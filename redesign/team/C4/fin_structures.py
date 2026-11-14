@@ -22,7 +22,7 @@ import numpy as np  # noqa: E402
 import fin_fe as fe  # noqa: E402
 import proofkit as pk  # noqa: E402
 
-kit = pk.Kit(__file__, params=["../../params/params.json"])
+kit = pk.Kit(__file__, params=["../../params/params.json", "../C6/params.json"])
 P = "P:"
 
 # ====================================================================== sources and assumptions
@@ -106,8 +106,12 @@ asm("ASM-C4-PETG-RHO", "PETG density 1270 kg/m3", "Prusament PETG", "datasheet",
     cites=["SRC-C4-PETG"])
 asm("ASM-C4-PETG-BEARING", "Printed PETG bearing allowable 20 MPa", "Bearing on a bore wall, layers in the x-y plane",
     "~45 % of the XY yield; creep under the bonded preload", 20e6, "Pa", cites=["SRC-C4-PETG"])
-asm("ASM-C4-PETG-TENSILE", "Printed PETG tensile allowable 15 MPa", "Tension/bending, interlayer (worst) direction",
-    "50 % of the Z yield 30 MPa", 15e6, "Pa", cites=["SRC-C4-PETG"])
+asm("ASM-C4-PETG-TENSILE", "Printed PETG tensile allowable across layers 9 MPa (C6 table, D-107)",
+    "Tension/bending, interlayer (worst) direction",
+    "= P:allowables.petg_interlayer_pa (team/C6/params.json): 0.5 x the Prusament interlayer adhesion 18 +/- 4 MPa. "
+    "Was 15 MPa (50 % of an assumed Z yield of 30 MPa). Parts loaded in the layer plane read "
+    "P:allowables.petg_inplane_pa (23.5 MPa) instead and state their print orientation",
+    kit.value("P:allowables.petg_interlayer_pa"), "Pa", cites=["SRC-C4-PETG"])
 asm("ASM-C4-PETG-SHEAR", "Printed PETG shear allowable 10 MPa", "Shear-out and web torsion",
     "~0.6 x tensile allowable rounded", 10e6, "Pa", cites=["SRC-C4-PETG"])
 asm("ASM-C4-BOND-SHEAR", "Epoxy bond on abraded PETG/CF 2 MPa", "Lap-shear allowable, 30-min epoxy, 80-grit both sides",

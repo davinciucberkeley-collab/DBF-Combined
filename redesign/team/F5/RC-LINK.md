@@ -35,6 +35,7 @@ log (ground) carry everything flight test needs. Upgrade paths if A1 later frees
 | TX power | 100 fixed (dynamic off) | mW | logs comparable flight to flight; 250 mW kept in hand | `ASM-F5-POWER` |
 | Binding phrase | team-chosen, **not in the repo** | — | brief: no secrets in files | — |
 | Model match | on; K09-L and the twin have different model ids | — | the wrong EdgeTX model cannot fly the wrong aircraft | `T-F5-BENCH` |
+| **RX failsafe mode** (CDR-26) | **"No Pulses"**, set in the receiver's ELRS web UI or the ELRS Lua and read back after a power cycle | — | ArduPilot detects RC loss only when CRSF frames stop. With "Last Position" or "Set Position" the receiver keeps sending frames and no failsafe ever fires (ArduPilot ELRS / CRSF page, `SRC-F5-AP-ELRS`; page not re-read this session) | `T-F5-BENCH` |
 | RX serial protocol | CRSF | — | RC + telemetry on one UART | `SRC-F5-AP-ELRS` |
 
 ## Channel map (EdgeTX model "K09L", AETR)
@@ -71,14 +72,14 @@ Pocket switch names are taken from the manual and are `UNVERIFIED` until the rad
 | `RSSI_TYPE` | 3 | RSSI and LQ from the CRSF stream into the log | `SRC-F5-AP-ELRS` |
 | `RC_OPTIONS` | 8448 (bit 8 passthrough telemetry + bit 13 420 kbaud ELRS) | Yaapu screen; ELRS baud | `SRC-F5-AP-ELRS` |
 | `FS_GCS_ENABL` | 0 | no GCS link in flight; a USB unplug must not trigger anything | `R-FAILSAFES` |
-| `THR_FAILSAFE`, `FS_SHORT_TIMEOUT`, `FS_LONG_TIMEOUT` | 1, 1.5 s, 5 s (F4 values kept) | CRSF stops frames on link loss → RC failsafe | `K09L.param` §10 |
+| `THR_FAILSAFE`, `RC_FS_TIMEOUT`, `FS_LONG_TIMEOUT` | 1, 1.0 s, 5 s (F4-R6; `FS_SHORT_TIMEOUT` was removed in ArduPlane 4.7) | CRSF stops frames on link loss → RC failsafe 1.0 s + 0.2 s later; Q modes go to QLAND then, FW goes to RTL at 5 s | `K09L.param` §10; `CL-F4-RC-FS-QLAND` |
 | No other `SERIALn_PROTOCOL` = 10 | — | conflicts with CRSF passthrough | ArduPilot CRSF thread |
 
 ## Failsafe behaviour (link side; F4 owns the actions)
 
 | Event | Receiver | ArduPilot (F4) | Time | Claim |
 |---|---|---|---|---|
-| Link lost | stops CRSF channel frames (no "hold" or "custom" outputs in CRSF) | Q modes: QLAND in place; FW: circle, RTL at 5 s, then QRTL (`Q_RTL_MODE 1`) | ≤ 2.5 s TX off → failsafe | `CL-F5-FS-TIME` `UNVERIFIED` |
+| Link lost | stops CRSF channel frames, **only in failsafe mode "No Pulses"** | Q modes: QLAND in place at the short event; FW: circle, RTL at 5 s, then the VTOL approach (`Q_RTL_MODE` 2) | 2.2 s TX off → failsafe (1.0 s ELRS + 1.0 s `RC_FS_TIMEOUT` + 0.2 s; was 2.5 s); SITL from the last frame to QLAND 1.0–1.15 s | `CL-F5-FS-TIME` 2.2 s `UNVERIFIED` |
 | Link back | frames resume | pilot re-selects the mode switch to take control | — | `T-F5-FS-BENCH` |
 | E-stop ch 9 | sent within one round-robin cycle | all motors off | ≤ 0.059 s link part vs 1 s | `CL-F5-SWITCH-LATENCY` |
 | RX brown-out | RX reboots, ~1 s without frames | as link lost | — | CR-F5-02: RX on the FC 5 V rail, not the servo rail |
@@ -128,8 +129,8 @@ the two-attitude ground check below measures it.
 
 | Id | Test | Set-up | Pass | Claim |
 |---|---|---|---|---|
-| `T-F5-BENCH` | arrival bench | FCC domain, matching ELRS 3.x, bind, model match, channel directions, ch 9 latency from log | all channels right; latency ≤ 1 s | `CL-F5-SWITCH-LATENCY` |
-| `T-F5-FS-BENCH` | RC failsafe, props off, tied down | armed in QSTABILIZE, FBWA, CRUISE in turn; TX off | QLAND in Q modes; circle → RTL in FW; ≤ 2.5 s | `CL-F5-FS-TIME` → `R-FAILSAFES` |
+| `T-F5-BENCH` | arrival bench | FCC domain, matching ELRS 3.x, bind, model match, **RX failsafe mode "No Pulses" set and read back, then TX off with props off: "Throttle failsafe on" appears and the RC inputs freeze**, channel directions, ch 9 latency from log | all channels right; failsafe message seen; latency ≤ 1 s | `CL-F5-SWITCH-LATENCY` |
+| `T-F5-FS-BENCH` | RC failsafe, props off, tied down | armed in QSTABILIZE, QHOVER, FBWA, CRUISE in turn; TX off | QLAND in Q modes **≤ 3 s after TX off** (`CL-F4-RC-FS-QLAND`); circle → RTL at 5 s in FW; failsafe message ≤ 2.5 s | `CL-F5-FS-TIME` → `R-FAILSAFES` |
 | `T-F5-RANGE` (updates H1 `GT-14`) | ground range check | **25 mW** (Pocket minimum), 150 Hz; aircraft 1 m up on a stand, motors spinning props-off at 20 %; 100 m; 4 headings × 2 attitudes (hover and cruise) | LQ ≥ 0.9 and best of 1RSS/2RSS ≥ **−93.8 dBm** in every position (predicted −82.2) | `CL-F5-RC-RSSI-REQ`, `-PRED` → `R-RC-LINK` |
 | Daily | short range check | first flight of each day, 25 mW, 100 m, one heading per attitude | LQ ≥ 0.9, no failsafe | `R-RC-LINK` |
 | `T-F5-FLIGHT-LINK` | in-flight log review | every flight; fixed-wing tune flights reach the 250 m fence | LQ ≥ 0.9, RSSI ≥ −102 dBm at the farthest point | `CL-F5-LINK-MARGIN` |

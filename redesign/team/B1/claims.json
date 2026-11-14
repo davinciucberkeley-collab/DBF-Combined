@@ -682,7 +682,7 @@
    ],
    "outputs": {
     "vs_gate_ms": 11.899981156892892,
-    "vs_sized_ms": 11.893113801608896,
+    "vs_sized_ms": 11.899981156892892,
     "vt_gate_ms": 15.46997550396076,
     "vs_bank30_gate_ms": 12.787361940463827,
     "vs_gate_clmax086_ms": 11.468875288798127,
@@ -692,7 +692,7 @@
    },
    "input_values": {
     "m_gate": 2.6,
-    "m_sized": 2.597,
+    "m_sized": 2.6,
     "g": 9.80665,
     "rho": 1.225,
     "S": 0.368,
@@ -736,7 +736,7 @@
    ],
    "outputs": {
     "n_max_rps": 137.78254133683689,
-    "n_max_sag_rps": 127.10392763934884,
+    "n_max_sag_rps": 127.02922652937626,
     "k_cal": 1.131836279989992,
     "hover_ref_rpm": 5395.261254325904,
     "fm_apc_static": 0.7164274187618953,
@@ -1019,7 +1019,7 @@
      ]
     ],
     "t_max_kg": 1.62,
-    "sag": 0.851,
+    "sag": 0.85,
     "D": 0.2794,
     "rho": 1.225,
     "g": 9.80665
@@ -1073,19 +1073,19 @@
    ],
    "outputs": {
     "p_gate_w": 386.9342052710069,
-    "p_sized_w": 386.2691641301014,
+    "p_sized_w": 386.9342052710069,
     "i_gate_a": 26.144203058851815,
-    "i_sized_a": 26.09926784662847,
+    "i_sized_a": 26.144203058851815,
     "p_gate_pess_w": 425.6276257981076,
     "prop_ratio_55_45": 1.0187517824989423,
     "hover_only_gate_min": 11.933811839575815,
-    "hover_only_sized_min": 11.954358330412111,
-    "throttle_frac_gate_sag": 0.4997751374562969,
-    "tw_gate_sag_download": 2.000899854862119
+    "hover_only_sized_min": 11.933811839575815,
+    "throttle_frac_gate_sag": 0.5003631082062455,
+    "tw_gate_sag_download": 1.9985486211901304
    },
    "input_values": {
     "m_gate": 2.6,
-    "m_sized": 2.597,
+    "m_sized": 2.6,
     "table": [
      [
       690,
@@ -1112,7 +1112,7 @@
     "v": 14.8,
     "res": 0.2,
     "t_max_kg": 1.62,
-    "sag": 0.851,
+    "sag": 0.85,
     "pess": [
      1.3,
      0.85,
@@ -2008,25 +2008,25 @@
       87.3,
       35.55,
       0.999,
-      0.472,
+      0.473,
       356.9,
       1
      ],
      [
       3,
       83.95,
-      34.45,
+      34.7,
       0.995,
-      0.472,
+      0.473,
       359.2,
       1
      ],
      [
       4,
       79.33,
-      33.33,
+      33.58,
       0.984,
-      0.471,
+      0.472,
       362.3,
       1
      ],
@@ -2035,7 +2035,7 @@
       73.6,
       32.1,
       0.963,
-      0.468,
+      0.469,
       365.2,
       1
      ],
@@ -2053,7 +2053,7 @@
       60.02,
       29.52,
       0.877,
-      0.451,
+      0.452,
       366.3,
       1
      ],
@@ -2062,7 +2062,7 @@
       53.01,
       28.01,
       0.816,
-      0.438,
+      0.439,
       362.6,
       1
      ],
@@ -2078,16 +2078,16 @@
      [
       10,
       40.35,
-      24.85,
+      25.1,
       0.682,
-      0.411,
+      0.412,
       353.2,
       1
      ],
      [
       11,
       35.08,
-      23.08,
+      23.33,
       0.618,
       0.401,
       350.4,
@@ -2143,7 +2143,7 @@
       5.17,
       5.17,
       0.168,
-      0.238,
+      0.239,
       256.9,
       0
      ],
@@ -2152,7 +2152,7 @@
       4.49,
       4.49,
       0.18,
-      0.309,
+      0.31,
       294.7,
       0
      ],
@@ -2161,7 +2161,7 @@
       3.92,
       3.92,
       0.194,
-      0.421,
+      0.423,
       337.2,
       0
      ],
@@ -2170,12 +2170,12 @@
       3.43,
       3.43,
       0.209,
-      0.623,
+      0.627,
       384.8,
       0
      ]
     ],
-    "thrust_frac_max": 0.499775137456297,
+    "thrust_frac_max": 0.5003631082062456,
     "p_peak_w": 386.9521125059667,
     "v_peak_ms": 0,
     "v_wing_unstalled_ms": 12,
@@ -2301,7 +2301,7 @@
     "rm": 0.086,
     "i0": 0.9,
     "kcal": 1.131836279989992,
-    "nmax": 127.10392763934884,
+    "nmax": 127.02922652937626,
     "D": 0.2794,
     "esc": 0.95,
     "av": 6.0,
@@ -2366,7 +2366,7 @@
     "t_to_cruise_s": 8.479999999999864,
     "alt_loss_m": 0.15260325654187362,
     "alt_gain_m": 0.11951574359088521,
-    "thrust_frac_max": 0.591908931815945,
+    "thrust_frac_max": 0.592951715372911,
     "energy_wh": 0.8815554404024317
    },
    "input_values": {
@@ -2487,7 +2487,7 @@
     "rm": 0.086,
     "i0": 0.9,
     "kcal": 1.131836279989992,
-    "nmax": 127.10392763934884,
+    "nmax": 127.02922652937626,
     "D": 0.2794,
     "esc": 0.95,
     "av": 6.0,
@@ -2552,28 +2552,28 @@
    "outputs": {
     "lean_5ms_deg": 15.795410611927222,
     "lean_8ms_deg": 35.911511415879644,
-    "lean_allowed_deg": 20.984724794454205,
-    "v_hover_max_ms": 5.822113872002822,
+    "lean_allowed_deg": 20.427430066833967,
+    "v_hover_max_ms": 5.7371239678743144,
     "tw_needed_8ms": 1.2346840304455746,
-    "thrust_frac_8ms": 0.6170643810310318,
-    "v_ground_tip_ms": 9.020324348682232,
+    "thrust_frac_8ms": 0.6177903391263624,
+    "v_ground_tip_ms": 9.048812653155574,
     "groundspeed_upwind_ms": 11.0,
-    "m_min_kg": 2.371
+    "m_min_kg": 2.386
    },
    "input_values": {
     "m": 2.6,
-    "m_sized": 2.597,
-    "growth": 226,
+    "m_sized": 2.6,
+    "growth": 214,
     "g": 9.80665,
     "rho": 1.225,
     "S": 0.368,
     "cd90": 1.28,
-    "tip": 30.984724794454205,
+    "tip": 30.427430066833967,
     "err": 10.0,
     "z_fin": 0.21,
     "c": 0.32,
     "foot": 0.048,
-    "tw_sag": 2.000899854862119,
+    "tw_sag": 1.9985486211901304,
     "frac": 0.8,
     "vw": 5.0,
     "vg": 8.0,
@@ -2879,7 +2879,7 @@
     "R-STALL"
    ],
    "how": "As CL-B1-VS-GATE at the weighed mass.",
-   "value": 11.893113801608896
+   "value": 11.899981156892892
   },
   {
    "id": "CL-B1-VT-GATE",
@@ -2916,7 +2916,7 @@
    "output": "n_max_sag_rps",
    "unit": "rev/s",
    "how": "Thrust stand at 14.0 V, full throttle, optical tachometer (H1, T-A1-THRUST-STATION).",
-   "value": 127.10392763934884
+   "value": 127.02922652937626
   },
   {
    "id": "CL-B1-KCAL",
@@ -3007,7 +3007,7 @@
     "R-HOVER-TW"
    ],
    "how": "Hover throttle in the log (MOT_THST_HOVER learned) at the gate mass and low pack (F4/H2).",
-   "value": 0.4997751374562969
+   "value": 0.5003631082062455
   },
   {
    "id": "CL-B1-HOVER-TW-SAG",
@@ -3024,7 +3024,7 @@
     "R-HOVER-TW"
    ],
    "how": "Thrust stand at 14.0 V; download from B4 or a tethered hover.",
-   "value": 2.000899854862119
+   "value": 1.9985486211901304
   },
   {
    "id": "CL-B1-CRUISE-P",
@@ -3222,7 +3222,7 @@
     "R-TRANSITION"
    ],
    "how": "Throttle output in the transition log stays below 80 % with no motor saturation flag (F4 SITL, H2).",
-   "value": 0.499775137456297
+   "value": 0.5003631082062456
   },
   {
    "id": "CL-B1-CORR-P-PEAK",
@@ -3296,7 +3296,7 @@
     "R-TRANSITION"
    ],
    "how": "Throttle output in the transition log (H2).",
-   "value": 0.591908931815945
+   "value": 0.592951715372911
   },
   {
    "id": "CL-B1-TRANS-ENERGY",
@@ -3316,7 +3316,7 @@
    "output": "lean_allowed_deg",
    "unit": "deg",
    "how": "Tilt-board tip-over test (C5) minus the landing attitude error from the twin's logs.",
-   "value": 20.984724794454205
+   "value": 20.427430066833967
   },
   {
    "id": "CL-B1-LEAN-5MS",
@@ -3350,7 +3350,7 @@
     "R-WIND"
    ],
    "how": "As CL-B1-LEAN-5MS; flight card stays at 5 m/s.",
-   "value": 5.822113872002822
+   "value": 5.7371239678743144
   },
   {
    "id": "CL-B1-GUST-8-THRUST",
@@ -3367,7 +3367,7 @@
     "R-WIND"
    ],
    "how": "Thrust stand T/W (H1) and the 8 m/s lean from the logs.",
-   "value": 0.6170643810310318
+   "value": 0.6177903391263624
   },
   {
    "id": "CL-B1-GROUND-TIP-WIND",
@@ -3385,7 +3385,7 @@
     "R-TIPOVER"
    ],
    "how": "Tilt-board tip angle (C5) and a fan test at the lightest flying mass; never leave it standing disarmed in gusts.",
-   "value": 9.020324348682232
+   "value": 9.048812653155574
   },
   {
    "id": "CL-B1-VCLIMB-P",

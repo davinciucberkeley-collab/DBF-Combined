@@ -298,9 +298,13 @@ kit.claim("CL-D3-TONGUE-FIT", "Strip-tail tongue fit under the 15 mm collar ring
 kit.claim("CL-D3-TAIL-EMBED", "Edge-strip embedment in the collar tail / C6 required", calc="CALC-D3-COLLAR",
           output="embed_ratio", unit="-", limit=(">=", 1.0), verifies=["R-FIN-TUBE-JOINT"],
           parts=SC + ["FIN-011-URO"], how="Measure on the dry fit; C6 strip-anchor coupon")
-kit.claim("CL-D3-STRAP-EYE-RF", "Strap eye shear-out reserve factor at the H1 tie load", calc="CALC-D3-STRAP-EYE",
-          output="rf", unit="-", limit=(">=", 1.0), verifies=["R-STRUCT-MARGIN"], parts=["FIN-004-R", "FIN-004-L"],
-          how="T-D3-EYE: spring scale on a printed eye to 2 x 29.4 N, then to failure")
+kit.claim("CL-D3-STRAP-EYE-RF", "Strap eye FIN-013 ligament shear-out reserve factor at the H1 tie load",
+          calc="CALC-D3-STRAP-EYE", output="rf", unit="-", limit=(">=", 1.0), verifies=["R-STRUCT-MARGIN"],
+          parts=["FIN-013-UR", "FIN-013-UL", "FIN-013-LR", "FIN-013-LL"],
+          how="T-D3-EYE on a bonded eye (C6 T-D3-EYE-BONDED): along x to 2 x 29.4 N, then to failure",
+          note="D-108 (CDR-27): the eye is the separate part FIN-013 since D-89c (this claim still named the block "
+               "FIN-004). Its bond on the boss and the tab bending are C6's CL-C6-EYE-BOND-RF, -PEEL, -SPLAY, "
+               "CL-C6-EYE-TAB-RF; the tie load is C1 case G4 (CL-C1-G4-TIE-LIM)")
 kit.claim("CL-D3-TIP-SQUARE", "Stepped tip length / D5 step length", calc="CALC-D3-TIP", output="ratio", unit="-",
           limit=(">=", 1.0), verifies=["R-LANDING-IMPACT"], parts=HF, how="Dry-fit the D5 shoe on the cut half-fin",
           note="R4 (D-54): D5's step adopted (45.4 mm, |z| 0.2005), over D3's CR-D3-19")
@@ -355,8 +359,10 @@ for tid, title, ver, proc in (
          "luggage scale hooked on the motor can, pull along y; adjust the pinch bolt until the collar turns at 85-100 N"),
         ("T-D3-ROOT", "Half-fin root side pull", ["CL-D3-ROOT-FILLET-RF"],
          "half-fin bonded to a core offcut per BUILD.md; pull at the TE tip along y to 35 N, then to failure"),
-        ("T-D3-EYE", "Strap eye pull", ["CL-D3-STRAP-EYE-RF"],
-         "printed block offcut with one eye; spring scale through the eye along z and along y to 60 N, then to failure"),
+        ("T-D3-EYE", "Strap eye pull (bonded eye, CDR-27)", ["CL-D3-STRAP-EYE-RF"],
+         "run as C6's T-D3-EYE-BONDED: two FIN-013 eyes bonded as built on the boss of a printed block offcut; spring "
+         "scale through the eye along x (the tie-hole axis) to 58.8 N and, on the second, 30 deg outboard of x; then "
+         "to failure; record bond shear, foot peel, ligament shear-out or tab break"),
         ("T-D3-WEIGH", "Weigh every fins part", ["CL-D3-MASS", "CL-D3-FILLET-MASS"],
          "1 g scale; update mass_g and status VERIFIED; weigh one half-fin before and after its root fillets and a "
          "cured 20 cm3 cup of the fillet mix (ASM-D3-FILLET-DENSITY)")):

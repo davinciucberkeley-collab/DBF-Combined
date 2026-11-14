@@ -4,7 +4,10 @@ A short, ordered guide to building the K09-L quad tailsitter at Jacobs Hall. Eac
 `subsystems/<x>/BUILD.md`, which holds the dimensions, cut tables and checks. This guide gives the order, the
 time, the parts and the warnings from the [buildability review](review/BUILDABILITY-REVIEW.md).
 
-Status: design `PROPOSED`, frame A1-R5. Nothing has been built yet. **Open Blockers are not solved.** Where a step
+Status: design `PROPOSED`, frame A1-R6 + CDR fix round (2026-11-13; this guide's order follows
+`showcase/animation/assembly_plan.py`, which the assembly check passes with 0 swept-path violations). Nothing has been
+built yet. **The CDR build hold stands: no flight half-fins cut and no flight collars, shoes or mounts printed until
+CDR-01, -02, -03 and -13 close** (`review/CDR-2026-11-13/CDR-SUMMARY.md`). **Open Blockers are not solved.** Where a step
 depends on one, it says "pending fix". Do not print or cut those parts until the fix lands in CAD.
 
 ![K09-L in cruise attitude](showcase/renders/hero-iso.png)
@@ -42,7 +45,7 @@ term, so take them all in November and December ([BR-31](review/MANUFACTURING.md
 0.1 g and 1 g scales, Z-bend pliers, pin vise, 1.85 / 2.5 / 3.4 / 8 mm drills (1.85: servo-arm hole for the 2-56 Z-bend), 3 mm and 22 mm ball bits, sharpened
 8 mm brass tube, luggage scale, servo tester, prop balancer.
 
-**Consumables** (⚠ mostly missing from the BOM, [BR-32](review/MANUFACTURING.md#4-findings)): laminating epoxy by
+**Consumables** (BOM R5, 2026-11-13: epoxy `C05`, 3M 77 `G16`, filament tape `W09`, sand bucket `G17` and tether `G18` are bought; fillers `C07`/`C08`, TPU `K08`, blades, sandpaper, cups, IPA and every "bring or buy" tool are on the owned-or-borrowed list X14, walked by the team on 19 Nov; gloves, 100 mm tape and a few tools have no price yet, lines `U01`–`U08`): laminating epoxy by
 the quart, colloidal silica, glass and phenolic microballoons, mixing cups, gloves, IPA, 3M 77, 48 mm and 100 mm
 clear tape, 12 mm filament tape, Blenderm or filament hinge tape, straws, heat-shrink, PETG in four colours, ASA,
 TPU 95A.
@@ -74,10 +77,11 @@ TPU 95A.
 ## Stage 1. Buy, measure, print and cut parts
 
 Time: November–18 Dec, plus the winter break for home printing and electrical pre-work.
-Parts: B01, B02, A01, M01, P01, W03/W04, W05, W08, D01–D03, C03.
+Parts: B01, B02, A01, M01, P01, W03/W04, W05, W08, D01–D03, C03; strap eyes `FIN-013` and horn backplates `MEC-013` print with the PETG set (G3 print list).
 Detail: every `subsystems/*/BUILD.md` step 1.
 
-1. Buy one motor, one ESC 4-pack, one CoreWing V2, three servos and both packs **now**. Weigh and caliper them.
+1. Buy one motor, one ESC 4-pack, one CoreWing V2, the two flight servos and both packs **now** (20 Nov order,
+   [ORDER-PLAN](team/I1/ORDER-PLAN.md) R5; the third servo is gated X02, the 4 spare ESCs are `B08` after `T-F2-DSHOT`). Weigh and caliper them.
    Write the numbers into the params files.
 2. Measure the motor bolt pattern. It must fit y ≤ 17.5 mm. ⚠ Never drill through the motor; use a printed drill
    guide ([MM-04](review/MOTOR-MOUNTS.md#findings)).
@@ -113,7 +117,8 @@ Detail: [`subsystems/wing/BUILD.md`](subsystems/wing/BUILD.md) steps 1–8, [`su
 3. Push the PETG plugs into the spar to the dowel marks. Cure 24 h.
 4. Bond both blocks to the spar in the clocking jig with silica-thickened epoxy, then cure
    ([SW-08](review/STRUCTURE-WING.md#findings)). The blocks have no strap eyes: those go on in stage 6 (D-89c).
-5. Bond spar and blocks into the core with microballoon epoxy, fill the lip-bead chamfers, sleeve the pod ties.
+5. Bond spar and blocks into the core with microballoon epoxy: push them up the slot from below, then re-bond the
+   slot strip as the cap under the spar (`WNG-008`, sanded flush). Fill the lip-bead chamfers, sleeve the pod ties.
    Weight it on the relieved bed, LE on a straight edge. Cure 24 h.
 
 ☐ Inspect before moving on: core straight within 1 mm, no twist; blocks at y ±320 ± 1 mm; tube bores parallel and
@@ -144,7 +149,7 @@ by gauge.
 [Play the stage 4 clip](showcase/animation/build/stage-04.mp4)
 
 Time: about 2 days hands-on plus 4–5 × 24 h cures.
-Parts: W02 foam board, W04 tubes, D03 plugs, D01 braces, D02 strips, C03 pins, collars `FIN-008`, anchors, ESC pads `FIN-007`.
+Parts: W02 foam board, G16 3M 77, W04 tubes, D03 plugs, D01 braces, D02 strips, C03 pins, collars `FIN-008` (22 mm, D-90), anchors `FIN-010`, ESC pads `FIN-007`.
 Detail: [`subsystems/fins/BUILD.md`](subsystems/fins/BUILD.md) steps 1–17.
 
 1. Laminate the board pairs (3M 77 in the spray booth), measure the laminate, then knife- or laser-cut the four
@@ -154,10 +159,13 @@ Detail: [`subsystems/fins/BUILD.md`](subsystems/fins/BUILD.md) steps 1–17.
 3. Bond the half-fin roots and run the cove fillets. ⚠ Weigh a cup from every fillet batch; the CG has no aft
    margin left ([MF-14](review/MANUFACTURING.md#4-findings), BR-00). ⚠ The lower roots have the rod notch under a
    fillet that already fails: pending C4 check [SC-04](review/SERVOS-CONTROLS.md#findings).
-4. Edge strips and pins. Fit strips and drill pins on the bench, flat, before the half-fin goes on, if the team
-   adopts [SW-04](review/STRUCTURE-WING.md#findings). ⚠ Pin row depends on the tip decision.
-5. Station collars, braces, ESC pads. ⚠ Collar height (13, 15 or 22 mm) is not frozen: pending H7 / BR-08. Clock
-   the collar notch with an inclinometer if the keyed mount ([MM-02](review/MOTOR-MOUNTS.md#findings)) is adopted.
+4. **Station collars down the tubes first** (assembly check: the edge-strip ends sit in the collar tail slots, so
+   a collar cannot slide on once the strips are on). Collar height **22 mm** (D-90, ring 22 mm + 40 mm two-face
+   tail). Clock the collar notch with an inclinometer for the keyed mount (D-81). ⚠ Flight collars are under the CDR
+   build hold until the `T-C6-LAP-PETG` and `T-C6-STRIP-ANCHOR` coupons read (CDR-02).
+5. Edge strips on both fin faces, ends into the collar tails; CF pins through strip-board-strip at **12 mm pitch**
+   (D-90). Then brace anchors `FIN-010` on the spar, braces `FIN-009` bowed into their slots (anchor end first, then
+   sprung into the collar ear), ESC pads `FIN-007`.
 6. Post-cure the collars in a heat tent (box, lamp, thermocouple), keeping XPS and tape cool
    ([SW-14](review/STRUCTURE-WING.md#findings)).
 
@@ -171,17 +179,24 @@ no filler in lead holes or elevon gaps.
 [![Stage 5 end state](showcase/animation/build/stage-05.png)](showcase/animation/build/stage-05.mp4)
 [Play the stage 5 clip](showcase/animation/build/stage-05.mp4)
 
-Time: about 8.5 h for the pod plus 3 × 24 h cures; 3 h for the power stack.
-Parts: pod board and prints `POD-*` (W02, W05), F01 AS150U, F02–F04 wire, F05 UBEC, F06 fuse, F07 caps, F08 FR4, C02 inserts, C06 nylon screws, D06 straps.
+Time: about 8.5 h for the pod plus 3 × 24 h cures. The power stack (3 h) is built in the Electronics Lab before
+18 Dec (`EL1`, [G4 sheets](team/G4/BUILD-STEPS.md) section 2, CDR-20) and only fitted here.
+Parts: pod board and prints `POD-*` (W02, W05), F01 AS150U, F02 wire, F07 caps, F08 FR4, C02 inserts, C06 nylon screws, D06 straps, H06 XT30U pairs; F04–F06 only if gate X12 (UBEC fallback, D-74).
 Detail: [`subsystems/pod/BUILD.md`](subsystems/pod/BUILD.md), [`subsystems/power/BUILD.md`](subsystems/power/BUILD.md).
 
-1. Build the pod box on the bench in parallel with stage 4: stop T, tray, walls, fillets.
+1. Build the pod box on the bench in parallel with stage 4: stop T, tray, walls, fillets, straps, inserts, **and the
+   pitot socket `POD-006` and carry handle `POD-007`** (assembly check: once the pod is in the recess neither can
+   reach its seat; the handle brackets wrap the pod walls).
 2. Lay the recess-step fillet on the wing, cure, then bond the pod into the recess. ⚠ Pod BUILD step 11 bonds the
    handle bridge to a "slot fill" that does not exist on top of the wing ([SW-10](review/STRUCTURE-WING.md#findings));
    bond to the spar saddles only.
-3. Build the power stack **on the bench**: bus board, power board with the supplied 470 µF 35 V input cap,
-   AS150U. Screw the power board down on its washers **before** soldering the 10 AWG leads to its aft-edge pads:
-   the joints sit over the two aft screw heads (D-89c), so taking the board out later means desoldering them.
+3. Tray first, then the power stack (assembly-check order, D-89c): **the four XT30U pairs `HRN-113`, the airspeed
+   sensor `AVN-004` and the receiver `AVN-003` go on the tray before the power frame** (they sit under the frame
+   cradle floor and the deck). Then the power frame `PWR-006` on its spacers, the power board, the bus board and the
+   AS150U. ⚠ **Board mounting (power BUILD step 5.3) is being redrawn by the integrator (CDR-17: frame to pod on
+   M3 × 18 with the head on the deck, board above the heads on four M2 stand-offs on 30.5 × 26.5 mm, no fastener under
+   the 10 AWG pads). Do not mount the board from the current drawing; follow the redrawn power `BUILD.md` when it
+   lands.** The power board carries the supplied 470 µF 35 V input cap.
    ⚠ The power and harness BUILD files disagree on when the ESC leads are soldered
    ([WB-02](review/WIRING-BATTERY.md#findings)); solder the bus board before the frame goes on, or use ESC-pair
    plugs at the pod exits if the team adopts [WB-03](review/WIRING-BATTERY.md#findings).
@@ -220,7 +235,9 @@ Detail: [`subsystems/harness/BUILD.md`](subsystems/harness/BUILD.md), [`subsyste
    adhesive-lined heat-shrink (HRN-107) over each lead before soldering and shrink it over the joint at the face.
 3. Strap the ESCs on their pads; thread the leads through the fin grommet with a 20–30 mm service loop
    ([WB-08](review/WIRING-BATTERY.md#findings)); lay them in the grooves with tape tabs.
-4. Servo leads to the JR recess before the skin. The mated JR pair lies flat on the floor of the 30.5 × 10.8 × 5 mm
+4. **Bond the servo frames `MEC-008` in their pockets now** (assembly check: the servo lead runs under the frame
+   rim and the tape doubler goes over its flange, so the frame cannot go in after the leads and the skin).
+   Then the servo leads to the JR recess before the skin. The mated JR pair lies flat on the floor of the 30.5 × 10.8 × 5 mm
    recess (D-86; the old 18 × 10 mm recess was narrower than the 10.3 mm shroud): female forward, lead dropping in
    from the groove, servo lead rising out of the aft end into the branch groove. In the pod, the six JR pairs stand
    on edge on the tie bar in FC-output order (output 1 inboard), two per tie.
@@ -256,7 +273,7 @@ Detail: [`subsystems/mechanisms/BUILD.md`](subsystems/mechanisms/BUILD.md) steps
 3. Bench-prep the servo at 1500 µs; drill the arm to 1.85 mm (not 1.6 mm) for the 2-56 Z-bend
    ([SC-07](review/SERVOS-CONTROLS.md#findings)). Crimp pins but leave the JR housing off, so the lead passes the
    straw ([SC-01](review/SERVOS-CONTROLS.md#findings)).
-4. Bond the frame in the pocket, install the servo, fit the cover, paint-pen the screws.
+4. Install the servo in its frame (bonded in stage 6 step 4), fit the cover, paint-pen the screws.
 5. Pushrod and clevis at neutral; sweep 900–2100 µs on the tester with no binding.
 
 ☐ Inspect before moving on: free play ≤ 1° at the TE; both panels of a side within 1° at 0 and ±25°; warm peel
@@ -300,12 +317,12 @@ holds 60 N.
 [![Stage 9 end state](showcase/animation/build/stage-09.png)](showcase/animation/build/stage-09.mp4)
 [Play the stage 9 clip](showcase/animation/build/stage-09.mp4)
 
-Time: about 1 day including calibration.
+Time: about 4 h on the aircraft; FC flash and bench calibration (4 h) are done in the winter closure (`HR1`, CDR-20).
 Parts: A01 FC, A02 GPS, A03 RX, A04 airspeed, A05 microSD, A06 antennas, A07 isolation set.
 Detail: [`subsystems/avionics/BUILD.md`](subsystems/avionics/BUILD.md).
 
-1. FC on four gel cubes with its strap; airspeed sensor between the tie posts; RX crosswise with antennas up the
-   tubes.
+1. FC on four gel cubes with its strap and the microSD in (the airspeed sensor and RX are already on the tray from
+   stage 5 step 3; RX antennas up the tubes).
 2. GPS on the mast pad; check the compass chip ID at the I²C scan ([WB-12](review/WIRING-BATTERY.md#findings)).
 3. Pitot lines on different coupler sizes or colours so T and S cannot swap ([WB-13](review/WIRING-BATTERY.md#findings)).
 4. Connect, tie within 20 mm of each plug, twist the current-sense wire with its ground. Every lead ends on a
@@ -316,9 +333,9 @@ Detail: [`subsystems/avionics/BUILD.md`](subsystems/avionics/BUILD.md).
    - **GPS (GH-6) and SERIAL6 to the RX (GH-4):** plug into the FC's aft-edge and fore-edge sockets. The RX lead
      runs down in front of the fore end stop and aft under the FC, inboard of the gel cubes.
    - **Airspeed I²C branch:** solder it to the GPS cable's four conductors about 15 mm from the FC plug. Shrink
-     one adhesive sleeve over the splice and both cables. Its other end plugs into the sensor's GH-4 on the
+     one adhesive sleeve (`HRN-107-I2C`) over the splice and both cables. Its other end plugs into the sensor's GH-4 on the
      aft face.
-   - **RX end:** strip the 4-core cable under a 2 mm breakout sleeve. Lay the four conductors flat onto the
+   - **RX end:** strip the 4-core cable under a 2 mm breakout sleeve (`HRN-107-RX`, adhesive-lined). Lay the four conductors flat onto the
      RP3's 5 V / GND / TX / RX pads and solder them. Check the pad order against the board first; the order
      in the CAD is an estimate.
    - **Power-board link ribbon:** plug into the PDB's top header and into the FC's underside header between
@@ -339,7 +356,8 @@ Detail: [`subsystems/landing/BUILD.md`](subsystems/landing/BUILD.md).
 1. Print the D-76 foot (59.1 g `EST`, landing allocation 60 g, D-78) on the D-75 tip. Weigh the first shoe and
    report it to A3 before printing the other three.
 2. Print pistons in orange (upper) and blue (lower); weigh each.
-3. Cut and pre-crush the cartridge sticks with a fence and crush block.
+3. Cartridge sticks: cut and pre-crush with a fence and crush block. Done at home in the winter closure (`FC1`,
+   6 h, CDR-20), so here they are only checked and fitted.
 4. Dry-fit, then bond the shoes; fit inserts by colour; push on the corner caps.
 
 ☐ Inspect before moving on: four feet and two caps weighed and reported to A3; pads level.
@@ -357,10 +375,11 @@ Detail: [`team/H1/GROUND-TEST-PLAN.md`](team/H1/GROUND-TEST-PLAN.md), [`subsyste
 
 1. Weigh the complete aircraft with each pack.
 2. **CG on the jig with each pack and its own spacer kit** (`T-A3-CG-BALANCE`, marks at 46.6 and 51.4 mm).
-   ⚠ **Mass and CG requirements currently FAIL** (BR-00): predicted CG 52.6 mm with a 550 g pack, 1.2 mm aft of
-   the limit; worst pack range use 1.028; gate margin 107 g against the 100 g overrun. If the aircraft balances
-   aft of 51.4 mm, **do not fly it**. Nose ballast costs about 13 g per mm of CG and only 7 g of mass margin
-   remains, so use ballast only to trim. Report the measured CG to A3 and B3.
+   Mass and CG on paper (D-95…D-98, D-132; [`MASS-CG.md`](MASS-CG.md)): predicted CG 50.5 mm with the 551 g pack
+   at its D-98 station, aft margin 0.7–0.9 mm; predicted mass 2 528 g, gate margin 72 g against the 64 g overrun line
+   with the 31 g structures contingency booked; pack pass line ≤ 558 g. If the aircraft balances aft of 51.4 mm,
+   **do not fly it**. First fixed-wing flights fly further forward with ≤ 30 g nose ballast (decision B9) once B3
+   re-issues the forward limit (CDR-14); until then 46.6 mm is the forward mark. Report the measured CG to A3 and B3.
 3. Control directions: with props off, check each elevon moves the right way for roll and pitch in FBWA, and what
    the surfaces do in QHOVER ([SC-06](review/SERVOS-CONTROLS.md#findings)). Motor order and direction from
    `MOTOR_TEST`.
@@ -392,17 +411,19 @@ Detail: [`team/H1/GROUND-TEST-PLAN.md`](team/H1/GROUND-TEST-PLAN.md), [`subsyste
 
 ## Week-by-week plan
 
-From [MANUFACTURING.md §5](review/MANUFACTURING.md#5-realistic-build-plan-week-by-week). Build week 1 = 19 Jan 2027.
+From [I2 schedule](team/I2/SCHEDULE.md) I2-R2 (CDR-20: cores from 10 Jan in the team workspace, 13 h of bench work
+before first cut). Build week 1 = 19 Jan 2027. **Needs two people in town from 10 Jan, the workspace named by 30 Nov
+and the `FIN-004` blocks printed by 9 Jan**; without them the I2-R1 plan (hover 22–24 Feb, week 5) applies.
 
 | When | Work | Gate at the end |
 |---|---|---|
 | 11 Nov – 18 Dec (shop open) | All trainings; shop exporter; templates; hot-wire bow; 2 practice cores; jigs and gauges; coupons and fin test article; thrust stand, lever frame, CG jig | Design freeze 18 Dec (CG fix, fin tip, collar, pins, mount material); traveler issued |
-| 19 Dec – 18 Jan (Jacobs closed) | Home printing: blocks, collars, pod prints, feet, pistons. Harness cut and labelled; ESCs and FC flashed; SITL hours. **No soldering: the Electronics Lab is the only iron, so bus board, AS150U and ESC leads are soldered there before 18 Dec or from 19 Jan** ([I2 schedule](team/I2/SCHEDULE.md)) | All prints on the shelf; electrical sub-assemblies cut, labelled and ready to solder |
-| Week 1 (19–25 Jan) | Cut cores 1 and 2; spar plugs; slot, pockets, grooves; fin laminates; pod board parts; mounts drilled | Core 1 accepted by template gauge |
-| Week 2 (26 Jan – 1 Feb) | Spar + blocks in the jig; elevons free; anchors; motor tubes; recess fillet; pod walls; half-fin roots and fillets | Tubes vertical and parallel |
-| Week 3 (2–8 Feb) | Collars, strips, pins, braces, ESC pads; pod into the recess, handle; harness; skin; mechanisms; shoes; power stack | Airframe complete; slip and throws checked |
-| Week 4 (9–15 Feb) | Avionics and calibration; weigh, CG, tap test, bench and restrained run, range check; transport box | Restrained run passes (stretch: tethered hover) |
-| **Week 5 (16–22 Feb)** | **First tethered hover** | Hover log, VIBE, compassmot |
+| 19 Dec – 18 Jan (Jacobs closed) | Home printing: **blocks first (by 9 Jan)**, collars, pod prints, feet, pistons; foot cartridges cut. Harness cut and labelled; ESCs and FC flashed, bench calibration; SITL hours. **From 10 Jan in the team workspace: cut cores, slot and pockets, spar plugs, spar and blocks in the jig and bonded.** **No soldering: the Electronics Lab is the only iron, so bus board, AS150U and ESC leads are soldered there before 18 Dec or from 19 Jan** ([I2 schedule](team/I2/SCHEDULE.md)) | All prints on the shelf; electrical sub-assemblies cut, labelled and ready to solder |
+| Week 1 (19–25 Jan) | Elevons free; motor tubes; fin laminates (spray booth); half-fin roots and fillets; harness soldering in the lab; pod box | Tubes vertical and parallel |
+| Week 2 (26 Jan – 1 Feb) | Collars, then strips, pins, braces, ESC pads; pod into the recess; harness route and `T-F2-CONT` | Fin stations complete |
+| Week 3 (2–8 Feb) | Skin; servos and linkage; mounts and motors; avionics on the aircraft; feet; checks begin (7 Feb) | Airframe complete; slip and throws checked |
+| **Week 4 (9–15 Feb)** | Weigh, CG, stand run-up, range check (to 11 Feb); **first tethered hover 12–14 Feb** | Hover log, VIBE, compassmot |
+| Week 5 (16–22 Feb) | Free hover; transport box | — |
 | Weeks 6–7 | Free hover tuning; fixed-wing tune; first transition late week 7 at the earliest | Transition attempt |
 | Weeks 8–9 | Transition round trips; crash-repair loop budgeted | One clean round trip |
 | Weeks 10–14 (to 30 Apr) | Mission demonstrations, second repair, documentation | Complete by 30 Apr |

@@ -10,7 +10,12 @@ from openpyxl.utils import get_column_letter
 from openpyxl.worksheet.table import Table, TableStyleInfo
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-rows = [x for x in csv.DictReader(open(os.path.join(HERE, "BOM.csv"), encoding="utf-8")) if x["line"] != "TOTAL"]
+import json  # noqa: E402
+# R5: UNPRICED lines (price "-") are listed in BOM.csv but are in no total; shipping and duty come from bom_summary.json
+rows = [x for x in csv.DictReader(open(os.path.join(HERE, "BOM.csv"), encoding="utf-8"))
+        if x["line"] not in ("TOTAL", "") and x["unit_usd"] != "-"]
+SUM = json.load(open(os.path.join(HERE, "bom_summary.json"), encoding="utf-8"))
+MON = SUM["money"]
 
 FONT = "Arial"
 
@@ -40,9 +45,9 @@ s["A2"].font = f(italic=True, size=9)
 inputs = [
     ("Budget (hard limit)", 2000, "Team lead constraint C1"),
     ("Sales tax rate", 0.1025, "Berkeley/Alameda County rate, CDTFA, effective 2026-10-01"),
-    ("Shipping, all vendors", 120, "ESTIMATE, I1 BOM.csv TOTAL rows"),
+    ("Shipping + pack duty, baseline", round(MON["ship_base"] + MON["duty_base"], 2), f"ESTIMATE: {MON['shipments']} paid shipments x $8.57 + duty $20 (bom_summary.json, R5)"),
     ("FAA registration (not taxed)", 5, "FAA small-UAS registration"),
-    ("Pessimistic adders", 57, "I1 bom_summary.json bridge: list-price and item adders on the pessimistic case"),
+    ("Pessimistic adders", round(MON["ship_pess"] - MON["ship_base"] + MON["duty_pess"] - MON["duty_base"] + 27, 2), "shipping $10.71 vs $8.57 per shipment, duty $45 vs $20, tax measure $7, jig/box $20 (bom_summary.json, R5)"),
     ("Crash reserve needed", 309, "Configuration study: one realistic class-S crash incl. tax"),
 ]
 s["A4"] = "Inputs"
@@ -84,8 +89,9 @@ for i, (k, b, c) in enumerate(tot):
         x = s.cell(r, col, v)
         x.font = f(bold=strong)
         x.number_format = money
-s["A22"] = ("Check against I1: baseline spend $1,588.38, pessimistic $1,673.59, "
-            "reserve $411.62 / $326.41 (bom_summary.json).")
+s["A22"] = (f"Check against I1 R5 (bom_summary.json): at order spend ${MON['spend_base']:,.2f} / ${MON['spend_pess']:,.2f}, "
+            f"reserve ${SUM['reserve_base']:,.2f} / ${SUM['reserve_pess']:,.2f}; flight-ready (+ X07 + X08) reserve "
+            f"${SUM['reserve_base_flight_ready']:,.2f} / ${SUM['reserve_pess_flight_ready']:,.2f}.")
 s["A22"].font = grey
 
 groups = sorted(set(x["group"] for x in rows))

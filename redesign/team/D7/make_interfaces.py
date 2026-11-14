@@ -26,9 +26,9 @@ ST = 'MODELLED'
 COR, PE, XPS = 'Coroplast 4 mm (PP twin-wall)', 'PE foam 1.7 pcf (closed cell)', 'XPS foam F-250'
 # id, name, mass_g, material, make_or_buy, process, unit cost USD (EST), vendor/file, notes
 PARTS = [
-    ('TRN-001', 'Box base (floor, walls, end pads, nose pad)', g(M['base_kg']), COR, 'make', 'scored, folded, LSE tape + hot-melt',
-     30.0, 'Home Depot Coroplast 48x96 4 mm (2 sheets incl. lid)', 'incl. 2 end pads, 3/4 in PE nose pad (round 4), 8 corner protectors, consumables; 1.25 x 0.55 x 0.54 m external; aircraft 12 mm off the aft wall'),
-    ('TRN-005', 'Lid with plug lip (no lining, D-31)', g(M['lid_kg']), COR, 'make', 'scored, folded', 6.0,
+    ('TRN-001', 'Box base (floor, walls, end pads, nose pad)', g(M['base_kg']), COR, 'make', 'separate panels (D-134): floor 1250 x 560, front / aft walls 1250 x 536, end walls 552 x 536; corners LSE tape + hot-melt + corner protectors',
+     75.96, 'Home Depot Coroplast CP4896S 48x96 4 mm, 2 sheets incl. lid ($37.98 each, snippet 2026-11-11; I1 T01)', 'incl. 2 end pads, 3/4 in PE nose pad (round 4), 8 corner protectors, consumables; 1.25 x 0.56 x 0.54 m external (D-134); aircraft 12 mm off the aft wall, against the saddle LE lips (x-stops); panel nest in SPEC.md'),
+    ('TRN-005', 'Lid with plug lip (no lining, D-31)', g(M['lid_kg']), COR, 'make', 'top 1250 x 560 + four 30 mm lip strips taped under it (D-134)', 0.0,
      'from TRN-001 sheets', 'lip 30 mm inside the walls; pillars taped to the shell'),
     ('TRN-002-L', 'Spar cradle L (saddle + crush column)', g(M['cradle_each_kg']), XPS + ' + ' + PE, 'make',
      'hot-wire saddle to the S5010 template; laminate 2+2+1 in PE, band-saw to 120 mm', 6.0, 'XPS offcut; PE plank 2 in + 1 in',

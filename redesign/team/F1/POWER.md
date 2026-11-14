@@ -1,5 +1,15 @@
 # Power distribution — K09-L
 
+> **CDR fix round, 2026-11-13 (CDR-03, CDR-05; D-115, D-117).** The voltage-drop and path-resistance figures below
+> are re-issued on the leads as routed (D-85…D-89: UR 0.670, UL 0.564, LR 0.701, LL 0.593 m, `CL-F2-ESC-LEN-*`) with one
+> XT30U per branch (D-74): path resistance **7.92 mΩ** (`CL-F1-R-EXT`; `params.json#electrical.r_ext_mohm` is now 7.9),
+> drop at the 100 A limiter **5.68 %** (`CL-F1-DROP-PEAK`). The limit on that drop is no longer the 5 % guideline
+> (WB-11) but E1's thrust need, **11.5 %** (`CL-E1-DROP-ALLOW`: the drop at which `R-HOVER-TW` is just held on the
+> more pessimistic of E1's two motor bounds), so the claim passes with +51 %. The 5 % guideline is exceeded by
+> 0.68 points (`CL-F1-DROP-OVER-5PCT`) and all four leads are longer than its 0.560 m (`CL-F1-ESC-LEN-5PCT`): accepted,
+> no 14 AWG (+26 g `REVIEWER EST`, `CDR-electrical.md` CDR-EL-04). **The rest of this document is still F1-R4** (leads
+> 0.475–0.620 m, lead masses, temperatures to 0.1 °C): it is re-published under CDR-23. Current values: `claims.json`.
+
 F1, revision F1-R4, 2026-11-10. R3 re-ran the analysis on F2's routed ESC leads (CR-F2-02), the 10 AWG main
 jumpers of the PWR-R1 stack, E2's phase claims (CR-E2-19), the D-56 limit keys, D6's servo (CR-D6-06) and the
 D-48 allocations. R4 re-runs it on F2's harness re-run of 2026-11-09 (ESC leads trimmed to 0.475–0.620 m), adds
@@ -110,17 +120,21 @@ Steady rise by gauge (`data/gauge_sweep.csv`):
 | Item | Value | Unit | Source | Status |
 |---|---|---|---|---|
 | Common path: 2 AS150U contacts 1.6 + board/shunt/joints 0.6 + 10 AWG jumper loop 0.59 | 2.79 | mΩ | `ASM-F1-R-CONTACT`, `ASM-F1-R-BOARD`, `CALC-F1-WIRES` | `UNVERIFIED` |
-| ESC branch loops, hot (UL shortest … LR longest) | 13.7 … 17.9 | mΩ | `CALC-F1-WIRES` | `MODELLED` |
-| Equivalent pack terminals → ESC pads (4 branches in parallel), hot | **6.69** (R3 6.94, params 6.5) | mΩ | `CL-F1-R-EXT` | `MODELLED` |
-| Drop to the farthest ESC at 30.3 A | 1.59 (limit 2) | % | `CL-F1-DROP-CONT` | `MODELLED` |
-| Drop to the farthest ESC at the 100 A limiter, 24.8 A per ESC | **4.89 (limit 5): passes, +2 %** | % | `CL-F1-DROP-PEAK` | `MODELLED` |
-| Longest 16 AWG lead for 5 % | 0.643 vs LR 0.620 (+4 %) | m | `CL-F1-ESC-LEN-ALLOW` | `MODELLED` |
+| ESC branch loops, hot, with one XT30U each (UL shortest … LR longest) | 18.7 … 22.6 | mΩ | `CALC-F1-WIRES` | `MODELLED` |
+| Equivalent pack terminals → ESC pads (4 branches in parallel), hot | **7.92** (R4 6.69; params 7.9 since D-115) | mΩ | `CL-F1-R-EXT` | `MODELLED` |
+| Drop to the farthest ESC at 30.3 A | 1.86 (limit 2, +7 %) | % | `CL-F1-DROP-CONT` | `MODELLED` |
+| Drop to the farthest ESC at the 100 A limiter, 24.8 A per ESC | **5.68 (limit 11.5 from E1's thrust need: passes, +51 %)**; 0.68 points over the 5 % guideline | % | `CL-F1-DROP-PEAK`, `CL-E1-DROP-ALLOW`, `CL-F1-DROP-OVER-5PCT` | `MODELLED` |
+| Longest 16 AWG lead for the allowable drop | 1.907 vs LR 0.701 (+172 %) | m | `CL-F1-ESC-LEN-ALLOW`, `CL-F1-ESC-LEN-MAX` | `MODELLED` |
+| Longest 16 AWG lead for the 5 % guideline (not met, no limit) | 0.560; all four leads are longer | m | `CL-F1-ESC-LEN-5PCT` | `MODELLED` |
 | Loss in the common path at 30.3 A | 2.6 | W | `CALC-F1-WIRES` | `MODELLED` |
 
-R3 failed this check by 0.03 pp (LR 0.650 m). F2's harness re-run trimmed all four leads (LR 0.620 m), so it now
-passes and the 14 AWG fallback is not needed (CR-F1-25 closed). Keep every cut at or under 0.640 m; a lead that grows
-past 0.643 m fails again. `CL-F1-R-EXT` is 6.69 mΩ against the 6.5 mΩ in `P:electrical.r_ext_mohm` (+3 %).
-CR-F1-24 now asks for **6.7** (it asked 6.9 in R3). The effect on E1's worst-state T/W is small, but E1 re-runs it.
+History: R3 failed the 5 % check by 0.03 pp (LR 0.650 m); R4 passed it after F2 trimmed the leads (LR 0.620 m,
+4.89 %). D-85…D-89 then routed the leads as built (LR 0.701 m) and D-74 added an XT30U per branch: 5.68 %. R5 removed
+the limit instead of replacing it (CDR-EL-04). Since 2026-11-13 the limit is E1's allowable drop
+(`CL-E1-DROP-ALLOW` 11.5 %, D-117) and `P:electrical.r_ext_mohm` is 7.9 (D-115). On E1's model the 7.92 mΩ path costs
+4.2 % of worst-state thrust against no path at all (`CL-E1-PATH-THRUST-COST`), 6.5 % on its second bound; the step
+from 6.7 to 7.9 mΩ moved the worst-state T/W from 2.120 to 2.106 (`CL-E1-TW-WORST`). `T-F1-DROP` (≤ 2 % at 30 A to the
+LR pads, plugs in) stays the acceptance test.
 
 ## Protection, sensing, BECs
 
@@ -212,7 +226,7 @@ F2's harness re-run (2026-11-09) declared the power wires; power now lists them 
 |---|---|---|---|---|
 | E-HRN-10 | W-PACK, pack → AS150U | 10 AWG (pack lead), 0.066 m | `CL-F1-PACKLEAD-RISE` at 0.10 m | passes; shorter is lower drop |
 | E-HRN-11, -12 | W-MAIN-1, -2 | 10 AWG, 0.030 / 0.050 m | `P:power.jumper_len_m`, `CL-PWR-JUMPER-R` | match |
-| E-HRN-13…16 | W-PWR-UR/UL/LR/LL | 16 AWG, 0.595 / 0.475 / 0.620 / 0.497 m | `CL-F1-ESC-LEN-ALLOW` 0.643 m | all pass |
+| E-HRN-13…16 | W-PWR-UR/UL/LR/LL | 16 AWG, 0.670 / 0.564 / 0.701 / 0.593 m (as routed, D-85…D-89) | `CL-F1-ESC-LEN-ALLOW` 1.907 m (5 % guideline 0.560 m: exceeded) | all pass the limit |
 | E-HRN-21, -33 | W-FUSE-IN, W-UBEC-IN (fuse between) | 20 AWG, 0.031 + 0.173 m | `CL-F1-FEED-RISE` | passes |
 | E-HRN-22 | W-UBEC-OUT → FC servo rail | 20 AWG, 0.065 m | `CL-F1-BUS-RISE` | passes |
 | E-HRN-23 | W-PMOD, power board → FC | 28 AWG × 6, 0.164 m | `CL-F1-PMOD-RISE` | passes **if no Vx on the link** (CR-F1-29) |

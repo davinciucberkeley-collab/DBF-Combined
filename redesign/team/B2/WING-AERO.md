@@ -201,3 +201,27 @@ From the repo root, in order (XFOIL ~6 min for new Re, cached after; AVL ~1 min)
 `python redesign/team/B2/plots_wing.py` (matplotlib needs the user site, so no `-I`) →
 `python -I redesign/proofs/build_graph.py`. The XFOIL design Re follow `wing.chord_m`, the stall limit and the
 cruise speed, so a chord change re-runs the right polars. Raw inputs and outputs: `out/xfoil/`, `out/avl/`.
+
+## 11. CDR fix round, 2026-11-13 (CDR-15): tripped stall is the planning baseline
+
+Board decision B6: until `T-B2-STALL`, the mission is planned on the tripped-boundary-layer stall, because the wing has
+a tape seam at x/c about 0.05. `sim/sim_claims.py` → `CALC-B2R3-FALLBACK`. The forward CG limit moved to 0.0393 m
+(CDR-14), which raises every forward-limit number slightly. All `UNVERIFIED`.
+
+| Quantity | Before (forward limit 0.0466) | Now (forward limit 0.0393) | Claim |
+|---|---|---|---|
+| Stall, free transition, 2.6 kg, forward limit | 11.99 m/s | 12.08 m/s (≤ 12.3) | `CL-B2R3-VS-GATE-FWD` |
+| Stall, XFOIL tripped (ratio 0.871) — **planning baseline** | 12.85 m/s | 12.94 m/s | `CL-B2R3-VS-GATE-FWD-TURB` |
+| Stall at the SU2 ratio 0.714 (bound only, not grid-converged) | 14.20 m/s | 14.30 m/s | `CALC-B2R3-FALLBACK` |
+| 1.3 Vs, free transition | 15.59 m/s | 15.70 m/s (**`FAILS`** the 15.6 key; flown value is 17) | `CL-B2R3-VTR-GATE-FWD` |
+
+| Setting | `AIRSPEED_MIN` / `CRUISE` / `MAX` | Holds to a measured stall of | Section clmax ratio covered | Status |
+|---|---|---|---|---|
+| Was (D-71) | 16 / 16 / 18 | 12.31 m/s | 0.96 | replaced |
+| **Baseline (B6, in `K09L.param`)** | **17 / 17 / 18** | **13.08 m/s** (+0.14 over the tripped 12.94) | 0.853 | `CL-B2R3-BASE-VS-KEEP` |
+| Second fallback, pre-computed | 18 / 18 / 20 | 13.85 m/s | 0.761 (covers tripped 0.871, not SU2 0.714) | `CL-B2R3-FB2-*`, PROPOSED: `AIRSPEED_MAX` 20 is 0.5 m/s under VA 20.5 and needs A1 / C1 |
+| Beyond | 19 / 19 / 20 would be needed for the SU2 bound | 14.62 m/s | — | not a parameter fix: wing or gate mass changes |
+
+First flights are not at the forward limit: at the first-flight CG (0.0453–0.0465 m) the stall is between the target
+value 11.97 and 12.08 m/s free, about 12.8–12.9 m/s tripped (`EST`, interpolated). The twin's wing is built with the
+flight seam; D1 moves the flight wing's seam to the lower surface aft of x/c 0.30 (CDR-15, D1's row).

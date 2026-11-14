@@ -305,10 +305,10 @@
   {
    "id": "ASM-C1-FRICTION",
    "type": "assumption",
-   "title": "Ground friction 0.7 (neoprene pad on the landing mat)",
+   "title": "Ground friction 0.40 (low-friction pad face on the landing mat, D-105)",
    "text": "Side load / vertical load at a foot",
-   "basis": "CHANGE-LOG D-30 and CR-C5-09: flight-card rule S1 puts every fin-tip landing on the mat, so the friction is D5's neoprene pad value (ASM-D5-PAD-MU 0.7, UNVERIFIED until H1's pad pull test). Was 0.5 (grass) at C1-R2; the higher value raises L4/L5 side loads by 40 %; it also sets the parked-stance slide check (higher = less margin needed)",
-   "value": 0.7,
+   "basis": "D-105 (CDR decision B1, 2026-11-13): the pad face is held to mu <= requirements.pad_mu_max so the foot side load stays at or below requirements.foot_side_load_cap_n; flight-card rule S1 puts every fin-tip landing on the mat. Was 0.7 (bare neoprene, D-30 / CR-C5-09) and 0.5 (grass) at C1-R2. UNVERIFIED until the incline test T-D5-PAD-MU. The parked aircraft needs more than this to stand in 8 m/s (CL-C1-STANCE-MU-REQ): laid flat or tied when parked",
+   "value": 0.4,
    "unit": "-",
    "status": "UNVERIFIED"
   },
@@ -344,6 +344,39 @@
    "cites": [
     "SRC-C1-HOERNER"
    ]
+  },
+  {
+   "id": "ASM-C1-TIE-SHARE",
+   "type": "assumption",
+   "title": "Restrained run: two of the four ties carry the net thrust",
+   "text": "Share factor on the per-tie load of the restrained four-motor run: per tie = share x (4 T_lim - W) / 4",
+   "basis": "four cords of unequal length: the two shortest go taut first. Same number as H1's tie-down factor ASM-H1-RESTRAINT-SF 2.0, so the C1 limit load per tie equals CL-H1-RESTRAINT-PER-TIE (29.45 N at the gate mass)",
+   "value": 2.0,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C1-EYE-POS",
+   "type": "assumption",
+   "title": "Strap eye FIN-013 tie point: 21.1 mm outboard of the tube axis, |z| 0.030 m",
+   "text": "Tie hole centre relative to the fin-tube axis: [dy outboard, |z|] (x = tube axis)",
+   "basis": "subsystems/fins/params.json fin_detail.strap_eye: boss bond radius 13.6 mm + foot 1.5 mm + hole offset 6 mm = 21.1 mm; the eye stands 10 mm above the upper / below the lower skin at the block (|z| about 0.030 m, EST from the block top z 0.0304)",
+   "value": [
+    0.0211,
+    0.03
+   ],
+   "unit": "m",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C1-PROP-STRIKE-T",
+   "type": "assumption",
+   "title": "Prop strike: mount turns on the tube at 3.71 N m",
+   "text": "Largest torque about the fin-tube axis that one motor mount can pass to the tube: the slip clamp plus the clocking dog let go above it",
+   "basis": "C6 CL-C6-DOG-FUSE-T (<= 3.71 N m, upper bound of the slip + dog break; team/C6/joints.py). Copied as a number so C1 and C6 do not read each other in a loop; CL-C1-P1-FUSE-MATCH checks the copy",
+   "value": 3.71,
+   "unit": "N m",
+   "status": "PROPOSED"
   },
   {
    "id": "ASM-C1-HANDLING-N",
@@ -783,7 +816,7 @@
     "F_foot_pair_wide_N": 33.675948506856976,
     "F_foot_corner_N": 37.37228814357933,
     "F_foot_max_N": 43.98538578322658,
-    "F_side_max_N": 30.789770048258607,
+    "F_side_max_N": 17.594154313290634,
     "m_eff_corner_kg": 0.573553983342758,
     "wingtip_strike_deg": 10.660348294535337,
     "foot_protrusion_req_m": 0.04496338008065856,
@@ -1290,7 +1323,7 @@
     "cdp": 1.2,
     "v_gust": 8.0,
     "x_cg_t": 0.049,
-    "mu": 0.7
+    "mu": 0.4
    }
   },
   {
@@ -2119,6 +2152,9 @@
     "n_h": "ASM-C1-HANDLING-N",
     "n_T": "CL-C1-TRANSPORT-N",
     "F_side": "CL-C5-SIM3D-SIDE-LOAD",
+    "tie_k": "ASM-C1-TIE-SHARE",
+    "eye": "ASM-C1-EYE-POS",
+    "T_ps": "ASM-C1-PROP-STRIKE-T",
     "y_cr": "ASM-C1-CRADLE-Y",
     "h_drop": "P:requirements.box_drop_m",
     "s_cr": "CL-D7-CRADLE-STROKE",
@@ -2201,6 +2237,8 @@
     "F_lvl": "N",
     "F_pn": "N",
     "F_side": "N",
+    "eye": "m",
+    "T_ps": "N m",
     "F_pw": "N",
     "F_cor": "N",
     "F_tip": "N",
@@ -2232,8 +2270,8 @@
     "n_T_allow_lid": 12.889819352939309,
     "n_T_governing_lid": "J-FIN:F",
     "stroke_req_lid_m": 0.0504633402905043,
-    "n_T_allow_aft": 10.786507077666359,
-    "n_T_governing_aft": "J-FIN:F",
+    "n_T_allow_aft": 10.181330679301144,
+    "n_T_governing_aft": "J-FINHALF:Mb",
     "n_T_allow_nose": 4.800449368924858,
     "n_T_governing_nose": "J-POD:F",
     "stroke_req_nose_m": 0.1578760672108991,
@@ -2241,10 +2279,19 @@
     "g3_can_F_lim": 23.45829557927301,
     "g3_can_F_ult": 35.18744336890951,
     "g3_foot_F_lim": 2.417608471771075,
-    "foot_side_lim": 39.5,
-    "foot_side_ult": 59.25,
-    "foot_side_friction_N": 26.16060170050553,
-    "aft_ratio": 0.7224659476055684,
+    "foot_side_lim": 24.5,
+    "foot_side_ult": 36.75,
+    "foot_side_friction_N": 14.948915257431734,
+    "g4_tie_lim": 29.136802599263795,
+    "g4_tie_ult": 43.70520389889569,
+    "g4_finjoint_M_lim": 1.3453812022386737,
+    "g4_finhalf_T_lim": 0.6905363284741064,
+    "g4_finhalf_Mb_lim": 3.93268350484593,
+    "p1_finjoint_M_lim": 3.5656696185779455,
+    "p1_finhalf_T_lim": 3.641692203761428,
+    "p1_finhalf_Mb_lim": 1.2889943597301707,
+    "p1_fuse_T": 3.71,
+    "aft_ratio": 0.7654091889052863,
     "cradle_F_static_N": 14.62032365,
     "cradle_F_floor_drop_N": 102.07781137727271,
     "pillar_F_lid_drop_N": 102.07781137727271,
@@ -2287,8 +2334,8 @@
     "proof_y4_m": 0.465,
     "proof_P4_lim_N": 6.111046106908295,
     "proof_P4_ult_N": 9.166569160362442,
-    "finhalf_T_wingplane_lim": 12.668552799861164,
-    "finhalf_T_wingplane_ult": 19.002829199791748,
+    "finhalf_T_wingplane_lim": 7.91638233935248,
+    "finhalf_T_wingplane_ult": 11.87457350902872,
     "finhalf_T_wingplane_case": "L4-CORNER-SIDE-Y",
     "motor_Fside_lim": 8.01322728504032,
     "motor_Fside_case": "F7-ROLLPULL-VA",
@@ -2297,17 +2344,17 @@
     "motor_Mb_case": "H5-SIDE-RIGHT",
     "motor_Mb_ult": 0.757259655037517,
     "cant_Fside_TLIM_N": 2.5714431458486118,
-    "spar_Mb_lim": 13.826365623596953,
-    "spar_Mb_ult": 20.739548435395427,
-    "spar_Mb_case": "L4-CORNER-SIDE-Y",
+    "spar_Mb_lim": 12.794508492830037,
+    "spar_Mb_ult": 19.191762739245057,
+    "spar_Mb_case": "L1-LEVEL",
     "spar_Mx_lim": 7.999671479747189,
     "spar_Mx_ult": 11.999507219620783,
     "spar_Mx_case": "G2-HANG-MOTOR",
     "spar_Mz_lim": 12.789112504695778,
     "spar_Mz_ult": 19.183668757043666,
     "spar_Mz_case": "L1-LEVEL",
-    "wing_T_lim": 5.636585667573225,
-    "wing_T_ult": 8.454878501359838,
+    "wing_T_lim": 5.634118774410428,
+    "wing_T_ult": 8.451178161615642,
     "wing_T_case": "L4-CORNER-SIDE-Y",
     "wing_Vz_lim": 22.134752538213593,
     "wing_Vz_ult": 33.20212880732039,
@@ -2318,14 +2365,14 @@
     "finjoint_F_lim": 59.05173028763445,
     "finjoint_F_ult": 88.57759543145167,
     "finjoint_F_case": "L1-LEVEL",
-    "finjoint_M_lim": 15.031710499756443,
-    "finjoint_M_ult": 22.547565749634664,
+    "finjoint_M_lim": 10.422831890868753,
+    "finjoint_M_ult": 15.63424783630313,
     "finjoint_M_case": "L4-CORNER-SIDE-Y",
-    "finhalf_Mb_lim": 10.868509853950846,
-    "finhalf_Mb_ult": 16.302764780926267,
-    "finhalf_Mb_case": "L5-CORNER-SIDE-Z",
-    "finhalf_T_lim": 12.718146504076598,
-    "finhalf_T_ult": 19.077219756114896,
+    "finhalf_Mb_lim": 8.161896287082676,
+    "finhalf_Mb_ult": 12.242844430624015,
+    "finhalf_Mb_case": "L4-CORNER-SIDE-Y",
+    "finhalf_T_lim": 7.935810769466995,
+    "finhalf_T_ult": 11.903716154200492,
     "finhalf_T_case": "L4-CORNER-SIDE-Y",
     "mount_F_lim": 21.08508627927301,
     "mount_F_ult": 31.627629418909514,
@@ -2348,18 +2395,19 @@
     "pack_F_lim": 42.57237291061053,
     "pack_F_ult": 63.858559365915795,
     "pack_F_case": "L1-LEVEL",
-    "foot_F_lim": 53.62878210240166,
-    "foot_F_ult": 80.44317315360249,
-    "foot_F_case": "L4-CORNER-SIDE-Y",
+    "foot_F_lim": 43.95324896688076,
+    "foot_F_ult": 65.92987345032114,
+    "foot_F_case": "L5-CORNER-SIDE-Z",
     "finjoint_F_design": 127.33029343271177,
-    "finjoint_M_design": 32.41212576509983,
+    "finjoint_M_design": 22.47423126468575,
+    "g4_finjoint_ratio": 0.12908019781239463,
     "mount_F_design": 45.464717289682426,
     "mount_M_design": 1.4165157036133964,
     "pod_F_design": 160.49566137325795,
-    "finjoint_M_nohandling_lim": 15.031710499756443,
+    "finjoint_M_nohandling_lim": 10.422831890868753,
     "finjoint_M_nohandling_case": "L4-CORNER-SIDE-Y",
-    "finhalf_Mb_nohandling_lim": 10.868509853950846,
-    "finhalf_Mb_nohandling_case": "L5-CORNER-SIDE-Z",
+    "finhalf_Mb_nohandling_lim": 8.161896287082676,
+    "finhalf_Mb_nohandling_case": "L4-CORNER-SIDE-Y",
     "n_T_allow": 12.889819352939309,
     "h_drop_allow_m": 0.3923640386469972,
     "n_T_governing": "J-FIN:F",
@@ -3002,10 +3050,16 @@
     "F_to": 931.2932495343395,
     "lw": 0.667,
     "att": 10.0,
-    "mu": 0.7,
+    "mu": 0.4,
     "n_h": 2.0,
     "n_T": 10.09090909090909,
-    "F_side": 39.5,
+    "F_side": 24.5,
+    "tie_k": 2.0,
+    "eye": [
+     0.0211,
+     0.03
+    ],
+    "T_ps": 3.71,
     "y_cr": 0.2,
     "h_drop": 0.3,
     "s_cr": 0.066,
@@ -3499,12 +3553,8 @@
    "calc": "CALC-C1-LANDING",
    "output": "stance_mu_req_8ms",
    "unit": "-",
-   "limit": {
-    "op": "<=",
-    "ref": "ASM-C1-FRICTION"
-   },
-   "how": "Pull test of a neoprene-padded foot on the landing mat with a spring scale (H1).",
-   "note": "Against the mat friction (rule S1). On grass (~0.5) the parked aircraft slides before it tips: lay it flat above 5 m/s (C5 S1-S8, CR-C1-02).",
+   "how": "Flight card (H3): the aircraft is laid flat or tied by the strap eyes when parked.",
+   "note": "D-105 (CDR decision B1): the pad face is held to mu <= 0.40 to cap the foot side load, which is below this value, so the limit against ASM-C1-FRICTION is removed on purpose: the parked aircraft is not left standing in wind. It slides before it tips (C5 CL-C5-V-PARK-GUST).",
    "value": 0.678923917012357
   },
   {
@@ -3563,7 +3613,7 @@
     "R-LOADS"
    ],
    "how": "C2 sizes the spar; wing proof test at limit (T-C1-WING-PROOF).",
-   "value": 20.739548435395427
+   "value": 19.191762739245057
   },
   {
    "id": "CL-C1-SPAR-MX-ULT",
@@ -3602,7 +3652,7 @@
     "R-LOADS"
    ],
    "how": "C2: foam core + skin torsion; twist test at limit.",
-   "value": 8.454878501359838
+   "value": 8.451178161615642
   },
   {
    "id": "CL-C1-WING-SHEAR-ULT",
@@ -3641,7 +3691,7 @@
     "R-LOADS"
    ],
    "how": "As above.",
-   "value": 22.547565749634664
+   "value": 15.63424783630313
   },
   {
    "id": "CL-C1-FINJOINT-M-DESIGN",
@@ -3654,7 +3704,7 @@
     "R-LOADS"
    ],
    "how": "C6 sizes the printed/bonded saddle to this value.",
-   "value": 32.41212576509983
+   "value": 22.47423126468575
   },
   {
    "id": "CL-C1-FINHALF-MB-ULT",
@@ -3667,7 +3717,7 @@
     "R-LOADS"
    ],
    "how": "C4 splits between tube and fin board; tube proof hang test.",
-   "value": 16.302764780926267
+   "value": 12.242844430624015
   },
   {
    "id": "CL-C1-MOUNT-F-ULT",
@@ -3732,7 +3782,7 @@
     "R-LOADS"
    ],
    "how": "C5: foot bond; drop test.",
-   "value": 80.44317315360249
+   "value": 65.92987345032114
   },
   {
    "id": "CL-C1-FINHALF-T-LIM",
@@ -3745,7 +3795,7 @@
     "R-LOADS"
    ],
    "how": "External torque on the half-fin section; C4's FE splits it between tube, board, strips and brace. The station-collar torque is C4's internal FE value (CR-C6-03), which may exceed this total.",
-   "value": 12.718146504076598
+   "value": 7.935810769466995
   },
   {
    "id": "CL-C1-FINHALF-T-ULT",
@@ -3758,7 +3808,7 @@
     "R-LOADS"
    ],
    "how": "As above x 1.5.",
-   "value": 19.077219756114896
+   "value": 11.903716154200492
   },
   {
    "id": "CL-C1-TRANSPORT-N-ALLOW",
@@ -3823,7 +3873,7 @@
     "R-LOADS"
    ],
    "how": "Calculated (CR-D7-14b): the X5 cut loads must stay inside the flight/landing/handling envelope.",
-   "value": 10.786507077666359
+   "value": 10.181330679301144
   },
   {
    "id": "CL-C1-BOX-STROKE-REQ-X",
@@ -3856,7 +3906,7 @@
     "R-LOADS"
    ],
    "how": "C4's FE section torque at the wing plane in the governing case equals this within 5 % (CR-C1-21); C6 sizes the collar to max(C4 FE collar torque, this).",
-   "value": 12.668552799861164
+   "value": 7.91638233935248
   },
   {
    "id": "CL-C1-FINHALF-T-WINGPLANE-ULT",
@@ -3869,7 +3919,7 @@
     "R-LOADS"
    ],
    "how": "As above x 1.5.",
-   "value": 19.002829199791748
+   "value": 11.87457350902872
   },
   {
    "id": "CL-C1-MOTOR-FSIDE-LIM",
@@ -4150,7 +4200,7 @@
     "R-LOADS"
    ],
    "how": "Applies only if lifting by a motor tube is ruled out by a handle and a label (CR-C1-04).",
-   "value": 15.031710499756443
+   "value": 10.422831890868753
   },
   {
    "id": "CL-C1-DROP-HEIGHT-ALLOW",
@@ -4333,7 +4383,72 @@
    ],
    "how": "T-D5-SIDE pull on the shoe; C5's 6-DOF sim (CL-C5-SIM3D-SIDE-LOAD).",
    "note": "D-65 / CR-C5-16: applied with the corner foot load in L4 (y) and L5 (z).",
-   "value": 39.5
+   "value": 24.5
+  },
+  {
+   "id": "CL-C1-G4-TIE-LIM",
+   "type": "claim",
+   "title": "Case G4: strap-eye tie load, restrained four-motor run, limit",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "g4_tie_lim",
+   "unit": "N",
+   "verifies": [
+    "R-LOADS"
+   ],
+   "how": "T-H1-RESTRAINT-PULL (spring scale on each strap) and T-D3-EYE on a bonded eye.",
+   "note": "CDR-28: two of four ties carry 4 T_lim - W (worst mass configuration = lightest). D3 sizes the eye FIN-013 and its bond to this (fin_detail.strap_eye.load_n 29.4 N); H1's CL-H1-RESTRAINT-PER-TIE is the same load at the gate mass.",
+   "value": 29.136802599263795
+  },
+  {
+   "id": "CL-C1-G4-TIE-ULT",
+   "type": "claim",
+   "title": "Case G4: strap-eye tie load, ultimate",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "g4_tie_ult",
+   "unit": "N",
+   "how": "As CL-C1-G4-TIE-LIM x 1.5.",
+   "value": 43.70520389889569
+  },
+  {
+   "id": "CL-C1-G4-FINJOINT-M",
+   "type": "claim",
+   "title": "Case G4: fin-group moment at the wing / the fin-joint envelope",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "g4_finjoint_ratio",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 1.0
+   },
+   "how": "Re-run loads.py: G4 is inside the envelope the blocks and spar are sized to.",
+   "note": "CDR-28: the blocks and spar react the tie pair; the check is that G4 does not set the fin-joint envelope.",
+   "value": 0.12908019781239463
+  },
+  {
+   "id": "CL-C1-P1-TUBE-TORQUE",
+   "type": "claim",
+   "title": "Case P1: half-fin torsion at the wing plane in a prop strike, limit",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "p1_finhalf_T_lim",
+   "unit": "N m",
+   "how": "T-C6-DOG-SHEAR: the mount turns at or below the fuse torque.",
+   "note": "CDR-28: reported (damage family), not in the sizing envelope. The torque is capped by the slip clamp and clocking dog; C6 CL-C6-DOG-FUSE-RF holds the collar and block bond against it.",
+   "value": 3.641692203761428
+  },
+  {
+   "id": "CL-C1-P1-FUSE-MATCH",
+   "type": "claim",
+   "title": "Case P1: fuse torque carried by C1 vs C6's fuse torque",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "p1_fuse_T",
+   "unit": "N m",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-C6-DOG-FUSE-T"
+   },
+   "how": "Re-run after any change to the mount clamp or dog (team/C6/joints.py).",
+   "note": "C1 carries a copy of C6's number (ASM-C1-PROP-STRIKE-T); this fails if C6's fuse torque rises above it.",
+   "value": 3.71
   },
   {
    "id": "CL-C1-FOOT-SIDE-DESIGN-ULT",
@@ -4343,7 +4458,7 @@
    "output": "foot_side_ult",
    "unit": "N",
    "how": "As CL-C1-FOOT-SIDE-DESIGN x 1.5.",
-   "value": 59.25
+   "value": 36.75
   },
   {
    "id": "CL-C1-TRANSPORT-N-ALLOW-NOSE",

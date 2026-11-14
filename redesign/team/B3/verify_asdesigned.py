@@ -36,7 +36,8 @@ import avl_model as AV  # noqa: E402
 import flight_models as FM  # noqa: E402
 import sc_analysis as SC  # noqa: E402
 
-kit = pk.Kit(__file__, params=["../../params/params.json"], out="claims.verify.json")
+kit = pk.Kit(__file__, params=["../../params/params.json", "../../subsystems/flight-software/params.json"],
+             out="claims.verify.json")   # fsw.mixing_gain sets the pure-pitch elevon travel (CDR-14, D-120)
 P = "P:"
 LEVELS = ("coarse", "medium", "fine", "xfine")
 
@@ -314,9 +315,9 @@ kit.claim("CL-B3-V-FIN-HAND", "Fin Cn_beta: DATCOM-style hand calc vs AVL (relat
           output="fin_hand_vs_avl", unit="-", how="As CL-B3-V-VLM-XNP.")
 
 
-V_SM_GRID = [0.05, 0.06, 0.07, 0.08]
+V_SM_GRID = [0.05, 0.06, 0.07, 0.08, 0.09, 0.10, 0.11, 0.12]   # CDR-14: MIXING_GAIN 0.65 moves the crossing forward
 VIN = {**SC.CS_IN, "fin": "ASM-B3-V-FIN-CAD", "gap": "ASM-B3-V-ELEVON-GAP", "sm_min": P + "requirements.static_margin_min",
-       "travel": P + "wing.elevon.deflection_deg", "tfrac": P + "requirements.elevon_trim_travel_max",
+       "travel": P + "wing.elevon.deflection_deg", "tfrac": P + "fsw.mixing_gain",
        "kslop": "ASM-B3-SLOP-TRIM-FRAC", "zcg": P + "cg.z_target_m", "m_pred": "CL-A3-MASS-PREDICTED",
        "cgf": "CL-A3-CG-X", "x_a3_pred": "CL-A3-CG-X-PRED", "CLa": "CL-B3-CLA", "n": P + "propulsion.n_motors",
        "D": P + "propulsion.prop_diameter_m", "x_prop": P + "propulsion.stations.x_prop_plane_m",

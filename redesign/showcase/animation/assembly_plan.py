@@ -7,17 +7,20 @@ What is data here and what is derived:
               with a one-line caption from that step and the part / wire globs it places, in the order the guide
               gives. Parts the steps do not name are placed in a last catch-all step and listed in the check report.
   * motion kind of each part, derived from repo data (interfaces/interfaces.json part name and material):
-              'lay'    tape and labels (material or name says tape / label): laid in strips onto what is under them
-              'fill'   wet epoxy beads and fillets (material says epoxy): applied in place
-              'screw'  screws, bolts and nuts (name): driven along their own axis while turning
-              'clip'   (OVERRIDES only) sprung, bowed or hooked on, not a rigid motion: placed, support-checked
-              'built'  (OVERRIDES only) glued up from flat pieces in place (the foam-board pod box)
+              'lay'    tape and labels (material or name says tape / label): laid in place, tested where it lies
+              'fill'   wet epoxy beads and fillets (material says epoxy): applied in place, tested where it lies
+              'screw'  screws, bolts and nuts (name): driven along their own axis while turning, swept
+              'fixture' (OVERRIDES only) cut in place in its fixture: tested where it lies
+              'built'  (OVERRIDES only) glued up from flat pieces: each body swept on its own path
+              'hinge'  (OVERRIDES only) hooked under a lip and turned about its edge: a rotational sweep
               'slide'  every other rigid part: brought in along an insertion direction found by assembly_check.py
                        from the geometry (bore / pin / tube axes, prism extrusion axes, the normal of the face it
                        mounts on), then checked as a swept path
-              'wire'   every routed wire: laid along its route from its supply end (part_a) to its load end (part_b)
-  * OVERRIDES the parts that truly need something else (a fixture, a build-time cut, a preferred direction), one row
-              each, with the BUILD-GUIDE step that says so. Keep every special case in this one table.
+              'wire'   every routed wire: laid along its route, tested where it lies
+  * OVERRIDES the parts that truly need something else (a fixture, a real non-straight motion, a preferred
+              direction), one row each, with the BUILD-GUIDE step that says so. No row exempts a pair of parts.
+  * ELASTIC   the only interference accepted: a named flexing body riding over a named body, up to the deflection
+              its strain allowable gives.
 
 Item grammar in STEPS:
   'GLOB'                 place the matching parts (fnmatch on part ids), in the order listed
@@ -25,6 +28,10 @@ Item grammar in STEPS:
                          replaced by the part's station / side suffix, so each station gets its own group)
   'install:NAME'         move every bench group whose name starts with NAME onto the aircraft as one rigid body
   'wire:GLOB'            lay the matching wire edges (E-HRN-..)
+  'tails:GLOB'            lay the held runs of the matching wires whose loose end's part is now on: a lead laid while
+                         its end part is not yet on is laid only up to its first in-line connector (JR pair, sleeve);
+                         the run beyond it waits coiled off the aircraft and is laid here (BUILD-GUIDE 9.4 "lead it
+                         into its contact of the JR pair"; 7.3-7.4 the servo lead)
   'swing:te-up'          swing the elevon panel groups to the joint limit that lifts the trailing edge and back
                          (the hinge-tape step: lower strip laid with the panel full TE-up; pose from the collision
                          job, the same joints collide.py sweeps)
@@ -52,8 +59,8 @@ STEPS = [
      ['bench:spar WNG-002', 'bench:spar WNG-005-*', 'bench:spar WNG-004-*']),
     (2, '2.4', 'Bond both through-core blocks to the spar in the clocking jig',
      ['bench:spar FIN-004-*']),
-    (2, '2.5', 'Bond spar and blocks into the core; fill the lip-bead chamfers',
-     ['install:spar', 'WNG-006-*']),
+    (2, '2.5', 'Bond spar and blocks up the slot into the core; re-bond the slot strip as the cap; fill the lip beads',
+     ['install:spar', 'WNG-008', 'WNG-006-*']),
     (3, '3.1', 'Route the torque-tube grooves, then cut the four panels free',
      ['WNG-011-*', 'WNG-012-*']),
     (3, '3.3', 'Bond the CF torque tubes flush in their grooves',
@@ -62,12 +69,12 @@ STEPS = [
      ['bench:tube-<x> FIN-002-*', 'bench:tube-<x> FIN-006-*', 'install:tube']),
     (4, '4.3', 'Bond the half-fin roots in the block slots; run the cove fillets',
      ['FIN-001-*']),
-    (4, '4.5a', 'Station collars down the tubes first: the edge-strip ends sit in the collar tails',
-     ['FIN-008-*']),
+    (4, '4.5a', 'Brace into its anchor and collar ear on the bench; collar down the tube, anchor into its pocket',
+     ['bench:brace-<x> FIN-010-*', 'bench:brace-<x> FIN-009-*', 'bench:brace-<x> FIN-008-*', 'install:brace']),
     (4, '4.4', 'Edge strips on both fin faces, ends into the collar tails; CF pins through strip-board-strip',
      ['FIN-011-*', 'FIN-012-*']),
-    (4, '4.5', 'Brace anchors on the spar, braces into their slots, ESC pads',
-     ['FIN-010-*', 'FIN-009-*', 'FIN-007-*']),
+    (4, '4.5', 'ESC pads on the fin faces',
+     ['FIN-007-*']),
     (5, '5.1', 'Pod box on the bench: tray with its stops, board walls round it, straps, inserts, pitot socket, handle',
      ['bench:pod POD-002', 'bench:pod POD-001', 'bench:pod POD-004', 'bench:pod PWR-107', 'bench:pod POD-006',
       'bench:pod POD-007']),
@@ -96,7 +103,7 @@ STEPS = [
     (7, '7.3', 'Bench-prep each servo at 1500 us: arm on the spline, arm screw',
      ['bench:servo-<x> MEC-001-*', 'bench:servo-<x> MEC-002-*', 'bench:servo-<x> MEC-012-*']),
     (7, '7.4', 'Install the servo in its frame, fit the cover and its screws',
-     ['install:servo', 'MEC-007-*', 'MEC-011-*']),
+     ['install:servo', 'tails:E-HRN-2[89]', 'MEC-007-*', 'MEC-011-*']),
     (7, '7.5', 'Pushrod and clevis at neutral',
      ['MEC-003-*']),
     (8, '8.3', 'Motor on its mount plate on the bench: four screws through the drilled plate',
@@ -114,7 +121,8 @@ STEPS = [
     (9, '9.3', 'Pitot boom into its keyed socket',
      ['AVN-005']),
     (9, '9.4', 'Connect power-board ribbon, GPS, RX and airspeed leads to the FC',
-     ['wire:E-HRN-23', 'wire:E-HRN-30', 'wire:E-HRN-31', 'wire:E-HRN-32']),
+     ['tails:E-HRN-*', 'wire:E-HRN-23', 'wire:E-HRN-30', 'wire:E-HRN-31', 'wire:E-HRN-32', 'HRN-107-I2C',
+      'HRN-107-RX']),
     (10, '10.4', 'Bond the shoes on the fin tips; inserts by colour; push on the corner caps',
      ['GER-001-*', 'bench:insert-<x> GER-002-*', 'bench:insert-<x> GER-003-*', 'bench:insert-<x> GER-008-*',
       'bench:insert-<x> GER-004-*', 'install:insert', 'GER-007-*']),
@@ -124,9 +132,11 @@ STEPS = [
 
 # Where this order differs from BUILD-GUIDE.md, and why (each found by assembly_check.py on the guide's order).
 DEVIATIONS = [
-    ('4.4 / 4.5', 'Station collars FIN-008 go on before the edge strips FIN-011',
+    ('4.4 / 4.5', 'Station collars FIN-008 go on before the edge strips FIN-011, carrying the brace FIN-009 and its '
+     'anchor FIN-010 (bench sub-assembly)',
      'the strip ends sit in the collar tail slot (seats.json FIN-008/FIN-011): with the strips on, the collar cannot '
-     'slide down the tube'),
+     'slide down the tube; the brace ends sit 10 mm in blind slots in the anchor and the ear, so the brace cannot go '
+     'in once both are fixed (bowing it in strains the CF past its limit: report, BOW)'),
     ('5.1 / 5.2', 'Pitot socket POD-006 and carry handle POD-007 go into the pod box on the bench',
      'with the pod in the recess, neither can reach its seat (handle brackets wrap the pod walls)'),
     ('5.3 / 6.2', 'XT30U pairs HRN-113 go on the tray before the power frame PWR-006',
@@ -137,48 +147,65 @@ DEVIATIONS = [
      'the servo lead runs under the frame rim and the tape doubler over its flange'),
 ]
 
-# Special cases. key: part glob (first match wins). Fields:
-#   kind      force a motion kind ('fixture': no motion, the part is held by the named fixture)
+# Special cases. key: part glob (first match wins). No row exempts a pair of parts from the swept-path test: every
+# row names a real motion the checker carries out and tests. Fields:
+#   kind      'fixture'  cut in place in its fixture (the core in its hot-wire bed, the panels cut free of it): no
+#                        motion; checked to appear clear of everything already placed (assembly_check.in_place)
+#             'lay'      flexible strap / tape laid in place: the same in-place test
+#             'built'    glued up from flat pieces: each CAD body is its own rigid motion, planned and swept
+#             'hinge'    hooked under a lip and turned down about the lip's edge (row 'hinge'): a rotational sweep
 #   fixture   what holds the part when nothing already placed touches it (a jig, a bed, the bench)
 #   dirs      preferred removal directions to try first (world unit vectors, aircraft frame x aft, y right, z up);
 #             the part arrives moving the opposite way
-#   cut_by    {host part: why}: the host has material removed along this part's path at build time (a slot cut for
-#             it and filled afterwards), so the pair is not tested during THIS part's motion
 #   why       the source (BUILD-GUIDE step) for the row
 OVERRIDES = [
     ('WNG-001', dict(kind='fixture', fixture='lower hot-wire foam bed',
-                     why='BUILD-GUIDE 2.1-2.2: the core is cut and stays in its lower bed')),
+                     why='BUILD-GUIDE 2.1-2.2: the core is hot-wired and slotted in its lower bed and stays in it')),
     ('WNG-011-*', dict(kind='fixture', fixture='core foam bed (cut free of the core in place)',
                        why='BUILD-GUIDE 3.1: the panels are cut from the whole core')),
     ('WNG-012-*', dict(kind='fixture', fixture='core foam bed (cut free of the core in place)',
                        why='BUILD-GUIDE 3.1: the panels are cut from the whole core')),
     ('WNG-002', dict(fixture='clocking jig on the bench', dirs=[(0, 0, -1)],
-                     cut_by={'WNG-001': 'spar slot cut from below with the core in its bed, filled with '
-                                        'microballoon epoxy round the spar (BUILD-GUIDE 2.2, 2.5)'},
-                     why='BUILD-GUIDE 2.2: "cut the spar slot from below"; 2.4 blocks bonded to the spar in the jig')),
-    ('WNG-00[45]-*', dict(cut_by={'WNG-001': 'inside the spar: rides up the same slot (BUILD-GUIDE 2.2, 2.5)'},
-                          why='BUILD-GUIDE 2.3: the plugs are inside the spar tube when it goes in')),
+                     why='BUILD-GUIDE 2.2: the spar slot is cut from below (WNG-001 slot, D-89c); 2.4 blocks bonded '
+                         'to the spar in the jig; 2.5 spar pushed up the slot')),
+    ('WNG-008', dict(dirs=[(0, 0, -1)], why='BUILD-GUIDE 2.5: the slot strip is re-bonded under the spar from below')),
     ('POD-001', dict(kind='built', why='BUILD-GUIDE 5.1 "stop T, tray, walls, fillets": the foam-board box is '
                                        'glued up from flat pieces round the tray, not slid on as one piece')),
     ('POD-006', dict(fixture='held in the nose opening while the board box is glued round it',
                      why='BUILD-GUIDE 5.1: the pod box is built round its inserts')),
-    ('POD-003', dict(kind='clip', why='BUILD-GUIDE 11 / pod BUILD: the hatch tongue is hooked under the nose lip '
-                                      'and the hatch swung down onto its tab: a rotation, placed, not swept')),
-    ('GER-002-*', dict(cut_by={'GER-001-*': 'ramped snap hooks of the insert deflect as it is pushed into the shoe '
-                                            'sleeve (snap fit, BUILD-GUIDE 10.4 "fit inserts by colour")'},
-                       why='BUILD-GUIDE 10.4: the insert snaps into the shoe')),
-    ('E-HRN-2[4-9]', dict(flexible=True, why='DShot and servo leads (BUILD-GUIDE 6.4): laid in their grooves with the '
-                                            'pod-end tails loose; soldered to the FC output field only in stage 9 '
-                                            'step 4, so the FC goes in past them (D-89c)')),
-    ('POD-004', dict(kind='lay', flexible=True, why='hook-and-loop straps: threaded through the floor groove under the tray '
-                                     '(seats.json POD-001/POD-004), flexible')),
-    ('FIN-009-*', dict(kind='clip', why='BUILD-GUIDE 4.5: the 10 x 2 CF brace strip ends sit in blind slots cut to '
-                                        'its own section in the anchor and the collar ear (fins.py: the brace body is '
-                                        'the slot), so it is bowed in, anchor end first, then sprung into the ear')),
-    ('MEC-003-*', dict(kind='clip', fixture='servo arm and horn',
-                       why='BUILD-GUIDE 7.5: the Z-bend is turned into the arm hole and the clevis sprung open over '
-                           'the horn arm; neither is a rigid straight motion, so the rod is placed, not swept')),
+    ('POD-003', dict(kind='hinge',
+                     hinge=dict(body='petg hatch tongue', host='POD-001', host_body='petg nose lip',
+                                angles=[60, 45, 75, 90, 30], lift_mm=40.0, clear_mm=2.0),
+                     why='interfaces E-POD-03 "tongue under the nose lip + hook-and-loop tab": the tongue is slid '
+                         'under the nose lip with the hatch open, then the hatch turned down about the lip edge')),
+    ('POD-004', dict(kind='lay', why='hook-and-loop straps (interfaces E-POD-04): each passes down a slot, under '
+                                     'the tray in the floor groove and up the other slot; laid in place')),
 ]
+
+# Elastic deflection during a motion: the only interference the check accepts, and only between the named bodies, up
+# to the deflection the strain allowable gives (assembly_check.elastic_rows: cantilever tip deflection d, root strain
+# eps = 3 t d / (2 L^2), d_allow = 2 eps_allow L^2 / (3 t)), and never past cap_mm (the geometric hook height). Every
+# use is reported with its measured deflection and strain.
+ELASTIC = [
+    dict(id='GER-002 snap finger', mover='GER-002-*', mover_body='hook *', blocker='GER-001-*',
+         blocker_body='sleeve wall *', L_mm=6.5, t_mm=0.8, cap_mm=0.6, eps_allow=0.035,
+         why='BUILD-GUIDE 10.4 "fit inserts by colour": the two ramped hooks ride over the sleeve wall on the way in '
+             'and click into the side windows (interfaces E-GER-05..08)',
+         source='finger 6.5 x 5 x 0.8 mm, hook 0.6 mm: interfaces E-GER-05 retention (CR-C6-12); PETG yield strain '
+                '3.5 % (lowest of the Prusament PETG TDS values found: V0 sheet Aug 2023 3.5-3.7 %, PETG v1.1 Feb '
+                '2022 5.1 %; https://cdn.shopify.com/s/files/1/1745/6181/files/prusament-petg-v0-technical-data-sheet.pdf, '
+                'checked 2026-11-13); EST'),
+]
+
+# The brace (FIN-009) is NOT bowed in: both ends sit 10 mm in blind slots cut to its own section (interfaces E-FIN-37..44)
+# and bowing a 10 x 2 CF strip enough to shorten its chord by 10 mm strains it past its limit (assembly_check reports the
+# number: BOW). It goes on the bench into the anchor and the collar ear, each slid along the brace axis, and the three
+# go on as one rigid sub-assembly (STEPS 4.5a).
+BOW = dict(part='FIN-009-UR', embed_mm=10.0, clear_mm=0.5, t_mm=2.0, eps_ult=0.013,
+           source='brace ends 10 mm in each slot: interfaces E-FIN-37..44; CF strip 10 x 2 (parts FIN-009); '
+                  'pultruded carbon ultimate tensile strain 1.30 % (TAP Plastics pultruded carbon rods & tubes '
+                  'sheet, https://www.tapplastics.com/image/pdf/Pultruded_Carbon_Rods__Tubes.pdf, checked '
+                  '2026-11-13); EST')
 
 
 # Open design blockers the BUILD-GUIDE already names, which no motion can route round until the CAD changes. A swept-path
@@ -240,26 +267,6 @@ def known(mover, blocker):
 def bonded_pairs():
     """Pairs of part ids joined by an interfaces.json edge (bond, tape, pad, fastener): a bond line may leave a gap."""
     return {frozenset((e['part_a'], e['part_b'])) for e in _load('interfaces.json')['edges']}
-
-
-def tape_trims(info):
-    """{tape part: {parts it is trimmed round}} from interfaces/seats.json rows whose host is a tape ('lay' kind):
-    'tape skin trimmed round X'. A tape is cut with a blade on the bench (BUILD-GUIDE 6.5: 'slit the tape round it with
-    a fresh blade'), so X may pass the tape where the tape is trimmed for it: the pair is not tested during X's
-    motion. Every use is listed in the check report."""
-    exp = {'<st>': ['UR', 'UL', 'LR', 'LL'], '<s>': ['L', 'R']}
-    out = {}
-    for row in _load('seats.json')['seats']:
-        h, g = row['host'], row['guest']
-        for key, vals in exp.items():
-            if key in g:
-                gs = [g.replace(key, v) for v in vals]
-                break
-        else:
-            gs = [g]
-        if kind_of(h, info) == 'lay':
-            out.setdefault(h, set()).update(gs)
-    return out
 
 
 def override(pid):
@@ -334,6 +341,8 @@ def sequence(part_ids, wire_ids):
                 for w in sorted(w for w in wire_ids if fnmatch.fnmatch(w, it[5:]) and w not in used):
                     used.add(w)
                     acts.append(dict(base, type='wire', id=w, group=None))
+            elif it.startswith('tails:'):
+                acts.append(dict(base, type='tails', id=it[6:], group=None))
             elif it.startswith('swing:'):
                 acts.append(dict(base, type='swing', id=it[6:], group=None))
             else:

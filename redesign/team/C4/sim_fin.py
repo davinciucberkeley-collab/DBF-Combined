@@ -47,7 +47,7 @@ P = "P:"
 OUT = HERE / "sim" / "out"
 RUNS = HERE / "sim" / "runs"
 CACHE = OUT / "cache"
-CODE = "C4-SIM-1"
+CODE = "C4-SIM-2"                   # R6 (CDR-01 e): shoe free corner R 0.5 mm
 STRESS_LEVELS = {1: (0.008, 0.002), 2: (0.008, 0.001), 3: (0.008, 0.0005)}   # global, tip-region element size
 STRESS_LEVELS["G"] = (0.004, 0.001)  # global refinement check at the level-2 tip size
 SU2_LEVELS = ()                     # SU2 CG/ILU does not converge on the quarter (CALC-C4-SIM-CODES)
@@ -78,8 +78,24 @@ asm("ASM-C4-SIM-LINK-E", "Tube wall + LE fillet zone modulus 3 GPa",
     "0.6 % to the tube's out-of-plane EI", 3e9, "Pa", status="PROPOSED")
 asm("ASM-C4-SIM-SHOE-E", "D5 shoe region modulus 50 GPa (rigid)",
     "Shoe legs, cheeks, glue and the board inside them as one stiff isotropic block (50 GPa), as the shell model's "
-    "rigid shoe", "Same idealisation as fin_fe rigid_fin; real PETG legs (2 GPa, 0.8 mm) are softer, so the stress "
-    "jump at the leg edge is not lower than in the real part", 50e9, "Pa", status="PROPOSED")
+    "rigid shoe", "Same idealisation as fin_fe rigid_fin. The two legs are joined by the sleeve floor on the step edge "
+    "and by the back wall, so the board between them cannot shear or bend freely: the block is the closer of the two "
+    "simple models. C4-R6 (CDR-01 e) tried the other one, legs only at the PETG modulus (1.5 GPa x 0.8 / 1.0 mm in "
+    "the outer layers, board left as board, mesh_quarter shoe_mode 'petg'): without the sleeve tie the 7 mm legs "
+    "peel off the faces and the face stress is 72 MPa limit on mesh level 1, which is not the load path of the part "
+    "as built. A model with the sleeve as a 3-D body is not built; the rigid block stays the upper bound on the "
+    "stress jump at the leg edge", 50e9, "Pa", status="PROPOSED")
+LEG_STIFF = 0.007
+asm("ASM-C4-SIM-LEG-STIFF", "Modal model: 7 mm of each shoe leg counted as rigid, as before D-106",
+    "In the station-mode model the rigid shoe block reaches 7 mm below the step (|z| 0.194), not the 30 mm of the "
+    "legs as drawn; the leg mass is in the foot mass (CL-D5-MASS-FOOT)",
+    "a rigid block over the full 30 mm legs stiffens the fin tip in a way two 0.8 mm PETG skins cannot (see "
+    "ASM-C4-SHOE-Z0); the face-stress model keeps the full legs", LEG_STIFF, "m", status="PROPOSED")
+asm("ASM-C4-SIM-SHOE-FILLET", "Shoe free corner on the board rounded R 0.5 mm",
+    "The corner of each shoe leg / cheek outline that ends on the bare board is a 0.5 mm radius in the planform "
+    "mesh", "CDR-ST-17: a 0.4 mm nozzle cannot print a sharper outside corner (D5 FEA uses R 0.4 for the same "
+    "reason); with the epoxy squeeze-out the real corner is blunter. Resolved by about 2 elements on the finest mesh",
+    0.0005, "m", status="PROPOSED")
 asm("ASM-C4-SIM-TAIL-E", "Station-collar tail tongue modulus 1 GPa (PETG, 45 % fill)",
     "Isotropic 1 GPa (nu 0.35) for the printed tail tongue that replaces the board in the notched LE-top corner, "
     "from the tube surface to 40 mm aft, strip band + 1 mm deep; the CF edge strips run on over it to the tube",
@@ -102,8 +118,9 @@ SHOE = {"tail_len": P + "fin_detail.station_collar.tail_m", "tongue_depth": P + 
         "leg_depth": P + "landing.shoe.leg_depth_m", "glue": P + "landing.shoe.glue_gap_m",
         "collar_len": P + "landing.shoe.collar_len_m", "z0_prop": "ASM-C4-SHOE-Z0-PROP"}
 SHOE_U = {"tail_len": "m", "tongue_depth": "m", "leg_depth": "m", "glue": "m", "collar_len": "m", "z0_prop": "m"}
-MATS = {"e_tail": "ASM-C4-SIM-TAIL-E", "e_link": "ASM-C4-SIM-LINK-E", "e_shoe": "ASM-C4-SIM-SHOE-E", "E": "ASM-J1-E-TUBE", "G": "ASM-C4-G-TUBE"}
-MATS_U = {"e_tail": "Pa", "e_link": "Pa", "e_shoe": "Pa", "E": "Pa", "G": "Pa"}
+MATS = {"e_tail": "ASM-C4-SIM-TAIL-E", "e_link": "ASM-C4-SIM-LINK-E", "e_shoe": "ASM-C4-SIM-SHOE-E", "E": "ASM-J1-E-TUBE", "G": "ASM-C4-G-TUBE",
+        "shoe_r": "ASM-C4-SIM-SHOE-FILLET"}
+MATS_U = {"e_tail": "Pa", "e_link": "Pa", "e_shoe": "Pa", "E": "Pa", "G": "Pa", "shoe_r": "m"}
 LOADS = {"f_corner": "CL-C1-FOOT-CORNER", "mu_hi": "ASM-C1-FRICTION", "side_c5": "CL-C5-SIM3D-SIDE-LOAD",
          "foot_h": P + "cg.foot_height_m", "z_pad": P + "landing.pad_contact_z_m", "sf": P + "requirements.safety_factor_ult",
          "s_face": "ASM-C4-FACE-SIGMA", "hs_t": "ASM-C4-SIM-HOTSPOT-T", "s_cf": "ASM-C4-CF-SIGMA"}
@@ -148,7 +165,8 @@ def materials(g, k, eq, brace_E=None, ortho_bar=False):
     """D matrices in mesh_quarter.MAT order; isotropic list (E, nu) for SU2."""
     nu_core = k["e_core"] / (2 * k["g_core"]) - 1
     iso = [(k["e_face"], 0.3), (k["e_core"], nu_core), (k["e_strip"], 0.3), (eq["E_bar"], 0.3),
-           (k["e_link"], 0.35), (k["e_shoe"], 0.3), (brace_E or k["e_strip"], 0.3), (k["e_tail"], 0.35)]
+           (k["e_link"], 0.35), (k["e_shoe"], 0.3 if k.get("shoe_mode") == "rigid" else 0.38),
+           (brace_E or k["e_strip"], 0.3), (k["e_tail"], 0.35)]
     D = [hx.d_iso(E, nu) for E, nu in iso]
     if ortho_bar:
         Eb = eq["E_bar"]
@@ -185,7 +203,8 @@ def quarter(g, k, side, h, h_loc, variant, brace_mode):
     br = {"z_ear": geo["z_ear"], "anchor": s["anchor"], "k": kb, "h": h} if brace_mode == "hex" else None
     m = mq.build(g, geo, top, z_stp, side=side, h=h, h_loc=h_loc, shoes=shoe_rects(g, k, geo, z_stp, variant),
                  brace=br, root_free=geo["root_free"], t_face=k["t_face"], z_split=[geo["z_ear"]],
-                 tail=(g["tube_x"] + g["od"] / 2 + k["tail_len"], k["tongue_depth"]))
+                 tail=(g["tube_x"] + g["od"] / 2 + k["tail_len"], k["tongue_depth"]),
+                 shoe_mode=k.get("shoe_mode", "rigid"), shoe_r=k.get("shoe_r", 0.0))
     m.update({"geo": geo, "z_stp": z_stp, "brace_spring": {"ear": ear, "anchor": s["anchor"], "k": kb, "L": L}})
     return m
 
@@ -470,6 +489,7 @@ def _split(kw):
     k = {n: kw[n] for n in kw if n not in GEOM and n != "s_cf"}      # s_cf only in face(): keeps cache keys
     for n in ("e_face", "e_core", "g_core", "e_strip", "t_face"):
         k[n] = g[n]
+    k["shoe_mode"] = "rigid"
     return g, k
 
 
@@ -738,6 +758,7 @@ def modes3d(**kw):
     k.update({n: g[n] for n in ("e_face", "e_core", "g_core", "e_strip")})
     for n in ("e_tail", "e_link", "e_shoe", "glue", "leg_depth", "collar_len", "z0_prop", "tail_len", "tongue_depth"):
         k[n] = kw[n]
+    k["leg_depth"] = LEG_STIFF          # modal model: only the leg strip next to the sleeve floor counts as stiff
     k["t_face"] = g["t_face"]
     rpm = (kw["rpm_h"], kw["rpm_c"], kw["rpm_x"])
     out = {}
@@ -772,6 +793,74 @@ def modes3d(**kw):
     out["f1_min"] = min(out["f1_up_ext"], out["f1_lo_ext"])
     out["sep_min"] = min(out["sep_up"], out["sep_lo"])
     out["plate_sep_min_a3"] = min(out["plate_sep_up_a3"], out["plate_sep_lo_a3"])
+    return out
+
+
+# ====================================================================== F. station-mode levers (CDR-19)
+LEVERS = {  # name: (what changes, added mass on four stations in g, changes applied to g / k / a3)
+    "base": ("as designed", 0.0, {}),
+    "brace3": ("brace 10 x 2 -> 10 x 3 mm (D-93 option)", 9.0, {"g": {"b_t": 0.003}}),
+    "light10": ("10 g less at each station (motor + mount + screws)", -40.0, {"a3_motor": -0.010}),
+    "grip15": ("mount rocking stiffness x 1.5 (longer grip or thicker cheeks)", None, {"g_scale": {"k_rock": 1.5}}),
+    "tube90": ("tube E 90 GPa, G 4.6 GPa (roll-wrapped supplier figures)", 0.0, {"k": {"E": 90e9, "G": 4.6e9}}),
+    "tubeG8": ("tube G 8 GPa at the nominal E (a +/-45 deg outer ply)", 0.0, {"k": {"G": 8e9}}),
+}
+LEVER_LEVEL, LEVER_SIDE = 2, "lower"
+
+
+def _modal_gk(kw):
+    g = {n: kw[n] for n in GEOM}
+    k = {n: kw[n] for n in MATS}
+    k.update({n: g[n] for n in ("e_face", "e_core", "g_core", "e_strip")})
+    for n in ("e_tail", "e_link", "e_shoe", "glue", "leg_depth", "collar_len", "z0_prop", "tail_len", "tongue_depth"):
+        k[n] = kw[n]
+    k["leg_depth"] = LEG_STIFF
+    k["t_face"] = g["t_face"]
+    return g, k
+
+
+def lever_run(kw, name):
+    g, k = _modal_gk(kw)
+    ch = LEVERS[name][2]
+    g = dict(g, **ch.get("g", {}))
+    for n, f in ch.get("g_scale", {}).items():
+        g[n] = g[n] * f
+    k = dict(k, **ch.get("k", {}))
+    a3 = list(kw["a3"])
+    a3[0] += ch.get("a3_motor", 0.0)
+    return modes_level(g, k, LEVER_SIDE, LEVER_LEVEL, a3)
+
+
+def lever_case(name):
+    kw = {a: kit.value(r) for a, r in kit.nodes["CALC-C4-SIM-LEVERS"]["inputs"].items()}
+    return lever_run(kw, name)
+
+
+@kit.calc("CALC-C4-SIM-LEVERS", title="3-D gain of each station-mode lever on the governing quarter (CDR-19)",
+          inputs=MODE_IN, units=MODE_U, tol=2e-3,
+          equation="first station mode of the lower quarter, hex8 model, mesh level 2 (5.7 mm), one change at a time; "
+                   "gain = f1(lever) / f1(base) - 1; separation with the lever = (1 + sep_3D) (1 + gain) - 1, sep_3D "
+                   "= CALC-C4-SIM-MODES sep_min (three meshes, extrapolated); gain needed = (1 + sep_req) / (1 + "
+                   "sep_3D) - 1")
+def levers(**kw):
+    out = {}
+    f = {}
+    for name in LEVERS:
+        r = lever_run(kw, name)
+        f[name] = [x for x, ke, kind in r["modes"] if ke >= 0.10][0]
+        out[f"f1_{name}_hz"] = f[name]
+    sep0 = modes3d(**kw)["sep_min"]
+    out["sep_base"] = sep0
+    out["gain_needed"] = (1 + kw["sep_min"]) / (1 + sep0) - 1
+    for name in LEVERS:
+        if name == "base":
+            continue
+        gn = f[name] / f["base"] - 1
+        out[f"gain_{name}"] = gn
+        out[f"sep_{name}"] = (1 + sep0) * (1 + gn) - 1
+    both = (1 + out["gain_brace3"]) * (1 + out["gain_tube90"]) - 1
+    out["gain_brace3_tube90"] = both
+    out["sep_brace3_tube90"] = (1 + sep0) * (1 + both) - 1
     return out
 
 
@@ -824,6 +913,22 @@ kit.claim("CL-C4-SIM-F1-GCI-UP", "Fine-mesh GCI of the first upper station mode"
 kit.claim("CL-C4-SIM-F1-GCI-LO", "Fine-mesh GCI of the first lower station mode", calc="CALC-C4-SIM-MODES",
           output="f1_lo_gci", unit="-", limit=("<=", 0.05), how="Re-run sim_fin.py (three meshes, Roache Fs 1.25).")
 
+
+# ---- CDR-19: one table of what each lever buys in the 3-D model
+kit.claim("CL-C4-SIM-LEVER-NEED", "Frequency gain the lower station mode needs for 20 % separation (3-D)",
+          calc="CALC-C4-SIM-LEVERS", output="gain_needed", unit="-", parts=d3.TUBES + d3.HALF,
+          how="T-C4-TAP-D3 on the first built station decides; this is the model's gap.")
+for _n, (_what, _dm, _ch) in LEVERS.items():
+    if _n == "base":
+        continue
+    kit.claim(f"CL-C4-SIM-LEVER-{_n.upper()}", f"Station-mode lever, 3-D: {_what}: separation with it",
+              calc="CALC-C4-SIM-LEVERS", output=f"sep_{_n}", unit="-", parts=d3.TUBES + d3.HALF,
+              note="record, no limit: one lever at a time on mesh level 2, applied to the three-mesh separation. "
+                   + ("Mass on four stations %+.0f g." % _dm if _dm is not None else "Mass - (not drawn)."),
+              how="T-C4-TAP-D3 with and without the change.")
+kit.claim("CL-C4-SIM-LEVER-BRACE3-TUBE90", "Station-mode levers combined, 3-D: 10 x 3 brace and a 90 / 4.6 GPa tube",
+          calc="CALC-C4-SIM-LEVERS", output="sep_brace3_tube90", unit="-", parts=d3.TUBES + d3.HALF,
+          note="record, no limit: product of the two single-lever gains", how="T-C4-TAP-D3.")
 
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)

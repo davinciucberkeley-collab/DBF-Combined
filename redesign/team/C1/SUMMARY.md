@@ -1,6 +1,6 @@
 # C1 Loads — summary
 
-Owner: C1 (loads engineer). Revision **C1-R5**, 2026-11-10, at params A1-R5 (D-62, D-65) and A3-R7.
+Owner: C1 (loads engineer). Revision **C1-R6**, 2026-11-13 (D-105 side-load cap, cases G4 and P1); R5 was 2026-11-10 at params A1-R5 (D-62, D-65) and A3-R7.
 Full report: [`LOADS.md`](LOADS.md). Requests: [`CHANGE-REQUESTS.md`](CHANGE-REQUESTS.md). Claims: `claims.json`
 (112 claims). Re-run: `python -I redesign/team/C1/loads.py` (~10 s), then `python -I redesign/proofs/build_graph.py`.
 
@@ -8,6 +8,27 @@ All loads are **limit** (largest expected in service) unless marked ult (= 1.5 �
 `CHECKED`. Its inputs (thrust, CLmax, masses, capped VH, C5's simulated side load) are `UNVERIFIED` or `MODELLED`, so
 every load stays `UNVERIFIED` until the stand, the level-speed log, the scale, the swing, the foot drop and the wing
 proof replace them.
+
+## C1-R6 (2026-11-13, CDR fix round): side-load cap, cases G4 and P1
+
+The tables below this section are C1-R5 (D-65, side load 39.3 N) and are kept for the record. What changed:
+
+| Item | R5 | R6 | Source |
+|---|---|---|---|
+| Foot side load (L4 / L5), limit / ult | 39.5 / 59.25 N | **24.5 / 36.75 N** | `P:requirements.foot_side_load_cap_n` (D-105, CDR decision B1) → `CL-C5-SIM3D-SIDE-LOAD` → `CL-C1-FOOT-SIDE-DESIGN(-ULT)` |
+| Ground friction | 0.7 | **0.40** | `P:requirements.pad_mu_max` → `ASM-C1-FRICTION` |
+| Fin root + saddle moment, ult / design | 22.55 / 32.41 N·m | **15.63 / 22.47 N·m** | `CL-C1-FINJOINT-M-ULT`, `-DESIGN` (L4) |
+| Half-fin torsion at the wing plane, limit / ult | 12.72 / 19.08 N·m | **7.94 / 11.90 N·m** | `CL-C1-FINHALF-T-LIM`, `-ULT` (L4) |
+| Half-fin bending, ult | 16.30 N·m | **12.24 N·m** | `CL-C1-FINHALF-MB-ULT` |
+| Foot cut force, ult | 80.44 N | **65.93 N** | `CL-C1-FOOT-F-ULT` (L5) |
+| Spar root bending, ult | 20.74 N·m | **19.19 N·m** | `CL-C1-SPAR-MB-ULT` |
+| Box aft-wall allowable factor | 10.79 | **10.18** (drop is n 7.79) | `CL-C1-TRANSPORT-N-ALLOW-AFT` |
+| Parked stance | μ needed 0.68 ≤ 0.7 | μ needed 0.68 > 0.40: **limit removed, laid flat or tied when parked** | `CL-C1-STANCE-MU-REQ` (flight card, H3) |
+| New case G4 | — | restrained ground run, two diagonal strap eyes: **29.14 N per tie** limit, 43.71 N ult; fin-joint moment 0.13 of the envelope | `CL-C1-G4-TIE-LIM`, `-ULT`, `CL-C1-G4-FINJOINT-M` |
+| New case P1 | — | prop strike, mount at its 3.71 N·m fuse: half-fin torsion 3.64 N·m limit (reported, damage family) | `CL-C1-P1-TUBE-TORQUE`, `CL-C1-P1-FUSE-MATCH` |
+
+These numbers are on the A3 masses of 2026-11-13 morning (basic 2.363 kg). S4 changed the roll-up later the same day;
+re-run `loads.py`, then C4, C6 once the mass budget is merged (order in `review/CDR-2026-11-13/fixes/S1.md`).
 
 ## Basis changes in R5
 

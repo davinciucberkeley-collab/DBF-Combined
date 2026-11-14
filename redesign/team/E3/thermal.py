@@ -382,7 +382,7 @@ CU = {"rho": "kg/m3", "D": "m", "x_prop": "m", "V_c": "m/s", "m_motor": "kg", "m
       "pod_size": "m", "f3_diss": "W"}
 CASE = {"pess": "CL-E2-BUDGET-PESS-TABLE", "base": "CL-E2-BUDGET-BASE-TABLE", "avn": "ASM-E2-AVIONICS-W",
         "rth_nom": "ASM-E1-RTH", "rth_des": "ASM-E3-RTH-DESIGN", "wake": "ASM-E3-WAKE", "r_nom": "ASM-E2-R-CELL",
-        "prof": "ASM-E3-PROFILE", "i_lim": "CL-E1-ILIM-I", "v_nom": P + "battery.v_nom", "lim": "ASM-E3-LIMITS",
+        "prof": "ASM-E3-PROFILE", "i_lim": "CL-E1-ILIM-I-BAT", "v_nom": P + "battery.v_nom", "lim": "ASM-E3-LIMITS",
         "amb_range": P + "env.ambient_design_c", "t_hov_only": "CL-E2-HOVER-ONLY-MIN-PESS",
         "wake_cfd": "CL-E3-CFD-FEQ", "m_pred": "CL-A3-MASS-PREDICTED", "m_gate": P + "requirements.mtow_gate_kg",
         "mscale": "ASM-E3-MASS-SCALE"}

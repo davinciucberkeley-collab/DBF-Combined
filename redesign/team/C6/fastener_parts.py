@@ -84,7 +84,7 @@ HW = [
          mat=PA66, mass=0.92, cost=0.40, vendor='any (I1 C06)',
          parent=lambda s: ['E-PWR-03'], joins=['PWR-006', 'POD-002'], fold=('PWR-006', 0.92),
          notes='4 fitted + 2 spare (I1 C06); 0.23 g each; mass moved out of PWR-006'),
-    dict(num='PWR-103', sub='power', inst=(None,), name='Power-frame washer set: 4 x M3 nylon washer 1.0 mm',
+    dict(num='PWR-103', sub='power', inst=(None,), name='Power-frame washer set: 4 x M3 nylon washer 0.5 mm',
          mat=PA66, mass=0.08, cost=0.08, vendor='any (I1 C06)',
          parent=lambda s: ['E-PWR-03'], joins=['PWR-006'], fold=('PWR-006', 0.08),
          notes='under the screw heads; 4 fitted + 2 spare (I1 C06); mass moved out of PWR-006'),

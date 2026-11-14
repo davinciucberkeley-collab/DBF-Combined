@@ -35,6 +35,25 @@ STRIPS = [f"FIN-011-{s}{f}" for s in ST for f in ("O", "I")]
 POD = ["POD-001", "POD-002"]
 ENV = "team/C1/data/envelope.json"
 
+# ----------------------------------------------------------------------------- printed-plastic design values (D-107)
+# One table for every role: team/C6/params.json "allowables" (P:allowables.*). C4, C3, D5, C5 read the same keys.
+kit.source("SRC-C6-PETG-TDS", "Prusament PETG technical data sheet v1.1 (16-02-2022), Prusa Polymers", "datasheet",
+           url="https://storage.googleapis.com/prusa3d-content-prod-14e8-wordpress-prusament-prod/2023/10/"
+               "9f8d2165-tds_prusament-petg_n_en.pdf", checked="2026-11-13",
+           where="page 2: interlayer adhesion 18 +/- 4 MPa; 3D printed specimens (0.2 mm layers, 2 perimeters, 100 % "
+                 "rectilinear infill): tensile yield 47 +/- 2 MPa horizontal, 50 +/- 1 MPa vertical xz; tensile "
+                 "modulus 1.5 +/- 0.1 / 1.6 +/- 0.1 GPa; density 1.27 g/cm3. Same sheet also at "
+                 "https://www.3dprintergear.com.au/assets/files/technical-data-sheet%20(1).pdf")
+kit.source("SRC-C6-ASA-TDS-PRUSA", "Prusament ASA technical data sheet v1.1 (20-05-2024), Prusa Polymers", "datasheet",
+           url="https://storage.googleapis.com/prusa3d-content-prod-14e8-wordpress-prusament-prod/2024/05/"
+               "bc8551ef-tds_prusament-asa_2024_en.pdf", checked="2026-11-13",
+           where="page 2: interlayer adhesion 11 +/- 1 MPa; 3D printed specimens: tensile yield 42 +/- 1 MPa "
+                 "horizontal, 45 +/- 2 MPa vertical xz; tensile modulus 1.6 +/- 0.1 / 1.7 +/- 0.1 GPa; density 1.07")
+kit.source("SRC-C6-FAR25-625", "14 CFR 25.625 Fitting factors, paragraph (a)", "regulation",
+           url="https://www.law.cornell.edu/cfr/text/14/25.625", checked="2026-11-13",
+           where="(a): a fitting factor of at least 1.15 applies to each fitting whose strength is not proven by "
+                 "limit and ultimate load tests in which actual stress conditions are simulated")
+
 # ----------------------------------------------------------------------------- assumptions (allowables, loads)
 kit.assumption("ASM-C6-FOAM-KD", "Foam bond knock-down 0.5", "Design allowable of an epoxy bond into XPS or onto "
                "paper-faced foam board = 0.5 x the typical cohesive strength of the foam or of the paper-to-core "
@@ -298,7 +317,7 @@ def tube_bonds(od, core, boss, Ls, Lc, Tz, Ty, Tc1, Tc4, Fb, h12, h13, hc, h15, 
                   "ff": "ASM-C1-FITTING-FACTOR", "pf": "ASM-C1-PRINTED-FACTOR",
                   "tail": "P:fin_detail.station_collar.tail_m", "gap": "P:fin_detail.fin.le_gap_m",
                   "n_now": "P:joints.strip_bonded_faces_now", "tau": "ASM-C4-BOND-SHEAR",
-                  "A_net": "ASM-C6-TAIL-NET-A", "s_pet": "ASM-C4-PETG-TENSILE",
+                  "A_net": "ASM-C6-TAIL-NET-A", "s_pet": "P:allowables.petg_inplane_pa",
                   "kd": "ASM-C6-FOAM-KD", "tau_b": "ASM-D5-BOND-TAU", "tb": "P:fins.board_t_m",
                   "nl": "P:fins.layers", "dp": "P:fin_detail.edge_strip.pin_d_m",
                   "pp": "P:fin_detail.edge_strip.pin_pitch_m", "pp_new": "P:joints.pin_pitch_prop_m",
@@ -306,7 +325,8 @@ def tube_bonds(od, core, boss, Ls, Lc, Tz, Ty, Tc1, Tc4, Fb, h12, h13, hc, h15, 
                   "dp2": "P:joints.pin_d_prop_m", "pp_alt": "P:joints.pin_pitch_alt_m",
                   "d_alt": "P:joints.pin_d_alt_m", "s_brg": "ASM-C6-CF-BEARING"},
           equation="C4 R3 FE (CR-C4-23): F = strip force per face at the collar end, design; anchor tau = "
-                   "F/(n w (tail - gap)); L_req = F/(2 w tau); tail net section sigma = F / A_net vs PETG; paper face "
+                   "F/(n w (tail - gap)); L_req = F/(2 w tau); tail net section sigma = F / A_net vs PETG in the layer "
+                   "plane (D-107: the collar is printed with the tail slots in the layer plane); paper face "
                    "if unpinned: tau = q_lim sf ff pf / w vs kd tau_board; pins carry the whole shear flow: "
                    "P = C4 pin force at the drawn pitch, shear P/(pi d^2/4), bending (pin loaded at the strip, "
                    "reacted at the board mid-plane, bound) 32 P (n tb + t)/2 / (pi d^3); at another pitch "
@@ -394,10 +414,11 @@ kit.assumption("ASM-C6-ASA-YIELD", "ASA tensile yield 36.5 MPa (filament datashe
                "ASA strength used to bound the clocking dog's break torque from above (a fuse must not be stronger "
                "than designed)", "SRC-C6-ASA-TDS tensile stress at yield 36.5 MPa (checked 2026-11-13)",
                value=36.5e6, unit="Pa", status="UNVERIFIED", cites=["SRC-C6-ASA-TDS"])
-kit.assumption("ASM-C6-ASA-INTERLAYER", "ASA interlayer shear 0.5 x the in-layer von Mises shear", "Lower bound of "
+kit.assumption("ASM-C6-ASA-INTERLAYER", "ASA interlayer shear 0.26 x the in-layer von Mises shear", "Lower bound of "
                "the dog's shear strength: the dog's shear plane is a layer plane (mount printed collar axis vertical)",
-               "C4/C6 practice for printed parts (ASM-C4-PETG-TENSILE takes 50 % of the Z yield); EST until "
-               "T-C6-DOG-SHEAR", value=0.5, unit="-", status="UNVERIFIED")
+               "D-107: ratio of interlayer adhesion to in-layer yield on the Prusament ASA sheet, 11 / 42 MPa "
+               "(SRC-C6-ASA-TDS-PRUSA; the Push Plastic sheet gives no interlayer value). Was 0.5 (estimate). EST "
+               "until T-C6-DOG-SHEAR", value=0.26, unit="-", status="UNVERIFIED", cites=["SRC-C6-ASA-TDS-PRUSA"])
 
 
 @kit.calc("CALC-C6-DOG", title="Clocking dog under the mount collar (D-81): fuse torque bounds and hold",
@@ -428,10 +449,76 @@ def dog(kw, od, gap, ring, cw, T_slip, s_y, k_il, T_tw, tau, Lc, core, boss):
             "rf_fuse": min(cap_collar, cap_block) / T_f, "rf_hold": T_lo / T_tw, "dog_share": T_hi / T_f}
 
 
+# ----------------------------------------------------------------------------- D-89c strap eye FIN-013 (CDR-27)
+EYES = [f"FIN-013-{s}" for s in ST]
+kit.assumption("ASM-C6-EYE-SPLAY", "Tie cord splayed 30 deg outboard of the fin plane",
+               "Largest angle between the tie cord and the aircraft x axis (vertical on the stand) in the restrained "
+               "run: the ground anchors stand outboard of the eyes", "GT-13 stake layout (H1): anchors within 0.3 m "
+               "of the point below each eye at 0.5 m cord length gives about 30 deg; the card states it",
+               value=30.0, unit="deg", status="PROPOSED")
+
+
+@kit.calc("CALC-C6-EYE", title="Strap eye FIN-013 saddle-foot bond on the block boss and the tab in bending",
+          inputs={"F": "P:fin_detail.strap_eye.load_n", "od": "P:fins.tube.od_m", "gap": "P:fin_detail.bond_gap_m",
+                  "ring": "P:fin_detail.boss.ring_wall_m", "ft": "P:fin_detail.strap_eye.foot_t_m",
+                  "yh": "P:fin_detail.strap_eye.hole_y_m", "half": "P:fin_detail.strap_eye.foot_deg",
+                  "h": "P:fin_detail.strap_eye.h_m", "t": "P:fin_detail.strap_eye.t_m", "splay": "ASM-C6-EYE-SPLAY",
+                  "sf": "P:requirements.safety_factor_ult", "ff": "ASM-C1-FITTING-FACTOR", "pf": "ASM-C1-PRINTED-FACTOR",
+                  "tau": "ASM-C4-BOND-SHEAR", "peel": "ASM-C6-PEEL", "s_in": "P:allowables.petg_inplane_pa"},
+          equation="The eye sits on the outboard face of the boss (axis z); the tie hole axis is x and the aircraft "
+                   "stands with x vertical, so the pull is tangential to the boss. R = od/2 + gap + ring (bond "
+                   "radius); arm = R + foot + hole offset; A = 2 half R h; torque about the boss axis T = F arm; "
+                   "tau = T / (R A); design = limit x sf ff pf; RF_shear = tau_allow / tau; RF_peel-value = peel / "
+                   "tau (if the foot edge peels instead of shearing); splayed pull: tangential F cos(a) as above + "
+                   "radial F sin(a) / A in flat-wise tension, RF = 1 / (tau / tau_allow + sigma / peel); tab bending "
+                   "sigma = 6 F yh / (h t^2) in the layer plane (eye printed flat, hole axis vertical)")
+def eye(F, od, gap, ring, ft, yh, half, h, t, splay, sf, ff, pf, tau, peel, s_in):
+    k = sf * ff * pf
+    Rb = od / 2 + gap + ring
+    arm = Rb + ft + yh
+    A = 2 * math.radians(half) * Rb * h
+    tau_lim = F * arm / (Rb * A)
+    a = math.radians(splay)
+    tau_s = k * tau_lim * math.cos(a)
+    sig_s = k * F * math.sin(a) / A
+    sig_tab = 6 * F * yh / (h * t * t)
+    return {"R_bond_m": Rb, "arm_m": arm, "area_mm2": A * 1e6, "tau_limit_mpa": tau_lim / 1e6,
+            "tau_design_mpa": k * tau_lim / 1e6, "rf_shear": tau / (k * tau_lim), "rf_peel_value": peel / (k * tau_lim),
+            "rf_splay": 1.0 / (tau_s / tau + sig_s / peel), "tab_design_mpa": k * sig_tab / 1e6,
+            "rf_tab": s_in / (k * sig_tab), "proof_n": 2.0 * F}
+
+
 def _rf_dog(cid, title, calc, out, parts, how):
     kit.claim(cid, title, calc=calc, output=out, unit="-", limit=(">=", 1.0), verifies=R_SM, parts=parts, how=how)
 
 
+kit.claim("CL-C6-EYE-BOND-TAU", "Strap eye foot bond stress under the tie pull along x, design", calc="CALC-C6-EYE",
+          output="tau_design_mpa", unit="MPa", parts=EYES + BLOCKS,
+          note="CDR-27 / CDR-ST-12: the 0.18 MPa mean (29.4 N / 166 mm2) understated it; the pull is tangential to "
+               "the boss and acts 21.1 mm from its axis", how="T-D3-EYE.")
+kit.claim("CL-C6-EYE-BOND-RF", "Strap eye FIN-013 foot bond RF, tie pull along x (lap shear value)", calc="CALC-C6-EYE",
+          output="rf_shear", unit="-", limit=(">=", 1.0), verifies=R_SM, parts=EYES + BLOCKS,
+          how="T-D3-EYE: bonded eye on a printed boss pulled along x to 2 x 29.4 N, then to failure")
+kit.claim("CL-C6-EYE-BOND-RF-PEEL", "Strap eye foot bond RF if the foot edge peels (flat-wise value 1.0 MPa)",
+          calc="CALC-C6-EYE", output="rf_peel_value", unit="-", limit=(">=", 1.0), verifies=R_SM, parts=EYES + BLOCKS,
+          how="T-D3-EYE: note whether the bond shears or the foot edge lifts first")
+kit.claim("CL-C6-EYE-BOND-RF-SPLAY", "Strap eye foot bond RF, tie splayed 30 deg outboard (shear + flat-wise tension)",
+          calc="CALC-C6-EYE", output="rf_splay", unit="-", limit=(">=", 1.0), verifies=R_SM, parts=EYES + BLOCKS,
+          how="T-D3-EYE second specimen pulled 30 deg outboard of x; GT-13 states the strap direction")
+kit.claim("CL-C6-EYE-TAB-RF", "Strap eye tab in bending about its root, design (PETG in the layer plane)",
+          calc="CALC-C6-EYE", output="rf_tab", unit="-", limit=(">=", 1.0), verifies=R_SM, parts=EYES,
+          note="print FIN-013 flat with the tie-hole axis vertical so the tab bends in the layer plane",
+          how="T-D3-EYE to failure: the tab must not snap below the proof load")
+kit.claim("CL-C6-EYE-PROOF-F", "T-D3-EYE proof load on a bonded eye (2 x the tie load)", calc="CALC-C6-EYE",
+          output="proof_n", unit="N", parts=EYES, how="T-D3-EYE.")
+kit.test("T-D3-EYE-BONDED", "Bonded strap eye pull (replaces the printed-eye pull of T-D3-EYE)",
+         verifies=["CL-C6-EYE-BOND-RF", "CL-C6-EYE-BOND-RF-PEEL", "CL-C6-EYE-BOND-RF-SPLAY", "CL-C6-EYE-TAB-RF"],
+         procedure="Two FIN-013 eyes bonded as built (E-FIN-89 block: boss and foot sanded 120 grit, IPA, 30 min "
+                   "epoxy + silica, skin tape cut back so the foot bonds PETG to PETG, 24 h) on the boss of a printed "
+                   "block offcut held on a 22 mm tube stub. Specimen 1: spring scale through the eye along x (the "
+                   "tie-hole axis) to 58.8 N, hold 10 s, then to failure. Specimen 2: the same 30 deg outboard of x. "
+                   "Pass: no movement of a witness line across the foot edge at 58.8 N; record the failure load and "
+                   "whether the bond sheared, the foot edge peeled or the tab broke.")
 kit.claim("CL-C6-DOG-FUSE-T", "Torque to turn the mount on the tube with the clocking dog (slip + dog break, upper "
           "bound)", calc="CALC-C6-DOG", output="T_fuse_nm", unit="N m", verifies=R_SM, parts=MOUNTS + COLLARS,
           how="T-C6-DOG-SHEAR: two printed mounts on a tube stub with a bonded station collar, pinch bolt at the "

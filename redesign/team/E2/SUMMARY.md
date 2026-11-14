@@ -1,5 +1,20 @@
 # E2 battery / energy: summary
 
+> **CDR fix round, 2026-11-13 (CDR-05; D-115, D-118).** Re-run on `electrical.r_ext_mohm` 7.9 mΩ (was 6.7): pack R
+> 24.0 / 32.0 mΩ warm / cold, worst bus 11.85 → 11.73 V. Cruise before `BATT_LOW`, pessimistic, at the carried
+> 253 W: 5.41 → **5.38 min** (`CL-E2-CRUISE-TO-LOW-PESS-240`, limit 5, +8 %); to the 20 % line 5.97 → 5.94 min. New
+> claims for the 17 m/s fallback (D-96 c, the planning case of CDR decision B6), at E1's 283.5 W + 6 W: base
+> 9.85 min, pessimistic **5.15 min** to the 20 % line (`CL-E2-CRUISE-MIN-PESS-V17`, +3 %) and **4.66 min before
+> `BATT_LOW`** (`CL-E2-CRUISE-TO-LOW-PESS-V17`, limit 5: **fails, −7 %**, verifies `R-MISSION`). The pessimistic
+> 17 m/s power scales B1's pessimistic 16 m/s power by the base ratio (`EST`). 49 claims; one fails. The rows
+> below are E2-R5 (6.7 mΩ) unless marked; current values: `claims.json`.
+>
+> **Pack pass line.** `T-E2-WEIGH` passes a pack at or under `CL-E2-PACK-ACCEPT-KG`, which is read live from
+> `CL-A1-PACK-ACCEPT`: **≤ 558 g** by D-132 (S4: 558.5 g after the 31 g structures contingency; 560 g by D-95, 592.6 g
+> by D-64). SKU maximum 556 g, margin +2.5 g. The claim follows A1 on every re-run: while the landing parts list
+> stood at 69.9 g during the fix round it read 546.5 g and `CL-E2-PACK-ACCEPT-KG`, `CL-E2-SKU-MASS-MARGIN` and
+> `CL-E2-PACK-MASS` failed (`review/CDR-2026-11-13/fixes/S4.md`, CDR-12). Read the claim on the day of the weigh.
+
 Status `PROPOSED`, revision **E2-R5**, 2026-11-10 (params A1-R5, D-61 … D-73). Full report: `team/E2/ENERGY.md`.
 Calculations: `team/E2/energy_claims.py` → `claims.json` (44 claims, 4 planned tests). No E2 claim fails. Nothing is
 `VERIFIED`: no pack has been bought or weighed.
@@ -12,8 +27,8 @@ hard case / 2 packs in the cart (release record: ENERGY.md §1a, CR-E2-28).
 | Parameter | Value | Unit | Source | Status |
 |---|---|---|---|---|
 | Pack SKU | Ovonic 120C 4S 6500 hard case, EC5 → AS150U, JST-XH | — | `SRC-E2-OVONIC-120C-EC5` | `CHECKED` (listing) |
-| Acceptance line `PACK_ACCEPT_KG` = `CL-A1-PACK-ACCEPT` | 0.5926 (was 0.601) | kg | `CL-E2-PACK-ACCEPT-KG` | `MODELLED` (read live) |
-| Listed worst mass / margin to the line | 0.556 / +0.0366 | kg | `CL-E2-SKU-MASS-MARGIN` | `UNVERIFIED` |
+| Acceptance line `PACK_ACCEPT_KG` = `CL-A1-PACK-ACCEPT` | 0.5585 by D-132 (was 0.5608 D-95, 0.5926 D-64); `T-E2-WEIGH` pass ≤ 558 g | kg | `CL-E2-PACK-ACCEPT-KG` | `MODELLED` (read live) |
+| Listed worst mass / margin to the line | 0.556 / +0.0025 (D-132) | kg | `CL-E2-SKU-MASS-MARGIN` | `UNVERIFIED` |
 | Mass carried | 0.55 (until weighed) | kg | `CL-E2-PACK-MASS` | `UNVERIFIED` |
 | Body in the 160 × 52 × 53 mm bay, tightest | 1 (height, +3 mm tolerance) | mm | `CL-E2-SKU-BAY-CLEAR` | `UNVERIFIED` |
 | Discharge leads | 10 (inferred from EC5; order check 1) | AWG | `CL-E2-SKU-LEAD-AWG` | `UNVERIFIED` |
@@ -34,7 +49,7 @@ hard case / 2 packs in the cart (release record: ENERGY.md §1a, CR-E2-28).
 | Item | Result |
 |---|---|
 | Release the pack cart with I1 (D-64), two order-time checks | Released on the record in ENERGY.md §1a (CR-E2-28). Check 1 (10 AWG) is still open: the product page does not print the gauge and E2's re-read was rate-limited (HTTP 429) |
-| `PACK_ACCEPT_KG` = `CL-A1-PACK-ACCEPT` | Read live from A1's claim (0.5926 kg today); new claim `CL-E2-PACK-ACCEPT-KG`; `CL-E2-PACK-MASS` and `T-E2-WEIGH` pass at ≤ it |
+| `PACK_ACCEPT_KG` = `CL-A1-PACK-ACCEPT` | Read live from A1's claim (0.5585 kg by D-132; 0.5926 kg when written); new claim `CL-E2-PACK-ACCEPT-KG`; `CL-E2-PACK-MASS` and `T-E2-WEIGH` pass at ≤ it |
 | Re-run `CALC-E2-BUDGET-PESS` on 312.4 W and r_ext 6.7 | Done: pessimistic 6.8 → **6.3 min**, `BATT_LOW` after 6.0 min; at 240 W 6.3 / 5.9 min. A1's 6.4 → 6.3 (CR-E2-29) |
 | Retire F1's old profile-assumption text reference (CR-F1-27) | Done: phase-current claims point at `CALC-F1-PROFILE` / `CL-F1-PROFILE`; ground phase is now a claim too |
 | Leftover from an interrupted edit | The script's `ASM-E2-R-EXT` mirror check was removed (the mirror was already retired; the script would not run) |

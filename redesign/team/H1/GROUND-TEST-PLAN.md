@@ -428,6 +428,11 @@ strip behind the pads on the hinge side; pack in, then at the forward stop, then
 ## GT-13 Restrained four-motor run
 
 Figure `FIG H1-07`. Aircraft on its feet on an 18 mm plywood table, strapped at the four root eyes (D3, CR-H1-08).
+Strap direction (CDR-27): each cord runs down from its eye along the aircraft x axis (vertical on the table) to an
+anchor no more than 0.3 m outboard of the point below the eye, so the cord is within 30° of x and never pulls the
+eye inboard or along the span. The eye bond is checked for that pull (`CL-C6-EYE-BOND-RF`, `-RF-SPLAY`); the load
+case is C1 `G4-RESTRAINED` (`CL-C1-G4-TIE-LIM`, two of four cords carrying everything). Before the first run,
+`T-D3-EYE-BONDED` has passed on two bonded eyes (58.8 N along x and 30° outboard).
 
 | Step | Pass | Source |
 |---|---|---|
@@ -455,21 +460,23 @@ CR-F5-05 replaces the old 10 mW card (the Pocket's lowest setting is 25 mW).
 ## GT-15 Coupons
 
 Lever frame (R3, CR-C6-33 and CR-C6-39; figure `FIG H1-09`, `ASM-H1-LEVER`): 2×4 lever 1.0 m on an M8 pivot, jug
-hook at 0.900 m, two coupon clevis holes at **0.060 m (15:1)** and **0.100 m (9:1)**. Pivot and both clevis holes go
-through a pair of 3 mm steel side plates 40 × 200 mm, each held to the lever by 4 × M6 through-bolts with washers. A
-bare M8 in the wood would bear at 10.3 MPa across the grain, against 4.3 MPa allowed (`CL-H1-LEVER-WOOD-BRG`). Short-
+hook at 0.900 m, three coupon clevis holes at **0.045 m (20:1, added by CDR-28)**, **0.060 m (15:1)** and
+**0.100 m (9:1)**. Pivot and the clevis holes go through a pair of 3 mm steel side plates 40 × 200 mm, each held to
+the lever by **6 × M6** through-bolts with washers (4 would bear on the wood at 4.5 MPa with the 20:1 hole loaded). A
+bare M8 in the wood would bear at 13.6 MPa across the grain, against 4.3 MPa allowed (`CL-H1-LEVER-WOOD-BRG`). Short-
 side counterweight tares the lever. Water jugs ≤ 20 kg, filled slowly from a hose and weighed after failure.
 
 | Item | Value | Claim |
 |---|---|---|
-| Capacity 15:1 / needed (1.25 × `CL-C6-STRIP-ANCHOR-F-EST` 2 131 N) | **2 942 / 2 664 N** | `CL-H1-LEVER-CAP`, `-NEED` (+9 %) |
-| Capacity 9:1 / needed (1.25 × `CL-C6-STRIP-ANCHOR-F` 1 243 N, CR-C6-33) | 1 765 / 1 554 N | `CL-H1-LEVER-CAP9`, `-NEED9` (+12 %) |
+| Capacity 20:1 / strip-anchor design force (`CL-C6-STRIP-ANCHOR-F` 1 399 N at the D-105 side-load cap) | **3 923 N / 1 399 N = 2.80** (≥ 1.5, so the coupon is taken to failure) | `CL-H1-LEVER-CAP20`, `-FAIL-HEADROOM` |
+| Capacity 15:1 / needed (1.25 × 1 400 N) | 2 942 / 1 750 N | `CL-H1-LEVER-CAP`, `-NEED` (+41 %) |
+| Capacity 9:1 | 1 765 N (40–300 N coupons; its strip-anchor need is retired, CDR-28) | `CL-H1-LEVER-CAP9` |
 | Lever bending at full jug | 3.5 MPa (≤ 6.0) | `CL-H1-LEVER-SIGMA` |
-| Pivot on the steel plates / M6 bolts on the wood | 65 MPa (≤ 150) / 3.4 MPa (≤ 4.3) | `CL-H1-LEVER-PLATE-BRG`, `-M6-BRG` |
-| Calibration | 3.000 kg at 15:1 balances 0.200 kg, 2.000 kg at 9:1 balances 0.222 kg, within 2 %; 20 kg proof on a steel bar for 60 s | `T-H1-LEVER-CAL` |
+| Pivot on the steel plates / M6 bolts on the wood | 86 MPa (≤ 150) / 3.0 MPa (≤ 4.3) | `CL-H1-LEVER-PLATE-BRG`, `-M6-BRG` |
+| Calibration | 4.000 kg at 20:1 balances 0.200 kg, 3.000 kg at 15:1 balances 0.200 kg, 2.000 kg at 9:1 balances 0.222 kg, within 2 %; 20 kg proof on a steel bar for 60 s | `T-H1-LEVER-CAL` |
 
 Compression and push coupons on the 20 kgf cell under the Jacobs drill press. Record every failure load and mode;
-allowable = owner's rule (mean − 2 s, or 0.5 × mean). A 2.9 kN failure stores energy in the cord: catch strap under
+allowable = owner's rule (mean − 2 s, or 0.5 × mean). A 3.9 kN failure stores energy in the cord: catch strap under
 the jugs, face shields, nobody under the long arm.
 
 | Test (owner) | Specimens | Rig | Pass | Window |
@@ -483,10 +490,12 @@ the jugs, face shields, nobody under the long arm.
 | `T-C6-XPS-PULL` (C6) | 10 pucks Ø30 mm | lever | allowables recorded | Dec |
 | `T-C6-BOARD-CORNER` (C6) | 2 U-sections | jugs | ≥ 43 N | Dec |
 | `T-C6-INSERT` (C6) | 3 inserts | lever | ≥ 300 N each | first POD-002 print |
-| `T-C6-STRIP-ANCHOR` (C6) | 40 mm two-face collar (ring + tail), strip pair bonded as built, ring on a 22 mm steel mandrel; pull ONE strip along its axis | **15:1 hole** | ≥ `CL-C6-STRIP-ANCHOR-F` (1 243 N today; read the claim on the day, not this table) with neither bond nor tail failing; then to failure (the D-65 estimate is 2 131 N) | first collar |
+| `T-C6-STRIP-ANCHOR` (C6) | 40 mm two-face collar (ring + tail), strip pair bonded as built, ring on a 22 mm steel mandrel; pull ONE strip along its axis | **20:1 hole** | ≥ `CL-C6-STRIP-ANCHOR-F` (1 399 N at the D-105 cap; read the claim on the day, not this table) with neither bond nor tail failing; then to failure, printed tail and tow-lashed tail side by side (CDR-02): failure load / design force is the measured RF | early-cart stock, before the order |
 | `T-C6-HEAD-CREEP` (C6) | ASA plate, 4 × M3 at 0.20 N·m | 70 °C, 2 h: sealed bag in a water bath with a probe (no oven needed) | breakaway ≥ 0.15 N·m | first mount |
 | `T-D5-COUPON` (D5) | 3 type-U + 3 type-L cartridge pairs | drill press over the 20 kgf cell (need 5.1 kgf, `CL-H1-D5-CELL-REQ`), 40 mm at < 10 mm/s, every 2 mm | U 34.5–38.5 N, L 29.5–33.0 N, U/L 1.15–1.19 (U95 0.006, `CL-H1-D5-RATIO-U`), peak ≤ 1.15 × plateau, flat to 40 mm | first cartridges |
-| `T-D5-PAD-MU` (D5) | foot with pad, 0.65 kg | tilt board faced with paver / shingle / mat; 5 runs each | slip angle ≥ **35.3°** (μ 0.70 + U95) | first pads |
+| `T-D5-PAD-MU` (D5) | foot with the faced pad, 0.65 kg | incline board covered with the landing mat; 5 runs dry, 5 with the mat damp | every run slides at or below **21.5°** (μ ≤ 0.40 less U95; D-105, CDR decision B1). The test is now an upper bound: the pad face caps the foot side load at 24.5 N | pad sheet, before the order |
+| `T-D5-SIDE` (D5) | every flight shoe, unbonded, on a stepped offcut; one bonded sample per printed batch | cord and jug at the pad, +y then +z | each flight shoe holds **28.2 N** (1.15 × limit) 3 s with no crack; the batch sample fails at or above **45.9 N** | every shoe batch |
+| `T-D3-EYE-BONDED` (C6 / D3) | two FIN-013 eyes bonded on a printed boss | spring scale along x, and 30° outboard | 58.8 N held 10 s, witness line unmoved; then to failure | first block print |
 
 Torque checks (0.20 N·m) without a torque driver: 2.0 N on a spring scale at 0.10 m on the hex key.
 
@@ -494,7 +503,8 @@ Torque checks (0.20 N·m) without a torque driver: 2.0 N on a spring scale at 0.
 
 `T-C4-TUBE-BEND` (= `T-J1-TUBE-BEND`), `T-C4-TUBE-TORSION` with GJ (CR-C2-15), CR-C4-21, CR-I1-08. Run on arrival
 (~27 Nov); weigh first. One specimen gives C4 E and G, and C2 the three values its 3-D FEA assumes
-(`ASM-C2-TUBE-ET`: E axial 70 GPa, G 3 GPa, E hoop 8 GPa).
+(`ASM-C2-TUBE-ET`: E axial 70 GPa, G 3 GPa, E hoop 8 GPa). The pass lines of this card are C4's live claims
+`CL-C4-D3-TUBE-E-REQ` and `-G-REQ` (CDR-19): read `CL-H1-TUBE-E-PASS` / `-G-PASS` on the day, not this table.
 
 1. Span 0.80 m on two 22 mm dowels; printed saddle at mid-span; 0.5 kg steps to 4.0 kg and back.
 2. Deflection: dial indicator (borrowed) or caliper depth rod against a fixed bar (U95 0.03 mm).
@@ -508,10 +518,10 @@ Torque checks (0.20 N·m) without a torque driver: 2.0 N on a spring scale at 0.
 
 | Pass | Limit | Claim |
 |---|---|---|
-| Deflection at 4.0 kg (E ≥ 70 GPa) | ≤ **1.61 mm** (1.64 mm at 70 GPa − U95) | `CL-H1-TUBE-DEFL-ACCEPT` |
+| Deflection at 4.0 kg (E ≥ **78.6 GPa**, `CL-C4-D3-TUBE-E-REQ`) | ≤ **1.43 mm** (1.46 mm at 78.6 GPa − U95); 1.61 mm was the old 70 GPa line | `CL-H1-TUBE-E-PASS`, `CL-H1-TUBE-DEFL-ACCEPT` |
 | Peak stress | 23.7 MPa (tube stays usable as the spare) | `CL-H1-TUBE-SIGMA` |
 | E read uncertainty | 1.8 % | `CL-H1-TUBE-E-U` |
-| GJ (both senses agree within 5 %) | report; ≥ **21.9 N·m²** (G 3 GPa) keeps C4's low corner conservative; 36.5 N·m² at G 5 GPa | `CL-H1-TORS-GJ-LO`, `ASM-C4-G-TUBE-LO`, `-HI` |
+| GJ (both senses agree within 5 %) | ≥ **31.4 N·m²** (G ≥ **4.31 GPa**, `CL-C4-D3-TUBE-G-REQ`): twist over the 0.30 m gauge ≤ **3.22°** at 2.0 kg. Below it the ±45° fallback tube is ordered. 21.9 N·m² (G 3 GPa) was C4's low corner only | `CL-H1-TUBE-G-PASS`, `CL-H1-TORS-GJ-PASS`, `-TWIST-PASS`, `CL-H1-TORS-GJ-LO` |
 | GJ read uncertainty (G 10 GPa, 73 mm spot difference) | 1.9 % | `CL-H1-TORS-U` |
 | Torsion peak shear | 8.9 MPa (≤ 30, tube stays usable) | `CL-H1-TORS-TAU` |
 | Ring δ at 20 N / E_hoop uncertainty | 0.26 mm at 8 GPa / 5.5 % | `CL-H1-RING-DEFL`, `-U` |
@@ -524,22 +534,23 @@ its E/G assumptions, and C2 its `ASM-C2-TUBE-ET` G and hoop values, with the mea
 `T-C4-MOUNT-STIFF`, with `T-C6-CANT-SEAT` and `T-C6-PROPNUT` on the same first ASA mount. Figure `FIG H1-08`.
 
 Pass level **≥ max(1 100, `CL-C4-D3-MOUNT-K-REQ`) about both rocking axes**: 1 100 is CR-C4-41's floor. C4's
-claim rose from 1 030 to **1 966 N·m/rad** at its 15:01 re-publish, so the card reads the claim on the day. C4's own
-estimate is now 1 500 N·m/rad (`ASM-C4-MOUNT-K-ROCK`, 0.76 of the pass level), so a mount built to the estimate is
-**expected to fail** GT-17 (CR-H1-24). C4's readout (two 0.01 mm dial gauges at 0.5 kg) sees 4.3 µm at the pass
-stiffness, under one division (`CL-H1-MSTIFF-DIAL-UM`), so GT-17 uses an optical lever (CR-H1-10).
+claim is **1 642 N·m/rad** today (2026-11-13, D-91 mount with the D-89c cheek); the card reads the claim on the day.
+C4's estimate of the mount as drawn is 2 259 N·m/rad (`CL-C4-D3-MOUNT-K-EST`, × 1.38 of the pass level). C4's readout
+(two 0.01 mm dial gauges at 0.5 kg) sees 5.2 µm at the pass stiffness, under one division (`CL-H1-MSTIFF-DIAL-UM`),
+so GT-17 uses an optical lever (CR-H1-10).
 
 1. Motor clamped in the mount on a 60 mm tube stub in a vice. Mirror on the can side, second mirror on the collar;
    laser spots on mm paper **5.0 m** away (a corridor). Tripod phone photo of the paper at each step; the spot
    centre is read against the 1 mm grid to ±0.3 mm.
-2. 0.5, 1.0, 1.5 kg over a cord at the prop nut, in y and then in z (1.5 kg = 70 % of the mount proof load,
+2. 0.5, 1.0, 1.7 kg over a cord at the prop nut, in y and then in z (top step raised from 1.5 kg by CDR-28;
+   1.7 kg = 79 % of the mount proof load,
    `CL-H1-MSTIFF-LOAD-FRAC`). Measure the arm a (nut to collar) with calipers; sizing used a = 0.0577 m.
 3. θ = (spot_can − spot_collar) / (2 L); k = F a / θ from the slope.
 
 | Pass | Limit | Claim |
 |---|---|---|
-| Net spot travel at 1.5 kg, y and z | ≤ **4.02 mm** (4.32 mm at 1 966 N·m/rad − 0.3 mm read); 5.66 mm expected at C4's 1 500 estimate | `CL-H1-MSTIFF-SPOT-ACCEPT` → `CL-H1-MSTIFF-K-PASS` = `CL-C4-D3-MOUNT-K-REQ` |
-| k uncertainty at the pass line | 6.9 % (≤ 10 %) | `CL-H1-MSTIFF-U` |
+| Net spot travel at 1.7 kg, y and z | ≤ **5.56 mm** (5.86 mm at 1 642 N·m/rad − 0.3 mm read) | `CL-H1-MSTIFF-SPOT-ACCEPT` → `CL-H1-MSTIFF-K-PASS` = `CL-C4-D3-MOUNT-K-REQ` |
+| k uncertainty at the pass line | 5.1 % (≤ 10 %) | `CL-H1-MSTIFF-U` |
 | `T-C6-CANT-SEAT` | ≥ 6 turns from first bite; 0.05 mm feeler does not enter | C6 |
 | `T-C6-PROPNUT`: 1.5 N·m on/off × 10 | witness line and lip cap unmoved | C6 |
 

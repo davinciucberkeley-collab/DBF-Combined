@@ -1,13 +1,26 @@
 {
- "bodies": 1113,
+ "bodies": 1177,
  "defects": [
   "PWR-004 body \"lap solder joint\": zero-width spike / repeated point in a loop (removed in the export)"
  ],
  "kinks": [],
- "parts": 219,
+ "parts": 220,
  "poses": [
   {
    "hits": [
+    {
+     "a": "E-HRN-11",
+     "at_mm": [
+      -3.12,
+      -44.66,
+      45.48
+     ],
+     "b": "E-HRN-12",
+     "bodies": [
+      "E-HRN-12 \"wire strand 1 (4.8 mm)\" x E-HRN-11 \"wire strand 0 (4.8 mm)\" 0.02 mm"
+     ],
+     "depth_mm": 0.024
+    },
     {
      "a": "E-HRN-28#3",
      "at_mm": [
@@ -356,7 +369,7 @@
    ]
   }
  ],
- "seconds": 341.8,
+ "seconds": 757.0,
  "skipped": [
   [
    "HRN-001",

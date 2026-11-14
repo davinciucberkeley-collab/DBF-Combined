@@ -18,6 +18,10 @@ offsets from F3's points and the CG; elevon servo limits from D6's linkage; elev
 stall need. R5 (D-65, D-66, D-71): touchdown sink in the altitude-holding Q modes against the hard-landing sink, no
 raw-stick flight mode (R-SPIRAL), AIRSPEED_MIN against 1.3 x the forward-CG stall. Lints K09L.param and the stand
 overlay K09L-STAND.param (incl. no RCn_OPTION that selects MANUAL / ACRO).
+R6 (CDR fix round 2026-11-13, CDR-07 a): every parameter name in both files must be in ArduPilot's published Plane
+parameter list (ap_plane_param_names_4.7.1.txt beside this file: names only, taken from apm.pdef.xml of stable-4.7.1),
+and no name that 4.7 removed or renamed may appear. Runs offline. New claims: AIRSPEED_MIN against 1.3 x the tripped
+stall (B6), the yaw acceleration limit against the airframe's yaw authority (CDR-16), RC loss to QLAND time (CDR-26).
 """
 import math
 import sys
@@ -27,6 +31,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[1] / "proofs"))
 import proofkit as pk  # noqa: E402
 
+NAMES_FILE = HERE / "ap_plane_param_names_4.7.1.txt"
 PARAM_FILE = HERE.parents[1] / "subsystems" / "flight-software" / "K09L.param"
 STAND_FILE = HERE.parents[1] / "subsystems" / "flight-software" / "K09L-STAND.param"
 
@@ -112,6 +117,36 @@ kit.assumption("ASM-F4-AVN-POINTS", "IMU and GPS centres in the aircraft frame",
 kit.assumption("ASM-F4-THETA-DN", "Servo angle for 25 deg TE down", "-42.9 deg (D6 linkage solution)",
                basis="team/D6/claims.json CALC-D6-KIN output theta_dn_deg -42.87 (no claim id published; "
                "CR-D6-09 quotes it)", value=-42.87, unit="deg", status="UNVERIFIED")
+
+kit.source("SRC-F4-AP-PDEF", "ArduPilot Plane parameter definitions, stable-4.7.1 (apm.pdef.xml, tag Plane-4.7.1 dbe79216)",
+           "doc", url="https://autotest.ardupilot.org/Parameters/versioned/Plane/stable-4.7.1/apm.pdef.xml",
+           checked="2026-11-13",
+           note="5 721 parameter names; name list committed as team/F4/ap_plane_param_names_4.7.1.txt. The stable-4.7.2 "
+                "folder is not published (HTTP 404 on 2026-11-13); the latest-master list gives the same result for K09L.param")
+kit.source("SRC-F4-AP-RELNOTES", "ArduPlane ReleaseNotes.txt at tag Plane-4.7.2", "doc",
+           url="https://raw.githubusercontent.com/ArduPilot/ardupilot/Plane-4.7.2/ArduPlane/ReleaseNotes.txt",
+           checked="2026-11-13",
+           note="4.7.2: CoreWing F405 Wing V2 board added (PR 33717). 4.7.0: FS_SHORT_TIMEOUT removed (PR 30350), "
+                "RC_FS_TIMEOUT added (PR 31441), ATC_ACC_R/P/Y_MAX renamed and scaled to deg/s/s (PR 32192), QuadPlane "
+                "attitude and position control converted to SI units (PR 30683)")
+kit.source("SRC-F4-AP-EVENTS", "ArduPlane/events.cpp and radio.cpp at tag Plane-4.7.2", "code",
+           url="https://raw.githubusercontent.com/ArduPilot/ardupilot/Plane-4.7.2/ArduPlane/events.cpp",
+           checked="2026-11-13",
+           note="rc_failsafe_short_on_event(): QSTABILIZE / QLOITER / QHOVER -> QLAND unless Q_OPTIONS bit 5 or 20; "
+                "radio.cpp control_failsafe(): failsafe set after 10 consecutive checks with no valid frame for "
+                "RC_FS_TIMEOUT (default 1.0 s, RC_Channels_VarInfo.h)")
+kit.assumption("ASM-F4-FS-COUNT", "RC failsafe debounce", "10 consecutive failed checks at the 50 Hz radio task = 0.2 s "
+               "after RC_FS_TIMEOUT has run out", basis="radio.cpp control_failsafe() (throttle_counter == 10), tag "
+               "Plane-4.7.2; the 50 Hz rate of read_radio is from the scheduler table (not re-read here): SITL measured "
+               "1.15 s in total on 2026-11-13 (team/F4/sitl/RESULTS.md S7a)", value=0.2, unit="s",
+               status="UNVERIFIED", cites=["SRC-F4-AP-EVENTS"])
+kit.assumption("ASM-F4-QLAND-MAX", "RC loss to QLAND in a Q mode", "<= 3 s after the last valid frame "
+               "(CDR-EL-11 pass line, REVIEWER EST: 5 s without control in 5 m/s wind is about 25 m of drift)",
+               basis="review/CDR-2026-11-13/CDR-electrical.md CDR-EL-11", value=3.0, unit="s")
+kit.assumption("ASM-F4-YAW-ACC-FRAC", "Share of the yaw authority the attitude shaper may ask for",
+               "Q_A_ACC_Y_MAX <= 0.85 x the yaw acceleration at 30 % differential (B4 half-fin factor)",
+               basis="review/CDR-2026-11-13/CDR-aero.md CDR-AE-12 (85 % of 2.8 rad/s2); T-B4-YAW measures the factor",
+               value=0.85, unit="-")
 
 # ---------------------------------------------------------------- ArduPilot Quad-X table (AP_MotorsMatrix, viewed from above)
 # motor number: (angle from copter forward, clockwise positive, deg; rotation viewed from above)
@@ -412,6 +447,32 @@ def bat_curr(i, n, idx):
     return {"i_set_a": float(i), "i_motor_a": i / n, "idx": idx}
 
 
+@kit.calc("CALC-F4-ARSPD-TRIP", title="AIRSPEED_MIN against the tripped-boundary-layer stall (planning baseline, B6)",
+          equation="V_need = f x Vs_trip ; Vs_keep = AIRSPEED_MIN / f ; second fallback: AIRSPEED_MIN 18 holds to 18 / f",
+          inputs={"vs": "CL-B2R3-VS-GATE-FWD-TURB", "f": "P:requirements.transition_factor",
+                  "vmin": "P:fsw.airspeed_min_ms", "vcr": "P:fsw.airspeed_cruise_ms", "vas": "P:fsw.assist_speed_ms"},
+          units={"vs": "m/s", "vmin": "m/s", "vcr": "m/s", "vas": "m/s"})
+def arspd_trip(vs, f, vmin, vcr, vas):
+    return {"v_need": f * vs, "vmin": float(vmin), "vs_keep": vmin / f, "vs_keep_fb2": 18.0 / f,
+            "cruise_minus_min": vcr - vmin, "assist_over_vs": vas / vs}
+
+
+@kit.calc("CALC-F4-YAW-ACC", title="Yaw acceleration limit of the attitude shaper against the airframe's yaw authority",
+          equation="a_set = Q_A_ACC_Y_MAX x pi/180 ; r = a_set / a_yaw(30 % differential, half-fin factor)",
+          inputs={"a": "P:fsw.yaw_acc_max_degs2", "ay": "CL-B3-HOVER-YAW-ACCEL-LOW"}, units={"a": "deg/s2", "ay": "rad/s2"},
+          cites=["SRC-F4-AP-PDEF", "SRC-F4-AP-RELNOTES"])
+def yaw_acc(a, ay):
+    return {"a_set_rads2": math.radians(a), "ratio": math.radians(a) / ay, "old_unit_cdegs2": a * 100.0}
+
+
+@kit.calc("CALC-F4-RC-FS", title="RC loss to QLAND in a Q mode (4.7: the short failsafe event selects QLAND)",
+          equation="t = RC_FS_TIMEOUT + debounce",
+          inputs={"t": "P:fsw.rc_fs_timeout_s", "d": "ASM-F4-FS-COUNT", "tl": "P:fsw.fs_long_timeout_s"},
+          units={"t": "s", "d": "s", "tl": "s"}, assumes=["ASM-F4-FS-COUNT"], cites=["SRC-F4-AP-EVENTS", "SRC-F4-AP-RELNOTES"])
+def rc_fs(t, d, tl):
+    return {"t_qland_s": t + d, "t_fw_rtl_s": float(tl)}
+
+
 # ---------------------------------------------------------------- claims
 FC = ["AVN-001"]
 MOT = ["PRP-002-UR", "PRP-002-UL", "PRP-002-LR", "PRP-002-LL"]
@@ -550,13 +611,33 @@ kit.claim("CL-F4-ELEVON-PWM-ERR", "SERVO5/6 MIN/MAX as set against D6's +/-25 de
 kit.claim("CL-F4-ELEVON-PWM-SPAN", "Largest servo pulse excursion from trim", calc="CALC-F4-ELEVON-PWM",
           output="span_us", unit="us", limit=("<=", 500.0), parts=FC,
           how="T-D6-THROW; the 500 us end is D6's assumed +/-45 deg servo range (ASM-D6-SERVO-THROW).")
-kit.claim("CL-F4-MIX-PITCH", "Trimmed-CLmax elevon need over pure-pitch travel at MIXING_GAIN 0.5",
+kit.claim("CL-F4-ARSPD-TRIP-NEED", "1.3 x the tripped stall at the gate mass, forward CG (B2 XFOIL tripped, 12.85 m/s)",
+          calc="CALC-F4-ARSPD-TRIP", output="v_need", unit="m/s", parts=FC,
+          how="T-B2-STALL replaces the tripped-section estimate with the measured trimmed stall.")
+kit.claim("CL-F4-ARSPD-MIN-TRIP", "AIRSPEED_MIN against 1.3 x the tripped stall at the gate mass, forward CG (B6 baseline)",
+          calc="CALC-F4-ARSPD-TRIP", output="vmin", unit="m/s", limit=(">=", "CL-F4-ARSPD-TRIP-NEED"),
+          verifies=["R-STALL", "R-TRANSITION"], parts=FC,
+          how="T-B2-STALL with the real LE tape seam (twin, then K09-L): AIRSPEED_MIN = ceil(1.3 x measured trimmed "
+              "stall); 17 holds to 13.07 m/s, the second fallback 18 to 13.85 m/s (vs_keep, vs_keep_fb2).")
+kit.claim("CL-F4-YAW-ACC-SET", "Q_A_ACC_Y_MAX over the hover yaw acceleration at 30 % differential",
+          calc="CALC-F4-YAW-ACC", output="ratio", limit=("<=", "ASM-F4-YAW-ACC-FRAC"), verifies=["R-FSW-PARAMS"],
+          parts=FC + MOT,
+          how="Read Q_A_ACC_Y_MAX after loading (135 deg/s/s; the 4.6 name Q_A_ACCEL_Y_MAX must not load). T-B4-YAW "
+              "(hanging yaw stand) measures the yaw moment per differential; re-set to 0.85 x the measured value.")
+kit.claim("CL-F4-RC-FS-QLAND", "RC loss to QLAND in QSTABILIZE / QHOVER / QLOITER", calc="CALC-F4-RC-FS",
+          output="t_qland_s", unit="s", limit=("<=", "ASM-F4-QLAND-MAX"), verifies=["R-FAILSAFES"], parts=FC,
+          how="SITL S7 (measured 1.15 s on the stock tailsitter model, 2026-11-13) and T-F5-BENCH step 9: transmitter "
+              "off, props off, QHOVER selected: the HUD shows QLAND within 3 s. Needs the receiver in failsafe mode "
+              "No Pulses (RC-LINK.md).")
+kit.claim("CL-F4-MIX-PITCH", "Trimmed-CLmax elevon need at the CG target over the pure-pitch travel MIXING_GAIN leaves",
           calc="CALC-F4-MIX", output="ratio", limit=("<=", 1.0), parts=FC,
           how="T-B2-STALL slow flight in FBWA: elevon output not at the pitch end at the stall break.")
 
 # ---------------------------------------------------------------- tests (all planned)
-kit.test("T-F4-SITL-NAMES", "Load K09L.param in SITL and on the board; no unknown name except the 3 LEGACY pairs",
-         verifies=["CL-F4-MOTOR-MAP-ERR", "CL-F4-SPIN-MAX"], procedure="SITL-PLAN.md S1")
+kit.test("T-F4-SITL-NAMES", "Load K09L.param in SITL and on the board; no unknown name. SITL part run 2026-11-13 "
+         "(ArduPlane 4.7.3-beta1 Windows SITL): 156 of 158 names accepted and read back after a reboot; "
+         "SERVO_BLH_BDMASK and SERVO_BLH_POLES are not in the SITL build (board only). Board part: T-F3-FW-LOAD",
+         verifies=["CL-F4-MOTOR-MAP-ERR", "CL-F4-SPIN-MAX"], procedure="SITL-PLAN.md S1; team/F4/sitl/RESULTS.md")
 kit.test("T-F4-BENCH-MAP", "Props-off motor order, rotation and elevon direction",
          verifies=["CL-F4-MOTOR-MAP-ERR"], procedure="TUNING-PLAN.md step 1")
 kit.test("T-F4-STAND-RPM-CAP", "Fresh-pack full-stick rpm and pack current on the stand",
@@ -581,23 +662,39 @@ kit.test("T-F4-SITL-MOTOR-OUT", "Motor-failure injection in hover, pitch-over an
 
 
 # ---------------------------------------------------------------- lint of the parameter file (not a claim)
-CHECKED_NAMES = {   # matched against SRC-F4-AP-SRC / SRC-F4-AP-TAILSITTER / the Plane parameter index, 2026-11-09
-    "Q_TAILSIT_ENABLE", "Q_TAILSIT_MOTMX", "Q_TAILSIT_RAT_FW", "Q_TAILSIT_RAT_VT", "Q_TAILSIT_ANGLE",
-    "Q_TAILSIT_THR_VT", "Q_TAILSIT_GSCMSK", "Q_TAILSIT_DSKLD", "Q_FRAME_CLASS", "Q_FRAME_TYPE", "Q_OPTIONS",
-    "INITIAL_MODE", "Q_M_SPIN_MAX", "Q_M_BAT_CURR_MAX", "Q_M_BAT_CURR_TC", "Q_M_BAT_VOLT_MAX", "Q_M_BAT_VOLT_MIN",
-    "Q_M_THST_HOVER", "Q_M_PWM_TYPE", "THR_MAX", "THR_MIN", "Q_A_RATE_R_MAX", "Q_A_ANGLE_MAX", "Q_WP_SPD_DN",
-    "Q_PILOT_SPD_DN", "Q_LAND_FINAL_SPD", "Q_WVANE_ENABLE", "Q_WVANE_GAIN", "Q_ASSIST_SPEED", "Q_ASSIST_ALT",
-    "Q_TRANS_FAIL", "Q_TRANS_FAIL_ACT", "AIRSPEED_CRUISE", "AIRSPEED_MIN", "AIRSPEED_MAX", "AIRSPEED_STALL",
-    "ROLL_LIMIT_DEG", "PTCH_LIM_MAX_DEG", "PTCH_LIM_MIN_DEG", "TECS_CLMB_MAX", "RUDD_DT_GAIN", "INS_HNTCH_MODE",
-    "BATT_FS_LOW_ACT", "BATT_ARM_VOLT", "BATT_FS_VOLTSRC", "THR_FAILSAFE", "FS_SHORT_ACTN", "FS_LONG_ACTN",
-    "FS_LONG_TIMEOUT", "FS_EKF_THRESH", "Q_RTL_MODE", "RTL_ALTITUDE", "RTL_RADIUS", "FLTMODE_CH", "FLTMODE1",
-    "FLTMODE2", "FLTMODE3", "FLTMODE4", "FLTMODE5", "FLTMODE6", "FENCE_TYPE", "FENCE_ACTION", "FENCE_ALT_MAX",
-    "Q_WVANE_LAND", "Q_WVANE_TAKEOFF", "RC_OPTIONS", "SCALING_SPEED",
+def load_names():
+    """Parameter names of ArduPlane stable-4.7.1 (SRC-F4-AP-PDEF). One name per line; lines starting '#' are the header."""
+    return {ln.strip() for ln in NAMES_FILE.read_text(encoding="utf-8").splitlines() if ln.strip() and not ln.startswith("#")}
+
+
+# Names that existed up to 4.6 and that ArduPlane 4.7 removed or renamed (SRC-F4-AP-RELNOTES; each new name is in the
+# 4.7.1 list). A K09L line under an old name would be skipped silently by the loader, so it is a lint error here.
+RENAMED_47 = {
+    "FS_SHORT_TIMEOUT": "removed (PR 30350); RC loss time is RC_FS_TIMEOUT",
+    "Q_A_ACCEL_Y_MAX": "Q_A_ACC_Y_MAX in deg/s/s (PR 32192; was cdeg/s/s)",
+    "Q_A_ACCEL_R_MAX": "Q_A_ACC_R_MAX in deg/s/s (PR 32192)",
+    "Q_A_ACCEL_P_MAX": "Q_A_ACC_P_MAX in deg/s/s (PR 32192)",
+    "Q_ANGLE_MAX": "Q_A_ANGLE_MAX in deg (PR 31978; was cdeg)",
+    "Q_WP_SPEED_DN": "Q_WP_SPD_DN in m/s (PR 32147)",
+    "Q_WP_SPEED_UP": "Q_WP_SPD_UP in m/s (PR 32147)",
+    "Q_WP_SPEED": "Q_WP_SPD in m/s (PR 32147)",
+    "Q_PILOT_SPEED_DN": "Q_PILOT_SPD_DN in m/s (4.7 list)",
+    "Q_PILOT_SPEED_UP": "Q_PILOT_SPD_UP in m/s (4.7 list)",
+    "Q_LAND_SPEED": "Q_LAND_FINAL_SPD in m/s (4.7 list)",
+    "Q_P_VELXY_P": "Q_P_NE_VEL_P (PR 30683)",
+    "Q_P_POSXY_P": "Q_P_NE_POS_P (PR 30683)",
+    "GPS_POS1_X": "GPS1_POS_X (4.6)", "GPS_POS1_Y": "GPS1_POS_Y (4.6)", "GPS_POS1_Z": "GPS1_POS_Z (4.6)",
+    "ARSPD_FBW_MIN": "AIRSPEED_MIN (4.5)", "ARSPD_FBW_MAX": "AIRSPEED_MAX (4.5)",
 }
-LEGACY = {"Q_WP_SPEED_DN": "Q_WP_SPD_DN", "Q_PILOT_SPEED_DN": "Q_PILOT_SPD_DN", "Q_LAND_SPEED": "Q_LAND_FINAL_SPD",
-          "GPS_POS1_X": "GPS1_POS_X", "GPS_POS1_Y": "GPS1_POS_Y", "GPS_POS1_Z": "GPS1_POS_Z"}
-LEGACY_SCALE = {"Q_WP_SPEED_DN": 100, "Q_PILOT_SPEED_DN": 100, "Q_LAND_SPEED": 100,
-                "GPS_POS1_X": 1, "GPS_POS1_Y": 1, "GPS_POS1_Z": 1}
+# In the 4.7.1 list but not in the SITL build (no BLHeli / bidirectional-DShot backend there): read back on the board only.
+BOARD_ONLY = {"SERVO_BLH_BDMASK", "SERVO_BLH_POLES"}
+
+
+def name_check(values, known, label):
+    errs = [f"{label}: {n} is a pre-4.7 name: {RENAMED_47[n]}" for n in values if n in RENAMED_47]
+    errs += [f"{label}: {n} is not an ArduPlane 4.7.1 parameter name ({NAMES_FILE.name})"
+             for n in values if n not in known and n not in RENAMED_47]
+    return errs
 
 
 def lint(path):
@@ -622,9 +719,6 @@ def lint(path):
             errors.append(f"line {i}: {name} value '{val}' is not a number")
         if not comment_above:      # a comment covers the parameter lines below it until a blank line
             errors.append(f"line {i}: {name} has no comment")
-    for old, new in LEGACY.items():
-        if old in values and new in values and abs(values[old] - LEGACY_SCALE[old] * values.get(new, -1)) > 1e-6:
-            errors.append(f"LEGACY {old} = {values[old]} does not equal {LEGACY_SCALE[old]} x {new}")
     return values, errors
 
 
@@ -669,11 +763,13 @@ if __name__ == "__main__":
     errs += mirror_check(vals)
     svals, serrs = lint(STAND_FILE)
     errs += [f"{STAND_FILE.name}: {e}" for e in serrs]
-    unchecked = sorted(n for n in vals if n not in CHECKED_NAMES and n not in LEGACY)
-    print(f"{PARAM_FILE.name}: {len(vals)} parameters, {len(LEGACY)} LEGACY duplicates, "
-          f"{len(vals) - len(unchecked) - len(LEGACY)} names matched to a source, {len(unchecked)} to match on the "
-          f"installed build (SITL S1):")
-    print("  " + " ".join(unchecked))
+    known = load_names()
+    name_errs = name_check(vals, known, PARAM_FILE.name) + name_check(svals, known, STAND_FILE.name)
+    errs += name_errs
+    print(f"{PARAM_FILE.name}: {len(vals)} parameters, {STAND_FILE.name}: {len(svals)}; {len(known)} names in "
+          f"{NAMES_FILE.name}; {len(vals) + len(svals) - len(name_errs)} of {len(vals) + len(svals)} names matched "
+          f"(ArduPlane stable-4.7.1), {len(name_errs)} unknown or renamed; board-only (not in SITL): "
+          f"{' '.join(sorted(BOARD_ONLY & set(vals)))}")
     kit.write()
     mm = kit.nodes["CALC-F4-MOTOR-MAP"]["outputs"]
     print("motor map (station: [AP motor, rotation seen from the nose]):", mm["derived"])

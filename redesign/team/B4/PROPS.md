@@ -279,3 +279,38 @@ APC PER3 files ([11×4.5MR](https://www.apcprop.com/files/PER3_11x45MR.dat), 11�
 interaction: [Zhou, Ning, Hu (ISPIV)](https://journals.library.iit.edu/index.php/ISPIV/article/view/39) (abstract
 only, `UNVERIFIED`). Drag of rectangular sections: Hoerner, *Fluid-Dynamic Drag* ch. 3; Delany and Sorensen, NACA
 TN 3038. All read 2026-11-09.
+
+## 9. CDR fix round, 2026-11-13 (CDR-15 / CDR-AE-08): 11 × 7E in the prop trade
+
+`CALC-B4-PROP-AB` in `props.py`; data `data/apc_per3_11x7E.csv` (APC PER3 file 11×7E, v2022-0915,
+https://www.apcprop.com/files/PER3_11x7E.dat, read 2026-11-13, tables 5 000–8 000 rpm, transcription error 0.32 %
+worst row, `CL-B4-DATA`). APC product page (https://www.apcprop.com/product/11x7e/, read 2026-11-13): LP11070E, $4.17,
+0.81 oz (23 g), 1/4 in shaft. APC files are blade-element predictions, not measurements; B4's motor model (E1 constants,
+25 °C winding) reads about 17 % under E1's carried cruise power, so read the **ratios**, not the watts. All `UNVERIFIED`.
+
+| Prop | Cruise pack W, 16 / 17 / 18 m/s | Prop η at 17 m/s | J at 17 m/s | Hover pack W | Level speed at output 0.704, fresh pack | Output for VH 21.8 m/s | Mass, price |
+|---|---|---|---|---|---|---|---|
+| 11×5.5MR (selected) | 204 / **231** / 262 | 0.455 | 0.577 | 346 | 24.8 m/s (9 080 rpm in flight; 7 800 static) | 0.61 | 17 g, $3.83 |
+| 11×5.5E | 186 / 210 / 237 (−8 / −9 / −10 %) | 0.503 | 0.569 | 347 (+0.3 %) | 25.0 m/s | 0.61 | 23 g, $4.17 |
+| **11×7E** | **158 / 177 / 199 (−22.5 / −23.3 / −23.8 %)** | **0.609** | 0.681 | 367 (**+6.0 %**, limit +10 %) | 28.9 m/s | **0.52** | 23 g, $4.17 |
+
+Claims: `CL-B4-AB-CRUISE-RATIO-16` 0.775, `-17` 0.767, `-E-17` 0.909, `CL-B4-AB-HOVER-RATIO` 1.060 ≤ 1.10,
+`CL-B4-AB-THR-VH-11X7E` 0.52, `CL-B4-AB-RPM-FULL-11X7E` 10 180 rpm ≤ 13 640 (thin-electric limit 150 000 / D).
+The reviewer's −28 % is −22 to −24 % on B4's model.
+
+What this means:
+
+- **The 11×7E is the lever for the 17 m/s baseline**: about 54 W less at 17 m/s on B4's model for 21 W more in hover
+  (2 min of hover costs 0.7 Wh more, 5 min of cruise saves 4.5 Wh; `EST` from the table).
+- **No matched pusher was found.** APC's site has no 11×7EP (https://www.apcprop.com/product/11x7ep/ returns 404; a web
+  search on 2026-11-13 found none). The only reverse-rotation 11×7 found is the sport pusher LP11070P, about 40 g on
+  retailer pages, a different blade. A quad needs two of each hand, so the 11×7E A/B on the stand (GT-02, static, one
+  motor) can run, but **a flight set does not exist until a counter-rotating 11×7 thin electric is found**: —. The
+  11×5.5E / EP pair exists and saves about 9 %.
+- **`THR_MAX` would drop to about 52** with the 11×7E (level speed 28.9 m/s at 70). With the selected MR prop B4's
+  model also reads 24.8 m/s at `THR_MAX` 70, above VH 21.8 m/s, where F4 carries 21.3 m/s from B1: in flight the prop
+  unloads and the rpm rises from 7 800 (static) to 9 080. TUNING-PLAN 6c now starts the full-throttle legs at 55 (D-125).
+- Mass: +24 g for four 11×7E (4 × 6 g), booked by S4 under CDR-12.
+
+Early-cart ask (I1, S4): 2 × LP11070E for the stand A/B ($8.34 + shipping, `EST`); the 11×5.5E / EP pair is the
+alternate that can fly.

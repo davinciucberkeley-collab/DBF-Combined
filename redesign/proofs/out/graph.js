@@ -2,10 +2,269 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-13 19:05 UTC",
+  "generated": "2026-11-13 20:43 UTC",
   "dataset": "redesign",
-  "ok": true,
-  "errors": [],
+  "ok": false,
+  "errors": [
+   "CALC-PWR-GEO: redesign/subsystems/power/power_claims.py::geo failed: KeyError: 'board_pad_m' (line 99)",
+   "CALC-PWR-KO: redesign/subsystems/power/power_claims.py::ko_fit failed: KeyError: 'board_pad_m' (line 99)",
+   "DRIFT CALC-C2-SPAR-ROOT.sigma_pa: stored 6.259e+07, re-runs to 5.792e+07. Changed inputs: Mb 20.74 -> 19.19 (CL-C1-SPAR-MB-ULT). Re-run redesign/team/C2/c2_claims.py",
+   "DRIFT CALC-C2-SPAR-TAU.value: stored 1.376e+07, re-runs to 1.376e+07. Changed inputs: T 8.455 -> 8.451 (CL-C1-WING-TORSION-ULT). Re-run redesign/team/C2/c2_claims.py",
+   "DRIFT CALC-C4-STATIC-2L.face_ult_pa: stored 5.693e+06, re-runs to 3.531e+06. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-2L.ms_face: stored 0.7566, re-runs to 1.832. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-2L.face_L4_pa: stored 5.693e+06, re-runs to 3.531e+06. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-2L.tube_ult_pa: stored 6.192e+07, re-runs to 3.601e+07. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-2L.ms_tube: stored 5.459, re-runs to 10.11. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-2L.edge_ult_pa: stored 7.648e+07, re-runs to 4.396e+07. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-2L.ms_edge: stored 4.23, re-runs to 8.099. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-2L.strut_comp_design_n: stored 164.5, re-runs to 106.7. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-2L.ms_strut_buckling: stored 0.2104, re-runs to 0.866. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-2L.dfoot_L4_m: stored 0.008773, re-runs to 0.005007. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-2L.mroot_L4_nm: stored 13.68, re-runs to 7.955. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-2L.strut_L4_n: stored 95.37, re-runs to 55.43. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-1L.face_ult_pa: stored 6.644e+06, re-runs to 3.98e+06. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-1L.ms_face: stored 0.5051, re-runs to 1.513. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-1L.face_L4_pa: stored 6.194e+06, re-runs to 3.98e+06. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-1L.tube_ult_pa: stored 6.911e+07, re-runs to 4.061e+07. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-1L.ms_tube: stored 4.788, re-runs to 8.85. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-1L.edge_ult_pa: stored 1.566e+08, re-runs to 8.986e+07. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-1L.ms_edge: stored 1.555, re-runs to 3.451. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-1L.strut_comp_design_n: stored 192.7, re-runs to 112.7. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-1L.ms_strut_buckling: stored 0.03339, re-runs to 0.7662. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-1L.dfoot_L4_m: stored 0.0149, re-runs to 0.008502. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-1L.mroot_L4_nm: stored 15.27, re-runs to 8.971. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-STATIC-1L.strut_L4_n: stored 111.7, re-runs to 65.36. Changed inputs: mu_g 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-BLOCK.M_design_nm: stored 32.41, re-runs to 23.07. Changed inputs: m_des_c1 32.41 -> 22.47 (CL-C1-FINJOINT-M-DESIGN). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-BLOCK.s_tube_bore_pa: stored 1.234e+07, re-runs to 8.846e+06. Changed inputs: m_des_c1 32.41 -> 22.47 (CL-C1-FINJOINT-M-DESIGN). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-BLOCK.tau_shear_out_pa: stored 9.527e+06, re-runs to 6.782e+06. Changed inputs: m_des_c1 32.41 -> 22.47 (CL-C1-FINJOINT-M-DESIGN). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-BLOCK.s_spar_bore_pa: stored 6.982e+06, re-runs to 5.016e+06. Changed inputs: m_des_c1 32.41 -> 22.47 (CL-C1-FINJOINT-M-DESIGN). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-BLOCK.s_web_pa: stored 7.41e+06, re-runs to 5.275e+06. Changed inputs: m_des_c1 32.41 -> 22.47 (CL-C1-FINJOINT-M-DESIGN). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-BLOCK.tau_web_pa: stored 5.881e+06, re-runs to 4.186e+06. Changed inputs: m_des_c1 32.41 -> 22.47 (CL-C1-FINJOINT-M-DESIGN). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-BLOCK.ms_tube_bore: stored 0.6207, re-runs to 1.261. Changed inputs: m_des_c1 32.41 -> 22.47 (CL-C1-FINJOINT-M-DESIGN). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-BLOCK.ms_shear_out: stored 0.04961, re-runs to 0.4745. Changed inputs: m_des_c1 32.41 -> 22.47 (CL-C1-FINJOINT-M-DESIGN). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-BLOCK.ms_spar_bore: stored 1.865, re-runs to 2.987. Changed inputs: m_des_c1 32.41 -> 22.47 (CL-C1-FINJOINT-M-DESIGN). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-BLOCK.ms_web_bend: stored 1.024, re-runs to 1.844. Changed inputs: m_des_c1 32.41 -> 22.47 (CL-C1-FINJOINT-M-DESIGN). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-BLOCK.ms_web_torsion: stored 0.7004, re-runs to 1.389. Changed inputs: m_des_c1 32.41 -> 22.47 (CL-C1-FINJOINT-M-DESIGN). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-BLOCK.ms_min: stored 0.04961, re-runs to 0.4745. Changed inputs: m_des_c1 32.41 -> 22.47 (CL-C1-FINJOINT-M-DESIGN). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-BLOCK.spar_couple_n: stored 1351, re-runs to 961.3. Changed inputs: m_des_c1 32.41 -> 22.47 (CL-C1-FINJOINT-M-DESIGN). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-BLOCK.tube_couple_n: stored 1801, re-runs to 1282. Changed inputs: m_des_c1 32.41 -> 22.47 (CL-C1-FINJOINT-M-DESIGN). Re-run redesign/team/C4/fin_structures.py",
+   "DRIFT CALC-C4-SIM-CODES.conjugate_gradient_ilu1_linres_log10: stored 1.07e-10, re-runs to 2.86e-11. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-CODES.conjugate_gradient_ilu1_wall_s: stored 228.7, re-runs to 633.5. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-CODES.restarted_fgmres_ilu2_wall_s: stored 14.3, re-runs to 39.3. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.hs_drawn_lim_pa: stored table (3 rows), re-runs to table (3 rows). Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.peak_drawn_lim_pa: stored table (3 rows), re-runs to table (3 rows). Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.far_drawn_lim_pa: stored table (3 rows), re-runs to table (3 rows). Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.hs_drawn_ext_lim_pa: stored 1.574e+07, re-runs to 1.038e+07. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.hs_drawn_gci: stored 0.6812, re-runs to 0.6853. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.face_drawn_ult_pa: stored 2.361e+07, re-runs to 1.557e+07. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.ms_drawn: stored -0.5765, re-runs to -0.3577. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.ms_far_drawn: stored -0.3433, re-runs to 0.05728. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.hs_proposed_lim_pa: stored table (3 rows), re-runs to table (3 rows). Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.peak_proposed_lim_pa: stored table (3 rows), re-runs to table (3 rows). Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.far_proposed_lim_pa: stored table (3 rows), re-runs to table (3 rows). Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.hs_proposed_ext_lim_pa: stored 4.086e+06, re-runs to 2.755e+06. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.hs_proposed_gci: stored 0.03871, re-runs to 0.0004361. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.hs_proposed_order: stored -1, re-runs to 4. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.face_proposed_ult_pa: stored 6.129e+06, re-runs to 4.133e+06. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.ms_proposed: stored 0.6315, re-runs to 1.419. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.ms_far_proposed: stored -0.0608, re-runs to 0.4599. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.hs_drawn_global4_lim_pa: stored 8.133e+06, re-runs to 5.337e+06. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.global_check_rel: stored 0.03103, re-runs to 0.02993. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.hs_drawn_lower_L2_lim_pa: stored 8.148e+06, re-runs to 5.35e+06. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.hs_proposed_lower_L2_lim_pa: stored 4.033e+06, re-runs to 2.84e+06. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.m_side_leg_nm: stored 0.9401, re-runs to 0.5831. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.strip_drawn_lim_pa: stored 1.389e+08, re-runs to 8.842e+07. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.strip_tau_drawn_lim_pa: stored table (3 rows), re-runs to table (3 rows). Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.ms_strip_drawn: stored 0.9205, re-runs to 2.016. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.foot_defl_drawn_m: stored 0.006981, re-runs to 0.004333. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.strip_proposed_lim_pa: stored 1.392e+08, re-runs to 8.864e+07. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.strip_tau_proposed_lim_pa: stored table (3 rows), re-runs to table (3 rows). Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.ms_strip_proposed: stored 0.9154, re-runs to 2.008. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.foot_defl_proposed_m: stored 0.00644, re-runs to 0.003998. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.board_share_3d: stored 0.9321, re-runs to 0.991. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.plate_hs_drawn_lim_pa: stored 2.216e+07, re-runs to 1.416e+07. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.plate_peak_drawn_lim_pa: stored 1.882e+07, re-runs to 1.215e+07. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.plate_hs_proposed_lim_pa: stored 8.66e+06, re-runs to 5.501e+06. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.plate_peak_proposed_lim_pa: stored 8.659e+06, re-runs to 5.541e+06. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C4-SIM-FACE.board_share_shell: stored 1.312, re-runs to 1.352. Changed inputs: mu_hi 0.7 -> 0.4 (ASM-C1-FRICTION); side_c5 39.5 -> 24.5 (CL-C5-SIM3D-SIDE-LOAD). Re-run redesign/team/C4/sim_fin.py",
+   "DRIFT CALC-C5-DROP-DYN.side_load_c1_N: stored 26.16, re-runs to 14.95. Changed inputs: mu_c1 0.7 -> 0.4 (ASM-C1-FRICTION). Re-run redesign/team/C5/landing_calc.py",
+   "DRIFT CALC-C6-TUBE-BONDS.T_collar_lim_nm: stored 12.72, re-runs to 7.936. Changed inputs: Tc1 12.72 -> 7.936 (CL-C1-FINHALF-T-LIM); Tc4 11.1 -> 6.919 (CL-C4-D3-COLLAR-T). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-TUBE-BONDS.T_collar_design_nm: stored 27.42, re-runs to 17.11. Changed inputs: Tc1 12.72 -> 7.936 (CL-C1-FINHALF-T-LIM); Tc4 11.1 -> 6.919 (CL-C4-D3-COLLAR-T). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-TUBE-BONDS.tau_collar_mpa: stored 1.776, re-runs to 1.16. Changed inputs: Tc1 12.72 -> 7.936 (CL-C1-FINHALF-T-LIM); Tc4 11.1 -> 6.919 (CL-C4-D3-COLLAR-T). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-TUBE-BONDS.rf_collar: stored 1.126, re-runs to 1.725. Changed inputs: Tc1 12.72 -> 7.936 (CL-C1-FINHALF-T-LIM); Tc4 11.1 -> 6.919 (CL-C4-D3-COLLAR-T). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-TUBE-BONDS.rf_collar_alt: stored 0.8189, re-runs to 1.254. Changed inputs: Tc1 12.72 -> 7.936 (CL-C1-FINHALF-T-LIM); Tc4 11.1 -> 6.919 (CL-C4-D3-COLLAR-T). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-TUBE-BONDS.rf_collar_min: stored 0.6654, re-runs to 1.019. Changed inputs: Tc1 12.72 -> 7.936 (CL-C1-FINHALF-T-LIM); Tc4 11.1 -> 6.919 (CL-C4-D3-COLLAR-T). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-TUBE-BONDS.L_collar_req_m: stored 0.01954, re-runs to 0.01276. Changed inputs: Tc1 12.72 -> 7.936 (CL-C1-FINHALF-T-LIM); Tc4 11.1 -> 6.919 (CL-C4-D3-COLLAR-T). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-TUBE-BONDS.rf_collar_cond12: stored 0.6295, re-runs to 0.9642. Changed inputs: Tc1 12.72 -> 7.936 (CL-C1-FINHALF-T-LIM); Tc4 11.1 -> 6.919 (CL-C4-D3-COLLAR-T). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-TUBE-BONDS.rf_collar_prop: stored 1.126, re-runs to 1.725. Changed inputs: Tc1 12.72 -> 7.936 (CL-C1-FINHALF-T-LIM); Tc4 11.1 -> 6.919 (CL-C4-D3-COLLAR-T). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-TUBE-BONDS.tau_req_12_mpa: stored 3.256, re-runs to 2.126. Changed inputs: Tc1 12.72 -> 7.936 (CL-C1-FINHALF-T-LIM); Tc4 11.1 -> 6.919 (CL-C4-D3-COLLAR-T). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.F_design_n: stored 2233, re-runs to 1399. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.rf_anchor: stored 0.7075, re-runs to 1.129. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.L_req_m: stored 0.05583, re-runs to 0.03498. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.tail_net_mpa: stored 23.51, re-runs to 14.73. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.rf_tail_net: stored 0.6381, re-runs to 1.018. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.q_design_npm: stored 8602, re-runs to 5707. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.tau_face_mpa: stored 0.8602, re-runs to 0.5707. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.rf_face: stored 0.1162, re-runs to 0.1752. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.pin_load_n: stored 103.2, re-runs to 68.48. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.rf_pin_shear: stored 2.378, re-runs to 3.584. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.rf_pin_bend: stored 1.122, re-runs to 1.69. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.rf_pin: stored 1.122, re-runs to 1.69. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.pin_load_prop_n: stored 129, re-runs to 85.61. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.rf_pin_prop: stored 0.8972, re-runs to 1.352. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.rf_pin_prop_shear: stored 1.902, re-runs to 2.867. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.rf_pin_alt: stored 0.7656, re-runs to 1.154. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.pin_load_alt_n: stored 77.42, re-runs to 51.36. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.pitch_max_d_m: stored 0.01346, re-runs to 0.02029. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.pitch_max_dalt_m: stored 0.006891, re-runs to 0.01039. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.rf_pin_bearing: stored 1.937, re-runs to 2.92. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-STRIP.rf_strip_net_pin: stored 1.343, re-runs to 2.144. Changed inputs: F 2233 -> 1399 (CL-C4-D3-STRIP-END-F); q_lim 3990 -> 2647 (CL-C4-D3-STRIP-Q); Pp 103.2 -> 68.48 (CL-C4-D3-STRIP-PIN-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-FIN-SCALE.k: stored 0.993, re-runs to 1. Changed inputs: T1 12.67 -> 7.916 (CL-C1-FINHALF-T-WINGPLANE-LIM); T4 12.76 -> 7.914 (CL-C4-D3-SEC-T-L4); F 2233 -> 1399 (CL-C4-D3-STRIP-END-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-FIN-SCALE.F_strip_n: stored 2218, re-runs to 1400. Changed inputs: T1 12.67 -> 7.916 (CL-C1-FINHALF-T-WINGPLANE-LIM); T4 12.76 -> 7.914 (CL-C4-D3-SEC-T-L4); F 2233 -> 1399 (CL-C4-D3-STRIP-END-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-FIN-SCALE.rf_anchor: stored 0.7125, re-runs to 0.7072. Changed inputs: T1 12.67 -> 7.916 (CL-C1-FINHALF-T-WINGPLANE-LIM); T4 12.76 -> 7.914 (CL-C4-D3-SEC-T-L4); F 2233 -> 1399 (CL-C4-D3-STRIP-END-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-FIN-SCALE.rf_tail_net: stored 0.6426, re-runs to 0.6378. Changed inputs: T1 12.67 -> 7.916 (CL-C1-FINHALF-T-WINGPLANE-LIM); T4 12.76 -> 7.914 (CL-C4-D3-SEC-T-L4); F 2233 -> 1399 (CL-C4-D3-STRIP-END-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-FIN-SCALE.rf_pin: stored 1.129, re-runs to 1.121. Changed inputs: T1 12.67 -> 7.916 (CL-C1-FINHALF-T-WINGPLANE-LIM); T4 12.76 -> 7.914 (CL-C4-D3-SEC-T-L4); F 2233 -> 1399 (CL-C4-D3-STRIP-END-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-FIN-SCALE.pitch_max_m: stored 0.01355, re-runs to 0.01345. Changed inputs: T1 12.67 -> 7.916 (CL-C1-FINHALF-T-WINGPLANE-LIM); T4 12.76 -> 7.914 (CL-C4-D3-SEC-T-L4); F 2233 -> 1399 (CL-C4-D3-STRIP-END-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-FIN-SCALE.L_req_m: stored 0.05544, re-runs to 0.05585. Changed inputs: T1 12.67 -> 7.916 (CL-C1-FINHALF-T-WINGPLANE-LIM); T4 12.76 -> 7.914 (CL-C4-D3-SEC-T-L4); F 2233 -> 1399 (CL-C4-D3-STRIP-END-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-FIN-SCALE.A_net_req_m2: stored 0.0001478, re-runs to 0.0001489. Changed inputs: T1 12.67 -> 7.916 (CL-C1-FINHALF-T-WINGPLANE-LIM); T4 12.76 -> 7.914 (CL-C4-D3-SEC-T-L4); F 2233 -> 1399 (CL-C4-D3-STRIP-END-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-C6-FIN-SCALE.frame_n: stored 2772, re-runs to 1750. Changed inputs: T1 12.67 -> 7.916 (CL-C1-FINHALF-T-WINGPLANE-LIM); T4 12.76 -> 7.914 (CL-C4-D3-SEC-T-L4); F 2233 -> 1399 (CL-C4-D3-STRIP-END-F). Re-run redesign/team/C6/joints.py",
+   "DRIFT CALC-D3-MOUNT-SLIP.fuse_ratio: stored 2.313, re-runs to 1.604. Changed inputs: M_joint 32.41 -> 22.47 (CL-C1-FINJOINT-M-DESIGN). Re-run redesign/team/D3/fins_calcs.py",
+   "DRIFT CALC-D3-COLLAR.h_ratio: stored 1.276, re-runs to 1.944. Changed inputs: h_req 0.01724 -> 0.01131 (CL-C4-D3-COLLAR-H-REQ). Re-run redesign/team/D3/fins_calcs.py",
+   "DRIFT CALC-D3-ROOT.M: stored 7.777, re-runs to 4.823. Changed inputs: S 59.25 -> 36.75 (CL-C1-FOOT-SIDE-DESIGN-ULT). Re-run redesign/team/D3/fins_calcs.py",
+   "DRIFT CALC-D3-ROOT.rf_fillet: stored 1.129, re-runs to 1.82. Changed inputs: S 59.25 -> 36.75 (CL-C1-FOOT-SIDE-DESIGN-ULT). Re-run redesign/team/D3/fins_calcs.py",
+   "DRIFT CALC-D3-ROOT.rf_allow: stored 0.5644, re-runs to 0.9099. Changed inputs: S 59.25 -> 36.75 (CL-C1-FOOT-SIDE-DESIGN-ULT). Re-run redesign/team/D3/fins_calcs.py",
+   "DRIFT CALC-D3-ROOT.rf_upper: stored 1.166, re-runs to 1.881. Changed inputs: S 59.25 -> 36.75 (CL-C1-FOOT-SIDE-DESIGN-ULT). Re-run redesign/team/D3/fins_calcs.py",
+   "DRIFT CALC-D3-ROOT.rf_lower: stored 1.129, re-runs to 1.82. Changed inputs: S 59.25 -> 36.75 (CL-C1-FOOT-SIDE-DESIGN-ULT). Re-run redesign/team/D3/fins_calcs.py",
+   "DRIFT CALC-D3-ROOT.leff_for_allow: stored 0.2883, re-runs to 0.1677. Changed inputs: S 59.25 -> 36.75 (CL-C1-FOOT-SIDE-DESIGN-ULT). Re-run redesign/team/D3/fins_calcs.py",
+   "DRIFT CALC-D5-FLANGE.F_N: stored 80.44, re-runs to 65.98. Changed inputs: F_c1 80.44 -> 65.93 (CL-C1-FOOT-F-ULT). Re-run redesign/team/D5/feet_calc.py",
+   "DRIFT CALC-D5-FLANGE.sigma_Pa: stored 3.744e+07, re-runs to 3.071e+07. Changed inputs: F_c1 80.44 -> 65.93 (CL-C1-FOOT-F-ULT). Re-run redesign/team/D5/feet_calc.py",
+   "DRIFT CALC-D5-FLANGE.sf: stored 1.068, re-runs to 1.303. Changed inputs: F_c1 80.44 -> 65.93 (CL-C1-FOOT-F-ULT). Re-run redesign/team/D5/feet_calc.py",
+   "DRIFT CALC-D5-BOND.design_N: stored 115.6, re-runs to 94.84. Changed inputs: F_c1 80.44 -> 65.93 (CL-C1-FOOT-F-ULT). Re-run redesign/team/D5/feet_calc.py",
+   "DRIFT CALC-D5-BOND.tau_Pa: stored 6.98e+04, re-runs to 5.725e+04. Changed inputs: F_c1 80.44 -> 65.93 (CL-C1-FOOT-F-ULT). Re-run redesign/team/D5/feet_calc.py",
+   "DRIFT CALC-D5-BOND.sf: stored 1.433, re-runs to 1.747. Changed inputs: F_c1 80.44 -> 65.93 (CL-C1-FOOT-F-ULT). Re-run redesign/team/D5/feet_calc.py",
+   "CALC-D5-SIDE: redesign/team/D5/feet_calc.py::side failed: TypeError: side() missing 2 required positional arguments: 'ff' and 'allow_z' (line 166)",
+   "CALC-D6-PUSHROD: redesign/team/D6/mech_calcs.py::pushrod failed: TypeError: pushrod() missing 3 required positional arguments: 'tp', 'tube', and 'tau_b' (line 166)",
+   "DRIFT CALC-E3-MISSION.motor_peak_des_c: stored 64.98, re-runs to 64.98. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-MISSION.pack_end_des_c: stored 45.44, re-runs to 45.5. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-MISSION.fc_peak_des_c: stored 55.01, re-runs to 55.03. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-MISSION.phase_log_des: stored table (8 rows), re-runs to table (8 rows). Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-MISSION.pack_end_nom_c: stored 39.55, re-runs to 39.57. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-MISSION.fc_peak_nom_c: stored 52.67, re-runs to 52.68. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-MISSION.motor_peak_asd_c: stored 62.56, re-runs to 62.56. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-MISSION.pack_end_asd_c: stored 44.28, re-runs to 44.33. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-MISSION.fc_peak_asd_c: stored 54.59, re-runs to 54.61. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-MISSION.asd_table: stored table (7 rows), re-runs to table (7 rows). Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-MISSION.fc_peak_sealed_des_c: stored 68.09, re-runs to 68.1. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-MISSION.pack_end_sealed_des_c: stored 47.63, re-runs to 47.69. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-MISSION.motor_peak_abuse_des_c: stored 102.2, re-runs to 117. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-MISSION.esc_peak_abuse_des_c: stored 79.96, re-runs to 88.42. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-MISSION.motor_peak_hoveronly_des_c: stored 66.34, re-runs to 66.34. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-MISSION.fc_peak_hoveronly_des_c: stored 68.71, re-runs to 68.72. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-MISSION.pack_end_hoveronly_des_c: stored 49.1, re-runs to 49.15. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-MISSION.pack_rise_cold_des_k: stored 17.52, re-runs to 17.57. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-MISSION.limiter_loss_motor_w: stored 100.7, re-runs to 125.6. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-MISSION.limiter_loss_esc_w: stored 9.366, re-runs to 11.7. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-MISSION.limiter_im_a: stored 29.78, re-runs to 33.46. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.mission_des__motor: stored 43.98, re-runs to 43.98. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.mission_des__petg: stored 32.8, re-runs to 32.8. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.mission_des__asa: stored 56.09, re-runs to 56.09. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.mission_des__pack: stored 44.61, re-runs to 44.56. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.mission_des__pack_life: stored 34.58, re-runs to 34.52. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.mission_des__fc: stored 60.79, re-runs to 60.77. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.mission_des__min_asa_c: stored 43.98, re-runs to 43.98. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.mission_des__min_petg_c: stored 32.8, re-runs to 32.8. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.mission_nom__pack: stored 50.52, re-runs to 50.49. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.mission_nom__pack_life: stored 40.48, re-runs to 40.46. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.mission_nom__fc: stored 63.24, re-runs to 63.23. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.mission_nom__min_asa_c: stored 50.52, re-runs to 50.49. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.hoveronly_des__motor: stored 42.68, re-runs to 42.68. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.hoveronly_des__petg: stored 31.54, re-runs to 31.54. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.hoveronly_des__asa: stored 54.75, re-runs to 54.75. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.hoveronly_des__pack: stored 40.91, re-runs to 40.86. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.hoveronly_des__pack_life: stored 30.9, re-runs to 30.85. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.hoveronly_des__fc: stored 47.66, re-runs to 47.66. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.hoveronly_des__min_asa_c: stored 40.91, re-runs to 40.86. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.hoveronly_des__min_petg_c: stored 31.54, re-runs to 31.54. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.abuse_des__motor: stored 10.85, re-runs to -1.035. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.abuse_des__petg: stored 0.5422, re-runs to -11.05. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.abuse_des__asa: stored 22.02, re-runs to 9.816. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.abuse_des__esc: stored 35.29, re-runs to 26.07. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.abuse_des__pack: stored 37.27, re-runs to 33.75. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.abuse_des__pack_life: stored 27.17, re-runs to 23.62. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.abuse_des__fc: stored 58.28, re-runs to 56.7. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.abuse_des__min_asa_c: stored 10.85, re-runs to -1.035. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.abuse_des__min_petg_c: stored 0.5422, re-runs to -11.05. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.mission_asd__motor: stored 46.33, re-runs to 46.33. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.mission_asd__petg: stored 35.08, re-runs to 35.08. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.mission_asd__asa: stored 58.5, re-runs to 58.5. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.mission_asd__pack: stored 45.78, re-runs to 45.72. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.mission_asd__pack_life: stored 35.74, re-runs to 35.69. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.mission_asd__fc: stored 61.23, re-runs to 61.21. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.mission_asd__min_asa_c: stored 45.78, re-runs to 45.72. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CEILING.mission_asd__min_petg_c: stored 35.08, re-runs to 35.08. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-CHECKS.peaks_dt_1_05_025: stored table (3 rows), re-runs to table (3 rows). Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS); e2_t_end 43.77 -> 43.81 (CL-E2-PACK-T-END). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-OPS.burst_max_s: stored 13.55, re-runs to 10.17. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-OPS.pack_start_max_c: stored 37.66, re-runs to 37.54. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-SWEEP.rows_des: stored table (4 rows), re-runs to table (4 rows). Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-SWEEP.motor_rise_spread_des_k: stored 1.1, re-runs to 1.1. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-SWEEP.rows_nom: stored table (4 rows), re-runs to table (4 rows). Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-SWEEP.rows_asd: stored table (4 rows), re-runs to table (4 rows). Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-SWEEP.motor_rise_spread_asd_k: stored 1.012, re-runs to 1.012. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-SWEEP.pack_end_15_warmed_des_c: stored 33.73, re-runs to 33.79. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-GT04.motor_rise_des_k: stored 38.15, re-runs to 40.34. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-GT04.esc_rise_des_k: stored 26.91, re-runs to 28.11. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-GT04.esc_peak_rise_des_k: stored 33.38, re-runs to 37.21. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-GT04.motor_peak_rise_des_k: stored 43.99, re-runs to 49.13. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-GT04.motor_rise_nom_k: stored 25.61, re-runs to 26.92. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-GT04.esc_rise_nom_k: stored 19.67, re-runs to 20.45. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-GT04.esc_peak_rise_nom_k: stored 27.94, re-runs to 31.63. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-E3-GT04.motor_peak_rise_nom_k: stored 35.41, re-runs to 40.29. Changed inputs: pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); i_lim 24.75 -> 30.01 (CL-E1-ILIM-I); t_hov_only 9.275 -> 9.249 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py",
+   "DRIFT CALC-F1-PROFILE.profile: stored table (7 rows), re-runs to table (7 rows). Changed inputs: i_climb 35.55 -> 35.67 (CL-E2-I-CLIMB-PESS); i_hover 30.14 -> 30.23 (CL-E2-HOVER-I-GATE); i_fwd 43.48 -> 43.67 (CL-E2-I-TRANS-FWD-PESS); i_cruise 23.9 -> 23.95 (CL-E2-CRUISE-I-PESS); t_cruise 380.3 -> 378.5 (CL-E2-T-CRUISE-PESS); i_back 40.06 -> 40.22 (CL-E2-I-TRANS-BACK-PESS); i_desc 30.14 -> 30.23 (CL-E2-I-DESCENT-PESS). Re-run redesign/team/F1/power.py",
+   "DRIFT CALC-H1-PROOF.fin_f_n: stored 57.2, re-runs to 42.96. Changed inputs: m_fin_ult 16.3 -> 12.24 (CL-C1-FINHALF-MB-ULT). Re-run redesign/team/H1/ground_tests.py",
+   "DRIFT CALC-H1-PROOF.fin_f_kg: stored 5.833, re-runs to 4.38. Changed inputs: m_fin_ult 16.3 -> 12.24 (CL-C1-FINHALF-MB-ULT). Re-run redesign/team/H1/ground_tests.py",
+   "CALC-H1-BEND: redesign/team/H1/ground_tests.py::bend failed: TypeError: bend() missing 1 required positional argument: 'e_req' (line 166)",
+   "CALC-H1-TORSION: redesign/team/H1/ground_tests.py::torsion failed: TypeError: torsion() missing 1 required positional argument: 'g_req' (line 166)",
+   "CALC-H1-LEVER: redesign/team/H1/ground_tests.py::lever failed: KeyError: 'arm_20_m' (line 584)",
+   "DRIFT CALC-H1-D5.mu_angle_deg: stored 34.99, re-runs to 21.8. Changed inputs: mu 0.7 -> 0.4 (ASM-D5-PAD-MU). Re-run redesign/team/H1/ground_tests.py",
+   "DRIFT CALC-H1-D5.mu_accept_deg: stored 35.29, re-runs to 21.5. Changed inputs: mu 0.7 -> 0.4 (ASM-D5-PAD-MU). Re-run redesign/team/H1/ground_tests.py",
+   "DRIFT CALC-H1-FINPROOF.d_split_mm: stored 11.49, re-runs to 9.056. Changed inputs: dsh 0.01893 -> 0.01175 (CL-C4-D3-FOOT-DEFL). Re-run redesign/team/H1/ground_tests.py",
+   "DRIFT CALC-H1-FINPROOF.dsh_mm: stored 18.93, re-runs to 11.75. Changed inputs: dsh 0.01893 -> 0.01175 (CL-C4-D3-FOOT-DEFL). Re-run redesign/team/H1/ground_tests.py",
+   "DRIFT CALC-H1-FINPROOF.travel_req_mm: stored 23.66, re-runs to 14.68. Changed inputs: dsh 0.01893 -> 0.01175 (CL-C4-D3-FOOT-DEFL). Re-run redesign/team/H1/ground_tests.py",
+   "DRIFT CALC-H1-FINPROOF.d_shell_ult_mm: stored 28.39, re-runs to 17.62. Changed inputs: dsh 0.01893 -> 0.01175 (CL-C4-D3-FOOT-DEFL). Re-run redesign/team/H1/ground_tests.py",
+   "DRIFT CALC-H1-SIDE-POD.side_n: stored 59.25, re-runs to 36.75. Changed inputs: f_side 59.25 -> 36.75 (CL-C1-FOOT-SIDE-DESIGN-ULT); f_d5 59.25 -> 36.75 (CL-C5-SIM3D-SIDE-ULT). Re-run redesign/team/H1/ground_tests.py",
+   "DRIFT CALC-H1-SIDE-POD.side_kg: stored 6.042, re-runs to 3.747. Changed inputs: f_side 59.25 -> 36.75 (CL-C1-FOOT-SIDE-DESIGN-ULT); f_d5 59.25 -> 36.75 (CL-C5-SIM3D-SIDE-ULT). Re-run redesign/team/H1/ground_tests.py",
+   "DRIFT CALC-I1-SPEND.spend_pess_allin: stored 2787, re-runs to 2941. Changed inputs: none (the function changed). Re-run redesign/team/I1/build_bom.py",
+   "DRIFT CALC-I1-SPEND.spend_base_allin: stored 2624, re-runs to 2637. Changed inputs: none (the function changed). Re-run redesign/team/I1/build_bom.py",
+   "DRIFT CALC-I1-SPEND.spend_pess_flight_ready: stored 2278, re-runs to 2236. Changed inputs: none (the function changed). Re-run redesign/team/I1/build_bom.py",
+   "DRIFT CALC-I1-SPEND.spend_base_flight_ready: stored 2138, re-runs to 2042. Changed inputs: none (the function changed). Re-run redesign/team/I1/build_bom.py",
+   "DRIFT CALC-I1-SPEND.goods_base: stored 1568, re-runs to 1500. Changed inputs: none (the function changed). Re-run redesign/team/I1/build_bom.py",
+   "DRIFT CALC-I1-SPEND.goods_pess: stored 1616, re-runs to 1548. Changed inputs: none (the function changed). Re-run redesign/team/I1/build_bom.py",
+   "DRIFT CALC-I1-SPEND.tax_base: stored 160.7, re-runs to 153.7. Changed inputs: none (the function changed). Re-run redesign/team/I1/build_bom.py",
+   "DRIFT CALC-I1-SPEND.tax_pess: stored 165.7, re-runs to 158.7. Changed inputs: none (the function changed). Re-run redesign/team/I1/build_bom.py",
+   "DRIFT CALC-I1-SPEND.ship_base: stored 128.6, re-runs to 94.29. Changed inputs: none (the function changed). Re-run redesign/team/I1/build_bom.py",
+   "DRIFT CALC-I1-SPEND.ship_pess: stored 160.7, re-runs to 117.9. Changed inputs: none (the function changed). Re-run redesign/team/I1/build_bom.py",
+   "DRIFT CALC-I1-SPEND.shipments: stored 15, re-runs to 11. Changed inputs: none (the function changed). Re-run redesign/team/I1/build_bom.py",
+   "DRIFT CALC-I1-SPEND.shipments_flight_ready: stored 16, re-runs to 12. Changed inputs: none (the function changed). Re-run redesign/team/I1/build_bom.py",
+   "DRIFT CALC-I1-SPEND.spend_base: stored 1882, re-runs to 1773. Changed inputs: none (the function changed). Re-run redesign/team/I1/build_bom.py",
+   "DRIFT CALC-I1-SPEND.spend_pess: stored 2020, re-runs to 1902. Changed inputs: none (the function changed). Re-run redesign/team/I1/build_bom.py",
+   "DRIFT CALC-I1-SPEND.early_goods_tax: stored 1286, re-runs to 1211. Changed inputs: none (the function changed). Re-run redesign/team/I1/build_bom.py",
+   "DRIFT CALC-I1-BRIDGE.delta_usd: stored 0, re-runs to 117.6. Changed inputs: none (the function changed). Re-run redesign/team/I1/build_bom.py",
+   "DRIFT CALC-I1-FLIGHT-READY.reserve_pess_flight_ready: stored -278.1, re-runs to -235.8. Changed inputs: none (the function changed). Re-run redesign/team/I1/build_bom.py",
+   "DRIFT CALC-I1-FLIGHT-READY.reserve_base_flight_ready: stored -138.2, re-runs to -42.47. Changed inputs: none (the function changed). Re-run redesign/team/I1/build_bom.py",
+   "DRIFT CALC-I1-ALLIN.reserve_pess_allin: stored -786.9, re-runs to -941. Changed inputs: none (the function changed). Re-run redesign/team/I1/build_bom.py",
+   "DRIFT CALC-I1-ALLIN.reserve_base_allin: stored -623.8, re-runs to -637. Changed inputs: none (the function changed). Re-run redesign/team/I1/build_bom.py",
+   "DRIFT CALC-I2-SCHEDULE.build_h: stored 113.5, re-runs to 100.5. Changed inputs: none (the function changed). Re-run redesign/team/I2/schedule_claims.py",
+   "DRIFT CALC-I2-SCHEDULE.build_h_stages_2_10: stored 94.5, re-runs to 81.5. Changed inputs: none (the function changed). Re-run redesign/team/I2/schedule_claims.py",
+   "DRIFT CALC-I2-SCHEDULE.pre_h: stored 226, re-runs to 241. Changed inputs: none (the function changed). Re-run redesign/team/I2/schedule_claims.py",
+   "DRIFT CALC-I2-SCHEDULE.first_cut: stored 2027-01-19, re-runs to 2027-01-10. Changed inputs: none (the function changed). Re-run redesign/team/I2/schedule_claims.py",
+   "DRIFT CALC-I2-SCHEDULE.first_hover: stored 2027-02-22, re-runs to 2027-02-12. Changed inputs: none (the function changed). Re-run redesign/team/I2/schedule_claims.py",
+   "DRIFT CALC-I2-SCHEDULE.cut_to_hover_d: stored 34, re-runs to 33. Changed inputs: none (the function changed). Re-run redesign/team/I2/schedule_claims.py",
+   "DRIFT CALC-I2-SCHEDULE.first_hover_week: stored 5, re-runs to 4. Changed inputs: none (the function changed). Re-run redesign/team/I2/schedule_claims.py",
+   "DRIFT CALC-I2-SCHEDULE.first_transition_week: stored 8, re-runs to 7. Changed inputs: none (the function changed). Re-run redesign/team/I2/schedule_claims.py",
+   "DRIFT CALC-I2-SCHEDULE.end_slack_d: stored 2, re-runs to 12. Changed inputs: none (the function changed). Re-run redesign/team/I2/schedule_claims.py",
+   "DRIFT CALC-I2-SCHEDULE.min_slack_d: stored 2, re-runs to 12. Changed inputs: none (the function changed). Re-run redesign/team/I2/schedule_claims.py",
+   "DRIFT CALC-J1-DISCONNECT-REQ.i_req_pess_a: stored 37.68, re-runs to 37.78. Changed inputs: i_hover_pess 30.14 -> 30.23 (CL-E2-HOVER-I-GATE). Re-run redesign/team/J1/research_claims.py"
+  ],
   "warnings": [
    "SRC-TEAM-LEAD: source has no url",
    "SRC-CONFIG: source has no url",
@@ -26,20 +285,20 @@ window.PROOF_GRAPH = {
   "counts": {
    "by_type": {
     "requirement": 59,
-    "source": 181,
-    "assumption": 535,
-    "calculation": 428,
-    "claim": 1728,
+    "source": 182,
+    "assumption": 543,
+    "calculation": 435,
+    "claim": 1773,
     "test": 145,
-    "parameter": 1111,
+    "parameter": 1114,
     "part": 147
    },
    "by_status": {
-    "CHECKED": 662,
-    "UNVERIFIED": 2527,
-    "PROPOSED": 1145
+    "CHECKED": 629,
+    "UNVERIFIED": 2614,
+    "PROPOSED": 1155
    },
-   "fails": 53
+   "fails": 81
   },
   "files": [
    "redesign/params/claims.json",
@@ -85,6 +344,7 @@ window.PROOF_GRAPH = {
    "redesign/team/F5/claims.json",
    "redesign/team/H1/claims.json",
    "redesign/team/I1/claims.json",
+   "redesign/team/I2/claims.json",
    "redesign/team/J1/claims.json"
   ],
   "part_link": "../../viewer/index.html#part={id}",
@@ -132,7 +392,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 165
+   "importance": 169
   },
   {
    "id": "R-HOVER-TW",
@@ -153,11 +413,13 @@ window.PROOF_GRAPH = {
     "CL-B4-SIM-TW-CAP is UNVERIFIED",
     "CL-E1-TW-TABLE is UNVERIFIED",
     "CL-E1-ILIM-TW-FRESH is UNVERIFIED",
-    "CL-E1-TW-WORST is UNVERIFIED"
+    "CL-E1-TW-WORST is UNVERIFIED",
+    "CL-E1-TW-WORST-B2 is UNVERIFIED",
+    "CL-E1-TW-FRESH-B2 is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 175
+   "importance": 183
   },
   {
    "id": "R-STALL",
@@ -184,7 +446,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 177
+   "importance": 181
   },
   {
    "id": "R-TRANSITION",
@@ -217,7 +479,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 211
+   "importance": 215
   },
   {
    "id": "R-MISSION",
@@ -237,11 +499,12 @@ window.PROOF_GRAPH = {
     "CL-E2-CRUISE-MIN-BASE is UNVERIFIED",
     "CL-E2-CRUISE-MIN-PESS is UNVERIFIED",
     "CL-E2-CRUISE-TO-LOW-PESS is UNVERIFIED",
+    "CL-E2-CRUISE-TO-LOW-PESS-V17: FAILS: margin -6.8% (4.662 min vs >= 5 min)",
     "CL-F4-BATT-CRT is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": false,
-   "importance": 197
+   "fails": true,
+   "importance": 205
   },
   {
    "id": "R-WIND",
@@ -262,8 +525,8 @@ window.PROOF_GRAPH = {
     "CL-B3-HOVER-ROLL-RATIO is UNVERIFIED",
     "CL-B3-HOVER-YAW-RATIO is UNVERIFIED",
     "CL-C5-V-LAND-SPANWISE is UNVERIFIED",
-    "CL-C5-V-PARK-GUST is UNVERIFIED",
-    "CL-C5-SIM3D-V-BROADSIDE: FAILS: margin -20.0% (4 m/s vs >= 5 m/s)",
+    "CL-C5-V-PARK-GUST: FAILS: margin -18.9% (4.054 m/s vs >= 5 m/s)",
+    "CL-C5-SIM3D-V-BROADSIDE: FAILS: margin -10.0% (4.5 m/s vs >= 5 m/s)",
     "CL-C5-SIM3D-V-SPANWISE is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
@@ -291,7 +554,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 231
+   "importance": 235
   },
   {
    "id": "R-PROP-CLEAR",
@@ -338,7 +601,7 @@ window.PROOF_GRAPH = {
    "ref": "redesign/config-study/REQUIREMENTS-PROPOSED.md#P25",
    "defined_in": "redesign/params/claims.json",
    "reasons": [
-    "CL-A1-CG-RANGE-AFT is UNVERIFIED",
+    "CL-A1-CG-RANGE-AFT: FAILS: margin -0.000123 m abs (-0.0001233 m vs >= 0 m)",
     "CL-A1-PACK-CG-AFT is UNVERIFIED",
     "CL-B3-V-CG-A3-AFT is UNVERIFIED",
     "CL-B3-V-SM-A3 is UNVERIFIED",
@@ -348,8 +611,8 @@ window.PROOF_GRAPH = {
     "CL-B3-V-TARGET-AFT is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": false,
-   "importance": 167
+   "fails": true,
+   "importance": 171
   },
   {
    "id": "R-BUDGET",
@@ -361,12 +624,13 @@ window.PROOF_GRAPH = {
    "reasons": [
     "CL-A1-RESERVE is UNVERIFIED",
     "CL-I1-SPEND-BASE is UNVERIFIED",
-    "CL-I1-SPEND-PESS is UNVERIFIED",
-    "CL-I1-RESERVE-PESS: FAILS: margin -9.3% (280.4 USD vs >= 309 USD)"
+    "CL-I1-SPEND-PESS: FAILS: margin -1.0% (2020 USD vs <= 2000 USD)",
+    "CL-I1-RESERVE-PESS: FAILS: margin -106.3% (-19.55 USD vs >= 309 USD)",
+    "CL-I1-RESERVE-PESS-FLIGHT-READY: FAILS: margin -278 USD abs (-278.1 USD vs >= 0 USD)"
    ],
    "status": "UNVERIFIED",
    "fails": true,
-   "importance": 9
+   "importance": 11
   },
   {
    "id": "R-RESERVE",
@@ -377,8 +641,8 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/params/claims.json",
    "reasons": [
     "CL-A1-RESERVE is UNVERIFIED",
-    "CL-I1-RESERVE-PESS: FAILS: margin -9.3% (280.4 USD vs >= 309 USD)",
-    "CL-I1-RESERVE-BASE is UNVERIFIED"
+    "CL-I1-RESERVE-PESS: FAILS: margin -106.3% (-19.55 USD vs >= 309 USD)",
+    "CL-I1-RESERVE-BASE: FAILS: margin -21.2% (118.1 USD vs >= 150 USD)"
    ],
    "status": "UNVERIFIED",
    "fails": true,
@@ -405,7 +669,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": true,
-   "importance": 327
+   "importance": 331
   },
   {
    "id": "R-DISCONNECT",
@@ -432,7 +696,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 191
+   "importance": 195
   },
   {
    "id": "R-BUILD-HOURS",
@@ -442,10 +706,12 @@ window.PROOF_GRAPH = {
    "ref": "redesign/config-study/REQUIREMENTS-PROPOSED.md#P11",
    "defined_in": "redesign/params/claims.json",
    "reasons": [
-    "no claim verifies it"
+    "CL-I2-BUILD-HOURS: FAILS: margin -26.1% (113.5 h vs <= 90 h)",
+    "CL-I2-CUT-TO-HOVER-D: FAILS: margin -61.9% (34 d vs <= 21 d)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1
+   "fails": true,
+   "importance": 5
   },
   {
    "id": "R-FC-STABLE",
@@ -491,7 +757,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 231
+   "importance": 237
   },
   {
    "id": "SRC-TEAM-LEAD",
@@ -502,7 +768,7 @@ window.PROOF_GRAPH = {
    "checked": "2026-11-09",
    "defined_in": "redesign/params/claims.json",
    "status": "CHECKED",
-   "importance": 7
+   "importance": 19
   },
   {
    "id": "SRC-CONFIG",
@@ -524,7 +790,7 @@ window.PROOF_GRAPH = {
    "checked": "2026-11-09",
    "defined_in": "redesign/params/claims.json",
    "status": "CHECKED",
-   "importance": 1229
+   "importance": 1261
   },
   {
    "id": "SRC-K09-CARD",
@@ -536,7 +802,7 @@ window.PROOF_GRAPH = {
    "note": "card values are the concept engineer's ESTIMATEs unless a datasheet is named",
    "defined_in": "redesign/params/claims.json",
    "status": "CHECKED",
-   "importance": 1404
+   "importance": 1436
   },
   {
    "id": "SRC-K09-REVIEW",
@@ -547,7 +813,7 @@ window.PROOF_GRAPH = {
    "checked": "2026-11-09",
    "defined_in": "redesign/params/claims.json",
    "status": "CHECKED",
-   "importance": 1194
+   "importance": 1224
   },
   {
    "id": "SRC-TIEBREAK",
@@ -558,7 +824,7 @@ window.PROOF_GRAPH = {
    "checked": "2026-11-09",
    "defined_in": "redesign/params/claims.json",
    "status": "CHECKED",
-   "importance": 1156
+   "importance": 1188
   },
   {
    "id": "SRC-ISA",
@@ -569,7 +835,7 @@ window.PROOF_GRAPH = {
    "checked": "2026-11-09",
    "defined_in": "redesign/params/claims.json",
    "status": "CHECKED",
-   "importance": 1265
+   "importance": 1297
   },
   {
    "id": "SRC-X3108S",
@@ -582,7 +848,7 @@ window.PROOF_GRAPH = {
    "note": "E1 compared the four rows with the maker image 2026-11-09 (CR-E1-03): W = 14.8 x A bookkeeping and the top row is at a sagged supply (~11.2 V, CL-E1-MAKER-SUPPLY). Not a 14.8 V thrust table; T-E1-STAND replaces it",
    "defined_in": "redesign/params/claims.json",
    "status": "CHECKED",
-   "importance": 1164
+   "importance": 1194
   },
   {
    "id": "SRC-APC-11X45MR",
@@ -608,7 +874,7 @@ window.PROOF_GRAPH = {
    "note": "fitted prop since D-05 (E1 CR-E1-01, B4 CR-B4-01); E1's SRC-E1-APC-PAGES and B4's SRC-B4-APC-PER3 hold the performance data",
    "defined_in": "redesign/params/claims.json",
    "status": "CHECKED",
-   "importance": 1202
+   "importance": 1232
   },
   {
    "id": "SRC-S5010",
@@ -621,7 +887,7 @@ window.PROOF_GRAPH = {
    "note": "wing section since D-02 (B2 CR-B2-02, SRC-B2-S5010-COORD); copy to subsystems/wing/s5010.dat with this header (D1)",
    "defined_in": "redesign/params/claims.json",
    "status": "CHECKED",
-   "importance": 1220
+   "importance": 1250
   },
   {
    "id": "SRC-LANRC-45A",
@@ -636,7 +902,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "SRC-OVONIC-4S6500",
@@ -651,7 +917,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1163
+   "importance": 1193
   },
   {
    "id": "SRC-CF-TUBE",
@@ -666,7 +932,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1220
+   "importance": 1250
   },
   {
    "id": "SRC-XPS-F250",
@@ -681,7 +947,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1123
+   "importance": 1153
   },
   {
    "id": "SRC-MH45",
@@ -829,7 +1095,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/subsystems/power/claims.json",
    "status": "CHECKED",
-   "importance": 1120
+   "importance": 1150
   },
   {
    "id": "CALC-PWR-JUMPER",
@@ -1085,7 +1351,11 @@ window.PROOF_GRAPH = {
     ]
    },
    "defined_in": "redesign/subsystems/power/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 3
   },
   {
@@ -1216,7 +1486,11 @@ window.PROOF_GRAPH = {
     "stack_u": 0.024
    },
    "defined_in": "redesign/subsystems/power/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 5
   },
   {
@@ -1254,7 +1528,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.004944178628389191,
-   "importance": 1119
+   "importance": 1149
   },
   {
    "id": "CL-PWR-MASS-NONPACK",
@@ -1446,6 +1720,7 @@ window.PROOF_GRAPH = {
    "value": 0.13783969856322234,
    "defined_in": "redesign/subsystems/power/claims.json",
    "reasons": [
+    "CALC-PWR-GEO does not re-run",
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
     "uses P:battery.size_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-64 (E2 CR-E2-25/-26): listed body 135 x 46 x 49 mm (+3 mm tolerance leaves 1 mm in the 53 mm bay, CL-E2-SKU-BAY-CLEAR); lead exits one 46 x 49 end. The 5 mm shorter pack gains 2.5 mm of forward room at the crush stack. D2 bay >= 0.160 x 0.052 x 0.053 m inside (CR-E2-02); measure on arrival (T-E2-WEIGH))",
     "uses P:pdb_pattern_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/pod/params.json: square M3 pattern placeholder until F1 names the PDB)",
@@ -1476,6 +1751,7 @@ window.PROOF_GRAPH = {
    "value": 11.140000000000004,
    "defined_in": "redesign/subsystems/power/claims.json",
    "reasons": [
+    "CALC-PWR-GEO does not re-run",
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
     "uses P:battery.size_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-64 (E2 CR-E2-25/-26): listed body 135 x 46 x 49 mm (+3 mm tolerance leaves 1 mm in the 53 mm bay, CL-E2-SKU-BAY-CLEAR); lead exits one 46 x 49 end. The 5 mm shorter pack gains 2.5 mm of forward room at the crush stack. D2 bay >= 0.160 x 0.052 x 0.053 m inside (CR-E2-02); measure on arrival (T-E2-WEIGH))",
     "uses P:pdb_pattern_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/pod/params.json: square M3 pattern placeholder until F1 names the PDB)",
@@ -1507,6 +1783,7 @@ window.PROOF_GRAPH = {
    "value": 1.850000000000001,
    "defined_in": "redesign/subsystems/power/claims.json",
    "reasons": [
+    "CALC-PWR-GEO does not re-run",
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
     "uses P:battery.size_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-64 (E2 CR-E2-25/-26): listed body 135 x 46 x 49 mm (+3 mm tolerance leaves 1 mm in the 53 mm bay, CL-E2-SKU-BAY-CLEAR); lead exits one 46 x 49 end. The 5 mm shorter pack gains 2.5 mm of forward room at the crush stack. D2 bay >= 0.160 x 0.052 x 0.053 m inside (CR-E2-02); measure on arrival (T-E2-WEIGH))",
     "uses P:pdb_pattern_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/pod/params.json: square M3 pattern placeholder until F1 names the PDB)",
@@ -1514,6 +1791,8 @@ window.PROOF_GRAPH = {
     "uses P:power.as150u_half_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/power/params.json: one AS150U half, L (x, mating axis) x W (y, the two contacts side by side) x H (z); mated length 2 x 0.029 - overlap; measure on arrival)"
    ],
    "status": "UNVERIFIED",
+   "margin": 1.850000000000001,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -1537,6 +1816,7 @@ window.PROOF_GRAPH = {
    "value": 0.0,
    "defined_in": "redesign/subsystems/power/claims.json",
    "reasons": [
+    "CALC-PWR-KO does not re-run",
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
     "uses P:battery.size_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-64 (E2 CR-E2-25/-26): listed body 135 x 46 x 49 mm (+3 mm tolerance leaves 1 mm in the 53 mm bay, CL-E2-SKU-BAY-CLEAR); lead exits one 46 x 49 end. The 5 mm shorter pack gains 2.5 mm of forward room at the crush stack. D2 bay >= 0.160 x 0.052 x 0.053 m inside (CR-E2-02); measure on arrival (T-E2-WEIGH))",
     "uses P:pdb_pattern_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/pod/params.json: square M3 pattern placeholder until F1 names the PDB)",
@@ -1545,6 +1825,8 @@ window.PROOF_GRAPH = {
     "uses P:power.stack_u_h_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/power/params.json: height above the deck top of the whole-stack fallback (case U); measured at BOARD-CHECK.md step 3)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -1567,6 +1849,7 @@ window.PROOF_GRAPH = {
    "value": 0.0,
    "defined_in": "redesign/subsystems/power/claims.json",
    "reasons": [
+    "CALC-PWR-KO does not re-run",
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
     "uses P:battery.size_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-64 (E2 CR-E2-25/-26): listed body 135 x 46 x 49 mm (+3 mm tolerance leaves 1 mm in the 53 mm bay, CL-E2-SKU-BAY-CLEAR); lead exits one 46 x 49 end. The 5 mm shorter pack gains 2.5 mm of forward room at the crush stack. D2 bay >= 0.160 x 0.052 x 0.053 m inside (CR-E2-02); measure on arrival (T-E2-WEIGH))",
     "uses P:pdb_pattern_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/pod/params.json: square M3 pattern placeholder until F1 names the PDB)",
@@ -1597,6 +1880,7 @@ window.PROOF_GRAPH = {
    "value": 0.048600000000000004,
    "defined_in": "redesign/subsystems/power/claims.json",
    "reasons": [
+    "CALC-PWR-KO does not re-run",
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
     "uses P:battery.size_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-64 (E2 CR-E2-25/-26): listed body 135 x 46 x 49 mm (+3 mm tolerance leaves 1 mm in the 53 mm bay, CL-E2-SKU-BAY-CLEAR); lead exits one 46 x 49 end. The 5 mm shorter pack gains 2.5 mm of forward room at the crush stack. D2 bay >= 0.160 x 0.052 x 0.053 m inside (CR-E2-02); measure on arrival (T-E2-WEIGH))",
     "uses P:pdb_pattern_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/pod/params.json: square M3 pattern placeholder until F1 names the PDB)",
@@ -1629,6 +1913,7 @@ window.PROOF_GRAPH = {
    "value": 0.0626,
    "defined_in": "redesign/subsystems/power/claims.json",
    "reasons": [
+    "CALC-PWR-KO does not re-run",
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
     "uses P:battery.size_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-64 (E2 CR-E2-25/-26): listed body 135 x 46 x 49 mm (+3 mm tolerance leaves 1 mm in the 53 mm bay, CL-E2-SKU-BAY-CLEAR); lead exits one 46 x 49 end. The 5 mm shorter pack gains 2.5 mm of forward room at the crush stack. D2 bay >= 0.160 x 0.052 x 0.053 m inside (CR-E2-02); measure on arrival (T-E2-WEIGH))",
     "uses P:pdb_pattern_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/pod/params.json: square M3 pattern placeholder until F1 names the PDB)",
@@ -1656,6 +1941,7 @@ window.PROOF_GRAPH = {
    "value": 0.0626,
    "defined_in": "redesign/subsystems/power/claims.json",
    "reasons": [
+    "CALC-PWR-KO does not re-run",
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
     "uses P:battery.size_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-64 (E2 CR-E2-25/-26): listed body 135 x 46 x 49 mm (+3 mm tolerance leaves 1 mm in the 53 mm bay, CL-E2-SKU-BAY-CLEAR); lead exits one 46 x 49 end. The 5 mm shorter pack gains 2.5 mm of forward room at the crush stack. D2 bay >= 0.160 x 0.052 x 0.053 m inside (CR-E2-02); measure on arrival (T-E2-WEIGH))",
     "uses P:pdb_pattern_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/pod/params.json: square M3 pattern placeholder until F1 names the PDB)",
@@ -1678,7 +1964,7 @@ window.PROOF_GRAPH = {
    "procedure": "Calipers on the AS150U halves and the separated CoreWing power board (BOARD-CHECK.md: <= 53 x 33 x 9 mm); 1 g scale on every part; unplug force of a mated AS150U pair with a luggage scale; epoxy coupon on a sanded spare housing",
    "defined_in": "redesign/subsystems/power/claims.json",
    "status": "PROPOSED",
-   "importance": 1120
+   "importance": 1150
   },
   {
    "id": "T-PWR-FIT",
@@ -1797,7 +2083,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/A1/claims.json",
    "status": "PROPOSED",
-   "importance": 511
+   "importance": 517
   },
   {
    "id": "ASM-A1-R5-ADDED-G",
@@ -1907,7 +2193,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/A1/claims.json",
    "status": "CHECKED",
-   "importance": 1128
+   "importance": 1158
   },
   {
    "id": "CALC-A1-ELEVON",
@@ -2373,7 +2659,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/A1/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CALC-A1-GROWTH",
@@ -2525,7 +2811,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/A1/claims.json",
    "status": "CHECKED",
-   "importance": 276
+   "importance": 281
   },
   {
    "id": "CALC-A1-RESERVE",
@@ -2567,7 +2853,7 @@ window.PROOF_GRAPH = {
    "value": 0.368,
    "defined_in": "redesign/team/A1/claims.json",
    "status": "CHECKED",
-   "importance": 1127
+   "importance": 1157
   },
   {
    "id": "CL-A1-WING-AR",
@@ -2702,6 +2988,8 @@ window.PROOF_GRAPH = {
    "value": 0.017000000000000015,
    "defined_in": "redesign/team/A1/claims.json",
    "status": "CHECKED",
+   "margin": 0.017000000000000015,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -2733,7 +3021,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.0011538461538461975,
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-A1-RESERVE-COVERS",
@@ -2763,6 +3051,8 @@ window.PROOF_GRAPH = {
     "uses P:mass.allocation_g.mechanisms, which is UNVERIFIED (cites CL-D6-MASS, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
+   "margin": 3.0,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -2789,6 +3079,8 @@ window.PROOF_GRAPH = {
     "uses CL-A3-MASS-BASIC, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.48370000000042523,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -2904,6 +3196,8 @@ window.PROOF_GRAPH = {
     "uses P:mass.allocation_g.mechanisms, which is UNVERIFIED (cites CL-D6-MASS, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -3009,7 +3303,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.03312653100245255,
-   "importance": 268
+   "importance": 273
   },
   {
    "id": "CL-A1-RESERVE",
@@ -3064,6 +3358,8 @@ window.PROOF_GRAPH = {
     "uses CL-B3-V-XNP-ENV, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.00013070473450270403,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -3086,6 +3382,7 @@ window.PROOF_GRAPH = {
    "value": -0.00012332758060219773,
    "defined_in": "redesign/team/A1/claims.json",
    "reasons": [
+    "FAILS: margin -0.000123 m abs (-0.0001233 m vs >= 0 m)",
     "uses P:cg.x_range_m, which is UNVERIFIED (cites CL-B3-V-CG-FWD, which is UNVERIFIED)",
     "uses CL-B3-V-CG-FWD, which is UNVERIFIED",
     "uses CL-B3-V-CG-AFT-ENV, which is UNVERIFIED",
@@ -3093,6 +3390,9 @@ window.PROOF_GRAPH = {
     "uses CL-B3-V-XNP-ENV, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "margin": -0.00012332758060219773,
+   "margin_abs": true,
+   "fails": true,
    "importance": 1
   },
   {
@@ -3195,6 +3495,8 @@ window.PROOF_GRAPH = {
     "uses ASM-A1-STACK-DX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.01790000000000002,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -3234,6 +3536,8 @@ window.PROOF_GRAPH = {
     "uses ASM-A1-STACK-DX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.00020037781383929615,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -3274,6 +3578,8 @@ window.PROOF_GRAPH = {
     "uses ASM-A1-STACK-DX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0017688149553544974,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -3354,7 +3660,7 @@ window.PROOF_GRAPH = {
    "procedure": "Pack in, props on, 5 kg scale with 1 g resolution; record with the pack's own mass (H1).",
    "defined_in": "redesign/team/A1/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "T-A1-THRUST-STATION",
@@ -3401,7 +3707,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 159
+   "importance": 163
   },
   {
    "id": "R-CG-RANGE",
@@ -3413,7 +3719,7 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/team/A2/claims.json",
    "reasons": [
     "CL-A1-CG-RANGE-FWD is UNVERIFIED",
-    "CL-A1-CG-RANGE-AFT is UNVERIFIED",
+    "CL-A1-CG-RANGE-AFT: FAILS: margin -0.000123 m abs (-0.0001233 m vs >= 0 m)",
     "CL-A1-CG-WIDTH is UNVERIFIED",
     "CL-A1-CG-TARGET-IN is UNVERIFIED",
     "CL-A1-PACK-STATION is UNVERIFIED",
@@ -3443,8 +3749,8 @@ window.PROOF_GRAPH = {
     "CL-D2-SPACER-SUM is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": false,
-   "importance": 237
+   "fails": true,
+   "importance": 241
   },
   {
    "id": "R-HOVER-SPLIT",
@@ -3459,7 +3765,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 151
+   "importance": 155
   },
   {
    "id": "R-GUST-LEAN",
@@ -3492,7 +3798,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 169
+   "importance": 173
   },
   {
    "id": "R-SPIRAL",
@@ -3508,7 +3814,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 163
+   "importance": 167
   },
   {
    "id": "R-HOVER-AUTHORITY",
@@ -3531,7 +3837,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 187
+   "importance": 191
   },
   {
    "id": "R-CRUISE-AUTHORITY",
@@ -3547,7 +3853,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 167
+   "importance": 171
   },
   {
    "id": "R-SERVO-TORQUE",
@@ -3563,7 +3869,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 155
+   "importance": 159
   },
   {
    "id": "R-AIRSPEED",
@@ -3579,7 +3885,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 161
+   "importance": 165
   },
   {
    "id": "R-ESC-CURRENT",
@@ -3593,14 +3899,14 @@ window.PROOF_GRAPH = {
     "CL-E1-HOVER-I-55 is UNVERIFIED",
     "CL-E1-IMAX-168-55 is UNVERIFIED",
     "CL-E1-IPACK-LIM is UNVERIFIED",
-    "CL-E1-ILIM-I is UNVERIFIED",
+    "CL-E1-ILIM-I: FAILS: margin -20.0% (30.01 A vs <= 25 A)",
     "CL-F4-BAT-CURR-MAX is UNVERIFIED",
     "CL-F4-SPIN-MAX is UNVERIFIED",
     "CL-F4-BAT-CURR-MOTOR is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": false,
-   "importance": 163
+   "fails": true,
+   "importance": 169
   },
   {
    "id": "R-PACK-MASS",
@@ -3618,7 +3924,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 161
+   "importance": 165
   },
   {
    "id": "R-LOADS",
@@ -3671,6 +3977,7 @@ window.PROOF_GRAPH = {
     "CL-C1-PACK-STOP-LIM is UNVERIFIED",
     "CL-C1-POD-F-LIM is UNVERIFIED",
     "CL-C1-FOOT-SIDE-DESIGN is UNVERIFIED",
+    "CL-C1-G4-TIE-LIM is UNVERIFIED",
     "CL-C1-TRANSPORT-N-AFT is UNVERIFIED",
     "CL-D7-CRADLE-STROKE is UNVERIFIED",
     "CL-D7-DROP-N is UNVERIFIED",
@@ -3678,7 +3985,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 367
+   "importance": 373
   },
   {
    "id": "R-STRUCT-MARGIN",
@@ -3717,7 +4024,7 @@ window.PROOF_GRAPH = {
     "CL-C3-OVERHANG-DESIGN is UNVERIFIED",
     "CL-C3-HANDLE-TIES is UNVERIFIED",
     "CL-C3-GRIP is UNVERIFIED",
-    "CL-C4-D3-MS-FACE is UNVERIFIED",
+    "CL-C4-D3-MS-FACE: FAILS: margin -0.609 abs (-0.6087 vs >= 0)",
     "CL-C4-D3-MS-EDGE is UNVERIFIED",
     "CL-C4-D3-MS-TUBE is UNVERIFIED",
     "CL-C4-D3-MS-BRACE is UNVERIFIED",
@@ -3725,11 +4032,11 @@ window.PROOF_GRAPH = {
     "CL-C4-D3-MS-COLLAR is UNVERIFIED",
     "CL-C4-D3-MS-ANCHOR is UNVERIFIED",
     "CL-C4-D3-MS-EAR is UNVERIFIED",
-    "CL-C4-D3-MS-STRIP-PAPER is UNVERIFIED",
+    "CL-C4-D3-MS-STRIP-PAPER: FAILS: margin -0.825 abs (-0.8248 vs >= 0)",
     "CL-C4-D3-MS-CAP-G3 is UNVERIFIED",
     "CL-C4-D3-MS-MOUNT-SLIP is UNVERIFIED",
     "CL-C4-D3-BLOCK-MS is UNVERIFIED",
-    "CL-C4-D3-MS-FACE-SHOE is UNVERIFIED",
+    "CL-C4-D3-MS-FACE-SHOE: FAILS: margin -0.61 abs (-0.6095 vs >= 0)",
     "CL-C6-DOG-FUSE-T is UNVERIFIED",
     "CL-C6-DOG-FUSE-RF is UNVERIFIED",
     "CL-C6-DOG-HOLD-RF is UNVERIFIED",
@@ -3793,7 +4100,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": true,
-   "importance": 597
+   "importance": 601
   },
   {
    "id": "R-FIN-TUBE-JOINT",
@@ -3838,7 +4145,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": true,
-   "importance": 371
+   "importance": 375
   },
   {
    "id": "R-VIBRATION",
@@ -3867,7 +4174,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": true,
-   "importance": 211
+   "importance": 215
   },
   {
    "id": "R-PACK-RETENTION",
@@ -3914,7 +4221,7 @@ window.PROOF_GRAPH = {
     "CL-C3-STOP-SECTION-PENALTY: FAILS: margin -516.7% (0.006167 m vs <= 0.001 m)",
     "CL-C5-PACK-NOSE-ROOM is UNVERIFIED",
     "CL-C5-PACK-ROOM-MARGIN-WORST is UNVERIFIED",
-    "CL-C5-PACK-STACK-MARGIN is UNVERIFIED",
+    "CL-C5-PACK-STACK-MARGIN: FAILS: margin -0.0033 m abs (-0.003303 m vs >= 0 m)",
     "CL-C6-POD-CRASH-RF is UNVERIFIED",
     "CL-C6-POD-TRAY-RF is UNVERIFIED",
     "CL-C6-POD-FLOOR-RF is UNVERIFIED",
@@ -3930,7 +4237,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": true,
-   "importance": 319
+   "importance": 323
   },
   {
    "id": "R-LANDING-IMPACT",
@@ -3948,7 +4255,7 @@ window.PROOF_GRAPH = {
     "CL-C5-DROP-PAIR-ROLL is UNVERIFIED",
     "CL-C5-DYN-LEVEL-FREE-PROP is UNVERIFIED",
     "CL-C5-DYN-N-LEVEL is UNVERIFIED",
-    "CL-C5-SIM3D-STROKE: FAILS: margin -0.0% (0.035 m vs <= 0.035 m)",
+    "CL-C5-SIM3D-STROKE is UNVERIFIED",
     "CL-C5-SIM3D-N is UNVERIFIED",
     "CL-C5-SIM3D-N-LIGHT is UNVERIFIED",
     "CL-C5-SIM3D-BOTTOM-TILT is UNVERIFIED",
@@ -3959,8 +4266,8 @@ window.PROOF_GRAPH = {
     "CL-D5-SIDE-RIM-SF is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": true,
-   "importance": 253
+   "fails": false,
+   "importance": 259
   },
   {
    "id": "R-AVIONICS-POWER",
@@ -3980,7 +4287,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 171
+   "importance": 175
   },
   {
    "id": "R-HARNESS-INSTALL",
@@ -4001,7 +4308,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 163
+   "importance": 167
   },
   {
    "id": "R-FSW-PARAMS",
@@ -4017,7 +4324,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 155
+   "importance": 159
   },
   {
    "id": "R-ARM-KILL",
@@ -4052,7 +4359,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 173
+   "importance": 177
   },
   {
    "id": "R-RC-LINK",
@@ -4085,7 +4392,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 155
+   "importance": 159
   },
   {
    "id": "R-FIELD-SETUP",
@@ -4139,10 +4446,15 @@ window.PROOF_GRAPH = {
    "note": "P11; owner I2; method I; see team/A2/REQUIREMENTS.md",
    "defined_in": "redesign/team/A2/claims.json",
    "reasons": [
-    "no claim verifies it"
+    "CL-I2-FIRST-HOVER-WEEK: FAILS: margin -25.0% (5 week vs <= 4 week)",
+    "CL-I2-FIRST-TRANSITION-WEEK: FAILS: margin -14.3% (8 week vs <= 7 week)",
+    "CL-I2-CRASH-LOOP-D is UNVERIFIED",
+    "CL-I2-END-SLACK-D is UNVERIFIED",
+    "CL-I2-TWIN-BEFORE-ORDER-D is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1
+   "fails": true,
+   "importance": 11
   },
   {
    "id": "R-CRASH-REPAIR",
@@ -4157,7 +4469,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 281
+   "importance": 285
   },
   {
    "id": "R-NO-FLOATING",
@@ -4342,7 +4654,7 @@ window.PROOF_GRAPH = {
    "unit": "%",
    "defined_in": "redesign/team/A3/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-A3-PACK-SLIDE",
@@ -4354,7 +4666,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "defined_in": "redesign/team/A3/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-A3-PACK-RANGE",
@@ -4375,7 +4687,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1142
+   "importance": 1172
   },
   {
    "id": "ASM-A3-PACK-NOMINAL",
@@ -4393,7 +4705,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-A3-NOSE-STACK",
@@ -4405,7 +4717,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "defined_in": "redesign/team/A3/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-A3-PACK-STATIONS",
@@ -4415,7 +4727,7 @@ window.PROOF_GRAPH = {
    "basis": "params/CHANGE-LOG.md D-98 (H8: A1's mid-band rule; D-59 put the basic CG on target and left the growth on the aft side), CR-A1-53",
    "defined_in": "redesign/team/A3/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CALC-A3-MASS",
@@ -7302,7 +7614,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/A3/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CALC-A3-CG",
@@ -10216,7 +10528,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/A3/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CALC-A3-INERTIA",
@@ -12947,7 +13259,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/A3/claims.json",
    "status": "CHECKED",
-   "importance": 437
+   "importance": 443
   },
   {
    "id": "CALC-A3-GROUPS",
@@ -16087,7 +16399,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/A3/claims.json",
    "status": "CHECKED",
-   "importance": 392
+   "importance": 398
   },
   {
    "id": "CL-A3-MASS-BASIC",
@@ -16123,7 +16435,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.0910384615384615,
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-A3-MASS-PREDICTED",
@@ -16159,7 +16471,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.04391680769230782,
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-A3-GATE-MARGIN",
@@ -16413,7 +16725,7 @@ window.PROOF_GRAPH = {
     "uses ASM-A3-PACK-NOMINAL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-A3-CG-X-RANGE",
@@ -16529,7 +16841,7 @@ window.PROOF_GRAPH = {
     "uses ASM-A3-PACK-NOMINAL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-A3-PACK-X-REQ",
@@ -16580,6 +16892,8 @@ window.PROOF_GRAPH = {
     "uses ASM-A3-PACK-NOMINAL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.2857738509090909,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -16608,6 +16922,8 @@ window.PROOF_GRAPH = {
     "uses ASM-A3-PACK-NOMINAL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0019000000000000059,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -16639,6 +16955,8 @@ window.PROOF_GRAPH = {
     "uses ASM-A3-PACK-NOMINAL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -16814,7 +17132,7 @@ window.PROOF_GRAPH = {
     "uses P:a3.rollup.items, which is UNVERIFIED (marked UNVERIFIED in redesign/team/A3/rollup/mass_items.json: params used: P:battery.mass_kg, P:battery.size_m, P:cg.foot_height_m, P:fins.areal_mass_kgm2, P:fins.chord_m, P:fins.half_height_m, P:fins.layers, P:fins.le_x_m, P:fins.te_x_m, P:fins.tube.length_m, P:fins.tube.od_m, P:fins.tube.x_m, P:fins.y_m, P:pod.pack_x_nominal_m, P:pod.size_m, P:pod.x_le_m, P:pod.z_base_m, P:propulsion.motor_diameter_m, P:propulsion.motor_length_m, P:propulsion.motor_mass_kg, P:propulsion.prop_diameter_m, P:propulsion.stations.x_mount_m, P:propulsion.stations.x_prop_plane_m, P:propulsion.stations.y_m, P:propulsion.stations.z_m, P:wing.chord_m, P:wing.elevon.chord_frac, P:wing.elevon.inboard_y_m, P:wing.elevon.outboard_y_m, P:wing.span_m, P:wing.spar.length_m, P:wing.spar.mass_per_m_kgm, P:wing.spar.x_m, P:wing.spar.z_m, P:wing.t_c, P:wing.te_x_m)"
    ],
    "status": "UNVERIFIED",
-   "importance": 433
+   "importance": 439
   },
   {
    "id": "CL-A3-IZZ",
@@ -16830,7 +17148,7 @@ window.PROOF_GRAPH = {
     "uses P:a3.rollup.items, which is UNVERIFIED (marked UNVERIFIED in redesign/team/A3/rollup/mass_items.json: params used: P:battery.mass_kg, P:battery.size_m, P:cg.foot_height_m, P:fins.areal_mass_kgm2, P:fins.chord_m, P:fins.half_height_m, P:fins.layers, P:fins.le_x_m, P:fins.te_x_m, P:fins.tube.length_m, P:fins.tube.od_m, P:fins.tube.x_m, P:fins.y_m, P:pod.pack_x_nominal_m, P:pod.size_m, P:pod.x_le_m, P:pod.z_base_m, P:propulsion.motor_diameter_m, P:propulsion.motor_length_m, P:propulsion.motor_mass_kg, P:propulsion.prop_diameter_m, P:propulsion.stations.x_mount_m, P:propulsion.stations.x_prop_plane_m, P:propulsion.stations.y_m, P:propulsion.stations.z_m, P:wing.chord_m, P:wing.elevon.chord_frac, P:wing.elevon.inboard_y_m, P:wing.elevon.outboard_y_m, P:wing.span_m, P:wing.spar.length_m, P:wing.spar.mass_per_m_kgm, P:wing.spar.x_m, P:wing.spar.z_m, P:wing.t_c, P:wing.te_x_m)"
    ],
    "status": "UNVERIFIED",
-   "importance": 426
+   "importance": 432
   },
   {
    "id": "CL-A3-GROUPS",
@@ -17250,7 +17568,7 @@ window.PROOF_GRAPH = {
     "uses P:a3.rollup.items, which is UNVERIFIED (marked UNVERIFIED in redesign/team/A3/rollup/mass_items.json: params used: P:battery.mass_kg, P:battery.size_m, P:cg.foot_height_m, P:fins.areal_mass_kgm2, P:fins.chord_m, P:fins.half_height_m, P:fins.layers, P:fins.le_x_m, P:fins.te_x_m, P:fins.tube.length_m, P:fins.tube.od_m, P:fins.tube.x_m, P:fins.y_m, P:pod.pack_x_nominal_m, P:pod.size_m, P:pod.x_le_m, P:pod.z_base_m, P:propulsion.motor_diameter_m, P:propulsion.motor_length_m, P:propulsion.motor_mass_kg, P:propulsion.prop_diameter_m, P:propulsion.stations.x_mount_m, P:propulsion.stations.x_prop_plane_m, P:propulsion.stations.y_m, P:propulsion.stations.z_m, P:wing.chord_m, P:wing.elevon.chord_frac, P:wing.elevon.inboard_y_m, P:wing.elevon.outboard_y_m, P:wing.span_m, P:wing.spar.length_m, P:wing.spar.mass_per_m_kgm, P:wing.spar.x_m, P:wing.spar.z_m, P:wing.t_c, P:wing.te_x_m)"
    ],
    "status": "UNVERIFIED",
-   "importance": 391
+   "importance": 397
   },
   {
    "id": "CL-A3-GROUPS-CLOSURE",
@@ -17289,7 +17607,7 @@ window.PROOF_GRAPH = {
    "procedure": "1 g kitchen scale; record in the owner's interfaces.json status VERIFIED and mass_g; pack first.",
    "defined_in": "redesign/team/A3/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "T-A3-CG-BALANCE",
@@ -17323,7 +17641,7 @@ window.PROOF_GRAPH = {
    "procedure": "Two 1.5 m strings, 0.30 m apart, about each axis; I = m g d^2 T^2 / (16 pi^2 L).",
    "defined_in": "redesign/team/A3/claims.json",
    "status": "PROPOSED",
-   "importance": 437
+   "importance": 443
   },
   {
    "id": "CALC-A4-PLAN-GRAPH",
@@ -17430,6 +17748,8 @@ window.PROOF_GRAPH = {
    "value": 0,
    "defined_in": "redesign/team/A4/claims.json",
    "status": "CHECKED",
+   "margin": 0.0,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -17703,7 +18023,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/A5/claims.json",
    "status": "PROPOSED",
-   "importance": 1144
+   "importance": 1174
   },
   {
    "id": "ASM-A5-MIN-COVER",
@@ -18028,7 +18348,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/A5/claims.json",
    "status": "CHECKED",
-   "importance": 1138
+   "importance": 1168
   },
   {
    "id": "CALC-A5-SPAR-COVER",
@@ -18859,7 +19179,7 @@ window.PROOF_GRAPH = {
    "value": 0.24960000000000002,
    "defined_in": "redesign/team/A5/claims.json",
    "status": "CHECKED",
-   "importance": 1137
+   "importance": 1167
   },
   {
    "id": "CL-A5-HINGE-Z",
@@ -19734,6 +20054,8 @@ window.PROOF_GRAPH = {
     "uses ASM-A5-ASSY-ROLLUP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -19777,7 +20099,7 @@ window.PROOF_GRAPH = {
    "note": "APC's own blade-element prediction, not a wind-tunnel test; static values run ~10 % optimistic (K09 REVIEW section 3, J1 REFERENCES). B4 owns the prop data.",
    "defined_in": "redesign/team/B1/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "SRC-B1-HOERNER",
@@ -19791,7 +20113,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1130
+   "importance": 1160
   },
   {
    "id": "SRC-B1-HELMBOLD",
@@ -19833,7 +20155,7 @@ window.PROOF_GRAPH = {
    "note": "B1 compared every 6 000 rpm row of B4's file with PROP_TABLE on 2026-11-09. APC's blade-element prediction, not a test; B4 owns the prop data",
    "defined_in": "redesign/team/B1/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-B1-PROP",
@@ -19950,7 +20272,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-B1-PROP-REF",
@@ -20116,7 +20438,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-B1-DRAG",
@@ -20143,7 +20465,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1130
+   "importance": 1160
   },
   {
    "id": "ASM-B1-WING-ROUGH",
@@ -20158,7 +20480,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 1121
+   "importance": 1151
   },
   {
    "id": "ASM-B1-DRAG-ADDONS",
@@ -20182,7 +20504,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 1121
+   "importance": 1151
   },
   {
    "id": "ASM-B1-POD-FRONT",
@@ -20200,7 +20522,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 1121
+   "importance": 1151
   },
   {
    "id": "ASM-B1-VTERM",
@@ -20218,7 +20540,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-B1-CD90",
@@ -20233,7 +20555,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 345
+   "importance": 352
   },
   {
    "id": "ASM-B1-ESC",
@@ -20251,7 +20573,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-B1-AVIONICS-W",
@@ -20266,7 +20588,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-B1-TRIM",
@@ -20281,7 +20603,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-B1-VCRUISE",
@@ -20293,7 +20615,7 @@ window.PROOF_GRAPH = {
    "unit": "m/s",
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 1138
+   "importance": 1168
   },
   {
    "id": "ASM-B1-PESS",
@@ -20312,7 +20634,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-B1-CTRL-RESERVE",
@@ -20324,7 +20646,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-B1-LAND-ERR",
@@ -20475,7 +20797,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B1/claims.json",
    "status": "CHECKED",
-   "importance": 1121
+   "importance": 1151
   },
   {
    "id": "CALC-B1-STALL",
@@ -20527,7 +20849,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B1/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CALC-B1-PROPCAL",
@@ -20854,7 +21176,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B1/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CALC-B1-HOVER",
@@ -22640,7 +22962,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B1/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B1-CD0",
@@ -22666,7 +22988,7 @@ window.PROOF_GRAPH = {
     "uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "CL-B1-K",
@@ -22692,7 +23014,7 @@ window.PROOF_GRAPH = {
     "uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "CL-B1-K-PESS",
@@ -22718,7 +23040,7 @@ window.PROOF_GRAPH = {
     "uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "CL-B1-CLA",
@@ -22822,7 +23144,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.032521857163179575,
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B1-VS-SIZED",
@@ -22935,7 +23257,7 @@ window.PROOF_GRAPH = {
     "uses P:propulsion.voltage_sag, which is UNVERIFIED (cites CL-E1-SAG-FACTOR, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B1-FM",
@@ -23935,10 +24257,10 @@ window.PROOF_GRAPH = {
     "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-B1-KCAL, which is UNVERIFIED",
     "uses ASM-B1-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)"
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B1-ROC-FW",
@@ -23958,7 +24280,7 @@ window.PROOF_GRAPH = {
     "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-B1-KCAL, which is UNVERIFIED",
     "uses ASM-B1-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)"
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -23986,11 +24308,11 @@ window.PROOF_GRAPH = {
     "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-B1-KCAL, which is UNVERIFIED",
     "uses ASM-B1-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)"
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
    "margin": 0.4261111111111951,
-   "importance": 327
+   "importance": 332
   },
   {
    "id": "CL-B1-VMAX-SAG",
@@ -24015,7 +24337,7 @@ window.PROOF_GRAPH = {
     "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-B1-KCAL, which is UNVERIFIED",
     "uses ASM-B1-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)"
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
    "margin": 0.4261111111111951,
@@ -24039,7 +24361,7 @@ window.PROOF_GRAPH = {
     "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-B1-KCAL, which is UNVERIFIED",
     "uses ASM-B1-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)"
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -24057,7 +24379,7 @@ window.PROOF_GRAPH = {
    "procedure": "Twin, then the aircraft: 60 s level legs at 14, 16, 18 m/s both directions, calm morning, log airspeed, pack V and A, ESC rpm (H2).",
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "T-B1-TETHER-HOVER",
@@ -24100,7 +24422,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1117
+   "importance": 1147
   },
   {
    "id": "SRC-B1-SIM-VLMXF",
@@ -24114,7 +24436,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1117
+   "importance": 1147
   },
   {
    "id": "ASM-B1V-CFD-2D",
@@ -24131,7 +24453,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B1/claims.verify.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-B1V-LIGHT-PACK",
@@ -24295,7 +24617,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B1/claims.verify.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CALC-B1V-STALL",
@@ -24406,7 +24728,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B1/claims.verify.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CALC-B1V-HOVER",
@@ -25039,7 +25361,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B1/claims.verify.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CALC-B1V-TRANSITION",
@@ -25858,7 +26180,7 @@ window.PROOF_GRAPH = {
     "uses CL-B1-K, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B1V-K",
@@ -25889,7 +26211,7 @@ window.PROOF_GRAPH = {
     "uses CL-B1-K, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B1V-FIN-RATIO",
@@ -26006,7 +26328,7 @@ window.PROOF_GRAPH = {
     "uses CL-B1-VS-GATE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B1V-CLMAX-SIM",
@@ -26370,7 +26692,7 @@ window.PROOF_GRAPH = {
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B1V-CRUISE-P-GATE",
@@ -26394,7 +26716,7 @@ window.PROOF_GRAPH = {
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B1V-CRUISE-DRAG",
@@ -26713,7 +27035,7 @@ window.PROOF_GRAPH = {
     "uses CL-B1-KCAL, which is UNVERIFIED",
     "uses ASM-B1-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-F4-FW-RPM-CAP, which is UNVERIFIED",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)"
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
    "margin": 0.16777777777782138,
@@ -26744,7 +27066,7 @@ window.PROOF_GRAPH = {
     "uses CL-B1-KCAL, which is UNVERIFIED",
     "uses ASM-B1-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-F4-FW-RPM-CAP, which is UNVERIFIED",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)"
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
    "margin": 0.034007352941140434,
@@ -26775,7 +27097,7 @@ window.PROOF_GRAPH = {
     "uses CL-B1-KCAL, which is UNVERIFIED",
     "uses ASM-B1-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-F4-FW-RPM-CAP, which is UNVERIFIED",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)"
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
    "margin": 2.910927874936369,
@@ -26936,7 +27258,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1159
+   "importance": 1189
   },
   {
    "id": "SRC-B2-AVL",
@@ -26951,7 +27273,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1150
+   "importance": 1180
   },
   {
    "id": "SRC-B2-S5010-COORD",
@@ -26963,7 +27285,7 @@ window.PROOF_GRAPH = {
    "where": "61 points; t/c 9.82 % from the file matches the published 9.8 %",
    "defined_in": "redesign/team/B2/claims.json",
    "status": "CHECKED",
-   "importance": 1121
+   "importance": 1151
   },
   {
    "id": "SRC-B2-MH45-COORD",
@@ -26990,7 +27312,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1133
+   "importance": 1163
   },
   {
    "id": "ASM-B2-DIVE-FACTOR",
@@ -27012,7 +27334,7 @@ window.PROOF_GRAPH = {
    "basis": "converged viscous XFOIL values are 70-80 % of inviscid at +10..+25 deg; viscous up-deflection cases do not converge (separated), so the inviscid value is used for both directions",
    "defined_in": "redesign/team/B2/claims.json",
    "status": "PROPOSED",
-   "importance": 1128
+   "importance": 1158
   },
   {
    "id": "ASM-B2-MIN-COVER",
@@ -27116,7 +27438,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B2/claims.json",
    "status": "CHECKED",
-   "importance": 1133
+   "importance": 1163
   },
   {
    "id": "CALC-B2-STALL",
@@ -27430,7 +27752,7 @@ window.PROOF_GRAPH = {
     "uses ASM-B2-CLMAX-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1132
+   "importance": 1162
   },
   {
    "id": "CL-B2-STALL-GATE",
@@ -27814,7 +28136,7 @@ window.PROOF_GRAPH = {
     "uses P:b2.xfoil.clmin_2d, which is UNVERIFIED (cites SRC-B2-XFOIL, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "CL-B2-DCM-VISC",
@@ -27833,7 +28155,7 @@ window.PROOF_GRAPH = {
     "uses P:b2.xfoil.clmin_2d, which is UNVERIFIED (cites SRC-B2-XFOIL, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "CL-B2-CLA-3D",
@@ -27852,7 +28174,7 @@ window.PROOF_GRAPH = {
     "uses P:b2.xfoil.clmin_2d, which is UNVERIFIED (cites SRC-B2-XFOIL, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 293
+   "importance": 298
   },
   {
    "id": "CL-B2-CLMIN-2D",
@@ -27903,7 +28225,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B2/claims.json",
    "status": "CHECKED",
-   "importance": 1119
+   "importance": 1149
   },
   {
    "id": "T-B2-STALL",
@@ -27917,7 +28239,7 @@ window.PROOF_GRAPH = {
    "procedure": "Twin first, then the XPS aircraft in FBWA at >= 50 m: ballast to 2.6 kg, CG at B3's value, decelerate 0.5 m/s per s to the stall break three times; Vs = mean airspeed at the break",
    "defined_in": "redesign/team/B2/claims.json",
    "status": "PROPOSED",
-   "importance": 1132
+   "importance": 1162
   },
   {
    "id": "T-B2-HINGE",
@@ -29536,6 +29858,8 @@ window.PROOF_GRAPH = {
     "uses P:b2sim.cfd.gci_f+0_a12_re2.6e5, which is UNVERIFIED (cites SRC-B2-SU2, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.009153864522805089,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -29582,6 +29906,8 @@ window.PROOF_GRAPH = {
     "uses P:b2sim.cfd.gci_f+0_a12_re2.6e5, which is UNVERIFIED (cites SRC-B2-SU2, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.00482039414983082,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -29728,7 +30054,7 @@ window.PROOF_GRAPH = {
    "note": "installed at C:/Users/dillo/tools/avl",
    "defined_in": "redesign/team/B3/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "SRC-B3-RIBNER",
@@ -29742,7 +30068,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "SRC-B3-PERKINS",
@@ -29755,7 +30081,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "SRC-B3-MIL8785C",
@@ -29796,7 +30122,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-B3-CLMAX-FLAP",
@@ -29839,7 +30165,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-B3-PROP-CNA",
@@ -29858,7 +30184,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-B3-UPWASH",
@@ -29870,7 +30196,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "defined_in": "redesign/team/B3/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-B3-CD-CYL",
@@ -29900,7 +30226,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B3/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-B3-POD-K-YAW",
@@ -30246,7 +30572,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "defined_in": "redesign/team/B3/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-B3-GM-MIN",
@@ -30419,7 +30745,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B3/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B3-AVL-CONV",
@@ -30459,7 +30785,7 @@ window.PROOF_GRAPH = {
     "uses P:cg.z_target_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-62 (B3 CR-B3-27, -24): the take-off CG height A3-R6a rolls up (+0.0185 m, pod group above the wing); every S&C number is now computed at this height (NP 3.4 mm forward at 1.3 Vs, Cl_beta +0.023, spiral t2 3.5 s). A3 publishes CL-A3-CG-Z (basic and predicted) and this key then cites it. The old 'on the chord plane' target (0) was never reachable with the pod on the upper surface; hover pitch trim carries the 1.22 split (D-18))"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B3-CLA",
@@ -30476,7 +30802,7 @@ window.PROOF_GRAPH = {
     "uses P:cg.z_target_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-62 (B3 CR-B3-27, -24): the take-off CG height A3-R6a rolls up (+0.0185 m, pod group above the wing); every S&C number is now computed at this height (NP 3.4 mm forward at 1.3 Vs, Cl_beta +0.023, spiral t2 3.5 s). A3 publishes CL-A3-CG-Z (basic and predicted) and this key then cites it. The old 'on the chord plane' target (0) was never reachable with the pod on the upper surface; hover pitch trim carries the 1.22 split (D-18))"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B3-ALPHA0",
@@ -30644,7 +30970,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B3/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B3-XNP",
@@ -30666,7 +30992,7 @@ window.PROOF_GRAPH = {
     "uses ASM-B3-PROP-CNA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CALC-B3-PROP-AFT",
@@ -31057,7 +31383,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B3/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B3-CLMAX-TRIM",
@@ -31126,7 +31452,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.03225922688246921,
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B3-VS-TRIM-FWD",
@@ -31513,7 +31839,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B3/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B3-ELEVON-TRIM-CRUISE",
@@ -31541,7 +31867,7 @@ window.PROOF_GRAPH = {
     "uses CL-B3-VS-TRIM, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B3-ALPHA-CRUISE",
@@ -34711,7 +35037,7 @@ window.PROOF_GRAPH = {
    "procedure": "H1: balance the ready-to-fly aircraft on two fingertips (or a knife-edge jig) at the fin roots; the balance line must lie between the two marks drawn at the B3 limits.",
    "defined_in": "redesign/team/B3/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "T-B3-TWIN-NP",
@@ -34726,7 +35052,7 @@ window.PROOF_GRAPH = {
    "procedure": "Twin, FBWA glides at 3 speeds for 2 pack positions; plot elevon trim vs CL; Xnp where the slope is 0.",
    "defined_in": "redesign/team/B3/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "T-B3-YAW-DOUBLET",
@@ -34777,7 +35103,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "defined_in": "redesign/team/B3/claims.verify.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-B3-V-ELEVON-GAP",
@@ -34789,7 +35115,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "defined_in": "redesign/team/B3/claims.verify.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CALC-B3-V-LATTICE",
@@ -35424,7 +35750,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B3/claims.verify.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B3-V-XNP-AERO",
@@ -35455,7 +35781,7 @@ window.PROOF_GRAPH = {
     "uses ASM-B3-PROP-CNA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B3-V-XNP",
@@ -35486,7 +35812,7 @@ window.PROOF_GRAPH = {
     "uses ASM-B3-PROP-CNA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B3-V-CG-FWD",
@@ -35517,7 +35843,7 @@ window.PROOF_GRAPH = {
     "uses ASM-B3-PROP-CNA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B3-V-CG-AFT",
@@ -35624,6 +35950,8 @@ window.PROOF_GRAPH = {
     "uses ASM-B3-PROP-CNA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0018962605251344397,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -35664,6 +35992,8 @@ window.PROOF_GRAPH = {
     "uses ASM-B3-PROP-CNA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0045071166287660655,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -35700,6 +36030,8 @@ window.PROOF_GRAPH = {
     "uses ASM-B3-PROP-CNA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0029247923890029573,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -36179,7 +36511,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B3/claims.verify.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B3-V-VS-A3",
@@ -36261,7 +36593,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.030283648282572906,
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B3-V-CLMAX-FWD",
@@ -37045,7 +37377,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B3/claims.verify.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-B3-V-VMAX",
@@ -37057,7 +37389,7 @@ window.PROOF_GRAPH = {
    "unit": "m/s",
    "defined_in": "redesign/team/B3/claims.verify.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B3-V-XNP-ENV",
@@ -37129,7 +37461,7 @@ window.PROOF_GRAPH = {
     "uses CL-B3-V-VT, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-B3-V-CG-WIDTH-ENV",
@@ -37192,6 +37524,8 @@ window.PROOF_GRAPH = {
     "uses CL-B3-V-VT, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0029111166287660653,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -37221,6 +37555,8 @@ window.PROOF_GRAPH = {
     "uses CL-B3-V-VT, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.001328792389002957,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -37523,6 +37859,8 @@ window.PROOF_GRAPH = {
     "uses CL-B3-V-VT, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0025307047345027034,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -37556,6 +37894,8 @@ window.PROOF_GRAPH = {
     "uses CL-B3-V-VT, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0022766724193978016,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -37585,6 +37925,8 @@ window.PROOF_GRAPH = {
     "uses CL-B3-V-VT, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.00013070473450270403,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -37603,6 +37945,7 @@ window.PROOF_GRAPH = {
    "value": -0.00012332758060219773,
    "defined_in": "redesign/team/B3/claims.verify.json",
    "reasons": [
+    "FAILS: margin -0.000123 m abs (-0.0001233 m vs >= 0 m)",
     "uses P:cg.z_target_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-62 (B3 CR-B3-27, -24): the take-off CG height A3-R6a rolls up (+0.0185 m, pod group above the wing); every S&C number is now computed at this height (NP 3.4 mm forward at 1.3 Vs, Cl_beta +0.023, spiral t2 3.5 s). A3 publishes CL-A3-CG-Z (basic and predicted) and this key then cites it. The old 'on the chord plane' target (0) was never reachable with the pod on the upper surface; hover pitch trim carries the 1.22 split (D-18))",
     "uses CL-B3-V-XNP-AERO, which is UNVERIFIED",
     "uses CL-B3-V-XNP, which is UNVERIFIED",
@@ -37614,6 +37957,9 @@ window.PROOF_GRAPH = {
     "uses CL-B3-V-VT, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "margin": -0.00012332758060219773,
+   "margin_abs": true,
+   "fails": true,
    "importance": 1
   },
   {
@@ -38139,7 +38485,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B4/claims.json",
    "status": "PROPOSED",
-   "importance": 469
+   "importance": 474
   },
   {
    "id": "ASM-B4-CD-TUBE",
@@ -38299,7 +38645,7 @@ window.PROOF_GRAPH = {
    "note": "APC blade-element predictions (v2022-0915), not measurements; transcription checked by CALC-B4-DATA",
    "defined_in": "redesign/team/B4/claims.json",
    "status": "CHECKED",
-   "importance": 481
+   "importance": 486
   },
   {
    "id": "SRC-B4-UIUC",
@@ -38323,7 +38669,7 @@ window.PROOF_GRAPH = {
    "where": "MR 105,000/D(in); SF 65,000/D; Thin Electric 150,000/D",
    "defined_in": "redesign/team/B4/claims.json",
    "status": "CHECKED",
-   "importance": 1163
+   "importance": 1193
   },
   {
    "id": "SRC-B4-APC-PRODUCTS",
@@ -38531,7 +38877,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B4/claims.json",
    "status": "CHECKED",
-   "importance": 469
+   "importance": 474
   },
   {
    "id": "CALC-B4-CRUISE",
@@ -39794,7 +40140,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B4/claims.json",
    "status": "CHECKED",
-   "importance": 333
+   "importance": 338
   },
   {
    "id": "CL-B4-DATA",
@@ -39832,7 +40178,7 @@ window.PROOF_GRAPH = {
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 387
+   "importance": 392
   },
   {
    "id": "CL-B4-DL",
@@ -39876,7 +40222,7 @@ window.PROOF_GRAPH = {
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 428
+   "importance": 433
   },
   {
    "id": "CL-B4-HOVER-Q",
@@ -39901,7 +40247,7 @@ window.PROOF_GRAPH = {
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 387
+   "importance": 392
   },
   {
    "id": "CL-B4-FM",
@@ -40063,7 +40409,7 @@ window.PROOF_GRAPH = {
     "uses ASM-E1-PACK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 331
+   "importance": 336
   },
   {
    "id": "CL-B4-TW-CAP",
@@ -40117,12 +40463,16 @@ window.PROOF_GRAPH = {
    "value": -0.34483403999488993,
    "defined_in": "redesign/team/B4/claims.json",
    "reasons": [
+    "FAILS: margin -0.345 abs (-0.3448 vs >= 0)",
     "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E1-PACK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
+   "margin": -0.34483403999488993,
+   "margin_abs": true,
+   "fails": true,
    "importance": 1
   },
   {
@@ -40662,6 +41012,8 @@ window.PROOF_GRAPH = {
     "uses P:fin_detail.mount.prop_stack_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/fins/params.json: R4: mount face to prop mid-plane along the motor axis (E1 paper stack; frozen on the measured motor, T-E1-MOTOR-RM); its x projection is stack cos(cant))"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0611137843911323,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -40684,6 +41036,8 @@ window.PROOF_GRAPH = {
     "uses P:fin_detail.mount.prop_stack_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/fins/params.json: R4: mount face to prop mid-plane along the motor axis (E1 paper stack; frozen on the measured motor, T-E1-MOTOR-RM); its x projection is stack cos(cant))"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0014750549012473857,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -40997,6 +41351,8 @@ window.PROOF_GRAPH = {
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.046809630881757436,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -41028,6 +41384,8 @@ window.PROOF_GRAPH = {
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.031227380527792642,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -41780,7 +42138,7 @@ window.PROOF_GRAPH = {
    "procedure": "H1 stand (shared with T-E1-STAND), 14.8 V, 10 % throttle steps; log thrust, torque, rpm, V, A.",
    "defined_in": "redesign/team/B4/claims.json",
    "status": "PROPOSED",
-   "importance": 445
+   "importance": 450
   },
   {
    "id": "T-B4-INSTALLED",
@@ -43038,7 +43396,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 590
+   "importance": 596
   },
   {
    "id": "SRC-C1-PRATT",
@@ -43051,7 +43409,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 292
+   "importance": 297
   },
   {
    "id": "SRC-C1-THIN-AIRFOIL",
@@ -43064,7 +43422,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 267
+   "importance": 272
   },
   {
    "id": "SRC-C1-HOERNER",
@@ -43077,7 +43435,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "ASM-C1-B2-SPANLOAD",
@@ -43222,7 +43580,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 267
+   "importance": 272
   },
   {
    "id": "ASM-C1-CLMIN",
@@ -43240,7 +43598,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 292
+   "importance": 297
   },
   {
    "id": "ASM-C1-UDE-D-FRAC",
@@ -43255,7 +43613,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 292
+   "importance": 297
   },
   {
    "id": "ASM-C1-PROP-PITCH",
@@ -43270,7 +43628,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 319
+   "importance": 324
   },
   {
    "id": "ASM-C1-VD-FACTOR",
@@ -43285,7 +43643,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 319
+   "importance": 324
   },
   {
    "id": "ASM-C1-BELL-INERTIA",
@@ -43300,7 +43658,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 376
+   "importance": 381
   },
   {
    "id": "ASM-C1-PITCH-RATE",
@@ -43315,7 +43673,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 320
+   "importance": 325
   },
   {
    "id": "ASM-C1-ELEVON-CN",
@@ -43345,7 +43703,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 267
+   "importance": 272
   },
   {
    "id": "ASM-C1-ADAPTER-MASS",
@@ -43360,7 +43718,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 438
+   "importance": 444
   },
   {
    "id": "ASM-C1-CRUSH-EFF",
@@ -43375,7 +43733,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "ASM-C1-LAND-LIFT",
@@ -43390,22 +43748,22 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 500
+   "importance": 506
   },
   {
    "id": "ASM-C1-FRICTION",
    "type": "assumption",
-   "title": "Ground friction 0.7 (neoprene pad on the landing mat)",
+   "title": "Ground friction 0.40 (low-friction pad face on the landing mat, D-105)",
    "text": "Side load / vertical load at a foot",
-   "basis": "CHANGE-LOG D-30 and CR-C5-09: flight-card rule S1 puts every fin-tip landing on the mat, so the friction is D5's neoprene pad value (ASM-D5-PAD-MU 0.7, UNVERIFIED until H1's pad pull test). Was 0.5 (grass) at C1-R2; the higher value raises L4/L5 side loads by 40 %; it also sets the parked-stance slide check (higher = less margin needed)",
-   "value": 0.7,
+   "basis": "D-105 (CDR decision B1, 2026-11-13): the pad face is held to mu <= requirements.pad_mu_max so the foot side load stays at or below requirements.foot_side_load_cap_n; flight-card rule S1 puts every fin-tip landing on the mat. Was 0.7 (bare neoprene, D-30 / CR-C5-09) and 0.5 (grass) at C1-R2. UNVERIFIED until the incline test T-D5-PAD-MU. The parked aircraft needs more than this to stand in 8 m/s (CL-C1-STANCE-MU-REQ): laid flat or tied when parked",
+   "value": 0.4,
    "unit": "-",
    "defined_in": "redesign/team/C1/claims.json",
    "reasons": [
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "ASM-C1-MOUNT-MASS",
@@ -43417,7 +43775,7 @@ window.PROOF_GRAPH = {
    "unit": "kg",
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "ASM-C1-CONTACT-STROKE",
@@ -43432,7 +43790,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "ASM-C1-CD-PLATE",
@@ -43447,7 +43805,46 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 390
+   "importance": 396
+  },
+  {
+   "id": "ASM-C1-TIE-SHARE",
+   "type": "assumption",
+   "title": "Restrained run: two of the four ties carry the net thrust",
+   "text": "Share factor on the per-tie load of the restrained four-motor run: per tie = share x (4 T_lim - W) / 4",
+   "basis": "four cords of unequal length: the two shortest go taut first. Same number as H1's tie-down factor ASM-H1-RESTRAINT-SF 2.0, so the C1 limit load per tie equals CL-H1-RESTRAINT-PER-TIE (29.45 N at the gate mass)",
+   "value": 2.0,
+   "unit": "-",
+   "defined_in": "redesign/team/C1/claims.json",
+   "status": "PROPOSED",
+   "importance": 272
+  },
+  {
+   "id": "ASM-C1-EYE-POS",
+   "type": "assumption",
+   "title": "Strap eye FIN-013 tie point: 21.1 mm outboard of the tube axis, |z| 0.030 m",
+   "text": "Tie hole centre relative to the fin-tube axis: [dy outboard, |z|] (x = tube axis)",
+   "basis": "subsystems/fins/params.json fin_detail.strap_eye: boss bond radius 13.6 mm + foot 1.5 mm + hole offset 6 mm = 21.1 mm; the eye stands 10 mm above the upper / below the lower skin at the block (|z| about 0.030 m, EST from the block top z 0.0304)",
+   "value": [
+    0.0211,
+    0.03
+   ],
+   "unit": "m",
+   "defined_in": "redesign/team/C1/claims.json",
+   "status": "PROPOSED",
+   "importance": 272
+  },
+  {
+   "id": "ASM-C1-PROP-STRIKE-T",
+   "type": "assumption",
+   "title": "Prop strike: mount turns on the tube at 3.71 N m",
+   "text": "Largest torque about the fin-tube axis that one motor mount can pass to the tube: the slip clamp plus the clocking dog let go above it",
+   "basis": "C6 CL-C6-DOG-FUSE-T (<= 3.71 N m, upper bound of the slip + dog break; team/C6/joints.py). Copied as a number so C1 and C6 do not read each other in a loop; CL-C1-P1-FUSE-MATCH checks the copy",
+   "value": 3.71,
+   "unit": "N m",
+   "defined_in": "redesign/team/C1/claims.json",
+   "status": "PROPOSED",
+   "importance": 272
   },
   {
    "id": "ASM-C1-HANDLING-N",
@@ -43459,7 +43856,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 290
+   "importance": 295
   },
   {
    "id": "ASM-C1-CRASH-V",
@@ -43495,7 +43892,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 270
+   "importance": 275
   },
   {
    "id": "ASM-C1-LID-PRELOAD",
@@ -43510,7 +43907,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 267
+   "importance": 272
   },
   {
    "id": "ASM-C1-CRADLE-PAD",
@@ -43522,7 +43919,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 267
+   "importance": 272
   },
   {
    "id": "ASM-C1-FITTING-FACTOR",
@@ -43537,7 +43934,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 355
+   "importance": 360
   },
   {
    "id": "ASM-C1-PRINTED-FACTOR",
@@ -43552,7 +43949,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 341
+   "importance": 346
   },
   {
    "id": "ASM-C1-PROP-NUT-TORQUE",
@@ -43680,7 +44077,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/C1/claims.json",
    "status": "CHECKED",
-   "importance": 319
+   "importance": 324
   },
   {
    "id": "CALC-C1-VN",
@@ -43765,7 +44162,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/C1/claims.json",
    "status": "CHECKED",
-   "importance": 292
+   "importance": 297
   },
   {
    "id": "CALC-C1-LANDING",
@@ -43925,7 +44322,7 @@ window.PROOF_GRAPH = {
     "F_foot_pair_wide_N": 33.675948506856976,
     "F_foot_corner_N": 37.37228814357933,
     "F_foot_max_N": 43.98538578322658,
-    "F_side_max_N": 30.789770048258607,
+    "F_side_max_N": 17.594154313290634,
     "m_eff_corner_kg": 0.573553983342758,
     "wingtip_strike_deg": 10.660348294535337,
     "foot_protrusion_req_m": 0.04496338008065856,
@@ -44432,11 +44829,11 @@ window.PROOF_GRAPH = {
     "cdp": 1.2,
     "v_gust": 8.0,
     "x_cg_t": 0.049,
-    "mu": 0.7
+    "mu": 0.4
    },
    "defined_in": "redesign/team/C1/claims.json",
    "status": "CHECKED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "CALC-C1-CRASH",
@@ -44508,7 +44905,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/C1/claims.json",
    "status": "CHECKED",
-   "importance": 267
+   "importance": 272
   },
   {
    "id": "CALC-C1-MASS-XCHECK",
@@ -45276,6 +45673,9 @@ window.PROOF_GRAPH = {
     "n_h": "ASM-C1-HANDLING-N",
     "n_T": "CL-C1-TRANSPORT-N",
     "F_side": "CL-C5-SIM3D-SIDE-LOAD",
+    "tie_k": "ASM-C1-TIE-SHARE",
+    "eye": "ASM-C1-EYE-POS",
+    "T_ps": "ASM-C1-PROP-STRIKE-T",
     "y_cr": "ASM-C1-CRADLE-Y",
     "h_drop": "P:requirements.box_drop_m",
     "s_cr": "CL-D7-CRADLE-STROKE",
@@ -45358,6 +45758,8 @@ window.PROOF_GRAPH = {
     "F_lvl": "N",
     "F_pn": "N",
     "F_side": "N",
+    "eye": "m",
+    "T_ps": "N m",
     "F_pw": "N",
     "F_cor": "N",
     "F_tip": "N",
@@ -45389,8 +45791,8 @@ window.PROOF_GRAPH = {
     "n_T_allow_lid": 12.889819352939309,
     "n_T_governing_lid": "J-FIN:F",
     "stroke_req_lid_m": 0.0504633402905043,
-    "n_T_allow_aft": 10.786507077666359,
-    "n_T_governing_aft": "J-FIN:F",
+    "n_T_allow_aft": 10.181330679301144,
+    "n_T_governing_aft": "J-FINHALF:Mb",
     "n_T_allow_nose": 4.800449368924858,
     "n_T_governing_nose": "J-POD:F",
     "stroke_req_nose_m": 0.1578760672108991,
@@ -45398,10 +45800,19 @@ window.PROOF_GRAPH = {
     "g3_can_F_lim": 23.45829557927301,
     "g3_can_F_ult": 35.18744336890951,
     "g3_foot_F_lim": 2.417608471771075,
-    "foot_side_lim": 39.5,
-    "foot_side_ult": 59.25,
-    "foot_side_friction_N": 26.16060170050553,
-    "aft_ratio": 0.7224659476055684,
+    "foot_side_lim": 24.5,
+    "foot_side_ult": 36.75,
+    "foot_side_friction_N": 14.948915257431734,
+    "g4_tie_lim": 29.136802599263795,
+    "g4_tie_ult": 43.70520389889569,
+    "g4_finjoint_M_lim": 1.3453812022386737,
+    "g4_finhalf_T_lim": 0.6905363284741064,
+    "g4_finhalf_Mb_lim": 3.93268350484593,
+    "p1_finjoint_M_lim": 3.5656696185779455,
+    "p1_finhalf_T_lim": 3.641692203761428,
+    "p1_finhalf_Mb_lim": 1.2889943597301707,
+    "p1_fuse_T": 3.71,
+    "aft_ratio": 0.7654091889052863,
     "cradle_F_static_N": 14.62032365,
     "cradle_F_floor_drop_N": 102.07781137727271,
     "pillar_F_lid_drop_N": 102.07781137727271,
@@ -45444,8 +45855,8 @@ window.PROOF_GRAPH = {
     "proof_y4_m": 0.465,
     "proof_P4_lim_N": 6.111046106908295,
     "proof_P4_ult_N": 9.166569160362442,
-    "finhalf_T_wingplane_lim": 12.668552799861164,
-    "finhalf_T_wingplane_ult": 19.002829199791748,
+    "finhalf_T_wingplane_lim": 7.91638233935248,
+    "finhalf_T_wingplane_ult": 11.87457350902872,
     "finhalf_T_wingplane_case": "L4-CORNER-SIDE-Y",
     "motor_Fside_lim": 8.01322728504032,
     "motor_Fside_case": "F7-ROLLPULL-VA",
@@ -45454,17 +45865,17 @@ window.PROOF_GRAPH = {
     "motor_Mb_case": "H5-SIDE-RIGHT",
     "motor_Mb_ult": 0.757259655037517,
     "cant_Fside_TLIM_N": 2.5714431458486118,
-    "spar_Mb_lim": 13.826365623596953,
-    "spar_Mb_ult": 20.739548435395427,
-    "spar_Mb_case": "L4-CORNER-SIDE-Y",
+    "spar_Mb_lim": 12.794508492830037,
+    "spar_Mb_ult": 19.191762739245057,
+    "spar_Mb_case": "L1-LEVEL",
     "spar_Mx_lim": 7.999671479747189,
     "spar_Mx_ult": 11.999507219620783,
     "spar_Mx_case": "G2-HANG-MOTOR",
     "spar_Mz_lim": 12.789112504695778,
     "spar_Mz_ult": 19.183668757043666,
     "spar_Mz_case": "L1-LEVEL",
-    "wing_T_lim": 5.636585667573225,
-    "wing_T_ult": 8.454878501359838,
+    "wing_T_lim": 5.634118774410428,
+    "wing_T_ult": 8.451178161615642,
     "wing_T_case": "L4-CORNER-SIDE-Y",
     "wing_Vz_lim": 22.134752538213593,
     "wing_Vz_ult": 33.20212880732039,
@@ -45475,14 +45886,14 @@ window.PROOF_GRAPH = {
     "finjoint_F_lim": 59.05173028763445,
     "finjoint_F_ult": 88.57759543145167,
     "finjoint_F_case": "L1-LEVEL",
-    "finjoint_M_lim": 15.031710499756443,
-    "finjoint_M_ult": 22.547565749634664,
+    "finjoint_M_lim": 10.422831890868753,
+    "finjoint_M_ult": 15.63424783630313,
     "finjoint_M_case": "L4-CORNER-SIDE-Y",
-    "finhalf_Mb_lim": 10.868509853950846,
-    "finhalf_Mb_ult": 16.302764780926267,
-    "finhalf_Mb_case": "L5-CORNER-SIDE-Z",
-    "finhalf_T_lim": 12.718146504076598,
-    "finhalf_T_ult": 19.077219756114896,
+    "finhalf_Mb_lim": 8.161896287082676,
+    "finhalf_Mb_ult": 12.242844430624015,
+    "finhalf_Mb_case": "L4-CORNER-SIDE-Y",
+    "finhalf_T_lim": 7.935810769466995,
+    "finhalf_T_ult": 11.903716154200492,
     "finhalf_T_case": "L4-CORNER-SIDE-Y",
     "mount_F_lim": 21.08508627927301,
     "mount_F_ult": 31.627629418909514,
@@ -45505,18 +45916,19 @@ window.PROOF_GRAPH = {
     "pack_F_lim": 42.57237291061053,
     "pack_F_ult": 63.858559365915795,
     "pack_F_case": "L1-LEVEL",
-    "foot_F_lim": 53.62878210240166,
-    "foot_F_ult": 80.44317315360249,
-    "foot_F_case": "L4-CORNER-SIDE-Y",
+    "foot_F_lim": 43.95324896688076,
+    "foot_F_ult": 65.92987345032114,
+    "foot_F_case": "L5-CORNER-SIDE-Z",
     "finjoint_F_design": 127.33029343271177,
-    "finjoint_M_design": 32.41212576509983,
+    "finjoint_M_design": 22.47423126468575,
+    "g4_finjoint_ratio": 0.12908019781239463,
     "mount_F_design": 45.464717289682426,
     "mount_M_design": 1.4165157036133964,
     "pod_F_design": 160.49566137325795,
-    "finjoint_M_nohandling_lim": 15.031710499756443,
+    "finjoint_M_nohandling_lim": 10.422831890868753,
     "finjoint_M_nohandling_case": "L4-CORNER-SIDE-Y",
-    "finhalf_Mb_nohandling_lim": 10.868509853950846,
-    "finhalf_Mb_nohandling_case": "L5-CORNER-SIDE-Z",
+    "finhalf_Mb_nohandling_lim": 8.161896287082676,
+    "finhalf_Mb_nohandling_case": "L4-CORNER-SIDE-Y",
     "n_T_allow": 12.889819352939309,
     "h_drop_allow_m": 0.3923640386469972,
     "n_T_governing": "J-FIN:F",
@@ -46159,10 +46571,16 @@ window.PROOF_GRAPH = {
     "F_to": 931.2932495343395,
     "lw": 0.667,
     "att": 10.0,
-    "mu": 0.7,
+    "mu": 0.4,
     "n_h": 2.0,
     "n_T": 10.09090909090909,
-    "F_side": 39.5,
+    "F_side": 24.5,
+    "tie_k": 2.0,
+    "eye": [
+     0.0211,
+     0.03
+    ],
+    "T_ps": 3.71,
     "y_cr": 0.2,
     "h_drop": 0.3,
     "s_cr": 0.066,
@@ -46176,7 +46594,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/C1/claims.json",
    "status": "CHECKED",
-   "importance": 267
+   "importance": 272
   },
   {
    "id": "CL-C1-T-CAP",
@@ -46274,7 +46692,7 @@ window.PROOF_GRAPH = {
     "uses CL-B1-VMAX, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 282
+   "importance": 287
   },
   {
    "id": "CL-C1-MOTOR-TORQUE",
@@ -46302,7 +46720,7 @@ window.PROOF_GRAPH = {
     "uses CL-B1-VMAX, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 280
+   "importance": 285
   },
   {
    "id": "CL-C1-ROTOR-H",
@@ -46330,7 +46748,7 @@ window.PROOF_GRAPH = {
     "uses CL-B1-VMAX, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 268
+   "importance": 273
   },
   {
    "id": "CL-C1-ROTOR-OMEGA",
@@ -46358,7 +46776,7 @@ window.PROOF_GRAPH = {
     "uses CL-B1-VMAX, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 268
+   "importance": 273
   },
   {
    "id": "CL-C1-GYRO-MOMENT",
@@ -46453,7 +46871,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.022058823529411686,
-   "importance": 295
+   "importance": 300
   },
   {
    "id": "CL-C1-VD-UNCAPPED",
@@ -46531,7 +46949,7 @@ window.PROOF_GRAPH = {
     "uses CL-C1-VD, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 272
+   "importance": 277
   },
   {
    "id": "CL-C1-Q-VD",
@@ -46597,7 +47015,7 @@ window.PROOF_GRAPH = {
     "uses CL-C1-VD, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 268
+   "importance": 273
   },
   {
    "id": "CL-C1-N-LIMIT-POS",
@@ -46629,7 +47047,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.0,
-   "importance": 271
+   "importance": 276
   },
   {
    "id": "CL-C1-N-LIMIT-NEG",
@@ -46660,7 +47078,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.0,
-   "importance": 268
+   "importance": 273
   },
   {
    "id": "CL-C1-GUST-N-POS",
@@ -46691,7 +47109,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.024170136608023807,
-   "importance": 268
+   "importance": 273
   },
   {
    "id": "CL-C1-GUST-V-POS",
@@ -46713,7 +47131,7 @@ window.PROOF_GRAPH = {
     "uses CL-C1-VD, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 268
+   "importance": 273
   },
   {
    "id": "CL-C1-GUST-N-NEG",
@@ -46741,7 +47159,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.09419106063830451,
-   "importance": 268
+   "importance": 273
   },
   {
    "id": "CL-C1-GUST-V-NEG",
@@ -46763,7 +47181,7 @@ window.PROOF_GRAPH = {
     "uses CL-C1-VD, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 268
+   "importance": 273
   },
   {
    "id": "CL-C1-N-STALL-VD",
@@ -46996,7 +47414,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 275
+   "importance": 280
   },
   {
    "id": "CL-C1-FOOT-LEVEL-UPPER",
@@ -47088,7 +47506,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 268
+   "importance": 273
   },
   {
    "id": "CL-C1-FOOT-PAIR-WIDE",
@@ -47134,7 +47552,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 268
+   "importance": 273
   },
   {
    "id": "CL-C1-FOOT-CORNER",
@@ -47180,7 +47598,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "CL-C1-FOOT-MAX",
@@ -47226,7 +47644,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "CL-C1-WINGTIP-STRIKE-ANGLE",
@@ -47429,7 +47847,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 268
+   "importance": 273
   },
   {
    "id": "CL-C1-TIPOVER-ANGLE-CONTACT",
@@ -47475,7 +47893,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 268
+   "importance": 273
   },
   {
    "id": "CL-C1-TIPOVER-ENERGY",
@@ -47567,7 +47985,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 268
+   "importance": 273
   },
   {
    "id": "CL-C1-STANCE-TIP-WIND",
@@ -47628,13 +48046,8 @@ window.PROOF_GRAPH = {
    "calc": "CALC-C1-LANDING",
    "output": "stance_mu_req_8ms",
    "unit": "-",
-   "limit": {
-    "op": "<=",
-    "ref": "ASM-C1-FRICTION",
-    "resolved": 0.7
-   },
-   "how": "Pull test of a neoprene-padded foot on the landing mat with a spring scale (H1).",
-   "note": "Against the mat friction (rule S1). On grass (~0.5) the parked aircraft slides before it tips: lay it flat above 5 m/s (C5 S1-S8, CR-C1-02).",
+   "how": "Flight card (H3): the aircraft is laid flat or tied by the strap eyes when parked.",
+   "note": "D-105 (CDR decision B1): the pad face is held to mu <= 0.40 to cap the foot side load, which is below this value, so the limit against ASM-C1-FRICTION is removed on purpose: the parked aircraft is not left standing in wind. It slides before it tips (C5 CL-C5-V-PARK-GUST).",
    "value": 0.678923917012357,
    "defined_in": "redesign/team/C1/claims.json",
    "reasons": [
@@ -47668,12 +48081,10 @@ window.PROOF_GRAPH = {
     "uses CL-D5-ETA, which is UNVERIFIED",
     "uses ASM-C1-CONTACT-STROKE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:cg.x_target_m, which is UNVERIFIED (cites CL-B3-V-CG-FWD, which is UNVERIFIED)",
-    "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.030108689982347094,
-   "importance": 2
+   "importance": 1
   },
   {
    "id": "CL-C1-CRASH-N",
@@ -47746,7 +48157,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.21714115499935024,
-   "importance": 267
+   "importance": 272
   },
   {
    "id": "CL-C1-SPAR-MB-ULT",
@@ -47759,7 +48170,7 @@ window.PROOF_GRAPH = {
     "R-LOADS"
    ],
    "how": "C2 sizes the spar; wing proof test at limit (T-C1-WING-PROOF).",
-   "value": 20.739548435395427,
+   "value": 19.191762739245057,
    "defined_in": "redesign/team/C1/claims.json",
    "reasons": [
     "uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -47993,7 +48404,7 @@ window.PROOF_GRAPH = {
     "R-LOADS"
    ],
    "how": "C2: foam core + skin torsion; twist test at limit.",
-   "value": 8.454878501359838,
+   "value": 8.451178161615642,
    "defined_in": "redesign/team/C1/claims.json",
    "reasons": [
     "uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -48227,7 +48638,7 @@ window.PROOF_GRAPH = {
     "R-LOADS"
    ],
    "how": "As above.",
-   "value": 22.547565749634664,
+   "value": 15.63424783630313,
    "defined_in": "redesign/team/C1/claims.json",
    "reasons": [
     "uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -48305,7 +48716,7 @@ window.PROOF_GRAPH = {
     "R-LOADS"
    ],
    "how": "C6 sizes the printed/bonded saddle to this value.",
-   "value": 32.41212576509983,
+   "value": 22.47423126468575,
    "defined_in": "redesign/team/C1/claims.json",
    "reasons": [
     "uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -48383,7 +48794,7 @@ window.PROOF_GRAPH = {
     "R-LOADS"
    ],
    "how": "C4 splits between tube and fin board; tube proof hang test.",
-   "value": 16.302764780926267,
+   "value": 12.242844430624015,
    "defined_in": "redesign/team/C1/claims.json",
    "reasons": [
     "uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -48526,7 +48937,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 33
+   "importance": 34
   },
   {
    "id": "CL-C1-MOUNT-M-ULT",
@@ -48604,7 +49015,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 14
+   "importance": 15
   },
   {
    "id": "CL-C1-MOTOR-F-ULT",
@@ -48773,7 +49184,7 @@ window.PROOF_GRAPH = {
     "R-LOADS"
    ],
    "how": "C5: foot bond; drop test.",
-   "value": 80.44317315360249,
+   "value": 65.92987345032114,
    "defined_in": "redesign/team/C1/claims.json",
    "reasons": [
     "uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -48851,7 +49262,7 @@ window.PROOF_GRAPH = {
     "R-LOADS"
    ],
    "how": "External torque on the half-fin section; C4's FE splits it between tube, board, strips and brace. The station-collar torque is C4's internal FE value (CR-C6-03), which may exceed this total.",
-   "value": 12.718146504076598,
+   "value": 7.935810769466995,
    "defined_in": "redesign/team/C1/claims.json",
    "reasons": [
     "uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -48929,7 +49340,7 @@ window.PROOF_GRAPH = {
     "R-LOADS"
    ],
    "how": "As above x 1.5.",
-   "value": 19.077219756114896,
+   "value": 11.903716154200492,
    "defined_in": "redesign/team/C1/claims.json",
    "reasons": [
     "uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -49072,7 +49483,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 267
+   "importance": 272
   },
   {
    "id": "CL-C1-TRANSPORT-N-ALLOW-X",
@@ -49319,7 +49730,7 @@ window.PROOF_GRAPH = {
     "R-LOADS"
    ],
    "how": "Calculated (CR-D7-14b): the X5 cut loads must stay inside the flight/landing/handling envelope.",
-   "value": 10.786507077666359,
+   "value": 10.181330679301144,
    "defined_in": "redesign/team/C1/claims.json",
    "reasons": [
     "uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -49547,7 +49958,7 @@ window.PROOF_GRAPH = {
     "R-LOADS"
    ],
    "how": "C4's FE section torque at the wing plane in the governing case equals this within 5 % (CR-C1-21); C6 sizes the collar to max(C4 FE collar torque, this).",
-   "value": 12.668552799861164,
+   "value": 7.91638233935248,
    "defined_in": "redesign/team/C1/claims.json",
    "reasons": [
     "uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -49625,7 +50036,7 @@ window.PROOF_GRAPH = {
     "R-LOADS"
    ],
    "how": "As above x 1.5.",
-   "value": 19.002829199791748,
+   "value": 11.87457350902872,
    "defined_in": "redesign/team/C1/claims.json",
    "reasons": [
     "uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -51596,7 +52007,7 @@ window.PROOF_GRAPH = {
     "R-LOADS"
    ],
    "how": "Applies only if lifting by a motor tube is ruled out by a handle and a label (CR-C1-04).",
-   "value": 15.031710499756443,
+   "value": 10.422831890868753,
    "defined_in": "redesign/team/C1/claims.json",
    "reasons": [
     "uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -51817,7 +52228,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 267
+   "importance": 272
   },
   {
    "id": "CL-C1-EQUILIBRIUM-RESIDUAL",
@@ -52156,7 +52567,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 117
+   "importance": 118
   },
   {
    "id": "CL-C1-G3-CAN-F-ULT",
@@ -52478,7 +52889,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "T-D5-SIDE pull on the shoe; C5's 6-DOF sim (CL-C5-SIM3D-SIDE-LOAD).",
    "note": "D-65 / CR-C5-16: applied with the corner foot load in L4 (y) and L5 (z).",
-   "value": 39.5,
+   "value": 24.5,
    "defined_in": "redesign/team/C1/claims.json",
    "reasons": [
     "uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -52546,6 +52957,401 @@ window.PROOF_GRAPH = {
    "importance": 1
   },
   {
+   "id": "CL-C1-G4-TIE-LIM",
+   "type": "claim",
+   "title": "Case G4: strap-eye tie load, restrained four-motor run, limit",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "g4_tie_lim",
+   "unit": "N",
+   "verifies": [
+    "R-LOADS"
+   ],
+   "how": "T-H1-RESTRAINT-PULL (spring scale on each strap) and T-D3-EYE on a bonded eye.",
+   "note": "CDR-28: two of four ties carry 4 T_lim - W (worst mass configuration = lightest). D3 sizes the eye FIN-013 and its bond to this (fin_detail.strap_eye.load_n 29.4 N); H1's CL-H1-RESTRAINT-PER-TIE is the same load at the gate mass.",
+   "value": 29.136802599263795,
+   "defined_in": "redesign/team/C1/claims.json",
+   "reasons": [
+    "uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses SRC-C1-THIN-AIRFOIL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses SRC-C1-FAR23, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses ASM-C1-B2-SPANLOAD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:wing.spar.mass_per_m_kgm, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: calc at rho 1.55 g/cm3; weigh the tube on arrival)",
+    "uses P:fins.areal_mass_kgm2, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: ESTIMATE; weigh one board (M-item))",
+    "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:propulsion.motor_mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json)",
+    "uses P:propulsion.motor_length_m, which is UNVERIFIED (cites ASM-E1-STACK, which is UNVERIFIED)",
+    "uses P:propulsion.esc_mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json)",
+    "uses P:propulsion.stations.x_prop_plane_m, which is UNVERIFIED (cites CL-E1-TIP-GAP-AT-75, which is UNVERIFIED)",
+    "uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-64: listing 551 +/- 5 g (CL-E2-SKU-MASS-MARGIN); carried as 0.55. Acceptance on arrival: <= CALC-A1-PACK-ACCEPT (about 590 g, the heaviest pack the 100 g first-build overrun still covers; E2 PACK_ACCEPT_KG follows it) plus the 10 AWG lead check. The 503 / 680 g bounding listings of D-58/D-59 are retired as flight cases: A3 carries 546 g (listing -5), 551 g and the acceptance line (ASM-A3-PACK-RANGE))",
+    "uses P:battery.size_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-64 (E2 CR-E2-25/-26): listed body 135 x 46 x 49 mm (+3 mm tolerance leaves 1 mm in the 53 mm bay, CL-E2-SKU-BAY-CLEAR); lead exits one 46 x 49 end. The 5 mm shorter pack gains 2.5 mm of forward room at the crush stack. D2 bay >= 0.160 x 0.052 x 0.053 m inside (CR-E2-02); measure on arrival (T-E2-WEIGH))",
+    "uses P:mass.allocation_g.wing, which is UNVERIFIED (cites CL-D1-WING-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.pod, which is UNVERIFIED (cites CL-D2-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.power, which is UNVERIFIED (cites CL-PWR-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.avionics, which is UNVERIFIED (cites CL-F3-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.harness, which is UNVERIFIED (cites CL-F2-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.mechanisms, which is UNVERIFIED (cites CL-D6-MASS, which is UNVERIFIED)",
+    "uses ASM-C1-ADAPTER-MASS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:cg.z_target_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-62 (B3 CR-B3-27, -24): the take-off CG height A3-R6a rolls up (+0.0185 m, pod group above the wing); every S&C number is now computed at this height (NP 3.4 mm forward at 1.3 Vs, Cl_beta +0.023, spiral t2 3.5 s). A3 publishes CL-A3-CG-Z (basic and predicted) and this key then cites it. The old 'on the chord plane' target (0) was never reachable with the pod on the upper surface; hover pitch trim carries the 1.22 split (D-18))",
+    "uses CL-A3-GROUPS, which is UNVERIFIED",
+    "uses P:cg.x_range_m, which is UNVERIFIED (cites CL-B3-V-CG-FWD, which is UNVERIFIED)",
+    "uses CL-D5-F-PLATEAU-UPPER, which is UNVERIFIED",
+    "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
+    "uses CL-A3-IYY, which is UNVERIFIED",
+    "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C1-T-LIMIT, which is UNVERIFIED",
+    "uses CL-C1-MOTOR-TORQUE, which is UNVERIFIED",
+    "uses CL-C1-ROTOR-H, which is UNVERIFIED",
+    "uses CL-C1-ROTOR-OMEGA, which is UNVERIFIED",
+    "uses ASM-C1-PITCH-RATE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:performance.ld_cruise, which is UNVERIFIED (cites CL-E1-CRUISE-LD-EFF, which is UNVERIFIED)",
+    "uses P:wing.oswald_e, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: kept conservative for the whole aircraft: B2's AVL at R2 gives 0.94 (SM 5 %) / 0.92 (CG 0.044) for wing + 0.275 m half-fins, props off, no pod (P:b2.avl.e_oswald, CR-B2-14); B1 carries k 0.0950 base (e 0.93) and 0.1107 pessimistic (e 0.80))",
+    "uses ASM-C1-B2-SPANLOAD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-B2-ELEVON-ETA, which is UNVERIFIED",
+    "uses CL-C1-N-LIMIT-POS, which is UNVERIFIED",
+    "uses CL-C1-N-LIMIT-NEG, which is UNVERIFIED",
+    "uses CL-C1-VD-ENV, which is UNVERIFIED",
+    "uses CL-C1-VA, which is UNVERIFIED",
+    "uses CL-C1-GUST-N-POS, which is UNVERIFIED",
+    "uses CL-C1-GUST-V-POS, which is UNVERIFIED",
+    "uses CL-C1-GUST-N-NEG, which is UNVERIFIED",
+    "uses CL-C1-GUST-V-NEG, which is UNVERIFIED",
+    "uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED",
+    "uses CL-A1-TRANSITION-GATE, which is UNVERIFIED",
+    "uses CL-C1-FOOT-LEVEL, which is UNVERIFIED",
+    "uses CL-C1-FOOT-PAIR-NARROW, which is UNVERIFIED",
+    "uses CL-C1-FOOT-PAIR-WIDE, which is UNVERIFIED",
+    "uses CL-C1-FOOT-CORNER, which is UNVERIFIED",
+    "uses CL-C1-WINGTIP-FORCE, which is UNVERIFIED",
+    "uses CL-C1-TIPOVER-ANGLE-CONTACT, which is UNVERIFIED",
+    "uses CL-C1-TIPOVER-FORCE, which is UNVERIFIED",
+    "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C1-TRANSPORT-N, which is UNVERIFIED",
+    "uses CL-C5-SIM3D-SIDE-LOAD, which is UNVERIFIED",
+    "uses CL-D7-CRADLE-STROKE, which is UNVERIFIED",
+    "uses ASM-C1-LID-PRELOAD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-CRUSH-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "CL-C1-G4-TIE-ULT",
+   "type": "claim",
+   "title": "Case G4: strap-eye tie load, ultimate",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "g4_tie_ult",
+   "unit": "N",
+   "how": "As CL-C1-G4-TIE-LIM x 1.5.",
+   "value": 43.70520389889569,
+   "defined_in": "redesign/team/C1/claims.json",
+   "reasons": [
+    "uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses SRC-C1-THIN-AIRFOIL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses SRC-C1-FAR23, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses ASM-C1-B2-SPANLOAD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:wing.spar.mass_per_m_kgm, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: calc at rho 1.55 g/cm3; weigh the tube on arrival)",
+    "uses P:fins.areal_mass_kgm2, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: ESTIMATE; weigh one board (M-item))",
+    "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:propulsion.motor_mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json)",
+    "uses P:propulsion.motor_length_m, which is UNVERIFIED (cites ASM-E1-STACK, which is UNVERIFIED)",
+    "uses P:propulsion.esc_mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json)",
+    "uses P:propulsion.stations.x_prop_plane_m, which is UNVERIFIED (cites CL-E1-TIP-GAP-AT-75, which is UNVERIFIED)",
+    "uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-64: listing 551 +/- 5 g (CL-E2-SKU-MASS-MARGIN); carried as 0.55. Acceptance on arrival: <= CALC-A1-PACK-ACCEPT (about 590 g, the heaviest pack the 100 g first-build overrun still covers; E2 PACK_ACCEPT_KG follows it) plus the 10 AWG lead check. The 503 / 680 g bounding listings of D-58/D-59 are retired as flight cases: A3 carries 546 g (listing -5), 551 g and the acceptance line (ASM-A3-PACK-RANGE))",
+    "uses P:battery.size_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-64 (E2 CR-E2-25/-26): listed body 135 x 46 x 49 mm (+3 mm tolerance leaves 1 mm in the 53 mm bay, CL-E2-SKU-BAY-CLEAR); lead exits one 46 x 49 end. The 5 mm shorter pack gains 2.5 mm of forward room at the crush stack. D2 bay >= 0.160 x 0.052 x 0.053 m inside (CR-E2-02); measure on arrival (T-E2-WEIGH))",
+    "uses P:mass.allocation_g.wing, which is UNVERIFIED (cites CL-D1-WING-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.pod, which is UNVERIFIED (cites CL-D2-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.power, which is UNVERIFIED (cites CL-PWR-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.avionics, which is UNVERIFIED (cites CL-F3-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.harness, which is UNVERIFIED (cites CL-F2-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.mechanisms, which is UNVERIFIED (cites CL-D6-MASS, which is UNVERIFIED)",
+    "uses ASM-C1-ADAPTER-MASS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:cg.z_target_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-62 (B3 CR-B3-27, -24): the take-off CG height A3-R6a rolls up (+0.0185 m, pod group above the wing); every S&C number is now computed at this height (NP 3.4 mm forward at 1.3 Vs, Cl_beta +0.023, spiral t2 3.5 s). A3 publishes CL-A3-CG-Z (basic and predicted) and this key then cites it. The old 'on the chord plane' target (0) was never reachable with the pod on the upper surface; hover pitch trim carries the 1.22 split (D-18))",
+    "uses CL-A3-GROUPS, which is UNVERIFIED",
+    "uses P:cg.x_range_m, which is UNVERIFIED (cites CL-B3-V-CG-FWD, which is UNVERIFIED)",
+    "uses CL-D5-F-PLATEAU-UPPER, which is UNVERIFIED",
+    "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
+    "uses CL-A3-IYY, which is UNVERIFIED",
+    "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C1-T-LIMIT, which is UNVERIFIED",
+    "uses CL-C1-MOTOR-TORQUE, which is UNVERIFIED",
+    "uses CL-C1-ROTOR-H, which is UNVERIFIED",
+    "uses CL-C1-ROTOR-OMEGA, which is UNVERIFIED",
+    "uses ASM-C1-PITCH-RATE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:performance.ld_cruise, which is UNVERIFIED (cites CL-E1-CRUISE-LD-EFF, which is UNVERIFIED)",
+    "uses P:wing.oswald_e, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: kept conservative for the whole aircraft: B2's AVL at R2 gives 0.94 (SM 5 %) / 0.92 (CG 0.044) for wing + 0.275 m half-fins, props off, no pod (P:b2.avl.e_oswald, CR-B2-14); B1 carries k 0.0950 base (e 0.93) and 0.1107 pessimistic (e 0.80))",
+    "uses ASM-C1-B2-SPANLOAD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-B2-ELEVON-ETA, which is UNVERIFIED",
+    "uses CL-C1-N-LIMIT-POS, which is UNVERIFIED",
+    "uses CL-C1-N-LIMIT-NEG, which is UNVERIFIED",
+    "uses CL-C1-VD-ENV, which is UNVERIFIED",
+    "uses CL-C1-VA, which is UNVERIFIED",
+    "uses CL-C1-GUST-N-POS, which is UNVERIFIED",
+    "uses CL-C1-GUST-V-POS, which is UNVERIFIED",
+    "uses CL-C1-GUST-N-NEG, which is UNVERIFIED",
+    "uses CL-C1-GUST-V-NEG, which is UNVERIFIED",
+    "uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED",
+    "uses CL-A1-TRANSITION-GATE, which is UNVERIFIED",
+    "uses CL-C1-FOOT-LEVEL, which is UNVERIFIED",
+    "uses CL-C1-FOOT-PAIR-NARROW, which is UNVERIFIED",
+    "uses CL-C1-FOOT-PAIR-WIDE, which is UNVERIFIED",
+    "uses CL-C1-FOOT-CORNER, which is UNVERIFIED",
+    "uses CL-C1-WINGTIP-FORCE, which is UNVERIFIED",
+    "uses CL-C1-TIPOVER-ANGLE-CONTACT, which is UNVERIFIED",
+    "uses CL-C1-TIPOVER-FORCE, which is UNVERIFIED",
+    "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C1-TRANSPORT-N, which is UNVERIFIED",
+    "uses CL-C5-SIM3D-SIDE-LOAD, which is UNVERIFIED",
+    "uses CL-D7-CRADLE-STROKE, which is UNVERIFIED",
+    "uses ASM-C1-LID-PRELOAD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-CRUSH-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "CL-C1-G4-FINJOINT-M",
+   "type": "claim",
+   "title": "Case G4: fin-group moment at the wing / the fin-joint envelope",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "g4_finjoint_ratio",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "how": "Re-run loads.py: G4 is inside the envelope the blocks and spar are sized to.",
+   "note": "CDR-28: the blocks and spar react the tie pair; the check is that G4 does not set the fin-joint envelope.",
+   "value": 0.12908019781239463,
+   "defined_in": "redesign/team/C1/claims.json",
+   "reasons": [
+    "uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses SRC-C1-THIN-AIRFOIL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses SRC-C1-FAR23, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses ASM-C1-B2-SPANLOAD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:wing.spar.mass_per_m_kgm, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: calc at rho 1.55 g/cm3; weigh the tube on arrival)",
+    "uses P:fins.areal_mass_kgm2, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: ESTIMATE; weigh one board (M-item))",
+    "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:propulsion.motor_mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json)",
+    "uses P:propulsion.motor_length_m, which is UNVERIFIED (cites ASM-E1-STACK, which is UNVERIFIED)",
+    "uses P:propulsion.esc_mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json)",
+    "uses P:propulsion.stations.x_prop_plane_m, which is UNVERIFIED (cites CL-E1-TIP-GAP-AT-75, which is UNVERIFIED)",
+    "uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-64: listing 551 +/- 5 g (CL-E2-SKU-MASS-MARGIN); carried as 0.55. Acceptance on arrival: <= CALC-A1-PACK-ACCEPT (about 590 g, the heaviest pack the 100 g first-build overrun still covers; E2 PACK_ACCEPT_KG follows it) plus the 10 AWG lead check. The 503 / 680 g bounding listings of D-58/D-59 are retired as flight cases: A3 carries 546 g (listing -5), 551 g and the acceptance line (ASM-A3-PACK-RANGE))",
+    "uses P:battery.size_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-64 (E2 CR-E2-25/-26): listed body 135 x 46 x 49 mm (+3 mm tolerance leaves 1 mm in the 53 mm bay, CL-E2-SKU-BAY-CLEAR); lead exits one 46 x 49 end. The 5 mm shorter pack gains 2.5 mm of forward room at the crush stack. D2 bay >= 0.160 x 0.052 x 0.053 m inside (CR-E2-02); measure on arrival (T-E2-WEIGH))",
+    "uses P:mass.allocation_g.wing, which is UNVERIFIED (cites CL-D1-WING-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.pod, which is UNVERIFIED (cites CL-D2-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.power, which is UNVERIFIED (cites CL-PWR-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.avionics, which is UNVERIFIED (cites CL-F3-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.harness, which is UNVERIFIED (cites CL-F2-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.mechanisms, which is UNVERIFIED (cites CL-D6-MASS, which is UNVERIFIED)",
+    "uses ASM-C1-ADAPTER-MASS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:cg.z_target_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-62 (B3 CR-B3-27, -24): the take-off CG height A3-R6a rolls up (+0.0185 m, pod group above the wing); every S&C number is now computed at this height (NP 3.4 mm forward at 1.3 Vs, Cl_beta +0.023, spiral t2 3.5 s). A3 publishes CL-A3-CG-Z (basic and predicted) and this key then cites it. The old 'on the chord plane' target (0) was never reachable with the pod on the upper surface; hover pitch trim carries the 1.22 split (D-18))",
+    "uses CL-A3-GROUPS, which is UNVERIFIED",
+    "uses P:cg.x_range_m, which is UNVERIFIED (cites CL-B3-V-CG-FWD, which is UNVERIFIED)",
+    "uses CL-D5-F-PLATEAU-UPPER, which is UNVERIFIED",
+    "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
+    "uses CL-A3-IYY, which is UNVERIFIED",
+    "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C1-T-LIMIT, which is UNVERIFIED",
+    "uses CL-C1-MOTOR-TORQUE, which is UNVERIFIED",
+    "uses CL-C1-ROTOR-H, which is UNVERIFIED",
+    "uses CL-C1-ROTOR-OMEGA, which is UNVERIFIED",
+    "uses ASM-C1-PITCH-RATE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:performance.ld_cruise, which is UNVERIFIED (cites CL-E1-CRUISE-LD-EFF, which is UNVERIFIED)",
+    "uses P:wing.oswald_e, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: kept conservative for the whole aircraft: B2's AVL at R2 gives 0.94 (SM 5 %) / 0.92 (CG 0.044) for wing + 0.275 m half-fins, props off, no pod (P:b2.avl.e_oswald, CR-B2-14); B1 carries k 0.0950 base (e 0.93) and 0.1107 pessimistic (e 0.80))",
+    "uses ASM-C1-B2-SPANLOAD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-B2-ELEVON-ETA, which is UNVERIFIED",
+    "uses CL-C1-N-LIMIT-POS, which is UNVERIFIED",
+    "uses CL-C1-N-LIMIT-NEG, which is UNVERIFIED",
+    "uses CL-C1-VD-ENV, which is UNVERIFIED",
+    "uses CL-C1-VA, which is UNVERIFIED",
+    "uses CL-C1-GUST-N-POS, which is UNVERIFIED",
+    "uses CL-C1-GUST-V-POS, which is UNVERIFIED",
+    "uses CL-C1-GUST-N-NEG, which is UNVERIFIED",
+    "uses CL-C1-GUST-V-NEG, which is UNVERIFIED",
+    "uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED",
+    "uses CL-A1-TRANSITION-GATE, which is UNVERIFIED",
+    "uses CL-C1-FOOT-LEVEL, which is UNVERIFIED",
+    "uses CL-C1-FOOT-PAIR-NARROW, which is UNVERIFIED",
+    "uses CL-C1-FOOT-PAIR-WIDE, which is UNVERIFIED",
+    "uses CL-C1-FOOT-CORNER, which is UNVERIFIED",
+    "uses CL-C1-WINGTIP-FORCE, which is UNVERIFIED",
+    "uses CL-C1-TIPOVER-ANGLE-CONTACT, which is UNVERIFIED",
+    "uses CL-C1-TIPOVER-FORCE, which is UNVERIFIED",
+    "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C1-TRANSPORT-N, which is UNVERIFIED",
+    "uses CL-C5-SIM3D-SIDE-LOAD, which is UNVERIFIED",
+    "uses CL-D7-CRADLE-STROKE, which is UNVERIFIED",
+    "uses ASM-C1-LID-PRELOAD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-CRUSH-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.8709198021876053,
+   "importance": 1
+  },
+  {
+   "id": "CL-C1-P1-TUBE-TORQUE",
+   "type": "claim",
+   "title": "Case P1: half-fin torsion at the wing plane in a prop strike, limit",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "p1_finhalf_T_lim",
+   "unit": "N m",
+   "how": "T-C6-DOG-SHEAR: the mount turns at or below the fuse torque.",
+   "note": "CDR-28: reported (damage family), not in the sizing envelope. The torque is capped by the slip clamp and clocking dog; C6 CL-C6-DOG-FUSE-RF holds the collar and block bond against it.",
+   "value": 3.641692203761428,
+   "defined_in": "redesign/team/C1/claims.json",
+   "reasons": [
+    "uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses SRC-C1-THIN-AIRFOIL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses SRC-C1-FAR23, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses ASM-C1-B2-SPANLOAD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:wing.spar.mass_per_m_kgm, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: calc at rho 1.55 g/cm3; weigh the tube on arrival)",
+    "uses P:fins.areal_mass_kgm2, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: ESTIMATE; weigh one board (M-item))",
+    "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:propulsion.motor_mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json)",
+    "uses P:propulsion.motor_length_m, which is UNVERIFIED (cites ASM-E1-STACK, which is UNVERIFIED)",
+    "uses P:propulsion.esc_mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json)",
+    "uses P:propulsion.stations.x_prop_plane_m, which is UNVERIFIED (cites CL-E1-TIP-GAP-AT-75, which is UNVERIFIED)",
+    "uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-64: listing 551 +/- 5 g (CL-E2-SKU-MASS-MARGIN); carried as 0.55. Acceptance on arrival: <= CALC-A1-PACK-ACCEPT (about 590 g, the heaviest pack the 100 g first-build overrun still covers; E2 PACK_ACCEPT_KG follows it) plus the 10 AWG lead check. The 503 / 680 g bounding listings of D-58/D-59 are retired as flight cases: A3 carries 546 g (listing -5), 551 g and the acceptance line (ASM-A3-PACK-RANGE))",
+    "uses P:battery.size_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-64 (E2 CR-E2-25/-26): listed body 135 x 46 x 49 mm (+3 mm tolerance leaves 1 mm in the 53 mm bay, CL-E2-SKU-BAY-CLEAR); lead exits one 46 x 49 end. The 5 mm shorter pack gains 2.5 mm of forward room at the crush stack. D2 bay >= 0.160 x 0.052 x 0.053 m inside (CR-E2-02); measure on arrival (T-E2-WEIGH))",
+    "uses P:mass.allocation_g.wing, which is UNVERIFIED (cites CL-D1-WING-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.pod, which is UNVERIFIED (cites CL-D2-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.power, which is UNVERIFIED (cites CL-PWR-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.avionics, which is UNVERIFIED (cites CL-F3-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.harness, which is UNVERIFIED (cites CL-F2-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.mechanisms, which is UNVERIFIED (cites CL-D6-MASS, which is UNVERIFIED)",
+    "uses ASM-C1-ADAPTER-MASS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:cg.z_target_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-62 (B3 CR-B3-27, -24): the take-off CG height A3-R6a rolls up (+0.0185 m, pod group above the wing); every S&C number is now computed at this height (NP 3.4 mm forward at 1.3 Vs, Cl_beta +0.023, spiral t2 3.5 s). A3 publishes CL-A3-CG-Z (basic and predicted) and this key then cites it. The old 'on the chord plane' target (0) was never reachable with the pod on the upper surface; hover pitch trim carries the 1.22 split (D-18))",
+    "uses CL-A3-GROUPS, which is UNVERIFIED",
+    "uses P:cg.x_range_m, which is UNVERIFIED (cites CL-B3-V-CG-FWD, which is UNVERIFIED)",
+    "uses CL-D5-F-PLATEAU-UPPER, which is UNVERIFIED",
+    "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
+    "uses CL-A3-IYY, which is UNVERIFIED",
+    "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C1-T-LIMIT, which is UNVERIFIED",
+    "uses CL-C1-MOTOR-TORQUE, which is UNVERIFIED",
+    "uses CL-C1-ROTOR-H, which is UNVERIFIED",
+    "uses CL-C1-ROTOR-OMEGA, which is UNVERIFIED",
+    "uses ASM-C1-PITCH-RATE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:performance.ld_cruise, which is UNVERIFIED (cites CL-E1-CRUISE-LD-EFF, which is UNVERIFIED)",
+    "uses P:wing.oswald_e, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: kept conservative for the whole aircraft: B2's AVL at R2 gives 0.94 (SM 5 %) / 0.92 (CG 0.044) for wing + 0.275 m half-fins, props off, no pod (P:b2.avl.e_oswald, CR-B2-14); B1 carries k 0.0950 base (e 0.93) and 0.1107 pessimistic (e 0.80))",
+    "uses ASM-C1-B2-SPANLOAD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-B2-ELEVON-ETA, which is UNVERIFIED",
+    "uses CL-C1-N-LIMIT-POS, which is UNVERIFIED",
+    "uses CL-C1-N-LIMIT-NEG, which is UNVERIFIED",
+    "uses CL-C1-VD-ENV, which is UNVERIFIED",
+    "uses CL-C1-VA, which is UNVERIFIED",
+    "uses CL-C1-GUST-N-POS, which is UNVERIFIED",
+    "uses CL-C1-GUST-V-POS, which is UNVERIFIED",
+    "uses CL-C1-GUST-N-NEG, which is UNVERIFIED",
+    "uses CL-C1-GUST-V-NEG, which is UNVERIFIED",
+    "uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED",
+    "uses CL-A1-TRANSITION-GATE, which is UNVERIFIED",
+    "uses CL-C1-FOOT-LEVEL, which is UNVERIFIED",
+    "uses CL-C1-FOOT-PAIR-NARROW, which is UNVERIFIED",
+    "uses CL-C1-FOOT-PAIR-WIDE, which is UNVERIFIED",
+    "uses CL-C1-FOOT-CORNER, which is UNVERIFIED",
+    "uses CL-C1-WINGTIP-FORCE, which is UNVERIFIED",
+    "uses CL-C1-TIPOVER-ANGLE-CONTACT, which is UNVERIFIED",
+    "uses CL-C1-TIPOVER-FORCE, which is UNVERIFIED",
+    "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C1-TRANSPORT-N, which is UNVERIFIED",
+    "uses CL-C5-SIM3D-SIDE-LOAD, which is UNVERIFIED",
+    "uses CL-D7-CRADLE-STROKE, which is UNVERIFIED",
+    "uses ASM-C1-LID-PRELOAD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-CRUSH-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "CL-C1-P1-FUSE-MATCH",
+   "type": "claim",
+   "title": "Case P1: fuse torque carried by C1 vs C6's fuse torque",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "p1_fuse_T",
+   "unit": "N m",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-C6-DOG-FUSE-T",
+    "resolved": 3.7087636175861682
+   },
+   "how": "Re-run after any change to the mount clamp or dog (team/C6/joints.py).",
+   "note": "C1 carries a copy of C6's number (ASM-C1-PROP-STRIKE-T); this fails if C6's fuse torque rises above it.",
+   "value": 3.71,
+   "defined_in": "redesign/team/C1/claims.json",
+   "reasons": [
+    "uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses SRC-C1-THIN-AIRFOIL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses SRC-C1-FAR23, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses ASM-C1-B2-SPANLOAD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:wing.spar.mass_per_m_kgm, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: calc at rho 1.55 g/cm3; weigh the tube on arrival)",
+    "uses P:fins.areal_mass_kgm2, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: ESTIMATE; weigh one board (M-item))",
+    "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:propulsion.motor_mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json)",
+    "uses P:propulsion.motor_length_m, which is UNVERIFIED (cites ASM-E1-STACK, which is UNVERIFIED)",
+    "uses P:propulsion.esc_mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json)",
+    "uses P:propulsion.stations.x_prop_plane_m, which is UNVERIFIED (cites CL-E1-TIP-GAP-AT-75, which is UNVERIFIED)",
+    "uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-64: listing 551 +/- 5 g (CL-E2-SKU-MASS-MARGIN); carried as 0.55. Acceptance on arrival: <= CALC-A1-PACK-ACCEPT (about 590 g, the heaviest pack the 100 g first-build overrun still covers; E2 PACK_ACCEPT_KG follows it) plus the 10 AWG lead check. The 503 / 680 g bounding listings of D-58/D-59 are retired as flight cases: A3 carries 546 g (listing -5), 551 g and the acceptance line (ASM-A3-PACK-RANGE))",
+    "uses P:battery.size_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-64 (E2 CR-E2-25/-26): listed body 135 x 46 x 49 mm (+3 mm tolerance leaves 1 mm in the 53 mm bay, CL-E2-SKU-BAY-CLEAR); lead exits one 46 x 49 end. The 5 mm shorter pack gains 2.5 mm of forward room at the crush stack. D2 bay >= 0.160 x 0.052 x 0.053 m inside (CR-E2-02); measure on arrival (T-E2-WEIGH))",
+    "uses P:mass.allocation_g.wing, which is UNVERIFIED (cites CL-D1-WING-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.pod, which is UNVERIFIED (cites CL-D2-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.power, which is UNVERIFIED (cites CL-PWR-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.avionics, which is UNVERIFIED (cites CL-F3-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.harness, which is UNVERIFIED (cites CL-F2-MASS, which is UNVERIFIED)",
+    "uses P:mass.allocation_g.mechanisms, which is UNVERIFIED (cites CL-D6-MASS, which is UNVERIFIED)",
+    "uses ASM-C1-ADAPTER-MASS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:cg.z_target_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-62 (B3 CR-B3-27, -24): the take-off CG height A3-R6a rolls up (+0.0185 m, pod group above the wing); every S&C number is now computed at this height (NP 3.4 mm forward at 1.3 Vs, Cl_beta +0.023, spiral t2 3.5 s). A3 publishes CL-A3-CG-Z (basic and predicted) and this key then cites it. The old 'on the chord plane' target (0) was never reachable with the pod on the upper surface; hover pitch trim carries the 1.22 split (D-18))",
+    "uses CL-A3-GROUPS, which is UNVERIFIED",
+    "uses P:cg.x_range_m, which is UNVERIFIED (cites CL-B3-V-CG-FWD, which is UNVERIFIED)",
+    "uses CL-D5-F-PLATEAU-UPPER, which is UNVERIFIED",
+    "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
+    "uses CL-A3-IYY, which is UNVERIFIED",
+    "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C1-T-LIMIT, which is UNVERIFIED",
+    "uses CL-C1-MOTOR-TORQUE, which is UNVERIFIED",
+    "uses CL-C1-ROTOR-H, which is UNVERIFIED",
+    "uses CL-C1-ROTOR-OMEGA, which is UNVERIFIED",
+    "uses ASM-C1-PITCH-RATE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:performance.ld_cruise, which is UNVERIFIED (cites CL-E1-CRUISE-LD-EFF, which is UNVERIFIED)",
+    "uses P:wing.oswald_e, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: kept conservative for the whole aircraft: B2's AVL at R2 gives 0.94 (SM 5 %) / 0.92 (CG 0.044) for wing + 0.275 m half-fins, props off, no pod (P:b2.avl.e_oswald, CR-B2-14); B1 carries k 0.0950 base (e 0.93) and 0.1107 pessimistic (e 0.80))",
+    "uses ASM-C1-B2-SPANLOAD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-B2-ELEVON-ETA, which is UNVERIFIED",
+    "uses CL-C1-N-LIMIT-POS, which is UNVERIFIED",
+    "uses CL-C1-N-LIMIT-NEG, which is UNVERIFIED",
+    "uses CL-C1-VD-ENV, which is UNVERIFIED",
+    "uses CL-C1-VA, which is UNVERIFIED",
+    "uses CL-C1-GUST-N-POS, which is UNVERIFIED",
+    "uses CL-C1-GUST-V-POS, which is UNVERIFIED",
+    "uses CL-C1-GUST-N-NEG, which is UNVERIFIED",
+    "uses CL-C1-GUST-V-NEG, which is UNVERIFIED",
+    "uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED",
+    "uses CL-A1-TRANSITION-GATE, which is UNVERIFIED",
+    "uses CL-C1-FOOT-LEVEL, which is UNVERIFIED",
+    "uses CL-C1-FOOT-PAIR-NARROW, which is UNVERIFIED",
+    "uses CL-C1-FOOT-PAIR-WIDE, which is UNVERIFIED",
+    "uses CL-C1-FOOT-CORNER, which is UNVERIFIED",
+    "uses CL-C1-WINGTIP-FORCE, which is UNVERIFIED",
+    "uses CL-C1-TIPOVER-ANGLE-CONTACT, which is UNVERIFIED",
+    "uses CL-C1-TIPOVER-FORCE, which is UNVERIFIED",
+    "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C1-TRANSPORT-N, which is UNVERIFIED",
+    "uses CL-C5-SIM3D-SIDE-LOAD, which is UNVERIFIED",
+    "uses CL-D7-CRADLE-STROKE, which is UNVERIFIED",
+    "uses ASM-C1-LID-PRELOAD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-CRUSH-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C6-DOG-FUSE-T, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.0003333678123806717,
+   "importance": 1
+  },
+  {
    "id": "CL-C1-FOOT-SIDE-DESIGN-ULT",
    "type": "claim",
    "title": "Design foot side load at the pad, ultimate",
@@ -52553,7 +53359,7 @@ window.PROOF_GRAPH = {
    "output": "foot_side_ult",
    "unit": "N",
    "how": "As CL-C1-FOOT-SIDE-DESIGN x 1.5.",
-   "value": 59.25,
+   "value": 36.75,
    "defined_in": "redesign/team/C1/claims.json",
    "reasons": [
     "uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -52746,7 +53552,7 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": "<=",
     "ref": "CL-C1-TRANSPORT-N-ALLOW-AFT",
-    "resolved": 10.786507077666359
+    "resolved": 10.181330679301144
    },
    "verifies": [
     "R-LOADS"
@@ -52819,7 +53625,7 @@ window.PROOF_GRAPH = {
     "uses CL-C1-TRANSPORT-N-ALLOW-AFT, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.27753405239443163,
+   "margin": 0.2345908110947137,
    "importance": 1
   },
   {
@@ -52834,7 +53640,7 @@ window.PROOF_GRAPH = {
    "procedure": "Aircraft inverted, supported under the pod with the half-fins hanging free; four-pad whiffletree per side over the spar at CL-C1-PROOF-Y1/-Y2/-Y3/-Y4 loaded to CL-C1-PROOF-P1/P2/P3/P4-LIM, plus the upward relief pull CL-C1-PROOF-R-LIM at each motor tube (LIMIT; data/whiffletree.json); hold 3 s, no permanent set after unloading; tip deflection logged. Step 2, each side in turn (rolling cases): padded V-block under the spar at CL-C1-PROOF-OUT-SUPPORT-Y, pads 3 and 4 at CL-C1-PROOF-OUT-P3/P4-LIM. Ultimate (x 1.5) on a sacrificial wing only. Torsion: twist test at CL-C1-WING-TORSION-ULT / 1.5; the G2 tube-end handling moment: T-C1-STATION-PROOF (CR-H1-13, agreed with C2).",
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 271
+   "importance": 276
   },
   {
    "id": "T-C1-FOOT-DROP",
@@ -52862,7 +53668,7 @@ window.PROOF_GRAPH = {
    "procedure": "H1 thrust stand, one station, 11x5.5MR, 16.8 V pack, F4 output cap and 100 A limiter as flown: step to full throttle, record peak thrust, torque and rpm.",
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 283
+   "importance": 288
   },
   {
    "id": "T-C1-STATION-PROOF",
@@ -52876,7 +53682,7 @@ window.PROOF_GRAPH = {
    "procedure": "Hang the limit mount load from each motor mount in -x and y with the wing supported at the spar. G2 step (CR-H1-13): wing held under the pod, a load equal to the G2 fin-group cut (data/envelope.json, J-FIN in G2-HANG-MOTOR) hung at the UR upper tube end at LIMIT; no permanent set.",
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 34
+   "importance": 35
   },
   {
    "id": "SRC-C2-ROARK",
@@ -53089,7 +53895,11 @@ window.PROOF_GRAPH = {
     "d": 0.02
    },
    "defined_in": "redesign/team/C2/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 2
   },
   {
@@ -53115,7 +53925,11 @@ window.PROOF_GRAPH = {
     "d": 0.02
    },
    "defined_in": "redesign/team/C2/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -54021,6 +54835,7 @@ window.PROOF_GRAPH = {
    "value": 62587921.84590675,
    "defined_in": "redesign/team/C2/claims.json",
    "reasons": [
+    "CALC-C2-SPAR-ROOT does not re-run",
     "uses SRC-C2-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-C2-SPAR-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-C1-SPAR-MB-ULT, which is UNVERIFIED",
@@ -54082,6 +54897,7 @@ window.PROOF_GRAPH = {
    "value": 13764119.19807867,
    "defined_in": "redesign/team/C2/claims.json",
    "reasons": [
+    "CALC-C2-SPAR-TAU does not re-run",
     "uses CL-C1-WING-TORSION-ULT, which is UNVERIFIED",
     "uses CL-C1-WING-SHEAR-ULT, which is UNVERIFIED",
     "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
@@ -62731,7 +63547,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 10
+   "importance": 11
   },
   {
    "id": "ASM-C4-TAPE-AREAL",
@@ -65155,26 +65971,26 @@ window.PROOF_GRAPH = {
     "brace_up_L1_n": 6.422363445569165,
     "tcollar_up_L1_nm": 0.027114456790305552,
     "qface_up_L1_npm": 129.05757854825265,
-    "t_sec_L4_tube_nm": 10.505865619128707,
-    "t_sec_L4_fin_nm": 2.1335690917215464,
-    "t_sec_L4_brace_nm": 0.11906529451050155,
+    "t_sec_L4_tube_nm": 6.506544684353917,
+    "t_sec_L4_fin_nm": 1.3226197924783525,
+    "t_sec_L4_brace_nm": 0.08433552640320251,
     "t_sec_L4_case": "L4- up_cr",
-    "face_up_L4+_mpa": 31.803578384147556,
-    "brace_up_L4+_n": -13.979836928474352,
-    "tcollar_up_L4+_nm": 10.393483324569502,
-    "qface_up_L4+_npm": 3537.131685803418,
-    "face_up_L4-_mpa": 31.638910369586267,
-    "brace_up_L4-_n": 24.893389829660833,
-    "tcollar_up_L4-_nm": 10.347407598586443,
-    "qface_up_L4-_npm": 3530.180549820185,
-    "face_up_L5+_mpa": 8.844530444877153,
-    "brace_up_L5+_n": 7.588131540540563,
-    "tcollar_up_L5+_nm": 0.03203619143073688,
-    "qface_up_L5+_npm": 414.7073832402958,
-    "face_up_L5-_mpa": 4.894500834003608,
-    "brace_up_L5-_n": 3.3254213575541574,
-    "tcollar_up_L5-_nm": 0.014039534585789132,
-    "qface_up_L5-_npm": 195.49565439438192,
+    "face_up_L4+_mpa": 20.252268260518203,
+    "brace_up_L4+_n": -6.598844499599333,
+    "tcollar_up_L4+_nm": 6.4553394784261116,
+    "qface_up_L4+_npm": 2235.497821624082,
+    "face_up_L4-_mpa": 20.14927941646906,
+    "brace_up_L4-_n": 17.5123974097019,
+    "tcollar_up_L4-_nm": 6.409263752494823,
+    "qface_up_L4-_npm": 2231.2464475364322,
+    "face_up_L5+_mpa": 6.327514863634119,
+    "brace_up_L5+_n": 6.778756189329423,
+    "tcollar_up_L5+_nm": 0.02861910468729867,
+    "qface_up_L5+_npm": 298.8643567028209,
+    "face_up_L5-_mpa": 2.477591735899828,
+    "brace_up_L5-_n": 4.134796708996882,
+    "tcollar_up_L5-_nm": 0.017456621328670346,
+    "qface_up_L5-_npm": 79.67609827799727,
     "face_up_G2+_mpa": 1.1065759416377534,
     "brace_up_G2+_n": 89.10241465929678,
     "tcollar_up_G2+_nm": 0.36691591943254576,
@@ -65237,22 +66053,22 @@ window.PROOF_GRAPH = {
     "brace_up_cr_L1_n": 7.321255874493082,
     "tcollar_up_cr_L1_nm": 0.030223547387289995,
     "qface_up_cr_L1_npm": 158.72906621215327,
-    "face_up_cr_L4+_mpa": 31.947775909932687,
-    "brace_up_cr_L4+_n": -14.38408901728299,
-    "tcollar_up_cr_L4+_nm": 10.557224637566605,
-    "qface_up_cr_L4+_npm": 3643.082091096971,
-    "face_up_cr_L4-_mpa": 31.746040549032145,
-    "brace_up_cr_L4-_n": 26.825134118091466,
-    "tcollar_up_cr_L4-_nm": 10.505865619128684,
-    "qface_up_cr_L4-_npm": 3601.9971809515146,
-    "face_up_cr_L5+_mpa": 8.959769649283304,
-    "brace_up_cr_L5+_n": 8.578399778484021,
-    "tcollar_up_cr_L5+_nm": 0.035413278358022604,
-    "qface_up_cr_L5+_npm": 421.67781557922814,
-    "face_up_cr_L5-_mpa": 4.834742242391866,
-    "brace_up_cr_L5-_n": 3.862645320587288,
-    "tcollar_up_cr_L5-_nm": 0.015945740168957168,
-    "qface_up_cr_L5-_npm": 191.51915391185844,
+    "face_up_cr_L4+_mpa": 20.378289564428083,
+    "brace_up_cr_L4+_n": -6.559552979829632,
+    "tcollar_up_cr_L4+_nm": 6.5579037027927995,
+    "qface_up_cr_L4+_npm": 2310.7638137084473,
+    "face_up_cr_L4-_mpa": 20.252305949847333,
+    "brace_up_cr_L4-_n": 19.000598083484483,
+    "tcollar_up_cr_L4-_nm": 6.506544684353912,
+    "qface_up_cr_L4-_npm": 2284.4968195859615,
+    "face_up_cr_L5+_mpa": 6.4277272264809415,
+    "brace_up_cr_L5+_n": 7.683003362352052,
+    "tcollar_up_cr_L5+_nm": 0.031716910347461436,
+    "qface_up_cr_L5+_npm": 305.2749937144777,
+    "face_up_cr_L5-_mpa": 2.4056783996501294,
+    "brace_up_cr_L5-_n": 4.758041736650313,
+    "tcollar_up_cr_L5-_nm": 0.019642108179556528,
+    "qface_up_cr_L5-_npm": 98.32337510347433,
     "face_up_cr_G2+_mpa": 1.9309706121785841,
     "brace_up_cr_G2+_n": 88.59526212473443,
     "tcollar_up_cr_G2+_nm": 0.36648749047113416,
@@ -65313,22 +66129,22 @@ window.PROOF_GRAPH = {
     "brace_up_rf_L1_n": 24.614494895695124,
     "tcollar_up_rf_L1_nm": 0.10624181381835007,
     "qface_up_rf_L1_npm": 501.7523079054403,
-    "face_up_rf_L4+_mpa": 38.090338746252314,
-    "brace_up_rf_L4+_n": -13.063572412802182,
-    "tcollar_up_rf_L4+_nm": 11.09971253440716,
-    "qface_up_rf_L4+_npm": 3989.5257206041492,
-    "face_up_rf_L4-_mpa": 37.133226290137614,
-    "brace_up_rf_L4-_n": 54.891101232501775,
-    "tcollar_up_rf_L4-_nm": 10.919175312281965,
-    "qface_up_rf_L4-_npm": 3901.1100815117165,
-    "face_up_rf_L5+_mpa": 22.8724193009526,
-    "brace_up_rf_L5+_n": 50.515126112566236,
-    "tcollar_up_rf_L5+_nm": 0.21803488741724442,
-    "qface_up_rf_L5+_npm": 1415.8748408780568,
-    "face_up_rf_L5-_mpa": 10.213834632572459,
-    "brace_up_rf_L5-_n": -8.687597292639625,
-    "tcollar_up_rf_L5-_nm": 0.03749766541963301,
-    "qface_up_rf_L5-_npm": 563.2447458920393,
+    "face_up_rf_L4+_mpa": 25.2673524413366,
+    "brace_up_rf_L4+_n": -0.160786266971723,
+    "tcollar_up_rf_L4+_nm": 6.918911044622888,
+    "qface_up_rf_L4+_npm": 2636.3696743492796,
+    "face_up_rf_L4-_mpa": 24.62692432689242,
+    "brace_up_rf_L4-_n": 41.98831509876659,
+    "tcollar_up_rf_L4-_nm": 6.738373822255497,
+    "qface_up_rf_L4-_npm": 2581.5676637645856,
+    "face_up_rf_L5+_mpa": 16.6117993922294,
+    "brace_up_rf_L5+_n": 39.27410268188315,
+    "tcollar_up_rf_L5+_nm": 0.16951604827123035,
+    "qface_up_rf_L5+_npm": 1040.0926408117714,
+    "face_up_rf_L5-_mpa": 4.009464598746917,
+    "brace_up_rf_L5-_n": 2.5534261388704076,
+    "tcollar_up_rf_L5-_nm": 0.011021173726632472,
+    "qface_up_rf_L5-_npm": 187.47478536807736,
     "face_up_rf_G2+_mpa": 1.9748168120839695,
     "brace_up_rf_G2+_n": 83.46535170344151,
     "tcollar_up_rf_G2+_nm": 0.3505620191818517,
@@ -65390,22 +66206,22 @@ window.PROOF_GRAPH = {
     "brace_lo_L1_n": 5.99380115089365,
     "tcollar_lo_L1_nm": 0.02322760901361376,
     "qface_lo_L1_npm": 131.92128045643608,
-    "face_lo_L4+_mpa": 32.33522436591532,
-    "brace_lo_L4+_n": 0.3839292888802268,
-    "tcollar_lo_L4+_nm": 10.304072402316706,
-    "qface_lo_L4+_npm": 3507.3000026241652,
-    "face_lo_L4-_mpa": 32.294497755333985,
-    "brace_lo_L4-_n": 9.801365642579146,
-    "tcollar_lo_L4-_nm": 10.264601615289138,
-    "qface_lo_L4-_npm": 3505.7006324628214,
-    "face_lo_L5+_mpa": 9.106131853519235,
-    "brace_lo_L5+_n": 7.12868443997593,
-    "tcollar_lo_L5+_nm": 0.027625590302990333,
-    "qface_lo_L5+_npm": 410.72095463850656,
-    "face_lo_L5-_mpa": 4.987126335963137,
-    "brace_lo_L5-_n": 3.0566105030423003,
-    "tcollar_lo_L5-_nm": 0.011845196709951683,
-    "qface_lo_L5-_npm": 187.88204890894585,
+    "face_lo_L4+_mpa": 20.629570621600998,
+    "brace_lo_L4+_n": 2.1720501127404392,
+    "tcollar_lo_L4+_nm": 6.398627968712958,
+    "qface_lo_L4+_npm": 2217.6863114209063,
+    "face_lo_L4-_mpa": 20.60362700976745,
+    "brace_lo_L4-_n": 8.013244817518352,
+    "tcollar_lo_L4-_nm": 6.359157181490488,
+    "qface_lo_L4-_npm": 2216.7497315423157,
+    "face_lo_L5+_mpa": 6.517797070597168,
+    "brace_lo_L5+_n": 6.355505844422212,
+    "tcollar_lo_L5+_nm": 0.024629313038647682,
+    "qface_lo_L5+_npm": 297.0787924597437,
+    "face_lo_L5-_mpa": 2.4967674242563374,
+    "brace_lo_L5-_n": 3.8297890987522196,
+    "tcollar_lo_L5-_nm": 0.01484147397444821,
+    "qface_lo_L5-_npm": 79.20073565664012,
     "face_lo_G2+_mpa": 1.1436796471432058,
     "brace_lo_G2+_n": 96.33209958107986,
     "tcollar_lo_G2+_nm": 0.36077166933372506,
@@ -65470,22 +66286,22 @@ window.PROOF_GRAPH = {
     "brace_lo_cr_L1_n": 6.894906318688044,
     "tcollar_lo_cr_L1_nm": 0.02594038855408015,
     "qface_lo_cr_L1_npm": 167.92766979852578,
-    "face_lo_cr_L4+_mpa": 32.482266706172204,
-    "brace_lo_cr_L4+_n": -0.09572720155323414,
-    "tcollar_lo_cr_L4+_nm": 10.449754121788288,
-    "qface_lo_cr_L4+_npm": 3603.1494159502945,
-    "face_lo_cr_L4-_mpa": 32.42299296319206,
-    "brace_lo_cr_L4-_n": 11.812274469880006,
-    "tcollar_lo_cr_L4-_nm": 10.405673495461826,
-    "qface_lo_cr_L4-_npm": 3590.1065465277434,
-    "face_lo_cr_L5+_mpa": 9.242674896484647,
-    "brace_lo_cr_L5+_n": 8.116342244640165,
-    "tcollar_lo_cr_L5+_nm": 0.030535740695006863,
-    "qface_lo_cr_L5+_npm": 419.0382915344274,
-    "face_lo_cr_L5-_mpa": 4.920411049001353,
-    "brace_lo_cr_L5-_n": 3.6002050164750474,
-    "tcollar_lo_cr_L5-_nm": 0.013544885555684893,
-    "qface_lo_cr_L5-_npm": 183.14728287194836,
+    "face_lo_cr_L4+_mpa": 20.76275456381047,
+    "brace_lo_cr_L4+_n": 2.1652857698646355,
+    "tcollar_lo_cr_L4+_nm": 6.489862802008474,
+    "qface_lo_cr_L4+_npm": 2288.9651998168233,
+    "face_lo_cr_L4-_mpa": 20.725369304885447,
+    "brace_lo_cr_L4-_n": 9.551261489697785,
+    "tcollar_lo_cr_L4-_nm": 6.445782175738088,
+    "qface_lo_cr_L4-_npm": 2280.0965216746863,
+    "face_lo_cr_L5+_mpa": 6.636490458236836,
+    "brace_lo_cr_L5+_n": 7.258847834364353,
+    "tcollar_lo_cr_L5+_nm": 0.027309628959664323,
+    "qface_lo_cr_L5+_npm": 304.7258899678878,
+    "face_lo_cr_L5-_mpa": 2.415569155421542,
+    "brace_lo_cr_L5-_n": 4.457699426805182,
+    "tcollar_lo_cr_L5-_nm": 0.016770997291016138,
+    "qface_lo_cr_L5-_npm": 103.96489819832354,
     "face_lo_cr_G2+_mpa": 2.0408577694163617,
     "brace_lo_cr_G2+_n": 95.82248085774053,
     "tcollar_lo_cr_G2+_nm": 0.3596438542630507,
@@ -65550,22 +66366,22 @@ window.PROOF_GRAPH = {
     "brace_lo_rf_L1_n": 25.469294518663357,
     "tcollar_lo_rf_L1_nm": 0.10118844892829881,
     "qface_lo_rf_L1_npm": 537.4040869453704,
-    "face_lo_rf_L4+_mpa": 38.42198804503394,
-    "brace_lo_rf_L4+_n": 2.1212598656962567,
-    "tcollar_lo_rf_L4+_nm": 11.091305527736836,
-    "qface_lo_rf_L4+_npm": 3987.696696274546,
-    "face_lo_rf_L4-_mpa": 37.7767930845613,
-    "brace_lo_rf_L4-_n": 41.158834031452685,
-    "tcollar_lo_rf_L4-_nm": 10.919355512462971,
-    "qface_lo_rf_L4-_npm": 3932.016921800033,
-    "face_lo_rf_L5+_mpa": 23.5366006659945,
-    "brace_lo_rf_L5+_n": 51.112062990951,
-    "tcollar_lo_rf_L5+_nm": 0.20306610267070901,
-    "qface_lo_rf_L5+_npm": 1432.613060352488,
-    "face_lo_rf_L5-_mpa": 9.77615670794236,
-    "brace_lo_rf_L5-_n": -7.8319690877480745,
-    "tcollar_lo_rf_L5-_nm": 0.031116087785684088,
-    "qface_lo_rf_L5-_npm": 519.3997269221126,
+    "face_lo_rf_L4+_mpa": 25.55629488483901,
+    "brace_lo_rf_L4+_n": 9.533457496571488,
+    "tcollar_lo_rf_L4+_nm": 6.91206608949075,
+    "qface_lo_rf_L4+_npm": 2646.753792906537,
+    "face_lo_rf_L4-_mpa": 25.08960666347668,
+    "brace_lo_rf_L4-_n": 33.74663640940818,
+    "tcollar_lo_rf_L4-_nm": 6.740116074643012,
+    "qface_lo_rf_L4-_npm": 2612.2408752812207,
+    "face_lo_rf_L5+_mpa": 17.230923946233062,
+    "brace_lo_rf_L5+_n": 39.92015816621268,
+    "tcollar_lo_rf_L5+_nm": 0.1586011298026384,
+    "qface_lo_rf_L5+_npm": 1061.977720963818,
+    "face_lo_rf_L5-_mpa": 3.5332796030296305,
+    "brace_lo_rf_L5-_n": 3.3599357371923038,
+    "tcollar_lo_rf_L5-_nm": 0.013348885086328477,
+    "qface_lo_rf_L5-_npm": 148.77364349363432,
     "face_lo_rf_G2+_mpa": 2.0964512591381057,
     "brace_lo_rf_G2+_n": 90.01649537844239,
     "tcollar_lo_rf_G2+_nm": 0.3458204470248658,
@@ -65626,76 +66442,76 @@ window.PROOF_GRAPH = {
     "brace_lo_rf_G3_n": 2.6488568419268614,
     "tcollar_lo_rf_G3_nm": 0.010523798178874527,
     "qface_lo_rf_G3_npm": 45.207603859689904,
-    "face_ult_pa": 38421988.04503394,
-    "face_ult_intact_pa": 38421988.04503394,
-    "face_lim_cracked_pa": 21654844.470781468,
-    "ms_face_intact_ult": -0.739732363971403,
-    "ms_face_failsafe_lim": -0.5382095672174955,
-    "ms_face_envelope_ult": -0.739732363971403,
-    "edge_ult_pa": 155256327.6285901,
-    "tube_ult_pa": 52041173.7862788,
-    "root_m_lim_nm": 11.496472083252241,
+    "face_ult_pa": 25556294.88483901,
+    "face_ult_intact_pa": 25556294.88483901,
+    "face_lim_cracked_pa": 13841836.375873648,
+    "ms_face_intact_ult": -0.6087069723893197,
+    "ms_face_failsafe_lim": -0.277552506152289,
+    "ms_face_envelope_ult": -0.6087069723893197,
+    "edge_ult_pa": 97238449.48146434,
+    "tube_ult_pa": 38971469.11374189,
+    "root_m_lim_nm": 8.609229464143823,
     "brace_comp_design_n": 166.17287177736273,
     "brace_tens_design_n": 166.17287177736273,
     "brace_pcr_n": 314.06020968773106,
     "brace_len_m": 0.1518078143574961,
-    "collar_t_lim_nm": 11.09971253440716,
-    "collar_t_lim_intact_nm": 11.09971253440716,
-    "collar_t_design_nm": 23.93375515231544,
+    "collar_t_lim_nm": 6.918911044622888,
+    "collar_t_lim_intact_nm": 6.918911044622888,
+    "collar_t_design_nm": 14.918901939968102,
     "collar_f_lim_n": 96.33209958107986,
-    "tau_collar_pa": 1567552.5567506906,
-    "collar_h_req_m": 0.017243078124257596,
-    "tube_t_root_lim_nm": 12.503835793329436,
-    "side_load_n": 39.5,
-    "strip_q_lim_npm": 3989.5257206041492,
-    "strip_q_lim_intact_npm": 3989.5257206041492,
-    "strip_tau_design_pa": 860241.4835052697,
-    "ms_strip_paper": -0.8837535716220928,
-    "strip_end_face_design_n": 2233.257001692858,
-    "strip_pin_design_n": 103.22897802063237,
+    "tau_collar_pa": 1028574.9271515427,
+    "collar_h_req_m": 0.011314324198666969,
+    "tube_t_root_lim_nm": 7.788565235560652,
+    "side_load_n": 24.5,
+    "strip_q_lim_npm": 2646.753792906537,
+    "strip_q_lim_intact_npm": 2646.753792906537,
+    "strip_tau_design_pa": 570706.286595472,
+    "ms_strip_paper": -0.8247785203198892,
+    "strip_end_face_design_n": 1399.2006936227026,
+    "strip_pin_design_n": 68.48475439145665,
     "tau_anchor_pa": 751341.8736120168,
     "s_ear_pa": 1394787.7925527608,
     "tau_brace_end_pa": 865483.7071737644,
-    "dfoot_L4_m": 0.018925858071998487,
-    "ms_face": -0.739732363971403,
-    "ms_edge": 1.576384525575632,
-    "ms_tube": 6.686221714419981,
+    "dfoot_L4_m": 0.011747243406382725,
+    "ms_face": -0.6087069723893197,
+    "ms_edge": 3.113599117767178,
+    "ms_tube": 9.263918941124915,
     "ms_brace_buckling": 0.889960775959308,
     "ms_brace_end_bond": 1.3108465051652987,
-    "ms_collar_bond": 0.27587428656664015,
+    "ms_collar_bond": 0.9444378306387926,
     "ms_anchor_bond": 0.33095204077017404,
     "ms_ear_root": 9.75432412019235,
-    "ms_min": -0.739732363971403,
+    "ms_min": -0.6087069723893197,
     "eq_resid": 1.811163996556786e-07,
-    "t_sec_L4_lim_nm": 12.758500005360755,
-    "t_sec_vs_c1": 0.007100037938080561,
+    "t_sec_L4_lim_nm": 7.913500003235472,
+    "t_sec_vs_c1": 0.0003640976387256911,
     "brace_g3_lim_n": 2.6488568419268614,
     "tube_g3_ult_pa": 2221699.2775406977,
     "face_swirl_ult_pa": 4710911.598070465,
     "brace_swirl_lim_n": 23.39953101776948,
     "collar_t_swirl_lim_nm": 0.6054203884094713,
-    "collar_bond_per_h_npm": 34486.15624851519,
+    "collar_bond_per_h_npm": 22628.64839733394,
     "strip_end_case": "L4- up_rf",
-    "strip_end_gov_design_n": -2233.257001692858,
-    "strip_coinc_design_n": 2152.7219961770406,
-    "strip_coinc_ratio": -0.963938317240349,
-    "strip_pair_design_n": 176.86742692589127,
+    "strip_end_gov_design_n": -1399.2006936227026,
+    "strip_coinc_design_n": 1321.4051366932947,
+    "strip_coinc_ratio": -0.9444000011692494,
+    "strip_pair_design_n": 137.5460461607808,
     "strip_both_tension_design_n": 46.2361571328767,
-    "face_ult_rootfree_pa": 38421988.04503394,
-    "ms_face_rootfree_ult": -0.739732363971403,
+    "face_ult_rootfree_pa": 25556294.88483901,
+    "ms_face_rootfree_ult": -0.6087069723893197,
     "fillet_share_table": {
      "L4+ up": {
       "x_hinge": 0.24960000000000002,
       "fore": {
        "F": [
-        -17.75492921640415,
-        -2.711211273983724,
-        10.886123646890415
+        -16.924812634217737,
+        -1.6713349852424955,
+        10.518462939575633
        ],
        "M": [
-        0.01679019413200468,
-        -0.23420645325152767,
-        0.214187990049071
+        0.01037396983283639,
+        -0.235302986880278,
+        0.13234790997982632
        ],
        "ref": [
         0.15355789473684212,
@@ -65710,14 +66526,14 @@ window.PROOF_GRAPH = {
       },
       "aft": {
        "F": [
-        -4.587315176615954,
-        7.821280666719742,
-        18.73420166135447
+        -4.39467294506816,
+        4.853316847263599,
+        18.221565774180497
        ],
        "M": [
-        0.014897083883716265,
-        -0.11277811150050632,
-        0.22183217990888332
+        0.009242501374564513,
+        -0.10852386842826348,
+        0.13762840516090213
        ],
        "ref": [
         0.2849736842105263,
@@ -65730,21 +66546,21 @@ window.PROOF_GRAPH = {
        ],
        "n": 7
       },
-      "mx_fillet": 0.060037387109874954,
-      "mx_section": -8.610999999999922
+      "mx_fillet": 0.037018810520016966,
+      "mx_section": -5.340999999999954
      },
      "L4- up": {
       "x_hinge": 0.24960000000000002,
       "fore": {
        "F": [
-        -13.382981884081776,
-        2.7654705157090658,
-        8.949777254564019
+        -14.213098466680814,
+        1.7255942264452755,
+        9.317437962176658
        ],
        "M": [
-        -0.017001920474179345,
-        -0.2399815304746329,
-        -0.21683643136549946
+        -0.010585696187077205,
+        -0.23888499682094128,
+        -0.13499635139224297
        ],
        "ref": [
         0.15355789473684212,
@@ -65759,14 +66575,14 @@ window.PROOF_GRAPH = {
       },
       "aft": {
        "F": [
-        -3.5727327578153094,
-        -7.809995439308542,
-        16.034319324402613
+        -3.765374989326799,
+        -4.842031620427537,
+        16.546955211429772
        ],
        "M": [
-        -0.014883717306406596,
-        -0.09037243133653595,
-        -0.2216410335026567
+        -0.009229134804918115,
+        -0.09462667440778838,
+        -0.13743725883539076
        ],
        "ref": [
         0.2849736842105263,
@@ -65779,8 +66595,8 @@ window.PROOF_GRAPH = {
        ],
        "n": 7
       },
-      "mx_fillet": -0.0611937829318325,
-      "mx_section": 8.610999999999922
+      "mx_fillet": -0.038175206351391336,
+      "mx_section": 5.340999999999954
      },
      "G2+ up": {
       "x_hinge": 0.24960000000000002,
@@ -65884,14 +66700,14 @@ window.PROOF_GRAPH = {
       "x_hinge": 0.24960000000000002,
       "fore": {
        "F": [
-        -16.00704026497897,
-        -3.8140374165982616,
-        11.986458557706507
+        -15.819114017032199,
+        -2.355178000659794,
+        11.884974018740188
        ],
        "M": [
-        0.004183386729352305,
-        -0.35472295954036415,
-        0.183808544292752
+        0.0025852580140448968,
+        -0.3538789712611021,
+        0.11356321284564322
        ],
        "ref": [
         0.14816578947368422,
@@ -65906,14 +66722,14 @@ window.PROOF_GRAPH = {
       },
       "aft": {
        "F": [
-        -5.670633640679597,
-        9.319517109864139,
-        18.07359238993847
+        -5.61632194867877,
+        5.782537669869697,
+        17.9533362354338
        ],
        "M": [
-        0.004121831384846092,
-        -0.012563587053020103,
-        0.07392807476042684
+        0.002557498268335503,
+        -0.012249740211271495,
+        0.045870439812713444
        ],
        "ref": [
         0.29656000000000005,
@@ -65926,21 +66742,21 @@ window.PROOF_GRAPH = {
        ],
        "n": 5
       },
-      "mx_fillet": 0.020207427143964382,
-      "mx_section": -8.611000000000054
+      "mx_fillet": 0.012444841319274853,
+      "mx_section": -5.341000000000031
      },
      "L4- lo": {
       "x_hinge": 0.24960000000000002,
       "fore": {
        "F": [
-        -15.017295365407097,
-        3.8692888317110556,
-        11.451973321395057
+        -15.20522161149885,
+        2.4104294374299813,
+        11.553457859708077
        ],
        "M": [
-        -0.004233424540187981,
-        -0.35027795474826073,
-        -0.1861502023893388
+        -0.002635295762851432,
+        -0.3511219429797508,
+        -0.11590486896135876
        ],
        "ref": [
         0.14816578947368422,
@@ -65955,14 +66771,14 @@ window.PROOF_GRAPH = {
       },
       "aft": {
        "F": [
-        -5.3845920652395005,
-        -9.308574604887585,
-        17.44024331546093
+        -5.438903756491456,
+        -5.771595169372051,
+        17.560499468145025
        ],
        "M": [
-        -0.004116989700977241,
-        -0.010910660366540176,
-        -0.07384213606334553
+        -0.0025526565786366073,
+        -0.011224507204160988,
+        -0.04578450101107795
        ],
        "ref": [
         0.29656000000000005,
@@ -65975,8 +66791,8 @@ window.PROOF_GRAPH = {
        ],
        "n": 5
       },
-      "mx_fillet": -0.020675524845985827,
-      "mx_section": 8.611000000000054
+      "mx_fillet": -0.0129129391041574,
+      "mx_section": 5.341000000000031
      },
      "G2+ lo": {
       "x_hinge": 0.24960000000000002,
@@ -66078,15 +66894,15 @@ window.PROOF_GRAPH = {
      }
     },
     "fillet_l4_case": "L4- up",
-    "fillet_l4_mx_share": 0.007106466488425624,
-    "fillet_l4_mx_nm": 0.0611937829318325,
-    "fillet_l4_mx_section_nm": 8.610999999999922,
-    "fillet_l4_fore_fx_n": 13.382981884081776,
-    "fillet_l4_fore_fy_n": 2.7654705157090658,
-    "fillet_l4_fore_fz_n": 8.949777254564019,
-    "fillet_l4_fore_mx_nm": 0.017001920474179345,
-    "fillet_l4_fore_my_nm": 0.2399815304746329,
-    "fillet_l4_fore_mz_nm": 0.21683643136549946,
+    "fillet_l4_mx_share": 0.007147576549595893,
+    "fillet_l4_mx_nm": 0.038175206351391336,
+    "fillet_l4_mx_section_nm": 5.340999999999954,
+    "fillet_l4_fore_fx_n": 14.213098466680814,
+    "fillet_l4_fore_fy_n": 1.7255942264452755,
+    "fillet_l4_fore_fz_n": 9.317437962176658,
+    "fillet_l4_fore_mx_nm": 0.010585696187077205,
+    "fillet_l4_fore_my_nm": 0.23888499682094128,
+    "fillet_l4_fore_mz_nm": 0.13499635139224297,
     "fillet_l4_fore_ref": [
      0.15355789473684212,
      0.0,
@@ -66096,12 +66912,12 @@ window.PROOF_GRAPH = {
      0.06728421052631578,
      0.23983157894736842
     ],
-    "fillet_l4_aft_fx_n": 3.5727327578153094,
-    "fillet_l4_aft_fy_n": 7.809995439308542,
-    "fillet_l4_aft_fz_n": 16.034319324402613,
-    "fillet_l4_aft_mx_nm": 0.014883717306406596,
-    "fillet_l4_aft_my_nm": 0.09037243133653595,
-    "fillet_l4_aft_mz_nm": 0.2216410335026567,
+    "fillet_l4_aft_fx_n": 3.765374989326799,
+    "fillet_l4_aft_fy_n": 4.842031620427537,
+    "fillet_l4_aft_fz_n": 16.546955211429772,
+    "fillet_l4_aft_mx_nm": 0.009229134804918115,
+    "fillet_l4_aft_my_nm": 0.09462667440778838,
+    "fillet_l4_aft_mz_nm": 0.13743725883539076,
     "fillet_l4_aft_ref": [
      0.2849736842105263,
      0.0,
@@ -66111,8 +66927,8 @@ window.PROOF_GRAPH = {
      0.25061578947368424,
      0.32
     ],
-    "fillet_l4_aft_fy_max_n": 9.319517109864139,
-    "fillet_l4_aft_fz_max_n": 18.73420166135447,
+    "fillet_l4_aft_fy_max_n": 5.782537669869697,
+    "fillet_l4_aft_fz_max_n": 18.221565774180497,
     "fillet_g2_case": "G2+ up",
     "fillet_g2_mx_share": 0.00011890312197136176,
     "fillet_g2_mx_nm": 0.0010429073396863587,
@@ -66149,8 +66965,8 @@ window.PROOF_GRAPH = {
     ],
     "fillet_g2_aft_fy_max_n": 0.11257635480277031,
     "fillet_g2_aft_fz_max_n": 6.478604533455376,
-    "ms_collar_bond_16mm": -0.07209142795153434,
-    "governing": "edge: L4- up_rf; face: L4+ lo_rf; mroot: L4- up_rf; q_face: L4+ up_rf; strip_end: L4- up_rf; t_collar: L4+ up_rf; t_root: L4+ lo_rf; tube: L4- up_rf"
+    "ms_collar_bond_16mm": 0.4141366041009402,
+    "governing": "edge: L4- up_rf; face: L4+ lo_rf; mroot: L5+ lo_rf; q_face: L4+ lo_rf; strip_end: L4- up_rf; t_collar: L4+ up_rf; t_root: L4+ lo_rf; tube: L5+ lo_rf"
    },
    "input_values": {
     "tube_x": 0.045,
@@ -66306,7 +67122,7 @@ window.PROOF_GRAPH = {
     "G": 5000000000.0,
     "f_level": 43.98538578322658,
     "f_corner": 37.37228814357933,
-    "mu_hi": 0.7,
+    "mu_hi": 0.4,
     "foot_h": 0.048,
     "z_pad": 0.218,
     "sw_f": 0.4871446634755346,
@@ -66314,8 +67130,8 @@ window.PROOF_GRAPH = {
     "sw_bad": 1.43,
     "sw_exp": 1.0,
     "g3": 23.45829557927301,
-    "t_c1": 12.668552799861164,
-    "side_c5": 39.5,
+    "t_c1": 7.91638233935248,
+    "side_c5": 24.5,
     "n_h": 2.0,
     "m_gate": 2.6,
     "grav": 9.80665,
@@ -66916,17 +67732,17 @@ window.PROOF_GRAPH = {
     "ASM-C4-FACE-SIGMA"
    ],
    "outputs": {
-    "ms_face_prop": -0.7454768980383659,
-    "face_ult_prop_pa": 39289164.413481675,
-    "ms_face_intact_prop": -0.7454768980383659,
-    "ms_face_failsafe_prop": -0.3878404016453808,
-    "ms_face_envelope_prop": -0.7454768980383659,
-    "ms_face_drawn_fine": -0.7617727861546735,
-    "face_ult_drawn_fine_pa": 41976732.37488598,
-    "ms_min_prop": -0.7454768980383659,
-    "ms_strip_paper_prop": -0.8731015803677726,
-    "collar_t_lim_prop_nm": 11.103271051012456,
-    "dfoot_L4_prop_m": 0.017230660115559834,
+    "ms_face_prop": -0.6095144946359856,
+    "face_ult_prop_pa": 25609145.186267294,
+    "ms_face_intact_prop": -0.6095144946359856,
+    "ms_face_failsafe_prop": -0.053404995892556095,
+    "ms_face_envelope_prop": -0.6095144946359856,
+    "ms_face_drawn_fine": -0.6438355954060926,
+    "face_ult_drawn_fine_pa": 28076921.418921217,
+    "ms_min_prop": -0.6095144946359856,
+    "ms_strip_paper_prop": -0.8003048890938446,
+    "collar_t_lim_prop_nm": 6.912281994288605,
+    "dfoot_L4_prop_m": 0.010691194131866928,
     "governing_prop": "edge: L4- up_rf; face: L4+ lo_rf; mroot: L4- up_rf; q_face: L4+ up_cr; strip_end: L4- up_rf; t_collar: L4+ up_rf; t_root: L4+ lo_rf; tube: L4- up_rf",
     "cheek_extension_m": 0.024999999999999994
    },
@@ -67084,7 +67900,7 @@ window.PROOF_GRAPH = {
     "G": 5000000000.0,
     "f_level": 43.98538578322658,
     "f_corner": 37.37228814357933,
-    "mu_hi": 0.7,
+    "mu_hi": 0.4,
     "foot_h": 0.048,
     "z_pad": 0.218,
     "sw_f": 0.4871446634755346,
@@ -67092,8 +67908,8 @@ window.PROOF_GRAPH = {
     "sw_bad": 1.43,
     "sw_exp": 1.0,
     "g3": 23.45829557927301,
-    "t_c1": 12.668552799861164,
-    "side_c5": 39.5,
+    "t_c1": 7.91638233935248,
+    "side_c5": 24.5,
     "n_h": 2.0,
     "m_gate": 2.6,
     "grav": 9.80665,
@@ -67220,7 +68036,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/C4/claims.d3.json",
    "status": "CHECKED",
-   "importance": 10
+   "importance": 11
   },
   {
    "id": "CALC-C4-D3-BLOCK",
@@ -67280,23 +68096,23 @@ window.PROOF_GRAPH = {
     "rounds_clear_planes": 1.0,
     "lig_diag_over_min": 2.086380754780532,
     "h_core_m": 0.027710000000000002,
-    "M_design_nm": 32.41212576509983,
+    "M_design_nm": 23.071874999999995,
     "F_design_n": 127.33029343271177,
-    "s_tube_bore_pa": 11721193.085325725,
-    "tau_shear_out_pa": 9045398.045114653,
-    "s_spar_bore_pa": 6981504.108942784,
-    "ms_tube_bore": 0.7063109407385222,
-    "ms_shear_out": 0.1055345436568067,
-    "ms_spar_bore": 1.8647122006820132,
-    "ms_web_bend": 1.1321023341952703,
-    "ms_web_torsion": 0.7909659607240269,
+    "s_tube_bore_pa": 8403669.231519334,
+    "tau_shear_out_pa": 6438772.159981061,
+    "s_spar_bore_pa": 5015963.123021102,
+    "ms_tube_bore": 1.3799128034438497,
+    "ms_shear_out": 0.5530911409092962,
+    "ms_spar_bore": 2.9872701432370286,
+    "ms_web_bend": 1.995247200325072,
+    "ms_web_torsion": 1.5160076482730607,
     "ms_bond_torsion": 3.910300598987339,
-    "ms_min": 0.1055345436568067,
-    "spar_couple_n": 1350.505240212493,
-    "tube_couple_n": 1754.5358588108893
+    "ms_min": 0.5530911409092962,
+    "spar_couple_n": 961.3281249999999,
+    "tube_couple_n": 1248.9286358715262
    },
    "input_values": {
-    "m_des_c1": 32.41212576509983,
+    "m_des_c1": 22.47423126468575,
     "m_task": 10.7,
     "f_ult": 88.57759543145167,
     "my_lim": 5.17,
@@ -68642,9 +69458,10 @@ window.PROOF_GRAPH = {
     "FIN-001-LL"
    ],
    "how": "T-C4-BOARD-COUPON for the face allowable; T-C4-FIN-PROOF at 1.5 x L4.",
-   "value": -0.739732363971403,
+   "value": -0.6087069723893197,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
+    "FAILS: margin -0.609 abs (-0.6087 vs >= 0)",
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses SRC-C4-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-C4-FACE-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -68701,6 +69518,9 @@ window.PROOF_GRAPH = {
     "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": -0.6087069723893197,
+   "margin_abs": true,
+   "fails": true,
    "importance": 1
   },
   {
@@ -68725,7 +69545,7 @@ window.PROOF_GRAPH = {
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF.",
-   "value": 1.576384525575632,
+   "value": 3.113599117767178,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -68784,6 +69604,8 @@ window.PROOF_GRAPH = {
     "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 3.113599117767178,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -68806,7 +69628,7 @@ window.PROOF_GRAPH = {
     "FIN-002-L"
    ],
    "how": "T-C4-FIN-PROOF (G2 at the tube end).",
-   "value": 6.686221714419981,
+   "value": 9.263918941124915,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -68865,6 +69687,8 @@ window.PROOF_GRAPH = {
     "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 9.263918941124915,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -68948,6 +69772,8 @@ window.PROOF_GRAPH = {
     "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.889960775959308,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -69119,6 +69945,8 @@ window.PROOF_GRAPH = {
     "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 1.3108465051652987,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -69144,7 +69972,7 @@ window.PROOF_GRAPH = {
     "FIN-008-LL"
    ],
    "how": "T-C4-FIN-PROOF at 1.5 x L4; witness line across collar and tube does not move.",
-   "value": 0.27587428656664015,
+   "value": 0.9444378306387926,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -69203,6 +70031,8 @@ window.PROOF_GRAPH = {
     "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.9444378306387926,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -69287,6 +70117,8 @@ window.PROOF_GRAPH = {
     "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.33095204077017404,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -69370,6 +70202,8 @@ window.PROOF_GRAPH = {
     "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 9.75432412019235,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -69387,7 +70221,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "T-C4-FIN-PROOF with the LE fillet left unbonded on one quarter; witness line across collar and tube.",
    "note": "Published for C6 (CR-C6-03, CR-C1-21): C6 reads this claim instead of ASM-C6-C4-COLLAR-T (9.3 N m, not a C4 output) and sizes the collar to the larger of it and C1's section torque, plus CL-C4-D3-BRACE-F as shear.",
-   "value": 11.09971253440716,
+   "value": 6.918911044622888,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -69462,7 +70296,7 @@ window.PROOF_GRAPH = {
     "FIN-008-LL"
    ],
    "how": "As CL-C4-D3-COLLAR-T.",
-   "value": 11.09971253440716,
+   "value": 6.918911044622888,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -69545,7 +70379,7 @@ window.PROOF_GRAPH = {
     "FIN-008-LL"
    ],
    "how": "C6 lap-shear coupon on scuffed CF; T-C4-FIN-PROOF.",
-   "value": 0.017243078124257596,
+   "value": 0.011314324198666969,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -69604,7 +70438,7 @@ window.PROOF_GRAPH = {
     "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.2162237216246547,
+   "margin": 0.4857125364242287,
    "importance": 5
   },
   {
@@ -69619,7 +70453,7 @@ window.PROOF_GRAPH = {
     "FIN-002-L"
    ],
    "how": "T-C4-FIN-PROOF.",
-   "value": 12.503835793329436,
+   "value": 7.788565235560652,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -69694,7 +70528,7 @@ window.PROOF_GRAPH = {
     "FIN-001-LL"
    ],
    "how": "D5 pad friction coupon (ASM-C1-FRICTION, ASM-D5-PAD-MU).",
-   "value": 39.5,
+   "value": 24.5,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -69769,7 +70603,7 @@ window.PROOF_GRAPH = {
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF: no strip lift; T-C6-BOARD-LAP.",
-   "value": 3989.5257206041492,
+   "value": 2646.753792906537,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -69852,9 +70686,10 @@ window.PROOF_GRAPH = {
     "FIN-001-LL"
    ],
    "how": "T-C6-BOARD-LAP for the allowable; T-C4-FIN-PROOF at 1.5 x L4.",
-   "value": -0.8837535716220928,
+   "value": -0.8247785203198892,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
+    "FAILS: margin -0.825 abs (-0.8248 vs >= 0)",
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses SRC-C4-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-C4-FACE-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -69911,6 +70746,9 @@ window.PROOF_GRAPH = {
     "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": -0.8247785203198892,
+   "margin_abs": true,
+   "fails": true,
    "importance": 1
   },
   {
@@ -69932,7 +70770,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "T-C6-STRIP-ANCHOR.",
    "note": "Replaces the 1 348 N C6 derived from the strip allowable (CR-C6-01).",
-   "value": 2233.257001692858,
+   "value": 1399.2006936227026,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -70012,7 +70850,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "T-C6-STRIP-ANCHOR loads both slots.",
    "note": "The two strips of a pair are the two faces of the top edge; per face F = N/2 +/- M/d. The pair sum in the tongue is CL-C4-D3-STRIP-PAIR-F.",
-   "value": 2152.7219961770406,
+   "value": 1321.4051366932947,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -70091,7 +70929,7 @@ window.PROOF_GRAPH = {
     "FIN-001-LL"
    ],
    "how": "T-C6-STRIP-ANCHOR with both strips pulled together.",
-   "value": 176.86742692589127,
+   "value": 137.5460461607808,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -70167,7 +71005,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "T-C4-FIN-PROOF with pins fitted; C6 pin coupon.",
    "note": "C6 sized the pins to 77 N (CL-C6-STRIP-PIN-RF 1.41); the FE load is lower.",
-   "value": 103.22897802063237,
+   "value": 68.48475439145665,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -70337,6 +71175,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-TAPE-AREAL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.889960775959308,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -70542,7 +71382,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-ASA-BEARING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 4
+   "importance": 5
   },
   {
    "id": "CL-C4-D3-MOUNT-ROCK",
@@ -70647,6 +71487,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-ASA-BEARING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 38.12864921008979,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -70688,6 +71530,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-ASA-BEARING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.49202176831440436,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -70704,7 +71548,7 @@ window.PROOF_GRAPH = {
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF: dial gauge at the foot.",
-   "value": 0.018925858071998487,
+   "value": 0.011747243406382725,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -70822,7 +71666,7 @@ window.PROOF_GRAPH = {
     "FIN-004-L"
    ],
    "how": "T-C4-BLOCK-PROOF (30 N m for 1 min on a block in a core offcut).",
-   "value": 0.1055345436568067,
+   "value": 0.5530911409092962,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -70838,6 +71682,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.5530911409092962,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -70852,7 +71698,7 @@ window.PROOF_GRAPH = {
     "FIN-004-L"
    ],
    "how": "C2 spar crushing check (CR-C4-02).",
-   "value": 1350.505240212493,
+   "value": 961.3281249999999,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -70889,9 +71735,10 @@ window.PROOF_GRAPH = {
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF on the test article built without the root fillet.",
-   "value": -0.739732363971403,
+   "value": -0.6087069723893197,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
+    "FAILS: margin -0.609 abs (-0.6087 vs >= 0)",
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses SRC-C4-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-C4-FACE-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -70948,6 +71795,9 @@ window.PROOF_GRAPH = {
     "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": -0.6087069723893197,
+   "margin_abs": true,
+   "fails": true,
    "importance": 1
   },
   {
@@ -70964,7 +71814,7 @@ window.PROOF_GRAPH = {
     "FIN-001-LL"
    ],
    "how": "Strain gauge on the skin beside the fillet in T-C1-WING-PROOF; C2 re-runs its FEA on this split.",
-   "value": 0.007106466488425624,
+   "value": 0.007147576549595893,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -71039,7 +71889,7 @@ window.PROOF_GRAPH = {
     "FIN-001-LL"
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
-   "value": 3.5727327578153094,
+   "value": 3.765374989326799,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -71114,7 +71964,7 @@ window.PROOF_GRAPH = {
     "FIN-001-LL"
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
-   "value": 7.809995439308542,
+   "value": 4.842031620427537,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -71189,7 +72039,7 @@ window.PROOF_GRAPH = {
     "FIN-001-LL"
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
-   "value": 16.034319324402613,
+   "value": 16.546955211429772,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -71264,7 +72114,7 @@ window.PROOF_GRAPH = {
     "FIN-001-LL"
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
-   "value": 0.014883717306406596,
+   "value": 0.009229134804918115,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -71339,7 +72189,7 @@ window.PROOF_GRAPH = {
     "FIN-001-LL"
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
-   "value": 13.382981884081776,
+   "value": 14.213098466680814,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -71414,7 +72264,7 @@ window.PROOF_GRAPH = {
     "FIN-001-LL"
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
-   "value": 2.7654705157090658,
+   "value": 1.7255942264452755,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -71489,7 +72339,7 @@ window.PROOF_GRAPH = {
     "FIN-001-LL"
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
-   "value": 8.949777254564019,
+   "value": 9.317437962176658,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -71564,7 +72414,7 @@ window.PROOF_GRAPH = {
     "FIN-001-LL"
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
-   "value": 0.017001920474179345,
+   "value": 0.010585696187077205,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -72422,7 +73272,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "T-C4-FIN-PROOF L4 step: load cell on the foot.",
    "note": "Section total (tube root + fin root + brace anchor). The collar torque CL-C4-D3-COLLAR-T is an internal path quantity and is smaller; C6 sizes the collar to the larger of the two (CR-C1-21).",
-   "value": 12.758500005360755,
+   "value": 7.913500003235472,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -72503,7 +73353,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "Re-run fin_structures_d3.py after any C1 or D5 foot-geometry change.",
    "note": "CR-C1-21 equilibrium check: same foot load and ground point as C1 within 5 %.",
-   "value": 0.007100037938080561,
+   "value": 0.0003640976387256911,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -72562,7 +73412,7 @@ window.PROOF_GRAPH = {
     "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.8579992412383888,
+   "margin": 0.9927180472254862,
    "importance": 1
   },
   {
@@ -72814,7 +73664,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "As CL-C4-D3-MS-COLLAR.",
    "note": "Torsion from the 12 mm model; the 16 mm band changes it by < 3 % (results_d3.json collar_16mm).",
-   "value": -0.07209142795153434,
+   "value": 0.4141366041009402,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -72873,6 +73723,8 @@ window.PROOF_GRAPH = {
     "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.4141366041009402,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -73032,6 +73884,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-TAPE-AREAL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.7346243791171949,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -73056,9 +73910,10 @@ window.PROOF_GRAPH = {
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF with the extended shoe; T-C4-BOARD-COUPON for the face allowable.",
-   "value": -0.7454768980383659,
+   "value": -0.6095144946359856,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
+    "FAILS: margin -0.61 abs (-0.6095 vs >= 0)",
     "uses ASM-C4-FACE-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
@@ -73109,6 +73964,9 @@ window.PROOF_GRAPH = {
     "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": -0.6095144946359856,
+   "margin_abs": true,
+   "fails": true,
    "importance": 1
   },
   {
@@ -73130,9 +73988,10 @@ window.PROOF_GRAPH = {
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF (bonded quarter) at 1.5 x L4.",
-   "value": -0.7454768980383659,
+   "value": -0.6095144946359856,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
+    "FAILS: margin -0.61 abs (-0.6095 vs >= 0)",
     "uses ASM-C4-FACE-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
@@ -73183,6 +74042,9 @@ window.PROOF_GRAPH = {
     "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": -0.6095144946359856,
+   "margin_abs": true,
+   "fails": true,
    "importance": 1
   },
   {
@@ -73205,9 +74067,10 @@ window.PROOF_GRAPH = {
    ],
    "how": "T-C4-FIN-PROOF: the test-article quarter is built with the LE fillet unbonded.",
    "note": "Peak at the end of the bonded LE band (x 0.060, z 0.033 / 0.149): a corner that does not converge with mesh (24 x 20: 7.9, 36 x 30: 9.9 MPa limit); the test decides.",
-   "value": -0.3878404016453808,
+   "value": -0.053404995892556095,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
+    "FAILS: margin -0.0534 abs (-0.0534 vs >= 0)",
     "uses ASM-C4-FACE-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
@@ -73258,6 +74121,9 @@ window.PROOF_GRAPH = {
     "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": -0.053404995892556095,
+   "margin_abs": true,
+   "fails": true,
    "importance": 1
   },
   {
@@ -73279,9 +74145,10 @@ window.PROOF_GRAPH = {
     "FIN-001-LL"
    ],
    "how": "Mesh check of CL-C4-D3-MS-FACE (24 x 20); both fail.",
-   "value": -0.7617727861546735,
+   "value": -0.6438355954060926,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
+    "FAILS: margin -0.644 abs (-0.6438 vs >= 0)",
     "uses ASM-C4-FACE-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
@@ -73332,6 +74199,9 @@ window.PROOF_GRAPH = {
     "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": -0.6438355954060926,
+   "margin_abs": true,
+   "fails": true,
    "importance": 1
   },
   {
@@ -73476,7 +74346,7 @@ window.PROOF_GRAPH = {
     "CL-C4-D3-MS-FACE-ROOT-FREE"
    ],
    "state": "planned",
-   "procedure": "Test article built with flight processes but never flown: one LOWER quarter (it carries G3 and the longer free tube) = one 0.21 m half-fin cut from the flight board batch (two 4.8 mm layers laminated), CF 22 x 20 tube offcut 0.20 m, PETG through-core block (R 3 mm vertical edges) bonded on a 0.15 m spar offcut in a 0.15 m core offcut, plug, station collar as drawn (13 mm), CF 10 x 2 brace 0.16 m with anchor saddle on the same spar offcut, CF 10 x 1 edge strips x 2 with 2.5 mm CF pins at 15 mm, strip tails bonded in the collar tongue (D-70 inspection), R5 ASA mount (cheeks 17 mm) with a dummy motor (steel slug at the motor CG, M3 x 8 into the plate), D5 shoe AS DRAWN (legs 7 mm, 8 mm cheeks over both strip ends, CR-C4-36), LE fillet LEFT UNBONDED and the ROOT FILLET LEFT OFF (primary path only, CR-C2-12), 30 min epoxy as in BUILD. Steps, each held 30 s, loads at 1.5 x limit through a hand-held spring scale or hung weights: (1) L4 at the C1 ground point 56 N along + 59 N across (C5 3-D side load, D-65), both senses; (2) G2 76 N lateral at the tube end, both senses; (3) G3 35 N on the dummy can toward the wing. Pass: no crack, face wrinkle, strip lift, pin push-out or bond-line movement (witness lines on collar, strip ends, brace ends, anchor); foot deflection at 1.0 x L4 <= 1.2 x CL-C4-D3-FOOT-DEFL. Then load step (1) to failure and record the load and the failed part. If step (1) fails below 1.5 x, fit the extended cheeks (CR-C4-30, |z| 0.171 m) on a second article and repeat. Flight fins get a 1.0 x limit L4 hand check only.",
+   "procedure": "Test article built with flight processes but never flown: one LOWER quarter (it carries G3 and the longer free tube) = one 0.21 m half-fin cut from the flight board batch (two 4.8 mm layers laminated), CF 22 x 20 tube offcut 0.20 m, PETG through-core block (R 3 mm vertical edges) bonded on a 0.15 m spar offcut in a 0.15 m core offcut, plug, station collar as drawn (13 mm), CF 10 x 2 brace 0.16 m with anchor saddle on the same spar offcut, CF 10 x 1 edge strips x 2 with 2.5 mm CF pins at 15 mm, strip tails bonded in the collar tongue (D-70 inspection), R5 ASA mount (cheeks 17 mm) with a dummy motor (steel slug at the motor CG, M3 x 8 into the plate), D5 shoe AS DRAWN (legs 7 mm, 8 mm cheeks over both strip ends, CR-C4-36), LE fillet LEFT UNBONDED and the ROOT FILLET LEFT OFF (primary path only, CR-C2-12), 30 min epoxy as in BUILD. Steps, each held 30 s, loads at 1.5 x limit through a hand-held spring scale or hung weights: (1) L4 at the C1 ground point 56 N along + 37 N across (C5 3-D side load, D-65), both senses; (2) G2 76 N lateral at the tube end, both senses; (3) G3 35 N on the dummy can toward the wing. Pass: no crack, face wrinkle, strip lift, pin push-out or bond-line movement (witness lines on collar, strip ends, brace ends, anchor); foot deflection at 1.0 x L4 <= 1.2 x CL-C4-D3-FOOT-DEFL. Then load step (1) to failure and record the load and the failed part. If step (1) fails below 1.5 x, fit the extended cheeks (CR-C4-30, |z| 0.171 m) on a second article and repeat. Flight fins get a 1.0 x limit L4 hand check only.",
    "defined_in": "redesign/team/C4/claims.d3.json",
    "status": "PROPOSED",
    "importance": 56
@@ -73664,7 +74534,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 45
+   "importance": 46
   },
   {
    "id": "ASM-C4-FACE-T",
@@ -74030,7 +74900,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 118
+   "importance": 119
   },
   {
    "id": "ASM-C4-FINJOINT-M-TASK",
@@ -75725,7 +76595,11 @@ window.PROOF_GRAPH = {
     "patch": 0.03
    },
    "defined_in": "redesign/team/C4/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 5
   },
   {
@@ -75935,7 +76809,11 @@ window.PROOF_GRAPH = {
     "patch": 0.03
    },
    "defined_in": "redesign/team/C4/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 4
   },
   {
@@ -76042,7 +76920,11 @@ window.PROOF_GRAPH = {
     "fill": 0.55
    },
    "defined_in": "redesign/team/C4/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 6
   },
   {
@@ -77175,6 +78057,7 @@ window.PROOF_GRAPH = {
    "value": 0.756628843959056,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
+    "CALC-C4-STATIC-2L does not re-run",
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-C4-FACE-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-FACE-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -77216,6 +78099,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.756628843959056,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -77241,6 +78126,7 @@ window.PROOF_GRAPH = {
    "value": 0.5051458264810225,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
+    "CALC-C4-STATIC-1L does not re-run",
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-C4-FACE-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-FACE-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -77282,6 +78168,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.5051458264810225,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -77307,6 +78195,7 @@ window.PROOF_GRAPH = {
    "value": 1.5548675883131757,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
+    "CALC-C4-STATIC-1L does not re-run",
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-C4-FACE-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-FACE-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -77348,6 +78237,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 1.5548675883131757,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -77371,6 +78262,7 @@ window.PROOF_GRAPH = {
    "value": 4.787809040336882,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
+    "CALC-C4-STATIC-1L does not re-run",
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-C4-FACE-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-FACE-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -77412,6 +78304,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 4.787809040336882,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -77435,6 +78329,7 @@ window.PROOF_GRAPH = {
    "value": 0.21037402193708954,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
+    "CALC-C4-STATIC-2L does not re-run",
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-C4-FACE-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-FACE-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -77476,6 +78371,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.21037402193708954,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -77490,6 +78387,7 @@ window.PROOF_GRAPH = {
    "value": 0.19064954759977798,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
+    "CALC-C4-STATIC-2L does not re-run",
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-C4-FACE-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-FACE-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -77551,6 +78449,7 @@ window.PROOF_GRAPH = {
    "value": 0.014900826059141354,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
+    "CALC-C4-STATIC-1L does not re-run",
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-C4-FACE-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-FACE-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -77610,6 +78509,7 @@ window.PROOF_GRAPH = {
    "value": 32.41212576509983,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
+    "CALC-C4-BLOCK does not re-run",
     "uses SRC-C4-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-C4-PETG-BEARING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-PETG-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -77650,6 +78550,7 @@ window.PROOF_GRAPH = {
    "value": 0.04960718240305817,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
+    "CALC-C4-BLOCK does not re-run",
     "uses SRC-C4-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-C4-PETG-BEARING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-PETG-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -77667,6 +78568,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.04960718240305817,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -77685,6 +78588,7 @@ window.PROOF_GRAPH = {
    "value": 0.030119067982376978,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
+    "CALC-C4-BLOCK does not re-run",
     "uses SRC-C4-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-C4-PETG-BEARING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-PETG-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -77720,6 +78624,7 @@ window.PROOF_GRAPH = {
    "value": 1350.505240212493,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
+    "CALC-C4-BLOCK does not re-run",
     "uses SRC-C4-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-C4-PETG-BEARING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-PETG-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -78399,7 +79304,11 @@ window.PROOF_GRAPH = {
     "patch": 0.03
    },
    "defined_in": "redesign/team/C4/claims.sim.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -78851,7 +79760,11 @@ window.PROOF_GRAPH = {
     "patch": 0.03
    },
    "defined_in": "redesign/team/C4/claims.sim.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 18
   },
   {
@@ -79371,6 +80284,7 @@ window.PROOF_GRAPH = {
    "value": 0.9999999999999999,
    "defined_in": "redesign/team/C4/claims.sim.json",
    "reasons": [
+    "CALC-C4-SIM-CODES does not re-run",
     "uses SRC-C4-SU2, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
@@ -79431,6 +80345,7 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/team/C4/claims.sim.json",
    "reasons": [
     "FAILS: margin -136.1% (2.361e+07 Pa vs <= 1e+07 Pa)",
+    "CALC-C4-SIM-FACE does not re-run",
     "uses SRC-C4-SU2, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses SRC-C4-IIW, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses SRC-C4-ROACHE, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -79493,6 +80408,8 @@ window.PROOF_GRAPH = {
    "value": -0.5764556279058467,
    "defined_in": "redesign/team/C4/claims.sim.json",
    "reasons": [
+    "FAILS: margin -0.576 abs (-0.5765 vs >= 0)",
+    "CALC-C4-SIM-FACE does not re-run",
     "uses SRC-C4-SU2, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses SRC-C4-IIW, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses SRC-C4-ROACHE, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -79531,6 +80448,9 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": -0.5764556279058467,
+   "margin_abs": true,
+   "fails": true,
    "importance": 1
   },
   {
@@ -79552,6 +80472,7 @@ window.PROOF_GRAPH = {
    "value": 0.6315052152025724,
    "defined_in": "redesign/team/C4/claims.sim.json",
    "reasons": [
+    "CALC-C4-SIM-FACE does not re-run",
     "uses SRC-C4-SU2, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses SRC-C4-IIW, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses SRC-C4-ROACHE, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -79590,6 +80511,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.6315052152025724,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -79832,6 +80755,8 @@ window.PROOF_GRAPH = {
    "value": -0.3432915275958319,
    "defined_in": "redesign/team/C4/claims.sim.json",
    "reasons": [
+    "FAILS: margin -0.343 abs (-0.3433 vs >= 0)",
+    "CALC-C4-SIM-FACE does not re-run",
     "uses SRC-C4-SU2, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses SRC-C4-IIW, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses SRC-C4-ROACHE, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -79870,6 +80795,9 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": -0.3432915275958319,
+   "margin_abs": true,
+   "fails": true,
    "importance": 1
   },
   {
@@ -79891,6 +80819,7 @@ window.PROOF_GRAPH = {
    "value": 0.9204564596620979,
    "defined_in": "redesign/team/C4/claims.sim.json",
    "reasons": [
+    "CALC-C4-SIM-FACE does not re-run",
     "uses SRC-C4-SU2, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses SRC-C4-IIW, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses SRC-C4-ROACHE, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -79929,6 +80858,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.9204564596620979,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -79945,6 +80876,7 @@ window.PROOF_GRAPH = {
    "value": 0.0069813364855230604,
    "defined_in": "redesign/team/C4/claims.sim.json",
    "reasons": [
+    "CALC-C4-SIM-FACE does not re-run",
     "uses SRC-C4-SU2, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses SRC-C4-IIW, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses SRC-C4-ROACHE, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -79999,6 +80931,7 @@ window.PROOF_GRAPH = {
    "value": 0.9320881661985656,
    "defined_in": "redesign/team/C4/claims.sim.json",
    "reasons": [
+    "CALC-C4-SIM-FACE does not re-run",
     "uses SRC-C4-SU2, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses SRC-C4-IIW, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses SRC-C4-ROACHE, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -80050,6 +80983,7 @@ window.PROOF_GRAPH = {
    "value": 0.6812047558519414,
    "defined_in": "redesign/team/C4/claims.sim.json",
    "reasons": [
+    "CALC-C4-SIM-FACE does not re-run",
     "uses SRC-C4-SU2, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses SRC-C4-IIW, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses SRC-C4-ROACHE, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -80221,7 +81155,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 318
+   "importance": 325
   },
   {
    "id": "ASM-C5-PARK-SF",
@@ -80233,7 +81167,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "defined_in": "redesign/team/C5/claims.json",
    "status": "PROPOSED",
-   "importance": 317
+   "importance": 324
   },
   {
    "id": "ASM-C5-GUST-FACTOR",
@@ -80248,7 +81182,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 317
+   "importance": 324
   },
   {
    "id": "ASM-C5-CL-FLAT",
@@ -80263,7 +81197,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 317
+   "importance": 324
   },
   {
    "id": "ASM-C5-PROP-HALF-DEPTH",
@@ -80335,7 +81269,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 317
+   "importance": 324
   },
   {
    "id": "ASM-C5-DROP-GUARD",
@@ -80347,7 +81281,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "defined_in": "redesign/team/C5/claims.json",
    "status": "PROPOSED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "ASM-C5-PRE-D47",
@@ -80363,7 +81297,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "defined_in": "redesign/team/C5/claims.json",
    "status": "PROPOSED",
-   "importance": 500
+   "importance": 506
   },
   {
    "id": "CALC-C5-STANCE",
@@ -83304,7 +84238,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/C5/claims.json",
    "status": "CHECKED",
-   "importance": 500
+   "importance": 506
   },
   {
    "id": "CL-C5-TIPOVER-A1-R1-ZCG",
@@ -83767,12 +84701,12 @@ window.PROOF_GRAPH = {
     "slope_calm_deg": 13.748121236927833,
     "v_tip_parked_full_ms": 8.781446979175241,
     "v_tip_parked_empty_ms": 7.862345618182409,
-    "v_slide_mat_empty_ms": 6.5684370357254975,
+    "v_slide_mat_empty_ms": 4.9652716854045575,
     "v_slide_grass_empty_ms": 5.551342507659769,
     "v_slide_grass_full_ms": 6.3375685245910764,
-    "v_park_gust_mat_ms": 5.363106381708917,
+    "v_park_gust_mat_ms": 4.05412735451007,
     "v_park_gust_grass_ms": 4.532652177062951,
-    "v_park_mean_mat_ms": 3.8307902726492267,
+    "v_park_mean_mat_ms": 2.8958052532214786,
     "v_lift_flat_empty_ms": 11.466803776671792
    },
    "input_values": {
@@ -83798,7 +84732,7 @@ window.PROOF_GRAPH = {
     "Iyy": 0.047204212395492856,
     "Izz": 0.17342792319527786,
     "m_a3": 2.3633,
-    "mu_pad": 0.7,
+    "mu_pad": 0.4,
     "mu_grass": 0.5,
     "sf": 1.5,
     "gf": 1.4,
@@ -83806,7 +84740,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/C5/claims.json",
    "status": "CHECKED",
-   "importance": 317
+   "importance": 324
   },
   {
    "id": "CL-C5-MASS-R1",
@@ -83826,7 +84760,7 @@ window.PROOF_GRAPH = {
     "uses P:cg.x_range_m, which is UNVERIFIED (cites CL-B3-V-CG-FWD, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 318
+   "importance": 325
   },
   {
    "id": "CL-C5-CG-Z-R1",
@@ -83846,7 +84780,7 @@ window.PROOF_GRAPH = {
     "uses P:cg.x_range_m, which is UNVERIFIED (cites CL-B3-V-CG-FWD, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 406
+   "importance": 412
   },
   {
    "id": "CL-C5-CG-H-R1",
@@ -83866,7 +84800,7 @@ window.PROOF_GRAPH = {
     "uses P:cg.x_range_m, which is UNVERIFIED (cites CL-B3-V-CG-FWD, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 406
+   "importance": 412
   },
   {
    "id": "CL-C5-PACK-X-B3",
@@ -83947,7 +84881,7 @@ window.PROOF_GRAPH = {
     "uses P:cg.x_range_m, which is UNVERIFIED (cites CL-B3-V-CG-FWD, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 318
+   "importance": 325
   },
   {
    "id": "CL-C5-CG-Z-EMPTY",
@@ -83967,7 +84901,7 @@ window.PROOF_GRAPH = {
     "uses P:cg.x_range_m, which is UNVERIFIED (cites CL-B3-V-CG-FWD, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 318
+   "importance": 325
   },
   {
    "id": "CL-C5-LEAN-5-BROADSIDE",
@@ -84132,7 +85066,7 @@ window.PROOF_GRAPH = {
    "status": "UNVERIFIED",
    "margin": -0.11334958450732682,
    "fails": true,
-   "importance": 303
+   "importance": 310
   },
   {
    "id": "CL-C5-V-LAND-SPANWISE",
@@ -84385,9 +85319,10 @@ window.PROOF_GRAPH = {
    ],
    "how": "Handheld anemometer gust reading at the landing mat (H3 flight card).",
    "note": "pack out governs; factor 1.5 on moment and friction. Below the 5 m/s card on grass: lay it flat",
-   "value": 5.363106381708917,
+   "value": 4.05412735451007,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "FAILS: margin -18.9% (4.054 m/s vs >= 5 m/s)",
     "uses CL-D5-CONTACT-Z, which is UNVERIFIED",
     "uses ASM-C5-TD-DRIFT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-C5-MASS-R1, which is UNVERIFIED",
@@ -84404,7 +85339,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C5-CL-FLAT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.07262127634178342,
+   "margin": -0.1891745290979861,
+   "fails": true,
    "importance": 1
   },
   {
@@ -84486,7 +85422,7 @@ window.PROOF_GRAPH = {
    "procedure": "Built aircraft, props off, pack in (then pack slid to the forward stop, then pack out), on a 0.6 x 0.8 m plywood board faced with the landing-mat rubber, a 6 mm stop strip behind the pads on the hinge side. Raise the far edge slowly with a phone inclinometer on the board; record the angle when the far pads lift. Four directions (+z pod side, -z, +y, -y), 3 times each. Pass: pod side >= 30 deg and within 1.5 deg of CL-C5-TIPOVER-R1 (else re-measure the CG z).",
    "defined_in": "redesign/team/C5/claims.json",
    "status": "PROPOSED",
-   "importance": 410
+   "importance": 416
   },
   {
    "id": "T-C5-DRIFT-LOG",
@@ -84690,7 +85626,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/C5/claims.json",
    "status": "CHECKED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "CL-C5-DROP-HEIGHT",
@@ -84770,7 +85706,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.5232756797913868,
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "CL-C5-DROP-STROKE-MARGIN",
@@ -84820,6 +85756,8 @@ window.PROOF_GRAPH = {
     "uses CL-D5-SET-NORMAL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.016884475832072695,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -85080,7 +86018,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "defined_in": "redesign/team/C5/claims.json",
    "status": "PROPOSED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "ASM-C5-FOOT-PROP",
@@ -85092,7 +86030,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "defined_in": "redesign/team/C5/claims.json",
    "status": "PROPOSED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "ASM-C5-F-PLATEAU-PROP",
@@ -85104,7 +86042,7 @@ window.PROOF_GRAPH = {
    "unit": "N",
    "defined_in": "redesign/team/C5/claims.json",
    "status": "PROPOSED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "ASM-C5-PRECRUSH-PEAK",
@@ -85119,7 +86057,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "CALC-C5-DROP-DYN",
@@ -85360,7 +86298,7 @@ window.PROOF_GRAPH = {
     "valid_sym_free_m": 0.016584338603520654,
     "valid_hand_free_m": 0.0181155241679273,
     "dt_check_spread_m": 1.7351563425527239e-06,
-    "side_load_N": 26.16060170050553,
+    "side_load_N": 14.948915257431734,
     "side_load_c1_N": 26.16060170050553
    },
    "input_values": {
@@ -85387,7 +86325,7 @@ window.PROOF_GRAPH = {
     "s_prop": 0.038,
     "foot_prop": 0.048,
     "s_hand": 0.0181155241679273,
-    "mu_pad": 0.7,
+    "mu_pad": 0.4,
     "mu_c1": 0.7,
     "F_corner": 37.37228814357933,
     "F_prop": 37.5,
@@ -85399,8 +86337,12 @@ window.PROOF_GRAPH = {
     "F_lo": 35.778886797385326
    },
    "defined_in": "redesign/team/C5/claims.json",
-   "status": "CHECKED",
-   "importance": 390
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 396
   },
   {
    "id": "CL-C5-DYN-USABLE-CUR",
@@ -85413,6 +86355,7 @@ window.PROOF_GRAPH = {
    "value": 0.034999999999999996,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -85434,7 +86377,7 @@ window.PROOF_GRAPH = {
     "uses CL-D5-F-PLATEAU-LOWER, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 305
+   "importance": 312
   },
   {
    "id": "CL-C5-DYN-LEVEL-CUR",
@@ -85471,6 +86414,7 @@ window.PROOF_GRAPH = {
    "value": 0.015930788079008218,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -85531,6 +86475,7 @@ window.PROOF_GRAPH = {
    "value": 0.021679970002449256,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -85554,7 +86499,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.3805722856443069,
-   "importance": 303
+   "importance": 310
   },
   {
    "id": "CL-C5-DYN-N-CUR",
@@ -85591,6 +86536,7 @@ window.PROOF_GRAPH = {
    "value": 5.880630200102468,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -85626,6 +86572,7 @@ window.PROOF_GRAPH = {
    "value": 0.034999999999999996,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -85647,7 +86594,7 @@ window.PROOF_GRAPH = {
     "uses CL-D5-F-PLATEAU-LOWER, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "CL-C5-DROP-PAIR-PITCH",
@@ -85686,6 +86633,7 @@ window.PROOF_GRAPH = {
    "value": 0.021675102099748933,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -85709,7 +86657,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.3807113685786018,
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "CL-C5-DROP-PAIR-ROLL",
@@ -85748,6 +86696,7 @@ window.PROOF_GRAPH = {
    "value": 0.020199114832972265,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -85807,6 +86756,7 @@ window.PROOF_GRAPH = {
    "value": 0.015757825144167126,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -85869,6 +86819,7 @@ window.PROOF_GRAPH = {
    "value": 0.01814508296204187,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -85931,6 +86882,7 @@ window.PROOF_GRAPH = {
    "value": 5.88297815179574,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -85989,6 +86941,7 @@ window.PROOF_GRAPH = {
    "value": 5.850486281198429,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -86047,6 +87000,7 @@ window.PROOF_GRAPH = {
    "value": 0.010000000000000002,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -86083,6 +87037,7 @@ window.PROOF_GRAPH = {
    "value": -0.007451054043434269,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -86118,6 +87073,7 @@ window.PROOF_GRAPH = {
    "value": 0.07341508615964679,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -86158,6 +87114,7 @@ window.PROOF_GRAPH = {
    "value": 0.016584338603520654,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -86215,9 +87172,10 @@ window.PROOF_GRAPH = {
    ],
    "how": "T-D5-PAD-MU gives mu; C4's T-C4-FIN-PROOF at 1.5 x this load.",
    "note": "the landing mat and neoprene pad (mu 0.7) raise C1's L4/L5 side load (mu 0.5) by 40 %; C4's fin face stress scales with it (CR-C5-09)",
-   "value": 26.16060170050553,
+   "value": 14.948915257431734,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -86240,8 +87198,8 @@ window.PROOF_GRAPH = {
     "uses CL-C5-FOOT-SIDE-C1, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.0,
-   "importance": 303
+   "margin": 0.4285714285714285,
+   "importance": 310
   },
   {
    "id": "CL-C5-FOOT-SIDE-C1",
@@ -86254,6 +87212,7 @@ window.PROOF_GRAPH = {
    "value": 26.16060170050553,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -86275,7 +87234,7 @@ window.PROOF_GRAPH = {
     "uses CL-D5-F-PLATEAU-LOWER, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 304
+   "importance": 311
   },
   {
    "id": "CL-C5-CART-BIAS-UPPER",
@@ -86289,6 +87248,7 @@ window.PROOF_GRAPH = {
    "value": 1.05,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -86310,7 +87270,7 @@ window.PROOF_GRAPH = {
     "uses CL-D5-F-PLATEAU-LOWER, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "CL-C5-CART-PLATEAU-UPPER",
@@ -86327,6 +87287,7 @@ window.PROOF_GRAPH = {
    "value": 39.375,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -86365,6 +87326,7 @@ window.PROOF_GRAPH = {
    "value": 35.625,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -86404,6 +87366,7 @@ window.PROOF_GRAPH = {
    "value": 0.009845965342201994,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -86442,6 +87405,7 @@ window.PROOF_GRAPH = {
    "value": 0.008908254357230376,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -86482,6 +87446,7 @@ window.PROOF_GRAPH = {
    "value": 59.0625,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "CALC-C5-DROP-DYN does not re-run",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -86517,7 +87482,7 @@ window.PROOF_GRAPH = {
    "procedure": "A foot (shoe bonded on a 2-layer foam-board offcut clamped vertical) under a 0.65 kg sled on two guide rods; free drop 0.115 m onto plywood; phone or logger accelerometer on the sled. 3 drops, new cartridge each. Pass: stroke <= 35 mm (model 26 mm), sled peak <= 6.0 g (100 Hz filter), no shoe-bond crack. With the biased, pre-crushed cartridges (CR-C5-10, R3) use a 0.69 kg sled for an upper-foot cartridge and 0.61 kg for a lower one (quarter gate mass x bias). Run before the aircraft drop; cheap and repeatable.",
    "defined_in": "redesign/team/C5/claims.json",
    "status": "PROPOSED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "T-C5-AIRCRAFT-DROP",
@@ -86536,7 +87501,7 @@ window.PROOF_GRAPH = {
    "procedure": "Complete aircraft, props off, LiPo replaced by a sandbag of the weighed pack mass (ballast to 2.6 kg), FC on a small 2S pack logging IMU at >= 1 kHz. Quick-release hook over plywood. (1) Level, 0.115 m pad-to-floor, x2, new cartridges each: pass CG peak <= 6.0 g (100 Hz low-pass), every stroke <= 35 mm, each pair's stroke within 3 mm of the model (the R3 bias leaves the upper pair ~3 mm deeper by design). (2) Pitch 4 deg both ways and roll 8 deg, at 0.098 m (CL-C5-TEST-TILT-H): pass when each pair's stroke is within 3 mm of the model re-run at the measured height and tilt, and the wing TE stays clear except the wingtip corner cap. The model then carries the design case (1.5 m/s with 2/3 W lift). After every drop: shoe bonds, fin tips, tube block and pod bond checked.",
    "defined_in": "redesign/team/C5/claims.json",
    "status": "PROPOSED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "ASM-C5-SPREADER-T",
@@ -86858,6 +87823,8 @@ window.PROOF_GRAPH = {
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0006553888911595175,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -86892,6 +87859,8 @@ window.PROOF_GRAPH = {
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0006553888911595175,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -86926,6 +87895,8 @@ window.PROOF_GRAPH = {
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.002421463881005302,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -86960,6 +87931,8 @@ window.PROOF_GRAPH = {
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.004596848801802424,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -87045,6 +88018,7 @@ window.PROOF_GRAPH = {
    "value": -0.0033031511981975945,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
+    "FAILS: margin -0.0033 m abs (-0.003303 m vs >= 0 m)",
     "uses ASM-C5-PACK-G-MAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-D5-XPS-PLATEAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-D5-DENSIFY, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -87058,6 +88032,9 @@ window.PROOF_GRAPH = {
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)"
    ],
    "status": "UNVERIFIED",
+   "margin": -0.0033031511981975945,
+   "margin_abs": true,
+   "fails": true,
    "importance": 1
   },
   {
@@ -87442,6 +88419,8 @@ window.PROOF_GRAPH = {
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.017000000000000015,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -87449,204 +88428,204 @@ window.PROOF_GRAPH = {
    "type": "assumption",
    "title": "3-D sim: worst stroke, 10 deg envelope, gate mass",
    "text": "Largest foot stroke in the design landing (sink requirements.landing_sink_ms, lift 2/3 W) over every touchdown tilt <= 10 deg in any direction (2.5 deg x 24 azimuths), at the 2.6 kg gate mass (A3-R6a inertia scaled), CG at the D-62 target",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 1290 s run, sink 1.2 m/s); dt 40 us, dt ladder to 5 us changes it by 0.010 mm",
-   "value": 0.03500453785963982,
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 267 s run, sink 1.2 m/s); dt 40 us, dt ladder to 5 us changes it by 0.007 mm",
+   "value": 0.025108107578321513,
    "unit": "m",
    "defined_in": "redesign/team/C5/claims.sim.json",
    "status": "PROPOSED",
-   "importance": 302
+   "importance": 309
   },
   {
    "id": "ASM-C5-SIM3D-STROKE-AXES",
    "type": "assumption",
    "title": "3-D sim: worst stroke, pitch-only or roll-only",
    "text": "As ASM-C5-SIM3D-STROKE, touchdown tilt about one stance axis only (the planar model's cases)",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 1290 s run, sink 1.2 m/s)",
-   "value": 0.024721411755136282,
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 267 s run, sink 1.2 m/s)",
+   "value": 0.0237916852475878,
    "unit": "m",
    "defined_in": "redesign/team/C5/claims.sim.json",
    "status": "PROPOSED",
-   "importance": 302
+   "importance": 309
   },
   {
    "id": "ASM-C5-SIM3D-STROKE-A3",
    "type": "assumption",
    "title": "3-D sim: worst stroke at the A3 basic mass",
    "text": "As ASM-C5-SIM3D-STROKE at the as-designed A3-R6a basic mass 2.322 kg",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 1290 s run, sink 1.2 m/s)",
-   "value": 0.031379798531552934,
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 267 s run, sink 1.2 m/s)",
+   "value": 0.022383168503449374,
    "unit": "m",
    "defined_in": "redesign/team/C5/claims.sim.json",
    "status": "PROPOSED",
-   "importance": 302
+   "importance": 309
   },
   {
    "id": "ASM-C5-SIM3D-BOTTOM-TILT",
    "type": "assumption",
    "title": "3-D sim: tilt that uses up the stroke",
    "text": "Smallest touchdown tilt magnitude (2.5 deg steps, any direction, design sink, gate mass) at which a foot passes the usable stroke; when no case inside the 10 deg envelope bottoms, the largest tilt simulated (10 deg)",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 1290 s run, sink 1.2 m/s)",
-   "value": 10.0,
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 267 s run, sink 1.2 m/s)",
+   "value": 10.000000000000002,
    "unit": "deg",
    "defined_in": "redesign/team/C5/claims.sim.json",
    "status": "PROPOSED",
-   "importance": 302
+   "importance": 309
   },
   {
    "id": "ASM-C5-SIM3D-V-SINK-10",
    "type": "assumption",
    "title": "3-D sim: sink speed limit at 10 deg",
-   "text": "Largest sink speed (0.1 m/s steps, 0.8-1.3) at which a 10 deg touchdown in any of 24 directions stays inside the usable stroke, gate mass",
+   "text": "Largest sink speed (0.05 m/s steps, 0.8-1.3) at which a 10 deg touchdown in any of 24 directions stays inside the usable stroke, gate mass",
    "basis": "sim/out/sink_sweep.json (sim/sink_sweep.py, C5-R6)",
-   "value": 1.1,
+   "value": 1.3,
    "unit": "m/s",
    "defined_in": "redesign/team/C5/claims.sim.json",
    "status": "PROPOSED",
-   "importance": 302
+   "importance": 309
   },
   {
    "id": "ASM-C5-SIM3D-N",
    "type": "assumption",
    "title": "3-D sim: peak load factor, level, A3 basic mass",
    "text": "Peak crusher force on the airframe / weight, level design landing at the as-designed A3-R6a basic mass with the 550 g pack",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 1290 s run, sink 1.2 m/s)",
-   "value": 6.519241769390969,
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 267 s run, sink 1.2 m/s)",
+   "value": 6.469612844879308,
    "unit": "-",
    "defined_in": "redesign/team/C5/claims.sim.json",
    "status": "PROPOSED",
-   "importance": 302
+   "importance": 309
   },
   {
    "id": "ASM-C5-SIM3D-N-LIGHT",
    "type": "assumption",
    "title": "3-D sim: peak load factor, level, lightest flying mass",
    "text": "As ASM-C5-SIM3D-N at A3-R6a basic with the D-64 546 g pack (the lightest flying mass; the crush plateau is fixed, so n rises as the mass falls)",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 1290 s run, sink 1.2 m/s); m = 2.3415 kg",
-   "value": 6.53037882309581,
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 267 s run, sink 1.2 m/s); m = 2.3593 kg",
+   "value": 6.480581542693176,
    "unit": "-",
    "defined_in": "redesign/team/C5/claims.sim.json",
    "status": "PROPOSED",
-   "importance": 302
+   "importance": 309
   },
   {
    "id": "ASM-C5-SIM3D-N-ENV",
    "type": "assumption",
    "title": "3-D sim: peak load factor anywhere in the envelope, lightest mass",
    "text": "Largest CG load factor over the whole 10 deg envelope at the lightest mass (tilted cases included)",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 1290 s run, sink 1.2 m/s)",
-   "value": 6.533063499698803,
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 267 s run, sink 1.2 m/s)",
+   "value": 6.5511649750379926,
    "unit": "-",
    "defined_in": "redesign/team/C5/claims.sim.json",
    "status": "PROPOSED",
-   "importance": 302
+   "importance": 309
   },
   {
    "id": "ASM-C5-SIM3D-SIDE",
    "type": "assumption",
    "title": "3-D sim: sustained foot side load at the design sink",
-   "text": "Largest transverse (side) load on one foot, 1 ms filtered, over every design-envelope case (4 masses), every sink-sweep row at or below the design sink and every drift-sweep row (0.3 m/s drift, 10 deg) that stays inside the usable stroke, mu 0.7",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 1290 s run, sink 1.2 m/s) + sim/out/drift_sweep.json; without drift 39.31 N; sink sweep to 1.3 m/s 39.31 N; the unfiltered peak includes the 0.2 ms piston-mass impact on the pad (42.3 N)",
-   "value": 39.44324343580951,
+   "text": "Largest transverse (side) load on one foot, 1 ms filtered, over every design-envelope case (4 masses), every sink-sweep row at or below the design sink and every drift-sweep row (0.3 m/s drift, 10 deg) that stays inside the usable stroke, pad mu = ASM-D5-PAD-MU (0.40, D-105)",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 267 s run, sink 1.2 m/s) + sim/out/drift_sweep.json; without drift 24.11 N; sink sweep to 1.3 m/s 24.11 N; the unfiltered peak includes the 0.2 ms piston-mass impact on the pad (26.0 N)",
+   "value": 24.284510618703447,
    "unit": "N",
    "defined_in": "redesign/team/C5/claims.sim.json",
    "status": "PROPOSED",
-   "importance": 308
-  },
-  {
-   "id": "ASM-C5-SIDE-DESIGN-D65",
-   "type": "assumption",
-   "title": "Design foot side load (limit), D-65 basis rounded up to cover drift",
-   "text": "Limit side load per foot that D5, C4/D3 and C1 design to (CHANGE-LOG D-65, CR-C5-16)",
-   "basis": "C5-S1 6-DOF 39.30 N (1.5 m/s envelope + sink sweep, no drift) adopted by D-65; C5-R6 adds the 0.3 m/s drift landings, 39.44 N (+0.4 %, sim/out/drift_sweep.json), so C5 rounds the basis up to 39.5 N (ultimate 59.25 N; was 39.3 / 59.0, CR-C5-16 update). Held fixed between runs so the downstream roles do not drift; CL-C5-SIM3D-SIDE-12 checks every run against it",
-   "value": 39.5,
-   "unit": "N",
-   "defined_in": "redesign/team/C5/claims.sim.json",
-   "status": "PROPOSED",
-   "importance": 308
+   "importance": 315
   },
   {
    "id": "ASM-C5-SIM3D-SIDE-MU05",
    "type": "assumption",
    "title": "3-D sim: sustained foot side load, pad mu 0.5",
    "text": "As ASM-C5-SIM3D-SIDE over the gate-mass 10 deg envelope with a pad face of mu 0.5 on the landing mat",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 1290 s run, sink 1.2 m/s); governing single case re-run in side_check.py: 29.1 N",
-   "value": 29.1094933684377,
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 267 s run, sink 1.2 m/s); governing single case re-run in side_check.py: 28.8 N",
+   "value": 28.82381374136304,
    "unit": "N",
    "defined_in": "redesign/team/C5/claims.sim.json",
    "status": "PROPOSED",
-   "importance": 308
+   "importance": 315
+  },
+  {
+   "id": "ASM-C5-SIM3D-SIDE-MU07",
+   "type": "assumption",
+   "title": "3-D sim: sustained foot side load, bare neoprene pad mu 0.7",
+   "text": "As ASM-C5-SIM3D-SIDE over the gate-mass 10 deg envelope with mu 0.7 (the D-65 basis: no low-friction pad face, or a face that has worn through)",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 267 s run, sink 1.2 m/s); stroke 34.9 mm; governing single case re-run in side_check.py: 38.6 N",
+   "value": 38.92862437997379,
+   "unit": "N",
+   "defined_in": "redesign/team/C5/claims.sim.json",
+   "status": "PROPOSED",
+   "importance": 309
   },
   {
    "id": "ASM-C5-SIM3D-STRIKE-TILT",
    "type": "assumption",
    "title": "3-D sim: wingtip strike onset tilt",
    "text": "Smallest touchdown tilt (design sink, any direction, any mass) at which the wingtip TE corner reaches the ground",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 1290 s run, sink 1.2 m/s) (wingtip contact itself not modelled: the corner cap GER-007 takes it)",
-   "value": 7.5,
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 267 s run, sink 1.2 m/s) (wingtip contact itself not modelled: the corner cap GER-007 takes it)",
+   "value": 10.0,
    "unit": "deg",
    "defined_in": "redesign/team/C5/claims.sim.json",
    "status": "PROPOSED",
-   "importance": 302
+   "importance": 309
   },
   {
    "id": "ASM-C5-SIM3D-V-BROADSIDE",
    "type": "assumption",
    "title": "3-D sim: broadside landing wind limit",
    "text": "Largest wind (0.5 m/s steps) for which a touchdown tilted by the hover lean + 10 deg toward the narrow pod-side pad line, drifting 0.3 m/s toward it, does not tip; wind gone at touchdown (lull), sink 0.5 m/s and the design sink, A3 basic mass",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 1290 s run, sink 1.2 m/s)",
-   "value": 4.0,
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 267 s run, sink 1.2 m/s)",
+   "value": 4.5,
    "unit": "m/s",
    "defined_in": "redesign/team/C5/claims.sim.json",
    "status": "PROPOSED",
-   "importance": 302
+   "importance": 309
   },
   {
    "id": "ASM-C5-SIM3D-V-SPANWISE",
    "type": "assumption",
    "title": "3-D sim: span-into-wind landing wind limit",
    "text": "As ASM-C5-SIM3D-V-BROADSIDE, lean and error toward a wide (fin) pad line",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 1290 s run, sink 1.2 m/s) (12 m/s is the top of the sweep)",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 267 s run, sink 1.2 m/s) (12 m/s is the top of the sweep)",
    "value": 8.0,
    "unit": "m/s",
    "defined_in": "redesign/team/C5/claims.sim.json",
    "status": "PROPOSED",
-   "importance": 302
+   "importance": 309
   },
   {
    "id": "ASM-C5-SIM3D-DRIFT-TIPS",
    "type": "assumption",
    "title": "3-D sim: drift cases that tip",
    "text": "Number of the 128 drift cases (0.3 m/s, 8 directions x 8 tilts of 10 deg x 2 sinks) that tip over",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 1290 s run, sink 1.2 m/s)",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 267 s run, sink 1.2 m/s)",
    "value": 0.0,
    "unit": "-",
    "defined_in": "redesign/team/C5/claims.sim.json",
    "status": "PROPOSED",
-   "importance": 302
+   "importance": 309
   },
   {
    "id": "ASM-C5-SIM3D-V-SINK-DRIFT",
    "type": "assumption",
    "title": "3-D sim: sink speed limit at 10 deg with 0.3 m/s drift",
-   "text": "Largest sink speed (0.1 m/s steps) at which a 10 deg touchdown (8 attitudes) drifting 0.3 m/s in 8 directions stays inside the usable stroke, gate mass",
-   "basis": "sim/out/drift_sweep.json (sim/drift_sweep.py, C5-R6): 1.2 m/s gives 38.1 mm at the gate, 36.9 mm at A3 predicted",
-   "value": 1.1,
+   "text": "Largest sink speed (0.05 m/s steps, 0.9-1.2) at which a 10 deg touchdown (8 attitudes) drifting 0.3 m/s in 8 directions stays inside the usable stroke, gate mass",
+   "basis": "sim/out/drift_sweep.json (sim/drift_sweep.py, C5-R6): 1.2 m/s gives 28.8 mm at the gate, 27.5 mm at A3 predicted",
+   "value": 1.2,
    "unit": "m/s",
    "defined_in": "redesign/team/C5/claims.sim.json",
    "status": "PROPOSED",
-   "importance": 302
+   "importance": 309
   },
   {
    "id": "ASM-C5-TEST-CORNER-H",
    "type": "assumption",
    "title": "3-D sim: free-drop height for the 10 deg corner drop",
    "text": "Largest pad-to-floor free-drop height (no rotor lift, 5 mm steps) at which a 10 deg touchdown in any of 24 directions stays inside the usable stroke, gate mass",
-   "basis": "sim/out/test_height.json (sim/test_height.py, C5-R6): 50 mm gives 34.1 mm, 55 mm 37.1 mm",
-   "value": 0.05,
+   "basis": "sim/out/test_height.json (sim/test_height.py, C5-R6): 50 mm gives 28.5 mm, 55 mm 29.8 mm",
+   "value": 0.0734,
    "unit": "m",
    "defined_in": "redesign/team/C5/claims.sim.json",
    "status": "PROPOSED",
-   "importance": 302
+   "importance": 309
   },
   {
    "id": "ASM-C5-PILOT-SPD-DN",
@@ -87665,19 +88644,19 @@ window.PROOF_GRAPH = {
    "type": "assumption",
    "title": "3-D sim: input snapshot",
    "text": "Input values the simulation ran with, in the order of the CALC-C5-SIM-STALE inputs",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 1290 s run, sink 1.2 m/s)",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 267 s run, sink 1.2 m/s)",
    "value": [
     2.6,
-    2.34546,
-    2.4617540000000004,
-    39.57548,
-    35.39940863779142,
+    2.3633,
+    2.4858162999999998,
+    39.19118,
+    35.778886797385326,
     0.038,
     0.667,
-    0.7,
-    0.01855926418162595,
+    0.4,
+    0.018326619826519522,
     0.3,
-    0.08899999999999997,
+    0.10199999999999998,
     1.2,
     0.319
    ],
@@ -87812,7 +88791,7 @@ window.PROOF_GRAPH = {
    "title": "3-D touchdown simulation results against the live limits",
    "script": "redesign/team/C5/landing_sim_claims.py",
    "function": "sim3d",
-   "equation": "results of sim/landing_sim3d.py (6-DOF rigid body, 4 elastic-plastic piston feet, 16 pad corners with Coulomb friction) ; ratios to the planar / hand values ; design side load = D-65 value ; ultimate = k_ult x side",
+   "equation": "results of sim/landing_sim3d.py (6-DOF rigid body, 4 elastic-plastic piston feet, 16 pad corners with Coulomb friction) ; ratios to the planar / hand values ; design side load = requirements.foot_side_load_cap_n (D-105) ; ultimate = k_ult x side",
    "inputs": {
     "s": "ASM-C5-SIM3D-STROKE",
     "n": "ASM-C5-SIM3D-N",
@@ -87823,8 +88802,9 @@ window.PROOF_GRAPH = {
     "bt": "ASM-C5-SIM3D-BOTTOM-TILT",
     "v10": "ASM-C5-SIM3D-V-SINK-10",
     "side": "ASM-C5-SIM3D-SIDE",
-    "side_d": "ASM-C5-SIDE-DESIGN-D65",
+    "side_d": "P:requirements.foot_side_load_cap_n",
     "side_mu": "ASM-C5-SIM3D-SIDE-MU05",
+    "side_mu7": "ASM-C5-SIM3D-SIDE-MU07",
     "strike": "ASM-C5-SIM3D-STRIKE-TILT",
     "vb": "ASM-C5-SIM3D-V-BROADSIDE",
     "vs": "ASM-C5-SIM3D-V-SPANWISE",
@@ -87847,6 +88827,7 @@ window.PROOF_GRAPH = {
     "v_dr": "m/s",
     "h_t": "m",
     "side_mu": "N",
+    "side_mu7": "N",
     "strike": "deg",
     "vb": "m/s",
     "vs": "m/s",
@@ -87855,55 +88836,58 @@ window.PROOF_GRAPH = {
     "vb_hand": "m/s"
    },
    "outputs": {
-    "stroke_m": 0.03500453785963982,
-    "stroke_axes_m": 0.024721411755136282,
-    "stroke_a3_m": 0.031379798531552934,
-    "bottom_tilt_deg": 10.0,
-    "v_sink_10_ms": 1.1,
-    "n": 6.519241769390969,
-    "n_light": 6.53037882309581,
-    "n_env_light": 6.533063499698803,
-    "side_N": 39.5,
-    "side_ult_N": 59.25,
-    "side_run_N": 39.44324343580951,
-    "side_mu05_N": 29.1094933684377,
-    "side_mu05_ult_N": 43.66424005265655,
-    "side_vs_hand": 1.507734565411288,
-    "stroke_vs_planar": 1.6146026888268408,
-    "strike_tilt_deg": 7.5,
-    "v_broadside_ms": 4.0,
-    "v_broadside_vs_hand": 0.9022721762956314,
+    "stroke_m": 0.025108107578321513,
+    "stroke_axes_m": 0.0237916852475878,
+    "stroke_a3_m": 0.022383168503449374,
+    "bottom_tilt_deg": 10.000000000000002,
+    "v_sink_10_ms": 1.3,
+    "n": 6.469612844879308,
+    "n_light": 6.480581542693176,
+    "n_env_light": 6.5511649750379926,
+    "side_N": 24.5,
+    "side_ult_N": 36.75,
+    "side_run_N": 24.284510618703447,
+    "side_mu05_N": 28.82381374136304,
+    "side_mu05_ult_N": 43.23572061204456,
+    "side_mu07_N": 38.92862437997379,
+    "side_mu07_over_design": 1.5889234440805629,
+    "side_vs_hand": 1.624499851695299,
+    "stroke_vs_planar": 1.15812464572068,
+    "strike_tilt_deg": 10.0,
+    "v_broadside_ms": 4.5,
+    "v_broadside_vs_hand": 1.0150561983325852,
     "v_spanwise_ms": 8.0,
     "drift_tips": 0.0,
-    "v_sink_drift_ms": 1.1,
-    "test_corner_h_m": 0.05
+    "v_sink_drift_ms": 1.2,
+    "test_corner_h_m": 0.0734
    },
    "input_values": {
-    "s": 0.03500453785963982,
-    "n": 6.519241769390969,
-    "n_l": 6.53037882309581,
-    "n_env": 6.533063499698803,
-    "s_ax": 0.024721411755136282,
-    "s_a3": 0.031379798531552934,
-    "bt": 10.0,
-    "v10": 1.1,
-    "side": 39.44324343580951,
-    "side_d": 39.5,
-    "side_mu": 29.1094933684377,
-    "strike": 7.5,
-    "vb": 4.0,
+    "s": 0.025108107578321513,
+    "n": 6.469612844879308,
+    "n_l": 6.480581542693176,
+    "n_env": 6.5511649750379926,
+    "s_ax": 0.0237916852475878,
+    "s_a3": 0.022383168503449374,
+    "bt": 10.000000000000002,
+    "v10": 1.3,
+    "side": 24.284510618703447,
+    "side_d": 24.5,
+    "side_mu": 28.82381374136304,
+    "side_mu7": 38.92862437997379,
+    "strike": 10.0,
+    "vb": 4.5,
     "vs": 8.0,
     "tips": 0.0,
-    "v_dr": 1.1,
-    "h_t": 0.05,
-    "side_hand": 26.16060170050553,
+    "v_dr": 1.2,
+    "h_t": 0.0734,
+    "side_hand": 14.948915257431734,
     "s_hand": 0.021679970002449256,
     "vb_hand": 4.433252077463366,
     "k_ult": 1.5
    },
    "defined_in": "redesign/team/C5/claims.sim.json",
    "status": "CHECKED",
-   "importance": 302
+   "importance": 309
   },
   {
    "id": "CALC-C5-SIM-STALE",
@@ -87929,29 +88913,22 @@ window.PROOF_GRAPH = {
     "x_cg_h": "CL-C5-CG-H-R1"
    },
    "outputs": {
-    "stale_count": 6.0,
-    "stale_inputs": [
-     "m_a3",
-     "m_pred",
-     "F_up",
-     "F_lo",
-     "z_cg",
-     "L_cart"
-    ]
+    "stale_count": 0.0,
+    "stale_inputs": []
    },
    "input_values": {
     "snap": [
      2.6,
-     2.34546,
-     2.4617540000000004,
-     39.57548,
-     35.39940863779142,
+     2.3633,
+     2.4858162999999998,
+     39.19118,
+     35.778886797385326,
      0.038,
      0.667,
-     0.7,
-     0.01855926418162595,
+     0.4,
+     0.018326619826519522,
      0.3,
-     0.08899999999999997,
+     0.10199999999999998,
      1.2,
      0.319
     ],
@@ -87962,7 +88939,7 @@ window.PROOF_GRAPH = {
     "F_lo": 35.778886797385326,
     "s_av": 0.038,
     "lam": 0.667,
-    "mu": 0.7,
+    "mu": 0.4,
     "z_cg": 0.018326619826519522,
     "v_td": 0.3,
     "L_cart": 0.10199999999999998,
@@ -87983,7 +88960,7 @@ window.PROOF_GRAPH = {
    "inputs": {
     "k": "ASM-C5-FEA-K-SHOE",
     "lever": "ASM-C5-FEA-LEVER",
-    "side_d": "ASM-C5-SIDE-DESIGN-D65",
+    "side_d": "P:requirements.foot_side_load_cap_n",
     "side_hand": "CL-C5-FOOT-SIDE-LOAD",
     "k_ult": "P:requirements.safety_factor_ult",
     "allow": "ASM-D5-PETG-SIGMA",
@@ -87996,18 +88973,18 @@ window.PROOF_GRAPH = {
     "allow": "Pa"
    },
    "outputs": {
-    "sigma_hand_MPa": 121.54364848345679,
-    "sf_hand": 0.329099878924931,
-    "sigma_design_MPa": 183.51925426102753,
-    "sf_design": 0.21796078106935982,
+    "sigma_hand_MPa": 69.45351341911818,
+    "sf_hand": 0.5759247881186291,
+    "sigma_design_MPa": 113.82839821253606,
+    "sf_design": 0.351406157234274,
     "sf_d5_beam": 1.2672926036051309,
     "side_capacity_N": 8.609450852239712
    },
    "input_values": {
     "k": 0.9577398345845318,
     "lever": 3.234042553191489,
-    "side_d": 39.5,
-    "side_hand": 26.16060170050553,
+    "side_d": 24.5,
+    "side_hand": 14.948915257431734,
     "k_ult": 1.5,
     "allow": 40000000.0,
     "sf_d5": 1.2672926036051309
@@ -88026,7 +89003,7 @@ window.PROOF_GRAPH = {
    "inputs": {
     "k": "ASM-C5-FEA-K-SHOE-D5R6",
     "lever": "ASM-C5-FEA-LEVER-D5R6",
-    "side_d": "ASM-C5-SIDE-DESIGN-D65",
+    "side_d": "P:requirements.foot_side_load_cap_n",
     "side_run": "ASM-C5-SIM3D-SIDE",
     "side_mu": "ASM-C5-SIM3D-SIDE-MU05",
     "k_ult": "P:requirements.safety_factor_ult",
@@ -88043,22 +89020,22 @@ window.PROOF_GRAPH = {
     "allow": "Pa"
    },
    "outputs": {
-    "sigma_design_MPa": 37.18796525180669,
-    "rf_design": 1.0756167950882092,
-    "rf_design_gci": 1.073161186805936,
-    "rf_run": 1.0771645459412582,
-    "rf_mu05": 1.459553516381399,
+    "sigma_design_MPa": 23.06595313086744,
+    "rf_design": 1.7341576900401738,
+    "rf_design_gci": 1.7301986481156928,
+    "rf_run": 1.7495457937398882,
+    "rf_mu05": 1.474019496074329,
     "side_capacity_N": 42.486863405984266,
-    "side_ult_N": 59.25,
-    "sigma_edge_MPa": 76.57418670982992,
-    "rf_edge": 0.5223692437188517
+    "side_ult_N": 36.75,
+    "sigma_edge_MPa": 47.49538163014767,
+    "rf_edge": 0.8421871480365161
    },
    "input_values": {
     "k": 0.2853793654516761,
     "lever": 2.199335548172757,
-    "side_d": 39.5,
-    "side_run": 39.44324343580951,
-    "side_mu": 29.1094933684377,
+    "side_d": 24.5,
+    "side_run": 24.284510618703447,
+    "side_mu": 28.82381374136304,
     "k_ult": 1.5,
     "allow": 40000000.0,
     "gci": 0.0022882007963609063,
@@ -88078,7 +89055,7 @@ window.PROOF_GRAPH = {
    "inputs": {
     "k": "ASM-C5-FEA-K-SHOE-D65",
     "lever": "ASM-C5-FEA-LEVER-D65",
-    "side_d": "ASM-C5-SIDE-DESIGN-D65",
+    "side_d": "P:requirements.foot_side_load_cap_n",
     "side_run": "ASM-C5-SIM3D-SIDE",
     "side_mu": "ASM-C5-SIM3D-SIDE-MU05",
     "k_ult": "P:requirements.safety_factor_ult",
@@ -88095,22 +89072,22 @@ window.PROOF_GRAPH = {
     "allow": "Pa"
    },
    "outputs": {
-    "sigma_design_MPa": 29.815338595638,
-    "rf_design": 1.3415913380186137,
-    "rf_design_gci": 1.3359867955213778,
-    "rf_run": 1.3435218109782623,
-    "rf_mu05": 1.8204665117666854,
+    "sigma_design_MPa": 18.493058116281798,
+    "rf_design": 2.1629737898667445,
+    "rf_design_gci": 2.15393789482018,
+    "rf_run": 2.1821670069365613,
+    "rf_mu05": 1.8385095854157876,
     "side_capacity_N": 52.992857851735245,
-    "side_ult_N": 59.25,
-    "sigma_edge_MPa": 41.24910659311411,
-    "rf_edge": 0.9697179721869994
+    "side_ult_N": 36.75,
+    "sigma_edge_MPa": 25.584888899526472,
+    "rf_edge": 1.5634228531178154
    },
    "input_values": {
     "k": 0.22880204258383469,
     "lever": 2.199335548172757,
-    "side_d": 39.5,
-    "side_run": 39.44324343580951,
-    "side_mu": 29.1094933684377,
+    "side_d": 24.5,
+    "side_run": 24.284510618703447,
+    "side_mu": 28.82381374136304,
     "k_ult": 1.5,
     "allow": 40000000.0,
     "gci": 0.0041950583014921956,
@@ -88155,18 +89132,16 @@ window.PROOF_GRAPH = {
    ],
    "how": "T-C5-AIRCRAFT-DROP corner drops (tilted board), flange-to-rim gap before and after.",
    "note": "C5-R6: 1.2 m/s (D-65) with the D-62 CG; 0.1 mm inside the usable stroke at the 2.6 kg gate, 2.4 mm at A3's predicted 2.436 kg. Cross-checks CL-C5-DYN-PAIR-CUR (planar) with 6 DOF, friction, combined pitch + roll and pad edges",
-   "value": 0.03500453785963982,
+   "value": 0.025108107578321513,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
-    "FAILS: margin -0.0% (0.035 m vs <= 0.035 m)",
     "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
     "uses CL-C5-DYN-PAIR-CUR, which is UNVERIFIED",
     "uses CL-C5-V-LAND-BROADSIDE, which is UNVERIFIED",
     "uses CL-D5-STROKE-USABLE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.00012965313256638587,
-   "fails": true,
+   "margin": 0.2826254977622424,
    "importance": 1
   },
   {
@@ -88204,7 +89179,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "T-C5-AIRCRAFT-DROP accelerometer at the CG, 100 Hz low-pass, at the weighed mass.",
    "note": "n = 4 x 37.5 N / (2.32 kg g) = 6.59, set by the crush plateau, not by the sink speed (D-65 raised landing_n_design to 6.6)",
-   "value": 6.519241769390969,
+   "value": 6.469612844879308,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
@@ -88212,7 +89187,7 @@ window.PROOF_GRAPH = {
     "uses CL-C5-V-LAND-BROADSIDE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.01223609554682286,
+   "margin": 0.019755629563741092,
    "importance": 1
   },
   {
@@ -88250,7 +89225,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "T-C5-AIRCRAFT-DROP at the lightest weighed configuration.",
    "note": "the D-64 lightest pack takes 4 g off A3-R6a basic: n reaches the 6.6 limit to the second decimal. Holds only while the flying mass stays >= 2.317 kg; the R5 additions (about +21 g, ASM-A1-R5-ADDED-G) give about 0.06 back",
-   "value": 6.53037882309581,
+   "value": 6.480581542693176,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
@@ -88258,7 +89233,7 @@ window.PROOF_GRAPH = {
     "uses CL-C5-V-LAND-BROADSIDE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.010548663167301466,
+   "margin": 0.01809370565254909,
    "importance": 1
   },
   {
@@ -88292,7 +89267,7 @@ window.PROOF_GRAPH = {
     "GER-008-LL"
    ],
    "how": "As CL-C5-SIM3D-N-LIGHT, tilted drops.",
-   "value": 6.533063499698803,
+   "value": 6.5511649750379926,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
@@ -88300,7 +89275,7 @@ window.PROOF_GRAPH = {
     "uses CL-C5-V-LAND-BROADSIDE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.010141893985029852,
+   "margin": 0.007399246206364711,
    "importance": 1
   },
   {
@@ -88334,7 +89309,7 @@ window.PROOF_GRAPH = {
     "GER-008-LL"
    ],
    "how": "T-C5-AIRCRAFT-DROP pitch and roll drops.",
-   "value": 0.024721411755136282,
+   "value": 0.0237916852475878,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
@@ -88343,7 +89318,7 @@ window.PROOF_GRAPH = {
     "uses CL-D5-STROKE-USABLE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.293673949853249,
+   "margin": 0.3202375643546342,
    "importance": 1
   },
   {
@@ -88377,7 +89352,7 @@ window.PROOF_GRAPH = {
     "GER-008-LL"
    ],
    "how": "As CL-C5-SIM3D-STROKE at the weighed mass.",
-   "value": 0.031379798531552934,
+   "value": 0.022383168503449374,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
@@ -88386,7 +89361,7 @@ window.PROOF_GRAPH = {
     "uses CL-D5-STROKE-USABLE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.10343432766991607,
+   "margin": 0.3604808999014464,
    "importance": 1
   },
   {
@@ -88424,7 +89399,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "T-C5-AIRCRAFT-DROP corner drop at 10 deg diagonal at the 1.2 m/s-equivalent height (run on the rig first).",
    "note": "C5-R6 at 1.2 m/s: no case inside the 10 deg envelope reaches the usable stroke (value = largest tilt simulated); at 1.5 m/s it was 5.0 deg (C5-S1)",
-   "value": 10.0,
+   "value": 10.000000000000002,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
@@ -88432,7 +89407,7 @@ window.PROOF_GRAPH = {
     "uses CL-C5-V-LAND-BROADSIDE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.0,
+   "margin": 1.7763568394002506e-16,
    "importance": 1
   },
   {
@@ -88466,24 +89441,22 @@ window.PROOF_GRAPH = {
     "GER-008-LL"
    ],
    "how": "As CL-C5-SIM3D-BOTTOM-TILT.",
-   "note": "0.1 m/s steps: the 1.2 m/s requirement is the last step that holds (0 % margin at the gate mass)",
-   "value": 1.1,
+   "note": "0.05 m/s steps (C5-R7); with the mu 0.40 pad face the feet scrub less and the stroke falls, so the whole 0.8-1.3 m/s sweep stays inside the usable stroke (at mu 0.7 it was 1.1 m/s on a 0.1 grid)",
+   "value": 1.3,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
-    "FAILS: margin -8.3% (1.1 m/s vs >= 1.2 m/s)",
     "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
     "uses CL-C5-DYN-PAIR-CUR, which is UNVERIFIED",
     "uses CL-C5-V-LAND-BROADSIDE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.08333333333333323,
-   "fails": true,
+   "margin": 0.08333333333333341,
    "importance": 1
   },
   {
    "id": "CL-C5-SIM3D-SIDE-LOAD",
    "type": "claim",
-   "title": "Design foot side load (limit), D-65",
+   "title": "Design foot side load (limit), D-105 cap",
    "calc": "CALC-C5-SIM3D",
    "output": "side_N",
    "unit": "N",
@@ -88505,9 +89478,9 @@ window.PROOF_GRAPH = {
     "GER-008-LR",
     "GER-008-LL"
    ],
-   "how": "T-D5-SIDE at the ultimate of this value; T-C5-AIRCRAFT-DROP with a side-load witness (crack check).",
-   "note": "D-65 design value (C5-S1 6-DOF, mu 0.7): replaces CL-C5-FOOT-SIDE-LOAD in D5, C4/D3 and C1 (CR-C5-16). Pads scrub at mu 0.7 while the aircraft rotates over the first foot. CL-C5-SIM3D-SIDE-12 checks that the 1.2 m/s envelope stays inside it",
-   "value": 39.5,
+   "how": "T-D5-PAD-MU (pad slides at <= 21.8 deg on the mat); T-D5-SIDE at the ultimate of this value; T-C5-AIRCRAFT-DROP with a side-load witness (crack check).",
+   "note": "D-105 (CDR decision B1): = requirements.foot_side_load_cap_n, held by a pad face of mu <= 0.40 on the landing mat. Replaces the D-65 value 39.5 N (mu 0.7) in D5, C4/D3, C1 and C6. CL-C5-SIM3D-SIDE-12 checks that every run of the 1.2 m/s envelope stays inside it",
+   "value": 24.5,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
@@ -88515,12 +89488,12 @@ window.PROOF_GRAPH = {
     "uses CL-C5-V-LAND-BROADSIDE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 286
+   "importance": 290
   },
   {
    "id": "CL-C5-SIM3D-SIDE-ULT",
    "type": "claim",
-   "title": "Design foot side load, ultimate (D-65)",
+   "title": "Design foot side load, ultimate (D-105)",
    "calc": "CALC-C5-SIM3D",
    "output": "side_ult_N",
    "unit": "N",
@@ -88543,7 +89516,7 @@ window.PROOF_GRAPH = {
     "GER-008-LL"
    ],
    "how": "T-D5-SIDE.",
-   "value": 59.25,
+   "value": 36.75,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
@@ -88556,14 +89529,14 @@ window.PROOF_GRAPH = {
   {
    "id": "CL-C5-SIM3D-SIDE-12",
    "type": "claim",
-   "title": "3-D sim sustained foot side load, 1.2 m/s envelope (4 masses, mu 0.7)",
+   "title": "3-D sim sustained foot side load, 1.2 m/s envelope (4 masses, drift, pad mu 0.40)",
    "calc": "CALC-C5-SIM3D",
    "output": "side_run_N",
    "unit": "N",
    "limit": {
     "op": "<=",
     "ref": "CL-C5-SIM3D-SIDE-LOAD",
-    "resolved": 39.5
+    "resolved": 24.5
    },
    "verifies": [
     "R-LANDING-IMPACT"
@@ -88587,8 +89560,8 @@ window.PROOF_GRAPH = {
     "GER-008-LL"
    ],
    "how": "As CL-C5-SIM3D-SIDE-LOAD.",
-   "note": "the scrub load saturates near mu x plateau + tilt component, so it barely depends on the sink speed",
-   "value": 39.44324343580951,
+   "note": "the scrub load saturates near mu x plateau + a tilt component, so it barely depends on the sink speed and is not proportional to mu: 24.3 N at mu 0.40, 28.8 N at 0.5, 38.9 N at 0.7",
+   "value": 24.284510618703447,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
@@ -88597,21 +89570,16 @@ window.PROOF_GRAPH = {
     "uses CL-C5-SIM3D-SIDE-LOAD, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.0014368750427973028,
+   "margin": 0.008795484950879725,
    "importance": 1
   },
   {
    "id": "CL-C5-SIM3D-SIDE-MU05",
    "type": "claim",
-   "title": "3-D sim foot side load with a mu 0.5 pad face (option), limit",
+   "title": "3-D sim foot side load if the pad face reaches mu 0.5 (record), limit",
    "calc": "CALC-C5-SIM3D",
    "output": "side_mu05_N",
    "unit": "N",
-   "limit": {
-    "op": "<=",
-    "ref": "CL-C5-SIM3D-SIDE-LOAD",
-    "resolved": 39.5
-   },
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -88630,24 +89598,22 @@ window.PROOF_GRAPH = {
     "GER-008-LR",
     "GER-008-LL"
    ],
-   "how": "T-D5-PAD-MU on the chosen pad face and the landing mat (tilt board, 5 pulls); <= 0.5 to adopt it.",
-   "note": "option for D5 (CR-C5-16): a pad face with mu <= 0.5 on the landing mat (e.g. PTFE / UHMW tape over the neoprene) cuts the side load by a quarter; the parked-slide and drift checks then use mu 0.5",
-   "value": 29.1094933684377,
+   "how": "T-D5-PAD-MU on the chosen pad face and the landing mat (incline, 5 repeats).",
+   "note": "record, no limit: what the side load becomes if the pad face misses the D-105 target by 0.1",
+   "value": 28.82381374136304,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
     "uses CL-C5-DYN-PAIR-CUR, which is UNVERIFIED",
-    "uses CL-C5-V-LAND-BROADSIDE, which is UNVERIFIED",
-    "uses CL-C5-SIM3D-SIDE-LOAD, which is UNVERIFIED"
+    "uses CL-C5-V-LAND-BROADSIDE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.2630508007990456,
    "importance": 1
   },
   {
    "id": "CL-C5-SIM3D-SIDE-MU05-ULT",
    "type": "claim",
-   "title": "Foot side load with a mu 0.5 pad face, ultimate",
+   "title": "Foot side load with a mu 0.5 pad face, ultimate (record)",
    "calc": "CALC-C5-SIM3D",
    "output": "side_mu05_ult_N",
    "unit": "N",
@@ -88670,7 +89636,81 @@ window.PROOF_GRAPH = {
     "GER-008-LL"
    ],
    "how": "T-D5-SIDE.",
-   "value": 43.66424005265655,
+   "value": 43.23572061204456,
+   "defined_in": "redesign/team/C5/claims.sim.json",
+   "reasons": [
+    "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
+    "uses CL-C5-DYN-PAIR-CUR, which is UNVERIFIED",
+    "uses CL-C5-V-LAND-BROADSIDE, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "CL-C5-SIM3D-SIDE-MU07",
+   "type": "claim",
+   "title": "3-D sim foot side load on bare neoprene, mu 0.7 (record), limit",
+   "calc": "CALC-C5-SIM3D",
+   "output": "side_mu07_N",
+   "unit": "N",
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-008-LR",
+    "GER-008-LL"
+   ],
+   "how": "Pre-flight: pad face present and unworn on all four feet.",
+   "note": "record, no limit: the D-65 case. A pad that has lost its low-friction face puts this load on a fin designed for the D-105 cap, so the pad face is a pre-flight inspection item (flight card, H3)",
+   "value": 38.92862437997379,
+   "defined_in": "redesign/team/C5/claims.sim.json",
+   "reasons": [
+    "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
+    "uses CL-C5-DYN-PAIR-CUR, which is UNVERIFIED",
+    "uses CL-C5-V-LAND-BROADSIDE, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "CL-C5-SIM3D-SIDE-MU07-RATIO",
+   "type": "claim",
+   "title": "Bare-neoprene side load / design side load (record)",
+   "calc": "CALC-C5-SIM3D",
+   "output": "side_mu07_over_design",
+   "unit": "-",
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-008-LR",
+    "GER-008-LL"
+   ],
+   "how": "As CL-C5-SIM3D-SIDE-MU07.",
+   "note": "above the 1.5 ultimate factor: a landing at 1.2 m/s and 10 deg on bare neoprene is past the fin's ultimate design load",
+   "value": 1.5889234440805629,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
@@ -88698,17 +89738,15 @@ window.PROOF_GRAPH = {
    ],
    "how": "T-C5-AIRCRAFT-DROP roll drop: witness tape on the corner caps.",
    "note": "FAILS by design intent: inside the 10 deg envelope a mostly-roll touchdown crushes the low fin's feet far enough for the wingtip TE corner to touch; the TPU corner cap (CR-C5-04) is the protection",
-   "value": 7.5,
+   "value": 10.0,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
-    "FAILS: margin -25.0% (7.5 deg vs >= 10 deg)",
     "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
     "uses CL-C5-DYN-PAIR-CUR, which is UNVERIFIED",
     "uses CL-C5-V-LAND-BROADSIDE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.25,
-   "fails": true,
+   "margin": 0.0,
    "importance": 1
   },
   {
@@ -88728,16 +89766,16 @@ window.PROOF_GRAPH = {
    ],
    "how": "Landing practice in measured wind (H2), anemometer; count tip-overs.",
    "note": "dynamic re-check of CL-C5-V-LAND-BROADSIDE (static, pivot stuck): crushing feet, friction, sink. FAILS: land with a wingtip into the wind (CR-C5-05, rule S1)",
-   "value": 4.0,
+   "value": 4.5,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
-    "FAILS: margin -20.0% (4 m/s vs >= 5 m/s)",
+    "FAILS: margin -10.0% (4.5 m/s vs >= 5 m/s)",
     "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
     "uses CL-C5-DYN-PAIR-CUR, which is UNVERIFIED",
     "uses CL-C5-V-LAND-BROADSIDE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.2,
+   "margin": -0.1,
    "fails": true,
    "importance": 1
   },
@@ -88792,6 +89830,8 @@ window.PROOF_GRAPH = {
     "uses CL-C5-V-LAND-BROADSIDE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -88825,8 +89865,8 @@ window.PROOF_GRAPH = {
     "GER-008-LL"
    ],
    "how": "T-C5-DRIFT-LOG: touchdown sink and ground speed in the twin hard-landing logs.",
-   "note": "the D-65 requirement (1.2 m/s at 10 deg) has no drift; a pilot down-stick landing in QLOITER also drifts. 1.2 m/s + 10 deg + 0.3 m/s bottoms a foot (38.1 mm at the gate), 1.1 m/s holds. C5 asks F4 for Q_PILOT_SPD_DN 1.0 m/s (CR-C5-23)",
-   "value": 1.1,
+   "note": "the D-65 requirement (1.2 m/s at 10 deg) has no drift; a pilot down-stick landing in QLOITER also drifts. C5-R7 at pad mu 0.40: 1.2 m/s + 10 deg + 0.3 m/s stays inside the stroke (at mu 0.7 it bottomed a foot). C5 still asks F4 for Q_PILOT_SPD_DN 1.0 m/s (CR-C5-23)",
+   "value": 1.2,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
@@ -88834,7 +89874,7 @@ window.PROOF_GRAPH = {
     "uses CL-C5-V-LAND-BROADSIDE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.10000000000000009,
+   "margin": 0.19999999999999996,
    "importance": 1
   },
   {
@@ -88846,7 +89886,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "how": "Release height pad-to-floor.",
    "note": "without rotor lift a 10 deg corner drop from the 73 mm (1.2 m/s) height bottoms a foot; run the corner drops at 45 mm (31.0 mm modelled) and compare each foot stroke with the model re-run",
-   "value": 0.05,
+   "value": 0.0734,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
@@ -88869,7 +89909,7 @@ window.PROOF_GRAPH = {
     "resolved": 0.0
    },
    "how": "Re-run sim/landing_sim3d.py, sim/sink_sweep.py, sim/side_check.py, then this script, whenever this is > 0.",
-   "value": 6.0,
+   "value": 0.0,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
@@ -88884,12 +89924,14 @@ window.PROOF_GRAPH = {
     "uses CL-C5-CG-H-R1, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0,
+   "margin_abs": true,
    "importance": 1
   },
   {
    "id": "CL-C5-FEA-SHOE-SF",
    "type": "claim",
-   "title": "Shoe GER-001 reserve factor at the design side load (59.25 N ult), D5-R6 stack",
+   "title": "Shoe GER-001 reserve factor at the design side load (D-105 cap x 1.5), D5-R6 stack",
    "calc": "CALC-C5-FEA-SHOE-D5R6",
    "output": "rf_design",
    "unit": "-",
@@ -88907,15 +89949,15 @@ window.PROOF_GRAPH = {
     "GER-001-LR",
     "GER-001-LL"
    ],
-   "how": "T-C5-SHOE-SIDE-FAIL on the R6 shoe: failure load >= 59.25 N at the pad, both axes.",
+   "how": "T-C5-SHOE-SIDE-FAIL on the R6 shoe: failure load >= 1.5 x CL-C5-SIM3D-SIDE-LOAD at the pad, both axes.",
    "note": "C5-R6: C5's independent SU2 FEA of D5's R6 stack (walls 1.2, rim 2.8, R 1.0, engagement 25 mm) on 3 meshes, rim body / window strips; D5 has not yet re-published CALC-D5-SIDE, so the R6 numbers enter as overrides (CR-C5-20). Was 0.22 on the as-drawn D5-R5 shoe (CL-C5-FEA-SHOE-SF-R5)",
-   "value": 1.0756167950882092,
+   "value": 1.7341576900401738,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses ASM-D5-PETG-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.07561679508820918,
+   "margin": 0.7341576900401738,
    "importance": 1
   },
   {
@@ -88937,19 +89979,19 @@ window.PROOF_GRAPH = {
     "GER-001-LL"
    ],
    "how": "As CL-C5-FEA-SHOE-SF.",
-   "value": 1.073161186805936,
+   "value": 1.7301986481156928,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses ASM-D5-PETG-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.07316118680593608,
+   "margin": 0.7301986481156928,
    "importance": 1
   },
   {
    "id": "CL-C5-FEA-SHOE-SF-MU05",
    "type": "claim",
-   "title": "D5-R6 shoe reserve factor with the mu 0.5 pad option",
+   "title": "D5-R6 shoe reserve factor if the pad face reaches mu 0.5",
    "calc": "CALC-C5-FEA-SHOE-D5R6",
    "output": "rf_mu05",
    "unit": "-",
@@ -88965,13 +90007,13 @@ window.PROOF_GRAPH = {
     "GER-001-LL"
    ],
    "how": "As CL-C5-FEA-SHOE-SF.",
-   "value": 1.459553516381399,
+   "value": 1.474019496074329,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses ASM-D5-PETG-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.4595535163813991,
+   "margin": 0.4740194960743289,
    "importance": 1
   },
   {
@@ -88989,7 +90031,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "T-C5-SHOE-SIDE-FAIL: note whether the crack starts at the fin TE.",
    "note": "boundary-condition edge of the bonded floor / legs at the fin TE: linear FEA cannot resolve it, so it does not set the RF; below 1 it points at where T-C5-SHOE-SIDE-FAIL may crack first (CR-C5-20: a fillet or taper at the leg / floor end)",
-   "value": 0.5223692437188517,
+   "value": 0.8421871480365161,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses ASM-D5-PETG-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
@@ -89007,7 +90049,7 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": ">=",
     "ref": "CL-C5-SIM3D-SIDE-LOAD",
-    "resolved": 39.5
+    "resolved": 24.5
    },
    "parts": [
     "GER-001-UR",
@@ -89023,7 +90065,7 @@ window.PROOF_GRAPH = {
     "uses CL-C5-SIM3D-SIDE-LOAD, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.07561679508820927,
+   "margin": 0.7341576900401742,
    "importance": 1
   },
   {
@@ -89046,13 +90088,13 @@ window.PROOF_GRAPH = {
    ],
    "how": "As CL-C5-FEA-SHOE-SF.",
    "note": "the geometry D-65 wrote down (walls 2.0, rim 3.0, R 1.0, engagement 25 mm, R5 long windows); D5-R6 builds a lighter variant, checked in CL-C5-FEA-SHOE-SF",
-   "value": 1.3415913380186137,
+   "value": 2.1629737898667445,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses ASM-D5-PETG-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.34159133801861374,
+   "margin": 1.1629737898667445,
    "importance": 1
   },
   {
@@ -89092,7 +90134,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "None: superseded.",
    "note": "C5-S1 record, superseded by the D-65 stack (CL-C5-FEA-SHOE-SF); no limit: the part is not built",
-   "value": 0.21796078106935982,
+   "value": 0.351406157234274,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
@@ -89117,7 +90159,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "None: superseded.",
    "note": "C5-S1 record (0.38 at D5's 34.4 N ult basis); the live CL-C5-FOOT-SIDE-LOAD moves with the sink speed, so this re-computes; superseded by D-65",
-   "value": 0.329099878924931,
+   "value": 0.5759247881186291,
    "defined_in": "redesign/team/C5/claims.sim.json",
    "reasons": [
     "uses CL-C5-FOOT-SIDE-LOAD, which is UNVERIFIED",
@@ -89160,7 +90202,7 @@ window.PROOF_GRAPH = {
     "CL-C5-FEA-SHOE-SF"
    ],
    "state": "planned",
-   "procedure": "Two shoes as D5 builds them (R6: walls 1.2, rim 2.8, R 1.0 inside fillets, 25 mm engagement, layers along the sleeve axis) bonded on stepped foam-board offcuts (as T-D5-PROOF), insert pushed 4.5 mm in; load the pad sideways along +y on one, +z on the other, in 5 N steps to failure; record the load and where it cracks (rim, window end, roof, fin TE). Pass: failure load >= 59.25 N (1.5 x CL-C5-SIM3D-SIDE-LOAD) on both.",
+   "procedure": "Two shoes as D5 builds them (R6: walls 1.2, rim 2.8, R 1.0 inside fillets, 25 mm engagement, layers along the sleeve axis) bonded on stepped foam-board offcuts (as T-D5-PROOF), insert pushed 4.5 mm in; load the pad sideways along +y on one, +z on the other, in 5 N steps to failure; record the load and where it cracks (rim, window end, roof, fin TE). Pass: failure load >= 1.5 x CL-C5-SIM3D-SIDE-LOAD (36.75 N at the D-105 cap) on both.",
    "defined_in": "redesign/team/C5/claims.sim.json",
    "status": "PROPOSED",
    "importance": 2
@@ -89896,7 +90938,11 @@ window.PROOF_GRAPH = {
     "tau": 2000000.0
    },
    "defined_in": "redesign/team/C6/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 13
   },
   {
@@ -89995,7 +91041,11 @@ window.PROOF_GRAPH = {
     "s_brg": 100000000.0
    },
    "defined_in": "redesign/team/C6/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 30
   },
   {
@@ -90118,7 +91168,11 @@ window.PROOF_GRAPH = {
     "A_net": 9.5e-05
    },
    "defined_in": "redesign/team/C6/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 14
   },
   {
@@ -90131,7 +91185,7 @@ window.PROOF_GRAPH = {
    "where": "mechanical table: tensile stress at yield 36.5 MPa, at break 30.5 MPa, flexural 62.2 MPa, flexural modulus 1 948 MPa (ASTM D638 / D790, values marked * on the sheet)",
    "defined_in": "redesign/team/C6/claims.json",
    "status": "CHECKED",
-   "importance": 3
+   "importance": 4
   },
   {
    "id": "ASM-C6-ASA-YIELD",
@@ -90149,7 +91203,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 3
+   "importance": 4
   },
   {
    "id": "ASM-C6-ASA-INTERLAYER",
@@ -90164,7 +91218,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 3
+   "importance": 4
   },
   {
    "id": "CALC-C6-DOG",
@@ -90217,7 +91271,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/C6/claims.json",
    "status": "CHECKED",
-   "importance": 3
+   "importance": 4
   },
   {
    "id": "CL-C6-DOG-FUSE-T",
@@ -90252,7 +91306,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-CORE-T-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1
+   "importance": 2
   },
   {
    "id": "CL-C6-DOG-FUSE-RF",
@@ -90351,7 +91405,7 @@ window.PROOF_GRAPH = {
    "procedure": "Two D-91 mounts, each on a 60 mm tube stub with a 22 mm PETG station collar bonded under it (dog in the notch). Pinch bolt set to the T-D3-SLIP 2.5 N m. Load a 100 mm arm with a luggage scale until the mount turns; record the peak torque and whether the dog sheared. Pass: peak <= CL-C6-DOG-FUSE-T x 1.1 and the dog piece shears, not the collar bond (no witness-mark movement)",
    "defined_in": "redesign/team/C6/claims.json",
    "status": "PROPOSED",
-   "importance": 3
+   "importance": 4
   },
   {
    "id": "CALC-C6-FOAM-BONDS",
@@ -91192,6 +92246,7 @@ window.PROOF_GRAPH = {
    "value": 2.637608094077646,
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
+    "CALC-C6-TUBE-BONDS does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses ASM-C4-CORE-T-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C6-FIN-MZ-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -91231,6 +92286,7 @@ window.PROOF_GRAPH = {
    "value": 4.415922296264359,
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
+    "CALC-C6-TUBE-BONDS does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses ASM-C4-CORE-T-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C6-FIN-MZ-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -91273,6 +92329,7 @@ window.PROOF_GRAPH = {
    "value": 1.1260014225073554,
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
+    "CALC-C6-TUBE-BONDS does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses ASM-C4-CORE-T-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C6-FIN-MZ-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -91310,6 +92367,7 @@ window.PROOF_GRAPH = {
    "value": 0.6653644769361646,
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
+    "CALC-C6-TUBE-BONDS does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses ASM-C4-CORE-T-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C6-FIN-MZ-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -91346,6 +92404,7 @@ window.PROOF_GRAPH = {
    "value": 0.8189101254598948,
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
+    "CALC-C6-TUBE-BONDS does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses ASM-C4-CORE-T-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C6-FIN-MZ-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -91382,6 +92441,7 @@ window.PROOF_GRAPH = {
    "value": 1.1260014225073554,
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
+    "CALC-C6-TUBE-BONDS does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses ASM-C4-CORE-T-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C6-FIN-MZ-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -91423,6 +92483,7 @@ window.PROOF_GRAPH = {
    "value": 1.1260014225073554,
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
+    "CALC-C6-TUBE-BONDS does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses ASM-C4-CORE-T-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C6-FIN-MZ-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -91460,6 +92521,7 @@ window.PROOF_GRAPH = {
    "value": 0.6295371589472942,
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
+    "CALC-C6-TUBE-BONDS does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses ASM-C4-CORE-T-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C6-FIN-MZ-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -91499,6 +92561,7 @@ window.PROOF_GRAPH = {
    "value": 0.01953816359397742,
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
+    "CALC-C6-TUBE-BONDS does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses ASM-C4-CORE-T-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C6-FIN-MZ-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -91542,6 +92605,7 @@ window.PROOF_GRAPH = {
    "value": 2233.257001692858,
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
+    "CALC-C6-STRIP does not re-run",
     "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-C4-D3-STRIP-END-F, which is UNVERIFIED",
     "uses CL-C4-D3-STRIP-Q, which is UNVERIFIED",
@@ -91594,6 +92658,7 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
     "FAILS: margin -29.3% (0.7075 vs >= 1)",
+    "CALC-C6-STRIP does not re-run",
     "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-C4-D3-STRIP-END-F, which is UNVERIFIED",
     "uses CL-C4-D3-STRIP-Q, which is UNVERIFIED",
@@ -91640,6 +92705,7 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
     "FAILS: margin -39.6% (0.05583 m vs <= 0.04 m)",
+    "CALC-C6-STRIP does not re-run",
     "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-C4-D3-STRIP-END-F, which is UNVERIFIED",
     "uses CL-C4-D3-STRIP-Q, which is UNVERIFIED",
@@ -91686,6 +92752,7 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
     "FAILS: margin -36.2% (0.6381 vs >= 1)",
+    "CALC-C6-STRIP does not re-run",
     "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-C4-D3-STRIP-END-F, which is UNVERIFIED",
     "uses CL-C4-D3-STRIP-Q, which is UNVERIFIED",
@@ -91733,6 +92800,7 @@ window.PROOF_GRAPH = {
    "value": 0.11624642837790726,
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
+    "CALC-C6-STRIP does not re-run",
     "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-C4-D3-STRIP-END-F, which is UNVERIFIED",
     "uses CL-C4-D3-STRIP-Q, which is UNVERIFIED",
@@ -91783,6 +92851,7 @@ window.PROOF_GRAPH = {
    "value": 1.121508099320968,
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
+    "CALC-C6-STRIP does not re-run",
     "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-C4-D3-STRIP-END-F, which is UNVERIFIED",
     "uses CL-C4-D3-STRIP-Q, which is UNVERIFIED",
@@ -91835,6 +92904,7 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
     "FAILS: margin -10.3% (0.8972 vs >= 1)",
+    "CALC-C6-STRIP does not re-run",
     "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-C4-D3-STRIP-END-F, which is UNVERIFIED",
     "uses CL-C4-D3-STRIP-Q, which is UNVERIFIED",
@@ -91888,6 +92958,7 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
     "FAILS: margin -23.4% (0.7656 vs >= 1)",
+    "CALC-C6-STRIP does not re-run",
     "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-C4-D3-STRIP-END-F, which is UNVERIFIED",
     "uses CL-C4-D3-STRIP-Q, which is UNVERIFIED",
@@ -91940,6 +93011,7 @@ window.PROOF_GRAPH = {
    "value": 0.013458097191851617,
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
+    "CALC-C6-STRIP does not re-run",
     "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-C4-D3-STRIP-END-F, which is UNVERIFIED",
     "uses CL-C4-D3-STRIP-Q, which is UNVERIFIED",
@@ -91992,6 +93064,7 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
     "FAILS: margin -23.4% (0.006891 m vs >= 0.009 m)",
+    "CALC-C6-STRIP does not re-run",
     "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-C4-D3-STRIP-END-F, which is UNVERIFIED",
     "uses CL-C4-D3-STRIP-Q, which is UNVERIFIED",
@@ -92040,6 +93113,7 @@ window.PROOF_GRAPH = {
    "value": 1.9374404729651205,
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
+    "CALC-C6-STRIP does not re-run",
     "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-C4-D3-STRIP-END-F, which is UNVERIFIED",
     "uses CL-C4-D3-STRIP-Q, which is UNVERIFIED",
@@ -92087,6 +93161,7 @@ window.PROOF_GRAPH = {
    "value": 1.3433294948704668,
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
+    "CALC-C6-STRIP does not re-run",
     "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-C4-D3-STRIP-END-F, which is UNVERIFIED",
     "uses CL-C4-D3-STRIP-Q, which is UNVERIFIED",
@@ -92639,6 +93714,7 @@ window.PROOF_GRAPH = {
    "value": 0.9929500172072111,
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
+    "CALC-C6-FIN-SCALE does not re-run",
     "uses CL-C1-FINHALF-T-WINGPLANE-LIM, which is UNVERIFIED",
     "uses CL-C4-D3-SEC-T-L4, which is UNVERIFIED",
     "uses CL-C4-D3-STRIP-END-F, which is UNVERIFIED",
@@ -92687,6 +93763,7 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
     "FAILS: margin -28.7% (0.7125 vs >= 1)",
+    "CALC-C6-FIN-SCALE does not re-run",
     "uses CL-C1-FINHALF-T-WINGPLANE-LIM, which is UNVERIFIED",
     "uses CL-C4-D3-SEC-T-L4, which is UNVERIFIED",
     "uses CL-C4-D3-STRIP-END-F, which is UNVERIFIED",
@@ -92729,6 +93806,7 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
     "FAILS: margin -35.7% (0.6426 vs >= 1)",
+    "CALC-C6-FIN-SCALE does not re-run",
     "uses CL-C1-FINHALF-T-WINGPLANE-LIM, which is UNVERIFIED",
     "uses CL-C4-D3-SEC-T-L4, which is UNVERIFIED",
     "uses CL-C4-D3-STRIP-END-F, which is UNVERIFIED",
@@ -92777,6 +93855,7 @@ window.PROOF_GRAPH = {
    "value": 1.1294708493740115,
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
+    "CALC-C6-FIN-SCALE does not re-run",
     "uses CL-C1-FINHALF-T-WINGPLANE-LIM, which is UNVERIFIED",
     "uses CL-C4-D3-SEC-T-L4, which is UNVERIFIED",
     "uses CL-C4-D3-STRIP-END-F, which is UNVERIFIED",
@@ -92824,6 +93903,7 @@ window.PROOF_GRAPH = {
    "value": 0.013553650192488139,
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
+    "CALC-C6-FIN-SCALE does not re-run",
     "uses CL-C1-FINHALF-T-WINGPLANE-LIM, which is UNVERIFIED",
     "uses CL-C4-D3-SEC-T-L4, which is UNVERIFIED",
     "uses CL-C4-D3-STRIP-END-F, which is UNVERIFIED",
@@ -92867,6 +93947,7 @@ window.PROOF_GRAPH = {
    "value": 2217.512578259048,
    "defined_in": "redesign/team/C6/claims.json",
    "reasons": [
+    "CALC-C6-FIN-SCALE does not re-run",
     "uses CL-C1-FINHALF-T-WINGPLANE-LIM, which is UNVERIFIED",
     "uses CL-C4-D3-SEC-T-L4, which is UNVERIFIED",
     "uses CL-C4-D3-STRIP-END-F, which is UNVERIFIED",
@@ -93190,7 +94271,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1118
+   "importance": 1148
   },
   {
    "id": "ASM-D1-PART-CGX",
@@ -93221,7 +94302,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/D1/claims.json",
    "status": "PROPOSED",
-   "importance": 1118
+   "importance": 1148
   },
   {
    "id": "ASM-D1-ELEVON-GAP",
@@ -93444,7 +94525,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/D1/claims.json",
    "status": "CHECKED",
-   "importance": 1118
+   "importance": 1148
   },
   {
    "id": "CALC-D1-ELEVON",
@@ -93662,7 +94743,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.005852417302799011,
-   "importance": 1117
+   "importance": 1147
   },
   {
    "id": "CL-D1-WING-CG-X",
@@ -93990,6 +95071,8 @@ window.PROOF_GRAPH = {
    "value": 0.00653,
    "defined_in": "redesign/team/D1/claims.json",
    "status": "CHECKED",
+   "margin": 0.00653,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -94124,7 +95207,7 @@ window.PROOF_GRAPH = {
    "procedure": "1 g scale: core after cutting and pocketing, spar, 4 plugs, a cured 20 cm3 cup of the bead mix (<= 13 g), tape roll before / after skinning, each elevon, finished wing; knife-edge balance of the bare wing for CG x",
    "defined_in": "redesign/team/D1/claims.json",
    "status": "PROPOSED",
-   "importance": 1118
+   "importance": 1148
   },
   {
    "id": "T-D1-FIT",
@@ -94555,7 +95638,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1119
+   "importance": 1149
   },
   {
    "id": "ASM-D2-PITOT-Y",
@@ -95599,7 +96682,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/D2/claims.json",
    "status": "CHECKED",
-   "importance": 1119
+   "importance": 1149
   },
   {
    "id": "CL-D2-BAY-L",
@@ -96565,6 +97648,8 @@ window.PROOF_GRAPH = {
    "value": 0.0175,
    "defined_in": "redesign/team/D2/claims.json",
    "status": "CHECKED",
+   "margin": 0.0175,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -96957,6 +98042,8 @@ window.PROOF_GRAPH = {
    "value": 0,
    "defined_in": "redesign/team/D2/claims.json",
    "status": "CHECKED",
+   "margin": 0.0,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -96998,6 +98085,8 @@ window.PROOF_GRAPH = {
    "value": 0,
    "defined_in": "redesign/team/D2/claims.json",
    "status": "CHECKED",
+   "margin": 0.0,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -97267,7 +98356,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.0034931506849314444,
-   "importance": 1119
+   "importance": 1149
   },
   {
    "id": "T-D2-WEIGH",
@@ -97280,7 +98369,7 @@ window.PROOF_GRAPH = {
    "procedure": "0.1 g scale; each printed part, board piece and XPS block; record in subsystems/pod/parts.csv",
    "defined_in": "redesign/team/D2/claims.json",
    "status": "PROPOSED",
-   "importance": 1119
+   "importance": 1149
   },
   {
    "id": "T-D2-FIT",
@@ -97479,7 +98568,11 @@ window.PROOF_GRAPH = {
     "mu": 0.3
    },
    "defined_in": "redesign/team/D3/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 3
   },
   {
@@ -97525,7 +98618,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/D3/claims.json",
    "status": "CHECKED",
-   "importance": 170
+   "importance": 171
   },
   {
    "id": "CALC-D3-SCREW-ENGAGE",
@@ -97615,7 +98708,11 @@ window.PROOF_GRAPH = {
     "sq": 0.0586
    },
    "defined_in": "redesign/team/D3/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 4
   },
   {
@@ -97771,7 +98868,11 @@ window.PROOF_GRAPH = {
     "kd": 0.5
    },
    "defined_in": "redesign/team/D3/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 6
   },
   {
@@ -97956,6 +99057,7 @@ window.PROOF_GRAPH = {
    "value": 2.313202238814493,
    "defined_in": "redesign/team/D3/claims.json",
    "reasons": [
+    "CALC-D3-MOUNT-SLIP does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:propulsion.motor_length_m, which is UNVERIFIED (cites ASM-E1-STACK, which is UNVERIFIED)",
     "uses P:fin_detail.mount.prop_stack_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/fins/params.json: R4: mount face to prop mid-plane along the motor axis (E1 paper stack; frozen on the measured motor, T-E1-MOTOR-RM); its x projection is stack cos(cant))",
@@ -97993,6 +99095,7 @@ window.PROOF_GRAPH = {
    "value": 1.7648939532563872,
    "defined_in": "redesign/team/D3/claims.json",
    "reasons": [
+    "CALC-D3-MOUNT-SLIP does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:propulsion.motor_length_m, which is UNVERIFIED (cites ASM-E1-STACK, which is UNVERIFIED)",
     "uses P:fin_detail.mount.prop_stack_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/fins/params.json: R4: mount face to prop mid-plane along the motor axis (E1 paper stack; frozen on the measured motor, T-E1-MOTOR-RM); its x projection is stack cos(cant))",
@@ -98022,6 +99125,7 @@ window.PROOF_GRAPH = {
    "value": 73.74631268436578,
    "defined_in": "redesign/team/D3/claims.json",
    "reasons": [
+    "CALC-D3-MOUNT-SLIP does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:propulsion.motor_length_m, which is UNVERIFIED (cites ASM-E1-STACK, which is UNVERIFIED)",
     "uses P:fin_detail.mount.prop_stack_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/fins/params.json: R4: mount face to prop mid-plane along the motor axis (E1 paper stack; frozen on the measured motor, T-E1-MOTOR-RM); its x projection is stack cos(cant))",
@@ -98126,7 +99230,7 @@ window.PROOF_GRAPH = {
     "uses P:fin_detail.mount.cant_sense_UR, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/fins/params.json: R4: -1. The UR thrust side component points along -t = -(x_hat x r_hat): the UR prop end leans toward the wing plane (-z) and outboard (+y); every station follows by the quad mirrors (UL: outboard -y and -z; LR: +y and +z; LL: -y and +z). The R3 print (+1) reversed hover yaw. Prints A (UR, LL) and B (UL, LR) keep their station assignment; the plate geometry of each print changed. H1/H2 verify with an inclinometer and the hanging yaw test before the first hover (D-52))"
    ],
    "status": "UNVERIFIED",
-   "importance": 165
+   "importance": 166
   },
   {
    "id": "CL-D3-X-FACE",
@@ -98151,7 +99255,7 @@ window.PROOF_GRAPH = {
     "uses P:fin_detail.mount.cant_sense_UR, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/fins/params.json: R4: -1. The UR thrust side component points along -t = -(x_hat x r_hat): the UR prop end leans toward the wing plane (-z) and outboard (+y); every station follows by the quad mirrors (UL: outboard -y and -z; LR: +y and +z; LL: -y and +z). The R3 print (+1) reversed hover yaw. Prints A (UR, LL) and B (UL, LR) keep their station assignment; the plate geometry of each print changed. H1/H2 verify with an inclinometer and the hanging yaw test before the first hover (D-52))"
    ],
    "status": "UNVERIFIED",
-   "importance": 167
+   "importance": 168
   },
   {
    "id": "CL-D3-SCREW-ENGAGE",
@@ -98211,6 +99315,7 @@ window.PROOF_GRAPH = {
    "value": 1.2758742865666401,
    "defined_in": "redesign/team/D3/claims.json",
    "reasons": [
+    "CALC-D3-COLLAR does not re-run",
     "uses CL-C4-D3-COLLAR-H-REQ, which is UNVERIFIED",
     "uses CL-C6-COLLAR-L-REQ, which is UNVERIFIED",
     "uses CL-C6-STRIP-EMBED-REQ, which is UNVERIFIED",
@@ -98246,6 +99351,7 @@ window.PROOF_GRAPH = {
    "value": 1.1260014225073554,
    "defined_in": "redesign/team/D3/claims.json",
    "reasons": [
+    "CALC-D3-COLLAR does not re-run",
     "uses CL-C4-D3-COLLAR-H-REQ, which is UNVERIFIED",
     "uses CL-C6-COLLAR-L-REQ, which is UNVERIFIED",
     "uses CL-C6-STRIP-EMBED-REQ, which is UNVERIFIED",
@@ -98285,6 +99391,7 @@ window.PROOF_GRAPH = {
    "value": 0.010626789793156712,
    "defined_in": "redesign/team/D3/claims.json",
    "reasons": [
+    "CALC-D3-COLLAR does not re-run",
     "uses CL-C4-D3-COLLAR-H-REQ, which is UNVERIFIED",
     "uses CL-C6-COLLAR-L-REQ, which is UNVERIFIED",
     "uses CL-C6-STRIP-EMBED-REQ, which is UNVERIFIED",
@@ -98321,6 +99428,7 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/team/D3/claims.json",
    "reasons": [
     "FAILS: margin -29.3% (0.7075 vs >= 1)",
+    "CALC-D3-COLLAR does not re-run",
     "uses CL-C4-D3-COLLAR-H-REQ, which is UNVERIFIED",
     "uses CL-C6-COLLAR-L-REQ, which is UNVERIFIED",
     "uses CL-C6-STRIP-EMBED-REQ, which is UNVERIFIED",
@@ -98517,6 +99625,7 @@ window.PROOF_GRAPH = {
    "value": 1.1287609403254972,
    "defined_in": "redesign/team/D3/claims.json",
    "reasons": [
+    "CALC-D3-ROOT does not re-run",
     "uses CL-C1-FOOT-SIDE-DESIGN-ULT, which is UNVERIFIED",
     "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
@@ -98547,6 +99656,7 @@ window.PROOF_GRAPH = {
    "value": 0.5643804701627486,
    "defined_in": "redesign/team/D3/claims.json",
    "reasons": [
+    "CALC-D3-ROOT does not re-run",
     "uses CL-C1-FOOT-SIDE-DESIGN-ULT, which is UNVERIFIED",
     "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
@@ -98577,6 +99687,7 @@ window.PROOF_GRAPH = {
    "value": 0.28827030612244897,
    "defined_in": "redesign/team/D3/claims.json",
    "reasons": [
+    "CALC-D3-ROOT does not re-run",
     "uses CL-C1-FOOT-SIDE-DESIGN-ULT, which is UNVERIFIED",
     "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
@@ -98765,7 +99876,7 @@ window.PROOF_GRAPH = {
    "procedure": "1 g scale; update mass_g and status VERIFIED; weigh one half-fin before and after its root fillets and a cured 20 cm3 cup of the fillet mix (ASM-D3-FILLET-DENSITY)",
    "defined_in": "redesign/team/D3/claims.json",
    "status": "PROPOSED",
-   "importance": 1119
+   "importance": 1149
   },
   {
    "id": "CL-D3-MASS",
@@ -98792,7 +99903,7 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/team/D3/claims.json",
    "status": "PROPOSED",
    "margin": 0.004608294930875576,
-   "importance": 1118
+   "importance": 1148
   },
   {
    "id": "CL-D3-FILLET-MASS",
@@ -98849,7 +99960,7 @@ window.PROOF_GRAPH = {
    "url": "https://www.engineeringtoolbox.com/friction-coefficients-d_778.html",
    "defined_in": "redesign/team/D5/claims.json",
    "status": "UNVERIFIED",
-   "importance": 405
+   "importance": 412
   },
   {
    "id": "SRC-D5-NEOPRENE",
@@ -98860,7 +99971,7 @@ window.PROOF_GRAPH = {
    "note": "density ~1.3 g/cm3; choose a 12 x 12 in adhesive-back sheet; part number at order time (I1)",
    "defined_in": "redesign/team/D5/claims.json",
    "status": "UNVERIFIED",
-   "importance": 541
+   "importance": 547
   },
   {
    "id": "SRC-D5-PETG",
@@ -98870,7 +99981,7 @@ window.PROOF_GRAPH = {
    "url": "https://www.prusa3d.com/page/petg_234/",
    "defined_in": "redesign/team/D5/claims.json",
    "status": "UNVERIFIED",
-   "importance": 510
+   "importance": 516
   },
   {
    "id": "SRC-D5-TPU",
@@ -98880,7 +99991,7 @@ window.PROOF_GRAPH = {
    "url": "https://www.prusa3d.com/page/flexible-materials_243/",
    "defined_in": "redesign/team/D5/claims.json",
    "status": "UNVERIFIED",
-   "importance": 504
+   "importance": 510
   },
   {
    "id": "SRC-D5-SNAP",
@@ -98902,7 +100013,7 @@ window.PROOF_GRAPH = {
    "note": "40 psi = 276 kPa at yield or 10 % deformation, through the board thickness; D-76 cartridge foam. Not yet compared with the sheet for the board the team buys",
    "defined_in": "redesign/team/D5/claims.json",
    "status": "UNVERIFIED",
-   "importance": 504
+   "importance": 510
   },
   {
    "id": "ASM-D5-XPS-PLATEAU",
@@ -98939,7 +100050,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "ASM-D5-YIELD-STRAIN",
@@ -98954,7 +100065,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 469
+   "importance": 475
   },
   {
    "id": "ASM-D5-XPS-ELASTIC-STRAIN",
@@ -98969,7 +100080,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "ASM-D5-DENSIFY",
@@ -98984,7 +100095,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 469
+   "importance": 475
   },
   {
    "id": "ASM-D5-NORMAL-SINK",
@@ -98996,15 +100107,15 @@ window.PROOF_GRAPH = {
    "unit": "m/s",
    "defined_in": "redesign/team/D5/claims.json",
    "status": "PROPOSED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "ASM-D5-PAD-MU",
    "type": "assumption",
-   "title": "Neoprene pad friction 0.7 on dry concrete/asphalt",
-   "text": "Static friction of a 40A neoprene pad on dry concrete or asphalt",
-   "basis": "Engineering ToolBox rubber/concrete 0.6-0.85; grass is lower and unmeasured. Tilt-board slide test T-D5-PAD-MU",
-   "value": 0.7,
+   "title": "Pad face friction on the landing mat, upper bound 0.40 (D-105, CDR decision B1)",
+   "text": "Static friction of the foot pad face on the landing mat is at most requirements.pad_mu_max: the 40A neoprene pad carries a low-friction face (UHMW-PE tape 0.13 mm, EST; the face material is chosen by the incline test, not by this assumption)",
+   "basis": "params requirements.pad_mu_max (D-105, CDR-SUMMARY decision B1). Bare neoprene on dry concrete is 0.6-0.85 (Engineering ToolBox), which gave the 39.5 N side load of D-65; a face value for UHMW-PE on the mat is not published (-), so T-D5-PAD-MU measures it: slide at or below 21.8 deg",
+   "value": 0.4,
    "unit": "-",
    "cites": [
     "SRC-D5-TOOLBOX-MU"
@@ -99014,7 +100125,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 405
+   "importance": 412
   },
   {
    "id": "ASM-D5-PETG-SIGMA",
@@ -99071,7 +100182,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "defined_in": "redesign/team/D5/claims.json",
    "status": "PROPOSED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "ASM-D5-FEA-SHOE-K",
@@ -99297,7 +100408,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/D5/claims.json",
    "status": "CHECKED",
-   "importance": 535
+   "importance": 541
   },
   {
    "id": "CALC-D5-CRUSH",
@@ -99402,7 +100513,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/D5/claims.json",
    "status": "CHECKED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "CALC-D5-TIPOVER",
@@ -99649,7 +100760,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/D5/claims.json",
    "status": "CHECKED",
-   "importance": 504
+   "importance": 510
   },
   {
    "id": "CALC-D5-FLANGE",
@@ -99694,7 +100805,11 @@ window.PROOF_GRAPH = {
     "allow": 40000000.0
    },
    "defined_in": "redesign/team/D5/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -99874,7 +100989,11 @@ window.PROOF_GRAPH = {
     "kd": 0.5
    },
    "defined_in": "redesign/team/D5/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 5
   },
   {
@@ -100059,7 +101178,11 @@ window.PROOF_GRAPH = {
     "k_fea": 532714.7679324894
    },
    "defined_in": "redesign/team/D5/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 11
   },
   {
@@ -100171,7 +101294,7 @@ window.PROOF_GRAPH = {
     "uses P:landing.pad.t_m, which is UNVERIFIED (cites SRC-D5-NEOPRENE, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 391
+   "importance": 397
   },
   {
    "id": "CL-D5-SLEEVE-OUT",
@@ -100474,7 +101597,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.0,
-   "importance": 391
+   "importance": 397
   },
   {
    "id": "CL-D5-CONTACT-Z",
@@ -100504,7 +101627,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.03809523809523813,
-   "importance": 513
+   "importance": 519
   },
   {
    "id": "CL-D5-TE-CLEAR-CRUSHED",
@@ -100556,6 +101679,8 @@ window.PROOF_GRAPH = {
     "uses P:landing.pad.t_m, which is UNVERIFIED (cites SRC-D5-NEOPRENE, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0005999999999999894,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -100607,6 +101732,8 @@ window.PROOF_GRAPH = {
     "uses P:landing.pad.t_m, which is UNVERIFIED (cites SRC-D5-NEOPRENE, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -100672,7 +101799,7 @@ window.PROOF_GRAPH = {
     "uses CL-C5-CART-BIAS-UPPER, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "CL-D5-F-MEAN-ERR",
@@ -100736,7 +101863,7 @@ window.PROOF_GRAPH = {
     "uses CL-C5-CART-BIAS-UPPER, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "CL-D5-F-PLATEAU-LOWER",
@@ -100764,7 +101891,7 @@ window.PROOF_GRAPH = {
     "uses CL-C5-CART-BIAS-UPPER, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "CL-D5-BIAS-UPPER",
@@ -100879,7 +102006,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.1477843667569415,
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "CL-D5-F-PEAK-UPPER",
@@ -101147,7 +102274,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.04999958837504467,
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "CL-D5-STRAIN-MARGIN",
@@ -101182,6 +102309,8 @@ window.PROOF_GRAPH = {
     "uses CL-C5-CART-BIAS-UPPER, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.1595238095238095,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -101243,7 +102372,7 @@ window.PROOF_GRAPH = {
     "uses CL-C5-CART-BIAS-UPPER, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "CL-D5-V-NO-SET",
@@ -101303,6 +102432,8 @@ window.PROOF_GRAPH = {
     "uses CL-C5-CART-BIAS-UPPER, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.01032489790025106,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -101539,7 +102670,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.017695437214544068,
-   "importance": 501
+   "importance": 507
   },
   {
    "id": "CALC-D5-KIT",
@@ -101655,6 +102786,7 @@ window.PROOF_GRAPH = {
    "value": 1.0684561116936926,
    "defined_in": "redesign/team/D5/claims.json",
    "reasons": [
+    "CALC-D5-FLANGE does not re-run",
     "uses CL-D5-F-ULT-UPPER, which is UNVERIFIED",
     "uses CL-C1-FOOT-F-ULT, which is UNVERIFIED",
     "uses CL-C1-FOOT-LEVEL-UPPER-ULT, which is UNVERIFIED",
@@ -101683,6 +102815,7 @@ window.PROOF_GRAPH = {
    "value": 0.00165664,
    "defined_in": "redesign/team/D5/claims.json",
    "reasons": [
+    "CALC-D5-BOND does not re-run",
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
     "uses P:landing.pad.t_m, which is UNVERIFIED (cites SRC-D5-NEOPRENE, which is UNVERIFIED)",
     "uses CL-D5-F-ULT-UPPER, which is UNVERIFIED",
@@ -101716,6 +102849,7 @@ window.PROOF_GRAPH = {
    "value": 1.432620286112737,
    "defined_in": "redesign/team/D5/claims.json",
    "reasons": [
+    "CALC-D5-BOND does not re-run",
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
     "uses P:landing.pad.t_m, which is UNVERIFIED (cites SRC-D5-NEOPRENE, which is UNVERIFIED)",
     "uses CL-D5-F-ULT-UPPER, which is UNVERIFIED",
@@ -101754,6 +102888,7 @@ window.PROOF_GRAPH = {
    "value": 1.2672926036051309,
    "defined_in": "redesign/team/D5/claims.json",
    "reasons": [
+    "CALC-D5-SIDE does not re-run",
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
     "uses P:landing.pad.t_m, which is UNVERIFIED (cites SRC-D5-NEOPRENE, which is UNVERIFIED)",
     "uses CL-C5-SIM3D-SIDE-LOAD, which is UNVERIFIED",
@@ -101791,6 +102926,7 @@ window.PROOF_GRAPH = {
    "value": 0.00015609110854142272,
    "defined_in": "redesign/team/D5/claims.json",
    "reasons": [
+    "CALC-D5-SIDE does not re-run",
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
     "uses P:landing.pad.t_m, which is UNVERIFIED (cites SRC-D5-NEOPRENE, which is UNVERIFIED)",
     "uses CL-C5-SIM3D-SIDE-LOAD, which is UNVERIFIED",
@@ -101824,6 +102960,7 @@ window.PROOF_GRAPH = {
    "value": 1.2262562577126819,
    "defined_in": "redesign/team/D5/claims.json",
    "reasons": [
+    "CALC-D5-SIDE does not re-run",
     "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
     "uses P:landing.pad.t_m, which is UNVERIFIED (cites SRC-D5-NEOPRENE, which is UNVERIFIED)",
     "uses CL-C5-SIM3D-SIDE-LOAD, which is UNVERIFIED",
@@ -101910,6 +103047,8 @@ window.PROOF_GRAPH = {
    "value": 0.07700000000000001,
    "defined_in": "redesign/team/D5/claims.json",
    "status": "CHECKED",
+   "margin": 0.07700000000000001,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -101945,15 +103084,15 @@ window.PROOF_GRAPH = {
   {
    "id": "CL-D5-PAD-MU",
    "type": "claim",
-   "title": "Pad friction vs the friction to stand in 8 m/s",
+   "title": "Pad face friction on the landing mat (design upper bound)",
    "unit": "-",
    "limit": {
-    "op": ">=",
-    "ref": "CL-C1-STANCE-MU-REQ",
-    "resolved": 0.678923917012357
+    "op": "<=",
+    "ref": "P:requirements.pad_mu_max",
+    "resolved": 0.4
    },
    "verifies": [
-    "R-WIND"
+    "R-LANDING-IMPACT"
    ],
    "parts": [
     "GER-004-UR",
@@ -101961,14 +103100,15 @@ window.PROOF_GRAPH = {
     "GER-004-LR",
     "GER-004-LL"
    ],
-   "how": "T-D5-PAD-MU tilt-board slide test.",
+   "how": "T-D5-PAD-MU incline test on the landing mat.",
    "assumes": [
     "ASM-D5-PAD-MU"
    ],
-   "value": 0.7,
+   "value": 0.4,
+   "note": "D-105 (CDR decision B1): the pad face caps the foot side load (requirements.foot_side_load_cap_n). It no longer holds the parked aircraft in 8 m/s (needs CL-C1-STANCE-MU-REQ 0.68): laid flat or tied when parked (flight card, H3). Until D-105 this claim was mu 0.7 >= the stance friction",
    "defined_in": "redesign/team/D5/claims.json",
    "status": "PROPOSED",
-   "margin": 0.03104336503623183,
+   "margin": 0.0,
    "importance": 1
   },
   {
@@ -102021,17 +103161,17 @@ window.PROOF_GRAPH = {
    "procedure": "Pre-crush every segment 1 mm (drill-press stop). Crush 3 type-U and 3 type-L cartridge pairs in a printed piston + shoe on the drill press over the H1 load cell, 40 mm at < 10 mm/s; record force every 2 mm. Pass (C5-R3, mean force 5-35 mm): U 38.2-40.2 N, L 34.6-36.3 N, ratio U/L 1.09-1.14, peak <= 1.05 x plateau, flat to 40 mm. Off target: change section_y_m (both types) by the force ratio, or the bore tube (ratio), and re-run feet_calc.py.",
    "defined_in": "redesign/team/D5/claims.json",
    "status": "PROPOSED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "T-D5-PAD-MU",
    "type": "test",
-   "title": "Pad slide on a tilt board",
+   "title": "Pad slide on an incline (the landing mat)",
    "verifies": [
     "CL-D5-PAD-MU"
    ],
    "state": "planned",
-   "procedure": "Foot with pad, 0.65 kg on it, on a board faced with concrete paver / asphalt shingle / the landing mat; tilt until it slides; mu = tan(angle). Pass >= 0.7 dry.",
+   "procedure": "Foot with the faced pad, 0.65 kg on it, on a board covered with the landing mat the team flies from; raise the board until the foot slides; mu = tan(angle); 5 repeats, dry, and 5 with the mat damp. Pass (D-105): every slide at or below 21.8 deg (mu <= 0.40). Fail: change the face material, or adopt the sideways piston snap (23-26 N release, CDR decision B1 fallback).",
    "defined_in": "redesign/team/D5/claims.json",
    "status": "PROPOSED",
    "importance": 1
@@ -102087,7 +103227,7 @@ window.PROOF_GRAPH = {
    "note": "retailer data, not the maker's sheet; weigh and bench the delivered servo",
    "defined_in": "redesign/team/D6/claims.json",
    "status": "UNVERIFIED",
-   "importance": 1138
+   "importance": 1168
   },
   {
    "id": "SRC-D6-SH0255-STALL",
@@ -102141,7 +103281,7 @@ window.PROOF_GRAPH = {
    "note": "weigh and bend-test one rod (T-D6-TWIST)",
    "defined_in": "redesign/team/D6/claims.json",
    "status": "UNVERIFIED",
-   "importance": 1123
+   "importance": 1153
   },
   {
    "id": "SRC-D6-CLEVIS",
@@ -102162,7 +103302,7 @@ window.PROOF_GRAPH = {
    "note": "any hobby roll-wrapped 5 x 4 tube; G unknown, see ASM-D6-TUBE-G",
    "defined_in": "redesign/team/D6/claims.json",
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "SRC-D6-PETG",
@@ -102185,7 +103325,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-D6-SERVO-THROW",
@@ -102215,7 +103355,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "ASM-D6-TUBE-G",
@@ -102230,7 +103370,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-D6-XPS-G",
@@ -102245,7 +103385,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-D6-CLEAR-MIN",
@@ -102269,7 +103409,7 @@ window.PROOF_GRAPH = {
    "unit": "deg",
    "defined_in": "redesign/team/D6/claims.json",
    "status": "PROPOSED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "ASM-D6-EFF-LOSS-MAX",
@@ -102281,7 +103421,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "defined_in": "redesign/team/D6/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-D6-TAPE-G",
@@ -102296,7 +103436,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-D6-TORQUE-AT-SERVO",
@@ -102372,7 +103512,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/D6/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CALC-D6-KIN",
@@ -102615,7 +103755,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/D6/claims.json",
    "status": "CHECKED",
-   "importance": 1128
+   "importance": 1158
   },
   {
    "id": "CALC-D6-SERVO",
@@ -102926,7 +104066,11 @@ window.PROOF_GRAPH = {
     ]
    },
    "defined_in": "redesign/team/D6/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 4
   },
   {
@@ -103276,7 +104420,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/D6/claims.json",
    "status": "CHECKED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "CALC-D6-BRIDGE",
@@ -103579,7 +104723,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/D6/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CALC-D6-ROD-TRADE",
@@ -103765,7 +104909,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/D6/claims.json",
    "status": "CHECKED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "CL-D6-H-VD-FULL",
@@ -103787,7 +104931,7 @@ window.PROOF_GRAPH = {
     "uses CL-B3-ELEVON-TRIM-CRUISE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-D6-H-VA-FULL",
@@ -103809,7 +104953,7 @@ window.PROOF_GRAPH = {
     "uses CL-B3-ELEVON-TRIM-CRUISE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-D6-H-CRUISE",
@@ -103857,7 +105001,7 @@ window.PROOF_GRAPH = {
     "uses CL-B3-ELEVON-TRIM-CRUISE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-D6-THROW-NEED",
@@ -103912,7 +105056,7 @@ window.PROOF_GRAPH = {
     "uses P:mec.station.shaft_above_skin_m, which is UNVERIFIED (cites SRC-D6-SH0255, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1117
+   "importance": 1147
   },
   {
    "id": "CL-D6-TORQUE-FACTOR",
@@ -104040,6 +105184,7 @@ window.PROOF_GRAPH = {
    "value": 20.236644734913515,
    "defined_in": "redesign/team/D6/claims.json",
    "reasons": [
+    "CALC-D6-PUSHROD does not re-run",
     "uses CL-D6-H-VD-FULL, which is UNVERIFIED",
     "uses P:mec.station.shaft_above_skin_m, which is UNVERIFIED (cites SRC-D6-SH0255, which is UNVERIFIED)",
     "uses P:mec.pushrod.d_m, which is UNVERIFIED (cites SRC-D6-CLEVIS, which is UNVERIFIED)",
@@ -104071,6 +105216,7 @@ window.PROOF_GRAPH = {
    "value": 17.910929168519583,
    "defined_in": "redesign/team/D6/claims.json",
    "reasons": [
+    "CALC-D6-PUSHROD does not re-run",
     "uses CL-D6-H-VD-FULL, which is UNVERIFIED",
     "uses P:mec.station.shaft_above_skin_m, which is UNVERIFIED (cites SRC-D6-SH0255, which is UNVERIFIED)",
     "uses P:mec.pushrod.d_m, which is UNVERIFIED (cites SRC-D6-CLEVIS, which is UNVERIFIED)",
@@ -104105,6 +105251,7 @@ window.PROOF_GRAPH = {
    "value": 1217.9334095238096,
    "defined_in": "redesign/team/D6/claims.json",
    "reasons": [
+    "CALC-D6-PUSHROD does not re-run",
     "uses CL-D6-H-VD-FULL, which is UNVERIFIED",
     "uses P:mec.station.shaft_above_skin_m, which is UNVERIFIED (cites SRC-D6-SH0255, which is UNVERIFIED)",
     "uses P:mec.pushrod.d_m, which is UNVERIFIED (cites SRC-D6-CLEVIS, which is UNVERIFIED)",
@@ -104138,6 +105285,7 @@ window.PROOF_GRAPH = {
    "value": 349.08212167725816,
    "defined_in": "redesign/team/D6/claims.json",
    "reasons": [
+    "CALC-D6-PUSHROD does not re-run",
     "uses CL-D6-H-VD-FULL, which is UNVERIFIED",
     "uses P:mec.station.shaft_above_skin_m, which is UNVERIFIED (cites SRC-D6-SH0255, which is UNVERIFIED)",
     "uses P:mec.pushrod.d_m, which is UNVERIFIED (cites SRC-D6-CLEVIS, which is UNVERIFIED)",
@@ -104452,7 +105600,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.1635460115955304,
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "CL-D6-BRIDGE-LAG-VA",
@@ -104600,7 +105748,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.21042774905165512,
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-D6-EFF-LOSS-IN",
@@ -104638,7 +105786,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.2851391524770566,
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-D6-EFF-LOSS-IN-FULL-TUBE",
@@ -104993,7 +106141,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.005479452054794599,
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "T-D6-THROW",
@@ -105020,7 +106168,7 @@ window.PROOF_GRAPH = {
    "procedure": "Servo powered at neutral; push the TE up and down with 0.5 N; dial gauge at the TE; play / elevon chord -> deg; <= 1.0 deg per panel",
    "defined_in": "redesign/team/D6/claims.json",
    "status": "PROPOSED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "T-D6-TWIST",
@@ -105034,7 +106182,7 @@ window.PROOF_GRAPH = {
    "procedure": "Servo at +25 deg; hang the VA hinge moment share as weights at the far-end TE of each panel; protractor at both ends; mean lag <= 2.5 deg (10 %)",
    "defined_in": "redesign/team/D6/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "T-D6-WEIGH",
@@ -105047,7 +106195,7 @@ window.PROOF_GRAPH = {
    "procedure": "Kitchen scale 0.1 g: servo, arm, horns, rods, tubes, frames, covers; update parts.csv",
    "defined_in": "redesign/team/D6/claims.json",
    "status": "PROPOSED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "SRC-D7-COROPLAST",
@@ -105068,7 +106216,7 @@ window.PROOF_GRAPH = {
    "note": "typical supplier cushion-curve values (EST); no curve checked yet: T-D7-CUSHION decides the density",
    "defined_in": "redesign/team/D7/claims.json",
    "status": "UNVERIFIED",
-   "importance": 267
+   "importance": 272
   },
   {
    "id": "ASM-D7-PACK-OUT",
@@ -105091,7 +106239,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 267
+   "importance": 272
   },
   {
    "id": "ASM-D7-REBOUND",
@@ -105151,7 +106299,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/D7/claims.json",
    "status": "CHECKED",
-   "importance": 267
+   "importance": 272
   },
   {
    "id": "CALC-D7-BOX-STACK",
@@ -105899,7 +107047,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.30788012882332416,
-   "importance": 267
+   "importance": 272
   },
   {
    "id": "CL-D7-DROP-N",
@@ -106177,6 +107325,8 @@ window.PROOF_GRAPH = {
     "uses CL-C1-TRANSPORT-N-ALLOW, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.015000000000000041,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -106975,6 +108125,8 @@ window.PROOF_GRAPH = {
     "uses CL-D7-TRAVEL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.016999999999999987,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -107040,7 +108192,7 @@ window.PROOF_GRAPH = {
    "procedure": "Two 60 x 50 x 120 mm PE columns under a 2.05 kg dummy on a saddle; drop 0.3 m onto concrete, phone accelerometer on the dummy (>= 400 Hz app); 1.7 and 2.2 pcf; pick the lower peak",
    "defined_in": "redesign/team/D7/claims.json",
    "status": "PROPOSED",
-   "importance": 268
+   "importance": 273
   },
   {
    "id": "T-D7-BOX-DROP",
@@ -107118,7 +108270,7 @@ window.PROOF_GRAPH = {
    "note": "full table transcribed into MAKER_1147 in propulsion.py; product page https://sunnyskyusa.com/products/sunnysky-x3108s-motors returned HTTP 429 on 2026-11-09, price $24.99 from docs/research/budget-lift.md (seen 2026-11-01)",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "CHECKED",
-   "importance": 1173
+   "importance": 1205
   },
   {
    "id": "SRC-E1-X3108S-SPEC",
@@ -107130,7 +108282,7 @@ window.PROOF_GRAPH = {
    "note": "single retailer source (search snippet 2026-11-09; page 403 to direct fetch): Rm and I0 are UNVERIFIED until measured on arrival (T-E1-MOTOR-RM)",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "UNVERIFIED",
-   "importance": 1173
+   "importance": 1205
   },
   {
    "id": "SRC-E1-X3108S-HIMODEL",
@@ -107143,7 +108295,7 @@ window.PROOF_GRAPH = {
    "note": "second independent listing for R and I0 (agrees with Robu); geekbuying swaps body and shaft length",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "CHECKED",
-   "importance": 1226
+   "importance": 1258
   },
   {
    "id": "SRC-E1-SPCNC-ADAPTER",
@@ -107156,7 +108308,7 @@ window.PROOF_GRAPH = {
    "note": "design basis for the prop stack; the adapter in the motor box is used if it measures the same",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "CHECKED",
-   "importance": 1194
+   "importance": 1224
   },
   {
    "id": "SRC-E1-APC-PER3",
@@ -107169,7 +108321,7 @@ window.PROOF_GRAPH = {
    "note": "blade-element prediction by the maker, not a measurement: calibrated against SRC-E1-X3108S-DATA",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "CHECKED",
-   "importance": 1125
+   "importance": 1157
   },
   {
    "id": "SRC-E1-APC-PAGES",
@@ -107181,7 +108333,7 @@ window.PROOF_GRAPH = {
    "where": "LP11045MR / LP11045MRP / LP11055MR / LP11055MRP: $3.83 each, 0.60 oz (17 g), 1/4 in bore, LPAR06E rings not included; 11x5.5MR hub diameter 0.65 in, hub thickness 0.35 in (re-read 2026-11-09)",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "CHECKED",
-   "importance": 1189
+   "importance": 1219
   },
   {
    "id": "SRC-E1-TEKKO32",
@@ -107209,7 +108361,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/E1/claims.json",
    "status": "PROPOSED",
-   "importance": 1173
+   "importance": 1205
   },
   {
    "id": "ASM-E1-RM",
@@ -107228,7 +108380,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1173
+   "importance": 1205
   },
   {
    "id": "ASM-E1-I0",
@@ -107247,7 +108399,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1173
+   "importance": 1205
   },
   {
    "id": "ASM-E1-ESC",
@@ -107262,7 +108414,7 @@ window.PROOF_GRAPH = {
    "unit": "ohm,W",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "PROPOSED",
-   "importance": 1173
+   "importance": 1205
   },
   {
    "id": "ASM-E1-PACK",
@@ -107280,7 +108432,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 494
+   "importance": 499
   },
   {
    "id": "ASM-E1-PACK-CELLS",
@@ -107298,7 +108450,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-E1-OCV",
@@ -107314,7 +108466,7 @@ window.PROOF_GRAPH = {
    "unit": "V",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "PROPOSED",
-   "importance": 1120
+   "importance": 1150
   },
   {
    "id": "ASM-E1-TCOPPER",
@@ -107329,7 +108481,7 @@ window.PROOF_GRAPH = {
    "unit": "1/K,degC",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "PROPOSED",
-   "importance": 1169
+   "importance": 1199
   },
   {
    "id": "ASM-E1-CAL-TRANSFER",
@@ -107342,7 +108494,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1121
+   "importance": 1151
   },
   {
    "id": "ASM-E1-RTH",
@@ -107372,7 +108524,47 @@ window.PROOF_GRAPH = {
    "unit": "A",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
+  },
+  {
+   "id": "ASM-E1-V-FALLBACK",
+   "type": "assumption",
+   "title": "Fallback cruise speed 17 m/s (D-96 c, CDR decision B6)",
+   "text": "AIRSPEED_MIN = AIRSPEED_CRUISE = 17 m/s: the planning case while the tripped stall (12.85 m/s) is the baseline, until T-B2-STALL",
+   "basis": "params/CHANGE-LOG.md D-96 (c): 17 holds to a 13.07 m/s stall; review/CDR-2026-11-13/CDR-SUMMARY.md decision B6 makes it the planning baseline. performance.cruise_ms stays 16 until A1 changes it",
+   "value": 17.0,
+   "unit": "m/s",
+   "defined_in": "redesign/team/E1/claims.json",
+   "status": "PROPOSED",
+   "importance": 6
+  },
+  {
+   "id": "ASM-E1-BOUND2",
+   "type": "assumption",
+   "title": "Second bound: the maker's top row is a true 14.8 V full-throttle point",
+   "text": "the maker's 30 A row (7 500 rpm, 1 580 gf, 11x4.7, 94 degC) was taken at 14.8 V at the ESC and 100 % duty. The station then has an effective series resistance R_eff = (14.8 - w / Kv) / I_m at that row (winding at its 94 degC, ESC and everything the simple model leaves out), used unchanged at other bus voltages and with the 11x5.5MR",
+   "basis": "CDR-AE-01 (review/CDR-2026-11-13/CDR-aero.md): the 'sagging supply' reading of the rows above 12 A has no evidence, so the rows are a second bound, not discarded data. A fixed series resistance is the simplest model that reproduces the row; the reviewer's cruder rule (full-throttle rpm proportional to bus voltage) is carried beside it as a sensitivity. T-E1-STAND with a logged bus voltage decides between the bounds",
+   "cites": [
+    "SRC-E1-X3108S-DATA"
+   ],
+   "defined_in": "redesign/team/E1/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1146
+  },
+  {
+   "id": "ASM-E1-V-STAND-LOW",
+   "type": "assumption",
+   "title": "Low stand point: bus held at 11.9 V",
+   "text": "bench supply held at 11.9 V at the ESC pads for the worst-state full-throttle run of T-E1-STAND",
+   "basis": "CDR condition B-7 / CDR-AE C1 (review/CDR-2026-11-13/CDR-SUMMARY.md): >= 1 060 gf at an 11.9 V bus; 11.9 V is CALC-E1-WORST's worst-state bus on the first bound (11.85 V at r_ext 6.7 mOhm)",
+   "value": 11.9,
+   "unit": "V",
+   "defined_in": "redesign/team/E1/claims.json",
+   "status": "PROPOSED",
+   "importance": 8
   },
   {
    "id": "ASM-E1-TRANS-MARGIN",
@@ -107409,7 +108601,7 @@ window.PROOF_GRAPH = {
    "unit": "degC,V",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-E1-STACK",
@@ -107436,7 +108628,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1188
+   "importance": 1218
   },
   {
    "id": "ASM-E1-MOUNT-SCREW",
@@ -107481,7 +108673,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "CALC-E1-CAL",
@@ -107489,7 +108681,7 @@ window.PROOF_GRAPH = {
    "title": "Fit PER3 to the maker's X3108S + 11x4.7 table",
    "script": "redesign/team/E1/propulsion.py",
    "function": "cal",
-   "equation": "kT = mean(T_meas / T_PER3(rpm)) ; kP: sum(P_bat,model(rpm) - P_meas) = 0 over rows 5-12 A ; R_th = (94 - 25) / P_loss(30 A row)",
+   "equation": "kT = mean(T_meas / T_PER3(rpm)) ; kP: sum(P_bat,model(rpm) - P_meas) = 0 over rows 5-12 A ; R_th = (94 - 25) / P_loss(30 A row) ; rows > 12 A (second bound): V_supply,min = V_m + I_m R_esc at the measured rpm, R_eff = (14.8 - w / Kv) / I_m",
    "inputs": {
     "rho": "P:env.rho_kgm3",
     "kv": "ASM-E1-KV",
@@ -107514,6 +108706,75 @@ window.PROOF_GRAPH = {
     "SRC-E1-APC-PER3"
    ],
    "outputs": {
+    "hi_rows": [
+     [
+      14,
+      6317,
+      -0.001400168071093555,
+      -0.06777205059042402,
+      21.24727864001831,
+      9.058627638330647,
+      0.36621683383281534
+     ],
+     [
+      16,
+      6530,
+      -0.003987725326856317,
+      -0.09655757974829005,
+      22.6523577123732,
+      9.430181895943385,
+      0.3330533863291197
+     ],
+     [
+      18,
+      6720,
+      -0.003186049430123239,
+      -0.11901336255770212,
+      23.94585060229846,
+      9.765468324487319,
+      0.30624651657308166
+     ],
+     [
+      20,
+      6940,
+      0.007894811028782867,
+      -0.12350381324199766,
+      25.49092020634621,
+      10.158239450920348,
+      0.2780946639628977
+     ],
+     [
+      23,
+      7140,
+      0.007041502588755799,
+      -0.16502060281697717,
+      26.939671094952462,
+      10.51954175844877,
+      0.2548905160149945
+     ],
+     [
+      26,
+      7300,
+      -0.003210415449683257,
+      -0.20878900984875948,
+      28.12897670403455,
+      10.811492874698427,
+      0.23779353793305608
+     ],
+     [
+      30,
+      7500,
+      -0.006994364860905322,
+      -0.2572065934891439,
+      29.65353327445097,
+      11.180072527680627,
+      0.21807406917806477
+     ]
+    ],
+    "T_err_hi_max": 0.007894811028782867,
+    "P_err_hi_max": 0.2572065934891439,
+    "I_m_30A_A": 29.65353327445097,
+    "r_eff_30A_ohm": 0.21807406917806477,
     "kT": 1.0390466549306472,
     "kP": 1.2395830229048008,
     "T_err_rms": 0.006046535791996946,
@@ -107535,7 +108796,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/E1/claims.json",
    "status": "CHECKED",
-   "importance": 1125
+   "importance": 1157
   },
   {
    "id": "CALC-E1-HOVER",
@@ -107660,39 +108921,39 @@ window.PROOF_GRAPH = {
    ],
    "outputs": {
     "tw_table_45": 3.4084103827459513,
-    "tw_sag_45": 2.167564125145212,
+    "tw_sag_45": 2.1410436514087423,
     "Tmax_table_45_gf": 2215.4667487848683,
-    "Tmax_sag_45_gf": 1408.9166813443878,
+    "Tmax_sag_45_gf": 1391.6783734156825,
     "I_148_45_A": 37.24562227610827,
     "I_168_45_A": 45.56843813136883,
     "P_148_45_W": 551.2352096864024,
-    "Ipack_sag_45_A": 98.25509370538428,
+    "Ipack_sag_45_A": 97.131000078048,
     "Ipack_fresh_45_A": 183.27375252547532,
-    "Vbus_sag_45_V": 11.776589523456977,
+    "Vbus_sag_45_V": 11.690045498929951,
     "rpm_148_45": 10104.897154263163,
     "loss_148_45_W": 129.19089661644358,
     "tw_table_55": 3.5825625030154566,
-    "tw_sag_55": 2.2060964749109746,
+    "tw_sag_55": 2.176950236138863,
     "Tmax_table_55_gf": 2328.665626960047,
-    "Tmax_sag_55_gf": 1433.9627086921337,
+    "Tmax_sag_55_gf": 1415.017653490261,
     "I_148_55_A": 42.42756085506846,
     "I_168_55_A": 51.56136196434739,
     "P_148_55_W": 627.9279006550132,
-    "Ipack_sag_55_A": 108.04122745514576,
+    "Ipack_sag_55_A": 106.72692429307293,
     "Ipack_fresh_55_A": 207.24544785738956,
-    "Vbus_sag_55_V": 11.515300182000487,
+    "Vbus_sag_55_V": 11.422319526544399,
     "rpm_148_55": 9657.177661041005,
     "loss_148_55_W": 164.21915841684222,
     "tw_table_12": 3.9281353574741082,
-    "tw_sag_12": 2.374261428895081,
+    "tw_sag_12": 2.3419578164220956,
     "Tmax_table_12_gf": 2553.2879823581707,
-    "Tmax_sag_12_gf": 1543.2699287818027,
+    "Tmax_sag_12_gf": 1522.272580674362,
     "I_148_12_A": 44.96644489432176,
     "I_168_12_A": 54.52117456590724,
     "P_148_12_W": 665.5033844359621,
-    "Ipack_sag_12_A": 112.70320119999886,
+    "Ipack_sag_12_A": 111.28597511708605,
     "Ipack_fresh_12_A": 219.08469826362895,
-    "Vbus_sag_12_V": 11.390825216729361,
+    "Vbus_sag_12_V": 11.295121795453337,
     "rpm_148_12": 9437.818080049521,
     "loss_148_12_W": 183.0670050448523
    },
@@ -107714,7 +108975,7 @@ window.PROOF_GRAPH = {
      0.02,
      1.0
     ],
-    "rext": 6.7,
+    "rext": 7.9,
     "ocv": [
      16.8,
      15.2,
@@ -107727,7 +108988,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/E1/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CALC-E1-LIMIT",
@@ -107766,16 +109027,26 @@ window.PROOF_GRAPH = {
     "ASM-E1-ILIM"
    ],
    "outputs": {
-    "I_motor_fresh_45_A": 24.750000000007976,
-    "tw_fresh_45": 2.532647529704855,
-    "tw_low_45": 2.167564125145212,
-    "I_motor_low_45_A": 24.31377342634607,
-    "Ipack_fresh_45_A": 100.0000000000319,
-    "I_motor_fresh_55_A": 24.7499999999861,
-    "tw_fresh_55": 2.4663413569392514,
-    "tw_low_55": 2.122201908711328,
-    "I_motor_low_55_A": 24.750000000001243,
-    "Ipack_fresh_55_A": 99.9999999999444
+    "I_motor_fresh_45_A": 24.750000000016552,
+    "tw_fresh_45": 2.5186599600873207,
+    "tw_low_45": 2.1410436514087423,
+    "I_motor_low_45_A": 24.032750019512,
+    "Ipack_fresh_45_A": 100.00000000006621,
+    "I_wind_fresh_45_A": 27.988268386165526,
+    "I_wind_low_45_A": 23.98997858632589,
+    "duty_fresh_45": 0.8830239465416067,
+    "duty_low_45": 1.0000000000000002,
+    "loss_wind_fresh_45_W": 76.08337522434931,
+    "I_motor_fresh_55_A": 24.74999999998992,
+    "tw_fresh_55": 2.4528577369577733,
+    "tw_low_55": 2.108046793030371,
+    "I_motor_low_55_A": 24.75000000000371,
+    "Ipack_fresh_55_A": 99.99999999995968,
+    "I_wind_fresh_55_A": 29.495094981240737,
+    "I_wind_low_55_A": 25.609397010642034,
+    "duty_fresh_55": 0.8379125825165374,
+    "duty_low_55": 0.9647604615243383,
+    "loss_wind_fresh_55_W": 82.83347785564703
    },
    "input_values": {
     "m": 2.6,
@@ -107795,7 +109066,7 @@ window.PROOF_GRAPH = {
      0.02,
      1.0
     ],
-    "rext": 6.7,
+    "rext": 7.9,
     "ocv": [
      16.8,
      15.2,
@@ -107809,7 +109080,80 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/E1/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
+  },
+  {
+   "id": "CALC-E1-ILIM-25",
+   "type": "calculation",
+   "title": "Pack-current limit that holds 25 A in the winding (11x5.5MR, fresh pack)",
+   "script": "redesign/team/E1/propulsion.py",
+   "function": "ilim_25",
+   "equation": "solve I_lim: I_m(largest duty with 4 I_bat + I_avn <= I_lim) = I_rating ; T/W = 4 T cos(cant) / (m_gate g) at that limit, fresh (4.20 V/cell, warm R, 25 degC winding)",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "n": "P:propulsion.n_motors",
+    "rho": "P:env.rho_kgm3",
+    "cant": "P:propulsion.stations.cant_deg",
+    "cells": "P:battery.cells_s",
+    "kP": "CL-E1-KP",
+    "kT": "CL-E1-KT",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "esc": "ASM-E1-ESC",
+    "pack": "ASM-E1-PACK-CELLS",
+    "r_cell": "ASM-E2-R-CELL",
+    "r_ext": "P:electrical.r_ext_mohm",
+    "i_rate": "P:propulsion.motor_max_a"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "cant": "deg",
+    "r_cell": "ohm",
+    "r_ext": "mOhm",
+    "i_rate": "A"
+   },
+   "assumes": [
+    "ASM-E1-CAL-TRANSFER",
+    "ASM-E2-R-CELL"
+   ],
+   "outputs": {
+    "ilim_a": 71.0688978433609,
+    "tw": 2.038886295653279,
+    "T_gf": 1335.2286843116476,
+    "I_wind_A": 24.999999990208103,
+    "I_bat_A": 17.51722446084921
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "n": 4,
+    "rho": 1.225,
+    "cant": 7.0,
+    "cells": 4,
+    "kP": 1.2395830229048008,
+    "kT": 1.0390466549306472,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "esc": [
+     0.01,
+     0.5
+    ],
+    "pack": [
+     0.02,
+     1.0
+    ],
+    "r_cell": 0.004,
+    "r_ext": 7.9,
+    "i_rate": 25.0
+   },
+   "defined_in": "redesign/team/E1/claims.json",
+   "status": "CHECKED",
+   "importance": 2
   },
   {
    "id": "CALC-E1-WORST",
@@ -107859,35 +109203,39 @@ window.PROOF_GRAPH = {
     "ASM-E2-COLD-R"
    ],
    "outputs": {
-    "r_pack_cold_ohm": 0.0307,
-    "r_pack_warm_ohm": 0.0227,
-    "tw_fresh": 2.492255493253334,
-    "T_fresh_gf": 1632.1317330542397,
-    "Vbus_fresh_V": 14.530000484039585,
-    "Ipack_fresh_A": 100.00000000006288,
-    "I_motor_fresh_A": 24.75000000001572,
+    "r_pack_cold_ohm": 0.0319,
+    "r_pack_warm_ohm": 0.0239,
+    "tw_fresh": 2.4790159518223023,
+    "T_fresh_gf": 1623.461403804623,
+    "Vbus_fresh_V": 14.410000372723712,
+    "Ipack_fresh_A": 100.00000000003354,
+    "I_motor_fresh_A": 24.750000000008384,
+    "I_wind_fresh_A": 30.00876182467904,
     "limited_fresh": 1.0,
-    "tw_res20_warm": 2.2123700429023843,
-    "T_res20_warm_gf": 1448.839961253728,
-    "Vbus_res20_warm_V": 12.650000755142496,
-    "Ipack_res20_warm_A": 99.99999999996632,
-    "I_motor_res20_warm_A": 24.74999999999158,
+    "tw_res20_warm": 2.1987130294842205,
+    "T_res20_warm_gf": 1439.896237370333,
+    "Vbus_res20_warm_V": 12.530000562488265,
+    "Ipack_res20_warm_A": 99.99999999995188,
+    "I_motor_res20_warm_A": 24.74999999998797,
+    "I_wind_res20_warm_A": 26.819857145192277,
     "limited_res20_warm": 1.0,
-    "tw_worst": 2.1203793780064757,
-    "T_worst_gf": 1388.5969870771999,
-    "Vbus_worst_V": 11.85000077455004,
-    "Ipack_worst_A": 100.00000000002066,
-    "I_motor_worst_A": 24.750000000005166,
+    "tw_worst": 2.1063833322979284,
+    "T_worst_gf": 1379.4312372573938,
+    "Vbus_worst_V": 11.730000529922247,
+    "Ipack_worst_A": 100.00000000000142,
+    "I_motor_worst_A": 24.750000000000355,
+    "I_wind_worst_A": 25.76944970062779,
     "limited_worst": 1.0,
-    "tw_land_cold": 2.059338770331658,
-    "T_land_cold_gf": 1348.6226292873673,
-    "Vbus_land_cold_V": 11.330000522510097,
-    "Ipack_land_cold_A": 100.0000000000021,
-    "I_motor_land_cold_A": 24.750000000000526,
+    "tw_land_cold": 2.0451050254725067,
+    "T_land_cold_gf": 1339.3012147182324,
+    "Vbus_land_cold_V": 11.210000343570027,
+    "Ipack_land_cold_A": 100.0000000000371,
+    "I_motor_land_cold_A": 24.750000000009276,
+    "I_wind_land_cold_A": 25.070947699044506,
     "limited_land_cold": 1.0,
-    "f_sag": 0.850787322466117,
-    "f_sag_closed_form": 0.8729080341272172,
-    "f_sag_land": 0.8262952076568376
+    "f_sag": 0.8496852675552753,
+    "f_sag_closed_form": 0.8718116888360824,
+    "f_sag_land": 0.8249664646042992
    },
    "input_values": {
     "m": 2.6,
@@ -107920,12 +109268,250 @@ window.PROOF_GRAPH = {
     ],
     "ocv20": 3.73,
     "r_cell": 0.004,
-    "r_ext": 6.7,
+    "r_ext": 7.9,
     "cold": 1.5
    },
    "defined_in": "redesign/team/E1/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
+  },
+  {
+   "id": "CALC-E1-REXT-ALLOW",
+   "type": "calculation",
+   "title": "Path resistance and 100 A voltage drop the thrust requirement allows",
+   "script": "redesign/team/E1/propulsion.py",
+   "function": "rext_allow",
+   "equation": "R_allow = min over the two bounds and the two cases of the R_ext at which T/W_worst(R_ext) = T/W_min,sag or T/W_fresh(R_ext) = T/W_min (bisection on the cases of CALC-E1-WORST and CALC-E1-BOUND2) ; drop_allow = 100 I_lim R_allow / V_nom ; thrust cost of the path = 1 - T_worst(R_ext) / T_worst(0)",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "n": "P:propulsion.n_motors",
+    "rho": "P:env.rho_kgm3",
+    "cant": "P:propulsion.stations.cant_deg",
+    "cells": "P:battery.cells_s",
+    "kP": "CL-E1-KP",
+    "kT": "CL-E1-KT",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "esc": "ASM-E1-ESC",
+    "pack": "ASM-E1-PACK-CELLS",
+    "tc": "ASM-E1-TCOPPER",
+    "ilim": "ASM-E1-ILIM",
+    "state": "ASM-E1-WORST-STATE",
+    "ocv20": "ASM-E2-OCV-20",
+    "r_cell": "ASM-E2-R-CELL",
+    "cold": "ASM-E2-COLD-R",
+    "r_ext": "P:electrical.r_ext_mohm",
+    "tw_min": "P:requirements.hover_tw_min",
+    "tw_sag": "P:requirements.hover_tw_min_sag",
+    "v_nom": "P:battery.v_nom",
+    "reff": "CL-E1-R-EFF-MAKER"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "cant": "deg",
+    "ilim": "A",
+    "ocv20": "V",
+    "r_cell": "ohm",
+    "r_ext": "mOhm",
+    "v_nom": "V",
+    "reff": "ohm"
+   },
+   "assumes": [
+    "ASM-E1-WORST-STATE",
+    "ASM-E1-CAL-TRANSFER",
+    "ASM-E1-ILIM",
+    "ASM-E2-OCV-20",
+    "ASM-E2-R-CELL",
+    "ASM-E2-COLD-R",
+    "ASM-E1-BOUND2"
+   ],
+   "outputs": {
+    "r_allow_worst_mohm": 42.51670837402343,
+    "r_allow_fresh_mohm": 47.95722961425781,
+    "r_allow_first_mohm": 42.51670837402343,
+    "r_allow_worst_b2_mohm": 17.050552368164066,
+    "r_allow_fresh_b2_mohm": 17.819595336914066,
+    "r_allow_mohm": 17.050552368164066,
+    "drop_allow_pct": 11.520643492002746,
+    "drop_allow_first_pct": 28.72750565812394,
+    "r_ext_use": 0.46332809808264536,
+    "tw_worst_r0": 2.19757274455579,
+    "thrust_cost_path": 0.041495514759987806,
+    "thrust_cost_path_b2": 0.06492407647488108
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "n": 4,
+    "rho": 1.225,
+    "cant": 7.0,
+    "cells": 4,
+    "kP": 1.2395830229048008,
+    "kT": 1.0390466549306472,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "esc": [
+     0.01,
+     0.5
+    ],
+    "pack": [
+     0.02,
+     1.0
+    ],
+    "tc": [
+     0.00393,
+     80.0
+    ],
+    "ilim": 100.0,
+    "state": [
+     80.0,
+     3.6
+    ],
+    "ocv20": 3.73,
+    "r_cell": 0.004,
+    "cold": 1.5,
+    "r_ext": 7.9,
+    "tw_min": 2.0,
+    "tw_sag": 1.6,
+    "v_nom": 14.8,
+    "reff": 0.21807406917806477
+   },
+   "defined_in": "redesign/team/E1/claims.json",
+   "status": "CHECKED",
+   "importance": 1145
+  },
+  {
+   "id": "CALC-E1-BOUND2",
+   "type": "calculation",
+   "title": "Second bound: the maker's rows above 12 A read as true 14.8 V points (11x5.5MR)",
+   "script": "redesign/team/E1/propulsion.py",
+   "function": "bound2",
+   "equation": "R_eff from the maker's 30 A row (CALC-E1-CAL) replaces R_m + R_esc ; then as CALC-E1-WORST: largest duty with 4 I_bat + I_avn <= I_lim, T/W = 4 T cos(cant) / (m_gate g) ; sensitivity (CDR-AE-01 rule): rpm_full = rpm_full(14.8 V held) x V_bus / 14.8 ; stand point: bus held at V_stand ; T_need = T/W_min,sag m / (4 cos cant)",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "n": "P:propulsion.n_motors",
+    "rho": "P:env.rho_kgm3",
+    "cant": "P:propulsion.stations.cant_deg",
+    "cells": "P:battery.cells_s",
+    "kP": "CL-E1-KP",
+    "kT": "CL-E1-KT",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "esc": "ASM-E1-ESC",
+    "pack": "ASM-E1-PACK-CELLS",
+    "tc": "ASM-E1-TCOPPER",
+    "ilim": "ASM-E1-ILIM",
+    "state": "ASM-E1-WORST-STATE",
+    "ocv20": "ASM-E2-OCV-20",
+    "r_cell": "ASM-E2-R-CELL",
+    "cold": "ASM-E2-COLD-R",
+    "r_ext": "P:electrical.r_ext_mohm",
+    "reff": "CL-E1-R-EFF-MAKER",
+    "tw_sag": "P:requirements.hover_tw_min_sag",
+    "v_stand": "ASM-E1-V-STAND-LOW"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "cant": "deg",
+    "ilim": "A",
+    "ocv20": "V",
+    "r_cell": "ohm",
+    "r_ext": "mOhm",
+    "reff": "ohm",
+    "v_stand": "V"
+   },
+   "assumes": [
+    "ASM-E1-WORST-STATE",
+    "ASM-E1-CAL-TRANSFER",
+    "ASM-E1-ILIM",
+    "ASM-E2-OCV-20",
+    "ASM-E2-R-CELL",
+    "ASM-E2-COLD-R",
+    "ASM-E1-BOUND2",
+    "ASM-E1-V-STAND-LOW"
+   ],
+   "cites": [
+    "SRC-E1-X3108S-DATA"
+   ],
+   "outputs": {
+    "rm_eff_ohm": 0.20807406917806476,
+    "tw_fresh": 2.0975994535524323,
+    "T_fresh_gf": 1373.6788385652715,
+    "Vbus_fresh_V": 14.410000709330717,
+    "rpm_fresh": 7448.918701697832,
+    "I_wind_fresh_A": 25.669390676383017,
+    "I_motor_fresh_A": 24.749999999998725,
+    "limited_fresh": 1.0,
+    "tw_worst": 1.7200108775680638,
+    "T_worst_gf": 1126.4031083798484,
+    "Vbus_worst_V": 12.159061587032166,
+    "rpm_worst": 6753.582540445368,
+    "I_wind_worst_A": 21.34632973137345,
+    "I_motor_worst_A": 21.387451325866675,
+    "limited_worst": 0.0,
+    "rpm_ref_148": 7810.371350943164,
+    "T_ref_148_gf": 1512.1643642816384,
+    "rpm_worst_prop": 6569.346164329392,
+    "Vbus_worst_prop_V": 12.448361142307807,
+    "T_worst_prop_gf": 1065.086493661446,
+    "tw_worst_prop": 1.6263807699212576,
+    "T_need_sag_gf": 1047.8102184772024,
+    "T_stand_gf": 1090.1909725221367,
+    "rpm_stand": 6645.416186745324,
+    "T_stand_prop_gf": 972.3142905927912,
+    "rpm_stand_prop": 6279.96074839349,
+    "T_stand_first_gf": 1392.4057446876511,
+    "rpm_stand_first": 7498.85649260127
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "n": 4,
+    "rho": 1.225,
+    "cant": 7.0,
+    "cells": 4,
+    "kP": 1.2395830229048008,
+    "kT": 1.0390466549306472,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "esc": [
+     0.01,
+     0.5
+    ],
+    "pack": [
+     0.02,
+     1.0
+    ],
+    "tc": [
+     0.00393,
+     80.0
+    ],
+    "ilim": 100.0,
+    "state": [
+     80.0,
+     3.6
+    ],
+    "ocv20": 3.73,
+    "r_cell": 0.004,
+    "cold": 1.5,
+    "r_ext": 7.9,
+    "reff": 0.21807406917806477,
+    "tw_sag": 1.6,
+    "v_stand": 11.9
+   },
+   "defined_in": "redesign/team/E1/claims.json",
+   "status": "CHECKED",
+   "importance": 8
   },
   {
    "id": "CALC-E1-STACK",
@@ -108030,7 +109616,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/E1/claims.json",
    "status": "CHECKED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "CALC-E1-CRUISE",
@@ -108136,7 +109722,79 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/E1/claims.json",
    "status": "CHECKED",
-   "importance": 399
+   "importance": 410
+  },
+  {
+   "id": "CALC-E1-CRUISE-V17",
+   "type": "calculation",
+   "title": "Cruise point at the 17 m/s fallback speed (D-96 c, B6), 11x5.5MR",
+   "script": "redesign/team/E1/propulsion.py",
+   "function": "cruise_v17",
+   "equation": "as CALC-E1-CRUISE at V = 17 m/s: D = q S (CD0 + k CL^2) trim ; T_m = D / 4 ; P = 4 P_bat(T_m, J) ; ratio = P(17) / P(cruise_ms)",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "S": "CL-A1-WING-AREA",
+    "cd0": "CL-B1V-CD0",
+    "k": "CL-B1V-K",
+    "trim": "ASM-B1-TRIM",
+    "V": "ASM-E1-V-FALLBACK",
+    "p16": "CL-E1-CRUISE-P-55",
+    "n": "P:propulsion.n_motors",
+    "kP": "CL-E1-KP",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "esc": "ASM-E1-ESC"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "V": "m/s",
+    "S": "m2",
+    "p16": "W"
+   },
+   "assumes": [
+    "ASM-E1-CAL-TRANSFER",
+    "ASM-B1-TRIM",
+    "ASM-E1-V-FALLBACK"
+   ],
+   "cites": [
+    "SRC-E1-APC-PER3"
+   ],
+   "outputs": {
+    "drag_N": 4.829425758829726,
+    "P_total_55_W": 283.52459987379257,
+    "rpm_55": 6338.265772660938,
+    "J_55": 0.5759745898285601,
+    "eta_tot_55": 0.2895700688287762,
+    "ratio_to_cruise": 1.1515094884133623
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "rho": 1.225,
+    "S": 0.368,
+    "cd0": 0.05802115249999999,
+    "k": 0.09571,
+    "trim": 1.02,
+    "V": 17.0,
+    "p16": 246.21994236839024,
+    "n": 4,
+    "kP": 1.2395830229048008,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "esc": [
+     0.01,
+     0.5
+    ]
+   },
+   "defined_in": "redesign/team/E1/claims.json",
+   "status": "CHECKED",
+   "importance": 6
   },
   {
    "id": "CALC-E1-CORRIDOR",
@@ -108182,10 +109840,10 @@ window.PROOF_GRAPH = {
     "ASM-B1-TRIM"
    ],
    "outputs": {
-    "margin_45": 2.0807308898259316,
+    "margin_45": 2.0551428796762155,
     "V_worst_45_ms": 2.6,
     "Treq_over_W_45": 0.9930897927445044,
-    "margin_55": 2.1208682884025767,
+    "margin_55": 2.092817212158789,
     "V_worst_55_ms": 1.5599999999999998,
     "Treq_over_W_55": 0.9991430155951609
    },
@@ -108213,7 +109871,7 @@ window.PROOF_GRAPH = {
      0.02,
      1.0
     ],
-    "rext": 6.7,
+    "rext": 7.9,
     "ocv": [
      16.8,
      15.2,
@@ -108258,7 +109916,7 @@ window.PROOF_GRAPH = {
     "ASM-E1-CAL-TRANSFER"
    ],
    "outputs": {
-    "tw_two_motors": 1.0681515285209229,
+    "tw_two_motors": 1.061100951736457,
     "yaw_torque_hover_Nm": 0.2821674177675153,
     "q_hover_per_motor_Nm": 0.14108370888375765,
     "yaw_diff30_Nm": 0.16323468025974305,
@@ -108267,7 +109925,7 @@ window.PROOF_GRAPH = {
     "P_cruise_2mot_W": 192.20764339234054
    },
    "input_values": {
-    "full": 1388.5969870771999,
+    "full": 1379.4312372573938,
     "m": 2.6,
     "g": 9.80665,
     "rho": 1.225,
@@ -108378,7 +110036,7 @@ window.PROOF_GRAPH = {
     "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1122
+   "importance": 1152
   },
   {
    "id": "CL-E1-KP",
@@ -108397,7 +110055,7 @@ window.PROOF_GRAPH = {
     "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1122
+   "importance": 1152
   },
   {
    "id": "CL-E1-CAL-PERR",
@@ -108785,7 +110443,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.06252069155732017,
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-E1-IMAX-148-55",
@@ -108841,7 +110499,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "Log on the stand with four motors on a flight pack, limiter off, 2 s.",
    "note": "wiring and disconnect design case if the limiter is not set; the bus-held 16.8 V upper bound is Ipack_fresh_55_A in CALC-E1-FULL. With the limiter the pack current is CL-E1-IPACK-LIM",
-   "value": 108.04122745514576,
+   "value": 106.72692429307293,
    "defined_in": "redesign/team/E1/claims.json",
    "reasons": [
     "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -108854,8 +110512,8 @@ window.PROOF_GRAPH = {
     "uses P:electrical.r_ext_mohm, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.09965643787378535,
-   "importance": 1115
+   "margin": 0.11060896422439229,
+   "importance": 1145
   },
   {
    "id": "CL-E1-IPACK-LIM",
@@ -108880,7 +110538,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "Bench: all four motors, props on, fresh pack, full throttle 2 s in QSTABILIZE on a restrained frame; dataflash BAT.Curr <= 100 A.",
    "note": "equals Q_M_BAT_CURR_MAX by construction: the claim states the model honours the limiter; the bench run (R-ESC-CURRENT a) is the evidence. F1's sensor error (+5 %) is in CL-F1-ILIM-WORST",
-   "value": 99.9999999999444,
+   "value": 99.99999999995968,
    "defined_in": "redesign/team/E1/claims.json",
    "reasons": [
     "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -108894,15 +110552,15 @@ window.PROOF_GRAPH = {
     "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "margin": 5.560707450058544e-13,
+   "margin": 4.0316194827028086e-13,
    "importance": 1
   },
   {
    "id": "CL-E1-ILIM-I",
    "type": "claim",
-   "title": "Per-motor current with the 100 A limiter, fresh pack, 11x5.5MR",
-   "calc": "CALC-E1-LIMIT",
-   "output": "I_motor_fresh_55_A",
+   "title": "Motor winding current at the 100 A limiter, fresh pack, 11x5.5MR (model)",
+   "calc": "CALC-E1-WORST",
+   "output": "I_wind_fresh_A",
    "unit": "A",
    "limit": {
     "op": "<=",
@@ -108916,14 +110574,51 @@ window.PROOF_GRAPH = {
     "PRP-001-UR",
     "PRP-001-UL",
     "PRP-001-LR",
-    "PRP-001-LL",
+    "PRP-001-LL"
+   ],
+   "how": "T-E1-STAND / GT-04: phase current with a clamp on one motor lead (true-RMS, or the ESC's phase-current telemetry) during the 100 A limiter run, with bell temperature; not the ESC input lead.",
+   "note": "CDR-05 (CDR-AE-02, decision B7): re-stated on the WINDING (phase) current. Until 2026-11-13 this id held the battery-side share of the limiter (24.75 A, now CL-E1-ILIM-I-BAT), which is not what the maker's 25 A / 30 s rating limits. At the limiter the ESC runs at a duty of about 0.82 (CALC-E1-LIMIT duty_fresh_55), so the winding carries about I_bat / duty. Fresh case of CALC-E1-WORST (4.20 V/cell, E2's cell resistance: the case behind the fresh T/W of 2.5); CALC-E1-LIMIT's older fresh case reads 0.5 A less (I_wind_fresh_55_A). FAILS as posed: the limiter value is decided on the stand (B7): keep 100 A only if a 30 s run holds the bell <= 80 degC, else the value of CL-E1-ILIM-FOR-25A. Second bound: CL-E1-ILIM-I-B2",
+   "value": 30.00876182467904,
+   "defined_in": "redesign/team/E1/claims.json",
+   "reasons": [
+    "FAILS: margin -20.0% (30.01 A vs <= 25 A)",
+    "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.cells_s, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses CL-E1-KP, which is UNVERIFIED",
+    "uses CL-E1-KT, which is UNVERIFIED",
+    "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-PACK-CELLS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:propulsion.motor_max_a, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-34 (CR-A2-12b): maker rating 25 A / 30 s, a winding current. D-116 (CDR-05): the 100 A limiter holds 24.8 A per ESC on the battery side (CL-E1-ILIM-I-BAT) but about 30 A in the winding (CL-E1-ILIM-I, fails; limiter value decided on the stand, CDR decision B7); thermally 10 s at full throttle (env.full_throttle_max_s))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.20035047298716166,
+   "fails": true,
+   "importance": 37
+  },
+  {
+   "id": "CL-E1-ILIM-I-BAT",
+   "type": "claim",
+   "title": "Battery-side current per ESC at the 100 A limiter, fresh pack, 11x5.5MR",
+   "calc": "CALC-E1-LIMIT",
+   "output": "I_motor_fresh_55_A",
+   "unit": "A",
+   "parts": [
     "PRP-002-UR",
     "PRP-002-UL",
     "PRP-002-LR",
     "PRP-002-LL"
    ],
-   "how": "Same bench run as CL-E1-IPACK-LIM; per-ESC current from the ESC telemetry or a clamp meter <= 25 A.",
-   "value": 24.7499999999861,
+   "how": "Same bench run as CL-E1-IPACK-LIM; clamp meter on one ESC input lead.",
+   "note": "(100 A - 1 A avionics) / 4: what the ESC input lead, the XT30U and E3's bus-power input see. This is the number CL-E1-ILIM-I carried before CDR-05; it is not compared with the motor rating",
+   "value": 24.74999999998992,
    "defined_in": "redesign/team/E1/claims.json",
    "reasons": [
     "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -108933,12 +110628,224 @@ window.PROOF_GRAPH = {
     "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E1-PACK-CELLS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses P:electrical.r_ext_mohm, which is UNVERIFIED",
-    "uses P:propulsion.motor_max_a, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-34 (CR-A2-12b): maker rating 25 A / 30 s; the 100 A limiter holds 24.8 A per motor (CL-E1-ILIM-I); thermally 10 s at full throttle (env.full_throttle_max_s))"
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.010000000000556071,
-   "importance": 1115
+   "importance": 1145
+  },
+  {
+   "id": "CL-E1-ILIM-I-WORST",
+   "type": "claim",
+   "title": "Motor winding current at the 100 A limiter, worst pack state, hot winding (model)",
+   "calc": "CALC-E1-WORST",
+   "output": "I_wind_worst_A",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "ref": "P:propulsion.motor_max_a",
+    "resolved": 25.0
+   },
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "As CL-E1-ILIM-I on the worst-state pack of T-E1-STAND.",
+   "note": "20 % charge, 10 degC pack, 80 degC winding: the duty is close to 1, so the winding current is close to the battery share; information beside CL-E1-ILIM-I",
+   "value": 25.76944970062779,
+   "defined_in": "redesign/team/E1/claims.json",
+   "reasons": [
+    "FAILS: margin -3.1% (25.77 A vs <= 25 A)",
+    "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.cells_s, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses CL-E1-KP, which is UNVERIFIED",
+    "uses CL-E1-KT, which is UNVERIFIED",
+    "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-PACK-CELLS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:propulsion.motor_max_a, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-34 (CR-A2-12b): maker rating 25 A / 30 s, a winding current. D-116 (CDR-05): the 100 A limiter holds 24.8 A per ESC on the battery side (CL-E1-ILIM-I-BAT) but about 30 A in the winding (CL-E1-ILIM-I, fails; limiter value decided on the stand, CDR decision B7); thermally 10 s at full throttle (env.full_throttle_max_s))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.03077798802511154,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CL-E1-R-EFF-MAKER",
+   "type": "claim",
+   "title": "Series resistance that puts the maker's 30 A row at 14.8 V (second bound)",
+   "calc": "CALC-E1-CAL",
+   "output": "r_eff_30A_ohm",
+   "unit": "ohm",
+   "how": "T-E1-STAND at a held, logged 14.8 V: full-throttle rpm 7 500 (this bound) or above 9 000 (first bound).",
+   "assumes": [
+    "ASM-E1-BOUND2"
+   ],
+   "note": "first bound: R_m + R_esc = 0.096 ohm at 25 degC and the supply sagged to CL-E1-MAKER-SUPPLY; second bound: this value at a true 14.8 V. CALC-E1-CAL hi_rows lists every row above 12 A: [A, rpm, thrust error, power error, model winding A, supply needed V, R_eff ohm]",
+   "value": 0.21807406917806477,
+   "defined_in": "redesign/team/E1/claims.json",
+   "reasons": [
+    "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-BOUND2, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1146
+  },
+  {
+   "id": "CL-E1-CAL-TERR-HI",
+   "type": "claim",
+   "title": "Model thrust error on the maker's rows above 12 A (at the measured rpm)",
+   "calc": "CALC-E1-CAL",
+   "output": "T_err_hi_max",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.05,
+    "resolved": 0.05
+   },
+   "how": "Max |T_model / T_maker - 1| over the 7 rows 14-30 A; re-run the script.",
+   "note": "the prop model holds on the 7 rows that were not fitted; what the two bounds dispute is the rpm reached at a given bus voltage, not thrust at a given rpm",
+   "value": 0.007894811028782867,
+   "defined_in": "redesign/team/E1/claims.json",
+   "reasons": [
+    "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.8421037794243427,
+   "importance": 1
+  },
+  {
+   "id": "CL-E1-ILIM-I-B2",
+   "type": "claim",
+   "title": "Motor winding current at the 100 A limiter, fresh pack, second bound",
+   "calc": "CALC-E1-BOUND2",
+   "output": "I_wind_fresh_A",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "ref": "P:propulsion.motor_max_a",
+    "resolved": 25.0
+   },
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "As CL-E1-ILIM-I.",
+   "note": "on the maker-row reading the limiter binds at a duty near 1, so the winding current is close to the battery share: the two bounds bracket the phase current the stand will read",
+   "value": 25.669390676383017,
+   "defined_in": "redesign/team/E1/claims.json",
+   "reasons": [
+    "FAILS: margin -2.7% (25.67 A vs <= 25 A)",
+    "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-BOUND2, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.cells_s, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses CL-E1-KP, which is UNVERIFIED",
+    "uses CL-E1-KT, which is UNVERIFIED",
+    "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-PACK-CELLS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)",
+    "uses CL-E1-R-EFF-MAKER, which is UNVERIFIED",
+    "uses P:propulsion.motor_max_a, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-34 (CR-A2-12b): maker rating 25 A / 30 s, a winding current. D-116 (CDR-05): the 100 A limiter holds 24.8 A per ESC on the battery side (CL-E1-ILIM-I-BAT) but about 30 A in the winding (CL-E1-ILIM-I, fails; limiter value decided on the stand, CDR decision B7); thermally 10 s at full throttle (env.full_throttle_max_s))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.026775627055320682,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CL-E1-ILIM-FOR-25A",
+   "type": "claim",
+   "title": "Pack-current limit that holds 25 A in the winding, fresh pack (model)",
+   "calc": "CALC-E1-ILIM-25",
+   "output": "ilim_a",
+   "unit": "A",
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "Stand: lower the limiter until the phase-current clamp reads 25 A on a fresh pack.",
+   "note": "option (b) of CDR-AE-02 / decision B7: Q_M_BAT_CURR_MAX at about this value if the 30 s stand run at 100 A takes the bell above 80 degC. F4 owns the parameter; not applied here",
+   "value": 71.0688978433609,
+   "defined_in": "redesign/team/E1/claims.json",
+   "reasons": [
+    "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.cells_s, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses CL-E1-KP, which is UNVERIFIED",
+    "uses CL-E1-KT, which is UNVERIFIED",
+    "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-PACK-CELLS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)",
+    "uses P:propulsion.motor_max_a, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-34 (CR-A2-12b): maker rating 25 A / 30 s, a winding current. D-116 (CDR-05): the 100 A limiter holds 24.8 A per ESC on the battery side (CL-E1-ILIM-I-BAT) but about 30 A in the winding (CL-E1-ILIM-I, fails; limiter value decided on the stand, CDR decision B7); thermally 10 s at full throttle (env.full_throttle_max_s))"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "CL-E1-ILIM-25A-TW",
+   "type": "claim",
+   "title": "Fresh-pack T/W with the winding held to 25 A (model)",
+   "calc": "CALC-E1-ILIM-25",
+   "output": "tw",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.hover_tw_min",
+    "resolved": 2.0
+   },
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "Thrust stand at the limiter value of CL-E1-ILIM-FOR-25A.",
+   "note": "what the lower limiter of CL-E1-ILIM-FOR-25A leaves; cant included",
+   "value": 2.038886295653279,
+   "defined_in": "redesign/team/E1/claims.json",
+   "reasons": [
+    "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.cells_s, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses CL-E1-KP, which is UNVERIFIED",
+    "uses CL-E1-KT, which is UNVERIFIED",
+    "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-PACK-CELLS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)",
+    "uses P:propulsion.motor_max_a, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-34 (CR-A2-12b): maker rating 25 A / 30 s, a winding current. D-116 (CDR-05): the 100 A limiter holds 24.8 A per ESC on the battery side (CL-E1-ILIM-I-BAT) but about 30 A in the winding (CL-E1-ILIM-I, fails; limiter value decided on the stand, CDR decision B7); thermally 10 s at full throttle (env.full_throttle_max_s))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.019443147826639473,
+   "importance": 1
   },
   {
    "id": "CL-E1-ILIM-TW-FRESH",
@@ -108962,7 +110869,7 @@ window.PROOF_GRAPH = {
     "PRP-001-LL"
    ],
    "how": "Thrust stand on a fresh pack with the duty limit found on the bench.",
-   "value": 2.4663413569392514,
+   "value": 2.4528577369577733,
    "defined_in": "redesign/team/E1/claims.json",
    "reasons": [
     "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -108975,8 +110882,8 @@ window.PROOF_GRAPH = {
     "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.2331706784696257,
-   "importance": 1115
+   "margin": 0.22642886847888666,
+   "importance": 1145
   },
   {
    "id": "CL-E1-CRUISE-DRAG",
@@ -109024,7 +110931,7 @@ window.PROOF_GRAPH = {
     "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 383
+   "importance": 388
   },
   {
    "id": "CL-E1-CRUISE-P-45",
@@ -109098,7 +111005,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.026798646765255986,
-   "importance": 4
+   "importance": 10
   },
   {
    "id": "CL-E1-CRUISE-P-55-LO",
@@ -109206,7 +111113,7 @@ window.PROOF_GRAPH = {
     "PRP-001-LL"
    ],
    "how": "B1 replaces the wing model with AVL/XFOIL post-stall data; flight log of throttle during the first transition.",
-   "value": 2.0807308898259316,
+   "value": 2.0551428796762155,
    "defined_in": "redesign/team/E1/claims.json",
    "reasons": [
     "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -109222,7 +111129,7 @@ window.PROOF_GRAPH = {
     "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.6005622229430242,
+   "margin": 0.5808791382124734,
    "importance": 1
   },
   {
@@ -109247,7 +111154,7 @@ window.PROOF_GRAPH = {
     "PRP-001-LL"
    ],
    "how": "As CL-E1-CORRIDOR-45.",
-   "value": 2.1208682884025767,
+   "value": 2.092817212158789,
    "defined_in": "redesign/team/E1/claims.json",
    "reasons": [
     "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -109263,7 +111170,7 @@ window.PROOF_GRAPH = {
     "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.631437144925059,
+   "margin": 0.6098593939682991,
    "importance": 1
   },
   {
@@ -109281,7 +111188,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "SITL motor-failure injection (F4); no flight test.",
    "note": "lift is there, yaw is not: both remaining props turn the same way",
-   "value": 1.0681515285209229,
+   "value": 1.061100951736457,
    "defined_in": "redesign/team/E1/claims.json",
    "reasons": [
     "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -109374,7 +111281,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "Thrust stand on a flight pack discharged to 3.73 V/cell rest and cold-soaked to 10 degC, motor warmed by a 2 min run at hover thrust, full throttle with the 25 A per-motor duty cap: thrust x 4 x cos(cant) / 2.6 kg (T-E1-STAND).",
    "note": "replaces CL-E1-TW-SAG, CL-E1-TW-SAG-55, CL-E1-ILIM-TW-LOW and, by agreement requested in CR-E1-15, CL-E2-TW-SAG-WORST: 11x5.5MR, 20 % charge, 10 degC pack, 80 degC winding, 100 A limiter",
-   "value": 2.1203793780064757,
+   "value": 2.1063833322979284,
    "defined_in": "redesign/team/E1/claims.json",
    "reasons": [
     "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -109393,7 +111300,7 @@ window.PROOF_GRAPH = {
     "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.32523711125404725,
+   "margin": 0.3164895826862052,
    "importance": 1
   },
   {
@@ -109404,8 +111311,8 @@ window.PROOF_GRAPH = {
    "output": "f_sag",
    "unit": "-",
    "how": "Ratio of the two T-E1-STAND full-throttle runs: worst-state pack / fresh pack.",
-   "note": "rev 8 (D-67): on F1's r_ext 6.7 mOhm (CL-F1-R-EXT 6.69) 0.8508, unchanged to three places from 0.851 at 6.5 (the limiter holds 100 A in both states, so 0.2 mOhm moves V_bus by 20 mV). To be applied to thrust_max_per_motor_kg (fresh pack, limiter); E2's 0.76 applied (V/14.8)^2 to that already current-limited thrust, which double-counts. Bounded above by CL-E1-SAG-XCHECK",
-   "value": 0.850787322466117,
+   "note": "CDR-05 (2026-11-13): on r_ext 7.9 mOhm (F1's routed leads, CL-F1-R-EXT 7.92); was 0.8508 at 6.7 (D-67) and 0.851 at 6.5 (the limiter holds 100 A in both states, so 1 mOhm moves V_bus by 0.1 V). To be applied to thrust_max_per_motor_kg (fresh pack, limiter); E2's 0.76 applied (V/14.8)^2 to that already current-limited thrust, which double-counts. Bounded above by CL-E1-SAG-XCHECK",
+   "value": 0.8496852675552753,
    "defined_in": "redesign/team/E1/claims.json",
    "reasons": [
     "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -109424,7 +111331,7 @@ window.PROOF_GRAPH = {
     "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-E1-SAG-XCHECK",
@@ -109435,7 +111342,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "how": "Hand calculation from the E2 pack assumptions and F1's r_ext; the T-E1-STAND ratio settles both.",
    "note": "independent of the prop tables and the motor model: same pack current in both states, so P ~ V_bus and T ~ P^(2/3) for a static prop; ignores the hot winding, so it sits just above CL-E1-SAG-FACTOR",
-   "value": 0.8729080341272172,
+   "value": 0.8718116888360824,
    "defined_in": "redesign/team/E1/claims.json",
    "reasons": [
     "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -109470,7 +111377,7 @@ window.PROOF_GRAPH = {
     "PRP-001-LL"
    ],
    "how": "As CL-E1-TW-WORST, per motor.",
-   "value": 1388.5969870771999,
+   "value": 1379.4312372573938,
    "defined_in": "redesign/team/E1/claims.json",
    "reasons": [
     "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -109510,7 +111417,7 @@ window.PROOF_GRAPH = {
     "PRP-001-LL"
    ],
    "how": "Same stand run on a pack at 3.60 V/cell rest; 1.3 is the emergency-landing floor, not R-HOVER-TW.",
-   "value": 2.059338770331658,
+   "value": 2.0451050254725067,
    "defined_in": "redesign/team/E1/claims.json",
    "reasons": [
     "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -109529,8 +111436,488 @@ window.PROOF_GRAPH = {
     "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.5841067464089675,
+   "margin": 0.5731577119019282,
    "importance": 1
+  },
+  {
+   "id": "CL-E1-TW-WORST-B2",
+   "type": "claim",
+   "title": "Hover T/W at the gate, worst pack state, second bound (maker rows as 14.8 V points)",
+   "calc": "CALC-E1-BOUND2",
+   "output": "tw_worst",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.hover_tw_min_sag",
+    "resolved": 1.6
+   },
+   "verifies": [
+    "R-HOVER-TW"
+   ],
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "T-E1-STAND at a logged 11.9 V bus: >= 1 060 gf per motor (CDR condition B-7).",
+   "assumes": [
+    "ASM-E1-BOUND2"
+   ],
+   "note": "CDR-05 (CDR-AE-01): the same case as CL-E1-TW-WORST with the series resistance CL-E1-R-EFF-MAKER. The limiter no longer binds at the worst state (CALC-E1-BOUND2 limited_worst = 0): the motor is voltage-limited. R-HOVER-TW has to hold on both bounds until T-E1-STAND picks one",
+   "value": 1.7200108775680638,
+   "defined_in": "redesign/team/E1/claims.json",
+   "reasons": [
+    "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-BOUND2, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.cells_s, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses CL-E1-KP, which is UNVERIFIED",
+    "uses CL-E1-KT, which is UNVERIFIED",
+    "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-PACK-CELLS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)",
+    "uses CL-E1-R-EFF-MAKER, which is UNVERIFIED",
+    "uses ASM-E1-BOUND2, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.07500679848003983,
+   "importance": 1
+  },
+  {
+   "id": "CL-E1-TW-FRESH-B2",
+   "type": "claim",
+   "title": "Hover T/W at the gate, fresh pack, 100 A limiter, second bound",
+   "calc": "CALC-E1-BOUND2",
+   "output": "tw_fresh",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.hover_tw_min",
+    "resolved": 2.0
+   },
+   "verifies": [
+    "R-HOVER-TW"
+   ],
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "T-E1-STAND on a fresh pack at the limiter: >= 1 330 gf per motor (CDR condition B-7).",
+   "assumes": [
+    "ASM-E1-BOUND2"
+   ],
+   "value": 2.0975994535524323,
+   "defined_in": "redesign/team/E1/claims.json",
+   "reasons": [
+    "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-BOUND2, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.cells_s, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses CL-E1-KP, which is UNVERIFIED",
+    "uses CL-E1-KT, which is UNVERIFIED",
+    "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-PACK-CELLS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)",
+    "uses CL-E1-R-EFF-MAKER, which is UNVERIFIED",
+    "uses ASM-E1-BOUND2, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.048799726776216135,
+   "importance": 1
+  },
+  {
+   "id": "CL-E1-TMAX-WORST-B2",
+   "type": "claim",
+   "title": "Full thrust per motor, worst pack state, second bound",
+   "calc": "CALC-E1-BOUND2",
+   "output": "T_worst_gf",
+   "unit": "gf",
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "As CL-E1-TW-WORST-B2, per motor.",
+   "value": 1126.4031083798484,
+   "defined_in": "redesign/team/E1/claims.json",
+   "reasons": [
+    "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-BOUND2, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.cells_s, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses CL-E1-KP, which is UNVERIFIED",
+    "uses CL-E1-KT, which is UNVERIFIED",
+    "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-PACK-CELLS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)",
+    "uses CL-E1-R-EFF-MAKER, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "CL-E1-TW-WORST-B2-PROP",
+   "type": "claim",
+   "title": "Worst-state T/W if full-throttle rpm goes with bus voltage (sensitivity)",
+   "calc": "CALC-E1-BOUND2",
+   "output": "tw_worst_prop",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.hover_tw_min_sag",
+    "resolved": 1.6
+   },
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "T-E1-STAND on the worst-state flight pack.",
+   "assumes": [
+    "ASM-E1-BOUND2"
+   ],
+   "note": "the rule CDR-AE-01 used: rpm = rpm(14.8 V) x V_bus / 14.8, with no credit for the smaller resistive drop at the lower current. Here the bus is solved with the pack model at the current this rpm draws (CALC-E1-BOUND2 Vbus_worst_prop_V, above 11.9 V because the limiter does not bind), and the reference rpm is this prop's own (rpm_ref_148). The reviewer's 1.44 (REVIEWER EST) held the bus at 11.9 V and took 7 500 rpm + 3 %: that case is CL-E1-T-STAND-B2-PROP",
+   "value": 1.6263807699212576,
+   "defined_in": "redesign/team/E1/claims.json",
+   "reasons": [
+    "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-BOUND2, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.cells_s, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses CL-E1-KP, which is UNVERIFIED",
+    "uses CL-E1-KT, which is UNVERIFIED",
+    "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-PACK-CELLS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)",
+    "uses CL-E1-R-EFF-MAKER, which is UNVERIFIED",
+    "uses ASM-E1-BOUND2, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.01648798120078593,
+   "importance": 1
+  },
+  {
+   "id": "CL-E1-T-NEED-SAG",
+   "type": "claim",
+   "title": "Thrust per motor that gives the worst-state T/W of R-HOVER-TW",
+   "calc": "CALC-E1-BOUND2",
+   "output": "T_need_sag_gf",
+   "unit": "gf",
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "Arithmetic.",
+   "note": "requirements.hover_tw_min_sag x gate mass / (4 cos cant). The board's stand line is 1 060 gf (CDR condition B-7), 1 % above this",
+   "value": 1047.8102184772024,
+   "defined_in": "redesign/team/E1/claims.json",
+   "reasons": [
+    "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-BOUND2, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.cells_s, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses CL-E1-KP, which is UNVERIFIED",
+    "uses CL-E1-KT, which is UNVERIFIED",
+    "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-PACK-CELLS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)",
+    "uses CL-E1-R-EFF-MAKER, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 3
+  },
+  {
+   "id": "CL-E1-T-STAND-B2",
+   "type": "claim",
+   "title": "Full thrust per motor at a held 11.9 V bus, second bound",
+   "calc": "CALC-E1-BOUND2",
+   "output": "T_stand_gf",
+   "unit": "gf",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-E1-T-NEED-SAG",
+    "resolved": 1047.8102184772024
+   },
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "T-E1-STAND: full throttle, bench supply held at 11.9 V at the ESC pads, bus voltage logged.",
+   "assumes": [
+    "ASM-E1-BOUND2"
+   ],
+   "note": "the stand point of CDR condition B-7 predicted on the maker-row reading with a fixed series resistance; the first bound predicts CALC-E1-BOUND2 T_stand_first_gf",
+   "value": 1090.1909725221367,
+   "defined_in": "redesign/team/E1/claims.json",
+   "reasons": [
+    "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-BOUND2, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.cells_s, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses CL-E1-KP, which is UNVERIFIED",
+    "uses CL-E1-KT, which is UNVERIFIED",
+    "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-PACK-CELLS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)",
+    "uses CL-E1-R-EFF-MAKER, which is UNVERIFIED",
+    "uses ASM-E1-BOUND2, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-T-NEED-SAG, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.04044697531822781,
+   "importance": 1
+  },
+  {
+   "id": "CL-E1-T-STAND-B2-PROP",
+   "type": "claim",
+   "title": "Full thrust per motor at a held 11.9 V bus if rpm goes with bus voltage",
+   "calc": "CALC-E1-BOUND2",
+   "output": "T_stand_prop_gf",
+   "unit": "gf",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-E1-T-NEED-SAG",
+    "resolved": 1047.8102184772024
+   },
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "T-E1-STAND as CL-E1-T-STAND-B2: this is the reading that fails the >= 1 060 gf line.",
+   "assumes": [
+    "ASM-E1-BOUND2"
+   ],
+   "note": "CDR-AE-01's own case (REVIEWER EST 946 gf, T/W 1.44, from 7 500 rpm x 11.9 / 14.8 + 3 %); here the reference is this prop's full-throttle rpm on R_eff at 14.8 V (rpm_ref_148). The most pessimistic reading of the maker's table that E1 can build, kept visible because nothing but the stand rules it out. If the stand reads this, the gate mass, the prop or the pack changes before 5 motors are bought (CDR-04)",
+   "value": 972.3142905927912,
+   "defined_in": "redesign/team/E1/claims.json",
+   "reasons": [
+    "FAILS: margin -7.2% (972.3 gf vs >= 1048 gf)",
+    "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-BOUND2, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.cells_s, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses CL-E1-KP, which is UNVERIFIED",
+    "uses CL-E1-KT, which is UNVERIFIED",
+    "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-PACK-CELLS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)",
+    "uses CL-E1-R-EFF-MAKER, which is UNVERIFIED",
+    "uses ASM-E1-BOUND2, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-T-NEED-SAG, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.07205114681371455,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CL-E1-REXT-ALLOW",
+   "type": "claim",
+   "title": "Largest pack-to-ESC path resistance that keeps R-HOVER-TW (model)",
+   "calc": "CALC-E1-REXT-ALLOW",
+   "output": "r_allow_mohm",
+   "unit": "mOhm",
+   "limit": {
+    "op": ">=",
+    "ref": "P:electrical.r_ext_mohm",
+    "resolved": 7.9
+   },
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "Re-run after T-E1-STAND; T-F1-DROP measures the path.",
+   "note": "the smallest of four: worst state T/W = requirements.hover_tw_min_sag and fresh T/W = requirements.hover_tw_min, each on the first bound (CALC-E1-WORST's cases) and on the second (CALC-E1-BOUND2's). The second bound governs (r_allow_worst_b2_mohm, r_allow_fresh_b2_mohm); on the first bound alone the value is r_allow_first_mohm. T-E1-STAND picks the bound and re-bases this",
+   "value": 17.050552368164066,
+   "defined_in": "redesign/team/E1/claims.json",
+   "reasons": [
+    "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-BOUND2, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.cells_s, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses CL-E1-KP, which is UNVERIFIED",
+    "uses CL-E1-KT, which is UNVERIFIED",
+    "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-PACK-CELLS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)",
+    "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses CL-E1-R-EFF-MAKER, which is UNVERIFIED",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 1.1582977681220337,
+   "importance": 1
+  },
+  {
+   "id": "CL-E1-DROP-ALLOW",
+   "type": "claim",
+   "title": "Largest 100 A voltage drop, pack to ESC, that keeps R-HOVER-TW (limit for F1)",
+   "calc": "CALC-E1-REXT-ALLOW",
+   "output": "drop_allow_pct",
+   "unit": "%",
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "Re-run after T-E1-STAND.",
+   "note": "= 100 x 100 A x CL-E1-REXT-ALLOW / battery.v_nom. F1 reads it as the limit of CL-F1-DROP-PEAK (CDR-03 / CDR-EL-04: the 5 % guideline had been removed, not met). The limiter keeps the pack current, so thrust falls slowly with path resistance (CL-E1-PATH-THRUST-COST) and this limit is above the 5 % guideline (WB-11), which stays F1's design target. First bound alone: drop_allow_first_pct",
+   "value": 11.520643492002746,
+   "defined_in": "redesign/team/E1/claims.json",
+   "reasons": [
+    "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-BOUND2, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.cells_s, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses CL-E1-KP, which is UNVERIFIED",
+    "uses CL-E1-KT, which is UNVERIFIED",
+    "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-PACK-CELLS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED",
+    "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses CL-E1-R-EFF-MAKER, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1145
+  },
+  {
+   "id": "CL-E1-PATH-THRUST-COST",
+   "type": "claim",
+   "title": "Worst-state thrust lost to the pack-to-ESC path resistance (model)",
+   "calc": "CALC-E1-REXT-ALLOW",
+   "output": "thrust_cost_path",
+   "unit": "-",
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "1 - T_worst(r_ext) / T_worst(0); CDR-EL-04 estimated the 6.7 -> 7.9 mOhm step at -1.6 % (REVIEWER EST, T ~ V^2).",
+   "value": 0.041495514759987806,
+   "defined_in": "redesign/team/E1/claims.json",
+   "reasons": [
+    "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-BOUND2, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.cells_s, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses CL-E1-KP, which is UNVERIFIED",
+    "uses CL-E1-KT, which is UNVERIFIED",
+    "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-PACK-CELLS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)",
+    "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses CL-E1-R-EFF-MAKER, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "CL-E1-CRUISE-P-55-V17",
+   "type": "claim",
+   "title": "Cruise electrical power at the 17 m/s fallback, 11x5.5MR (propulsion only)",
+   "calc": "CALC-E1-CRUISE-V17",
+   "output": "P_total_55_W",
+   "unit": "W",
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL",
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Log pack power in steady 17 m/s FBWA legs, both directions; subtract the avionics draw.",
+   "note": "D-96 (c) quoted 283 W from the CR-E1-51 sweep; this is the same point as a claim, so E2 can carry the fallback to BATT_LOW (CL-E2-CRUISE-TO-LOW-PESS-V17, CDR-05 / CDR-AE-09)",
+   "value": 283.52459987379257,
+   "defined_in": "redesign/team/E1/claims.json",
+   "reasons": [
+    "uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-B1V-CD0, which is UNVERIFIED",
+    "uses CL-B1V-K, which is UNVERIFIED",
+    "uses CL-E1-CRUISE-P-55, which is UNVERIFIED",
+    "uses CL-E1-KP, which is UNVERIFIED",
+    "uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 6
   },
   {
    "id": "CL-E1-STACK-PROP-PLANE",
@@ -109715,6 +112102,8 @@ window.PROOF_GRAPH = {
     "uses P:fin_detail.mount.prop_stack_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/fins/params.json: R4: mount face to prop mid-plane along the motor axis (E1 paper stack; frozen on the measured motor, T-E1-MOTOR-RM); its x projection is stack cos(cant))"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.00011,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -109747,6 +112136,8 @@ window.PROOF_GRAPH = {
     "uses P:fin_detail.mount.prop_stack_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/fins/params.json: R4: mount face to prop mid-plane along the motor axis (E1 paper stack; frozen on the measured motor, T-E1-MOTOR-RM); its x projection is stack cos(cant))"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -109843,7 +112234,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.0,
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "ASM-E1-BLADE-HALF",
@@ -109858,7 +112249,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1177
+   "importance": 1207
   },
   {
    "id": "ASM-E1-ADAPTER-SCREW",
@@ -110158,7 +112549,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1180
+   "importance": 1210
   },
   {
    "id": "CALC-E1-TIP-GAP",
@@ -110248,7 +112639,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/E1/claims.json",
    "status": "CHECKED",
-   "importance": 1177
+   "importance": 1207
   },
   {
    "id": "CL-E1-TIP-GAP-TUBE",
@@ -110358,7 +112749,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.043852815748751106,
-   "importance": 1175
+   "importance": 1205
   },
   {
    "id": "CL-E1-CAD-HUB-X",
@@ -110752,6 +113143,8 @@ window.PROOF_GRAPH = {
     "uses ASM-E1-ADAPTER-FIT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0005,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -110886,13 +113279,21 @@ window.PROOF_GRAPH = {
     "CL-E1-HOVER-GW",
     "CL-E1-KT",
     "CL-E1-KP",
-    "CL-E1-MAKER-SUPPLY"
+    "CL-E1-MAKER-SUPPLY",
+    "CL-E1-ILIM-I",
+    "CL-E1-ILIM-I-B2",
+    "CL-E1-TW-WORST-B2",
+    "CL-E1-TW-FRESH-B2",
+    "CL-E1-TW-WORST-B2-PROP",
+    "CL-E1-R-EFF-MAKER",
+    "CL-E1-T-STAND-B2",
+    "CL-E1-T-STAND-B2-PROP"
    ],
    "state": "planned",
-   "procedure": "H1 stand (20 kg cell + HX711), X3108S + LANRC 45 A, 11x4.5MR then 11x5.5MR; held 14.8 V bench supply (>= 40 A) and then a flight pack; 10 % throttle steps to 100 %, 3 s each; log gf, A, V, rpm (optical tach or ESC telemetry), can temperature; one 60 s run at 689 gf for g/W; ten 10 -> 100 % throttle punches in < 50 ms with no desync",
+   "procedure": "H1 stand (20 kg cell + HX711), X3108S + LANRC 45 A, 11x4.5MR then 11x5.5MR; held 14.8 V bench supply (>= 40 A) and then a flight pack; 10 % throttle steps to 100 %, 3 s each; log gf, A, V, rpm (optical tach or ESC telemetry), can temperature; one 60 s run at 689 gf for g/W; ten 10 -> 100 % throttle punches in < 50 ms with no desync. CDR-04 / CDR-05 additions: bus voltage logged at the ESC pads on every run; full throttle at a held 14.6 V and 11.9 V bus (pass >= 1 330 gf and >= 1 060 gf); phase current on one motor lead (clamp or ESC telemetry) at the limiter duty; one 30 s run at the limiter with the bell temperature (pass <= 80 degC, else the limiter drops to CL-E1-ILIM-FOR-25A)",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "PROPOSED",
-   "importance": 1124
+   "importance": 1155
   },
   {
    "id": "T-E1-MOTOR-RM",
@@ -110914,7 +113315,7 @@ window.PROOF_GRAPH = {
    "procedure": "Weigh motor, stripped ESC, prop, adapter set (0.1 g); calipers: base diameter (D3 needs >= 28 mm), base bolt pattern (D3 prints 16 x 19 mm), base hole depth (>= 4.0 mm, CL-E1-HOLE-DEPTH-MIN), bell-top thread length (>= 2.5 mm for D-58; >= 3.0 mm with >= 4.0 mm free depth -> M3x5, CR-A4-43), adapter flange under the screw head, motor phase-lead length from the base (F2's routed reach 0.121 m, CL-F2-PHASE-REACH: if the leads reach, no splice and F2 returns 12 g), ESC strapped on a printed pad (height proud), body length, adapter base and post; on the first built station a printed 25 mm gauge between the blade's aft face at the tip and the CF tube, blade turned through the wing-side position (R-PROP-CLEAR); 4-wire: 2.00 A from a bench supply through two phases, read the voltage drop (R = V / I); no-load current and rpm at 10.0 V without prop (Kv = rpm / (V - I0 R))",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "PROPOSED",
-   "importance": 1131
+   "importance": 1161
   },
   {
    "id": "T-E1-HOVER-LOG",
@@ -110953,7 +113354,7 @@ window.PROOF_GRAPH = {
    "note": "checked = mass, size, plug and balance lead compared with the page; the lead gauge and the US price are confirmed by I1 at order (photo or seller answer) and by E2 on arrival (T-E2-WEIGH step 3a)",
    "defined_in": "redesign/team/E2/claims.json",
    "status": "CHECKED",
-   "importance": 1172
+   "importance": 1202
   },
   {
    "id": "SRC-E2-TATTU-6750",
@@ -111017,7 +113418,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-E2-AVIONICS-W",
@@ -111035,7 +113436,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-E2-OCV-AVG",
@@ -111050,7 +113451,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/E2/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-E2-OCV-20",
@@ -111065,7 +113466,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-E2-R-CELL",
@@ -111080,7 +113481,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1117
+   "importance": 1147
   },
   {
    "id": "ASM-E2-COLD-R",
@@ -111095,7 +113496,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1117
+   "importance": 1147
   },
   {
    "id": "ASM-E2-HOVER-MARGIN",
@@ -111113,7 +113514,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-E2-PROFILE",
@@ -111137,7 +113538,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "defined_in": "redesign/team/E2/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-E2-CRUISE-AERO",
@@ -111166,7 +113567,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-E2-PACK-CANDIDATES",
@@ -111378,80 +113779,80 @@ window.PROOF_GRAPH = {
       "ground, armed checks",
       180,
       6.0,
-      0.405657802184542,
-      0.0202828901092271
+      0.40567116224971256,
+      0.02028355811248563
      ],
      [
       "climb 0-50 m",
       25.0,
       442.5466753968275,
-      31.415550025702927,
-      0.2181635418451592
+      31.50462234999043,
+      0.21878209965271134
      ],
      [
       "hover (mission)",
       120,
       379.7619832189169,
-      26.757747447209532,
-      0.8919249149069844
+      26.821298240420592,
+      0.8940432746806863
      ],
      [
       "transition forward",
       10,
       531.6667765064836,
-      38.15649435865001,
-      0.10599026210736114
+      38.29116752775286,
+      0.10636435424375795
      ],
      [
       "back-transition",
       10,
       493.69057818459197,
-      35.26490584812292,
-      0.09795807180034144
+      35.378723714563435,
+      0.09827423254045398
      ],
      [
       "descent 50-0 m",
       50.0,
       379.7619832189169,
-      26.757747447209532,
-      0.3716353812112435
+      26.821298240420592,
+      0.3725180311169527
      ],
      [
       "cruise",
-      722.2001678758579,
+      720.2314374732848,
       250.8855403046076,
-      17.417002011875805,
-      3.4940449380196834
+      17.443065333032788,
+      3.489734449652952
      ]
     ],
-    "cruise_min": 12.036669464597631,
-    "ah_fixed": 1.7059550619803168,
+    "cruise_min": 12.003857291221415,
+    "ah_fixed": 1.710265550347048,
     "ah_avail": 5.2,
     "cruise_w_b1_level": 239.0822065019597,
     "mass_scale": 0.9993993836256212,
     "hover_w": 379.7619832189169,
-    "hover_a": 26.757747447209532,
+    "hover_a": 26.821298240420592,
     "cruise_w": 250.8855403046076,
-    "cruise_a": 17.417002011875805,
+    "cruise_a": 17.443065333032788,
     "cruise_w_e2_model": 249.5421195812205,
-    "hover_only_min": 11.61469317275647,
-    "flight_min": 15.620002797930965,
-    "r_pack": 0.0227,
-    "i_ground_a": 0.405657802184542,
+    "hover_only_min": 11.587171647228116,
+    "flight_min": 15.587190624554747,
+    "r_pack": 0.0239,
+    "i_ground_a": 0.40567116224971256,
     "t_ground_s": 180,
-    "i_climb_a": 31.415550025702927,
+    "i_climb_a": 31.50462234999043,
     "t_climb_s": 25.0,
-    "i_hover_a": 26.757747447209532,
+    "i_hover_a": 26.821298240420592,
     "t_hover_s": 120,
-    "i_trans_fwd_a": 38.15649435865001,
+    "i_trans_fwd_a": 38.29116752775286,
     "t_trans_fwd_s": 10,
-    "i_trans_back_a": 35.26490584812292,
+    "i_trans_back_a": 35.378723714563435,
     "t_trans_back_s": 10,
-    "i_descent_a": 26.757747447209532,
+    "i_descent_a": 26.821298240420592,
     "t_descent_s": 50.0,
-    "i_cruise_a": 17.417002011875805,
-    "t_cruise_s": 722.2001678758579,
-    "i_max_phase_a": 38.15649435865001
+    "i_cruise_a": 17.443065333032788,
+    "t_cruise_s": 720.2314374732848,
+    "i_max_phase_a": 38.29116752775286
    },
    "input_values": {
     "m": 2.597,
@@ -111488,7 +113889,7 @@ window.PROOF_GRAPH = {
     "ah": 6.5,
     "ocv": 3.7,
     "r_cell": 0.004,
-    "r_ext": 6.7,
+    "r_ext": 7.9,
     "cold": 1.5,
     "hmargin": 1.1,
     "prof": {
@@ -111596,80 +113997,80 @@ window.PROOF_GRAPH = {
       "ground, armed checks",
       180,
       6.0,
-      0.4057469025575869,
-      0.020287345127879344
+      0.4057602743694851,
+      0.020288013718474253
      ],
      [
       "climb 0-50 m",
       25.0,
       487.3121040405871,
-      35.54768895031274,
-      0.24685895104383848
+      35.66872519372642,
+      0.247699480511989
      ],
      [
       "hover (mission)",
       120,
       418.2131197559116,
-      30.142285945850148,
-      1.0047428648616716
+      30.226972150217204,
+      1.0075657383405734
      ],
      [
       "transition forward",
       20,
       585.4983676582762,
-      43.482723517945665,
-      0.24157068621080924
+      43.67148708639382,
+      0.2426193727021879
      ],
      [
       "back-transition",
       20,
       543.677055682685,
-      40.064580664453594,
-      0.22258100369140885
+      40.22196500217414,
+      0.22345536112318964
      ],
      [
       "descent 50-0 m",
       50.0,
       418.2131197559116,
-      30.142285945850148,
-      0.41864286035902987
+      30.226972150217204,
+      0.4198190576419056
      ],
      [
       "cruise",
-      380.3419421564585,
+      378.50537872949747,
       336.21772282610345,
-      23.902540402971255,
-      2.525316288705363
+      23.954192524016207,
+      2.518552975961681
      ]
     ],
-    "cruise_min": 6.3390323692743085,
-    "ah_fixed": 2.1546837112946378,
+    "cruise_min": 6.308422978824957,
+    "ah_fixed": 2.1614470240383197,
     "ah_avail": 4.680000000000001,
     "cruise_w_b1_level": 314.2767169708027,
     "mass_scale": 1.018870752370204,
     "hover_w": 418.2131197559116,
-    "hover_a": 30.142285945850148,
+    "hover_a": 30.226972150217204,
     "cruise_w": 336.21772282610345,
-    "cruise_a": 23.902540402971255,
+    "cruise_a": 23.954192524016207,
     "cruise_w_e2_model": 404.9976035971049,
-    "hover_only_min": 9.275433183620864,
-    "flight_min": 10.255699035940976,
-    "r_pack": 0.0307,
-    "i_ground_a": 0.4057469025575869,
+    "hover_only_min": 9.249445091207477,
+    "flight_min": 10.225089645491625,
+    "r_pack": 0.0319,
+    "i_ground_a": 0.4057602743694851,
     "t_ground_s": 180,
-    "i_climb_a": 35.54768895031274,
+    "i_climb_a": 35.66872519372642,
     "t_climb_s": 25.0,
-    "i_hover_a": 30.142285945850148,
+    "i_hover_a": 30.226972150217204,
     "t_hover_s": 120,
-    "i_trans_fwd_a": 43.482723517945665,
+    "i_trans_fwd_a": 43.67148708639382,
     "t_trans_fwd_s": 20,
-    "i_trans_back_a": 40.064580664453594,
+    "i_trans_back_a": 40.22196500217414,
     "t_trans_back_s": 20,
-    "i_descent_a": 30.142285945850148,
+    "i_descent_a": 30.226972150217204,
     "t_descent_s": 50.0,
-    "i_cruise_a": 23.902540402971255,
-    "t_cruise_s": 380.3419421564585,
-    "i_max_phase_a": 43.482723517945665
+    "i_cruise_a": 23.954192524016207,
+    "t_cruise_s": 378.50537872949747,
+    "i_max_phase_a": 43.67148708639382
    },
    "input_values": {
     "m": 2.6,
@@ -111706,7 +114107,7 @@ window.PROOF_GRAPH = {
     "ah": 6.5,
     "ocv": 3.7,
     "r_cell": 0.004,
-    "r_ext": 6.7,
+    "r_ext": 7.9,
     "cold": 1.5,
     "hmargin": 1.1,
     "prof": {
@@ -111742,7 +114143,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/E2/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CALC-E2-SAG",
@@ -111777,27 +114178,27 @@ window.PROOF_GRAPH = {
     "ASM-E2-COLD-R"
    ],
    "outputs": {
-    "v_full_warm": 14.530000000000001,
-    "r_full_warm_ohm": 0.0227,
-    "i_unlim_full_warm": 163.57459518858332,
+    "v_full_warm": 14.41,
+    "r_full_warm_ohm": 0.0239,
+    "i_unlim_full_warm": 160.8839006426103,
     "limiter_binds_full_warm": 1.0,
-    "v_res20_warm": 12.65,
-    "r_res20_warm_ohm": 0.0227,
-    "i_unlim_res20_warm": 123.98400943992316,
+    "v_res20_warm": 12.53,
+    "r_res20_warm_ohm": 0.0239,
+    "i_unlim_res20_warm": 121.64290064007517,
     "limiter_binds_res20_warm": 1.0,
-    "v_res20_cold": 11.85,
-    "r_res20_cold_ohm": 0.0307,
-    "i_unlim_res20_cold": 108.79810380151298,
+    "v_res20_cold": 11.73,
+    "r_res20_cold_ohm": 0.0319,
+    "i_unlim_res20_cold": 106.60575489363309,
     "limiter_binds_res20_cold": 1.0,
-    "f_lower_thrust_prop_v": 0.8155540261527873,
-    "f_upper_ideal_rotor": 0.8729080341272172,
-    "f_old_v2_rule": 0.6410815376186998,
-    "f_e1": 0.850787322466117,
-    "e1_bracket_margin": 0.02212071166110019,
-    "e1_exponent": 0.7925596679846051,
+    "f_lower_thrust_prop_v": 0.8140180430256766,
+    "f_upper_ideal_rotor": 0.8718116888360824,
+    "f_old_v2_rule": 0.6281633491599707,
+    "f_e1": 0.8496852675552753,
+    "e1_bracket_margin": 0.022126421280807107,
+    "e1_exponent": 0.7915978847110052,
     "c_peak": 15.384615384615385,
-    "sag_v_per_cell_worst": 0.7675000000000001,
-    "v_cell_worst_loaded": 2.9625
+    "sag_v_per_cell_worst": 0.7974999999999999,
+    "v_cell_worst_loaded": 2.9325
    },
    "input_values": {
     "cells": 4,
@@ -111806,10 +114207,10 @@ window.PROOF_GRAPH = {
     "n": 4,
     "ocv20": 3.73,
     "r_cell": 0.004,
-    "r_ext": 6.7,
+    "r_ext": 7.9,
     "cold": 1.5,
     "ah": 6.5,
-    "f_e1": 0.850787322466117
+    "f_e1": 0.8496852675552753
    },
    "defined_in": "redesign/team/E2/claims.json",
    "status": "CHECKED",
@@ -111840,13 +114241,13 @@ window.PROOF_GRAPH = {
     "ASM-E2-COLD-R"
    ],
    "outputs": {
-    "dT_cold_k": 20.652873276720147,
-    "t_end_cold_c": 30.652873276720147,
-    "p_hover_cold_w": 21.80537764899349,
-    "dT_hot_k": 13.768582184480097,
-    "t_end_hot_c": 43.768582184480096,
-    "p_hover_hot_w": 14.536918432662326,
-    "t_end_max_c": 43.768582184480096
+    "dT_cold_k": 20.720627497015965,
+    "t_end_cold_c": 30.720627497015965,
+    "p_hover_cold_w": 21.928076288880156,
+    "dT_hot_k": 13.813751664677309,
+    "t_end_hot_c": 43.81375166467731,
+    "p_hover_hot_w": 14.618717525920104,
+    "t_end_max_c": 43.81375166467731
    },
    "input_values": {
     "b": [
@@ -111854,50 +114255,50 @@ window.PROOF_GRAPH = {
       "ground, armed checks",
       180,
       6.0,
-      0.4057469025575869,
-      0.020287345127879344
+      0.4057602743694851,
+      0.020288013718474253
      ],
      [
       "climb 0-50 m",
       25.0,
       487.3121040405871,
-      35.54768895031274,
-      0.24685895104383848
+      35.66872519372642,
+      0.247699480511989
      ],
      [
       "hover (mission)",
       120,
       418.2131197559116,
-      30.142285945850148,
-      1.0047428648616716
+      30.226972150217204,
+      1.0075657383405734
      ],
      [
       "transition forward",
       20,
       585.4983676582762,
-      43.482723517945665,
-      0.24157068621080924
+      43.67148708639382,
+      0.2426193727021879
      ],
      [
       "back-transition",
       20,
       543.677055682685,
-      40.064580664453594,
-      0.22258100369140885
+      40.22196500217414,
+      0.22345536112318964
      ],
      [
       "descent 50-0 m",
       50.0,
       418.2131197559116,
-      30.142285945850148,
-      0.41864286035902987
+      30.226972150217204,
+      0.4198190576419056
      ],
      [
       "cruise",
-      380.3419421564585,
+      378.50537872949747,
       336.21772282610345,
-      23.902540402971255,
-      2.525316288705363
+      23.954192524016207,
+      2.518552975961681
      ]
     ],
     "r_cell": 0.004,
@@ -112000,7 +114401,7 @@ window.PROOF_GRAPH = {
       5.0,
       0.46,
       2.507,
-      8.3,
+      8.2,
       3.9,
       150.0,
       false
@@ -112020,7 +114421,7 @@ window.PROOF_GRAPH = {
       6.75,
       0.605,
       2.652,
-      12.4,
+      12.3,
       6.5,
       168.75,
       false
@@ -112030,8 +114431,8 @@ window.PROOF_GRAPH = {
       6.5,
       0.68,
       2.727,
-      11.2,
-      5.7,
+      11.1,
+      5.6,
       195.0,
       false
      ],
@@ -112050,7 +114451,7 @@ window.PROOF_GRAPH = {
       9.0,
       0.62,
       2.667,
-      18.4,
+      18.3,
       10.4,
       90.0,
       false
@@ -112141,7 +114542,7 @@ window.PROOF_GRAPH = {
     "cells": 4,
     "ocv": 3.7,
     "r_cell": 0.004,
-    "r_ext": 6.7,
+    "r_ext": 7.9,
     "cold": 1.5,
     "hmargin": 1.1,
     "prof": {
@@ -112197,8 +114598,8 @@ window.PROOF_GRAPH = {
    "outputs": {
     "crt_mah": 1300,
     "low_mah": 2600,
-    "land_need_mah": 1290.7852536487107,
-    "cruise_to_low_min": 5.99067742387534
+    "land_need_mah": 1294.4023954171753,
+    "cruise_to_low_min": 5.96595537671858
    },
    "input_values": {
     "b": [
@@ -112206,50 +114607,50 @@ window.PROOF_GRAPH = {
       "ground, armed checks",
       180,
       6.0,
-      0.4057469025575869,
-      0.020287345127879344
+      0.4057602743694851,
+      0.020288013718474253
      ],
      [
       "climb 0-50 m",
       25.0,
       487.3121040405871,
-      35.54768895031274,
-      0.24685895104383848
+      35.66872519372642,
+      0.247699480511989
      ],
      [
       "hover (mission)",
       120,
       418.2131197559116,
-      30.142285945850148,
-      1.0047428648616716
+      30.226972150217204,
+      1.0075657383405734
      ],
      [
       "transition forward",
       20,
       585.4983676582762,
-      43.482723517945665,
-      0.24157068621080924
+      43.67148708639382,
+      0.2426193727021879
      ],
      [
       "back-transition",
       20,
       543.677055682685,
-      40.064580664453594,
-      0.22258100369140885
+      40.22196500217414,
+      0.22345536112318964
      ],
      [
       "descent 50-0 m",
       50.0,
       418.2131197559116,
-      30.142285945850148,
-      0.41864286035902987
+      30.226972150217204,
+      0.4198190576419056
      ],
      [
       "cruise",
-      380.3419421564585,
+      378.50537872949747,
       336.21772282610345,
-      23.902540402971255,
-      2.525316288705363
+      23.954192524016207,
+      2.518552975961681
      ]
     ],
     "ah": 6.5,
@@ -112285,10 +114686,10 @@ window.PROOF_GRAPH = {
     "ASM-E2-CHARGE"
    ],
    "outputs": {
-    "t_sortie_min": 18.620002797930965,
+    "t_sortie_min": 18.587190624554747,
     "sorties_window": 4,
     "sorties_current_packs": 2,
-    "window_used_min": 57.24000559586193,
+    "window_used_min": 57.174381249109494,
     "packs_to_fill_window": 4,
     "charge_min_per_pack": 58.99999999999999,
     "charge_h_current_packs": 1.9666666666666663,
@@ -112301,50 +114702,50 @@ window.PROOF_GRAPH = {
       "ground, armed checks",
       180,
       6.0,
-      0.405657802184542,
-      0.0202828901092271
+      0.40567116224971256,
+      0.02028355811248563
      ],
      [
       "climb 0-50 m",
       25.0,
       442.5466753968275,
-      31.415550025702927,
-      0.2181635418451592
+      31.50462234999043,
+      0.21878209965271134
      ],
      [
       "hover (mission)",
       120,
       379.7619832189169,
-      26.757747447209532,
-      0.8919249149069844
+      26.821298240420592,
+      0.8940432746806863
      ],
      [
       "transition forward",
       10,
       531.6667765064836,
-      38.15649435865001,
-      0.10599026210736114
+      38.29116752775286,
+      0.10636435424375795
      ],
      [
       "back-transition",
       10,
       493.69057818459197,
-      35.26490584812292,
-      0.09795807180034144
+      35.378723714563435,
+      0.09827423254045398
      ],
      [
       "descent 50-0 m",
       50.0,
       379.7619832189169,
-      26.757747447209532,
-      0.3716353812112435
+      26.821298240420592,
+      0.3725180311169527
      ],
      [
       "cruise",
-      722.2001678758579,
+      720.2314374732848,
       250.8855403046076,
-      17.417002011875805,
-      3.4940449380196834
+      17.443065333032788,
+      3.489734449652952
      ]
     ],
     "td": {
@@ -112512,13 +114913,13 @@ window.PROOF_GRAPH = {
    ],
    "outputs": {
     "k": 1.0582134224946023,
-    "cruise_min_base": 11.35580104864966,
-    "cruise_min_pess": 5.971057070635094,
+    "cruise_min_base": 11.323766025926577,
+    "cruise_min_pess": 5.941337802128428,
     "cruise_w_base": 265.4904462601463,
     "cruise_w_pess": 355.7901071751525,
-    "cruise_a_pess": 25.375570109264736,
+    "cruise_a_pess": 25.434200779421428,
     "low_mah": 2700,
-    "cruise_to_low_min": 5.406475936288758
+    "cruise_to_low_min": 5.382895451323905
    },
    "input_values": {
     "m_b": 2.597,
@@ -112557,7 +114958,7 @@ window.PROOF_GRAPH = {
     "ah": 6.5,
     "ocv": 3.7,
     "r_cell": 0.004,
-    "r_ext": 6.7,
+    "r_ext": 7.9,
     "cold": 1.5,
     "hmargin": 1.1,
     "prof": {
@@ -112596,6 +114997,161 @@ window.PROOF_GRAPH = {
    "importance": 3
   },
   {
+   "id": "CALC-E2-BUDGET-V17",
+   "type": "calculation",
+   "title": "Budget at the 17 m/s fallback cruise (D-96 c; planning baseline of CDR decision B6)",
+   "script": "redesign/team/E2/energy_claims.py",
+   "function": "budget_v17",
+   "equation": "as CALC-E2-BUDGET-240 with the params cruise power replaced by E1's 17 m/s point: k = (P_E1(17 m/s) + P_avionics) / P_B1(16 m/s, gate) ; base = B1 level power x k ; pessimistic = B1 pessimistic power x the same k (EST: the pessimistic / base ratio of 16 m/s is carried to 17 m/s) ; BATT_LOW count as CALC-E2-FAILSAFE with the 17 m/s cruise current",
+   "inputs": {
+    "m_b": "CL-A1-MASS-SIZED",
+    "m_p": "P:requirements.mtow_gate_kg",
+    "p17": "CL-E1-CRUISE-P-55-V17",
+    "n": "P:propulsion.n_motors",
+    "table": "P:propulsion.thrust_table_g_w",
+    "download": "P:propulsion.download_factor",
+    "esc": "ASM-E2-ESC-EFF",
+    "avn": "ASM-E2-AVIONICS-W",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "D": "P:propulsion.prop_diameter_m",
+    "S": "CL-A1-WING-AREA",
+    "b": "P:wing.span_m",
+    "e": "P:wing.oswald_e",
+    "V": "P:performance.cruise_ms",
+    "cells": "P:battery.cells_s",
+    "ah": "P:battery.capacity_ah",
+    "ocv": "ASM-E2-OCV-AVG",
+    "r_cell": "ASM-E2-R-CELL",
+    "r_ext": "P:electrical.r_ext_mohm",
+    "cold": "ASM-E2-COLD-R",
+    "hmargin": "ASM-E2-HOVER-MARGIN",
+    "prof": "ASM-E2-PROFILE",
+    "aero": "ASM-E2-CRUISE-AERO",
+    "cap_frac": "P:requirements.pack_capacity_min_frac",
+    "reserve": "P:requirements.energy_reserve_frac",
+    "pc_b": "CL-B1V-CRUISE-P-GATE",
+    "pc_p": "CL-B1V-CRUISE-P-PESS",
+    "m_ref": "P:requirements.mtow_gate_kg",
+    "m_ref_p": "CL-A3-MASS-PREDICTED"
+   },
+   "units": {
+    "m_b": "kg",
+    "m_p": "kg",
+    "p17": "W",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "D": "m",
+    "S": "m2",
+    "b": "m",
+    "V": "m/s",
+    "ah": "Ah",
+    "ocv": "V",
+    "r_cell": "ohm",
+    "r_ext": "mOhm",
+    "pc_b": "W",
+    "pc_p": "W",
+    "m_ref": "kg",
+    "m_ref_p": "kg"
+   },
+   "assumes": [
+    "ASM-E2-ESC-EFF",
+    "ASM-E2-AVIONICS-W",
+    "ASM-E2-OCV-AVG",
+    "ASM-E2-R-CELL",
+    "ASM-E2-PROFILE",
+    "ASM-E2-CRUISE-AERO",
+    "ASM-E2-COLD-R",
+    "ASM-E2-HOVER-MARGIN",
+    "ASM-E1-V-FALLBACK"
+   ],
+   "outputs": {
+    "k": 1.2109834692838986,
+    "p_carried_w": 289.52459987379257,
+    "cruise_min_base": 9.849649220185492,
+    "cruise_min_pess": 5.145222692113712,
+    "cruise_w_base": 303.81824199123906,
+    "cruise_w_pess": 407.15410442268694,
+    "cruise_a_pess": 29.369608975199085,
+    "low_mah": 2700,
+    "cruise_to_low_min": 4.661609345879229
+   },
+   "input_values": {
+    "m_b": 2.597,
+    "m_p": 2.6,
+    "p17": 283.52459987379257,
+    "n": 4,
+    "table": [
+     [
+      690,
+      89.0
+     ],
+     [
+      750,
+      104.0
+     ],
+     [
+      870,
+      133.0
+     ],
+     [
+      1580,
+      447.0
+     ]
+    ],
+    "download": 1.06,
+    "esc": 0.95,
+    "avn": 6.0,
+    "g": 9.80665,
+    "rho": 1.225,
+    "D": 0.2794,
+    "S": 0.368,
+    "b": 1.15,
+    "e": 0.8,
+    "V": 16.0,
+    "cells": 4,
+    "ah": 6.5,
+    "ocv": 3.7,
+    "r_cell": 0.004,
+    "r_ext": 7.9,
+    "cold": 1.5,
+    "hmargin": 1.1,
+    "prof": {
+     "ground_s": 180,
+     "alt_m": 50,
+     "climb_ms": 2.0,
+     "descent_ms": 1.0,
+     "hover_s": 120,
+     "trans_s": [
+      10,
+      20
+     ],
+     "trans_fwd_factor": 1.4,
+     "trans_back_factor": 1.3
+    },
+    "aero": {
+     "cd0": 0.0593,
+     "cd0_pess": 1.3,
+     "eta_prop": [
+      0.47,
+      0.35
+     ],
+     "eta_motor": 0.72,
+     "trim": 1.05,
+     "circuit": 1.05
+    },
+    "cap_frac": 0.92,
+    "reserve": 0.2,
+    "pc_b": 239.0822065019597,
+    "pc_p": 314.2767169708027,
+    "m_ref": 2.6,
+    "m_ref_p": 2.4858162999999998
+   },
+   "defined_in": "redesign/team/E2/claims.json",
+   "status": "CHECKED",
+   "importance": 5
+  },
+  {
    "id": "CL-E2-BUDGET-BASE-TABLE",
    "type": "claim",
    "title": "Phase table, base [phase, s, W, A, Ah]",
@@ -112608,50 +115164,50 @@ window.PROOF_GRAPH = {
      "ground, armed checks",
      180,
      6.0,
-     0.405657802184542,
-     0.0202828901092271
+     0.40567116224971256,
+     0.02028355811248563
     ],
     [
      "climb 0-50 m",
      25.0,
      442.5466753968275,
-     31.415550025702927,
-     0.2181635418451592
+     31.50462234999043,
+     0.21878209965271134
     ],
     [
      "hover (mission)",
      120,
      379.7619832189169,
-     26.757747447209532,
-     0.8919249149069844
+     26.821298240420592,
+     0.8940432746806863
     ],
     [
      "transition forward",
      10,
      531.6667765064836,
-     38.15649435865001,
-     0.10599026210736114
+     38.29116752775286,
+     0.10636435424375795
     ],
     [
      "back-transition",
      10,
      493.69057818459197,
-     35.26490584812292,
-     0.09795807180034144
+     35.378723714563435,
+     0.09827423254045398
     ],
     [
      "descent 50-0 m",
      50.0,
      379.7619832189169,
-     26.757747447209532,
-     0.3716353812112435
+     26.821298240420592,
+     0.3725180311169527
     ],
     [
      "cruise",
-     722.2001678758579,
+     720.2314374732848,
      250.8855403046076,
-     17.417002011875805,
-     3.4940449380196834
+     17.443065333032788,
+     3.489734449652952
     ]
    ],
    "defined_in": "redesign/team/E2/claims.json",
@@ -112692,50 +115248,50 @@ window.PROOF_GRAPH = {
      "ground, armed checks",
      180,
      6.0,
-     0.4057469025575869,
-     0.020287345127879344
+     0.4057602743694851,
+     0.020288013718474253
     ],
     [
      "climb 0-50 m",
      25.0,
      487.3121040405871,
-     35.54768895031274,
-     0.24685895104383848
+     35.66872519372642,
+     0.247699480511989
     ],
     [
      "hover (mission)",
      120,
      418.2131197559116,
-     30.142285945850148,
-     1.0047428648616716
+     30.226972150217204,
+     1.0075657383405734
     ],
     [
      "transition forward",
      20,
      585.4983676582762,
-     43.482723517945665,
-     0.24157068621080924
+     43.67148708639382,
+     0.2426193727021879
     ],
     [
      "back-transition",
      20,
      543.677055682685,
-     40.064580664453594,
-     0.22258100369140885
+     40.22196500217414,
+     0.22345536112318964
     ],
     [
      "descent 50-0 m",
      50.0,
      418.2131197559116,
-     30.142285945850148,
-     0.41864286035902987
+     30.226972150217204,
+     0.4198190576419056
     ],
     [
      "cruise",
-     380.3419421564585,
+     378.50537872949747,
      336.21772282610345,
-     23.902540402971255,
-     2.525316288705363
+     23.954192524016207,
+     2.518552975961681
     ]
    ],
    "defined_in": "redesign/team/E2/claims.json",
@@ -112780,7 +115336,7 @@ window.PROOF_GRAPH = {
     "R-MISSION"
    ],
    "how": "Full-mission flight (R-TEST-ORDER gate 9): land when BAT.CurrTot reaches 80 % of 6 500 mAh; logged cruise time >= this value.",
-   "value": 12.036669464597631,
+   "value": 12.003857291221415,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -112804,7 +115360,7 @@ window.PROOF_GRAPH = {
     "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 1.4073338929195263,
+   "margin": 1.400771458244283,
    "importance": 1
   },
   {
@@ -112823,7 +115379,7 @@ window.PROOF_GRAPH = {
     "R-MISSION"
    ],
    "how": "Same flight; also re-run this script with the twin's logged hover and cruise currents in place of the model (ASM-E2-HOVER-MARGIN, ASM-E2-CRUISE-AERO).",
-   "value": 6.3390323692743085,
+   "value": 6.308422978824957,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -112848,7 +115404,7 @@ window.PROOF_GRAPH = {
     "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.26780647385486167,
+   "margin": 0.2616845957649915,
    "importance": 1
   },
   {
@@ -112864,7 +115420,7 @@ window.PROOF_GRAPH = {
     "resolved": 2.0
    },
    "how": "Tethered hover (R-TEST-ORDER gate 3): log BAT.CurrTot vs time; minutes to 5 200 mAh >= this value.",
-   "value": 9.275433183620864,
+   "value": 9.249445091207477,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -112889,7 +115445,7 @@ window.PROOF_GRAPH = {
     "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 3.637716591810432,
+   "margin": 3.6247225456037384,
    "importance": 37
   },
   {
@@ -112900,7 +115456,7 @@ window.PROOF_GRAPH = {
    "output": "hover_a",
    "unit": "A",
    "how": "Tethered hover at gate mass (ballast) with the 150 A watt meter; F1 sizes wires and the disconnect on it.",
-   "value": 30.142285945850148,
+   "value": 30.226972150217204,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -112925,7 +115481,7 @@ window.PROOF_GRAPH = {
     "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-E2-CRUISE-I-PESS",
@@ -112935,7 +115491,7 @@ window.PROOF_GRAPH = {
    "output": "cruise_a",
    "unit": "A",
    "how": "Fixed-wing tune flights: mean BAT.Curr in level cruise at 16 m/s.",
-   "value": 23.902540402971255,
+   "value": 23.954192524016207,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -112960,7 +115516,7 @@ window.PROOF_GRAPH = {
     "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-E2-I-GROUND-PESS",
@@ -112970,7 +115526,7 @@ window.PROOF_GRAPH = {
    "output": "i_ground_a",
    "unit": "A",
    "how": "DataFlash BAT.Curr mean over the phase on the full-mission log (T-E2-MISSION-LOG), within +/-15 %; F1 reads this claim for harness heating (CALC-F1-PROFILE, CL-F1-PROFILE).",
-   "value": 0.4057469025575869,
+   "value": 0.4057602743694851,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -113040,7 +115596,7 @@ window.PROOF_GRAPH = {
    "output": "i_climb_a",
    "unit": "A",
    "how": "DataFlash BAT.Curr mean over the phase on the full-mission log (T-E2-MISSION-LOG), within +/-15 %; F1 reads this claim for harness heating (CALC-F1-PROFILE, CL-F1-PROFILE).",
-   "value": 35.54768895031274,
+   "value": 35.66872519372642,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -113065,7 +115621,7 @@ window.PROOF_GRAPH = {
     "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-E2-T-CLIMB-PESS",
@@ -113100,7 +115656,7 @@ window.PROOF_GRAPH = {
     "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-E2-I-TRANS-FWD-PESS",
@@ -113110,7 +115666,7 @@ window.PROOF_GRAPH = {
    "output": "i_trans_fwd_a",
    "unit": "A",
    "how": "DataFlash BAT.Curr mean over the phase on the full-mission log (T-E2-MISSION-LOG), within +/-15 %; F1 reads this claim for harness heating (CALC-F1-PROFILE, CL-F1-PROFILE).",
-   "value": 43.482723517945665,
+   "value": 43.67148708639382,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -113135,7 +115691,7 @@ window.PROOF_GRAPH = {
     "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-E2-T-TRANS-FWD-PESS",
@@ -113170,7 +115726,7 @@ window.PROOF_GRAPH = {
     "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-E2-I-TRANS-BACK-PESS",
@@ -113180,7 +115736,7 @@ window.PROOF_GRAPH = {
    "output": "i_trans_back_a",
    "unit": "A",
    "how": "DataFlash BAT.Curr mean over the phase on the full-mission log (T-E2-MISSION-LOG), within +/-15 %; F1 reads this claim for harness heating (CALC-F1-PROFILE, CL-F1-PROFILE).",
-   "value": 40.064580664453594,
+   "value": 40.22196500217414,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -113205,7 +115761,7 @@ window.PROOF_GRAPH = {
     "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-E2-T-TRANS-BACK-PESS",
@@ -113240,7 +115796,7 @@ window.PROOF_GRAPH = {
     "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-E2-I-DESCENT-PESS",
@@ -113250,7 +115806,7 @@ window.PROOF_GRAPH = {
    "output": "i_descent_a",
    "unit": "A",
    "how": "DataFlash BAT.Curr mean over the phase on the full-mission log (T-E2-MISSION-LOG), within +/-15 %; F1 reads this claim for harness heating (CALC-F1-PROFILE, CL-F1-PROFILE).",
-   "value": 30.142285945850148,
+   "value": 30.226972150217204,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -113275,7 +115831,7 @@ window.PROOF_GRAPH = {
     "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-E2-T-DESCENT-PESS",
@@ -113310,7 +115866,7 @@ window.PROOF_GRAPH = {
     "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-E2-T-HOVER-PESS",
@@ -113345,7 +115901,7 @@ window.PROOF_GRAPH = {
     "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-E2-T-CRUISE-PESS",
@@ -113355,7 +115911,7 @@ window.PROOF_GRAPH = {
    "output": "t_cruise_s",
    "unit": "s",
    "how": "As CL-E2-CRUISE-MIN-PESS x 60.",
-   "value": 380.3419421564585,
+   "value": 378.50537872949747,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -113380,7 +115936,7 @@ window.PROOF_GRAPH = {
     "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-E2-I-MAX-PHASE-PESS",
@@ -113395,7 +115951,7 @@ window.PROOF_GRAPH = {
     "resolved": 100.0
    },
    "how": "Largest phase-mean BAT.Curr on the full-mission log; stays under the 100 A limiter.",
-   "value": 43.482723517945665,
+   "value": 43.67148708639382,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -113421,7 +115977,7 @@ window.PROOF_GRAPH = {
     "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.5651727648205433,
+   "margin": 0.5632851291360619,
    "importance": 1
   },
   {
@@ -113471,7 +116027,7 @@ window.PROOF_GRAPH = {
    },
    "how": "T-E1-STAND fresh and worst-state runs: measured thrust ratio between the measured bus-voltage ratio and its 2/3 power.",
    "note": "D-35 resolved: E2 adopts E1's station model (CL-E1-SAG-FACTOR, CL-E1-TW-WORST) as the one worst-state claim. The limiter binds in every pack state, so the pack current is fixed at 100 A and thrust follows power (lower bound, thrust ~ V) or the ideal rotor (upper, ~ V^(2/3)); E1 lies between. Retires CL-E2-SAG-F-WORST and CL-E2-TW-SAG-WORST (the (V/14.8)^2 rule counted the sag twice)",
-   "value": 0.02212071166110019,
+   "value": 0.022126421280807107,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -113488,6 +116044,8 @@ window.PROOF_GRAPH = {
     "uses CL-E1-SAG-FACTOR, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.022126421280807107,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -113503,7 +116061,7 @@ window.PROOF_GRAPH = {
     "resolved": 100.0
    },
    "how": "Same stand run with Q_M_BAT_CURR_MAX disabled for one 1 s punch (props on the stand only): pack current at full duty above 100 A. If it is not, the V^2 rule applies below the limiter and D-35 re-opens.",
-   "value": 108.79810380151298,
+   "value": 106.60575489363309,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -113521,7 +116079,7 @@ window.PROOF_GRAPH = {
     "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.0879810380151298,
+   "margin": 0.06605754893633091,
    "importance": 1
   },
   {
@@ -113532,7 +116090,7 @@ window.PROOF_GRAPH = {
    "output": "v_res20_cold",
    "unit": "V",
    "how": "Logged BAT.Volt during a full-throttle punch on the cold-pack stand run (T-E2-IR); F4 sets BATT_FS_VOLTSRC 1 (sag-compensated) and Q_M_BAT_VOLT_MIN below it.",
-   "value": 11.85,
+   "value": 11.73,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -113559,7 +116117,7 @@ window.PROOF_GRAPH = {
    "output": "sag_v_per_cell_worst",
    "unit": "V",
    "how": "Load-step IR test (T-E2-IR) scaled to 100 A; F4 uses it for BATT_FS_VOLTSRC 1 and Q_M_BAT_VOLT_MIN.",
-   "value": 0.7675000000000001,
+   "value": 0.7974999999999999,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-OCV-20, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -113594,7 +116152,7 @@ window.PROOF_GRAPH = {
     "R-THERMAL"
    ],
    "how": "IR thermometer on the pack face at landing; E3 adds the pod's heat path. 50 degC leaves 10 K to the usual 60 degC LiPo discharge limit.",
-   "value": 43.768582184480096,
+   "value": 43.81375166467731,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -113606,7 +116164,7 @@ window.PROOF_GRAPH = {
     "uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-64: listing 551 +/- 5 g (CL-E2-SKU-MASS-MARGIN); carried as 0.55. Acceptance on arrival: <= CALC-A1-PACK-ACCEPT (about 590 g, the heaviest pack the 100 g first-build overrun still covers; E2 PACK_ACCEPT_KG follows it) plus the 10 AWG lead check. The 503 / 680 g bounding listings of D-58/D-59 are retired as flight cases: A3 carries 546 g (listing -5), 551 g and the acceptance line (ASM-A3-PACK-RANGE))"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.12462835631039809,
+   "margin": 0.12372496670645376,
    "importance": 5
   },
   {
@@ -113617,7 +116175,7 @@ window.PROOF_GRAPH = {
    "output": "p_hover_cold_w",
    "unit": "W",
    "how": "E3 input; check by I^2 R from the measured IR and hover current.",
-   "value": 21.80537764899349,
+   "value": 21.928076288880156,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -113731,14 +116289,14 @@ window.PROOF_GRAPH = {
     "R-MISSION"
    ],
    "how": "SITL with the logged currents: QRTL must not trigger before 5 min of cruise.",
-   "value": 5.99067742387534,
+   "value": 5.96595537671858,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses CL-E2-BUDGET-PESS-TABLE, which is UNVERIFIED",
     "uses P:battery.capacity_ah, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.19813548477506798,
+   "margin": 0.193191075343716,
    "importance": 1
   },
   {
@@ -113836,7 +116394,7 @@ window.PROOF_GRAPH = {
     "resolved": 180.0
    },
    "how": "Log take-off and landing times on the first test day; I2 plans the day on it.",
-   "value": 57.24000559586193,
+   "value": 57.174381249109494,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses CL-E2-BUDGET-BASE-TABLE, which is UNVERIFIED",
@@ -113845,7 +116403,7 @@ window.PROOF_GRAPH = {
     "uses ASM-E2-CHARGER-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.6819999689118782,
+   "margin": 0.6823645486160583,
    "importance": 1
   },
   {
@@ -113906,6 +116464,8 @@ window.PROOF_GRAPH = {
     "uses CL-A1-PACK-ACCEPT, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.008183700000000238,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -113932,6 +116492,8 @@ window.PROOF_GRAPH = {
     "uses CL-A1-PACK-ACCEPT, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.000999999999999994,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -113975,7 +116537,7 @@ window.PROOF_GRAPH = {
     "resolved": 5.0
    },
    "how": "As CL-E2-CRUISE-MIN-BASE; the first tune flight's logged cruise current decides between B1 and E1.",
-   "value": 11.35580104864966,
+   "value": 11.323766025926577,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -114002,7 +116564,7 @@ window.PROOF_GRAPH = {
     "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 1.271160209729932,
+   "margin": 1.2647532051853154,
    "importance": 1
   },
   {
@@ -114018,7 +116580,7 @@ window.PROOF_GRAPH = {
     "resolved": 5.0
    },
    "how": "As CL-E2-CRUISE-MIN-PESS.",
-   "value": 5.971057070635094,
+   "value": 5.941337802128428,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -114045,7 +116607,7 @@ window.PROOF_GRAPH = {
     "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.19421141412701887,
+   "margin": 0.18826756042568568,
    "importance": 1
   },
   {
@@ -114061,7 +116623,7 @@ window.PROOF_GRAPH = {
     "resolved": 5.0
    },
    "how": "SITL with the logged currents, as CL-E2-CRUISE-TO-LOW-PESS.",
-   "value": 5.406475936288758,
+   "value": 5.382895451323905,
    "defined_in": "redesign/team/E2/claims.json",
    "reasons": [
     "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -114088,7 +116650,7 @@ window.PROOF_GRAPH = {
     "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.0812951872577516,
+   "margin": 0.07657909026478098,
    "importance": 1
   },
   {
@@ -114181,7 +116743,220 @@ window.PROOF_GRAPH = {
    "procedure": "DataFlash BAT messages; IR thermometer on pack before/after; compare row by row with the phase table.",
    "defined_in": "redesign/team/E2/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
+  },
+  {
+   "id": "CL-E2-CRUISE-MIN-BASE-V17",
+   "type": "claim",
+   "title": "Cruise after 2 min hover to the 20 % line, base, at the 17 m/s fallback",
+   "calc": "CALC-E2-BUDGET-V17",
+   "output": "cruise_min_base",
+   "unit": "min",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.cruise_time_min",
+    "resolved": 5.0
+   },
+   "how": "As CL-E2-CRUISE-MIN-BASE at 17 m/s.",
+   "note": "17 m/s is AIRSPEED_MIN = AIRSPEED_CRUISE if the stall is the tripped 12.85 m/s (D-96 c; CDR decision B6 plans on it until T-B2-STALL). Cruise power = E1's 17 m/s point (CL-E1-CRUISE-P-55-V17) + 6 W avionics, carried through the same chain as the 253 W case; the pessimistic case scales B1's pessimistic power by the same factor (EST). performance.cruise_ms stays 16 until A1 changes it. The way out is the prop A/B on the stand (CDR-04: 11x7E, about -28 % cruise power, REVIEWER EST), not this model",
+   "value": 9.849649220185492,
+   "defined_in": "redesign/team/E2/claims.json",
+   "reasons": [
+    "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-CRUISE-AERO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-HOVER-MARGIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-A1-MASS-SIZED, which is UNVERIFIED",
+    "uses CL-E1-CRUISE-P-55-V17, which is UNVERIFIED",
+    "uses P:propulsion.thrust_table_g_w, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: [thrust gf, input W] per motor, KV900, APC 11x4.7, maker rows match the page image (E1 2026-11-09) but the supply sagged: the top row is at ~11.2 V and W = 14.8 x A bookkeeping (CL-E1-MAKER-SUPPLY). Replace with T-E1-STAND rows)",
+    "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:wing.oswald_e, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: kept conservative for the whole aircraft: B2's AVL at R2 gives 0.94 (SM 5 %) / 0.92 (CG 0.044) for wing + 0.275 m half-fins, props off, no pod (P:b2.avl.e_oswald, CR-B2-14); B1 carries k 0.0950 base (e 0.93) and 0.1107 pessimistic (e 0.80))",
+    "uses P:battery.cells_s, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses P:battery.capacity_ah, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-HOVER-MARGIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-CRUISE-AERO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-B1V-CRUISE-P-GATE, which is UNVERIFIED",
+    "uses CL-B1V-CRUISE-P-PESS, which is UNVERIFIED",
+    "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.9699298440370985,
+   "importance": 1
+  },
+  {
+   "id": "CL-E2-CRUISE-MIN-PESS-V17",
+   "type": "claim",
+   "title": "Cruise after 2 min hover to the 20 % line, pessimistic, at the 17 m/s fallback",
+   "calc": "CALC-E2-BUDGET-V17",
+   "output": "cruise_min_pess",
+   "unit": "min",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.cruise_time_min",
+    "resolved": 5.0
+   },
+   "how": "As CL-E2-CRUISE-MIN-PESS at 17 m/s (T-E2-MISSION-LOG decides).",
+   "note": "17 m/s is AIRSPEED_MIN = AIRSPEED_CRUISE if the stall is the tripped 12.85 m/s (D-96 c; CDR decision B6 plans on it until T-B2-STALL). Cruise power = E1's 17 m/s point (CL-E1-CRUISE-P-55-V17) + 6 W avionics, carried through the same chain as the 253 W case; the pessimistic case scales B1's pessimistic power by the same factor (EST). performance.cruise_ms stays 16 until A1 changes it. The way out is the prop A/B on the stand (CDR-04: 11x7E, about -28 % cruise power, REVIEWER EST), not this model",
+   "value": 5.145222692113712,
+   "defined_in": "redesign/team/E2/claims.json",
+   "reasons": [
+    "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-CRUISE-AERO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-HOVER-MARGIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-A1-MASS-SIZED, which is UNVERIFIED",
+    "uses CL-E1-CRUISE-P-55-V17, which is UNVERIFIED",
+    "uses P:propulsion.thrust_table_g_w, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: [thrust gf, input W] per motor, KV900, APC 11x4.7, maker rows match the page image (E1 2026-11-09) but the supply sagged: the top row is at ~11.2 V and W = 14.8 x A bookkeeping (CL-E1-MAKER-SUPPLY). Replace with T-E1-STAND rows)",
+    "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:wing.oswald_e, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: kept conservative for the whole aircraft: B2's AVL at R2 gives 0.94 (SM 5 %) / 0.92 (CG 0.044) for wing + 0.275 m half-fins, props off, no pod (P:b2.avl.e_oswald, CR-B2-14); B1 carries k 0.0950 base (e 0.93) and 0.1107 pessimistic (e 0.80))",
+    "uses P:battery.cells_s, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses P:battery.capacity_ah, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-HOVER-MARGIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-CRUISE-AERO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-B1V-CRUISE-P-GATE, which is UNVERIFIED",
+    "uses CL-B1V-CRUISE-P-PESS, which is UNVERIFIED",
+    "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.02904453842274233,
+   "importance": 1
+  },
+  {
+   "id": "CL-E2-CRUISE-TO-LOW-PESS-V17",
+   "type": "claim",
+   "title": "Cruise at 17 m/s before BATT_LOW triggers, pessimistic",
+   "calc": "CALC-E2-BUDGET-V17",
+   "output": "cruise_to_low_min",
+   "unit": "min",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.cruise_time_min",
+    "resolved": 5.0
+   },
+   "verifies": [
+    "R-MISSION"
+   ],
+   "how": "SITL with the logged currents at AIRSPEED_CRUISE 17: QRTL must not trigger before 5 min of cruise; first logged cruise current (T-E2-MISSION-LOG).",
+   "note": "17 m/s is AIRSPEED_MIN = AIRSPEED_CRUISE if the stall is the tripped 12.85 m/s (D-96 c; CDR decision B6 plans on it until T-B2-STALL). Cruise power = E1's 17 m/s point (CL-E1-CRUISE-P-55-V17) + 6 W avionics, carried through the same chain as the 253 W case; the pessimistic case scales B1's pessimistic power by the same factor (EST). performance.cruise_ms stays 16 until A1 changes it. The way out is the prop A/B on the stand (CDR-04: 11x7E, about -28 % cruise power, REVIEWER EST), not this model",
+   "value": 4.661609345879229,
+   "defined_in": "redesign/team/E2/claims.json",
+   "reasons": [
+    "FAILS: margin -6.8% (4.662 min vs >= 5 min)",
+    "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-CRUISE-AERO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-HOVER-MARGIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-A1-MASS-SIZED, which is UNVERIFIED",
+    "uses CL-E1-CRUISE-P-55-V17, which is UNVERIFIED",
+    "uses P:propulsion.thrust_table_g_w, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: [thrust gf, input W] per motor, KV900, APC 11x4.7, maker rows match the page image (E1 2026-11-09) but the supply sagged: the top row is at ~11.2 V and W = 14.8 x A bookkeeping (CL-E1-MAKER-SUPPLY). Replace with T-E1-STAND rows)",
+    "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:wing.oswald_e, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: kept conservative for the whole aircraft: B2's AVL at R2 gives 0.94 (SM 5 %) / 0.92 (CG 0.044) for wing + 0.275 m half-fins, props off, no pod (P:b2.avl.e_oswald, CR-B2-14); B1 carries k 0.0950 base (e 0.93) and 0.1107 pessimistic (e 0.80))",
+    "uses P:battery.cells_s, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses P:battery.capacity_ah, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-HOVER-MARGIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-CRUISE-AERO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-B1V-CRUISE-P-GATE, which is UNVERIFIED",
+    "uses CL-B1V-CRUISE-P-PESS, which is UNVERIFIED",
+    "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.06767813082415426,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CL-E2-BATT-LOW-MAH-V17",
+   "type": "claim",
+   "title": "BATT_LOW_MAH needed with the 17 m/s cruise current (60 s return leg)",
+   "calc": "CALC-E2-BUDGET-V17",
+   "output": "low_mah",
+   "unit": "mAh",
+   "how": "Compare with CL-E2-BATT-LOW-MAH; F4 sets the larger if AIRSPEED_CRUISE goes to 17.",
+   "note": "17 m/s is AIRSPEED_MIN = AIRSPEED_CRUISE if the stall is the tripped 12.85 m/s (D-96 c; CDR decision B6 plans on it until T-B2-STALL). Cruise power = E1's 17 m/s point (CL-E1-CRUISE-P-55-V17) + 6 W avionics, carried through the same chain as the 253 W case; the pessimistic case scales B1's pessimistic power by the same factor (EST). performance.cruise_ms stays 16 until A1 changes it. The way out is the prop A/B on the stand (CDR-04: 11x7E, about -28 % cruise power, REVIEWER EST), not this model",
+   "value": 2700,
+   "defined_in": "redesign/team/E2/claims.json",
+   "reasons": [
+    "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-CRUISE-AERO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-HOVER-MARGIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-A1-MASS-SIZED, which is UNVERIFIED",
+    "uses CL-E1-CRUISE-P-55-V17, which is UNVERIFIED",
+    "uses P:propulsion.thrust_table_g_w, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: [thrust gf, input W] per motor, KV900, APC 11x4.7, maker rows match the page image (E1 2026-11-09) but the supply sagged: the top row is at ~11.2 V and W = 14.8 x A bookkeeping (CL-E1-MAKER-SUPPLY). Replace with T-E1-STAND rows)",
+    "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:wing.oswald_e, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: kept conservative for the whole aircraft: B2's AVL at R2 gives 0.94 (SM 5 %) / 0.92 (CG 0.044) for wing + 0.275 m half-fins, props off, no pod (P:b2.avl.e_oswald, CR-B2-14); B1 carries k 0.0950 base (e 0.93) and 0.1107 pessimistic (e 0.80))",
+    "uses P:battery.cells_s, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses P:battery.capacity_ah, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-HOVER-MARGIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-CRUISE-AERO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-B1V-CRUISE-P-GATE, which is UNVERIFIED",
+    "uses CL-B1V-CRUISE-P-PESS, which is UNVERIFIED",
+    "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "CL-E2-CRUISE-W-PESS-V17",
+   "type": "claim",
+   "title": "Cruise bus power, pessimistic, at the 17 m/s fallback",
+   "calc": "CALC-E2-BUDGET-V17",
+   "output": "cruise_w_pess",
+   "unit": "W",
+   "how": "Logged pack power in 17 m/s legs (T-E2-MISSION-LOG).",
+   "note": "17 m/s is AIRSPEED_MIN = AIRSPEED_CRUISE if the stall is the tripped 12.85 m/s (D-96 c; CDR decision B6 plans on it until T-B2-STALL). Cruise power = E1's 17 m/s point (CL-E1-CRUISE-P-55-V17) + 6 W avionics, carried through the same chain as the 253 W case; the pessimistic case scales B1's pessimistic power by the same factor (EST). performance.cruise_ms stays 16 until A1 changes it. The way out is the prop A/B on the stand (CDR-04: 11x7E, about -28 % cruise power, REVIEWER EST), not this model",
+   "value": 407.15410442268694,
+   "defined_in": "redesign/team/E2/claims.json",
+   "reasons": [
+    "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-CRUISE-AERO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-HOVER-MARGIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-A1-MASS-SIZED, which is UNVERIFIED",
+    "uses CL-E1-CRUISE-P-55-V17, which is UNVERIFIED",
+    "uses P:propulsion.thrust_table_g_w, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: [thrust gf, input W] per motor, KV900, APC 11x4.7, maker rows match the page image (E1 2026-11-09) but the supply sagged: the top row is at ~11.2 V and W = 14.8 x A bookkeeping (CL-E1-MAKER-SUPPLY). Replace with T-E1-STAND rows)",
+    "uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:wing.oswald_e, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: kept conservative for the whole aircraft: B2's AVL at R2 gives 0.94 (SM 5 %) / 0.92 (CG 0.044) for wing + 0.275 m half-fins, props off, no pod (P:b2.avl.e_oswald, CR-B2-14); B1 carries k 0.0950 base (e 0.93) and 0.1107 pessimistic (e 0.80))",
+    "uses P:battery.cells_s, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses P:battery.capacity_ah, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:electrical.r_ext_mohm, which is UNVERIFIED (cites CL-F1-R-EXT, which is UNVERIFIED)",
+    "uses ASM-E2-COLD-R, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-HOVER-MARGIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-E2-CRUISE-AERO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-B1V-CRUISE-P-GATE, which is UNVERIFIED",
+    "uses CL-B1V-CRUISE-P-PESS, which is UNVERIFIED",
+    "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
   },
   {
    "id": "SRC-E3-INCROPERA",
@@ -115176,7 +117951,11 @@ window.PROOF_GRAPH = {
     ]
    },
    "defined_in": "redesign/team/E3/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 19
   },
   {
@@ -115561,7 +118340,11 @@ window.PROOF_GRAPH = {
     ]
    },
    "defined_in": "redesign/team/E3/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 5
   },
   {
@@ -115930,7 +118713,11 @@ window.PROOF_GRAPH = {
     "e2_t_end": 43.768582184480096
    },
    "defined_in": "redesign/team/E3/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 4
   },
   {
@@ -116330,7 +119117,11 @@ window.PROOF_GRAPH = {
     ]
    },
    "defined_in": "redesign/team/E3/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 2
   },
   {
@@ -116788,7 +119579,11 @@ window.PROOF_GRAPH = {
     ]
    },
    "defined_in": "redesign/team/E3/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 4
   },
   {
@@ -117145,7 +119940,11 @@ window.PROOF_GRAPH = {
     ]
    },
    "defined_in": "redesign/team/E3/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 2
   },
   {
@@ -117232,6 +120031,7 @@ window.PROOF_GRAPH = {
    "value": 64.9813732604981,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-MISSION does not re-run",
     "uses SRC-E3-INCROPERA, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -117313,6 +120113,7 @@ window.PROOF_GRAPH = {
    "value": 66.33601185265226,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-MISSION does not re-run",
     "uses SRC-E3-INCROPERA, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -117394,6 +120195,7 @@ window.PROOF_GRAPH = {
    "value": 55.96350044982045,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-MISSION does not re-run",
     "uses SRC-E3-INCROPERA, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -117475,6 +120277,7 @@ window.PROOF_GRAPH = {
    "value": 79.95874734282557,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-MISSION does not re-run",
     "uses SRC-E3-INCROPERA, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -117547,6 +120350,7 @@ window.PROOF_GRAPH = {
    "value": 102.15541423507877,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-MISSION does not re-run",
     "uses SRC-E3-INCROPERA, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -117627,6 +120431,7 @@ window.PROOF_GRAPH = {
    "value": 13.554879426956177,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-OPS does not re-run",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -117701,6 +120506,7 @@ window.PROOF_GRAPH = {
    "value": 37.65620783902705,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-OPS does not re-run",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -117778,6 +120584,7 @@ window.PROOF_GRAPH = {
    "value": 45.436923466496026,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-MISSION does not re-run",
     "uses SRC-E3-INCROPERA, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -117849,6 +120656,7 @@ window.PROOF_GRAPH = {
    "value": 17.516038524141578,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-MISSION does not re-run",
     "uses SRC-E3-INCROPERA, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -117926,6 +120734,7 @@ window.PROOF_GRAPH = {
    "value": 55.00957513879904,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-MISSION does not re-run",
     "uses SRC-E3-INCROPERA, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -118004,6 +120813,7 @@ window.PROOF_GRAPH = {
    "value": 68.71200137723234,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-MISSION does not re-run",
     "uses SRC-E3-INCROPERA, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -118082,6 +120892,7 @@ window.PROOF_GRAPH = {
    "value": 0.027379876963066582,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-MISSION does not re-run",
     "uses SRC-E3-INCROPERA, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -118135,6 +120946,8 @@ window.PROOF_GRAPH = {
     "uses CL-A3-MASS-PREDICTED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.027379876963066582,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -118152,6 +120965,7 @@ window.PROOF_GRAPH = {
    "value": 24.496953238662066,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-MISSION does not re-run",
     "uses SRC-E3-INCROPERA, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -118222,6 +121036,7 @@ window.PROOF_GRAPH = {
    "value": 100.71749887160588,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-MISSION does not re-run",
     "uses SRC-E3-INCROPERA, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -118303,6 +121118,7 @@ window.PROOF_GRAPH = {
    "value": 43.98142045363784,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-CEILING does not re-run",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -118369,6 +121185,7 @@ window.PROOF_GRAPH = {
    "value": 32.80165020376444,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-CEILING does not re-run",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -118443,6 +121260,7 @@ window.PROOF_GRAPH = {
    "value": 40.90939128771424,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-CEILING does not re-run",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -118511,6 +121329,7 @@ window.PROOF_GRAPH = {
    "value": 34.57806000486016,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-CEILING does not re-run",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -118581,6 +121400,7 @@ window.PROOF_GRAPH = {
    "value": 0.013477089162329037,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-CHECKS does not re-run",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -118648,6 +121468,7 @@ window.PROOF_GRAPH = {
    "value": -0.13108356567845192,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-CHECKS does not re-run",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -118714,6 +121535,7 @@ window.PROOF_GRAPH = {
    "value": -9.308109838457312e-13,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-CHECKS does not re-run",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -118789,6 +121611,7 @@ window.PROOF_GRAPH = {
    "value": 66.3494552498346,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-CHECKS does not re-run",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -118921,6 +121744,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-SWEEP does not re-run",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -119025,6 +121849,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-SWEEP does not re-run",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -119096,6 +121921,7 @@ window.PROOF_GRAPH = {
    "value": 1.100011764044119,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-SWEEP does not re-run",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -119174,6 +122000,7 @@ window.PROOF_GRAPH = {
    "value": 26.90583432796285,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-GT04 does not re-run",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -119249,6 +122076,7 @@ window.PROOF_GRAPH = {
    "value": 38.14687446122941,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-GT04 does not re-run",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -119327,6 +122155,7 @@ window.PROOF_GRAPH = {
    "value": 55.96350044982045,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-MISSION does not re-run",
     "uses SRC-E3-INCROPERA, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -119408,6 +122237,7 @@ window.PROOF_GRAPH = {
    "value": 62.56313999378552,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-MISSION does not re-run",
     "uses SRC-E3-INCROPERA, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -119489,6 +122319,7 @@ window.PROOF_GRAPH = {
    "value": 54.57500334805915,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-MISSION does not re-run",
     "uses SRC-E3-INCROPERA, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -119567,6 +122398,7 @@ window.PROOF_GRAPH = {
    "value": 44.278767244079624,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-MISSION does not re-run",
     "uses SRC-E3-INCROPERA, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -119645,6 +122477,7 @@ window.PROOF_GRAPH = {
    "value": 54.59178319670403,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-MISSION does not re-run",
     "uses SRC-E3-INCROPERA, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -119726,6 +122559,7 @@ window.PROOF_GRAPH = {
    "value": 45.775768645107746,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-CEILING does not re-run",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -119796,6 +122630,7 @@ window.PROOF_GRAPH = {
    "value": 62.84787574717584,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-MISSION does not re-run",
     "uses SRC-E3-INCROPERA, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -119905,6 +122740,7 @@ window.PROOF_GRAPH = {
    "value": 33.72789763077099,
    "defined_in": "redesign/team/E3/claims.json",
    "reasons": [
+    "CALC-E3-SWEEP does not re-run",
     "uses ASM-E3-MOTOR-CP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-RTH-DESIGN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-E3-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -120512,7 +123348,7 @@ window.PROOF_GRAPH = {
    "note": "per harness SPEC.md (D-74); open the maker sheet before ordering (I1 H06)",
    "defined_in": "redesign/team/F1/claims.json",
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "SRC-F1-IEC60028",
@@ -120539,7 +123375,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1118
+   "importance": 1148
   },
   {
    "id": "ASM-F1-GROUND",
@@ -120557,7 +123393,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-F1-PUNCH",
@@ -120573,7 +123409,7 @@ window.PROOF_GRAPH = {
    "unit": "s",
    "defined_in": "redesign/team/F1/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-F1-GAUGES",
@@ -120588,7 +123424,7 @@ window.PROOF_GRAPH = {
    "unit": "AWG",
    "defined_in": "redesign/team/F1/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-F1-BUNDLE",
@@ -120617,7 +123453,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-F1-WIRE-OD",
@@ -120669,7 +123505,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1146
+   "importance": 1176
   },
   {
    "id": "ASM-F1-COOLING",
@@ -120692,7 +123528,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1118
+   "importance": 1148
   },
   {
    "id": "ASM-F1-R-CONTACT",
@@ -120710,7 +123546,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-F1-R-BOARD",
@@ -120725,7 +123561,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-F1-SERVO-STALL",
@@ -120755,7 +123591,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "defined_in": "redesign/team/F1/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-F1-R-XT30U",
@@ -120773,7 +123609,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-F1-PMOD-CONDUCTORS",
@@ -120897,8 +123733,12 @@ window.PROOF_GRAPH = {
     "t_desc": 50.0
    },
    "defined_in": "redesign/team/F1/claims.json",
-   "status": "CHECKED",
-   "importance": 1115
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1145
   },
   {
    "id": "CALC-F1-I-DESIGN",
@@ -120979,7 +123819,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/F1/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CALC-F1-WIRES",
@@ -121013,7 +123853,8 @@ window.PROOF_GRAPH = {
     "r_contact": "ASM-F1-R-CONTACT",
     "r_board": "ASM-F1-R-BOARD",
     "v": "P:battery.v_nom",
-    "r_xt30": "ASM-F1-R-XT30U"
+    "r_xt30": "ASM-F1-R-XT30U",
+    "drop_allow": "CL-E1-DROP-ALLOW"
    },
    "units": {
     "ilim": "A",
@@ -121025,7 +123866,8 @@ window.PROOF_GRAPH = {
     "l_ur": "m",
     "l_ul": "m",
     "l_lr": "m",
-    "l_ll": "m"
+    "l_ll": "m",
+    "drop_allow": "%"
    },
    "outputs": {
     "main_awg": 10,
@@ -121077,7 +123919,10 @@ window.PROOF_GRAPH = {
     "drop_cont_pct": 1.8575501547128186,
     "drop_peak_pct": 5.680365649079135,
     "main_loss_w_cont": 2.557086319973969,
-    "esc_len_allow_m": 0.560136307190062,
+    "esc_len_5pct_m": 0.560136307190062,
+    "esc_len_allow_m": 1.9066410806505474,
+    "esc_len_max_m": 0.7006309677718234,
+    "drop_peak_over_5pct": 0.6803656490791354,
     "xt30_drop_pct": 0.4021621621621621
    },
    "input_values": {
@@ -121207,11 +124052,12 @@ window.PROOF_GRAPH = {
     "r_contact": 0.0008,
     "r_board": 0.0006,
     "v": 14.8,
-    "r_xt30": 0.0024
+    "r_xt30": 0.0024,
+    "drop_allow": 11.520643492002746
    },
    "defined_in": "redesign/team/F1/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-F1-PACKLEAD",
@@ -121595,6 +124441,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/F1/claims.json",
    "reasons": [
+    "CALC-F1-PROFILE does not re-run",
     "uses ASM-F1-GROUND, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-E2-I-CLIMB-PESS, which is UNVERIFIED",
     "uses CL-E2-T-CLIMB-PESS, which is UNVERIFIED",
@@ -121610,7 +124457,7 @@ window.PROOF_GRAPH = {
     "uses CL-E2-T-DESCENT-PESS, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-F1-I-CONT",
@@ -121637,7 +124484,7 @@ window.PROOF_GRAPH = {
     "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-F1-DISC-REQ-CONT",
@@ -121884,12 +124731,13 @@ window.PROOF_GRAPH = {
     "uses ASM-F1-BUNDLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-COOLING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)",
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)",
     "uses CL-E1-IMAX-168-55, which is UNVERIFIED",
     "uses ASM-F1-R-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-R-BOARD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
-    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-DROP-ALLOW, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "margin": 0.9534785937795316,
@@ -121922,12 +124770,13 @@ window.PROOF_GRAPH = {
     "uses ASM-F1-BUNDLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-COOLING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)",
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)",
     "uses CL-E1-IMAX-168-55, which is UNVERIFIED",
     "uses ASM-F1-R-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-R-BOARD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
-    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-DROP-ALLOW, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -121967,12 +124816,13 @@ window.PROOF_GRAPH = {
     "uses ASM-F1-BUNDLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-COOLING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)",
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)",
     "uses CL-E1-IMAX-168-55, which is UNVERIFIED",
     "uses ASM-F1-R-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-R-BOARD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
-    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-DROP-ALLOW, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "margin": 0.31806688786909826,
@@ -122006,12 +124856,13 @@ window.PROOF_GRAPH = {
     "uses ASM-F1-BUNDLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-COOLING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)",
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)",
     "uses CL-E1-IMAX-168-55, which is UNVERIFIED",
     "uses ASM-F1-R-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-R-BOARD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
-    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-DROP-ALLOW, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -122051,12 +124902,13 @@ window.PROOF_GRAPH = {
     "uses ASM-F1-BUNDLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-COOLING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)",
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)",
     "uses CL-E1-IMAX-168-55, which is UNVERIFIED",
     "uses ASM-F1-R-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-R-BOARD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
-    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-DROP-ALLOW, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "margin": 0.08340161604450458,
@@ -122097,12 +124949,13 @@ window.PROOF_GRAPH = {
     "uses ASM-F1-BUNDLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-COOLING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)",
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)",
     "uses CL-E1-IMAX-168-55, which is UNVERIFIED",
     "uses ASM-F1-R-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-R-BOARD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
-    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-DROP-ALLOW, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "margin": 0.4146199881246074,
@@ -122144,12 +124997,13 @@ window.PROOF_GRAPH = {
     "uses ASM-F1-BUNDLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-COOLING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)",
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)",
     "uses CL-E1-IMAX-168-55, which is UNVERIFIED",
     "uses ASM-F1-R-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-R-BOARD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
-    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-DROP-ALLOW, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "margin": 0.04762911022163117,
@@ -122190,12 +125044,13 @@ window.PROOF_GRAPH = {
     "uses ASM-F1-BUNDLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-COOLING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)",
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)",
     "uses CL-E1-IMAX-168-55, which is UNVERIFIED",
     "uses ASM-F1-R-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-R-BOARD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
-    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-DROP-ALLOW, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "margin": 0.16318600855903895,
@@ -122229,12 +125084,13 @@ window.PROOF_GRAPH = {
     "uses ASM-F1-BUNDLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-COOLING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)",
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)",
     "uses CL-E1-IMAX-168-55, which is UNVERIFIED",
     "uses ASM-F1-R-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-R-BOARD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
-    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-DROP-ALLOW, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -122267,22 +125123,23 @@ window.PROOF_GRAPH = {
     "uses ASM-F1-BUNDLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-COOLING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)",
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)",
     "uses CL-E1-IMAX-168-55, which is UNVERIFIED",
     "uses ASM-F1-R-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-R-BOARD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
-    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-DROP-ALLOW, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
-   "id": "CL-F1-ESC-LEN-ALLOW",
+   "id": "CL-F1-ESC-LEN-MAX",
    "type": "claim",
-   "title": "Longest 16 AWG ESC lead that keeps the 100 A drop <= 5 %",
+   "title": "Longest routed 16 AWG ESC lead (F2 cut list)",
    "calc": "CALC-F1-WIRES",
-   "output": "esc_len_allow_m",
+   "output": "esc_len_max_m",
    "unit": "m",
    "parts": [
     "PRP-002-UR",
@@ -122290,8 +125147,92 @@ window.PROOF_GRAPH = {
     "PRP-002-LR",
     "PRP-002-LL"
    ],
+   "how": "Tape measure on the cut pairs; = max of CL-F2-ESC-LEN-UR / UL / LR / LL.",
+   "value": 0.7006309677718234,
+   "defined_in": "redesign/team/F1/claims.json",
+   "reasons": [
+    "uses CL-F1-I-CONT, which is UNVERIFIED",
+    "uses CL-F1-PROFILE, which is UNVERIFIED",
+    "uses ASM-F1-WIRE-OD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-F2-ESC-LEN-UR, which is UNVERIFIED",
+    "uses CL-F2-ESC-LEN-UL, which is UNVERIFIED",
+    "uses CL-F2-ESC-LEN-LR, which is UNVERIFIED",
+    "uses CL-F2-ESC-LEN-LL, which is UNVERIFIED",
+    "uses ASM-F1-BUNDLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-F1-COOLING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)",
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)",
+    "uses CL-E1-IMAX-168-55, which is UNVERIFIED",
+    "uses ASM-F1-R-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-F1-R-BOARD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-DROP-ALLOW, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 2
+  },
+  {
+   "id": "CL-F1-ESC-LEN-ALLOW",
+   "type": "claim",
+   "title": "Longest 16 AWG ESC lead that keeps the 100 A drop within E1's allowable",
+   "calc": "CALC-F1-WIRES",
+   "output": "esc_len_allow_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-F1-ESC-LEN-MAX",
+    "resolved": 0.7006309677718234
+   },
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
    "how": "F2 cut list: every ESC lead <= this length (CR-F1-25); T-F1-DROP on the longest branch.",
-   "note": "R5: with one XT30U per branch (D-74) the 5 % guideline length is below F2's longest lead; WB-11 makes 5 % a guideline, so this claim carries no limit. Measure the built branch (T-F1-DROP).",
+   "note": "CDR-03 / CDR-EL-04 (2026-11-13): the limit is back. The length is now the one at which the farthest ESC's 100 A drop reaches CL-E1-DROP-ALLOW (the drop at which R-HOVER-TW is just held, on the more pessimistic of E1's two motor bounds), and it must be at least F2's longest lead. R5 had removed the limit when the XT30U (D-74) put the 5 % guideline length below the longest lead; that length is CL-F1-ESC-LEN-5PCT.",
+   "value": 1.9066410806505474,
+   "defined_in": "redesign/team/F1/claims.json",
+   "reasons": [
+    "uses CL-F1-I-CONT, which is UNVERIFIED",
+    "uses CL-F1-PROFILE, which is UNVERIFIED",
+    "uses ASM-F1-WIRE-OD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-F2-ESC-LEN-UR, which is UNVERIFIED",
+    "uses CL-F2-ESC-LEN-UL, which is UNVERIFIED",
+    "uses CL-F2-ESC-LEN-LR, which is UNVERIFIED",
+    "uses CL-F2-ESC-LEN-LL, which is UNVERIFIED",
+    "uses ASM-F1-BUNDLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-F1-COOLING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)",
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)",
+    "uses CL-E1-IMAX-168-55, which is UNVERIFIED",
+    "uses ASM-F1-R-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-F1-R-BOARD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-DROP-ALLOW, which is UNVERIFIED",
+    "uses CL-F1-ESC-LEN-MAX, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 1.721320022028328,
+   "importance": 1
+  },
+  {
+   "id": "CL-F1-ESC-LEN-5PCT",
+   "type": "claim",
+   "title": "Longest 16 AWG ESC lead for a 5 % drop at 100 A (WB-11 guideline, not met)",
+   "calc": "CALC-F1-WIRES",
+   "output": "esc_len_5pct_m",
+   "unit": "m",
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Information: compare with CL-F1-ESC-LEN-MAX. T-F1-DROP on the longest branch.",
+   "note": "All four routed leads (0.564-0.701 m, D-85...D-89) are longer than this: the 5 % guideline is exceeded and accepted (D-74, D-117). No limit here; the limit is on CL-F1-ESC-LEN-ALLOW. Do not go to 14 AWG on the right pair (+26 g REVIEWER EST, CDR-EL-04) unless T-F1-DROP or the stand shows a thrust shortfall.",
    "value": 0.560136307190062,
    "defined_in": "redesign/team/F1/claims.json",
    "reasons": [
@@ -122305,12 +125246,13 @@ window.PROOF_GRAPH = {
     "uses ASM-F1-BUNDLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-COOLING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)",
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)",
     "uses CL-E1-IMAX-168-55, which is UNVERIFIED",
     "uses ASM-F1-R-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-R-BOARD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
-    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-DROP-ALLOW, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -122342,12 +125284,13 @@ window.PROOF_GRAPH = {
     "uses ASM-F1-BUNDLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-COOLING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)",
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)",
     "uses CL-E1-IMAX-168-55, which is UNVERIFIED",
     "uses ASM-F1-R-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-R-BOARD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
-    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-DROP-ALLOW, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -122473,15 +125416,16 @@ window.PROOF_GRAPH = {
     "uses ASM-F1-BUNDLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-COOLING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)",
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)",
     "uses CL-E1-IMAX-168-55, which is UNVERIFIED",
     "uses ASM-F1-R-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-R-BOARD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
-    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-DROP-ALLOW, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CL-F1-DROP-CONT",
@@ -122519,12 +125463,13 @@ window.PROOF_GRAPH = {
     "uses ASM-F1-BUNDLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-COOLING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)",
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)",
     "uses CL-E1-IMAX-168-55, which is UNVERIFIED",
     "uses ASM-F1-R-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-R-BOARD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
-    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-DROP-ALLOW, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "margin": 0.0712249226435907,
@@ -122533,10 +125478,15 @@ window.PROOF_GRAPH = {
   {
    "id": "CL-F1-DROP-PEAK",
    "type": "claim",
-   "title": "Voltage drop pack to the farthest ESC at the 100 A limiter (5 % guideline, WB-11)",
+   "title": "Voltage drop pack to the farthest ESC at the 100 A limiter",
    "calc": "CALC-F1-WIRES",
    "output": "drop_peak_pct",
    "unit": "%",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-E1-DROP-ALLOW",
+    "resolved": 11.520643492002746
+   },
    "parts": [
     "PWR-001",
     "PWR-002",
@@ -122548,7 +125498,7 @@ window.PROOF_GRAPH = {
     "PRP-002-LL"
    ],
    "how": "T-F1-DROP scaled with the XT30U plugs in; stand log at full throttle. Go to 14 AWG on the right-hand leads only if the measured drop costs real thrust (WB-11).",
-   "note": "D-74 accepts the XT30U (CL-F1-XT30U-DROP) over F1's 5 % guideline: WB-11 makes 5 % a guideline, not a hardware limit, so this claim carries no limit; the number is the one to measure.",
+   "note": "CDR-03 / CDR-EL-04 (2026-11-13): the limit is back, derived from E1's thrust need: CL-E1-DROP-ALLOW is the 100 A drop at which R-HOVER-TW is just held (worst pack T/W 1.6, fresh 2.0) on the more pessimistic of E1's two motor bounds. Comparing the FARTHEST branch with it is conservative: E1's limit is for the equivalent path of all four. D-74 accepted the XT30U over F1's 5 % guideline (WB-11); R5 then removed the limit instead of replacing it. The guideline is exceeded by CL-F1-DROP-OVER-5PCT and stays F1's design target.",
    "value": 5.680365649079135,
    "defined_in": "redesign/team/F1/claims.json",
    "reasons": [
@@ -122562,12 +125512,58 @@ window.PROOF_GRAPH = {
     "uses ASM-F1-BUNDLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-COOLING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)",
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)",
     "uses CL-E1-IMAX-168-55, which is UNVERIFIED",
     "uses ASM-F1-R-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-R-BOARD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
-    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-DROP-ALLOW, which is UNVERIFIED",
+    "uses CL-E1-DROP-ALLOW, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.5069402457404172,
+   "importance": 1
+  },
+  {
+   "id": "CL-F1-DROP-OVER-5PCT",
+   "type": "claim",
+   "title": "100 A drop above the 5 % guideline (WB-11), percentage points",
+   "calc": "CALC-F1-WIRES",
+   "output": "drop_peak_over_5pct",
+   "unit": "%",
+   "parts": [
+    "PWR-001",
+    "PWR-002",
+    "PWR-003",
+    "PWR-004",
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Information: T-F1-DROP. Positive = the guideline is exceeded.",
+   "note": "No limit: WB-11 makes 5 % a guideline and D-74 accepted the XT30U. The hard limit is on CL-F1-DROP-PEAK.",
+   "value": 0.6803656490791354,
+   "defined_in": "redesign/team/F1/claims.json",
+   "reasons": [
+    "uses CL-F1-I-CONT, which is UNVERIFIED",
+    "uses CL-F1-PROFILE, which is UNVERIFIED",
+    "uses ASM-F1-WIRE-OD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-F2-ESC-LEN-UR, which is UNVERIFIED",
+    "uses CL-F2-ESC-LEN-UL, which is UNVERIFIED",
+    "uses CL-F2-ESC-LEN-LR, which is UNVERIFIED",
+    "uses CL-F2-ESC-LEN-LL, which is UNVERIFIED",
+    "uses ASM-F1-BUNDLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-F1-COOLING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)",
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)",
+    "uses CL-E1-IMAX-168-55, which is UNVERIFIED",
+    "uses ASM-F1-R-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-F1-R-BOARD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
+    "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-DROP-ALLOW, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -122603,12 +125599,13 @@ window.PROOF_GRAPH = {
     "uses ASM-F1-BUNDLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-COOLING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)",
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)",
     "uses CL-E1-IMAX-168-55, which is UNVERIFIED",
     "uses ASM-F1-R-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-F1-R-BOARD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)",
     "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-E1-DROP-ALLOW, which is UNVERIFIED",
     "uses ASM-F1-R-XT30U, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
@@ -122942,7 +125939,7 @@ window.PROOF_GRAPH = {
    "procedure": "20 A load step from the pack; meter across pack terminals and across one ESC's pads; R = dV/dI. Pass: drop <= 2 % at 30 A.",
    "defined_in": "redesign/team/F1/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "T-F1-SENSOR-CAL",
@@ -123033,14 +126030,14 @@ window.PROOF_GRAPH = {
     "esc_min": 0.5638832883852334,
     "phase_reach_max": 0.13141016253268345,
     "dshot_max": 0.688582353931683,
-    "main_path": 0.12271722374664987,
-    "main_1": 0.03400778826901726,
-    "main_2": 0.08870943547763262,
+    "main_path": 0.12623377341459197,
+    "main_1": 0.035376705810928485,
+    "main_2": 0.0908570676036635,
     "i2c_total": 0.5223567691494556,
     "rx": 0.14544223162078296,
     "servo_max": 0.6022674187152275,
     "cap_lead_max": 0.01922497311824849,
-    "pmod": 0.172884957545944,
+    "pmod": 0.1751839286608226,
     "servo_own_max": 0.062004893224950716
    },
    "input_values": {
@@ -125322,7 +128319,7 @@ window.PROOF_GRAPH = {
         "P"
        ],
        [
-        -0.003,
+        -0.002,
         -0.0403,
         0.046,
         "P"
@@ -125330,13 +128327,13 @@ window.PROOF_GRAPH = {
        [
         -0.0085,
         -0.0403,
-        0.0514,
+        0.0537,
         "P"
        ],
        [
         -0.0145,
         -0.0403,
-        0.0514,
+        0.0537,
         "E"
        ]
       ]
@@ -125355,19 +128352,19 @@ window.PROOF_GRAPH = {
        [
         -0.0145,
         -0.0545,
-        0.0484,
+        0.0507,
         "P"
        ],
        [
         -0.0085,
         -0.0545,
-        0.0514,
+        0.0537,
         "P"
        ],
        [
         -0.003,
         -0.0532,
-        0.044,
+        0.0455,
         "P"
        ],
        [
@@ -125416,13 +128413,13 @@ window.PROOF_GRAPH = {
        [
         -0.0612,
         -0.034,
-        0.0506,
+        0.0529,
         "F"
        ],
        [
         -0.0685,
         -0.0335,
-        0.0506,
+        0.0529,
         "F"
        ],
        [
@@ -125800,7 +128797,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/F2/claims.json",
    "status": "CHECKED",
-   "importance": 1139
+   "importance": 1169
   },
   {
    "id": "CALC-F2-PHASE-EXT",
@@ -125848,12 +128845,12 @@ window.PROOF_GRAPH = {
     "od": "AWG,mm"
    },
    "outputs": {
-    "mass_g": 141.1205764887846,
-    "cg_x": 0.06504404161595652,
-    "cg_y": -0.0012336654063773787,
-    "cg_z": 0.015590699719592267,
+    "mass_g": 141.14586517104826,
+    "cg_x": 0.06502011492966968,
+    "cg_y": -0.0012394016772330936,
+    "cg_z": 0.015610060778303661,
     "plugs_g": 13.8164,
-    "pod_g": 38.2006121028213,
+    "pod_g": 38.22590078508497,
     "side_g": 44.80659586236298
    },
    "input_values": {
@@ -128135,7 +131132,7 @@ window.PROOF_GRAPH = {
         "P"
        ],
        [
-        -0.003,
+        -0.002,
         -0.0403,
         0.046,
         "P"
@@ -128143,13 +131140,13 @@ window.PROOF_GRAPH = {
        [
         -0.0085,
         -0.0403,
-        0.0514,
+        0.0537,
         "P"
        ],
        [
         -0.0145,
         -0.0403,
-        0.0514,
+        0.0537,
         "E"
        ]
       ]
@@ -128168,19 +131165,19 @@ window.PROOF_GRAPH = {
        [
         -0.0145,
         -0.0545,
-        0.0484,
+        0.0507,
         "P"
        ],
        [
         -0.0085,
         -0.0545,
-        0.0514,
+        0.0537,
         "P"
        ],
        [
         -0.003,
         -0.0532,
-        0.044,
+        0.0455,
         "P"
        ],
        [
@@ -128229,13 +131226,13 @@ window.PROOF_GRAPH = {
        [
         -0.0612,
         -0.034,
-        0.0506,
+        0.0529,
         "F"
        ],
        [
         -0.0685,
         -0.0335,
-        0.0506,
+        0.0529,
         "F"
        ],
        [
@@ -128865,7 +131862,7 @@ window.PROOF_GRAPH = {
       0.3,
       -0.0612,
       -0.034,
-      0.0506
+      0.0529
      ],
      [
       "I2C Y-splice, 4 conductors",
@@ -129172,7 +132169,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/F2/claims.json",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "CALC-F2-INSTALL",
@@ -131476,7 +134473,7 @@ window.PROOF_GRAPH = {
         "P"
        ],
        [
-        -0.003,
+        -0.002,
         -0.0403,
         0.046,
         "P"
@@ -131484,13 +134481,13 @@ window.PROOF_GRAPH = {
        [
         -0.0085,
         -0.0403,
-        0.0514,
+        0.0537,
         "P"
        ],
        [
         -0.0145,
         -0.0403,
-        0.0514,
+        0.0537,
         "E"
        ]
       ]
@@ -131509,19 +134506,19 @@ window.PROOF_GRAPH = {
        [
         -0.0145,
         -0.0545,
-        0.0484,
+        0.0507,
         "P"
        ],
        [
         -0.0085,
         -0.0545,
-        0.0514,
+        0.0537,
         "P"
        ],
        [
         -0.003,
         -0.0532,
-        0.044,
+        0.0455,
         "P"
        ],
        [
@@ -131570,13 +134567,13 @@ window.PROOF_GRAPH = {
        [
         -0.0612,
         -0.034,
-        0.0506,
+        0.0529,
         "F"
        ],
        [
         -0.0685,
         -0.0335,
-        0.0506,
+        0.0529,
         "F"
        ],
        [
@@ -132188,8 +135185,8 @@ window.PROOF_GRAPH = {
     "L_link": "m"
    },
    "outputs": {
-    "v_servo": 5.747821299005243,
-    "v_link_drop": 0.09275686764410224,
+    "v_servo": 5.747022237951607,
+    "v_link_drop": 0.09355592869773764,
     "v_lead_drop": 0.1594218333506556
    },
    "input_values": {
@@ -132204,7 +135201,7 @@ window.PROOF_GRAPH = {
      0.2128,
      0.1339
     ],
-    "L_link": 0.172884957545944,
+    "L_link": 0.1751839286608226,
     "n": [
      1,
      4,
@@ -132264,8 +135261,8 @@ window.PROOF_GRAPH = {
     "od": "AWG,mm"
    },
    "outputs": {
-    "cg_gap_max": 0.00819961784436306,
-    "gap_pod": 0.00819961784436306,
+    "cg_gap_max": 0.008247531048387026,
+    "gap_pod": 0.008247531048387026,
     "gap_side": 0.001406521789914777
    },
    "input_values": {
@@ -134547,7 +137544,7 @@ window.PROOF_GRAPH = {
         "P"
        ],
        [
-        -0.003,
+        -0.002,
         -0.0403,
         0.046,
         "P"
@@ -134555,13 +137552,13 @@ window.PROOF_GRAPH = {
        [
         -0.0085,
         -0.0403,
-        0.0514,
+        0.0537,
         "P"
        ],
        [
         -0.0145,
         -0.0403,
-        0.0514,
+        0.0537,
         "E"
        ]
       ]
@@ -134580,19 +137577,19 @@ window.PROOF_GRAPH = {
        [
         -0.0145,
         -0.0545,
-        0.0484,
+        0.0507,
         "P"
        ],
        [
         -0.0085,
         -0.0545,
-        0.0514,
+        0.0537,
         "P"
        ],
        [
         -0.003,
         -0.0532,
-        0.044,
+        0.0455,
         "P"
        ],
        [
@@ -134641,13 +137638,13 @@ window.PROOF_GRAPH = {
        [
         -0.0612,
         -0.034,
-        0.0506,
+        0.0529,
         "F"
        ],
        [
         -0.0685,
         -0.0335,
-        0.0506,
+        0.0529,
         "F"
        ],
        [
@@ -135277,7 +138274,7 @@ window.PROOF_GRAPH = {
       0.3,
       -0.0612,
       -0.034,
-      0.0506
+      0.0529
      ],
      [
       "I2C Y-splice, 4 conductors",
@@ -135661,7 +138658,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "ASM-F2-FACTORY-LEADS",
@@ -135746,7 +138743,7 @@ window.PROOF_GRAPH = {
      [
       -0.0105,
       -0.04,
-      0.0478
+      0.0501
      ]
     ],
     [
@@ -135754,7 +138751,7 @@ window.PROOF_GRAPH = {
      [
       -0.0105,
       -0.052,
-      0.0478
+      0.0501
      ]
     ],
     [
@@ -135778,7 +138775,7 @@ window.PROOF_GRAPH = {
      [
       -0.0612,
       -0.034,
-      0.0506
+      0.0529
      ]
     ],
     [
@@ -135933,7 +138930,7 @@ window.PROOF_GRAPH = {
     "uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "CL-F2-ESC-LEN-UL",
@@ -135952,7 +138949,7 @@ window.PROOF_GRAPH = {
     "uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "CL-F2-ESC-LEN-LR",
@@ -135971,7 +138968,7 @@ window.PROOF_GRAPH = {
     "uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "CL-F2-ESC-LEN-LL",
@@ -135990,7 +138987,7 @@ window.PROOF_GRAPH = {
     "uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "CL-F2-MAIN-LEN",
@@ -136014,13 +139011,13 @@ window.PROOF_GRAPH = {
    ],
    "how": "Measure on the power-frame mock-up (T-F2-FIT, T-PWR-FIT)",
    "note": "10 AWG per CR-F1-18 (8 AWG cannot make the 24.8 mm drop)",
-   "value": 0.12271722374664987,
+   "value": 0.12623377341459197,
    "defined_in": "redesign/team/F2/claims.json",
    "reasons": [
     "uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.1818851750223342,
+   "margin": 0.15844151056938688,
    "importance": 1
   },
   {
@@ -136036,7 +139033,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "T-PWR-FIT: cut, form, measure before soldering",
    "note": "F1 sized R and rise on 0.030 m (CR-F1-18)",
-   "value": 0.03400778826901726,
+   "value": 0.035376705810928485,
    "defined_in": "redesign/team/F2/claims.json",
    "reasons": [
     "uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)"
@@ -136057,7 +139054,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "T-PWR-FIT: cut, form, measure before soldering",
    "note": "F1 sized R and rise on 0.050 m (CR-F1-18)",
-   "value": 0.08870943547763262,
+   "value": 0.0908570676036635,
    "defined_in": "redesign/team/F2/claims.json",
    "reasons": [
     "uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)"
@@ -136111,7 +139108,7 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/team/F2/claims.json",
    "reasons": [
     "uses P:performance.hover_current_a, which is UNVERIFIED (cites CL-E1-HOVER-I-55, which is UNVERIFIED)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)"
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -136133,7 +139130,7 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/team/F2/claims.json",
    "reasons": [
     "uses P:performance.hover_current_a, which is UNVERIFIED (cites CL-E1-HOVER-I-55, which is UNVERIFIED)",
-    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)"
+    "uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I-BAT, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -136300,7 +139297,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "T-F1-SERVO-STALL: measure at the servo plug with the servo stalled",
    "note": "D-74 case S: includes the board link's Vx / GND drop (CL-F2-SERVO-LINK-DROP, 4 Vx + 3 GND conductors); case U has no link cable. The servo + / - are 22 AWG from the FC pad to the wing recess (the 26 AWG leads gave 5.61 V)",
-   "value": 5.747821299005243,
+   "value": 5.747022237951607,
    "defined_in": "redesign/team/F2/claims.json",
    "reasons": [
     "uses CL-F2-SERVO-LEN, which is UNVERIFIED",
@@ -136310,7 +139307,7 @@ window.PROOF_GRAPH = {
     "uses CL-F2-PMOD-LEN, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.008389701579867136,
+   "margin": 0.008249515430106488,
    "importance": 1
   },
   {
@@ -136325,7 +139322,7 @@ window.PROOF_GRAPH = {
     "AVN-001"
    ],
    "how": "BOARD-CHECK.md step 7 / T-F1-SERVO-STALL: Vx at the PDB contacts minus Vx at the FC header",
-   "value": 0.09275686764410224,
+   "value": 0.09355592869773764,
    "defined_in": "redesign/team/F2/claims.json",
    "reasons": [
     "uses CL-F2-SERVO-LEN, which is UNVERIFIED",
@@ -136393,7 +139390,7 @@ window.PROOF_GRAPH = {
     "AVN-001"
    ],
    "how": "T-F2-FIT: lay the ribbon over the deck front edge and through the under-pack channel, measure",
-   "value": 0.172884957545944,
+   "value": 0.1751839286608226,
    "defined_in": "redesign/team/F2/claims.json",
    "reasons": [
     "uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)"
@@ -136422,7 +139419,7 @@ window.PROOF_GRAPH = {
     "HRN-002-L"
    ],
    "how": "T-F2-WEIGH: weigh each made-up lead before installation",
-   "value": 141.1205764887846,
+   "value": 141.14586517104826,
    "defined_in": "redesign/team/F2/claims.json",
    "reasons": [
     "uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)",
@@ -136430,8 +139427,8 @@ window.PROOF_GRAPH = {
     "uses P:mass.allocation_g.harness, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.0061931233184183586,
-   "importance": 1115
+   "margin": 0.006015034006702415,
+   "importance": 1145
   },
   {
    "id": "CL-F2-CG-X",
@@ -136446,7 +139443,7 @@ window.PROOF_GRAPH = {
     "HRN-002-L"
    ],
    "how": "from the weighed leads and their stations",
-   "value": 0.06504404161595652,
+   "value": 0.06502011492966968,
    "defined_in": "redesign/team/F2/claims.json",
    "reasons": [
     "uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)",
@@ -136574,14 +139571,14 @@ window.PROOF_GRAPH = {
    ],
    "how": "python -I redesign/fusion/check.py: no cg WARN on HRN parts; T-F2-WEIGH stations",
    "note": "bundle legs sized by the wire mass each carries, so the body centroid stands for the wire mass",
-   "value": 0.00819961784436306,
+   "value": 0.008247531048387026,
    "defined_in": "redesign/team/F2/claims.json",
    "reasons": [
     "uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)",
     "uses P:harness.fittings_table, which is UNVERIFIED (cites ASM-F2-WIRE-GPM, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.18003821556369404,
+   "margin": 0.17524689516129743,
    "importance": 1
   },
   {
@@ -136613,7 +139610,7 @@ window.PROOF_GRAPH = {
    "procedure": "0.1 g scale; update ASM-F2-WIRE-GPM and the wire table",
    "defined_in": "redesign/team/F2/claims.json",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "T-F2-DSHOT",
@@ -136932,6 +139929,8 @@ window.PROOF_GRAPH = {
    "value": 0.0,
    "defined_in": "redesign/team/F3/claims.avn_data.json",
    "status": "CHECKED",
+   "margin": 0.0,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -137079,7 +140078,7 @@ window.PROOF_GRAPH = {
    "where": "12 PWM: 10 DShot, PWM 1-4 bi-directional DShot (V2 only, not Mini); groups incl. PWM 5-7 (TIM8); 1 I2C; SERIAL5 = GPS (UART5), SERIAL6 = RCIN (USART6), SERIAL1 = wireless module; BATT_VOLT_MULT 11.05, BATT_AMP_PERVLT 64 (V2); 90 A cont / 215 A peak sensing; FC BEC 5.2 V 4 A, servo BEC 5/6/7.2 V 8 A cont / 14 A peak; 52 x 32 x 17 mm, 40 g; microSD logging",
    "defined_in": "redesign/team/F3/claims.json",
    "status": "CHECKED",
-   "importance": 1150
+   "importance": 1180
   },
   {
    "id": "SRC-F3-HWDEF-COREWING",
@@ -137420,7 +140419,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1139
+   "importance": 1169
   },
   {
    "id": "ASM-F3-I2C-MAP",
@@ -137758,7 +140757,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/F3/claims.json",
    "status": "CHECKED",
-   "importance": 1139
+   "importance": 1169
   },
   {
    "id": "CALC-F3-FIT",
@@ -138459,7 +141458,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.014054054054054138,
-   "importance": 1139
+   "importance": 1169
   },
   {
    "id": "CL-F3-FC-H",
@@ -138704,7 +141703,7 @@ window.PROOF_GRAPH = {
    "note": "parameter names, units, ranges; output_motor_mask(): diff = roll_factor * rudder_dt * 0.5; AIRSPEED_MIN/MAX are AP_Int16; Q_M_SPIN_MAX documented range 0.9-1.0",
    "defined_in": "redesign/team/F4/claims.json",
    "status": "CHECKED",
-   "importance": 334
+   "importance": 339
   },
   {
    "id": "ASM-F4-DT-MIX",
@@ -138738,7 +141737,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 328
+   "importance": 333
   },
   {
    "id": "ASM-F4-RPM-LIN",
@@ -138751,7 +141750,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 326
+   "importance": 331
   },
   {
    "id": "ASM-F4-FW-RPM-REQ",
@@ -138766,7 +141765,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 323
+   "importance": 328
   },
   {
    "id": "ASM-F4-THRUST-SQ",
@@ -138818,7 +141817,7 @@ window.PROOF_GRAPH = {
    "unit": "m/s",
    "defined_in": "redesign/team/F4/claims.json",
    "status": "PROPOSED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "ASM-F4-TORSION-HI",
@@ -139286,7 +142285,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/F4/claims.json",
    "status": "CHECKED",
-   "importance": 326
+   "importance": 331
   },
   {
    "id": "CALC-F4-XOVER",
@@ -139979,6 +142978,8 @@ window.PROOF_GRAPH = {
     "uses P:fin_detail.mount.cant_sense_UR, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/fins/params.json: R4: -1. The UR thrust side component points along -t = -(x_hat x r_hat): the UR prop end leans toward the wing plane (-z) and outboard (+y); every station follows by the quad mirrors (UL: outboard -y and -z; LR: +y and +z; LL: -y and +z). The R3 print (+1) reversed hover yaw. Prints A (UR, LL) and B (UL, LR) keep their station assignment; the plate geometry of each print changed. H1/H2 verify with an inclinometer and the hanging yaw test before the first hover (D-52))"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.0,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -140203,7 +143204,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.18187152502216541,
-   "importance": 321
+   "importance": 326
   },
   {
    "id": "CL-F4-FW-RPM-CAP",
@@ -140236,7 +143237,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.025321496295660068,
-   "importance": 323
+   "importance": 328
   },
   {
    "id": "CL-F4-XOVER-RLL",
@@ -140836,6 +143837,8 @@ window.PROOF_GRAPH = {
    "value": 0,
    "defined_in": "redesign/team/F4/claims.json",
    "status": "CHECKED",
+   "margin": 0.0,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -141052,7 +144055,7 @@ window.PROOF_GRAPH = {
    "value": 25.0,
    "defined_in": "redesign/team/F4/claims.json",
    "reasons": [
-    "uses P:propulsion.motor_max_a, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-34 (CR-A2-12b): maker rating 25 A / 30 s; the 100 A limiter holds 24.8 A per motor (CL-E1-ILIM-I); thermally 10 s at full throttle (env.full_throttle_max_s))"
+    "uses P:propulsion.motor_max_a, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: D-34 (CR-A2-12b): maker rating 25 A / 30 s, a winding current. D-116 (CDR-05): the 100 A limiter holds 24.8 A per ESC on the battery side (CL-E1-ILIM-I-BAT) but about 30 A in the winding (CL-E1-ILIM-I, fails; limiter value decided on the stand, CDR decision B7); thermally 10 s at full throttle (env.full_throttle_max_s))"
    ],
    "status": "UNVERIFIED",
    "margin": 0.0,
@@ -143179,7 +146182,11 @@ window.PROOF_GRAPH = {
     "g": 9.80665
    },
    "defined_in": "redesign/team/H1/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 22
   },
   {
@@ -143196,6 +146203,7 @@ window.PROOF_GRAPH = {
    "value": 24.395330630291976,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-PROOF does not re-run",
     "uses CL-C1-PROOF-P1-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P2-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P3-LIM, which is UNVERIFIED",
@@ -143231,6 +146239,7 @@ window.PROOF_GRAPH = {
    "value": 0.0,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-PROOF does not re-run",
     "uses CL-C1-PROOF-P1-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P2-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P3-LIM, which is UNVERIFIED",
@@ -143267,6 +146276,7 @@ window.PROOF_GRAPH = {
    "value": 0.2736113137968142,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-PROOF does not re-run",
     "uses CL-C1-PROOF-P1-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P2-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P3-LIM, which is UNVERIFIED",
@@ -143298,6 +146308,7 @@ window.PROOF_GRAPH = {
    "value": 48.79066126058395,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-PROOF does not re-run",
     "uses CL-C1-PROOF-P1-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P2-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P3-LIM, which is UNVERIFIED",
@@ -143328,6 +146339,7 @@ window.PROOF_GRAPH = {
    "value": 0.7897667159228651,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-PROOF does not re-run",
     "uses CL-C1-PROOF-P1-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P2-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P3-LIM, which is UNVERIFIED",
@@ -143358,6 +146370,7 @@ window.PROOF_GRAPH = {
    "value": 0.6201525445684279,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-PROOF does not re-run",
     "uses CL-C1-PROOF-P1-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P2-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P3-LIM, which is UNVERIFIED",
@@ -143388,6 +146401,7 @@ window.PROOF_GRAPH = {
    "value": 0.45455887662828215,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-PROOF does not re-run",
     "uses CL-C1-PROOF-P1-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P2-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P3-LIM, which is UNVERIFIED",
@@ -143418,6 +146432,7 @@ window.PROOF_GRAPH = {
    "value": 0.6231532793470038,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-PROOF does not re-run",
     "uses CL-C1-PROOF-P1-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P2-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P3-LIM, which is UNVERIFIED",
@@ -143448,6 +146463,7 @@ window.PROOF_GRAPH = {
    "value": 2.05128,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-PROOF does not re-run",
     "uses CL-C1-PROOF-P1-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P2-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P3-LIM, which is UNVERIFIED",
@@ -143478,6 +146494,7 @@ window.PROOF_GRAPH = {
    "value": 0.5022933894232309,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-PROOF does not re-run",
     "uses CL-C1-PROOF-P1-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P2-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P3-LIM, which is UNVERIFIED",
@@ -143508,6 +146525,7 @@ window.PROOF_GRAPH = {
    "value": 1.6719371269673227,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-PROOF does not re-run",
     "uses CL-C1-PROOF-P1-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P2-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P3-LIM, which is UNVERIFIED",
@@ -143538,6 +146556,7 @@ window.PROOF_GRAPH = {
    "value": 0.028749999999999998,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-PROOF does not re-run",
     "uses CL-C1-PROOF-P1-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P2-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P3-LIM, which is UNVERIFIED",
@@ -143568,6 +146587,7 @@ window.PROOF_GRAPH = {
    "value": 21.08508627927301,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-PROOF does not re-run",
     "uses CL-C1-PROOF-P1-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P2-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P3-LIM, which is UNVERIFIED",
@@ -143598,6 +146618,7 @@ window.PROOF_GRAPH = {
    "value": 57.20268344184655,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-PROOF does not re-run",
     "uses CL-C1-PROOF-P1-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P2-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P3-LIM, which is UNVERIFIED",
@@ -143628,6 +146649,7 @@ window.PROOF_GRAPH = {
    "value": 73.75,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-PROOF does not re-run",
     "uses CL-C1-PROOF-P1-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P2-LIM, which is UNVERIFIED",
     "uses CL-C1-PROOF-P3-LIM, which is UNVERIFIED",
@@ -144256,7 +147278,11 @@ window.PROOF_GRAPH = {
     "g": 9.80665
    },
    "defined_in": "redesign/team/H1/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 3
   },
   {
@@ -144273,6 +147299,7 @@ window.PROOF_GRAPH = {
    "value": 1.6098718117157305,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-BEND does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses ASM-C4-E-TUBE-LO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
@@ -144296,6 +147323,7 @@ window.PROOF_GRAPH = {
    "value": 23.675649281645853,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-BEND does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses ASM-C4-E-TUBE-LO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
@@ -144320,6 +147348,7 @@ window.PROOF_GRAPH = {
    "value": 0.018294112860329146,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-BEND does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses ASM-C4-E-TUBE-LO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
@@ -144423,7 +147452,11 @@ window.PROOF_GRAPH = {
     "g": 9.80665
    },
    "defined_in": "redesign/team/H1/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 6
   },
   {
@@ -144440,6 +147473,7 @@ window.PROOF_GRAPH = {
    "value": 21.87019725796533,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-TORSION does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses ASM-C4-G-TUBE-LO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -144467,6 +147501,7 @@ window.PROOF_GRAPH = {
    "value": 0.019468478320921086,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-TORSION does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses ASM-C4-G-TUBE-LO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -144495,6 +147530,7 @@ window.PROOF_GRAPH = {
    "value": 8.878368480617196,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-TORSION does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses ASM-C4-G-TUBE-LO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -144518,6 +147554,7 @@ window.PROOF_GRAPH = {
    "value": 0.2583819000000006,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-TORSION does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses ASM-C4-G-TUBE-LO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -144545,6 +147582,7 @@ window.PROOF_GRAPH = {
    "value": 0.05473346091088779,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-TORSION does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses ASM-C4-G-TUBE-LO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -144573,6 +147611,7 @@ window.PROOF_GRAPH = {
    "value": 20.034000000000034,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-TORSION does not re-run",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses ASM-C4-G-TUBE-LO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -144674,7 +147713,11 @@ window.PROOF_GRAPH = {
     "g": 9.80665
    },
    "defined_in": "redesign/team/H1/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 8
   },
   {
@@ -144688,6 +147731,7 @@ window.PROOF_GRAPH = {
    "value": 2941.995,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-LEVER does not re-run",
     "uses CL-C6-STRIP-ANCHOR-F, which is UNVERIFIED",
     "uses CL-C6-STRIP-ANCHOR-F-EST, which is UNVERIFIED",
     "uses ASM-C6-INSERT-PULL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
@@ -144711,6 +147755,7 @@ window.PROOF_GRAPH = {
    "value": 2791.5712521160726,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-LEVER does not re-run",
     "uses CL-C6-STRIP-ANCHOR-F, which is UNVERIFIED",
     "uses CL-C6-STRIP-ANCHOR-F-EST, which is UNVERIFIED",
     "uses ASM-C6-INSERT-PULL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -144731,6 +147776,7 @@ window.PROOF_GRAPH = {
    "value": 1765.197,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-LEVER does not re-run",
     "uses CL-C6-STRIP-ANCHOR-F, which is UNVERIFIED",
     "uses CL-C6-STRIP-ANCHOR-F-EST, which is UNVERIFIED",
     "uses ASM-C6-INSERT-PULL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
@@ -144755,6 +147801,7 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
     "FAILS: margin -58.1% (2792 N vs <= 1765 N)",
+    "CALC-H1-LEVER does not re-run",
     "uses CL-C6-STRIP-ANCHOR-F, which is UNVERIFIED",
     "uses CL-C6-STRIP-ANCHOR-F-EST, which is UNVERIFIED",
     "uses ASM-C6-INSERT-PULL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -144781,6 +147828,7 @@ window.PROOF_GRAPH = {
    "value": 3.5186884962690783,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-LEVER does not re-run",
     "uses CL-C6-STRIP-ANCHOR-F, which is UNVERIFIED",
     "uses CL-C6-STRIP-ANCHOR-F-EST, which is UNVERIFIED",
     "uses ASM-C6-INSERT-PULL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
@@ -144800,6 +147848,7 @@ window.PROOF_GRAPH = {
    "value": 10.322789473684209,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-LEVER does not re-run",
     "uses CL-C6-STRIP-ANCHOR-F, which is UNVERIFIED",
     "uses CL-C6-STRIP-ANCHOR-F-EST, which is UNVERIFIED",
     "uses ASM-C6-INSERT-PULL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
@@ -144823,6 +147872,7 @@ window.PROOF_GRAPH = {
    "value": 65.37766666666666,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-LEVER does not re-run",
     "uses CL-C6-STRIP-ANCHOR-F, which is UNVERIFIED",
     "uses CL-C6-STRIP-ANCHOR-F-EST, which is UNVERIFIED",
     "uses ASM-C6-INSERT-PULL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
@@ -144847,6 +147897,7 @@ window.PROOF_GRAPH = {
    "value": 3.4409298245614033,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-LEVER does not re-run",
     "uses CL-C6-STRIP-ANCHOR-F, which is UNVERIFIED",
     "uses CL-C6-STRIP-ANCHOR-F-EST, which is UNVERIFIED",
     "uses ASM-C6-INSERT-PULL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
@@ -144890,7 +147941,11 @@ window.PROOF_GRAPH = {
     "g": 9.80665
    },
    "defined_in": "redesign/team/H1/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 3
   },
   {
@@ -144924,6 +147979,7 @@ window.PROOF_GRAPH = {
    "value": 4.995485206467041,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-D5 does not re-run",
     "uses CL-D5-F-PEAK-UPPER, which is UNVERIFIED",
     "uses CL-D5-F-PLATEAU-LOWER, which is UNVERIFIED",
     "uses CL-H1-T-U95, which is UNVERIFIED",
@@ -144951,6 +148007,7 @@ window.PROOF_GRAPH = {
    "value": 0.004845279811940523,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-D5 does not re-run",
     "uses CL-D5-F-PEAK-UPPER, which is UNVERIFIED",
     "uses CL-D5-F-PLATEAU-LOWER, which is UNVERIFIED",
     "uses CL-H1-T-U95, which is UNVERIFIED",
@@ -144972,6 +148029,7 @@ window.PROOF_GRAPH = {
    "value": 35.29202019855866,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-D5 does not re-run",
     "uses CL-D5-F-PEAK-UPPER, which is UNVERIFIED",
     "uses CL-D5-F-PLATEAU-LOWER, which is UNVERIFIED",
     "uses CL-H1-T-U95, which is UNVERIFIED",
@@ -145228,7 +148286,11 @@ window.PROOF_GRAPH = {
     "sf": 1.5
    },
    "defined_in": "redesign/team/H1/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 10
   },
   {
@@ -145242,6 +148304,7 @@ window.PROOF_GRAPH = {
    "value": 1612.5,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-FINPROOF does not re-run",
     "uses ASM-H1-FP-PRED, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-H1-SG, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-H1-SG-STACK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -145263,6 +148326,7 @@ window.PROOF_GRAPH = {
    "value": 800.0,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-FINPROOF does not re-run",
     "uses ASM-H1-FP-PRED, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-H1-SG, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-H1-SG-STACK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -145289,6 +148353,7 @@ window.PROOF_GRAPH = {
    "value": 0.0010474887629470394,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-FINPROOF does not re-run",
     "uses ASM-H1-FP-PRED, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-H1-SG, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-H1-SG-STACK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -145316,6 +148381,7 @@ window.PROOF_GRAPH = {
    "value": 19.2218014405584,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-FINPROOF does not re-run",
     "uses ASM-H1-FP-PRED, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-H1-SG, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-H1-SG-STACK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -145338,6 +148404,7 @@ window.PROOF_GRAPH = {
    "value": 1760.9523809523807,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-FINPROOF does not re-run",
     "uses ASM-H1-FP-PRED, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-H1-SG, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-H1-SG-STACK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -145359,6 +148426,7 @@ window.PROOF_GRAPH = {
    "value": 1743.8963627304436,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-FINPROOF does not re-run",
     "uses ASM-H1-FP-PRED, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-H1-SG, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-H1-SG-STACK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -145380,6 +148448,7 @@ window.PROOF_GRAPH = {
    "value": 0.6312500000000001,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-FINPROOF does not re-run",
     "uses ASM-H1-FP-PRED, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-H1-SG, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-H1-SG-STACK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -145401,6 +148470,7 @@ window.PROOF_GRAPH = {
    "value": 11.494685009945865,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-FINPROOF does not re-run",
     "uses ASM-H1-FP-PRED, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-H1-SG, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-H1-SG-STACK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -145427,6 +148497,7 @@ window.PROOF_GRAPH = {
    "value": 23.657322589998106,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-FINPROOF does not re-run",
     "uses ASM-H1-FP-PRED, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-H1-SG, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-H1-SG-STACK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -145450,6 +148521,7 @@ window.PROOF_GRAPH = {
    "value": 28.388787107997732,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-FINPROOF does not re-run",
     "uses ASM-H1-FP-PRED, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-H1-SG, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-H1-SG-STACK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -145750,7 +148822,11 @@ window.PROOF_GRAPH = {
     "g": 9.80665
    },
    "defined_in": "redesign/team/H1/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 5
   },
   {
@@ -145768,6 +148844,7 @@ window.PROOF_GRAPH = {
    "value": 59.25,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-SIDE-POD does not re-run",
     "uses CL-C1-FOOT-SIDE-DESIGN-ULT, which is UNVERIFIED",
     "uses CL-D5-SIDE-RIM-SF, which is UNVERIFIED",
     "uses CL-C5-SIM3D-SIDE-ULT, which is UNVERIFIED",
@@ -145798,6 +148875,7 @@ window.PROOF_GRAPH = {
    "value": 1.2672926036051309,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-SIDE-POD does not re-run",
     "uses CL-C1-FOOT-SIDE-DESIGN-ULT, which is UNVERIFIED",
     "uses CL-D5-SIDE-RIM-SF, which is UNVERIFIED",
     "uses CL-C5-SIM3D-SIDE-ULT, which is UNVERIFIED",
@@ -145823,6 +148901,7 @@ window.PROOF_GRAPH = {
    "value": 76.21620962710105,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-SIDE-POD does not re-run",
     "uses CL-C1-FOOT-SIDE-DESIGN-ULT, which is UNVERIFIED",
     "uses CL-D5-SIDE-RIM-SF, which is UNVERIFIED",
     "uses CL-C5-SIM3D-SIDE-ULT, which is UNVERIFIED",
@@ -145847,6 +148926,7 @@ window.PROOF_GRAPH = {
    "value": 51.37029604285736,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-SIDE-POD does not re-run",
     "uses CL-C1-FOOT-SIDE-DESIGN-ULT, which is UNVERIFIED",
     "uses CL-D5-SIDE-RIM-SF, which is UNVERIFIED",
     "uses CL-C5-SIM3D-SIDE-ULT, which is UNVERIFIED",
@@ -145871,6 +148951,7 @@ window.PROOF_GRAPH = {
    "value": 204.69804269769435,
    "defined_in": "redesign/team/H1/claims.json",
    "reasons": [
+    "CALC-H1-SIDE-POD does not re-run",
     "uses CL-C1-FOOT-SIDE-DESIGN-ULT, which is UNVERIFIED",
     "uses CL-D5-SIDE-RIM-SF, which is UNVERIFIED",
     "uses CL-C5-SIM3D-SIDE-ULT, which is UNVERIFIED",
@@ -145945,7 +149026,7 @@ window.PROOF_GRAPH = {
    "evidence": "redesign/team/H1/logs/T-H1-RESTRAINED-RUN.csv",
    "defined_in": "redesign/team/H1/claims.json",
    "status": "PROPOSED",
-   "importance": 1116
+   "importance": 40
   },
   {
    "id": "T-H1-PACK-PULL",
@@ -146093,10 +149174,10 @@ window.PROOF_GRAPH = {
   {
    "id": "ASM-I1-SHIPPING",
    "type": "assumption",
-   "title": "Shipping 120 + 30 USD",
-   "text": "Class-S shipping for all vendors is $120 at baseline, +$30 in the pessimistic case",
-   "basis": "cards/K09/cost.csv shipping line and DECISION section 9; no vendor quote taken",
-   "value": 150.0,
+   "title": "Shipping per paid shipment 8.57 / 10.71 USD",
+   "text": "R5 (lever L3): each paid shipment (one vendor cart per order wave; store pick-up free; Amazon counted as paid) costs the R4 flat $120 / $150 spread over its 14 vendors: $8.57 baseline, $10.71 pessimistic",
+   "basis": "cards/K09/cost.csv shipping line and DECISION section 9 ($120 + $30); ORDER-PLAN R4 'about 14 vendors'; CDR-BT-03 L3 ($150 / 14); no vendor quote taken",
+   "value": 10.7143,
    "unit": "USD",
    "cites": [
     "SRC-K09-CARD",
@@ -146107,7 +149188,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 7
+   "importance": 9
   },
   {
    "id": "ASM-I1-ADDERS",
@@ -146125,7 +149206,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 7
+   "importance": 9
   },
   {
    "id": "CALC-I1-SPEND",
@@ -146133,7 +149214,7 @@ window.PROOF_GRAPH = {
    "title": "BOM spend, baseline and pessimistic",
    "script": "redesign/team/I1/build_bom.py",
    "function": "spend",
-   "equation": "spend = sum(qty x unit) x (1 + tax) + shipping + FAA fee (+ adders, pessimistic prices); lines in team/I1/build_bom.py LINES",
+   "equation": "spend = sum(qty x unit) x (1 + tax) + n_shipments x rate + FAA fee + pack duty (+ adders, pessimistic prices); lines in team/I1/build_bom.py LINES",
    "inputs": {
     "tax": "P:requirements.tax_rate"
    },
@@ -146150,21 +149231,34 @@ window.PROOF_GRAPH = {
     "SRC-I1-OVONIC"
    ],
    "outputs": {
-    "spend_pess_allin": 1982.86,
-    "spend_base_allin": 1897.64,
-    "goods_base": 1369.05,
-    "goods_pess": 1394.64,
-    "tax_base": 140.33,
-    "tax_pess": 142.95,
-    "spend_base": 1634.38,
-    "spend_pess": 1719.59,
-    "early_goods_tax": 1018.85
+    "spend_pess_allin": 2786.87,
+    "spend_base_allin": 2623.76,
+    "shipments_allin": 21,
+    "spend_pess_flight_ready": 2278.05,
+    "spend_base_flight_ready": 2138.23,
+    "goods_base": 1567.62,
+    "goods_pess": 1616.18,
+    "tax_base": 160.68,
+    "tax_pess": 165.66,
+    "ship_base": 128.57,
+    "ship_pess": 160.71,
+    "shipments": 15,
+    "shipments_flight_ready": 16,
+    "duty_base": 20.0,
+    "duty_pess": 45.0,
+    "spend_base": 1881.87,
+    "spend_pess": 2019.55,
+    "early_goods_tax": 1285.86
    },
    "input_values": {
     "tax": 0.1025
    },
    "defined_in": "redesign/team/I1/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 6
   },
   {
@@ -146173,7 +149267,7 @@ window.PROOF_GRAPH = {
    "title": "Bottom-up minus R2-bridge (pessimistic spend)",
    "script": "redesign/team/I1/build_bom.py",
    "function": "spend_bridge",
-   "equation": "delta = spend_pess(bottom-up) - [1687.01 (R2) + sum(R3 line deltas) x (1 + tax)]",
+   "equation": "delta = spend_pess(bottom-up) - [1687.01 (R2) + sum(R3..R5 line deltas) x (1 + tax) + R5 untaxed deltas (duty, shipping)]",
    "inputs": {
     "tax": "P:requirements.tax_rate",
     "sp": "CL-I1-SPEND-PESS"
@@ -146190,10 +149284,14 @@ window.PROOF_GRAPH = {
    },
    "input_values": {
     "tax": 0.1025,
-    "sp": 1719.59
+    "sp": 2019.55
    },
    "defined_in": "redesign/team/I1/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -146214,22 +149312,57 @@ window.PROOF_GRAPH = {
     "sb": "USD"
    },
    "outputs": {
-    "reserve_pess": 280.41,
-    "reserve_base": 365.62
+    "reserve_pess": -19.55,
+    "reserve_base": 118.13
    },
    "input_values": {
     "budget": 2000.0,
-    "sp": 1719.59,
-    "sb": 1634.38
+    "sp": 2019.55,
+    "sb": 1881.87
    },
    "defined_in": "redesign/team/I1/claims.json",
    "status": "CHECKED",
    "importance": 2
   },
   {
+   "id": "CALC-I1-FLIGHT-READY",
+   "type": "calculation",
+   "title": "Flight-ready spend: committed lines + X07 box and field kit + X08 airspeed sensor (B4)",
+   "script": "redesign/team/I1/build_bom.py",
+   "function": "flight_ready",
+   "equation": "flight-ready spend = spend_case(committed + gates X07, X08); reserve = budget - spend",
+   "inputs": {
+    "tax": "P:requirements.tax_rate",
+    "budget": "P:requirements.budget_usd"
+   },
+   "units": {
+    "tax": "-",
+    "budget": "USD"
+   },
+   "assumes": [
+    "ASM-I1-SHIPPING",
+    "ASM-I1-ADDERS"
+   ],
+   "outputs": {
+    "reserve_pess_flight_ready": -278.05,
+    "reserve_base_flight_ready": -138.23
+   },
+   "input_values": {
+    "tax": 0.1025,
+    "budget": 2000.0
+   },
+   "defined_in": "redesign/team/I1/claims.json",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 2
+  },
+  {
    "id": "CALC-I1-ALLIN",
    "type": "calculation",
-   "title": "All-in spend if every gated BOM line (X07, X08, X10, X12) were also bought",
+   "title": "All-in spend if every gated BOM line (X07, X08, X10, X12, X13, X14) were also bought",
    "script": "redesign/team/I1/build_bom.py",
    "function": "allin",
    "equation": "all-in spend = spend + gated lines x (1 + tax); reserve = budget - spend",
@@ -146246,15 +149379,19 @@ window.PROOF_GRAPH = {
     "ASM-I1-ADDERS"
    ],
    "outputs": {
-    "reserve_pess_allin": 17.14,
-    "reserve_base_allin": 102.36
+    "reserve_pess_allin": -786.87,
+    "reserve_base_allin": -623.76
    },
    "input_values": {
     "tax": 0.1025,
     "budget": 2000.0
    },
    "defined_in": "redesign/team/I1/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -146275,7 +149412,7 @@ window.PROOF_GRAPH = {
    ],
    "outputs": {
     "bought_usd": 17.0,
-    "bought_with_gauges_usd": 26.0
+    "bought_with_gauges_usd": 83.07
    },
    "input_values": {
     "tax": 0.1025
@@ -146300,16 +149437,17 @@ window.PROOF_GRAPH = {
     "R-BUDGET"
    ],
    "how": "Re-run build_bom.py after re-pricing each line on the day of the order; compare with the order confirmations.",
-   "value": 1634.38,
+   "value": 1881.87,
    "defined_in": "redesign/team/I1/claims.json",
    "reasons": [
+    "CALC-I1-SPEND does not re-run",
     "uses SRC-I1-CARRIED, which is UNVERIFIED",
     "uses SRC-I1-OVONIC, which is UNVERIFIED",
     "uses ASM-I1-SHIPPING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-I1-ADDERS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.18280999999999994,
+   "margin": 0.059065000000000055,
    "importance": 3
   },
   {
@@ -146328,16 +149466,19 @@ window.PROOF_GRAPH = {
     "R-BUDGET"
    ],
    "how": "Same lines at list price plus the DECISION section 9 adders; CL-I1-BRIDGE-DELTA must be 0.",
-   "value": 1719.59,
+   "value": 2019.55,
    "defined_in": "redesign/team/I1/claims.json",
    "reasons": [
+    "FAILS: margin -1.0% (2020 USD vs <= 2000 USD)",
+    "CALC-I1-SPEND does not re-run",
     "uses SRC-I1-CARRIED, which is UNVERIFIED",
     "uses SRC-I1-OVONIC, which is UNVERIFIED",
     "uses ASM-I1-SHIPPING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-I1-ADDERS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.14020500000000005,
+   "margin": -0.009774999999999976,
+   "fails": true,
    "importance": 5
   },
   {
@@ -146356,6 +149497,7 @@ window.PROOF_GRAPH = {
    "value": 0.0,
    "defined_in": "redesign/team/I1/claims.json",
    "reasons": [
+    "CALC-I1-BRIDGE does not re-run",
     "uses CL-I1-SPEND-PESS, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
@@ -146379,15 +149521,15 @@ window.PROOF_GRAPH = {
     "R-BUDGET"
    ],
    "how": "2 000 minus CL-I1-SPEND-PESS must be >= 309 (one class-S crash incl. tax). On the day: re-price every CARRY line.",
-   "value": 280.41,
+   "value": -19.55,
    "defined_in": "redesign/team/I1/claims.json",
    "reasons": [
-    "FAILS: margin -9.3% (280.4 USD vs >= 309 USD)",
+    "FAILS: margin -106.3% (-19.55 USD vs >= 309 USD)",
     "uses CL-I1-SPEND-PESS, which is UNVERIFIED",
     "uses CL-I1-SPEND-BASE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.09252427184466011,
+   "margin": -1.0632686084142395,
    "fails": true,
    "importance": 1
   },
@@ -146407,14 +149549,16 @@ window.PROOF_GRAPH = {
     "R-RESERVE"
    ],
    "how": "2 000 minus CL-I1-SPEND-BASE must be >= 150 (planned reserve, P2).",
-   "value": 365.62,
+   "value": 118.13,
    "defined_in": "redesign/team/I1/claims.json",
    "reasons": [
+    "FAILS: margin -21.2% (118.1 USD vs >= 150 USD)",
     "uses CL-I1-SPEND-PESS, which is UNVERIFIED",
     "uses CL-I1-SPEND-BASE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 1.4374666666666667,
+   "margin": -0.2124666666666667,
+   "fails": true,
    "importance": 1
   },
   {
@@ -146425,9 +149569,58 @@ window.PROOF_GRAPH = {
    "output": "reserve_pess_allin",
    "unit": "USD",
    "how": "2 000 minus the all-in pessimistic spend. Information, not a gate: the committed order holds >= 309 by deferring X07 and X08 until their gate passes. Below 309 means every gated line cannot be bought on pessimistic numbers.",
-   "value": 17.14,
+   "value": -786.87,
    "defined_in": "redesign/team/I1/claims.json",
    "reasons": [
+    "CALC-I1-ALLIN does not re-run",
+    "uses ASM-I1-SHIPPING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-I1-ADDERS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "CL-I1-RESERVE-PESS-FLIGHT-READY",
+   "type": "claim",
+   "title": "Pessimistic reserve, flight-ready (committed + X07 box + X08 airspeed sensor)",
+   "calc": "CALC-I1-FLIGHT-READY",
+   "output": "reserve_pess_flight_ready",
+   "unit": "USD",
+   "limit": {
+    "op": ">=",
+    "value": 0.0,
+    "resolved": 0.0
+   },
+   "verifies": [
+    "R-BUDGET"
+   ],
+   "how": "Decision B4: every document quotes this beside the at-order reserve. Limit 0 = inside the $2 000 cap; the $309 crash line is CL-I1-RESERVE-PESS's limit (B3 would re-base it to about $228, not applied).",
+   "value": -278.05,
+   "defined_in": "redesign/team/I1/claims.json",
+   "reasons": [
+    "FAILS: margin -278 USD abs (-278.1 USD vs >= 0 USD)",
+    "CALC-I1-FLIGHT-READY does not re-run",
+    "uses ASM-I1-SHIPPING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-I1-ADDERS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -278.05,
+   "margin_abs": true,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CL-I1-RESERVE-BASE-FLIGHT-READY",
+   "type": "claim",
+   "title": "Baseline reserve, flight-ready (committed + X07 + X08)",
+   "calc": "CALC-I1-FLIGHT-READY",
+   "output": "reserve_base_flight_ready",
+   "unit": "USD",
+   "how": "Information: baseline prices, same lines as CL-I1-RESERVE-PESS-FLIGHT-READY.",
+   "value": -138.23,
+   "defined_in": "redesign/team/I1/claims.json",
+   "reasons": [
+    "CALC-I1-FLIGHT-READY does not re-run",
     "uses ASM-I1-SHIPPING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-I1-ADDERS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
@@ -146464,7 +149657,7 @@ window.PROOF_GRAPH = {
    "output": "bought_with_gauges_usd",
    "unit": "USD",
    "how": "G12 $17.00 (D-39 line, limit 20) + G13 $9.00 (CR-C4-38): $26.00 is $6 above the D-39 line. Information for A1, who owns the decision; the gauges are in the pessimistic spend.",
-   "value": 26.0,
+   "value": 83.07,
    "defined_in": "redesign/team/I1/claims.json",
    "reasons": [
     "uses SRC-I1-CARRIED, which is UNVERIFIED"
@@ -146523,6 +149716,363 @@ window.PROOF_GRAPH = {
    "procedure": "Weigh each pack, motor, ESC and the Aloft tube; check the pack connector is XT60; give masses to A3 and E2 (pack_log.csv).",
    "defined_in": "redesign/team/I1/claims.json",
    "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "SRC-I2-TASKS",
+   "type": "source",
+   "title": "I2 task list (durations, hours, dependencies, not-before dates)",
+   "kind": "web",
+   "url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/main/redesign/team/I2/make_schedule.py",
+   "where": "the t(...) rows of redesign/team/I2/make_schedule.py; hours are EST with the source named per row (BUILD-GUIDE.md stage times, H1 and H2 plans)",
+   "note": "planning data, not a measurement: every hour figure is EST until the build logs replace it",
+   "defined_in": "redesign/team/I2/claims.json",
+   "status": "UNVERIFIED",
+   "importance": 10
+  },
+  {
+   "id": "ASM-I2-REQ-TEXT",
+   "type": "assumption",
+   "title": "Limits read from the requirement text",
+   "text": "R-BUILD-HOURS: <= 3 weeks (21 d) from first cut to first hover. R-SCHEDULE: first transition by build week 7; crash-repair loop >= 1.5 weeks calendar (10.5 d); twin flown before the 15 Dec order",
+   "basis": "team/A2/REQUIREMENTS.md rows R-BUILD-HOURS and R-SCHEDULE (read 2026-11-13); these four limits have no key in params.json, so they are carried here as [21, 7, 10.5, 1]",
+   "value": [
+    21.0,
+    7.0,
+    10.5,
+    1.0
+   ],
+   "unit": "d,week,d,d",
+   "defined_in": "redesign/team/I2/claims.json",
+   "status": "PROPOSED",
+   "importance": 4
+  },
+  {
+   "id": "ASM-I2-B2-PROPOSED",
+   "type": "assumption",
+   "title": "CDR decision B2 (PROPOSED, not applied)",
+   "text": "re-word R-BUILD-HOURS to '<= 90 team-hours of build (stages 2-10) to first hover and <= 5 weeks from first cut'",
+   "basis": "review/CDR-2026-11-13/CDR-SUMMARY.md section 4, B2: needs the students' sign-off; A2 edits the requirement after it. Until then the limits above stand",
+   "value": [
+    90.0,
+    35.0
+   ],
+   "unit": "h,d",
+   "defined_in": "redesign/team/I2/claims.json",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-I2-SCHEDULE",
+   "type": "calculation",
+   "title": "Schedule figures from the task list (forward and backward pass)",
+   "script": "redesign/team/I2/schedule_claims.py",
+   "function": "schedule",
+   "equation": "earliest start = max(not-before, finish of every dependency) ; slack = latest finish - earliest finish against complete_by ; build week = (date - build_start) // 7 + 1 ; build hours = sum of the build-phase task hours without the transport box (TB1)",
+   "inputs": {
+    "build_start": "P:schedule.build_start",
+    "complete_by": "P:schedule.complete_by",
+    "order": "P:schedule.order_date"
+   },
+   "cites": [
+    "SRC-I2-TASKS"
+   ],
+   "outputs": {
+    "build_h": 113.5,
+    "build_h_stages_2_10": 94.5,
+    "pre_h": 226,
+    "first_cut": "2027-01-19",
+    "first_hover": "2027-02-22",
+    "cut_to_hover_d": 34,
+    "first_hover_week": 5,
+    "first_transition_week": 8,
+    "crash_loop_d": 11,
+    "end_slack_d": 2,
+    "min_slack_d": 2,
+    "twin_before_order_d": 2,
+    "dates_differ": 0
+   },
+   "input_values": {
+    "build_start": "2027-01-19",
+    "complete_by": "2027-04-30",
+    "order": "2026-12-15"
+   },
+   "defined_in": "redesign/team/I2/claims.json",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 10
+  },
+  {
+   "id": "CL-I2-BUILD-HOURS",
+   "type": "claim",
+   "title": "Team-hours of build to first hover (BUILD-GUIDE stage times)",
+   "calc": "CALC-I2-SCHEDULE",
+   "output": "build_h",
+   "unit": "h",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.build_hours_max",
+    "resolved": 90.0
+   },
+   "verifies": [
+    "R-BUILD-HOURS"
+   ],
+   "how": "Log hours per task during the build; compare the total at first hover.",
+   "note": "EST: the sum of the build-phase task hours, bench checks (stage 11) and the range check included, transport box excluded (SCHEDULE.md verdict table, CR-I2-02). G4's count is 111 h (CDR decision B2)",
+   "value": 113.5,
+   "defined_in": "redesign/team/I2/claims.json",
+   "reasons": [
+    "FAILS: margin -26.1% (113.5 h vs <= 90 h)",
+    "CALC-I2-SCHEDULE does not re-run",
+    "uses SRC-I2-TASKS, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.2611111111111111,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CL-I2-CUT-TO-HOVER-D",
+   "type": "claim",
+   "title": "Calendar days from first cut to first tethered hover",
+   "calc": "CALC-I2-SCHEDULE",
+   "output": "cut_to_hover_d",
+   "unit": "d",
+   "limit": {
+    "op": "<=",
+    "value": 21.0,
+    "resolved": 21.0
+   },
+   "verifies": [
+    "R-BUILD-HOURS"
+   ],
+   "how": "Dates of the first cut and the first tethered hover in the build log.",
+   "assumes": [
+    "ASM-I2-REQ-TEXT"
+   ],
+   "note": "limit: '<= 3 weeks from first cut' in R-BUILD-HOURS. Set by the serial 24 h cures of the build chain (CDR decision B2); no lever in the task list removes them",
+   "value": 34,
+   "defined_in": "redesign/team/I2/claims.json",
+   "reasons": [
+    "FAILS: margin -61.9% (34 d vs <= 21 d)",
+    "CALC-I2-SCHEDULE does not re-run",
+    "uses SRC-I2-TASKS, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.6190476190476191,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CL-I2-FIRST-HOVER-WEEK",
+   "type": "claim",
+   "title": "Build week of the first tethered hover",
+   "calc": "CALC-I2-SCHEDULE",
+   "output": "first_hover_week",
+   "unit": "week",
+   "limit": {
+    "op": "<=",
+    "ref": "P:schedule.first_hover_week",
+    "resolved": 4
+   },
+   "verifies": [
+    "R-SCHEDULE"
+   ],
+   "how": "Date of the first tethered hover (gate 3) against the build start.",
+   "note": "build week 1 starts on schedule.build_start; CR-I2-01 asks A1 whether the requirement is week 4 or 5",
+   "value": 5,
+   "defined_in": "redesign/team/I2/claims.json",
+   "reasons": [
+    "FAILS: margin -25.0% (5 week vs <= 4 week)",
+    "CALC-I2-SCHEDULE does not re-run",
+    "uses SRC-I2-TASKS, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.25,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CL-I2-FIRST-TRANSITION-WEEK",
+   "type": "claim",
+   "title": "Build week of the first transition (gate 6)",
+   "calc": "CALC-I2-SCHEDULE",
+   "output": "first_transition_week",
+   "unit": "week",
+   "limit": {
+    "op": "<=",
+    "value": 7.0,
+    "resolved": 7.0
+   },
+   "verifies": [
+    "R-SCHEDULE"
+   ],
+   "how": "Date of the first transition flight against the build start.",
+   "assumes": [
+    "ASM-I2-REQ-TEXT"
+   ],
+   "value": 8,
+   "defined_in": "redesign/team/I2/claims.json",
+   "reasons": [
+    "FAILS: margin -14.3% (8 week vs <= 7 week)",
+    "CALC-I2-SCHEDULE does not re-run",
+    "uses SRC-I2-TASKS, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.14285714285714285,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CL-I2-CRASH-LOOP-D",
+   "type": "claim",
+   "title": "Crash-repair loop held in the plan",
+   "calc": "CALC-I2-SCHEDULE",
+   "output": "crash_loop_d",
+   "unit": "d",
+   "limit": {
+    "op": ">=",
+    "value": 10.5,
+    "resolved": 10.5
+   },
+   "verifies": [
+    "R-SCHEDULE"
+   ],
+   "how": "Task CR1 in the task list; >= 1.5 weeks calendar.",
+   "assumes": [
+    "ASM-I2-REQ-TEXT"
+   ],
+   "value": 11,
+   "defined_in": "redesign/team/I2/claims.json",
+   "reasons": [
+    "CALC-I2-SCHEDULE does not re-run",
+    "uses SRC-I2-TASKS, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.047619047619047616,
+   "importance": 1
+  },
+  {
+   "id": "CL-I2-END-SLACK-D",
+   "type": "claim",
+   "title": "Slack of the last task against complete_by",
+   "calc": "CALC-I2-SCHEDULE",
+   "output": "end_slack_d",
+   "unit": "d",
+   "limit": {
+    "op": ">=",
+    "value": 0.0,
+    "resolved": 0.0
+   },
+   "verifies": [
+    "R-SCHEDULE"
+   ],
+   "how": "Re-run after every change to the task list; the last task must end on or before schedule.complete_by.",
+   "note": "with one crash-repair loop in the plan; CDR-BT-10 calls 2 d thin",
+   "value": 2,
+   "defined_in": "redesign/team/I2/claims.json",
+   "reasons": [
+    "CALC-I2-SCHEDULE does not re-run",
+    "uses SRC-I2-TASKS, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 2.0,
+   "margin_abs": true,
+   "importance": 1
+  },
+  {
+   "id": "CL-I2-TWIN-BEFORE-ORDER-D",
+   "type": "claim",
+   "title": "Days between the last twin flight day and the December order",
+   "calc": "CALC-I2-SCHEDULE",
+   "output": "twin_before_order_d",
+   "unit": "d",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-SCHEDULE"
+   ],
+   "how": "Date of the last twin flight (task TW3) against schedule.order_date.",
+   "assumes": [
+    "ASM-I2-REQ-TEXT"
+   ],
+   "value": 2,
+   "defined_in": "redesign/team/I2/claims.json",
+   "reasons": [
+    "CALC-I2-SCHEDULE does not re-run",
+    "uses SRC-I2-TASKS, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 1.0,
+   "importance": 1
+  },
+  {
+   "id": "CL-I2-DATES-MATCH",
+   "type": "claim",
+   "title": "Dates in make_schedule.py that differ from params.json#schedule",
+   "calc": "CALC-I2-SCHEDULE",
+   "output": "dates_differ",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.0,
+    "resolved": 0.0
+   },
+   "how": "BUILD_START and END in make_schedule.py against schedule.build_start and schedule.complete_by.",
+   "value": 0,
+   "defined_in": "redesign/team/I2/claims.json",
+   "reasons": [
+    "CALC-I2-SCHEDULE does not re-run",
+    "uses SRC-I2-TASKS, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.0,
+   "margin_abs": true,
+   "importance": 1
+  },
+  {
+   "id": "CL-I2-BUILD-HOURS-S2-10",
+   "type": "claim",
+   "title": "Team-hours of build, stages 2-10 only (measure of the PROPOSED decision B2)",
+   "calc": "CALC-I2-SCHEDULE",
+   "output": "build_h_stages_2_10",
+   "unit": "h",
+   "how": "As CL-I2-BUILD-HOURS, stages 2-10.",
+   "assumes": [
+    "ASM-I2-B2-PROPOSED"
+   ],
+   "note": "information, no limit: B2 would compare this with 90 h after 13 h EST of bench work moves before first cut (CDR-20, G4). Not applied: needs the students' sign-off",
+   "value": 94.5,
+   "defined_in": "redesign/team/I2/claims.json",
+   "reasons": [
+    "CALC-I2-SCHEDULE does not re-run",
+    "uses SRC-I2-TASKS, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "CL-I2-PRE-HOURS",
+   "type": "claim",
+   "title": "Team-hours before first cut (16 Nov - 18 Jan)",
+   "calc": "CALC-I2-SCHEDULE",
+   "output": "pre_h",
+   "unit": "h",
+   "how": "Log hours per task before the build start.",
+   "note": "information, no limit: R-BUILD-HOURS does not say whether pre-work counts (CR-I2-02)",
+   "value": 226,
+   "defined_in": "redesign/team/I2/claims.json",
+   "reasons": [
+    "CALC-I2-SCHEDULE does not re-run",
+    "uses SRC-I2-TASKS, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -146732,7 +150282,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1117
+   "importance": 1147
   },
   {
    "id": "SRC-J1-EC-TUBES",
@@ -147275,7 +150825,11 @@ window.PROOF_GRAPH = {
     "i_hover_pess": 30.142285945850148
    },
    "defined_in": "redesign/team/J1/claims.json",
-   "status": "CHECKED",
+   "drift": true,
+   "reasons": [
+    "does not re-run to its stored outputs (see build errors)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 3
   },
   {
@@ -147305,6 +150859,8 @@ window.PROOF_GRAPH = {
     "uses P:cg.x_target_m, which is UNVERIFIED (cites CL-B3-V-CG-FWD, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
+   "margin": 0.1335,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -147555,6 +151111,7 @@ window.PROOF_GRAPH = {
    "value": 33.75,
    "defined_in": "redesign/team/J1/claims.json",
    "reasons": [
+    "CALC-J1-DISCONNECT-REQ does not re-run",
     "uses P:performance.hover_current_a, which is UNVERIFIED (cites CL-E1-HOVER-I-55, which is UNVERIFIED)",
     "uses CL-E2-HOVER-I-GATE, which is UNVERIFIED"
    ],
@@ -147575,6 +151132,7 @@ window.PROOF_GRAPH = {
    "value": 37.677857432312685,
    "defined_in": "redesign/team/J1/claims.json",
    "reasons": [
+    "CALC-J1-DISCONNECT-REQ does not re-run",
     "uses P:performance.hover_current_a, which is UNVERIFIED (cites CL-E1-HOVER-I-55, which is UNVERIFIED)",
     "uses CL-E2-HOVER-I-GATE, which is UNVERIFIED"
    ],
@@ -147861,7 +151419,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-ISA",
    "note": "sea level; Richmond Field Station is ~5 m ASL",
    "status": "CHECKED",
-   "importance": 1219
+   "importance": 1251
   },
   {
    "id": "P:env.g_ms2",
@@ -147872,7 +151430,7 @@ window.PROOF_GRAPH = {
    "unit": "m/s2",
    "source": "SRC-ISA",
    "status": "CHECKED",
-   "importance": 1247
+   "importance": 1277
   },
   {
    "id": "P:env.ambient_design_c",
@@ -147890,7 +151448,7 @@ window.PROOF_GRAPH = {
     "marked PROPOSED in redesign/params/params.json: P19: E3 reports the field-ambient ceiling as an output; no 25 degC rule carried over"
    ],
    "status": "PROPOSED",
-   "importance": 1118
+   "importance": 1148
   },
   {
    "id": "P:env.site",
@@ -147958,7 +151516,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-REQ-PROPOSED",
    "note": "P4: hard as-built gate = sized 2.48 kg + 5 %",
    "status": "CHECKED",
-   "importance": 1215
+   "importance": 1245
   },
   {
    "id": "P:requirements.mtow_sized_kg",
@@ -147985,7 +151543,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-REQ-PROPOSED",
    "note": "P5: at the 2.6 kg gate on the maker's 14.8 V table",
    "status": "CHECKED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "P:requirements.hover_tw_min_sag",
@@ -147997,7 +151555,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-REQ-PROPOSED",
    "note": "P5: never below 1.6 with voltage sag",
    "status": "CHECKED",
-   "importance": 23
+   "importance": 1145
   },
   {
    "id": "P:requirements.stall_max_ms",
@@ -148009,7 +151567,7 @@ window.PROOF_GRAPH = {
    "source": "redesign/params/CHANGE-LOG.md#D-96",
    "note": "P7, re-derived by D-96 (2026-11-13): 12.0 -> 12.3 m/s. P7's 12.0 was 15.6 / 1.3 (D-36: transition at 1.3 Vs ending at ARSPD_FBW_MIN 15.6). F4's AIRSPEED_MIN is an integer (16, subsystems/flight-software/K09L.param), so R-TRANSITION holds for any trimmed stall <= 16 / 1.3 = 12.31 m/s; 12.3 is that bound rounded down. Above it the planned fallback is AIRSPEED_MIN / AIRSPEED_CRUISE 17 (holds to 13.07 m/s) at about 289 W cruise (E1 CR-E1-51 sweep 283 W + 6 W). T-B2-STALL on the twin and the first build remains the gate before AIRSPEED_MIN is frozen (D-71). Was 12.0 (P7)",
    "status": "PROPOSED",
-   "importance": 1121
+   "importance": 1151
   },
   {
    "id": "P:requirements.transition_factor",
@@ -148021,7 +151579,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-REQ-PROPOSED",
    "note": "P7: transition at >= 1.3 Vs",
    "status": "CHECKED",
-   "importance": 1125
+   "importance": 1155
   },
   {
    "id": "P:requirements.hover_time_min",
@@ -148045,7 +151603,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-REQ-PROPOSED",
    "note": "P3: after the 2 min hover; 10 min is a stretch target",
    "status": "CHECKED",
-   "importance": 12
+   "importance": 15
   },
   {
    "id": "P:requirements.energy_reserve_frac",
@@ -148057,7 +151615,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-REQ-PROPOSED",
    "note": "P3",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:requirements.growth_allowance_kg",
@@ -148069,7 +151627,7 @@ window.PROOF_GRAPH = {
    "source": "redesign/params/CHANGE-LOG.md#D-95",
    "note": "D-95 (2026-11-13): 0.113 -> 0.123 kg = A3's growth by maturity on the delivered parts lists with F2's routed harness (CL-A3-MASS-PREDICTED - CL-A3-MASS-BASIC, 122.7 g on A3-R8, rounded up); CL-A1-GROWTH-COVERS checks it on every A1 run. The 113 g it replaces was 3.4 g short of A3's own growth (116.4 g) even before the harness, which is why the reserve read 0 g free. Previous: 2026-11-11 A1: 1 g moved to the fins allocation (fastener CAD parts). P3 sizing growth allowance was a flat 250 g on 2 200 g of estimates (R0). D-38 replaced it by what the A1 reserve leaves after the 100 g overrun (170 g), D-48 145 g. CHANGE-LOG D-63: 214 - 100 = 114 g, equal to A3's growth by maturity on the delivered parts lists (A3-R6a, CL-A3-MASS-PREDICTED 2 436 g): no slack left; the pack is decided by the 590 g acceptance line (CALC-A1-PACK-ACCEPT, D-64)",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:requirements.build_overrun_kg",
@@ -148084,7 +151642,7 @@ window.PROOF_GRAPH = {
     "marked PROPOSED in redesign/params/params.json: REVIEW section 2: first student foam build overrun, ESTIMATE"
    ],
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:requirements.wind_limit_ms",
@@ -148096,7 +151654,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-REQ-PROPOSED",
    "note": "P8: flight-card steady wind limit; hover and fin landing controllable",
    "status": "CHECKED",
-   "importance": 334
+   "importance": 341
   },
   {
    "id": "P:requirements.gust_survive_ms",
@@ -148108,7 +151666,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-REQ-PROPOSED",
    "note": "P8: survive-and-land case, not an operating case",
    "status": "CHECKED",
-   "importance": 438
+   "importance": 444
   },
   {
    "id": "P:requirements.tipover_min_deg",
@@ -148132,7 +151690,7 @@ window.PROOF_GRAPH = {
    "source": "A1 choice",
    "note": "minimum geometric gap prop tip to any structure or other prop; B4/D3 re-derive",
    "status": "PROPOSED",
-   "importance": 1181
+   "importance": 1211
   },
   {
    "id": "P:requirements.static_margin_min",
@@ -148144,7 +151702,7 @@ window.PROOF_GRAPH = {
    "source": "A1 choice",
    "note": "fraction of chord, cruise, elevons neutral; B3 keeps 0.05 (CR-B3-01, sets the aft CG limit); B2's trimmed CLmax 0.80 is at this margin",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:requirements.elevon_area_frac",
@@ -148174,7 +151732,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-REQ-PROPOSED",
    "note": "P18: connector rating >= 1.25 x peak continuous current",
    "status": "CHECKED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:requirements.budget_usd",
@@ -148186,7 +151744,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-TEAM-LEAD",
    "note": "hard, incl. tax, shipping, packs, charger, radio, tools, spares",
    "status": "CHECKED",
-   "importance": 7
+   "importance": 9
   },
   {
    "id": "P:requirements.crash_reserve_planned_usd",
@@ -148222,7 +151780,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-K09-CARD",
    "note": "Berkeley sales tax, CDTFA 2026-10-01",
    "status": "CHECKED",
-   "importance": 9
+   "importance": 11
   },
   {
    "id": "P:requirements.build_hours_max",
@@ -148234,7 +151792,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-REQ-PROPOSED",
    "note": "P11: team-hours to first hover",
    "status": "CHECKED",
-   "importance": 0
+   "importance": 1
   },
   {
    "id": "P:requirements.field_setup_max_min",
@@ -148310,7 +151868,7 @@ window.PROOF_GRAPH = {
    "source": "team/C1/CHANGE-REQUESTS.md#CR-C1-16",
    "note": "CHANGE-LOG D-29: was 3.0; CL-C1-GUST-N-POS 3.36 at VH 21.8 m/s with the 8 m/s gust line to VD 27.2 (B2 CL_alpha 3.48-3.58 /rad). Spar sizing unchanged (landing governs); wing shear and torsion already at 3.36",
    "status": "PROPOSED",
-   "importance": 295
+   "importance": 300
   },
   {
    "id": "P:requirements.load_factor_limit_neg",
@@ -148322,7 +151880,7 @@ window.PROOF_GRAPH = {
    "source": "team/C1/LOADS.md",
    "note": "limit load factor, push-over (CL-C1-N-LIMIT-NEG)",
    "status": "PROPOSED",
-   "importance": 292
+   "importance": 297
   },
   {
    "id": "P:requirements.safety_factor_ult",
@@ -148334,7 +151892,7 @@ window.PROOF_GRAPH = {
    "source": "team/A2/REQUIREMENTS.md",
    "note": "ultimate = 1.5 x limit (FAR 23.303 practice)",
    "status": "PROPOSED",
-   "importance": 480
+   "importance": 486
   },
   {
    "id": "P:requirements.vd_ms",
@@ -148346,7 +151904,7 @@ window.PROOF_GRAPH = {
    "source": "team/C1/CHANGE-REQUESTS.md#CR-C1-13",
    "note": "CHANGE-LOG D-29: was 22.4; VD = 1.25 x VH with VH 21.8 m/s. D-50 (B1 CR-B1-17, C1 CR-C1-20, F4 CR-F4-15): B1's VH at the 9 350 rpm cap is 25.7 m/s (CL-B1-VMAX), so VH is held at <= 21.8 m/s by F4's fixed-wing THR_MAX 70 % cap (7 750 rpm, level 21.3 m/s, CL-F4-VLEVEL-VH), shown in the first full-throttle level log (H2); C1 reads the capped VH and keeps 27.2 / n 3.4 (the 32.1 m/s alternative is rejected). q 454 Pa. Elevon schedule (F4 CR-F4-12): full travel to VA 20.5 m/s; the <= 1/3-at-VD half is held by envelope (no raw-stick FW mode, PTCH_LIM_MIN -10 deg, AIRSPEED_MAX 18, THR_MAX 70), not by an airspeed-dependent surface limit; servo stays B2's 3.93 kgf cm (CL-B2-SERVO-TORQUE-REQ); ARSPD_FBW_MAX <= 22",
    "status": "PROPOSED",
-   "importance": 1126
+   "importance": 1156
   },
   {
    "id": "P:requirements.thrust_limit_per_motor_n",
@@ -148358,7 +151916,7 @@ window.PROOF_GRAPH = {
    "source": "team/C1/CHANGE-REQUESTS.md#CR-C1-12",
    "note": "CHANGE-LOG D-29: was 17.8 (1.15 x 1.58 kgf). CL-C1-T-CAP 21.08 N = 11x5.5MR at the 9 350 rpm cap x E1 k_T 1.039; the 100 A limiter is time-filtered and does not bound a step to full throttle (F4 keeps the cap, CR-F4-07). H1 replaces it with the measured fresh-pack peak at the F4 cap, rounded up to 0.5 N (GT-02d, CR-H1-01). Only mount and motor loads change (+18 %)",
    "status": "PROPOSED",
-   "importance": 331
+   "importance": 336
   },
   {
    "id": "P:requirements.landing_sink_ms",
@@ -148370,7 +151928,7 @@ window.PROOF_GRAPH = {
    "source": "team/C5/CHANGE-REQUESTS.md#CR-C5-17",
    "note": "CHANGE-LOG D-65 (C5 CR-C5-17a, S1 6-DOF touchdown): hard landing = 1.2 m/s sink at <= 10 deg of combined tilt in any direction (one foot takes the energy first); at 1.5 m/s a 5 deg diagonal tilt already bottoms the 35 mm usable stroke (CL-C5-SIM3D-BOTTOM-TILT). 2.4 x Q_LAND_FINAL_SPD 0.3 m/s; F4 holds Q_PILOT_SPD_DN <= 1.2 m/s and Q_LAND_SPEED <= 0.5 (CR-F4-18). C1's 1.5 m/s level / pitch-pair cases (L1, L4) stay the structural bounds for the feet, fin roots and pack stop. A2 re-words R-LANDING-IMPACT. Was 1.5 (3 x Q_LAND_SPEED 0.5)",
    "status": "PROPOSED",
-   "importance": 391
+   "importance": 397
   },
   {
    "id": "P:requirements.landing_n_design",
@@ -148382,7 +151940,7 @@ window.PROOF_GRAPH = {
    "source": "team/C5/CHANGE-REQUESTS.md#CR-C5-19",
    "note": "CHANGE-LOG D-65 (C5 CR-C5-19): the crush plateau sized for n 5.88 at the 2.6 kg gate gives n 6.59 at the as-designed 2.32 kg (CL-C5-SIM3D-N); the plateau is not lowered (it would lengthen the stroke), so the airframe (fin roots, spar saddles, pack stop) is checked at 6.6 (C1, C4, C3 re-run). Design foot side load: C5's simulated 39.3 N limit / 59.0 N ultimate (CL-C5-SIM3D-SIDE-LOAD, -SIDE-ULT) replaces the 22.9 N hand value in D5, C4/D3 and C1 (CR-C5-16). Was 6.0 (ASM-C1-N-LAND)",
    "status": "PROPOSED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "P:requirements.landing_attitude_err_deg",
@@ -148394,7 +151952,31 @@ window.PROOF_GRAPH = {
    "source": "team/A2/REQUIREMENTS.md",
    "note": "attitude error at touchdown in 5 m/s; sets the foot height with the wingtip-strike check (CR-C1-01)",
    "status": "PROPOSED",
-   "importance": 500
+   "importance": 506
+  },
+  {
+   "id": "P:requirements.foot_side_load_cap_n",
+   "type": "parameter",
+   "title": "requirements.foot_side_load_cap_n",
+   "file": "redesign/params/params.json",
+   "value": 24.5,
+   "unit": "N",
+   "source": "redesign/review/CDR-2026-11-13/CDR-SUMMARY.md#B1",
+   "note": "D-105 (CDR board decision B1, 2026-11-13): design foot side load at the pad, limit, per foot, held by the pad face friction (requirements.pad_mu_max 0.40). Basis: C5-R7 6-DOF touchdown sim at mu 0.40, 1.2 m/s, 10 deg any direction, 4 masses, with 0.3 m/s drift: 24.28 N (team/C5/sim/out/sim3d.json, drift_sweep.json), rounded up. The board's 23 N was a linear estimate (29.1 x 0.4 / 0.5); the simulated load is not proportional to mu (a tilt component stays), so 23 N would need mu <= 0.37 (22.8 N, same model). The board's mu <= 0.40 is kept and the structure is designed to 24.5 N. C5 checks every run against it (CL-C5-SIM3D-SIDE-12 <= CL-C5-SIM3D-SIDE-LOAD); D5, C1, C4/D3 and C6 design to it. Was 39.5 N (D-65, mu 0.7 neoprene). Fallback if the incline test T-D5-PAD-MU fails: sideways piston snap releasing at 23-26 N",
+   "status": "PROPOSED",
+   "importance": 315
+  },
+  {
+   "id": "P:requirements.pad_mu_max",
+   "type": "parameter",
+   "title": "requirements.pad_mu_max",
+   "file": "redesign/params/params.json",
+   "value": 0.4,
+   "unit": "-",
+   "source": "redesign/review/CDR-2026-11-13/CDR-SUMMARY.md#B1",
+   "note": "D-105 (B1): largest static friction of the foot pad face on the landing mat. Acceptance: T-D5-PAD-MU incline test, pad slides at or below atan(0.40) = 21.8 deg, 5 repeats, measured on the mat the team lands on. Consequence: a parked aircraft needs mu 0.68 to stand in 8 m/s (CL-C1-STANCE-MU-REQ), so it is laid flat or tied when parked (flight card, H3)",
+   "status": "PROPOSED",
+   "importance": 1
   },
   {
    "id": "P:requirements.foot_crush_stroke_min_m",
@@ -148406,7 +151988,7 @@ window.PROOF_GRAPH = {
    "source": "team/C5/CHANGE-REQUESTS.md#CR-C5-10",
    "note": "CHANGE-LOG D-30: constant-force XPS cartridge (eta >= 0.8) with a >= 38 mm flange-to-sleeve gap (D-54, D5 CR-D5-16c: the gap is the stroke; usable after C5's 3 mm guard is 35 mm; a 38 mm usable stroke would need a 51 mm foot) and biased plateaus (upper feet x1.077, lower x0.923), from C5's planar landing model: the 17 mm z_cg offset pitches a level landing onto the pod-side pair and a pair-first touchdown lands the second pair harder (CL-C5-DROP-PAIR-PITCH 34.5 of 35 mm, n 5.84 / 5.54). C1's single-foot bound is >= 41 mm at eta 0.5 or >= 26 mm constant-force (CR-C1-17). Validated by T-C5-AIRCRAFT-DROP",
    "status": "PROPOSED",
-   "importance": 391
+   "importance": 397
   },
   {
    "id": "P:requirements.box_drop_m",
@@ -148418,7 +152000,7 @@ window.PROOF_GRAPH = {
    "source": "team/A2/REQUIREMENTS.md",
    "note": "box slipping from a car sill, FLOOR drop (D-53, D7 CR-D7-12, C1 CR-C1-22). CHANGE-LOG D-22: kept; D7 puts crush foam under the spar cradles at y +/-0.20 m (D-53: 120 mm column, no lid lining, CL-D7-A1-BOX-DROP-ALLOW 0.339 m). D-31 corrects D-22: the stroke does cost box height, because the tube ends and feet sink with the aircraft (box 0.54 m). The aft-wall drop is taken by the four feet (0.25 m, CL-D7-AFT-N); end, nose and lid-down drops are label-and-test only (0.06-0.09 m): the box carries 'keep upright' (54-57 mm of end/side stroke would need ~0.2 m more box). If the car check forces the 0.50 m box, this value becomes 0.15 m (column 56 mm) and the box is labelled",
    "status": "PROPOSED",
-   "importance": 267
+   "importance": 272
   },
   {
    "id": "P:requirements.crash_decel_g",
@@ -148478,7 +152060,7 @@ window.PROOF_GRAPH = {
    "source": "team/A2/REQUIREMENTS.md",
    "note": "= cg.y_target_m tolerance",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:requirements.cnbeta_min",
@@ -148526,7 +152108,7 @@ window.PROOF_GRAPH = {
    "source": "team/B3/CHANGE-REQUESTS.md#CR-B3-10",
    "note": "CHANGE-LOG D-18: largest allowed upper/lower pair thrust ratio for hover pitch trim (uses (s-1)/2 of the pitch differential, 12.5 % at 1.25); replaces A3's 1.10 placeholder ASM-A3-SPLIT-MAX. A3 roll-up 1.19 today (CL-A3-HOVER-SPLIT)",
    "status": "PROPOSED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "P:requirements.elevon_trim_travel_max",
@@ -148538,7 +152120,7 @@ window.PROOF_GRAPH = {
    "source": "team/A2/REQUIREMENTS.md",
    "note": "trim deflection <= half the travel",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:requirements.roll_rate_min_degs",
@@ -148876,7 +152458,7 @@ window.PROOF_GRAPH = {
    "source": "team/A2/REQUIREMENTS.md",
    "note": "E2 uses 92 % delivered capacity",
    "status": "PROPOSED",
-   "importance": 1117
+   "importance": 1147
   },
   {
    "id": "P:requirements.wind_ratio_max",
@@ -148934,7 +152516,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-K09-CARD",
    "note": "P6: one piece; may grow only if the measured car box allows",
    "status": "CHECKED",
-   "importance": 1185
+   "importance": 1215
   },
   {
    "id": "P:wing.chord_m",
@@ -148946,7 +152528,7 @@ window.PROOF_GRAPH = {
    "source": "team/B2/CHANGE-REQUESTS.md#CR-B2-01",
    "note": "CHANGE-LOG D-01: 0.30 -> 0.32 so the trimmed CLmax 0.80 gives Vs 11.9 m/s and 1.3 Vs 15.5 m/s at the gate; constant chord, rectangular, no sweep, no twist (B2 confirmed 0 deg)",
    "status": "PROPOSED",
-   "importance": 1257
+   "importance": 1287
   },
   {
    "id": "P:wing.sweep_deg",
@@ -148990,7 +152572,7 @@ window.PROOF_GRAPH = {
     "marked PROPOSED in redesign/params/params.json: CHANGE-LOG D-02: Selig S5010 reflexed section (was MH 45): trimmed CLmax +4 %, softer stall (B2 WING-AERO.md section 2); coordinates subsystems/wing/s5010.dat (D1 copies from team/B2/airfoils/)"
    ],
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:wing.t_c",
@@ -149002,7 +152584,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-S5010",
    "note": "from the coordinate file; 31.4 mm at c 0.32",
    "status": "CHECKED",
-   "importance": 1153
+   "importance": 1183
   },
   {
    "id": "P:wing.le_x_m",
@@ -149026,7 +152608,7 @@ window.PROOF_GRAPH = {
    "source": "A1 choice",
    "note": "= chord",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:wing.oswald_e",
@@ -149041,7 +152623,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json: kept conservative for the whole aircraft: B2's AVL at R2 gives 0.94 (SM 5 %) / 0.92 (CG 0.044) for wing + 0.275 m half-fins, props off, no pod (P:b2.avl.e_oswald, CR-B2-14); B1 carries k 0.0950 base (e 0.93) and 0.1107 pessimistic (e 0.80)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1121
+   "importance": 1151
   },
   {
    "id": "P:wing.core.material",
@@ -149162,7 +152744,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-K09-CARD",
    "note": "stock length, centred: spans y = -0.50 to +0.50; outer 0.075 m per side is unspanned foam",
    "status": "CHECKED",
-   "importance": 402
+   "importance": 408
   },
   {
    "id": "P:wing.spar.x_m",
@@ -149174,7 +152756,7 @@ window.PROOF_GRAPH = {
    "source": "A1 choice",
    "note": "25 % chord at c 0.32, near the section's maximum thickness (~31 mm) so the 22 mm tube stays inside the foam; 35 mm behind the motor tubes (x 0.045); C2/D1 confirm",
    "status": "PROPOSED",
-   "importance": 546
+   "importance": 552
   },
   {
    "id": "P:wing.spar.z_m",
@@ -149204,7 +152786,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json: calc at rho 1.55 g/cm3; weigh the tube on arrival"
    ],
    "status": "UNVERIFIED",
-   "importance": 454
+   "importance": 460
   },
   {
    "id": "P:wing.elevon.chord_frac",
@@ -149216,7 +152798,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-TIEBREAK",
    "note": "B3 CR-B3-01: keep 22 % chord, both panels, 17.2 % of S; outboard panels alone would be 8.4 % (< 15 % floor)",
    "status": "CHECKED",
-   "importance": 1149
+   "importance": 1179
   },
   {
    "id": "P:wing.elevon.panels_per_side",
@@ -149243,7 +152825,7 @@ window.PROOF_GRAPH = {
    "source": "A1 choice",
    "note": "20 mm clear of the fin root (y = 0.32). The pod is 0.14 m wide since D-25, so the panel end is level with the pod side (y 0.07); the gap is real because the pod ends at x 0.095, 155 mm ahead of the hinge (A5 CALC-A5-ELEVON-GAPS measures the corner distance; CR-A5-18)",
    "status": "PROPOSED",
-   "importance": 1133
+   "importance": 1163
   },
   {
    "id": "P:wing.elevon.outboard_y_m",
@@ -149258,7 +152840,7 @@ window.PROOF_GRAPH = {
    "source": "A1 choice",
    "note": "20 mm clear of the fin root; 15 mm from the tip",
    "status": "PROPOSED",
-   "importance": 1133
+   "importance": 1163
   },
   {
    "id": "P:wing.elevon.deflection_deg",
@@ -149273,7 +152855,7 @@ window.PROOF_GRAPH = {
    "source": "A1 choice",
    "note": "mechanical travel; F4 sets the servo limits",
    "status": "PROPOSED",
-   "importance": 1132
+   "importance": 1162
   },
   {
    "id": "P:wing.elevon.hinge",
@@ -149297,7 +152879,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-K09-CARD",
    "note": "+/-; motor station from centreline; 11 in props clear each other by 0.36 m",
    "status": "CHECKED",
-   "importance": 1207
+   "importance": 1237
   },
   {
    "id": "P:fins.half_height_m",
@@ -149309,7 +152891,7 @@ window.PROOF_GRAPH = {
    "source": "team/B3/CHANGE-REQUESTS.md#CR-B3-14",
    "note": "CHANGE-LOG D-26: was 0.19 (fin 0.38 m). Each half-fin now reaches z +/-0.21, the motor-mount lip, so the fin tips sit at the tube-end station: Cn_beta at the aft CG limit and 1.3 Vs 0.0286 -> 0.0373 /rad (R-DIRECTIONAL >= 0.03). C4 accepts with two board layers (CR-C4-20, separation 0.38); ~+6 g; props-off envelope unchanged (feet pads already at z +/-0.219). The motor stations stay at z +/-0.19",
    "status": "PROPOSED",
-   "importance": 1192
+   "importance": 1222
   },
   {
    "id": "P:fins.chord_m",
@@ -149321,7 +152903,7 @@ window.PROOF_GRAPH = {
    "source": "team/B3/CHANGE-REQUESTS.md#CR-B3-02",
    "note": "from the motor tube (x = 0.045) to the wing trailing edge (x = 0.32); was 0.40 with the tube at -0.10",
    "status": "PROPOSED",
-   "importance": 1121
+   "importance": 1151
   },
   {
    "id": "P:fins.le_x_m",
@@ -149333,7 +152915,7 @@ window.PROOF_GRAPH = {
    "source": "team/B3/CHANGE-REQUESTS.md#CR-B3-02",
    "note": "motor-tube centreline; fin leading edge on the tube",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:fins.te_x_m",
@@ -149345,7 +152927,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-K09-CARD",
    "note": "= wing trailing edge; feet at the tips",
    "status": "CHECKED",
-   "importance": 1183
+   "importance": 1213
   },
   {
    "id": "P:fins.material",
@@ -149371,7 +152953,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width"
    ],
    "status": "UNVERIFIED",
-   "importance": 655
+   "importance": 661
   },
   {
    "id": "P:fins.areal_mass_kgm2",
@@ -149386,7 +152968,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json: ESTIMATE; weigh one board (M-item)"
    ],
    "status": "UNVERIFIED",
-   "importance": 442
+   "importance": 448
   },
   {
    "id": "P:fins.layers",
@@ -149398,7 +152980,7 @@ window.PROOF_GRAPH = {
    "source": "team/C4/CHANGE-REQUESTS.md#CR-C4-14",
    "note": "CHANGE-LOG D-26: two 4.8 mm boards laminated (spray adhesive) with the CF brace and 10 x 1 mm edge strips. D3's one-layer option (CR-D3-02) is rejected: on D3's geometry its first station mode is 228 Hz, 14 % from cruise 2P (CL-C4-D3-SEP-1L 0.14 FAIL); two layers give 0.41 (worst E/G 0.33). The board carries the motor twist because the tube stops below the motor (fins.tube.length_m)",
    "status": "PROPOSED",
-   "importance": 592
+   "importance": 598
   },
   {
    "id": "P:fins.pieces_per_fin",
@@ -149438,7 +153020,7 @@ window.PROOF_GRAPH = {
     "cites SRC-CF-TUBE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1208
+   "importance": 1238
   },
   {
    "id": "P:fins.tube.id_m",
@@ -149452,7 +153034,7 @@ window.PROOF_GRAPH = {
     "cites SRC-CF-TUBE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 207
+   "importance": 208
   },
   {
    "id": "P:fins.tube.length_m",
@@ -149464,7 +153046,7 @@ window.PROOF_GRAPH = {
    "source": "team/D3/CHANGE-REQUESTS.md#CR-D3-01",
    "note": "CHANGE-LOG D-26: was 0.42 (z +/-0.21). The tube now ends at z +/-0.172, 18 mm below the motor axis, inside the printed mount's collar and lip cap, so the four motor screws can be reached from behind the plate; the mount carries the motor past the tube end (C4: rocking stiffness >= 900 N m/rad, CR-C4-17). -7.8 g per tube. Passes through the core (31 mm thick at y 0.32)",
    "status": "PROPOSED",
-   "importance": 1185
+   "importance": 1215
   },
   {
    "id": "P:fins.tube.x_m",
@@ -149476,7 +153058,7 @@ window.PROOF_GRAPH = {
    "source": "team/B3/CHANGE-REQUESTS.md#CR-B3-02",
    "note": "centreline, = fins.le_x_m; through a vertical 22 mm hole in the core at y = +/-0.32 (core ~27 mm thick there); cruise Cn_beta +0.044 /rad modelled (CL-B3-CNB option O4b)",
    "status": "PROPOSED",
-   "importance": 1186
+   "importance": 1216
   },
   {
    "id": "P:fins.tube.axis",
@@ -149550,7 +153132,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "source": "SRC-K09-CARD",
    "status": "CHECKED",
-   "importance": 1136
+   "importance": 1166
   },
   {
    "id": "P:propulsion.motor",
@@ -149576,7 +153158,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json"
    ],
    "status": "UNVERIFIED",
-   "importance": 478
+   "importance": 484
   },
   {
    "id": "P:propulsion.motor_diameter_m",
@@ -149605,7 +153187,7 @@ window.PROOF_GRAPH = {
     "cites ASM-E1-STACK, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 463
+   "importance": 469
   },
   {
    "id": "P:propulsion.esc",
@@ -149634,7 +153216,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json"
    ],
    "status": "UNVERIFIED",
-   "importance": 438
+   "importance": 444
   },
   {
    "id": "P:propulsion.esc_cont_a",
@@ -149663,7 +153245,7 @@ window.PROOF_GRAPH = {
     "cites SRC-LANRC-45A, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:propulsion.motor_max_a",
@@ -149673,12 +153255,12 @@ window.PROOF_GRAPH = {
    "value": 25.0,
    "unit": "A",
    "source": "SRC-X3108S",
-   "note": "D-34 (CR-A2-12b): maker rating 25 A / 30 s; the 100 A limiter holds 24.8 A per motor (CL-E1-ILIM-I); thermally 10 s at full throttle (env.full_throttle_max_s)",
+   "note": "D-34 (CR-A2-12b): maker rating 25 A / 30 s, a winding current. D-116 (CDR-05): the 100 A limiter holds 24.8 A per ESC on the battery side (CL-E1-ILIM-I-BAT) but about 30 A in the winding (CL-E1-ILIM-I, fails; limiter value decided on the stand, CDR decision B7); thermally 10 s at full throttle (env.full_throttle_max_s)",
    "reasons": [
-    "marked UNVERIFIED in redesign/params/params.json: D-34 (CR-A2-12b): maker rating 25 A / 30 s; the 100 A limiter holds 24.8 A per motor (CL-E1-ILIM-I); thermally 10 s at full throttle (env.full_throttle_max_s)"
+    "marked UNVERIFIED in redesign/params/params.json: D-34 (CR-A2-12b): maker rating 25 A / 30 s, a winding current. D-116 (CDR-05): the 100 A limiter holds 24.8 A per ESC on the battery side (CL-E1-ILIM-I-BAT) but about 30 A in the winding (CL-E1-ILIM-I, fails; limiter value decided on the stand, CDR decision B7); thermally 10 s at full throttle (env.full_throttle_max_s)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1116
+   "importance": 42
   },
   {
    "id": "P:propulsion.prop",
@@ -149705,7 +153287,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-APC-11X55MR",
    "note": "11 in",
    "status": "CHECKED",
-   "importance": 1199
+   "importance": 1229
   },
   {
    "id": "P:propulsion.prop_mass_kg",
@@ -149717,7 +153299,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-APC-11X55MR",
    "note": "0.60 oz on the product page (B4, E1 2026-11-09); adapter rings not included",
    "status": "CHECKED",
-   "importance": 499
+   "importance": 505
   },
   {
    "id": "P:propulsion.rpm_max",
@@ -149729,7 +153311,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-B4-APC-RPM",
    "note": "0.98 x APC's 105 000 / D(in) = 9 545 rpm for MR props; unlimited full throttle reaches 10 637 rpm on a fresh pack (CL-B4-RPM-MAX-FULL): F4 caps the output at ~0.85 from rpm telemetry (CL-B4-SPIN-MAX)",
    "status": "CHECKED",
-   "importance": 1117
+   "importance": 1147
   },
   {
    "id": "P:propulsion.thrust_table_g_w",
@@ -149761,7 +153343,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json: [thrust gf, input W] per motor, KV900, APC 11x4.7, maker rows match the page image (E1 2026-11-09) but the supply sagged: the top row is at ~11.2 V and W = 14.8 x A bookkeeping (CL-E1-MAKER-SUPPLY). Replace with T-E1-STAND rows"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:propulsion.thrust_max_per_motor_kg",
@@ -149776,7 +153358,7 @@ window.PROOF_GRAPH = {
     "cites CL-E1-ILIM-TW-FRESH, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:propulsion.current_max_per_motor_a",
@@ -149785,13 +153367,13 @@ window.PROOF_GRAPH = {
    "file": "redesign/params/params.json",
    "value": 24.8,
    "unit": "A",
-   "source": "CL-E1-ILIM-I",
-   "note": "with Q_M_BAT_CURR_MAX 100 A (motor rating 25 A / 30 s); unlimited 42.4 A at 14.8 V and 51.6 A at 16.8 V (CL-E1-IMAX-*), above the ESC's 45 A",
+   "source": "CL-E1-ILIM-I-BAT",
+   "note": "battery side, per ESC input (D-116: the winding current at the same point is CL-E1-ILIM-I, about 30 A); with Q_M_BAT_CURR_MAX 100 A (motor rating 25 A / 30 s); unlimited 42.4 A at 14.8 V and 51.6 A at 16.8 V (CL-E1-IMAX-*), above the ESC's 45 A",
    "reasons": [
-    "cites CL-E1-ILIM-I, which is UNVERIFIED"
+    "cites CL-E1-ILIM-I-BAT, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:propulsion.download_factor",
@@ -149806,7 +153388,7 @@ window.PROOF_GRAPH = {
     "marked PROPOSED in redesign/params/params.json: B4 models 1.038 (R3, collars, ears, braces, pads; CL-B4-DOWNLOAD) and 1.025 with the SU2 tube + board section (CL-B4-SIM-DOWNLOAD, simulation round, CR-B4-28); kept at 1.06 until T-B4-INSTALLED"
    ],
    "status": "PROPOSED",
-   "importance": 1180
+   "importance": 1210
   },
   {
    "id": "P:propulsion.voltage_sag",
@@ -149821,7 +153403,7 @@ window.PROOF_GRAPH = {
     "cites CL-E1-SAG-FACTOR, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:propulsion.stations.x_mount_m",
@@ -149833,7 +153415,7 @@ window.PROOF_GRAPH = {
    "source": "team/B3/CHANGE-REQUESTS.md#CR-B3-02",
    "note": "CHANGE-LOG D-04: on the tube centreline (was -0.10). D-28 (D3 CR-D3-04): the tube front face DP-MOUNT stays at x 0.034; the printed mount's 2 mm collar wall sits ahead of it and the motor base plate face is at x 0.0309",
    "status": "PROPOSED",
-   "importance": 495
+   "importance": 501
   },
   {
    "id": "P:propulsion.stations.x_prop_plane_m",
@@ -149848,7 +153430,7 @@ window.PROOF_GRAPH = {
     "cites CL-E1-TIP-GAP-AT-75, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1174
+   "importance": 1204
   },
   {
    "id": "P:propulsion.stations.x_plate_face_m",
@@ -149872,7 +153454,7 @@ window.PROOF_GRAPH = {
    "source": "team/B3/CHANGE-REQUESTS.md#CR-B3-12",
    "note": "CHANGE-LOG D-27: was 3 (D-09). Tangential cant about the line from the x-axis to the motor so the thrust side component turns the airframe like the reaction torque (same sense as the 3 deg prints: UR and LL print A, UL and LR print B, D3 CR-D3-07; F4 CL-F4-CANT-NET-FORCE 0). B3 at R1: 3 deg gives hover yaw 1.15 x the 5 m/s disturbance and 1.15 rad/s2 against 1.5 x and 2 rad/s2 (R-HOVER-AUTHORITY, 30 % differential cap); 6.1 deg needed, 7 deg gives 2.23 x and 2.24 rad/s2 for 0.75 % thrust (CL-B3-HOVER-CANT-REQ). B4 re-runs swirl recovery at 7 deg; C4/C6 re-check the mount for the 12 % side component; the mount angle is one print parameter (fin_detail.mount). CHANGE-LOG D-52 (F4 CR-F4-11, B4 CR-B4-15a, E1 CR-E1-32): the sense as printed in D3's R3 CAD is REVERSED (side force opposes the reaction torque; hover yaw would reverse): D3 sets fin_detail.mount.cant_sense_UR = -1, i.e. the UR prop end leans toward the wing and outboard (side component along -t = (0, +0.511, -0.860)), same rule at every station; H1/H2 verify by inclinometer and a hanging yaw test before the first hover (CR-B4-16b). B4's 5 deg option (CR-B4-14: 1.03 x with no fin credit, +4.3 mm blade-to-tube gap) is kept open until T-B4-YAW; 7 deg stays (B4 at 7 deg: yaw 1.30 x with no fin credit, 2.23-3.15 x with the fin)",
    "status": "PROPOSED",
-   "importance": 1223
+   "importance": 1253
   },
   {
    "id": "P:propulsion.stations.y_m",
@@ -149884,7 +153466,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-K09-CARD",
    "note": "+/-",
    "status": "CHECKED",
-   "importance": 1190
+   "importance": 1220
   },
   {
    "id": "P:propulsion.stations.z_m",
@@ -149896,7 +153478,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-K09-CARD",
    "note": "+/-; motor axes 0.19 m above and below the chord plane. D-26: the tube ends at +/-0.172 inside the mount; the half-fin tips reach +/-0.21 (fins.half_height_m)",
    "status": "CHECKED",
-   "importance": 1195
+   "importance": 1225
   },
   {
    "id": "P:propulsion.stations.ids",
@@ -149939,7 +153521,7 @@ window.PROOF_GRAPH = {
     "cites SRC-OVONIC-4S6500, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1117
+   "importance": 1147
   },
   {
    "id": "P:battery.v_nom",
@@ -149953,7 +153535,7 @@ window.PROOF_GRAPH = {
     "cites SRC-OVONIC-4S6500, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1158
+   "importance": 1188
   },
   {
    "id": "P:battery.capacity_ah",
@@ -149967,7 +153549,7 @@ window.PROOF_GRAPH = {
     "cites SRC-OVONIC-4S6500, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1117
+   "importance": 1147
   },
   {
    "id": "P:battery.energy_wh",
@@ -149994,7 +153576,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json: D-64: listing 551 +/- 5 g (CL-E2-SKU-MASS-MARGIN); carried as 0.55. Acceptance on arrival: <= CALC-A1-PACK-ACCEPT (about 590 g, the heaviest pack the 100 g first-build overrun still covers; E2 PACK_ACCEPT_KG follows it) plus the 10 AWG lead check. The 503 / 680 g bounding listings of D-58/D-59 are retired as flight cases: A3 carries 546 g (listing -5), 551 g and the acceptance line (ASM-A3-PACK-RANGE)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1127
+   "importance": 1157
   },
   {
    "id": "P:battery.n_packs",
@@ -150024,7 +153606,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json: D-64 (E2 CR-E2-25/-26): listed body 135 x 46 x 49 mm (+3 mm tolerance leaves 1 mm in the 53 mm bay, CL-E2-SKU-BAY-CLEAR); lead exits one 46 x 49 end. The 5 mm shorter pack gains 2.5 mm of forward room at the crush stack. D2 bay >= 0.160 x 0.052 x 0.053 m inside (CR-E2-02); measure on arrival (T-E2-WEIGH)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1156
+   "importance": 1186
   },
   {
    "id": "P:pod.size_m",
@@ -150040,7 +153622,7 @@ window.PROOF_GRAPH = {
    "source": "team/D2/CHANGE-REQUESTS.md#CR-D2-16",
    "note": "L x W x H outside. CHANGE-LOG D-25: width 0.10 -> 0.14 (D2 CR-D2-01): the 52 mm pack bay and the 54 x 36 mm FC do not fit side by side in 0.10; two 37 mm side channels take the FC (right) and airspeed, RX, power items (left). Length 0.20 -> 0.21 (CR-C5-02 crush block), 0.21 -> 0.225 (D-47, 15 mm nose extension), 0.225 -> 0.235 (D-62, 10 mm nose extension, +2 g shell). Height 0.07 for the 49 mm pack (E2 CR-E2-26)",
    "status": "PROPOSED",
-   "importance": 1152
+   "importance": 1182
   },
   {
    "id": "P:pod.x_le_m",
@@ -150052,7 +153634,7 @@ window.PROOF_GRAPH = {
    "source": "params/CHANGE-LOG.md#D-62",
    "note": "Pod shell nose. CHANGE-LOG D-62 (B3 CR-B3-25): the nose shell extends another 10 mm (-0.130 -> -0.140) and the whole pack bay (forward stop -0.1212 -> -0.1312, crush block >= 24.3 mm, spreader 1.5 mm, 2 mm spacer steps, aft stop 0.060 -> 0.050) moves 10 mm forward with it; pack nominal centroid pod.pack_x_nominal_m -0.032 m; the tray, hatch, handle, spar saddle POD-007 (x 0.080) and the aft end 0.095 do not move. Cost: +2 g shell (pod 146 g, D-63), envelope x 0.508 m, D7's nose pad 3/4 -> 1/2 in (CR-A1-66), pitot tip -0.220. D-47 (A3 CR-A3-22) did the same 21 mm move from -0.115 at the R4 CG 0.0577 m; D-25 added the crush block at -0.115; D-08 moved the pod to -0.105. Moving the whole pod is impossible (POD-007 sits on the spar); nose ballast would cost about 41 g; the pod group cannot be lowered to recover the CG height",
    "status": "PROPOSED",
-   "importance": 1144
+   "importance": 1174
   },
   {
    "id": "P:pod.pack_x_nominal_m",
@@ -150064,7 +153646,7 @@ window.PROOF_GRAPH = {
    "source": "params/CHANGE-LOG.md#D-77",
    "note": "D-77 (BR-00): datum 4 mm forward, -0.032 -> -0.036 (16 mm spacer stack), the most forward 2 mm step that keeps C5's crush block B (26.2 vs 25.8 mm at 550 g, CL-C5-PACK-X-FWD-MAX-551 -0.0364). D-62: bay datum and nominal pack centroid, 10 mm forward of the D-47 datum (-0.022). D2 draws the pack here; pod.py checks its aft face against this key. Flight station per weighed pack (D-59 rule, D-60 band rule): the whole spacer step, counted forward from the no-spacer station x_nom + pod.pack_aft_travel_m = -0.020, that centres the basic-to-predicted CG band on cg.x_target_m, never ahead of the crush stack (-0.0354 for the 140 mm pack, -0.0379 for the 135 mm Ovonic EC5 pack, D-64). The stations themselves are read from A3's live roll-up (CL-A3-CG-X-STATIONS, team/A3/rollup/rollup.json cg.station_cases), never from a note (CR-A3-27): H3 writes the flight card from A3's re-run on the balance-test day. A1's frame estimate (CALC-A1-PACK-CASES) must agree with A3's rule on every pack. Was -0.022 (D-47), -0.001 (D-24)",
    "status": "PROPOSED",
-   "importance": 428
+   "importance": 434
   },
   {
    "id": "P:pod.pack_aft_travel_m",
@@ -150076,7 +153658,7 @@ window.PROOF_GRAPH = {
    "source": "params/CHANGE-LOG.md#D-59",
    "note": "D-77: 12 -> 16 mm so the aft stop stays at 0.0475 with the datum at -0.036. D-59: pack travel aft of pod.pack_x_nominal_m to the aft stop (no spacer); 12 mm (was 8 at D-47). D-62: the bay moved 10 mm forward, so the aft stop face = x_nom + L/2 + this = 0.050 (D2); the spar saddle POD-007 stays at 0.080",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:pod.pack_spacer_step_m",
@@ -150088,7 +153670,7 @@ window.PROOF_GRAPH = {
    "source": "subsystems/pod/params.json#spacer_set_m",
    "note": "D-59: the U-spacer set POD-008 2/4/6/8/8 mm gives every 2 mm step from 0 to 28 mm",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:pod.z_base_m",
@@ -150100,7 +153682,7 @@ window.PROOF_GRAPH = {
    "source": "A1 choice",
    "note": "sits on the upper skin near maximum thickness; D1 may recess the tray into the core",
    "status": "PROPOSED",
-   "importance": 508
+   "importance": 514
   },
   {
    "id": "P:pod.material",
@@ -150129,7 +153711,7 @@ window.PROOF_GRAPH = {
     "cites CL-B3-V-CG-FWD, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:cg.x_range_m",
@@ -150147,7 +153729,7 @@ window.PROOF_GRAPH = {
     "cites CL-B3-V-CG-FWD, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:cg.y_target_m",
@@ -150174,7 +153756,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json: D-62 (B3 CR-B3-27, -24): the take-off CG height A3-R6a rolls up (+0.0185 m, pod group above the wing); every S&C number is now computed at this height (NP 3.4 mm forward at 1.3 Vs, Cl_beta +0.023, spiral t2 3.5 s). A3 publishes CL-A3-CG-Z (basic and predicted) and this key then cites it. The old 'on the chord plane' target (0) was never reachable with the pod on the upper surface; hover pitch trim carries the 1.22 split (D-18)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:cg.z_range_m",
@@ -150189,7 +153771,7 @@ window.PROOF_GRAPH = {
    "source": "redesign/params/CHANGE-LOG.md#D-96",
    "note": "D-96 (H9, CR-B2-20 option a, 2026-11-13): lower end 0.010 -> 0.0165 m (B2 CL-B2R4-Z-MIN-AT-XFWD 0.0162, rounded inward). The pod sits on the upper surface, so the CG cannot drop below A3's 0.0179 m (predicted) without moving the pack bay: the band below 0.0165 described no buildable aircraft and its corner carried the worst stall. T-A3-CG-BALANCE reads z as well as x. Previous: D-62: narrowed from [-0.02, 0.03]. Each 10 mm of CG height costs 1.85 mm of aft CG limit and 0.27 s of spiral t2 (B3 sens_zcg.py), so the top of the range is held 6.5 mm above A3's value; the tip-over corner bound (CALC-A1-TIPOVER) uses the top of this range",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:cg.foot_height_m",
@@ -150201,7 +153783,7 @@ window.PROOF_GRAPH = {
    "source": "team/C5/CHANGE-REQUESTS.md#CR-C5-11",
    "note": "CHANGE-LOG D-30: was 45 mm (D-11). 48 mm keeps the wing TE >= 10 mm off the ground after the 38 mm stroke (CL-C5-TE-CLEAR-PROP); a 10 deg attitude error still clears the wingtip TE (CL-C1-WINGTIP-STRIKE-ANGLE); feet splayed so the pad contact sits at z +/-0.218 (D5 CL-D5-CONTACT-Z) for the tip-over; TE corner caps at y +/-0.575 (CR-C5-04). Tip-over drops < 0.3 deg; foot tips at x 0.368",
    "status": "PROPOSED",
-   "importance": 1168
+   "importance": 1198
   },
   {
    "id": "P:mass.allocation_g.wing",
@@ -150216,7 +153798,7 @@ window.PROOF_GRAPH = {
     "cites CL-D1-WING-MASS, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1117
+   "importance": 1147
   },
   {
    "id": "P:mass.allocation_g.fins",
@@ -150228,7 +153810,7 @@ window.PROOF_GRAPH = {
    "source": "CL-D3-MASS",
    "note": "D-95 (2026-11-13): 438 -> 434 g. Delivered D3 CL-D3-MASS / C4 CL-C4-D3-FINS-MASS 433.3 g + 0.7 g. The 4.7 g left above the drawn fins was held for C6's collar (CR-C6-37, +4.4 g, H7); it now sits in the A1 free reserve (3 g) and the 10.8 g of predicted gate margin above the overrun and is released to fins by change request if the structures decision takes the 22 mm collar. Previous: 2026-11-11 A1: +1 g for the fasteners modelled as CAD parts (team/C6/FASTENERS-CAD.md: fins +1.2 g), taken from requirements.growth_allowance_kg (114 -> 113 g) so the sized total stays 2 600 g. Previous: D-63 (D3 CR-D3-33, A3 CR-A3-26, C4 CR-C4-34, C6 CR-C6-31/-32): D3-R4 434.8 g (the 15 mm root fillets C6 asked for weigh 30.6 g as drawn, booked at +3 g in D-48; collar 16 -> 12 mm returned 2.0 g; sealing bead 6 -> 4 mm -1.6 g) + C6's pins 2 -> 2.5 mm (+1.5 g) and collar 12 -> 13 mm (+0.6 g) = 436.9 g. D3 returns what its levers give (microlight fillet filler -5.6, block 2 perimeters + 10 % gyroid -13.8 if C4 keeps CL-C4-D3-BLOCK-MS >= 0, mount cheeks 12 -> 8 mm -4 if >= 1 100 N m/rad). Was 418 (D-48), 408 (D-38), 370 (D-07). The four spar plugs (22 g) are booked in wing",
    "status": "PROPOSED",
-   "importance": 1118
+   "importance": 1148
   },
   {
    "id": "P:mass.allocation_g.pod",
@@ -150243,7 +153825,7 @@ window.PROOF_GRAPH = {
     "cites CL-D2-MASS, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1119
+   "importance": 1149
   },
   {
    "id": "P:mass.allocation_g.landing",
@@ -150255,7 +153837,7 @@ window.PROOF_GRAPH = {
    "source": "params/CHANGE-LOG.md#D-78",
    "note": "D-78 (BR-00): 48 -> 60 g, taken from power (648 -> 636) which D-74 lightened by 16.5 g; D5-R7 (D-76) 59.1 g EST with F-400 cartridges on the 59 N side-load shoe (R6 F-250 shoe 69.9 g). 48 g is not reachable inside the telescoping-shoe concept at the D-65 side load; the side-load fuse (SW-03 / BR-09) is the next lever. D-63 (C5 CR-C5-18): D5-R4 42.50 g EST (CR-D5-26) + 5 g EST for the shoe sleeve fix (wall 1.6 -> 2.0 mm, rim 2.4 -> 3.0, 1.0 mm inside fillet, engagement 25 mm; D5 reports the real figure). C4's cheek extension to |z| 0.171 (+16 g, CR-C4-30) is held by test (CR-C4-36) and not allocated; was 43 (D-30), 40 (D-11)",
    "status": "PROPOSED",
-   "importance": 1122
+   "importance": 1152
   },
   {
    "id": "P:mass.allocation_g.propulsion",
@@ -150270,7 +153852,7 @@ window.PROOF_GRAPH = {
     "cites CL-E1-MASS-PRP, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "P:mass.allocation_g.power",
@@ -150285,7 +153867,7 @@ window.PROOF_GRAPH = {
     "cites CL-PWR-MASS, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1119
+   "importance": 1149
   },
   {
    "id": "P:mass.allocation_g.avionics",
@@ -150300,7 +153882,7 @@ window.PROOF_GRAPH = {
     "cites CL-F3-MASS, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1139
+   "importance": 1169
   },
   {
    "id": "P:mass.allocation_g.harness",
@@ -150315,7 +153897,7 @@ window.PROOF_GRAPH = {
     "cites CL-F2-MASS, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:mass.allocation_g.mechanisms",
@@ -150330,7 +153912,7 @@ window.PROOF_GRAPH = {
     "cites CL-D6-MASS, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "P:mass.growth_reserve_g",
@@ -150342,7 +153924,7 @@ window.PROOF_GRAPH = {
    "source": "A1 choice",
    "note": "D-95 (2026-11-13): 213 -> 226 g = gate 2 600 - allocations 2374 g. Covers the growth allowance 123 g (A3 growth by maturity on the delivered parts with the routed harness, CL-A3-MASS-PREDICTED - CL-A3-MASS-BASIC, checked by CL-A1-GROWTH-COVERS) + the 100 g first-build overrun, leaving 3 g free (CL-A1-RESERVE-COVERS). The free grams come from setting each allocation to the delivered basic + about 1 g (wing, fins, power, avionics) so growth is carried once, in the growth allowance. Next releases: harness phase extensions -13.6 g (T-E1-MOTOR-RM), D3 fin levers up to -23 g (structures). Previous: 2026-11-11 A1: 214 -> 213 g with the fins allocation 437 -> 438 g (growth allowance 114 -> 113 g + 100 g build overrun). D-63: = gate 2 600 - allocations 2 386 (was 245 at 2 355, 276 at 2 324, 400 at 2 200), held by A1 and released only through a change request; must cover growth by maturity (A3-R6a: 114 g on the delivered parts lists) and the 100 g build overrun: 0 g free. The next release needs a lever: D3's fins levers (up to -23 g), the 12 g harness return if the factory phase leads reach, D6's 1.3 g cushion, aluminium prop nuts (-4 g)",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:mass.transport_box_kg",
@@ -150414,7 +153996,7 @@ window.PROOF_GRAPH = {
    "source": "ASM-B1-VCRUISE",
    "note": "D-01: 15 -> 16 (B1 CR-B1-01); 2.6-3.4 % above 1.3 Vs; F4 AIRSPEED_CRUISE 16, AIRSPEED_MIN 15.6, AIRSPEED_MAX 18. B1's 16.5 m/s alternative (+15 W, -1.1 min) not taken (D-37 tightened the airspeed error instead)",
    "status": "PROPOSED",
-   "importance": 1138
+   "importance": 1168
   },
   {
    "id": "P:performance.hover_power_w",
@@ -150459,7 +154041,7 @@ window.PROOF_GRAPH = {
     "cites CL-E1-IPACK-PEAK, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:performance.cruise_power_w",
@@ -150474,7 +154056,7 @@ window.PROOF_GRAPH = {
     "cites CL-E1-CRUISE-P-55, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 4
+   "importance": 10
   },
   {
    "id": "P:performance.cruise_current_a",
@@ -150504,7 +154086,7 @@ window.PROOF_GRAPH = {
     "cites CL-E1-CRUISE-LD-EFF, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 382
+   "importance": 387
   },
   {
    "id": "P:performance.cruise_after_hover_min",
@@ -150609,22 +154191,22 @@ window.PROOF_GRAPH = {
     "marked PROPOSED in redesign/params/params.json: wiring, disconnect and current-sensor design case: all four motors full throttle on a full pack with no limiter, momentary < 5 s (E2 117 A; the flight limiter holds 100 A, worst 105 A with sensor error, CL-F1-ILIM-WORST). Single-ESC unlimited burst 51.6 A <= 2 s"
    ],
    "status": "PROPOSED",
-   "importance": 1119
+   "importance": 1149
   },
   {
    "id": "P:electrical.r_ext_mohm",
    "type": "parameter",
    "title": "electrical.r_ext_mohm",
    "file": "redesign/params/params.json",
-   "value": 6.7,
+   "value": 7.9,
    "unit": "mOhm",
    "source": "CL-F1-R-EXT",
-   "note": "D-67 (F1 CR-F1-24 rev, F1-R4): pack terminals to ESC pads, hot, on F2's trimmed ESC leads 0.475-0.620 m (common path 2.79 mOhm with the 10 AWG jumpers + four 16 AWG branches 13.7-17.9 mOhm in parallel; CL-F1-R-EXT 6.69). E1 re-runs CALC-E1-WORST (sag 0.851 moves slightly); E2, E3 and H1 read the key. Was 6.5 (D-32: 0.5 m leads)",
+   "note": "D-115 (CDR-05, CDR-EL-04): pack terminals to ESC pads, hot, on the leads as routed (D-85...D-89: 0.564-0.701 m) with one XT30U per branch (D-74); CL-F1-R-EXT 7.92, rounded to 0.1. E1 re-ran CALC-E1-WORST, E2 its budgets; E3 and H1 read the key. Was 6.7 (D-67: trimmed leads 0.475-0.620 m, no XT30U), 6.5 (D-32: 0.5 m leads)",
    "reasons": [
     "cites CL-F1-R-EXT, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:electrical.wire_temp_rise_max_c",
@@ -150997,7 +154579,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-TEAM-LEAD",
    "note": "mid-December; CF tubes ~2 weeks lead: order first; early electronics order ~2026-11-20 (DECISION section 8)",
    "status": "CHECKED",
-   "importance": 0
+   "importance": 10
   },
   {
    "id": "P:schedule.build_start",
@@ -151012,7 +154594,7 @@ window.PROOF_GRAPH = {
     "marked PROPOSED in redesign/params/params.json: spring term start; I2 sets the real date"
    ],
    "status": "PROPOSED",
-   "importance": 0
+   "importance": 10
   },
   {
    "id": "P:schedule.complete_by",
@@ -151023,7 +154605,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "source": "SRC-TEAM-LEAD",
    "status": "CHECKED",
-   "importance": 0
+   "importance": 10
   },
   {
    "id": "P:schedule.first_hover_week",
@@ -151035,7 +154617,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-REQ-PROPOSED",
    "note": "P11: first XPS hover by week 4 of build; first transition by week 7",
    "status": "CHECKED",
-   "importance": 0
+   "importance": 1
   },
   {
    "id": "P:power.as150u_half_m",
@@ -151084,7 +154666,23 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/subsystems/power/params.json: aircraft half with heat-shrink; the pack half is inside the pack mass"
    ],
    "status": "UNVERIFIED",
-   "importance": 1120
+   "importance": 1150
+  },
+  {
+   "id": "P:power.board_pad_m",
+   "type": "parameter",
+   "title": "power.board_pad_m",
+   "file": "redesign/subsystems/power/params.json",
+   "value": [
+    0.048,
+    0.016,
+    0.0033
+   ],
+   "unit": "m",
+   "source": "CDR-17 (review/CDR-2026-11-13/CDR-SUMMARY.md); 3 x PWR-106 1.1 mm tape",
+   "note": "case S foam pad under the power board along its centreline (|y| <= 8 mm from the board axis), clear of the frame-screw heads (25 mm pattern, head edge 9.7 mm from the axis, top 2.3 mm over the deck): the board stands 1.0 mm above the heads",
+   "status": "PROPOSED",
+   "importance": 0
   },
   {
    "id": "P:power.board_env_m",
@@ -151151,7 +154749,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/subsystems/power/params.json"
    ],
    "status": "UNVERIFIED",
-   "importance": 1120
+   "importance": 1150
   },
   {
    "id": "P:power.deck_t_m",
@@ -151338,7 +154936,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/subsystems/power/params.json"
    ],
    "status": "UNVERIFIED",
-   "importance": 1120
+   "importance": 1150
   },
   {
    "id": "P:power.cap_m",
@@ -151370,7 +154968,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/subsystems/power/params.json"
    ],
    "status": "UNVERIFIED",
-   "importance": 1120
+   "importance": 1150
   },
   {
    "id": "P:power.cap_gap_x_m",
@@ -151396,7 +154994,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/subsystems/power/params.json"
    ],
    "status": "UNVERIFIED",
-   "importance": 1120
+   "importance": 1150
   },
   {
    "id": "P:power.jumper_awg",
@@ -151408,7 +155006,7 @@ window.PROOF_GRAPH = {
    "source": "F1 choice (CALC-PWR-JUMPER)",
    "note": "main jumpers AS150U -> power board -> bus bars: <= 0.05 m each, so conduction to the terminals sets their temperature; 10 AWG replaces the 0.15 m 8 AWG run of team/F1/POWER.md",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:power.jumper_len_m",
@@ -151423,7 +155021,7 @@ window.PROOF_GRAPH = {
    "source": "F1 layout (fusion/power.py) incl. 10 mm slack",
    "note": "per conductor: W-MAIN-1 cups -> power board input, W-MAIN-2 power board output -> bus bars (down through the deck window)",
    "status": "PROPOSED",
-   "importance": 1120
+   "importance": 1150
   },
   {
    "id": "P:power.jumper_drop_m",
@@ -151453,7 +155051,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/subsystems/power/params.json: OD, resistance per metre at 20 degC, mass per metre (one conductor)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1121
+   "importance": 1151
   },
   {
    "id": "P:power.bend_k",
@@ -151505,7 +155103,7 @@ window.PROOF_GRAPH = {
    "unit": "W/m/K",
    "source": "handbook copper",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:power.i_cont_a",
@@ -152615,7 +156213,7 @@ window.PROOF_GRAPH = {
    "source": "team/A3/rollup/rollup.json#cg.station_cases (D-77 re-run)",
    "note": "A3's live stations after D-75...D-78 (2026-11-11): 546 g -0.036 (16 mm: blue + green + white), 550 g -0.034 (14 mm: blue + green), 590 g -0.030 (10 mm: blue + white); basic CG 48.8-49.2 mm, predicted 50.3-50.7 mm. Was -0.028 for 590 g (A1 D-62 estimate). H3 writes the flight card from A3's re-run on the balance-test day (CR-A3-27)",
    "status": "PROPOSED",
-   "importance": 500
+   "importance": 506
   },
   {
    "id": "P:spacer_colour",
@@ -155593,7 +159191,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/team/A3/rollup/mass_items.json: params used: P:battery.mass_kg, P:battery.size_m, P:cg.foot_height_m, P:fins.areal_mass_kgm2, P:fins.chord_m, P:fins.half_height_m, P:fins.layers, P:fins.le_x_m, P:fins.te_x_m, P:fins.tube.length_m, P:fins.tube.od_m, P:fins.tube.x_m, P:fins.y_m, P:pod.pack_x_nominal_m, P:pod.size_m, P:pod.x_le_m, P:pod.z_base_m, P:propulsion.motor_diameter_m, P:propulsion.motor_length_m, P:propulsion.motor_mass_kg, P:propulsion.prop_diameter_m, P:propulsion.stations.x_mount_m, P:propulsion.stations.x_prop_plane_m, P:propulsion.stations.y_m, P:propulsion.stations.z_m, P:wing.chord_m, P:wing.elevon.chord_frac, P:wing.elevon.inboard_y_m, P:wing.elevon.outboard_y_m, P:wing.span_m, P:wing.spar.length_m, P:wing.spar.mass_per_m_kgm, P:wing.spar.x_m, P:wing.spar.z_m, P:wing.t_c, P:wing.te_x_m"
    ],
    "status": "UNVERIFIED",
-   "importance": 1120
+   "importance": 1150
   },
   {
    "id": "P:fin_detail.tube_length_m",
@@ -155605,7 +159203,7 @@ window.PROOF_GRAPH = {
    "source": "params.json#fins.tube.length_m (D-26, CR-D3-01 accepted)",
    "note": "copy of the shared key for the C4/C6 readers; fins.py reads params.json#fins.tube.length_m and checks they agree",
    "status": "PROPOSED",
-   "importance": 166
+   "importance": 167
   },
   {
    "id": "P:fin_detail.bond_gap_m",
@@ -155617,7 +159215,7 @@ window.PROOF_GRAPH = {
    "source": "G3/C6 practice",
    "note": "radial gap of every printed bore on a 22 mm CF tube (bore 22.3 mm); filled with 30 min epoxy",
    "status": "PROPOSED",
-   "importance": 1185
+   "importance": 1215
   },
   {
    "id": "P:fin_detail.block.width_m",
@@ -155884,7 +159482,7 @@ window.PROOF_GRAPH = {
    "source": "G3 practice",
    "note": "5 perimeters at 0.4 mm",
    "status": "PROPOSED",
-   "importance": 1185
+   "importance": 1215
   },
   {
    "id": "P:fin_detail.mount.grip_m",
@@ -155990,7 +159588,7 @@ window.PROOF_GRAPH = {
    "source": "params/CHANGE-LOG.md#D-61 (CR-A1-63, CR-D3-26 option a at 7.5 mm, CR-E1-44/-48)",
    "note": "R5 (D-61): motor face at the axis 7.5 mm ahead of the mount collar front (was 2.5 mm, D-51). Prop plane x = face - 37.3 cos 7 deg = -0.01267 (CL-D3-X-PROP), face 0.02435 (CL-D3-X-FACE); A1 copies both into propulsion.stations.x_prop_plane_m / x_plate_face_m. Collar-front gap 44.5 mm >= 0.14 D 39.1 mm; blade swept volume to the tube 26.1 mm (E1 CL-E1-TIP-GAP-AT-75), least face_ahead 6.5 mm",
    "status": "PROPOSED",
-   "importance": 1194
+   "importance": 1224
   },
   {
    "id": "P:fin_detail.mount.plate_t_m",
@@ -156142,7 +159740,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/subsystems/fins/params.json: D-81: clocking dog under the mount collar, tangential width; sits in the notch at the top of the FIN-008 station-collar ring on the front (-x) side, clear of the tail (+x) and the brace ear (-y). Sets the cant clocking positively; the pinch bolt stays the clamp. Its shear strength changes the D-23 slip fuse: C6 sizes it (shear tab or 1.75 mm filament pin) before the 18 Dec freeze"
    ],
    "status": "UNVERIFIED",
-   "importance": 3
+   "importance": 4
   },
   {
    "id": "P:fin_detail.mount.key_d_m",
@@ -156195,7 +159793,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/subsystems/fins/params.json: R4: mount face to prop mid-plane along the motor axis (E1 paper stack; frozen on the measured motor, T-E1-MOTOR-RM); its x projection is stack cos(cant)"
    ],
    "status": "UNVERIFIED",
-   "importance": 266
+   "importance": 267
   },
   {
    "id": "P:fin_detail.mount.cant_sense_UR",
@@ -156210,7 +159808,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/subsystems/fins/params.json: R4: -1. The UR thrust side component points along -t = -(x_hat x r_hat): the UR prop end leans toward the wing plane (-z) and outboard (+y); every station follows by the quad mirrors (UL: outboard -y and -z; LR: +y and +z; LL: -y and +z). The R3 print (+1) reversed hover yaw. Prints A (UR, LL) and B (UL, LR) keep their station assignment; the plate geometry of each print changed. H1/H2 verify with an inclinometer and the hanging yaw test before the first hover (D-52)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1188
+   "importance": 1218
   },
   {
    "id": "P:fin_detail.mount.slip_torque_nm",
@@ -156222,7 +159820,7 @@ window.PROOF_GRAPH = {
    "source": "team/D3/fins_calcs.py#CALC-D3-MOUNT-SLIP",
    "note": "pinch-bolt setting: the collar turns on the tube at this torque (the D-23 fuse, side loads at the motor); set with a luggage scale (BUILD.md)",
    "status": "PROPOSED",
-   "importance": 19
+   "importance": 20
   },
   {
    "id": "P:fin_detail.mount.mu_petg_cf",
@@ -156564,7 +160162,7 @@ window.PROOF_GRAPH = {
    "source": "params/CHANGE-LOG.md#D-90 (team/C6/CHANGE-REQUESTS.md#CR-C6-37; team/C6/claims.json#CL-C6-COLLAR-L-REQ)",
    "note": "D-90: 15 -> 22 mm on the D-65 loads (C1 half-fin torsion 12.67 N m governs, CL-C6-COLLAR-L-REQ 19.45 mm): RF 1.13 (CL-C6-COLLAR-RF). Top 0.5 mm below the mount collar, which D-91 moved down 6 mm: ring |z| 0.1315-0.1535, ear mid 0.1475. Was 15 (R5b), 13 (D-70), 12 (D-48), 16 (R3)",
    "status": "PROPOSED",
-   "importance": 230
+   "importance": 231
   },
   {
    "id": "P:fin_detail.station_collar.gap_m",
@@ -156586,7 +160184,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "source": "G3 practice",
    "status": "PROPOSED",
-   "importance": 218
+   "importance": 219
   },
   {
    "id": "P:fin_detail.station_collar.slot_wall_m",
@@ -156919,7 +160517,7 @@ window.PROOF_GRAPH = {
    "source": "team/C4/CHANGE-REQUESTS.md#CR-C4-04",
    "note": "keyhole boss on the block, above the upper skin and below the lower skin: lengthens the tube bore 27 -> 47 mm (root fixity) and holds the board root LE in its slot (replaces separate root clips)",
    "status": "PROPOSED",
-   "importance": 16
+   "importance": 17
   },
   {
    "id": "P:fin_detail.boss.ring_wall_m",
@@ -157265,7 +160863,7 @@ window.PROOF_GRAPH = {
    "source": "team/D5/feet_calc.py#CALC-D5-CRUSH (D-76)",
    "note": "R7 (D-76): 14.5 x 9.8 mm in FOAMULAR 400 (276 kPa): 142.1 mm2 gives type U 39.2 N, mean 37.5 N (C5-R3 target) as R6's 20.9 x 11.0 mm in F-250 did; the narrower section shrinks the sleeve and tine (-11 g on four feet). Tuning knob after T-D5-COUPON (y only). Was 0.0209 (R6, F-250), 0.0173 (R4)",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.cartridge.section_z_m",
@@ -157277,7 +160875,7 @@ window.PROOF_GRAPH = {
    "source": "team/D5/feet_calc.py#CALC-D5-CRUSH (D-76)",
    "note": "R7 (D-76): 9.8 mm (was 11.0): with the 3.4 mm rim the fin step stays 9.0 mm deep (<= 10, CL-D5-FIN-STEP-DEPTH)",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.cartridge.bore_lower_d_m",
@@ -157289,7 +160887,7 @@ window.PROOF_GRAPH = {
    "source": "team/D5/feet_calc.py#CALC-D5-CRUSH (D-76)",
    "note": "R7 (D-76): 5/32 in (3.97 mm) bore cut by a sharpened K&S 5/32 in brass tube: type L 129.7 mm2 -> 35.8 N, bias x1.045 vs C5's x1.05 (3/16 in gives x1.066, outside the 1 % band). Was 7/32 in (R4-R6, F-250 section)",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.cartridge.segments",
@@ -157301,7 +160899,7 @@ window.PROOF_GRAPH = {
    "source": "D5 choice",
    "note": "R6/R7: three ~34 mm pieces (cut 35 mm) across a 2 in board (crush axis = through-thickness)",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.cartridge.material",
@@ -157328,7 +160926,7 @@ window.PROOF_GRAPH = {
    "source": "D5 choice",
    "note": "per side, cartridge in the piston bore",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.cartridge.preload_m",
@@ -157374,7 +160972,7 @@ window.PROOF_GRAPH = {
    "source": "team/C5/CHANGE-REQUESTS.md#CR-C5-10",
    "note": "R6: each of the three segments is cut 1 mm long and pressed 1 mm on the drill press before assembly (CR-C5-10): removes the first-yield peak of every segment in the series stack; the pressed length is the CAD length",
    "status": "PROPOSED",
-   "importance": 390
+   "importance": 396
   },
   {
    "id": "P:landing.cartridge.density_kgm3",
@@ -157389,7 +160987,7 @@ window.PROOF_GRAPH = {
     "cites SRC-D5-OC-F400, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 504
+   "importance": 510
   },
   {
    "id": "P:landing.wall_t_m",
@@ -157401,7 +160999,7 @@ window.PROOF_GRAPH = {
    "source": "G3 practice",
    "note": "two 0.4 mm perimeters, 100 % solid; shoe sleeve and piston tine",
    "status": "PROPOSED",
-   "importance": 542
+   "importance": 548
   },
   {
    "id": "P:landing.slide_clear_m",
@@ -157413,7 +161011,7 @@ window.PROOF_GRAPH = {
    "source": "G3 practice",
    "note": "per side, tine in sleeve (PETG on PETG); check with the first print",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.shoe.back_wall_t_m",
@@ -157424,7 +161022,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "source": "D5 choice",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.shoe.leg_depth_m",
@@ -157436,7 +161034,7 @@ window.PROOF_GRAPH = {
    "source": "team/D5/feet_calc.py#CALC-D5-BOND",
    "note": "R4: 10 -> 7 mm to pay for the wider R4 cartridge (-1.2 g on four shoes); legs bonded to both fin faces below the step; bond RF stays >= 1.4 (CL-D5-BOND-SF)",
    "status": "PROPOSED",
-   "importance": 545
+   "importance": 551
   },
   {
    "id": "P:landing.shoe.glue_gap_m",
@@ -157448,7 +161046,7 @@ window.PROOF_GRAPH = {
    "source": "G3 practice",
    "note": "per side between shoe and fin (epoxy line)",
    "status": "PROPOSED",
-   "importance": 545
+   "importance": 551
   },
   {
    "id": "P:landing.shoe.window_z_m",
@@ -157460,7 +161058,7 @@ window.PROOF_GRAPH = {
    "source": "D5 choice",
    "note": "snap-finger window height in the two y walls of the sleeve",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.shoe.rim_t_m",
@@ -157472,7 +161070,7 @@ window.PROOF_GRAPH = {
    "source": "team/D5/sim/fea_shoe_d5.py (D-76)",
    "note": "R7 (D-76): 3.4 mm (R6 2.8) round the last rim_len of the narrower sleeve; D5 FEA 37.5 MPa (+y) at 59.25 N ult, RF 1.07 (R6 1.03). Roof side level with the pad edge (lip_m = rim_t_m)",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.shoe.rim_side_t_m",
@@ -157484,7 +161082,7 @@ window.PROOF_GRAPH = {
    "source": "team/D5/sim/fea_shoe_d5.py (D5-R8, sweep 2026-11-13: sim/out/fea_d5_h400_p{y,z}_v_*.json)",
    "note": "R8: rim thickness on the two y sides (outside the sleeve, aft of the fin TE, free space). +y side load at 59.25 N ult, R 2.0 fillets, h 0.4: rs 3.4 (floor 3.4) 35.5 MPa; rs 4.4 / 4.8 (floor 0.4) 29.3 / 28.3 MPa; rs 5.4 (floor 1.4) 28.2 MPa. Past ~4.8 the inboard window edge (28.3 MPa) governs. 4.6 is taken to keep the landing mass at or under R7. The roof side stays rim_t_m (= lip_m) so the rim top stays level with the pad edge and the fin step does not move",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.shoe.rim_floor_t_m",
@@ -157496,7 +161094,7 @@ window.PROOF_GRAPH = {
    "source": "team/D5/sim/fea_shoe_d5.py (D5-R8)",
    "note": "R8: rim on the floor side (below the sleeve floor, aft of the TE) cut to one 0.4 mm perimeter: it is not the stroke stop (the flange spans z_slv0..pad edge) and a thick floor rim stiffens the floor and raises the +y corner peak (h 0.4, R 2.0: rs 5.4 with floor 3.4 / 1.4 gives 28.9 / 28.2 MPa; rs 4.4 with floor 1.4 / 0.4 gives 30.1 / 29.3 MPa; rs 4.8 with floor 0.4 / 0 gives 28.3 / 30.0 MPa, so one perimeter is kept)",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.shoe.rim_len_m",
@@ -157508,7 +161106,7 @@ window.PROOF_GRAPH = {
    "source": "team/D5/feet_calc.py#CALC-D5-SIDE",
    "note": "must start aft of the fin TE",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.shoe.collar_len_m",
@@ -157520,7 +161118,7 @@ window.PROOF_GRAPH = {
    "source": "D5 choice (CR-C4-09)",
    "note": "two collar cheeks forward of the step front over both edge-strip ends (the strips end at the square-tip front, D3)",
    "status": "PROPOSED",
-   "importance": 545
+   "importance": 551
   },
   {
    "id": "P:landing.shoe.lip_m",
@@ -157532,7 +161130,7 @@ window.PROOF_GRAPH = {
    "source": "D5 (= shoe.rim_t_m)",
    "note": "R7: = shoe.rim_t_m; sleeve roof this far below the pad edge so the rim top is level with it (CL-D5-RIM-TOP-MARGIN >= 0)",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.shoe.wall_t_m",
@@ -157544,7 +161142,7 @@ window.PROOF_GRAPH = {
    "source": "team/D5/sim/fea_shoe_d5.py (CR-C5-18, CR-A1-65)",
    "note": "R6: sleeve floor, roof and y walls (three 0.4 mm perimeters); the tine and legs stay at wall_t_m 0.8. D5 FEA sweep (sim/out/sweep1, sweep2): 0.8/3.2 and 1.0/3.0 fail near the TE (56 / 50 MPa), 1.2/2.8 gives 34.1 MPa at 59.0 N ult (RF 1.17), 1.4/2.6 34.8 MPa and heavier; R7 (D-76): 1.2 kept on the 19.1 x 14.4 mm sleeve (FEA sweep sim/runs/log_k11_*, log_k12_*: ws 0.8 / 1.0 fail +y at 60 / 52 MPa on the narrow sleeve)",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.shoe.inside_fillet_r_m",
@@ -157556,7 +161154,7 @@ window.PROOF_GRAPH = {
    "source": "team/D5/sim/fea_shoe_d5.py (D5-R8); was team/C5/CHANGE-REQUESTS.md#CR-C5-18 (R 1.0)",
    "note": "R8: R 2.0 mm in the four inside corners of the sleeve, full length (modelled); the FEA peak sits in this corner. R 1.0 / 1.5 / 2.0 at rim 3.4 give +y 37.6 / 38.8 / 35.5 MPa and +z 31.0 / 26.1 / 21.2 MPa (h 0.4). Tine chamfer piston.corner_chamfer_m 1.4 keeps 0.16 mm to the arc (CL-D5-FILLET-CLEAR)",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.edge_strip.w_m",
@@ -157568,7 +161166,7 @@ window.PROOF_GRAPH = {
    "source": "subsystems/fins/params.json#fin_detail.edge_strip.w_m",
    "note": "copied, D3 owns it: CF 10 x 1 mm on both faces along the half-fin top edge; ends at the step front, wrapped by the collar",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.edge_strip.t_m",
@@ -157579,7 +161177,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "source": "subsystems/fins/params.json#fin_detail.edge_strip.t_m",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.piston.flange_t_m",
@@ -157591,7 +161189,7 @@ window.PROOF_GRAPH = {
    "source": "team/D5/feet_calc.py#CALC-D5-FLANGE",
    "note": "R7 (D-76): 1.6 -> 1.8 mm: the flange is narrower (19.1 mm) with the narrower sleeve; SF 1.23 at C1's 80 N bound",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.piston.engage_m",
@@ -157603,7 +161201,7 @@ window.PROOF_GRAPH = {
    "source": "team/C5/CHANGE-REQUESTS.md#CR-C5-18",
    "note": "R6: 12 -> 25 mm (C5 variant): tine engagement in the sleeve before any crush; lowers the lip reaction R = F (a + e) / (e + s0) from 3.2 F to 2.2 F",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.piston.hook_protrusion_m",
@@ -157615,7 +161213,7 @@ window.PROOF_GRAPH = {
    "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-12",
    "note": "hook 0.6 mm beyond the tine wall: 0.4 mm catch on the window aft edge; R6: 45 deg ramp on its forward face so any set > 1 mm cams it under the 3 mm window's front edge and it rides inside the wall (finger held at 1.7 % strain until the insert is pulled)",
    "status": "PROPOSED",
-   "importance": 542
+   "importance": 548
   },
   {
    "id": "P:landing.piston.hook_len_m",
@@ -157626,7 +161224,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "source": "D5 choice",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.piston.finger_len_m",
@@ -157638,7 +161236,7 @@ window.PROOF_GRAPH = {
    "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-12",
    "note": "free finger length >= 6.0 mm (CL-C6-SNAP-L-MIN); 6.5 mm gives 1.7 % strain",
    "status": "PROPOSED",
-   "importance": 541
+   "importance": 547
   },
   {
    "id": "P:landing.piston.finger_w_m",
@@ -157650,7 +161248,7 @@ window.PROOF_GRAPH = {
    "source": "D5 choice",
    "note": "finger width between the two slots",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.piston.slot_w_m",
@@ -157662,7 +161260,7 @@ window.PROOF_GRAPH = {
    "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-12",
    "note": "two 0.8 mm slots in each tine y wall make the finger",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.piston.window_rail_m",
@@ -157674,7 +161272,7 @@ window.PROOF_GRAPH = {
    "source": "team/D5/feet_calc.py#CALC-D5-SIDE (D5 choice, R8)",
    "note": "R8: 2.0 -> 2.5 mm rail each side of the inspection window: the 1.4 mm tine chamfer (needed by the R 2.0 sleeve fillets) costs tine section; with R8's CALC-D5-SIDE (windowed section at F (a - 3 mm), full section at F a) the tine SF is CL-D5-SIDE-TINE-SF. Window 10.7 -> 9.7 mm wide, still shows the cartridge stripe. R7 (D-76): 1.5 -> 2.0 mm",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.piston.replace_mark_m",
@@ -157686,7 +161284,7 @@ window.PROOF_GRAPH = {
    "source": "team/D5/feet_calc.py#CALC-D5-CRUSH",
    "note": "R4: 6 -> 3 mm. Groove on the tine 3 mm aft of the rim: once it is inside the sleeve, less than C5's pair-first stroke plus the 3 mm guard is left; replace the insert (CL-D5-MARK-MARGIN)",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.piston.corner_chamfer_m",
@@ -157698,7 +161296,7 @@ window.PROOF_GRAPH = {
    "source": "D5 choice (R8)",
    "note": "R8: 45 deg chamfer on the four outside corners of the tine so it clears the R 2.0 sleeve fillets with the 0.2 mm slide clearance: the chamfer ends sit sqrt((R-cs-tc)^2+(R-cs)^2) = 1.844 mm from the fillet centre, 0.156 mm inside the 2.0 mm arc (CL-D5-FILLET-CLEAR; R7 was 1.0 mm chamfer on R 1.0, 0.175 mm). With 1.0 mm the gap would be 0.030 mm",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.pad.t_m",
@@ -157713,7 +161311,7 @@ window.PROOF_GRAPH = {
     "cites SRC-D5-NEOPRENE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 541
+   "importance": 547
   },
   {
    "id": "P:landing.pad.z_outer_m",
@@ -157725,7 +161323,7 @@ window.PROOF_GRAPH = {
    "source": "team/D5/feet_calc.py#CALC-D5-TIPOVER",
    "note": "outboard edge of the pad and flange (D-30, kept with the 0.21 m half-fins); tip-over pivot = z_outer - edge_r",
    "status": "PROPOSED",
-   "importance": 544
+   "importance": 550
   },
   {
    "id": "P:landing.pad.edge_r_m",
@@ -157737,7 +161335,7 @@ window.PROOF_GRAPH = {
    "source": "D5 choice",
    "note": "edge round on the flange and pad",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.stroke_max_m",
@@ -157749,7 +161347,7 @@ window.PROOF_GRAPH = {
    "source": "params.json#requirements.foot_crush_stroke_min_m",
    "note": "flange-to-rim gap (D-30); the wing TE stays 10 mm off the ground at full stroke",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.cap.span_m",
@@ -157761,7 +161359,7 @@ window.PROOF_GRAPH = {
    "source": "D5 choice (CR-C5-04)",
    "note": "spanwise length of the TPU corner cap on the fixed wingtip; inboard edge 1.5 mm outboard of the outboard elevon end (k9.elevon_spans: 0.560)",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.cap.chord_m",
@@ -157773,7 +161371,7 @@ window.PROOF_GRAPH = {
    "source": "D5 choice (CR-C5-04)",
    "note": "chordwise depth of the cap legs forward of the TE",
    "status": "PROPOSED",
-   "importance": 539
+   "importance": 545
   },
   {
    "id": "P:landing.cap.wall_t_m",
@@ -157785,7 +161383,7 @@ window.PROOF_GRAPH = {
    "source": "G3 practice",
    "note": "TPU 95A, two perimeters",
    "status": "PROPOSED",
-   "importance": 542
+   "importance": 548
   },
   {
    "id": "P:landing.cap.tape_g",
@@ -157800,7 +161398,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/subsystems/landing/params.json: two wraps of 12 mm filament tape over the cap legs"
    ],
    "status": "UNVERIFIED",
-   "importance": 504
+   "importance": 510
   },
   {
    "id": "P:landing.materials.petg_density_kgm3",
@@ -157814,7 +161412,7 @@ window.PROOF_GRAPH = {
     "cites SRC-D5-PETG, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 504
+   "importance": 510
   },
   {
    "id": "P:landing.materials.tpu_density_kgm3",
@@ -157828,7 +161426,7 @@ window.PROOF_GRAPH = {
     "cites SRC-D5-TPU, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 504
+   "importance": 510
   },
   {
    "id": "P:landing.materials.neoprene_density_kgm3",
@@ -157842,7 +161440,7 @@ window.PROOF_GRAPH = {
     "cites SRC-D5-NEOPRENE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 506
+   "importance": 512
   },
   {
    "id": "P:landing.materials.glue_g_per_foot",
@@ -157857,7 +161455,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/subsystems/landing/params.json: epoxy on the shoe (0.35) + foam-safe CA on the cartridge (0.05)"
    ],
    "status": "UNVERIFIED",
-   "importance": 504
+   "importance": 510
   },
   {
    "id": "P:landing.materials.brass_density_kgm3",
@@ -158162,7 +161760,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-XFOIL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1121
+   "importance": 1151
   },
   {
    "id": "P:b2.xfoil.cm_cl07_2d",
@@ -158192,7 +161790,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-XFOIL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1119
+   "importance": 1149
   },
   {
    "id": "P:b2.xfoil.elevon_eta",
@@ -158207,7 +161805,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-XFOIL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1119
+   "importance": 1149
   },
   {
    "id": "P:b2.xfoil.hinge_coef_max",
@@ -158222,7 +161820,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-XFOIL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1128
+   "importance": 1158
   },
   {
    "id": "P:b2.avl.dcm_visc",
@@ -158237,7 +161835,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-AVL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1119
+   "importance": 1149
   },
   {
    "id": "P:b2.avl.xnp_m",
@@ -158252,7 +161850,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-AVL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:b2.avl.cla_per_rad",
@@ -158266,7 +161864,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-AVL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1126
+   "importance": 1156
   },
   {
    "id": "P:b2.avl.e_oswald",
@@ -158281,7 +161879,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-AVL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1121
+   "importance": 1151
   },
   {
    "id": "P:b2.avl.cd0_wing",
@@ -158296,7 +161894,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-AVL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1121
+   "importance": 1151
   },
   {
    "id": "P:b2.avl.cnb_per_rad",
@@ -158397,7 +161995,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-AVL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:b2.avl.cs.cl_over_CL",
@@ -158438,7 +162036,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-AVL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1133
+   "importance": 1163
   },
   {
    "id": "P:b2.avl.cs.clmax_local",
@@ -158479,7 +162077,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-XFOIL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1133
+   "importance": 1163
   },
   {
    "id": "P:b2.avl.cs.y_m",
@@ -158534,7 +162132,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B1-SIM-CFD, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:b1sim.cfd.fin_b_cd",
@@ -158549,7 +162147,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B1-SIM-CFD, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:b1sim.cfd.fin_a_gci_pct",
@@ -158729,7 +162327,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B1-SIM-VLMXF, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:b1sim.avl.xnp_m",
@@ -158774,7 +162372,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B1-SIM-VLMXF, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:b1sim.avl.lattice_spread_pct",
@@ -158804,7 +162402,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B1-SIM-VLMXF, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:b1sim.wing.k_fit",
@@ -158819,7 +162417,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B1-SIM-VLMXF, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:b1sim.wing.cd0_fit_ncrit5",
@@ -158894,7 +162492,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B1-SIM-VLMXF, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:b1sim.wing.elevon_at_clmax_deg",
@@ -159902,7 +163500,7 @@ window.PROOF_GRAPH = {
    "source": "D6 choice",
    "note": "servo shaft 54.6 mm ahead of the hinge; case x 0.178-0.201 where the core is 20.4-24.2 mm deep (12 mm servo + >= 6 mm foam above)",
    "status": "PROPOSED",
-   "importance": 1136
+   "importance": 1166
   },
   {
    "id": "P:mec.station.shaft_above_skin_m",
@@ -159917,7 +163515,7 @@ window.PROOF_GRAPH = {
     "cites SRC-D6-SH0255, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1136
+   "importance": 1166
   },
   {
    "id": "P:mec.station.arm_plane_y_m",
@@ -159929,7 +163527,7 @@ window.PROOF_GRAPH = {
    "source": "D6 choice",
    "note": "servo arm, pushrod and inboard horn share this plane: straight pushrod along x; 15 mm inboard of the inboard panel end (0.30)",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:mec.station.outboard_horn_y_m",
@@ -159941,7 +163539,7 @@ window.PROOF_GRAPH = {
    "source": "D6 choice",
    "note": "15 mm outboard of the outboard panel start (0.34)",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:mec.arm.r_m",
@@ -159953,7 +163551,7 @@ window.PROOF_GRAPH = {
    "source": "team/D6/mech_calcs.py#CALC-D6-KIN",
    "note": "0.61 x horn radius: +/-25 deg surface at about +/-44 deg servo; hole drilled 1.6 mm in the supplied single arm at 15.6 mm",
    "status": "PROPOSED",
-   "importance": 1138
+   "importance": 1168
   },
   {
    "id": "P:mec.arm.t_m",
@@ -160008,7 +163606,7 @@ window.PROOF_GRAPH = {
    "source": "D6 choice",
    "note": "clevis pin hole straight below the hinge axis; 16 mm below the lower skin at the hinge so the 4 mm clevis clears the rod boss by >= 1 mm through the travel",
    "status": "PROPOSED",
-   "importance": 1136
+   "importance": 1166
   },
   {
    "id": "P:mec.horn.bridge_r_m",
@@ -160020,7 +163618,7 @@ window.PROOF_GRAPH = {
    "source": "team/D6/mech_calcs.py#CALC-D6-CLEAR",
    "note": "inter-panel rod centre below the hinge axis; feasible band 13.8-18.9 mm in D3's 24 x 12 mm notch; 16.5 centres the sweep",
    "status": "PROPOSED",
-   "importance": 1123
+   "importance": 1153
   },
   {
    "id": "P:mec.horn.plate_t_m",
@@ -160032,7 +163630,7 @@ window.PROOF_GRAPH = {
    "source": "G3 practice",
    "note": "6 perimeters at 0.4 mm, 100 % infill, PETG; slot cut 2.5 mm through the panel",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:mec.horn.outline_mm",
@@ -160169,7 +163767,7 @@ window.PROOF_GRAPH = {
    "source": "D6 choice",
    "note": "on the face toward the fin; the link rod is bonded over this length (fixed end)",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:mec.horn.pin_hole_d_m",
@@ -160211,7 +163809,7 @@ window.PROOF_GRAPH = {
     "cites SRC-D6-CFROD, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1123
+   "importance": 1153
   },
   {
    "id": "P:mec.link.e_pa",
@@ -160226,7 +163824,7 @@ window.PROOF_GRAPH = {
     "cites SRC-D6-CFROD, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:mec.link.steel_gcc",
@@ -160345,7 +163943,7 @@ window.PROOF_GRAPH = {
    "source": "ASM-D6-HOLE-PLAY",
    "note": "diametral play: Z-bend in the arm hole drilled 1.6 mm with a pin vise, clevis pin in the drilled horn hole",
    "status": "PROPOSED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "P:mec.pushrod.e_pa",
@@ -160378,7 +163976,7 @@ window.PROOF_GRAPH = {
     "cites SRC-D6-CFTUBE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:mec.tube.x_aft_of_hinge_m",
@@ -160460,7 +164058,7 @@ window.PROOF_GRAPH = {
    "source": "team/D6/mech_calcs.py#CALC-D6-BRIDGE",
    "note": "fraction of the drive-to-far-end length the tube covers, [inboard, outboard] panel, measured from the horn. Inboard tube runs 0.150 m inboard of the horn (|y| 0.135-0.295, 160 mm with the 10 mm past the horn): the torque near the far end is small (loss 6.8 -> 7.1 %). Outboard tube kept full length: wing tip, ground handling, tip stiffness",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:mec.panel.foam_g_pa",
@@ -160490,7 +164088,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/subsystems/mechanisms/params.json: one layer of packing tape; the panel skin is closed into a torsion box by taping the LE bevel face (BUILD step)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:mec.panel.skin_g_eff_pa",
@@ -160505,7 +164103,7 @@ window.PROOF_GRAPH = {
     "cites ASM-D6-TAPE-G, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:mec.frame.wall_m",
@@ -160691,7 +164289,7 @@ window.PROOF_GRAPH = {
    "source": "D6 choice",
    "note": "mechanical stops 5 deg beyond wing.elevon.deflection_deg: TE down = D1's 30 deg panel bevel on the core TE face (wing/params.json#elevon.bevel_deg), TE up = the arm on the cover slot end",
    "status": "PROPOSED",
-   "importance": 1136
+   "importance": 1166
   },
   {
    "id": "P:mec.section.x_m",
@@ -160765,7 +164363,7 @@ window.PROOF_GRAPH = {
    "source": "k09kit.surface_z",
    "note": "GENERATED by make_mechanisms.py from k09kit.surface_z (subsystems/wing/s5010.dat, chord wing.chord_m)",
    "status": "PROPOSED",
-   "importance": 1136
+   "importance": 1166
   },
   {
    "id": "P:mec.section.zu_m",
@@ -160839,7 +164437,7 @@ window.PROOF_GRAPH = {
    "source": "k09kit.surface_z",
    "note": "GENERATED by make_mechanisms.py from k09kit.surface_z (subsystems/wing/s5010.dat, chord wing.chord_m)",
    "status": "PROPOSED",
-   "importance": 1136
+   "importance": 1166
   },
   {
    "id": "P:mec.section.zl_m",
@@ -160913,7 +164511,7 @@ window.PROOF_GRAPH = {
    "source": "k09kit.surface_z",
    "note": "GENERATED by make_mechanisms.py from k09kit.surface_z (subsystems/wing/s5010.dat, chord wing.chord_m)",
    "status": "PROPOSED",
-   "importance": 1136
+   "importance": 1166
   },
   {
    "id": "P:mec.mass_total_g",
@@ -160928,7 +164526,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/subsystems/mechanisms/params.json: GENERATED: sum of the 22 declared part masses (EST until weighed, T-D6-WEIGH)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1116
+   "importance": 1146
   },
   {
    "id": "P:c2.inputs.spar_E_nom_pa",
@@ -163346,7 +166944,7 @@ window.PROOF_GRAPH = {
    "source": "D7 choice",
    "note": "PE plank 2 + 2 + 1 in laminated (127 mm) and band-sawn to 120 mm: >= t_req (CALC-D7-STROKE) for the 0.3 m drop, and bottoms (0.6 x 120 = 72 mm) >= 10 mm above the floor under the lower tube ends in the 0.54 m box (window 109-123 mm at n_allow 11.0)",
    "status": "PROPOSED",
-   "importance": 267
+   "importance": 272
   },
   {
    "id": "P:trn.cradle.crush_footprint_m",
@@ -163466,7 +167064,7 @@ window.PROOF_GRAPH = {
     "cites SRC-D7-PE-FOAM, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 267
+   "importance": 272
   },
   {
    "id": "P:trn.foam.eps_bottom",
@@ -163481,7 +167079,7 @@ window.PROOF_GRAPH = {
     "cites SRC-D7-PE-FOAM, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 267
+   "importance": 272
   },
   {
    "id": "P:trn.foam.static_stress_band_kpa",
@@ -163511,7 +167109,7 @@ window.PROOF_GRAPH = {
    "source": "D7 choice",
    "note": "free travel left under the lower tube ends when the column bottoms",
    "status": "PROPOSED",
-   "importance": 267
+   "importance": 272
   },
   {
    "id": "P:trn.tray.size_m",
@@ -165106,7 +168704,7 @@ window.PROOF_GRAPH = {
     "cites ASM-F1-WIRE-OD, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1143
+   "importance": 1173
   },
   {
    "id": "P:harness.pod_box",
@@ -165125,7 +168723,7 @@ window.PROOF_GRAPH = {
    "source": "params.json#pod",
    "note": "[x range, half width, base z]: inside = HRN-001",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:harness.wire_table",
@@ -167410,7 +171008,7 @@ window.PROOF_GRAPH = {
        "P"
       ],
       [
-       -0.003,
+       -0.002,
        -0.0403,
        0.046,
        "P"
@@ -167418,13 +171016,13 @@ window.PROOF_GRAPH = {
       [
        -0.0085,
        -0.0403,
-       0.0514,
+       0.0537,
        "P"
       ],
       [
        -0.0145,
        -0.0403,
-       0.0514,
+       0.0537,
        "E"
       ]
      ]
@@ -167443,19 +171041,19 @@ window.PROOF_GRAPH = {
       [
        -0.0145,
        -0.0545,
-       0.0484,
+       0.0507,
        "P"
       ],
       [
        -0.0085,
        -0.0545,
-       0.0514,
+       0.0537,
        "P"
       ],
       [
        -0.003,
        -0.0532,
-       0.044,
+       0.0455,
        "P"
       ],
       [
@@ -167504,13 +171102,13 @@ window.PROOF_GRAPH = {
       [
        -0.0612,
        -0.034,
-       0.0506,
+       0.0529,
        "F"
       ],
       [
        -0.0685,
        -0.0335,
-       0.0506,
+       0.0529,
        "F"
       ],
       [
@@ -167859,7 +171457,7 @@ window.PROOF_GRAPH = {
    "source": "team/F2/harness.py",
    "note": "[id, edge, AWG, conductors, twisted, lay m, service loop m, g/m per conductor (0 = mass carried by another subsystem), factory lead m, points]",
    "status": "PROPOSED",
-   "importance": 1142
+   "importance": 1172
   },
   {
    "id": "P:harness.fittings_table",
@@ -168121,7 +171719,7 @@ window.PROOF_GRAPH = {
      0.3,
      -0.0612,
      -0.034,
-     0.0506
+     0.0529
     ],
     [
      "I2C Y-splice, 4 conductors",
@@ -168171,7 +171769,7 @@ window.PROOF_GRAPH = {
     "cites ASM-F2-WIRE-GPM, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:harness.xt30u_table",
@@ -168212,7 +171810,7 @@ window.PROOF_GRAPH = {
    "source": "team/F2/harness.py (D-74)",
    "note": "[name, g, x, y, z]: the four XT30U mated pairs, parts HRN-113-<st> (own nodes, not in the bundle masses)",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:harness.grommet_table",
@@ -168253,7 +171851,7 @@ window.PROOF_GRAPH = {
    "source": "team/F2/harness.py (D-83)",
    "note": "[name, g, x, y, z]: the four fin-hole grommets, parts HRN-110-<st> (own nodes, not in the bundle masses); 0.50 g each EST",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:harness.jr_table",
@@ -168322,7 +171920,7 @@ window.PROOF_GRAPH = {
    "source": "team/F2/harness.py (D-86)",
    "note": "[name, g, x, y, z]: the JR pairs drawn as parts HRN-105-<n> (tray, FC output n) and HRN-105-S<L|R> (servo recess); own nodes, not in the bundle masses; EST",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:harness.sleeve_table",
@@ -168468,7 +172066,7 @@ window.PROOF_GRAPH = {
    "source": "team/F2/harness.py (D-88)",
    "note": "[name, g, x, y, z]: the heat-shrink sleeves drawn as parts HRN-107-*; mass = pi (r_out^2 - r_in^2) L x 1.3 g/cm3 (EST); own nodes",
    "status": "PROPOSED",
-   "importance": 1115
+   "importance": 1145
   },
   {
    "id": "P:harness.passes",
@@ -169608,7 +173206,7 @@ window.PROOF_GRAPH = {
      2.17,
      2.03,
      1.0,
-     3.51,
+     3.54,
      2.34
     ]
    },
@@ -170284,71 +173882,71 @@ window.PROOF_GRAPH = {
      "loop": [
       [
        -0.053772,
-       0.0488
+       0.0511
       ],
       [
        -0.052906,
-       0.049221
+       0.051521
       ],
       [
        -0.052242,
-       0.049919
+       0.052219
       ],
       [
        -0.051866,
-       0.050805
+       0.053105
       ],
       [
        -0.051825,
-       0.051767
+       0.054067
       ],
       [
        -0.052124,
-       0.052683
+       0.054983
       ],
       [
        -0.052725,
-       0.053435
+       0.055735
       ],
       [
        -0.053552,
-       0.053928
+       0.056228
       ],
       [
        -0.0545,
-       0.05398
+       0.05628
       ],
       [
        -0.055448,
-       0.053928
+       0.056228
       ],
       [
        -0.056275,
-       0.053435
+       0.055735
       ],
       [
        -0.056876,
-       0.052683
+       0.054983
       ],
       [
        -0.057175,
-       0.051767
+       0.054067
       ],
       [
        -0.057134,
-       0.050805
+       0.053105
       ],
       [
        -0.056758,
-       0.049919
+       0.052219
       ],
       [
        -0.056094,
-       0.049221
+       0.051521
       ],
       [
        -0.055228,
-       0.0488
+       0.0511
       ]
      ],
      "mass_g": 0.1604
@@ -170365,71 +173963,71 @@ window.PROOF_GRAPH = {
      "loop": [
       [
        -0.048772,
-       0.0488
+       0.0511
       ],
       [
        -0.047906,
-       0.049221
+       0.051521
       ],
       [
        -0.047242,
-       0.049919
+       0.052219
       ],
       [
        -0.046866,
-       0.050805
+       0.053105
       ],
       [
        -0.046825,
-       0.051767
+       0.054067
       ],
       [
        -0.047124,
-       0.052683
+       0.054983
       ],
       [
        -0.047725,
-       0.053435
+       0.055735
       ],
       [
        -0.048552,
-       0.053928
+       0.056228
       ],
       [
        -0.0495,
-       0.05398
+       0.05628
       ],
       [
        -0.050448,
-       0.053928
+       0.056228
       ],
       [
        -0.051275,
-       0.053435
+       0.055735
       ],
       [
        -0.051876,
-       0.052683
+       0.054983
       ],
       [
        -0.052175,
-       0.051767
+       0.054067
       ],
       [
        -0.052134,
-       0.050805
+       0.053105
       ],
       [
        -0.051758,
-       0.049919
+       0.052219
       ],
       [
        -0.051094,
-       0.049221
+       0.051521
       ],
       [
        -0.050228,
-       0.0488
+       0.0511
       ]
      ],
      "mass_g": 0.1604
@@ -170608,71 +174206,71 @@ window.PROOF_GRAPH = {
      "loop": [
       [
        -0.041992,
-       0.0488
+       0.0511
       ],
       [
        -0.041126,
-       0.049221
+       0.051521
       ],
       [
        -0.040462,
-       0.049919
+       0.052219
       ],
       [
        -0.040086,
-       0.050805
+       0.053105
       ],
       [
        -0.040045,
-       0.051767
+       0.054067
       ],
       [
        -0.040344,
-       0.052683
+       0.054983
       ],
       [
        -0.040945,
-       0.053435
+       0.055735
       ],
       [
        -0.041772,
-       0.053928
+       0.056228
       ],
       [
        -0.04272,
-       0.05398
+       0.05628
       ],
       [
        -0.043668,
-       0.053928
+       0.056228
       ],
       [
        -0.044495,
-       0.053435
+       0.055735
       ],
       [
        -0.045096,
-       0.052683
+       0.054983
       ],
       [
        -0.045395,
-       0.051767
+       0.054067
       ],
       [
        -0.045354,
-       0.050805
+       0.053105
       ],
       [
        -0.044978,
-       0.049919
+       0.052219
       ],
       [
        -0.044314,
-       0.049221
+       0.051521
       ],
       [
        -0.043448,
-       0.0488
+       0.0511
       ]
      ],
      "mass_g": 0.1604
@@ -170689,71 +174287,71 @@ window.PROOF_GRAPH = {
      "loop": [
       [
        -0.037152,
-       0.0488
+       0.0511
       ],
       [
        -0.036286,
-       0.049221
+       0.051521
       ],
       [
        -0.035622,
-       0.049919
+       0.052219
       ],
       [
        -0.035246,
-       0.050805
+       0.053105
       ],
       [
        -0.035205,
-       0.051767
+       0.054067
       ],
       [
        -0.035504,
-       0.052683
+       0.054983
       ],
       [
        -0.036105,
-       0.053435
+       0.055735
       ],
       [
        -0.036932,
-       0.053928
+       0.056228
       ],
       [
        -0.03788,
-       0.05398
+       0.05628
       ],
       [
        -0.038828,
-       0.053928
+       0.056228
       ],
       [
        -0.039655,
-       0.053435
+       0.055735
       ],
       [
        -0.040256,
-       0.052683
+       0.054983
       ],
       [
        -0.040555,
-       0.051767
+       0.054067
       ],
       [
        -0.040514,
-       0.050805
+       0.053105
       ],
       [
        -0.040138,
-       0.049919
+       0.052219
       ],
       [
        -0.039474,
-       0.049221
+       0.051521
       ],
       [
        -0.038608,
-       0.0488
+       0.0511
       ]
      ],
      "mass_g": 0.1604
@@ -181609,19 +185207,19 @@ window.PROOF_GRAPH = {
         0.046
        ],
        [
-        -0.003,
+        -0.002,
         -0.04272,
         0.046
        ],
        [
         -0.0085,
         -0.04272,
-        0.0514
+        0.0537
        ],
        [
         -0.0145,
         -0.04272,
-        0.0514
+        0.0537
        ]
       ]
      ],
@@ -181634,19 +185232,19 @@ window.PROOF_GRAPH = {
         0.046
        ],
        [
-        -0.003,
+        -0.002,
         -0.03788,
         0.046
        ],
        [
         -0.0085,
         -0.03788,
-        0.0514
+        0.0537
        ],
        [
         -0.0145,
         -0.03788,
-        0.0514
+        0.0537
        ]
       ]
      ]
@@ -181658,17 +185256,17 @@ window.PROOF_GRAPH = {
        [
         -0.0145,
         -0.0545,
-        0.0514
+        0.0537
        ],
        [
         -0.0085,
         -0.0545,
-        0.0514
+        0.0537
        ],
        [
         -0.003,
         -0.0532,
-        0.044
+        0.0455
        ],
        [
         -0.003,
@@ -181703,17 +185301,17 @@ window.PROOF_GRAPH = {
        [
         -0.0145,
         -0.0495,
-        0.0514
+        0.0537
        ],
        [
         -0.0085,
         -0.0495,
-        0.0514
+        0.0537
        ],
        [
         -0.004,
         -0.048,
-        0.044
+        0.0455
        ],
        [
         -0.003,
@@ -181760,12 +185358,12 @@ window.PROOF_GRAPH = {
        [
         -0.0612,
         -0.034,
-        0.0506
+        0.0529
        ],
        [
         -0.0685,
         -0.0335,
-        0.0506
+        0.0529
        ],
        [
         -0.0685,
@@ -182322,7 +185920,7 @@ window.PROOF_GRAPH = {
      [
       -0.0105,
       -0.04,
-      0.0478
+      0.0501
      ],
      "CR-F1-18: power-board input pads, aft edge x -0.010, z 0.0486"
     ],
@@ -182330,7 +185928,7 @@ window.PROOF_GRAPH = {
      [
       -0.0105,
       -0.052,
-      0.0478
+      0.0501
      ],
      "CR-F1-18: power-board output pads, aft edge"
     ],
@@ -182354,7 +185952,7 @@ window.PROOF_GRAPH = {
      [
       -0.0612,
       -0.034,
-      0.0506
+      0.0529
      ],
      "D-89: rear of the ribbon plug on the PDB board-to-board header (power.py PWR-003 'board-link header', fore face x -0.0615, top-face forward-inboard corner); pin map at BOARD-CHECK.md step 4"
     ],
@@ -182465,7 +186063,7 @@ window.PROOF_GRAPH = {
    "source": "team/B1/CHANGE-REQUESTS.md#CR-B1-12",
    "note": "pre-4.5 name ARSPD_FBW_MAX (C1 asks <= 22)",
    "status": "PROPOSED",
-   "importance": 327
+   "importance": 332
   },
   {
    "id": "P:fsw.spin_max",
@@ -182479,7 +186077,7 @@ window.PROOF_GRAPH = {
     "cites CL-B4-SPIN-MAX, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 330
+   "importance": 335
   },
   {
    "id": "P:fsw.thr_max_pct",
@@ -182490,7 +186088,7 @@ window.PROOF_GRAPH = {
    "unit": "%",
    "source": "team/F4/fsw_check.py#CALC-F4-VLEVEL (CR-B1-17 b, CR-C1-20: level speed <= 21.8 m/s)",
    "status": "PROPOSED",
-   "importance": 328
+   "importance": 333
   },
   {
    "id": "P:fsw.thr_min_pct",
@@ -183002,7 +186600,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "source": "ArduPilot default, stated (CALC-F4-VLEVEL input); stand sets it (TUNING-PLAN step 2)",
    "status": "PROPOSED",
-   "importance": 326
+   "importance": 331
   },
   {
    "id": "P:fsw.thst_expo",
@@ -183013,7 +186611,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "source": "ArduPilot default, stated (CALC-F4-VLEVEL input)",
    "status": "PROPOSED",
-   "importance": 326
+   "importance": 331
   },
   {
    "id": "P:fsw.q_rtl_mode",
@@ -183173,28 +186771,28 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Flight pack 4S 6500 mAh (re-terminated AS150U, own 10 AWG leads 0.10 m)",
    "status": "UNVERIFIED",
-   "importance": 39
+   "importance": 40
   },
   {
    "id": "PWR-002",
    "type": "part",
    "title": "Main disconnect AS150U aircraft half + two 10 AWG main jumpers",
    "status": "UNVERIFIED",
-   "importance": 28
+   "importance": 29
   },
   {
    "id": "PWR-003",
    "type": "part",
    "title": "Power module: CoreWing F405 Wing V2 power board (V/I sense, servo BEC), separated from the FC stack",
    "status": "UNVERIFIED",
-   "importance": 33
+   "importance": 34
   },
   {
    "id": "PWR-004",
    "type": "part",
    "title": "Bus board: FR4 strip with two tinned 8 AWG bus bars (+ / -)",
    "status": "UNVERIFIED",
-   "importance": 16
+   "importance": 17
   },
   {
    "id": "PWR-006",
@@ -183229,28 +186827,28 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Foot shoe UR",
    "status": "UNVERIFIED",
-   "importance": 65
+   "importance": 67
   },
   {
    "id": "GER-001-UL",
    "type": "part",
    "title": "Foot shoe UL",
    "status": "UNVERIFIED",
-   "importance": 63
+   "importance": 65
   },
   {
    "id": "GER-001-LR",
    "type": "part",
    "title": "Foot shoe LR",
    "status": "UNVERIFIED",
-   "importance": 62
+   "importance": 64
   },
   {
    "id": "GER-001-LL",
    "type": "part",
    "title": "Foot shoe LL",
    "status": "UNVERIFIED",
-   "importance": 62
+   "importance": 64
   },
   {
    "id": "AVN-002",
@@ -183579,84 +187177,84 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Foot pad UR",
    "status": "UNVERIFIED",
-   "importance": 51
+   "importance": 53
   },
   {
    "id": "GER-004-UL",
    "type": "part",
    "title": "Foot pad UL",
    "status": "UNVERIFIED",
-   "importance": 51
+   "importance": 53
   },
   {
    "id": "GER-004-LR",
    "type": "part",
    "title": "Foot pad LR",
    "status": "UNVERIFIED",
-   "importance": 51
+   "importance": 53
   },
   {
    "id": "GER-004-LL",
    "type": "part",
    "title": "Foot pad LL",
    "status": "UNVERIFIED",
-   "importance": 51
+   "importance": 53
   },
   {
    "id": "GER-002-UR",
    "type": "part",
    "title": "Foot piston UR",
    "status": "UNVERIFIED",
-   "importance": 56
+   "importance": 58
   },
   {
    "id": "GER-002-UL",
    "type": "part",
    "title": "Foot piston UL",
    "status": "UNVERIFIED",
-   "importance": 54
+   "importance": 56
   },
   {
    "id": "GER-002-LR",
    "type": "part",
    "title": "Foot piston LR",
    "status": "UNVERIFIED",
-   "importance": 53
+   "importance": 55
   },
   {
    "id": "GER-002-LL",
    "type": "part",
    "title": "Foot piston LL",
    "status": "UNVERIFIED",
-   "importance": 53
+   "importance": 55
   },
   {
    "id": "GER-003-UR",
    "type": "part",
    "title": "Crush cartridge type U (solid) UR",
    "status": "UNVERIFIED",
-   "importance": 49
+   "importance": 51
   },
   {
    "id": "GER-003-UL",
    "type": "part",
    "title": "Crush cartridge type U (solid) UL",
    "status": "UNVERIFIED",
-   "importance": 49
+   "importance": 51
   },
   {
    "id": "GER-008-LR",
    "type": "part",
    "title": "Crush cartridge type L (bored) LR",
    "status": "UNVERIFIED",
-   "importance": 49
+   "importance": 51
   },
   {
    "id": "GER-008-LL",
    "type": "part",
    "title": "Crush cartridge type L (bored) LL",
    "status": "UNVERIFIED",
-   "importance": 49
+   "importance": 51
   },
   {
    "id": "GER-007-R",
@@ -183677,28 +187275,28 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Motor UR SunnySky X3108S KV900 (CW from the nose)",
    "status": "UNVERIFIED",
-   "importance": 56
+   "importance": 71
   },
   {
    "id": "PRP-001-UL",
    "type": "part",
    "title": "Motor UL SunnySky X3108S KV900 (CCW from the nose)",
    "status": "UNVERIFIED",
-   "importance": 43
+   "importance": 58
   },
   {
    "id": "PRP-001-LR",
    "type": "part",
    "title": "Motor LR SunnySky X3108S KV900 (CCW from the nose)",
    "status": "UNVERIFIED",
-   "importance": 42
+   "importance": 57
   },
   {
    "id": "PRP-001-LL",
    "type": "part",
    "title": "Motor LL SunnySky X3108S KV900 (CW from the nose)",
    "status": "UNVERIFIED",
-   "importance": 42
+   "importance": 57
   },
   {
    "id": "FIN-011-URO",
@@ -184069,28 +187667,28 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "ESC UR LANRC 45 A",
    "status": "UNVERIFIED",
-   "importance": 68
+   "importance": 72
   },
   {
    "id": "PRP-002-UL",
    "type": "part",
    "title": "ESC UL LANRC 45 A",
    "status": "UNVERIFIED",
-   "importance": 44
+   "importance": 48
   },
   {
    "id": "PRP-002-LR",
    "type": "part",
    "title": "ESC LR LANRC 45 A",
    "status": "UNVERIFIED",
-   "importance": 44
+   "importance": 48
   },
   {
    "id": "PRP-002-LL",
    "type": "part",
    "title": "ESC LL LANRC 45 A",
    "status": "UNVERIFIED",
-   "importance": 44
+   "importance": 48
   },
   {
    "id": "PRP-004-UR",
@@ -200920,6 +204518,21 @@ window.PROOF_GRAPH = {
    "type": "uses"
   },
   {
+   "source": "ASM-C1-TIE-SHARE",
+   "target": "CALC-C1-ENVELOPE",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C1-EYE-POS",
+   "target": "CALC-C1-ENVELOPE",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C1-PROP-STRIKE-T",
+   "target": "CALC-C1-ENVELOPE",
+   "type": "uses"
+  },
+  {
    "source": "ASM-C1-CRADLE-Y",
    "target": "CALC-C1-ENVELOPE",
    "type": "uses"
@@ -201273,11 +204886,6 @@ window.PROOF_GRAPH = {
    "source": "CALC-C1-LANDING",
    "target": "CL-C1-STANCE-MU-REQ",
    "type": "derives-from"
-  },
-  {
-   "source": "ASM-C1-FRICTION",
-   "target": "CL-C1-STANCE-MU-REQ",
-   "type": "uses"
   },
   {
    "source": "CALC-C1-CRASH",
@@ -201823,6 +205431,41 @@ window.PROOF_GRAPH = {
    "source": "CL-C1-FOOT-SIDE-DESIGN",
    "target": "R-LOADS",
    "type": "verifies"
+  },
+  {
+   "source": "CALC-C1-ENVELOPE",
+   "target": "CL-C1-G4-TIE-LIM",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C1-G4-TIE-LIM",
+   "target": "R-LOADS",
+   "type": "verifies"
+  },
+  {
+   "source": "CALC-C1-ENVELOPE",
+   "target": "CL-C1-G4-TIE-ULT",
+   "type": "derives-from"
+  },
+  {
+   "source": "CALC-C1-ENVELOPE",
+   "target": "CL-C1-G4-FINJOINT-M",
+   "type": "derives-from"
+  },
+  {
+   "source": "CALC-C1-ENVELOPE",
+   "target": "CL-C1-P1-TUBE-TORQUE",
+   "type": "derives-from"
+  },
+  {
+   "source": "CALC-C1-ENVELOPE",
+   "target": "CL-C1-P1-FUSE-MATCH",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-DOG-FUSE-T",
+   "target": "CL-C1-P1-FUSE-MATCH",
+   "type": "uses"
   },
   {
    "source": "CALC-C1-ENVELOPE",
@@ -221005,12 +224648,17 @@ window.PROOF_GRAPH = {
    "type": "uses"
   },
   {
-   "source": "ASM-C5-SIDE-DESIGN-D65",
+   "source": "P:requirements.foot_side_load_cap_n",
    "target": "CALC-C5-SIM3D",
    "type": "uses"
   },
   {
    "source": "ASM-C5-SIM3D-SIDE-MU05",
+   "target": "CALC-C5-SIM3D",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C5-SIM3D-SIDE-MU07",
    "target": "CALC-C5-SIM3D",
    "type": "uses"
   },
@@ -221145,7 +224793,7 @@ window.PROOF_GRAPH = {
    "type": "uses"
   },
   {
-   "source": "ASM-C5-SIDE-DESIGN-D65",
+   "source": "P:requirements.foot_side_load_cap_n",
    "target": "CALC-C5-FEA-SHOE",
    "type": "uses"
   },
@@ -221180,7 +224828,7 @@ window.PROOF_GRAPH = {
    "type": "uses"
   },
   {
-   "source": "ASM-C5-SIDE-DESIGN-D65",
+   "source": "P:requirements.foot_side_load_cap_n",
    "target": "CALC-C5-FEA-SHOE-D5R6",
    "type": "uses"
   },
@@ -221225,7 +224873,7 @@ window.PROOF_GRAPH = {
    "type": "uses"
   },
   {
-   "source": "ASM-C5-SIDE-DESIGN-D65",
+   "source": "P:requirements.foot_side_load_cap_n",
    "target": "CALC-C5-FEA-SHOE-D65",
    "type": "uses"
   },
@@ -222270,11 +225918,6 @@ window.PROOF_GRAPH = {
    "type": "derives-from"
   },
   {
-   "source": "CL-C5-SIM3D-SIDE-LOAD",
-   "target": "CL-C5-SIM3D-SIDE-MU05",
-   "type": "uses"
-  },
-  {
    "source": "CL-C5-SIM3D-SIDE-MU05",
    "target": "GER-001-UR",
    "type": "about"
@@ -222436,6 +226079,176 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C5-SIM3D-SIDE-MU05-ULT",
+   "target": "GER-008-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C5-SIM3D",
+   "target": "CL-C5-SIM3D-SIDE-MU07",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07",
+   "target": "GER-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07",
+   "target": "GER-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07",
+   "target": "GER-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07",
+   "target": "GER-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07",
+   "target": "GER-002-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07",
+   "target": "GER-002-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07",
+   "target": "GER-002-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07",
+   "target": "GER-002-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07",
+   "target": "GER-004-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07",
+   "target": "GER-004-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07",
+   "target": "GER-004-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07",
+   "target": "GER-004-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07",
+   "target": "GER-003-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07",
+   "target": "GER-003-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07",
+   "target": "GER-008-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07",
+   "target": "GER-008-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C5-SIM3D",
+   "target": "CL-C5-SIM3D-SIDE-MU07-RATIO",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07-RATIO",
+   "target": "GER-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07-RATIO",
+   "target": "GER-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07-RATIO",
+   "target": "GER-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07-RATIO",
+   "target": "GER-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07-RATIO",
+   "target": "GER-002-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07-RATIO",
+   "target": "GER-002-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07-RATIO",
+   "target": "GER-002-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07-RATIO",
+   "target": "GER-002-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07-RATIO",
+   "target": "GER-004-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07-RATIO",
+   "target": "GER-004-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07-RATIO",
+   "target": "GER-004-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07-RATIO",
+   "target": "GER-004-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07-RATIO",
+   "target": "GER-003-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07-RATIO",
+   "target": "GER-003-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07-RATIO",
+   "target": "GER-008-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-SIM3D-SIDE-MU07-RATIO",
    "target": "GER-008-LL",
    "type": "about"
   },
@@ -233875,13 +237688,13 @@ window.PROOF_GRAPH = {
    "type": "assumes"
   },
   {
-   "source": "CL-C1-STANCE-MU-REQ",
+   "source": "P:requirements.pad_mu_max",
    "target": "CL-D5-PAD-MU",
    "type": "uses"
   },
   {
    "source": "CL-D5-PAD-MU",
-   "target": "R-WIND",
+   "target": "R-LANDING-IMPACT",
    "type": "verifies"
   },
   {
@@ -237440,6 +241253,11 @@ window.PROOF_GRAPH = {
    "type": "cites"
   },
   {
+   "source": "SRC-E1-X3108S-DATA",
+   "target": "ASM-E1-BOUND2",
+   "type": "cites"
+  },
+  {
    "source": "SRC-E1-X3108S-HIMODEL",
    "target": "ASM-E1-STACK",
    "type": "cites"
@@ -237785,6 +241603,96 @@ window.PROOF_GRAPH = {
    "type": "uses"
   },
   {
+   "source": "ASM-E1-CAL-TRANSFER",
+   "target": "CALC-E1-ILIM-25",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E2-R-CELL",
+   "target": "CALC-E1-ILIM-25",
+   "type": "assumes"
+  },
+  {
+   "source": "P:requirements.mtow_gate_kg",
+   "target": "CALC-E1-ILIM-25",
+   "type": "uses"
+  },
+  {
+   "source": "P:env.g_ms2",
+   "target": "CALC-E1-ILIM-25",
+   "type": "uses"
+  },
+  {
+   "source": "P:propulsion.n_motors",
+   "target": "CALC-E1-ILIM-25",
+   "type": "uses"
+  },
+  {
+   "source": "P:env.rho_kgm3",
+   "target": "CALC-E1-ILIM-25",
+   "type": "uses"
+  },
+  {
+   "source": "P:propulsion.stations.cant_deg",
+   "target": "CALC-E1-ILIM-25",
+   "type": "uses"
+  },
+  {
+   "source": "P:battery.cells_s",
+   "target": "CALC-E1-ILIM-25",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E1-KP",
+   "target": "CALC-E1-ILIM-25",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E1-KT",
+   "target": "CALC-E1-ILIM-25",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-KV",
+   "target": "CALC-E1-ILIM-25",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-RM",
+   "target": "CALC-E1-ILIM-25",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-I0",
+   "target": "CALC-E1-ILIM-25",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-ESC",
+   "target": "CALC-E1-ILIM-25",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-PACK-CELLS",
+   "target": "CALC-E1-ILIM-25",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E2-R-CELL",
+   "target": "CALC-E1-ILIM-25",
+   "type": "uses"
+  },
+  {
+   "source": "P:electrical.r_ext_mohm",
+   "target": "CALC-E1-ILIM-25",
+   "type": "uses"
+  },
+  {
+   "source": "P:propulsion.motor_max_a",
+   "target": "CALC-E1-ILIM-25",
+   "type": "uses"
+  },
+  {
    "source": "ASM-E1-WORST-STATE",
    "target": "CALC-E1-WORST",
    "type": "assumes"
@@ -237912,6 +241820,321 @@ window.PROOF_GRAPH = {
   {
    "source": "ASM-E2-COLD-R",
    "target": "CALC-E1-WORST",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-WORST-STATE",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E1-CAL-TRANSFER",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E1-ILIM",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E2-OCV-20",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E2-R-CELL",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E2-COLD-R",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E1-BOUND2",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "assumes"
+  },
+  {
+   "source": "P:requirements.mtow_gate_kg",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "P:env.g_ms2",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "P:propulsion.n_motors",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "P:env.rho_kgm3",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "P:propulsion.stations.cant_deg",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "P:battery.cells_s",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E1-KP",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E1-KT",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-KV",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-RM",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-I0",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-ESC",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-PACK-CELLS",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-TCOPPER",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-ILIM",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-WORST-STATE",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E2-OCV-20",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E2-R-CELL",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E2-COLD-R",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "P:electrical.r_ext_mohm",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "P:requirements.hover_tw_min",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "P:requirements.hover_tw_min_sag",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "P:battery.v_nom",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E1-R-EFF-MAKER",
+   "target": "CALC-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "SRC-E1-X3108S-DATA",
+   "target": "CALC-E1-BOUND2",
+   "type": "cites"
+  },
+  {
+   "source": "ASM-E1-WORST-STATE",
+   "target": "CALC-E1-BOUND2",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E1-CAL-TRANSFER",
+   "target": "CALC-E1-BOUND2",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E1-ILIM",
+   "target": "CALC-E1-BOUND2",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E2-OCV-20",
+   "target": "CALC-E1-BOUND2",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E2-R-CELL",
+   "target": "CALC-E1-BOUND2",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E2-COLD-R",
+   "target": "CALC-E1-BOUND2",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E1-BOUND2",
+   "target": "CALC-E1-BOUND2",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E1-V-STAND-LOW",
+   "target": "CALC-E1-BOUND2",
+   "type": "assumes"
+  },
+  {
+   "source": "P:requirements.mtow_gate_kg",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "P:env.g_ms2",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "P:propulsion.n_motors",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "P:env.rho_kgm3",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "P:propulsion.stations.cant_deg",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "P:battery.cells_s",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E1-KP",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E1-KT",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-KV",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-RM",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-I0",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-ESC",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-PACK-CELLS",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-TCOPPER",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-ILIM",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-WORST-STATE",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E2-OCV-20",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E2-R-CELL",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E2-COLD-R",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "P:electrical.r_ext_mohm",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E1-R-EFF-MAKER",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "P:requirements.hover_tw_min_sag",
+   "target": "CALC-E1-BOUND2",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-V-STAND-LOW",
+   "target": "CALC-E1-BOUND2",
    "type": "uses"
   },
   {
@@ -238072,6 +242295,101 @@ window.PROOF_GRAPH = {
   {
    "source": "ASM-E1-ESC",
    "target": "CALC-E1-CRUISE",
+   "type": "uses"
+  },
+  {
+   "source": "SRC-E1-APC-PER3",
+   "target": "CALC-E1-CRUISE-V17",
+   "type": "cites"
+  },
+  {
+   "source": "ASM-E1-CAL-TRANSFER",
+   "target": "CALC-E1-CRUISE-V17",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-B1-TRIM",
+   "target": "CALC-E1-CRUISE-V17",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E1-V-FALLBACK",
+   "target": "CALC-E1-CRUISE-V17",
+   "type": "assumes"
+  },
+  {
+   "source": "P:requirements.mtow_gate_kg",
+   "target": "CALC-E1-CRUISE-V17",
+   "type": "uses"
+  },
+  {
+   "source": "P:env.g_ms2",
+   "target": "CALC-E1-CRUISE-V17",
+   "type": "uses"
+  },
+  {
+   "source": "P:env.rho_kgm3",
+   "target": "CALC-E1-CRUISE-V17",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A1-WING-AREA",
+   "target": "CALC-E1-CRUISE-V17",
+   "type": "uses"
+  },
+  {
+   "source": "CL-B1V-CD0",
+   "target": "CALC-E1-CRUISE-V17",
+   "type": "uses"
+  },
+  {
+   "source": "CL-B1V-K",
+   "target": "CALC-E1-CRUISE-V17",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-B1-TRIM",
+   "target": "CALC-E1-CRUISE-V17",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-V-FALLBACK",
+   "target": "CALC-E1-CRUISE-V17",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E1-CRUISE-P-55",
+   "target": "CALC-E1-CRUISE-V17",
+   "type": "uses"
+  },
+  {
+   "source": "P:propulsion.n_motors",
+   "target": "CALC-E1-CRUISE-V17",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E1-KP",
+   "target": "CALC-E1-CRUISE-V17",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-KV",
+   "target": "CALC-E1-CRUISE-V17",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-RM",
+   "target": "CALC-E1-CRUISE-V17",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-I0",
+   "target": "CALC-E1-CRUISE-V17",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E1-ESC",
+   "target": "CALC-E1-CRUISE-V17",
    "type": "uses"
   },
   {
@@ -238795,7 +243113,7 @@ window.PROOF_GRAPH = {
    "type": "about"
   },
   {
-   "source": "CALC-E1-LIMIT",
+   "source": "CALC-E1-WORST",
    "target": "CL-E1-ILIM-I",
    "type": "derives-from"
   },
@@ -238830,23 +243148,158 @@ window.PROOF_GRAPH = {
    "type": "about"
   },
   {
-   "source": "CL-E1-ILIM-I",
+   "source": "CALC-E1-LIMIT",
+   "target": "CL-E1-ILIM-I-BAT",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-E1-ILIM-I-BAT",
    "target": "PRP-002-UR",
    "type": "about"
   },
   {
-   "source": "CL-E1-ILIM-I",
+   "source": "CL-E1-ILIM-I-BAT",
    "target": "PRP-002-UL",
    "type": "about"
   },
   {
-   "source": "CL-E1-ILIM-I",
+   "source": "CL-E1-ILIM-I-BAT",
    "target": "PRP-002-LR",
    "type": "about"
   },
   {
-   "source": "CL-E1-ILIM-I",
+   "source": "CL-E1-ILIM-I-BAT",
    "target": "PRP-002-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-E1-WORST",
+   "target": "CL-E1-ILIM-I-WORST",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:propulsion.motor_max_a",
+   "target": "CL-E1-ILIM-I-WORST",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E1-ILIM-I-WORST",
+   "target": "PRP-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-ILIM-I-WORST",
+   "target": "PRP-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-ILIM-I-WORST",
+   "target": "PRP-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-ILIM-I-WORST",
+   "target": "PRP-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "ASM-E1-BOUND2",
+   "target": "CL-E1-R-EFF-MAKER",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-E1-CAL",
+   "target": "CL-E1-R-EFF-MAKER",
+   "type": "derives-from"
+  },
+  {
+   "source": "CALC-E1-CAL",
+   "target": "CL-E1-CAL-TERR-HI",
+   "type": "derives-from"
+  },
+  {
+   "source": "CALC-E1-BOUND2",
+   "target": "CL-E1-ILIM-I-B2",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:propulsion.motor_max_a",
+   "target": "CL-E1-ILIM-I-B2",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E1-ILIM-I-B2",
+   "target": "PRP-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-ILIM-I-B2",
+   "target": "PRP-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-ILIM-I-B2",
+   "target": "PRP-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-ILIM-I-B2",
+   "target": "PRP-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-E1-ILIM-25",
+   "target": "CL-E1-ILIM-FOR-25A",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-E1-ILIM-FOR-25A",
+   "target": "PRP-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-ILIM-FOR-25A",
+   "target": "PRP-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-ILIM-FOR-25A",
+   "target": "PRP-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-ILIM-FOR-25A",
+   "target": "PRP-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-E1-ILIM-25",
+   "target": "CL-E1-ILIM-25A-TW",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:requirements.hover_tw_min",
+   "target": "CL-E1-ILIM-25A-TW",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E1-ILIM-25A-TW",
+   "target": "PRP-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-ILIM-25A-TW",
+   "target": "PRP-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-ILIM-25A-TW",
+   "target": "PRP-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-ILIM-25A-TW",
+   "target": "PRP-001-LL",
    "type": "about"
   },
   {
@@ -239232,6 +243685,366 @@ window.PROOF_GRAPH = {
   {
    "source": "CL-E1-TW-LAND-COLD",
    "target": "PRP-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "ASM-E1-BOUND2",
+   "target": "CL-E1-TW-WORST-B2",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-E1-BOUND2",
+   "target": "CL-E1-TW-WORST-B2",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:requirements.hover_tw_min_sag",
+   "target": "CL-E1-TW-WORST-B2",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E1-TW-WORST-B2",
+   "target": "R-HOVER-TW",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-E1-TW-WORST-B2",
+   "target": "PRP-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-TW-WORST-B2",
+   "target": "PRP-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-TW-WORST-B2",
+   "target": "PRP-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-TW-WORST-B2",
+   "target": "PRP-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "ASM-E1-BOUND2",
+   "target": "CL-E1-TW-FRESH-B2",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-E1-BOUND2",
+   "target": "CL-E1-TW-FRESH-B2",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:requirements.hover_tw_min",
+   "target": "CL-E1-TW-FRESH-B2",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E1-TW-FRESH-B2",
+   "target": "R-HOVER-TW",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-E1-TW-FRESH-B2",
+   "target": "PRP-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-TW-FRESH-B2",
+   "target": "PRP-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-TW-FRESH-B2",
+   "target": "PRP-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-TW-FRESH-B2",
+   "target": "PRP-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-E1-BOUND2",
+   "target": "CL-E1-TMAX-WORST-B2",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-E1-TMAX-WORST-B2",
+   "target": "PRP-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-TMAX-WORST-B2",
+   "target": "PRP-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-TMAX-WORST-B2",
+   "target": "PRP-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-TMAX-WORST-B2",
+   "target": "PRP-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "ASM-E1-BOUND2",
+   "target": "CL-E1-TW-WORST-B2-PROP",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-E1-BOUND2",
+   "target": "CL-E1-TW-WORST-B2-PROP",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:requirements.hover_tw_min_sag",
+   "target": "CL-E1-TW-WORST-B2-PROP",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E1-TW-WORST-B2-PROP",
+   "target": "PRP-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-TW-WORST-B2-PROP",
+   "target": "PRP-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-TW-WORST-B2-PROP",
+   "target": "PRP-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-TW-WORST-B2-PROP",
+   "target": "PRP-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-E1-BOUND2",
+   "target": "CL-E1-T-NEED-SAG",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-E1-T-NEED-SAG",
+   "target": "PRP-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-T-NEED-SAG",
+   "target": "PRP-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-T-NEED-SAG",
+   "target": "PRP-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-T-NEED-SAG",
+   "target": "PRP-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "ASM-E1-BOUND2",
+   "target": "CL-E1-T-STAND-B2",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-E1-BOUND2",
+   "target": "CL-E1-T-STAND-B2",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-E1-T-NEED-SAG",
+   "target": "CL-E1-T-STAND-B2",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E1-T-STAND-B2",
+   "target": "PRP-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-T-STAND-B2",
+   "target": "PRP-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-T-STAND-B2",
+   "target": "PRP-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-T-STAND-B2",
+   "target": "PRP-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "ASM-E1-BOUND2",
+   "target": "CL-E1-T-STAND-B2-PROP",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-E1-BOUND2",
+   "target": "CL-E1-T-STAND-B2-PROP",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-E1-T-NEED-SAG",
+   "target": "CL-E1-T-STAND-B2-PROP",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E1-T-STAND-B2-PROP",
+   "target": "PRP-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-T-STAND-B2-PROP",
+   "target": "PRP-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-T-STAND-B2-PROP",
+   "target": "PRP-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-T-STAND-B2-PROP",
+   "target": "PRP-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-E1-REXT-ALLOW",
+   "target": "CL-E1-REXT-ALLOW",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:electrical.r_ext_mohm",
+   "target": "CL-E1-REXT-ALLOW",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E1-REXT-ALLOW",
+   "target": "PRP-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-REXT-ALLOW",
+   "target": "PRP-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-REXT-ALLOW",
+   "target": "PRP-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-REXT-ALLOW",
+   "target": "PRP-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-E1-REXT-ALLOW",
+   "target": "CL-E1-DROP-ALLOW",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-E1-DROP-ALLOW",
+   "target": "PRP-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-DROP-ALLOW",
+   "target": "PRP-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-DROP-ALLOW",
+   "target": "PRP-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-DROP-ALLOW",
+   "target": "PRP-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-E1-REXT-ALLOW",
+   "target": "CL-E1-PATH-THRUST-COST",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-E1-PATH-THRUST-COST",
+   "target": "PRP-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-PATH-THRUST-COST",
+   "target": "PRP-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-PATH-THRUST-COST",
+   "target": "PRP-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-PATH-THRUST-COST",
+   "target": "PRP-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-E1-CRUISE-V17",
+   "target": "CL-E1-CRUISE-P-55-V17",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-E1-CRUISE-P-55-V17",
+   "target": "PRP-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-CRUISE-P-55-V17",
+   "target": "PRP-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-CRUISE-P-55-V17",
+   "target": "PRP-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-CRUISE-P-55-V17",
+   "target": "PRP-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-CRUISE-P-55-V17",
+   "target": "PRP-002-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-CRUISE-P-55-V17",
+   "target": "PRP-002-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-CRUISE-P-55-V17",
+   "target": "PRP-002-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-E1-CRUISE-P-55-V17",
+   "target": "PRP-002-LL",
    "type": "about"
   },
   {
@@ -240540,6 +245353,46 @@ window.PROOF_GRAPH = {
    "type": "verifies"
   },
   {
+   "source": "T-E1-STAND",
+   "target": "CL-E1-ILIM-I",
+   "type": "verifies"
+  },
+  {
+   "source": "T-E1-STAND",
+   "target": "CL-E1-ILIM-I-B2",
+   "type": "verifies"
+  },
+  {
+   "source": "T-E1-STAND",
+   "target": "CL-E1-TW-WORST-B2",
+   "type": "verifies"
+  },
+  {
+   "source": "T-E1-STAND",
+   "target": "CL-E1-TW-FRESH-B2",
+   "type": "verifies"
+  },
+  {
+   "source": "T-E1-STAND",
+   "target": "CL-E1-TW-WORST-B2-PROP",
+   "type": "verifies"
+  },
+  {
+   "source": "T-E1-STAND",
+   "target": "CL-E1-R-EFF-MAKER",
+   "type": "verifies"
+  },
+  {
+   "source": "T-E1-STAND",
+   "target": "CL-E1-T-STAND-B2",
+   "type": "verifies"
+  },
+  {
+   "source": "T-E1-STAND",
+   "target": "CL-E1-T-STAND-B2-PROP",
+   "type": "verifies"
+  },
+  {
    "source": "T-E1-MOTOR-RM",
    "target": "CL-E1-KP",
    "type": "verifies"
@@ -241595,6 +246448,201 @@ window.PROOF_GRAPH = {
    "type": "uses"
   },
   {
+   "source": "ASM-E2-ESC-EFF",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E2-AVIONICS-W",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E2-OCV-AVG",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E2-R-CELL",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E2-PROFILE",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E2-CRUISE-AERO",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E2-COLD-R",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E2-HOVER-MARGIN",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-E1-V-FALLBACK",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "assumes"
+  },
+  {
+   "source": "CL-A1-MASS-SIZED",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "P:requirements.mtow_gate_kg",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E1-CRUISE-P-55-V17",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "P:propulsion.n_motors",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "P:propulsion.thrust_table_g_w",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "P:propulsion.download_factor",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E2-ESC-EFF",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E2-AVIONICS-W",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "P:env.g_ms2",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "P:env.rho_kgm3",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "P:propulsion.prop_diameter_m",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A1-WING-AREA",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "P:wing.span_m",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "P:wing.oswald_e",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "P:performance.cruise_ms",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "P:battery.cells_s",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "P:battery.capacity_ah",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E2-OCV-AVG",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E2-R-CELL",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "P:electrical.r_ext_mohm",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E2-COLD-R",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E2-HOVER-MARGIN",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E2-PROFILE",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-E2-CRUISE-AERO",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "P:requirements.pack_capacity_min_frac",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "P:requirements.energy_reserve_frac",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "CL-B1V-CRUISE-P-GATE",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "CL-B1V-CRUISE-P-PESS",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "P:requirements.mtow_gate_kg",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A3-MASS-PREDICTED",
+   "target": "CALC-E2-BUDGET-V17",
+   "type": "uses"
+  },
+  {
    "source": "CALC-E2-BUDGET-BASE",
    "target": "CL-E2-BUDGET-BASE-TABLE",
    "type": "derives-from"
@@ -242033,6 +247081,51 @@ window.PROOF_GRAPH = {
    "source": "T-E2-MISSION-LOG",
    "target": "CL-E2-I-MAX-PHASE-PESS",
    "type": "verifies"
+  },
+  {
+   "source": "CALC-E2-BUDGET-V17",
+   "target": "CL-E2-CRUISE-MIN-BASE-V17",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:requirements.cruise_time_min",
+   "target": "CL-E2-CRUISE-MIN-BASE-V17",
+   "type": "uses"
+  },
+  {
+   "source": "CALC-E2-BUDGET-V17",
+   "target": "CL-E2-CRUISE-MIN-PESS-V17",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:requirements.cruise_time_min",
+   "target": "CL-E2-CRUISE-MIN-PESS-V17",
+   "type": "uses"
+  },
+  {
+   "source": "CALC-E2-BUDGET-V17",
+   "target": "CL-E2-CRUISE-TO-LOW-PESS-V17",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:requirements.cruise_time_min",
+   "target": "CL-E2-CRUISE-TO-LOW-PESS-V17",
+   "type": "uses"
+  },
+  {
+   "source": "CL-E2-CRUISE-TO-LOW-PESS-V17",
+   "target": "R-MISSION",
+   "type": "verifies"
+  },
+  {
+   "source": "CALC-E2-BUDGET-V17",
+   "target": "CL-E2-BATT-LOW-MAH-V17",
+   "type": "derives-from"
+  },
+  {
+   "source": "CALC-E2-BUDGET-V17",
+   "target": "CL-E2-CRUISE-W-PESS-V17",
+   "type": "derives-from"
   },
   {
    "source": "SRC-E3-INCROPERA",
@@ -245760,6 +250853,11 @@ window.PROOF_GRAPH = {
    "type": "uses"
   },
   {
+   "source": "CL-E1-DROP-ALLOW",
+   "target": "CALC-F1-WIRES",
+   "type": "uses"
+  },
+  {
    "source": "SRC-OVONIC-4S6500",
    "target": "ASM-F1-PACKLEAD",
    "type": "cites"
@@ -246381,8 +251479,38 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CALC-F1-WIRES",
+   "target": "CL-F1-ESC-LEN-MAX",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-F1-ESC-LEN-MAX",
+   "target": "PRP-002-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-F1-ESC-LEN-MAX",
+   "target": "PRP-002-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-F1-ESC-LEN-MAX",
+   "target": "PRP-002-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-F1-ESC-LEN-MAX",
+   "target": "PRP-002-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-F1-WIRES",
    "target": "CL-F1-ESC-LEN-ALLOW",
    "type": "derives-from"
+  },
+  {
+   "source": "CL-F1-ESC-LEN-MAX",
+   "target": "CL-F1-ESC-LEN-ALLOW",
+   "type": "uses"
   },
   {
    "source": "CL-F1-ESC-LEN-ALLOW",
@@ -246401,6 +251529,31 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-F1-ESC-LEN-ALLOW",
+   "target": "PRP-002-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-F1-WIRES",
+   "target": "CL-F1-ESC-LEN-5PCT",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-F1-ESC-LEN-5PCT",
+   "target": "PRP-002-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-F1-ESC-LEN-5PCT",
+   "target": "PRP-002-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-F1-ESC-LEN-5PCT",
+   "target": "PRP-002-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-F1-ESC-LEN-5PCT",
    "target": "PRP-002-LL",
    "type": "about"
   },
@@ -246575,6 +251728,11 @@ window.PROOF_GRAPH = {
    "type": "derives-from"
   },
   {
+   "source": "CL-E1-DROP-ALLOW",
+   "target": "CL-F1-DROP-PEAK",
+   "type": "uses"
+  },
+  {
    "source": "CL-F1-DROP-PEAK",
    "target": "PWR-001",
    "type": "about"
@@ -246611,6 +251769,51 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-F1-DROP-PEAK",
+   "target": "PRP-002-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-F1-WIRES",
+   "target": "CL-F1-DROP-OVER-5PCT",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-F1-DROP-OVER-5PCT",
+   "target": "PWR-001",
+   "type": "about"
+  },
+  {
+   "source": "CL-F1-DROP-OVER-5PCT",
+   "target": "PWR-002",
+   "type": "about"
+  },
+  {
+   "source": "CL-F1-DROP-OVER-5PCT",
+   "target": "PWR-003",
+   "type": "about"
+  },
+  {
+   "source": "CL-F1-DROP-OVER-5PCT",
+   "target": "PWR-004",
+   "type": "about"
+  },
+  {
+   "source": "CL-F1-DROP-OVER-5PCT",
+   "target": "PRP-002-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-F1-DROP-OVER-5PCT",
+   "target": "PRP-002-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-F1-DROP-OVER-5PCT",
+   "target": "PRP-002-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-F1-DROP-OVER-5PCT",
    "target": "PRP-002-LL",
    "type": "about"
   },
@@ -252101,6 +257304,26 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "ASM-I1-SHIPPING",
+   "target": "CALC-I1-FLIGHT-READY",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-I1-ADDERS",
+   "target": "CALC-I1-FLIGHT-READY",
+   "type": "assumes"
+  },
+  {
+   "source": "P:requirements.tax_rate",
+   "target": "CALC-I1-FLIGHT-READY",
+   "type": "uses"
+  },
+  {
+   "source": "P:requirements.budget_usd",
+   "target": "CALC-I1-FLIGHT-READY",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-I1-SHIPPING",
    "target": "CALC-I1-ALLIN",
    "type": "assumes"
   },
@@ -252205,6 +257428,21 @@ window.PROOF_GRAPH = {
    "type": "derives-from"
   },
   {
+   "source": "CALC-I1-FLIGHT-READY",
+   "target": "CL-I1-RESERVE-PESS-FLIGHT-READY",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-I1-RESERVE-PESS-FLIGHT-READY",
+   "target": "R-BUDGET",
+   "type": "verifies"
+  },
+  {
+   "source": "CALC-I1-FLIGHT-READY",
+   "target": "CL-I1-RESERVE-BASE-FLIGHT-READY",
+   "type": "derives-from"
+  },
+  {
    "source": "CALC-I1-GROUNDTEST",
    "target": "CL-I1-GROUNDTEST-BOUGHT",
    "type": "derives-from"
@@ -252238,6 +257476,146 @@ window.PROOF_GRAPH = {
    "source": "T-I1-ARRIVAL",
    "target": "CL-I1-RESERVE-PESS",
    "type": "verifies"
+  },
+  {
+   "source": "SRC-I2-TASKS",
+   "target": "CALC-I2-SCHEDULE",
+   "type": "cites"
+  },
+  {
+   "source": "P:schedule.build_start",
+   "target": "CALC-I2-SCHEDULE",
+   "type": "uses"
+  },
+  {
+   "source": "P:schedule.complete_by",
+   "target": "CALC-I2-SCHEDULE",
+   "type": "uses"
+  },
+  {
+   "source": "P:schedule.order_date",
+   "target": "CALC-I2-SCHEDULE",
+   "type": "uses"
+  },
+  {
+   "source": "CALC-I2-SCHEDULE",
+   "target": "CL-I2-BUILD-HOURS",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:requirements.build_hours_max",
+   "target": "CL-I2-BUILD-HOURS",
+   "type": "uses"
+  },
+  {
+   "source": "CL-I2-BUILD-HOURS",
+   "target": "R-BUILD-HOURS",
+   "type": "verifies"
+  },
+  {
+   "source": "ASM-I2-REQ-TEXT",
+   "target": "CL-I2-CUT-TO-HOVER-D",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-I2-SCHEDULE",
+   "target": "CL-I2-CUT-TO-HOVER-D",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-I2-CUT-TO-HOVER-D",
+   "target": "R-BUILD-HOURS",
+   "type": "verifies"
+  },
+  {
+   "source": "CALC-I2-SCHEDULE",
+   "target": "CL-I2-FIRST-HOVER-WEEK",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:schedule.first_hover_week",
+   "target": "CL-I2-FIRST-HOVER-WEEK",
+   "type": "uses"
+  },
+  {
+   "source": "CL-I2-FIRST-HOVER-WEEK",
+   "target": "R-SCHEDULE",
+   "type": "verifies"
+  },
+  {
+   "source": "ASM-I2-REQ-TEXT",
+   "target": "CL-I2-FIRST-TRANSITION-WEEK",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-I2-SCHEDULE",
+   "target": "CL-I2-FIRST-TRANSITION-WEEK",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-I2-FIRST-TRANSITION-WEEK",
+   "target": "R-SCHEDULE",
+   "type": "verifies"
+  },
+  {
+   "source": "ASM-I2-REQ-TEXT",
+   "target": "CL-I2-CRASH-LOOP-D",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-I2-SCHEDULE",
+   "target": "CL-I2-CRASH-LOOP-D",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-I2-CRASH-LOOP-D",
+   "target": "R-SCHEDULE",
+   "type": "verifies"
+  },
+  {
+   "source": "CALC-I2-SCHEDULE",
+   "target": "CL-I2-END-SLACK-D",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-I2-END-SLACK-D",
+   "target": "R-SCHEDULE",
+   "type": "verifies"
+  },
+  {
+   "source": "ASM-I2-REQ-TEXT",
+   "target": "CL-I2-TWIN-BEFORE-ORDER-D",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-I2-SCHEDULE",
+   "target": "CL-I2-TWIN-BEFORE-ORDER-D",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-I2-TWIN-BEFORE-ORDER-D",
+   "target": "R-SCHEDULE",
+   "type": "verifies"
+  },
+  {
+   "source": "CALC-I2-SCHEDULE",
+   "target": "CL-I2-DATES-MATCH",
+   "type": "derives-from"
+  },
+  {
+   "source": "ASM-I2-B2-PROPOSED",
+   "target": "CL-I2-BUILD-HOURS-S2-10",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-I2-SCHEDULE",
+   "target": "CL-I2-BUILD-HOURS-S2-10",
+   "type": "derives-from"
+  },
+  {
+   "source": "CALC-I2-SCHEDULE",
+   "target": "CL-I2-PRE-HOURS",
+   "type": "derives-from"
   },
   {
    "source": "SRC-J1-EPSILON",
@@ -253070,7 +258448,7 @@ window.PROOF_GRAPH = {
    "type": "cites"
   },
   {
-   "source": "CL-E1-ILIM-I",
+   "source": "CL-E1-ILIM-I-BAT",
    "target": "P:propulsion.current_max_per_motor_a",
    "type": "cites"
   },

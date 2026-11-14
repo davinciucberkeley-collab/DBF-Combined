@@ -1,12 +1,12 @@
 # Transport (TRN)
 
-Status `PROPOSED`, D7 round 4, 2026-11-10 (A4 CR-A4-46 and PLAN-STATUS, D-47 nose at −0.130; round 3: C1 CR-C1-22, A4 CR-A4-24, C5 CR-C5-06, I1 CR-I1-18). Designer D7, loads
+Status `PROPOSED`, D7 round 5 (CDR fix round S4, D-134, 2026-11-13: box 0.56 m wide, separate panels, nest below), round 4 2026-11-10 (A4 CR-A4-46 and PLAN-STATUS, D-47 nose at −0.130; round 3: C1 CR-C1-22, A4 CR-A4-24, C5 CR-C5-06, I1 CR-I1-18). Designer D7, loads
 C1. Every part is a ground item (`flight: false`). Numbers: `team/D7/transport_calc.py` (claims `CL-D7-*`) and
 `subsystems/transport/params.json` (`trn.*`). Field joints: `FIELD-JOINTS.md`. Set-up card: `CHECKLIST.md`.
 
 ## Purpose
 
-Get the one-piece aircraft to the field and flying in under 5 min. It rides in one 1.25 × 0.55 × 0.54 m Coroplast
+Get the one-piece aircraft to the field and flying in under 5 min. It rides in one 1.25 × 0.56 × 0.54 m Coroplast
 box with props off in the tray, the pitot boom off in its slot and the packs out. The box survives a 0.3 m floor drop
 off a car sill. One person carries it by the side handle, or two people use the end handles. The field has no
 structural joint. The only joints made there are 4 prop nuts (the 10 mm spanner is the only tool, D-40), the pitot
@@ -16,12 +16,12 @@ boom and the pack strap and plug.
 
 | Parameter | Value | Unit | Source | Status |
 |---|---|---|---|---|
-| Box external L × W × H | 1.25 × 0.55 × 0.54 | m | `requirements.box_external_m` (D-31) | `PROPOSED` (two cars first, `CAR-FIT.md`) |
+| Box external L × W × H | 1.25 × **0.56** × 0.54 | m | `requirements.box_external_m` (D-31; W +10 mm D-134) | `PROPOSED` (two cars first, `CAR-FIT.md`) |
 | Height needed for the floor-drop stroke | 0.538 | m | `CL-D7-BOX-H-REQ` | `UNVERIFIED` (foam data) |
 | Floor drop: column stroke vs C1 need / load factor vs allowable | 66 vs 52 / 10.1 vs 12.4 | mm / — | `CL-D7-CRADLE-STROKE`, `CL-D7-DROP-N` | `UNVERIFIED` (`T-D7-BOX-DROP`) |
 | Floor drop height the 0.54 m box allows (needs 0.30) | 0.39 | m | `CL-D7-A1-BOX-DROP-ALLOW` | `UNVERIFIED` |
 | Lower tube ends to floor when the columns bottom (≥ 10) | 12 | mm | `CL-D7-TUBE-CLEAR-DROP` | `UNVERIFIED` |
-| Aft gap (feet to wall) / pod nose (x −0.130) to 3/4 in nose pad / antenna B tip to pad | 12 / 12.95 / 2.95 | mm | `CL-D7-SIDE-CLEAR`, `CL-D7-NOSE-GAP`, `CL-D7-ANTENNA-PAD-GAP` | `CHECKED` (geometry) |
+| Aft gap (feet to wall) / pod nose (x −0.130) to 3/4 in nose pad / antenna B tip to pad | 12 / **12.95** (≥ 10) / **2.95** (≥ 2) | mm | `CL-D7-SIDE-CLEAR`, `CL-D7-NOSE-GAP`, `CL-D7-ANTENNA-PAD-GAP` (D-134; were 2.95 / −7.05 mm, `FAILS`) | `CHECKED` (geometry) |
 | Wingtip to end pad / upper tube ends to lid | 15 / 10 | mm | `CL-D7-TIP-PAD-GAP`, `trn.box.top_gap_min_m` | `UNVERIFIED` |
 | Off-axis drop allowed: aft wall (feet crush) / end / nose / lid-down | 0.25 / 0.087 / 0.059 / 0.057 | m | `CL-D7-AFT-`, `-END-`, `-NOSE-`, `-LID-DROP-ALLOW` | `UNVERIFIED` (label + test) |
 | Aft-wall drop load factor (feet plateau) vs C1 x allowable | 7.5 vs 12.1 | — | `CL-D7-AFT-N` | `UNVERIFIED` |
@@ -31,7 +31,7 @@ boom and the pack strap and plug.
 | Handle: load per M3 bolt at 2 g / wall bearing | 57 / 27 | N / kPa | `CL-D7-HANDLE-BOLT-F`, `-BEARING` | `UNVERIFIED` |
 | Handle M3 × 16: grip / thread past the nyloc vs D-41 minimum (nyloc 4.0 + 2 × 0.5) / thickest strap tab | 10.5 / 5.5 vs 5.0 / 3.0 | mm | `CL-D7-HANDLE-ENGAGE`, `-ENGAGE-MIN`, `-STRAP-T-MAX` | `CHECKED` (strap tab `EST` 2.5) |
 | Saddle and pillar to the tape skin `WNG-003`: modelled gap / saddle preload / pillar preload | 0 / 0 / 5 | mm | `trn.cradle.saddle_preload_m`, `trn.holddown.preload_m` | `MODELLED` |
-| Empty box / loaded box (aircraft less pack, spares, pouch) vs 6 kg | 3.57 / 5.84 | kg | `CL-D7-BOX-MASS`, `CL-D7-LOADED-MASS` | `UNVERIFIED` (`EST`, +3 %) |
+| Empty box / loaded box (aircraft less pack, spares, pouch) vs 6 kg | 3.60 / 5.86 | kg | `CL-D7-BOX-MASS`, `CL-D7-LOADED-MASS` | `UNVERIFIED` (`EST`, +3 %) |
 | Battery can (2 packs) / landing mat / tote | 3.30 / 2.70 / 0.57 | kg | `CL-D7-CAN-MASS`, `-MAT-MASS`, `CALC-D7-CARRY` | `UNVERIFIED` (`EST`) |
 | Carrier A (box + tote) / carrier B (can + mat) | 6.4 / 6.0 | kg | `CL-D7-CARRY-A`, `-B` | `UNVERIFIED` |
 | Set-up, closed box to arm check (limit 5) | 4.75 | min | `CL-D7-SETUP-MIN` | `UNVERIFIED` (+5 %, `T-D7-SETUP`) |
@@ -43,6 +43,29 @@ about 0.2 m, and then no car takes it. These faces are label-and-test cases: "TH
 ON END". The aircraft sits 12 mm off the aft wall, and the slack goes to a 3/4 in PE nose pad (round 4: the pod nose
 moved to −0.130 under D-47, and the 1 in pad left only 6.6 mm).
 **Fallback 0.50 m box** (if a car rejects 0.54): 56 mm columns, a 0.15 m floor-drop label.
+
+## Panel nest (D-134, CDR-24)
+
+The box is cut as **separate flat panels** (no cross-shaped blank: the old one-piece base blank was 1 614 mm wide
+against a 1 219 mm sheet, `review/MANUFACTURING.md` MF-16). Sheet: Coroplast 4 mm, 48 × 96 in = 1 219 × 2 438 mm,
+the standard size Home Depot sells (CP4896S single sheet, WC4896-10 ten-pack; the other sizes listed are 36 × 72 in
+and 24 × 36 in; homedepot.com product pages, search 2026-11-13). Panels from the 1.25 × 0.56 × 0.54 m external
+box, 4 mm shell; walls stand on the floor (536 = 540 − 4), end walls sit between the long walls (552 = 560 − 2 × 4).
+Every 1 250 mm side runs along the 2 438 mm sheet length, because 1 250 > 1 219.
+
+| Sheet | Panel | Size mm | Qty | Placement | Left over |
+|---|---|---|---|---|---|
+| 1 | Floor | 1 250 × 560 | 1 | across: 560 + 560 = 1 120 ≤ 1 219, along 1 250 | strip 99 × 1 250: two lid long lips 1 242 × 30 |
+| 1 | Lid top | 1 250 × 560 | 1 | beside the floor | — |
+| 1 | End walls | 552 × 536 | 2 | block 1 188 × 1 219 left after 1 250 of length: 552 + 552 = 1 104 ≤ 1 188, 536 ≤ 1 219 | 1 188 × 683: lid short lips 544 × 30 × 2, end pads, corner angles, handle-strip templates |
+| 2 | Front and aft walls | 1 250 × 536 | 2 | across: 536 + 536 = 1 072 ≤ 1 219, along 1 250 | 1 188 × 1 219 spare (a whole second lid or repair panels) |
+
+Two sheets are enough, so no third sheet is bought (`T01`, $37.98 a sheet, LINKS-CHECK snippet 2026-11-11). Flutes:
+run them vertically in the walls and across the floor (stiffer across the cradle span). Corners: LSE tape + hot-melt +
+the 8 corner protectors (`TRN-001` notes; `T02`). **x-stops:** the aircraft is loaded against the 15 mm LE lip of each
+cradle saddle (`trn.cradle.saddle_x_m` starts at −0.015), which fixes its x position; the nose-pad stack above is
+computed from that position. **Cars:** the longest side is unchanged at 1.25 m, so the `CAR-FIT.md` check against
+1.28 m is unchanged; it stays a HUMAN item (two cars measured by 15 Dec, before any panel is cut).
 
 ## Parts
 

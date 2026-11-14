@@ -215,6 +215,37 @@
    "status": "PROPOSED"
   },
   {
+   "id": "ASM-E1-V-FALLBACK",
+   "type": "assumption",
+   "title": "Fallback cruise speed 17 m/s (D-96 c, CDR decision B6)",
+   "text": "AIRSPEED_MIN = AIRSPEED_CRUISE = 17 m/s: the planning case while the tripped stall (12.85 m/s) is the baseline, until T-B2-STALL",
+   "basis": "params/CHANGE-LOG.md D-96 (c): 17 holds to a 13.07 m/s stall; review/CDR-2026-11-13/CDR-SUMMARY.md decision B6 makes it the planning baseline. performance.cruise_ms stays 16 until A1 changes it",
+   "value": 17.0,
+   "unit": "m/s",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-E1-BOUND2",
+   "type": "assumption",
+   "title": "Second bound: the maker's top row is a true 14.8 V full-throttle point",
+   "text": "the maker's 30 A row (7 500 rpm, 1 580 gf, 11x4.7, 94 degC) was taken at 14.8 V at the ESC and 100 % duty. The station then has an effective series resistance R_eff = (14.8 - w / Kv) / I_m at that row (winding at its 94 degC, ESC and everything the simple model leaves out), used unchanged at other bus voltages and with the 11x5.5MR",
+   "basis": "CDR-AE-01 (review/CDR-2026-11-13/CDR-aero.md): the 'sagging supply' reading of the rows above 12 A has no evidence, so the rows are a second bound, not discarded data. A fixed series resistance is the simplest model that reproduces the row; the reviewer's cruder rule (full-throttle rpm proportional to bus voltage) is carried beside it as a sensitivity. T-E1-STAND with a logged bus voltage decides between the bounds",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-E1-X3108S-DATA"
+   ]
+  },
+  {
+   "id": "ASM-E1-V-STAND-LOW",
+   "type": "assumption",
+   "title": "Low stand point: bus held at 11.9 V",
+   "text": "bench supply held at 11.9 V at the ESC pads for the worst-state full-throttle run of T-E1-STAND",
+   "basis": "CDR condition B-7 / CDR-AE C1 (review/CDR-2026-11-13/CDR-SUMMARY.md): >= 1 060 gf at an 11.9 V bus; 11.9 V is CALC-E1-WORST's worst-state bus on the first bound (11.85 V at r_ext 6.7 mOhm)",
+   "value": 11.9,
+   "unit": "V",
+   "status": "PROPOSED"
+  },
+  {
    "id": "ASM-E1-TRANS-MARGIN",
    "type": "assumption",
    "title": "Transition thrust margin 1.3",
@@ -308,7 +339,7 @@
    "title": "Fit PER3 to the maker's X3108S + 11x4.7 table",
    "script": "redesign/team/E1/propulsion.py",
    "function": "cal",
-   "equation": "kT = mean(T_meas / T_PER3(rpm)) ; kP: sum(P_bat,model(rpm) - P_meas) = 0 over rows 5-12 A ; R_th = (94 - 25) / P_loss(30 A row)",
+   "equation": "kT = mean(T_meas / T_PER3(rpm)) ; kP: sum(P_bat,model(rpm) - P_meas) = 0 over rows 5-12 A ; R_th = (94 - 25) / P_loss(30 A row) ; rows > 12 A (second bound): V_supply,min = V_m + I_m R_esc at the measured rpm, R_eff = (14.8 - w / Kv) / I_m",
    "inputs": {
     "rho": "P:env.rho_kgm3",
     "kv": "ASM-E1-KV",
@@ -333,6 +364,75 @@
     "SRC-E1-APC-PER3"
    ],
    "outputs": {
+    "hi_rows": [
+     [
+      14,
+      6317,
+      -0.001400168071093555,
+      -0.06777205059042402,
+      21.24727864001831,
+      9.058627638330647,
+      0.36621683383281534
+     ],
+     [
+      16,
+      6530,
+      -0.003987725326856317,
+      -0.09655757974829005,
+      22.6523577123732,
+      9.430181895943385,
+      0.3330533863291197
+     ],
+     [
+      18,
+      6720,
+      -0.003186049430123239,
+      -0.11901336255770212,
+      23.94585060229846,
+      9.765468324487319,
+      0.30624651657308166
+     ],
+     [
+      20,
+      6940,
+      0.007894811028782867,
+      -0.12350381324199766,
+      25.49092020634621,
+      10.158239450920348,
+      0.2780946639628977
+     ],
+     [
+      23,
+      7140,
+      0.007041502588755799,
+      -0.16502060281697717,
+      26.939671094952462,
+      10.51954175844877,
+      0.2548905160149945
+     ],
+     [
+      26,
+      7300,
+      -0.003210415449683257,
+      -0.20878900984875948,
+      28.12897670403455,
+      10.811492874698427,
+      0.23779353793305608
+     ],
+     [
+      30,
+      7500,
+      -0.006994364860905322,
+      -0.2572065934891439,
+      29.65353327445097,
+      11.180072527680627,
+      0.21807406917806477
+     ]
+    ],
+    "T_err_hi_max": 0.007894811028782867,
+    "P_err_hi_max": 0.2572065934891439,
+    "I_m_30A_A": 29.65353327445097,
+    "r_eff_30A_ohm": 0.21807406917806477,
     "kT": 1.0390466549306472,
     "kP": 1.2395830229048008,
     "T_err_rms": 0.006046535791996946,
@@ -473,39 +573,39 @@
    ],
    "outputs": {
     "tw_table_45": 3.4084103827459513,
-    "tw_sag_45": 2.167564125145212,
+    "tw_sag_45": 2.1410436514087423,
     "Tmax_table_45_gf": 2215.4667487848683,
-    "Tmax_sag_45_gf": 1408.9166813443878,
+    "Tmax_sag_45_gf": 1391.6783734156825,
     "I_148_45_A": 37.24562227610827,
     "I_168_45_A": 45.56843813136883,
     "P_148_45_W": 551.2352096864024,
-    "Ipack_sag_45_A": 98.25509370538428,
+    "Ipack_sag_45_A": 97.131000078048,
     "Ipack_fresh_45_A": 183.27375252547532,
-    "Vbus_sag_45_V": 11.776589523456977,
+    "Vbus_sag_45_V": 11.690045498929951,
     "rpm_148_45": 10104.897154263163,
     "loss_148_45_W": 129.19089661644358,
     "tw_table_55": 3.5825625030154566,
-    "tw_sag_55": 2.2060964749109746,
+    "tw_sag_55": 2.176950236138863,
     "Tmax_table_55_gf": 2328.665626960047,
-    "Tmax_sag_55_gf": 1433.9627086921337,
+    "Tmax_sag_55_gf": 1415.017653490261,
     "I_148_55_A": 42.42756085506846,
     "I_168_55_A": 51.56136196434739,
     "P_148_55_W": 627.9279006550132,
-    "Ipack_sag_55_A": 108.04122745514576,
+    "Ipack_sag_55_A": 106.72692429307293,
     "Ipack_fresh_55_A": 207.24544785738956,
-    "Vbus_sag_55_V": 11.515300182000487,
+    "Vbus_sag_55_V": 11.422319526544399,
     "rpm_148_55": 9657.177661041005,
     "loss_148_55_W": 164.21915841684222,
     "tw_table_12": 3.9281353574741082,
-    "tw_sag_12": 2.374261428895081,
+    "tw_sag_12": 2.3419578164220956,
     "Tmax_table_12_gf": 2553.2879823581707,
-    "Tmax_sag_12_gf": 1543.2699287818027,
+    "Tmax_sag_12_gf": 1522.272580674362,
     "I_148_12_A": 44.96644489432176,
     "I_168_12_A": 54.52117456590724,
     "P_148_12_W": 665.5033844359621,
-    "Ipack_sag_12_A": 112.70320119999886,
+    "Ipack_sag_12_A": 111.28597511708605,
     "Ipack_fresh_12_A": 219.08469826362895,
-    "Vbus_sag_12_V": 11.390825216729361,
+    "Vbus_sag_12_V": 11.295121795453337,
     "rpm_148_12": 9437.818080049521,
     "loss_148_12_W": 183.0670050448523
    },
@@ -527,7 +627,7 @@
      0.02,
      1.0
     ],
-    "rext": 6.7,
+    "rext": 7.9,
     "ocv": [
      16.8,
      15.2,
@@ -576,16 +676,26 @@
     "ASM-E1-ILIM"
    ],
    "outputs": {
-    "I_motor_fresh_45_A": 24.750000000007976,
-    "tw_fresh_45": 2.532647529704855,
-    "tw_low_45": 2.167564125145212,
-    "I_motor_low_45_A": 24.31377342634607,
-    "Ipack_fresh_45_A": 100.0000000000319,
-    "I_motor_fresh_55_A": 24.7499999999861,
-    "tw_fresh_55": 2.4663413569392514,
-    "tw_low_55": 2.122201908711328,
-    "I_motor_low_55_A": 24.750000000001243,
-    "Ipack_fresh_55_A": 99.9999999999444
+    "I_motor_fresh_45_A": 24.750000000016552,
+    "tw_fresh_45": 2.5186599600873207,
+    "tw_low_45": 2.1410436514087423,
+    "I_motor_low_45_A": 24.032750019512,
+    "Ipack_fresh_45_A": 100.00000000006621,
+    "I_wind_fresh_45_A": 27.988268386165526,
+    "I_wind_low_45_A": 23.98997858632589,
+    "duty_fresh_45": 0.8830239465416067,
+    "duty_low_45": 1.0000000000000002,
+    "loss_wind_fresh_45_W": 76.08337522434931,
+    "I_motor_fresh_55_A": 24.74999999998992,
+    "tw_fresh_55": 2.4528577369577733,
+    "tw_low_55": 2.108046793030371,
+    "I_motor_low_55_A": 24.75000000000371,
+    "Ipack_fresh_55_A": 99.99999999995968,
+    "I_wind_fresh_55_A": 29.495094981240737,
+    "I_wind_low_55_A": 25.609397010642034,
+    "duty_fresh_55": 0.8379125825165374,
+    "duty_low_55": 0.9647604615243383,
+    "loss_wind_fresh_55_W": 82.83347785564703
    },
    "input_values": {
     "m": 2.6,
@@ -605,7 +715,7 @@
      0.02,
      1.0
     ],
-    "rext": 6.7,
+    "rext": 7.9,
     "ocv": [
      16.8,
      15.2,
@@ -616,6 +726,76 @@
      80.0
     ],
     "ilim": 100.0
+   }
+  },
+  {
+   "id": "CALC-E1-ILIM-25",
+   "type": "calculation",
+   "title": "Pack-current limit that holds 25 A in the winding (11x5.5MR, fresh pack)",
+   "script": "redesign/team/E1/propulsion.py",
+   "function": "ilim_25",
+   "equation": "solve I_lim: I_m(largest duty with 4 I_bat + I_avn <= I_lim) = I_rating ; T/W = 4 T cos(cant) / (m_gate g) at that limit, fresh (4.20 V/cell, warm R, 25 degC winding)",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "n": "P:propulsion.n_motors",
+    "rho": "P:env.rho_kgm3",
+    "cant": "P:propulsion.stations.cant_deg",
+    "cells": "P:battery.cells_s",
+    "kP": "CL-E1-KP",
+    "kT": "CL-E1-KT",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "esc": "ASM-E1-ESC",
+    "pack": "ASM-E1-PACK-CELLS",
+    "r_cell": "ASM-E2-R-CELL",
+    "r_ext": "P:electrical.r_ext_mohm",
+    "i_rate": "P:propulsion.motor_max_a"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "cant": "deg",
+    "r_cell": "ohm",
+    "r_ext": "mOhm",
+    "i_rate": "A"
+   },
+   "assumes": [
+    "ASM-E1-CAL-TRANSFER",
+    "ASM-E2-R-CELL"
+   ],
+   "outputs": {
+    "ilim_a": 71.0688978433609,
+    "tw": 2.038886295653279,
+    "T_gf": 1335.2286843116476,
+    "I_wind_A": 24.999999990208103,
+    "I_bat_A": 17.51722446084921
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "n": 4,
+    "rho": 1.225,
+    "cant": 7.0,
+    "cells": 4,
+    "kP": 1.2395830229048008,
+    "kT": 1.0390466549306472,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "esc": [
+     0.01,
+     0.5
+    ],
+    "pack": [
+     0.02,
+     1.0
+    ],
+    "r_cell": 0.004,
+    "r_ext": 7.9,
+    "i_rate": 25.0
    }
   },
   {
@@ -666,35 +846,39 @@
     "ASM-E2-COLD-R"
    ],
    "outputs": {
-    "r_pack_cold_ohm": 0.0307,
-    "r_pack_warm_ohm": 0.0227,
-    "tw_fresh": 2.492255493253334,
-    "T_fresh_gf": 1632.1317330542397,
-    "Vbus_fresh_V": 14.530000484039585,
-    "Ipack_fresh_A": 100.00000000006288,
-    "I_motor_fresh_A": 24.75000000001572,
+    "r_pack_cold_ohm": 0.0319,
+    "r_pack_warm_ohm": 0.0239,
+    "tw_fresh": 2.4790159518223023,
+    "T_fresh_gf": 1623.461403804623,
+    "Vbus_fresh_V": 14.410000372723712,
+    "Ipack_fresh_A": 100.00000000003354,
+    "I_motor_fresh_A": 24.750000000008384,
+    "I_wind_fresh_A": 30.00876182467904,
     "limited_fresh": 1.0,
-    "tw_res20_warm": 2.2123700429023843,
-    "T_res20_warm_gf": 1448.839961253728,
-    "Vbus_res20_warm_V": 12.650000755142496,
-    "Ipack_res20_warm_A": 99.99999999996632,
-    "I_motor_res20_warm_A": 24.74999999999158,
+    "tw_res20_warm": 2.1987130294842205,
+    "T_res20_warm_gf": 1439.896237370333,
+    "Vbus_res20_warm_V": 12.530000562488265,
+    "Ipack_res20_warm_A": 99.99999999995188,
+    "I_motor_res20_warm_A": 24.74999999998797,
+    "I_wind_res20_warm_A": 26.819857145192277,
     "limited_res20_warm": 1.0,
-    "tw_worst": 2.1203793780064757,
-    "T_worst_gf": 1388.5969870771999,
-    "Vbus_worst_V": 11.85000077455004,
-    "Ipack_worst_A": 100.00000000002066,
-    "I_motor_worst_A": 24.750000000005166,
+    "tw_worst": 2.1063833322979284,
+    "T_worst_gf": 1379.4312372573938,
+    "Vbus_worst_V": 11.730000529922247,
+    "Ipack_worst_A": 100.00000000000142,
+    "I_motor_worst_A": 24.750000000000355,
+    "I_wind_worst_A": 25.76944970062779,
     "limited_worst": 1.0,
-    "tw_land_cold": 2.059338770331658,
-    "T_land_cold_gf": 1348.6226292873673,
-    "Vbus_land_cold_V": 11.330000522510097,
-    "Ipack_land_cold_A": 100.0000000000021,
-    "I_motor_land_cold_A": 24.750000000000526,
+    "tw_land_cold": 2.0451050254725067,
+    "T_land_cold_gf": 1339.3012147182324,
+    "Vbus_land_cold_V": 11.210000343570027,
+    "Ipack_land_cold_A": 100.0000000000371,
+    "I_motor_land_cold_A": 24.750000000009276,
+    "I_wind_land_cold_A": 25.070947699044506,
     "limited_land_cold": 1.0,
-    "f_sag": 0.850787322466117,
-    "f_sag_closed_form": 0.8729080341272172,
-    "f_sag_land": 0.8262952076568376
+    "f_sag": 0.8496852675552753,
+    "f_sag_closed_form": 0.8718116888360824,
+    "f_sag_land": 0.8249664646042992
    },
    "input_values": {
     "m": 2.6,
@@ -727,8 +911,240 @@
     ],
     "ocv20": 3.73,
     "r_cell": 0.004,
-    "r_ext": 6.7,
+    "r_ext": 7.9,
     "cold": 1.5
+   }
+  },
+  {
+   "id": "CALC-E1-REXT-ALLOW",
+   "type": "calculation",
+   "title": "Path resistance and 100 A voltage drop the thrust requirement allows",
+   "script": "redesign/team/E1/propulsion.py",
+   "function": "rext_allow",
+   "equation": "R_allow = min over the two bounds and the two cases of the R_ext at which T/W_worst(R_ext) = T/W_min,sag or T/W_fresh(R_ext) = T/W_min (bisection on the cases of CALC-E1-WORST and CALC-E1-BOUND2) ; drop_allow = 100 I_lim R_allow / V_nom ; thrust cost of the path = 1 - T_worst(R_ext) / T_worst(0)",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "n": "P:propulsion.n_motors",
+    "rho": "P:env.rho_kgm3",
+    "cant": "P:propulsion.stations.cant_deg",
+    "cells": "P:battery.cells_s",
+    "kP": "CL-E1-KP",
+    "kT": "CL-E1-KT",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "esc": "ASM-E1-ESC",
+    "pack": "ASM-E1-PACK-CELLS",
+    "tc": "ASM-E1-TCOPPER",
+    "ilim": "ASM-E1-ILIM",
+    "state": "ASM-E1-WORST-STATE",
+    "ocv20": "ASM-E2-OCV-20",
+    "r_cell": "ASM-E2-R-CELL",
+    "cold": "ASM-E2-COLD-R",
+    "r_ext": "P:electrical.r_ext_mohm",
+    "tw_min": "P:requirements.hover_tw_min",
+    "tw_sag": "P:requirements.hover_tw_min_sag",
+    "v_nom": "P:battery.v_nom",
+    "reff": "CL-E1-R-EFF-MAKER"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "cant": "deg",
+    "ilim": "A",
+    "ocv20": "V",
+    "r_cell": "ohm",
+    "r_ext": "mOhm",
+    "v_nom": "V",
+    "reff": "ohm"
+   },
+   "assumes": [
+    "ASM-E1-WORST-STATE",
+    "ASM-E1-CAL-TRANSFER",
+    "ASM-E1-ILIM",
+    "ASM-E2-OCV-20",
+    "ASM-E2-R-CELL",
+    "ASM-E2-COLD-R",
+    "ASM-E1-BOUND2"
+   ],
+   "outputs": {
+    "r_allow_worst_mohm": 42.51670837402343,
+    "r_allow_fresh_mohm": 47.95722961425781,
+    "r_allow_first_mohm": 42.51670837402343,
+    "r_allow_worst_b2_mohm": 17.050552368164066,
+    "r_allow_fresh_b2_mohm": 17.819595336914066,
+    "r_allow_mohm": 17.050552368164066,
+    "drop_allow_pct": 11.520643492002746,
+    "drop_allow_first_pct": 28.72750565812394,
+    "r_ext_use": 0.46332809808264536,
+    "tw_worst_r0": 2.19757274455579,
+    "thrust_cost_path": 0.041495514759987806,
+    "thrust_cost_path_b2": 0.06492407647488108
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "n": 4,
+    "rho": 1.225,
+    "cant": 7.0,
+    "cells": 4,
+    "kP": 1.2395830229048008,
+    "kT": 1.0390466549306472,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "esc": [
+     0.01,
+     0.5
+    ],
+    "pack": [
+     0.02,
+     1.0
+    ],
+    "tc": [
+     0.00393,
+     80.0
+    ],
+    "ilim": 100.0,
+    "state": [
+     80.0,
+     3.6
+    ],
+    "ocv20": 3.73,
+    "r_cell": 0.004,
+    "cold": 1.5,
+    "r_ext": 7.9,
+    "tw_min": 2.0,
+    "tw_sag": 1.6,
+    "v_nom": 14.8,
+    "reff": 0.21807406917806477
+   }
+  },
+  {
+   "id": "CALC-E1-BOUND2",
+   "type": "calculation",
+   "title": "Second bound: the maker's rows above 12 A read as true 14.8 V points (11x5.5MR)",
+   "script": "redesign/team/E1/propulsion.py",
+   "function": "bound2",
+   "equation": "R_eff from the maker's 30 A row (CALC-E1-CAL) replaces R_m + R_esc ; then as CALC-E1-WORST: largest duty with 4 I_bat + I_avn <= I_lim, T/W = 4 T cos(cant) / (m_gate g) ; sensitivity (CDR-AE-01 rule): rpm_full = rpm_full(14.8 V held) x V_bus / 14.8 ; stand point: bus held at V_stand ; T_need = T/W_min,sag m / (4 cos cant)",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "n": "P:propulsion.n_motors",
+    "rho": "P:env.rho_kgm3",
+    "cant": "P:propulsion.stations.cant_deg",
+    "cells": "P:battery.cells_s",
+    "kP": "CL-E1-KP",
+    "kT": "CL-E1-KT",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "esc": "ASM-E1-ESC",
+    "pack": "ASM-E1-PACK-CELLS",
+    "tc": "ASM-E1-TCOPPER",
+    "ilim": "ASM-E1-ILIM",
+    "state": "ASM-E1-WORST-STATE",
+    "ocv20": "ASM-E2-OCV-20",
+    "r_cell": "ASM-E2-R-CELL",
+    "cold": "ASM-E2-COLD-R",
+    "r_ext": "P:electrical.r_ext_mohm",
+    "reff": "CL-E1-R-EFF-MAKER",
+    "tw_sag": "P:requirements.hover_tw_min_sag",
+    "v_stand": "ASM-E1-V-STAND-LOW"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "cant": "deg",
+    "ilim": "A",
+    "ocv20": "V",
+    "r_cell": "ohm",
+    "r_ext": "mOhm",
+    "reff": "ohm",
+    "v_stand": "V"
+   },
+   "assumes": [
+    "ASM-E1-WORST-STATE",
+    "ASM-E1-CAL-TRANSFER",
+    "ASM-E1-ILIM",
+    "ASM-E2-OCV-20",
+    "ASM-E2-R-CELL",
+    "ASM-E2-COLD-R",
+    "ASM-E1-BOUND2",
+    "ASM-E1-V-STAND-LOW"
+   ],
+   "cites": [
+    "SRC-E1-X3108S-DATA"
+   ],
+   "outputs": {
+    "rm_eff_ohm": 0.20807406917806476,
+    "tw_fresh": 2.0975994535524323,
+    "T_fresh_gf": 1373.6788385652715,
+    "Vbus_fresh_V": 14.410000709330717,
+    "rpm_fresh": 7448.918701697832,
+    "I_wind_fresh_A": 25.669390676383017,
+    "I_motor_fresh_A": 24.749999999998725,
+    "limited_fresh": 1.0,
+    "tw_worst": 1.7200108775680638,
+    "T_worst_gf": 1126.4031083798484,
+    "Vbus_worst_V": 12.159061587032166,
+    "rpm_worst": 6753.582540445368,
+    "I_wind_worst_A": 21.34632973137345,
+    "I_motor_worst_A": 21.387451325866675,
+    "limited_worst": 0.0,
+    "rpm_ref_148": 7810.371350943164,
+    "T_ref_148_gf": 1512.1643642816384,
+    "rpm_worst_prop": 6569.346164329392,
+    "Vbus_worst_prop_V": 12.448361142307807,
+    "T_worst_prop_gf": 1065.086493661446,
+    "tw_worst_prop": 1.6263807699212576,
+    "T_need_sag_gf": 1047.8102184772024,
+    "T_stand_gf": 1090.1909725221367,
+    "rpm_stand": 6645.416186745324,
+    "T_stand_prop_gf": 972.3142905927912,
+    "rpm_stand_prop": 6279.96074839349,
+    "T_stand_first_gf": 1392.4057446876511,
+    "rpm_stand_first": 7498.85649260127
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "n": 4,
+    "rho": 1.225,
+    "cant": 7.0,
+    "cells": 4,
+    "kP": 1.2395830229048008,
+    "kT": 1.0390466549306472,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "esc": [
+     0.01,
+     0.5
+    ],
+    "pack": [
+     0.02,
+     1.0
+    ],
+    "tc": [
+     0.00393,
+     80.0
+    ],
+    "ilim": 100.0,
+    "state": [
+     80.0,
+     3.6
+    ],
+    "ocv20": 3.73,
+    "r_cell": 0.004,
+    "cold": 1.5,
+    "r_ext": 7.9,
+    "reff": 0.21807406917806477,
+    "tw_sag": 1.6,
+    "v_stand": 11.9
    }
   },
   {
@@ -934,6 +1350,75 @@
    }
   },
   {
+   "id": "CALC-E1-CRUISE-V17",
+   "type": "calculation",
+   "title": "Cruise point at the 17 m/s fallback speed (D-96 c, B6), 11x5.5MR",
+   "script": "redesign/team/E1/propulsion.py",
+   "function": "cruise_v17",
+   "equation": "as CALC-E1-CRUISE at V = 17 m/s: D = q S (CD0 + k CL^2) trim ; T_m = D / 4 ; P = 4 P_bat(T_m, J) ; ratio = P(17) / P(cruise_ms)",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "S": "CL-A1-WING-AREA",
+    "cd0": "CL-B1V-CD0",
+    "k": "CL-B1V-K",
+    "trim": "ASM-B1-TRIM",
+    "V": "ASM-E1-V-FALLBACK",
+    "p16": "CL-E1-CRUISE-P-55",
+    "n": "P:propulsion.n_motors",
+    "kP": "CL-E1-KP",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "esc": "ASM-E1-ESC"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "V": "m/s",
+    "S": "m2",
+    "p16": "W"
+   },
+   "assumes": [
+    "ASM-E1-CAL-TRANSFER",
+    "ASM-B1-TRIM",
+    "ASM-E1-V-FALLBACK"
+   ],
+   "cites": [
+    "SRC-E1-APC-PER3"
+   ],
+   "outputs": {
+    "drag_N": 4.829425758829726,
+    "P_total_55_W": 283.52459987379257,
+    "rpm_55": 6338.265772660938,
+    "J_55": 0.5759745898285601,
+    "eta_tot_55": 0.2895700688287762,
+    "ratio_to_cruise": 1.1515094884133623
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "rho": 1.225,
+    "S": 0.368,
+    "cd0": 0.05802115249999999,
+    "k": 0.09571,
+    "trim": 1.02,
+    "V": 17.0,
+    "p16": 246.21994236839024,
+    "n": 4,
+    "kP": 1.2395830229048008,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "esc": [
+     0.01,
+     0.5
+    ]
+   }
+  },
+  {
    "id": "CALC-E1-CORRIDOR",
    "type": "calculation",
    "title": "Thrust margin along the level pitch-over corridor (sag case, 11x4.5MR and 11x5.5MR)",
@@ -977,10 +1462,10 @@
     "ASM-B1-TRIM"
    ],
    "outputs": {
-    "margin_45": 2.0807308898259316,
+    "margin_45": 2.0551428796762155,
     "V_worst_45_ms": 2.6,
     "Treq_over_W_45": 0.9930897927445044,
-    "margin_55": 2.1208682884025767,
+    "margin_55": 2.092817212158789,
     "V_worst_55_ms": 1.5599999999999998,
     "Treq_over_W_55": 0.9991430155951609
    },
@@ -1008,7 +1493,7 @@
      0.02,
      1.0
     ],
-    "rext": 6.7,
+    "rext": 7.9,
     "ocv": [
      16.8,
      15.2,
@@ -1050,7 +1535,7 @@
     "ASM-E1-CAL-TRANSFER"
    ],
    "outputs": {
-    "tw_two_motors": 1.0681515285209229,
+    "tw_two_motors": 1.061100951736457,
     "yaw_torque_hover_Nm": 0.2821674177675153,
     "q_hover_per_motor_Nm": 0.14108370888375765,
     "yaw_diff30_Nm": 0.16323468025974305,
@@ -1059,7 +1544,7 @@
     "P_cruise_2mot_W": 192.20764339234054
    },
    "input_values": {
-    "full": 1388.5969870771999,
+    "full": 1379.4312372573938,
     "m": 2.6,
     "g": 9.80665,
     "rho": 1.225,
@@ -1438,7 +1923,7 @@
    ],
    "how": "Log on the stand with four motors on a flight pack, limiter off, 2 s.",
    "note": "wiring and disconnect design case if the limiter is not set; the bus-held 16.8 V upper bound is Ipack_fresh_55_A in CALC-E1-FULL. With the limiter the pack current is CL-E1-IPACK-LIM",
-   "value": 108.04122745514576
+   "value": 106.72692429307293
   },
   {
    "id": "CL-E1-IPACK-LIM",
@@ -1462,14 +1947,14 @@
    ],
    "how": "Bench: all four motors, props on, fresh pack, full throttle 2 s in QSTABILIZE on a restrained frame; dataflash BAT.Curr <= 100 A.",
    "note": "equals Q_M_BAT_CURR_MAX by construction: the claim states the model honours the limiter; the bench run (R-ESC-CURRENT a) is the evidence. F1's sensor error (+5 %) is in CL-F1-ILIM-WORST",
-   "value": 99.9999999999444
+   "value": 99.99999999995968
   },
   {
    "id": "CL-E1-ILIM-I",
    "type": "claim",
-   "title": "Per-motor current with the 100 A limiter, fresh pack, 11x5.5MR",
-   "calc": "CALC-E1-LIMIT",
-   "output": "I_motor_fresh_55_A",
+   "title": "Motor winding current at the 100 A limiter, fresh pack, 11x5.5MR (model)",
+   "calc": "CALC-E1-WORST",
+   "output": "I_wind_fresh_A",
    "unit": "A",
    "limit": {
     "op": "<=",
@@ -1482,14 +1967,137 @@
     "PRP-001-UR",
     "PRP-001-UL",
     "PRP-001-LR",
-    "PRP-001-LL",
+    "PRP-001-LL"
+   ],
+   "how": "T-E1-STAND / GT-04: phase current with a clamp on one motor lead (true-RMS, or the ESC's phase-current telemetry) during the 100 A limiter run, with bell temperature; not the ESC input lead.",
+   "note": "CDR-05 (CDR-AE-02, decision B7): re-stated on the WINDING (phase) current. Until 2026-11-13 this id held the battery-side share of the limiter (24.75 A, now CL-E1-ILIM-I-BAT), which is not what the maker's 25 A / 30 s rating limits. At the limiter the ESC runs at a duty of about 0.83 (CALC-E1-LIMIT duty_fresh_55), so the winding carries about I_bat / duty. Fresh case of CALC-E1-WORST (4.20 V/cell, E2's cell resistance: the case behind the fresh T/W of 2.5); CALC-E1-LIMIT's older fresh case reads 0.5 A less (I_wind_fresh_55_A). FAILS as posed: the limiter value is decided on the stand (B7): keep 100 A only if a 30 s run holds the bell <= 80 degC, else the value of CL-E1-ILIM-FOR-25A. Second bound: CL-E1-ILIM-I-B2",
+   "value": 30.00876182467904
+  },
+  {
+   "id": "CL-E1-ILIM-I-BAT",
+   "type": "claim",
+   "title": "Battery-side current per ESC at the 100 A limiter, fresh pack, 11x5.5MR",
+   "calc": "CALC-E1-LIMIT",
+   "output": "I_motor_fresh_55_A",
+   "unit": "A",
+   "parts": [
     "PRP-002-UR",
     "PRP-002-UL",
     "PRP-002-LR",
     "PRP-002-LL"
    ],
-   "how": "Same bench run as CL-E1-IPACK-LIM; per-ESC current from the ESC telemetry or a clamp meter <= 25 A.",
-   "value": 24.7499999999861
+   "how": "Same bench run as CL-E1-IPACK-LIM; clamp meter on one ESC input lead.",
+   "note": "(100 A - 1 A avionics) / 4: what the ESC input lead, the XT30U and E3's bus-power input see. This is the number CL-E1-ILIM-I carried before CDR-05; it is not compared with the motor rating",
+   "value": 24.74999999998992
+  },
+  {
+   "id": "CL-E1-ILIM-I-WORST",
+   "type": "claim",
+   "title": "Motor winding current at the 100 A limiter, worst pack state, hot winding (model)",
+   "calc": "CALC-E1-WORST",
+   "output": "I_wind_worst_A",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "ref": "P:propulsion.motor_max_a"
+   },
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "As CL-E1-ILIM-I on the worst-state pack of T-E1-STAND.",
+   "note": "20 % charge, 10 degC pack, 80 degC winding: the duty is close to 1, so the winding current is close to the battery share; information beside CL-E1-ILIM-I",
+   "value": 25.76944970062779
+  },
+  {
+   "id": "CL-E1-R-EFF-MAKER",
+   "type": "claim",
+   "title": "Series resistance that puts the maker's 30 A row at 14.8 V (second bound)",
+   "calc": "CALC-E1-CAL",
+   "output": "r_eff_30A_ohm",
+   "unit": "ohm",
+   "how": "T-E1-STAND at a held, logged 14.8 V: full-throttle rpm 7 500 (this bound) or above 9 000 (first bound).",
+   "assumes": [
+    "ASM-E1-BOUND2"
+   ],
+   "note": "first bound: R_m + R_esc = 0.096 ohm at 25 degC and the supply sagged to CL-E1-MAKER-SUPPLY; second bound: this value at a true 14.8 V. CALC-E1-CAL hi_rows lists every row above 12 A: [A, rpm, thrust error, power error, model winding A, supply needed V, R_eff ohm]",
+   "value": 0.21807406917806477
+  },
+  {
+   "id": "CL-E1-CAL-TERR-HI",
+   "type": "claim",
+   "title": "Model thrust error on the maker's rows above 12 A (at the measured rpm)",
+   "calc": "CALC-E1-CAL",
+   "output": "T_err_hi_max",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.05
+   },
+   "how": "Max |T_model / T_maker - 1| over the 7 rows 14-30 A; re-run the script.",
+   "note": "the prop model holds on the 7 rows that were not fitted; what the two bounds dispute is the rpm reached at a given bus voltage, not thrust at a given rpm",
+   "value": 0.007894811028782867
+  },
+  {
+   "id": "CL-E1-ILIM-I-B2",
+   "type": "claim",
+   "title": "Motor winding current at the 100 A limiter, fresh pack, second bound",
+   "calc": "CALC-E1-BOUND2",
+   "output": "I_wind_fresh_A",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "ref": "P:propulsion.motor_max_a"
+   },
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "As CL-E1-ILIM-I.",
+   "note": "on the maker-row reading the limiter binds at a duty near 1, so the winding current is close to the battery share: the two bounds bracket the phase current the stand will read",
+   "value": 25.669390676383017
+  },
+  {
+   "id": "CL-E1-ILIM-FOR-25A",
+   "type": "claim",
+   "title": "Pack-current limit that holds 25 A in the winding, fresh pack (model)",
+   "calc": "CALC-E1-ILIM-25",
+   "output": "ilim_a",
+   "unit": "A",
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "Stand: lower the limiter until the phase-current clamp reads 25 A on a fresh pack.",
+   "note": "option (b) of CDR-AE-02 / decision B7: Q_M_BAT_CURR_MAX at about this value if the 30 s stand run at 100 A takes the bell above 80 degC. F4 owns the parameter; not applied here",
+   "value": 71.0688978433609
+  },
+  {
+   "id": "CL-E1-ILIM-25A-TW",
+   "type": "claim",
+   "title": "Fresh-pack T/W with the winding held to 25 A (model)",
+   "calc": "CALC-E1-ILIM-25",
+   "output": "tw",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.hover_tw_min"
+   },
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "Thrust stand at the limiter value of CL-E1-ILIM-FOR-25A.",
+   "note": "what the lower limiter of CL-E1-ILIM-FOR-25A leaves; cant included",
+   "value": 2.038886295653279
   },
   {
    "id": "CL-E1-ILIM-TW-FRESH",
@@ -1512,7 +2120,7 @@
     "PRP-001-LL"
    ],
    "how": "Thrust stand on a fresh pack with the duty limit found on the bench.",
-   "value": 2.4663413569392514
+   "value": 2.4528577369577733
   },
   {
    "id": "CL-E1-CRUISE-DRAG",
@@ -1642,7 +2250,7 @@
     "PRP-001-LL"
    ],
    "how": "B1 replaces the wing model with AVL/XFOIL post-stall data; flight log of throttle during the first transition.",
-   "value": 2.0807308898259316
+   "value": 2.0551428796762155
   },
   {
    "id": "CL-E1-CORRIDOR-55",
@@ -1665,7 +2273,7 @@
     "PRP-001-LL"
    ],
    "how": "As CL-E1-CORRIDOR-45.",
-   "value": 2.1208682884025767
+   "value": 2.092817212158789
   },
   {
    "id": "CL-E1-MOTOROUT-TW",
@@ -1682,7 +2290,7 @@
    ],
    "how": "SITL motor-failure injection (F4); no flight test.",
    "note": "lift is there, yaw is not: both remaining props turn the same way",
-   "value": 1.0681515285209229
+   "value": 1.061100951736457
   },
   {
    "id": "CL-E1-HOVER-YAW",
@@ -1738,7 +2346,7 @@
    ],
    "how": "Thrust stand on a flight pack discharged to 3.73 V/cell rest and cold-soaked to 10 degC, motor warmed by a 2 min run at hover thrust, full throttle with the 25 A per-motor duty cap: thrust x 4 x cos(cant) / 2.6 kg (T-E1-STAND).",
    "note": "replaces CL-E1-TW-SAG, CL-E1-TW-SAG-55, CL-E1-ILIM-TW-LOW and, by agreement requested in CR-E1-15, CL-E2-TW-SAG-WORST: 11x5.5MR, 20 % charge, 10 degC pack, 80 degC winding, 100 A limiter",
-   "value": 2.1203793780064757
+   "value": 2.1063833322979284
   },
   {
    "id": "CL-E1-SAG-FACTOR",
@@ -1748,8 +2356,8 @@
    "output": "f_sag",
    "unit": "-",
    "how": "Ratio of the two T-E1-STAND full-throttle runs: worst-state pack / fresh pack.",
-   "note": "rev 8 (D-67): on F1's r_ext 6.7 mOhm (CL-F1-R-EXT 6.69) 0.8508, unchanged to three places from 0.851 at 6.5 (the limiter holds 100 A in both states, so 0.2 mOhm moves V_bus by 20 mV). To be applied to thrust_max_per_motor_kg (fresh pack, limiter); E2's 0.76 applied (V/14.8)^2 to that already current-limited thrust, which double-counts. Bounded above by CL-E1-SAG-XCHECK",
-   "value": 0.850787322466117
+   "note": "CDR-05 (2026-11-13): on r_ext 7.9 mOhm (F1's routed leads, CL-F1-R-EXT 7.92); was 0.8508 at 6.7 (D-67) and 0.851 at 6.5 (the limiter holds 100 A in both states, so 1 mOhm moves V_bus by 0.1 V). To be applied to thrust_max_per_motor_kg (fresh pack, limiter); E2's 0.76 applied (V/14.8)^2 to that already current-limited thrust, which double-counts. Bounded above by CL-E1-SAG-XCHECK",
+   "value": 0.8496852675552753
   },
   {
    "id": "CL-E1-SAG-XCHECK",
@@ -1760,7 +2368,7 @@
    "unit": "-",
    "how": "Hand calculation from the E2 pack assumptions and F1's r_ext; the T-E1-STAND ratio settles both.",
    "note": "independent of the prop tables and the motor model: same pack current in both states, so P ~ V_bus and T ~ P^(2/3) for a static prop; ignores the hot winding, so it sits just above CL-E1-SAG-FACTOR",
-   "value": 0.8729080341272172
+   "value": 0.8718116888360824
   },
   {
    "id": "CL-E1-TMAX-WORST",
@@ -1776,7 +2384,7 @@
     "PRP-001-LL"
    ],
    "how": "As CL-E1-TW-WORST, per motor.",
-   "value": 1388.5969870771999
+   "value": 1379.4312372573938
   },
   {
    "id": "CL-E1-TW-LAND-COLD",
@@ -1796,7 +2404,240 @@
     "PRP-001-LL"
    ],
    "how": "Same stand run on a pack at 3.60 V/cell rest; 1.3 is the emergency-landing floor, not R-HOVER-TW.",
-   "value": 2.059338770331658
+   "value": 2.0451050254725067
+  },
+  {
+   "id": "CL-E1-TW-WORST-B2",
+   "type": "claim",
+   "title": "Hover T/W at the gate, worst pack state, second bound (maker rows as 14.8 V points)",
+   "calc": "CALC-E1-BOUND2",
+   "output": "tw_worst",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.hover_tw_min_sag"
+   },
+   "verifies": [
+    "R-HOVER-TW"
+   ],
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "T-E1-STAND at a logged 11.9 V bus: >= 1 060 gf per motor (CDR condition B-7).",
+   "assumes": [
+    "ASM-E1-BOUND2"
+   ],
+   "note": "CDR-05 (CDR-AE-01): the same case as CL-E1-TW-WORST with the series resistance CL-E1-R-EFF-MAKER. The limiter no longer binds at the worst state (CALC-E1-BOUND2 limited_worst = 0): the motor is voltage-limited. R-HOVER-TW has to hold on both bounds until T-E1-STAND picks one",
+   "value": 1.7200108775680638
+  },
+  {
+   "id": "CL-E1-TW-FRESH-B2",
+   "type": "claim",
+   "title": "Hover T/W at the gate, fresh pack, 100 A limiter, second bound",
+   "calc": "CALC-E1-BOUND2",
+   "output": "tw_fresh",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.hover_tw_min"
+   },
+   "verifies": [
+    "R-HOVER-TW"
+   ],
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "T-E1-STAND on a fresh pack at the limiter: >= 1 330 gf per motor (CDR condition B-7).",
+   "assumes": [
+    "ASM-E1-BOUND2"
+   ],
+   "value": 2.0975994535524323
+  },
+  {
+   "id": "CL-E1-TMAX-WORST-B2",
+   "type": "claim",
+   "title": "Full thrust per motor, worst pack state, second bound",
+   "calc": "CALC-E1-BOUND2",
+   "output": "T_worst_gf",
+   "unit": "gf",
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "As CL-E1-TW-WORST-B2, per motor.",
+   "value": 1126.4031083798484
+  },
+  {
+   "id": "CL-E1-TW-WORST-B2-PROP",
+   "type": "claim",
+   "title": "Worst-state T/W if full-throttle rpm goes with bus voltage (sensitivity)",
+   "calc": "CALC-E1-BOUND2",
+   "output": "tw_worst_prop",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.hover_tw_min_sag"
+   },
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "T-E1-STAND on the worst-state flight pack.",
+   "assumes": [
+    "ASM-E1-BOUND2"
+   ],
+   "note": "the rule CDR-AE-01 used: rpm = rpm(14.8 V) x V_bus / 14.8, with no credit for the smaller resistive drop at the lower current. Here the bus is solved with the pack model at the current this rpm draws (CALC-E1-BOUND2 Vbus_worst_prop_V, above 11.9 V because the limiter does not bind), and the reference rpm is this prop's own (rpm_ref_148). The reviewer's 1.44 (REVIEWER EST) held the bus at 11.9 V and took 7 500 rpm + 3 %: that case is CL-E1-T-STAND-B2-PROP",
+   "value": 1.6263807699212576
+  },
+  {
+   "id": "CL-E1-T-NEED-SAG",
+   "type": "claim",
+   "title": "Thrust per motor that gives the worst-state T/W of R-HOVER-TW",
+   "calc": "CALC-E1-BOUND2",
+   "output": "T_need_sag_gf",
+   "unit": "gf",
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "Arithmetic.",
+   "note": "requirements.hover_tw_min_sag x gate mass / (4 cos cant). The board's stand line is 1 060 gf (CDR condition B-7), 1 % above this",
+   "value": 1047.8102184772024
+  },
+  {
+   "id": "CL-E1-T-STAND-B2",
+   "type": "claim",
+   "title": "Full thrust per motor at a held 11.9 V bus, second bound",
+   "calc": "CALC-E1-BOUND2",
+   "output": "T_stand_gf",
+   "unit": "gf",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-E1-T-NEED-SAG"
+   },
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "T-E1-STAND: full throttle, bench supply held at 11.9 V at the ESC pads, bus voltage logged.",
+   "assumes": [
+    "ASM-E1-BOUND2"
+   ],
+   "note": "the stand point of CDR condition B-7 predicted on the maker-row reading with a fixed series resistance; the first bound predicts CALC-E1-BOUND2 T_stand_first_gf",
+   "value": 1090.1909725221367
+  },
+  {
+   "id": "CL-E1-T-STAND-B2-PROP",
+   "type": "claim",
+   "title": "Full thrust per motor at a held 11.9 V bus if rpm goes with bus voltage",
+   "calc": "CALC-E1-BOUND2",
+   "output": "T_stand_prop_gf",
+   "unit": "gf",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-E1-T-NEED-SAG"
+   },
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "T-E1-STAND as CL-E1-T-STAND-B2: this is the reading that fails the >= 1 060 gf line.",
+   "assumes": [
+    "ASM-E1-BOUND2"
+   ],
+   "note": "CDR-AE-01's own case (REVIEWER EST 946 gf, T/W 1.44, from 7 500 rpm x 11.9 / 14.8 + 3 %); here the reference is this prop's full-throttle rpm on R_eff at 14.8 V (rpm_ref_148). The most pessimistic reading of the maker's table that E1 can build, kept visible because nothing but the stand rules it out. If the stand reads this, the gate mass, the prop or the pack changes before 5 motors are bought (CDR-04)",
+   "value": 972.3142905927912
+  },
+  {
+   "id": "CL-E1-REXT-ALLOW",
+   "type": "claim",
+   "title": "Largest pack-to-ESC path resistance that keeps R-HOVER-TW (model)",
+   "calc": "CALC-E1-REXT-ALLOW",
+   "output": "r_allow_mohm",
+   "unit": "mOhm",
+   "limit": {
+    "op": ">=",
+    "ref": "P:electrical.r_ext_mohm"
+   },
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "Re-run after T-E1-STAND; T-F1-DROP measures the path.",
+   "note": "the smallest of four: worst state T/W = requirements.hover_tw_min_sag and fresh T/W = requirements.hover_tw_min, each on the first bound (CALC-E1-WORST's cases) and on the second (CALC-E1-BOUND2's). The second bound governs (r_allow_worst_b2_mohm, r_allow_fresh_b2_mohm); on the first bound alone the value is r_allow_first_mohm. T-E1-STAND picks the bound and re-bases this",
+   "value": 17.050552368164066
+  },
+  {
+   "id": "CL-E1-DROP-ALLOW",
+   "type": "claim",
+   "title": "Largest 100 A voltage drop, pack to ESC, that keeps R-HOVER-TW (limit for F1)",
+   "calc": "CALC-E1-REXT-ALLOW",
+   "output": "drop_allow_pct",
+   "unit": "%",
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "Re-run after T-E1-STAND.",
+   "note": "= 100 x 100 A x CL-E1-REXT-ALLOW / battery.v_nom. F1 reads it as the limit of CL-F1-DROP-PEAK (CDR-03 / CDR-EL-04: the 5 % guideline had been removed, not met). The limiter keeps the pack current, so thrust falls slowly with path resistance (CL-E1-PATH-THRUST-COST) and this limit is above the 5 % guideline (WB-11), which stays F1's design target. First bound alone: drop_allow_first_pct",
+   "value": 11.520643492002746
+  },
+  {
+   "id": "CL-E1-PATH-THRUST-COST",
+   "type": "claim",
+   "title": "Worst-state thrust lost to the pack-to-ESC path resistance (model)",
+   "calc": "CALC-E1-REXT-ALLOW",
+   "output": "thrust_cost_path",
+   "unit": "-",
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "1 - T_worst(r_ext) / T_worst(0); CDR-EL-04 estimated the 6.7 -> 7.9 mOhm step at -1.6 % (REVIEWER EST, T ~ V^2).",
+   "value": 0.041495514759987806
+  },
+  {
+   "id": "CL-E1-CRUISE-P-55-V17",
+   "type": "claim",
+   "title": "Cruise electrical power at the 17 m/s fallback, 11x5.5MR (propulsion only)",
+   "calc": "CALC-E1-CRUISE-V17",
+   "output": "P_total_55_W",
+   "unit": "W",
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL",
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Log pack power in steady 17 m/s FBWA legs, both directions; subtract the avionics draw.",
+   "note": "D-96 (c) quoted 283 W from the CR-E1-51 sweep; this is the same point as a claim, so E2 can carry the fallback to BATT_LOW (CL-E2-CRUISE-TO-LOW-PESS-V17, CDR-05 / CDR-AE-09)",
+   "value": 283.52459987379257
   },
   {
    "id": "CL-E1-STACK-PROP-PLANE",
@@ -2791,10 +3632,18 @@
     "CL-E1-HOVER-GW",
     "CL-E1-KT",
     "CL-E1-KP",
-    "CL-E1-MAKER-SUPPLY"
+    "CL-E1-MAKER-SUPPLY",
+    "CL-E1-ILIM-I",
+    "CL-E1-ILIM-I-B2",
+    "CL-E1-TW-WORST-B2",
+    "CL-E1-TW-FRESH-B2",
+    "CL-E1-TW-WORST-B2-PROP",
+    "CL-E1-R-EFF-MAKER",
+    "CL-E1-T-STAND-B2",
+    "CL-E1-T-STAND-B2-PROP"
    ],
    "state": "planned",
-   "procedure": "H1 stand (20 kg cell + HX711), X3108S + LANRC 45 A, 11x4.5MR then 11x5.5MR; held 14.8 V bench supply (>= 40 A) and then a flight pack; 10 % throttle steps to 100 %, 3 s each; log gf, A, V, rpm (optical tach or ESC telemetry), can temperature; one 60 s run at 689 gf for g/W; ten 10 -> 100 % throttle punches in < 50 ms with no desync"
+   "procedure": "H1 stand (20 kg cell + HX711), X3108S + LANRC 45 A, 11x4.5MR then 11x5.5MR; held 14.8 V bench supply (>= 40 A) and then a flight pack; 10 % throttle steps to 100 %, 3 s each; log gf, A, V, rpm (optical tach or ESC telemetry), can temperature; one 60 s run at 689 gf for g/W; ten 10 -> 100 % throttle punches in < 50 ms with no desync. CDR-04 / CDR-05 additions: bus voltage logged at the ESC pads on every run; full throttle at a held 14.6 V and 11.9 V bus (pass >= 1 330 gf and >= 1 060 gf); phase current on one motor lead (clamp or ESC telemetry) at the limiter duty; one 30 s run at the limiter with the bell temperature (pass <= 80 degC, else the limiter drops to CL-E1-ILIM-FOR-25A)"
   },
   {
    "id": "T-E1-MOTOR-RM",

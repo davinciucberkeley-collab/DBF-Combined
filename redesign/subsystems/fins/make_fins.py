@@ -209,11 +209,17 @@ NOTES = {
              'pattern; plate face 7.5 mm ahead of the collar front, cheeks 17 mm (D-61), 18 mm grip (D-91)',
     'block': 'PETG, 3 perimeters, 15 % gyroid, spar bore horizontal on the bed; sand the socket top/bottom flush; '
              'four vertical plan-form edges R 3 mm (D-68) to match the R 3 mm pocket corners',
-    'eye': 'PETG, 100 %, saddle foot down on the bed; D-89c (SW-01): bonded round the outboard face of each bore '
-           'boss after the spar and blocks have cured in the core, 30 min epoxy + silica, foot sanded 120 grit',
+    'eye': 'PETG, 100 %, printed on its side with the tie-hole axis vertical (layers stacked along x), so the tab '
+           'bends in the layer plane (D-107, CL-C6-EYE-TAB-RF; foot-down it would bend across layers, RF 1.4); '
+           'D-89c (SW-01): bonded round the outboard face of each bore boss after the spar and blocks have cured in '
+           'the core, 30 min epoxy + silica, boss and foot sanded 120 grit, skin tape cut back so the foot bonds '
+           'PETG to PETG (E-FIN-89...92, T-D3-EYE-BONDED)',
     'plug': 'CF 20 x 18 offcut, 53 mm, sanded to slide in the 20 mm bore, laminating epoxy',
-    'collar': 'PETG, 100 %, printed upside down on the tail cap (slots open upward on the bed); 22 mm ring (D-90), 40 mm '
-              'two-face tail, brace ear inboard; phase tie lug at x 0.060, slot open along x (CR-F2-16)',
+    'collar': 'PETG, 100 %, printed upside down on the tail cap (slots open upward on the bed), layers stacked along '
+              'the tube axis: the strip pull along the tail and the ring hoop both lie in the layer plane (D-107 / '
+              'CDR-01 f: CL-C6-STRIP-TAIL-NET-RF uses the in-plane value 23.5 MPa; do not print it on its side); '
+              '22 mm ring (D-90), 40 mm two-face tail, brace ear inboard; phase tie lug at x 0.060, slot open along x '
+              '(CR-F2-16)',
     'brace': 'pultruded CF strip 10 x 2 mm, cut to length on the jig, ends scuffed',
     'anchor': 'PETG, 80 %, brace slot vertical on the bed; foot sits on the spar through a core pocket',
     'strip': 'pultruded CF strip 10 x 1 mm, cut to the template, one per laminate face, ends at the step front x 0.2746',
@@ -357,4 +363,12 @@ if __name__ == '__main__':
         import os as _o, runpy as _r
         _r.run_path(_o.path.join(_o.path.abspath(__file__).rsplit(_o.sep + 'redesign' + _o.sep, 1)[0], 'redesign', 'team',
                                  'C6', 'fastener_parts.py'), run_name='c6_hook')['run']()
+        # D-109 (CDR-23 / CDR-ST-16): one fins mass. The line printed by main() is the printed and bonded parts
+        # only; the declared subsystem mass (CL-D3-MASS, A3 roll-up) is the sum of interfaces.json AFTER the
+        # fastener parts are split out of FIN-003 (C6 FASTENERS-CAD: the modelled screws, nuts and washers weigh
+        # more than the allowance they replace).
+        import json as _j
+        with open(_o.path.join(HERE, 'interfaces.json'), encoding='utf-8') as _f:
+            _tot = sum(p_['mass_g'] for p_ in _j.load(_f)['parts'])
+        print('fins declared mass with the modelled fasteners: %.1f g (= CL-D3-MASS; quote this one)' % _tot)
     sys.exit(rc)

@@ -1,5 +1,13 @@
 # B3 stability and control: K09-L summary (V1 verification round)
 
+**CDR fix round, 2026-11-13 (CDR-14, CDR-16; details `S-AND-C.md` §9).** `MIXING_GAIN` 0.65 moves the forward CG limit
+0.0465 → **0.0393 m**; range **[0.0394, 0.0513] m, 12.0 mm** (was 4.8). First fixed-wing flights at x ≤ 0.0465 m (static
+margin ≥ 6.5 %). New cases: hover yaw with a wingtip into a 5 m/s wind 3.24 at 10° heading error, **1.32 at 20° (`FAILS` 1.5)**,
+saturating at 25° (12° in the 8 m/s gust); 10° cant contingency +28 % yaw arm. `CL-B3-TRANS-PITCH-USE` re-based on the 30 % cap
+with no elevon credit: **0.91 (`FAILS` 0.60)**. Gust pitch: 0.94 at the cap, 32 % differential needed, 1.25 at 40 %
+(`R-GUST-LEAN` now has claims). Thrust line: 0.083 N·m in cruise (0.77° of elevon), 3.4° at `THR_MAX`. The tables
+below are V1 / R4 and their CG range is superseded.
+
 Status: `MODELLED` (B3, 2026-11-10). V1 re-runs the chain on the settled CAD (fins `fins.py` R4, wing elevon gaps)
 and the A3-R6a roll-up. Report: **`SIMULATION-REPORT.md`**; R4 design basis: `S-AND-C.md`. Requests:
 `CHANGE-REQUESTS.md` (CR-B3-24 … -29 new). Claims: `claims.verify.json` (32, `CL-B3-V-*`) beside R4's `claims.json`.

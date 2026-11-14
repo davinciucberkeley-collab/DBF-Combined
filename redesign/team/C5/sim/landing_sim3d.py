@@ -3,6 +3,8 @@
 Run:  python -I redesign/team/C5/sim/landing_sim3d.py        (about 30 min, single thread)
 C5-R6 (2026-11-10): sink from requirements.landing_sink_ms (1.2 m/s, D-65); a lightest-mass case (A3 basic with the
 D-64 546 g pack) and a mu 0.5 envelope at the gate mass are added.
+C5-R7 (2026-11-13, D-105 / CDR-01): pad friction = ASM-D5-PAD-MU = requirements.pad_mu_max (0.40); comparison
+envelopes at mu 0.7 and 0.5 (MU_ALT) at the gate mass.
 Writes sim/out/sim3d.json; landing_sim_claims.py carries the results into the proof chain.
 
 What it adds over landing_calc.py CALC-C5-DROP-DYN (planar, 2 contacts, frictionless, pitch and roll separately):
@@ -10,7 +12,7 @@ What it adds over landing_calc.py CALC-C5-DROP-DYN (planar, 2 contacts, friction
   * four feet, each a piston (mass m_f) on an elastic-plastic crusher (D5-R4 as delivered: plateau upper / lower,
     elastic ramp to the plateau over eps_y L/2, rigid stop at the 38 mm rim), with the pad as four corner contacts
     (neoprene k_p each, edges at the D5 pad outline) so a tilted foot lands and pivots on its edge;
-  * Coulomb friction (mu 0.7, regularised) at every corner: horizontal drift, sliding and the foot side load;
+  * Coulomb friction (mu = ASM-D5-PAD-MU, regularised) at every corner: horizontal drift, sliding and the foot side load;
   * combined pitch + roll touchdown errors, drift in any direction, steady wind or a lull, rotor lift lam W held to
     0.3 s then ramped to 0 at 0.6 s (C1 convention: vertical, through the CG; no attitude control = conservative).
 Outputs per case: stroke per foot, peak load factor at the CG, peak transverse (side) load per foot, wingtip TE
@@ -105,6 +107,7 @@ K_PAD = 1.0e5        # N/m per pad corner (1.6 mm 40A neoprene, 385 mm2 pad: E A
 ZETA_PAD = 0.3       # damping ratio of a corner contact against the piston mass
 EPS_V = 0.01         # m/s, friction regularisation (Coulomb above ~3 eps)
 K_STOP = 5.0e5       # N/m, flange on the sleeve rim after the full stroke
+MU_ALT = (0.7, 0.5)  # comparison pad frictions (bare neoprene D-65 basis; CR-C5-16 option), gate-mass envelope
 
 
 def quat_mul(a, b):
@@ -335,14 +338,19 @@ def main():
             env[tag]["side_peak_max_N"], env[tag]["tip_min_m"], env[tag]["strike_tilt_min_deg"], time.time() - t0),
             flush=True)
     out["hard_envelope"] = env
-    # 1b. pad friction option (CR-C5-16): the same envelope at the gate mass with a pad face of mu 0.5 on the mat
-    c_mu = [dict(c, mu=0.5) for c in disc_cases(inp, inp["m_gate"], k_I(inp["m_gate"]), inp["lam"], inp["v_sink"])]
-    r_mu = simulate(inp, c_mu)
-    out["hard_envelope_mu05_gate"] = dict(summarise(c_mu, r_mu), rows=[
-        [c["theta"], c["phi"], max(sm), n_, max(sd), tm] for c, sm, n_, sd, tm in
-        zip(c_mu, r_mu["s_max"], r_mu["n_peak"], r_mu["side_1ms"], r_mu["tip_min"])])
-    print("hard gate mu 0.5   stroke %.4f m  side %.1f N" % (out["hard_envelope_mu05_gate"]["stroke_max_m"],
-                                                          out["hard_envelope_mu05_gate"]["side_1ms_max_N"]), flush=True)
+    # 1b. pad friction cases at the gate mass (C5-R7, D-105): the design envelope above runs at ASM-D5-PAD-MU
+    #     (requirements.pad_mu_max 0.40); the same envelope at mu 0.7 (bare neoprene, the D-65 basis) and 0.5 (the
+    #     CR-C5-16 option) shows what the side load, stroke and tilt become if the pad face misses its target
+    out["hard_envelope_mu_alt_gate"] = {}
+    for mu_alt in MU_ALT:
+        c_mu = [dict(c, mu=mu_alt) for c in disc_cases(inp, inp["m_gate"], k_I(inp["m_gate"]), inp["lam"], inp["v_sink"])]
+        r_mu = simulate(inp, c_mu)
+        out["hard_envelope_mu_alt_gate"]["%.2f" % mu_alt] = dict(summarise(c_mu, r_mu), rows=[
+            [c["theta"], c["phi"], max(sm), n_, max(sd), tm] for c, sm, n_, sd, tm in
+            zip(c_mu, r_mu["s_max"], r_mu["n_peak"], r_mu["side_1ms"], r_mu["tip_min"])])
+        print("hard gate mu %.2f   stroke %.4f m  side %.1f N" % (
+            mu_alt, out["hard_envelope_mu_alt_gate"]["%.2f" % mu_alt]["stroke_max_m"],
+            out["hard_envelope_mu_alt_gate"]["%.2f" % mu_alt]["side_1ms_max_N"]), flush=True)
     # level references and the beyond-requirement square corners (pitch and roll both at err)
     mg = inp["m_gate"]
     ref_cases = [dict(m=mg, I_scale=k_I(mg), theta=0, phi=0, v_sink=inp["v_sink"], lam=inp["lam"]),

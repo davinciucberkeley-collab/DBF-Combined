@@ -1,6 +1,12 @@
 """E1 propulsion engineer: motor / ESC / prop model and margins for the K09-L quad tailsitter.
 
-Run:  python -I redesign/team/E1/propulsion.py      -> claims.json beside this file + a printed report
+Run:  python -I redesign/team/E1/propulsion.py      -> claims.json beside this file + a printed report. Writes
+                                                       nothing outside team/E1/: the propulsion parts list is
+                                                       printed and compared with the file, not written (CDR-29)
+      python -I redesign/team/E1/propulsion.py --write-parts
+                                                    -> also rewrites subsystems/propulsion/parts.csv and then runs
+                                                       C6's fastener_parts.py, which patches subsystems/*/parts.csv
+                                                       and interfaces.json. Only the propulsion owner, on purpose
       python -I redesign/team/E1/plots.py           -> FIG PRP-01 / PRP-02 SVGs (reads this module)
 
 Model (one station = pack share + ESC + SunnySky X3108S KV900 + APC prop), pure standard library:
@@ -8,9 +14,16 @@ Model (one station = pack share + ESC + SunnySky X3108S KV900 + APC prop), pure 
   motor   V_m = w / Kv + I_m R_m ,  I_m = Q / Kt + I0 ,  Kt = 1 / Kv   (SI units, Kv in rad/s/V)
   ESC     V_m = d V_bus - I_m R_esc ,  P_bat = V_m I_m + I_m^2 R_esc + P_esc0
   pack    V_bus = V_ocv - R_pack * (sum of station battery currents + avionics)
-kT and kP are fitted to the maker's own X3108S KV900 + APC 11x4.7 table (rows <= 16 A, where the maker's supply
-did not sag) against the PER3 file of that same prop (CALC-E1-CAL). The fitted factors are then applied to the
-11x4.5MR / 11x5.5MR PER3 files (ASM-E1-CAL-TRANSFER). The H1 thrust stand replaces all of this (T-E1-STAND).
+kT and kP are fitted to the maker's own X3108S KV900 + APC 11x4.7 table (rows 5-12 A) against the PER3 file of that
+same prop (CALC-E1-CAL). The fitted factors are then applied to the 11x4.5MR / 11x5.5MR PER3 files
+(ASM-E1-CAL-TRANSFER). The H1 thrust stand replaces all of this (T-E1-STAND).
+
+Two readings of the maker's rows above 12 A are carried since CDR-05 (2026-11-13), because nothing but the stand can
+tell them apart:
+  first bound  (this model)   the maker's supply sagged, so the rows above 12 A were not at 14.8 V (CL-E1-MAKER-SUPPLY)
+  second bound (CALC-E1-BOUND2) the rows are true 14.8 V full-throttle points: the station then behaves as if it had
+               the series resistance that reproduces the top row (CL-E1-R-EFF-MAKER), and thrust at a low bus is lower
+Motor current is judged in the WINDING (I_m = I_bat / duty at the limiter), not at the battery (CDR-AE-02, decision B7).
 """
 import math
 import sys
@@ -45,8 +58,9 @@ MAKER_1147 = [
     [20, 1330, 6940, 296], [23, 1410, 7140, 340], [26, 1490, 7300, 385], [30, 1580, 7500, 447]]
 MAKER_TEMP_C = 94.0          # maker's temperature column at the 30 A row
 CAL_ROWS_A = (5, 12)         # rows used for the fit. The W column is 14.8 V x A with A in whole-amp steps, so rows
-                             # < 5 A carry > 10 % rounding error and rows > 12 A are taken at a sagging supply
-                             # (CL-E1-MAKER-SUPPLY); between them both errors are small
+                             # < 5 A carry > 10 % rounding error. Rows > 12 A are NOT discarded (CDR-05): the fit
+                             # reads them as taken at a sagging supply (CL-E1-MAKER-SUPPLY, first bound) and
+                             # CALC-E1-CAL / CALC-E1-BOUND2 carry them as true 14.8 V points (second bound)
 
 # APC PER3 files (apcprop.com/files/PER3_<size>.dat, v2022-0915), read 2026-11-09 (SRC-E1-APC-PER3).
 # static: {rpm: (Ct0, Cp0)};  J-curve: 6000 rpm block [J, Ct, Cp] (scaled to other rpm by the static ratio).
@@ -167,6 +181,28 @@ kit.assumption("ASM-E1-RTH", "Motor thermal resistance 1.0 K/W in own wash", "st
 kit.assumption("ASM-E1-ILIM", "Pack-current limit 100 A", "ArduPilot Q_M_BAT_CURR_MAX = 100 A (with the power "
                "module's current sensor calibrated) caps the summed motor current",
                basis="4 x 25 A = the X3108S's 25 A / 30 s rating; F4 sets it, F1 sizes wiring to it", value=100.0, unit="A")
+kit.assumption("ASM-E1-V-FALLBACK", "Fallback cruise speed 17 m/s (D-96 c, CDR decision B6)",
+               "AIRSPEED_MIN = AIRSPEED_CRUISE = 17 m/s: the planning case while the tripped stall (12.85 m/s) is "
+               "the baseline, until T-B2-STALL",
+               basis="params/CHANGE-LOG.md D-96 (c): 17 holds to a 13.07 m/s stall; review/CDR-2026-11-13/"
+                     "CDR-SUMMARY.md decision B6 makes it the planning baseline. performance.cruise_ms stays 16 "
+                     "until A1 changes it", value=17.0, unit="m/s")
+kit.assumption("ASM-E1-BOUND2", "Second bound: the maker's top row is a true 14.8 V full-throttle point",
+               "the maker's 30 A row (7 500 rpm, 1 580 gf, 11x4.7, 94 degC) was taken at 14.8 V at the ESC and "
+               "100 % duty. The station then has an effective series resistance R_eff = (14.8 - w / Kv) / I_m at "
+               "that row (winding at its 94 degC, ESC and everything the simple model leaves out), used unchanged "
+               "at other bus voltages and with the 11x5.5MR",
+               basis="CDR-AE-01 (review/CDR-2026-11-13/CDR-aero.md): the 'sagging supply' reading of the rows above "
+                     "12 A has no evidence, so the rows are a second bound, not discarded data. A fixed series "
+                     "resistance is the simplest model that reproduces the row; the reviewer's cruder rule "
+                     "(full-throttle rpm proportional to bus voltage) is carried beside it as a sensitivity. "
+                     "T-E1-STAND with a logged bus voltage decides between the bounds", status="UNVERIFIED",
+               cites=["SRC-E1-X3108S-DATA"])
+kit.assumption("ASM-E1-V-STAND-LOW", "Low stand point: bus held at 11.9 V",
+               "bench supply held at 11.9 V at the ESC pads for the worst-state full-throttle run of T-E1-STAND",
+               basis="CDR condition B-7 / CDR-AE C1 (review/CDR-2026-11-13/CDR-SUMMARY.md): >= 1 060 gf at an 11.9 V "
+                     "bus; 11.9 V is CALC-E1-WORST's worst-state bus on the first bound (11.85 V at r_ext 6.7 mOhm)",
+               value=11.9, unit="V")
 kit.assumption("ASM-E1-TRANS-MARGIN", "Transition thrust margin 1.3", "full thrust at every point of the level "
                "pitch-over corridor >= 1.3 x the thrust that holds level unaccelerated flight there",
                basis="0.3 g of surplus for acceleration and gusts; same headroom as ASM-A2-GUST-THRUST-HEADROOM",
@@ -306,15 +342,19 @@ def calibrate(rho, kv, rm, i0, esc):
     for r in MAKER_1147:
         s = station("11x4.7SF", r[2], 0, rho, kT, kP, kv, rm, i0, r_esc, p0, 14.8)
         v_sup = s["V_m_V"] + s["I_m_A"] * r_esc            # supply needed at 100 % duty to reach the measured rpm
+        w = r[2] * 2 * math.pi / 60.0
         res.append({"A": r[0], "T_err": s["T_N"] / (r[1] * 9.80665e-3) - 1, "P_err": s["P_bat_W"] / r[3] - 1,
-                    "v_supply_min": v_sup, "loss_W": s["P_loss_motor_W"]})
+                    "v_supply_min": v_sup, "loss_W": s["P_loss_motor_W"], "I_m_A": s["I_m_A"], "rpm": r[2],
+                    # series resistance (winding + ESC + anything else) that puts this row at 14.8 V, 100 % duty
+                    "r_eff_ohm": (14.8 - w / (kv * 2 * math.pi / 60.0)) / s["I_m_A"]})
     return kT, kP, res
 
 
 # ================================================================== calculations (claims)
 @kit.calc("CALC-E1-CAL", title="Fit PER3 to the maker's X3108S + 11x4.7 table",
           equation="kT = mean(T_meas / T_PER3(rpm)) ; kP: sum(P_bat,model(rpm) - P_meas) = 0 over rows 5-12 A ; "
-                   "R_th = (94 - 25) / P_loss(30 A row)",
+                   "R_th = (94 - 25) / P_loss(30 A row) ; rows > 12 A (second bound): V_supply,min = V_m + I_m R_esc "
+                   "at the measured rpm, R_eff = (14.8 - w / Kv) / I_m",
           inputs={"rho": P + "env.rho_kgm3", "kv": "ASM-E1-KV", "rm": "ASM-E1-RM", "i0": "ASM-E1-I0", "esc": "ASM-E1-ESC"},
           units={"rho": "kg/m3", "kv": "rpm/V", "rm": "ohm", "i0": "A"},
           assumes=["ASM-E1-KV", "ASM-E1-RM", "ASM-E1-I0", "ASM-E1-ESC"], cites=["SRC-E1-X3108S-DATA", "SRC-E1-APC-PER3"])
@@ -322,7 +362,12 @@ def cal(rho, kv, rm, i0, esc):
     kT, kP, res = calibrate(rho, kv, rm, i0, esc)
     fit = [r for r in res if CAL_ROWS_A[0] <= r["A"] <= CAL_ROWS_A[1]]
     top = res[-1]
-    return {"kT": kT, "kP": kP,
+    hi = [r for r in res if r["A"] > CAL_ROWS_A[1]]            # the maker's rows above 12 A: recorded, not discarded
+    return {"hi_rows": [[r["A"], r["rpm"], r["T_err"], r["P_err"], r["I_m_A"], r["v_supply_min"], r["r_eff_ohm"]]
+                        for r in hi],
+            "T_err_hi_max": max(abs(r["T_err"]) for r in hi), "P_err_hi_max": max(abs(r["P_err"]) for r in hi),
+            "I_m_30A_A": top["I_m_A"], "r_eff_30A_ohm": top["r_eff_ohm"],
+            "kT": kT, "kP": kP,
             "T_err_rms": math.sqrt(sum(r["T_err"] ** 2 for r in fit) / len(fit)),
             "P_err_rms": math.sqrt(sum(r["P_err"] ** 2 for r in fit) / len(fit)),
             "P_err_max": max(abs(r["P_err"]) for r in fit),
@@ -424,12 +469,41 @@ def limit_calc(m, g, n, rho, kP, kT, kv, rm, i0, esc, pack, rext, ocv, tc, ilim)
     for prop, tag in (("11x4.5MR", "45"), ("11x5.5MR", "55")):
         fr = limited(prop, rho, kT, kP, kv, rm, i0, esc, ocv[0], pack[0], pack[1], n, ilim)
         lo = limited(prop, rho, kT, kP, kv, r_hot(rm, tc[0], tc[1]), i0, esc, ocv[2], pack[0], pack[1], n, ilim)
-        out[f"I_motor_fresh_{tag}_A"] = fr["I_bat_A"]
+        out[f"I_motor_fresh_{tag}_A"] = fr["I_bat_A"]           # battery side, per ESC input
         out[f"tw_fresh_{tag}"] = n * fr["T_N"] / W
         out[f"tw_low_{tag}"] = n * lo["T_N"] / W
         out[f"I_motor_low_{tag}_A"] = lo["I_bat_A"]
         out[f"Ipack_fresh_{tag}_A"] = n * fr["I_bat_A"] + pack[1]
+        # CDR-05: the motor rating is a winding (phase) current. At duty d the ESC is a buck stage: I_m = I_bat / d
+        # (less the ESC's own loss), so the winding carries more than the battery lead whenever d < 1
+        out[f"I_wind_fresh_{tag}_A"] = fr["I_m_A"]
+        out[f"I_wind_low_{tag}_A"] = lo["I_m_A"]
+        out[f"duty_fresh_{tag}"] = fr["duty"]
+        out[f"duty_low_{tag}"] = lo["duty"]
+        out[f"loss_wind_fresh_{tag}_W"] = fr["P_loss_motor_W"]
     return out
+
+
+@kit.calc("CALC-E1-ILIM-25", title="Pack-current limit that holds 25 A in the winding (11x5.5MR, fresh pack)",
+          equation="solve I_lim: I_m(largest duty with 4 I_bat + I_avn <= I_lim) = I_rating ; "
+                   "T/W = 4 T cos(cant) / (m_gate g) at that limit, fresh (4.20 V/cell, warm R, 25 degC winding)",
+          inputs={"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "n": P + "propulsion.n_motors",
+                  "rho": P + "env.rho_kgm3", "cant": P + "propulsion.stations.cant_deg", "cells": P + "battery.cells_s",
+                  "kP": "CL-E1-KP", "kT": "CL-E1-KT", "kv": "ASM-E1-KV", "rm": "ASM-E1-RM", "i0": "ASM-E1-I0",
+                  "esc": "ASM-E1-ESC", "pack": "ASM-E1-PACK-CELLS", "r_cell": "ASM-E2-R-CELL",
+                  "r_ext": P + "electrical.r_ext_mohm", "i_rate": P + "propulsion.motor_max_a"},
+          units={"m": "kg", "g": "m/s2", "rho": "kg/m3", "cant": "deg", "r_cell": "ohm", "r_ext": "mOhm", "i_rate": "A"},
+          assumes=["ASM-E1-CAL-TRANSFER", "ASM-E2-R-CELL"])
+def ilim_25(m, g, n, rho, cant, cells, kP, kT, kv, rm, i0, esc, pack, r_cell, r_ext, i_rate):
+    r = cells * r_cell + r_ext / 1000.0
+    voc = cells * 4.20
+
+    def at(il):
+        return limited("11x5.5MR", rho, kT, kP, kv, rm, i0, esc, voc, r, pack[1], n, il)
+    il = bisect(lambda x: at(x)["I_m_A"] - i_rate, 40.0, 100.0, n=24)
+    s = at(il)
+    return {"ilim_a": il, "tw": n * s["T_N"] * math.cos(math.radians(cant)) / (m * g), "T_gf": s["T_N"] / g * 1000,
+            "I_wind_A": s["I_m_A"], "I_bat_A": s["I_bat_A"]}
 
 
 @kit.calc("CALC-E1-WORST", title="Hover T/W at the worst pack state (E1 station model + E2 pack model)",
@@ -464,6 +538,7 @@ def worst(m, g, n, rho, cant, cells, kP, kT, kv, rm, i0, esc, pack, tc, ilim, st
         out[f"Vbus_{k}_V"] = s["V_bus_V"]
         out[f"Ipack_{k}_A"] = n * s["I_bat_A"] + pack[1]
         out[f"I_motor_{k}_A"] = s["I_bat_A"]
+        out[f"I_wind_{k}_A"] = s["I_m_A"]                       # winding (phase) current, CDR-05
         out[f"limited_{k}"] = 1.0 if "duty_max" in s else 0.0
     out["f_sag"] = out["T_worst_gf"] / out["T_fresh_gf"]
     # closed-form cross-check: limiter binding in both states -> same pack current; static thrust ~ P^(2/3)
@@ -472,6 +547,106 @@ def worst(m, g, n, rho, cant, cells, kP, kT, kv, rm, i0, esc, pack, tc, ilim, st
     v_w = cells * ocv20 - ilim * r_cold
     out["f_sag_closed_form"] = (v_w / v_f) ** (2.0 / 3.0)
     out["f_sag_land"] = out["T_land_cold_gf"] / out["T_fresh_gf"]
+    return out
+
+
+WORST_IN = {"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "n": P + "propulsion.n_motors",
+            "rho": P + "env.rho_kgm3", "cant": P + "propulsion.stations.cant_deg", "cells": P + "battery.cells_s",
+            "kP": "CL-E1-KP", "kT": "CL-E1-KT", "kv": "ASM-E1-KV", "rm": "ASM-E1-RM", "i0": "ASM-E1-I0",
+            "esc": "ASM-E1-ESC", "pack": "ASM-E1-PACK-CELLS", "tc": "ASM-E1-TCOPPER", "ilim": "ASM-E1-ILIM",
+            "state": "ASM-E1-WORST-STATE", "ocv20": "ASM-E2-OCV-20", "r_cell": "ASM-E2-R-CELL", "cold": "ASM-E2-COLD-R"}
+WORST_UNITS = {"m": "kg", "g": "m/s2", "rho": "kg/m3", "cant": "deg", "ilim": "A", "ocv20": "V", "r_cell": "ohm"}
+WORST_ASM = ["ASM-E1-WORST-STATE", "ASM-E1-CAL-TRANSFER", "ASM-E1-ILIM", "ASM-E2-OCV-20", "ASM-E2-R-CELL",
+             "ASM-E2-COLD-R"]
+
+
+@kit.calc("CALC-E1-REXT-ALLOW", title="Path resistance and 100 A voltage drop the thrust requirement allows",
+          equation="R_allow = min over the two bounds and the two cases of the R_ext at which T/W_worst(R_ext) = "
+                   "T/W_min,sag or T/W_fresh(R_ext) = T/W_min (bisection on the cases of CALC-E1-WORST and "
+                   "CALC-E1-BOUND2) ; drop_allow = 100 I_lim R_allow / V_nom ; "
+                   "thrust cost of the path = 1 - T_worst(R_ext) / T_worst(0)",
+          inputs={**WORST_IN, "r_ext": P + "electrical.r_ext_mohm", "tw_min": P + "requirements.hover_tw_min",
+                  "tw_sag": P + "requirements.hover_tw_min_sag", "v_nom": P + "battery.v_nom",
+                  "reff": "CL-E1-R-EFF-MAKER"},
+          units={**WORST_UNITS, "r_ext": "mOhm", "v_nom": "V", "reff": "ohm"}, assumes=WORST_ASM + ["ASM-E1-BOUND2"])
+def rext_allow(m, g, n, rho, cant, cells, kP, kT, kv, rm, i0, esc, pack, tc, ilim, state, ocv20, r_cell, cold,
+               r_ext, tw_min, tw_sag, v_nom, reff):
+    W = m * g
+    cc = math.cos(math.radians(cant))
+    rm_hot = r_hot(rm, tc[0], state[0])
+    rm2 = reff - esc[0]                                         # second bound, as CALC-E1-BOUND2
+
+    def tw(case, rx, b2=False):                                 # rx in ohm
+        if case == "worst":
+            voc, r, rmk = cells * ocv20, cells * r_cell * cold + rx, (rm2 if b2 else rm_hot)
+        else:
+            voc, r, rmk = cells * 4.20, cells * r_cell + rx, (rm2 if b2 else rm)
+        return n * limited("11x5.5MR", rho, kT, kP, kv, rmk, i0, esc, voc, r, pack[1], n, ilim)["T_N"] * cc / W
+
+    def allow(case, need, b2):                                  # 0 if the requirement fails even with no path
+        return bisect(lambda rx: tw(case, rx, b2) - need, 0.0, 0.200, n=18) if tw(case, 0.0, b2) > need else 0.0
+    r_w, r_f = allow("worst", tw_sag, False), allow("fresh", tw_min, False)
+    r_w2, r_f2 = allow("worst", tw_sag, True), allow("fresh", tw_min, True)
+    r_1, r_a = min(r_w, r_f), min(r_w, r_f, r_w2, r_f2)
+    rx = r_ext / 1000.0
+    t0, t1 = tw("worst", 0.0), tw("worst", rx)
+    u0, u1 = tw("worst", 0.0, True), tw("worst", rx, True)
+    return {"r_allow_worst_mohm": r_w * 1e3, "r_allow_fresh_mohm": r_f * 1e3, "r_allow_first_mohm": r_1 * 1e3,
+            "r_allow_worst_b2_mohm": r_w2 * 1e3, "r_allow_fresh_b2_mohm": r_f2 * 1e3,
+            "r_allow_mohm": r_a * 1e3, "drop_allow_pct": 100 * ilim * r_a / v_nom,
+            "drop_allow_first_pct": 100 * ilim * r_1 / v_nom, "r_ext_use": rx / r_a if r_a > 0 else float("inf"),
+            "tw_worst_r0": t0, "thrust_cost_path": 1 - t1 / t0, "thrust_cost_path_b2": 1 - u1 / u0}
+
+
+@kit.calc("CALC-E1-BOUND2", title="Second bound: the maker's rows above 12 A read as true 14.8 V points (11x5.5MR)",
+          equation="R_eff from the maker's 30 A row (CALC-E1-CAL) replaces R_m + R_esc ; then as CALC-E1-WORST: "
+                   "largest duty with 4 I_bat + I_avn <= I_lim, T/W = 4 T cos(cant) / (m_gate g) ; "
+                   "sensitivity (CDR-AE-01 rule): rpm_full = rpm_full(14.8 V held) x V_bus / 14.8 ; stand point: bus "
+                   "held at V_stand ; T_need = T/W_min,sag m / (4 cos cant)",
+          inputs={**WORST_IN, "r_ext": P + "electrical.r_ext_mohm", "reff": "CL-E1-R-EFF-MAKER",
+                  "tw_sag": P + "requirements.hover_tw_min_sag", "v_stand": "ASM-E1-V-STAND-LOW"},
+          units={**WORST_UNITS, "r_ext": "mOhm", "reff": "ohm", "v_stand": "V"},
+          assumes=WORST_ASM + ["ASM-E1-BOUND2", "ASM-E1-V-STAND-LOW"],
+          cites=["SRC-E1-X3108S-DATA"])
+def bound2(m, g, n, rho, cant, cells, kP, kT, kv, rm, i0, esc, pack, tc, ilim, state, ocv20, r_cell, cold,
+           r_ext, reff, tw_sag, v_stand):
+    W = m * g
+    cc = math.cos(math.radians(cant))
+    rx = r_ext / 1000.0
+    rm2 = reff - esc[0]                                         # the winding carries all of R_eff but the ESC's share
+    prop = "11x5.5MR"
+    cases = {"fresh": (cells * 4.20, cells * r_cell + rx), "worst": (cells * ocv20, cells * r_cell * cold + rx)}
+    out = {"rm_eff_ohm": rm2}
+    for k, (voc, r) in cases.items():
+        s = limited(prop, rho, kT, kP, kv, rm2, i0, esc, voc, r, pack[1], n, ilim)
+        out[f"tw_{k}"] = n * s["T_N"] * cc / W
+        out[f"T_{k}_gf"] = s["T_N"] / g * 1000
+        out[f"Vbus_{k}_V"] = s["V_bus_V"]
+        out[f"rpm_{k}"] = s["rpm"]
+        out[f"I_wind_{k}_A"] = s["I_m_A"]
+        out[f"I_motor_{k}_A"] = s["I_bat_A"]
+        out[f"limited_{k}"] = 1.0 if "duty_max" in s else 0.0
+    # sensitivity, the reviewer's rule: full-throttle rpm goes with the bus voltage (no credit for the smaller
+    # I R drop at the lower current). Reference = full throttle of this prop at a held 14.8 V on R_eff, no limiter
+    ref = full_throttle(prop, 0.0, rho, kT, kP, kv, rm2, i0, esc[0], esc[1], 14.8, 0.0, pack[1], n)
+    voc, r = cases["worst"]
+    v = voc
+    for _ in range(60):
+        rpm = ref["rpm"] * v / 14.8
+        s = station(prop, rpm, 0.0, rho, kT, kP, kv, rm2, i0, esc[0], esc[1], v)
+        v_new = voc - r * (n * s["I_bat_A"] + pack[1])
+        if abs(v_new - v) < 1e-7:
+            break
+        v = 0.5 * (v + v_new)
+    out.update({"rpm_ref_148": ref["rpm"], "T_ref_148_gf": ref["T_N"] / g * 1000, "rpm_worst_prop": rpm,
+                "Vbus_worst_prop_V": v, "T_worst_prop_gf": s["T_N"] / g * 1000, "tw_worst_prop": n * s["T_N"] * cc / W})
+    # the stand point of CDR condition B-7: one station, bus HELD at v_stand (bench supply), full throttle
+    held = limited(prop, rho, kT, kP, kv, rm2, i0, esc, v_stand, 0.0, pack[1], n, ilim)
+    hp = station(prop, ref["rpm"] * v_stand / 14.8, 0.0, rho, kT, kP, kv, rm2, i0, esc[0], esc[1], v_stand)
+    first = limited(prop, rho, kT, kP, kv, r_hot(rm, tc[0], state[0]), i0, esc, v_stand, 0.0, pack[1], n, ilim)
+    out.update({"T_need_sag_gf": tw_sag * m * 1000 / (n * cc), "T_stand_gf": held["T_N"] / g * 1000,
+                "rpm_stand": held["rpm"], "T_stand_prop_gf": hp["T_N"] / g * 1000, "rpm_stand_prop": hp["rpm"],
+                "T_stand_first_gf": first["T_N"] / g * 1000, "rpm_stand_first": first["rpm"]})
     return out
 
 
@@ -548,6 +723,22 @@ def cruise(m, g, rho, S, cd0, k, trim, p_b1, av, V, n, kP, kT, kv, rm, i0, esc):
     return out
 
 
+
+
+@kit.calc("CALC-E1-CRUISE-V17", title="Cruise point at the 17 m/s fallback speed (D-96 c, B6), 11x5.5MR",
+          equation="as CALC-E1-CRUISE at V = 17 m/s: D = q S (CD0 + k CL^2) trim ; T_m = D / 4 ; "
+                   "P = 4 P_bat(T_m, J) ; ratio = P(17) / P(cruise_ms)",
+          inputs={"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "rho": P + "env.rho_kgm3",
+                  "S": "CL-A1-WING-AREA", "cd0": "CL-B1V-CD0", "k": "CL-B1V-K", "trim": "ASM-B1-TRIM",
+                  "V": "ASM-E1-V-FALLBACK", "p16": "CL-E1-CRUISE-P-55", "n": P + "propulsion.n_motors",
+                  "kP": "CL-E1-KP", "kv": "ASM-E1-KV", "rm": "ASM-E1-RM", "i0": "ASM-E1-I0", "esc": "ASM-E1-ESC"},
+          units={"m": "kg", "g": "m/s2", "rho": "kg/m3", "V": "m/s", "S": "m2", "p16": "W"},
+          assumes=["ASM-E1-CAL-TRANSFER", "ASM-B1-TRIM", "ASM-E1-V-FALLBACK"], cites=["SRC-E1-APC-PER3"])
+def cruise_v17(m, g, rho, S, cd0, k, trim, V, p16, n, kP, kv, rm, i0, esc):
+    D = cruise_drag(V, m, g, rho, S, cd0, k, trim)
+    s = at_thrust("11x5.5MR", D / n, V, rho, 1.0, kP, kv, r_hot(rm, 0.00393, 40.0), i0, esc[0], esc[1], 14.8)
+    return {"drag_N": D, "P_total_55_W": n * s["P_bat_W"], "rpm_55": s["rpm"], "J_55": s["J"],
+            "eta_tot_55": D / n * V / s["P_bat_W"], "ratio_to_cruise": n * s["P_bat_W"] / p16}
 
 
 def wing_cl_cd(alpha, cla, clmax, cd0, K):
@@ -726,10 +917,54 @@ kit.claim("CL-E1-IPACK-LIM", "Pack current, four motors full throttle, 100 A lim
                "run (R-ESC-CURRENT a) is the evidence. F1's sensor error (+5 %) is in CL-F1-ILIM-WORST",
           how="Bench: all four motors, props on, fresh pack, full throttle 2 s in QSTABILIZE on a restrained frame; "
               "dataflash BAT.Curr <= 100 A.")
-kit.claim("CL-E1-ILIM-I", "Per-motor current with the 100 A limiter, fresh pack, 11x5.5MR", calc="CALC-E1-LIMIT",
-          output="I_motor_fresh_55_A", unit="A", limit=("<=", P + "propulsion.motor_max_a"), verifies=["R-ESC-CURRENT"],
-          parts=MOTORS + ESCS,
-          how="Same bench run as CL-E1-IPACK-LIM; per-ESC current from the ESC telemetry or a clamp meter <= 25 A.")
+kit.claim("CL-E1-ILIM-I", "Motor winding current at the 100 A limiter, fresh pack, 11x5.5MR (model)",
+          calc="CALC-E1-WORST", output="I_wind_fresh_A", unit="A", limit=("<=", P + "propulsion.motor_max_a"),
+          verifies=["R-ESC-CURRENT"], parts=MOTORS,
+          note="CDR-05 (CDR-AE-02, decision B7): re-stated on the WINDING (phase) current. Until 2026-11-13 this id "
+               "held the battery-side share of the limiter (24.75 A, now CL-E1-ILIM-I-BAT), which is not what the "
+               "maker's 25 A / 30 s rating limits. At the limiter the ESC runs at a duty of about 0.83 (CALC-E1-LIMIT "
+               "duty_fresh_55), so the winding carries about I_bat / duty. Fresh case of CALC-E1-WORST (4.20 V/cell, "
+               "E2's cell resistance: the case behind the fresh T/W of 2.5); CALC-E1-LIMIT's older fresh case reads "
+               "0.5 A less (I_wind_fresh_55_A). FAILS as posed: the limiter value is decided on the "
+               "stand (B7): keep 100 A only if a 30 s run holds the bell <= 80 degC, else the value of "
+               "CL-E1-ILIM-FOR-25A. Second bound: CL-E1-ILIM-I-B2",
+          how="T-E1-STAND / GT-04: phase current with a clamp on one motor lead (true-RMS, or the ESC's phase-current "
+              "telemetry) during the 100 A limiter run, with bell temperature; not the ESC input lead.")
+kit.claim("CL-E1-ILIM-I-BAT", "Battery-side current per ESC at the 100 A limiter, fresh pack, 11x5.5MR",
+          calc="CALC-E1-LIMIT", output="I_motor_fresh_55_A", unit="A", parts=ESCS,
+          note="(100 A - 1 A avionics) / 4: what the ESC input lead, the XT30U and E3's bus-power input see. This "
+               "is the number CL-E1-ILIM-I carried before CDR-05; it is not compared with the motor rating",
+          how="Same bench run as CL-E1-IPACK-LIM; clamp meter on one ESC input lead.")
+kit.claim("CL-E1-ILIM-I-WORST", "Motor winding current at the 100 A limiter, worst pack state, hot winding (model)",
+          calc="CALC-E1-WORST", output="I_wind_worst_A", unit="A", limit=("<=", P + "propulsion.motor_max_a"),
+          parts=MOTORS, note="20 % charge, 10 degC pack, 80 degC winding: the duty is close to 1, so the winding "
+                             "current is close to the battery share; information beside CL-E1-ILIM-I",
+          how="As CL-E1-ILIM-I on the worst-state pack of T-E1-STAND.")
+kit.claim("CL-E1-R-EFF-MAKER", "Series resistance that puts the maker's 30 A row at 14.8 V (second bound)",
+          calc="CALC-E1-CAL", output="r_eff_30A_ohm", unit="ohm", assumes=["ASM-E1-BOUND2"],
+          note="first bound: R_m + R_esc = 0.096 ohm at 25 degC and the supply sagged to CL-E1-MAKER-SUPPLY; second "
+               "bound: this value at a true 14.8 V. CALC-E1-CAL hi_rows lists every row above 12 A: [A, rpm, "
+               "thrust error, power error, model winding A, supply needed V, R_eff ohm]",
+          how="T-E1-STAND at a held, logged 14.8 V: full-throttle rpm 7 500 (this bound) or above 9 000 (first bound).")
+kit.claim("CL-E1-CAL-TERR-HI", "Model thrust error on the maker's rows above 12 A (at the measured rpm)",
+          calc="CALC-E1-CAL", output="T_err_hi_max", unit="-", limit=("<=", 0.05),
+          note="the prop model holds on the 7 rows that were not fitted; what the two bounds dispute is the rpm "
+               "reached at a given bus voltage, not thrust at a given rpm",
+          how="Max |T_model / T_maker - 1| over the 7 rows 14-30 A; re-run the script.")
+kit.claim("CL-E1-ILIM-I-B2", "Motor winding current at the 100 A limiter, fresh pack, second bound",
+          calc="CALC-E1-BOUND2", output="I_wind_fresh_A", unit="A", limit=("<=", P + "propulsion.motor_max_a"),
+          parts=MOTORS, note="on the maker-row reading the limiter binds at a duty near 1, so the winding current is "
+                             "close to the battery share: the two bounds bracket the phase current the stand will read",
+          how="As CL-E1-ILIM-I.")
+kit.claim("CL-E1-ILIM-FOR-25A", "Pack-current limit that holds 25 A in the winding, fresh pack (model)",
+          calc="CALC-E1-ILIM-25", output="ilim_a", unit="A", parts=MOTORS,
+          note="option (b) of CDR-AE-02 / decision B7: Q_M_BAT_CURR_MAX at about this value if the 30 s stand run "
+               "at 100 A takes the bell above 80 degC. F4 owns the parameter; not applied here",
+          how="Stand: lower the limiter until the phase-current clamp reads 25 A on a fresh pack.")
+kit.claim("CL-E1-ILIM-25A-TW", "Fresh-pack T/W with the winding held to 25 A (model)", calc="CALC-E1-ILIM-25",
+          output="tw", unit="-", limit=(">=", P + "requirements.hover_tw_min"), parts=MOTORS,
+          note="what the lower limiter of CL-E1-ILIM-FOR-25A leaves; cant included",
+          how="Thrust stand at the limiter value of CL-E1-ILIM-FOR-25A.")
 kit.claim("CL-E1-ILIM-TW-FRESH", "T/W with the limiter, fresh pack, 11x5.5MR", calc="CALC-E1-LIMIT",
           output="tw_fresh_55", unit="-", limit=(">=", P + "requirements.hover_tw_min"), verifies=["R-HOVER-TW"],
           parts=MOTORS, how="Thrust stand on a fresh pack with the duty limit found on the bench.")
@@ -788,8 +1023,8 @@ kit.claim("CL-E1-TW-WORST", "Hover T/W at the gate, worst pack state (one team c
               "2.6 kg (T-E1-STAND).")
 kit.claim("CL-E1-SAG-FACTOR", "Thrust factor worst / fresh with the limiter (replaces params voltage_sag)",
           calc="CALC-E1-WORST", output="f_sag", unit="-",
-          note="rev 8 (D-67): on F1's r_ext 6.7 mOhm (CL-F1-R-EXT 6.69) 0.8508, unchanged to three places from "
-               "0.851 at 6.5 (the limiter holds 100 A in both states, so 0.2 mOhm moves V_bus by 20 mV). "
+          note="CDR-05 (2026-11-13): on r_ext 7.9 mOhm (F1's routed leads, CL-F1-R-EXT 7.92); was 0.8508 at 6.7 "
+               "(D-67) and 0.851 at 6.5 (the limiter holds 100 A in both states, so 1 mOhm moves V_bus by 0.1 V). "
                "To be applied to thrust_max_per_motor_kg (fresh pack, limiter); E2's 0.76 applied (V/14.8)^2 to "
                "that already current-limited thrust, which double-counts. Bounded above by CL-E1-SAG-XCHECK",
           how="Ratio of the two T-E1-STAND full-throttle runs: worst-state pack / fresh pack.")
@@ -803,6 +1038,71 @@ kit.claim("CL-E1-TMAX-WORST", "Full thrust per motor, worst pack state, 11x5.5MR
 kit.claim("CL-E1-TW-LAND-COLD", "Hover T/W below the reserve line (3.60 V/cell, cold), sensitivity",
           calc="CALC-E1-WORST", output="tw_land_cold", unit="-", limit=(">=", 1.3), parts=MOTORS,
           how="Same stand run on a pack at 3.60 V/cell rest; 1.3 is the emergency-landing floor, not R-HOVER-TW.")
+kit.claim("CL-E1-TW-WORST-B2", "Hover T/W at the gate, worst pack state, second bound (maker rows as 14.8 V points)",
+          calc="CALC-E1-BOUND2", output="tw_worst", unit="-", limit=(">=", P + "requirements.hover_tw_min_sag"),
+          verifies=["R-HOVER-TW"], parts=MOTORS, assumes=["ASM-E1-BOUND2"],
+          note="CDR-05 (CDR-AE-01): the same case as CL-E1-TW-WORST with the series resistance CL-E1-R-EFF-MAKER. "
+               "The limiter no longer binds at the worst state (CALC-E1-BOUND2 limited_worst = 0): the motor is "
+               "voltage-limited. R-HOVER-TW has to hold on both bounds until T-E1-STAND picks one",
+          how="T-E1-STAND at a logged 11.9 V bus: >= 1 060 gf per motor (CDR condition B-7).")
+kit.claim("CL-E1-TW-FRESH-B2", "Hover T/W at the gate, fresh pack, 100 A limiter, second bound",
+          calc="CALC-E1-BOUND2", output="tw_fresh", unit="-", limit=(">=", P + "requirements.hover_tw_min"),
+          verifies=["R-HOVER-TW"], parts=MOTORS, assumes=["ASM-E1-BOUND2"],
+          how="T-E1-STAND on a fresh pack at the limiter: >= 1 330 gf per motor (CDR condition B-7).")
+kit.claim("CL-E1-TMAX-WORST-B2", "Full thrust per motor, worst pack state, second bound", calc="CALC-E1-BOUND2",
+          output="T_worst_gf", unit="gf", parts=MOTORS, how="As CL-E1-TW-WORST-B2, per motor.")
+kit.claim("CL-E1-TW-WORST-B2-PROP", "Worst-state T/W if full-throttle rpm goes with bus voltage (sensitivity)",
+          calc="CALC-E1-BOUND2", output="tw_worst_prop", unit="-", limit=(">=", P + "requirements.hover_tw_min_sag"),
+          parts=MOTORS, assumes=["ASM-E1-BOUND2"],
+          note="the rule CDR-AE-01 used: rpm = rpm(14.8 V) x V_bus / 14.8, with no credit for the smaller resistive "
+               "drop at the lower current. Here the bus is solved with the pack model at the current this rpm "
+               "draws (CALC-E1-BOUND2 Vbus_worst_prop_V, above 11.9 V because the limiter does not bind), and the "
+               "reference rpm is this prop's own (rpm_ref_148). The reviewer's 1.44 (REVIEWER EST) held the bus at "
+               "11.9 V and took 7 500 rpm + 3 %: that case is CL-E1-T-STAND-B2-PROP",
+          how="T-E1-STAND on the worst-state flight pack.")
+kit.claim("CL-E1-T-NEED-SAG", "Thrust per motor that gives the worst-state T/W of R-HOVER-TW", calc="CALC-E1-BOUND2",
+          output="T_need_sag_gf", unit="gf", parts=MOTORS,
+          note="requirements.hover_tw_min_sag x gate mass / (4 cos cant). The board's stand line is 1 060 gf "
+               "(CDR condition B-7), 1 % above this",
+          how="Arithmetic.")
+kit.claim("CL-E1-T-STAND-B2", "Full thrust per motor at a held 11.9 V bus, second bound", calc="CALC-E1-BOUND2",
+          output="T_stand_gf", unit="gf", limit=(">=", "CL-E1-T-NEED-SAG"), parts=MOTORS, assumes=["ASM-E1-BOUND2"],
+          note="the stand point of CDR condition B-7 predicted on the maker-row reading with a fixed series "
+               "resistance; the first bound predicts CALC-E1-BOUND2 T_stand_first_gf",
+          how="T-E1-STAND: full throttle, bench supply held at 11.9 V at the ESC pads, bus voltage logged.")
+kit.claim("CL-E1-T-STAND-B2-PROP", "Full thrust per motor at a held 11.9 V bus if rpm goes with bus voltage",
+          calc="CALC-E1-BOUND2", output="T_stand_prop_gf", unit="gf", limit=(">=", "CL-E1-T-NEED-SAG"), parts=MOTORS,
+          assumes=["ASM-E1-BOUND2"],
+          note="CDR-AE-01's own case (REVIEWER EST 946 gf, T/W 1.44, from 7 500 rpm x 11.9 / 14.8 + 3 %); here the "
+               "reference is this prop's full-throttle rpm on R_eff at 14.8 V (rpm_ref_148). The most pessimistic "
+               "reading of the maker's table that E1 can build, kept visible because nothing but the stand rules "
+               "it out. If the stand reads this, the gate mass, the prop or the pack changes before 5 motors are "
+               "bought (CDR-04)",
+          how="T-E1-STAND as CL-E1-T-STAND-B2: this is the reading that fails the >= 1 060 gf line.")
+kit.claim("CL-E1-REXT-ALLOW", "Largest pack-to-ESC path resistance that keeps R-HOVER-TW (model)",
+          calc="CALC-E1-REXT-ALLOW", output="r_allow_mohm", unit="mOhm", limit=(">=", P + "electrical.r_ext_mohm"),
+          parts=MOTORS,
+          note="the smallest of four: worst state T/W = requirements.hover_tw_min_sag and fresh T/W = requirements."
+               "hover_tw_min, each on the first bound (CALC-E1-WORST's cases) and on the second (CALC-E1-BOUND2's). "
+               "The second bound governs (r_allow_worst_b2_mohm, r_allow_fresh_b2_mohm); on the first bound alone the "
+               "value is r_allow_first_mohm. T-E1-STAND picks the bound and re-bases this",
+          how="Re-run after T-E1-STAND; T-F1-DROP measures the path.")
+kit.claim("CL-E1-DROP-ALLOW", "Largest 100 A voltage drop, pack to ESC, that keeps R-HOVER-TW (limit for F1)",
+          calc="CALC-E1-REXT-ALLOW", output="drop_allow_pct", unit="%", parts=MOTORS,
+          note="= 100 x 100 A x CL-E1-REXT-ALLOW / battery.v_nom. F1 reads it as the limit of CL-F1-DROP-PEAK "
+               "(CDR-03 / CDR-EL-04: the 5 % guideline had been removed, not met). The limiter keeps the pack "
+               "current, so thrust falls slowly with path resistance (CL-E1-PATH-THRUST-COST) and this limit is "
+               "above the 5 % guideline (WB-11), which stays F1's design target. First bound alone: "
+               "drop_allow_first_pct",
+          how="Re-run after T-E1-STAND.")
+kit.claim("CL-E1-PATH-THRUST-COST", "Worst-state thrust lost to the pack-to-ESC path resistance (model)",
+          calc="CALC-E1-REXT-ALLOW", output="thrust_cost_path", unit="-", parts=MOTORS,
+          how="1 - T_worst(r_ext) / T_worst(0); CDR-EL-04 estimated the 6.7 -> 7.9 mOhm step at -1.6 % (REVIEWER EST, T ~ V^2).")
+kit.claim("CL-E1-CRUISE-P-55-V17", "Cruise electrical power at the 17 m/s fallback, 11x5.5MR (propulsion only)",
+          calc="CALC-E1-CRUISE-V17", output="P_total_55_W", unit="W", parts=MOTORS + ESCS,
+          note="D-96 (c) quoted 283 W from the CR-E1-51 sweep; this is the same point as a claim, so E2 can carry "
+               "the fallback to BATT_LOW (CL-E2-CRUISE-TO-LOW-PESS-V17, CDR-05 / CDR-AE-09)",
+          how="Log pack power in steady 17 m/s FBWA legs, both directions; subtract the avionics draw.")
 kit.claim("CL-E1-STACK-PROP-PLANE", "Mount face to prop mid-plane (hub centre)", calc="CALC-E1-STACK",
           output="mount_to_prop_plane_m", unit="m", parts=MOTORS + ADAPTERS + PROPS_ID,
           how="Calipers on the first assembled station (T-E1-MOTOR-RM): mount face to hub front face minus half the "
@@ -1137,11 +1437,16 @@ kit.claim("CL-E1-ADAPTER-STRIP", "Adapter screw thread strip at 2.0 mm engagemen
               "threads undamaged.")
 
 kit.test("T-E1-STAND", "Thrust stand, one station, both candidate props", verifies=["CL-E1-TW-TABLE", "CL-E1-TW-WORST",
-         "CL-E1-SAG-FACTOR", "CL-E1-IMAX-168-55", "CL-E1-HOVER-GW", "CL-E1-KT", "CL-E1-KP", "CL-E1-MAKER-SUPPLY"],
+         "CL-E1-SAG-FACTOR", "CL-E1-IMAX-168-55", "CL-E1-HOVER-GW", "CL-E1-KT", "CL-E1-KP", "CL-E1-MAKER-SUPPLY",
+         "CL-E1-ILIM-I", "CL-E1-ILIM-I-B2", "CL-E1-TW-WORST-B2", "CL-E1-TW-FRESH-B2", "CL-E1-TW-WORST-B2-PROP",
+         "CL-E1-R-EFF-MAKER", "CL-E1-T-STAND-B2", "CL-E1-T-STAND-B2-PROP"],
          procedure="H1 stand (20 kg cell + HX711), X3108S + LANRC 45 A, 11x4.5MR then 11x5.5MR; held 14.8 V bench supply "
                    "(>= 40 A) and then a flight pack; 10 % throttle steps to 100 %, 3 s each; log gf, A, V, rpm (optical "
                    "tach or ESC telemetry), can temperature; one 60 s run at 689 gf for g/W; ten 10 -> 100 % throttle "
-                   "punches in < 50 ms with no desync")
+                   "punches in < 50 ms with no desync. CDR-04 / CDR-05 additions: bus voltage logged at the ESC "
+                   "pads on every run; full throttle at a held 14.6 V and 11.9 V bus (pass >= 1 330 gf and >= 1 060 gf); "
+                   "phase current on one motor lead (clamp or ESC telemetry) at the limiter duty; one 30 s run at the "
+                   "limiter with the bell temperature (pass <= 80 degC, else the limiter drops to CL-E1-ILIM-FOR-25A)")
 kit.test("T-E1-MOTOR-RM", "Incoming check: resistance, no-load current, mass, bolt pattern, hole and thread depth",
          verifies=["CL-E1-KP", "CL-E1-MASS-PRP", "CL-E1-SCREW-ENGAGE", "CL-E1-STACK-PROP-PLANE", "CL-E1-PROP-GAP",
                    "CL-E1-ADAPTER-THREAD-D58", "CL-E1-ADAPTER-M3X5-DEPTH", "CL-E1-HOLE-DEPTH-MIN", "CL-E1-ESC-PROUD",
@@ -1165,15 +1470,21 @@ def report():
     vals = {n["id"]: n for n in kit.nodes.values()}
     print("\n--- E1 propulsion summary ---")
     for cid in ("CALC-E1-CAL", "CALC-E1-HOVER", "CALC-E1-FULL", "CALC-E1-CRUISE", "CALC-E1-CORRIDOR", "CALC-E1-MOTOR-OUT",
-                "CALC-E1-LIMIT", "CALC-E1-SENS", "CALC-E1-WORST", "CALC-E1-STACK", "CALC-E1-MASS",
-                "CALC-E1-HOVER-I-BAND"):
+                "CALC-E1-LIMIT", "CALC-E1-ILIM-25", "CALC-E1-SENS", "CALC-E1-WORST", "CALC-E1-BOUND2",
+                "CALC-E1-REXT-ALLOW", "CALC-E1-CRUISE-V17", "CALC-E1-STACK", "CALC-E1-MASS", "CALC-E1-HOVER-I-BAND"):
         print(cid)
         for k, v in vals[cid]["outputs"].items():
-            print(f"   {k:<22} {v:10.4g}")
+            if isinstance(v, list):                             # tables (CALC-E1-CAL hi_rows)
+                print(f"   {k}")
+                for row in v:
+                    print("      " + "  ".join(f"{x:9.4g}" for x in row))
+            else:
+                print(f"   {k:<22} {v:10.4g}")
 
 
-def write_parts():
-    """redesign/subsystems/propulsion/parts.csv (assigned by A1, CR-A3-05): flown quantities, per-unit flying mass
+def write_parts(write=False):
+    """Print-only unless write=True (CDR-29: an analysis re-run must not rewrite a shared file).
+    redesign/subsystems/propulsion/parts.csv (assigned by A1, CR-A3-05): flown quantities, per-unit flying mass
     incl. leads from ASM-E1-PART-MASS, so A3's roll-up and CL-E1-MASS-PRP use one set of numbers. Rev 3: the four
     motor screws are booked inside PRP-001 (fins convention for fasteners: a 1xx line with mass 0), so qty = number
     of instance nodes in interfaces.json for every line that carries mass."""
@@ -1205,22 +1516,43 @@ def write_parts():
          "window (CL-E1-SCREW-ENGAGE), hole depth probed on arrival"],
     ]
     out = HERE.parents[1] / "subsystems" / "propulsion" / "parts.csv"
+    rel = out.relative_to(HERE.parents[2]).as_posix()
+    total = sum(r[2] * r[6] for r in rows)
+    if not write:
+        # compare qty and mass with the file as it stands (C6's fastener_parts.py moves the screw mass out of
+        # PRP-001 into its own hardware lines and tags the note [C6-HW], so a difference there is expected)
+        have = {}
+        if out.exists():
+            with out.open(newline="", encoding="utf-8") as f:
+                have = {r["part_id"]: r for r in csv.DictReader(f)}
+        print(f"\n{rel}: NOT written (print-only; --write-parts rewrites it and runs C6's fastener_parts.py)")
+        print(f"  E1's lines: {len(rows)}, {total:.1f} g flying")
+        for r in rows:
+            h = have.get(r[0])
+            if h is None:
+                state = "not in the file"
+            else:
+                same = int(float(h["qty"])) == r[2] and abs(float(h["mass_g"]) - float(r[6])) < 0.005
+                state = "as in the file" if same else f"file has qty {h['qty']}, {h['mass_g']} g" + \
+                    (" [C6-HW]" if "[C6-HW]" in h.get("notes", "") else "")
+            print(f"  {r[0]}  qty {r[2]:>2}  {float(r[6]):6.2f} g  ${float(r[7]):6.2f}   {state}")
+        return {r[0]: r for r in rows}
     out.parent.mkdir(parents=True, exist_ok=True)
     with out.open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["part_id", "name", "qty", "make_or_buy", "process", "material", "mass_g", "unit_cost_usd",
                     "vendor_or_file", "notes"])
         w.writerows(rows)
-    total = sum(r[2] * r[6] for r in rows)
-    print(f"{out.relative_to(HERE.parents[2]).as_posix()}: {len(rows)} lines, {total:.1f} g flying")
+    print(f"{rel}: {len(rows)} lines, {total:.1f} g flying (written)")
     return {r[0]: r for r in rows}
 
 
 if __name__ == "__main__":
+    WRITE_PARTS = "--write-parts" in sys.argv   # CDR-29: default writes team/E1/claims.json only
     kit.write()
-    write_parts()          # interfaces.json: python -I redesign/subsystems/propulsion/make_propulsion.py (rev 4)
+    write_parts(WRITE_PARTS)   # interfaces.json: python -I redesign/subsystems/propulsion/make_propulsion.py (rev 4)
     report()
-    if '--check' not in __import__('sys').argv:     # C6 FASTENERS-CAD: re-apply the modelled fastener parts
-        import os as _o, runpy as _r
+    if WRITE_PARTS:             # C6 FASTENERS-CAD: write_parts() dropped the modelled fastener lines; C6 re-applies
+        import os as _o, runpy as _r            # them (patches subsystems/*/parts.csv and interfaces.json)
         _r.run_path(_o.path.join(_o.path.abspath(__file__).rsplit(_o.sep + 'redesign' + _o.sep, 1)[0], 'redesign', 'team',
                                  'C6', 'fastener_parts.py'), run_name='c6_hook')['run']()

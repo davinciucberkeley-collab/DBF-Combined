@@ -172,16 +172,21 @@ def servo_torque(hvd, hva, tf, sf):
 
 
 @kit.calc("CALC-D6-PUSHROD", title="Pushrod force, buckling and horn bond area",
-          equation="F = H / (r_h sin phi) worst; Pcr = pi^2 E I / L^2; A_min = F sf ff pf / (kd sigma_XPS)",
+          equation="F = H / (r_h sin phi) worst; Pcr = pi^2 E I / L^2; A_min = F sf ff pf / (kd sigma_XPS); horn bond "
+                   "area = lower flange + the two slot walls (the D-89c backplate MEC-013 is a separate part and is "
+                   "not counted); moment check tau = F_design r_h / (A r_c), r_c = area-weighted distance of the "
+                   "bond from the hinge axis; U-slot on the torque tube alone: T_cap = tau_bond (pi d / 2) t_plate d / 2",
           inputs={"hvd": "CL-D6-H-VD-FULL", "xh": "CL-A5-HINGE-X", "sx": "P:mec.section.x_m",
                   "szu": "P:mec.section.zu_m", "szl": "P:mec.section.zl_m", "rh": "P:mec.horn.r_m",
                   "rs": "P:mec.arm.r_m", "xs": "P:mec.station.shaft_x_m", "above": "P:mec.station.shaft_above_skin_m",
                   "d": "P:mec.pushrod.d_m", "E": "P:mec.pushrod.e_pa", "sf": "P:requirements.safety_factor_ult",
                   "ff": "ASM-C1-FITTING-FACTOR", "pf": "ASM-C1-PRINTED-FACTOR", "kd": "ASM-C6-FOAM-KD",
                   "s_xps": "ASM-D3-XPS-TENSILE", "flange": "P:mec.horn.flange_mm", "back": "P:mec.horn.backplate_mm",
-                  "blade": "P:mec.horn.blade_x_mm", "defl": "P:wing.elevon.deflection_deg"},
+                  "blade": "P:mec.horn.blade_x_mm", "defl": "P:wing.elevon.deflection_deg",
+                  "tp": "P:mec.horn.plate_t_m", "tube": "P:mec.tube.od_id_m", "tau_b": "ASM-C4-BOND-SHEAR"},
           units={"hvd": "N*m", "xh": "m", "rh": "m", "rs": "m", "xs": "m", "above": "m", "d": "m", "E": "Pa"})
-def pushrod(hvd, xh, sx, szu, szl, rh, rs, xs, above, d, E, sf, ff, pf, kd, s_xps, flange, back, blade, defl):
+def pushrod(hvd, xh, sx, szu, szl, rh, rs, xs, above, d, E, sf, ff, pf, kd, s_xps, flange, back, blade, defl, tp,
+            tube, tau_b):
     lk = linkage(xh, sx, (szu, szl), rh, rs, xs, above)
     L0 = MEC.rod_length(lk)
     dmax = max(abs(defl[0]), abs(defl[1]))
@@ -200,10 +205,22 @@ def pushrod(hvd, xh, sx, szu, szl, rh, rs, xs, above, d, E, sf, ff, pf, kd, s_xp
     zu = lambda x: interp(sx, szu, x)
     zl = lambda x: interp(sx, szl, x)
     t_blade = sum(zu(xh + x / 1000) - zl(xh + x / 1000) for x in sweep(blade[0], blade[1], 21)) / 21
-    area = (flange[1] - flange[0]) * flange[2] + (back[1] - back[0]) * back[2] + \
-        2 * (blade[1] - blade[0]) * t_blade * 1000
+    a_fl = (flange[1] - flange[0]) * flange[2]
+    a_bl = 2 * (blade[1] - blade[0]) * t_blade * 1000
+    a_back = (back[1] - back[0]) * back[2]
+    area = a_fl + a_bl                       # D-108 (CDR-27): the backplate MEC-013 is no longer part of the horn
+    # hinge-moment check of the same bond: design moment about the hinge / (area x its mean distance from the hinge)
+    r_c = (a_fl * (flange[0] + flange[1]) / 2 + a_bl * (blade[0] + blade[1]) / 2) / area          # mm
+    m_design = fd * rh                                                                              # N m
+    tau_m = m_design * 1000 / (area * r_c)                                                          # MPa
+    # the horn bore is an open U-slot on the 5 mm torque tube: capacity of that bond line alone, in torsion
+    d_t = tube[0]
+    t_slot = tau_b * (math.pi * d_t / 2) * tp * d_t / 2
     return {"F_max_N": fmax, "F_design_N": fd, "Pcr_N": pcr, "buckling_sf": pcr / fmax, "A_min_mm2": a_min,
-            "A_horn_mm2": area, "rod_len_m": L0}
+            "A_horn_mm2": area, "A_backplate_mm2": a_back, "A_with_backplate_mm2": area + a_back,
+            "M_design_Nm": m_design, "bond_r_c_mm": r_c, "tau_moment_MPa": tau_m,
+            "rf_moment": kd * s_xps / (tau_m * 1e6), "T_slot_tube_Nm": t_slot, "slot_share": t_slot / m_design,
+            "rod_len_m": L0}
 
 
 @kit.calc("CALC-D6-CLEAR", title="Clearances through the full mechanical travel",
@@ -425,9 +442,30 @@ kit.claim("CL-D6-PUSHROD-F", "Pushrod force, VD full travel (limit)", calc="CALC
 kit.claim("CL-D6-PUSHROD-BUCKLING", "Pushrod Euler buckling factor at the limit force", calc="CALC-D6-PUSHROD",
           output="buckling_sf", unit="-", limit=(">=", 3.0), parts=["MEC-003-L", "MEC-003-R"],
           how="Pushrod does not bow visibly at the T-B2-HINGE load")
-kit.claim("CL-D6-BOND-HORN", "Horn bonded area into XPS (flange + backplate + slot walls)", calc="CALC-D6-PUSHROD",
-          output="A_horn_mm2", unit="mm2", limit=(">=", "CL-C6-LINK-BOND-AREA-MIN"),
-          parts=["MEC-004-L", "MEC-004-R", "MEC-006-L", "MEC-006-R"], how="T-C6-XPS-PULL; horn pull-off coupon")
+kit.claim("CL-D6-BOND-HORN", "Horn bonded area into XPS (flange + slot walls, without the backplate MEC-013)",
+          calc="CALC-D6-PUSHROD", output="A_horn_mm2", unit="mm2", limit=(">=", "CL-C6-LINK-BOND-AREA-MIN"),
+          parts=["MEC-004-L", "MEC-004-R", "MEC-006-L", "MEC-006-R"], how="T-C6-XPS-PULL; horn pull-off coupon",
+          note="D-108 (CDR-27 / CDR-ST-13): since D-89c the backplate is its own part and reaches the horn only "
+               "through the blade-top glue line, so its 288 mm2 no longer counts (was 1 218 mm2 with it)")
+kit.claim("CL-D6-BOND-BACKPLATE", "Backplate MEC-013 bonded area on the upper skin (reported)", calc="CALC-D6-PUSHROD",
+          output="A_backplate_mm2", unit="mm2", parts=["MEC-013-L", "MEC-013-R"],
+          how="Visual: backplate seated in epoxy over the blade top.",
+          note="not in the horn's load path; it closes the slot and spreads the blade-top bearing")
+kit.claim("CL-D6-HORN-MOMENT-RF", "Horn bond RF under the design hinge moment (flange + slot walls)",
+          calc="CALC-D6-PUSHROD", output="rf_moment", unit="-", limit=(">=", 1.0),
+          parts=["MEC-004-L", "MEC-004-R", "MEC-006-L", "MEC-006-R"], how="Horn pull-off coupon; T-B2-HINGE.",
+          note="D-108 (CDR-27): design moment F_design x r_h (2.29 N m) carried as shear on the horn's own bond at "
+               "its mean distance from the hinge axis, against kd x XPS tension (the C6 link-bond value). EST: the "
+               "bond is treated as one patch at r_c")
+kit.claim("CL-D6-HORN-SLOT-TUBE", "Open U-slot on the torque tube: torque that bond line alone can pass (reported)",
+          calc="CALC-D6-PUSHROD", output="T_slot_tube_Nm", unit="N m", parts=["MEC-004-L", "MEC-004-R", "MEC-009-L", "MEC-009-R"],
+          how="Build check: the U-slot is filled with thickened epoxy round the tube; no test (not a load path).",
+          note="D-108 (CDR-27): half the tube circumference x the 2.4 mm plate at 2 MPa gives under 10 % of the design "
+               "hinge moment (CL-D6-HORN-SLOT-SHARE). The slot-to-tube bond is therefore not counted: the horn drives "
+               "the panel through its flange and blade (CL-D6-HORN-MOMENT-RF) and the tube picks its torque up from "
+               "the panel along its own filled groove")
+kit.claim("CL-D6-HORN-SLOT-SHARE", "U-slot bond capacity / design hinge moment (reported)", calc="CALC-D6-PUSHROD",
+          output="slot_share", unit="-", parts=["MEC-004-L", "MEC-004-R"], how="As CL-D6-HORN-SLOT-TUBE.")
 kit.claim("CL-D6-BOND-HORN-NEED", "Horn bond area needed at the D6 pushrod force (C6 method)", calc="CALC-D6-PUSHROD",
           output="A_min_mm2", unit="mm2", limit=("<=", "CL-D6-BOND-HORN"), parts=["MEC-004-L", "MEC-004-R"],
           how="T-C6-XPS-PULL")

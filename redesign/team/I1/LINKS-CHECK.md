@@ -1,5 +1,6 @@
 # Link check, I1 BOM (second pass 2026-11-11)
 
+> R5 2026-11-13 (CDR-BT-22): the two dead links are replaced in the BOM lines themselves. `M01` -> AMain SH-0255MGP page p1441652 (fetched 2026-11-13, $34.99, back-ordered; Hobby Etc. $41.99 as the pessimistic dealer). `A01` -> RaceDayQuads CoreWing F405 Wing V2 stack ($69.49, search snippet 2026-11-13; the ReadyMadeRC page reads "Product not found"). `C05`, `T01`, `T02` also carry their own links now; the rows below for these lines are history.
 > R4 2026-11-13: lines G07, G08, G09 were deleted from the BOM (Electronics Lab, Maker Pass); their rows below are history. G10 is a gated fallback (X10); G11 and H05 are bought.
 
 Method: web search plus WebFetch. Amazon, Home Depot, Zoro, Harbor Freight, Bolt Depot, getfpv and McMaster blocked fetch (403/503) and Aloft, West3D, Pyrodrone rate-limited (429), so those are 'link not opened; matched by search'. Lines opened: B05, B07, A04, M01, F05, D01, G07, G08, T09; for these price_status is CHK (seen 2026-11-11) and the page price is in the note. unit_usd is never changed. Edits live in LINK_FIXES in build_bom.py.

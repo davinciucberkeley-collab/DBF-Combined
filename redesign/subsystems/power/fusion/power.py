@@ -96,7 +96,10 @@ def layout(get, L, pod):
     x_deck0 = min(ko['x_m'][0], x_board0 - m)          # deck forward end = keep-out forward end
     g['deck'] = ((x_deck0, -cy - bwid / 2 - m, dz0), (x_deck1, -cy + bwid / 2 + m, dz1))
     g['window'] = (x_board1, x_deck1)
-    g['board'] = ((x_board0, -cy - bwid / 2, dz1 + 0.001), (x_board1, -cy + bwid / 2, dz1 + 0.001 + bh))
+    pad_t = L['board_pad_m'][2]                         # CDR-17: board on a foam pad, clear above the screw heads
+    g['board'] = ((x_board0, -cy - bwid / 2, dz1 + pad_t), (x_board1, -cy + bwid / 2, dz1 + pad_t + bh))
+    g['board_pad'] = ((x_board0 + 0.002, -cy - L['board_pad_m'][1] / 2, dz1),
+                      (x_board1 - 0.002, -cy + L['board_pad_m'][1] / 2, dz1 + pad_t))
     g['ko'] = ((ko['x_m'][0], -cy - ko['w_m'] / 2, dz1), (ko['x_m'][1], -cy + ko['w_m'] / 2, ko['z_top_m']))
     hl, hw, hh = L['as150u_half_m']
     cw = hw / 2 + wt                                    # cradle half width
@@ -166,12 +169,11 @@ def build(ctx):
     # PWR-003 power board on the deck; PWR-002 AS150U aircraft half in the cradle
     pb = ctx.part('PWR-003')
     pb.box(*G['board'], name='power board envelope')
-    # D-89c: the envelope box stands for the components above the 1.6 mm PCB. The mounting holes have a component
-    # keep-out round them (pan-head Ø5.6 + clearance, Ø6.2 EST until the board is measured, T-PWR-ARRIVAL), so the
-    # frame screws can be driven down onto the PCB after the board is in (build-film assembly check)
-    z_pcb = G['dz1'] + 0.001 + 0.0016
-    for x, y in G['bosses']:
-        pb.cut_cylinder('Z', (x, y, z_pcb), G['board'][1][2] - z_pcb + 0.001, 0.0031, name='mounting-hole keep-out')
+    # CDR-17 (CDR-EL-03): case S as power SPEC.md says: the board sits on a 3.3 mm foam pad (three layers of PWR-106
+    # 1.1 mm VHB-class tape) along its centreline, clear of the four frame-screw heads (pan head top 2.3 mm over the
+    # deck), and one tie. No fastener passes the board and none lies under its 10 AWG pads; the board's own M2 holes
+    # (30.5 x 26.5 mm, [M] p. 13) are not used
+    pb.box(*G['board_pad'], name='foam tape pad (3 x PWR-106)')
     # D-89: what the leads land on (no lead may end on a bare envelope). Battery / output pads on the aft short edge
     # (power SPEC.md 'Battery / output pads', [M] p. 4: 3 + and 3 - pads on one 32 mm edge), drawn as pad + solder
     # joint 6 x 4.4 x 0.5 mm EST under the four 10 AWG conductors (team/F2/harness.py W-MAIN-1 / W-MAIN-2);
@@ -229,11 +231,11 @@ def build_frame_hardware(ctx, G):
     for x, y in G['bosses']:
         k9.hw_insert(ins, 'Z', (x, y, zb), -1, 'M3')
         k9.hw_washer(sp, 'Z', (x, y, zb), 1, 'M3', od=0.006, t=dz0 - zb, idia=0.0032, name='nylon spacer 10 mm')
-        # D-89b: the board rests on 1.0 mm washers and each screw goes down through its mounting hole, head on the
-        # PCB top (1.6 mm PCB, EST); before, the board floated 1 mm above the deck on the screw heads (build-film
-        # assembly check). Thread into the brass insert: 18 - (1.0 + 1.6 + 2 deck + 10 spacer) = 3.4 mm >= 1 d (EST)
-        k9.hw_washer(wa, 'Z', (x, y, dz1), 1, 'M3', t=0.001, name='nylon washer 1.0 mm')
-        k9.hw_screw(sc, 'Z', (x, y, dz1 + 0.001 + 0.0016), -1, 'M3', 0.018, 'pan', name='M3x18 PA66 pan head')
+        # CDR-17 (CDR-EL-03): head on the deck over a 0.5 mm nylon washer again (D-89b had it on the board, through
+        # M3 holes the board does not have). Thread into the insert: 18 - (0.5 + 2 deck + 10 spacer) = 5.5 mm,
+        # >= the 4.5 mm minimum (CL-PWR-ENGAGE). The board sits above the heads on its foam pad
+        k9.hw_washer(wa, 'Z', (x, y, dz1), 1, 'M3', t=0.0005, name='nylon washer 0.5 mm')
+        k9.hw_screw(sc, 'Z', (x, y, dz1 + 0.0005), -1, 'M3', 0.018, 'pan', name='M3x18 PA66 pan head')
     x, y = G['bosses'][0]
     k9.hw_join(ctx, 'PWR-107', 'POD-002', (x, y, zb - 0.003))
     k9.hw_join(ctx, 'PWR-101', 'PWR-107', (x, y, zb - 0.002))

@@ -18,6 +18,11 @@ HERE = Path(__file__).resolve().parent
 D = dt.date
 START, END = D(2026, 11, 16), D(2027, 4, 30)
 BUILD_START = D(2027, 1, 19)          # params.json#schedule.build_start (spring instruction begins, Berkeley Global page, searched 2026-11-13)
+# I2-R2 (CDR-20, lever S3 of CDR-BT-10): cores, slot and spar-and-block bonding start 10 Jan in the team workspace (W: hot
+# wire and epoxy are not Jacobs work). Needs two people in town from 10 Jan, the workspace named by 30 Nov and the
+# FIN-004 blocks printed by 9 Jan (task PR0). Jacobs-only work (spray booth, soldering) still waits for 19 Jan.
+CORE_START = D(2027, 1, 10)
+FREE = D(2026, 11, 16)                # "no date constraint": the dependencies set the start
 
 # id, name, owners, not-before, days (calendar, cures included), hours (person-h, EST), deps, source of the hours / dates
 T = []
@@ -44,42 +49,43 @@ t("TW3", "Twin flights: hover in 5 m/s, QLOITER 30 m, transition (R-TWIN)", ["P4
 t("WN1", "RFS anemometer mornings x 3 (R-WIND-MEASURE)", ["P4"], D(2026, 11, 23), 14, 6, ["M01"], "team/H3/WIND-RFS.md", "pre")
 t("OR2", "December order placed (15 Dec): Aloft cart first, servos same day", ["P2"], D(2026, 12, 15), 1, 3, ["TW3", "W02"], "ORDER-PLAN.md December order", "pre")
 t("FZ1", "Design freeze (18 Dec): CG fix, fin tip, collar, pins, mount material", ["P1", "P2", "P3", "P4"], D(2026, 12, 18), 1, 4, ["W02", "H01"], "BUILD-GUIDE.md week table", "pre")
-t("EL1", "Electronics Lab days before Jacobs closes (18 Dec): bus board, AS150U, ESC leads, FC flash", ["P2"], D(2026, 12, 1), 17, 20, ["O02"], "Jacobs Electronics Lab (labs-and-equipment page 2026-11-13); closure 19 Dec - 18 Jan (BUILD-GUIDE)", "pre")
+t("EL1", "Electronics Lab days before Jacobs closes (18 Dec): bus board, AS150U, ESC leads, FC flash, and the power stack assembled and weighed (88 g; was B12, I2-R2 lever S2)", ["P2"], D(2026, 12, 1), 17, 23, ["O02"], "Jacobs Electronics Lab (labs-and-equipment page 2026-11-13); closure 19 Dec - 18 Jan (BUILD-GUIDE); +3 h power stack from stage 5 (CDR-BT-09 S2)", "pre")
 # ---- Phase 1: winter closure (19 Dec - 18 Jan)
 t("PR1", "Home printing: blocks, collars (after freeze), pod prints, feet, pistons, mounts (ASA)", ["P3"], D(2026, 12, 19), 30, 24, ["FZ1", "W03"], "team/G3/PRINT-LIST.md totals (machine hours); labour EST", "closure")
 t("OR3", "December order arrives (lands about 20-22 Dec; the overseas carbon fallback would be 14 d: a risk, not the baseline)", ["P2"], D(2026, 12, 16), 7, 2, ["OR2"], "ORDER-PLAN.md; MANUFACTURING.md section 5", "closure")
-t("HR1", "Harness cut, labelled, twisted; ESC and FC flash; Plane 4.7; K09L.param; SITL (no soldering)", ["P2"], D(2026, 12, 21), 28, 12, ["OR3", "EL1"], "BUILD-GUIDE.md stage 6 step 1; hours EST", "closure")
+t("HR1", "Harness cut, labelled, twisted; ESC and FC flash; Plane 4.7; K09L.param; SITL; avionics bench calibration (accel, compass on the bench; no soldering)", ["P2"], D(2026, 12, 21), 28, 16, ["OR3", "EL1"], "BUILD-GUIDE.md stage 6 step 1; hours EST; +4 h of stage 9 flash and bench calibration (CDR-BT-09 S2)", "closure")
+t("FC1", "Foot cartridges cut and pre-crushed at home (knife, XPS offcuts; 6 of stage 10's 9 h, I2-R2 lever S2)", ["P3"], D(2026, 12, 21), 21, 6, ["FZ1"], "BUILD-GUIDE stage 10 (cartridges most of a day); CDR-BT-09 S2 (EST)", "closure")
+t("PR0", "Print the two through-core blocks FIN-004 first (needed by B04 on the early core start)", ["P3"], D(2026, 12, 19), 10, 2, ["FZ1", "W03"], "team/G3/PRINT-LIST.md; CDR-BT-10 'blocks FIN-004 printed by 9 Jan' (EST)", "closure")
 # ---- Phase 2: build (19 Jan - ...)
-t("B01", "Cut cores 1 and 2, sand LE, accept core 1 by gauge", ["P1"], BUILD_START, 3, 4, ["W01"], "BUILD-GUIDE stage 2 (16 h for stage 2, split by me, EST)", "build")
-t("B02", "Spar slot, pockets, grooves (core in its bed)", ["P1"], D(2027, 1, 19), 3, 5, ["B01"], "wing/BUILD.md steps 3-5", "build")
+t("B01", "Cut cores 1 and 2, sand LE, accept core 1 by gauge (W, from 10 Jan)", ["P1"], CORE_START, 3, 4, ["W01"], "BUILD-GUIDE stage 2 (16 h for stage 2, split by me, EST); start CDR-BT-10 S3", "build")
+t("B02", "Spar slot, pockets, grooves (core in its bed)", ["P1"], CORE_START, 3, 5, ["B01"], "wing/BUILD.md steps 3-5", "build")
 t("B03", "Spar plugs bonded (24 h cure): done before build week 1 in the home workspace (CR-I2-04), tube and plugs only", ["P1"], D(2027, 1, 4), 2, 1, ["OR3", "W03"], "wing/BUILD.md step 6 (needs no core); hours EST", "closure")
-t("B04", "Spar and blocks in the clocking jig (cure)", ["P1", "P3"], D(2027, 1, 26), 2, 3, ["B02", "B03", "PR1"], "wing/BUILD.md step 7; MF-06", "build")
-t("B05", "Bond spar and blocks into the core, beads, weight on the bed (24 h cure)", ["P1"], D(2027, 1, 26), 2, 3, ["B04"], "wing/BUILD.md step 8", "build")
-t("B06", "Elevons free, torque-tube grooves", ["P1"], D(2027, 1, 26), 2, 4, ["B05"], "BUILD-GUIDE stage 3 (3-4 h plus 24 h cure)", "build")
-t("B07", "Motor tubes cut, plugged, through the blocks, squared in the jig (cure)", ["P1", "P3"], D(2027, 1, 28), 3, 3, ["B05"], "BUILD-GUIDE stage 4 step 2 (stage 4 total 16 h, split EST)", "build")
-t("B08", "Fin laminates and cuts (3M 77, spray booth); half-fin boards", ["P3"], D(2027, 1, 19), 3, 3, ["FZ1"], "MANUFACTURING.md section 2 (3 h reviewer est.)", "build")
-t("B09", "Half-fin roots and cove fillets (weigh a cup per batch)", ["P1", "P3"], D(2027, 2, 1), 3, 4, ["B07", "B08"], "BUILD-GUIDE stage 4 step 3", "build")
-t("B10", "Collars, strips, pins, braces, ESC pads, heat-tent post-cure", ["P1", "P3"], D(2027, 2, 2), 5, 6, ["B09", "PR1"], "BUILD-GUIDE stage 4 steps 4-6; MF-13 hold until freeze", "build")
-t("B11", "Pod box, tray, recess fillet, pod into the recess, handle (3 cures)", ["P3"], D(2027, 1, 19), 14, 8.5, ["PR1"], "BUILD-GUIDE stage 5 (8.5 h plus 3 x 24 h cures)", "build")
-t("B12", "Power stack on the bench (Electronics Lab: soldering), weigh 88 g", ["P2"], D(2027, 1, 19), 5, 3, ["OR3"], "BUILD-GUIDE stage 5; power/BUILD.md", "build")
-t("B13", "Harness solder and route; JR recesses; T-F2-CONT", ["P2"], D(2027, 1, 26), 7, 12, ["B12", "HR1", "B09"], "BUILD-GUIDE stage 6 (1-2 days)", "build")
-t("B14", "Skin the wing (two people)", ["P1", "P3"], D(2027, 2, 6), 2, 7, ["B13", "B10", "B11"], "BUILD-GUIDE stage 6 (3-4 h for two people)", "build")
-t("B15", "Servos, linkage, hinges (both sides in parallel, 2 x 24 h cures)", ["P3", "P1"], D(2027, 2, 8), 3, 8, ["B14"], "BUILD-GUIDE stage 7 (half a day per side)", "build")
-t("B16", "Motor mounts, motors, props, slip test, spin test", ["P1", "P2"], D(2027, 2, 8), 3, 4, ["B10", "B14"], "BUILD-GUIDE stage 8 (1 h per station)", "build")
-t("B17", "Avionics and calibration", ["P2"], D(2027, 2, 10), 2, 8, ["B13", "B14"], "BUILD-GUIDE stage 9 (about 1 day)", "build")
-t("B18", "Feet and corner caps (cure)", ["P3"], D(2027, 2, 9), 3, 9, ["B14"], "BUILD-GUIDE stage 10 (1 h bench + cartridges most of a day)", "build")
-t("B19", "Weigh, CG, control directions, stand run-up, compassmot (GT-06/07/12/13/18)", ["P1", "P2", "P3", "P4"], D(2027, 2, 11), 4, 16, ["B15", "B16", "B17", "B18"], "BUILD-GUIDE stage 11 (about 2 days); H1 plan", "build")
+t("B04", "Spar and blocks in the clocking jig (cure)", ["P1", "P3"], CORE_START, 2, 3, ["B02", "B03", "PR0"], "wing/BUILD.md step 7; MF-06", "build")
+t("B05", "Bond spar and blocks into the core, beads, weight on the bed (24 h cure)", ["P1"], CORE_START, 2, 3, ["B04"], "wing/BUILD.md step 8", "build")
+t("B06", "Elevons free, torque-tube grooves", ["P1"], CORE_START, 2, 4, ["B05"], "BUILD-GUIDE stage 3 (3-4 h plus 24 h cure)", "build")
+t("B07", "Motor tubes cut, plugged, through the blocks, squared in the jig (cure)", ["P1", "P3"], CORE_START, 3, 3, ["B05"], "BUILD-GUIDE stage 4 step 2 (stage 4 total 16 h, split EST)", "build")
+t("B08", "Fin laminates and cuts (3M 77, spray booth at Jacobs: from 19 Jan); half-fin boards", ["P3"], BUILD_START, 3, 3, ["FZ1"], "MANUFACTURING.md section 2 (3 h reviewer est.)", "build")
+t("B09", "Half-fin roots and cove fillets (weigh a cup per batch)", ["P1", "P3"], CORE_START, 3, 4, ["B07", "B08"], "BUILD-GUIDE stage 4 step 3", "build")
+t("B10", "Collars, strips, pins, braces, ESC pads, heat-tent post-cure (collars before strips: assembly check)", ["P1", "P3"], CORE_START, 5, 6, ["B09", "PR1"], "BUILD-GUIDE stage 4 steps 4-6; MF-13 hold until freeze", "build")
+t("B11", "Pod box, tray, recess fillet, pod into the recess, handle (3 cures)", ["P3"], CORE_START, 14, 8.5, ["PR1"], "BUILD-GUIDE stage 5 (8.5 h plus 3 x 24 h cures)", "build")
+t("B13", "Harness solder and route; JR recesses; T-F2-CONT (Electronics Lab: from 19 Jan)", ["P2"], BUILD_START, 7, 12, ["EL1", "HR1", "B09"], "BUILD-GUIDE stage 6 (1-2 days)", "build")
+t("B14", "Skin the wing (two people)", ["P1", "P3"], CORE_START, 2, 7, ["B13", "B10", "B11"], "BUILD-GUIDE stage 6 (3-4 h for two people)", "build")
+t("B15", "Servos, linkage, hinges (both sides in parallel, 2 x 24 h cures)", ["P3", "P1"], CORE_START, 3, 8, ["B14"], "BUILD-GUIDE stage 7 (half a day per side)", "build")
+t("B16", "Motor mounts, motors, props, slip test, spin test", ["P1", "P2"], CORE_START, 3, 4, ["B10", "B14"], "BUILD-GUIDE stage 8 (1 h per station)", "build")
+t("B17", "Avionics on the aircraft (flash and bench calibration done in HR1)", ["P2"], CORE_START, 2, 4, ["B13", "B14"], "BUILD-GUIDE stage 9 (about 1 day; 4 of 8 h moved to HR1, CDR-BT-09 S2)", "build")
+t("B18", "Feet assembled on the pre-cut cartridges, corner caps (cure)", ["P3"], CORE_START, 3, 3, ["B14", "FC1"], "BUILD-GUIDE stage 10 (9 h; 6 h of cartridges moved to FC1, CDR-BT-09 S2)", "build")
+t("B19", "Weigh, CG, control directions, stand run-up, compassmot (GT-06/07/12/13/18)", ["P1", "P2", "P3", "P4"], CORE_START, 4, 16, ["B15", "B16", "B17", "B18"], "BUILD-GUIDE stage 11 (about 2 days); H1 plan; test cards, not build (CDR-BT-09 S1)", "build")
 t("TB1", "Transport box and mat (X07 kit if the gate passes)", ["P3", "P4"], D(2027, 2, 1), 14, 15, ["PR1"], "BUILD-GUIDE week table; D7 (about 6 h for two plus 1.5 h mat, EST)", "build")
-t("RG1", "RC range check GT-14 (T-F5-RANGE), props off", ["P2", "P4"], D(2027, 2, 15), 1, 3, ["B19"], "team/F5/RANGE-TEST.md", "build")
+t("RG1", "RC range check GT-14 (T-F5-RANGE), props off", ["P2", "P4"], CORE_START, 1, 3, ["B19"], "team/F5/RANGE-TEST.md", "build")
 # ---- Phase 3: flight
-t("FR1", "RFS flight request for the first hover block", ["P4"], D(2027, 2, 3), 10, 1, ["M01"], "team/H3/COMPLIANCE.md", "fly")
-t("F01", "First tethered hover (gate 3)", ["P4", "P2", "P1", "P3"], D(2027, 2, 16), 3, 16, ["B19", "RG1", "FR1", "S01"], "team/H2/FLIGHT-TEST-PLAN.md gate 3", "fly")
-t("F02", "Free hover, QLOITER, landing practice (gate 4)", ["P4", "P2"], D(2027, 2, 23), 8, 20, ["F01"], "H2 plan gate 4", "fly")
-t("F03", "Fixed-wing tune as a plain flying wing (gate 5)", ["P4", "P2"], D(2027, 3, 2), 9, 20, ["F02"], "H2 plan gate 5; F4 TUNING-PLAN steps 6-6d", "fly")
-t("F04", "First transition at >= 50 m (gate 6) and back-transition (gate 7)", ["P4", "P2", "P1"], D(2027, 3, 9), 7, 16, ["F03"], "H2 plan gates 6-7; R-SCHEDULE wk 7", "fly")
-t("CR1", "Crash-repair loop (contingency block, >= 1.5 weeks calendar)", ["P1", "P3"], D(2027, 3, 16), 11, 24, ["F04"], "R-SCHEDULE; MANUFACTURING.md section 5 (core 4-5 days through the cure chain)", "fly")
-t("F05", "Transition round trips, landing practice in calm air (gates 7-8)", ["P4", "P2"], D(2027, 3, 29), 12, 24, ["CR1"], "H2 plan", "fly")
-t("F06", "Full mission demonstrations (gate 9), data and report", ["P4", "P2", "P1", "P3"], D(2027, 4, 12), 16, 36, ["F05"], "H2 plan gate 9; R-MISSION", "fly")
+t("FR1", "RFS flight request for the first hover block (7 business days ahead)", ["P4"], D(2027, 1, 26), 10, 1, ["M01"], "team/H3/COMPLIANCE.md; CDR-BT section 5 item 19 (S3: 26 Jan)", "fly")
+t("F01", "First tethered hover (gate 3)", ["P4", "P2", "P1", "P3"], CORE_START, 3, 16, ["B19", "RG1", "FR1", "S01"], "team/H2/FLIGHT-TEST-PLAN.md gate 3", "fly")
+t("F02", "Free hover, QLOITER, landing practice (gate 4)", ["P4", "P2"], CORE_START, 8, 20, ["F01"], "H2 plan gate 4", "fly")
+t("F03", "Fixed-wing tune as a plain flying wing (gate 5)", ["P4", "P2"], CORE_START, 9, 20, ["F02"], "H2 plan gate 5; F4 TUNING-PLAN steps 6-6d", "fly")
+t("F04", "First transition at >= 50 m (gate 6) and back-transition (gate 7)", ["P4", "P2", "P1"], CORE_START, 7, 16, ["F03"], "H2 plan gates 6-7; R-SCHEDULE wk 7", "fly")
+t("CR1", "Crash-repair loop (contingency block, >= 1.5 weeks calendar)", ["P1", "P3"], CORE_START, 11, 24, ["F04"], "R-SCHEDULE; MANUFACTURING.md section 5 (core 4-5 days through the cure chain)", "fly")
+t("F05", "Transition round trips, landing practice in calm air (gates 7-8)", ["P4", "P2"], CORE_START, 12, 24, ["CR1"], "H2 plan", "fly")
+t("F06", "Full mission demonstrations (gate 9), data and report", ["P4", "P2", "P1", "P3"], CORE_START, 16, 36, ["F05"], "H2 plan gate 9; R-MISSION", "fly")
 
 BY = {x["id"]: x for x in T}
 
@@ -197,7 +203,7 @@ def main():
         loadtab.append(f"| {w:%d %b} | " + " | ".join(f"{a:,.1f}" for a in v) + f" | {sum(v):,.1f} |")
     txt = f"""# I2 schedule: 16 Nov 2026 to 30 Apr 2027, team of 4
 
-Revision I2-R1, 2026-11-13. Status `PROPOSED`; generated by `python -I redesign/team/I2/make_schedule.py` from the task list in that file (forward and backward pass, so
+Revision **I2-R2**, 2026-11-13 (CDR fix round S4, CDR-20: levers S1-S3 of `review/CDR-2026-11-13/CDR-build-and-test.md` section 3; change-log row D-133 in `review/CDR-2026-11-13/fixes/S4.md`). I2-R1 was the same day. Status `PROPOSED`; generated by `python -I redesign/team/I2/make_schedule.py` from the task list in that file (forward and backward pass, so
 the critical path and slack below are computed). Hours are `EST` unless a source is named. Owners are roles (P1 wing and fin structure, P2 electrical and software, P3 printing,
 pod, mechanisms and landing, P4 test, compliance and pilot), not names: the team assigns people. Requirement ids: `R-SCHEDULE`, `R-BUILD-HOURS` (A2).
 
@@ -205,12 +211,14 @@ pod, mechanisms and landing, P4 test, compliance and pilot), not names: the team
 
 | Item | Plan | Requirement | Status |
 |---|---|---|---|
-| First cut | {first_cut:%d %b %Y} (build week 1) | build start 2027-01-19 (`params.json#schedule`) | on date |
-| First tethered hover | {hov['es']:%d %b} - {hov['ef']:%d %b} (build week {wk(hov['es'])}) | `R-SCHEDULE`: build week 4; `MANUFACTURING.md` section 5: week 5 is the honest target | **week {wk(hov['es'])} is the baseline; week 4 is the stretch. The two documents disagree: A1 decides** (`CR-I2-01`) |
+| First cut | {first_cut:%d %b %Y}, team workspace W (lever S3: cores, slot, spar-and-block bonding 9 days early) | build start 2027-01-19 (`params.json#schedule`; Jacobs opens that day) | 9 days early; **needs two people in town from 10 Jan, W named by 30 Nov, `FIN-004` blocks printed by 9 Jan (`PR0`)**. If S3 is not possible, re-run with `CORE_START` = 19 Jan: hover moves back to about 22 Feb (I2-R1) |
+| First tethered hover | {hov['es']:%d %b} - {hov['ef']:%d %b} (build week {wk(hov['es'])}, weeks counted from 19 Jan) | `R-SCHEDULE`: build week 4 | {'**meets** (I2-R1: 22-24 Feb, week 5)' if wk(hov['es']) <= 4 else 'week ' + str(wk(hov['es'])) + ': FAILS week 4'} |
 | First transition (gate 6) | {BY['F04']['es']:%d %b} - {BY['F04']['ef']:%d %b} (build week {wk(BY['F04']['es'])}) | build week 7 | {'meets' if wk(BY['F04']['es']) <= 7 else 'one week late (build week ' + str(wk(BY['F04']['es'])) + ' vs 7)'}; `MANUFACTURING.md` calls week 7 a stretch (`CR-I2-01`) |
 | Crash-repair loop | {BY['CR1']['es']:%d %b} - {BY['CR1']['ef']:%d %b}, {BY['CR1']['days']} d | >= 1.5 weeks calendar (10.5 d) | meets, as a contingency block |
 | Last task ends | {last['ef']:%d %b %Y} ({last['id']}) | complete by 2027-04-30 | {'meets' if last['ef'] <= END else 'FAILS'}; slack of the last task {last['slack']} d |
-| Build hours to first hover | {build_h_incl:,.1f} h (airframe, electrical, checks; excludes the transport box) from the BUILD-GUIDE stage times | <= 90 h (`R-BUILD-HOURS`) | **{'FAIL by ' + format(build_h_incl - 90, ',.1f') + ' h' if build_h_incl > 90 else 'meets'} on the guide's own stage times** (`CR-I2-02`) |
+| Build hours, stages 2-10 | **{build_h:,.1f} h** `EST` (lever S1: stage 11 is 16 h of test cards; lever S2: power stack 3 h to `EL1`, flash and bench calibration 4 h to `HR1`, foot cartridges 6 h to `FC1`, all before first cut) | <= 90 h (decision B2 wording, `PROPOSED`) | {'meets' if build_h <= 90 else 'FAILS'} under the B2 wording; G4 re-times on the practice cores |
+| Build hours, stages 2-11 + range check (today's wording counts everything to first hover) | {build_h_incl:,.1f} h (was 113.5 h in I2-R1) | <= 90 h (`R-BUILD-HOURS` as written) | **{'FAIL by ' + format(build_h_incl - 90, ',.1f') + ' h' if build_h_incl > 90 else 'meets'}** until A2 re-words it (B2, needs sign-off) |
+| First cut to first hover | {(hov['es'] - first_cut).days} d | `R-BUILD-HOURS` "<= 3 weeks from first cut" (21 d); B2 proposal "<= 5 weeks" (35 d) | **FAIL** as written ({(hov['es'] - first_cut).days} vs 21 d: eight serial 24 h cures, MF-12); meets the B2 wording |
 | Hours before first cut (Nov-Jan) | {pre_h:,.0f} h (EST) | not bounded | shifts hours out of the 3-week window; the requirement text does not say whether pre-work counts |
 | Twin flown before the 15 Dec order | {BY['TW3']['es']:%d %b} - {BY['TW3']['ef']:%d %b} | `R-SCHEDULE` | {'meets' if BY['TW3']['ef'] < D(2026, 12, 15) else 'FAILS'} (needs the 7-business-day request out by {BY['TW2']['es']:%d %b}) |
 | Early order 20 Nov, December order 15 Dec | tasks `O01`, `OR2`; arrivals `O02`, `OR3` | `ORDER-PLAN.md` | consistent with its lead times (5 d; packs 14 d; servos 7 d) |
@@ -222,6 +230,8 @@ Facts the plan rests on, each from a page checked on 2026-11-13 unless stated:
 - Soldering is Electronics Lab only (no loans, no home iron after the R4 BOM change): `EL1` before 18 Dec, `B12` and `B13` from 19 Jan. The closure block `HR1` contains no soldering.
 - RFS: flight request 7 business days ahead (campus policy, https://oercs.berkeley.edu/policies/campus-policy-library/unmanned-aircraft-system-drone-policy), RFS asks 72 h (https://rfs.berkeley.edu/services.html); flights 06:00 to sunset only, so the flight card's 07:00-10:00 window sits inside it.
 - Hot-wire cutting is not a Jacobs capability: the team needs a ventilated place (`CR-I2-04`, owner to name it) for `W01`, `B01`.
+
+Slack with one 10.5-day crash loop (`CR1`) on 30 Apr: **{min(x['slack'] for x in T)} d** (I2-R1: 2 d). Room for a second repair loop of the same length: {'yes' if min(x['slack'] for x in T) >= 11 else 'no'}.
 
 ## Gantt (week commencing Monday; `#` = task active with slack, **X** = active on the critical path)
 
@@ -254,8 +264,8 @@ Flight-phase durations assume 5.0 to 5.7 usable mornings a week (`config-study/t
 
 | # | Item | Why | By |
 |---|---|---|---|
-| CR-I2-01 | A1: hover in build week 4 (`R-SCHEDULE`) or 5 (`MANUFACTURING.md`)? | the stage times sum past 90 h and the cure chain needs 4 weeks to the restrained run | before 18 Dec |
-| CR-I2-02 | A2 and G4: does `R-BUILD-HOURS` count pre-build work (printing, harness cut, templates)? | {build_h_incl:,.0f} h on the stage times vs 90 h | before 18 Dec |
+| CR-I2-01 | A1: closed by I2-R2 if lever S3 holds (hover in week 4); otherwise accept week 5 formally and A2 edits `R-SCHEDULE` | early core start needs two people in town from 10 Jan and the workspace | 30 Nov (workspace), 9 Jan (blocks) |
+| CR-I2-02 | A2: re-word `R-BUILD-HOURS` per board decision B2 (`PROPOSED`, needs the students' sign-off): "<= 90 team-hours of build (stages 2-10) to first hover and <= 5 weeks from first cut" | {build_h:,.1f} h on stages 2-10 vs {build_h_incl:,.1f} h on everything; {(hov['es'] - first_cut).days} d from first cut | before 18 Dec |
 | CR-I2-03 | Team: ask Jacobs staff for hands-on trainings now (laser, printer, drill press, woodshop, electronics) | the fall hands-on window closed 23 Oct; spring window opens with the term | week of 16 Nov |
 | CR-I2-04 | Team: name a ventilated workspace for hot-wire cutting, epoxy and spray lamination (spray booth is at Jacobs) | Jacobs lists no hot-wire cutter; XPS fumes (`BUILD-GUIDE.md` safety) | before 30 Nov |
 | CR-I2-05 | Owner: Spring 2027 Maker Pass for all four from 19 Jan | the pass is semesterly and not transferable (https://jacobsaccess.ist.berkeley.edu/Maker-Pass-troubleshooting.html) | before 19 Jan |

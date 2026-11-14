@@ -1,5 +1,10 @@
 # B2 — Wing aero engineer (K09-L)
 
+**CDR fix round, 2026-11-13 (CDR-15; `WING-AERO.md` §11).** The tripped stall (12.94 m/s at the new forward CG limit 0.0393 m;
+12.85 at the old) is the planning baseline: `AIRSPEED_MIN` / `CRUISE` 17 hold to 13.08 m/s. Second fallback pre-computed:
+18 / 18 / 20 holds to 13.85 m/s (`CL-B2R3-FB2-*`, PROPOSED). `CL-B2R3-VTR-GATE-FWD` reads 15.70 m/s against the 15.6 key
+(`FAILS`; the key follows the flown 17 once A1 moves it, CR-F4-24).
+
 Status: `MODELLED`, revision **B2-R4** (2026-11-10): stall re-run on the **D-62 CG range [0.0466, 0.0514] m with
 the CG 18.5 mm above the chord plane**, and CR-B1-23 (B1 vs B2 CLmax and NP) reconciled. Geometry as B2-R3 (A1-R4).
 Reports: [`SIMULATION-REPORT.md`](SIMULATION-REPORT.md) (R4 §2a, R3 rest), [`WING-AERO.md`](WING-AERO.md) (design basis).

@@ -7,6 +7,12 @@ Figures: `team/E1/plots.py`. Every number is at the 2.6 kg gate and reads `param
 cruise 16 m/s, chord 0.32 m, CLmax 0.80, **7° motor cant, sense −1** (D-27, D-52), mount `face_ahead` 7.5 mm (D-61),
 harness 6.7 mΩ (D-67, `CL-F1-R-EXT`), and B1's as-designed polar (`CL-B1V-CD0` 0.0579, `CL-B1V-K` 0.0957, trim 1.02).
 
+**Rev 9 (2026-11-13, CDR fix round).** `r_ext` is 7.9 mΩ (D-115), the motor current is judged in the winding
+(30.0 A against 25 A: `CL-E1-ILIM-I` fails, D-116), the maker's rows above 12 A are carried as a second bound
+(worst-state T/W 1.72, D-118) and the script writes no shared file by default (D-119). The table of changed
+values is in [`SUMMARY.md`](SUMMARY.md), section "Rev 9". Rows below that quote 6.7 mΩ, 2.12, 0.8508 or
+24.75 A against the motor rating are rev 8 values unless marked.
+
 **Verdict.** Keep the SunnySky X3108S KV900, the LANRC 45 A ESC and the APC 11×5.5MR/MRP. Full throttle stays
 current-limited (`Q_M_BAT_CURR_MAX` 100 A). The worst-state hover T/W is **2.12** (limit 1.6). Propulsion is
 **462.0 g** against the 462 g allocation (D-48), zero margin. The prop-to-tube failure is closed by D-61: on D3's
@@ -155,9 +161,9 @@ a CW motor needs a left-hand post for the nut to tighten itself.
 | Hover thrust per motor (download 1.06, cant 7°) | 6.81 N, 5 313 rpm, duty 0.50 | — | `CL-E1-HOVER-T` | `UNVERIFIED` |
 | Hover pack current / power (kP 1 → 1.24) | 27.3 A / 338–405 W | ≤ 31.05 A (27 A + 15 %) | `CL-E1-HOVER-I-55` | `UNVERIFIED` |
 | T/W, bus held 14.8 V, no limiter | 3.58 | ≥ 2.0 | `CL-E1-TW-TABLE` | `UNVERIFIED` |
-| T/W, fresh pack, 100 A limiter | 2.47 | ≥ 2.0 | `CL-E1-ILIM-TW-FRESH` | `UNVERIFIED` |
-| **T/W, worst pack state** | **2.12** | ≥ 1.6 | `CL-E1-TW-WORST` | `UNVERIFIED` |
-| Per-motor current with the limiter | 24.75 A | ≤ 25 A (`propulsion.motor_max_a`) | `CL-E1-ILIM-I` | `UNVERIFIED` |
+| T/W, fresh pack, 100 A limiter | 2.45 (rev 9) | ≥ 2.0 | `CL-E1-ILIM-TW-FRESH` | `UNVERIFIED` |
+| **T/W, worst pack state** | **2.11** (rev 9; second bound 1.72, `CL-E1-TW-WORST-B2`) | ≥ 1.6 | `CL-E1-TW-WORST` | `UNVERIFIED` |
+| Winding current at the limiter (rev 9) | **30.0 A: fails, −20 %** (battery side 24.75 A, `CL-E1-ILIM-I-BAT`) | ≤ 25 A (`propulsion.motor_max_a`) | `CL-E1-ILIM-I` | `UNVERIFIED` |
 | Pack current with the limiter | 100 A | ≤ 100 A (`full_throttle_current_a`) | `CL-E1-IPACK-LIM` | `UNVERIFIED` (bench) |
 | Unlimited burst per motor at 16.8 V | 51.6 A | ≤ 55 A (`esc_burst_a`, 10 s) | `CL-E1-IMAX-168-55` | `UNVERIFIED` |
 | Unlimited pack peak, low pack (wiring case) | 108 A | ≤ 120 A (`electrical.peak_current_a`) | `CL-E1-IPACK-PEAK` | `UNVERIFIED` |
@@ -265,7 +271,8 @@ electrical nodes warn `unpowered` until harness declares `E-HRN-13…16`.
 
 ## How to verify
 
-1. `python -I redesign/team/E1/propulsion.py` (writes claims, `parts.csv`, `interfaces.json`), then
+1. `python -I redesign/team/E1/propulsion.py` (writes `team/E1/claims.json` only since rev 9; add `--write-parts`
+   to rewrite `subsystems/propulsion/parts.csv` and re-apply C6's fastener lines), then
    `python -I redesign/proofs/build_graph.py`: no `CALC-E1` drift.
 2. `python -I redesign/interfaces/merge_check.py`: no `PRP` errors.
 3. `T-E1-MOTOR-RM` on the first motor: stack (mount face to hub face − 4.45 mm), hole depth, bolt pattern, lead

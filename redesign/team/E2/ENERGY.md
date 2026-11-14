@@ -10,7 +10,7 @@ All 44 E2 claims are `UNVERIFIED` or `PROPOSED`: no pack has been weighed, capac
 | Change | Effect |
 |---|---|
 | **Pack cart released with I1 (D-64)**: `P01` = Ovonic 120C 4S 6500 hard case EC5, 2-pack, with the two order-time checks (§1a) | I1 places the order once both checks are ticked on the release record; nothing else holds the pack |
-| Acceptance line 0.601 → **`CL-A1-PACK-ACCEPT` 0.5926 kg**, read live (`PACK_ACCEPT_KG`, new `CL-E2-PACK-ACCEPT-KG`) | `T-E2-WEIGH` pass line ≤ 592.6 g; SKU worst listed 556 g is 36.6 g under it (`CL-E2-SKU-MASS-MARGIN`) |
+| Acceptance line 0.601 → **`CL-A1-PACK-ACCEPT` 0.5926 kg**, read live (`PACK_ACCEPT_KG`, new `CL-E2-PACK-ACCEPT-KG`) | `T-E2-WEIGH` pass line ≤ 558 g (D-132, was 560 g by D-95 and 592.6 g by D-64); SKU worst listed 556 g is 2.5 g under it (`CL-E2-SKU-MASS-MARGIN`) |
 | Pessimistic cruise on B1's as-designed **312.4 W** (`CL-B1V-CRUISE-P-PESS`, at A3's 2.436 kg, scaled to the gate × 1.027) | pessimistic cruise 6.8 → **6.3 min**; `BATT_LOW` after 6.4 → **6.0 min**; cruise current 22.4 → 24.0 A |
 | Base cruise on B1's 238.9 W at the gate (`CL-B1V-CRUISE-P-GATE`) | 12.6 → **12.0 min** |
 | `electrical.r_ext_mohm` 6.5 → **6.7** (D-67); `ASM-E2-R-EXT` mirror retired (no reader left) | phase currents +0.0 to +0.1 A; worst bus 11.87 → 11.85 V |
@@ -31,7 +31,7 @@ pack per sortie, 2 sorties per test day (D-12). The pessimistic mission gives **
 | Chemistry, cells | LiPo, 4S (KV900 motors fix 4S) | — | `params.json#battery.cells_s` | `PROPOSED` |
 | Capacity, energy | 6.5, 96.2 | Ah, Wh | `params.json#battery` | `UNVERIFIED` |
 | **SKU (D-58, D-64)** | Ovonic 14.8V 120C 4S 6500 mAh hard-case LiPo, EC5 plug, 2-pack ([listing](https://www.ampow.com/products/2-pack-ovonic-4s-6500mah-120c-lipo-hardcase-ec5-1-8-rc-car), read 2026-11-10) | — | `SRC-E2-OVONIC-120C-EC5`, `ASM-E2-PACK-SKU` | `CHECKED` (listing) |
-| Listed mass / acceptance line | 0.551 ± 0.005 / ≤ 0.5926 (`CL-A1-PACK-ACCEPT`; margin 0.0366 on the worst listed) | kg | `CL-E2-PACK-ACCEPT-KG`, `CL-E2-SKU-MASS-MARGIN` | `UNVERIFIED` (not weighed) |
+| Listed mass / acceptance line | 0.551 ± 0.005 / ≤ 0.5585 (`CL-A1-PACK-ACCEPT`, D-132; margin 0.0025 on the worst listed; was 0.5926) | kg | `CL-E2-PACK-ACCEPT-KG`, `CL-E2-SKU-MASS-MARGIN` | `UNVERIFIED` (not weighed) |
 | Mass carried in the budget | 0.55 (unchanged until weighed) | kg | `CL-E2-PACK-MASS` (≤ `CL-E2-PACK-ACCEPT-KG`) | `UNVERIFIED` |
 | Envelope, hard case | 0.135 × 0.046 × 0.049 ± 0.003; bay 0.160 × 0.052 × 0.053; tightest clearance 1 mm (height, at +3 mm) | m | `CL-E2-SKU-BAY-CLEAR` | `UNVERIFIED` |
 | Connectors | ships EC5; re-terminated to **AS150U** main (F1, D-32), §6; JST-XH 5-pin balance | — | `SRC-E2-OVONIC-120C-EC5` | `CHECKED` (listing) |
@@ -41,7 +41,7 @@ pack per sortie, 2 sorties per test day (D-12). The pessimistic mission gives **
 
 **Answer to D-58 / CR-I1-13 (closed by D-64).** E2 named the EC5 SKU above and does **not** accept re-leading the 680 g pack.
 
-| Option | Mass, g | Leads | Plug | Price (as found) | D-64 (≤ 592.6 g, ≥ 10 AWG) | Decision |
+| Option | Mass, g | Leads | Plug | Price (as found) | D-64 (≤ 592.6 g then; ≤ 558 g since D-132; ≥ 10 AWG) | Decision |
 |---|---|---|---|---|---|---|
 | **Ovonic 120C 4S 6500 hard case, EC5, 2-pack** | 551 ± 5 | 10 AWG inferred | EC5 | EUR 98.69 (EU page); US price for I1 | passes (mass `CHECKED` on the listing, gauge to confirm) | **buy** |
 | Tattu 4S 6750 25C (soft pack) | 605 ± 10 (Grepow 620) | 10 AWG stated | XT90 | USD 74–83 each, stock "contact us" | passes at nominal (605 g fails: 12 g over) | not pre-approved (D-64); only with A1's decision if the EC5 SKU is unavailable |
@@ -68,10 +68,10 @@ the same day.
 | 2d | Case | **hard case** | I1 at order | cart screenshot | `UNVERIFIED` |
 | 2e | Quantity | **2 packs** (one 2-pack, `battery.n_packs` 2) | I1 at order | cart screenshot | `UNVERIFIED` |
 | 3 | Price | inside I1's pessimistic pack line $119.88 incl. shipping and tax; EU page showed EUR 98.69 per pair | I1 at order | order confirmation | `UNVERIFIED` |
-| 4 | Acceptance on arrival | each pack ≤ **592.6 g** (`CL-E2-PACK-ACCEPT-KG` = `CL-A1-PACK-ACCEPT`), fits 160 × 52 × 53 mm, 10 AWG on the lead | E2 on arrival (`T-E2-WEIGH`, §8) | `pack_log.csv` | planned |
+| 4 | Acceptance on arrival | each pack ≤ **558 g** (D-132; `CL-E2-PACK-ACCEPT-KG` = `CL-A1-PACK-ACCEPT`), fits 160 × 52 × 53 mm, 10 AWG on the lead | E2 on arrival (`T-E2-WEIGH`, §8) | `pack_log.csv` | planned |
 
 Ground rules: the held 130C XT60 SKU (680 g, 12 AWG) is not bought, and re-leading is not accepted. The Tattu 4S
-6750 is not a pre-approved substitute: at 605 ± 10 g it is over the 592.6 g line. If the EC5 SKU is unavailable, I1
+6750 is not a pre-approved substitute: at 605 ± 10 g it is over the acceptance line (558 g since D-132). If the EC5 SKU is unavailable, I1
 stops and asks A1 and E2.
 
 **Trade** (`CALC-E2-PACK-TRADE`). Each candidate replaces the 0.55 kg pack in the sized mass (2.600 kg, which
@@ -256,15 +256,15 @@ The ~20 Nov order holds both flight packs. On arrival, before any charge:
 | Step | What | Record in `team/E2/pack_log.csv` | Pass |
 |---|---|---|---|
 | 1 | Arrival cell voltages (storage charge expected) | `cell_v_on_arrival` | every cell 3.75–3.90 V, spread ≤ 0.02 V |
-| 2 | Weigh on a 1 g scale, leads included | `mass_g` | ≤ 592.6 g (`CL-E2-PACK-ACCEPT-KG` = `CL-A1-PACK-ACCEPT`, D-64) |
+| 2 | Weigh on a 1 g scale, leads included | `mass_g` | ≤ 558 g (`CL-E2-PACK-ACCEPT-KG` = `CL-A1-PACK-ACCEPT`, read on the day; D-132, was 560 g by D-95) |
 | 3 | Calipers L × W × H and lead exit | `length_mm` … `lead_exit_mm` | fits the D2 bay 160 × 52 × 53 mm |
 | 3a | Lead gauge: print on the insulation, or conductor bundle of the cut-off end at re-termination | `notes` (`AWG10`) | 10 AWG (bundle ≈ 2.6 mm; 12 AWG ≈ 2.1 mm) |
 | 4 | IR load step at 25 °C (`T-E2-IR`) | `ir_mohm_cell_25c` | ≤ 5 mΩ/cell |
 | 5 | 1C capacity on the stand (`T-E2-CAPACITY`) | `capacity_mah` | ≥ 6 000 mAh |
 
 Then re-run the script. It reads `pack_log.csv`, carries the heaviest weighed pack in `CL-E2-PACK-MASS` and marks
-`T-E2-WEIGH` run. Decision on the mass: ≤ 550 g, nothing changes; 551–592.6 g, A3 replaces the 550 g line with the
-heaviest pack and re-runs the stations; > 592.6 g (the `CL-A1-PACK-ACCEPT` line read on the day), return the pair
+`T-E2-WEIGH` run. Decision on the mass: ≤ 550 g, nothing changes; 551–558 g (D-132), A3 replaces the 550 g line with the
+heaviest pack and re-runs the stations; > 558 g (the `CL-A1-PACK-ACCEPT` line read on the day, D-132), return the pair
 (the listing says 551 ± 5 g, so this would be a wrong SKU). A 12 AWG lead at step 3a: stop, return the pair, tell F1. Only then does A1 set `checked`
 on `SRC-OVONIC-4S6500` (CR-E2-01b stands until the weigh).
 

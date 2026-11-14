@@ -29,7 +29,18 @@ def _poly_contains(poly, pts):
     return inside
 
 
-def planform(g, geo, top, z_stp, shoes, h, h_loc, box, a_bar, z_split, tail=None):
+def _in_shoe(c, rect, r=0.0):
+    """Centroids c (n, 2) inside the shoe rectangle (xa, za, xb, zb) whose lower-left corner is rounded with radius r
+    (the free corner on the bare board; the other corners lie on the fin edge or against the other shoe part)."""
+    xa, za, xb, zb = rect
+    ins = (c[:, 0] > xa) & (c[:, 0] < xb) & (c[:, 1] > za) & (c[:, 1] < zb)
+    if r > 0:
+        cut = (c[:, 0] < xa + r) & (c[:, 1] < za + r) & (np.hypot(c[:, 0] - xa - r, c[:, 1] - za - r) > r)
+        ins &= ~cut
+    return ins
+
+
+def planform(g, geo, top, z_stp, shoes, h, h_loc, box, a_bar, z_split, tail=None, shoe_r=0.0):
     """gmsh all-quad planform mesh. Returns xz (n, 2), quads (m, 4) CCW in (x, z), zone label per quad."""
     import gmsh
     gmsh.initialize(["-noenv"])
@@ -65,7 +76,16 @@ def planform(g, geo, top, z_stp, shoes, h, h_loc, box, a_bar, z_split, tail=None
         tools.append((2, poly([(xb, z_tl - dw - td), (x_le, z_tl - dw - td), (x1, zt1 - dw - td), (x1, zt1 - dw),
                                (x_le, z_tl - dw), (xb, z_tl - dw)])))
     for (xa, za, xb, zb) in shoes:
-        tools.append((2, occ.addRectangle(xa, za, 0, xb - xa, zb - za)))
+        if shoe_r > 0:                  # CDR-01 e: the printed shoe's free corner on the board has a fillet
+            r = shoe_r
+            p = [occ.addPoint(xa + r, za, 0), occ.addPoint(xb, za, 0), occ.addPoint(xb, zb, 0),
+                 occ.addPoint(xa, zb, 0), occ.addPoint(xa, za + r, 0)]
+            cen = occ.addPoint(xa + r, za + r, 0)
+            ln = [occ.addLine(p[0], p[1]), occ.addLine(p[1], p[2]), occ.addLine(p[2], p[3]), occ.addLine(p[3], p[4]),
+                  occ.addCircleArc(p[4], cen, p[0])]
+            tools.append((2, occ.addPlaneSurface([occ.addCurveLoop(ln)])))
+        else:
+            tools.append((2, occ.addRectangle(xa, za, 0, xb - xa, zb - za)))
     zs = sorted({z0, *[z for z in z_split if z0 < z < z_end], z_end})
     for za, zb in zip(zs[:-1], zs[1:]):
         tools.append((2, occ.addRectangle(x_t - a_bar / 2, za, 0, a_bar, zb - za)))
@@ -137,7 +157,10 @@ def planform(g, geo, top, z_stp, shoes, h, h_loc, box, a_bar, z_split, tail=None
 
 
 def build(g, geo, top, z_stp, *, side, h, h_loc, shoes, nc=2, t_face=1e-4, brace=None, root_free=(), z_split=(),
-          tail=None):
+          tail=None, shoe_mode="rigid", shoe_r=0.0):
+    """shoe_mode "rigid": the shoe zone is one stiff block through the whole laminate (R4/R5 idealisation).
+    shoe_mode "petg": the board keeps its faces and core under the shoe and the shoe is the two outer layers only
+    (printed legs and cheeks bonded on both faces), with the free corner rounded by shoe_r (CDR-01 e)."""
     """tail: None or (x_end, depth below the strip band): the PETG collar tail tongue replaces the board there and
     the edge strips run on over the LE link to the tube bar (strip tails bonded in the collar slots)."""
     """Layered hex mesh. shoes: [(x0, z0, x1, z1)] rigid D5 regions; brace: None or dict(z_ear, anchor (x, y, z),
@@ -149,7 +172,7 @@ def build(g, geo, top, z_stp, *, side, h, h_loc, shoes, nc=2, t_face=1e-4, brace
     z0, z_end, z_tl = geo["z_clamp"], geo["z_end"], geo["z_top_le"]
     box = (geo["x_step"] - 0.035, g["x_te"] + 0.001, z_stp - 0.06, g["hh"] + 0.001)
     splits = list(z_split) + ([brace["z_ear"]] if brace else [])
-    xz, quads, fin_poly, zr = planform(g, geo, top, z_stp, shoes, h, h_loc, box, a_bar, splits, tail)
+    xz, quads, fin_poly, zr = planform(g, geo, top, z_stp, shoes, h, h_loc, box, a_bar, splits, tail, shoe_r)
     c = xz[quads].mean(axis=1)
     zone = np.full(len(quads), "FIN", object)
     in_bar = (np.abs(c[:, 0] - x_t) <= a_bar / 2) & (c[:, 1] >= z0) & (c[:, 1] <= z_end)
@@ -164,8 +187,8 @@ def build(g, geo, top, z_stp, *, side, h, h_loc, shoes, nc=2, t_face=1e-4, brace
     if tail:
         in_tail = (c[:, 0] > x_s0) & (c[:, 0] < tail[0]) & (c[:, 1] > ztop - dw - tail[1])
     in_shoe = np.zeros(len(quads), bool)
-    for (xa, za, xb, zb) in shoes:
-        in_shoe |= (c[:, 0] > xa) & (c[:, 0] < xb) & (c[:, 1] > za) & (c[:, 1] < zb)
+    for rect in shoes:
+        in_shoe |= _in_shoe(c, rect, shoe_r)
     zone[in_strip] = "STRIP"
     zone[in_shoe] = "SHOE"
     zone[in_link & ~in_strip] = "LINK"
@@ -192,11 +215,12 @@ def build(g, geo, top, z_stp, *, side, h, h_loc, shoes, nc=2, t_face=1e-4, brace
     q = quads[:, ::-1]                       # (x, z) CCW -> normal along -y; reversed -> +y, the extrusion direction
     hexes, mat, lay, qid = [], [], [], []
     zmat = {"FIN": None, "STRIP": None, "SHOE": MAT["SHOE"], "BAR": MAT["BAR"], "LINK": MAT["LINK"]}
+    zmat_in = dict(zmat, SHOE=None) if shoe_mode == "petg" else zmat      # board layers under a printed shoe
     for k in range(len(lv) - 1):
         bot, topn = base[k] + q, base[k + 1] + q
         hexes.append(np.hstack([bot, topn]))
         kind = kinds[k]
-        m = np.array([zmat[z] if zmat[z] is not None else (MAT["CORE"] if kind == "core" else MAT["FACE"])
+        m = np.array([zmat_in[z] if zmat_in[z] is not None else (MAT["CORE"] if kind == "core" else MAT["FACE"])
                       for z in zone])
         m[in_tail & np.isin(zone, ["FIN", "STRIP", "LINK"])] = MAT["TAIL"]
         mat.append(m)

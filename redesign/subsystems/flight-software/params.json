@@ -1,24 +1,25 @@
 {
- "_note": "flight-software (FSW) local numbers, owner F4, revision F4-R5. The parameter file K09L.param is the source; each key below mirrors one line of it (key ap = ArduPilot name) so proof-chain claims can read it. team/F4/fsw_check.py fails if a value here differs from K09L.param. Motor map: SPEC.md section 'Motor and output map'.",
+ "_note": "flight-software (FSW) local numbers, owner F4, revision F4-R6 (2026-11-13, CDR fix round D-120..D-126). The parameter file K09L.param is the source; each key below mirrors one line of it (key ap = ArduPilot name) so proof-chain claims can read it. team/F4/fsw_check.py fails if a value here differs from K09L.param. Motor map: SPEC.md section 'Motor and output map'.",
  "fsw": {
   "firmware": {
-   "value": "ArduPlane 4.7.x stable, target CoreWingF405WingV2",
+   "value": "ArduPlane 4.7.2 stable or later, target CoreWingF405WingV2 (board support entered ArduPilot in 4.7.2; features.txt read 2026-11-13, subsystems/flight-software/SPEC.md, Firmware build check)",
    "unit": "-",
    "source": "D-33 (P:avionics.flight_controller)",
    "status": "PROPOSED"
   },
   "airspeed_cruise_ms": {
-   "value": 16.0,
+   "value": 17.0,
    "unit": "m/s",
-   "source": "P:performance.cruise_ms",
-   "ap": "AIRSPEED_CRUISE"
+   "source": "review/CDR-2026-11-13/CDR-SUMMARY.md decision B6 (D-122)",
+   "ap": "AIRSPEED_CRUISE",
+   "note": "was 16.0 = P:performance.cruise_ms. B6: the tripped stall 12.85 m/s is the planning baseline until T-B2-STALL, so AIRSPEED_MIN = CRUISE = 17. performance.cruise_ms stays 16 until S2 / A1 move the power models (D-122)"
   },
   "airspeed_min_ms": {
-   "value": 16,
+   "value": 17,
    "unit": "m/s",
-   "source": "D-36 (15.6 m/s, CL-B3-VT-TRIM) rounded up: AP_Int16",
+   "source": "review/CDR-2026-11-13/CDR-SUMMARY.md decision B6 (D-122): ceil(1.3 x CL-B2R3-VS-GATE-FWD-TURB 12.85 = 16.71)",
    "ap": "AIRSPEED_MIN",
-   "note": "integer parameter (AP_Int16); pre-4.5 name ARSPD_FBW_MIN. D-71: >= 1.3 x CL-B2R3-VS-GATE-FWD (15.59); after T-B2-STALL set ceil(1.3 x measured trimmed stall): 16 holds up to 12.31 m/s"
+   "note": "was 16 (D-36, D-71). Integer parameter (AP_Int16). 17 holds for a measured trimmed stall <= 13.07 m/s. After T-B2-STALL set ceil(1.3 x measured): <= 12.31 -> 16; 13.07-13.85 -> second fallback 18 with AIRSPEED_MAX 20 (CL-B2R3-FB2-*, PROPOSED)"
   },
   "airspeed_max_ms": {
    "value": 18,
@@ -264,9 +265,9 @@
    "ap": "TECS_SINK_MAX"
   },
   "scaling_speed_ms": {
-   "value": 16,
+   "value": 17,
    "unit": "m/s",
-   "source": "P:performance.cruise_ms",
+   "source": "= fsw.airspeed_cruise_ms (D-122; was 16)",
    "ap": "SCALING_SPEED"
   },
   "gyro_filter_hz": {
@@ -422,10 +423,39 @@
    "note": "MIN, TRIM, MAX, REVERSED"
   },
   "mixing_gain": {
-   "value": 0.5,
+   "value": 0.65,
    "unit": "-",
-   "source": "ArduPilot default, stated: pure pitch reaches half travel (P:requirements.elevon_trim_travel_max)",
-   "ap": "MIXING_GAIN"
+   "source": "review/CDR-2026-11-13/CDR-SUMMARY.md decision B9, CDR-14 (D-120)",
+   "ap": "MIXING_GAIN",
+   "note": "was 0.5 (firmware default). Pure pitch reaches 0.65 x 25 = 16.25 deg; full pitch leaves 8.75 deg of roll. B3's forward CG limit (CL-B3-V-CG-FWD) now reads this key instead of requirements.elevon_trim_travel_max; that key (0.5) still limits the trim at 1.3 Vs (R-CRUISE-AUTHORITY)"
+  },
+  "yaw_acc_max_degs2": {
+   "value": 135,
+   "unit": "deg/s2",
+   "source": "CDR-16 / CDR-AE-12 (D-123): 84 % of CL-B3-HOVER-YAW-ACCEL-LOW",
+   "ap": "Q_A_ACC_Y_MAX",
+   "note": "new. The 4.6 name Q_A_ACCEL_Y_MAX (cdeg/s/s, 13 500) is Q_A_ACC_Y_MAX in deg/s/s on 4.7 (range 0-720, pdef stable-4.7.1; ReleaseNotes PR 32192). CL-F4-YAW-ACC-SET"
+  },
+  "rc_fs_timeout_s": {
+   "value": 1.0,
+   "unit": "s",
+   "source": "ArduPlane 4.7 default, stated (D-124); RC_Channels_VarInfo.h tag Plane-4.7.2",
+   "ap": "RC_FS_TIMEOUT",
+   "note": "new. Replaces FS_SHORT_TIMEOUT, which 4.7 removed (ReleaseNotes PR 30350). RC loss in a Q mode -> QLAND at this time (events.cpp rc_failsafe_short_on_event); SITL 2026-11-13: 1.15 s"
+  },
+  "fs_long_timeout_s": {
+   "value": 5,
+   "unit": "s",
+   "source": "ArduPlane default, stated",
+   "ap": "FS_LONG_TIMEOUT",
+   "note": "fixed-wing modes: CIRCLE -> RTL after 5 s. Not the Q-mode QLAND timer (D-124)"
+  },
+  "assist_speed_ms": {
+   "value": 14,
+   "unit": "m/s",
+   "source": "CDR-15 / B6 (D-122): 1.09 x CL-B2R3-VS-GATE-FWD-TURB 12.85",
+   "ap": "Q_ASSIST_SPEED",
+   "note": "new mirror; was 13 in K09L.param (1.09 x 11.9)"
   },
   "ins_pos_m": {
    "value": [

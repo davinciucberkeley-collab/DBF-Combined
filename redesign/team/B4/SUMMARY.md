@@ -1,5 +1,11 @@
 # B4 rotor / propeller aero: summary
 
+**CDR fix round, 2026-11-13 (CDR-15; `PROPS.md` §9).** 11×7E added to the trade from APC's PER3 file: cruise pack power
+−22.5 % at 16 m/s and −23.3 % at 17 m/s against the 11×5.5MR (177 vs 231 W on B4's model), hover +6.0 %, η 0.61 vs 0.46.
+**No 11×7EP (thin-electric pusher) is listed by APC**, so a flight set cannot be bought today; the 11×5.5E / EP pair saves
+about 9 %. Second finding: at `THR_MAX` 70 B4's model reaches 24.8 m/s with the MR prop (VH 21.8; F4 carries 21.3):
+CR-B4-29. 89 claims; the two by-design fails are unchanged (`CL-B4-RPM-MAX-FULL`, `CL-B4-SF-RPM`).
+
 Status `PROPOSED`, 2026-11-10, re-run at **R4**. Full report: [`PROPS.md`](PROPS.md) (R4 clearance work in §0a
 and §3.0). Calculations: `props.py` → `claims.json` (74 claims, 4 planned tests); figures: `figures.py` → `out/`;
 data: `data/` (APC PER3 for five props, UIUC for two). R4 inputs: prop plane x −0.0077 (hub x taken straight

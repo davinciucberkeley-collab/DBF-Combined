@@ -26,8 +26,8 @@ All at the 2.6 kg gate unless stated. Live values: `python -I redesign/team/A1/f
 
 | Parameter | Value | Limit | Unit | Status | Source |
 |---|---|---|---|---|---|
-| Take-off mass, basic / predicted (550 g pack) | 2 366 / 2 489 | ≤ 2 600 gate | g | `MODELLED` (+111 g after growth; 100 g of it is the first-build overrun) | [`MASS-CG.md`](MASS-CG.md) A3-R8 |
-| Allocations + A1 reserve | 2 374 + 226 | = 2 600 | g | `CHECKED` (reserve = growth 123 + overrun 100 + 3 g free, D-95) | `params/mass_budget.json` |
+| Take-off mass, basic / predicted (550 g pack) | 2 398 / 2 528 (live re-run with the in-progress landing change: 2 409 / 2 540) | ≤ 2 600 gate | g | `MODELLED` (+72 g after growth against a 64 g first-build overrun, 31 g structures contingency booked, D-132; **+60 g, `FAIL` by 4 g, with landing at 69.9 g**: see `MASS-CG.md` CDR-12) | [`MASS-CG.md`](MASS-CG.md) |
+| Allocations + A1 reserve | 2 406 + 194 | = 2 600 | g | `CHECKED` (reserve = growth 130 + overrun 64 + 0 g free, D-132; was 2 374 + 226, D-95) | `params/mass_budget.json` |
 | Pack acceptance line (heaviest pack the overrun still covers) | 560.8 (one number: A1 = A3 = E2); `T-E2-WEIGH` pass ≤ 560 | ≥ 556 SKU max | g | `MODELLED`; weigh on arrival | `MASS-CG.md`, D-95 |
 | CG x, basic (551 g pack at its D-98 station) | 0.0484–0.0490 | 0.0466–0.0514 | m | `MODELLED` (aft margin 0.8 mm predicted for 546 g, set by the bay travel) | `MASS-CG.md` |
 | CG height z | +0.0184 | 0.0165–0.025 (D-96) | m | `MODELLED` | `MASS-CG.md` |
@@ -44,8 +44,8 @@ All at the 2.6 kg gate unless stated. Live values: `python -I redesign/team/A1/f
 | Hard landing: sink at ≤ 10° tilt, any direction; n | 1.2; 6.6 | design | m/s; — | `MODELLED` (D-65) | `team/C5/SIMULATION-REPORT.md` |
 | Stance tip-over, worst CG | 31.0 | ≥ 30 | ° | `UNVERIFIED` (tilt board) | `team/A1/SUMMARY.md` |
 | ESC peak / field ambient ceiling | 56.1 / 44 | ≤ 85 / mission | °C | `UNVERIFIED` (SU2 pad h; GT-04) | `team/E3/SIMULATION-REPORT.md` |
-| Spend, pessimistic / reserve (Maker Pass paid outside the budget; hot-wire gear bought) | 1 716 / 284 | ≤ 2 000 / ≥ 309 (one crash) | USD | `FAIL` by $25.28 on the reserve line; all-in pessimistic reserve +$20.45 (was −$57.82); prices re-read at order | [`team/I1/ORDER-PLAN.md`](team/I1/ORDER-PLAN.md) I1-R4 |
-| Build to first hover | 70–85 (older estimate); **111** on the BUILD-GUIDE stage times | ≤ 90 | h | `FAIL` on the guide's times (`CR-I2-02`) | `params/params.json#requirements`; [`team/G4/BUILD-STEPS.md`](team/G4/BUILD-STEPS.md) |
+| Reserve **at order** / **flight-ready** (+ X07 box, + X08 airspeed), pessimistic (BOM R5; Maker Pass paid outside the budget) | 98.01 / −235.84 (baseline 227.11 / −42.47) | ≥ 309 (one crash; B3 proposal 227.89, not signed) / ≥ 0 (the $2 000 cap) | USD | `FAIL` on both lines; spend at order $1 901.99 pessimistic, inside $2 000 | [`team/I1/ORDER-PLAN.md`](team/I1/ORDER-PLAN.md), `team/I1/bom_summary.json` |
+| Build to first hover | **82** `EST` on stages 2–10 (G4-R2: 13 h of bench work moved before first cut); 98 on stages 2–11 | ≤ 90 | h | meets on stages 2–10 under the B2 wording (`PROPOSED`); `FAIL` as written; first tethered hover 12–14 Feb (week 4) with cores from 10 Jan | [`team/I2/SCHEDULE.md`](team/I2/SCHEDULE.md) I2-R2; [`team/G4/BUILD-STEPS.md`](team/G4/BUILD-STEPS.md) |
 | Transport box, external / mass | 1.25 × 0.55 × 0.54 / 3.6 | two cars | m / kg | `PROPOSED` (`CAR-FIT.md` waits for the cars) | `subsystems/transport/SPEC.md` |
 
 ## General arrangement

@@ -66,10 +66,10 @@
   {
    "id": "ASM-I1-SHIPPING",
    "type": "assumption",
-   "title": "Shipping 120 + 30 USD",
-   "text": "Class-S shipping for all vendors is $120 at baseline, +$30 in the pessimistic case",
-   "basis": "cards/K09/cost.csv shipping line and DECISION section 9; no vendor quote taken",
-   "value": 150.0,
+   "title": "Shipping per paid shipment 8.57 / 10.71 USD",
+   "text": "R5 (lever L3): each paid shipment (one vendor cart per order wave; store pick-up free; Amazon counted as paid) costs the R4 flat $120 / $150 spread over its 14 vendors: $8.57 baseline, $10.71 pessimistic",
+   "basis": "cards/K09/cost.csv shipping line and DECISION section 9 ($120 + $30); ORDER-PLAN R4 'about 14 vendors'; CDR-BT-03 L3 ($150 / 14); no vendor quote taken",
+   "value": 10.7143,
    "unit": "USD",
    "status": "UNVERIFIED",
    "cites": [
@@ -96,7 +96,7 @@
    "title": "BOM spend, baseline and pessimistic",
    "script": "redesign/team/I1/build_bom.py",
    "function": "spend",
-   "equation": "spend = sum(qty x unit) x (1 + tax) + shipping + FAA fee (+ adders, pessimistic prices); lines in team/I1/build_bom.py LINES",
+   "equation": "spend = sum(qty x unit) x (1 + tax) + n_shipments x rate + FAA fee + pack duty (+ adders, pessimistic prices); lines in team/I1/build_bom.py LINES",
    "inputs": {
     "tax": "P:requirements.tax_rate"
    },
@@ -113,15 +113,24 @@
     "SRC-I1-OVONIC"
    ],
    "outputs": {
-    "spend_pess_allin": 1982.86,
-    "spend_base_allin": 1897.64,
-    "goods_base": 1369.05,
-    "goods_pess": 1394.64,
-    "tax_base": 140.33,
-    "tax_pess": 142.95,
-    "spend_base": 1634.38,
-    "spend_pess": 1719.59,
-    "early_goods_tax": 1018.85
+    "spend_pess_allin": 2941.05,
+    "spend_base_allin": 2636.99,
+    "shipments_allin": 21,
+    "spend_pess_flight_ready": 2235.84,
+    "spend_base_flight_ready": 2042.47,
+    "goods_base": 1499.86,
+    "goods_pess": 1548.42,
+    "tax_base": 153.74,
+    "tax_pess": 158.71,
+    "ship_base": 94.29,
+    "ship_pess": 117.86,
+    "shipments": 11,
+    "shipments_flight_ready": 12,
+    "duty_base": 20.0,
+    "duty_pess": 45.0,
+    "spend_base": 1772.89,
+    "spend_pess": 1901.99,
+    "early_goods_tax": 1211.15
    },
    "input_values": {
     "tax": 0.1025
@@ -133,7 +142,7 @@
    "title": "Bottom-up minus R2-bridge (pessimistic spend)",
    "script": "redesign/team/I1/build_bom.py",
    "function": "spend_bridge",
-   "equation": "delta = spend_pess(bottom-up) - [1687.01 (R2) + sum(R3 line deltas) x (1 + tax)]",
+   "equation": "delta = spend_pess(bottom-up) - [1687.01 (R2) + sum(R3..R5 line deltas) x (1 + tax) + R5 untaxed deltas (duty, shipping)]",
    "inputs": {
     "tax": "P:requirements.tax_rate",
     "sp": "CL-I1-SPEND-PESS"
@@ -150,7 +159,7 @@
    },
    "input_values": {
     "tax": 0.1025,
-    "sp": 1719.59
+    "sp": 1901.99
    }
   },
   {
@@ -171,19 +180,47 @@
     "sb": "USD"
    },
    "outputs": {
-    "reserve_pess": 280.41,
-    "reserve_base": 365.62
+    "reserve_pess": 98.01,
+    "reserve_base": 227.11
    },
    "input_values": {
     "budget": 2000.0,
-    "sp": 1719.59,
-    "sb": 1634.38
+    "sp": 1901.99,
+    "sb": 1772.89
+   }
+  },
+  {
+   "id": "CALC-I1-FLIGHT-READY",
+   "type": "calculation",
+   "title": "Flight-ready spend: committed lines + X07 box and field kit + X08 airspeed sensor (B4)",
+   "script": "redesign/team/I1/build_bom.py",
+   "function": "flight_ready",
+   "equation": "flight-ready spend = spend_case(committed + gates X07, X08); reserve = budget - spend",
+   "inputs": {
+    "tax": "P:requirements.tax_rate",
+    "budget": "P:requirements.budget_usd"
+   },
+   "units": {
+    "tax": "-",
+    "budget": "USD"
+   },
+   "assumes": [
+    "ASM-I1-SHIPPING",
+    "ASM-I1-ADDERS"
+   ],
+   "outputs": {
+    "reserve_pess_flight_ready": -235.84,
+    "reserve_base_flight_ready": -42.47
+   },
+   "input_values": {
+    "tax": 0.1025,
+    "budget": 2000.0
    }
   },
   {
    "id": "CALC-I1-ALLIN",
    "type": "calculation",
-   "title": "All-in spend if every gated BOM line (X07, X08, X10, X12) were also bought",
+   "title": "All-in spend if every gated BOM line (X07, X08, X10, X12, X13, X14) were also bought",
    "script": "redesign/team/I1/build_bom.py",
    "function": "allin",
    "equation": "all-in spend = spend + gated lines x (1 + tax); reserve = budget - spend",
@@ -200,8 +237,8 @@
     "ASM-I1-ADDERS"
    ],
    "outputs": {
-    "reserve_pess_allin": 17.14,
-    "reserve_base_allin": 102.36
+    "reserve_pess_allin": -941.05,
+    "reserve_base_allin": -636.99
    },
    "input_values": {
     "tax": 0.1025,
@@ -226,7 +263,7 @@
    ],
    "outputs": {
     "bought_usd": 17.0,
-    "bought_with_gauges_usd": 26.0
+    "bought_with_gauges_usd": 83.07
    },
    "input_values": {
     "tax": 0.1025
@@ -247,7 +284,7 @@
     "R-BUDGET"
    ],
    "how": "Re-run build_bom.py after re-pricing each line on the day of the order; compare with the order confirmations.",
-   "value": 1634.38
+   "value": 1772.89
   },
   {
    "id": "CL-I1-SPEND-PESS",
@@ -264,7 +301,7 @@
     "R-BUDGET"
    ],
    "how": "Same lines at list price plus the DECISION section 9 adders; CL-I1-BRIDGE-DELTA must be 0.",
-   "value": 1719.59
+   "value": 1901.99
   },
   {
    "id": "CL-I1-BRIDGE-DELTA",
@@ -296,7 +333,7 @@
     "R-BUDGET"
    ],
    "how": "2 000 minus CL-I1-SPEND-PESS must be >= 309 (one class-S crash incl. tax). On the day: re-price every CARRY line.",
-   "value": 280.41
+   "value": 98.01
   },
   {
    "id": "CL-I1-RESERVE-BASE",
@@ -313,7 +350,7 @@
     "R-RESERVE"
    ],
    "how": "2 000 minus CL-I1-SPEND-BASE must be >= 150 (planned reserve, P2).",
-   "value": 365.62
+   "value": 227.11
   },
   {
    "id": "CL-I1-RESERVE-PESS-ALLIN",
@@ -323,7 +360,34 @@
    "output": "reserve_pess_allin",
    "unit": "USD",
    "how": "2 000 minus the all-in pessimistic spend. Information, not a gate: the committed order holds >= 309 by deferring X07 and X08 until their gate passes. Below 309 means every gated line cannot be bought on pessimistic numbers.",
-   "value": 17.14
+   "value": -941.05
+  },
+  {
+   "id": "CL-I1-RESERVE-PESS-FLIGHT-READY",
+   "type": "claim",
+   "title": "Pessimistic reserve, flight-ready (committed + X07 box + X08 airspeed sensor)",
+   "calc": "CALC-I1-FLIGHT-READY",
+   "output": "reserve_pess_flight_ready",
+   "unit": "USD",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-BUDGET"
+   ],
+   "how": "Decision B4: every document quotes this beside the at-order reserve. Limit 0 = inside the $2 000 cap; the $309 crash line is CL-I1-RESERVE-PESS's limit (B3 would re-base it to about $228, not applied).",
+   "value": -235.84
+  },
+  {
+   "id": "CL-I1-RESERVE-BASE-FLIGHT-READY",
+   "type": "claim",
+   "title": "Baseline reserve, flight-ready (committed + X07 + X08)",
+   "calc": "CALC-I1-FLIGHT-READY",
+   "output": "reserve_base_flight_ready",
+   "unit": "USD",
+   "how": "Information: baseline prices, same lines as CL-I1-RESERVE-PESS-FLIGHT-READY.",
+   "value": -42.47
   },
   {
    "id": "CL-I1-GROUNDTEST-BOUGHT",
@@ -347,7 +411,7 @@
    "output": "bought_with_gauges_usd",
    "unit": "USD",
    "how": "G12 $17.00 (D-39 line, limit 20) + G13 $9.00 (CR-C4-38): $26.00 is $6 above the D-39 line. Information for A1, who owns the decision; the gauges are in the pessimistic spend.",
-   "value": 26.0
+   "value": 83.07
   },
   {
    "id": "T-I1-CONNECTOR-LEADS",

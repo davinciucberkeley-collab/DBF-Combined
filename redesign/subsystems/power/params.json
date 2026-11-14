@@ -5,6 +5,8 @@
       "note": "one AS150U half, L (x, mating axis) x W (y, the two contacts side by side) x H (z); mated length 2 x 0.029 - overlap; measure on arrival"},
     "as150u_contact_pitch_m": {"value": 0.010, "unit": "m", "source": "EST", "status": "UNVERIFIED", "note": "centre distance of the two main contacts (y)"},
     "as150u_mass_g": {"value": 9.0, "unit": "g", "source": "EST (AS150 family class value)", "status": "UNVERIFIED", "note": "aircraft half with heat-shrink; the pack half is inside the pack mass"},
+    "board_pad_m": {"value": [0.048, 0.016, 0.0033], "unit": "m", "source": "CDR-17 (review/CDR-2026-11-13/CDR-SUMMARY.md); 3 x PWR-106 1.1 mm tape", "status": "PROPOSED",
+      "note": "case S foam pad under the power board along its centreline (|y| <= 8 mm from the board axis), clear of the frame-screw heads (25 mm pattern, head edge 9.7 mm from the axis, top 2.3 mm over the deck): the board stands 1.0 mm above the heads"},
     "board_env_m": {"value": [0.052, 0.032, 0.009], "unit": "m", "source": "CoreWing F405 Wing V2 manual V2.1 p. 13 (PDB 52 x 32 mm incl. battery pads); height 9 mm = split-case allowance (BOARD-CHECK.md step 3)", "status": "UNVERIFIED",
       "note": "power board (PWR-003, the PDB alone, case S) as drawn: L x W x H incl. pads and components; aft edge (pads) at the deck window, so it sits in the aft 52 mm of KO-PWR-BOARD and leaves 4 mm forward. Height and outline measured at BOARD-CHECK.md step 3 (D-74)"},
     "ko_board_m": {"value": {"x_m": [-0.066, -0.010], "w_m": 0.034, "z_top_m": 0.0626}, "unit": "m", "source": "D-74 (params/CHANGE-LOG.md); subsystems/power/SPEC.md KO-PWR-BOARD", "status": "PROPOSED",

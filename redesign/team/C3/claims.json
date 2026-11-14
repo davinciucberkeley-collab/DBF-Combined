@@ -2,7 +2,8 @@
  "schema": "proofs/1",
  "generated_by": "redesign/team/C3/pod_structures.py",
  "params": [
-  "../../params/params.json"
+  "../../params/params.json",
+  "../C6/params.json"
  ],
  "nodes": [
   {
@@ -240,20 +241,20 @@
     [
      "L4-CORNER-SIDE-Y/MC-C",
      26.141,
-     16.9745,
+     12.1987,
      9.4485,
-     -0.5047,
+     -0.3632,
      1.7675,
-     0.092
+     -0.1192
     ],
     [
      "L5-CORNER-SIDE-Z/MC-C",
-     18.664,
-     2.4806,
-     8.021,
-     -0.0749,
-     -0.3466,
-     -0.4779
+     21.5034,
+     3.2088,
+     8.5631,
+     -0.0965,
+     0.4563,
+     -0.4727
     ],
     [
      "G1-POD-LIFT/MC-C",
@@ -280,6 +281,15 @@
      -20.7823,
      0.0,
      0.0713,
+     -0.0
+    ],
+    [
+     "G4-RESTRAINED/MC-C",
+     10.1133,
+     0.0,
+     -0.6512,
+     -0.0,
+     0.2325,
      -0.0
     ],
     [
@@ -510,20 +520,20 @@
     [
      "L4-CORNER-SIDE-Y/MC-P",
      23.0501,
-     14.5792,
+     10.5536,
      9.0464,
-     -0.5514,
+     -0.3995,
      1.4882,
-     -0.0176
+     -0.1147
     ],
     [
      "L5-CORNER-SIDE-Z/MC-P",
-     15.0956,
-     2.0592,
-     6.1302,
-     -0.0786,
-     0.0911,
-     -0.273
+     18.1163,
+     2.788,
+     7.2376,
+     -0.1062,
+     0.6217,
+     -0.2731
     ],
     [
      "G1-POD-LIFT/MC-P",
@@ -550,6 +560,15 @@
      -17.5739,
      0.0,
      -0.0387,
+     0.0
+    ],
+    [
+     "G4-RESTRAINED/MC-P",
+     8.4869,
+     -0.0,
+     -0.6234,
+     0.0,
+     0.2785,
      0.0
     ]
    ],
@@ -719,14 +738,14 @@
     [
      "L4-CORNER-SIDE-Y/MC-C",
      13.6379,
-     8.7858,
+     6.5565,
      6.2545
     ],
     [
      "L5-CORNER-SIDE-Z/MC-C",
-     9.6288,
-     1.8968,
-     3.0094
+     11.1512,
+     2.2836,
+     4.2417
     ],
     [
      "G1-POD-LIFT/MC-C",
@@ -745,6 +764,12 @@
      -0.0,
      -0.0,
      -10.7873
+    ],
+    [
+     "G4-RESTRAINED/MC-C",
+     5.2447,
+     0.0,
+     -0.431
     ],
     [
      "F1-PULLUP-VD/MC-P",
@@ -899,14 +924,14 @@
     [
      "L4-CORNER-SIDE-Y/MC-P",
      15.7011,
-     9.8887,
+     7.3231,
      7.1157
     ],
     [
      "L5-CORNER-SIDE-Z/MC-P",
-     10.2089,
-     1.8145,
-     3.3576
+     12.2946,
+     2.315,
+     4.7847
     ],
     [
      "G1-POD-LIFT/MC-P",
@@ -925,6 +950,12 @@
      0.0,
      -0.0,
      -11.9329
+    ],
+    [
+     "G4-RESTRAINED/MC-P",
+     5.7593,
+     -0.0,
+     -0.4904
     ]
    ],
    "unit": "N",
@@ -994,7 +1025,7 @@
    "value": [
     246.59,
     -0.01779,
-    0.03734
+    0.03759
    ],
    "unit": "g, m",
    "status": "PROPOSED",
@@ -1526,10 +1557,10 @@
   {
    "id": "ASM-C3-PETG-INPLANE",
    "type": "assumption",
-   "title": "Printed PETG in-plane (along-raster) allowable 25 MPa",
+   "title": "Printed PETG in-plane (along-raster) allowable 23.5 MPa (C6 table, D-107)",
    "text": "Bending allowable along the filament (part printed so the stress runs along the layers)",
-   "basis": "filament data 40-50 MPa (ASM-D5-PETG-SIGMA basis) x ~0.6",
-   "value": 25000000.0,
+   "basis": "= P:allowables.petg_inplane_pa (team/C6/params.json): 0.5 x 47 MPa, Prusament PETG TDS v1.1 printed specimens. Was 25 MPa",
+   "value": 23500000.0,
    "unit": "Pa",
    "status": "UNVERIFIED",
    "cites": [
@@ -1838,20 +1869,20 @@
      [
       "L4-CORNER-SIDE-Y/MC-C",
       26.141,
-      16.9745,
+      12.1987,
       9.4485,
-      -0.5047,
+      -0.3632,
       1.7675,
-      0.092
+      -0.1192
      ],
      [
       "L5-CORNER-SIDE-Z/MC-C",
-      18.664,
-      2.4806,
-      8.021,
-      -0.0749,
-      -0.3466,
-      -0.4779
+      21.5034,
+      3.2088,
+      8.5631,
+      -0.0965,
+      0.4563,
+      -0.4727
      ],
      [
       "G1-POD-LIFT/MC-C",
@@ -1878,6 +1909,15 @@
       -20.7823,
       0.0,
       0.0713,
+      -0.0
+     ],
+     [
+      "G4-RESTRAINED/MC-C",
+      10.1133,
+      0.0,
+      -0.6512,
+      -0.0,
+      0.2325,
       -0.0
      ],
      [
@@ -2108,20 +2148,20 @@
      [
       "L4-CORNER-SIDE-Y/MC-P",
       23.0501,
-      14.5792,
+      10.5536,
       9.0464,
-      -0.5514,
+      -0.3995,
       1.4882,
-      -0.0176
+      -0.1147
      ],
      [
       "L5-CORNER-SIDE-Z/MC-P",
-      15.0956,
-      2.0592,
-      6.1302,
-      -0.0786,
-      0.0911,
-      -0.273
+      18.1163,
+      2.788,
+      7.2376,
+      -0.1062,
+      0.6217,
+      -0.2731
      ],
      [
       "G1-POD-LIFT/MC-P",
@@ -2149,6 +2189,15 @@
       0.0,
       -0.0387,
       0.0
+     ],
+     [
+      "G4-RESTRAINED/MC-P",
+      8.4869,
+      -0.0,
+      -0.6234,
+      0.0,
+      0.2785,
+      0.0
      ]
     ],
     "xle": -0.14,
@@ -2168,7 +2217,7 @@
     "grp": [
      246.59,
      -0.01779,
-     0.03734
+     0.03759
     ],
     "pack_rng": [
      546.0,
@@ -2212,10 +2261,10 @@
     "F_fwd_n": 73.75,
     "F_fwd_flight_n": 3.3376593750000003,
     "sigma_aft_d2_pa": 17785440.0,
-    "t_req_m": 0.0032666900679433914,
+    "t_req_m": 0.00421727874345531,
     "sigma_aft_rec_pa": 17785440.0,
     "sigma_fwd_rec_pa": 11174242.424242424,
-    "fwd_fuse_n": 98.99999999999999,
+    "fwd_fuse_n": 59.39999999999999,
     "nose_m_req_nmm_per_mm": 40.41198979591837,
     "nose_m_cap_nmm_per_mm": 4.699999999999999
    },
@@ -2377,14 +2426,14 @@
      [
       "L4-CORNER-SIDE-Y/MC-C",
       13.6379,
-      8.7858,
+      6.5565,
       6.2545
      ],
      [
       "L5-CORNER-SIDE-Z/MC-C",
-      9.6288,
-      1.8968,
-      3.0094
+      11.1512,
+      2.2836,
+      4.2417
      ],
      [
       "G1-POD-LIFT/MC-C",
@@ -2403,6 +2452,12 @@
       -0.0,
       -0.0,
       -10.7873
+     ],
+     [
+      "G4-RESTRAINED/MC-C",
+      5.2447,
+      0.0,
+      -0.431
      ],
      [
       "F1-PULLUP-VD/MC-P",
@@ -2557,14 +2612,14 @@
      [
       "L4-CORNER-SIDE-Y/MC-P",
       15.7011,
-      9.8887,
+      7.3231,
       7.1157
      ],
      [
       "L5-CORNER-SIDE-Z/MC-P",
-      10.2089,
-      1.8145,
-      3.3576
+      12.2946,
+      2.315,
+      4.7847
      ],
      [
       "G1-POD-LIFT/MC-P",
@@ -2583,6 +2638,12 @@
       0.0,
       -0.0,
       -11.9329
+     ],
+     [
+      "G4-RESTRAINED/MC-P",
+      5.7593,
+      -0.0,
+      -0.4904
      ]
     ],
     "fc": 73.75,
@@ -2601,7 +2662,7 @@
      0.0015,
      0.008
     ],
-    "sa": 15000000.0,
+    "sa": 9000000.0,
     "W": 0.14,
     "tb": 0.0048,
     "tf": 0.0001,
@@ -2796,14 +2857,14 @@
      [
       "L4-CORNER-SIDE-Y/MC-C",
       13.6379,
-      8.7858,
+      6.5565,
       6.2545
      ],
      [
       "L5-CORNER-SIDE-Z/MC-C",
-      9.6288,
-      1.8968,
-      3.0094
+      11.1512,
+      2.2836,
+      4.2417
      ],
      [
       "G1-POD-LIFT/MC-C",
@@ -2822,6 +2883,12 @@
       -0.0,
       -0.0,
       -10.7873
+     ],
+     [
+      "G4-RESTRAINED/MC-C",
+      5.2447,
+      0.0,
+      -0.431
      ],
      [
       "F1-PULLUP-VD/MC-P",
@@ -2976,14 +3043,14 @@
      [
       "L4-CORNER-SIDE-Y/MC-P",
       15.7011,
-      9.8887,
+      7.3231,
       7.1157
      ],
      [
       "L5-CORNER-SIDE-Z/MC-P",
-      10.2089,
-      1.8145,
-      3.3576
+      12.2946,
+      2.315,
+      4.7847
      ],
      [
       "G1-POD-LIFT/MC-P",
@@ -3002,6 +3069,12 @@
       0.0,
       -0.0,
       -11.9329
+     ],
+     [
+      "G4-RESTRAINED/MC-P",
+      5.7593,
+      -0.0,
+      -0.4904
      ]
     ],
     "fc": 73.75,
@@ -3213,14 +3286,14 @@
      [
       "L4-CORNER-SIDE-Y/MC-C",
       13.6379,
-      8.7858,
+      6.5565,
       6.2545
      ],
      [
       "L5-CORNER-SIDE-Z/MC-C",
-      9.6288,
-      1.8968,
-      3.0094
+      11.1512,
+      2.2836,
+      4.2417
      ],
      [
       "G1-POD-LIFT/MC-C",
@@ -3239,6 +3312,12 @@
       -0.0,
       -0.0,
       -10.7873
+     ],
+     [
+      "G4-RESTRAINED/MC-C",
+      5.2447,
+      0.0,
+      -0.431
      ],
      [
       "F1-PULLUP-VD/MC-P",
@@ -3393,14 +3472,14 @@
      [
       "L4-CORNER-SIDE-Y/MC-P",
       15.7011,
-      9.8887,
+      7.3231,
       7.1157
      ],
      [
       "L5-CORNER-SIDE-Z/MC-P",
-      10.2089,
-      1.8145,
-      3.3576
+      12.2946,
+      2.315,
+      4.7847
      ],
      [
       "G1-POD-LIFT/MC-P",
@@ -3419,6 +3498,12 @@
       0.0,
       -0.0,
       -11.9329
+     ],
+     [
+      "G4-RESTRAINED/MC-P",
+      5.7593,
+      -0.0,
+      -0.4904
      ]
     ],
     "fc": 73.75,
@@ -4445,10 +4530,6 @@
    "calc": "CALC-C3-FEA",
    "output": "aft_fillet_solid_stop_peak_pa",
    "unit": "Pa",
-   "limit": {
-    "op": "<=",
-    "ref": "ASM-C4-PETG-TENSILE"
-   },
    "verifies": [
     "R-PACK-RETENTION"
    ],
@@ -4456,7 +4537,7 @@
     "POD-002"
    ],
    "how": "Re-run python -I redesign/team/C3/pod_fea.py (SU2 + gmsh, 4 levels); then T-C3-STOP-PUSH on the built tray rear piece.",
-   "note": "solid tray section (best case); the 1 mm tray rotates under the stop, so the root is the tray, not the stop",
+   "note": "D-107 / CDR-23: superseded record (pre-D-69 stop printed with the tray, or the unpropped aft stop), limit removed; the built design is checked by CL-C3-FEA-AFT-PROP-* and CL-C3-FEA-FWD-T-*. solid tray section (best case); the 1 mm tray rotates under the stop, so the root is the tray, not the stop",
    "value": 49931275.23549451
   },
   {
@@ -4466,10 +4547,6 @@
    "calc": "CALC-C3-FEA",
    "output": "aft_fillet_solid_tray_peak_pa",
    "unit": "Pa",
-   "limit": {
-    "op": "<=",
-    "ref": "ASM-C3-PETG-INPLANE"
-   },
    "verifies": [
     "R-PACK-RETENTION"
    ],
@@ -4477,6 +4554,7 @@
     "POD-002"
    ],
    "how": "Re-run python -I redesign/team/C3/pod_fea.py (SU2 + gmsh, 4 levels); then T-C3-STOP-PUSH.",
+   "note": "D-107 / CDR-23: superseded record (pre-D-69 stop printed with the tray, or the unpropped aft stop), limit removed; the built design is checked by CL-C3-FEA-AFT-PROP-* and CL-C3-FEA-FWD-T-*.",
    "value": 48160704.71614992
   },
   {
@@ -4486,10 +4564,6 @@
    "calc": "CALC-C3-FEA",
    "output": "aft_fillet_solid_peel_pa",
    "unit": "Pa",
-   "limit": {
-    "op": "<=",
-    "ref": "CL-C3-ALLOW-BOARD-FLAT"
-   },
    "verifies": [
     "R-PACK-RETENTION"
    ],
@@ -4498,6 +4572,7 @@
     "POD-001"
    ],
    "how": "Re-run python -I redesign/team/C3/pod_fea.py (SU2 + gmsh, 4 levels); then T-C3-STOP-PUSH on a tray bonded to board.",
+   "note": "D-107 / CDR-23: superseded record (pre-D-69 stop printed with the tray, or the unpropped aft stop), limit removed; the built design is checked by CL-C3-FEA-AFT-PROP-* and CL-C3-FEA-FWD-T-*.",
    "value": 408147.8732974738
   },
   {
@@ -4549,15 +4624,11 @@
    "calc": "CALC-C3-FEA",
    "output": "aft_heel_fillet_peel_pa",
    "unit": "Pa",
-   "limit": {
-    "op": "<=",
-    "ref": "CL-C3-ALLOW-BOARD-FLAT"
-   },
    "parts": [
     "POD-002"
    ],
    "how": "Re-run python -I redesign/team/C3/pod_fea.py (SU2 + gmsh, 4 levels); then not adopted.",
-   "note": "option studied and rejected: the heel fixes the PETG but not the peel",
+   "note": "D-107 / CDR-23: superseded record (pre-D-69 stop printed with the tray, or the unpropped aft stop), limit removed; the built design is checked by CL-C3-FEA-AFT-PROP-* and CL-C3-FEA-FWD-T-*. option studied and rejected: the heel fixes the PETG but not the peel",
    "value": 196146.16458977968
   },
   {
@@ -5009,10 +5080,6 @@
    "calc": "CALC-C3-STOPS",
    "output": "sigma_aft_d2_pa",
    "unit": "Pa",
-   "limit": {
-    "op": "<=",
-    "ref": "ASM-C4-PETG-TENSILE"
-   },
    "verifies": [
     "R-PACK-RETENTION"
    ],
@@ -5020,7 +5087,7 @@
     "POD-002"
    ],
    "how": "T-C3-STOP-PUSH on a printed tray: 89 N on a 680 g-pack-size block at 13 mm height.",
-   "note": "D2-R5: printed with the tray rear piece at x 0.056; 2 gussets behind it ignored (conservative)",
+   "note": "D-107 / CDR-23: superseded record (pre-D-69 stop printed with the tray, or the unpropped aft stop), limit removed; the built design is checked by CL-C3-FEA-AFT-PROP-* and CL-C3-FEA-FWD-T-*. D2-R5: printed with the tray rear piece at x 0.056; 2 gussets behind it ignored (conservative)",
    "value": 17785440.0
   },
   {
@@ -5056,7 +5123,7 @@
     "POD-002"
    ],
    "how": "Recompute after T-C3-STOP-PUSH sets the printed-PETG allowable.",
-   "value": 0.0032666900679433914
+   "value": 0.00421727874345531
   },
   {
    "id": "CL-C3-AFT-STOP-REC",
@@ -5065,10 +5132,6 @@
    "calc": "CALC-C3-STOPS",
    "output": "sigma_aft_rec_pa",
    "unit": "Pa",
-   "limit": {
-    "op": "<=",
-    "ref": "ASM-C4-PETG-TENSILE"
-   },
    "verifies": [
     "R-PACK-RETENTION"
    ],
@@ -5076,6 +5139,7 @@
     "POD-002"
    ],
    "how": "T-C3-STOP-PUSH.",
+   "note": "D-107 / CDR-23: superseded record (pre-D-69 stop printed with the tray, or the unpropped aft stop), limit removed; the built design is checked by CL-C3-FEA-AFT-PROP-* and CL-C3-FEA-FWD-T-*.",
    "value": 17785440.0
   },
   {
@@ -5099,10 +5163,6 @@
    "calc": "CALC-C3-STOPS",
    "output": "sigma_fwd_rec_pa",
    "unit": "Pa",
-   "limit": {
-    "op": "<=",
-    "ref": "ASM-C4-PETG-TENSILE"
-   },
    "verifies": [
     "R-PACK-RETENTION"
    ],
@@ -5110,6 +5170,7 @@
     "POD-002"
    ],
    "how": "T-C3-STOP-PUSH in -x.",
+   "note": "D-107 / CDR-23: superseded record (pre-D-69 stop printed with the tray, or the unpropped aft stop), limit removed; the built design is checked by CL-C3-FEA-AFT-PROP-* and CL-C3-FEA-FWD-T-*.",
    "value": 11174242.424242424
   },
   {
@@ -5416,10 +5477,6 @@
    "calc": "CALC-C3-STOPS",
    "output": "fwd_fuse_n",
    "unit": "N",
-   "limit": {
-    "op": ">=",
-    "ref": "CL-C1-PACK-CRASH-LOAD"
-   },
    "verifies": [
     "R-PACK-RETENTION"
    ],
@@ -5427,8 +5484,8 @@
     "POD-002"
    ],
    "how": "T-C3-STOP-PUSH in -x to failure.",
-   "note": "holds every airframe-decelerated case (pack load <= 12.75 g); in a nose-in impact it is backed by the nose wall and the ground, so the fuse no longer has to break (block A ~1 mm, CALC-C3-NOSE-PATH)",
-   "value": 98.99999999999999
+   "note": "D-107 / CDR-23: superseded record (pre-D-69 stop printed with the tray, or the unpropped aft stop), limit removed; the built design is checked by CL-C3-FEA-AFT-PROP-* and CL-C3-FEA-FWD-T-*. holds every airframe-decelerated case (pack load <= 12.75 g); in a nose-in impact it is backed by the nose wall and the ground, so the fuse no longer has to break (block A ~1 mm, CALC-C3-NOSE-PATH)",
+   "value": 59.39999999999999
   },
   {
    "id": "CL-C3-NOSE-BLOCK-A",

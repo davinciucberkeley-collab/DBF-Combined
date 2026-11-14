@@ -525,7 +525,7 @@
    "title": "Pushrod force, buckling and horn bond area",
    "script": "redesign/team/D6/mech_calcs.py",
    "function": "pushrod",
-   "equation": "F = H / (r_h sin phi) worst; Pcr = pi^2 E I / L^2; A_min = F sf ff pf / (kd sigma_XPS)",
+   "equation": "F = H / (r_h sin phi) worst; Pcr = pi^2 E I / L^2; A_min = F sf ff pf / (kd sigma_XPS); horn bond area = lower flange + the two slot walls (the D-89c backplate MEC-013 is a separate part and is not counted); moment check tau = F_design r_h / (A r_c), r_c = area-weighted distance of the bond from the hinge axis; U-slot on the torque tube alone: T_cap = tau_bond (pi d / 2) t_plate d / 2",
    "inputs": {
     "hvd": "CL-D6-H-VD-FULL",
     "xh": "CL-A5-HINGE-X",
@@ -546,7 +546,10 @@
     "flange": "P:mec.horn.flange_mm",
     "back": "P:mec.horn.backplate_mm",
     "blade": "P:mec.horn.blade_x_mm",
-    "defl": "P:wing.elevon.deflection_deg"
+    "defl": "P:wing.elevon.deflection_deg",
+    "tp": "P:mec.horn.plate_t_m",
+    "tube": "P:mec.tube.od_id_m",
+    "tau_b": "ASM-C4-BOND-SHEAR"
    },
    "units": {
     "hvd": "N*m",
@@ -564,7 +567,15 @@
     "Pcr_N": 362.4571104555307,
     "buckling_sf": 17.910929168519583,
     "A_min_mm2": 349.08212167725816,
-    "A_horn_mm2": 1217.9334095238096,
+    "A_horn_mm2": 929.9334095238096,
+    "A_backplate_mm2": 288.0,
+    "A_with_backplate_mm2": 1217.9334095238096,
+    "M_design_Nm": 1.1126992628462604,
+    "bond_r_c_mm": 21.354935726683063,
+    "tau_moment_MPa": 0.056030910641826824,
+    "rf_moment": 2.2309114481299908,
+    "T_slot_tube_Nm": 0.0942477796076938,
+    "slot_share": 0.08470193407570886,
     "rod_len_m": 0.05475498790917957
    },
    "input_values": {
@@ -789,7 +800,13 @@
     "defl": [
      -25,
      25
-    ]
+    ],
+    "tp": 0.0024,
+    "tube": [
+     0.005,
+     0.004
+    ],
+    "tau_b": 2000000.0
    }
   },
   {
@@ -1819,7 +1836,7 @@
   {
    "id": "CL-D6-BOND-HORN",
    "type": "claim",
-   "title": "Horn bonded area into XPS (flange + backplate + slot walls)",
+   "title": "Horn bonded area into XPS (flange + slot walls, without the backplate MEC-013)",
    "calc": "CALC-D6-PUSHROD",
    "output": "A_horn_mm2",
    "unit": "mm2",
@@ -1834,7 +1851,75 @@
     "MEC-006-R"
    ],
    "how": "T-C6-XPS-PULL; horn pull-off coupon",
-   "value": 1217.9334095238096
+   "note": "D-108 (CDR-27 / CDR-ST-13): since D-89c the backplate is its own part and reaches the horn only through the blade-top glue line, so its 288 mm2 no longer counts (was 1 218 mm2 with it)",
+   "value": 929.9334095238096
+  },
+  {
+   "id": "CL-D6-BOND-BACKPLATE",
+   "type": "claim",
+   "title": "Backplate MEC-013 bonded area on the upper skin (reported)",
+   "calc": "CALC-D6-PUSHROD",
+   "output": "A_backplate_mm2",
+   "unit": "mm2",
+   "parts": [
+    "MEC-013-L",
+    "MEC-013-R"
+   ],
+   "how": "Visual: backplate seated in epoxy over the blade top.",
+   "note": "not in the horn's load path; it closes the slot and spreads the blade-top bearing",
+   "value": 288.0
+  },
+  {
+   "id": "CL-D6-HORN-MOMENT-RF",
+   "type": "claim",
+   "title": "Horn bond RF under the design hinge moment (flange + slot walls)",
+   "calc": "CALC-D6-PUSHROD",
+   "output": "rf_moment",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "parts": [
+    "MEC-004-L",
+    "MEC-004-R",
+    "MEC-006-L",
+    "MEC-006-R"
+   ],
+   "how": "Horn pull-off coupon; T-B2-HINGE.",
+   "note": "D-108 (CDR-27): design moment F_design x r_h (2.29 N m) carried as shear on the horn's own bond at its mean distance from the hinge axis, against kd x XPS tension (the C6 link-bond value). EST: the bond is treated as one patch at r_c",
+   "value": 2.2309114481299908
+  },
+  {
+   "id": "CL-D6-HORN-SLOT-TUBE",
+   "type": "claim",
+   "title": "Open U-slot on the torque tube: torque that bond line alone can pass (reported)",
+   "calc": "CALC-D6-PUSHROD",
+   "output": "T_slot_tube_Nm",
+   "unit": "N m",
+   "parts": [
+    "MEC-004-L",
+    "MEC-004-R",
+    "MEC-009-L",
+    "MEC-009-R"
+   ],
+   "how": "Build check: the U-slot is filled with thickened epoxy round the tube; no test (not a load path).",
+   "note": "D-108 (CDR-27): half the tube circumference x the 2.4 mm plate at 2 MPa gives under 10 % of the design hinge moment (CL-D6-HORN-SLOT-SHARE). The slot-to-tube bond is therefore not counted: the horn drives the panel through its flange and blade (CL-D6-HORN-MOMENT-RF) and the tube picks its torque up from the panel along its own filled groove",
+   "value": 0.0942477796076938
+  },
+  {
+   "id": "CL-D6-HORN-SLOT-SHARE",
+   "type": "claim",
+   "title": "U-slot bond capacity / design hinge moment (reported)",
+   "calc": "CALC-D6-PUSHROD",
+   "output": "slot_share",
+   "unit": "-",
+   "parts": [
+    "MEC-004-L",
+    "MEC-004-R"
+   ],
+   "how": "As CL-D6-HORN-SLOT-TUBE.",
+   "value": 0.08470193407570886
   },
   {
    "id": "CL-D6-BOND-HORN-NEED",

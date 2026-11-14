@@ -92,10 +92,10 @@
     "source": "D5 choice"
    },
    "leg_depth_m": {
-    "value": 0.007,
+    "value": 0.03,
     "unit": "m",
-    "source": "team/D5/feet_calc.py#CALC-D5-BOND",
-    "note": "R4: 10 -> 7 mm to pay for the wider R4 cartridge (-1.2 g on four shoes); legs bonded to both fin faces below the step; bond RF stays >= 1.4 (CL-D5-BOND-SF)"
+    "source": "team/C4/sim_fin.py#CALC-C4-SIM-FACE",
+    "note": "D-106 (CDR-01 d, CR-C4-30, 2026-11-13): 7 -> 30 mm. The two legs (0.8 mm, both fin faces, back wall to the TE) now reach |z| 0.171 m, so the foot side load enters the board over 30 mm instead of 7 mm; C4's 3-D model gives the face margins (CL-C4-SIM-MS-FACE-DRAWN, -FAR). Mass from the CAD volumes: CL-D5-MASS-TOTAL. Before: R4: 10 -> 7 mm to pay for the wider R4 cartridge (-1.2 g on four shoes); legs bonded to both fin faces below the step; bond RF stays >= 1.4 (CL-D5-BOND-SF)"
    },
    "glue_gap_m": {
     "value": 0.0002,

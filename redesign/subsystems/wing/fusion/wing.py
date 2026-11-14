@@ -220,6 +220,18 @@ def _arc(xc, zc, r, a0, a1, n=None):
     return [(xc + r * math.cos(a0 + (a1 - a0) * i / n), zc + r * math.sin(a0 + (a1 - a0) * i / n)) for i in range(n + 1)]
 
 
+def cap_loop(g, d, r):
+    """(x, z) loop of the spar-slot cap strip in one span segment: from the lower boundary (skin, or the lip bead
+    d deep) up the slot walls x_s +/- r_bore to the spar, then under the spar on radius r (the bore, or the bore plus
+    the pod-tie channel). The slot is cut from below to z_s; the spar goes up it; this strip is re-bonded under it."""
+    xs, zs, rb = g['xs'], g['zs'], g['rb']
+    xa, xb = xs - rb, xs + rb
+    h = math.sqrt(max(r * r - rb * rb, 0.0))
+    a0 = math.atan2(-h, rb)
+    bottom = [(xa + (xb - xa) * i / 8, surf(g, xa + (xb - xa) * i / 8, 'lower') + d) for i in range(9)]
+    return bottom + [(xb, zs - h)] + _arc(xs, zs, r, a0, -math.pi - a0)[1:-1] + [(xa, zs - h)]
+
+
 def bore_floor(g, xa, xb, zf, r):
     """Upper cut whose floor zf lies inside the bore: floor from xb to the bore, round the bore BELOW the spar
     (foam boundary), on to xa. Returns the polyline from xb to xa."""
@@ -660,6 +672,30 @@ def build(ctx):
                           loops=[tri if s_ > 0 else tri[::-1]]), note='servo groove corner relief (D-87)')
     for cutter in p1s_jog(g):                                 # D-86: lower-surface jog P1s mouth -> signal groove
         core.cut(cutter, note='jog groove from the P1s lower mouth to the signal groove (hand-cut with the grooves)')
+
+    # Spar slot and cap strip (build-film assembly check, 2026-11-13): BUILD-GUIDE 2.2 cuts the spar slot from the
+    # lower surface with the core in its bed, the spar (with the blocks and plugs) goes up it at 2.5, and the slot
+    # strip is re-bonded under it as the cap (E-WNG-01). The core is drawn with that slot cut (x_s +/- r_bore, from
+    # below the skin to the spar axis) wherever the spar runs in foam; WNG-008 is the cap. The block and anchor
+    # pockets are full depth already. The cap's foam mass stays in WNG-001 (team/D1/wing_data.py).
+    xs, zs, rb = g['xs'], g['zs'], g['rb']
+    zlo = min(surf(g, x, 'lower') for x in (xs - rb, xs, xs + rb)) - 0.002
+    slot = [(xs - rb, zlo), (xs + rb, zlo), (xs + rb, zs), (xs - rb, zs)]
+    capp = ctx.part('WNG-008')
+    caps = []
+    for y0, y1, act in segments(g):
+        if 'spar' not in act or act & {'block', 'anchor'}:
+            continue
+        d = bead_depth(g, y0, y1) if 'bead' in act else 0.0
+        r = g['rb'] + (g['tie_d'] if 'tie' in act else 0.0)
+        spans = [(-y1, 2 * y1)] if y0 == 0.0 else [(y0, y1 - y0), (-y1, y1 - y0)]
+        for off, dep in spans:
+            core.cut(fk.Shape('prism', 'spar slot', axis='Y', offset=off, depth=dep, loops=[slot]),
+                     note='spar slot cut from the lower surface (BUILD-GUIDE 2.2), closed by the cap WNG-008')
+        caps.append(capp.prism('Y', spans[0][0], [cap_loop(g, d, r)], spans[0][1], name='cap strip y%.3f-%.3f' % (y0, y1)))
+    for s in [s for s in caps if s.offset >= 0.0]:
+        capp._add(s.mirrored(1))
+    ctx.contact('E-WNG-18', 'slot strip re-bonded under the spar as the cap (microballoon epoxy), sanded flush')
 
     # WNG-006 block-pocket lip beads (D-68): microballoon epoxy in the stepped 45 deg chamfer along the inboard and
     # outboard pocket lips, upper and lower surface, sanded flush; the 60 mm tape doubler runs over them

@@ -385,83 +385,83 @@
       "ground, armed checks",
       180,
       6.0,
-      0.405657802184542,
-      0.0202828901092271
+      0.40567116224971256,
+      0.02028355811248563
      ],
      [
       "climb 0-50 m",
       25.0,
-      442.5466753968275,
-      31.415550025702927,
-      0.2181635418451592
+      443.0110036732609,
+      31.539551993069846,
+      0.2190246666185406
      ],
      [
       "hover (mission)",
       120,
-      379.7619832189169,
-      26.757747447209532,
-      0.8919249149069844
+      380.19374523264685,
+      26.85323996646592,
+      0.8951079988821974
      ],
      [
       "transition forward",
       10,
-      531.6667765064836,
-      38.15649435865001,
-      0.10599026210736114
+      532.2712433257055,
+      38.33777767078833,
+      0.10649382686330092
      ],
      [
       "back-transition",
       10,
-      493.69057818459197,
-      35.26490584812292,
-      0.09795807180034144
+      494.2518688024409,
+      35.42154458967341,
+      0.09839317941575947
      ],
      [
       "descent 50-0 m",
       50.0,
-      379.7619832189169,
-      26.757747447209532,
-      0.3716353812112435
+      380.19374523264685,
+      26.85323996646592,
+      0.3729616662009156
      ],
      [
       "cruise",
-      722.2001678758579,
-      250.8855403046076,
-      17.417002011875805,
-      3.4940449380196834
+      719.3735606962503,
+      251.03631682705768,
+      17.453861331673387,
+      3.4877351039068003
      ]
     ],
-    "cruise_min": 12.036669464597631,
-    "ah_fixed": 1.7059550619803168,
+    "cruise_min": 11.989559344937504,
+    "ah_fixed": 1.7122648960931997,
     "ah_avail": 5.2,
     "cruise_w_b1_level": 239.0822065019597,
-    "mass_scale": 0.9993993836256212,
-    "hover_w": 379.7619832189169,
-    "hover_a": 26.757747447209532,
-    "cruise_w": 250.8855403046076,
-    "cruise_a": 17.417002011875805,
-    "cruise_w_e2_model": 249.5421195812205,
-    "hover_only_min": 11.61469317275647,
-    "flight_min": 15.620002797930965,
-    "r_pack": 0.0227,
-    "i_ground_a": 0.405657802184542,
+    "mass_scale": 1.0,
+    "hover_w": 380.19374523264685,
+    "hover_a": 26.85323996646592,
+    "cruise_w": 251.03631682705768,
+    "cruise_a": 17.453861331673387,
+    "cruise_w_e2_model": 249.69208873826955,
+    "hover_only_min": 11.573388794102828,
+    "flight_min": 15.572892678270838,
+    "r_pack": 0.0239,
+    "i_ground_a": 0.40567116224971256,
     "t_ground_s": 180,
-    "i_climb_a": 31.415550025702927,
+    "i_climb_a": 31.539551993069846,
     "t_climb_s": 25.0,
-    "i_hover_a": 26.757747447209532,
+    "i_hover_a": 26.85323996646592,
     "t_hover_s": 120,
-    "i_trans_fwd_a": 38.15649435865001,
+    "i_trans_fwd_a": 38.33777767078833,
     "t_trans_fwd_s": 10,
-    "i_trans_back_a": 35.26490584812292,
+    "i_trans_back_a": 35.42154458967341,
     "t_trans_back_s": 10,
-    "i_descent_a": 26.757747447209532,
+    "i_descent_a": 26.85323996646592,
     "t_descent_s": 50.0,
-    "i_cruise_a": 17.417002011875805,
-    "t_cruise_s": 722.2001678758579,
-    "i_max_phase_a": 38.15649435865001
+    "i_cruise_a": 17.453861331673387,
+    "t_cruise_s": 719.3735606962503,
+    "i_max_phase_a": 38.33777767078833
    },
    "input_values": {
-    "m": 2.597,
+    "m": 2.6,
     "n": 4,
     "table": [
      [
@@ -495,7 +495,7 @@
     "ah": 6.5,
     "ocv": 3.7,
     "r_cell": 0.004,
-    "r_ext": 6.7,
+    "r_ext": 7.9,
     "cold": 1.5,
     "hmargin": 1.1,
     "prof": {
@@ -525,9 +525,9 @@
     "cap_frac": 0.92,
     "reserve": 0.2,
     "pc_b": 239.0822065019597,
-    "pc_p": 314.2767169708027,
+    "pc_p": 314.8059091853597,
     "m_ref": 2.6,
-    "m_ref_p": 2.4858162999999998
+    "m_ref_p": 2.5024393
    }
   },
   {
@@ -600,80 +600,80 @@
       "ground, armed checks",
       180,
       6.0,
-      0.4057469025575869,
-      0.020287345127879344
+      0.4057602743694851,
+      0.020288013718474253
      ],
      [
       "climb 0-50 m",
       25.0,
       487.3121040405871,
-      35.54768895031274,
-      0.24685895104383848
+      35.66872519372642,
+      0.247699480511989
      ],
      [
       "hover (mission)",
       120,
       418.2131197559116,
-      30.142285945850148,
-      1.0047428648616716
+      30.226972150217204,
+      1.0075657383405734
      ],
      [
       "transition forward",
       20,
       585.4983676582762,
-      43.482723517945665,
-      0.24157068621080924
+      43.67148708639382,
+      0.2426193727021879
      ],
      [
       "back-transition",
       20,
       543.677055682685,
-      40.064580664453594,
-      0.22258100369140885
+      40.22196500217414,
+      0.22345536112318964
      ],
      [
       "descent 50-0 m",
       50.0,
       418.2131197559116,
-      30.142285945850148,
-      0.41864286035902987
+      30.226972150217204,
+      0.4198190576419056
      ],
      [
       "cruise",
-      380.3419421564585,
-      336.21772282610345,
-      23.902540402971255,
-      2.525316288705363
+      378.90927299931326,
+      335.87882565806126,
+      23.928658809779208,
+      2.518552975961681
      ]
     ],
-    "cruise_min": 6.3390323692743085,
-    "ah_fixed": 2.1546837112946378,
+    "cruise_min": 6.315154549988554,
+    "ah_fixed": 2.1614470240383197,
     "ah_avail": 4.680000000000001,
-    "cruise_w_b1_level": 314.2767169708027,
-    "mass_scale": 1.018870752370204,
+    "cruise_w_b1_level": 314.8059091853597,
+    "mass_scale": 1.0161327552351318,
     "hover_w": 418.2131197559116,
-    "hover_a": 30.142285945850148,
-    "cruise_w": 336.21772282610345,
-    "cruise_a": 23.902540402971255,
+    "hover_a": 30.226972150217204,
+    "cruise_w": 335.87882565806126,
+    "cruise_a": 23.928658809779208,
     "cruise_w_e2_model": 404.9976035971049,
-    "hover_only_min": 9.275433183620864,
-    "flight_min": 10.255699035940976,
-    "r_pack": 0.0307,
-    "i_ground_a": 0.4057469025575869,
+    "hover_only_min": 9.249445091207477,
+    "flight_min": 10.231821216655222,
+    "r_pack": 0.0319,
+    "i_ground_a": 0.4057602743694851,
     "t_ground_s": 180,
-    "i_climb_a": 35.54768895031274,
+    "i_climb_a": 35.66872519372642,
     "t_climb_s": 25.0,
-    "i_hover_a": 30.142285945850148,
+    "i_hover_a": 30.226972150217204,
     "t_hover_s": 120,
-    "i_trans_fwd_a": 43.482723517945665,
+    "i_trans_fwd_a": 43.67148708639382,
     "t_trans_fwd_s": 20,
-    "i_trans_back_a": 40.064580664453594,
+    "i_trans_back_a": 40.22196500217414,
     "t_trans_back_s": 20,
-    "i_descent_a": 30.142285945850148,
+    "i_descent_a": 30.226972150217204,
     "t_descent_s": 50.0,
-    "i_cruise_a": 23.902540402971255,
-    "t_cruise_s": 380.3419421564585,
-    "i_max_phase_a": 43.482723517945665
+    "i_cruise_a": 23.928658809779208,
+    "t_cruise_s": 378.90927299931326,
+    "i_max_phase_a": 43.67148708639382
    },
    "input_values": {
     "m": 2.6,
@@ -710,7 +710,7 @@
     "ah": 6.5,
     "ocv": 3.7,
     "r_cell": 0.004,
-    "r_ext": 6.7,
+    "r_ext": 7.9,
     "cold": 1.5,
     "hmargin": 1.1,
     "prof": {
@@ -740,9 +740,9 @@
     "cap_frac": 0.92,
     "reserve": 0.2,
     "pc_b": 239.0822065019597,
-    "pc_p": 314.2767169708027,
+    "pc_p": 314.8059091853597,
     "m_ref": 2.6,
-    "m_ref_p": 2.4858162999999998
+    "m_ref_p": 2.5024393
    }
   },
   {
@@ -778,27 +778,27 @@
     "ASM-E2-COLD-R"
    ],
    "outputs": {
-    "v_full_warm": 14.530000000000001,
-    "r_full_warm_ohm": 0.0227,
-    "i_unlim_full_warm": 163.57459518858332,
+    "v_full_warm": 14.41,
+    "r_full_warm_ohm": 0.0239,
+    "i_unlim_full_warm": 160.8839006426103,
     "limiter_binds_full_warm": 1.0,
-    "v_res20_warm": 12.65,
-    "r_res20_warm_ohm": 0.0227,
-    "i_unlim_res20_warm": 123.98400943992316,
+    "v_res20_warm": 12.53,
+    "r_res20_warm_ohm": 0.0239,
+    "i_unlim_res20_warm": 121.64290064007517,
     "limiter_binds_res20_warm": 1.0,
-    "v_res20_cold": 11.85,
-    "r_res20_cold_ohm": 0.0307,
-    "i_unlim_res20_cold": 108.79810380151298,
+    "v_res20_cold": 11.73,
+    "r_res20_cold_ohm": 0.0319,
+    "i_unlim_res20_cold": 106.60575489363309,
     "limiter_binds_res20_cold": 1.0,
-    "f_lower_thrust_prop_v": 0.8155540261527873,
-    "f_upper_ideal_rotor": 0.8729080341272172,
-    "f_old_v2_rule": 0.6410815376186998,
-    "f_e1": 0.850787322466117,
-    "e1_bracket_margin": 0.02212071166110019,
-    "e1_exponent": 0.7925596679846051,
+    "f_lower_thrust_prop_v": 0.8140180430256766,
+    "f_upper_ideal_rotor": 0.8718116888360824,
+    "f_old_v2_rule": 0.6281633491599707,
+    "f_e1": 0.8496852675552753,
+    "e1_bracket_margin": 0.022126421280807107,
+    "e1_exponent": 0.7915978847110052,
     "c_peak": 15.384615384615385,
-    "sag_v_per_cell_worst": 0.7675000000000001,
-    "v_cell_worst_loaded": 2.9625
+    "sag_v_per_cell_worst": 0.7974999999999999,
+    "v_cell_worst_loaded": 2.9325
    },
    "input_values": {
     "cells": 4,
@@ -807,10 +807,10 @@
     "n": 4,
     "ocv20": 3.73,
     "r_cell": 0.004,
-    "r_ext": 6.7,
+    "r_ext": 7.9,
     "cold": 1.5,
     "ah": 6.5,
-    "f_e1": 0.850787322466117
+    "f_e1": 0.8496852675552753
    }
   },
   {
@@ -838,13 +838,13 @@
     "ASM-E2-COLD-R"
    ],
    "outputs": {
-    "dT_cold_k": 20.652873276720147,
-    "t_end_cold_c": 30.652873276720147,
-    "p_hover_cold_w": 21.80537764899349,
-    "dT_hot_k": 13.768582184480097,
-    "t_end_hot_c": 43.768582184480096,
-    "p_hover_hot_w": 14.536918432662326,
-    "t_end_max_c": 43.768582184480096
+    "dT_cold_k": 20.710525292952365,
+    "t_end_cold_c": 30.710525292952365,
+    "p_hover_cold_w": 21.928076288880156,
+    "dT_hot_k": 13.807016861968242,
+    "t_end_hot_c": 43.80701686196824,
+    "p_hover_hot_w": 14.618717525920104,
+    "t_end_max_c": 43.80701686196824
    },
    "input_values": {
     "b": [
@@ -852,50 +852,50 @@
       "ground, armed checks",
       180,
       6.0,
-      0.4057469025575869,
-      0.020287345127879344
+      0.4057602743694851,
+      0.020288013718474253
      ],
      [
       "climb 0-50 m",
       25.0,
       487.3121040405871,
-      35.54768895031274,
-      0.24685895104383848
+      35.66872519372642,
+      0.247699480511989
      ],
      [
       "hover (mission)",
       120,
       418.2131197559116,
-      30.142285945850148,
-      1.0047428648616716
+      30.226972150217204,
+      1.0075657383405734
      ],
      [
       "transition forward",
       20,
       585.4983676582762,
-      43.482723517945665,
-      0.24157068621080924
+      43.67148708639382,
+      0.2426193727021879
      ],
      [
       "back-transition",
       20,
       543.677055682685,
-      40.064580664453594,
-      0.22258100369140885
+      40.22196500217414,
+      0.22345536112318964
      ],
      [
       "descent 50-0 m",
       50.0,
       418.2131197559116,
-      30.142285945850148,
-      0.41864286035902987
+      30.226972150217204,
+      0.4198190576419056
      ],
      [
       "cruise",
-      380.3419421564585,
-      336.21772282610345,
-      23.902540402971255,
-      2.525316288705363
+      378.90927299931326,
+      335.87882565806126,
+      23.928658809779208,
+      2.518552975961681
      ]
     ],
     "r_cell": 0.004,
@@ -984,7 +984,7 @@
       "Admiral 4S 4000 LiPo",
       4.0,
       0.386,
-      2.433,
+      2.436,
       5.7,
       2.2,
       120.0,
@@ -994,8 +994,8 @@
       "4S 5000 hard-case LiPo (EST)",
       5.0,
       0.46,
-      2.507,
-      8.3,
+      2.51,
+      8.2,
       3.9,
       150.0,
       false
@@ -1004,7 +1004,7 @@
       "Ovonic 4S 6500 120C hard case EC5 (named, 551 g listed)",
       6.5,
       0.55,
-      2.597,
+      2.6,
       12.0,
       6.3,
       195.0,
@@ -1014,8 +1014,8 @@
       "Tattu 4S 6750 25C XT90 (605 g listed)",
       6.75,
       0.605,
-      2.652,
-      12.4,
+      2.655,
+      12.3,
       6.5,
       168.75,
       false
@@ -1024,9 +1024,9 @@
       "Ovonic 4S 6500 130C XT60 (680 g listed, 12 AWG)",
       6.5,
       0.68,
-      2.727,
-      11.2,
-      5.7,
+      2.73,
+      11.1,
+      5.6,
       195.0,
       false
      ],
@@ -1034,7 +1034,7 @@
       "4S 8000 hard-case LiPo (EST)",
       8.0,
       0.7,
-      2.747,
+      2.75,
       15.0,
       8.2,
       240.0,
@@ -1044,8 +1044,8 @@
       "Li-ion 4S2P 21700 9 Ah (EST)",
       9.0,
       0.62,
-      2.667,
-      18.4,
+      2.67,
+      18.3,
       10.4,
       90.0,
       false
@@ -1099,7 +1099,7 @@
       90.0
      ]
     ],
-    "m_sized": 2.597,
+    "m_sized": 2.6,
     "m_pack": 0.55,
     "gate": 2.6,
     "t_req": 5.0,
@@ -1136,7 +1136,7 @@
     "cells": 4,
     "ocv": 3.7,
     "r_cell": 0.004,
-    "r_ext": 6.7,
+    "r_ext": 7.9,
     "cold": 1.5,
     "hmargin": 1.1,
     "prof": {
@@ -1166,9 +1166,9 @@
     "cap_frac": 0.92,
     "reserve": 0.2,
     "pc_b": 239.0822065019597,
-    "pc_p": 314.2767169708027,
+    "pc_p": 314.8059091853597,
     "m_ref": 2.6,
-    "m_ref_p": 2.4858162999999998
+    "m_ref_p": 2.5024393
    }
   },
   {
@@ -1189,8 +1189,8 @@
    "outputs": {
     "crt_mah": 1300,
     "low_mah": 2600,
-    "land_need_mah": 1290.7852536487107,
-    "cruise_to_low_min": 5.99067742387534
+    "land_need_mah": 1293.976833513225,
+    "cruise_to_low_min": 5.972321508684052
    },
    "input_values": {
     "b": [
@@ -1198,50 +1198,50 @@
       "ground, armed checks",
       180,
       6.0,
-      0.4057469025575869,
-      0.020287345127879344
+      0.4057602743694851,
+      0.020288013718474253
      ],
      [
       "climb 0-50 m",
       25.0,
       487.3121040405871,
-      35.54768895031274,
-      0.24685895104383848
+      35.66872519372642,
+      0.247699480511989
      ],
      [
       "hover (mission)",
       120,
       418.2131197559116,
-      30.142285945850148,
-      1.0047428648616716
+      30.226972150217204,
+      1.0075657383405734
      ],
      [
       "transition forward",
       20,
       585.4983676582762,
-      43.482723517945665,
-      0.24157068621080924
+      43.67148708639382,
+      0.2426193727021879
      ],
      [
       "back-transition",
       20,
       543.677055682685,
-      40.064580664453594,
-      0.22258100369140885
+      40.22196500217414,
+      0.22345536112318964
      ],
      [
       "descent 50-0 m",
       50.0,
       418.2131197559116,
-      30.142285945850148,
-      0.41864286035902987
+      30.226972150217204,
+      0.4198190576419056
      ],
      [
       "cruise",
-      380.3419421564585,
-      336.21772282610345,
-      23.902540402971255,
-      2.525316288705363
+      378.90927299931326,
+      335.87882565806126,
+      23.928658809779208,
+      2.518552975961681
      ]
     ],
     "ah": 6.5,
@@ -1274,10 +1274,10 @@
     "ASM-E2-CHARGE"
    ],
    "outputs": {
-    "t_sortie_min": 18.620002797930965,
+    "t_sortie_min": 18.572892678270836,
     "sorties_window": 4,
     "sorties_current_packs": 2,
-    "window_used_min": 57.24000559586193,
+    "window_used_min": 57.14578535654167,
     "packs_to_fill_window": 4,
     "charge_min_per_pack": 58.99999999999999,
     "charge_h_current_packs": 1.9666666666666663,
@@ -1290,50 +1290,50 @@
       "ground, armed checks",
       180,
       6.0,
-      0.405657802184542,
-      0.0202828901092271
+      0.40567116224971256,
+      0.02028355811248563
      ],
      [
       "climb 0-50 m",
       25.0,
-      442.5466753968275,
-      31.415550025702927,
-      0.2181635418451592
+      443.0110036732609,
+      31.539551993069846,
+      0.2190246666185406
      ],
      [
       "hover (mission)",
       120,
-      379.7619832189169,
-      26.757747447209532,
-      0.8919249149069844
+      380.19374523264685,
+      26.85323996646592,
+      0.8951079988821974
      ],
      [
       "transition forward",
       10,
-      531.6667765064836,
-      38.15649435865001,
-      0.10599026210736114
+      532.2712433257055,
+      38.33777767078833,
+      0.10649382686330092
      ],
      [
       "back-transition",
       10,
-      493.69057818459197,
-      35.26490584812292,
-      0.09795807180034144
+      494.2518688024409,
+      35.42154458967341,
+      0.09839317941575947
      ],
      [
       "descent 50-0 m",
       50.0,
-      379.7619832189169,
-      26.757747447209532,
-      0.3716353812112435
+      380.19374523264685,
+      26.85323996646592,
+      0.3729616662009156
      ],
      [
       "cruise",
-      722.2001678758579,
-      250.8855403046076,
-      17.417002011875805,
-      3.4940449380196834
+      719.3735606962503,
+      251.03631682705768,
+      17.453861331673387,
+      3.4877351039068003
      ]
     ],
     "td": {
@@ -1385,9 +1385,9 @@
     "ASM-E2-PACK-LIMITS"
    ],
    "outputs": {
-    "accept_kg": 0.5641837000000003,
+    "accept_kg": 0.5635607000000002,
     "mass_worst_kg": 0.556,
-    "mass_margin_kg": 0.008183700000000238,
+    "mass_margin_kg": 0.007560700000000198,
     "bay_clear_min_m": 0.000999999999999994,
     "bay_clear_m": [
      0.021999999999999992,
@@ -1417,7 +1417,7 @@
      ],
      "awg_max": 10
     },
-    "accept_g": 564.1837000000003
+    "accept_g": 563.5607000000002
    }
   },
   {
@@ -1490,16 +1490,16 @@
    ],
    "outputs": {
     "k": 1.0582134224946023,
-    "cruise_min_base": 11.35580104864966,
-    "cruise_min_pess": 5.971057070635094,
-    "cruise_w_base": 265.4904462601463,
-    "cruise_w_pess": 355.7901071751525,
-    "cruise_a_pess": 25.375570109264736,
+    "cruise_min_base": 11.310265184599842,
+    "cruise_min_pess": 5.947701613605093,
+    "cruise_w_base": 265.65000000000003,
+    "cruise_w_pess": 355.4314816430849,
+    "cruise_a_pess": 25.40698716493047,
     "low_mah": 2700,
-    "cruise_to_low_min": 5.406475936288758
+    "cruise_to_low_min": 5.3886611110106095
    },
    "input_values": {
-    "m_b": 2.597,
+    "m_b": 2.6,
     "m_p": 2.6,
     "p_par": 253.0,
     "n": 4,
@@ -1535,7 +1535,7 @@
     "ah": 6.5,
     "ocv": 3.7,
     "r_cell": 0.004,
-    "r_ext": 6.7,
+    "r_ext": 7.9,
     "cold": 1.5,
     "hmargin": 1.1,
     "prof": {
@@ -1565,9 +1565,161 @@
     "cap_frac": 0.92,
     "reserve": 0.2,
     "pc_b": 239.0822065019597,
-    "pc_p": 314.2767169708027,
+    "pc_p": 314.8059091853597,
     "m_ref": 2.6,
-    "m_ref_p": 2.4858162999999998
+    "m_ref_p": 2.5024393
+   }
+  },
+  {
+   "id": "CALC-E2-BUDGET-V17",
+   "type": "calculation",
+   "title": "Budget at the 17 m/s fallback cruise (D-96 c; planning baseline of CDR decision B6)",
+   "script": "redesign/team/E2/energy_claims.py",
+   "function": "budget_v17",
+   "equation": "as CALC-E2-BUDGET-240 with the params cruise power replaced by E1's 17 m/s point: k = (P_E1(17 m/s) + P_avionics) / P_B1(16 m/s, gate) ; base = B1 level power x k ; pessimistic = B1 pessimistic power x the same k (EST: the pessimistic / base ratio of 16 m/s is carried to 17 m/s) ; BATT_LOW count as CALC-E2-FAILSAFE with the 17 m/s cruise current",
+   "inputs": {
+    "m_b": "CL-A1-MASS-SIZED",
+    "m_p": "P:requirements.mtow_gate_kg",
+    "p17": "CL-E1-CRUISE-P-55-V17",
+    "n": "P:propulsion.n_motors",
+    "table": "P:propulsion.thrust_table_g_w",
+    "download": "P:propulsion.download_factor",
+    "esc": "ASM-E2-ESC-EFF",
+    "avn": "ASM-E2-AVIONICS-W",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "D": "P:propulsion.prop_diameter_m",
+    "S": "CL-A1-WING-AREA",
+    "b": "P:wing.span_m",
+    "e": "P:wing.oswald_e",
+    "V": "P:performance.cruise_ms",
+    "cells": "P:battery.cells_s",
+    "ah": "P:battery.capacity_ah",
+    "ocv": "ASM-E2-OCV-AVG",
+    "r_cell": "ASM-E2-R-CELL",
+    "r_ext": "P:electrical.r_ext_mohm",
+    "cold": "ASM-E2-COLD-R",
+    "hmargin": "ASM-E2-HOVER-MARGIN",
+    "prof": "ASM-E2-PROFILE",
+    "aero": "ASM-E2-CRUISE-AERO",
+    "cap_frac": "P:requirements.pack_capacity_min_frac",
+    "reserve": "P:requirements.energy_reserve_frac",
+    "pc_b": "CL-B1V-CRUISE-P-GATE",
+    "pc_p": "CL-B1V-CRUISE-P-PESS",
+    "m_ref": "P:requirements.mtow_gate_kg",
+    "m_ref_p": "CL-A3-MASS-PREDICTED"
+   },
+   "units": {
+    "m_b": "kg",
+    "m_p": "kg",
+    "p17": "W",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "D": "m",
+    "S": "m2",
+    "b": "m",
+    "V": "m/s",
+    "ah": "Ah",
+    "ocv": "V",
+    "r_cell": "ohm",
+    "r_ext": "mOhm",
+    "pc_b": "W",
+    "pc_p": "W",
+    "m_ref": "kg",
+    "m_ref_p": "kg"
+   },
+   "assumes": [
+    "ASM-E2-ESC-EFF",
+    "ASM-E2-AVIONICS-W",
+    "ASM-E2-OCV-AVG",
+    "ASM-E2-R-CELL",
+    "ASM-E2-PROFILE",
+    "ASM-E2-CRUISE-AERO",
+    "ASM-E2-COLD-R",
+    "ASM-E2-HOVER-MARGIN",
+    "ASM-E1-V-FALLBACK"
+   ],
+   "outputs": {
+    "k": 1.2109834692838986,
+    "p_carried_w": 289.52459987379257,
+    "cruise_min_base": 9.837875732003681,
+    "cruise_min_pess": 5.150790398640713,
+    "cruise_w_base": 304.0008298674822,
+    "cruise_w_pess": 406.7437055544007,
+    "cruise_a_pess": 29.337862126476633,
+    "low_mah": 2700,
+    "cruise_to_low_min": 4.666653728665841
+   },
+   "input_values": {
+    "m_b": 2.6,
+    "m_p": 2.6,
+    "p17": 283.52459987379257,
+    "n": 4,
+    "table": [
+     [
+      690,
+      89.0
+     ],
+     [
+      750,
+      104.0
+     ],
+     [
+      870,
+      133.0
+     ],
+     [
+      1580,
+      447.0
+     ]
+    ],
+    "download": 1.06,
+    "esc": 0.95,
+    "avn": 6.0,
+    "g": 9.80665,
+    "rho": 1.225,
+    "D": 0.2794,
+    "S": 0.368,
+    "b": 1.15,
+    "e": 0.8,
+    "V": 16.0,
+    "cells": 4,
+    "ah": 6.5,
+    "ocv": 3.7,
+    "r_cell": 0.004,
+    "r_ext": 7.9,
+    "cold": 1.5,
+    "hmargin": 1.1,
+    "prof": {
+     "ground_s": 180,
+     "alt_m": 50,
+     "climb_ms": 2.0,
+     "descent_ms": 1.0,
+     "hover_s": 120,
+     "trans_s": [
+      10,
+      20
+     ],
+     "trans_fwd_factor": 1.4,
+     "trans_back_factor": 1.3
+    },
+    "aero": {
+     "cd0": 0.0593,
+     "cd0_pess": 1.3,
+     "eta_prop": [
+      0.47,
+      0.35
+     ],
+     "eta_motor": 0.72,
+     "trim": 1.05,
+     "circuit": 1.05
+    },
+    "cap_frac": 0.92,
+    "reserve": 0.2,
+    "pc_b": 239.0822065019597,
+    "pc_p": 314.8059091853597,
+    "m_ref": 2.6,
+    "m_ref_p": 2.5024393
    }
   },
   {
@@ -1583,50 +1735,50 @@
      "ground, armed checks",
      180,
      6.0,
-     0.405657802184542,
-     0.0202828901092271
+     0.40567116224971256,
+     0.02028355811248563
     ],
     [
      "climb 0-50 m",
      25.0,
-     442.5466753968275,
-     31.415550025702927,
-     0.2181635418451592
+     443.0110036732609,
+     31.539551993069846,
+     0.2190246666185406
     ],
     [
      "hover (mission)",
      120,
-     379.7619832189169,
-     26.757747447209532,
-     0.8919249149069844
+     380.19374523264685,
+     26.85323996646592,
+     0.8951079988821974
     ],
     [
      "transition forward",
      10,
-     531.6667765064836,
-     38.15649435865001,
-     0.10599026210736114
+     532.2712433257055,
+     38.33777767078833,
+     0.10649382686330092
     ],
     [
      "back-transition",
      10,
-     493.69057818459197,
-     35.26490584812292,
-     0.09795807180034144
+     494.2518688024409,
+     35.42154458967341,
+     0.09839317941575947
     ],
     [
      "descent 50-0 m",
      50.0,
-     379.7619832189169,
-     26.757747447209532,
-     0.3716353812112435
+     380.19374523264685,
+     26.85323996646592,
+     0.3729616662009156
     ],
     [
      "cruise",
-     722.2001678758579,
-     250.8855403046076,
-     17.417002011875805,
-     3.4940449380196834
+     719.3735606962503,
+     251.03631682705768,
+     17.453861331673387,
+     3.4877351039068003
     ]
    ]
   },
@@ -1643,50 +1795,50 @@
      "ground, armed checks",
      180,
      6.0,
-     0.4057469025575869,
-     0.020287345127879344
+     0.4057602743694851,
+     0.020288013718474253
     ],
     [
      "climb 0-50 m",
      25.0,
      487.3121040405871,
-     35.54768895031274,
-     0.24685895104383848
+     35.66872519372642,
+     0.247699480511989
     ],
     [
      "hover (mission)",
      120,
      418.2131197559116,
-     30.142285945850148,
-     1.0047428648616716
+     30.226972150217204,
+     1.0075657383405734
     ],
     [
      "transition forward",
      20,
      585.4983676582762,
-     43.482723517945665,
-     0.24157068621080924
+     43.67148708639382,
+     0.2426193727021879
     ],
     [
      "back-transition",
      20,
      543.677055682685,
-     40.064580664453594,
-     0.22258100369140885
+     40.22196500217414,
+     0.22345536112318964
     ],
     [
      "descent 50-0 m",
      50.0,
      418.2131197559116,
-     30.142285945850148,
-     0.41864286035902987
+     30.226972150217204,
+     0.4198190576419056
     ],
     [
      "cruise",
-     380.3419421564585,
-     336.21772282610345,
-     23.902540402971255,
-     2.525316288705363
+     378.90927299931326,
+     335.87882565806126,
+     23.928658809779208,
+     2.518552975961681
     ]
    ]
   },
@@ -1705,7 +1857,7 @@
     "R-MISSION"
    ],
    "how": "Full-mission flight (R-TEST-ORDER gate 9): land when BAT.CurrTot reaches 80 % of 6 500 mAh; logged cruise time >= this value.",
-   "value": 12.036669464597631
+   "value": 11.989559344937504
   },
   {
    "id": "CL-E2-CRUISE-MIN-PESS",
@@ -1722,7 +1874,7 @@
     "R-MISSION"
    ],
    "how": "Same flight; also re-run this script with the twin's logged hover and cruise currents in place of the model (ASM-E2-HOVER-MARGIN, ASM-E2-CRUISE-AERO).",
-   "value": 6.3390323692743085
+   "value": 6.315154549988554
   },
   {
    "id": "CL-E2-HOVER-ONLY-MIN-PESS",
@@ -1736,7 +1888,7 @@
     "ref": "P:requirements.hover_time_min"
    },
    "how": "Tethered hover (R-TEST-ORDER gate 3): log BAT.CurrTot vs time; minutes to 5 200 mAh >= this value.",
-   "value": 9.275433183620864
+   "value": 9.249445091207477
   },
   {
    "id": "CL-E2-HOVER-I-GATE",
@@ -1746,7 +1898,7 @@
    "output": "hover_a",
    "unit": "A",
    "how": "Tethered hover at gate mass (ballast) with the 150 A watt meter; F1 sizes wires and the disconnect on it.",
-   "value": 30.142285945850148
+   "value": 30.226972150217204
   },
   {
    "id": "CL-E2-CRUISE-I-PESS",
@@ -1756,7 +1908,7 @@
    "output": "cruise_a",
    "unit": "A",
    "how": "Fixed-wing tune flights: mean BAT.Curr in level cruise at 16 m/s.",
-   "value": 23.902540402971255
+   "value": 23.928658809779208
   },
   {
    "id": "CL-E2-I-GROUND-PESS",
@@ -1766,7 +1918,7 @@
    "output": "i_ground_a",
    "unit": "A",
    "how": "DataFlash BAT.Curr mean over the phase on the full-mission log (T-E2-MISSION-LOG), within +/-15 %; F1 reads this claim for harness heating (CALC-F1-PROFILE, CL-F1-PROFILE).",
-   "value": 0.4057469025575869
+   "value": 0.4057602743694851
   },
   {
    "id": "CL-E2-T-GROUND-PESS",
@@ -1786,7 +1938,7 @@
    "output": "i_climb_a",
    "unit": "A",
    "how": "DataFlash BAT.Curr mean over the phase on the full-mission log (T-E2-MISSION-LOG), within +/-15 %; F1 reads this claim for harness heating (CALC-F1-PROFILE, CL-F1-PROFILE).",
-   "value": 35.54768895031274
+   "value": 35.66872519372642
   },
   {
    "id": "CL-E2-T-CLIMB-PESS",
@@ -1806,7 +1958,7 @@
    "output": "i_trans_fwd_a",
    "unit": "A",
    "how": "DataFlash BAT.Curr mean over the phase on the full-mission log (T-E2-MISSION-LOG), within +/-15 %; F1 reads this claim for harness heating (CALC-F1-PROFILE, CL-F1-PROFILE).",
-   "value": 43.482723517945665
+   "value": 43.67148708639382
   },
   {
    "id": "CL-E2-T-TRANS-FWD-PESS",
@@ -1826,7 +1978,7 @@
    "output": "i_trans_back_a",
    "unit": "A",
    "how": "DataFlash BAT.Curr mean over the phase on the full-mission log (T-E2-MISSION-LOG), within +/-15 %; F1 reads this claim for harness heating (CALC-F1-PROFILE, CL-F1-PROFILE).",
-   "value": 40.064580664453594
+   "value": 40.22196500217414
   },
   {
    "id": "CL-E2-T-TRANS-BACK-PESS",
@@ -1846,7 +1998,7 @@
    "output": "i_descent_a",
    "unit": "A",
    "how": "DataFlash BAT.Curr mean over the phase on the full-mission log (T-E2-MISSION-LOG), within +/-15 %; F1 reads this claim for harness heating (CALC-F1-PROFILE, CL-F1-PROFILE).",
-   "value": 30.142285945850148
+   "value": 30.226972150217204
   },
   {
    "id": "CL-E2-T-DESCENT-PESS",
@@ -1876,7 +2028,7 @@
    "output": "t_cruise_s",
    "unit": "s",
    "how": "As CL-E2-CRUISE-MIN-PESS x 60.",
-   "value": 380.3419421564585
+   "value": 378.90927299931326
   },
   {
    "id": "CL-E2-I-MAX-PHASE-PESS",
@@ -1890,7 +2042,7 @@
     "ref": "P:performance.full_throttle_current_a"
    },
    "how": "Largest phase-mean BAT.Curr on the full-mission log; stays under the 100 A limiter.",
-   "value": 43.482723517945665
+   "value": 43.67148708639382
   },
   {
    "id": "CL-E2-C-PEAK",
@@ -1919,7 +2071,7 @@
    },
    "how": "T-E1-STAND fresh and worst-state runs: measured thrust ratio between the measured bus-voltage ratio and its 2/3 power.",
    "note": "D-35 resolved: E2 adopts E1's station model (CL-E1-SAG-FACTOR, CL-E1-TW-WORST) as the one worst-state claim. The limiter binds in every pack state, so the pack current is fixed at 100 A and thrust follows power (lower bound, thrust ~ V) or the ideal rotor (upper, ~ V^(2/3)); E1 lies between. Retires CL-E2-SAG-F-WORST and CL-E2-TW-SAG-WORST (the (V/14.8)^2 rule counted the sag twice)",
-   "value": 0.02212071166110019
+   "value": 0.022126421280807107
   },
   {
    "id": "CL-E2-LIMITER-BINDS-WORST",
@@ -1933,7 +2085,7 @@
     "ref": "P:performance.full_throttle_current_a"
    },
    "how": "Same stand run with Q_M_BAT_CURR_MAX disabled for one 1 s punch (props on the stand only): pack current at full duty above 100 A. If it is not, the V^2 rule applies below the limiter and D-35 re-opens.",
-   "value": 108.79810380151298
+   "value": 106.60575489363309
   },
   {
    "id": "CL-E2-V-BUS-WORST",
@@ -1943,7 +2095,7 @@
    "output": "v_res20_cold",
    "unit": "V",
    "how": "Logged BAT.Volt during a full-throttle punch on the cold-pack stand run (T-E2-IR); F4 sets BATT_FS_VOLTSRC 1 (sag-compensated) and Q_M_BAT_VOLT_MIN below it.",
-   "value": 11.85
+   "value": 11.73
   },
   {
    "id": "CL-E2-SAG-V-WORST",
@@ -1953,7 +2105,7 @@
    "output": "sag_v_per_cell_worst",
    "unit": "V",
    "how": "Load-step IR test (T-E2-IR) scaled to 100 A; F4 uses it for BATT_FS_VOLTSRC 1 and Q_M_BAT_VOLT_MIN.",
-   "value": 0.7675000000000001
+   "value": 0.7974999999999999
   },
   {
    "id": "CL-E2-PACK-T-END",
@@ -1970,7 +2122,7 @@
     "R-THERMAL"
    ],
    "how": "IR thermometer on the pack face at landing; E3 adds the pod's heat path. 50 degC leaves 10 K to the usual 60 degC LiPo discharge limit.",
-   "value": 43.768582184480096
+   "value": 43.80701686196824
   },
   {
    "id": "CL-E2-PACK-HEAT-HOVER",
@@ -1980,7 +2132,7 @@
    "output": "p_hover_cold_w",
    "unit": "W",
    "how": "E3 input; check by I^2 R from the measured IR and hover current.",
-   "value": 21.80537764899349
+   "value": 21.928076288880156
   },
   {
    "id": "CL-E2-PACK-LARGEST",
@@ -2037,7 +2189,7 @@
     "R-MISSION"
    ],
    "how": "SITL with the logged currents: QRTL must not trigger before 5 min of cruise.",
-   "value": 5.99067742387534
+   "value": 5.972321508684052
   },
   {
    "id": "CL-E2-SORTIES-WINDOW",
@@ -2095,7 +2247,7 @@
     "value": 180.0
    },
    "how": "Log take-off and landing times on the first test day; I2 plans the day on it.",
-   "value": 57.24000559586193
+   "value": 57.14578535654167
   },
   {
    "id": "CL-E2-PACK-ACCEPT-KG",
@@ -2116,7 +2268,7 @@
    ],
    "how": "Re-run this script after every A1 / A3 re-run; T-E2-WEIGH passes a pack at or under this value.",
    "note": "D-64: E2's acceptance line and the T-E2-WEIGH pass line follow A1's CL-A1-PACK-ACCEPT (A1 frame estimate today; A3 publishes the same figure from CL-A3-GATE-MARGIN). Limit = the SKU's listed maximum 0.556 kg: below it the named pack itself would fail acceptance. Replaces the D-58 0.601 kg",
-   "value": 0.5641837000000003
+   "value": 0.5635607000000002
   },
   {
    "id": "CL-E2-SKU-MASS-MARGIN",
@@ -2136,7 +2288,7 @@
     "PWR-001"
    ],
    "how": "T-E2-WEIGH: every pack <= CL-E2-PACK-ACCEPT-KG on a 1 g scale, leads included (pack_log.csv).",
-   "value": 0.008183700000000238
+   "value": 0.007560700000000198
   },
   {
    "id": "CL-E2-SKU-BAY-CLEAR",
@@ -2185,7 +2337,7 @@
     "ref": "P:requirements.cruise_time_min"
    },
    "how": "As CL-E2-CRUISE-MIN-BASE; the first tune flight's logged cruise current decides between B1 and E1.",
-   "value": 11.35580104864966
+   "value": 11.310265184599842
   },
   {
    "id": "CL-E2-CRUISE-MIN-PESS-240",
@@ -2199,7 +2351,7 @@
     "ref": "P:requirements.cruise_time_min"
    },
    "how": "As CL-E2-CRUISE-MIN-PESS.",
-   "value": 5.971057070635094
+   "value": 5.947701613605093
   },
   {
    "id": "CL-E2-CRUISE-TO-LOW-PESS-240",
@@ -2213,7 +2365,7 @@
     "ref": "P:requirements.cruise_time_min"
    },
    "how": "SITL with the logged currents, as CL-E2-CRUISE-TO-LOW-PESS.",
-   "value": 5.406475936288758
+   "value": 5.3886611110106095
   },
   {
    "id": "CL-E2-PACK-MASS",
@@ -2290,6 +2442,76 @@
    ],
    "state": "planned",
    "procedure": "DataFlash BAT messages; IR thermometer on pack before/after; compare row by row with the phase table."
+  },
+  {
+   "id": "CL-E2-CRUISE-MIN-BASE-V17",
+   "type": "claim",
+   "title": "Cruise after 2 min hover to the 20 % line, base, at the 17 m/s fallback",
+   "calc": "CALC-E2-BUDGET-V17",
+   "output": "cruise_min_base",
+   "unit": "min",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.cruise_time_min"
+   },
+   "how": "As CL-E2-CRUISE-MIN-BASE at 17 m/s.",
+   "note": "17 m/s is AIRSPEED_MIN = AIRSPEED_CRUISE if the stall is the tripped 12.85 m/s (D-96 c; CDR decision B6 plans on it until T-B2-STALL). Cruise power = E1's 17 m/s point (CL-E1-CRUISE-P-55-V17) + 6 W avionics, carried through the same chain as the 253 W case; the pessimistic case scales B1's pessimistic power by the same factor (EST). performance.cruise_ms stays 16 until A1 changes it. The way out is the prop A/B on the stand (CDR-04: 11x7E, about -28 % cruise power, REVIEWER EST), not this model",
+   "value": 9.837875732003681
+  },
+  {
+   "id": "CL-E2-CRUISE-MIN-PESS-V17",
+   "type": "claim",
+   "title": "Cruise after 2 min hover to the 20 % line, pessimistic, at the 17 m/s fallback",
+   "calc": "CALC-E2-BUDGET-V17",
+   "output": "cruise_min_pess",
+   "unit": "min",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.cruise_time_min"
+   },
+   "how": "As CL-E2-CRUISE-MIN-PESS at 17 m/s (T-E2-MISSION-LOG decides).",
+   "note": "17 m/s is AIRSPEED_MIN = AIRSPEED_CRUISE if the stall is the tripped 12.85 m/s (D-96 c; CDR decision B6 plans on it until T-B2-STALL). Cruise power = E1's 17 m/s point (CL-E1-CRUISE-P-55-V17) + 6 W avionics, carried through the same chain as the 253 W case; the pessimistic case scales B1's pessimistic power by the same factor (EST). performance.cruise_ms stays 16 until A1 changes it. The way out is the prop A/B on the stand (CDR-04: 11x7E, about -28 % cruise power, REVIEWER EST), not this model",
+   "value": 5.150790398640713
+  },
+  {
+   "id": "CL-E2-CRUISE-TO-LOW-PESS-V17",
+   "type": "claim",
+   "title": "Cruise at 17 m/s before BATT_LOW triggers, pessimistic",
+   "calc": "CALC-E2-BUDGET-V17",
+   "output": "cruise_to_low_min",
+   "unit": "min",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.cruise_time_min"
+   },
+   "verifies": [
+    "R-MISSION"
+   ],
+   "how": "SITL with the logged currents at AIRSPEED_CRUISE 17: QRTL must not trigger before 5 min of cruise; first logged cruise current (T-E2-MISSION-LOG).",
+   "note": "17 m/s is AIRSPEED_MIN = AIRSPEED_CRUISE if the stall is the tripped 12.85 m/s (D-96 c; CDR decision B6 plans on it until T-B2-STALL). Cruise power = E1's 17 m/s point (CL-E1-CRUISE-P-55-V17) + 6 W avionics, carried through the same chain as the 253 W case; the pessimistic case scales B1's pessimistic power by the same factor (EST). performance.cruise_ms stays 16 until A1 changes it. The way out is the prop A/B on the stand (CDR-04: 11x7E, about -28 % cruise power, REVIEWER EST), not this model",
+   "value": 4.666653728665841
+  },
+  {
+   "id": "CL-E2-BATT-LOW-MAH-V17",
+   "type": "claim",
+   "title": "BATT_LOW_MAH needed with the 17 m/s cruise current (60 s return leg)",
+   "calc": "CALC-E2-BUDGET-V17",
+   "output": "low_mah",
+   "unit": "mAh",
+   "how": "Compare with CL-E2-BATT-LOW-MAH; F4 sets the larger if AIRSPEED_CRUISE goes to 17.",
+   "note": "17 m/s is AIRSPEED_MIN = AIRSPEED_CRUISE if the stall is the tripped 12.85 m/s (D-96 c; CDR decision B6 plans on it until T-B2-STALL). Cruise power = E1's 17 m/s point (CL-E1-CRUISE-P-55-V17) + 6 W avionics, carried through the same chain as the 253 W case; the pessimistic case scales B1's pessimistic power by the same factor (EST). performance.cruise_ms stays 16 until A1 changes it. The way out is the prop A/B on the stand (CDR-04: 11x7E, about -28 % cruise power, REVIEWER EST), not this model",
+   "value": 2700
+  },
+  {
+   "id": "CL-E2-CRUISE-W-PESS-V17",
+   "type": "claim",
+   "title": "Cruise bus power, pessimistic, at the 17 m/s fallback",
+   "calc": "CALC-E2-BUDGET-V17",
+   "output": "cruise_w_pess",
+   "unit": "W",
+   "how": "Logged pack power in 17 m/s legs (T-E2-MISSION-LOG).",
+   "note": "17 m/s is AIRSPEED_MIN = AIRSPEED_CRUISE if the stall is the tripped 12.85 m/s (D-96 c; CDR decision B6 plans on it until T-B2-STALL). Cruise power = E1's 17 m/s point (CL-E1-CRUISE-P-55-V17) + 6 W avionics, carried through the same chain as the 253 W case; the pessimistic case scales B1's pessimistic power by the same factor (EST). performance.cruise_ms stays 16 until A1 changes it. The way out is the prop A/B on the stand (CDR-04: 11x7E, about -28 % cruise power, REVIEWER EST), not this model",
+   "value": 406.7437055544007
   }
  ]
 }

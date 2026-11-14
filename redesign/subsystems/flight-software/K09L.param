@@ -1,12 +1,16 @@
-# K09-L quad tailsitter - ArduPilot Plane parameter file (owner F4, revision F4-R5, 2026-11-10)
-# Status: PROPOSED. Not loaded on hardware, not run in SITL (SITL not installed): UNVERIFIED.
-# Firmware: ArduPlane 4.7.x stable, target CoreWingF405WingV2 (D-33; bdshot on outputs 1-4, no Lua on this board).
-# Parameter names checked 2026-11-09 against ArduPilot master source and the Plane parameter index
-#   (ArduPlane/quadplane.cpp, tailsitter.cpp, Attitude.cpp, Parameters.cpp, AP_Vehicle/AP_FixedWing.h,
-#    AC_AttitudeControl/AC_WeatherVane.cpp, RC_Channel/RC_Channels_VarInfo.h, AP_Motors). Before loading on the
-#    board, run the name check in SITL-PLAN.md S1 on the 4.7.x tag (R-FSW-PARAMS).
-# LEGACY lines duplicate a parameter under its older name (cm/s units or the pre-4.6 GPS name); the loader skips the
-#   name the installed build does not know. fsw_check.py checks each pair holds the same value.
+# K09-L quad tailsitter - ArduPilot Plane parameter file (owner F4, revision F4-R6, 2026-11-13, CDR fix round D-120..D-126)
+# Status: PROPOSED. Not loaded on hardware. Loaded and read back in SITL (ArduPlane 4.7.3-beta1 Windows build,
+#   2026-11-13, team/F4/sitl/RESULTS.md): every name below is accepted except SERVO_BLH_BDMASK / SERVO_BLH_POLES,
+#   which the SITL build does not carry (board only: T-F3-FW-LOAD). Flight behaviour on K09-L: UNVERIFIED.
+# Firmware: ArduPlane 4.7.2 stable or later, target CoreWingF405WingV2. The board entered ArduPilot in 4.7.2
+#   (ArduPlane/ReleaseNotes.txt, "Changes from 4.7.1", read 2026-11-13), so no 4.6 or 4.7.0/4.7.1 build exists for it
+#   (D-33; bdshot on outputs 1-4, no Lua on this board).
+# Parameter names: every name is in ArduPilot's published Plane parameter definitions for stable-4.7.1
+#   (https://autotest.ardupilot.org/Parameters/versioned/Plane/stable-4.7.1/apm.pdef.xml, read 2026-11-13; the 4.7.2
+#   folder is not published). fsw_check.py checks every name against team/F4/ap_plane_param_names_4.7.1.txt offline.
+# R6 name changes (4.7): FS_SHORT_TIMEOUT removed by the firmware -> RC_FS_TIMEOUT; Q_A_ACCEL_Y_MAX (cdeg/s/s) is
+#   Q_A_ACC_Y_MAX (deg/s/s); the six LEGACY duplicates (Q_WP_SPEED_DN, Q_PILOT_SPEED_DN, Q_LAND_SPEED, GPS_POS1_X/Y/Z)
+#   are deleted: no firmware that knows them runs on this board.
 # Format: one comment line (or more) above every parameter, then NAME,VALUE. "(default, stated)" marks a line that
 #   repeats the firmware default on purpose because a request names it.
 # Frame: params.json#frame (x aft, y right, z up, cruise attitude). Hover copter frame: forward = belly (-z),
@@ -75,10 +79,11 @@ SERVO6_TRIM,1500
 SERVO6_MIN,1024
 # right TE-up end: 1500 + 44.7 x 11.1 = 1997 us
 SERVO6_MAX,1997
-# elevon mixer gain 0.5 (default, stated): pure pitch or pure roll reaches half travel (12.5 deg), both together the full
-#   25 deg without saturating. B3's trim limit is exactly half travel (P:requirements.elevon_trim_travel_max 0.5) and the
-#   trimmed CLmax needs 11.0 deg (CL-B3-DELTA-STALL), inside 12.5 (CL-F4-MIX-PITCH)
-MIXING_GAIN,0.5
+# elevon mixer gain 0.65 (was 0.5, the default; CDR-14, board decision B9, D-120): pure pitch or pure roll reaches
+#   0.65 x 25 = 16.25 deg; both together saturate at 25 deg, so full pitch leaves 8.75 deg of roll. The pure-pitch travel
+#   sets B3's forward CG limit (CL-B3-V-CG-FWD reads P:fsw.mixing_gain); the trimmed CLmax needs 11.0 deg at the CG
+#   target (CL-B3-DELTA-STALL), inside 16.25 (CL-F4-MIX-PITCH). Documented range 0.5-1.2 (pdef 4.7.1)
+MIXING_GAIN,0.65
 
 # ---------------------------------------------------------------- 3 Motor limits (E1, B4, C1, A2)
 # output at full demand: holds rpm <= 9 350 on a 16.8 V pack (CL-B4-SPIN-MAX 0.849). Documented range is 0.9-1.0: SITL S1 confirms the value is kept; the stand (T-F4-STAND-RPM-CAP) confirms rpm
@@ -130,28 +135,29 @@ Q_A_RAT_PIT_FLTD,32
 # copter yaw: prop torque + 7 deg cant (sense corrected, D-52: cant_sense_UR -1), 1.0 Hz at these gains (CL-F4-XOVER-YAW, ceiling 2.4 Hz: P+I only, no D, CR-B3-19); P ceiling 0.94
 Q_A_RAT_YAW_P,0.40
 Q_A_RAT_YAW_I,0.04
+# yaw acceleration limit of the attitude shaper 135 deg/s/s = 2.36 rad/s2 (new line, CDR-16 / CDR-AE-12, D-123): 84 %
+#   of what the airframe has at 30 % differential (CL-B3-HOVER-YAW-ACCEL-LOW); claim CL-F4-YAW-ACC-SET. The board asked
+#   "Q_A_ACCEL_Y_MAX 13 500 cdeg/s/s": that is the 4.6 name and unit. In 4.7 the name is Q_A_ACC_Y_MAX in deg/s/s, range
+#   0-720 (ReleaseNotes 4.7.0 "ATC_ACC_R/P/Y_MAX renamed and scaled to deg/s/s", PR 32192; pdef 4.7.1). 13 500 typed
+#   into the 4.7 name would be out of range. Roll and pitch limits stay at the firmware default. T-B4-YAW re-sets it
+Q_A_ACC_Y_MAX,135
 # auto/QRTL descent 1.2 m/s: vortex-ring onset 1.88 m/s (CL-B4-DESCENT); B4 asks <= 1.5 (CR-B4-06b). Units m/s
 Q_WP_SPD_DN,1.2
-# LEGACY name of the line above (cm/s)
-Q_WP_SPEED_DN,120
 # pilot descent at full down stick in QHOVER/QLOITER 1.0 m/s (R5, was 1.2; default 0 = the 2.5 m/s climb limit, above
 #   VRS onset). D-65: a touchdown at this rate is the design hard landing, 1.2 m/s at <= 10 deg any direction
 #   (P:requirements.landing_sink_ms); 1.0 leaves 0.2 m/s for velocity-loop overshoot, no rangefinder and ground effect
 #   (CL-F4-TOUCHDOWN-SINK). QSTABILIZE has no climb-rate loop (throttle is direct): never land in it (CR-F4-21)
 Q_PILOT_SPD_DN,1.0
-# LEGACY name of the line above (cm/s)
-Q_PILOT_SPEED_DN,100
 # final landing descent 0.3 m/s (was 0.5, the default; CR-D5-21, D-65): below 0.32 m/s the pre-crushed foot cartridges take a touchdown
 #   elastically (CL-D5-V-NO-SET), at 0.5 they set 1.28 mm per landing (2.3 landings to the 3 mm mark). Costs ~8 s from
 #   Q_LAND_FINAL_ALT. VRS onset 1.88 m/s is far away. The velocity controller holds thrust to contact (CL-F4-LAND-SPD)
 Q_LAND_FINAL_SPD,0.3
-# LEGACY name of the line above (cm/s)
-Q_LAND_SPEED,30
 # QLAND/RTL switches to the final descent speed below 6 m (default, stated: CR-D5-21 keeps it)
 #   PENDING (C-07, G-06; CR-132423 p. 59): after test M1 (baro height error at touchdown, 10 flights) set this to 6 + the measured error,
 #   only if |error| > 1 m (EST); the final 0.3 m/s must start above the ground. Value: — until M1. Do not change before M1
 Q_LAND_FINAL_ALT,6
-# PENDING (C-06, G-09; CR-132423 p. 61): Q_P_VELXY_P and Q_P_POSXY_P stay at the firmware defaults (no line here) until SITL S3b / the
+# PENDING (C-06, G-09; CR-132423 p. 61): Q_P_NE_VEL_P and Q_P_NE_POS_P (the 4.7 names of Q_P_VELXY_P / Q_P_POSXY_P;
+#   SITL defaults 0.7 / 0.5) stay at the firmware defaults (no line here) until SITL S3b / the
 #   tethered 1 m/s step in TUNING-PLAN.md measures the QLOITER velocity-loop crossover. Pass: <= 1/6 of the attitude crossover = <= 1.0 rad/s
 #   at the 1.0 Hz roll loop (CL-F4-XOVER-RLL). If it fails, lower both, add the two lines here and mirror them in params.json. Values: —
 # weathervane in hover: 1 = belly (copter nose) into wind (default on Plane, stated; J1 CR-J1-05: wind loads copter pitch, the strongest axis)
@@ -176,8 +182,9 @@ Q_TAILSIT_THR_VT,55
 Q_TAILSIT_GSCMSK,1
 # disk loading 2.6 kg / 0.245 m^2 (CR-J1-05); inert while GSCMSK bit 2 is off
 Q_TAILSIT_DSKLD,10.6
-# copter assist below 13 m/s = 1.09 Vs (CR-B1-12)
-Q_ASSIST_SPEED,13
+# copter assist below 14 m/s (was 13; CDR-15, B6, D-122) = 1.09 x the tripped stall 12.85 m/s (CL-B2R3-VS-GATE-FWD-TURB); the
+#   aero review asks >= 1.1 x the measured stall (14.1): re-set after T-B2-STALL
+Q_ASSIST_SPEED,14
 # copter assist below 15 m above home in fixed-wing modes
 Q_ASSIST_ALT,15
 # transition time limit 15 s (B1 needs 7.8 s to 1.3 Vs at 12 deg/s, CL-B1-TRANS-TIME)
@@ -186,18 +193,20 @@ Q_TRANS_FAIL,15
 Q_TRANS_FAIL_ACT,1
 
 # ---------------------------------------------------------------- 6 Fixed-wing envelope and elevon schedule (B1, B3, C1: D-29, D-36)
-# cruise target 16 m/s (P:performance.cruise_ms)
-AIRSPEED_CRUISE,16
-# TECS floor 16 m/s: D-36 asks 15.6 (1.3 Vs at the forward CG, CL-B3-VT-TRIM); the parameter is an integer (AP_Int16), so the next integer up. Pre-4.5 name ARSPD_FBW_MIN
-#   D-71: 16 >= 1.3 x B2's forward-CG stall 11.99 = 15.59 (CL-F4-ARSPD-MIN-D71). NOT FROZEN: after T-B2-STALL set it to
-#   ceil(1.3 x measured trimmed stall); 16 holds for a measured stall <= 12.31 m/s, above that 17 and AIRSPEED_CRUISE >= 17
-AIRSPEED_MIN,16
+# cruise target 17 m/s (was 16; CDR-15, board decision B6, D-122): the tripped-boundary-layer stall is the planning
+#   baseline until T-B2-STALL. P:performance.cruise_ms (16, the base case of the power models) is S2's key: D-122 asks for it
+AIRSPEED_CRUISE,17
+# TECS floor 17 m/s (was 16; B6, D-122) >= 1.3 x the tripped forward-CG stall 12.85 = 16.71 (CL-B2R3-VS-GATE-FWD-TURB; claim
+#   CL-F4-ARSPD-MIN-TRIP). Integer parameter (AP_Int16). Holds for a measured stall <= 17 / 1.3 = 13.07 m/s. NOT FROZEN:
+#   after T-B2-STALL set ceil(1.3 x measured trimmed stall): <= 12.31 m/s -> 16 again; 13.07-13.85 -> the second fallback
+#   (AIRSPEED_MIN = CRUISE 18, AIRSPEED_MAX 20 < VA 20.5; B2 CL-B2R3-FB2-*; needs A1's yes on AIRSPEED_MAX 20, PROPOSED)
+AIRSPEED_MIN,17
 # TECS ceiling 18 m/s (CR-B1-12) <= 22 asked for ARSPD_FBW_MAX (CR-C1-08; that is this parameter's pre-4.5 name) and < VA 20.5
 AIRSPEED_MAX,18
-# stall speed for stall-prevention bank scaling (CL-B3-VS-TRIM 11.9 m/s)
-AIRSPEED_STALL,12
-# airspeed the FW gains are tuned at = cruise. Surface demand scales by 16/V: 0.78 at VA 20.5, 0.59 at VD 27.2 (floor 0.44 = 16/(2 x AIRSPEED_MAX))
-SCALING_SPEED,16
+# stall speed for stall-prevention bank scaling: 13 (was 12; B6, D-122) = the tripped stall 12.85 m/s rounded up
+AIRSPEED_STALL,13
+# airspeed the FW gains are tuned at = cruise. Surface demand scales by 17/V: 0.83 at VA 20.5, 0.63 at VD 27.2 (floor 0.47 = 17/(2 x AIRSPEED_MAX))
+SCALING_SPEED,17
 # bank limit 45 deg: n = 1.41 against the +3.4 limit (P:requirements.load_factor_limit_pos)
 ROLL_LIMIT_DEG,45
 # pitch-up limit 20 deg
@@ -285,22 +294,29 @@ SERIAL6_PROTOCOL,23
 RSSI_TYPE,3
 # 8480 = bit 8 CRSF passthrough telemetry + bit 13 ELRS 420 kbaud (CR-F5-01: 8448) + bit 5 throttle-at-zero arming check (the firmware default, kept: CR-F4-13)
 RC_OPTIONS,8480
-# RC failsafe on (default 1, stated); ELRS loss of frames triggers it
+# RC failsafe on (default 1, stated); ELRS loss of frames triggers it. The receiver must be set to failsafe mode
+#   "No Pulses" (ELRS web UI or Lua; RC-LINK.md, T-F5-BENCH): with "Last Position" or "Set Position" the receiver keeps
+#   sending frames and ArduPilot never sees the loss (CDR-26 / CDR-EL-11)
 THR_FAILSAFE,1
-# short failsafe after 1.5 s (default, stated: CR-F5-01)
-FS_SHORT_TIMEOUT,1.5
+# RC loss is declared 1.0 s after the last valid frame (default, stated; new line, D-124). 4.7 removed FS_SHORT_TIMEOUT
+#   (ReleaseNotes 4.7.0, PR 30350) and added RC_FS_TIMEOUT (PR 31441, range 0.1-10 s): the short failsafe fires at this
+#   time. In a Q mode the short event itself selects QLAND (ArduPlane/events.cpp rc_failsafe_short_on_event, tag
+#   Plane-4.7.2), so QLAND comes about 1.0-1.2 s after the last frame and does NOT wait for FS_LONG_TIMEOUT.
+#   SITL 2026-11-13: QHOVER -> QLAND 1.15 s after the last RC frame (team/F4/sitl/RESULTS.md, S7a)
+RC_FS_TIMEOUT,1.0
 # short failsafe in FW: 0 = continue in AUTO/GUIDED, else circle; Q modes go to QLAND (Q_OPTIONS bit 5 off)
 FS_SHORT_ACTN,0
 # long failsafe in FW: 1 = RTL
 FS_LONG_ACTN,1
-# long failsafe after 5 s (default, stated)
+# long failsafe after 5 s (default, stated): fixed-wing modes only (CIRCLE -> RTL). The Q-mode QLAND timer is
+#   RC_FS_TIMEOUT above, so the board's "FS_LONG_TIMEOUT 2-3 s" is not needed for QLAND <= 3 s (CDR-26, D-124)
 FS_LONG_TIMEOUT,5
 # no GCS failsafe: telemetry rides the RC link, so RC failsafe covers it (CR-F5-01)
 FS_GCS_ENABL,0
 # RTL: 2 = VTOL approach (was 1, C-01, review/NASA-CR-132423-COMPLIANCE.md G-01; CR-132423 p. 35, 38-39, 172): fly home fixed-wing at
 #   RTL_ALTITUDE, circle down to Q_RTL_ALT, back-transition INTO THE WIND, then QRTL. Mode 1 back-transitioned on the arrival heading
 #   (no downwind limit; vortex-ring risk, CR p. 35). Values on ArduPilot master: 0 off, 1 on, 2 VTOL approach, 3 QRTL always (read 2026-11-13).
-#   Keep Q_OPTIONS bit 16 DisableApproach off (262400 does). UNVERIFIED on 4.7.x and on a tailsitter: SITL S1 (name), S18 (heading)
+#   Keep Q_OPTIONS bit 16 DisableApproach off (262400 does). Name and value 2 read back in SITL 2026-11-13 (S1); a VTOL approach ran once on the stock SITL tailsitter (RESULTS.md). UNVERIFIED on K09-L: S18 (heading)
 Q_RTL_MODE,2
 # RTL cruise altitude 50 m (>= transition altitude, P:requirements.transition_alt_min_m)
 RTL_ALTITUDE,50
@@ -309,7 +325,7 @@ RTL_ALTITUDE,50
 #   height the spiral leg returns
 Q_RTL_ALT,50
 # VTOL-approach spiral radius 60 m (new, C-03, G-01; CR-132423 p. 165 Table 29 bank 9-30 deg, p. 174): = RTL_RADIUS; bank
-#   atan(16^2/(9.81 x 60)) = 23.5 deg at 16 m/s, inside 9-30 (EST). Name to confirm on the 4.7.x tag in SITL S1
+#   atan(16^2/(9.81 x 60)) = 23.5 deg at 16 m/s, inside 9-30 (EST). Name read back in SITL 2026-11-13 (S1)
 Q_FW_LND_APR_RAD,60
 # loiter radius at home 60 m (turn radius at 16 m/s, 45 deg bank = 26 m)
 RTL_RADIUS,60
@@ -379,9 +395,5 @@ INS_POS2_Z,-0.0205
 GPS1_POS_X,-0.026
 GPS1_POS_Y,0
 GPS1_POS_Z,-0.1595
-# LEGACY names of the three lines above (before 4.6)
-GPS_POS1_X,-0.026
-GPS_POS1_Y,0
-GPS_POS1_Z,-0.1595
 # compass orientation auto-detected and stored (F3 expects 36 on the 45-deg mast pad)
 COMPASS_AUTO_ROT,2

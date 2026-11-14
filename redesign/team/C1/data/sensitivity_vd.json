@@ -21,11 +21,11 @@
  ],
  "outputs": {
   "spar_Mb_ult": {
-   "at_derived": 20.739548435395427,
-   "at_requirement": 20.739548435395427,
+   "at_derived": 19.191762739245057,
+   "at_requirement": 19.191762739245057,
    "case": [
-    "L4-CORNER-SIDE-Y",
-    "L4-CORNER-SIDE-Y"
+    "L1-LEVEL",
+    "L1-LEVEL"
    ]
   },
   "spar_Mx_ult": {
@@ -37,8 +37,8 @@
    ]
   },
   "wing_T_ult": {
-   "at_derived": 8.454878501359838,
-   "at_requirement": 8.454878501359838,
+   "at_derived": 8.451178161615642,
+   "at_requirement": 8.451178161615642,
    "case": [
     "L4-CORNER-SIDE-Y",
     "L4-CORNER-SIDE-Y"
@@ -53,24 +53,24 @@
    ]
   },
   "finjoint_M_ult": {
-   "at_derived": 22.547565749634664,
-   "at_requirement": 22.547565749634664,
+   "at_derived": 15.63424783630313,
+   "at_requirement": 15.63424783630313,
    "case": [
     "L4-CORNER-SIDE-Y",
     "L4-CORNER-SIDE-Y"
    ]
   },
   "finhalf_Mb_ult": {
-   "at_derived": 16.302764780926267,
-   "at_requirement": 16.302764780926267,
+   "at_derived": 12.242844430624015,
+   "at_requirement": 12.242844430624015,
    "case": [
-    "L5-CORNER-SIDE-Z",
-    "L5-CORNER-SIDE-Z"
+    "L4-CORNER-SIDE-Y",
+    "L4-CORNER-SIDE-Y"
    ]
   },
   "finhalf_T_ult": {
-   "at_derived": 19.077219756114896,
-   "at_requirement": 19.077219756114896,
+   "at_derived": 11.903716154200492,
+   "at_requirement": 11.903716154200492,
    "case": [
     "L4-CORNER-SIDE-Y",
     "L4-CORNER-SIDE-Y"
@@ -93,11 +93,11 @@
    ]
   },
   "foot_F_ult": {
-   "at_derived": 80.44317315360249,
-   "at_requirement": 80.44317315360249,
+   "at_derived": 65.92987345032114,
+   "at_requirement": 65.92987345032114,
    "case": [
-    "L4-CORNER-SIDE-Y",
-    "L4-CORNER-SIDE-Y"
+    "L5-CORNER-SIDE-Z",
+    "L5-CORNER-SIDE-Z"
    ]
   },
   "proof_P_side_lim_N": {

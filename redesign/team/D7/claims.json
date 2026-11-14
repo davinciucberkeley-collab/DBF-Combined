@@ -141,23 +141,23 @@
     "travel_m": 0.08400000000000003,
     "clear_bottoming_m": 0.012000000000000038,
     "aft_gap_m": 0.012,
-    "nose_gap_m": 0.002950000000000029,
-    "nose_gap_ext_m": 0.002950000000000029,
-    "x_clear_m": 0.002950000000000029,
+    "nose_gap_m": 0.012950000000000041,
+    "nose_gap_ext_m": 0.012950000000000041,
+    "x_clear_m": 0.012,
     "tip_to_pad_m": 0.015000000000000041,
     "travel_a1_m": 0.08400000000000003,
     "h_allow_a1_m": 0.40326303972052513,
-    "antenna_gap_m": -0.007049999999999971
+    "antenna_gap_m": 0.002950000000000041
    },
    "input_values": {
     "ext": [
      1.25,
-     0.55,
+     0.56,
      0.54
     ],
     "ext_a1": [
      1.25,
-     0.55,
+     0.56,
      0.54
     ],
     "env": [
@@ -250,11 +250,11 @@
     "m": "kg"
    },
    "outputs": {
-    "F_bolt_N": 57.219449153999996,
-    "p_strip_kpa": 27.247356739999997
+    "F_bolt_N": 57.503678821344,
+    "p_strip_kpa": 27.382704200639996
    },
    "input_values": {
-    "m": 5.83476
+    "m": 5.863743360000001
    }
   },
   {
@@ -400,20 +400,20 @@
     "SRC-D7-PE-FOAM"
    ],
    "outputs": {
-    "base_kg": 2.333505,
-    "lid_kg": 0.6348090000000001,
+    "base_kg": 2.3520345600000003,
+    "lid_kg": 0.6452628000000001,
     "cradle_each_kg": 0.06979500000000001,
     "tray_kg": 0.14904000000000003,
     "pillar_each_kg": 0.037908000000000004,
-    "box_kg": 3.5667600000000004,
+    "box_kg": 3.5957433600000006,
     "aircraft_kg": 2.05,
-    "loaded_kg": 5.83476,
-    "loaded_with_packs_kg": 6.934760000000001
+    "loaded_kg": 5.863743360000001,
+    "loaded_with_packs_kg": 6.9637433600000005
    },
    "input_values": {
     "ext": [
      1.25,
-     0.55,
+     0.56,
      0.54
     ],
     "t": 0.004,
@@ -651,9 +651,9 @@
     "can_kg": 3.3000000000000003,
     "tote_kg": 0.565,
     "item_max_kg": 3.3000000000000003,
-    "person_a_kg": 6.399760000000001,
+    "person_a_kg": 6.42874336,
     "person_b_kg": 5.999600000000001,
-    "all_kg": 12.39936
+    "all_kg": 12.428343360000001
    },
    "input_values": {
     "mat": [
@@ -670,7 +670,7 @@
     "tote": 0.15,
     "tx": 0.35,
     "spares": 0.065,
-    "box": 5.83476
+    "box": 5.863743360000001
    }
   },
   {
@@ -871,7 +871,7 @@
     "TRN-005"
    ],
    "how": "Place the aircraft on the cradles; a 10 mm foam feeler passes between nose and nose pad and between the foot pads and the aft wall.",
-   "value": 0.002950000000000029
+   "value": 0.012
   },
   {
    "id": "CL-D7-NOSE-GAP",
@@ -889,7 +889,7 @@
     "TRN-005"
    ],
    "how": "Ruler in the built box.",
-   "value": 0.002950000000000029
+   "value": 0.012950000000000041
   },
   {
    "id": "CL-D7-ANTENNA-PAD-GAP",
@@ -907,7 +907,7 @@
     "TRN-005"
    ],
    "how": "Aircraft in the box against the LE lips: a 2 mm feeler passes between the antenna tip and the nose pad.",
-   "value": -0.007049999999999971
+   "value": 0.002950000000000041
   },
   {
    "id": "CL-D7-TIP-PAD-GAP",
@@ -1038,7 +1038,7 @@
     "TRN-007-R"
    ],
    "how": "C6 checks the M3 stack (CR-C6-08: 59 N); T-D7-HANDLE-PULL.",
-   "value": 57.219449153999996
+   "value": 57.503678821344
   },
   {
    "id": "CL-D7-HANDLE-BEARING",
@@ -1052,7 +1052,7 @@
     "TRN-001"
    ],
    "how": "T-D7-HANDLE-PULL: Coroplast face shows no dent behind the strip.",
-   "value": 27.247356739999997
+   "value": 27.382704200639996
   },
   {
    "id": "CL-D7-HANDLE-ENGAGE-MIN",
@@ -1145,7 +1145,7 @@
     "TRN-004-R"
    ],
    "how": "T-D7-WEIGH-BOX: 10 kg luggage scale.",
-   "value": 3.5667600000000004
+   "value": 3.5957433600000006
   },
   {
    "id": "CL-D7-LOADED-MASS",
@@ -1166,7 +1166,7 @@
     "TRN-005"
    ],
    "how": "T-D7-WEIGH-BOX: weigh the loaded box, packs in their LiPo bag outside.",
-   "value": 5.83476
+   "value": 5.863743360000001
   },
   {
    "id": "CL-D7-LOADED-WITH-PACKS",
@@ -1176,7 +1176,7 @@
    "output": "loaded_with_packs_kg",
    "unit": "kg",
    "how": "Shows why packs ride in the LiPo bag (ASM-D7-PACK-OUT).",
-   "value": 6.934760000000001
+   "value": 6.9637433600000005
   },
   {
    "id": "CL-D7-END-DROP-ALLOW",
@@ -1327,7 +1327,7 @@
    "output": "person_a_kg",
    "unit": "kg",
    "how": "Sum of T-D7-WEIGH-BOX readings.",
-   "value": 6.399760000000001
+   "value": 6.42874336
   },
   {
    "id": "CL-D7-CARRY-B",
@@ -1347,7 +1347,7 @@
    "output": "all_kg",
    "unit": "kg",
    "how": "Sum of T-D7-WEIGH-BOX readings.",
-   "value": 12.39936
+   "value": 12.428343360000001
   },
   {
    "id": "CL-D7-PROPS-ON-ZMARGIN",

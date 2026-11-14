@@ -120,7 +120,7 @@
   }
   // One row per requirement for the list: claims, fails, worst margin, unverified count.
   function reqSummary(m, rid) {
-    const cl = claimsOfReq(m, rid), margins = cl.map(n => n.margin).filter(x => typeof x === 'number');
+    const cl = claimsOfReq(m, rid), margins = cl.filter(n => !n.margin_abs).map(n => n.margin).filter(x => typeof x === 'number');   // limit-0 margins are distances, not fractions
     return { claims: cl.length, fails: cl.filter(n => n.fails).length, unverified: cl.filter(n => n.status === 'UNVERIFIED').length,
       worst: margins.length ? Math.min(...margins) : null, area: area(m, rid) };
   }
@@ -209,7 +209,7 @@
     const x = col => xs[col];
     const pos = new Map(), cols = {};
     ch.nodes.forEach(n => (cols[n.col] = cols[n.col] || []).push(n));
-    const rank = n => { const d = m.byId.get(n.id); return [n.key === ch.focus ? 0 : 1, d.fails ? 0 : 1, typeof d.margin === 'number' ? d.margin : 9, STATUSES.indexOf(d.status), n.id]; };
+    const rank = n => { const d = m.byId.get(n.id); return [n.key === ch.focus ? 0 : 1, d.fails ? 0 : 1, typeof d.margin === 'number' && !d.margin_abs ? d.margin : 9, STATUSES.indexOf(d.status), n.id]; };
     const cmp = (a, b) => { const ra = rank(a), rb = rank(b); for (let i = 0; i < ra.length; i++) if (ra[i] !== rb[i]) return ra[i] < rb[i] ? -1 : 1; return 0; };
     const place = (list, desired) => {
       const want = new Map(list.map(n => [n.key, desired(n)]));

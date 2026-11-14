@@ -8,12 +8,12 @@
    "name": "Wing core, one piece (XPS), with all cuts",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 201.9,
+   "mass_g": 198.1,
    "material": "XPS foam F-250",
    "cg_xyz_m": [
-    0.1187,
+    0.1195,
     0.0,
-    0.0053
+    0.0055
    ],
    "make_or_buy": "make",
    "notes": "S5010, 1.150 x 0.320 m, hot-wired LE sanded smooth; spar bore 22.4 mm (slot from below, cap re-bonded); pod recess x 0.0226-0.065 floor z 0.015, |y| <= 0.07; pod saddle windows |y| 0.029-0.053 with tie channels at 0.036; anchor pockets |y| 0.2335-0.2505 top and bottom; block pockets |y| 0.302-0.338 x 0.028-0.097 full depth, corners R 3.15, 3 x 3 mm lip chamfers inboard and outboard both surfaces; ESC grooves both surfaces |y| 0.086-0.296; servo groove and branch with the JR recess x 0.150-0.168 |y| 0.280-0.290 5 mm deep; servo pockets (open below) x 0.1722-0.2075 |y| 0.2527-0.2879; elevon cut-outs with R 3 mm corners at the fin-root tabs"
@@ -137,6 +137,21 @@
    ],
    "make_or_buy": "make",
    "notes": "inboard and outboard pocket lips, upper and lower, x 0.0279-0.0972 (D-68, CR-C2-11); 60 mm tape doubler over them"
+  },
+  {
+   "id": "WNG-008",
+   "name": "Spar-slot cap strips (XPS, the slot strip re-bonded)",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 3.9,
+   "material": "XPS foam F-250",
+   "cg_xyz_m": [
+    0.08,
+    0.0,
+    -0.0049
+   ],
+   "make_or_buy": "make",
+   "notes": "x 0.0688-0.0912 from the lower skin to the spar, every span segment where the spar runs in foam (not in the block or anchor pockets); stops at the lip beads and round the pod-tie channels; foam mass counted in WNG-001"
   },
   {
    "id": "WNG-011-R",
@@ -474,6 +489,23 @@
     "cure": "24 h at >= 18 degC before load or tape",
     "load_n": "spreads the block corner load into the lip (see E-WNG-12); C2 FEA re-run",
     "load_case": "L4 corner + side landing, ultimate",
+    "sized_by": "C2"
+   }
+  },
+  {
+   "id": "E-WNG-18",
+   "part_a": "WNG-008",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "spar-slot cap strips re-bonded under the spar in the slot cut from below (BUILD-GUIDE 2.2, 2.5), microballoon epoxy on the slot walls and round the spar, sanded flush with the lower surface; part of the spar bond E-WNG-01",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + glass microballoons 1:1 by volume (foam-safe; no CA, no solvent glue on XPS)",
+    "area_mm2": "—",
+    "prep": "slot vacuumed, foam dust off",
+    "cure": "24 h at >= 18 degC before load or tape",
+    "load_n": "closes the slot; the spar bond is sized as E-WNG-01 (CL-C2-SPAR-BOND-TAU)",
+    "load_case": "C1 flight envelope",
     "sized_by": "C2"
    }
   }

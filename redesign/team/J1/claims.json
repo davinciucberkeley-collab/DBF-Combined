@@ -603,12 +603,12 @@
    },
    "outputs": {
     "i_req_a": 33.75,
-    "i_req_pess_a": 37.677857432312685
+    "i_req_pess_a": 37.783715187771506
    },
    "input_values": {
     "k": 1.25,
     "i_hover": 27.0,
-    "i_hover_pess": 30.142285945850148
+    "i_hover_pess": 30.226972150217204
    }
   },
   {
@@ -800,7 +800,7 @@
     "R-DISCONNECT"
    ],
    "how": "1.25 x the hover current logged in 5 m/s wind at the gate mass (H2).",
-   "value": 37.677857432312685
+   "value": 37.783715187771506
   },
   {
    "id": "CL-J1-XT60-CONT",

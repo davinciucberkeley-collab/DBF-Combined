@@ -52,11 +52,11 @@ PORTS = {
     # F1 PWR-R1 stack (CR-F1-18)
     "pack_mate": ((0.031, -0.046, 0.046), "CR-F1-18: AS150U mating face"),
     "as150u_cups": ((0.0025, -0.040, 0.046), "CR-F1-18: AS150U aircraft-half solder cups x 0.002"),
-    "board_in": ((-0.0105, -0.040, 0.0478), "CR-F1-18: power-board input pads, aft edge x -0.010, z 0.0486"),
-    "board_out": ((-0.0105, -0.052, 0.0478), "CR-F1-18: power-board output pads, aft edge"),
+    "board_in": ((-0.0105, -0.040, 0.0501), "CR-F1-18: power-board input pads, aft edge x -0.010, z 0.0486"),
+    "board_out": ((-0.0105, -0.052, 0.0501), "CR-F1-18: power-board output pads, aft edge"),
     "bars_end": ((-0.0105, -0.046, 0.0245), "CR-F1-18: aft end of the bus bars, z 0.024"),
     "bars_out": ((-0.005, -0.0464, 0.024), "CR-F1-18: bars (+ y -0.0499, - y -0.0429), ESC pigtails (D-74)"),
-    "pdb_link": ((-0.0612, -0.034, 0.0506), "D-89: rear of the ribbon plug on the PDB board-to-board header (power.py "
+    "pdb_link": ((-0.0612, -0.034, 0.0529), "D-89: rear of the ribbon plug on the PDB board-to-board header (power.py "
                  "PWR-003 'board-link header', fore face x -0.0615, top-face forward-inboard corner); pin map at "
                  "BOARD-CHECK.md step 4"),
     # F3 avionics ports (CR-F3-16, ASM-F3-PORTS +/- 10 mm). D-89: each is a drawn termination on the board part
@@ -1218,8 +1218,9 @@ def build(g):
     wires.append(["W-PACK", "E-HRN-10", 10, 2, 0, 0.0, 0.0, 0.0, 0.0, r])
     # D-88: out of the AS150U aircraft half's cup end square (x 0.002, 0.3 mm in) and 5 mm straight, then up onto the
     # board's input pads (top, z 0.0486) and along them
-    r = [[0.0023, -0.0403, 0.046, "P"], [-0.003, -0.0403, 0.046, "P"], [-0.0085, -0.0403, 0.0514, "P"],
-         [-0.0145, -0.0403, 0.0514, "E"]]      # D-89: one 44 deg rise onto the pads, the last 6 mm flat on them
+    r = [[0.0023, -0.0403, 0.046, "P"], [-0.002, -0.0403, 0.046, "P"], [-0.0085, -0.0403, 0.0537, "P"],
+         [-0.0145, -0.0403, 0.0537, "E"]]      # D-89: one rise onto the pads, the last 6 mm flat on them; CDR-17: the
+    #                                          board stands 2.3 mm higher on its foam pad (49 deg rise)
     wires.append(["W-MAIN-1", "E-HRN-11", 10, 2, 0, 0.0, 0.015, 0.0, 0.0, r])
     # D-89: drawn as its two 10 AWG conductors side by side (y -0.04272 / -0.03788, 4.84 mm apart) from the cups
     # through the widened cup slot onto the board's two input pads (power.py PWR-003 'input pad', joint top z
@@ -1241,14 +1242,14 @@ def build(g):
     # front edge, and neither it nor its solder fillet reaches the RX ahead of the bars (x <= -0.0405)
     arc = lambda yc, s: [[-0.0335 - 0.0035 * math.sin(math.radians(a)), yc - s * 0.0035 * math.cos(math.radians(a)),
                           zm2 - (zm2 - zbar) * a / 90.0] for a in (0, 30, 60, 90)]
-    # D-89: the first two points lie on the output pads (joint top z 0.0491)
-    mp = [[-0.0145, -0.0545, 0.0514], [-0.0085, -0.0545, 0.0514], [-0.003, -0.0532, 0.044], [-0.003, -0.0532, zm2]]
+    # D-89: the first two points lie on the output pads (joint top z 0.0514 since CDR-17)
+    mp = [[-0.0145, -0.0545, 0.0537], [-0.0085, -0.0545, 0.0537], [-0.003, -0.0532, 0.0455], [-0.003, -0.0532, zm2]]
     mp += arc(-0.0497, 1)                                               # the arc ends lying on the + bar
-    mn = [[-0.0145, -0.0495, 0.0514], [-0.0085, -0.0495, 0.0514], [-0.0040, -0.0480, 0.0440],   # down first, then in
+    mn = [[-0.0145, -0.0495, 0.0537], [-0.0085, -0.0495, 0.0537], [-0.0040, -0.0480, 0.0455],   # down first, then in
           [-0.0030, -0.0430, 0.0405], [-0.0030, -0.0396, 0.0370], [-0.0030, -0.0396, zm2]]   # under main 1, over
     #                                                                                      the pairs (top 0.0364)
     mn += arc(-0.0431, -1)                                              # ... and on the - bar
-    r = [[-0.0145, -0.0545, 0.0484, "P"]] + [p + ["P"] for p in mp[1:-1]] + [[-0.0370, -0.04985, BAR_TOP - 0.0005, "E"]]
+    r = [[-0.0145, -0.0545, 0.0507, "P"]] + [p + ["P"] for p in mp[1:-1]] + [[-0.0370, -0.04985, BAR_TOP - 0.0005, "E"]]
     #                                                                     centre line on the pad and on the bar
     wires.append(["W-MAIN-2", "E-HRN-12", 10, 2, 0, 0.0, 0.020, 0.0, 0.0, r])
     STRAND_FIX["W-MAIN-2"] = lambda s, mp=mp, mn=mn: [[0.0048, mp], [0.0048, mn]]
@@ -1268,7 +1269,7 @@ def build(g):
     # D-89: the ribbon plug sits on the PDB's board-to-board header (top face, forward-inboard corner, power.py) and
     # on the FC's underside header between the gel cubes (avionics.py fc_link_m): it leaves the PDB plug's fore face
     # square, and enters the FC plug's inboard face square from the under-FC lane (no lead ends on a bare board)
-    r = [port("pdb_link") + ["F"], [-0.0685, -0.0335, 0.0506, "F"], [-0.0685, -0.033, 0.0350, "P"],
+    r = [port("pdb_link") + ["F"], [-0.0685, -0.0335, 0.0529, "F"], [-0.0685, -0.033, 0.0350, "P"],
          [-0.0555, y_c, zc["PMOD"], "P"], [xl["PMOD"], y_out, zc["PMOD"], "P"],
          [xl["PMOD"], y_out, z_under, "L"], [xl["PMOD"], yb, z_under, "P"],
          [xl["PMOD"], 0.0362, 0.0236, "P"], port("fc_link") + ["E"]]
@@ -1704,7 +1705,7 @@ def draw_strands(row, od_table, want_lat=False):
 LAP_ENDS = ([["W-PWR-" + st, 0, "PWR-004", "bar"] for st in STATIONS] +
             [["W-MAIN-2", 0, "PWR-003", "pad"], ["W-MAIN-2", -1, "PWR-004", "bar", 0.0008], ["W-MAIN-1", -1, "PWR-003", "pad"],
              ["W-RX", -1, "AVN-003", "rx"]])
-LAP_FLAT = {"bar": 0.0255, "pad": 0.0491, "rx": 0.0261}     # bar top (BAR_TOP), PDB pad joint top, RX pad joint top
+LAP_FLAT = {"bar": 0.0255, "pad": 0.0514, "rx": 0.0261}     # bar top (BAR_TOP), PDB pad joint top, RX pad joint top
 LAP_LEN = {10: 0.0040, 16: 0.0018, 28: 0.0020}              # fillet length along the conductor, EST (16 AWG
 #                                                            pairs rise 1.5 mm after the landing: the fillet ends first)
 LAP_WALL = 0.0003                                            # solder at the conductor's sides, EST

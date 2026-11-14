@@ -5,13 +5,13 @@
    "external_m": {
     "value": [
      1.25,
-     0.55,
+     0.56,
      0.54
     ],
     "unit": "m",
-    "source": "team/D7/CHANGE-REQUESTS.md#CR-D7-01",
+    "source": "review/CDR-2026-11-13/fixes/S4.md#D-134",
     "status": "PROPOSED",
-    "note": "L (y) x W (x) x H (z). Length and width are A1's D-16 values; height 0.54 (was 0.50) because the lower tube ends need free travel equal to the cradle crush stroke (CL-D7-BOX-H-REQ). Freeze only after CAR-FIT.md has two measured cars"
+    "note": "D-134 (S4, CDR-24, 2026-11-13): W 0.55 -> 0.56 m. The +10 mm the CDR asks for (CDR-BT-18 '1.26 x 0.55 x 0.54', 'box needs +10 mm inside length') goes on the axis the pod-nose stack runs along, which is x = this key's W: nose gap 2.95 -> 12.95 mm (>= 10), antenna tube B to pad -7.05 -> +2.95 mm (>= 2). Adding it to L (span) would not move either claim. The x-stop is the 15 mm LE lip of each cradle saddle (trn.cradle.saddle_x_m[0] = -0.015): the aircraft is loaded against the lips, so the stack is fixed. Longest side stays 1.25 m (car check against 1.28 m unchanged). Was [1.25, 0.55, 0.54]. L (y) x W (x) x H (z). Length and width are A1's D-16 values; height 0.54 (was 0.50) because the lower tube ends need free travel equal to the cradle crush stroke (CL-D7-BOX-H-REQ). Freeze only after CAR-FIT.md has two measured cars"
    },
    "shell_t_m": {
     "value": 0.004,

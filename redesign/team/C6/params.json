@@ -1,5 +1,64 @@
 {
  "_note": "C6 joints and fasteners: local specification values (hardware dimensions from the ISO standards, torques and rules chosen by C6). Read by team/C6/joints.py as P:joints.*. Revision C6-R5 (params A1-R5, D-50, D-58, D-68, D-70; C4 frozen R4 set). Shared numbers come from params/params.json and the subsystem params; loads come from C1 claims. Frame and units: params.json#frame, SI.",
+ "allowables": {
+  "_note": "D-107 (CDR-18, 2026-11-13): the one table of printed-plastic design values. C6 owns it; C4, C3, D5, D3, D6 and C5 read it as P:allowables.* (add ../C6/params.json to the Kit params). Design value = print_kd x the data-sheet value of printed specimens. Factor rule: printed parts and bonded joints are checked at limit x 1.5 x 1.15 x 1.25 = 2.156 (requirements.safety_factor_ult, ASM-C1-FITTING-FACTOR, ASM-C1-PRINTED-FACTOR). A part may claim ultimate only (1.5) when each flight article is proof-loaded to 1.15 x limit and one article per printed batch is taken past 1.5 x 1.25 x limit (14 CFR 25.625(a): the fitting factor is for fittings whose strength is not proven by limit and ultimate load tests); the claim then names that test. Replaced by 0.5 x the mean of a printed tensile bar pair (in-plane and across layers) when the coupons run.",
+  "print_kd": {
+   "value": 0.5,
+   "unit": "-",
+   "source": "C6 rule (C4 ASM-C4-PETG-TENSILE practice since R1)",
+   "status": "PROPOSED",
+   "note": "knock-down from the data-sheet value of a 100 % infill specimen to the design value of a printed part: voids, seams, moisture, 4 perimeters + partial infill"
+  },
+  "petg_inplane_pa": {
+   "value": 23500000.0,
+   "unit": "Pa",
+   "source": "SRC-C6-PETG-TDS",
+   "status": "UNVERIFIED",
+   "note": "0.5 x 47 MPa. Prusament PETG TDS v1.1 (16-02-2022), 3D printed specimens, tensile yield 47 +/- 2 MPa horizontal, 50 +/- 1 MPa vertical xz (lower taken). Tension and bending with the stress in the layer plane. Was 40 MPa (D5), 25 MPa (C3)"
+  },
+  "petg_interlayer_pa": {
+   "value": 9000000.0,
+   "unit": "Pa",
+   "source": "SRC-C6-PETG-TDS",
+   "status": "UNVERIFIED",
+   "note": "0.5 x 18 MPa. Same sheet: interlayer adhesion 18 +/- 4 MPa. Tension and bending across the layers. Was 15 MPa (C4 / C6 / C3: 0.5 x an assumed Z yield of 30 MPa)"
+  },
+  "petg_bearing_pa": {
+   "value": 20000000.0,
+   "unit": "Pa",
+   "source": "ASM-C4-PETG-BEARING",
+   "status": "UNVERIFIED",
+   "note": "unchanged: 0.43 x 47 MPa, bearing on a bore wall with the layers in the bore plane, creep under bonded preload (the sheet gives no compressive value: -). C2 checks the block von Mises peak against this row"
+  },
+  "petg_shear_pa": {
+   "value": 10000000.0,
+   "unit": "Pa",
+   "source": "ASM-C4-PETG-SHEAR",
+   "status": "UNVERIFIED",
+   "note": "unchanged: shear-out and web torsion in the layer plane; 0.43 x 23.5 MPa, below the von Mises ratio 0.577 (the sheet gives no shear value: -)"
+  },
+  "petg_e_pa": {
+   "value": 1500000000.0,
+   "unit": "Pa",
+   "source": "SRC-C6-PETG-TDS",
+   "status": "UNVERIFIED",
+   "note": "tensile modulus 1.5 +/- 0.1 GPa horizontal, 1.6 +/- 0.1 vertical xz (100 % infill). C3 FEA uses 1.8 GPa, D5 FEA 2.0 GPa (linear models: stress does not depend on it), C4 tail tongue 1.0 GPa at 45 % fill"
+  },
+  "asa_inplane_pa": {
+   "value": 18250000.0,
+   "unit": "Pa",
+   "source": "SRC-C6-ASA-TDS",
+   "status": "UNVERIFIED",
+   "note": "0.5 x 36.5 MPa. Push Plastic ASA TDS v1.0: tensile stress at yield 36.5 MPa, specimens printed flat. Lower of the two sheets read (Prusament ASA TDS v1.1, 20-05-2024: 42 +/- 1 horizontal, 45 +/- 2 vertical xz), because the ASA brand is not fixed in the BOM"
+  },
+  "asa_interlayer_pa": {
+   "value": 5500000.0,
+   "unit": "Pa",
+   "source": "SRC-C6-ASA-TDS-PRUSA",
+   "status": "UNVERIFIED",
+   "note": "0.5 x 11 MPa. Prusament ASA TDS v1.1 (20-05-2024): interlayer adhesion 11 +/- 1 MPa. The Push Plastic sheet gives no interlayer value (-). ASA across layers is weaker than PETG (11 vs 18 MPa): print ASA mounts with the clamp hoop and the dog in the layer plane"
+  }
+ },
  "joints": {
   "m3_d_m": {
    "value": 0.003,

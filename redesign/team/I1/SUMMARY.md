@@ -1,6 +1,6 @@
 # I1 Procurement / BOM: K09-L
 
-> **R4, 2026-11-13 (supersedes the numbers below):** committed spend $1,631.07 baseline / $1,716.28 pessimistic, reserve $368.93 / $283.72 (short of $309 by $25.28), all-in pessimistic reserve +$20.45. See `ORDER-PLAN.md` and `bom_summary.json`; the figures in the table below are from I1-R1.
+> **R5, 2026-11-13 (CDR fix round; supersedes every figure below; quote `bom_summary.json` only):** reserve **at order** $227.11 baseline / **$98.01 pessimistic** (spend $1,772.89 / $1,901.99; crash line $309 FAILS by $210.99, the B3 proposal $227.89 would fail by $129.88); reserve **flight-ready** (+ X07 box, + X08 airspeed) **-$42.47 / -$235.84** (over the $2 000 cap). See `ORDER-PLAN.md` "What changed in R5" and `review/CDR-2026-11-13/fixes/S4.md`. The table below is from I1-R1.
 
 Revision I1-R1, 2026-11-09. Status `PROPOSED`: every price is `UNVERIFIED` until the order-day re-read (`T-I1-LISTINGS`).
 Files: [`BOM.csv`](BOM.csv) (one line per purchase) · [`ORDER-PLAN.md`](ORDER-PLAN.md) · `build_bom.py` → `claims.json`, `bom_summary.json` · [`CHANGE-REQUESTS.md`](CHANGE-REQUESTS.md).

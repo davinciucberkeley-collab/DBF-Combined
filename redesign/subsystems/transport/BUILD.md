@@ -7,15 +7,17 @@ Status `PROPOSED` (D7, round 4, 2026-11-10: 3/4 in nose pad, saddle cut to the s
 |---|---|
 | straightedge, box cutter, scoring tool (blunt butter knife), hot-wire bow, band saw, hot-melt gun, 3.5 mm drill, 2.5 mm hex key + 5.5 mm spanner, laser cutter, tape measure, luggage scale | 2 sheets 4 mm Coroplast 48 × 96 in, PE plank 2 in + 1 in (1.7 pcf), XPS offcuts (wing stock), 3 mm birch ply (backing strips; two 800 × 400 mm mat panels), 1.5 mm rubber sheet 0.8 × 0.8 m, cloth tape, 1 m of 25 mm webbing, LSE double-sided tape, zip ties, 6 × M3 × 16 SHCS + nylocs + M3 × 12 mm fender washers, 3 strap handles, 2 cam straps, 8 corner protectors |
 
-1. **Check the cars first.** `CAR-FIT.md` passes for two cars at 1.25 × 0.55 × 0.54 m. If a car rejects 0.54, stop
+1. **Check the cars first.** `CAR-FIT.md` passes for two cars at 1.25 × 0.56 × 0.54 m (D-134). If a car rejects 0.54, stop
    and tell A1. The fallback is a 0.50 m box with 56 mm columns and a "MAX DROP 0.15 m" label. CHECK: two rows signed.
-2. **Cut the base blank** (one sheet, flutes along the 1.25 m length): floor 1 242 × 542 mm with 536 mm walls on all
-   four sides as one cross-shaped blank. Score the fold lines on the inside face; add 40 mm glue flaps on the end
-   walls. CHECK: floor diagonals within 3 mm.
-3. **Fold and close the base.** Fold the walls up, hot-melt the flaps inside the long walls, then a strip of LSE tape
-   over every inside corner. Fit 8 corner protectors. CHECK: outside 1 250 × 550 mm ± 3 mm, walls square.
-4. **Cut and fold the lid** (second sheet): 1 250 × 550 mm top with a 30 mm lip that folds down 4 mm inside the walls.
-   No lining. CHECK: the lid drops in and sits on the wall tops, no gap > 3 mm.
+2. **Cut the panels** (D-134, `SPEC.md` "Panel nest"; the old cross-shaped blank was 1 614 mm wide on a 1 219 mm
+   sheet). Sheet 1: floor 1 250 × 560, lid top 1 250 × 560, two end walls 552 × 536, two lid lips 1 242 × 30 from the
+   99 mm edge strip, two lid lips 544 × 30 from the end block. Sheet 2: front and aft walls 1 250 × 536. Every 1 250 mm
+   side along the sheet length. CHECK: floor diagonals within 3 mm.
+3. **Assemble the base.** Stand the long walls on the floor edges, the end walls between them; hot-melt each joint
+   on the inside, then a strip of LSE tape (`T02`) over every inside corner. Fit 8 corner protectors. CHECK: outside
+   1 250 × 560 mm ± 3 mm, walls square.
+4. **Make the lid** from the sheet-1 top and the four lip strips taped and hot-melted 4 mm inside its edge (plug lid,
+   30 mm lip). No lining. CHECK: the lid drops in and sits on the wall tops, no gap > 3 mm.
 5. **Make the two crush columns.** Laminate PE 2 in + 2 in + 1 in with LSE tape, band-saw to 60 × 50 × **120** mm.
    CHECK: height 120 ± 2 mm (the 109–123 mm window in `SPEC.md`); about 10 g each.
 6. **Hot-wire the two saddles** from 3 stacked 2 in XPS offcuts with the wing's lower-surface template

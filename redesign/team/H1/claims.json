@@ -390,7 +390,7 @@
    "outputs": {
     "pass_fresh_kgf": 1.3780000000000001,
     "pass_sag_kgf": 1.1024,
-    "pred_sag_kgf": 1.37862,
+    "pred_sag_kgf": 1.377,
     "pred_fresh_kgf": 1.62
    },
    "input_values": {
@@ -400,7 +400,7 @@
     "k_dl": 1.06,
     "n": 4,
     "t_max": 1.62,
-    "sag": 0.851
+    "sag": 0.85
    }
   },
   {
@@ -421,7 +421,7 @@
    "output": "pred_sag_kgf",
    "unit": "kgf",
    "how": "params.json thrust_max x voltage_sag; measured on a 3.6 V/cell 10 degC pack.",
-   "value": 1.37862
+   "value": 1.377
   },
   {
    "id": "CL-H1-T-PASS-FRESH",
@@ -571,7 +571,7 @@
    },
    "outputs": {
     "u95_g": 5.231953108862248,
-    "u_frac": 0.04582049021762505,
+    "u_frac": 0.08652761993762106,
     "accept_max_kg": 2.594768046891138
    },
    "input_values": {
@@ -580,7 +580,7 @@
      "cal_frac": 0.001
     },
     "m": 2.6,
-    "margin": 0.11418370000000033
+    "margin": 0.0604657000000004
    }
   },
   {
@@ -605,7 +605,7 @@
     "value": 0.1
    },
    "how": "Re-run after A3 updates CL-A3-GATE-MARGIN.",
-   "value": 0.04582049021762505
+   "value": 0.08652761993762106
   },
   {
    "id": "CL-H1-WEIGH-ACCEPT",
@@ -638,9 +638,9 @@
    },
    "outputs": {
     "u95_m": 0.0006092823008252251,
-    "u_frac_half_range": 0.2538676253438439,
-    "accept_fwd_m": 0.04720928230082523,
-    "accept_aft_m": 0.05079071769917477,
+    "u_frac_half_range": 0.10240038669331514,
+    "accept_fwd_m": 0.040009282300825226,
+    "accept_aft_m": 0.05069071769917477,
     "w2_frac": 0.17727272727272728
    },
    "input_values": {
@@ -655,8 +655,8 @@
     },
     "m": 2.6,
     "xr": [
-     0.0466,
-     0.0514
+     0.0394,
+     0.0513
     ],
     "xt": 0.049
    }
@@ -683,7 +683,7 @@
     "value": 0.5
    },
    "how": "Re-run after B3 changes cg.x_range_m.",
-   "value": 0.2538676253438439
+   "value": 0.10240038669331514
   },
   {
    "id": "CL-H1-CG-ACCEPT-FWD",
@@ -693,7 +693,7 @@
    "output": "accept_fwd_m",
    "unit": "m",
    "how": "Card GT-07: measured x must be >= this value.",
-   "value": 0.04720928230082523
+   "value": 0.040009282300825226
   },
   {
    "id": "CL-H1-CG-ACCEPT-AFT",
@@ -703,7 +703,7 @@
    "output": "accept_aft_m",
    "unit": "m",
    "how": "Card GT-07: measured x must be <= this value.",
-   "value": 0.05079071769917477
+   "value": 0.05069071769917477
   },
   {
    "id": "CALC-H1-PROOF",
@@ -755,8 +755,8 @@
     "wing_defl_max_m": 0.028749999999999998,
     "mount_f_n": 21.08508627927301,
     "mount_f_kg": 2.1500804331013152,
-    "fin_f_n": 57.20268344184655,
-    "fin_f_kg": 5.833050373149502,
+    "fin_f_n": 42.95734887938251,
+    "fin_f_kg": 4.380430511885558,
     "pack_pull_n": 73.75,
     "pack_pull_kg": 7.5204070707122215
    },
@@ -777,7 +777,7 @@
     "k_def": 0.05,
     "b": 1.15,
     "f_mount_ult": 31.627629418909514,
-    "m_fin_ult": 16.302764780926267,
+    "m_fin_ult": 12.242844430624015,
     "z_st": 0.19,
     "f_pack": 73.75,
     "g": 9.80665
@@ -932,7 +932,7 @@
    "output": "fin_f_n",
    "unit": "N",
    "how": "Card GT-09: hang at the motor station, side-load in y, wing held at the spar.",
-   "value": 57.20268344184655
+   "value": 42.95734887938251
   },
   {
    "id": "CL-H1-PACK-PULL-F",
@@ -1058,7 +1058,7 @@
    "id": "ASM-H1-OPTLEVER",
    "type": "assumption",
    "title": "Mount-stiffness rig: optical lever and load steps",
-   "text": "T-C4-MOUNT-STIFF read by a laser pointer reflected off a 10 mm mirror bonded to the motor can, onto mm paper on a wall L = 5.0 m away (spot moves 2 theta L); a second mirror on the collar subtracts tube and stub rotation. Spot centre read to +/-0.3 mm from a tripod phone photo against a 1 mm grid. Loads 0.5, 1.0, 1.5 kg at the prop nut. For comparison, C4's two dial gauges (0.01 mm) are 0.030 m apart.",
+   "text": "T-C4-MOUNT-STIFF read by a laser pointer reflected off a 10 mm mirror bonded to the motor can, onto mm paper on a wall L = 5.0 m away (spot moves 2 theta L); a second mirror on the collar subtracts tube and stub rotation. Spot centre read to +/-0.3 mm from a tripod phone photo against a 1 mm grid. Loads 0.5, 1.0, 1.7 kg at the prop nut (CDR-28: top step 1.5 -> 1.7 kg, so the U95 at the pass line is under 10 %; still under 0.8 x the mount proof load). For comparison, C4's two dial gauges (0.01 mm) are 0.030 m apart.",
    "basis": "optical lever is the standard way to read sub-milliradian rotations without a fine gauge; R3: wall 3.0 -> 5.0 m (a corridor) and photo read-out, because C4's need rose to ~1 970 N m/rad (15:01 re-publish) and the spot shrinks with it; laser pointer and mirror are team-owned",
    "value": {
     "L_m": 5.0,
@@ -1066,7 +1066,7 @@
     "load_kg": [
      0.5,
      1.0,
-     1.5
+     1.7
     ],
     "dial_res_mm": 0.01,
     "gauge_s_m": 0.03
@@ -1109,12 +1109,12 @@
    "outputs": {
     "k_pass": 1641.8574642609717,
     "arm_m": 0.0577,
-    "spot_pass_mm": 5.16954471368831,
-    "spot_nom_mm": 3.8580252613636365,
-    "spot_accept_mm": 4.8695447136883105,
-    "u_k_frac": 0.058032189799159174,
+    "spot_pass_mm": 5.858817342180084,
+    "spot_nom_mm": 4.372428629545454,
+    "spot_accept_mm": 5.558817342180085,
+    "u_k_frac": 0.051204873352199275,
     "dial_diff_um": 5.16954471368831,
-    "load_frac": 0.6976483190614282,
+    "load_frac": 0.7906680949362853,
     "nom_over_pass": 1.3399457918171098
    },
    "input_values": {
@@ -1129,7 +1129,7 @@
      "load_kg": [
       0.5,
       1.0,
-      1.5
+      1.7
      ],
      "dial_res_mm": 0.01,
      "gauge_s_m": 0.03
@@ -1155,12 +1155,12 @@
   {
    "id": "CL-H1-MSTIFF-SPOT-ACCEPT",
    "type": "claim",
-   "title": "T-C4-MOUNT-STIFF acceptance: spot travel at 1.5 kg (can minus collar)",
+   "title": "T-C4-MOUNT-STIFF acceptance: spot travel at the top load step, 1.7 kg (can minus collar)",
    "calc": "CALC-H1-MOUNT-STIFF",
    "output": "spot_accept_mm",
    "unit": "mm",
-   "how": "Card GT-17: net spot travel at 1.5 kg <= this value in y and in z passes k >= CL-H1-MSTIFF-K-PASS.",
-   "value": 4.8695447136883105
+   "how": "Card GT-17: net spot travel at 1.7 kg <= this value in y and in z passes k >= CL-H1-MSTIFF-K-PASS.",
+   "value": 5.558817342180085
   },
   {
    "id": "CL-H1-MSTIFF-SPOT-NOM",
@@ -1170,7 +1170,7 @@
    "output": "spot_nom_mm",
    "unit": "mm",
    "how": "Informational: what the mount as estimated reads on GT-17.",
-   "value": 3.8580252613636365
+   "value": 4.372428629545454
   },
   {
    "id": "CL-H1-MSTIFF-NOM-RATIO",
@@ -1194,7 +1194,7 @@
     "value": 0.1
    },
    "how": "T-H1-RIG-CHECK: read a 1.00 mm shim step on the wall.",
-   "value": 0.058032189799159174
+   "value": 0.051204873352199275
   },
   {
    "id": "CL-H1-MSTIFF-DIAL-UM",
@@ -1218,7 +1218,7 @@
     "value": 0.8
    },
    "how": "Load steps set in ASM-H1-OPTLEVER.",
-   "value": 0.6976483190614282
+   "value": 0.7906680949362853
   },
   {
    "id": "ASM-H1-TAP",
@@ -1370,25 +1370,30 @@
     "od": "P:fins.tube.od_m",
     "idm": "P:fins.tube.id_m",
     "e_lo": "ASM-C4-E-TUBE-LO",
+    "e_req": "CL-C4-D3-TUBE-E-REQ",
     "rig": "ASM-H1-BEND",
     "g": "P:env.g_ms2"
    },
    "units": {
     "od": "m",
     "idm": "m",
-    "g": "m/s2"
+    "g": "m/s2",
+    "e_req": "Pa"
    },
    "outputs": {
     "I_m4": 3.645032876327555e-09,
     "defl_elo_mm": 1.6398718117157305,
-    "defl_accept_mm": 1.6098718117157305,
+    "e_pass_pa": 78631845509.55621,
+    "defl_pass_mm": 1.4598541605659054,
+    "defl_accept_mm": 1.4298541605659054,
     "sigma_mpa": 23.675649281645853,
-    "u_e_frac": 0.018294112860329146
+    "u_e_frac": 0.020549997945254094
    },
    "input_values": {
     "od": 0.022,
     "idm": 0.02,
     "e_lo": 70000000000.0,
+    "e_req": 78631845509.55621,
     "rig": {
      "span_m": 0.8,
      "load_kg": 4.0,
@@ -1398,9 +1403,27 @@
    }
   },
   {
+   "id": "CL-H1-TUBE-E-PASS",
+   "type": "claim",
+   "title": "GT-16 tube axial modulus pass line (C4's live requirement)",
+   "calc": "CALC-H1-BEND",
+   "output": "e_pass_pa",
+   "unit": "Pa",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-C4-D3-TUBE-E-REQ"
+   },
+   "parts": [
+    "WNG-002"
+   ],
+   "how": "Re-run whenever C4 re-publishes CL-C4-D3-TUBE-E-REQ (as CL-H1-MSTIFF-K-PASS does for the mount).",
+   "note": "CDR-19: was written for E >= 70 GPa (ASM-C4-E-TUBE-LO); a 72 GPa tube passed the card and failed the station-mode separation. Now max(70 GPa, CL-C4-D3-TUBE-E-REQ)",
+   "value": 78631845509.55621
+  },
+  {
    "id": "CL-H1-TUBE-DEFL-ACCEPT",
    "type": "claim",
-   "title": "Aloft tube bend acceptance: centre deflection at 4 kg (E >= 70 GPa)",
+   "title": "Aloft tube bend acceptance: centre deflection at 4 kg at the E pass line",
    "calc": "CALC-H1-BEND",
    "output": "defl_accept_mm",
    "unit": "mm",
@@ -1408,7 +1431,7 @@
     "WNG-002"
    ],
    "how": "Card GT-16 (T-C4-TUBE-BEND on BOM line W03 by 10 Dec): slope of 8 load steps; deflection at 4 kg <= this value passes; result to I1 (CR-I1-08) and C4.",
-   "value": 1.6098718117157305
+   "value": 1.4298541605659054
   },
   {
    "id": "CL-H1-TUBE-SIGMA",
@@ -1436,7 +1459,7 @@
     "value": 0.05
    },
    "how": "T-H1-RIG-CHECK: read a 1.00 mm gauge block.",
-   "value": 0.018294112860329146
+   "value": 0.020549997945254094
   },
   {
    "id": "ASM-H1-TORSION",
@@ -1482,6 +1505,7 @@
     "g_nom": "ASM-C4-G-TUBE",
     "g_hi": "ASM-C4-G-TUBE-HI",
     "e_t": "ASM-C2-TUBE-ET",
+    "g_req": "CL-C4-D3-TUBE-G-REQ",
     "rig": "ASM-H1-TORSION",
     "ring": "ASM-H1-RING",
     "g": "P:env.g_ms2"
@@ -1489,13 +1513,17 @@
    "units": {
     "od": "m",
     "idm": "m",
-    "g": "m/s2"
+    "g": "m/s2",
+    "g_req": "Pa"
    },
    "outputs": {
     "J_m4": 7.29006575265511e-09,
     "torque_nm": 5.88399,
     "gj_lo": 21.87019725796533,
     "gj_nom": 36.45032876327555,
+    "g_pass_pa": 4312333453.765495,
+    "gj_pass": 31.437194425324765,
+    "dtheta_pass_deg": 3.2171553460152493,
     "dtheta_lo_deg": 4.6244822081940224,
     "spot_hi_mm": 72.64119665959524,
     "u_gj": 0.019468478320921086,
@@ -1511,6 +1539,7 @@
     "g_nom": 5000000000.0,
     "g_hi": 10000000000.0,
     "e_t": 8000000000.0,
+    "g_req": 4312333453.765495,
     "rig": {
      "lever_m": 0.3,
      "load_kg": 2.0,
@@ -1538,6 +1567,50 @@
    ],
    "how": "Card GT-16 step 4 (T-C4-TUBE-TORSION, CR-C2-15): measured GJ = T L_g / dtheta from the slope of 4 steps, both senses; report GJ and G = GJ / J; >= this value keeps C4's low corner conservative.",
    "value": 21.87019725796533
+  },
+  {
+   "id": "CL-H1-TUBE-G-PASS",
+   "type": "claim",
+   "title": "GT-16 tube shear modulus pass line (C4's live requirement)",
+   "calc": "CALC-H1-TORSION",
+   "output": "g_pass_pa",
+   "unit": "Pa",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-C4-D3-TUBE-G-REQ"
+   },
+   "parts": [
+    "WNG-002"
+   ],
+   "how": "Re-run whenever C4 re-publishes CL-C4-D3-TUBE-G-REQ.",
+   "note": "CDR-19: the card used to report GJ against C4's low corner (G 3 GPa) only",
+   "value": 4312333453.765495
+  },
+  {
+   "id": "CL-H1-TORS-GJ-PASS",
+   "type": "claim",
+   "title": "GT-16 torsion pass: GJ at the G pass line",
+   "calc": "CALC-H1-TORSION",
+   "output": "gj_pass",
+   "unit": "N m2",
+   "parts": [
+    "WNG-002"
+   ],
+   "how": "Card GT-16 step 4: measured GJ minus its U95 (CL-H1-TORS-U) >= this value passes; below it the +/-45 deg fallback tube is ordered (BOM, I1).",
+   "value": 31.437194425324765
+  },
+  {
+   "id": "CL-H1-TORS-TWIST-PASS",
+   "type": "claim",
+   "title": "GT-16 torsion pass: twist over the 0.30 m gauge at 2.0 kg at the G pass line",
+   "calc": "CALC-H1-TORSION",
+   "output": "dtheta_pass_deg",
+   "unit": "deg",
+   "parts": [
+    "WNG-002"
+   ],
+   "how": "Card GT-16 step 4: measured twist <= this value (less the read U95) passes.",
+   "value": 3.2171553460152493
   },
   {
    "id": "CL-H1-TORS-U",
@@ -1608,8 +1681,8 @@
   {
    "id": "ASM-H1-LEVER",
    "type": "assumption",
-   "title": "Coupon lever frame 15:1 / 9:1, water jugs to 20 kg",
-   "text": "2x4 (38 x 89 mm) lever 1.0 m long on an M8 pivot; coupon clevis at 0.060 m (15:1) or 0.100 m (9:1) from the pivot, jug hook at 0.900 m. Pivot and both clevis holes in a pair of 3 mm steel side plates 40 x 200 mm, each plate held to the lever by 4 x M6 through-bolts; lever tare balanced by a counterweight on the short side. Water filled slowly from a hose; jug weighed after failure.",
+   "title": "Coupon lever frame 20:1 / 15:1 / 9:1, water jugs to 20 kg",
+   "text": "2x4 (38 x 89 mm) lever 1.0 m long on an M8 pivot; coupon clevis at 0.045 m (20:1, CDR-28), 0.060 m (15:1) or 0.100 m (9:1) from the pivot, jug hook at 0.900 m. Pivot and the three clevis holes in a pair of 3 mm steel side plates 40 x 200 mm, each plate held to the lever by 6 x M6 through-bolts (was 4: the 20:1 hole raises the pivot load and 4 bolts would bear on the wood at 4.5 MPa against 4.3); lever tare balanced by a counterweight on the short side. Water filled slowly from a hose; jug weighed after failure.",
    "basis": "CR-C6-39 asks >= 2 660 N for the strip anchor; 15:1 x 20 kg = 2 940 N. The 9:1 hole keeps resolution for the 40-300 N coupons. Steel plates because bare wood across the grain does not carry the pivot bearing (CALC-H1-LEVER)",
    "value": {
     "arm_jug_m": 0.9,
@@ -1620,10 +1693,11 @@
     "h_m": 0.089,
     "bolt_m": 0.008,
     "plate_t_m": 0.003,
-    "n_m6": 4,
-    "m6_m": 0.006
+    "n_m6": 6,
+    "m6_m": 0.006,
+    "arm_20_m": 0.045
    },
-   "unit": "m,m,m,kg,m,m,m,m,-,m",
+   "unit": "m,m,m,kg,m,m,m,m,-,m,m",
    "status": "PROPOSED"
   },
   {
@@ -1660,12 +1734,14 @@
    "outputs": {
     "cap_n": 2941.995,
     "cap9_n": 1765.197,
-    "need_n": 2791.5712521160726,
-    "need9_n": 2791.5712521160726,
+    "cap20_n": 3922.66,
+    "fail_headroom_20": 2.8024798634168233,
+    "need_n": 1749.6379060585991,
+    "need9_n": 1749.0008670283783,
     "sigma_mpa": 3.5186884962690783,
-    "wood_brg_mpa": 10.322789473684209,
-    "plate_brg_mpa": 65.37766666666666,
-    "m6_brg_mpa": 3.4409298245614033
+    "wood_brg_mpa": 13.548661184210523,
+    "plate_brg_mpa": 85.80818749999999,
+    "m6_brg_mpa": 3.0108135964912277
    },
    "input_values": {
     "lev": {
@@ -1677,11 +1753,12 @@
      "h_m": 0.089,
      "bolt_m": 0.008,
      "plate_t_m": 0.003,
-     "n_m6": 4,
-     "m6_m": 0.006
+     "n_m6": 6,
+     "m6_m": 0.006,
+     "arm_20_m": 0.045
     },
-    "f_strip": 2233.257001692858,
-    "f_est": 2217.512578259048,
+    "f_strip": 1399.2006936227026,
+    "f_est": 1399.7103248468793,
     "f_ins": 300.0,
     "k": 1.25,
     "g": 9.80665
@@ -1709,7 +1786,7 @@
     "ref": "CL-H1-LEVER-CAP"
    },
    "how": "Re-run when C6/C4 change the anchor force.",
-   "value": 2791.5712521160726
+   "value": 1749.6379060585991
   },
   {
    "id": "CL-H1-LEVER-CAP9",
@@ -1724,16 +1801,38 @@
   {
    "id": "CL-H1-LEVER-NEED9",
    "type": "claim",
-   "title": "Load the 9:1 hole must reach (1.25 x CL-C6-STRIP-ANCHOR-F, CR-C6-33)",
+   "title": "Load the 9:1 hole would need for the strip anchor (record, CR-C6-33)",
    "calc": "CALC-H1-LEVER",
    "output": "need9_n",
    "unit": "N",
+   "how": "None: the strip anchor runs on the 20:1 hole; the 9:1 hole is for the 40-300 N coupons.",
+   "note": "CDR-28: limit retired. The 9:1 hole was never used for the strip anchor after CR-C6-39, so this was a standing failure for a test that does not exist",
+   "value": 1749.0008670283783
+  },
+  {
+   "id": "CL-H1-LEVER-CAP20",
+   "type": "claim",
+   "title": "Coupon lever capacity, 20:1 hole (CDR-28)",
+   "calc": "CALC-H1-LEVER",
+   "output": "cap20_n",
+   "unit": "N",
+   "how": "T-H1-LEVER-CAL: 4.000 kg check mass at the 20:1 clevis balances 0.200 kg at the jug hook within 2 %.",
+   "value": 3922.66
+  },
+  {
+   "id": "CL-H1-LEVER-FAIL-HEADROOM",
+   "type": "claim",
+   "title": "20:1 hole capacity / strip-anchor design force (room to reach failure)",
+   "calc": "CALC-H1-LEVER",
+   "output": "fail_headroom_20",
+   "unit": "-",
    "limit": {
-    "op": "<=",
-    "ref": "CL-H1-LEVER-CAP9"
+    "op": ">=",
+    "value": 1.5
    },
-   "how": "CR-C6-33 frame line (>= 1 560 N at C4 R4); the anchor runs on the 15:1 hole regardless.",
-   "value": 2791.5712521160726
+   "how": "T-C6-STRIP-ANCHOR is taken to failure on the 20:1 hole; the failure load / design force is the measured RF.",
+   "note": "CDR-28: the 15:1 hole had 5 % over 1.25 x the design force, so a joint that passed could not be taken to failure and its real RF stayed unknown",
+   "value": 2.8024798634168233
   },
   {
    "id": "CL-H1-LEVER-SIGMA",
@@ -1757,7 +1856,7 @@
    "output": "wood_brg_mpa",
    "unit": "MPa",
    "how": "Informational: above 4.3 MPa across the grain, so the M8 never bears on the wood directly.",
-   "value": 10.322789473684209
+   "value": 13.548661184210523
   },
   {
    "id": "CL-H1-LEVER-PLATE-BRG",
@@ -1771,7 +1870,7 @@
     "value": 150.0
    },
    "how": "Mild steel; holes drilled, not punched.",
-   "value": 65.37766666666666
+   "value": 85.80818749999999
   },
   {
    "id": "CL-H1-LEVER-M6-BRG",
@@ -1785,7 +1884,7 @@
     "value": 4.3
    },
    "how": "ASM-H1-WOOD Fc-perp; washers both sides.",
-   "value": 3.4409298245614033
+   "value": 3.0108135964912277
   },
   {
    "id": "CALC-H1-D5",
@@ -1793,7 +1892,7 @@
    "title": "d5",
    "script": "redesign/team/H1/ground_tests.py",
    "function": "d5",
-   "equation": "F_req = k F_peak,U / g [kgf] ; u_ratio = sqrt2 U_cell / F_plateau,L ; theta_acc = atan(mu) + u_theta",
+   "equation": "F_req = k F_peak,U / g [kgf] ; u_ratio = sqrt2 U_cell / F_plateau,L ; theta_acc = atan(mu_max) - u_theta (D-105: mu is an upper bound)",
    "inputs": {
     "f_pk": "CL-D5-F-PEAK-UPPER",
     "f_l": "CL-D5-F-PLATEAU-LOWER",
@@ -1809,15 +1908,15 @@
    "outputs": {
     "cell_req_kgf": 4.995485206467041,
     "ratio_u": 0.004845279811940523,
-    "mu_angle_deg": 34.99202019855866,
-    "mu_accept_deg": 35.29202019855866
+    "mu_angle_deg": 21.80140948635181,
+    "mu_accept_deg": 21.50140948635181
    },
    "input_values": {
     "f_pk": 39.19118,
     "f_l": 35.778886797385326,
     "k": 1.25,
     "u_t": 0.122583125,
-    "mu": 0.7,
+    "mu": 0.4,
     "inc": 0.3,
     "g": 9.80665
    }
@@ -1863,12 +1962,13 @@
   {
    "id": "CL-H1-MU-ANGLE-ACCEPT",
    "type": "claim",
-   "title": "T-D5-PAD-MU acceptance slip angle (mu 0.7 + U95)",
+   "title": "T-D5-PAD-MU acceptance slip angle (mu <= 0.40 less U95)",
    "calc": "CALC-H1-D5",
    "output": "mu_accept_deg",
    "unit": "deg",
-   "how": "Card GT-15: mean slip angle of 5 runs per surface >= this value passes mu >= 0.7.",
-   "value": 35.29202019855866
+   "how": "Card GT-15: every one of 5 runs on the landing mat (dry) and 5 with the mat damp slides at or below this angle; that passes mu <= requirements.pad_mu_max (D-105, CDR decision B1).",
+   "note": "D-105: the pass used to be a LOWER bound (slip angle >= 35.3 deg, mu >= 0.7, to stand parked in 8 m/s). The pad face now caps the foot side load, so the test is an upper bound and the parked aircraft is laid flat or tied",
+   "value": 21.50140948635181
   },
   {
    "id": "ASM-H1-GPS-U",
@@ -2032,12 +2132,12 @@
     "p_dens_wm2": 19.2218014405584,
     "p_dens_bare_wm2": 1760.9523809523807,
     "shunt_ue": 1743.8963627304436,
-    "d_split_mm": 11.494685009945865,
-    "d3_mm": 6.981336485523061,
-    "dsh_mm": 18.925858071998487,
-    "travel_req_mm": 23.657322589998106,
+    "d_split_mm": 6.942182132611486,
+    "d3_mm": 4.102570372906769,
+    "dsh_mm": 11.747243406382726,
+    "travel_req_mm": 14.684054257978406,
     "travel_mm": 25.0,
-    "d_shell_ult_mm": 28.388787107997732,
+    "d_shell_ult_mm": 17.62086510957409,
     "reinf": 0.6312500000000001
    },
    "input_values": {
@@ -2065,8 +2165,8 @@
      "et_face_npm": 800000.0
     },
     "dial": 25.0,
-    "d3": 0.0069813364855230604,
-    "dsh": 0.018925858071998487,
+    "d3": 0.004102570372906769,
+    "dsh": 0.011747243406382725,
     "sf": 1.5
    }
   },
@@ -2156,7 +2256,7 @@
    "output": "d_split_mm",
    "unit": "mm",
    "how": "Card GT-09 FP step 3: geometric mean of the two predictions (model errors are multiplicative); below it, the 3-D load path (strips clamped in the cheeks) is the one built.",
-   "value": 11.494685009945865
+   "value": 6.942182132611486
   },
   {
    "id": "CL-H1-FP-TRAVEL-REQ",
@@ -2170,7 +2270,7 @@
     "ref": "ASM-H1-DIAL"
    },
    "how": "Borrowed 25 mm indicator, removed before the 1.5 x step; above 1.0 x a steel rule on a fixed bar (0.5 mm) reads the pad.",
-   "value": 23.657322589998106
+   "value": 14.684054257978406
   },
   {
    "id": "CL-H1-FP-DEFL-SHELL-ULT",
@@ -2180,7 +2280,7 @@
    "output": "d_shell_ult_mm",
    "unit": "mm",
    "how": "Informational: sizes the rule and the frame clearance.",
-   "value": 28.388787107997732
+   "value": 17.62086510957409
   },
   {
    "id": "ASM-H1-ESC-DUMMY",
@@ -2384,9 +2484,9 @@
     "g": "m/s2"
    },
    "outputs": {
-    "side_n": 59.25,
-    "side_kg": 6.0418185618942255,
-    "rim_sf_at_side": 1.2672926036051309,
+    "side_n": 36.75,
+    "side_kg": 3.7474570826938867,
+    "rim_sf_at_side": 1.200371795200472,
     "pod_x_n": 76.21620962710105,
     "pod_x_kg": 7.7718904648479405,
     "pod_z_n": 51.37029604285736,
@@ -2395,9 +2495,9 @@
     "pod_crash_kg": 20.873391290368716
    },
    "input_values": {
-    "f_side": 59.25,
-    "sf_rim": 1.2672926036051309,
-    "f_d5": 59.25,
+    "f_side": 36.75,
+    "sf_rim": 1.200371795200472,
+    "f_d5": 36.75,
     "f_px": 76.21620962710105,
     "f_pz": 51.37029604285736,
     "f_crash": 204.69804269769435,
@@ -2416,7 +2516,7 @@
     "GER-002-UR"
    ],
    "how": "Card GT-09: jugs over a pulley, along y then z, insert pushed 4 mm in; 3 s hold.",
-   "value": 59.25
+   "value": 36.75
   },
   {
    "id": "CL-H1-D5-SIDE-RIM-SF",
@@ -2434,7 +2534,7 @@
     "GER-002-UR"
    ],
    "how": "T-D5-SIDE 60 N at the pad of two R8 shoes, +y on one and +z on the other, insert pushed 4-5 mm in; inspect the inboard snap-window corners and the rim; no crack.",
-   "value": 1.2672926036051309
+   "value": 1.200371795200472
   },
   {
    "id": "CL-H1-POD-BRACKET-F",

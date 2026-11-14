@@ -135,6 +135,30 @@ def stall_turb(vs, su2, trip, xf):
             "ratio_su2": su2 / xf, "Vs_su2": vs * math.sqrt(xf / su2), "su2_over_trip": su2 / trip}
 
 
+kit.assumption("ASM-B2R3-FB2", "Second stall fallback (pre-computed, CDR-15 / CDR-AE-06)",
+               "AIRSPEED_MIN = AIRSPEED_CRUISE = 18 m/s with AIRSPEED_MAX 20 m/s, used if T-B2-STALL measures a gate-mass "
+               "stall between 13.07 and 13.85 m/s. PROPOSED: AIRSPEED_MAX 20 needs A1 / C1 to accept 0.5 m/s to VA",
+               basis="review/CDR-2026-11-13/CDR-aero.md CDR-AE-06; board decision B6 makes 17 the baseline (first "
+                     "fallback of D-96)", value={"airspeed_min": 18.0, "airspeed_max": 20.0, "baseline_min": 17.0},
+               unit="m/s", status="PROPOSED")
+
+
+@kit.calc("CALC-B2R3-FALLBACK", title="Stall the B6 baseline (17 m/s) and the second fallback (18 m/s) hold to",
+          equation="Vs_keep = AIRSPEED_MIN / f ; clmax ratio covered = (Vs_free / Vs_keep)^2 ; third step = "
+                   "ceil(f x Vs_su2)",
+          inputs={"vs": "CL-B2R3-VS-GATE-FWD", "vtrip": "CL-B2R3-VS-GATE-FWD-TURB", "su2": "P:b2sim.cfd.clmax_2d",
+                  "xf": "P:b2.xfoil.clmax_2d_stall", "f": "P:requirements.transition_factor", "fb": "ASM-B2R3-FB2",
+                  "va": "ASM-B2R3-VA"},
+          units={"vs": "m/s", "vtrip": "m/s"}, assumes=["ASM-B2R3-FB2"])
+def fallback(vs, vtrip, su2, xf, f, fb, va):
+    vs_su2 = vs * math.sqrt(xf / su2)
+    k17, k18 = fb["baseline_min"] / f, fb["airspeed_min"] / f
+    return {"vs_keep_17": k17, "vs_keep_18": k18, "trip_margin_17": k17 - vtrip, "trip_margin_18": k18 - vtrip,
+            "clmax_ratio_17": (vs / k17) ** 2, "clmax_ratio_18": (vs / k18) ** 2, "vs_su2": vs_su2,
+            "su2_short_18": vs_su2 - k18, "min_needed_su2": float(math.ceil(f * vs_su2)),
+            "max_fb2": fb["airspeed_max"], "va_margin_fb2": va - fb["airspeed_max"]}
+
+
 @kit.calc("CALC-B2R3-HINGE", title="Elevon hinge moment per servo, VA full travel and VD 1/3 travel",
           equation="H = C_h q c^2 s; C_h(25) = XFOIL inviscid max (design), C_h(8.3) = interp of XFOIL inviscid "
                    "max at 5 and 10 deg; T_servo = SF * max(H) * k_linkage (envelope: 25 deg to VA, 1/3 at VD); "
@@ -254,8 +278,27 @@ kit.claim("CL-B2R3-VTR-GATE-FWD", "1.3 Vs at 2.6 kg, forward CG, CG height, vs t
           how="F4 AIRSPEED_MIN 15.6 must be >= this; transition logs show airspeed >= 1.3 Vs")
 kit.claim("CL-B2R3-VS-GATE-FWD-TURB", "Stall at 2.6 kg, forward CG, turbulent-LE section (XFOIL tripped)",
           calc="CALC-B2R3-STALL-TURB", output="Vs_trip", unit="m/s", parts=WING,
-          how="Sensitivity (no limit): the value if the LE is rough (tape seam, bugs, rain). T-B2-STALL decides",
-          note="informational; the design value is CL-B2R3-VS-GATE-FWD (free transition). Exceeds 12 m/s")
+          how="Planning baseline (board decision B6, CDR-15): the wing has a tape seam at x/c about 0.05, so the "
+              "tripped section is the likelier case. T-B2-STALL decides",
+          note="B6: planning baseline until T-B2-STALL (AIRSPEED_MIN / CRUISE 17). The free-transition value "
+               "CL-B2R3-VS-GATE-FWD stays the R-STALL design value. Exceeds 12.3 m/s")
+kit.claim("CL-B2R3-BASE-VS-KEEP", "Largest gate-mass stall the B6 baseline AIRSPEED_MIN 17 holds (1.3 Vs)",
+          calc="CALC-B2R3-FALLBACK", output="vs_keep_17", unit="m/s", limit=(">=", "CL-B2R3-VS-GATE-FWD-TURB"),
+          verifies=["R-STALL", "R-TRANSITION"], parts=WING,
+          how="T-B2-STALL with the real LE tape seam: measured trimmed stall <= 13.07 m/s keeps 17")
+kit.claim("CL-B2R3-FB2-VS-KEEP", "Largest gate-mass stall the second fallback AIRSPEED_MIN 18 holds (1.3 Vs)",
+          calc="CALC-B2R3-FALLBACK", output="vs_keep_18", unit="m/s", parts=WING,
+          how="T-B2-STALL: a measured stall of 13.07-13.85 m/s selects 18 / 18 / 20")
+kit.claim("CL-B2R3-FB2-CLMAX-RATIO", "Section-clmax ratio to free transition that the second fallback still covers",
+          calc="CALC-B2R3-FALLBACK", output="clmax_ratio_18", unit="-", limit=("<=", "CL-B2R3-CLMAX-TRIP-RATIO"),
+          parts=WING, how="Covers the XFOIL tripped ratio 0.871; the unconverged SU2 ratio 0.714 is not covered")
+kit.claim("CL-B2R3-FB2-MAX-VA", "Second fallback AIRSPEED_MAX against the full-travel speed VA", calc="CALC-B2R3-FALLBACK",
+          output="max_fb2", unit="m/s", limit=("<=", "ASM-B2R3-VA"), parts=WING,
+          how="A1 / C1 accept AIRSPEED_MAX 20 (0.5 m/s under VA 20.5) before the fallback is used; T-F4-DIVE re-flown")
+kit.claim("CL-B2R3-FB2-SU2-MIN", "AIRSPEED_MIN the SU2-ratio stall (14.2 m/s, bound only) would need",
+          calc="CALC-B2R3-FALLBACK", output="min_needed_su2", unit="m/s", parts=WING,
+          how="Information: 19 m/s leaves 1 m/s to AIRSPEED_MAX 20 and 1.5 to VA; beyond the second fallback the "
+              "wing or the gate mass changes, not the parameter")
 kit.claim("CL-B2R3-CLMAX-TRIP-RATIO", "Section clmax, tripped / free transition (XFOIL)", calc="CALC-B2R3-STALL-TURB",
           output="ratio_trip", unit="-", how="Re-run xfoil_tripped.py; T-B2-STALL with and without an LE trip strip")
 kit.claim("CL-B2R3-CLMAX-SU2-RATIO", "Section clmax, SU2 SA (L2) / XFOIL free transition", calc="CALC-B2R3-STALL-TURB",

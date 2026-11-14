@@ -237,6 +237,66 @@
    "status": "UNVERIFIED"
   },
   {
+   "id": "SRC-F4-AP-PDEF",
+   "type": "source",
+   "title": "ArduPilot Plane parameter definitions, stable-4.7.1 (apm.pdef.xml, tag Plane-4.7.1 dbe79216)",
+   "kind": "doc",
+   "url": "https://autotest.ardupilot.org/Parameters/versioned/Plane/stable-4.7.1/apm.pdef.xml",
+   "checked": "2026-11-13",
+   "note": "5 721 parameter names; name list committed as team/F4/ap_plane_param_names_4.7.1.txt. The stable-4.7.2 folder is not published (HTTP 404 on 2026-11-13); the latest-master list gives the same result for K09L.param"
+  },
+  {
+   "id": "SRC-F4-AP-RELNOTES",
+   "type": "source",
+   "title": "ArduPlane ReleaseNotes.txt at tag Plane-4.7.2",
+   "kind": "doc",
+   "url": "https://raw.githubusercontent.com/ArduPilot/ardupilot/Plane-4.7.2/ArduPlane/ReleaseNotes.txt",
+   "checked": "2026-11-13",
+   "note": "4.7.2: CoreWing F405 Wing V2 board added (PR 33717). 4.7.0: FS_SHORT_TIMEOUT removed (PR 30350), RC_FS_TIMEOUT added (PR 31441), ATC_ACC_R/P/Y_MAX renamed and scaled to deg/s/s (PR 32192), QuadPlane attitude and position control converted to SI units (PR 30683)"
+  },
+  {
+   "id": "SRC-F4-AP-EVENTS",
+   "type": "source",
+   "title": "ArduPlane/events.cpp and radio.cpp at tag Plane-4.7.2",
+   "kind": "code",
+   "url": "https://raw.githubusercontent.com/ArduPilot/ardupilot/Plane-4.7.2/ArduPlane/events.cpp",
+   "checked": "2026-11-13",
+   "note": "rc_failsafe_short_on_event(): QSTABILIZE / QLOITER / QHOVER -> QLAND unless Q_OPTIONS bit 5 or 20; radio.cpp control_failsafe(): failsafe set after 10 consecutive checks with no valid frame for RC_FS_TIMEOUT (default 1.0 s, RC_Channels_VarInfo.h)"
+  },
+  {
+   "id": "ASM-F4-FS-COUNT",
+   "type": "assumption",
+   "title": "RC failsafe debounce",
+   "text": "10 consecutive failed checks at the 50 Hz radio task = 0.2 s after RC_FS_TIMEOUT has run out",
+   "basis": "radio.cpp control_failsafe() (throttle_counter == 10), tag Plane-4.7.2; the 50 Hz rate of read_radio is from the scheduler table (not re-read here): SITL measured 1.15 s in total on 2026-11-13 (team/F4/sitl/RESULTS.md S7a)",
+   "value": 0.2,
+   "unit": "s",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-F4-AP-EVENTS"
+   ]
+  },
+  {
+   "id": "ASM-F4-QLAND-MAX",
+   "type": "assumption",
+   "title": "RC loss to QLAND in a Q mode",
+   "text": "<= 3 s after the last valid frame (CDR-EL-11 pass line, REVIEWER EST: 5 s without control in 5 m/s wind is about 25 m of drift)",
+   "basis": "review/CDR-2026-11-13/CDR-electrical.md CDR-EL-11",
+   "value": 3.0,
+   "unit": "s",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-F4-YAW-ACC-FRAC",
+   "type": "assumption",
+   "title": "Share of the yaw authority the attitude shaper may ask for",
+   "text": "Q_A_ACC_Y_MAX <= 0.85 x the yaw acceleration at 30 % differential (B4 half-fin factor)",
+   "basis": "review/CDR-2026-11-13/CDR-aero.md CDR-AE-12 (85 % of 2.8 rad/s2); T-B4-YAW measures the factor",
+   "value": 0.85,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
    "id": "CALC-F4-MOTOR-MAP",
    "type": "calculation",
    "title": "Station -> motor number -> rotation, and cant sense",
@@ -393,16 +453,16 @@
     "vmax": "m/s"
    },
    "outputs": {
-    "min_factor": 1.3445399441437125,
-    "cruise_over_trans": 1.0342614954951634,
+    "min_factor": 1.4285736906526945,
+    "cruise_over_trans": 1.0989028389636113,
     "vmax": 18.0,
-    "vmin": 16.0,
-    "vs_keep": 12.307692307692307
+    "vmin": 17.0,
+    "vs_keep": 13.076923076923077
    },
    "input_values": {
     "vs": 11.899981156892892,
-    "vmin": 16,
-    "vcr": 16.0,
+    "vmin": 17,
+    "vcr": 17.0,
     "f": 1.3,
     "vmax": 18
    }
@@ -447,8 +507,8 @@
    "outputs": {
     "v_dive": 17.696752994819956,
     "cd0": 0.04827745166573386,
-    "scaler_va": 0.7804878048780488,
-    "scaler_vd": 0.6015037593984962
+    "scaler_va": 0.8292682926829268,
+    "scaler_vd": 0.6390977443609023
    },
    "input_values": {
     "m": 2.6,
@@ -460,7 +520,7 @@
     "ld": 6.3219657774236495,
     "vc": 16.0,
     "th": -10,
-    "sc": 16,
+    "sc": 17,
     "vmax": 18,
     "vd": 26.6,
     "va": 20.5
@@ -548,12 +608,12 @@
     "ASM-F4-QT-ARM"
    ],
    "outputs": {
-    "f_rll_hz": 1.0036555261781543,
-    "p_ceiling_rll": 0.3586888036883066,
-    "f_pit_hz": 2.299447843449623,
-    "p_ceiling_pit": 0.17395480447163417,
-    "f_yaw_hz": 0.9894215361152333,
-    "p_ceiling_yaw": 0.9702639016422151
+    "f_rll_hz": 0.9725330233739362,
+    "p_ceiling_rll": 0.3701673787395711,
+    "f_pit_hz": 2.201014523268318,
+    "p_ceiling_pit": 0.18173437556697006,
+    "f_yaw_hz": 0.9597250351704285,
+    "p_ceiling_yaw": 1.0002865037583633
    },
    "input_values": {
     "T": 21.1,
@@ -561,9 +621,9 @@
     "z": 0.19,
     "cant": 7.0,
     "qt": 0.02,
-    "izz": 0.17342792319527786,
-    "iyy": 0.047204212395492856,
-    "ixx": 0.17745408426915923,
+    "izz": 0.17884531520198343,
+    "iyy": 0.049076275078503935,
+    "ixx": 0.18294499592410293,
     "p": [
      0.08,
      0.08,
@@ -625,11 +685,11 @@
     "ASM-F4-SAG"
    ],
    "outputs": {
-    "a_up": 0.6710637101094139,
+    "a_up": 0.6705582817284894,
     "a_up_at_limit": 0.6755223233592841
    },
    "input_values": {
-    "s": 1.2135948647351915,
+    "s": 1.2095570978204906,
     "smax": 1.25,
     "a_h": 0.49,
     "d": 0.3,
@@ -1064,12 +1124,12 @@
     "ds": "deg"
    },
    "outputs": {
-    "d_pitch_deg": 12.5,
-    "ratio": 0.8714659656919933,
-    "gain_over_trim_limit": 1.0
+    "d_pitch_deg": 16.25,
+    "ratio": 0.6703584351476871,
+    "gain_over_trim_limit": 1.3
    },
    "input_values": {
-    "g": 0.5,
+    "g": 0.65,
     "trav": [
      -25,
      25
@@ -1122,6 +1182,105 @@
     "i": 100,
     "n": 4,
     "idx": 0
+   }
+  },
+  {
+   "id": "CALC-F4-ARSPD-TRIP",
+   "type": "calculation",
+   "title": "AIRSPEED_MIN against the tripped-boundary-layer stall (planning baseline, B6)",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "arspd_trip",
+   "equation": "V_need = f x Vs_trip ; Vs_keep = AIRSPEED_MIN / f ; second fallback: AIRSPEED_MIN 18 holds to 18 / f",
+   "inputs": {
+    "vs": "CL-B2R3-VS-GATE-FWD-TURB",
+    "f": "P:requirements.transition_factor",
+    "vmin": "P:fsw.airspeed_min_ms",
+    "vcr": "P:fsw.airspeed_cruise_ms",
+    "vas": "P:fsw.assist_speed_ms"
+   },
+   "units": {
+    "vs": "m/s",
+    "vmin": "m/s",
+    "vcr": "m/s",
+    "vas": "m/s"
+   },
+   "outputs": {
+    "v_need": 16.82326785215212,
+    "vmin": 17.0,
+    "vs_keep": 13.076923076923077,
+    "vs_keep_fb2": 13.846153846153845,
+    "cruise_minus_min": 0.0,
+    "assist_over_vs": 1.0818350013770814
+   },
+   "input_values": {
+    "vs": 12.940975270886247,
+    "f": 1.3,
+    "vmin": 17,
+    "vcr": 17.0,
+    "vas": 14
+   }
+  },
+  {
+   "id": "CALC-F4-YAW-ACC",
+   "type": "calculation",
+   "title": "Yaw acceleration limit of the attitude shaper against the airframe's yaw authority",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "yaw_acc",
+   "equation": "a_set = Q_A_ACC_Y_MAX x pi/180 ; r = a_set / a_yaw(30 % differential, half-fin factor)",
+   "inputs": {
+    "a": "P:fsw.yaw_acc_max_degs2",
+    "ay": "CL-B3-HOVER-YAW-ACCEL-LOW"
+   },
+   "units": {
+    "a": "deg/s2",
+    "ay": "rad/s2"
+   },
+   "cites": [
+    "SRC-F4-AP-PDEF",
+    "SRC-F4-AP-RELNOTES"
+   ],
+   "outputs": {
+    "a_set_rads2": 2.356194490192345,
+    "ratio": 0.8459433083860819,
+    "old_unit_cdegs2": 13500.0
+   },
+   "input_values": {
+    "a": 135,
+    "ay": 2.7852865160522033
+   }
+  },
+  {
+   "id": "CALC-F4-RC-FS",
+   "type": "calculation",
+   "title": "RC loss to QLAND in a Q mode (4.7: the short failsafe event selects QLAND)",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "rc_fs",
+   "equation": "t = RC_FS_TIMEOUT + debounce",
+   "inputs": {
+    "t": "P:fsw.rc_fs_timeout_s",
+    "d": "ASM-F4-FS-COUNT",
+    "tl": "P:fsw.fs_long_timeout_s"
+   },
+   "units": {
+    "t": "s",
+    "d": "s",
+    "tl": "s"
+   },
+   "assumes": [
+    "ASM-F4-FS-COUNT"
+   ],
+   "cites": [
+    "SRC-F4-AP-EVENTS",
+    "SRC-F4-AP-RELNOTES"
+   ],
+   "outputs": {
+    "t_qland_s": 1.2,
+    "t_fw_rtl_s": 5.0
+   },
+   "input_values": {
+    "t": 1.0,
+    "d": 0.2,
+    "tl": 5
    }
   },
   {
@@ -1183,7 +1342,7 @@
     "AVN-001"
    ],
    "how": "Slow-flight stall test T-B2-STALL; re-run when A1/B3 re-issue the stall.",
-   "value": 1.3445399441437125
+   "value": 1.4285736906526945
   },
   {
    "id": "CL-F4-ARSPD-MIN-D71",
@@ -1204,7 +1363,7 @@
     "AVN-001"
    ],
    "how": "T-B2-STALL (three slow-flight stalls at 2.6 kg, forward CG, airspeed logged): set AIRSPEED_MIN = ceil(1.3 x measured trimmed stall); 16 holds while the measured stall is <= 12.31 m/s (vs_keep).",
-   "value": 16.0
+   "value": 17.0
   },
   {
    "id": "CL-F4-ARSPD-MIN-FLOOR",
@@ -1224,7 +1383,7 @@
     "AVN-001"
    ],
    "how": "Read AIRSPEED_MIN after loading (integer: 16).",
-   "value": 16.0
+   "value": 17.0
   },
   {
    "id": "CL-F4-VDIVE-VA",
@@ -1258,7 +1417,7 @@
     "AVN-001"
    ],
    "how": "Information: the speed scaler alone does not hold <= 1/3 at VD; the schedule rests on CL-F4-VDIVE-VA and CL-F4-VLEVEL-VH (CR-F4-12).",
-   "value": 0.6015037593984962
+   "value": 0.6390977443609023
   },
   {
    "id": "CL-F4-VLEVEL-VH",
@@ -1332,7 +1491,7 @@
     "AVN-001"
    ],
    "how": "Tethered hover: doublets on the rate loop (RATE log), crossover from the log; P stays below p_ceiling.",
-   "value": 1.0036555261781543
+   "value": 0.9725330233739362
   },
   {
    "id": "CL-F4-XOVER-PIT",
@@ -1352,7 +1511,7 @@
     "AVN-001"
    ],
    "how": "As roll; after QAUTOTUNE reject any Q_A_RAT_PIT_P above p_ceiling_pit.",
-   "value": 2.299447843449623
+   "value": 2.201014523268318
   },
   {
    "id": "CL-F4-XOVER-YAW",
@@ -1369,7 +1528,7 @@
     "AVN-001"
    ],
    "how": "As roll.",
-   "value": 0.9894215361152333
+   "value": 0.9597250351704285
   },
   {
    "id": "CL-F4-FILT-SEP",
@@ -1450,7 +1609,7 @@
     "PRP-002-LL"
    ],
    "how": "Tethered-hover log on a pack near BATT_LOW: mean RCOU of the upper pair (UR, UL) / lower pair gives the split; peak upper-pair RCOU during pitch inputs stays below 0.84 (CR-A3-04, R-HOVER-SPLIT).",
-   "value": 0.6710637101094139
+   "value": 0.6705582817284894
   },
   {
    "id": "CL-F4-SPLIT-OUT-LIMIT",
@@ -1512,7 +1671,7 @@
     "AVN-001"
    ],
    "how": "SITL S4 and flight logs: airspeed reaches 16 m/s after every pitch-over before the first turn.",
-   "value": 1.0342614954951634
+   "value": 1.0989028389636113
   },
   {
    "id": "CL-F4-ARSPD-MAX-VA",
@@ -1940,9 +2099,87 @@
    "value": 497
   },
   {
+   "id": "CL-F4-ARSPD-TRIP-NEED",
+   "type": "claim",
+   "title": "1.3 x the tripped stall at the gate mass, forward CG (B2 XFOIL tripped, 12.85 m/s)",
+   "calc": "CALC-F4-ARSPD-TRIP",
+   "output": "v_need",
+   "unit": "m/s",
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "T-B2-STALL replaces the tripped-section estimate with the measured trimmed stall.",
+   "value": 16.82326785215212
+  },
+  {
+   "id": "CL-F4-ARSPD-MIN-TRIP",
+   "type": "claim",
+   "title": "AIRSPEED_MIN against 1.3 x the tripped stall at the gate mass, forward CG (B6 baseline)",
+   "calc": "CALC-F4-ARSPD-TRIP",
+   "output": "vmin",
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-F4-ARSPD-TRIP-NEED"
+   },
+   "verifies": [
+    "R-STALL",
+    "R-TRANSITION"
+   ],
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "T-B2-STALL with the real LE tape seam (twin, then K09-L): AIRSPEED_MIN = ceil(1.3 x measured trimmed stall); 17 holds to 13.07 m/s, the second fallback 18 to 13.85 m/s (vs_keep, vs_keep_fb2).",
+   "value": 17.0
+  },
+  {
+   "id": "CL-F4-YAW-ACC-SET",
+   "type": "claim",
+   "title": "Q_A_ACC_Y_MAX over the hover yaw acceleration at 30 % differential",
+   "calc": "CALC-F4-YAW-ACC",
+   "output": "ratio",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-F4-YAW-ACC-FRAC"
+   },
+   "verifies": [
+    "R-FSW-PARAMS"
+   ],
+   "parts": [
+    "AVN-001",
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Read Q_A_ACC_Y_MAX after loading (135 deg/s/s; the 4.6 name Q_A_ACCEL_Y_MAX must not load). T-B4-YAW (hanging yaw stand) measures the yaw moment per differential; re-set to 0.85 x the measured value.",
+   "value": 0.8459433083860819
+  },
+  {
+   "id": "CL-F4-RC-FS-QLAND",
+   "type": "claim",
+   "title": "RC loss to QLAND in QSTABILIZE / QHOVER / QLOITER",
+   "calc": "CALC-F4-RC-FS",
+   "output": "t_qland_s",
+   "unit": "s",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-F4-QLAND-MAX"
+   },
+   "verifies": [
+    "R-FAILSAFES"
+   ],
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "SITL S7 (measured 1.15 s on the stock tailsitter model, 2026-11-13) and T-F5-BENCH step 9: transmitter off, props off, QHOVER selected: the HUD shows QLAND within 3 s. Needs the receiver in failsafe mode No Pulses (RC-LINK.md).",
+   "value": 1.2
+  },
+  {
    "id": "CL-F4-MIX-PITCH",
    "type": "claim",
-   "title": "Trimmed-CLmax elevon need over pure-pitch travel at MIXING_GAIN 0.5",
+   "title": "Trimmed-CLmax elevon need at the CG target over the pure-pitch travel MIXING_GAIN leaves",
    "calc": "CALC-F4-MIX",
    "output": "ratio",
    "unit": "-",
@@ -1954,18 +2191,18 @@
     "AVN-001"
    ],
    "how": "T-B2-STALL slow flight in FBWA: elevon output not at the pitch end at the stall break.",
-   "value": 0.8714659656919933
+   "value": 0.6703584351476871
   },
   {
    "id": "T-F4-SITL-NAMES",
    "type": "test",
-   "title": "Load K09L.param in SITL and on the board; no unknown name except the 3 LEGACY pairs",
+   "title": "Load K09L.param in SITL and on the board; no unknown name. SITL part run 2026-11-13 (ArduPlane 4.7.3-beta1 Windows SITL): 156 of 158 names accepted and read back after a reboot; SERVO_BLH_BDMASK and SERVO_BLH_POLES are not in the SITL build (board only). Board part: T-F3-FW-LOAD",
    "verifies": [
     "CL-F4-MOTOR-MAP-ERR",
     "CL-F4-SPIN-MAX"
    ],
    "state": "planned",
-   "procedure": "SITL-PLAN.md S1"
+   "procedure": "SITL-PLAN.md S1; team/F4/sitl/RESULTS.md"
   },
   {
    "id": "T-F4-BENCH-MAP",

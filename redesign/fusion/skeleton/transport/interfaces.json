@@ -5,7 +5,7 @@
  "parts": [
   {
    "id": "TRN-901",
-   "name": "Transport box 1.25 x 0.55 x 0.54 (six walls, lining lumped)",
+   "name": "Transport box 1.25 x 0.56 x 0.54 (six walls, lining lumped)",
    "subsystem": "transport",
    "status": "MODELLED",
    "mass_g": 3270.0,

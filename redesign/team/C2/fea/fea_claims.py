@@ -94,6 +94,16 @@ passthrough("CALC-C2-FEA-CORNER-S3", "Foam compression peak at the same corners,
             F + "d68_corner_s3_ult_pa", assumes=["ASM-C2-TUBE-ET", "ASM-C2-FOAM-AVG-R"])
 passthrough("CALC-C2-FEA-CORNER-TAU", "Foam shear peak at the same corners, ultimate (D-68)",
             F + "d68_corner_tau_ult_pa", assumes=["ASM-C2-TUBE-ET", "ASM-C2-FOAM-AVG-R"])
+passthrough("CALC-C2-FEA-CORNER-S1-CUTS", "Foam tension peak at the pocket corners with the ESC-lead grooves and the "
+            "spar-slot cap seams run open (d68g), ultimate", F + "d68g_corner_s1_ult_pa", assumes=["ASM-C2-FOAM-AVG-R"])
+passthrough("CALC-C2-FEA-CORNER-S3-CUTS", "Foam compression peak, same (d68g), ultimate", F + "d68g_corner_s3_ult_pa",
+            assumes=["ASM-C2-FOAM-AVG-R"])
+passthrough("CALC-C2-FEA-CUTS-RATIO", "Corner tension with the grooves and open seams / without, same local level",
+            F + "d68g_over_d68_s1")
+passthrough("CALC-C2-FEA-CORNER-S1-G431", "Foam tension peak at the pocket corners with the tube at G 4.31 GPa, ultimate",
+            F + "d68_g431_corner_s1_ult_pa", assumes=["ASM-C2-FOAM-AVG-R"])
+passthrough("CALC-C2-FEA-CORNER-S3-G431", "Foam compression peak, same, tube at G 4.31 GPa, ultimate",
+            F + "d68_g431_corner_s3_ult_pa", assumes=["ASM-C2-FOAM-AVG-R"])
 passthrough("CALC-C2-FEA-BEAD", "Microballoon bead max principal stress, ultimate (D-68)", F + "d68_bead_s1_ult_pa",
             assumes=["ASM-C2-BEAD"])
 passthrough("CALC-C2-FEA-CUTOUT", "Foam shear peak at the R 3 mm elevon cut-out corners, primary load path, ultimate",
@@ -152,6 +162,28 @@ kit.claim("CL-C2-FEA-FOAM-CORNER-S3", "Core foam compression peak at the same co
 kit.claim("CL-C2-FEA-FOAM-CORNER-TAU", "Core foam shear peak at the same corners, ultimate (D-68)",
           calc="CALC-C2-FEA-CORNER-TAU", unit="Pa", limit=("<=", I + "xps_shear_allow_pa"), verifies=SM,
           parts=["WNG-001", "FIN-004-L", "FIN-004-R"], how=PROOF)
+kit.claim("CL-C2-FEA-FOAM-CORNER-S1-CUTS", "Core foam tension peak at the pocket corners with the ESC-lead grooves and "
+          "open slot seams (SW-05), ultimate", calc="CALC-C2-FEA-CORNER-S1-CUTS", unit="Pa",
+          limit=("<=", I + "xps_tens_allow_pa"), verifies=SM, parts=["WNG-001", "FIN-004-L", "FIN-004-R"],
+          note="C2-R4 (CDR-13): grooves at x 54-64 mm to |y| 0.296 on both surfaces and both cap seams removed as "
+               "open slits in the local model (the bound opposite to the bonded seam of CL-C2-FEA-FOAM-CORNER-S1)",
+          how=PROOF)
+kit.claim("CL-C2-FEA-FOAM-CORNER-S3-CUTS", "Core foam compression peak, same corners with the cuts, ultimate",
+          calc="CALC-C2-FEA-CORNER-S3-CUTS", unit="Pa", limit=("<=", I + "xps_comp_allow_pa"), verifies=SM,
+          parts=["WNG-001", "FIN-004-L", "FIN-004-R"], how=PROOF)
+kit.claim("CL-C2-FEA-CUTS-RATIO", "Pocket-corner tension with the grooves and open seams / without (record)",
+          calc="CALC-C2-FEA-CUTS-RATIO", unit="-", parts=["WNG-001"],
+          note="record: close to 1 means the grooves and seams are not what loads the corner, so stopping the "
+               "grooves short (the CDR-13 fallback) does not fix it",
+          how="python -I redesign/team/C2/fea/wing_fea_d68.py --phase local --job d68g/3")
+kit.claim("CL-C2-FEA-FOAM-CORNER-S1-G431", "Core foam tension peak at the pocket corners if the tube meets the GT-16 "
+          "shear-modulus line (G 4.31 GPa, not the 3 GPa low corner), ultimate (record)",
+          calc="CALC-C2-FEA-CORNER-S1-G431", unit="Pa", parts=["WNG-001"],
+          note="record, no limit: sensitivity. The corner stress follows the twist of the spar under the L4 fin-joint "
+               "torque; the tape skin, which also resists that twist, is not in the model",
+          how="T-C4-TUBE-TORSION (GT-16) gives G; re-run with C2_TUBE_G set to the measured value")
+kit.claim("CL-C2-FEA-FOAM-CORNER-S3-G431", "Core foam compression peak, same, tube at G 4.31 GPa (record)",
+          calc="CALC-C2-FEA-CORNER-S3-G431", unit="Pa", parts=["WNG-001"], how="As CL-C2-FEA-FOAM-CORNER-S1-G431.")
 kit.claim("CL-C2-FEA-BEAD", "Microballoon fillet bead along the pocket edges, max principal stress, ultimate",
           calc="CALC-C2-FEA-BEAD", unit="Pa", limit=("<=", "ASM-C2-BEAD"), verifies=SM, parts=["WNG-001"],
           how="T-C2-XPS-COUPON beaded-pocket coupon; " + PROOF)

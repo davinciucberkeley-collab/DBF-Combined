@@ -50,3 +50,12 @@ fins (`fins.py` R4), the wing CAD elevon gaps and the A3-R6a roll-up. Detail: `S
 | CR-B3-14 | adopted (D-26, 0.21 m): `CL-B3-CNB` 0.0354 /rad at R4 |
 | CR-B3-15 | holds: `CL-B3-VT-TRIM` 15.51 m/s, `ARSPD_FBW_MIN` 15.6 stays |
 | CR-B3-01…08, -10 | closed or superseded at R0–R1 (see git history) |
+
+## CDR fix round, 2026-11-13
+
+| Id | To | What | Why (numbers) |
+|---|---|---|---|
+| CR-B3-30 | A2 | Accept `ASM-B3-GUST-DIFF-MAX` 0.40 (differential allowed in the 8 m/s gust) or set another value; `R-GUST-LEAN` now cites `CL-B3-HOVER-PITCH-RATIO-GUST`, `-DIFF-GUST`, `CL-B3-HOVER-YAW-WTIP-GUST-10` | 30 % cap gives 0.94 in pitch; 32 % is needed |
+| CR-B3-31 | A3, A1 (S4) | `MASS-CG.md`: range [0.0394, 0.0513] m; first-flight station x ≤ 0.0465 m; ballast rule and cases as `S-AND-C.md` §9.1 | forward limit 0.03932, aft 0.05133 |
+| CR-B3-32 | D3, E1 | Keep the 10° cant open until `T-B3-HOVER-YAW-WTIP` (twin TW3): no flight mount printed before it | `CL-B3-HOVER-YAW-WTIP-20` 1.32 < 1.5; 10° gives 1.69 |
+| CR-B3-33 | F4, H2 | Flight card: wingtip-into-wind landing only up to 5 m/s; if the heading error passes about 20° let it swing broadside (pitch axis) rather than fight it; SITL S20 | saturation at 25° (5 m/s), 12° (8 m/s) |

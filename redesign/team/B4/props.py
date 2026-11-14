@@ -27,6 +27,9 @@ PROPS = {  # key -> (data file, diameter in, APC rpm-limit constant, mass g, pri
     "11x5.5MR": ("apc_per3_11x55MR.csv", 11.0, 105000, 17.0, 3.83, "MRP"),
     "11x5.5E": ("apc_per3_11x55E.csv", 11.0, 150000, 23.0, 4.17, "EP"),
     "12x4.5MR": ("apc_per3_12x45MR.csv", 12.0, 105000, 20.0, 4.10, "MRP"),
+    # CDR-15 / CDR-AE-08 (2026-11-13): higher-pitch thin electric for the cruise A/B. LP11070E, 0.81 oz, $4.17 (APC
+    # product page, read 2026-11-13). No thin-electric pusher 11x7EP is listed by APC (SRC-B4-APC-11X7E): "-".
+    "11x7E": ("apc_per3_11x7E.csv", 11.0, 150000, 23.0, 4.17, "-"),
 }
 
 
@@ -281,6 +284,19 @@ S("SRC-B4-ZHOU-ROTOR", "Zhou, Ning, Hu: rotor-to-rotor interaction of small UAV 
 
 
 # ---------------------------------------------------------------- 1. data transcription check
+S("SRC-B4-APC-11X7E", "APC PER3 performance file 11x7E and product page 11x7E (LP11070E)", "datasheet",
+  url="https://www.apcprop.com/files/PER3_11x7E.dat", checked="2026-11-13",
+  where="tables at 5000-8000 rpm copied into redesign/team/B4/data/apc_per3_11x7E.csv; product page "
+        "https://www.apcprop.com/product/11x7e/ : LP11070E, $4.17, 0.81 oz (23 g), hub 0.80 in x 0.41 in, 1/4 in shaft, "
+        "adapter rings LPAR06E. https://www.apcprop.com/product/11x7ep/ returns HTTP 404 and a web search on "
+        "2026-11-13 finds no 11x7EP / LP11070EP: the only reverse-rotation 11x7 found is the sport pusher LP11070P "
+        "(about 40 g on retailer pages, a different blade)",
+  note="APC blade-element predictions (v2022-0915), not measurements; transcription checked by CALC-B4-DATA")
+kit.assumption("ASM-B4-AB-HOVER-MAX", "Hover power penalty allowed for a cruise prop", "hover pack power <= 1.10 x the "
+               "11x5.5MR (measure M6 of the aero review: above +10 % stay on the MR)",
+               basis="review/CDR-2026-11-13/CDR-aero.md 'What the team must measure' M6", value=1.10, unit="-")
+
+
 @kit.calc("CALC-B4-DATA", title="APC data transcription check", cites=["SRC-B4-APC-PER3"],
           equation="Ct' = T / (rho n^2 D^4) ; Cp' = P / (rho n^3 D^5) from the printed N and W ; "
                    "error = max |Ct'/Ct - 1|, |Cp'/Cp - 1| over rows with Ct, Cp >= 0.02 (4-digit rounding < 0.25 %)",
@@ -383,6 +399,80 @@ def cruise_points(kv, rm, i0, esc, pack, tcu, m, ld, V, g, rho):
         c2 = _cruise(prop, 2 * T, V, rho, mot, esc_w)       # option: two motors stopped (windmill drag not included)
         out[f"pack_w_2motor__{prop}"] = 2 * c2["in_w"]
     return out
+# ---------------------------------------------------------------- 4b. CDR-15: 11x7E against the 11x5.5MR (cruise A/B)
+def _drag_n(V, m, g, rho, S, cd0, k):
+    q = 0.5 * rho * V * V
+    cl = m * g / (q * S)
+    return q * S * (cd0 + k * cl * cl)
+
+
+def _level_speed(prop, duty, v_pack, mot, m, g, rho, S, cd0, k):
+    """Level speed where four props at motor output `duty` on a v_pack bus give thrust = drag (upper root)."""
+    def f(V):
+        rpm = mot.full_throttle_rpm(prop, duty * v_pack, V, rho)
+        return 4 * thrust_power(prop, rpm, V, rho)[0] - _drag_n(V, m, g, rho, S, cd0, k)
+    if f(14.0) <= 0:                 # not enough thrust to hold 14 m/s at this output
+        return 14.0
+    return _bisect(f, 14.0, 40.0)
+
+
+@kit.calc("CALC-B4-PROP-AB", title="Prop A/B for the cruise leg: 11x5.5MR, 11x5.5E, 11x7E at 16 and 17 m/s, hover cost, "
+          "level speed at the fixed-wing throttle cap (CDR-15, CDR-AE-08)",
+          cites=["SRC-B4-APC-PER3", "SRC-B4-APC-11X7E", "SRC-B4-APC-RPM"], assumes=["ASM-B4-AB-HOVER-MAX"],
+          equation="CD0 = CL_c / (L/D) - k CL_c^2 at the cruise key, k = 1 / (pi AR e) ; D(V) = q S (CD0 + k CL^2) ; "
+                   "T = D / 4 -> rpm, P_shaft (APC), P_in (E1 motor, 25 degC) ; pack = 4 P_in ; hover as CALC-B4-STATIC ; "
+                   "level speed: 4 T(rpm(duty x 16.8 V, V), V) = D(V), hot winding ; THR_MAX for V_H: duty with "
+                   "V_level = VD / 1.25",
+          inputs=dict(E1_MOTOR, m=P + "requirements.mtow_gate_kg", ld=P + "performance.ld_cruise",
+                      vc=P + "performance.cruise_ms", g=P + "env.g_ms2", rho=P + "env.rho_kgm3", b=P + "wing.span_m",
+                      c=P + "wing.chord_m", e=P + "wing.oswald_e", vd=P + "requirements.vd_ms",
+                      k_dl=P + "propulsion.download_factor", cant=P + "propulsion.stations.cant_deg",
+                      ocv="ASM-E1-OCV"),
+          units={"m": "kg", "vc": "m/s", "rho": "kg/m3", "b": "m", "c": "m", "vd": "m/s", "cant": "deg"})
+def prop_ab(kv, rm, i0, esc, pack, tcu, m, ld, vc, g, rho, b, c, e, vd, k_dl, cant, ocv):
+    vfull = max(ocv)
+    mot, esc_w = _motor(kv, rm, i0, esc, pack, tcu, hot=False)
+    mot_hot, _ = _motor(kv, rm, i0, esc, pack, tcu, hot=True)
+    S = b * c
+    k = 1.0 / (math.pi * (b / c) * e)
+    cl_c = m * g / (0.5 * rho * vc * vc * S)
+    cd0 = cl_c / ld - k * cl_c * cl_c
+    out = {"cd0": cd0, "k": k, "vh_req": vd / 1.25}
+    cc = math.cos(math.radians(cant))
+    Th = k_dl * m * g / 4.0 / cc
+    for prop in ("11x5.5MR", "11x5.5E", "11x7E"):
+        tag = prop.replace(".", "").replace("x", "X")
+        for V in (16.0, 17.0, 18.0):
+            T = _drag_n(V, m, g, rho, S, cd0, k) / 4.0
+            cr = _cruise(prop, T, V, rho, mot, esc_w)
+            out[f"drag_n_{V:.0f}"] = 4 * T
+            out[f"pack_w_{V:.0f}__{tag}"] = 4 * cr["in_w"]
+            out[f"eta_{V:.0f}__{tag}"] = cr["eta_prop"]
+            out[f"rpm_{V:.0f}__{tag}"] = cr["rpm"]
+            out[f"J_{V:.0f}__{tag}"] = cr["J"]
+        rpm_h = rpm_for_thrust(prop, Th, 0.0, rho)
+        _, Ph, *_ = thrust_power(prop, rpm_h, 0.0, rho)
+        Pin, _ih = mot.p_in(rpm_h, Ph / (2 * math.pi * rpm_h / 60.0))
+        out[f"hover_pack_w__{tag}"] = 4 * (Pin + esc_w)
+        out[f"hover_rpm__{tag}"] = rpm_h
+        out[f"v_level_thr70__{tag}"] = _level_speed(prop, 0.704, vfull, mot_hot, m, g, rho, S, cd0, k)
+        out[f"thr_for_vh__{tag}"] = _bisect(
+            lambda a, prop=prop: _level_speed(prop, a, vfull, mot_hot, m, g, rho, S, cd0, k) - vd / 1.25, 0.30, 0.95)
+        rpm_ft = mot_hot.full_throttle_rpm(prop, vfull, 0.0, rho)
+        v70 = out[f"v_level_thr70__{tag}"]
+        out[f"rpm_level_thr70__{tag}"] = mot_hot.full_throttle_rpm(prop, 0.704 * vfull, v70, rho)
+        out[f"rpm_static_thr70__{tag}"] = mot_hot.full_throttle_rpm(prop, 0.704 * vfull, 0.0, rho)
+        out[f"rpm_full_fresh__{tag}"] = rpm_ft
+        out[f"rpm_limit__{tag}"] = PROPS[prop][2] / PROPS[prop][1]
+    for V in (16, 17):
+        out[f"ratio_{V}__11X7E_over_MR"] = out[f"pack_w_{V}__11X7E"] / out[f"pack_w_{V}__11X55MR"]
+        out[f"ratio_{V}__11X55E_over_MR"] = out[f"pack_w_{V}__11X55E"] / out[f"pack_w_{V}__11X55MR"]
+    out["hover_ratio__11X7E_over_MR"] = out["hover_pack_w__11X7E"] / out["hover_pack_w__11X55MR"]
+    out["hover_ratio__11X55E_over_MR"] = out["hover_pack_w__11X55E"] / out["hover_pack_w__11X55MR"]
+    out["mass_delta_g_4props__11X7E"] = 4 * (PROPS["11x7E"][3] - PROPS["11x5.5MR"][3])
+    return out
+
+
 # ---------------------------------------------------------------- 5. download (installed thrust loss in hover)
 def _v_axial(vi, x, R):
     return vi * (1 + x / math.sqrt(x * x + R * R))
@@ -1155,6 +1245,48 @@ c("CL-B4-HOVER-W", "Hover pack power at the gate, 11x5.5MR (E1 motor constants)"
   output=f"hover_pack_w__{SEL}", unit="W", parts=PRP, how="Log pack power in a 60 s tethered hover at 2.6 kg.")
 c("CL-B4-HOVER-W-OLD", "Hover pack power at the gate, 11x4.5MR (E1 motor constants)", calc="CALC-B4-STATIC",
   output=f"hover_pack_w__{OLD}", unit="W", how="As CL-B4-HOVER-W.")
+# CDR-15 / CDR-AE-08: cruise prop A/B (APC PER3 predictions, uncalibrated; the stand and a cruise leg decide, M6)
+c("CL-B4-AB-CRUISE-W-MR-17", "Cruise pack power at 17 m/s (B6 baseline speed), 11x5.5MR, 4 motors", calc="CALC-B4-PROP-AB",
+  output="pack_w_17__11X55MR", unit="W", parts=PRP,
+  how="T-B1-CRUISE-POWER leg at 17 m/s; E1's own figure for 17 m/s is 283 W (D-96).")
+c("CL-B4-AB-CRUISE-W-11X7E-16", "Cruise pack power at 16 m/s, 11x7E, 4 motors", calc="CALC-B4-PROP-AB",
+  output="pack_w_16__11X7E", unit="W", how="GT-02 static A/B, then a cruise leg on the twin (M6).")
+c("CL-B4-AB-CRUISE-W-11X7E-17", "Cruise pack power at 17 m/s, 11x7E, 4 motors", calc="CALC-B4-PROP-AB",
+  output="pack_w_17__11X7E", unit="W", how="As CL-B4-AB-CRUISE-W-11X7E-16.")
+c("CL-B4-AB-CRUISE-RATIO-16", "Cruise pack power, 11x7E over 11x5.5MR, 16 m/s", calc="CALC-B4-PROP-AB",
+  output="ratio_16__11X7E_over_MR", unit="-", how="Ratio of logged cruise power in the A/B legs.")
+c("CL-B4-AB-CRUISE-RATIO-17", "Cruise pack power, 11x7E over 11x5.5MR, 17 m/s", calc="CALC-B4-PROP-AB",
+  output="ratio_17__11X7E_over_MR", unit="-", how="As CL-B4-AB-CRUISE-RATIO-16.")
+c("CL-B4-AB-CRUISE-RATIO-E-17", "Cruise pack power, 11x5.5E over 11x5.5MR, 17 m/s", calc="CALC-B4-PROP-AB",
+  output="ratio_17__11X55E_over_MR", unit="-", how="As CL-B4-AB-CRUISE-RATIO-16.")
+c("CL-B4-AB-ETA-11X7E-17", "Cruise prop efficiency at 17 m/s, 11x7E", calc="CALC-B4-PROP-AB", output="eta_17__11X7E",
+  unit="-", how="As CL-B4-CRUISE-ETA.")
+c("CL-B4-AB-ETA-MR-17", "Cruise prop efficiency at 17 m/s, 11x5.5MR", calc="CALC-B4-PROP-AB", output="eta_17__11X55MR",
+  unit="-", how="As CL-B4-CRUISE-ETA.")
+c("CL-B4-AB-HOVER-RATIO", "Hover pack power, 11x7E over 11x5.5MR, gate mass", calc="CALC-B4-PROP-AB",
+  output="hover_ratio__11X7E_over_MR", unit="-", limit=("<=", "ASM-B4-AB-HOVER-MAX"),
+  how="GT-02: pack power at 0.69 kgf per prop, both props on the same motor and supply.")
+c("CL-B4-AB-THR-VH-11X7E", "Motor output that reaches VH 21.8 m/s in level flight with the 11x7E, fresh pack "
+  "(THR_MAX would be set to this)", calc="CALC-B4-PROP-AB", output="thr_for_vh__11X7E", unit="-",
+  how="FBWB full-throttle level leg with the 11x7E fitted (TUNING-PLAN step 6c) before THR_MAX is frozen.")
+c("CL-B4-AB-VLEVEL-MR-70", "Level speed at fixed-wing output 0.704, fresh pack, 11x5.5MR (B4 motor and prop model; "
+  "F4 carries 21.3 m/s from B1)", calc="CALC-B4-PROP-AB", output="v_level_thr70__11X55MR", unit="m/s",
+  how="TUNING-PLAN step 6c.")
+c("CL-B4-AB-THR-VH-MR", "Motor output that reaches VH 21.8 m/s in level flight with the 11x5.5MR, fresh pack "
+  "(B4 motor and prop model: the prop unloads in flight, so rpm at a fixed output is higher than on the stand)",
+  calc="CALC-B4-PROP-AB", output="thr_for_vh__11X55MR", unit="-",
+  how="TUNING-PLAN step 6c (FBWB full-throttle level leg, THR_MAX downward only): airspeed <= 21.8 m/s decides "
+      "THR_MAX. F4's CL-F4-VLEVEL-VH scales B1's speed with the static rpm (ASM-F4-RPM-LIN); this claim is the "
+      "second model and reads lower (CR-B4-20 to F4, B1).")
+c("CL-B4-AB-RPM-LEVEL-MR-70", "In-flight rpm at fixed-wing output 0.704 and the level speed it reaches, 11x5.5MR, "
+  "fresh pack", calc="CALC-B4-PROP-AB", output="rpm_level_thr70__11X55MR", unit="rpm",
+  limit=("<=", 105000 / 11.0), cites=["SRC-B4-APC-RPM"], how="ESC rpm telemetry in the step-6c leg.")
+c("CL-B4-AB-VLEVEL-11X7E-70", "Level speed at fixed-wing output 0.704, fresh pack, 11x7E (THR_MAX 70 kept)",
+  calc="CALC-B4-PROP-AB", output="v_level_thr70__11X7E", unit="m/s",
+  how="Information: above VH 21.8 m/s, so THR_MAX must drop to CL-B4-AB-THR-VH-11X7E if the 11x7E is flown.")
+c("CL-B4-AB-RPM-FULL-11X7E", "Full-throttle rpm, 11x7E, 16.8 V fresh pack (unlimited), against the thin-electric limit",
+  calc="CALC-B4-PROP-AB", output="rpm_full_fresh__11X7E", unit="rpm", limit=("<=", 150000 / 11.0),
+  cites=["SRC-B4-APC-RPM"], how="GT-02 with rpm telemetry on a full pack.")
 c("CL-B4-UIUC-ETA", "UIUC-measured over APC-predicted cruise efficiency, 11x4.7SF (data spread)",
   calc="CALC-B4-XCHECK", output="eta_ratio_uiuc_over_apc__11x4.7SF", unit="-",
   how="The 11x5.5MR value comes from T-B4-STAND plus a car-top or flight check; this ratio is the expected spread.")

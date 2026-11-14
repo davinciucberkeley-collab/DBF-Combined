@@ -1,5 +1,14 @@
 # F4 — flight-control software
 
+**R6, 2026-11-13 (CDR fix round, stream S3; CDR-07, -14, -15, -16, -26).** `K09L.param` is now 158 parameters; every name is in
+ArduPilot's published 4.7.1 Plane list (`ap_plane_param_names_4.7.1.txt`, checked offline by `fsw_check.py`) and 156 were read back in
+SITL. The "88 of 155 unmatched" were unchecked, not wrong: three real name faults were found (`FS_SHORT_TIMEOUT` removed in 4.7, the six
+LEGACY lines, and the board's suggested `Q_A_ACCEL_Y_MAX`, which is `Q_A_ACC_Y_MAX` in deg/s/s on 4.7). SITL runs natively on the
+design machine: `sitl/RESULTS.md`. Values changed: `MIXING_GAIN` 0.65, `AIRSPEED_MIN` / `CRUISE` 17, `AIRSPEED_STALL` 13, `SCALING_SPEED` 17,
+`Q_ASSIST_SPEED` 14, `Q_A_ACC_Y_MAX` 135, `RC_FS_TIMEOUT` 1.0. `fsw_check.py`: 47 claims, none negative, lint OK. Thinnest new margins:
+`CL-F4-YAW-ACC-SET` 0.846 vs 0.85, `CL-F4-ARSPD-MIN-TRIP` 17 vs 16.82 m/s. Details: `subsystems/flight-software/SPEC.md` (R6 table,
+firmware build check), `review/CDR-2026-11-13/fixes/S3.md`. The sections below are R5.
+
 Status `PROPOSED`, revision **F4-R5**, 2026-11-10. Firmware ArduPlane 4.7.x stable on the CoreWing F405 Wing V2
 (D-33, no Lua), `Q_TAILSIT_ENABLE` 1, copter Quad-X mixing on the four fin motors, two elevons. ArduPilot, not PX4:
 the chosen board has an ArduPilot target and no PX4 target, and ArduPilot gives copter-motor tailsitter mixing,

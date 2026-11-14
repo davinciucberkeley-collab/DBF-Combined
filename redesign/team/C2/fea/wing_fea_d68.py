@@ -28,6 +28,17 @@ Geometry construction (on the extruded mesh, so every node stays on its span lay
   * bead: the foam elements with x in the pocket's x range, outside an inboard/outboard pocket face by dy >= 0 and
     below the skin by ds >= 0 with dy + ds <= 3 mm (a 3 x 3 mm triangular fillet) become epoxy-microballoon.
 
+C2-R4 (2026-11-13, CDR-13 / SW-05): geometry "d68g" = the D-68 model plus the cuts SW-05 names, built by removing
+foam elements in the local model (stair-stepped at the local element size):
+  * the three ESC-lead grooves on each surface (subsystems/harness/params.json harness.groove x_sig / x_pos / x_neg,
+    width and depth from harness.groove_size_mm), running inboard from |y| = harness.groove.y_end_m (0.296);
+  * the spar-slot cap seams: the slot is cut from below, 22.4 mm wide, and re-capped with a foam strip. A glue line
+    carries compression but its tension strength on a hot-wired face is not known, so the two seams are run OPEN
+    (one element column removed on the cap side of x_spar +/- 12 mm, lower skin up to the spar centre height) as
+    the bound opposite to the fully bonded seam of geometry "d68". A no-tension line lies between the two.
+The global model is unchanged (the cuts are smaller than its elements); they act through the local stiffness only.
+Phased run: --phase global --intro block|distributed ; --phase local --job d68/1 ... d68g/3 ; --phase merge.
+
 Run (repo root):  python -I redesign/team/C2/fea/wing_fea_d68.py [--levels 1 2 3] [--geoms d68 asdrawn]
 Writes team/C2/fea/out/d68_submodel.json.
 """
@@ -134,13 +145,25 @@ def morph(X, cs, tube=None):
 
 def make_mat_fn(g, breaks, geom):
     base = wf.make_mat_fn(g)
-    if geom != "d68":
+    if geom not in D68_GEOMS:
         return base
+    cuts_on = geom == "d68g"
+    xs_, zs_ = g["xs"], g["zs"]
     bx0, bx1 = g["blk_x"]
     by0, by1 = face_y(breaks, g["blk_y"][0]), face_y(breaks, g["blk_y"][1])
 
     def fn(x, z, y):
         m = base(x, z, y)
+        if m == FOAM and cuts_on:
+            if y <= GROOVE_Y_END:                                       # ESC-lead grooves, both surfaces
+                for xg, wg, dg in GROOVES:
+                    if abs(x - xg) <= wg / 2 and (z >= zu(x) - dg or z <= zl(x) + dg):
+                        return None
+            if z < zs_:                                                  # spar-slot cap seams, run open
+                for sg in (-1.0, 1.0):
+                    d = sg * (xs_ + sg * wf.COL_HALF - x)                # > 0 on the cap side of the seam
+                    if 0.0 <= d <= SEAM_BAND[0]:
+                        return None
         if m != FOAM or not (bx0 <= x <= bx1):
             return m
         dy = by0 - y if y < by0 else (y - by1 if y > by1 else -1.0)
@@ -222,7 +245,7 @@ def local_build(g, h, strips, br_all, cuts, geom):
     bx0, bx1 = g["blk_x"]
     xh = g["xh"]
     cs_all = corners(g, br_all)
-    cs = cs_all if geom == "d68" else []
+    cs = cs_all if geom in D68_GEOMS else []
     d = 2.5 * R_POCKET + 0.001
     zb = lambda x: (float(zl(x)) - 0.001, float(zu(x)) + 0.001)
     boxes = [(bx0 - d, bx0 + d, -0.02, 0.03, h, 0.004),
@@ -234,6 +257,16 @@ def local_build(g, h, strips, br_all, cuts, geom):
         xx = np.linspace(a, b_, 9)
         boxes.append((a, b_, float(zu(xx).min()) - 0.005, float(zu(xx).max()) + 0.001, h, 0.003))
         boxes.append((a, b_, float(zl(xx).min()) - 0.001, float(zl(xx).max()) + 0.005, h, 0.003))
+    if geom == "d68g":
+        SEAM_BAND[0] = h
+        xg0 = min(xg - wg / 2 for xg, wg, _ in GROOVES) - 0.002
+        xg1 = max(xg + wg / 2 for xg, wg, _ in GROOVES) + 0.002
+        xx = np.linspace(xg0, xg1, 9)
+        boxes.append((xg0, xg1, float(zu(xx).min()) - 0.006, float(zu(xx).max()) + 0.001, h, 0.003))
+        boxes.append((xg0, xg1, float(zl(xx).min()) - 0.001, float(zl(xx).max()) + 0.006, h, 0.003))
+        for sg in (-1.0, 1.0):
+            xsm = g["xs"] + sg * wf.COL_HALF
+            boxes.append((xsm - 0.002, xsm + 0.002, -0.02, g["zs"] + 0.001, h, 0.003))
     nodes2d, elems2d, on_out = sf.section_mesh(wf.outline_poly(), wf.cut_lines(g), (g["xs"], g["zs"], [g["ri"], g["rs"]]),
                                                p["nth"], p["nr"], p["h_near"], p["h_far"], boxes=boxes)
     br_local = [b_ for b_ in br_all if y_c0 - 1e-12 <= b_ <= y_c1 + 1e-12]
@@ -374,6 +407,28 @@ def local_solve(model, E, nu, glob, cases_sel, cuts):
 
 
 G = None
+# C2-R4 sensitivity: C2_TUBE_G=<Pa> runs the whole chain with that tube shear modulus instead of the low corner
+# (ws.M spar_G_lo_pa); C2_D68_TAG=<name> keeps its cache and result files apart (d68_global_<intro>_<name>.pkl ...).
+import os as _os
+TAG = _os.environ.get("C2_D68_TAG", "")
+SFX = ("_" + TAG) if TAG else ""
+if _os.environ.get("C2_TUBE_G"):
+    ws.M["spar_G_lo_pa"] = float(_os.environ["C2_TUBE_G"])
+D68_GEOMS = ("d68", "d68g")
+SEAM_BAND = [0.0011]        # width of the removed element column at each slot seam = the local element size (set per level)
+
+
+def _harness_grooves():
+    """[(x centre, width, depth)] of the ESC-lead grooves and the |y| where they end (F2's routed harness)."""
+    hp = json.loads((HERE.parents[2] / "subsystems" / "harness" / "params.json").read_text("utf-8"))["harness"]
+    gv, sz = hp["groove"], hp["groove_size_mm"]["value"]
+    out = [(gv["x_sig_m"]["value"], sz["signal"][0] / 1e3, sz["signal"][1] / 1e3),
+           (gv["x_pos_m"]["value"], sz["power"][0] / 1e3, sz["power"][1] / 1e3),
+           (gv["x_neg_m"]["value"], sz["power"][0] / 1e3, sz["power"][1] / 1e3)]
+    return out, gv["y_end_m"]["value"]
+
+
+GROOVES, GROOVE_Y_END = _harness_grooves()
 
 
 def setup():
@@ -400,7 +455,7 @@ def phase_global(intro):
     sel = {cs: cases[cs] for cs in CASE_SETS[intro]}
     planes = sorted(set(CUTS) | set(CUTS_NEAR))
     glob, strips, br_all, gstats = global_solve(g, msets, sel, [intro], planes)
-    with open(OUT / f"d68_global_{intro}.pkl", "wb") as f:
+    with open(OUT / f"d68_global_{intro}{SFX}.pkl", "wb") as f:
         pickle.dump({"glob": glob, "strips": strips, "br_all": br_all, "stats": gstats}, f)
     print("global done", intro, flush=True)
 
@@ -414,7 +469,7 @@ def phase_local(job):
     glob = {}
     gstats = {}
     for intro in ("block", "distributed"):
-        with open(OUT / f"d68_global_{intro}.pkl", "rb") as f:
+        with open(OUT / f"d68_global_{intro}{SFX}.pkl", "rb") as f:
             d = pickle.load(f)
         glob.update(d["glob"])
         strips, br_all = d["strips"], d["br_all"]
@@ -435,19 +490,23 @@ def phase_local(job):
            "global": {intro: {**gstats[intro], "runs": {f"{k[0]}/{k[1][0]}/{k[1][1]}": {kk: v[kk] for kk in (
                "tip_w_mm", "cg_iter", "rel_residual", "root_reaction_N", "applied_N")} for k, v in glob.items()
                if k[0] == intro}} for intro in gstats}}
-    (OUT / f"d68_local_{tag.replace('/', '_')}.json").write_text(json.dumps(rec, indent=1, default=float))
+    (OUT / f"d68_local{SFX}_{tag.replace('/', '_')}.json").write_text(json.dumps(rec, indent=1, default=float))
     print("local done", tag, flush=True)
 
 
-def phase_merge(out_name="d68_submodel.json"):
+def phase_merge(out_name=None):
+    out_name = out_name or f"d68_submodel{SFX}.json"
     result = {"inputs": {"geometry_source": "team/D1/wing_data.py -> subsystems/wing/fusion/wing.py (D1-R1) + D-68 "
                                             "as decided (R 3 mm pocket edges, 3 mm bead, R 3 mm cut-out corners)",
-                         "loads": "team/C1/data/wing_spanwise.csv (C1-R4)", "material_set": "O (orthotropic tube)",
+                         "loads": "team/C1/data/wing_spanwise.csv (C1-R5 with the D-105 side-load cap)",
+                         "material_set": "O (orthotropic tube)", "tube_G_pa": ws.M["spar_G_lo_pa"],
                          "E_bead_pa": BEAD_E, "nu_bead": BEAD_NU, "R_pocket_m": R_POCKET, "R_cutout_m": R_CUT,
                          "bead_leg_m": BEAD_LEG, "cuts_m": list(CUTS), "cuts_near_m": list(CUTS_NEAR),
                          "local_h_m": LOCAL_H, "clip_m": CLIP, "avg_radius_m": AVG_R, "global_level": GLOBAL_LEVEL},
               "local": {}}
-    for f in sorted(OUT.glob("d68_local_*.json")):
+    for f in sorted(OUT.glob(f"d68_local{SFX}_*.json")):
+        if not TAG and not f.name[len("d68_local_"):].startswith(("d68", "asdrawn")):
+            continue                                # tagged sensitivity runs are merged under their own tag
         r = json.loads(f.read_text())
         result["local"][r["tag"]] = {"stats": r["stats"], "runs": r["runs"]}
         result["global"] = r["global"]

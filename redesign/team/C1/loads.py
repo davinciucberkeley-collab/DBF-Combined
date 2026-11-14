@@ -92,11 +92,13 @@ asm("ASM-C1-CRUSH-EFF", "Crush efficiency 0.5", "Energy absorbed / (peak force x
 asm("ASM-C1-LAND-LIFT", "Rotor lift 2/3 W at touchdown", "Thrust still acting at touchdown, fraction of weight",
     "FAR 23.473(b); ArduPilot keeps throttle until the land detector trips", 0.667, "-", status="PROPOSED",
     cites=["SRC-C1-FAR23"])
-asm("ASM-C1-FRICTION", "Ground friction 0.7 (neoprene pad on the landing mat)", "Side load / vertical load at a foot",
-    "CHANGE-LOG D-30 and CR-C5-09: flight-card rule S1 puts every fin-tip landing on the mat, so the friction is D5's "
-    "neoprene pad value (ASM-D5-PAD-MU 0.7, UNVERIFIED until H1's pad pull test). Was 0.5 (grass) at C1-R2; the higher "
-    "value raises L4/L5 side loads by 40 %; it also sets the parked-stance slide check (higher = less margin needed)",
-    0.7, "-")
+asm("ASM-C1-FRICTION", "Ground friction 0.40 (low-friction pad face on the landing mat, D-105)",
+    "Side load / vertical load at a foot",
+    "D-105 (CDR decision B1, 2026-11-13): the pad face is held to mu <= requirements.pad_mu_max so the foot side load "
+    "stays at or below requirements.foot_side_load_cap_n; flight-card rule S1 puts every fin-tip landing on the mat. "
+    "Was 0.7 (bare neoprene, D-30 / CR-C5-09) and 0.5 (grass) at C1-R2. UNVERIFIED until the incline test T-D5-PAD-MU. "
+    "The parked aircraft needs more than this to stand in 8 m/s (CL-C1-STANCE-MU-REQ): laid flat or tied when parked",
+    kit.value(P + "requirements.pad_mu_max"), "-")
 # ASM-C1-FOOT-BIAS (1.077, D-30) is retired at C1-R4: the upper/lower split is read from D5's per-type cartridge
 # plateaus (CL-D5-F-PLATEAU-UPPER / CL-D5-F-PLATEAU, CR-D5-23), bias = upper / mean.
 asm("ASM-C1-MOUNT-MASS", "Printed motor mount 18 g", "One printed ASA motor mount with its collar and screws",
@@ -106,6 +108,21 @@ asm("ASM-C1-CONTACT-STROKE", "Contact stroke 10 mm", "Crush stroke at an unprote
     "foam/grass contact without a bumper", 0.010, "m")
 asm("ASM-C1-CD-PLATE", "Flat-plate CD 1.2", "Broadside drag/normal-force coefficient of the wing or a fin",
     "flat plate normal to the flow", 1.2, "-", status="PROPOSED", cites=["SRC-C1-HOERNER"])
+asm("ASM-C1-TIE-SHARE", "Restrained run: two of the four ties carry the net thrust",
+    "Share factor on the per-tie load of the restrained four-motor run: per tie = share x (4 T_lim - W) / 4",
+    "four cords of unequal length: the two shortest go taut first. Same number as H1's tie-down factor "
+    "ASM-H1-RESTRAINT-SF 2.0, so the C1 limit load per tie equals CL-H1-RESTRAINT-PER-TIE (29.45 N at the gate mass)",
+    2.0, "-", status="PROPOSED")
+asm("ASM-C1-EYE-POS", "Strap eye FIN-013 tie point: 21.1 mm outboard of the tube axis, |z| 0.030 m",
+    "Tie hole centre relative to the fin-tube axis: [dy outboard, |z|] (x = tube axis)",
+    "subsystems/fins/params.json fin_detail.strap_eye: boss bond radius 13.6 mm + foot 1.5 mm + hole offset 6 mm = "
+    "21.1 mm; the eye stands 10 mm above the upper / below the lower skin at the block (|z| about 0.030 m, EST from "
+    "the block top z 0.0304)", [0.0211, 0.030], "m", status="PROPOSED")
+asm("ASM-C1-PROP-STRIKE-T", "Prop strike: mount turns on the tube at 3.71 N m",
+    "Largest torque about the fin-tube axis that one motor mount can pass to the tube: the slip clamp plus the "
+    "clocking dog let go above it",
+    "C6 CL-C6-DOG-FUSE-T (<= 3.71 N m, upper bound of the slip + dog break; team/C6/joints.py). Copied as a number so "
+    "C1 and C6 do not read each other in a loop; CL-C1-P1-FUSE-MATCH checks the copy", 3.71, "N m", status="PROPOSED")
 asm("ASM-C1-HANDLING-N", "Handling factor 2", "Ground-handling load factor (lift, carry, set down)",
     "jerk when lifting one-handed or setting down", 2.0, "-", status="PROPOSED")
 asm("ASM-C1-CRASH-V", "Crash speed 5 m/s", "Impact speed of the survivable crash for pack retention",
@@ -894,7 +911,7 @@ def build_cases(k, X, items, growth, dy=0.005):
         LD["F_foot_corner_N"], X["mu"]
     bias = foot_bias(k)
     # foot side load (C1-R5, D-65, CR-C5-16): the larger of friction x corner load and C5's 3-D simulated sustained
-    # side load (CL-C5-SIM3D-SIDE-LOAD 39.3 N limit, 1.2 m/s at 10 deg any direction), applied with the corner load
+    # side load (CL-C5-SIM3D-SIDE-LOAD = requirements.foot_side_load_cap_n since D-105), applied with the corner load
     Fs = max(mu * Fc, X["F_side"])
     land("L1-LEVEL", "Level landing on four feet, biased cartridges (upper x bias, lower x (2 - bias))",
          {st: (-Fl * (bias if STATIONS[st][1] > 0 else 2 - bias), 0.0, 0.0) for st in STATIONS},
@@ -948,6 +965,29 @@ def build_cases(k, X, items, growth, dy=0.005):
     cases.append({"id": "G3-BENCH", "family": "ground", "title": "Set down flat on the lower motor cans and lower feet",
                   "gb": (0.0, 0.0, -g), "loads": sup,
                   "info": {"n": nh, "support_a": ga, "R_a_N": Ra, "support_b": gb_, "R_b_N": Rb}})
+
+    # G4 (CDR-28, CR-H1-08): restrained four-motor ground run. The aircraft stands on its feet, tied down at the four
+    # strap eyes FIN-013; all four motors at T_lim. Net up-force 4 T_lim - W goes into the ties; with unequal cords
+    # two ties (one diagonal pair, so there is no net moment) carry all of it: per tie = share (4 T_lim - W) / 4.
+    dy_e, z_e = X["eye"]
+    f_tie = X["tie_k"] * (4 * T_lim * math.cos(math.radians(k["cant"])) - W) / 4
+    ties = [load((k["tube_x"], s * (k["fin_y"] + dy_e), sz * z_e), (f_tie, 0.0, 0.0), grp="tie", side=s, st=st,
+                 fin=True, kind="tie") for st, (s, sz) in STATIONS.items() if st in ("UR", "LL")]
+    cases.append({"id": "G4-RESTRAINED", "family": "ground",
+                  "title": "Restrained ground run: four motors at T_lim, held by two diagonal strap eyes",
+                  "gb": hov, "loads": ties + rotor_loads(k, Rr, {st: T_lim for st in STATIONS}),
+                  "info": {"F_tie_N": f_tie, "ties": "UR+LL", "T_tot_N": 4 * T_lim}})
+    # P1 (CDR-28): prop strike on the ground, one upper motor (UR) at T_lim. The blade stops on the ground or a
+    # stand; the mount turns on the tube once the torque about the tube axis reaches the slip-clamp + dog fuse
+    # (ASM-C1-PROP-STRIKE-T), so that torque is the most the tube, collar and block see. Reported, not in the sizing
+    # envelope (C6 holds the downstream check, CL-C6-DOG-FUSE-RF).
+    s_, sz_ = STATIONS["UR"]
+    strike = [load((k["tube_x"], s_ * k["st_y"], sz_ * k["st_z"]), ZERO, (0.0, 0.0, SPIN["UR"] * X["T_ps"]), grp="mount",
+                   side=s_, st="UR", fin=True, kind="strike")]
+    cases.append({"id": "P1-PROP-STRIKE", "family": "damage",
+                  "title": "Prop strike on the ground: UR mount at its slip + dog fuse torque about the tube axis",
+                  "gb": hov, "loads": strike + rotor_loads(k, Rr, trim_split(k, cg, W, [], T_lim)),
+                  "info": {"T_fuse_Nm": X["T_ps"]}})
 
     # transport (props and pack out). Cradles under the spar at y +/-y_cr on the lower surface, lid pillars over the
     # spar on the upper surface at the same stations, each preloaded with p_lid (self-equilibrated pinch, CR-D7-02c).
@@ -1244,7 +1284,7 @@ def derived(k, kx):
             "v_gust": kx["v_gust"], "cdp": kx["cdp"], "clmax": kx["clmax"], "V_tr": kx["V_tr"],
             "landing": kx["landing"], "lw": kx["lw"], "att": kx["att"], "mu": kx["mu"], "n_h": kx["n_h"],
             "n_T": kx["n_T"], "y_cr": kx["y_cr"], "p_lid": kx["p_lid"], "el_vd_frac": kx["el_vd_frac"],
-            "F_side": kx["F_side"]}
+            "F_side": kx["F_side"], "tie_k": kx["tie_k"], "eye": kx["eye"], "T_ps": kx["T_ps"]}
 
 
 ENV_INPUTS = {
@@ -1259,7 +1299,8 @@ ENV_INPUTS = {
     "F_pw": "CL-C1-FOOT-PAIR-WIDE", "F_cor": "CL-C1-FOOT-CORNER", "F_tip": "CL-C1-WINGTIP-FORCE",
     "th_to": "CL-C1-TIPOVER-ANGLE-CONTACT", "F_to": "CL-C1-TIPOVER-FORCE", "lw": "ASM-C1-LAND-LIFT",
     "att": P + "requirements.landing_attitude_err_deg", "mu": "ASM-C1-FRICTION", "n_h": "ASM-C1-HANDLING-N", "n_T": "CL-C1-TRANSPORT-N",
-    "F_side": "CL-C5-SIM3D-SIDE-LOAD",
+    "F_side": "CL-C5-SIM3D-SIDE-LOAD", "tie_k": "ASM-C1-TIE-SHARE", "eye": "ASM-C1-EYE-POS",
+    "T_ps": "ASM-C1-PROP-STRIKE-T",
     "y_cr": "ASM-C1-CRADLE-Y", "h_drop": P + "requirements.box_drop_m", "s_cr": "CL-D7-CRADLE-STROKE",
     "p_lid": "ASM-C1-LID-PRELOAD", "pad": "ASM-C1-CRADLE-PAD", "el_vd": "ASM-C1-ELEVON-VD-FRAC",
     "eta": "ASM-C1-CRUSH-EFF", "sf": P + "requirements.safety_factor_ult",
@@ -1267,7 +1308,7 @@ ENV_INPUTS = {
 }
 ENV_UNITS = {**MODEL_UNITS, "Vc": "m/s", "VD": "m/s", "VA": "m/s", "V_gp": "m/s", "V_gn": "m/s", "v_gust": "m/s",
              "V_tr": "m/s", "att": "deg", "y_cr": "m", "h_drop": "m", "s_cr": "m", "p_lid": "N", "pad": "m",
-             "T_lim": "N", "F_lvl": "N", "F_pn": "N", "F_side": "N",
+             "T_lim": "N", "F_lvl": "N", "F_pn": "N", "F_side": "N", "eye": "m", "T_ps": "N m",
              "F_pw": "N", "F_cor": "N", "F_tip": "N", "F_to": "N", "th_to": "deg"}
 
 
@@ -1288,7 +1329,8 @@ def pack_inputs(kw):
                     "F_foot_corner_N": kw["F_cor"], "F_wingtip_N": kw["F_tip"], "tipover_theta_contact_deg": kw["th_to"],
                     "F_tipover_total_N": kw["F_to"]},
         "lw": kw["lw"], "att": kw["att"], "mu": kw["mu"], "n_h": kw["n_h"], "n_T": kw["n_T"], "y_cr": kw["y_cr"],
-        "p_lid": kw["p_lid"], "el_vd_frac": kw["el_vd"], "F_side": kw["F_side"],
+        "p_lid": kw["p_lid"], "el_vd_frac": kw["el_vd"], "F_side": kw["F_side"], "tie_k": kw["tie_k"],
+        "eye": kw["eye"], "T_ps": kw["T_ps"],
     }
     return k, derived(k, kx)
 
@@ -1335,6 +1377,16 @@ def envelope_calc(**kw):
     o["foot_side_lim"] = max(kw["mu"] * kw["F_cor"], kw["F_side"])
     o["foot_side_ult"] = o["foot_side_lim"] * kw["sf"]
     o["foot_side_friction_N"] = kw["mu"] * kw["F_cor"]
+    # G4 restrained run and P1 prop strike (CDR-28): tie load, the fin-group and half-fin resultants they produce
+    g4 = [c for c in res["cases"] if c["case"] == "G4-RESTRAINED"]
+    o["g4_tie_lim"] = max(c["F_tie_N"] for c in g4)
+    o["g4_tie_ult"] = o["g4_tie_lim"] * sf
+    for tag, cid in (("g4", "G4-RESTRAINED"), ("p1", "P1-PROP-STRIKE")):
+        rows = [(jid, v, mb) for case, mc, family, jid, v, mb in res["joints"] if case == cid]
+        o[tag + "_finjoint_M_lim"] = max(norm(v[3:]) for jid, v, mb in rows if jid.startswith("J-FIN-"))
+        o[tag + "_finhalf_T_lim"] = max(abs(v[5]) for jid, v, mb in rows if jid.startswith("J-FINHALF-"))
+        o[tag + "_finhalf_Mb_lim"] = max(mb for jid, v, mb in rows if jid.startswith("J-FINHALF-"))
+    o["p1_fuse_T"] = kw["T_ps"]
     o["aft_ratio"] = n_aft / o["n_T_allow_aft"]
     n_allow, rkey, s_req = o["n_T_allow_z"], o["n_T_governing_z"], o["stroke_req_z_m"]
     # lid pillar / cradle local loads (the pinch is self-equilibrated; it adds bearing, not wing bending)
@@ -1378,6 +1430,7 @@ def envelope_calc(**kw):
         o[name + "_case"] = c
     o["finjoint_F_design"] = o["finjoint_F_ult"] * kw["kfit"] * kw["kprint"]
     o["finjoint_M_design"] = o["finjoint_M_ult"] * kw["kfit"] * kw["kprint"]
+    o["g4_finjoint_ratio"] = o["g4_finjoint_M_lim"] / o["finjoint_M_lim"]
     o["mount_F_design"] = o["mount_F_ult"] * kw["kfit"] * kw["kprint"]
     o["mount_M_design"] = o["mount_M_ult"] * kw["kfit"] * kw["kprint"]
     o["pod_F_design"] = o["pod_F_ult"] * kw["kfit"] * kw["kprint"]
@@ -1511,10 +1564,11 @@ kit.claim("CL-C1-STANCE-TIP-WIND", "Wind that tips the parked aircraft", calc="C
           output="stance_tip_wind_ms", unit="m/s", limit=(">=", P + "requirements.gust_survive_ms"),
           how="Parked on its feet, motors off: fan or measured wind until a foot lifts.")
 kit.claim("CL-C1-STANCE-MU-REQ", "Friction needed to stand in 8 m/s", calc="CALC-C1-LANDING",
-          output="stance_mu_req_8ms", unit="-", limit=("<=", "ASM-C1-FRICTION"),
-          how="Pull test of a neoprene-padded foot on the landing mat with a spring scale (H1).",
-          note="Against the mat friction (rule S1). On grass (~0.5) the parked aircraft slides before it tips: lay it "
-               "flat above 5 m/s (C5 S1-S8, CR-C1-02).")
+          output="stance_mu_req_8ms", unit="-",
+          how="Flight card (H3): the aircraft is laid flat or tied by the strap eyes when parked.",
+          note="D-105 (CDR decision B1): the pad face is held to mu <= 0.40 to cap the foot side load, which is below "
+               "this value, so the limit against ASM-C1-FRICTION is removed on purpose: the parked aircraft is not "
+               "left standing in wind. It slides before it tips (C5 CL-C5-V-PARK-GUST).")
 kit.claim("CL-C1-CRASH-N", "Crash deceleration (ultimate)", calc="CALC-C1-CRASH", output="n_crash", unit="-",
           limit=(">=", P + "requirements.crash_decel_g"), verifies=["R-PACK-RETENTION"],
           how="Pack strap pull test (C3) at F_pack in each axis.")
@@ -1683,6 +1737,27 @@ kit.claim("CL-C1-FOOT-SIDE-DESIGN", "Design foot side load at the pad, limit (ma
           calc="CALC-C1-ENVELOPE", output="foot_side_lim", unit="N", verifies=["R-LOADS"],
           how="T-D5-SIDE pull on the shoe; C5's 6-DOF sim (CL-C5-SIM3D-SIDE-LOAD).",
           note="D-65 / CR-C5-16: applied with the corner foot load in L4 (y) and L5 (z).")
+kit.claim("CL-C1-G4-TIE-LIM", "Case G4: strap-eye tie load, restrained four-motor run, limit", calc="CALC-C1-ENVELOPE",
+          output="g4_tie_lim", unit="N", verifies=["R-LOADS"],
+          how="T-H1-RESTRAINT-PULL (spring scale on each strap) and T-D3-EYE on a bonded eye.",
+          note="CDR-28: two of four ties carry 4 T_lim - W (worst mass configuration = lightest). D3 sizes the eye "
+               "FIN-013 and its bond to this (fin_detail.strap_eye.load_n 29.4 N); H1's CL-H1-RESTRAINT-PER-TIE is the "
+               "same load at the gate mass.")
+kit.claim("CL-C1-G4-TIE-ULT", "Case G4: strap-eye tie load, ultimate", calc="CALC-C1-ENVELOPE", output="g4_tie_ult",
+          unit="N", how="As CL-C1-G4-TIE-LIM x 1.5.")
+kit.claim("CL-C1-G4-FINJOINT-M", "Case G4: fin-group moment at the wing / the fin-joint envelope", calc="CALC-C1-ENVELOPE",
+          output="g4_finjoint_ratio", unit="-", limit=("<=", 1.0),
+          how="Re-run loads.py: G4 is inside the envelope the blocks and spar are sized to.",
+          note="CDR-28: the blocks and spar react the tie pair; the check is that G4 does not set the fin-joint envelope.")
+kit.claim("CL-C1-P1-TUBE-TORQUE", "Case P1: half-fin torsion at the wing plane in a prop strike, limit",
+          calc="CALC-C1-ENVELOPE", output="p1_finhalf_T_lim", unit="N m",
+          how="T-C6-DOG-SHEAR: the mount turns at or below the fuse torque.",
+          note="CDR-28: reported (damage family), not in the sizing envelope. The torque is capped by the slip clamp "
+               "and clocking dog; C6 CL-C6-DOG-FUSE-RF holds the collar and block bond against it.")
+kit.claim("CL-C1-P1-FUSE-MATCH", "Case P1: fuse torque carried by C1 vs C6's fuse torque", calc="CALC-C1-ENVELOPE",
+          output="p1_fuse_T", unit="N m", limit=(">=", "CL-C6-DOG-FUSE-T"),
+          how="Re-run after any change to the mount clamp or dog (team/C6/joints.py).",
+          note="C1 carries a copy of C6's number (ASM-C1-PROP-STRIKE-T); this fails if C6's fuse torque rises above it.")
 kit.claim("CL-C1-FOOT-SIDE-DESIGN-ULT", "Design foot side load at the pad, ultimate", calc="CALC-C1-ENVELOPE",
           output="foot_side_ult", unit="N", how="As CL-C1-FOOT-SIDE-DESIGN x 1.5.")
 kit.claim("CL-C1-TRANSPORT-N-ALLOW-NOSE", "Box front-wall impact factor with the pod nose on the nose pad",
@@ -1871,9 +1946,9 @@ def write_data(outdir):
                                             "C6 sizes the collar to max(C4 FE collar torque, C1 section total)."},
     }
     with open(outdir / "envelope.json", "w", encoding="utf-8") as f:
-        json.dump({"note": "Limit-load envelopes over cases F1-F8, H1-H9, T1-T3, L1-L5, G1-G3 and both mass configs. "
+        json.dump({"note": "Limit-load envelopes over cases F1-F8, H1-H9, T1-T3, L1-L5, G1-G4 and both mass configs. "
                            "ultimate = 1.5 x limit; joint_design = x fitting factor; printed_bonded_design = x printed factor. "
-                           "Damage (L6, L7), transport (X1-X3) and crash are reported separately.",
+                           "Damage (L6, L7, P1 prop strike), transport (X1-X3) and crash are reported separately.",
                    "joints": jenv, "other": other}, f, indent=1)
     # wing proof whiffletree (H1, CR-H1-03)
     pt, rows = proof_tree(k, res, sf)
@@ -2153,16 +2228,17 @@ if __name__ == "__main__":
     (out / "sensitivity_vd.json").write_text(json.dumps(sens, indent=1), encoding="utf-8")
     for kk, vv in sens["outputs"].items():
         print(f"  {kk:24s} {vv['at_derived']:9.3f} {vv['at_requirement']:9.3f}  {vv['case']}")
-    # sensitivity (information, D-65 / CR-C5-16): the design foot side load at C5's 39.3 N (mu 0.7 mat) against
-    # C5's mu <= 0.5 pad-face option (29.1 N, CR-C5-16) and the friction-only value (mu x corner load)
+    # sensitivity (information, D-105): the design foot side load at the cap (C5 3-D sim, pad mu 0.40) against the
+    # D-65 value (39.5 N, bare neoprene mu 0.7) and the friction-only value (mu x corner load)
     keys2 = ["finjoint_M_ult", "finjoint_M_design", "finhalf_Mb_ult", "finhalf_T_lim", "finhalf_T_wingplane_lim",
              "wing_T_ult", "foot_F_ult", "spar_Mb_ult", "pod_F_ult", "pack_F_lim", "n_T_allow_aft", "n_T_allow_nose"]
-    o_s = {"c5_mu07": o1}
-    for tag, fs in (("c5_mu05_29N", 29.1), ("friction_only", 0.0)):
+    o_s = {"d105_cap": o1}
+    for tag, fs in (("d65_mu07_39N5", 39.5), ("friction_only", 0.0)):
         o_s[tag] = envelope_calc(**dict(kw, F_side=fs))
-    side = {"note": "Envelope outputs at the design side load (C5 3-D sim, mu 0.7, 39.3 N), at C5's mu <= 0.5 pad option "
-                    "(29.1 N, CR-C5-16) and with friction x corner load only (C1-R4 basis). Information only.",
-            "F_side_N": {"c5_mu07": kw["F_side"], "c5_mu05_29N": 29.1,
+    side = {"note": "Envelope outputs at the design side load (D-105 cap, pad mu 0.40), at the D-65 value (39.5 N, bare "
+                    "neoprene mu 0.7: what a foot without its pad face would see) and with friction x corner load "
+                    "only. Information only.",
+            "F_side_N": {"d105_cap": kw["F_side"], "d65_mu07_39N5": 39.5,
                          "friction_only": kw["mu"] * kw["F_cor"]},
             "outputs": {kk: {t: o_s[t][kk] for t in o_s} for kk in keys2},
             "cases": {kk: {t: o_s[t].get(kk.replace("_ult", "_case").replace("_lim", "_case").replace("_design", "_case"), "")

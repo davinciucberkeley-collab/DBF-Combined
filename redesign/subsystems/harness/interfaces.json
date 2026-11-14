@@ -18,7 +18,7 @@
    "make_or_buy": "make",
    "carried": true,
    "mass_proxy": true,
-   "notes": "carried item (ties, tape): mass from team/F2/harness.py (wire table x g/m + fittings). CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0362, -0.0097, 0.0358] m, 8.2 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness"
+   "notes": "carried item (ties, tape): mass from team/F2/harness.py (wire table x g/m + fittings). CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0362, -0.0097, 0.0359] m, 8.3 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness"
   },
   {
    "id": "HRN-002-R",
@@ -1284,7 +1284,7 @@
    "part_b": "PWR-003",
    "via": "CT-SOLDER-DC",
    "owner": "harness",
-   "notes": "Vbat main + / - (10 AWG jumper, F1 PWR-002). Wire list rows W-MAIN-1; routed cut length 0.034 m",
+   "notes": "Vbat main + / - (10 AWG jumper, F1 PWR-002). Wire list rows W-MAIN-1; routed cut length 0.035 m",
    "wire": {
     "gauge_awg": 10,
     "connector": "AS150U aircraft half (solder cup) -> power board input pads (aft edge)",
@@ -1296,7 +1296,7 @@
     "strain_relief": "adhesive heat-shrink 15 mm over each cup; formed before soldering",
     "disconnect": false,
     "slack_mm": 15,
-    "length_m": 0.034,
+    "length_m": 0.035,
     "wires": [
      "W-MAIN-1"
     ]
@@ -1312,7 +1312,7 @@
    "part_b": "PWR-004",
    "via": "CT-SOLDER-DC",
    "owner": "harness",
-   "notes": "Vbat main + / - (10 AWG jumper, F1 PWR-002). Wire list rows W-MAIN-2; routed cut length 0.089 m",
+   "notes": "Vbat main + / - (10 AWG jumper, F1 PWR-002). Wire list rows W-MAIN-2; routed cut length 0.091 m",
    "wire": {
     "gauge_awg": 10,
     "connector": "power board output pads (aft edge) -> bus bars, aft end (solder)",
@@ -1325,7 +1325,7 @@
     "strain_relief": "heat-shrink; jumpers formed before soldering",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.089,
+    "length_m": 0.091,
     "wires": [
      "W-MAIN-2"
     ]
@@ -1605,7 +1605,7 @@
    "part_b": "AVN-001",
    "via": "CT-PIN-HEADER-LINK",
    "owner": "harness",
-   "notes": "Power-board link, case S (D-74): BATT_VOLT, BATT_CURR, FC-BEC 5 V x1, servo-BEC Vx 6 V x4, GND x3 (10 of the board-to-board contacts, flat 28 AWG ribbon folded in two). Wire list rows W-PMOD; routed cut length 0.173 m",
+   "notes": "Power-board link, case S (D-74): BATT_VOLT, BATT_CURR, FC-BEC 5 V x1, servo-BEC Vx 6 V x4, GND x3 (10 of the board-to-board contacts, flat 28 AWG ribbon folded in two). Wire list rows W-PMOD; routed cut length 0.175 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "male pin header (pitch per power BOARD-CHECK.md step 4) in the PDB board-to-board socket -> male pin header in the FC board-to-board socket",
@@ -1621,7 +1621,7 @@
     "strain_relief": "tie within 20 mm of each header; header held by the board's own socket + a dab of hot glue",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.173,
+    "length_m": 0.175,
     "wires": [
      "W-PMOD"
     ]

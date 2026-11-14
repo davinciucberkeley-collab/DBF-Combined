@@ -3,7 +3,8 @@
  "generated_by": "redesign/team/D5/feet_calc.py",
  "params": [
   "../../params/params.json",
-  "../../subsystems/landing/params.json"
+  "../../subsystems/landing/params.json",
+  "../C6/params.json"
  ],
  "nodes": [
   {
@@ -136,10 +137,10 @@
   {
    "id": "ASM-D5-PAD-MU",
    "type": "assumption",
-   "title": "Neoprene pad friction 0.7 on dry concrete/asphalt",
-   "text": "Static friction of a 40A neoprene pad on dry concrete or asphalt",
-   "basis": "Engineering ToolBox rubber/concrete 0.6-0.85; grass is lower and unmeasured. Tilt-board slide test T-D5-PAD-MU",
-   "value": 0.7,
+   "title": "Pad face friction on the landing mat, upper bound 0.40 (D-105, CDR decision B1)",
+   "text": "Static friction of the foot pad face on the landing mat is at most requirements.pad_mu_max: the 40A neoprene pad carries a low-friction face (UHMW-PE tape 0.13 mm, EST; the face material is chosen by the incline test, not by this assumption)",
+   "basis": "params requirements.pad_mu_max (D-105, CDR-SUMMARY decision B1). Bare neoprene on dry concrete is 0.6-0.85 (Engineering ToolBox), which gave the 39.5 N side load of D-65; a face value for UHMW-PE on the mat is not published (-), so T-D5-PAD-MU measures it: slide at or below 21.8 deg",
+   "value": 0.4,
    "unit": "-",
    "status": "UNVERIFIED",
    "cites": [
@@ -149,10 +150,10 @@
   {
    "id": "ASM-D5-PETG-SIGMA",
    "type": "assumption",
-   "title": "Printed PETG allowable 40 MPa",
-   "text": "Printed PETG bending allowable (XY, 100 % walls)",
-   "basis": "filament data 40-50 MPa; low end for layer adhesion",
-   "value": 40000000.0,
+   "title": "Printed PETG in-plane allowable 23.5 MPa (C6 table, D-107)",
+   "text": "Printed PETG tension / bending allowable with the stress in the layer plane. Print orientation (stated for CDR-18): shoe GER-001 and piston GER-002 are printed standing on the bed with the layers stacked along the sleeve axis x, so the hoop bending of the sleeve end, rim and inside fillets, the tine walls in bending about y / z and the flange plate all work in the layer plane; only the axial (x) stress of the sleeve crosses layers (CL-D5-SIDE-AXIAL-RF)",
+   "basis": "= P:allowables.petg_inplane_pa (team/C6/params.json): 0.5 x 47 MPa, Prusament PETG TDS v1.1 printed specimens. Was 40 MPa (filament data 40-50 MPa, low end)",
+   "value": 23500000.0,
    "unit": "Pa",
    "status": "UNVERIFIED",
    "cites": [
@@ -375,7 +376,7 @@
     "z_outer": 0.219,
     "edge_r": 0.001,
     "lip": 0.0034,
-    "leg_depth": 0.007,
+    "leg_depth": 0.03,
     "glue": 0.0002,
     "win_z": 0.006,
     "rim_t": 0.0034,
@@ -475,7 +476,7 @@
     "v_no_set_ms": 0.34299465825249104,
     "mean_err": 0.00039910936819564924,
     "cut_seg_len_m": 0.034999999999999996,
-    "mark_margin_m": 0.01032489790025106,
+    "mark_margin_m": 0.010417939679741216,
     "landings_per_cartridge": 2.6143067526390444
    },
    "input_values": {
@@ -496,7 +497,7 @@
     "mark": 0.003,
     "eps_e": 0.02,
     "guard": 0.003,
-    "s_pair": 0.021675102099748933,
+    "s_pair": 0.021582060320258778,
     "bias_t": 1.05,
     "k_ult": 1.5,
     "pre": 0.003,
@@ -534,7 +535,7 @@
    "outputs": {
     "cg_height_m": 0.319,
     "narrow_deg": 32.02152513736852,
-    "corner_deg": 30.9847247944542,
+    "corner_deg": 30.427430066833967,
     "wide_deg": 45.089664683473664
    },
    "input_values": {
@@ -543,8 +544,8 @@
     "x_cg": 0.049,
     "z_cg": 0.0185,
     "x_rng": [
-     0.0466,
-     0.0514
+     0.0394,
+     0.0513
     ],
     "z_rng": [
      0.0165,
@@ -672,18 +673,18 @@
     "alloc": "g"
    },
    "outputs": {
-    "shoe_g": 9.981839063992263,
+    "shoe_g": 12.711221463992343,
     "piston_g": 3.1888734800010625,
     "cartridge_upper_g": 0.5138144000000199,
     "cartridge_lower_g": 0.47389078735981516,
     "pad_g": 0.7071583999999951,
     "cap_g": 0.7256898082172017,
-    "foot_upper_g": 14.391685343993341,
-    "foot_lower_g": 14.351761731353136,
-    "feet_g": 57.486894150692954,
+    "foot_upper_g": 17.121067743993418,
+    "foot_lower_g": 17.081144131353213,
+    "feet_g": 68.40442375069327,
     "caps_g": 1.4513796164344035,
-    "total_g": 58.938273767127356,
-    "alloc_margin_g": 1.061726232872644,
+    "total_g": 69.85580336712768,
+    "alloc_margin_g": -9.855803367127677,
     "insert_upper_g": 4.409846280001077,
     "insert_lower_g": 4.369922667360873
    },
@@ -711,7 +712,7 @@
     "z_outer": 0.219,
     "edge_r": 0.001,
     "lip": 0.0034,
-    "leg_depth": 0.007,
+    "leg_depth": 0.03,
     "glue": 0.0002,
     "win_z": 0.006,
     "rim_t": 0.0034,
@@ -771,13 +772,13 @@
     "allow": "Pa"
    },
    "outputs": {
-    "F_N": 80.44317315360249,
-    "sigma_Pa": 37437195.18492238,
-    "sf": 1.0684561116936926
+    "F_N": 65.97807867483988,
+    "sigma_Pa": 30705330.38968678,
+    "sf": 0.7653394280979017
    },
    "input_values": {
     "F": 58.786770000000004,
-    "F_c1": 80.44317315360249,
+    "F_c1": 65.92987345032114,
     "F_c1u": 65.97807867483988,
     "a": 0.004799999999999971,
     "b": [
@@ -785,7 +786,7 @@
      0.0144
     ],
     "t": 0.0018,
-    "allow": 40000000.0
+    "allow": 23500000.0
    }
   },
   {
@@ -902,11 +903,11 @@
     "tau": "Pa"
    },
    "outputs": {
-    "area_m2": 0.00165664,
-    "design_N": 115.63706140830358,
-    "tau_Pa": 69802.1666797274,
+    "area_m2": 0.00434304,
+    "design_N": 94.84348809508232,
+    "tau_Pa": 21838.041578038035,
     "allow_Pa": 100000.0,
-    "sf": 1.432620286112737
+    "sf": 4.57916519861229
    },
    "input_values": {
     "te": 0.32,
@@ -932,7 +933,7 @@
     "z_outer": 0.219,
     "edge_r": 0.001,
     "lip": 0.0034,
-    "leg_depth": 0.007,
+    "leg_depth": 0.03,
     "glue": 0.0002,
     "win_z": 0.006,
     "rim_t": 0.0034,
@@ -958,7 +959,7 @@
     "airfoil": "S5010",
     "t_c": 0.0982,
     "F": 58.786770000000004,
-    "F_c1": 80.44317315360249,
+    "F_c1": 65.92987345032114,
     "F_c1u": 65.97807867483988,
     "ff": 1.4375,
     "tau": 200000.0,
@@ -971,7 +972,7 @@
    "title": "Side load at the pad: shoe sleeve end by FEA, tine bending by beam",
    "script": "redesign/team/D5/feet_calc.py",
    "function": "side",
-   "equation": "F = 1.5 F_side (C5 3-D sim, mu 0.7, D-65) ; sleeve end: sigma = k_FEA F (D5 FEA of the drawn shoe, lever R = F (a + e) / (e + s0), s0 = eps_y L_cart) ; RF = allow / sigma ; R5 beam kept for information: M = R b / 12 over the rim ; tine (R8): max(F a on the full chamfered section at the sleeve end, F (a - dxw) on the windowed section, dxw = window front - sleeve end at rest); clearance of the tine chamfer to the sleeve fillet r_in - hypot(r_in - cs - tc, r_in - cs)",
+   "equation": "F = 1.5 F_side (D-105 cap) ; RF at the printed / bonded design load = RF / ff (ff = 1.15 x 1.25) ; axial stress across layers at the fin TE section = R (x_end - x_te) c / I_z of the sleeve box, x 3 for the window corner (EST), vs the interlayer value ; sleeve end: sigma = k_FEA F (D5 FEA of the drawn shoe, lever R = F (a + e) / (e + s0), s0 = eps_y L_cart) ; RF = allow / sigma ; R5 beam kept for information: M = R b / 12 over the rim ; tine (R8): max(F a on the full chamfered section at the sleeve end, F (a - dxw) on the windowed section, dxw = window front - sleeve end at rest); clearance of the tine chamfer to the sleeve fillet r_in - hypot(r_in - cs - tc, r_in - cs)",
    "inputs": {
     "te": "P:fins.te_x_m",
     "hh": "P:fins.half_height_m",
@@ -1025,7 +1026,9 @@
     "k_ult": "ASM-D5-ULT-FACTOR",
     "eps_y": "ASM-D5-YIELD-STRAIN",
     "allow": "ASM-D5-PETG-SIGMA",
-    "k_fea": "ASM-D5-FEA-SHOE-K"
+    "k_fea": "ASM-D5-FEA-SHOE-K",
+    "ff": "ASM-D5-FIT-FACTOR",
+    "allow_z": "P:allowables.petg_interlayer_pa"
    },
    "units": {
     "te": "m",
@@ -1074,21 +1077,28 @@
     "mark": "m",
     "F_lim": "N",
     "allow": "Pa",
-    "k_fea": "Pa/N"
+    "k_fea": "Pa/N",
+    "allow_z": "Pa"
    },
    "outputs": {
-    "F_N": 59.25,
-    "R_lip_N": 130.70431893687703,
-    "R_open_N": 71.45431893687703,
-    "sigma_fea_Pa": 31563349.999999996,
-    "sf_shoe": 1.2672926036051309,
+    "F_N": 36.75,
+    "R_lip_N": 81.06976744186045,
+    "R_open_N": 44.31976744186045,
+    "sigma_fea_Pa": 19577267.721518986,
+    "sf_shoe": 1.200371795200472,
+    "sf_shoe_full": 0.835041248835111,
+    "sf_tine_full": 0.8080016832097937,
+    "sigma_axial_Pa": 1379549.6754440293,
+    "sf_axial_kt3_full": 1.5127809885261372,
+    "F_proof_each_N": 28.174999999999997,
+    "F_batch_fail_N": 45.9375,
     "fillet_clear_m": 0.00015609110854142272,
-    "sigma_rim_beam_Pa": 8870787.465512363,
+    "sigma_rim_beam_Pa": 5502133.997596276,
     "fea_over_beam": 3.558122672052649,
-    "sigma_tine_Pa": 32619609.27694789,
-    "sf_tine": 1.2262562577126819,
-    "sigma_tine_win_Pa": 32619609.27694789,
-    "sigma_tine_full_Pa": 18153426.722553946,
+    "sigma_tine_Pa": 20232415.880638566,
+    "sf_tine": 1.1615024196140784,
+    "sigma_tine_win_Pa": 20232415.880638566,
+    "sigma_tine_full_Pa": 11259720.372217005,
     "win_offset_m": 0.0030000000000000027
    },
    "input_values": {
@@ -1115,7 +1125,7 @@
     "z_outer": 0.219,
     "edge_r": 0.001,
     "lip": 0.0034,
-    "leg_depth": 0.007,
+    "leg_depth": 0.03,
     "glue": 0.0002,
     "win_z": 0.006,
     "rim_t": 0.0034,
@@ -1140,11 +1150,13 @@
     "mark": 0.003,
     "airfoil": "S5010",
     "t_c": 0.0982,
-    "F_lim": 39.5,
+    "F_lim": 24.5,
     "k_ult": 1.5,
     "eps_y": 0.05,
-    "allow": 40000000.0,
-    "k_fea": 532714.7679324894
+    "allow": 23500000.0,
+    "k_fea": 532714.7679324894,
+    "ff": 1.4375,
+    "allow_z": 9000000.0
    }
   },
   {
@@ -1215,7 +1227,7 @@
    "input_values": {
     "ext": [
      1.25,
-     0.55,
+     0.56,
      0.54
     ],
     "wall": 0.0125,
@@ -1954,7 +1966,7 @@
     "GER-002-LL"
    ],
    "how": "With the groove at the rim the remaining gap less the 3 mm guard must be >= CL-C5-DROP-PAIR-PITCH.",
-   "value": 0.01032489790025106
+   "value": 0.010417939679741216
   },
   {
    "id": "CL-D5-LANDINGS-PER-CART",
@@ -2007,7 +2019,7 @@
     "GER-004-LL"
    ],
    "how": "Tilting board with the pack at its forward stop and ballast at the z limit.",
-   "value": 30.9847247944542
+   "value": 30.427430066833967
   },
   {
    "id": "CL-D5-MASS-FOOT",
@@ -2035,7 +2047,7 @@
     "GER-008-LL"
    ],
    "how": "Weigh one assembled foot (T-A3-WEIGH-PARTS).",
-   "value": 14.391685343993341
+   "value": 17.121067743993418
   },
   {
    "id": "CL-D5-MASS-INSERT",
@@ -2098,7 +2110,7 @@
     "GER-007-L"
    ],
    "how": "Weigh the four feet and two caps with glue and tape.",
-   "value": 58.938273767127356
+   "value": 69.85580336712768
   },
   {
    "id": "CALC-D5-KIT",
@@ -2183,7 +2195,7 @@
     "GER-002-LL"
    ],
    "how": "Load a printed flange edge to 67 N (C1 upper-foot ult 66.6 N); no crack (T-D5-PROOF).",
-   "value": 1.0684561116936926
+   "value": 0.7653394280979017
   },
   {
    "id": "CL-D5-BOND-AREA",
@@ -2199,7 +2211,7 @@
     "GER-001-LL"
    ],
    "how": "Shoe drawing; C6 copies it into the E-GER-01..04 bond block.",
-   "value": 0.00165664
+   "value": 0.00434304
   },
   {
    "id": "CL-D5-BOND-SF",
@@ -2219,12 +2231,12 @@
     "GER-001-LL"
    ],
    "how": "Pull test of a shoe bonded on a stepped two-layer offcut to 96 N along x (T-D5-PROOF, C6 coupon).",
-   "value": 1.432620286112737
+   "value": 4.57916519861229
   },
   {
    "id": "CL-D5-SIDE-RIM-SF",
    "type": "claim",
-   "title": "Shoe sleeve end RF at C5's 59.0 N ultimate side load (D5 FEA of the drawn shoe)",
+   "title": "Shoe sleeve end RF at the ultimate side load (D-105 cap x 1.5), common in-plane value",
    "calc": "CALC-D5-SIDE",
    "output": "sf_shoe",
    "unit": "-",
@@ -2241,9 +2253,79 @@
     "GER-001-LR",
     "GER-001-LL"
    ],
-   "how": "T-D5-SIDE: 60 N (>= 59.0 N ult) sideways at the pad of a foot crushed 5 mm, along +y then +z on a second shoe; no crack at the rim, window or roof; then C5's T-C5-SHOE-SIDE-FAIL to failure.",
-   "note": "CR-C5-18 / CR-A1-65: replaces the R5 beam (FEA/beam 2.78); worst of +y and +z",
-   "value": 1.2672926036051309
+   "how": "T-D5-SIDE.",
+   "note": "D-107: on the C6 table value 23.5 MPa (was 40 MPa). Ultimate only, under the table's test rule: every flight shoe is proof-loaded to 1.15 x limit and one shoe per printed batch is taken past 1.5 x 1.25 x limit (T-D5-SIDE). CL-D5-SIDE-RIM-SF-FULL reports the same on the full printed / bonded factor. D5 FEA of the drawn shoe, worst of +y and +z, finest mesh (the window-corner peak still rises with refinement: 28.3 / 28.9 / 31.6 MPa at 59.25 N on h 0.4 / 0.3 / 0.2 mm; the rim is converged at 30.4)",
+   "value": 1.200371795200472
+  },
+  {
+   "id": "CL-D5-SIDE-RIM-SF-FULL",
+   "type": "claim",
+   "title": "Shoe sleeve end RF at ultimate x 1.15 x 1.25 (reported, no limit)",
+   "calc": "CALC-D5-SIDE",
+   "output": "sf_shoe_full",
+   "unit": "-",
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL"
+   ],
+   "how": "T-D5-SIDE batch failure load.",
+   "note": "D-107 / CDR-18: below 1 on the common value. Not the pass line because T-D5-SIDE proof-loads every flight shoe; to pass it without the test rule the sleeve end stress must fall by the shortfall (snap-window corner radius R >= 0.5 mm and a thicker rim; needs a new D5 FEA sweep, not run)",
+   "value": 0.835041248835111
+  },
+  {
+   "id": "CL-D5-SIDE-AXIAL-RF",
+   "type": "claim",
+   "title": "Shoe sleeve axial stress across layers at the fin TE, x 3 at the window corner, full factor",
+   "calc": "CALC-D5-SIDE",
+   "output": "sf_axial_kt3_full",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL"
+   ],
+   "how": "T-D5-SIDE: no crack across the sleeve at the fin TE.",
+   "note": "D-107: the one stress of the standing print that crosses layers; hand beam value x 3 (EST concentration at the snap-window corner) against the interlayer row 9 MPa",
+   "value": 1.5127809885261372
+  },
+  {
+   "id": "CL-D5-SIDE-PROOF-EACH",
+   "type": "claim",
+   "title": "Side proof load for every flight shoe before bonding (1.15 x limit)",
+   "calc": "CALC-D5-SIDE",
+   "output": "F_proof_each_N",
+   "unit": "N",
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL"
+   ],
+   "how": "T-D5-SIDE step 1.",
+   "value": 28.174999999999997
+  },
+  {
+   "id": "CL-D5-SIDE-BATCH-FAIL",
+   "type": "claim",
+   "title": "Least side failure load of the batch sample shoe (1.5 x 1.25 x limit)",
+   "calc": "CALC-D5-SIDE",
+   "output": "F_batch_fail_N",
+   "unit": "N",
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL"
+   ],
+   "how": "T-D5-SIDE step 2.",
+   "value": 45.9375
   },
   {
    "id": "CL-D5-FILLET-CLEAR",
@@ -2287,7 +2369,7 @@
     "GER-002-LL"
    ],
    "how": "T-D5-SIDE.",
-   "value": 1.2262562577126819
+   "value": 1.1615024196140784
   },
   {
    "id": "CL-D5-SNAP-STRAIN",
@@ -2373,14 +2455,14 @@
   {
    "id": "CL-D5-PAD-MU",
    "type": "claim",
-   "title": "Pad friction vs the friction to stand in 8 m/s",
+   "title": "Pad face friction on the landing mat (design upper bound)",
    "unit": "-",
    "limit": {
-    "op": ">=",
-    "ref": "CL-C1-STANCE-MU-REQ"
+    "op": "<=",
+    "ref": "P:requirements.pad_mu_max"
    },
    "verifies": [
-    "R-WIND"
+    "R-LANDING-IMPACT"
    ],
    "parts": [
     "GER-004-UR",
@@ -2388,11 +2470,12 @@
     "GER-004-LR",
     "GER-004-LL"
    ],
-   "how": "T-D5-PAD-MU tilt-board slide test.",
+   "how": "T-D5-PAD-MU incline test on the landing mat.",
    "assumes": [
     "ASM-D5-PAD-MU"
    ],
-   "value": 0.7
+   "value": 0.4,
+   "note": "D-105 (CDR decision B1): the pad face caps the foot side load (requirements.foot_side_load_cap_n). It no longer holds the parked aircraft in 8 m/s (needs CL-C1-STANCE-MU-REQ 0.68): laid flat or tied when parked (flight card, H3). Until D-105 this claim was mu 0.7 >= the stance friction"
   },
   {
    "id": "CL-D5-REPLACE-TIME",
@@ -2441,12 +2524,12 @@
   {
    "id": "T-D5-PAD-MU",
    "type": "test",
-   "title": "Pad slide on a tilt board",
+   "title": "Pad slide on an incline (the landing mat)",
    "verifies": [
     "CL-D5-PAD-MU"
    ],
    "state": "planned",
-   "procedure": "Foot with pad, 0.65 kg on it, on a board faced with concrete paver / asphalt shingle / the landing mat; tilt until it slides; mu = tan(angle). Pass >= 0.7 dry."
+   "procedure": "Foot with the faced pad, 0.65 kg on it, on a board covered with the landing mat the team flies from; raise the board until the foot slides; mu = tan(angle); 5 repeats, dry, and 5 with the mat damp. Pass (D-105): every slide at or below 21.8 deg (mu <= 0.40). Fail: change the face material, or adopt the sideways piston snap (23-26 N release, CDR decision B1 fallback)."
   },
   {
    "id": "T-D5-REPLACE",
@@ -2472,13 +2555,14 @@
   {
    "id": "T-D5-SIDE",
    "type": "test",
-   "title": "Side load at the pad",
+   "title": "Side load at the pad: proof of every flight shoe, failure load of one per batch",
    "verifies": [
     "CL-D5-SIDE-RIM-SF",
-    "CL-D5-SIDE-TINE-SF"
+    "CL-D5-SIDE-TINE-SF",
+    "CL-D5-SIDE-AXIAL-RF"
    ],
    "state": "planned",
-   "procedure": "Two R6 shoes bonded on stepped offcuts (as T-D5-PROOF), printed as flown (layers stacked along the sleeve axis), insert pushed 5 mm in; 60 N (>= C5's 59.0 N ult, D-65) at the pad sideways along +y on one, +z on the other, held 3 s; pass: no crack at the rim, window or roof, insert still slides. Then C5's T-C5-SHOE-SIDE-FAIL on the same specimens."
+   "procedure": "Shoes printed as flown (standing, layers stacked along the sleeve axis). Step 1, every flight shoe before it is bonded: seat it on a stepped two-layer board offcut clamped in a vice (legs taped, not glued), insert pushed 5 mm in; hang CL-D5-SIDE-PROOF-EACH (1.15 x limit, 28.2 N at the D-105 cap) at the pad sideways along +y, then +z, 3 s each; pass: no crack or whitening at the rim, window or roof, insert still slides. Step 2, one extra shoe per printed batch, bonded on an offcut (as T-D5-PROOF): load the pad sideways in 5 N steps to failure, +y; pass: failure at or above CL-D5-SIDE-BATCH-FAIL (1.5 x 1.25 x limit, 45.9 N); record the load and where it cracks. A batch that fails step 2 is not flown. Then C5's T-C5-SHOE-SIDE-FAIL (+z) on a second sample of the first batch."
   }
  ]
 }

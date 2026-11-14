@@ -436,10 +436,13 @@ kit.claim("CL-C5-V-TIP-PARKED-EMPTY", "Wind that tips the parked aircraft, pack 
 kit.claim("CL-C5-V-SLIDE-GRASS-EMPTY", "Wind that slides it on grass, pack out", calc="CALC-C5-WIND",
           output="v_slide_grass_empty_ms", unit="m/s", how="Spring-scale pull of the parked aircraft on RFS grass.")
 kit.claim("CL-C5-V-PARK-GUST", "Largest gust to leave it standing (on the mat)", calc="CALC-C5-WIND",
-          output="v_park_gust_mat_ms", unit="m/s", limit=(">=", P + "requirements.wind_limit_ms"),
-          verifies=["R-WIND"],
-          note="pack out governs; factor 1.5 on moment and friction. Below the 5 m/s card on grass: lay it flat",
-          how="Handheld anemometer gust reading at the landing mat (H3 flight card).")
+          output="v_park_gust_mat_ms", unit="m/s",
+          note="D-105 (CDR decision B1): the pad face is held to mu <= 0.40 (requirements.pad_mu_max) to cap the "
+               "foot side load, so the parked aircraft now slides before it tips and this value is below the 5 m/s "
+               "card (it was 5.36 m/s at mu 0.7). The limit is removed on purpose: the aircraft is not left "
+               "standing; it is laid flat (CL-C5-V-LIFT-FLAT) or tied by the strap eyes when parked (flight card, "
+               "H3). Pack out governs; factor 1.5 on moment and friction",
+          how="Handheld anemometer gust reading at the landing mat (H3 flight card); parked rule on the card.")
 kit.claim("CL-C5-V-PARK-GUST-GRASS", "Largest gust to leave it standing on grass", calc="CALC-C5-WIND",
           output="v_park_gust_grass_ms", unit="m/s", how="As CL-C5-V-PARK-GUST, on grass.")
 kit.claim("CL-C5-V-LIFT-FLAT", "Wind that lifts it lying flat, pack out", calc="CALC-C5-WIND",
@@ -792,8 +795,8 @@ kit.claim("CL-C5-DYN-VALID", "Model check: symmetric free level drop vs the hand
           how="Re-run; compare with CL-C5-DROP-STROKE.")
 kit.claim("CL-C5-FOOT-SIDE-LOAD", "Foot side load at the pad, mat friction, one foot first", calc="CALC-C5-DROP-DYN",
           output="side_load_N", unit="N", limit=("<=", "CL-C5-FOOT-SIDE-C1"), parts=FEET,
-          note="the landing mat and neoprene pad (mu 0.7) raise C1's L4/L5 side load (mu 0.5) by 40 %; C4's fin "
-               "face stress scales with it (CR-C5-09)",
+          note="hand value mu_pad x corner load at the D-105 pad face (mu <= 0.40); the design value is the cap "
+               "requirements.foot_side_load_cap_n, checked by the 6-DOF sim (CL-C5-SIM3D-SIDE-12)",
           how="T-D5-PAD-MU gives mu; C4's T-C4-FIN-PROOF at 1.5 x this load.")
 kit.claim("CL-C5-FOOT-SIDE-C1", "Foot side load in C1 case L4 (C1 friction as carried)", calc="CALC-C5-DROP-DYN",
           output="side_load_c1_N", unit="N", how="C1 LOADS.md case L4.")

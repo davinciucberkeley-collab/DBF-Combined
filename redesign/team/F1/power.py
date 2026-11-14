@@ -259,11 +259,11 @@ def _segments(profile, kind, punch_t, i_punch, scale):
                   "split": "P:requirements.hover_split_max", "ilim": "P:performance.full_throttle_current_a",
                   "ipeak": "P:electrical.peak_current_a", "i_esc_lim": "P:propulsion.current_max_per_motor_a",
                   "i_esc_asym": "CL-E1-IMAX-168-55", "r_contact": "ASM-F1-R-CONTACT", "r_board": "ASM-F1-R-BOARD",
-                  "v": "P:battery.v_nom", "r_xt30": "ASM-F1-R-XT30U"},
+                  "v": "P:battery.v_nom", "r_xt30": "ASM-F1-R-XT30U", "drop_allow": "CL-E1-DROP-ALLOW"},
           units={"ilim": "A", "ipeak": "A", "i_esc_lim": "A", "v": "V", "l_main": "m", "k_cu": "W/m/K",
-                 "l_ur": "m", "l_ul": "m", "l_lr": "m", "l_ll": "m"})
+                 "l_ur": "m", "l_ul": "m", "l_lr": "m", "l_ll": "m", "drop_allow": "%"})
 def wires(i_cont, profile, punch, gauges, od, g_main, l_main, k_cu, l_ur, l_ul, l_lr, l_ll, bundle, cool,
-          amb, n, split, ilim, ipeak, i_esc_lim, i_esc_asym, r_contact, r_board, v, r_xt30):
+          amb, n, split, ilim, ipeak, i_esc_lim, i_esc_asym, r_contact, r_board, v, r_xt30, drop_allow):
     ta = max(amb)
     share = 2 * split / (1 + split) / n
     t_lim, t_mom, t_asym = punch
@@ -318,7 +318,12 @@ def wires(i_cont, profile, punch, gauges, od, g_main, l_main, k_cu, l_ur, l_ul, 
     out["drop_peak_pct"] = 100 * (ilim * r_common + i_esc_lim * max(r_br)) / v
     out["main_loss_w_cont"] = i_cont ** 2 * r_common
     r_per_m = 2 * we["r20"] * (1 + ALPHA * (t_esc - 20))                   # loop Ohm per metre of route
-    out["esc_len_allow_m"] = (0.05 * v - ilim * r_common - i_esc_lim * r_xt30) / (i_esc_lim * r_per_m)
+    # longest lead for a given drop at the limiter. CDR-03 / CDR-EL-04 (2026-11-13): the limit is E1's allowable
+    # drop (CL-E1-DROP-ALLOW: the drop at which R-HOVER-TW is just held); the 5 % figure is the WB-11 guideline
+    out["esc_len_5pct_m"] = (0.05 * v - ilim * r_common - i_esc_lim * r_xt30) / (i_esc_lim * r_per_m)
+    out["esc_len_allow_m"] = (drop_allow / 100 * v - ilim * r_common - i_esc_lim * r_xt30) / (i_esc_lim * r_per_m)
+    out["esc_len_max_m"] = max(l_esc)
+    out["drop_peak_over_5pct"] = out["drop_peak_pct"] - 5.0
     out["xt30_drop_pct"] = 100 * i_esc_lim * r_xt30 / v
     return out
 
@@ -480,11 +485,23 @@ kit.claim("CL-F1-ESC-MASS", "ESC power leads, 4 pairs at F2's routed lengths", c
           parts=ESC_IDS, how="Weigh the four cut pairs before soldering.",
           note="Harness mass is F2's (HRN-101/102, CL-F2-MASS); F2 reads the per-metre value CL-F1-W16-GPM "
                "instead of dividing this by 4.0 m (CR-F1-23).")
-kit.claim("CL-F1-ESC-LEN-ALLOW", "Longest 16 AWG ESC lead that keeps the 100 A drop <= 5 %", calc=W,
-          output="esc_len_allow_m", unit="m", parts=ESC_IDS,
+kit.claim("CL-F1-ESC-LEN-MAX", "Longest routed 16 AWG ESC lead (F2 cut list)", calc=W, output="esc_len_max_m",
+          unit="m", parts=ESC_IDS, how="Tape measure on the cut pairs; = max of CL-F2-ESC-LEN-UR / UL / LR / LL.")
+kit.claim("CL-F1-ESC-LEN-ALLOW", "Longest 16 AWG ESC lead that keeps the 100 A drop within E1's allowable", calc=W,
+          output="esc_len_allow_m", unit="m", limit=(">=", "CL-F1-ESC-LEN-MAX"), parts=ESC_IDS,
           how="F2 cut list: every ESC lead <= this length (CR-F1-25); T-F1-DROP on the longest branch.",
-          note="R5: with one XT30U per branch (D-74) the 5 % guideline length is below F2's longest lead; WB-11 makes "
-               "5 % a guideline, so this claim carries no limit. Measure the built branch (T-F1-DROP).")
+          note="CDR-03 / CDR-EL-04 (2026-11-13): the limit is back. The length is now the one at which the farthest "
+               "ESC's 100 A drop reaches CL-E1-DROP-ALLOW (the drop at which R-HOVER-TW is just held, on the more "
+               "pessimistic of E1's two motor bounds), and it must be at least F2's longest lead. R5 had removed "
+               "the limit when the XT30U (D-74) put the 5 % guideline length below the longest lead; that length "
+               "is CL-F1-ESC-LEN-5PCT.")
+kit.claim("CL-F1-ESC-LEN-5PCT", "Longest 16 AWG ESC lead for a 5 % drop at 100 A (WB-11 guideline, not met)",
+          calc=W, output="esc_len_5pct_m", unit="m", parts=ESC_IDS,
+          how="Information: compare with CL-F1-ESC-LEN-MAX. T-F1-DROP on the longest branch.",
+          note="All four routed leads (0.564-0.701 m, D-85...D-89) are longer than this: the 5 % guideline is "
+               "exceeded and accepted (D-74, D-117). No limit here; the limit is on CL-F1-ESC-LEN-ALLOW. Do not go "
+               "to 14 AWG on the right pair (+26 g REVIEWER EST, CDR-EL-04) unless T-F1-DROP or the stand shows a "
+               "thrust shortfall.")
 kit.claim("CL-F1-W16-GPM", "16 AWG silicone wire mass per metre of one conductor", calc=W, output="esc_gpm",
           unit="g/m", parts=ESC_IDS, how="Weigh 1 m of the delivered reel.")
 kit.claim("CL-F1-PACKLEAD-RISE", "Pack's own leads (10 AWG assumed), steady rise at the continuous current",
@@ -507,12 +524,21 @@ kit.claim("CL-F1-R-EXT", "Resistance pack terminals to ESC pads (equivalent, hot
                "(A1) follows (CR-F1-24).")
 kit.claim("CL-F1-DROP-CONT", "Voltage drop pack to the farthest ESC at the continuous current", calc=W,
           output="drop_cont_pct", unit="%", limit=("<=", 2.0), parts=PARTS_MAIN + ESC_IDS, how="T-F1-DROP at 30 A.")
-kit.claim("CL-F1-DROP-PEAK", "Voltage drop pack to the farthest ESC at the 100 A limiter (5 % guideline, WB-11)",
-          calc=W, output="drop_peak_pct", unit="%", parts=PARTS_MAIN + ESC_IDS,
+kit.claim("CL-F1-DROP-PEAK", "Voltage drop pack to the farthest ESC at the 100 A limiter", calc=W,
+          output="drop_peak_pct", unit="%", limit=("<=", "CL-E1-DROP-ALLOW"), parts=PARTS_MAIN + ESC_IDS,
           how="T-F1-DROP scaled with the XT30U plugs in; stand log at full throttle. Go to 14 AWG on the right-hand "
               "leads only if the measured drop costs real thrust (WB-11).",
-          note="D-74 accepts the XT30U (CL-F1-XT30U-DROP) over F1's 5 % guideline: WB-11 makes 5 % a guideline, not a "
-               "hardware limit, so this claim carries no limit; the number is the one to measure.")
+          note="CDR-03 / CDR-EL-04 (2026-11-13): the limit is back, derived from E1's thrust need: CL-E1-DROP-ALLOW "
+               "is the 100 A drop at which R-HOVER-TW is just held (worst pack T/W 1.6, fresh 2.0) on the more "
+               "pessimistic of E1's two motor bounds. Comparing the FARTHEST branch with it is conservative: E1's "
+               "limit is for the equivalent path of all four. D-74 accepted the XT30U over F1's 5 % guideline "
+               "(WB-11); R5 then removed the limit instead of replacing it. The guideline is exceeded by "
+               "CL-F1-DROP-OVER-5PCT and stays F1's design target.")
+kit.claim("CL-F1-DROP-OVER-5PCT", "100 A drop above the 5 % guideline (WB-11), percentage points", calc=W,
+          output="drop_peak_over_5pct", unit="%", parts=PARTS_MAIN + ESC_IDS,
+          how="Information: T-F1-DROP. Positive = the guideline is exceeded.",
+          note="No limit: WB-11 makes 5 % a guideline and D-74 accepted the XT30U. The hard limit is on "
+               "CL-F1-DROP-PEAK.")
 kit.claim("CL-F1-XT30U-DROP", "Drop across one ESC branch's XT30U at the per-motor limit", calc=W,
           output="xt30_drop_pct", unit="%", parts=ESC_IDS + ["HRN-001"], assumes=["ASM-F1-R-XT30U"],
           how="T-F1-DROP: meter across a mated XT30U at 20 A, scale to the per-motor limit.")

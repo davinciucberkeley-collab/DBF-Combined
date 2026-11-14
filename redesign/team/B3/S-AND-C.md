@@ -272,3 +272,106 @@ in the transition now carries D6's effectiveness and play.
 6. Spiral time to double 4.08 s (limit 4 s): benign under FBWA, marginal in MANUAL.
 7. The transition model is quasi-steady with no prop wash on the wing. F4's SITL with `results/sc_results.json` is the
    next check.
+
+## 9 CDR fix round, 2026-11-13 (stream S3: CDR-14, CDR-16)
+
+Run: `verify_asdesigned.py` (CG limits, 22 min of fresh AVL), then `sc_analysis.py`. Everything is `UNVERIFIED` (nothing
+flown). "Before" is the tree at `3268e69`. Where a number above in this file disagrees, this section is the newer one.
+
+### 9.1 CG plan (CDR-14, board decision B9)
+
+The forward limit was the 12.5° of pure-pitch elevon that `MIXING_GAIN` 0.5 leaves, not a physical limit. `CALC-B3-V-CG`
+now reads the travel from `P:fsw.mixing_gain` (0.65 → 16.25°); `requirements.elevon_trim_travel_max` 0.5 keeps its
+other job, the trim share at 1.3 Vs.
+
+| Quantity | Before | After | Limit | Claim |
+|---|---|---|---|---|
+| Forward CG limit (trim at the stall, CG height in) | 0.04647 m | **0.03932 m** (12.3 % c; static margin there 9.2 %; binding: trim) | — | `CL-B3-V-CG-FWD` |
+| Aft CG limit (static margin 5 % at 1.3 Vs) | 0.05128 m | 0.05133 m | — | `CL-B3-V-CG-AFT-ENV` |
+| Range width | 4.81 mm | **12.0 mm** | ≥ 4 mm | `CL-B3-V-CG-WIDTH-ENV` |
+| Effective neutral point, 1.3 Vs | 0.06728 m | 0.06733 m | — | `CL-B3-V-XNP-ENV` |
+| `cg.x_range_m` (rounded inward) | [0.0466, 0.0514] | **[0.0394, 0.0513]** | — | D-120 |
+| Aft end of the params range against the claim | −0.12 mm (`FAILS`, hidden by the graph) | +0.03 mm with 0.0513 | ≥ 0 | `CL-B3-V-RANGE-AFT-IN` |
+| Trimmed stall at the forward limit, free transition | 11.93 m/s | 12.01 m/s (B2: 12.08) | ≤ 12.3 | `CL-B3-V-VS-FWD`, `CL-B2R3-VS-GATE-FWD` |
+| 1.3 Vs at the forward limit | 15.52 m/s | 15.61 m/s (B2: **15.70, `FAILS` the 15.6 key**; flown value is 17) | ≤ 16 (cruise key) / 15.6 | `CL-B3-V-VT`, `CL-B2R3-VTR-GATE-FWD` |
+| Trim share at 1.3 Vs, worst CG | 0.33 | 0.42 | ≤ 0.5 | `CL-B3-TRIM-USE-VT` |
+| Roll helix angle at the stall, CG target | 0.126 | 0.126 | ≥ 0.07 | `CL-B3-ROLL-PB2V` |
+| Roll helix angle at the stall on the forward limit (pitch uses 16.25°, 8.75° left) | — | about 0.078 (`EST`: 0.126 × 8.75 / 14.1, not an AVL run) | ≥ 0.07 | — |
+
+**First fixed-wing flights (D-121).** Static margin ≥ 6.5 % at the worst wingborne speed means
+x ≤ 0.06733 − 0.065 × 0.32 = **0.0465 m**; the first-flight band is 0.0453 m (the new mid-range, 6.9 %) to 0.0465 m.
+Against S4's roll-up cases (`MASS-CG.md`, read 2026-11-13):
+
+| Case (S4) | CG x | Static margin | To the forward limit 0.0393 | Reading |
+|---|---|---|---|---|
+| 551 g pack, basic, 30 g nose ballast | 0.04667 m | 6.46 % | +7.3 mm | 0.14 mm short of 6.5 %: 32 g, or accept 6.46 % |
+| 546 g pack, basic, 30 g ballast, 11 × 7E props | 0.04626 m | 6.58 % | **+6.9 mm** (was −0.34 mm outside the old 0.0466 limit) | inside; ballast and the heavier props can be fitted together |
+| Predicted growth all realised (0.0499–0.0501 m unballasted), 30 g | 0.0475–0.0477 m | 6.1–6.2 % | +8 mm | 6.5 % then needs 43–45 g at 0.8 mm per 10 g (D-59) |
+
+So ≤ 30 g reaches 6.5 % only while the as-weighed unballasted CG is ≤ 0.0489 m. The marks are not scribed until the
+twin's neutral point is measured (`T-B3-TWIN-NP`): a ±2 % c neutral-point error is ±6.4 mm, half the new range.
+
+### 9.2 Hover yaw with a wingtip into the wind (CDR-AE-04)
+
+`Q_WVANE_LAND` / `TAKEOFF` 3 puts a wingtip into wind. The wing is then a plate of aspect ratio c / b = 0.28 at an
+incidence equal to the heading error; its centre of pressure is ahead of mid-span, so the moment grows with the error
+(`CALC-B3-HOVER-WTIP`, `ASM-B3-WTIP-CN`, `-ARM`: estimates, the twin test replaces them). Control: 0.550 N·m at 30 %
+differential (B4 half-fin factor, 7° cant), 2.79 rad/s². The elevons give nothing (outside the wash).
+
+| Case | Wing moment | Ratio, no fin credit | With the fins' restoring moment | Limit | Claim |
+|---|---|---|---|---|---|
+| Belly into wind, 5 m/s (the old case, 9 % asymmetry) | 0.19 N·m | 2.83 | — | ≥ 1.5 | `CL-B3-HOVER-YAW-RATIO-LOW` |
+| Wingtip into 5 m/s, 10° error | 0.170 N·m | **3.24** | 3.99 | ≥ 1.5 | `CL-B3-HOVER-YAW-WTIP-10` |
+| Wingtip into 5 m/s, 20° error | 0.417 N·m | **1.32 (`FAILS`)** | 1.55 | ≥ 1.5 | `CL-B3-HOVER-YAW-WTIP-20`, `-FINS` |
+| Wingtip into the 8 m/s gust, 10° | 0.435 N·m | 1.26 | 1.56 | ≥ 1.0 | `CL-B3-HOVER-YAW-WTIP-GUST-10` |
+| Wingtip into the 8 m/s gust, 20° | 1.068 N·m | 0.51 | 0.60 | — | information |
+| Heading error where the ratio is 1.5 / 1.0, 5 m/s | — | 18.1° / 24.6° | — | — | `CL-B3-HOVER-YAW-WTIP-BETA`, `-BETA-SAT` |
+| Heading error where control saturates, 8 m/s | — | 12.0° | — | — | `CL-B3-HOVER-YAW-WTIP-BETA-GUST` |
+
+Reading: the stance holds for small errors and lets go beyond about 25° in 5 m/s (12° in the gust); the aircraft then
+swings broadside, where pitch (the strongest axis) carries the wind. The reviewer's 1.5 at 20° is 1.32 here because the
+cross-flow arm is taken at b / 8. **Contingency, cant 7° → 10° (PROPOSED, not applied; decided before any mount is
+printed if `T-B3-HOVER-YAW-WTIP` fails):** yaw arm 0.0678 → 0.0871 m (**+28.4 %**), yaw acceleration 2.79 → 3.58 rad/s²,
+ratio at 20° 1.32 → 1.69, lift −0.78 % against 7° (1.52 % against no cant). It needs D3's mount re-drawn and E1's
+blade-to-tube gap (26.1 mm) re-checked. `Q_A_ACC_Y_MAX` is set to 135 deg/s/s = 2.36 rad/s², 85 % of 2.79 (`CL-F4-YAW-ACC-SET`).
+
+### 9.3 Gust pitch claim for `R-GUST-LEAN` (CDR-AE-10)
+
+| Quantity | Value | Limit | Claim |
+|---|---|---|---|
+| Pitch control / 8 m/s gust moment at the 30 % cap | 0.94 (2.40 × (5 / 8)²) | — (below 1: the cap does not hold the gust) | `CL-B3-HOVER-PITCH-RATIO-GUST-CAP30` |
+| Differential needed | 32 % | ≤ 40 % (`ASM-B3-GUST-DIFF-MAX`, PROPOSED, A2 to accept) | `CL-B3-HOVER-PITCH-DIFF-GUST` |
+| Ratio at the 40 % gust differential | 1.25 | ≥ 1.0 | `CL-B3-HOVER-PITCH-RATIO-GUST` → `R-GUST-LEAN` |
+
+### 9.4 Transition pitch claim re-based (CDR-AE-07)
+
+`CL-B3-TRANS-PITCH-USE` now divides the motor moment (no elevon credit) by the pitch moment at the 30 % cap, 1.54 N·m.
+
+| Basis | Before | After | Limit |
+|---|---|---|---|
+| Full differential (lower pair to zero), elevon credit: `CL-B3-TRANS-PITCH-USE-FULLDIFF` | 0.247 | 0.275 (forward limit moved) | information |
+| 30 % cap, no elevon credit, hub H-force bound: `CL-B3-TRANS-PITCH-USE` | — | **0.91 (`FAILS`)**, 1.40 N·m needed | ≤ 0.60 |
+| 30 % cap, Ribner normal force only: `-NOHUB-CAP30` | — | **0.83 (`FAILS`)** | ≤ 0.60 |
+
+The reviewer's 0.64 was at the old CG range; the forward limit 0.0393 m lengthens the wing's nose-down arm. The level
+quasi-steady moment does not depend on the pitch-over rate, so lowering `Q_TAILSIT_RAT_FW` does not change it. What
+can: first flights at CG ≥ 0.0453 m (not the forward limit), the differential allowed in the pitch-over (40 % brings
+0.91 to 0.68), and measurement: SITL stage B S4 and the twin's logged upper / lower RCOU split. Open (item 8 below).
+
+### 9.5 Thrust line below the CG (CDR-AE-11)
+
+Four equal thrusts act in the chord plane; the CG is 18.5 mm above it (`CALC-B3-THRUST-LINE`).
+
+| Point (16 m/s) | Thrust | Nose-up moment | ΔCm | Elevon equivalent | Claim |
+|---|---|---|---|---|---|
+| Cruise | 4.50 N | 0.083 N·m | 0.0045 | 0.77° (power-on trim −5.95° instead of −6.72°) | `CL-B3-THRUST-LINE-M-CRUISE`, `-DELEV-CRUISE` |
+| `THR_MAX` 70 % | 20 N (`REVIEWER EST`, upper end) | 0.37 N·m | 0.0200 | 3.41° (≤ 5°) | `CL-B3-THRUST-LINE-DELEV-THRMAX` |
+| Step 30 → 70 % | — | — | — | 1.95° | SITL S19 |
+
+The power-off trim and stall already in §3 are the conservative side (thrust reduces the up-elevon needed).
+
+### 9.6 Open after this round
+
+8. `CL-B3-TRANS-PITCH-USE` 0.91 and `CL-B3-HOVER-YAW-WTIP-20` 1.32 fail on paper; both close by test (SITL stage B, twin TW3), not by argument.
+9. No time-domain back-transition case was added to `CALC-B3-TRANSITION` (CDR-AE-03, part of CDR-07): not done.
+10. `T-B3-TWIN-NP` before the CG marks are scribed.

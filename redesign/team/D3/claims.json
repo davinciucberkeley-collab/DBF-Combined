@@ -103,7 +103,7 @@
     "F_side": 73.74631268436578,
     "F_hub": 43.14063848144952,
     "M_root": 14.011799410029498,
-    "fuse_ratio": 2.313202238814493,
+    "fuse_ratio": 1.6039503997323092,
     "hold_ratio": 1.7648939532563872,
     "F_axial": 227.27272727272728,
     "clamp_n": 241.1438531695384
@@ -121,7 +121,7 @@
     "M_mount": 0.9854022286006237,
     "ff": 1.15,
     "pf": 1.25,
-    "M_joint": 32.41212576509983,
+    "M_joint": 22.47423126468575,
     "mu": 0.3
    }
   },
@@ -226,20 +226,20 @@
     "sq": "P:fin_detail.fin.tip_square_m"
    },
    "outputs": {
-    "h_ratio": 1.2758742865666401,
-    "h_ratio_c6": 1.1260014225073554,
+    "h_ratio": 1.9444378306387928,
+    "h_ratio_c6": 1.7246272322462575,
     "embed": 0.0395,
-    "embed_ratio": 0.7074868672984458,
+    "embed_ratio": 1.1292161354703063,
     "tongue": 0.011373210206843287,
     "tongue_fit": 0.010626789793156712
    },
    "input_values": {
     "h": 0.022,
-    "h_req": 0.017243078124257596,
-    "h_req_c6": 0.01953816359397742,
+    "h_req": 0.011314324198666969,
+    "h_req_c6": 0.012756379806983499,
     "tail": 0.04,
     "gap": 0.0005,
-    "embed_req": 0.05583142504232145,
+    "embed_req": 0.03498001734056756,
     "w": 0.01,
     "td": 0.001,
     "L": 0.344,
@@ -371,15 +371,15 @@
     "kd": "ASM-C6-FOAM-KD"
    },
    "outputs": {
-    "M": 7.7765625,
-    "rf_fillet": 1.1287609403254972,
-    "rf_allow": 0.5643804701627486,
-    "rf_upper": 1.1664896925858952,
-    "rf_lower": 1.1287609403254972,
-    "leff_for_allow": 0.28827030612244897
+    "M": 4.8234375,
+    "rf_fillet": 1.8198390670553937,
+    "rf_allow": 0.9099195335276968,
+    "rf_upper": 1.880667055393586,
+    "rf_lower": 1.8198390670553937,
+    "leff_for_allow": 0.16773459183673467
    },
    "input_values": {
-    "S": 59.25,
+    "S": 36.75,
     "pf": 1.25,
     "hh": 0.21,
     "tb": 0.0048,
@@ -557,7 +557,7 @@
     "FIN-004-R"
    ],
    "how": "T-D3-SLIP: luggage scale at the motor can along y; the collar turns between 70 and 80 N (R5 lever 33.9 mm)",
-   "value": 2.313202238814493
+   "value": 1.6039503997323092
   },
   {
    "id": "CL-D3-SLIP-HOLD",
@@ -728,7 +728,7 @@
    ],
    "how": "C6 coupon T-C6-COLLAR; measure the printed collar",
    "note": "R4 (D-48): read against C4-R3 CL-C4-D3-COLLAR-H-REQ (envelope torsion 4.6 N m + brace shear). C6's own requirement on max(C1, C4) torsion + brace shear is CL-D3-COLLAR-H-C6 (CR-D3-25)",
-   "value": 1.2758742865666401
+   "value": 1.9444378306387928
   },
   {
    "id": "CL-D3-COLLAR-H-C6",
@@ -752,7 +752,7 @@
    ],
    "how": "C6 coupon T-C6-COLLAR; measure the printed collar",
    "note": "R5: drawn 15 mm (C6-R5 CL-C6-COLLAR-RF-15MM 1.15 on a 13.007 mm requirement). C6's live run now reads C1's CL-C1-FINHALF-T-LIM 12.67 N m (R4 7.40, wing-plane value) and needs 19.4 mm: CR-D3-36 asks C1/C6 which torsion governs before D3 redraws (20 mm fits: ring |z| 0.1395-0.1595, +3 g)",
-   "value": 1.1260014225073554
+   "value": 1.7246272322462575
   },
   {
    "id": "CL-D3-TONGUE-FIT",
@@ -804,12 +804,12 @@
     "FIN-011-URO"
    ],
    "how": "Measure on the dry fit; C6 strip-anchor coupon",
-   "value": 0.7074868672984458
+   "value": 1.1292161354703063
   },
   {
    "id": "CL-D3-STRAP-EYE-RF",
    "type": "claim",
-   "title": "Strap eye shear-out reserve factor at the H1 tie load",
+   "title": "Strap eye FIN-013 ligament shear-out reserve factor at the H1 tie load",
    "calc": "CALC-D3-STRAP-EYE",
    "output": "rf",
    "unit": "-",
@@ -821,10 +821,13 @@
     "R-STRUCT-MARGIN"
    ],
    "parts": [
-    "FIN-004-R",
-    "FIN-004-L"
+    "FIN-013-UR",
+    "FIN-013-UL",
+    "FIN-013-LR",
+    "FIN-013-LL"
    ],
-   "how": "T-D3-EYE: spring scale on a printed eye to 2 x 29.4 N, then to failure",
+   "how": "T-D3-EYE on a bonded eye (C6 T-D3-EYE-BONDED): along x to 2 x 29.4 N, then to failure",
+   "note": "D-108 (CDR-27): the eye is the separate part FIN-013 since D-89c (this claim still named the block FIN-004). Its bond on the boss and the tab bending are C6's CL-C6-EYE-BOND-RF, -PEEL, -SPLAY, CL-C6-EYE-TAB-RF; the tie load is C1 case G4 (CL-C1-G4-TIE-LIM)",
    "value": 9.795918367346937
   },
   {
@@ -942,7 +945,7 @@
    ],
    "how": "T-D3-ROOT: side pull at the fin TE tip on a core offcut to 1.25 x 28 N, then to failure",
    "note": "R4: 15 mm cove fillets on the last 0.15 m of bonded root, 13 mm aft of the hinge (elevon end gap), none over the D6 slot on the lower roots. C6 multiplies this by its 0.5 foam knock-down (CL-C6-FIN-ROOT-RF), same as CL-D3-ROOT-FILLET-RF-ALLOW",
-   "value": 1.1287609403254972
+   "value": 1.8198390670553937
   },
   {
    "id": "CL-D3-ROOT-FILLET-RF-ALLOW",
@@ -960,7 +963,7 @@
    ],
    "how": "T-C6-XPS-PULL (allowable) and T-D3-ROOT (joint)",
    "note": "CR-C6-24 asked >= 1.0 at 0.125 MPa. R5: FAILS on the D-65 side load (58.96 N ult, n 6.6) where R4 read 1.14 on mu F_foot at n 6.0. ASM-D3-ROOT-SHARE 0.5 agrees with C4's 3-D board share 0.47 (CL-C4-SIM-BOARD-SHARE). Fix offered in CR-D3-35: 15 mm zone forward to L_eff 0.185 m (CL-D3-ROOT-LEFF-REQ, +5 g) or C4's fillet-intact share / T-C6-XPS-PULL. The fillet is credited fail-safe only in the wing (D-68)",
-   "value": 0.5643804701627486
+   "value": 0.9099195335276968
   },
   {
    "id": "CL-D3-ROOT-LEFF-REQ",
@@ -978,7 +981,7 @@
    ],
    "how": "T-D3-ROOT on the chosen length",
    "note": "information for CR-D3-35: the drawn 0.150 m is short at the D-65 side load",
-   "value": 0.28827030612244897
+   "value": 0.16773459183673467
   },
   {
    "id": "CL-D3-BRACE-PCR",
@@ -1087,12 +1090,12 @@
   {
    "id": "T-D3-EYE",
    "type": "test",
-   "title": "Strap eye pull",
+   "title": "Strap eye pull (bonded eye, CDR-27)",
    "verifies": [
     "CL-D3-STRAP-EYE-RF"
    ],
    "state": "planned",
-   "procedure": "printed block offcut with one eye; spring scale through the eye along z and along y to 60 N, then to failure"
+   "procedure": "run as C6's T-D3-EYE-BONDED: two FIN-013 eyes bonded as built on the boss of a printed block offcut; spring scale through the eye along x (the tie-hole axis) to 58.8 N and, on the second, 30 deg outboard of x; then to failure; record bond shear, foot peel, ligament shear-out or tab break"
   },
   {
    "id": "T-D3-WEIGH",
@@ -1124,7 +1127,7 @@
     "FIN-001-LL"
    ],
    "how": "T-D3-WEIGH; sum of subsystems/fins/interfaces.json",
-   "value": 432.0,
+   "value": 434.9,
    "note": "from make_fins.py (CAD volumes x densities). R4 against the D-48 418 g: collar 16 -> 12 mm -2.0 g (not -3: the 12 mm ear already spanned the ring top), ESC pads 31 mm +0.8 g, and the 15 mm root fillets now CAD bodies at 0.55 g/cm3 (CL-D3-FILLET-MASS) in place of the 3 g/root estimate: +20 g where D-48 booked +3 g. R4b (CR-A3-26): forward sealing bead 6 -> 4 mm -1.6 g. The laminate itself did not grow (CL-D3-LAMINATE-MASS); the rest of the overrun is the C6 root fillet (D-63: 437 g). R5 (CR-A1-63): cheeks +5 mm and the 7.5 mm face_ahead (mounts 47.8 g), pins 2.5 mm, collar 15 mm (C6-R5 needs 13.007 mm), block edges R 3 mm -0.4 g: 440.3 g; lever taken: fillet mix 0.55 -> 0.45 g/cm3 -5.6 g (T-D3-WEIGH cup <= 9.0 g). Block fill (C4) and cheeks (withdrawn: length set by the reach to the collar) not taken"
   },
   {

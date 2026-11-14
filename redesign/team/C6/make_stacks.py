@@ -238,6 +238,24 @@ for k, s in ((3, "L"), (4, "R")):
                 "0.5 x pi x 2 x 5.2 mm2 x 15 MPa (PETG across layers) = 245 N per screw; the ears carry the 14 N "
                 "servo reaction. Not an M3 insert: the 4 x 5 mm bosses cannot take a 7.2 mm insert boss"}}
 
+# D-89c parts (CDR-27): strap eyes FIN-013 on the block bosses, horn backplates MEC-013 over the blade tops
+ey = out("CALC-C6-EYE")
+for i, (s_, blk) in enumerate((("UR", "R"), ("UL", "L"), ("LR", "R"), ("LL", "L"))):
+    stacks[f"E-FIN-{89 + i}"] = bond(
+        EPOXY, round(ey["area_mm2"]), load=f"{ey['tau_design_mpa']:.2f} MPa design shear on the foot (tie 29.4 N along x, "
+        f"arm {ey['arm_m'] * 1e3:.1f} mm about the boss axis); RF {ey['rf_shear']:.1f} on 2.0 MPa, "
+        f"{ey['rf_peel_value']:.1f} on the 1.0 MPa flat-wise value, {ey['rf_splay']:.1f} with the tie splayed 30 deg "
+        "(CL-C6-EYE-BOND-RF, -PEEL, -SPLAY)", case="restrained ground run (C1 G4, GT-13), per tie",
+        prep="boss outboard face and saddle foot sanded 120 grit, IPA wipe; skin tape cut back 2 mm round the foot so "
+             "the foot bonds PETG to PETG only (0.32 mm tape stand-off otherwise); eye printed flat, hole axis vertical")
+for i, (inst, horn) in enumerate((("LI", "MEC-004-L"), ("RI", "MEC-004-R"), ("LO", "MEC-006-L"), ("RO", "MEC-006-R"))):
+    stacks[f"E-MEC-{37 + i}"] = bond(
+        FOAMEPOXY, 288, load="not a load path: the horn's own bond (flange + slot walls, 930 mm2, D6 CL-D6-BOND-HORN) "
+        "carries the pushrod force and hinge moment (CL-D6-HORN-MOMENT-RF); the backplate closes the slot and spreads "
+        "the blade-top bearing", case="full travel at VD (R-SERVO-TORQUE)",
+        prep="hinge tape cut back 1.5 mm, foam scuffed, backplate MEC-013 sanded 120 grit; set over the blade top "
+             "after the horn is in from below; 2.5 mm blade-top glue line")
+
 WITHDRAWN = {"E-PWR-05": "bus board on foam tape (F1), retention block owned by power; no C6 stack (CR-A4-44b)"}
 
 doc = {"_note": "C6 joint stacks / clamp / bond / retention blocks per edge id (interfaces/SCHEMA.md names). Generated "

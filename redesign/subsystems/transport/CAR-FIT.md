@@ -5,7 +5,7 @@ Status `UNVERIFIED`. **No car has been measured yet.** D7 cannot measure a car. 
 span freeze only when both rows below pass. The numbers in the results table are measurements only, never values from
 spec sheets.
 
-Box to fit: **1.25 × 0.55 × 0.54 m** (D-31). Fallback: 1.25 × 0.55 × 0.50 m with 56 mm columns and a "MAX DROP 0.15 m" label.
+Box to fit: **1.25 × 0.56 × 0.54 m** (D-31; width +10 mm D-134). Fallback: 1.25 × 0.56 × 0.50 m with 56 mm columns and a "MAX DROP 0.15 m" label.
 
 ## Decision rule
 
@@ -23,7 +23,7 @@ Box to fit: **1.25 × 0.55 × 0.54 m** (D-31). Fallback: 1.25 × 0.55 × 0.50 m 
 | Back seat, door | clear opening: width at the bottom, height at the narrowest point | both ≥ 0.57 m (box goes in end first) | width ≥ 0.57, height ≥ 0.52 m |
 | Back seat, height | seat cushion to headliner at the centre seat | ≥ 0.56 m | ≥ 0.52 m |
 | Hatch / trunk | floor length (seats as used), width between wheel arches, opening height | one horizontal pair ≥ 1.27 × 0.57 m and height ≥ 0.56 m | same pair, height ≥ 0.52 m |
-| Trunk lid opening | width × height of the opening | the 0.55 × 0.54 end passes, then the box slides in | the 0.55 × 0.50 end passes |
+| Trunk lid opening | width × height of the opening | the 0.56 × 0.54 end passes, then the box slides in | the 0.56 × 0.50 end passes |
 
 Every dimension includes a 20 mm allowance for handles and straps. A pass on either the back seat or the hatch/trunk is enough.
 
@@ -45,7 +45,7 @@ Every dimension includes a 20 mm allowance for handles and straps. A pass on eit
 
 | Item | Where | How it is held | Why |
 |---|---|---|---|
-| Box 1.25 × 0.55 × 0.54 m, 5.8 kg | hatch floor lengthwise (seat folded), or across the back seat | a cam strap or the seat belt around the box; never on its end; nothing on the lid | the end-first and lid-down drops are label-only (`SPEC.md`) |
+| Box 1.25 × 0.56 × 0.54 m, 5.9 kg | hatch floor lengthwise (seat folded), or across the back seat | a cam strap or the seat belt around the box; never on its end; nothing on the lid | the end-first and lid-down drops are label-only (`SPEC.md`) |
 | Battery can (2 packs), 3.3 kg | cabin floor behind a front seat | wedged by the seat; never in a closed trunk in the sun | packs 20–34 °C at flight (flight card, E2/H3); the can contains a pack fire |
 | Mat 0.8 × 0.4 m folded, 2.7 kg | flat under the box or on the floor beside it | under the box or wedged | a loose 2.7 kg panel must not slide into the box in a hard stop |
 | Tote, 0.6 kg | anywhere in the cabin | — | — |

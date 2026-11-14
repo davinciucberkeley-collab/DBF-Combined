@@ -32,8 +32,15 @@ Every node has `id` (unique across the repo), `type`, `title` (short label, ≤ 
 | `part` | the part id from `interfaces.json` | made by build_graph from claims' `parts` | `name`, `subsystem`, `file` |
 
 `claim.limit` = `{"op": ">=" | "<=", "value": 1.6}` or `{"op": ">=", "ref": "P:requirements.hover_tw_min"}`
-(`ref` may name any node with a `value`). Margin = `(value − limit) / limit` for `>=`, `(limit − value) / limit`
+(`ref` may name any node with a `value`). Margin = `(value − limit) / |limit|` for `>=`, `(limit − value) / |limit|`
 for `<=`; negative margin = the claim **fails**.
+
+**A limit of 0** (margins of safety, clearances, counts of errors) has no fractional margin. The margin is then the
+signed distance to the limit in the claim's own unit (`value` for `>= 0`, `−value` for `<= 0`), the node carries
+`"margin_abs": true`, and `CHAIN.md` and the viewer print it as a distance (`-0.00012 m abs`), not a percentage.
+The sign decides pass / fail exactly as for any other limit. Until 2026-11-13 a limit of 0 gave `margin: null` and
+the violation was not counted (CDR-03); `build_graph.py` now also checks every claim a second way (plain comparison
+of value and limit) and stops with `SELF-CHECK …` if the two disagree.
 
 ## Edges
 
@@ -74,6 +81,8 @@ a requirement no claim verifies is `UNVERIFIED` ("no claim").
 3. A reference to a node id that does not exist; duplicate ids; a parameter key with two different values in two files.
 4. A unit mismatch between `calc.units[arg]` and the input node's `unit` (plain string compare, e.g. `mm` ≠ `m`).
 5. `--strict` only: any claim with a negative margin, any requirement with no claim.
+6. `SELF-CHECK`: a claim with a numeric value and a numeric limit that carries no margin, or whose `fails` flag
+   disagrees with the plain comparison of value and limit (a fault in the tool, not in the claim).
 
 Warnings (printed, build passes): a `parts` id not found in any `interfaces.json`; a source with no `url`.
 
@@ -85,7 +94,7 @@ Warnings (printed, build passes): a `parts` id not found in any `interfaces.json
             "part_link": "../../viewer/index.html#part={id}", "dataset": "examples" },
   "nodes": [ { "id": "CL-EX-HOVER-TW", "type": "claim", "title": "…", "status": "CHECKED",
                "reasons": [], "fails": false, "importance": 7, "value": 2.49, "unit": "-",
-               "limit": {"op": ">=", "value": 1.6}, "margin": 0.56, "…": "type fields as above" } ],
+               "limit": {"op": ">=", "value": 1.6, "resolved": 1.6}, "margin": 0.56, "…": "type fields as above" } ],
   "edges": [ { "source": "CALC-EX-HOVER-TW", "target": "CL-EX-HOVER-TW", "type": "derives-from" } ] }
 ```
 

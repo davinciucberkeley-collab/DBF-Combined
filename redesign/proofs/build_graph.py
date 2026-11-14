@@ -251,10 +251,15 @@ class Build:
                 lv = self.nodes[lim["ref"]].get("value")
             lim["resolved"] = lv
             n["margin"] = pk.margin(n.get("value"), lv, lim["op"])
+            if lv == 0 and n["margin"] is not None:
+                n["margin_abs"] = True                             # limit 0: the margin is a distance in the claim's unit
             if n["margin"] is not None and n["margin"] < 0:
                 n["fails"] = True
-                reasons.append(f"FAILS: margin {n['margin']:+.1%} ({pk.fmt(n['value'], n.get('unit'))} vs "
-                               f"{lim['op']} {pk.fmt(lv, n.get('unit'))})")
+                reasons.append(f"FAILS: margin {pk.margin_text(n['margin'], lv, n.get('unit'), 1)} "
+                               f"({pk.fmt(n['value'], n.get('unit'))} vs {lim['op']} {pk.fmt(lv, n.get('unit'))})")
+            elif n["margin"] is None and isinstance(lv, (int, float)):
+                self.warnings.append(f"{n['id']}: has a limit, but its value {n.get('value')!r} is not a number, "
+                                     f"so pass / fail is not judged")
         calc = self.nodes.get(n.get("calc"))
         if calc is None:
             status = "PROPOSED"                                    # a value with no calculation yet
@@ -346,16 +351,18 @@ class Build:
         out += ["| Requirement | Status | Claims | Smallest margin |", "|---|---|---|---|"]
         for r in reqs:
             cl = self.incoming(r["id"], "verifies")
-            ms = [c["margin"] for c in cl if c.get("margin") is not None]
-            out.append(f"| [{r['id']}](#{r['id'].lower()}) {r['title']} | {st(r)} | {len(cl)} | "
-                       f"{f'{min(ms):+.0%}' if ms else '—'} |")
+            ms = [c["margin"] for c in cl if c.get("margin") is not None and not c.get("margin_abs")]
+            zero = sum(1 for c in cl if c.get("margin_abs") and c["margin"] < 0)      # fails against a limit of 0
+            txt = (f"{min(ms):+.0%}" if ms else "") + (f"{'; ' if ms else ''}{zero} below a limit of 0" if zero else "")
+            out.append(f"| [{r['id']}](#{r['id'].lower()}) {r['title']} | {st(r)} | {len(cl)} | {txt or '—'} |")
         out.append("")
 
         def line(n):
             t, v = n["type"], lambda x: pk.fmt(x.get("value"), x.get("unit", ""))
             if t == "claim":
                 lim = n.get("limit")
-                limtxt = f" (limit {lim['op']} {pk.fmt(lim.get('resolved'), n.get('unit'))}, margin {n['margin']:+.0%})" \
+                limtxt = (f" (limit {lim['op']} {pk.fmt(lim.get('resolved'), n.get('unit'))}, "
+                          f"margin {pk.margin_text(n['margin'], lim.get('resolved'), n.get('unit'))})") \
                     if lim and n.get("margin") is not None else ""
                 return f"claim **{n['id']}** {n['title']} = **{v(n)}**{limtxt} — {st(n)}"
             if t == "calculation":
@@ -432,6 +439,29 @@ class Build:
         return "\n".join(out) + "\n"
 
 
+def self_check(nodes):
+    """Judge every claim a second way: plain comparison of value and limit, no margin arithmetic.
+
+    A claim with a numeric value and a numeric limit must carry a margin, must be marked `fails` when the value is
+    on the wrong side of the limit, and must not have a negative margin when it is on the right side. A mismatch
+    is a build error. (CDR-03: the margin rule skipped limits of 0 and 15 violated claims were not counted.)"""
+    num = lambda x: isinstance(x, (int, float)) and x == x
+    bad = []
+    for n in nodes:
+        lim = n.get("limit") if n["type"] == "claim" else None
+        v, lv = n.get("value"), (lim or {}).get("resolved")
+        if not lim or not num(v) or not num(lv):
+            continue
+        violated = v < lv if lim["op"] == ">=" else v > lv
+        if n.get("margin") is None:
+            bad.append(f"SELF-CHECK {n['id']}: numeric value and limit but no margin")
+        elif violated and not n.get("fails"):
+            bad.append(f"SELF-CHECK {n['id']}: {pk.fmt(v)} violates {lim['op']} {pk.fmt(lv)} but is not marked FAILS")
+        elif not violated and n["margin"] < 0:
+            bad.append(f"SELF-CHECK {n['id']}: {pk.fmt(v)} meets {lim['op']} {pk.fmt(lv)} but has a negative margin")
+    return bad
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--examples", action="store_true", help="build the demo aircraft in proofs/examples/")
@@ -450,6 +480,7 @@ def main(argv=None):
     b.recompute()
     b.status()
     b.importance()
+    b.errors += self_check(b.nodes.values())
     if a.strict:
         b.errors += [f"STRICT {n['id']}: {n['reasons'][0]}" for n in b.nodes.values()
                      if n["type"] in ("claim", "requirement") and (n.get("fails") or "no claim verifies it" in n["reasons"])]

@@ -62,6 +62,10 @@ PARTS = [
     ('WNG-006', 'Block-pocket lip beads (microballoon epoxy)', 'epoxy + glass microballoons 1:1 by volume', 'make',
      'chamfer the pocket lip 3 x 3 mm 45 deg, fill wet with the block bond, sand flush', 'subsystems/wing/fusion/wing.py',
      'inboard and outboard pocket lips, upper and lower, x 0.0279-0.0972 (D-68, CR-C2-11); 60 mm tape doubler over them', {}),
+    ('WNG-008', 'Spar-slot cap strips (XPS, the slot strip re-bonded)', 'XPS foam F-250', 'make',
+     'trimmed from the strip cut out of the spar slot (or a fresh offcut, SW-07), re-bonded under the spar', 'subsystems/wing/fusion/wing.py',
+     'x 0.0688-0.0912 from the lower skin to the spar, every span segment where the spar runs in foam (not in the block or anchor pockets); '
+     'stops at the lip beads and round the pod-tie channels; foam mass counted in WNG-001', {}),
     ('WNG-011', 'Elevon inboard', 'XPS foam F-250 + packing-tape skin', 'make', 'cut from the core after the hot-wire pass; tape both faces',
      'subsystems/wing/fusion/wing.py', 'y 0.071-0.299, hinge x 0.2496 on the upper skin, lower edge bevelled 30 deg; D6 torque-tube groove (open below) |y| 0.1335-0.296 and 2.5 mm horn-blade slot at y 0.285; outboard front corner relieved round the R 3 mm tab fill; tape cut back for the horn flange (14 mm) and backplate (12 mm)', {}),
     ('WNG-012', 'Elevon outboard', 'XPS foam F-250 + packing-tape skin', 'make', 'cut from the core after the hot-wire pass; tape both faces',
@@ -158,6 +162,10 @@ def masses(ctx, P, g, mod):
             m = lv('plugs.block_mass_g' if base(iid) == 'WNG-004' else 'plugs.anchor_mass_g', 'g')
             out[iid] = (m, c.volume_centroid()[1], {'PETG + bond': m})
             continue
+        if iid == 'WNG-008':                            # the slot strip: XPS at the core density
+            m = k9.val(P, 'wing.core.density_kgm3', 'kg/m3') * c.volume_centroid()[0] * 1000
+            out[iid] = (m, c.volume_centroid()[1], {'XPS': m})
+            continue
         if iid == 'WNG-020':
             m = lv('label.mass_g', 'g')
             out[iid] = (m, c.volume_centroid()[1], {'label': m})
@@ -172,7 +180,14 @@ def masses(ctx, P, g, mod):
                  'tape doubler' if 'doubler' in nm else 'tape LE strip' if 'LE strip' in nm else
                  'tape tab edge' if 'tab edge' in nm else 'tape tip' if 'tip' in nm else 'tape')
             br[k] = br.get(k, 0.0) + gm
-        if iid == 'WNG-001':
+        if iid == 'WNG-001':                            # the slot strip is drawn as WNG-008: take it out of the core
+            cap = ctx.components.get('WNG-008')
+            if cap is not None:
+                vc, cc = cap.volume_centroid()
+                mc = k9.val(P, 'wing.core.density_kgm3', 'kg/m3') * vc * 1000
+                M -= mc
+                mom = [mom[i] - mc * cc[i] for i in range(3)]
+                br['XPS'] = br.get('XPS', 0.0) - mc
             fill = lv('slot.fill_g', 'g')
             M += fill
             mom = [mom[0] + fill * g['xs'], mom[1], mom[2] + fill * g['zs']]
@@ -353,6 +368,13 @@ def edges(g, r, M):
                     'load_case': 'L4 corner + side landing, ultimate', 'sized_by': 'C2'}}
           for eid, iid, blk in (('E-WNG-14', 'WNG-006-R', 'FIN-004-R'), ('E-WNG-15', 'WNG-006-L', 'FIN-004-L'))]
     # D-103: E-WNG-16 / -17 (recess-step fillet, WNG-007) removed with the fillet
+    E.append({'id': 'E-WNG-18', 'part_a': 'WNG-008', 'part_b': 'WNG-001', 'via': 'CT-EPOXY', 'owner': 'wing',
+              'notes': 'spar-slot cap strips re-bonded under the spar in the slot cut from below (BUILD-GUIDE 2.2, 2.5), '
+                       'microballoon epoxy on the slot walls and round the spar, sanded flush with the lower surface; '
+                       'part of the spar bond E-WNG-01',
+              'bond': {'adhesive': bond_foam, 'area_mm2': '—', 'prep': 'slot vacuumed, foam dust off', 'cure': cure,
+                       'load_n': 'closes the slot; the spar bond is sized as E-WNG-01 (CL-C2-SPAR-BOND-TAU)',
+                       'load_case': 'C1 flight envelope', 'sized_by': 'C2'}})
     return E
 
 
@@ -381,7 +403,7 @@ def parts_csv(M):
     cost = k9.lval(L, 'cost_usd', 'USD')
     unit_cost = {'WNG-001': cost['xps_sheet'] / cost['cores_per_sheet'] + cost['epoxy'], 'WNG-002': cost['spar'],
                  'WNG-003': cost['tape_roll'] * cost['rolls'] + cost['le_tape_roll'], 'WNG-004': cost['petg_plugs'] / 4, 'WNG-005': cost['petg_plugs'] / 4,
-                 'WNG-006': 0.0, 'WNG-011': 0.0, 'WNG-012': 0.0, 'WNG-020': cost['label']}
+                 'WNG-006': 0.0, 'WNG-008': 0.0, 'WNG-011': 0.0, 'WNG-012': 0.0, 'WNG-020': cost['label']}
     buf = io.StringIO()
     w = csv.writer(buf, lineterminator='\n')
     w.writerow(['part_id', 'name', 'qty', 'make_or_buy', 'process', 'material', 'mass_g', 'unit_cost_usd', 'vendor_or_file', 'notes'])

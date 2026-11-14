@@ -1,6 +1,6 @@
 # G4 build-step sheets: K09-L
 
-Revision G4-R1, 2026-11-13. Status `PROPOSED`. Owner G4 (assembly sequence engineer). Requirements: `R-BUILD-HOURS`, `R-JOINT-STACK` (support), `R-FIELD-SETUP` (support).
+Revision **G4-R2**, 2026-11-13 (CDR fix round S4, CDR-20 / CDR-23: hours re-timed to stages 2-10 with 13 h of bench work before first cut; cores from 10 Jan; D-89c parts and the 22 mm collar). G4-R1 was the same day. Status `PROPOSED`. Owner G4 (assembly sequence engineer). Requirements: `R-BUILD-HOURS`, `R-JOINT-STACK` (support), `R-FIELD-SETUP` (support).
 These sheets **sit on top of `../../BUILD-GUIDE.md`**: stage numbers 1-12 are the same, the numbered steps stay in the guide and in each `subsystems/<x>/BUILD.md` (one source, no copies that can drift),
 and each sheet here adds what the guide does not carry: who, where, which tools and BOM lines, hold points, records and the I2 task ids. If a step changes in the guide, nothing here needs editing unless a hold point or a record changes.
 Companions: [`../G1/PROCESS-PLAN.md`](../G1/PROCESS-PLAN.md) (processes, gates), [`../G2/COMPOSITES-FOAM-PLAN.md`](../G2/COMPOSITES-FOAM-PLAN.md) (foam, epoxy, tape sheets), [`../G3/PRINT-LIST.md`](../G3/PRINT-LIST.md) (print list),
@@ -17,24 +17,32 @@ Companions: [`../G1/PROCESS-PLAN.md`](../G1/PROCESS-PLAN.md) (processes, gates),
 | Where | J = Jacobs Hall (Maker Pass, drop-in, in-lab; closed 19 Dec - 18 Jan), W = team workspace (hot wire, epoxy, CF; to be named, `../G1/PROCESS-PLAN.md` `CR-G1-01`), F = field (RFS) |
 | Re-run before any print or cut | `python -I redesign/fusion/check.py`, `python -I redesign/collision/collide.py`, `python -B redesign/manufacturing/make_shop_files.py` (`BUILD-GUIDE.md`, RESUME) |
 
-## 2. Hours check against `R-BUILD-HOURS` (<= 90 team-hours to first hover)
+## 2. Hours check against `R-BUILD-HOURS`
 
-| Stage | Hours `EST` (guide's times, 8 h per day) | I2 tasks |
-|---|---|---|
-| 2 Wing core and spar | 16 | `B01`-`B05` |
-| 3 Elevon panels | 3.5 | `B06` |
-| 4 Fins on the motor tubes | 16 | `B07`-`B10` |
-| 5 Pod and power stack | 8.5 + 3 | `B11`, `B12` |
-| 6 Harness, then skin | 12 + 7 | `B13`, `B14` |
-| 7 Servos, linkage, hinges | 8 | `B15` |
-| 8 Motor mounts, motors, props | 4 | `B16` |
-| 9 Avionics | 8 | `B17` |
-| 10 Feet and corner caps | 9 | `B18` |
-| 11 Checks | 16 | `B19` |
-| **Sum, stages 2-11** | **111** | |
+Re-timed in G4-R2 on levers S1 and S2 of `review/CDR-2026-11-13/CDR-build-and-test.md` section 3 (CDR-BT-09). Hours are the
+guide's stage times (8 h per day), `EST` until measured on the practice cores and the fin test article.
 
-111 h is 21 h over the 90 h line even before stage 1 (prints, jigs) and stage 12; the schedule's sum is 113.5 h (`../I2/SCHEDULE.md`, with `B02` split differently). **This is a `FAIL` on the guide's own times.** Levers (none applied):
-two-person parallel work does not change the team-hours; moving printing, harness cutting and jig work to stage 1 (done: they are before first cut); a measured reduction after the practice cores; or A2 rewording `R-BUILD-HOURS` to the hours after first cut and before the first hover for the airframe only (`CR-I2-02`).
+| Stage | G4-R1 h | G4-R2 h `EST` | What moved | I2 tasks (I2-R2) |
+|---|---|---|---|---|
+| 2 Wing core and spar | 16 | 16 | — | `B01`-`B05` (from 10 Jan, W) |
+| 3 Elevon panels | 3.5 | 3.5 | — | `B06` |
+| 4 Fins on the motor tubes | 16 | 16 | — | `B07`-`B10` |
+| 5 Pod and power stack | 8.5 + 3 | 8.5 | power stack 3 h to `EL1` (Electronics Lab, before 18 Dec) | `B11` (`B12` folded into `EL1`) |
+| 6 Harness, then skin | 12 + 7 | 19 | — | `B13`, `B14` |
+| 7 Servos, linkage, hinges | 8 | 8 | — | `B15` |
+| 8 Motor mounts, motors, props | 4 | 4 | — | `B16` |
+| 9 Avionics | 8 | 4 | flash and bench calibration 4 h to `HR1` (closure, no soldering) | `B17` |
+| 10 Feet and corner caps | 9 | 3 | foot cartridges 6 h to `FC1` (knife and XPS at home, closure) | `B18` |
+| **Sum, stages 2-10** | **95** | **82** | 13 h before first cut | |
+| 11 Checks (test cards GT-06/07/12/13/18, not build: lever S1) | 16 | 16 | — | `B19` |
+| **Sum, stages 2-11** | **111** | **98** | | I2 adds `RG1` 3 h: 100.5 h, `../I2/SCHEDULE.md` |
+
+Verdict: **82 h `EST` meets 90 h on stages 2-10** under the wording board decision B2 proposes ("<= 90 team-hours of
+build (stages 2-10) to first hover and <= 5 weeks from first cut"). B2 is `PROPOSED` and needs the students'
+sign-off; A2 (stream S3) edits `R-BUILD-HOURS`. Under today's wording (everything to first hover) the plan is still
+98-100.5 h, a `FAIL`. First cut 10 Jan to first hover 12 Feb is 33 days: `FAIL` against 3 weeks (eight serial 24 h
+cures, MF-12), meets 5 weeks. Measured hours replace these `EST` values after the practice cores (`W01`) and the fin
+test article (`W02`).
 
 ## 3. Stage sheets
 
@@ -78,8 +86,8 @@ two-person parallel work does not change the team-hours; moving printing, harnes
 | Item | Detail |
 |---|---|
 | Owner, where | P1, P3; spray lamination at J (booth), the rest W |
-| Needs | W02 foam board, W04 tubes, D03 plugs, D01 braces, D02 strips, C03 pins, collars `FIN-008` (**on hold**), anchors, ESC pads `FIN-007` |
-| Holds | collar height not frozen (H7 / BR-08); pin row depends on the tip decision; lower roots rod notch under a fillet pending C4 check (SC-04); weigh a cup per fillet batch |
+| Needs | W02 foam board, W04 tubes, D03 plugs, D01 braces, D02 strips, C03 pins, collars `FIN-008` (**on hold**), anchors, ESC pads `FIN-007`, strap eyes `FIN-013` (PETG, `W05`), G16 3M 77 |
+| Holds | **build hold** on flight collars, shoes and mounts until CDR-01, -02, -03 and -13 close (`CDR-SUMMARY.md`); collar height **22 mm** (D-90); **collars on before the strips** (assembly check, CDR-BT-14 a); strap eyes `FIN-013` bonded at step 6.6 (D-89c); pin pitch 12 mm (D-90); lower roots rod notch under a fillet pending C4 check (SC-04); weigh a cup per fillet batch |
 | Steps | `BUILD-GUIDE.md` stage 4 steps 1-6; `fins/BUILD.md` steps 1-17; `../G2` P-05, P-06 |
 | Hold point | tubes vertical and parallel; each half-fin weighed before and after (+6.3 g expected); no filler in lead holes or elevon gaps |
 | Records | laminate thickness per board, tube length, cup mass per batch, half-fin before/after |
@@ -94,7 +102,7 @@ two-person parallel work does not change the team-hours; moving printing, harnes
 | Holds | pod BUILD step 11 handle bridge to a non-existent slot fill (SW-10): bond to the spar saddles only; WB-02 order of the ESC lead soldering; pack station may move forward up to 6 mm (BR-00) |
 | Steps | `BUILD-GUIDE.md` stage 5 steps 1-5; `pod/BUILD.md`; `power/BUILD.md` and `power/BOARD-CHECK.md` (30 min on arrival of the FC) |
 | Hold point | polarity; > 1 Mohm between rails; loop resistance logged; stack weighed (88 g) |
-| I2 | `B11`, `B12`; hours 8.5 + 3; 3 cures |
+| I2 | `B11` 8.5 h; 3 cures. The power stack (3 h) is built in `EL1` before 18 Dec (G4-R2, lever S2). **Board mounting (power step 5.3) is being redrawn by the integrator (CDR-17): do not mount the board from the old drawing** |
 
 ### Stage 6. Harness, then skin
 
@@ -112,7 +120,7 @@ two-person parallel work does not change the team-hours; moving printing, harnes
 | Item | Detail |
 |---|---|
 | Owner, where | P3 + P1 (both sides in parallel), W |
-| Needs | M01 servos, H02 mechanisms hardware, horns and frames `MEC-004...008`, servo tester |
+| Needs | M01 servos, H02 mechanisms hardware, horns and frames `MEC-004...008`, horn backplates `MEC-013` (bonded at step 7.2, D-89c), servo tester |
 | Holds | SC-01 JR housing off while the lead passes the straw; arm drilled to 1.85 mm (SC-07); slip-fit the outboard horn (SC-03) |
 | Steps | `BUILD-GUIDE.md` stage 7 steps 1-5; `mechanisms/BUILD.md` steps 5-12 |
 | Hold point | free play <= 1 deg at the TE; both panels of a side within 1 deg at 0 and +/-25 deg; warm peel test passed (3.5 N at the TE, 10 min) |
@@ -138,7 +146,7 @@ two-person parallel work does not change the team-hours; moving printing, harnes
 | Holds | check the RP3 pad order against the board (CAD order is an estimate); pitot lines on different couplers (WB-13); compass chip ID at the I2C scan (WB-12) |
 | Steps | `BUILD-GUIDE.md` stage 9 steps 1-5; `avionics/BUILD.md` |
 | Hold point | pre-arm checks pass; airspeed rises on a blow at the tip and drops on a suck (if A04 is fitted) |
-| I2 | `B17`; hours 8 |
+| I2 | `B17`; 4 h on the aircraft; flash and bench calibration 4 h in `HR1` (G4-R2) |
 
 ### Stage 10. Feet and corner caps
 
@@ -149,7 +157,7 @@ two-person parallel work does not change the team-hours; moving printing, harnes
 | Holds | weigh the first shoe and report it to A3 before printing the other three (D-76 foot 59.1 g `EST`, allocation 60 g) |
 | Steps | `BUILD-GUIDE.md` stage 10 steps 1-4; `landing/BUILD.md` |
 | Hold point | four feet and two caps weighed and reported to A3; pads level |
-| I2 | `B18`; hours 9; cure 24 h |
+| I2 | `B18` 3 h; cartridges 6 h in `FC1` (G4-R2); cure 24 h |
 
 ### Stage 11. Checks: weight, CG, controls, thrust stand
 
@@ -172,20 +180,22 @@ two-person parallel work does not change the team-hours; moving printing, harnes
 | Steps | `BUILD-GUIDE.md` stage 12; `../H2/FLIGHT-TEST-PLAN.md` gate 3 |
 | I2 | `F01` |
 
-## 4. Work packages by week and person (matches `../I2/SCHEDULE.md`)
+## 4. Work packages by week and person (matches `../I2/SCHEDULE.md` I2-R2)
 
 | Week of | P1 | P2 | P3 | P4 |
 |---|---|---|---|---|
-| 19 Jan | cut cores, slot and pockets (B01, B02) | power stack in the lab (B12) | fin laminates, pod box (B08, B11) | compliance, flight request (FR1) |
-| 26 Jan | spar and blocks in the jig, bond, elevons (B04-B06) | harness solder in the lab | pod walls, tray (cure) | wind log, SITL |
-| 2 Feb | tubes, half-fin roots, collars, strips (B07-B10) | harness route and T-F2-CONT (B13) | fins, pod into the recess | stand and bench set-up |
-| 9 Feb | skin (B14), mounts (B16) | avionics (B17), calibration | servos, feet (B15, B18) | checks (B19) |
-| 16 Feb | checks, range test | range test, SITL | checks | first tethered hover (F01) |
+| 21 Dec - 4 Jan (closure) | spar plugs (B03, 4 Jan) | harness cut, flash, bench calibration (HR1) | prints: blocks first (PR0, by 9 Jan), then PR1; foot cartridges (FC1) | SITL log |
+| 4 Jan (W, two people in town) | cut cores, slot and pockets (B01, B02 from 10 Jan) | HR1 | PR1 | SITL |
+| 11 Jan | spar and blocks in the jig, bond (B04, B05), elevons (B06) | — | jig partner (B04), pod box (B11) | flight request for the hover block by 26 Jan (FR1) |
+| 18 Jan | tubes, half-fin roots (B07, B09) | harness solder in the lab from 19 Jan, route, T-F2-CONT (B13) | fin laminates at the booth (B08), roots (B09) | FR1 |
+| 25 Jan | collars then strips, pins, braces (B10, 26-30 Jan) | B13 (to 1 Feb) | B10, pod into the recess (B11) | stand and bench set-up |
+| 1 Feb | skin (B14, 2-3 Feb), servos (B15), mounts (B16) | avionics on the aircraft (B17), mounts (B16) | skin, servos, feet (B14, B15, B18) | checks from 7 Feb (B19) |
+| 8 Feb | checks to 10 Feb, range test 11 Feb (B19, RG1) | range test, SITL | checks | **first tethered hover 12-14 Feb (F01)** |
 
 ## 5. Change requests from G4
 
 | # | To | What | Why |
 |---|---|---|---|
 | CR-G4-01 | D5, I1 | Cartridge stock: `GER-003/008` are cut from 2 in **F-400**, the BOM carries F-250 offcuts from `W01` | landing parts.csv (D-76) vs `W01` |
-| CR-G4-02 | A2 | `R-BUILD-HOURS` reading (section 2) | 111 h vs 90 h |
+| CR-G4-02 | A2 | `R-BUILD-HOURS` re-worded per decision B2 (`PROPOSED`, needs sign-off; text in `review/CDR-2026-11-13/fixes/S4.md`) | 82 h stages 2-10 vs 98 h stages 2-11 (section 2) |
 | CR-G4-03 | A5 | Draw the aids G1 lists as "named, not drawn" | `../G1/PROCESS-PLAN.md` section 4 |

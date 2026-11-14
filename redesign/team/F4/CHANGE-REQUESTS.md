@@ -74,3 +74,12 @@ CR-F4-01 … 10 stand as filed in R1 (status column).
 | A1-R5 F4 row (D-62 CG) | A1 | `INS_POS` X 0.062 → 0.059, `GPS1_POS` X −0.023 → −0.026 m; offsets read `P:cg.*` (`ASM-F4-CG-Z` retired); CR-F4-19 re-issued |
 | CR-A2-31b | A2 | added as the new `CL-F4-TOUCHDOWN-SINK`, not on `CL-F4-DESCENT` (CR-F4-23) |
 | re-run on the R5 keys | A1 | `fsw_check.py`: 43 claims, none negative |
+
+## R6 (2026-11-13, CDR fix round)
+
+| Id | To | What | Why (numbers) | Status |
+|---|---|---|---|---|
+| CR-F4-24 | **A1, S2 (B1, E1, E2)** | Move `performance.cruise_ms` 16 → 17 and `performance.transition_min_ms` 15.6 → 17 when the power models are re-based (CDR-05), or state why the base case stays 16 | B6 makes 17 the planning speed; `K09L.param` flies 17. `CL-B2R3-VTR-GATE-FWD` reads 15.70 m/s at the new forward limit against the 15.6 key (`FAILS` by 0.10 m/s) | open |
+| CR-F4-25 | **H3** | Flight card: (a) during a fence recovery ArduPlane refuses the mode switch ("Mode change denied, in fence recovery", SITL 2026-11-13); the way out is the RTL it flies or the e-stop; (b) receiver failsafe mode "No Pulses" is a pre-flight item; (c) RC loss in a Q mode lands in place about 1.2 s after the link drops | `team/F4/sitl/RESULTS.md` S9a, S7a | open |
+| CR-F4-26 | **B1, B4, H2** | Level speed at `THR_MAX` 70: F4 / B1 21.3 m/s (static rpm 7 750 scaled), B4 24.8 m/s (prop unloads, 9 080 rpm in flight); 21.8 m/s is reached at output 0.61 on B4's model. Fly the 55 → 70 ladder of TUNING-PLAN 6c; B1 states which model its 7 950 rpm figure is | `CL-B4-AB-VLEVEL-MR-70`, `-THR-VH-MR`, `CL-F4-VLEVEL-VH` | open |
+| CR-F4-27 | **F3, H1** | `T-F3-FW-LOAD`: flash 4.7.2 or later, load `K09L.param` twice with a reboot between, read back all 158 names incl. `SERVO_BLH_BDMASK` 15 and `SERVO_BLH_POLES` 14 | the two names are not in the SITL build | open |

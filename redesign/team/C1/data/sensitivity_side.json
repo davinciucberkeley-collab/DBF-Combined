@@ -1,131 +1,131 @@
 {
- "note": "Envelope outputs at the design side load (C5 3-D sim, mu 0.7, 39.3 N), at C5's mu <= 0.5 pad option (29.1 N, CR-C5-16) and with friction x corner load only (C1-R4 basis). Information only.",
+ "note": "Envelope outputs at the design side load (D-105 cap, pad mu 0.40), at the D-65 value (39.5 N, bare neoprene mu 0.7: what a foot without its pad face would see) and with friction x corner load only. Information only.",
  "F_side_N": {
-  "c5_mu07": 39.5,
-  "c5_mu05_29N": 29.1,
-  "friction_only": 26.16060170050553
+  "d105_cap": 24.5,
+  "d65_mu07_39N5": 39.5,
+  "friction_only": 14.948915257431734
  },
  "outputs": {
   "finjoint_M_ult": {
-   "c5_mu07": 22.547565749634664,
-   "c5_mu05_29N": 17.679326244343887,
-   "friction_only": 16.362036411259375
+   "d105_cap": 15.63424783630313,
+   "d65_mu07_39N5": 22.547565749634664,
+   "friction_only": 12.12167945518977
   },
   "finjoint_M_design": {
-   "c5_mu07": 32.41212576509983,
-   "c5_mu05_29N": 25.414031476244332,
-   "friction_only": 23.520427341185346
+   "d105_cap": 22.47423126468575,
+   "d65_mu07_39N5": 32.41212576509983,
+   "friction_only": 17.424914216835294
   },
   "finhalf_Mb_ult": {
-   "c5_mu07": 16.302764780926267,
-   "c5_mu05_29N": 13.121680207424006,
-   "friction_only": 12.551065876092956
+   "d105_cap": 12.242844430624015,
+   "d65_mu07_39N5": 16.302764780926267,
+   "friction_only": 12.214570148831921
   },
   "finhalf_T_lim": {
-   "c5_mu07": 12.718146504076598,
-   "c5_mu05_29N": 9.402393728080614,
-   "friction_only": 8.465247759685738
+   "d105_cap": 7.935810769466995,
+   "d65_mu07_39N5": 12.718146504076598,
+   "friction_only": 4.891204729623662
   },
   "finhalf_T_wingplane_lim": {
-   "c5_mu07": 12.668552799861164,
-   "c5_mu05_29N": 9.373714613908477,
-   "friction_only": 8.442479829206672
+   "d105_cap": 7.91638233935248,
+   "d65_mu07_39N5": 12.668552799861164,
+   "friction_only": 4.890490154055939
   },
   "wing_T_ult": {
-   "c5_mu07": 8.454878501359838,
-   "c5_mu05_29N": 8.452312932470527,
-   "friction_only": 8.451587814313752
+   "d105_cap": 8.451178161615642,
+   "d65_mu07_39N5": 8.454878501359838,
+   "friction_only": 8.448822011050769
   },
   "foot_F_ult": {
-   "c5_mu07": 80.44317315360249,
-   "c5_mu05_29N": 69.93680199258358,
-   "friction_only": 67.30401188514486
+   "d105_cap": 65.92987345032114,
+   "d65_mu07_39N5": 80.44317315360249,
+   "friction_only": 64.54208424744756
   },
   "spar_Mb_ult": {
-   "c5_mu07": 20.739548435395427,
-   "c5_mu05_29N": 19.191762739245057,
+   "d105_cap": 19.191762739245057,
+   "d65_mu07_39N5": 20.739548435395427,
    "friction_only": 19.191762739245057
   },
   "pod_F_ult": {
-   "c5_mu07": 111.64915573791856,
-   "c5_mu05_29N": 111.64915573791856,
+   "d105_cap": 111.64915573791856,
+   "d65_mu07_39N5": 111.64915573791856,
    "friction_only": 111.64915573791856
   },
   "pack_F_lim": {
-   "c5_mu07": 42.57237291061053,
-   "c5_mu05_29N": 42.57237291061053,
+   "d105_cap": 42.57237291061053,
+   "d65_mu07_39N5": 42.57237291061053,
    "friction_only": 42.57237291061053
   },
   "n_T_allow_aft": {
-   "c5_mu07": 10.786507077666359,
-   "c5_mu05_29N": 10.786507077666359,
-   "friction_only": 10.437652196457885
+   "d105_cap": 10.181330679301144,
+   "d65_mu07_39N5": 10.786507077666359,
+   "friction_only": 10.157817367972534
   },
   "n_T_allow_nose": {
-   "c5_mu07": 4.800449368924858,
-   "c5_mu05_29N": 4.800449368924858,
+   "d105_cap": 4.800449368924858,
+   "d65_mu07_39N5": 4.800449368924858,
    "friction_only": 4.800449368924858
   }
  },
  "cases": {
   "finjoint_M_ult": {
-   "c5_mu07": "L4-CORNER-SIDE-Y",
-   "c5_mu05_29N": "L4-CORNER-SIDE-Y",
-   "friction_only": "L4-CORNER-SIDE-Y"
+   "d105_cap": "L4-CORNER-SIDE-Y",
+   "d65_mu07_39N5": "L4-CORNER-SIDE-Y",
+   "friction_only": "G2-HANG-MOTOR"
   },
   "finjoint_M_design": {
-   "c5_mu07": "L4-CORNER-SIDE-Y",
-   "c5_mu05_29N": "L4-CORNER-SIDE-Y",
-   "friction_only": "L4-CORNER-SIDE-Y"
+   "d105_cap": "L4-CORNER-SIDE-Y",
+   "d65_mu07_39N5": "L4-CORNER-SIDE-Y",
+   "friction_only": "G2-HANG-MOTOR"
   },
   "finhalf_Mb_ult": {
-   "c5_mu07": "L5-CORNER-SIDE-Z",
-   "c5_mu05_29N": "L4-CORNER-SIDE-Y",
-   "friction_only": "L4-CORNER-SIDE-Y"
+   "d105_cap": "L4-CORNER-SIDE-Y",
+   "d65_mu07_39N5": "L5-CORNER-SIDE-Z",
+   "friction_only": "L1-LEVEL"
   },
   "finhalf_T_lim": {
-   "c5_mu07": "L4-CORNER-SIDE-Y",
-   "c5_mu05_29N": "L4-CORNER-SIDE-Y",
+   "d105_cap": "L4-CORNER-SIDE-Y",
+   "d65_mu07_39N5": "L4-CORNER-SIDE-Y",
    "friction_only": "L4-CORNER-SIDE-Y"
   },
   "finhalf_T_wingplane_lim": {
-   "c5_mu07": "L4-CORNER-SIDE-Y",
-   "c5_mu05_29N": "L4-CORNER-SIDE-Y",
+   "d105_cap": "L4-CORNER-SIDE-Y",
+   "d65_mu07_39N5": "L4-CORNER-SIDE-Y",
    "friction_only": "L4-CORNER-SIDE-Y"
   },
   "wing_T_ult": {
-   "c5_mu07": "L4-CORNER-SIDE-Y",
-   "c5_mu05_29N": "L4-CORNER-SIDE-Y",
+   "d105_cap": "L4-CORNER-SIDE-Y",
+   "d65_mu07_39N5": "L4-CORNER-SIDE-Y",
    "friction_only": "L4-CORNER-SIDE-Y"
   },
   "foot_F_ult": {
-   "c5_mu07": "L4-CORNER-SIDE-Y",
-   "c5_mu05_29N": "L4-CORNER-SIDE-Y",
-   "friction_only": "L4-CORNER-SIDE-Y"
+   "d105_cap": "L5-CORNER-SIDE-Z",
+   "d65_mu07_39N5": "L4-CORNER-SIDE-Y",
+   "friction_only": "L1-LEVEL"
   },
   "spar_Mb_ult": {
-   "c5_mu07": "L4-CORNER-SIDE-Y",
-   "c5_mu05_29N": "L1-LEVEL",
+   "d105_cap": "L1-LEVEL",
+   "d65_mu07_39N5": "L4-CORNER-SIDE-Y",
    "friction_only": "L1-LEVEL"
   },
   "pod_F_ult": {
-   "c5_mu07": "L1-LEVEL",
-   "c5_mu05_29N": "L1-LEVEL",
+   "d105_cap": "L1-LEVEL",
+   "d65_mu07_39N5": "L1-LEVEL",
    "friction_only": "L1-LEVEL"
   },
   "pack_F_lim": {
-   "c5_mu07": "L1-LEVEL",
-   "c5_mu05_29N": "L1-LEVEL",
+   "d105_cap": "L1-LEVEL",
+   "d65_mu07_39N5": "L1-LEVEL",
    "friction_only": "L1-LEVEL"
   },
   "n_T_allow_aft": {
-   "c5_mu07": 10.786507077666359,
-   "c5_mu05_29N": 10.786507077666359,
-   "friction_only": 10.437652196457885
+   "d105_cap": 10.181330679301144,
+   "d65_mu07_39N5": 10.786507077666359,
+   "friction_only": 10.157817367972534
   },
   "n_T_allow_nose": {
-   "c5_mu07": 4.800449368924858,
-   "c5_mu05_29N": 4.800449368924858,
+   "d105_cap": 4.800449368924858,
+   "d65_mu07_39N5": 4.800449368924858,
    "friction_only": 4.800449368924858
   }
  }

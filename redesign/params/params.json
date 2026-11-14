@@ -128,7 +128,7 @@
    "note": "P4: hard as-built gate = sized 2.48 kg + 5 %"
   },
   "mtow_sized_kg": {
-   "value": 2.597,
+   "value": 2.6,
    "unit": "kg",
    "source": "CL-A1-MASS-SIZED",
    "status": "PROPOSED",
@@ -177,18 +177,18 @@
    "note": "P3"
   },
   "growth_allowance_kg": {
-   "value": 0.123,
+   "value": 0.13,
    "unit": "kg",
-   "source": "redesign/params/CHANGE-LOG.md#D-95",
+   "source": "review/CDR-2026-11-13/fixes/S4.md#D-132",
    "status": "PROPOSED",
-   "note": "D-95 (2026-11-13): 0.113 -> 0.123 kg = A3's growth by maturity on the delivered parts lists with F2's routed harness (CL-A3-MASS-PREDICTED - CL-A3-MASS-BASIC, 122.7 g on A3-R8, rounded up); CL-A1-GROWTH-COVERS checks it on every A1 run. The 113 g it replaces was 3.4 g short of A3's own growth (116.4 g) even before the harness, which is why the reserve read 0 g free. Previous: 2026-11-11 A1: 1 g moved to the fins allocation (fastener CAD parts). P3 sizing growth allowance was a flat 250 g on 2 200 g of estimates (R0). D-38 replaced it by what the A1 reserve leaves after the 100 g overrun (170 g), D-48 145 g. CHANGE-LOG D-63: 214 - 100 = 114 g, equal to A3's growth by maturity on the delivered parts lists (A3-R6a, CL-A3-MASS-PREDICTED 2 436 g): no slack left; the pack is decided by the 590 g acceptance line (CALC-A1-PACK-ACCEPT, D-64)"
+   "note": "D-132 (S4, CDR-12, 2026-11-13): 0.123 -> 0.130 kg = A3's growth by maturity with the 31 g structures contingency booked as EST adders (CL-A3-MASS-PREDICTED - CL-A3-MASS-BASIC 129.1 g, rounded up). D-95 (2026-11-13): 0.113 -> 0.123 kg = A3's growth by maturity on the delivered parts lists with F2's routed harness (CL-A3-MASS-PREDICTED - CL-A3-MASS-BASIC, 122.7 g on A3-R8, rounded up); CL-A1-GROWTH-COVERS checks it on every A1 run. The 113 g it replaces was 3.4 g short of A3's own growth (116.4 g) even before the harness, which is why the reserve read 0 g free. Previous: 2026-11-11 A1: 1 g moved to the fins allocation (fastener CAD parts). P3 sizing growth allowance was a flat 250 g on 2 200 g of estimates (R0). D-38 replaced it by what the A1 reserve leaves after the 100 g overrun (170 g), D-48 145 g. CHANGE-LOG D-63: 214 - 100 = 114 g, equal to A3's growth by maturity on the delivered parts lists (A3-R6a, CL-A3-MASS-PREDICTED 2 436 g): no slack left; the pack is decided by the 590 g acceptance line (CALC-A1-PACK-ACCEPT, D-64)"
   },
   "build_overrun_kg": {
-   "value": 0.1,
+   "value": 0.084,
    "unit": "kg",
-   "source": "SRC-K09-REVIEW",
+   "source": "review/CDR-2026-11-13/fixes/S4.md#D-132",
    "status": "PROPOSED",
-   "note": "REVIEW section 2: first student foam build overrun, ESTIMATE"
+   "note": "D-135 (2026-11-13): 0.064 -> 0.084 kg: the 20 g freed when the fins contingency (31 g) became 11 g of real landing-shoe legs returns to the build overrun. D-132 (S4, CDR-12, 2026-11-13): 0.100 -> 0.064 kg. 31 g of the unnamed first-build overrun becomes the named structures contingency (fins allocation 434 -> 466 g: cheeks 16 + doubler 6 + brace 9 EST, plus the 0.9 g fins re-run) and 6 g its growth; the gate stays 2.6 kg. The 64 g left must hold the other CDR-12 asks (ballast 30, 11x7E props +24, second caps 8.8, XT30U saddles 1.2 = 64 g EST): 0 g of true build overrun if all of them land. Was: REVIEW section 2: first student foam build overrun 100 g, ESTIMATE (SRC-K09-REVIEW)"
   },
   "wind_limit_ms": {
    "value": 5.0,
@@ -278,13 +278,13 @@
   "box_external_m": {
    "value": [
     1.25,
-    0.55,
+    0.56,
     0.54
    ],
    "unit": "m",
-   "source": "team/D7/CHANGE-REQUESTS.md#CR-D7-01",
+   "source": "review/CDR-2026-11-13/fixes/S4.md#D-134",
    "status": "PROPOSED",
-   "note": "P9 said 0.45 m high; D-16 made it 0.50 for the tube ends; CHANGE-LOG D-31 (D7 CR-D7-01): 0.54 because in a floor drop the aircraft sinks into the cradle foam by the ~70 mm stroke, so the lower tube ends and foot pads (z -0.219) need that travel above the floor: height needed 0.535 m (CL-D7-BOX-H-REQ). Freeze only after subsystems/transport/CAR-FIT.md has two measured cars; if a car rejects 0.54, fall back to 0.50 m with a 'max drop 0.15 m' label on the box (requirements.box_drop_m note)"
+   "note": "D-134 (S4, CDR-24, 2026-11-13): W (x) 0.55 -> 0.56 m so the pod-nose stack clears (nose gap 12.95 mm >= 10, antenna +2.95 mm >= 2; subsystems/transport/params.json trn.box.external_m note). P9 said 0.45 m high; D-16 made it 0.50 for the tube ends; CHANGE-LOG D-31 (D7 CR-D7-01): 0.54 because in a floor drop the aircraft sinks into the cradle foam by the ~70 mm stroke, so the lower tube ends and foot pads (z -0.219) need that travel above the floor: height needed 0.535 m (CL-D7-BOX-H-REQ). Freeze only after subsystems/transport/CAR-FIT.md has two measured cars; if a car rejects 0.54, fall back to 0.50 m with a 'max drop 0.15 m' label on the box (requirements.box_drop_m note)"
   },
   "box_mass_max_kg": {
    "value": 6.0,
@@ -361,6 +361,20 @@
    "source": "team/A2/REQUIREMENTS.md",
    "status": "PROPOSED",
    "note": "attitude error at touchdown in 5 m/s; sets the foot height with the wingtip-strike check (CR-C1-01)"
+  },
+  "foot_side_load_cap_n": {
+   "value": 24.5,
+   "unit": "N",
+   "source": "redesign/review/CDR-2026-11-13/CDR-SUMMARY.md#B1",
+   "status": "PROPOSED",
+   "note": "D-105 (CDR board decision B1, 2026-11-13): design foot side load at the pad, limit, per foot, held by the pad face friction (requirements.pad_mu_max 0.40). Basis: C5-R7 6-DOF touchdown sim at mu 0.40, 1.2 m/s, 10 deg any direction, 4 masses, with 0.3 m/s drift: 24.28 N (team/C5/sim/out/sim3d.json, drift_sweep.json), rounded up. The board's 23 N was a linear estimate (29.1 x 0.4 / 0.5); the simulated load is not proportional to mu (a tilt component stays), so 23 N would need mu <= 0.37 (22.8 N, same model). The board's mu <= 0.40 is kept and the structure is designed to 24.5 N. C5 checks every run against it (CL-C5-SIM3D-SIDE-12 <= CL-C5-SIM3D-SIDE-LOAD); D5, C1, C4/D3 and C6 design to it. Was 39.5 N (D-65, mu 0.7 neoprene). Fallback if the incline test T-D5-PAD-MU fails: sideways piston snap releasing at 23-26 N"
+  },
+  "pad_mu_max": {
+   "value": 0.4,
+   "unit": "-",
+   "source": "redesign/review/CDR-2026-11-13/CDR-SUMMARY.md#B1",
+   "status": "PROPOSED",
+   "note": "D-105 (B1): largest static friction of the foot pad face on the landing mat. Acceptance: T-D5-PAD-MU incline test, pad slides at or below atan(0.40) = 21.8 deg, 5 repeats, measured on the mat the team lands on. Consequence: a parked aircraft needs mu 0.68 to stand in 8 m/s (CL-C1-STANCE-MU-REQ), so it is laid flat or tied when parked (flight card, H3)"
   },
   "foot_crush_stroke_min_m": {
    "value": 0.038,
@@ -1064,7 +1078,7 @@
    "unit": "A",
    "source": "SRC-X3108S",
    "status": "UNVERIFIED",
-   "note": "D-34 (CR-A2-12b): maker rating 25 A / 30 s; the 100 A limiter holds 24.8 A per motor (CL-E1-ILIM-I); thermally 10 s at full throttle (env.full_throttle_max_s)"
+   "note": "D-34 (CR-A2-12b): maker rating 25 A / 30 s, a winding current. D-116 (CDR-05): the 100 A limiter holds 24.8 A per ESC on the battery side (CL-E1-ILIM-I-BAT) but about 30 A in the winding (CL-E1-ILIM-I, fails; limiter value decided on the stand, CDR decision B7); thermally 10 s at full throttle (env.full_throttle_max_s)"
   },
   "prop": {
    "value": "APC 11x5.5MR / 11x5.5MRP (LP11055MR/MRP), CW + CCW pairs",
@@ -1127,9 +1141,9 @@
   "current_max_per_motor_a": {
    "value": 24.8,
    "unit": "A",
-   "source": "CL-E1-ILIM-I",
+   "source": "CL-E1-ILIM-I-BAT",
    "status": "UNVERIFIED",
-   "note": "with Q_M_BAT_CURR_MAX 100 A (motor rating 25 A / 30 s); unlimited 42.4 A at 14.8 V and 51.6 A at 16.8 V (CL-E1-IMAX-*), above the ESC's 45 A"
+   "note": "battery side, per ESC input (D-116: the winding current at the same point is CL-E1-ILIM-I, about 30 A); with Q_M_BAT_CURR_MAX 100 A (motor rating 25 A / 30 s); unlimited 42.4 A at 14.8 V and 51.6 A at 16.8 V (CL-E1-IMAX-*), above the ESC's 45 A"
   },
   "download_factor": {
    "value": 1.06,
@@ -1139,11 +1153,11 @@
    "note": "B4 models 1.038 (R3, collars, ears, braces, pads; CL-B4-DOWNLOAD) and 1.025 with the SU2 tube + board section (CL-B4-SIM-DOWNLOAD, simulation round, CR-B4-28); kept at 1.06 until T-B4-INSTALLED"
   },
   "voltage_sag": {
-   "value": 0.851,
+   "value": 0.85,
    "unit": "-",
    "source": "CL-E1-SAG-FACTOR",
    "status": "UNVERIFIED",
-   "note": "CHANGE-LOG D-49 (E1 CR-E1-25, E2 CR-E2-18a): thrust factor worst state (20 % charge, 10 degC) divided by fresh, both with the 100 A limiter, one calculation (CALC-E1-WORST) on E2's OCV, cell R and cold factor and F1's electrical.r_ext_mohm 6.5: 0.851 (CL-E1-TW-WORST 2.12; closed-form cross-check 0.873, CL-E1-SAG-XCHECK). E2's CL-E2-SAG-F-WORST (0.758, which applied (V/14.8)^2 to an already current-limited thrust) is withdrawn. The cold-pack stand run decides (T-E1-STAND at 3.6 V/cell, 10 degC; H1 pass line CL-H1-T-PASS-SAG). Was 0.76 (D-35), 0.72 (D-06)"
+   "note": "D-115 (CDR-05): 0.851 -> 0.850 on electrical.r_ext_mohm 7.9 (CL-E1-SAG-FACTOR 0.8497, CL-E1-TW-WORST 2.106; cross-check 0.872); B1, B3 and H1 read the key. Before: CHANGE-LOG D-49 (E1 CR-E1-25, E2 CR-E2-18a): thrust factor worst state (20 % charge, 10 degC) divided by fresh, both with the 100 A limiter, one calculation (CALC-E1-WORST) on E2's OCV, cell R and cold factor and F1's electrical.r_ext_mohm 6.5: 0.851 (CL-E1-TW-WORST 2.12; closed-form cross-check 0.873, CL-E1-SAG-XCHECK). E2's CL-E2-SAG-F-WORST (0.758, which applied (V/14.8)^2 to an already current-limited thrust) is withdrawn. The cold-pack stand run decides (T-E1-STAND at 3.6 V/cell, 10 degC; H1 pass line CL-H1-T-PASS-SAG). Was 0.76 (D-35), 0.72 (D-06)"
   },
   "stations": {
    "_note": "Motor shaft axis along -x (thrust toward -x in cruise = up in hover), plus a 3 deg tangential cant (cant_deg). Position = shaft axis at the mount face on the tube end. Ids by position; ArduPilot motor numbers and rotation directions are set by F4 (Q_FRAME_TYPE 1, X) and recorded in subsystems/flight-software/.",
@@ -1319,13 +1333,13 @@
   },
   "x_range_m": {
    "value": [
-    0.0466,
-    0.0514
+    0.0394,
+    0.0513
    ],
    "unit": "m",
    "source": "CL-B3-V-CG-FWD",
    "status": "UNVERIFIED",
-   "note": "D-62 (B3 CR-B3-25, V1): forward CL-B3-V-CG-FWD 0.04660 (trim at the stall, CG height included), aft CL-B3-V-CG-AFT-ENV 0.05144 (SM 5 % at 1.3 Vs with the CG 18.5 mm above the chord plane), rounded inward to 0.1 mm; 14.6-16.1 % chord, 4.8 mm between the marks (>= 4). A3-R6a's 0.0522 m was 0.8 mm aft of this limit (SM 4.76 %), the predicted 0.0536 m 2.2 mm aft (SM 4.33 %): D-61 and D-62 move the CG about 3.3 mm forward. Was [0.0509, 0.0548] (D-60, B3 R4 at z = 0), [0.050, 0.0549] (D-47), [0.050, 0.055] (D-24), [0.040, 0.049] (R0). Written to mass_budget.json cg_x_m"
+   "note": "D-120 (CDR-14, board decision B9, stream S3 2026-11-13): MIXING_GAIN 0.5 -> 0.65 gives 16.25 deg of pure-pitch elevon, so the trim-at-the-stall forward limit moves from 0.04647 to CL-B3-V-CG-FWD 0.03932 (SM 9.2 %, stall there 12.01 m/s <= 12.3); aft CL-B3-V-CG-AFT-ENV 0.05133 (SM 5 % at 1.3 Vs, NP 0.06733); rounded inward to 0.1 mm; 12.3-16.0 % chord, 11.9 mm between the limits (was 4.8). The aft end 0.0514 was 0.07-0.12 mm aft of the claim (CL-B3-V-RANGE-AFT-IN, CL-A1-CG-RANGE-AFT negative): now 0.0513. First fixed-wing flights are flown at x <= 0.0465 m (SM >= 6.5 %, D-121); the marks are not scribed until T-B3-TWIN-NP. Before D-120: D-62 (B3 CR-B3-25, V1): forward CL-B3-V-CG-FWD 0.04660 (trim at the stall, CG height included), aft CL-B3-V-CG-AFT-ENV 0.05144 (SM 5 % at 1.3 Vs with the CG 18.5 mm above the chord plane), rounded inward to 0.1 mm; 14.6-16.1 % chord, 4.8 mm between the marks (>= 4). A3-R6a's 0.0522 m was 0.8 mm aft of this limit (SM 4.76 %), the predicted 0.0536 m 2.2 mm aft (SM 4.33 %): D-61 and D-62 move the CG about 3.3 mm forward. Was [0.0509, 0.0548] (D-60, B3 R4 at z = 0), [0.050, 0.0549] (D-47), [0.050, 0.055] (D-24), [0.040, 0.049] (R0). Written to mass_budget.json cg_x_m"
   },
   "y_target_m": {
    "value": 0.0,
@@ -1369,11 +1383,11 @@
     "note": "D-95 (2026-11-13): 405 -> 393 g. Allocation = delivered basic + about 1 g: D1 CL-D1-WING-MASS 391.8 g, A3 roll-up 391.9 g (C2 CL-C2-WING-MASS 389.4 g). The 12 g held for XPS density / tape was a second growth cushion on top of A3's maturity growth (wing predicted 411.5 g, EST 20 %, CALC 10 %), so it returns to the A1 reserve. Previous: D-48: kept at 405 (D1 CR-D1-08): D1 CAD 387.3 g EST (core 187, tape, spar 102, four plugs 22, elevons, label); the 17.7 g left is the only cushion for XPS density above 30 kg/m3 (+6.2 g per kg/m3) and tape above 0.065 kg/m2 until T-D1-WEIGH"
    },
    "fins": {
-    "value": 434,
+    "value": 435,
     "unit": "g",
-    "source": "CL-D3-MASS",
+    "source": "review/CDR-2026-11-13/fixes/S4.md#D-132",
     "status": "PROPOSED",
-    "note": "D-95 (2026-11-13): 438 -> 434 g. Delivered D3 CL-D3-MASS / C4 CL-C4-D3-FINS-MASS 433.3 g + 0.7 g. The 4.7 g left above the drawn fins was held for C6's collar (CR-C6-37, +4.4 g, H7); it now sits in the A1 free reserve (3 g) and the 10.8 g of predicted gate margin above the overrun and is released to fins by change request if the structures decision takes the 22 mm collar. Previous: 2026-11-11 A1: +1 g for the fasteners modelled as CAD parts (team/C6/FASTENERS-CAD.md: fins +1.2 g), taken from requirements.growth_allowance_kg (114 -> 113 g) so the sized total stays 2 600 g. Previous: D-63 (D3 CR-D3-33, A3 CR-A3-26, C4 CR-C4-34, C6 CR-C6-31/-32): D3-R4 434.8 g (the 15 mm root fillets C6 asked for weigh 30.6 g as drawn, booked at +3 g in D-48; collar 16 -> 12 mm returned 2.0 g; sealing bead 6 -> 4 mm -1.6 g) + C6's pins 2 -> 2.5 mm (+1.5 g) and collar 12 -> 13 mm (+0.6 g) = 436.9 g. D3 returns what its levers give (microlight fillet filler -5.6, block 2 perimeters + 10 % gyroid -13.8 if C4 keeps CL-C4-D3-BLOCK-MS >= 0, mount cheeks 12 -> 8 mm -4 if >= 1 100 N m/rad). Was 418 (D-48), 408 (D-38), 370 (D-07). The four spar plugs (22 g) are booked in wing"
+    "note": "D-135 (integrator, CDR fix round 2026-11-13): 466 -> 435 g. S1 (fixes/S1.md) closed CDR-01 with the side-load cap and the landing-shoe legs, so none of the three FIN-A3-CDR adders (cheek 16, doubler 6, brace 9 g) is fitted: the cheek mass is real and sits in landing (GER-001 legs +10.9 g), no doubler, no 10 x 3 brace (CDR-19). Fins parts.csv 434.9 g (CL-D3-MASS). D-132 (S4, CDR-12, 2026-11-13): 434 -> 466 g = fins parts.csv 434.94 g (re-run, CDR-ST-16) + the booked structures contingency 31 g EST (cheek extension 16 + face doubler 6 + 10 x 3 brace 9; CDR-ST-09, CDR-SUMMARY CDR-12), carried by A3 as adders FIN-A3-CDR-* until D3 / D5 draw them. The solid 62 mm tail (+29 g, D-90) is NOT booked: decision B1's side-load cap is expected to retire it; if the pad incline test fails it does not fit (A1 free reserve 0 g). D-95 (2026-11-13): 438 -> 434 g. Delivered D3 CL-D3-MASS / C4 CL-C4-D3-FINS-MASS 433.3 g + 0.7 g. The 4.7 g left above the drawn fins was held for C6's collar (CR-C6-37, +4.4 g, H7); it now sits in the A1 free reserve (3 g) and the 10.8 g of predicted gate margin above the overrun and is released to fins by change request if the structures decision takes the 22 mm collar. Previous: 2026-11-11 A1: +1 g for the fasteners modelled as CAD parts (team/C6/FASTENERS-CAD.md: fins +1.2 g), taken from requirements.growth_allowance_kg (114 -> 113 g) so the sized total stays 2 600 g. Previous: D-63 (D3 CR-D3-33, A3 CR-A3-26, C4 CR-C4-34, C6 CR-C6-31/-32): D3-R4 434.8 g (the 15 mm root fillets C6 asked for weigh 30.6 g as drawn, booked at +3 g in D-48; collar 16 -> 12 mm returned 2.0 g; sealing bead 6 -> 4 mm -1.6 g) + C6's pins 2 -> 2.5 mm (+1.5 g) and collar 12 -> 13 mm (+0.6 g) = 436.9 g. D3 returns what its levers give (microlight fillet filler -5.6, block 2 perimeters + 10 % gyroid -13.8 if C4 keeps CL-C4-D3-BLOCK-MS >= 0, mount cheeks 12 -> 8 mm -4 if >= 1 100 N m/rad). Was 418 (D-48), 408 (D-38), 370 (D-07). The four spar plugs (22 g) are booked in wing"
    },
    "pod": {
     "value": 146,
@@ -1383,11 +1397,11 @@
     "note": "D-63 (C3 CR-C3-19, D-62): D2-R5 130.9 g + C3's FEA fixes (aft-stop strut to the handle bridge 3.7, forward-stop floor flange 1.5, handle-foot wall brackets 8.7 g EST, CR-C3-14/-15/-16) + 2 g for the D-62 nose extension = 145.8; was 131 (D-48), 122 (D-38), 105 (D-07). D2's lighter levers (0.8 mm floor, lead window) are void: the tray already fails in bending without the strut"
    },
    "landing": {
-    "value": 60,
+    "value": 71,
     "unit": "g",
     "source": "params/CHANGE-LOG.md#D-78",
     "status": "PROPOSED",
-    "note": "D-78 (BR-00): 48 -> 60 g, taken from power (648 -> 636) which D-74 lightened by 16.5 g; D5-R7 (D-76) 59.1 g EST with F-400 cartridges on the 59 N side-load shoe (R6 F-250 shoe 69.9 g). 48 g is not reachable inside the telescoping-shoe concept at the D-65 side load; the side-load fuse (SW-03 / BR-09) is the next lever. D-63 (C5 CR-C5-18): D5-R4 42.50 g EST (CR-D5-26) + 5 g EST for the shoe sleeve fix (wall 1.6 -> 2.0 mm, rim 2.4 -> 3.0, 1.0 mm inside fillet, engagement 25 mm; D5 reports the real figure). C4's cheek extension to |z| 0.171 (+16 g, CR-C4-30) is held by test (CR-C4-36) and not allocated; was 43 (D-30), 40 (D-11)"
+    "note": "D-135 (2026-11-13): 60 -> 71 g = landing parts.csv 69.86 g with the GER-001 shoe legs 7 -> 30 mm deep (S1, CDR-01, +10.92 g), rounded up. D-78 (BR-00): 48 -> 60 g, taken from power (648 -> 636) which D-74 lightened by 16.5 g; D5-R7 (D-76) 59.1 g EST with F-400 cartridges on the 59 N side-load shoe (R6 F-250 shoe 69.9 g). 48 g is not reachable inside the telescoping-shoe concept at the D-65 side load; the side-load fuse (SW-03 / BR-09) is the next lever. D-63 (C5 CR-C5-18): D5-R4 42.50 g EST (CR-D5-26) + 5 g EST for the shoe sleeve fix (wall 1.6 -> 2.0 mm, rim 2.4 -> 3.0, 1.0 mm inside fillet, engagement 25 mm; D5 reports the real figure). C4's cheek extension to |z| 0.171 (+16 g, CR-C4-30) is held by test (CR-C4-36) and not allocated; was 43 (D-30), 40 (D-11)"
    },
    "propulsion": {
     "value": 462,
@@ -1426,11 +1440,11 @@
    }
   },
   "growth_reserve_g": {
-   "value": 226,
+   "value": 214,
    "unit": "g",
-   "source": "A1 choice",
+   "source": "review/CDR-2026-11-13/fixes/S4.md#D-132",
    "status": "PROPOSED",
-   "note": "D-95 (2026-11-13): 213 -> 226 g = gate 2 600 - allocations 2374 g. Covers the growth allowance 123 g (A3 growth by maturity on the delivered parts with the routed harness, CL-A3-MASS-PREDICTED - CL-A3-MASS-BASIC, checked by CL-A1-GROWTH-COVERS) + the 100 g first-build overrun, leaving 3 g free (CL-A1-RESERVE-COVERS). The free grams come from setting each allocation to the delivered basic + about 1 g (wing, fins, power, avionics) so growth is carried once, in the growth allowance. Next releases: harness phase extensions -13.6 g (T-E1-MOTOR-RM), D3 fin levers up to -23 g (structures). Previous: 2026-11-11 A1: 214 -> 213 g with the fins allocation 437 -> 438 g (growth allowance 114 -> 113 g + 100 g build overrun). D-63: = gate 2 600 - allocations 2 386 (was 245 at 2 355, 276 at 2 324, 400 at 2 200), held by A1 and released only through a change request; must cover growth by maturity (A3-R6a: 114 g on the delivered parts lists) and the 100 g build overrun: 0 g free. The next release needs a lever: D3's fins levers (up to -23 g), the 12 g harness return if the factory phase leads reach, D6's 1.3 g cushion, aluminium prop nuts (-4 g)"
+   "note": "D-135 (2026-11-13): 194 -> 214 g = gate 2 600 - allocations 2 386 g; covers growth allowance 130 g + build overrun 84 g. D-132 (S4, CDR-12, 2026-11-13): 226 -> 194 g = gate 2 600 - allocations 2 406 g; covers growth allowance 130 g + build overrun 64 g, 0 g free. D-95 (2026-11-13): 213 -> 226 g = gate 2 600 - allocations 2374 g. Covers the growth allowance 123 g (A3 growth by maturity on the delivered parts with the routed harness, CL-A3-MASS-PREDICTED - CL-A3-MASS-BASIC, checked by CL-A1-GROWTH-COVERS) + the 100 g first-build overrun, leaving 3 g free (CL-A1-RESERVE-COVERS). The free grams come from setting each allocation to the delivered basic + about 1 g (wing, fins, power, avionics) so growth is carried once, in the growth allowance. Next releases: harness phase extensions -13.6 g (T-E1-MOTOR-RM), D3 fin levers up to -23 g (structures). Previous: 2026-11-11 A1: 214 -> 213 g with the fins allocation 437 -> 438 g (growth allowance 114 -> 113 g + 100 g build overrun). D-63: = gate 2 600 - allocations 2 386 (was 245 at 2 355, 276 at 2 324, 400 at 2 200), held by A1 and released only through a change request; must cover growth by maturity (A3-R6a: 114 g on the delivered parts lists) and the 100 g build overrun: 0 g free. The next release needs a lever: D3's fins levers (up to -23 g), the 12 g harness return if the factory phase leads reach, D6's 1.3 g cushion, aluminium prop nuts (-4 g)"
   },
   "transport_box_kg": {
    "value": 3.57,
@@ -1564,11 +1578,11 @@
    "note": "wiring, disconnect and current-sensor design case: all four motors full throttle on a full pack with no limiter, momentary < 5 s (E2 117 A; the flight limiter holds 100 A, worst 105 A with sensor error, CL-F1-ILIM-WORST). Single-ESC unlimited burst 51.6 A <= 2 s"
   },
   "r_ext_mohm": {
-   "value": 6.7,
+   "value": 7.9,
    "unit": "mOhm",
    "source": "CL-F1-R-EXT",
    "status": "UNVERIFIED",
-   "note": "D-67 (F1 CR-F1-24 rev, F1-R4): pack terminals to ESC pads, hot, on F2's trimmed ESC leads 0.475-0.620 m (common path 2.79 mOhm with the 10 AWG jumpers + four 16 AWG branches 13.7-17.9 mOhm in parallel; CL-F1-R-EXT 6.69). E1 re-runs CALC-E1-WORST (sag 0.851 moves slightly); E2, E3 and H1 read the key. Was 6.5 (D-32: 0.5 m leads)"
+   "note": "D-115 (CDR-05, CDR-EL-04): pack terminals to ESC pads, hot, on the leads as routed (D-85...D-89: 0.564-0.701 m) with one XT30U per branch (D-74); CL-F1-R-EXT 7.92, rounded to 0.1. E1 re-ran CALC-E1-WORST, E2 its budgets; E3 and H1 read the key. Was 6.7 (D-67: trimmed leads 0.475-0.620 m, no XT30U), 6.5 (D-32: 0.5 m leads)"
   },
   "wire_temp_rise_max_c": {
    "value": 10.0,

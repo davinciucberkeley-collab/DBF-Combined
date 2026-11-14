@@ -89,9 +89,13 @@ kit.assumption("ASM-F5-ELRS-LOSS-T", "ELRS link-loss detection 1.0 s", "Time fro
                "the RX stopping CRSF channel frames", basis="ELRS disconnects after roughly 1 s without packets at "
                                                            "150 Hz; measured on the bench (T-F5-FS-BENCH)",
                value=1.0, unit="s", status="UNVERIFIED")
-kit.assumption("ASM-F5-FS-SHORT", "ArduPilot FS_SHORT_TIMEOUT 1.5 s", "Plane short RC failsafe after 1.5 s of no RC "
-               "input (default, kept by K09L.param)", basis="redesign/subsystems/flight-software/K09L.param section 10",
-               value=1.5, unit="s")
+kit.assumption("ASM-F5-FS-SHORT", "ArduPilot RC_FS_TIMEOUT 1.0 s + 0.2 s debounce", "Plane 4.7 declares RC loss "
+               "RC_FS_TIMEOUT (1.0 s, default, stated in K09L.param) after the last valid frame, plus 10 radio-task "
+               "checks. FS_SHORT_TIMEOUT (1.5 s) no longer exists in 4.7 (CDR-26, D-124). Holds only with the receiver "
+               "in failsafe mode No Pulses",
+               basis="redesign/subsystems/flight-software/K09L.param section 10; team/F4/claims.json CL-F4-RC-FS-QLAND "
+                     "1.2 s; SITL 2026-11-13: 1.0-1.15 s from the last frame to QLAND (team/F4/sitl/RESULTS.md)",
+               value=1.2, unit="s")
 kit.assumption("ASM-F5-ANT-CLEAR", "Antenna clearance >= lambda/4", "Active element of each RX antenna at least a "
                "quarter wavelength from carbon, the pack, ESC leads and the other antenna element",
                basis="common practice for dipoles near conductors (detuning, pattern null)", value=0.25, unit="-")
@@ -142,7 +146,7 @@ def antenna_clearance(f, k):
 
 # ---------------------------------------------------------------- 4. switch-channel latency (e-stop) and failsafe time
 @kit.calc("CALC-F5-LATENCY", title="Switch latency and RC-loss-to-failsafe time",
-          equation="t_switch = (aux_slots + 1) / rate / LQ; t_fs = t_elrs + FS_SHORT_TIMEOUT",
+          equation="t_switch = (aux_slots + 1) / rate / LQ; t_fs = t_elrs + RC_FS_TIMEOUT + debounce",
           inputs={"rate": "ASM-F5-RATE", "lq": P + "requirements.rc_lq_min", "t_elrs": "ASM-F5-ELRS-LOSS-T",
                   "t_short": "ASM-F5-FS-SHORT"})
 def latency(rate, lq, t_elrs, t_short):
@@ -251,10 +255,15 @@ def write_ground():
 kit.test("T-F5-BENCH", "Arrival bench: versions, bind, model match, channel map", verifies=["CL-F5-SWITCH-LATENCY"],
          procedure="ELRS TX and RX on the same major version (3.x), FCC domain; binding phrase set (kept off the "
                    "repo); model match on, K09-L and twin have different model ids; RC calibration in Mission "
-                   "Planner; every channel moves the right way; ch 9 latency from the log.")
+                   "Planner; every channel moves the right way; ch 9 latency from the log. CDR-26: open the "
+                   "receiver's ELRS web UI (or the ELRS Lua, 'Other Devices'), set failsafe mode to 'No Pulses', "
+                   "save, power-cycle and read it back; then, props off, TX off: Mission Planner shows 'Throttle "
+                   "failsafe on' and the RC inputs freeze (they must not jump to preset values).")
 kit.test("T-F5-FS-BENCH", "Bench RC failsafe, props off", verifies=["CL-F5-FS-TIME"],
          procedure="Armed in QSTABILIZE, FBWA and CRUISE in turn (props off, tied down), TX off: QLAND in Q modes, "
-                   "circle then RTL at 5 s in FW; time from TX off to the FS message <= 2.5 s.")
+                   "circle then RTL at 5 s in FW; time from TX off to the FS message <= 2.5 s (model: 1.0 s ELRS + 1.2 s). "
+                   "In QHOVER the mode must read QLAND within 3 s of TX off (CL-F4-RC-FS-QLAND); if the receiver "
+                   "is not on No Pulses no failsafe appears at all: stop and fix the receiver setting.")
 kit.test("T-F5-RANGE", "Ground range check, two attitudes", verifies=["CL-F5-RC-RSSI-REQ", "CL-F5-RC-RSSI-PRED"],
          procedure="25 mW, 150 Hz; aircraft 1 m above ground on a stand, motors spinning props-off at 20 %; at "
                    "100 m read 1RSS/2RSS/RQly for 4 headings in hover attitude and 4 in cruise attitude.")

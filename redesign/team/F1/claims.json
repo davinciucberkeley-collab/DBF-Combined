@@ -329,32 +329,32 @@
      [
       "climb 0-50 m",
       25.0,
-      35.54768895031274
+      35.66872519372642
      ],
      [
       "hover",
       120,
-      30.142285945850148
+      30.226972150217204
      ],
      [
       "transition forward",
       20,
-      43.482723517945665
+      43.67148708639382
      ],
      [
       "cruise",
-      380.3419421564585,
-      23.902540402971255
+      378.90927299931326,
+      23.928658809779208
      ],
      [
       "back-transition",
       20,
-      40.064580664453594
+      40.22196500217414
      ],
      [
       "descent",
       50.0,
-      30.142285945850148
+      30.226972150217204
      ]
     ]
    },
@@ -363,17 +363,17 @@
      180,
      0.41
     ],
-    "i_climb": 35.54768895031274,
+    "i_climb": 35.66872519372642,
     "t_climb": 25.0,
-    "i_hover": 30.142285945850148,
+    "i_hover": 30.226972150217204,
     "t_hover": 120,
-    "i_fwd": 43.482723517945665,
+    "i_fwd": 43.67148708639382,
     "t_fwd": 20,
-    "i_cruise": 23.902540402971255,
-    "t_cruise": 380.3419421564585,
-    "i_back": 40.064580664453594,
+    "i_cruise": 23.928658809779208,
+    "t_cruise": 378.90927299931326,
+    "i_back": 40.22196500217414,
     "t_back": 20,
-    "i_desc": 30.142285945850148,
+    "i_desc": 30.226972150217204,
     "t_desc": 50.0
    }
   },
@@ -404,13 +404,13 @@
    "outputs": {
     "i_cont_a": 30.272755043992028,
     "i_req_cont_a": 37.84094380499003,
-    "i_short_a": 43.482723517945665,
-    "i_req_short_a": 54.35340439743208,
+    "i_short_a": 43.67148708639382,
+    "i_req_short_a": 54.58935885799227,
     "i_lim_worst_a": 105.26315789473685
    },
    "input_values": {
-    "i_hover": 30.142285945850148,
-    "i_cruise": 23.902540402971255,
+    "i_hover": 30.226972150217204,
+    "i_cruise": 23.928658809779208,
     "p_climb": 448.03677465108206,
     "v": 14.8,
     "k": 1.25,
@@ -423,32 +423,32 @@
      [
       "climb 0-50 m",
       25.0,
-      35.54768895031274
+      35.66872519372642
      ],
      [
       "hover",
       120,
-      30.142285945850148
+      30.226972150217204
      ],
      [
       "transition forward",
       20,
-      43.482723517945665
+      43.67148708639382
      ],
      [
       "cruise",
-      380.3419421564585,
-      23.902540402971255
+      378.90927299931326,
+      23.928658809779208
      ],
      [
       "back-transition",
       20,
-      40.064580664453594
+      40.22196500217414
      ],
      [
       "descent",
       50.0,
-      30.142285945850148
+      30.226972150217204
      ]
     ],
     "ilim": 100.0,
@@ -487,7 +487,8 @@
     "r_contact": "ASM-F1-R-CONTACT",
     "r_board": "ASM-F1-R-BOARD",
     "v": "P:battery.v_nom",
-    "r_xt30": "ASM-F1-R-XT30U"
+    "r_xt30": "ASM-F1-R-XT30U",
+    "drop_allow": "CL-E1-DROP-ALLOW"
    },
    "units": {
     "ilim": "A",
@@ -499,7 +500,8 @@
     "l_ur": "m",
     "l_ul": "m",
     "l_lr": "m",
-    "l_ll": "m"
+    "l_ll": "m",
+    "drop_allow": "%"
    },
    "outputs": {
     "main_awg": 10,
@@ -507,8 +509,8 @@
     "main_i_cont_a": 30.272755043992028,
     "main_rise_long_c": 16.37110345286638,
     "main_rise_c": 0.46521406220468364,
-    "main_peak_normal_c": 17.972930791078028,
-    "main_peak_fault_c": 20.457993363927052,
+    "main_peak_normal_c": 18.024843725912724,
+    "main_peak_fault_c": 20.51158252393538,
     "main_r_loop_mohm": 0.5902395822486407,
     "main_mass_g": 9.796363398955664,
     "main_od_mm": 4.8,
@@ -518,8 +520,8 @@
     "esc_i_cont_a": 8.409098623331118,
     "esc_rise_long_c": 9.165983839554954,
     "esc_rise_c": 9.165983839554954,
-    "esc_peak_normal_c": 13.819181810415593,
-    "esc_peak_fault_c": 17.561400356261778,
+    "esc_peak_normal_c": 13.882508146011737,
+    "esc_peak_fault_c": 17.62803781167566,
     "esc_r_loop_mohm": 20.247990235437417,
     "esc_mass_g": 81.69368596148429,
     "esc_od_mm": 2.6000000000000005,
@@ -529,8 +531,8 @@
     "esc18_i_cont_a": 8.409098623331118,
     "esc18_rise_long_c": 16.401796147986758,
     "esc18_rise_c": 16.401796147986758,
-    "esc18_peak_normal_c": 31.015162931177414,
-    "esc18_peak_fault_c": 41.79518025106877,
+    "esc18_peak_normal_c": 31.151055300470027,
+    "esc18_peak_fault_c": 41.94435704559345,
     "esc18_r_loop_mohm": 33.04697263986427,
     "esc18_mass_g": 50.22970380070188,
     "esc18_od_mm": 2.0,
@@ -540,18 +542,21 @@
     "esc_len_total_m": 2.527748667417412,
     "bundle0_rise_c": 9.523708897783688,
     "bundle0_rise_long_c": 21.486683906061074,
-    "bundle0_peak_fault_c": 25.10441974322883,
+    "bundle0_peak_fault_c": 25.17405587738903,
     "bundle1_rise_c": 9.507536299968553,
     "bundle1_rise_long_c": 11.267951276206247,
-    "bundle1_peak_fault_c": 18.83589668809065,
+    "bundle1_peak_fault_c": 18.910563056174425,
     "bundle_rise_max_c": 9.523708897783688,
-    "bundle_peak_max_c": 25.10441974322883,
+    "bundle_peak_max_c": 25.17405587738903,
     "r_common_mohm": 2.7902395822486405,
     "r_ext_mohm": 7.924661645438626,
     "drop_cont_pct": 1.8575501547128186,
     "drop_peak_pct": 5.680365649079135,
     "main_loss_w_cont": 2.557086319973969,
-    "esc_len_allow_m": 0.560136307190062,
+    "esc_len_5pct_m": 0.560136307190062,
+    "esc_len_allow_m": 1.9066410806505474,
+    "esc_len_max_m": 0.7006309677718234,
+    "drop_peak_over_5pct": 0.6803656490791354,
     "xt30_drop_pct": 0.4021621621621621
    },
    "input_values": {
@@ -565,32 +570,32 @@
      [
       "climb 0-50 m",
       25.0,
-      35.54768895031274
+      35.66872519372642
      ],
      [
       "hover",
       120,
-      30.142285945850148
+      30.226972150217204
      ],
      [
       "transition forward",
       20,
-      43.482723517945665
+      43.67148708639382
      ],
      [
       "cruise",
-      380.3419421564585,
-      23.902540402971255
+      378.90927299931326,
+      23.928658809779208
      ],
      [
       "back-transition",
       20,
-      40.064580664453594
+      40.22196500217414
      ],
      [
       "descent",
       50.0,
-      30.142285945850148
+      30.226972150217204
      ]
     ],
     "punch": [
@@ -681,7 +686,8 @@
     "r_contact": 0.0008,
     "r_board": 0.0006,
     "v": 14.8,
-    "r_xt30": 0.0024
+    "r_xt30": 0.0024,
+    "drop_allow": 11.520643492002746
    }
   },
   {
@@ -725,11 +731,11 @@
    "outputs": {
     "lead_awg": 10,
     "lead_rise_c": 16.37110345286638,
-    "lead_peak_fault_c": 20.457993363927052,
+    "lead_peak_fault_c": 20.51158252393538,
     "lead_r_loop_mohm": 0.7377994778108008,
     "lead_alt_awg": 12,
     "lead_alt_rise_c": 28.45784867501736,
-    "lead_alt_peak_fault_c": 43.71753692477772,
+    "lead_alt_peak_fault_c": 43.89717124736177,
     "lead_alt_r_loop_mohm": 1.2236397044591412
    },
    "input_values": {
@@ -748,32 +754,32 @@
      [
       "climb 0-50 m",
       25.0,
-      35.54768895031274
+      35.66872519372642
      ],
      [
       "hover",
       120,
-      30.142285945850148
+      30.226972150217204
      ],
      [
       "transition forward",
       20,
-      43.482723517945665
+      43.67148708639382
      ],
      [
       "cruise",
-      380.3419421564585,
-      23.902540402971255
+      378.90927299931326,
+      23.928658809779208
      ],
      [
       "back-transition",
       20,
-      40.064580664453594
+      40.22196500217414
      ],
      [
       "descent",
       50.0,
-      30.142285945850148
+      30.226972150217204
      ]
     ],
     "punch": [
@@ -1016,32 +1022,32 @@
     [
      "climb 0-50 m",
      25.0,
-     35.54768895031274
+     35.66872519372642
     ],
     [
      "hover",
      120,
-     30.142285945850148
+     30.226972150217204
     ],
     [
      "transition forward",
      20,
-     43.482723517945665
+     43.67148708639382
     ],
     [
      "cruise",
-     380.3419421564585,
-     23.902540402971255
+     378.90927299931326,
+     23.928658809779208
     ],
     [
      "back-transition",
      20,
-     40.064580664453594
+     40.22196500217414
     ],
     [
      "descent",
      50.0,
-     30.142285945850148
+     30.226972150217204
     ]
    ]
   },
@@ -1091,7 +1097,7 @@
     "PWR-002"
    ],
    "how": "1.25 x the transition current (20 s); logged in the first transitions (T-B1-TRANSITION-LOG).",
-   "value": 54.35340439743208
+   "value": 54.58935885799227
   },
   {
    "id": "CL-F1-ILIM-WORST",
@@ -1268,7 +1274,7 @@
     "PWR-004"
    ],
    "how": "Log the jumper temperature over a full flight profile on the stand (T-F1-WIRE-HEAT).",
-   "value": 20.457993363927052
+   "value": 20.51158252393538
   },
   {
    "id": "CL-F1-MAIN-MASS",
@@ -1331,7 +1337,7 @@
     "PRP-002-LL"
    ],
    "how": "Same rig: profile replay incl. 2 s at 50 A.",
-   "value": 17.561400356261778
+   "value": 17.62803781167566
   },
   {
    "id": "CL-F1-BUNDLE-RISE",
@@ -1378,7 +1384,7 @@
     "PRP-002-LL"
    ],
    "how": "Same straw rig, profile replay incl. 2 s at 50 A.",
-   "value": 25.10441974322883
+   "value": 25.17405587738903
   },
   {
    "id": "CL-F1-ESC18-RISE",
@@ -1415,11 +1421,11 @@
    "value": 81.69368596148429
   },
   {
-   "id": "CL-F1-ESC-LEN-ALLOW",
+   "id": "CL-F1-ESC-LEN-MAX",
    "type": "claim",
-   "title": "Longest 16 AWG ESC lead that keeps the 100 A drop <= 5 %",
+   "title": "Longest routed 16 AWG ESC lead (F2 cut list)",
    "calc": "CALC-F1-WIRES",
-   "output": "esc_len_allow_m",
+   "output": "esc_len_max_m",
    "unit": "m",
    "parts": [
     "PRP-002-UR",
@@ -1427,8 +1433,45 @@
     "PRP-002-LR",
     "PRP-002-LL"
    ],
+   "how": "Tape measure on the cut pairs; = max of CL-F2-ESC-LEN-UR / UL / LR / LL.",
+   "value": 0.7006309677718234
+  },
+  {
+   "id": "CL-F1-ESC-LEN-ALLOW",
+   "type": "claim",
+   "title": "Longest 16 AWG ESC lead that keeps the 100 A drop within E1's allowable",
+   "calc": "CALC-F1-WIRES",
+   "output": "esc_len_allow_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-F1-ESC-LEN-MAX"
+   },
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
    "how": "F2 cut list: every ESC lead <= this length (CR-F1-25); T-F1-DROP on the longest branch.",
-   "note": "R5: with one XT30U per branch (D-74) the 5 % guideline length is below F2's longest lead; WB-11 makes 5 % a guideline, so this claim carries no limit. Measure the built branch (T-F1-DROP).",
+   "note": "CDR-03 / CDR-EL-04 (2026-11-13): the limit is back. The length is now the one at which the farthest ESC's 100 A drop reaches CL-E1-DROP-ALLOW (the drop at which R-HOVER-TW is just held, on the more pessimistic of E1's two motor bounds), and it must be at least F2's longest lead. R5 had removed the limit when the XT30U (D-74) put the 5 % guideline length below the longest lead; that length is CL-F1-ESC-LEN-5PCT.",
+   "value": 1.9066410806505474
+  },
+  {
+   "id": "CL-F1-ESC-LEN-5PCT",
+   "type": "claim",
+   "title": "Longest 16 AWG ESC lead for a 5 % drop at 100 A (WB-11 guideline, not met)",
+   "calc": "CALC-F1-WIRES",
+   "output": "esc_len_5pct_m",
+   "unit": "m",
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Information: compare with CL-F1-ESC-LEN-MAX. T-F1-DROP on the longest branch.",
+   "note": "All four routed leads (0.564-0.701 m, D-85...D-89) are longer than this: the 5 % guideline is exceeded and accepted (D-74, D-117). No limit here; the limit is on CL-F1-ESC-LEN-ALLOW. Do not go to 14 AWG on the right pair (+26 g REVIEWER EST, CDR-EL-04) unless T-F1-DROP or the stand shows a thrust shortfall.",
    "value": 0.560136307190062
   },
   {
@@ -1486,7 +1529,7 @@
     "PWR-001"
    ],
    "how": "Same rig, profile replay.",
-   "value": 20.457993363927052
+   "value": 20.51158252393538
   },
   {
    "id": "CL-F1-PACKLEAD12-RISE",
@@ -1550,10 +1593,14 @@
   {
    "id": "CL-F1-DROP-PEAK",
    "type": "claim",
-   "title": "Voltage drop pack to the farthest ESC at the 100 A limiter (5 % guideline, WB-11)",
+   "title": "Voltage drop pack to the farthest ESC at the 100 A limiter",
    "calc": "CALC-F1-WIRES",
    "output": "drop_peak_pct",
    "unit": "%",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-E1-DROP-ALLOW"
+   },
    "parts": [
     "PWR-001",
     "PWR-002",
@@ -1565,8 +1612,29 @@
     "PRP-002-LL"
    ],
    "how": "T-F1-DROP scaled with the XT30U plugs in; stand log at full throttle. Go to 14 AWG on the right-hand leads only if the measured drop costs real thrust (WB-11).",
-   "note": "D-74 accepts the XT30U (CL-F1-XT30U-DROP) over F1's 5 % guideline: WB-11 makes 5 % a guideline, not a hardware limit, so this claim carries no limit; the number is the one to measure.",
+   "note": "CDR-03 / CDR-EL-04 (2026-11-13): the limit is back, derived from E1's thrust need: CL-E1-DROP-ALLOW is the 100 A drop at which R-HOVER-TW is just held (worst pack T/W 1.6, fresh 2.0) on the more pessimistic of E1's two motor bounds. Comparing the FARTHEST branch with it is conservative: E1's limit is for the equivalent path of all four. D-74 accepted the XT30U over F1's 5 % guideline (WB-11); R5 then removed the limit instead of replacing it. The guideline is exceeded by CL-F1-DROP-OVER-5PCT and stays F1's design target.",
    "value": 5.680365649079135
+  },
+  {
+   "id": "CL-F1-DROP-OVER-5PCT",
+   "type": "claim",
+   "title": "100 A drop above the 5 % guideline (WB-11), percentage points",
+   "calc": "CALC-F1-WIRES",
+   "output": "drop_peak_over_5pct",
+   "unit": "%",
+   "parts": [
+    "PWR-001",
+    "PWR-002",
+    "PWR-003",
+    "PWR-004",
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Information: T-F1-DROP. Positive = the guideline is exceeded.",
+   "note": "No limit: WB-11 makes 5 % a guideline and D-74 accepted the XT30U. The hard limit is on CL-F1-DROP-PEAK.",
+   "value": 0.6803656490791354
   },
   {
    "id": "CL-F1-XT30U-DROP",

@@ -17,7 +17,7 @@ atts = [(e * math.cos(k * math.pi / 4), e * math.sin(k * math.pi / 4)) for k in 
 dirs = [(math.cos(k * math.pi / 4), math.sin(k * math.pi / 4)) for k in range(8)]
 out = {}
 for tag, m in (("A3 predicted", inp["m_pred"]), ("gate", inp["m_gate"])):
-    vs = [0.9, 1.0, 1.1, 1.2]
+    vs = [round(0.90 + 0.05 * i, 2) for i in range(7)]                    # 0.05 m/s grid (CDR-01 b)
     cs = [dict(m=m, I_scale=m / inp["m_a3"], theta=a, phi=b, v_sink=v, lam=inp["lam"],
                drift=(inp["v_td"] * dx, inp["v_td"] * dy)) for v in vs for (a, b) in atts for (dx, dy) in dirs]
     r = L.simulate(inp, cs, t_end=0.4)

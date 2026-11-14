@@ -427,6 +427,26 @@ def budget_240(m_b, m_p, p_par, **kw):
             "low_mah": fs["low_mah"], "cruise_to_low_min": fs["cruise_to_low_min"]}
 
 
+@kit.calc("CALC-E2-BUDGET-V17", title="Budget at the 17 m/s fallback cruise (D-96 c; planning baseline of CDR decision B6)",
+          assumes=ASSUMES + ["ASM-E2-COLD-R", "ASM-E2-HOVER-MARGIN", "ASM-E1-V-FALLBACK"],
+          equation="as CALC-E2-BUDGET-240 with the params cruise power replaced by E1's 17 m/s point: "
+                   "k = (P_E1(17 m/s) + P_avionics) / P_B1(16 m/s, gate) ; base = B1 level power x k ; pessimistic = "
+                   "B1 pessimistic power x the same k (EST: the pessimistic / base ratio of 16 m/s is carried to "
+                   "17 m/s) ; BATT_LOW count as CALC-E2-FAILSAFE with the 17 m/s cruise current",
+          inputs={"m_b": "CL-A1-MASS-SIZED", "m_p": P + "requirements.mtow_gate_kg",
+                  "p17": "CL-E1-CRUISE-P-55-V17", **COMMON},
+          units={"m_b": "kg", "m_p": "kg", "p17": "W", **CU})
+def budget_v17(m_b, m_p, p17, **kw):
+    k = (p17 + kw["avn"]) / kw["pc_b"]
+    base = budget(m_b, False, p_scale=k, **kw)
+    pess = budget(m_p, True, p_scale=k, **kw)
+    fs = failsafe_rows(pess["phases"], kw["ah"], kw["reserve"])
+    return {"k": k, "p_carried_w": p17 + kw["avn"], "cruise_min_base": base["cruise_min"],
+            "cruise_min_pess": pess["cruise_min"], "cruise_w_base": base["cruise_w"],
+            "cruise_w_pess": pess["cruise_w"], "cruise_a_pess": pess["cruise_a"],
+            "low_mah": fs["low_mah"], "cruise_to_low_min": fs["cruise_to_low_min"]}
+
+
 # ---------------------------------------------------------------- claims
 def table_out(calc, title):
     return dict(calc=calc, output="phases", unit="-", how=f"{title}: compare each row with the DataFlash log "
@@ -608,6 +628,30 @@ kit.test("T-E2-MISSION-LOG", "Full-mission current log", verifies=["CL-E2-CRUISE
          "CL-E2-I-TRANS-BACK-PESS", "CL-E2-I-DESCENT-PESS", "CL-E2-I-MAX-PHASE-PESS"], state="planned",
          procedure="DataFlash BAT messages; IR thermometer on pack before/after; compare row by row with the phase table.")
 
+# ---- CDR-05 / CDR-AE-09 (2026-11-13): the 17 m/s fallback of D-96 (c), which decision B6 makes the planning case
+V17_NOTE = ("17 m/s is AIRSPEED_MIN = AIRSPEED_CRUISE if the stall is the tripped 12.85 m/s (D-96 c; CDR decision B6 "
+            "plans on it until T-B2-STALL). Cruise power = E1's 17 m/s point (CL-E1-CRUISE-P-55-V17) + 6 W avionics, "
+            "carried through the same chain as the 253 W case; the pessimistic case scales B1's pessimistic power "
+            "by the same factor (EST). performance.cruise_ms stays 16 until A1 changes it. The way out is the prop "
+            "A/B on the stand (CDR-04: 11x7E, about -28 % cruise power, REVIEWER EST), not this model")
+kit.claim("CL-E2-CRUISE-MIN-BASE-V17", "Cruise after 2 min hover to the 20 % line, base, at the 17 m/s fallback",
+          calc="CALC-E2-BUDGET-V17", output="cruise_min_base", unit="min",
+          limit=(">=", P + "requirements.cruise_time_min"), note=V17_NOTE, how="As CL-E2-CRUISE-MIN-BASE at 17 m/s.")
+kit.claim("CL-E2-CRUISE-MIN-PESS-V17", "Cruise after 2 min hover to the 20 % line, pessimistic, at the 17 m/s fallback",
+          calc="CALC-E2-BUDGET-V17", output="cruise_min_pess", unit="min",
+          limit=(">=", P + "requirements.cruise_time_min"), note=V17_NOTE,
+          how="As CL-E2-CRUISE-MIN-PESS at 17 m/s (T-E2-MISSION-LOG decides).")
+kit.claim("CL-E2-CRUISE-TO-LOW-PESS-V17", "Cruise at 17 m/s before BATT_LOW triggers, pessimistic",
+          calc="CALC-E2-BUDGET-V17", output="cruise_to_low_min", unit="min",
+          limit=(">=", P + "requirements.cruise_time_min"), verifies=["R-MISSION"], note=V17_NOTE,
+          how="SITL with the logged currents at AIRSPEED_CRUISE 17: QRTL must not trigger before 5 min of cruise; "
+              "first logged cruise current (T-E2-MISSION-LOG).")
+kit.claim("CL-E2-BATT-LOW-MAH-V17", "BATT_LOW_MAH needed with the 17 m/s cruise current (60 s return leg)",
+          calc="CALC-E2-BUDGET-V17", output="low_mah", unit="mAh", note=V17_NOTE,
+          how="Compare with CL-E2-BATT-LOW-MAH; F4 sets the larger if AIRSPEED_CRUISE goes to 17.")
+kit.claim("CL-E2-CRUISE-W-PESS-V17", "Cruise bus power, pessimistic, at the 17 m/s fallback", calc="CALC-E2-BUDGET-V17",
+          output="cruise_w_pess", unit="W", note=V17_NOTE, how="Logged pack power in 17 m/s legs (T-E2-MISSION-LOG).")
+
 
 if __name__ == "__main__":
     kit.write()
@@ -628,4 +672,5 @@ if __name__ == "__main__":
         print(cid, "E2 cross-check cruise W", round(kit.nodes[cid]["outputs"]["cruise_w_e2_model"], 1))
     print("SKU", kit.nodes["CALC-E2-SKU-CHECK"]["outputs"])
     print("AT PARAMS CRUISE W", {k: round(v, 3) for k, v in kit.nodes["CALC-E2-BUDGET-240"]["outputs"].items()})
+    print("AT 17 M/S FALLBACK", {k: round(v, 3) for k, v in kit.nodes["CALC-E2-BUDGET-V17"]["outputs"].items()})
     print("PACK LOG", f"{len(WEIGHED)} weighed pack(s)" if WEIGHED else "no pack weighed yet (order ~20 Nov)")

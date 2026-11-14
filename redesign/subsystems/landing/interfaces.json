@@ -8,12 +8,12 @@
    "name": "Foot shoe UR",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 9.98,
+   "mass_g": 12.71,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2978,
+    0.2962,
     0.32,
-    0.2079
+    0.2023
    ],
    "make_or_buy": "make",
    "notes": "sleeve 19.1 x 14.4 mm, 1.2 mm walls with R 2.0 inside fillets, short snap windows, on the half-fin TE step; back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the edge-strip ends, rim at the sleeve end 4.6 mm on the y sides, 3.4 mm roof, 0.4 mm floor (R8, CR-H1-22); permanent; includes 0.35 g epoxy (upper right); mass EST from CALC-D5-MASS"
@@ -23,12 +23,12 @@
    "name": "Foot shoe UL",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 9.98,
+   "mass_g": 12.71,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2978,
+    0.2962,
     -0.32,
-    0.2079
+    0.2023
    ],
    "make_or_buy": "make",
    "notes": "sleeve 19.1 x 14.4 mm, 1.2 mm walls with R 2.0 inside fillets, short snap windows, on the half-fin TE step; back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the edge-strip ends, rim at the sleeve end 4.6 mm on the y sides, 3.4 mm roof, 0.4 mm floor (R8, CR-H1-22); permanent; includes 0.35 g epoxy (upper left); mass EST from CALC-D5-MASS"
@@ -38,12 +38,12 @@
    "name": "Foot shoe LR",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 9.98,
+   "mass_g": 12.71,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2978,
+    0.2962,
     0.32,
-    -0.2079
+    -0.2023
    ],
    "make_or_buy": "make",
    "notes": "sleeve 19.1 x 14.4 mm, 1.2 mm walls with R 2.0 inside fillets, short snap windows, on the half-fin TE step; back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the edge-strip ends, rim at the sleeve end 4.6 mm on the y sides, 3.4 mm roof, 0.4 mm floor (R8, CR-H1-22); permanent; includes 0.35 g epoxy (lower right); mass EST from CALC-D5-MASS"
@@ -53,12 +53,12 @@
    "name": "Foot shoe LL",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 9.98,
+   "mass_g": 12.71,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2978,
+    0.2962,
     -0.32,
-    -0.2079
+    -0.2023
    ],
    "make_or_buy": "make",
    "notes": "sleeve 19.1 x 14.4 mm, 1.2 mm walls with R 2.0 inside fillets, short snap windows, on the half-fin TE step; back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the edge-strip ends, rim at the sleeve end 4.6 mm on the y sides, 3.4 mm roof, 0.4 mm floor (R8, CR-H1-22); permanent; includes 0.35 g epoxy (lower left); mass EST from CALC-D5-MASS"
@@ -343,12 +343,12 @@
    "subsystem": "landing",
    "status": "MODELLED",
    "flight": false,
-   "mass_g": 9.63,
+   "mass_g": 12.36,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1577,
+    0.1561,
     0.85,
-    -0.0987
+    -0.0928
    ],
    "make_or_buy": "make",
    "notes": "GROUND ITEM, not flying (CR-A3-18): qty 2 per kit line in parts.csv, one node per line, mass per unit; CAD: one representative unit in the field-kit row at y 0.85 (landing.kit, a layout convention for the TRN-108 spares box, CR-A4-39); ground spare, not flying"
@@ -422,10 +422,10 @@
    "notes": "shoe bonded on the half-fin TE step (D3 cuts the tip to |z| 0.2010 from x 0.2614 to the TE, CR-D5-11): sleeve floor on the step edge, legs 7 mm down both faces, back wall on the step front and the strip end faces, collar cheeks over both edge-strip ends (CR-C4-09). Permanent; a broken shoe is cut off with a razor saw and a spare bonded (24 h cure)",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 1657,
+    "area_mm2": 4343,
     "prep": "board paper scuffed 220 grit, not torn; cut foam edge and CF strip ends wiped with IPA; PETG 120 grit",
     "cure": "24 h at >= 18 degC before load",
-    "load_n": "115.7 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 1.43 at 0.10 MPa (CL-D5-BOND-SF)",
+    "load_n": "94.8 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 4.58 at 0.10 MPa (CL-D5-BOND-SF)",
     "load_case": "L1 (landing, C1) with the C5 biased upper foot",
     "sized_by": "D5, C6"
    }
@@ -436,7 +436,7 @@
    "part_b": "GER-001-UR",
    "via": "CT-GER-CRUSH-SLIDE",
    "owner": "landing",
-   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 59.2 N ult (C5 3-D sim, D-65), lip reaction 131 N, shoe RF 1.27 by D5 FEA (CL-D5-SIDE-RIM-SF)",
+   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 36.8 N ult (C5 3-D sim, D-65), lip reaction 81 N, shoe RF 2.04 by D5 FEA (CL-D5-SIDE-RIM-SF)",
    "retention": {
     "item": "2 PETG snap fingers 6.5 x 5 x 0.8 mm, 0.6 mm ramped hooks (CR-C6-12)",
     "count": 2,
@@ -473,7 +473,7 @@
     "area_mm2": 340,
     "prep": "IPA wipe",
     "cure": "press 30 s; 1 h before flight",
-    "load_n": "side friction 39.5 N limit (C5 3-D sim, mu 0.7) in shear",
+    "load_n": "side friction 24.5 N limit (C5 3-D sim, mu 0.7) in shear",
     "load_case": "L4/L5 (C1), CR-C5-09",
     "sized_by": "D5"
    }
@@ -501,10 +501,10 @@
    "notes": "shoe bonded on the half-fin TE step (D3 cuts the tip to |z| 0.2010 from x 0.2614 to the TE, CR-D5-11): sleeve floor on the step edge, legs 7 mm down both faces, back wall on the step front and the strip end faces, collar cheeks over both edge-strip ends (CR-C4-09). Permanent; a broken shoe is cut off with a razor saw and a spare bonded (24 h cure)",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 1657,
+    "area_mm2": 4343,
     "prep": "board paper scuffed 220 grit, not torn; cut foam edge and CF strip ends wiped with IPA; PETG 120 grit",
     "cure": "24 h at >= 18 degC before load",
-    "load_n": "115.7 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 1.43 at 0.10 MPa (CL-D5-BOND-SF)",
+    "load_n": "94.8 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 4.58 at 0.10 MPa (CL-D5-BOND-SF)",
     "load_case": "L1 (landing, C1) with the C5 biased upper foot",
     "sized_by": "D5, C6"
    }
@@ -515,7 +515,7 @@
    "part_b": "GER-001-UL",
    "via": "CT-GER-CRUSH-SLIDE",
    "owner": "landing",
-   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 59.2 N ult (C5 3-D sim, D-65), lip reaction 131 N, shoe RF 1.27 by D5 FEA (CL-D5-SIDE-RIM-SF)",
+   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 36.8 N ult (C5 3-D sim, D-65), lip reaction 81 N, shoe RF 2.04 by D5 FEA (CL-D5-SIDE-RIM-SF)",
    "retention": {
     "item": "2 PETG snap fingers 6.5 x 5 x 0.8 mm, 0.6 mm ramped hooks (CR-C6-12)",
     "count": 2,
@@ -552,7 +552,7 @@
     "area_mm2": 340,
     "prep": "IPA wipe",
     "cure": "press 30 s; 1 h before flight",
-    "load_n": "side friction 39.5 N limit (C5 3-D sim, mu 0.7) in shear",
+    "load_n": "side friction 24.5 N limit (C5 3-D sim, mu 0.7) in shear",
     "load_case": "L4/L5 (C1), CR-C5-09",
     "sized_by": "D5"
    }
@@ -580,10 +580,10 @@
    "notes": "shoe bonded on the half-fin TE step (D3 cuts the tip to |z| 0.2010 from x 0.2614 to the TE, CR-D5-11): sleeve floor on the step edge, legs 7 mm down both faces, back wall on the step front and the strip end faces, collar cheeks over both edge-strip ends (CR-C4-09). Permanent; a broken shoe is cut off with a razor saw and a spare bonded (24 h cure)",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 1657,
+    "area_mm2": 4343,
     "prep": "board paper scuffed 220 grit, not torn; cut foam edge and CF strip ends wiped with IPA; PETG 120 grit",
     "cure": "24 h at >= 18 degC before load",
-    "load_n": "115.7 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 1.43 at 0.10 MPa (CL-D5-BOND-SF)",
+    "load_n": "94.8 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 4.58 at 0.10 MPa (CL-D5-BOND-SF)",
     "load_case": "L1 (landing, C1) with the C5 biased upper foot",
     "sized_by": "D5, C6"
    }
@@ -594,7 +594,7 @@
    "part_b": "GER-001-LR",
    "via": "CT-GER-CRUSH-SLIDE",
    "owner": "landing",
-   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 59.2 N ult (C5 3-D sim, D-65), lip reaction 131 N, shoe RF 1.27 by D5 FEA (CL-D5-SIDE-RIM-SF)",
+   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 36.8 N ult (C5 3-D sim, D-65), lip reaction 81 N, shoe RF 2.04 by D5 FEA (CL-D5-SIDE-RIM-SF)",
    "retention": {
     "item": "2 PETG snap fingers 6.5 x 5 x 0.8 mm, 0.6 mm ramped hooks (CR-C6-12)",
     "count": 2,
@@ -631,7 +631,7 @@
     "area_mm2": 340,
     "prep": "IPA wipe",
     "cure": "press 30 s; 1 h before flight",
-    "load_n": "side friction 39.5 N limit (C5 3-D sim, mu 0.7) in shear",
+    "load_n": "side friction 24.5 N limit (C5 3-D sim, mu 0.7) in shear",
     "load_case": "L4/L5 (C1), CR-C5-09",
     "sized_by": "D5"
    }
@@ -659,10 +659,10 @@
    "notes": "shoe bonded on the half-fin TE step (D3 cuts the tip to |z| 0.2010 from x 0.2614 to the TE, CR-D5-11): sleeve floor on the step edge, legs 7 mm down both faces, back wall on the step front and the strip end faces, collar cheeks over both edge-strip ends (CR-C4-09). Permanent; a broken shoe is cut off with a razor saw and a spare bonded (24 h cure)",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 1657,
+    "area_mm2": 4343,
     "prep": "board paper scuffed 220 grit, not torn; cut foam edge and CF strip ends wiped with IPA; PETG 120 grit",
     "cure": "24 h at >= 18 degC before load",
-    "load_n": "115.7 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 1.43 at 0.10 MPa (CL-D5-BOND-SF)",
+    "load_n": "94.8 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 4.58 at 0.10 MPa (CL-D5-BOND-SF)",
     "load_case": "L1 (landing, C1) with the C5 biased upper foot",
     "sized_by": "D5, C6"
    }
@@ -673,7 +673,7 @@
    "part_b": "GER-001-LL",
    "via": "CT-GER-CRUSH-SLIDE",
    "owner": "landing",
-   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 59.2 N ult (C5 3-D sim, D-65), lip reaction 131 N, shoe RF 1.27 by D5 FEA (CL-D5-SIDE-RIM-SF)",
+   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 36.8 N ult (C5 3-D sim, D-65), lip reaction 81 N, shoe RF 2.04 by D5 FEA (CL-D5-SIDE-RIM-SF)",
    "retention": {
     "item": "2 PETG snap fingers 6.5 x 5 x 0.8 mm, 0.6 mm ramped hooks (CR-C6-12)",
     "count": 2,
@@ -710,7 +710,7 @@
     "area_mm2": 340,
     "prep": "IPA wipe",
     "cure": "press 30 s; 1 h before flight",
-    "load_n": "side friction 39.5 N limit (C5 3-D sim, mu 0.7) in shear",
+    "load_n": "side friction 24.5 N limit (C5 3-D sim, mu 0.7) in shear",
     "load_case": "L4/L5 (C1), CR-C5-09",
     "sized_by": "D5"
    }

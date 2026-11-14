@@ -13,7 +13,7 @@ inp = L.inputs()
 usable = inp["s_av"] - inp["guard"]
 out = {}
 for tag, m in (("A3 basic", inp["m_a3"]), ("gate", inp["m_gate"])):
-    cs, vs = [], [0.8, 0.9, 1.0, 1.1, 1.2, 1.3]
+    cs, vs = [], [round(0.80 + 0.05 * i, 2) for i in range(11)]          # 0.05 m/s grid (CDR-01 b)
     for v in vs:
         cs += L.disc_cases(inp, m, m / inp["m_a3"], inp["lam"], v, mags=(inp["err"],), n_az=24)
     r = L.simulate(inp, cs)

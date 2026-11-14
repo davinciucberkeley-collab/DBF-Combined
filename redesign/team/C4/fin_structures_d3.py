@@ -135,15 +135,18 @@ asm("ASM-C4-SWIRL-SCALE", "Swirl side force scales with thrust (exponent 1)",
     "F_swirl(T) = F_swirl(T_hover) (T / T_hover)^1, T_hover = m_gate g / 4",
     "fixed prop: thrust and torque both go as n^2, and the swirl momentum flux goes as the torque; C4 choice, "
     "conservative against B4's hover-only number", 1.0, "-", status="PROPOSED")
-asm("ASM-C4-SHOE-Z0", "D5 shoe cheeks reach down to |z| 0.196 m",
-    "Lowest |z| of the D5 shoe cheeks bonded to both board faces; with fin_detail.fin.tip_clear_x_m (x >= 0.2666) it "
-    "bounds the region modelled as one rigid body with the strip ends bonded into the shoe back wall",
-    "team/D5/CHANGE-REQUESTS.md CR-D5-11 ('nothing else on x >= 0.2666 m, |z| >= 0.196 m', cheeks 17 x 51 mm, strip "
-    "termination bonded into the shoe); subsystems/fins/params.json fin_detail.fin.tip_clear_x_m note", 0.196, "m",
+asm("ASM-C4-SHOE-Z0", "Stiff zone of the D5 shoe down to |z| 0.196 m (sleeve, step, collar cheeks)",
+    "Lowest |z| of the part of the D5 shoe that is stiff enough to count as one rigid body with the board in the "
+    "stiffness and modal models: the sleeve on the step edge, the back wall and the collar cheeks over the strip "
+    "ends, with fin_detail.fin.tip_clear_x_m (x >= 0.2666). The 0.8 mm legs below it (to |z| 0.171 since D-106) add "
+    "mass (CL-D5-MASS-FOOT) but are not counted as stiffness here",
+    "team/D5/CHANGE-REQUESTS.md CR-D5-11 (cheeks 17 x 51 mm, strip termination bonded into the shoe). Counting the "
+    "30 mm legs as rigid raised the first station mode and lowered CL-C4-D3-TUBE-E-REQ from 78.6 to 66.6 GPa, which "
+    "a pair of 0.8 mm PETG skins cannot do; the modal models therefore keep 0.196", 0.196, "m",
     status="PROPOSED")
-asm("ASM-C4-SHOE-Z0-PROP", "Proposed D5 shoe cheeks down to |z| 0.171 m (CR-C4-30)",
-    "C4 sizing proposal: the two D5 shoe cheeks (x >= fin_detail.fin.tip_clear_x_m) extended 25 mm toward the wing, bonded to both board faces, so the foot side load enters the board below the strip ends",
-    "C4 R4 sweep (out/results_d3.json shoe_sweep, mesh 36 x 30): |z| 0.196 (as drawn) MS -0.5, 0.176 about 0, 0.171 positive with the LE root governing; a D5 printed part, D5 confirms fit and mass", 0.171, "m", status="PROPOSED")
+asm("ASM-C4-SHOE-Z0-PROP", "D5 shoe legs down to |z| 0.171 m: drawn since D-106 (CR-C4-30)",
+    "The two D5 shoe legs (x >= fin_detail.fin.tip_clear_x_m) reach 30 mm below the step, bonded to both board faces, so the foot side load enters the board below the strip ends. Static face-stress model only (CALC-C4-D3-SHOE)",
+    "D-106 (CDR-01 d): subsystems/landing/params.json landing.shoe.leg_depth_m 0.030: step 0.2010 + glue 0.0002 - 0.030 = 0.1712 m. C4 R4 sweep (out/results_d3.json shoe_sweep, mesh 36 x 30): |z| 0.196 MS -0.5, 0.176 about 0, 0.171 positive with the LE root governing", 0.171, "m", status="PROPOSED")
 asm("ASM-C4-ASA-BEARING", "ASA printed bearing allowable 30 MPa",
     "Compressive bearing allowable of the printed ASA lip cap on the tube end",
     "ASA filament TDS compressive strength 50-60 MPa x 0.5 for layer lines and voids; G3 coupon not planned "
@@ -1246,8 +1249,8 @@ kit.claim("CL-C4-D3-MESH-CONV", "Mesh convergence of the station modes, D3 quart
           output="change", unit="-", limit=("<=", 0.03), how="Meshes 6x5, 12x10, 24x20 on both quarters.")
 kit.claim("CL-C4-D3-SEP-1L", "Mode separation with one board layer (rejected option), R3 geometry, nominal",
           calc="CALC-C4-D3-MODES",
-          output="sep_op", unit="-", limit=(">=", LIMIT_SEP), parts=TUBES + HALF + BRACE + MOUNT, how=TAP,
-          note="FAILS: motor twist about the tube coupled with fore-aft nodding near 2P cruise (200 Hz); the one-layer "
+          output="sep_op", unit="-",  parts=TUBES + HALF + BRACE + MOUNT, how=TAP,
+          note="C4-R6: record, limit removed (rejected one-layer option). FAILS: motor twist about the tube coupled with fore-aft nodding near 2P cruise (200 Hz); the one-layer "
                "board stores 45-70 % of the strain energy. Not the design of record: see CL-C4-D3-SEP.")
 kit.claim("CL-C4-D3-F1-1L", "First station mode with one board layer (rejected option), lower quarter",
           calc="CALC-C4-D3-MODES", output="f1_lo", unit="Hz", parts=TUBES + HALF, how=TAP)
@@ -1281,9 +1284,9 @@ kit.claim("CL-C4-D3-TUBE-G-REQ", "Least tube shear modulus for 20 % station-mode
 kit.claim("CL-C4-D3-SEP-WHIRL", "Whirl separation incl. prop gyroscopics, recommended design", calc="CALC-C4-D3-CAMPBELL",
           output="sep_whirl", unit="-", limit=(">=", LIMIT_SEP), verifies=R_VIB, parts=TUBES, how=TAP)
 kit.claim("CL-C4-D3-SEP-BAND", "Separation from the whole 80-330 Hz band (B4 rule), recommended design",
-          calc="CALC-C4-D3-MODES-REC", output="sep_band", unit="-", limit=(">=", LIMIT_SEP), parts=TUBES,
+          calc="CALC-C4-D3-MODES-REC", output="sep_band", unit="-",  parts=TUBES,
           how="Needs every station mode >= 396 Hz; R-VIBRATION (operating points) is the criterion of record (CR-C4-06).",
-          note="FAILS by design intent: no buildable 22 mm tube station reaches 396 Hz; rpm-tracking notch is the backup.")
+          note="C4-R6: record, limit removed. R-VIBRATION is judged at the operating points (CL-C4-D3-SEP, CL-C4-SIM-SEP), not on the whole band (CR-C4-06). FAILS by design intent: no buildable 22 mm tube station reaches 396 Hz; rpm-tracking notch is the backup.")
 kit.claim("CL-C4-D3-MOUNT-K-REQ", "Mount rocking stiffness needed for 20 % separation, nominal tube E,G (D-93: the "
           "low E/G corner is closed on the measured tube, CL-C4-D3-TUBE-E-REQ)",
           calc="CALC-C4-D3-MOUNT-K", output="k_req_nom", unit="N m/rad", limit=("<=", "ASM-C4-MOUNT-K-ROCK"),
@@ -1303,8 +1306,9 @@ kit.claim("CL-C4-D3-MOUNT-K-EST-CHANGE", "Change of the mount stiffness estimate
           how="T-C4-MOUNT-STIFF on the R5 print.")
 kit.claim("CL-C4-D3-MS-FACE", "Fin face margin as drawn (D5 cheeks to |z| 0.196): min(intact at ultimate, LE fillet "
           "cracked at limit), both quarters", calc="CALC-C4-D3-STATIC",
-          output="ms_face", unit="-", limit=(">=", 0.0), verifies=R_SM, parts=HALF,
-          how="T-C4-BOARD-COUPON for the face allowable; T-C4-FIN-PROOF at 1.5 x L4.")
+          output="ms_face", unit="-",  verifies=R_SM, parts=HALF,
+          how="T-C4-BOARD-COUPON for the face allowable; T-C4-FIN-PROOF at 1.5 x L4.",
+          note="C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.")
 kit.claim("CL-C4-D3-MS-EDGE", "Edge-strip margin, recommended design", calc="CALC-C4-D3-STATIC", output="ms_edge", unit="-",
           limit=(">=", 0.0), verifies=R_SM, parts=HALF, how="T-C4-FIN-PROOF.")
 kit.claim("CL-C4-D3-MS-TUBE", "Motor tube bending margin at the bore end", calc="CALC-C4-D3-STATIC", output="ms_tube",
@@ -1348,8 +1352,9 @@ kit.claim("CL-C4-D3-SIDE-LOAD", "Foot side load used, limit: max(friction 0.7 x 
 kit.claim("CL-C4-D3-STRIP-Q", "Edge-strip-to-paper shear flow per face, limit, FE (CR-C6-02a)", calc="CALC-C4-D3-STATIC",
           output="strip_q_lim_npm", unit="N/m", parts=HALF, how="T-C4-FIN-PROOF: no strip lift; T-C6-BOARD-LAP.")
 kit.claim("CL-C4-D3-MS-STRIP-PAPER", "Edge strip bonded to the paper face only (no pins): margin on the paper-to-foam "
-          "shear", calc="CALC-C4-D3-STATIC", output="ms_strip_paper", unit="-", limit=(">=", 0.0), verifies=R_SM,
-          parts=HALF, how="T-C6-BOARD-LAP for the allowable; T-C4-FIN-PROOF at 1.5 x L4.")
+          "shear", calc="CALC-C4-D3-STATIC", output="ms_strip_paper", unit="-",  verifies=R_SM,
+          parts=HALF, how="T-C6-BOARD-LAP for the allowable; T-C4-FIN-PROOF at 1.5 x L4.",
+          note="C4-R6: record, limit removed. Hypothetical strip with no pins; the drawn strips carry 2.5 mm through-pins at 15 mm (CL-C6-STRIP-PIN-RF), which is why this claim exists.")
 kit.claim("CL-C4-D3-STRIP-END-F", "Edge-strip force per face at the collar end, design (for C6's tail anchorage)",
           calc="CALC-C4-D3-STATIC", output="strip_end_face_design_n", unit="N", parts=COLLAR + HALF,
           how="T-C6-STRIP-ANCHOR.", note="Replaces the 1 348 N C6 derived from the strip allowable (CR-C6-01).")
@@ -1405,8 +1410,7 @@ kit.claim("CL-C4-D3-SPAR-COUPLE", "Bearing couple on the spar at each block (des
           calc="CALC-C4-D3-BLOCK", output="spar_couple_n", unit="N", parts=BLOCK, how="C2 spar crushing check (CR-C4-02).")
 
 kit.claim("CL-C4-D3-MS-FACE-ROOT-FREE", "Fin face margin with the root fillet absent (primary path only), D5 shoe "
-          "as drawn, ultimate (CR-C2-12)", calc="CALC-C4-D3-STATIC", output="ms_face_rootfree_ult", unit="-",
-          limit=(">=", 0.0), parts=HALF, how="T-C4-FIN-PROOF on the test article built without the root fillet.")
+          "as drawn, ultimate (CR-C2-12)", calc="CALC-C4-D3-STATIC", output="ms_face_rootfree_ult", unit="-",  parts=HALF, how="T-C4-FIN-PROOF on the test article built without the root fillet.")
 for fam, fam_t in (("L4", "L4 corner + side, worst quarter and sense"), ("G2", "G2 tube-end lateral, worst quarter "
                                                                             "and sense")):
     f = fam.lower()
@@ -1421,8 +1425,8 @@ for fam, fam_t in (("L4", "L4 corner + side, worst quarter and sense"), ("G2", "
             out_key = f"fillet_{f}_{sg.lower()}_{comp.lower()}_{'nm' if u == 'N m' else 'n'}"
             kit.claim(f"CL-C4-D3-FILLET-{fam}-{sg}-{comp}", f"Root fillet intact, {fam}, {sg_t}: {comp_t} into the "
                       f"wing, limit (CR-C2-12)", calc="CALC-C4-D3-STATIC", output=out_key, unit=u, parts=HALF,
-                      how="C2 FEA input; T-C1-WING-PROOF.")
-
+                      how="C2 FEA input; T-C1-WING-PROOF.",
+          note="C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.")
 kit.claim("CL-C4-D3-FINS-MASS", "Fins subsystem mass, recommended design (D3 CAD + second board layer)",
           calc="CALC-C4-D3-MASS", output="total_g", unit="g", limit=("<=", P + "mass.allocation_g.fins"),
           parts=HALF, how="T-D3-WEIGH; A3 roll-up.",
@@ -1462,20 +1466,23 @@ kit.claim("CL-C4-D3-BRACE-ROUND-I", "Weak-axis I of the 10 x 2 brace with both e
 kit.claim("CL-C4-D3-BRACE-ROUND-MS", "Brace buckling margin if the 10 x 2 edges are sanded round (G2 design)",
           calc="CALC-C4-D3-BRACE-TRADE", output="ms_buckle_t2_round", unit="-", limit=(">=", 0.0), parts=BRACE,
           how="T-C4-FIN-PROOF G2 both senses.")
-kit.claim("CL-C4-D3-MS-FACE-SHOE", "Fin face margin with the D5 shoe cheeks to |z| 0.171 m (CR-C4-30), 36 x 30 mesh",
-          calc="CALC-C4-D3-SHOE", output="ms_face_prop", unit="-", limit=(">=", 0.0), verifies=R_SM, parts=HALF,
-          how="T-C4-FIN-PROOF with the extended shoe; T-C4-BOARD-COUPON for the face allowable.")
+kit.claim("CL-C4-D3-MS-FACE-SHOE", "Fin face margin, shell model, D5 shoe legs to |z| 0.171 m as drawn (D-106), 36 x 30 mesh",
+          calc="CALC-C4-D3-SHOE", output="ms_face_prop", unit="-",  verifies=R_SM, parts=HALF,
+          how="T-C4-FIN-PROOF with the extended shoe; T-C4-BOARD-COUPON for the face allowable.",
+          note="C4-R6 (CDR-01 e): record, limit removed. The shell model's largest face stress sits at the end of the rigid LE link (x 0.060) and at the rigid shoe edge, two idealised corners where it rises with every mesh level. The 3-D solid model has the collar tail tongue and the LE fillet zone at their own stiffness and converges away from the shoe; its claims carry the limit: CL-C4-SIM-MS-FACE-FAR (whole face, one laminate thickness clear of the shoe and clamps) and CL-C4-SIM-MS-FACE-DRAWN (IIW hot spot at the leg edge). T-C4-FIN-PROOF decides.")
 kit.claim("CL-C4-D3-MS-FACE-SHOE-INTACT", "Fin face margin, cheeks to |z| 0.171 m, LE fillet intact, ultimate",
-          calc="CALC-C4-D3-SHOE", output="ms_face_intact_prop", unit="-", limit=(">=", 0.0), parts=HALF,
-          how="T-C4-FIN-PROOF (bonded quarter) at 1.5 x L4.")
+          calc="CALC-C4-D3-SHOE", output="ms_face_intact_prop", unit="-",  parts=HALF,
+          how="T-C4-FIN-PROOF (bonded quarter) at 1.5 x L4.",
+          note="C4-R6 (CDR-01 e): record, limit removed. The shell model's largest face stress sits at the end of the rigid LE link (x 0.060) and at the rigid shoe edge, two idealised corners where it rises with every mesh level. The 3-D solid model has the collar tail tongue and the LE fillet zone at their own stiffness and converges away from the shoe; its claims carry the limit: CL-C4-SIM-MS-FACE-FAR (whole face, one laminate thickness clear of the shoe and clamps) and CL-C4-SIM-MS-FACE-DRAWN (IIW hot spot at the leg edge). T-C4-FIN-PROOF decides.")
 kit.claim("CL-C4-D3-MS-FACE-SHOE-FS", "Fin face margin, cheeks to |z| 0.171 m, LE fillet cracked (fail-safe), limit",
-          calc="CALC-C4-D3-SHOE", output="ms_face_failsafe_prop", unit="-", limit=(">=", 0.0), parts=HALF,
+          calc="CALC-C4-D3-SHOE", output="ms_face_failsafe_prop", unit="-",  parts=HALF,
           how="T-C4-FIN-PROOF: the test-article quarter is built with the LE fillet unbonded.",
-          note="Peak at the end of the bonded LE band (x 0.060, z 0.033 / 0.149): a corner that does not converge "
+          note="C4-R6 (CDR-01 e): record, limit removed. The shell model's largest face stress sits at the end of the rigid LE link (x 0.060) and at the rigid shoe edge, two idealised corners where it rises with every mesh level. The 3-D solid model has the collar tail tongue and the LE fillet zone at their own stiffness and converges away from the shoe; its claims carry the limit: CL-C4-SIM-MS-FACE-FAR (whole face, one laminate thickness clear of the shoe and clamps) and CL-C4-SIM-MS-FACE-DRAWN (IIW hot spot at the leg edge). T-C4-FIN-PROOF decides. Peak at the end of the bonded LE band (x 0.060, z 0.033 / 0.149): a corner that does not converge "
                "with mesh (24 x 20: 7.9, 36 x 30: 9.9 MPa limit); the test decides.")
 kit.claim("CL-C4-D3-MS-FACE-DRAWN-FINE", "Fin face margin with the shoe cheeks as drawn (|z| 0.196), 36 x 30 mesh",
-          calc="CALC-C4-D3-SHOE", output="ms_face_drawn_fine", unit="-", limit=(">=", 0.0), parts=HALF,
-          how="Mesh check of CL-C4-D3-MS-FACE (24 x 20); both fail.")
+          calc="CALC-C4-D3-SHOE", output="ms_face_drawn_fine", unit="-",  parts=HALF,
+          how="Mesh check of CL-C4-D3-MS-FACE (24 x 20); both fail.",
+          note="C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.")
 kit.claim("CL-C4-D3-SHOE-EXT", "D5 shoe cheek extension toward the wing needed (CR-C4-30)", calc="CALC-C4-D3-SHOE",
           output="cheek_extension_m", unit="m", parts=HALF, how="D5 CAD: cheek lower edge at |z| <= 0.171 m.")
 kit.claim("CL-C4-D3-BRACE-TAPE-MASS", "Tape fairing on four braces (CR-B1-18), mass", calc="CALC-C4-D3-BRACE-TRADE",
