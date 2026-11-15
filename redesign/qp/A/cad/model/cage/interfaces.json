@@ -4,10 +4,10 @@
  "parts": [
   {
    "id": "CGE-001",
-   "name": "Hub disc (printed shell, envelope)",
+   "name": "Hub disc (printed shell, envelope; QP-4 FIXES: 16 -> 13 g, 2 perimeters, 10 % infill, EST)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 16.0,
+   "mass_g": 13.0,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.075,
@@ -34,10 +34,10 @@
   },
   {
    "id": "CGE-003-UR",
-   "name": "Motor cup (UR)",
+   "name": "Motor cup (UR; QP-4 FIXES 5 -> 4 g, EST, C1 to re-check prop-strike)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 5.0,
+   "mass_g": 4.0,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0798,
@@ -64,10 +64,10 @@
   },
   {
    "id": "CGE-003-UL",
-   "name": "Motor cup (UL)",
+   "name": "Motor cup (UL; QP-4 FIXES 5 -> 4 g, EST, C1 to re-check prop-strike)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 5.0,
+   "mass_g": 4.0,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0798,
@@ -94,10 +94,10 @@
   },
   {
    "id": "CGE-003-LR",
-   "name": "Motor cup (LR)",
+   "name": "Motor cup (LR; QP-4 FIXES 5 -> 4 g, EST, C1 to re-check prop-strike)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 5.0,
+   "mass_g": 4.0,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0798,
@@ -124,10 +124,10 @@
   },
   {
    "id": "CGE-003-LL",
-   "name": "Motor cup (LL)",
+   "name": "Motor cup (LL; QP-4 FIXES 5 -> 4 g, EST, C1 to re-check prop-strike)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 5.0,
+   "mass_g": 4.0,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0798,
@@ -232,7 +232,7 @@
    "name": "Pack tray (66 x 109 mm plate, trim slots; 4.0 g at 44 mm scaled by plate area + longer walls, EST)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 5.3,
+   "mass_g": 3.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0114,

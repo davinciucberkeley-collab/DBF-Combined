@@ -4,11 +4,11 @@
  "parts": [
   {
    "id": "WNG-001",
-   "name": "Wing core, XPS + tape skin + glue + hinge tape (lumped)",
+   "name": "Wing core, XPS 25 kg/m3 + tape skin + glue + hinge tape (lumped)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 116.0,
-   "material": "XPS foam 30 kg/m3 + packing tape",
+   "mass_g": 102.0,
+   "material": "XPS foam 25 kg/m3 + packing tape",
    "cg_xyz_m": [
     0.0902,
     0.0,
@@ -37,7 +37,7 @@
    "name": "Spar plug (centre clamp)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 1.65,
+   "mass_g": 1.2,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.06,
@@ -52,7 +52,7 @@
    "name": "Spar plug (right strut clamp)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 1.65,
+   "mass_g": 1.2,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.06,
@@ -67,7 +67,7 @@
    "name": "Spar plug (left strut clamp)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 1.65,
+   "mass_g": 1.2,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.06,
@@ -82,7 +82,7 @@
    "name": "Spar plug (right rib clamp)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 1.65,
+   "mass_g": 1.2,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.06,
@@ -97,7 +97,7 @@
    "name": "Spar plug (left rib clamp)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 1.65,
+   "mass_g": 1.2,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.06,
@@ -112,11 +112,11 @@
    "name": "Elevon right",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 8.5,
+   "mass_g": 8.0,
    "material": "XPS foam + tape",
    "cg_xyz_m": [
     0.2055,
-    0.19,
+    0.195,
     -0.0001
    ],
    "make_or_buy": "make",
@@ -127,11 +127,11 @@
    "name": "Elevon left",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 8.5,
+   "mass_g": 8.0,
    "material": "XPS foam + tape",
    "cg_xyz_m": [
     0.2055,
-    -0.19,
+    -0.195,
     -0.0001
    ],
    "make_or_buy": "make",
@@ -139,30 +139,30 @@
   },
   {
    "id": "WNG-007-R",
-   "name": "Elevon balance horn + 10.7 g lead block, 30 mm ahead of the hinge (D-187, R)",
+   "name": "Elevon balance (D-187 v2, R): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g + 2 printed lens caps 1.0 g",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 11.3,
-   "material": "lead + PETG/CF horn",
+   "mass_g": 17.1,
+   "material": "lead + PETG/CF",
    "cg_xyz_m": [
-    0.1564,
-    0.305,
-    0.001
+    0.1654,
+    0.285,
+    0.0006
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "WNG-007-L",
-   "name": "Elevon balance horn + 10.7 g lead block, 30 mm ahead of the hinge (D-187, L)",
+   "name": "Elevon balance (D-187 v2, L): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g + 2 printed lens caps 1.0 g",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 11.3,
-   "material": "lead + PETG/CF horn",
+   "mass_g": 17.1,
+   "material": "lead + PETG/CF",
    "cg_xyz_m": [
-    0.1564,
-    -0.305,
-    0.001
+    0.1654,
+    -0.285,
+    0.0006
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"

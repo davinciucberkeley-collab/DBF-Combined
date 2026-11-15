@@ -42,19 +42,20 @@ hub = m.mworld("UR", (-0.0475, 0.0, 0.0))
 # elevon hinge inertia (one elevon, about the hinge axis): foam + tape 8.5 g plate (ce wide), balance horn + lead
 ce = m.C - m.XH
 Ih_elevon = mass_of("WNG-006-R") * ce * ce / 3
+lead_kg = 0.0156                            # QP-4 FIXES D-187 v2: lead strip 15.6 g, 20 mm ahead of the hinge; 2 tabs 0.5 g (11 mm), 2 caps 1.0 g sit on the wing, not the elevon
 vx, vz = m.BAL_REACH, m.HINGE_Z - (m.HINGE_Z + m.BAL_DZ)
-Ih_bal = (m.BAL_ARM_W * m.BAL_ARM_T * 0.022 * 1600 * 0.5) * 0.015 ** 2 + 0.0107 * (vx * vx + vz * vz)
+Ih_bal = 0.0005 * 0.011 ** 2 + lead_kg * (vx * vx + vz * vz)
 # elevon CG offset from the hinge (+ aft) with and without the balance
-xe = 0.5 * ce * 1.0 * 0.0 + 0.35 * ce
-mb_ = 0.0107 + 0.0006
+xe = 0.35 * ce
+mb_ = lead_kg + 0.0005
 cg_off_unbal = xe
-cg_off_bal = (mass_of("WNG-006-R") * xe - 0.0107 * m.BAL_REACH - 0.0006 * 0.011) / (mass_of("WNG-006-R") + mb_)
+cg_off_bal = (mass_of("WNG-006-R") * xe - lead_kg * m.BAL_REACH - 0.0005 * 0.011) / (mass_of("WNG-006-R") + mb_)
 out = dict(mass_basic_kg=M, cg_x_m=X[0], cg_y_m=X[1], cg_z_m=X[2],
            I_cad_axes_kgm2=dict(Ixx=I[0], Iyy=I[1], Izz=I[2]),
            prop_hub_x_aft_of_LE_m=hub[0], motor_station_y=m.YM, motor_station_z=m.ZM, x_ground_m=m.X_GROUND, fin_y_m=m.YFIN, fin_h_m=m.FIN_H,
            elevon=dict(hinge_inertia_one_elevon_kgm2=Ih_elevon, hinge_inertia_balance_one_kgm2=Ih_bal, hinge_inertia_total_kgm2=Ih_elevon + Ih_bal,
                        cg_aft_of_hinge_unbalanced_m=cg_off_unbal, cg_aft_of_hinge_balanced_m=cg_off_bal, y0=m.ELEV_Y0, y1=m.ELEV_Y1, lim_deg=m.ELEV_LIM,
-                       balance_mass_each_g=11.3),
+                       balance_mass_each_g=17.1),
            pack_x_m=list(m.PACK_X), trim_m=m.TRIM)
 json.dump(out, open(os.path.join(HERE, "cad_mass.json"), "w"), indent=1)
 print(json.dumps(out, indent=1))

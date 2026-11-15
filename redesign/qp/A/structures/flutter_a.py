@@ -7,6 +7,7 @@ import math, numpy as np
 from scipy.special import hankel2
 from scipy.linalg import eig
 RHO = 1.225; VD = 24.0; VREQ = 1.2*VD
+FOAM_RHO = 30.0          # kg/m3 XPS; FIXES.md D-187 v2 uses 25 (scales the foam entries of wing_mass / fin_lump)
 CH, S_SEMI = 0.245, 0.45; B = CH/2; X_SPAR = 0.060; X_AC = 0.25*CH
 A_EA = (X_SPAR-B)/B                   # elastic axis (spar) in semichords from midchord
 EL_CF, EL_Y0, EL_Y1 = 0.25, 0.04, 0.34   # BOARD s3 / CAD elevon; chord fraction EST (a_model.py ELEV_FRAC)
@@ -103,9 +104,11 @@ def track_modes(M, K, ndof, amat, Vgrid, b):
             rows.append((V, gi, w/(2*math.pi)))
         out[j] = rows
     return out
-def first_flutter(tr):
+def first_flutter(tr, gthr=0.0):
+    """gthr = structural damping g_s assumed (QP-4 FIXES: 0 = undamped, the QP-4 FLUTTER.md basis); a mode flutters when its aero g exceeds gthr."""
     best = None
     for j, rows in tr.items():
+        rows = [(r[0], r[1]-gthr, r[2]) for r in rows]
         if rows[0][1] > 0.0 and (best is None or rows[0][0] < best[0]): best = (rows[0][0], rows[0][2], j)   # already unstable at the lowest V
         for r0, r1 in zip(rows[:-1], rows[1:]):
             if r0[1] < 0 <= r1[1] and (r1[1]-r0[1]) < 0.6:
@@ -115,18 +118,18 @@ def first_flutter(tr):
 # ---------------------------------------------------------------- wing data (EST; STRUCTURES.md iteration-2 masses, CAD positions)
 def wing_mass():
     """(m' kg/m, S' = m'(xcg-xea), I'_EA kg m, xcg m from LE); components (g, x_cg from LE, extent); EA at the spar."""
-    comp = [(A12*1600*0.9*1e3, X_SPAR, 0.012), (95.3, 0.098, 0.245), (24.2, 0.122, 0.245), (14.0, 0.15, 0.03), (8.0, 0.08, 0.05)]
+    comp = [(A12*1600*0.9*1e3, X_SPAR, 0.012), (95.3*FOAM_RHO/30.0, 0.098, 0.245), (24.2, 0.122, 0.245), (14.0, 0.15, 0.03), (8.0, 0.08, 0.05)]
     mt = sum(c[0] for c in comp); m = mt*1e-3/0.9
     xcg = sum(c[0]*c[1] for c in comp)/mt
     I = sum(c[0]*1e-3/0.9*(c[2]**2/12+(c[1]-X_SPAR)**2) for c in comp)
     return m, m*(xcg-X_SPAR), I, xcg
 def fin_lump():
     A16, _ = tube(16e-3, 14e-3); A14, _ = tube(14e-3, 12e-3)
-    comp = [(A16*1600*0.36*1e3, 0.294), (0.0432*3e-3*30*1e3, 0.255), (2*0.0432*55, 0.255), (5.0, 0.30), (4.0, 0.24), (A14*1600*0.227*1e3, 0.177)]
+    comp = [(A16*1600*0.36*1e3, 0.294), (0.0432*3e-3*FOAM_RHO*1e3, 0.255), (2*0.0432*55, 0.255), (5.0, 0.30), (4.0, 0.24), (A14*1600*0.227*1e3, 0.177)]
     mt = sum(c[0] for c in comp); xcg = sum(c[0]*c[1] for c in comp)/mt
     I = sum(c[0]*1e-3*(c[1]-X_SPAR)**2 for c in comp)
     return mt*1e-3, xcg, I
-def ritz(corner="nom", GJ=None, fins=True, motors=False, nb=3, nt=3, n=600):
+def ritz(corner="nom", GJ=None, fins=True, motors=False, nb=3, nt=3, n=600, lumps=()):
     p = CORN[corner]; EI = p["E"]*I12
     if GJ is None: GJ = sum(GJ_parts(corner, hinge_cut=False))
     y = (np.arange(n)+0.5)*S_SEMI/n; dy = S_SEMI/n; L = S_SEMI
@@ -150,6 +153,9 @@ def ritz(corner="nom", GJ=None, fins=True, motors=False, nb=3, nt=3, n=600):
     if fins:      # one fin per semispan (symmetric mode)
         mf, xf, If = fin_lump(); hv, tv = at(0.38); d = xf-X_SPAR
         M += mf*np.outer(hv, hv)+mf*d*(np.outer(hv, tv)+np.outer(tv, hv))+If*np.outer(tv, tv)
+    for (ml, xl, yl) in lumps:   # point mass per semispan (kg, x from LE m, y m): D-187 balance strip, rigid on the wing
+        hv, tv = at(yl); d = xl-X_SPAR
+        M += ml*np.outer(hv, hv)+ml*d*(np.outer(hv, tv)+np.outer(tv, hv))+ml*d*d*np.outer(tv, tv)
     if motors:    # 2 x 81 g per semispan at y 0.228, x -0.075, rigid on the wing (optimistic: really on the soft cage)
         hv, tv = at(0.228); mm = 2*0.081; d = -0.075-X_SPAR
         M += mm*np.outer(hv, hv)+mm*d*(np.outer(hv, tv)+np.outer(tv, hv))+mm*d*d*np.outer(tv, tv)
@@ -206,10 +212,10 @@ def elevon_section(fh, fa, Kb, xb_bal=0.0, mbal=0.0, a=A_EA):
         d_b = np.array([1.0, (xh_le-xb_bal-B)-xea, -xb_bal]); M += mbal*np.outer(d_b, d_b)
     K = np.diag([M[0, 0]*(2*math.pi*fh)**2, M[1, 1]*(2*math.pi*fa)**2, Kb/span_e])
     return M, K
-def elevon_flutter(fh, fa, Kb, **kw):
+def elevon_flutter(fh, fa, Kb, gthr=0.0, **kw):
     M, K = elevon_section(fh, fa, Kb, **kw)
     tr = track_modes(M, K, 3, lambda k: aero3(k, B, A_EA, C_H), np.arange(4, 100.1, 1.0), B)
-    return first_flutter(tr)
+    return first_flutter(tr, gthr)
 def hinge_stiffness_aero(V):
     T = Tc(C_H, A_EA); return RHO*V*V*B*B*(-T[18]-T[12]*T[10])/math.pi      # d(M_beta)/d(beta) steady, per unit span (negative = restoring)
 def run_all():

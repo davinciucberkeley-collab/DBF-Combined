@@ -28,7 +28,7 @@ CMQ, CLP = -1.0, -0.30                                     # pitch and roll damp
 CLB = -0.04                                                # dihedral effect per rad (EST)
 # ---------------- elevons (EST, not in REQUIREMENTS-A or SIZING-A: only "2 elevons")
 EL_CF = 0.25                                               # chord fraction (K09-L wing.elevon.chord_frac scale, EST)
-EL_Y0, EL_Y1 = 0.04, 0.34                                  # span stations each side, m: the drawn elevon (CAD a_model.py ELEV_Y0/Y1; fin root at 0.34-0.38). QP-4 fold-in, BOARD s1 item 3 (was 0.10-0.40)
+EL_Y0, EL_Y1 = 0.04, 0.35                                  # span stations each side, m: the drawn elevon (CAD a_model.py ELEV_Y0/Y1; fin root at 0.34-0.38). QP-4 fold-in, BOARD s1 item 3 (was 0.10-0.40); QP-4 FIXES item 2: 0.34 -> 0.35
 EL_S = 2 * (EL_Y1 - EL_Y0) * EL_CF * C_W                   # both elevons, m2
 EL_TAU = 0.5                                               # flap effectiveness tau at cf/c 0.25 (thin airfoil)
 CLD = CLA * EL_TAU * (EL_S / S_W)                          # dCL per rad of mean deflection, EST

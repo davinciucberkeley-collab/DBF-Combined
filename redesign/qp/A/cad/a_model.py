@@ -25,7 +25,7 @@ ST = {'UR': (1, 1), 'UL': (-1, 1), 'LR': (1, -1), 'LL': (-1, -1)}      # (y sign
 C, B = 0.245, 0.90                          # DOC STRUCTURES s1: chord, span
 ELEV_FRAC = 0.25                            # EST elevon chord fraction (A documents give none)
 XH = C * (1 - ELEV_FRAC)                    # hinge station
-ELEV_Y0, ELEV_Y1 = 0.04, 0.34               # elevon y range (DOC: ends at |y| 0.34; inboard end EST)
+ELEV_Y0, ELEV_Y1 = 0.04, 0.35               # elevon y range; QP-4 FIXES item 2: outboard end 0.34 -> 0.35 for roll rate (fin plane y 0.372 inner face: 22 mm clear); inboard end EST
 ELEV_LIM = 20.0                             # deg EST (A documents give none)
 GAP_Y = 0.0005
 SPAR_X, SPAR_OD, SPAR_ID = 0.060, 0.012, 0.010     # DOC iteration 2: CF 12x10 at x 60
@@ -156,9 +156,10 @@ HORN_X0, HORN_X1 = 0.195, 0.209
 
 
 # D-187 (FLUTTER.md): elevon mass balance, 10.7 g lead on a 30 mm horn ahead of the hinge, per elevon (EST)
-BAL_YC, BAL_W = 0.305, 0.0246               # lead block centre y, width (EST; clear of servo pocket y 0.2, strut slot, rib saddle)
-BAL_REACH, BAL_L, BAL_T = 0.030, 0.016, 0.0024        # lead centre 30 mm ahead of the hinge axis; block 16 x 2.4 mm section (10.7 g at 11.34 g/cm3)
-BAL_DZ = -0.0055                            # lead centre z below the hinge axis: centres the sweep in the 16.8 mm section; +-20 deg at 30 mm still pokes up to 5.5 mm through both skins (CAD.md QP-4)
+BAL_YC, BAL_W = 0.285, 0.106                # QP-4 FIXES D-187 v2: lead STRIP centre y, length (spanwise y 0.232-0.338; clear of the servo pocket edge y 0.2225 and the elevon tip 0.35)
+BAL_ARM_DY = 0.035                          # two horn tabs at BAL_YC +- this
+BAL_REACH, BAL_L, BAL_T = 0.020, 0.010, 0.0013        # lead centre 20 mm ahead of the hinge axis; strip 10 x 1.3 mm section x 106 mm = 15.6 g at 11.34 g/cm3 (FIXES.md: fits the section to 2 mm of skin poke, printed lens caps)
+BAL_DZ = -0.0060                            # lead centre z below the hinge axis: centres the sweep in the 16.8 mm section; +-20 deg at 30 mm still pokes up to 5.5 mm through both skins (CAD.md QP-4)
 BAL_ARM_W, BAL_ARM_T = 0.006, 0.0012        # horn arm (CF-reinforced PETG strip) width, thickness
 HINGE_Z = zu(XH)
 
@@ -239,33 +240,33 @@ def tube_g(d, o, i):
 
 
 # wing (MASS-GATE 220 allocation; STRUCTURES iteration 2: 191 g)
-P('WNG-001', 'Wing core, XPS + tape skin + glue + hinge tape (lumped)', 'wing', 116.0, 'XPS foam 30 kg/m3 + packing tape')
+P('WNG-001', 'Wing core, XPS 25 kg/m3 + tape skin + glue + hinge tape (lumped)', 'wing', 102.0, 'XPS foam 25 kg/m3 + packing tape')   # QP-4 FIXES item 3: 116 - 13.7 (foam 82 g x 5/30) - 0.3 (elevon span moved 10 mm)
 P('WNG-002', 'Spar, CF tube 12x10 x 0.90 m', 'wing', round(tube_g(0.90, SPAR_OD, SPAR_ID), 1), 'CFRP tube')
 for pid, nm in (('WNG-003-C', 'centre'), ('WNG-004-R', 'right strut'), ('WNG-004-L', 'left strut'),
                 ('WNG-005-R', 'right rib'), ('WNG-005-L', 'left rib')):
-    P(pid, 'Spar plug (%s clamp)' % nm, 'wing', 1.65, 'PETG (printed)')
-P('WNG-006-R', 'Elevon right', 'wing', 8.5, 'XPS foam + tape')
-P('WNG-006-L', 'Elevon left', 'wing', 8.5, 'XPS foam + tape')
+    P(pid, 'Spar plug (%s clamp)' % nm, 'wing', 1.2, 'PETG (printed)')   # QP-4 FIXES 1.65 -> 1.2 g (1.2 mm wall, EST)
+P('WNG-006-R', 'Elevon right', 'wing', 8.0, 'XPS foam + tape')   # 8.5 - 0.73 (foam 4.4 g x 5/30) + 0.26 (10 mm more span)
+P('WNG-006-L', 'Elevon left', 'wing', 8.0, 'XPS foam + tape')
 for s_ in 'RL':
-    P('WNG-007-' + s_, 'Elevon balance horn + 10.7 g lead block, 30 mm ahead of the hinge (D-187, %s)' % s_, 'wing', 11.3, 'lead + PETG/CF horn')
+    P('WNG-007-' + s_, 'Elevon balance (D-187 v2, %s): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g + 2 printed lens caps 1.0 g' % s_, 'wing', 17.1, 'lead + PETG/CF')
 # fins (allocation 70 g; STRUCTURES iteration 2: 119 g)
 for s in 'RL':
     P('FIN-001-' + s, 'Fin tube 16x14 x 0.36 m (%s)' % s, 'fins', round(tube_g(0.36, FIN_OD, FIN_ID), 1), 'CFRP tube')
     P('FIN-002-' + s, 'Fin rib tube 14x12 (%s)' % s, 'fins', 14.8, 'CFRP tube')      # DOC 14x12 x 0.227 = 14.8 g
-    P('FIN-003-' + s, 'Fin root block (%s)' % s, 'fins', 4.0, 'PETG (printed)')
-    P('FIN-004-' + s, 'Fin fairing 3 mm XPS + tape (%s)' % s, 'fins', 9.0, 'XPS foam + tape')
+    P('FIN-003-' + s, 'Fin root block (%s)' % s, 'fins', 3.2, 'PETG (printed)')
+    P('FIN-004-' + s, 'Fin fairing 3 mm XPS + tape (%s)' % s, 'fins', 8.4, 'XPS foam + tape')
     P('FIN-005-' + s, 'Rib saddle on spar (%s)' % s, 'fins', 1.0, 'PETG (printed)')
 # cage (allocation 135; STRUCTURES iteration 2: 122 g)
-P('CGE-001', 'Hub disc (printed shell, envelope)', 'cage', 16.0, 'PETG (printed)')
+P('CGE-001', 'Hub disc (printed shell, envelope; QP-4 FIXES: 16 -> 13 g, 2 perimeters, 10 % infill, EST)', 'cage', 13.0, 'PETG (printed)')
 for s in ST:
     P('CGE-002-' + s, 'Arm 12x10 x 0.245 (%s)' % s, 'cage', round(tube_g(0.245, ARM_OD, ARM_ID), 1), 'CFRP tube')
-    P('CGE-003-' + s, 'Motor cup (%s)' % s, 'cage', 5.0, 'PETG (printed)')
+    P('CGE-003-' + s, 'Motor cup (%s; QP-4 FIXES 5 -> 4 g, EST, C1 to re-check prop-strike)' % s, 'cage', 4.0, 'PETG (printed)')
 P('CGE-004', 'Bridge 12x10', 'cage', round(tube_g(BR_X1 - BR_X0, BR_OD, BR_ID), 1), 'CFRP tube')
 for s in 'RL':
     P('CGE-005-' + s, 'V strut 6x4.5 (%s)' % s, 'cage', 6.5, 'CFRP tube')
     P('CGE-007-' + s, 'Strut clamp on spar (%s)' % s, 'cage', 1.5, 'PETG (printed)')
 P('CGE-006', 'Bridge saddle on spar', 'cage', 2.0, 'PETG (printed)')
-P('CGE-008', 'Pack tray (66 x 109 mm plate, trim slots; 4.0 g at 44 mm scaled by plate area + longer walls, EST)', 'cage', 5.3, 'PETG (printed)')
+P('CGE-008', 'Pack tray (66 x 109 mm plate, trim slots; 4.0 g at 44 mm scaled by plate area + longer walls, EST)', 'cage', 3.8, 'PETG (printed)')   # QP-4 FIXES 5.3 -> 3.8 g: 1.5 mm floor with ribs, EST
 # propulsion
 for s in ST:
     P('PRP-001-' + s, 'Motor MN2212 V2.0 KV780 (%s)' % s, 'propulsion', 65.0, 'Al / Cu / NdFeB', 'buy', 'sink')
@@ -273,7 +274,7 @@ for s in ST:
 P('PRP-003', 'ESC SpeedyBee BLS 35A Mini V2 4-in-1 with leads', 'propulsion', 20.0, 'PCB', 'buy', 'bus')
 # power / avionics
 P('PWR-001', 'Pack Tattu 2300 mAh 4S 75C', 'power', 270.0, 'LiPo', 'buy', 'source')
-P('AVN-001', 'Avionics plate', 'avionics', 12.0, 'PETG (printed)')
+P('AVN-001', 'Avionics plate', 'avionics', 8.0, 'PETG (printed)')   # QP-4 FIXES 12 -> 8 g: 4 lightening windows, EST
 P('AVN-002', 'Flight controller Kakute F405 Wing Mini', 'avionics', 17.0, 'PCB', 'buy', 'bus')
 P('AVN-007', 'Foam-tape pads x4 (FC hard mount, 1.5 mm)', 'avionics', 1.0, 'VHB-class foam tape', 'buy')
 P('AVN-003', 'Receiver RP3 V2 ELRS', 'avionics', 3.0, 'PCB', 'buy', 'sink')
@@ -288,14 +289,14 @@ for s in 'RL':
     P('MEC-004-' + s, 'Control horn (%s)' % s, 'mechanisms', 1.0, 'nylon', 'buy')
 # landing
 for s in ST:
-    P('GER-001-' + s, 'Foot shoe (%s)' % s, 'landing', 1.8, 'PETG (printed)')
+    P('GER-001-' + s, 'Foot shoe (%s)' % s, 'landing', 1.4, 'PETG (printed)')
     P('GER-002-' + s, 'Foot pad EVA/PE 12x15x30 (%s)' % s, 'landing', 0.7, 'EVA / PE foam')
 # harness / hardware lumps (proxies: mass and CG count, not drawn)
 P('HRN-001', 'Harness remainder (wire, connectors, ties, tubing; MASS-GATE avionics 110 g less itemised parts) - lumped',
   'harness', None, 'copper / silicone', cg=[0.030, 0.0, 0.020], mass_proxy=True, carried=True)
 P('HRD-001', 'Hardware: screws, nuts, epoxy fillets, paint (MASS-GATE 40 g less rib saddles) - lumped', 'assembly',
-  37.0, 'steel / epoxy', cg=[0.100, 0.0, 0.0], mass_proxy=True, carried=True)
-PARTS['HRN-001']['mass_g'] = round(110.0 - sum(PARTS[k]['mass_g'] for k in PARTS if k.startswith('AVN-')), 1)
+  30.0, 'steel / epoxy', cg=[0.100, 0.0, 0.0], mass_proxy=True, carried=True)   # QP-4 FIXES 37 -> 30 g: no paint (tape-skinned), EST bottom-up in FIXES.md
+PARTS['HRN-001']['mass_g'] = round(106.0 - sum(PARTS[k]['mass_g'] for k in PARTS if k.startswith('AVN-')), 1)
 
 # ------------------------------------------------------------------ edges table
 EDGES = []
@@ -441,12 +442,13 @@ def build_wing(ctx):
     k9.elevon(ev, COORDS, C, 1 - ELEV_FRAC, ELEV_Y0, ELEV_Y1, gap=GAP_Y)
     ctx.mirror('WNG-006-R', 'WNG-006-L', plane='XZ')
     bw = ctx.part('WNG-007-R', rgb=(0.35, 0.35, 0.4))
-    bw.prism('Y', BAL_YC - BAL_ARM_W / 2, [bal_arm_loop()], BAL_ARM_W, name='balance horn arm')
+    for dy_ in (-BAL_ARM_DY, BAL_ARM_DY):
+        bw.prism('Y', BAL_YC + dy_ - BAL_ARM_W / 2, [bal_arm_loop()], BAL_ARM_W, name='balance horn tab')
     bw.prism('Y', BAL_YC - BAL_W / 2, [bal_lead_loop()], BAL_W, name='balance lead block')
     ctx.mirror('WNG-007-R', 'WNG-007-L', plane='XZ')
     for sy in (1, -1):                                    # pocket for the balance horn and lead over the full elevon travel
         ya, yb = sorted((sy * (BAL_YC - BAL_W / 2 - 0.001), sy * (BAL_YC + BAL_W / 2 + 0.001)))
-        core.cut_prism('Y', ya, [bal_sweep_loop()], yb - ya, name='elevon balance pocket')
+        core.cut_prism('Y', ya, [bal_sweep_loop()], yb - ya, name='elevon balance pocket (strip window)')
     for sy in (1, -1):                                    # servo pocket open to the upper skin (arm sweep too)
         y0, y1 = sorted((sy * SERVO_Y - 0.0225, sy * SERVO_Y + 0.0225))
         core.cut_box((0.1245, y0, SV_Z1), (0.1655, y1, 0.020), name='servo pocket')

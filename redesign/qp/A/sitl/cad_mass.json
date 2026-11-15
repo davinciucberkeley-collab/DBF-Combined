@@ -1,12 +1,12 @@
 {
- "mass_basic_kg": 1.24549,
- "cg_x_m": 0.022963325277601587,
- "cg_y_m": 0.001858987225911087,
- "cg_z_m": 0.0067473524476310545,
+ "mass_basic_kg": 1.21594,
+ "cg_x_m": 0.022536072503577476,
+ "cg_y_m": 0.0019041646791782489,
+ "cg_z_m": 0.0068236343898547625,
  "I_cad_axes_kgm2": {
-  "Ixx": 0.06317280014432117,
-  "Iyy": 0.025873487322922554,
-  "Izz": 0.06987161759672607
+  "Ixx": 0.06169434148803832,
+  "Iyy": 0.025417854125813582,
+  "Izz": 0.06825262387933378
  },
  "prop_hub_x_aft_of_LE_m": -0.12065993055707014,
  "motor_station_y": 0.228,
@@ -15,15 +15,15 @@
  "fin_y_m": 0.38,
  "fin_h_m": 0.18,
  "elevon": {
-  "hinge_inertia_one_elevon_kgm2": 1.0629427083333335e-05,
-  "hinge_inertia_balance_one_kgm2": 9.982186999999998e-06,
-  "hinge_inertia_total_kgm2": 2.0611614083333333e-05,
+  "hinge_inertia_one_elevon_kgm2": 1.0004166666666666e-05,
+  "hinge_inertia_balance_one_kgm2": 6.8621e-06,
+  "hinge_inertia_total_kgm2": 1.6866266666666665e-05,
   "cg_aft_of_hinge_unbalanced_m": 0.021437499999999998,
-  "cg_aft_of_hinge_balanced_m": -0.0073424873737373735,
+  "cg_aft_of_hinge_balanced_m": -0.006058091286307054,
   "y0": 0.04,
-  "y1": 0.34,
+  "y1": 0.35,
   "lim_deg": 20.0,
-  "balance_mass_each_g": 11.3
+  "balance_mass_each_g": 17.1
  },
  "pack_x_m": [
   -0.0275,

@@ -37,7 +37,7 @@
    "name": "Fin root block (R)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 4.0,
+   "mass_g": 3.2,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.2831,
@@ -52,7 +52,7 @@
    "name": "Fin fairing 3 mm XPS + tape (R)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 9.0,
+   "mass_g": 8.4,
    "material": "XPS foam + tape",
    "cg_xyz_m": [
     0.239,
@@ -112,7 +112,7 @@
    "name": "Fin root block (L)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 4.0,
+   "mass_g": 3.2,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.2831,
@@ -127,7 +127,7 @@
    "name": "Fin fairing 3 mm XPS + tape (L)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 9.0,
+   "mass_g": 8.4,
    "material": "XPS foam + tape",
    "cg_xyz_m": [
     0.239,

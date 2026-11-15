@@ -7,7 +7,7 @@
    "name": "Hardware: screws, nuts, epoxy fillets, paint (MASS-GATE 40 g less rib saddles) - lumped",
    "subsystem": "assembly",
    "status": "MODELLED",
-   "mass_g": 37.0,
+   "mass_g": 30.0,
    "material": "steel / epoxy",
    "cg_xyz_m": [
     0.1,

@@ -26,11 +26,11 @@ cruise_s = settle + laps2 + goaround + runin
 print(f"R {R:.1f} m; reference lap (300 m leg) {lap_ref:.1f} m = {tl_ref:.2f} s; cruise requirement {cruise_s:.1f} s = {cruise_s/60:.2f} min")
 print(f"flown: leg {LEG:.0f} m, lap {lap:.1f} m = {tl:.2f} s, {(cruise_s-settle)/tl:.1f} laps of cruise after the {settle:.0f} s settle; racetrack far point {LEG/2+R:.0f} m; any-direction bound after BATT_LOW L/2 + 51 + 94 = {LEG/2+R+94:.0f} m vs fence 250 - 10 = 240 m (margin {240-(LEG/2+R+94):.0f} m)")
 # ---- mass roll-up (basic g, maturity, growth by ASM-A3-MGA: EST 20, CALC 10, DATASHEET 5, CAD 5, WEIGHED 1, pack 0) ----
-items = [("wing foam + 12x10 spar + 2 elevons (STRUCTURES iter. 2, frozen D-185)", 191, "EST", .20), ("2 fins: 16x14 tubes + ribs + fairing + feet (frozen D-185)", 119, "EST", .20),
-         ("4 x MN2212 with cables (65 g, T-Motor page)", 260, "DATASHEET", .05), ("4 x APC 9x4.5MR/MRP (11.06 g each, RMRC page)", 44, "DATASHEET", .05),
+items = [("wing: foam 25 kg/m3 + 12x10 spar + 2 elevons y 0.04-0.35 + 2 D-187 v2 balances 34.2 g (CAD as drawn, QP-4 FIXES)", 208.0, "EST", .20), ("2 fins: tubes + ribs + fairing + feet (CAD, lightened printed parts, EST)", 117.4, "EST", .20),
+         ("4 x MN2212 with cables (65 g, T-Motor page)", 260, "DATASHEET", .05), ("4 x APC 9x4.5MR/MRP (11.06 g each, RMRC page)", 44.2, "DATASHEET", .05),
          ("ESC 4-in-1 7.2 g board + leads/caps (page; leads EST)", 20, "EST", .20), ("1 x Tattu 2300 (listing 270 g)", 270, "pack", 0.0),
-         ("FC + GPS + RX + airspeed + wiring", 110, "EST", .20), ("2 servos + linkage", 30, "EST", .20),
-         ("motor cage, 12x10 arms + bridge + V (frozen D-185)", 122, "EST", .20), ("hardware, tape, paint (frozen D-185)", 40, "EST", .20)]
+         ("FC + GPS + RX + airspeed + plate + wiring (106 g: plate 12 -> 8 g)", 106, "EST", .20), ("2 x ES3054HV 20.5 g + linkage (SERVO.md)", 47, "DATASHEET", .05),
+         ("motor cage incl. tray, hub 13 g, cups 4 g (CAD)", 113.3, "EST", .20), ("hardware, tape (no paint; CAD lump 30 g)", 30, "EST", .20)]
 base = sum(i[1] for i in items); gr = sum(i[1]*i[3] for i in items); OVER = 0.032*1500
 PRED = base+gr+OVER; M = PRED/1000
 print(f"basic {base} g; growth {gr:.1f} g; predicted {base+gr:.1f} g; overrun {OVER:.0f} g; predicted+overrun {PRED:.0f} g; headroom to 1500 {1500-PRED:.0f} g, to 1440 {1440-PRED:.0f} g")
@@ -69,7 +69,7 @@ for V_ in (17.0,):
 print("hard landing 1.2 m/s on 6 mm crush: decel g =", round(1.2**2/(2*0.006)/G, 1), "; impact energy at 1.50 kg (J) =", round(0.5*1.5*1.44, 2))
 # CG (QP-4): anchored on the CAD (QP-3 CAD s4): basic 1,204.6 g, CG 16.2 mm aft of LE with the pack centred at x -20 mm. The old 'rest of aircraft 35.7 mm' estimate is withdrawn.
 NP, CHORD = 40.7, 245.0
-CAD_BASIC, CAD_CG, PACK_X = 1204.6, 16.2, -20.0
+CAD_BASIC, CAD_CG, PACK_X = 1215.9, 22.5, -10.0   # QP-4 FIXES: as-drawn CAD (was 1204.6 / 16.2 / -20 at QP-3)
 cg = CAD_CG
 for px in (-20.0, -3.0, +7.0):
     print(f"CAD CG with the pack centre at x {px:+.0f} mm: {CAD_CG + 270*(px-PACK_X)/CAD_BASIC:.1f} mm aft of LE, SM {(NP-(CAD_CG + 270*(px-PACK_X)/CAD_BASIC))/CHORD*100:.1f} %")

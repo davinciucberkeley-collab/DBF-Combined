@@ -1,0 +1,13 @@
+Z5_roll case=roll mass=1.41 wind=0 from=0 hold=25 cruise_s=8 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z5_rollg case=roll mass=1.50 wind=0 from=0 hold=25 cruise_s=8 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z5_t0 case=trans mass=1.41 wind=0 from=0 hold=25 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z5_t5c case=trans mass=1.41 wind=5 from=90 hold=25 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z5_t5h case=trans mass=1.41 wind=5 from=0 hold=25 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z5_g0 case=trans mass=1.50 wind=0 from=0 hold=25 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z5_g5c case=trans mass=1.50 wind=5 from=90 hold=25 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z5_g5h case=trans mass=1.50 wind=5 from=0 hold=25 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z5_b0 case=trans mass=1.41 wind=5 from=0 chain=1 hold=30 cruise_s=15 turb=0.5 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z5_b45 case=trans mass=1.41 wind=5 from=45 chain=1 hold=30 cruise_s=15 turb=0.5 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z5_b90 case=trans mass=1.41 wind=5 from=90 chain=1 hold=30 cruise_s=15 turb=0.5 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z5_gb45 case=trans mass=1.50 wind=5 from=45 chain=1 hold=30 cruise_s=15 turb=0.5 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z5_gb0 case=trans mass=1.50 wind=0 from=0 chain=1 hold=30 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
