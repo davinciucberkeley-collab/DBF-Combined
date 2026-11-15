@@ -60,12 +60,12 @@ P(f"\nGrowth on these four lines: EST 20 % = {growth_old:.0f} g in MASS-GATE; at
 # ======================================================================= 2. C1 loads
 P("\n## 2. C1 loads (limit unless marked; ult = 1.5 x limit)")
 S, b, c = 0.22, 0.90, 0.245
-Vs = math.sqrt(2*W/(RHO*S*0.75)); n_lim = 3.4; VA = Vs*math.sqrt(n_lim); VC = 17.0; VD = 22.0
+Vs = math.sqrt(2*W/(RHO*S*0.75)); n_lim = 3.4; VA = Vs*math.sqrt(n_lim); VC = 17.0; VD = 24.0
 AR = b*b/S; a_w = math.pi*AR/(1+math.sqrt(1+(AR/2)**2)); wl = W/S
 mu_g = 2*wl/(RHO*c*a_w*G); Kg = 0.88*mu_g/(5.3+mu_g)
 def n_gust(V, U): return 1+Kg*RHO*U*V*a_w/(2*wl)
 def n_stall(V): return 0.5*RHO*V*V*S*0.75/W
-P(f"Vs {Vs:.2f} m/s (CLmax 0.75 EST), VA = Vs sqrt(3.4) = {VA:.1f}, VC 17, VD {VD:.0f} (1.25 VC rounded up; A.param AIRSPEED_MAX 18). a = {a_w:.2f}/rad, mu_g {mu_g:.1f}, Kg {Kg:.3f}.")
+P(f"Vs {Vs:.2f} m/s (CLmax 0.75 EST), VA = Vs sqrt(3.4) = {VA:.1f}, VC 17, VD {VD:.0f} (D-186: VH 18.8 m/s x 1.25 = 23.5, rounded up; A.param THR_MAX 68 + FWD_BAT, AIRSPEED_MAX 18; flutter / divergence at VD 24 open, G8). a = {a_w:.2f}/rad, mu_g {mu_g:.1f}, Kg {Kg:.3f}.")
 P("| Case | n | Note |"); P("|---|---|---|")
 P(f"| Gust U 8 m/s at VC | {n_gust(VC,8):.2f} -> stall-limited {n_stall(VC):.2f} | wing cannot make the gust n at 17 m/s |")
 P(f"| Gust U 4 m/s at VD (half, ASM-C1-UDE-D-FRAC) | {n_gust(VD,4):.2f} (stall line {n_stall(VD):.2f}) | |")
@@ -117,27 +117,27 @@ P("Fin elevon note: elevon span ends at |y| <= 0.34 (fin slot at 0.38 starts bey
 # ======================================================================= 4. C4 modes
 P("\n## 4. C4 modes vs rotor orders (3-D beam FE, free-free; fe_a.py)")
 # rpm: prop_a.py hover 1.50 kg derate 0.93 = 6272 rpm; cruise estimated
-RPM = {"hover (1.50 kg, prop_a.py)": 6272.0, "hover light 1.381 kg": 6272*math.sqrt(1.381/1.5), "hover 8 m/s lean 1.3 W": 6272*math.sqrt(1.3), "cruise 17 m/s (EST)": 9700.0}
+RPM = {"hover (1.50 kg, prop_a.py)": 6272.0, "hover light 1.381 kg": 6272*math.sqrt(1.381/1.5), "hover 8 m/s lean 1.3 W": 6272*math.sqrt(1.3), "cruise 17 m/s (SITL fu_level.py, 7,300-7,540 rpm; mid 7,450)": 7450.0}
 for k, v in RPM.items(): P(f"- {k}: {v:.0f} rpm: 1P {v/60:.0f} Hz, 2P {v/30:.0f} Hz")
-P("Cruise rpm is an estimate (APC static table only; J0 0.47 assumed, thrust 0.49 N per prop at L/D 7.6): 8,900-10,500 rpm band; bench M1 + audio FFT replace it.")
+P("Cruise rpm 7,300-7,600 (QP-3 BOARD s1 item 2: sitl/fu_level.py with the APC V > 0 data, 17 m/s level at duty 0.60-0.70); the earlier 8,900-10,500 band was an estimate and is withdrawn; M8 audio FFT on the first cruise replaces it.")
 results = {}; frames = {}
 for kind in ("kd", "nom", "hi"):
     F, info = fe_a.build(kind); results[kind] = F.solve(90); frames[kind] = F
 def sep(f, rpm):
     return min(abs(f-rpm/60)/(rpm/60), abs(f-rpm/30)/(rpm/30))
-pts = [6272.0, 6272*math.sqrt(1.381/1.5), 9700.0]
+pts = [6272.0, 6272*math.sqrt(1.381/1.5), 7450.0]
 P("\nModes with strong coupling to the motors (|phi| at motors in plane cy or thrust cx >= 0.5, mass-normalised), kd = E_CF 61 / PETG 1.6 GPa, nom 70 / 2.1, hi 90 / 2.4:")
-P("| Corner | f (Hz) | group | cx / cy | worst separation to 1P/2P at hover 6272 and cruise 9700 | worst incl. hover light | Result |"); P("|---|---|---|---|---|---|---|")
+P("| Corner | f (Hz) | group | cx / cy | worst separation to 1P/2P at hover 6272 and cruise 7450 | worst incl. hover light | Result |"); P("|---|---|---|---|---|---|---|")
 worst_all = {}
 for kind in ("kd", "nom", "hi"):
     res = results[kind]
     for (f, e, v, cx, cy), (f2, cl) in zip(res, fe_a.classify(res)):
         if (cx >= 0.5 or cy >= 0.5) and f < 800:
-            s1 = min(sep(f, 6272.0), sep(f, 9700.0)); s2 = min(sep(f, r) for r in pts)
+            s1 = min(sep(f, 6272.0), sep(f, 7450.0)); s2 = min(sep(f, r) for r in pts)
             worst_all.setdefault(kind, []).append((f, s2))
             P(f"| {kind} | {f:.0f} | {cl.split(',')[0]} | {cx:.1f} / {cy:.1f} | {s1*100:.0f} % | {s2*100:.0f} % | {'PASS' if s2 >= 0.2 else ('MARGINAL' if s2 >= 0.1 else 'FAIL')} |")
 P("\nFin out-of-plane modes (fin 75-95 % of strain energy) and weakly coupled spar / rib modes (cx, cy < 0.5):")
-P("| Corner | f (Hz) | group | worst separation (6272, light, 9700 rpm) | Result |"); P("|---|---|---|---|---|")
+P("| Corner | f (Hz) | group | worst separation (6272, light, 7450 rpm) | Result |"); P("|---|---|---|---|---|")
 for kind in ("kd", "nom", "hi"):
     for (f, e, v, cx, cy), (f2, cl) in zip(results[kind], fe_a.classify(results[kind])):
         if 20 < f < 800 and cx < 0.5 and cy < 0.5 and (e.get("fin", 0) > 0.5 or f > 60):
@@ -163,7 +163,7 @@ def forced(kind, rpm, thrust):
         out[tag] = (a_imu, a_tip)
     return out
 for kind in ("kd", "nom", "hi"):
-    for nm, rpm, th in (("hover 6272", 6272, 3.94), ("cruise 9700 EST", 9700, 0.49)):
+    for nm, rpm, th in (("hover 6272", 6272, 3.94), ("cruise 7450", 7450, 0.49)):
         o = forced(kind, rpm, th)
         worst = max(o["1P"][0], o["2P"][0])
         P(f"| {kind} | {nm} | {o['1P'][0]:.1f} | {o['2P'][0]:.1f} | {o['1P'][1]:.1f} / {o['2P'][1]:.1f} | 30 m/s2 | {30/worst-1:+.1f} |")

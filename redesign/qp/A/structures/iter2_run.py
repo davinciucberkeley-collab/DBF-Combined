@@ -36,26 +36,26 @@ for n, v in m.items(): P(f"|   {n} | {v:.1f} | | |")
 # ---------------- modes
 r = evaluate("final", **CFG)
 P("\n### Rotor bands and rpm source")
-P(f"Hover 6,018 / 6,272 / 7,151 rpm (1.381 kg / 1.50 kg / 8 m/s lean at 1.3 W): `qp/A/prop_a.py` hover() at derate 0.93, lean scaled by sqrt(1.3). 1P {RPM_HOVER[0]/60:.0f}-{RPM_HOVER[2]/60:.0f} Hz, 2P {RPM_HOVER[0]/30:.0f}-{RPM_HOVER[2]/30:.0f} Hz. Cruise 8,900-10,500 rpm is an **estimate** (4.5 in pitch gives 17 m/s at 8,923 rpm; J0 0.47 assumed; no APC data for V > 0): 1P {RPM_CRUISE[0]/60:.0f}-{RPM_CRUISE[2]/60:.0f}, 2P {RPM_CRUISE[0]/30:.0f}-{RPM_CRUISE[2]/30:.0f} Hz. Rule: f <= band_low/1.2 or f >= 1.2 x band_high for all four. That excludes **83-420 Hz**.")
-P("\n### Modes with motor coupling >= 0.3, plus the fin and every mode in 83-420 Hz with coupling >= 0.1 (coupling = mass-normalised |phi| summed at the four motors; arm modes 2.7-3.4)")
+P(f"Hover 6,018 / 6,272 / 7,151 rpm (1.381 kg / 1.50 kg / 8 m/s lean at 1.3 W): `qp/A/prop_a.py` hover() at derate 0.93, lean scaled by sqrt(1.3). 1P {RPM_HOVER[0]/60:.0f}-{RPM_HOVER[2]/60:.0f} Hz, 2P {RPM_HOVER[0]/30:.0f}-{RPM_HOVER[2]/30:.0f} Hz. Cruise 7,300-7,600 rpm (QP-3 BOARD s1 item 2: `sitl/fu_level.py` with the APC V > 0 data; the 8,900-10,500 EST band is withdrawn): 1P {RPM_CRUISE[0]/60:.0f}-{RPM_CRUISE[2]/60:.0f}, 2P {RPM_CRUISE[0]/30:.0f}-{RPM_CRUISE[2]/30:.0f} Hz. Rule: f <= band_low/1.2 or f >= 1.2 x band_high for all four. That excludes **{LO_LIM:.0f}-{HI_LIM:.0f} Hz** for strongly coupled modes (coupling >= 0.5, D-185).")
+P("\n### Modes with motor coupling >= 0.3, plus the fin and every mode in the excluded band with coupling >= 0.1 (coupling = mass-normalised |phi| summed at the four motors; arm modes 2.7-3.4)")
 P("| Corner | f (Hz) | part | coupling | vs bands |"); P("|---|---|---|---|---|")
 nweak = {}
 for k in ("kd", "nom", "hi"):
     F, res, info = r[k]
     for (f, e, v, cx, cy) in res:
         c = float(max(cx, cy)); dom = max(e, key=e.get)
-        show = (f > 2 and f < 700 and ((c >= 0.3 and (f < 100 or c >= 0.3)) or e.get("fin", 0) > 0.5 or (83 < f < 420 and c >= 0.1)))
+        show = (f > 2 and f < 700 and ((c >= 0.3 and (f < 100 or c >= 0.3)) or e.get("fin", 0) > 0.5 or (LO_LIM < f < HI_LIM and c >= 0.1)))
         if show and f < 700:
             if ok(f): st = "pass"
             else:
                 st = f"in band, coupling {c:.1f}"; nweak.setdefault(k, []).append((round(f), c))
             if f < 100 or not ok(f) or e.get("fin", 0) > 0.5: P(f"| {k} | {f:.0f} | {dom} {100*e[dom]:.0f}% | {c:.1f} | {st} |")
-P("\nSmallest margin among strongly coupled modes (>= 0.5): see the lowest-frequency rows; the highest strongly coupled mode below 100 Hz and the lowest above 420 Hz per corner:")
+P("\nSmallest margin among strongly coupled modes (>= 0.5): see the lowest-frequency rows; the highest strongly coupled mode below the bands and the lowest above them per corner:")
 for k in ("kd", "nom", "hi"):
     F, res, info = r[k]
-    below = max([f for (f, e, v, cx, cy) in res if 2 < f < 100 and max(cx, cy) >= 0.5]); above = min([f for (f, e, v, cx, cy) in res if f >= 420 and max(cx, cy) >= 0.5])
-    P(f"- {k}: highest coupled mode below the bands {below:.0f} Hz (limit 83.3, margin {100*(83.3/below-1):.0f} %); lowest above {above:.0f} Hz (limit 420)")
-P("\n### Forced response, no balancing credit (U 1.0 g mm per rotor EST; ISO G16 prop alone 0.27; 2P ripple 5 % of thrust EST; damping 1 % EST); worst of six rpm points; FC acceleration vs 30 m/s2")
+    below = max([f for (f, e, v, cx, cy) in res if 2 < f < 100 and max(cx, cy) >= 0.5]); above = min([f for (f, e, v, cx, cy) in res if f >= HI_LIM and max(cx, cy) >= 0.5])
+    P(f"- {k}: highest coupled mode below the bands {below:.0f} Hz (limit {LO_LIM:.1f}, margin {100*(LO_LIM/below-1):.0f} %); lowest above {above:.0f} Hz (limit {HI_LIM:.0f})")
+P("\n### Forced response, no balancing credit (U 1.0 g mm per rotor EST; ISO G16 prop alone 0.27; 2P ripple 5 % of thrust EST; damping 1 % EST); worst over the D-185 sweep 6,000-10,500 rpm in 250 rpm steps plus the hover and cruise (7,300 / 7,450 / 7,600) points, all three corners; FC acceleration vs 30 m/s2")
 for k in ("kd", "nom", "hi"): P(f"- {k}: {float(r['acc'][k]):.1f} m/s2, MS {30/float(r['acc'][k])-1:+.2f}")
 # ---------------- static hub rotation
 def hubrot(kind):

@@ -65,8 +65,8 @@ def loads(m=1.50):
     AR = b * b / S; a_w = math.pi * AR / (1 + math.sqrt(1 + (AR / 2) ** 2)); wl = W / S
     mu = 2 * wl / (RHO * c * a_w * G); Kg = 0.88 * mu / (5.3 + mu)
     ng = lambda V, U: 1 + Kg * RHO * U * V * a_w / (2 * wl); ns = lambda V: 0.5 * RHO * V * V * S * 0.75 / W
-    print("VD  gust n (4 m/s)  stall line  pitch-rate-limited n (35 deg/s)  hinge 25 deg (N m)  servo 0.167 N m ratio  at 15 deg")
-    for VD in (22.0, 23.0, 25.0, 27.5):
+    print("VD  gust n (4 m/s)  stall line  pitch-rate-limited n (35 deg/s)  hinge 25 deg (N m; the stop is now 20 deg, so the 15-deg column is about 1.33x less loaded than the 20-deg hinge)  servo 0.167 N m ratio  at 15 deg")
+    for VD in (22.0, 24.0, 25.0, 27.5):   # 24 = the board-ruled VD (D-186)
         h = 0.0585 * (VD / 18.0) ** 2
         print("%4.1f  %.2f  %.2f  %.2f  %.4f  %.2f  %.2f" % (VD, ng(VD, 4), ns(VD), 1 + VD * math.radians(35) / G, h, 0.167 / h, 0.167 / (h * 15 / 25)))
     for n in (3.4,):

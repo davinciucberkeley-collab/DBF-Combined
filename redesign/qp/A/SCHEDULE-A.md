@@ -20,7 +20,7 @@ Status `PROPOSED`. Nothing ordered. Dates are computed or `EST`. Flight-programm
 
 | ID | Task | Dates | Critical | Notes |
 |---|---|---|---|---|
-| O1 | Order 1: all RMRC lines, 2 motors, PETG, SparkFun bench parts, anemometer, CFRP order or quote | 1-4 Dec | no (14 d slack) | list and risks: COST-SCHEDULE.md s2 |
+| O1 | Order 1 (`ORDER-1.csv`, $967.90 with 2 motors; $1,123.02 if all 5): bench parts, concept-neutral avionics / power, stock-risk lines (props, GPS, PETG, ESC, FC). No CFRP (R04 removed), no tubes, servos, foam or anemometer. T-Motor asked for stock and lead time; no answer by 4 Dec = buy all 5 motors | 1-4 Dec | no (14 d slack) | BOARD QP-3 s7.1; FOLDIN.md s4 |
 | O2 | Order 1 arrives | 7-15 Dec | no | T-Motor the latest |
 | M1 | Compliance (TRUST, UC drone program, FAA, AMA) | 16-30 Nov | no | before any RFS request |
 | S1 | >= 10 h SITL on A with the Pocket TX (A-D9) | 9 Dec - 15 Jan | no (slack 30 d) | break is the pilot-training window |
@@ -33,7 +33,7 @@ Status `PROPOSED`. Nothing ordered. Dates are computed or `EST`. Flight-programm
 | B1 | First cut: cores, spar, fin laminates at team workspace W (hot wire is not a Jacobs tool) | 6-18 Jan, about 30 h | **yes** | needs W named by 30 Nov |
 | B2 | Skin, harness (soldering at Jacobs EL), servos, linkage, motors | 19-29 Jan, about 14.5 h | **yes** | cures in series |
 | B3 | Checks: weigh-in, CG, motor test, range check | 30 Jan - 5 Feb, 12 h | **yes** | A-P mass 1.50 kg gate |
-| F01 | First tethered hover | 8-13 Feb | **yes** | R4 trigger 15 Feb: 2 d spare |
+| F01 | First tethered hover | 8-13 Feb | **yes** | R4 trigger revised to 18 Feb (BOARD QP-3): 5 d spare |
 | F02 | Free hover, landing practice | 13-25 Feb | **yes** | |
 | F03 | Fixed-wing tune | 25 Feb - 7 Mar | **yes** | |
 | F04 | First transition, back-transition | 7-14 Mar | **yes** | |
@@ -73,14 +73,14 @@ Slack is one chain: a day lost anywhere before F01 is a day off the 11 d. Latest
 
 Order 1 (1-4 Dec) -> arrival -> bench B0 -> bench decision and main order (18 Dec) -> arrival (5 Jan) -> first cut (6 Jan) -> B1, B2, B3 -> F01 (8 Feb) -> F02 -> F03 -> F04 -> CR1 -> F04b -> F05 -> F06 -> 30 Apr. The path from F01 on is rate-limited by the number of flyable RFS mornings, not by work content: 25 flown mornings (22 plus 3 repeated) at 4 x 0.72 = 2.9 a week is 8.7 weeks.
 
-Near-critical: Rock West CFRP lead (>= 4 weeks: order by 4 Dec to land before 6 Jan); T-Motor motors (no lead time on the page); Jacobs closure on 18 Dec (EL1 and PR1); workspace W for the foam cores.
+Near-critical: T-Motor motors (no lead time on the page); Jacobs closure on 18 Dec (EL1 and PR1); workspace W for the foam cores.
 
 ## Needed from the team
 
 1. Commit to **4 booked RFS mornings a week from 8 Feb** (request in blocks, 7 business days ahead) with at least three of the four people on each; at 3 a week one crash ends the programme after the deadline.
 2. Name workspace W by 30 Nov (hot wire, glue, cures).
-3. Decide the fin-skin material (0.2 mm CFRP is not sold by a US vendor found).
-4. Measure RFS wind on 3 mornings before 15 Jan (anemometer in order 1).
+3. Fin skin decided: no CFRP sheet; 16x14 tube + 3 mm XPS fairing + tape (STRUCTURES iter. 2). Risk R04 retired.
+4. Measure RFS wind on 3 mornings before 15 Jan (anemometer G05 is not in Order 1: borrow one, or buy it with the main order; D-J6-3 cut candidate).
 
 ## Open
 

@@ -258,3 +258,26 @@ Net about **-$10.94** before tax (tubes $83.98 vs R02 $54.92 plus R04 $40.00). N
 3. Highest arm mode at the stiff corner 78 Hz vs 83.3 (7 %); fin f1 432 Hz vs 420 at kd (3 %). Both rest on the estimated cruise rpm and on tube E; bend-test one 12x10 and one 16x14 tube.
 4. Cage-coupled modes at 9-11 Hz are inside the rate-loop band; filter / notch setting is a flight-controls item.
 5. All allowables are `EST`; the spar must be bonded to the foam over |y| <= 0.15 m (foam shear at the bridge torque).
+
+## Iteration 3 (D-185 as ruled), 2026-11-15
+
+Script `qp/A/structures/iter3_run.py` (+ `iter3_gmwindow.py`; output `iter3_run.md`; `python -I`, numpy + scipy; FE `fe_a.py` unchanged, structure frozen at 473 g). Labels: `CALC` computed, `EST` estimate. Nothing built or tested; no git.
+
+**One-truth rpm.** Hover 6,018-7,151 (1P 100-119, 2P 201-238 Hz), cruise 7,300-7,600 (1P 122-127, 2P 243-253), one motor at the 0.90 cap 9,349 rpm (`prop_a.py`: 8.75 N, 156 / 312 Hz). Excluded band for strongly coupled modes **84-304 Hz**.
+
+**Strongly coupled = coupling >= 0.5** (the board number). Basis: a mode's on-resonance FC acceleration under 1 g mm unbalance is linear in its coupling, worst 19 m/s2 per unit coupling at zeta 0.5 % (`CALC`), so 0.5 allows at most 9.5 m/s2 per mode (32 % of the 30 limit) and the single-mode limit sits at 1.6: the classification is not knife-edge. The three in-band spar modes (199 / 214 / 242 Hz, coupling **0.46**, `CALC`) are weak; their on-resonance response is under 1.5 m/s2.
+
+| # | Item | Result | Rating |
+|---|---|---|---|
+| 1 | Strongly coupled modes in 84-304 Hz | none, all three corners; nearest below: hi arm 78 Hz vs limit 83.6 (8 % of room); above: 432 / 463 / 525 Hz vs 304 | PASS (thin at hi) |
+| 2 | Forced response, U 1.0 g mm, 6,000-10,500 rpm (25 rpm steps), FC sum of axes | all four rotors at the cap (9,349): 19.6-20.1 m/s2, MS +0.49; at the 10,500 end (not reachable, uncapped max 10,142): 25.0-27.1, 28.5 at zeta 0.5 % (MS +0.05); cruise band 10.0-10.9; hi corner peak 16.2 at 8,025 rpm; one motor at cap 12.3-13.6 | PASS (physical); MARGINAL at the sweep end |
+| 3 | Hard-mounted FC, VIBE vs 30 | per-axis amplitude / sqrt 2: 12.5-12.9 m/s2 (sum-of-axes bound 20-27); no mount-isolation credit; foam-tape stiffness assumed rigid | PASS |
+| 4 | Control band, GM >= 2 at every corner, damping, thrust scale (A.param gains, FC at the spar) | pitch 2.76 / 3.17 / 3.59, roll 2.52 / 2.81 / 3.76 (29-35 Hz arm modes), yaw 2.06-2.09; min **2.06** | PASS |
+| 4b | Same with every cage mode shifted +-20 % (tap tolerance) | min **1.64** (pitch, hi +20 %; kd -20 % 1.66) | MARGINAL |
+| 5 | C1 at VD 24 | gust n 3.01 < 3.4 (U 4 m/s at VD); spar 94 MPa design, MS +2.73; at the stall-line pull 3.96 g MS +2.2 | PASS |
+| 6 | D-187 elevon, C6 | hinge moment 0.146 N m limit at VD, +-20 deg (FLUTTER.md stiffness 0.375 N m/rad x 20 deg + alpha term `EST`) vs servo 0.17-0.24 N m; rod 12 N vs buckling 339 N; lead on the 30 mm horn 0.36 N (n 3.4), 1.26 N (12 g), horn tab 1-5 MPa vs 9.5, bond 0.01 MPa | PASS (servo margin +0.17, thin) |
+| 7 | Mass vs 473 g freeze | 473 + 21 (D-187) = **494 g** (wing 212) | FAIL against the freeze; needs a board waiver |
+
+**Control-band pass rule and tap test.** Rule: GM >= 2 (6 dB) on all axes and corners at zeta 0.3 / 1 %, thrust x0.77-1.25, no right-half-plane pole. Tap-test window (`iter3_gmwindow.py`): GM >= 2 requires the first pitch cage mode (FE 12 Hz nom, 10-15 corners) between **12 and 16 Hz** and the first roll / arm mode between 21 and 43 Hz; outside, re-tune (lower pitch P or FLTD) before flight. The 12 Hz mode sits next to the 11-Hz edge, so a built cage 8-10 % soft already needs the re-tune. Yaw is the thinnest axis (2.06).
+
+**Open.** U, zeta and the foam-tape mount stiffness are `EST`; first-hover IMU VIBE < 30 and the balance fallback (0.3 g mm) stand. Elevon hinge moment is `EST` (flutter stiffness `CALC` scaled by the stop). The +21 g is the only fail and is a mass-gate decision, not a strength one.

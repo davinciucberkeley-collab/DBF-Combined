@@ -1,0 +1,31 @@
+order_id,bom_id,vendor,item,qty,unit_usd,flag,why,url
+O1-01,P01,TMotor,T-Motor MN2212 V2.0 KV780 (4 + 1 spare),2,46.9,V,stock risk: asked for stock/lead time; if no answer by 2026-12-04 buy qty 5 (see totals),https://store.tmotor.com/goods-388-MN2212-V20.html
+O1-02,P02,RMRC,"APC 9x4.5MR 4-pack (2 CW 9x4.5MR + 2 CCW 9x4.5MRP, 11.06 g each, adapter rings): flight set, no spare (D-183)",1,9.4,V,"stock risk (T9545 sold out); flight set + bench prop; 2nd pack = $9.40 optional, not added",https://www.readymaderc.com/products/details/86771-apc-multirotor-9x4-5-2-blade-4-pack-with-adapter-rings
+O1-03,P04,RMRC,SpeedyBee BLS 35A Mini V2 4-in-1 ESC 20x20 (DShot300/600; 7.2 g board),1,45.66,V,single-source 4-in-1 ESC; M4 bidirectional-DShot bench test needs it,https://www.readymaderc.com/products/details/86873-speedybee-bls-35a-mini-v2-20x20-4-in-1-esc
+O1-04,W01,RMRC,Tattu 2300 mAh 4S 75C XT60 270 g (2 flight packs),2,37.09,V,concept-neutral power; 2 packs flown one at a time,https://www.readymaderc.com/products/details/tattu-2300-75c-4s1p-xt60
+O1-05,W02,RMRC,ToolkitRC M6AC charger,1,63.71,V,concept-neutral,https://www.readymaderc.com/products/details/86179-toolkitrc-m6ac-charger
+O1-06,W03,RMRC,TBS LiPo bag,2,7.61,V,concept-neutral,https://www.readymaderc.com/products/details/tbs-lipo-battery-bag
+O1-07,W05,RMRC,"Wire 14 AWG silicone (3 m red + 3 m black), XT60 5-pair, heat-shrink kit 500 pc",1,23.92,V,concept-neutral,https://www.readymaderc.com/products/details/premium-silicone-wire-14ga-red-1m
+O1-08,V01,RMRC,Radiomaster Pocket ELRS TX,1,76.99,V,concept-neutral,https://www.readymaderc.com/products/details/85660-radiomaster-pocket-radio-controller-expresslrs-elrs-2-4ghz-charcoal-mode-2
+O1-09,V02,RMRC,Radiomaster RP3 V2 ELRS RX,1,23.08,V,concept-neutral,https://www.readymaderc.com/products/details/85670-radiomaster-rp3-expresslrs-2-4ghz-nano-receiver-v2
+O1-10,V03,RMRC,Holybro Kakute F405 Wing Mini FC,1,95.98,V,single-source FC; M4 test,https://www.readymaderc.com/products/details/87184-holybro-kakute-f405-wing-mini-flight-controller
+O1-11,V04,RMRC,"TBS M10Q GPS + QMC5883 compass (13.5 g; replaces Foxeer M10Q-250, backordered at RMRC)",1,19.76,V,stock risk (Foxeer backordered); connector is NOT a plug on the Kakute (see FOLDIN s3),https://www.readymaderc.com/products/details/86501-tbs-m10q-gps-receiver-with-glonass
+O1-12,V05,RMRC,RMRC MS4525 airspeed + pitot,1,59.99,V,concept-neutral,https://www.readymaderc.com/products/details/rmrc-digital-air-speed-sensor-pixhawk-ii-2
+O1-13,G01,RMRC,ToolkitRC WM150 watt meter,1,35.31,V,bench M1/M2,https://www.readymaderc.com/products/details/toolkitrc-wm150-watt-meter
+O1-14,B01,RMRC,SunnySky X2212 KV980 CW (R1 bench motor),1,15.99,V,bench R1 motor,https://www.readymaderc.com/products/details/sunnysky-x2212-kv980-multirotor-cw
+O1-15,B02,RMRC,Holybro 1045 prop set (bench / C7 spare props),1,12.99,V,bench props / C7 spare,https://www.readymaderc.com/products/details/87244-holybro-1045-propeller-set-2cw-2ccw-x500-s500-spare-parts
+O1-16,R03,Prusa,"Prusament PETG 1 kg (printed cage, mounts, foot pads)",1,23.99,V,stock risk: Prusa shipping; cage prints at Jacobs before 18 Dec,https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/
+O1-17,B03,Amazon,1 kgf bar cell + HX711 (+K-type probes) for the yaw-torque arm,1,17.0,EST,bench yaw-torque cell (EST; page not read),https://www.amazon.com/dp/B0F52QCK3T
+O1-18,B04,Amazon,"Bench fixture: 2 x 608 bearings, plywood, M3/M6 hardware, print (Jacobs)",1,15.0,EST,bench fixture (EST),—
+O1-19,G02,SparkFun,SparkFun TAL220 10 kg cell $12.95 + HX711 $4.95 (the SparkFun part of BOM G02),1,17.9,EST,bench thrust cell; In stock 2026-11-15,—
+O1-20,G02,Amazon,"IR thermometer, 0.1 g scale, caliper, knife-edge (the Amazon remainder of BOM G02 50.95 - 17.90)",1,33.05,EST,bench M2/M6 (EST; Amazon not read),—
+O1-21,G03,Local,Thrust-stand + hanging yaw-rig parts (wood and hardware),1,25.0,EST,bench stand + yaw rig,—
+O1-22,G04,Local,Foam-board planform for hanging yaw test (M3),1,10.0,EST,bench M3,—
+O1-23,W04,Local,Metal ammo can (pack storage),1,13.99,V,LiPo storage before the first charge,https://www.harborfreight.com/30-cal-metal-ammo-can-57767.html
+O1-24,W06,Local,Threadlocker,1,6.0,EST,bench fixture,—
+TOTAL,,,Goods (qty x unit),,827.91,,,
+TOTAL,,,Tax 10.25 % on goods,,84.86,,,
+TOTAL,,,"Shipping EST (RMRC 15.00, T-Motor 10.71, Amazon 10.71, Prusa 10.71, SparkFun 8.00)",,55.13,,,
+TOTAL,,,"ORDER 1 TOTAL, 2 MN2212",,967.90,EST,"Excludes R04 (removed), tubes R02/R08-R10, servos M01/M02, foam R01, epoxy/CA R05/R07, R06 struts, G05 anemometer: main order",
+TOTAL,,,"IF T-Motor gives no stock/lead time by 2026-12-04: +3 MN2212 (3 x 46.90 x 1.1025, same shipment, no extra shipping)",,155.12,,,
+TOTAL,,,"ORDER 1 TOTAL, 5 MN2212",,1123.02,EST,,

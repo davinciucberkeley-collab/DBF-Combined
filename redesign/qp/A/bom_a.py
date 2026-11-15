@@ -7,7 +7,7 @@ Crash reserve = one bad crash BEYOND the spares in the BOM: 1 flight pack + 1 mo
 it (a bad crash that also kills them is not covered); stated in MASS-GATE / BASELINE."""
 import csv, os, math
 TAX, FAA, BUDGET, BUMP = 0.1025, 5.0, 2000.0, 0.30
-SHIP = {"RMRC": 15.0, "TMotor": 10.71, "Amazon": 10.71, "Prusa": 10.71, "Local": 0.0}
+SHIP = {"RMRC": 15.0, "TMotor": 10.71, "Amazon": 10.71, "Prusa": 10.71, "SparkFun": 8.00, "Local": 0.0}
 rows = list(csv.DictReader(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "BOM-A.csv"), encoding="utf-8")))
 for r in rows:
     r["qty"] = float(r["qty"]); r["u"] = float(r["unit_usd"]); r["spares"] = float(r["spares"])
@@ -19,7 +19,8 @@ def line(i): return next(r["u"] for r in rows if r["id"] == i)
 def ship(): return sum(SHIP[g] for g in {r["ship_group"] for r in rows})
 def reserve(bump=0.0):
     f = 1 + bump
-    airset = line("R01")*f + line("R02") + line("R04")*f + 0.5*line("R03")*f
+    tubes = sum(r["qty"]*r["u"] for r in rows if r["id"] in ("R02", "R08", "R09", "R10"))   # QP-4: full carbon-tube set (16x14, 3 x 12x10, 14x12, 6x4.5); R04 removed
+    airset = line("R01")*f + tubes + 0.5*line("R03")*f
     return (line("W01") + line("P01") + line("M01") + airset)*(1+TAX) + SHIP["TMotor"] + SHIP["RMRC"] + SHIP["Amazon"]
 def totals(bump=0.0):
     g = goods(bump); spend = g*(1+TAX) + ship() + FAA; res = reserve(bump)
@@ -42,7 +43,10 @@ if __name__ == "__main__":
     print(f"\nUnverified goods (U + EST): {unv:.2f} ({100*unv/t['goods']:.0f} % of goods); lines {sum(U(r) for r in rows)} of {len(rows)}")
     print(f"+30 % on unverified lines: total {t30['total']:,.2f}, margin {t30['margin']:+,.2f}")
     print(f"Growth absorbed: margin / (goods x 1.1025) = {100*t['margin']/(t['goods']*1.1025):.0f} %")
-    print(f"Margin >= $100 at +30 %: {'PASS' if t30['margin']>=100 else 'FAIL'}; R5 total <= $1,750: {'PASS' if t['total']<=1750 else 'FAIL'}\n")
+    print(f"Margin >= $100 at +30 %: {'PASS' if t30['margin']>=100 else 'FAIL'}; R5 total <= $1,750 (replaced by G7): {'PASS' if t['total']<=1750 else 'FAIL'}")
+    g7 = t30['margin'] >= 100 and t['total'] <= 1800   # QP-3 board G7
+    print(f"G7 (+30 % margin >= $100 AND total <= $1,800): {'PASS' if g7 else 'FAIL'} (total {t['total']:,.2f}, +30 % margin {t30['margin']:+,.2f})")
+    print()
     print("| Subsystem | Nominal $ (incl tax) | +30 % unverified | Cap $ | Unverified share |\n|---|---|---|---|---|")
     for s in SUBS:
         gs = goods(0, s); us = sum(r["qty"]*r["u"] for r in rows if r["subsystem"] == s and U(r))

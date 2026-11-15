@@ -16,27 +16,39 @@ CDW = 2.0                                                  # plate Cd for the po
 # CD0 calibrated to MISSION.md s1: L/D 7.19 at CL 0.352 (1.37 kg, 17 m/s) with e = 0.8
 E_OSW = 0.8
 CD0 = 1.87 / (0.5 * 1.20 * 17 ** 2 * S_W) - 0.352 ** 2 / (math.pi * E_OSW * AR)
-SM = 0.065                                                 # static margin MASS-GATE: AC 0.065 c behind the CG
+SM = 0.065                                                 # static margin MASS-GATE: AC 0.065 c behind the CG (replaced by the CAD CG below: NP 40.7 mm EST, CAD.md s4)
+import json as _json, os as _os
+_cp = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "cad_mass.json")
+CADM = _json.load(open(_cp)) if _os.path.exists(_cp) else None
+NP_X = 0.0407                                              # neutral point aft of the LE, m (SIZING-A, EST; the M5 CG breadboard measures it)
+CG_X = CADM["cg_x_m"] if CADM else 0.0246
+if CADM: SM = (NP_X - CG_X) / C_W
 CM0 = 0.015                                                # reflexed flying-wing section Cm about the AC (EST, S5010-like); trim needs a little up elevon
 CMQ, CLP = -1.0, -0.30                                     # pitch and roll damping, nondimensional (EST: thin-airfoil -pi/2 reduced for AR; Helmbold-type Clp)
 CLB = -0.04                                                # dihedral effect per rad (EST)
 # ---------------- elevons (EST, not in REQUIREMENTS-A or SIZING-A: only "2 elevons")
 EL_CF = 0.25                                               # chord fraction (K09-L wing.elevon.chord_frac scale, EST)
-EL_Y0, EL_Y1 = 0.10, 0.40                                  # span stations each side, m (EST)
+EL_Y0, EL_Y1 = 0.04, 0.34                                  # span stations each side, m: the drawn elevon (CAD a_model.py ELEV_Y0/Y1; fin root at 0.34-0.38). QP-4 fold-in, BOARD s1 item 3 (was 0.10-0.40)
 EL_S = 2 * (EL_Y1 - EL_Y0) * EL_CF * C_W                   # both elevons, m2
 EL_TAU = 0.5                                               # flap effectiveness tau at cf/c 0.25 (thin airfoil)
 CLD = CLA * EL_TAU * (EL_S / S_W)                          # dCL per rad of mean deflection, EST
-EL_X = -(0.875 * C_W - 0.0246)                             # elevon centroid, m forward of the CG (negative = aft)
+EL_X = -(0.875 * C_W - CG_X)                             # elevon centroid, m forward of the CG (negative = aft)
 EL_Y = 0.5 * (EL_Y0 + EL_Y1)
-EL_MAX = math.radians(25.0)                                # physical stops (K09-L B3 "25 deg travel"), EST
+EL_MAX = math.radians(20.0)                                # physical stops +-20 deg = CAD ELEV_LIM (QP-4 fold-in, BOARD s1 item 3; was 25). Plant needs a re-run: roll arm 0.19 vs 0.25 m
 EL_RATE = math.radians(300.0)                              # servo rate limit (ES3352HV 0.1 s / 60 deg class), EST
 EL_LAG = 0.04                                              # s
+EL_IH = CADM["elevon"]["hinge_inertia_total_kgm2"] if CADM else 1.1e-5   # one elevon about its hinge incl. D-187 balance horn + 10.7 g lead (cad_mass.py), kg m2; plant has no hinge dynamics: servo torque check in fwd_checks.py
+
+def set_cg(x):
+    """Re-reference the aerodynamic arms to a CG at x aft of the LE (pack trim runs)."""
+    global SM, EL_X, FIN_X, CG_X
+    CG_X = x; SM = (NP_X - x) / C_W; EL_X = -(0.875 * C_W - x); FIN_X = -(0.24 - x)
 POSTSTALL_EL = 0.30                                        # elevon effectiveness in separated flow, EST (B3 K09-L uses its own curve)
 SLIP = 0.0                                                 # fraction of the prop-wash dynamic pressure the elevons see; the props are above and below the wing plane (z +-0.156 m),
 #                                                            gap about 0.04 m, so 0 by default (no credit, as K09-L and sizing). Sensitivity via cfg.
 # ---------------- fins
 FIN_S = 2 * 0.36 * 0.12
-FIN_X = -(0.24 - 0.0246)                                   # fin centre, m forward of CG (aft = negative), as a_plant.py
+FIN_X = -(0.24 - CG_X)                                   # fin centre, m forward of CG (aft = negative), as a_plant.py
 CLAF = 2.5                                                 # effective fin lift slope per rad (AR 3, wing as end plate), EST
 CDF = 2.0
 HINGE_CH = -0.60                                           # hinge-moment coefficient per rad of deflection (EST), for the servo check

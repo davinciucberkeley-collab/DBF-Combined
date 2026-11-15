@@ -1,0 +1,22 @@
+Z4_t0 case=trans mass=1.43 wind=0 from=0 hold=25 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z4_t5h case=trans mass=1.43 wind=5 from=0 hold=25 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z4_t5t case=trans mass=1.43 wind=5 from=180 hold=25 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z4_t5c case=trans mass=1.43 wind=5 from=90 hold=25 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z4_g0 case=trans mass=1.50 wind=0 from=0 hold=25 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z4_g5h case=trans mass=1.50 wind=5 from=0 hold=25 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z4_g5c case=trans mass=1.50 wind=5 from=90 hold=25 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z4_b0 case=trans mass=1.43 wind=5 from=0 chain=1 hold=30 cruise_s=15 turb=0.5 P:THR_MAX=80 P:Q_WVANE_ENABLE=0 wv_after=3
+Z4_b45 case=trans mass=1.43 wind=5 from=45 chain=1 hold=30 cruise_s=15 turb=0.5 P:THR_MAX=80 P:Q_WVANE_ENABLE=0 wv_after=3
+Z4_b90 case=trans mass=1.43 wind=5 from=90 chain=1 hold=30 cruise_s=15 turb=0.5 P:THR_MAX=80 P:Q_WVANE_ENABLE=0 wv_after=3
+Z4_gb45 case=trans mass=1.50 wind=5 from=45 chain=1 hold=30 cruise_s=15 turb=0.5 P:THR_MAX=80 P:Q_WVANE_ENABLE=0 wv_after=3
+Z4_gb0 case=trans mass=1.50 wind=0 from=0 chain=1 hold=30 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0 wv_after=3
+Z4_roll case=roll mass=1.43 wind=0 from=0 hold=25 cruise_s=8 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z4_rollg case=roll mass=1.50 wind=0 from=0 hold=25 cruise_s=8 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+Z4_wv1 case=wvane mass=1.43 wind=5 from=45 turb=1.0 seed=1 hold=10 wv_s=100
+Z4_wv2 case=wvane mass=1.43 wind=5 from=45 turb=1.0 seed=2 hold=10 wv_s=100
+Z4_wv3 case=wvane mass=1.43 wind=5 from=0 turb=1.0 seed=3 hold=10 wv_s=100
+Z4_wv4 case=wvane mass=1.50 wind=5 from=90 turb=1.0 seed=4 hold=10 wv_s=100
+Z4_f126 case=battC mass=1.43 hold=25 cruise_s=2.5 P:THR_MAX=80 P:FENCE_ENABLE=1 P:FENCE_RADIUS=240 P:Q_WVANE_ENABLE=0
+Z4_f150 case=battC mass=1.43 hold=25 cruise_s=3.7 P:THR_MAX=80 P:FENCE_ENABLE=1 P:FENCE_RADIUS=240 P:Q_WVANE_ENABLE=0
+Z4_f126g case=battC mass=1.50 hold=25 cruise_s=2.5 P:THR_MAX=80 P:FENCE_ENABLE=1 P:FENCE_RADIUS=240 P:Q_WVANE_ENABLE=0
+Z4_f150g case=battC mass=1.50 hold=25 cruise_s=3.7 P:THR_MAX=80 P:FENCE_ENABLE=1 P:FENCE_RADIUS=240 P:Q_WVANE_ENABLE=0

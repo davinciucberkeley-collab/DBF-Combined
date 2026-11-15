@@ -4,15 +4,15 @@
  "parts": [
   {
    "id": "MEC-001-R",
-   "name": "Servo ES3352HV (R)",
+   "name": "Servo EMAX ES3054HV (R)",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 12.0,
+   "mass_g": 20.5,
    "material": "plastic / metal gear",
    "cg_xyz_m": [
-    0.1384,
+    0.1411,
     0.2,
-    0.0035
+    0.0053
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -28,7 +28,7 @@
    "cg_xyz_m": [
     0.15,
     0.2,
-    0.0092
+    0.0127
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -41,9 +41,9 @@
    "mass_g": 1.0,
    "material": "steel",
    "cg_xyz_m": [
-    0.1768,
+    0.1772,
     0.2,
-    0.011
+    0.0127
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -65,15 +65,15 @@
   },
   {
    "id": "MEC-001-L",
-   "name": "Servo ES3352HV (L)",
+   "name": "Servo EMAX ES3054HV (L)",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 12.0,
+   "mass_g": 20.5,
    "material": "plastic / metal gear",
    "cg_xyz_m": [
-    0.1384,
+    0.1411,
     -0.2,
-    0.0035
+    0.0053
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -89,7 +89,7 @@
    "cg_xyz_m": [
     0.15,
     -0.2,
-    0.0092
+    0.0127
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -102,9 +102,9 @@
    "mass_g": 1.0,
    "material": "steel",
    "cg_xyz_m": [
-    0.1768,
+    0.1772,
     -0.2,
-    0.011
+    0.0127
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"

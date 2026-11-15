@@ -33,7 +33,9 @@ for da in (5.0, 8.7, 15.0):
     print("roll at 17 m/s, differential +-%.1f deg: moment %.2f N m, steady rate %.0f deg/s (requirement >= 90 deg/s, A-P11)" % (da, Mx, math.degrees(rate)))
 print("Cn_beta (fins, wing neglected) = %.3f /rad (requirement >= 0.03, A-P15)" % (A.CLAF * A.FIN_S * abs(A.FIN_X) / (A.S_W * A.B_W)))
 V = 18.0; al = trim(1.5, V)
-print("peak hinge moment at 18 m/s, 25 deg, alpha %.0f deg: %.4f N m vs servo 0.167-0.235 N m (ES3352HV 1.7-2.4 kgf-cm, U); ratio %.1f" %
-      (math.degrees(al), A.airframe(V * math.cos(al), 0, V * math.sin(al), 0, 0, 0, math.radians(25), math.radians(25))[2]["hinge"],
-       0.167 / A.airframe(V * math.cos(al), 0, V * math.sin(al), 0, 0, 0, math.radians(25), math.radians(25))[2]["hinge"]))
+print("peak hinge moment at 18 m/s, 20 deg stop (QP-4), alpha %.0f deg: %.4f N m vs servo 0.167 N m (ES3352HV at 6 V, old) ratio %.1f" %
+      (math.degrees(al), A.airframe(V * math.cos(al), 0, V * math.sin(al), 0, 0, 0, math.radians(20), math.radians(20))[2]["hinge"],
+       0.167 / A.airframe(V * math.cos(al), 0, V * math.sin(al), 0, 0, 0, math.radians(20), math.radians(20))[2]["hinge"]))
 print("elevon area both %.4f m2 (cf/c %.2f, y %.2f-%.2f m each side), CL_delta %.3f /rad, tau %.2f; stops +-%.0f deg, rate %.0f deg/s" % (A.EL_S, A.EL_CF, A.EL_Y0, A.EL_Y1, A.CLD, A.EL_TAU, math.degrees(A.EL_MAX), math.degrees(A.EL_RATE)))
+
+print("QP-4 as drawn: CG %.1f mm aft of the LE, SM %.1f %% (NP %.1f mm EST); elevon hinge inertia incl. D-187 balance %.2e kg m2 per elevon; servo ES3054HV 0.333-0.397 N m (SERVO.md, 6.0-7.2 V): alpha at 300 deg/s^2 x 4 = %.4f N m inertial torque" % (A.CG_X * 1e3, A.SM * 100, A.NP_X * 1e3, A.EL_IH, A.EL_IH * 4 * math.radians(300) / 0.04 * 0 + A.EL_IH * (math.radians(300) / A.EL_LAG)))

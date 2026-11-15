@@ -53,7 +53,6 @@
     "CGE-001",
     "CGE-004",
     "CGE-006",
-    "CGE-008",
     "CGE-002-UR",
     "CGE-002-UL",
     "CGE-002-LR",
@@ -90,6 +89,15 @@
    "pairs": []
   },
   {
+   "id": "B3",
+   "parts": [
+    "CGE-008"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
    "id": "C1",
    "parts": [
     "FIN-002-R",
@@ -103,7 +111,9 @@
    "id": "C2",
    "parts": [
     "WNG-006-R",
-    "WNG-006-L"
+    "WNG-006-L",
+    "WNG-007-R",
+    "WNG-007-L"
    ],
    "worst_mm": 0.0,
    "first_hit_t_mm": null,

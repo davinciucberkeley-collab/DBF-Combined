@@ -1,0 +1,4 @@
+Z4_wv1g5 case=wvane mass=1.43 wind=5 from=45 turb=1.0 seed=1 hold=10 wv_s=100 P:Q_WVANE_GAIN=0.5
+Z4_wv2g5 case=wvane mass=1.43 wind=5 from=45 turb=1.0 seed=2 hold=10 wv_s=100 P:Q_WVANE_GAIN=0.5
+Z4_wv3g5 case=wvane mass=1.43 wind=5 from=0 turb=1.0 seed=3 hold=10 wv_s=100 P:Q_WVANE_GAIN=0.5
+Z4_rollh case=roll mass=1.43 wind=0 from=0 hold=25 cruise_s=8 P:THR_MAX=80 P:Q_WVANE_ENABLE=0 P:ROLL_LIMIT_DEG=75 P:RLL2SRV_RMAX=300

@@ -1,8 +1,8 @@
 {
- "bodies": 127,
+ "bodies": 131,
  "defects": [],
  "kinks": [],
- "parts": 68,
+ "parts": 70,
  "poses": [
   {
    "hits": [],
@@ -16,7 +16,9 @@
     "MEC-004-L",
     "MEC-004-R",
     "WNG-006-L",
-    "WNG-006-R"
+    "WNG-006-R",
+    "WNG-007-L",
+    "WNG-007-R"
    ],
    "name": "elevons at lower limit (E-WNG-10 -20, E-WNG-11 -20)",
    "not_swept_against": [
@@ -30,7 +32,9 @@
     "MEC-004-L",
     "MEC-004-R",
     "WNG-006-L",
-    "WNG-006-R"
+    "WNG-006-R",
+    "WNG-007-L",
+    "WNG-007-R"
    ],
    "name": "elevons at upper limit (E-WNG-10 +20, E-WNG-11 +20)",
    "not_swept_against": [
@@ -39,7 +43,7 @@
    ]
   }
  ],
- "seconds": 89.9,
+ "seconds": 85.6,
  "skipped": [
   [
    "HRD-001",

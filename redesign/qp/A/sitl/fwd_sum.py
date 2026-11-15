@@ -42,9 +42,9 @@ def trans(f, res):
     vh = f["V"][ife] if ife else None
     out["V_at_handover"] = None if vh is None else round(vh, 1)
     de = [0.5 * (f["dl"][i] + f["dr"][i]) for i in range(i1, iend)]; dr = [0.5 * abs(f["dl"][i] - f["dr"][i]) for i in range(i1, iend)]
-    out["pitch_use_15"] = round(max(abs(x) for x in de) / 15.0, 2); out["pitch_use_25"] = round(max(abs(x) for x in de) / 25.0, 2)
+    out["pitch_use_15"] = round(max(abs(x) for x in de) / 15.0, 2); out["pitch_use_25"] = round(max(abs(x) for x in de) / 25.0, 2); out["pitch_use_20"] = round(max(abs(x) for x in de) / 20.0, 2)
     out["elevon_max_deg"] = round(max(max(abs(f["dl"][i]), abs(f["dr"][i])) for i in range(i1, iend)), 1)
-    out["t_elevon_sat_s"] = round(sum(0.05 for i in range(i1, iend) if max(abs(f["dl"][i]), abs(f["dr"][i])) >= 24.5), 2)
+    out["t_elevon_sat_s"] = round(sum(0.05 for i in range(i1, iend) if max(abs(f["dl"][i]), abs(f["dr"][i])) >= 19.5), 2)
     um = [max(f["u1"][i], f["u2"][i], f["u3"][i], f["u4"][i]) for i in range(i0, iend)]
     out["u_max"] = round(max(um), 3); out["t_cap_run_s"] = round(runlen([u >= 0.895 for u in um]), 2); out["t_ge85_s"] = round(sum(0.05 for u in um if u >= 0.85), 2)
     out["I_pack_peak_A"] = round(max(f["ipack"][i0:iend]), 1); out["I_motor_peak_A"] = round(max(max(f["i%d" % k][i0:iend]) for k in (1, 2, 3, 4)), 1)
@@ -122,6 +122,24 @@ def summarize(tag):
                              u_max=round(max(max(f["u1"][k], f["u2"][k], f["u3"][k], f["u4"][k]) for k in range(ib, iq)), 3))
             if res["marks"].get("t_yaw0"): o["back"]["yaw_turn_deg"] = round(((f["hdg_belly"][iq] - f["hdg_belly"][idx(f["t"], res["marks"]["t_yaw0"])] + 180) % 360) - 180, 0)
             o["back"]["hdg_belly_at_qland"] = round(f["hdg_belly"][iq], 0)
+    elif c == "roll":
+        o = trans(f, res); mk = res["marks"]; T = f["t"]; ia, ib = idx(T, mk["t_roll0"]), idx(T, mk["t_roll3"])
+        pr = [math.degrees(f["p"][i]) for i in range(ia, ib)]; el = [0.5 * abs(f["dl"][i] - f["dr"][i]) for i in range(ia, ib)]
+        o["roll"] = dict(p_peak_deg_s=round(max(abs(x) for x in pr), 0), diff_elevon_peak_deg=round(max(el), 1), roll_peak_deg=round(max(abs(f["roll"][i] - 180.0 if abs(f["roll"][i]) > 90 else f["roll"][i]) for i in range(ia, ib)), 0),
+                         elevon_max_deg=round(max(max(abs(f["dl"][i]), abs(f["dr"][i])) for i in range(ia, ib)), 1), alt_min=round(min(f["alt"][ia:ib]), 1), V_min=round(min(f["V"][ia:ib]), 1))
+    elif c == "wvane":
+        T = f["t"]; ia, ib = idx(T, mk_ := res["marks"]["t_wv0"]), idx(T, res["marks"]["t_wv1"])
+        h = [f["hdg_belly"][i] for i in range(ia, ib)]
+        def unwrap(a):
+            out = [a[0]]
+            for x in a[1:]: out.append(out[-1] + ((x - out[-1] + 180) % 360) - 180)
+            return out
+        hu = unwrap(h); n = len(hu); tail = hu[n // 2:]; med = sorted(tail)[len(tail) // 2]
+        lean = [90 - f["pitch"][i] for i in range(ia, ib)]
+        o = dict(case="wvane", mass=res["mass"], wind=res["cfg"]["wind"], wfrom=res["cfg"]["wind_from_deg"], turb=res["cfg"]["turb"], seed=res["cfg"]["seed"],
+                 hdg_start=round(hu[0], 0), hdg_settled_median=round(med, 1), hdg_exc_after_half_deg=round(max(abs(x - med) for x in tail), 1),
+                 hdg_exc_peak_to_peak_after_half=round(max(tail) - min(tail), 1), edge_on_err_deg=round(abs(((med - res["cfg"]["wind_from_deg"]) % 180) - 90), 1),
+                 hdg_exc_last_third=round(max(abs(x - med) for x in hu[2 * n // 3:]), 1), lean_mean_last_third=round(sum(lean[2 * n // 3:]) / (n - 2 * n // 3), 1), lean_max=round(max(lean), 1))
     elif c == "land": o = landing(f, res, res["marks"]["t_qland"], "land")
     elif c == "takeoff": o = takeoff(f, res)
     else: o = fail(f, res)

@@ -4,7 +4,7 @@ cross-flow plates, wind and gusts, fin-tip ground contact. Every constant is EST
 usage: python a_plant.py '<json config>'     (started by run_case.py; writes <out>.csv and <out>.plant.json)
 Frames: world NED; body FRD in cruise attitude (x nose/chord, y right wing, z belly). Hover = nose up (x_b up),
 copter forward = +z_b (belly), copter right = +y_b, copter down = -x_b (tail)."""
-import json, math, socket, struct, sys, random
+import json, math, socket, struct, sys, random, os
 
 cfg = json.loads(sys.argv[1])
 G = 9.81; RHO = 1.225
@@ -21,7 +21,13 @@ HOLD = cfg.get("hold_s", 60.0); ALT_TRIG = cfg.get("alt_trigger", 18.0); SETTLE 
 CDW, CDF = cfg.get("cd_wing", 2.0), cfg.get("cd_fin", 2.0)              # plate Cd (sizing 2.0-2.05)
 ARM = cfg.get("arm", 1.0); WING_S = cfg.get("wing_s", 1.0); FIN_S = cfg.get("fin_s", 1.0); PORT = 9002 + 10 * cfg.get("inst", 0)
 S_W, B_W, C_W = 0.22 * WING_S, 0.90, 0.245; A_FIN = 2 * 0.36 * 0.12 * FIN_S
-CG_AFT = 0.0246                                                         # CG aft of LE (sizing section 6)
+CG_AFT = 0.0246                                                         # CG aft of LE (sizing section 6); replaced by the CAD value below (cad=1, default)
+CADM = None
+if cfg.get("cad", 1):                                                   # QP-4 7.2 #2: the as-drawn aircraft (sitl/cad_mass.py -> cad_mass.json)
+    _cp = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cad_mass.json")
+    if os.path.exists(_cp):
+        CADM = json.load(open(_cp))
+        CG_AFT = cfg.get("cg_aft", CADM["cg_x_m"])
 random.seed(cfg.get("seed", 1))
 # ---- QP-3 forward-flight mode: cfg fwd=1 switches the motors to the APC 9x4.5MR + MN2212 + pack model (a_aero.py) and the wing / elevons / fins to the
 #      full-alpha model. fwd=0 is the unchanged hover plant (regression: same numbers as QP-2 / WIND.md).
@@ -31,11 +37,12 @@ if FWD:
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import a_aero as AE
     AE.SLIP = cfg.get("slip", 0.0)
+    if "cg_aft" in cfg and CADM: AE.set_cg(cfg["cg_aft"])
     VREST = cfg.get("vrest", 14.92)            # pack rest voltage, V (14.92 = 3.73 V/cell, the T/W-sag state of MASS-GATE; 16.8 fresh)
     HOT = cfg.get("hot", 0.97 if VREST < 15.5 else 1.0)   # winding-hot thrust factor used with the sag state (sizing_a.py)
     RPACK = cfg.get("rpack", 0.030)            # pack resistance, ohm (prop_a.py EST)
     ES5, ES6 = cfg.get("es5", 1.0), cfg.get("es6", -1.0)  # elevon servo sign: deflection (TE down +) = sign x (pwm - 1500) / 500 x EL_MAX (fit in QP-3; see SITL-FLIGHT.md)
-    ELV_SCALE = cfg.get("elv_scale", 1.0)      # 1.0: full 1000-2000 us throw = the physical +-25 deg stop
+    ELV_SCALE = cfg.get("elv_scale", 1.0)      # 1.0: full 1000-2000 us throw = the physical +-20 deg stop (QP-4: was 25)
     CMDF = cfg.get("cmd_file", None); WIND_T0 = cfg.get("wind_t0", None); WIND_ALT = cfg.get("wind_alt", 20.0)
     ELV_FAIL = cfg.get("elv_scale_fail", 1.0)
 
@@ -55,9 +62,13 @@ mw = 0.220 * kk * WING_S
 Ixx += mw * B_W ** 2 / 12; Iyy += mw * C_W ** 2 / 12; Izz += mw * (B_W ** 2 + C_W ** 2) / 12     # wing plate, own inertia
 Iyy += 2 * 0.018 * kk * 0.36 ** 2 / 12 * 0; Izz += 2 * 0.018 * kk * 0.36 ** 2 / 12                # fin own inertia (small)
 I = (Ixx, Iyy, Izz)
+if CADM:                                                                # CAD point masses + own inertias, scaled to the case mass; body axes (x fwd, y right, z down)
+    _k = M / CADM["mass_basic_kg"]; _c = CADM["I_cad_axes_kgm2"]
+    I = (_c["Ixx"] * _k, _c["Iyy"] * _k, _c["Izz"] * _k)               # CAD x aft/y right/z up: diagonal terms are the same in body axes
 
 # ---- motors: (copter f = +z_b, r = +y_b, spin +1 CCW). ArduCopter X: 1 FR ccw, 2 RL ccw, 3 FL cw, 4 RR cw
 YM, ZM, XM = 0.19 * ARM, 0.13 * ARM, 0.11
+if CADM: XM = -CADM["prop_hub_x_aft_of_LE_m"] + CG_AFT                  # prop plane 121 mm ahead of the LE (CAD), forward of the CG by this
 mot = [(+ZM, +YM, +1), (-ZM, -YM, +1), (+ZM, -YM, -1), (-ZM, +YM, -1)]
 mpos, mtang, mspin = [], [], []
 for f, r, s in mot:
@@ -98,11 +109,11 @@ def mat2q(R):   # R[i][j], body -> world
     s = math.sqrt(1+R[2][2]-R[0][0]-R[1][1])*2; return qnorm(((R[1][0]-R[0][1])/s, (R[0][2]+R[2][0])/s, (R[1][2]+R[2][1])/s, s/4))
 
 # ---- state: nose up, belly north, feet on the ground (CG 0.2754 m above the foot line)
-FOOT_X = -(0.30 - CG_AFT)
+FOOT_X = -((CADM["x_ground_m"] if CADM else 0.30) - CG_AFT)
 q = mat2q(((0, 0, 1), (0, 1, 0), (-1, 0, 0)))      # body x -> up, y -> east, z -> north
 pos = (0.0, 0.0, FOOT_X); vel = (0.0, 0.0, 0.0); om = (0.0, 0.0, 0.0)
 uf = [0.0] * 4
-feet = [(FOOT_X, sy * 0.45, sz * 0.18) for sy in (1, -1) for sz in (1, -1)]
+feet = [(FOOT_X, sy * (CADM["fin_y_m"] if CADM else 0.45), sz * 0.18) for sy in (1, -1) for sz in (1, -1)]
 turb = [0.0, 0.0, 0.0]
 
 def air_wind(t, tw0):

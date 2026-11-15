@@ -2,7 +2,8 @@ import sys, math, os; sys.path.insert(0, os.path.dirname(os.path.abspath(__file_
 import numpy as np, fe_a
 FIN = (5e-3, 1e-3, 110e9, 10e-3, 0.055)
 RPM_HOVER = (6018.0, 6272.0, 7151.0)      # 1.381 kg, 1.50 kg (prop_a.py), 8 m/s lean 1.3 W
-RPM_CRUISE = (8900.0, 9700.0, 10500.0)    # EST band
+RPM_CRUISE = (7300.0, 7450.0, 7600.0)    # SITL cruise band (BOARD s1 item 2, fu_level.py); the 8,900-10,500 EST band is withdrawn
+RPM_SWEEP = list(range(6000, 10501, 250))    # D-185: forced response swept over the full rpm range incl. cruise 7,300-7,600
 F_HOV1 = (RPM_HOVER[0]/60, RPM_HOVER[2]/60); F_CR1 = (RPM_CRUISE[0]/60, RPM_CRUISE[2]/60)
 BANDS = [("hover 1P", RPM_HOVER[0]/60, RPM_HOVER[2]/60), ("hover 2P", RPM_HOVER[0]/30, RPM_HOVER[2]/30),
          ("cruise 1P", RPM_CRUISE[0]/60, RPM_CRUISE[2]/60), ("cruise 2P", RPM_CRUISE[0]/30, RPM_CRUISE[2]/30)]
@@ -31,7 +32,9 @@ def forced(F, res, rpm, thrust, U=1e-6, zeta=0.01):
             a += w*w*gam*h*sum(abs(v[6*imu+q]) for q in range(3))
         out[tag] = a
     return out
-def evaluate(label, thr=0.3, **kw):
+STRONG = 0.5   # D-185 (BOARD s3): 'strongly coupled' = motor coupling >= 0.5
+LO_LIM = min(b[1] for b in BANDS)/1.2; HI_LIM = 1.2*max(b[2] for b in BANDS)   # separation limits from the four rotor bands
+def evaluate(label, thr=STRONG, **kw):
     kw.setdefault("fin_strip", FIN)
     row = {"label": label}; viol = []; low = []; acc = {}
     for k in ("kd", "nom", "hi"):
@@ -40,7 +43,7 @@ def evaluate(label, thr=0.3, **kw):
             if (cx >= thr or cy >= thr) and f > 2 and not ok(f): viol.append((k, round(f), round(cx, 1), round(cy, 1)))
         low.append((k, [round(f) for (f, e, v, cx, cy) in res if f > 2][:1]))
         worst = 0
-        for rpm, th in ((6272, 3.94), (RPM_HOVER[0], 3.8), (RPM_HOVER[2], 5.4), (9700, 0.49), (8900, 0.4), (10500, 0.6)):
+        for rpm, th in [(r, 5.4 if r <= 7200 else 0.6) for r in RPM_SWEEP] + [(6272, 3.94), (RPM_HOVER[0], 3.8), (RPM_HOVER[2], 5.4), (7300, 0.45), (7450, 0.49), (7600, 0.52)]:   # QP-4 D-185 sweep (thrust per rotor EST: hover 3.8-5.4 N, cruise ~0.5 N)
             o = forced(F, res, rpm, th); worst = max(worst, o["1P"], o["2P"])
         acc[k] = worst
         row[k] = (F, res, info)

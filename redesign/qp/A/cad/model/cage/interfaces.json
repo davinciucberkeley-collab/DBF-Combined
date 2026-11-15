@@ -229,15 +229,15 @@
   },
   {
    "id": "CGE-008",
-   "name": "Pack tray",
+   "name": "Pack tray (66 x 109 mm plate, trim slots; 4.0 g at 44 mm scaled by plate area + longer walls, EST)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 4.0,
+   "mass_g": 5.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.022,
+    -0.0114,
     0.0,
-    0.011
+    0.0107
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -386,7 +386,7 @@
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
    "owner": "cage",
-   "notes": "pack tray bonded to the hub aft face"
+   "notes": "pack tray bonded to the hub aft face and seated in the core tray slot"
   }
  ],
  "acknowledges": [

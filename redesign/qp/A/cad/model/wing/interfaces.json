@@ -136,6 +136,36 @@
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-007-R",
+   "name": "Elevon balance horn + 10.7 g lead block, 30 mm ahead of the hinge (D-187, R)",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 11.3,
+   "material": "lead + PETG/CF horn",
+   "cg_xyz_m": [
+    0.1564,
+    0.305,
+    0.001
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-007-L",
+   "name": "Elevon balance horn + 10.7 g lead block, 30 mm ahead of the hinge (D-187, L)",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 11.3,
+   "material": "lead + PETG/CF horn",
+   "cg_xyz_m": [
+    0.1564,
+    -0.305,
+    0.001
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   }
  ],
  "edges": [
@@ -216,6 +246,22 @@
      20.0
     ]
    }
+  },
+  {
+   "id": "E-WNG-20",
+   "part_a": "WNG-007-R",
+   "part_b": "WNG-006-R",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "balance horn root bonded to the elevon nose face (D-187)"
+  },
+  {
+   "id": "E-WNG-21",
+   "part_a": "WNG-007-L",
+   "part_b": "WNG-006-L",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "balance horn root bonded to the elevon nose face (D-187)"
   }
  ],
  "acknowledges": [

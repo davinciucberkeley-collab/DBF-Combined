@@ -49,8 +49,10 @@ RIB_X1 = XFIN_T - FIN_OD / 2                # rib ends on the tube front
 PROP_D = 0.2286                             # 9 in
 CAN_D, CAN_L, SHAFT_D, SHAFT_L = 0.0275, 0.0265, 0.004, 0.012   # V tmotor page: 27.5 x 26.5, shaft 4; shaft length EST
 PACK_L, PACK_W, PACK_H = 0.105, 0.035, 0.029                    # V RMRC Tattu 2300 4S: 105 x 35 x 29
-PACK_X = (-0.0375, -0.0025)                 # DOC: pack centre 20 mm ahead of the LE
+PACK_X = (-0.0275, 0.0075)                  # QP-4 7.2 #2: pack moved 10 mm aft (centre -10 mm; was -20 mm) so the CAD CG lands mid-band (23 mm) WITH the D-187 elevon balance and the ES3054HV servos; trim +-10 mm in the tray slots
 PACK_Z0 = 0.008
+TRIM = 0.010                                # +-10 mm pack trim travel (about +-2.2 mm of CG)
+TRAY_X1 = 0.0215                            # tray plate aft end (pack aft edge at +TRIM is 17.5 mm; core tray slot ends at 0.0225)
 X_GROUND = 0.3375                           # EST: pad aft face (pad 30 mm DOC)
 SERVO_Y = 0.200                             # EST (DOC landing_a: servo y 0.30 is in the elevon; moved inboard)
 
@@ -121,32 +123,106 @@ def core_loop():
     return list(reversed(up)) + lo[1:]                 # hinge-top -> LE (aft to fore) then lower LE -> cove foot
 
 
-PLATE_I0, PLATE_I1 = 8, 20
+PLATE_I0, PLATE_I1 = 10, 20                   # QP-4: plate starts at x 40.8 mm (was 26.9) to clear the pack at +10 mm trim
 PLATE_X0, PLATE_X1 = XS[PLATE_I0], XS[PLATE_I1]
 PLATE_ZTOP = max(zu(x) for x in XS[PLATE_I0:PLATE_I1 + 1]) + 0.0015
 PLATE_Y = 0.055
 ZP = PLATE_ZTOP
 
 # avionics layout on the plate (EST; board sizes from vendor pages V where noted)
-ESC_B = ((0.031, -0.0175, ZP), (0.066, 0.0175, ZP + 0.0055))           # V SpeedyBee 35 x 35 x 5.5
-GEL = 0.005                                                            # EST gel pad (Zeal class, 5 mm) soft mount
-FC_B = ((0.071, -0.0125, ZP + GEL), (0.101, 0.0125, ZP + GEL + 0.020))             # V Kakute Wing Mini 30 x 25 x 20 (stack envelope)
-RX_B = ((0.104, -0.006, ZP), (0.124, 0.006, ZP + 0.004))               # EST RP3 V2
-GPS_B = ((0.071, 0.0275, ZP), (0.096, 0.0525, ZP + 0.008))             # EST TBS M10Q
-AS_B = ((0.071, -0.0525, ZP), (0.086, -0.0375, ZP + 0.008))            # EST MS4525 board
+FC_X0 = 0.045                                                          # QP-4: FC hard-mounted ON the spar centre (spar axis x 0.060 = FC centre); ESC moved aft of it
+ESC_X0 = 0.082
+ESC_B = ((ESC_X0, -0.0175, ZP), (ESC_X0 + 0.035, 0.0175, ZP + 0.0055))  # V SpeedyBee 35 x 35 x 5.5
+GEL = 0.0015                                                           # EST thin foam tape (1.5 mm): FC HARD-MOUNTED (BOARD s3 D-186, s1 item 5); was 5 mm gel pads. CAD gates must be re-run
+FC_B = ((FC_X0, -0.0125, ZP + GEL), (FC_X0 + 0.030, 0.0125, ZP + GEL + 0.020))             # V Kakute Wing Mini 30 x 25 x 20 (stack envelope)
+RX_B = ((0.102, -0.0525, ZP), (0.122, -0.0405, ZP + 0.004))            # EST RP3 V2 (moved aft-left: the ESC took its place)
+GPS_B = ((0.045, 0.0275, ZP), (0.070, 0.0525, ZP + 0.008))             # EST TBS M10Q
+AS_B = ((0.045, -0.0525, ZP), (0.060, -0.0375, ZP + 0.008))            # EST MS4525 board
 PAD = 0.003                                                             # half size of an ESC pad body
-ESC_PADS = {'UR': (0.034, 0.013), 'LR': (0.046, 0.013), 'UL': (0.034, -0.013), 'LL': (0.046, -0.013),
-            'BAT': (0.034, 0.0), 'SIG': (0.0635, 0.0)}
-FC_PADS = {'ESC': (0.0745, 0.0), 'GPS': (0.0745, 0.008), 'I2C': (0.0745, -0.008), 'S5': (0.0875, 0.009),
-           'S6': (0.0875, -0.009), 'RX': (0.0975, 0.0)}
+_e = ESC_X0 - 0.031
+ESC_PADS = {'UR': (0.034 + _e, 0.013), 'LR': (0.046 + _e, 0.013), 'UL': (0.034 + _e, -0.013), 'LL': (0.046 + _e, -0.013),
+            'BAT': (0.034 + _e, 0.0), 'SIG': (0.0635 + _e, 0.0)}
+_f = FC_X0 - 0.071
+FC_PADS = {'ESC': (0.0745 + _f, 0.0), 'GPS': (0.0745 + _f, 0.008), 'I2C': (0.0745 + _f, -0.008), 'S5': (0.0875 + _f, 0.009),
+           'S6': (0.0875 + _f, -0.009), 'RX': (0.0975 + _f, 0.0)}
 FC_TOP = ZP + GEL + 0.020
-GEL_XY = [(0.074, -0.0095), (0.074, 0.0095), (0.098, -0.0095), (0.098, 0.0095)]    # EST under the four M2 holes
+GEL_XY = [(0.048, -0.0095), (0.048, 0.0095), (0.072, -0.0095), (0.072, 0.0095)]    # EST under the four M2 holes
 ESC_TOP = ZP + 0.0055
 
-SV_X0, SV_X1, SV_DY, SV_Z0, SV_Z1 = 0.12685, 0.15015, 0.013, -0.0013, 0.0082    # V ES3352HV 23.3 x 9.45 x 26
-ARM_X0, ARM_X1, ARM_Z1 = 0.1405, 0.1595, 0.0102
-ROD_Z = 0.0110
+SV_X0, SV_X1, SV_DY, SV_Z0, SV_Z1 = 0.1270, 0.1554, 0.01335, -0.0013, 0.0117    # SERVO.md: EMAX ES3054HV 28.4 x 13.0 x 26.7 (servodatabase / getfpv, 2026-11-15; spline kept at x 140.5)
+ARM_X0, ARM_X1, ARM_Z1 = 0.1405, 0.1595, SV_Z1 + 0.0020
+ROD_Z = 0.0127
 HORN_X0, HORN_X1 = 0.195, 0.209
+
+
+# D-187 (FLUTTER.md): elevon mass balance, 10.7 g lead on a 30 mm horn ahead of the hinge, per elevon (EST)
+BAL_YC, BAL_W = 0.305, 0.0246               # lead block centre y, width (EST; clear of servo pocket y 0.2, strut slot, rib saddle)
+BAL_REACH, BAL_L, BAL_T = 0.030, 0.016, 0.0024        # lead centre 30 mm ahead of the hinge axis; block 16 x 2.4 mm section (10.7 g at 11.34 g/cm3)
+BAL_DZ = -0.0055                            # lead centre z below the hinge axis: centres the sweep in the 16.8 mm section; +-20 deg at 30 mm still pokes up to 5.5 mm through both skins (CAD.md QP-4)
+BAL_ARM_W, BAL_ARM_T = 0.006, 0.0012        # horn arm (CF-reinforced PETG strip) width, thickness
+HINGE_Z = zu(XH)
+
+
+def _poly_area(l):
+    return sum(l[i][0] * l[(i + 1) % len(l)][1] - l[(i + 1) % len(l)][0] * l[i][1] for i in range(len(l))) / 2
+
+
+def _ccw(l):
+    return l if _poly_area(l) > 0 else l[::-1]
+
+
+def bal_arm_loop():
+    xe = XH - BAL_REACH + BAL_L / 2             # aft end of the lead block
+    zc = HINGE_Z + BAL_DZ
+    zr = HINGE_Z - 0.0035                       # arm root on the elevon nose face (x = XH)
+    t = BAL_ARM_T / 2
+    return _ccw([(XH - 0.0004, zr + t), (xe, zc + t), (xe, zc - t), (XH - 0.0004, zr - t)])   # 0.4 mm epoxy gap to the elevon nose
+
+
+def bal_lead_loop():
+    xc, zc = XH - BAL_REACH, HINGE_Z + BAL_DZ
+    return _ccw([(xc - BAL_L / 2, zc - BAL_T / 2), (xc + BAL_L / 2, zc - BAL_T / 2), (xc + BAL_L / 2, zc + BAL_T / 2),
+                 (xc - BAL_L / 2, zc + BAL_T / 2)])
+
+
+def _rot_pt(p, a_deg):
+    a = math.radians(a_deg)
+    vx, vz = p[0] - XH, p[1] - HINGE_Z
+    return (XH + vx * math.cos(a) + vz * math.sin(a), HINGE_Z - vx * math.sin(a) + vz * math.cos(a))
+
+
+def _hull(pts):
+    pts = sorted(set(pts))
+    def cr(o, a, b):
+        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+    lo, up = [], []
+    for q in pts:
+        while len(lo) >= 2 and cr(lo[-2], lo[-1], q) <= 0:
+            lo.pop()
+        lo.append(q)
+    for q in reversed(pts):
+        while len(up) >= 2 and cr(up[-2], up[-1], q) <= 0:
+            up.pop()
+        up.append(q)
+    return lo[:-1] + up[:-1]
+
+
+def bal_sweep_loop(margin=0.0005):
+    """Convex hull of the horn and lead over -ELEV_LIM..+ELEV_LIM (5 deg steps), grown by margin: the pocket cut in the core."""
+    pts = []
+    for a in range(-int(ELEV_LIM), int(ELEV_LIM) + 1, 4):
+        for l in (bal_arm_loop(), bal_lead_loop()):
+            pts += [_rot_pt(p, a) for p in l]
+    for l in (bal_arm_loop(), bal_lead_loop()):          # install path: the elevon with its balance slides in 25 mm from aft (assembly step C2)
+        pts += [(q[0] + 0.025, q[1]) for q in l]
+    h = _hull(pts)
+    cx = sum(p[0] for p in h) / len(h)
+    cz = sum(p[1] for p in h) / len(h)
+    out = []
+    for p in h:
+        d = math.hypot(p[0] - cx, p[1] - cz)
+        out.append((p[0] + (p[0] - cx) / d * margin, p[1] + (p[1] - cz) / d * margin))
+    return _ccw(out)
 
 
 # ------------------------------------------------------------------ parts table
@@ -170,6 +246,8 @@ for pid, nm in (('WNG-003-C', 'centre'), ('WNG-004-R', 'right strut'), ('WNG-004
     P(pid, 'Spar plug (%s clamp)' % nm, 'wing', 1.65, 'PETG (printed)')
 P('WNG-006-R', 'Elevon right', 'wing', 8.5, 'XPS foam + tape')
 P('WNG-006-L', 'Elevon left', 'wing', 8.5, 'XPS foam + tape')
+for s_ in 'RL':
+    P('WNG-007-' + s_, 'Elevon balance horn + 10.7 g lead block, 30 mm ahead of the hinge (D-187, %s)' % s_, 'wing', 11.3, 'lead + PETG/CF horn')
 # fins (allocation 70 g; STRUCTURES iteration 2: 119 g)
 for s in 'RL':
     P('FIN-001-' + s, 'Fin tube 16x14 x 0.36 m (%s)' % s, 'fins', round(tube_g(0.36, FIN_OD, FIN_ID), 1), 'CFRP tube')
@@ -187,7 +265,7 @@ for s in 'RL':
     P('CGE-005-' + s, 'V strut 6x4.5 (%s)' % s, 'cage', 6.5, 'CFRP tube')
     P('CGE-007-' + s, 'Strut clamp on spar (%s)' % s, 'cage', 1.5, 'PETG (printed)')
 P('CGE-006', 'Bridge saddle on spar', 'cage', 2.0, 'PETG (printed)')
-P('CGE-008', 'Pack tray', 'cage', 4.0, 'PETG (printed)')
+P('CGE-008', 'Pack tray (66 x 109 mm plate, trim slots; 4.0 g at 44 mm scaled by plate area + longer walls, EST)', 'cage', 5.3, 'PETG (printed)')
 # propulsion
 for s in ST:
     P('PRP-001-' + s, 'Motor MN2212 V2.0 KV780 (%s)' % s, 'propulsion', 65.0, 'Al / Cu / NdFeB', 'buy', 'sink')
@@ -197,14 +275,14 @@ P('PRP-003', 'ESC SpeedyBee BLS 35A Mini V2 4-in-1 with leads', 'propulsion', 20
 P('PWR-001', 'Pack Tattu 2300 mAh 4S 75C', 'power', 270.0, 'LiPo', 'buy', 'source')
 P('AVN-001', 'Avionics plate', 'avionics', 12.0, 'PETG (printed)')
 P('AVN-002', 'Flight controller Kakute F405 Wing Mini', 'avionics', 17.0, 'PCB', 'buy', 'bus')
-P('AVN-007', 'Gel pads x4 (FC soft mount)', 'avionics', 1.6, 'silicone gel', 'buy')
+P('AVN-007', 'Foam-tape pads x4 (FC hard mount, 1.5 mm)', 'avionics', 1.0, 'VHB-class foam tape', 'buy')
 P('AVN-003', 'Receiver RP3 V2 ELRS', 'avionics', 3.0, 'PCB', 'buy', 'sink')
 P('AVN-004', 'GPS TBS M10Q + compass', 'avionics', 13.5, 'PCB', 'buy', 'sink')
 P('AVN-005', 'Airspeed sensor MS4525 board', 'avionics', 3.0, 'PCB', 'buy', 'sink')
 P('AVN-006', 'Pitot probe', 'avionics', 5.0, 'brass tube', 'buy')
 # mechanisms (30 g with linkage)
 for s in 'RL':
-    P('MEC-001-' + s, 'Servo ES3352HV (%s)' % s, 'mechanisms', 12.0, 'plastic / metal gear', 'buy', 'sink')
+    P('MEC-001-' + s, 'Servo EMAX ES3054HV (%s)' % s, 'mechanisms', 20.5, 'plastic / metal gear', 'buy', 'sink')
     P('MEC-002-' + s, 'Servo arm (%s)' % s, 'mechanisms', 1.0, 'nylon', 'buy')
     P('MEC-003-' + s, 'Pushrod 1.2 mm (%s)' % s, 'mechanisms', 1.0, 'steel', 'buy')
     P('MEC-004-' + s, 'Control horn (%s)' % s, 'mechanisms', 1.0, 'nylon', 'buy')
@@ -254,6 +332,8 @@ for pid in ('WNG-003-C', 'WNG-004-R', 'WNG-004-L', 'WNG-005-R', 'WNG-005-L'):
 for s in 'RL':
     E('E-WNG-1' + ('0' if s == 'R' else '1'), 'WNG-006-' + s, 'WNG-001', 'CT-TAPE-HINGE', 'wing', 'tape hinge, upper surface',
       motion=dict(axis='Y', range_deg=[-ELEV_LIM, ELEV_LIM]))
+for s in 'RL':
+    E('E-WNG-2' + ('0' if s == 'R' else '1'), 'WNG-007-' + s, 'WNG-006-' + s, EPX, 'wing', 'balance horn root bonded to the elevon nose face (D-187)')
 # fins
 for s in 'RL':
     E(en('FIN'), 'FIN-003-' + s, 'FIN-001-' + s, EPX, 'fins', 'root block wraps the tube')
@@ -273,7 +353,7 @@ for s in 'RL':
     E(en('CGE'), 'CGE-005-' + s, 'CGE-001', EPX, 'cage', 'strut in hub')
     E(en('CGE'), 'CGE-005-' + s, 'CGE-007-' + s, EPX, 'cage', 'strut end in clamp boss')
     E(en('CGE'), 'CGE-007-' + s, 'WNG-002', EPX, 'cage', 'clamp wraps the spar')
-E(en('CGE'), 'CGE-008', 'CGE-001', EPX, 'cage', 'pack tray bonded to the hub aft face')
+E(en('CGE'), 'CGE-008', 'CGE-001', EPX, 'cage', 'pack tray bonded to the hub aft face and seated in the core tray slot')
 # propulsion
 for i, s in enumerate(ST):
     E(en('PRP'), 'PRP-001-' + s, 'CGE-003-' + s, 'CT-M3-SHCS-MOTOR', 'propulsion',
@@ -290,8 +370,8 @@ E(en('PWR'), 'PWR-001', 'CGE-008', 'CT-STRAP-VELCRO', 'power', 'hook-and-loop st
   retention=dict(item='25 mm strap', count=1, load_n=38.8), field_joint=True)
 # avionics
 E(en('AVN'), 'AVN-001', 'WNG-001', CA, 'avionics', 'plate base follows the upper skin (same vertices as the core)')
-E(en('AVN'), 'AVN-007', 'AVN-001', 'CT-GEL-PAD', 'avionics', 'four 5 mm gel pads on the plate (FC on the wing centre, not on the cage hub: SITL-FLIGHT follow-up 2)')
-E(en('AVN'), 'AVN-002', 'AVN-007', 'CT-GEL-PAD', 'avionics', 'FC on the gel pads, M2 screws through rubber grommets')
+E(en('AVN'), 'AVN-007', 'AVN-001', 'CT-GEL-PAD', 'avionics', 'four thin foam-tape pads on the plate (FC on the wing centre, not on the cage hub: SITL-FLIGHT follow-up 2; hard mount, BOARD D-186)')
+E(en('AVN'), 'AVN-002', 'AVN-007', 'CT-GEL-PAD', 'avionics', 'FC on the tape pads, M2 screws (hard mount; gel only if its frequency is measured at 40-70 Hz)')
 for pid in ('AVN-003', 'AVN-004', 'AVN-005'):
     E(en('AVN'), pid, 'AVN-001', TAPEF, 'avionics', 'foam tape + tie', retention=dict(item='VHB-class tape', count=1))
 E(en('AVN'), 'AVN-006', 'WNG-001', EPX, 'avionics', 'pitot in a groove in the LE at y = +0.41 (outside the rotor wash, EST)')
@@ -360,10 +440,18 @@ def build_wing(ctx):
     ev = ctx.part('WNG-006-R', rgb=(0.95, 0.5, 0.1))
     k9.elevon(ev, COORDS, C, 1 - ELEV_FRAC, ELEV_Y0, ELEV_Y1, gap=GAP_Y)
     ctx.mirror('WNG-006-R', 'WNG-006-L', plane='XZ')
+    bw = ctx.part('WNG-007-R', rgb=(0.35, 0.35, 0.4))
+    bw.prism('Y', BAL_YC - BAL_ARM_W / 2, [bal_arm_loop()], BAL_ARM_W, name='balance horn arm')
+    bw.prism('Y', BAL_YC - BAL_W / 2, [bal_lead_loop()], BAL_W, name='balance lead block')
+    ctx.mirror('WNG-007-R', 'WNG-007-L', plane='XZ')
+    for sy in (1, -1):                                    # pocket for the balance horn and lead over the full elevon travel
+        ya, yb = sorted((sy * (BAL_YC - BAL_W / 2 - 0.001), sy * (BAL_YC + BAL_W / 2 + 0.001)))
+        core.cut_prism('Y', ya, [bal_sweep_loop()], yb - ya, name='elevon balance pocket')
     for sy in (1, -1):                                    # servo pocket open to the upper skin (arm sweep too)
-        y0, y1 = sorted((sy * SERVO_Y - 0.020, sy * SERVO_Y + 0.020))
-        core.cut_box((0.1255, y0, SV_Z1), (0.1655, y1, 0.020), name='servo pocket')
+        y0, y1 = sorted((sy * SERVO_Y - 0.0225, sy * SERVO_Y + 0.0225))
+        core.cut_box((0.1245, y0, SV_Z1), (0.1655, y1, 0.020), name='servo pocket')
     core.cut_box((0.0, -0.0065, -0.05), (0.056, 0.0065, 0.0075), name='bridge slot (open below)')
+    core.cut_box((-0.010, -0.0555, 0.0055), (0.0225, 0.0555, 0.050), name='pack tray slot (open above)')
     core.cut_box((0.0295, -0.0165, -0.05), (0.0710, 0.0165, 0.0115), name='saddle slot (open below)')
     core.cut_box((0.0335, 0.2705, -0.05), (0.0710, 0.3095, 0.0075), name='clamp slot R (open below)')
     core.cut_box((0.0335, -0.3095, -0.05), (0.0710, -0.2705, 0.0075), name='clamp slot L (open below)')
@@ -380,7 +468,7 @@ def build_wing(ctx):
                 (p0[0] - nx, sg * (p0[1] - ny))]
         core.cut_prism('Z', -0.05, [loop], 0.055, name='strut slot (open below, 0.5 mm clear)')
     guests = ['WNG-002', 'CGE-004', 'CGE-005-R', 'CGE-005-L', 'CGE-006', 'CGE-007-R', 'CGE-007-L', 'FIN-002-R', 'FIN-002-L',
-              'FIN-005-R', 'FIN-005-L', 'AVN-006', 'MEC-001-R', 'MEC-001-L']
+              'FIN-005-R', 'FIN-005-L', 'AVN-006', 'MEC-001-R', 'MEC-001-L', 'CGE-008']
     for g in guests:
         ctx.seat('WNG-001', g, 'groove / bore / pocket cut in the core for ' + g, shop=True)
 
@@ -459,11 +547,14 @@ def build_cage(ctx):
     cl.cut_box((SPAR_X - 0.0065, 0.291, 0.0), (SPAR_X + 0.0065, 0.309, 0.012), name='clip slot')
     ctx.mirror('CGE-007-R', 'CGE-007-L', plane='XZ')
     tr = ctx.part('CGE-008', rgb=(0.9, 0.9, 0.9))
-    tr.box((-0.045, -0.0545, 0.006), (-0.0005, 0.0545, 0.008), name='tray plate')
-    tr.box((-0.040, 0.0525, 0.008), (-0.001, 0.0545, 0.030), name='tray end wall R')
-    tr.box((-0.040, -0.0545, 0.008), (-0.001, -0.0525, 0.030), name='tray end wall L')
-    tr.box((-0.0395, -0.0545, 0.008), (-0.0375, 0.0545, 0.020), name='tray front lip')
-    tr.box((-0.0025, -0.0545, 0.008), (-0.0005, 0.0545, 0.018), name='tray rear lip')
+    tr.box((-0.045, -0.0545, 0.006), (TRAY_X1, 0.0545, 0.008), name='tray plate')
+    tr.box((PACK_X[0] - TRIM, 0.0525, 0.008), (PACK_X[1] + TRIM, 0.0545, 0.030), name='tray end wall R')
+    tr.box((PACK_X[0] - TRIM, -0.0545, 0.008), (PACK_X[1] + TRIM, -0.0525, 0.030), name='tray end wall L')
+    tr.box((PACK_X[0] - 0.002, -0.0545, 0.008), (PACK_X[0], 0.0545, 0.020), name='tray front lip')
+    tr.box((PACK_X[1], -0.0545, 0.008), (PACK_X[1] + 0.002, 0.0545, 0.018), name='tray rear lip')
+    for xl in (PACK_X[0] - 0.001, PACK_X[1] + 0.001):          # trim slots: the M3 lip bolts slide +-TRIM (lips re-bolt with the pack)
+        for sy_ in (1, -1):
+            tr.cut_box((xl - TRIM - 0.0017, sy_ * 0.040 - 0.0017, 0.005), (xl + TRIM + 0.0017, sy_ * 0.040 + 0.0017, 0.009), name='trim slot')
 
 
 def build_propulsion(ctx):
@@ -485,7 +576,7 @@ def build_propulsion(ctx):
 def build_power(ctx):
     pk = ctx.part('PWR-001', rgb=(0.15, 0.15, 0.6))
     pk.box((PACK_X[0], -PACK_L / 2, PACK_Z0), (PACK_X[1], PACK_L / 2, PACK_Z0 + PACK_H), name='pack cells')
-    pk.box((PACK_X[1], -0.004, 0.0300), (0.0010, 0.004, 0.0350), name='lead exit')
+    pk.box((PACK_X[1], -0.004, 0.0300), (PACK_X[1] + 0.0055, 0.004, 0.0350), name='lead exit')
 
 
 def build_avionics(ctx):
@@ -494,7 +585,7 @@ def build_avionics(ctx):
     pl.prism('Y', -PLATE_Y, [loop], 2 * PLATE_Y, name='plate')
     gl = ctx.part('AVN-007', rgb=(0.6, 0.8, 0.9))
     for gx, gy in GEL_XY:
-        gl.box((gx - 0.003, gy - 0.003, ZP), (gx + 0.003, gy + 0.003, ZP + GEL), name='gel pad')
+        gl.box((gx - 0.003, gy - 0.003, ZP), (gx + 0.003, gy + 0.003, ZP + GEL), name='foam tape pad')
     fc = ctx.part('AVN-002', rgb=(0.1, 0.1, 0.5))
     fc.box(*FC_B, name='FC board envelope')
     for k, (x, y) in FC_PADS.items():
@@ -502,13 +593,13 @@ def build_avionics(ctx):
         fc.box((x - 0.002, y - 0.002, FC_TOP), (x + 0.002, y + 0.002, FC_TOP + 0.003), name=nm)
     rx = ctx.part('AVN-003', rgb=(0.2, 0.2, 0.2))
     rx.box(*RX_B, name='RX board envelope')
-    rx.box((0.1045, -0.002, ZP + 0.004), (0.1085, 0.002, ZP + 0.007), name='UART header')
+    rx.box((0.1045, -0.0485, ZP + 0.004), (0.1085, -0.0445, ZP + 0.007), name='UART header')
     gp = ctx.part('AVN-004', rgb=(0.3, 0.3, 0.3))
     gp.box(*GPS_B, name='GPS envelope')
-    gp.box((0.0725, 0.0285, ZP + 0.008), (0.0765, 0.0325, ZP + 0.011), name='JST-SH plug')
+    gp.box((0.0465, 0.0285, ZP + 0.008), (0.0505, 0.0325, ZP + 0.011), name='JST-SH plug')
     asd = ctx.part('AVN-005', rgb=(0.3, 0.3, 0.3))
     asd.box(*AS_B, name='airspeed board envelope')
-    asd.box((0.0725, -0.0325, ZP + 0.008), (0.0765, -0.0285, ZP + 0.011), name='I2C header')
+    asd.box((0.0465, -0.0325, ZP + 0.008), (0.0505, -0.0285, ZP + 0.011), name='I2C header')
     pt = ctx.part('AVN-006', rgb=(0.8, 0.7, 0.2))
     pt.tube('X', (-0.130, YFIN + 0.030, 0.0), 0.175, 0.0015, 0.0010, name='pitot tube')
 
@@ -518,11 +609,11 @@ def build_mechanisms(ctx):
         yc = sy * SERVO_Y
         sv = ctx.part('MEC-001-' + s, rgb=(0.2, 0.2, 0.2))
         sv.box((SV_X0, yc - SV_DY, SV_Z0), (SV_X1, yc + SV_DY, SV_Z1), name='servo case')
-        sv.box((0.1275, yc - 0.003, SV_Z1), (0.1315, yc + 0.003, SV_Z1 + 0.003), name='servo lead exit')
+        sv.box((0.1285, yc - 0.003, SV_Z1), (0.1325, yc + 0.003, SV_Z1 + 0.003), name='servo lead exit')
         ar = ctx.part('MEC-002-' + s, rgb=(0.9, 0.9, 0.9))
         ar.box((ARM_X0, yc - 0.003, SV_Z1), (ARM_X1, yc + 0.003, ARM_Z1), name='servo arm')
         rd = ctx.part('MEC-003-' + s, rgb=(0.6, 0.6, 0.6))
-        rd.cylinder('X', (0.1585, yc, ROD_Z), HORN_X0 - 0.1585, 0.0006, name='pushrod')
+        rd.cylinder('X', (ARM_X1, yc, ROD_Z), HORN_X0 - ARM_X1, 0.0006, name='pushrod')
         zb = zu(HORN_X0)
         hn = ctx.part('MEC-004-' + s, rgb=(0.9, 0.9, 0.9))
         hn.box((HORN_X0, yc - 0.001, zb), (HORN_X1, yc + 0.001, zb + 0.010), name='control horn')
@@ -558,7 +649,9 @@ def build_harness(ctx):
     h.cylinder('X', (0.030, 0.0, 0.005), 0.002, 0.001, name='harness lump')
     z_pad = ESC_TOP + 0.002
     bx, by = ESC_PADS['BAT']
-    ctx.wire('E-HRN-01', [(-0.0010, 0.0, 0.0325), (bx, 0.0, 0.0325), (bx, by, z_pad)], dia=0.004)
+    x0 = PACK_X[1] + 0.0025                                  # lead leaves the pack, passes round the FC (y -26.5 mm) to the ESC battery pad
+    xb = FC_B[1][0] + 0.0035
+    ctx.wire('E-HRN-01', [(x0, 0.0, 0.0325), (x0, -0.0265, 0.0325), (xb, -0.0265, 0.0325), (xb, 0.0, 0.0325), (bx, 0.0, 0.0325), (bx, by, z_pad)], dia=0.004)
     for i, st in enumerate(ST):
         px, py = ESC_PADS[st]
         sy, sz = ST[st]
@@ -574,10 +667,10 @@ def build_harness(ctx):
         x, y = FC_PADS[key]
         yc = sg * SERVO_Y
         pts = [(x, y, FC_TOP + 0.0015), (x, y, 0.048), (x, sg * 0.075, 0.048), (x, sg * 0.075, 0.016), (x, yc, 0.016),
-               (0.1295, yc, 0.016), (0.1295, yc, SV_Z1 + 0.0015)]
+               (0.1305, yc, 0.016), (0.1305, yc, SV_Z1 + 0.0015)]
         ctx.wire('E-HRN-%02d' % (7 + i), pts, dia=0.0025)
     x, y = FC_PADS['RX']
-    ctx.wire('E-HRN-09', [(x, y, FC_TOP + 0.0015), (x, y, 0.050), (0.1065, y, 0.050), (0.1065, y, ZP + 0.0055)], dia=0.0015)
+    ctx.wire('E-HRN-09', [(x, y, FC_TOP + 0.0015), (x, y, 0.050), (x, -0.0465, 0.050), (0.1065, -0.0465, 0.050), (0.1065, -0.0465, ZP + 0.0055)], dia=0.0015)
     x, y = FC_PADS['GPS']
     ctx.wire('E-HRN-10', [(x, y, FC_TOP + 0.0015), (x, y, 0.054), (x, 0.0305, 0.054), (x, 0.0305, ZP + 0.0095)], dia=0.0015)
     x, y = FC_PADS['I2C']

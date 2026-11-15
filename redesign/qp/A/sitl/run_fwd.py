@@ -162,7 +162,7 @@ def hover_setup(alt_goal, hold=40.0):
     run_for(hold)
     res["thst_hover"] = getp("Q_M_THST_HOVER")
 try:
-    if case in ("trans", "battC", "rcC", "moC"):
+    if case in ("trans", "battC", "rcC", "moC", "roll"):
         ALT0 = float(kv.get("alt0", 50.0))
         hover_setup(ALT0, hold=float(kv.get("hold", 45)))
         thm = res["thst_hover"] or 0.42
@@ -196,6 +196,10 @@ try:
             mk["t_qland"] = st["t"]
             run_for(220, lambda: seen("Land complete") or (st["alt"] < 0.4 and not st["armed"]))
             run_for(6)
+        if case == "roll":                                    # QP-4: FBWA roll steps in cruise (right, left), peak roll rate from the plant csv (p)
+            rc[5] = FBWA; run_for(2); mk["t_roll0"] = st["t"]
+            rc[0] = 1900; run_for(3); mk["t_roll1"] = st["t"]; rc[0] = 1100; run_for(4); mk["t_roll2"] = st["t"]; rc[0] = 1500; run_for(4)
+            mk["t_roll3"] = st["t"]
         if case == "battC":
             mk["t_fail"] = st["t"]; setp("BATT_LOW_MAH", 5975); run_for(150, lambda: seen("Land complete"))
         if case == "rcC":
@@ -210,6 +214,9 @@ try:
         if case == "battH": setp("BATT_LOW_MAH", 5975); run_for(120, lambda: seen("Land complete"))
         if case == "rcH": send_rc[0] = False; setp("SIM_RC_FAIL", 1); run_for(120, lambda: seen("Land complete"))
         if case == "moH": cmd(motor_out=0); run_for(25)
+    elif case == "wvane":                                      # QP-4: hover in wind + turbulence with Q_WVANE (A.param), heading from the plant csv
+        hover_setup(float(kv.get("alt0", 50.0)), hold=float(kv.get("hold", 10)))
+        mk["t_wv0"] = st["t"]; run_for(float(kv.get("wv_s", 100))); mk["t_wv1"] = st["t"]
     elif case == "land":
         hover_setup(20.0, hold=float(kv.get("hold", 25)))
         mk["t_qland"] = st["t"]

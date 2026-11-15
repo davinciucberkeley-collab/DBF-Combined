@@ -27,9 +27,9 @@
 |   Hardware: screws, nuts, fillets, paint EST | 40.0 | | |
 
 ### Rotor bands and rpm source
-Hover 6,018 / 6,272 / 7,151 rpm (1.381 kg / 1.50 kg / 8 m/s lean at 1.3 W): `qp/A/prop_a.py` hover() at derate 0.93, lean scaled by sqrt(1.3). 1P 100-119 Hz, 2P 201-238 Hz. Cruise 8,900-10,500 rpm is an **estimate** (4.5 in pitch gives 17 m/s at 8,923 rpm; J0 0.47 assumed; no APC data for V > 0): 1P 148-175, 2P 297-350 Hz. Rule: f <= band_low/1.2 or f >= 1.2 x band_high for all four. That excludes **83-420 Hz**.
+Hover 6,018 / 6,272 / 7,151 rpm (1.381 kg / 1.50 kg / 8 m/s lean at 1.3 W): `qp/A/prop_a.py` hover() at derate 0.93, lean scaled by sqrt(1.3). 1P 100-119 Hz, 2P 201-238 Hz. Cruise 7,300-7,600 rpm (QP-3 BOARD s1 item 2: `sitl/fu_level.py` with the APC V > 0 data; the 8,900-10,500 EST band is withdrawn): 1P 122-127, 2P 243-253 Hz. Rule: f <= band_low/1.2 or f >= 1.2 x band_high for all four. That excludes **84-304 Hz** for strongly coupled modes (coupling >= 0.5, D-185).
 
-### Modes with motor coupling >= 0.3, plus the fin and every mode in 83-420 Hz with coupling >= 0.1 (coupling = mass-normalised |phi| summed at the four motors; arm modes 2.7-3.4)
+### Modes with motor coupling >= 0.3, plus the fin and every mode in the excluded band with coupling >= 0.1 (coupling = mass-normalised |phi| summed at the four motors; arm modes 2.7-3.4)
 | Corner | f (Hz) | part | coupling | vs bands |
 |---|---|---|---|---|
 | kd | 8 | bridge 50% | 2.2 | pass |
@@ -39,17 +39,14 @@ Hover 6,018 / 6,272 / 7,151 rpm (1.381 kg / 1.50 kg / 8 m/s lean at 1.3 W): `qp/
 | kd | 29 | arm 43% | 2.8 | pass |
 | kd | 36 | rib 39% | 1.6 | pass |
 | kd | 36 | spar 74% | 0.6 | pass |
-| kd | 37 | arm 100% | 2.6 | pass |
-| kd | 37 | arm 100% | 2.6 | pass |
+| kd | 37 | arm 100% | 3.4 | pass |
+| kd | 37 | arm 100% | 3.4 | pass |
 | kd | 39 | arm 99% | 3.3 | pass |
 | kd | 44 | arm 97% | 2.9 | pass |
 | kd | 44 | arm 65% | 2.4 | pass |
 | kd | 50 | spar 59% | 0.6 | pass |
 | kd | 64 | arm 59% | 1.3 | pass |
 | kd | 199 | spar 51% | 0.5 | in band, coupling 0.5 |
-| kd | 348 | bridge 87% | 0.1 | in band, coupling 0.1 |
-| kd | 359 | bridge 89% | 0.1 | in band, coupling 0.1 |
-| kd | 361 | bridge 88% | 0.1 | in band, coupling 0.1 |
 | kd | 432 | fin 61% | 0.6 | pass |
 | kd | 450 | fin 87% | 0.0 | pass |
 | kd | 544 | fin 93% | 0.0 | pass |
@@ -61,17 +58,14 @@ Hover 6,018 / 6,272 / 7,151 rpm (1.381 kg / 1.50 kg / 8 m/s lean at 1.3 W): `qp/
 | nom | 31 | arm 43% | 2.8 | pass |
 | nom | 37 | rib 36% | 1.5 | pass |
 | nom | 39 | spar 74% | 0.6 | pass |
-| nom | 40 | arm 100% | 3.4 | pass |
-| nom | 40 | arm 100% | 3.4 | pass |
+| nom | 40 | arm 100% | 3.0 | pass |
+| nom | 40 | arm 100% | 3.0 | pass |
 | nom | 42 | arm 99% | 3.3 | pass |
 | nom | 47 | arm 97% | 2.9 | pass |
 | nom | 47 | arm 69% | 2.5 | pass |
 | nom | 53 | spar 59% | 0.6 | pass |
 | nom | 68 | arm 60% | 1.4 | pass |
 | nom | 214 | spar 51% | 0.5 | in band, coupling 0.5 |
-| nom | 368 | bridge 81% | 0.2 | in band, coupling 0.2 |
-| nom | 381 | bridge 87% | 0.1 | in band, coupling 0.1 |
-| nom | 387 | bridge 88% | 0.1 | in band, coupling 0.1 |
 | nom | 463 | fin 60% | 0.6 | pass |
 | nom | 482 | fin 87% | 0.0 | pass |
 | nom | 582 | fin 93% | 0.0 | pass |
@@ -83,26 +77,25 @@ Hover 6,018 / 6,272 / 7,151 rpm (1.381 kg / 1.50 kg / 8 m/s lean at 1.3 W): `qp/
 | hi | 35 | arm 43% | 2.8 | pass |
 | hi | 43 | rib 39% | 1.7 | pass |
 | hi | 44 | spar 74% | 0.6 | pass |
-| hi | 45 | arm 100% | 2.7 | pass |
-| hi | 45 | arm 100% | 2.7 | pass |
+| hi | 45 | arm 100% | 3.4 | pass |
+| hi | 45 | arm 100% | 3.4 | pass |
 | hi | 48 | arm 99% | 3.3 | pass |
 | hi | 54 | arm 97% | 2.9 | pass |
 | hi | 54 | arm 64% | 2.4 | pass |
 | hi | 60 | spar 59% | 0.6 | pass |
 | hi | 78 | arm 59% | 1.3 | pass |
 | hi | 242 | spar 51% | 0.5 | in band, coupling 0.5 |
-| hi | 406 | bridge 88% | 0.1 | in band, coupling 0.1 |
 | hi | 525 | fin 61% | 0.6 | pass |
 | hi | 546 | fin 87% | 0.0 | pass |
 | hi | 660 | fin 93% | 0.0 | pass |
 | hi | 669 | fin 91% | 0.3 | pass |
 
-Smallest margin among strongly coupled modes (>= 0.5): see the lowest-frequency rows; the highest strongly coupled mode below 100 Hz and the lowest above 420 Hz per corner:
-- kd: highest coupled mode below the bands 64 Hz (limit 83.3, margin 30 %); lowest above 432 Hz (limit 420)
-- nom: highest coupled mode below the bands 68 Hz (limit 83.3, margin 22 %); lowest above 463 Hz (limit 420)
-- hi: highest coupled mode below the bands 78 Hz (limit 83.3, margin 7 %); lowest above 525 Hz (limit 420)
+Smallest margin among strongly coupled modes (>= 0.5): see the lowest-frequency rows; the highest strongly coupled mode below the bands and the lowest above them per corner:
+- kd: highest coupled mode below the bands 64 Hz (limit 83.6, margin 31 %); lowest above 432 Hz (limit 304)
+- nom: highest coupled mode below the bands 68 Hz (limit 83.6, margin 23 %); lowest above 463 Hz (limit 304)
+- hi: highest coupled mode below the bands 78 Hz (limit 83.6, margin 8 %); lowest above 525 Hz (limit 304)
 
-### Forced response, no balancing credit (U 1.0 g mm per rotor EST; ISO G16 prop alone 0.27; 2P ripple 5 % of thrust EST; damping 1 % EST); worst of six rpm points; FC acceleration vs 30 m/s2
+### Forced response, no balancing credit (U 1.0 g mm per rotor EST; ISO G16 prop alone 0.27; 2P ripple 5 % of thrust EST; damping 1 % EST); worst over the D-185 sweep 6,000-10,500 rpm in 250 rpm steps plus the hover and cruise (7,300 / 7,450 / 7,600) points, all three corners; FC acceleration vs 30 m/s2
 - kd: 18.4 m/s2, MS +0.63
 - nom: 17.9 m/s2, MS +0.67
 - hi: 18.0 m/s2, MS +0.66

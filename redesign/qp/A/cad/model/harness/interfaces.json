@@ -7,7 +7,7 @@
    "name": "Harness remainder (wire, connectors, ties, tubing; MASS-GATE avionics 110 g less itemised parts) - lumped",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 54.9,
+   "mass_g": 55.5,
    "material": "copper / silicone",
    "cg_xyz_m": [
     0.03,

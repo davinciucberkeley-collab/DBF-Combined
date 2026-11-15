@@ -10,9 +10,9 @@
    "mass_g": 12.0,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0768,
+    0.0886,
     0.0,
-    0.0147
+    0.0148
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -25,9 +25,9 @@
    "mass_g": 17.0,
    "material": "PCB",
    "cg_xyz_m": [
-    0.0859,
+    0.0599,
     0.0,
-    0.0313
+    0.0278
    ],
    "make_or_buy": "buy",
    "electrical": "bus",
@@ -35,15 +35,15 @@
   },
   {
    "id": "AVN-007",
-   "name": "Gel pads x4 (FC soft mount)",
+   "name": "Foam-tape pads x4 (FC hard mount, 1.5 mm)",
    "subsystem": "avionics",
    "status": "MODELLED",
-   "mass_g": 1.6,
-   "material": "silicone gel",
+   "mass_g": 1.0,
+   "material": "VHB-class foam tape",
    "cg_xyz_m": [
-    0.086,
+    0.06,
     0.0,
-    0.0186
+    0.0168
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -56,8 +56,8 @@
    "mass_g": 3.0,
    "material": "PCB",
    "cg_xyz_m": [
-    0.1136,
-    0.0,
+    0.1117,
+    -0.0465,
     0.0182
    ],
    "make_or_buy": "buy",
@@ -72,7 +72,7 @@
    "mass_g": 13.5,
    "material": "PCB",
    "cg_xyz_m": [
-    0.0834,
+    0.0574,
     0.0399,
     0.0201
    ],
@@ -88,7 +88,7 @@
    "mass_g": 3.0,
    "material": "PCB",
    "cg_xyz_m": [
-    0.0784,
+    0.0524,
     -0.0446,
     0.0202
    ],
@@ -127,7 +127,7 @@
    "part_b": "AVN-001",
    "via": "CT-GEL-PAD",
    "owner": "avionics",
-   "notes": "four 5 mm gel pads on the plate (FC on the wing centre, not on the cage hub: SITL-FLIGHT follow-up 2)"
+   "notes": "four thin foam-tape pads on the plate (FC on the wing centre, not on the cage hub: SITL-FLIGHT follow-up 2; hard mount, BOARD D-186)"
   },
   {
    "id": "E-AVN-03",
@@ -135,7 +135,7 @@
    "part_b": "AVN-007",
    "via": "CT-GEL-PAD",
    "owner": "avionics",
-   "notes": "FC on the gel pads, M2 screws through rubber grommets"
+   "notes": "FC on the tape pads, M2 screws (hard mount; gel only if its frequency is measured at 40-70 Hz)"
   },
   {
    "id": "E-AVN-04",
