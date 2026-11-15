@@ -1,0 +1,260 @@
+{
+ "schema": "dbf-interfaces/1",
+ "subsystem": "fins",
+ "parts": [
+  {
+   "id": "FIN-001-R",
+   "name": "Fin tube 16x14 x 0.36 m (R)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 27.1,
+   "material": "CFRP tube",
+   "cg_xyz_m": [
+    0.294,
+    0.38,
+    -0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "FIN-002-R",
+   "name": "Fin rib tube 14x12 (R)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 14.8,
+   "material": "CFRP tube",
+   "cg_xyz_m": [
+    0.1782,
+    0.38,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "FIN-003-R",
+   "name": "Fin root block (R)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 4.0,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.2831,
+    0.38,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "FIN-004-R",
+   "name": "Fin fairing 3 mm XPS + tape (R)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 9.0,
+   "material": "XPS foam + tape",
+   "cg_xyz_m": [
+    0.239,
+    0.38,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "FIN-005-R",
+   "name": "Rib saddle on spar (R)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.0,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.0671,
+    0.38,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "FIN-001-L",
+   "name": "Fin tube 16x14 x 0.36 m (L)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 27.1,
+   "material": "CFRP tube",
+   "cg_xyz_m": [
+    0.294,
+    -0.38,
+    -0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "FIN-002-L",
+   "name": "Fin rib tube 14x12 (L)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 14.8,
+   "material": "CFRP tube",
+   "cg_xyz_m": [
+    0.1782,
+    -0.38,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "FIN-003-L",
+   "name": "Fin root block (L)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 4.0,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.2831,
+    -0.38,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "FIN-004-L",
+   "name": "Fin fairing 3 mm XPS + tape (L)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 9.0,
+   "material": "XPS foam + tape",
+   "cg_xyz_m": [
+    0.239,
+    -0.38,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "FIN-005-L",
+   "name": "Rib saddle on spar (L)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.0,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.0671,
+    -0.38,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  }
+ ],
+ "edges": [
+  {
+   "id": "E-FIN-01",
+   "part_a": "FIN-003-R",
+   "part_b": "FIN-001-R",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "root block wraps the tube"
+  },
+  {
+   "id": "E-FIN-02",
+   "part_a": "FIN-003-R",
+   "part_b": "FIN-002-R",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "rib end in the block socket"
+  },
+  {
+   "id": "E-FIN-03",
+   "part_a": "FIN-002-R",
+   "part_b": "FIN-005-R",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "rib start in the saddle socket"
+  },
+  {
+   "id": "E-FIN-04",
+   "part_a": "FIN-005-R",
+   "part_b": "WNG-002",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "saddle wraps the spar (60 mm)"
+  },
+  {
+   "id": "E-FIN-05",
+   "part_a": "FIN-004-R",
+   "part_b": "FIN-001-R",
+   "via": "CT-CA",
+   "owner": "fins",
+   "notes": "fairing in the tube slot (foam-safe CA)"
+  },
+  {
+   "id": "E-FIN-06",
+   "part_a": "FIN-004-R",
+   "part_b": "FIN-002-R",
+   "via": "CT-CA",
+   "owner": "fins",
+   "notes": "fairing round the rib"
+  },
+  {
+   "id": "E-FIN-07",
+   "part_a": "FIN-003-L",
+   "part_b": "FIN-001-L",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "root block wraps the tube"
+  },
+  {
+   "id": "E-FIN-08",
+   "part_a": "FIN-003-L",
+   "part_b": "FIN-002-L",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "rib end in the block socket"
+  },
+  {
+   "id": "E-FIN-09",
+   "part_a": "FIN-002-L",
+   "part_b": "FIN-005-L",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "rib start in the saddle socket"
+  },
+  {
+   "id": "E-FIN-10",
+   "part_a": "FIN-005-L",
+   "part_b": "WNG-002",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "saddle wraps the spar (60 mm)"
+  },
+  {
+   "id": "E-FIN-11",
+   "part_a": "FIN-004-L",
+   "part_b": "FIN-001-L",
+   "via": "CT-CA",
+   "owner": "fins",
+   "notes": "fairing in the tube slot (foam-safe CA)"
+  },
+  {
+   "id": "E-FIN-12",
+   "part_a": "FIN-004-L",
+   "part_b": "FIN-002-L",
+   "via": "CT-CA",
+   "owner": "fins",
+   "notes": "fairing round the rib"
+  }
+ ],
+ "acknowledges": [
+  "E-GER-01",
+  "E-GER-03",
+  "E-GER-05",
+  "E-GER-07"
+ ]
+}

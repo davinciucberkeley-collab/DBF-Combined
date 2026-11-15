@@ -1,0 +1,399 @@
+{
+ "schema": "dbf-interfaces/1",
+ "subsystem": "cage",
+ "parts": [
+  {
+   "id": "CGE-001",
+   "name": "Hub disc (printed shell, envelope)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 16.0,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.075,
+    0.0,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-002-UR",
+   "name": "Arm 12x10 x 0.245 (UR)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 13.5,
+   "material": "CFRP tube",
+   "cg_xyz_m": [
+    -0.075,
+    0.1269,
+    0.0868
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-003-UR",
+   "name": "Motor cup (UR)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 5.0,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0798,
+    0.223,
+    0.1543
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-002-UL",
+   "name": "Arm 12x10 x 0.245 (UL)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 13.5,
+   "material": "CFRP tube",
+   "cg_xyz_m": [
+    -0.075,
+    -0.1269,
+    0.0868
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-003-UL",
+   "name": "Motor cup (UL)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 5.0,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0798,
+    -0.2246,
+    0.152
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-002-LR",
+   "name": "Arm 12x10 x 0.245 (LR)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 13.5,
+   "material": "CFRP tube",
+   "cg_xyz_m": [
+    -0.075,
+    0.1269,
+    -0.0868
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-003-LR",
+   "name": "Motor cup (LR)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 5.0,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0798,
+    0.2246,
+    -0.152
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-002-LL",
+   "name": "Arm 12x10 x 0.245 (LL)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 13.5,
+   "material": "CFRP tube",
+   "cg_xyz_m": [
+    -0.075,
+    -0.1269,
+    -0.0868
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-003-LL",
+   "name": "Motor cup (LL)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 5.0,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0798,
+    -0.223,
+    -0.1543
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-004",
+   "name": "Bridge 12x10",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 8.5,
+   "material": "CFRP tube",
+   "cg_xyz_m": [
+    -0.023,
+    0.0,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-005-R",
+   "name": "V strut 6x4.5 (R)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 6.5,
+   "material": "CFRP tube",
+   "cg_xyz_m": [
+    -0.0075,
+    0.154,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-007-R",
+   "name": "Strut clamp on spar (R)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 1.5,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.0488,
+    0.2904,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-005-L",
+   "name": "V strut 6x4.5 (L)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 6.5,
+   "material": "CFRP tube",
+   "cg_xyz_m": [
+    -0.0075,
+    -0.154,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-007-L",
+   "name": "Strut clamp on spar (L)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 1.5,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.0488,
+    -0.2904,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-006",
+   "name": "Bridge saddle on spar",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 2.0,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.051,
+    0.0,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-008",
+   "name": "Pack tray",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 4.0,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.022,
+    0.0,
+    0.011
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  }
+ ],
+ "edges": [
+  {
+   "id": "E-CGE-01",
+   "part_a": "CGE-002-UR",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "arm in hub socket"
+  },
+  {
+   "id": "E-CGE-02",
+   "part_a": "CGE-002-UR",
+   "part_b": "CGE-003-UR",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "arm end in cup sleeve (25 mm)"
+  },
+  {
+   "id": "E-CGE-03",
+   "part_a": "CGE-002-UL",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "arm in hub socket"
+  },
+  {
+   "id": "E-CGE-04",
+   "part_a": "CGE-002-UL",
+   "part_b": "CGE-003-UL",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "arm end in cup sleeve (25 mm)"
+  },
+  {
+   "id": "E-CGE-05",
+   "part_a": "CGE-002-LR",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "arm in hub socket"
+  },
+  {
+   "id": "E-CGE-06",
+   "part_a": "CGE-002-LR",
+   "part_b": "CGE-003-LR",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "arm end in cup sleeve (25 mm)"
+  },
+  {
+   "id": "E-CGE-07",
+   "part_a": "CGE-002-LL",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "arm in hub socket"
+  },
+  {
+   "id": "E-CGE-08",
+   "part_a": "CGE-002-LL",
+   "part_b": "CGE-003-LL",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "arm end in cup sleeve (25 mm)"
+  },
+  {
+   "id": "E-CGE-09",
+   "part_a": "CGE-004",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "bridge in hub"
+  },
+  {
+   "id": "E-CGE-10",
+   "part_a": "CGE-004",
+   "part_b": "CGE-006",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "bridge end in saddle boss"
+  },
+  {
+   "id": "E-CGE-11",
+   "part_a": "CGE-006",
+   "part_b": "WNG-002",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "saddle wraps the spar (30 mm)"
+  },
+  {
+   "id": "E-CGE-12",
+   "part_a": "CGE-005-R",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "strut in hub"
+  },
+  {
+   "id": "E-CGE-13",
+   "part_a": "CGE-005-R",
+   "part_b": "CGE-007-R",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "strut end in clamp boss"
+  },
+  {
+   "id": "E-CGE-14",
+   "part_a": "CGE-007-R",
+   "part_b": "WNG-002",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "clamp wraps the spar"
+  },
+  {
+   "id": "E-CGE-15",
+   "part_a": "CGE-005-L",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "strut in hub"
+  },
+  {
+   "id": "E-CGE-16",
+   "part_a": "CGE-005-L",
+   "part_b": "CGE-007-L",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "strut end in clamp boss"
+  },
+  {
+   "id": "E-CGE-17",
+   "part_a": "CGE-007-L",
+   "part_b": "WNG-002",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "clamp wraps the spar"
+  },
+  {
+   "id": "E-CGE-18",
+   "part_a": "CGE-008",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "pack tray bonded to the hub aft face"
+  }
+ ],
+ "acknowledges": [
+  "E-PRP-01",
+  "E-PRP-03",
+  "E-PRP-05",
+  "E-PRP-07",
+  "E-PWR-01"
+ ]
+}

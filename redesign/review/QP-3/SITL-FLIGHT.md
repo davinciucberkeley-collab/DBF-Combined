@@ -144,3 +144,137 @@ set SCR=<folder with sitl\ArduPlane.elf + cyg*.dll and src\quadplane.parm>      
 python redesign\qp\A\sitl\fwd_sum.py Tb_x5                                           # metrics; python a_aero.py and fwd_checks.py: closed-form checks
 ```
 Disk: `runs/` is about 1.2 GB (SITL logs and terrain per run); the `logs`, `terrain` and `eeprom.bin` folders can be deleted, `case.fwd.csv`, `result.json` and `sum.json` are what this page uses.
+
+
+---
+
+# Follow-ups (F4 / B3 with C1, 2026-11-15)
+
+Files: `redesign/qp/A/sitl/` new `fu_level.py` (level speed, compensation, VD loads), `fu_cage.py` (flex-mode loop analysis; outputs `fu_cage_final.md`, `fu_cage.md`, `fu_cage_sweep.md`), `fu_back.py`, `fu_batt.py`, `jobs_fu*.txt`; `run_fwd.py` gained keys `cthr` (pin the cruise throttle) and `wv_after`; `A.param` edited. Runs `runs/Fu_*` (about 25 SITL runs, at most 4 at a time, SITL 4.7.3-beta1 as above; 1.50 kg, sag state unless stated). Labels as above: `EST` mine, `V` vendor, `—` unknown. No git, nothing bought. Name check after the edits: 159 names, 157 accepted, the same 2 board-only unknowns, no value differs.
+
+## Ratings
+
+| # | Item | Result | Rating |
+|---|---|---|---|
+| 1 | THR_MAX 80 against VH / VD | 80 gives 22.0 m/s level on a fresh pack = VD 22 (VH limit 17.6). **Fix: THR_MAX 68 with the FWD_BAT compensation already in the file, VD 24 (C1 re-check done)** | pass `EST` |
+| 2 | Cage flex modes in the rate band | the old gains are unstable or at gain margin 1.0 on pitch; new gains + FC on the spar pass (min GM 2.1-2.8); **FC on the cage hub fails** | pass **only with the FC on the spar**; yaw PM 34 deg marginal |
+| 3 | Back-transition at the cap | `Q_TAILSIT_RAT_VT` 24: no cap (0 s) at 0 and 5 m/s head wind; crosswind 5 m/s still 2.3 s | pass head wind; **marginal crosswind** |
+| 4 | Cruise battery failsafe range | outward 70 -> 49 m with R 40; with a 200 m leg 200 m outward / 245 m any-direction against the 250 m fence | pass outward, marginal on the conservative bound |
+| 5 | Edge-on heading cue | `Q_WVANE_ENABLE` 3 + `Q_WVANE_GAIN` 1: turns to 86 deg edge-on by itself, holds it to the ground | pass in SITL (calm); needs the card step below |
+
+## 1. THR_MAX and VH / VD
+
+The FC passes THR_MAX straight to the motor duty: SITL pinned cruise (`Fu_t80`, `Fu_t60`, fresh 16.8 V) read duty 0.800 and 0.600. Closed form (`fu_level.py`, same a_aero + APC model as the plant; level = lift W, 4 x thrust x cos 16 = drag at trim alpha) reproduces the SITL speeds within 1-2 % (80 fresh: 22.0 closed form, 21.9 m/s measured in a 3.8 deg climb; 60 fresh: 16.5 against 16.6).
+
+| THR_MAX (with FWD_BAT 16.8 / 13.2 V) | ceiling duty fresh / 14.92 V rest / 13.2 V rest | level speed 1.50 kg (m/s) | level speed 1.381 kg | climb at 17 m/s 1.50 kg (m/s) |
+|---|---|---|---|---|
+| 80 (before) | 0.80 / 0.90 / 1.00 | **22.0** / 21.8 / 21.2 | 22.0 / 21.8 / 21.2 | +8.8 / +8.0 / +6.8 |
+| 70 | 0.70 / 0.79 / 0.89 | 19.3 / 19.1 / 19.0 | 19.3 / 19.2 / 19.1 | +3.8 / +3.4 / +3.1 |
+| **68 (now)** | 0.68 / 0.77 / 0.87 | **18.7** / 18.6 / 18.5 | 18.8 / 18.7 / 18.5 | +2.8 / +2.5 / +2.2 |
+| 66 | 0.66 / 0.74 / 0.84 | 18.2 / 18.1 / 17.9 | 18.3 / 18.1 / 18.0 | +1.9 / +1.6 / +1.4 |
+| 64 | 0.64 / 0.72 / 0.82 | 17.6 / 17.5 / 17.4 | 17.7 / 17.6 / 17.5 | +1.0 / +0.7 / +0.6 |
+| 60 (original) | 0.60 / 0.68 / 0.76 | 16.5 / 16.4 / 16.3 | 16.6 / 16.4 / 16.4 | -0.8 / -0.9 / -1.0 |
+
+17 m/s needs duty 0.618 fresh, 0.701 at 14.92 V, 0.797 at 13.2 V (1.50 kg). Answers:
+- **At 80 the fresh-pack level speed is 22.0 m/s: it exceeds VH and equals VD (22).** C1 used VD 22 = 1.25 VC rounded (`structures_a.py`); the rule VH <= VD / 1.25 allows 17.6, and AIRSPEED_MAX is 18.
+- No fixed THR_MAX works: 17.6 fresh needs <= 0.639, 17 on a sag needs >= 0.70. **FWD_BAT compensation** (`FWD_BAT_VOLT_MAX` 16.8 / `MIN` 13.2, already in the file) scales demand and THR_MAX by 16.8 V / resting voltage (K09-L, F4 closeout 2026-11-14), so the ceiling is the same motor terminal voltage on every pack; the maximum level speed is then the fresh one and falls a little on a sag. SITL with the battery monitor on (`Fu_sagpin`, `Fu_frpin`, THR_MAX 66): ceiling duty **0.750** at SIM_BATT_VOLTAGE 14.92 (closed form 0.743), **0.660** at 16.8; `Fu_sagcr` / `Fu_frcr` (TECS, THR_MAX 66): CRUISE held 17.2 m/s level at duty 0.705 sagged / 0.621 fresh.
+- Why 68 and not the 17.6 limit (THR_MAX 63-64): at 64 the climb margin at 17 m/s is 0.6-1.0 m/s, and MISSION estimates the cruise power 10-15 % above this model (161-170 W against 144-147 W): a duty of 0.65 may be needed, so the 17.6 ceiling has no headroom. 68 keeps 0.06 duty above the cruise duty on every pack state.
+- **C1 re-check at VD 24 (VH 18.8 x 1.25 = 23.5)**, same formulas as `structures_a.py` (`fu_level.py loads()`): gust 4 m/s at VD: 3.02 (2.85 at 22; stall line 3.6-4.0) **below the 3.4 manoeuvre limit that sizes the spar** (the 4 m/s gust reaches 3.4 only at VD 28.6); pitch-rate-limited n at 35 deg/s: 2.5; so spar, cage, rib and fin-root margins (iter2_margins: spar +2.73) **do not change**. Elevon hinge moment scales with V^2: 0.104 N m at 25 deg and VD 24 (0.0585 at 18 m/s), servo ratio 1.61 against 1.5 (A-P11) at the full stop, 2.7 at the 15 deg actually used; at VD 25 the full-stop ratio would be 1.48 (fails). `—` not checked: flutter (never computed for A) at 24 m/s, fin side loads at VD, wing-tip torsion; C1 to add them to the first-build checks. **Final values: `THR_MAX` 68, `FWD_BAT_VOLT_MAX` 16.8, `FWD_BAT_VOLT_MIN` 13.2, `TECS_CLMB_MAX` 2 (was 3; worst-state climb 2.2), structures VD 24.**
+
+## 2. Cage flex modes (9-11 Hz and the rest of the rate band)
+
+Method (`fu_cage.py`): the iteration-2 FE (`qp/A/structures/fe_a.py`, CFG of `iter2_run.py`, free-free, kd / nom / hi corners) gives every mode shape; motor-pair torque (x-forces, plus the 16 deg cant tangential components and the shaft reaction for yaw) -> body rate at the IMU node is the modal sum; the A.param rate loop (P, I, D, D filter, `INS_GYRO_FILTER` 2-pole, 40 ms motor lag as the plant, 4 ms delay, ArduPilot's 2.5 Hz yaw error filter) is closed around it and the closed-loop poles are computed. Worst case over 3 corners x zeta 0.3 / 1 % (a guess, `EST`) x thrust scale 0.77 / 1.0 / 1.25. FE rigid inertias 0.021 (pitch), 0.069 (roll), 0.061 (yaw) kg m2 (plant EST 0.03 / 0.05: same order).
+
+What the FE modes are on the three control axes: **yaw 7.9 / 8.1 / 9.6 Hz (kd / nom / hi)** (cage rocking about the thrust axis on the bridge: this is the "9-11 Hz" mode), **pitch 12.1 / 12.4 / 14.8 Hz**, **roll 28.7 / 30.5 / 34.8 Hz**, each with a modal gain 0.7-1.1 times the rigid gain. The rigid crossover is 1.5-3.9 Hz, so the pitch mode is only 3-8 x above it.
+
+`fu_cage_final.md` (36 loops per row; GM = factor on the loop gain before a right-half-plane pole; 1.00 = unstable somewhere):
+
+| settings | axis | IMU at | min GM | unstable loops of 18 | rigid PM deg | crossover Hz |
+|---|---|---|---|---|---|---|
+| A.param before | pitch | spar centre | **1.00** | **4** | 50 | 3.9 |
+| | roll | spar centre | 2.44 | 0 | 62 | 2.2 |
+| | yaw | spar centre | 1.97 | 0 | 33 | 1.5 |
+| | pitch / roll / yaw | **cage hub** | 1.00 | 4 / 17 / 15 | | |
+| A.param now | pitch | spar centre | **2.76** | 0 | 56 | 2.6 |
+| | roll | spar centre | 2.52 | 0 | 64 | 1.8 |
+| | yaw | spar centre | 2.06 | 0 | 34 | 1.5 |
+| | pitch | cage hub | 3.22 | 0 | 56 | 2.6 |
+| | roll / yaw | **cage hub** | 1.00 | **12 / 15** | | |
+
+Reading: the coupling is real. With the old settings the 12-15 Hz pitch mode peaks the loop gain at 6-9 (against 1) and the loop is unstable at zeta 0.3 % or +25 % thrust. The cause is lag: motor 40 ms, gyro filter 40 Hz and D filter 32 Hz put the mode beyond 180 deg. A notch did **not** help (a 13.5 Hz notch, 20-30 dB, BW 6-12 Hz left 8-12 of 18 loops unstable; it adds lag below its centre and cannot cover 12.1-14.8 Hz). Making the mode stiffer alone does not help either (15-40 Hz with the same gains: unstable, the mode just moves to more lag). What works is **less lag and less gain at the mode**.
+
+Settings (all in A.param): `INS_GYRO_FILTER` 60 (was 40); `Q_A_RAT_PIT_P` 0.15 (0.25), `_D` 0.002 (0.004), `_FLTD` 40 (32), `_I` 0.25 unchanged; `Q_A_RAT_RLL_P` 0.20, `_D` 0.003, `_FLTD` 32 unchanged, `_I` 0.25; yaw unchanged. Hover wind check (rigid plant, 5 m/s from 45 deg, 1 m/s turbulence, 1.50 kg, `Fu_h0` old against `Fu_h1` new): lean max 23.3 / 24.4 deg, yaw error max 13.1 / 12.6 deg, position error rms 2.03 / 2.05 m, peak duty 0.859 / 0.854: no change.
+
+**Hard requirement: the flight controller sits on the wing spar centre (C4's IMU node), not on the cage hub or pack tray.** With the IMU on the hub the yaw mode (8-10 Hz) and the roll mode are unstable at zeta <= 1 % with any gain set above; notches only reach GM 1.2-1.4 (yaw 8.5 Hz, BW 8 Hz, 25 dB; roll 31 Hz, BW 24 Hz, 30 dB). If the FC must go on the cage the yaw-torsion frequency would have to double (about 4 x the bridge torsion stiffness) and the roll mode rise above about 50 Hz, which breaks the rotor-order separation iteration 2 settled: do not. Also: yaw PM is only 33-35 deg with ArduPilot's default 2.5 Hz yaw error filter (independent of the cage); try `Q_A_RAT_YAW_FLTE` 4 if the hanging test shows yaw ringing (not tested). Bench: tap-test the built cage for the 8-15 Hz modes; if the first pitch mode is below 11 Hz, cut `Q_A_RAT_PIT_P` further. Flag, not changed: `INS_HNTCH_FREQ` 70 / BW 35 dates from the 9545 prop (1P 71 Hz); the 9x4.5MR hover 1P is 100-119 Hz (STRUCTURES), so the harmonic notch setting needs checking against the first IMU log.
+
+## 3. Back-transition with the motors at the cap (1.50 kg, `fu_back.py`)
+
+Baseline `Q_TAILSIT_RAT_VT` 30, THR_VT 55, no wind: 0.56 s at 0.90, balloon 5.8 m, 82 m of travel to 3 m/s.
+
+| Variant | peak duty | s at cap (>= 0.895) | s >= 0.85 | balloon (m) | pitch-up to > 70 deg (s) | travel to 3 m/s (m) |
+|---|---|---|---|---|---|---|
+| 30 (baseline) | 0.90 | 0.56 | 1.02 | 5.8 | 6.2 | 82 |
+| 24, no wind | 0.877 | 0 | 0.31 | 6.2 | 8.0 | 102 |
+| 24, 5 m/s head | 0.812 | 0 | 0 | 5.4 | 7.8 | 58 (to 3 m/s not reached: wind) |
+| 20, 5 m/s head | 0.845 | 0 | 0 | 5.1 | 9.0 | 68 (same) |
+| 18, no wind | 0.833 | 0 | 0 | 4.8 | 9.8 | 126 |
+| 18, 5 m/s head | 0.832 | 0 | 0 | 4.9 | 9.9 | 75 (same) |
+| 24, 5 m/s **crosswind** (hover turned edge-on first) | 0.90 | **2.2-2.4** | 2.6 | 5.3-5.4 | 7.6 | 106 |
+| 18 / 20, crosswind | 0.90 | 1.3 / 1.5 | 2.5-2.8 | 4.9-5.0 | 9-10 | 124-134 |
+| THR_VT 40 (RAT 30) | 0.90 | 3.3 | 5.6 | 1.3 | 11.5 | 113 |
+| entry at 15 m/s (AIRSPEED_CRUISE 15; the aircraft held 16.7) | 0.90 | 0.26 | 0.92 | 5.0 | 6.3 | 83 |
+
+**Fix: `Q_TAILSIT_RAT_VT` 24.** The cap is the pitch-up rate demand, not the throttle: slower pitch-up gives no cap in 0 and 5 m/s head wind, balloon 5.4-6.2 m, 20 m more travel than at 30; 18 costs 44 m more travel for 0.04 less peak duty. **Leave `Q_TAILSIT_THR_VT` 55**: lowering it to 40 loses lift (lean 64 deg, 3.3 s at the cap). Entry speed is not the lever. **Procedure: switch to QLOITER from level cruise heading into the wind** (head wind, not crosswind); a crosswind back-transition at 5 m/s still holds the cap 1.3-2.4 s (marginal; 0.90 is 12.1 A phase, under the 13 A rating, but no control margin is left). Not re-run at THR_MAX 68: the back-transition throttle is `Q_TAILSIT_THR_VT`, not THR_MAX.
+
+## 4. Cruise battery failsafe against the 250 m fence (`fu_batt.py`, `battC`)
+
+Mechanism: `BATT_FS_LOW_ACT` 6 = loiter to `Q_RTL_ALT` 50 m about the trigger point, then QLAND (the back-transition travel is part of the excursion). Action 1 (RTL) is not an option: in a Q mode it starts a forward transition (K09-L; the SITL source `events.cpp` has no VTOL case in the RTL branch), so the lever is the geometry.
+
+| Case (trigger at 87 m, 17 m/s) | to QLAND (s) / to touchdown (s) | max distance from trigger | outward along the track | energy trigger -> touchdown |
+|---|---|---|---|---|
+| before: R 60, RAT_VT 30 (`Fb_battC`) | 25.8 / 101 | 93 m | 70 m | 4.91 Wh |
+| R 40, RAT_VT 30 (`Fu_c40`) | 27.0 / 103 | 80 m | 49 m | 4.98 Wh |
+| R 40, RAT_VT 18 (`Fu_c40b`) | 27.7 / 103 | 124 m | 49 m | 4.91 Wh |
+| **R 40, RAT_VT 24 (`Fu_f4`, as now)** | 28.3 / 105 | **94 m** | **49 m** | 5.03 Wh |
+
+- **`WP_LOITER_RAD` 60 -> 40** (bank 36 deg at 17 m/s, stall 13.6 m/s against 15.85 minimum airspeed; the racetrack radius stays 51 m). The slower back-transition (24) gives back the saved distance in the any-direction number, so that stays at 94 m; outward is 49 m.
+- Far point: the 300 m leg (far point 201 m) gives 250 m outward (at the fence) and 295 m any-direction. **Fly a 200 m leg** (lap 42 s, far point 151 m): **200 m** outward-heading and **245 m** for the conservative any-direction bound (the radial component cannot reach all of 94 m), against 250 m less `FENCE_MARGIN` 10 m. Flight-card change, written into MISSION.md s2; total cruise time unchanged. `FENCE_RADIUS` 250 and `FENCE_ALT_MAX` 110 unchanged.
+- Energy: 5.0 Wh from trigger to touchdown against 9.4 Wh left at `BATT_LOW_MAH` 650 (1.9 x). `BATT_CRT_MAH` 345 is only 5.1 Wh: a backstop, not a margin. `BATT_LOW_MAH` 650 unchanged.
+- Not changed: `BATT_FS_*_ACT`, `Q_RTL_ALT` 50 (raising it adds hover time at 1.2 m/s). Not covered: wind (SITL ran calm) and a trigger while turning at the far point.
+
+## 5. Heading cue for edge-on
+
+ArduPilot `Q_WVANE_ENABLE` has a **side-into-wind** mode (3; read from `AC_WeatherVane.cpp` Plane-4.7.2, https://raw.githubusercontent.com/ArduPilot/ardupilot/Plane-4.7.2/libraries/AC_AttitudeControl/AC_WeatherVane.cpp, 2026-11-15): the pitch lean from a belly-on wind is turned into a yaw until the wing edge faces the wind. QP-2 had weathervane off because mode 1 puts the belly into the wind. **`Q_WVANE_GAIN` defaults to 0 on Plane**, so ENABLE 3 alone does nothing (`Fu_wv`, heading unchanged for 55 s). With GAIN 1:
+
+| Run | Result |
+|---|---|
+| `Fu_wv2`: hover 20 m QLOITER, 5 m/s from the belly, then QLAND | belly heading 0 -> -36 deg (6 s) -> -84 deg (12 s), held -82 deg to touchdown; lean 8.4 deg (25 deg belly-on); landed, no tip |
+| `Fu_wv7`: head-wind back-transition (RAT_VT 24, peak duty 0.81, no cap), weathervane on 20 s later with `Q_WVANE_SPD_MAX` 2 | belly 1 -> 80 deg (+7 s) -> 86 deg; lean 9 deg through the 88 m descent; edge-on to touchdown (4 deg inside the +-10 deg rule) |
+| `Fu_wv3` / `Fu_wv6`: weathervane on from the start | hover turns edge-on before the pitch-over, so the transition and back-transition are crosswind: 2.2-2.4 s at the cap (item 3) |
+| `Fu_f3`: `Q_WVANE_ENABLE` -1 with `Q_WVANE_LAND` 3 | no turn (heading stayed 2 deg): this option set does not work here |
+
+Final: `Q_WVANE_ENABLE` 3, `Q_WVANE_GAIN` 1, `Q_WVANE_SPD_MAX` 2 (A.param). It works only in position-controlled Q modes with the yaw stick centred for 2 s; a pilot yaw command overrides it. **Flight card:** before the pitch-over yaw the belly to the intended flight heading and go QLOITER -> QSTABILIZE -> FBWA within 2 s, so the weathervane never acts before the transition; after the back-transition leave the yaw stick centred and the aircraft turns itself edge-on in about 25 s and lands edge-on. Backup cues, not needed now: the GCS HUD wind arrow against heading; an analog OSD wind element (the BOM has no OSD or video link, `—`). A-P8a still says `Q_WVANE_ENABLE` 0: change it to "3 (side into wind)" at the next requirements edit (not edited here).
+
+## 6. A.param diff (all in `redesign/qp/A/A.param`)
+
+```
+THR_MAX                 80   -> 68      (FWD_BAT_VOLT_MAX 16.8 / MIN 13.2 unchanged: required)
+TECS_CLMB_MAX           3    -> 2
+INS_GYRO_FILTER         40   -> 60
+Q_A_RAT_PIT_P           0.25 -> 0.15    Q_A_RAT_PIT_D 0.004 -> 0.002    Q_A_RAT_PIT_FLTD 32 -> 40
+Q_A_RAT_RLL_P           0.25 -> 0.20    Q_A_RAT_RLL_D 0.004 -> 0.003
+Q_TAILSIT_RAT_VT        30   -> 24
+WP_LOITER_RAD           60   -> 40
+Q_WVANE_ENABLE          0    -> 3       Q_WVANE_GAIN (new) 1     Q_WVANE_SPD_MAX (new) 2
+```
+Other files: `qp/A/MISSION.md` s2 (200 m leg note). Structures VD 22 -> 24 is for C1 to carry into `structures_a.py` (loads above); not edited here.
+
+## 7. What still needs the bench or flight
+
+1. Cruise duty for 17 m/s (the model is 10-15 % cheaper than MISSION): measure on the thrust stand and the first cruise; if 17 m/s needs more than 0.65 fresh, raise THR_MAX and VD together (VD = 1.25 x VH; THR_MAX 70 needs VD 25 and fails the A-P11 hinge ratio at the full stop).
+2. FWD_BAT uses the resting-voltage estimate: confirm the 0.66-0.75 duty read-back on the bench with a sagging pack (SITL used the instantaneous analog voltage).
+3. FC position on the spar, tap test of the cage (8-15 Hz) and zeta (1 % is a guess); IMU log FFT in the tethered hover against the gyro filter and notch settings.
+4. Crosswind and gusty back-transition above 5 m/s; battery failsafe geometry in wind.
+5. Weathervane holding edge-on within 10 deg in turbulence: it is a feedback on lean, not a heading hold; SITL here was calm, `—` not simulated with gusts.
+
+Reproduce: `python -I fu_level.py` (PYTHONPATH = sitl folder), `python -I fu_cage.py [sweep|final]`, `python -I fu_back.py <tag>`, `python -I fu_batt.py <tag>`; runs `jobs_fu.txt` .. `jobs_fu4.txt` with `jobq.py`; the `Fu_t*`, `*pin`, `*cr`, `Fu_h*`, `Fu_wv*` runs by hand with `run_fwd.py` / `run_case.py` and the `P:` overrides recorded in `runs/<tag>/A_sitl.parm`.

@@ -1,0 +1,274 @@
+{
+ "schema": "dbf-interfaces/1",
+ "subsystem": "harness",
+ "parts": [
+  {
+   "id": "HRN-001",
+   "name": "Harness remainder (wire, connectors, ties, tubing; MASS-GATE avionics 110 g less itemised parts) - lumped",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 54.9,
+   "material": "copper / silicone",
+   "cg_xyz_m": [
+    0.03,
+    0.0,
+    0.02
+   ],
+   "make_or_buy": "make",
+   "mass_proxy": true,
+   "carried": true,
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  }
+ ],
+ "edges": [
+  {
+   "id": "E-HRN-20",
+   "part_a": "HRN-001",
+   "part_b": "WNG-001",
+   "via": "CT-TIE",
+   "owner": "harness",
+   "notes": "harness lump: ties and tape on the wing"
+  },
+  {
+   "id": "E-HRN-01",
+   "part_a": "PWR-001",
+   "part_b": "PRP-003",
+   "via": "CT-XT60",
+   "owner": "harness",
+   "notes": "pack main lead (XT60 at the pack, disconnect) to the ESC battery pads",
+   "wire": {
+    "gauge_awg": 14,
+    "connector": "XT60",
+    "route_id": "R-A-01",
+    "support_points": [
+     "rear tray lip",
+     "plate front edge"
+    ],
+    "bend_radius_mm": 6,
+    "strain_relief": "heat-shrink + tie",
+    "disconnect": true
+   },
+   "current_a": {
+    "cont": 11,
+    "peak": 41
+   }
+  },
+  {
+   "id": "E-HRN-02",
+   "part_a": "PRP-003",
+   "part_b": "PRP-001-UR",
+   "via": "CT-SOLDER-PHASE",
+   "owner": "harness",
+   "notes": "motor phase leads UR: ESC pad, over the LE, along the arm on the aft side, through the cup hole",
+   "wire": {
+    "gauge_awg": 18,
+    "connector": "solder + heat-shrink",
+    "route_id": "R-A-02",
+    "support_points": [
+     "tie at the plate edge",
+     "tie along the arm every 0.1 m",
+     "cup hole grommet"
+    ],
+    "bend_radius_mm": 6,
+    "strain_relief": "heat-shrink + tie at the cup",
+    "disconnect": false
+   },
+   "current_a": {
+    "cont": 10.9,
+    "peak": 12.1
+   }
+  },
+  {
+   "id": "E-HRN-03",
+   "part_a": "PRP-003",
+   "part_b": "PRP-001-UL",
+   "via": "CT-SOLDER-PHASE",
+   "owner": "harness",
+   "notes": "motor phase leads UL: ESC pad, over the LE, along the arm on the aft side, through the cup hole",
+   "wire": {
+    "gauge_awg": 18,
+    "connector": "solder + heat-shrink",
+    "route_id": "R-A-03",
+    "support_points": [
+     "tie at the plate edge",
+     "tie along the arm every 0.1 m",
+     "cup hole grommet"
+    ],
+    "bend_radius_mm": 6,
+    "strain_relief": "heat-shrink + tie at the cup",
+    "disconnect": false
+   },
+   "current_a": {
+    "cont": 10.9,
+    "peak": 12.1
+   }
+  },
+  {
+   "id": "E-HRN-04",
+   "part_a": "PRP-003",
+   "part_b": "PRP-001-LR",
+   "via": "CT-SOLDER-PHASE",
+   "owner": "harness",
+   "notes": "motor phase leads LR: ESC pad, over the LE, along the arm on the aft side, through the cup hole",
+   "wire": {
+    "gauge_awg": 18,
+    "connector": "solder + heat-shrink",
+    "route_id": "R-A-04",
+    "support_points": [
+     "tie at the plate edge",
+     "tie along the arm every 0.1 m",
+     "cup hole grommet"
+    ],
+    "bend_radius_mm": 6,
+    "strain_relief": "heat-shrink + tie at the cup",
+    "disconnect": false
+   },
+   "current_a": {
+    "cont": 10.9,
+    "peak": 12.1
+   }
+  },
+  {
+   "id": "E-HRN-05",
+   "part_a": "PRP-003",
+   "part_b": "PRP-001-LL",
+   "via": "CT-SOLDER-PHASE",
+   "owner": "harness",
+   "notes": "motor phase leads LL: ESC pad, over the LE, along the arm on the aft side, through the cup hole",
+   "wire": {
+    "gauge_awg": 18,
+    "connector": "solder + heat-shrink",
+    "route_id": "R-A-05",
+    "support_points": [
+     "tie at the plate edge",
+     "tie along the arm every 0.1 m",
+     "cup hole grommet"
+    ],
+    "bend_radius_mm": 6,
+    "strain_relief": "heat-shrink + tie at the cup",
+    "disconnect": false
+   },
+   "current_a": {
+    "cont": 10.9,
+    "peak": 12.1
+   }
+  },
+  {
+   "id": "E-HRN-06",
+   "part_a": "PRP-003",
+   "part_b": "AVN-002",
+   "via": "CT-JST-GH-6",
+   "owner": "harness",
+   "notes": "ESC lead to the FC (VBAT, signals, telemetry)",
+   "wire": {
+    "gauge_awg": 26,
+    "connector": "JST-GH 6-pin",
+    "route_id": "R-A-06",
+    "support_points": [
+     "tie on the plate"
+    ],
+    "bend_radius_mm": 3,
+    "strain_relief": "strain loop",
+    "disconnect": false
+   }
+  },
+  {
+   "id": "E-HRN-07",
+   "part_a": "AVN-002",
+   "part_b": "MEC-001-R",
+   "via": "CT-SERVO-JR",
+   "owner": "harness",
+   "notes": "servo lead R: FC servo pad, over the plate, laid on the skin to the servo pocket",
+   "wire": {
+    "gauge_awg": 26,
+    "connector": "JR 3-pin",
+    "route_id": "R-A-07",
+    "support_points": [
+     "tie at the plate edge",
+     "tape on the skin"
+    ],
+    "bend_radius_mm": 3,
+    "strain_relief": "strain loop",
+    "disconnect": false
+   }
+  },
+  {
+   "id": "E-HRN-08",
+   "part_a": "AVN-002",
+   "part_b": "MEC-001-L",
+   "via": "CT-SERVO-JR",
+   "owner": "harness",
+   "notes": "servo lead L: FC servo pad, over the plate, laid on the skin to the servo pocket",
+   "wire": {
+    "gauge_awg": 26,
+    "connector": "JR 3-pin",
+    "route_id": "R-A-08",
+    "support_points": [
+     "tie at the plate edge",
+     "tape on the skin"
+    ],
+    "bend_radius_mm": 3,
+    "strain_relief": "strain loop",
+    "disconnect": false
+   }
+  },
+  {
+   "id": "E-HRN-09",
+   "part_a": "AVN-002",
+   "part_b": "AVN-003",
+   "via": "CT-JST-GH-4",
+   "owner": "harness",
+   "notes": "RX UART lead",
+   "wire": {
+    "gauge_awg": 28,
+    "connector": "CT-JST-GH-4",
+    "route_id": "R-HRN-09",
+    "support_points": [
+     "tie on the plate"
+    ],
+    "bend_radius_mm": 3,
+    "strain_relief": "strain loop",
+    "disconnect": false
+   }
+  },
+  {
+   "id": "E-HRN-10",
+   "part_a": "AVN-002",
+   "part_b": "AVN-004",
+   "via": "CT-JST-GH-6",
+   "owner": "harness",
+   "notes": "GPS lead",
+   "wire": {
+    "gauge_awg": 28,
+    "connector": "CT-JST-GH-6",
+    "route_id": "R-HRN-10",
+    "support_points": [
+     "tie on the plate"
+    ],
+    "bend_radius_mm": 3,
+    "strain_relief": "strain loop",
+    "disconnect": false
+   }
+  },
+  {
+   "id": "E-HRN-11",
+   "part_a": "AVN-002",
+   "part_b": "AVN-005",
+   "via": "CT-JST-GH-4",
+   "owner": "harness",
+   "notes": "airspeed I2C lead",
+   "wire": {
+    "gauge_awg": 28,
+    "connector": "CT-JST-GH-4",
+    "route_id": "R-HRN-11",
+    "support_points": [
+     "tie on the plate"
+    ],
+    "bend_radius_mm": 3,
+    "strain_relief": "strain loop",
+    "disconnect": false
+   }
+  }
+ ],
+ "acknowledges": []
+}

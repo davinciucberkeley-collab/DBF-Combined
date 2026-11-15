@@ -64,9 +64,13 @@ Q_M_THST_EXPO,0.55
 # A: hover in thrust space is 0.36 fresh (0.46 on the sagged pack); start in between, learned in flight
 Q_M_THST_HOVER,0.42
 Q_M_HOVER_LEARN,2
-# fixed-wing throttle limit. QP-3 (SITL-FLIGHT.md, APC 9x4.5MR PER3 x0.93 in forward flight): level cruise at 17 m/s needs motor duty 0.62-0.65 fresh, 0.70 at the 3.73 V/cell sag state
-#   (about 145 W electric); the old 60 (duty 0.60) cannot hold 17 m/s on a sagged pack (settles at 15.3 m/s and sinks 1 m/s). 80 leaves 0.10 duty for the climb after the pitch-over and gusts; the 0.90 spin cap still bounds the motor. EST until C7 / thrust stand
-THR_MAX,80
+# fixed-wing throttle limit. QP-3 follow-up 1 (SITL-FLIGHT.md Follow-ups): the FC passes THR_MAX straight to the motor duty (SITL read-back: 80 -> 0.800, 60 -> 0.600), so 80 gave a
+#   FRESH-pack level speed of 22.0 m/s (a_aero / fu_level.py, confirmed 21.9 m/s in SITL) = the structures VD 22, 1.2 x VC above the 17.6 m/s that VD 22 allows (VH <= VD / 1.25) and above AIRSPEED_MAX 18.
+#   Fix = the FWD_BAT compensation K09-L used (lines below, 16.8 / 13.2 V, already in the file): the ceiling becomes THR_MAX x 16.8 V / resting voltage, so the motor terminal voltage at the ceiling
+#   is the same on every pack. 68: ceiling duty 0.68 fresh, 0.77 at 14.92 V rest, 0.87 at 13.2 V rest; level speed 18.7-18.8 m/s fresh (the maximum over pack states), 18.6-18.7 sagged, 18.5 empty;
+#   17 m/s needs duty 0.62 fresh / 0.70 sagged, so the margin to the ceiling is 0.06-0.07 on every pack state and the climb at 17 m/s is 2.2-3.2 m/s (EST). SITL with compensation on (THR_MAX 66, SIM_BATT_VOLTAGE 14.92 / 16.8):
+#   ceiling duty 0.750 / 0.660 as predicted (0.743 / 0.660), CRUISE held 17.2 m/s at duty 0.705 sagged / 0.621 fresh. C1 VD 24 (VH 18.8 x 1.25 = 23.5): REQUIRED, see STRUCTURES / SITL-FLIGHT follow-up 1. EST until C7 / thrust stand
+THR_MAX,68
 FWD_BAT_VOLT_MAX,16.8
 FWD_BAT_VOLT_MIN,13.2
 FWD_BAT_IDX,0
@@ -83,14 +87,18 @@ Q_A_RATE_R_MAX,120
 Q_A_RATE_P_MAX,120
 Q_A_RATE_Y_MAX,90
 # A: roll/pitch rate loop. K09-L 0.08 was for 2.6 kg / 5.5 s of pack; A has I_z 0.05 and I_y 0.03 kg m2 (EST, a_plant.py) so P is higher. Starting values
-Q_A_RAT_RLL_P,0.25
+# QP-3 follow-up 2 (SITL-FLIGHT.md Follow-ups; sitl/fu_cage.py): the cage flex modes (pitch 12-15 Hz, yaw 8-10 Hz, roll 29-35 Hz in the iteration-2 FE) are above the 2-4 Hz rate crossover.
+#   With P 0.25 / D 0.004, gyro filter 40 Hz and D filter 32 Hz the pitch loop is unstable or has gain margin 1.0-1.7 over the three property corners and zeta 0.3-1 % (the
+#   lag of the motor, gyro and D filters turns the 12-15 Hz mode into a pole). Lower P, D and LESS lag restore it (pitch 15 / 0.002 / FLTD 40 + gyro 60: min gain margin 2.8; roll 0.20 / 0.003 / 32 + gyro 60: 2.5).
+#   REQUIRES the flight controller on the wing spar centre (C4's IMU node), not on the cage hub: with the IMU on the hub the yaw (8-10 Hz) and roll (29-35 Hz) loops are unstable at zeta <= 1 % with any of these settings.
+Q_A_RAT_RLL_P,0.20
 Q_A_RAT_RLL_I,0.25
-Q_A_RAT_RLL_D,0.004
+Q_A_RAT_RLL_D,0.003
 Q_A_RAT_RLL_FLTD,32
-Q_A_RAT_PIT_P,0.25
+Q_A_RAT_PIT_P,0.15
 Q_A_RAT_PIT_I,0.25
-Q_A_RAT_PIT_D,0.004
-Q_A_RAT_PIT_FLTD,32
+Q_A_RAT_PIT_D,0.002
+Q_A_RAT_PIT_FLTD,40
 # yaw: K09-L values. A's yaw authority comes from cant 16 deg + arm x1.2 + reaction (WIND.md D-184: about 0.35 N m at +-0.10 throttle EST; the hanging yaw test must confirm >= 0.35, fail < 0.30)
 Q_A_RAT_YAW_P,0.40
 Q_A_RAT_YAW_I,0.04
@@ -101,9 +109,15 @@ Q_WP_SPD_DN,1.2
 Q_PILOT_SPD_DN,1.0
 Q_LAND_FINAL_SPD,0.3
 Q_LAND_FINAL_ALT,6
-# A: weathervane OFF (D-184, WIND.md): it turns the belly into the wind (lean 30 deg, hold 4.7 m off), the wrong way for A. Only the enable line is kept, at 0; no other Q_WVANE
-#   parameter is set. Wind rule: pilot holds the wing edge into the wind within +-10 deg (+-20 deg steady only), belly-on only to 3 m/s; limit 5 m/s mean, gust <= 8 m/s
-Q_WVANE_ENABLE,0
+# Weathervane: QP-2 / D-184 had it OFF because mode 1 (nose = belly into wind) is the wrong way for A (lean 30 deg, hold 4.7 m off). Wind rule: pilot holds the wing edge into the wind within +-10 deg (+-20 deg steady only), belly-on only to 3 m/s; limit 5 m/s mean, gust <= 8 m/s
+# QP-3 follow-up 5 (heading cue): 3 = SIDE into wind = the wing edge, which is what A needs (the QP-2 OFF decision was for 1 = nose/belly into wind). Q_WVANE_GAIN defaults to 0 on Plane
+#   (= no weathervane at all, why a bare ENABLE 3 does nothing), so it is set; SPD_MAX 2 keeps it off while the ground speed is above 2 m/s (back-transition). SITL, 1.50 kg, 5 m/s wind from the belly:
+#   QLOITER hover turns to within 6-8 deg of edge-on in about 12 s and holds it (lean 8.4 deg against 25 deg belly-on); after a head-wind back-transition (peak duty 0.81, no cap) it turned 1 -> 86 deg in 26 s
+#   and landed edge-on. It acts only in position-controlled Q modes with the yaw stick centred for 2 s; the pilot yaw stick overrides. FLIGHT CARD: before the pitch-over yaw the belly to the flight
+#   heading and go QLOITER -> QSTABILIZE -> FBWA within 2 s, otherwise the aircraft turns edge-on first and the back-transition ends up crosswind (2.2-2.4 s at the 0.90 cap at 5 m/s, SITL)
+Q_WVANE_ENABLE,3
+Q_WVANE_GAIN,1
+Q_WVANE_SPD_MAX,2
 
 # ---------------------------------------------------------------- 4 Transition (K09-L lessons, A numbers where they exist)
 # pitch-over rate cap 12 deg/s (K09-L B3 entry law, A's sizing used the same 12 deg/s to 70 deg). QP-3 SITL ran the entry (held throttle, 1.0 s pre-climb in QSTABILIZE, then FBWA):
@@ -116,7 +130,9 @@ Q_TRANSITION_MS,11667
 Q_A_ANGLE_BOOST,0
 Q_THROTTLE_EXPO,0.2
 # back-transition pitch-up rate and throttle (K09-L: slower pitch-up balloons more, stage A S5a); A: unverified, stage B needed
-Q_TAILSIT_RAT_VT,30
+# QP-3 follow-up 3: 30 deg/s put the motors at the 0.90 cap for 0.56 s at the 1.50 kg gate (no wind, 17 m/s entry). 24: no cap in 0 and 5 m/s head wind (peak duty 0.88 / 0.81, balloon 6.2 / 5.4 m,
+#   pitch-up 8 s, 102 m of travel to 3 m/s against 82). 18: peak 0.83, 126 m of travel. Do NOT lower Q_TAILSIT_THR_VT (40: 3-5 s at the cap, lean 64 deg). Entry speed 15 instead of 17 changed nothing (0.26 s at cap)
+Q_TAILSIT_RAT_VT,24
 Q_TAILSIT_ANGLE,70
 Q_TAILSIT_ANG_VT,0
 Q_TAILSIT_THR_VT,55
@@ -147,7 +163,8 @@ RLL2SRV_RMAX,150
 #   (K09-L 17 m/s: 23.4), so UP 35 still covers it. No A structural basis for the cap yet (fin f1 / wing torsion not computed): keep the K09-L numbers
 PTCH2SRV_RMAX_UP,35
 PTCH2SRV_RMAX_DN,20
-TECS_CLMB_MAX,3
+# QP-3 follow-up 1: climb attainable at 17 m/s at the THR_MAX 68 ceiling is 2.8-3.2 m/s fresh, 2.2-2.5 m/s at 13.2 V rest (EST); the cap follows the worst state
+TECS_CLMB_MAX,2
 TECS_SINK_MAX,2.5
 ARSPD_TYPE,1
 ARSPD_BUS,0
@@ -157,7 +174,8 @@ RUDD_DT_GAIN,35
 YAW2SRV_DAMP,0.1
 YAW2SRV_SLIP,0
 INS_GYRO_RATE,0
-INS_GYRO_FILTER,40
+# QP-3 follow-up 2: 60 Hz (was 40): the 2-pole gyro filter lag at 12-15 Hz was what turned the cage pitch mode unstable (fu_cage.py)
+INS_GYRO_FILTER,60
 # A: harmonic notch on bidirectional DShot rpm. Hover 1P is 71 Hz fresh / 76 Hz sagged (sizing_a.py s4); K09-L used 70 Hz, BW 35. Fin f1 is 219 Hz ideal
 INS_HNTCH_ENABLE,1
 INS_HNTCH_MODE,3
@@ -200,7 +218,9 @@ RTL_ALTITUDE,50
 Q_RTL_ALT,50
 Q_FW_LND_APR_RAD,60
 RTL_RADIUS,60
-WP_LOITER_RAD,60
+# QP-3 follow-up 4: the cruise BATT_LOW action (BATT_FS_LOW_ACT 6, loiter to Q_RTL_ALT then QLAND) circles at this radius about the trigger point; 40 m (bank 36 deg at 17 m/s, stall 13.6 m/s) cut the
+#   outward excursion from 70 to 49 m (SITL, 1.50 kg); the racetrack keeps R 51 m (flight card), so a leg of 200 m puts the far point at 151 m (MISSION.md s2 note)
+WP_LOITER_RAD,40
 Q_TRANS_DECEL,2.0
 FS_EKF_THRESH,0.8
 

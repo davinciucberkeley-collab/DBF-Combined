@@ -28,6 +28,8 @@ Cruise power, 1.37 kg: CL 0.352, L/D 7.19, drag 1.87 N, aero 31.8 W, electric **
 
 Bank 30 deg: R = V^2 / (g tan 30) = 289 / (9.807 x 0.5774) = **51.0 m**; leg 300 m; lap 2 x 300 + 2 pi R = 920.7 m = 54.2 s; far point 150 + 51.0 = **201 m** inside the 250 m fence and 500 m VLOS; the transition climb (about 31 m from 50 m, `EST`) ends near 81 m under the 110 m ceiling. These match K09-L's 3.41 min because the speed is the same.
 
+**QP-3 follow-up 4 (SITL-FLIGHT.md): leg 200 m, not 300 m.** A cruise BATT_LOW (loiter to 50 m, back-transition, QLAND) moves the aircraft up to 49 m outward / 94 m in any direction from the trigger point (SITL, 1.50 kg, `WP_LOITER_RAD` 40, `Q_TAILSIT_RAT_VT` 24). With the 300 m leg (far point 201 m) that is 250-295 m against the 250 m fence; with a 200 m leg (lap 2 x 200 + 2 pi 51 = 720 m = 42 s, far point 151 m) it is 200 m outward-heading and 245 m for the conservative any-direction bound. Total cruise time (204.6 s) is unchanged: fly more, shorter laps. `EST`.
+
 ## 3. Hover-mode time: 3.0 min total (incl. go-around)
 
 | Segment | Basis | s |

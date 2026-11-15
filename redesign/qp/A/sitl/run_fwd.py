@@ -181,11 +181,13 @@ try:
         ok = run_for(30, lambda: seen("Transition FW done", t_fw)); mk["t_fwdone"] = st["t"] if ok else None
         run_for(3.0)                                         # override held 3 s after the handover
         rc[5] = CRZ; rc[2] = 1500; mk["t_cruise_mode"] = st["t"]
+        if "cthr" in kv: setp("THR_MIN", kv["cthr"]); setp("THR_MAX", kv["cthr"])      # F4 follow-up: pin the cruise throttle (percent) to read the duty it maps to
         run_for(float(kv.get("cruise_s", 25)))
         mk["t_cruise_end"] = st["t"]
         if case == "trans" and kv.get("chain", "0") == "1":
             mk["t_back"] = st["t"]; rc[5] = QLOI; rc[2] = 1500
             run_for(20, lambda: seen("Transition", mk["t_back"]) and False)
+            if "wv_after" in kv: setp("Q_WVANE_GAIN", 1); setp("Q_WVANE_SPD_MAX", 2); setp("Q_WVANE_ENABLE", kv["wv_after"]); mk["t_wv"] = st["t"]     # F4 follow-up: weathervane (3 = side into wind) switched on after the back-transition
             yc = float(kv.get("yawcmd", 0))
             if yc: rc[3] = 1950 if yc > 0 else 1050; mk["t_yaw0"] = st["t"]; run_for(abs(yc)); rc[3] = 1500
             run_for(8)

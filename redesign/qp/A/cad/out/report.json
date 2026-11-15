@@ -1,0 +1,55 @@
+{
+ "bodies": 127,
+ "defects": [],
+ "kinks": [],
+ "parts": 68,
+ "poses": [
+  {
+   "hits": [],
+   "moved": null,
+   "name": "static",
+   "not_swept_against": null
+  },
+  {
+   "hits": [],
+   "moved": [
+    "MEC-004-L",
+    "MEC-004-R",
+    "WNG-006-L",
+    "WNG-006-R"
+   ],
+   "name": "elevons at lower limit (E-WNG-10 -20, E-WNG-11 -20)",
+   "not_swept_against": [
+    "MEC-003-L",
+    "MEC-003-R"
+   ]
+  },
+  {
+   "hits": [],
+   "moved": [
+    "MEC-004-L",
+    "MEC-004-R",
+    "WNG-006-L",
+    "WNG-006-R"
+   ],
+   "name": "elevons at upper limit (E-WNG-10 +20, E-WNG-11 +20)",
+   "not_swept_against": [
+    "MEC-003-L",
+    "MEC-003-R"
+   ]
+  }
+ ],
+ "seconds": 89.9,
+ "skipped": [
+  [
+   "HRD-001",
+   "mass proxy"
+  ],
+  [
+   "HRN-001",
+   "mass proxy"
+  ]
+ ],
+ "wire_ends": [],
+ "wire_strands": 11
+}

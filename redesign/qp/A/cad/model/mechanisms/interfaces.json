@@ -1,0 +1,272 @@
+{
+ "schema": "dbf-interfaces/1",
+ "subsystem": "mechanisms",
+ "parts": [
+  {
+   "id": "MEC-001-R",
+   "name": "Servo ES3352HV (R)",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 12.0,
+   "material": "plastic / metal gear",
+   "cg_xyz_m": [
+    0.1384,
+    0.2,
+    0.0035
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "MEC-002-R",
+   "name": "Servo arm (R)",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 1.0,
+   "material": "nylon",
+   "cg_xyz_m": [
+    0.15,
+    0.2,
+    0.0092
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "MEC-003-R",
+   "name": "Pushrod 1.2 mm (R)",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 1.0,
+   "material": "steel",
+   "cg_xyz_m": [
+    0.1768,
+    0.2,
+    0.011
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "MEC-004-R",
+   "name": "Control horn (R)",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 1.0,
+   "material": "nylon",
+   "cg_xyz_m": [
+    0.202,
+    0.2,
+    0.0102
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "MEC-001-L",
+   "name": "Servo ES3352HV (L)",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 12.0,
+   "material": "plastic / metal gear",
+   "cg_xyz_m": [
+    0.1384,
+    -0.2,
+    0.0035
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "MEC-002-L",
+   "name": "Servo arm (L)",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 1.0,
+   "material": "nylon",
+   "cg_xyz_m": [
+    0.15,
+    -0.2,
+    0.0092
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "MEC-003-L",
+   "name": "Pushrod 1.2 mm (L)",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 1.0,
+   "material": "steel",
+   "cg_xyz_m": [
+    0.1768,
+    -0.2,
+    0.011
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "MEC-004-L",
+   "name": "Control horn (L)",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 1.0,
+   "material": "nylon",
+   "cg_xyz_m": [
+    0.202,
+    -0.2,
+    0.0102
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  }
+ ],
+ "edges": [
+  {
+   "id": "E-MEC-01",
+   "part_a": "MEC-001-R",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "mechanisms",
+   "notes": "servo in its pocket"
+  },
+  {
+   "id": "E-MEC-02",
+   "part_a": "MEC-002-R",
+   "part_b": "MEC-001-R",
+   "via": "CT-SERVO-SPLINE",
+   "owner": "mechanisms",
+   "notes": "arm on the output spline",
+   "joint_stack": {
+    "fastener": "M2x6 retaining screw",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "arm bore on the 25T spline",
+    "insert": "none",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 3.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 20,
+    "removal_order": 20
+   }
+  },
+  {
+   "id": "E-MEC-03",
+   "part_a": "MEC-003-R",
+   "part_b": "MEC-002-R",
+   "via": "CT-CLEVIS",
+   "owner": "mechanisms",
+   "notes": "rod end in the arm hole",
+   "motion": {
+    "axis": "Z",
+    "range_deg": [
+     -30,
+     30
+    ]
+   }
+  },
+  {
+   "id": "E-MEC-04",
+   "part_a": "MEC-003-R",
+   "part_b": "MEC-004-R",
+   "via": "CT-CLEVIS",
+   "owner": "mechanisms",
+   "notes": "rod end in the horn hole",
+   "motion": {
+    "axis": "Y",
+    "range_deg": [
+     -20.0,
+     20.0
+    ]
+   }
+  },
+  {
+   "id": "E-MEC-05",
+   "part_a": "MEC-004-R",
+   "part_b": "WNG-006-R",
+   "via": "CT-EPOXY",
+   "owner": "mechanisms",
+   "notes": "horn bonded on the elevon upper skin"
+  },
+  {
+   "id": "E-MEC-06",
+   "part_a": "MEC-001-L",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "mechanisms",
+   "notes": "servo in its pocket"
+  },
+  {
+   "id": "E-MEC-07",
+   "part_a": "MEC-002-L",
+   "part_b": "MEC-001-L",
+   "via": "CT-SERVO-SPLINE",
+   "owner": "mechanisms",
+   "notes": "arm on the output spline",
+   "joint_stack": {
+    "fastener": "M2x6 retaining screw",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "arm bore on the 25T spline",
+    "insert": "none",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 3.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 20,
+    "removal_order": 20
+   }
+  },
+  {
+   "id": "E-MEC-08",
+   "part_a": "MEC-003-L",
+   "part_b": "MEC-002-L",
+   "via": "CT-CLEVIS",
+   "owner": "mechanisms",
+   "notes": "rod end in the arm hole",
+   "motion": {
+    "axis": "Z",
+    "range_deg": [
+     -30,
+     30
+    ]
+   }
+  },
+  {
+   "id": "E-MEC-09",
+   "part_a": "MEC-003-L",
+   "part_b": "MEC-004-L",
+   "via": "CT-CLEVIS",
+   "owner": "mechanisms",
+   "notes": "rod end in the horn hole",
+   "motion": {
+    "axis": "Y",
+    "range_deg": [
+     -20.0,
+     20.0
+    ]
+   }
+  },
+  {
+   "id": "E-MEC-10",
+   "part_a": "MEC-004-L",
+   "part_b": "WNG-006-L",
+   "via": "CT-EPOXY",
+   "owner": "mechanisms",
+   "notes": "horn bonded on the elevon upper skin"
+  }
+ ],
+ "acknowledges": [
+  "E-HRN-07",
+  "E-HRN-08"
+ ]
+}

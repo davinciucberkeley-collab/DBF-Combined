@@ -1,0 +1,194 @@
+{
+ "schema": "dbf-interfaces/1",
+ "subsystem": "avionics",
+ "parts": [
+  {
+   "id": "AVN-001",
+   "name": "Avionics plate",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 12.0,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.0768,
+    0.0,
+    0.0147
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "AVN-002",
+   "name": "Flight controller Kakute F405 Wing Mini",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 17.0,
+   "material": "PCB",
+   "cg_xyz_m": [
+    0.0859,
+    0.0,
+    0.0313
+   ],
+   "make_or_buy": "buy",
+   "electrical": "bus",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "AVN-007",
+   "name": "Gel pads x4 (FC soft mount)",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 1.6,
+   "material": "silicone gel",
+   "cg_xyz_m": [
+    0.086,
+    0.0,
+    0.0186
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "AVN-003",
+   "name": "Receiver RP3 V2 ELRS",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "material": "PCB",
+   "cg_xyz_m": [
+    0.1136,
+    0.0,
+    0.0182
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "AVN-004",
+   "name": "GPS TBS M10Q + compass",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 13.5,
+   "material": "PCB",
+   "cg_xyz_m": [
+    0.0834,
+    0.0399,
+    0.0201
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "AVN-005",
+   "name": "Airspeed sensor MS4525 board",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "material": "PCB",
+   "cg_xyz_m": [
+    0.0784,
+    -0.0446,
+    0.0202
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "AVN-006",
+   "name": "Pitot probe",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 5.0,
+   "material": "brass tube",
+   "cg_xyz_m": [
+    -0.0425,
+    0.41,
+    0.0
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  }
+ ],
+ "edges": [
+  {
+   "id": "E-AVN-01",
+   "part_a": "AVN-001",
+   "part_b": "WNG-001",
+   "via": "CT-CA",
+   "owner": "avionics",
+   "notes": "plate base follows the upper skin (same vertices as the core)"
+  },
+  {
+   "id": "E-AVN-02",
+   "part_a": "AVN-007",
+   "part_b": "AVN-001",
+   "via": "CT-GEL-PAD",
+   "owner": "avionics",
+   "notes": "four 5 mm gel pads on the plate (FC on the wing centre, not on the cage hub: SITL-FLIGHT follow-up 2)"
+  },
+  {
+   "id": "E-AVN-03",
+   "part_a": "AVN-002",
+   "part_b": "AVN-007",
+   "via": "CT-GEL-PAD",
+   "owner": "avionics",
+   "notes": "FC on the gel pads, M2 screws through rubber grommets"
+  },
+  {
+   "id": "E-AVN-04",
+   "part_a": "AVN-003",
+   "part_b": "AVN-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "avionics",
+   "notes": "foam tape + tie",
+   "retention": {
+    "item": "VHB-class tape",
+    "count": 1
+   }
+  },
+  {
+   "id": "E-AVN-05",
+   "part_a": "AVN-004",
+   "part_b": "AVN-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "avionics",
+   "notes": "foam tape + tie",
+   "retention": {
+    "item": "VHB-class tape",
+    "count": 1
+   }
+  },
+  {
+   "id": "E-AVN-06",
+   "part_a": "AVN-005",
+   "part_b": "AVN-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "avionics",
+   "notes": "foam tape + tie",
+   "retention": {
+    "item": "VHB-class tape",
+    "count": 1
+   }
+  },
+  {
+   "id": "E-AVN-07",
+   "part_a": "AVN-006",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "avionics",
+   "notes": "pitot in a groove in the LE at y = +0.41 (outside the rotor wash, EST)"
+  }
+ ],
+ "acknowledges": [
+  "E-HRN-06",
+  "E-HRN-07",
+  "E-HRN-08",
+  "E-HRN-09",
+  "E-HRN-10",
+  "E-HRN-11",
+  "E-PRP-09"
+ ]
+}

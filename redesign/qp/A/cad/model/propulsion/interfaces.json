@@ -1,0 +1,356 @@
+{
+ "schema": "dbf-interfaces/1",
+ "subsystem": "propulsion",
+ "parts": [
+  {
+   "id": "PRP-001-UR",
+   "name": "Motor MN2212 V2.0 KV780 (UR)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 65.0,
+   "material": "Al / Cu / NdFeB",
+   "cg_xyz_m": [
+    -0.0993,
+    0.224,
+    0.1619
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "PRP-002-UR",
+   "name": "Prop APC 9x4.5MR (UR), swept disc",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 11.06,
+   "material": "nylon-glass composite",
+   "cg_xyz_m": [
+    -0.1207,
+    0.2206,
+    0.1668
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "PRP-001-UL",
+   "name": "Motor MN2212 V2.0 KV780 (UL)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 65.0,
+   "material": "Al / Cu / NdFeB",
+   "cg_xyz_m": [
+    -0.0993,
+    -0.232,
+    0.1501
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "PRP-002-UL",
+   "name": "Prop APC 9x4.5MR (UL), swept disc",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 11.06,
+   "material": "nylon-glass composite",
+   "cg_xyz_m": [
+    -0.1207,
+    -0.2354,
+    0.1452
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "PRP-001-LR",
+   "name": "Motor MN2212 V2.0 KV780 (LR)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 65.0,
+   "material": "Al / Cu / NdFeB",
+   "cg_xyz_m": [
+    -0.0993,
+    0.232,
+    -0.1501
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "PRP-002-LR",
+   "name": "Prop APC 9x4.5MR (LR), swept disc",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 11.06,
+   "material": "nylon-glass composite",
+   "cg_xyz_m": [
+    -0.1207,
+    0.2354,
+    -0.1452
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "PRP-001-LL",
+   "name": "Motor MN2212 V2.0 KV780 (LL)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 65.0,
+   "material": "Al / Cu / NdFeB",
+   "cg_xyz_m": [
+    -0.0993,
+    -0.224,
+    -0.1619
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "PRP-002-LL",
+   "name": "Prop APC 9x4.5MR (LL), swept disc",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 11.06,
+   "material": "nylon-glass composite",
+   "cg_xyz_m": [
+    -0.1207,
+    -0.2206,
+    -0.1668
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "PRP-003",
+   "name": "ESC SpeedyBee BLS 35A Mini V2 4-in-1 with leads",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 20.0,
+   "material": "PCB",
+   "cg_xyz_m": [
+    0.0479,
+    -0.0,
+    0.0194
+   ],
+   "make_or_buy": "buy",
+   "electrical": "bus",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  }
+ ],
+ "edges": [
+  {
+   "id": "E-PRP-01",
+   "part_a": "PRP-001-UR",
+   "part_b": "CGE-003-UR",
+   "via": "CT-M3-SHCS-MOTOR",
+   "owner": "propulsion",
+   "notes": "motor on the cup plate, 16 deg cant in the cup",
+   "joint_stack": {
+    "fastener": "M3x8 SHCS",
+    "count": 4,
+    "grade": "A2-70",
+    "hole": "3.4 mm clearance in the cup plate (EST pattern); motor base tapped M3",
+    "insert": "none",
+    "engagement_mm": 2.5,
+    "min_engagement_mm": 2.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 1,
+    "removal_order": 1
+   }
+  },
+  {
+   "id": "E-PRP-02",
+   "part_a": "PRP-002-UR",
+   "part_b": "PRP-001-UR",
+   "via": "CT-PROP-NUT",
+   "owner": "propulsion",
+   "notes": "APC adapter ring + prop nut on the shaft",
+   "joint_stack": {
+    "fastener": "M6x1 prop nut + washer",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "adapter ring on the 4 mm shaft (EST)",
+    "insert": "none",
+    "engagement_mm": 6.0,
+    "min_engagement_mm": 4.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 10,
+    "removal_order": 10
+   },
+   "field_joint": true
+  },
+  {
+   "id": "E-PRP-03",
+   "part_a": "PRP-001-UL",
+   "part_b": "CGE-003-UL",
+   "via": "CT-M3-SHCS-MOTOR",
+   "owner": "propulsion",
+   "notes": "motor on the cup plate, 16 deg cant in the cup",
+   "joint_stack": {
+    "fastener": "M3x8 SHCS",
+    "count": 4,
+    "grade": "A2-70",
+    "hole": "3.4 mm clearance in the cup plate (EST pattern); motor base tapped M3",
+    "insert": "none",
+    "engagement_mm": 2.5,
+    "min_engagement_mm": 2.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 2,
+    "removal_order": 2
+   }
+  },
+  {
+   "id": "E-PRP-04",
+   "part_a": "PRP-002-UL",
+   "part_b": "PRP-001-UL",
+   "via": "CT-PROP-NUT",
+   "owner": "propulsion",
+   "notes": "APC adapter ring + prop nut on the shaft",
+   "joint_stack": {
+    "fastener": "M6x1 prop nut + washer",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "adapter ring on the 4 mm shaft (EST)",
+    "insert": "none",
+    "engagement_mm": 6.0,
+    "min_engagement_mm": 4.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 11,
+    "removal_order": 11
+   },
+   "field_joint": true
+  },
+  {
+   "id": "E-PRP-05",
+   "part_a": "PRP-001-LR",
+   "part_b": "CGE-003-LR",
+   "via": "CT-M3-SHCS-MOTOR",
+   "owner": "propulsion",
+   "notes": "motor on the cup plate, 16 deg cant in the cup",
+   "joint_stack": {
+    "fastener": "M3x8 SHCS",
+    "count": 4,
+    "grade": "A2-70",
+    "hole": "3.4 mm clearance in the cup plate (EST pattern); motor base tapped M3",
+    "insert": "none",
+    "engagement_mm": 2.5,
+    "min_engagement_mm": 2.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 3,
+    "removal_order": 3
+   }
+  },
+  {
+   "id": "E-PRP-06",
+   "part_a": "PRP-002-LR",
+   "part_b": "PRP-001-LR",
+   "via": "CT-PROP-NUT",
+   "owner": "propulsion",
+   "notes": "APC adapter ring + prop nut on the shaft",
+   "joint_stack": {
+    "fastener": "M6x1 prop nut + washer",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "adapter ring on the 4 mm shaft (EST)",
+    "insert": "none",
+    "engagement_mm": 6.0,
+    "min_engagement_mm": 4.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 12,
+    "removal_order": 12
+   },
+   "field_joint": true
+  },
+  {
+   "id": "E-PRP-07",
+   "part_a": "PRP-001-LL",
+   "part_b": "CGE-003-LL",
+   "via": "CT-M3-SHCS-MOTOR",
+   "owner": "propulsion",
+   "notes": "motor on the cup plate, 16 deg cant in the cup",
+   "joint_stack": {
+    "fastener": "M3x8 SHCS",
+    "count": 4,
+    "grade": "A2-70",
+    "hole": "3.4 mm clearance in the cup plate (EST pattern); motor base tapped M3",
+    "insert": "none",
+    "engagement_mm": 2.5,
+    "min_engagement_mm": 2.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 4,
+    "removal_order": 4
+   }
+  },
+  {
+   "id": "E-PRP-08",
+   "part_a": "PRP-002-LL",
+   "part_b": "PRP-001-LL",
+   "via": "CT-PROP-NUT",
+   "owner": "propulsion",
+   "notes": "APC adapter ring + prop nut on the shaft",
+   "joint_stack": {
+    "fastener": "M6x1 prop nut + washer",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "adapter ring on the 4 mm shaft (EST)",
+    "insert": "none",
+    "engagement_mm": 6.0,
+    "min_engagement_mm": 4.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 13,
+    "removal_order": 13
+   },
+   "field_joint": true
+  },
+  {
+   "id": "E-PRP-09",
+   "part_a": "PRP-003",
+   "part_b": "AVN-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "propulsion",
+   "notes": "ESC on the plate, foam tape + tie",
+   "retention": {
+    "item": "VHB-class tape",
+    "count": 1
+   }
+  }
+ ],
+ "acknowledges": [
+  "E-HRN-01",
+  "E-HRN-02",
+  "E-HRN-03",
+  "E-HRN-04",
+  "E-HRN-05",
+  "E-HRN-06"
+ ]
+}

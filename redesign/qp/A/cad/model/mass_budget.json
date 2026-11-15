@@ -1,0 +1,9 @@
+{
+ "_note": "concept A: gate 1.50 kg (MASS-GATE s1); CG band 4.0..28.5 mm aft of the LE (forward limit / aft hard limit, MASS-GATE s5)",
+ "limit_g": 1500,
+ "allocations_g": {},
+ "cg_x_m": [
+  0.004,
+  0.0285
+ ]
+}

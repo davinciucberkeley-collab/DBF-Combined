@@ -1,0 +1,4 @@
+Fu_b1 case=trans wind=0 from=0 chain=1 mass=1.50 hold=30 cruise_s=15 P:THR_MAX=80 P:Q_TAILSIT_RAT_VT=18
+Fu_b2 case=trans wind=0 from=0 chain=1 mass=1.50 hold=30 cruise_s=15 P:THR_MAX=80 P:Q_TAILSIT_THR_VT=40
+Fu_b3 case=trans wind=0 from=0 chain=1 mass=1.50 hold=30 cruise_s=30 P:THR_MAX=80 P:AIRSPEED_CRUISE=15 P:AIRSPEED_MIN=15
+Fu_b4 case=trans wind=0 from=0 chain=1 mass=1.50 hold=30 cruise_s=15 P:THR_MAX=80 P:Q_TAILSIT_RAT_VT=18 P:Q_TAILSIT_THR_VT=40

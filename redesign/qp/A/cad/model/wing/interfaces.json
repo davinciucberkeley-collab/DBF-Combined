@@ -1,0 +1,236 @@
+{
+ "schema": "dbf-interfaces/1",
+ "subsystem": "wing",
+ "parts": [
+  {
+   "id": "WNG-001",
+   "name": "Wing core, XPS + tape skin + glue + hinge tape (lumped)",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 116.0,
+   "material": "XPS foam 30 kg/m3 + packing tape",
+   "cg_xyz_m": [
+    0.0902,
+    0.0,
+    0.0021
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-002",
+   "name": "Spar, CF tube 12x10 x 0.90 m",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 49.8,
+   "material": "CFRP tube",
+   "cg_xyz_m": [
+    0.06,
+    -0.0,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-003-C",
+   "name": "Spar plug (centre clamp)",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 1.65,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.06,
+    -0.0,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-004-R",
+   "name": "Spar plug (right strut clamp)",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 1.65,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.06,
+    0.3,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-004-L",
+   "name": "Spar plug (left strut clamp)",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 1.65,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.06,
+    -0.3,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-005-R",
+   "name": "Spar plug (right rib clamp)",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 1.65,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.06,
+    0.38,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-005-L",
+   "name": "Spar plug (left rib clamp)",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 1.65,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.06,
+    -0.38,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-006-R",
+   "name": "Elevon right",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 8.5,
+   "material": "XPS foam + tape",
+   "cg_xyz_m": [
+    0.2055,
+    0.19,
+    -0.0001
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-006-L",
+   "name": "Elevon left",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 8.5,
+   "material": "XPS foam + tape",
+   "cg_xyz_m": [
+    0.2055,
+    -0.19,
+    -0.0001
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  }
+ ],
+ "edges": [
+  {
+   "id": "E-WNG-01",
+   "part_a": "WNG-002",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "spar bonded in its bore; build rule: bond over |y| <= 0.15 m (STRUCTURES iter 2)"
+  },
+  {
+   "id": "E-WNG-02",
+   "part_a": "WNG-003-C",
+   "part_b": "WNG-002",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "plug in the spar bore under a clamp (C2 rule)"
+  },
+  {
+   "id": "E-WNG-03",
+   "part_a": "WNG-004-R",
+   "part_b": "WNG-002",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "plug in the spar bore under a clamp (C2 rule)"
+  },
+  {
+   "id": "E-WNG-04",
+   "part_a": "WNG-004-L",
+   "part_b": "WNG-002",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "plug in the spar bore under a clamp (C2 rule)"
+  },
+  {
+   "id": "E-WNG-05",
+   "part_a": "WNG-005-R",
+   "part_b": "WNG-002",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "plug in the spar bore under a clamp (C2 rule)"
+  },
+  {
+   "id": "E-WNG-06",
+   "part_a": "WNG-005-L",
+   "part_b": "WNG-002",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "plug in the spar bore under a clamp (C2 rule)"
+  },
+  {
+   "id": "E-WNG-10",
+   "part_a": "WNG-006-R",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-HINGE",
+   "owner": "wing",
+   "notes": "tape hinge, upper surface",
+   "motion": {
+    "axis": "Y",
+    "range_deg": [
+     -20.0,
+     20.0
+    ]
+   }
+  },
+  {
+   "id": "E-WNG-11",
+   "part_a": "WNG-006-L",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-HINGE",
+   "owner": "wing",
+   "notes": "tape hinge, upper surface",
+   "motion": {
+    "axis": "Y",
+    "range_deg": [
+     -20.0,
+     20.0
+    ]
+   }
+  }
+ ],
+ "acknowledges": [
+  "E-ASM-01",
+  "E-AVN-01",
+  "E-AVN-07",
+  "E-CGE-11",
+  "E-CGE-14",
+  "E-CGE-17",
+  "E-FIN-04",
+  "E-FIN-10",
+  "E-HRN-20",
+  "E-MEC-01",
+  "E-MEC-05",
+  "E-MEC-06",
+  "E-MEC-10"
+ ]
+}

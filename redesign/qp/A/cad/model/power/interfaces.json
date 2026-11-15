@@ -1,0 +1,41 @@
+{
+ "schema": "dbf-interfaces/1",
+ "subsystem": "power",
+ "parts": [
+  {
+   "id": "PWR-001",
+   "name": "Pack Tattu 2300 mAh 4S 75C",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 270.0,
+   "material": "LiPo",
+   "cg_xyz_m": [
+    -0.02,
+    0.0,
+    0.0225
+   ],
+   "make_or_buy": "buy",
+   "electrical": "source",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  }
+ ],
+ "edges": [
+  {
+   "id": "E-PWR-01",
+   "part_a": "PWR-001",
+   "part_b": "CGE-008",
+   "via": "CT-STRAP-VELCRO",
+   "owner": "power",
+   "notes": "hook-and-loop strap round pack and tray, lips fore and aft",
+   "retention": {
+    "item": "25 mm strap",
+    "count": 1,
+    "load_n": 38.8
+   },
+   "field_joint": true
+  }
+ ],
+ "acknowledges": [
+  "E-HRN-01"
+ ]
+}
