@@ -49,6 +49,7 @@ src("SRC-A-ITER3", "Structures iteration 3 (iter3_run.md, D-185 as ruled)", "qp/
 src("SRC-A-FLUTTER", "QP-4 flutter / divergence (FLUTTER.md)", "review/QP-4/FLUTTER.md", "verdict table: divergence, wing flutter, reversal")
 src("SRC-A-SITL2", "QP-2 SITL wind study (SITL.md)", "review/QP-2/SITL.md", "hover wind lean vs Q_A_ANGLE_MAX")
 src("SRC-A-WIND", "QP-2 wind levers (WIND.md)", "review/QP-2/WIND.md", "arm x1.2 + cant 16 turbulence runs; motors peak 0.87")
+src("SRC-A-CLAIMSFIX", "QP-4 claims fix (CLAIMS-FIX.md): cant 17, gate 1.47 kg, pitch / yaw rate gains, 4 m/s hover wind", "review/QP-4/CLAIMS-FIX.md", "s1 window gate, s2 yaw, s3 wind output, s4 gain margin; SITL runs N4_* in qp/A/sitl/results.jsonl")
 src("SRC-A-D184", "D-184 yaw levers (D184.md)", "review/QP-2/D184.md", "model Q 59.7 N mm gives 0.346 N m authority (marginally under 0.35)")
 src("SRC-A-TRANSPORT", "Configuration-study transport requirement C3", "config-study/requirements/REQUIREMENTS.md",
     "C3(a): one box <= 1.2 x 0.5 x 0.4 m fits a mid-size sedan trunk (the team's car trunk is not measured)")
@@ -85,7 +86,7 @@ for rid, title, text in [
     ("A-U4", "3-D physics pass", "No part interpenetration (collision gate at neutral and at the elevon stops), no open wire ends, every build step passes the assembly sweep"),
     ("A-U5", "Mass under 25 kg", "Take-off mass < 25 kg (55 lb)"),
     ("A-D2", "Mission: 3.0 min hover, 3.41 min cruise at 17 m/s", "3.0 min hover mode incl. 40 s go-around, cruise 3.41 min at 17 m/s (requirement 3.5 min), 20 % reserve; cruise to BATT_LOW lasts longer than the mission needs"),
-    ("A-P1", "Mass gate 1.50 kg and T/W at the gate", "As-built mass <= 1.50 kg; at the gate T/W fresh >= 2.0 and sag >= 1.6 with Q_M_SPIN_MAX 0.90"),
+    ("A-P1", "Mass gate 1.47 kg and T/W at the gate", "As-built mass <= 1.47 kg; at the gate T/W fresh >= 2.0 and sag >= 1.6 with Q_M_SPIN_MAX 0.90"),
     ("A-D3", "Design target <= 1.44 kg; structure <= 494 g", "Predicted mass incl. growth and overrun <= 1.44 kg; structure ceiling 494 g (BOARD QP-4 s1)"),
     ("A-P2", "Hover T/W >= 2.0 fresh, >= 1.6 worst pack state", "Hover T/W >= 2.0 fresh, >= 1.6 at the worst pack state (20 % rest, 3.73 V/cell)"),
     ("A-P3", "Transition window >= +-5 %", "Transition entry window >= +-5 % of the weight-ratio entry thrust: entry >= 1.33 W, <= 0.80 x T/W sag"),
@@ -93,7 +94,7 @@ for rid, title, text in [
     ("A-P5", "Pack retained at 12 g crash", "Pack retained at 12 g crash deceleration (MS >= 0 on the bridge and tray)"),
     ("A-P6", "Stall: 1.3 Vs below cruise", "Clean stall Vs <= cruise / 1.3 at the gate mass (1.3 Vs < 17 m/s)"),
     ("A-P7", "Hover yaw authority >= 0.35 N m", "Hover yaw authority >= 0.35 N m at +-0.10 throttle (R2 below 0.30), rotor reaction Q >= 55 N mm"),
-    ("A-P8", "Wind limits", "<= 5 m/s mean, gust <= 8 m/s; hover lean <= Q_A_ANGLE_MAX 45 deg (40 deg with margin); no motor above 85 % output"),
+    ("A-P8", "Wind limits", "<= 4 m/s mean, gust <= 6.4 m/s (D-192; was 5 / 8); hover lean <= Q_A_ANGLE_MAX 45 deg (40 deg with margin); no motor above 85 % output for more than 0.5 s and none at the 0.90 cap"),
     ("A-P9", "Fin-tip landing tip-over >= 30 deg", "Static tip-over angle >= 30 deg on the fin tips"),
     ("A-P10", "Vibration rule D-185", "(a) strongly coupled modes >= 20 % from every rotor band; (b) forced response FC <= 30 m/s2 over 6,000-10,500 rpm; (c) rate-loop gain margin >= 2 with the cage modes at +-20 %"),
     ("A-P11", "Cruise control authority", "Roll rate >= 90 deg/s within +-20 deg; pitch use <= 0.60 of the stop; servo torque factor >= 1.5 at the 7.2 V rail"),
@@ -116,7 +117,7 @@ kit.test("T-A-ELEVON-E1", "Elevon coupon E1: K, free play, ring-down, stop, damp
 kit.test("T-A-SERVO-RAIL", "Servo rail voltage under two-servo load (M12)", ["CL-A-SERVO-FACTOR"], state="planned",
          procedure="Kakute servo rail set to 7.2 V and measured under load; below 6.0 V the servo fails the 1.5 factor")
 kit.test("T-A-WEIGH", "Weigh-in: foam block, printed parts, epoxy joint, lead strip, one servo, then the aircraft", ["CL-A-MASS-PRED", "CL-A-CUTS-REQUIRED", "CL-A-STRUCT-MASS", "CL-A-MASS-GATE-ROOM"], state="planned",
-         procedure="BOARD QP-4 s1 and FIXES2 s9: >= 27.2 g of the 41.6 g EST cuts must be real; as-built <= 1.50 kg; at > 1.486 kg the C3 run must show >= +-5 % at the as-weighed mass")
+         procedure="BOARD QP-4 s1 and FIXES2 s9: >= 27.2 g of the 41.6 g EST cuts must be real; as-built <= 1.47 kg (D-190; the +-5 % window holds to 1.478 kg)")
 kit.test("T-A-CG-BREADBOARD", "CG breadboard on a knife edge (M5, M6)", ["CL-A-CG", "CL-A-CG-HI", "CL-A-SM", "CL-A-CG-LATERAL"], state="planned",
          procedure="Measure CG and NP on the built aircraft; trim the pack +-10 mm in the tray slots; CG 20-26 mm, SM >= 5 %")
 kit.test("T-A-TAP", "Tap test: built cage and fin against the FE modes", ["CL-A-VIB-LOW", "CL-A-VIB-HIGH", "CL-A-VIB-GM-SHIFT"], state="planned",

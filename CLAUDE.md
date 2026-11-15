@@ -33,6 +33,11 @@ that concept.
   `redesign/collision/collide.py --glb`) with no part interpenetration, no
   open wire ends and no exemptions; flight cases in the 3-D sims (C5 landing,
   SITL) pass against their limits.
+- The CAD looks exactly like the physical aircraft (user, 2026-11-15): every
+  part modelled to its real shape and dimensions from the vendor drawing or
+  data sheet (props with real blades, motors, servos, connectors, boards,
+  fasteners), no stand-in disks or boxes. Where a dimension is unknown, say so
+  and mark the part, never invent it.
 
 Within these constraints the engineering agents (`redesign/TEAM.md`) make the
 design decisions, including mass, mission and performance trade-offs; log

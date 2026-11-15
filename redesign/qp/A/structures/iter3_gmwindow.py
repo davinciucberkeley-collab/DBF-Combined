@@ -4,7 +4,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, os.path.jo
 import fu_cage as FC
 C = FC.cases(); corners = ("kd", "nom", "hi"); OUT = []
 def P(s=""): print(s); OUT.append(s)
-SET = {"pit": dict(gyro_lpf=60, fltd=40, P=0.15, D=0.002), "rll": dict(gyro_lpf=60, fltd=32, P=0.20, D=0.003)}
+SET = {"pit": dict(gyro_lpf=60, fltd=60, P=0.12, D=0.0012), "rll": dict(gyro_lpf=60, fltd=32, P=0.20, D=0.003)}
 P("\n### Tap-test window (rate-loop clause)\nLowest GM, zeta 0.3 %, thrust x0.77 / x1.25, every flexible mode scaled by s (first cage mode Hz in brackets), IMU at the spar centre:")
 P("| s | pit kd | pit nom | pit hi | rll kd | rll nom | rll hi |"); P("|---|---|---|---|---|---|---|")
 win = {}

@@ -125,8 +125,8 @@ P("\n### Control-band clause (D-185 added row): cage modes vs the rate loop")
 try:
     import fu_cage as FC
     C = FC.cases()
-    SET = {"pit": dict(gyro_lpf=60, fltd=40, P=0.15, D=0.002), "rll": dict(gyro_lpf=60, fltd=32, P=0.20, D=0.003), "yaw": dict(gyro_lpf=60, fltd=32)}   # A.param: INS_GYRO_FILTER 60, Q_A_RAT_PIT P .15 D .002 FLTD 40, RLL P .20 D .003 FLTD 32, YAW as fu_cage RATE
-    P("A.param gains: pitch P 0.15 / I 0.25 / D 0.002 / FLTD 40, roll P 0.20 / I 0.25 / D 0.003 / FLTD 32, yaw P 0.40 / I 0.04, `INS_GYRO_FILTER` 60 (A.param lines 99-109, 184). Model `sitl/fu_cage.py` (FE modes 1-250 Hz, motor lag 40 ms, delay 4 ms `EST`), IMU at the spar centre. Pass rule: **GM >= 2.0 (6 dB) on every axis, corner, damping (0.3 / 1 %), thrust scale (0.77 / 1.0 / 1.25) and with all flexible modes shifted +-20 % in frequency (the tap-test tolerance)**, no right-half-plane pole.")
+    SET = {"pit": dict(gyro_lpf=60, fltd=60, P=0.12, D=0.0012), "rll": dict(gyro_lpf=60, fltd=32, P=0.20, D=0.003), "yaw": dict(gyro_lpf=60, fltd=32, P=0.37)}   # A.param: INS_GYRO_FILTER 60, Q_A_RAT_PIT P .15 D .002 FLTD 40, RLL P .20 D .003 FLTD 32, YAW as fu_cage RATE
+    P("A.param gains: pitch P 0.12 / I 0.25 / D 0.0012 / FLTD 60 (D-191), roll P 0.20 / I 0.25 / D 0.003 / FLTD 32, yaw P 0.37 / I 0.04 (D-191), motor cant 17 deg (D-189), `INS_GYRO_FILTER` 60 (A.param lines 99-109, 184). Model `sitl/fu_cage.py` (FE modes 1-250 Hz, motor lag 40 ms, delay 4 ms `EST`), IMU at the spar centre. Pass rule: **GM >= 2.0 (6 dB) on every axis, corner, damping (0.3 / 1 %), thrust scale (0.77 / 1.0 / 1.25) and with all flexible modes shifted +-20 % in frequency (the tap-test tolerance)**, no right-half-plane pole.")
     P("| axis | corner | cage modes 3-40 Hz (Hz: gain / rigid) | min GM nominal freq | min GM modes -20 % | min GM modes +20 % | crossover (Hz) |"); P("|---|---|---|---|---|---|---|")
     gmall = 99.0; rows = []
     for ax in ("pit", "rll", "yaw"):

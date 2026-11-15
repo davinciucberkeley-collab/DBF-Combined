@@ -16,10 +16,10 @@
  },
  "req": {
   "mass_gate_kg": {
-   "value": 1.5,
+   "value": 1.47,
    "unit": "kg",
    "source": "SRC-A-REQ",
-   "note": "A-P1 / MASS-GATE s1: frozen as-built weigh-in gate (BOARD C5)"
+   "note": "A-P1 / MASS-GATE s8 (D-190): weigh-in gate 1.47 kg = the largest 0.01-kg step under the +-5 % window mass limit 1.478 kg at cant 17 (was 1.50, BOARD C5)"
   },
   "mass_target_kg": {
    "value": 1.44,
@@ -177,11 +177,23 @@
    "source": "SRC-A-SITL2",
    "note": "SITL.md s70: Q_A_ANGLE_MAX 45 less 5 deg margin = 40 deg; A-P8 lean <= 45"
   },
-  "motor_out_max": {
+  "motor_out_line": {
    "value": 0.85,
    "unit": "-",
    "source": "SRC-A-REQ",
-   "note": "A-P8 / A-P20: no motor above 85 % output"
+   "note": "A-P8 / A-P20: the 85 % output line (SITL-FLIGHT.md pass line: no motor at or above it for more than the time below)"
+  },
+  "motor_ge85_s_max": {
+   "value": 0.5,
+   "unit": "s",
+   "source": "SRC-A-REQ",
+   "note": "A-P8 (D-192): time above the 0.85 line <= 0.5 s per run (QP-3 SITL-FLIGHT.md used 1 s); basis in review/QP-4/CLAIMS-FIX.md s3"
+  },
+  "motor_cap_s_max": {
+   "value": 0.0,
+   "unit": "s",
+   "source": "SRC-A-REQ",
+   "note": "A-P8 (D-192): no time at the 0.90 spin cap (the saturation line)"
   },
   "tipover_min_deg": {
    "value": 30.0,
@@ -483,10 +495,10 @@
    "status": "UNVERIFIED"
   },
   "cant_deg": {
-   "value": 16.0,
+   "value": 17.0,
    "unit": "deg",
    "source": "SRC-A-PROPA",
-   "note": "prop_a.py CANT (D-184)"
+   "note": "prop_a.py CANT (D-189; was 16, D-184)"
   },
   "download": {
    "value": 0.97,
@@ -537,7 +549,7 @@
    "value": 1.5,
    "unit": "kg",
    "source": "SRC-A-PROPA",
-   "note": "prop_a.py one_motor(m=1.50): the gate mass"
+   "note": "prop_a.py one_motor(m=1.50): 30 g above the 1.47 kg gate, so the one-motor current is conservative"
   }
  },
  "mission": {
@@ -709,10 +721,10 @@
    "note": "arm x1.2 (D-184)"
   },
   "cant_deg": {
-   "value": 16.0,
+   "value": 17.0,
    "unit": "deg",
    "source": "SRC-A-BENCH",
-   "note": "CANT 16 deg (D-184)"
+   "note": "CANT 17 deg (D-189; was 16, D-184)"
   },
   "cant_ref_deg": {
    "value": 14.0,
@@ -765,11 +777,23 @@
    "source": "SRC-A-SITL2",
    "note": "SITL.md s70: belly into wind at 5 m/s needs 29-31 deg (mean 29.3, max 31.5)"
   },
-  "wind_motor_peak": {
-   "value": 0.87,
+  "wind_ge85_s": {
+   "value": 0.2,
+   "unit": "s",
+   "source": "SRC-A-CLAIMSFIX",
+   "note": "CLAIMS-FIX s3 table: 4 m/s turbulence 1.0 m/s, 1.47 kg, worst pack (thrust scale 0.767), arm 1.2, cant 17, A.param D-191: longest time at or above 0.85 over the seven runs (0 / 0 / 0.15 / 0.05 / 0.20 / 0 / 0), runs N4_g90, N4_g70s2, N4_g60, N4_g80, N4_g60s3, N4_g60s2, N4_g70 (sitl/results.jsonl)"
+  },
+  "wind_cap_s": {
+   "value": 0.0,
+   "unit": "s",
+   "source": "SRC-A-CLAIMSFIX",
+   "note": "same seven runs: time at the 0.90 cap, all 0"
+  },
+  "wind_peak": {
+   "value": 0.873,
    "unit": "-",
-   "source": "SRC-A-WIND",
-   "note": "WIND.md l.57: motors never reach the 0.90 cap (peak 0.87) in 5 m/s turbulence"
+   "source": "SRC-A-CLAIMSFIX",
+   "note": "same seven runs: highest instantaneous output (seed 3, from 60 deg); reported, not a limit"
   },
   "tipover_deg": {
    "value": 33.2,
@@ -913,31 +937,31 @@
   },
   "gm_nominal": {
    "value": [
-    2.76,
-    3.17,
-    3.59,
-    2.52,
-    2.81,
+    3.48,
     3.76,
-    2.06,
-    2.09,
-    2.09
+    5.28,
+    2.37,
+    2.64,
+    3.54,
+    2.13,
+    2.16,
+    2.16
    ],
    "unit": "-",
    "source": "SRC-A-ITER3",
-   "note": "iter3_run.md control-band table, min GM at nominal mode frequencies: pit / rll / yaw x kd, nom, hi"
+   "note": "iter3_run.md control-band table (rerun 2026-11-15 with A.param D-191, cant 17), min GM at nominal mode frequencies: pit / rll / yaw x kd, nom, hi"
   },
   "gm_shifted": {
    "value": [
-    1.66,
-    1.71,
-    2.6,
-    2.16,
-    2.19,
-    2.41,
+    2.33,
+    2.33,
+    3.27,
     2.03,
-    2.03,
-    2.06
+    2.06,
+    2.3,
+    2.09,
+    2.09,
+    2.13
    ],
    "unit": "-",
    "source": "SRC-A-ITER3",
@@ -945,15 +969,15 @@
   },
   "gm_shifted_up": {
    "value": [
-    3.7,
-    3.54,
-    1.64,
-    3.65,
-    4.45,
-    7.52,
-    2.09,
-    2.09,
-    2.13
+    5.44,
+    5.12,
+    2.44,
+    3.43,
+    4.25,
+    7.07,
+    2.16,
+    2.16,
+    2.19
    ],
    "unit": "-",
    "source": "SRC-A-ITER3",

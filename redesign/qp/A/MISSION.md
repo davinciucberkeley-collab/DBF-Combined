@@ -58,3 +58,7 @@ Reserve 20 % of nameplate and worn-pack floor 0.90 (A2). Usable = 34.0 x 0.90 x 
 ## 5. Flight-test basis
 
 Gate order from A2/H2 carried: bench, thrust stand, hanging yaw test, tethered hover, free hover in <= 5 m/s, transition at >= 50 m (after the C3 time-domain run), 2 laps, back-transition, 20 landings, full mission. `—`: tailsitter transition altitude loss, so 50 m is kept.
+
+## Update 2026-11-15 (CLAIMS-FIX D-189 / D-190)
+
+Cant 17 deg (was 16) and the weigh-in gate 1.47 kg (was 1.50): `mission_gate_a.py` now prints the 1.47 kg row beside 1.50 kg; the hover and cruise energy lines move by < 1 % (hover 214 W at 1.47 kg, 220 W at 1.50 kg, pack margin 1.10x at the gate, 1.14x at the predicted 1.419 kg; cruise to BATT_LOW 253 s at the gate against the 204.6 s requirement). Numbers above that cite cant 16 or 1.50 kg are the previous run and stay conservative for the gate.

@@ -48,7 +48,7 @@ def build():
     # ---------------------------------------------------------------- limits and thresholds (each from REQUIREMENTS-A or a board report)
     R = "SRC-A-REQ"
     P["req"] = {
-        "mass_gate_kg": V(1.50, "kg", R, "A-P1 / MASS-GATE s1: frozen as-built weigh-in gate (BOARD C5)"),
+        "mass_gate_kg": V(1.47, "kg", R, "A-P1 / MASS-GATE s8 (D-190): weigh-in gate 1.47 kg = the largest 0.01-kg step under the +-5 % window mass limit 1.478 kg at cant 17 (was 1.50, BOARD C5)"),
         "mass_target_kg": V(1.44, "kg", R, "A-D3: design target <= 1.44 kg predicted incl. growth"),
         "mass_user_max_kg": V(25.0, "kg", "SRC-A-USER", "A-U5: hard cap under 25 kg (55 lb)"),
         "structure_ceiling_g": V(494.0, "g", "SRC-A-BOARD4", "BOARD QP-4 s1: structure line becomes a ceiling of 494 g, weighed"),
@@ -68,7 +68,9 @@ def build():
         "yaw_pass_nm": V(0.35, "N m", R, "A-P7"), "yaw_r2_nm": V(0.30, "N m", R, "A-P7: below 0.30 the 5 m/s card is reopened (R2)"),
         "yaw_q_min_nmm": V(55.0, "N mm", R, "A-P7: rotor reaction Q >= 55 N mm"),
         "lean_max_deg": V(40.0, "deg", "SRC-A-SITL2", "SITL.md s70: Q_A_ANGLE_MAX 45 less 5 deg margin = 40 deg; A-P8 lean <= 45"),
-        "motor_out_max": V(0.85, "-", R, "A-P8 / A-P20: no motor above 85 % output"),
+        "motor_out_line": V(0.85, "-", R, "A-P8 / A-P20: the 85 % output line (SITL-FLIGHT.md pass line: no motor at or above it for more than the time below)"),
+        "motor_ge85_s_max": V(0.5, "s", R, "A-P8 (D-192): time above the 0.85 line <= 0.5 s per run (QP-3 SITL-FLIGHT.md used 1 s); basis in review/QP-4/CLAIMS-FIX.md s3"),
+        "motor_cap_s_max": V(0.0, "s", R, "A-P8 (D-192): no time at the 0.90 spin cap (the saturation line)"),
         "tipover_min_deg": V(30.0, "deg", R, "A-P9"),
         "vd_ms": V(24.0, "m/s", R, "A-P13: VD 24 m/s (D-186)"), "flutter_factor": V(1.2, "-", R, "A-P13 / G8: flutter and divergence >= 1.2 VD"),
         "n_limit": V(3.4, "g", R, "A-P13: limit +3.4 g floor"), "ms_min": V(0.0, "-", R, "A-P13: MS >= 0 at 1.5 x limit"),
@@ -111,13 +113,13 @@ def build():
         "i0_a": V(0.5, "A", "SRC-A-PROPA", "prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it", est=True),
         "rp_ohm": V(0.030, "ohm", "SRC-A-PROPA", "prop_a.py rp: pack resistance 30 mohm EST (SIZING-A)", est=True),
         "derate": V(0.93, "-", "SRC-A-PROPA", "prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1", est=True),
-        "cant_deg": V(16.0, "deg", "SRC-A-PROPA", "prop_a.py CANT (D-184)"), "download": V(0.97, "-", "SRC-A-PROPA", "prop_a.py hover: x 0.97 download"),
+        "cant_deg": V(17.0, "deg", "SRC-A-PROPA", "prop_a.py CANT (D-189; was 16, D-184)"), "download": V(0.97, "-", "SRC-A-PROPA", "prop_a.py hover: x 0.97 download"),
         "hot_sag": V(0.97, "-", "SRC-A-MGATE", "mission_gate_a.py: hot x0.97 on the sag case", est=True),
         "spin_cap": V(0.90, "-", "SRC-A-PROPA", "A.param Q_M_SPIN_MAX 0.90 (prop_a.py `duty`)"),
         "v_fresh": V(16.8, "V", "SRC-A-PROPA", "4S fresh, 4.2 V/cell"), "v_sag_rest": V(14.92, "V", "SRC-A-PROPA", "prop_a.py: 3.73 V/cell rest (20 % left) x 4"),
         "esc_eff": V(0.98, "-", "SRC-A-PROPA", "prop_a.py hover: input power = V I / 0.98", est=True),
         "ctrl_margin": V(1.10, "-", "SRC-A-PROPA", "prop_a.py hover: x 1.10 control margin (MISSION s4)", est=True),
-        "hover_mass_ref_kg": V(1.50, "kg", "SRC-A-PROPA", "prop_a.py one_motor(m=1.50): the gate mass"),
+        "hover_mass_ref_kg": V(1.50, "kg", "SRC-A-PROPA", "prop_a.py one_motor(m=1.50): 30 g above the 1.47 kg gate, so the one-motor current is conservative"),
     }
 
     # ---------------------------------------------------------------- mission (mission_gate_a.py, MISSION.md)
@@ -142,7 +144,7 @@ def build():
 
     # ---------------------------------------------------------------- hover yaw (bench_analysis.py, D184.md)
     P["yaw"] = {"cant_term_ref_nm": V(0.201, "N m", "SRC-A-BENCH", "bench_analysis.py: SIZING-A s4 cant term 0.201 N m (EST) at arm x1, cant 14 deg", est=True),
-                "arm_factor": V(1.2, "-", "SRC-A-BENCH", "arm x1.2 (D-184)"), "cant_deg": V(16.0, "deg", "SRC-A-BENCH", "CANT 16 deg (D-184)"),
+                "arm_factor": V(1.2, "-", "SRC-A-BENCH", "arm x1.2 (D-184)"), "cant_deg": V(17.0, "deg", "SRC-A-BENCH", "CANT 17 deg (D-189; was 16, D-184)"),
                 "cant_ref_deg": V(14.0, "deg", "SRC-A-BENCH", "cant of the 0.201 N m figure"),
                 "q_model_nmm": V(59.7, "N mm", "SRC-A-D184", "D184.md: model rotor reaction Q 59.7 N mm (EST until bench M3)", est=True),
                 "q_gain": V(1.2, "-", "SRC-A-BENCH", "authority = cant term + 1.2 Q (WIND.md s5, bench_analysis.py)")}
@@ -154,7 +156,9 @@ def build():
         "elevon_peak_deg": V(9.6, "deg", "SRC-A-FIXES", "FIXES s5.1: worst elevon peak in transition, 1.50 kg, 5 m/s cross"),
         "elevon_stop_deg": V(20.0, "deg", "SRC-A-FIXES2", "FIXES2 s3.1: control authority 20 deg (stop 21 deg)"),
         "lean_belly_5ms_deg": V(31.5, "deg", "SRC-A-SITL2", "SITL.md s70: belly into wind at 5 m/s needs 29-31 deg (mean 29.3, max 31.5)"),
-        "wind_motor_peak": V(0.87, "-", "SRC-A-WIND", "WIND.md l.57: motors never reach the 0.90 cap (peak 0.87) in 5 m/s turbulence"),
+        "wind_ge85_s": V(0.20, "s", "SRC-A-CLAIMSFIX", "CLAIMS-FIX s3 table: 4 m/s turbulence 1.0 m/s, 1.47 kg, worst pack (thrust scale 0.767), arm 1.2, cant 17, A.param D-191: longest time at or above 0.85 over the seven runs (0 / 0 / 0.15 / 0.05 / 0.20 / 0 / 0), runs N4_g90, N4_g70s2, N4_g60, N4_g80, N4_g60s3, N4_g60s2, N4_g70 (sitl/results.jsonl)"),
+        "wind_cap_s": V(0.0, "s", "SRC-A-CLAIMSFIX", "same seven runs: time at the 0.90 cap, all 0"),
+        "wind_peak": V(0.873, "-", "SRC-A-CLAIMSFIX", "same seven runs: highest instantaneous output (seed 3, from 60 deg); reported, not a limit"),
         "tipover_deg": V(33.2, "deg", "SRC-A-SIZING", "SIZING-A s4 line 15: static tip angle 33.2 deg at CG 25 mm (EST)", est=True),
         "gust_n_vd": V(3.01, "g", "SRC-A-ITER3", "iter3_run.md C1: gust U 4 m/s at VD 24, n 3.01 (stall line 3.96)"),
         "flutter_hot_ms": V([35.5, 38.0, 41.5], "m/s", "SRC-A-CDAMP", "fixes2_cdamp.md: hot 50 C (EST x0.6) lowest onset, wing corners kd / nom / hi", est=True),
@@ -172,9 +176,9 @@ def build():
         "cruise_2p_hz_hi": V(253.0, "Hz", "SRC-A-REQ", "A-P10(a): cruise 2P 243-253 Hz (7,300-7,600 rpm)"),
         "vib_fc_ms2": V([27.1, 28.5, 25.1, 25.1, 25.0, 25.0], "m/s2", "SRC-A-ITER3",
                         "iter3_run.md forced response 6,000-10,500 rpm, U 1.0 g mm: kd 1 % / kd 0.5 % / nom 1 % / nom 0.5 % / hi 1 % / hi 0.5 %"),
-        "gm_nominal": V([2.76, 3.17, 3.59, 2.52, 2.81, 3.76, 2.06, 2.09, 2.09], "-", "SRC-A-ITER3", "iter3_run.md control-band table, min GM at nominal mode frequencies: pit / rll / yaw x kd, nom, hi"),
-        "gm_shifted": V([1.66, 1.71, 2.60, 2.16, 2.19, 2.41, 2.03, 2.03, 2.06], "-", "SRC-A-ITER3", "iter3_run.md: min GM with all flexible modes shifted -20 %"),
-        "gm_shifted_up": V([3.70, 3.54, 1.64, 3.65, 4.45, 7.52, 2.09, 2.09, 2.13], "-", "SRC-A-ITER3", "iter3_run.md: min GM with modes shifted +20 %"),
+        "gm_nominal": V([3.48, 3.76, 5.28, 2.37, 2.64, 3.54, 2.13, 2.16, 2.16], "-", "SRC-A-ITER3", "iter3_run.md control-band table (rerun 2026-11-15 with A.param D-191, cant 17), min GM at nominal mode frequencies: pit / rll / yaw x kd, nom, hi"),
+        "gm_shifted": V([2.33, 2.33, 3.27, 2.03, 2.06, 2.30, 2.09, 2.09, 2.13], "-", "SRC-A-ITER3", "iter3_run.md: min GM with all flexible modes shifted -20 %"),
+        "gm_shifted_up": V([5.44, 5.12, 2.44, 3.43, 4.25, 7.07, 2.16, 2.16, 2.19], "-", "SRC-A-ITER3", "iter3_run.md: min GM with modes shifted +20 %"),
     }
 
     # ---------------------------------------------------------------- servo (FIXES2 s2, SERVO.md)

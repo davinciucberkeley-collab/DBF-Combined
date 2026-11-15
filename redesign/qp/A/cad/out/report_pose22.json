@@ -71,6 +71,19 @@
   {
    "hits": [
     {
+     "a": "WNG-001",
+     "at_mm": [
+      182.15,
+      195.0,
+      3.13
+     ],
+     "b": "WNG-006-R",
+     "bodies": [
+      "WNG-006-R \"elevon\" x WNG-001 \"core box\" 0.07 mm"
+     ],
+     "depth_mm": 0.069
+    },
+    {
      "a": "WNG-007-R",
      "at_mm": [
       169.26,
@@ -88,12 +101,12 @@
      "a": "WNG-001",
      "at_mm": [
       182.15,
-      195.0,
+      -40.5,
       3.13
      ],
-     "b": "WNG-006-R",
+     "b": "WNG-006-L",
      "bodies": [
-      "WNG-006-R \"elevon\" x WNG-001 \"core box\" 0.07 mm"
+      "WNG-006-L \"elevon\" x WNG-001 \"core box\" 0.07 mm"
      ],
      "depth_mm": 0.069
     },
@@ -110,19 +123,6 @@
       "WNG-007-L \"balance horn tab\" x WNG-008-LU \"mechanical stop boss\" 0.25 mm"
      ],
      "depth_mm": 0.248
-    },
-    {
-     "a": "WNG-001",
-     "at_mm": [
-      182.15,
-      -40.5,
-      3.13
-     ],
-     "b": "WNG-006-L",
-     "bodies": [
-      "WNG-006-L \"elevon\" x WNG-001 \"core box\" 0.07 mm"
-     ],
-     "depth_mm": 0.069
     }
    ],
    "moved": [
@@ -144,7 +144,7 @@
    ]
   }
  ],
- "seconds": 91.0,
+ "seconds": 91.6,
  "skipped": [
   [
    "HRD-001",

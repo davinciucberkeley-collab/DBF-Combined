@@ -12,8 +12,8 @@ Structure frozen at 473 g (wing 191 / fins 119 / cage 122 / hardware 40). Forced
 | kd | 28.7 | arm 43% | 2.85 | 0.55 | 2.85 | no | - | strong, outside: pass |
 | kd | 35.6 | rib 39% | 1.17 | 1.64 | 1.64 | no | - | strong, outside: pass |
 | kd | 36.0 | spar 74% | 0.56 | 0.00 | 0.56 | no | - | strong, outside: pass |
-| kd | 37.0 | arm 100% | 3.43 | 0.05 | 3.43 | no | - | strong, outside: pass |
-| kd | 37.0 | arm 100% | 0.05 | 3.43 | 3.43 | no | - | strong, outside: pass |
+| kd | 37.0 | arm 100% | 2.58 | 2.26 | 2.58 | no | - | strong, outside: pass |
+| kd | 37.0 | arm 100% | 2.26 | 2.58 | 2.58 | no | - | strong, outside: pass |
 | kd | 39.2 | arm 99% | 0.24 | 3.27 | 3.27 | no | - | strong, outside: pass |
 | kd | 44.1 | arm 97% | 2.86 | 0.00 | 2.86 | no | - | strong, outside: pass |
 | kd | 44.5 | arm 65% | 0.33 | 2.40 | 2.40 | no | - | strong, outside: pass |
@@ -28,8 +28,8 @@ Structure frozen at 473 g (wing 191 / fins 119 / cage 122 / hardware 40). Forced
 | nom | 30.7 | arm 43% | 2.85 | 0.55 | 2.85 | no | - | strong, outside: pass |
 | nom | 37.2 | rib 36% | 1.19 | 1.54 | 1.54 | no | - | strong, outside: pass |
 | nom | 38.6 | spar 74% | 0.56 | 0.00 | 0.56 | no | - | strong, outside: pass |
-| nom | 39.6 | arm 100% | 1.59 | 3.04 | 3.04 | no | - | strong, outside: pass |
-| nom | 39.6 | arm 100% | 3.04 | 1.59 | 3.04 | no | - | strong, outside: pass |
+| nom | 39.6 | arm 100% | 0.12 | 3.43 | 3.43 | no | - | strong, outside: pass |
+| nom | 39.6 | arm 100% | 3.43 | 0.12 | 3.43 | no | - | strong, outside: pass |
 | nom | 42.0 | arm 99% | 0.24 | 3.27 | 3.27 | no | - | strong, outside: pass |
 | nom | 47.3 | arm 97% | 2.86 | 0.00 | 2.86 | no | - | strong, outside: pass |
 | nom | 47.3 | arm 69% | 0.40 | 2.47 | 2.47 | no | - | strong, outside: pass |
@@ -45,8 +45,8 @@ Structure frozen at 473 g (wing 191 / fins 119 / cage 122 / hardware 40). Forced
 | hi | 34.8 | arm 43% | 2.85 | 0.55 | 2.85 | no | - | strong, outside: pass |
 | hi | 43.4 | rib 39% | 1.17 | 1.65 | 1.65 | no | - | strong, outside: pass |
 | hi | 43.7 | spar 74% | 0.56 | 0.00 | 0.56 | no | - | strong, outside: pass |
-| hi | 44.9 | arm 100% | 0.04 | 3.43 | 3.43 | no | - | strong, outside: pass |
-| hi | 44.9 | arm 100% | 3.43 | 0.04 | 3.43 | no | - | strong, outside: pass |
+| hi | 44.9 | arm 100% | 2.17 | 2.66 | 2.66 | no | - | strong, outside: pass |
+| hi | 44.9 | arm 100% | 2.66 | 2.17 | 2.66 | no | - | strong, outside: pass |
 | hi | 47.7 | arm 99% | 0.24 | 3.27 | 3.27 | no | - | strong, outside: pass |
 | hi | 53.6 | arm 97% | 2.86 | 0.00 | 2.86 | no | - | strong, outside: pass |
 | hi | 54.1 | arm 64% | 0.32 | 2.39 | 2.39 | no | - | strong, outside: pass |
@@ -94,20 +94,20 @@ Peak locations (kd / nom / hi, zeta 1 %): the sweep maximum sits where a rotor o
 No isolation credit: the FE node is the rigid spar centre, foam tape 1.5 mm stiffness is taken as rigid (mount frequency not measured, `EST`). Worst FC amplitude, sum of the three axes (conservative): **27.1 m/s2 at zeta 1 %, 28.5 at 0.5 %** at the 10,500 rpm end of the sweep (all four rotors at 10,500 rpm is not reachable: the uncapped maximum is 10,142 rpm, the 0.90 cap 9,349 rpm; the curve rises there with the rigid-body 1P force, U omega^2); the physical envelope (all four at the cap) is the 9,349 column; one motor at the cap 13.6. ArduPilot's VIBE is the per-axis standard deviation (about amplitude / sqrt 2 for a sinusoid), so the per-axis column above is the like-for-like number; the sum of axes is compared with 30 as a bound. Guidance: VIBE < 30 m/s2, source https://ardupilot.org/copter/docs/common-measuring-vibration.html (checked 2026-11-15 in QP-3 / FOLDIN; guidance 30 m/s2 per the task and BOARD).
 
 ### Control-band clause (D-185 added row): cage modes vs the rate loop
-A.param gains: pitch P 0.15 / I 0.25 / D 0.002 / FLTD 40, roll P 0.20 / I 0.25 / D 0.003 / FLTD 32, yaw P 0.40 / I 0.04, `INS_GYRO_FILTER` 60 (A.param lines 99-109, 184). Model `sitl/fu_cage.py` (FE modes 1-250 Hz, motor lag 40 ms, delay 4 ms `EST`), IMU at the spar centre. Pass rule: **GM >= 2.0 (6 dB) on every axis, corner, damping (0.3 / 1 %), thrust scale (0.77 / 1.0 / 1.25) and with all flexible modes shifted +-20 % in frequency (the tap-test tolerance)**, no right-half-plane pole.
+A.param gains: pitch P 0.12 / I 0.25 / D 0.0012 / FLTD 60 (D-191), roll P 0.20 / I 0.25 / D 0.003 / FLTD 32, yaw P 0.37 / I 0.04 (D-191), motor cant 17 deg (D-189), `INS_GYRO_FILTER` 60 (A.param lines 99-109, 184). Model `sitl/fu_cage.py` (FE modes 1-250 Hz, motor lag 40 ms, delay 4 ms `EST`), IMU at the spar centre. Pass rule: **GM >= 2.0 (6 dB) on every axis, corner, damping (0.3 / 1 %), thrust scale (0.77 / 1.0 / 1.25) and with all flexible modes shifted +-20 % in frequency (the tap-test tolerance)**, no right-half-plane pole.
 | axis | corner | cage modes 3-40 Hz (Hz: gain / rigid) | min GM nominal freq | min GM modes -20 % | min GM modes +20 % | crossover (Hz) |
 |---|---|---|---|---|---|---|
-| pit | kd | 12: +0.65, 25: +0.01, 36: -0.09 | 2.76 | 1.66 | 3.70 | 2.6, 11.7, 12.7 |
-| pit | nom | 12: +0.66, 26: +0.01, 37: -0.09 | 3.17 | 1.71 | 3.54 | 2.6, 12.0, 13.0 |
-| pit | hi | 15: +0.65, 31: +0.01 | 3.59 | 2.60 | 1.64 | 2.6, 14.4, 15.3 |
-| rll | kd | 29: -1.05, 39: +0.14 | 2.52 | 2.16 | 3.65 | 1.8, 28.5, 28.9 |
-| rll | nom | 31: -1.05 | 2.81 | 2.19 | 4.45 | 1.8, 30.6, 30.9 |
-| rll | hi | 35: -1.05 | 3.76 | 2.41 | 7.52 | 1.8 |
-| yaw | kd | 8: -0.11, 16: -0.72, 32: -0.06, 37: -0.00 | 2.06 | 2.03 | 2.09 | 1.5 |
-| yaw | nom | 8: -0.09, 16: -0.75, 32: -0.06, 40: +0.00, 40: -0.00 | 2.09 | 2.03 | 2.09 | 1.5 |
-| yaw | hi | 10: -0.11, 19: -0.72, 39: -0.06 | 2.09 | 2.06 | 2.13 | 1.5 |
+| pit | kd | 12: +0.64, 25: +0.01, 36: -0.09 | 3.48 | 2.33 | 5.44 | 2.2, 11.8, 12.5 |
+| pit | nom | 12: +0.66, 26: +0.01, 37: -0.09 | 3.76 | 2.33 | 5.12 | 2.2, 12.1, 12.8 |
+| pit | hi | 15: +0.64, 31: +0.01 | 5.28 | 3.27 | 2.44 | 2.2, 14.6, 15.1 |
+| rll | kd | 29: -1.05, 39: +0.15 | 2.37 | 2.03 | 3.43 | 1.8, 28.5, 28.9 |
+| rll | nom | 31: -1.05 | 2.64 | 2.06 | 4.25 | 1.8, 30.5, 30.9 |
+| rll | hi | 35: -1.05 | 3.54 | 2.30 | 7.07 | 1.8 |
+| yaw | kd | 8: -0.11, 16: -0.72, 32: -0.06 | 2.13 | 2.09 | 2.16 | 1.5 |
+| yaw | nom | 8: -0.09, 16: -0.75, 32: -0.06, 40: -0.00 | 2.16 | 2.09 | 2.16 | 1.5 |
+| yaw | hi | 10: -0.11, 19: -0.72, 39: -0.06 | 2.16 | 2.13 | 2.19 | 1.5 |
 
-Minimum GM over everything: **1.64** vs rule 2.0.
+Minimum GM over everything: **2.03** vs rule 2.0.
 
 ## C1 loads at VD 24 (D-186), 1.50 kg gate mass
 | Case | n | Note |
@@ -143,19 +143,19 @@ Offsets that keep 473 without new risk (`EST`, none applied): lighter elevon (2 
 Lowest GM, zeta 0.3 %, thrust x0.77 / x1.25, every flexible mode scaled by s (first cage mode Hz in brackets), IMU at the spar centre:
 | s | pit kd | pit nom | pit hi | rll kd | rll nom | rll hi |
 |---|---|---|---|---|---|---|
-| 0.6 | 1.34 (7) | 1.28 (7) | 1.49 (9) | 1.08 (17) | 2.06 (18) | 2.19 (21) |
-| 0.7 | 1.43 (8) | 1.43 (9) | 1.88 (10) | 2.26 (20) | 2.19 (22) | 2.19 (24) |
-| 0.8 | 1.66 (10) | 1.71 (10) | 2.60 (12) | 2.16 (23) | 2.19 (25) | 2.41 (28) |
-| 0.9 | 2.06 (11) | 2.23 (11) | 4.00 (13) | 2.26 (26) | 2.41 (28) | 2.89 (31) |
-| 1.0 | 2.76 (12) | 3.17 (12) | 3.59 (15) | 2.52 (29) | 2.81 (31) | 3.76 (35) |
-| 1.1 | 4.00 (13) | 4.06 (14) | 2.68 (16) | 2.94 (32) | 3.48 (34) | 5.20 (38) |
-| 1.2 | 3.70 (15) | 3.54 (15) | 1.64 (18) | 3.65 (34) | 4.45 (37) | 7.52 (42) |
-| 1.3 | 3.03 (16) | 2.76 (16) | 1.00 (19) | 4.67 (37) | 6.06 (40) | 11.76 (45) |
-| 1.4 | 2.19 (17) | 1.88 (17) | 1.00 (21) | 6.25 (40) | 8.64 (43) | 13.71 (49) |
-| 1.5 | 1.38 (18) | 1.15 (19) | 1.00 (22) | 8.77 (43) | 13.09 (46) | 13.93 (52) |
-- pit kd: GM >= 2 for the first cage mode (pit: ~12 Hz mode; rll: ~31 Hz) from 11 to 17 Hz (grid)
-- pit nom: GM >= 2 for the first cage mode (pit: ~12 Hz mode; rll: ~31 Hz) from 11 to 16 Hz (grid)
-- pit hi: GM >= 2 for the first cage mode (pit: ~12 Hz mode; rll: ~31 Hz) from 12 to 16 Hz (grid)
+| 0.6 | 2.00 (7) | 1.91 (7) | 2.16 (9) | 1.08 (17) | 2.06 (18) | 2.09 (21) |
+| 0.7 | 2.09 (8) | 2.03 (9) | 2.56 (10) | 2.16 (20) | 2.06 (22) | 2.06 (24) |
+| 0.8 | 2.33 (10) | 2.33 (10) | 3.27 (12) | 2.03 (23) | 2.06 (25) | 2.30 (28) |
+| 0.9 | 2.76 (11) | 2.85 (11) | 4.67 (13) | 2.13 (26) | 2.26 (28) | 2.76 (31) |
+| 1.0 | 3.48 (12) | 3.76 (12) | 5.28 (15) | 2.37 (29) | 2.64 (31) | 3.54 (35) |
+| 1.1 | 4.67 (13) | 5.36 (14) | 3.94 (16) | 2.81 (32) | 3.27 (34) | 4.89 (38) |
+| 1.2 | 5.44 (15) | 5.12 (15) | 2.44 (18) | 3.43 (34) | 4.25 (37) | 7.07 (42) |
+| 1.3 | 4.45 (16) | 4.00 (16) | 1.47 (19) | 4.39 (37) | 5.79 (40) | 11.05 (45) |
+| 1.4 | 3.17 (17) | 2.76 (17) | 1.02 (21) | 5.88 (40) | 8.25 (43) | 13.71 (49) |
+| 1.5 | 2.09 (18) | 1.77 (19) | 1.00 (22) | 8.25 (43) | 12.50 (46) | 13.93 (52) |
+- pit kd: GM >= 2 for the first cage mode (pit: ~12 Hz mode; rll: ~31 Hz) from 8 to 18 Hz (grid)
+- pit nom: GM >= 2 for the first cage mode (pit: ~12 Hz mode; rll: ~31 Hz) from 9 to 17 Hz (grid)
+- pit hi: GM >= 2 for the first cage mode (pit: ~12 Hz mode; rll: ~31 Hz) from 9 to 18 Hz (grid)
 - rll kd: GM >= 2 for the first cage mode (pit: ~12 Hz mode; rll: ~31 Hz) from 20 to 43 Hz (grid)
 - rll nom: GM >= 2 for the first cage mode (pit: ~12 Hz mode; rll: ~31 Hz) from 18 to 46 Hz (grid)
 - rll hi: GM >= 2 for the first cage mode (pit: ~12 Hz mode; rll: ~31 Hz) from 21 to 52 Hz (grid)

@@ -14,9 +14,10 @@ import a_aero as AE
 
 CFG = dict(spar_tube=(12e-3, 10e-3), arm_tube=(12e-3, 10e-3), rib_tube=(14e-3, 12e-3), bridge_cfg="single+V", bridge_tube=(12e-3, 10e-3),
            vtube=(6e-3, 4.5e-3), bridge_yv=0.30, fin_strip=None, fin_tube=(16e-3, 14e-3, 3e-3, 0.055), x_fin=0.294, foot_pad_m=0.0025)
+CANT_DEG = 17.0     # D-189 (was 16, D-184): motor cant, deg
 YM, ZM = fe_a.Y_M, fe_a.Z_M
 RATE = dict(pit=dict(P=0.25, I=0.25, D=0.004, arm=ZM, dof=4), rll=dict(P=0.25, I=0.25, D=0.004, arm=YM, dof=5),
-            yaw=dict(P=0.40, I=0.04, D=0.0, arm=math.hypot(YM, ZM) * math.sin(math.radians(16.0)) + 0.0204, dof=3, flte=2.5))   # A.param section 3
+            yaw=dict(P=0.37, I=0.04, D=0.0, arm=math.hypot(YM, ZM) * math.sin(math.radians(CANT_DEG)) + 0.0204, dof=3, flte=2.5))   # A.param section 3
 FLTD = 32.0; GYRO_LPF = 40.0; TAU_M = 0.04; DELAY = 0.004     # Q_A_RAT_*_FLTD, INS_GYRO_FILTER, plant TAU_M (EST), DShot + loop delay (EST)
 rpm, T, Q, I = AE.motor(0.90 * 16.0, 0.0); TFULL = T * AE.DER * AE.DOWNLOAD   # per-motor full-scale thrust (0.90 cap, 16 V bus, x0.93 x0.97), N
 
@@ -33,8 +34,8 @@ def modal(F, node, dof_out, torque_split):
         sy = 1 if m[1] == "+" else -1; sz = 1 if m[3] == "+" else -1
         q = torque_split(sy, sz)                                           # x-force on this motor (N per N m of demanded torque)
         b[6 * idx[m]] += q
-        if CANT_TAN:                                                       # 16 deg cant: the tangential (swirl) component acts in y, z (derivation in the report)
-            rho = math.hypot(YM, ZM); tc = math.tan(math.radians(16.0))
+        if CANT_TAN:                                                       # cant CANT_DEG: the tangential (swirl) component acts in y, z (derivation in the report)
+            rho = math.hypot(YM, ZM); tc = math.tan(math.radians(CANT_DEG))
             b[6 * idx[m] + 1] += -q * tc * sy * ZM / rho; b[6 * idx[m] + 2] += q * tc * sz * YM / rho
             b[6 * idx[m] + 3] += sy * sz * 0.0204 * q                      # shaft reaction torque about x (KQ 0.0204 m, plant)
     gin = V.T @ b; gout = V[6 * idx[node] + dof_out, :]
@@ -118,7 +119,7 @@ def cases():
             r = RATE[ax]
             if ax == "pit": sg = lambda sy, sz, a=r["arm"]: sz / (4 * a)
             elif ax == "rll": sg = lambda sy, sz, a=r["arm"]: -sy / (4 * a)
-            else: sg = lambda sy, sz, a=r["arm"]: sy * sz * math.cos(math.radians(16.0)) / (4 * a)     # unit yaw torque: th = -sy sz / (4 (rho sin c + KQ cos c)) per motor
+            else: sg = lambda sy, sz, a=r["arm"]: sy * sz * math.cos(math.radians(CANT_DEG)) / (4 * a)     # unit yaw torque: th = -sy sz / (4 (rho sin c + KQ cos c)) per motor
             for node, nname in (("s+0.000", "spar centre"), ("hub", "cage hub")):
                 f, g = modal(F, node, r["dof"], sg)
                 rig = [(0.0, sum(gg for ff, gg in zip(f, g) if ff < 1.0))]       # the six rigid modes collapse to one gain 1 / I

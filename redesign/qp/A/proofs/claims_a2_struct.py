@@ -142,8 +142,8 @@ def gm_shifted(lo, hi):
 
 kit.claim("CL-A-VIB-GM-SHIFT", "Rate-loop gain margin with the cage modes shifted +-20 %", calc="CALC-A-VIB-GM-SHIFT", output="gm", unit="-",
           limit=(">=", "P:req.gm_min"), verifies=["A-P10"], parts=["AVN-002", "CGE-004", "CGE-002-UR"],
-          how="Tap test of the built cage (T-A-TAP): pitch mode 12-16 Hz, roll 21-43 Hz; outside that window re-tune the rate loop.",
-          note="Known: iter3_run.md rates this MARGINAL: minimum 1.64 (pitch, hi corner, modes +20 %) against the rule 2.0; the tap-test window is the remedy.")
+          how="Tap test of the built cage (T-A-TAP): first pitch mode 9-17 Hz, first roll mode 21-43 Hz (GM >= 2 grid, iter3_run.md); outside that window re-tune the rate loop.",
+          note="D-191 (CLAIMS-FIX s4): with the QP-3 gains (pitch P 0.15 / D 0.002 / FLTD 40) the minimum was 1.64 (1.56 at cant 17); pitch P 0.12 / D 0.0012 / FLTD 60 and yaw P 0.37 give 2.03 (roll, kd corner, modes -20 %; pitch 2.33).")
 
 
 # ================================================================ servo torque at the 7.2 V rail (FIXES2 s2)

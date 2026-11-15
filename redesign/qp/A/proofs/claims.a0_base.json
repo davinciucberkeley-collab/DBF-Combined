@@ -222,6 +222,15 @@
    "where": "arm x1.2 + cant 16 turbulence runs; motors peak 0.87"
   },
   {
+   "id": "SRC-A-CLAIMSFIX",
+   "type": "source",
+   "title": "QP-4 claims fix (CLAIMS-FIX.md): cant 17, gate 1.47 kg, pitch / yaw rate gains, 4 m/s hover wind",
+   "kind": "repo",
+   "url": "redesign/review/QP-4/CLAIMS-FIX.md",
+   "checked": "2026-11-15",
+   "where": "s1 window gate, s2 yaw, s3 wind output, s4 gain margin; SITL runs N4_* in qp/A/sitl/results.jsonl"
+  },
+  {
    "id": "SRC-A-D184",
    "type": "source",
    "title": "D-184 yaw levers (D184.md)",
@@ -344,8 +353,8 @@
   {
    "id": "A-P1",
    "type": "requirement",
-   "title": "Mass gate 1.50 kg and T/W at the gate",
-   "text": "As-built mass <= 1.50 kg; at the gate T/W fresh >= 2.0 and sag >= 1.6 with Q_M_SPIN_MAX 0.90",
+   "title": "Mass gate 1.47 kg and T/W at the gate",
+   "text": "As-built mass <= 1.47 kg; at the gate T/W fresh >= 2.0 and sag >= 1.6 with Q_M_SPIN_MAX 0.90",
    "ref": "qp/A/REQUIREMENTS-A.md#a-p1"
   },
   {
@@ -401,7 +410,7 @@
    "id": "A-P8",
    "type": "requirement",
    "title": "Wind limits",
-   "text": "<= 5 m/s mean, gust <= 8 m/s; hover lean <= Q_A_ANGLE_MAX 45 deg (40 deg with margin); no motor above 85 % output",
+   "text": "<= 4 m/s mean, gust <= 6.4 m/s (D-192; was 5 / 8); hover lean <= Q_A_ANGLE_MAX 45 deg (40 deg with margin); no motor above 85 % output for more than 0.5 s and none at the 0.90 cap",
    "ref": "qp/A/REQUIREMENTS-A.md#a-p8"
   },
   {
@@ -520,7 +529,7 @@
     "CL-A-MASS-GATE-ROOM"
    ],
    "state": "planned",
-   "procedure": "BOARD QP-4 s1 and FIXES2 s9: >= 27.2 g of the 41.6 g EST cuts must be real; as-built <= 1.50 kg; at > 1.486 kg the C3 run must show >= +-5 % at the as-weighed mass"
+   "procedure": "BOARD QP-4 s1 and FIXES2 s9: >= 27.2 g of the 41.6 g EST cuts must be real; as-built <= 1.47 kg (D-190; the +-5 % window holds to 1.478 kg)"
   },
   {
    "id": "T-A-CG-BREADBOARD",

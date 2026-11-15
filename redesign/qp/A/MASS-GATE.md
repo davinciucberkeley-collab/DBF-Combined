@@ -4,7 +4,7 @@ Reproduce: `python -I mission_gate_a.py`. Labels: `V` vendor page, `EST` estimat
 
 QP-4 changes (BOARD QP-3 s1 item 10, s3 D-185, s4): structure frozen at **473 g** (wing 191 / fins 119 / cage 122 / hardware 40; any growth needs the board); predicted mass rolls up to **1,396 g** (CAD itemised: 1,392 g, CAD s4; the 4 g is CAD's lower hardware and cage numbers); CG is the CAD's 16.2 mm, not 24.8 mm; the pack moves aft to give 20-24 mm (s5).
 
-## 1. Verdict: keep 1.50 kg frozen; it is the weigh-in limit, not the design target (updated D-183 / D-184)
+## 1. Verdict (superseded by s8, D-190: the weigh-in gate is now **1.47 kg**; the tables below are at cant 16 and 1.50 kg, kept as the record)
 
 Physics now from `prop_a.py` (APC 9x4.5MR PER3 static data through the MN2212, x0.93 derate (BOARD R3), hot x0.97 on the sag case, cant 16 deg, `Q_M_SPIN_MAX` 0.90 required; `EST` until bench M1). The old SIZING-A scaling (fresh 2.82, sag 2.16 at 1.226 kg) is superseded.
 
@@ -75,3 +75,18 @@ Predicted mass > 1.44 kg; structure above 473 g (any growth needs the board, D-1
 ## 7. QP-4 FIXES2 update (2026-11-15; supersedes the QP-3 tables above where they differ; full text `review/QP-4/FIXES2.md`)
 
 Basic mass (CAD, `cad_mass.json`) **1,231.3 g** (FIXES 1,215.9): +15.4 g in the wing group = 4 printed lens caps with stop bosses and bonding flanges 12.4 g (FIXES carried 2 g), 2 hinge dampers 5.0 g (new), balance tabs/lead 32.2 g (was 34.2 with the caps counted inside). CG 24.4 mm (band 20-26; pack trim -/+ 10 mm). Predicted (basic x 1.1174 + 48): **1,423.9 g** (headroom 16 g to 1,440); `mission_gate_a.py` 1,419 g; capped +-5 % window mass limit 1.486 kg. The predicted total stays <= 1,440 only if >= **27.2 g** of the 41.6 g `EST` cuts are real (was 11.8 g). Fallback worth 5.6 g: lead 15.6 -> 12.8 g per elevon (the damper carries the flutter margin; FIXES2 s2.4). Structure (CAD groups wing 223.4 + fins 109 + feet 8.4 + hardware 30 + cage 113.3): **484.1 g** with the cuts (ceiling 494 g, 9.9 g under), about 521 g without them (FIXES 506).
+
+## 8. CLAIMS-FIX update (2026-11-15, D-189 / D-190; full text `review/QP-4/CLAIMS-FIX.md`; supersedes s1 where they differ)
+
+Motor cant 16 -> **17 deg** (D-189, for hover yaw authority 0.3465 -> 0.363 N m; cos 17 / cos 16 = 0.9948, vertical thrust -0.5 %). Reproduce: `python -I mission_gate_a.py`, `python -I prop_a.py`. With the 0.90 cap, `prop_a.py` x0.93, hot x0.97 on the sag case:
+
+| At | T/W fresh (cap) | T/W sag (cap) | Window with the 0.90 cap |
+|---|---|---|---|
+| 1.419 kg (predicted + overrun) | 2.42 | 1.91 | +-7.0 % |
+| 1.44 kg (target) | 2.39 | 1.89 | +-6.3 % |
+| **1.47 kg (new gate)** | 2.34 | 1.85 | **+-5.3 %** |
+| 1.50 kg (old gate) | 2.29 | 1.81 | +-4.3 % (below the R2 floor) |
+
+Largest mass for a +-5 % capped window: **1.478 kg** (1.486 kg at cant 16). T/W sag >= 1.6 capped holds to 1.698 kg, fresh >= 2.0 capped to 1.718 kg. **The weigh-in gate is 1.47 kg**, the largest 0.01-kg step under 1.478 kg; the C3 "fly above the limit if the run shows >= +-5 %" rule of s1 is withdrawn (gate and window now agree). Headroom of the predicted 1,419 g (`mission_gate_a.py`; 1,423.9 g by the s7 formula) to the gate: 46-51 g; to the 1.44 kg target unchanged (16-21 g). The A-D3 target and the s6 re-sit triggers are unchanged except "as-built > 1.47 kg".
+
+Analyses that still use 1.50 kg and remain conservative (heavier than the gate): mission energy lines (`mission_gate_a.py` prints 1.47 and 1.50), one-motor current 12.1 A (`prop_a.py one_motor(m=1.50)`), SITL roll rate at 1.50 kg (94.1 deg/s: more inertia, lower rate), SITL transition and landing cases at 1.41 / 1.50 kg, C1 loads at VD (n at 1.50 kg), structures iter. 3 loads at the gate mass. Not re-run at cant 17 (cant 16 baked in `run_fwd.py`): the forward-flight SITL cases (thrust cos 17 vs cos 16 is -0.5 %, `EST` effect far below the aero model error).

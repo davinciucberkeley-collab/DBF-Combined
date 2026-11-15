@@ -5,7 +5,7 @@ Motor: T-Motor MN2212 V2.0 KV780: Kv 780 rpm/V and Rm 0.173 ohm (store.tmotor.co
 Hover: m g / (4 cos(CANT) x 0.97 download); input power = V_m I / 0.98 (ESC) x 1.10 control margin (MISSION s4)."""
 import math
 RHO, D, KV, RM, I0 = 1.225, 9*0.0254, 780.0, 0.173, 0.5
-CANT = 16.0   # deg; D-184 (was 14 in D-183)
+CANT = 17.0   # deg; D-189 (was 16 in D-184, 14 in D-183): yaw authority
 KT = 60/(2*math.pi*KV)
 # rpm: (thrust N, shaft W) from the APC file, V = 0
 T = {5000:(2.674,20.063),6000:(3.859,34.224),7000:(5.264,53.842),8000:(6.892,79.836),9000:(8.746,113.149),

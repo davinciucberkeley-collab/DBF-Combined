@@ -72,7 +72,7 @@
    "cg_xyz_m": [
     -0.0798,
     -0.2246,
-    0.152
+    0.1519
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -102,7 +102,7 @@
    "cg_xyz_m": [
     -0.0798,
     0.2246,
-    -0.152
+    -0.1519
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"

@@ -2,37 +2,28 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-15 20:27 UTC",
+  "generated": "2026-11-15 21:16 UTC",
   "dataset": "concept-a",
-  "ok": false,
-  "errors": [
-   "STRICT A-P3: CL-A-WINDOW-PRED is UNVERIFIED",
-   "STRICT A-P7: CL-A-YAW-MODEL: FAILS: margin -1.0% (0.3465 N m vs >= 0.35 N m)",
-   "STRICT A-P8: CL-A-WIND-OUTPUT: FAILS: margin -2.4% (0.87 vs <= 0.85)",
-   "STRICT A-P10: CL-A-VIB-GM-SHIFT: FAILS: margin -18.0% (1.64 vs >= 2)",
-   "STRICT CL-A-WINDOW-GATE: FAILS: margin -9.3% (4.536 % vs >= 5 %)",
-   "STRICT CL-A-YAW-MODEL: FAILS: margin -1.0% (0.3465 N m vs >= 0.35 N m)",
-   "STRICT CL-A-WIND-OUTPUT: FAILS: margin -2.4% (0.87 vs <= 0.85)",
-   "STRICT CL-A-VIB-GM-SHIFT: FAILS: margin -18.0% (1.64 vs >= 2)"
-  ],
+  "ok": true,
+  "errors": [],
   "warnings": [],
   "counts": {
    "by_type": {
-    "source": 26,
+    "source": 27,
     "assumption": 7,
     "requirement": 22,
     "test": 12,
-    "calculation": 65,
-    "claim": 81,
-    "parameter": 173,
+    "calculation": 66,
+    "claim": 82,
+    "parameter": 177,
     "part": 56
    },
    "by_status": {
-    "CHECKED": 270,
-    "UNVERIFIED": 160,
+    "CHECKED": 283,
+    "UNVERIFIED": 154,
     "PROPOSED": 12
    },
-   "fails": 8
+   "fails": 0
   },
   "files": [
    "redesign/qp/A/proofs/claims.a0_base.json",
@@ -71,7 +62,7 @@ window.PROOF_GRAPH = {
    "where": "limits of A-U1 ... A-D12; status PROPOSED, owner A2",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
-   "importance": 66
+   "importance": 67
   },
   {
    "id": "SRC-A-MASSGATE",
@@ -335,7 +326,19 @@ window.PROOF_GRAPH = {
    "where": "arm x1.2 + cant 16 turbulence runs; motors peak 0.87",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
-   "importance": 1
+   "importance": 0
+  },
+  {
+   "id": "SRC-A-CLAIMSFIX",
+   "type": "source",
+   "title": "QP-4 claims fix (CLAIMS-FIX.md): cant 17, gate 1.47 kg, pitch / yaw rate gains, 4 m/s hover wind",
+   "kind": "repo",
+   "url": "redesign/review/QP-4/CLAIMS-FIX.md",
+   "checked": "2026-11-15",
+   "where": "s1 window gate, s2 yaw, s3 wind output, s4 gain margin; SITL runs N4_* in qp/A/sitl/results.jsonl",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "CHECKED",
+   "importance": 2
   },
   {
    "id": "SRC-A-D184",
@@ -551,8 +554,8 @@ window.PROOF_GRAPH = {
   {
    "id": "A-P1",
    "type": "requirement",
-   "title": "Mass gate 1.50 kg and T/W at the gate",
-   "text": "As-built mass <= 1.50 kg; at the gate T/W fresh >= 2.0 and sag >= 1.6 with Q_M_SPIN_MAX 0.90",
+   "title": "Mass gate 1.47 kg and T/W at the gate",
+   "text": "As-built mass <= 1.47 kg; at the gate T/W fresh >= 2.0 and sag >= 1.6 with Q_M_SPIN_MAX 0.90",
    "ref": "qp/A/REQUIREMENTS-A.md#a-p1",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
@@ -607,11 +610,11 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
     "CL-A-WINDOW-PRED is UNVERIFIED",
-    "CL-A-WINDOW-GATE: FAILS: margin -9.3% (4.536 % vs >= 5 %)",
+    "CL-A-WINDOW-GATE is UNVERIFIED",
     "CL-A-WINDOW-MASS is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": true,
+   "fails": false,
    "importance": 9
   },
   {
@@ -664,27 +667,29 @@ window.PROOF_GRAPH = {
    "ref": "qp/A/REQUIREMENTS-A.md#a-p7",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
-    "CL-A-YAW-MODEL: FAILS: margin -1.0% (0.3465 N m vs >= 0.35 N m)",
+    "CL-A-YAW-MODEL is UNVERIFIED",
     "CL-A-YAW-R2 is UNVERIFIED",
     "CL-A-YAW-Q is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": true,
+   "fails": false,
    "importance": 7
   },
   {
    "id": "A-P8",
    "type": "requirement",
    "title": "Wind limits",
-   "text": "<= 5 m/s mean, gust <= 8 m/s; hover lean <= Q_A_ANGLE_MAX 45 deg (40 deg with margin); no motor above 85 % output",
+   "text": "<= 4 m/s mean, gust <= 6.4 m/s (D-192; was 5 / 8); hover lean <= Q_A_ANGLE_MAX 45 deg (40 deg with margin); no motor above 85 % output for more than 0.5 s and none at the 0.90 cap",
    "ref": "qp/A/REQUIREMENTS-A.md#a-p8",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
-    "CL-A-WIND-OUTPUT: FAILS: margin -2.4% (0.87 vs <= 0.85)"
+    "CL-A-WIND-LEAN is CHECKED",
+    "CL-A-WIND-OUTPUT is CHECKED",
+    "CL-A-WIND-CAP is CHECKED"
    ],
-   "status": "UNVERIFIED",
-   "fails": true,
-   "importance": 5
+   "status": "CHECKED",
+   "fails": false,
+   "importance": 7
   },
   {
    "id": "A-P9",
@@ -708,10 +713,16 @@ window.PROOF_GRAPH = {
    "ref": "qp/A/REQUIREMENTS-A.md#a-p10",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
-    "CL-A-VIB-GM-SHIFT: FAILS: margin -18.0% (1.64 vs >= 2)"
+    "CL-A-VIB-LOW-LIMIT is CHECKED",
+    "CL-A-VIB-HIGH-LIMIT is CHECKED",
+    "CL-A-VIB-LOW is CHECKED",
+    "CL-A-VIB-HIGH is CHECKED",
+    "CL-A-VIB-FC is CHECKED",
+    "CL-A-VIB-GM is CHECKED",
+    "CL-A-VIB-GM-SHIFT is CHECKED"
    ],
-   "status": "UNVERIFIED",
-   "fails": true,
+   "status": "CHECKED",
+   "fails": false,
    "importance": 15
   },
   {
@@ -877,7 +888,7 @@ window.PROOF_GRAPH = {
     "CL-A-MASS-GATE-ROOM"
    ],
    "state": "planned",
-   "procedure": "BOARD QP-4 s1 and FIXES2 s9: >= 27.2 g of the 41.6 g EST cuts must be real; as-built <= 1.50 kg; at > 1.486 kg the C3 run must show >= +-5 % at the as-weighed mass",
+   "procedure": "BOARD QP-4 s1 and FIXES2 s9: >= 27.2 g of the 41.6 g EST cuts must be real; as-built <= 1.47 kg (D-190; the +-5 % window holds to 1.478 kg)",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "PROPOSED",
    "importance": 9
@@ -986,13 +997,13 @@ window.PROOF_GRAPH = {
     "gate": "kg"
    },
    "outputs": {
-    "m_kg": 1.4238993160000002
+    "m_kg": 1.4229393160000001
    },
    "input_values": {
     "basic": 1.23134,
     "gf": 1.1174,
     "over": 0.032,
-    "gate": 1.5
+    "gate": 1.47
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1014,7 +1025,7 @@ window.PROOF_GRAPH = {
     "gate": "kg"
    },
    "outputs": {
-    "m_kg": 1.41888
+    "m_kg": 1.4179199999999998
    },
    "input_values": {
     "items": [
@@ -1060,7 +1071,7 @@ window.PROOF_GRAPH = {
      ]
     ],
     "over": 0.032,
-    "gate": 1.5
+    "gate": 1.47
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1087,12 +1098,12 @@ window.PROOF_GRAPH = {
     "ASM-A-CUTS"
    ],
    "outputs": {
-    "x_g": 27.190939681403478
+    "x_g": 26.331802398425072
    },
    "input_values": {
     "cuts": 41.6,
     "target": 1.44,
-    "m": 1.4238993160000002,
+    "m": 1.4229393160000001,
     "gf": 1.1174
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
@@ -1149,14 +1160,14 @@ window.PROOF_GRAPH = {
     "FIN-001-L"
    ],
    "how": "Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).",
-   "value": 1.4238993160000002,
+   "value": 1.4229393160000001,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))",
     "uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.011181030555555384,
+   "margin": 0.011847697222222103,
    "importance": 7
   },
   {
@@ -1175,40 +1186,40 @@ window.PROOF_GRAPH = {
     "A-D3"
    ],
    "how": "python -I qp/A/mission_gate_a.py prints 1,419 g; both methods must stay <= 1.44 kg.",
-   "value": 1.41888,
+   "value": 1.4179199999999998,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:mass.itemised_g_growth, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py `items`: [basic g, growth fraction by maturity]: wing, fins, motors, props, ESC, pack, avionics, servos, cage, hardware)",
     "uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.014666666666666687,
+   "margin": 0.015333333333333404,
    "importance": 1
   },
   {
    "id": "CL-A-MASS-GATE-ROOM",
    "type": "claim",
-   "title": "Predicted mass against the 1.50 kg gate",
+   "title": "Predicted mass against the 1.47 kg gate",
    "calc": "CALC-A-MASS-PRED",
    "output": "m_kg",
    "unit": "kg",
    "limit": {
     "op": "<=",
     "ref": "P:req.mass_gate_kg",
-    "resolved": 1.5
+    "resolved": 1.47
    },
    "verifies": [
     "A-P1"
    ],
-   "how": "As-built weigh-in <= 1.50 kg (BOARD C5); above 1.486 kg the C3 run decides (MASS-GATE s1).",
-   "value": 1.4238993160000002,
+   "how": "As-built weigh-in <= 1.47 kg (D-190, MASS-GATE s8); the +-5 % window holds to 1.478 kg.",
+   "value": 1.4229393160000001,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))",
     "uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.0507337893333332,
+   "margin": 0.03201407074829922,
    "importance": 1
   },
   {
@@ -1227,14 +1238,14 @@ window.PROOF_GRAPH = {
     "A-U5"
    ],
    "how": "Weigh-in.",
-   "value": 1.4238993160000002,
+   "value": 1.4229393160000001,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))",
     "uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.94304402736,
+   "margin": 0.9430824273599999,
    "importance": 1
   },
   {
@@ -1256,7 +1267,7 @@ window.PROOF_GRAPH = {
    "assumes": [
     "ASM-A-CUTS"
    ],
-   "value": 27.190939681403478,
+   "value": 26.331802398425072,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses ASM-A-CUTS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -1267,7 +1278,7 @@ window.PROOF_GRAPH = {
     "uses P:mass.est_cuts_g, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s5, s7: 41.6 g of EST cuts already in the CAD basic mass (foam 16.6, printed 18.0, hardware 7.0))"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.3463716422739549,
+   "margin": 0.36702398080708964,
    "importance": 1
   },
   {
@@ -1612,13 +1623,13 @@ window.PROOF_GRAPH = {
     "m": "kg"
    },
    "outputs": {
-    "fresh_cap": 2.3029375993365515,
-    "sag_cap": 1.8205039155806164,
-    "fresh_unc": 2.7128353788842543,
-    "sag_unc": 2.150913166767692,
-    "window_cap_pct": 4.536426584931853,
-    "window_unc_pct": 12.807769455038587,
-    "sag_cap_gf": 2730.7558733709247
+    "fresh_cap": 2.337818404831478,
+    "sag_cap": 1.8480776731155204,
+    "fresh_unc": 2.753924587388157,
+    "sag_unc": 2.1834913763675154,
+    "window_cap_pct": 5.286243188313403,
+    "window_unc_pct": 13.546348012344856,
+    "sag_cap_gf": 2716.674179479815
    },
    "input_values": {
     "apc_table": [
@@ -1668,7 +1679,7 @@ window.PROOF_GRAPH = {
     "i0_a": 0.5,
     "rp_ohm": 0.03,
     "derate": 0.93,
-    "cant_deg": 16.0,
+    "cant_deg": 17.0,
     "download": 0.97,
     "hot_sag": 0.97,
     "spin_cap": 0.9,
@@ -1677,7 +1688,7 @@ window.PROOF_GRAPH = {
     "g": 9.807,
     "lo": 1.33,
     "hi_frac": 0.8,
-    "m": 1.5
+    "m": 1.47
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1712,13 +1723,13 @@ window.PROOF_GRAPH = {
     "m": "kg"
    },
    "outputs": {
-    "fresh_cap": 2.426018722102418,
-    "sag_cap": 1.9178012396565576,
-    "fresh_unc": 2.857823599324196,
-    "sag_unc": 2.2658693026238783,
-    "window_cap_pct": 7.1307195279760185,
-    "window_unc_pct": 15.359281578258683,
-    "sag_cap_gf": 2730.7558733709247
+    "fresh_cap": 2.4151367640630097,
+    "sag_cap": 1.9091989018313236,
+    "fresh_unc": 2.845004771419634,
+    "sag_unc": 2.2557056981762726,
+    "window_cap_pct": 6.907046439576228,
+    "window_unc_pct": 15.139728331577386,
+    "sag_cap_gf": 2716.674179479815
    },
    "input_values": {
     "apc_table": [
@@ -1768,7 +1779,7 @@ window.PROOF_GRAPH = {
     "i0_a": 0.5,
     "rp_ohm": 0.03,
     "derate": 0.93,
-    "cant_deg": 16.0,
+    "cant_deg": 17.0,
     "download": 0.97,
     "hot_sag": 0.97,
     "spin_cap": 0.9,
@@ -1777,7 +1788,7 @@ window.PROOF_GRAPH = {
     "g": 9.807,
     "lo": 1.33,
     "hi_frac": 0.8,
-    "m": 1.4238993160000002
+    "m": 1.4229393160000001
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1786,7 +1797,7 @@ window.PROOF_GRAPH = {
   {
    "id": "CL-A-TW-FRESH-GATE",
    "type": "claim",
-   "title": "Hover T/W fresh at the 1.50 kg gate (0.90 cap)",
+   "title": "Hover T/W fresh at the 1.47 kg gate (0.90 cap)",
    "calc": "CALC-A-TW-GATE",
    "output": "fresh_cap",
    "unit": "-",
@@ -1810,7 +1821,7 @@ window.PROOF_GRAPH = {
     "PRP-002-LL"
    ],
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "value": 2.3029375993365515,
+   "value": 2.337818404831478,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
@@ -1819,13 +1830,13 @@ window.PROOF_GRAPH = {
     "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.15146879966827576,
+   "margin": 0.16890920241573903,
    "importance": 1
   },
   {
    "id": "CL-A-TW-SAG-GATE",
    "type": "claim",
-   "title": "Hover T/W sagged pack at the 1.50 kg gate (0.90 cap)",
+   "title": "Hover T/W sagged pack at the 1.47 kg gate (0.90 cap)",
    "calc": "CALC-A-TW-GATE",
    "output": "sag_cap",
    "unit": "-",
@@ -1846,7 +1857,7 @@ window.PROOF_GRAPH = {
     "PWR-001"
    ],
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "value": 1.8205039155806164,
+   "value": 1.8480776731155204,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
@@ -1855,7 +1866,7 @@ window.PROOF_GRAPH = {
     "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.1378149472378852,
+   "margin": 0.1550485456972002,
    "importance": 1
   },
   {
@@ -1880,7 +1891,7 @@ window.PROOF_GRAPH = {
     "PRP-001-LL"
    ],
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "value": 2.426018722102418,
+   "value": 2.4151367640630097,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
@@ -1890,7 +1901,7 @@ window.PROOF_GRAPH = {
     "uses CL-A-MASS-PRED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.21300936105120893,
+   "margin": 0.20756838203150485,
    "importance": 1
   },
   {
@@ -1916,7 +1927,7 @@ window.PROOF_GRAPH = {
     "PWR-001"
    ],
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "value": 1.9178012396565576,
+   "value": 1.9091989018313236,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
@@ -1926,7 +1937,7 @@ window.PROOF_GRAPH = {
     "uses CL-A-MASS-PRED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.19862577478534843,
+   "margin": 0.19324931364457718,
    "importance": 1
   },
   {
@@ -1951,7 +1962,7 @@ window.PROOF_GRAPH = {
     "PRP-001-LL"
    ],
    "how": "C3 time-domain pitch-over run at the as-weighed mass (T-A-C3-PITCHOVER); the window uses 1.33 W low and 0.80 x T/W sag high.",
-   "value": 7.1307195279760185,
+   "value": 6.907046439576228,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
@@ -1961,13 +1972,13 @@ window.PROOF_GRAPH = {
     "uses CL-A-MASS-PRED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.4261439055952037,
+   "margin": 0.38140928791524564,
    "importance": 1
   },
   {
    "id": "CL-A-WINDOW-GATE",
    "type": "claim",
-   "title": "Transition entry window at the 1.50 kg gate (0.90 cap)",
+   "title": "Transition entry window at the 1.47 kg gate (0.90 cap)",
    "calc": "CALC-A-TW-GATE",
    "output": "window_cap_pct",
    "unit": "%",
@@ -1985,20 +1996,18 @@ window.PROOF_GRAPH = {
     "PRP-001-LR",
     "PRP-001-LL"
    ],
-   "how": "C3 run at the as-weighed mass; MASS-GATE s1: +-5 % holds to 1.486 kg, above it the aircraft flies only if the run shows >= +-5 %.",
-   "note": "Known: MASS-GATE s1 reports +-4.5 % at the gate mass, just under the R2 floor; the gate stays 1.50 kg (C5) and the window is the weigh-in rule above 1.486 kg.",
-   "value": 4.536426584931853,
+   "how": "C3 run at the as-weighed mass; MASS-GATE s8: +-5 % holds to 1.478 kg at cant 17, gate 1.47 kg.",
+   "note": "D-190 (CLAIMS-FIX s1): the gate was 1.50 kg (window +-4.3 % at cant 17); lowered to 1.47 kg so the window floor holds at the gate. Heavier analyses at 1.50 kg stay conservative.",
+   "value": 5.286243188313403,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -9.3% (4.536 % vs >= 5 %)",
     "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
     "uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))",
     "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
     "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.09271468301362944,
-   "fails": true,
+   "margin": 0.05724863766268058,
    "importance": 1
   },
   {
@@ -2027,7 +2036,7 @@ window.PROOF_GRAPH = {
     "w": "P:req.window_min_pct"
    },
    "outputs": {
-    "m_kg": 1.4861256453719318
+    "m_kg": 1.4784621384924161
    },
    "input_values": {
     "apc_table": [
@@ -2077,7 +2086,7 @@ window.PROOF_GRAPH = {
     "i0_a": 0.5,
     "rp_ohm": 0.03,
     "derate": 0.93,
-    "cant_deg": 16.0,
+    "cant_deg": 17.0,
     "download": 0.97,
     "hot_sag": 0.97,
     "spin_cap": 0.9,
@@ -2102,13 +2111,13 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": ">=",
     "ref": "CL-A-MASS-PRED",
-    "resolved": 1.4238993160000002
+    "resolved": 1.4229393160000001
    },
    "verifies": [
     "A-P3"
    ],
-   "how": "MASS-GATE s1: 1.486 kg capped; bench M1 thrust replaces the 0.93 derate.",
-   "value": 1.4861256453719318,
+   "how": "MASS-GATE s8: 1.478 kg capped at cant 17; bench M1 thrust replaces the 0.93 derate.",
+   "value": 1.4784621384924161,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
@@ -2118,7 +2127,7 @@ window.PROOF_GRAPH = {
     "uses CL-A-MASS-PRED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.04370135491513335,
+   "margin": 0.039019810520448096,
    "importance": 1
   },
   {
@@ -2147,7 +2156,7 @@ window.PROOF_GRAPH = {
     "m": "kg"
    },
    "outputs": {
-    "i_a": 12.079418040950374
+    "i_a": 12.077257782615476
    },
    "input_values": {
     "apc_table": [
@@ -2197,7 +2206,7 @@ window.PROOF_GRAPH = {
     "i0_a": 0.5,
     "rp_ohm": 0.03,
     "derate": 0.93,
-    "cant_deg": 16.0,
+    "cant_deg": 17.0,
     "download": 0.97,
     "spin_cap": 0.9,
     "v_fresh": 16.8,
@@ -2235,7 +2244,7 @@ window.PROOF_GRAPH = {
     "m": "kg"
    },
    "outputs": {
-    "i_a": 17.836356822386307
+    "i_a": 17.83305726953393
    },
    "input_values": {
     "apc_table": [
@@ -2285,7 +2294,7 @@ window.PROOF_GRAPH = {
     "i0_a": 0.5,
     "rp_ohm": 0.03,
     "derate": 0.93,
-    "cant_deg": 16.0,
+    "cant_deg": 17.0,
     "download": 0.97,
     "spin_cap": 0.9,
     "v_fresh": 16.8,
@@ -2320,7 +2329,7 @@ window.PROOF_GRAPH = {
     "PRP-003"
    ],
    "how": "Bench M2: one motor at duty 0.90 for 180 s, phase A <= 13 A, can <= 80 C. Without Q_M_SPIN_MAX 0.90 the same case is 14.3 A (prop_a.py).",
-   "value": 12.079418040950374,
+   "value": 12.077257782615476,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
@@ -2328,7 +2337,7 @@ window.PROOF_GRAPH = {
     "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.07081399684997122,
+   "margin": 0.07098017056804032,
    "importance": 1
   },
   {
@@ -2350,7 +2359,7 @@ window.PROOF_GRAPH = {
     "PRP-003"
    ],
    "how": "Compare the SpeedyBee BLS 35A Mini V2 page (35 A continuous per channel) with 1.25 x 14.3 A.",
-   "value": 17.836356822386307,
+   "value": 17.83305726953393,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
@@ -2358,7 +2367,7 @@ window.PROOF_GRAPH = {
     "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.49038980507467694,
+   "margin": 0.4904840780133162,
    "importance": 1
   },
   {
@@ -2432,10 +2441,10 @@ window.PROOF_GRAPH = {
     "m": "kg"
    },
    "outputs": {
-    "cruise_s": 271.8732379099456,
+    "cruise_s": 270.5393752779971,
     "usable_wh": 24.5088,
-    "hover_w": 202.40914604760874,
-    "cruise_w": 164.64400820023084
+    "hover_w": 203.7634870174536,
+    "cruise_w": 164.57961687260482
    },
    "input_values": {
     "apc_table": [
@@ -2484,12 +2493,12 @@ window.PROOF_GRAPH = {
     "rm_ohm": 0.173,
     "i0_a": 0.5,
     "derate": 0.93,
-    "cant_deg": 16.0,
+    "cant_deg": 17.0,
     "download": 0.97,
     "esc_eff": 0.98,
     "ctrl_margin": 1.1,
     "g": 9.807,
-    "m": 1.4238993160000002,
+    "m": 1.4229393160000001,
     "pack_ah": 2.3,
     "pack_v": 14.8,
     "floor_frac": 0.9,
@@ -2595,7 +2604,7 @@ window.PROOF_GRAPH = {
     "PRP-003"
    ],
    "how": "Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).",
-   "value": 271.8732379099456,
+   "value": 270.5393752779971,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
@@ -2611,7 +2620,7 @@ window.PROOF_GRAPH = {
     "uses CL-A-CRUISE-NEED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.3290871302362776,
+   "margin": 0.32256637199153626,
    "importance": 1
   },
   {
@@ -2664,11 +2673,11 @@ window.PROOF_GRAPH = {
     "ASM-A-CLMAX"
    ],
    "outputs": {
-    "vs_ms": 12.189787081442772,
-    "k_vs_ms": 15.846723205875604
+    "vs_ms": 12.067273549111702,
+    "k_vs_ms": 15.687455613845213
    },
    "input_values": {
-    "m": 1.5,
+    "m": 1.47,
     "g": 9.807,
     "rho": 1.2,
     "s": 0.22,
@@ -2682,7 +2691,7 @@ window.PROOF_GRAPH = {
   {
    "id": "CL-A-STALL",
    "type": "claim",
-   "title": "1.3 x clean stall speed at the 1.50 kg gate",
+   "title": "1.3 x clean stall speed at the 1.47 kg gate",
    "calc": "CALC-A-STALL",
    "output": "k_vs_ms",
    "unit": "m/s",
@@ -2697,11 +2706,11 @@ window.PROOF_GRAPH = {
    "parts": [
     "WNG-001"
    ],
-   "how": "Measured stall on the first cruise sorties (T-A-FIRST-CRUISE) replaces CLmax 0.75; 12.19 m/s stall, 15.85 m/s at 1.3 Vs (MISSION s1).",
+   "how": "Measured stall on the first cruise sorties (T-A-FIRST-CRUISE) replaces CLmax 0.75; 12.07 m/s stall, 15.69 m/s at 1.3 Vs at 1.47 kg (12.19 / 15.85 at 1.50 kg, MISSION s1).",
    "assumes": [
     "ASM-A-CLMAX"
    ],
-   "value": 15.846723205875604,
+   "value": 15.687455613845213,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses ASM-A-CLMAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -2709,7 +2718,7 @@ window.PROOF_GRAPH = {
     "uses ASM-A-CLMAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.06783981141908214,
+   "margin": 0.07720849330322277,
    "importance": 1
   },
   {
@@ -2718,7 +2727,7 @@ window.PROOF_GRAPH = {
    "title": "yaw authority",
    "script": "redesign/qp/A/proofs/claims_a1_flight.py",
    "function": "yaw_authority",
-   "equation": "authority = 0.201 x 1.2 x sin(16)/sin(14) + 1.2 Q   (cant term + 1.2 x rotor reaction), D184.md / bench_analysis.py",
+   "equation": "authority = 0.201 x 1.2 x sin(17)/sin(14) + 1.2 Q   (cant term + 1.2 x rotor reaction), D184.md / bench_analysis.py",
    "inputs": {
     "cant_term_ref_nm": "P:yaw.cant_term_ref_nm",
     "arm_factor": "P:yaw.arm_factor",
@@ -2731,12 +2740,12 @@ window.PROOF_GRAPH = {
     "q_model_nmm": "N mm"
    },
    "outputs": {
-    "n_m": 0.34645485319161623
+    "n_m": 0.363139266754344
    },
    "input_values": {
     "cant_term_ref_nm": 0.201,
     "arm_factor": 1.2,
-    "cant_deg": 16.0,
+    "cant_deg": 17.0,
     "cant_ref_deg": 14.0,
     "q_model_nmm": 59.7,
     "q_gain": 1.2
@@ -2771,17 +2780,15 @@ window.PROOF_GRAPH = {
     "CGE-002-LL"
    ],
    "how": "Hanging yaw test (M3) on the bench: >= 0.35 N m go; 0.30-0.35 go with the 4 m/s card; < 0.30 R2.",
-   "note": "Known: D184.md and QP-3 BOARD (risk table) record this as marginally under 0.35 and accept it as a risk; the bench is the test.",
-   "value": 0.34645485319161623,
+   "note": "D-189 (CLAIMS-FIX s2): at cant 16 the model gave 0.3465 (marginally under 0.35); cant 17 gives 0.363. The bench (M3) is still the test.",
+   "value": 0.363139266754344,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -1.0% (0.3465 N m vs >= 0.35 N m)",
     "uses P:yaw.cant_term_ref_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bench_analysis.py: SIZING-A s4 cant term 0.201 N m (EST) at arm x1, cant 14 deg)",
     "uses P:yaw.q_model_nmm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D184.md: model rotor reaction Q 59.7 N mm (EST until bench M3))"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.010128990881096422,
-   "fails": true,
+   "margin": 0.037540762155268616,
    "importance": 1
   },
   {
@@ -2800,14 +2807,14 @@ window.PROOF_GRAPH = {
     "A-P7"
    ],
    "how": "Hanging yaw test (M3); below 0.30 N m the 5 m/s card is reopened (R2).",
-   "value": 0.34645485319161623,
+   "value": 0.363139266754344,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:yaw.cant_term_ref_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bench_analysis.py: SIZING-A s4 cant term 0.201 N m (EST) at arm x1, cant 14 deg)",
     "uses P:yaw.q_model_nmm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D184.md: model rotor reaction Q 59.7 N mm (EST until bench M3))"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.15484951063872082,
+   "margin": 0.21046422251448002,
    "importance": 1
   },
   {
@@ -2903,18 +2910,18 @@ window.PROOF_GRAPH = {
   {
    "id": "CALC-A-WIND-OUTPUT-READ",
    "type": "calculation",
-   "title": "Stored result: Peak motor output in 5 m/s turbulence hover (SITL)",
+   "title": "Stored result: Longest time any motor is at or above 0.85 output, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)",
    "script": "redesign/qp/A/proofs/claims_a1_flight.py",
    "function": "read_value",
-   "equation": "SITL turbulence cases, QP-2 WIND.md; read, not re-run",
+   "equation": "SITL turbulence cases N4_* (sitl/results.jsonl, run_case.py, A.param D-191, arm 1.2, cant 17); read, not re-run",
    "inputs": {
-    "v": "P:sim.wind_motor_peak"
+    "v": "P:sim.wind_ge85_s"
    },
    "outputs": {
-    "v": 0.87
+    "v": 0.2
    },
    "input_values": {
-    "v": 0.87
+    "v": 0.2
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -2923,14 +2930,14 @@ window.PROOF_GRAPH = {
   {
    "id": "CL-A-WIND-OUTPUT",
    "type": "claim",
-   "title": "Peak motor output in 5 m/s turbulence hover (SITL)",
+   "title": "Longest time any motor is at or above 0.85 output, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)",
    "calc": "CALC-A-WIND-OUTPUT-READ",
    "output": "v",
-   "unit": "-",
+   "unit": "s",
    "limit": {
     "op": "<=",
-    "ref": "P:req.motor_out_max",
-    "resolved": 0.85
+    "ref": "P:req.motor_ge85_s_max",
+    "resolved": 0.5
    },
    "verifies": [
     "A-P8"
@@ -2941,16 +2948,61 @@ window.PROOF_GRAPH = {
     "PRP-001-LR",
     "PRP-001-LL"
    ],
-   "how": "Log motor outputs in the tethered turbulence hover (M9); no motor above 85 %, none held at the 0.90 cap for more than 1 s.",
-   "note": "Known: REQUIREMENTS-A A-P8 itself records the SITL peak as 0.87 (never at the 0.90 cap) against its 85 % line.",
-   "value": 0.87,
+   "how": "Log motor outputs in the tethered turbulence hover (M9) at <= 4 m/s mean: no motor above 0.85 for more than 0.5 s, none at the 0.90 cap.",
+   "note": "D-192 (CLAIMS-FIX s3): the old claim read the 0.87 peak of the BASE airframe at 1.23 kg; at the 1.47 kg gate on the worst pack the 5 m/s peak is 0.89-0.90 (0.5-1.9 s above 0.85, cap touched), so the hover limit is 4 m/s (peak 0.83-0.873, <= 0.20 s above 0.85) and the line is stated as a duration. Peak 0.873 is reported, not a limit.",
+   "value": 0.2,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
-   "reasons": [
-    "FAILS: margin -2.4% (0.87 vs <= 0.85)"
+   "status": "CHECKED",
+   "margin": 0.6,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-WIND-CAP-READ",
+   "type": "calculation",
+   "title": "Stored result: Time any motor is at the 0.90 spin cap, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "read_value",
+   "equation": "same seven SITL runs; read, not re-run",
+   "inputs": {
+    "v": "P:sim.wind_cap_s"
+   },
+   "outputs": {
+    "v": 0.0
+   },
+   "input_values": {
+    "v": 0.0
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-WIND-CAP",
+   "type": "claim",
+   "title": "Time any motor is at the 0.90 spin cap, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)",
+   "calc": "CALC-A-WIND-CAP-READ",
+   "output": "v",
+   "unit": "s",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.motor_cap_s_max",
+    "resolved": 0.0
+   },
+   "verifies": [
+    "A-P8"
    ],
-   "status": "UNVERIFIED",
-   "margin": -0.023529411764705903,
-   "fails": true,
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "Log motor outputs in the tethered turbulence hover (M9): no sample at the cap.",
+   "value": 0.0,
+   "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
+   "status": "CHECKED",
+   "margin": 0.0,
+   "margin_abs": true,
    "importance": 1
   },
   {
@@ -3055,7 +3107,7 @@ window.PROOF_GRAPH = {
   {
    "id": "CALC-A-ROLL-GATE-READ",
    "type": "calculation",
-   "title": "Stored result: Peak roll rate in SITL, 1.50 kg gate",
+   "title": "Stored result: Peak roll rate in SITL, 1.50 kg (30 g over the 1.47 kg gate, conservative)",
    "script": "redesign/qp/A/proofs/claims_a1_flight.py",
    "function": "read_value",
    "equation": "SITL case=roll (FIXES s2: 5,392 / 57.3); read, not re-run",
@@ -3075,7 +3127,7 @@ window.PROOF_GRAPH = {
   {
    "id": "CL-A-ROLL-GATE",
    "type": "claim",
-   "title": "Peak roll rate in SITL, 1.50 kg gate",
+   "title": "Peak roll rate in SITL, 1.50 kg (30 g over the 1.47 kg gate, conservative)",
    "calc": "CALC-A-ROLL-GATE-READ",
    "output": "v",
    "unit": "deg/s",
@@ -4564,19 +4616,19 @@ window.PROOF_GRAPH = {
     "x": "P:sim.gm_nominal"
    },
    "outputs": {
-    "gm": 2.06
+    "gm": 2.13
    },
    "input_values": {
     "x": [
-     2.76,
-     3.17,
-     3.59,
-     2.52,
-     2.81,
+     3.48,
      3.76,
-     2.06,
-     2.09,
-     2.09
+     5.28,
+     2.37,
+     2.64,
+     3.54,
+     2.13,
+     2.16,
+     2.16
     ]
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
@@ -4604,10 +4656,10 @@ window.PROOF_GRAPH = {
     "CGE-002-UR"
    ],
    "how": "Re-run sitl/fu_cage.py with the built-cage tap-test frequencies; hard-mounted FC.",
-   "value": 2.06,
+   "value": 2.13,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
-   "margin": 0.030000000000000027,
+   "margin": 0.06499999999999995,
    "importance": 1
   },
   {
@@ -4622,30 +4674,30 @@ window.PROOF_GRAPH = {
     "hi": "P:sim.gm_shifted_up"
    },
    "outputs": {
-    "gm": 1.64
+    "gm": 2.03
    },
    "input_values": {
     "lo": [
-     1.66,
-     1.71,
-     2.6,
-     2.16,
-     2.19,
-     2.41,
+     2.33,
+     2.33,
+     3.27,
      2.03,
-     2.03,
-     2.06
-    ],
-    "hi": [
-     3.7,
-     3.54,
-     1.64,
-     3.65,
-     4.45,
-     7.52,
+     2.06,
+     2.3,
      2.09,
      2.09,
      2.13
+    ],
+    "hi": [
+     5.44,
+     5.12,
+     2.44,
+     3.43,
+     4.25,
+     7.07,
+     2.16,
+     2.16,
+     2.19
     ]
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
@@ -4672,16 +4724,12 @@ window.PROOF_GRAPH = {
     "CGE-004",
     "CGE-002-UR"
    ],
-   "how": "Tap test of the built cage (T-A-TAP): pitch mode 12-16 Hz, roll 21-43 Hz; outside that window re-tune the rate loop.",
-   "note": "Known: iter3_run.md rates this MARGINAL: minimum 1.64 (pitch, hi corner, modes +20 %) against the rule 2.0; the tap-test window is the remedy.",
-   "value": 1.64,
+   "how": "Tap test of the built cage (T-A-TAP): first pitch mode 9-17 Hz, first roll mode 21-43 Hz (GM >= 2 grid, iter3_run.md); outside that window re-tune the rate loop.",
+   "note": "D-191 (CLAIMS-FIX s4): with the QP-3 gains (pitch P 0.15 / D 0.002 / FLTD 40) the minimum was 1.64 (1.56 at cant 17); pitch P 0.12 / D 0.0012 / FLTD 60 and yaw P 0.37 give 2.03 (roll, kd corner, modes -20 %; pitch 2.33).",
+   "value": 2.03,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
-   "reasons": [
-    "FAILS: margin -18.0% (1.64 vs >= 2)"
-   ],
-   "status": "UNVERIFIED",
-   "margin": -0.18000000000000005,
-   "fails": true,
+   "status": "CHECKED",
+   "margin": 0.014999999999999902,
    "importance": 1
   },
   {
@@ -5810,10 +5858,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "req.mass_gate_kg",
    "file": "redesign/qp/A/params-A.json",
-   "value": 1.5,
+   "value": 1.47,
    "unit": "kg",
    "source": "SRC-A-REQ",
-   "note": "A-P1 / MASS-GATE s1: frozen as-built weigh-in gate (BOARD C5)",
+   "note": "A-P1 / MASS-GATE s8 (D-190): weigh-in gate 1.47 kg = the largest 0.01-kg step under the +-5 % window mass limit 1.478 kg at cant 17 (was 1.50, BOARD C5)",
    "status": "CHECKED",
    "importance": 14
   },
@@ -6130,14 +6178,38 @@ window.PROOF_GRAPH = {
    "importance": 1
   },
   {
-   "id": "P:req.motor_out_max",
+   "id": "P:req.motor_out_line",
    "type": "parameter",
-   "title": "req.motor_out_max",
+   "title": "req.motor_out_line",
    "file": "redesign/qp/A/params-A.json",
    "value": 0.85,
    "unit": "-",
    "source": "SRC-A-REQ",
-   "note": "A-P8 / A-P20: no motor above 85 % output",
+   "note": "A-P8 / A-P20: the 85 % output line (SITL-FLIGHT.md pass line: no motor at or above it for more than the time below)",
+   "status": "CHECKED",
+   "importance": 0
+  },
+  {
+   "id": "P:req.motor_ge85_s_max",
+   "type": "parameter",
+   "title": "req.motor_ge85_s_max",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 0.5,
+   "unit": "s",
+   "source": "SRC-A-REQ",
+   "note": "A-P8 (D-192): time above the 0.85 line <= 0.5 s per run (QP-3 SITL-FLIGHT.md used 1 s); basis in review/QP-4/CLAIMS-FIX.md s3",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "P:req.motor_cap_s_max",
+   "type": "parameter",
+   "title": "req.motor_cap_s_max",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 0.0,
+   "unit": "s",
+   "source": "SRC-A-REQ",
+   "note": "A-P8 (D-192): no time at the 0.90 spin cap (the saturation line)",
    "status": "CHECKED",
    "importance": 1
   },
@@ -6649,10 +6721,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "prop.cant_deg",
    "file": "redesign/qp/A/params-A.json",
-   "value": 16.0,
+   "value": 17.0,
    "unit": "deg",
    "source": "SRC-A-PROPA",
-   "note": "prop_a.py CANT (D-184)",
+   "note": "prop_a.py CANT (D-189; was 16, D-184)",
    "status": "CHECKED",
    "importance": 10
   },
@@ -6757,7 +6829,7 @@ window.PROOF_GRAPH = {
    "value": 1.5,
    "unit": "kg",
    "source": "SRC-A-PROPA",
-   "note": "prop_a.py one_motor(m=1.50): the gate mass",
+   "note": "prop_a.py one_motor(m=1.50): 30 g above the 1.47 kg gate, so the one-motor current is conservative",
    "status": "CHECKED",
    "importance": 2
   },
@@ -7105,10 +7177,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "yaw.cant_deg",
    "file": "redesign/qp/A/params-A.json",
-   "value": 16.0,
+   "value": 17.0,
    "unit": "deg",
    "source": "SRC-A-BENCH",
-   "note": "CANT 16 deg (D-184)",
+   "note": "CANT 17 deg (D-189; was 16, D-184)",
    "status": "CHECKED",
    "importance": 2
   },
@@ -7212,16 +7284,40 @@ window.PROOF_GRAPH = {
    "importance": 1
   },
   {
-   "id": "P:sim.wind_motor_peak",
+   "id": "P:sim.wind_ge85_s",
    "type": "parameter",
-   "title": "sim.wind_motor_peak",
+   "title": "sim.wind_ge85_s",
    "file": "redesign/qp/A/params-A.json",
-   "value": 0.87,
-   "unit": "-",
-   "source": "SRC-A-WIND",
-   "note": "WIND.md l.57: motors never reach the 0.90 cap (peak 0.87) in 5 m/s turbulence",
+   "value": 0.2,
+   "unit": "s",
+   "source": "SRC-A-CLAIMSFIX",
+   "note": "CLAIMS-FIX s3 table: 4 m/s turbulence 1.0 m/s, 1.47 kg, worst pack (thrust scale 0.767), arm 1.2, cant 17, A.param D-191: longest time at or above 0.85 over the seven runs (0 / 0 / 0.15 / 0.05 / 0.20 / 0 / 0), runs N4_g90, N4_g70s2, N4_g60, N4_g80, N4_g60s3, N4_g60s2, N4_g70 (sitl/results.jsonl)",
    "status": "CHECKED",
    "importance": 1
+  },
+  {
+   "id": "P:sim.wind_cap_s",
+   "type": "parameter",
+   "title": "sim.wind_cap_s",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 0.0,
+   "unit": "s",
+   "source": "SRC-A-CLAIMSFIX",
+   "note": "same seven runs: time at the 0.90 cap, all 0",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "P:sim.wind_peak",
+   "type": "parameter",
+   "title": "sim.wind_peak",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 0.873,
+   "unit": "-",
+   "source": "SRC-A-CLAIMSFIX",
+   "note": "same seven runs: highest instantaneous output (seed 3, from 60 deg); reported, not a limit",
+   "status": "CHECKED",
+   "importance": 0
   },
   {
    "id": "P:sim.tipover_deg",
@@ -7471,19 +7567,19 @@ window.PROOF_GRAPH = {
    "title": "sim.gm_nominal",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    2.76,
-    3.17,
-    3.59,
-    2.52,
-    2.81,
+    3.48,
     3.76,
-    2.06,
-    2.09,
-    2.09
+    5.28,
+    2.37,
+    2.64,
+    3.54,
+    2.13,
+    2.16,
+    2.16
    ],
    "unit": "-",
    "source": "SRC-A-ITER3",
-   "note": "iter3_run.md control-band table, min GM at nominal mode frequencies: pit / rll / yaw x kd, nom, hi",
+   "note": "iter3_run.md control-band table (rerun 2026-11-15 with A.param D-191, cant 17), min GM at nominal mode frequencies: pit / rll / yaw x kd, nom, hi",
    "status": "CHECKED",
    "importance": 1
   },
@@ -7493,15 +7589,15 @@ window.PROOF_GRAPH = {
    "title": "sim.gm_shifted",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    1.66,
-    1.71,
-    2.6,
-    2.16,
-    2.19,
-    2.41,
+    2.33,
+    2.33,
+    3.27,
     2.03,
-    2.03,
-    2.06
+    2.06,
+    2.3,
+    2.09,
+    2.09,
+    2.13
    ],
    "unit": "-",
    "source": "SRC-A-ITER3",
@@ -7515,15 +7611,15 @@ window.PROOF_GRAPH = {
    "title": "sim.gm_shifted_up",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    3.7,
-    3.54,
-    1.64,
-    3.65,
-    4.45,
-    7.52,
-    2.09,
-    2.09,
-    2.13
+    5.44,
+    5.12,
+    2.44,
+    3.43,
+    4.25,
+    7.07,
+    2.16,
+    2.16,
+    2.19
    ],
    "unit": "-",
    "source": "SRC-A-ITER3",
@@ -8546,28 +8642,28 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Motor MN2212 V2.0 KV780 (UR)",
    "status": "UNVERIFIED",
-   "importance": 9
+   "importance": 10
   },
   {
    "id": "PRP-001-UL",
    "type": "part",
    "title": "Motor MN2212 V2.0 KV780 (UL)",
    "status": "UNVERIFIED",
-   "importance": 9
+   "importance": 10
   },
   {
    "id": "PRP-001-LR",
    "type": "part",
    "title": "Motor MN2212 V2.0 KV780 (LR)",
    "status": "UNVERIFIED",
-   "importance": 9
+   "importance": 10
   },
   {
    "id": "PRP-001-LL",
    "type": "part",
    "title": "Motor MN2212 V2.0 KV780 (LL)",
    "status": "UNVERIFIED",
-   "importance": 9
+   "importance": 10
   },
   {
    "id": "PRP-002-UR",
@@ -8748,7 +8844,7 @@ window.PROOF_GRAPH = {
    "id": "CGE-004",
    "type": "part",
    "title": "Bridge 12x10",
-   "status": "UNVERIFIED",
+   "status": "CHECKED",
    "importance": 4
   },
   {
@@ -8839,7 +8935,7 @@ window.PROOF_GRAPH = {
    "id": "AVN-002",
    "type": "part",
    "title": "Flight controller Kakute F405 Wing Mini",
-   "status": "UNVERIFIED",
+   "status": "CHECKED",
    "importance": 3
   },
   {
@@ -10552,7 +10648,7 @@ window.PROOF_GRAPH = {
    "type": "about"
   },
   {
-   "source": "P:sim.wind_motor_peak",
+   "source": "P:sim.wind_ge85_s",
    "target": "CALC-A-WIND-OUTPUT-READ",
    "type": "uses"
   },
@@ -10562,7 +10658,7 @@ window.PROOF_GRAPH = {
    "type": "derives-from"
   },
   {
-   "source": "P:req.motor_out_max",
+   "source": "P:req.motor_ge85_s_max",
    "target": "CL-A-WIND-OUTPUT",
    "type": "uses"
   },
@@ -10588,6 +10684,46 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-A-WIND-OUTPUT",
+   "target": "PRP-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "P:sim.wind_cap_s",
+   "target": "CALC-A-WIND-CAP-READ",
+   "type": "uses"
+  },
+  {
+   "source": "CALC-A-WIND-CAP-READ",
+   "target": "CL-A-WIND-CAP",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:req.motor_cap_s_max",
+   "target": "CL-A-WIND-CAP",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-WIND-CAP",
+   "target": "A-P8",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-WIND-CAP",
+   "target": "PRP-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-WIND-CAP",
+   "target": "PRP-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-WIND-CAP",
+   "target": "PRP-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-WIND-CAP",
    "target": "PRP-001-LL",
    "type": "about"
   },
@@ -12603,7 +12739,17 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "SRC-A-REQ",
-   "target": "P:req.motor_out_max",
+   "target": "P:req.motor_out_line",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-REQ",
+   "target": "P:req.motor_ge85_s_max",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-REQ",
+   "target": "P:req.motor_cap_s_max",
    "type": "cites"
   },
   {
@@ -12987,8 +13133,18 @@ window.PROOF_GRAPH = {
    "type": "cites"
   },
   {
-   "source": "SRC-A-WIND",
-   "target": "P:sim.wind_motor_peak",
+   "source": "SRC-A-CLAIMSFIX",
+   "target": "P:sim.wind_ge85_s",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-CLAIMSFIX",
+   "target": "P:sim.wind_cap_s",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-CLAIMSFIX",
+   "target": "P:sim.wind_peak",
    "type": "cites"
   },
   {

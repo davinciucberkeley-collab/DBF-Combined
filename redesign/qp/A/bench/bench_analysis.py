@@ -8,12 +8,12 @@ import csv, math, sys, tempfile, os
 
 G = 9.80665
 # ---- limits (source) ----------------------------------------------------------------------------
-GATE_KG = 1.50                      # BOARD C5 mass gate
-CANT = math.radians(16)             # D-184 (was 14, BOARD C1); WIND.md: arm x1.2 + cant 16 deg
+GATE_KG = 1.47                      # D-190 mass gate (was 1.50, BOARD C5): +-5 % window holds to 1.478 kg at cant 17
+CANT = math.radians(17)             # D-189 (was 16 in D-184, 14 in BOARD C1): arm x1.2 + cant 17 deg
 N_MOT = 4
 TW_FRESH, TW_SAG = 2.0, 1.6         # BOARD s2 gates
-T_FRESH = TW_FRESH * GATE_KG * 1000 / (N_MOT * math.cos(CANT))   # 780 gf per motor at cant 16
-T_SAG = TW_SAG * GATE_KG * 1000 / (N_MOT * math.cos(CANT))       # 624 gf per motor at cant 16
+T_FRESH = TW_FRESH * GATE_KG * 1000 / (N_MOT * math.cos(CANT))   # 769 gf per motor at 1.47 kg, cant 17
+T_SAG = TW_SAG * GATE_KG * 1000 / (N_MOT * math.cos(CANT))       # 615 gf per motor at 1.47 kg, cant 17
 T_R3 = 1201.0                       # BOARD R3 derate 0.93 x 1292 gf (APC 9x4.5MR model, one motor on the stand, 16.8 V; D-183)
 # D-183: the T9545 is sold out; prop is APC 9x4.5MR (CW) / 9x4.5MRP (CCW). MAKER = model rows, NOT maker data: APC PER3_9x45MR.dat
 # static rows (https://www.apcprop.com/files/PER3_9x45MR.dat, 2026-11-14) through Kv 780, Rm 0.173, I0 0.5 A (EST), one motor on a
@@ -22,13 +22,13 @@ MAKER = {50: (378, 2.4, 5875), 65: (612, 4.8, 7451), 75: (789, 7.0, 8456), 85: (
 RPM100 = MAKER[100][2]
 MN_I_MAX = 13.0                     # maker: 13 A / 180 s
 SPIN_MAX_I = 10.9                   # prop_a.py: bus A of one motor at the 0.90 duty cap (12.1 A phase), three at hover, 1.50 kg, fresh
-T_HOVER = 402.0                     # hover thrust per motor at the 1.50 kg gate: 1500 / (4 cos 16 x 0.97), prop_a.py (398 gf at cant 14)
-P_HOVER = 48.7 / 0.98 * 1.15       # prop_a.py (cant 16) motor input 48.7 W at x0.93 derate, /0.98 ESC, +15 % (TEST-PLAN-QP1 hover_current_tol) = 57.2 W
+T_HOVER = 396.0                     # hover thrust per motor at the 1.47 kg gate: 1470 / (4 cos 17 x 0.97), prop_a.py (404 gf at 1.50 kg, 402 at cant 16)
+P_HOVER = 47.6 / 0.98 * 1.15       # prop_a.py (cant 17, 1.47 kg) motor input 47.6 W at x0.93 derate, /0.98 ESC, +15 % (TEST-PLAN-QP1 hover_current_tol) = 55.9 W
 # Yaw: SIZING-A s4 authority = 1.2 x (cant term + Q); cant term 0.201 N m (EST), wind moment 0.178 N m.
 # ratio >= 1.5  <=>  Q >= 1.5 x 0.178 / 1.2 - 0.201/1.2 ... computed below from these two numbers.
-# D-184 (review/QP-2/WIND.md s5): arm x1.2 and cant 16 deg: cant term 0.201 x 1.2 x sin16/sin14 = 0.275 N m (EST); authority at +-0.10 throttle
-#   = cant term + 1.2 Q (WIND.md: 0.201 x 1.2 x (sin16/sin14) + 0.078 = about 0.35 with Q = 65 N mm).  Pass line 0.35 N m, fail line 0.30 (5 m/s card reopened).
-CANT_TERM, WIND_M = 0.201 * 1.2 * math.sin(math.radians(16)) / math.sin(math.radians(14)), 0.178
+# D-184 / D-189 (review/QP-2/WIND.md s5, review/QP-4/CLAIMS-FIX.md s2): arm x1.2 and cant 17 deg: cant term 0.201 x 1.2 x sin17/sin14 = 0.291 N m (EST); authority at +-0.10 throttle
+#   = cant term + 1.2 Q (model Q 59.7 N mm: 0.291 + 0.072 = 0.363; at cant 16 it was 0.3465, WIND.md about 0.35 with Q = 65).  Pass line 0.35 N m, fail line 0.30 (5 m/s card reopened).
+CANT_TERM, WIND_M = 0.201 * 1.2 * math.sin(math.radians(17)) / math.sin(math.radians(14)), 0.178
 Q_MIN_NMM = 55.0                    # WIND.md s5: the rotor-reaction pass line Q >= 55 N mm stays
 AUTH_PASS, AUTH_FAIL = 0.35, 0.30   # N m yaw authority at +-0.10 throttle, WIND.md s5
 V_SAG = 13.6                        # prop_a.py: 4 motors saturated, pack at 3.73 V/cell rest, R 30 mohm EST
@@ -122,12 +122,12 @@ def analyse(key, rows):
     line(tag, "Can temperature never above stop", f"max {mx:.0f} C", f"<= {CAN_STOP:.0f} C", mx <= CAN_STOP, "TEST-PLAN-QP1 QP-P19")
 
     if motor.upper().startswith("MN2212"):
-        line(tag, "Fresh thrust 100 % >= T/W 2.0 at 1.50 kg gate", f"{rd(T100)} gf", f">= {T_FRESH:.0f} gf", None if T100 is None else T100 >= T_FRESH, "BOARD C5; 2.0 x 1500 / (4 cos 16)")
+        line(tag, "Fresh thrust 100 % >= T/W 2.0 at 1.47 kg gate", f"{rd(T100)} gf", f">= {T_FRESH:.0f} gf", None if T100 is None else T100 >= T_FRESH, "BOARD C5; 2.0 x 1470 / (4 cos 17)")
         line(tag, "Fresh thrust 100 % >= 1201 gf (R3)", f"{rd(T100)} gf", f">= {T_R3:.0f} gf", None if T100 is None else T100 >= T_R3, "BOARD R3 (0.93 x APC model 1292); fail = resize once")
         if sag and at(rows, "sag", 100):
             Ts = mean([r["_T"] for r in at(rows, "sag", 100)])
             Vs = mean([r["_v_esc"] for r in at(rows, "sag", 100)])
-            line(tag, "Sag thrust 100 % (pack at 20 % rest, 3.73 V/cell) >= T/W 1.6", f"{rd(Ts)} gf at {rd(Vs,2)} V", f">= {T_SAG:.0f} gf", None if Ts is None else Ts >= T_SAG, "BOARD C5; 1.6 x 1500 / (4 cos 16)")
+            line(tag, "Sag thrust 100 % (pack at 20 % rest, 3.73 V/cell) >= T/W 1.6", f"{rd(Ts)} gf at {rd(Vs,2)} V", f">= {T_SAG:.0f} gf", None if Ts is None else Ts >= T_SAG, "BOARD C5; 1.6 x 1470 / (4 cos 17)")
         elif T100 and V100:
             est = T100 * (V_SAG / V100) ** 2 * 0.97
             line(tag, "Sag thrust ESTIMATED from fresh (T ~ V^2, hot x0.97); a sag-pack run replaces it", f"{est:.0f} gf at {V_SAG} V", f">= {T_SAG:.0f} gf", est >= T_SAG, "SIZING-A s3 (EST)")
@@ -149,7 +149,7 @@ def analyse(key, rows):
             I = interp(hov, thr_x, ix)
             line(tag, f"Hover point {T_HOVER:.0f} gf: throttle {hov:.0f} %, current {rd(I,2)} A", f"{rd(P,1)} W", f"<= {P_HOVER:.1f} W (model +15 %)", None if P is None else P <= P_HOVER, "prop_a.py (EST)")
         else:
-            line(tag, "Hover point", "thrust rows do not bracket 402 gf", "", None, "SIZING-A s3")
+            line(tag, "Hover point", "thrust rows do not bracket 396 gf", "", None, "SIZING-A s3")
         line(tag, "One-motor full-duty current, 100 % fresh 16.8 V", f"{rd(I100,1)} A", f"<= {MN_I_MAX} A (maker 13 A / 180 s; prop_a.py predicts 14.6 on the stand, over: the 0.90 cap is the fix)", None if I100 is None else I100 <= MN_I_MAX, "maker page; prop_a.py")
         I90 = mean([r["_i_a"] for r in at(rows, "fresh", 90)] + [r["_i_a"] for r in at(rows, "hold", 90)])
         line(tag, "Current at 90 % (Q_M_SPIN_MAX 0.90 cap)", f"{rd(I90,1)} A", f"<= {MN_I_MAX} A (sizing {SPIN_MAX_I})", None if I90 is None else I90 <= MN_I_MAX, "prop_a.py")
@@ -180,11 +180,11 @@ def analyse(key, rows):
             Q = Qgf / 1000 * G * 0.100 * 1000
             line(tag, f"Rotor reaction torque Q at {T_HOVER:.0f} gf (prop_a.py predicts 58-60 N mm; sizing EST 65)", f"{Q:.1f} N mm; Q/T {Q/(T_HOVER/1000*G):.1f} mm", f">= {Q_MIN_NMM:.0f} N mm", Q >= Q_MIN_NMM, "SIZING-A s4 with the D-184 cant term (WIND.md s5)")
             ratio = (CANT_TERM + 1.2 * Q / 1000) / WIND_M
-            line(tag, f"Hover yaw ratio rebuilt with measured Q (cant term {CANT_TERM:.3f} N m at arm 1.2 / cant 16 stays EST)", f"{ratio:.2f}", ">= 1.5", ratio >= 1.5, "SIZING-A s4; hanging test still decides arm and Cd")
+            line(tag, f"Hover yaw ratio rebuilt with measured Q (cant term {CANT_TERM:.3f} N m at arm 1.2 / cant 17 stays EST)", f"{ratio:.2f}", ">= 1.5", ratio >= 1.5, "SIZING-A s4; hanging test still decides arm and Cd")
             auth = CANT_TERM + 1.2 * Q / 1000
-            line(tag, f"Yaw authority at +-0.10 throttle from measured Q (fail < {AUTH_FAIL}: 5 m/s card reopened; model Q 59.7 N mm gives 0.346)", f"{auth:.3f} N m", f">= {AUTH_PASS} N m", auth >= AUTH_PASS, "WIND.md s5; the hanging yaw test at cant 16, arm 0.228 m is the real measurement")
+            line(tag, f"Yaw authority at +-0.10 throttle from measured Q (fail < {AUTH_FAIL}: 5 m/s card reopened; model Q 59.7 N mm gives 0.363)", f"{auth:.3f} N m", f">= {AUTH_PASS} N m", auth >= AUTH_PASS, "WIND.md s5; the hanging yaw test at cant 16, arm 0.228 m is the real measurement")
         else:
-            line(tag, "Rotor reaction torque Q", "no torque_gf_100mm rows bracketing 402 gf", f">= {Q_MIN_NMM:.0f} N mm", None, "SIZING-A s4")
+            line(tag, "Rotor reaction torque Q", "no torque_gf_100mm rows bracketing 396 gf", f">= {Q_MIN_NMM:.0f} N mm", None, "SIZING-A s4")
     else:
         line(tag, "R1 price of the motor", "15.99 (ORDER-LIST O5)", "<= $25", True, "BOARD R1")
         line(tag, "R1 fresh thrust 100 % on 4S", f"{rd(T100)} gf", f">= {R1_T:.0f} gf", None if T100 is None else T100 >= R1_T, "BOARD R1 / s4")

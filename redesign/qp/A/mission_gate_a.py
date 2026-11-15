@@ -1,8 +1,8 @@
-"""Concept A mission and mass-gate arithmetic (D-183 props/pack, D-184 arm x1.2 + cant 16 deg).  Reproduce: python -I mission_gate_a.py  (stdlib; prints; writes nothing)
+"""Concept A mission and mass-gate arithmetic (D-183 props/pack, D-184 arm x1.2, D-189 cant 17 deg, D-190 gate 1.47 kg).  Reproduce: python -I mission_gate_a.py  (stdlib; prints; writes nothing)
 Inputs are SIZING-A.md / BOARD.md numbers (cited in the dict); EST where marked."""
 import math, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import prop_a as pa   # APC 9x4.5MR model, CANT 16 deg, derate 0.93
+import prop_a as pa   # APC 9x4.5MR model, CANT 17 deg (prop_a.py), derate 0.93
 G, RHO = 9.807, 1.20
 S, CLMAX, CD0, E, AR = 0.22, 0.75, 0.0356, 0.8, 0.90**2/0.22          # SIZING-A s2
 VS = math.sqrt(2*1.226*G/(RHO*S*CLMAX))                               # at 1.226 kg sized mass (SIZING-A)
@@ -33,7 +33,7 @@ items = [("wing: foam 25 kg/m3 + 12x10 spar + 2 elevons y 0.04-0.35 + 2 balances
          ("motor cage incl. tray, hub 13 g, cups 4 g (CAD)", 113.3, "EST", .20), ("hardware, tape (no paint; CAD lump 30 g)", 30, "EST", .20)]
 base = sum(i[1] for i in items); gr = sum(i[1]*i[3] for i in items); OVER = 0.032*1500
 PRED = base+gr+OVER; M = PRED/1000
-print(f"basic {base} g; growth {gr:.1f} g; predicted {base+gr:.1f} g; overrun {OVER:.0f} g; predicted+overrun {PRED:.0f} g; headroom to 1500 {1500-PRED:.0f} g, to 1440 {1440-PRED:.0f} g")
+print(f"basic {base} g; growth {gr:.1f} g; predicted {base+gr:.1f} g; overrun {OVER:.0f} g; predicted+overrun {PRED:.0f} g; headroom to the 1.47 kg gate {1470-PRED:.0f} g (to the old 1.50 kg: {1500-PRED:.0f} g), to 1440 {1440-PRED:.0f} g")
 # ---- stall ----
 print("Stall (CLmax 0.75 EST):", {m: round(vs(m), 2) for m in (1.226, round(M,3), 1.44, 1.50)})
 print(f"1.3 Vs at 1.50 kg: {1.3*vs(1.50):.2f} (cruise 17 is {100*(17/(1.3*vs(1.5))-1):.1f} % over); at {M:.3f} kg: {1.3*vs(M):.2f}")
@@ -43,7 +43,7 @@ for tag, vr in (("fresh", 16.8), ("sag", 3.73*4)):
     for duty in (1.0, 0.90):
         n, i, t_, pw, vb = pa.full(vr, duty); hot = 0.97 if tag == "sag" else 1.0
         th[(tag, duty)] = 4*t_/9.807*1000*hot*pa.DER*math.cos(math.radians(pa.CANT))   # total vertical gf
-for m in (round(M,3), 1.44, 1.50):
+for m in (round(M,3), 1.44, 1.47, 1.50):
     r = {k: v/(m*1000) for k, v in th.items()}
     print(f"m {m}: T/W fresh {r[('fresh',1.0)]:.2f} (cap {r[('fresh',0.9)]:.2f}); sag {r[('sag',1.0)]:.2f} (cap {r[('sag',0.9)]:.2f})")
     for tag, k in (("uncapped sag", ("sag",1.0)), ("0.90-capped sag", ("sag",0.9))):
@@ -56,7 +56,7 @@ for tag, k in (("uncapped", ("sag",1.0)), ("capped", ("sag",0.9))):
 # ---- energy: Tattu 2300 4S ----
 PACK_WH = 2.3*14.8; USABLE = PACK_WH*0.90*0.80
 print(f"Pack {PACK_WH:.1f} Wh, usable after 0.90 floor and 20 % reserve {USABLE:.1f} Wh; BATT_LOW remaining = {2300-USABLE/PACK_WH*2300:.0f} mAh of 2300")
-for m in (round(M,3), 1.44, 1.50):
+for m in (round(M,3), 1.44, 1.47, 1.50):
     Ph = pa.hover(m, pa.DER)[4]; Eh = Ph*180/3600; Etr = 1.56*(m/1.37)**1.5; Ecl = 0.29*(m/1.37)
     Pc = 161*(m/1.37)**0.58; Ecr = Pc*cruise_s/3600; E_ = Eh+Etr+Ecl+Ecr
     tc = (USABLE-Eh-Etr-Ecl)/Pc*3600

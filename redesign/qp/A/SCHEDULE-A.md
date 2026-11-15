@@ -85,3 +85,7 @@ Near-critical: T-Motor motors (no lead time on the page); Jacobs closure on 18 D
 ## Open
 
 All durations after 5 Jan are `EST` and replaced by measured hours after the first foam core. The crash loop is one loop after F04, as K09-L; a second one needs another 11 d plus 3 mornings and is not covered at 4 a week. Flight mornings are modelled by week, not by weekday.
+
+## Update 2026-11-15 (CLAIMS-FIX D-192): hover wind limit 4 m/s mean, gust 6.4 m/s
+
+The RFS criterion in the table above (5 / 8 m/s) is replaced by 4 / 6.4 m/s for all hover (A-P8; SITL peak motor output at the 1.47 kg gate, review/QP-4/CLAIMS-FIX.md s3). Effect, two bounds, both `EST`: (a) WIND.md s3 block method (RCMC1 2022-2025): usable mornings Jan-Apr 0.80 -> 0.64, the February blocks F01 / F02 are short, **+1.4 d average year, +8.4 d worst year**, against the 11 d slack of the baseline here (9.6 d / 2.6 d left); (b) scaling p by 0.64 / 0.80 gives p about 0.58, the 0.60 row above: 4 booked mornings a week with one crash ends **-5 d** past 30 Apr, 5 booked mornings a week +12 d. Mitigation to take at the Feb booking: 5 booked mornings a week for F01-F02, or allow 5 m/s for hover-only gates F01-F02 on packs that land above 3.90 V per cell at rest (about 55 %: SITL fresh-pack peak 0.79 at 5 m/s, CLAIMS-FIX s3), which removes the WIND.md shortfall (only F01 / F02 are short at 4 m/s). Not applied; board call.
