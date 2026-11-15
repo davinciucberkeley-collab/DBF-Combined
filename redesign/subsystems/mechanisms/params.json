@@ -125,11 +125,11 @@
     "note": "servo arm, pushrod and inboard horn share this plane: straight pushrod along x; 15 mm inboard of the inboard panel end (0.30)"
    },
    "outboard_horn_y_m": {
-    "value": 0.355,
+    "value": 0.392,
     "unit": "m",
-    "source": "D6 choice",
+    "source": "D6 choice (closure round 2026-11-14, CR-D1-C1)",
     "status": "PROPOSED",
-    "note": "15 mm outboard of the outboard panel start (0.34)"
+    "note": "was 0.355 (15 mm outboard of the panel start 0.34). D-164 chamfer: panel edge is (c - xh) x (y - 0.34) / 0.07 aft of the hinge, full chord from y 0.41. At 0.392 the slot's inboard face (0.3907) and the 14 mm flange's inboard edge (0.385) leave >= 5 mm of panel beyond the blade (40 mm) / flange (38 mm) ends"
    }
   },
   "arm": {
@@ -138,7 +138,7 @@
     "unit": "m",
     "source": "team/D6/mech_calcs.py#CALC-D6-KIN",
     "status": "PROPOSED",
-    "note": "0.61 x horn radius: +/-25 deg surface at about +/-44 deg servo; hole drilled 1.6 mm in the supplied single arm at 15.6 mm"
+    "note": "0.61 x horn radius: +/-25 deg surface at about +/-44 deg servo; hole drilled 1.85 mm (#49, review/SERVOS-CONTROLS.md SC-07, D-142) in the supplied single arm at 15.6 mm"
    },
    "t_m": {
     "value": 0.0025,
@@ -292,20 +292,20 @@
     "note": "printed 1.4, drilled to the clevis pin"
    },
    "bore_d_m": {
-    "value": 0.0033,
+    "value": 0.0041,
     "unit": "m",
     "source": "D6 choice",
     "status": "PROPOSED",
-    "note": "3.175 mm rod + 0.06 mm epoxy each side"
+    "note": "4.0 mm rod + 0.05 mm epoxy each side (CR-D1-C1: rod 1/8 in -> 4 mm; boss wall (7 - 4.1) / 2 = 1.45 mm)"
    }
   },
   "link": {
    "d_m": {
-    "value": 0.003175,
+    "value": 0.004,
     "unit": "m",
     "source": "SRC-D6-CFROD",
     "status": "PROPOSED",
-    "note": "1/8 in (3.18 mm) pultruded unidirectional CF rod (D6-R2, was 1/8 in music wire: -6.6 g); a 3.0 mm metric rod also fits the 3.3 mm bore (loss 8.3 %)"
+    "note": "CR-D1-C1 (2026-11-14): 4.0 mm (was 1/8 in = 3.175) because the outboard link horn moved to y 0.392 and the free rod lengthened 47.6 -> 84.6 mm (lag ~ L^3 / d^4: 2.36 deg at 3.175 mm gives outboard loss 13.6 %, 0.94 deg at 4 mm gives 7.9 %). Older note: 1/8 in (3.18 mm) pultruded unidirectional CF rod (D6-R2, was 1/8 in music wire: -6.6 g); a 3.0 mm metric rod also fits the 3.3 mm bore (loss 8.3 %)"
    },
    "e_pa": {
     "value": 110000000000.0,
@@ -383,7 +383,7 @@
     "unit": "mm",
     "source": "ASM-D6-HOLE-PLAY",
     "status": "PROPOSED",
-    "note": "diametral play: Z-bend in the arm hole drilled 1.6 mm with a pin vise, clevis pin in the drilled horn hole"
+    "note": "diametral play: Z-bend in the arm hole drilled 1.85 mm (#49, SC-07, D-142) with a pin vise, clevis pin in the drilled horn hole"
    },
    "e_pa": {
     "value": 200000000000.0,
@@ -410,6 +410,13 @@
     "source": "team/D6/mech_calcs.py#CALC-D6-CLEAR",
     "status": "PROPOSED",
     "note": "front of the tube 1 mm aft of D1's 30 deg bevel line (wing/params.json#elevon.bevel_deg) at the tube's lower edge; tube on the local mid-thickness (cover about 1.5 mm)"
+   },
+   "out_start_y_m": {
+    "value": 0.358,
+    "unit": "m",
+    "source": "D6 choice (closure round 2026-11-14, CR-D1-C1)",
+    "status": "PROPOSED",
+    "note": "start of the outboard torque tube (was y0 + end_inset = 0.345, 5 mm of panel aft of the hinge under the chamfer). The tube's aft face is 12.5 mm aft of the hinge; the panel edge is 18.9 mm aft at 0.358 (D1's groove starts here too)"
    },
    "end_inset_m": {
     "value": 0.005,
@@ -440,7 +447,7 @@
    "cover_frac": {
     "value": [
      0.7,
-     1.0
+     0.8
     ],
     "unit": "-",
     "source": "team/D6/mech_calcs.py#CALC-D6-BRIDGE",
@@ -791,7 +798,7 @@
    }
   },
   "mass_total_g": {
-   "value": 72.6,
+   "value": 73.66,
    "unit": "g",
    "source": "subsystems/mechanisms/make_mechanisms.py",
    "status": "UNVERIFIED",

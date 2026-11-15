@@ -43,7 +43,7 @@ Calcs: `team/D6/mech_calcs.py` (four-bar from the CAD module). Local numbers: `p
 | Id | Part | Qty | g each | Make / buy |
 |---|---|---|---|---|
 | `MEC-001-L/R` | Servo SH-0255MG+, laid on its side, shaft along y at x 0.195 | 2 | 15.80 | buy |
-| `MEC-002-L/R` | Servo arm (supplied), hole drilled 1.6 mm at 15.6 mm | 2 | 0.60 | buy |
+| `MEC-002-L/R` | Servo arm (supplied), hole drilled 1.85 mm (#49, SC-07) at 15.6 mm; the rod runs beside it (D-142) | 2 | 0.60 | buy |
 | `MEC-003-L/R` | Pushrod 2-56 steel, Z-bend at the arm, steel clevis + keeper at the horn, 54.8 mm | 2 | 1.58 | buy |
 | `MEC-004-L/R` | Control horn, inboard panel, y ±0.285: clevis hole 25.5 mm and rod boss 16.5 mm below the axis; flange 14 mm, backplate 12 mm wide | 2 | 3.13 | print PETG |
 | `MEC-005-L/R` | Inter-panel rod, 1/8 in pultruded CF, 67 mm, bonded in both bosses | 2 | 0.85 | buy |

@@ -82,9 +82,9 @@
   {
    "id": "CL-I2-BUILD-HOURS",
    "type": "claim",
-   "title": "Team-hours of build to first hover (BUILD-GUIDE stage times)",
+   "title": "Team-hours of build, stages 2-10 (build_hours_max 90, D-160)",
    "calc": "CALC-I2-SCHEDULE",
-   "output": "build_h",
+   "output": "build_h_stages_2_10",
    "unit": "h",
    "limit": {
     "op": "<=",
@@ -95,7 +95,7 @@
    ],
    "how": "Log hours per task during the build; compare the total at first hover.",
    "note": "EST: the sum of the build-phase task hours, bench checks (stage 11) and the range check included, transport box excluded (SCHEDULE.md verdict table, CR-I2-02). G4's count is 111 h (CDR decision B2)",
-   "value": 100.5
+   "value": 81.5
   },
   {
    "id": "CL-I2-CUT-TO-HOVER-D",
@@ -106,15 +106,12 @@
    "unit": "d",
    "limit": {
     "op": "<=",
-    "value": 21.0
+    "ref": "P:schedule.cut_to_hover_max_d"
    },
    "verifies": [
     "R-BUILD-HOURS"
    ],
    "how": "Dates of the first cut and the first tethered hover in the build log.",
-   "assumes": [
-    "ASM-I2-REQ-TEXT"
-   ],
    "note": "limit: '<= 3 weeks from first cut' in R-BUILD-HOURS. Set by the serial 24 h cures of the build chain (CDR decision B2); no lever in the task list removes them",
    "value": 33
   },
@@ -229,18 +226,15 @@
    "value": 0
   },
   {
-   "id": "CL-I2-BUILD-HOURS-S2-10",
+   "id": "CL-I2-BUILD-HOURS-ALL",
    "type": "claim",
-   "title": "Team-hours of build, stages 2-10 only (measure of the PROPOSED decision B2)",
+   "title": "Team-hours of build, stages 2-11 + range check (information, R7)",
    "calc": "CALC-I2-SCHEDULE",
-   "output": "build_h_stages_2_10",
+   "output": "build_h",
    "unit": "h",
    "how": "As CL-I2-BUILD-HOURS, stages 2-10.",
-   "assumes": [
-    "ASM-I2-B2-PROPOSED"
-   ],
-   "note": "information, no limit: B2 would compare this with 90 h after 13 h EST of bench work moves before first cut (CDR-20, G4). Not applied: needs the students' sign-off",
-   "value": 81.5
+   "note": "information, no limit: the old reading of R-BUILD-HOURS, everything to first hover (G4 counts 111 h)",
+   "value": 100.5
   },
   {
    "id": "CL-I2-PRE-HOURS",

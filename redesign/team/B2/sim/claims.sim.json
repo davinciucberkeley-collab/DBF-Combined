@@ -6,6 +6,7 @@
   "../params.json",
   "params.json",
   "params.zcg.json",
+  "params.trip.json",
   "../../../subsystems/mechanisms/params.json",
   "../../B1/params.json"
  ],
@@ -108,56 +109,57 @@
     "ASM-B2-CLMAX-KD"
    ],
    "outputs": {
-    "Vs_fwd_gate": 12.079474721905916,
-    "Vtr_fwd_gate": 15.703317138477692,
-    "Vs_fwd_predm": 11.944429614518645,
-    "Vtr_fwd_predm": 15.52775849887424,
-    "CLmax_fwd": 0.7749271559134923,
-    "elev_fwd": -15.935253544837568,
-    "Vs_aft_gate": 11.904556131380053,
-    "Vtr_aft_gate": 15.47592297079407,
-    "Vs_aft_predm": 11.771381531472244,
-    "Vtr_aft_predm": 15.302795990913918,
-    "CLmax_aft": 0.7989481801631926,
-    "elev_aft": -9.75578481986623,
-    "Vs_target_gate": 11.966547897513568,
-    "Vtr_target_gate": 15.556512266767639,
-    "Vs_target_predm": 11.832710110616482,
-    "Vtr_target_predm": 15.382523143801427,
-    "CLmax_target": 0.7903124999999999,
-    "elev_target": -10.920166406249999,
-    "Vs_basic_gate": 11.939290304672248,
-    "Vtr_basic_gate": 15.521077396073922,
-    "Vs_basic_predm": 11.805744082217966,
-    "Vtr_basic_predm": 15.347467306883356,
-    "CLmax_basic": 0.7940927475708606,
-    "elev_basic": -10.41046125502833,
-    "Vs_pred_gate": 11.882686451952635,
-    "Vtr_pred_gate": 15.447492387538427,
-    "Vs_pred_predm": 11.749745885004453,
-    "Vtr_pred_predm": 15.274669650505789,
-    "CLmax_pred": 0.8020275273288486,
-    "elev_pred": -9.57529041402867,
-    "Vs_fwd_zlo_gate": 12.084552120547478,
-    "Vtr_fwd_zlo_gate": 15.709917756711722,
-    "Vs_fwd_zlo_predm": 11.949452753109185,
-    "Vtr_fwd_zlo_predm": 15.53428857904194,
-    "CLmax_fwd_zlo": 0.7742456811175855,
-    "elev_fwd_zlo": -16.15760302463504,
-    "Vs_fwd_z0_gate": 12.12746242089113,
-    "Vtr_fwd_z0_gate": 15.765701147158468,
-    "Vs_fwd_z0_predm": 11.991904568945584,
-    "Vtr_fwd_z0_predm": 15.58947593962926,
-    "CLmax_fwd_z0": 0.7685210727969354,
-    "elev_fwd_z0": -18.02956143295019,
-    "SM_fwd": 0.09210210131061815,
-    "Vs_fwd_z_gain": 0.04798769898521371,
-    "x_fwd_stall_at_zlo": 0.0446,
+    "Vs_fwd_gate": 12.207254656060346,
+    "Vtr_fwd_gate": 15.86943105287845,
+    "Vs_fwd_predm": 11.720356270015689,
+    "Vtr_fwd_predm": 15.236463151020395,
+    "CLmax_fwd": 0.7871940864137484,
+    "elev_fwd": -15.778060784825486,
+    "Vs_aft_gate": 12.139066535964934,
+    "Vtr_aft_gate": 15.780786496754414,
+    "Vs_aft_predm": 11.654770758600776,
+    "Vtr_aft_predm": 15.15120198618101,
+    "CLmax_aft": 0.7964829396325459,
+    "elev_aft": -11.538223205380579,
+    "Vs_target_gate": 12.149587382803388,
+    "Vtr_target_gate": 15.794463597644404,
+    "Vs_target_predm": 11.664889963101558,
+    "Vtr_target_predm": 15.164356952032026,
+    "CLmax_target": 0.7950393700787403,
+    "elev_target": -12.19914279527559,
+    "Vs_basic_gate": 11.899723066048631,
+    "Vtr_basic_gate": 15.469639985863221,
+    "Vs_basic_predm": 11.424572518889152,
+    "Vtr_basic_predm": 14.851944274555898,
+    "CLmax_basic": 0.8303821052090006,
+    "elev_basic": -7.2494531757790135,
+    "Vs_pred_gate": 11.85450217043778,
+    "Vtr_pred_gate": 15.410852821569113,
+    "Vs_pred_predm": 11.381081240243143,
+    "Vtr_pred_predm": 14.795405612316086,
+    "CLmax_pred": 0.8370223945782334,
+    "elev_pred": -6.525943762894713,
+    "Vs_fwd_zlo_gate": 12.211225195820777,
+    "Vtr_fwd_zlo_gate": 15.874592754567011,
+    "Vs_fwd_zlo_predm": 11.724175300646634,
+    "Vtr_fwd_zlo_predm": 15.241427890840624,
+    "CLmax_fwd_zlo": 0.7866580717899698,
+    "elev_fwd_zlo": -16.027097835465852,
+    "Vs_fwd_z0_gate": 12.24499306904434,
+    "Vtr_fwd_z0_gate": 15.918490989757641,
+    "Vs_fwd_z0_predm": 11.756654820573452,
+    "Vtr_fwd_z0_predm": 15.283651266745489,
+    "CLmax_fwd_z0": 0.7821208791208791,
+    "elev_fwd_z0": -18.125837961538465,
+    "SM_fwd": 0.08027567791765787,
+    "Vs_fwd_z_gain": 0.03773841298399283,
+    "x_fwd_stall_at_zlo": 0.04250000000000001,
     "z_min_stall_at_xfwd": 1.0842021724855045e-20,
-    "dx_fwd_needed_at_zlo": 0.005200000000000003
+    "dx_fwd_needed_at_zlo": -0.0004999999999999866
    },
    "input_values": {
     "xg": [
+     0.0425,
      0.0446,
      0.0466,
      0.049,
@@ -172,71 +174,83 @@
     ],
     "tab": [
      [
-      0.777088122605364,
-      0.7804633204633205,
-      0.7832558139534884,
-      0.7853125
+      0.7814615384615385,
+      0.7842635658914728,
+      0.7865369649805448,
+      0.78828125
      ],
      [
-      0.780383141762452,
-      0.7837065637065637,
-      0.7864591439688716,
-      0.788470588235294
+      0.7842307692307691,
+      0.7870038910505835,
+      0.789296875,
+      0.7909803921568627
      ],
      [
-      0.7843243243243243,
-      0.7876264591439688,
-      0.7903124999999999,
-      0.7923622047244094
+      0.7868992248062016,
+      0.7896498054474709,
+      0.7918749999999999,
+      0.7935433070866142
      ],
      [
-      0.7882945736434108,
-      0.7915625,
-      0.799323644518114,
-      0.8112267652715985
+      0.7901550387596898,
+      0.7928125,
+      0.7950393700787403,
+      0.7966798418972333
      ],
      [
-      0.7920622568093385,
-      0.8048206641567441,
-      0.8207016842608473,
-      0.8332870248610437
+      0.793385214007782,
+      0.796078431372549,
+      0.7981889763779527,
+      0.799859313985891
+     ],
+     [
+      0.79640625,
+      0.7990551181102362,
+      0.8096402312816087,
+      0.8225467142534374
      ]
     ],
     "etab": [
      [
-      -15.24029448275862,
-      -14.133105637065636,
-      -13.222688604651163,
-      -12.544165312499999
+      -18.432802769230772,
+      -17.138089031007752,
+      -16.075017548638133,
+      -15.2858425
      ],
      [
-      -14.167499501915708,
-      -13.076515945945944,
-      -12.17939439688716,
-      -11.51091188235294
+      -17.143550576923072,
+      -15.871281750972761,
+      -14.827799140625,
+      -14.051995294117646
      ],
      [
-      -12.872095135135135,
-      -11.801069416342411,
-      -10.920166406249999,
-      -10.265108031496062
+      -15.911568798449611,
+      -14.661047821011673,
+      -13.634928749999997,
+      -12.872890551181102
      ],
      [
-      -11.56777930232558,
-      -10.517119843749999,
-      -9.705159533501718,
-      -9.134205125799504
+      -14.427921899224804,
+      -13.202691875,
+      -12.19914279527559,
+      -11.453622450592887
      ],
      [
-      -10.36570887159533,
-      -9.438598281369517,
-      -8.67835941242164,
-      -8.07448341651255
+      -12.936659922178986,
+      -11.739446862745096,
+      -10.757136417322833,
+      -10.029007295266362
+     ],
+     [
+      -11.56443578125,
+      -10.391973228346457,
+      -9.50943616640897,
+      -8.860100210985264
      ]
     ],
     "xr": [
-     0.0394,
-     0.0513
+     0.043,
+     0.0501
     ],
     "xt": 0.049,
     "zt": 0.0185,
@@ -244,12 +258,12 @@
      0.0165,
      0.025
     ],
-    "xnp": 0.0688726724193978,
-    "xbf": 0.15627131029659574,
-    "xp": 0.051678254800496294,
+    "xnp": 0.06868821693365051,
+    "xbf": 0.17995281713232067,
+    "xp": 0.05886062512444305,
     "kd": 1.0,
-    "mg": 2.6,
-    "mp": 2.5395342999999997,
+    "mg": 2.7,
+    "mp": 2.4795479,
     "g": 9.80665,
     "rho": 1.225,
     "b": 1.15,
@@ -289,41 +303,41 @@
     "xw": "m"
    },
    "outputs": {
-    "repro": -0.009555769617982768,
-    "d_table": -0.001550831217302595,
-    "d_envelope": -0.02180411366099999,
-    "d_cmt": -0.037426417553475755,
-    "d_props": 0.02644349782878863,
-    "W4": 0.8196706921554439,
-    "elev_W0": -8.441481729306577,
-    "np_vs_b1": 8.019999999998861e-05,
-    "np_z_shift": -0.0035642000000000035,
-    "np_trim_vs_a0": 0.0006953999999999988,
-    "dprop_drift": 0.00016414674770831583
+    "repro": -0.0003983506924972735,
+    "d_table": 0.007057424442945104,
+    "d_envelope": -0.027794200686047765,
+    "d_cmt": -0.020636333150480746,
+    "d_props": 0.011854314499578633,
+    "W4": 0.8085472278854056,
+    "elev_W0": -9.363647654929132,
+    "np_vs_b1": -8.120000000000349e-05,
+    "np_z_shift": -0.003550600000000001,
+    "np_trim_vs_a0": 0.0007714000000000054,
+    "dprop_drift": 3.2802087558597703e-05
    },
    "input_values": {
     "w": {
-     "W0": 0.8540085567584336,
-     "W1": 0.852457725541131,
-     "W2": 0.830653611880131,
-     "W3": 0.7932271943266552,
-     "W4": 0.8196706921554439
+     "W0": 0.8380660227794103,
+     "W1": 0.8451234472223554,
+     "W2": 0.8173292465363077,
+     "W3": 0.7966929133858269,
+     "W4": 0.8085472278854056
     },
     "we": {
-     "W0": -8.441481729306577,
-     "W1": -8.425400384998758,
-     "W2": -8.199363379913798,
-     "W3": -10.088318401822919,
-     "W4": -8.728952233538797
+     "W0": -9.363647654929132,
+     "W1": -9.446326060762672,
+     "W2": -9.12051389635561,
+     "W3": -11.440082598425198,
+     "W4": -9.56353412435891
     },
-    "b1": 0.862248,
-    "np_z": 0.07089619999999999,
-    "np_0": 0.0744604,
-    "np_b1": 0.070816,
+    "b1": 0.8384,
+    "np_z": 0.0709858,
+    "np_0": 0.0745364,
+    "np_b1": 0.071067,
     "np_a0": 0.073765,
-    "dprop": 0.002909180832893876,
-    "xa": 0.071946,
-    "xw": 0.0688726724193978
+    "dprop": 0.003225980978790885,
+    "xa": 0.071947,
+    "xw": 0.06868821693365051
    }
   },
   {
@@ -332,28 +346,71 @@
    "title": "Stall at the forward CG if the boundary layer were turbulent from the LE",
    "script": "redesign/team/B2/sim/sim_claims.py",
    "function": "stall_turb",
-   "equation": "CLmax' = CLmax_fwd * clmax_turb / clmax_free; Vs' = Vs_fwd sqrt(clmax_free / clmax_turb); clmax_turb = XFOIL tripped at 2 % c (lower bound) or SU2 SA L2 sweep max",
+   "equation": "CLmax' = CLmax_fwd * clmax_turb / clmax_free; Vs' = Vs_fwd sqrt(clmax_free / clmax_turb); clmax_turb = lowest converged XFOIL tripped clmax at Re 2.6e5 over the trip cases of turbulator.py (closure round; was the unconverged xtr 0.02 point 1.095) or SU2 SA L2 sweep max",
    "inputs": {
     "vs": "CL-B2R3-VS-GATE-FWD",
     "su2": "P:b2sim.cfd.clmax_2d",
-    "trip": "P:b2sim.xfoil.clmax_tripped",
+    "trip": "P:b2sim.trip.clmax_tripped_min",
     "xf": "P:b2.xfoil.clmax_2d_stall"
    },
    "units": {
     "vs": "m/s"
    },
    "outputs": {
-    "ratio_trip": 0.8712887049271671,
-    "Vs_trip": 12.940975270886247,
+    "ratio_trip": 0.9918809201623816,
+    "Vs_trip": 12.257114310781967,
     "ratio_su2": 0.7135868025081589,
-    "Vs_su2": 14.299624874087874,
-    "su2_over_trip": 0.819001553070528
+    "Vs_su2": 14.45089015398704,
+    "su2_over_trip": 0.7194278950252788
    },
    "input_values": {
-    "vs": 12.079474721905916,
+    "vs": 12.207254656060346,
     "su2": 0.896479099991,
-    "trip": 1.0946,
+    "trip": 1.2461,
     "xf": 1.2563
+   }
+  },
+  {
+   "id": "CALC-B2C-GATES",
+   "type": "calculation",
+   "title": "Tripped stall and the 1.3 Vs gate at both CG limits, with the airspeed error (final re-run)",
+   "script": "redesign/team/B2/sim/sim_claims.py",
+   "function": "gates",
+   "equation": "Vs_trip = Vs sqrt(clmax_free / clmax_trip) at the forward (cg.x_range_m[0]) and aft (cg.x_range_m[1]) limits ; V_1.3 = f Vs_trip ; gate: V_1.3 + e <= AIRSPEED_MIN (transition_min_ms), e = requirements.airspeed_err_max_ms ; stall bound re-derived from the integer AIRSPEED_MIN: (AIRSPEED_MIN - e) / f",
+   "inputs": {
+    "vf": "CL-B2R3-VS-GATE-FWD",
+    "va": "CL-B2R3-VS-GATE-AFT",
+    "trip": "P:b2sim.trip.clmax_tripped_min",
+    "xf": "P:b2.xfoil.clmax_2d_stall",
+    "f": "P:requirements.transition_factor",
+    "e": "P:requirements.airspeed_err_max_ms",
+    "amin": "P:performance.transition_min_ms"
+   },
+   "units": {
+    "vf": "m/s",
+    "va": "m/s",
+    "e": "m/s",
+    "amin": "m/s"
+   },
+   "outputs": {
+    "vs_trip_fwd": 12.257114310781967,
+    "vs_trip_aft": 12.18864768120839,
+    "v13_trip_fwd": 15.934248604016558,
+    "v13_trip_aft": 15.845241985570908,
+    "gate_fwd_margin": 0.5657513959834422,
+    "gate_aft_margin": 0.6547580144290919,
+    "vs_bound_rederived": 12.692307692307692,
+    "v13_clean_fwd": 15.86943105287845,
+    "v13_clean_aft": 15.780786496754414
+   },
+   "input_values": {
+    "vf": 12.207254656060346,
+    "va": 12.139066535964934,
+    "trip": 1.2461,
+    "xf": 1.2563,
+    "f": 1.3,
+    "e": 0.5,
+    "amin": 17.0
    }
   },
   {
@@ -396,19 +453,19 @@
    "outputs": {
     "vs_keep_17": 13.076923076923077,
     "vs_keep_18": 13.846153846153845,
-    "trip_margin_17": 0.13594780603683,
-    "trip_margin_18": 0.9051785752675983,
-    "clmax_ratio_17": 0.8532670212858381,
-    "clmax_ratio_18": 0.7610931146654545,
-    "vs_su2": 14.299624874087874,
-    "su2_short_18": 0.4534710279340288,
+    "trip_margin_17": 0.8198087661411098,
+    "trip_margin_18": 1.589039535371878,
+    "clmax_ratio_17": 0.8714146780002175,
+    "clmax_ratio_18": 0.7772803763643916,
+    "vs_su2": 14.45089015398704,
+    "su2_short_18": 0.6047363078331944,
     "min_needed_su2": 19.0,
     "max_fb2": 20.0,
     "va_margin_fb2": 0.5
    },
    "input_values": {
-    "vs": 12.079474721905916,
-    "vtrip": 12.940975270886247,
+    "vs": 12.207254656060346,
+    "vtrip": 12.257114310781967,
     "su2": 0.896479099991,
     "xf": 1.2563,
     "f": 1.3,
@@ -614,16 +671,16 @@
     "b": "m"
    },
    "outputs": {
-    "M_root_1g": 3.092197198576394,
-    "M_root_limit": 10.513470475159739,
-    "M_root_limit_schrenk": 11.51953098177706,
+    "M_root_1g": 3.2111278600601016,
+    "M_root_limit": 10.917834724204345,
+    "M_root_limit_schrenk": 11.96258986569156,
     "schrenk_ratio": 1.0956925221785085
    },
    "input_values": {
     "yb": 0.421827908643917,
     "ys": 0.46219368514733894,
     "n": 3.4,
-    "mg": 2.6,
+    "mg": 2.7,
     "g": 9.80665,
     "b": 1.15
    }
@@ -660,7 +717,7 @@
    "unit": "-",
    "how": "(CL-B3-V-XNP - cg.x_range_m[0]) / c; CG balance test T-A3-CG-BALANCE",
    "note": "information only: since B2-R4 the stall is read directly at (x, z), not through a static margin",
-   "value": 0.09210210131061815
+   "value": 0.08027567791765787
   },
   {
    "id": "CL-B2R3-CLMAX-FWD",
@@ -675,7 +732,7 @@
     "WNG-003"
    ],
    "how": "T-B2-STALL at the gate mass, the marked forward CG and the CG height read on the balance rig; CLmax = 2 m g / (rho S Vs^2)",
-   "value": 0.7749271559134923
+   "value": 0.7871940864137484
   },
   {
    "id": "CL-B2R4-ELEV-FWD",
@@ -686,12 +743,12 @@
    "unit": "deg",
    "how": "T-B2-STALL: log the servo output at the break",
    "note": "B3's forward-limit criterion is 12.5 deg of up-elevon at the trimmed stall",
-   "value": -15.935253544837568
+   "value": -15.778060784825486
   },
   {
    "id": "CL-B2R3-VS-GATE-FWD",
    "type": "claim",
-   "title": "Stall at 2.6 kg, forward CG limit, CG height (as designed)",
+   "title": "Stall at the gate mass, forward CG limit, CG height (as designed)",
    "calc": "CALC-B2R4-STALL-Z",
    "output": "Vs_fwd_gate",
    "unit": "m/s",
@@ -708,12 +765,12 @@
     "WNG-003"
    ],
    "how": "T-B2-STALL at the gate mass, the marked forward CG and the CG height read on the balance rig; CLmax = 2 m g / (rho S Vs^2)",
-   "value": 12.079474721905916
+   "value": 12.207254656060346
   },
   {
    "id": "CL-B2R4-VS-GATE-FWD-ZLO",
    "type": "claim",
-   "title": "Stall at 2.6 kg, forward CG limit, bottom of the CG height range",
+   "title": "Stall at the gate mass, forward CG limit, bottom of the CG height range",
    "calc": "CALC-B2R4-STALL-Z",
    "output": "Vs_fwd_zlo_gate",
    "unit": "m/s",
@@ -728,12 +785,12 @@
    ],
    "how": "T-B2-STALL at the gate mass, the marked forward CG and the CG height read on the balance rig; CLmax = 2 m g / (rho S Vs^2)",
    "note": "corner of the CG box: a lower CG needs more up-elevon at the stall",
-   "value": 12.084552120547478
+   "value": 12.211225195820777
   },
   {
    "id": "CL-B2R4-VS-GATE-FWD-Z0",
    "type": "claim",
-   "title": "Stall at 2.6 kg, forward CG limit, CG on the chord plane (old basis)",
+   "title": "Stall at the gate mass, forward CG limit, CG on the chord plane (old basis)",
    "calc": "CALC-B2R4-STALL-Z",
    "output": "Vs_fwd_z0_gate",
    "unit": "m/s",
@@ -744,12 +801,12 @@
    ],
    "how": "T-B2-STALL at the gate mass, the marked forward CG and the CG height read on the balance rig; CLmax = 2 m g / (rho S Vs^2)",
    "note": "information: the z = 0 model A1 quoted (~12.05); not a flight case since D-62",
-   "value": 12.12746242089113
+   "value": 12.24499306904434
   },
   {
    "id": "CL-B2R3-VS-GATE-AFT",
    "type": "claim",
-   "title": "Stall at 2.6 kg, aft CG limit, CG height (as designed)",
+   "title": "Stall at the gate mass, aft CG limit, CG height (as designed)",
    "calc": "CALC-B2R4-STALL-Z",
    "output": "Vs_aft_gate",
    "unit": "m/s",
@@ -766,7 +823,7 @@
     "WNG-003"
    ],
    "how": "T-B2-STALL at the gate mass, the marked forward CG and the CG height read on the balance rig; CLmax = 2 m g / (rho S Vs^2)",
-   "value": 11.904556131380053
+   "value": 12.139066535964934
   },
   {
    "id": "CL-B2R4-X-FWD-AT-ZLO",
@@ -776,7 +833,7 @@
    "output": "x_fwd_stall_at_zlo",
    "unit": "m",
    "how": "T-B2-STALL; A1 sets the forward mark at max(this, B3 limit) or raises cg.z_range_m[0] to CL-B2R4-Z-MIN-AT-XFWD",
-   "value": 0.0446
+   "value": 0.04250000000000001
   },
   {
    "id": "CL-B2R4-Z-MIN-AT-XFWD",
@@ -791,7 +848,7 @@
   {
    "id": "CL-B2R4-VS-GATE-TARGET",
    "type": "claim",
-   "title": "Stall at 2.6 kg, CG target, CG height",
+   "title": "Stall at the gate mass, CG target, CG height",
    "calc": "CALC-B2R4-STALL-Z",
    "output": "Vs_target_gate",
    "unit": "m/s",
@@ -805,7 +862,7 @@
     "WNG-003"
    ],
    "how": "T-B2-STALL at the gate mass, the marked forward CG and the CG height read on the balance rig; CLmax = 2 m g / (rho S Vs^2)",
-   "value": 11.966547897513568
+   "value": 12.149587382803388
   },
   {
    "id": "CL-B2R3-VS-PRED",
@@ -824,7 +881,7 @@
     "WNG-003"
    ],
    "how": "T-B2-STALL at the as-built mass; the expected flight value",
-   "value": 11.749745885004453
+   "value": 11.381081240243143
   },
   {
    "id": "CL-B2R4-B1-REPRO",
@@ -834,7 +891,7 @@
    "output": "repro",
    "unit": "-",
    "how": "Re-run stall_zcg.py; |value| <= 0.02 means the two codes agree and the gap is set-up, not solver",
-   "value": -0.009555769617982768
+   "value": -0.0003983506924972735
   },
   {
    "id": "CL-B2R4-RECON-ENVELOPE",
@@ -844,7 +901,7 @@
    "output": "d_envelope",
    "unit": "-",
    "how": "T-B2-STALL; XFOIL up-elevon clmax scatters +/- 0.07",
-   "value": -0.02180411366099999
+   "value": -0.027794200686047765
   },
   {
    "id": "CL-B2R4-RECON-CMT",
@@ -854,7 +911,7 @@
    "output": "d_cmt",
    "unit": "-",
    "how": "T-B2-STALL: elevon at the break against CL-B2R4-ELEV-FWD",
-   "value": -0.037426417553475755
+   "value": -0.020636333150480746
   },
   {
    "id": "CL-B2R4-RECON-PROPS",
@@ -864,7 +921,7 @@
    "output": "d_props",
    "unit": "-",
    "how": "T-B3-TWIN-NP",
-   "value": 0.02644349782878863
+   "value": 0.011854314499578633
   },
   {
    "id": "CL-B2R4-CLMAX-B1POINT",
@@ -875,7 +932,7 @@
    "unit": "-",
    "how": "T-B2-STALL",
    "note": "replaces B1's 0.862 at the same point (CR-B1-23)",
-   "value": 0.8196706921554439
+   "value": 0.8085472278854056
   },
   {
    "id": "CL-B2R4-NP-VS-B1",
@@ -886,7 +943,7 @@
    "unit": "m",
    "how": "Re-run stall_zcg.py; |value| < 0.5 mm closes the NP part of CR-B1-23",
    "note": "B1's 0.0708 had Zref 0.018; B2's 0.0738 is Zref 0 at alpha 0: same model, different reference height",
-   "value": 8.019999999998861e-05
+   "value": -8.120000000000349e-05
   },
   {
    "id": "CL-B2R4-NP-Z-SHIFT",
@@ -896,7 +953,7 @@
    "output": "np_z_shift",
    "unit": "m",
    "how": "T-B3-TWIN-NP",
-   "value": -0.0035642000000000035
+   "value": -0.003550600000000001
   },
   {
    "id": "CL-B2R4-DPROP-DRIFT",
@@ -910,12 +967,12 @@
     "value": 0.0002
    },
    "how": "If it fails, re-run stall_zcg.py (B3 changed CL-B3-V-XNP or -XNP-AERO)",
-   "value": 0.00016414674770831583
+   "value": 3.2802087558597703e-05
   },
   {
    "id": "CL-B2R3-VTR-GATE-FWD",
    "type": "claim",
-   "title": "1.3 Vs at 2.6 kg, forward CG, CG height, vs transition speed",
+   "title": "1.3 Vs at the gate mass, forward CG, CG height, vs transition speed",
    "calc": "CALC-B2R4-STALL-Z",
    "output": "Vtr_fwd_gate",
    "unit": "m/s",
@@ -932,12 +989,12 @@
     "WNG-003"
    ],
    "how": "F4 AIRSPEED_MIN 15.6 must be >= this; transition logs show airspeed >= 1.3 Vs",
-   "value": 15.703317138477692
+   "value": 15.86943105287845
   },
   {
    "id": "CL-B2R3-VS-GATE-FWD-TURB",
    "type": "claim",
-   "title": "Stall at 2.6 kg, forward CG, turbulent-LE section (XFOIL tripped)",
+   "title": "Stall at the gate mass, forward CG, tripped section (lowest converged XFOIL trip case)",
    "calc": "CALC-B2R3-STALL-TURB",
    "output": "Vs_trip",
    "unit": "m/s",
@@ -946,9 +1003,82 @@
     "WNG-002",
     "WNG-003"
    ],
-   "how": "Planning baseline (board decision B6, CDR-15): the wing has a tape seam at x/c about 0.05, so the tripped section is the likelier case. T-B2-STALL decides",
-   "note": "B6: planning baseline until T-B2-STALL (AIRSPEED_MIN / CRUISE 17). The free-transition value CL-B2R3-VS-GATE-FWD stays the R-STALL design value. Exceeds 12.3 m/s",
-   "value": 12.940975270886247
+   "how": "Planning baseline (board decision B6, CDR-15), now the design state: the wing carries a lower-surface turbulator (closure round, CL-B2C-TRIP-DCMDCL) and may have an upper tape seam at x/c 0.05. T-B2-STALL with the tape fitted decides",
+   "note": "Closure round: the trip clmax is the lowest converged forced-transition case of turbulator.py (upper 0.02-0.10 / lower 0.05-0.60, Re 2.6e5: 1.246, ratio 0.992). The old 1.095 was the last converged alpha of an xtr 0.02 run that stops at 9.5 deg with cl still rising, not a clmax; with it the value would be 12.94 m/s, still under CL-B2R3-BASE-VS-KEEP 13.08",
+   "value": 12.257114310781967
+  },
+  {
+   "id": "CL-B2C-VS-TRIP-AFT",
+   "type": "claim",
+   "title": "Stall at the gate mass, aft CG limit, tripped section (final re-run)",
+   "calc": "CALC-B2C-GATES",
+   "output": "vs_trip_aft",
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.stall_max_ms"
+   },
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "T-B2-STALL with the lower-surface turbulator fitted",
+   "value": 12.18864768120839
+  },
+  {
+   "id": "CL-B2C-V13-TRIP-FWD",
+   "type": "claim",
+   "title": "1.3 x tripped stall, forward CG, plus the airspeed error, against AIRSPEED_MIN",
+   "calc": "CALC-B2C-GATES",
+   "output": "gate_fwd_margin",
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-TRANSITION"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "AIRSPEED_MIN 17 minus airspeed_err_max_ms minus 1.3 Vs_trip; transition logs show airspeed >= 1.3 Vs",
+   "value": 0.5657513959834422
+  },
+  {
+   "id": "CL-B2C-V13-TRIP-AFT",
+   "type": "claim",
+   "title": "1.3 x tripped stall, aft CG, plus the airspeed error, against AIRSPEED_MIN",
+   "calc": "CALC-B2C-GATES",
+   "output": "gate_aft_margin",
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-TRANSITION"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "As CL-B2C-V13-TRIP-FWD",
+   "value": 0.6547580144290919
+  },
+  {
+   "id": "CL-B2C-VS-BOUND",
+   "type": "claim",
+   "title": "Stall bound re-derived from AIRSPEED_MIN 17 and the airspeed error: (17 - 0.5) / 1.3 (information)",
+   "calc": "CALC-B2C-GATES",
+   "output": "vs_bound_rederived",
+   "unit": "m/s",
+   "how": "Information: requirements.stall_max_ms 12.3 (D-96, AIRSPEED_MIN 16 / 1.3) is tighter than this and is still met",
+   "value": 12.692307692307692
   },
   {
    "id": "CL-B2R3-BASE-VS-KEEP",
@@ -1005,7 +1135,7 @@
     "WNG-003"
    ],
    "how": "Covers the XFOIL tripped ratio 0.871; the unconverged SU2 ratio 0.714 is not covered",
-   "value": 0.7610931146654545
+   "value": 0.7772803763643916
   },
   {
    "id": "CL-B2R3-FB2-MAX-VA",
@@ -1049,7 +1179,7 @@
    "output": "ratio_trip",
    "unit": "-",
    "how": "Re-run xfoil_tripped.py; T-B2-STALL with and without an LE trip strip",
-   "value": 0.8712887049271671
+   "value": 0.9918809201623816
   },
   {
    "id": "CL-B2R3-CLMAX-SU2-RATIO",
@@ -1070,7 +1200,7 @@
    "output": "su2_over_trip",
    "unit": "-",
    "how": "Like-for-like solver check (both fully turbulent); expected 0.9-1.1",
-   "value": 0.819001553070528
+   "value": 0.7194278950252788
   },
   {
    "id": "CL-B2R3-HINGE-VA",
@@ -1273,7 +1403,7 @@
     "WNG-002"
    ],
    "how": "C1/C2 spar sizing; H1 spar proof load",
-   "value": 10.513470475159739
+   "value": 10.917834724204345
   },
   {
    "id": "CL-B2R3-ROOT-BM-LIMIT-SCHRENK",
@@ -1286,7 +1416,7 @@
     "WNG-002"
    ],
    "how": "Conservative bound for C2",
-   "value": 11.51953098177706
+   "value": 11.96258986569156
   },
   {
    "id": "CL-B2R3-SCHRENK-RATIO",
@@ -1307,6 +1437,200 @@
    "unit": "-",
    "how": "Expected 0.9-1.0 (rectangular, elevon gaps, fins)",
    "value": 0.91870753864771
+  },
+  {
+   "id": "SRC-B2-TRIPS-GOPAL",
+   "type": "source",
+   "title": "Gopalarathnam, Broughton, McGranahan, Selig, Design of Low Reynolds Number Airfoils with Trips, J. Aircraft 40(4), 2003",
+   "kind": "web",
+   "url": "https://m-selig.web.engr.illinois.edu/pubs/GopalarathnamEtal-2003-JofAC-LRNAirfoiLDesignWithTrips.pdf",
+   "checked": "2026-11-14",
+   "where": "p. 770: XFOIL fixed transition assumes instantaneous transition and no device drag; trips often act downstream of the device. p. 771-773: 0.0135 in (0.343 mm) tape on a 12 in chord (k/c 0.00113), Re 1e5 / 3e5, upper surface only: at Re 3e5 net drag change -0.001..-0.002 at Cl 0-0.4 (SA7025), increase at Cl ~0.75 for 0.1c / 0.2c trips (loss of laminar run)",
+   "note": "measured net trip effect (device + skin friction + bubble) at our k/c and Re; not the S5010"
+  },
+  {
+   "id": "ASM-B2C-TRIP-CDK",
+   "type": "assumption",
+   "title": "Device drag of the zigzag tape",
+   "text": "dcd_dev = C_Dk (k/c) (u_k/V)^2 with C_Dk = 1.0 on the dynamic pressure at the tape top, u_k from a Pohlhausen (Lambda 0) laminar profile on XFOIL's Ue and delta* just ahead of the tape",
+   "basis": "EST, pessimistic: a 2-D bluff step whose top is inside the layer; XFOIL carries no device drag (SRC-B2-TRIPS-GOPAL p. 770); the measured net effect of a 0.34 mm tape at Re 3e5 was -0.002..+ small, so the hand total (XFOIL laminar-run loss + this) is an upper bound",
+   "value": 1.0,
+   "unit": "-",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "CALC-B2C-TRIP",
+   "type": "calculation",
+   "title": "Turbulator: section ac shift, cruise drag and power, trip Reynolds number",
+   "script": "redesign/team/B2/sim/sim_claims.py",
+   "function": "trip",
+   "equation": "dcm/dcl = local least-squares slope of XFOIL cm(cl) within +/-0.15 at B3's rows (18 / 17 m/s / 1.3 Vs, gate mass, Re-interpolated 3.4-3.9e5); cd = cd_XFOIL(forced transition) + C_Dk (k/c)(u_k/V)^2; dD = q S dcd; dP = dD V x P_E1 / (D_E1 V); Re_k = u_k k / nu",
+   "inputs": {
+    "dcm": "P:b2sim.trip.dcm_dcl_design_max",
+    "dcm_u": "P:b2sim.trip.dcm_dcl_upper05_max",
+    "dcm_f": "P:b2sim.trip.dcm_dcl_free_max",
+    "dcm_late": "P:b2sim.trip.dcm_dcl_lower_late_max",
+    "cd": "P:b2sim.trip.cd_design_cruise",
+    "cdf": "P:b2sim.trip.cd_free_cruise",
+    "dcd_u": "P:b2sim.trip.dcd_upper05_cruise",
+    "rek": "P:b2sim.trip.re_k_design_vt",
+    "ratio": "P:b2sim.trip.e1_p_over_dv",
+    "rho": "P:env.rho_kgm3",
+    "v": "P:performance.cruise_ms",
+    "b": "P:wing.span_m",
+    "c": "P:wing.chord_m"
+   },
+   "units": {
+    "rho": "kg/m3",
+    "v": "m/s",
+    "b": "m",
+    "c": "m"
+   },
+   "assumes": [
+    "ASM-B2C-TRIP-CDK"
+   ],
+   "cites": [
+    "SRC-B2-TRIPS-GOPAL"
+   ],
+   "outputs": {
+    "dcm": 0.0006948234980229436,
+    "dcm_u": 0.01535579217856358,
+    "dcm_f": 0.01338203593474991,
+    "dcm_late": 0.0004060306413284506,
+    "cd": 0.011769459061000263,
+    "dcd": 0.004029327461465774,
+    "dD": 0.2624728084363574,
+    "dP": 14.009125521078287,
+    "dP_u": 17.072238389813663,
+    "rek": 634.4960019556379,
+    "dnp_mm": -0.22234351936734198
+   },
+   "input_values": {
+    "dcm": 0.0006948234980229436,
+    "dcm_u": 0.01535579217856358,
+    "dcm_f": 0.01338203593474991,
+    "dcm_late": 0.0004060306413284506,
+    "cd": 0.011769459061000263,
+    "cdf": 0.00774013159953449,
+    "dcd_u": 0.004910344965448754,
+    "rek": 634.4960019556379,
+    "ratio": 3.139625060712017,
+    "rho": 1.225,
+    "v": 17.0,
+    "b": 1.15,
+    "c": 0.32
+   }
+  },
+  {
+   "id": "CL-B2C-TRIP-DCMDCL",
+   "type": "claim",
+   "title": "Section dcm/dcl with the design turbulator (lower surface x/c 0.20)",
+   "calc": "CALC-B2C-TRIP",
+   "output": "dcm",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.0032
+   },
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "T-B3-TWIN-NP on a twin wing with the same tape; oil-flow or stethoscope check that the lower surface is turbulent aft of the tape at 15.7-18 m/s",
+   "note": "limit = B3 D-163 pass line (the SU2 SA fully-turbulent value B3 charges)",
+   "value": 0.0006948234980229436
+  },
+  {
+   "id": "CL-B2C-TRIP-CD",
+   "type": "claim",
+   "title": "Section cd at cruise CL with the design turbulator (incl. device drag)",
+   "calc": "CALC-B2C-TRIP",
+   "output": "cd",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.0146
+   },
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "T-B1-CRUISE-POWER with the tape fitted",
+   "note": "limit = B3 D-163 pass line (B3's EST basis xtr 0.02 at CL 0.39)",
+   "value": 0.011769459061000263
+  },
+  {
+   "id": "CL-B2C-TRIP-REK",
+   "type": "claim",
+   "title": "Trip Reynolds number u_k k / nu at 1.3 Vs, gate mass",
+   "calc": "CALC-B2C-TRIP",
+   "output": "rek",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 600.0
+   },
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "Same check as CL-B2C-TRIP-DCMDCL; 600 is the 3-D-roughness value, zigzag tape trips lower",
+   "value": 634.4960019556379
+  },
+  {
+   "id": "CL-B2C-TRIP-DCD",
+   "type": "claim",
+   "title": "Cruise section drag increment, design turbulator vs free transition (EST)",
+   "calc": "CALC-B2C-TRIP",
+   "output": "dcd",
+   "unit": "-",
+   "how": "T-B1-CRUISE-POWER with and without the tape",
+   "note": "information (EST)",
+   "value": 0.004029327461465774
+  },
+  {
+   "id": "CL-B2C-TRIP-DP",
+   "type": "claim",
+   "title": "Cruise electrical power increment, design turbulator, 17 m/s, gate mass (EST)",
+   "calc": "CALC-B2C-TRIP",
+   "output": "dP",
+   "unit": "W",
+   "how": "T-B1-CRUISE-POWER with and without the tape",
+   "note": "information for E2 R-MISSION; average P/(D V) of E1's CL-E1-CRUISE-P-55-V17",
+   "value": 14.009125521078287
+  },
+  {
+   "id": "CL-B2C-TRIP-DCMDCL-UPPER",
+   "type": "claim",
+   "title": "Section dcm/dcl with an upper-surface-only trip at x/c 0.05 (B3 D-163 spec)",
+   "calc": "CALC-B2C-TRIP",
+   "output": "dcm_u",
+   "unit": "-",
+   "how": "Information: rejected alternative. The ac term comes from the laminar lower surface; an upper trip alone raises dcm/dcl",
+   "note": "information (not in the design)",
+   "value": 0.01535579217856358
+  },
+  {
+   "id": "CL-B2C-TRIP-DCMDCL-LATE",
+   "type": "claim",
+   "title": "Section dcm/dcl if the lower trip acts late (transition at x/c 0.40-0.60)",
+   "calc": "CALC-B2C-TRIP",
+   "output": "dcm_late",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.0032
+   },
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "Covers a trip that does not trip at once (SRC-B2-TRIPS-GOPAL p. 770)",
+   "value": 0.0004060306413284506
   }
  ]
 }

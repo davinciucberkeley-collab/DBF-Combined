@@ -112,12 +112,6 @@ HW = [
          mat=A2, mass=0.17, cost=0.0, vendor='supplied with MEC-001',
          parent=lambda s: ['E-MEC-%02d' % (6 if s == 'R' else 5)], joins=['MEC-002-{s}', 'MEC-001-{s}'], fold=None,
          notes='Loctite 222; new mass (no part carried it before)'),
-    dict(num='TRN-102', sub='transport', inst=('C', 'L', 'R'),
-         name='Handle bolt set {s}: 2 x (M3x16 SHCS + M3 nyloc + M3 x 12 fender washer)',
-         mat=A2, mass=4.6, cost=0.60, vendor='hardware store (I1 T04)',
-         parent=lambda s: ['E-TRN-%02d' % {'C': 13, 'L': 14, 'R': 15}[s]], joins=['TRN-007-{s}', 'TRN-001'],
-         fold=None, flight=False,
-         notes='flight: false; handles (C6 CR-C6-08); 3 mm ply strip inside not modelled'),
 ]
 HAND = {'UR': 'LH', 'LL': 'LH', 'UL': 'RH', 'LR': 'RH'}
 PREFIX = {'fins': 'FIN', 'propulsion': 'PRP', 'power': 'PWR', 'pod': 'POD', 'mechanisms': 'MEC', 'transport': 'TRN'}

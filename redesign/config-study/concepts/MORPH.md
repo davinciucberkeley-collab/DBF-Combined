@@ -34,10 +34,10 @@ Option codes are used in §3. "Seen in" points to where the option already has e
 | **D7** | Landing method | **G1** skids / boom ends · **G2** tail fins or wingtips as legs (tailsitter) · **G3** wheels (also allows a rolling emergency landing) · **G4** foam pads on fuselage belly · **G5** printed crushable feet (sacrificial) |
 | **D8** | Transport / break-down | **P1** two wing halves on a carbon spar joiner, booms stay on halves · **P2** one-piece wing removed from fuselage, booms removable · **P3** whole aircraft fits the 1.2 m box, no breakdown · **P4** folding arms / folding wing (hinge + lock) · **P5** wing panels slide on spar tubes (no glue joint) · **P6** buy-kit's own breakdown (kit case) |
 | **D9** | Primary structure material / process | **M1** hot-wire XPS/EPS core + packing-tape or laminating-film skin + carbon spar · **M2** foam board (paper-faced, laser/knife cut, FT style) + carbon spar · **M3** FDM-printed (LW-PLA / PETG) shells + carbon spar · **M4** balsa/plywood laser-cut ribs + film covering · **M5** bought moulded EPO/EPP airframe (kit) · **M6** aluminium or carbon tube space frame + printed nodes (multirotor style) · **M7** carbon/glass wet lay-up over foam (spray booth only) |
-| **D10** | Energy source | **E1** single 4S LiPo · **E2** single 6S LiPo · **E3** 2 LiPo packs in parallel · **E4** bought Li-ion 18650/21700 pack (cruise-heavy missions) · **E5** split bus: LiPo for lift, Li-ion for cruise |
-| **D11** | Buy vs build airframe | **B1** scratch-built (all airframe made in Jacobs) · **B2** buy a foam fixed-wing kit, add VTOL hardware (convert) · **B3** buy a complete VTOL PNP / kit, add own FC/radio · **B4** buy a carbon multirotor frame, build the wing · **B5** two aircraft: a cheap bought VTOL as trainer/mule + a scratch-built main aircraft |
+| **D10** | Energy source | **E1** single 4S LiPo · **E2** single 6S LiPo · **E3** 2 LiPo packs in parallel · **E4** bought Li-ion 18650/21700 pack (cruise-heavy missions) · **E5** split bus: LiPo for lift, Li-ion for cruise · **E7** (added 2026-11-14) single 4S LiPo 2200-4000 mAh, two flight packs, 1.0-2.3 kg class · **E8** (added 2026-11-14) single 3S LiPo 3000-4000 mAh, listed for A and C, not sized or costed |
+| **D11** | Buy vs build airframe | **B1** scratch-built (all airframe made in Jacobs) · **B2** buy a foam fixed-wing kit, add VTOL hardware (convert) · **B3** buy a complete VTOL PNP / kit, add own FC/radio · **B4** buy a carbon multirotor frame, build the wing · **B5** two aircraft: a cheap bought VTOL as trainer/mule + a scratch-built main aircraft · **B7** (added 2026-11-14) commercial VTOL PNP / kit airframe retained and modified (B3 plus a team modification budget, card B08); B3 alone means buy a PNP and add own FC |
 
-Options counted: 7 + 5 + 6 + 7 + 6 + 8 + 5 + 6 + 7 + 5 + 5 = **67**. Full combinations ≈ 7×5×6×7×6×8×5×6×7×5×5
+Options counted (v1, 2026-11-09): 7 + 5 + 6 + 7 + 6 + 8 + 5 + 6 + 7 + 5 + 5 = **67**; three added 2026-11-14 (E7, E8, B7), so 70 options in the chart as it stands (the v1 audit rounds' additions are in §4). Full combinations ≈ 7×5×6×7×6×8×5×6×7×5×5
 ≈ 1.06 × 10⁹; most are incoherent (e.g. L3 with T1), so §3 picks coherent paths.
 
 ### Compatibility rules used to prune (why some combinations are not concepts)
@@ -182,3 +182,28 @@ Saturation: round 1 added 6 new options from external sources and 5 from this ag
 | U05 | Bench rig: one servo rotating a tube with two motors at hover thrust; time 0–90° | < $40, 1 day | Servo holds and does not strip at full thrust |
 | U06 | Hinge mock-up loaded to 2 g wing load | < $20, 1 day | No slop; lock engages by hand |
 | U07, U08 | Desk calc only until the main layout is chosen | 0 | — |
+
+---
+
+## 6. Re-study 2026-11-14 (D-181)
+
+Status: the v1 content above is kept as the record. K09-L could not be built new within $2,000 (cheapest workable
+build about $2,577, gap $577; `../review/CLOSURE-ROUND-2026-11-14/DESIGN-TO-COST.md` §0, §5). The re-study
+(`../RESTUDY-2026-11-14.md`, §2-§5; script `config-study/restudy_cost.py`) costed six candidates on one basis
+(tax 10.25 %, $10.71 per vendor shipment, FAA $5, floor $744.02). Mass is `EST`; prices are mostly `U` (UNVERIFIED).
+
+New options proposed there (chart rows above): **E7**, **E8**, **B7**. D6 needs no new option (dual-motor body-fixed is R6).
+
+| Code | Candidate | Code string (D1..D11) | MTOW kg `EST` | Total $ incl. crash reserve | Margin $ | Status |
+|---|---|---|---|---|---|---|
+| A | Scaled quad tailsitter | L3 T3 X3 W2 C3 R5 G2 P3 M1 E7 B1 | 1.23 | 1,461 | +539 | Not selected (carry-over option) |
+| **B** | **Small quadplane 4+1** | L1 T1 X1 W1 C1 or C2 (`EST`) R1 G1 P1 M1 E7 B1 | **1.88** | **1,625** | **+375** (about +175 with parts +30 %) | **SELECTED (D-181)** |
+| C | Dual-motor tailsitter | L3 T3 X3 W2 C3 R6 G2 P3 M1 E7 B1 | 1.02 | 1,351 | +649 | Rejected: any motor-out is fatal |
+| D1 | HEEWING T1-S VTOL PNP + F405 + GPS | L2 T3 X2 W1 C2 (`EST`) R3 G4 P6 M5 E7 B7 | 0.90 | 1,666 | +334 | Rejected: hover T/W 1.64 at its 1.6 limit |
+| **D2** | **ZOHD Altus VTOL PNP** | L2 T3 X2 W1 C2 R3 G4 P6 M5 E7 B7 | 1.16 | 1,549 | +451 | **FALLBACK** |
+| D3 | HEEWING T2 Cruza 1.2 m + VTOL kit | L2 T3 X2 W1 C2 (`EST`) R3 G4 P6 M5 E2 B7 | 2.23 | 1,934 | +66 | Rejected: misses the $100 margin |
+
+Source: `RESTUDY-2026-11-14.md` §2 (cost, margin, mass), §5 (code strings). Why B: lowest-risk concept that clears the
+$100 margin; most-flown ArduPilot VTOL layout (`Q_ENABLE=1`), lift on dedicated motors, lands on gear, so none of K09-L's
+tailsitter problems (hover yaw in wind, narrow transition entry, fin-tip landing, tip-over, climb-out). A smaller
+tailsitter (A) is worse in wind. Decision record: `tiebreak/DECISION.md`, "Re-decision 2026-11-14 (D-181)".

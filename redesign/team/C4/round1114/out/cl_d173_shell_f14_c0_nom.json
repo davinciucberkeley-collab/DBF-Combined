@@ -1,0 +1,555 @@
+{
+ "case": "f14_c0_nom",
+ "mount": [
+  0.01193,
+  -0.012100000000000001,
+  0.0005,
+  -0.0106
+ ],
+ "k_rock": 2050.0,
+ "tube": {
+  "id": 0.01905,
+  "mu": 0.156,
+  "E": 90.2,
+  "G": 20.5
+ },
+ "claims": {
+  "CL-C4-TUBE-E": {
+   "value": 90200000000.0,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-TUBE-G": {
+   "value": 20500000000.0,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-Q4-RECT": {
+   "value": 1.0836532616868934e-15,
+   "limit": [
+    "<=",
+    1e-09
+   ],
+   "pass": true
+  },
+  "CL-C4-D3-Q4-SKEW": {
+   "value": 0.008687569101011094,
+   "limit": [
+    "<=",
+    0.02
+   ],
+   "pass": true
+  },
+  "CL-C4-D3-MESH-CONV": {
+   "value": 0.06356242714939286,
+   "limit": [
+    "<=",
+    0.03
+   ],
+   "pass": false
+  },
+  "CL-C4-D3-SEP-1L": {
+   "value": 0.004987981370356831,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-F1-1L": {
+   "value": 189.18584053393712,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-F1-UP": {
+   "value": 222.22140544161664,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-F1-LO": {
+   "value": 217.97130083113126,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-PANEL": {
+   "value": 101.80816085884969,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-SEP": {
+   "value": 0.017044366427029445,
+   "limit": [
+    ">=",
+    0.2
+   ],
+   "pass": false
+  },
+  "CL-C4-D3-SEP-WORST": {
+   "value": 0.007523654780292377,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-TUBE-E-REQ": {
+   "value": 1350000000000.0,
+   "limit": [
+    "<=",
+    90200000000.0
+   ],
+   "pass": false
+  },
+  "CL-C4-D3-TUBE-G-REQ": {
+   "value": 100000000000.0,
+   "limit": [
+    "<=",
+    20500000000.0
+   ],
+   "pass": false
+  },
+  "CL-C4-D3-SEP-WHIRL": {
+   "value": 0.01412715916786933,
+   "limit": [
+    ">=",
+    0.2
+   ],
+   "pass": false
+  },
+  "CL-C4-D3-SEP-BAND": {
+   "value": -0.33948090657232954,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-MOUNT-K-REQ": {
+   "value": 300000.0,
+   "limit": [
+    "<=",
+    2050.0
+   ],
+   "pass": false
+  },
+  "CL-C4-D3-MOUNT-K-EST": {
+   "value": 2281.931505690086,
+   "limit": [
+    ">=",
+    2050.0
+   ],
+   "pass": true
+  },
+  "CL-C4-D3-MOUNT-K-EST-CHANGE": {
+   "value": 0.44834776240840846,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-MS-FACE": {
+   "value": -0.6267232884953371,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-MS-EDGE": {
+   "value": 2.9021108279188397,
+   "limit": [
+    ">=",
+    0.0
+   ],
+   "pass": 1.0
+  },
+  "CL-C4-D3-MS-TUBE": {
+   "value": 12.854624551604731,
+   "limit": [
+    ">=",
+    0.0
+   ],
+   "pass": true
+  },
+  "CL-C4-D3-MS-BRACE": {
+   "value": 0.785077473445351,
+   "limit": [
+    ">=",
+    0.0
+   ],
+   "pass": true
+  },
+  "CL-C4-D3-BRACE-F": {
+   "value": 175.93645898268394,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-MS-BRACE-END": {
+   "value": 1.1826061648642945,
+   "limit": [
+    ">=",
+    0.0
+   ],
+   "pass": true
+  },
+  "CL-C4-D3-MS-COLLAR": {
+   "value": 0.7880862071219774,
+   "limit": [
+    ">=",
+    0.0
+   ],
+   "pass": true
+  },
+  "CL-C4-D3-MS-ANCHOR": {
+   "value": 0.2570909070898675,
+   "limit": [
+    ">=",
+    0.0
+   ],
+   "pass": true
+  },
+  "CL-C4-D3-MS-EAR": {
+   "value": 5.09450798342876,
+   "limit": [
+    ">=",
+    0.0
+   ],
+   "pass": true
+  },
+  "CL-C4-D3-COLLAR-T": {
+   "value": 7.6282565731692955,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-COLLAR-T-INTACT": {
+   "value": 7.6282565731692955,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-COLLAR-H-REQ": {
+   "value": 0.012303657347377117,
+   "limit": [
+    "<=",
+    0.022
+   ],
+   "pass": true
+  },
+  "CL-C4-D3-TUBE-T-ROOT": {
+   "value": 8.25470076269164,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-SIDE-LOAD": {
+   "value": 24.5,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-STRIP-Q": {
+   "value": 2692.033038965419,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-MS-STRIP-PAPER": {
+   "value": -0.8277256968137877,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-STRIP-END-F": {
+   "value": 1475.178462673571,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-STRIP-END-F-COINC": {
+   "value": 1385.2476169343952,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-STRIP-PAIR-F": {
+   "value": 151.6553262575683,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-STRIP-PIN-F": {
+   "value": 69.65635488323022,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-BRACE-10X2-SEP": {
+   "value": 0.017044366427029445,
+   "limit": [
+    ">=",
+    0.2
+   ],
+   "pass": false
+  },
+  "CL-C4-D3-BRACE-10X2-MS": {
+   "value": 0.785077473445351,
+   "limit": [
+    ">=",
+    0.0
+   ],
+   "pass": true
+  },
+  "CL-C4-D3-BRACE-10X3-SEP": {
+   "value": 0.01959003072784027,
+   "limit": [
+    ">=",
+    0.2
+   ],
+   "pass": false
+  },
+  "CL-C4-D3-BRACE-SAVE": {
+   "value": 9.032771459408142,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-CANT-SIDE": {
+   "value": 0.17364817766693033,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-MOUNT-AXIAL": {
+   "value": 7.1151933750479905,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-MOUNT-TWIST": {
+   "value": 0.44403738541700016,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-MOUNT-ROCK": {
+   "value": 2.2548715265530483,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-MOUNT-G3-ROCK": {
+   "value": 2.2540473659739084,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-MS-CAP-G3": {
+   "value": 58.30020733713367,
+   "limit": [
+    ">=",
+    0.0
+   ],
+   "pass": true
+  },
+  "CL-C4-D3-MS-MOUNT-SLIP": {
+   "value": 0.08497123450496202,
+   "limit": [
+    ">=",
+    0.0
+   ],
+   "pass": true
+  },
+  "CL-C4-D3-FOOT-DEFL": {
+   "value": 0.006382432248015662,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-BLOCK-LIG": {
+   "value": 2.083738824334038,
+   "limit": [
+    ">=",
+    1.0
+   ],
+   "pass": true
+  },
+  "CL-C4-D3-BLOCK-MS": {
+   "value": 0.5419976327599441,
+   "limit": [
+    ">=",
+    0.0
+   ],
+   "pass": true
+  },
+  "CL-C4-D3-SPAR-COUPLE": {
+   "value": 961.3281249999999,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-MS-FACE-ROOT-FREE": {
+   "value": -0.6267232884953371,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-FILLET-L4-SHARE": {
+   "value": 0.0074185061379077434,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-FILLET-L4-AFT-FX": {
+   "value": 5.325615744680169,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-FILLET-L4-AFT-FY": {
+   "value": 3.8761246247087153,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-FILLET-L4-AFT-FZ": {
+   "value": 20.947157111586446,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-FILLET-L4-AFT-MX": {
+   "value": 0.006634457358406387,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-FILLET-L4-FORE-FX": {
+   "value": 21.14459042613545,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-FILLET-L4-FORE-FY": {
+   "value": 1.9971277366914681,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-FILLET-L4-FORE-FZ": {
+   "value": 12.619394201198688,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-FILLET-L4-FORE-MX": {
+   "value": 0.007718368927127103,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-FILLET-G2-SHARE": {
+   "value": 0.0001356427336950093,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-FILLET-G2-AFT-FX": {
+   "value": 2.412075972991673,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-FILLET-G2-AFT-FY": {
+   "value": 0.011551602079569945,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-FILLET-G2-AFT-FZ": {
+   "value": 6.425714763261468,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-FILLET-G2-AFT-MX": {
+   "value": 4.705967305560727e-05,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-FILLET-G2-FORE-FX": {
+   "value": 10.478250737350773,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-FILLET-G2-FORE-FY": {
+   "value": 0.053067256089975146,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-FILLET-G2-FORE-FZ": {
+   "value": 4.483447788469448,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-FILLET-G2-FORE-MX": {
+   "value": 0.0003040987132138686,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-FINS-MASS": {
+   "value": 476.1,
+   "limit": [
+    "<=",
+    487
+   ],
+   "pass": true
+  },
+  "CL-C4-D3-LAYER-ADD": {
+   "value": 0.0,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-SEC-T-L4": {
+   "value": 8.03600000111278,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-SEC-T-VS-C1": {
+   "value": 0.004449813621392185,
+   "limit": [
+    "<=",
+    0.05
+   ],
+   "pass": 1.0
+  },
+  "CL-C4-D3-EQ-RESID": {
+   "value": 4.20230517050868e-08,
+   "limit": [
+    "<=",
+    0.001
+   ],
+   "pass": 1.0
+  },
+  "CL-C4-D3-SWIRL-F": {
+   "value": 4.774235774628365,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-BRACE-G3": {
+   "value": 3.8758580413825987,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-MS-COLLAR-16": {
+   "value": 0.3004263324523473,
+   "limit": [
+    ">=",
+    0.0
+   ],
+   "pass": true
+  },
+  "CL-C4-D3-F-WHIRL-CRUISE": {
+   "value": 217.3460896977104,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-BRACE-ROUND-I": {
+   "value": 0.9178097245096173,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-BRACE-ROUND-MS": {
+   "value": 0.638361464131201,
+   "limit": [
+    ">=",
+    0.0
+   ],
+   "pass": true
+  },
+  "CL-C4-D3-MS-FACE-SHOE": {
+   "value": -0.3100089187875775,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-MS-FACE-SHOE-INTACT": {
+   "value": -0.3100089187875775,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-MS-FACE-SHOE-FS": {
+   "value": 0.583702818679688,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-MS-FACE-DRAWN-FINE": {
+   "value": -0.6037493702210159,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-SHOE-EXT": {
+   "value": 0.024999999999999994,
+   "limit": null,
+   "pass": null
+  },
+  "CL-C4-D3-BRACE-TAPE-MASS": {
+   "value": 1.3785097128678991,
+   "limit": null,
+   "pass": null
+  }
+ }
+}

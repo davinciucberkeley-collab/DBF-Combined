@@ -5,6 +5,13 @@ A1-R5 (landing_n_design **6.6**, CG range [0.0466, 0.0514] m, z 0.0185 m, pod no
 A3-R7 (`CL-A3-GROUPS`, `CL-A3-IYY` 0.0461 kg m2, basic 2.342 kg), C5's `CL-C5-SIM3D-SIDE-LOAD` 39.3 N. All loads
 limit unless marked ult (= 1.5 x limit). Inputs are live: a later A3/C5/D5 republish moves these by a few %.
 
+## Closure round 2026-11-14 (open)
+
+| ID | To | Request | Basis |
+|---|---|---|---|
+| CR-C1-40 | F4 (cc A1) | **Fixed-wing pitch-rate demand caps.** Set `PTCH2SRV_RMAX_UP` **35 °/s** and `PTCH2SRV_RMAX_DN` **20 °/s** in `K09L.param` and `subsystems/flight-software/params.json` `fsw.rate_max_fw_degs` **[150, 100, 100] → [150, 35, 20]** (roll unchanged). Add `fsw.rat_vt_degs` 30 (= `Q_TAILSIT_RAT_VT`) so C1 reads it instead of `ASM-C1-RAT-VT`. Ceilings: `CL-C1-Q-UP-MAX` 39.66 °/s, `CL-C1-Q-DN-MAX` 24.79 °/s at VD 27.2 and overshoot 1.25. Confirm in TUNING-PLAN: FBWA full-pull / full-push step at AIRSPEED_MAX, logged peak pitch rate ≤ 1.25 × cap. Confirm in SITL that angle-triggered Q-assist (`Q_ASSIST_ANGLE`, default 30°) does not lift the FW rate clamp at speed. | Closes CR-C1-08. `CL-C1-N-STALL-VD` 5.22 → **3.12** ≤ 3.4; `CL-C1-N-REACH-NEG-VD` −2.88 → **−1.21** ≥ −1.5. ArduPilot clamps the total pitch-rate demand incl. turn coordination (SRC-C1-AP-PITCHCTL, Plane-4.7.1, checked 2026-11-14). A 45° turn at 17 m/s needs 23.4 °/s. |
+| CR-C1-41 | C6 | Keep `CL-C6-DOG-FUSE-T` **≤ 6.55 N m** (C1's copy `ASM-C1-PROP-STRIKE-T`; A1 decision on C6.md §6, 10 mm sector dog at 10° cant; was 3.72). If it rises, send the new value. | `CL-C1-P1-FUSE-MATCH` 6.55. P1 at 6.55 stays inside the C1 sizing envelope at the tube, block and spar (C1.md §6). |
+
 ## New in R5 (open)
 
 | # | To | What | Why / numbers |
@@ -85,5 +92,5 @@ limit unless marked ult (= 1.5 x limit).
 |---|---|---|---|
 | CR-C1-02 | H3, C5 | Parked stance: μ needed 0.68 vs mat 0.70 (3 % margin); lay flat above 5 m/s (C5 S1–S8) | Forwarded to H2/H3 |
 | CR-C1-07 | E1, H1 | Stand test, fresh pack, 11×5.5MR, F4 cap and limiter as flown (`T-C1-THRUST-FRESH`) | Open |
-| CR-C1-08 | F4 | `ARSPD_FBW_MAX` and pitch/elevon limits above VA (stall-line n at VD 5.22 at R4, was 7.3 at VD 32.1; D-50 holds it by envelope); body rates ≤ 3 rad/s; confirm the spin map and the cant sense | Open |
+| CR-C1-08 | F4 | `ARSPD_FBW_MAX` and pitch/elevon limits above VA (stall-line n at VD 5.22 at R4, was 7.3 at VD 32.1; D-50 holds it by envelope); body rates ≤ 3 rad/s; confirm the spin map and the cant sense | Pitch part → CR-C1-40 (closure 2026-11-14) |
 | CR-C1-18 | B2 | `loads_spanwise.json` at c 0.32 with the R3 CG range | Done (R4) |

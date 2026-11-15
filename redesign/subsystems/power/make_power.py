@@ -59,11 +59,13 @@ def jumper_mass_g():
     return round(2 * sum(L['jumper_len_m']) * gpm, 1)       # + and - conductors, W-MAIN-1 and W-MAIN-2
 
 
-def cap_cg(st):
+def cap_cg(st, k=0):
+    """k = 0: first can at the ESC centre height; k = 1 / -1: second / third can cap_pitch_m toward the wing / tip (R6)."""
     x0 = FIN['x0_m']['value'] + FIN['len_m']['value'] + L['cap_gap_x_m']
     face = get('fins.y_m', 'm') + get('fins.layers', '-') * get('fins.board_t_m', 'm') / 2
     sy, sz = (1 if st[1] == 'R' else -1), (1 if st[0] == 'U' else -1)
-    return [round(x0 + L['cap_m'][0] / 2, 4), round(sy * (face + L['cap_m'][1] / 2), 4), round(sz * FIN['z_m']['value'], 4)]
+    return [round(x0 + L['cap_m'][0] / 2, 4), round(sy * (face + L['cap_m'][1] / 2), 4),
+            round(sz * (FIN['z_m']['value'] - k * L['cap_pitch_m']), 4)]
 
 
 AS_G = round(L['as150u_mass_g'] + jumper_mass_g(), 1)
@@ -75,10 +77,10 @@ PARTS = [
      'mass UNVERIFIED (listings 503-680 g, weigh on arrival); CG = pack centroid at the D-24 station; the body also shows the leads and the AS150U pack half'),
     ('PWR-002', 'Main disconnect AS150U aircraft half + two 10 AWG main jumpers', 'buy', 'solder, bond into PWR-006',
      'electronics (bought)', AS_G, 'bus', c(G['as_air']), 5.0, 'team/I1/BOM.csv#F01 (Amass AS150U pair)',
-     'AS150U half %.1f g EST + 10 AWG jumpers %.1f g (W-MAIN-1 0.030 m + W-MAIN-2 0.050 m, + and -); the wires are harness edges E-HRN-11/12, their mass is booked here (CR-F1-18)' % (L['as150u_mass_g'], jumper_mass_g())),
+     'AS150U half %.1f g EST + 10 AWG jumpers %.1f g (W-MAIN-1 %.3f m AS150U -> power-board input + W-MAIN-2 %.3f m power-board output -> bus bars, + and -); the wires are harness edges E-HRN-11/12, their mass is booked here (CR-F1-18)' % (L['as150u_mass_g'], jumper_mass_g(), L['jumper_len_m'][0], L['jumper_len_m'][1])),
     ('PWR-003', 'Power module: CoreWing F405 Wing V2 power board (V/I sense, servo BEC), separated from the FC stack', 'buy', 'separate from the stack, set the servo-BEC jumper to 6 V, foam-tape on PWR-006',
      'electronics (bought)', L['board_mass_g'], 'bus', c(G['board']), 0.0, 'team/I1/BOM.csv#A01 (part of the CoreWing V2 stack, F3)',
-     '90 A cont / 215 A peak sense, 64 A/V (CL-F3-SENSE-*; CoreWing manual V2.1); servo BEC 8 A cont / 14 A peak on the 6 V jumper feeds the elevon servos through the FC Vx rail (D-74, CL-F1-SERVO-BEC-RATING; Vx >= 5.8 V at BOARD-CHECK.md step 7); outline 52 x 32 mm (manual), M2 holes 30.5 x 26.5; drawn 52 mm pads-aft in keep-out KO-PWR-BOARD 56 x 34 x 24 mm (deck re-drawn to it, D-74), fits split (PDB alone) and whole stack (SPEC.md); height and link pitch measured at BOARD-CHECK.md; mass ~28 g EST (listing 11.4 g) moved from AVN-001 (F3 CR-F3-13, CR-F1-19)'),
+     '90 A cont / 215 A peak sense, 64 A/V (CL-F3-SENSE-*; CoreWing manual V2.1); servo BEC 8 A cont / 14 A peak on the 6 V jumper feeds the elevon servos through the FC Vx rail (D-74, CL-F1-SERVO-BEC-RATING; Vx >= 5.8 V at BOARD-CHECK.md step 7); outline 52 x 32 mm (manual), M2 holes 30.5 x 26.5; drawn 52 mm pads-aft in keep-out KO-PWR-BOARD 56 x 34 x 24 mm (deck re-drawn to it, D-74), fits split (PDB alone) and whole stack (SPEC.md); height and link pitch measured at BOARD-CHECK.md; mass ~28 g EST (listing 11.4 g) moved from AVN-001 (F3 CR-F3-13, CR-F1-19). R7: restored by D-173b'),
     ('PWR-004', 'Bus board: FR4 strip with two tinned 8 AWG bus bars (+ / -)', 'make', 'shear FR4, file isolation slot, solder bars',
      'FR4 + copper (made)', L['bus_mass_g'], 'bus', c(G['bus']), 3.0, 'FR4 1 oz single-sided sheet + 8 AWG offcut (team/I1/BOM.csv#F02, F08 replaced)',
      '4 ESC pigtails (XT30U female at the pod side exits, D-74) and the main input solder to the bars on the bench; 36 x 16 mm between D2 boss rows'),
@@ -89,7 +91,9 @@ PARTS = [
 # D-74 (params/CHANGE-LOG.md): the UBEC PWR-005 and its 5 A fuse PWR-007 are deleted; the power board's servo BEC
 # (6 V jumper) feeds the servos through the FC Vx rail. Fallback only if BOARD-CHECK.md step 7 fails (BOM gate X12):
 # then F1 names a 4S-input UBEC and D2 gives it its own zone; the ids PWR-005 / PWR-007 stay retired.
-CAPS = [('PWR-008-' + s, 'ESC capacitor 680 uF 25 V low-ESR, %s' % s, cap_cg(s)) for s in ST]
+CAPS = [('PWR-008-' + s, 'ESC capacitor 560 uF 35 V hybrid polymer (Rubycon 35PZJ560M10X15), first can, %s' % s, cap_cg(s)) for s in ST]
+CAPS += [('PWR-009-' + s, 'ESC capacitor 560 uF 35 V hybrid polymer (Rubycon 35PZJ560M10X15), second can, %s' % s, cap_cg(s, 1)) for s in ST]
+CAPS += [('PWR-010-' + s, 'ESC capacitor 560 uF 35 V hybrid polymer (Rubycon 35PZJ560M10X15), third can, %s' % s, cap_cg(s, -1)) for s in ST]
 
 HARDWARE = [
     ('PWR-101', 'M3x18 pan head screw, nylon PA66', 6, 'buy', '-', 'nylon PA66', 0, 0.10, 'any (nylon M3 assortment)', '4 + 2 spare; mass inside PWR-006'),
@@ -119,7 +123,7 @@ def tape(item, load, insp, count=1):
 def main():
     parts = [part(p[0], p[1], p[2], p[4], p[5], p[6], p[7], p[10]) for p in PARTS]
     parts += [part(i, n, 'buy', 'electronics (bought)', L['cap_mass_g'], 'sink', cg,
-                   'at the ESC power pads, leads <= 20 mm; on the outboard face beside the ESC, never under its strap')
+                   'R8: three cans per ESC side by side (L6 rejected, team/F1 CALC-F1-ESC-CAP); at the ESC power pads, legs <= 20 mm, the second and third cans paralleled at the first can legs; on the outboard face beside the ESC, never under its strap')
               for i, n, cg in CAPS]
     s = L['screw']
     eng = s['len_mm'] - s['washer_mm'] - s['deck_mm'] - s['spacer_mm']
@@ -136,7 +140,7 @@ def main():
                   'load_case': 'field unplug / plug', 'sized_by': 'F1 (CALC-PWR-PARK)'},
          'retention': tape('1 nylon tie 2.5 mm through two floor slots over the housing', 'secondary', 'housing does not move when the pack half is pulled: pre-flight card')},
         {'id': 'E-PWR-02', 'part_a': 'PWR-003', 'part_b': 'PWR-006', 'via': 'CT-TAPE-FOAM', 'owner': 'power',
-         'notes': 'power board on 3M foam tape on the deck, battery/output pads at the aft edge over the wire window; one tie round board and deck through two deck slots. Inside KO-PWR-BOARD (power SPEC.md); whole-stack fallback (case U): stack on 4 gel cubes + strap instead of tape. Replaces the R2 tape-to-tray (CR-F1-16); the frame screws sit under the board, so tape the board after E-PWR-03',
+         'notes': 'power board on 3M foam tape on the deck, battery/output pads at the aft edge over the wire window; one tie round board and deck through two deck slots. Inside KO-PWR-BOARD (power SPEC.md); whole-stack fallback (case U): stack on 4 gel cubes + strap instead of tape. Replaces the R2 tape-to-tray (CR-F1-16); the frame screws sit under the board, so tape the board after E-PWR-03. R7: restored by D-173b',
          'retention': tape('foam tape 1.1 mm, full underside + 1 tie', '28 g x 12.75 g crash = 3.5 N', 'board flat, tie tight: weekly')},
         {'id': 'E-PWR-03', 'part_a': 'PWR-006', 'part_b': 'POD-002', 'via': 'CT-M3-SHCS-INSERT', 'owner': 'power',
          'notes': 'frame deck on four 10 mm nylon spacers over D2\'s four PDB-plate bosses (25 mm pattern, inserts at z %.4f); nylon keeps the stack insulating next to the bus bars and non-magnetic. Supersedes the C6 M3x10 A2 stack drawn for a bought PCB (CR-F1-20)' % G['zboss'],
@@ -152,11 +156,19 @@ def main():
          'retention': tape('foam tape 1.1 mm, full underside', '7.3 g x 12.75 g = 0.9 N; lead pulls taken by F2 ties', 'with the deck off (bench): board flat, no lifted corner')},
     ]
     for i, st in enumerate(ST):
+        edges.append({'id': 'E-PWR-%d' % (19 + i), 'part_a': 'PWR-010-' + st, 'part_b': 'FIN-001-' + st, 'via': 'CT-TAPE-FOAM', 'owner': 'power',
+                      'notes': 'third can (R8) beside the first, %.0f mm toward the fin tip, same x; legs paralleled at the first can (harness edge, F2)' % (L['cap_pitch_m'] * 1000),
+                      'retention': tape('foam tape 1.1 mm + the packing-tape strip over the three cans', '2.2 g x 12.75 g = 0.3 N; prop-wash drag < 0.1 N', 'pre-flight: caps tight on the fin')})
+    for i, st in enumerate(ST):
+        edges.append({'id': 'E-PWR-%d' % (15 + i), 'part_a': 'PWR-009-' + st, 'part_b': 'FIN-001-' + st, 'via': 'CT-TAPE-FOAM', 'owner': 'power',
+                      'notes': 'second can (R6 / R7) beside the first, %.0f mm toward the wing, same x; legs paralleled at the first can (harness edge, F2)' % (L['cap_pitch_m'] * 1000),
+                      'retention': tape('foam tape 1.1 mm + the packing-tape strip over both cans', '2.2 g x 12.75 g = 0.3 N; prop-wash drag < 0.1 N', 'pre-flight: caps tight on the fin')})
+    for i, st in enumerate(ST):
         edges.append({'id': 'E-PWR-%d' % (11 + i), 'part_a': 'PWR-008-' + st, 'part_b': 'FIN-001-' + st, 'via': 'CT-TAPE-FOAM', 'owner': 'power',
                       'notes': 'cap laid along x on the half-fin outboard face %.0f mm aft of the ESC pad, clear of the ESC strap and FET face (E3); leads to the ESC power pads <= 20 mm (harness edge, CR-F1-18)' % (L['cap_gap_x_m'] * 1000),
                       'retention': tape('foam tape 1.1 mm + 1 packing-tape strip over the can', '2.2 g x 12.75 g = 0.3 N; prop-wash drag < 0.1 N', 'pre-flight: cap tight on the fin')})
     doc = {'schema': 'dbf-interfaces/1', 'subsystem': 'power',
-           '_note': 'GENERATED by subsystems/power/make_power.py (F1, PWR-R1 + D-74) - edit the script, not this file. Electrical edges (pack plug, main jumpers, ESC leads with their XT30U, power-board link, cap leads) are harness edges (F2, D-20); power acknowledges E-HRN-10...16, -23, -34...37. D-74 deleted the UBEC PWR-005, its fuse PWR-007, their edges E-PWR-04 / -07 and the harness edges E-HRN-21 / -22 / -33.',
+           '_note': 'GENERATED by subsystems/power/make_power.py (F1, PWR-R1 + D-74) - edit the script, not this file. Electrical edges (pack plug, main jumpers, ESC leads with their XT30U, power-board link, cap leads) are harness edges (F2, D-20); power acknowledges E-HRN-10...16, -23, -34...37. R7 (D-173b): PWR-003 and W-PMOD restored after the D-161c Kakute. D-74 deleted the UBEC PWR-005, its fuse PWR-007, their edges E-PWR-04 / -07 and the harness edges E-HRN-21 / -22 / -33.',
            'parts': parts, 'connection_types': cts, 'edges': edges, 'acknowledges': ['E-POD-05', 'E-POD-12'] + ['E-HRN-%02d' % i for i in list(range(10, 17)) + [23] + list(range(34, 38))]}
     with open(os.path.join(HERE, 'interfaces.json'), 'w', encoding='utf-8') as f:
         json.dump(doc, f, indent=1, ensure_ascii=False)
@@ -166,11 +178,15 @@ def main():
         w.writerow(['part_id', 'name', 'qty', 'make_or_buy', 'process', 'material', 'mass_g', 'unit_cost_usd', 'vendor_or_file', 'notes'])
         for p in PARTS:
             w.writerow([p[0], p[1], 1, p[2], p[3], p[4], p[5], p[8], p[9], p[10]])
-        w.writerow(['PWR-008', 'ESC capacitor 680 uF 25 V low-ESR (UR/UL/LR/LL)', 4, 'buy', 'solder at the ESC pads, foam-tape', 'electronics (bought)',
-                    L['cap_mass_g'], 1.0, 'team/I1/BOM.csv#F07 (x5, 1 spare)', 'one per ESC, leads <= 20 mm'])
+        w.writerow(['PWR-008', 'ESC capacitor 560 uF 35 V hybrid polymer, Rubycon 35PZJ560M10X15 (lead wire), first can (UR/UL/LR/LL)', 4, 'buy', 'solder at the ESC pads, foam-tape', 'electronics (bought)',
+                    L['cap_mass_g'], 2.83, 'team/I1/BOM.csv#F07 (R8: 13 pcs incl. 1 spare; $2.83 at qty 1, ichome.com listing; Digi-Key ~3 700 in stock, 2026-11-14)', 'R7: replaces the Panasonic FR 680 uF 25 V (rated 1.79 A; 4.4 A per can at hover); legs <= 20 mm'])
+        w.writerow(['PWR-009', 'ESC capacitor 560 uF 35 V hybrid polymer, Rubycon 35PZJ560M10X15 (lead wire), second can (UR/UL/LR/LL)', 4, 'buy', 'solder in parallel with PWR-008, foam-tape', 'electronics (bought)',
+                    L['cap_mass_g'], 2.83, 'team/I1/BOM.csv#F07', 'the D-160 second can (was A3 adder PWR-A3-CAPS2); L6 one-can option rejected (team/F1 CALC-F1-ESC-CAP)'])
+        w.writerow(['PWR-010', 'ESC capacitor 560 uF 35 V hybrid polymer, Rubycon 35PZJ560M10X15 (lead wire), third can (UR/UL/LR/LL)', 4, 'buy', 'solder in parallel with PWR-008, foam-tape', 'electronics (bought)',
+                    L['cap_mass_g'], 2.83, 'team/I1/BOM.csv#F07', 'R8 (D-174): needed for the 2 s single-motor transient at the 0.81 cap (team/F1 CL-F1-CAP-I-TRANS, CL-F1-CAP2-I-TRANS-INFO)'])
         for h in HARDWARE:
             w.writerow(h)
-    tot = sum(p[5] for p in PARTS) + 4 * L['cap_mass_g']
+    tot = sum(p[5] for p in PARTS) + 4 * L['cap_n_per_esc'] * L['cap_mass_g']
     print('power: %d nodes, %d edges, flying mass %.1f g (allocation %s g)' % (len(parts), len(edges), tot, get('mass.allocation_g.power', 'g')))
 
 

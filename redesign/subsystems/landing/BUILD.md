@@ -61,19 +61,20 @@ R5 shoes, pistons and cartridges do not fit R6 parts. Scrap them; do not mix.
    plane; turn it over for the lower feet). **Stand it on the rim end** so the layers stack along the sleeve axis
    (CR-C5-18: the side load bends the walls within the layers). 0.2 mm layers, 1.2 mm walls = 3 perimeters, 100 %
    solid; keep the modelled R 2.0 inside fillets and R 1.0 leg fillets (the FEA peak sits in those corners). Supports only
-   under the two leg ends at the TE. Check: leg gap 10.0 mm, legs 7 mm deep, cheek gap 12.0 mm, wall 1.2 ± 0.1 mm and rim 4.6 mm
+   under the two leg ends at the TE. Check: leg gap 10.0 mm, legs 30 mm deep (D-106), cheek gap 12.0 mm, wall 1.2 ± 0.1 mm and rim 4.6 mm
    (y sides) / 3.4 mm (roof) / 0.4 mm (floor) at the rim end, snap-window corners clean (no stringing or notch), sleeve 19.1 × 14.4 mm outside; a piston slides in by hand.
 2. **Print the pistons** (`GER-002`): 2 + 4 spare in **orange** PETG (upper), 2 + 4 spare in **blue** (lower). Flange
    on the bed. Check: the 1.4 mm corner chamfers are there (a sharp tine corner binds on the sleeve fillet); both 6.5 mm
    fingers free (clear the 0.8 mm slots with a blade); the hook ramps face forward (away from the flange); the piston
-   slides the full 38 mm. Knife the replace groove all round the tine 3 mm aft of the rim position (35 mm from the flange).
-3. **Weigh**: shoe ≤ 9.8 g bare, piston ≤ 3.4 g. Heavier: check the extrusion multiplier before printing more.
+   slides the full 43 mm (R9). Scribe the replace line all round the tine 6 mm aft of the rim position (37 mm from the
+   flange face; on the solid wall, 4 mm ahead of the inspection window, which starts 10 mm aft of the rim).
+3. **Weigh**: shoe ≤ 14.2 g bare (14.0 `EST`, R9), piston ≤ 4.1 g (3.89 `EST`). Heavier: check the extrusion multiplier before printing more.
 4. **Cut the cartridges**: from 2 in F-400 cut 14.5 × 9.8 mm sticks with the stick axis **through the board
-   thickness**, **35.0 mm** long, **3 per foot**. Type U (`GER-003`): solid, orange stripe. Type L (`GER-008`): twist
+   thickness**, **40.0 mm** long, **3 per foot** (R9, 117 mm cartridge). Type U (`GER-003`): solid, orange stripe. Type L (`GER-008`): twist
    the sharpened 5/32 in brass tube through each segment along its axis, push the plug out, blue stripe. Check: square
    ends; bore centred ± 0.5 mm.
 4a. **Pre-crush every segment 1 mm** (CR-C5-10): stand it on end on the drill-press table under a flat 20 × 15 mm
-   block, set the depth stop, press once to 34.0 mm, release. Check: 34.0 ± 0.3 mm after 1 min (102.0 mm per foot
+   block, set the depth stop, press once to 39.0 mm, release. Check: 39.0 ± 0.3 mm after 1 min (117.0 mm per foot
    incl. 0.5 mm preload). Make the field-kit cartridges (16 + 16 sets of three) the same way.
 5. **Glue the cartridges into the pistons** (`E-GER-09…12`): orange piston + type U, blue piston + type L only. Two
    drops of foam-safe CA on the piston floor, first segment home, one drop between segments. 2 min.
@@ -84,25 +85,25 @@ R5 shoes, pistons and cartridges do not fit R6 parts. Scrap them; do not mix.
 8. **Bond the shoes** (`E-GER-01…04`): epoxy + silica on the legs, floor, back-wall face and cheeks; slide on; align the
    sleeve axis with the wing TE line using a straight edge; wipe the bore clean. Tape; 24 h before landing loads.
 9. **Fit the inserts** (`E-GER-05…08`): orange up (UR, UL), blue down (LR, LL). Push in until both hooks click into
-   their windows. Check: flange-to-rim gap 38 ± 1 mm on all four; the four pads lie in one plane (no rocking).
+   their windows. Check: flange-to-rim gap 43 ± 1 mm on all four; the four pads lie in one plane (no rocking).
 10. **Corner caps** (`GER-007`, TPU): push over each wingtip TE corner outboard of the elevon end (do not touch the
     elevon); two wraps of filament tape over the legs. Nothing on the lower surface at \|y\| 0.45 m (CG-jig patch).
-11. **Record**: weigh 4 feet + 2 caps (59.1 g expected, ≤ 60 g allocation; tell A3); photograph each foot.
+11. **Record**: weigh 4 feet + 2 caps (79.5 g `EST` expected, R9; allocation 77 g, A1 asked 80 g; tell A3); photograph each foot.
 
 ## Field replacement (≤ 10 min, 1.5 mm hex key)
 
 | # | Action | Check |
 |---|---|---|
-| 1 | Replace groove inside the rim → replace; visible → fly | groove at the rim = 3 mm used (C5 pair-first stroke + 3 mm guard left) |
+| 1 | Replace line inside the rim → replace; visible → fly | line at the rim = 6 mm used: C5's honest mark, one more touchdown plus the hard landing still ends ≥ 3 mm short of the rim (`CL-C5-MARK-HONEST-MARGIN`, D-165) |
 | 2 | Hooks in their windows: push each hook in with the hex key, pull the insert aft. Hooks not visible (set > 1 mm): pull the insert aft until both hooks snap into the windows, then release them | insert comes out with its cartridge |
-| 3 | Push in a spare **of the same colour** (orange up, blue down) until both click | 38 mm gap; pads level |
+| 3 | Push in a spare **of the same colour** (orange up, blue down) until both click | 43 mm gap; pads level |
 | 4 | Shoe cracked (rim, window, roof) or bond lifting → ground the aircraft; razor-saw the shoe off, sand, step 8, 24 h | no crack |
 
 Normal landings at `Q_LAND_SPEED` 50 cm/s crush ≈ 1.3 mm each; at ≤ 30 cm/s nothing (`CL-D5-V-NO-SET`, CR-D5-21).
-Check the groove after every landing (C5 S7).
+Check the replace line after every sortie (≤ 2 touchdowns per sortie, `requirements.touchdowns_per_sortie`, D-165).
 
 ## Animation
 
 One 4 s clip for the build manual (J3): the orange insert sliding into the shoe and clicking, then the crush stroke
-(`E-GER-05` slider 0 → −38 mm) with the hook camming under the window edge and the flange stopping on the rim; the fin
+(`E-GER-05` slider 0 → −43 mm) with the hook camming under the window edge and the flange stopping on the rim; the fin
 ghosted, the insert highlighted.

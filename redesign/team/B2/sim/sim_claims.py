@@ -13,7 +13,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "proofs"))
 import proofkit as pk  # noqa: E402
 
-kit = pk.Kit(__file__, params=["../../../params/params.json", "../params.json", "params.json", "params.zcg.json",
+kit = pk.Kit(__file__, params=["../../../params/params.json", "../params.json", "params.json", "params.zcg.json", "params.trip.json",
                                "../../../subsystems/mechanisms/params.json", "../../B1/params.json"],
              out="claims.sim.json")
 G_KGF = 9.80665
@@ -126,13 +126,30 @@ def recon(w, we, b1, np_z, np_0, np_b1, np_a0, dprop, xa, xw):
 
 @kit.calc("CALC-B2R3-STALL-TURB", title="Stall at the forward CG if the boundary layer were turbulent from the LE",
           equation="CLmax' = CLmax_fwd * clmax_turb / clmax_free; Vs' = Vs_fwd sqrt(clmax_free / clmax_turb); "
-                   "clmax_turb = XFOIL tripped at 2 % c (lower bound) or SU2 SA L2 sweep max",
-          inputs={"vs": "CL-B2R3-VS-GATE-FWD", "su2": "P:b2sim.cfd.clmax_2d", "trip": "P:b2sim.xfoil.clmax_tripped",
+                   "clmax_turb = lowest converged XFOIL tripped clmax at Re 2.6e5 over the trip cases of turbulator.py (closure round; was the unconverged xtr 0.02 point 1.095) or SU2 SA L2 sweep max",
+          inputs={"vs": "CL-B2R3-VS-GATE-FWD", "su2": "P:b2sim.cfd.clmax_2d", "trip": "P:b2sim.trip.clmax_tripped_min",
                   "xf": "P:b2.xfoil.clmax_2d_stall"},
           units={"vs": "m/s"})
 def stall_turb(vs, su2, trip, xf):
     return {"ratio_trip": trip / xf, "Vs_trip": vs * math.sqrt(xf / trip),
             "ratio_su2": su2 / xf, "Vs_su2": vs * math.sqrt(xf / su2), "su2_over_trip": su2 / trip}
+
+
+@kit.calc("CALC-B2C-GATES", title="Tripped stall and the 1.3 Vs gate at both CG limits, with the airspeed error (final re-run)",
+          equation="Vs_trip = Vs sqrt(clmax_free / clmax_trip) at the forward (cg.x_range_m[0]) and aft (cg.x_range_m[1]) "
+                   "limits ; V_1.3 = f Vs_trip ; gate: V_1.3 + e <= AIRSPEED_MIN (transition_min_ms), e = "
+                   "requirements.airspeed_err_max_ms ; stall bound re-derived from the integer AIRSPEED_MIN: "
+                   "(AIRSPEED_MIN - e) / f",
+          inputs={"vf": "CL-B2R3-VS-GATE-FWD", "va": "CL-B2R3-VS-GATE-AFT", "trip": "P:b2sim.trip.clmax_tripped_min",
+                  "xf": "P:b2.xfoil.clmax_2d_stall", "f": "P:requirements.transition_factor",
+                  "e": "P:requirements.airspeed_err_max_ms", "amin": "P:performance.transition_min_ms"},
+          units={"vf": "m/s", "va": "m/s", "e": "m/s", "amin": "m/s"})
+def gates(vf, va, trip, xf, f, e, amin):
+    k = math.sqrt(xf / trip)
+    vtf, vta = vf * k, va * k
+    return {"vs_trip_fwd": vtf, "vs_trip_aft": vta, "v13_trip_fwd": f * vtf, "v13_trip_aft": f * vta,
+            "gate_fwd_margin": amin - e - f * vtf, "gate_aft_margin": amin - e - f * vta,
+            "vs_bound_rederived": (amin - e) / f, "v13_clean_fwd": f * vf, "v13_clean_aft": f * va}
 
 
 kit.assumption("ASM-B2R3-FB2", "Second stall fallback (pre-computed, CDR-15 / CDR-AE-06)",
@@ -231,16 +248,16 @@ kit.claim("CL-B2R3-CLMAX-FWD", "Trimmed CLmax at the forward CG limit and the CG
 kit.claim("CL-B2R4-ELEV-FWD", "Elevon at the trimmed CLmax, forward CG limit, CG height", calc=ST,
           output="elev_fwd", unit="deg", how="T-B2-STALL: log the servo output at the break",
           note="B3's forward-limit criterion is 12.5 deg of up-elevon at the trimmed stall")
-kit.claim("CL-B2R3-VS-GATE-FWD", "Stall at 2.6 kg, forward CG limit, CG height (as designed)", calc=ST,
+kit.claim("CL-B2R3-VS-GATE-FWD", "Stall at the gate mass, forward CG limit, CG height (as designed)", calc=ST,
           output="Vs_fwd_gate", unit="m/s", limit=("<=", "P:requirements.stall_max_ms"), verifies=["R-STALL"],
           parts=WING, how=how_stall)
-kit.claim("CL-B2R4-VS-GATE-FWD-ZLO", "Stall at 2.6 kg, forward CG limit, bottom of the CG height range", calc=ST,
+kit.claim("CL-B2R4-VS-GATE-FWD-ZLO", "Stall at the gate mass, forward CG limit, bottom of the CG height range", calc=ST,
           output="Vs_fwd_zlo_gate", unit="m/s", limit=("<=", "P:requirements.stall_max_ms"), parts=WING,
           how=how_stall, note="corner of the CG box: a lower CG needs more up-elevon at the stall")
-kit.claim("CL-B2R4-VS-GATE-FWD-Z0", "Stall at 2.6 kg, forward CG limit, CG on the chord plane (old basis)", calc=ST,
+kit.claim("CL-B2R4-VS-GATE-FWD-Z0", "Stall at the gate mass, forward CG limit, CG on the chord plane (old basis)", calc=ST,
           output="Vs_fwd_z0_gate", unit="m/s", parts=WING, how=how_stall,
           note="information: the z = 0 model A1 quoted (~12.05); not a flight case since D-62")
-kit.claim("CL-B2R3-VS-GATE-AFT", "Stall at 2.6 kg, aft CG limit, CG height (as designed)", calc=ST,
+kit.claim("CL-B2R3-VS-GATE-AFT", "Stall at the gate mass, aft CG limit, CG height (as designed)", calc=ST,
           output="Vs_aft_gate", unit="m/s", limit=("<=", "P:requirements.stall_max_ms"), verifies=["R-STALL"],
           parts=WING, how=how_stall)
 kit.claim("CL-B2R4-X-FWD-AT-ZLO", "Forward CG x that just meets R-STALL at the bottom of the CG height range", calc=ST,
@@ -248,7 +265,7 @@ kit.claim("CL-B2R4-X-FWD-AT-ZLO", "Forward CG x that just meets R-STALL at the b
                                                      "or raises cg.z_range_m[0] to CL-B2R4-Z-MIN-AT-XFWD")
 kit.claim("CL-B2R4-Z-MIN-AT-XFWD", "Lowest CG height that meets R-STALL at the forward CG limit", calc=ST,
           output="z_min_stall_at_xfwd", unit="m", how="CG height from the balance rig (T-A3-CG-BALANCE)")
-kit.claim("CL-B2R4-VS-GATE-TARGET", "Stall at 2.6 kg, CG target, CG height", calc=ST, output="Vs_target_gate",
+kit.claim("CL-B2R4-VS-GATE-TARGET", "Stall at the gate mass, CG target, CG height", calc=ST, output="Vs_target_gate",
           unit="m/s", limit=("<=", "P:requirements.stall_max_ms"), parts=WING, how=how_stall)
 kit.claim("CL-B2R3-VS-PRED", "Stall at the A3 predicted mass and CG", calc=ST,
           output="Vs_pred_predm", unit="m/s", limit=("<=", "P:requirements.stall_max_ms"), parts=WING,
@@ -272,16 +289,31 @@ kit.claim("CL-B2R4-NP-Z-SHIFT", "Props-off NP shift from the CG height 0.0185 m 
 kit.claim("CL-B2R4-DPROP-DRIFT", "Props/pod NP term used in the AVL runs vs B3's current claims", calc=RC,
           output="dprop_drift", unit="m", limit=("<=", 0.0002),
           how="If it fails, re-run stall_zcg.py (B3 changed CL-B3-V-XNP or -XNP-AERO)")
-kit.claim("CL-B2R3-VTR-GATE-FWD", "1.3 Vs at 2.6 kg, forward CG, CG height, vs transition speed", calc=ST,
+kit.claim("CL-B2R3-VTR-GATE-FWD", "1.3 Vs at the gate mass, forward CG, CG height, vs transition speed", calc=ST,
           output="Vtr_fwd_gate", unit="m/s", limit=("<=", "P:performance.transition_min_ms"),
           verifies=["R-TRANSITION"], parts=WING,
           how="F4 AIRSPEED_MIN 15.6 must be >= this; transition logs show airspeed >= 1.3 Vs")
-kit.claim("CL-B2R3-VS-GATE-FWD-TURB", "Stall at 2.6 kg, forward CG, turbulent-LE section (XFOIL tripped)",
+kit.claim("CL-B2R3-VS-GATE-FWD-TURB", "Stall at the gate mass, forward CG, tripped section (lowest converged XFOIL trip case)",
           calc="CALC-B2R3-STALL-TURB", output="Vs_trip", unit="m/s", parts=WING,
-          how="Planning baseline (board decision B6, CDR-15): the wing has a tape seam at x/c about 0.05, so the "
-              "tripped section is the likelier case. T-B2-STALL decides",
-          note="B6: planning baseline until T-B2-STALL (AIRSPEED_MIN / CRUISE 17). The free-transition value "
-               "CL-B2R3-VS-GATE-FWD stays the R-STALL design value. Exceeds 12.3 m/s")
+          how="Planning baseline (board decision B6, CDR-15), now the design state: the wing carries a lower-surface "
+              "turbulator (closure round, CL-B2C-TRIP-DCMDCL) and may have an upper tape seam at x/c 0.05. "
+              "T-B2-STALL with the tape fitted decides",
+          note="Closure round: the trip clmax is the lowest converged forced-transition case of turbulator.py "
+               "(upper 0.02-0.10 / lower 0.05-0.60, Re 2.6e5: 1.246, ratio 0.992). The old 1.095 was the last converged "
+               "alpha of an xtr 0.02 run that stops at 9.5 deg with cl still rising, not a clmax; with it the value "
+               "would be 12.94 m/s, still under CL-B2R3-BASE-VS-KEEP 13.08")
+kit.claim("CL-B2C-VS-TRIP-AFT", "Stall at the gate mass, aft CG limit, tripped section (final re-run)", calc="CALC-B2C-GATES",
+          output="vs_trip_aft", unit="m/s", limit=("<=", "P:requirements.stall_max_ms"), parts=WING,
+          how="T-B2-STALL with the lower-surface turbulator fitted")
+kit.claim("CL-B2C-V13-TRIP-FWD", "1.3 x tripped stall, forward CG, plus the airspeed error, against AIRSPEED_MIN", calc="CALC-B2C-GATES",
+          output="gate_fwd_margin", unit="m/s", limit=(">=", 0.0), verifies=["R-TRANSITION"], parts=WING,
+          how="AIRSPEED_MIN 17 minus airspeed_err_max_ms minus 1.3 Vs_trip; transition logs show airspeed >= 1.3 Vs")
+kit.claim("CL-B2C-V13-TRIP-AFT", "1.3 x tripped stall, aft CG, plus the airspeed error, against AIRSPEED_MIN", calc="CALC-B2C-GATES",
+          output="gate_aft_margin", unit="m/s", limit=(">=", 0.0), verifies=["R-TRANSITION"], parts=WING,
+          how="As CL-B2C-V13-TRIP-FWD")
+kit.claim("CL-B2C-VS-BOUND", "Stall bound re-derived from AIRSPEED_MIN 17 and the airspeed error: (17 - 0.5) / 1.3 (information)",
+          calc="CALC-B2C-GATES", output="vs_bound_rederived", unit="m/s",
+          how="Information: requirements.stall_max_ms 12.3 (D-96, AIRSPEED_MIN 16 / 1.3) is tighter than this and is still met")
 kit.claim("CL-B2R3-BASE-VS-KEEP", "Largest gate-mass stall the B6 baseline AIRSPEED_MIN 17 holds (1.3 Vs)",
           calc="CALC-B2R3-FALLBACK", output="vs_keep_17", unit="m/s", limit=(">=", "CL-B2R3-VS-GATE-FWD-TURB"),
           verifies=["R-STALL", "R-TRANSITION"], parts=WING,
@@ -357,6 +389,71 @@ kit.claim("CL-B2R3-SCHRENK-RATIO", "Root bending, Schrenk / AVL", calc="CALC-B2R
           unit="-", how="Hand check of the AVL loading")
 kit.claim("CL-B2R3-CLA-HAND-RATIO", "Lift slope, AVL / Helmbold", calc="CALC-B2R3-CLA-HAND", output="ratio",
           unit="-", how="Expected 0.9-1.0 (rectangular, elevon gaps, fins)")
+
+# ---------------------------------------------------------------- closure round 2026-11-14: turbulator (D-163, D163-3)
+kit.source("SRC-B2-TRIPS-GOPAL", "Gopalarathnam, Broughton, McGranahan, Selig, Design of Low Reynolds Number Airfoils "
+           "with Trips, J. Aircraft 40(4), 2003", "web",
+           url="https://m-selig.web.engr.illinois.edu/pubs/GopalarathnamEtal-2003-JofAC-LRNAirfoiLDesignWithTrips.pdf",
+           checked="2026-11-14",
+           where="p. 770: XFOIL fixed transition assumes instantaneous transition and no device drag; trips often act "
+                 "downstream of the device. p. 771-773: 0.0135 in (0.343 mm) tape on a 12 in chord (k/c 0.00113), "
+                 "Re 1e5 / 3e5, upper surface only: at Re 3e5 net drag change -0.001..-0.002 at Cl 0-0.4 (SA7025), "
+                 "increase at Cl ~0.75 for 0.1c / 0.2c trips (loss of laminar run)",
+           note="measured net trip effect (device + skin friction + bubble) at our k/c and Re; not the S5010")
+kit.assumption("ASM-B2C-TRIP-CDK", "Device drag of the zigzag tape",
+               "dcd_dev = C_Dk (k/c) (u_k/V)^2 with C_Dk = 1.0 on the dynamic pressure at the tape top, u_k from a "
+               "Pohlhausen (Lambda 0) laminar profile on XFOIL's Ue and delta* just ahead of the tape",
+               basis="EST, pessimistic: a 2-D bluff step whose top is inside the layer; XFOIL carries no device drag "
+                     "(SRC-B2-TRIPS-GOPAL p. 770); the measured net effect of a 0.34 mm tape at Re 3e5 was -0.002..+ "
+                     "small, so the hand total (XFOIL laminar-run loss + this) is an upper bound", value=1.0, unit="-",
+               status="UNVERIFIED")
+
+
+@kit.calc("CALC-B2C-TRIP", title="Turbulator: section ac shift, cruise drag and power, trip Reynolds number",
+          equation="dcm/dcl = local least-squares slope of XFOIL cm(cl) within +/-0.15 at B3's rows (18 / 17 m/s / 1.3 Vs, "
+                   "gate mass, Re-interpolated 3.4-3.9e5); cd = cd_XFOIL(forced transition) + C_Dk (k/c)(u_k/V)^2; "
+                   "dD = q S dcd; dP = dD V x P_E1 / (D_E1 V); Re_k = u_k k / nu",
+          inputs={"dcm": "P:b2sim.trip.dcm_dcl_design_max", "dcm_u": "P:b2sim.trip.dcm_dcl_upper05_max",
+                  "dcm_f": "P:b2sim.trip.dcm_dcl_free_max", "dcm_late": "P:b2sim.trip.dcm_dcl_lower_late_max",
+                  "cd": "P:b2sim.trip.cd_design_cruise", "cdf": "P:b2sim.trip.cd_free_cruise",
+                  "dcd_u": "P:b2sim.trip.dcd_upper05_cruise", "rek": "P:b2sim.trip.re_k_design_vt",
+                  "ratio": "P:b2sim.trip.e1_p_over_dv", "rho": "P:env.rho_kgm3", "v": "P:performance.cruise_ms",
+                  "b": "P:wing.span_m", "c": "P:wing.chord_m"},
+          units={"rho": "kg/m3", "v": "m/s", "b": "m", "c": "m"}, assumes=["ASM-B2C-TRIP-CDK"],
+          cites=["SRC-B2-TRIPS-GOPAL"])
+def trip(dcm, dcm_u, dcm_f, dcm_late, cd, cdf, dcd_u, rek, ratio, rho, v, b, c):
+    q = 0.5 * rho * v * v
+    dcd = cd - cdf
+    return {"dcm": dcm, "dcm_u": dcm_u, "dcm_f": dcm_f, "dcm_late": dcm_late, "cd": cd, "dcd": dcd,
+            "dD": q * b * c * dcd, "dP": q * b * c * dcd * v * ratio, "dP_u": q * b * c * dcd_u * v * ratio,
+            "rek": rek, "dnp_mm": -dcm * c * 1e3}
+
+
+TR = "CALC-B2C-TRIP"
+kit.claim("CL-B2C-TRIP-DCMDCL", "Section dcm/dcl with the design turbulator (lower surface x/c 0.20)", calc=TR,
+          output="dcm", unit="-", limit=("<=", 0.0032), parts=WING,
+          how="T-B3-TWIN-NP on a twin wing with the same tape; oil-flow or stethoscope check that the lower surface "
+              "is turbulent aft of the tape at 15.7-18 m/s",
+          note="limit = B3 D-163 pass line (the SU2 SA fully-turbulent value B3 charges)")
+kit.claim("CL-B2C-TRIP-CD", "Section cd at cruise CL with the design turbulator (incl. device drag)", calc=TR,
+          output="cd", unit="-", limit=("<=", 0.0146), parts=WING, how="T-B1-CRUISE-POWER with the tape fitted",
+          note="limit = B3 D-163 pass line (B3's EST basis xtr 0.02 at CL 0.39)")
+kit.claim("CL-B2C-TRIP-REK", "Trip Reynolds number u_k k / nu at 1.3 Vs, gate mass", calc=TR, output="rek",
+          unit="-", limit=(">=", 600.0), parts=WING,
+          how="Same check as CL-B2C-TRIP-DCMDCL; 600 is the 3-D-roughness value, zigzag tape trips lower")
+kit.claim("CL-B2C-TRIP-DCD", "Cruise section drag increment, design turbulator vs free transition (EST)", calc=TR,
+          output="dcd", unit="-", how="T-B1-CRUISE-POWER with and without the tape", note="information (EST)")
+kit.claim("CL-B2C-TRIP-DP", "Cruise electrical power increment, design turbulator, 17 m/s, gate mass (EST)", calc=TR,
+          output="dP", unit="W", how="T-B1-CRUISE-POWER with and without the tape",
+          note="information for E2 R-MISSION; average P/(D V) of E1's CL-E1-CRUISE-P-55-V17")
+kit.claim("CL-B2C-TRIP-DCMDCL-UPPER", "Section dcm/dcl with an upper-surface-only trip at x/c 0.05 (B3 D-163 spec)",
+          calc=TR, output="dcm_u", unit="-",
+          how="Information: rejected alternative. The ac term comes from the laminar lower surface; an upper trip "
+              "alone raises dcm/dcl", note="information (not in the design)")
+kit.claim("CL-B2C-TRIP-DCMDCL-LATE", "Section dcm/dcl if the lower trip acts late (transition at x/c 0.40-0.60)",
+          calc=TR, output="dcm_late", unit="-", limit=("<=", 0.0032), parts=WING,
+          how="Covers a trip that does not trip at once (SRC-B2-TRIPS-GOPAL p. 770)")
+
 
 if __name__ == "__main__":
     kit.write()

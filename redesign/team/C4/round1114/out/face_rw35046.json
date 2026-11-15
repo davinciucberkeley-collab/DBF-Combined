@@ -1,0 +1,110 @@
+{
+ "base upper L1 drawn": {
+  "hotspot_lim": 3813762.2431009663,
+  "far_lim": 4785873.011349362,
+  "strip_lim": 92186748.74758661,
+  "foot_defl": 0.0036266822723063103
+ },
+ "base upper L2 drawn": {
+  "hotspot_lim": 3090565.690524484,
+  "far_lim": 4591052.304537099,
+  "strip_lim": 89086946.96053675,
+  "foot_defl": 0.0040649956500772
+ },
+ "base upper L3 drawn": {
+  "hotspot_lim": 3036038.2967035696,
+  "far_lim": 4901465.931573629,
+  "strip_lim": 89012767.24891081,
+  "foot_defl": 0.004102659522489586
+ },
+ "base upper L1 proposed": {
+  "hotspot_lim": 3135489.557674012,
+  "far_lim": 4658424.460779786,
+  "strip_lim": 90205532.15185991,
+  "foot_defl": 0.003812460324406218
+ },
+ "base upper L2 proposed": {
+  "hotspot_lim": 2783425.7313335063,
+  "far_lim": 4559928.977788807,
+  "strip_lim": 88684601.58574647,
+  "foot_defl": 0.00399245521007612
+ },
+ "base upper L3 proposed": {
+  "hotspot_lim": 2755464.009723276,
+  "far_lim": 4563076.578809043,
+  "strip_lim": 88664743.81912702,
+  "foot_defl": 0.003997188468446808
+ },
+ "base upper LG drawn": {
+  "hotspot_lim": 3223334.3339944244,
+  "far_lim": 5836402.0764481705,
+  "strip_lim": 113255169.53781983,
+  "foot_defl": 0.004786650395833935
+ },
+ "base lower L2 drawn": {
+  "hotspot_lim": 3246780.2200369835,
+  "far_lim": 4651681.663228038,
+  "strip_lim": 90006458.50789022,
+  "foot_defl": 0.004199008088874556
+ },
+ "base lower L2 proposed": {
+  "hotspot_lim": 2864568.3796250196,
+  "far_lim": 4651188.949747482,
+  "strip_lim": 90075881.63188472,
+  "foot_defl": 0.004123822793439341
+ },
+ "rw35046 upper L1 drawn": {
+  "hotspot_lim": 3736259.002436787,
+  "far_lim": 4636129.948446276,
+  "strip_lim": 91103076.88131163,
+  "foot_defl": 0.0034839314414862816
+ },
+ "rw35046 upper L2 drawn": {
+  "hotspot_lim": 3071660.656714958,
+  "far_lim": 4655117.960887046,
+  "strip_lim": 87406020.05716956,
+  "foot_defl": 0.003922742921291356
+ },
+ "rw35046 upper L3 drawn": {
+  "hotspot_lim": 3007454.2920964886,
+  "far_lim": 4959842.940172212,
+  "strip_lim": 87687532.8775442,
+  "foot_defl": 0.003954810352795669
+ },
+ "rw35046 upper L1 proposed": {
+  "hotspot_lim": 3131688.8035157463,
+  "far_lim": 4512039.240321148,
+  "strip_lim": 88713686.2394534,
+  "foot_defl": 0.003664363759342799
+ },
+ "rw35046 upper L2 proposed": {
+  "hotspot_lim": 2682370.390600986,
+  "far_lim": 4459816.307649255,
+  "strip_lim": 87652402.74751732,
+  "foot_defl": 0.0038460846730407395
+ },
+ "rw35046 upper L3 proposed": {
+  "hotspot_lim": 2687549.490911074,
+  "far_lim": 4518516.94619783,
+  "strip_lim": 87740213.96578363,
+  "foot_defl": 0.003847595651845524
+ },
+ "rw35046 upper LG drawn": {
+  "hotspot_lim": 3294639.1299129277,
+  "far_lim": 5863741.441028377,
+  "strip_lim": 110514449.97877634,
+  "foot_defl": 0.0046008249704528464
+ },
+ "rw35046 lower L2 drawn": {
+  "hotspot_lim": 3122383.724564002,
+  "far_lim": 4663848.25437448,
+  "strip_lim": 88642021.14592332,
+  "foot_defl": 0.0040290324615559064
+ },
+ "rw35046 lower L2 proposed": {
+  "hotspot_lim": 2796236.203953017,
+  "far_lim": 4544244.349751392,
+  "strip_lim": 88412620.75097084,
+  "foot_defl": 0.003950501425689308
+ }
+}

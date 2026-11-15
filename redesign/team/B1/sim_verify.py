@@ -33,6 +33,7 @@ kit = pk.Kit(__file__, params=["../../params/params.json", "../B2/params.json", 
              out="claims.verify.json")
 P = "P:"
 DEG = math.pi / 180.0
+VC = kit.value(P + "performance.cruise_ms")      # D-145: read the params key, never a constant
 
 kit.source("SRC-B1-SIM-CFD", "B1 2-D RANS runs of the fin and wing sections (SU2 8.5, SA)", "file",
            where="team/B1/sim/cfd/<case>_L<1-3>/ (case.cfg, history.csv, surface_flow.csv, su2.log); "
@@ -61,23 +62,24 @@ kit.assumption("ASM-B1V-LIGHT-PACK", "Lightest flying mass below the A3 basic ma
 # ------------------------------------------------------------------ calculations
 @kit.calc("CALC-B1V-AERO", title="As-designed drag polar from AVL + XFOIL (wing) and SU2 (fins)",
           equation="CD0 = IF [A_fit f_rough + n_f c_f (Cd_A L_tube + Cd_B (2 h_f - L_tube)) + n CdA_m + pod + pod_front "
-                   "+ braces + collars] / S ; k = K_fit (AVL CDi + XFOIL lift-dependent profile, trimmed) ; "
+                   "+ braces + collars] / S ; k = max(K_fit (AVL CDi + XFOIL lift-dependent profile, trimmed), 1/(pi AR e_base)) ; "
                    "k_pess = 1/(pi AR e_params) ; alpha0_trim = alpha_cruise - CL_cruise / CLa",
           inputs={"b": P + "wing.span_m", "c": P + "wing.chord_m", "tc": P + "wing.t_c", "e_pess": P + "wing.oswald_e",
                   "a_fit": P + "b1sim.wing.cd0_fit", "k_fit": P + "b1sim.wing.k_fit", "rough": "ASM-B1-WING-ROUGH",
                   "cla": P + "b1sim.avl.cla_per_rad", "a_cr": P + "b1sim.avl.alpha_cruise_deg",
                   "m": "CL-A3-MASS-PREDICTED", "g": P + "env.g_ms2", "rho": P + "env.rho_kgm3",
-                  "vc": "ASM-B1-VCRUISE", "cd_a": P + "b1sim.cfd.fin_a_cd", "cd_b": P + "b1sim.cfd.fin_b_cd",
+                  "vc": P + "performance.cruise_ms", "cd_a": P + "b1sim.cfd.fin_a_cd", "cd_b": P + "b1sim.cfd.fin_b_cd",
                   "fin_h": P + "fins.half_height_m", "fin_c": P + "fins.chord_m", "tube_l": P + "fins.tube.length_m",
                   "tube_d": P + "fins.tube.od_m", "pod": P + "pod.size_m", "n": P + "propulsion.n_motors",
                   "drag": "ASM-B1-DRAG", "addons": "ASM-B1-DRAG-ADDONS", "podf": "ASM-B1-POD-FRONT",
-                  "clmax": "CL-B1V-CLMAX", "cd0_hand": "CL-B1-CD0", "k_hand": "CL-B1-K"},
+                  "clmax": "CL-B1V-CLMAX", "cd0_hand": "CL-B1-CD0", "k_hand": "CL-B1-K", "e_base": "ASM-B1-E-BASE"},
           units={"b": "m", "c": "m", "fin_h": "m", "fin_c": "m", "tube_l": "m", "tube_d": "m", "pod": "m",
                  "cla": "1/rad", "a_cr": "deg", "m": "kg", "g": "m/s2", "rho": "kg/m3", "vc": "m/s"},
-          assumes=["ASM-B1V-CFD-2D", "ASM-B1-DRAG", "ASM-B1-WING-ROUGH", "ASM-B1-DRAG-ADDONS", "ASM-B1-POD-FRONT"],
+          assumes=["ASM-B1V-CFD-2D", "ASM-B1-DRAG", "ASM-B1-WING-ROUGH", "ASM-B1-DRAG-ADDONS", "ASM-B1-POD-FRONT",
+                   "ASM-B1-E-BASE"],
           cites=["SRC-B1-SIM-CFD", "SRC-B1-SIM-VLMXF"])
 def aero_asdesigned(b, c, tc, e_pess, a_fit, k_fit, rough, cla, a_cr, m, g, rho, vc, cd_a, cd_b, fin_h, fin_c, tube_l,
-                    tube_d, pod, n, drag, addons, podf, clmax, cd0_hand, k_hand):
+                    tube_d, pod, n, drag, addons, podf, clmax, cd0_hand, k_hand, e_base):
     cf_b, ff_f, cd_tube, cda_m, ff_pod, interf = drag
     nb, lb, wb, cdb, nc, dc, hc, cdc = addons
     cd_front, w_ref = podf
@@ -96,14 +98,16 @@ def aero_asdesigned(b, c, tc, e_pess, a_fit, k_fit, rough, cla, a_cr, m, g, rho,
     hand_fins = cf_b * ff_f * 2.0 * (1.0 + 0.2 * tc) * (2 * 2 * fin_h * fin_c) / S + 2 * cd_tube * tube_d * tube_l / S
     cd0 = interf * sum(parts.values())
     cl_cr = 2 * m * g / (rho * vc * vc * S)
-    return {"cd0": cd0, "k": k_fit, "k_pess": 1.0 / (math.pi * AR * e_pess), "e_equiv": 1 / (math.pi * AR * k_fit),
+    k = max(k_fit, 1.0 / (math.pi * AR * e_base))             # CDR-AE-14: e 0.85 carried as the base case
+    return {"cd0": cd0, "k": k, "k_avl_xfoil": k_fit, "e_avl_xfoil": 1 / (math.pi * AR * k_fit),
+            "k_pess": 1.0 / (math.pi * AR * e_pess), "e_equiv": 1 / (math.pi * AR * k),
             "cd0_parts": [round(interf * parts[p], 6) for p in parts], "cd0_parts_names": list(parts),
             "fins_cd0_hand": interf * hand_fins, "fins_cd0_sim": interf * parts["fins_and_tubes"],
             "fins_ratio_sim_hand": parts["fins_and_tubes"] / hand_fins,
             "d_cd0_vs_hand_pct": 100 * (cd0 / cd0_hand - 1), "d_k_vs_hand_pct": 100 * (k_fit / k_hand - 1),
             "cla_per_rad": cla, "alpha0_trim_deg": a_cr - cl_cr / cla / DEG,
             "alpha_stall_deg": a_cr - cl_cr / cla / DEG + clmax / cla / DEG,
-            "ld_max": 1 / (2 * math.sqrt(cd0 * k_fit)), "cl_cruise_pred": cl_cr}
+            "ld_max": 1 / (2 * math.sqrt(cd0 * k)), "cl_cruise_pred": cl_cr}
 
 
 @kit.calc("CALC-B1V-STALL", title="Stall and transition speeds, as designed",
@@ -168,26 +172,38 @@ CR_IN = {"g": P + "env.g_ms2", "rho": P + "env.rho_kgm3", "S": "CL-A1-WING-AREA"
 CR_UNITS = {"g": "m/s2", "rho": "kg/m3", "S": "m2", "D": "m", "av": "W"}
 
 
-@kit.calc("CALC-B1V-CRUISE", title="Cruise at 16 m/s, as-designed mass and drag",
-          equation="as CALC-B1-CRUISE with m = A3 predicted, CD0 and k from CALC-B1V-AERO ; also at the 2.6 kg gate ; "
-                   "sweep 14-20 m/s",
+@kit.calc("CALC-B1V-CRUISE", title="Cruise at the cruise speed (performance.cruise_ms), as-designed mass and drag",
+          equation="as CALC-B1-CRUISE with m = A3 predicted, CD0 and k from CALC-B1V-AERO ; thrust per prop = "
+                   "D / (n cos cant) ; also at the 2.6 kg gate (base and pessimistic) ; sweep 10-22 m/s at both masses ; "
+                   "V_minP,allowed = argmin P over V >= 1.3 Vs (CL-B1V-VT-GATE)",
           inputs={"m": "CL-A3-MASS-PREDICTED", "m_g": P + "requirements.mtow_gate_kg", **CR_IN,
-                  "vc": "ASM-B1-VCRUISE", "pess": "ASM-B1-PESS", "v": P + "battery.v_nom"},
-          units={"m": "kg", "m_g": "kg", **CR_UNITS, "vc": "m/s", "v": "V"},
-          assumes=["ASM-B1-TRIM", "ASM-B1-PESS", "ASM-B1-VCRUISE"])
-def cruise_asdesigned(m, m_g, g, rho, S, cd0, k, k_pess, trim, n, tab, kv, rm, i0, kcal, D, esc, av, vc, pess, v):
-    c = perf.cruise(m, g, rho, S, cd0, k, k_pess, trim, n, tab, kv, rm, i0, kcal, D, esc, av, vc, pess, v)
-    cg_ = perf.cruise(m_g, g, rho, S, cd0, k, k_pess, trim, n, tab, kv, rm, i0, kcal, D, esc, av, vc, pess, v)
+                  "vc": P + "performance.cruise_ms", "pess": "ASM-B1-PESS", "v": P + "battery.v_nom",
+                  "cant": P + "propulsion.stations.cant_deg", "vt": "CL-B1V-VT-GATE"},
+          units={"m": "kg", "m_g": "kg", **CR_UNITS, "vc": "m/s", "v": "V", "cant": "deg", "vt": "m/s"},
+          assumes=["ASM-B1-TRIM", "ASM-B1-PESS"])
+def cruise_asdesigned(m, m_g, g, rho, S, cd0, k, k_pess, trim, n, tab, kv, rm, i0, kcal, D, esc, av, vc, pess, v,
+                      cant=0.0, vt=0.0):
+    c = perf.cruise(m, g, rho, S, cd0, k, k_pess, trim, n, tab, kv, rm, i0, kcal, D, esc, av, vc, pess, v, cant)
+    cg_ = perf.cruise(m_g, g, rho, S, cd0, k, k_pess, trim, n, tab, kv, rm, i0, kcal, D, esc, av, vc, pess, v, cant)
     motor = (kv, rm, i0)
-    rows = []
-    for v10 in range(140, 201, 5):
+    rows, rows_g = [], []
+    for v10 in range(100, 221, 5):
         V = v10 / 10
-        b_ = perf.cruise_point(V, m, g, rho, S, cd0, k, trim, n, tab, motor, kcal, D, esc, av)
-        w_ = perf.cruise_point(V, m, g, rho, S, cd0 * pess[0], k_pess, trim, n, tab, motor, kcal, D, esc, av, pess[1])
-        rows.append([V, round(b_["p_el_w"], 1), round(w_["p_el_w"], 1), round(b_["drag_n"], 3)])
+        for mm, rr in ((m, rows), (m_g, rows_g)):
+            b_ = perf.cruise_point(V, mm, g, rho, S, cd0, k, trim, n, tab, motor, kcal, D, esc, av, cant=cant)
+            w_ = perf.cruise_point(V, mm, g, rho, S, cd0 * pess[0], k_pess, trim, n, tab, motor, kcal, D, esc, av,
+                                   pess[1], cant=cant)
+            rr.append([V, round(b_["p_el_w"], 1), round(w_["p_el_w"], 1), round(b_["drag_n"], 3)])
+    ok = [r for r in rows_g if r[0] >= vt] or rows_g[-1:]
     return {"p_el_w": c["p_el_w"], "p_el_pess_w": c["p_el_pess_w"], "drag_n": c["drag_n"], "ld": c["ld"],
             "i_a": c["i_a"], "rpm": c["rpm"], "eta_prop": c["eta_prop"], "p_el_gate_w": cg_["p_el_w"],
-            "drag_gate_n": cg_["drag_n"], "rows_V_P_Ppess_D": rows}
+            "p_el_gate_pess_w": cg_["p_el_pess_w"], "i_gate_a": cg_["i_a"], "i_gate_pess_a": cg_["i_pess_a"],
+            "p_el_gate_nocant_w": cg_["p_el_nocant_w"], "ld_eff_gate": cg_["ld_eff"],
+            "drag_gate_n": cg_["drag_n"], "t_prop_gate_n": cg_["t_prop_n"], "cant_deg": cant,
+            "v_min_power_gate_free_ms": min(rows_g, key=lambda r: r[1])[0],
+            "v_min_power_gate_allowed_ms": min(ok, key=lambda r: r[1])[0],
+            "v_best_range_gate_ms": min(rows_g, key=lambda r: r[1] / r[0])[0],
+            "rows_V_P_Ppess_D": rows, "rows_gate_V_P_Ppess_D": rows_g}
 
 
 @kit.calc("CALC-B1V-TRANSITION", title="Corridor and pitch-over, as designed",
@@ -199,7 +215,7 @@ def cruise_asdesigned(m, m_g, g, rho, S, cd0, k, k_pess, trim, n, tab, kv, rm, i
                   "tab": "ASM-B1-PROP", "kv": "ASM-E1-KV", "rm": "ASM-E1-RM", "i0": "ASM-E1-I0", "kcal": "CL-B1-KCAL",
                   "nmax": "CL-B1-NMAX-SAG", "D": P + "propulsion.prop_diameter_m", "esc": "ASM-B1-ESC",
                   "av": "ASM-B1-AVIONICS-W", "frac": "ASM-B1-CTRL-RESERVE", "trans": "ASM-B1-TRANS",
-                  "vs": "CL-B1V-VS-PRED", "vc": "ASM-B1-VCRUISE", "kt": P + "requirements.transition_factor",
+                  "vs": "CL-B1V-VS-PRED", "vc": P + "performance.cruise_ms", "kt": P + "requirements.transition_factor",
                   "dl": P + "propulsion.download_factor"},
           units={"m": "kg", "g": "m/s2", "rho": "kg/m3", "S": "m2", "cla": "1/rad", "a0": "deg", "D": "m", "av": "W",
                  "nmax": "rev/s", "vs": "m/s", "vc": "m/s"},
@@ -222,7 +238,7 @@ def transition_asdesigned(m, g, rho, S, cla, a0, clmax, cd0, k, cd90, n, tab, kv
           inputs={"E": P + "battery.energy_wh", "res": P + "requirements.energy_reserve_frac",
                   "p_h": "CL-B1V-HOVER-P", "t_h": P + "requirements.hover_time_min", "e_tr": "CL-B1V-TRANS-ENERGY",
                   "trans": "ASM-B1-TRANS", "p_c": "CL-B1V-CRUISE-P", "p_cp": "CL-B1V-CRUISE-P-PESS",
-                  "pess": "ASM-B1-PESS", "vc": "ASM-B1-VCRUISE", "t_hand": "CL-B1-CRUISE-TIME"},
+                  "pess": "ASM-B1-PESS", "vc": P + "performance.cruise_ms", "t_hand": "CL-B1-CRUISE-TIME"},
           units={"E": "Wh", "p_h": "W", "t_h": "min", "e_tr": "Wh", "p_c": "W", "p_cp": "W", "vc": "m/s",
                  "t_hand": "min"},
           assumes=["ASM-B1-TRANS", "ASM-B1-PESS"])
@@ -237,7 +253,7 @@ def mission_asdesigned(E, res, p_h, t_h, e_tr, trans, p_c, p_cp, pess, vc, t_han
 @kit.calc("CALC-B1V-SPEED", title="Top level speed at F4's fixed-wing throttle cap and FW climb, as designed",
           equation="CALC-B1-CLIMB with m = A3 predicted, as-designed CD0 and k, rpm cap = CL-F4-FW-RPM-CAP (THR_MAX 70 %) ; "
                    "VH / (VD / 1.25) <= 1 ; also at the 9 350 rpm VTOL cap",
-          inputs={"m": "CL-A3-MASS-PREDICTED", **CR_IN, "vc": "ASM-B1-VCRUISE", "frac": "ASM-B1-CTRL-RESERVE",
+          inputs={"m": "CL-A3-MASS-PREDICTED", **CR_IN, "vc": P + "performance.cruise_ms", "frac": "ASM-B1-CTRL-RESERVE",
                   "dl": P + "propulsion.download_factor", "rpm_fw": "CL-F4-FW-RPM-CAP", "rpm_cap": P + "propulsion.rpm_max",
                   "i_lim": P + "propulsion.current_max_per_motor_a", "vterm": "ASM-B1-VTERM", "pess": "ASM-B1-PESS",
                   "vd": P + "requirements.vd_ms"},
@@ -264,7 +280,7 @@ def speed_asdesigned(m, g, rho, S, cd0, k, k_pess, trim, n, tab, kv, rm, i0, kca
                   "err": "ASM-B1-LAND-ERR", "z_fin": P + "fins.half_height_m", "c": P + "wing.chord_m",
                   "foot": P + "cg.foot_height_m", "tw_sag": "CL-B1V-HOVER-TW-SAG", "frac": "ASM-B1-CTRL-RESERVE",
                   "vw": P + "requirements.wind_limit_ms", "vg": P + "requirements.gust_survive_ms",
-                  "vc": "ASM-B1-VCRUISE"},
+                  "vc": P + "performance.cruise_ms"},
           units={"m_b": "kg", "light": "g", "g": "m/s2", "rho": "kg/m3", "S": "m2", "tip": "deg", "err": "deg",
                  "z_fin": "m", "c": "m", "foot": "m", "vw": "m/s", "vg": "m/s", "vc": "m/s"},
           assumes=["ASM-B1V-LIGHT-PACK", "ASM-B1-CD90", "ASM-B1-LAND-ERR"])
@@ -296,9 +312,9 @@ def C(id, title, calc, out, unit, how, limit=None, verifies=(), **kw):
     kit.claim(id, title, calc=calc, output=out, unit=unit, limit=limit, verifies=list(verifies), how=how, **kw)
 
 
-SIMHOW = "Re-run team/B1/vlm_xfoil.py and cfd_sections.py; flight: cruise power legs at 14/16/18 m/s (T-B1-CRUISE-POWER)."
+SIMHOW = "Re-run team/B1/vlm_xfoil.py and cfd_sections.py; flight: cruise power legs at 15/17/19 m/s (T-B1-CRUISE-POWER)."
 C("CL-B1V-CD0", "Zero-lift drag coefficient, as designed (sim)", "CALC-B1V-AERO", "cd0", "-", SIMHOW)
-C("CL-B1V-K", "Lift-dependent drag factor, trimmed AVL + XFOIL", "CALC-B1V-AERO", "k", "-", SIMHOW)
+C("CL-B1V-K", "Lift-dependent drag factor, base case: e 0.85 (CDR-AE-14) over trimmed AVL + XFOIL", "CALC-B1V-AERO", "k", "-", SIMHOW)
 C("CL-B1V-FIN-RATIO", "Fin + tube drag, SU2 over the hand estimate", "CALC-B1V-AERO", "fins_ratio_sim_hand", "-",
   "Re-run cfd_sections.py; flight: the cruise power test cannot separate it, a fin-off glide comparison on the twin can.")
 C("CL-B1V-ALPHA0-TRIM", "Trimmed zero-lift angle, as designed", "CALC-B1V-AERO", "alpha0_trim_deg", "deg",
@@ -316,10 +332,10 @@ C("CL-B1V-VS-PRED", "Stall speed at the A3 predicted mass", "CALC-B1V-STALL", "v
 C("CL-B1V-VS-GATE", "Stall speed at the 2.6 kg gate, sim CLmax at the A3 CG", "CALC-B1V-STALL", "vs_gate_ms", "m/s",
   "As CL-B1V-VS-PRED with ballast to 2.6 kg.", limit=("<=", P + "requirements.stall_max_ms"), verifies=["R-STALL"])
 C("CL-B1V-VT-PRED", "1.3 Vs at the predicted mass", "CALC-B1V-STALL", "vt_pred_ms", "m/s",
-  "Airspeed at 'Transition done' in the log (F4/H2).", limit=("<=", "ASM-B1-VCRUISE"), verifies=["R-TRANSITION"])
+  "Airspeed at 'Transition done' in the log (F4/H2).", limit=("<=", P + "performance.cruise_ms"), verifies=["R-TRANSITION"])
 C("CL-B1V-VT-GATE", "1.3 Vs at the 2.6 kg gate", "CALC-B1V-STALL", "vt_gate_ms", "m/s",
-  "As CL-B1V-VT-PRED.", limit=("<=", "ASM-B1-VCRUISE"), verifies=["R-TRANSITION"])
-C("CL-B1V-HOVER-P", "Hover power at the predicted mass, 7 deg cant", "CALC-B1V-HOVER", "p_pred_w", "W",
+  "As CL-B1V-VT-PRED.", limit=("<=", P + "performance.cruise_ms"), verifies=["R-TRANSITION"])
+C("CL-B1V-HOVER-P", "Hover power at the predicted mass, motor cant (propulsion.stations.cant_deg)", "CALC-B1V-HOVER", "p_pred_w", "W",
   "Tethered hover at the weighed mass (T-B1-TETHER-HOVER).")
 C("CL-B1V-HOVER-THROTTLE", "Hover thrust fraction, sagged pack, predicted mass", "CALC-B1V-HOVER",
   "throttle_pred_sag", "-", "Learned hover throttle in the log (F4/H2).", limit=("<=", 0.6), verifies=["R-HOVER-TW"])
@@ -327,13 +343,23 @@ C("CL-B1V-HOVER-TW-SAG", "Hover T/W, sag, download and cant, predicted mass", "C
   "Thrust stand at 14.0 V (H1).", limit=(">=", P + "requirements.hover_tw_min_sag"), verifies=["R-HOVER-TW"])
 C("CL-B1V-HOVER-TW", "Hover T/W, fresh pack, download and cant, predicted mass", "CALC-B1V-HOVER", "tw_pred_fresh",
   "-", "Thrust stand at 16.0 V (H1).", limit=(">=", P + "requirements.hover_tw_min"), verifies=["R-HOVER-TW"])
-C("CL-B1V-CRUISE-P", "Cruise power, 16 m/s, predicted mass, sim drag", "CALC-B1V-CRUISE", "p_el_w", "W",
+C("CL-B1V-CRUISE-P", f"Cruise power, {VC:g} m/s, predicted mass, sim drag, motor cant", "CALC-B1V-CRUISE", "p_el_w", "W",
   "T-B1-CRUISE-POWER at the weighed mass.", verifies=["R-MISSION"])
 C("CL-B1V-CRUISE-P-PESS", "Cruise power, pessimistic, predicted mass", "CALC-B1V-CRUISE", "p_el_pess_w", "W",
   "As CL-B1V-CRUISE-P.")
-C("CL-B1V-CRUISE-P-GATE", "Cruise power at 2.6 kg with sim drag", "CALC-B1V-CRUISE", "p_el_gate_w", "W",
+C("CL-B1V-CRUISE-P-GATE", f"Cruise power at 2.6 kg, {VC:g} m/s, sim drag, motor cant", "CALC-B1V-CRUISE", "p_el_gate_w", "W",
   "As CL-B1V-CRUISE-P with ballast.")
-C("CL-B1V-CRUISE-DRAG", "Cruise drag, 16 m/s, predicted mass", "CALC-B1V-CRUISE", "drag_n", "N", SIMHOW)
+C("CL-B1V-CRUISE-P-GATE-PESS", f"Cruise power at 2.6 kg, {VC:g} m/s, pessimistic (CD0 x 1.3, e 0.80, eta_prop x 0.85)",
+  "CALC-B1V-CRUISE", "p_el_gate_pess_w", "W",
+  "As CL-B1V-CRUISE-P with ballast; E2 reads it for the BATT_LOW budget in place of the scaled 16 m/s value.")
+C("CL-B1V-CRUISE-I-GATE-PESS", f"Cruise current at 2.6 kg, {VC:g} m/s, pessimistic, at battery.v_nom",
+  "CALC-B1V-CRUISE", "i_gate_pess_a", "A", "Current sensor in cruise at the gate mass (H2).")
+C("CL-B1V-CRUISE-LD-GATE", f"Effective L/D (W / trimmed drag) at 2.6 kg, {VC:g} m/s", "CALC-B1V-CRUISE",
+  "ld_eff_gate", "-", SIMHOW)
+C("CL-B1V-V-MINPOWER", "Lowest-power speed at or above 1.3 Vs, 2.6 kg (sweep 10-22 m/s)", "CALC-B1V-CRUISE",
+  "v_min_power_gate_allowed_ms", "m/s",
+  "Cruise power legs at 15, 17, 19 m/s (T-B1-CRUISE-POWER). The free minimum (v_min_power_gate_free_ms) lies below Vs.")
+C("CL-B1V-CRUISE-DRAG", f"Cruise drag, {VC:g} m/s, predicted mass", "CALC-B1V-CRUISE", "drag_n", "N", SIMHOW)
 C("CL-B1V-CRUISE-LD", "Cruise L/D, predicted mass", "CALC-B1V-CRUISE", "ld", "-", SIMHOW)
 C("CL-B1V-CRUISE-I", "Cruise current, predicted mass", "CALC-B1V-CRUISE", "i_a", "A", "Current sensor in cruise (H2).")
 C("CL-B1V-TRANS-THRUST", "Pitch-over peak thrust fraction, as designed", "CALC-B1V-TRANSITION", "thrust_frac_max",
@@ -355,11 +381,11 @@ C("CL-B1V-CRUISE-TIME-PESS", "Cruise after 2 min hover, pessimistic, as designed
   verifies=["R-MISSION"])
 C("CL-B1V-VH-FW", "Top level speed at THR_MAX 70 %, as designed (C1's VH)", "CALC-B1V-SPEED", "vh_fw_cap_ms", "m/s",
   "Full-throttle FBWA level run on a fresh pack with rpm telemetry, after the VD loads case is cleared (H2).",
-  limit=(">=", 18.0))
+  limit=(">=", VC + 2.0))   # cruise + 2 m/s speed-hold headroom, as CL-B1-VMAX
 C("CL-B1V-VH-RATIO", "VH x 1.25 over VD 27.2 m/s", "CALC-B1V-SPEED", "vh_ratio_vd", "-",
   "As CL-B1V-VH-FW; C1 holds VD = 27.2 m/s while this stays <= 1.", limit=("<=", 1.0))
-C("CL-B1V-ROC-FW", "FW climb at 16 m/s, THR_MAX 70 %, worst pack", "CALC-B1V-SPEED", "roc_fw_cap_ms", "m/s",
-  "FBWA full-throttle climb at 16 m/s (H2); F4 sets TECS_CLMB_MAX below it.", limit=(">=", 3.0))
+C("CL-B1V-ROC-FW", f"FW climb at {VC:g} m/s, THR_MAX 70 %, worst pack", "CALC-B1V-SPEED", "roc_fw_cap_ms", "m/s",
+  f"FBWA full-throttle climb at {VC:g} m/s (H2); F4 sets TECS_CLMB_MAX below it.", limit=(">=", 3.0))
 C("CL-B1V-WIND-HOVER-MAX", "Wind for a safe fin-tip landing, lightest mass", "CALC-B1V-WIND", "v_hover_max_ms", "m/s",
   "QLOITER in measured wind at the lightest pack (H2).", limit=(">=", P + "requirements.wind_limit_ms"),
   verifies=["R-WIND"])
@@ -462,9 +488,9 @@ def figures(res):
     ax.plot([r[0] for r in hr], [r[1] for r in hr], "-", color=AX, lw=1.5, label="rev 3 hand, 2.6 kg")
     ax.plot([r[0] for r in hr], [r[2] for r in hr], "--", color=AX, lw=1, label="rev 3 hand, pessimistic")
     sr = res["cruise"]["rows_V_P_Ppess_D"]
-    ax.plot([r[0] for r in sr], [r[1] for r in sr], "-", color=ACC, lw=2, label="as designed, 2.436 kg")
+    ax.plot([r[0] for r in sr], [r[1] for r in sr], "-", color=ACC, lw=2, label=f"as designed, {kit.value('CL-A3-MASS-PREDICTED'):.3f} kg")
     ax.plot([r[0] for r in sr], [r[2] for r in sr], "--", color=ACC, lw=1, label="as designed, pessimistic")
-    ax.axvline(16, color=INK3, lw=0.8); ax.text(16.05, ax.get_ylim()[0] + 5, "cruise 16 m/s", fontsize=7, color=INK3)
+    ax.axvline(VC, color=INK3, lw=0.8); ax.text(VC + 0.05, ax.get_ylim()[0] + 5, f"cruise {VC:g} m/s", fontsize=7, color=INK3)
     ax.axvline(res["stall"]["vt_gate_ms"], color=INK3, lw=0.8, ls=":")
     ax.text(res["stall"]["vt_gate_ms"] - 0.05, ax.get_ylim()[0] + 5, "1.3 Vs at 2.6 kg", fontsize=7, color=INK3,
             ha="right")

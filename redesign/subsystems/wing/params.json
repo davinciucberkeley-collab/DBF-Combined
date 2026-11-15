@@ -38,7 +38,7 @@
     "lead_hole_x_m": {"value": [0.173, 0.177], "unit": "m", "source": "D1 choice (F2 CR-F2-04 servo groove, D6 lower pocket)", "status": "PROPOSED",
       "note": "4 mm square pass (drill 5 mm) from the end of the upper servo-lead branch groove down into the pocket front, at y = the branch (0.283-0.287); straw liner"},
     "doubler_w_m": {"value": 0.06, "unit": "m", "source": "team/C2/sizing.json#skin.doublers", "status": "PROPOSED",
-      "note": "chordwise tape band over the pocket edges, lower surface x 0.12 ... hinge, opening cut out (the cover is taped over it)"}
+      "note": "chordwise tape band over the pocket edges, lower surface x 0.12 ... hinge, opening cut out (the cover is taped over it). Also sets the width of the STRUCTURAL block doubler band (skin.block_doubler_x_m, D-153): do not change without C2"}
   },
   "grooves": {
     "y_m": {"value": [0.086, 0.296], "unit": "m", "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-04", "status": "PROPOSED",
@@ -52,6 +52,16 @@
     "depth_m": {"value": 0.005, "unit": "m", "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-14", "status": "PROPOSED",
       "note": "floor follows the upper skin 5 mm down; > 20 mm foam left under it; 4.3 mm foam wall to the servo pocket (x 0.1722)"}
   },
+  "turbulator": {
+    "width_m": {"value": 0.006, "unit": "m", "source": "review/CLOSURE-ROUND-2026-11-14/B2.md#B2C-4 (6 mm tape width in the mass formula)", "status": "PROPOSED",
+      "note": "chordwise width of the zigzag tape drawn as a solid strip centred on x/c wing.turbulator.x_c (x 0.064 m: strip x 0.061-0.067, 1.8 mm ahead of the spar-slot cap at x 0.0688). Height / thickness 0.7 mm = params wing.turbulator.height_m. The real tape is serrated; the body is the envelope"},
+    "density_gcc": {"value": 1.3, "unit": "g/cm3", "source": "review/CLOSURE-ROUND-2026-11-14/B2.md#B2C-4 (density EST)", "status": "UNVERIFIED",
+      "note": "EST; weigh the tape (T-D1-WEIGH). Solid envelope, so the CAD mass is an upper bound on a serrated tape"},
+    "fin_stop_clear_m": {"value": 0.002, "unit": "m", "source": "D1 choice", "status": "PROPOSED",
+      "note": "the tape stops this far outside the toe of the half-fin root cove (fin face + fins.fin_detail.fin.root_fillet.leg_m 10 mm), on both sides of each fin: |y - 0.320| >= board_t / 2 + leg + 2 mm = 14.4 mm. Nothing is taped under the roots or the coves (BUILD step 11); a gap in a trip line is a local laminar wedge behind the cove, acceptable (the cove is itself a turbulent wake)"},
+    "tip_stop_m": {"value": 0.003, "unit": "m", "source": "D1 choice", "status": "PROPOSED",
+      "note": "stops this far inside the tip (tip edge tape layer, 2 x skin_t)"}
+  },
   "elevon": {
     "end_gap_m": {"value": 0.001, "unit": "m", "source": "D1 choice", "status": "PROPOSED",
       "note": "each panel end to the core cut-out (hot-wire kerf ~1 mm); fin-face and tip gaps are the params elevon spans (>= 15 mm)"},
@@ -59,6 +69,8 @@
       "note": "plan-form radius of the two re-entrant cut-out corners at each fin-root tab (hinge line meets the tab face at |y| 0.30 and 0.34): foam left in the corner; the panel's front corner is relieved concentric (offset by the 1 mm end gap in y and x). Tab tape carried round the cut-out edge (skin.tab_edge_tape_w_m)"},
     "tube_groove_y_m": {"value": [[0.1335, 0.296], [0.344, 0.556]], "unit": "m", "source": "team/D6/CHANGE-REQUESTS.md#CR-D6-14 (D6-R2)", "status": "PROPOSED",
       "note": "|y| range of the torque-tube groove in the inboard and outboard panel = D6's tube (MEC-009, |y| 0.1345-0.295 / 0.345-0.555) + 1 mm each end for the fill (CR-D6-14 quotes 0.135-0.295 / 0.345-0.555; the built inboard tube starts at 0.1345). Inboard tube shortened to 70 % of the horn-to-root length, mechanisms mec.tube.cover_frac); the panel is ungrooved elsewhere. Bare-foam patches for the horn flanges come from mechanisms mec.horn.flange_mm / backplate_mm (14 / 12 mm wide)"},
+    "chamfer_step_m": {"value": 0.005, "unit": "m", "source": "D1 choice (closure round 2026-11-14, D-164 / B4 CR-B4-32)", "status": "PROPOSED",
+      "note": "TE-corner chamfers (params wing.elevon.te_chamfer_m [0.02, 0.07]): straight cut from the hinge-line end (|y| 0.30 / 0.34) to the TE (|y| 0.28 / 0.41). Fusion prisms are Y-extrusions, so the cut is drawn as a staircase of Y-slabs this wide, each slab cut at the TE-side-most x of the line (never more material than the straight cut: B4's wake clearance is not reduced). Hot-wire / saw the straight line in the shop"},
     "bevel_deg": {"value": 30.0, "unit": "deg", "source": "D1 choice", "status": "PROPOSED",
       "note": "lower-edge bevel of the panel front face, measured from the vertical through the upper-skin hinge line: clears the core at +25 deg down with 1.07 mm; D6 uses it as the TE-down mechanical stop at about 28-30 deg"},
     "tube_groove_gap_m": {"value": 0.0002, "unit": "m", "source": "D1 choice", "status": "PROPOSED",
@@ -72,7 +84,7 @@
     "untaped_upper_x_m": {"value": [0.0, 0.095], "unit": "m", "source": "team/D2/CHANGE-REQUESTS.md#CR-D2-04", "status": "PROPOSED",
       "note": "no tape on the upper surface under the pod (|y| <= pod width / 2): pod bonds to bare sanded foam (CR-C2-07)"},
     "block_doubler_x_m": {"value": 0.12, "unit": "m", "source": "team/C2/sizing.json#skin.doublers", "status": "PROPOSED",
-      "note": "60 mm band (servo_pocket.doubler_w_m) wrapped round the LE from upper x 0.12 to lower x 0.12 over each through-core block pocket; slit round the tube and the half-fin roots"},
+      "note": "STRUCTURAL (C2-R5, D-153, review/DESIGN-ROUND-2026-11-14/C2.md section 2 rules 1-3 and A1.md D-153): the block-pocket corner claims pass only with this band and the base skin (102 / 75 / 52 kPa at 50 % tape credit, 113 / 83 / 55 at 25 %, vs 150 / 120 / 100). Band: 2 extra BOPP layers over the base skin (3 layers in all) over each block, 60 mm spanwise (servo_pocket.doubler_w_m) centred on |y| 0.320, i.e. |y| 0.290-0.350, wrapped round the LE from upper x 0.120 to lower x 0.120 m; it must cover the pocket faces |y| 0.30185 / 0.33815 and the lip-bead toes 3 mm beyond them (|y| 0.29885 / 0.34115). Slits only round the tube boss and the half-fin root, clearance <= 2 mm; no other cut, slit or gap in the band. Base skin: runs unbroken over the block span, no tape seam or overlap edge between |y| 0.27 and 0.37 m on either surface for x <= 0.24 m (C2 rule 2; D1 reading, sent to C2 to confirm: no strip end, butt joint or splice in that zone, the spanwise strips run through it). Repair: a damaged band is replaced in kind (2 layers, same extent) before flight (H3 flight card). Tape credit decided by coupon T-C2-XPS-COUPON (taped vs untaped, pass = no foam crack at 1.5 x the scaled limit; plus 3 notched XPS beams for K_Ic). Fallback if it fails: root-continuous glass D-cell, 1 ply Style 1080 +/-45, upper x 0.120 round the LE to lower x 0.120, |y| 0 -> 0.363, +16.5 g EST, $43.55 EST, 4 h EST (72 / 70 / 56 kPa); not drawn unless A1 chooses it"},
     "tip_extra_layers": {"value": 1, "unit": "-", "source": "team/C2/sizing.json#tip.edge", "status": "PROPOSED",
       "note": "one 48 mm strip folded round the tip edge over the normal skin = 2 layers at the tip (damage fuse, CR-C2-01)"},
     "tip_tape_w_m": {"value": 0.048, "unit": "m", "source": "D1 choice", "status": "PROPOSED", "note": "standard packing-tape roll width"},

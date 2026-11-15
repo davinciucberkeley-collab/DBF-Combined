@@ -167,7 +167,13 @@ def hard_class(g, strip, cx):
     blk_x, or the anchor column |x - xs| < COL_HALF), else 'O'."""
     kind = station_kind(g, strip)
     if kind == "blk":
-        return "H" if g["blk_x"][0] <= cx <= g["blk_x"][1] else "O"
+        if g["blk_x"][0] <= cx <= g["blk_x"][1]:
+            return "H"
+        # closure round 2026-11-14: with INTRO "fore" the station-strip skin aft of the bond break (X_BREAK, default
+        # the hinge line) is its own patch class 'T' (the fin root and its cove sit on a release strip there)
+        if INTRO in ("fore", "c4split") and cx > (X_BREAK if X_BREAK is not None else g["xh"]):
+            return "T"
+        return "O"
     if kind == "anc":
         return "H" if abs(cx - g["xs"]) < COL_HALF else "O"
     return "O"
@@ -192,6 +198,8 @@ def layers_from(breaks, hy):
 
 # ------------------------------------------------------------------------------------------------ model build
 def build(level, g):
+    global _G
+    _G = g
     p = LEVELS[level]
     poly = outline_poly()
     nodes2d, elems2d, on_out = sf.section_mesh(poly, cut_lines(g), (g["xs"], g["zs"], [g["ri"], g["rs"]]),
@@ -268,7 +276,46 @@ def strip_loads(rows, strips, xs):
 
 INTRO = "block"     # "block": station strips loaded on the hard point only (C4 primary path: tube -> block / brace
                     # -> anchor -> spar; fin root fillet cracked); "distributed": every strip over its whole skin
-                    # (fin root fillet carries the station load into the core along the chord: sensitivity case)
+                    # (fin root fillet carries the station load into the core along the chord: sensitivity case);
+                    # "fore" (closure round 2026-11-14, studied and rejected): the fin root and cove bonded only ahead of
+                    # the bond break X_BREAK and sit on a release strip aft of it, so the whole station load is put
+                    # on the station-strip skin ahead of the break (bound: 100 % through the bonded fillet), none aft
+import os as _os_xb
+X_BREAK = float(_os_xb.environ["C2_X_BREAK"]) if _os_xb.environ.get("C2_X_BREAK") else None   # m; None = hinge g["xh"]
+# "c4split" (closure round 2026-11-14, the drawn design, fin root and coves bonded along the whole chord): the fin
+# root fillet carries C4's fillet-intact resultants (CR-C2-12 answer: team/C4/claims.d3.json CALC-C4-D3-STATIC
+# output fillet_share_table, -reactions of the pinned root split at the hinge, per quarter, limit); each segment's
+# force and moment go on the station-strip skin of its own surface and side of the hinge ('U' upper quarter, 'L'
+# lower quarter mirrored z -> -z; fore = O patches, aft = T patches); the rest of the station load goes on the block
+# (H). C4's pinned root is rigid, so the shares are an upper bound for a foam wing. C2_C4SPLIT="<sense>,<ymir>,<k>":
+# sense + / - picks C4's load sense, ymir 0 / 1 mirrors C4's y, k scales the fillet resultants (default "+,0,1").
+_G = None
+CUR_CASE = None
+C4_UNAPPLIED = [0.0]   # largest fillet-segment moment (N m) a single patch could not take (it goes to the block)
+C4_CASE = {"L4-CORNER-SIDE-Y": "L4", "G2-HANG-MOTOR": "G2"}
+
+
+def c4_table():
+    import os
+    t = json.loads((HERE.parents[1] / "C4" / "claims.d3.json").read_text(encoding="utf-8"))
+    tab = next(n for n in t["nodes"] if n["id"] == "CALC-C4-D3-STATIC")["outputs"]["fillet_share_table"]
+    sense, ymir, k, brk = (os.environ.get("C2_C4SPLIT", "+,0,1,0").split(",") + ["1", "0"])[:4]
+    return tab, sense, ymir == "1", float(k), brk == "1"
+
+
+def _fit(X, mk, names, F, Mo, ref):
+    B = np.zeros((6, 3 * len(names)))
+    w = np.zeros(3 * len(names))
+    for j, n in enumerate(names):
+        A, S = patch_geom(X, mk[n])
+        B[:3, 3 * j:3 * j + 3] = A * np.eye(3)
+        B[3:, 3 * j:3 * j + 3] = ws.skew(S - A * ref)
+        w[3 * j:3 * j + 3] = A
+    rhs = np.concatenate([F, Mo])
+    Winv = np.diag(1 / w)
+    t = Winv @ B.T @ np.linalg.lstsq(B @ Winv @ B.T, rhs, rcond=None)[0]
+    got = B @ t       # a single patch cannot take a moment about its own centroid: the achieved resultant is returned
+    return [(n, *t[3 * j:3 * j + 3]) for j, n in enumerate(names)], got[:3], got[3:]
 
 
 def tractions(model, rows, xs, intro=None):
@@ -284,6 +331,49 @@ def tractions(model, rows, xs, intro=None):
         if intro == "block" and any(n.endswith("H") for n in names):
             res.extend((n, 0.0, 0.0, 0.0) for n in names if not n.endswith("H"))
             names = [n for n in names if n.endswith("H")]
+        if intro == "fore":
+            res.extend((n, 0.0, 0.0, 0.0) for n in names if n.endswith("T"))
+            names = [n for n in names if not n.endswith("T")]
+        if intro == "c4split" and any(n.endswith("H") for n in names):
+            g = _G
+            on_fin = strips[k][0] - 1e-9 <= g["y_fin"] <= strips[k][1] + 1e-9
+            cc = C4_CASE.get(CUR_CASE)
+            if on_fin and cc:
+                tab, sense, ymir, kf, brk = c4_table()
+                Ffill, Mfill = np.zeros(3), np.zeros(3)
+                for q, surf in (("up", "U"), ("lo", "L")):
+                    row = tab[f"{cc}{sense} {q}"]
+                    for seg, cls in (("fore", ("O",)), ("aft", ("T",))):
+                        Fq = kf * np.array(row[seg]["F"], float)
+                        Mq = kf * np.array(row[seg]["M"], float)
+                        rq = np.array([row[seg]["ref"][0], g["y_fin"], row[seg]["ref"][2]], float)
+                        if brk:
+                            # bond break aft of the hinge (release strip): the aft segment's resultant is moved onto
+                            # the bonded root ahead of the hinge (same quarter), its moment carried with it
+                            if seg == "aft":
+                                res.extend((n, 0.0, 0.0, 0.0) for n in names if n[3] == surf and n.endswith("T"))
+                                continue
+                            ra = np.array([row["aft"]["ref"][0], g["y_fin"], row["aft"]["ref"][2]], float)
+                            Fa_ = kf * np.array(row["aft"]["F"], float)
+                            Fq = Fq + Fa_
+                            Mq = Mq + kf * np.array(row["aft"]["M"], float) + np.cross(ra - rq, Fa_)
+                        if q == "lo":                  # C4's lower quarter is mirrored z -> -z
+                            Fq[2] = -Fq[2]; Mq[0] = -Mq[0]; Mq[1] = -Mq[1]; rq[2] = -rq[2]
+                        if ymir:                       # y -> -y
+                            Fq[1] = -Fq[1]; Mq[0] = -Mq[0]; Mq[2] = -Mq[2]
+                        nm = [n for n in names if n[3] == surf and n[-1] in cls]
+                        if not nm:
+                            raise RuntimeError(f"c4split: no {surf}{cls} patch in strip {k}")
+                        tq, Fa, Ma = _fit(X, mk, nm, Fq, Mq, rq)
+                        res.extend(tq)
+                        C4_UNAPPLIED[0] = max(C4_UNAPPLIED[0], float(np.abs(Ma - Mq).max()))
+                        Ffill += Fa                    # the block takes the rest, so the strip stays in equilibrium
+                        Mfill += Ma + np.cross(rq - ref, Fa)
+                F, Mo = F - Ffill, Mo - Mfill
+                names = [n for n in names if n.endswith("H")]
+            else:
+                res.extend((n, 0.0, 0.0, 0.0) for n in names if not n.endswith("H"))
+                names = [n for n in names if n.endswith("H")]
         if not names:
             if np.linalg.norm(F) + np.linalg.norm(Mo) > 1e-9:
                 raise RuntimeError(f"strip {k} has load but no skin patch")
@@ -360,7 +450,8 @@ def post(model, U, g, E, nu, stations):
             else:
                 ev = np.linalg.eigvalsh(s)
                 vm = np.sqrt(0.5 * ((ev[:, 0] - ev[:, 1]) ** 2 + (ev[:, 1] - ev[:, 2]) ** 2 + (ev[:, 2] - ev[:, 0]) ** 2))
-                rec = np.column_stack([cen[sel], ev[:, 2], ev[:, 0], 0.5 * (ev[:, 2] - ev[:, 0]), vm])
+                vol = np.abs(sf.element_volumes(X, [(vtk, conn[sel], m[sel])]))   # C2 closure: volume weight
+                rec = np.column_stack([cen[sel], ev[:, 2], ev[:, 0], 0.5 * (ev[:, 2] - ev[:, 0]), vm, vol])
                 (foam if mid == FOAM else petg).append(rec)
     if sig_rows:
         C = np.vstack([c_ for c_, _ in sig_rows])
@@ -373,6 +464,14 @@ def post(model, U, g, E, nu, stations):
             a, b_, c_ = np.linalg.lstsq(A, S[sel], rcond=None)[0]
             prof.append((float(yv), float(abs(a) + rs * math.hypot(b_, c_)), float(np.abs(S[sel]).max())))
         out["spar_profile"] = prof
+    def vpct(v, w, q):
+        # volume-weighted percentile: the value exceeded over (1 - q) of the foam VOLUME. The element-count percentile
+        # (np.percentile) depends on the mesh grading (more small elements near the tube at finer levels), so it is
+        # not one functional of the field across levels; the volume-weighted one is (closure round 2026-11-14).
+        o = np.argsort(v)
+        cw = np.cumsum(w[o])
+        return float(v[o][min(int(np.searchsorted(cw, q * cw[-1])), len(o) - 1)])
+
     def summary(recs, clip_root=0.010):
         if not recs:
             return {}
@@ -383,6 +482,8 @@ def post(model, U, g, E, nu, stations):
                 "s3_min_pa": float(R[i3, 4]), "s3_at": R[i3, :3].tolist(),
                 "tau_max_pa": float(R[it, 5]), "tau_at": R[it, :3].tolist(),
                 "s1_p995_pa": float(np.percentile(R[:, 3], 99.5)), "tau_p995_pa": float(np.percentile(R[:, 5], 99.5)),
+                "s1_p995v_pa": vpct(R[:, 3], R[:, 7], 0.995), "tau_p995v_pa": vpct(R[:, 5], R[:, 7], 0.995),
+                "volume_m3": float(R[:, 7].sum()),
                 "vm_max_pa": float(R[iv, 6]), "vm_at": R[iv, :3].tolist()}
     out["foam"] = summary(foam)
     out["petg"] = summary(petg)
@@ -491,7 +592,7 @@ def main():
     ap.add_argument("--jobs", nargs="+", default=None, help="subset as CASE/SET, e.g. G2-HANG-MOTOR/B")
     ap.add_argument("--out", default="wing_fea.json")
     ap.add_argument("--no-validation", action="store_true")
-    ap.add_argument("--intro", default="block", choices=["block", "distributed"])
+    ap.add_argument("--intro", default="block", choices=["block", "distributed", "fore", "c4split"])
     a = ap.parse_args()
     global INTRO
     INTRO = a.intro

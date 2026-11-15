@@ -7,26 +7,26 @@
      # Vortices =2124
 
   Sref = 0.36800       Cref = 0.32000       Bref =  1.1500    
-  Xref = 0.53590E-01   Yref =  0.0000       Zref = 0.18000E-01
+  Xref = 0.51230E-01   Yref =  0.0000       Zref = 0.18000E-01
 
  Standard axis orientation,  X fwd, Z down         
 
  Run case:  -unnamed-                              
 
-  Alpha =   7.28385     pb/2V =  -0.00000     p'b/2V =  -0.00000
+  Alpha =   6.69772     pb/2V =  -0.00000     p'b/2V =  -0.00000
   Beta  =   0.00000     qc/2V =   0.00000
   Mach  =     0.000     rb/2V =  -0.00000     r'b/2V =  -0.00000
 
-  CXtot =   0.03794     Cltot =   0.00000     Cl'tot =   0.00000
-  CYtot =  -0.00000     Cmtot =  -0.00000
-  CZtot =  -0.41252     Cntot =  -0.00000     Cn'tot =  -0.00000
+  CXtot =   0.03187     Cltot =   0.00000     Cl'tot =   0.00000
+  CYtot =   0.00000     Cmtot =  -0.00000
+  CZtot =  -0.37545     Cntot =  -0.00000     Cn'tot =  -0.00000
 
-  CLtot =   0.41400
-  CDtot =   0.01467
-  CDvis =   0.00000     CDind = 0.0146655
-  CLff  =   0.41587     CDff  = 0.0147429    | Trefftz
-  CYff  =  -0.00000         e =    1.0391    | Plane  
+  CLtot =   0.37660
+  CDtot =   0.01214
+  CDvis =   0.00000     CDind = 0.0121384
+  CLff  =   0.37803     CDff  = 0.0121778    | Trefftz
+  CYff  =  -0.00000         e =    1.0394    | Plane  
 
-   elevator        =  -3.36390
+   elevator        =  -3.51386
 
  ---------------------------------------------------------------

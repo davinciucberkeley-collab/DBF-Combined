@@ -112,6 +112,9 @@ Restart file name: restart.csv.
 |                                   |                              seg35|
 |                                   |                              seg36|
 |                                   |                              seg37|
+|                                   |                              seg38|
+|                                   |                              seg39|
+|                                   |                              seg40|
 +-----------------------------------------------------------------------+
 
 -------------------- Output Preprocessing ( Zone 0 ) --------------------
@@ -125,49 +128,52 @@ Volume output fields: COORDINATES, SOLUTION
 
 ------------------- Geometry Preprocessing ( Zone 0 ) -------------------
 Two dimensional problem.
-53193 grid points.
-105305 volume elements.
-39 surface markers.
+54641 grid points.
+108142 volume elements.
+42 surface markers.
 78 boundary elements in index 0 (Marker = spar).
-5 boundary elements in index 1 (Marker = seg00).
-5 boundary elements in index 2 (Marker = seg01).
-5 boundary elements in index 3 (Marker = seg02).
-5 boundary elements in index 4 (Marker = seg03).
-5 boundary elements in index 5 (Marker = seg04).
-5 boundary elements in index 6 (Marker = seg05).
-5 boundary elements in index 7 (Marker = seg06).
-5 boundary elements in index 8 (Marker = seg07).
-5 boundary elements in index 9 (Marker = seg08).
-5 boundary elements in index 10 (Marker = seg09).
-5 boundary elements in index 11 (Marker = seg10).
-5 boundary elements in index 12 (Marker = seg11).
-5 boundary elements in index 13 (Marker = seg12).
-5 boundary elements in index 14 (Marker = seg13).
-5 boundary elements in index 15 (Marker = seg14).
-5 boundary elements in index 16 (Marker = seg15).
-5 boundary elements in index 17 (Marker = seg16).
-5 boundary elements in index 18 (Marker = seg17).
-5 boundary elements in index 19 (Marker = seg18).
-5 boundary elements in index 20 (Marker = seg19).
-5 boundary elements in index 21 (Marker = seg20).
-5 boundary elements in index 22 (Marker = seg21).
-5 boundary elements in index 23 (Marker = seg22).
-5 boundary elements in index 24 (Marker = seg23).
-5 boundary elements in index 25 (Marker = seg24).
+6 boundary elements in index 1 (Marker = seg00).
+6 boundary elements in index 2 (Marker = seg01).
+6 boundary elements in index 3 (Marker = seg02).
+6 boundary elements in index 4 (Marker = seg03).
+6 boundary elements in index 5 (Marker = seg04).
+6 boundary elements in index 6 (Marker = seg05).
+6 boundary elements in index 7 (Marker = seg06).
+6 boundary elements in index 8 (Marker = seg07).
+6 boundary elements in index 9 (Marker = seg08).
+6 boundary elements in index 10 (Marker = seg09).
+6 boundary elements in index 11 (Marker = seg10).
+6 boundary elements in index 12 (Marker = seg11).
+6 boundary elements in index 13 (Marker = seg12).
+6 boundary elements in index 14 (Marker = seg13).
+6 boundary elements in index 15 (Marker = seg14).
+6 boundary elements in index 16 (Marker = seg15).
+6 boundary elements in index 17 (Marker = seg16).
+6 boundary elements in index 18 (Marker = seg17).
+6 boundary elements in index 19 (Marker = seg18).
+6 boundary elements in index 20 (Marker = seg19).
+6 boundary elements in index 21 (Marker = seg20).
+6 boundary elements in index 22 (Marker = seg21).
+6 boundary elements in index 23 (Marker = seg22).
+6 boundary elements in index 24 (Marker = seg23).
+6 boundary elements in index 25 (Marker = seg24).
 6 boundary elements in index 26 (Marker = seg25).
 6 boundary elements in index 27 (Marker = seg26).
-8 boundary elements in index 28 (Marker = seg27).
-10 boundary elements in index 29 (Marker = seg28).
-13 boundary elements in index 30 (Marker = seg29).
-13 boundary elements in index 31 (Marker = seg30).
-13 boundary elements in index 32 (Marker = seg31).
+6 boundary elements in index 28 (Marker = seg27).
+6 boundary elements in index 29 (Marker = seg28).
+6 boundary elements in index 30 (Marker = seg29).
+8 boundary elements in index 31 (Marker = seg30).
+10 boundary elements in index 32 (Marker = seg31).
 13 boundary elements in index 33 (Marker = seg32).
 13 boundary elements in index 34 (Marker = seg33).
 13 boundary elements in index 35 (Marker = seg34).
 13 boundary elements in index 36 (Marker = seg35).
 13 boundary elements in index 37 (Marker = seg36).
-28 boundary elements in index 38 (Marker = seg37).
-105305 triangles.
+13 boundary elements in index 38 (Marker = seg37).
+13 boundary elements in index 39 (Marker = seg38).
+13 boundary elements in index 40 (Marker = seg39).
+28 boundary elements in index 41 (Marker = seg40).
+108142 triangles.
 Setting point connectivity.
 Renumbering points (Reverse Cuthill McKee Ordering).
 Recomputing point connectivity.
@@ -177,13 +183,13 @@ All volume elements are correctly oriented.
 There has been a re-orientation of 78 LINE surface elements.
 Identifying edges and vertices.
 Setting the control volume structure.
-Area of the computational grid: 0.01829.
+Area of the computational grid: 0.0193984.
 Searching for the closest normal neighbors to the surfaces.
 Storing a mapping from global to local point index.
-Surface area = 0.259133 m.
+Surface area = 0.276133 m.
 Area projection in the x-plane = 0.0219771 m, y-plane = 0.0222192 m.
 Max. coordinate in the x-direction = 0.091 m, y-direction = 0.0198 m.
-Min. coordinate in the x-direction = -0.1252 m, y-direction = -0.00439215 m.
+Min. coordinate in the x-direction = -0.1422 m, y-direction = -0.00439215 m.
 Computing wall distances.
 
 -------------------- Solver Preprocessing ( Zone 0 ) --------------------
@@ -210,7 +216,7 @@ All convergence criteria satisfied.
 +-----------------------------------------------------------------------+
 |      Convergence Field     |     Value    |   Criterion  |  Converged |
 +-----------------------------------------------------------------------+
-|                  rms[DispX]|      -9.94219|         < -14|          No|
+|                  rms[DispX]|      -9.87319|         < -14|          No|
 +-----------------------------------------------------------------------+
 -------------------------------------------------------------------------
 +-----------------------------------------------------------------------+

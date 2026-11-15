@@ -21,12 +21,13 @@
    "id": "ASM-PWR-R-BUDGET",
    "type": "assumption",
    "title": "Main-path wire resistance budget",
-   "text": "The aircraft-side wiring between the AS150U cups and the bus may add at most the 0.68 mOhm that the R2 8 AWG 0.15 m loop carried inside CL-F1-R-EXT 6.5 mOhm",
-   "basis": "team/F1/POWER.md voltage-drop table",
-   "value": 0.68,
+   "text": "The 10 AWG main jumpers may add at most 1.5 mOhm to the path",
+   "basis": "R6 (corrected model): the old 0.68 mOhm was the R2 8 AWG loop's share of a 6.5 mOhm path that no longer exists. The physical limit is E1's allowable path resistance CL-E1-REXT-ALLOW (13.99 mOhm at the 73.2 A limiter, 2026-11-14); with the D-163 LiHV joints the rest of the path is about 10.2 mOhm (team/F1 CL-F1-HV-R-EXT), so 1.5 mOhm for the jumpers keeps >= 2 mOhm of the allowance free",
+   "value": 1.5,
    "unit": "mOhm",
    "status": "PROPOSED",
    "cites": [
+    "CL-E1-REXT-ALLOW",
     "CL-F1-R-EXT"
    ]
   },
@@ -66,7 +67,7 @@
    "title": "Power subsystem flying mass",
    "script": "redesign/subsystems/power/power_claims.py",
    "function": "mass",
-   "equation": "m = pack + (AS150U half + 2 x (l1 + l2) x m'_10AWG) + board + bus + frame + 4 x cap (D-74: no UBEC, no fuse)",
+   "equation": "m = pack + (AS150U half + 2 x (l1 + l2) x m'_10AWG) + board + bus + frame + 4 x n_cap x cap (D-74: no UBEC, no fuse; R7: CoreWing board back, two caps per ESC)",
    "inputs": {
     "pack": "P:battery.mass_kg",
     "as_g": "P:power.as150u_mass_g",
@@ -75,7 +76,8 @@
     "board": "P:power.board_mass_g",
     "bus": "P:power.bus_mass_g",
     "frame": "P:power.frame_mass_g",
-    "cap": "P:power.cap_mass_g"
+    "cap": "P:power.cap_mass_g",
+    "n_cap": "P:power.cap_n_per_esc"
    },
    "units": {
     "pack": "kg",
@@ -83,12 +85,12 @@
     "board": "g"
    },
    "outputs": {
-    "total_g": 623.9,
-    "non_pack_g": 73.9,
+    "total_g": 505.5,
+    "non_pack_g": 91.50000000000001,
     "jumpers_g": 9.6
    },
    "input_values": {
-    "pack": 0.55,
+    "pack": 0.414,
     "as_g": 9.0,
     "jl": [
      0.03,
@@ -102,7 +104,8 @@
     "board": 28.0,
     "bus": 8.8,
     "frame": 9.7,
-    "cap": 2.2
+    "cap": 2.2,
+    "n_cap": 3
    }
   },
   {
@@ -123,8 +126,8 @@
    },
    "outputs": {
     "loop_mohm": 0.6072985599999999,
-    "rise_c": 0.5182288532125484,
-    "loss_w": 0.5565525088940226
+    "rise_c": 0.6829315254002849,
+    "loss_w": 0.7334351445469595
    },
    "input_values": {
     "jl": [
@@ -136,7 +139,7 @@
      3.28,
      60.0
     ],
-    "i": 30.272755043992028,
+    "i": 34.75199432021045,
     "k": 400.0
    }
   },
@@ -254,6 +257,7 @@
     "leg": "P:power.leg_m",
     "ko": "P:power.ko_board_m",
     "leg_sb": "P:power.leg_setback_m",
+    "pad": "P:power.board_pad_m",
     "gps": "P:power.gps_xyz_m"
    },
    "outputs": {
@@ -265,14 +269,14 @@
     "zb": 0.015,
     "tb": 0.0048,
     "size": [
-     0.235,
+     0.242,
      0.14,
      0.07
     ],
     "pack": [
-     0.135,
-     0.046,
-     0.049
+     0.098,
+     0.047,
+     0.046
     ],
     "tray_t": 0.001,
     "plate_t": 0.0008,
@@ -284,8 +288,8 @@
     ],
     "guide_t": 0.0015,
     "aft": [
-     0.0315,
-     0.0475
+     -0.0055,
+     0.0045
     ],
     "pad_t": 0.0025,
     "plate_x": [
@@ -340,6 +344,11 @@
      "z_top_m": 0.0626
     },
     "leg_sb": 0.01,
+    "pad": [
+     0.048,
+     0.016,
+     0.0033
+    ],
     "gps": [
      0.076,
      0.0,
@@ -383,13 +392,14 @@
     "leg": "P:power.leg_m",
     "ko": "P:power.ko_board_m",
     "leg_sb": "P:power.leg_setback_m",
+    "pad": "P:power.board_pad_m",
     "stack_u": "P:power.stack_u_h_m"
    },
    "outputs": {
     "fit_mm": 0.0,
     "seat_err_mm": 0.0,
     "deck_len_mm": 56.0,
-    "top_s_m": 0.048600000000000004,
+    "top_s_m": 0.0509,
     "top_u_m": 0.0626,
     "ko_top_m": 0.0626
    },
@@ -397,14 +407,14 @@
     "zb": 0.015,
     "tb": 0.0048,
     "size": [
-     0.235,
+     0.242,
      0.14,
      0.07
     ],
     "pack": [
-     0.135,
-     0.046,
-     0.049
+     0.098,
+     0.047,
+     0.046
     ],
     "tray_t": 0.001,
     "plate_t": 0.0008,
@@ -416,8 +426,8 @@
     ],
     "guide_t": 0.0015,
     "aft": [
-     0.0315,
-     0.0475
+     -0.0055,
+     0.0045
     ],
     "pad_t": 0.0025,
     "plate_x": [
@@ -472,6 +482,11 @@
      "z_top_m": 0.0626
     },
     "leg_sb": 0.01,
+    "pad": [
+     0.048,
+     0.016,
+     0.0033
+    ],
     "stack_u": 0.024
    }
   },
@@ -493,9 +508,9 @@
     "PWR-004",
     "PWR-006"
    ],
-   "how": "Weigh pack and frame stack on a 1 g scale at T-PWR-ARRIVAL; the 28 g power board moved from avionics (CR-F1-19) is what the 620 g allocation does not yet carry",
-   "note": "D-74: UBEC (13 g) and fuse (3.5 g) deleted, deck 56 mm (+0.7 g frame)",
-   "value": 623.9
+   "how": "Weigh pack and frame stack on a 1 g scale at T-PWR-ARRIVAL",
+   "note": "R7 (D-173b): CoreWing power board PWR-003 28 g EST back, no S-loops; 8 ESC cans (two Rubycon 35PZJ560M10X15 per ESC; the D-160 second cans are in parts.csv). D-74: UBEC and fuse deleted",
+   "value": 505.5
   },
   {
    "id": "CL-PWR-MASS-NONPACK",
@@ -510,8 +525,8 @@
     "PWR-004",
     "PWR-006"
    ],
-   "how": "Weigh the built frame stack (board, bus, AS150U, frame) and the four caps",
-   "value": 73.9
+   "how": "Weigh the built frame stack (board, bus, AS150U, jumpers, frame) and the eight caps",
+   "value": 91.50000000000001
   },
   {
    "id": "CL-PWR-JUMPER-R",
@@ -548,7 +563,7 @@
     "PWR-002"
    ],
    "how": "Thermocouples on the jumper mid-point and the cup, 30 A for 10 min (T-F1-WIRE-HEAT)",
-   "value": 0.5182288532125484
+   "value": 0.6829315254002849
   },
   {
    "id": "CL-PWR-BEND",
@@ -718,7 +733,7 @@
     "PWR-003"
    ],
    "how": "BOARD-CHECK.md step 3: PDB height <= 9 mm; T-PWR-FIT",
-   "value": 0.048600000000000004
+   "value": 0.0509
   },
   {
    "id": "CL-PWR-KO-TOP-U",

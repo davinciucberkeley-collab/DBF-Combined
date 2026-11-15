@@ -1,6 +1,13 @@
 # Fins and motor tubes (FIN): SPEC
 
 
+> **2026-11-14 (D-146 / D-147, design round wave 2, D3):** motor cant 7° → **9°** (sense unchanged, D-52 / B3 §1.4),
+> plate face 7.5 → **12.0 mm** ahead of the collar, cheeks 17 → **21.5 mm**: prop plane x **−0.01704**, plate face x
+> **0.01980** (`CL-D3-X-PROP`, `-X-FACE`); blade swept volume to the tube 26.3 mm ≥ 25 (E1 §7.1). Motor tube → **Rock West
+> 35046-S** filament-wound, OD 22.10 `EST` (micrometer on arrival) × ID 19.05, 0.156 kg/m; bores follow the OD (22.40 mm);
+> tube plug → CF **19 × 17** (A3 S01R). Fins 434.9 → **476.1 g** (tubes +37.1, mounts +4.0) against 471 g (D-155):
+> A3 reconciles. Slip setting now 62–71 N at the can (lever 38.5 mm). Rows below updated where marked R6.
+
 > **2026-11-13 (D-90 ... D-94, Dillon Alcouffe, structures):** station collar 15 -> **22 mm** (C6 RF 1.13 on C1's
 > 12.67 N·m); strip pins 15 -> **12 mm** pitch (RF 1.12); mount grip 12 -> **18 mm** (rocking 2 235 vs need 1 455 N·m/rad),
 > so the collar, ear and fin top-edge LE sit 6 mm lower (ring |z| 0.1315-0.1535, ear mid 0.1475); root fillets 15 -> **10 mm**
@@ -29,7 +36,7 @@ around the tube.
 
 | Path | Route |
 |---|---|
-| Motor loads | motor → 7° canted ASA plate (D-52 sense), face 7.5 mm ahead of the collar (D-61) → 17 mm cheeks → slit collar (friction, D-23 fuse) → tube → station collar → brace (axial) → anchor → spar |
+| Motor loads | motor → 9° canted ASA plate (D-52 sense, D-146), face 12.0 mm ahead of the collar → 21.5 mm cheeks → slit collar (friction, D-23 fuse) → tube → station collar → brace (axial) → anchor → spar |
 | Tube root | tube → block bore 47 mm (CF plug inside) → spar bore (C2 plug inside the spar) → spar; block vertical edges R 3 mm in an R 3 mm pocket with ≥ 3 mm beads (D-68) |
 | Fin top edge | CF edge strips (Ø 2.5 mm CF pins every 15 mm, D-70) → collar tail (two faces, 39.5 mm; bond inspected, BUILD step 13) → tube |
 | Fin root, feet | laminate → cove fillets (15 mm on the last 0.15 m of bonded root, 13 mm aft of the hinge, 4 mm bead ahead, none over the D6 slot) and tape laps → core; D5 shoe on the stepped tip. Fillet credited fail-safe only in the wing (D-68) |
@@ -39,12 +46,12 @@ around the tube.
 
 | Parameter | Value | Unit | Source | Status |
 |---|---|---|---|---|
-| Fin plane / tube x / tube | ±0.320 / 0.045 / CF 22 × 20 × 344 | m, m, mm | `params.json#fins` | `PROPOSED` |
-| Motor plate face x (DP-MOTOR-FACE) / prop plane x, A1 copies both (D-61) | **0.02435 / −0.01267** | m | `CL-D3-X-FACE`, `CL-D3-X-PROP` | `CHECKED` |
-| Collar front to prop plane ÷ 0.14 D / blade tip mid-plane to tube | 1.14 / 31.9 (E1 swept volume 26.1 ≥ 25) | —, mm | `CL-D3-PROP-GAP`, `-TIP-GAP`, `CL-E1-TIP-GAP-AT-75` | `MODELLED` |
+| Fin plane / tube x / tube (R6) | ±0.320 / 0.045 / RW 35046-S 22.10 `EST` × 19.05 × 344 | m, m, mm | `params.json#fins` | `PROPOSED` |
+| Motor plate face x (DP-MOTOR-FACE) / prop plane x, A1 copies both (R6, D-146) | **0.01980 / −0.01704** | m | `CL-D3-X-FACE`, `CL-D3-X-PROP` | `CHECKED` |
+| Collar front to prop plane ÷ 0.14 D / blade tip mid-plane to tube (R6) | 1.25 / 32.0 (E1 swept volume 26.3 ≥ 25, E1.md §7.1) | —, mm | `CL-D3-PROP-GAP`, `-TIP-GAP`, E1 `tip_gap` | `MODELLED` |
 | Cant sense UR (prop end toward the wing, outboard) | −1 | — | `fin_detail.mount.cant_sense_UR` (D-52) | `UNVERIFIED` |
 | Motor screws: canted plate 4.5 mm, engagement every hole | 3.5 (≥ 3.0) at 0.20 N·m | mm | `CL-D3-SCREW-ENGAGE` | `UNVERIFIED` |
-| Mount slip: side force at the can / fuse ratio / hold ratio | 74 / 2.29 / 1.76 | N, —, — | `CL-D3-SLIP-F`, `-FUSE`, `-HOLD` | `UNVERIFIED` |
+| Mount slip: side force at the can / fuse ratio / hold ratio (R6) | 65 / 1.82 / 1.77 | N, —, — | `CL-D3-SLIP-F`, `-FUSE`, `-HOLD` | `UNVERIFIED` |
 | Collar 15 mm ÷ C4 required / ÷ C6 required (live C1 12.67 N·m) / tongue fit | 1.45 / **0.77** / 3.7 mm | — | `CL-D3-COLLAR-H`, `-H-C6`, `CL-D3-TONGUE-FIT` | `FAIL` → CR-D3-36 |
 | Tail embedment ÷ C6 required | 1.27 | — | `CL-D3-TAIL-EMBED` | `UNVERIFIED` |
 | Root fillet RF typical / at C6 allowable, D-65 side load 59.0 N ult | 1.62 / **0.81** (needs L_eff 0.182 m) | — | `CL-D3-ROOT-FILLET-RF`, `-ALLOW`, `-ROOT-LEFF-REQ` | `FAIL` → CR-D3-35 |
@@ -58,11 +65,11 @@ around the tube.
 | Id | Part | Qty | Each g | Line g |
 |---|---|---|---|---|
 | `FIN-001-<st>` | Half-fin laminate, notch, stepped tip, Ø 8 lead hole, root fillets (lower: link slot) | 4 | 25.9 | 103.5 |
-| `FIN-002-R/L` | Motor tube CF 22 × 20 × 344 | 2 | 35.1 | 70.2 |
-| `FIN-003-<st>` | Motor mount ASA, 7° canted plate 7.5 mm ahead, 17 mm cheeks (A = UR/LL, B = UL/LR) | 4 | 11.9 | 47.8 |
+| `FIN-002-R/L` | Motor tube RW 35046-S 22.10 × 19.05 × 344 (R6) | 2 | 53.7 | 107.3 |
+| `FIN-003-<st>` | Motor mount ASA, 9° canted plate 12.0 mm ahead, 21.5 mm cheeks (A = UR/LL, B = UL/LR) (R6) | 4 | 11.7 | 46.7 |
 | `FIN-004-R/L` | Through-core block PETG, R 3 mm vertical edges, bosses, 2 tie lugs | 2 | 40.0 | 79.9 |
 | `FIN-013-<st>` | Strap eye PETG 100 %, saddle foot bonded round the bore boss (D-89c, SW-01) | 4 | 1.36 | 5.4 |
-| `FIN-006-R/L` | Tube plug CF 20 × 18 × 53 | 2 | 5.5 | 10.9 |
+| `FIN-006-R/L` | Tube plug CF 19 × 17 × 53 (R6, A3 S01R) | 2 | 5.5 | 10.9 |
 | `FIN-007-<st>` | ESC pad ASA 46 × 31 | 4 | 2.0 | 8.2 |
 | `FIN-008-<st>` | Station collar PETG, 15 mm ring, 40 mm tail, ear, phase tie lug (x 0.060, open along x) | 4 | 10.5 | 42.0 |
 | `FIN-009-<st>` | Brace CF 10 × 2 (145 / 157 mm) | 4 | 5.2 | 20.6 |
@@ -91,6 +98,6 @@ Hardware and consumables are `FIN-101`…`FIN-107` in `parts.csv`.
 
 ## How to verify
 
-T-D3-WEIGH (fillet cup first), T-D3-SLIP (70–80 N), T-D3-ROOT, T-D3-EYE, the strip-tail tap/pull check (BUILD step
+T-D3-WEIGH (fillet cup first), T-D3-SLIP (62–71 N, R6), T-D3-ROOT, T-D3-EYE, the strip-tail tap/pull check (BUILD step
 13), the D-52 inclinometer and hanging yaw test, D5 shoe dry-fit, C4 T-C4-TAP-D3 / T-C4-MOUNT-STIFF (≥ 1 100 N·m/rad),
 C6 coupons (collar, strip anchor, pins, XPS pull), `check.py`.

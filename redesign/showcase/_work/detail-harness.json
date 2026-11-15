@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 29.13,
+ "render_s": 180.64,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -18,7 +18,7 @@
   "lens_mm": 50,
   "location_m": [
    -1.7255,
-   -1.1163,
+   -1.1164,
    1.8175
   ],
   "fit": "visible",
@@ -42,7 +42,7 @@
  "callouts": [
   {
    "item": "E-HRN-23",
-   "x": 709.3,
+   "x": 709.1,
    "y": 572.4,
    "title": "E-HRN-23",
    "text": "Pod runs: power board, FC, RX",
@@ -52,12 +52,12 @@
    "world_m": [
     -0.0687,
     -0.0347,
-    0.047
+    0.0469
    ]
   },
   {
    "item": "E-HRN-13",
-   "x": 607.7,
+   "x": 607.6,
    "y": 465.8,
    "title": "E-HRN-13",
    "text": "ESC power pair, right",
@@ -72,7 +72,7 @@
   },
   {
    "item": "E-HRN-14",
-   "x": 896.0,
+   "x": 895.9,
    "y": 576.5,
    "title": "E-HRN-14",
    "text": "ESC power pair, left",
@@ -87,7 +87,7 @@
   },
   {
    "item": "PWR-001",
-   "x": 700.0,
+   "x": 699.9,
    "y": 545.5,
    "title": "PWR-001",
    "text": "Flight pack",
@@ -102,7 +102,7 @@
   },
   {
    "item": "PRP-002-UR",
-   "x": 537.2,
+   "x": 537.1,
    "y": 360.0,
    "title": "PRP-002-UR",
    "text": "ESC on fin face",
@@ -117,7 +117,7 @@
   },
   {
    "item": "PWR-008-LL",
-   "x": 1004.1,
+   "x": 1004.0,
    "y": 649.3,
    "title": "PWR-008-LL",
    "text": "ESC capacitor",
@@ -137,13 +137,13 @@
    "role": "ghost",
    "name": "Wing core, one piece (XPS), with all cuts",
    "status": "MODELLED",
-   "mass_g": 201.9,
+   "mass_g": 198.1,
    "subsystem": "wing",
    "bbox_px": [
-    348,
-    298,
-    1250,
-    723
+    349,
+    300,
+    1246,
+    726
    ]
   },
   {
@@ -151,7 +151,7 @@
    "role": "ghost",
    "name": "Tape skin (packing tape, both surfaces, doublers, tip edge layer)",
    "status": "MODELLED",
-   "mass_g": 47.9,
+   "mass_g": 47.5,
    "subsystem": "wing",
    "bbox_px": [
     348,
@@ -249,7 +249,7 @@
    "role": "ghost",
    "name": "Pod shell (foam-board box, XPS LE filler, printed nose lip and antenna tube B)",
    "status": "MODELLED",
-   "mass_g": 24.8,
+   "mass_g": 24.7,
    "subsystem": "pod",
    "bbox_px": [
     601,
@@ -407,9 +407,9 @@
    "subsystem": "power",
    "bbox_px": [
     709,
-    541,
-    755,
-    582
+    539,
+    754,
+    580
    ]
   },
   {
@@ -450,7 +450,7 @@
    "bbox_px": [
     550,
     336,
-    564,
+    563,
     349
    ]
   },
@@ -504,7 +504,7 @@
    "mass_g": 1.6,
    "subsystem": "power",
    "bbox_px": [
-    723,
+    722,
     555,
     755,
     580
@@ -527,14 +527,14 @@
   {
    "id": "PWR-103",
    "role": "context",
-   "name": "Power-frame washer set: 4 x M3 nylon washer 1.0 mm",
+   "name": "Power-frame washer set: 4 x M3 nylon washer 0.5 mm",
    "status": "MODELLED",
    "mass_g": 0.08,
    "subsystem": "power",
    "bbox_px": [
     721,
     546,
-    756,
+    755,
     569
    ]
   },
@@ -547,9 +547,9 @@
    "subsystem": "power",
    "bbox_px": [
     722,
-    545,
+    546,
     755,
-    578
+    579
    ]
   },
   {
@@ -588,9 +588,9 @@
    "mass_g": 2.0,
    "subsystem": "harness",
    "bbox_px": [
-    701,
+    700,
     493,
-    718,
+    717,
     503
    ]
   },
@@ -602,7 +602,7 @@
    "mass_g": 2.0,
    "subsystem": "harness",
    "bbox_px": [
-    755,
+    754,
     533,
     770,
     548
@@ -744,7 +744,7 @@
    "bbox_px": [
     972,
     620,
-    985,
+    984,
     630
    ]
   },
@@ -756,7 +756,7 @@
    "mass_g": 0.5,
    "subsystem": "harness",
    "bbox_px": [
-    539,
+    538,
     454,
     550,
     463
@@ -770,7 +770,7 @@
    "mass_g": 0.5,
    "subsystem": "harness",
    "bbox_px": [
-    976,
+    975,
     574,
     988,
     584
@@ -814,7 +814,7 @@
    "bbox_px": [
     993,
     657,
-    997,
+    996,
     660
    ]
   },
@@ -842,7 +842,7 @@
    "bbox_px": [
     975,
     681,
-    981,
+    980,
     686
    ]
   },
@@ -854,7 +854,7 @@
    "mass_g": 0.0054,
    "subsystem": "harness",
    "bbox_px": [
-    994,
+    993,
     655,
     996,
     657
@@ -884,7 +884,7 @@
    "bbox_px": [
     559,
     493,
-    563,
+    562,
     496
    ]
   },
@@ -996,7 +996,7 @@
    "bbox_px": [
     1004,
     520,
-    1007,
+    1006,
     522
    ]
   },
@@ -1038,7 +1038,7 @@
    "bbox_px": [
     523,
     368,
-    529,
+    528,
     373
    ]
   },
@@ -1066,7 +1066,7 @@
    "bbox_px": [
     736,
     501,
-    780,
+    779,
     518
    ]
   },
@@ -1081,7 +1081,7 @@
     733,
     538,
     747,
-    548
+    546
    ]
   },
   {
@@ -1093,7 +1093,7 @@
    "subsystem": "harness",
    "bbox_px": [
     726,
-    543,
+    542,
     753,
     575
    ]
@@ -1108,7 +1108,7 @@
    "bbox_px": [
     522,
     344,
-    774,
+    773,
     564
    ]
   },
@@ -1148,7 +1148,7 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    735,
+    734,
     528,
     1003,
     665
@@ -1206,7 +1206,7 @@
    "bbox_px": [
     960,
     681,
-    981,
+    980,
     755
    ]
   },
@@ -1234,7 +1234,7 @@
    "bbox_px": [
     534,
     355,
-    703,
+    702,
     524
    ]
   },
@@ -1274,9 +1274,9 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    684,
+    683,
     490,
-    997,
+    996,
     657
    ]
   },
@@ -1316,7 +1316,7 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    698,
+    697,
     399,
     753,
     524
@@ -1400,7 +1400,7 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    996,
+    995,
     652,
     1002,
     665
@@ -1582,6 +1582,7 @@
   "WNG-005-R",
   "WNG-006-L",
   "WNG-006-R",
+  "WNG-008",
   "WNG-011-L",
   "WNG-011-R",
   "WNG-012-L",

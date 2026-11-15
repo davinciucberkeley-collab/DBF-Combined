@@ -32,8 +32,10 @@ GOV = {  # quantity: (run key, field, station rule, unit scale, label)
     "spar_sigma_L1": ("L1-LEVEL/MC-C/O", "spar", "max", 1e-6, "spar outer-fibre stress, L1, limit, MPa"),
     "w_tip_G2_O": ("G2-HANG-MOTOR/MC-P/O", "w", "tip", 1e3, "flap w at the tip, G2, orthotropic tube, mm"),
     "twist_tip_L4_O": ("L4-CORNER-SIDE-Y/MC-C/O", "twist", "tip", 180 / math.pi, "twist at the tip, L4, orthotropic tube, deg"),
-    "foam_s1_L4_O": ("L4-CORNER-SIDE-Y/MC-C/O", "foam:s1_p995_pa", "", 1e-3, "foam tension, 99.5th pct, L4, orthotropic, kPa"),
-    "foam_tau_L4_O": ("L4-CORNER-SIDE-Y/MC-C/O", "foam:tau_p995_pa", "", 1e-3, "foam shear, 99.5th pct, L4, orthotropic, kPa"),
+    # closure round 2026-11-14: the 99.5th percentile is taken by foam VOLUME (s1_p995v), not by element count; the
+    # count percentile depends on the mesh grading and is not one functional of the field across the three levels
+    "foam_s1_L4_O": ("L4-CORNER-SIDE-Y/MC-C/O", "foam:s1_p995v_pa", "", 1e-3, "foam tension, 99.5th pct by volume, L4, orthotropic, kPa"),
+    "foam_tau_L4_O": ("L4-CORNER-SIDE-Y/MC-C/O", "foam:tau_p995v_pa", "", 1e-3, "foam shear, 99.5th pct by volume, L4, orthotropic, kPa"),
     "foam_peak_L4_O": ("L4-CORNER-SIDE-Y/MC-C/O", "foam:s1_max_pa", "", 1e-3, "foam tension peak (block corner), L4, orthotropic, kPa"),
 }
 UNITS = {"w_tip_G2": "mm", "u_tip_L1": "mm", "twist_tip_L4": "deg", "spar_sigma_L1": "MPa", "w_tip_G2_O": "mm",
@@ -304,7 +306,9 @@ def d68_summary(name="d68_submodel.json"):
     fin = out["levels"].get("d68/L3") or out["levels"].get("d68/L2") or out["levels"].get("d68/L1")
     if fin:
         P_ = out["params"]
-        lv = "d68 submodel, finest level"
+        # D-153 (2026-11-14): RECORD ONLY. The CL-C2-FEA-FOAM-CORNER-* claims read vm(L/2) on the tape model from
+        # c2r5_reduced.json (c2r5_reduce.py); these 1 mm-average values of the untaped D-68 model are kept for the trail.
+        lv = "d68 submodel, finest level, record only since D-153 (claims read c2r5_reduced.json)"
         P_["d68_corner_s1_ult_pa"] = (SF * abs(fin[f"pocket_foam_s1{'_avg' if D68_MEASURE else ''}_lim_pa"]), "Pa",
                                       f"foam tension peak at the R 3 mm block-pocket corners + beads, ultimate, {lv}, {out['measure']}")
         P_["d68_corner_s3_ult_pa"] = (SF * abs(fin[f"pocket_foam_s3{'_avg' if D68_MEASURE else ''}_lim_pa"]), "Pa",
@@ -470,8 +474,8 @@ def main():
     # foam and PETG: the orthotropic-tube set O is the physical model; B and T (isotropic tube, as SU2 runs it)
     # bracket it and are kept as the *_BT values
     phys = ("O",) if have_O else ("B", "T")
-    for nm, sub, allow, mats in (("foam_s1_p995_ult_pa", "s1_p995_pa", M["xps_tens_allow_pa"], ("foam",)),
-                                 ("foam_tau_p995_ult_pa", "tau_p995_pa", M["xps_shear_allow_pa"], ("foam",)),
+    for nm, sub, allow, mats in (("foam_s1_p995_ult_pa", "s1_p995v_pa", M["xps_tens_allow_pa"], ("foam",)),
+                                 ("foam_tau_p995_ult_pa", "tau_p995v_pa", M["xps_shear_allow_pa"], ("foam",)),
                                  ("foam_s1_peak_ult_pa", "s1_max_pa", M["xps_tens_allow_pa"], ("foam",)),
                                  ("foam_s3_peak_ult_pa", "s3_min_pa", M["xps_comp_allow_pa"], ("foam",)),
                                  ("foam_tau_peak_ult_pa", "tau_max_pa", M["xps_shear_allow_pa"], ("foam",)),
@@ -550,6 +554,55 @@ def main():
         (OUT / "fea_report.json").write_text(json.dumps(res, indent=1, default=float))
         for k, (v, unit, note) in d68["params"].items():
             c[k] = pv_(v, unit, note)
+    # ---- closure round 2026-11-14: the drawn fin root (bonded along the whole chord) with the fillet carrying C4's
+    # fillet-intact resultants (upper bound: C4's root is rigid); worst of the four sense / y-sign combinations;
+    # data/c2cl_split.json from c2cl_split_reduce.py
+    fp = HERE / "data" / "c2cl_split.json"
+    if fp.exists():
+        fr = json.loads(fp.read_text())
+        res["c4split"] = fr
+        for nm, sub, lab in (("s1", "s1_p995v_pa", "tension"), ("tau", "tau_p995v_pa", "shear")):
+            best = (0.0, None)
+            for t, levs in fr.get("global", {}).items():
+                lev = max(levs, key=int)
+                for k, v in levs[lev].items():
+                    if abs(v[sub]) > abs(best[0]):
+                        best = (v[sub], f"{t} {k} level {lev}")
+            if best[1]:
+                c[f"split_foam_{nm}_p995v_ult_pa"] = pv_(SF * abs(best[0]), "Pa",
+                    f"fin root fillet carrying C4's intact split: foam {lab} 99.5th pct by volume, ultimate, {best[1]}")
+        cut = fr.get("cutout", {})
+        for nm in ("s1", "s3", "tau"):
+            best = (0.0, None)
+            for t, levs in cut.items():
+                lev = max(levs, key=int)
+                for k, v in levs[lev].items():
+                    if not k.startswith("_") and abs(v[f"{nm}_avg_pa"]) > abs(best[0]):
+                        best = (v[f"{nm}_avg_pa"], f"{t} {k} local level {lev}")
+            if best[1]:
+                c[f"split_cutout_{nm}_ult_pa"] = pv_(SF * abs(best[0]), "Pa",
+                    f"foam {nm} at the R 3 mm elevon cut-out corners, 1 mm average, fin root fillet carrying C4's "
+                    f"intact split, ultimate, {best[1]}")
+        g_all = []
+        for t, levs in cut.items():
+            if all(str(l) in levs for l in (1, 2, 3)):
+                hs = [levs[str(l)]["_h_local_mm"] for l in (1, 2, 3)]
+                for k in levs["3"]:
+                    if k.startswith("_"):
+                        continue
+                    for nm in ("s1", "s3", "tau"):
+                        g_all.append(gci(hs, [abs(levs[str(l)][k][f"{nm}_avg_pa"]) for l in (1, 2, 3)])["gci_fine"])
+        for nm in ("s1", "s3", "tau"):
+            cr = fr.get("corner", {})
+            if cr:
+                k = max(cr, key=lambda kk: abs(cr[kk][nm]))
+                c[f"split_corner_{nm}_ult_pa"] = pv_(SF * abs(cr[k][nm]), "Pa",
+                    f"block-pocket corner foam {nm}, vm(L/2), tape model 50 % credit, level 2, fin root fillet carrying "
+                    f"C4's split (bond break at x 0.22), ultimate, {k}")
+        if g_all:
+            c["split_cutout_gci"] = pv_(max(g_all), "-", "largest fine-grid GCI of the cut-out corner foam s1 / s3 / tau "
+                                        "(1 mm average), C4 fillet split, 3 local levels")
+        (OUT / "fea_report.json").write_text(json.dumps(res, indent=1, default=float))
     (HERE / "params.json").write_text(json.dumps(pr, indent=1), encoding="utf-8")
     # ---- figures
     FIG.mkdir(exist_ok=True)

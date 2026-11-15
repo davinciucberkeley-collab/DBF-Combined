@@ -1,7 +1,20 @@
 {
- "bodies": 219,
+ "bodies": 220,
  "wire_strands": 63,
  "hits": [
+  {
+   "a": "E-HRN-11",
+   "b": "E-HRN-12",
+   "depth_mm": 0.024,
+   "at_mm": [
+    -3.12,
+    -44.66,
+    45.48
+   ],
+   "bodies": [
+    "E-HRN-12 \"wire strand 1 (4.8 mm)\" x E-HRN-11 \"wire strand 0 (4.8 mm)\" 0.02 mm"
+   ]
+  },
   {
    "a": "WNG-001",
    "b": "WNG-003",
@@ -13,6 +26,58 @@
    ],
    "bodies": [
     "WNG-003 \"WNG-003\" x WNG-001 \"WNG-001\" 0.02 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-17",
+   "b": "FIN-003-UR",
+   "depth_mm": 0.156,
+   "at_mm": [
+    25.33,
+    334.34,
+    190.19
+   ],
+   "bodies": [
+    "FIN-003-UR \"FIN-003-UR\" x E-HRN-17 \"wire strand 0 (5.6 mm)\" 0.16 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-18",
+   "b": "FIN-003-UL",
+   "depth_mm": 0.156,
+   "at_mm": [
+    25.33,
+    -334.34,
+    190.19
+   ],
+   "bodies": [
+    "FIN-003-UL \"FIN-003-UL\" x E-HRN-18 \"wire strand 0 (5.6 mm)\" 0.16 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-19",
+   "b": "FIN-003-LR",
+   "depth_mm": 0.156,
+   "at_mm": [
+    25.33,
+    334.34,
+    -190.19
+   ],
+   "bodies": [
+    "FIN-003-LR \"FIN-003-LR\" x E-HRN-19 \"wire strand 0 (5.6 mm)\" 0.16 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-20",
+   "b": "FIN-003-LL",
+   "depth_mm": 0.156,
+   "at_mm": [
+    25.33,
+    -334.34,
+    -190.19
+   ],
+   "bodies": [
+    "FIN-003-LL \"FIN-003-LL\" x E-HRN-20 \"wire strand 0 (5.6 mm)\" 0.16 mm"
    ]
   },
   {

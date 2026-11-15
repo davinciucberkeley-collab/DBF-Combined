@@ -1,0 +1,341 @@
+ce failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ MRCHDU: Convergence failed at   5  side 2    Res =         NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ MRCHDU: Convergence failed at   6  side 2    Res =         NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ MRCHDU: Convergence failed at   7  side 2    Res =         NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ MRCHDU: Convergence failed at   8  side 2    Res =         NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ MRCHDU: Convergence failed at   9  side 2    Res =         NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ MRCHDU: Convergence failed at  10  side 2    Res =         NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+ x:  0.00000  0.00000  0.00000  N:    NaN  9.000    NaN  Nx:     NaN   dN:       NaN
+ TRCHEK2: N2 convergence failed.
+
+*** TIMEOUT ***

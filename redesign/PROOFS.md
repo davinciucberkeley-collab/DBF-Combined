@@ -1,7 +1,7 @@
 # Proof chains (claims map)
 
 Every number in the redesign is meant to be traceable: **requirement ← claim ← calculation ← parameters ← sources**.
-The graph has **4,261 nodes and 13,826 links** (2026-11-13), built by `python -I redesign/proofs/build_graph.py`, which
+The graph had **4,567 nodes and 14,894 links** at its last clean build (2026-11-14 03:33 UTC), built by `python -I redesign/proofs/build_graph.py`, which
 re-runs every calculation and flags any stored number that no longer matches (drift).
 
 **Explore it:** the **Proofs ↗** link in the K09-L Explorer (double-click `00 - OPEN THE K09-L EXPLORER (double-click me).bat`,
@@ -16,13 +16,13 @@ everything still UNVERIFIED.
 | Node type | VERIFIED | CHECKED | PROPOSED | UNVERIFIED | Total |
 |---|---|---|---|---|---|
 | requirement | 0 | 1 | 1 | 57 | 59 |
-| claim | 0 | 87 | 37 | 1576 | 1700 |
-| calculation | 0 | 421 | 0 | 0 | 421 |
-| parameter | 0 | 63 | 656 | 366 | 1085 |
-| source | 0 | 76 | 0 | 101 | 177 |
-| assumption | 0 | 0 | 283 | 248 | 531 |
-| test | 0 | 0 | 141 | 0 | 141 |
-| part | 0 | 0 | 0 | 147 | 147 |
+| claim | 0 | 90 | 37 | 1729 | 1856 |
+| calculation | 0 | 456 | 0 | 0 | 456 |
+| parameter | 0 | 63 | 687 | 393 | 1143 |
+| source | 0 | 87 | 0 | 103 | 190 |
+| assumption | 0 | 0 | 301 | 260 | 561 |
+| test | 0 | 0 | 147 | 0 | 147 |
+| part | 0 | 0 | 0 | 155 | 155 |
 
 VERIFIED needs a physical test, and nothing has been built yet, so nothing is VERIFIED. CHECKED means re-run and
 compared to an independent calculation or simulation. The counts above and the fail counts are in the next section;
@@ -40,7 +40,41 @@ and print its margin as a distance in the claim's unit (`-0.00012 m abs`). The b
 second way, by plain comparison of value and limit, and stops with `SELF-CHECK …` if the two disagree.
 `proofs/test_proofs.py` has the regression cases. Detail: `proofs/SCHEMA.md`, `review/CDR-2026-11-13/fixes/S2.md`.
 
-GRAPH_STATE_PROOFS
+**State of the graph at the fixed point of the fix round** (build of 2026-11-14 03:33 UTC, after every fix stream
+and the integrator): `OK: every stored number re-computes`, 0 drift, 0 errors, 19 warnings;
+4 567 nodes, 14 894 links, 45 claims files; node counts in the table above.
+
+**58 nodes fail: 45 claims and 13 requirements.** `--strict` exits 1 on them, as it should. By folder:
+A3 2 (`CL-A3-ALLOC-WORST`, `CL-A3-CG-X-STATIONS`); B2 1 (`CL-B2R3-VTR-GATE-FWD`); B3 4 (`CL-B3-HOVER-YAW-WTIP-20`,
+`CL-B3-TRANS-PITCH-USE`, `-HMAX-CAP30`, `-NOHUB-CAP30`); B4 2 (`CL-B4-RPM-MAX-FULL`, `CL-B4-SF-RPM`); C1 1
+(`CL-C1-N-STALL-VD`); C2 11 (`CL-C2-RING-ANCHOR`, `-RING-NO-PLUG`, `CL-C2-FEA-CUTOUT-SENS`, `-FOAM-CORNER-S1`,
+`-S1-CUTS`, `-S3`, `-S3-CUTS`, `-FOAM-CORNER-TAU`, `-FOAM-FILLET-SENS`, `-GCI`, `-SUB-GCI`); C3 2
+(`CL-C3-BLOCK-A-SHARE`, `-STOP-SECTION-PENALTY`); C4 7 (`CL-C4-MESH-CONV`, `-SEP-1L`, `-SEP-2L`, `-SEP-BAND-1LB`,
+`-SEP-BAND-REC`, `CL-C4-SIM-SEP`, `-SIM-SEP-PLATE-A3`); C5 5 (`CL-C5-LANDINGS-PER-CARTRIDGE`, `-PACK-STACK-MARGIN`,
+`-SIM-INPUTS-STALE`, `-SIM3D-V-BROADSIDE`, `-V-LAND-BROADSIDE`); D5 1 (`CL-D5-FLANGE-SF`); E1 4; E2 1; I1 2
+(`CL-I1-RESERVE-PESS`, `-RESERVE-PESS-FLIGHT-READY`); I2 2. Requirements: `R-BUDGET`, `R-BUILD-HOURS`,
+`R-CG-RANGE`, `R-ESC-CURRENT`, `R-HOVER-AUTHORITY`, `R-MASS-ALLOC`, `R-MISSION`, `R-PACK-RETENTION`, `R-RESERVE`,
+`R-STRUCT-MARGIN`, `R-TRANSITION`, `R-VIBRATION`, `R-WIND`. Eleven requirements still have no claim: `R-CAR-FIT`,
+`R-ENVELOPE`, `R-LEGAL`, `R-NO-FLOATING`, `R-PILOT`, `R-PROCESS`, `R-PROOF-BUILD`, `R-SITE`, `R-TEST-ORDER`,
+`R-TWIN`, `R-WIND-MEASURE`. Reasons for the structures, aero, BOM and mass fails: `review/CDR-2026-11-13/fixes/S1.md`,
+`S3.md`, `S4.md`, `INTEGRATOR.md`.
+
+Of the fifteen hidden fails, three remain at the end of the round: `CL-B4-SF-RPM` −0.34, `CL-C5-PACK-STACK-MARGIN`
+−3.3 mm and `CL-C5-SIM-INPUTS-STALE` 3 (was 6). One limit-0 fail is new: `CL-I1-RESERVE-PESS-FLIGHT-READY` −$235.84
+(S4's flight-ready reserve line, decision B4). The rest cleared by the other streams' work: the CG range
+(`CL-A1-CG-RANGE-AFT` +0.03 mm on `cg.x_range_m` [0.0394, 0.0513]), the 3-D fin-face margins on the 24.5 N
+side-load cap (`CL-C4-SIM-MS-FACE-FAR` +0.36, `-DRAWN` +1.20), and the 16 mm collar (+0.41). The shell-model face
+and paper-strip margins are now reported by S1 without a limit (`CL-C4-D3-MS-FACE` −0.61, `-MS-STRIP-PAPER` −0.83):
+the shell and the 3-D model disagree and `T-C4-FIN-PROOF` decides, so they are no longer counted as fails. A limit
+that is removed while the value is still negative is the pattern CDR-EL-04 objected to: the integrator decides
+whether the limits go back or the claims are retired (`fixes/S2.md`, section 2).
+
+**The files in `proofs/out/` today are not that clean build.** After 03:33 UTC the pod generator and the mass
+roll-up were re-run twice by the build-sequence work (pod mass 145.5 → 144.8 g, predicted CG ± 0.02 mm). The graph
+as left (2026-11-14 05:10 UTC) has 332 drift errors, all on scripts that read A3's mass and CG, and 60 fails
+(47 claims + 13 requirements; new: `CL-C3-HATCH-TAB`, `CL-C6-POD-HATCH-RF`, both from the pod change). The
+commands that close it are in `review/CDR-2026-11-13/fixes/S2.md`, section 4. Re-read the counts from
+`proofs/out/graph.json` after that run.
 
 **The fifteen fails that were hidden** (values at the first build with the fix, 19:28 UTC):
 
@@ -61,8 +95,8 @@ GRAPH_STATE_PROOFS
 | `CL-E1-ILIM-I` | 30.0 A vs ≤ 25 A (−20 %) | The motor rating is a winding current. The id used to hold the battery-side 24.75 A (now `CL-E1-ILIM-I-BAT`) and passed. `R-ESC-CURRENT` fails through it. The limiter value is decided on the stand (decision B7); about 71 A holds 25 A (`CL-E1-ILIM-FOR-25A`) |
 | `CL-E1-ILIM-I-WORST`, `CL-E1-ILIM-I-B2` | 25.8 A, 25.7 A vs ≤ 25 A (−3 %) | Same check at the worst pack state and on the second motor bound |
 | `CL-E1-T-STAND-B2-PROP` | 972 gf vs ≥ 1 048 gf (−7 %) | Sensitivity, no requirement link: thrust at a held 11.9 V bus if full-throttle rpm goes with bus voltage (the reviewer's reading of the maker's table, `REVIEWER EST` 946 gf). The two bounds E1 carries pass (1 392 and 1 090 gf). `T-E1-STAND` decides (CDR-04) |
-| `CL-E2-CRUISE-TO-LOW-PESS-V17` | 4.67 min vs ≥ 5 (−7 %) | Pessimistic cruise at the 17 m/s fallback before `BATT_LOW` (D-96 c, the planning case of decision B6). `R-MISSION` fails through it. The prop A/B on the stand is the way out (CDR-04) |
-| `CL-I2-BUILD-HOURS`, `CL-I2-CUT-TO-HOVER-D` (and, on the task list before S4's re-plan, `CL-I2-FIRST-HOVER-WEEK`, `CL-I2-FIRST-TRANSITION-WEEK`) | 113.5 h vs ≤ 90 and 34 d vs ≤ 21 before the re-plan; 100.5 h and 33 d after it | `R-BUILD-HOURS` and `R-SCHEDULE` had no claim. Limits are the requirement text of today; decision B2 (re-word) is PROPOSED and waits for the students |
+| `CL-E2-CRUISE-TO-LOW-PESS-V17` | 4.68 min vs ≥ 5 (−6 %) | Pessimistic cruise at the 17 m/s fallback before `BATT_LOW` (D-96 c, the planning case of decision B6). `R-MISSION` fails through it. The prop A/B on the stand is the way out (CDR-04) |
+| `CL-I2-BUILD-HOURS`, `CL-I2-CUT-TO-HOVER-D` | 100.5 h vs ≤ 90 (−12 %) and 33 d vs ≤ 21 (−57 %) on S4's re-plan (113.5 h and 34 d before it, when the hover week 5 vs 4 and transition week 8 vs 7 also failed) | `R-BUILD-HOURS` and `R-SCHEDULE` had no claim. Limits are the requirement text of today; decision B2 (re-word) is PROPOSED and waits for the students |
 
 **Cleared:** `CL-F2-I2C-LEN` 0.522 m against 1.0 m (D-99 applied by F2, +48 %). `CL-F1-DROP-PEAK` and
 `CL-F1-ESC-LEN-ALLOW` have limits again (5.68 % against E1's 11.5 %; 1.907 m against the longest lead 0.701 m).

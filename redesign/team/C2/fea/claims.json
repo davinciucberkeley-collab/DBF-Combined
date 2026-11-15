@@ -4,7 +4,8 @@
  "params": [
   "../../../params/params.json",
   "../params.json",
-  "params.json"
+  "params.json",
+  "c2r5_reduced.json"
  ],
  "nodes": [
   {
@@ -54,7 +55,7 @@
    "title": "Largest fine-grid GCI over the governing FEA outputs",
    "script": "redesign/team/C2/fea/fea_claims.py",
    "function": "fea_gci",
-   "equation": "max GCI over: w_G2 (B, O), u_L1 (B), twist_L4 (T, O), sigma_spar_L1 (B), foam tension and shear 99.5th pct L4 (O)",
+   "equation": "max GCI over: w_G2 (B, O), u_L1 (B), twist_L4 (T, O), sigma_spar_L1 (B), foam tension and shear 99.5th pct by volume L4 (O; closure round: volume-weighted percentile)",
    "inputs": {
     "a": "P:c2fea.w_tip_G2_gci",
     "b": "P:c2fea.u_tip_L1_gci",
@@ -69,17 +70,17 @@
     "SRC-C2-CELIK-GCI"
    ],
    "outputs": {
-    "value": 0.07780338842385646
+    "value": 0.03419030800562731
    },
    "input_values": {
-    "a": 0.0007400173184632698,
-    "b": 0.0005251800977712065,
-    "c": 0.0009155520235286528,
-    "d": 0.00474236200072305,
-    "e": 0.0007400173184632698,
-    "f": 0.0009155520235286528,
-    "g": 0.07780338842385646,
-    "h": 0.012368649370472778
+    "a": 0.000720607034757912,
+    "b": 0.0012397806523250679,
+    "c": 0.0004923562779089392,
+    "d": 0.00487176614940446,
+    "e": 0.000720607034757912,
+    "f": 0.0004923562779089392,
+    "g": 0.03419030800562731,
+    "h": 0.0031914342840531694
    }
   },
   {
@@ -132,10 +133,10 @@
     "ASM-C2-TUBE-ET"
    ],
    "outputs": {
-    "value": 52543857.72308484
+    "value": 38867986.29586747
    },
    "input_values": {
-    "v": 52543857.72308484
+    "v": 38867986.29586747
    }
   },
   {
@@ -149,10 +150,10 @@
     "v": "P:c2fea.tip_defl_frac"
    },
    "outputs": {
-    "value": 0.004316759345426763
+    "value": 0.004422206008956705
    },
    "input_values": {
-    "v": 0.004316759345426763
+    "v": 0.004422206008956705
    }
   },
   {
@@ -169,10 +170,10 @@
     "ASM-C2-TUBE-ET"
    ],
    "outputs": {
-    "value": 58202.13785312392
+    "value": 51878.32118649508
    },
    "input_values": {
-    "v": 58202.13785312392
+    "v": 51878.32118649508
    }
   },
   {
@@ -189,10 +190,10 @@
     "ASM-C2-TUBE-ET"
    ],
    "outputs": {
-    "value": 40747.09481114573
+    "value": 38485.72163466488
    },
    "input_values": {
-    "v": 40747.09481114573
+    "v": 38485.72163466488
    }
   },
   {
@@ -209,10 +210,10 @@
     "ASM-C2-TUBE-ET"
    ],
    "outputs": {
-    "value": 3592643.9458760237
+    "value": 3157824.4249723405
    },
    "input_values": {
-    "v": 3592643.9458760237
+    "v": 3157824.4249723405
    }
   },
   {
@@ -246,183 +247,503 @@
    "status": "UNVERIFIED"
   },
   {
+   "id": "SRC-C2-XPS-KIC",
+   "type": "source",
+   "title": "XPS fracture parameters from notched beams: K_Ice 0.0547 MPa m^0.5 (CoV 16.7 %, n = 3), E 10.7 MPa, Key Eng. Mater. 776:160",
+   "kind": "paper",
+   "url": "https://www.scientific.net/KEM.776.160",
+   "where": "abstract via search 2026-11-14 (page returns 403 to fetch)"
+  },
+  {
+   "id": "SRC-C2-FOAMULAR250",
+   "type": "source",
+   "title": "Owens Corning FOAMULAR 250 data sheet: flexural strength 75 psi minimum (ASTM C203)",
+   "kind": "datasheet",
+   "url": "https://www2.owenscorning.com/comminsul/documents/foamular250.pdf",
+   "where": "search snippet 2026-11-14"
+  },
+  {
+   "id": "SRC-C2-NEGRU-TCD",
+   "type": "source",
+   "title": "Negru R. et al., Application of TCD for brittle fracture of notched PUR materials, Theor. Appl. Fract. Mech. 80 (2015) 87-95",
+   "kind": "paper",
+   "url": "https://imechanica.egr.uh.edu/node/25514",
+   "where": "TCD applied to notched polymer foams (checked 2026-11-14)"
+  },
+  {
+   "id": "ASM-C2-FOAM-TCD",
+   "type": "assumption",
+   "title": "Block-pocket corner foam stress read as vm(L/2), L = (1/pi)(K_Ic/sigma_0)^2 (D-153)",
+   "text": "Foam-only volume average over a ball of radius L/2 = 1.78 mm, maximised over the ball centre (the 3000 highest foam elements tried as centres), compared with the unchanged allowables",
+   "basis": "the corner is a bimaterial singularity (Williams exponents 0.255 / 0.30, c2r5_wedge.py), so any peak or fixed sub-L average grows with refinement; for those exponents the ball average reads the point-method stress at about 0.35 L, more conservative than the point (0.5 L) and line methods; sigma_0 is the highest strength on record (shortest L). The basis is mode-I cracks in homogeneous foam; T-C2-XPS-COUPON (taped and untaped torsion coupons, 3 SENB beams) checks it",
+   "value": 0.00178,
+   "unit": "m",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-C2-TAYLOR-TCD",
+    "SRC-C2-NEGRU-TCD",
+    "SRC-C2-XPS-KIC",
+    "SRC-C2-FOAMULAR250"
+   ]
+  },
+  {
+   "id": "ASM-C2-TAPE-CREDIT",
+   "type": "assumption",
+   "title": "WNG-003 tape skin and block doubler carried at 50 % membrane credit (D-153)",
+   "text": "BOPP packing-tape skin as a 0.35 mm offset layer with E t 0.044 MN/m (1 layer at 50 %) for x <= 0.24 m, 3x over the block doubler band y 0.29-0.35, x <= 0.12 m; 25 % (E t 0.022 MN/m) is the reported sensitivity",
+   "basis": "50 % is the credit the beam design basis already uses for the tape (team/C2/sizing.json); the PSA shear-lag length on foam is about 2-5 mm EST, so the credit is decided by T-C2-XPS-COUPON (taped vs untaped block coupon); fallback if it fails: glass D-cell (A1.md D-153)",
+   "value": 0.5,
+   "unit": "-",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "CALC-C2-TCD-HALF-L",
+   "type": "calculation",
+   "title": "Critical-distance half-length L/2 for XPS",
+   "script": "redesign/team/C2/fea/fea_claims.py",
+   "function": "tcd_half_l",
+   "equation": "L/2 = (1/(2 pi)) (K_Ic / sigma_0)^2",
+   "inputs": {
+    "k": "P:c2r5.tcd_K_Ic_pa_sqrtm",
+    "s0": "P:c2r5.tcd_sigma0_pa"
+   },
+   "cites": [
+    "SRC-C2-TAYLOR-TCD",
+    "SRC-C2-XPS-KIC",
+    "SRC-C2-FOAMULAR250"
+   ],
+   "outputs": {
+    "value": 0.001781614333832777
+   },
+   "input_values": {
+    "k": 54700.0,
+    "s0": 517000.0
+   }
+  },
+  {
    "id": "CALC-C2-FEA-CORNER-S1",
    "type": "calculation",
-   "title": "Foam tension peak at the R 3 mm block-pocket corners with fillet beads, ultimate (D-68, submodel finest level)",
+   "title": "Foam tension vm(L/2) at the block-pocket corners, tape skin + doubler at 50 %, ultimate (D-153, local level 2)",
    "script": "redesign/team/C2/fea/fea_claims.py",
-   "function": "pt_calc_c2_fea_corner_s1",
-   "equation": "value from fea_report.py (3-D FEA)",
+   "function": "ult_calc_c2_fea_corner_s1",
+   "equation": "sigma_ult = SF_ult x vm(L/2) at limit (c2r5_reduced.json)",
    "inputs": {
-    "v": "P:c2fea.d68_corner_s1_ult_pa"
+    "v": "P:c2r5.tape50_L2_vm_s1_lim_pa",
+    "sf": "P:requirements.safety_factor_ult"
    },
    "assumes": [
     "ASM-C2-TUBE-ET",
-    "ASM-C2-FOAM-AVG-R"
+    "ASM-C2-FOAM-TCD",
+    "ASM-C2-TAPE-CREDIT"
    ],
    "outputs": {
-    "value": 284066.0718789729
+    "value": 101933.42014388216
    },
    "input_values": {
-    "v": 284066.0718789729
+    "v": 67955.61342925478,
+    "sf": 1.5
+   }
+  },
+  {
+   "id": "CALC-C2-FEA-CORNER-S1-T25",
+   "type": "calculation",
+   "title": "Foam tension vm(L/2) at the corners, tape at 25 % credit, ultimate (sensitivity, level 2)",
+   "script": "redesign/team/C2/fea/fea_claims.py",
+   "function": "ult_calc_c2_fea_corner_s1_t25",
+   "equation": "sigma_ult = SF_ult x vm(L/2) at limit (c2r5_reduced.json)",
+   "inputs": {
+    "v": "P:c2r5.tape25_L2_vm_s1_lim_pa",
+    "sf": "P:requirements.safety_factor_ult"
+   },
+   "assumes": [
+    "ASM-C2-TUBE-ET",
+    "ASM-C2-FOAM-TCD",
+    "ASM-C2-TAPE-CREDIT"
+   ],
+   "outputs": {
+    "value": 112696.94102369764
+   },
+   "input_values": {
+    "v": 75131.29401579843,
+    "sf": 1.5
+   }
+  },
+  {
+   "id": "CALC-C2-FEA-CORNER-S1-BASE",
+   "type": "calculation",
+   "title": "Foam tension vm(L/2) at the corners with no skin (untaped base, the coupon control), ultimate, level 3",
+   "script": "redesign/team/C2/fea/fea_claims.py",
+   "function": "ult_calc_c2_fea_corner_s1_base",
+   "equation": "sigma_ult = SF_ult x vm(L/2) at limit (c2r5_reduced.json)",
+   "inputs": {
+    "v": "P:c2r5.base_L3_vm_s1_lim_pa",
+    "sf": "P:requirements.safety_factor_ult"
+   },
+   "assumes": [
+    "ASM-C2-TUBE-ET",
+    "ASM-C2-FOAM-TCD"
+   ],
+   "outputs": {
+    "value": 213852.13642162806
+   },
+   "input_values": {
+    "v": 142568.09094775203,
+    "sf": 1.5
+   }
+  },
+  {
+   "id": "CALC-C2-FEA-SERVO-S1",
+   "type": "calculation",
+   "title": "Foam tension vm(L/2) round the lower-skin servo-pocket opening, tape at 50 %, ultimate (level 2)",
+   "script": "redesign/team/C2/fea/fea_claims.py",
+   "function": "ult_calc_c2_fea_servo_s1",
+   "equation": "sigma_ult = SF_ult x vm(L/2) at limit (c2r5_reduced.json)",
+   "inputs": {
+    "v": "P:c2r5.tape50_L2_servo_vm_s1_lim_pa",
+    "sf": "P:requirements.safety_factor_ult"
+   },
+   "assumes": [
+    "ASM-C2-TUBE-ET",
+    "ASM-C2-FOAM-TCD",
+    "ASM-C2-TAPE-CREDIT"
+   ],
+   "outputs": {
+    "value": 28804.752049921473
+   },
+   "input_values": {
+    "v": 19203.16803328098,
+    "sf": 1.5
    }
   },
   {
    "id": "CALC-C2-FEA-CORNER-S3",
    "type": "calculation",
-   "title": "Foam compression peak at the same corners, ultimate (D-68)",
+   "title": "Foam compression vm(L/2) at the block-pocket corners, tape skin + doubler at 50 %, ultimate (D-153, local level 2)",
    "script": "redesign/team/C2/fea/fea_claims.py",
-   "function": "pt_calc_c2_fea_corner_s3",
-   "equation": "value from fea_report.py (3-D FEA)",
+   "function": "ult_calc_c2_fea_corner_s3",
+   "equation": "sigma_ult = SF_ult x vm(L/2) at limit (c2r5_reduced.json)",
    "inputs": {
-    "v": "P:c2fea.d68_corner_s3_ult_pa"
+    "v": "P:c2r5.tape50_L2_vm_s3_lim_pa",
+    "sf": "P:requirements.safety_factor_ult"
    },
    "assumes": [
     "ASM-C2-TUBE-ET",
-    "ASM-C2-FOAM-AVG-R"
+    "ASM-C2-FOAM-TCD",
+    "ASM-C2-TAPE-CREDIT"
    ],
    "outputs": {
-    "value": 193336.15003217914
+    "value": 74562.15118678284
    },
    "input_values": {
-    "v": 193336.15003217914
+    "v": 49708.10079118856,
+    "sf": 1.5
+   }
+  },
+  {
+   "id": "CALC-C2-FEA-CORNER-S3-T25",
+   "type": "calculation",
+   "title": "Foam compression vm(L/2) at the corners, tape at 25 % credit, ultimate (sensitivity, level 2)",
+   "script": "redesign/team/C2/fea/fea_claims.py",
+   "function": "ult_calc_c2_fea_corner_s3_t25",
+   "equation": "sigma_ult = SF_ult x vm(L/2) at limit (c2r5_reduced.json)",
+   "inputs": {
+    "v": "P:c2r5.tape25_L2_vm_s3_lim_pa",
+    "sf": "P:requirements.safety_factor_ult"
+   },
+   "assumes": [
+    "ASM-C2-TUBE-ET",
+    "ASM-C2-FOAM-TCD",
+    "ASM-C2-TAPE-CREDIT"
+   ],
+   "outputs": {
+    "value": 87602.06904603454
+   },
+   "input_values": {
+    "v": 58401.37936402302,
+    "sf": 1.5
+   }
+  },
+  {
+   "id": "CALC-C2-FEA-CORNER-S3-BASE",
+   "type": "calculation",
+   "title": "Foam compression vm(L/2) at the corners with no skin (untaped base, the coupon control), ultimate, level 3",
+   "script": "redesign/team/C2/fea/fea_claims.py",
+   "function": "ult_calc_c2_fea_corner_s3_base",
+   "equation": "sigma_ult = SF_ult x vm(L/2) at limit (c2r5_reduced.json)",
+   "inputs": {
+    "v": "P:c2r5.base_L3_vm_s3_lim_pa",
+    "sf": "P:requirements.safety_factor_ult"
+   },
+   "assumes": [
+    "ASM-C2-TUBE-ET",
+    "ASM-C2-FOAM-TCD"
+   ],
+   "outputs": {
+    "value": 143689.99727750564
+   },
+   "input_values": {
+    "v": 95793.33151833709,
+    "sf": 1.5
+   }
+  },
+  {
+   "id": "CALC-C2-FEA-SERVO-S3",
+   "type": "calculation",
+   "title": "Foam compression vm(L/2) round the lower-skin servo-pocket opening, tape at 50 %, ultimate (level 2)",
+   "script": "redesign/team/C2/fea/fea_claims.py",
+   "function": "ult_calc_c2_fea_servo_s3",
+   "equation": "sigma_ult = SF_ult x vm(L/2) at limit (c2r5_reduced.json)",
+   "inputs": {
+    "v": "P:c2r5.tape50_L2_servo_vm_s3_lim_pa",
+    "sf": "P:requirements.safety_factor_ult"
+   },
+   "assumes": [
+    "ASM-C2-TUBE-ET",
+    "ASM-C2-FOAM-TCD",
+    "ASM-C2-TAPE-CREDIT"
+   ],
+   "outputs": {
+    "value": 91867.40762362607
+   },
+   "input_values": {
+    "v": 61244.938415750716,
+    "sf": 1.5
    }
   },
   {
    "id": "CALC-C2-FEA-CORNER-TAU",
    "type": "calculation",
-   "title": "Foam shear peak at the same corners, ultimate (D-68)",
+   "title": "Foam shear vm(L/2) at the block-pocket corners, tape skin + doubler at 50 %, ultimate (D-153, local level 2)",
    "script": "redesign/team/C2/fea/fea_claims.py",
-   "function": "pt_calc_c2_fea_corner_tau",
-   "equation": "value from fea_report.py (3-D FEA)",
+   "function": "ult_calc_c2_fea_corner_tau",
+   "equation": "sigma_ult = SF_ult x vm(L/2) at limit (c2r5_reduced.json)",
    "inputs": {
-    "v": "P:c2fea.d68_corner_tau_ult_pa"
+    "v": "P:c2r5.tape50_L2_vm_tau_lim_pa",
+    "sf": "P:requirements.safety_factor_ult"
    },
    "assumes": [
     "ASM-C2-TUBE-ET",
-    "ASM-C2-FOAM-AVG-R"
+    "ASM-C2-FOAM-TCD",
+    "ASM-C2-TAPE-CREDIT"
    ],
    "outputs": {
-    "value": 126230.78187442536
+    "value": 52045.83734905505
    },
    "input_values": {
-    "v": 126230.78187442536
+    "v": 34697.224899370034,
+    "sf": 1.5
+   }
+  },
+  {
+   "id": "CALC-C2-FEA-CORNER-TAU-T25",
+   "type": "calculation",
+   "title": "Foam shear vm(L/2) at the corners, tape at 25 % credit, ultimate (sensitivity, level 2)",
+   "script": "redesign/team/C2/fea/fea_claims.py",
+   "function": "ult_calc_c2_fea_corner_tau_t25",
+   "equation": "sigma_ult = SF_ult x vm(L/2) at limit (c2r5_reduced.json)",
+   "inputs": {
+    "v": "P:c2r5.tape25_L2_vm_tau_lim_pa",
+    "sf": "P:requirements.safety_factor_ult"
+   },
+   "assumes": [
+    "ASM-C2-TUBE-ET",
+    "ASM-C2-FOAM-TCD",
+    "ASM-C2-TAPE-CREDIT"
+   ],
+   "outputs": {
+    "value": 57983.64110940549
+   },
+   "input_values": {
+    "v": 38655.76073960366,
+    "sf": 1.5
+   }
+  },
+  {
+   "id": "CALC-C2-FEA-CORNER-TAU-BASE",
+   "type": "calculation",
+   "title": "Foam shear vm(L/2) at the corners with no skin (untaped base, the coupon control), ultimate, level 3",
+   "script": "redesign/team/C2/fea/fea_claims.py",
+   "function": "ult_calc_c2_fea_corner_tau_base",
+   "equation": "sigma_ult = SF_ult x vm(L/2) at limit (c2r5_reduced.json)",
+   "inputs": {
+    "v": "P:c2r5.base_L3_vm_tau_lim_pa",
+    "sf": "P:requirements.safety_factor_ult"
+   },
+   "assumes": [
+    "ASM-C2-TUBE-ET",
+    "ASM-C2-FOAM-TCD"
+   ],
+   "outputs": {
+    "value": 100698.8903122083
+   },
+   "input_values": {
+    "v": 67132.5935414722,
+    "sf": 1.5
+   }
+  },
+  {
+   "id": "CALC-C2-FEA-SERVO-TAU",
+   "type": "calculation",
+   "title": "Foam shear vm(L/2) round the lower-skin servo-pocket opening, tape at 50 %, ultimate (level 2)",
+   "script": "redesign/team/C2/fea/fea_claims.py",
+   "function": "ult_calc_c2_fea_servo_tau",
+   "equation": "sigma_ult = SF_ult x vm(L/2) at limit (c2r5_reduced.json)",
+   "inputs": {
+    "v": "P:c2r5.tape50_L2_servo_vm_tau_lim_pa",
+    "sf": "P:requirements.safety_factor_ult"
+   },
+   "assumes": [
+    "ASM-C2-TUBE-ET",
+    "ASM-C2-FOAM-TCD",
+    "ASM-C2-TAPE-CREDIT"
+   ],
+   "outputs": {
+    "value": 44265.632384188866
+   },
+   "input_values": {
+    "v": 29510.421589459245,
+    "sf": 1.5
    }
   },
   {
    "id": "CALC-C2-FEA-CORNER-S1-CUTS",
    "type": "calculation",
-   "title": "Foam tension peak at the pocket corners with the ESC-lead grooves and the spar-slot cap seams run open (d68g), ultimate",
+   "title": "Foam tension vm(L/2) at the corners with the ESC-lead grooves and open slot seams (d68g), tape at 50 %, ultimate",
    "script": "redesign/team/C2/fea/fea_claims.py",
-   "function": "pt_calc_c2_fea_corner_s1_cuts",
-   "equation": "value from fea_report.py (3-D FEA)",
+   "function": "ult_calc_c2_fea_corner_s1_cuts",
+   "equation": "sigma_ult = SF_ult x vm(L/2) at limit (c2r5_reduced.json)",
    "inputs": {
-    "v": "P:c2fea.d68g_corner_s1_ult_pa"
+    "v": "P:c2r5.tape50g_L2_vm_s1_lim_pa",
+    "sf": "P:requirements.safety_factor_ult"
    },
    "assumes": [
-    "ASM-C2-FOAM-AVG-R"
+    "ASM-C2-TUBE-ET",
+    "ASM-C2-FOAM-TCD",
+    "ASM-C2-TAPE-CREDIT"
    ],
    "outputs": {
-    "value": 288391.0914041769
+    "value": 102276.49601826665
    },
    "input_values": {
-    "v": 288391.0914041769
+    "v": 68184.33067884443,
+    "sf": 1.5
    }
   },
   {
    "id": "CALC-C2-FEA-CORNER-S3-CUTS",
    "type": "calculation",
-   "title": "Foam compression peak, same (d68g), ultimate",
+   "title": "Foam compression vm(L/2), same (d68g), ultimate",
    "script": "redesign/team/C2/fea/fea_claims.py",
-   "function": "pt_calc_c2_fea_corner_s3_cuts",
-   "equation": "value from fea_report.py (3-D FEA)",
+   "function": "ult_calc_c2_fea_corner_s3_cuts",
+   "equation": "sigma_ult = SF_ult x vm(L/2) at limit (c2r5_reduced.json)",
    "inputs": {
-    "v": "P:c2fea.d68g_corner_s3_ult_pa"
+    "v": "P:c2r5.tape50g_L2_vm_s3_lim_pa",
+    "sf": "P:requirements.safety_factor_ult"
    },
    "assumes": [
-    "ASM-C2-FOAM-AVG-R"
+    "ASM-C2-TUBE-ET",
+    "ASM-C2-FOAM-TCD",
+    "ASM-C2-TAPE-CREDIT"
    ],
    "outputs": {
-    "value": 218703.14145509538
+    "value": 76009.53834840852
    },
    "input_values": {
-    "v": 218703.14145509538
-   }
-  },
-  {
-   "id": "CALC-C2-FEA-CUTS-RATIO",
-   "type": "calculation",
-   "title": "Corner tension with the grooves and open seams / without, same local level",
-   "script": "redesign/team/C2/fea/fea_claims.py",
-   "function": "pt_calc_c2_fea_cuts_ratio",
-   "equation": "value from fea_report.py (3-D FEA)",
-   "inputs": {
-    "v": "P:c2fea.d68g_over_d68_s1"
-   },
-   "outputs": {
-    "value": 1.015225399839537
-   },
-   "input_values": {
-    "v": 1.015225399839537
+    "v": 50673.025565605676,
+    "sf": 1.5
    }
   },
   {
    "id": "CALC-C2-FEA-CORNER-S1-G431",
    "type": "calculation",
-   "title": "Foam tension peak at the pocket corners with the tube at G 4.31 GPa, ultimate",
+   "title": "Foam tension vm(L/2) at the corners, tube at G 4.31 GPa, tape at 50 %, ultimate",
    "script": "redesign/team/C2/fea/fea_claims.py",
-   "function": "pt_calc_c2_fea_corner_s1_g431",
-   "equation": "value from fea_report.py (3-D FEA)",
+   "function": "ult_calc_c2_fea_corner_s1_g431",
+   "equation": "sigma_ult = SF_ult x vm(L/2) at limit (c2r5_reduced.json)",
    "inputs": {
-    "v": "P:c2fea.d68_g431_corner_s1_ult_pa"
+    "v": "P:c2r5.tape50g431_L2_vm_s1_lim_pa",
+    "sf": "P:requirements.safety_factor_ult"
    },
    "assumes": [
-    "ASM-C2-FOAM-AVG-R"
+    "ASM-C2-TUBE-ET",
+    "ASM-C2-FOAM-TCD",
+    "ASM-C2-TAPE-CREDIT"
    ],
    "outputs": {
-    "value": 234372.70090438338
+    "value": 85158.8754703236
    },
    "input_values": {
-    "v": 234372.70090438338
+    "v": 56772.5836468824,
+    "sf": 1.5
    }
   },
   {
    "id": "CALC-C2-FEA-CORNER-S3-G431",
    "type": "calculation",
-   "title": "Foam compression peak, same, tube at G 4.31 GPa, ultimate",
+   "title": "Foam compression vm(L/2), same, tube at G 4.31 GPa, ultimate",
    "script": "redesign/team/C2/fea/fea_claims.py",
-   "function": "pt_calc_c2_fea_corner_s3_g431",
-   "equation": "value from fea_report.py (3-D FEA)",
+   "function": "ult_calc_c2_fea_corner_s3_g431",
+   "equation": "sigma_ult = SF_ult x vm(L/2) at limit (c2r5_reduced.json)",
    "inputs": {
-    "v": "P:c2fea.d68_g431_corner_s3_ult_pa"
+    "v": "P:c2r5.tape50g431_L2_vm_s3_lim_pa",
+    "sf": "P:requirements.safety_factor_ult"
    },
    "assumes": [
-    "ASM-C2-FOAM-AVG-R"
+    "ASM-C2-TUBE-ET",
+    "ASM-C2-FOAM-TCD",
+    "ASM-C2-TAPE-CREDIT"
    ],
    "outputs": {
-    "value": 145231.50789284543
+    "value": 58030.91455101628
    },
    "input_values": {
-    "v": 145231.50789284543
+    "v": 38687.27636734419,
+    "sf": 1.5
+   }
+  },
+  {
+   "id": "CALC-C2-FEA-CUTS-RATIO",
+   "type": "calculation",
+   "title": "Corner tension vm(L/2) with the grooves and open seams / without (tape model, level 2)",
+   "script": "redesign/team/C2/fea/fea_claims.py",
+   "function": "cuts_ratio",
+   "equation": "vm_s1(d68g) / vm_s1(d68)",
+   "inputs": {
+    "a": "P:c2r5.tape50g_L2_vm_s1_lim_pa",
+    "b": "P:c2r5.tape50_L2_vm_s1_lim_pa"
+   },
+   "outputs": {
+    "value": 1.0033656858947755
+   },
+   "input_values": {
+    "a": 68184.33067884443,
+    "b": 67955.61342925478
    }
   },
   {
    "id": "CALC-C2-FEA-BEAD",
    "type": "calculation",
-   "title": "Microballoon bead max principal stress, ultimate (D-68)",
+   "title": "Microballoon bead max principal stress, ultimate, worst of the untaped D-68 model and the tape models",
    "script": "redesign/team/C2/fea/fea_claims.py",
-   "function": "pt_calc_c2_fea_bead",
-   "equation": "value from fea_report.py (3-D FEA)",
+   "function": "bead_worst",
+   "equation": "max(d68 finest level, SF x tape 50 % L2, SF x tape 25 % L2)",
    "inputs": {
-    "v": "P:c2fea.d68_bead_s1_ult_pa"
+    "d68": "P:c2fea.d68_bead_s1_ult_pa",
+    "t50": "P:c2r5.tape50_L2_bead_s1_lim_pa",
+    "t25": "P:c2r5.tape25_L2_bead_s1_lim_pa",
+    "sf": "P:requirements.safety_factor_ult"
    },
    "assumes": [
     "ASM-C2-BEAD"
    ],
    "outputs": {
-    "value": 2360476.780958643
+    "value": 4750405.383393429
    },
    "input_values": {
-    "v": 2360476.780958643
+    "d68": 2848721.603539453,
+    "t50": 3166936.9222622863,
+    "t25": 2899220.809262317,
+    "sf": 1.5
    }
   },
   {
@@ -439,10 +760,10 @@
     "ASM-C2-FOAM-AVG-R"
    ],
    "outputs": {
-    "value": 21963.359162742185
+    "value": 22322.632663501317
    },
    "input_values": {
-    "v": 21963.359162742185
+    "v": 22322.632663501317
    }
   },
   {
@@ -459,27 +780,82 @@
     "ASM-C2-FOAM-AVG-R"
    ],
    "outputs": {
-    "value": 875300.8692272312
+    "value": 867441.5794557394
    },
    "input_values": {
-    "v": 875300.8692272312
+    "v": 867441.5794557394
    }
   },
   {
    "id": "CALC-C2-FEA-SUB-GCI",
    "type": "calculation",
-   "title": "Submodel discretisation uncertainty, pocket-corner foam peaks (3 local levels)",
+   "title": "Corner measure vm(L/2): fine-grid GCI over three local levels (untaped D-68 geometry)",
    "script": "redesign/team/C2/fea/fea_claims.py",
-   "function": "pt_calc_c2_fea_sub_gci",
-   "equation": "max GCI (Celik 2008) of the corner tension, compression and shear peaks",
+   "function": "sub_gci",
+   "equation": "max over s1, s3, tau of GCI_fine (Celik 2008, Fs 1.25) of vm(L/2), levels 1-3",
    "inputs": {
-    "v": "P:c2fea.d68_corner_gci"
+    "s11": "P:c2r5.base_L1_vm_s1_lim_pa",
+    "s12": "P:c2r5.base_L2_vm_s1_lim_pa",
+    "s13": "P:c2r5.base_L3_vm_s1_lim_pa",
+    "s31": "P:c2r5.base_L1_vm_s3_lim_pa",
+    "s32": "P:c2r5.base_L2_vm_s3_lim_pa",
+    "s33": "P:c2r5.base_L3_vm_s3_lim_pa",
+    "tau1": "P:c2r5.base_L1_vm_tau_lim_pa",
+    "tau2": "P:c2r5.base_L2_vm_tau_lim_pa",
+    "tau3": "P:c2r5.base_L3_vm_tau_lim_pa",
+    "h1": "P:c2r5.base_L1_h_m",
+    "h2": "P:c2r5.base_L2_h_m",
+    "h3": "P:c2r5.base_L3_h_m"
    },
+   "assumes": [
+    "ASM-C2-FOAM-TCD"
+   ],
+   "cites": [
+    "SRC-C2-CELIK-GCI"
+   ],
    "outputs": {
-    "value": 0.13939831181324003
+    "value": 0.005228032407972241
    },
    "input_values": {
-    "v": 0.13939831181324003
+    "s11": 130468.00595650951,
+    "s12": 141602.21620998913,
+    "s13": 142568.09094775203,
+    "s31": 98044.01294267859,
+    "s32": 96434.06041085575,
+    "s33": 95793.33151833709,
+    "tau1": 60561.03740670454,
+    "tau2": 66020.98377452146,
+    "tau3": 67132.5935414722,
+    "h1": 0.0016,
+    "h2": 0.0011,
+    "h3": 0.00075
+   }
+  },
+  {
+   "id": "CALC-C2-FEA-SUB-TAPE-L1L2",
+   "type": "calculation",
+   "title": "Decided tape model: largest change of vm(L/2) from local level 1 to 2",
+   "script": "redesign/team/C2/fea/fea_claims.py",
+   "function": "sub_tape_l1l2",
+   "equation": "max over s1, s3, tau of |vm(L2) / vm(L1) - 1|, tape 50 %",
+   "inputs": {
+    "s11": "P:c2r5.tape50_L1_vm_s1_lim_pa",
+    "s12": "P:c2r5.tape50_L2_vm_s1_lim_pa",
+    "s31": "P:c2r5.tape50_L1_vm_s3_lim_pa",
+    "s32": "P:c2r5.tape50_L2_vm_s3_lim_pa",
+    "tau1": "P:c2r5.tape50_L1_vm_tau_lim_pa",
+    "tau2": "P:c2r5.tape50_L2_vm_tau_lim_pa"
+   },
+   "outputs": {
+    "value": 0.01052512156681451
+   },
+   "input_values": {
+    "s11": 67334.47489838075,
+    "s12": 67955.61342925478,
+    "s31": 50236.84974185538,
+    "s32": 49708.10079118856,
+    "tau1": 34340.08633293886,
+    "tau2": 34697.224899370034
    }
   },
   {
@@ -517,6 +893,204 @@
    }
   },
   {
+   "id": "SRC-C2-PTFE-TAPE",
+   "type": "source",
+   "title": "Uline S-14538 PTFE film tape, 1 in x 36 yd, 3.5 mil, silicone adhesive",
+   "kind": "web",
+   "url": "https://www.uline.com/Product/Detail/S-14538/Specialty-Tape/Uline-PTFE-Film-Tape-1-x-36-yds",
+   "checked": "2026-11-14",
+   "where": "USD 60 per roll (1 roll); 1 in wide, 3.5 mil, silicone adhesive"
+  },
+  {
+   "id": "ASM-C2-FILLET-BREAK",
+   "type": "assumption",
+   "title": "Fin root bond break from x 0.22 to the TE (design, closure round)",
+   "text": "From x 0.22 (30 mm ahead of the elevon hinge, 10 R ahead of the cut-out corners) to the TE, under each half-fin root (4 places), two overlapping 25.4 mm strips of PTFE film tape (about 45 mm wide, centred on the fin plane) are laid on the wing skin before the root bond; the root edge, its 13 mm coves and the fin's 15 mm skin-tape laps sit on it and bond to the fin only. Ahead of the hinge the root, coves and laps bond as drawn",
+   "basis": "epoxy and packing-tape adhesive do not bond to PTFE (a release surface); 45 mm covers the two 13 mm cove legs, the root edge and 8 mm of margin each side, so no epoxy or lap reaches the wing skin aft of x 0.22. Mass about 4.9 g for the four roots (EST: 3.5 mil PTFE + silicone adhesive, about 0.24 kg/m2, 8 strips x 100 x 25.4 mm). The break sits 30 mm ahead of the hinge because a bonded root ending at the hinge line loads the cut-out corners (closure-round runs: corner compression 118.7 kPa vs 120 at local level 2, rising with refinement; 75.9 with the break at 0.22)",
+   "value": 0.22,
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-C2-PTFE-TAPE"
+   ]
+  },
+  {
+   "id": "ASM-C2-FILLET-SPLIT",
+   "type": "assumption",
+   "title": "Fin root fillet load = C4's fillet-intact split, aft share moved ahead of the bond break (rigid root)",
+   "text": "The bonded half-fin root and coves carry, per quarter, the force and moment C4 computed with the root pinned (team/C4/claims.d3.json CALC-C4-D3-STATIC fillet_share_table, L4 and G2, both senses, limit); the share C4 puts aft of x 0.22 is moved, with its moment, onto the bonded root ahead of x 0.22 (ASM-C2-FILLET-BREAK); the block carries the rest of the station load",
+   "basis": "a pinned (rigid) root attracts the most load; the real root sits on foam and sheds load back to the tube / block path, so the split is an upper bound for the fillet; moving the aft share forward (rather than back to the block) is the larger load on the bonded root. C4's table is for the shoe before D-106 (C4 to re-issue it on the drawn shoe with the root free aft of the hinge)",
+   "value": 1.0,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-C2-FEA-CORNER-S1-SPLIT",
+   "type": "calculation",
+   "title": "Block-pocket corner foam tension, vm(L/2), tape 50 %, C4 fillet split, ultimate",
+   "script": "redesign/team/C2/fea/fea_claims.py",
+   "function": "pt_calc_c2_fea_corner_s1_split",
+   "equation": "value from fea_report.py (3-D FEA)",
+   "inputs": {
+    "v": "P:c2fea.split_corner_s1_ult_pa"
+   },
+   "assumes": [
+    "ASM-C2-TUBE-ET",
+    "ASM-C2-FOAM-TCD",
+    "ASM-C2-TAPE-CREDIT"
+   ],
+   "outputs": {
+    "value": 107363.85032259062
+   },
+   "input_values": {
+    "v": 107363.85032259062
+   }
+  },
+  {
+   "id": "CALC-C2-FEA-CORNER-S3-SPLIT",
+   "type": "calculation",
+   "title": "Block-pocket corner foam compression, vm(L/2), tape 50 %, C4 fillet split, ultimate",
+   "script": "redesign/team/C2/fea/fea_claims.py",
+   "function": "pt_calc_c2_fea_corner_s3_split",
+   "equation": "value from fea_report.py (3-D FEA)",
+   "inputs": {
+    "v": "P:c2fea.split_corner_s3_ult_pa"
+   },
+   "assumes": [
+    "ASM-C2-TUBE-ET",
+    "ASM-C2-FOAM-TCD",
+    "ASM-C2-TAPE-CREDIT"
+   ],
+   "outputs": {
+    "value": 104518.99717526486
+   },
+   "input_values": {
+    "v": 104518.99717526486
+   }
+  },
+  {
+   "id": "CALC-C2-FEA-CORNER-TAU-SPLIT",
+   "type": "calculation",
+   "title": "Block-pocket corner foam shear, vm(L/2), tape 50 %, C4 fillet split, ultimate",
+   "script": "redesign/team/C2/fea/fea_claims.py",
+   "function": "pt_calc_c2_fea_corner_tau_split",
+   "equation": "value from fea_report.py (3-D FEA)",
+   "inputs": {
+    "v": "P:c2fea.split_corner_tau_ult_pa"
+   },
+   "assumes": [
+    "ASM-C2-TUBE-ET",
+    "ASM-C2-FOAM-TCD",
+    "ASM-C2-TAPE-CREDIT"
+   ],
+   "outputs": {
+    "value": 62895.93046476397
+   },
+   "input_values": {
+    "v": 62895.93046476397
+   }
+  },
+  {
+   "id": "CALC-C2-FEA-SPLIT-S1",
+   "type": "calculation",
+   "title": "Foam tension 99.5th pct by volume, C4 fillet split, ultimate",
+   "script": "redesign/team/C2/fea/fea_claims.py",
+   "function": "pt_calc_c2_fea_split_s1",
+   "equation": "value from fea_report.py (3-D FEA)",
+   "inputs": {
+    "v": "P:c2fea.split_foam_s1_p995v_ult_pa"
+   },
+   "assumes": [
+    "ASM-C2-TUBE-ET"
+   ],
+   "outputs": {
+    "value": 52854.883185290135
+   },
+   "input_values": {
+    "v": 52854.883185290135
+   }
+  },
+  {
+   "id": "CALC-C2-FEA-SPLIT-TAU",
+   "type": "calculation",
+   "title": "Foam shear 99.5th pct by volume, C4 fillet split, ultimate",
+   "script": "redesign/team/C2/fea/fea_claims.py",
+   "function": "pt_calc_c2_fea_split_tau",
+   "equation": "value from fea_report.py (3-D FEA)",
+   "inputs": {
+    "v": "P:c2fea.split_foam_tau_p995v_ult_pa"
+   },
+   "assumes": [
+    "ASM-C2-TUBE-ET"
+   ],
+   "outputs": {
+    "value": 40770.62365815728
+   },
+   "input_values": {
+    "v": 40770.62365815728
+   }
+  },
+  {
+   "id": "CALC-C2-FEA-CUTOUT-SPLIT-S1",
+   "type": "calculation",
+   "title": "Cut-out corner foam tension, 1 mm average, C4 fillet split, ultimate",
+   "script": "redesign/team/C2/fea/fea_claims.py",
+   "function": "pt_calc_c2_fea_cutout_split_s1",
+   "equation": "value from fea_report.py (3-D FEA)",
+   "inputs": {
+    "v": "P:c2fea.split_cutout_s1_ult_pa"
+   },
+   "assumes": [
+    "ASM-C2-FOAM-AVG-R"
+   ],
+   "outputs": {
+    "value": 12833.125531933096
+   },
+   "input_values": {
+    "v": 12833.125531933096
+   }
+  },
+  {
+   "id": "CALC-C2-FEA-CUTOUT-SPLIT-S3",
+   "type": "calculation",
+   "title": "Cut-out corner foam compression, 1 mm average, C4 fillet split, ultimate",
+   "script": "redesign/team/C2/fea/fea_claims.py",
+   "function": "pt_calc_c2_fea_cutout_split_s3",
+   "equation": "value from fea_report.py (3-D FEA)",
+   "inputs": {
+    "v": "P:c2fea.split_cutout_s3_ult_pa"
+   },
+   "assumes": [
+    "ASM-C2-FOAM-AVG-R"
+   ],
+   "outputs": {
+    "value": 77635.10808398598
+   },
+   "input_values": {
+    "v": 77635.10808398598
+   }
+  },
+  {
+   "id": "CALC-C2-FEA-CUTOUT-SPLIT-TAU",
+   "type": "calculation",
+   "title": "Cut-out corner foam shear, 1 mm average, C4 fillet split, ultimate",
+   "script": "redesign/team/C2/fea/fea_claims.py",
+   "function": "pt_calc_c2_fea_cutout_split_tau",
+   "equation": "value from fea_report.py (3-D FEA)",
+   "inputs": {
+    "v": "P:c2fea.split_cutout_tau_ult_pa"
+   },
+   "assumes": [
+    "ASM-C2-FOAM-AVG-R"
+   ],
+   "outputs": {
+    "value": 36384.337641657854
+   },
+   "input_values": {
+    "v": 36384.337641657854
+   }
+  },
+  {
    "id": "CALC-C2-FEA-W-RATIO",
    "type": "calculation",
    "title": "FEA / beam model tip deflection, G2 (both tape 0 %)",
@@ -527,10 +1101,10 @@
     "v": "P:c2fea.fea_beam_w_ratio_G2"
    },
    "outputs": {
-    "value": 0.9539331036025631
+    "value": 0.9548195614510676
    },
    "input_values": {
-    "v": 0.9539331036025631
+    "v": 0.9548195614510676
    }
   },
   {
@@ -544,10 +1118,10 @@
     "v": "P:c2fea.fea_beam_twist_ratio_L4"
    },
    "outputs": {
-    "value": 0.8331074849899262
+    "value": 0.846440828788533
    },
    "input_values": {
-    "v": 0.8331074849899262
+    "v": 0.846440828788533
    }
   },
   {
@@ -562,7 +1136,7 @@
     "ref": "ASM-C2-FEA-GCI-TOL"
    },
    "how": "Re-run fea/wing_fea_direct.py (3 levels), fea/fea_report.py; out/fea_report.json#convergence",
-   "value": 0.07780338842385646
+   "value": 0.03419030800562731
   },
   {
    "id": "CL-C2-FEA-TUBE-VALID",
@@ -610,7 +1184,7 @@
     "WNG-002"
    ],
    "how": "T-C1-WING-PROOF; the hand calc CL-C2-SPAR-SIGMA-ULT (spar alone) bounds it from above",
-   "value": 52543857.72308484
+   "value": 38867986.29586747
   },
   {
    "id": "CL-C2-FEA-TIP-DEFL-FRAC",
@@ -632,12 +1206,12 @@
     "WNG-003"
    ],
    "how": "T-C1-WING-PROOF: ruler at the tip under the G2 load",
-   "value": 0.004316759345426763
+   "value": 0.004422206008956705
   },
   {
    "id": "CL-C2-FEA-FOAM-S1",
    "type": "claim",
-   "title": "Core foam tension (99.5th percentile element), ultimate, station loads on the hard points",
+   "title": "Core foam tension (99.5th percentile by volume), ultimate, station loads on the hard points",
    "calc": "CALC-C2-FEA-FOAM-S1",
    "output": "value",
    "unit": "Pa",
@@ -652,12 +1226,12 @@
     "WNG-001"
    ],
    "how": "T-C2-XPS-COUPON (allowable) and T-C1-WING-PROOF (no crack at the elevon cut-out corners)",
-   "value": 58202.13785312392
+   "value": 51878.32118649508
   },
   {
    "id": "CL-C2-FEA-FOAM-TAU",
    "type": "claim",
-   "title": "Core foam shear (99.5th percentile element), ultimate, station loads on the hard points",
+   "title": "Core foam shear (99.5th percentile by volume), ultimate, station loads on the hard points",
    "calc": "CALC-C2-FEA-FOAM-TAU",
    "output": "value",
    "unit": "Pa",
@@ -672,7 +1246,7 @@
     "WNG-001"
    ],
    "how": "T-C2-XPS-COUPON and T-C1-WING-PROOF",
-   "value": 40747.09481114573
+   "value": 38485.72163466488
   },
   {
    "id": "CL-C2-FEA-PETG",
@@ -697,12 +1271,12 @@
     "WNG-005-R"
    ],
    "how": "T-C4-BLOCK-PROOF (C4)",
-   "value": 3592643.9458760237
+   "value": 3157824.4249723405
   },
   {
    "id": "CL-C2-FEA-FOAM-CORNER-S1",
    "type": "claim",
-   "title": "Core foam tension peak at the R 3 mm block-pocket corners with fillet beads, ultimate (D-68)",
+   "title": "Core foam tension at the R 3 mm block-pocket corners, vm(L/2), with the tape skin and 2-layer block doubler at 50 % credit, ultimate (D-153)",
    "calc": "CALC-C2-FEA-CORNER-S1",
    "output": "value",
    "unit": "Pa",
@@ -715,16 +1289,75 @@
    ],
    "parts": [
     "WNG-001",
+    "WNG-003",
     "FIN-004-L",
     "FIN-004-R"
    ],
-   "how": "T-C1-WING-PROOF (GT-08) steps 1-2 and T-C1-STATION-PROOF; inspect the four block-pocket corners and beads with a light after each step (no crack, no bead debond); D1 builds the pocket to D-68",
-   "value": 284066.0718789729
+   "how": "T-C1-WING-PROOF (GT-08) steps 1-2 and T-C1-STATION-PROOF; inspect the four block-pocket corners and beads with a light after each step (no crack, no bead debond); T-C2-XPS-COUPON decides the tape credit (taped vs untaped block torsion coupon, 3 SENB beams for K_Ic); fallback glass D-cell (A1.md D-153). Re-run: c2r5_corner.py local --variant band --level 2 --band-x 0.24 --band-dy 0.2 --Et 0.044e6 --dbl-mult 3 --dump-servo --out-dir <scratch>; c2r5_measure.py --dir <scratch>; data/c2w2_measures.json; c2r5_reduce.py; fea_claims.py",
+   "note": "D-153: the WNG-003 base skin (no strip end, butt or splice in |y| 0.27-0.37 for x <= 0.24) and the 2-layer block doubler band (|y| 0.29-0.35, LE wrap to x 0.120 both surfaces) are structural",
+   "value": 101933.42014388216
+  },
+  {
+   "id": "CL-C2-FEA-FOAM-CORNER-S1-T25",
+   "type": "claim",
+   "title": "Core foam tension at the block-pocket corners, vm(L/2), tape at 25 % credit (sensitivity)",
+   "calc": "CALC-C2-FEA-CORNER-S1-T25",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.xps_tens_allow_pa"
+   },
+   "parts": [
+    "WNG-001",
+    "WNG-003",
+    "FIN-004-L",
+    "FIN-004-R"
+   ],
+   "how": "T-C2-XPS-COUPON decides the tape credit (taped vs untaped block torsion coupon, 3 SENB beams for K_Ic); fallback glass D-cell (A1.md D-153). Re-run: as the 50 % case with --Et 0.022e6",
+   "note": "sensitivity to the tape credit; does not verify the requirement",
+   "value": 112696.94102369764
+  },
+  {
+   "id": "CL-C2-FEA-FOAM-CORNER-S1-BASE",
+   "type": "claim",
+   "title": "Core foam tension at the block-pocket corners, vm(L/2), no skin (untaped base, information)",
+   "calc": "CALC-C2-FEA-CORNER-S1-BASE",
+   "output": "value",
+   "unit": "Pa",
+   "parts": [
+    "WNG-001"
+   ],
+   "how": "c2r5_corner.py local --variant base --level 3; c2r5_measure.py; c2r5_reduce.py",
+   "note": "record, no limit: the model before D-153 and the coupon control. It exceeds the allowable (the untaped wing does not pass); the untaped coupon shows how conservative the measure is",
+   "value": 213852.13642162806
+  },
+  {
+   "id": "CL-C2-FEA-FOAM-SERVO-S1",
+   "type": "claim",
+   "title": "Core foam tension round the lower-skin servo-pocket opening (skin cut out, inside the no-seam zone), vm(L/2), tape at 50 %, ultimate",
+   "calc": "CALC-C2-FEA-SERVO-S1",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.xps_tens_allow_pa"
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-003"
+   ],
+   "how": "T-C1-WING-PROOF (GT-08) steps 1-2 and T-C1-STATION-PROOF; inspect the four servo-pocket opening corners with a light after each step (no crack, no bead debond). Re-run: c2r5_corner.py local --variant band --level 2 --band-x 0.24 --band-dy 0.2 --Et 0.044e6 --dbl-mult 3 --dump-servo --out-dir <scratch>; c2r5_measure.py --dir <scratch>; data/c2w2_measures.json; c2r5_reduce.py; fea_claims.py",
+   "note": "servo-pocket opening |y| 0.2527-0.2879, x 0.1722-0.2075 (subsystems/wing/params.json servo_pocket), modelled as a void with no skin over it; the servo-pocket tape doubler is not modelled (conservative); local cut plane at y 0.27, results kept 6 mm clear of it",
+   "value": 28804.752049921473
   },
   {
    "id": "CL-C2-FEA-FOAM-CORNER-S3",
    "type": "claim",
-   "title": "Core foam compression peak at the same corners, ultimate (D-68)",
+   "title": "Core foam compression at the R 3 mm block-pocket corners, vm(L/2), with the tape skin and 2-layer block doubler at 50 % credit, ultimate (D-153)",
    "calc": "CALC-C2-FEA-CORNER-S3",
    "output": "value",
    "unit": "Pa",
@@ -737,16 +1370,75 @@
    ],
    "parts": [
     "WNG-001",
+    "WNG-003",
     "FIN-004-L",
     "FIN-004-R"
    ],
-   "how": "T-C1-WING-PROOF (GT-08) steps 1-2 and T-C1-STATION-PROOF; inspect the four block-pocket corners and beads with a light after each step (no crack, no bead debond)",
-   "value": 193336.15003217914
+   "how": "T-C1-WING-PROOF (GT-08) steps 1-2 and T-C1-STATION-PROOF; inspect the four block-pocket corners and beads with a light after each step (no crack, no bead debond); T-C2-XPS-COUPON decides the tape credit (taped vs untaped block torsion coupon, 3 SENB beams for K_Ic); fallback glass D-cell (A1.md D-153). Re-run: c2r5_corner.py local --variant band --level 2 --band-x 0.24 --band-dy 0.2 --Et 0.044e6 --dbl-mult 3 --dump-servo --out-dir <scratch>; c2r5_measure.py --dir <scratch>; data/c2w2_measures.json; c2r5_reduce.py; fea_claims.py",
+   "note": "D-153: the WNG-003 base skin (no strip end, butt or splice in |y| 0.27-0.37 for x <= 0.24) and the 2-layer block doubler band (|y| 0.29-0.35, LE wrap to x 0.120 both surfaces) are structural",
+   "value": 74562.15118678284
+  },
+  {
+   "id": "CL-C2-FEA-FOAM-CORNER-S3-T25",
+   "type": "claim",
+   "title": "Core foam compression at the block-pocket corners, vm(L/2), tape at 25 % credit (sensitivity)",
+   "calc": "CALC-C2-FEA-CORNER-S3-T25",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.xps_comp_allow_pa"
+   },
+   "parts": [
+    "WNG-001",
+    "WNG-003",
+    "FIN-004-L",
+    "FIN-004-R"
+   ],
+   "how": "T-C2-XPS-COUPON decides the tape credit (taped vs untaped block torsion coupon, 3 SENB beams for K_Ic); fallback glass D-cell (A1.md D-153). Re-run: as the 50 % case with --Et 0.022e6",
+   "note": "sensitivity to the tape credit; does not verify the requirement",
+   "value": 87602.06904603454
+  },
+  {
+   "id": "CL-C2-FEA-FOAM-CORNER-S3-BASE",
+   "type": "claim",
+   "title": "Core foam compression at the block-pocket corners, vm(L/2), no skin (untaped base, information)",
+   "calc": "CALC-C2-FEA-CORNER-S3-BASE",
+   "output": "value",
+   "unit": "Pa",
+   "parts": [
+    "WNG-001"
+   ],
+   "how": "c2r5_corner.py local --variant base --level 3; c2r5_measure.py; c2r5_reduce.py",
+   "note": "record, no limit: the model before D-153 and the coupon control. It exceeds the allowable (the untaped wing does not pass); the untaped coupon shows how conservative the measure is",
+   "value": 143689.99727750564
+  },
+  {
+   "id": "CL-C2-FEA-FOAM-SERVO-S3",
+   "type": "claim",
+   "title": "Core foam compression round the lower-skin servo-pocket opening (skin cut out, inside the no-seam zone), vm(L/2), tape at 50 %, ultimate",
+   "calc": "CALC-C2-FEA-SERVO-S3",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.xps_comp_allow_pa"
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-003"
+   ],
+   "how": "T-C1-WING-PROOF (GT-08) steps 1-2 and T-C1-STATION-PROOF; inspect the four servo-pocket opening corners with a light after each step (no crack, no bead debond). Re-run: c2r5_corner.py local --variant band --level 2 --band-x 0.24 --band-dy 0.2 --Et 0.044e6 --dbl-mult 3 --dump-servo --out-dir <scratch>; c2r5_measure.py --dir <scratch>; data/c2w2_measures.json; c2r5_reduce.py; fea_claims.py",
+   "note": "servo-pocket opening |y| 0.2527-0.2879, x 0.1722-0.2075 (subsystems/wing/params.json servo_pocket), modelled as a void with no skin over it; the servo-pocket tape doubler is not modelled (conservative); local cut plane at y 0.27, results kept 6 mm clear of it",
+   "value": 91867.40762362607
   },
   {
    "id": "CL-C2-FEA-FOAM-CORNER-TAU",
    "type": "claim",
-   "title": "Core foam shear peak at the same corners, ultimate (D-68)",
+   "title": "Core foam shear at the R 3 mm block-pocket corners, vm(L/2), with the tape skin and 2-layer block doubler at 50 % credit, ultimate (D-153)",
    "calc": "CALC-C2-FEA-CORNER-TAU",
    "output": "value",
    "unit": "Pa",
@@ -759,16 +1451,75 @@
    ],
    "parts": [
     "WNG-001",
+    "WNG-003",
     "FIN-004-L",
     "FIN-004-R"
    ],
-   "how": "T-C1-WING-PROOF (GT-08) steps 1-2 and T-C1-STATION-PROOF; inspect the four block-pocket corners and beads with a light after each step (no crack, no bead debond)",
-   "value": 126230.78187442536
+   "how": "T-C1-WING-PROOF (GT-08) steps 1-2 and T-C1-STATION-PROOF; inspect the four block-pocket corners and beads with a light after each step (no crack, no bead debond); T-C2-XPS-COUPON decides the tape credit (taped vs untaped block torsion coupon, 3 SENB beams for K_Ic); fallback glass D-cell (A1.md D-153). Re-run: c2r5_corner.py local --variant band --level 2 --band-x 0.24 --band-dy 0.2 --Et 0.044e6 --dbl-mult 3 --dump-servo --out-dir <scratch>; c2r5_measure.py --dir <scratch>; data/c2w2_measures.json; c2r5_reduce.py; fea_claims.py",
+   "note": "D-153: the WNG-003 base skin (no strip end, butt or splice in |y| 0.27-0.37 for x <= 0.24) and the 2-layer block doubler band (|y| 0.29-0.35, LE wrap to x 0.120 both surfaces) are structural",
+   "value": 52045.83734905505
+  },
+  {
+   "id": "CL-C2-FEA-FOAM-CORNER-TAU-T25",
+   "type": "claim",
+   "title": "Core foam shear at the block-pocket corners, vm(L/2), tape at 25 % credit (sensitivity)",
+   "calc": "CALC-C2-FEA-CORNER-TAU-T25",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.xps_shear_allow_pa"
+   },
+   "parts": [
+    "WNG-001",
+    "WNG-003",
+    "FIN-004-L",
+    "FIN-004-R"
+   ],
+   "how": "T-C2-XPS-COUPON decides the tape credit (taped vs untaped block torsion coupon, 3 SENB beams for K_Ic); fallback glass D-cell (A1.md D-153). Re-run: as the 50 % case with --Et 0.022e6",
+   "note": "sensitivity to the tape credit; does not verify the requirement",
+   "value": 57983.64110940549
+  },
+  {
+   "id": "CL-C2-FEA-FOAM-CORNER-TAU-BASE",
+   "type": "claim",
+   "title": "Core foam shear at the block-pocket corners, vm(L/2), no skin (untaped base, information)",
+   "calc": "CALC-C2-FEA-CORNER-TAU-BASE",
+   "output": "value",
+   "unit": "Pa",
+   "parts": [
+    "WNG-001"
+   ],
+   "how": "c2r5_corner.py local --variant base --level 3; c2r5_measure.py; c2r5_reduce.py",
+   "note": "record, no limit: the model before D-153 and the coupon control. It exceeds the allowable (the untaped wing does not pass); the untaped coupon shows how conservative the measure is",
+   "value": 100698.8903122083
+  },
+  {
+   "id": "CL-C2-FEA-FOAM-SERVO-TAU",
+   "type": "claim",
+   "title": "Core foam shear round the lower-skin servo-pocket opening (skin cut out, inside the no-seam zone), vm(L/2), tape at 50 %, ultimate",
+   "calc": "CALC-C2-FEA-SERVO-TAU",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.xps_shear_allow_pa"
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-003"
+   ],
+   "how": "T-C1-WING-PROOF (GT-08) steps 1-2 and T-C1-STATION-PROOF; inspect the four servo-pocket opening corners with a light after each step (no crack, no bead debond). Re-run: c2r5_corner.py local --variant band --level 2 --band-x 0.24 --band-dy 0.2 --Et 0.044e6 --dbl-mult 3 --dump-servo --out-dir <scratch>; c2r5_measure.py --dir <scratch>; data/c2w2_measures.json; c2r5_reduce.py; fea_claims.py",
+   "note": "servo-pocket opening |y| 0.2527-0.2879, x 0.1722-0.2075 (subsystems/wing/params.json servo_pocket), modelled as a void with no skin over it; the servo-pocket tape doubler is not modelled (conservative); local cut plane at y 0.27, results kept 6 mm clear of it",
+   "value": 44265.632384188866
   },
   {
    "id": "CL-C2-FEA-FOAM-CORNER-S1-CUTS",
    "type": "claim",
-   "title": "Core foam tension peak at the pocket corners with the ESC-lead grooves and open slot seams (SW-05), ultimate",
+   "title": "Core foam tension at the pocket corners with the ESC-lead grooves and open slot seams (SW-05), vm(L/2), tape at 50 %, ultimate",
    "calc": "CALC-C2-FEA-CORNER-S1-CUTS",
    "output": "value",
    "unit": "Pa",
@@ -781,17 +1532,18 @@
    ],
    "parts": [
     "WNG-001",
+    "WNG-003",
     "FIN-004-L",
     "FIN-004-R"
    ],
-   "how": "T-C1-WING-PROOF (GT-08) steps 1-2 and T-C1-STATION-PROOF; inspect the four block-pocket corners and beads with a light after each step (no crack, no bead debond)",
-   "note": "C2-R4 (CDR-13): grooves at x 54-64 mm to |y| 0.296 on both surfaces and both cap seams removed as open slits in the local model (the bound opposite to the bonded seam of CL-C2-FEA-FOAM-CORNER-S1)",
-   "value": 288391.0914041769
+   "how": "T-C1-WING-PROOF (GT-08) steps 1-2 and T-C1-STATION-PROOF; inspect the four block-pocket corners and beads with a light after each step (no crack, no bead debond). Re-run: as the corner claim with --geom d68g",
+   "note": "grooves at x 54-64 mm to |y| 0.296 on both surfaces and both cap seams removed as open slits in the local model (geometry d68g); the tape skin bridges them, as built (harness SPEC: tape tabs, then the skin)",
+   "value": 102276.49601826665
   },
   {
    "id": "CL-C2-FEA-FOAM-CORNER-S3-CUTS",
    "type": "claim",
-   "title": "Core foam compression peak, same corners with the cuts, ultimate",
+   "title": "Core foam compression, same corners with the cuts, vm(L/2), ultimate",
    "calc": "CALC-C2-FEA-CORNER-S3-CUTS",
    "output": "value",
    "unit": "Pa",
@@ -804,11 +1556,12 @@
    ],
    "parts": [
     "WNG-001",
+    "WNG-003",
     "FIN-004-L",
     "FIN-004-R"
    ],
-   "how": "T-C1-WING-PROOF (GT-08) steps 1-2 and T-C1-STATION-PROOF; inspect the four block-pocket corners and beads with a light after each step (no crack, no bead debond)",
-   "value": 218703.14145509538
+   "how": "T-C1-WING-PROOF (GT-08) steps 1-2 and T-C1-STATION-PROOF; inspect the four block-pocket corners and beads with a light after each step (no crack, no bead debond). Re-run: as the corner claim with --geom d68g",
+   "value": 76009.53834840852
   },
   {
    "id": "CL-C2-FEA-CUTS-RATIO",
@@ -820,28 +1573,28 @@
    "parts": [
     "WNG-001"
    ],
-   "how": "python -I redesign/team/C2/fea/wing_fea_d68.py --phase local --job d68g/3",
-   "note": "record: close to 1 means the grooves and seams are not what loads the corner, so stopping the grooves short (the CDR-13 fallback) does not fix it",
-   "value": 1.015225399839537
+   "how": "c2r5_corner.py --geom d68g vs d68, tape model, level 2",
+   "note": "record: close to 1 means the grooves and seams are not what loads the corner",
+   "value": 1.0033656858947755
   },
   {
    "id": "CL-C2-FEA-FOAM-CORNER-S1-G431",
    "type": "claim",
-   "title": "Core foam tension peak at the pocket corners if the tube meets the GT-16 shear-modulus line (G 4.31 GPa, not the 3 GPa low corner), ultimate (record)",
+   "title": "Core foam tension at the pocket corners if the tube meets the GT-16 shear-modulus line (G 4.31 GPa, not the 3 GPa low corner), vm(L/2), tape at 50 %, ultimate (record)",
    "calc": "CALC-C2-FEA-CORNER-S1-G431",
    "output": "value",
    "unit": "Pa",
    "parts": [
     "WNG-001"
    ],
-   "how": "T-C4-TUBE-TORSION (GT-16) gives G; re-run with C2_TUBE_G set to the measured value",
-   "note": "record, no limit: sensitivity. The corner stress follows the twist of the spar under the L4 fin-joint torque; the tape skin, which also resists that twist, is not in the model",
-   "value": 234372.70090438338
+   "how": "T-C4-TUBE-TORSION (GT-16) gives G; re-run with C2_TUBE_G set and --global-pkl out/d68_global_block_g431.pkl",
+   "note": "record, no limit: sensitivity to the tube G (the corner stress follows the spar twist under the L4 fin-joint torque)",
+   "value": 85158.8754703236
   },
   {
    "id": "CL-C2-FEA-FOAM-CORNER-S3-G431",
    "type": "claim",
-   "title": "Core foam compression peak, same, tube at G 4.31 GPa (record)",
+   "title": "Core foam compression, same, tube at G 4.31 GPa, vm(L/2) (record)",
    "calc": "CALC-C2-FEA-CORNER-S3-G431",
    "output": "value",
    "unit": "Pa",
@@ -849,7 +1602,21 @@
     "WNG-001"
    ],
    "how": "As CL-C2-FEA-FOAM-CORNER-S1-G431.",
-   "value": 145231.50789284543
+   "value": 58030.91455101628
+  },
+  {
+   "id": "CL-C2-FEA-TCD-HALF-L",
+   "type": "claim",
+   "title": "Critical-distance half-length L/2 for XPS (the corner measure radius, record)",
+   "calc": "CALC-C2-TCD-HALF-L",
+   "output": "value",
+   "unit": "m",
+   "parts": [
+    "WNG-001"
+   ],
+   "how": "T-C2-XPS-COUPON: 3 notched 40 x 40 x 160 mm XPS beams (SENB) on the purchased board",
+   "note": "1.78 mm = 6-18 XPS cells (cell 0.1-0.3 mm); L scales with K_Ic^2, so the SENB beams check it",
+   "value": 0.001781614333832777
   },
   {
    "id": "CL-C2-FEA-BEAD",
@@ -869,7 +1636,8 @@
     "WNG-001"
    ],
    "how": "T-C2-XPS-COUPON beaded-pocket coupon; T-C1-WING-PROOF (GT-08) steps 1-2 and T-C1-STATION-PROOF; inspect the four block-pocket corners and beads with a light after each step (no crack, no bead debond)",
-   "value": 2360476.780958643
+   "note": "worst of the untaped D-68 model and the tape models (the skin stiffens the surface over the bead)",
+   "value": 4750405.383393429
   },
   {
    "id": "CL-C2-FEA-CUTOUT-TAU",
@@ -889,31 +1657,28 @@
     "WNG-001"
    ],
    "how": "T-C1-WING-PROOF (GT-08) steps 1-2 and T-C1-STATION-PROOF; inspect the four elevon cut-out corners with a light after each step (no crack, no bead debond)",
-   "value": 21963.359162742185
+   "value": 22322.632663501317
   },
   {
    "id": "CL-C2-FEA-CUTOUT-SENS",
    "type": "claim",
-   "title": "Foam shear peak at the R 3 mm elevon cut-out corners if the fin root fillet carries the station loads (sensitivity)",
+   "title": "Foam shear peak at the R 3 mm elevon cut-out corners if the fin root fillet carried 100 % of the station loads (not a reachable state, record)",
    "calc": "CALC-C2-FEA-CUTOUT-SENS",
    "output": "value",
    "unit": "Pa",
-   "limit": {
-    "op": "<=",
-    "ref": "P:c2.inputs.xps_shear_allow_pa"
-   },
    "parts": [
     "WNG-001",
     "FIN-001-UR",
     "FIN-001-LR"
    ],
-   "how": "Bounds the fillet-intact case at the corners only; the tab as a whole is CL-C2-FEA-FOAM-FILLET-SENS (C4 fillet share, CR-C2-12)",
-   "value": 875300.8692272312
+   "how": "Bounding record; the real path is CL-C2-FEA-CUTOUT-SPLIT-*",
+   "note": "record, no limit (closure round 2026-11-14): 100 % of the station loads through the fin root fillet is not a state the drawn wing can reach. The fin is fixed to the tube and the through-core block, which is far stiffer than a microballoon cove on foam, so the bonded fillet carries only what compatibility gives it; C4 computed that split with the root pinned (rigid, an upper bound: CR-C2-12 answer, CL-C4-D3-FILLET-L4-SHARE 0.73 % of the root moment). The real path is checked with C4's split in CL-C2-FEA-SPLIT-* and CL-C2-FEA-CUTOUT-SPLIT-*. A 100 % path needs the block path gone (a broken block), which T-C4-BLOCK-PROOF and CL-C2-FEA-PETG cover",
+   "value": 867441.5794557394
   },
   {
    "id": "CL-C2-FEA-SUB-GCI",
    "type": "claim",
-   "title": "D-68 submodel: GCI of the pocket-corner foam peaks (3 local levels)",
+   "title": "Corner measure vm(L/2): GCI over three local levels (D-68 geometry, untaped)",
    "calc": "CALC-C2-FEA-SUB-GCI",
    "output": "value",
    "unit": "-",
@@ -921,11 +1686,27 @@
     "op": "<=",
     "ref": "ASM-C2-FEA-GCI-TOL"
    },
-   "how": "python -I redesign/team/C2/fea/wing_fea_d68.py; fea_report.py; out/fea_report.json#d68",
+   "how": "c2r5_corner.py local --variant base --level 1/2/3; c2r5_measure.py; c2r5_gci.py; c2r5_reduce.py",
    "cites": [
     "SRC-C2-CELIK-GCI"
    ],
-   "value": 0.13939831181324003
+   "note": "D-153: the measure is shown to converge on the untaped geometry (3 levels). The tape model has two levels (CL-C2-FEA-SUB-TAPE-L1L2); its level 3 (2.3 M dofs) is open",
+   "value": 0.005228032407972241
+  },
+  {
+   "id": "CL-C2-FEA-SUB-TAPE-L1L2",
+   "type": "claim",
+   "title": "Decided tape model: change of the corner vm(L/2) from local level 1 to 2",
+   "calc": "CALC-C2-FEA-SUB-TAPE-L1L2",
+   "output": "value",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C2-FEA-GCI-TOL"
+   },
+   "how": "c2r5_corner.py local --variant band --level 1/2 (tape 50 %); c2r5_measure.py; c2r5_reduce.py",
+   "note": "two levels only (not a GCI): level 3 of the tape model is open (A1 to schedule on a free machine)",
+   "value": 0.01052512156681451
   },
   {
    "id": "CL-C2-FEA-SUB-CUT",
@@ -944,14 +1725,10 @@
   {
    "id": "CL-C2-FEA-FOAM-FILLET-SENS",
    "type": "claim",
-   "title": "Core foam shear if the fin root fillet carries the station loads (sensitivity)",
+   "title": "Core foam shear if the fin root fillet carried 100 % of the station loads (not a reachable state, record)",
    "calc": "CALC-C2-FEA-FILLET-SENS",
    "output": "value",
    "unit": "Pa",
-   "limit": {
-    "op": "<=",
-    "ref": "P:c2.inputs.xps_shear_allow_pa"
-   },
    "parts": [
     "WNG-001",
     "FIN-001-UR",
@@ -959,8 +1736,261 @@
     "FIN-001-LR",
     "FIN-001-LL"
    ],
-   "how": "Shows the fin-root tab aft of the hinge cannot take the fin loads (expected FAIL); C4 keeps the fillet fail-safe (CR-C2-12); T-C1-WING-PROOF inspects the tab",
+   "how": "Bounding record; the real path is CL-C2-FEA-SPLIT-S1 / -TAU",
+   "note": "record, no limit (closure round 2026-11-14): 100 % of the station loads through the fin root fillet is not a state the drawn wing can reach. The fin is fixed to the tube and the through-core block, which is far stiffer than a microballoon cove on foam, so the bonded fillet carries only what compatibility gives it; C4 computed that split with the root pinned (rigid, an upper bound: CR-C2-12 answer, CL-C4-D3-FILLET-L4-SHARE 0.73 % of the root moment). The real path is checked with C4's split in CL-C2-FEA-SPLIT-* and CL-C2-FEA-CUTOUT-SPLIT-*. A 100 % path needs the block path gone (a broken block), which T-C4-BLOCK-PROOF and CL-C2-FEA-PETG cover",
    "value": 292618.55763571075
+  },
+  {
+   "id": "CL-C2-FEA-SPLIT-S1",
+   "type": "claim",
+   "title": "Core foam tension (99.5th pct by volume), fin root fillet carrying C4's intact split, rest on the block, ultimate",
+   "calc": "CALC-C2-FEA-SPLIT-S1",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.xps_tens_allow_pa"
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-003",
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "c2cl_split_reduce.py RUNS (wing_fea_direct.py / wing_fea_d68.py --intro c4split, four sense / y-sign combinations); data/c2cl_split.json; T-C1-STATION-PROOF inspects the fin root and the cut-out corners",
+   "assumes": [
+    "ASM-C2-FILLET-SPLIT",
+    "ASM-C2-FILLET-BREAK"
+   ],
+   "note": "worst of the four C4 sense / y-sign combinations; C4's rigid-root split is an upper bound for a foam wing; the root is released from x 0.22 to the TE (ASM-C2-FILLET-BREAK)",
+   "value": 52854.883185290135
+  },
+  {
+   "id": "CL-C2-FEA-SPLIT-TAU",
+   "type": "claim",
+   "title": "Core foam shear (99.5th pct by volume), fin root fillet carrying C4's intact split, rest on the block, ultimate",
+   "calc": "CALC-C2-FEA-SPLIT-TAU",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.xps_shear_allow_pa"
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-003",
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "c2cl_split_reduce.py RUNS (wing_fea_direct.py / wing_fea_d68.py --intro c4split, four sense / y-sign combinations); data/c2cl_split.json; T-C1-STATION-PROOF inspects the fin root and the cut-out corners",
+   "assumes": [
+    "ASM-C2-FILLET-SPLIT",
+    "ASM-C2-FILLET-BREAK"
+   ],
+   "note": "worst of the four C4 sense / y-sign combinations; C4's rigid-root split is an upper bound for a foam wing; the root is released from x 0.22 to the TE (ASM-C2-FILLET-BREAK)",
+   "value": 40770.62365815728
+  },
+  {
+   "id": "CL-C2-FEA-FOAM-CORNER-S1-SPLIT",
+   "type": "claim",
+   "title": "Core foam tension at the block-pocket corners, vm(L/2), tape 50 %, fin root fillet carrying C4's split (bond break at x 0.22), ultimate",
+   "calc": "CALC-C2-FEA-CORNER-S1-SPLIT",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.xps_tens_allow_pa"
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-003",
+    "FIN-004-L",
+    "FIN-004-R",
+    "FIN-001-UR",
+    "FIN-001-LR"
+   ],
+   "how": "c2cl_split_reduce.py RUNS (wing_fea_direct.py / wing_fea_d68.py --intro c4split, four sense / y-sign combinations); data/c2cl_split.json; T-C1-STATION-PROOF inspects the fin root and the cut-out corners",
+   "assumes": [
+    "ASM-C2-TUBE-ET",
+    "ASM-C2-FOAM-TCD",
+    "ASM-C2-TAPE-CREDIT",
+    "ASM-C2-FILLET-SPLIT",
+    "ASM-C2-FILLET-BREAK"
+   ],
+   "note": "worst of the four C4 sense / y-sign combinations; C4's rigid-root split is an upper bound for a foam wing; the root is released from x 0.22 to the TE (ASM-C2-FILLET-BREAK); governing combination",
+   "value": 107363.85032259062
+  },
+  {
+   "id": "CL-C2-FEA-CUTOUT-SPLIT-S1",
+   "type": "claim",
+   "title": "Foam tension at the R 3 mm elevon cut-out corners (1 mm average), fin root fillet carrying C4's intact split, ultimate",
+   "calc": "CALC-C2-FEA-CUTOUT-SPLIT-S1",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.xps_tens_allow_pa"
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-003",
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "c2cl_split_reduce.py RUNS (wing_fea_direct.py / wing_fea_d68.py --intro c4split, four sense / y-sign combinations); data/c2cl_split.json; T-C1-STATION-PROOF inspects the fin root and the cut-out corners",
+   "assumes": [
+    "ASM-C2-FILLET-SPLIT",
+    "ASM-C2-FILLET-BREAK",
+    "ASM-C2-FOAM-AVG-R"
+   ],
+   "note": "worst of the four C4 sense / y-sign combinations; C4's rigid-root split is an upper bound for a foam wing; the root is released from x 0.22 to the TE (ASM-C2-FILLET-BREAK)",
+   "value": 12833.125531933096
+  },
+  {
+   "id": "CL-C2-FEA-FOAM-CORNER-S3-SPLIT",
+   "type": "claim",
+   "title": "Core foam compression at the block-pocket corners, vm(L/2), tape 50 %, fin root fillet carrying C4's split (bond break at x 0.22), ultimate",
+   "calc": "CALC-C2-FEA-CORNER-S3-SPLIT",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.xps_comp_allow_pa"
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-003",
+    "FIN-004-L",
+    "FIN-004-R",
+    "FIN-001-UR",
+    "FIN-001-LR"
+   ],
+   "how": "c2cl_split_reduce.py RUNS (wing_fea_direct.py / wing_fea_d68.py --intro c4split, four sense / y-sign combinations); data/c2cl_split.json; T-C1-STATION-PROOF inspects the fin root and the cut-out corners",
+   "assumes": [
+    "ASM-C2-TUBE-ET",
+    "ASM-C2-FOAM-TCD",
+    "ASM-C2-TAPE-CREDIT",
+    "ASM-C2-FILLET-SPLIT",
+    "ASM-C2-FILLET-BREAK"
+   ],
+   "note": "worst of the four C4 sense / y-sign combinations; C4's rigid-root split is an upper bound for a foam wing; the root is released from x 0.22 to the TE (ASM-C2-FILLET-BREAK); governing combination",
+   "value": 104518.99717526486
+  },
+  {
+   "id": "CL-C2-FEA-CUTOUT-SPLIT-S3",
+   "type": "claim",
+   "title": "Foam compression at the R 3 mm elevon cut-out corners (1 mm average), fin root fillet carrying C4's intact split, ultimate",
+   "calc": "CALC-C2-FEA-CUTOUT-SPLIT-S3",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.xps_comp_allow_pa"
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-003",
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "c2cl_split_reduce.py RUNS (wing_fea_direct.py / wing_fea_d68.py --intro c4split, four sense / y-sign combinations); data/c2cl_split.json; T-C1-STATION-PROOF inspects the fin root and the cut-out corners",
+   "assumes": [
+    "ASM-C2-FILLET-SPLIT",
+    "ASM-C2-FILLET-BREAK",
+    "ASM-C2-FOAM-AVG-R"
+   ],
+   "note": "worst of the four C4 sense / y-sign combinations; C4's rigid-root split is an upper bound for a foam wing; the root is released from x 0.22 to the TE (ASM-C2-FILLET-BREAK)",
+   "value": 77635.10808398598
+  },
+  {
+   "id": "CL-C2-FEA-FOAM-CORNER-TAU-SPLIT",
+   "type": "claim",
+   "title": "Core foam shear at the block-pocket corners, vm(L/2), tape 50 %, fin root fillet carrying C4's split (bond break at x 0.22), ultimate",
+   "calc": "CALC-C2-FEA-CORNER-TAU-SPLIT",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.xps_shear_allow_pa"
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-003",
+    "FIN-004-L",
+    "FIN-004-R",
+    "FIN-001-UR",
+    "FIN-001-LR"
+   ],
+   "how": "c2cl_split_reduce.py RUNS (wing_fea_direct.py / wing_fea_d68.py --intro c4split, four sense / y-sign combinations); data/c2cl_split.json; T-C1-STATION-PROOF inspects the fin root and the cut-out corners",
+   "assumes": [
+    "ASM-C2-TUBE-ET",
+    "ASM-C2-FOAM-TCD",
+    "ASM-C2-TAPE-CREDIT",
+    "ASM-C2-FILLET-SPLIT",
+    "ASM-C2-FILLET-BREAK"
+   ],
+   "note": "worst of the four C4 sense / y-sign combinations; C4's rigid-root split is an upper bound for a foam wing; the root is released from x 0.22 to the TE (ASM-C2-FILLET-BREAK); governing combination",
+   "value": 62895.93046476397
+  },
+  {
+   "id": "CL-C2-FEA-CUTOUT-SPLIT-TAU",
+   "type": "claim",
+   "title": "Foam shear at the R 3 mm elevon cut-out corners (1 mm average), fin root fillet carrying C4's intact split, ultimate",
+   "calc": "CALC-C2-FEA-CUTOUT-SPLIT-TAU",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.xps_shear_allow_pa"
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-003",
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "c2cl_split_reduce.py RUNS (wing_fea_direct.py / wing_fea_d68.py --intro c4split, four sense / y-sign combinations); data/c2cl_split.json; T-C1-STATION-PROOF inspects the fin root and the cut-out corners",
+   "assumes": [
+    "ASM-C2-FILLET-SPLIT",
+    "ASM-C2-FILLET-BREAK",
+    "ASM-C2-FOAM-AVG-R"
+   ],
+   "note": "worst of the four C4 sense / y-sign combinations; C4's rigid-root split is an upper bound for a foam wing; the root is released from x 0.22 to the TE (ASM-C2-FILLET-BREAK)",
+   "value": 36384.337641657854
   },
   {
    "id": "CL-C2-FEA-W-RATIO",
@@ -970,7 +2000,7 @@
    "output": "value",
    "unit": "-",
    "how": "Shows the beam model (all deflection, mode and aeroelastic claims) is within a few % of the 3-D model",
-   "value": 0.9539331036025631
+   "value": 0.9548195614510676
   },
   {
    "id": "CL-C2-FEA-TW-RATIO",
@@ -980,7 +2010,7 @@
    "output": "value",
    "unit": "-",
    "how": "As above, for twist (GJ): the input of every aeroelastic claim",
-   "value": 0.8331074849899262
+   "value": 0.846440828788533
   }
  ]
 }

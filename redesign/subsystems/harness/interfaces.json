@@ -8,74 +8,74 @@
    "name": "Pod harness bundle (lumped: pod runs of every lead, GPS cable, JR row, GH plugs)",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 38.2,
+   "mass_g": 38.3,
    "material": "copper + silicone",
    "cg_xyz_m": [
-    0.0414,
-    -0.0061,
-    0.0306
+    0.0418,
+    -0.006,
+    0.0307
    ],
    "make_or_buy": "make",
    "carried": true,
    "mass_proxy": true,
-   "notes": "carried item (ties, tape): mass from team/F2/harness.py (wire table x g/m + fittings). CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0362, -0.0097, 0.0359] m, 8.3 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness"
+   "notes": "carried item (ties, tape): mass from team/F2/harness.py (wire table x g/m + fittings). CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0362, -0.0098, 0.0363] m, 8.8 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness"
   },
   {
    "id": "HRN-002-R",
    "name": "Wing-fin harness bundle R (grooves, fin-face leads, phase joints)",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 44.8,
+   "mass_g": 39.8,
    "material": "copper + silicone",
    "cg_xyz_m": [
-    0.0782,
-    0.2638,
-    0.0049
+    0.0797,
+    0.2556,
+    0.0055
    ],
    "make_or_buy": "make",
    "carried": true,
    "mass_proxy": true,
-   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0789, 0.2627, 0.0053] m, 1.4 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness"
+   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0819, 0.2536, 0.006] m, 3.0 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness"
   },
   {
    "id": "HRN-002-L",
    "name": "Wing-fin harness bundle L (grooves, fin-face leads, phase joints)",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 44.3,
+   "mass_g": 39.3,
    "material": "copper + silicone",
    "cg_xyz_m": [
-    0.0782,
-    -0.2638,
-    0.0049
+    0.0797,
+    -0.2556,
+    0.0055
    ],
    "make_or_buy": "make",
    "carried": true,
    "mass_proxy": true,
-   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0791, -0.2645, 0.0051] m, 1.2 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness"
+   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0821, -0.2556, 0.0057] m, 2.4 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness"
   },
   {
    "id": "HRN-113-UR",
-   "name": "Amass XT30U mated pair, ESC UR power plug",
+   "name": "Amass XT60H mated pair, ESC UR power plug",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 2.0,
+   "mass_g": 7.3,
    "material": "PA + brass",
    "cg_xyz_m": [
     0.067,
     0.0503,
-    0.0346
+    0.039
    ],
    "make_or_buy": "buy",
    "carried": true,
-   "notes": "D-74 / WB-03: XT30U-F on the bus pigtail (0.195 m of route from the bars), XT30U-M on the ESC lead; body 20.1 x 10.2 x 5.2 mm (Amass manual drawing 20.1 x 10.2; thickness 5.2 from the listing, UNVERIFIED), axis (x, y) [-0.4217, 0.9067]; tied in its station (right channel, just inside the exit); team/I1/BOM.csv#H06"
+   "notes": "D-74 / WB-03 (D-174: XT60H): XT60H-F on the bus pigtail (0.196 m of route from the bars), XT60H-M on the ESC lead; body 30.0 x 15.8 x 8.1 mm (XT60 plug section 15.8 x 8.1; mated length 30 EST, UNVERIFIED), axis (x, y) [-0.4217, 0.9067]; tied in its station (right channel, just inside the exit); team/I1/BOM.csv#H06"
   },
   {
    "id": "HRN-113-UL",
-   "name": "Amass XT30U mated pair, ESC UL power plug",
+   "name": "Amass XT60H mated pair, ESC UL power plug",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 2.0,
+   "mass_g": 7.3,
    "material": "PA + brass",
    "cg_xyz_m": [
     0.0259,
@@ -84,39 +84,39 @@
    ],
    "make_or_buy": "buy",
    "carried": true,
-   "notes": "D-74 / WB-03: XT30U-F on the bus pigtail (0.064 m of route from the bars), XT30U-M on the ESC lead; body 20.1 x 10.2 x 5.2 mm (Amass manual drawing 20.1 x 10.2; thickness 5.2 from the listing, UNVERIFIED), axis (x, y) [1.0, 0.0]; tied in its station (tunnel under the AS150U cradle); team/I1/BOM.csv#H06"
+   "notes": "D-74 / WB-03 (D-174: XT60H): XT60H-F on the bus pigtail (0.064 m of route from the bars), XT60H-M on the ESC lead; body 30.0 x 15.8 x 8.1 mm (XT60 plug section 15.8 x 8.1; mated length 30 EST, UNVERIFIED), axis (x, y) [1.0, 0.0]; tied in its station (tunnel under the AS150U cradle); team/I1/BOM.csv#H06"
   },
   {
    "id": "HRN-113-LR",
-   "name": "Amass XT30U mated pair, ESC LR power plug",
+   "name": "Amass XT60H mated pair, ESC LR power plug",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 2.0,
+   "mass_g": 7.3,
    "material": "PA + brass",
    "cg_xyz_m": [
     0.067,
     0.0503,
-    0.0288
+    0.0302
    ],
    "make_or_buy": "buy",
    "carried": true,
-   "notes": "D-74 / WB-03: XT30U-F on the bus pigtail (0.186 m of route from the bars), XT30U-M on the ESC lead; body 20.1 x 10.2 x 5.2 mm (Amass manual drawing 20.1 x 10.2; thickness 5.2 from the listing, UNVERIFIED), axis (x, y) [-0.4217, 0.9067]; tied in its station (right channel, just inside the exit); team/I1/BOM.csv#H06"
+   "notes": "D-74 / WB-03 (D-174: XT60H): XT60H-F on the bus pigtail (0.186 m of route from the bars), XT60H-M on the ESC lead; body 30.0 x 15.8 x 8.1 mm (XT60 plug section 15.8 x 8.1; mated length 30 EST, UNVERIFIED), axis (x, y) [-0.4217, 0.9067]; tied in its station (right channel, just inside the exit); team/I1/BOM.csv#H06"
   },
   {
    "id": "HRN-113-LL",
-   "name": "Amass XT30U mated pair, ESC LL power plug",
+   "name": "Amass XT60H mated pair, ESC LL power plug",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 2.0,
+   "mass_g": 7.3,
    "material": "PA + brass",
    "cg_xyz_m": [
     0.0259,
     -0.052,
-    0.0277
+    0.0248
    ],
    "make_or_buy": "buy",
    "carried": true,
-   "notes": "D-74 / WB-03: XT30U-F on the bus pigtail (0.054 m of route from the bars), XT30U-M on the ESC lead; body 20.1 x 10.2 x 5.2 mm (Amass manual drawing 20.1 x 10.2; thickness 5.2 from the listing, UNVERIFIED), axis (x, y) [1.0, 0.0]; tied in its station (tunnel under the AS150U cradle); team/I1/BOM.csv#H06"
+   "notes": "D-74 / WB-03 (D-174: XT60H): XT60H-F on the bus pigtail (0.055 m of route from the bars), XT60H-M on the ESC lead; body 30.0 x 15.8 x 8.1 mm (XT60 plug section 15.8 x 8.1; mated length 30 EST, UNVERIFIED), axis (x, y) [1.0, 0.0]; tied in its station (tunnel under the AS150U cradle); team/I1/BOM.csv#H06"
   },
   {
    "id": "HRN-110-UR",
@@ -616,7 +616,7 @@
    "id": "CT-XT30U",
    "kind": "electrical",
    "method": "connector",
-   "spec": "Amass XT30U 2-pin keyed (20 A) in line in an ESC power pair just inside the pod side exit: female on the bus-bar pigtail (soldered on the bench), male on the ESC lead; both ends of the pair soldered (D-74, WB-03)"
+   "spec": "Amass XT60H 2-pin keyed (30 A cont / 60 A 1 min; D-174, was XT30U 20 A) in line in an ESC power pair just inside the pod side exit: female on the bus-bar pigtail (soldered on the bench), male on the ESC lead; both ends of the pair soldered (D-74, WB-03)"
   },
   {
    "id": "CT-PIN-HEADER-LINK",
@@ -1255,7 +1255,7 @@
    "part_b": "PWR-002",
    "via": "CT-AS150U",
    "owner": "harness",
-   "notes": "Pack + / - (pack's own 10 AWG lead). Wire list rows W-PACK; routed cut length 0.085 m",
+   "notes": "Pack + / - (pack's own 10 AWG lead). Wire list rows W-PACK; routed cut length 0.127 m",
    "wire": {
     "gauge_awg": 10,
     "connector": "pack terminal (factory) -> AS150U pack half",
@@ -1267,14 +1267,14 @@
     "strain_relief": "AS150U body held in the 60 mm park; lead heat-shrink at the plug",
     "disconnect": true,
     "slack_mm": 0,
-    "length_m": 0.085,
+    "length_m": 0.127,
     "wires": [
      "W-PACK"
     ]
    },
    "current_a": {
-    "cont": 30.3,
-    "peak": 120.0
+    "cont": 33.7,
+    "peak": 80.0
    },
    "field_joint": true
   },
@@ -1302,8 +1302,8 @@
     ]
    },
    "current_a": {
-    "cont": 30.3,
-    "peak": 120.0
+    "cont": 33.7,
+    "peak": 80.0
    }
   },
   {
@@ -1331,8 +1331,8 @@
     ]
    },
    "current_a": {
-    "cont": 30.3,
-    "peak": 120.0
+    "cont": 33.7,
+    "peak": 80.0
    }
   },
   {
@@ -1341,7 +1341,7 @@
    "part_b": "PRP-002-UR",
    "via": "CT-XT30U",
    "owner": "harness",
-   "notes": "ESC UR power + / -. Wire list rows W-PWR-UR; routed cut length 0.670 m",
+   "notes": "ESC UR power + / -. Wire list rows W-PWR-UR; routed cut length 0.672 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "bus bar (solder on the bench, D-74) -> pod pigtail -> XT30U female -> XT30U male -> ESC UR power pads (solder) + 680 uF cap",
@@ -1359,14 +1359,14 @@
     "strain_relief": "adhesive heat-shrink over each pad and XT30U joint; lead taped 20 mm from the ESC; never under the ESC strap",
     "disconnect": true,
     "slack_mm": 20,
-    "length_m": 0.67,
+    "length_m": 0.672,
     "wires": [
      "W-PWR-UR"
     ]
    },
    "current_a": {
-    "cont": 8.4,
-    "peak": 24.8
+    "cont": 13.6,
+    "peak": 40.0
    }
   },
   {
@@ -1399,8 +1399,8 @@
     ]
    },
    "current_a": {
-    "cont": 8.4,
-    "peak": 24.8
+    "cont": 13.6,
+    "peak": 40.0
    }
   },
   {
@@ -1409,7 +1409,7 @@
    "part_b": "PRP-002-LR",
    "via": "CT-XT30U",
    "owner": "harness",
-   "notes": "ESC LR power + / -. Wire list rows W-PWR-LR; routed cut length 0.701 m",
+   "notes": "ESC LR power + / -. Wire list rows W-PWR-LR; routed cut length 0.700 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "bus bar (solder on the bench, D-74) -> pod pigtail -> XT30U female -> XT30U male -> ESC LR power pads (solder) + 680 uF cap",
@@ -1427,14 +1427,14 @@
     "strain_relief": "adhesive heat-shrink over each pad and XT30U joint; lead taped 20 mm from the ESC; never under the ESC strap",
     "disconnect": true,
     "slack_mm": 20,
-    "length_m": 0.701,
+    "length_m": 0.7,
     "wires": [
      "W-PWR-LR"
     ]
    },
    "current_a": {
-    "cont": 8.4,
-    "peak": 24.8
+    "cont": 13.6,
+    "peak": 40.0
    }
   },
   {
@@ -1443,7 +1443,7 @@
    "part_b": "PRP-002-LL",
    "via": "CT-XT30U",
    "owner": "harness",
-   "notes": "ESC LL power + / -. Wire list rows W-PWR-LL; routed cut length 0.593 m",
+   "notes": "ESC LL power + / -. Wire list rows W-PWR-LL; routed cut length 0.594 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "bus bar (solder on the bench, D-74) -> pod pigtail -> XT30U female -> XT30U male -> ESC LL power pads (solder) + 680 uF cap",
@@ -1461,14 +1461,14 @@
     "strain_relief": "adhesive heat-shrink over each pad and XT30U joint; lead taped 20 mm from the ESC; never under the ESC strap",
     "disconnect": true,
     "slack_mm": 20,
-    "length_m": 0.593,
+    "length_m": 0.594,
     "wires": [
      "W-PWR-LL"
     ]
    },
    "current_a": {
-    "cont": 8.4,
-    "peak": 24.8
+    "cont": 13.6,
+    "peak": 40.0
    }
   },
   {
@@ -1477,7 +1477,7 @@
    "part_b": "PRP-001-UR",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "Motor UR phases A/B/C. Wire list rows W-PH-UR; routed cut length 0.131 m",
+   "notes": "Motor UR phases A/B/C. Wire list rows W-PH-UR; routed cut length 0.129 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "ESC UR phase pads (solder) -> motor UR factory leads (staggered in-line splices)",
@@ -1493,14 +1493,15 @@
     "strain_relief": "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.131,
+    "length_m": 0.129,
     "wires": [
      "W-PH-UR"
     ]
    },
    "current_a": {
-    "cont": 6.9,
-    "peak": 20.2
+    "cont": 15.8,
+    "peak": 49.3,
+    "kind": "winding current (ASM-F1-D173)"
    }
   },
   {
@@ -1509,7 +1510,7 @@
    "part_b": "PRP-001-UL",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "Motor UL phases A/B/C. Wire list rows W-PH-UL; routed cut length 0.131 m",
+   "notes": "Motor UL phases A/B/C. Wire list rows W-PH-UL; routed cut length 0.129 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "ESC UL phase pads (solder) -> motor UL factory leads (staggered in-line splices)",
@@ -1525,14 +1526,15 @@
     "strain_relief": "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.131,
+    "length_m": 0.129,
     "wires": [
      "W-PH-UL"
     ]
    },
    "current_a": {
-    "cont": 6.9,
-    "peak": 20.2
+    "cont": 15.8,
+    "peak": 49.3,
+    "kind": "winding current (ASM-F1-D173)"
    }
   },
   {
@@ -1541,7 +1543,7 @@
    "part_b": "PRP-001-LR",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "Motor LR phases A/B/C. Wire list rows W-PH-LR; routed cut length 0.131 m",
+   "notes": "Motor LR phases A/B/C. Wire list rows W-PH-LR; routed cut length 0.129 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "ESC LR phase pads (solder) -> motor LR factory leads (staggered in-line splices)",
@@ -1557,14 +1559,15 @@
     "strain_relief": "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.131,
+    "length_m": 0.129,
     "wires": [
      "W-PH-LR"
     ]
    },
    "current_a": {
-    "cont": 6.9,
-    "peak": 20.2
+    "cont": 15.8,
+    "peak": 49.3,
+    "kind": "winding current (ASM-F1-D173)"
    }
   },
   {
@@ -1573,7 +1576,7 @@
    "part_b": "PRP-001-LL",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "Motor LL phases A/B/C. Wire list rows W-PH-LL; routed cut length 0.131 m",
+   "notes": "Motor LL phases A/B/C. Wire list rows W-PH-LL; routed cut length 0.129 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "ESC LL phase pads (solder) -> motor LL factory leads (staggered in-line splices)",
@@ -1589,14 +1592,15 @@
     "strain_relief": "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.131,
+    "length_m": 0.129,
     "wires": [
      "W-PH-LL"
     ]
    },
    "current_a": {
-    "cont": 6.9,
-    "peak": 20.2
+    "cont": 15.8,
+    "peak": 49.3,
+    "kind": "winding current (ASM-F1-D173)"
    }
   },
   {
@@ -1950,17 +1954,17 @@
    "part_b": "PWR-008-UR",
    "via": "CT-SOLDER-DC",
    "owner": "harness",
-   "notes": "ESC UR bus decoupling: 680 uF cap + / - (cap's own legs, PWR-008). Wire list rows W-CAP-UR; routed cut length 0.019 m",
+   "notes": "ESC UR bus decoupling: 560 uF cap 1 of 3 + / - (cap's own legs, PWR-008). Wire list rows W-CAP-UR; routed cut length 0.019 m",
    "wire": {
     "gauge_awg": 22,
     "connector": "ESC UR power pads (solder, with the power lead) -> cap body (factory legs)",
     "route_id": "R-HRN-CAP-UR",
     "support_points": [
      "on the fin outboard face",
-     "cap in line aft of the ESC; legs formed forward 90 deg"
+     "three cans in line aft of the ESC (11 mm pitch in z); legs run forward to the two pads"
     ],
     "bend_radius_mm": 3.9,
-    "strain_relief": "legs sleeved (heat-shrink), cap foam-taped to the face (E-PWR-11...14)",
+    "strain_relief": "legs sleeved (heat-shrink) where they cross, cans foam-taped to the face (E-PWR-11...14)",
     "disconnect": false,
     "slack_mm": 3,
     "length_m": 0.019,
@@ -1969,8 +1973,8 @@
     ]
    },
    "current_a": {
-    "cont": 4.2,
-    "peak": 12.4,
+    "cont": 3.3,
+    "peak": 6.4,
     "kind": "AC ripple RMS, no DC (CL-F2-CAP-RIPPLE-CONT / -PEAK)"
    }
   },
@@ -1980,17 +1984,17 @@
    "part_b": "PWR-008-UL",
    "via": "CT-SOLDER-DC",
    "owner": "harness",
-   "notes": "ESC UL bus decoupling: 680 uF cap + / - (cap's own legs, PWR-008). Wire list rows W-CAP-UL; routed cut length 0.019 m",
+   "notes": "ESC UL bus decoupling: 560 uF cap 1 of 3 + / - (cap's own legs, PWR-008). Wire list rows W-CAP-UL; routed cut length 0.019 m",
    "wire": {
     "gauge_awg": 22,
     "connector": "ESC UL power pads (solder, with the power lead) -> cap body (factory legs)",
     "route_id": "R-HRN-CAP-UL",
     "support_points": [
      "on the fin outboard face",
-     "cap in line aft of the ESC; legs formed forward 90 deg"
+     "three cans in line aft of the ESC (11 mm pitch in z); legs run forward to the two pads"
     ],
     "bend_radius_mm": 3.9,
-    "strain_relief": "legs sleeved (heat-shrink), cap foam-taped to the face (E-PWR-11...14)",
+    "strain_relief": "legs sleeved (heat-shrink) where they cross, cans foam-taped to the face (E-PWR-11...14)",
     "disconnect": false,
     "slack_mm": 3,
     "length_m": 0.019,
@@ -1999,8 +2003,8 @@
     ]
    },
    "current_a": {
-    "cont": 4.2,
-    "peak": 12.4,
+    "cont": 3.3,
+    "peak": 6.4,
     "kind": "AC ripple RMS, no DC (CL-F2-CAP-RIPPLE-CONT / -PEAK)"
    }
   },
@@ -2010,17 +2014,17 @@
    "part_b": "PWR-008-LR",
    "via": "CT-SOLDER-DC",
    "owner": "harness",
-   "notes": "ESC LR bus decoupling: 680 uF cap + / - (cap's own legs, PWR-008). Wire list rows W-CAP-LR; routed cut length 0.019 m",
+   "notes": "ESC LR bus decoupling: 560 uF cap 1 of 3 + / - (cap's own legs, PWR-008). Wire list rows W-CAP-LR; routed cut length 0.019 m",
    "wire": {
     "gauge_awg": 22,
     "connector": "ESC LR power pads (solder, with the power lead) -> cap body (factory legs)",
     "route_id": "R-HRN-CAP-LR",
     "support_points": [
      "on the fin outboard face",
-     "cap in line aft of the ESC; legs formed forward 90 deg"
+     "three cans in line aft of the ESC (11 mm pitch in z); legs run forward to the two pads"
     ],
     "bend_radius_mm": 3.9,
-    "strain_relief": "legs sleeved (heat-shrink), cap foam-taped to the face (E-PWR-11...14)",
+    "strain_relief": "legs sleeved (heat-shrink) where they cross, cans foam-taped to the face (E-PWR-11...14)",
     "disconnect": false,
     "slack_mm": 3,
     "length_m": 0.019,
@@ -2029,8 +2033,8 @@
     ]
    },
    "current_a": {
-    "cont": 4.2,
-    "peak": 12.4,
+    "cont": 3.3,
+    "peak": 6.4,
     "kind": "AC ripple RMS, no DC (CL-F2-CAP-RIPPLE-CONT / -PEAK)"
    }
   },
@@ -2040,17 +2044,17 @@
    "part_b": "PWR-008-LL",
    "via": "CT-SOLDER-DC",
    "owner": "harness",
-   "notes": "ESC LL bus decoupling: 680 uF cap + / - (cap's own legs, PWR-008). Wire list rows W-CAP-LL; routed cut length 0.019 m",
+   "notes": "ESC LL bus decoupling: 560 uF cap 1 of 3 + / - (cap's own legs, PWR-008). Wire list rows W-CAP-LL; routed cut length 0.019 m",
    "wire": {
     "gauge_awg": 22,
     "connector": "ESC LL power pads (solder, with the power lead) -> cap body (factory legs)",
     "route_id": "R-HRN-CAP-LL",
     "support_points": [
      "on the fin outboard face",
-     "cap in line aft of the ESC; legs formed forward 90 deg"
+     "three cans in line aft of the ESC (11 mm pitch in z); legs run forward to the two pads"
     ],
     "bend_radius_mm": 3.9,
-    "strain_relief": "legs sleeved (heat-shrink), cap foam-taped to the face (E-PWR-11...14)",
+    "strain_relief": "legs sleeved (heat-shrink) where they cross, cans foam-taped to the face (E-PWR-11...14)",
     "disconnect": false,
     "slack_mm": 3,
     "length_m": 0.019,
@@ -2059,8 +2063,248 @@
     ]
    },
    "current_a": {
-    "cont": 4.2,
-    "peak": 12.4,
+    "cont": 3.3,
+    "peak": 6.4,
+    "kind": "AC ripple RMS, no DC (CL-F2-CAP-RIPPLE-CONT / -PEAK)"
+   }
+  },
+  {
+   "id": "E-HRN-73",
+   "part_a": "PRP-002-UR",
+   "part_b": "PWR-009-UR",
+   "via": "CT-SOLDER-DC",
+   "owner": "harness",
+   "notes": "ESC UR bus decoupling: 560 uF cap 2 of 3 + / - (cap's own legs, PWR-009). Wire list rows W-CAP2-UR; routed cut length 0.021 m",
+   "wire": {
+    "gauge_awg": 22,
+    "connector": "ESC UR power pads (solder, with the power lead) -> cap body (factory legs)",
+    "route_id": "R-HRN-CAP2-UR",
+    "support_points": [
+     "on the fin outboard face",
+     "three cans in line aft of the ESC (11 mm pitch in z); legs run forward to the two pads"
+    ],
+    "bend_radius_mm": 3.9,
+    "strain_relief": "legs sleeved (heat-shrink) where they cross, cans foam-taped to the face (E-PWR-15...18)",
+    "disconnect": false,
+    "slack_mm": 0,
+    "length_m": 0.021,
+    "wires": [
+     "W-CAP2-UR"
+    ]
+   },
+   "current_a": {
+    "cont": 3.3,
+    "peak": 6.4,
+    "kind": "AC ripple RMS, no DC (CL-F2-CAP-RIPPLE-CONT / -PEAK)"
+   }
+  },
+  {
+   "id": "E-HRN-74",
+   "part_a": "PRP-002-UL",
+   "part_b": "PWR-009-UL",
+   "via": "CT-SOLDER-DC",
+   "owner": "harness",
+   "notes": "ESC UL bus decoupling: 560 uF cap 2 of 3 + / - (cap's own legs, PWR-009). Wire list rows W-CAP2-UL; routed cut length 0.021 m",
+   "wire": {
+    "gauge_awg": 22,
+    "connector": "ESC UL power pads (solder, with the power lead) -> cap body (factory legs)",
+    "route_id": "R-HRN-CAP2-UL",
+    "support_points": [
+     "on the fin outboard face",
+     "three cans in line aft of the ESC (11 mm pitch in z); legs run forward to the two pads"
+    ],
+    "bend_radius_mm": 3.9,
+    "strain_relief": "legs sleeved (heat-shrink) where they cross, cans foam-taped to the face (E-PWR-15...18)",
+    "disconnect": false,
+    "slack_mm": 0,
+    "length_m": 0.021,
+    "wires": [
+     "W-CAP2-UL"
+    ]
+   },
+   "current_a": {
+    "cont": 3.3,
+    "peak": 6.4,
+    "kind": "AC ripple RMS, no DC (CL-F2-CAP-RIPPLE-CONT / -PEAK)"
+   }
+  },
+  {
+   "id": "E-HRN-75",
+   "part_a": "PRP-002-LR",
+   "part_b": "PWR-009-LR",
+   "via": "CT-SOLDER-DC",
+   "owner": "harness",
+   "notes": "ESC LR bus decoupling: 560 uF cap 2 of 3 + / - (cap's own legs, PWR-009). Wire list rows W-CAP2-LR; routed cut length 0.021 m",
+   "wire": {
+    "gauge_awg": 22,
+    "connector": "ESC LR power pads (solder, with the power lead) -> cap body (factory legs)",
+    "route_id": "R-HRN-CAP2-LR",
+    "support_points": [
+     "on the fin outboard face",
+     "three cans in line aft of the ESC (11 mm pitch in z); legs run forward to the two pads"
+    ],
+    "bend_radius_mm": 3.9,
+    "strain_relief": "legs sleeved (heat-shrink) where they cross, cans foam-taped to the face (E-PWR-15...18)",
+    "disconnect": false,
+    "slack_mm": 0,
+    "length_m": 0.021,
+    "wires": [
+     "W-CAP2-LR"
+    ]
+   },
+   "current_a": {
+    "cont": 3.3,
+    "peak": 6.4,
+    "kind": "AC ripple RMS, no DC (CL-F2-CAP-RIPPLE-CONT / -PEAK)"
+   }
+  },
+  {
+   "id": "E-HRN-76",
+   "part_a": "PRP-002-LL",
+   "part_b": "PWR-009-LL",
+   "via": "CT-SOLDER-DC",
+   "owner": "harness",
+   "notes": "ESC LL bus decoupling: 560 uF cap 2 of 3 + / - (cap's own legs, PWR-009). Wire list rows W-CAP2-LL; routed cut length 0.021 m",
+   "wire": {
+    "gauge_awg": 22,
+    "connector": "ESC LL power pads (solder, with the power lead) -> cap body (factory legs)",
+    "route_id": "R-HRN-CAP2-LL",
+    "support_points": [
+     "on the fin outboard face",
+     "three cans in line aft of the ESC (11 mm pitch in z); legs run forward to the two pads"
+    ],
+    "bend_radius_mm": 3.9,
+    "strain_relief": "legs sleeved (heat-shrink) where they cross, cans foam-taped to the face (E-PWR-15...18)",
+    "disconnect": false,
+    "slack_mm": 0,
+    "length_m": 0.021,
+    "wires": [
+     "W-CAP2-LL"
+    ]
+   },
+   "current_a": {
+    "cont": 3.3,
+    "peak": 6.4,
+    "kind": "AC ripple RMS, no DC (CL-F2-CAP-RIPPLE-CONT / -PEAK)"
+   }
+  },
+  {
+   "id": "E-HRN-77",
+   "part_a": "PRP-002-UR",
+   "part_b": "PWR-010-UR",
+   "via": "CT-SOLDER-DC",
+   "owner": "harness",
+   "notes": "ESC UR bus decoupling: 560 uF cap 3 of 3 + / - (cap's own legs, PWR-010). Wire list rows W-CAP3-UR; routed cut length 0.019 m",
+   "wire": {
+    "gauge_awg": 22,
+    "connector": "ESC UR power pads (solder, with the power lead) -> cap body (factory legs)",
+    "route_id": "R-HRN-CAP3-UR",
+    "support_points": [
+     "on the fin outboard face",
+     "three cans in line aft of the ESC (11 mm pitch in z); legs run forward to the two pads"
+    ],
+    "bend_radius_mm": 3.9,
+    "strain_relief": "legs sleeved (heat-shrink) where they cross, cans foam-taped to the face (E-PWR-19...22)",
+    "disconnect": false,
+    "slack_mm": 0,
+    "length_m": 0.019,
+    "wires": [
+     "W-CAP3-UR"
+    ]
+   },
+   "current_a": {
+    "cont": 3.3,
+    "peak": 6.4,
+    "kind": "AC ripple RMS, no DC (CL-F2-CAP-RIPPLE-CONT / -PEAK)"
+   }
+  },
+  {
+   "id": "E-HRN-78",
+   "part_a": "PRP-002-UL",
+   "part_b": "PWR-010-UL",
+   "via": "CT-SOLDER-DC",
+   "owner": "harness",
+   "notes": "ESC UL bus decoupling: 560 uF cap 3 of 3 + / - (cap's own legs, PWR-010). Wire list rows W-CAP3-UL; routed cut length 0.019 m",
+   "wire": {
+    "gauge_awg": 22,
+    "connector": "ESC UL power pads (solder, with the power lead) -> cap body (factory legs)",
+    "route_id": "R-HRN-CAP3-UL",
+    "support_points": [
+     "on the fin outboard face",
+     "three cans in line aft of the ESC (11 mm pitch in z); legs run forward to the two pads"
+    ],
+    "bend_radius_mm": 3.9,
+    "strain_relief": "legs sleeved (heat-shrink) where they cross, cans foam-taped to the face (E-PWR-19...22)",
+    "disconnect": false,
+    "slack_mm": 0,
+    "length_m": 0.019,
+    "wires": [
+     "W-CAP3-UL"
+    ]
+   },
+   "current_a": {
+    "cont": 3.3,
+    "peak": 6.4,
+    "kind": "AC ripple RMS, no DC (CL-F2-CAP-RIPPLE-CONT / -PEAK)"
+   }
+  },
+  {
+   "id": "E-HRN-79",
+   "part_a": "PRP-002-LR",
+   "part_b": "PWR-010-LR",
+   "via": "CT-SOLDER-DC",
+   "owner": "harness",
+   "notes": "ESC LR bus decoupling: 560 uF cap 3 of 3 + / - (cap's own legs, PWR-010). Wire list rows W-CAP3-LR; routed cut length 0.019 m",
+   "wire": {
+    "gauge_awg": 22,
+    "connector": "ESC LR power pads (solder, with the power lead) -> cap body (factory legs)",
+    "route_id": "R-HRN-CAP3-LR",
+    "support_points": [
+     "on the fin outboard face",
+     "three cans in line aft of the ESC (11 mm pitch in z); legs run forward to the two pads"
+    ],
+    "bend_radius_mm": 3.9,
+    "strain_relief": "legs sleeved (heat-shrink) where they cross, cans foam-taped to the face (E-PWR-19...22)",
+    "disconnect": false,
+    "slack_mm": 0,
+    "length_m": 0.019,
+    "wires": [
+     "W-CAP3-LR"
+    ]
+   },
+   "current_a": {
+    "cont": 3.3,
+    "peak": 6.4,
+    "kind": "AC ripple RMS, no DC (CL-F2-CAP-RIPPLE-CONT / -PEAK)"
+   }
+  },
+  {
+   "id": "E-HRN-80",
+   "part_a": "PRP-002-LL",
+   "part_b": "PWR-010-LL",
+   "via": "CT-SOLDER-DC",
+   "owner": "harness",
+   "notes": "ESC LL bus decoupling: 560 uF cap 3 of 3 + / - (cap's own legs, PWR-010). Wire list rows W-CAP3-LL; routed cut length 0.019 m",
+   "wire": {
+    "gauge_awg": 22,
+    "connector": "ESC LL power pads (solder, with the power lead) -> cap body (factory legs)",
+    "route_id": "R-HRN-CAP3-LL",
+    "support_points": [
+     "on the fin outboard face",
+     "three cans in line aft of the ESC (11 mm pitch in z); legs run forward to the two pads"
+    ],
+    "bend_radius_mm": 3.9,
+    "strain_relief": "legs sleeved (heat-shrink) where they cross, cans foam-taped to the face (E-PWR-19...22)",
+    "disconnect": false,
+    "slack_mm": 0,
+    "length_m": 0.019,
+    "wires": [
+     "W-CAP3-LL"
+    ]
+   },
+   "current_a": {
+    "cont": 3.3,
+    "peak": 6.4,
     "kind": "AC ripple RMS, no DC (CL-F2-CAP-RIPPLE-CONT / -PEAK)"
    }
   }

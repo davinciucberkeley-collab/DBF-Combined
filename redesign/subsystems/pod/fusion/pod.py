@@ -3,12 +3,18 @@ with antenna tube, pack straps and pads, crush block, spreader and aft spacers, 
 with flange, carry handle on the spar with the aft-stop strut and the two wall brackets.
 R6 (D-62, D-64, D-69; CR-A1-62, CR-A3-25, CR-C3-14..18, CR-C6-27, CR-E3-15, CR-F1-26, CR-D7-23): nose x -0.140 (pod 0.235
 long); the whole bay 10 mm forward (forward stop face -0.1312, datum pod.pack_x_nominal_m -0.032, aft stop face
-x_nom + L/2 + pod.pack_aft_travel_m = 0.0475 for the 0.135 m Ovonic pack); straps to -0.062 / 0.006; spacer set 2/4/6/8.
+x_nom + L/2 + pod.pack_aft_travel_m = 0.0475 for the 0.135 m Ovonic pack); straps to -0.062 / 0.006; spacer set 2/4/6/8 (D-150: 2/4/6/8/8).
 C3's fixes: the forward stop is a printed T whose upright passes the floor's front edge to a 12 mm flange bonded under
 the floor; the aft stop is backed by a strut (pad + three ribs) printed with POD-007 that ends on the foot bridge; each
 handle foot is tied to its side wall by a bracket (web + flange >= 1 000 mm2). PDB bosses 7.2 mm; the PDB plate runs aft
 to 0.050 with a rib along each boss row (unplug-moment path, C6).
 R5 (D-47) and R4 history: team/D2/SUMMARY.md and git.
+D-174 (Gens Ace Redline 6000 HV Shorty, 98 mm): XPS aft filler POD-013 (aft_filler_m) on the aft stop; datum -0.0545.
+D-161c / D-173b (closure round 2026-11-14): the FC tray was retired for the Kakute deck seat, then restored when D-173b reversed
+D-161c (CoreWing back); fc_seat_m / usb_spot_m RETIRED. Kept: pack_spacer_m (E2 D-163, t 0 = not drawn) and hatch_low().
+D-150 (design round 2026-11-14, wave 2): nose 7 mm forward (pod.x_le_m -0.147, 0.242 long); nose wall, epoxy line and
+forward stop follow it (stop aft face -0.1382); crush block and spreader top back to 0.5 mm under the hatch, with an 8 x 3 mm
+step on the block's fore top edge so the hatch tongue clears it in the swing (layout() hatch_sweep, block_step_m).
 
 Frame and datums: redesign/fusion/DATUMS.md (x aft, y right, z up, cruise attitude, metres).
 Shared numbers from params.json (pod LE, L x W x H, base, board thickness, pack size, spar, pitot tip); pod-only
@@ -16,12 +22,12 @@ numbers from subsystems/pod/params.json. `layout()` is a pure function of those 
 team/D2/pod_data.py (masses, CGs, interfaces.json) and team/D2/pod_claims.py (proof chain) import it, so the CAD,
 the mass roll-up and the claims cannot disagree.
 
-Arrangement (SPEC.md): the pack bay runs down the middle. From the nose aft: foam-board nose wall (x_le -0.140) ->
-1 mm epoxy line -> 3 mm printed forward-stop T (aft face x -0.1312) -> removable XPS crush block cut per pack
-(POD-009) -> 1.5 mm spreader (POD-010) -> pack (datum centroid x -0.032) -> printed U-spacers (POD-008) -> 3 mm aft
+Arrangement (SPEC.md): the pack bay runs down the middle. From the nose aft: foam-board nose wall (x_le -0.147, D-150) ->
+1 mm epoxy line -> 3 mm printed forward-stop T (aft face x -0.1382) -> removable XPS crush block cut per pack
+(POD-009) -> 1.5 mm spreader (POD-010) -> pack (datum centroid x -0.036, D-77) -> printed U-spacers (POD-008) -> 3 mm aft
 stop at x 0.0475 on the tray rear piece -> strut pad and ribs (POD-007) -> foot bridge. The pack sits wholly on the tray.
-FC on gel pads in the right channel, the right XT30U pair behind it (D-74: UBEC deleted); airspeed sensor, receiver, PDB and the AS150U park in the
-left channel; pitot socket with its flange at the left of the nose; ram-air vent over the pack; two antenna exits.
+FC on gel pads in the right channel, the right XT30U pair behind it (D-74: UBEC deleted; D-173b: tray restored); airspeed sensor,
+receiver, PDB and the AS150U park in the left channel; pitot socket with its flange at the left of the nose; ram-air vent over the pack; two antenna exits.
 
 UNVERIFIED-IN-FUSION: Y-normal prisms whose loops follow the S5010 upper surface (side walls with the exit holes, LE
 filler, saddle tongues); the L-section forward-stop T and the stepped bracket flanges (Y-normal prisms); prisms with many hole loops (tray, deck, nose wall, JR bar, FC end stops); the 45 deg
@@ -127,7 +133,7 @@ def layout(get, L, coords):
     fs_t, fs_h, fs_w = lv('fwd_stop_m')
     g['nose_block'] = lv('nose_block_l_m')              # fixed XPS block A
     g['x_fs0'] = g['xn'] + g['nose_block']              # forward stop fore face = nose block aft face = tray front
-    g['x_fs'] = g['x_fs0'] + fs_t                       # forward stop aft face (-0.1312 at x_le -0.140, D-62)
+    g['x_fs'] = g['x_fs0'] + fs_t                       # forward stop aft face (-0.1382 at x_le -0.147, D-150)
     fl_l, fl_t = lv('fwd_stop_flange_m')                # R6 (D-69, CR-C3-15): flange of the stop T under the floor
     g['fs_flange'] = (g['x_fs0'], g['x_fs0'] + fl_l, zb - fl_t, zb)
     g['fs_flange_bond'] = (g['x_fs0'] + fl_l - g['x_fs']) * fs_w   # flange area under the floor (aft of the stop)
@@ -137,6 +143,8 @@ def layout(get, L, coords):
     g['as_t'] = as_t
     g['z_as_top'] = g['zp'] + as_top
     a_nom, a_hvy = lv('pack_aft_face_m')
+    g['filler'] = lv('aft_filler_m')                    # D-174: XPS aft filler on the aft stop (POD-013); spacers bear on it
+    g['x_ab'] = g['x_as'] - g['filler'][0]              # face the spacers (or, with no spacer, the pack) bear on
     x_nom_shared = get('pod.pack_x_nominal_m', 'm')     # D-47: A1's nominal centroid; the local aft face must agree
     if abs((a_nom - pk[0] / 2) - x_nom_shared) > 0.0005:
         raise ValueError('pod params pack_aft_face_m[0] %.4f does not put the pack centroid at pod.pack_x_nominal_m %.4f'
@@ -145,14 +153,14 @@ def layout(get, L, coords):
     g['pack_c_nom'] = a_nom - pk[0] / 2
     g['pack_c_hvy'] = a_hvy - pk[0] / 2
     trav = get('pod.pack_aft_travel_m', 'm')            # D-62: the no-spacer station is x_nom + travel
-    if abs((g['x_as'] - pk[0] / 2) - (x_nom_shared + trav)) > 0.0005:
+    if abs((g['x_ab'] - pk[0] / 2) - (x_nom_shared + trav)) > 0.0005:
         raise ValueError('aft_stop_x_m %.4f does not put the no-spacer centroid at pod.pack_x_nominal_m + pack_aft_travel_m %.4f'
-                         % (g['x_as'], x_nom_shared + trav))
+                         % (g['x_as'], x_nom_shared + trav) + ' (aft_stop_x_m - aft_filler_m[0] - L/2 must equal it)')
     g['pack_fore_nom'] = a_nom - pk[0]
     g['pack_fwd_c'] = g['x_fs'] + pk[0] / 2             # centroid with the pack against the forward stop (no block)
     g['travel'] = g['x_as'] - g['x_fs'] - pk[0]         # stop-to-stop room beyond the pack length
-    g['spacer_nom'] = g['x_as'] - a_nom
-    g['spacer_hvy'] = g['x_as'] - a_hvy
+    g['spacer_nom'] = g['x_ab'] - a_nom
+    g['spacer_hvy'] = g['x_ab'] - a_hvy
     g['sp_t'] = lv('spreader_t_m')
     g['block_nom'] = g['pack_fore_nom'] - g['sp_t'] - g['x_fs']
     g['bay'] = (g['x_as'] - g['x_fs'], g['bw'], g['zh'] - g['zp'])
@@ -160,8 +168,8 @@ def layout(get, L, coords):
     step = min(lv('spacer_set_m'))
     g['stations'] = {}
     for m, x_t in sorted(lv('pack_x_per_pack_m').items(), key=lambda kv: float(kv[0])):
-        sp = max(0.0, round((g['x_as'] - (x_t + pk[0] / 2)) / step) * step)
-        x_a = g['x_as'] - sp - pk[0] / 2
+        sp = max(0.0, round((g['x_ab'] - (x_t + pk[0] / 2)) / step) * step)
+        x_a = g['x_ab'] - sp - pk[0] / 2
         g['stations'][m] = {'target': x_t, 'spacer': sp, 'x': x_a, 'block': (x_a - pk[0] / 2 - g['sp_t']) - g['x_fs']}
     g['tray_front_solid'] = lv('tray_front_solid_m')
     g['pod_c'] = x0 + Lp / 2
@@ -267,7 +275,106 @@ def layout(get, L, coords):
     g['xt30u_zone'] = lv('xt30u_zone_m')
     xm = lv('xt30u_mated_m')
     g['xt30u_exit_clr'] = ((se[1] - se[0]) - xm[1], (se[3] - se[2]) - xm[2])   # one body through the 16 x 12 exit
+    # D-150: crush block section (top block_top_clear_m under the hatch, less the vent groove) and the fore-top step
+    gw, gd = lv('block_groove_m')
+    clr = lv('block_top_clear_m')
+    stx, stz = lv('block_step_m')
+    g['block_top'] = g['zh'] - clr
+    g['block_step'] = (stx, stz)
+    g['block_sec'] = g['bw'] * (g['block_top'] - g['zt']) - gw * gd          # section aft of the step (C5's A)
+    g['block_sec_step'] = g['bw'] * (g['block_top'] - stz - g['zt']) - gw * max(gd - stz, 0.0)   # groove floor unchanged
+    g['hatch_sweep'] = hatch_sweep(g, lv('lip_m')[0], lv('tongue_t_m'), lv('hatch_motion'))
+    # D-173b: CoreWing FC back on the right-channel tray (D-161c reversed). Hatch check over it: FC envelope on the FC
+    # plate + 5 mm gel cubes (avionics pad_m, F3) + board height, + a 1.5 mm hook-and-loop strap over the board
+    fx, fl_len = lv('fc_centre_x_m'), lv('fc_plate_len_m')
+    fb = lv('fc_board_m')
+    cy_ = g['ch_y'][2]
+    g['fc_box'] = (fx - fb[0] / 2, cy_ - fb[1] / 2, g['zf'] + lv('plate_t_m'), fx + fb[0] / 2, cy_ + fb[1] / 2,
+                   g['zf'] + lv('plate_t_m') + 0.005 + fb[2] + 0.0015)
+    b = g['fc_box']
+    g['fc_hatch_gap'] = hatch_low(g, lv('hatch_motion'), b[0], b[3], b[1], b[4], lv('ant_tube_m'), lv('ant_tube_xy_m')) - b[5]
+    # pack spacer (E2 D-163): 0 = not drawn; lifts the pack (zpk) inside the unchanged bay
+    g['pack_spacer'] = lv('pack_spacer_m')
+    g['zpk'] = g['zp'] + g['pack_spacer'][0]
+    g['pack_z_c'] = g['zpk'] + pk[2] / 2
+    g['ant_a_pack_clr'] = math.hypot(abs(ay) - pk[1] / 2, ztube - (g['zpk'] + pk[2]))
     return g
+
+
+def hatch_low(g, motion, x0, x1, y0, y1, ant_tube, ant_xy, step_deg=0.5):
+    """D-161c, kept at D-173b: lowest z the hatch reaches over the box x0..x1, y0..y1 in the D-143 closing motion (turned about the
+    nose-lip upper aft edge 0..tilt_max, plus the slide), and closed. Moving: the hatch board underside x_lip1..x_hatch1
+    (full width) and antenna tube A's lower end (zh - 4 mm, counted only where its y overlaps the box)."""
+    px, pz = g['x_lip1'], g['ztop']
+    tb = g['tb']
+    pts = [((g['x_lip1'] + (g['x_hatch1'] - g['x_lip1']) * k / 400) - px, -tb, None) for k in range(401)]
+    ax, ay = ant_xy
+    r = ant_tube[0] / 2
+    pts.append((ax - px, -tb - 0.004, (ay - r, ay + r)))
+    poses = [(motion['tilt_max_deg'] * k / int(motion['tilt_max_deg'] / step_deg), 0.0)
+             for k in range(int(motion['tilt_max_deg'] / step_deg) + 1)]
+    poses += [(motion['slide_deg'], motion['slide_m'] * k / 10) for k in range(11)]
+    low = 1e9
+    for th, s in poses:
+        c, sn = math.cos(math.radians(th)), math.sin(math.radians(th))
+        for dx, dz, yr in pts:
+            if yr is not None and (yr[1] <= y0 or yr[0] >= y1):
+                continue
+            x = px + dx * c - dz * sn + s * c
+            if x0 <= x <= x1:
+                low = min(low, pz + dx * sn + dz * c + s * sn)
+    return low
+
+
+def hatch_sweep(g, lip_l, tongue_t, motion, step_deg=0.1, step_m=0.0001):
+    """D-150: smallest gap (m, < 0 = into the block) between the closing hatch and the crush block, in x-z.
+    The hatch turns about the upper aft edge of the nose lip (x_lip1, ztop) from motion['tilt_max_deg'] to 0 (aft end up =
+    open), plus the D-143 slide of motion['slide_m'] along its plane at motion['slide_deg']. Moving: the tongue (xn + 0.5 mm
+    .. x_lip1, zh .. zh + tongue_t) and the first 40 mm of the hatch board (zh .. ztop). Fixed: the crush block from the
+    forward stop face, stepped (block_step_m) at its fore top edge. The tongue spans y +/-45 mm, wider than the block, so the
+    2-D section is the whole check. Returns (gap, deg, slide, x, z, lowest tongue z)."""
+    px, pz = g['x_lip1'], g['ztop']
+    tb, x_fs, zt = g['tb'], g['x_fs'], g['zt']
+    t0 = (g['xn'] + 0.0005) - px
+    polys = [[(t0, -tb), (0.0, -tb), (0.0, -tb + tongue_t), (t0, -tb + tongue_t)],
+             [(0.0, -tb), (0.040, -tb), (0.040, 0.0), (0.0, 0.0)]]
+    pts = []
+    for q in polys:
+        for i in range(4):
+            a, b = q[i], q[(i + 1) % 4]
+            n = max(1, int(math.hypot(b[0] - a[0], b[1] - a[1]) / 0.0001))
+            pts += [(a[0] + (b[0] - a[0]) * k / n, a[1] + (b[1] - a[1]) * k / n) for k in range(n)]
+    stx, stz = g['block_step']
+    top = g['block_top']
+    L_blk = max(g['block_nom'], stx + 0.001)
+    rects = [(x_fs, x_fs + stx, zt, top - stz), (x_fs + stx, x_fs + L_blk, zt, top)]
+
+    def gap(x, z):
+        out, pen = 1e9, None
+        for x0, x1, z0, z1 in rects:
+            dx, dz = max(x0 - x, 0.0, x - x1), max(z0 - z, 0.0, z - z1)
+            if dx == 0.0 and dz == 0.0:
+                d = -min(x - x0, x1 - x, z - z0, z1 - z)
+                pen = d if pen is None else min(pen, d)
+            out = min(out, math.hypot(dx, dz))
+        return out if pen is None else pen
+
+    tmax = motion['tilt_max_deg']
+    poses = [(tmax * k / int(tmax / step_deg), 0.0) for k in range(int(tmax / step_deg) + 1)]
+    ns = int(motion['slide_m'] / step_m)
+    poses += [(motion['slide_deg'], motion['slide_m'] * k / ns) for k in range(ns + 1)]
+    best, low = (1e9, 0, 0, 0, 0), 1e9
+    for th, s in poses:
+        c, sn = math.cos(math.radians(th)), math.sin(math.radians(th))
+        for dx, dz in pts:
+            x = px + dx * c - dz * sn + s * c
+            z = pz + dx * sn + dz * c + s * sn
+            if dx < 0:
+                low = min(low, z)
+            d = gap(x, z)
+            if d < best[0]:
+                best = (d, th, s, x, z)
+    return best + (low,)
 
 
 def build(ctx):
@@ -320,8 +427,14 @@ def build(ctx):
     lg, _lb = lv('leg_m')
     ly = lv('leg_y_m')
     hh = lg / 2 + 0.0004
-    deck = [_rect(G['x_hatch1'], -yi, x1 - tb, yi),
-            _rect(xs - hh, ly - hh, xs + hh, ly + hh), _rect(xs - hh, -ly - hh, xs + hh, -ly + hh)]
+    # D-139: the two handle-leg slots run out through the deck's FORWARD edge (the hatch opening) instead of being
+    # closed holes. With closed holes neither the deck nor the handle could go on (grip above, feet below; the
+    # assembly check found 1.6 mm into a leg in every direction). The deck is held just under the grip, slid forward
+    # so the legs enter the slots at its front edge, lowered along the legs onto the walls and bonded (E-POD-08)
+    xh1, xa = G['x_hatch1'], x1 - tb
+    deck = [[(xh1, -yi), (xa, -yi), (xa, yi), (xh1, yi),
+             (xh1, ly + hh), (xs + hh, ly + hh), (xs + hh, ly - hh), (xh1, ly - hh),
+             (xh1, -ly + hh), (xs + hh, -ly + hh), (xs + hh, -ly - hh), (xh1, -ly - hh)]]
     sh.prism('Z', zh, deck, tb, name='fb aft deck')
 
     # ---------------------------------------------------------------- POD-002 tray (printed PETG: bay tray + forward stop + guides, FC, avionics and PDB plates)
@@ -353,10 +466,10 @@ def build(ctx):
         tr.prism('Y', a_w - gt if s > 0 else -a_w, tri, gt, name='petg stop gusset')
     ci, co, cy = G['ch_y']
     tp = lv('plate_t_m')
-    fx, fl_len = lv('fc_centre_x_m'), lv('fc_plate_len_m')
+    fx, fl_len = lv('fc_centre_x_m'), lv('fc_plate_len_m')     # D-173b: FC tray restored (D-161c reversed)
     bx = lv('fc_board_m')[0]
     tr.prism('Z', zf, [_rect(fx - fl_len / 2, ci + 0.0005, fx + fl_len / 2, co - 0.0005)], tp, name='petg FC plate')
-    jb = lv('jr_bar_m')                                 # R4 (CR-F2-03 f): JR tie bar, 3 tie slots at its foot
+    jb = lv('jr_bar_m')                               # R4 (CR-F2-03 f): JR tie bar, 3 tie slots at its foot
     jx = (jb[0] + jb[1]) / 2 - jb[2] / 2
     jy0, jy1 = ci + 0.0005, co - 0.0005
     jslots = [_rect(jy0 + (jy1 - jy0) * k / 4 - jb[4] / 2, zf + 0.0005, jy0 + (jy1 - jy0) * k / 4 + jb[4] / 2,
@@ -403,20 +516,30 @@ def build(ctx):
 
     # ---------------------------------------------------------------- POD-004 pack straps (2) + EVA pads
     st = ctx.part('POD-004')
-    ztop_pack = zp + pk[2]
+    ztop_pack = G['zpk'] + pk[2]                        # E2 D-163: the pack spacer (if any) lifts the pack and the loops
     for xc in G['strap_x']:
         ring = [_rect(-yo, zf - ts, yo, ztop_pack + ts), _rect(-yo + ts, zf, yo - ts, ztop_pack)]
         st.prism('X', xc - ws / 2, ring, ws, name='strap')
     pl = lv('pad_len_m')
     for xc in G['strap_x']:
         st.box((xc - pl / 2, -(bw / 2 - 0.002), zt), (xc + pl / 2, bw / 2 - 0.002, zp), name='eva pad')
+    spt, spl, spw = G['pack_spacer']
+    if spt > 0:                                         # not drawn while t = 0 (A1 decides D-163)
+        xc = G['pack_c_nom']
+        st.box((xc - spl / 2, -spw / 2, zp), (xc + spl / 2, spw / 2, zp + spt), name='pefoam pack spacer')
 
     # ---------------------------------------------------------------- R5 (CR-A5-27): the trim kit is three single-material parts, so
     # each declared CG is both the mass centroid and the body centroid. POD-009 crush block, POD-010 spreader, POD-008 aft
     # spacers (CAD pack at the -0.032 datum: blue 8 + yellow 4 mm, D-62)
     gw, gd = lv('block_groove_m')
-    sec = _notched(-bw / 2 + 0.0003, bw / 2 - 0.0003, zt, zh - 0.0005, gw, gd)
-    ctx.part('POD-009').prism('X', x_fs, [sec], G['block_nom'], name='xps crush block')
+    sec = _notched(-bw / 2 + 0.0003, bw / 2 - 0.0003, zt, G['block_top'], gw, gd)   # D-150: 0.5 mm under the hatch again
+    stx, stz = G['block_step']                          # D-150: fore-top step the hatch tongue swings through
+    sec_st = _notched(-bw / 2 + 0.0003, bw / 2 - 0.0003, zt, G['block_top'] - stz, gw, max(gd - stz, 0.0))
+    if gd <= stz:                                       # groove no deeper than the step: plain rectangle over the step
+        sec_st = [(-bw / 2 + 0.0003, zt), (bw / 2 - 0.0003, zt), (bw / 2 - 0.0003, G['block_top'] - stz), (-bw / 2 + 0.0003, G['block_top'] - stz)]
+    blk = ctx.part('POD-009')
+    blk.prism('X', x_fs, [sec_st], stx, name='xps crush block step')
+    blk.prism('X', x_fs + stx, [sec], G['block_nom'] - stx, name='xps crush block')
     ctx.part('POD-010').prism('X', x_fs + G['block_nom'], [sec], G['sp_t'], name='petg spreader')
     tk = ctx.part('POD-008')
     hsp, bar = lv('spacer_h_m'), lv('spacer_bar_m')
@@ -427,6 +550,11 @@ def build(ctx):
               (-ya + bar, zp + bar * 0.6), (-ya + bar, zp + hsp), (-ya, zp + hsp)]
         tk.prism('X', xcur, uu, t, name='petgb spacer %.0f mm' % (t * 1000))
         xcur += t
+    fl_l, fl_h, fl_f = G['filler']                      # D-174: XPS aft filler against the aft stop, under the pack leads:
+    fy = bw / 2 - 0.0003                                #   removable fore piece + piece on the stop
+    af = ctx.part('POD-013')
+    af.box((G['x_ab'], -fy, zt), (G['x_ab'] + fl_f, fy, zt + fl_h), name='xps aft filler fore piece')
+    af.box((G['x_ab'] + fl_f, -fy, zt), (x_as, fy, zt + fl_h), name='xps aft filler stop piece')
 
     # ---------------------------------------------------------------- POD-006 pitot socket with flange (printed, through the nose wall)
     so = ctx.part('POD-006')
@@ -550,5 +678,6 @@ def build(ctx):
     ctx.contact('E-POD-11', 'crush block against the forward stop, between the guides')
     ctx.contact('E-POD-12', 'pack on the EVA pads on the tray: insulating thermal contact (E3); heat leaves by the pod air and vents')
     ctx.contact('E-POD-13', 'spreader trapped between the crush block and the pack fore face')
+    ctx.contact('E-POD-16', 'aft filler trapped between the U-spacers (or the pack) and the aft stop, on the tray (D-174)')
     ctx.contact('E-POD-14', 'strut pad epoxy-bedded on the aft stop back face (D-69)')
     ctx.contact('E-POD-15', 'wall-bracket flanges epoxied to the side-wall inner faces (D-69)')

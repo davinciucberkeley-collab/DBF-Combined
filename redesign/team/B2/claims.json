@@ -192,13 +192,13 @@
     "c": "m"
    },
    "outputs": {
-    "Vs_ms": 11.899981156892892,
-    "Vtr_ms": 15.46997550396076,
-    "Re_stall": 257296.8898787652,
-    "Re_dev": 0.010396577389364614
+    "Vs_ms": 12.126667833632935,
+    "Vtr_ms": 15.764668183722815,
+    "Re_stall": 262198.2234299013,
+    "Re_dev": 0.008454705499620463
    },
    "input_values": {
-    "m": 2.6,
+    "m": 2.7,
     "g": 9.80665,
     "rho": 1.225,
     "b": 1.15,
@@ -239,10 +239,10 @@
     "ASM-B2-CLMAX-KD"
    ],
    "outputs": {
-    "SM_fwd": 0.065,
-    "CLmax_fwd": 0.7861,
-    "Vs_fwd_ms": 11.99585362445588,
-    "Vtr_fwd_ms": 15.594609711792643
+    "SM_fwd": 0.07218750000000002,
+    "CLmax_fwd": 0.782240625,
+    "Vs_fwd_ms": 12.254485451359981,
+    "Vtr_fwd_ms": 15.930831086767975
    },
    "input_values": {
     "tab": [
@@ -289,11 +289,11 @@
     ],
     "sm_min": 0.05,
     "xr": [
-     0.0466,
-     0.0514
+     0.043,
+     0.0501
     ],
     "kd": 1.0,
-    "m": 2.6,
+    "m": 2.7,
     "g": 9.80665,
     "rho": 1.225,
     "b": 1.15,
@@ -329,15 +329,15 @@
     "ASM-B2-HINGE-INVISCID"
    ],
    "outputs": {
-    "q_dive_Pa": 264.992,
-    "M_hinge_Nm": 0.2571601084416001,
-    "T_req_Nm": 0.38574016266240013,
-    "T_req_kgfcm": 3.933454978635927
+    "q_dive_Pa": 299.1511250000001,
+    "M_hinge_Nm": 0.29030965367040007,
+    "T_req_Nm": 0.4354644805056001,
+    "T_req_kgfcm": 4.4405019094757145
    },
    "input_values": {
     "ch": 0.02106,
     "rho": 1.225,
-    "v": 16.0,
+    "v": 17.0,
     "f": 1.3,
     "c": 0.32,
     "yin": [
@@ -406,12 +406,12 @@
     "t": "m"
    },
    "outputs": {
-    "M_root_1g_Nm": 3.0919926150749997,
-    "T_root_1g_Nm": 0.32419804235,
+    "M_root_1g_Nm": 3.2109154079624997,
+    "T_root_1g_Nm": 0.33666719782500004,
     "ybar_m": 0.24253499999999997
    },
    "input_values": {
-    "m": 2.6,
+    "m": 2.7,
     "g": 9.80665,
     "b": 1.15,
     "yb": 0.4218,
@@ -468,7 +468,7 @@
     "WNG-003"
    ],
    "how": "T-B2-STALL: FBWA slow flight, 1 kt/s deceleration, three runs, airspeed sensor calibrated",
-   "value": 11.899981156892892
+   "value": 12.126667833632935
   },
   {
    "id": "CL-B2-TRANSITION-GATE",
@@ -490,7 +490,7 @@
     "WNG-003"
    ],
    "how": "Re-run with the cruise speed B1 sets (CR-B2-01); flight: transition logs show airspeed >= 1.3 Vs",
-   "value": 15.46997550396076
+   "value": 15.764668183722815
   },
   {
    "id": "CL-B2-RE-STALL",
@@ -500,7 +500,7 @@
    "output": "Re_stall",
    "unit": "-",
    "how": "Must stay within 10 % of the XFOIL stall polar Re (P:b2.xfoil.re_stall, which follows the chord); re-run xfoil_wing.py if not",
-   "value": 257296.8898787652
+   "value": 262198.2234299013
   },
   {
    "id": "CL-B2-SM-FWD",
@@ -510,7 +510,7 @@
    "output": "SM_fwd",
    "unit": "-",
    "how": "B3's CG range width over the chord, added to the SM floor; B3 re-derives the range (D-17)",
-   "value": 0.065
+   "value": 0.07218750000000002
   },
   {
    "id": "CL-B2-CLMAX-FWD",
@@ -525,7 +525,7 @@
     "WNG-003"
    ],
    "how": "T-B2-STALL flown at the forward CG ballast as well as the aft",
-   "value": 0.7861
+   "value": 0.782240625
   },
   {
    "id": "CL-B2-STALL-GATE-FWD",
@@ -545,7 +545,7 @@
    ],
    "how": "T-B2-STALL at the forward CG limit, 2.6 kg",
    "note": "R2 basis (CG on the chord plane, SM from the range width): superseded for R-STALL by CL-B2R3-VS-GATE-FWD (B2-R4, real CG height, team/B2/sim/stall_zcg.py)",
-   "value": 11.99585362445588
+   "value": 12.254485451359981
   },
   {
    "id": "CL-B2-TRANSITION-GATE-FWD",
@@ -565,7 +565,7 @@
    ],
    "how": "Transition logs at the forward CG: airspeed >= 1.3 Vs before the wing carries the weight",
    "note": "R2 basis: superseded for R-TRANSITION by CL-B2R3-VTR-GATE-FWD (B2-R4, real CG height)",
-   "value": 15.594609711792643
+   "value": 15.930831086767975
   },
   {
    "id": "CL-B2-RE-STALL-DEV",
@@ -579,7 +579,7 @@
     "ref": "ASM-B2-RE-TOL"
    },
    "how": "|Re at Vs / Re of the stall polars - 1|; re-run xfoil_wing.py (Re follow the chord) if it fails",
-   "value": 0.010396577389364614
+   "value": 0.008454705499620463
   },
   {
    "id": "CL-B2-HINGE-MOMENT",
@@ -594,7 +594,7 @@
     "WNG-003"
    ],
    "how": "Bench: hang M / (0.5 x elevon chord) on the trailing edge of a linked panel pair at 25 deg",
-   "value": 0.2571601084416001
+   "value": 0.29030965367040007
   },
   {
    "id": "CL-B2-SERVO-TORQUE-REQ",
@@ -609,7 +609,7 @@
     "WNG-003"
    ],
    "how": "D6 selects a servo with rated stall torque >= this at 5 V; T-B2-HINGE bench test",
-   "value": 3.933454978635927
+   "value": 4.4405019094757145
   },
   {
    "id": "CL-B2-SPAR-COVER",
@@ -672,7 +672,7 @@
     "WNG-002"
    ],
    "how": "C1 multiplies by n; spar proof load test (H1)",
-   "value": 3.0919926150749997
+   "value": 3.2109154079624997
   },
   {
    "id": "CL-B2-ROOT-TORSION-1G",
@@ -686,7 +686,7 @@
     "WNG-002"
    ],
    "how": "C1 multiplies by n; included in the spar proof test",
-   "value": 0.32419804235
+   "value": 0.33666719782500004
   },
   {
    "id": "CL-B2-ELEVON-ETA",

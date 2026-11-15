@@ -117,14 +117,14 @@
   {
    "id": "ASM-C4-MOUNT-CAD",
    "type": "assumption",
-   "title": "Motor mount 10.9 g, CG 8.4 mm ahead, 11.0 mm below the motor axis (D-91: grip 18 mm)",
+   "title": "Motor mount 16.24 g, CG 7.9 mm ahead, 8.0 mm below the motor axis (R8: 10 deg, face_ahead 4.0 mm, cheeks 5.5 / 5.4 mm; closure re-run 2026-11-14 from subsystems/fins/interfaces.json FIN-003-UR mass_g 16.24, cg_xyz_m (0.0371, 0.3189, 0.182) vs station (0.045, 0.32, 0.19))",
    "text": "[mass kg, dx, dy (+ outboard), dz (+ away from the wing)] of FIN-003-UR from the motor station (0.045, 0.32, 0.19)",
-   "basis": "subsystems/fins/interfaces.json FIN-003-UR (D-91, 2026-11-13: grip 18 mm) mass_g 10.85 (less the 1.40 g pinch hardware, now its own parts), cg_xyz_m (0.0366, 0.3207, 0.1790) (D3 CAD centroid); R5 was 11.94 g at (0.0365, 0.3214, 0.1814) with the hardware, R4 11.28 g at (0.0404, 0.3218, 0.1803)",
+   "basis": "subsystems/fins/interfaces.json FIN-003-UR (D3 R6, 2026-11-14, D-146) mass_g 11.67, cg_xyz_m (0.0345, 0.3205, 0.1794); was (D-91) 10.85 g at (0.0366, 0.3207, 0.1790): D-91, 2026-11-13: grip 18 mm, mass_g 10.85 (less the 1.40 g pinch hardware, now its own parts), cg_xyz_m (0.0366, 0.3207, 0.1790) (D3 CAD centroid); R5 was 11.94 g at (0.0365, 0.3214, 0.1814) with the hardware, R4 11.28 g at (0.0404, 0.3218, 0.1803)",
    "value": [
-    0.01085,
-    -0.0084,
-    0.0007,
-    -0.011
+    0.01624,
+    -0.0079,
+    -0.0011,
+    -0.008
    ],
    "unit": "kg, m",
    "status": "PROPOSED"
@@ -145,10 +145,10 @@
   {
    "id": "ASM-C4-MOUNT-K-ROCK",
    "type": "assumption",
-   "title": "Mount rocking stiffness 2 200 N m/rad (D-91: 18 mm grip, in series with the body)",
+   "title": "Mount rocking stiffness 3 900 N m/rad (D3 R8 drawn mount, closure re-run 2026-11-14)",
    "text": "Rotational stiffness of the printed mount about x and y between the tube end and the motor base, used in every FE model as the nominal value (same value about both axes)",
-   "basis": "D-91 (2026-11-13): CALC-C4-D3-MOUNT-K-EST on the 18 mm grip (foundation 10 692 N m/rad), 2.5 mm cheeks and the D-80 outboard cheek that stops 1 mm ahead of the slit = 2 235 N m/rad; nominal set below the estimate (CL-C4-D3-MOUNT-K-EST >= this). R5 (D-61, cheeks 17 mm): CALC-C4-D3-MOUNT-K-EST = series of the 12 mm slit-collar foundation (E/t_wall) d l^3 / 12 = 3 170 N m/rad and the mount body above the tube end: nodding = two cheeks as deep beams over the free length plate back face -> collar (8.7 mm), 5 690 N m/rad; sway = plate + cheeks as a channel cantilevered from the lip cap to the motor axis, 2 960 N m/rad; weaker axis 1 530 N m/rad, rounded down. R1-R4 used the collar alone (3 000), which left the body out; 3 000 is kept as the upper sensitivity. Static test T-C4-MOUNT-STIFF replaces it",
-   "value": 2200.0,
+   "basis": "D-91 (2026-11-13): CALC-C4-D3-MOUNT-K-EST on the 18 mm grip (foundation 10 692 N m/rad), 2.5 mm cheeks and the D-80 outboard cheek that stops 1 mm ahead of the slit = 2 235 N m/rad; nominal set below the estimate (CL-C4-D3-MOUNT-K-EST >= this). R5 (D-61, cheeks 17 mm): CALC-C4-D3-MOUNT-K-EST = series of the 12 mm slit-collar foundation (E/t_wall) d l^3 / 12 = 3 170 N m/rad and the mount body above the tube end: nodding = two cheeks as deep beams over the free length plate back face -> collar (8.7 mm), 5 690 N m/rad; sway = plate + cheeks as a channel cantilevered from the lip cap to the motor axis, 2 960 N m/rad; weaker axis 1 530 N m/rad, rounded down. R1-R4 used the collar alone (3 000), which left the body out; 3 000 is kept as the upper sensitivity. Static test T-C4-MOUNT-STIFF replaces it. Closure round 2026-11-14 (C4.md): rule made explicit, the value is CALC-C4-D3-MOUNT-K-EST at the low end of ASM-C4-ASA-E's TDS range (1.8 GPa), rounded down (today 2 266 -> 2 200). With the requested cheeks 4.0 / 3.9 mm (D3 R7) it becomes 3 100 (estimate 3 455 at 2.0 GPa, 3 109 at 1.8 GPa). Final re-run 2026-11-14 on the drawn R8 mount (subsystems/fins/params.json: face_ahead 4.0, cheeks 5.5 / 5.4, inner faces 13.4 / 14.3 mm, cheek length 13.5, plate 0.0200 x 0.0163 x 4.5 mm): CALC-C4-D3-MOUNT-K-EST 4 365 at 2.0 GPa, 3 929 at 1.8 GPa (sway governs; nodding 4 515) -> 3 900",
+   "value": 3900.0,
    "unit": "N m/rad",
    "status": "UNVERIFIED"
   },
@@ -297,6 +297,64 @@
    "status": "UNVERIFIED"
   },
   {
+   "id": "CALC-C4-TUBE-EG",
+   "type": "calculation",
+   "title": "Fin motor-tube moduli in SI from params (D-147, split from the wing spar)",
+   "script": "redesign/team/C4/fin_structures_d3.py",
+   "function": "tube_eg",
+   "equation": "E = e_gpa x 1e9, G = g_gpa x 1e9 (Rock West 35046-S CLT page values; the wing spar keeps ASM-J1-E-TUBE / ASM-C4-G-TUBE)",
+   "inputs": {
+    "e_gpa": "P:fins.tube.e_gpa",
+    "g_gpa": "P:fins.tube.g_gpa"
+   },
+   "units": {
+    "e_gpa": "GPa",
+    "g_gpa": "GPa"
+   },
+   "tol": 1e-09,
+   "cites": [
+    "SRC-RW-35046S"
+   ],
+   "outputs": {
+    "E_pa": 90200000000.0,
+    "G_pa": 20500000000.0
+   },
+   "input_values": {
+    "e_gpa": 90.2,
+    "g_gpa": 20.5
+   }
+  },
+  {
+   "id": "CL-C4-TUBE-E",
+   "type": "claim",
+   "title": "Fin motor-tube axial modulus used by the C4 models (Pa)",
+   "calc": "CALC-C4-TUBE-EG",
+   "output": "E_pa",
+   "unit": "Pa",
+   "parts": [
+    "FIN-002-R",
+    "FIN-002-L"
+   ],
+   "how": "T-C4-TUBE-BEND on the delivered tube (H1 GT-16); then set P:fins.tube.e_gpa to the measured value.",
+   "note": "D-147: record, no limit. Unit conversion of P:fins.tube.e_gpa so the fin models stay in SI.",
+   "value": 90200000000.0
+  },
+  {
+   "id": "CL-C4-TUBE-G",
+   "type": "claim",
+   "title": "Fin motor-tube shear modulus used by the C4 models (Pa)",
+   "calc": "CALC-C4-TUBE-EG",
+   "output": "G_pa",
+   "unit": "Pa",
+   "parts": [
+    "FIN-002-R",
+    "FIN-002-L"
+   ],
+   "how": "T-C4-TUBE-TORSION on the delivered tube (H1 GT-16); then set P:fins.tube.g_gpa to the measured value.",
+   "note": "D-147: record, no limit. Unit conversion of P:fins.tube.g_gpa.",
+   "value": 20500000000.0
+  },
+  {
    "id": "CALC-C4-D3-Q4-CHECK",
    "type": "calculation",
    "title": "General quad shell element checks",
@@ -323,9 +381,9 @@
    ],
    "outputs": {
     "err_rect": 1.0836532616868934e-15,
-    "f_skew_fe": 69.68687527352854,
+    "f_skew_fe": 69.68687514288861,
     "f_leissa": 69.08667983783796,
-    "err_skew": 0.008687570991968041
+    "err_skew": 0.008687569101011094
    },
    "input_values": {
     "t_board": 0.0048,
@@ -347,7 +405,7 @@
     "y_fin": "P:fins.y_m",
     "od": "P:fins.tube.od_m",
     "idd": "P:fins.tube.id_m",
-    "mu": "P:wing.spar.mass_per_m_kgm",
+    "mu": "P:fins.tube.mass_per_m_kgm",
     "tube_len": "P:fin_detail.tube_length_m",
     "z_st": "P:propulsion.stations.z_m",
     "x_face": "CL-D3-X-FACE",
@@ -409,8 +467,8 @@
     "rpm_h": "CL-B4-HOVER-RPM",
     "rpm_c": "CL-B4-CRUISE-RPM",
     "rpm_x": "CL-B4-RPM-MAX",
-    "E": "ASM-J1-E-TUBE",
-    "G": "ASM-C4-G-TUBE",
+    "E": "CL-C4-TUBE-E",
+    "G": "CL-C4-TUBE-G",
     "lo": "ASM-C4-BAND-LO",
     "hi": "ASM-C4-BAND-HI",
     "lay_1l": "ASM-C4-ONE-LAYER"
@@ -500,30 +558,30 @@
     "SRC-C4-ALLEN"
    ],
    "outputs": {
-    "f1_up": 203.9138799945546,
-    "f2_up": 233.16382573163028,
-    "panel_up": 58.765498053002815,
-    "sep_up": 0.020580647941619512,
-    "band_up": -0.3820791515316527,
-    "f1_lo": 197.97846486363966,
-    "f2_lo": 228.97775551215372,
-    "panel_lo": 57.31544562600475,
-    "sep_lo": 0.009125862572885168,
-    "band_lo": -0.40006525798897075,
-    "f1_min": 197.97846486363966,
-    "sep_op": 0.009125862572885168,
-    "sep_band": -0.40006525798897075
+    "f1_up": 210.48233558171512,
+    "f2_up": 213.9739476597368,
+    "panel_up": 65.4205707435104,
+    "sep_up": 0.09680163500152394,
+    "band_up": -0.3621747406614694,
+    "f1_lo": 202.27282470359143,
+    "f2_lo": 323.75011985264985,
+    "panel_lo": 65.10120119941965,
+    "sep_lo": 0.05402272470102898,
+    "band_lo": -0.38705204635275325,
+    "f1_min": 202.27282470359143,
+    "sep_op": 0.05402272470102898,
+    "sep_band": -0.38705204635275325
    },
    "input_values": {
     "tube_x": 0.045,
     "y_fin": 0.32,
-    "od": 0.022,
-    "idd": 0.02,
-    "mu": 0.102,
+    "od": 0.0221,
+    "idd": 0.01905,
+    "mu": 0.156,
     "tube_len": 0.344,
     "z_st": 0.19,
-    "x_face": 0.024349999999999997,
-    "x_prop": -0.012671971456221315,
+    "x_face": 0.028799999999999996,
+    "x_prop": -0.018175329818682324,
     "x_te": 0.32,
     "hh": 0.21,
     "le_gap": 0.0005,
@@ -609,18 +667,18 @@
      0.03043,
      -0.01662
     ],
-    "m_motor": 0.081,
-    "d_motor": 0.038,
-    "l_motor": 0.0265,
-    "m_prop": 0.017,
+    "m_motor": 0.108,
+    "d_motor": 0.035,
+    "l_motor": 0.036,
+    "m_prop": 0.02296,
     "m_adapt": 0.005,
-    "ip": 7.5e-05,
-    "i_bell": 1.5e-05,
+    "ip": 0.000102,
+    "i_bell": 2e-05,
     "mount": [
-     0.01085,
-     -0.0084,
-     0.0007,
-     -0.011
+     0.01624,
+     -0.0079,
+     -0.0011,
+     -0.008
     ],
     "cb_mass": [
      0.01159,
@@ -630,8 +688,8 @@
     "esc_x0": 0.078,
     "esc_len": 0.046,
     "esc_z": 0.118,
-    "landing_g": 60,
-    "cant": 7.0,
+    "landing_g": 80,
+    "cant": 10.0,
     "t_board": 0.0048,
     "areal": 0.2,
     "layers": 2,
@@ -651,24 +709,24 @@
     "chord": 0.32,
     "el_frac": 0.22,
     "slot_hw": 0.012,
-    "k_rock": 2200.0,
+    "k_rock": 3900.0,
     "k_twist": 30000.0,
     "k_root": 10000.0,
     "k_anchor": 30000000.0,
-    "tip_sq": 0.0586,
-    "z_step": 0.201,
+    "tip_sq": 0.069,
+    "z_step": 0.203,
     "ear_xyz": [
      0.045,
      0.3023,
      0.1475
     ],
-    "shoe_x0": 0.2536,
+    "shoe_x0": 0.2432,
     "shoe_z0": 0.196,
-    "rpm_h": 5415.791721033196,
-    "rpm_c": 5994.054866878658,
-    "rpm_x": 9319.452696615961,
-    "E": 100000000000.0,
-    "G": 5000000000.0,
+    "rpm_h": 5757.16689868235,
+    "rpm_c": 4983.918745222161,
+    "rpm_x": 10468.232852367586,
+    "E": 90200000000.0,
+    "G": 20500000000.0,
     "lo": 80.0,
     "hi": 330.0,
     "lay_1l": 1
@@ -686,7 +744,7 @@
     "y_fin": "P:fins.y_m",
     "od": "P:fins.tube.od_m",
     "idd": "P:fins.tube.id_m",
-    "mu": "P:wing.spar.mass_per_m_kgm",
+    "mu": "P:fins.tube.mass_per_m_kgm",
     "tube_len": "P:fin_detail.tube_length_m",
     "z_st": "P:propulsion.stations.z_m",
     "x_face": "CL-D3-X-FACE",
@@ -748,8 +806,8 @@
     "rpm_h": "CL-B4-HOVER-RPM",
     "rpm_c": "CL-B4-CRUISE-RPM",
     "rpm_x": "CL-B4-RPM-MAX",
-    "E": "ASM-J1-E-TUBE",
-    "G": "ASM-C4-G-TUBE",
+    "E": "CL-C4-TUBE-E",
+    "G": "CL-C4-TUBE-G",
     "lo": "ASM-C4-BAND-LO",
     "hi": "ASM-C4-BAND-HI",
     "lay_rec": "P:fins.layers"
@@ -839,30 +897,30 @@
     "SRC-C4-ALLEN"
    ],
    "outputs": {
-    "f1_up": 249.20747724267386,
-    "f2_up": 298.2239088969223,
-    "panel_up": 72.43250923553337,
-    "sep_up": 0.2472732538021265,
-    "band_up": -0.24482582653735196,
-    "f1_lo": 243.3468317141885,
-    "f2_lo": 293.74966160738114,
-    "panel_lo": 69.82483487374755,
-    "sep_lo": 0.21794096209654246,
-    "band_lo": -0.26258535844185305,
-    "f1_min": 243.3468317141885,
-    "sep_op": 0.21794096209654246,
-    "sep_band": -0.26258535844185305
+    "f1_up": 248.36696600060483,
+    "f2_up": 334.9278113859533,
+    "panel_up": 101.90070196848852,
+    "sep_up": 0.29421451751267935,
+    "band_up": -0.2473728303011975,
+    "f1_lo": 241.12926035878337,
+    "f2_lo": 309.11821000137246,
+    "panel_lo": 100.29083025920592,
+    "sep_lo": 0.2564995835745405,
+    "band_lo": -0.26930527164005036,
+    "f1_min": 241.12926035878337,
+    "sep_op": 0.2564995835745405,
+    "sep_band": -0.26930527164005036
    },
    "input_values": {
     "tube_x": 0.045,
     "y_fin": 0.32,
-    "od": 0.022,
-    "idd": 0.02,
-    "mu": 0.102,
+    "od": 0.0221,
+    "idd": 0.01905,
+    "mu": 0.156,
     "tube_len": 0.344,
     "z_st": 0.19,
-    "x_face": 0.024349999999999997,
-    "x_prop": -0.012671971456221315,
+    "x_face": 0.028799999999999996,
+    "x_prop": -0.018175329818682324,
     "x_te": 0.32,
     "hh": 0.21,
     "le_gap": 0.0005,
@@ -948,18 +1006,18 @@
      0.03043,
      -0.01662
     ],
-    "m_motor": 0.081,
-    "d_motor": 0.038,
-    "l_motor": 0.0265,
-    "m_prop": 0.017,
+    "m_motor": 0.108,
+    "d_motor": 0.035,
+    "l_motor": 0.036,
+    "m_prop": 0.02296,
     "m_adapt": 0.005,
-    "ip": 7.5e-05,
-    "i_bell": 1.5e-05,
+    "ip": 0.000102,
+    "i_bell": 2e-05,
     "mount": [
-     0.01085,
-     -0.0084,
-     0.0007,
-     -0.011
+     0.01624,
+     -0.0079,
+     -0.0011,
+     -0.008
     ],
     "cb_mass": [
      0.01159,
@@ -969,8 +1027,8 @@
     "esc_x0": 0.078,
     "esc_len": 0.046,
     "esc_z": 0.118,
-    "landing_g": 60,
-    "cant": 7.0,
+    "landing_g": 80,
+    "cant": 10.0,
     "t_board": 0.0048,
     "areal": 0.2,
     "layers": 2,
@@ -990,24 +1048,24 @@
     "chord": 0.32,
     "el_frac": 0.22,
     "slot_hw": 0.012,
-    "k_rock": 2200.0,
+    "k_rock": 3900.0,
     "k_twist": 30000.0,
     "k_root": 10000.0,
     "k_anchor": 30000000.0,
-    "tip_sq": 0.0586,
-    "z_step": 0.201,
+    "tip_sq": 0.069,
+    "z_step": 0.203,
     "ear_xyz": [
      0.045,
      0.3023,
      0.1475
     ],
-    "shoe_x0": 0.2536,
+    "shoe_x0": 0.2432,
     "shoe_z0": 0.196,
-    "rpm_h": 5415.791721033196,
-    "rpm_c": 5994.054866878658,
-    "rpm_x": 9319.452696615961,
-    "E": 100000000000.0,
-    "G": 5000000000.0,
+    "rpm_h": 5757.16689868235,
+    "rpm_c": 4983.918745222161,
+    "rpm_x": 10468.232852367586,
+    "E": 90200000000.0,
+    "G": 20500000000.0,
     "lo": 80.0,
     "hi": 330.0,
     "lay_rec": 2
@@ -1025,7 +1083,7 @@
     "y_fin": "P:fins.y_m",
     "od": "P:fins.tube.od_m",
     "idd": "P:fins.tube.id_m",
-    "mu": "P:wing.spar.mass_per_m_kgm",
+    "mu": "P:fins.tube.mass_per_m_kgm",
     "tube_len": "P:fin_detail.tube_length_m",
     "z_st": "P:propulsion.stations.z_m",
     "x_face": "CL-D3-X-FACE",
@@ -1088,10 +1146,10 @@
     "rpm_c": "CL-B4-CRUISE-RPM",
     "rpm_x": "CL-B4-RPM-MAX",
     "lay_rec": "P:fins.layers",
-    "E0": "ASM-J1-E-TUBE",
+    "E0": "CL-C4-TUBE-E",
     "E_lo": "ASM-C4-E-TUBE-LO",
     "E_hi": "ASM-C4-E-TUBE-HI",
-    "G0": "ASM-C4-G-TUBE",
+    "G0": "CL-C4-TUBE-G",
     "G_lo": "ASM-C4-G-TUBE-LO",
     "G_hi": "ASM-C4-G-TUBE-HI",
     "sep_min": "P:requirements.vibration_sep_frac"
@@ -1180,23 +1238,23 @@
     "ASM-C4-G-TUBE-HI"
    ],
    "outputs": {
-    "sep_op_worst": 0.12800607378684004,
-    "f_station_min": 225.37767654835648,
-    "E_req_g0": 78631845509.55621,
-    "G_req_e0": 4312333453.765495,
-    "E_req_over_nom": 0.7863184550955621,
-    "G_req_over_nom": 0.862466690753099
+    "sep_op_worst": 0.0869079537927906,
+    "f_station_min": 208.5836831163473,
+    "E_req_g0": 58218731845.21205,
+    "G_req_e0": 7298242261.050405,
+    "E_req_over_nom": 0.6454404860888254,
+    "G_req_over_nom": 0.35601181761221484
    },
    "input_values": {
     "tube_x": 0.045,
     "y_fin": 0.32,
-    "od": 0.022,
-    "idd": 0.02,
-    "mu": 0.102,
+    "od": 0.0221,
+    "idd": 0.01905,
+    "mu": 0.156,
     "tube_len": 0.344,
     "z_st": 0.19,
-    "x_face": 0.024349999999999997,
-    "x_prop": -0.012671971456221315,
+    "x_face": 0.028799999999999996,
+    "x_prop": -0.018175329818682324,
     "x_te": 0.32,
     "hh": 0.21,
     "le_gap": 0.0005,
@@ -1282,18 +1340,18 @@
      0.03043,
      -0.01662
     ],
-    "m_motor": 0.081,
-    "d_motor": 0.038,
-    "l_motor": 0.0265,
-    "m_prop": 0.017,
+    "m_motor": 0.108,
+    "d_motor": 0.035,
+    "l_motor": 0.036,
+    "m_prop": 0.02296,
     "m_adapt": 0.005,
-    "ip": 7.5e-05,
-    "i_bell": 1.5e-05,
+    "ip": 0.000102,
+    "i_bell": 2e-05,
     "mount": [
-     0.01085,
-     -0.0084,
-     0.0007,
-     -0.011
+     0.01624,
+     -0.0079,
+     -0.0011,
+     -0.008
     ],
     "cb_mass": [
      0.01159,
@@ -1303,8 +1361,8 @@
     "esc_x0": 0.078,
     "esc_len": 0.046,
     "esc_z": 0.118,
-    "landing_g": 60,
-    "cant": 7.0,
+    "landing_g": 80,
+    "cant": 10.0,
     "t_board": 0.0048,
     "areal": 0.2,
     "layers": 2,
@@ -1324,27 +1382,27 @@
     "chord": 0.32,
     "el_frac": 0.22,
     "slot_hw": 0.012,
-    "k_rock": 2200.0,
+    "k_rock": 3900.0,
     "k_twist": 30000.0,
     "k_root": 10000.0,
     "k_anchor": 30000000.0,
-    "tip_sq": 0.0586,
-    "z_step": 0.201,
+    "tip_sq": 0.069,
+    "z_step": 0.203,
     "ear_xyz": [
      0.045,
      0.3023,
      0.1475
     ],
-    "shoe_x0": 0.2536,
+    "shoe_x0": 0.2432,
     "shoe_z0": 0.196,
-    "rpm_h": 5415.791721033196,
-    "rpm_c": 5994.054866878658,
-    "rpm_x": 9319.452696615961,
+    "rpm_h": 5757.16689868235,
+    "rpm_c": 4983.918745222161,
+    "rpm_x": 10468.232852367586,
     "lay_rec": 2,
-    "E0": 100000000000.0,
+    "E0": 90200000000.0,
     "E_lo": 70000000000.0,
     "E_hi": 135000000000.0,
-    "G0": 5000000000.0,
+    "G0": 20500000000.0,
     "G_lo": 3000000000.0,
     "G_hi": 10000000000.0,
     "sep_min": 0.2
@@ -1412,51 +1470,51 @@
     "SRC-C4-ROARK"
    ],
    "outputs": {
-    "k_found": 10691.999999999998,
-    "free_len_m": 0.009738706275439123,
-    "cheek_h_m": 0.039000000000000035,
-    "k_nod_body": 4701.4500861830165,
-    "k_sway_body": 2864.710041288645,
-    "cl_out_m": 0.014366205785435182,
-    "k_nod": 3265.5385271030764,
-    "k_sway": 2259.359362866972,
-    "k_est": 2259.359362866972,
-    "r4_k_found": 3168.0,
-    "r4_free_len_m": 0.004738706275439125,
-    "r4_cheek_h_m": 0.039000000000000035,
-    "r4_k_nod_body": 10431.644657152618,
-    "r4_k_sway_body": 2438.6612903225787,
-    "r4_cl_out_m": 0.012,
-    "r4_k_nod": 2430.0230709688776,
-    "r4_k_sway": 1377.9464404380726,
-    "r4_k_est": 1377.9464404380726,
-    "change_vs_r4": 0.6396568811112013,
-    "nom_over_est": 0.9737273477417736
+    "k_found": 10740.599999999997,
+    "free_len_m": 0.01163058024651415,
+    "cheek_h_m": 0.04030000000000003,
+    "k_nod_body": 10223.250534065455,
+    "k_sway_body": 7180.851760897619,
+    "cl_out_m": 0.00988058024651415,
+    "k_nod": 5237.7708240075635,
+    "k_sway": 4303.5942317674135,
+    "k_est": 4303.5942317674135,
+    "r4_k_found": 3182.4,
+    "r4_free_len_m": 0.006630580246514146,
+    "r4_cheek_h_m": 0.04030000000000003,
+    "r4_k_nod_body": 18096.935467513096,
+    "r4_k_sway_body": 5865.079242424237,
+    "r4_cl_out_m": 0.0085,
+    "r4_k_nod": 2706.4608065293305,
+    "r4_k_sway": 2063.0086768886217,
+    "r4_k_est": 2063.0086768886217,
+    "change_vs_r4": 1.0860766510483062,
+    "nom_over_est": 0.9062192646350713
    },
    "input_values": {
     "E": 2000000000.0,
-    "od": 0.022,
+    "od": 0.0221,
     "gap": 0.00015,
     "grip": 0.018,
     "wall": 0.002,
-    "cap_t": 0.0025,
+    "cap_t": 0.0015,
     "ear_h": 0.012,
     "plate_t": 0.0045,
-    "p_hy": 0.0145,
-    "p_hz": 0.015,
-    "ct": 0.0025,
-    "ct_in": 0.0024,
+    "p_hy": 0.02,
+    "p_hz": 0.0163,
+    "ct": 0.0055,
+    "ct_in": 0.0054,
     "slit": 0.0015,
     "csg": 0.001,
-    "cy": 0.0115,
-    "cy_in": 0.0121,
-    "cl": 0.017,
-    "x_face": 0.024349999999999997,
+    "cy": 0.0134,
+    "cy_in": 0.0143,
+    "cl": 0.0135,
+    "x_face": 0.028799999999999996,
     "tube_x": 0.045,
     "z_st": 0.19,
     "tube_len": 0.344,
-    "cant": 7.0,
-    "k_nom": 2200.0
+    "cant": 10.0,
+    "k_nom": 3900.0
    }
   },
   {
@@ -1471,7 +1529,7 @@
     "y_fin": "P:fins.y_m",
     "od": "P:fins.tube.od_m",
     "idd": "P:fins.tube.id_m",
-    "mu": "P:wing.spar.mass_per_m_kgm",
+    "mu": "P:fins.tube.mass_per_m_kgm",
     "tube_len": "P:fin_detail.tube_length_m",
     "z_st": "P:propulsion.stations.z_m",
     "x_face": "CL-D3-X-FACE",
@@ -1533,8 +1591,8 @@
     "rpm_h": "CL-B4-HOVER-RPM",
     "rpm_c": "CL-B4-CRUISE-RPM",
     "rpm_x": "CL-B4-RPM-MAX",
-    "E": "ASM-J1-E-TUBE",
-    "G": "ASM-C4-G-TUBE",
+    "E": "CL-C4-TUBE-E",
+    "G": "CL-C4-TUBE-G",
     "lay_rec": "P:fins.layers",
     "sep_min": "P:requirements.vibration_sep_frac",
     "E_lo": "ASM-C4-E-TUBE-LO",
@@ -1616,40 +1674,40 @@
    },
    "tol": 0.001,
    "outputs": {
-    "k_req_nom": 1641.8574642609717,
+    "k_req_nom": 2005.327928704082,
     "seps_nom": [
-     0.022406567040190062,
-     0.1463286392393961,
-     0.19396445874178592,
-     0.21317935013474876,
-     0.22974795757595534,
-     0.24140695590460592,
-     0.2493617982432883,
-     0.2543327702401146
+     0.005844239527535988,
+     0.07380955697577951,
+     0.15800798395468174,
+     0.19974040555732153,
+     0.23930423316109506,
+     0.26861454328203904,
+     0.28900039517996867,
+     0.3017969994874463
     ],
     "k_req_lo": 300000.0,
     "seps_lo": [
-     0.04686563414051048,
-     0.08295968407165821,
-     0.11286653814146796,
-     0.12496406324788478,
-     0.13565524575689025,
-     0.1433857911003773,
-     0.14877734577207002,
-     0.15219922715111278
+     0.006901506858723483,
+     0.012744316012379686,
+     0.05267596866790236,
+     0.06818520251243188,
+     0.0814202610066348,
+     0.09071897773895565,
+     0.0970793236866796,
+     0.10106656453241314
     ],
     "k_req": 300000.0
    },
    "input_values": {
     "tube_x": 0.045,
     "y_fin": 0.32,
-    "od": 0.022,
-    "idd": 0.02,
-    "mu": 0.102,
+    "od": 0.0221,
+    "idd": 0.01905,
+    "mu": 0.156,
     "tube_len": 0.344,
     "z_st": 0.19,
-    "x_face": 0.024349999999999997,
-    "x_prop": -0.012671971456221315,
+    "x_face": 0.028799999999999996,
+    "x_prop": -0.018175329818682324,
     "x_te": 0.32,
     "hh": 0.21,
     "le_gap": 0.0005,
@@ -1735,18 +1793,18 @@
      0.03043,
      -0.01662
     ],
-    "m_motor": 0.081,
-    "d_motor": 0.038,
-    "l_motor": 0.0265,
-    "m_prop": 0.017,
+    "m_motor": 0.108,
+    "d_motor": 0.035,
+    "l_motor": 0.036,
+    "m_prop": 0.02296,
     "m_adapt": 0.005,
-    "ip": 7.5e-05,
-    "i_bell": 1.5e-05,
+    "ip": 0.000102,
+    "i_bell": 2e-05,
     "mount": [
-     0.01085,
-     -0.0084,
-     0.0007,
-     -0.011
+     0.01624,
+     -0.0079,
+     -0.0011,
+     -0.008
     ],
     "cb_mass": [
      0.01159,
@@ -1756,8 +1814,8 @@
     "esc_x0": 0.078,
     "esc_len": 0.046,
     "esc_z": 0.118,
-    "landing_g": 60,
-    "cant": 7.0,
+    "landing_g": 80,
+    "cant": 10.0,
     "t_board": 0.0048,
     "areal": 0.2,
     "layers": 2,
@@ -1777,24 +1835,24 @@
     "chord": 0.32,
     "el_frac": 0.22,
     "slot_hw": 0.012,
-    "k_rock": 2200.0,
+    "k_rock": 3900.0,
     "k_twist": 30000.0,
     "k_root": 10000.0,
     "k_anchor": 30000000.0,
-    "tip_sq": 0.0586,
-    "z_step": 0.201,
+    "tip_sq": 0.069,
+    "z_step": 0.203,
     "ear_xyz": [
      0.045,
      0.3023,
      0.1475
     ],
-    "shoe_x0": 0.2536,
+    "shoe_x0": 0.2432,
     "shoe_z0": 0.196,
-    "rpm_h": 5415.791721033196,
-    "rpm_c": 5994.054866878658,
-    "rpm_x": 9319.452696615961,
-    "E": 100000000000.0,
-    "G": 5000000000.0,
+    "rpm_h": 5757.16689868235,
+    "rpm_c": 4983.918745222161,
+    "rpm_x": 10468.232852367586,
+    "E": 90200000000.0,
+    "G": 20500000000.0,
     "lay_rec": 2,
     "sep_min": 0.2,
     "E_lo": 70000000000.0,
@@ -1813,7 +1871,7 @@
     "y_fin": "P:fins.y_m",
     "od": "P:fins.tube.od_m",
     "idd": "P:fins.tube.id_m",
-    "mu": "P:wing.spar.mass_per_m_kgm",
+    "mu": "P:fins.tube.mass_per_m_kgm",
     "tube_len": "P:fin_detail.tube_length_m",
     "z_st": "P:propulsion.stations.z_m",
     "x_face": "CL-D3-X-FACE",
@@ -1872,8 +1930,8 @@
     "ear_xyz": "P:fins.stations.collar_end_xyz_m",
     "shoe_x0": "P:fin_detail.fin.tip_clear_x_m",
     "shoe_z0": "ASM-C4-SHOE-Z0",
-    "E": "ASM-J1-E-TUBE",
-    "G": "ASM-C4-G-TUBE",
+    "E": "CL-C4-TUBE-E",
+    "G": "CL-C4-TUBE-G",
     "rpm_h": "CL-B4-HOVER-RPM",
     "rpm_c": "CL-B4-CRUISE-RPM",
     "rpm_x": "CL-B4-RPM-MAX",
@@ -1952,36 +2010,36 @@
    },
    "tol": 0.0001,
    "outputs": {
-    "f1_up_coarse": 249.44683803217472,
-    "f2_up_coarse": 297.66494884200966,
-    "sep_up_coarse": 0.2484712447856101,
-    "f1_up_used": 249.20747724267386,
-    "f2_up_used": 298.2239088969223,
-    "sep_up_used": 0.2472732538021265,
-    "f1_up_fine": 248.80752722491366,
-    "f2_up_fine": 298.1534725070211,
-    "sep_up_fine": 0.24527152028461963,
-    "f1_lo_coarse": 243.28931683379332,
-    "f2_lo_coarse": 293.0421668214082,
-    "sep_lo_coarse": 0.21765310246726388,
-    "f1_lo_used": 243.3468317141885,
-    "f2_lo_used": 293.74966160738114,
-    "sep_lo_used": 0.21794096209654246,
-    "f1_lo_fine": 243.08831026237976,
-    "f2_lo_fine": 293.8412865105982,
-    "sep_lo_fine": 0.21664707278012707,
-    "change": 0.008161296163468279
+    "f1_up_coarse": 248.18384360745975,
+    "f2_up_coarse": 352.13395184208764,
+    "sep_up_coarse": 0.2932602857019584,
+    "f1_up_used": 248.36696600060483,
+    "f2_up_used": 358.7881452709857,
+    "sep_up_used": 0.29421451751267935,
+    "f1_up_fine": 248.76517385726584,
+    "f2_up_fine": 357.73667019692675,
+    "sep_up_fine": 0.29628953738096975,
+    "f1_lo_coarse": 241.0098806116763,
+    "f2_lo_coarse": 339.90190064122726,
+    "sep_lo_coarse": 0.25587750808563436,
+    "f1_lo_used": 241.12926035878337,
+    "f2_lo_used": 705.3410260248571,
+    "sep_lo_used": 0.2564995835745405,
+    "f1_lo_fine": 241.55606293941244,
+    "f2_lo_fine": 346.5522932497895,
+    "sep_lo_fine": 0.25872360758569135,
+    "change": 0.008596138682142596
    },
    "input_values": {
     "tube_x": 0.045,
     "y_fin": 0.32,
-    "od": 0.022,
-    "idd": 0.02,
-    "mu": 0.102,
+    "od": 0.0221,
+    "idd": 0.01905,
+    "mu": 0.156,
     "tube_len": 0.344,
     "z_st": 0.19,
-    "x_face": 0.024349999999999997,
-    "x_prop": -0.012671971456221315,
+    "x_face": 0.028799999999999996,
+    "x_prop": -0.018175329818682324,
     "x_te": 0.32,
     "hh": 0.21,
     "le_gap": 0.0005,
@@ -2067,18 +2125,18 @@
      0.03043,
      -0.01662
     ],
-    "m_motor": 0.081,
-    "d_motor": 0.038,
-    "l_motor": 0.0265,
-    "m_prop": 0.017,
+    "m_motor": 0.108,
+    "d_motor": 0.035,
+    "l_motor": 0.036,
+    "m_prop": 0.02296,
     "m_adapt": 0.005,
-    "ip": 7.5e-05,
-    "i_bell": 1.5e-05,
+    "ip": 0.000102,
+    "i_bell": 2e-05,
     "mount": [
-     0.01085,
-     -0.0084,
-     0.0007,
-     -0.011
+     0.01624,
+     -0.0079,
+     -0.0011,
+     -0.008
     ],
     "cb_mass": [
      0.01159,
@@ -2088,8 +2146,8 @@
     "esc_x0": 0.078,
     "esc_len": 0.046,
     "esc_z": 0.118,
-    "landing_g": 60,
-    "cant": 7.0,
+    "landing_g": 80,
+    "cant": 10.0,
     "t_board": 0.0048,
     "areal": 0.2,
     "layers": 2,
@@ -2109,24 +2167,24 @@
     "chord": 0.32,
     "el_frac": 0.22,
     "slot_hw": 0.012,
-    "k_rock": 2200.0,
+    "k_rock": 3900.0,
     "k_twist": 30000.0,
     "k_root": 10000.0,
     "k_anchor": 30000000.0,
-    "tip_sq": 0.0586,
-    "z_step": 0.201,
+    "tip_sq": 0.069,
+    "z_step": 0.203,
     "ear_xyz": [
      0.045,
      0.3023,
      0.1475
     ],
-    "shoe_x0": 0.2536,
+    "shoe_x0": 0.2432,
     "shoe_z0": 0.196,
-    "E": 100000000000.0,
-    "G": 5000000000.0,
-    "rpm_h": 5415.791721033196,
-    "rpm_c": 5994.054866878658,
-    "rpm_x": 9319.452696615961,
+    "E": 90200000000.0,
+    "G": 20500000000.0,
+    "rpm_h": 5757.16689868235,
+    "rpm_c": 4983.918745222161,
+    "rpm_x": 10468.232852367586,
     "lay_rec": 2
    }
   },
@@ -2142,7 +2200,7 @@
     "y_fin": "P:fins.y_m",
     "od": "P:fins.tube.od_m",
     "idd": "P:fins.tube.id_m",
-    "mu": "P:wing.spar.mass_per_m_kgm",
+    "mu": "P:fins.tube.mass_per_m_kgm",
     "tube_len": "P:fin_detail.tube_length_m",
     "z_st": "P:propulsion.stations.z_m",
     "x_face": "CL-D3-X-FACE",
@@ -2204,8 +2262,8 @@
     "rpm_h": "CL-B4-HOVER-RPM",
     "rpm_c": "CL-B4-CRUISE-RPM",
     "rpm_x": "CL-B4-RPM-MAX",
-    "E": "ASM-J1-E-TUBE",
-    "G": "ASM-C4-G-TUBE",
+    "E": "CL-C4-TUBE-E",
+    "G": "CL-C4-TUBE-G",
     "lay_rec": "P:fins.layers"
    },
    "units": {
@@ -2285,22 +2343,22 @@
     "ASM-C1-BELL-INERTIA"
    ],
    "outputs": {
-    "sep_whirl": 0.21205736789493446,
-    "f_whirl_hover_hz": 242.38342849953114,
-    "f_whirl_cruise_hz": 242.17127883222557,
-    "f_2p_hover_hz": 180.52639070110655,
-    "f_2p_cruise_hz": 199.80182889595525
+    "sep_whirl": 0.2547696013129932,
+    "f_whirl_hover_hz": 240.79726713840043,
+    "f_whirl_cruise_hz": 240.88029819802608,
+    "f_2p_hover_hz": 191.90556328941165,
+    "f_2p_cruise_hz": 166.1306248407387
    },
    "input_values": {
     "tube_x": 0.045,
     "y_fin": 0.32,
-    "od": 0.022,
-    "idd": 0.02,
-    "mu": 0.102,
+    "od": 0.0221,
+    "idd": 0.01905,
+    "mu": 0.156,
     "tube_len": 0.344,
     "z_st": 0.19,
-    "x_face": 0.024349999999999997,
-    "x_prop": -0.012671971456221315,
+    "x_face": 0.028799999999999996,
+    "x_prop": -0.018175329818682324,
     "x_te": 0.32,
     "hh": 0.21,
     "le_gap": 0.0005,
@@ -2386,18 +2444,18 @@
      0.03043,
      -0.01662
     ],
-    "m_motor": 0.081,
-    "d_motor": 0.038,
-    "l_motor": 0.0265,
-    "m_prop": 0.017,
+    "m_motor": 0.108,
+    "d_motor": 0.035,
+    "l_motor": 0.036,
+    "m_prop": 0.02296,
     "m_adapt": 0.005,
-    "ip": 7.5e-05,
-    "i_bell": 1.5e-05,
+    "ip": 0.000102,
+    "i_bell": 2e-05,
     "mount": [
-     0.01085,
-     -0.0084,
-     0.0007,
-     -0.011
+     0.01624,
+     -0.0079,
+     -0.0011,
+     -0.008
     ],
     "cb_mass": [
      0.01159,
@@ -2407,8 +2465,8 @@
     "esc_x0": 0.078,
     "esc_len": 0.046,
     "esc_z": 0.118,
-    "landing_g": 60,
-    "cant": 7.0,
+    "landing_g": 80,
+    "cant": 10.0,
     "t_board": 0.0048,
     "areal": 0.2,
     "layers": 2,
@@ -2428,24 +2486,24 @@
     "chord": 0.32,
     "el_frac": 0.22,
     "slot_hw": 0.012,
-    "k_rock": 2200.0,
+    "k_rock": 3900.0,
     "k_twist": 30000.0,
     "k_root": 10000.0,
     "k_anchor": 30000000.0,
-    "tip_sq": 0.0586,
-    "z_step": 0.201,
+    "tip_sq": 0.069,
+    "z_step": 0.203,
     "ear_xyz": [
      0.045,
      0.3023,
      0.1475
     ],
-    "shoe_x0": 0.2536,
+    "shoe_x0": 0.2432,
     "shoe_z0": 0.196,
-    "rpm_h": 5415.791721033196,
-    "rpm_c": 5994.054866878658,
-    "rpm_x": 9319.452696615961,
-    "E": 100000000000.0,
-    "G": 5000000000.0,
+    "rpm_h": 5757.16689868235,
+    "rpm_c": 4983.918745222161,
+    "rpm_x": 10468.232852367586,
+    "E": 90200000000.0,
+    "G": 20500000000.0,
     "lay_rec": 2
    }
   },
@@ -2461,7 +2519,7 @@
     "y_fin": "P:fins.y_m",
     "od": "P:fins.tube.od_m",
     "idd": "P:fins.tube.id_m",
-    "mu": "P:wing.spar.mass_per_m_kgm",
+    "mu": "P:fins.tube.mass_per_m_kgm",
     "tube_len": "P:fin_detail.tube_length_m",
     "z_st": "P:propulsion.stations.z_m",
     "x_face": "CL-D3-X-FACE",
@@ -2520,8 +2578,8 @@
     "ear_xyz": "P:fins.stations.collar_end_xyz_m",
     "shoe_x0": "P:fin_detail.fin.tip_clear_x_m",
     "shoe_z0": "ASM-C4-SHOE-Z0",
-    "E": "ASM-J1-E-TUBE",
-    "G": "ASM-C4-G-TUBE",
+    "E": "CL-C4-TUBE-E",
+    "G": "CL-C4-TUBE-G",
     "f_level": "CL-C1-FOOT-MAX",
     "f_corner": "CL-C1-FOOT-CORNER",
     "mu_hi": "ASM-C1-FRICTION",
@@ -2675,1017 +2733,1017 @@
    ],
    "outputs": {
     "brace_len_up_m": 0.13957191013954062,
-    "face_up_L1_mpa": 2.8135044235047038,
-    "brace_up_L1_n": 6.422363445569165,
-    "tcollar_up_L1_nm": 0.027114456790305552,
-    "qface_up_L1_npm": 129.05757854825265,
-    "t_sec_L4_tube_nm": 6.506544684353917,
-    "t_sec_L4_fin_nm": 1.3226197924783525,
-    "t_sec_L4_brace_nm": 0.08433552640320251,
-    "t_sec_L4_case": "L4- up_cr",
-    "face_up_L4+_mpa": 20.252268260518203,
-    "brace_up_L4+_n": -6.598844499599333,
-    "tcollar_up_L4+_nm": 6.4553394784261116,
-    "qface_up_L4+_npm": 2235.497821624082,
-    "face_up_L4-_mpa": 20.14927941646906,
-    "brace_up_L4-_n": 17.5123974097019,
-    "tcollar_up_L4-_nm": 6.409263752494823,
-    "qface_up_L4-_npm": 2231.2464475364322,
-    "face_up_L5+_mpa": 6.327514863634119,
-    "brace_up_L5+_n": 6.778756189329423,
-    "tcollar_up_L5+_nm": 0.02861910468729867,
-    "qface_up_L5+_npm": 298.8643567028209,
-    "face_up_L5-_mpa": 2.477591735899828,
-    "brace_up_L5-_n": 4.134796708996882,
-    "tcollar_up_L5-_nm": 0.017456621328670346,
-    "qface_up_L5-_npm": 79.67609827799727,
-    "face_up_G2+_mpa": 1.1065759416377534,
-    "brace_up_G2+_n": 89.10241465929678,
-    "tcollar_up_G2+_nm": 0.36691591943254576,
-    "qface_up_G2+_npm": 69.232590053552,
-    "face_up_G2-_mpa": 1.1065759416377534,
-    "brace_up_G2-_n": -89.10241465929678,
-    "tcollar_up_G2-_nm": 0.36691591943254576,
-    "qface_up_G2-_npm": 69.232590053552,
-    "face_up_H2c++_mpa": 1.2325698348028404,
-    "brace_up_H2c++_n": 6.775398580205782,
-    "tcollar_up_H2c++_nm": 0.018887724577863585,
-    "qface_up_H2c++_npm": 93.93076278644195,
-    "swirl_force_lim_n": 4.733522660643543,
-    "swirl_cp_m": 0.1433547152627283,
-    "face_up_H2s+++_mpa": 1.442737668715309,
-    "brace_up_H2s+++_n": 9.174269129296354,
-    "tcollar_up_H2s+++_nm": 0.47434248761020115,
-    "qface_up_H2s+++_npm": 422.1075237586174,
-    "face_up_H2s++-_mpa": 1.2093840066142298,
-    "brace_up_H2s++-_n": 4.376528031361685,
-    "tcollar_up_H2s++-_nm": 0.4365670384539415,
-    "qface_up_H2s++-_npm": 427.90916510753476,
-    "face_up_H2c+-_mpa": 1.2148329727462617,
-    "brace_up_H2c+-_n": -5.535770333997824,
-    "tcollar_up_H2c+-_nm": 0.024348054609857325,
-    "qface_up_H2c+-_npm": 101.69118027556361,
-    "face_up_H2s+-+_mpa": 1.4260537059411282,
-    "brace_up_H2s+-+_n": -3.1368997847026314,
-    "tcollar_up_H2s+-+_nm": 0.43110670842555354,
-    "qface_up_H2s+-+_npm": 432.00094426045723,
-    "face_up_H2s+--_mpa": 1.3698958375577246,
-    "brace_up_H2s+--_n": -7.934640882707355,
-    "tcollar_up_H2s+--_nm": 0.4798028176375997,
-    "qface_up_H2s+--_npm": 431.7399945245443,
-    "face_up_H2c-+_mpa": 1.2358385957503193,
-    "brace_up_H2c-+_n": 14.870006980943822,
-    "tcollar_up_H2c-+_nm": 0.07032704750563767,
-    "qface_up_H2c-+_npm": 97.35618812940127,
-    "face_up_H2s-++_mpa": 1.2730364576477404,
-    "brace_up_H2s-++_n": 17.268877529589496,
-    "tcollar_up_H2s-++_nm": 0.5257818105369845,
-    "qface_up_H2s-++_npm": 427.66595208487047,
-    "face_up_H2s-+-_mpa": 1.4891445218737602,
-    "brace_up_H2s-+-_n": 12.471136431873308,
-    "tcollar_up_H2s-+-_nm": 0.38512771551847536,
-    "qface_up_H2s-+-_npm": 429.27904638486854,
-    "face_up_H2c--_mpa": 1.3054913542831266,
-    "brace_up_H2c--_n": 0.8562375920639622,
-    "tcollar_up_H2c--_nm": 0.006761185456789387,
-    "qface_up_H2c--_npm": 112.07328102793481,
-    "face_up_H2s--+_mpa": 1.5172338773012608,
-    "brace_up_H2s--+_n": 3.255108141320149,
-    "tcollar_up_H2s--+_nm": 0.4622159484884909,
-    "qface_up_H2s--+_npm": 442.38304501941354,
-    "face_up_H2s---_mpa": 1.552569385469452,
-    "brace_up_H2s---_n": -1.5426329564787702,
-    "tcollar_up_H2s---_nm": 0.44869357757217987,
-    "qface_up_H2s---_npm": 441.09693237709445,
-    "face_up_cr_L1_mpa": 2.887707393008923,
-    "brace_up_cr_L1_n": 7.321255874493082,
-    "tcollar_up_cr_L1_nm": 0.030223547387289995,
-    "qface_up_cr_L1_npm": 158.72906621215327,
-    "face_up_cr_L4+_mpa": 20.378289564428083,
-    "brace_up_cr_L4+_n": -6.559552979829632,
-    "tcollar_up_cr_L4+_nm": 6.5579037027927995,
-    "qface_up_cr_L4+_npm": 2310.7638137084473,
-    "face_up_cr_L4-_mpa": 20.252305949847333,
-    "brace_up_cr_L4-_n": 19.000598083484483,
-    "tcollar_up_cr_L4-_nm": 6.506544684353912,
-    "qface_up_cr_L4-_npm": 2284.4968195859615,
-    "face_up_cr_L5+_mpa": 6.4277272264809415,
-    "brace_up_cr_L5+_n": 7.683003362352052,
-    "tcollar_up_cr_L5+_nm": 0.031716910347461436,
-    "qface_up_cr_L5+_npm": 305.2749937144777,
-    "face_up_cr_L5-_mpa": 2.4056783996501294,
-    "brace_up_cr_L5-_n": 4.758041736650313,
-    "tcollar_up_cr_L5-_nm": 0.019642108179556528,
-    "qface_up_cr_L5-_npm": 98.32337510347433,
-    "face_up_cr_G2+_mpa": 1.9309706121785841,
-    "brace_up_cr_G2+_n": 88.59526212473443,
-    "tcollar_up_cr_G2+_nm": 0.36648749047113416,
-    "qface_up_cr_G2+_npm": 85.75579243379617,
-    "face_up_cr_G2-_mpa": 1.9309706121785841,
-    "brace_up_cr_G2-_n": -88.59526212473443,
-    "tcollar_up_cr_G2-_nm": 0.36648749047113416,
-    "qface_up_cr_G2-_npm": 85.75579243379617,
-    "face_up_cr_H2c++_mpa": 1.7422185712514722,
-    "brace_up_cr_H2c++_n": 7.280201075061919,
-    "tcollar_up_cr_H2c++_nm": 0.021623524534495342,
-    "qface_up_cr_H2c++_npm": 111.06580086732588,
-    "face_up_cr_H2s+++_mpa": 2.128501673088652,
-    "brace_up_cr_H2s+++_n": 9.643146639425797,
-    "tcollar_up_cr_H2s+++_nm": 0.4902484820851569,
-    "qface_up_cr_H2s+++_npm": 455.3434822303861,
-    "face_up_cr_H2s++-_mpa": 1.8998848510884752,
-    "brace_up_cr_H2s++-_n": 4.9172555106612155,
-    "tcollar_up_cr_H2s++-_nm": 0.447001433017558,
-    "qface_up_cr_H2s++-_npm": 459.2177049359237,
-    "face_up_cr_H2c+-_mpa": 1.7771320130035706,
-    "brace_up_cr_H2c+-_n": -4.9581400083657154,
-    "tcollar_up_cr_H2c+-_nm": 0.02280112173602175,
-    "qface_up_cr_H2c+-_npm": 120.66770357040025,
-    "face_up_cr_H2s+-+_mpa": 2.087791114192924,
-    "brace_up_cr_H2s+-+_n": -2.595194444070594,
-    "tcollar_up_cr_H2s+-+_nm": 0.44582383581104956,
-    "qface_up_cr_H2s+-+_npm": 465.1458143494421,
-    "face_up_cr_H2s+--_mpa": 2.199491935204832,
-    "brace_up_cr_H2s+--_n": -7.321085572936293,
-    "tcollar_up_cr_H2s+--_nm": 0.4914260792891998,
-    "qface_up_cr_H2s+--_npm": 466.8723275205054,
-    "face_up_cr_H2c-+_mpa": 1.570652213658606,
-    "brace_up_cr_H2c-+_n": 15.399350806608773,
-    "tcollar_up_cr_H2c-+_nm": 0.07213989722216851,
-    "qface_up_cr_H2c-+_npm": 114.32199899020785,
-    "face_up_cr_H2s-++_mpa": 1.86040273644183,
-    "brace_up_cr_H2s-++_n": 17.7622963711298,
-    "tcollar_up_cr_H2s-++_nm": 0.5407648547683124,
-    "qface_up_cr_H2s-++_npm": 458.80010978092184,
-    "face_up_cr_H2s-+-_mpa": 2.1756174371806756,
-    "brace_up_cr_H2s-+-_n": 13.036405242125655,
-    "tcollar_up_cr_H2s-+-_nm": 0.39648506033332076,
-    "qface_up_cr_H2s-+-_npm": 462.0249293758179,
-    "face_up_cr_H2c--_mpa": 1.7827969680375564,
-    "brace_up_cr_H2c--_n": 1.4617248811850163,
-    "tcollar_up_cr_H2c--_nm": 0.008229364998456945,
-    "qface_up_cr_H2c--_npm": 131.3179825739267,
-    "face_up_cr_H2s--+_mpa": 2.095929004479917,
-    "brace_up_cr_H2s--+_n": 3.8246704459015626,
-    "tcollar_up_cr_H2s--+_nm": 0.47685432254677895,
-    "qface_up_cr_H2s--+_npm": 475.796093370803,
-    "face_up_cr_H2s---_mpa": 2.3005953522599376,
-    "brace_up_cr_H2s---_n": -0.9012206838241101,
-    "tcollar_up_cr_H2s---_nm": 0.46039559255368534,
-    "qface_up_cr_H2s---_npm": 477.1434019594535,
-    "face_up_rf_L1_mpa": 7.560763729835649,
-    "brace_up_rf_L1_n": 24.614494895695124,
-    "tcollar_up_rf_L1_nm": 0.10624181381835007,
-    "qface_up_rf_L1_npm": 501.7523079054403,
-    "face_up_rf_L4+_mpa": 25.2673524413366,
-    "brace_up_rf_L4+_n": -0.160786266971723,
-    "tcollar_up_rf_L4+_nm": 6.918911044622888,
-    "qface_up_rf_L4+_npm": 2636.3696743492796,
-    "face_up_rf_L4-_mpa": 24.62692432689242,
-    "brace_up_rf_L4-_n": 41.98831509876659,
-    "tcollar_up_rf_L4-_nm": 6.738373822255497,
-    "qface_up_rf_L4-_npm": 2581.5676637645856,
-    "face_up_rf_L5+_mpa": 16.6117993922294,
-    "brace_up_rf_L5+_n": 39.27410268188315,
-    "tcollar_up_rf_L5+_nm": 0.16951604827123035,
-    "qface_up_rf_L5+_npm": 1040.0926408117714,
-    "face_up_rf_L5-_mpa": 4.009464598746917,
-    "brace_up_rf_L5-_n": 2.5534261388704076,
-    "tcollar_up_rf_L5-_nm": 0.011021173726632472,
-    "qface_up_rf_L5-_npm": 187.47478536807736,
-    "face_up_rf_G2+_mpa": 1.9748168120839695,
-    "brace_up_rf_G2+_n": 83.46535170344151,
-    "tcollar_up_rf_G2+_nm": 0.3505620191818517,
-    "qface_up_rf_G2+_npm": 109.62475509145942,
-    "face_up_rf_G2-_mpa": 1.9748168120839695,
-    "brace_up_rf_G2-_n": -83.46535170344151,
-    "tcollar_up_rf_G2-_nm": 0.3505620191818517,
-    "qface_up_rf_G2-_npm": 109.62475509145942,
-    "face_up_rf_H2c++_mpa": 2.1989698306844025,
-    "brace_up_rf_H2c++_n": 13.33870363691436,
-    "tcollar_up_rf_H2c++_nm": 0.0504135563007746,
-    "qface_up_rf_H2c++_npm": 137.6772058917326,
-    "face_up_rf_H2s+++_mpa": 4.370835452454549,
-    "brace_up_rf_H2s+++_n": 14.096468535470317,
-    "tcollar_up_rf_H2s+++_nm": 0.5578005528032062,
-    "qface_up_rf_H2s+++_npm": 315.0649550886665,
-    "face_up_rf_H2s++-_mpa": 3.904291619522937,
-    "brace_up_rf_H2s++-_n": 12.58093873837138,
-    "tcollar_up_rf_H2s++-_nm": 0.45697344018758734,
-    "qface_up_rf_H2s++-_npm": 323.1285843661397,
-    "face_up_rf_H2c+-_mpa": 2.3933866298468636,
-    "brace_up_rf_H2c+-_n": 1.7198597247462013,
-    "tcollar_up_rf_H2c+-_nm": 0.007123742019372381,
-    "qface_up_rf_H2c+-_npm": 149.48173010304308,
-    "face_up_rf_H2s+-+_mpa": 4.253233100654384,
-    "brace_up_rf_H2s+-+_n": 2.4776246230295316,
-    "tcollar_up_rf_H2s+-+_nm": 0.5145107385131595,
-    "qface_up_rf_H2s+-+_npm": 323.496765382313,
-    "face_up_rf_H2s+--_mpa": 4.258273976811182,
-    "brace_up_rf_H2s+--_n": 0.9620948272016423,
-    "tcollar_up_rf_H2s+--_nm": 0.5002632544810703,
-    "qface_up_rf_H2s+--_npm": 319.6756809391145,
-    "face_up_rf_H2c-+_mpa": 2.2147518275586395,
-    "brace_up_rf_H2c-+_n": 21.55412203935653,
-    "tcollar_up_rf_H2c-+_nm": 0.09803339190707577,
-    "qface_up_rf_H2c-+_npm": 138.38026969904166,
-    "face_up_rf_H2s-++_mpa": 4.039275363259604,
-    "brace_up_rf_H2s-++_n": 22.31188693783029,
-    "tcollar_up_rf_H2s-++_nm": 0.6054203884094713,
-    "qface_up_rf_H2s-++_npm": 325.0372833217113,
-    "face_up_rf_H2s-+-_mpa": 4.260289573481582,
-    "brace_up_rf_H2s-+-_n": 20.79635714104182,
-    "tcollar_up_rf_H2s-+-_nm": 0.40935360459063297,
-    "qface_up_rf_H2s-+-_npm": 320.1689422682214,
-    "face_up_rf_H2c--_mpa": 2.5346656141203123,
-    "brace_up_rf_H2c--_n": 8.51214173252378,
-    "tcollar_up_rf_H2c--_nm": 0.03919842866693894,
-    "qface_up_rf_H2c--_npm": 158.34865607666865,
-    "face_up_rf_H2s--+_mpa": 4.289971953754325,
-    "brace_up_rf_H2s--+_n": 9.269906630556804,
-    "tcollar_up_rf_H2s--+_nm": 0.5465854251593614,
-    "qface_up_rf_H2s--+_npm": 332.2684170409846,
-    "face_up_rf_H2s---_mpa": 4.4098387580060345,
-    "brace_up_rf_H2s---_n": 7.754376833284921,
-    "tcollar_up_rf_H2s---_nm": 0.46818856783643614,
-    "qface_up_rf_H2s---_npm": 325.79083962814065,
+    "face_up_L1_mpa": 2.4706353403485313,
+    "brace_up_L1_n": 7.689192008358012,
+    "tcollar_up_L1_nm": 0.03425904154376236,
+    "qface_up_L1_npm": 125.3633694481697,
+    "t_sec_L4_tube_nm": 7.1732542740982606,
+    "t_sec_L4_fin_nm": 1.103789735735265,
+    "t_sec_L4_brace_nm": 0.24104400897353462,
+    "t_sec_L4_case": "L4+ lo_cr",
+    "face_up_L4+_mpa": 18.759003649901242,
+    "brace_up_L4+_n": 54.98653436354025,
+    "tcollar_up_L4+_nm": 7.134667118031743,
+    "qface_up_L4+_npm": 2193.844013050542,
+    "face_up_L4-_mpa": 18.78722067229898,
+    "brace_up_L4-_n": -41.05295140910536,
+    "tcollar_up_L4-_nm": 7.072586317115778,
+    "qface_up_L4-_npm": 2210.723411161433,
+    "face_up_L5+_mpa": 6.044019803208885,
+    "brace_up_L5+_n": 8.372481146806726,
+    "tcollar_up_L5+_nm": 0.037303422665302566,
+    "qface_up_L5+_npm": 289.6309546338505,
+    "face_up_L5-_mpa": 2.4860213581863606,
+    "brace_up_L5-_n": 5.561101813680613,
+    "tcollar_up_L5-_nm": 0.024777378151530416,
+    "qface_up_L5-_npm": 86.99587362914946,
+    "face_up_G2+_mpa": 0.8244775619906184,
+    "brace_up_G2+_n": 94.80057934779994,
+    "tcollar_up_G2+_nm": 0.4147015603147235,
+    "qface_up_G2+_npm": 70.41812824223587,
+    "face_up_G2-_mpa": 0.8244775619906184,
+    "brace_up_G2-_n": -94.80057934779994,
+    "tcollar_up_G2-_nm": 0.4147015603147235,
+    "qface_up_G2-_npm": 70.41812824223587,
+    "face_up_H2c++_mpa": 1.0554084582935415,
+    "brace_up_H2c++_n": 8.792799400163949,
+    "tcollar_up_H2c++_nm": 0.035705722864378675,
+    "qface_up_H2c++_npm": 86.55793967411,
+    "swirl_force_lim_n": 4.774235774628365,
+    "swirl_cp_m": 0.14271341450737632,
+    "face_up_H2s+++_mpa": 1.1652725824254024,
+    "brace_up_H2s+++_n": 15.511420822712473,
+    "tcollar_up_H2s+++_nm": 0.5383306294940589,
+    "qface_up_H2s+++_npm": 412.45947780955265,
+    "face_up_H2s++-_mpa": 1.340403616676587,
+    "brace_up_H2s++-_n": 2.0741779775636218,
+    "tcollar_up_H2s++-_nm": 0.4669191837645221,
+    "qface_up_H2s++-_npm": 423.07220778422516,
+    "face_up_H2c+-_mpa": 1.1460281871174225,
+    "brace_up_H2c+-_n": -7.920616867737397,
+    "tcollar_up_H2c+-_nm": 0.034376033349279064,
+    "qface_up_H2c+-_npm": 96.30116050991778,
+    "face_up_H2s+-+_mpa": 1.244080072354783,
+    "brace_up_H2s+-+_n": -1.2019954453091812,
+    "tcollar_up_H2s+-+_nm": 0.46824887327937503,
+    "qface_up_H2s+-+_npm": 423.0974011918517,
+    "face_up_H2s+--_mpa": 1.4299373468235215,
+    "brace_up_H2s+--_n": -14.639238290208892,
+    "tcollar_up_H2s+--_nm": 0.537000939975802,
+    "qface_up_H2s+--_npm": 428.28122417526134,
+    "face_up_H2c-+_mpa": 1.1675201648062863,
+    "brace_up_H2c-+_n": 18.306156820438343,
+    "tcollar_up_H2c-+_nm": 0.08279943134991963,
+    "qface_up_H2c-+_npm": 92.98419536098915,
+    "face_up_H2s-++_mpa": 1.3382844011631128,
+    "brace_up_H2s-++_n": 25.024778242934282,
+    "tcollar_up_H2s-++_nm": 0.5854243379763382,
+    "qface_up_H2s-++_npm": 419.4494401568391,
+    "face_up_H2s-+-_mpa": 1.3575408619943494,
+    "brace_up_H2s-+-_n": 11.587535397696616,
+    "tcollar_up_H2s-+-_nm": 0.41982547527399916,
+    "qface_up_H2s-+-_npm": 429.40755936232364,
+    "face_up_H2c--_mpa": 1.3413618146159043,
+    "brace_up_H2c--_n": 1.1791500594152198,
+    "tcollar_up_H2c--_nm": 0.006573266948622536,
+    "qface_up_H2c--_npm": 111.5499594691846,
+    "face_up_H2s--+_mpa": 1.4651605816770368,
+    "brace_up_H2s--+_n": 7.897771481842669,
+    "tcollar_up_H2s--+_nm": 0.5091981735750943,
+    "qface_up_H2s--+_npm": 438.34620014832234,
+    "face_up_H2s---_mpa": 1.6233424557330993,
+    "brace_up_H2s---_n": -5.539471362526232,
+    "tcollar_up_H2s---_nm": 0.49605163967961996,
+    "qface_up_H2s---_npm": 443.6117222643775,
+    "face_up_cr_L1_mpa": 2.5746288574517853,
+    "brace_up_cr_L1_n": 8.706634776978271,
+    "tcollar_up_cr_L1_nm": 0.03813063990129173,
+    "qface_up_cr_L1_npm": 151.04108968708582,
+    "face_up_cr_L4+_mpa": 18.76100369778143,
+    "brace_up_cr_L4+_n": 55.79341097147172,
+    "tcollar_up_cr_L4+_nm": 7.218554240425277,
+    "qface_up_cr_L4+_npm": 2201.410280712013,
+    "face_up_cr_L4-_mpa": 18.794324421153572,
+    "brace_up_cr_L4-_n": -40.01612021564993,
+    "tcollar_up_cr_L4-_nm": 7.1494577172286,
+    "qface_up_cr_L4-_npm": 2270.5657138181505,
+    "face_up_cr_L5+_mpa": 6.14413969914549,
+    "brace_up_cr_L5+_n": 9.424206875334066,
+    "tcollar_up_cr_L5+_nm": 0.041273241373771086,
+    "qface_up_cr_L5+_npm": 296.11404044290623,
+    "face_up_cr_L5-_mpa": 2.4072908538908826,
+    "brace_up_cr_L5-_n": 6.353083877960556,
+    "tcollar_up_cr_L5-_nm": 0.027823281878243344,
+    "qface_up_cr_L5-_npm": 108.13228962625034,
+    "face_up_cr_G2+_mpa": 1.5039549394648983,
+    "brace_up_cr_G2+_n": 94.26809153847526,
+    "tcollar_up_cr_G2+_nm": 0.4133858234896941,
+    "qface_up_cr_G2+_npm": 84.51694386774385,
+    "face_up_cr_G2-_mpa": 1.5039549394648983,
+    "brace_up_cr_G2-_n": -94.26809153847526,
+    "tcollar_up_cr_G2-_nm": 0.4133858234896941,
+    "qface_up_cr_G2-_npm": 84.51694386774385,
+    "face_up_cr_H2c++_mpa": 1.5620239955229354,
+    "brace_up_cr_H2c++_n": 9.374080417436971,
+    "tcollar_up_cr_H2c++_nm": 0.03852038387564738,
+    "qface_up_cr_H2c++_npm": 102.13271649641179,
+    "face_up_cr_H2s+++_mpa": 1.5999473039636418,
+    "brace_up_cr_H2s+++_n": 16.09743843017529,
+    "tcollar_up_cr_H2s+++_nm": 0.5537403682830355,
+    "qface_up_cr_H2s+++_npm": 439.90524334862494,
+    "face_up_cr_H2s++-_mpa": 1.933598202654817,
+    "brace_up_cr_H2s++-_n": 2.6507224044951987,
+    "tcollar_up_cr_H2s++-_nm": 0.47669960053056526,
+    "qface_up_cr_H2s++-_npm": 451.68316995611815,
+    "face_up_cr_H2c+-_mpa": 1.7684954327021372,
+    "brace_up_cr_H2c+-_n": -7.263919587368482,
+    "tcollar_up_cr_H2c+-_nm": 0.032428823354473696,
+    "qface_up_cr_H2c+-_npm": 113.60460147078598,
+    "face_up_cr_H2s+-+_mpa": 1.8080476131127854,
+    "brace_up_cr_H2s+-+_n": -0.5405615744700805,
+    "tcollar_up_cr_H2s+-+_nm": 0.4827911610502795,
+    "qface_up_cr_H2s+-+_npm": 451.4518222839559,
+    "face_up_cr_H2s+--_mpa": 2.1397471669888386,
+    "brace_up_cr_H2s+--_n": -13.987277599940164,
+    "tcollar_up_cr_H2s+--_nm": 0.5476488077584545,
+    "qface_up_cr_H2s+--_npm": 460.3374098490358,
+    "face_up_cr_H2c-+_mpa": 1.5485207338707647,
+    "brace_up_cr_H2c-+_n": 18.90154591740467,
+    "tcollar_up_cr_H2c-+_nm": 0.08543511399590686,
+    "qface_up_cr_H2c-+_npm": 108.82491887198798,
+    "face_up_cr_H2s-++_mpa": 1.7021842646355958,
+    "brace_up_cr_H2s-++_n": 25.62490393014851,
+    "tcollar_up_cr_H2s-++_nm": 0.6006550984013588,
+    "qface_up_cr_H2s-++_npm": 446.4930781796929,
+    "face_up_cr_H2s-+-_mpa": 1.8379495556512673,
+    "brace_up_cr_H2s-+-_n": 12.178187904362789,
+    "tcollar_up_cr_H2s-+-_nm": 0.4297848704059781,
+    "qface_up_cr_H2s-+-_npm": 458.5050092487054,
+    "face_up_cr_H2c--_mpa": 1.8733616115566567,
+    "brace_up_cr_H2c--_n": 1.8869907529376027,
+    "tcollar_up_cr_H2c--_nm": 0.008757994698412874,
+    "qface_up_cr_H2c--_npm": 129.9114636201252,
+    "face_up_cr_H2s--+_mpa": 1.9277146498517794,
+    "brace_up_cr_H2s--+_n": 8.610348765821598,
+    "tcollar_up_cr_H2s--+_nm": 0.5239779791046848,
+    "qface_up_cr_H2s--+_npm": 467.7586844341397,
+    "face_up_cr_H2s---_mpa": 2.2303627822834056,
+    "brace_up_cr_H2s---_n": -4.8363672599951855,
+    "tcollar_up_cr_H2s---_nm": 0.5064619897009104,
+    "qface_up_cr_H2s---_npm": 476.74734012604154,
+    "face_up_rf_L1_mpa": 6.711338530170838,
+    "brace_up_rf_L1_n": 26.123579717038936,
+    "tcollar_up_rf_L1_nm": 0.11694312701902376,
+    "qface_up_rf_L1_npm": 475.0915682083677,
+    "face_up_rf_L4+_mpa": 21.0678363750041,
+    "brace_up_rf_L4+_n": 65.8114353692522,
+    "tcollar_up_rf_L4+_nm": 7.548974250989517,
+    "qface_up_rf_L4+_npm": 2503.716752464593,
+    "face_up_rf_L4-_mpa": 21.901140986311102,
+    "brace_up_rf_L4-_n": -18.472902948023624,
+    "tcollar_up_rf_L4-_nm": 7.337061639064714,
+    "qface_up_rf_L4-_npm": 2600.923343639939,
+    "face_up_rf_L5+_mpa": 15.286102900602154,
+    "brace_up_rf_L5+_n": 41.20602890015572,
+    "tcollar_up_rf_L5+_nm": 0.18446024334028932,
+    "qface_up_rf_L5+_npm": 987.8533657674371,
+    "face_up_rf_L5-_mpa": 3.36399734052978,
+    "brace_up_rf_L5-_n": 6.1325035258229805,
+    "tcollar_up_rf_L5-_nm": 0.027452368569947705,
+    "qface_up_rf_L5-_npm": 126.99848066186772,
+    "face_up_rf_G2+_mpa": 1.632183902451756,
+    "brace_up_rf_G2+_n": 89.15654565964114,
+    "tcollar_up_rf_G2+_nm": 0.3909285287930979,
+    "qface_up_rf_G2+_npm": 103.33647169867484,
+    "face_up_rf_G2-_mpa": 1.632183902451756,
+    "brace_up_rf_G2-_n": -89.15654565964114,
+    "tcollar_up_rf_G2-_nm": 0.3909285287930979,
+    "qface_up_rf_G2-_npm": 103.33647169867484,
+    "face_up_rf_H2c++_mpa": 1.9098039018752426,
+    "brace_up_rf_H2c++_n": 15.216944856994624,
+    "tcollar_up_rf_H2c++_nm": 0.06546492009602689,
+    "qface_up_rf_H2c++_npm": 121.23161916572772,
+    "face_up_rf_H2s+++_mpa": 3.0341084815684267,
+    "brace_up_rf_H2s+++_n": 20.98364898707191,
+    "tcollar_up_rf_H2s+++_nm": 0.617844797917849,
+    "qface_up_rf_H2s+++_npm": 314.0978923961246,
+    "face_up_rf_H2s++-_mpa": 3.1014029251093866,
+    "brace_up_rf_H2s++-_n": 9.450240727225578,
+    "tcollar_up_rf_H2s++-_nm": 0.4869149577277616,
+    "qface_up_rf_H2s++-_npm": 319.2055290076424,
+    "face_up_rf_H2c+-_mpa": 2.1246486070716633,
+    "brace_up_rf_H2c+-_n": -0.7274397363941829,
+    "tcollar_up_rf_H2c+-_nm": 0.0021540648728212153,
+    "qface_up_rf_H2c+-_npm": 134.90619267172514,
+    "face_up_rf_H2s+-+_mpa": 3.0753531868031554,
+    "brace_up_rf_H2s+-+_n": 5.039264392970874,
+    "tcollar_up_rf_H2s+-+_nm": 0.5502258129484723,
+    "qface_up_rf_H2s+-+_npm": 319.9402911550139,
+    "face_up_rf_H2s+--_mpa": 3.285346453956961,
+    "brace_up_rf_H2s+--_n": -6.494143866394135,
+    "tcollar_up_rf_H2s+--_nm": 0.5545339426993472,
+    "qface_up_rf_H2s+--_npm": 318.03087252187595,
+    "face_up_rf_H2c-+_mpa": 1.9837498206333029,
+    "brace_up_rf_H2c-+_n": 24.943173421302415,
+    "tcollar_up_rf_H2c-+_nm": 0.11207195708206363,
+    "qface_up_rf_H2c-+_npm": 125.89545339557404,
+    "face_up_rf_H2s-++_mpa": 2.973987699811918,
+    "brace_up_rf_H2s-++_n": 30.709877551317764,
+    "tcollar_up_rf_H2s-++_nm": 0.6644518349056572,
+    "qface_up_rf_H2s-++_npm": 321.26415364106435,
+    "face_up_rf_H2s-+-_mpa": 3.2531201679339894,
+    "brace_up_rf_H2s-+-_n": 19.176469291762004,
+    "tcollar_up_rf_H2s-+-_nm": 0.44030792073985126,
+    "qface_up_rf_H2s-+-_npm": 322.74134229754,
+    "face_up_rf_H2c--_mpa": 2.3486746411150574,
+    "brace_up_rf_H2c--_n": 9.06021581067951,
+    "tcollar_up_rf_H2c--_nm": 0.04169734153446221,
+    "qface_up_rf_H2c--_npm": 149.09081932660825,
+    "face_up_rf_H2s--+_mpa": 3.1952470743759536,
+    "brace_up_rf_H2s--+_n": 14.826919940653672,
+    "tcollar_up_rf_H2s--+_nm": 0.5940772193542365,
+    "qface_up_rf_H2s--+_npm": 330.6536972684651,
+    "face_up_rf_H2s---_mpa": 3.433099104510147,
+    "brace_up_rf_H2s---_n": 3.2935116810883382,
+    "tcollar_up_rf_H2s---_nm": 0.5106825362906537,
+    "qface_up_rf_H2s---_npm": 328.24902411462983,
     "brace_len_lo_m": 0.1518078143574961,
-    "face_lo_L1_mpa": 2.8958642538499153,
-    "brace_lo_L1_n": 5.99380115089365,
-    "tcollar_lo_L1_nm": 0.02322760901361376,
-    "qface_lo_L1_npm": 131.92128045643608,
-    "face_lo_L4+_mpa": 20.629570621600998,
-    "brace_lo_L4+_n": 2.1720501127404392,
-    "tcollar_lo_L4+_nm": 6.398627968712958,
-    "qface_lo_L4+_npm": 2217.6863114209063,
-    "face_lo_L4-_mpa": 20.60362700976745,
-    "brace_lo_L4-_n": 8.013244817518352,
-    "tcollar_lo_L4-_nm": 6.359157181490488,
-    "qface_lo_L4-_npm": 2216.7497315423157,
-    "face_lo_L5+_mpa": 6.517797070597168,
-    "brace_lo_L5+_n": 6.355505844422212,
-    "tcollar_lo_L5+_nm": 0.024629313038647682,
-    "qface_lo_L5+_npm": 297.0787924597437,
-    "face_lo_L5-_mpa": 2.4967674242563374,
-    "brace_lo_L5-_n": 3.8297890987522196,
-    "tcollar_lo_L5-_nm": 0.01484147397444821,
-    "qface_lo_L5-_npm": 79.20073565664012,
-    "face_lo_G2+_mpa": 1.1436796471432058,
-    "brace_lo_G2+_n": 96.33209958107986,
-    "tcollar_lo_G2+_nm": 0.36077166933372506,
-    "qface_lo_G2+_npm": 70.30962992347924,
-    "face_lo_G2-_mpa": 1.1436796471432058,
-    "brace_lo_G2-_n": -96.33209958107986,
-    "tcollar_lo_G2-_nm": 0.36077166933372506,
-    "qface_lo_G2-_npm": 70.30962992347924,
-    "face_lo_H2c++_mpa": 1.2479336341756526,
-    "brace_lo_H2c++_n": 6.31951045691584,
-    "tcollar_lo_H2c++_nm": 0.01348332145094,
-    "qface_lo_H2c++_npm": 95.57464060922301,
-    "face_lo_H2s+++_mpa": 1.3441074781568565,
-    "brace_lo_H2s+++_n": 9.467735958912654,
-    "tcollar_lo_H2s+++_nm": 0.4443459403662846,
-    "qface_lo_H2s+++_npm": 382.34254892823196,
-    "face_lo_H2s++-_mpa": 1.1623589645436547,
-    "brace_lo_H2s++-_n": 3.171284955183324,
-    "tcollar_lo_H2s++-_nm": 0.4173792974556054,
-    "qface_lo_H2s++-_npm": 388.9562907627367,
-    "face_lo_H2c+-_mpa": 1.2257363961113914,
-    "brace_lo_H2c+-_n": -6.060259181598266,
-    "tcollar_lo_H2c+-_nm": 0.02443866026573417,
-    "qface_lo_H2c+-_npm": 103.06459767675777,
-    "face_lo_H2s+-+_mpa": 1.3233400941656306,
-    "brace_lo_H2s+-+_n": -2.9120336796829607,
-    "tcollar_lo_H2s+-+_nm": 0.4064239586347824,
-    "qface_lo_H2s+-+_npm": 391.86775553904937,
-    "face_lo_H2s+--_mpa": 1.279592708235787,
-    "brace_lo_H2s+--_n": -9.208484683721508,
-    "tcollar_lo_H2s+--_nm": 0.45530127917949237,
-    "qface_lo_H2s+--_npm": 392.39128194022896,
-    "face_lo_H2c-+_mpa": 1.2594205730262407,
-    "brace_lo_H2c-+_n": 14.534494895545201,
-    "tcollar_lo_H2c-+_nm": 0.06469965512579956,
-    "qface_lo_H2c-+_npm": 98.88732621628695,
-    "face_lo_H2s-++_mpa": 1.1676589605815484,
-    "brace_lo_H2s-++_n": 17.682720397037915,
-    "tcollar_lo_H2s-++_nm": 0.4955622740303278,
-    "qface_lo_H2s-++_npm": 387.69048406681236,
-    "face_lo_H2s-+-_mpa": 1.4096240637971558,
-    "brace_lo_H2s-+-_n": 11.386269393564897,
-    "tcollar_lo_H2s-+-_nm": 0.36616296378935864,
-    "qface_lo_H2s-+-_npm": 390.72168713104577,
-    "face_lo_H2c--_mpa": 1.3126102689238215,
-    "brace_lo_H2c--_n": 0.5775225441174792,
-    "tcollar_lo_H2c--_nm": 0.00582352899756744,
-    "qface_lo_H2c--_npm": 113.2682723091065,
-    "face_lo_H2s--+_mpa": 1.4106147830169096,
-    "brace_lo_H2s--+_n": 3.725748045453882,
-    "tcollar_lo_H2s--+_nm": 0.4366861479098558,
-    "qface_lo_H2s--+_npm": 402.07143015036337,
-    "face_lo_H2s---_mpa": 1.4612244517513229,
-    "brace_lo_H2s---_n": -2.5707029578179688,
-    "tcollar_lo_H2s---_nm": 0.4250390899139509,
-    "qface_lo_H2s---_npm": 401.6823008574252,
-    "face_lo_G3_mpa": 0.47110054713304866,
-    "brace_lo_G3_n": 0.6831032410310884,
-    "tcollar_lo_G3_nm": 0.00264721077647824,
-    "qface_lo_G3_npm": 36.74225110169071,
-    "face_lo_cr_L1_mpa": 2.984975824593938,
-    "brace_lo_cr_L1_n": 6.894906318688044,
-    "tcollar_lo_cr_L1_nm": 0.02594038855408015,
-    "qface_lo_cr_L1_npm": 167.92766979852578,
-    "face_lo_cr_L4+_mpa": 20.76275456381047,
-    "brace_lo_cr_L4+_n": 2.1652857698646355,
-    "tcollar_lo_cr_L4+_nm": 6.489862802008474,
-    "qface_lo_cr_L4+_npm": 2288.9651998168233,
-    "face_lo_cr_L4-_mpa": 20.725369304885447,
-    "brace_lo_cr_L4-_n": 9.551261489697785,
-    "tcollar_lo_cr_L4-_nm": 6.445782175738088,
-    "qface_lo_cr_L4-_npm": 2280.0965216746863,
-    "face_lo_cr_L5+_mpa": 6.636490458236836,
-    "brace_lo_cr_L5+_n": 7.258847834364353,
-    "tcollar_lo_cr_L5+_nm": 0.027309628959664323,
-    "qface_lo_cr_L5+_npm": 304.7258899678878,
-    "face_lo_cr_L5-_mpa": 2.415569155421542,
-    "brace_lo_cr_L5-_n": 4.457699426805182,
-    "tcollar_lo_cr_L5-_nm": 0.016770997291016138,
-    "qface_lo_cr_L5-_npm": 103.96489819832354,
-    "face_lo_cr_G2+_mpa": 2.0408577694163617,
-    "brace_lo_cr_G2+_n": 95.82248085774053,
-    "tcollar_lo_cr_G2+_nm": 0.3596438542630507,
-    "qface_lo_cr_G2+_npm": 90.37575161992936,
-    "face_lo_cr_G2-_mpa": 2.0408577694163617,
-    "brace_lo_cr_G2-_n": -95.82248085774053,
-    "tcollar_lo_cr_G2-_nm": 0.3596438542630507,
-    "qface_lo_cr_G2-_npm": 90.37575161992936,
-    "face_lo_cr_H2c++_mpa": 1.7817297987879082,
-    "brace_lo_cr_H2c++_n": 6.812744301695147,
-    "tcollar_lo_cr_H2c++_nm": 0.015732046490510854,
-    "qface_lo_cr_H2c++_npm": 115.44469987133292,
-    "face_lo_cr_H2s+++_mpa": 2.2108061079029495,
-    "brace_lo_cr_H2s+++_n": 9.952650771080227,
-    "tcollar_lo_cr_H2s+++_nm": 0.46446605559196463,
-    "qface_lo_cr_H2s+++_npm": 420.6824718425039,
-    "face_lo_cr_H2s++-_mpa": 2.020792359787182,
-    "brace_lo_cr_H2s++-_n": 3.6728378323120174,
-    "tcollar_lo_cr_H2s++-_nm": 0.43300196260932644,
-    "qface_lo_cr_H2s++-_npm": 426.37171003896356,
-    "face_lo_cr_H2c+-_mpa": 1.821749675723208,
-    "brace_lo_cr_H2c+-_n": -5.497876868227782,
-    "tcollar_lo_cr_H2c+-_nm": 0.023218927321668137,
-    "qface_lo_cr_H2c+-_npm": 125.1553013691452,
-    "face_lo_cr_H2s+-+_mpa": 2.1075646266347055,
-    "brace_lo_cr_H2s+-+_n": -2.3579703985587854,
-    "tcollar_lo_cr_H2s+-+_nm": 0.4255150817796842,
-    "qface_lo_cr_H2s+-+_npm": 430.60091916415126,
-    "face_lo_cr_H2s+--_mpa": 2.302290585121325,
-    "brace_lo_cr_H2s+--_n": -8.637783337102876,
-    "tcollar_lo_cr_H2s+--_nm": 0.47195293642750613,
-    "qface_lo_cr_H2s+--_npm": 433.4557325837144,
-    "face_lo_cr_H2c-+_mpa": 1.6195154829084062,
-    "brace_lo_cr_H2c-+_n": 15.051958350020358,
-    "tcollar_lo_cr_H2c-+_nm": 0.06642727240910373,
-    "qface_lo_cr_H2c-+_npm": 118.90649179050699,
-    "face_lo_cr_H2s-++_mpa": 1.948792113052423,
-    "brace_lo_cr_H2s-++_n": 18.191864819739425,
-    "tcollar_lo_cr_H2s-++_nm": 0.5151612815086786,
-    "qface_lo_cr_H2s-++_npm": 424.3521095844694,
-    "face_lo_cr_H2s-+-_mpa": 2.284738163271961,
-    "brace_lo_cr_H2s-+-_n": 11.91205187979979,
-    "tcollar_lo_cr_H2s-+-_nm": 0.38230673668716353,
-    "qface_lo_cr_H2s-+-_npm": 429.1231505581611,
-    "face_lo_cr_H2c--_mpa": 1.8076513308415214,
-    "brace_lo_cr_H2c--_n": 1.1626905815728354,
-    "tcollar_lo_cr_H2c--_nm": 0.00701010066273644,
-    "qface_lo_cr_H2c--_npm": 135.75352206368225,
-    "face_lo_cr_H2s--+_mpa": 2.117564505311215,
-    "brace_lo_cr_H2s--+_n": 4.302597051260344,
-    "tcollar_lo_cr_H2s--+_nm": 0.45574410976295976,
-    "qface_lo_cr_H2s--+_npm": 441.19913985542763,
-    "face_lo_cr_H2s---_mpa": 2.3948806631315507,
-    "brace_lo_cr_H2s---_n": -1.9772158873354375,
-    "tcollar_lo_cr_H2s---_nm": 0.44172390844186005,
-    "qface_lo_cr_H2s---_npm": 443.64282769963916,
-    "face_lo_cr_G3_mpa": 0.5534391673807332,
-    "brace_lo_cr_G3_n": 0.8027223875789369,
-    "tcollar_lo_cr_G3_nm": 0.0030200454759031423,
-    "qface_lo_cr_G3_npm": 41.47528563617345,
-    "face_lo_rf_L1_mpa": 8.19371116936357,
-    "brace_lo_rf_L1_n": 25.469294518663357,
-    "tcollar_lo_rf_L1_nm": 0.10118844892829881,
-    "qface_lo_rf_L1_npm": 537.4040869453704,
-    "face_lo_rf_L4+_mpa": 25.55629488483901,
-    "brace_lo_rf_L4+_n": 9.533457496571488,
-    "tcollar_lo_rf_L4+_nm": 6.91206608949075,
-    "qface_lo_rf_L4+_npm": 2646.753792906537,
-    "face_lo_rf_L4-_mpa": 25.08960666347668,
-    "brace_lo_rf_L4-_n": 33.74663640940818,
-    "tcollar_lo_rf_L4-_nm": 6.740116074643012,
-    "qface_lo_rf_L4-_npm": 2612.2408752812207,
-    "face_lo_rf_L5+_mpa": 17.230923946233062,
-    "brace_lo_rf_L5+_n": 39.92015816621268,
-    "tcollar_lo_rf_L5+_nm": 0.1586011298026384,
-    "qface_lo_rf_L5+_npm": 1061.977720963818,
-    "face_lo_rf_L5-_mpa": 3.5332796030296305,
-    "brace_lo_rf_L5-_n": 3.3599357371923038,
-    "tcollar_lo_rf_L5-_nm": 0.013348885086328477,
-    "qface_lo_rf_L5-_npm": 148.77364349363432,
-    "face_lo_rf_G2+_mpa": 2.0964512591381057,
-    "brace_lo_rf_G2+_n": 90.01649537844239,
-    "tcollar_lo_rf_G2+_nm": 0.3458204470248658,
-    "qface_lo_rf_G2+_npm": 129.62471161986988,
-    "face_lo_rf_G2-_mpa": 2.0964512591381057,
-    "brace_lo_rf_G2-_n": -90.01649537844239,
-    "tcollar_lo_rf_G2-_nm": 0.3458204470248658,
-    "qface_lo_rf_G2-_npm": 129.62471161986988,
-    "face_lo_rf_H2c++_mpa": 2.546836612885986,
-    "brace_lo_rf_H2c++_n": 13.563486140285702,
-    "tcollar_lo_rf_H2c++_nm": 0.04611564696179915,
-    "qface_lo_rf_H2c++_npm": 160.0165971940963,
-    "face_lo_rf_H2s+++_mpa": 4.6464660737886785,
-    "brace_lo_rf_H2s+++_n": 15.07602944254976,
-    "tcollar_lo_rf_H2s+++_nm": 0.5358231843749834,
-    "qface_lo_rf_H2s+++_npm": 282.59229708485805,
-    "face_lo_rf_H2s++-_mpa": 4.188216648179276,
-    "brace_lo_rf_H2s++-_n": 12.05094283710207,
-    "tcollar_lo_rf_H2s++-_nm": 0.44359189045761216,
-    "qface_lo_rf_H2s++-_npm": 289.39375786580985,
-    "face_lo_rf_H2c+-_mpa": 2.7613720269401205,
-    "brace_lo_rf_H2c+-_n": 1.9105697967460946,
-    "tcollar_lo_rf_H2c+-_nm": 0.007363892372801661,
-    "qface_lo_rf_H2c+-_npm": 173.0725570534138,
-    "face_lo_rf_H2s+-+_mpa": 4.537140505531871,
-    "brace_lo_rf_H2s+-+_n": 3.423113099951015,
-    "tcollar_lo_rf_H2s+-+_nm": 0.49707142978456176,
-    "qface_lo_rf_H2s+-+_npm": 290.01646628953426,
-    "face_lo_rf_H2s+--_mpa": 4.55212746603025,
-    "brace_lo_rf_H2s+--_n": 0.3980264931942687,
-    "tcollar_lo_rf_H2s+--_nm": 0.4823436450523788,
-    "qface_lo_rf_H2s+--_npm": 286.32128857533166,
-    "face_lo_rf_H2c-+_mpa": 2.557316549702923,
-    "brace_lo_rf_H2c-+_n": 21.886987715399528,
-    "tcollar_lo_rf_H2c-+_nm": 0.09227114686916255,
-    "qface_lo_rf_H2c-+_npm": 160.34426956898022,
-    "face_lo_rf_H2s-++_mpa": 4.294092479109026,
-    "brace_lo_rf_H2s-++_n": 23.39953101776948,
-    "tcollar_lo_rf_H2s-++_nm": 0.5819786842892203,
-    "qface_lo_rf_H2s-++_npm": 291.60781812376047,
-    "face_lo_rf_H2s-+-_mpa": 4.562635859939649,
-    "brace_lo_rf_H2s-+-_n": 20.37444441179498,
-    "tcollar_lo_rf_H2s-+-_nm": 0.3974363905471403,
-    "qface_lo_rf_H2s-+-_npm": 287.85296786940336,
-    "face_lo_rf_H2c--_mpa": 2.9036303598946644,
-    "brace_lo_rf_H2c--_n": 8.928058027170712,
-    "tcollar_lo_rf_H2c--_nm": 0.03815399156450604,
-    "qface_lo_rf_H2c--_npm": 182.02719889463071,
-    "face_lo_rf_H2s--+_mpa": 4.572376834394125,
-    "brace_lo_rf_H2s--+_n": 10.440601329416161,
-    "tcollar_lo_rf_H2s--+_nm": 0.5278615289718349,
-    "qface_lo_rf_H2s--+_npm": 299.04617817473917,
-    "face_lo_rf_H2s---_mpa": 4.7109115980704654,
-    "brace_lo_rf_H2s---_n": 7.4155147229447405,
-    "tcollar_lo_rf_H2s---_nm": 0.45155354584630025,
-    "qface_lo_rf_H2s---_npm": 293.1600240038719,
-    "face_lo_rf_G3_mpa": 0.723404988048048,
-    "brace_lo_rf_G3_n": 2.6488568419268614,
-    "tcollar_lo_rf_G3_nm": 0.010523798178874527,
-    "qface_lo_rf_G3_npm": 45.207603859689904,
-    "face_ult_pa": 25556294.88483901,
-    "face_ult_intact_pa": 25556294.88483901,
-    "face_lim_cracked_pa": 13841836.375873648,
-    "ms_face_intact_ult": -0.6087069723893197,
-    "ms_face_failsafe_lim": -0.277552506152289,
-    "ms_face_envelope_ult": -0.6087069723893197,
-    "edge_ult_pa": 97238449.48146434,
-    "tube_ult_pa": 38971469.11374189,
-    "root_m_lim_nm": 8.609229464143823,
-    "brace_comp_design_n": 166.17287177736273,
-    "brace_tens_design_n": 166.17287177736273,
+    "face_lo_L1_mpa": 2.523389701634951,
+    "brace_lo_L1_n": 7.166211797449715,
+    "tcollar_lo_L1_nm": 0.029498531828389407,
+    "qface_lo_L1_npm": 129.07913132136665,
+    "face_lo_L4+_mpa": 18.628012427807718,
+    "brace_lo_L4+_n": 58.2433904372883,
+    "tcollar_lo_L4+_nm": 7.088415927335632,
+    "qface_lo_L4+_npm": 2191.482751383454,
+    "face_lo_L4-_mpa": 18.65921784344694,
+    "brace_lo_L4-_n": -45.257499788916974,
+    "tcollar_lo_L4-_nm": 7.03496164499478,
+    "qface_lo_L4-_npm": 2209.8594938999527,
+    "face_lo_L5+_mpa": 6.117678636003208,
+    "brace_lo_L5+_n": 7.749592854440099,
+    "tcollar_lo_L5+_nm": 0.0318999239583852,
+    "qface_lo_L5+_npm": 293.43970880298525,
+    "face_lo_L5-_mpa": 2.4298028733924455,
+    "brace_lo_L5-_n": 5.236297794009004,
+    "tcollar_lo_L5-_nm": 0.021554358350504843,
+    "qface_lo_L5-_npm": 91.17540631686005,
+    "face_lo_G2+_mpa": 0.8592255831771781,
+    "brace_lo_G2+_n": 101.97071390300694,
+    "tcollar_lo_G2+_nm": 0.4092001787344879,
+    "qface_lo_G2+_npm": 71.62669133853773,
+    "face_lo_G2-_mpa": 0.8592255831771781,
+    "brace_lo_G2-_n": -101.97071390300694,
+    "tcollar_lo_G2-_nm": 0.4092001787344879,
+    "qface_lo_G2-_npm": 71.62669133853773,
+    "face_lo_H2c++_mpa": 1.0768745568202918,
+    "brace_lo_H2c++_n": 8.098035275952798,
+    "tcollar_lo_H2c++_nm": 0.029356890779890676,
+    "qface_lo_H2c++_npm": 88.78791552335197,
+    "face_lo_H2s+++_mpa": 1.2968273069738123,
+    "brace_lo_H2s+++_n": 15.051704277828176,
+    "tcollar_lo_H2s+++_nm": 0.506166900988271,
+    "qface_lo_H2s+++_npm": 372.4603278952775,
+    "face_lo_H2s++-_mpa": 1.4700772349350038,
+    "brace_lo_H2s++-_n": 1.1443662739166085,
+    "tcollar_lo_H2s++-_nm": 0.44745311943835553,
+    "qface_lo_H2s++-_npm": 383.0978462259838,
+    "face_lo_H2c+-_mpa": 1.1611955541408663,
+    "brace_lo_H2c+-_n": -8.537081449943004,
+    "tcollar_lo_H2c+-_nm": 0.033933991828609955,
+    "qface_lo_H2c+-_npm": 97.9576648371077,
+    "face_lo_H2s+-+_mpa": 1.370492936278194,
+    "brace_lo_H2s+-+_n": -1.5834124477822074,
+    "tcollar_lo_H2s+-+_nm": 0.44287601838142443,
+    "qface_lo_H2s+-+_npm": 382.6806686616819,
+    "face_lo_H2s+--_mpa": 1.553232315886858,
+    "brace_lo_H2s+--_n": -15.490750452026573,
+    "tcollar_lo_H2s+--_nm": 0.5107440020405827,
+    "qface_lo_H2s+--_npm": 387.5941682764248,
+    "face_lo_H2c-+_mpa": 1.1897249609771208,
+    "brace_lo_H2c-+_n": 17.98648137640717,
+    "tcollar_lo_H2c-+_nm": 0.07528305207241126,
+    "qface_lo_H2c-+_npm": 95.16766032359192,
+    "face_lo_H2s-++_mpa": 1.4695943020298423,
+    "brace_lo_H2s-++_n": 24.940150378514804,
+    "tcollar_lo_H2s-++_nm": 0.5520930622881961,
+    "qface_lo_H2s-++_npm": 379.21044065677,
+    "face_lo_H2s-+-_mpa": 1.4818867524952875,
+    "brace_lo_H2s-+-_n": 11.032812374616844,
+    "tcollar_lo_H2s-+-_nm": 0.4015269581422114,
+    "qface_lo_H2s-+-_npm": 389.41713430626544,
+    "face_lo_H2c--_mpa": 1.351891117774878,
+    "brace_lo_H2c--_n": 0.9385914061870997,
+    "tcollar_lo_H2c--_nm": 0.005388736054196208,
+    "qface_lo_H2c--_npm": 112.93518350640639,
+    "face_lo_H2s--+_mpa": 1.586892648055,
+    "brace_lo_H2s--+_n": 7.892260408197056,
+    "tcollar_lo_H2s--+_nm": 0.4821987462708961,
+    "qface_lo_H2s--+_npm": 397.65818733339944,
+    "face_lo_H2s---_mpa": 1.741650162360224,
+    "brace_lo_H2s---_n": -6.015077595535133,
+    "tcollar_lo_H2s---_nm": 0.47142127416182955,
+    "qface_lo_H2s---_npm": 402.69101846273264,
+    "face_lo_G3_mpa": 0.4284967242256806,
+    "brace_lo_G3_n": 0.8864564740916799,
+    "tcollar_lo_G3_nm": 0.0036489522284500336,
+    "qface_lo_G3_npm": 33.336883676024215,
+    "face_lo_cr_L1_mpa": 2.745777099890413,
+    "brace_lo_cr_L1_n": 8.183603825241017,
+    "tcollar_lo_cr_L1_nm": 0.032983385561701994,
+    "qface_lo_cr_L1_npm": 160.30709106196824,
+    "face_lo_cr_L4+_mpa": 18.629882858135275,
+    "brace_lo_cr_L4+_n": 59.067577346635964,
+    "tcollar_lo_cr_L4+_nm": 7.173254274098909,
+    "qface_lo_cr_L4+_npm": 2200.109126193329,
+    "face_lo_cr_L4-_mpa": 18.667234268297854,
+    "brace_lo_cr_L4-_n": -44.2380708541346,
+    "tcollar_lo_cr_L4-_nm": 7.113485089183882,
+    "qface_lo_cr_L4-_npm": 2265.169502219561,
+    "face_lo_cr_L5+_mpa": 6.233464563974438,
+    "brace_lo_cr_L5+_n": 8.787502245499883,
+    "tcollar_lo_cr_L5+_nm": 0.035417351680299136,
+    "qface_lo_cr_L5+_npm": 301.127938890619,
+    "face_lo_cr_L5-_mpa": 2.398830111444653,
+    "brace_lo_cr_L5-_n": 6.042004248066798,
+    "tcollar_lo_cr_L5-_nm": 0.024351833243436816,
+    "qface_lo_cr_L5-_npm": 116.93193619418307,
+    "face_lo_cr_G2+_mpa": 1.5990431620756378,
+    "brace_lo_cr_G2+_n": 101.4404886553634,
+    "tcollar_lo_cr_G2+_nm": 0.4078384030621338,
+    "qface_lo_cr_G2+_npm": 88.65889810974193,
+    "face_lo_cr_G2-_mpa": 1.5990431620756378,
+    "brace_lo_cr_G2-_n": -101.4404886553634,
+    "tcollar_lo_cr_G2-_nm": 0.4078384030621338,
+    "qface_lo_cr_G2-_npm": 88.65889810974193,
+    "face_lo_cr_H2c++_mpa": 1.6172891591574354,
+    "brace_lo_cr_H2c++_n": 8.669440096197803,
+    "tcollar_lo_cr_H2c++_nm": 0.03188240061723313,
+    "qface_lo_cr_H2c++_npm": 107.00853140309997,
+    "face_lo_cr_H2s+++_mpa": 1.8224680673502158,
+    "brace_lo_cr_H2s+++_n": 15.654819118362301,
+    "tcollar_lo_cr_H2s+++_nm": 0.5270748401789138,
+    "qface_lo_cr_H2s+++_npm": 406.2992476222609,
+    "face_lo_cr_H2s++-_mpa": 2.155363298274106,
+    "brace_lo_cr_H2s++-_n": 1.6840610740292778,
+    "tcollar_lo_cr_H2s++-_nm": 0.4633100389410503,
+    "qface_lo_cr_H2s++-_npm": 418.5418715805169,
+    "face_lo_cr_H2c+-_mpa": 1.8244009244153825,
+    "brace_lo_cr_H2c+-_n": -7.895707470872379,
+    "tcollar_lo_cr_H2c+-_nm": 0.03232913791333933,
+    "qface_lo_cr_H2c+-_npm": 118.27655502110547,
+    "face_lo_cr_H2s+-+_mpa": 2.0275434192422583,
+    "brace_lo_cr_H2s+-+_n": -0.9103284486673949,
+    "tcollar_lo_cr_H2s+-+_nm": 0.46286330164635636,
+    "qface_lo_cr_H2s+-+_npm": 417.7023664920702,
+    "face_lo_cr_H2s+--_mpa": 2.361709229720424,
+    "brace_lo_cr_H2s+--_n": -14.881086492957575,
+    "tcollar_lo_cr_H2s+--_nm": 0.527521577473796,
+    "qface_lo_cr_H2s+--_npm": 426.5412949172455,
+    "face_lo_cr_H2c-+_mpa": 1.5951424923406814,
+    "brace_lo_cr_H2c-+_n": 18.56724930922294,
+    "tcollar_lo_cr_H2c-+_nm": 0.07773971267678004,
+    "qface_lo_cr_H2c-+_npm": 113.7106888358652,
+    "face_lo_cr_H2s-++_mpa": 1.9117229864149294,
+    "brace_lo_cr_H2s-++_n": 25.552628331350867,
+    "tcollar_lo_cr_H2s-++_nm": 0.5729321522360662,
+    "qface_lo_cr_H2s-++_npm": 412.7576950935042,
+    "face_lo_cr_H2s-+-_mpa": 2.035329330934966,
+    "brace_lo_cr_H2s-+-_n": 11.581870287120948,
+    "tcollar_lo_cr_H2s-+-_nm": 0.4174527268830026,
+    "qface_lo_cr_H2s-+-_npm": 425.1754741754361,
+    "face_lo_cr_H2c--_mpa": 1.9032987742296403,
+    "brace_lo_cr_H2c--_n": 1.621072154414762,
+    "tcollar_lo_cr_H2c--_nm": 0.0071929707807902865,
+    "qface_lo_cr_H2c--_npm": 134.4047093394377,
+    "face_lo_cr_H2s--+_mpa": 2.117423635696619,
+    "brace_lo_cr_H2s--+_n": 8.606451176418878,
+    "tcollar_lo_cr_H2s--+_nm": 0.5023854103408665,
+    "qface_lo_cr_H2s--+_npm": 433.8305208058563,
+    "face_lo_cr_H2s---_mpa": 2.4210490097880486,
+    "brace_lo_cr_H2s---_n": -5.3643068677054275,
+    "tcollar_lo_cr_H2s---_nm": 0.48799946877886224,
+    "qface_lo_cr_H2s---_npm": 442.7841879973638,
+    "face_lo_cr_G3_mpa": 0.5081861561963622,
+    "brace_lo_cr_G3_n": 1.0218783690661788,
+    "tcollar_lo_cr_G3_nm": 0.00411860214209276,
+    "qface_lo_cr_G3_npm": 37.509357520576685,
+    "face_lo_rf_L1_mpa": 7.219200663123796,
+    "brace_lo_rf_L1_n": 26.927663004293198,
+    "tcollar_lo_rf_L1_nm": 0.11123343486602444,
+    "qface_lo_rf_L1_npm": 508.7707312820832,
+    "face_lo_rf_L4+_mpa": 20.94088365446076,
+    "brace_lo_rf_L4+_n": 70.54937597631522,
+    "tcollar_lo_rf_L4+_nm": 7.526384575505105,
+    "qface_lo_rf_L4+_npm": 2524.0252526881145,
+    "face_lo_rf_L4-_mpa": 22.53342324637834,
+    "brace_lo_rf_L4-_n": -21.753764422222634,
+    "tcollar_lo_rf_L4-_nm": 7.324818495430364,
+    "qface_lo_rf_L4-_npm": 2641.0345290233295,
+    "face_lo_rf_L5+_mpa": 15.643975686105252,
+    "brace_lo_rf_L5+_n": 41.63166785322782,
+    "tcollar_lo_rf_L5+_nm": 0.17197309005212214,
+    "qface_lo_rf_L5+_npm": 1008.9522509292281,
+    "face_lo_rf_L5-_mpa": 2.7772763907373217,
+    "brace_lo_rf_L5-_n": 7.163943702687762,
+    "tcollar_lo_rf_L5-_nm": 0.029592990119257034,
+    "qface_lo_rf_L5-_npm": 91.97651036485473,
+    "face_lo_rf_G2+_mpa": 1.9025515559510258,
+    "brace_lo_rf_G2+_n": 95.64876226947717,
+    "tcollar_lo_rf_G2+_nm": 0.3851395452373625,
+    "qface_lo_rf_G2+_npm": 121.9136018418503,
+    "face_lo_rf_G2-_mpa": 1.9025515559510258,
+    "brace_lo_rf_G2-_n": -95.64876226947717,
+    "tcollar_lo_rf_G2-_nm": 0.3851395452373625,
+    "qface_lo_rf_G2-_npm": 121.9136018418503,
+    "face_lo_rf_H2c++_mpa": 2.226460014849367,
+    "brace_lo_rf_H2c++_n": 15.252639917152676,
+    "tcollar_lo_rf_H2c++_nm": 0.06010714363742897,
+    "qface_lo_rf_H2c++_npm": 142.09737046584775,
+    "face_lo_rf_H2s+++_mpa": 3.220985275265364,
+    "brace_lo_rf_H2s+++_n": 21.306761097540456,
+    "tcollar_lo_rf_H2s+++_nm": 0.5921282359469782,
+    "qface_lo_rf_H2s+++_npm": 279.06256196610127,
+    "face_lo_rf_H2s++-_mpa": 3.3022200085729265,
+    "brace_lo_rf_H2s++-_n": 9.198518737800256,
+    "tcollar_lo_rf_H2s++-_nm": 0.47191394867220016,
+    "qface_lo_rf_H2s++-_npm": 283.9948496676808,
+    "face_lo_rf_H2c+-_mpa": 2.460811681040694,
+    "brace_lo_rf_H2c+-_n": -0.5812337095514564,
+    "tcollar_lo_rf_H2c+-_nm": 0.0011005078467571927,
+    "qface_lo_rf_H2c+-_npm": 157.13579142880653,
+    "face_lo_rf_H2s+-+_mpa": 3.2717335687266793,
+    "brace_lo_rf_H2s+-+_n": 5.472887470447438,
+    "tcollar_lo_rf_H2s+-+_nm": 0.5309205844607092,
+    "qface_lo_rf_H2s+-+_npm": 284.9021678225339,
+    "face_lo_rf_H2s+--_mpa": 3.4910789582430413,
+    "brace_lo_rf_H2s+--_n": -6.6353548898379815,
+    "tcollar_lo_rf_H2s+--_nm": 0.5331216001510164,
+    "qface_lo_rf_H2s+--_npm": 282.42443492244206,
+    "face_lo_rf_H2c-+_mpa": 2.2948669189631987,
+    "brace_lo_rf_H2c-+_n": 25.318918452429962,
+    "tcollar_lo_rf_H2c-+_nm": 0.10493366155600636,
+    "qface_lo_rf_H2c-+_npm": 146.43409229382928,
+    "face_lo_rf_H2s-++_mpa": 3.1557796284595914,
+    "brace_lo_rf_H2s-++_n": 31.37303963271179,
+    "tcollar_lo_rf_H2s-++_nm": 0.6369547538610156,
+    "qface_lo_rf_H2s-++_npm": 286.4501702162095,
+    "face_lo_rf_H2s-+-_mpa": 3.4587613960693506,
+    "brace_lo_rf_H2s-+-_n": 19.26479727240273,
+    "tcollar_lo_rf_H2s-+-_nm": 0.42708743075701605,
+    "qface_lo_rf_H2s-+-_npm": 287.8383380995307,
+    "face_lo_rf_H2c--_mpa": 2.689789263935671,
+    "brace_lo_rf_H2c--_n": 9.55603256917947,
+    "tcollar_lo_rf_H2c--_nm": 0.04072698101574294,
+    "qface_lo_rf_H2c--_npm": 171.68101226432643,
+    "face_lo_rf_H2s--+_mpa": 3.397724444973647,
+    "brace_lo_rf_H2s--+_n": 15.610153749479222,
+    "tcollar_lo_rf_H2s--+_nm": 0.5727480733249379,
+    "qface_lo_rf_H2s--+_npm": 296.0894531506362,
+    "face_lo_rf_H2s---_mpa": 3.644869351713477,
+    "brace_lo_rf_H2s---_n": 3.5019113893406506,
+    "tcollar_lo_rf_H2s---_nm": 0.49129411128832956,
+    "qface_lo_rf_H2s---_npm": 293.10544620795963,
+    "face_lo_rf_G3_mpa": 0.6313801681882485,
+    "brace_lo_rf_G3_n": 2.806548672349087,
+    "tcollar_lo_rf_G3_nm": 0.011593358431950335,
+    "qface_lo_rf_G3_npm": 40.16416235821121,
+    "face_ult_pa": 22533423.24637834,
+    "face_ult_intact_pa": 22533423.24637834,
+    "face_lim_cracked_pa": 12529549.61410238,
+    "ms_face_intact_ult": -0.5562147885538324,
+    "ms_face_failsafe_lim": -0.20188671516614587,
+    "ms_face_envelope_ult": -0.5562147885538324,
+    "edge_ult_pa": 101336874.99688062,
+    "tube_ult_pa": 27189980.73175606,
+    "root_m_lim_nm": 8.603674086415499,
+    "brace_comp_design_n": 175.89948148268695,
+    "brace_tens_design_n": 175.89948148268695,
     "brace_pcr_n": 314.06020968773106,
     "brace_len_m": 0.1518078143574961,
-    "collar_t_lim_nm": 6.918911044622888,
-    "collar_t_lim_intact_nm": 6.918911044622888,
-    "collar_t_design_nm": 14.918901939968102,
-    "collar_f_lim_n": 96.33209958107986,
-    "tau_collar_pa": 1028574.9271515427,
-    "collar_h_req_m": 0.011314324198666969,
-    "tube_t_root_lim_nm": 7.788565235560652,
+    "collar_t_lim_nm": 7.548974250989517,
+    "collar_t_lim_intact_nm": 7.548974250989517,
+    "collar_t_design_nm": 16.277475728696146,
+    "collar_f_lim_n": 101.97071390300694,
+    "tau_collar_pa": 1108355.4678541864,
+    "collar_h_req_m": 0.012191910146396048,
+    "tube_t_root_lim_nm": 8.24722388026584,
     "side_load_n": 24.5,
-    "strip_q_lim_npm": 2646.753792906537,
-    "strip_q_lim_intact_npm": 2646.753792906537,
-    "strip_tau_design_pa": 570706.286595472,
-    "ms_strip_paper": -0.8247785203198892,
-    "strip_end_face_design_n": 1399.2006936227026,
-    "strip_pin_design_n": 68.48475439145665,
-    "tau_anchor_pa": 751341.8736120168,
-    "s_ear_pa": 1394787.7925527608,
-    "tau_brace_end_pa": 865483.7071737644,
-    "dfoot_L4_m": 0.011747243406382725,
-    "ms_face": -0.6087069723893197,
-    "ms_edge": 3.113599117767178,
-    "ms_tube": 9.263918941124915,
-    "ms_brace_buckling": 0.889960775959308,
-    "ms_brace_end_bond": 1.3108465051652987,
-    "ms_collar_bond": 0.9444378306387926,
-    "ms_anchor_bond": 0.33095204077017404,
-    "ms_ear_root": 5.45259447211541,
-    "ms_min": -0.6087069723893197,
-    "eq_resid": 1.811163996556786e-07,
-    "t_sec_L4_lim_nm": 7.913500003235472,
-    "t_sec_vs_c1": 0.0003640976387256911,
-    "brace_g3_lim_n": 2.6488568419268614,
-    "tube_g3_ult_pa": 2221699.2775406977,
-    "face_swirl_ult_pa": 4710911.598070465,
-    "brace_swirl_lim_n": 23.39953101776948,
-    "collar_t_swirl_lim_nm": 0.6054203884094713,
-    "collar_bond_per_h_npm": 22628.64839733394,
-    "strip_end_case": "L4- up_rf",
-    "strip_end_gov_design_n": -1399.2006936227026,
-    "strip_coinc_design_n": 1321.4051366932947,
-    "strip_coinc_ratio": -0.9444000011692494,
-    "strip_pair_design_n": 137.5460461607808,
-    "strip_both_tension_design_n": 46.2361571328767,
-    "face_ult_rootfree_pa": 25556294.88483901,
-    "ms_face_rootfree_ult": -0.6087069723893197,
+    "strip_q_lim_npm": 2641.0345290233295,
+    "strip_q_lim_intact_npm": 2641.0345290233295,
+    "strip_tau_design_pa": 569473.0703206555,
+    "ms_strip_paper": -0.824399071331516,
+    "strip_end_face_design_n": 1458.4828824635965,
+    "strip_pin_design_n": 68.33676843847866,
+    "tau_anchor_pa": 795320.2262861064,
+    "s_ear_pa": 1476429.0155442478,
+    "tau_brace_end_pa": 916143.132722328,
+    "dfoot_L4_m": 0.006323987807172637,
+    "ms_face": -0.5562147885538324,
+    "ms_edge": 2.947230462872601,
+    "ms_tube": 13.711301340968845,
+    "ms_brace_buckling": 0.7854527315286184,
+    "ms_brace_end_bond": 1.183064991227933,
+    "ms_collar_bond": 0.8044752410272018,
+    "ms_anchor_bond": 0.25735517210430237,
+    "ms_ear_root": 5.095789167813381,
+    "ms_min": -0.5562147885538324,
+    "eq_resid": 4.0863923356226906e-08,
+    "t_sec_L4_lim_nm": 8.03600000085999,
+    "t_sec_vs_c1": 0.006009344700576902,
+    "brace_g3_lim_n": 2.806548672349087,
+    "tube_g3_ult_pa": 1574103.2027269173,
+    "face_swirl_ult_pa": 3644869.3517134767,
+    "brace_swirl_lim_n": 31.37303963271179,
+    "collar_t_swirl_lim_nm": 0.6644518349056572,
+    "collar_bond_per_h_npm": 24383.820292792097,
+    "strip_end_case": "L4+ up_rf",
+    "strip_end_gov_design_n": -1458.4828824635965,
+    "strip_coinc_design_n": 1369.5043412085417,
+    "strip_coinc_ratio": -0.9389923993453002,
+    "strip_pair_design_n": 138.2656897684427,
+    "strip_both_tension_design_n": 46.54454609817522,
+    "face_ult_rootfree_pa": 22533423.24637834,
+    "ms_face_rootfree_ult": -0.5562147885538324,
     "fillet_share_table": {
      "L4+ up": {
       "x_hinge": 0.24960000000000002,
       "fore": {
        "F": [
-        -16.924812634217737,
-        -1.6713349852424955,
-        10.518462939575633
+        -10.837691715622562,
+        -1.717142236449359,
+        9.399385132144001
        ],
        "M": [
-        0.01037396983283639,
-        -0.235302986880278,
-        0.13234790997982632
+        0.006920779787867303,
+        -0.29011909851764434,
+        0.07768921781550386
        ],
        "ref": [
-        0.15355789473684212,
+        0.14297222222222222,
         0.0,
-        0.017172446611627108
+        0.018406706694101507
        ],
        "x": [
-        0.06728421052631578,
-        0.23983157894736842
+        0.06735277777777779,
+        0.21859166666666668
        ],
-       "n": 17
+       "n": 15
       },
       "aft": {
        "F": [
-        -4.39467294506816,
-        4.853316847263599,
-        18.221565774180497
+        -3.9166868372564565,
+        4.083601258288791,
+        14.885007082274885
        ],
        "M": [
-        0.009242501374564513,
-        -0.10852386842826348,
-        0.13762840516090213
+        0.002869489130959645,
+        0.0037352587049483965,
+        0.05433721756933951
        ],
        "ref": [
-        0.2849736842105263,
+        0.29700000000000004,
         0.0,
-        0.002328010275689222
+        0.0012760000000000007
        ],
        "x": [
-        0.25061578947368424,
+        0.274,
         0.32
        ],
-       "n": 7
+       "n": 5
       },
-      "mx_fillet": 0.037018810520016966,
-      "mx_section": -5.340999999999954
+      "mx_fillet": 0.0361865272116273,
+      "mx_section": -5.340999999999983
      },
      "L4- up": {
       "x_hinge": 0.24960000000000002,
       "fore": {
        "F": [
-        -14.213098466680814,
-        1.7255942264452755,
-        9.317437962176658
+        -21.201693897830687,
+        1.7715660747958428,
+        14.289327275891853
        ],
        "M": [
-        -0.010585696187077205,
-        -0.23888499682094128,
-        -0.13499635139224297
+        -0.0070926384874059785,
+        -0.3124634241562147,
+        -0.0802333694210561
        ],
        "ref": [
-        0.15355789473684212,
+        0.14297222222222222,
         0.0,
-        0.017172446611627108
+        0.018406706694101507
        ],
        "x": [
-        0.06728421052631578,
-        0.23983157894736842
+        0.06735277777777779,
+        0.21859166666666668
        ],
-       "n": 17
+       "n": 15
       },
       "aft": {
        "F": [
-        -3.765374989326799,
-        -4.842031620427537,
-        16.546955211429772
+        -6.548260990423298,
+        -4.079489458410839,
+        20.97732053049811
        ],
        "M": [
-        -0.009229134804918115,
-        -0.09462667440778838,
-        -0.13743725883539076
+        -0.0028742778973015713,
+        -0.010512434741371077,
+        -0.05443494699945528
        ],
        "ref": [
-        0.2849736842105263,
+        0.29700000000000004,
         0.0,
-        0.002328010275689222
+        0.0012760000000000007
        ],
        "x": [
-        0.25061578947368424,
+        0.274,
         0.32
        ],
-       "n": 7
+       "n": 5
       },
-      "mx_fillet": -0.038175206351391336,
-      "mx_section": 5.340999999999954
+      "mx_fillet": -0.03737018496376308,
+      "mx_section": 5.340999999999983
      },
      "G2+ up": {
       "x_hinge": 0.24960000000000002,
       "fore": {
        "F": [
-        10.02106325474674,
-        -0.03289956336089972,
-        -4.4383539423835625
+        10.230306872990221,
+        -0.05402997291075425,
+        -4.826862040435217
        ],
        "M": [
-        0.00044791663277082415,
-        -0.013237216675729257,
-        0.00697607241332077
+        0.00023111298349381073,
+        0.02205608452809122,
+        0.003649831581316683
        ],
        "ref": [
-        0.15355789473684212,
+        0.14297222222222222,
         0.0,
-        0.017172446611627108
+        0.018406706694101507
        ],
        "x": [
-        0.06728421052631578,
-        0.23983157894736842
+        0.06735277777777779,
+        0.21859166666666668
        ],
-       "n": 17
+       "n": 15
       },
       "aft": {
        "F": [
-        2.325552853880224,
-        0.07260347268193523,
-        -6.188476123400305
+        2.5976269275771324,
+        0.012341919579996098,
+        -6.013722792236322
        ],
        "M": [
-        0.00019904634200890804,
-        0.05135668870665209,
-        0.0030698834064890237
+        2.5272860357808916e-05,
+        0.014063898639437761,
+        0.0005053031654118636
        ],
        "ref": [
-        0.2849736842105263,
+        0.29700000000000004,
         0.0,
-        0.002328010275689222
+        0.0012760000000000007
        ],
        "x": [
-        0.25061578947368424,
+        0.274,
         0.32
        ],
-       "n": 7
+       "n": 5
       },
-      "mx_fillet": 0.0010429073396863587,
-      "mx_section": -8.77106776
+      "mx_fillet": 0.0012351514185260485,
+      "mx_section": -9.10841652
      },
      "G2- up": {
       "x_hinge": 0.24960000000000002,
       "fore": {
        "F": [
-        -10.02106325474674,
-        0.03289956336089972,
-        4.4383539423835625
+        -10.230306872990221,
+        0.05402997291075425,
+        4.826862040435217
        ],
        "M": [
-        -0.00044791663277082415,
-        0.013237216675729257,
-        -0.00697607241332077
+        -0.00023111298349381073,
+        -0.02205608452809122,
+        -0.003649831581316683
        ],
        "ref": [
-        0.15355789473684212,
+        0.14297222222222222,
         0.0,
-        0.017172446611627108
+        0.018406706694101507
        ],
        "x": [
-        0.06728421052631578,
-        0.23983157894736842
+        0.06735277777777779,
+        0.21859166666666668
        ],
-       "n": 17
+       "n": 15
       },
       "aft": {
        "F": [
-        -2.325552853880224,
-        -0.07260347268193523,
-        6.188476123400305
+        -2.5976269275771324,
+        -0.012341919579996098,
+        6.013722792236322
        ],
        "M": [
-        -0.00019904634200890804,
-        -0.05135668870665209,
-        -0.0030698834064890237
+        -2.5272860357808916e-05,
+        -0.014063898639437761,
+        -0.0005053031654118636
        ],
        "ref": [
-        0.2849736842105263,
+        0.29700000000000004,
         0.0,
-        0.002328010275689222
+        0.0012760000000000007
        ],
        "x": [
-        0.25061578947368424,
+        0.274,
         0.32
        ],
-       "n": 7
+       "n": 5
       },
-      "mx_fillet": -0.0010429073396863587,
-      "mx_section": 8.77106776
+      "mx_fillet": -0.0012351514185260485,
+      "mx_section": 9.10841652
      },
      "L4+ lo": {
       "x_hinge": 0.24960000000000002,
       "fore": {
        "F": [
-        -15.819114017032199,
-        -2.355178000659794,
-        11.884974018740188
+        -11.178144042982538,
+        -2.0746150699626833,
+        9.739947681840835
        ],
        "M": [
-        0.0025852580140448968,
-        -0.3538789712611021,
-        0.11356321284564322
+        0.0014804029396497274,
+        -0.3091326968411263,
+        0.05871236859404406
        ],
        "ref": [
-        0.14816578947368422,
+        0.14297222222222222,
         0.0,
-        0.007314230683479531
+        0.007475376155692731
        ],
        "x": [
-        0.06728421052631578,
-        0.22904736842105264
+        0.06735277777777779,
+        0.21859166666666668
        ],
-       "n": 16
+       "n": 15
       },
       "aft": {
        "F": [
-        -5.61632194867877,
-        5.782537669869697,
-        17.9533362354338
+        -4.903174538795279,
+        4.514612942145865,
+        16.100555956632885
        ],
        "M": [
-        0.002557498268335503,
-        -0.012249740211271495,
-        0.045870439812713444
+        0.0019776395012968562,
+        0.0003204092392680019,
+        0.03559954687565754
        ],
        "ref": [
-        0.29656000000000005,
+        0.29700000000000004,
         0.0,
-        0.0017162413333333324
+        0.0016948500000000006
        ],
        "x": [
-        0.27312000000000003,
+        0.274,
         0.32
        ],
        "n": 5
       },
-      "mx_fillet": 0.012444841319274853,
-      "mx_section": -5.341000000000031
+      "mx_fillet": 0.01131497872219051,
+      "mx_section": -5.341000000000011
      },
      "L4- lo": {
       "x_hinge": 0.24960000000000002,
       "fore": {
        "F": [
-        -15.20522161149885,
-        2.4104294374299813,
-        11.553457859708077
+        -21.626622796633693,
+        2.132395386994742,
+        15.173056316661752
        ],
        "M": [
-        -0.002635295762851432,
-        -0.3511219429797508,
-        -0.11590486896135876
+        -0.0015301707468052456,
+        -0.3566526960825467,
+        -0.061217739954814825
        ],
        "ref": [
-        0.14816578947368422,
+        0.14297222222222222,
         0.0,
-        0.007314230683479531
+        0.007475376155692731
        ],
        "x": [
-        0.06728421052631578,
-        0.22904736842105264
+        0.06735277777777779,
+        0.21859166666666668
        ],
-       "n": 16
+       "n": 15
       },
       "aft": {
        "F": [
-        -5.438903756491456,
-        -5.771595169372051,
-        17.560499468145025
+        -8.240123380380428,
+        -4.5125815889298995,
+        22.950276944363893
        ],
        "M": [
-        -0.0025526565786366073,
-        -0.011224507204160988,
-        -0.04578450101107795
+        -0.001976357212085361,
+        -0.01675856191499822,
+        -0.03557850498984556
        ],
        "ref": [
-        0.29656000000000005,
+        0.29700000000000004,
         0.0,
-        0.0017162413333333324
+        0.0016948500000000006
        ],
        "x": [
-        0.27312000000000003,
+        0.274,
         0.32
        ],
        "n": 5
       },
-      "mx_fillet": -0.0129129391041574,
-      "mx_section": 5.341000000000031
+      "mx_fillet": -0.011798836683342428,
+      "mx_section": 5.341000000000011
      },
      "G2+ lo": {
       "x_hinge": 0.24960000000000002,
       "fore": {
        "F": [
-        10.124220676087731,
-        -0.07016813401787994,
-        -5.467314342056118
+        10.294006509570528,
+        -0.06715936524701745,
+        -5.352784550983104
        ],
        "M": [
-        0.0001452693015732989,
-        0.04546849324709824,
-        0.007320265194485427
+        7.512761348452527e-05,
+        0.04681745478241504,
+        0.003910937724617748
        ],
        "ref": [
-        0.14816578947368422,
+        0.14297222222222222,
         0.0,
-        0.007314230683479531
+        0.007475376155692731
        ],
        "x": [
-        0.06728421052631578,
-        0.22904736842105264
+        0.06735277777777779,
+        0.21859166666666668
        ],
-       "n": 16
+       "n": 15
       },
       "aft": {
        "F": [
-        2.9259539839219033,
-        0.11257635480277031,
-        -6.478604533455376
+        3.2876147722354636,
+        0.021917424267269482,
+        -6.748453444781319
        ],
        "M": [
-        4.217801489625795e-05,
-        0.01690798764495899,
-        0.0007680265115859346
+        6.58519290110922e-06,
+        0.016826472483287037,
+        0.00012149805940655865
        ],
        "ref": [
-        0.29656000000000005,
+        0.29700000000000004,
         0.0,
-        0.0017162413333333324
+        0.0016948500000000006
        ],
        "x": [
-        0.27312000000000003,
+        0.274,
         0.32
        ],
        "n": 5
       },
-      "mx_fillet": 0.0005074650420371254,
-      "mx_section": -8.77106776
+      "mx_fillet": 0.000546607577465266,
+      "mx_section": -9.10841652
      },
      "G2- lo": {
       "x_hinge": 0.24960000000000002,
       "fore": {
        "F": [
-        -10.124220676087731,
-        0.07016813401787994,
-        5.467314342056118
+        -10.294006509570528,
+        0.06715936524701745,
+        5.352784550983104
        ],
        "M": [
-        -0.0001452693015732989,
-        -0.04546849324709824,
-        -0.007320265194485427
+        -7.512761348452527e-05,
+        -0.04681745478241504,
+        -0.003910937724617748
        ],
        "ref": [
-        0.14816578947368422,
+        0.14297222222222222,
         0.0,
-        0.007314230683479531
+        0.007475376155692731
        ],
        "x": [
-        0.06728421052631578,
-        0.22904736842105264
+        0.06735277777777779,
+        0.21859166666666668
        ],
-       "n": 16
+       "n": 15
       },
       "aft": {
        "F": [
-        -2.9259539839219033,
-        -0.11257635480277031,
-        6.478604533455376
+        -3.2876147722354636,
+        -0.021917424267269482,
+        6.748453444781319
        ],
        "M": [
-        -4.217801489625795e-05,
-        -0.01690798764495899,
-        -0.0007680265115859346
+        -6.58519290110922e-06,
+        -0.016826472483287037,
+        -0.00012149805940655865
        ],
        "ref": [
-        0.29656000000000005,
+        0.29700000000000004,
         0.0,
-        0.0017162413333333324
+        0.0016948500000000006
        ],
        "x": [
-        0.27312000000000003,
+        0.274,
         0.32
        ],
        "n": 5
       },
-      "mx_fillet": -0.0005074650420371254,
-      "mx_section": 8.77106776
+      "mx_fillet": -0.000546607577465266,
+      "mx_section": 9.10841652
      }
     },
     "fillet_l4_case": "L4- up",
-    "fillet_l4_mx_share": 0.007147576549595893,
-    "fillet_l4_mx_nm": 0.038175206351391336,
-    "fillet_l4_mx_section_nm": 5.340999999999954,
-    "fillet_l4_fore_fx_n": 14.213098466680814,
-    "fillet_l4_fore_fy_n": 1.7255942264452755,
-    "fillet_l4_fore_fz_n": 9.317437962176658,
-    "fillet_l4_fore_mx_nm": 0.010585696187077205,
-    "fillet_l4_fore_my_nm": 0.23888499682094128,
-    "fillet_l4_fore_mz_nm": 0.13499635139224297,
+    "fillet_l4_mx_share": 0.006996851706377681,
+    "fillet_l4_mx_nm": 0.03737018496376308,
+    "fillet_l4_mx_section_nm": 5.340999999999983,
+    "fillet_l4_fore_fx_n": 21.201693897830687,
+    "fillet_l4_fore_fy_n": 1.7715660747958428,
+    "fillet_l4_fore_fz_n": 14.289327275891853,
+    "fillet_l4_fore_mx_nm": 0.0070926384874059785,
+    "fillet_l4_fore_my_nm": 0.3124634241562147,
+    "fillet_l4_fore_mz_nm": 0.0802333694210561,
     "fillet_l4_fore_ref": [
-     0.15355789473684212,
+     0.14297222222222222,
      0.0,
-     0.017172446611627108
+     0.018406706694101507
     ],
     "fillet_l4_fore_x": [
-     0.06728421052631578,
-     0.23983157894736842
+     0.06735277777777779,
+     0.21859166666666668
     ],
-    "fillet_l4_aft_fx_n": 3.765374989326799,
-    "fillet_l4_aft_fy_n": 4.842031620427537,
-    "fillet_l4_aft_fz_n": 16.546955211429772,
-    "fillet_l4_aft_mx_nm": 0.009229134804918115,
-    "fillet_l4_aft_my_nm": 0.09462667440778838,
-    "fillet_l4_aft_mz_nm": 0.13743725883539076,
+    "fillet_l4_aft_fx_n": 6.548260990423298,
+    "fillet_l4_aft_fy_n": 4.079489458410839,
+    "fillet_l4_aft_fz_n": 20.97732053049811,
+    "fillet_l4_aft_mx_nm": 0.0028742778973015713,
+    "fillet_l4_aft_my_nm": 0.010512434741371077,
+    "fillet_l4_aft_mz_nm": 0.05443494699945528,
     "fillet_l4_aft_ref": [
-     0.2849736842105263,
+     0.29700000000000004,
      0.0,
-     0.002328010275689222
+     0.0012760000000000007
     ],
     "fillet_l4_aft_x": [
-     0.25061578947368424,
+     0.274,
      0.32
     ],
-    "fillet_l4_aft_fy_max_n": 5.782537669869697,
-    "fillet_l4_aft_fz_max_n": 18.221565774180497,
+    "fillet_l4_aft_fy_max_n": 4.514612942145865,
+    "fillet_l4_aft_fz_max_n": 22.950276944363893,
     "fillet_g2_case": "G2+ up",
-    "fillet_g2_mx_share": 0.00011890312197136176,
-    "fillet_g2_mx_nm": 0.0010429073396863587,
-    "fillet_g2_mx_section_nm": 8.77106776,
-    "fillet_g2_fore_fx_n": 10.02106325474674,
-    "fillet_g2_fore_fy_n": 0.03289956336089972,
-    "fillet_g2_fore_fz_n": 4.4383539423835625,
-    "fillet_g2_fore_mx_nm": 0.00044791663277082415,
-    "fillet_g2_fore_my_nm": 0.013237216675729257,
-    "fillet_g2_fore_mz_nm": 0.00697607241332077,
+    "fillet_g2_mx_share": 0.00013560550462464452,
+    "fillet_g2_mx_nm": 0.0012351514185260485,
+    "fillet_g2_mx_section_nm": 9.10841652,
+    "fillet_g2_fore_fx_n": 10.230306872990221,
+    "fillet_g2_fore_fy_n": 0.05402997291075425,
+    "fillet_g2_fore_fz_n": 4.826862040435217,
+    "fillet_g2_fore_mx_nm": 0.00023111298349381073,
+    "fillet_g2_fore_my_nm": 0.02205608452809122,
+    "fillet_g2_fore_mz_nm": 0.003649831581316683,
     "fillet_g2_fore_ref": [
-     0.15355789473684212,
+     0.14297222222222222,
      0.0,
-     0.017172446611627108
+     0.018406706694101507
     ],
     "fillet_g2_fore_x": [
-     0.06728421052631578,
-     0.23983157894736842
+     0.06735277777777779,
+     0.21859166666666668
     ],
-    "fillet_g2_aft_fx_n": 2.325552853880224,
-    "fillet_g2_aft_fy_n": 0.07260347268193523,
-    "fillet_g2_aft_fz_n": 6.188476123400305,
-    "fillet_g2_aft_mx_nm": 0.00019904634200890804,
-    "fillet_g2_aft_my_nm": 0.05135668870665209,
-    "fillet_g2_aft_mz_nm": 0.0030698834064890237,
+    "fillet_g2_aft_fx_n": 2.5976269275771324,
+    "fillet_g2_aft_fy_n": 0.012341919579996098,
+    "fillet_g2_aft_fz_n": 6.013722792236322,
+    "fillet_g2_aft_mx_nm": 2.5272860357808916e-05,
+    "fillet_g2_aft_my_nm": 0.014063898639437761,
+    "fillet_g2_aft_mz_nm": 0.0005053031654118636,
     "fillet_g2_aft_ref": [
-     0.2849736842105263,
+     0.29700000000000004,
      0.0,
-     0.002328010275689222
+     0.0012760000000000007
     ],
     "fillet_g2_aft_x": [
-     0.25061578947368424,
+     0.274,
      0.32
     ],
-    "fillet_g2_aft_fy_max_n": 0.11257635480277031,
-    "fillet_g2_aft_fz_max_n": 6.478604533455376,
-    "ms_collar_bond_16mm": 0.4141366041009402,
-    "governing": "edge: L4- up_rf; face: L4+ lo_rf; mroot: L5+ lo_rf; q_face: L4+ lo_rf; strip_end: L4- up_rf; t_collar: L4+ up_rf; t_root: L4+ lo_rf; tube: L5+ lo_rf"
+    "fillet_g2_aft_fy_max_n": 0.021917424267269482,
+    "fillet_g2_aft_fz_max_n": 6.748453444781319,
+    "ms_collar_bond_16mm": 0.3123456298379652,
+    "governing": "edge: L4+ up_rf; face: L4- lo_rf; mroot: L5+ lo_rf; q_face: L4- lo_rf; strip_end: L4+ up_rf; t_collar: L4+ up_rf; t_root: L4+ up_rf; tube: L5+ lo_rf"
    },
    "input_values": {
     "tube_x": 0.045,
     "y_fin": 0.32,
-    "od": 0.022,
-    "idd": 0.02,
-    "mu": 0.102,
+    "od": 0.0221,
+    "idd": 0.01905,
+    "mu": 0.156,
     "tube_len": 0.344,
     "z_st": 0.19,
-    "x_face": 0.024349999999999997,
-    "x_prop": -0.012671971456221315,
+    "x_face": 0.028799999999999996,
+    "x_prop": -0.018175329818682324,
     "x_te": 0.32,
     "hh": 0.21,
     "le_gap": 0.0005,
@@ -3771,18 +3829,18 @@
      0.03043,
      -0.01662
     ],
-    "m_motor": 0.081,
-    "d_motor": 0.038,
-    "l_motor": 0.0265,
-    "m_prop": 0.017,
+    "m_motor": 0.108,
+    "d_motor": 0.035,
+    "l_motor": 0.036,
+    "m_prop": 0.02296,
     "m_adapt": 0.005,
-    "ip": 7.5e-05,
-    "i_bell": 1.5e-05,
+    "ip": 0.000102,
+    "i_bell": 2e-05,
     "mount": [
-     0.01085,
-     -0.0084,
-     0.0007,
-     -0.011
+     0.01624,
+     -0.0079,
+     -0.0011,
+     -0.008
     ],
     "cb_mass": [
      0.01159,
@@ -3792,8 +3850,8 @@
     "esc_x0": 0.078,
     "esc_len": 0.046,
     "esc_z": 0.118,
-    "landing_g": 60,
-    "cant": 7.0,
+    "landing_g": 80,
+    "cant": 10.0,
     "t_board": 0.0048,
     "areal": 0.2,
     "layers": 2,
@@ -3813,38 +3871,38 @@
     "chord": 0.32,
     "el_frac": 0.22,
     "slot_hw": 0.012,
-    "k_rock": 2200.0,
+    "k_rock": 3900.0,
     "k_twist": 30000.0,
     "k_root": 10000.0,
     "k_anchor": 30000000.0,
-    "tip_sq": 0.0586,
-    "z_step": 0.201,
+    "tip_sq": 0.069,
+    "z_step": 0.203,
     "ear_xyz": [
      0.045,
      0.3023,
      0.1475
     ],
-    "shoe_x0": 0.2536,
+    "shoe_x0": 0.2432,
     "shoe_z0": 0.196,
-    "E": 100000000000.0,
-    "G": 5000000000.0,
-    "f_level": 43.98538578322658,
-    "f_corner": 37.37228814357933,
+    "E": 90200000000.0,
+    "G": 20500000000.0,
+    "f_level": 45.67713139027375,
+    "f_corner": 41.38575931842226,
     "mu_hi": 0.4,
-    "foot_h": 0.048,
+    "foot_h": 0.053,
     "z_pad": 0.218,
-    "sw_f": 0.4871446634755346,
-    "sw_m": 0.06983448452429286,
+    "sw_f": 0.4367724237743866,
+    "sw_m": 0.06233328395950546,
     "sw_bad": 1.43,
     "sw_exp": 1.0,
-    "g3": 23.45829557927301,
-    "t_c1": 7.91638233935248,
+    "g3": 23.886520228600695,
+    "t_c1": 8.08458304715076,
     "side_c5": 24.5,
     "n_h": 2.0,
-    "m_gate": 2.6,
+    "m_gate": 2.7,
     "grav": 9.80665,
-    "t_lim": 21.1,
-    "q_mot": 0.42037891319631054,
+    "t_lim": 22.1,
+    "q_mot": 0.545025904014508,
     "sf": 1.5,
     "fit": 1.15,
     "prt": 1.25,
@@ -3877,7 +3935,7 @@
     "y_fin": "P:fins.y_m",
     "od": "P:fins.tube.od_m",
     "idd": "P:fins.tube.id_m",
-    "mu": "P:wing.spar.mass_per_m_kgm",
+    "mu": "P:fins.tube.mass_per_m_kgm",
     "tube_len": "P:fin_detail.tube_length_m",
     "z_st": "P:propulsion.stations.z_m",
     "x_face": "CL-D3-X-FACE",
@@ -3936,8 +3994,8 @@
     "ear_xyz": "P:fins.stations.collar_end_xyz_m",
     "shoe_x0": "P:fin_detail.fin.tip_clear_x_m",
     "shoe_z0": "ASM-C4-SHOE-Z0",
-    "E": "ASM-J1-E-TUBE",
-    "G": "ASM-C4-G-TUBE",
+    "E": "CL-C4-TUBE-E",
+    "G": "CL-C4-TUBE-G",
     "rpm_h": "CL-B4-HOVER-RPM",
     "rpm_c": "CL-B4-CRUISE-RPM",
     "rpm_x": "CL-B4-RPM-MAX",
@@ -4032,33 +4090,33 @@
    },
    "tol": 0.0001,
    "outputs": {
-    "sep_t3": 0.23003970673670593,
+    "sep_t3": 0.26199326496047304,
     "pcr_t3_n": 1059.9532076960922,
-    "f_design_t3_n": 169.00381108654005,
-    "ms_buckle_t3": 5.2717710380704546,
+    "f_design_t3_n": 179.44632056806256,
+    "ms_buckle_t3": 4.906798224341749,
     "mass4_t3_g": 27.09831437822442,
-    "sep_t2": 0.21794096209654246,
+    "sep_t2": 0.2564995835745405,
     "pcr_t2_n": 314.06020968773106,
-    "f_design_t2_n": 166.17287177736273,
-    "ms_buckle_t2": 0.889960775959308,
+    "f_design_t2_n": 175.89948148268695,
+    "ms_buckle_t2": 0.7854527315286184,
     "mass4_t2_g": 18.065542918816277,
     "mass_saving_g": 9.032771459408142,
-    "sep_loss": 0.012098744640163472,
+    "sep_loss": 0.005493681385932536,
     "round_area_frac": 0.9570796326794897,
     "round_i_frac": 0.9178097245096173,
-    "ms_buckle_t2_round": 0.7346243791171949,
+    "ms_buckle_t2_round": 0.6387058796492249,
     "tape_mass4_g": 1.3785097128678991
    },
    "input_values": {
     "tube_x": 0.045,
     "y_fin": 0.32,
-    "od": 0.022,
-    "idd": 0.02,
-    "mu": 0.102,
+    "od": 0.0221,
+    "idd": 0.01905,
+    "mu": 0.156,
     "tube_len": 0.344,
     "z_st": 0.19,
-    "x_face": 0.024349999999999997,
-    "x_prop": -0.012671971456221315,
+    "x_face": 0.028799999999999996,
+    "x_prop": -0.018175329818682324,
     "x_te": 0.32,
     "hh": 0.21,
     "le_gap": 0.0005,
@@ -4144,18 +4202,18 @@
      0.03043,
      -0.01662
     ],
-    "m_motor": 0.081,
-    "d_motor": 0.038,
-    "l_motor": 0.0265,
-    "m_prop": 0.017,
+    "m_motor": 0.108,
+    "d_motor": 0.035,
+    "l_motor": 0.036,
+    "m_prop": 0.02296,
     "m_adapt": 0.005,
-    "ip": 7.5e-05,
-    "i_bell": 1.5e-05,
+    "ip": 0.000102,
+    "i_bell": 2e-05,
     "mount": [
-     0.01085,
-     -0.0084,
-     0.0007,
-     -0.011
+     0.01624,
+     -0.0079,
+     -0.0011,
+     -0.008
     ],
     "cb_mass": [
      0.01159,
@@ -4165,8 +4223,8 @@
     "esc_x0": 0.078,
     "esc_len": 0.046,
     "esc_z": 0.118,
-    "landing_g": 60,
-    "cant": 7.0,
+    "landing_g": 80,
+    "cant": 10.0,
     "t_board": 0.0048,
     "areal": 0.2,
     "layers": 2,
@@ -4186,30 +4244,30 @@
     "chord": 0.32,
     "el_frac": 0.22,
     "slot_hw": 0.012,
-    "k_rock": 2200.0,
+    "k_rock": 3900.0,
     "k_twist": 30000.0,
     "k_root": 10000.0,
     "k_anchor": 30000000.0,
-    "tip_sq": 0.0586,
-    "z_step": 0.201,
+    "tip_sq": 0.069,
+    "z_step": 0.203,
     "ear_xyz": [
      0.045,
      0.3023,
      0.1475
     ],
-    "shoe_x0": 0.2536,
+    "shoe_x0": 0.2432,
     "shoe_z0": 0.196,
-    "E": 100000000000.0,
-    "G": 5000000000.0,
-    "rpm_h": 5415.791721033196,
-    "rpm_c": 5994.054866878658,
-    "rpm_x": 9319.452696615961,
+    "E": 90200000000.0,
+    "G": 20500000000.0,
+    "rpm_h": 5757.16689868235,
+    "rpm_c": 4983.918745222161,
+    "rpm_x": 10468.232852367586,
     "lay_rec": 2,
     "t3": 0.003,
     "t2": 0.002,
     "n_h": 2.0,
     "tape": 0.06,
-    "m_gate": 2.6,
+    "m_gate": 2.7,
     "grav": 9.80665,
     "sf": 1.5,
     "fit": 1.15
@@ -4227,7 +4285,7 @@
     "y_fin": "P:fins.y_m",
     "od": "P:fins.tube.od_m",
     "idd": "P:fins.tube.id_m",
-    "mu": "P:wing.spar.mass_per_m_kgm",
+    "mu": "P:fins.tube.mass_per_m_kgm",
     "tube_len": "P:fin_detail.tube_length_m",
     "z_st": "P:propulsion.stations.z_m",
     "x_face": "CL-D3-X-FACE",
@@ -4286,8 +4344,8 @@
     "ear_xyz": "P:fins.stations.collar_end_xyz_m",
     "shoe_x0": "P:fin_detail.fin.tip_clear_x_m",
     "shoe_z0": "ASM-C4-SHOE-Z0",
-    "E": "ASM-J1-E-TUBE",
-    "G": "ASM-C4-G-TUBE",
+    "E": "CL-C4-TUBE-E",
+    "G": "CL-C4-TUBE-G",
     "f_level": "CL-C1-FOOT-MAX",
     "f_corner": "CL-C1-FOOT-CORNER",
     "mu_hi": "ASM-C1-FRICTION",
@@ -4434,30 +4492,30 @@
     "ASM-C4-FACE-SIGMA"
    ],
    "outputs": {
-    "ms_face_prop": -0.6095144946359856,
-    "face_ult_prop_pa": 25609145.186267294,
-    "ms_face_intact_prop": -0.6095144946359856,
-    "ms_face_failsafe_prop": -0.053404995892556095,
-    "ms_face_envelope_prop": -0.6095144946359856,
-    "ms_face_drawn_fine": -0.6438355954060926,
-    "face_ult_drawn_fine_pa": 28076921.418921217,
-    "ms_min_prop": -0.6095144946359856,
-    "ms_strip_paper_prop": -0.8003048890938446,
-    "collar_t_lim_prop_nm": 6.912281994288605,
-    "dfoot_L4_prop_m": 0.010691194131866928,
-    "governing_prop": "edge: L4- up_rf; face: L4+ lo_rf; mroot: L4- up_rf; q_face: L4+ up_cr; strip_end: L4- up_rf; t_collar: L4+ up_rf; t_root: L4+ lo_rf; tube: L4- up_rf",
+    "ms_face_prop": -0.35258425766067736,
+    "face_ult_prop_pa": 15446025.399176676,
+    "ms_face_intact_prop": -0.35258425766067736,
+    "ms_face_failsafe_prop": 0.4540000178008292,
+    "ms_face_envelope_prop": -0.35258425766067736,
+    "ms_face_drawn_fine": -0.565960085250866,
+    "face_ult_drawn_fine_pa": 23039355.737086512,
+    "ms_min_prop": -0.35258425766067736,
+    "ms_strip_paper_prop": -0.7965396993364398,
+    "collar_t_lim_prop_nm": 7.550935172389657,
+    "dfoot_L4_prop_m": 0.005413538111637061,
+    "governing_prop": "edge: L4+ up_rf; face: L4- up_rf; mroot: L5+ lo_rf; q_face: L4- up_cr; strip_end: L4+ up_rf; t_collar: L4+ up_rf; t_root: L4+ lo_rf; tube: L5+ lo_rf",
     "cheek_extension_m": 0.024999999999999994
    },
    "input_values": {
     "tube_x": 0.045,
     "y_fin": 0.32,
-    "od": 0.022,
-    "idd": 0.02,
-    "mu": 0.102,
+    "od": 0.0221,
+    "idd": 0.01905,
+    "mu": 0.156,
     "tube_len": 0.344,
     "z_st": 0.19,
-    "x_face": 0.024349999999999997,
-    "x_prop": -0.012671971456221315,
+    "x_face": 0.028799999999999996,
+    "x_prop": -0.018175329818682324,
     "x_te": 0.32,
     "hh": 0.21,
     "le_gap": 0.0005,
@@ -4543,18 +4601,18 @@
      0.03043,
      -0.01662
     ],
-    "m_motor": 0.081,
-    "d_motor": 0.038,
-    "l_motor": 0.0265,
-    "m_prop": 0.017,
+    "m_motor": 0.108,
+    "d_motor": 0.035,
+    "l_motor": 0.036,
+    "m_prop": 0.02296,
     "m_adapt": 0.005,
-    "ip": 7.5e-05,
-    "i_bell": 1.5e-05,
+    "ip": 0.000102,
+    "i_bell": 2e-05,
     "mount": [
-     0.01085,
-     -0.0084,
-     0.0007,
-     -0.011
+     0.01624,
+     -0.0079,
+     -0.0011,
+     -0.008
     ],
     "cb_mass": [
      0.01159,
@@ -4564,8 +4622,8 @@
     "esc_x0": 0.078,
     "esc_len": 0.046,
     "esc_z": 0.118,
-    "landing_g": 60,
-    "cant": 7.0,
+    "landing_g": 80,
+    "cant": 10.0,
     "t_board": 0.0048,
     "areal": 0.2,
     "layers": 2,
@@ -4585,38 +4643,38 @@
     "chord": 0.32,
     "el_frac": 0.22,
     "slot_hw": 0.012,
-    "k_rock": 2200.0,
+    "k_rock": 3900.0,
     "k_twist": 30000.0,
     "k_root": 10000.0,
     "k_anchor": 30000000.0,
-    "tip_sq": 0.0586,
-    "z_step": 0.201,
+    "tip_sq": 0.069,
+    "z_step": 0.203,
     "ear_xyz": [
      0.045,
      0.3023,
      0.1475
     ],
-    "shoe_x0": 0.2536,
+    "shoe_x0": 0.2432,
     "shoe_z0": 0.196,
-    "E": 100000000000.0,
-    "G": 5000000000.0,
-    "f_level": 43.98538578322658,
-    "f_corner": 37.37228814357933,
+    "E": 90200000000.0,
+    "G": 20500000000.0,
+    "f_level": 45.67713139027375,
+    "f_corner": 41.38575931842226,
     "mu_hi": 0.4,
-    "foot_h": 0.048,
+    "foot_h": 0.053,
     "z_pad": 0.218,
-    "sw_f": 0.4871446634755346,
-    "sw_m": 0.06983448452429286,
+    "sw_f": 0.4367724237743866,
+    "sw_m": 0.06233328395950546,
     "sw_bad": 1.43,
     "sw_exp": 1.0,
-    "g3": 23.45829557927301,
-    "t_c1": 7.91638233935248,
+    "g3": 23.886520228600695,
+    "t_c1": 8.08458304715076,
     "side_c5": 24.5,
     "n_h": 2.0,
-    "m_gate": 2.6,
+    "m_gate": 2.7,
     "grav": 9.80665,
-    "t_lim": 21.1,
-    "q_mot": 0.42037891319631054,
+    "t_lim": 22.1,
+    "q_mot": 0.545025904014508,
     "sf": 1.5,
     "fit": 1.15,
     "prt": 1.25,
@@ -4691,46 +4749,46 @@
    },
    "tol": 1e-06,
    "outputs": {
-    "side_frac": 0.12186934340514748,
-    "side_lim_n": 2.5714431458486118,
-    "axial_lim_n": 2.2110675874746706,
-    "lateral_lim_n": 1.3128213800630857,
-    "twist_lim_nm": 0.1197644753299727,
-    "rock_lim_nm": 0.9222842732916305,
-    "axial_design_n": 4.767614485492259,
-    "twist_design_nm": 0.25824214993025363,
-    "rock_design_nm": 1.9886754642850784,
-    "shear_design_n": 45.24638645111175,
-    "c1_force_ratio": 1.0007073113445901,
-    "slip_use": 0.6702315081701116,
-    "ms_slip_hold": 0.49202176831440436,
-    "rock_g3_lim_nm": 0.7952362201373551,
-    "rock_g3_design_nm": 1.7147280996711718,
-    "g3_design_n": 50.581949842807425,
-    "rock_env_design_nm": 1.9886754642850784,
-    "cap_bearing_g3_pa": 766701.6522580121,
-    "ms_cap_bearing_g3": 38.12864921008979
+    "side_frac": 0.17364817766693033,
+    "side_lim_n": 3.8376247264391607,
+    "axial_lim_n": 3.299799826109213,
+    "lateral_lim_n": 1.9592561467523455,
+    "twist_lim_nm": 0.2051556751387804,
+    "rock_lim_nm": 1.1380033704249795,
+    "axial_design_n": 7.1151933750479905,
+    "twist_design_nm": 0.44236692451799525,
+    "rock_design_nm": 2.453819767478862,
+    "shear_design_n": 47.11893828919852,
+    "c1_force_ratio": 1.0590957931693286,
+    "slip_use": 0.9921727505120799,
+    "ms_slip_hold": 0.007888998648552192,
+    "rock_g3_lim_nm": 0.8169189918181438,
+    "rock_g3_design_nm": 1.7614815761078724,
+    "g3_design_n": 51.50530924292025,
+    "rock_env_design_nm": 2.453819767478862,
+    "cap_bearing_g3_pa": 522507.3919239847,
+    "ms_cap_bearing_g3": 56.41545567333228
    },
    "input_values": {
-    "T": 21.1,
-    "Q": 0.42037891319631054,
-    "cant": 7.0,
+    "T": 22.1,
+    "Q": 0.545025904014508,
+    "cant": 10.0,
     "y_fin": 0.32,
     "z_st": 0.19,
-    "x_prop": -0.012671971456221315,
+    "x_prop": -0.018175329818682324,
     "tube_x": 0.045,
     "tube_len": 0.344,
-    "od": 0.022,
-    "slip": 2.5,
-    "m_c1": 0.9854022286006237,
-    "f_c1": 31.627629418909514,
+    "od": 0.0221,
+    "slip": 2.55,
+    "m_c1": 1.4514446343869165,
+    "f_c1": 31.300284840901043,
     "sf": 1.5,
     "fit": 1.15,
     "prt": 1.25,
-    "g3": 23.45829557927301,
-    "x_face": 0.024349999999999997,
-    "l_motor": 0.0265,
-    "idd": 0.02,
+    "g3": 23.886520228600695,
+    "x_face": 0.028799999999999996,
+    "l_motor": 0.036,
+    "idd": 0.01905,
     "s_brg": 30000000.0
    }
   },
@@ -4787,35 +4845,35 @@
    ],
    "outputs": {
     "lig_min_m": 0.006,
-    "lig_diag_m": 0.012518284528683192,
-    "lig_diag_sharp_m": 0.013758836806279894,
+    "lig_diag_m": 0.012502432946004227,
+    "lig_diag_sharp_m": 0.013743194630785278,
     "rounds_clear_planes": 1.0,
-    "lig_diag_over_min": 2.086380754780532,
+    "lig_diag_over_min": 2.083738824334038,
     "h_core_m": 0.027710000000000002,
-    "M_design_nm": 23.071874999999995,
-    "F_design_n": 127.33029343271177,
-    "s_tube_bore_pa": 8403669.231519334,
-    "tau_shear_out_pa": 6438772.159981061,
-    "s_spar_bore_pa": 5015963.123021102,
-    "ms_tube_bore": 1.3799128034438497,
-    "ms_shear_out": 0.5530911409092962,
-    "ms_spar_bore": 2.9872701432370286,
-    "ms_web_bend": 0.7971483201950431,
-    "ms_web_torsion": 1.5160076482730607,
+    "M_design_nm": 23.201420246734635,
+    "F_design_n": 119.12412892387616,
+    "s_tube_bore_pa": 8398047.79663853,
+    "tau_shear_out_pa": 6521507.129737065,
+    "s_spar_bore_pa": 5032863.009317739,
+    "ms_tube_bore": 1.3815058552066541,
+    "ms_shear_out": 0.5333878812156081,
+    "ms_spar_bore": 2.9738812606209253,
+    "ms_web_bend": 0.787113933503083,
+    "ms_web_torsion": 1.5019595069043161,
     "ms_bond_torsion": 3.910300598987339,
-    "ms_min": 0.5530911409092962,
-    "spar_couple_n": 961.3281249999999,
-    "tube_couple_n": 1248.9286358715262
+    "ms_min": 0.5333878812156081,
+    "spar_couple_n": 966.7258436139431,
+    "tube_couple_n": 1255.9411898268477
    },
    "input_values": {
-    "m_des_c1": 22.47423126468575,
+    "m_des_c1": 23.201420246734635,
     "m_task": 10.7,
-    "f_ult": 88.57759543145167,
+    "f_ult": 82.86895925139211,
     "my_lim": 5.17,
     "sf": 1.5,
     "fit": 1.15,
     "prt": 1.25,
-    "d": 0.022,
+    "d": 0.0221,
     "d_spar": 0.022,
     "skin": [
      [
@@ -4911,7 +4969,7 @@
     "y_fin": "P:fins.y_m",
     "od": "P:fins.tube.od_m",
     "idd": "P:fins.tube.id_m",
-    "mu": "P:wing.spar.mass_per_m_kgm",
+    "mu": "P:fins.tube.mass_per_m_kgm",
     "tube_len": "P:fin_detail.tube_length_m",
     "z_st": "P:propulsion.stations.z_m",
     "x_face": "CL-D3-X-FACE",
@@ -5046,22 +5104,22 @@
    },
    "tol": 1e-06,
    "outputs": {
-    "area_up_m2": 0.04444615223118102,
-    "area_lo_m2": 0.046356781511547804,
+    "area_up_m2": 0.04443812463263566,
+    "area_lo_m2": 0.046348108593597226,
     "added_g": 0.0,
     "brace_delta_g": 0.0,
-    "total_g": 432.0
+    "total_g": 479.4
    },
    "input_values": {
     "tube_x": 0.045,
     "y_fin": 0.32,
-    "od": 0.022,
-    "idd": 0.02,
-    "mu": 0.102,
+    "od": 0.0221,
+    "idd": 0.01905,
+    "mu": 0.156,
     "tube_len": 0.344,
     "z_st": 0.19,
-    "x_face": 0.024349999999999997,
-    "x_prop": -0.012671971456221315,
+    "x_face": 0.028799999999999996,
+    "x_prop": -0.018175329818682324,
     "x_te": 0.32,
     "hh": 0.21,
     "le_gap": 0.0005,
@@ -5147,18 +5205,18 @@
      0.03043,
      -0.01662
     ],
-    "m_motor": 0.081,
-    "d_motor": 0.038,
-    "l_motor": 0.0265,
-    "m_prop": 0.017,
+    "m_motor": 0.108,
+    "d_motor": 0.035,
+    "l_motor": 0.036,
+    "m_prop": 0.02296,
     "m_adapt": 0.005,
-    "ip": 7.5e-05,
-    "i_bell": 1.5e-05,
+    "ip": 0.000102,
+    "i_bell": 2e-05,
     "mount": [
-     0.01085,
-     -0.0084,
-     0.0007,
-     -0.011
+     0.01624,
+     -0.0079,
+     -0.0011,
+     -0.008
     ],
     "cb_mass": [
      0.01159,
@@ -5168,8 +5226,8 @@
     "esc_x0": 0.078,
     "esc_len": 0.046,
     "esc_z": 0.118,
-    "landing_g": 60,
-    "cant": 7.0,
+    "landing_g": 80,
+    "cant": 10.0,
     "t_board": 0.0048,
     "areal": 0.2,
     "layers": 2,
@@ -5189,20 +5247,20 @@
     "chord": 0.32,
     "el_frac": 0.22,
     "slot_hw": 0.012,
-    "k_rock": 2200.0,
+    "k_rock": 3900.0,
     "k_twist": 30000.0,
     "k_root": 10000.0,
     "k_anchor": 30000000.0,
-    "tip_sq": 0.0586,
-    "z_step": 0.201,
+    "tip_sq": 0.069,
+    "z_step": 0.203,
     "ear_xyz": [
      0.045,
      0.3023,
      0.1475
     ],
-    "shoe_x0": 0.2536,
+    "shoe_x0": 0.2432,
     "shoe_z0": 0.196,
-    "m_d3": 432.0,
+    "m_d3": 479.4,
     "basis": [
      2,
      0.21,
@@ -5241,7 +5299,7 @@
    "cites": [
     "SRC-C4-LEISSA"
    ],
-   "value": 0.008687570991968041
+   "value": 0.008687569101011094
   },
   {
    "id": "CL-C4-D3-MESH-CONV",
@@ -5255,7 +5313,7 @@
     "value": 0.03
    },
    "how": "Meshes 6x5, 12x10, 24x20 on both quarters.",
-   "value": 0.008161296163468279
+   "value": 0.008596138682142596
   },
   {
    "id": "CL-C4-D3-SEP-1L",
@@ -5282,7 +5340,7 @@
    ],
    "how": "Tap test of one finished quarter, upper and lower (T-C4-TAP): FFT of the FC raw IMU; then hover VIBE < 30 m/s2, Clip 0.",
    "note": "C4-R6: record, limit removed (rejected one-layer option). FAILS: motor twist about the tube coupled with fore-aft nodding near 2P cruise (200 Hz); the one-layer board stores 45-70 % of the strain energy. Not the design of record: see CL-C4-D3-SEP.",
-   "value": 0.009125862572885168
+   "value": 0.05402272470102898
   },
   {
    "id": "CL-C4-D3-F1-1L",
@@ -5300,7 +5358,7 @@
     "FIN-001-LL"
    ],
    "how": "Tap test of one finished quarter, upper and lower (T-C4-TAP): FFT of the FC raw IMU; then hover VIBE < 30 m/s2, Clip 0.",
-   "value": 197.97846486363966
+   "value": 202.27282470359143
   },
   {
    "id": "CL-C4-D3-F1-UP",
@@ -5320,7 +5378,7 @@
     "FIN-003-UL"
    ],
    "how": "Tap test of one finished quarter, upper and lower (T-C4-TAP): FFT of the FC raw IMU; then hover VIBE < 30 m/s2, Clip 0.",
-   "value": 249.20747724267386
+   "value": 248.36696600060483
   },
   {
    "id": "CL-C4-D3-F1-LO",
@@ -5341,7 +5399,7 @@
    ],
    "how": "Tap test of one finished quarter, upper and lower (T-C4-TAP): FFT of the FC raw IMU; then hover VIBE < 30 m/s2, Clip 0.",
    "note": "The lower tube is 14 mm longer outside the bore (cambered wing); the lower quarter governs.",
-   "value": 243.3468317141885
+   "value": 241.12926035878337
   },
   {
    "id": "CL-C4-D3-PANEL",
@@ -5358,7 +5416,7 @@
    ],
    "how": "Tap the TE tip with the foot fitted.",
    "note": "Below the forcing band; < 10 % of its energy reaches the station.",
-   "value": 72.43250923553337
+   "value": 101.90070196848852
   },
   {
    "id": "CL-C4-D3-SEP",
@@ -5391,7 +5449,7 @@
     "FIN-003-LL"
    ],
    "how": "Tap test of one finished quarter, upper and lower (T-C4-TAP): FFT of the FC raw IMU; then hover VIBE < 30 m/s2, Clip 0.",
-   "value": 0.21794096209654246
+   "value": 0.2564995835745405
   },
   {
    "id": "CL-C4-D3-SEP-WORST",
@@ -5406,7 +5464,7 @@
    ],
    "how": "T-C4-TUBE-BEND and T-C4-TUBE-TORSION on the bought tube (I1, H1), then T-C4-TAP-D3.",
    "note": "D-93: the corner is an assumption (ASM-C4-E-TUBE-LO 70 GPa with ASM-C4-G-TUBE-LO 3 GPa), not a property of the bought tube. No mount stiffness reaches 0.20 there (CALC-C4-D3-MOUNT-K seps_lo), so the separation is closed on the measured tube: CL-C4-D3-TUBE-E-REQ is the T-C4-TUBE-BEND pass line.",
-   "value": 0.12800607378684004
+   "value": 0.0869079537927906
   },
   {
    "id": "CL-C4-D3-TUBE-E-REQ",
@@ -5417,7 +5475,7 @@
    "unit": "Pa",
    "limit": {
     "op": "<=",
-    "ref": "ASM-J1-E-TUBE"
+    "ref": "CL-C4-TUBE-E"
    },
    "verifies": [
     "R-VIBRATION"
@@ -5427,7 +5485,7 @@
     "FIN-002-L"
    ],
    "how": "T-C4-TUBE-BEND: measured E >= this value; then re-run CALC-C4-D3-WORST with the measured E and G (sep_op >= 0.20) before the first hover, and T-C4-TAP-D3.",
-   "value": 78631845509.55621
+   "value": 58218731845.21205
   },
   {
    "id": "CL-C4-D3-TUBE-G-REQ",
@@ -5438,7 +5496,7 @@
    "unit": "Pa",
    "limit": {
     "op": "<=",
-    "ref": "ASM-C4-G-TUBE"
+    "ref": "CL-C4-TUBE-G"
    },
    "verifies": [
     "R-VIBRATION"
@@ -5448,7 +5506,7 @@
     "FIN-002-L"
    ],
    "how": "T-C4-TUBE-TORSION: measured G >= this value (two lasers 0.30 m apart, CR-H1-24).",
-   "value": 4312333453.765495
+   "value": 7298242261.050405
   },
   {
    "id": "CL-C4-D3-SEP-WHIRL",
@@ -5469,7 +5527,7 @@
     "FIN-002-L"
    ],
    "how": "Tap test of one finished quarter, upper and lower (T-C4-TAP): FFT of the FC raw IMU; then hover VIBE < 30 m/s2, Clip 0.",
-   "value": 0.21205736789493446
+   "value": 0.2547696013129932
   },
   {
    "id": "CL-C4-D3-SEP-BAND",
@@ -5484,7 +5542,7 @@
    ],
    "how": "Needs every station mode >= 396 Hz; R-VIBRATION (operating points) is the criterion of record (CR-C4-06).",
    "note": "C4-R6: record, limit removed. R-VIBRATION is judged at the operating points (CL-C4-D3-SEP, CL-C4-SIM-SEP), not on the whole band (CR-C4-06). FAILS by design intent: no buildable 22 mm tube station reaches 396 Hz; rpm-tracking notch is the backup.",
-   "value": -0.26258535844185305
+   "value": -0.26930527164005036
   },
   {
    "id": "CL-C4-D3-MOUNT-K-REQ",
@@ -5507,7 +5565,7 @@
     "FIN-003-LL"
    ],
    "how": "T-C4-MOUNT-STIFF: side load at the prop nut on a mount clamped on a tube stub; rotation from two dial gauges; k = F a / theta.",
-   "value": 1641.8574642609717
+   "value": 2005.327928704082
   },
   {
    "id": "CL-C4-D3-MOUNT-K-EST",
@@ -5528,7 +5586,7 @@
    ],
    "how": "T-C4-MOUNT-STIFF (pass level >= CL-C4-D3-MOUNT-K-REQ, CR-H1-24 / D-91) in both directions.",
    "note": "D-91 (CR-H1-24): the R5 estimate 1 531 N m/rad was below the 2 229 need, capped by the 12 mm collar foundation (3 168). D-61 asked C4 to re-check the rocking stiffness with the cheeks +5 mm. The longer cheeks lengthen the nodding span (stiffer sway channel, softer nodding); the weaker axis is sway. The FE nominal (ASM-C4-MOUNT-K-ROCK) is set at or below this estimate.",
-   "value": 2259.359362866972
+   "value": 4303.5942317674135
   },
   {
    "id": "CL-C4-D3-MOUNT-K-EST-CHANGE",
@@ -5544,7 +5602,7 @@
     "FIN-003-LL"
    ],
    "how": "T-C4-MOUNT-STIFF on the R5 print.",
-   "value": 0.6396568811112013
+   "value": 1.0860766510483062
   },
   {
    "id": "CL-C4-D3-MS-FACE",
@@ -5564,7 +5622,7 @@
    ],
    "how": "T-C4-BOARD-COUPON for the face allowable; T-C4-FIN-PROOF at 1.5 x L4.",
    "note": "C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.",
-   "value": -0.6087069723893197
+   "value": -0.5562147885538324
   },
   {
    "id": "CL-C4-D3-MS-EDGE",
@@ -5587,7 +5645,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF.",
-   "value": 3.113599117767178
+   "value": 2.947230462872601
   },
   {
    "id": "CL-C4-D3-MS-TUBE",
@@ -5608,7 +5666,7 @@
     "FIN-002-L"
    ],
    "how": "T-C4-FIN-PROOF (G2 at the tube end).",
-   "value": 9.263918941124915
+   "value": 13.711301340968845
   },
   {
    "id": "CL-C4-D3-MS-BRACE",
@@ -5631,7 +5689,7 @@
     "FIN-009-LL"
    ],
    "how": "T-C4-FIN-PROOF G2 both senses; no visible bow.",
-   "value": 0.889960775959308
+   "value": 0.7854527315286184
   },
   {
    "id": "CL-C4-D3-BRACE-F",
@@ -5651,7 +5709,7 @@
     "FIN-010-LL"
    ],
    "how": "C2 checks the spar under the anchor.",
-   "value": 166.17287177736273
+   "value": 175.89948148268695
   },
   {
    "id": "CL-C4-D3-MS-BRACE-END",
@@ -5683,7 +5741,7 @@
     "FIN-010-LL"
    ],
    "how": "C6 lap-shear coupons; T-C4-FIN-PROOF.",
-   "value": 1.3108465051652987
+   "value": 1.183064991227933
   },
   {
    "id": "CL-C4-D3-MS-COLLAR",
@@ -5707,7 +5765,7 @@
     "FIN-008-LL"
    ],
    "how": "T-C4-FIN-PROOF at 1.5 x L4; witness line across collar and tube does not move.",
-   "value": 0.9444378306387926
+   "value": 0.8044752410272018
   },
   {
    "id": "CL-C4-D3-MS-ANCHOR",
@@ -5731,7 +5789,7 @@
     "FIN-010-LL"
    ],
    "how": "T-C4-FIN-PROOF G2 in the tension sense; C6 peel coupon PETG on CF.",
-   "value": 0.33095204077017404
+   "value": 0.25735517210430237
   },
   {
    "id": "CL-C4-D3-MS-EAR",
@@ -5754,7 +5812,7 @@
     "FIN-008-LL"
    ],
    "how": "T-C4-FIN-PROOF G2 both senses; print the collar with layers in x-y (ear bending loads the layer lines).",
-   "value": 5.45259447211541
+   "value": 5.095789167813381
   },
   {
    "id": "CL-C4-D3-COLLAR-T",
@@ -5771,7 +5829,7 @@
    ],
    "how": "T-C4-FIN-PROOF with the LE fillet left unbonded on one quarter; witness line across collar and tube.",
    "note": "Published for C6 (CR-C6-03, CR-C1-21): C6 reads this claim instead of ASM-C6-C4-COLLAR-T (9.3 N m, not a C4 output) and sizes the collar to the larger of it and C1's section torque, plus CL-C4-D3-BRACE-F as shear.",
-   "value": 6.918911044622888
+   "value": 7.548974250989517
   },
   {
    "id": "CL-C4-D3-COLLAR-T-INTACT",
@@ -5787,7 +5845,7 @@
     "FIN-008-LL"
    ],
    "how": "As CL-C4-D3-COLLAR-T.",
-   "value": 6.918911044622888
+   "value": 7.548974250989517
   },
   {
    "id": "CL-C4-D3-COLLAR-H-REQ",
@@ -5810,7 +5868,7 @@
     "FIN-008-LL"
    ],
    "how": "C6 lap-shear coupon on scuffed CF; T-C4-FIN-PROOF.",
-   "value": 0.011314324198666969
+   "value": 0.012191910146396048
   },
   {
    "id": "CL-C4-D3-TUBE-T-ROOT",
@@ -5824,7 +5882,7 @@
     "FIN-002-L"
    ],
    "how": "T-C4-FIN-PROOF.",
-   "value": 7.788565235560652
+   "value": 8.24722388026584
   },
   {
    "id": "CL-C4-D3-SIDE-LOAD",
@@ -5856,7 +5914,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF: no strip lift; T-C6-BOARD-LAP.",
-   "value": 2646.753792906537
+   "value": 2641.0345290233295
   },
   {
    "id": "CL-C4-D3-MS-STRIP-PAPER",
@@ -5876,7 +5934,7 @@
    ],
    "how": "T-C6-BOARD-LAP for the allowable; T-C4-FIN-PROOF at 1.5 x L4.",
    "note": "C4-R6: record, limit removed. Hypothetical strip with no pins; the drawn strips carry 2.5 mm through-pins at 15 mm (CL-C6-STRIP-PIN-RF), which is why this claim exists.",
-   "value": -0.8247785203198892
+   "value": -0.824399071331516
   },
   {
    "id": "CL-C4-D3-STRIP-END-F",
@@ -5897,7 +5955,7 @@
    ],
    "how": "T-C6-STRIP-ANCHOR.",
    "note": "Replaces the 1 348 N C6 derived from the strip allowable (CR-C6-01).",
-   "value": 1399.2006936227026
+   "value": 1458.4828824635965
   },
   {
    "id": "CL-C4-D3-STRIP-END-F-COINC",
@@ -5918,7 +5976,7 @@
    ],
    "how": "T-C6-STRIP-ANCHOR loads both slots.",
    "note": "The two strips of a pair are the two faces of the top edge; per face F = N/2 +/- M/d. The pair sum in the tongue is CL-C4-D3-STRIP-PAIR-F.",
-   "value": 1321.4051366932947
+   "value": 1369.5043412085417
   },
   {
    "id": "CL-C4-D3-STRIP-PAIR-F",
@@ -5938,7 +5996,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C6-STRIP-ANCHOR with both strips pulled together.",
-   "value": 137.5460461607808
+   "value": 138.2656897684427
   },
   {
    "id": "CL-C4-D3-STRIP-PIN-F",
@@ -5955,7 +6013,7 @@
    ],
    "how": "T-C4-FIN-PROOF with pins fitted; C6 pin coupon.",
    "note": "C6 sized the pins to 77 N (CL-C6-STRIP-PIN-RF 1.41); the FE load is lower.",
-   "value": 68.48475439145665
+   "value": 68.33676843847866
   },
   {
    "id": "CL-C4-D3-BRACE-10X2-SEP",
@@ -5975,7 +6033,7 @@
     "FIN-009-LL"
    ],
    "how": "T-C4-TAP-D3 on a 10 x 2 quarter.",
-   "value": 0.21794096209654246
+   "value": 0.2564995835745405
   },
   {
    "id": "CL-C4-D3-BRACE-10X2-MS",
@@ -5995,7 +6053,7 @@
     "FIN-009-LL"
    ],
    "how": "T-C4-FIN-PROOF G2 both senses.",
-   "value": 0.889960775959308
+   "value": 0.7854527315286184
   },
   {
    "id": "CL-C4-D3-BRACE-10X3-SEP",
@@ -6015,7 +6073,7 @@
     "FIN-009-LL"
    ],
    "how": "T-C4-TAP-D3.",
-   "value": 0.23003970673670593
+   "value": 0.26199326496047304
   },
   {
    "id": "CL-C4-D3-BRACE-SAVE",
@@ -6047,7 +6105,7 @@
     "FIN-003-LL"
    ],
    "how": "Check the printed plate angle with a protractor.",
-   "value": 0.12186934340514748
+   "value": 0.17364817766693033
   },
   {
    "id": "CL-C4-D3-MOUNT-AXIAL",
@@ -6063,7 +6121,7 @@
     "FIN-003-LL"
    ],
    "how": "T-D3-SLIP.",
-   "value": 4.767614485492259
+   "value": 7.1151933750479905
   },
   {
    "id": "CL-C4-D3-MOUNT-TWIST",
@@ -6079,7 +6137,7 @@
     "FIN-003-LL"
    ],
    "how": "T-D3-SLIP.",
-   "value": 0.25824214993025363
+   "value": 0.44236692451799525
   },
   {
    "id": "CL-C4-D3-MOUNT-ROCK",
@@ -6095,7 +6153,7 @@
     "FIN-003-LL"
    ],
    "how": "T-C4-MOUNT-STIFF (load to 1.5 x limit).",
-   "value": 1.9886754642850784
+   "value": 2.453819767478862
   },
   {
    "id": "CL-C4-D3-MOUNT-G3-ROCK",
@@ -6109,7 +6167,7 @@
     "FIN-003-LL"
    ],
    "how": "T-C4-FIN-PROOF G3 step on the test article.",
-   "value": 1.7147280996711718
+   "value": 1.7614815761078724
   },
   {
    "id": "CL-C4-D3-MS-CAP-G3",
@@ -6132,7 +6190,7 @@
     "FIN-002-L"
    ],
    "how": "T-C4-FIN-PROOF G3 step: no cap crush, mount does not slide down the tube.",
-   "value": 38.12864921008979
+   "value": 56.41545567333228
   },
   {
    "id": "CL-C4-D3-MS-MOUNT-SLIP",
@@ -6155,7 +6213,7 @@
     "FIN-003-LL"
    ],
    "how": "T-D3-SLIP: set 2.5 N m; witness line checked before every flight.",
-   "value": 0.49202176831440436
+   "value": 0.007888998648552192
   },
   {
    "id": "CL-C4-D3-FOOT-DEFL",
@@ -6171,7 +6229,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF: dial gauge at the foot.",
-   "value": 0.011747243406382725
+   "value": 0.006323987807172637
   },
   {
    "id": "CL-C4-D3-BLOCK-LIG",
@@ -6189,7 +6247,7 @@
     "FIN-004-L"
    ],
    "how": "Measure the printed block (calipers) against the CAD.",
-   "value": 2.086380754780532
+   "value": 2.083738824334038
   },
   {
    "id": "CL-C4-D3-BLOCK-MS",
@@ -6211,7 +6269,7 @@
     "FIN-004-L"
    ],
    "how": "T-C4-BLOCK-PROOF (30 N m for 1 min on a block in a core offcut).",
-   "value": 0.5530911409092962
+   "value": 0.5333878812156081
   },
   {
    "id": "CL-C4-D3-SPAR-COUPLE",
@@ -6225,7 +6283,7 @@
     "FIN-004-L"
    ],
    "how": "C2 spar crushing check (CR-C4-02).",
-   "value": 961.3281249999999
+   "value": 966.7258436139431
   },
   {
    "id": "CL-C4-D3-MS-FACE-ROOT-FREE",
@@ -6241,7 +6299,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF on the test article built without the root fillet.",
-   "value": -0.6087069723893197
+   "value": -0.5562147885538324
   },
   {
    "id": "CL-C4-D3-FILLET-L4-SHARE",
@@ -6257,7 +6315,7 @@
     "FIN-001-LL"
    ],
    "how": "Strain gauge on the skin beside the fillet in T-C1-WING-PROOF; C2 re-runs its FEA on this split.",
-   "value": 0.007147576549595893
+   "value": 0.006996851706377681
   },
   {
    "id": "CL-C4-D3-FILLET-L4-AFT-FX",
@@ -6274,7 +6332,7 @@
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
    "note": "C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.",
-   "value": 3.765374989326799
+   "value": 6.548260990423298
   },
   {
    "id": "CL-C4-D3-FILLET-L4-AFT-FY",
@@ -6291,7 +6349,7 @@
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
    "note": "C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.",
-   "value": 4.842031620427537
+   "value": 4.079489458410839
   },
   {
    "id": "CL-C4-D3-FILLET-L4-AFT-FZ",
@@ -6308,7 +6366,7 @@
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
    "note": "C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.",
-   "value": 16.546955211429772
+   "value": 20.97732053049811
   },
   {
    "id": "CL-C4-D3-FILLET-L4-AFT-MX",
@@ -6325,7 +6383,7 @@
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
    "note": "C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.",
-   "value": 0.009229134804918115
+   "value": 0.0028742778973015713
   },
   {
    "id": "CL-C4-D3-FILLET-L4-FORE-FX",
@@ -6342,7 +6400,7 @@
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
    "note": "C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.",
-   "value": 14.213098466680814
+   "value": 21.201693897830687
   },
   {
    "id": "CL-C4-D3-FILLET-L4-FORE-FY",
@@ -6359,7 +6417,7 @@
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
    "note": "C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.",
-   "value": 1.7255942264452755
+   "value": 1.7715660747958428
   },
   {
    "id": "CL-C4-D3-FILLET-L4-FORE-FZ",
@@ -6376,7 +6434,7 @@
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
    "note": "C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.",
-   "value": 9.317437962176658
+   "value": 14.289327275891853
   },
   {
    "id": "CL-C4-D3-FILLET-L4-FORE-MX",
@@ -6393,7 +6451,7 @@
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
    "note": "C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.",
-   "value": 0.010585696187077205
+   "value": 0.0070926384874059785
   },
   {
    "id": "CL-C4-D3-FILLET-G2-SHARE",
@@ -6409,7 +6467,7 @@
     "FIN-001-LL"
    ],
    "how": "Strain gauge on the skin beside the fillet in T-C1-WING-PROOF; C2 re-runs its FEA on this split.",
-   "value": 0.00011890312197136176
+   "value": 0.00013560550462464452
   },
   {
    "id": "CL-C4-D3-FILLET-G2-AFT-FX",
@@ -6426,7 +6484,7 @@
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
    "note": "C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.",
-   "value": 2.325552853880224
+   "value": 2.5976269275771324
   },
   {
    "id": "CL-C4-D3-FILLET-G2-AFT-FY",
@@ -6443,7 +6501,7 @@
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
    "note": "C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.",
-   "value": 0.07260347268193523
+   "value": 0.012341919579996098
   },
   {
    "id": "CL-C4-D3-FILLET-G2-AFT-FZ",
@@ -6460,7 +6518,7 @@
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
    "note": "C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.",
-   "value": 6.188476123400305
+   "value": 6.013722792236322
   },
   {
    "id": "CL-C4-D3-FILLET-G2-AFT-MX",
@@ -6477,7 +6535,7 @@
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
    "note": "C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.",
-   "value": 0.00019904634200890804
+   "value": 2.5272860357808916e-05
   },
   {
    "id": "CL-C4-D3-FILLET-G2-FORE-FX",
@@ -6494,7 +6552,7 @@
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
    "note": "C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.",
-   "value": 10.02106325474674
+   "value": 10.230306872990221
   },
   {
    "id": "CL-C4-D3-FILLET-G2-FORE-FY",
@@ -6511,7 +6569,7 @@
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
    "note": "C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.",
-   "value": 0.03289956336089972
+   "value": 0.05402997291075425
   },
   {
    "id": "CL-C4-D3-FILLET-G2-FORE-FZ",
@@ -6528,7 +6586,7 @@
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
    "note": "C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.",
-   "value": 4.4383539423835625
+   "value": 4.826862040435217
   },
   {
    "id": "CL-C4-D3-FILLET-G2-FORE-MX",
@@ -6545,7 +6603,7 @@
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
    "note": "C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.",
-   "value": 0.00044791663277082415
+   "value": 0.00023111298349381073
   },
   {
    "id": "CL-C4-D3-FINS-MASS",
@@ -6566,7 +6624,7 @@
    ],
    "how": "T-D3-WEIGH; A3 roll-up.",
    "note": "Allocation 408 g since D-26/D-38 (CR-C4-15 closed). Falls back to CL-D3-MASS alone once D3 re-runs make_fins.py at R3 and ASM-C4-D3-MASS-BASIS is set to (2, 0.21).",
-   "value": 432.0
+   "value": 479.4
   },
   {
    "id": "CL-C4-D3-LAYER-ADD",
@@ -6605,7 +6663,7 @@
    ],
    "how": "T-C4-FIN-PROOF L4 step: load cell on the foot.",
    "note": "Section total (tube root + fin root + brace anchor). The collar torque CL-C4-D3-COLLAR-T is an internal path quantity and is smaller; C6 sizes the collar to the larger of the two (CR-C1-21).",
-   "value": 7.913500003235472
+   "value": 8.03600000085999
   },
   {
    "id": "CL-C4-D3-SEC-T-VS-C1",
@@ -6626,7 +6684,7 @@
    ],
    "how": "Re-run fin_structures_d3.py after any C1 or D5 foot-geometry change.",
    "note": "CR-C1-21 equilibrium check: same foot load and ground point as C1 within 5 %.",
-   "value": 0.0003640976387256911
+   "value": 0.006009344700576902
   },
   {
    "id": "CL-C4-D3-EQ-RESID",
@@ -6646,7 +6704,7 @@
     "FIN-001-LL"
    ],
    "how": "Re-run fin_structures_d3.py.",
-   "value": 1.811163996556786e-07
+   "value": 4.0863923356226906e-08
   },
   {
    "id": "CL-C4-D3-SWIRL-F",
@@ -6662,7 +6720,7 @@
     "FIN-001-LL"
    ],
    "how": "B4 tuft/flow check in hover; T-C4-FIN-PROOF covers it (L4 side load is 4 x larger).",
-   "value": 4.733522660643543
+   "value": 4.774235774628365
   },
   {
    "id": "CL-C4-D3-BRACE-G3",
@@ -6676,7 +6734,7 @@
     "FIN-009-LL"
    ],
    "how": "T-C4-FIN-PROOF G3 step.",
-   "value": 2.6488568419268614
+   "value": 2.806548672349087
   },
   {
    "id": "CL-C4-D3-MS-COLLAR-16",
@@ -6697,7 +6755,7 @@
    ],
    "how": "As CL-C4-D3-MS-COLLAR.",
    "note": "Torsion from the 12 mm model; the 16 mm band changes it by < 3 % (results_d3.json collar_16mm).",
-   "value": 0.4141366041009402
+   "value": 0.3123456298379652
   },
   {
    "id": "CL-C4-D3-F-WHIRL-CRUISE",
@@ -6715,7 +6773,7 @@
     "FIN-003-LL"
    ],
    "how": "Tap test of one finished quarter, upper and lower (T-C4-TAP): FFT of the FC raw IMU; then hover VIBE < 30 m/s2, Clip 0.",
-   "value": 242.17127883222557
+   "value": 240.88029819802608
   },
   {
    "id": "CL-C4-D3-BRACE-ROUND-I",
@@ -6752,7 +6810,7 @@
     "FIN-009-LL"
    ],
    "how": "T-C4-FIN-PROOF G2 both senses.",
-   "value": 0.7346243791171949
+   "value": 0.6387058796492249
   },
   {
    "id": "CL-C4-D3-MS-FACE-SHOE",
@@ -6772,7 +6830,7 @@
    ],
    "how": "T-C4-FIN-PROOF with the extended shoe; T-C4-BOARD-COUPON for the face allowable.",
    "note": "C4-R6 (CDR-01 e): record, limit removed. The shell model's largest face stress sits at the end of the rigid LE link (x 0.060) and at the rigid shoe edge, two idealised corners where it rises with every mesh level. The 3-D solid model has the collar tail tongue and the LE fillet zone at their own stiffness and converges away from the shoe; its claims carry the limit: CL-C4-SIM-MS-FACE-FAR (whole face, one laminate thickness clear of the shoe and clamps) and CL-C4-SIM-MS-FACE-DRAWN (IIW hot spot at the leg edge). T-C4-FIN-PROOF decides.",
-   "value": -0.6095144946359856
+   "value": -0.35258425766067736
   },
   {
    "id": "CL-C4-D3-MS-FACE-SHOE-INTACT",
@@ -6789,7 +6847,7 @@
    ],
    "how": "T-C4-FIN-PROOF (bonded quarter) at 1.5 x L4.",
    "note": "C4-R6 (CDR-01 e): record, limit removed. The shell model's largest face stress sits at the end of the rigid LE link (x 0.060) and at the rigid shoe edge, two idealised corners where it rises with every mesh level. The 3-D solid model has the collar tail tongue and the LE fillet zone at their own stiffness and converges away from the shoe; its claims carry the limit: CL-C4-SIM-MS-FACE-FAR (whole face, one laminate thickness clear of the shoe and clamps) and CL-C4-SIM-MS-FACE-DRAWN (IIW hot spot at the leg edge). T-C4-FIN-PROOF decides.",
-   "value": -0.6095144946359856
+   "value": -0.35258425766067736
   },
   {
    "id": "CL-C4-D3-MS-FACE-SHOE-FS",
@@ -6806,7 +6864,7 @@
    ],
    "how": "T-C4-FIN-PROOF: the test-article quarter is built with the LE fillet unbonded.",
    "note": "C4-R6 (CDR-01 e): record, limit removed. The shell model's largest face stress sits at the end of the rigid LE link (x 0.060) and at the rigid shoe edge, two idealised corners where it rises with every mesh level. The 3-D solid model has the collar tail tongue and the LE fillet zone at their own stiffness and converges away from the shoe; its claims carry the limit: CL-C4-SIM-MS-FACE-FAR (whole face, one laminate thickness clear of the shoe and clamps) and CL-C4-SIM-MS-FACE-DRAWN (IIW hot spot at the leg edge). T-C4-FIN-PROOF decides. Peak at the end of the bonded LE band (x 0.060, z 0.033 / 0.149): a corner that does not converge with mesh (24 x 20: 7.9, 36 x 30: 9.9 MPa limit); the test decides.",
-   "value": -0.053404995892556095
+   "value": 0.4540000178008292
   },
   {
    "id": "CL-C4-D3-MS-FACE-DRAWN-FINE",
@@ -6823,7 +6881,7 @@
    ],
    "how": "Mesh check of CL-C4-D3-MS-FACE (24 x 20); both fail.",
    "note": "C4-R6 (D-106): record, limit removed. This is the shoe before D-106 (legs 7 mm, stiff zone to |z| 0.196); the part as drawn is checked by CL-C4-SIM-MS-FACE-DRAWN / -FAR (3-D) and CL-C4-D3-MS-FACE-SHOE*.",
-   "value": -0.6438355954060926
+   "value": -0.565960085250866
   },
   {
    "id": "CL-C4-D3-SHOE-EXT",
@@ -6880,7 +6938,7 @@
     "CL-C4-D3-MS-FACE-ROOT-FREE"
    ],
    "state": "planned",
-   "procedure": "Test article built with flight processes but never flown: one LOWER quarter (it carries G3 and the longer free tube) = one 0.21 m half-fin cut from the flight board batch (two 4.8 mm layers laminated), CF 22 x 20 tube offcut 0.20 m, PETG through-core block (R 3 mm vertical edges) bonded on a 0.15 m spar offcut in a 0.15 m core offcut, plug, station collar as drawn (13 mm), CF 10 x 2 brace 0.16 m with anchor saddle on the same spar offcut, CF 10 x 1 edge strips x 2 with 2.5 mm CF pins at 15 mm, strip tails bonded in the collar tongue (D-70 inspection), R5 ASA mount (cheeks 17 mm) with a dummy motor (steel slug at the motor CG, M3 x 8 into the plate), D5 shoe AS DRAWN (legs 7 mm, 8 mm cheeks over both strip ends, CR-C4-36), LE fillet LEFT UNBONDED and the ROOT FILLET LEFT OFF (primary path only, CR-C2-12), 30 min epoxy as in BUILD. Steps, each held 30 s, loads at 1.5 x limit through a hand-held spring scale or hung weights: (1) L4 at the C1 ground point 56 N along + 37 N across (C5 3-D side load, D-65), both senses; (2) G2 76 N lateral at the tube end, both senses; (3) G3 35 N on the dummy can toward the wing. Pass: no crack, face wrinkle, strip lift, pin push-out or bond-line movement (witness lines on collar, strip ends, brace ends, anchor); foot deflection at 1.0 x L4 <= 1.2 x CL-C4-D3-FOOT-DEFL. Then load step (1) to failure and record the load and the failed part. If step (1) fails below 1.5 x, fit the extended cheeks (CR-C4-30, |z| 0.171 m) on a second article and repeat. Flight fins get a 1.0 x limit L4 hand check only."
+   "procedure": "Test article built with flight processes but never flown: one LOWER quarter (it carries G3 and the longer free tube) = one 0.21 m half-fin cut from the flight board batch (two 4.8 mm layers laminated), CF 22 x 20 tube offcut 0.20 m, PETG through-core block (R 3 mm vertical edges) bonded on a 0.15 m spar offcut in a 0.15 m core offcut, plug, station collar as drawn (13 mm), CF 10 x 2 brace 0.16 m with anchor saddle on the same spar offcut, CF 10 x 1 edge strips x 2 with 2.5 mm CF pins at 15 mm, strip tails bonded in the collar tongue (D-70 inspection), R5 ASA mount (cheeks 17 mm) with a dummy motor (steel slug at the motor CG, M3 x 8 into the plate), D5 shoe AS DRAWN (legs 7 mm, 8 mm cheeks over both strip ends, CR-C4-36), LE fillet LEFT UNBONDED and the ROOT FILLET LEFT OFF (primary path only, CR-C2-12), 30 min epoxy as in BUILD. Steps, each held 30 s, loads at 1.5 x limit through a hand-held spring scale or hung weights: (1) L4 at the C1 ground point 62 N along + 37 N across (C5 3-D side load, D-65), both senses; (2) G2 79 N lateral at the tube end, both senses; (3) G3 35 N on the dummy can toward the wing. Pass: no crack, face wrinkle, strip lift, pin push-out or bond-line movement (witness lines on collar, strip ends, brace ends, anchor); foot deflection at 1.0 x L4 <= 1.2 x CL-C4-D3-FOOT-DEFL. Then load step (1) to failure and record the load and the failed part. If step (1) fails below 1.5 x, fit the extended cheeks (CR-C4-30, |z| 0.171 m) on a second article and repeat. Flight fins get a 1.0 x limit L4 hand check only."
   },
   {
    "id": "T-C4-MOUNT-STIFF",

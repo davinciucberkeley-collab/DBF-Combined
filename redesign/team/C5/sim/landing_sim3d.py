@@ -273,12 +273,39 @@ def simulate(inp, cases, dt=4e-5, t_end=0.3, k_pad=K_PAD, m_f=None, eps_v=EPS_V,
     u = -np.einsum("nij,j->ni", R, a_b)
     out["tilt_end"] = np.degrees(np.arccos(np.clip(u[:, 2], -1, 1)))
     out["tipped"] = out["tilt_end"] > 50.0                  # past every static tip angle (32-45 deg)
+    out["sp_end"] = sp.copy()                                # C5 closure 11-14: plastic set per foot at t_end (record only)
     return {k: v_.tolist() for k, v_ in out.items()}
 
 
 # ------------------------------------------------------------------ case sets
 def lean_deg(inp, V, area, m):
     return math.degrees(math.atan(0.5 * inp["rho"] * V * V * area * inp["cd90"] / (m * G0)))
+
+
+HEADING_AZ = tuple(30.0 * k for k in range(12))   # C5-W2: lean azimuth from the +z pad line, 30 deg grid
+HEADING_V = tuple(round(3.5 + 0.1 * k, 2) for k in range(36))   # 3.5 .. 7.0 m/s, 0.1 m/s grid
+
+
+def heading_cases(inp, m, Vs, az_deg, modes=("lull", "steady")):
+    """C5-W2 (C5.md section 4, D-152): wind cases of section 3 with the lean toward azimuth az from the +z pad line
+    (0 = pod (+z) face to the wind, 90 = a wingtip to the wind, 180 = belly (-z) face to the wind). Touchdown tilt =
+    lean(V) + err, drift v_td the same way, lull and steady wind, sink 0.5 and the design sink. The lean uses the full
+    broadside area at every azimuth (conservative off the pure broadside). Same as dr1114/broadside_levers.cases_for."""
+    S_b = inp["span"] * inp["chord"]
+    ar = math.radians(az_deg)
+    out, keys = [], []
+    for mode in modes:
+        for vs in (inp["v_normal"], inp["v_sink"]):
+            for V in Vs:
+                tilt = lean_deg(inp, V, S_b, m) + inp["err"]
+                D = 0.5 * inp["rho"] * V * V * S_b * inp["cd90"] if mode == "steady" else 0.0
+                # +theta lowers the +z feet (world +X); a lean toward world -Y is phi > 0
+                out.append(dict(m=m, I_scale=m / inp["m_a3"], theta=tilt * math.cos(ar), phi=tilt * math.sin(ar),
+                                v_sink=vs, lam=inp["lam"],
+                                drift=(inp["v_td"] * math.cos(ar), -inp["v_td"] * math.sin(ar)),
+                                wind=(-D * math.cos(ar), D * math.sin(ar))))
+                keys.append(("%s/%.1f" % (mode, vs), V, tilt))
+    return out, keys
 
 
 def disc_cases(inp, m, I_scale, lam, v, mags=(0.0, 2.5, 5.0, 7.5, 10.0), n_az=24):
@@ -419,6 +446,28 @@ def main():
                                                                               w_["tilt_limit_deg"]), flush=True)
     out["wind"] = wind
     print("(%.0f s)" % (time.time() - t0), flush=True)
+
+    # 3b. C5-W2 (D-152): landing heading. The same wind cases with the lean toward each azimuth (30 deg grid, 0.1 m/s
+    #     wind grid); landing_sim_claims.py takes the claim at the heading Q_WVANE_LAND commands (fsw.wvane_land) +/- 30
+    head = {}
+    for az in HEADING_AZ:
+        cs, keys = heading_cases(inp, m1, HEADING_V, az)
+        res = simulate(inp, cs, t_end=2.0)
+        tab = {}
+        for i, (key, V, tilt) in enumerate(keys):
+            tab.setdefault(key, []).append((V, tilt, bool(res["tipped"][i])))
+        by = {}
+        for key, rows in tab.items():
+            first = next((j for j, r_ in enumerate(rows) if r_[2]), None)
+            by[key] = {"v_limit_ms": rows[-1][0] if first is None else (rows[first - 1][0] if first > 0 else 0.0),
+                       "tilt_tip_deg": None if first is None else rows[first][1], "top_of_sweep": first is None}
+        head["%.0f" % az] = {"by_mode": by,
+                             "v_lull_ms": min(v_["v_limit_ms"] for k_, v_ in by.items() if k_.startswith("lull")),
+                             "v_all_ms": min(v_["v_limit_ms"] for v_ in by.values())}
+        print("heading az %3.0f: lull %.1f  all %.1f  %s (%.0f s)" % (az, head["%.0f" % az]["v_lull_ms"],
+              head["%.0f" % az]["v_all_ms"], {k_: v_["v_limit_ms"] for k_, v_ in by.items()}, time.time() - t0),
+              flush=True)
+    out["heading"] = {"az_deg": list(HEADING_AZ), "V_ms": list(HEADING_V), "mass_kg": m1, "rows": head}
 
     # 4. convergence: time-step ladder on the governing hard-landing case and on the tip-over threshold
     wc = env["gate"]["worst_case"]

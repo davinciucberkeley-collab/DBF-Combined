@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 19.93,
+ "render_s": 68.04,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -150,7 +150,7 @@
    "role": "ghost",
    "name": "Pod shell (foam-board box, XPS LE filler, printed nose lip and antenna tube B)",
    "status": "MODELLED",
-   "mass_g": 24.8,
+   "mass_g": 24.7,
    "subsystem": "pod",
    "bbox_px": [
     408,
@@ -192,11 +192,11 @@
    "role": "context",
    "name": "Crush block (XPS F-250, hot-wired, cut per pack, vent groove)",
    "status": "MODELLED",
-   "mass_g": 2.2,
+   "mass_g": 2.1,
    "subsystem": "pod",
    "bbox_px": [
     528,
-    586,
+    592,
     710,
     836
    ]
@@ -206,11 +206,11 @@
    "role": "context",
    "name": "Spreader (1.5 mm PETG plate, full block section)",
    "status": "MODELLED",
-   "mass_g": 5.3,
+   "mass_g": 5.1,
    "subsystem": "pod",
    "bbox_px": [
-    585,
-    583,
+    586,
+    589,
     713,
     791
    ]
@@ -336,9 +336,9 @@
    "subsystem": "power",
    "bbox_px": [
     807,
-    580,
+    574,
     984,
-    729
+    723
    ]
   },
   {
@@ -490,9 +490,9 @@
    "subsystem": "harness",
    "bbox_px": [
     911,
-    573,
+    572,
     965,
-    605
+    600
    ]
   },
   {
@@ -504,7 +504,7 @@
    "subsystem": "harness",
    "bbox_px": [
     875,
-    593,
+    588,
     981,
     703
    ]
@@ -802,6 +802,7 @@
   "WNG-005-R",
   "WNG-006-L",
   "WNG-006-R",
+  "WNG-008",
   "WNG-011-L",
   "WNG-011-R",
   "WNG-012-L",

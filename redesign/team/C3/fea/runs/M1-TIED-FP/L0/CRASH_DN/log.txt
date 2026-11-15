@@ -114,6 +114,7 @@ Restart file name: restart.csv.
 |                                   |                              seg37|
 |                                   |                              seg38|
 |                                   |                              seg39|
+|                                   |                              seg40|
 +-----------------------------------------------------------------------+
 
 -------------------- Output Preprocessing ( Zone 0 ) --------------------
@@ -127,9 +128,9 @@ Volume output fields: COORDINATES, SOLUTION
 
 ------------------- Geometry Preprocessing ( Zone 0 ) -------------------
 Two dimensional problem.
-4951 grid points.
-9519 volume elements.
-41 surface markers.
+5015 grid points.
+9643 volume elements.
+42 surface markers.
 61 boundary elements in index 0 (Marker = spar).
 2 boundary elements in index 1 (Marker = seg00).
 2 boundary elements in index 2 (Marker = seg01).
@@ -161,8 +162,8 @@ Two dimensional problem.
 2 boundary elements in index 28 (Marker = seg27).
 2 boundary elements in index 29 (Marker = seg28).
 2 boundary elements in index 30 (Marker = seg29).
-3 boundary elements in index 31 (Marker = seg30).
-4 boundary elements in index 32 (Marker = seg31).
+2 boundary elements in index 31 (Marker = seg30).
+3 boundary elements in index 32 (Marker = seg31).
 4 boundary elements in index 33 (Marker = seg32).
 4 boundary elements in index 34 (Marker = seg33).
 4 boundary elements in index 35 (Marker = seg34).
@@ -170,8 +171,9 @@ Two dimensional problem.
 4 boundary elements in index 37 (Marker = seg36).
 4 boundary elements in index 38 (Marker = seg37).
 4 boundary elements in index 39 (Marker = seg38).
-8 boundary elements in index 40 (Marker = seg39).
-9519 triangles.
+4 boundary elements in index 40 (Marker = seg39).
+8 boundary elements in index 41 (Marker = seg40).
+9643 triangles.
 Setting point connectivity.
 Renumbering points (Reverse Cuthill McKee Ordering).
 Recomputing point connectivity.
@@ -181,13 +183,13 @@ All volume elements are correctly oriented.
 There has been a re-orientation of 61 LINE surface elements.
 Identifying edges and vertices.
 Setting the control volume structure.
-Area of the computational grid: 0.0189511.
+Area of the computational grid: 0.0194075.
 Searching for the closest normal neighbors to the surfaces.
 Storing a mapping from global to local point index.
-Surface area = 0.268516 m.
+Surface area = 0.275516 m.
 Area projection in the x-plane = 0.0215333 m, y-plane = 0.0221394 m.
 Max. coordinate in the x-direction = 0.091 m, y-direction = 0.0198 m.
-Min. coordinate in the x-direction = -0.1352 m, y-direction = -0.0044 m.
+Min. coordinate in the x-direction = -0.1422 m, y-direction = -0.0044 m.
 Computing wall distances.
 
 -------------------- Solver Preprocessing ( Zone 0 ) --------------------
@@ -214,7 +216,7 @@ All convergence criteria satisfied.
 +-----------------------------------------------------------------------+
 |      Convergence Field     |     Value    |   Criterion  |  Converged |
 +-----------------------------------------------------------------------+
-|                  rms[DispX]|      -10.3181|         < -14|          No|
+|                  rms[DispX]|      -10.1459|         < -14|          No|
 +-----------------------------------------------------------------------+
 -------------------------------------------------------------------------
 +-----------------------------------------------------------------------+

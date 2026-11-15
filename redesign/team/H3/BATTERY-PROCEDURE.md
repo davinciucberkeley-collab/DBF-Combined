@@ -41,8 +41,8 @@ One **battery lead** (named by the team) owns the pack log and does all charging
 1. Only in the named place: **the team workspace, on a non-flammable surface, indoors with the door open or outdoors under cover, never in a car, never unattended** (`R-BATT-HANDLING`). The place is named by the team lead (`CR-H3-05`); Jacobs LiPo policy is not stated on its pages (checked 2026-11-13).
 2. Bag the pack, sand within reach, phone in hand.
 3. Inspect again: no puffing, dents or damaged leads, balance lead intact.
-4. Charger in **balance mode**, balance lead connected, charge current per E2 (1C, `ENERGY.md` section 5), 4S selected; check the charger shows 4 cells before starting.
-5. **Charge to 4.20 V per cell only the afternoon before a flying morning**; if the pack will not fly within 48 h, return it to storage (3.80-3.85 V per cell, charger STORAGE mode) (`ENERGY.md` section 5).
+4. Charger in **balance mode**, balance lead connected, charge current per E2 (1C = 6 A, `ENERGY.md` section 5; the charger must give >= 6 A), 4S selected, **chemistry set to LiHV**; check the charger shows 4 cells and a 4.35 V per cell target (17.4 V) before starting. If the charger has no LiHV mode, **do not charge the pack in LiPo mode and do not raise the limit by hand**: the pack then reaches only 4.20 V (16.8 V), below the 17.0 V arming voltage, and does not fly (H1 / I1: confirm the HTRC C150 LiHV mode on arrival, `G01`).
+5. **Charge to 4.35 V per cell (LiHV) only the afternoon before a flying morning**; if the pack will not fly within 48 h, return it to storage (3.80-3.85 V per cell, charger STORAGE mode, LiHV chemistry) (`ENERGY.md` section 5). A pack at 4.35 V is at its limit: never leave it charged overnight in a car, and the sand bucket stays at 5 m.
 6. Charge only between 10 C and 45 C; a cold pack is brought into the cabin, in its bag, first (`team/H1/GROUND-TEST-PLAN.md` rules; `env.pack_takeoff_max_c`).
 7. At full charge cell spread must be <= 0.02 V; **quarantine** if the spread after a 1 h rest is > 0.05 V or any cell is below 3.0 V.
 8. Unplug, pack back in its bag, log: pack id, mAh in, cell voltages, IR if shown.
@@ -65,7 +65,7 @@ Time: about 59 min per pack from the 20 % line, 2.0 h for two packs (`CL-E2-CHAR
 | 1 | Ammo can and sand bucket **5 m from the pilot box** (`ENERGY.md` section 6) |
 | 2 | Packs come out only to fly; one fully charged pack per sortie; a part-used pack is never re-flown the same day |
 | 3 | IR the pack: **20-34 C** at take-off (`env.pack_takeoff_max_c`); warm a cold pack in its bag in the cabin |
-| 4 | Pack in at the trim mark with this pack's spacer stack and crush block, strap, AS150U plugged **last**, after the transmitter is on (`subsystems/pod/BUILD.md` field card) |
+| 4 | Pack in at the trim mark with this pack's spacer stack and crush block **and both aft filler pieces (`POD-013`, 16 + 27 mm) behind it**, strap, AS150U plugged **last**, after the transmitter is on (`subsystems/pod/BUILD.md` field card) |
 | 5 | After landing: disarm, **pull the plug from behind the pod**, IR the pack, bag it, log mAh used and temperature |
 | 6 | Pack warm or hot (>= 34 C) after landing: leave bagged in the can, do not charge until it returns to room temperature |
 

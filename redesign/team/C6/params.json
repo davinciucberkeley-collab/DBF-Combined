@@ -285,6 +285,20 @@
    "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-37",
    "status": "PROPOSED",
    "note": "C6-R5b ask: 15 -> 22 mm. C1's D-65 re-run raised the half-fin section torsion 8.13 -> 12.67 N m (limit); the collar needs 19.45 mm at the 2.0 MPa allowable (CL-C6-COLLAR-L-REQ); 22 mm gives RF 1.13. Ring grows down to |z| 0.1375; ear and brace end unchanged. ~+4.2 g for four vs 15 mm (EST). Was 15 (CR-C6-36)"
+  },
+  "dog_w_prop_m": {
+   "value": 0.01,
+   "unit": "m",
+   "source": "review/CLOSURE-ROUND-2026-11-14/C6.md",
+   "status": "PROPOSED",
+   "note": "C6 closure-round ask to D3 for fin_detail.mount.key_w_m (D-164 re-run): 3.0 -> 10.0 mm, now the ARC LENGTH at the dog's mean radius 12.0 mm: annular-sector dog r 11.2-12.8 mm (r_b to r_b + ring wall), 47.7 deg centred on -x; notch 49.6 deg (0.2 mm clearance each side). At 10 deg / 14 mm on C1's D-161 loads (T_lim 22.03 N, Q 0.416 N m) the design twist is 0.406 N m; hold RF 1.61 lower bound (CALC-C6-DOG). 9 deg R1 ask was 7.0 mm box"
+  },
+  "dog_d_prop_m": {
+   "value": 0.0025,
+   "unit": "m",
+   "source": "review/CLOSURE-ROUND-2026-11-14/C6.md",
+   "status": "PROPOSED",
+   "note": "C6 closure-round (D-164 re-run): key_d_m stays 2.5 mm (the 9 deg R1 ask of 2.0 mm is withdrawn): ASA dog-face bearing RF 2.16 at 2.5 mm vs 1.72 at 2.0 mm (CALC-C6-DOG rf_bear_prop)"
   }
  }
 }

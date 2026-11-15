@@ -1,5 +1,5 @@
 {
- "bodies": 1177,
+ "bodies": 1178,
  "defects": [
   "PWR-004 body \"lap solder joint\": zero-width spike / repeated point in a loop (removed in the export)"
  ],
@@ -20,6 +20,58 @@
       "E-HRN-12 \"wire strand 1 (4.8 mm)\" x E-HRN-11 \"wire strand 0 (4.8 mm)\" 0.02 mm"
      ],
      "depth_mm": 0.024
+    },
+    {
+     "a": "E-HRN-20",
+     "at_mm": [
+      25.33,
+      -334.34,
+      -190.19
+     ],
+     "b": "FIN-003-LL",
+     "bodies": [
+      "E-HRN-20 \"wire strand 0 (5.6 mm)\" x FIN-003-LL \"canted plate\" 0.16 mm"
+     ],
+     "depth_mm": 0.156
+    },
+    {
+     "a": "E-HRN-19",
+     "at_mm": [
+      25.33,
+      334.34,
+      -190.19
+     ],
+     "b": "FIN-003-LR",
+     "bodies": [
+      "E-HRN-19 \"wire strand 0 (5.6 mm)\" x FIN-003-LR \"canted plate\" 0.16 mm"
+     ],
+     "depth_mm": 0.156
+    },
+    {
+     "a": "E-HRN-18",
+     "at_mm": [
+      25.33,
+      -334.34,
+      190.19
+     ],
+     "b": "FIN-003-UL",
+     "bodies": [
+      "E-HRN-18 \"wire strand 0 (5.6 mm)\" x FIN-003-UL \"canted plate\" 0.16 mm"
+     ],
+     "depth_mm": 0.156
+    },
+    {
+     "a": "E-HRN-17",
+     "at_mm": [
+      25.33,
+      334.34,
+      190.19
+     ],
+     "b": "FIN-003-UR",
+     "bodies": [
+      "E-HRN-17 \"wire strand 0 (5.6 mm)\" x FIN-003-UR \"canted plate\" 0.16 mm"
+     ],
+     "depth_mm": 0.156
     },
     {
      "a": "E-HRN-28#3",
@@ -369,7 +421,7 @@
    ]
   }
  ],
- "seconds": 757.0,
+ "seconds": 326.3,
  "skipped": [
   [
    "HRN-001",

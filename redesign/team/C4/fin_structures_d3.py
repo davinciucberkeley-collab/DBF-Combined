@@ -1,5 +1,10 @@
 """C4 R5: fin / motor-tube structures on D3's as-designed geometry (CR-D3-10), K09-L, params A1-R5.
 
+R6 (2026-11-14, design round wave 2, D-146 / D-147): fin motor tube = Rock West 35046-S. Tube mass from
+P:fins.tube.mass_per_m_kgm (was the wing spar's 0.102 kg/m) and tube E / G from P:fins.tube.e_gpa / g_gpa through
+CALC-C4-TUBE-EG (CL-C4-TUBE-E / -G in Pa), split from the wing spar's ASM-J1-E-TUBE / ASM-C4-G-TUBE, which C2's
+wing_struct.py keeps. D3 R6 mount: cant 9 deg, face_ahead 12.0 mm, cheeks 21.5 mm, CAD 11.67 g (ASM-C4-MOUNT-CAD).
+
 R5 (2026-11-10, D-61/63/65/68/70): prop plane and motor face from D3's R5 CL-D3-X-PROP / -X-FACE (7.5 mm
 face_ahead), R5 mount CAD (11.9 g, cheeks 17 mm) and a series estimate of its rocking stiffness
 (CALC-C4-D3-MOUNT-K-EST; the FE nominal falls 3 000 -> 1 500 N m/rad), foot side load = C5 3-D touchdown 39.3 N
@@ -77,17 +82,20 @@ asm("ASM-C4-BORE-Z", "Block bore ends (boss tops) +30.4 / -16.6 mm",
     "keyhole boss footprint plus the 8 mm boss height",
     "subsystems/fins/fusion/fins.py G['boss_u'], G['boss_l'] evaluated with params A1-R2 and fin_detail (C4 re-ran "
     "the same expressions)", [0.03043, -0.01662], "m", status="PROPOSED", cites=["SRC-C4-S5010"])
-asm("ASM-C4-MOUNT-CAD", "Motor mount 10.9 g, CG 8.4 mm ahead, 11.0 mm below the motor axis (D-91: grip 18 mm)",
+asm("ASM-C4-MOUNT-CAD", "Motor mount 16.24 g, CG 7.9 mm ahead, 8.0 mm below the motor axis (R8: 10 deg, face_ahead 4.0 mm, "
+    "cheeks 5.5 / 5.4 mm; closure re-run 2026-11-14 from subsystems/fins/interfaces.json FIN-003-UR mass_g 16.24, cg_xyz_m (0.0371, 0.3189, 0.182) vs station (0.045, 0.32, 0.19))",
     "[mass kg, dx, dy (+ outboard), dz (+ away from the wing)] of FIN-003-UR from the motor station "
-    "(0.045, 0.32, 0.19)", "subsystems/fins/interfaces.json FIN-003-UR (D-91, 2026-11-13: grip 18 mm) mass_g 10.85 "
+    "(0.045, 0.32, 0.19)", "subsystems/fins/interfaces.json FIN-003-UR (D3 R6, 2026-11-14, D-146) mass_g 11.67, "
+    "cg_xyz_m (0.0345, 0.3205, 0.1794); was (D-91) 10.85 g at (0.0366, 0.3207, 0.1790): "
+    "D-91, 2026-11-13: grip 18 mm, mass_g 10.85 "
     "(less the 1.40 g pinch hardware, now its own parts), cg_xyz_m (0.0366, 0.3207, 0.1790) (D3 CAD centroid); R5 was "
     "11.94 g at (0.0365, 0.3214, 0.1814) with the hardware, R4 11.28 g at (0.0404, 0.3218, 0.1803)",
-    [0.01085, -0.0084, 0.0007, -0.0110], "kg, m", status="PROPOSED")
+    [0.01624, -0.0079, -0.0011, -0.0080], "kg, m", status="PROPOSED")
 asm("ASM-C4-COLLAR-BRACE-MASS", "Station collar 11.6 g, brace 5.0 g (D-90, 22 mm collar)",
     "[collar kg, brace kg]; collar lumped on the tube at the collar, half the brace at the ear",
     "subsystems/fins/interfaces.json FIN-008-UR 11.59 g (22 mm ring, 40 mm tail, D-90), FIN-009-UR / -LR 4.79 / 5.18 g "
     "(2026-11-13); was 5.7 / 7.4 g from the R3 SPEC table", [0.01159, 0.00499], "kg", status="PROPOSED")
-asm("ASM-C4-MOUNT-K-ROCK", "Mount rocking stiffness 2 200 N m/rad (D-91: 18 mm grip, in series with the body)",
+asm("ASM-C4-MOUNT-K-ROCK", "Mount rocking stiffness 3 900 N m/rad (D3 R8 drawn mount, closure re-run 2026-11-14)",
     "Rotational stiffness of the printed mount about x and y between the tube end and the motor base, used in every "
     "FE model as the nominal value (same value about both axes)",
     "D-91 (2026-11-13): CALC-C4-D3-MOUNT-K-EST on the 18 mm grip (foundation 10 692 N m/rad), 2.5 mm cheeks and "
@@ -96,8 +104,13 @@ asm("ASM-C4-MOUNT-K-ROCK", "Mount rocking stiffness 2 200 N m/rad (D-91: 18 mm g
     "= 3 170 N m/rad and the mount body above the tube end: nodding = two cheeks as deep beams over the free length "
     "plate back face -> collar (8.7 mm), 5 690 N m/rad; sway = plate + cheeks as a channel cantilevered from the lip "
     "cap to the motor axis, 2 960 N m/rad; weaker axis 1 530 N m/rad, rounded down. R1-R4 used the collar alone "
-    "(3 000), which left the body out; 3 000 is kept as the upper sensitivity. Static test T-C4-MOUNT-STIFF replaces it",
-    2200.0, "N m/rad")
+    "(3 000), which left the body out; 3 000 is kept as the upper sensitivity. Static test T-C4-MOUNT-STIFF replaces it. "
+    "Closure round 2026-11-14 (C4.md): rule made explicit, the value is CALC-C4-D3-MOUNT-K-EST at the low end of "
+    "ASM-C4-ASA-E's TDS range (1.8 GPa), rounded down (today 2 266 -> 2 200). With the requested cheeks 4.0 / 3.9 mm "
+    "(D3 R7) it becomes 3 100 (estimate 3 455 at 2.0 GPa, 3 109 at 1.8 GPa). Final re-run 2026-11-14 on the drawn R8 mount "
+    "(subsystems/fins/params.json: face_ahead 4.0, cheeks 5.5 / 5.4, inner faces 13.4 / 14.3 mm, cheek length 13.5, plate 0.0200 x "
+    "0.0163 x 4.5 mm): CALC-C4-D3-MOUNT-K-EST 4 365 at 2.0 GPa, 3 929 at 1.8 GPa (sway governs; nodding 4 515) -> 3 900",
+    3900.0, "N m/rad")
 asm("ASM-C4-ASA-E", "ASA printed modulus 2.0 GPa",
     "Tensile/flexural modulus of the printed ASA mount (100 % perimeters in the cheeks and collar)",
     "ASA filament TDS 1.8-2.3 GPa (printed, XY); same 2 GPa the R1 collar estimate used", 2.0e9, "Pa")
@@ -160,7 +173,7 @@ SF, FIT, PRT = P + "requirements.safety_factor_ult", "ASM-C1-FITTING-FACTOR", "A
 
 # ====================================================================== named inputs
 GEOM = {"tube_x": P + "fins.tube.x_m", "y_fin": P + "fins.y_m", "od": P + "fins.tube.od_m", "idd": P + "fins.tube.id_m",
-        "mu": P + "wing.spar.mass_per_m_kgm", "tube_len": P + "fin_detail.tube_length_m",
+        "mu": P + "fins.tube.mass_per_m_kgm", "tube_len": P + "fin_detail.tube_length_m",
         "z_st": P + "propulsion.stations.z_m", "x_face": "CL-D3-X-FACE", "x_prop": "CL-D3-X-PROP",
         "x_te": P + "fins.te_x_m", "hh": P + "fins.half_height_m", "le_gap": P + "fin_detail.fin.le_gap_m",
         "grip": P + "fin_detail.mount.grip_m", "sc_gap": P + "fin_detail.station_collar.gap_m",
@@ -196,12 +209,66 @@ GU = {"tube_x": "m", "y_fin": "m", "od": "m", "idd": "m", "mu": "kg/m", "tube_le
       "k_anchor": "N/m", "tip_sq": "m", "z_step": "m", "ear_xyz": "m", "shoe_x0": "m", "shoe_z0": "m"}
 RPM = {"rpm_h": "CL-B4-HOVER-RPM", "rpm_c": "CL-B4-CRUISE-RPM", "rpm_x": "CL-B4-RPM-MAX"}
 RU = {k: "rpm" for k in RPM}
-TUBE = {"E": "ASM-J1-E-TUBE", "G": "ASM-C4-G-TUBE"}
+TUBE = {"E": "CL-C4-TUBE-E", "G": "CL-C4-TUBE-G"}       # D-147: fin tube's own keys (SI via CALC-C4-TUBE-EG)
 TU = {"E": "Pa", "G": "Pa"}
+
+
+@kit.calc("CALC-C4-TUBE-EG", title="Fin motor-tube moduli in SI from params (D-147, split from the wing spar)",
+          inputs={"e_gpa": P + "fins.tube.e_gpa", "g_gpa": P + "fins.tube.g_gpa"},
+          units={"e_gpa": "GPa", "g_gpa": "GPa"}, tol=1e-9, cites=["SRC-RW-35046S"],
+          equation="E = e_gpa x 1e9, G = g_gpa x 1e9 (Rock West 35046-S CLT page values; the wing spar keeps "
+                   "ASM-J1-E-TUBE / ASM-C4-G-TUBE)")
+def tube_eg(e_gpa, g_gpa):
+    return {"E_pa": e_gpa * 1e9, "G_pa": g_gpa * 1e9}
+
+
+kit.claim("CL-C4-TUBE-E", "Fin motor-tube axial modulus used by the C4 models (Pa)", calc="CALC-C4-TUBE-EG",
+          output="E_pa", unit="Pa", parts=["FIN-002-R", "FIN-002-L"],
+          how="T-C4-TUBE-BEND on the delivered tube (H1 GT-16); then set P:fins.tube.e_gpa to the measured value.",
+          note="D-147: record, no limit. Unit conversion of P:fins.tube.e_gpa so the fin models stay in SI.")
+kit.claim("CL-C4-TUBE-G", "Fin motor-tube shear modulus used by the C4 models (Pa)", calc="CALC-C4-TUBE-EG",
+          output="G_pa", unit="Pa", parts=["FIN-002-R", "FIN-002-L"],
+          how="T-C4-TUBE-TORSION on the delivered tube (H1 GT-16); then set P:fins.tube.g_gpa to the measured value.",
+          note="D-147: record, no limit. Unit conversion of P:fins.tube.g_gpa.")
 MESH = (24, 20)
 REC, REC_U = {"lay_rec": P + "fins.layers"}, {"lay_rec": "-"}
 SIDES = ("upper", "lower")
 ST_PART = 0.10
+
+
+def _release_x():
+    """C2 root bond-break (C2.md, closure round 2026-11-14): the half-fin root is bonded only for x < release_x and sits on
+    PTFE film aft of it to the TE. D3 key fin_detail.fin.root_fillet.release_x_m when present, else C2's 0.22 m (request to
+    D3 / A1 to publish it). env C4_RELEASE_X=none gives the earlier full-chord bond (information)."""
+    import os
+    v = os.environ.get("C4_RELEASE_X")
+    if v is not None:
+        return None if v.lower() == "none" else float(v)
+    try:
+        d = json.loads((HERE.parents[1] / "subsystems" / "fins" / "params.json").read_text(encoding="utf-8"))
+        return float(d["fin_detail"]["fin"]["root_fillet"]["release_x_m"]["value"])
+    except (KeyError, OSError, ValueError):
+        return 0.22
+
+
+RELEASE_X = _release_x()
+
+
+def _release_end_x():
+    """Closure fix: the release ends at release_end_x_m (D3 key, 0.27 m); aft of it the last 30 mm of the root is bonded again.
+    env C4_RELEASE_END=none (or no key) gives the release to the TE (the earlier D-179 geometry)."""
+    import os
+    v = os.environ.get("C4_RELEASE_END")
+    if v is not None:
+        return 10.0 if v.lower() == "none" else float(v)
+    try:
+        d = json.loads((HERE.parents[1] / "subsystems" / "fins" / "params.json").read_text(encoding="utf-8"))
+        return float(d["fin_detail"]["fin"]["root_fillet"]["release_end_x_m"]["value"])
+    except (KeyError, OSError, ValueError):
+        return 10.0
+
+
+RELEASE_END = _release_end_x()
 
 
 def geometry(g, side):
@@ -221,7 +288,8 @@ def geometry(g, side):
     return {"root": [(float(x), float(z)) for x, z in zip(sk[:, 0], zs)], "z_clamp": z_clamp, "z_end": z_end,
             "z_sc": z_sc, "z_ear": abs(ez), "z_top_le": z_top_le, "ear": (ex - g["tube_x"], ear_dy, 0.0),
             "anchor": anchor, "x_le": x_le, "x_step": g["x_te"] - g["tip_sq"],
-            "root_free": [(x_hinge - g["slot_hw"], x_hinge + g["slot_hw"])] if side == "lower" else []}
+            "root_free": ([(x_hinge - g["slot_hw"], x_hinge + g["slot_hw"])] if side == "lower" else [])
+                         + ([(RELEASE_X, RELEASE_END)] if RELEASE_X is not None else [])}
 
 
 def fin_top(g, geo, nx, hh=None):
@@ -415,8 +483,8 @@ def modes_rec(**k):
 
 
 @kit.calc("CALC-C4-D3-WORST", title="Separation over the tube E/G corners, recommended design",
-          inputs={**GEOM, **RPM, **REC, "E0": "ASM-J1-E-TUBE", "E_lo": "ASM-C4-E-TUBE-LO", "E_hi": "ASM-C4-E-TUBE-HI",
-                  "G0": "ASM-C4-G-TUBE", "G_lo": "ASM-C4-G-TUBE-LO", "G_hi": "ASM-C4-G-TUBE-HI", "sep_min": LIMIT_SEP},
+          inputs={**GEOM, **RPM, **REC, "E0": TUBE["E"], "E_lo": "ASM-C4-E-TUBE-LO", "E_hi": "ASM-C4-E-TUBE-HI",
+                  "G0": TUBE["G"], "G_lo": "ASM-C4-G-TUBE-LO", "G_hi": "ASM-C4-G-TUBE-HI", "sep_min": LIMIT_SEP},
           units={**GU, **RU, **REC_U, "E0": "Pa", "E_lo": "Pa", "E_hi": "Pa", "G0": "Pa", "G_lo": "Pa", "G_hi": "Pa",
                  "sep_min": "-"},
           tol=1e-4,
@@ -1274,11 +1342,11 @@ kit.claim("CL-C4-D3-SEP-WORST", "Mode separation, recommended design, worst tube
                "separation is closed on the measured tube: CL-C4-D3-TUBE-E-REQ is the T-C4-TUBE-BEND pass line.")
 kit.claim("CL-C4-D3-TUBE-E-REQ", "Least tube axial modulus for 20 % station-mode separation at the nominal shear "
           "modulus, drawn D-90/D-91 station (D-93)", calc="CALC-C4-D3-WORST", output="E_req_g0", unit="Pa",
-          limit=("<=", "ASM-J1-E-TUBE"), verifies=R_VIB, parts=TUBES,
+          limit=("<=", TUBE["E"]), verifies=R_VIB, parts=TUBES,
           how="T-C4-TUBE-BEND: measured E >= this value; then re-run CALC-C4-D3-WORST with the measured E and G "
               "(sep_op >= 0.20) before the first hover, and T-C4-TAP-D3.")
 kit.claim("CL-C4-D3-TUBE-G-REQ", "Least tube shear modulus for 20 % station-mode separation at the nominal axial "
-          "modulus (D-93)", calc="CALC-C4-D3-WORST", output="G_req_e0", unit="Pa", limit=("<=", "ASM-C4-G-TUBE"),
+          "modulus (D-93)", calc="CALC-C4-D3-WORST", output="G_req_e0", unit="Pa", limit=("<=", TUBE["G"]),
           verifies=R_VIB, parts=TUBES,
           how="T-C4-TUBE-TORSION: measured G >= this value (two lasers 0.30 m apart, CR-H1-24).")
 kit.claim("CL-C4-D3-SEP-WHIRL", "Whirl separation incl. prop gyroscopics, recommended design", calc="CALC-C4-D3-CAMPBELL",
@@ -1571,7 +1639,7 @@ def campbell_svg(path, curves, rpm_ops, rpm_max=10000.0, f_max=500.0):
 if __name__ == "__main__":
     kit.write()
     g = {n: kit.value(r) for n, r in GEOM.items()}
-    E0, G0 = kit.value("ASM-J1-E-TUBE"), kit.value("ASM-C4-G-TUBE")
+    E0, G0 = kit.value(TUBE["E"]), kit.value(TUBE["G"])
     rpm = tuple(kit.value(RPM[k]) for k in ("rpm_h", "rpm_c", "rpm_x"))
     res = {"inputs": {k: v for k, v in g.items() if k != "skin"}, "geometry": {s: geometry(g, s) for s in SIDES},
            "configs": {}, "sensitivity": {}}

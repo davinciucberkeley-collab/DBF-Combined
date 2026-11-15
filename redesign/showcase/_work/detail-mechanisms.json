@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 24.12,
+ "render_s": 142.73,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -41,9 +41,9 @@
   "sub": "Servo in a printed frame, arm, 2-56 pushrod to the inboard horn, CF link rod to the outboard panel"
  },
  "subject_px": [
-  -1031,
-  -2145,
-  2671,
+  -1029,
+  -2146,
+  2670,
   1522
  ],
  "callouts": [
@@ -80,7 +80,7 @@
   {
    "item": "MEC-003-R",
    "x": 846.9,
-   "y": 630.3,
+   "y": 630.1,
    "title": "MEC-003-R",
    "text": "2-56 pushrod + clevis",
    "detail": null,
@@ -144,13 +144,13 @@
    "role": "ghost",
    "name": "Wing core, one piece (XPS), with all cuts",
    "status": "MODELLED",
-   "mass_g": 201.9,
+   "mass_g": 198.1,
    "subsystem": "wing",
    "bbox_px": [
-    -1014,
-    -2132,
-    2668,
-    1520
+    -986,
+    -2141,
+    2667,
+    1519
    ]
   },
   {
@@ -158,12 +158,12 @@
    "role": "ghost",
    "name": "Tape skin (packing tape, both surfaces, doublers, tip edge layer)",
    "status": "MODELLED",
-   "mass_g": 47.9,
+   "mass_g": 47.5,
    "subsystem": "wing",
    "bbox_px": [
-    -1031,
-    -2145,
-    2671,
+    -1029,
+    -2146,
+    2670,
     1522
    ]
   },
@@ -629,6 +629,7 @@
   "WNG-005-R",
   "WNG-006-L",
   "WNG-006-R",
+  "WNG-008",
   "WNG-011-L",
   "WNG-012-L",
   "WNG-020"

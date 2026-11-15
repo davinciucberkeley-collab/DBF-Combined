@@ -1,4 +1,4 @@
-<title>Tailsitter Decision</title>
+<title>Quadplane Decision (D-181; K09-L superseded)</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -427,6 +427,30 @@ section.c > header .use { color: var(--fg-2); margin: 0; max-width: var(--measur
 </header>
 
 <main class="page" id="top">
+
+<section class="c hero" id="decision-d181">
+  <div class="lede">
+    <span class="secno">Current decision · D-181 · 2026-11-14</span>
+    <h1 class="ds-display">Build candidate B: a small quadplane. Four fixed lift rotors, one cruise pusher, foam wing, about 1.9 kg (EST), ArduPilot QuadPlane.</h1>
+    <p class="ds-body">K09-L could not be built new within $2,000: the cheapest workable path ends at $2,577, a $577 gap (DESIGN-TO-COST §0). B totals about $1,625 including crash reserve, +$375 margin (about +$175 if parts run 30 % over). Fallback: D2, ZOHD Altus VTOL PNP. Why B: it is the most-flown ArduPilot VTOL layout, hovers on dedicated lift motors and lands on gear, which removes K09-L's tailsitter problems (hover yaw in wind, narrow transition entry, fin-tip landing, tip-over, transition climb-out); a smaller, lighter tailsitter is worse in wind. <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/config-study/RESTUDY-2026-11-14.md" target="_blank" rel="noopener">RESTUDY-2026-11-14.md</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/config-study/tiebreak/DECISION.md" target="_blank" rel="noopener">tiebreak/DECISION.md</a></p>
+  </div>
+  <div class="scroll wide"><table class="ds-table">
+    <caption>Re-study candidates (RESTUDY §2; mass and prices EST, most prices UNVERIFIED)</caption>
+    <thead><tr><th>Cand</th><th>MTOW kg</th><th>Total $ incl. crash reserve</th><th>Margin $</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td class="first">A scaled quad tailsitter</td><td>1.23</td><td>1,461</td><td>+539</td><td>not chosen; worse in wind</td></tr>
+      <tr class="chosen"><td class="first"><b>B small quadplane 4+1</b></td><td>1.88</td><td>1,625</td><td>+375</td><td><b>selected</b></td></tr>
+      <tr><td class="first">C dual-motor tailsitter</td><td>1.02</td><td>1,351</td><td>+649</td><td>rejected: motor-out is fatal</td></tr>
+      <tr><td class="first">D1 HEEWING T1-S VTOL PNP</td><td>0.90</td><td>1,666</td><td>+334</td><td>rejected: T/W 1.64 at its limit</td></tr>
+      <tr><td class="first"><b>D2 ZOHD Altus VTOL PNP</b></td><td>1.16</td><td>1,549</td><td>+451</td><td><b>fallback</b></td></tr>
+      <tr><td class="first">D3 HEEWING T2 Cruza + kit</td><td>2.23</td><td>1,934</td><td>+66</td><td>rejected: misses $100 margin</td></tr>
+    </tbody>
+  </table></div>
+  <p class="ds-body">Next steps (RESTUDY §4): bench thrust test, replace UNVERIFIED prices, wing and transition sizing, CAD and SITL, order the floor items first. Reverses if the thrust test fails B's hover T/W or the corrected prices push the margin under $100.</p>
+</section>
+
+<div class="ds-rowlabel">Previous decision (superseded 2026-11-14) <span>K09-L, decided 2026-11-09; kept as the record. The pages below still describe K09-L.</span></div>
+
 
 <!-- ================= 1. DECISION ================= -->
 <section class="c hero" id="decision">

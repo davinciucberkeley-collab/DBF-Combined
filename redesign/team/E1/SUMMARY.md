@@ -29,7 +29,8 @@ Nothing is tested; all of it is `UNVERIFIED` until `T-E1-STAND`.
 | Path resistance the thrust requirement allows | — | 17.1 mΩ (first bound alone 42.5) | ≥ 7.9 mΩ | `CL-E1-REXT-ALLOW` | passes, +116 % |
 | 100 A drop the thrust requirement allows (F1's new limit) | — | 11.5 % | — | `CL-E1-DROP-ALLOW` | limit of `CL-F1-DROP-PEAK` (5.68 %) |
 | Worst-state thrust lost to the 7.9 mΩ path | — | 4.2 % (second bound 6.5 %) | — | `CL-E1-PATH-THRUST-COST` | — |
-| Cruise power at the 17 m/s fallback (D-96 c, decision B6), propulsion only | 283 W (CR-E1-51 sweep, no claim) | 283.5 W | — | `CL-E1-CRUISE-P-55-V17` | feeds `CL-E2-CRUISE-TO-LOW-PESS-V17` |
+| Cruise power at 16 m/s, propulsion only (B1's base case now carries Oswald e 0.85, CDR-AE-14: `CL-B1V-K` 0.0957 → 0.1042) | 246.2 W | **249.1 W** (+ 6 W avionics = 255.1 W; the carried figure is 253 W) | ≤ 253 W | `CL-E1-CRUISE-P-55` | passes, +2 %; request to A1 below |
+| Cruise power at the 17 m/s fallback (D-96 c, decision B6), propulsion only | 283 W (CR-E1-51 sweep, no claim) | 286.2 W (283.5 W before e 0.85) | — | `CL-E1-CRUISE-P-55-V17` | feeds `CL-E2-CRUISE-TO-LOW-PESS-V17` |
 
 What changed in the model:
 
@@ -46,6 +47,9 @@ What changed in the model:
   `REVIEWER EST`) is carried as a sensitivity and is the one that fails. Only `T-E1-STAND` with a logged bus
   voltage picks between them: 7 500 rpm at a held 14.8 V with the 11×4.7 means the second bound, above 9 000 rpm
   the first.
+- **Request to A1 (CR-E1-55).** With e 0.85 the E1 cruise figure is 249.1 + 6 = 255.1 W and the effective L/D is
+  5.53. `performance.cruise_power_w` carries 253 W and `performance.ld_cruise` 5.66 (D-97, "carry the conservative
+  model"). A1 decides whether to carry 256 W and 5.53; nothing was changed in `params.json`.
 - **The script no longer writes shared files by default** (CDR-29). `python -I redesign/team/E1/propulsion.py`
   writes `team/E1/claims.json` only and prints the propulsion parts lines beside the file's values.
   `--write-parts` rewrites `subsystems/propulsion/parts.csv` and then runs C6's `fastener_parts.py`.

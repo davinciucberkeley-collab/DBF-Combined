@@ -8,7 +8,7 @@
    "name": "Half-fin UR (2-layer foam board, edge strips, pins, ESC pad)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 40.7,
+   "mass_g": 41.900000000000006,
    "material": "foam board 4.8 mm, paper faced",
    "cg_xyz_m": [
     0.1911,
@@ -23,7 +23,7 @@
    "name": "Half-fin UL (2-layer foam board, edge strips, pins, ESC pad)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 40.7,
+   "mass_g": 41.900000000000006,
    "material": "foam board 4.8 mm, paper faced",
    "cg_xyz_m": [
     0.1911,
@@ -38,7 +38,7 @@
    "name": "Half-fin LR (2-layer foam board, edge strips, pins, ESC pad)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 40.7,
+   "mass_g": 41.900000000000006,
    "material": "foam board 4.8 mm, paper faced",
    "cg_xyz_m": [
     0.1889,
@@ -53,7 +53,7 @@
    "name": "Half-fin LL (2-layer foam board, edge strips, pins, ESC pad)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 40.7,
+   "mass_g": 41.900000000000006,
    "material": "foam board 4.8 mm, paper faced",
    "cg_xyz_m": [
     0.1889,
@@ -65,11 +65,11 @@
   },
   {
    "id": "FIN-902-R",
-   "name": "Motor tube R CF 22x20x344 (through the core)",
+   "name": "Motor tube R CF 22.1x19.05x344 (through the core)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 35.1,
-   "material": "CF tube 22x20 (bought)",
+   "mass_g": 53.7,
+   "material": "CF tube (bought)",
    "cg_xyz_m": [
     0.045,
     0.32,
@@ -80,11 +80,11 @@
   },
   {
    "id": "FIN-902-L",
-   "name": "Motor tube L CF 22x20x344 (through the core)",
+   "name": "Motor tube L CF 22.1x19.05x344 (through the core)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 35.1,
-   "material": "CF tube 22x20 (bought)",
+   "mass_g": 53.7,
+   "material": "CF tube (bought)",
    "cg_xyz_m": [
     0.045,
     -0.32,
@@ -101,7 +101,7 @@
    "mass_g": 11.0,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0417,
+    0.0394,
     0.32,
     0.1795
    ],
@@ -116,7 +116,7 @@
    "mass_g": 11.0,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0417,
+    0.0394,
     -0.32,
     0.1795
    ],
@@ -131,7 +131,7 @@
    "mass_g": 11.0,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0417,
+    0.0394,
     0.32,
     -0.1795
    ],
@@ -146,7 +146,7 @@
    "mass_g": 11.0,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0417,
+    0.0394,
     -0.32,
     -0.1795
    ],
@@ -161,7 +161,7 @@
    "mass_g": 41.0,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.064,
+    0.0639,
     0.32,
     0.0065
    ],
@@ -176,7 +176,7 @@
    "mass_g": 41.0,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.064,
+    0.0639,
     -0.32,
     0.0065
    ],

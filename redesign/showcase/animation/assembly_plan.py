@@ -24,10 +24,15 @@ What is data here and what is derived:
 
 Item grammar in STEPS:
   'GLOB'                 place the matching parts (fnmatch on part ids), in the order listed
+  'bench:NAME GLOB|SEL'  as below, only the bodies whose name matches SEL (fnmatch; '!SEL' = all but those): a part
+                         glued up in more than one go, another part fitted between (the pod box round the handle)
   'bench:NAME GLOB'      assemble the matching parts on the bench, off the aircraft, as group NAME ('<x>' in NAME is
                          replaced by the part's station / side suffix, so each station gets its own group)
   'install:NAME'         move every bench group whose name starts with NAME onto the aircraft as one rigid body
   'wire:GLOB'            lay the matching wire edges (E-HRN-..)
+  'park:NAME'            PARK[NAME]: slide the placed members by move_mm (a checked sweep) and leave them there; parts
+                         matching its 'carry' globs placed while parked are planned and placed in the parked frame
+  'unpark:NAME'          slide the parked members and what they carry back by -move_mm (a checked sweep) to their seats
   'tails:GLOB'            lay the held runs of the matching wires whose loose end's part is now on: a lead laid while
                          its end part is not yet on is laid only up to its first in-line connector (JR pair, sleeve);
                          the run beyond it waits coiled off the aircraft and is laid here (BUILD-GUIDE 9.4 "lead it
@@ -53,16 +58,16 @@ REDESIGN = os.path.dirname(os.path.dirname(HERE))
 # (stage, step, caption from BUILD-GUIDE.md, items). Stage titles stay those of render_build.STAGES (the website and
 # the build guide link one clip per stage).
 STEPS = [
-    (2, '2.1', 'Hot-wire the core; cut the pockets, grooves and recess with it in its lower bed',
-     ['WNG-001']),
+    (2, '2.1', 'Hot-wire the core blank (elevon strip included); cut the pockets, grooves and recess in its lower bed',
+     ['WNG-001', 'WNG-011-*', 'WNG-012-*']),
     (2, '2.3', 'Push the PETG plugs into the spar to the dowel marks, the inboard (anchor) plugs first',
      ['bench:spar WNG-002', 'bench:spar WNG-005-*', 'bench:spar WNG-004-*']),
     (2, '2.4', 'Bond both through-core blocks to the spar in the clocking jig',
      ['bench:spar FIN-004-*']),
     (2, '2.5', 'Bond spar and blocks up the slot into the core; re-bond the slot strip as the cap; fill the lip beads',
      ['install:spar', 'WNG-008', 'WNG-006-*']),
-    (3, '3.1', 'Route the torque-tube grooves, then cut the four panels free',
-     ['WNG-011-*', 'WNG-012-*']),
+    (3, '3.1', 'Route the torque-tube grooves, then cut the four panels free and slide them aft in the bed',
+     ['park:elevons']),
     (3, '3.3', 'Bond the CF torque tubes flush in their grooves',
      ['MEC-009-*']),
     (4, '4.2', 'Plug the motor tubes, then slide them through the bosses and blocks',
@@ -75,14 +80,14 @@ STEPS = [
      ['FIN-011-*', 'FIN-012-*']),
     (4, '4.5', 'ESC pads on the fin faces',
      ['FIN-007-*']),
-    (5, '5.1', 'Pod box on the bench: tray with its stops, board walls round it, straps, inserts, pitot socket, handle',
-     ['bench:pod POD-002', 'bench:pod POD-001', 'bench:pod POD-004', 'bench:pod PWR-107', 'bench:pod POD-006',
-      'bench:pod POD-007']),
-    (5, '5.2', 'Lay the recess-step fillet, bond the pod into the recess; GPS mast and its cross-screw',
-     ['install:pod', 'POD-005', 'POD-011', 'POD-012']),
-    (5, '5.3', 'XT30U pairs, airspeed sensor and RX on the tray; power frame on spacers; power board on its washers, screwed down through it; bus board, AS150U',
-     ['HRN-113-*', 'AVN-004', 'AVN-003', 'PWR-102', 'PWR-006', 'PWR-103', 'PWR-004', 'PWR-003', 'PWR-101', 'PWR-002', 'wire:E-HRN-11',
-      'wire:E-HRN-12']),
+    (5, '5.1', 'Pod box on the bench: tray, pitot socket, board walls glued round them piece by piece, handle, inserts',
+     ['bench:pod POD-002', 'bench:pod POD-006', 'bench:pod POD-001|!fb aft deck', 'bench:pod POD-007',
+      'bench:pod POD-001|fb aft deck', 'bench:pod PWR-107']),
+    (5, '5.2', 'Bond the pod into the recess; thread the straps under the tray; GPS mast and its cross-screw',
+     ['install:pod', 'POD-004', 'POD-005', 'POD-011', 'POD-012']),
+    (5, '5.3', 'XT30U pairs, airspeed sensor and RX on the tray; bus board; frame on its spacers, washers, screws; power board on its foam pad; AS150U',
+     ['HRN-113-*', 'AVN-004', 'AVN-003', 'PWR-102', 'PWR-004', 'PWR-006', 'PWR-103', 'PWR-101', 'PWR-003', 'PWR-002',
+      'wire:E-HRN-11', 'wire:E-HRN-12']),
     (6, '6.2', 'Strap the ESCs on their pads; caps, XT30U pairs and heat-shrink on the soldered leads',
      ['PRP-002-*', 'PWR-008-*', 'HRN-110-*', 'wire:E-HRN-13', 'wire:E-HRN-14', 'wire:E-HRN-15', 'wire:E-HRN-16',
       'wire:E-HRN-34', 'wire:E-HRN-35', 'wire:E-HRN-36', 'wire:E-HRN-37', 'HRN-107-*-P1',
@@ -96,10 +101,10 @@ STEPS = [
      ['WNG-003', 'WNG-020']),
     (6, '6.6', 'Bond a strap eye round the outboard face of each bore boss (D-89c)',
      ['FIN-013-*']),
-    (7, '7.1', 'Hinge tape: top strip at neutral, lower strip with the panel full TE-up',
-     ['MEC-010-*', 'swing:te-up']),
+    (7, '7.1', 'Panels with their tubes slid back against the core; hinge tape: top strip at neutral, lower strip full TE-up',
+     ['unpark:elevons', 'MEC-010-*', 'swing:te-up']),
     (7, '7.2', 'Horns on the torque tubes and the inter-panel rod',
-     ['MEC-004-*', 'MEC-005-*', 'MEC-006-*', 'MEC-013-*']),
+     ['MEC-004-*', 'MEC-006-*', 'MEC-005-*', 'MEC-013-*']),
     (7, '7.3', 'Bench-prep each servo at 1500 us: arm on the spline, arm screw',
      ['bench:servo-<x> MEC-001-*', 'bench:servo-<x> MEC-002-*', 'bench:servo-<x> MEC-012-*']),
     (7, '7.4', 'Install the servo in its frame, fit the cover and its screws',
@@ -127,7 +132,7 @@ STEPS = [
      ['GER-001-*', 'bench:insert-<x> GER-002-*', 'bench:insert-<x> GER-003-*', 'bench:insert-<x> GER-008-*',
       'bench:insert-<x> GER-004-*', 'install:insert', 'GER-007-*']),
     (11, '11.1', 'Pack in with its spacer, crush block and spreader; strap it; mate the AS150U; hatch on',
-     ['POD-008', 'POD-009', 'POD-010', 'PWR-001', 'HRN-107-PACK', 'wire:E-HRN-10', 'POD-003']),
+     ['POD-008', 'POD-009', 'POD-010', 'PWR-001', 'wrap:POD-004', 'HRN-107-PACK', 'wire:E-HRN-10', 'POD-003']),
 ]
 
 # Where this order differs from BUILD-GUIDE.md, and why (each found by assembly_check.py on the guide's order).
@@ -139,6 +144,10 @@ DEVIATIONS = [
      'in once both are fixed (bowing it in strains the CF past its limit: report, BOW)'),
     ('5.1 / 5.2', 'Pitot socket POD-006 and carry handle POD-007 go into the pod box on the bench',
      'with the pod in the recess, neither can reach its seat (handle brackets wrap the pod walls)'),
+    ('5.3', 'Bus board PWR-004 goes in before the power frame PWR-006 (not after the screws)',
+     'the frame cradle covers the bus-board seat: the board meets the frame 0.86 mm deep 12 mm out (2026-11-13 run)'),
+    ('7.2', 'Outboard horn MEC-006 before the inter-panel rod MEC-005',
+     'the rod runs through both horn bosses: with the rod in, the outboard horn cannot reach its slot'),
     ('5.3 / 6.2', 'XT30U pairs HRN-113 go on the tray before the power frame PWR-006',
      'the frame cradle floor lies over them'),
     ('5.3 / 9.1', 'Airspeed sensor AVN-004 and receiver AVN-003 go on the tray before the power frame',
@@ -161,10 +170,12 @@ DEVIATIONS = [
 OVERRIDES = [
     ('WNG-001', dict(kind='fixture', fixture='lower hot-wire foam bed',
                      why='BUILD-GUIDE 2.1-2.2: the core is hot-wired and slotted in its lower bed and stays in it')),
-    ('WNG-011-*', dict(kind='fixture', fixture='core foam bed (cut free of the core in place)',
-                       why='BUILD-GUIDE 3.1: the panels are cut from the whole core')),
-    ('WNG-012-*', dict(kind='fixture', fixture='core foam bed (cut free of the core in place)',
-                       why='BUILD-GUIDE 3.1: the panels are cut from the whole core')),
+    ('WNG-011-*', dict(kind='fixture', fixture='lower hot-wire foam bed (the TE strip of the core blank)',
+                       why='BUILD-GUIDE 2.1, 3.1: the panels are the trailing-edge strip of the same hot-wired blank as '
+                           'the core; laid in with it, cut free at 3.1 (PARK elevons)')),
+    ('WNG-012-*', dict(kind='fixture', fixture='lower hot-wire foam bed (the TE strip of the core blank)',
+                       why='BUILD-GUIDE 2.1, 3.1: the panels are the trailing-edge strip of the same hot-wired blank as '
+                           'the core; laid in with it, cut free at 3.1 (PARK elevons)')),
     ('WNG-002', dict(fixture='clocking jig on the bench', dirs=[(0, 0, -1)],
                      why='BUILD-GUIDE 2.2: the spar slot is cut from below (WNG-001 slot, D-89c); 2.4 blocks bonded '
                          'to the spar in the jig; 2.5 spar pushed up the slot')),
@@ -178,9 +189,29 @@ OVERRIDES = [
                                 angles=[60, 45, 75, 90, 30], lift_mm=40.0, clear_mm=2.0),
                      why='interfaces E-POD-03 "tongue under the nose lip + hook-and-loop tab": the tongue is slid '
                          'under the nose lip with the hatch open, then the hatch turned down about the lip edge')),
-    ('POD-004', dict(kind='lay', why='hook-and-loop straps (interfaces E-POD-04): each passes down a slot, under '
-                                     'the tray in the floor groove and up the other slot; laid in place')),
+    ('POD-004', dict(kind='lay', hold=dict(above='POD-002', bodies='strap', wrap_step='11.1'),
+                     why='hook-and-loop straps (interfaces E-POD-04): each passes down a slot, under the tray in the '
+                         'floor groove and up the other slot (laid in place, with the EVA pads); the run above the '
+                         'tray is left open and wrapped over the pack at BUILD-GUIDE 11.1 "strap it"')),
+    ('HRN-113-*', dict(fixture='cable tie in its lane (interfaces E-HRN-38..41 CT-TIE; harness BUILD step 8 '
+                               '"tie the body in its lane")',
+                       why='XT30U mated pair: no rigid seat; tied in its lane on the tray')),
+    ('MEC-003-*', dict(kind='hinge', hinge=dict(pivot='axis', body='pushrod Z-bend leg', angles=[30, 60, 90, 15, 120],
+                                                clear_mm=2.0),
+                       why='BUILD-GUIDE 7.5 "pushrod and clevis at neutral": the Z-bend leg is threaded through the '
+                           'servo-arm hole with the rod swung clear, then the rod is swung about the leg onto the horn '
+                           '(the clevis closing round the horn arm)')),
 ]
+
+# Parts moved away from their seat for a while and brought back, both moves checked as sweeps (STEPS 'park:' and
+# 'unpark:'). While parked their bodies are obstacles at the parked pose, so nothing placed meanwhile may pass there.
+PARK = {
+    'elevons': dict(members=['WNG-011-*', 'WNG-012-*'], carry=['MEC-009-*'], move_mm=(10.0, 0.0, 0.0),
+                    why='BUILD-GUIDE 3.1: the panels are cut free of the core blank along the kerf and slid 10 mm aft in '
+                        'the bed (EST: enough to clear the kerf and handle them); the torque tubes are bonded into them '
+                        'there (3.3); at 7.1 panels and tubes slide forward back against the core before the hinge '
+                        'tape'),
+}
 
 # Elastic deflection during a motion: the only interference the check accepts, and only between the named bodies, up
 # to the deflection the strain allowable gives (assembly_check.elastic_rows: cantilever tip deflection d, root strain
@@ -195,6 +226,32 @@ ELASTIC = [
                 '3.5 % (lowest of the Prusament PETG TDS values found: V0 sheet Aug 2023 3.5-3.7 %, PETG v1.1 Feb '
                 '2022 5.1 %; https://cdn.shopify.com/s/files/1/1745/6181/files/prusament-petg-v0-technical-data-sheet.pdf, '
                 'checked 2026-11-13); EST'),
+    dict(id='MEC-003 clevis jaw', mover='MEC-003-*', mover_body='clevis', blocker='MEC-004-*',
+         blocker_body='horn arm', L_mm=12.5, t_mm=1.2, cap_mm=0.5, eps_allow=0.0108,
+         why='BUILD-GUIDE 7.5: the rod swung about its Z-bend leg onto the horn; the clevis jaws spring over the horn arm',
+         source='jaw length 12.5 mm = clevis x 235.6-248.1 mm, jaw 1.2 mm = (4.8 mm clevis - 2.4 mm horn arm) / 2: '
+                'CAD MEC-003 clevis and MEC-004 horn arm; steel clevis taken as music wire ASTM A228, proof 2050 MPa / '
+                'E 190 GPa = 1.08 % (https://www.makeitfrom.com/material-properties/ASTM-A228-SWP-A-K08500-Music-Wire, '
+                'checked 2026-11-13); EST'),
+    dict(id='MEC-010 hinge film', mover='WNG-01[12]-*', mover_body='xps elevon', blocker='MEC-010-*',
+         blocker_body='hinge tape strip (on the core)', L_mm=11.9, t_mm=0.10, cap_mm=0.2, eps_allow=0.02,
+         why='BUILD-GUIDE 7.1: on the TE-up swing the panel nose presses the hinge film where it leaves the core edge',
+         source='film 0.10 mm thick: CAD MEC-010 strip section; free span 11.9 mm wide across the hinge gap: this check '
+                '(swing tape split, x 250.2-262.1 mm); BOPP packing tape (interfaces MEC-010): elongation at break '
+                '140 % MD (Transcendia HT2-F BOPP film data sheet, https://www.transcendia.com/sites/default/files/'
+                '2025-01/ht2-f_bopp_film_datasheet_01032025.pdf, checked 2026-11-13); elastic limit taken as 2 %, EST'),
+    dict(id='POD-003 hatch end-on (lip)', model='axial', mover='POD-003', mover_body='fb hatch', blocker='POD-001',
+         blocker_body='petg nose lip', L_mm=195.2, cap_mm=0.2, eps_allow=0.01,
+         why='the hatch fits between the nose lip and the aft deck with no clearance in CAD: closing about the lip '
+             'edge presses its foam-board front edge against the lip',
+         source='hatch length 195.2 mm: CAD POD-003 fb hatch x -129.2..66.0 (pod_data.py); foam-board elastic limit '
+                'EST 1 % (XPS of the FOAMULAR family: 40 psi strength over 1800 psi modulus = 2.2 %, FOAMULAR '
+                '400/600/1000 data sheet, https://cemstonesupply.com/wp-content/uploads/2020/05/'
+                'FOAMULAR-400-600-1000-XPS-Product-Data-Sheet.pdf, checked 2026-11-13; halved); EST'),
+    dict(id='POD-003 hatch end-on (deck)', model='axial', mover='POD-003', mover_body='fb hatch', blocker='POD-001',
+         blocker_body='fb aft deck', L_mm=195.2, cap_mm=0.2, eps_allow=0.01,
+         why='as above, the aft edge against the aft deck edge',
+         source='as POD-003 hatch end-on (lip); EST'),
 ]
 
 # The brace (FIN-009) is NOT bowed in: both ends sit 10 mm in blind slots cut to its own section (interfaces E-FIN-37..44)
@@ -220,32 +277,13 @@ KNOWN = [
 # direction tried. A diagnosis to start from, not a verified cause; the fix belongs in the CAD (this tool never moves
 # a part to make a path pass).
 FINDINGS = [
-    ('POD-011', 'Cross-screw: along its own axis the head meets the mast 6 mm out one way and the handle mast-socket '
-                'boss 0.3 mm out the other; no out-then-across path. The 4.5 mm counterbore (seats.json POD-005) is '
-                'cut to the head only; open it to the mast face, or give the handle boss a through hole.'),
-    ('PWR-003', 'Power-board stand-in box rests on the PWR-101 frame-screw heads (0.050 mm, at the threshold): the box '
-                'is cut by the whole screw (seats.json "mounting holes of the power board (envelope box)"). Model the '
-                'board at its real thickness above the heads.'),
-    ('MEC-004-*', 'Horn: the blade straddles the bonded torque tube (blocked by MEC-009 0.15 mm out in x and z) and sits '
-                  'in its panel slot (blocked in y). It cannot go on after the tube (guide 3.3 before 7.2), and the '
-                  'check found the tube cannot slide through a seated horn either. A horn that clamps on from one '
-                  'side, or a blade slot open to the panel edge, would fit.'),
-    ('MEC-006-*', 'Link horn: same as MEC-004 (blade over the outboard torque tube).'),
-    ('PRP-005-*', 'Motor screws (each screw planned on its own): straight out of the plate hole, and out-then-across, '
-                  'every path meets the mount collar / cheeks 7-19 mm out. A tilted entry with a ball-end key was not '
-                  'searched (straight and two-segment paths only); check by hand on the first printed mount.'),
-    ('PRP-006-*', 'Prop-adapter screws: the head meets the adapter 6 mm out: the counterbore (seats.json PRP-004 / '
-                  'PRP-006 "adapter screw counterbores") is cut to the head envelope only, closed above it. Open the '
-                  'counterbore to the adapter face.'),
-    ('AVN-005', 'Pitot boom: the probe-root barb / coupler is caught by the socket POD-006 at 0.05-0.3 mm in every '
-                'direction: the coupler is larger than the socket bore it must pass. Fit the coupler after the probe '
-                'is through, or enlarge the bore.'),
+    # empty: the five blockers of 2026-11-13 (servo and cover through the tape, cover in the core, pushrod in the arm
+    # plane, pod aft deck, hatch tab under the grip) are fixed in CAD by D-139...D-143 (review/CDR-2026-11-13/fixes/
+    # ASSEMBLY.md). Add a row here with its reading when a run reports a new violation.
 ]
 
 # Placements that touch nothing placed: why, when the data does not say.
 SUPPORT_NOTES = [
-    ('HRN-113-*', 'XT30U pair hangs on its leads, tied to the tray (CT-TIE is not structural): no rigid support'),
-    ('PWR-003', 'power board stand-in box sits more than 0.6 mm above the deck; held by the frame screws'),
     ('AVN-002', 'GPS on the mast pad: gap to the pad over 0.6 mm in CAD (pad tape not modelled)'),
 ]
 
@@ -267,6 +305,20 @@ def known(mover, blocker):
 def bonded_pairs():
     """Pairs of part ids joined by an interfaces.json edge (bond, tape, pad, fastener): a bond line may leave a gap."""
     return {frozenset((e['part_a'], e['part_b'])) for e in _load('interfaces.json')['edges']}
+
+
+FOAM_TAPE = re.compile(r'(\d+(?:\.\d+)?) mm foam tape', re.I)
+
+
+def bond_gaps():
+    """{pair: allowed gap mm} for interfaces.json edges whose notes state a foam-tape layer ('on 1 mm foam tape'): the
+    tape fills that gap (BUILD data; the tape itself is not modelled)."""
+    out = {}
+    for e in _load('interfaces.json')['edges']:
+        m = FOAM_TAPE.search(e.get('notes') or '')
+        if m:
+            out[frozenset((e['part_a'], e['part_b']))] = float(m.group(1)) + 0.1
+    return out
 
 
 def override(pid):
@@ -319,17 +371,22 @@ def sequence(part_ids, wire_ids):
         {'stage', 'step', 'caption', 'type': 'part'|'wire'|'bench'|'install'|'swing', 'id', 'group'}
     'bench' actions place one part into a bench group; 'install' moves one whole group ('id' = group name).
     Returns (actions, unplaced part ids appended to a catch-all step at the end)."""
-    acts, used, groups = [], set(), {}
+    acts, used, groups, partial = [], set(), {}, set()
     for stage, step, cap, items in STEPS:
         for it in items:
             base = dict(stage=stage, step=step, caption=cap)
             if it.startswith('bench:'):
                 name, glob = it[6:].split(' ', 1)
-                for pid in sorted(p for p in part_ids if fnmatch.fnmatch(p, glob) and p not in used):
+                glob, sel = glob.split('|', 1) if '|' in glob else (glob, None)
+                for pid in sorted(p for p in part_ids if fnmatch.fnmatch(p, glob) and (p not in used or
+                                                                                       (sel and p in partial))):
                     g = name.replace('<x>', suffix(pid))
-                    groups.setdefault(g, []).append(pid)
+                    if pid not in groups.get(g, []):
+                        groups.setdefault(g, []).append(pid)
                     used.add(pid)
-                    acts.append(dict(base, type='bench', id=pid, group=g))
+                    if sel:
+                        partial.add(pid)
+                    acts.append(dict(base, type='bench', id=pid, group=g, bodies=sel))
             elif it.startswith('install:'):
                 name = it[8:]
                 for g in sorted(groups):
@@ -341,6 +398,11 @@ def sequence(part_ids, wire_ids):
                 for w in sorted(w for w in wire_ids if fnmatch.fnmatch(w, it[5:]) and w not in used):
                     used.add(w)
                     acts.append(dict(base, type='wire', id=w, group=None))
+            elif it.startswith('wrap:'):
+                acts.append(dict(base, type='wrap', id=it[5:], group=None))
+            elif it.startswith(('park:', 'unpark:')):
+                kind_, name = it.split(':', 1)
+                acts.append(dict(base, type=kind_, id=name, group=None))
             elif it.startswith('tails:'):
                 acts.append(dict(base, type='tails', id=it[6:], group=None))
             elif it.startswith('swing:'):

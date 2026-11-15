@@ -1,3 +1,57 @@
+# Re-decision 2026-11-14 (D-181): small quadplane B replaces K09-L
+
+Status: DECIDED (A1, 2026-11-14). Supersedes the K09-L decision below, which is kept unedited as the record.
+Inputs: `../RESTUDY-2026-11-14.md` (§2 costs, §4 steps, §5 chart rows), `../../review/CLOSURE-ROUND-2026-11-14/DESIGN-TO-COST.md`.
+Tags: `EST` estimate, `U` UNVERIFIED price (vendor page not read), `—` unknown.
+
+**Decision in three lines.** Build **candidate B**: a small quadplane, 4 fixed lift rotors + 1 cruise pusher on a foam wing,
+about 1.88 kg `EST`, ArduPilot QuadPlane. Total about $1,625 including crash reserve (+$375 margin; about +$175 if candidate
+parts run 30 % over). Fallback: **D2, ZOHD Altus VTOL PNP** ($1,549, +$451).
+
+### Why K09-L was dropped (cost)
+- Cheapest workable all-new K09-L path ends at **$2,577**, gap **$577** to $2,000 (DESIGN-TO-COST §0, §5). Honest baseline $3,243.67 (§1).
+- 3S packs (`EST` -$282) would still leave about $295 and reopen E1, E2, B1, B2, B3, A3, C1, C4, C5, F1, F4 with a likely T/W failure (§4).
+- Airframe is the overrun: +$247 over its cap, driven by the fin tube (§2). Motors cannot fall under about $175 (§3).
+- The closure round was also dominated by tailsitter-specific problems: hover yaw in wind, a narrow transition entry window, landing on fin tips, tip-over, and the transition climb-out.
+
+### Why B, and not A
+| Cand | Total $ | Margin $ | MTOW kg `EST` | Verdict |
+|---|---|---|---|---|
+| A scaled quad tailsitter | 1,461 | +539 | 1.23 | Not chosen: keeps every tailsitter problem; a smaller, lighter tailsitter is worse in wind |
+| **B small quadplane 4+1** | **1,625** | **+375** | **1.88** | **Selected** |
+| C dual-motor tailsitter | 1,351 | +649 | 1.02 | Rejected: motor-out is fatal |
+| D1 HEEWING T1-S VTOL PNP | 1,666 | +334 | 0.90 | Rejected: T/W 1.64 sits at the 1.6 limit |
+| **D2 ZOHD Altus VTOL PNP** | 1,549 | +451 | 1.16 | **Fallback** |
+| D3 HEEWING T2 Cruza + kit | 1,934 | +66 | 2.23 | Rejected: misses the $100 margin |
+
+Source: RESTUDY §2. B is the lowest-risk concept that clears the $100 margin (RESTUDY §4). The quadplane is the most-flown
+ArduPilot VTOL layout (`Q_ENABLE=1`), hovers on dedicated lift motors and lands on gear, so it carries the lowest risk to the
+30 April 2027 flight test. Technical risk Low-Medium (parked-prop drag, boom flex, pusher in transition); schedule Low-Medium
+(RESTUDY §3). Carry-over from K09-L is Medium: FC, airspeed, logging, test plan, harness.
+
+### Fallback
+D2 ZOHD Altus VTOL PNP, $299.99 `V` (readymaderc.com, read 2026-11-14), 1.16 kg, no maker ArduPilot parameter file found. It accepts low
+design content (RESTUDY §2, §4).
+
+### What would reverse it
+- Bench thrust test of X2212 KV980 + 9/10 in props on 4S fails to support B's hover T/W 2.13 `EST` (motor thrust is `EST` for every scratch candidate).
+- Vendor-page prices replacing the `U` values push B's margin below $100 (+$175 at parts +30 %, RESTUDY §2; the break-even overrun is not computed).
+- Wing / transition sizing shows 1.3 Vs 12.5 m/s `EST` cannot be met on the racetrack, or QuadPlane parameters on the SpeedyBee target fail in SITL.
+- Schedule: airframe parts not ordered by mid-December (RESTUDY §4 f).
+- Switch to A only if the bench test passes and the team wants pitch-over tuning; switch to D2 if both stall.
+
+### Immediate next steps (RESTUDY §4)
+1. Bench-test X2212 KV980 + 9/10 in props on 4S: replaces `EST` thrust, sets hover current and pack C-rate.
+2. Re-run `restudy_cost.py` with vendor-page prices (replace every `U`) and a real spares list.
+3. Check ArduPilot QuadPlane parameters, frame class and logging on the SpeedyBee F405 Wing APP target.
+4. Size wing area and 1.3 Vs transition on the racetrack (stall 9.6 / 1.3 Vs 12.5 m/s `EST`).
+5. CAD interference and assembly checks, landing and SITL on the quadplane layout.
+6. Order floor items first ($744.02 incl. tax, shipping, FAA), airframe parts by mid-December.
+
+---
+
+# Superseded record (2026-11-09): everything below describes K09-L and is no longer the decision
+
 # Tie-break decision: K09 quad tailsitter (lean, with elevons and airspeed)
 
 Status: DECIDED (deciding judge, 2026-11-09), for the team lead's sign-off before the mid-December order.

@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 37.01,
+ "render_s": 87.33,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -42,16 +42,16 @@
  "callouts": [
   {
    "item": "WNG-003",
-   "x": 654.9,
-   "y": 507.5,
+   "x": 655.0,
+   "y": 507.6,
    "title": "",
    "text": "Wing",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0698,
-    0.178,
+    0.0696,
+    0.1776,
     0.0223
    ]
   },
@@ -148,16 +148,16 @@
   {
    "item": "GER-001-UL",
    "x": 1110.6,
-   "y": 422.1,
+   "y": 428.2,
    "title": "",
    "text": "Landing feet",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.4411,
-    -0.4865,
-    0.2156
+    0.4364,
+    -0.4895,
+    0.2073
    ]
   },
   {
@@ -182,13 +182,27 @@
    "role": "context",
    "name": "Wing core, one piece (XPS), with all cuts",
    "status": "MODELLED",
-   "mass_g": 201.9,
+   "mass_g": 198.1,
    "subsystem": "wing",
    "bbox_px": [
-    454,
-    411,
-    1117,
-    667
+    455,
+    412,
+    1112,
+    668
+   ]
+  },
+  {
+   "id": "WNG-008",
+   "role": "context",
+   "name": "Spar-slot cap strips (XPS, the slot strip re-bonded)",
+   "status": "MODELLED",
+   "mass_g": 3.9,
+   "subsystem": "wing",
+   "bbox_px": [
+    511,
+    463,
+    1008,
+    640
    ]
   },
   {
@@ -294,7 +308,7 @@
    "role": "context",
    "name": "Tape skin (packing tape, both surfaces, doublers, tip edge layer)",
    "status": "MODELLED",
-   "mass_g": 47.9,
+   "mass_g": 47.5,
    "subsystem": "wing",
    "bbox_px": [
     454,
@@ -1190,7 +1204,7 @@
    "role": "context",
    "name": "Pod shell (foam-board box, XPS LE filler, printed nose lip and antenna tube B)",
    "status": "MODELLED",
-   "mass_g": 24.8,
+   "mass_g": 24.7,
    "subsystem": "pod",
    "bbox_px": [
     623,
@@ -1216,7 +1230,7 @@
   {
    "id": "POD-003",
    "role": "context",
-   "name": "Hatch (foam board, printed tongue, 12 x 40 hook-and-loop tab, antenna tube A)",
+   "name": "Hatch (foam board, printed tongue, 8 x 60 hook-and-loop tab, antenna tube A)",
    "status": "MODELLED",
    "mass_g": 9.2,
    "subsystem": "pod",
@@ -1246,11 +1260,11 @@
    "role": "context",
    "name": "Crush block (XPS F-250, hot-wired, cut per pack, vent groove)",
    "status": "MODELLED",
-   "mass_g": 2.2,
+   "mass_g": 2.1,
    "subsystem": "pod",
    "bbox_px": [
     649,
-    432,
+    433,
     687,
     480
    ]
@@ -1260,11 +1274,11 @@
    "role": "context",
    "name": "Spreader (1.5 mm PETG plate, full block section)",
    "status": "MODELLED",
-   "mass_g": 5.3,
+   "mass_g": 5.1,
    "subsystem": "pod",
    "bbox_px": [
     660,
-    432,
+    433,
     687,
     474
    ]
@@ -1358,13 +1372,13 @@
    "role": "context",
    "name": "Foot shoe UR",
    "status": "MODELLED",
-   "mass_g": 9.98,
+   "mass_g": 12.71,
    "subsystem": "landing",
    "bbox_px": [
     632,
     283,
     665,
-    309
+    321
    ]
   },
   {
@@ -1442,13 +1456,13 @@
    "role": "context",
    "name": "Foot shoe UL",
    "status": "MODELLED",
-   "mass_g": 9.98,
+   "mass_g": 12.71,
    "subsystem": "landing",
    "bbox_px": [
     1095,
     407,
     1127,
-    438
+    451
    ]
   },
   {
@@ -1456,11 +1470,11 @@
    "role": "context",
    "name": "Foot shoe LR",
    "status": "MODELLED",
-   "mass_g": 9.98,
+   "mass_g": 12.71,
    "subsystem": "landing",
    "bbox_px": [
     639,
-    481,
+    471,
     671,
     505
    ]
@@ -1470,11 +1484,11 @@
    "role": "context",
    "name": "Foot shoe LL",
    "status": "MODELLED",
-   "mass_g": 9.98,
+   "mass_g": 12.71,
    "subsystem": "landing",
    "bbox_px": [
     1080,
-    623,
+    612,
     1111,
     651
    ]
@@ -2274,7 +2288,7 @@
     1008,
     559,
     1025,
-    571
+    572
    ]
   },
   {
@@ -2510,9 +2524,9 @@
    "subsystem": "power",
    "bbox_px": [
     726,
-    329,
+    328,
     762,
-    352
+    351
    ]
   },
   {
@@ -2630,7 +2644,7 @@
   {
    "id": "PWR-103",
    "role": "context",
-   "name": "Power-frame washer set: 4 x M3 nylon washer 1.0 mm",
+   "name": "Power-frame washer set: 4 x M3 nylon washer 0.5 mm",
    "status": "MODELLED",
    "mass_g": 0.08,
    "subsystem": "power",
@@ -2650,9 +2664,9 @@
    "subsystem": "power",
    "bbox_px": [
     737,
-    334,
+    335,
     762,
-    356
+    357
    ]
   },
   {

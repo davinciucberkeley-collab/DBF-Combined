@@ -45,6 +45,47 @@ SIM-only overrides (needed because the stock model is wired and sized differentl
 Simulated time flown: 6 runs of about 370–510 s = about 0.75 h (logic only; counts toward `R-PILOT` only if A2 accepts
 stage A hours).
 
+## Closure round, 2026-11-14 (F4-R8 parameter file; same binary, model and SIM-only overrides)
+
+Driver: `s1.py` (load and read back) and `s8.py` (scratchpad, outside the repo). `BATT_LOW` triggered by raising
+`BATT_LOW_MAH` to 5 975 in flight (a `SIM_BATT_VOLTAGE` drop to 13.7 V did not trigger within 60 s on this build).
+Pitch-over detected by "Transition FW done" or a pitch change > 45° from the hover attitude.
+
+| # | Case | Result | Pass? |
+|---|---|---|---|
+| S1 (R8) | Load `K09L.param` R8 (167 names) and read back after a reboot | 1 614 parameters; all accepted except `SERVO_BLH_BDMASK` / `_POLES` (board-only); every value equal; read back: `Q_A_ANGLE_BOOST` 0, `Q_ASSIST_ALT` 0, `Q_ASSIST_ANGLE` 0, `Q_TRANSITION_MS` 11 667, `THR_MAX` 60, `PTCH2SRV_RMAX_UP/DN` 35 / 20, `BATT_LOW_MAH` 3 100, `BATT_FS_LOW_ACT` 6, `Q_M_BAT_CURR_MAX` 73.2, `INS_HNTCH_HMNCS` 3; boot mode 17 | **pass** |
+| S8a | `BATT_LOW` in QLOITER at 61.6 m near home, `BATT_FS_LOW_ACT` 6 | "Battery 1 is low" → QLAND at once, descent ≈ 1.2 m/s, no FW mode, pitch change ≤ 0.9° | **pass** |
+| S8b | Control: same with `BATT_FS_LOW_ACT` 1 | RTL → "Transition FW done" 6.3 s later (pitch-over at the held hover throttle, motors 1 580–1 587 µs), then RTL, VTOL approach, QRTL | shows the hazard 6 removes |
+| S9b | Altitude fence climbing in QLOITER, `FENCE_ACTION` 1 | "Max Alt fence breached" at 110.9 m (breach at `FENCE_ALT_MAX`; `FENCE_MARGIN` 10 does not lower it) → RTL → "Transition FW done" 6.2 s later | recorded: residual (F4 closure §4.2) |
+| S4c | QSTABILIZE hover at 51.6 m, stick 1 650 µs (motors 1 640 µs), FBWA, stick to 1 100 then 1 950 µs in the pitch-over | motors held at 1 636–1 648 µs until "Transition FW done" while the FW throttle demand read 10 → 45 → 60 %; `Q_A_ANGLE_BOOST` 0 | **pass** (logic; θh ratio not checked on the stock model) |
+
+Simulated time flown in this round: 4 flight runs of about 160–260 s.
+
+## D-161c, 2026-11-14: spin-cap script (F4-R9 file, same binary and model; scripting runs in this SITL build)
+
+Driver `s10.py` (scratchpad). `scripts/k09l_spincap.lua` copied unchanged into the run's `scripts/`; `SCR_ENABLE` 1.
+SIM-only: battery and fence failsafes off for the sweep, output-map overrides as above. The sim motor thrust scales with
+`SIM_BATT_VOLTAGE` (SIM_Motor.cpp `voltage_scale`), so the sweep moves both the script input and the plant.
+
+| # | Case | Result | Pass? |
+|---|---|---|---|
+| S1 (R9) | Load `K09L.param` R9 (180 names) and read back | 1 628 parameters; all accepted except the board-only `SERVO_BLH_BDMASK` / `_POLES` and `BRD_ALT_CONFIG` (Kakute alternate config, not in SITL); values equal; boot 17. With no script on the "card": **PreArm "Scripting: loaded CRC incorrect"** (the CRC check blocks a missing script) | **pass** |
+| S23a | Voltage sweep 16.8 → 13.6 V, 9 × 20 s in QHOVER at 76 m, `Q_M_BAT_VOLT_MAX` 0 (record run, `SCR_HEAP_SIZE` 102 400) | cap = 11.2 / V within **0.0001** at every step (0.6667 → 0.8234); learnt hover 0.538 → 0.557 (**+3.5 %**); altitude peak-to-peak ≤ **0.05 m**, vertical-speed rms ≤ 0.013 m/s per step | **pass** |
+| S23b | Same with built-in compensation on (`Q_M_BAT_VOLT_MAX` 16.8) | cap tracks; learnt hover 0.537 → 0.461 (**−14 %**, both schemes scale 1 / V); altitude ≤ 0.06 m | works; compensation set off in R9 |
+| S23c | QSTABILIZE full stick + roll stick 1 800 µs, 3 s, at 16.8 V and 13.6 V | highest motor output 0.666 (cap 0.6667) and 0.823 (cap 0.8235); 35 and 47 samples at the cap; never above | **pass** |
+| S23d | `SCR_USER1` 99 on the ground | "SPINCAP fault", cap 0.746, **"PreArm: SPINCAP fault", "Arm: SPINCAP fault"**: arming refused; `SCR_USER1` 0 → "recovered", arming accepted | **pass** |
+| S23e | `SCR_USER1` 99 in flight (QHOVER) | cap 0.746 within 3 s, recovered to 0.8235 after clearing | **pass** |
+| S23f | Memory (`SCR_DEBUG_OPTS` 2) | Lua state 6.0 kB; peak 29.2 kB at start, steady 23.3 kB + 0.7 kB per cycle; no out-of-memory message in a 100 kB heap | pass |
+| S23g | CRC (`SCR_DEBUG_OPTS` 32) | "Scripting: saved checksums": `SCR_LD_CHECKSUM` = `SCR_RUN_CHECKSUM` = **2 238 619** for the committed file | value set in R9 |
+
+Not checked in SITL (no model of it): winding current; the real thrust curve; a scripting-engine crash in flight.
+
+**D-173b: the spin-cap script is withdrawn** (CoreWing F405 again, fixed `Q_M_SPIN_MAX` 0.81). The rows above stay as a record.
+
+| # | Case | Result | Pass? |
+|---|---|---|---|
+| S1 (R10) | Load `K09L.param` R10 (179 names) and read back | 1 614 parameters; all accepted except the board-only `SERVO_BLH_BDMASK` / `_POLES`; every value equal (`Q_M_SPIN_MAX` 0.81, `THR_MAX` 42, `FWD_BAT_VOLT_MAX` 16.8, `Q_M_BAT_CURR_MAX` 75); boot 17. Pre-arm also showed "Battery 1 low capacity failsafe": a SITL artefact, because the file's `BATT_AMP_PERVLT` 64 makes SITL's analog current read 3.8x high (see Set-up), so the mAh counter drains during the reboots | **pass** |
+
 ## Not run
 
-S3 (wind), S3b, S4 (sagged pack, RCOU at `THR_MAX`), S5 on K09-L aero, S6, S8, S9 polygon, S10–S17, S19, all of stage B.
+S3 (wind), S3b, S4 (sagged pack, RCOU at `THR_MAX`), S5 on K09-L aero, S6, S9 polygon, S10–S17, S19, S22, all of stage B.

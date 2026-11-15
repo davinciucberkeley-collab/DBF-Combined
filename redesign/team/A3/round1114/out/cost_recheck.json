@@ -1,0 +1,295 @@
+{
+ "plug_g": -0.03515864809122604,
+ "f2_g": 152.37484135190877,
+ "lumps_g": 152.41,
+ "live_gens": {
+  "pack": "gens",
+  "xp": -0.0545,
+  "dnose": 0.0,
+  "basic_g": 2452.9,
+  "pred_g": 2589.3,
+  "gate_margin_g": 110.7,
+  "margin_light_g": 120.7,
+  "margin_heavy_g": 100.7,
+  "accept_g": 440.7,
+  "accept_need_g": 424.0,
+  "accept_margin_g": 16.7,
+  "cg_basic": 0.04976,
+  "cg_pred": 0.05135,
+  "pack_x_req": -0.059,
+  "x_fwd_lim": -0.0567,
+  "alloc": {
+   "wing": [
+    396.0,
+    395.1
+   ],
+   "fins": [
+    487.0,
+    483.3
+   ],
+   "pod": [
+    147.0,
+    146.6
+   ],
+   "landing": [
+    80.0,
+    79.5
+   ],
+   "propulsion": [
+    594.0,
+    579.0
+   ],
+   "power": [
+    506.0,
+    507.1
+   ],
+   "avionics": [
+    36.0,
+    35.4
+   ],
+   "harness": [
+    148.0,
+    152.4
+   ],
+   "mechanisms": [
+    74.0,
+    74.4
+   ]
+  },
+  "fits_crush_stack": true,
+  "cg_range_ok_basic": true,
+  "cg_range_ok_pred": false
+ },
+ "shorty": {
+  "pack": "shorty",
+  "xp": -0.0545,
+  "dnose": 0.0,
+  "basic_g": 2458.4,
+  "pred_g": 2594.8,
+  "gate_margin_g": 105.2,
+  "margin_light_g": 115.2,
+  "margin_heavy_g": 95.2,
+  "accept_g": 440.7,
+  "accept_need_g": 429.5,
+  "accept_margin_g": 11.2,
+  "cg_basic": 0.04953,
+  "cg_pred": 0.05113,
+  "pack_x_req": -0.0576,
+  "x_fwd_lim": -0.0572,
+  "alloc": {
+   "wing": [
+    396.0,
+    395.1
+   ],
+   "fins": [
+    487.0,
+    483.3
+   ],
+   "pod": [
+    147.0,
+    146.6
+   ],
+   "landing": [
+    80.0,
+    79.5
+   ],
+   "propulsion": [
+    594.0,
+    579.0
+   ],
+   "power": [
+    506.0,
+    512.6
+   ],
+   "avionics": [
+    36.0,
+    35.4
+   ],
+   "harness": [
+    148.0,
+    152.4
+   ],
+   "mechanisms": [
+    74.0,
+    74.4
+   ]
+  },
+  "fits_crush_stack": true,
+  "cg_range_ok_basic": true,
+  "cg_range_ok_pred": false
+ },
+ "CNHL 6000 120C @ -0.0545 (asked), foam 5 g": {
+  "pack": "cnhl",
+  "xp": -0.0545,
+  "dnose": 0.0,
+  "basic_g": 2522.9,
+  "pred_g": 2660.3,
+  "gate_margin_g": 39.7,
+  "margin_light_g": 44.7,
+  "margin_heavy_g": 34.7,
+  "accept_g": 434.7,
+  "accept_need_g": 484.0,
+  "accept_margin_g": -49.3,
+  "cg_basic": 0.04687,
+  "cg_pred": 0.04853,
+  "pack_x_req": -0.0433,
+  "x_fwd_lim": -0.0367,
+  "alloc": {
+   "wing": [
+    396.0,
+    395.1
+   ],
+   "fins": [
+    487.0,
+    483.3
+   ],
+   "pod": [
+    147.0,
+    151.6
+   ],
+   "landing": [
+    80.0,
+    79.5
+   ],
+   "propulsion": [
+    594.0,
+    579.0
+   ],
+   "power": [
+    506.0,
+    572.1
+   ],
+   "avionics": [
+    36.0,
+    35.4
+   ],
+   "harness": [
+    148.0,
+    152.4
+   ],
+   "mechanisms": [
+    74.0,
+    74.4
+   ]
+  },
+  "fits_crush_stack": false,
+  "cg_range_ok_basic": true,
+  "cg_range_ok_pred": true
+ },
+ "CNHL 6000 120C @ fore-face limit": {
+  "pack": "cnhl",
+  "xp": -0.03449999999999999,
+  "dnose": 0.0,
+  "basic_g": 2522.9,
+  "pred_g": 2660.3,
+  "gate_margin_g": 39.7,
+  "margin_light_g": 44.7,
+  "margin_heavy_g": 34.7,
+  "accept_g": 434.7,
+  "accept_need_g": 484.0,
+  "accept_margin_g": -49.3,
+  "cg_basic": 0.05071,
+  "cg_pred": 0.05217,
+  "pack_x_req": -0.0435,
+  "x_fwd_lim": -0.0367,
+  "alloc": {
+   "wing": [
+    396.0,
+    395.1
+   ],
+   "fins": [
+    487.0,
+    483.3
+   ],
+   "pod": [
+    147.0,
+    151.6
+   ],
+   "landing": [
+    80.0,
+    79.5
+   ],
+   "propulsion": [
+    594.0,
+    579.0
+   ],
+   "power": [
+    506.0,
+    572.1
+   ],
+   "avionics": [
+    36.0,
+    35.4
+   ],
+   "harness": [
+    148.0,
+    152.4
+   ],
+   "mechanisms": [
+    74.0,
+    74.4
+   ]
+  },
+  "fits_crush_stack": true,
+  "cg_range_ok_basic": false,
+  "cg_range_ok_pred": false
+ },
+ "CNHL 6000 120C @ -0.0545 + nose 20 mm": {
+  "pack": "cnhl",
+  "xp": -0.0545,
+  "dnose": 0.02,
+  "basic_g": 2525.1,
+  "pred_g": 2663.0,
+  "gate_margin_g": 37.0,
+  "margin_light_g": 42.0,
+  "margin_heavy_g": 32.0,
+  "accept_g": 432.0,
+  "accept_need_g": 484.0,
+  "accept_margin_g": -52.0,
+  "cg_basic": 0.04669,
+  "cg_pred": 0.04832,
+  "pack_x_req": -0.0423,
+  "x_fwd_lim": -0.0567,
+  "alloc": {
+   "wing": [
+    396.0,
+    395.1
+   ],
+   "fins": [
+    487.0,
+    483.3
+   ],
+   "pod": [
+    147.0,
+    153.8
+   ],
+   "landing": [
+    80.0,
+    79.5
+   ],
+   "propulsion": [
+    594.0,
+    579.0
+   ],
+   "power": [
+    506.0,
+    572.1
+   ],
+   "avionics": [
+    36.0,
+    35.4
+   ],
+   "harness": [
+    148.0,
+    152.4
+   ],
+   "mechanisms": [
+    74.0,
+    74.4
+   ]
+  },
+  "fits_crush_stack": true,
+  "cg_range_ok_basic": true,
+  "cg_range_ok_pred": true
+ }
+}

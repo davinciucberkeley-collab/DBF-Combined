@@ -1,5 +1,10 @@
 # Loads — K09-L quad tailsitter
 
+> **W2 note, 2026-11-14 (D-146 / D-147).** `loads.py` now runs at 9° cant with the plate face and prop plane from
+> params (`x_plate_face_m` 0.0198, `x_prop_plane_m` −0.01704). The motor can centroid follows the plate face and the
+> fin tubes use `fins.tube.mass_per_m_kgm`. Numbers in the tables below that differ from `claims.json` are R5 values;
+> `claims.json` is the record. Changes and the 10° / 14 mm row: `review/DESIGN-ROUND-2026-11-14/C1-W2.md`.
+
 Owner: C1 (loads engineer). Revision **C1-R5** (D-65 action items), 2026-11-10, at params revision **A1-R5**
 (landing_n_design **6.6**, CG range 0.0466–0.0514 m with the CG **18.5 mm** above the chord plane, pod nose −0.140 m,
 pack datum −0.032 m, allocations 2 386 g, VD 27.2 m/s, n⁺ 3.4, T_lim 21.1 N, 7° cant) and **A3-R7** (`CL-A3-GROUPS`,
@@ -96,7 +101,9 @@ Every envelope case runs on both mass configurations.
 | Envelope VD, q | 27.2, 453 | m/s, Pa | `CL-C1-VD-ENV`, `CL-C1-Q-VD` | `CHECKED` |
 | Design n± (gust peak) | +3.4 / −1.5 (+3.32 / −1.36) | — | `CL-C1-N-LIMIT-POS/NEG`, `CL-C1-GUST-N-POS/NEG` | `CHECKED` |
 | Uncapped VD (information) | 32.1 | m/s | `CL-C1-VD-UNCAPPED` | rejected (D-50) |
-| Stall-line n at VD | 5.22 vs 3.4 | — | `CL-C1-N-STALL-VD` | `FAIL` → F4 envelope (CR-C1-08) |
+| n reachable at VD, FW modes (closure 2026-11-14) | min(stall line 5.22, 1 + VD·1.25·q_up/g): 3.12 at PTCH2SRV_RMAX_UP 35 °/s vs 3.4 (5.22 at today's 100 °/s) | — | `CL-C1-N-STALL-VD` (bare stall line now `CL-C1-N-STALL-LINE-VD`, information) | `PASS` once F4 sets `fsw.rate_max_fw_degs` [150, 35, 20] (CR-C1-40) |
+| n reachable at VD, full push | max(−2.88, −VD·1.25·q_dn/g): −1.21 at RMAX_DN 20 °/s vs −1.5 (−2.88 at 100) | — | `CL-C1-N-REACH-NEG-VD` | as above |
+| Back-transition entered at VD | 1 + VD·1.25·30°/s/g = 2.82 vs 3.4 | — | `CL-C1-N-REACH-VT` | `PASS` |
 
 ![V-n diagram](data/vn-diagram.svg)
 

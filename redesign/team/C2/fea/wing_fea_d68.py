@@ -60,6 +60,9 @@ import wing_fea_direct as wfd       # noqa: E402
 import wing_struct as ws            # noqa: E402
 
 OUT = HERE / "out"
+import os as _os0
+if _os0.environ.get("C2_D68_OUT"):          # closure round: write new results outside the repo (git-ignored scratch)
+    OUT = Path(_os0.environ["C2_D68_OUT"])
 FOAM, CF, PETG, BEAD = 0, 1, 2, 3
 
 R_POCKET = 0.003           # D-68: block vertical edges R 3 mm, pocket cut to match
@@ -196,6 +199,7 @@ def global_solve(g, msets, cases, intro_list, extra_planes):
     out = {}
     for intro in intro_list:
         for cs in cases:
+            wf.CUR_CASE = cs[0]
             tr, chk = wf.tractions(model, cases[cs]["rows"], g["xs"], intro=intro)
             f = sf.traction_vector(X, mk, tr)
             U, sol = pc.solve(f)
@@ -444,7 +448,12 @@ def setup():
 
 
 CASE_SETS = {"block": [cs for cs in wf.CASES],
-             "distributed": [cs for cs in wf.CASES if cs[0] in ("L4-CORNER-SIDE-Y", "G2-HANG-MOTOR")]}
+             "distributed": [cs for cs in wf.CASES if cs[0] in ("L4-CORNER-SIDE-Y", "G2-HANG-MOTOR")],
+             "fore": [cs for cs in wf.CASES if cs[0] in ("L4-CORNER-SIDE-Y", "G2-HANG-MOTOR")],
+             "c4split": [cs for cs in wf.CASES if cs[0] in ("L4-CORNER-SIDE-Y", "G2-HANG-MOTOR")]}
+# closure round 2026-11-14: C2_D68_INTROS=fore runs the local model on the "fore" global solve only (fin root bonded
+# ahead of the bond break, release strip aft of it; wing_fea.INTRO "fore" also classifies the patches)
+INTROS = tuple(_os0.environ.get("C2_D68_INTROS", "block,distributed").split(","))
 
 
 def phase_global(intro):
@@ -454,6 +463,7 @@ def phase_global(intro):
     cases = ws.read_spanwise()
     sel = {cs: cases[cs] for cs in CASE_SETS[intro]}
     planes = sorted(set(CUTS) | set(CUTS_NEAR))
+    wf.INTRO = intro                 # patch classes ('T' aft of the bond break for "fore")
     glob, strips, br_all, gstats = global_solve(g, msets, sel, [intro], planes)
     with open(OUT / f"d68_global_{intro}{SFX}.pkl", "wb") as f:
         pickle.dump({"glob": glob, "strips": strips, "br_all": br_all, "stats": gstats}, f)
@@ -468,7 +478,10 @@ def phase_local(job):
     G = g
     glob = {}
     gstats = {}
-    for intro in ("block", "distributed"):
+    for _i in ("fore", "c4split"):
+        if _i in INTROS:
+            wf.INTRO = _i
+    for intro in INTROS:
         with open(OUT / f"d68_global_{intro}{SFX}.pkl", "rb") as f:
             d = pickle.load(f)
         glob.update(d["glob"])
@@ -482,8 +495,10 @@ def phase_local(job):
     model = local_build(g, LOCAL_H[lev], strips, br_all, cuts, geom)
     print(f"local {tag}: {model['stats']}", flush=True)
     full = geom == "d68" and cuts == CUTS
-    sel = [(intro, cs) for intro in ("block", "distributed") for cs in CASE_SETS[intro]
+    sel = [(intro, cs) for intro in INTROS for cs in CASE_SETS[intro]
            if full or (intro == "block" and cs[0] in ("L4-CORNER-SIDE-Y", "G2-HANG-MOTOR"))]
+    if "fore" in INTROS or "c4split" in INTROS:
+        sel = [(intro, cs) for intro in INTROS for cs in CASE_SETS[intro]]
     runs, t_set = local_solve(model, E, nu, glob, sel, cuts)
     rec = {"tag": tag, "stats": {**model["stats"], "setup_s": t_set, "wall_s": round(time.time() - t0, 1)},
            "runs": {f"{k[0]}/{k[1][0]}/{k[1][1]}": v for k, v in runs.items()},

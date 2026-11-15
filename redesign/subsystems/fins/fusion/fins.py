@@ -1,9 +1,11 @@
-"""K09-L fins subsystem (FIN), owner D3, design R5 (CR-A1-63; CHANGE-LOG D-26, D-27, D-28, D-42, D-48, D-51, D-52,
-D-54, D-61, D-68, D-70). Two fins at y = +/-0.32 m. Each fin = one continuous CF motor tube through the wing core at x 0.045 (0.344 m,
+"""K09-L fins subsystem (FIN), owner D3, design R6 (D-146, D-147; R5 CR-A1-63; CHANGE-LOG D-26, D-27, D-28, D-42, D-48,
+D-51, D-52, D-54, D-61, D-68, D-70). Two fins at y = +/-0.32 m. Each fin = one continuous CF motor tube (Rock West
+35046-S filament-wound, OD from fins.tube.od_m, ID 19.05 mm, D-147) through the wing core at x 0.045 (0.344 m,
 ends at z +/-0.172), an upper and a lower two-layer foam-board half-fin behind it (0.21 m high, D5's stepped 45.4 mm
 tip for the foot shoe), a printed PETG through-core block that joins tube, spar and core (with a strap eye on each bore
 boss; four vertical plan-form edges rounded R 3 mm, D-68), and per motor station an ASA slip-clamp motor mount with
-a 7 deg canted plate (sense per D-52) whose face sits 7.5 mm ahead of the mount collar (D-61, cheeks 17 mm), a 15 mm
+a canted plate (propulsion.stations.cant_deg, 9 deg since D-146; sense per D-52) whose face sits 12.0 mm ahead of the
+mount collar (D-146, cheeks 21.5 mm; was 7.5 / 17 mm, D-61), a 22 mm
 PETG station collar with a 40 mm two-face tail (C6 CR-C6-36), a pultruded CF brace from the collar to the spar, two CF edge
 strips along the half-fin top edge pinned with 2.5 mm CF pins every 15 mm (D-70), an ASA ESC pad, and microballoon-
 epoxy root fillets (CR-C6-24; credited fail-safe only, D-68) modelled as bodies of the half-fin.
@@ -28,8 +30,8 @@ edge strips (pinned to the board) -> collar tail -> tube; fin root -> cove fille
 length, 13 mm aft of the hinge for the elevon end gaps, 4 mm sealing bead ahead of it, none over the D6 link slot on
 the lower roots) and tape laps -> core.
 
-Cant (D-27, 7 deg; sense D-52): the motor plate is a slab whose front and back faces are both planes through the motor
-point tilted 7 deg about the radial line from the x-axis to the motor, so every motor screw passes the same 4.5 mm stack
+Cant (D-27, 9 deg since D-146; sense D-52): the motor plate is a slab whose front and back faces are both planes
+through the motor point tilted by the cant about the radial line from the x-axis to the motor, so every motor screw passes the same 4.5 mm stack
 and its head bears flat. fin_detail.mount.cant_sense_UR = -1: the UR prop end leans toward the wing plane and
 outboard. fusionkit has no rotated bodies inside an axis-aligned part and no holes in lofts, so the slab is a set of
 ruled Z-lofts around the openings (square 2.5 mm drill pilots on the nominal pattern, a 10 mm square shaft opening):
@@ -120,7 +122,11 @@ def geometry(P, LP, coords):
     G['drill'] = l('mount.screw_hole_d_m', 'm')                     # D-89c: the plate as built, holes drilled 3.4 mm
     G['shaft_open'] = l('mount.shaft_hole_d_m', 'm')
     G['head_d'] = l('mount.head_d_m', 'm')
-    G['z_head_low'] = G['zm'] - G['pattern'][1] / 2 - G['head_d'] / 2
+    G['washer_d'] = l('mount.washer_d_m', 'm')                      # D-173: 2 x M3 washers under each head
+    G['washer_stack'] = l('mount.washer_stack_m', 'm')
+    assert abs(G['washer_stack'] - l('mount.washers_per_screw', '-') * l('mount.washer_t_m', 'm')) < 1e-9,         'mount.washer_stack_m must equal washers_per_screw x washer_t_m (D-173: 2 x 0.5 mm)'
+    G['hole_depth'] = l('mount.motor_hole_depth_m', 'm')            # blind M3 holes in the X2814 base
+    G['z_head_low'] = G['zm'] - G['pattern'][1] / 2 - max(G['head_d'], G['washer_d']) / 2
     G['z_cap1'] = G['z_head_low'] - l('mount.head_clear_m', 'm')
     G['z_cap0'] = G['z_cap1'] - l('mount.cap_t_m', 'm')
     G['slip'] = G['z_cap0'] - G['z_tube_end']
@@ -134,7 +140,8 @@ def geometry(P, LP, coords):
     G['plate_x_min'] = min(G['face_x_at'](dy, dz) for dy, dz in corners)
     G['stack_min'] = G['stack_max'] = G['plate_t']                 # along the screw axis, every hole
     G['screw_len'] = l('mount.motor_screw_len_m', 'm')
-    G['engage_min'] = G['screw_len'] - G['stack_max']
+    G['engage_min'] = G['screw_len'] - G['stack_max'] - G['washer_stack']
+    G['tip_clear'] = G['hole_depth'] - G['engage_min']              # screw tip to the hole bottom
     G['slit'], G['cap_lip_r'] = l('mount.slit_m', 'm'), l('mount.cap_lip_r_m', 'm')
     G['ear_t'], G['ear_len'], G['ear_h'] = l('mount.ear_t_m', 'm'), l('mount.ear_len_m', 'm'), l('mount.ear_h_m', 'm')
     G['cheek_t'], G['cheek_y_in'], G['cheek_len'] = (l('mount.cheek_t_m', 'm'), l('mount.cheek_y_in_m', 'm'),
@@ -166,7 +173,10 @@ def geometry(P, LP, coords):
     # D-81 clocking key: dog under the mount collar (front, -x) into a notch at the top of the station-collar ring
     G['key_z1'] = G['z_col0']                                        # dog top = mount collar lower face
     G['key_z0'] = G['z_sc1'] - G['key_d']                            # dog tip, key_d below the ring top
-    G['notch_w'] = G['key_w'] + 2 * G['key_clear']
+    G['key_r_mean'] = G['r_b'] + l('station_collar.ring_wall_m', 'm') / 2    # C6 CALC-C6-DOG: arc length at mean radius
+    G['key_ang'] = G['key_w'] / G['key_r_mean']                      # dog sector angle (rad), centred on -x
+    G['notch_ang'] = G['key_ang'] + 2 * G['key_clear'] / G['key_r_mean']   # matching notch sector through the ring
+    G['notch_w'] = G['notch_ang'] * G['r_b']                         # arc taken out of the tube bond at r_b
     G['notch_z0'] = G['key_z0'] - G['key_clear']                     # notch floor, clear under the dog tip
     G['key_r1'] = min(G['col_r'], G['sc_r_out'])                     # dog radial extent r_b .. key_r1
     if G['notch_z0'] <= G['z_sc0'] + 0.002:
@@ -224,6 +234,11 @@ def geometry(P, LP, coords):
     G['fil_x0'] = G['boss_x_end']                                     # starts behind the bore-boss slot walls
     G['fil_x1'] = G['te'] - 0.002                                     # stops short of the opened TE
     G['slot_x'] = (G['x_hinge'] - G['slot_hw'], G['x_hinge'] + G['slot_hw'])
+    # D-179 (C2): the root, coves and tape laps are released from x_rel to the TE on a film under each root
+    G['rel_x'] = rf('release_x_m')
+    G['rel_x1'] = rf('release_end_x_m')                              # C4 fix: the last 30 mm of the root stays bonded
+    G['film_w'], G['film_t'] = rf('release_film_w_m'), rf('release_film_t_m')
+    G['film_areal'] = rf('release_film_areal_kgm2', 'kg/m2')
 
     def fillet_zones(upper):
         gap = 0.0 if upper or not rf('stop_over_link_slot', '-') else G['slot_x'][1] - G['slot_x'][0]
@@ -334,6 +349,18 @@ def slit_ring(cx, cy, r_in, r_out, slit, ang, n=28):
     return arc(cx, cy, r_out, ang + do, ang + 2 * math.pi - do, n) + arc(cx, cy, r_in, ang + 2 * math.pi - di, ang + di, n)
 
 
+def sector_gap_ring(cx, cy, r_in, r_out, ang_gap, ang, n=36):
+    """Ring r_in..r_out with an angular gap of `ang_gap` (rad) centred on direction `ang`: radial side faces."""
+    h = ang_gap / 2
+    return arc(cx, cy, r_out, ang + h, ang + 2 * math.pi - h, n) + arc(cx, cy, r_in, ang + 2 * math.pi - h, ang + h, n)
+
+
+def sector(cx, cy, r_in, r_out, ang_w, ang, n=12):
+    """Annular sector r_in..r_out, angular width `ang_w` (rad) centred on direction `ang`."""
+    h = ang_w / 2
+    return arc(cx, cy, r_out, ang - h, ang + h, n) + arc(cx, cy, r_in, ang + h, ang - h, n)
+
+
 def rect(x0, y0, x1, y1):
     return [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]
 
@@ -355,14 +382,21 @@ def half_fin_loop(G, upper):
     a, b = G['x_hinge'] - G['slot_hw'], G['x_hinge'] + G['slot_hw']
     if not upper:
         xs = sorted(set([x for x in xs if not a - 1e-9 < x < b + 1e-9] + [a, b]))
+    xr0, xr1 = G['rel_x'], G['rel_x1']
+    xs = sorted(set(xs + [xr0, xr1]))
+    lift = lambda x: s * G['film_t'] if xr0 - 1e-9 <= x < xr1 - 1e-9 else 0.0   # D-179: root sits on the film from x_rel to x_end
     root = []
     for x in xs:
         if not upper and abs(x - a) < 1e-9:
-            root += [(x, surf(x)), (x, surf(x) - G['slot_d'])]
+            root += [(x, surf(x) + lift(x)), (x, surf(x) + lift(x) - G['slot_d'])]
         elif not upper and abs(x - b) < 1e-9:
-            root += [(x, surf(x) - G['slot_d']), (x, surf(x))]
+            root += [(x, surf(x) + lift(x) - G['slot_d']), (x, surf(x) + lift(x))]
+        elif abs(x - xr0) < 1e-9:
+            root += [(x, surf(x)), (x, surf(x) + lift(x))]               # the 0.13 mm step up onto the film
+        elif abs(x - xr1) < 1e-9:
+            root += [(x, surf(x) + s * G['film_t']), (x, surf(x))]       # and down again onto the bonded tab
         else:
-            root.append((x, surf(x)))
+            root.append((x, surf(x) + lift(x)))
     xe = G['sc_x_end']
     xr = G['xt'] + G['sc_r_out'] + (G['x_le'] - G['xt'] - G['r_t'])    # clear of the collar ring by the LE gap
     top = [(G['te'], s * G['z_step']), (G['x_sq'], s * G['z_step']), (G['x_sq'], s * G['h']), (xe, s * G['ztop'](xe)),
@@ -377,10 +411,26 @@ def build_half_fin(part, G, upper):
     lam = part.prism('Y', G['yf'] - G['t_fin'] / 2, [half_fin_loop(G, upper), hole], G['t_fin'],
                      name='half-fin laminate (2 boards)')
     build_root_fillets(part, G, upper)
+    build_release_film(part, G, upper)
     return lam
 
 
 FILLET = 'root fillet'
+FILM = 'release film'
+
+
+def build_release_film(part, G, upper):
+    """D-179 (C2): release film under the root from x_rel to the TE, on the wing skin (z from the skin to skin + film_t),
+    film_w wide centred on the fin plane (100 x 45 x 0.13 mm). Four of them (UR, UL, LR, LL). Mass: make_fins.py."""
+    surf = G['zu'] if upper else G['zl']
+    s = 1 if upper else -1
+    x0, x1 = G['rel_x'], G['rel_x1']                # x 0.22 to 0.27: 50 mm (C4 fix, the last 30 mm of the root bonded)
+    n = 12
+    xs = [x0 + (x1 - x0) * i / n for i in range(n + 1)]
+    top = [(x, surf(x) + s * G['film_t']) for x in xs]
+    bot = [(x, surf(x)) for x in reversed(xs)]
+    part.prism('Y', G['yf'] - G['film_w'] / 2, [top + bot], G['film_w'], name=FILM)
+
 
 
 def cove(y_face, d, zb, s, leg, n=6):
@@ -395,8 +445,16 @@ def cove(y_face, d, zb, s, leg, n=6):
 def build_root_fillets(part, G, upper):
     """Microballoon-epoxy cove fillets along the root on both laminate faces, on the S5010 surface (bodies of the
     half-fin part; make_fins.py weighs them at fin.root_fillet.gcc). Zones from geometry()['fillet_zones']."""
-    surf, s = (G['zu'], 1) if upper else (G['zl'], -1)
+    surf0, s = (G['zu'], 1) if upper else (G['zl'], -1)
+    xr0, xr1 = G['rel_x'], G['rel_x1']
+    # D-179: from x_rel to x_end the coves sit on the release film (skin level + film_t); a zone crossing either is split
+    surf = lambda x: surf0(x) + (s * G['film_t'] if xr0 - 1e-9 <= x < xr1 - 1e-9 else 0.0)
+    zones = []
     for x0, x1, leg in G['fillet_zones'](upper):
+        cuts = [c for c in (xr0, xr1) if x0 + 1e-9 < c < x1 - 1e-9]
+        pts = [x0] + cuts + [x1]
+        zones += [(a_, b_, leg) for a_, b_ in zip(pts[:-1], pts[1:])]
+    for x0, x1, leg in zones:
         if x1 - x0 < 1e-4:
             continue
         # D-88: the wing section's own stations (wing.py _xs: N_SURF 96 cosine-spaced per 0.32 m chord), so the
@@ -454,7 +512,7 @@ def build_station_collar(part, G):
     part.prism('Z', G['z_sc0'], [circle(xt, yf, G['sc_r_out'], 36), circle(xt, yf, G['r_b'], 36)],
                G['notch_z0'] - G['z_sc0'], name='collar ring')
     # D-81: top of the ring carries the clocking notch on the front (-x) side for the mount's dog
-    part.prism('Z', G['notch_z0'], [slit_ring(xt, yf, G['r_b'], G['sc_r_out'], G['notch_w'], math.pi, 36)],
+    part.prism('Z', G['notch_z0'], [sector_gap_ring(xt, yf, G['r_b'], G['sc_r_out'], G['notch_ang'], math.pi, 36)],
                G['z_sc1'] - G['notch_z0'], name='collar ring (notched)')
     part.box((xt - G['sc_ear_w'] / 2, yf - G['sc_r_out'] - G['sc_ear_len'], G['z_ear0']),
              (xt + G['sc_ear_w'] / 2, yf - G['sc_r_out'] + 0.0005, G['z_sc1']), name='brace ear')
@@ -550,7 +608,7 @@ def plate_cells(G):
 
 def build_mount(part, G):
     """Motor mount UR (ASA): slit collar + lip cap on the tube end, pinch-bolt ears outboard, a canted plate of uniform
-    thickness (front and back faces on the 7 deg plane, exact ruled lofts), two cheeks plate -> collar."""
+    thickness (front and back faces on the cant plane, exact ruled lofts), two cheeks plate -> collar."""
     xt, yf, zm = G['xt'], G['yf'], G['zm']
     slit = G['slit']
     part.prism('Z', G['z_col0'], [slit_ring(xt, yf, G['r_b'], G['col_r'], slit, math.pi / 2)], G['z_cap0'] - G['z_col0'],
@@ -581,9 +639,13 @@ def build_mount(part, G):
             if x1 <= max(bx) + 0.002:
                 raise ValueError('D-80 outboard cheek is < 2 mm long behind the plate: the plate moved aft')
         part.box((min(bx) - 0.0005, yf + min(ya, yb), zc0), (x1, yf + max(ya, yb), zc1), name='cheek')
+        if c_in > G['col_r'] - 0.0005 and sy < 0:     # D-173: inner face moved out past the collar wall: web back to the collar
+            xw0 = x1 - 0.0025
+            part.box((xw0, yf + sy * (c_in + 0.0005), zc0), (x1, yf + sy * (G['col_r'] - 0.0010), zc1), name='cheek web')
     # D-81 clocking dog under the collar, front (-x), into the station-collar notch
-    kw = G['key_w'] / 2
-    part.box((xt - G['key_r1'], yf - kw, G['key_z0']), (xt - G['r_b'], yf + kw, G['key_z1']), name='clocking dog')
+    # C6 closure (D-164): an annular sector, 47.7 deg centred on -x, r_b .. ring OD (radial side faces)
+    part.prism('Z', G['key_z0'], [sector(xt, yf, G['r_b'], G['key_r1'], G['key_ang'], math.pi)],
+               G['key_z1'] - G['key_z0'], name='clocking dog')
 
 
 def build_strap_eye(part, G, upper):
@@ -624,7 +686,7 @@ def build_esc_pad(part, G):
 BOARD = 'foam board 4.8 mm x 2, paper faced, laminated'
 PETG = 'PETG (printed)'
 ASA = 'ASA (printed)'
-CF = 'CF tube 22x20 (bought)'
+CF = 'CF tube RW 35046-S filament-wound (bought, D-147)'
 CFS = 'CF strip, pultruded (bought)'
 CFR = 'CF rod 2.5 mm, pultruded (bought)'
 
@@ -637,16 +699,16 @@ def part_specs(G=None):
         S.append(('FIN-001-' + st, 'Half-fin %s, two-layer foam board, stepped %.1f mm tip, 8 mm lead hole, root fillets%s'
                   % (SNAME[st], (G['te'] - G['x_sq']) * 1000 if G else 45.4, ', link slot' if st[0] == 'L' else ''), BOARD, 'make', 'board'))
     for s in ('R', 'L'):
-        S.append(('FIN-002-' + s, 'Motor tube %s, CF 22x20 x %s' % (s, L), CF, 'buy', 'tube'))
+        S.append(('FIN-002-' + s, 'Motor tube %s, CF %s x %s' % (s, ('%.2f x %.2f' % (G['od'] * 1000, G['id'] * 1000)) if G else 'RW 35046-S', L), CF, 'buy', 'tube'))
     for st in STATIONS:
-        S.append(('FIN-003-' + st, 'Motor mount %s, ASA, 7 deg canted plate, slip clamp (print %s)'
-                  % (st, 'A' if st in ('UR', 'LL') else 'B'), ASA, 'make', 'mount'))
+        S.append(('FIN-003-' + st, 'Motor mount %s, ASA, %.0f deg canted plate, slip clamp (print %s)'
+                  % (st, G['cant'] if G else 9, 'A' if st in ('UR', 'LL') else 'B'), ASA, 'make', 'mount'))
     for s in ('R', 'L'):
         S.append(('FIN-004-' + s, 'Through-core block %s (tube socket + spar saddle + 2 tie lugs)' % s, PETG, 'make',
                   'block'))
     for s in ('R', 'L'):
-        S.append(('FIN-006-' + s, 'Tube plug %s, CF 20x18 x 53 mm inside the tube at the block' % s,
-                  'CF tube 20x18 (bought)', 'buy', 'plug'))
+        S.append(('FIN-006-' + s, 'Tube plug %s, CF %s x 53 mm inside the tube at the block' % (s, ('%.0f x %.0f' % (G['plug_od'] * 1000, G['plug_id'] * 1000)) if G else '19 x 17'),
+                  'CF tube 19x17 (bought, D-147 / A3 S01R)', 'buy', 'plug'))
     for st in STATIONS:
         S.append(('FIN-007-' + st, 'ESC pad %s, ASA, on the outboard face of half-fin %s' % (st, st), ASA, 'make', 'pad'))
     for st in STATIONS:
@@ -694,8 +756,8 @@ def edge_specs(G):
         E.append(dict(id='E-FIN-%02d' % n[0], part_a=a, part_b=b, via=via, notes=notes, reg=reg, at=at,
                       joint_stack=stack, needs=list(needs), blocks=blocks or {}, geo=list(geo)))
     for s in ('R', 'L'):                                                                     # 01-02
-        add('FIN-002-' + s, 'FIN-004-' + s, 'CT-EPOXY', 'tube through the block socket bore (22.3 mm, %.0f mm long with '
-            'the bosses), 30 min epoxy, tube scuffed 120 grit' % (G['bore_len'] * 1000),
+        add('FIN-002-' + s, 'FIN-004-' + s, 'CT-EPOXY', 'tube through the block socket bore (%.2f mm, %.0f mm long with '
+            'the bosses), 30 min epoxy, tube scuffed 120 grit' % (2000 * G['r_b'], G['bore_len'] * 1000),
             blocks={'bond': bond(math.pi * G['od'] * G['bore_len'] * 1e6, 'see C6', 'L4 corner', 'C6')})
     for s in ('R', 'L'):                                                                     # 03-04
         add('FIN-006-' + s, 'FIN-002-' + s, 'CT-EPOXY', 'plug pushed in from the tube end to z %.3f..%.3f with a rod, '
@@ -811,8 +873,8 @@ def edge_specs(G):
     for st in STATIONS:                                                                      # 61-64
         sy, sz = k9.SIGNS[st]
         add('PRP-001-' + st, 'FIN-003-' + st, 'CT-M3-SHCS-MOTOR',
-            'motor base on the 7 deg canted ASA plate (tangential cant, D-27), face at x %.4f on the axis'
-            % G['x_face'], reg='rigid', at=(G['x_face'], sy * G['yf'], sz * G['zm']), stack=dict(motor),
+            'motor base on the %.0f deg canted ASA plate (tangential cant, D-27 / D-146), face at x %.4f on the axis'
+            % (G['cant'], G['x_face']), reg='rigid', at=(G['x_face'], sy * G['yf'], sz * G['zm']), stack=dict(motor),
             needs=['PRP-001-' + st])
     for st in STATIONS:                                                                      # 65-68
         add('PRP-002-' + st, 'FIN-007-' + st, 'CT-STRAP-VELCRO',

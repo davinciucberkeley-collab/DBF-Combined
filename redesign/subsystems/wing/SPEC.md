@@ -21,7 +21,9 @@ cheap re-cut. No ribs, no wing joint: the core is the rib, the through-core bloc
 | Foam over the bore, min (rule ≥ 2 mm) | 4.05 | mm | `CL-D1-SPAR-COVER` | `CHECKED` |
 | Spar bond area (bore, both sides) | 62 153 | mm² | `CL-D1-SPAR-BOND-AREA` | `CHECKED` |
 | Elevon panels \|y\| · hinge x · bevel · end gap | 0.071–0.299, 0.341–0.559 · 0.2496 · 30° · 1.0 | m · m · — · mm | `params.json#wing.elevon`, local | `PROPOSED` |
-| Elevon area fraction as built (≥ 0.15) | 0.171 | — | `CL-D1-ELEVON-FRAC` | `CHECKED` |
+| Elevon TE-corner chamfers, [inboard, outboard] set-back (D-164) | 0.02, 0.07 (TE at \|y\| 0.28 / 0.41) | m | `params.json#wing.elevon.te_chamfer_m` | `PROPOSED` |
+| Elevon area fraction as built, with chamfers (≥ 0.15; 0.171 without) | 0.153 | — | `CL-D1-ELEVON-FRAC` | `CHECKED` |
+| Lower turbulator, zigzag tape (D-168) | x 0.064 (x/c 0.20), 6 × 0.7 mm, full span, broken at the fin coves | m | `params.json#wing.turbulator` | `PROPOSED` |
 | Bevel clearance at +25° / −25° (≥ 0.5 mm) | 1.07 / 8.93 | mm | `CL-D1-HINGE-CLEAR-DOWN/-UP` | `CHECKED` |
 | Servo pocket (open below) x · \|y\| · ceiling z · bare foam | 0.1722–0.2075 · 0.2527–0.2879 · 0.0075 · 3 195 mm² (≥ 1 002) | m | `CL-D1-POCKET-BOND` | `CHECKED` (= D6 frame + 0.2 mm) |
 | Foam over pocket ceiling (≥ 3 mm) · over the torque-tube groove (≥ 1 mm) | 4.2 · 1.1 | mm | `CL-D1-POCKET-ROOF`, `-TUBE-GROOVE-COVER` | `CHECKED` (groove thin) |
@@ -61,6 +63,7 @@ cheap re-cut. No ribs, no wing joint: the core is the rib, the through-core bloc
 | `WNG-004-L/R` · `WNG-005-L/R` | PETG plugs Ø 19.8 × 36 (block) · × 20 (anchor) | 2 · 2 | 7.0 · 4.0 (C2) | `MODELLED` |
 | `WNG-006-L/R` | Block-pocket lip beads, microballoon epoxy | 2 | 1.0 `EST` | `MODELLED` |
 | `WNG-011-L/R` · `WNG-012-L/R` | Elevon inboard · outboard (foam + tape) | 2 · 2 | 3.7 · 3.5 `EST` | `MODELLED` |
+| `WNG-009` | Lower-surface zigzag turbulator tape | 1 | 5.9 `EST` | `MODELLED` |
 | `WNG-020` | FAA label, right upper skin | 1 | 0.5 | `MODELLED` |
 
 ## Interfaces
@@ -70,6 +73,7 @@ cheap re-cut. No ribs, no wing joint: the core is the rib, the through-core bloc
 | `E-WNG-01` spar ↔ core | epoxy + microballoons in the bore, cap re-bonded | C2 (MS +11) |
 | `E-WNG-02` skin ↔ core · `E-WNG-03` label ↔ skin | tape, 10 % overlap, 100 mm LE strip laid last · label | C2, B2 · H3 |
 | `E-WNG-04…07` elevon ↔ core | upper tape hinge, ±25°; tape, horns, torque tubes, link by D6 | D6, B2 (0.257 N·m/servo) |
+| `E-WNG-19` turbulator ↔ skin | pressure-sensitive tape on the lower skin, over the doubler band, broken at the fin coves | B2 (dcm/dcl 0.0007) |
 | `E-WNG-08…11` plugs ↔ spar | thickened epoxy inside the tube | C2 (MS +2.7) |
 | `E-WNG-12/13` lip bead ↔ core · `E-WNG-14/15` lip bead ↔ block `FIN-004-R/L` | microballoon epoxy, 1 176 / 832 mm² per side | C2 (FEA re-run on the revised pocket) |
 | Acknowledged (36) | `E-FIN-49…60`, `E-GER-21/22` (TPU tip corner caps over the tape, fixed core \|y\| 0.560–0.575), `E-HRN-02/04` (ESC and servo grooves, wing params `grooves.*`), `E-MEC-01/02/11/12/17/18/23…28/33/34`, `E-POD-01/09`, `E-TRN-06…09`; none pending | D5 · F2 |

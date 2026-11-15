@@ -2,140 +2,140 @@
  "_note": "Written by team/C2/fea/fea_report.py from the 3-D FEA outputs. Do not edit by hand.",
  "c2fea": {
   "w_tip_G2_gci": {
-   "value": 0.0007400173184632698,
+   "value": 0.000720607034757912,
    "unit": "-",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "GCI fine grid, flap w at the tip, G2, mm"
   },
   "w_tip_G2_ext": {
-   "value": -2.4821366236203883,
+   "value": -2.542768455150105,
    "unit": "mm",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "Richardson-extrapolated flap w at the tip, G2, mm"
   },
   "u_tip_L1_gci": {
-   "value": 0.0005251800977712065,
+   "value": 0.0012397806523250679,
    "unit": "-",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "GCI fine grid, in-plane u at the tip, L1, mm"
   },
   "u_tip_L1_ext": {
-   "value": -1.8343302851773344,
+   "value": -1.7348227111140784,
    "unit": "mm",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "Richardson-extrapolated in-plane u at the tip, L1, mm"
   },
   "twist_tip_L4_gci": {
-   "value": 0.0009155520235286528,
+   "value": 0.0004923562779089392,
    "unit": "-",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "GCI fine grid, twist at the tip, L4, deg"
   },
   "twist_tip_L4_ext": {
-   "value": -3.0667059043867475,
+   "value": -3.2731060052868512,
    "unit": "deg",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "Richardson-extrapolated twist at the tip, L4, deg"
   },
   "spar_sigma_L1_gci": {
-   "value": 0.00474236200072305,
+   "value": 0.00487176614940446,
    "unit": "-",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "GCI fine grid, spar outer-fibre stress, L1, limit, MPa"
   },
   "spar_sigma_L1_ext": {
-   "value": 19.218252584298586,
+   "value": 18.175896702219024,
    "unit": "MPa",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "Richardson-extrapolated spar outer-fibre stress, L1, limit, MPa"
   },
   "w_tip_G2_O_gci": {
-   "value": 0.0007400173184632698,
+   "value": 0.000720607034757912,
    "unit": "-",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "GCI fine grid, flap w at the tip, G2, orthotropic tube, mm"
   },
   "w_tip_G2_O_ext": {
-   "value": -2.4821366236203883,
+   "value": -2.542768455150105,
    "unit": "mm",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "Richardson-extrapolated flap w at the tip, G2, orthotropic tube, mm"
   },
   "twist_tip_L4_O_gci": {
-   "value": 0.0009155520235286528,
+   "value": 0.0004923562779089392,
    "unit": "-",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "GCI fine grid, twist at the tip, L4, orthotropic tube, deg"
   },
   "twist_tip_L4_O_ext": {
-   "value": -3.0667059043867475,
+   "value": -3.2731060052868512,
    "unit": "deg",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "Richardson-extrapolated twist at the tip, L4, orthotropic tube, deg"
   },
   "foam_s1_L4_O_gci": {
-   "value": 0.07780338842385646,
+   "value": 0.03419030800562731,
    "unit": "-",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
-   "note": "GCI fine grid, foam tension, 99.5th pct, L4, orthotropic, kPa"
+   "note": "GCI fine grid, foam tension, 99.5th pct by volume, L4, orthotropic, kPa"
   },
   "foam_s1_L4_O_ext": {
-   "value": 36.386319348223715,
+   "value": 35.53153987375999,
    "unit": "kPa",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
-   "note": "Richardson-extrapolated foam tension, 99.5th pct, L4, orthotropic, kPa"
+   "note": "Richardson-extrapolated foam tension, 99.5th pct by volume, L4, orthotropic, kPa"
   },
   "foam_tau_L4_O_gci": {
-   "value": 0.012368649370472778,
+   "value": 0.0031914342840531694,
    "unit": "-",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
-   "note": "GCI fine grid, foam shear, 99.5th pct, L4, orthotropic, kPa"
+   "note": "GCI fine grid, foam shear, 99.5th pct by volume, L4, orthotropic, kPa"
   },
   "foam_tau_L4_O_ext": {
-   "value": 26.895937058852105,
+   "value": 25.59164127565851,
    "unit": "kPa",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
-   "note": "Richardson-extrapolated foam shear, 99.5th pct, L4, orthotropic, kPa"
+   "note": "Richardson-extrapolated foam shear, 99.5th pct by volume, L4, orthotropic, kPa"
   },
   "foam_peak_L4_O_gci": {
-   "value": 0.00032074360935206416,
+   "value": 6.371031237460749e-05,
    "unit": "-",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "GCI fine grid, foam tension peak (block corner), L4, orthotropic, kPa"
   },
   "foam_peak_L4_O_ext": {
-   "value": 176.1147443712501,
+   "value": 152.43632465854958,
    "unit": "kPa",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "Richardson-extrapolated foam tension peak (block corner), L4, orthotropic, kPa"
   },
   "spar_sigma_ult_pa": {
-   "value": 52543857.72308484,
+   "value": 38867986.29586747,
    "unit": "Pa",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
-   "note": "FEA spar_sigma_ult_pa, ultimate (1.5 x limit), worst case L4-CORNER-SIDE-Y/MC-C/O"
+   "note": "FEA spar_sigma_ult_pa, ultimate (1.5 x limit), worst case G2-HANG-MOTOR/MC-P/O"
   },
   "foam_s1_p995_ult_pa": {
-   "value": 58202.13785312392,
+   "value": 51878.32118649508,
    "unit": "Pa",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
@@ -149,7 +149,7 @@
    "note": "FEA foam_s1_p995_ult_pa_BT, ultimate (1.5 x limit), worst case None"
   },
   "foam_tau_p995_ult_pa": {
-   "value": 40747.09481114573,
+   "value": 38485.72163466488,
    "unit": "Pa",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
@@ -163,7 +163,7 @@
    "note": "FEA foam_tau_p995_ult_pa_BT, ultimate (1.5 x limit), worst case None"
   },
   "foam_s1_peak_ult_pa": {
-   "value": 264104.348731229,
+   "value": 228642.83346275066,
    "unit": "Pa",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
@@ -177,7 +177,7 @@
    "note": "FEA foam_s1_peak_ult_pa_BT, ultimate (1.5 x limit), worst case None"
   },
   "foam_s3_peak_ult_pa": {
-   "value": 227050.2754225324,
+   "value": 232954.10791107238,
    "unit": "Pa",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
@@ -191,7 +191,7 @@
    "note": "FEA foam_s3_peak_ult_pa_BT, ultimate (1.5 x limit), worst case None"
   },
   "foam_tau_peak_ult_pa": {
-   "value": 111406.02500964582,
+   "value": 104929.67763290883,
    "unit": "Pa",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
@@ -205,7 +205,7 @@
    "note": "FEA foam_tau_peak_ult_pa_BT, ultimate (1.5 x limit), worst case None"
   },
   "petg_vm_peak_ult_pa": {
-   "value": 3592643.9458760237,
+   "value": 3157824.4249723405,
    "unit": "Pa",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
@@ -219,7 +219,7 @@
    "note": "FEA petg_vm_peak_ult_pa_BT, ultimate (1.5 x limit), worst case None"
   },
   "tip_defl_frac": {
-   "value": 0.004316759345426763,
+   "value": 0.004422206008956705,
    "unit": "-",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
@@ -233,14 +233,14 @@
    "note": "max relative difference SU2 vs in-house PCG, same level-1 mesh, tip w/u/twist"
   },
   "fea_beam_w_ratio_G2": {
-   "value": 0.9539331036025631,
+   "value": 0.9548195614510676,
    "unit": "-",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "FEA / beam (tape 0) tip w, G2"
   },
   "fea_beam_twist_ratio_L4": {
-   "value": 0.8331074849899262,
+   "value": 0.846440828788533,
    "unit": "-",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
@@ -275,67 +275,67 @@
    "note": "sensitivity, station loads through the fin root fillet along the chord: foam shear 99.5th percentile, ultimate, L4-CORNER-SIDE-Y/MC-C/O level 2"
   },
   "d68_corner_s1_ult_pa": {
-   "value": 284066.0718789729,
+   "value": 251183.32773694108,
    "unit": "Pa",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
-   "note": "foam tension peak at the R 3 mm block-pocket corners + beads, ultimate, d68 submodel, finest level, avg"
+   "note": "foam tension peak at the R 3 mm block-pocket corners + beads, ultimate, d68 submodel, finest level, record only since D-153 (claims read c2r5_reduced.json), avg"
   },
   "d68_corner_s3_ult_pa": {
-   "value": 193336.15003217914,
+   "value": 191594.41131355328,
    "unit": "Pa",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "foam compression peak, same, ultimate, avg"
   },
   "d68_corner_tau_ult_pa": {
-   "value": 126230.78187442536,
+   "value": 121359.71083698684,
    "unit": "Pa",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "foam shear peak, same, ultimate, avg"
   },
   "d68_bead_s1_ult_pa": {
-   "value": 2360476.780958643,
+   "value": 2848721.603539453,
    "unit": "Pa",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "microballoon bead max principal, ultimate"
   },
   "d68_petg_vm_ult_pa": {
-   "value": 4396845.848245145,
+   "value": 4679232.340666346,
    "unit": "Pa",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "PETG block von Mises peak (rounded block), ultimate"
   },
   "d68_cutout_tau_dist_ult_pa": {
-   "value": 875300.8692272312,
+   "value": 867441.5794557394,
    "unit": "Pa",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "foam shear peak at the R 3 mm elevon cut-out corners, fillet-carries-load sensitivity, ultimate, avg"
   },
   "d68_cutout_s1_dist_ult_pa": {
-   "value": 1713551.7665833235,
+   "value": 1720443.5939279676,
    "unit": "Pa",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "foam tension peak at the same corners, sensitivity, ultimate, avg"
   },
   "d68_cutout_tau_ult_pa": {
-   "value": 21963.359162742185,
+   "value": 22322.632663501317,
    "unit": "Pa",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "foam shear peak at the cut-out corners, primary path, ultimate, avg"
   },
   "d68_corner_gci": {
-   "value": 0.13939831181324003,
+   "value": 2.8430718856055845,
    "unit": "-",
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
-   "note": "TWO LEVELS ONLY (local level 3 not finished): largest relative change level 1 -> 2 of the three pocket-corner foam peaks; not a GCI"
+   "note": "largest GCI of the three pocket-corner foam peaks, d68 submodel, 3 local levels"
   },
   "d68_cut_sens": {
    "value": 0.007296835051575634,
@@ -392,6 +392,62 @@
    "source": "team/C2/fea/fea_report.py",
    "status": "UNVERIFIED",
    "note": "foam compression peak, same, tube G 4.31 GPa, ultimate"
+  },
+  "split_foam_s1_p995v_ult_pa": {
+   "value": 52854.883185290135,
+   "unit": "Pa",
+   "source": "team/C2/fea/fea_report.py",
+   "status": "UNVERIFIED",
+   "note": "fin root fillet carrying C4's intact split: foam tension 99.5th pct by volume, ultimate, bm_1 L4-CORNER-SIDE-Y/MC-C/O level 2"
+  },
+  "split_foam_tau_p995v_ult_pa": {
+   "value": 40770.62365815728,
+   "unit": "Pa",
+   "source": "team/C2/fea/fea_report.py",
+   "status": "UNVERIFIED",
+   "note": "fin root fillet carrying C4's intact split: foam shear 99.5th pct by volume, ultimate, bm_1 L4-CORNER-SIDE-Y/MC-C/O level 2"
+  },
+  "split_cutout_s1_ult_pa": {
+   "value": 12833.125531933096,
+   "unit": "Pa",
+   "source": "team/C2/fea/fea_report.py",
+   "status": "UNVERIFIED",
+   "note": "foam s1 at the R 3 mm elevon cut-out corners, 1 mm average, fin root fillet carrying C4's intact split, ultimate, bp_0 c4split/G2-HANG-MOTOR/MC-P local level 2"
+  },
+  "split_cutout_s3_ult_pa": {
+   "value": 77635.10808398598,
+   "unit": "Pa",
+   "source": "team/C2/fea/fea_report.py",
+   "status": "UNVERIFIED",
+   "note": "foam s3 at the R 3 mm elevon cut-out corners, 1 mm average, fin root fillet carrying C4's intact split, ultimate, bm_0 c4split/L4-CORNER-SIDE-Y/MC-C local level 2"
+  },
+  "split_cutout_tau_ult_pa": {
+   "value": 36384.337641657854,
+   "unit": "Pa",
+   "source": "team/C2/fea/fea_report.py",
+   "status": "UNVERIFIED",
+   "note": "foam tau at the R 3 mm elevon cut-out corners, 1 mm average, fin root fillet carrying C4's intact split, ultimate, bm_0 c4split/L4-CORNER-SIDE-Y/MC-C local level 2"
+  },
+  "split_corner_s1_ult_pa": {
+   "value": 107363.85032259062,
+   "unit": "Pa",
+   "source": "team/C2/fea/fea_report.py",
+   "status": "UNVERIFIED",
+   "note": "block-pocket corner foam s1, vm(L/2), tape model 50 % credit, level 2, fin root fillet carrying C4's split (bond break at x 0.22), ultimate, split_bp_0_L2_L4-CORNER-SIDE-Y"
+  },
+  "split_corner_s3_ult_pa": {
+   "value": 104518.99717526486,
+   "unit": "Pa",
+   "source": "team/C2/fea/fea_report.py",
+   "status": "UNVERIFIED",
+   "note": "block-pocket corner foam s3, vm(L/2), tape model 50 % credit, level 2, fin root fillet carrying C4's split (bond break at x 0.22), ultimate, split_bm_1_L2_L4-CORNER-SIDE-Y"
+  },
+  "split_corner_tau_ult_pa": {
+   "value": 62895.93046476397,
+   "unit": "Pa",
+   "source": "team/C2/fea/fea_report.py",
+   "status": "UNVERIFIED",
+   "note": "block-pocket corner foam tau, vm(L/2), tape model 50 % credit, level 2, fin root fillet carrying C4's split (bond break at x 0.22), ultimate, split_bm_1_L2_L4-CORNER-SIDE-Y"
   }
  }
 }

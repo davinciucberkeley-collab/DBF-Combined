@@ -113,6 +113,18 @@ def _wing_text(g, nc, ds, af, hinge, S, lattice):
              f"{g['xref']:.5f} 0.0 {g['zref']:.5f}   | Xref Yref Zref = CG",
              "0.0                     | CDp (not used: AVL gives induced drag only)",
              "#", "SURFACE", "Wing", f"{nc} 1.0", "YDUPLICATE", "0.0", "ANGLE", "0.0"]
+    # optional fin-root TE chamfers (closure round D-163, B4 CR-B4-32): te_chamfer = [inboard, outboard] set-back of
+    # the TE corner next to the fin root (m). The elevon chord runs linearly from zero at the panel end next to the fin
+    # to full at the set-back; AVL interpolates Xhinge linearly between control sections, so one extra control
+    # section per panel at the set-back with the normal hinge and Xhinge 1.0 (zero chord) at the fin-side end model it.
+    hx = {}
+    if g.get("te_chamfer"):
+        ci, co = g["te_chamfer"]
+        yi_end, yo_end = g["yin"][1], g["yout"][0]
+        extra = [(yi_end - ci, True), (yo_end + co, True)]
+        clean = sorted(clean + [e for e in extra if all(abs(e[0] - y) > 1e-6 for y, _ in clean)],
+                       key=lambda s: s[0])
+        hx = {round(yi_end, 6): 1.0, round(yo_end, 6): 1.0}
     for i, (y, ctrl) in enumerate(clean):
         nxt = clean[i + 1][0] if i + 1 < len(clean) else None
         n = _nspan(nxt - y, ds) if nxt is not None else 1
@@ -121,8 +133,9 @@ def _wing_text(g, nc, ds, af, hinge, S, lattice):
             lines += af.strip().split("\n")
         if ctrl:
             k = g.get("egain", 1.0)
-            lines += ["CONTROL", f"elevator {k:.4f} {hinge:.4f} 0 0 0 1.0",
-                      "CONTROL", f"aileron {k:.4f} {hinge:.4f} 0 0 0 -1.0"]
+            h = hx.get(round(y, 6), hinge)
+            lines += ["CONTROL", f"elevator {k:.4f} {h:.4f} 0 0 0 1.0",
+                      "CONTROL", f"aileron {k:.4f} {h:.4f} 0 0 0 -1.0"]
     return "\n".join(lines) + "\n"
 
 

@@ -8,10 +8,10 @@
    "name": "Pod shell + tray + hatch (envelope)",
    "subsystem": "pod",
    "status": "MODELLED",
-   "mass_g": 146.0,
+   "mass_g": 148.0,
    "material": "foam board + PETG",
    "cg_xyz_m": [
-    -0.0225,
+    -0.026,
     0.0,
     0.05
    ],

@@ -7,7 +7,7 @@ vertical edges R 3 mm; C4's frozen R4 set CL-C4-D3-* read directly from team/C4/
 data/envelope.json read live (the R4 hand copies of the envelope drifted after C1's D-65 re-run); D5 R5 bond block
 CL-D5-BOND-SF / -AREA; F1 power frame E-PWR-03 at 0.08 N m, still open with F1).
 Loads are C1's (claims CL-C1-*, or C1 data/envelope.json values entered as ASM-C6-* with the file as basis) and C4's
-fin model (CL-C4-D3-*). The 7 deg motor cant (D-27) is not in C1's cases: C6 adds its side component here.
+fin model (CL-C4-D3-*). The motor cant (10 deg since D-164; 9 in D-146, 7 in D-27) is not in C1's cases: C6 adds its side component here.
 Every check is a reserve factor RF = allowable / applied at the design load; RF >= 1.0 passes (margin = RF - 1).
 Design load = ultimate (1.5 x limit) x fitting factor 1.15, x printed/bonded factor 1.25 for anything printed or
 bonded (C1 LOADS.md). Python 3 standard library only.
@@ -148,26 +148,31 @@ kit.assumption("ASM-C6-HORN-ARM", "Horn arm 12 mm", "Control-horn hole radius us
 
 
 # ----------------------------------------------------------------------------- fastened joints
-@kit.calc("CALC-C6-MOTOR-SCREW", title="Motor to mount: 4 x M3x8 into the motor base, incl. the 7 deg cant side load",
+kit.assumption("ASM-C6-MOTOR-WASHER-STACK", "Motor screw washer stack 1.0 mm", "Total washer thickness under the "
+               "4 motor screw heads on the canted plate (2 x 0.5 mm) that sets the X2814 V3 engagement",
+               "D3.md CL-D3-SCREW-ENGAGE: M3x8 - 4.5 plate - 2 washers = 2.5 mm", 0.001, "m", status="PROPOSED")
+
+
+@kit.calc("CALC-C6-MOTOR-SCREW", title="Motor to mount: 4 x M3x8 into the motor base, incl. the 10 deg cant side load (D-164)",
           inputs={"T": "P:joints.torque.motor_screw_nm", "T_e1": "ASM-C6-E1-TORQUE", "K": "ASM-C6-NUT-FACTOR",
                   "d": "P:joints.m3_d_m", "dh": "P:fin_detail.mount.head_d_m",
                   "dhole": "P:fin_detail.mount.screw_hole_d_m", "s_allow": "ASM-C6-HEAD-BEARING",
                   "F_ult": "CL-C1-MOTOR-F-ULT", "M_ult": "ASM-C6-MOTOR-M-ULT", "ff": "ASM-C1-FITTING-FACTOR",
                   "pat": "P:fin_detail.mount.bolt_pattern_m", "Le": "P:fin_detail.mount.plate_t_m",
                   "Ls": "P:fin_detail.mount.motor_screw_len_m", "tau_al": "ASM-C6-AL-SHEAR",
-                  "Tlim": "P:requirements.thrust_limit_per_motor_n", "cant": "P:propulsion.stations.cant_deg",
+                  "w": "ASM-C6-MOTOR-WASHER-STACK", "Tlim": "CL-C1-T-LIMIT", "cant": "P:propulsion.stations.cant_deg",
                   "arm": "P:fin_detail.mount.prop_stack_m", "sf": "P:requirements.safety_factor_ult"},
           equation="P = T/(K d); head bearing = P / (pi/4 (dh^2 - dhole^2)); cant side moment M_s = T_lim sin(cant) "
-                   "arm sf; screw tension F_t = ff (F/4 + (M + M_s)/s_min); separation RF = P / F_t; "
+                   "arm sf (T_lim = C1's live CL-C1-T-LIMIT since D-161; was the 21.1 N requirement); screw tension F_t = ff (F/4 + (M + M_s)/s_min); separation RF = P / F_t; "
                    "thread strip = 0.5 pi d e tau_Al with e = L_screw - plate (R3 canted plate, uniform grip)")
-def motor_screw(T, T_e1, K, d, dh, dhole, s_allow, F_ult, M_ult, ff, pat, Le, Ls, tau_al, Tlim, cant, arm, sf):
+def motor_screw(T, T_e1, K, d, dh, dhole, s_allow, F_ult, M_ult, ff, pat, Le, Ls, tau_al, w, Tlim, cant, arm, sf):
     a_head = math.pi / 4 * (dh ** 2 - dhole ** 2)
     P = T / (K * d)
     P_e1 = T_e1 / (K * d)
     side = Tlim * math.sin(math.radians(cant))
     M_s = side * arm * sf
     F_t = ff * (F_ult / 4 + (M_ult + M_s) / min(pat))
-    e = Ls - Le
+    e = Ls - Le - w
     strip = 0.5 * math.pi * d * e * tau_al
     return {"preload_n": P, "head_mpa": P / a_head / 1e6, "rf_head": s_allow / (P / a_head),
             "head_mpa_e1": P_e1 / a_head / 1e6, "rf_head_e1": s_allow / (P_e1 / a_head),
@@ -175,34 +180,94 @@ def motor_screw(T, T_e1, K, d, dh, dhole, s_allow, F_ult, M_ult, ff, pat, Le, Ls
             "strip_n": strip, "rf_strip": strip / F_t}
 
 
-@kit.calc("CALC-C6-CANT-SEAT", title="Motor screws on the 7 deg canted plate: engagement and head seating",
+kit.assumption("ASM-C6-M6-POST-D", "Prop adapter post M6x1, 6 mm", "Nominal major diameter of the adapter's prop "
+               "post that the D-161 thin nut threads onto", "E1 ASM-E1-STACK (M6x1 post, Small Parts CNC adapter)",
+               0.006, "m", status="PROPOSED")
+kit.assumption("ASM-C6-NUT-K-LOW", "Nut factor K 0.15 (low end)", "Lowest nut factor for the prop nut, giving the "
+               "highest preload at the set torque", "VDI 2230 / Shigley typical 0.15-0.30 (same basis as "
+               "ASM-C6-NUT-FACTOR), low end", 0.15, "-", status="PROPOSED")
+
+
+@kit.calc("CALC-C6-PROPNUT", title="M6 thin prop nut (ISO 4035, 3.2 mm, D-161) on the aluminium adapter post",
+          inputs={"Tn": "ASM-C1-PROP-NUT-TORQUE", "K": "ASM-C6-NUT-K-LOW", "d": "ASM-C6-M6-POST-D",
+                  "st": "ASM-E1-STACK", "marg": "CL-E1-NUT-ENGAGE", "tau_al": "ASM-C6-AL-SHEAR",
+                  "T": "CL-C1-T-LIMIT", "sf": "P:requirements.safety_factor_ult", "ff": "ASM-C1-FITTING-FACTOR"},
+          equation="engaged length m = nut height if E1's thread margin past the nut >= 0, else nut + margin; preload "
+                   "P = T_nut / (K_low d); thrust through the nut (tractor, the prop pulls off the post) F = T_lim sf ff; "
+                   "post thread strip (aluminium, weaker than the A4 nut) = 0.5 pi d m tau_Al; RF = strip / (P + F)")
+def propnut(Tn, K, d, st, marg, tau_al, T, sf, ff):
+    h_nut = st[5]
+    m = h_nut if marg >= 0 else h_nut + marg
+    P = Tn / (K * d)
+    F = T * sf * ff
+    strip = 0.5 * math.pi * d * m * tau_al
+    return {"engaged_m": m, "preload_n": P, "thrust_design_n": F, "strip_n": strip, "rf_strip": strip / (P + F)}
+
+
+kit.assumption("ASM-C6-MOTOR-HOLE-DEPTH", "X2814 V3 base holes 3.0 mm deep", "Blind M3 hole depth in the motor base",
+               "E1.md D-173 applied (maker drawing)", 0.003, "m", status="PROPOSED")
+kit.assumption("ASM-C6-TWIST-DESIGN", "Mount design twist 0.402 N m", "C4 design twist on the mount, taken as extra "
+               "screw-pattern moment", "C4 CL-C4-D3-MOUNT-TWIST (value given by the task brief)", 0.402, "N m",
+               status="PROPOSED")
+kit.assumption("ASM-C6-FUSE-T", "Prop-strike fuse torque 6.55 N m", "Torque at which the dog fuse releases, "
+               "carried by the 4 screws in shear", "A1-STATUS.md 'From C6 at 10 deg' (fuse 3.71 -> 6.55 N m)", 6.55,
+               "N m", status="PROPOSED")
+
+
+@kit.calc("CALC-C6-MOTOR-STRIP-X", title="Motor-base M3 thread: pull-out and strip at the blind-hole engagement (X2814 V3)",
+          inputs={"T": "P:joints.torque.motor_screw_nm", "K": "ASM-C6-NUT-FACTOR", "d": "P:joints.m3_d_m",
+                  "Ls": "P:fin_detail.mount.motor_screw_len_m", "tp": "P:fin_detail.mount.plate_t_m",
+                  "w": "ASM-C6-MOTOR-WASHER-STACK", "hole": "ASM-C6-MOTOR-HOLE-DEPTH", "tau_al": "ASM-C6-AL-SHEAR",
+                  "F_ult": "CL-C1-MOTOR-F-ULT", "M_ult": "ASM-C6-MOTOR-M-ULT", "ff": "ASM-C1-FITTING-FACTOR",
+                  "pat": "P:fin_detail.mount.bolt_pattern_m", "twist": "ASM-C6-TWIST-DESIGN",
+                  "fuse": "ASM-C6-FUSE-T", "sf": "P:requirements.safety_factor_ult"},
+          equation="e = L - plate - washers; strip = 0.5 pi d e tau_Al (0.5 = thread-flank knock-down); axial per screw = "
+                   "P + ff (F/4 + (M + sf twist...)/s_min); RF_strip = strip / axial; shear per screw = fuse / (4 r), "
+                   "r = half pattern diagonal; interaction = axial/strip + shear/strip (linear, conservative: same "
+                   "capacity); RF = 1 / interaction")
+def motor_strip_x(T, K, d, Ls, tp, w, hole, tau_al, F_ult, M_ult, ff, pat, twist, fuse, sf):
+    e = Ls - tp - w
+    P = T / (K * d)
+    strip = 0.5 * math.pi * d * e * tau_al
+    ax = P + ff * (F_ult / 4 + (M_ult + sf * twist) / min(pat))
+    r = math.hypot(*pat) / 2
+    V = fuse / (4 * r)
+    return {"engage_m": e, "tip_clear_m": hole - e, "strip_n": strip, "axial_n": ax, "rf_pullout": strip / ax,
+            "shear_n": V, "rf_strike": 1 / (ax / strip + V / strip), "engage_d": e / d}
+
+
+@kit.calc("CALC-C6-CANT-SEAT", title="Motor screws on the 10 deg canted plate: engagement and head seating",
           inputs={"Ls": "P:fin_detail.mount.motor_screw_len_m", "tp": "P:fin_detail.mount.plate_t_m",
                   "pat": "P:fin_detail.mount.bolt_pattern_m", "cant": "P:propulsion.stations.cant_deg",
                   "ym": "P:propulsion.stations.y_m", "zm": "P:propulsion.stations.z_m",
-                  "dhole": "P:fin_detail.mount.screw_hole_d_m", "d": "P:joints.m3_d_m"},
+                  "dhole": "P:fin_detail.mount.screw_hole_d_m", "d": "P:joints.m3_d_m",
+                  "w": "ASM-C6-MOTOR-WASHER-STACK"},
           equation="R3 (D3): whole plate canted, faces parallel to the motor face, holes drilled square to the face -> "
                    "engagement = L - plate at every hole; for record, the R2 layout (flat plate, canted 2 mm pads) "
                    "would give L - (2.5 + 2 + tan(cant) max|t . hole|) and allow a screw lean of only "
                    "atan((d_hole - d)/4.5 mm) against the cant")
-def cant_seat(Ls, tp, pat, cant, ym, zm, dhole, d):
+def cant_seat(Ls, tp, pat, cant, ym, zm, dhole, d, w):
     n = math.hypot(ym, zm)
     dmax = max(abs(-zm / n * pat[0] / 2), abs(ym / n * pat[1] / 2))
     rise = math.tan(math.radians(cant)) * dmax
-    return {"engage_m": Ls - tp, "engage_r2_m": Ls - (0.0045 + rise),
+    return {"engage_m": Ls - tp - w, "engage_r2_m": Ls - (0.0045 + rise),
             "tilt_allow_r2_deg": math.degrees(math.atan((dhole - d) / 0.0045)), "rise_r2_m": rise}
 
 
-@kit.calc("CALC-C6-MOUNT-SIDE", title="Mount collar on the tube under the 7 deg cant side force",
-          inputs={"Tlim": "P:requirements.thrust_limit_per_motor_n", "cant": "P:propulsion.stations.cant_deg",
+@kit.calc("CALC-C6-MOUNT-SIDE", title="Mount collar on the tube under the 10 deg cant side force",
+          inputs={"Tlim": "CL-C1-T-LIMIT", "cant": "P:propulsion.stations.cant_deg",
                   "ym": "P:propulsion.stations.y_m", "zm": "P:propulsion.stations.z_m",
                   "xt": "P:propulsion.stations.x_mount_m", "xp": "P:propulsion.stations.x_prop_plane_m",
+                  "xp_e1": "CL-E1-CAD-HUB-X",
                   "Ts": "P:fin_detail.mount.slip_torque_nm", "od": "P:fins.tube.od_m",
                   "sf": "P:requirements.safety_factor_ult", "ff": "ASM-C1-FITTING-FACTOR",
                   "pf": "ASM-C1-PRINTED-FACTOR"},
           equation="side S = T_lim sin(cant) along t = x_hat x r_hat = (0, -z/r, y/r); tube torsion Mz = S z/r "
-                   "(x_tube - x_prop); axial along the tube S y/r; design x sf ff pf; slip capacity Ts (torsion), "
+                   "(x_tube - x_prop), x_prop = min(params copy, E1 CL-E1-CAD-HUB-X); T_lim = C1's live limit thrust "
+                   "CL-C1-T-LIMIT (D-161 E props; was the 21.1 N requirement); axial along the tube S y/r; design x sf ff pf; slip capacity Ts (torsion), "
                    "Ts/(od/2) (axial, same friction)")
-def mount_side(Tlim, cant, ym, zm, xt, xp, Ts, od, sf, ff, pf):
+def mount_side(Tlim, cant, ym, zm, xt, xp, xp_e1, Ts, od, sf, ff, pf):
+    xp = min(xp, xp_e1)                                                # D-164: E1's hub at 10 deg / 14 mm if further forward
     S = Tlim * math.sin(math.radians(cant))
     n = math.hypot(ym, zm)
     k = sf * ff * pf
@@ -285,13 +350,18 @@ def pwr_frame(L, stack, bore, sp, d, p, kmin, Li, T, K, share, s_pa, mu, un, Fc,
                   "h12": "P:joints.collar_alt_h_m", "h13": "P:joints.collar_min_h_m",
                   "hc": "P:joints.collar_cond_h_m", "h15": "P:joints.collar_prop_h_m", "tau_c": "P:joints.collar_cond_tau_pa",
                   "sf": "P:requirements.safety_factor_ult", "ff": "ASM-C1-FITTING-FACTOR",
-                  "pf": "ASM-C1-PRINTED-FACTOR", "tau": "ASM-C4-BOND-SHEAR"},
+                  "pf": "ASM-C1-PRINTED-FACTOR", "tau": "ASM-C4-BOND-SHEAR",
+                  "kw": "P:fin_detail.mount.key_w_m", "kd": "P:fin_detail.mount.key_d_m",
+                  "kc": "P:fin_detail.mount.key_clear_m"},
           equation="tau = T / (2 pi r^2 L), T = T_ult ff pf; spar OD = tube OD (22 mm); tube bore L = core + 2 bosses; "
+                   "drawn collar: bond height less the D-81 dog notch, L_c,eff = L_c - (kw + 2 kc)(kd + kc) / (pi od) "
+                   "(closure round: the notch is cut through the ring to the tube, fins.py A_collar_tube); "
                    "collar (CR-C4-23): T_lim = max(C1 J-FINHALF section torsion, C4 FE collar torsion); tau = T_lim sf "
                    "ff pf / (2 pi r^2 h) + F_brace pf / (pi d h) (F_brace already x 1.5 x 1.15); "
                    "h_req = (T/(2 pi r^2) + F/(pi d)) / tau; D-70 condition: 12 mm only at tau_c = 0.5 x 4.1 MPa "
                    "coupon mean")
-def tube_bonds(od, core, boss, Ls, Lc, Tz, Ty, Tc1, Tc4, Fb, h12, h13, hc, h15, tau_c, sf, ff, pf, tau):
+def tube_bonds(od, core, boss, Ls, Lc, Tz, Ty, Tc1, Tc4, Fb, h12, h13, hc, h15, tau_c, sf, ff, pf, tau, kw, kd, kc):
+    Lc = Lc - (kw + 2 * kc) * (kd + kc) / (math.pi * od)                # D-81 notch taken out of the drawn collar bond
     r = od / 2
     k = 2 * math.pi * r ** 2
     Lb = core + 2 * boss
@@ -421,32 +491,78 @@ kit.assumption("ASM-C6-ASA-INTERLAYER", "ASA interlayer shear 0.26 x the in-laye
                "until T-C6-DOG-SHEAR", value=0.26, unit="-", status="UNVERIFIED", cites=["SRC-C6-ASA-TDS-PRUSA"])
 
 
+def _dog_one(kw, kd, g, radial, r_b, T_tw, s_y, k_il, s_bp):
+    """One dog geometry: hold (lower bound, root shear + bending on the layer plane) and break (upper bound)."""
+    A = kw * radial
+    r_m = r_b + radial / 2
+    T_hi = s_y / math.sqrt(3) * A * r_m                                # in-layer von Mises shear yield (upper bound)
+    F = T_tw / r_m                                                     # tangential force on the notch wall, design
+    e = g + kd / 2                                                     # root (mount collar face) to the bearing centroid
+    tau_r = F / A
+    sig_r = 6 * F * e / (radial * kw * kw)                             # bending about the radial axis, tension across layers
+    tau_il, sig_il = k_il * s_y / math.sqrt(3), k_il * s_y             # layer-plane lower bounds (ASM-C6-ASA-INTERLAYER)
+    use = tau_r / tau_il + sig_r / sig_il                              # linear interaction (conservative)
+    return {"area_mm2": A * 1e6, "r_m_m": r_m, "T_dog_hi_nm": T_hi, "T_dog_lo_shear_nm": k_il * T_hi,
+            "F_design_n": F, "lever_m": e, "tau_root_mpa": tau_r / 1e6, "sig_root_mpa": sig_r / 1e6,
+            "rf_hold_shear_only": k_il * T_hi / T_tw, "rf_hold": 1.0 / use,
+            "bear_mpa": F / (kd * radial) / 1e6, "rf_bear": s_bp / (F / (kd * radial))}
+
+
 @kit.calc("CALC-C6-DOG", title="Clocking dog under the mount collar (D-81): fuse torque bounds and hold",
-          inputs={"kw": "P:fin_detail.mount.key_w_m", "od": "P:fins.tube.od_m", "gap": "P:fin_detail.bond_gap_m",
+          inputs={"kw": "P:fin_detail.mount.key_w_m", "kd": "P:fin_detail.mount.key_d_m",
+                  "kw_p": "P:joints.dog_w_prop_m", "kd_p": "P:joints.dog_d_prop_m",
+                  "g": "P:fin_detail.station_collar.gap_m", "od": "P:fins.tube.od_m", "gap": "P:fin_detail.bond_gap_m",
                   "ring": "P:fin_detail.station_collar.ring_wall_m", "cw": "P:fin_detail.mount.collar_wall_m",
                   "T_slip": "P:fin_detail.mount.slip_torque_nm", "s_y": "ASM-C6-ASA-YIELD",
                   "k_il": "ASM-C6-ASA-INTERLAYER", "T_tw": "CL-C4-D3-MOUNT-TWIST", "tau": "ASM-C4-BOND-SHEAR",
                   "Lc": "P:fin_detail.station_collar.height_m", "core": "ASM-C4-CORE-T-TUBE",
-                  "boss": "P:fin_detail.boss.height_m"},
-          equation="dog shear plane at the notch top: A = w_key x (min(r_col, r_ring) - r_b), r_b = od/2 + gap, mean "
-                   "radius r_m = r_b + radial/2; break torque upper bound T_hi = (s_y / sqrt 3) A r_m (in-layer von "
-                   "Mises, yield), lower bound T_lo = k_il T_hi (layer plane); fuse T_fuse = T_slip + T_hi (D-23: the "
-                   "clamp slips at T_slip, then the dog shears); downstream capacities at the C4 bond allowable: station "
-                   "collar on the tube tau 2 pi r^2 L_c, tube in block tau 2 pi r^2 (core + 2 boss); RF_fuse = "
-                   "min(capacity) / T_fuse; hold if the clamp is lost: RF_hold = T_lo / T_twist (C4 design twist)")
-def dog(kw, od, gap, ring, cw, T_slip, s_y, k_il, T_tw, tau, Lc, core, boss):
+                  "boss": "P:fin_detail.boss.height_m", "s_bp": "P:allowables.petg_inplane_pa",
+                  "s_ba": "P:allowables.asa_inplane_pa", "cant": "P:propulsion.stations.cant_deg",
+                  "T": "CL-C1-T-LIMIT", "Q": "CL-C1-MOTOR-TORQUE", "y_fin": "P:fins.y_m",
+                  "z_st": "P:propulsion.stations.z_m", "tube_x": "P:fins.tube.x_m",
+                  "tube_len": "P:fin_detail.tube_length_m", "xp": "P:propulsion.stations.x_prop_plane_m",
+                  "xp_e1": "CL-E1-CAD-HUB-X", "sf": "P:requirements.safety_factor_ult",
+                  "fit": "ASM-C1-FITTING-FACTOR", "prt": "ASM-C1-PRINTED-FACTOR"},
+          equation="Twist (C6, D-164): C4's CALC-C4-D3-MOUNT-CANT formula on C1's live loads, twist = |x_prop - x_tube| "
+                   "T sin c |t_y| + Q sin c |t_z|, t = (-z, y)/r, x design = sf fit prt, x_prop = min(params copy, E1 "
+                   "CL-E1-CAD-HUB-X at 10 deg / 14 mm); T_twist = max(C4 CL-C4-D3-MOUNT-TWIST, this). "
+                   "Dog (closure round): the dog is a printed ASA block hanging from the mount collar's lower "
+                   "face (layer plane, collar axis vertical), w_key tangential x radial = min(r_col, r_ring) - r_b, r_b = "
+                   "od/2 + gap, r_m = r_b + radial/2. Hold if the clamp is lost (lower bound): F = T_twist / r_m (C4 "
+                   "design twist at the current cant); root plane at the collar face carries tau = F / (w radial) and "
+                   "bending sigma = 6 F e / (radial w^2), e = station-collar gap + key_d / 2 (bearing centroid on the "
+                   "notch wall); layer-plane allowables tau_il = k_il s_y / sqrt 3, sigma_il = k_il s_y; RF_hold = 1 / "
+                   "(tau / tau_il + sigma / sigma_il). Was RF = k_il T_hi / T_twist (shear only at the notch top: "
+                   "missed the root bending). Bearing on the notch wall F / (key_d radial) vs the lower of the PETG "
+                   "and ASA in-plane allowables. w_key is the dog's arc length at r_m (annular-sector dog from D-164). Break upper bound T_hi = (s_y / sqrt 3) w radial r_m; fuse T_fuse = T_slip + T_hi (D-23); "
+                   "downstream capacities at the C4 bond allowable: station collar tau 2 pi r^2 L_c, tube in block tau "
+                   "2 pi r^2 (core + 2 boss); RF_fuse = min(capacity) / T_fuse. *_prop = the same at the C6 proposal "
+                   "(joints.dog_w_prop_m / dog_d_prop_m) until D3 draws it")
+def dog(kw, kd, kw_p, kd_p, g, od, gap, ring, cw, T_slip, s_y, k_il, T_tw, tau, Lc, core, boss, s_bp, s_ba, cant,
+        T, Q, y_fin, z_st, tube_x, tube_len, xp, xp_e1, sf, fit, prt):
+    c = math.radians(cant)
+    rr = math.hypot(y_fin, z_st)
+    tw_c6 = (abs(min(xp, xp_e1) - tube_x) * T * math.sin(c) * abs(z_st / rr)
+             + Q * math.sin(c) * abs(y_fin / rr)) * sf * fit * prt
+    T_tw_c4 = T_tw
+    T_tw = max(T_tw_c4, tw_c6)
+    s_bp = min(s_bp, s_ba)                                             # bearing: weaker of the PETG wall and the ASA dog
     r_b = od / 2 + gap
     radial = min(ring, cw)
-    A = kw * radial
-    r_m = r_b + radial / 2
-    T_hi = s_y / math.sqrt(3) * A * r_m
-    T_lo = k_il * T_hi
-    T_f = T_slip + T_hi
     k = 2 * math.pi * (od / 2) ** 2
     cap_collar, cap_block = tau * k * Lc, tau * k * (core + 2 * boss)
-    return {"area_mm2": A * 1e6, "r_m_m": r_m, "T_dog_hi_nm": T_hi, "T_dog_lo_nm": T_lo, "T_fuse_nm": T_f,
-            "cap_collar_nm": cap_collar, "cap_block_nm": cap_block,
-            "rf_fuse": min(cap_collar, cap_block) / T_f, "rf_hold": T_lo / T_tw, "dog_share": T_hi / T_f}
+    cap = min(cap_collar, cap_block)
+    d = _dog_one(kw, kd, g, radial, r_b, T_tw, s_y, k_il, s_bp)
+    p = _dog_one(kw_p, kd_p, g, radial, r_b, T_tw, s_y, k_il, s_bp)
+    out = dict(d)
+    out.update({"cant_deg": cant, "twist_c4_nm": T_tw_c4, "twist_c6_nm": tw_c6, "twist_used_nm": T_tw,
+                "T_fuse_nm": T_slip + d["T_dog_hi_nm"], "cap_collar_nm": cap_collar,
+                "cap_block_nm": cap_block, "rf_fuse": cap / (T_slip + d["T_dog_hi_nm"]),
+                "dog_share": d["T_dog_hi_nm"] / (T_slip + d["T_dog_hi_nm"]),
+                "T_fuse_prop_nm": T_slip + p["T_dog_hi_nm"], "rf_fuse_prop": cap / (T_slip + p["T_dog_hi_nm"]),
+                "rf_hold_prop": p["rf_hold"], "rf_bear_prop": p["rf_bear"], "tau_root_prop_mpa": p["tau_root_mpa"],
+                "sig_root_prop_mpa": p["sig_root_mpa"], "area_prop_mm2": p["area_mm2"]})
+    return out
 
 
 # ----------------------------------------------------------------------------- D-89c strap eye FIN-013 (CDR-27)
@@ -514,7 +630,7 @@ kit.claim("CL-C6-EYE-PROOF-F", "T-D3-EYE proof load on a bonded eye (2 x the tie
 kit.test("T-D3-EYE-BONDED", "Bonded strap eye pull (replaces the printed-eye pull of T-D3-EYE)",
          verifies=["CL-C6-EYE-BOND-RF", "CL-C6-EYE-BOND-RF-PEEL", "CL-C6-EYE-BOND-RF-SPLAY", "CL-C6-EYE-TAB-RF"],
          procedure="Two FIN-013 eyes bonded as built (E-FIN-89 block: boss and foot sanded 120 grit, IPA, 30 min "
-                   "epoxy + silica, skin tape cut back so the foot bonds PETG to PETG, 24 h) on the boss of a printed "
+                   "epoxy (neat), skin tape cut back so the foot bonds PETG to PETG, 24 h) on the boss of a printed "
                    "block offcut held on a 22 mm tube stub. Specimen 1: spring scale through the eye along x (the "
                    "tie-hole axis) to 58.8 N, hold 10 s, then to failure. Specimen 2: the same 30 deg outboard of x. "
                    "Pass: no movement of a witness line across the foot edge at 58.8 N; record the failure load and "
@@ -526,13 +642,22 @@ kit.claim("CL-C6-DOG-FUSE-T", "Torque to turn the mount on the tube with the clo
 _rf_dog("CL-C6-DOG-FUSE-RF", "Weakest downstream torsion capacity (station collar or tube-in-block bond) / mount fuse "
    "torque with the dog (D-23 holds: the mount gives first)", "CALC-C6-DOG", "rf_fuse", MOUNTS + COLLARS + TUBES,
    "T-C6-DOG-SHEAR; witness marks on the station collar after T-C4-FIN-PROOF")
-_rf_dog("CL-C6-DOG-HOLD-RF", "Dog alone holds the 7 deg cant twist if the clamp is lost (lower bound)", "CALC-C6-DOG",
-   "rf_hold", MOUNTS + COLLARS, "T-C6-DOG-SHEAR lower result; pinch bolt check every 10 flights")
+_rf_dog("CL-C6-DOG-HOLD-RF", "Dog alone holds the 10 deg cant twist if the clamp is lost (lower bound: root shear + "
+   "bending on the layer plane, drawn key_w / key_d)", "CALC-C6-DOG", "rf_hold", MOUNTS + COLLARS,
+   "T-C6-DOG-SHEAR lower result; pinch bolt check every 10 flights")
+_rf_dog("CL-C6-DOG-HOLD-RF-PROP", "Dog hold at the C6 proposal (sector dog, 10.0 mm arc, key_d 2.5 mm), 10 deg cant, lower "
+   "bound", "CALC-C6-DOG", "rf_hold_prop", MOUNTS + COLLARS, "T-C6-DOG-SHEAR lower result on the 10 mm sector dogs")
+_rf_dog("CL-C6-DOG-FUSE-RF-PROP", "Downstream torsion capacity / mount fuse torque at the C6 dog proposal (D-23)",
+   "CALC-C6-DOG", "rf_fuse_prop", MOUNTS + COLLARS + TUBES, "T-C6-DOG-SHEAR on the 10 mm sector dogs")
+_rf_dog("CL-C6-DOG-BEAR-RF-PROP", "Notch wall / dog bearing (weaker of PETG, ASA) at the C6 proposal, 10 deg design twist",
+   "CALC-C6-DOG", "rf_bear_prop", MOUNTS + COLLARS, "T-C6-DOG-SHEAR: no crushing of the notch wall at the hold torque")
 kit.test("T-C6-DOG-SHEAR", "Clocking dog shear-out on a tube stub", verifies=["CL-C6-DOG-FUSE-T", "CL-C6-DOG-FUSE-RF",
-         "CL-C6-DOG-HOLD-RF"], procedure="Two D-91 mounts, each on a 60 mm tube stub with a 22 mm PETG station collar "
+         "CL-C6-DOG-HOLD-RF", "CL-C6-DOG-HOLD-RF-PROP", "CL-C6-DOG-FUSE-RF-PROP", "CL-C6-DOG-BEAR-RF-PROP"], procedure="Two D-91 mounts, each on a 60 mm tube stub with a 22 mm PETG station collar "
          "bonded under it (dog in the notch). Pinch bolt set to the T-D3-SLIP 2.5 N m. Load a 100 mm arm with a luggage "
          "scale until the mount turns; record the peak torque and whether the dog sheared. Pass: peak <= "
-         "CL-C6-DOG-FUSE-T x 1.1 and the dog piece shears, not the collar bond (no witness-mark movement)")
+         "CL-C6-DOG-FUSE-T x 1.1 and the dog piece shears, not the collar bond (no witness-mark movement). Third "
+         "specimen (clamp lost): pinch bolt backed off, hold the 10 deg design twist 0.69 N m (CALC-C6-DOG twist_used_nm) "
+         "for 60 s, then to failure; pass: no crack at the dog root at 0.69 N m")
 
 
 # ----------------------------------------------------------------------------- bonds into foam and foam board
@@ -606,20 +731,33 @@ def _rec(cid, title, calc, out, parts, how, ver=R_SM, unit="-"):
 rf("CL-C6-MOTOR-HEAD-RF", "Motor screw head bearing on the printed plate at 0.20 N m", "CALC-C6-MOTOR-SCREW",
    "rf_head", MOUNTS, "T-C6-HEAD-CREEP: 4 screws at 0.20 N m on a printed ASA plate, 2 h at 70 degC, witness lines "
    "unmoved and breakaway torque >= 0.15 N m")
-rf("CL-C6-MOTOR-SEP-RF", "Motor screw preload / design tension incl. 7 deg cant side moment (no gapping)",
+rf("CL-C6-MOTOR-SEP-RF", "Motor screw preload / design tension incl. 10 deg cant side moment (no gapping)",
    "CALC-C6-MOTOR-SCREW", "rf_sep", MOTORS + MOUNTS,
    "Witness line across each screw head and plate; tap test after T-H1 thrust-stand runs")
-rf("CL-C6-MOTOR-STRIP-RF", "Motor-base thread strip / design tension (3.5 mm engagement, canted plate)",
+rf("CL-C6-MOTOR-STRIP-RF", "Motor-base thread strip / design tension (2.5 mm engagement: M3x8, 4.5 mm plate, 2 x 0.5 mm washers)",
    "CALC-C6-MOTOR-SCREW", "rf_strip", MOTORS,
    "Probe the motor hole depth on arrival (E1 T-E1-MOTOR-RM); engagement >= 3.0 mm")
-kit.claim("CL-C6-CANT-ENGAGE", "Motor-screw engagement on the 7 deg canted plate (R3, every hole)",
-          calc="CALC-C6-CANT-SEAT", output="engage_m", unit="m", limit=(">=", 0.003), verifies=R_JS,
+rf("CL-C6-PROPNUT-STRIP-RF", "M6 thin prop nut on the adapter post: thread strip / (max preload + design thrust)",
+   "CALC-C6-PROPNUT", "rf_strip", MOTORS, "Prop-nut fit check at assembly: >= 1 full thread past the nut (E1 "
+   "CL-E1-NUT-ENGAGE); T-C6-PROPNUT torque cycles", ver=R_SM + R_JS)
+rf("CL-C6-MOTOR-PULLOUT-RF", "X2814 V3 base thread strip / (preload + design tension), 2.5 mm engagement (EST 6061-T6)",
+   "CALC-C6-MOTOR-STRIP-X", "rf_pullout", MOTORS,
+   "T-C6-CANT-SEAT: 4 screws at 0.20 N m, >= 4 turns from first bite, tip clearance >= 0.4 mm; probe hole depth on arrival")
+rf("CL-C6-MOTOR-STRIKE-RF", "X2814 V3 base thread: axial + prop-strike fuse shear (6.55 N m), linear interaction",
+   "CALC-C6-MOTOR-STRIP-X", "rf_strike", MOTORS, "As CL-C6-MOTOR-PULLOUT-RF; fuse release test T-C6-DOG-FUSE")
+kit.claim("CL-C6-MOTOR-TIP-CLEAR", "Motor screw tip clearance in the 3.0 mm blind hole", calc="CALC-C6-MOTOR-STRIP-X",
+          output="tip_clear_m", unit="m", limit=(">=", 0.0004), verifies=R_JS, parts=MOUNTS + MOTORS,
+          how="Probe the hole depth with a 2.0 mm wire; screw tip must not bottom",
+          note="D3 CL-D3-SCREW-TIP-CLEAR 0.4 mm")
+_MOTOR_MIN = _json.loads((ROOT / "params/params.json").read_text(encoding="utf-8"))["requirements"]["thread_engagement_motor_m3_min_m"]["value"]
+kit.claim("CL-C6-CANT-ENGAGE", "Motor-screw engagement on the 10 deg canted plate (R3, every hole)",
+          calc="CALC-C6-CANT-SEAT", output="engage_m", unit="m", limit=(">=", _MOTOR_MIN), verifies=R_JS,
           parts=MOUNTS + MOTORS, how="T-C6-CANT-SEAT: all four heads flat (0.05 mm feeler), >= 6 turns from first bite",
-          note="limit = requirements.thread_engagement_min 1.0 x d into metal (D-41)")
-rf("CL-C6-MOUNT-SIDE-SLIP-RF", "Mount slip torque / tube torsion from the 7 deg side force (design)",
+          note="engagement = M3x8 - 4.5 plate - 2 x 0.5 washers = 2.5 mm; limit = requirements.thread_engagement_motor_m3_min_m (D-178)")
+rf("CL-C6-MOUNT-SIDE-SLIP-RF", "Mount slip torque / tube torsion from the 10 deg side force (design)",
    "CALC-C6-MOUNT-SIDE", "rf_slip_torsion", MOUNTS + TUBES, "T-D3-SLIP setting; witness line after GT runs",
    ver=R_SM + R_FT)
-rf("CL-C6-MOUNT-SIDE-AXIAL-RF", "Mount clamp axial friction / 7 deg side force along the tube (design)",
+rf("CL-C6-MOUNT-SIDE-AXIAL-RF", "Mount clamp axial friction / 10 deg side force along the tube (design)",
    "CALC-C6-MOUNT-SIDE", "rf_slip_axial", MOUNTS + TUBES, "Lip cap seated after GT runs; witness line", ver=R_SM + R_FT)
 rf("CL-C6-PINCH-ENGAGE-RF", "Mount pinch bolt: protrusion past the grip / nyloc need", "CALC-C6-PINCH", "rf_engage",
    MOUNTS, "Build check: >= 2 threads visible past each nyloc (BUILD step for the mounts)", ver=R_JS)
@@ -813,7 +951,7 @@ kit.test("T-C6-NYLON-TORQUE", "PA66 M3x18 torque to failure in a brass insert",
 kit.test("T-C6-HEAD-CREEP", "Motor screw creep on a hot printed plate", ["CL-C6-MOTOR-HEAD-RF"],
          procedure="Printed ASA mount plate on an aluminium block with 4 x M3x8 at 0.20 N m, "
                    "2 h at 70 degC (oven), cool, breakaway torque >= 0.15 N m on all four")
-kit.test("T-C6-CANT-SEAT", "Motor screws on the 7 deg canted mount", ["CL-C6-CANT-ENGAGE", "CL-C6-MOTOR-STRIP-RF"],
+kit.test("T-C6-CANT-SEAT", "Motor screws on the 10 deg canted mount", ["CL-C6-CANT-ENGAGE", "CL-C6-MOTOR-STRIP-RF"],
          procedure="First printed mount A, holes drilled square to the canted face to the motor's pattern; fit the "
                    "motor; 4 x M3x8 at 0.20 N m; count turns from first bite (>= 6 = 3.0 mm, <= probed depth - 0.5) "
                    "and check a 0.05 mm feeler does not enter under any head")

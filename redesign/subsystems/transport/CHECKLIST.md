@@ -9,14 +9,14 @@ motor or foot. The joints and their checks are in `FIELD-JOINTS.md`.
 
 | # | Step | Check |
 |---|---|---|
-| A | Carrier A takes the box (side handle) and the tote. Carrier B takes the battery can and the folded mat. Alone: the box on the first trip, the rest on the second | box carried flat, lid up |
+| A | Carrier A takes the box (side hand hole) and the tote. Carrier B takes the battery can and the folded mat. Alone: the box on the first trip, the rest on the second | box carried flat, lid up |
 | B | Set the box down flat, never on its end, and keep it out of the sun until set-up | — |
 
 ## Set up
 
 | # | Step | s | Check |
 |---|---|---|---|
-| 1 | Undo the 2 cam straps and lift the lid (the pillars come with it). Unfold the mat on level ground, rubber up, upwind of the pilot | 30 | mat level within 5° (C5 S1) |
+| 1 | Pull the tails of the 2 cord lashings (slipped hitch) and lift the lid (the pillars come with it). Unfold the mat on level ground, rubber up, upwind of the pilot | 30 | mat level within 5° (C5 S1) |
 | 2 | Lift the aircraft out by the centre section and stand it nose-up on its four feet on the mat | 20 | all four feet down, no rock; four replace-mark grooves visible (C5 S7) |
 | 3 | Take the props, pitot boom and pouch from the tray | 15 | 4 flight props whose colours match the motors |
 | 4 | Fit the 4 props, colour on the prop to colour on the motor (LH nut on the CW motors). 10 mm spanner, 1.5 N·m (firm wrist turn) | 140 | each prop turns freely and its nut is tight; spanner back in the pouch |
@@ -34,7 +34,7 @@ motor or foot. The joints and their checks are in `FIELD-JOINTS.md`.
 3. Put the spanner back in the pouch and the pouch in its pocket.
 4. Check the feet. Swap any insert past its replace mark now (3 min, `FIELD-JOINTS.md`).
 5. Set the aircraft on the cradles with the wing seated in both saddles and the LE against both saddle lips, the pod
-   nose toward the nose pad (gap about 13 mm, antenna B clear of it) and nothing touching the braces or tubes.
-6. Put the lid on, close the 2 cam straps and fold the mat. Carry the box flat.
-7. Before each trip (lid off, 30 s): every handle nyloc fully on with 2 threads showing past it, no handle tab torn
+   nose toward the nose pad (gap about 12 mm, pitot collar and antenna B clear of it) and nothing touching the braces or tubes.
+6. Put the lid on, tie the 2 cord lashings (trucker's hitch, slipped, over the edge saddles) and fold the mat. Carry the box flat.
+7. Before each trip (lid off, 30 s): no crease or tear at the three hand holes, cords not frayed, box dry (rebuild from 4 new XLBX blanks if soaked)
    (`E-TRN-13…15`, D-41).

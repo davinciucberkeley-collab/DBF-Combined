@@ -39,7 +39,7 @@ Slack with one 10.5-day crash loop (`CR1`) on 30 Apr: **12 d** (I2-R1: 2 d). Roo
 | S01 | SITL install and >= 10 h pilot log (R-PILOT) | 4 | # | # | # | # | # | # |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 16 Nov | 25 Dec | 60 |
 | O01 | Early order placed (20 Nov): packs and FC carts first | 2 | # |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 21 Nov | 21 Nov | 18 |
 | O02 | Early order arrives (lead 5 d EST, Thanksgiving week: allow 7) | 2 | # | # |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 22 Nov | 28 Nov | 18 |
-| O03 | Ovonic packs arrive (ships from Germany, about 14 d); weigh, log | 2 | # | # | # |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 22 Nov | 05 Dec | 21 |
+| O03 | Gens Ace Shorty 6000 HV packs arrive (US stock, about 7 d EST, D-174); weigh, IR-check <= 3.8 mOhm per group, log | 2 | # | # |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 22 Nov | 28 Nov | 28 |
 | TW2 | RFS flight request for twin days (7 business days ahead; RFS 72 h) | 4 |  | # | # |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 24 Nov | 03 Dec | 23 |
 | WN1 | RFS anemometer mornings x 3 (R-WIND-MEASURE) | 4 |  | # | # | # |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 24 Nov | 07 Dec | 144 |
 | H01 | Thrust stand build and calibration (GT-01), stand campaign (GT-02/03) | 1,2 |  | # | # | # |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 29 Nov | 12 Dec | 18 |
@@ -121,15 +121,15 @@ A late freeze or a failed fin-station decision (STATUS issue 1) moves every late
 | Person | Total h | Peak week |
 |---|---|---|
 | P1 | 114 | 22.9 (week of 07 Dec) |
-| P2 | 155 | 23.1 (week of 30 Nov) |
+| P2 | 155 | 22.8 (week of 07 Dec) |
 | P3 | 146 | 21.9 (week of 30 Nov) |
 | P4 | 99 | 13.2 (week of 08 Feb) |
 
 | Week of | P1 | P2 | P3 | P4 | Team h |
 |---|---|---|---|---|---|
 | 16 Nov | 0.0 | 3.0 | 0.0 | 9.3 | 12.3 |
-| 23 Nov | 0.0 | 3.0 | 0.0 | 6.2 | 9.2 |
-| 30 Nov | 17.9 | 23.1 | 21.9 | 5.8 | 68.7 |
+| 23 Nov | 0.0 | 4.0 | 0.0 | 6.2 | 10.2 |
+| 30 Nov | 17.9 | 22.1 | 21.9 | 5.8 | 67.7 |
 | 07 Dec | 22.9 | 22.8 | 20.9 | 7.9 | 74.5 |
 | 14 Dec | 4.2 | 12.3 | 4.2 | 3.3 | 24.1 |
 | 21 Dec | 0.0 | 3.2 | 9.7 | 2.3 | 15.2 |

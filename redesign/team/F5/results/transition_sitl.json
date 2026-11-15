@@ -1,0 +1,414 @@
+{
+ "cases": {
+  "A_nominal": {
+   "t_flip_sim": 157.465,
+   "mode_end": "QHOVER",
+   "tx_changes": [
+    [
+     157.53,
+     31,
+     -65
+    ],
+    [
+     159.43,
+     31,
+     -40
+    ],
+    [
+     160.62,
+     0,
+     -40
+    ],
+    [
+     161.47,
+     0,
+     -15
+    ],
+    [
+     181.53,
+     0,
+     11
+    ]
+   ]
+  },
+  "B_stick_moves": {
+   "t_flip_sim": 223.545,
+   "mode_end": "QHOVER",
+   "tx_changes": [
+    [
+     223.6,
+     31,
+     -65
+    ],
+    [
+     225.5,
+     31,
+     -40
+    ],
+    [
+     226.7,
+     -40,
+     -40
+    ],
+    [
+     227.44,
+     100,
+     -40
+    ],
+    [
+     228.94,
+     0,
+     -40
+    ],
+    [
+     247.6,
+     0,
+     11
+    ]
+   ]
+  },
+  "C_abort": {
+   "t_flip_sim": 289.586,
+   "mode_end": "QSTABILIZE",
+   "tx_changes": [
+    [
+     289.68,
+     31,
+     -65
+    ],
+    [
+     290.68,
+     0,
+     -65
+    ]
+   ]
+  },
+  "D_from_qhover": {
+   "t_flip_sim": 303.664,
+   "mode_end": "QHOVER",
+   "tx_changes": []
+  }
+ },
+ "text": [
+  [
+   0.0,
+   "Barometer 1 calibration complete"
+  ],
+  [
+   0.0,
+   "Barometer 2 calibration complete"
+  ],
+  [
+   0.0,
+   "Airspeed 1 calibration started"
+  ],
+  [
+   0.0,
+   "ArduPilot Ready"
+  ],
+  [
+   0.0,
+   "AHRS: DCM active"
+  ],
+  [
+   2.02,
+   "RC9: MotorEStop LOW"
+  ],
+  [
+   3.38,
+   "Airspeed 1 calibrated"
+  ],
+  [
+   3.7,
+   "EKF3 IMU0 initialised"
+  ],
+  [
+   3.7,
+   "EKF3 IMU1 initialised"
+  ],
+  [
+   5.46,
+   "EKF3 IMU1 tilt alignment complete"
+  ],
+  [
+   5.46,
+   "EKF3 IMU0 tilt alignment complete"
+  ],
+  [
+   5.54,
+   "EKF3 IMU1 MAG0 initial yaw alignment complete"
+  ],
+  [
+   5.58,
+   "EKF3 IMU0 MAG0 initial yaw alignment complete"
+  ],
+  [
+   9.03,
+   "GPS 1: probing for u-blox at 230400 baud"
+  ],
+  [
+   9.03,
+   "GPS 1: detected u-blox"
+  ],
+  [
+   19.23,
+   "EKF3 IMU1 origin set"
+  ],
+  [
+   19.31,
+   "Field Elevation Set: 5m"
+  ],
+  [
+   19.43,
+   "EKF3 IMU0 origin set"
+  ],
+  [
+   30.7,
+   "PreArm: AHRS: not using configured AHRS type"
+  ],
+  [
+   40.03,
+   "Updating barometer calibration"
+  ],
+  [
+   40.03,
+   "Barometer calibration complete"
+  ],
+  [
+   40.03,
+   "Airspeed 1 calibration started"
+  ],
+  [
+   41.7,
+   "Airspeed 1 calibrated"
+  ],
+  [
+   47.83,
+   "EKF3 IMU1 is using GPS"
+  ],
+  [
+   47.83,
+   "EKF3 IMU0 is using GPS"
+  ],
+  [
+   47.83,
+   "AHRS: EKF3 active"
+  ],
+  [
+   53.31,
+   "Throttle armed"
+  ],
+  [
+   160.26,
+   "Angle assist r=0 p=87"
+  ],
+  [
+   165.99,
+   "Transition FW done"
+  ],
+  [
+   184.55,
+   "Transition VTOL done"
+  ],
+  [
+   226.34,
+   "Angle assist r=0 p=87"
+  ],
+  [
+   232.06,
+   "Transition FW done"
+  ],
+  [
+   250.55,
+   "Transition VTOL done"
+  ],
+  [
+   312.67,
+   "Weathervane Active: nose in"
+  ],
+  [
+   430.87,
+   "Throttle disarmed"
+  ],
+  [
+   432.67,
+   "PreArm: Rangefinder 1: No Data"
+  ],
+  [
+   432.67,
+   "PreArm: QLand mode not armable"
+  ]
+ ],
+ "params_set": {
+  "SIM_BATT_VOLTAGE": 16.799999237060547,
+  "SIM_RC_FAIL": 1.0,
+  "RC3_MIN": 988.0,
+  "RC3_MAX": 2012.0,
+  "RC3_DZ": 30.0,
+  "RC3_TRIM": 988.0,
+  "Q_THROTTLE_EXPO": 0.20000000298023224,
+  "FENCE_ALT_MAX": 900.0,
+  "FENCE_RADIUS": 5000.0,
+  "Q_M_HOVER_LEARN": 2.0,
+  "Q_A_ANGLE_BOOST": 0.0,
+  "LOG_DISARMED": 0.0,
+  "FLTMODE1": 17.0,
+  "FLTMODE2": 5.0,
+  "FLTMODE3": 7.0,
+  "FLTMODE4": 18.0,
+  "FLTMODE5": 11.0,
+  "FLTMODE6": 19.0
+ },
+ "mode_at_power_up": "QHOVER",
+ "armed": true,
+ "theta_h_sitl": 0.3500317335128784,
+ "setting": {
+  "theta_h": 0.35,
+  "k_pct_ap": 64,
+  "q_throttle_expo": 0.185,
+  "throttle_in": 0.44970688000000003,
+  "r": 1.2848768000000002,
+  "r_err_pct": -0.009587548638112509,
+  "edgetx_override_pct": 31,
+  "pwm_us": 1658.72,
+  "bin_margin_us": 4.560000000000173
+ },
+ "target_throttle_in": 0.44970688000000003,
+ "log": {
+  "modes": [
+   [
+    53.322829,
+    "QHOVER"
+   ],
+   [
+    150.94959599999999,
+    "QSTABILIZE"
+   ],
+   [
+    159.768567,
+    "FBWA"
+   ],
+   [
+    161.86856,
+    "CRUISE"
+   ],
+   [
+    181.886383,
+    "QHOVER"
+   ],
+   [
+    216.883212,
+    "QSTABILIZE"
+   ],
+   [
+    225.84212699999998,
+    "FBWA"
+   ],
+   [
+    247.95994299999998,
+    "QHOVER"
+   ],
+   [
+    282.956772,
+    "QSTABILIZE"
+   ],
+   [
+    296.955337,
+    "QHOVER"
+   ],
+   [
+    310.680678,
+    "QLAND"
+   ]
+  ],
+  "lines": [
+   {
+    "start": 157.589439,
+    "end": 160.709024,
+    "mode_before": "QSTABILIZE",
+    "fbwa_at": 159.768567,
+    "hold_qstab_s": 2.1791279999999915,
+    "release_after_fbwa_s": 0.9404570000000092,
+    "ThI_preclimb_min": 0.44973188638687134,
+    "ThI_preclimb_max": 0.44973188638687134,
+    "ThH": 0.3500210642814636,
+    "att_pitch_at_fbwa": 0.007358195260167122,
+    "att_pitch_range": [
+     -69.998291015625,
+     18.345359802246094
+    ],
+    "t_fw_done_after_fbwa_s": 6.241433000000001,
+    "ThI_hold_min": 0.44973188638687134,
+    "ThI_hold_max": 0.44973188638687134,
+    "qtun_samples_hold": 136
+   },
+   {
+    "start": 223.66216599999998,
+    "end": 226.74259999999998,
+    "mode_before": "QSTABILIZE",
+    "fbwa_at": 225.84212699999998,
+    "hold_qstab_s": 2.1799609999999916,
+    "release_after_fbwa_s": 0.9004730000000052,
+    "ThI_preclimb_min": 0.4498979449272156,
+    "ThI_preclimb_max": 0.4498979449272156,
+    "ThH": 0.3501608073711395,
+    "att_pitch_at_fbwa": -0.005359301343560219,
+    "att_pitch_range": [
+     -68.93324279785156,
+     19.83925437927246
+    ],
+    "t_fw_done_after_fbwa_s": 6.247873000000027,
+    "ThI_hold_min": 0.4498979449272156,
+    "ThI_hold_max": 0.4498979449272156,
+    "qtun_samples_hold": 137
+   },
+   {
+    "start": 289.735726,
+    "end": 290.736159,
+    "mode_before": "QSTABILIZE",
+    "fbwa_at": null,
+    "hold_qstab_s": null,
+    "release_after_fbwa_s": null,
+    "ThI_preclimb_min": 0.45007631182670593,
+    "ThI_preclimb_max": 0.45007631182670593,
+    "ThH": 0.35031092166900635
+   }
+  ],
+  "msgs": [
+   [
+    53.32,
+    "New fence"
+   ],
+   [
+    166.01,
+    "Transition FW done"
+   ],
+   [
+    184.57,
+    "Transition VTOL done"
+   ],
+   [
+    232.09,
+    "Transition FW done"
+   ],
+   [
+    250.56,
+    "Transition VTOL done"
+   ]
+  ],
+  "override_episodes": [
+   [
+    157.589439,
+    160.709024
+   ],
+   [
+    223.66216599999998,
+    226.74259999999998
+   ],
+   [
+    289.735726,
+    290.736159
+   ]
+  ]
+ }
+}

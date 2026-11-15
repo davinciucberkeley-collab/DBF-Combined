@@ -1,10 +1,14 @@
-# K09-L quad tailsitter - ArduPilot Plane parameter file (owner F4, revision F4-R6, 2026-11-13, CDR fix round D-120..D-126)
+# K09-L quad tailsitter - ArduPilot Plane parameter file (owner F4, revision F4-R11, 2026-11-14, D-174: limiter 80 A, gate 2.70 kg,
+#   Gens Ace LiHV 4S 6000 HV Shorty (17.4 V full): THR_MAX 41, FWD_BAT / Q_M_BAT_VOLT_MAX 17.4, BATT_* for the pack. R10 D-173: SunnySky
+#   X2814 V3 KV900 + APC 11x8E/EP, Q_M_SPIN_MAX 0.81 fixed, limiter 75 A; D-173b: back to the CoreWing F405 Wing V2, the Lua spin
+#   cap of R9 (D-161c) is WITHDRAWN: no SCR_* lines (the CoreWing build has no scripting, so they would be unknown names; the
+#   script is archived in subsystems/flight-software/archive/D-161c/). R9: CR-F5-15/16, BATT_LOW 3 000; R8: CR-C1-40, B3 entry
+#   design; R7 design round D-145..D-157; R6 CDR fix round D-120..D-126)
 # Status: PROPOSED. Not loaded on hardware. Loaded and read back in SITL (ArduPlane 4.7.3-beta1 Windows build,
 #   2026-11-13, team/F4/sitl/RESULTS.md): every name below is accepted except SERVO_BLH_BDMASK / SERVO_BLH_POLES,
 #   which the SITL build does not carry (board only: T-F3-FW-LOAD). Flight behaviour on K09-L: UNVERIFIED.
-# Firmware: ArduPlane 4.7.2 stable or later, target CoreWingF405WingV2. The board entered ArduPilot in 4.7.2
-#   (ArduPlane/ReleaseNotes.txt, "Changes from 4.7.1", read 2026-11-13), so no 4.6 or 4.7.0/4.7.1 build exists for it
-#   (D-33; bdshot on outputs 1-4, no Lua on this board).
+# Firmware: ArduPlane 4.7.2 stable or later, target CoreWingF405WingV2 (D-33, D-173b; the board entered ArduPilot in 4.7.2,
+#   ReleaseNotes "Changes from 4.7.1", read 2026-11-13; bdshot on outputs 1-4, no Lua on this board).
 # Parameter names: every name is in ArduPilot's published Plane parameter definitions for stable-4.7.1
 #   (https://autotest.ardupilot.org/Parameters/versioned/Plane/stable-4.7.1/apm.pdef.xml, read 2026-11-13; the 4.7.2
 #   folder is not published). fsw_check.py checks every name against team/F4/ap_plane_param_names_4.7.1.txt offline.
@@ -35,13 +39,13 @@ Q_OPTIONS,262400
 INITIAL_MODE,17
 
 # ---------------------------------------------------------------- 2 Outputs (F3 CR-F3-02: outputs 1-4 bdshot on TIM4/TIM3, elevons 5-6 on TIM8 PWM, 7 unused)
-# out 1 = Motor 1 = station LR (lower right), CCW seen from the nose, 11x5.5MR, right-hand-thread adapter
+# out 1 = Motor 1 = station LR (lower right), CCW seen from the nose, APC 11x8E (D-173), right-hand-thread adapter
 SERVO1_FUNCTION,33
-# out 2 = Motor 2 = station UL (upper left), CCW seen from the nose, 11x5.5MR, right-hand-thread adapter
+# out 2 = Motor 2 = station UL (upper left), CCW seen from the nose, APC 11x8E, right-hand-thread adapter
 SERVO2_FUNCTION,34
-# out 3 = Motor 3 = station LL (lower left), CW seen from the nose, 11x5.5MRP, LEFT-hand-thread adapter (CR-E1-21: prop drag tightens the nut)
+# out 3 = Motor 3 = station LL (lower left), CW seen from the nose, APC 11x8EP, LEFT-hand-thread adapter (CR-E1-21: prop drag tightens the nut)
 SERVO3_FUNCTION,35
-# out 4 = Motor 4 = station UR (upper right), CW seen from the nose, 11x5.5MRP, LEFT-hand-thread adapter (CR-E1-21)
+# out 4 = Motor 4 = station UR (upper right), CW seen from the nose, APC 11x8EP, LEFT-hand-thread adapter (CR-E1-21)
 SERVO4_FUNCTION,36
 # out 5 = left elevon servo (ElevonLeft); throw limits in section 2b
 SERVO5_FUNCTION,77
@@ -51,7 +55,7 @@ SERVO6_FUNCTION,78
 Q_M_PWM_TYPE,5
 # bidirectional DShot on outputs 1-4 for ESC rpm telemetry (harmonic notch, rpm cap check)
 SERVO_BLH_BDMASK,15
-# motor magnet poles for rpm = eRPM / (poles/2); X3108S 12N14P (UNVERIFIED: count the magnets, CR-F4-06)
+# motor magnet poles for rpm = eRPM / (poles/2); SunnySky X2814 V3 (D-173): pole count — (UNVERIFIED: count the magnets, CR-F4-06)
 SERVO_BLH_POLES,14
 # ESC type for DShot commands: 1 = BLHeli32/BLHeli_S/Kiss family (UNVERIFIED for Bluejay; bench check)
 SERVO_DSHOT_ESC,1
@@ -86,26 +90,51 @@ SERVO6_MAX,1997
 MIXING_GAIN,0.65
 
 # ---------------------------------------------------------------- 3 Motor limits (E1, B4, C1, A2)
-# output at full demand: holds rpm <= 9 350 on a 16.8 V pack (CL-B4-SPIN-MAX 0.849). Documented range is 0.9-1.0: SITL S1 confirms the value is kept; the stand (T-F4-STAND-RPM-CAP) confirms rpm
-Q_M_SPIN_MAX,0.84
-# pack-current limiter 100 A (CR-A2-14, CR-E3-05, CR-F1-10; R-ESC-CURRENT part a; claim CL-F4-BAT-CURR-MAX)
-Q_M_BAT_CURR_MAX,100
+# output at full demand 0.81, FIXED (F4-R10, A1 D-173, E1 "D-173 motor"): one motor at full output with the others light on a
+#   fresh pack (the worst case for current) stays at 49.3 A winding <= 50 A / 30 s (X2814 V3) and 40.0 A ESC <= 45 A; on the
+#   worst-state pack the 75 A limiter binds before 0.81, so worst T/W 1.762 (band edge) is unchanged. Was 0.746 + Lua schedule
+#   (R9, withdrawn D-173b). Range 0.9-1.0 is metadata only (SITL S1 keeps 0.84 / 0.746 / 0.81)
+Q_M_SPIN_MAX,0.81
+# pack-current limiter 80 A (F4-R11, A1 D-174: P:performance.full_throttle_current_a 80.0, gate 2.70 kg; D-173 had 75, D-161
+#   73.2, D-157 70.2, D-148 70, was 100). E1 D-173 limiter table: at 80 A, 2.64 kg fresh T/W 2.102, worst 1.826, winding 29.1 A
+#   (<= 50), ESC 20.0 A; largest mass with B3's 1.75 is 2.755 kg. Claim CL-F4-BAT-CURR-MAX. Valid only with the current sensor
+#   within +/-1.1 % at 70-80 A: T-F1-SENSOR-CAL must pass and BATT_AMP_PERVLT carry its value BEFORE FLIGHT. AP_Float, 0-200 A
+Q_M_BAT_CURR_MAX,80
 # limiter reads battery monitor 0 = the flight pack (default, stated: CR-A2-14)
 Q_M_BAT_IDX,0
 # limiter time constant 1 s (default 5 s): C1 shows a step to full throttle outruns a slow limiter (CL-C1-T-CAP)
 Q_M_BAT_CURR_TC,1
-# voltage compensation range, 4S full / empty (CR-E1-08)
-Q_M_BAT_VOLT_MAX,16.8
+# built-in VTOL voltage compensation, LiHV 4S full 4 x 4.35 = 17.4 V (F4-R11, D-174 Gens Ace HV Shorty; R10 16.8 for LiPo).
+#   The firmware clamps the resting voltage to [MIN, MAX] and scales demand by MAX / V, so MAX must be the full-charge voltage:
+#   a fresh LiHV pack then reads ratio 1 (AP_Motors_Thrust_Linearization.cpp, tag Plane-4.7.2). Full demand still maps to 0.81
+Q_M_BAT_VOLT_MAX,17.4
 # 3.30 V/cell
 Q_M_BAT_VOLT_MIN,13.2
 # lowest running output 0.15 (default, stated: CALC-F4-VLEVEL input); the stand sets the value that spins reliably (TUNING-PLAN step 2)
 Q_M_SPIN_MIN,0.15
 # thrust-curve expo 0.65 (default, stated: CALC-F4-VLEVEL input); replace from the stand thrust-vs-output curve
 Q_M_THST_EXPO,0.65
-# hover throttle start value (E1: duty 0.49 on the 11x5.5MR); learnt in flight (Q_M_HOVER_LEARN 2, default)
+# hover throttle start value 0.49 (E1, X3108S; the X2814 V3 + 11x8E hover value is learnt on the first hover: about 0.45 EST
+#   from E1's 5 693 rpm); learnt in flight (Q_M_HOVER_LEARN 2 below). The forward-transition entry is a
+#   ratio to the learnt value (1.285 x theta_h, section 5), so this start value does not set it
 Q_M_THST_HOVER,0.49
-# fixed-wing throttle ceiling 70 % (was 75): motor output <= 0.704 whether FW throttle passes straight through or via the thrust curve below (ASM-F4-FW-PASSTHRU) = 7 750 rpm fresh pack <= 7 950 (CR-B1-17 b); level speed <= 21.3 m/s <= 21.8 = VD 27.2 / 1.25 (CL-F4-VLEVEL-VH, CR-C1-20); with full yaw differential 0.70 + 0.0875 = 0.79 <= 0.849 (CL-F4-FW-ACT-MAX); never sustained full throttle (CR-E3-05)
-THR_MAX,70
+# hover-throttle learning on, learnt value saved (default 2, stated: B3 closure section 1.4). It does not move in QSTABILIZE
+#   (update_throttle_hover returns while the Z controller is off, B3 section 1.2)
+Q_M_HOVER_LEARN,2
+# fixed-wing throttle ceiling 41 % on a full pack (F4-R11, D-174 LiHV; R10 42 at 16.8 V, R8 / R9 60, before 70). F4 estimate (EST;
+#   APC PER3 11x8E, E1's two prop factors, X2814 V3 Kv 900 / 33.6 mOhm, B4's CD0 / k, 2.70 kg, 10 deg cant): on a fresh 17.4 V
+#   pack the output that reaches VH 21.76 = VD 27.2 / 1.25 is 0.414; 0.41 -> 21.24-21.53 m/s (CL-F4-VLEVEL-VH 0.989). FW output
+#   passes straight through (tailsitter.cpp output() -> output_motor_mask(), tag Plane-4.7.2: ASM-F4-FW-PASSTHRU). FWD_BAT_VOLT_*
+#   raise this ceiling as the pack sags: a 14.4 V resting pack flies 19.97-20.2 m/s >= AIRSPEED_MAX 18. B4 to confirm (CR-F4-54)
+THR_MAX,41
+# forward-throttle battery compensation (F4-R10 / R11): demand and THR_MAX / THR_MIN scale by FWD_BAT_VOLT_MAX / resting V
+#   (servos.cpp FWD_BATT_CMP, tag Plane-4.7.2), so the terminal voltage at THR_MAX stays 0.41 x 17.4 = 7.13 V on any pack
+#   (<= 0.414 x 17.4 = 7.21 V for VH). LiHV 4S full 17.4 V (D-174). THR_MAX <= 100 x MIN / MAX = 75 holds (41 x 17.4 / 13.2 = 54 %)
+FWD_BAT_VOLT_MAX,17.4
+# compensation floor 3.30 V/cell (below this no further scaling)
+FWD_BAT_VOLT_MIN,13.2
+# compensation reads battery monitor 0 = the flight pack (default, stated)
+FWD_BAT_IDX,0
 # fixed-wing throttle floor 10 %: keeps differential-thrust yaw damping when TECS idles (CR-B3-15: optional damping)
 THR_MIN,10
 
@@ -160,48 +189,93 @@ Q_LAND_FINAL_ALT,6
 #   SITL defaults 0.7 / 0.5) stay at the firmware defaults (no line here) until SITL S3b / the
 #   tethered 1 m/s step in TUNING-PLAN.md measures the QLOITER velocity-loop crossover. Pass: <= 1/6 of the attitude crossover = <= 1.0 rad/s
 #   at the 1.0 Hz roll loop (CL-F4-XOVER-RLL). If it fails, lower both, add the two lines here and mirror them in params.json. Values: —
-# weathervane in hover: 1 = belly (copter nose) into wind (default on Plane, stated; J1 CR-J1-05: wind loads copter pitch, the strongest axis)
+# weathervane in hover: 1 = nose into wind = belly (copter nose, -z) into wind (default on Plane, stated; J1 CR-J1-05: wind
+#   loads copter pitch, the strongest axis). Acts only in position-controlled Q modes (QLOITER, QLAND, QRTL, AUTO): not in
+#   QSTABILIZE or QHOVER, and not while the pilot gives yaw input (quadplane.cpp get_weathervane_yaw_rate_cds, tag Plane-4.7.1)
 Q_WVANE_ENABLE,1
 # weathervane gain start 1 (J1, ArduPilot weathervaning page)
 Q_WVANE_GAIN,1
-# landing override 3 = side into wind = a wingtip into wind (CR-C5-05a: spanwise limit 8.4 m/s vs broadside 4.33 m/s)
-Q_WVANE_LAND,3
-# take-off override 3 = side into wind: same fin-tip stance as landing
-Q_WVANE_TAKEOFF,3
+# landing override 1 = nose into wind = BELLY into the wind (D-152, was 3 side = wingtip into wind). C5: belly to the
+#   wind lull limit 5.3 m/s, 5.7 at +/-30 deg heading error; pod face (+z) to the wind 4.5 m/s, so never 2 (nose OR
+#   tail) or 4 (tail = pod face). Values -1 no override, 0 off, 1 nose, 2 nose or tail, 3 side, 4 tail
+#   (https://raw.githubusercontent.com/ArduPilot/ardupilot/Plane-4.7.1/libraries/AC_AttitudeControl/AC_WeatherVane.cpp, read 2026-11-14). Applies in QRTL and the VTOL land descent / final (in_vtol_land_sequence)
+Q_WVANE_LAND,1
+# take-off override 1 = nose into wind = BELLY into the wind (D-156, review/DESIGN-ROUND-2026-11-14/A1.md; was 3 side =
+#   wingtip, B3's failing hover-yaw case): same heading as landing (D-152). Acts only in AUTO VTOL take-offs
+#   (is_takeoff = in_vtol_auto() && is_vtol_takeoff, quadplane.cpp tag Plane-4.7.1, read 2026-11-14)
+Q_WVANE_TAKEOFF,1
+# weathervane down to the ground: no minimum height, no vertical-speed or ground-speed cut-off (Plane defaults 0, stated:
+#   D-152 needs the heading held through touchdown; a positive HGT_MIN or VELZ_MAX below the descent rate would stop it)
+Q_WVANE_HGT_MIN,0
+Q_WVANE_VELZ_MAX,0
+Q_WVANE_SPD_MAX,0
 
 # ---------------------------------------------------------------- 5 Transition (TRANSITION section of SPEC.md)
-# forward pitch-over rate 12 deg/s: peak thrust fraction 0.70 at sag 0.76 (CR-B1-12 rev 3; 0.77 at 15, 0.88 at 20); at most 15 after the cold-pack stand run confirms sag >= 0.76 and step-7 logs show peak output <= 0.7
+# Entry design (B3 closure 1.3-1.4, replaces D-149's ">= 1.4 W"; no parameter sets it): one transmitter switch (F5) overrides
+#   CH3 to throttle_in = 1.285 x learnt theta_h (0.630 at 0.49), holds QSTABILIZE for a 1.0 s pre-climb (B3 closure; L06 0.9 s, FC hold 1.08-1.38 s), then sends FBWA;
+#   the override releases >= 0.5 s after FBWA. FBWA / CRUISE / RTL are never reachable from a Q mode by the plain mode switch
+#   (F5 latch). The firmware holds max(hover, entry throttle_in) through ANGLE_WAIT_FW, stick ignored (tailsitter.cpp
+#   Tailsitter_Transition::update, tag Plane-4.7.2, read 2026-11-14); SITL S4c confirms. Static T0/W 1.29-1.39 at the band edges
+# forward pitch-over rate 12 deg/s (B3 closure: 8-16 deg/s moves the entry window by <= 0.006 W); at most 15 after the cold-pack stand run confirms sag >= 0.76 and step-7 logs show peak output <= 0.7
 Q_TAILSIT_RAT_FW,12
+# 11667 ms: inert while Q_TAILSIT_RAT_FW is configured; if RAT_FW were ever unconfigured the firmware derives
+#   RAT_FW = Q_TAILSIT_ANGLE / (MS / 2000) = 70 / 5.83 = 12.0 deg/s (tailsitter.cpp setup(), tag Plane-4.7.2), not 70 / 2.5 = 28
+#   deg/s at the Quad-frame default 5000 (quadplane.cpp). B3 closure 1.4; CL-F4-TRANS-MS-RATE
+Q_TRANSITION_MS,11667
+# angle boost OFF. The pitch-over calls set_throttle_out(..., apply_angle_boost = true); boost would raise the held throttle as
+#   1/cos(tilt) and saturate it (B3 1.2). Must be SET: the tailsitter defaults table (Q_A_ANGLE_BOOST 0) is applied only for
+#   Q_FRAME_CLASS 10 (tailsitter.cpp setup(): frame_class == MOTOR_FRAME_TAILSITTER), and K09-L is class 1 (Quad), whose default
+#   is 1 (AC_AttitudeControl.cpp ANGLE_BOOST default 1, tag Plane-4.7.2, read 2026-11-14). CL-F4-ANGLE-BOOST
+Q_A_ANGLE_BOOST,0
+# pilot-throttle expo 0.2 (default, stated): the CH3 override value is computed through throttle_curve with it (B3 1.4)
+Q_THROTTLE_EXPO,0.2
 # back-transition pitch-up rate 30 deg/s (default 50); SITL S5 sweeps 20/30/50 (CR-B3-15: motors hold 1.03 N*m nose-up at 8-11 m/s)
+#   C1: a back-transition entered at VD 27.2 m/s reaches n 2.82 <= 3.4 at 30 (CL-C1-N-REACH-VT reads fsw.rat_vt_degs)
 Q_TAILSIT_RAT_VT,30
-# plane controller takes over at 70 deg nose-down from vertical = 20 deg above the horizon (CR-B4-06d)
+# plane controller takes over at 70 deg nose-down from vertical = 20 deg above the horizon (CR-B4-06d); B3 closure keeps 70 (75 pushes GUST2 over 1.0)
 Q_TAILSIT_ANGLE,70
+# back-transition end angle 0 = use Q_TAILSIT_ANGLE 70 (default, stated: B3 closure 1.4; tailsitter.cpp get_transition_angle_vtol)
+Q_TAILSIT_ANG_VT,0
 # back-transition throttle 55 % (default -1 = hover throttle 49 %): keeps thrust and wash up in the flare (J1 failure mode 3)
 Q_TAILSIT_THR_VT,55
 # gain scaling on throttle only (default, stated): bit 2 would schedule on airspeed in the pitch-over, which B4 forbids (CR-B4-06d)
 Q_TAILSIT_GSCMSK,1
 # disk loading 2.6 kg / 0.245 m^2 (CR-J1-05); inert while GSCMSK bit 2 is off
 Q_TAILSIT_DSKLD,10.6
-# copter assist below 14 m/s (was 13; CDR-15, B6, D-122) = 1.09 x the tripped stall 12.85 m/s (CL-B2R3-VS-GATE-FWD-TURB); the
-#   aero review asks >= 1.1 x the measured stall (14.1): re-set after T-B2-STALL
+# copter assist below 14 m/s (was 13; CDR-15, B6, D-122) = 1.08 x the tripped forward-CG stall 12.94 m/s (B1 2026-11-14;
+#   B1's ASM-B1-TRANS assumes 1.10 Vs = 14.2: information, no change asked). ArduPilot guidance: about 3 m/s under the
+#   minimum airspeed = 17 - 3 = 14 (quadplane.cpp ASSIST_SPEED, tag Plane-4.7.1, read 2026-11-14). B3's closure entry
+#   reaches 70 deg at 13.0-13.9 m/s (B3 closure band). Re-set to ceil(1.1 x measured stall) after T-B2-STALL. The only assist
+#   trigger kept: below 14 m/s the stall line caps the load factor at (14 / 11.90)^2 = 1.38 <= 3.4 (CL-F4-QASSIST-N)
 Q_ASSIST_SPEED,14
-# copter assist below 15 m above home in fixed-wing modes
-Q_ASSIST_ALT,15
+# altitude-triggered assist OFF (F4-R8, CR-C1-40 residual; was 15 m). On this tailsitter the assist motors are the cruise
+#   motors, so assist adds no lift; it puts the motors on the copter rate loop (Q_A_RATE_P_MAX 120 deg/s, not the 35 deg/s FW
+#   clamp) at any airspeed (VTOL_Assist::should_assist, tailsitter.cpp output(), tag Plane-4.7.2, read 2026-11-14). K09-L
+#   never flies FW below 50 m by plan. B4 withdrew its rpm reason (CR-B4-31) after D-161; the C1 load reason stands.
+#   Safety review and the alternative (assist on with Q_A_RATE_P_MAX 35): F4.md section 3. Change here and fsw.assist_alt_m
+Q_ASSIST_ALT,0
+# angle-triggered assist OFF (F4-R8, CR-C1-40 residual; default 30). It fires only outside the FW attitude envelope + 5 deg
+#   with > this error for Q_ASSIST_DELAY 0.5 s, at any airspeed; with Q_OPTIONS bit 8 the elevons stay on the plane pitch
+#   controller (PTCH2SRV_RMAX clamp kept) but the motors run the copter rate loop up to 120 deg/s: the clamp is bypassed through
+#   the motors. Stall upsets are covered by the speed trigger. CL-F4-QASSIST-TRIGGERS; F4.md section 3. Change here and
+#   fsw.assist_angle_deg
+Q_ASSIST_ANGLE,0
 # transition time limit 15 s (B1 needs 7.8 s to 1.3 Vs at 12 deg/s, CL-B1-TRANS-TIME)
 Q_TRANS_FAIL,15
 # on transition failure: QRTL (R-FAILSAFES)
 Q_TRANS_FAIL_ACT,1
 
 # ---------------------------------------------------------------- 6 Fixed-wing envelope and elevon schedule (B1, B3, C1: D-29, D-36)
-# cruise target 17 m/s (was 16; CDR-15, board decision B6, D-122): the tripped-boundary-layer stall is the planning
-#   baseline until T-B2-STALL. P:performance.cruise_ms (16, the base case of the power models) is S2's key: D-122 asks for it
+# cruise target 17 m/s (D-122; D-145 2026-11-14 sets P:performance.cruise_ms and transition_min_ms to 17 to match): the
+#   tripped-boundary-layer stall is the planning baseline until T-B2-STALL
 AIRSPEED_CRUISE,17
-# TECS floor 17 m/s (was 16; B6, D-122) >= 1.3 x the tripped forward-CG stall 12.85 = 16.71 (CL-B2R3-VS-GATE-FWD-TURB; claim
-#   CL-F4-ARSPD-MIN-TRIP). Integer parameter (AP_Int16). Holds for a measured stall <= 17 / 1.3 = 13.07 m/s. NOT FROZEN:
-#   after T-B2-STALL set ceil(1.3 x measured trimmed stall): <= 12.31 m/s -> 16 again; 13.07-13.85 -> the second fallback
+# TECS floor 17 m/s (was 16; B6, D-122; D-145 confirms, = P:performance.transition_min_ms 17) >= 1.3 x the tripped
+#   forward-CG stall = 16.82 (CL-F4-ARSPD-TRIP-NEED; claim CL-F4-ARSPD-MIN-TRIP). Integer parameter (AP_Int16). Holds for a
+#   measured stall <= 17 / 1.3 = 13.07 m/s. NOT FROZEN: after T-B2-STALL set ceil(1.3 x measured trimmed stall): <= 12.31 m/s
+#   -> 16 only if A1 also moves transition_min_ms (D-145); 13.07-13.85 -> the second fallback
 #   (AIRSPEED_MIN = CRUISE 18, AIRSPEED_MAX 20 < VA 20.5; B2 CL-B2R3-FB2-*; needs A1's yes on AIRSPEED_MAX 20, PROPOSED)
 AIRSPEED_MIN,17
-# TECS ceiling 18 m/s (CR-B1-12) <= 22 asked for ARSPD_FBW_MAX (CR-C1-08; that is this parameter's pre-4.5 name) and < VA 20.5
+# TECS ceiling 18 m/s (CR-B1-12; D-145 confirms) <= 22 asked for ARSPD_FBW_MAX (CR-C1-08; that is this parameter's pre-4.5 name) and < VA 20.5
 AIRSPEED_MAX,18
 # stall speed for stall-prevention bank scaling: 13 (was 12; B6, D-122) = the tripped stall 12.85 m/s rounded up
 AIRSPEED_STALL,13
@@ -215,9 +289,12 @@ PTCH_LIM_MAX_DEG,20
 PTCH_LIM_MIN_DEG,-10
 # FW body-rate limits (deg/s) <= 172 deg/s (C1); roll >= 90 deg/s requirement (P:requirements.roll_rate_min_degs)
 RLL2SRV_RMAX,150
-# pitch rate limits up / down
-PTCH2SRV_RMAX_UP,100
-PTCH2SRV_RMAX_DN,100
+# pitch rate limits up 35 / down 20 deg/s (F4-R8, CR-C1-40; were 100 / 100). ArduPilot clamps the TOTAL pitch-rate demand,
+#   turn offset included (AP_PitchController.cpp, tag Plane-4.7.1, C1's SRC-C1-AP-PITCHCTL), so n <= 1 + VD k q / g:
+#   35 -> 3.12 <= 3.4 (C1 ceiling 39.66), 20 -> -1.21 >= -1.5 (ceiling 24.79). A 45 deg coordinated turn at AIRSPEED_MIN 17
+#   needs 23.4 deg/s (CL-F4-PTCH-RMAX-TURN). Elevons only; the VTOL controller (Q_A_RATE_P_MAX) is separate
+PTCH2SRV_RMAX_UP,35
+PTCH2SRV_RMAX_DN,20
 # TECS climb 3 m/s (CR-B1-12; FW climb 4.7 m/s at 80 % thrust)
 TECS_CLMB_MAX,3
 # TECS sink 2.5 m/s = 9 deg path at 16 m/s, inside the 10 deg pitch floor (was 4)
@@ -250,12 +327,16 @@ INS_HNTCH_ENABLE,1
 INS_HNTCH_MODE,3
 # reference 1: required for rpm/ESC tracking (0 freezes the notch at INS_HNTCH_FREQ)
 INS_HNTCH_REF,1
-# lowest tracked fundamental 70 Hz (hover 1P 90 Hz, CL-B4-HOVER-RPM; 1P sweep 90-156 Hz, CR-J1-12)
+# lowest tracked fundamental 70 Hz (F4-R10, D-173 rpm range, E1 D-173.4: cruise 4 899-5 007 rpm = 1P 81.7-83.4 Hz, hover
+#   5 256-5 693 = 87.6-94.9 Hz, all >= 1.1 x 70 = 77 Hz; CL-F4-NOTCH-LOW)
 INS_HNTCH_FREQ,70
 # bandwidth half the minimum frequency
 INS_HNTCH_BW,35
-# harmonics 1, 2, 3 (bitmask 7): 1P, blade pass 2P (180-312 Hz), 3P; one notch set on mean rpm (F405 CPU)
-INS_HNTCH_HMNCS,7
+# harmonics 1, 2 (bitmask 3; F4-R8, was 7 = 1-3): 1P and blade pass 2P; one notch set on mean rpm (F405 CPU). D-173: the
+#   highest flown rpm is one motor at the 0.81 cap on a fresh pack, 9 663-9 964 rpm (E1 D-173.4): 2P 332 Hz (CL-F4-NOTCH-TOP
+#   0.66); 3P would be 498 Hz, 0.4 % under the 500 Hz gyro Nyquist, so 3 harmonics stay off. 3P >= 263 Hz at hover rpm, > 6 x the
+#   40 Hz gyro low-pass (EST)
+INS_HNTCH_HMNCS,3
 # batch-log the first IMU (FFT check of the notch and the 12-15 Hz mode, T-C2-TAP-TEST)
 INS_LOG_BAT_MASK,1
 # 5 = bit 0 sensor-rate sampling (>= the 1 kHz backend rate, CR-H1-18: GT-18 needs >= 935 Hz) + bit 2 pre- and post-filter
@@ -263,32 +344,46 @@ INS_LOG_BAT_MASK,1
 INS_LOG_BAT_OPT,5
 
 # ---------------------------------------------------------------- 9 Battery (E2: CL-E2-BATT-LOW-MAH, CL-E2-BATT-CRT-MAH; F1/F3 sensor)
-# analog voltage + current (FC power board)
+# analog voltage + current (FC power board; CoreWing hwdef HAL_BATT_MONITOR_DEFAULT 4)
 BATT_MONITOR,4
-# voltage divider 11.05 (CR-F3-02); replace with the T-F1-SENSOR-CAL value
+# voltage divider 11.05 (CoreWing hwdef HAL_BATT_VOLT_SCALE, CR-F3-02); replace with the T-F1-SENSOR-CAL value. FWD_BAT_* reads it
 BATT_VOLT_MULT,11.05
-# current sensor 64 A/V (CR-F3-02, CR-F1-10); replace with the T-F1-SENSOR-CAL value
+# current sensor 64 A/V (CoreWing hwdef HAL_BATT_CURR_SCALE, CR-F3-02, CR-F1-10); replace with the T-F1-SENSOR-CAL value (+/-1.1 %
+#   at 70-75 A: the 75 A limiter depends on it)
 BATT_AMP_PERVLT,64
-# nameplate 6 500 mAh; lower to the measured capacity (T-E2-CAPACITY)
-BATT_CAPACITY,6500
-# low at 2 600 mAh remaining -> RTL (CR-E2-20, CL-E2-BATT-LOW-MAH: landing allowance 1 265 mAh; was 2 700 provisional)
-BATT_LOW_MAH,2600
-# critical at 1 300 mAh = 20 % reserve -> QLAND
-BATT_CRT_MAH,1300
-# voltage backups 3.50 / 3.40 V per cell
-BATT_LOW_VOLT,14.0
-BATT_CRT_VOLT,13.6
+# PLACEHOLDER 5 520 mAh = the pack acceptance floor 0.92 x 6 000 (requirements.pack_capacity_min_frac; D-174 Gens Ace 6.0 Ah
+#   HV Shorty; R10 5 980 for the 6.5 Ah Ovonic). Before flight set the LOWEST measured T-E2-CAPACITY of the packs flown (D-154).
+#   Never the 6 000 nameplate
+BATT_CAPACITY,5520
+# low at 3 000 mAh remaining (F4-R11, E2 D-173 for the Gens Ace 6.0 Ah HV Shorty, A1 D-174; R10 3 200 for the Ovonic):
+#   landing need incl. one 40 s hover go-around + the BATT_CRT reserve; E2: cruise to BATT_LOW 4.66 min (>= 3.5), touchdown
+#   1 279 mAh >= 1 200. CL-F4-BATT-LOW reads E2's live claim (E2 to re-run on the Shorty)
+BATT_LOW_MAH,3000
+# critical at 1 200 mAh = 20 % of 6.0 Ah -> QLAND (F4-R11, E2 D-173 Shorty; was 1 300 for 6.5 Ah)
+BATT_CRT_MAH,1200
+# voltage backups for LiHV (F4-R11, D-174): 3.60 / 3.50 V per cell resting (BATT_FS_VOLTSRC 1), 0.10 V/cell above the LiPo
+#   3.50 / 3.40 of R10 because an LiHV cell rests about 0.1 V higher at the same charge (EST; E2 to confirm from T-E2-CAPACITY's
+#   discharge log). The mAh thresholds above are the primary triggers
+# low (backup)
+BATT_LOW_VOLT,14.4
+# critical (backup)
+BATT_CRT_VOLT,14.0
 # sag-compensated voltage for the failsafe: a transition sag (worst bus 11.87 V at full throttle, CL-E2-V-BUS-WORST) must not trigger it (CR-E2-20)
 BATT_FS_VOLTSRC,1
-# low action 1 = RTL (FW home, then VTOL approach and landing via Q_RTL_MODE 2, C-01)
-BATT_FS_LOW_ACT,1
+# low action 6 = Loiter to QLand (F4-R8, B3 closure section 2 path 3, H2-4b; was 1 RTL). From a Q mode it goes straight to
+#   QLAND (ModeLoiterAltQLand::_enter: previous mode VTOL -> QLAND), never a forward transition. RTL from a Q mode pitches
+#   over unless within 1.5 x RTL_RADIUS = 90 m of home AND below Q_RTL_ALT 50 m (mode_rtl.cpp _enter), all tag Plane-4.7.2,
+#   read 2026-11-14; SITL S8 2026-11-14. In FW: loiter at the current point down to Q_RTL_ALT 50 m, then QLAND there; the
+#   flight card asks the pilot to select RTL (mode slot 6) for the into-wind VTOL approach (C-01)
+BATT_FS_LOW_ACT,6
 # critical action 4 = QLAND
 BATT_FS_CRT_ACT,4
-# refuse to arm below 4.10 V/cell: the mAh counter assumes a full pack
-BATT_ARM_VOLT,16.4
+# refuse to arm below 4.25 V/cell (F4-R11, LiHV full 4.35; R10 16.4 = 4.10 for LiPo): the mAh counter assumes a full pack
+#   (EST; E2 to confirm the charge level that 4.25 V/cell resting means on the Shorty)
+BATT_ARM_VOLT,17.0
 
 # ---------------------------------------------------------------- 10 RC link (ELRS/CRSF, CR-F5-01) and failsafes
-# receiver on SERIAL6 (F3's DMA UART): 23 = RCIN (CRSF)
+# receiver on SERIAL6 (CoreWing DMA UART, F3 CR-F3-02; hwdef DEFAULT_SERIAL6_PROTOCOL RCIN): 23 = RCIN (CRSF)
 SERIAL6_PROTOCOL,23
 # RSSI from the receiver protocol (CRSF)
 RSSI_TYPE,3
@@ -341,22 +436,39 @@ FS_EKF_THRESH,0.8
 #   harmless). Never MANUAL 0, STABILIZE 2, TRAINING 3, ACRO 4 or QACRO 23 here or in INITIAL_MODE (CL-F4-NO-RAW-MODES);
 #   no RCn_OPTION selects one (fsw_check.py lint). The GCS can still command any mode: the flight card forbids it
 FLTMODE_CH,6
-# QSTABILIZE
+# Slot order (F4-R9, CR-F5-15; was 17 / 18 / 19 / 5 / 7 / 11): the radio puts the Q modes at 988, 1500 and 2012 us and reaches
+#   the FW slots only through the latched transition logic (F5 L05 / L06), so a plain switch move cannot pick FBWA from a Q
+#   mode (B3 section 2 path 1). S1b pulses 1167 / 1295 / 1423 / 1556 / 1684 / 1817 us -> 17 / 5 / 7 / 18 / 11 / 19
+# slot 1: QSTABILIZE (also the transition start mode)
 FLTMODE1,17
-# QHOVER
-FLTMODE2,18
-# QLOITER
-FLTMODE3,19
-# FBWA (forward transition is started by entering it)
-FLTMODE4,5
-# CRUISE (heading + altitude hold, airspeed by TECS)
-FLTMODE5,7
-# RTL
-FLTMODE6,11
-# arm/disarm switch on channel 5 (CR-F5-01, R-ARM-KILL)
+# slot 2: FBWA (forward transition is started by entering it; only from the timed transition switch)
+FLTMODE2,5
+# slot 3: CRUISE (heading + altitude hold, airspeed by TECS)
+FLTMODE3,7
+# slot 4: QHOVER
+FLTMODE4,18
+# slot 5: RTL
+FLTMODE5,11
+# slot 6: QLOITER
+FLTMODE6,19
+# throttle channel range fixed to the radio's CRSF limits (CR-F5-15): F5 picks the transition override value on this range.
+#   Do NOT re-calibrate RC3 in Mission Planner; if it is, F5 re-picks the override (team/F5/TRANSITION-SWITCH.md)
+RC3_MIN,988
+RC3_MAX,2012
+# throttle trim at the bottom of the range (F5)
+RC3_TRIM,988
+# throttle dead zone 30 us (default, stated: CR-F5-15)
+RC3_DZ,30
+# arm/disarm switch on channel 5 (CR-F5-01, R-ARM-KILL; SA)
 RC5_OPTION,153
-# channel 8 has no function (was arm/disarm in R1)
+# channels 6 (the flight-mode channel), 7, 8, 10, 11, 12 carry no aux function (stated, CR-F5-15): no RCn_OPTION selects a
+#   flight mode, so FLTMODE_CH is the only way to change mode from the radio
+RC6_OPTION,0
+RC7_OPTION,0
 RC8_OPTION,0
+RC10_OPTION,0
+RC11_OPTION,0
+RC12_OPTION,0
 # rudder-stick arming off
 ARMING_RUDDER,0
 # motor emergency stop on channel 9 (R-ARM-KILL); also the touchdown cut, <= 0.5 s from contact (CR-C5-05b, CL-F4-TD-CUT)
@@ -368,7 +480,10 @@ FENCE_ENABLE,1
 #   every corner is read back against the field map (plot over satellite imagery, two people, initialled; C-05, G-04; CR-132423 p. 54, 168).
 #   Until then FENCE_TYPE stays 3. SITL S9 adds a polygon and an exclusion-zone breach (exclusion support on this board: —, S9)
 FENCE_TYPE,3
-# breach action 1 = RTL (in a Q mode: SITL S9 records what the build does)
+# breach action 1 = RTL. Plane offers no Q-mode fence action (fence.cpp, tag Plane-4.7.2: RTL / GUIDED / AUTOLAND / report).
+#   A breach while hovering (>= 110 m or >= 250 m out, both outside the 90 m / 50 m QRTL cone) therefore starts a forward
+#   transition at max(hover, throttle_in): the bounded double-fault case CL-B3-TRANS-PITCH-USE-HOVERTHR 0.848 <= 1.0
+#   (F4.md section 4). The breach is at FENCE_ALT_MAX itself; FENCE_MARGIN is a notice only (H2, AC_Fence.cpp 4.7)
 FENCE_ACTION,1
 # 110 m AGL against 400 ft = 121.9 m (P:mission.ceiling_ft_agl)
 FENCE_ALT_MAX,110
@@ -376,7 +491,7 @@ FENCE_ALT_MAX,110
 FENCE_RADIUS,250
 FENCE_MARGIN,10
 
-# ---------------------------------------------------------------- 12 Board and sensor placement (F3, CR-F3-02)
+# ---------------------------------------------------------------- 12 Board and sensor placement (F3, CR-F3-02; CoreWing F405 Wing V2, D-173b)
 # FC flat, arrow toward the nose (-x): fixed-wing attitude (the tailsitter code rotates for hover)
 AHRS_ORIENTATION,0
 # GPS on SERIAL5: 5 = GPS
@@ -387,7 +502,7 @@ SERIAL5_PROTOCOL,5
 INS_POS1_X,0.059
 INS_POS1_Y,0.046
 INS_POS1_Z,-0.0205
-# second IMU slot, same chip position (F3)
+# second IMU slot, same chip position (F3; the CoreWing has two IMUs)
 INS_POS2_X,0.059
 INS_POS2_Y,0.046
 INS_POS2_Z,-0.0205

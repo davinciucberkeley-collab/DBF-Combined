@@ -571,6 +571,379 @@
    "note": "Estimate from CR-F3-15 (~$6), UNVERIFIED until I1 fetches a listing. The pessimistic reserve is $312.99 vs the $309 crash (+$3.99, D-57), so A1 pulls I1's first lever (borrow the soldering kit, +$94.82). A 915 MHz SiK pair (~$35-60) stays out"
   },
   {
+   "id": "SRC-F5-AP-THRCURVE",
+   "type": "source",
+   "title": "ArduPilot Plane-4.7.2: pilot throttle path in QSTABILIZE",
+   "kind": "web",
+   "url": "https://raw.githubusercontent.com/ArduPilot/ardupilot/Plane-4.7.2/ArduPlane/quadplane.cpp",
+   "checked": "2026-11-14",
+   "where": "get_pilot_throttle(): control_in / get_range(), then throttle_curve(get_throttle_hover(), Q_THROTTLE_EXPO, .); AP_Math.cpp throttle_curve/expo_curve; RC_Channel.h 'int16_t control_in'; radio.cpp channel_throttle->set_range(100), set_default_dead_zone(30); RC_Channel.cpp pwm_to_range_dz. So QSTABILIZE throttle moves in 1 % stick steps"
+  },
+  {
+   "id": "SRC-F5-AP-MODESW",
+   "type": "source",
+   "title": "ArduPilot Plane-4.7.2: flight-mode switch read",
+   "kind": "web",
+   "url": "https://raw.githubusercontent.com/ArduPilot/ardupilot/Plane-4.7.2/libraries/RC_Channel/RC_Channel.cpp",
+   "checked": "2026-11-14",
+   "where": "read_6pos_switch: < 1231 / 1361 / 1491 / 1621 / 1750 us -> positions 1-6; debounce_completed with SWITCH_DEBOUNCE_TIME_MS 200; Plane.cpp schedules read_mode_switch at 7 Hz, read_radio at 50 Hz"
+  },
+  {
+   "id": "SRC-F5-EDGETX-LS",
+   "type": "source",
+   "title": "EdgeTX v2.11.3 source and B&W manual: logical switches, override, mixes",
+   "kind": "web",
+   "url": "https://raw.githubusercontent.com/EdgeTX/edgetx/v2.11.3/radio/src/switches.cpp",
+   "checked": "2026-11-14",
+   "where": "switches.cpp: delay/duration and sticky/edge stepped by logicalSwitchesTimerTick every 0.1 s (mixer.cpp), a delay restarts when the condition drops; mixer.cpp applyLimits: Override CHx returns calc100toRESX(value) before limits; MLTPX_REPL replaces the lines above. Manual pages https://manual.edgetx.org/bw-radios/model-select/logical-switches, .../special-functions, .../inputs-mixes-and-outputs/mixes.md (read 2026-11-14)"
+  },
+  {
+   "id": "ASM-F5-TRANS-WINDOW",
+   "type": "assumption",
+   "title": "B3 physical window for the static entry T0/W (12 deg/s, w0 4 m/s)",
+   "text": "Lowest T0/W that passes use, gust and handover with a 4 m/s pre-climb, and highest T0/W that keeps the sagged-pack fraction <= 0.80",
+   "basis": "team/B3/results/closure1114.json window.rate12_w04 (B3 closure report section 1.3)",
+   "value": [
+    1.2827,
+    1.3968
+   ],
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-F5-TRANS-RC3",
+   "type": "assumption",
+   "title": "Throttle channel calibration RC3_MIN 988, RC3_MAX 2012, RC3_DZ 30",
+   "text": "EdgeTX -100 / +100 % over CRSF reach ArduPilot as 988 / 2012 us; dead zone is Plane's default 30 us. F4 states them in K09L.param (CR-F5-15) so the override lands in a known control_in step",
+   "basis": "ArduPilot CRSF decoder (CRSF 172..1811 -> 988..2012 us); radio.cpp set_default_dead_zone(30)",
+   "value": [
+    988,
+    2012,
+    30
+   ],
+   "unit": "us",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-F5-AP-THRCURVE"
+   ]
+  },
+  {
+   "id": "ASM-F5-TRANS-CHAIN",
+   "type": "assumption",
+   "title": "Pulse error EdgeTX -> CRSF -> ELRS 10-bit -> ArduPilot <= 2 us",
+   "text": "Ch 1-4 travel at 10 bit in every ELRS packet (~1 us per step) plus the 0.625 us CRSF step and rounding",
+   "basis": "estimate (EST); T-F5-TRANS-BENCH reads the RCIN value",
+   "value": 2.0,
+   "unit": "us",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-F5-TRANS-SET",
+   "type": "assumption",
+   "title": "Transition switch setting: stick step 67 %, Q_THROTTLE_EXPO 0.2, delays 0.9 / 1.2 s (D-181 pre-climb 1.0 s, B3 closure)",
+   "text": "Override CH3 so control_in = 67 at theta_h 0.49 (E1 hover duty, K09L.param Q_M_THST_HOVER start value); FBWA command 0.9 s after the latch; override released 1.2 s after the FBWA command",
+   "basis": "transition_switch.py setting_table and timing(); re-picked from the table if the learnt Q_M_THST_HOVER leaves the band (TRANSITION-SWITCH.md section 4)",
+   "value": {
+    "theta_h": 0.49,
+    "k": 67,
+    "alpha": 0.2,
+    "d_fbwa": 0.9,
+    "d_release": 1.2
+   },
+   "unit": "-,%,-,s,s",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-F5-TRANS",
+   "type": "calculation",
+   "title": "Transition switch: entry throttle realised in QSTABILIZE, timing at the FC",
+   "script": "redesign/team/F5/rc_link.py",
+   "function": "transition_switch",
+   "equation": "throttle_in = throttle_curve(theta_h, alpha, k/100); r = throttle_in/theta_h; r_lo,hi = r_B3 x window_lo,hi / band_low,high; hold = d - 0.1 + ch6 + debounce(7 Hz, 0.2 s) - ch3",
+   "inputs": {
+    "t0": "ASM-B3-TRANS-T0",
+    "t0_low": "CL-B3-TRANS-T0-LOW",
+    "t0_high": "CL-B3-TRANS-T0-HIGH",
+    "win": "ASM-F5-TRANS-WINDOW",
+    "rc3": "ASM-F5-TRANS-RC3",
+    "s": "ASM-F5-TRANS-SET",
+    "t_sw": "CL-F5-SWITCH-LATENCY"
+   },
+   "assumes": [
+    "ASM-F5-TRANS-CHAIN"
+   ],
+   "cites": [
+    "SRC-F5-AP-THRCURVE",
+    "SRC-F5-AP-MODESW",
+    "SRC-F5-EDGETX-LS"
+   ],
+   "outputs": {
+    "throttle_in": 0.6296619088000001,
+    "r_real": 1.2850243036734694,
+    "r_lo": 1.2769537083125932,
+    "r_hi": 1.2918978912319645,
+    "r_step_pct": 1.3945411461738975,
+    "theta_lo": 0.4766,
+    "theta_hi": 0.5056,
+    "override_pct": 37,
+    "pwm_margin_us": 4.480000000000018,
+    "hold_min_s": 1.079047619047619,
+    "hold_max_s": 1.3811640211640213,
+    "release_min_s": 0.6188359788359786,
+    "fuzz_violations": 0,
+    "fuzz_sequences": 113,
+    "fw_slots_at_neutral_or_ends": 0
+   },
+   "input_values": {
+    "t0": [
+     1.285,
+     1.0
+    ],
+    "t0_low": 1.2907825,
+    "t0_high": 1.389342,
+    "win": [
+     1.2827,
+     1.3968
+    ],
+    "rc3": [
+     988,
+     2012,
+     30
+    ],
+    "s": {
+     "theta_h": 0.49,
+     "k": 67,
+     "alpha": 0.2,
+     "d_fbwa": 0.9,
+     "d_release": 1.2
+    },
+    "t_sw": 0.05925925925925926
+   }
+  },
+  {
+   "id": "CL-F5-TRANS-THR-IN",
+   "type": "claim",
+   "title": "QSTABILIZE throttle_in under the CH3 override (theta_h 0.49)",
+   "calc": "CALC-F5-TRANS",
+   "output": "throttle_in",
+   "unit": "-",
+   "parts": [
+    "GND-001"
+   ],
+   "how": "SITL (transition_sitl.py) and T-F5-TRANS-BENCH: QTUN.ThI during the pre-climb.",
+   "value": 0.6296619088000001
+  },
+  {
+   "id": "CL-F5-TRANS-R-REAL-LO",
+   "type": "claim",
+   "title": "Realised entry ratio throttle_in / theta_h, against B3's low window edge",
+   "calc": "CALC-F5-TRANS",
+   "output": "r_real",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-F5-TRANS-R-LO"
+   },
+   "parts": [
+    "GND-001"
+   ],
+   "how": "Ratio of QTUN.ThI to QTUN.ThH in the pre-climb (SITL, bench, every transition log).",
+   "value": 1.2850243036734694
+  },
+  {
+   "id": "CL-F5-TRANS-R-REAL-HI",
+   "type": "claim",
+   "title": "Realised entry ratio throttle_in / theta_h, against B3's high window edge",
+   "calc": "CALC-F5-TRANS",
+   "output": "r_real",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-F5-TRANS-R-HI"
+   },
+   "parts": [
+    "GND-001"
+   ],
+   "how": "As -LO.",
+   "value": 1.2850243036734694
+  },
+  {
+   "id": "CL-F5-TRANS-R-LO",
+   "type": "claim",
+   "title": "Lowest entry ratio that keeps B3's low band edge in the window",
+   "calc": "CALC-F5-TRANS",
+   "output": "r_lo",
+   "unit": "-",
+   "how": "1.285 x 1.2827 / 1.2908 (B3 window and band).",
+   "value": 1.2769537083125932
+  },
+  {
+   "id": "CL-F5-TRANS-R-HI",
+   "type": "claim",
+   "title": "Highest entry ratio that keeps B3's high band edge in the window",
+   "calc": "CALC-F5-TRANS",
+   "output": "r_hi",
+   "unit": "-",
+   "how": "1.285 x 1.3968 / 1.3893.",
+   "value": 1.2918978912319645
+  },
+  {
+   "id": "CL-F5-TRANS-R-STEP",
+   "type": "claim",
+   "title": "Entry-ratio change per 1 % stick step (ArduPilot control_in is an integer)",
+   "calc": "CALC-F5-TRANS",
+   "output": "r_step_pct",
+   "unit": "%",
+   "how": "Information: one step (1.39 %) is wider than the window (1.17 %), so the stick step is picked per theta_h and Q_THROTTLE_EXPO fills the gaps (table in TRANSITION-SWITCH.md).",
+   "value": 1.3945411461738975
+  },
+  {
+   "id": "CL-F5-TRANS-THETA-LO",
+   "type": "claim",
+   "title": "Lowest learnt hover throttle the 67 % setting covers",
+   "calc": "CALC-F5-TRANS",
+   "output": "theta_lo",
+   "unit": "-",
+   "how": "Pre-flight: read Q_M_THST_HOVER; outside the band pick the table row.",
+   "value": 0.4766
+  },
+  {
+   "id": "CL-F5-TRANS-THETA-HI",
+   "type": "claim",
+   "title": "Highest learnt hover throttle the 67 % setting covers",
+   "calc": "CALC-F5-TRANS",
+   "output": "theta_hi",
+   "unit": "-",
+   "how": "As -LO.",
+   "value": 0.5056
+  },
+  {
+   "id": "CL-F5-TRANS-PWM-MARGIN",
+   "type": "claim",
+   "title": "Override pulse distance to the edge of its ArduPilot control_in step",
+   "calc": "CALC-F5-TRANS",
+   "output": "pwm_margin_us",
+   "unit": "us",
+   "limit": {
+    "op": ">=",
+    "ref": "ASM-F5-TRANS-CHAIN"
+   },
+   "parts": [
+    "GND-001",
+    "AVN-003"
+   ],
+   "how": "T-F5-TRANS-BENCH: Mission Planner RC3 reads the predicted pulse within 2 us.",
+   "value": 4.480000000000018
+  },
+  {
+   "id": "CL-F5-TRANS-HOLD-MIN",
+   "type": "claim",
+   "title": "Shortest time the FC spends in QSTABILIZE with the override before FBWA",
+   "calc": "CALC-F5-TRANS",
+   "output": "hold_min_s",
+   "unit": "s",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "parts": [
+    "GND-001"
+   ],
+   "how": "SITL and bench: RCIN.C3 step to MODE FBWA in the DataFlash log.",
+   "value": 1.079047619047619
+  },
+  {
+   "id": "CL-F5-TRANS-HOLD-MAX",
+   "type": "claim",
+   "title": "Longest QSTABILIZE override time before FBWA (B3 to check its pre-climb model)",
+   "calc": "CALC-F5-TRANS",
+   "output": "hold_max_s",
+   "unit": "s",
+   "parts": [
+    "GND-001"
+   ],
+   "how": "Information for B3 (request CL-F5-B3): B3 closure hold 1.0 s: FC hold 1.08-1.38 s; B3 checks CL-B3-TRANS-CLIMB at 1.38 s (< 60 m).",
+   "value": 1.3811640211640213
+  },
+  {
+   "id": "CL-F5-TRANS-RELEASE",
+   "type": "claim",
+   "title": "Override release after FBWA is active at the FC",
+   "calc": "CALC-F5-TRANS",
+   "output": "release_min_s",
+   "unit": "s",
+   "limit": {
+    "op": ">=",
+    "value": 0.5
+   },
+   "parts": [
+    "GND-001"
+   ],
+   "how": "SITL and bench: MODE FBWA to the RCIN.C3 step back to the stick.",
+   "value": 0.6188359788359786
+  },
+  {
+   "id": "CL-F5-TRANS-NO-DIRECT-FW",
+   "type": "claim",
+   "title": "Fixed-wing slot commanded outside the timed sequence (logic model, random switch histories)",
+   "calc": "CALC-F5-TRANS",
+   "output": "fuzz_violations",
+   "unit": "count",
+   "limit": {
+    "op": "<=",
+    "value": 0
+   },
+   "parts": [
+    "GND-001"
+   ],
+   "how": "EdgeTX Companion simulator and T-F5-TRANS-BENCH channel monitor: every SB/SC/SA position and order; FBWA only after SC flipped down from QSTABILIZE, armed, stick > 40 %.",
+   "value": 0
+  },
+  {
+   "id": "CL-F5-TRANS-NEUTRAL-Q",
+   "type": "claim",
+   "title": "Fixed-wing modes at 988 / 1500 / 2012 us with the requested FLTMODE order",
+   "calc": "CALC-F5-TRANS",
+   "output": "fw_slots_at_neutral_or_ends",
+   "unit": "count",
+   "limit": {
+    "op": "<=",
+    "value": 0
+   },
+   "parts": [
+    "GND-001"
+   ],
+   "how": "SITL S1b with FLTMODE1-6 = 17, 5, 7, 18, 11, 19: 988 / 1500 / 2012 us read QSTABILIZE / QHOVER / QLOITER.",
+   "value": 0
+  },
+  {
+   "id": "T-F5-TRANS-BENCH",
+   "type": "test",
+   "title": "Transition switch bench test, props off",
+   "verifies": [
+    "CL-F5-TRANS-PWM-MARGIN",
+    "CL-F5-TRANS-HOLD-MIN",
+    "CL-F5-TRANS-RELEASE",
+    "CL-F5-TRANS-NO-DIRECT-FW"
+   ],
+   "state": "planned",
+   "procedure": "TRANSITION-SWITCH.md section 6: EdgeTX Companion first, then the radio with the FC on USB, props off, aircraft tied down: switch matrix, RC3 pulse, armed sequence with DataFlash log, aborts."
+  },
+  {
+   "id": "T-F5-TRANS-SITL",
+   "type": "test",
+   "title": "Transition switch SITL check (stage A, logic)",
+   "verifies": [
+    "CL-F5-TRANS-THR-IN",
+    "CL-F5-TRANS-R-REAL-LO",
+    "CL-F5-TRANS-R-REAL-HI",
+    "CL-F5-TRANS-HOLD-MIN",
+    "CL-F5-TRANS-RELEASE"
+   ],
+   "state": "planned",
+   "procedure": "python -I redesign/team/F5/transition_sitl.py <rundir> with the EdgeTX logic model driving RC_CHANNELS_OVERRIDE at 10 ms of sim time (TRANSITION-SWITCH.md section 7)."
+  },
+  {
    "id": "T-F5-BENCH",
    "type": "test",
    "title": "Arrival bench: versions, bind, model match, channel map",

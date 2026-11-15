@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 34.6,
+ "render_s": 90.0,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -145,13 +145,13 @@
    "role": "ghost",
    "name": "Wing core, one piece (XPS), with all cuts",
    "status": "MODELLED",
-   "mass_g": 201.9,
+   "mass_g": 198.1,
    "subsystem": "wing",
    "bbox_px": [
-    218,
-    226,
-    1932,
-    668
+    224,
+    229,
+    1940,
+    671
    ]
   },
   {
@@ -173,7 +173,7 @@
    "role": "ghost",
    "name": "Tape skin (packing tape, both surfaces, doublers, tip edge layer)",
    "status": "MODELLED",
-   "mass_g": 47.9,
+   "mass_g": 47.5,
    "subsystem": "wing",
    "bbox_px": [
     215,
@@ -593,13 +593,13 @@
    "role": "context",
    "name": "Foot shoe UR",
    "status": "MODELLED",
-   "mass_g": 9.98,
+   "mass_g": 12.71,
    "subsystem": "landing",
    "bbox_px": [
     571,
     37,
     687,
-    99
+    142
    ]
   },
   {
@@ -663,11 +663,11 @@
    "role": "context",
    "name": "Foot shoe LR",
    "status": "MODELLED",
-   "mass_g": 9.98,
+   "mass_g": 12.71,
    "subsystem": "landing",
    "bbox_px": [
     586,
-    751,
+    714,
     695,
     820
    ]
@@ -1135,6 +1135,7 @@
   "WNG-005-R",
   "WNG-006-L",
   "WNG-006-R",
+  "WNG-008",
   "WNG-011-L",
   "WNG-011-R",
   "WNG-012-L",

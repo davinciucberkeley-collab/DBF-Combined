@@ -1,5 +1,18 @@
 # K09-L performance on the as-designed aircraft: simulation and verification
 
+> **Wave 2 (2026-11-14, D-145 / D-146).** The scripts now read `performance.cruise_ms` (17 m/s) and
+> `propulsion.stations.cant_deg` (9°, thrust per prop = D / (n cos 9°)), and the cruise sweep runs 10–22 m/s.
+> AVL + XFOIL were re-run at 17 m/s and the current A3 mass and CG; SU2 fin drag is still the 16 m/s run (Re +6 %,
+> effect on cd < 1 % `EST`). Current: cruise at 17 m/s **275.9 W** (365.1 W pessimistic) at 2.502 kg, **278.2 W**
+> (368.2 W) at 2.6 kg, CD0 0.0577, L/D 5.20. Before/after: `review/DESIGN-ROUND-2026-11-14/B1-W2.md`.
+>
+> **Superseded values (B1, design round 2026-11-14, wave 1).** D-118 (S2, CDR-AE-14) made Oswald e 0.85 the base case:
+> k = max(AVL/XFOIL 0.0957, 1/(π AR 0.85)) = **0.1042** (`CL-B1V-K`; 0.0957 is now only the output `k_avl_xfoil`). With
+> A3's predicted mass now 2.502 kg the current claims are CD0 0.0580, L/D max 6.43, cruise at 16 m/s **239.3 W**
+> (314.8 W pessimistic; **241.8 W at 2.6 kg**), L/D 5.53, 16.2 A, 15.8 / 11.7 min, Vs 11.79 / 12.02 m/s, 1.3 Vs at the
+> gate 15.62 m/s, hover 369 W. The 235 W, k 0.0957, e 1.046 / 0.925, L/D 6.72 / 5.57 and 2.436 kg figures below are the
+> 2026-11-10 run and are kept as history. Speed side and 17 m/s values: `review/DESIGN-ROUND-2026-11-14/B1.md`.
+
 Status: `MODELLED` (B1, simulation round, 2026-11-10). Chain claims `CL-B1V-*` are in `claims.verify.json`, and they
 stay `UNVERIFIED` until the flight and stand tests in the last table close them. Re-run, in order:
 `python -I redesign/team/B1/cfd_sections.py` (about 1 h on 3 × 4 threads; fin A L4 is a separate 25 min run, see the script header), then `vlm_xfoil.py`, `sim_to_params.py`

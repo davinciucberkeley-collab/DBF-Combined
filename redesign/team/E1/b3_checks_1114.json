@@ -1,0 +1,568 @@
+{
+ "gap_9deg_12mm": {
+  "gap_m": 0.0263,
+  "ahead_needed_m": 0.011
+ },
+ "tw_9deg": {
+  "11x5.5MR_L73_b1_fresh": {
+   "tw": 2.0613,
+   "Iw": 25.3718
+  },
+  "11x5.5MR_L73_b1_worst": {
+   "tw": 1.7833,
+   "Iw": 22.1742
+  },
+  "11x5.5MR_L73_b2_fresh": {
+   "tw": 1.7567,
+   "Iw": 21.8675
+  },
+  "11x5.5MR_L73_b2_worst": {
+   "tw": 1.569,
+   "Iw": 19.6939
+  },
+  "11x5.5MR_L95_b1_fresh": {
+   "tw": 2.3985,
+   "Iw": 29.2184
+  },
+  "11x5.5MR_L95_b1_worst": {
+   "tw": 2.0444,
+   "Iw": 25.1779
+  },
+  "11x5.5MR_L95_b2_fresh": {
+   "tw": 2.0312,
+   "Iw": 25.0261
+  },
+  "11x5.5MR_L95_b2_worst": {
+   "tw": 1.7116,
+   "Iw": 21.3463
+  },
+  "11x5.5MR_L100_b1_fresh": {
+   "tw": 2.4669,
+   "Iw": 30.0088
+  },
+  "11x5.5MR_L100_b1_worst": {
+   "tw": 2.0961,
+   "Iw": 25.7694
+  },
+  "11x5.5MR_L100_b2_fresh": {
+   "tw": 2.0873,
+   "Iw": 25.6694
+  },
+  "11x5.5MR_L100_b2_worst": {
+   "tw": 1.7116,
+   "Iw": 21.3463
+  },
+  "11x5.5E_L73_b1_fresh": {
+   "tw": 2.0745,
+   "Iw": 24.1551
+  },
+  "11x5.5E_L73_b1_worst": {
+   "tw": 1.7961,
+   "Iw": 21.1456
+  },
+  "11x5.5E_L73_b2_fresh": {
+   "tw": 1.788,
+   "Iw": 21.0579
+  },
+  "11x5.5E_L73_b2_worst": {
+   "tw": 1.5946,
+   "Iw": 18.9507
+  },
+  "11x5.5E_L95_b1_fresh": {
+   "tw": 2.4182,
+   "Iw": 27.8388
+  },
+  "11x5.5E_L95_b1_worst": {
+   "tw": 2.0626,
+   "Iw": 24.0275
+  },
+  "11x5.5E_L95_b2_fresh": {
+   "tw": 2.0715,
+   "Iw": 24.1229
+  },
+  "11x5.5E_L95_b2_worst": {
+   "tw": 1.6811,
+   "Iw": 19.8939
+  },
+  "11x5.5E_L100_b1_fresh": {
+   "tw": 2.4889,
+   "Iw": 28.5925
+  },
+  "11x5.5E_L100_b1_worst": {
+   "tw": 2.107,
+   "Iw": 24.5057
+  },
+  "11x5.5E_L100_b2_fresh": {
+   "tw": 2.1295,
+   "Iw": 24.7475
+  },
+  "11x5.5E_L100_b2_worst": {
+   "tw": 1.6811,
+   "Iw": 19.8939
+  }
+ },
+ "transition_1p4W": {
+  "7deg_11x5.5MR_lipo_fresh_b1": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6100.1174,
+   "I_wind_A": 17.6465,
+   "I_esc_A": 9.4503,
+   "I_pack_A": 38.8011,
+   "V_bus": 15.8727,
+   "duty": 0.5337,
+   "reachable": true
+  },
+  "7deg_11x5.5MR_lipo_fresh_b2": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6100.1174,
+   "I_wind_A": 17.6465,
+   "I_esc_A": 12.0323,
+   "I_pack_A": 49.1293,
+   "V_bus": 15.6258,
+   "duty": 0.68,
+   "reachable": true
+  },
+  "7deg_11x5.5MR_lipo_worst_b1": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6100.1174,
+   "I_wind_A": 17.6465,
+   "I_esc_A": 11.6216,
+   "I_pack_A": 47.4864,
+   "V_bus": 13.4052,
+   "duty": 0.6565,
+   "reachable": true
+  },
+  "7deg_11x5.5MR_lipo_worst_b2": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6100.1174,
+   "I_wind_A": 17.6465,
+   "I_esc_A": 14.4076,
+   "I_pack_A": 58.6305,
+   "V_bus": 13.0497,
+   "duty": 0.8143,
+   "reachable": true
+  },
+  "7deg_11x5.5MR_li6.0_fresh_b1": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6100.1174,
+   "I_wind_A": 17.6465,
+   "I_esc_A": 9.655,
+   "I_pack_A": 39.6199,
+   "V_bus": 15.5361,
+   "duty": 0.5453,
+   "reachable": true
+  },
+  "7deg_11x5.5MR_li6.0_fresh_b2": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6100.1174,
+   "I_wind_A": 17.6465,
+   "I_esc_A": 12.3787,
+   "I_pack_A": 50.5148,
+   "V_bus": 15.1886,
+   "duty": 0.6996,
+   "reachable": true
+  },
+  "7deg_11x5.5MR_li6.0_worst_b1": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6100.1174,
+   "I_wind_A": 17.6465,
+   "I_esc_A": 14.9912,
+   "I_pack_A": 60.9648,
+   "V_bus": 10.3921,
+   "duty": 0.8468,
+   "reachable": true
+  },
+  "7deg_11x5.5MR_li6.0_worst_b2": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6100.1174,
+   "I_wind_A": 17.6465,
+   "I_esc_A": 20.5501,
+   "I_pack_A": 83.2005,
+   "V_bus": 9.1491,
+   "duty": 1.1614,
+   "reachable": false
+  },
+  "7deg_11x5.5MR_li6.9_fresh_b1": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6100.1174,
+   "I_wind_A": 17.6465,
+   "I_esc_A": 9.7533,
+   "I_pack_A": 40.0132,
+   "V_bus": 15.3795,
+   "duty": 0.5509,
+   "reachable": true
+  },
+  "7deg_11x5.5MR_li6.9_fresh_b2": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6100.1174,
+   "I_wind_A": 17.6465,
+   "I_esc_A": 12.5489,
+   "I_pack_A": 51.1957,
+   "V_bus": 14.9826,
+   "duty": 0.7092,
+   "reachable": true
+  },
+  "7deg_11x5.5MR_li6.9_worst_b1": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6100.1174,
+   "I_wind_A": 17.6465,
+   "I_esc_A": 16.1089,
+   "I_pack_A": 65.4358,
+   "V_bus": 9.671,
+   "duty": 0.9099,
+   "reachable": true
+  },
+  "7deg_11x5.5MR_li6.9_worst_b2": null,
+  "7deg_11x5.5E_lipo_fresh_b1": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6566.7148,
+   "I_wind_A": 16.7751,
+   "I_esc_A": 9.4443,
+   "I_pack_A": 38.7772,
+   "V_bus": 15.8732,
+   "duty": 0.5611,
+   "reachable": true
+  },
+  "7deg_11x5.5E_lipo_fresh_b2": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6566.7148,
+   "I_wind_A": 16.7751,
+   "I_esc_A": 11.7736,
+   "I_pack_A": 48.0945,
+   "V_bus": 15.6505,
+   "duty": 0.6999,
+   "reachable": true
+  },
+  "7deg_11x5.5E_lipo_worst_b1": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6566.7148,
+   "I_wind_A": 16.7751,
+   "I_esc_A": 11.5674,
+   "I_pack_A": 47.2694,
+   "V_bus": 13.4121,
+   "duty": 0.6873,
+   "reachable": true
+  },
+  "7deg_11x5.5E_lipo_worst_b2": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6566.7148,
+   "I_wind_A": 16.7751,
+   "I_esc_A": 14.0743,
+   "I_pack_A": 57.2971,
+   "V_bus": 13.0922,
+   "duty": 0.8367,
+   "reachable": true
+  },
+  "7deg_11x5.5E_li6.0_fresh_b1": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6566.7148,
+   "I_wind_A": 16.7751,
+   "I_esc_A": 9.6487,
+   "I_pack_A": 39.5949,
+   "V_bus": 15.5369,
+   "duty": 0.5733,
+   "reachable": true
+  },
+  "7deg_11x5.5E_li6.0_fresh_b2": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6566.7148,
+   "I_wind_A": 16.7751,
+   "I_esc_A": 12.1038,
+   "I_pack_A": 49.4151,
+   "V_bus": 15.2237,
+   "duty": 0.7196,
+   "reachable": true
+  },
+  "7deg_11x5.5E_li6.0_worst_b1": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6566.7148,
+   "I_wind_A": 16.7751,
+   "I_esc_A": 14.8996,
+   "I_pack_A": 60.5982,
+   "V_bus": 10.4126,
+   "duty": 0.8853,
+   "reachable": true
+  },
+  "7deg_11x5.5E_li6.0_worst_b2": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6566.7148,
+   "I_wind_A": 16.7751,
+   "I_esc_A": 19.7572,
+   "I_pack_A": 80.029,
+   "V_bus": 9.3264,
+   "duty": 1.1746,
+   "reachable": false
+  },
+  "7deg_11x5.5E_li6.9_fresh_b1": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6566.7148,
+   "I_wind_A": 16.7751,
+   "I_esc_A": 9.7469,
+   "I_pack_A": 39.9876,
+   "V_bus": 15.3804,
+   "duty": 0.5791,
+   "reachable": true
+  },
+  "7deg_11x5.5E_li6.9_fresh_b2": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6566.7148,
+   "I_wind_A": 16.7751,
+   "I_esc_A": 12.2656,
+   "I_pack_A": 50.0624,
+   "V_bus": 15.0228,
+   "duty": 0.7292,
+   "reachable": true
+  },
+  "7deg_11x5.5E_li6.9_worst_b1": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6566.7148,
+   "I_wind_A": 16.7751,
+   "I_esc_A": 15.9941,
+   "I_pack_A": 64.9764,
+   "V_bus": 9.7,
+   "duty": 0.9504,
+   "reachable": true
+  },
+  "7deg_11x5.5E_li6.9_worst_b2": {
+   "T_per_motor_gf": 916.8339,
+   "rpm": 6566.7148,
+   "I_wind_A": 16.7751,
+   "I_esc_A": 23.9757,
+   "I_pack_A": 96.9027,
+   "V_bus": 7.6854,
+   "duty": 1.4254,
+   "reachable": false
+  },
+  "9deg_11x5.5MR_lipo_fresh_b1": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6114.9386,
+   "I_wind_A": 17.7265,
+   "I_esc_A": 9.5242,
+   "I_pack_A": 39.0967,
+   "V_bus": 15.8656,
+   "duty": 0.5355,
+   "reachable": true
+  },
+  "9deg_11x5.5MR_lipo_fresh_b2": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6114.9386,
+   "I_wind_A": 17.7265,
+   "I_esc_A": 12.1326,
+   "I_pack_A": 49.5306,
+   "V_bus": 15.6162,
+   "duty": 0.6826,
+   "reachable": true
+  },
+  "9deg_11x5.5MR_lipo_worst_b1": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6114.9386,
+   "I_wind_A": 17.7265,
+   "I_esc_A": 11.7188,
+   "I_pack_A": 47.8754,
+   "V_bus": 13.3928,
+   "duty": 0.659,
+   "reachable": true
+  },
+  "9deg_11x5.5MR_lipo_worst_b2": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6114.9386,
+   "I_wind_A": 17.7265,
+   "I_esc_A": 14.5372,
+   "I_pack_A": 59.1489,
+   "V_bus": 13.0331,
+   "duty": 0.8179,
+   "reachable": true
+  },
+  "9deg_11x5.5MR_li6.0_fresh_b1": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6114.9386,
+   "I_wind_A": 17.7265,
+   "I_esc_A": 9.7323,
+   "I_pack_A": 39.9293,
+   "V_bus": 15.5263,
+   "duty": 0.5472,
+   "reachable": true
+  },
+  "9deg_11x5.5MR_li6.0_fresh_b2": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6114.9386,
+   "I_wind_A": 17.7265,
+   "I_esc_A": 12.4854,
+   "I_pack_A": 50.9417,
+   "V_bus": 15.175,
+   "duty": 0.7025,
+   "reachable": true
+  },
+  "9deg_11x5.5MR_li6.0_worst_b1": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6114.9386,
+   "I_wind_A": 17.7265,
+   "I_esc_A": 15.1566,
+   "I_pack_A": 61.6264,
+   "V_bus": 10.3551,
+   "duty": 0.8523,
+   "reachable": true
+  },
+  "9deg_11x5.5MR_li6.0_worst_b2": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6114.9386,
+   "I_wind_A": 17.7265,
+   "I_esc_A": 20.8739,
+   "I_pack_A": 84.4955,
+   "V_bus": 9.0767,
+   "duty": 1.1744,
+   "reachable": false
+  },
+  "9deg_11x5.5MR_li6.9_fresh_b1": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6114.9386,
+   "I_wind_A": 17.7265,
+   "I_esc_A": 9.8324,
+   "I_pack_A": 40.3294,
+   "V_bus": 15.3683,
+   "duty": 0.5528,
+   "reachable": true
+  },
+  "9deg_11x5.5MR_li6.9_fresh_b2": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6114.9386,
+   "I_wind_A": 17.7265,
+   "I_esc_A": 12.659,
+   "I_pack_A": 51.6359,
+   "V_bus": 14.9669,
+   "duty": 0.7122,
+   "reachable": true
+  },
+  "9deg_11x5.5MR_li6.9_worst_b1": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6114.9386,
+   "I_wind_A": 17.7265,
+   "I_esc_A": 16.3175,
+   "I_pack_A": 66.2702,
+   "V_bus": 9.6184,
+   "duty": 0.9176,
+   "reachable": true
+  },
+  "9deg_11x5.5MR_li6.9_worst_b2": null,
+  "9deg_11x5.5E_lipo_fresh_b1": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6582.6808,
+   "I_wind_A": 16.8494,
+   "I_esc_A": 9.5165,
+   "I_pack_A": 39.0662,
+   "V_bus": 15.8663,
+   "duty": 0.5629,
+   "reachable": true
+  },
+  "9deg_11x5.5E_lipo_fresh_b2": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6582.6808,
+   "I_wind_A": 16.8494,
+   "I_esc_A": 11.8691,
+   "I_pack_A": 48.4764,
+   "V_bus": 15.6414,
+   "duty": 0.7025,
+   "reachable": true
+  },
+  "9deg_11x5.5E_lipo_worst_b1": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6582.6808,
+   "I_wind_A": 16.8494,
+   "I_esc_A": 11.6619,
+   "I_pack_A": 47.6476,
+   "V_bus": 13.4,
+   "duty": 0.6899,
+   "reachable": true
+  },
+  "9deg_11x5.5E_lipo_worst_b2": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6582.6808,
+   "I_wind_A": 16.8494,
+   "I_esc_A": 14.1971,
+   "I_pack_A": 57.7886,
+   "V_bus": 13.0765,
+   "duty": 0.8403,
+   "reachable": true
+  },
+  "9deg_11x5.5E_li6.0_fresh_b1": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6582.6808,
+   "I_wind_A": 16.8494,
+   "I_esc_A": 9.7243,
+   "I_pack_A": 39.8974,
+   "V_bus": 15.5273,
+   "duty": 0.5752,
+   "reachable": true
+  },
+  "9deg_11x5.5E_li6.0_fresh_b2": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6582.6808,
+   "I_wind_A": 16.8494,
+   "I_esc_A": 12.2052,
+   "I_pack_A": 49.8207,
+   "V_bus": 15.2107,
+   "duty": 0.7224,
+   "reachable": true
+  },
+  "9deg_11x5.5E_li6.0_worst_b1": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6582.6808,
+   "I_wind_A": 16.8494,
+   "I_esc_A": 15.0596,
+   "I_pack_A": 61.2383,
+   "V_bus": 10.3768,
+   "duty": 0.8909,
+   "reachable": true
+  },
+  "9deg_11x5.5E_li6.0_worst_b2": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6582.6808,
+   "I_wind_A": 16.8494,
+   "I_esc_A": 20.0433,
+   "I_pack_A": 81.1733,
+   "V_bus": 9.2624,
+   "duty": 1.1864,
+   "reachable": false
+  },
+  "9deg_11x5.5E_li6.9_fresh_b1": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6582.6808,
+   "I_wind_A": 16.8494,
+   "I_esc_A": 9.8242,
+   "I_pack_A": 40.2967,
+   "V_bus": 15.3695,
+   "duty": 0.5811,
+   "reachable": true
+  },
+  "9deg_11x5.5E_li6.9_fresh_b2": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6582.6808,
+   "I_wind_A": 16.8494,
+   "I_esc_A": 12.3701,
+   "I_pack_A": 50.4803,
+   "V_bus": 15.0079,
+   "duty": 0.7322,
+   "reachable": true
+  },
+  "9deg_11x5.5E_li6.9_worst_b1": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6582.6808,
+   "I_wind_A": 16.8494,
+   "I_esc_A": 16.195,
+   "I_pack_A": 65.7799,
+   "V_bus": 9.6493,
+   "duty": 0.9581,
+   "reachable": true
+  },
+  "9deg_11x5.5E_li6.9_worst_b2": {
+   "T_per_motor_gf": 921.3433,
+   "rpm": 6582.6808,
+   "I_wind_A": 16.8494,
+   "I_esc_A": 24.9796,
+   "I_pack_A": 100.9182,
+   "V_bus": 7.4321,
+   "duty": 1.4785,
+   "reachable": false
+  }
+ }
+}

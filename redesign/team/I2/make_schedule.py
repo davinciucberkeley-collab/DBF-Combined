@@ -12,6 +12,8 @@ fallback 14 d), params.json#schedule (build_start 2027-01-19, complete_by 2027-0
 (week-by-week plan) and BUILD-GUIDE.md (stage times).
 """
 import datetime as dt
+import math
+import os
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -37,7 +39,7 @@ t("M01", "Compliance: TRUST, UC Drone Program, AMA / insurance answer, FAA regis
 t("M02", "Jacobs: Spring-pass and training answers, flux/wick and K-type check (T-I1-BORROW)", ["P4"], D(2026, 11, 16), 5, 2, [], "team/I1/ORDER-PLAN.md R4", "pre")
 t("O01", "Early order placed (20 Nov): packs and FC carts first", ["P2"], D(2026, 11, 20), 1, 3, ["M02"], "ORDER-PLAN.md", "pre")
 t("O02", "Early order arrives (lead 5 d EST, Thanksgiving week: allow 7)", ["P2"], D(2026, 11, 21), 7, 2, ["O01"], "ORDER-PLAN.md early table lead column", "pre")
-t("O03", "Ovonic packs arrive (ships from Germany, about 14 d); weigh, log", ["P2"], D(2026, 11, 21), 14, 2, ["O01"], "ORDER-PLAN.md P01 lead 14 d LONG", "pre")
+t("O03", "Gens Ace Shorty 6000 HV packs arrive (US stock, about 7 d EST, D-174); weigh, IR-check <= 3.8 mOhm per group, log", ["P2"], D(2026, 11, 21), 7, 2, ["O01"], "BOM.csv P01 lead 7 d (R7, 2026-11-14)", "pre")
 t("S01", "SITL install and >= 10 h pilot log (R-PILOT)", ["P4"], D(2026, 11, 16), 40, 14, [], "subsystems/flight-software/SITL-PLAN.md; params requirements.sitl_hours_min 10", "pre")
 t("H01", "Thrust stand build and calibration (GT-01), stand campaign (GT-02/03)", ["P1", "P2"], D(2026, 11, 28), 14, 30, ["O02"], "team/H1/GROUND-TEST-PLAN.md campaign order 23 Nov - 8 Dec (EST hours)", "pre")
 t("W01", "Hot-wire bow, templates (laser), practice cores x 2-3, LE sanding", ["P1", "P3"], D(2026, 11, 26), 18, 28, ["O02"], "review/MANUFACTURING.md section 1 and 6 (practice cores); hours EST", "pre")
@@ -86,6 +88,23 @@ t("F04", "First transition at >= 50 m (gate 6) and back-transition (gate 7)", ["
 t("CR1", "Crash-repair loop (contingency block, >= 1.5 weeks calendar)", ["P1", "P3"], CORE_START, 11, 24, ["F04"], "R-SCHEDULE; MANUFACTURING.md section 5 (core 4-5 days through the cure chain)", "fly")
 t("F05", "Transition round trips, landing practice in calm air (gates 7-8)", ["P4", "P2"], CORE_START, 12, 24, ["CR1"], "H2 plan", "fly")
 t("F06", "Full mission demonstrations (gate 9), data and report", ["P4", "P2", "P1", "P3"], CORE_START, 16, 36, ["F05"], "H2 plan gate 9; R-MISSION", "fly")
+
+# ---- Flight-block length from the number of flight packs (D-180 cost re-check, 2026-11-14)
+# Rule (H2 FLIGHT-TEST-PLAN section 1 and E2 ASM-E2-TESTDAY): one fully charged pack per sortie, a part-used pack is
+# never re-flown the same day, no charging at the field. So sorties per morning = N_PACKS (cap 2: H2 plans 2).
+# Sorties per block = 2 x H2's mornings (plan_checks.py table; F01 2, F02 5, F03 4, F04 3, F05 5, F06 3); the twin
+# gate (1c, 1d, 1e, 1g, 1i) is 7 sorties EST (H2 TWIN section, no source count: EST). Usable mornings 5.0 per 7 days.
+# A block is never shorter than the hand-set length above (that carries the weather margin).
+N_PACKS = int(os.environ.get("K09_PACKS", "2"))      # 2 = design of record (params battery.n_packs); 1 = D-180 cost set
+SORTIES = {"TW3": 7, "F01": 4, "F02": 10, "F03": 8, "F04": 6, "F05": 10, "F06": 6}
+USABLE_PER_DAY = 5.0 / 7.0
+for _id, _n in SORTIES.items():
+    _mornings = _n / min(N_PACKS, 2)
+    _d = math.ceil(_mornings / USABLE_PER_DAY - 1e-9)
+    BYID = next(x for x in T if x["id"] == _id)
+    BYID["days_hand"] = BYID["days"]
+    BYID["days"] = max(BYID["days"], _d)
+    BYID["mornings"] = _mornings
 
 BY = {x["id"]: x for x in T}
 

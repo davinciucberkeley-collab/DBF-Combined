@@ -111,3 +111,8 @@ desktop.ini
 # collision check scratch (collision/collide.py regenerates it)
 redesign/collision/out/_job.json
 redesign/collision/out/blender.log
+
+# C2 design-round FE fields and logs (regenerate with team/C2/c2r5_*.py); the small .json summaries are committed
+redesign/team/C2/fea/out/c2r5/*.npz
+redesign/team/C2/fea/out/c2r5/*.log
+redesign/team/C2/fea/out/c2r5/*.pkl

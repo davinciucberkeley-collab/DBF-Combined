@@ -58,7 +58,12 @@ FOIL = "s5010"
 F = A["foils"][FOIL]
 OUT = AW.OUT
 CLS = [0.40, 0.47, 0.55, 0.65, 0.70, 0.74, 0.76, 0.78, 0.80, 0.82, 0.84, 0.86, 0.88, 0.90, 0.93, 0.96]
-X_GRID = [0.0446, 0.0466, 0.0490, 0.0514, 0.0536]
+X_GRID = [0.0425, 0.0446, 0.0466, 0.0490, 0.0514, 0.0536]   # 0.0425 added in the closure round: fwd limit 0.0430 (D-164)
+# Closure round 2026-11-14: elevon fin-root TE chamfers (D-164, wing.elevon.te_chamfer_m) are in the model of record;
+# --no-chamfer re-runs the grid without them (sensitivity, writes out/stall_zcg_nochamfer.json only).
+NO_CHAMFER = "--no-chamfer" in ARGS
+CHAMFER = None if NO_CHAMFER else AW.v("wing.elevon.te_chamfer_m")
+TAGP = "r4n" if NO_CHAMFER else "r4"
 Z_GRID = [0.0, 0.010, 0.0185, 0.025]
 
 
@@ -88,7 +93,7 @@ def raw_stall_table():
 def case_xz(tag, xref, zref, cm_t, cls=CLS):
     """AVL trim sweep with the moment reference at (xref, 0, zref); ST at each trimmed CL for the effective NP."""
     f = OUT / f"{tag}.avl"
-    AW.write_avl(f, FOIL, F["eta"])
+    AW.write_avl(f, FOIL, F["eta"], chamfer=CHAMFER)
     txt = f.read_text().splitlines()
     txt[4] = f"{xref:.5f} 0.0 {zref:.5f}"
     f.write_text("\n".join(txt) + "\n")
@@ -130,7 +135,7 @@ def stall_point(res, table):
 
 def run_grid_point(xz):
     x, z = xz
-    tag = f"r4_x{x*1e4:.0f}_z{z*1e4:.0f}"
+    tag = f"{TAGP}_x{x*1e4:.0f}_z{z*1e4:.0f}"
     r = case_xz(tag, x + DPROP, z, F["cm_t"])
     return x, z, stall_point(r, F["clmax_vs_flap"])
 
@@ -143,7 +148,7 @@ def run_recon(step):
             "W3": (B1_X, B1_Z, F["cm_t"], F["clmax_vs_flap"]),
             "W4": (B1_X + DPROP, B1_Z, F["cm_t"], F["clmax_vs_flap"])}[step]
     xr, zr, cmt, tab = spec
-    r = case_xz(f"r4_recon_{step}", xr, zr, cmt)
+    r = case_xz(f"{TAGP}_recon_{step}", xr, zr, cmt)
     sp = stall_point(r, [tuple(t) for t in tab])
     sp.update({"xref": xr, "zref": zr, "cm_t": cmt, "table": [list(t) for t in tab]})
     return step, sp
@@ -151,7 +156,7 @@ def run_recon(step):
 
 def main():
     pts = [(x, z) for x in X_GRID for z in Z_GRID]
-    with cf.ThreadPoolExecutor(max_workers=6) as ex:
+    with cf.ThreadPoolExecutor(max_workers=4) as ex:
         grid = list(ex.map(run_grid_point, pts))
         recon = dict(ex.map(run_recon, ["W0", "W1", "W2", "W3", "W4"]))
     tab = [[[None] * len(Z_GRID) for _ in X_GRID] for _ in range(3)]
@@ -170,6 +175,10 @@ def main():
            "recon": {k: {kk: vv for kk, vv in v.items() if kk != "xnp_aero_vs_cl"} for k, v in recon.items()},
            "b1_table": B1_TABLE, "raw_stall_table": raw_stall_table(), "b2_envelope": F["clmax_vs_flap"],
            "xnp_aero_vs_cl": npcl, "xnp_props_off_z0_a0": F["Xnp_m"]}
+    res["chamfer_m"] = CHAMFER
+    if NO_CHAMFER:
+        (HERE / "out" / "stall_zcg_nochamfer.json").write_text(json.dumps(res, indent=1))
+        return
     (HERE / "out" / "stall_zcg.json").write_text(json.dumps(res, indent=1))
     write_params(res)
 
@@ -185,7 +194,7 @@ def write_params(res):
              "x_grid_m": e(res["x_grid"], "m", "CG x (real aircraft); AVL Xref = x + dprop_m (props + pod NP term)"),
              "z_grid_m": e(res["z_grid"], "m", "CG height above the chord plane (AVL Zref)"),
              "clmax_grid": e(res["clmax"], "-", "trimmed CLmax [x index][z index], critical section, B2 envelope, "
-                                                "cm_t trim, lattice 12x1"),
+                                                "cm_t trim, lattice 12x1, elevon TE chamfers " + str(res.get("chamfer_m"))),
              "elevon_grid": e(res["elevon"], "deg", "elevon at the trimmed CLmax [x][z]"),
              "dprop_m": e(res["dprop_m"], "m", "props + pod NP term used: CL-B3-V-XNP-AERO - CL-B3-V-XNP at the run"),
              "recon_clmax": e({k: v["CLmax_trim"] for k, v in res["recon"].items()}, "-",

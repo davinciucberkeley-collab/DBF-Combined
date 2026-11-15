@@ -1,0 +1,16 @@
+  
+       XFOIL         Version 6.99
+  
+ Calculated polar for: S5010 9.82% (UIUC https://m-selig.ae.illinois.ed
+  
+ 1 1 Reynolds number fixed          Mach number fixed         
+  
+ xtrf =   1.000 (top)        1.000 (bottom)  
+ Mach =   0.000     Re =     0.260 e 6     Ncrit =   9.000
+  
+   alpha    CL        CD       CDp       CM     Top_Xtr  Bot_Xtr
+  ------ -------- --------- --------- -------- -------- --------
+   0.000  -0.5571   0.01772   0.00934   0.1076   0.6328   0.0409
+  -0.500  -0.6122   0.01937   0.01108   0.1066   0.6429   0.0361
+  -1.000  -0.6723   0.02238   0.01432   0.1063   0.6525   0.0329
+  -1.500  -0.7316   0.02658   0.01912   0.1050   0.6617   0.0327

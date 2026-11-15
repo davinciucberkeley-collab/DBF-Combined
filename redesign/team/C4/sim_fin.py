@@ -53,7 +53,7 @@ STRESS_LEVELS["G"] = (0.004, 0.001)  # global refinement check at the level-2 ti
 SU2_LEVELS = ()                     # SU2 CG/ILU does not converge on the quarter (CALC-C4-SIM-CODES)
 SU2_TOL, SU2_ITERS = 1e-9, 6000
 MODAL_LEVELS = {1: 0.008, 2: 0.008 / 2 ** 0.5, 3: 0.004}                        # ratio sqrt 2 (eigen solve cost)
-THREADS = 6
+THREADS = 4                         # design round 2026-11-14 WAVE2: FE thread count <= 4
 
 
 # ====================================================================== sources and assumptions
@@ -107,10 +107,10 @@ asm("ASM-C4-SIM-HOTSPOT-T", "Hot-spot read distances 0.4 t and 1.0 t, t = lamina
     "laminate thickness", "the peak at a rigid-insert edge is singular and grows with mesh refinement; the hot-spot "
     "value converges and is the structural stress the faces carry", 0.0096, "m", status="PROPOSED",
     cites=["SRC-C4-IIW"])
-asm("ASM-C4-A3-STATION-MASS", "As-designed station masses: motor 84.2 g, ESC 7.6 g, bullets 4 g",
+asm("ASM-C4-A3-STATION-MASS", "As-designed station masses: motor 111.2 g, ESC 7.6 g, bullets 4 g",
     "A3-R6a roll-up items: PRP-001 motor with its four M3 screws 84.2 g (params 81 g), PRP-002 stripped ESC 7.6 g "
     "(params 6.6 g), HRN-E03 phase bullets and short leads 4 g at 0.8 z_st on the tube",
-    "team/A3/mass_model.csv and subsystems/propulsion/parts.csv (2026-11-10)", [0.0842, 0.0076, 0.004], "kg",
+    "team/A3/mass_model.csv and subsystems/propulsion/parts.csv (2026-11-10); closure re-run 2026-11-14 (D-173): motor 108 g (propulsion.motor_mass_kg) + 3.2 g screws = 111.2 g, as C4.md D173.1", [0.1112, 0.0076, 0.004], "kg",
     status="PROPOSED")
 
 GEOM, GU = dict(d3.GEOM), dict(d3.GU)
@@ -118,7 +118,8 @@ SHOE = {"tail_len": P + "fin_detail.station_collar.tail_m", "tongue_depth": P + 
         "leg_depth": P + "landing.shoe.leg_depth_m", "glue": P + "landing.shoe.glue_gap_m",
         "collar_len": P + "landing.shoe.collar_len_m", "z0_prop": "ASM-C4-SHOE-Z0-PROP"}
 SHOE_U = {"tail_len": "m", "tongue_depth": "m", "leg_depth": "m", "glue": "m", "collar_len": "m", "z0_prop": "m"}
-MATS = {"e_tail": "ASM-C4-SIM-TAIL-E", "e_link": "ASM-C4-SIM-LINK-E", "e_shoe": "ASM-C4-SIM-SHOE-E", "E": "ASM-J1-E-TUBE", "G": "ASM-C4-G-TUBE",
+# D-147: tube E / G are the fin tube's own keys (CL-C4-TUBE-E / -G from P:fins.tube.e_gpa / g_gpa)
+MATS = {"e_tail": "ASM-C4-SIM-TAIL-E", "e_link": "ASM-C4-SIM-LINK-E", "e_shoe": "ASM-C4-SIM-SHOE-E", "E": d3.TUBE["E"], "G": d3.TUBE["G"],
         "shoe_r": "ASM-C4-SIM-SHOE-FILLET"}
 MATS_U = {"e_tail": "Pa", "e_link": "Pa", "e_shoe": "Pa", "E": "Pa", "G": "Pa", "shoe_r": "m"}
 LOADS = {"f_corner": "CL-C1-FOOT-CORNER", "mu_hi": "ASM-C1-FRICTION", "side_c5": "CL-C5-SIM3D-SIDE-LOAD",
@@ -864,7 +865,49 @@ def levers(**kw):
     return out
 
 
+# ====================================================================== G. pessimistic tube (closure round 2026-11-14)
+asm("ASM-C4-TUBE-E-KNOCK", "Pessimistic fin-tube axial modulus 78.6 GPa (RW 35046-S)",
+    "Axial modulus at the low end the design must pass with today, the GT-16 measurement being confirmation only",
+    "C4-W2 section 4: the R5 GT-16 shell pass line, 87 % of the 90.2 GPa CLT page value (SRC-RW-35046S); the page "
+    "values are CLT figures Rock West does not guarantee", 78.6e9, "Pa", status="PROPOSED")
+asm("ASM-C4-TUBE-G-KNOCK", "Pessimistic fin-tube shear modulus 10.27 GPa (RW 35046-S)",
+    "Shear modulus at the low end the design must pass with today",
+    "Half the page GXY 2 979 000 psi = 20.5 GPa (SRC-RW-35046S), C4.md wave 1 section 1.3", 10.27e9, "Pa",
+    status="PROPOSED")
+
+
+@kit.calc("CALC-C4-SIM-MODES-KNOCK", title="Station modes, 3-D, three meshes, pessimistic tube E / G",
+          inputs={**MODE_IN, "E_k": "ASM-C4-TUBE-E-KNOCK", "G_k": "ASM-C4-TUBE-G-KNOCK"},
+          units={**MODE_U, "E_k": "Pa", "G_k": "Pa"}, tol=2e-3, cites=["SRC-C4-ROACHE"],
+          assumes=["ASM-C4-TUBE-E-KNOCK", "ASM-C4-TUBE-G-KNOCK", "ASM-C4-MOUNT-K-ROCK", "ASM-C4-A3-STATION-MASS"],
+          equation="as CALC-C4-SIM-MODES with the tube E, G replaced by E_k, G_k (both quarters, meshes 8/5.7/4 mm, "
+                   "Richardson r sqrt 2); separation = min |f/f_forcing - 1| over 1P/2P hover/cruise and 1P max")
+def modes3d_knock(**kw):
+    g, k = _modal_gk(kw)
+    k = dict(k, E=kw["E_k"], G=kw["G_k"])
+    rpm = (kw["rpm_h"], kw["rpm_c"], kw["rpm_x"])
+    out = {}
+    for side in d3.SIDES:
+        f1 = []
+        for lv in (1, 2, 3):
+            r = modes_level(g, k, side, lv, kw["a3"])
+            f1.append([f for f, ke, kind in r["modes"] if ke >= 0.10][0])
+        p, ext, gci = richardson(f1, 2 ** 0.5)
+        st3 = [f for f, ke, kind in modes_level(g, k, side, 3, kw["a3"])["modes"] if ke >= 0.10]
+        out[f"f1_{side[:2]}"], out[f"f1_{side[:2]}_ext"], out[f"f1_{side[:2]}_gci"] = f1, ext, gci
+        out[f"sep_{side[:2]}"] = sep_of([ext] + st3[1:3], rpm)
+    out["f1_min"] = min(out["f1_up_ext"], out["f1_lo_ext"])
+    out["sep_min"] = min(out["sep_up"], out["sep_lo"])
+    return out
+
+
 # ====================================================================== claims
+kit.claim("CL-C4-SIM-SEP-KNOCK", "Station-mode separation from 1P/2P, 3-D, pessimistic tube (E 78.6 / G 10.27 GPa)",
+          calc="CALC-C4-SIM-MODES-KNOCK", output="sep_min", unit="-", limit=(">=", d3.LIMIT_SEP),
+          verifies=["R-VIBRATION"], parts=["FIN-001-UR", "FIN-001-LR", "FIN-002-R", "FIN-003-UR"],
+          how="GT-16 (H1) bend and torsion of a delivered tube confirms E >= 78.6 and G >= 10.27 GPa; T-C4-TAP-D3.",
+          note="Closure round 2026-11-14: the design must pass at the pessimistic tube now (WAVE.md); the mount "
+               "rocking stiffness is the CALC-C4-D3-MOUNT-K-EST value at ASA E 1.8 GPa (ASM-C4-MOUNT-K-ROCK).")
 kit.claim("CL-C4-SIM-BENCH-ERR", "SU2 cantilever error, extrapolated", calc="CALC-C4-SIM-BENCH", output="err_extrap",
           unit="-", limit=("<=", 0.01), how="Re-run sim_fin.py; compare with the closed-form two-modulus cantilever.")
 kit.claim("CL-C4-SIM-BENCH-CODES", "In-house hex8 vs SU2, cantilever", calc="CALC-C4-SIM-BENCH", output="code_diff",

@@ -79,14 +79,13 @@ def schedule(build_start, complete_by, order):
 
 
 C = "CALC-I2-SCHEDULE"
-kit.claim("CL-I2-BUILD-HOURS", "Team-hours of build to first hover (BUILD-GUIDE stage times)", calc=C,
-          output="build_h", unit="h", limit=("<=", P + "requirements.build_hours_max"), verifies=["R-BUILD-HOURS"],
+kit.claim("CL-I2-BUILD-HOURS", "Team-hours of build, stages 2-10 (build_hours_max 90, D-160)", calc=C,
+          output="build_h_stages_2_10", unit="h", limit=("<=", P + "requirements.build_hours_max"), verifies=["R-BUILD-HOURS"],
           note="EST: the sum of the build-phase task hours, bench checks (stage 11) and the range check included, "
                "transport box excluded (SCHEDULE.md verdict table, CR-I2-02). G4's count is 111 h (CDR decision B2)",
           how="Log hours per task during the build; compare the total at first hover.")
 kit.claim("CL-I2-CUT-TO-HOVER-D", "Calendar days from first cut to first tethered hover", calc=C,
-          output="cut_to_hover_d", unit="d", limit=("<=", 21.0), verifies=["R-BUILD-HOURS"],
-          assumes=["ASM-I2-REQ-TEXT"],
+          output="cut_to_hover_d", unit="d", limit=("<=", P + "schedule.cut_to_hover_max_d"), verifies=["R-BUILD-HOURS"],
           note="limit: '<= 3 weeks from first cut' in R-BUILD-HOURS. Set by the serial 24 h cures of the build "
                "chain (CDR decision B2); no lever in the task list removes them",
           how="Dates of the first cut and the first tethered hover in the build log.")
@@ -110,10 +109,9 @@ kit.claim("CL-I2-TWIN-BEFORE-ORDER-D", "Days between the last twin flight day an
 kit.claim("CL-I2-DATES-MATCH", "Dates in make_schedule.py that differ from params.json#schedule", calc=C,
           output="dates_differ", unit="-", limit=("<=", 0.0),
           how="BUILD_START and END in make_schedule.py against schedule.build_start and schedule.complete_by.")
-kit.claim("CL-I2-BUILD-HOURS-S2-10", "Team-hours of build, stages 2-10 only (measure of the PROPOSED decision B2)",
-          calc=C, output="build_h_stages_2_10", unit="h", assumes=["ASM-I2-B2-PROPOSED"],
-          note="information, no limit: B2 would compare this with 90 h after 13 h EST of bench work moves before "
-               "first cut (CDR-20, G4). Not applied: needs the students' sign-off",
+kit.claim("CL-I2-BUILD-HOURS-ALL", "Team-hours of build, stages 2-11 + range check (information, R7)",
+          calc=C, output="build_h", unit="h",
+          note="information, no limit: the old reading of R-BUILD-HOURS, everything to first hover (G4 counts 111 h)",
           how="As CL-I2-BUILD-HOURS, stages 2-10.")
 kit.claim("CL-I2-PRE-HOURS", "Team-hours before first cut (16 Nov - 18 Jan)", calc=C, output="pre_h", unit="h",
           note="information, no limit: R-BUILD-HOURS does not say whether pre-work counts (CR-I2-02)",

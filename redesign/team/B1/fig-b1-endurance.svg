@@ -1,39 +1,49 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="IBM Plex Sans, system-ui, sans-serif">
 <line x1="90" y1="480.0" x2="1150" y2="480.0" stroke="#E3E7ED" stroke-width="0.75"/>
 <text x="80" y="484.0" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="end">0</text>
-<line x1="90" y1="388.3" x2="1150" y2="388.3" stroke="#E3E7ED" stroke-width="0.75"/>
-<text x="80" y="392.3" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="end">5</text>
-<line x1="90" y1="296.6" x2="1150" y2="296.6" stroke="#E3E7ED" stroke-width="0.75"/>
-<text x="80" y="300.6" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="end">10</text>
-<line x1="90" y1="205.0" x2="1150" y2="205.0" stroke="#E3E7ED" stroke-width="0.75"/>
-<text x="80" y="209.0" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="end">15</text>
-<line x1="90" y1="113.3" x2="1150" y2="113.3" stroke="#E3E7ED" stroke-width="0.75"/>
-<text x="80" y="117.3" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="end">20</text>
-<text x="90.0" y="500" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">14</text>
-<text x="266.7" y="500" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">15</text>
-<text x="443.3" y="500" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">16</text>
-<text x="620.0" y="500" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">17</text>
+<line x1="90" y1="393.0" x2="1150" y2="393.0" stroke="#E3E7ED" stroke-width="0.75"/>
+<text x="80" y="397.0" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="end">5</text>
+<line x1="90" y1="305.9" x2="1150" y2="305.9" stroke="#E3E7ED" stroke-width="0.75"/>
+<text x="80" y="309.9" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="end">10</text>
+<line x1="90" y1="218.9" x2="1150" y2="218.9" stroke="#E3E7ED" stroke-width="0.75"/>
+<text x="80" y="222.9" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="end">15</text>
+<line x1="90" y1="131.9" x2="1150" y2="131.9" stroke="#E3E7ED" stroke-width="0.75"/>
+<text x="80" y="135.9" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="end">20</text>
+<line x1="90" y1="44.8" x2="1150" y2="44.8" stroke="#E3E7ED" stroke-width="0.75"/>
+<text x="80" y="48.8" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="end">25</text>
+<text x="90.0" y="500" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">10</text>
+<text x="178.3" y="500" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">11</text>
+<text x="266.7" y="500" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">12</text>
+<text x="355.0" y="500" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">13</text>
+<text x="443.3" y="500" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">14</text>
+<text x="531.7" y="500" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">15</text>
+<text x="620.0" y="500" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">16</text>
+<text x="708.3" y="500" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">17</text>
 <text x="796.7" y="500" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">18</text>
-<text x="973.3" y="500" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">19</text>
-<text x="1150.0" y="500" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">20</text>
+<text x="885.0" y="500" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">19</text>
+<text x="973.3" y="500" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">20</text>
+<text x="1061.7" y="500" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">21</text>
+<text x="1150.0" y="500" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">22</text>
 <line x1="90" y1="480" x2="1150" y2="480" stroke="#9AA4B1" stroke-width="1"/>
 <line x1="90" y1="30" x2="90" y2="480" stroke="#9AA4B1" stroke-width="1"/>
 <text x="620.0" y="526" font-size="12" fill="#4B5563" text-anchor="middle">cruise airspeed (m/s)</text>
 <text x="24" y="255.0" font-size="12" fill="#4B5563" text-anchor="middle" transform="rotate(-90 24 255.0)">cruise after 2 min hover (min)</text>
-<rect x="90" y="30" width="259.7" height="450" fill="#FBE4E4" opacity="0.6"/>
-<text x="96" y="46" font-size="11" fill="#B42323">below 1.3 Vs (15.47 m/s): FAIL</text>
-<line x1="90" y1="388.3" x2="1150" y2="388.3" stroke="#6B7280" stroke-width="0.75" stroke-dasharray="6 4"/>
-<text x="1146" y="382.3" font-size="11" fill="#6B7280" text-anchor="end">required 5 min</text>
-<polyline points="90.0,88.7 178.3,114.0 266.7,138.0 355.0,160.6 443.3,181.7 531.7,201.5 620.0,219.8 708.3,236.9 796.7,252.8 885.0,267.5 973.3,281.0 1061.7,293.7 1150.0,305.4" fill="none" stroke="#1F5FC7" stroke-width="2"/>
-<polyline points="90.0,189.7 178.3,208.8 266.7,226.8 355.0,243.6 443.3,259.6 531.7,274.4 620.0,288.4 708.3,301.2 796.7,313.1 885.0,324.1 973.3,334.4 1061.7,343.9 1150.0,352.6" fill="none" stroke="#4B5563" stroke-width="1.5" stroke-dasharray="6 4"/>
+<rect x="90" y="30" width="509.2" height="450" fill="#FBE4E4" opacity="0.6"/>
+<text x="96" y="46" font-size="11" fill="#B42323">below 1.3 Vs (15.76 m/s): FAIL</text>
+<line x1="90" y1="419.1" x2="1150" y2="419.1" stroke="#6B7280" stroke-width="0.75" stroke-dasharray="6 4"/>
+<text x="1146" y="413.1" font-size="11" fill="#6B7280" text-anchor="end">required 4 min</text>
+<polyline points="90.0,88.7 134.2,99.8 178.3,113.1 222.5,128.2 266.7,144.4 310.8,161.1 355.0,178.2 399.2,194.9 443.3,211.2 487.5,227.3 531.7,242.4 575.8,257.0 620.0,270.8 664.2,283.7 708.3,295.8 752.5,307.3 796.7,317.9 840.8,327.9 885.0,337.1 929.2,345.8 973.3,353.8 1017.5,361.3 1061.7,368.2 1105.8,374.7 1150.0,380.8" fill="none" stroke="#1F5FC7" stroke-width="2"/>
+<polyline points="90.0,177.5 134.2,186.9 178.3,198.0 222.5,210.4 266.7,223.6 310.8,237.2 355.0,250.9 399.2,264.3 443.3,277.6 487.5,290.1 531.7,302.1 575.8,313.4 620.0,324.2 664.2,334.3 708.3,343.7 752.5,352.4 796.7,360.6 840.8,368.1 885.0,375.2 929.2,381.8 973.3,387.7 1017.5,393.5 1061.7,398.7 1105.8,403.6 1150.0,408.1" fill="none" stroke="#4B5563" stroke-width="1.5" stroke-dasharray="6 4"/>
 <text x="96.0" y="80.7" font-size="12" fill="#1F5FC7">base</text>
-<text x="96.0" y="207.7" font-size="12" fill="#4B5563">pessimistic</text>
-<circle cx="266.7" cy="138.0" r="3" fill="#1F5FC7"/>
-<text x="272.7" y="130.0" font-size="12" font-family="IBM Plex Mono, monospace" fill="#121619">18.6 min · 199 W</text>
-<circle cx="443.3" cy="181.7" r="3" fill="#1F5FC7"/>
-<text x="449.3" y="173.7" font-size="12" font-family="IBM Plex Mono, monospace" fill="#121619">16.3 min · 228 W</text>
-<circle cx="796.7" cy="252.8" r="3" fill="#1F5FC7"/>
-<text x="802.7" y="244.8" font-size="12" font-family="IBM Plex Mono, monospace" fill="#121619">12.4 min · 300 W</text>
-<circle cx="1150.0" cy="305.4" r="3" fill="#1F5FC7"/>
-<text x="1156.0" y="297.4" font-size="12" font-family="IBM Plex Mono, monospace" fill="#121619">9.5 min · 390 W</text>
+<text x="96.0" y="195.5" font-size="12" fill="#4B5563">pessimistic</text>
+<circle cx="355.0" cy="178.2" r="3" fill="#1F5FC7"/>
+<text x="361.0" y="170.2" font-size="12" font-family="IBM Plex Mono, monospace" fill="#121619">17.3 min · 171 W</text>
+<circle cx="531.7" cy="242.4" r="3" fill="#1F5FC7"/>
+<text x="537.7" y="234.4" font-size="12" font-family="IBM Plex Mono, monospace" fill="#121619">13.7 min · 217 W</text>
+<circle cx="708.3" cy="295.8" r="3" fill="#1F5FC7"/>
+<text x="714.3" y="287.8" font-size="12" font-family="IBM Plex Mono, monospace" fill="#121619">10.6 min · 280 W</text>
+<circle cx="885.0" cy="337.1" r="3" fill="#1F5FC7"/>
+<text x="891.0" y="329.1" font-size="12" font-family="IBM Plex Mono, monospace" fill="#121619">8.2 min · 362 W</text>
+<circle cx="1061.7" cy="368.2" r="3" fill="#1F5FC7"/>
+<text x="1067.7" y="360.2" font-size="12" font-family="IBM Plex Mono, monospace" fill="#121619">6.4 min · 462 W</text>
 </svg>

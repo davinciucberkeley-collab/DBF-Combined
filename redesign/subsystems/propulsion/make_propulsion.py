@@ -26,7 +26,7 @@ from backends.stub_backend import StubBackend    # noqa: E402
 
 STATIONS = ('UR', 'UL', 'LR', 'LL')
 ROT = {'UR': 'CW', 'LL': 'CW', 'UL': 'CCW', 'LR': 'CCW'}
-SKU = {'CW': '11x5.5MRP (LP11055MRP)', 'CCW': '11x5.5MR (LP11055MR)'}
+SKU = {'CW': '11x8EP (LP11080EP)', 'CCW': '11x8E (LP11080E)'}
 THREAD = {'CW': 'LH', 'CCW': 'RH'}
 PRINT = {'UR': 'A', 'LL': 'A', 'UL': 'B', 'LR': 'B'}
 
@@ -93,10 +93,10 @@ def main():
     for i, s in enumerate(STATIONS):
         rot, th = ROT[s], THREAD[ROT[s]]
         parts += [
-            {'id': 'PRP-001-' + s, 'name': 'Motor %s SunnySky X3108S KV900 (%s from the nose)' % (s, rot),
+            {'id': 'PRP-001-' + s, 'name': 'Motor %s SunnySky X2814 V3 KV900 (%s from the nose)' % (s, rot),
              'subsystem': 'propulsion', 'status': 'MODELLED', 'mass_g': m['PRP-001'], 'material': 'motor (bought)',
              'cg_xyz_m': cg['PRP-001-' + s], 'make_or_buy': 'buy', 'electrical': 'sink',
-             'notes': '81.0 g with factory leads + 4 x M3x8 screws 3.2 g (PRP-005); envelope OD %.1f x %.1f mm, '
+             'notes': '108 g as listed (D-173; leads included: -) + 4 x M3x8 screws 3.2 g (PRP-005); 4 x M3 on 19 / 25 mm into 3.0 mm-deep holes, 110 mm leads, shaft 12 mm proud (maker drawing https://cdn.shopify.com/s/files/1/2024/0305/files/X2814.jpg, 2026-11-14); envelope OD %.1f x %.1f mm, '
                       'base on D3 canted plate print %s (7 deg tangential, D-27), shaft along the canted axis; '
                       'CG = CAD centroid; UNVERIFIED (T-E1-MOTOR-RM)' % (2000 * G['bell_r'], 1000 * G['body'], PRINT[s])},
             {'id': 'PRP-002-' + s, 'name': 'ESC %s LANRC 45 A' % s, 'subsystem': 'propulsion', 'status': 'MODELLED',
@@ -120,11 +120,11 @@ def main():
         edges += [
             {'id': 'E-PRP-%02d' % (i + 1), 'part_a': 'PRP-004-' + s, 'part_b': 'PRP-001-' + s, 'via': 'CT-PROP-ADAPTER',
              'owner': 'propulsion',
-             'notes': 'adapter pilot bore (4 mm x 8.5 mm) on the shaft stub, base flat on the bell top, four M3x4 on '
-                      'the 12 mm circle (vendor fit list names the X3108S KV900); bench joint, never a field joint',
-             'joint_stack': {'fastener': 'M3x4 SHCS (4 supplied with the adapter)', 'count': 4, 'grade': '12.9 (vendor)',
-                             'hole': 'counterbored clearance in the adapter base; M3 tapped in the bell top by the maker',
-                             'insert': 'none (aluminium bell)', 'engagement_mm': 2.5, 'min_engagement_mm': 2.0,
+             'notes': 'adapter pilot bore (4 mm) on the 12 mm shaft stub, base flat on the bell top, three M2.5x0.45 on '
+                      'the 15 mm circle, 3.5 mm deep (maker drawing, X2814); bench joint, never a field joint',
+             'joint_stack': {'fastener': 'M2.5 SHCS (3 with the adapter; length EST 6 mm)', 'count': 3, 'grade': '12.9 (vendor, -)',
+                             'hole': 'dia. 2.7 / 4.8 counterbored clearance in the adapter base; M2.5x0.45 tapped 3.5 mm in the bell top by the maker',
+                             'insert': 'none (aluminium bell)', 'engagement_mm': 2.5, 'min_engagement_mm': 2.0,   # EST: L 6 - 3.5 base
                              'min_engagement_basis': 'deviation D-58 (a) from the 1.0 d rule (D-41), granted on '
                                                      'CL-E1-ADAPTER-STRIP (RF 1.70 at 2.0 mm vs the 0.5 N m preload) '
                                                      'and conditional on T-E1-MOTOR-RM measuring >= 2.5 mm of bell-top '
@@ -134,7 +134,7 @@ def main():
                                                      'short of the windings',
                              'washer_nut': 'none', 'torque': '0.5 N m + Loctite 243 on the tip threads (C6; vendor '
                                                              'value wins if printed)',
-                             'tool': '2.0 mm hex key (vendor set)', 'access': 'from the front (-x), prop and nut off',
+                             'tool': 'hex key for M2.5 (2.0 mm, vendor set -)', 'access': 'from the front (-x), prop and nut off',
                              'install_order': 1, 'removal_order': 3},
              'retention': {'item': 'Loctite 243', 'count': 4,
                            'load_n': 'prop torque 0.33 N m at full throttle on a 6 mm radius = 14 N per screw in shear; '
@@ -144,8 +144,7 @@ def main():
              'owner': 'propulsion', 'field_joint': True,
              'notes': '%s on a %s post; LPAR06E ring centres the 1/4 in bore on the M6 post; hub rear face on the adapter '
                       'shoulder; prop off for transport (pouch spanner, D-40)' % (SKU[rot], th),
-             'joint_stack': {'fastener': 'M6x1 hex nut ISO 4032 (%s, steel, from the adapter set) + M6 washer 6 x 12 x '
-                                         '1.0' % th, 'count': 1, 'grade': '8 (steel)',
+             'joint_stack': {'fastener': 'M6x1 hex nut ISO 4032 (%s, steel, from the adapter set) + M6 washer 17.8 x 2.5 (maker, D-173)' % th, 'count': 1, 'grade': '8 (steel)',
                              'hole': '6.35 mm prop bore with LPAR06E ring to 6 mm',
                              'insert': 'none (threaded aluminium post)',
                              'engagement_mm': round(1000 * (G['post_len'] - G['hub_t'] - G['wash_t']), 2),
@@ -153,7 +152,7 @@ def main():
                              'min_engagement_basis': 'full ISO 4032 nut height (nut strength >= the post); post tip '
                                                      'at least flush with the nut face (CL-E1-NUT-ENGAGE); a 1.6 mm '
                                                      'washer fails this',
-                             'washer_nut': 'M6 washer 1.0 mm under the nut', 'torque': '1.5 N m, bell held by hand '
+                             'washer_nut': 'M6 washer 2.5 mm under the nut (maker, dia. 17.8)', 'torque': '1.5 N m, bell held by hand '
                                                                                         '(C6 CR-C6-05, T-C6-PROPNUT)',
                              'tool': '10 mm spanner (the one field tool, box pouch)', 'access': 'from the front (-x)',
                              'install_order': 2, 'removal_order': 1}},
@@ -166,7 +165,7 @@ def main():
            'parts': parts,
            'connection_types': [
                {'id': 'CT-PROP-ADAPTER', 'kind': 'mechanical', 'method': 'fastened',
-                'spec': 'bolt-on prop adapter, 4 x M3x4 SHCS into the motor bell, pilot on the shaft'},
+                'spec': 'bolt-on prop adapter, 3 x M2.5 SHCS on a 15 mm circle into the motor bell, pilot on the shaft'},
                {'id': 'CT-PROP-NUT', 'kind': 'mechanical', 'method': 'fastened',
                 'spec': 'M6x1 nut and washer clamp the prop hub on the adapter post (field joint)'}],
            'edges': edges,

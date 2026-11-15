@@ -3,9 +3,9 @@
  "nose_block_l_m": {
   "value": 0.001,
   "unit": "m",
-  "source": "params/CHANGE-LOG.md#D-47, #D-62",
+  "source": "params/CHANGE-LOG.md#D-47, #D-62, #D-150",
   "status": "PROPOSED",
-  "note": "1 mm thickened-epoxy (microballoon) bond line between the nose wall inside face and the fore face of the forward-stop T (XPS block A deleted at D-47; key name kept for C3, C5, F2, A5). x_fs = pod.x_le_m + board t + this + forward-stop t = -0.140 + 0.0048 + 0.001 + 0.003 = -0.1312 (D-62); nose skin to stop face 8.8 mm"
+  "note": "1 mm thickened-epoxy (microballoon) bond line between the nose wall inside face and the fore face of the forward-stop T (XPS block A deleted at D-47; key name kept for C3, C5, F2, A5). x_fs = pod.x_le_m + board t + this + forward-stop t = -0.147 + 0.0048 + 0.001 + 0.003 = -0.1382 (D-150; was -0.1312 at x_le -0.140, D-62); nose skin to stop face 8.8 mm (unchanged)"
  },
  "fwd_stop_m": {
   "value": [
@@ -20,13 +20,13 @@
  },
  "pack_aft_face_m": {
   "value": [
-   0.0315,
-   0.0475
+   -0.0055,
+   0.0045
   ],
   "unit": "m",
-  "source": "params/CHANGE-LOG.md#D-62, #D-64",
+  "source": "params/CHANGE-LOG.md#D-62, #D-64; review/CLOSURE-ROUND-2026-11-14/D2.md#D-174",
   "status": "PROPOSED",
-  "note": "pack aft face: [0] CAD pack (F1 PWR-001) at the datum pod.pack_x_nominal_m -0.036 (16 mm stack, blue 8 + green 6 + white 2; D-77, was -0.032 / 12 mm); [1] the most aft face, no spacer, on the aft stop (centroid -0.020). Pack 0.135 long (D-64 Ovonic EC5). Read by F1 power.py, F2 harness.py and A5 cad_claims.py; pod.py checks item 0 against pod.pack_x_nominal_m"
+  "note": "D-174 (Gens Ace Redline 4S 6000 HV Shorty, 98 x 47 x 46 mm): [0] CAD pack at the datum pod.pack_x_nominal_m -0.0545 (10 mm stack: blue 8 + white 2) = -0.0545 + 0.049; [1] most aft face, no spacer, on the aft filler (aft_stop_x_m 0.0475 - aft_filler_m 0.043 = 0.0045, centroid -0.0445). Read by F1 power.py, F2 harness.py, A5. Was [0.0315, 0.0475] for the 135 mm Ovonic (datum -0.036, no filler): still the fallback with the filler out"
  },
  "aft_stop_x_m": {
   "value": 0.0475,
@@ -34,6 +34,17 @@
   "source": "params/CHANGE-LOG.md#D-62 (CR-A1-62), params.json pod.pack_aft_travel_m",
   "status": "PROPOSED",
   "note": "aft stop face = pod.pack_x_nominal_m + L_pack/2 + pod.pack_aft_travel_m = -0.036 + 0.0675 + 0.016 = 0.0475 (D-77: the datum moved 4 mm forward, the stop did not). CR-A1-62 and D-62 quote 0.050, which is the same sum with the retired 0.140 pack: with the 0.135 Ovonic pack a stop at 0.050 would put the no-spacer station at -0.0175 and the datum on a 14.5 mm stack, off the 2 mm grid (CR-D2-24 to A1). Back face 0.0505; C3's strut (strut_m) bears on it"
+ },
+ "aft_filler_m": {
+  "value": [
+   0.043,
+   0.02,
+   0.016
+  ],
+  "unit": "m",
+  "source": "review/CLOSURE-ROUND-2026-11-14/D2.md#D-174 (D2 choice)",
+  "status": "PROPOSED",
+  "note": "D-174: XPS F-250 aft filler POD-013 against the aft stop, full bay width (52 mm): total length, height above the tray top, length of the removable fore piece. Two hot-wired blocks, 16 mm (fore) + 27 mm (on the stop), so the pack sits on the forward crush stack with a short U-spacer stack: datum -0.0545 on 10 mm (blue 8 + white 2); 12 mm reaches -0.0565 (block 31.2 mm, the most forward on the grid); no spacer -0.0445. Take the 16 mm piece out to trim further aft (no-spacer -0.0285, 28 mm set reaches -0.0565 again) if the X2814 motors move the CG forward enough. XPS (0.03 g/mm) instead of PETG U-spacers (0.15 g/mm). 20 mm tall so the pack leads pass over it to the aft stop (top z 0.0503); bearing 52 x 20 mm x 172 kPa = 179 N >= 85 N crash +x (C3 / C5 check). Remove both (and set pack_aft_face_m back) for the Ovonic 135 mm fallback"
  },
  "aft_stop_m": {
   "value": [
@@ -81,11 +92,29 @@
   "note": "closed-cell EVA pads with an anti-slip face; 2.5 mm keeps the 3.5 mm wire channel under the pack and the bay height"
  },
  "pad_len_m": {
-  "value": 0.045,
+  "value": 0.03,
   "unit": "m",
   "source": "D2 choice",
   "status": "PROPOSED",
-  "note": "one pad per strap station, centred on the strap slot"
+  "note": "D-174: 45 -> 30 mm so the aft pad (strap -0.045) stays out of the wire channel x -0.0295 ... -0.0195; one pad per strap station, centred on the strap slot"
+ },
+ "pack_spacer_m": {
+  "value": [
+   0.0,
+   0.139,
+   0.047
+  ],
+  "unit": "m",
+  "source": "review/CLOSURE-ROUND-2026-11-14/E2.md section \"D-163 pack\" 5 (12 mm closed-cell foam spacer, 139 x 47 x 12 mm, 3-8 g EST)",
+  "status": "PROPOSED",
+  "note": "D-174: stays 0. The 46 mm Shorty already fills the bay height (pad top to hatch 56.9 mm, 10.9 mm over the pack); a 12 mm spacer would put the pack top 1.1 mm into the hatch. Strap loops and hatch clamp without it. closed-cell foam spacer under the pack, on the EVA pads: thickness t, length x, width y. t = 0 (not drawn) while the 6.5 Ah Ovonic (49 mm high) is the flight pack. If A1 picks the D-163 6.0 Ah Gens Ace (139 x 47 x 37 mm, E2 bay fit) set t 0.012: pod.py then draws it in POD-004 (pefoam tag, spacer_foam_kgm3) and lifts the pack, the strap loops and CL-D2-PACK-Z by t; the bay (160 x 52 x 53 mm, bay_min_m) stays as it is (E2: keep the Ovonic fallback)"
+ },
+ "spacer_foam_kgm3": {
+  "value": 64.0,
+  "unit": "kg/m3",
+  "source": "review/CLOSURE-ROUND-2026-11-14/E2.md \"D-163 pack\" 5: 78 cm3 x 0.03-0.10 g/cm3 = 3-8 g, book 5 g -> 5 g / 78 cm3",
+  "status": "UNVERIFIED",
+  "note": "closed-cell foam (PE / EVA class) for pack_spacer_m; weigh at build (T-D2-WEIGH)"
  },
  "window_border_m": {
   "value": [
@@ -122,23 +151,23 @@
    0.002,
    0.004,
    0.006,
+   0.008,
    0.008
   ],
   "unit": "m",
-  "source": "params/CHANGE-LOG.md#D-62 (CR-A1-62)",
+  "source": "params/CHANGE-LOG.md#D-62 (CR-A1-62); review/DESIGN-ROUND-2026-11-14/A1.md#D-150",
   "status": "PROPOSED",
-  "note": "printed U-spacers behind the pack (POD-008): every 2 mm stack 0-20 mm. D-62: stations run from the no-spacer -0.020 to the crush-stack limit -0.0365 (C5 block 25.7 mm, 550 g class) / -0.0379 (A1's 24.3 mm): at most 16 mm of spacers; the second 8 mm spacer of D-47 is dropped. Colour by thickness: 2 white, 4 yellow, 6 green, 8 blue; each pack label carries its stack"
+  "note": "printed U-spacers behind the pack (POD-008): every 2 mm stack 0-28 mm. D-150: the forward stop moved 7 mm forward, so the station range (no-spacer -0.020 to the crush-stack limit) grows: -0.0382 with A1's 31.0 mm block (18.2 mm), -0.0401 with C5's 29.1 mm (20.1 mm, over the 20 mm of 2/4/6/8): the second 8 mm blue spacer of D-47 comes back (field kit, 0 g flown). D-62 had dropped it (range 16 mm). Colour by thickness: 2 white, 4 yellow, 6 green, 8 blue; each pack label carries its stack"
  },
  "spacer_flown_m": {
   "value": [
    0.008,
-   0.006,
    0.002
   ],
   "unit": "m",
-  "source": "params/CHANGE-LOG.md#D-77",
+  "source": "review/CLOSURE-ROUND-2026-11-14/D2.md#D-174",
   "status": "PROPOSED",
-  "note": "spacers in the CAD: the 550 g pack at the D-77 datum -0.036 with a 16 mm stack (blue 8 + green 6 + white 2); the rest live in the field kit. Was 12 mm (blue + yellow) at -0.032"
+  "note": "D-174: the Shorty at the datum -0.0545 on a 10 mm stack (blue 8 + white 2), with the 43 mm aft filler; the rest in the field kit. Was 16 mm at -0.036 (D-77)"
  },
  "spacer_h_m": {
   "value": 0.012,
@@ -196,12 +225,12 @@
  "strap_x_m": {
   "value": [
    -0.079,
-   0.006
+   -0.045
   ],
   "unit": "m",
   "source": "params/CHANGE-LOG.md#D-74, #D-77",
   "status": "PROPOSED",
-  "note": "strap slot centres. D-74 / D-77: the forward strap moves -0.062 -> -0.079 so its bay-side leg stays ahead of KO-PWR-BOARD / KO-PWR-SIDE (x >= -0.066): with the 26 mm slot the 20 mm strap spans at most -0.092 ... -0.066. Fore strap 16-25 mm behind the pack fore face for every D-77 station (-0.0365 ... -0.028); aft strap unchanged"
+  "note": "D-174: aft strap 0.006 -> -0.045 (the 98 mm pack ends at -0.0055): 13.5 mm behind the forward strap slot zone, its 30 mm EVA pad ends at -0.030, ahead of the wire channel (-0.0295). Its bay-side leg now stands in KO-PWR-SIDE-IN (case U only; case S is the design, D-173b): CL-D2-KO-PWR-HITS counts the case-S keep-outs, CL-D2-KO-PWR-U-HITS reports case U. Forward strap -0.079 unchanged (D-74). strap slot centres. D-74 / D-77: the forward strap moves -0.062 -> -0.079 so its bay-side leg stays ahead of KO-PWR-BOARD / KO-PWR-SIDE (x >= -0.066): with the 26 mm slot the 20 mm strap spans at most -0.092 ... -0.066. Fore strap 16-25 mm behind the pack fore face for every D-77 station (-0.0365 ... -0.028); aft strap unchanged"
  },
  "strap_slot_m": {
   "value": [
@@ -225,7 +254,7 @@
   "unit": "m",
   "source": "team/F3/AVIONICS.md (FC at (-0.010, 0.046))",
   "status": "PROPOSED",
-  "note": "right channel"
+  "note": "right channel. D-173b (closure round 2026-11-14): restored after D-161c was reversed (CoreWing F405 Wing APP V2 back)"
  },
  "fc_board_m": {
   "value": [
@@ -236,14 +265,14 @@
   "unit": "m",
   "source": "team/F3/CHANGE-REQUESTS.md#CR-F3-12 (f)",
   "status": "PROPOSED",
-  "note": "CoreWing F405 Wing V2 top board alone: footprint x height on 4 gel cubes 5 mm; no screws, no inserts"
+  "note": "CoreWing F405 Wing V2 top board alone: footprint x height on 4 gel cubes 5 mm; no screws, no inserts. D-173b (closure round 2026-11-14): restored after D-161c was reversed (CoreWing F405 Wing APP V2 back)"
  },
  "fc_plate_len_m": {
   "value": 0.062,
   "unit": "m",
   "source": "D2 choice",
   "status": "PROPOSED",
-  "note": "board 52 mm + 2 x (2 mm clearance + 3 mm end stop)"
+  "note": "board 52 mm + 2 x (2 mm clearance + 3 mm end stop). D-173b (closure round 2026-11-14): restored after D-161c was reversed (CoreWing F405 Wing APP V2 back)"
  },
  "fc_stop_m": {
   "value": [
@@ -254,7 +283,7 @@
   "unit": "m",
   "source": "D2 choice",
   "status": "PROPOSED",
-  "note": "end stops at both FC ends: thickness x height x width; 2 mm clear of the board so the gel pads isolate; the guide and side wall bound y"
+  "note": "end stops at both FC ends: thickness x height x width; 2 mm clear of the board so the gel pads isolate; the guide and side wall bound y. D-173b (closure round 2026-11-14): restored after D-161c was reversed (CoreWing F405 Wing APP V2 back)"
  },
  "avn_plate_x_m": {
   "value": [
@@ -352,13 +381,13 @@
  },
  "latch_tab_m": {
   "value": [
-   0.012,
-   0.04
+   0.008,
+   0.06
   ],
   "unit": "m",
   "source": "team/C3/CHANGE-REQUESTS.md#CR-C3-01",
   "status": "PROPOSED",
-  "note": "hook-and-loop latch tab, overlap on the aft deck x width"
+  "note": "hook-and-loop latch tab, overlap on the aft deck x width. D-143: 12 -> 8 mm so the tab ends at x 0.074, forward of the handle grip (x 0.075-0.085); 3.2 cm2 x 11 N/cm2 (VELCRO Velstick shear, lowest found, https://www.trivantage.com/itemfiles/pdfs/tds/VELCRO_Velstick_Specifications.pdf, checked 2026-11-13) = 35 N against the 0.09 N hatch weight; EST. D-144: the load case is VD suction (C3 CALC-C3-HATCH), not weight: at 8 x 40 the tab read 3.34 N/cm2 against the 2.5 N/cm2 allowable (CL-C3-HATCH-TAB), so the tab widens 40 -> 60 mm (|y| <= 30 mm, inboard of the handle-leg slots at |y| 44.1 mm): 4.8 cm2, the area of the old 12 x 40 tab"
  },
  "ant_tube_m": {
   "value": [
@@ -569,7 +598,7 @@
    "strap_each": 4.0,
    "tie_each": 2.0,
    "label": 0.5,
-   "velcro_tab": 1.3,
+   "velcro_tab": 1.35,
    "inserts_m3": 1.4,
    "mast_hw": 0.4,
    "glue_shell": 4.0,
@@ -582,7 +611,7 @@
   "unit": "g",
   "source": "EST (catalogue class values; weigh at build, T-D2-WEIGH)",
   "status": "UNVERIFIED",
-  "note": "R4: mast_hw is now a PA66 M3x16 cheese-head screw + PA66 nut (CR-C6-18); fillet_corners = 6 mm microballoon fillets floor-to-side-wall +/-30 mm of each strap (CR-C6-17)"
+  "note": "R4: mast_hw is now a PA66 M3x16 cheese-head screw + PA66 nut (CR-C6-18); fillet_corners = 6 mm microballoon fillets floor-to-side-wall +/-30 mm of each strap (CR-C6-17); D-143: velcro_tab 1.3 -> 0.9 g with the tab 12 -> 8 mm (x 8/12); D-144: 0.9 -> 1.35 g with the tab 40 -> 60 mm wide (x 60/40)"
  },
  "floor_channel_m": {
   "value": [
@@ -653,7 +682,51 @@
   "unit": "m",
   "source": "team/F3/CHANGE-REQUESTS.md#CR-F3-12 (c); C6 CR-C6-19",
   "status": "PROPOSED",
-  "note": "slot at the root of each FC end stop (y width x z height, 0.5 mm above the plate): a 10 mm hook-and-loop strap loops round the FC through both stops, 1-2 mm slack (secondary retention, 10 N)"
+  "note": "slot at the root of each FC end stop (y width x z height, 0.5 mm above the plate): a 10 mm hook-and-loop strap loops round the FC through both stops, 1-2 mm slack (secondary retention, 10 N). D-173b (closure round 2026-11-14): restored after D-161c was reversed (CoreWing F405 Wing APP V2 back)"
+ },
+ "fc_seat_m": {
+  "value": {
+   "board": [
+    0.045,
+    0.03,
+    0.0135
+   ],
+   "cube": [
+    0.0076,
+    0.0076,
+    0.005
+   ],
+   "cube_inset": 0.004,
+   "strap": [
+    0.01,
+    0.0015
+   ],
+   "slot": [
+    0.002,
+    0.011
+   ],
+   "land_fore": 0.002,
+   "gap": 0.0015,
+   "deck_t": 0.002
+  },
+  "unit": "m",
+  "source": "review/CLOSURE-ROUND-2026-11-14/F3.md sections 2, 2.1, 3, 7 (D-161c: Holybro Kakute H743-Wing 45 x 30 x 13.5 mm, docs.holybro.com/autopilot/kakute-h743-wing/overview read by F3 2026-11-14; gel cubes 7.6 x 7.6 x 5 mm, CALC-F3-VIBE); subsystems/avionics/params.json pad_inset_m (4 mm); subsystems/power/SPEC.md (deck 0.0366-0.0386, 2 mm)",
+  "status": "RETIRED",
+  "note": "RETIRED by D-173b (D-161c reversed: the Kakute H743-Wing is not bought; the CoreWing FC is back on the right-channel tray). pod.py and pod_claims.py no longer read it; kept as the record of the D-161c layout. Was: D-161c flight-controller seat on F1's power-frame deck (PWR-006) inside KO-PWR-BOARD (ko_pwr_m: x -0.066 ... -0.010, y -0.0634 ... -0.0294, deck top 0.0386, keep-out top 0.0626). board: footprint x (arrow -x) by y, height; cube: gel cube x, y, height, one under each board corner, cube_inset from the board edges (F3 rule); strap: 10 mm hook-and-loop width, thickness; slot: deck slot length x by width y, one at each board end on the board centreline, cut by F1 in PWR-006; the strap runs over the board along x, down both slots and back under the deck (C6 10 N secondary retention, as fc_strap_slot_m did on the old tray); land_fore: deck land ahead of the fore slot; gap: slot to board end (strap turn). From the seat front: land 2 | slot 2 | gap 1.5 | board 45 | gap 1.5 | slot 2 | land 2 mm = 56 mm, so the board sits x -0.0605 ... -0.0155 (centre -0.038, F3.md 4 station), y -0.0614 ... -0.0314, bottom 0.0436, top 0.0571 (5.5 mm under the keep-out top), strap top 0.0586. deck_t: F1 deck thickness (under-deck strap run). Checked by CL-D2-FC-SEAT-*; D2 does not draw the board, cubes, strap or slots (F3: AVN-001, AVN-006; F1: PWR-006)"
+ },
+ "usb_spot_m": {
+  "value": [
+   -0.048,
+   -0.028,
+   -0.0652,
+   -0.0592,
+   0.0636,
+   0.0786
+  ],
+  "unit": "m",
+  "source": "D2 choice (closure round 2026-11-14, F3.md section 7 request to D2); extender size EST (the Kakute ships a USB extender, F3.md [K-M]; its size is not published: \"-\")",
+  "status": "RETIRED",
+  "note": "RETIRED by D-173b (D-161c reversed: the Kakute H743-Wing is not bought; the CoreWing FC is back on the right-channel tray). pod.py and pod_claims.py no longer read it; kept as the record of the D-161c layout. Was: D-161c: reserved envelope for the Kakute USB-C extender, x0 x1 y0 y1 z0 z1 (20 x 6 x 15 mm EST incl. 1 mm foam tape): on the left side-wall inner face (y -0.0652) above the FC, receptacle mouth up. Inside the hatch opening (x -0.1362 ... 0.066), 1.0 mm above the KO-PWR-BOARD top (0.0626), 1.6 mm under the hatch underside (0.0802), 10 mm outboard of antenna tube A. Plug in from above with the hatch off, pack in place. F3 sizes it on arrival and owns the part (AVN-001 extender, new edge to POD-001, foam tape); CL-D2-USB-*"
  },
  "tie_post_x_m": {
   "value": [
@@ -674,14 +747,14 @@
  },
  "pack_x_per_pack_m": {
   "value": {
-   "546": -0.036,
-   "550": -0.034,
-   "590": -0.03
+   "404": -0.0545,
+   "414": -0.0545,
+   "424": -0.0545
   },
   "unit": "m",
-  "source": "team/A3/rollup/rollup.json#cg.station_cases (D-77 re-run)",
+  "source": "review/CLOSURE-ROUND-2026-11-14/D2.md#D-174 (placeholder until A3 re-runs cg_cases for the 414 g pack)",
   "status": "PROPOSED",
-  "note": "A3's live stations after D-75...D-78 (2026-11-11): 546 g -0.036 (16 mm: blue + green + white), 550 g -0.034 (14 mm: blue + green), 590 g -0.030 (10 mm: blue + white); basic CG 48.8-49.2 mm, predicted 50.3-50.7 mm. Was -0.028 for 590 g (A1 D-62 estimate). H3 writes the flight card from A3's re-run on the balance-test day (CR-A3-27)"
+  "note": "D-174: Shorty 414 g (+-10 g) all at the datum -0.0545 until A3 gives weighed stations; range -0.0445 (no spacer, both filler pieces) ... -0.0565 (12 mm, block 31.2 mm); -0.0285 ... -0.0565 with the 16 mm filler piece out. Was 546 / 550 / 590 g Ovonic cases"
  },
  "spacer_colour": {
   "value": {
@@ -776,11 +849,11 @@
   "note": "PDB-plate ribs: width x height above the plate, one along each boss row (broken at the bosses), plate front to plate end, outboard / inboard of F1's bus board (>= 3.7 mm clear); below the boss tops so the nylon spacers sit on the bosses only"
  },
  "ant_b_tip_min_x_m": {
-  "value": -0.15,
+  "value": -0.157,
   "unit": "m",
-  "source": "team/D7/CHANGE-REQUESTS.md#CR-D7-23 (D-62)",
+  "source": "team/D7/CHANGE-REQUESTS.md#CR-D7-23 (D-62); review/DESIGN-ROUND-2026-11-14/A1.md#D-150, C5.md section 1.3",
   "status": "PROPOSED",
-  "note": "antenna B tube must not reach further forward than this (10 mm ahead of the pod nose, D7's nose pad gap)"
+  "note": "antenna B tube must not reach further forward than this: 10 mm ahead of the pod nose (D7 nose pad gap). D-150: moves with the nose, -0.150 -> -0.157 (C5 section 1.3); D7-W3: 1/2 in nose pad, face -0.1593; tip at -0.157 clears it by 2.30 mm. Do not let the socket collar grow past 8 mm or this rule move forward of -0.157 (2 mm feeler margin)"
  },
  "floor_bevel_m": {
   "value": 0.0,
@@ -871,5 +944,33 @@
   "source": "Amass XT30U drawing (UNVERIFIED, measure at receipt)",
   "status": "UNVERIFIED",
   "note": "mated male + female body length x width x height; the side exit (16 x 12 mm) passes one body (10.2 x 5.2) with the leads (CL-D2-XT30U-EXIT)"
+ },
+ "block_top_clear_m": {
+  "value": 0.0005,
+  "unit": "m",
+  "source": "review/DESIGN-ROUND-2026-11-14/A1.md#D-150 (C3.md section 3, C5.md section 1.3); D2-W2 hatch sweep",
+  "status": "PROPOSED",
+  "note": "D-150: crush block and spreader top back to 0.5 mm under the hatch (D-143 had 3.0 mm). Block section 0.052 x (zh 0.0802 - tray top 0.0208 - 0.0005) - 30 x 8 mm vent groove = 2.823e-3 m2 (CL-D2-BLOCK-SECTION; 486 N at 172 kPa, C5). The hatch tongue clears the block because of the fore-top step block_step_m, not this gap: closed, the tongue underside sits 0.5 mm over the block top; in the swing it dips to zh - 2.5 mm over the step (CL-D2-HATCH-SWEEP-CLR). D-143 history: the 3.0 mm drop gave 0.5 mm swing clearance with no step"
+ },
+ "block_step_m": {
+  "value": [
+   0.008,
+   0.003
+  ],
+  "unit": "m",
+  "source": "review/DESIGN-ROUND-2026-11-14/A1.md#D-150 (C3.md section 3 proposed 3 x 3 mm); length set by D2-W2 hatch sweep",
+  "status": "PROPOSED",
+  "note": "step cut on the crush block fore top edge (POD-009 only; the spreader is full height): length in x from the forward stop face x depth in z below the block top. A1 / C3 gave 3 x 3 mm from the closed tongue (tongue ends 2 mm aft of the block front). The swing does not stay there: turned about the nose-lip edge, the tongue front corner sweeps to x_fs + 3.4 mm at 60 deg open and x_fs + 6.8 mm at 90 deg, at zh - 2.4 / zh - 0.7 mm. 3 mm long: -0.92 mm (into the block) at 60 deg; 5.5 mm: clear to 70 deg; 8 mm: clear at every opening 0-90 deg, smallest gap 0.50 mm (the closed pose). Section over the step 2.667e-3 m2 (459 N), C5 counts the force deficit over the step length"
+ },
+ "hatch_motion": {
+  "value": {
+   "tilt_max_deg": 90.0,
+   "slide_deg": 60.0,
+   "slide_m": 0.0038
+  },
+  "unit": "deg, m",
+  "source": "params/CHANGE-LOG.md#D-143 (assembly-check motion: lowered tilted 60 deg, slid 3.8 mm along its plane, turned about the upper aft edge of the nose lip)",
+  "status": "PROPOSED",
+  "note": "hatch closing motion used by pod.py#layout() hatch_sweep: the tongue and the first 40 mm of the hatch board turned about (x_lip1, ztop) from tilt_max_deg to 0, plus the D-143 slide at slide_deg; 2-D in x-z (the tongue spans y +/-45 mm, wider than the 51.4 mm block). tilt_max 90 deg covers any opening a user may use, not only the 60 deg of the D-143 check"
  }
 }

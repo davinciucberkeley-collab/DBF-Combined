@@ -1,7 +1,15 @@
-# K09-L quad tailsitter VTOL — student project
+# Small quadplane VTOL — student project
 
-The chosen design (team decision 2026-11-13, see `redesign/CONFIGURATION.md`)
-is **K09-L**: a quad tailsitter. A flat flying wing about 1.15 × 0.30 m with
+**Configuration changed 2026-11-14 (D-181, `redesign/config-study/RESTUDY-2026-11-14.md`):**
+K09-L could not be built new within the $2,000 limit (cheapest workable build
+about $2,577, `redesign/review/CLOSURE-ROUND-2026-11-14/DESIGN-TO-COST.md`).
+The new configuration is a **small quadplane**: four fixed lift motors plus one
+cruise pusher on a foam wing, about 1.9 kg (estimate), ArduPilot QuadPlane;
+fallback the ZOHD Altus VTOL kit. The K09-L description below is the previous
+design, kept as the record until the new design documents replace it.
+
+The previous design (team decision 2026-11-13, see `redesign/CONFIGURATION.md`)
+was **K09-L**: a quad tailsitter. A flat flying wing about 1.15 × 0.30 m with
 two fins, four fixed motors in an X; it takes off standing on its fin tips as
 a quadcopter, pitches 90° to cruise on the same motors with two elevons, and
 pitches back to land. No pusher, no tilt, no separate lift rotors. Mass gate
@@ -16,6 +24,15 @@ that concept.
 - Portable: a team of 4 moves it routinely; hard cap under 25 kg (55 lb).
   K09-L travels in one piece in a ~1.25 × 0.55 × 0.45 m box that fits a
   standard car.
+- Passes a 3-D physics simulation: every build step and the assembled
+  aircraft (`redesign/showcase/animation/assembly_check.py`, collision
+  `redesign/collision/collide.py --glb`) with no part interpenetration, no
+  open wire ends and no exemptions; flight cases in the 3-D sims (C5 landing,
+  SITL) pass against their limits.
+
+Within these constraints the engineering agents (`redesign/TEAM.md`) make the
+design decisions, including mass, mission and performance trade-offs; log
+each one with its reasoning in `redesign/params/CHANGE-LOG.md`.
 
 ## Where things are
 - README.md is the front door: directory map, status, how to view the pages.

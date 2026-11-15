@@ -88,26 +88,32 @@ kit.assumption("ASM-A3-PACK-SLIDE", "Total U-spacer stack behind the pack",
                basis="params/CHANGE-LOG.md D-47 (spacer set 2/4/6/8/8), D-59 and D-62; replace by "
                      "subsystems/pod/params.json spacer_set_m once D2 publishes it",
                value=0.028, unit="m", status="PROPOSED")
-kit.assumption("ASM-A3-PACK-RANGE", "Flight-pack mass bounds (D-64)",
-               "Lightest and heaviest flight pack the CG, gate and load cases run with: the Ovonic 120C EC5 listing "
-               "minimum 546 g (551 - 5) and a 590 g heavy bound kept for the CG stations and load cases (D-64). "
-               "D-95: 590 g is a conservative structural / CG bounding case only, not the acceptance line: the "
-               "T-E2-WEIGH pass line is CL-A3-PACK-ACCEPT (one number, A1 copies it). The 503 / 680 g listings of the "
-               "generic 4S 6500 search are retired as flight cases",
-               basis="params/CHANGE-LOG.md D-64 and D-95 (E2 CR-E2-24/-25, A1 ASM-A1-PACK-CASES-G [546, 590]); weigh "
-                     "each pack on arrival", value=[546.0, 590.0], unit="g",
-               status="UNVERIFIED", cites=["SRC-E2-OVONIC-120C-EC5"])
-kit.assumption("ASM-A3-PACK-NOMINAL", "Flight-pack listed mass (D-64)",
-               "Ovonic 4S 6500 mAh 120C hard case EC5: listed 551 g (+/- 5 g); the parts.csv line carries 550 g "
-               "(battery.mass_kg). The middle CG / gate case runs at the listed 551 g",
-               basis="params/CHANGE-LOG.md D-64; E2 CL-E2-SKU-MASS-MARGIN", value=551.0, unit="g",
-               status="UNVERIFIED", cites=["SRC-E2-OVONIC-120C-EC5"])
+kit.assumption("ASM-A3-PACK-RANGE", "Flight-pack mass bounds (D-180 cost re-check, 2026-11-14)",
+               "Lightest and heaviest weighed mass of the ONE flight pack the CG, gate and load cases run with: CNHL "
+               "Racing Series 4S 6000 mAh 15.2 V 130C LiHV Shorty hard case, listed 415.5 g (chinahobbyline.com "
+               "listing, search snippet 2026-11-14, tolerance not stated: +/- 10 g EST) + 4 g for E2's own 10 AWG "
+               "pigtails: [409.5, 429.5] g. The heavy bound IS the SKU listing maximum, so it equals the pass line "
+               "the pack must meet (CL-A3-PACK-ACCEPT >= 429.5 g). The Gens Ace Redline Shorty (410 +/- 10 + 4 g = "
+               "[404, 424]) is the fallback and sits inside this range at the heavy end",
+               basis="review/CLOSURE-ROUND-2026-11-14/A3.md cost re-check; E2.md cost re-check (CNHL 6000 120C hard "
+                     "case 479 g fails this line: worst 484 g against 439 g); weigh each pack on arrival (T-E2-WEIGH). "
+                     "Was [546, 590] for the Ovonic 120C EC5 (D-64)", value=[409.5, 429.5], unit="g",
+               status="UNVERIFIED", cites=["SRC-E2-PACK-SEARCH-D173"])
+kit.assumption("ASM-A3-PACK-NOMINAL", "Flight-pack listed mass incl. pigtails (D-180 cost re-check)",
+               "CNHL Racing Series 4S 6000 130C LiHV Shorty: listed 415.5 g + 4 g pigtails = 419.5 g (EST). The "
+               "parts.csv line carries battery.mass_kg (0.414 until A1 applies 0.4195). The middle CG / gate case "
+               "runs at 419.5 g",
+               basis="A3.md cost re-check; E2.md cost re-check", value=419.5, unit="g",
+               status="UNVERIFIED", cites=["SRC-E2-PACK-SEARCH-D173"])
 kit.assumption("ASM-A3-NOSE-STACK", "Length from the pod nose to the most forward pack fore face",
-               "D-62 bay: pod nose -0.140 to the forward-stop aft face -0.1312 (8.8 mm: nose wall, nose block, "
-               "3 mm stop) + XPS F-250 crush block >= 24.3 mm + 1.5 mm PETG spreader = 34.6 mm; most forward pack "
-               "fore face -0.1054, so the 135 mm pack centroid is >= -0.0379",
-               basis="params/CHANGE-LOG.md D-62 (forward stop -0.1312, nose -0.140; was -0.1212 / -0.130 at D-47), "
-                     "CR-A1-43, crush block >= 24.3 mm C5 CR-C5-02, spreader 1.5 mm", value=0.0346, unit="m")
+               "D-150 pod as drawn (D2 wave 2): pod nose -0.147 to the forward-stop aft face -0.1382 (8.8 mm: nose "
+               "wall, nose block, 3 mm stop) + XPS F-250 crush block >= 31.0 mm (the D-150 floor, "
+               "CL-C5-BLOCK-L-CUT-MIN; not C5's 27.5 mm energy length) + 1.5 mm PETG spreader = 41.3 mm; most "
+               "forward pack fore face -0.1057, so the 135 mm pack centroid is >= -0.0382 (= CL-D2-PACK-X-FWD-MIN, "
+               "C3's crash fail-safe condition)",
+               basis="review/DESIGN-ROUND-2026-11-14 A1.md D-150, D2-W2.md (stop -0.1382, ASM-D2-STACK-BLOCK-A1 "
+                     "0.031), C5-W2.md section 4 (request 0.0346 -> 0.0413), C3-W2.md section 3; was 0.0346 on the "
+                     "D-62 bay (nose -0.140, stop -0.1312, block 24.3 mm)", value=0.0413, unit="m")
 kit.assumption("ASM-A3-PACK-STATIONS", "Per-pack flight station rule (D-98 mid-band; was D-59)",
                "Each weighed pack flies at the whole spacer step (P:pod.pack_spacer_step_m), counted forward from "
                "the no-spacer station (nominal + P:pod.pack_aft_travel_m), that minimises the worse range use of the "
@@ -139,7 +145,7 @@ def _growth(r, mga):
                   "overrun_kg": P + "requirements.build_overrun_kg"},
           units={"gate_kg": "kg", **{k: "g" for k in SUBSYSTEMS}, "growth_g": "g", "pack_rng": "g", "pack_nom": "g",
                  "overrun_kg": "kg"})
-def mass_rollup(items, mga, gate_kg, growth_g, pack_rng, pack_nom=551.0, overrun_kg=0.1, **alloc):
+def mass_rollup(items, mga, gate_kg, growth_g, pack_rng, pack_nom=419.5, overrun_kg=0.1, **alloc):
     rows = _rows(items)
     by_sub, by_disc = {}, {}
     for r in rows:
@@ -201,7 +207,7 @@ def _cg(rows, w=None):
                  "foot": "m", "pack_rng": "g", "pod_le": "m", "nose": "m", "y_max": "m", "aft": "m", "stations": "m",
                  "pack_nom": "g"})
 def cg_cases(items, mga, x_rng, z_rng, x_t, z_m, c, te, pack, slide, foot, pack_rng, pod_le, nose, y_max,
-             aft=0.012, stations=0.002, pack_nom=551.0):
+             aft=0.012, stations=0.002, pack_nom=419.5):
     cases = (pack_rng[0], pack_nom, pack_rng[1])              # D-64: listing minimum, listing, acceptance line
     rows = _rows(items)
     packs = [r for r in rows if r["discipline"] == "energy"]
@@ -414,7 +420,7 @@ kit.claim("CL-A3-GATE-MARGIN-590", "Gate margin after growth with the 590 g heav
           how="Information: a 590 g pack would leave this margin; it is above the acceptance line CL-A3-PACK-ACCEPT "
               "and is returned at T-E2-WEIGH.",
           note="D-95: no limit and no requirement link. The acceptance test of record is CL-A3-PACK-ACCEPT (>= SKU "
-               "maximum 556 g); 590 g stays only as the conservative heavy case for CG stations and load cases. "
+               "maximum 429.5 g, D-180); the heavy bound stays only as the conservative heavy case for CG stations and load cases. "
                "Replaces CL-A3-GATE-MARGIN-680 (D-64 retired the 680 g listing).")
 kit.claim("CL-A3-GATE-MARGIN-546", "Gate margin after growth with the lightest flight pack (546 g, D-64)",
           calc="CALC-A3-MASS", output="gate_margin_pack_light_kg", unit="kg",
@@ -427,10 +433,10 @@ for _m in (503, 680):                                           # retired ids, k
               note="Kept for one revision so B4 sim_claims.py, I1 and A2's matrix still resolve (CR-A3-33); removed at "
                    "A3-R8. No limit and no requirement: D-64 retired the 503 / 680 g listings.")
 kit.claim("CL-A3-PACK-ACCEPT", "Heaviest weighed pack the first-build overrun still covers (pack acceptance line)",
-          calc="CALC-A3-MASS", output="pack_accept_g", unit="g", limit=(">=", 556.0),
+          calc="CALC-A3-MASS", output="pack_accept_g", unit="g", limit=(">=", 429.5),
           verifies=["R-MASS-GATE", "R-PACK-MASS"],
           how="Weigh each pack on arrival (T-E2-WEIGH); a pack above this line is returned or the first build must "
-              "come in under its allocations. Limit: the SKU listing maximum 551 + 5 g.",
+              "come in under its allocations. Limit: the SKU listing maximum 415.5 + 4 + 10 = 429.5 g (D-180).",
           note="= carried pack + CL-A3-GATE-MARGIN - build overrun, on the live roll-up (the R5 additions are in the "
                "items, so A1's ASM-A1-R5-ADDED-G is not subtracted again). A1's CL-A1-PACK-ACCEPT, E2's PACK_ACCEPT_KG "
                "and the T-E2-WEIGH pass line follow it.")
@@ -803,7 +809,7 @@ def fmt_g(v):
     return f"{v:,.0f}".replace(",", " ")
 
 
-def report(kit, items, log):
+def report(kit, items, log, doc=True):
     M = kit.nodes["CALC-A3-MASS"]["outputs"]
     C = kit.nodes["CALC-A3-CG"]["outputs"]
     I = kit.nodes["CALC-A3-INERTIA"]["outputs"]
@@ -839,8 +845,8 @@ def report(kit, items, log):
         L.append(f"| {lbl} | {pg:.0f} | {fmt_g(pr * 1000)} | {mg * 1000:+.0f} | {ovr:.0f} | `{cl}` | "
                  f"{'`MODELLED`' if mg * 1000 >= ovr else ('rejected at `T-E2-WEIGH`' if cl.endswith('-590') else '`FAIL`')} |")
     L += ["", f"Pack acceptance (heaviest weighed pack that leaves the {ovr:.0f} g overrun under the gate): "
-              f"**{M['pack_accept_g']:.1f} g** (`CL-A3-PACK-ACCEPT`; SKU listing maximum 556 g, margin "
-              f"{M['pack_accept_g'] - 556:+.1f} g).",
+              f"**{M['pack_accept_g']:.1f} g** (`CL-A3-PACK-ACCEPT`; SKU listing maximum 429.5 g, margin "
+              f"{M['pack_accept_g'] - 429.5:+.1f} g).",
           "", "| Discipline | Basic g | Predicted g | Share |", "|---|---|---|---|"]
     for name, basic, pred in M["by_discipline_g"]:
         L.append(f"| {name} | {fmt_g(basic)} | {fmt_g(pred)} | {basic / (M['basic_kg'] * 10):.0f} % |")
@@ -937,8 +943,8 @@ def report(kit, items, log):
         {"_note": "GENERATED by team/A3/mass_rollup.py", "mass": M, "cg": C, "inertia_kgm2": I, "groups": G,
          "sources": log["sources"], "log": log}, indent=1) + "\n", encoding="utf-8")
 
-    doc = RED / "MASS-CG.md"
-    if doc.exists():
+    doc = RED / "MASS-CG.md" if doc else None
+    if doc and doc.exists():
         t = doc.read_text(encoding="utf-8")
         a, b = t.find("<!-- rollup:begin"), t.find("<!-- rollup:end -->")
         if a >= 0 and b > a:
@@ -949,6 +955,8 @@ def report(kit, items, log):
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--check", action="store_true", help="exit 1 if rollup/mass_items.json is stale")
+    ap.add_argument("--no-doc", action="store_true", help="do not rewrite the roll-up block in redesign/MASS-CG.md "
+                    "(design-round waves where A3 writes only in team/A3/)")
     a = ap.parse_args()
     params = kit._params
     items, log = gather(params)
@@ -964,7 +972,7 @@ def main():
     kit.param_files.append(rel)
     kit._params.update(pk.load_params(HERE / rel))
     kit.write()
-    M, C, I = report(kit, items, log)
+    M, C, I = report(kit, items, log, doc=not a.no_doc)
     print(f"basic {M['basic_kg'] * 1000:.0f} g, predicted {M['predicted_kg'] * 1000:.0f} g, gate margin "
           f"{M['gate_margin_kg'] * 1000:+.0f} g (546 g pack {M['gate_margin_pack_light_kg'] * 1000:+.0f}, 590 g pack "
           f"{M['gate_margin_pack_heavy_kg'] * 1000:+.0f}; accept {M['pack_accept_g']:.1f} g); CG x {C['cg_m'][0]:.4f} m "

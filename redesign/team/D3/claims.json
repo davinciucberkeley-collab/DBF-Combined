@@ -100,28 +100,28 @@
     "mu": "P:fin_detail.mount.mu_petg_cf"
    },
    "outputs": {
-    "F_side": 73.74631268436578,
-    "F_hub": 43.14063848144952,
-    "M_root": 14.011799410029498,
-    "fuse_ratio": 1.6039503997323092,
-    "hold_ratio": 1.7648939532563872,
-    "F_axial": 227.27272727272728,
-    "clamp_n": 241.1438531695384
+    "F_side": 74.56140350877192,
+    "F_hub": 39.906103286384976,
+    "M_root": 14.166666666666664,
+    "fuse_ratio": 1.6377473115342098,
+    "hold_ratio": 1.2221706577375262,
+    "F_axial": 230.76923076923075,
+    "clamp_n": 244.85375860291586
    },
    "input_values": {
-    "T": 2.5,
+    "T": 2.55,
     "xt": 0.045,
-    "od": 0.022,
+    "od": 0.0221,
     "gap": 0.00015,
     "wall": 0.002,
-    "ahead": 0.0075,
-    "can": 0.0265,
-    "stack": 0.0373,
+    "ahead": 0.003,
+    "can": 0.036,
+    "stack": 0.0477,
     "zm": 0.19,
-    "M_mount": 0.9854022286006237,
+    "M_mount": 1.4514446343869165,
     "ff": 1.15,
     "pf": 1.25,
-    "M_joint": 22.47423126468575,
+    "M_joint": 23.201420246734635,
     "mu": 0.3
    }
   },
@@ -146,22 +146,22 @@
     "zm": "P:propulsion.stations.z_m"
    },
    "outputs": {
-    "gap": 0.04452197145622131,
-    "ratio": 1.1382035856483617,
-    "x_prop": -0.012671971456221315,
-    "x_face": 0.024349999999999997,
-    "tube_gap": 0.04667197145622132,
-    "tip_gap": 0.03192288031958317
+    "gap": 0.04997532981868232,
+    "ratio": 1.2776186169005606,
+    "x_prop": -0.018175329818682324,
+    "x_face": 0.028799999999999996,
+    "tube_gap": 0.052125329818682314,
+    "tip_gap": 0.030944631779830884
    },
    "input_values": {
-    "ahead": 0.0075,
-    "stack": 0.0373,
+    "ahead": 0.003,
+    "stack": 0.0477,
     "D": 0.2794,
     "xt": 0.045,
-    "od": 0.022,
+    "od": 0.0221,
     "gap": 0.00015,
     "wall": 0.002,
-    "cant": 7.0,
+    "cant": 10.0,
     "sense": -1,
     "ym": 0.32,
     "zm": 0.19
@@ -170,34 +170,39 @@
   {
    "id": "CALC-D3-SCREW-ENGAGE",
    "type": "calculation",
-   "title": "Motor screw thread engagement on the 7 deg canted plate",
+   "title": "Motor screw thread engagement on the canted plate (10 deg, X2814 blind holes, D-173)",
    "script": "redesign/team/D3/fins_calcs.py",
    "function": "screw_engage",
-   "equation": "R3 canted plate (front and back faces both on the cant plane): engagement = L_screw - t_plate at every hole; for comparison the R2 flat plate + canted pads would give L - (t + tan(cant) max|t.hole|)",
+   "equation": "R3 canted plate (front and back faces both on the cant plane): engagement = L_screw - t_plate at every hole, less the washer stack under the head (D-173: 2 x 0.5 mm); tip clearance = blind hole depth - engagement; for comparison the R2 flat plate + canted pads would give L - (t + tan(cant) max|t.hole|)",
    "inputs": {
     "Ls": "P:fin_detail.mount.motor_screw_len_m",
     "tp": "P:fin_detail.mount.plate_t_m",
     "pat": "P:fin_detail.mount.bolt_pattern_m",
     "cant": "P:propulsion.stations.cant_deg",
     "ym": "P:propulsion.stations.y_m",
-    "zm": "P:propulsion.stations.z_m"
+    "zm": "P:propulsion.stations.z_m",
+    "wst": "P:fin_detail.mount.washer_stack_m",
+    "hd": "P:fin_detail.mount.motor_hole_depth_m"
    },
    "outputs": {
-    "engage": 0.0035000000000000005,
+    "engage": 0.0025000000000000005,
+    "tip_clear": 0.0004999999999999996,
     "stack_max": 0.0045,
-    "flat_plate_engage": 0.002497019571953742,
-    "head_tilt_flat_deg": 7.0
+    "flat_plate_engage": 0.001604805114633909,
+    "head_tilt_flat_deg": 10.0
    },
    "input_values": {
     "Ls": 0.008,
     "tp": 0.0045,
     "pat": [
-     0.016,
-     0.019
+     0.019,
+     0.025
     ],
-    "cant": 7.0,
+    "cant": 10.0,
     "ym": 0.32,
-    "zm": 0.19
+    "zm": 0.19,
+    "wst": 0.001,
+    "hd": 0.003
    }
   },
   {
@@ -226,20 +231,20 @@
     "sq": "P:fin_detail.fin.tip_square_m"
    },
    "outputs": {
-    "h_ratio": 1.9444378306387928,
-    "h_ratio_c6": 1.7246272322462575,
+    "h_ratio": 1.8066242911732493,
+    "h_ratio_c6": 1.698132604514706,
     "embed": 0.0395,
-    "embed_ratio": 1.1292161354703063,
-    "tongue": 0.011373210206843287,
-    "tongue_fit": 0.010626789793156712
+    "embed_ratio": 1.0850092597568177,
+    "tongue": 0.01141358214370581,
+    "tongue_fit": 0.010586417856294189
    },
    "input_values": {
     "h": 0.022,
-    "h_req": 0.011314324198666969,
-    "h_req_c6": 0.012756379806983499,
+    "h_req": 0.012177407393162452,
+    "h_req_c6": 0.012955407570357074,
     "tail": 0.04,
     "gap": 0.0005,
-    "embed_req": 0.03498001734056756,
+    "embed_req": 0.036405219259467984,
     "w": 0.01,
     "td": 0.001,
     "L": 0.344,
@@ -247,9 +252,9 @@
     "g_sc": 0.0005,
     "hh": 0.21,
     "xt": 0.045,
-    "od": 0.022,
+    "od": 0.0221,
     "te": 0.32,
-    "sq": 0.0586
+    "sq": 0.069
    }
   },
   {
@@ -304,16 +309,16 @@
     "n": "P:fins.layers"
    },
    "outputs": {
-    "ratio": 1.0000000000000002,
-    "mismatch": 0.0,
+    "ratio": 1.0000000000000009,
+    "mismatch": 5.551115123125783e-17,
     "width": 0.0096
    },
    "input_values": {
-    "sq": 0.0586,
-    "zs": 0.201,
+    "sq": 0.069,
+    "zs": 0.203,
     "te": 0.32,
-    "x_d5": 0.2614,
-    "z_d5": 0.201,
+    "x_d5": 0.25100000000000006,
+    "z_d5": 0.203,
     "tb": 0.0048,
     "n": 2
    }
@@ -425,10 +430,10 @@
     "E": "ASM-D3-CF-E-STRIP"
    },
    "outputs": {
-    "L": 0.13954165148800554,
-    "pcr": 371.70076448128947,
-    "pcr_ratio": 2.2368318035647334,
-    "ky": 2939173.393294017,
+    "L": 0.139520070240808,
+    "pcr": 371.81576422977656,
+    "pcr_ratio": 2.1333360412805495,
+    "ky": 2935658.9811032815,
     "attach_dz": 0.04250000000000001
    },
    "input_values": {
@@ -439,7 +444,7 @@
     "zm": 0.19,
     "xt": 0.045,
     "yf": 0.32,
-    "od": 0.022,
+    "od": 0.0221,
     "gap": 0.00015,
     "wall": 0.0016,
     "ear": 0.01,
@@ -449,7 +454,7 @@
     "proud": 0.008,
     "t": 0.002,
     "w": 0.01,
-    "F_d": 166.17287177736273,
+    "F_d": 174.28841824965914,
     "E": 110000000000.0
    }
   },
@@ -516,7 +521,7 @@
    },
    "outputs": {
     "root": 0.0019999999999999983,
-    "boss": 0.006999999999999992,
+    "boss": 0.006949999999999984,
     "pad": 0.05279999999999999,
     "min": 0.0019999999999999983
    },
@@ -525,7 +530,7 @@
     "off": 0.022,
     "d": 0.008,
     "xt": 0.045,
-    "od": 0.022,
+    "od": 0.0221,
     "tail": 0.018,
     "pz": 0.118,
     "ph": 0.031,
@@ -556,8 +561,8 @@
     "FIN-003-LL",
     "FIN-004-R"
    ],
-   "how": "T-D3-SLIP: luggage scale at the motor can along y; the collar turns between 70 and 80 N (R5 lever 33.9 mm)",
-   "value": 1.6039503997323092
+   "how": "T-D3-SLIP: luggage scale at the motor can along y; the collar turns between 62 and 71 N (R6 lever 38.5 mm, D-146; R5 was 70-80 N at 33.9 mm)",
+   "value": 1.6377473115342098
   },
   {
    "id": "CL-D3-SLIP-HOLD",
@@ -580,7 +585,7 @@
     "FIN-003-LL"
    ],
    "how": "T-D3-SLIP; witness line checked before every flight",
-   "value": 1.7648939532563872
+   "value": 1.2221706577375262
   },
   {
    "id": "CL-D3-SLIP-F",
@@ -596,7 +601,7 @@
     "FIN-003-LL"
    ],
    "how": "T-D3-SLIP",
-   "value": 73.74631268436578
+   "value": 74.56140350877192
   },
   {
    "id": "CL-D3-PROP-GAP",
@@ -619,8 +624,8 @@
     "FIN-003-LL"
    ],
    "how": "Measure motor face to prop hub face on the built station; Fusion interference check",
-   "note": "R5 (D-61): face_ahead 7.5 mm, E1 stack 37.3 mm (37.0 along x). The canted plate corners sit up to 2.5 mm ahead of the face at the axis, inside the motor-base shadow. The tube clearance with the blade's swept volume is E1's CL-E1-TIP-GAP-AT-75 (26.1 mm) and B4's CL-B4-GAP-TUBE-FIX5",
-   "value": 1.1382035856483617
+   "note": "R6 (D-146): 9 deg cant, face_ahead 12.0 mm, E1 stack 37.3 mm (36.8 along x). The canted plate corners sit up to 3.2 mm ahead of the face at the axis, inside the motor-base shadow. The tube clearance with the blade's swept volume is E1's tip_gap / probe at 9 deg / 12.0 mm (26.3 mm, E1.md 7.1; was CL-E1-TIP-GAP-AT-75 26.1 mm at 7 deg / 7.5 mm)",
+   "value": 1.2776186169005606
   },
   {
    "id": "CL-D3-PROP-TIP-GAP",
@@ -645,13 +650,13 @@
     "FIN-002-L"
    ],
    "how": "Ruler from the blade tip, turned over the tube, to the tube face (B4 CL-B4-GAP-TUBE)",
-   "note": "mid-plane only; E1's swept-volume envelope (+10 / -6 mm) comes off this: 26.1 mm at face_ahead 7.5 mm (CL-E1-TIP-GAP-AT-75, D-61). check.py's hull test is the CAD check",
-   "value": 0.03192288031958317
+   "note": "mid-plane only; E1's swept-volume envelope (+10 / -6 mm) comes off this: 26.3 mm at 9 deg / 12.0 mm (E1.md 7.1, D-146; 26.1 mm at 7 deg / 7.5 mm, CL-E1-TIP-GAP-AT-75). check.py's hull test is the CAD check",
+   "value": 0.030944631779830884
   },
   {
    "id": "CL-D3-X-PROP",
    "type": "claim",
-   "title": "Prop plane x (hub on the motor axis) with the D3 mount, face_ahead 7.5 mm",
+   "title": "Prop plane x (hub on the motor axis) with the D3 mount, 10 deg, face_ahead 4.0 mm, stack 47.7 mm",
    "calc": "CALC-D3-PROP-GAP",
    "output": "x_prop",
    "unit": "m",
@@ -661,14 +666,14 @@
     "FIN-003-LR",
     "FIN-003-LL"
    ],
-   "how": "Measure collar front to prop hub face on the built station (44.5 mm along x); Fusion CAD",
-   "note": "D-61: A1 copies this exact value into propulsion.stations.x_prop_plane_m (carried -0.0127); -0.01267 = x_face 0.02435 - 37.3 mm cos 7 deg",
-   "value": -0.012671971456221315
+   "how": "Measure collar front to prop hub face on the built station (51.0 mm along x); Fusion CAD",
+   "note": "D-173 closure round: A1 copies this exact value into propulsion.stations.x_prop_plane_m (was -0.01779); x_face 0.02780 - 47.7 mm cos 10 deg. D-146 was -0.01704 (9 deg, 12.0 mm, 37.3 mm stack)",
+   "value": -0.018175329818682324
   },
   {
    "id": "CL-D3-X-FACE",
    "type": "claim",
-   "title": "Motor plate face x at the motor axis (DP-MOTOR-FACE), D3 mount, face_ahead 7.5 mm",
+   "title": "Motor plate face x at the motor axis (DP-MOTOR-FACE), D3 mount, face_ahead 4.0 mm",
    "calc": "CALC-D3-PROP-GAP",
    "output": "x_face",
    "unit": "m",
@@ -678,20 +683,44 @@
     "FIN-003-LR",
     "FIN-003-LL"
    ],
-   "how": "Calliper from the tube front face (x 0.034) to the plate face on the printed mount: 9.65 mm",
-   "note": "D-61: A1 copies this exact value into propulsion.stations.x_plate_face_m (carried 0.0244); = tube axis 0.045 - (11.15 + 2.0) mm collar radius - 7.5 mm",
-   "value": 0.024349999999999997
+   "how": "Calliper from the tube front face (x 0.03395 at OD 22.10) to the plate face on the printed mount: 6.15 mm",
+   "note": "D-173 closure round: A1 copies this exact value into propulsion.stations.x_plate_face_m (was 0.0198); = tube axis 0.045 - (11.05 + 0.15 + 2.0) mm collar radius (RW tube, D-147) - 4.0 mm. D-146 was 0.01980 at 12.0 mm",
+   "value": 0.028799999999999996
+  },
+  {
+   "id": "CL-D3-SCREW-TIP-CLEAR",
+   "type": "claim",
+   "title": "Motor-screw tip to the bottom of the X2814 3.0 mm blind base hole (M3x8, 4.5 mm plate, 2 washers)",
+   "calc": "CALC-D3-SCREW-ENGAGE",
+   "output": "tip_clear",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0004
+   },
+   "verifies": [
+    "R-JOINT-STACK"
+   ],
+   "parts": [
+    "FIN-003-UR",
+    "FIN-003-UL",
+    "FIN-003-LR",
+    "FIN-003-LL"
+   ],
+   "how": "Probe the hole depth on arrival (T-E1-MOTOR-RM); count turns on assembly; add a washer if the hole is shallower",
+   "note": "D-173: the screw must not bottom before the head clamps the plate. 0.4 mm = thread-run-out / tip chamfer allowance EST",
+   "value": 0.0004999999999999996
   },
   {
    "id": "CL-D3-SCREW-ENGAGE",
    "type": "claim",
-   "title": "Motor-screw engagement, every hole, 7 deg canted plate",
+   "title": "Motor-screw engagement, every hole, canted plate (10 deg, X2814, D-173)",
    "calc": "CALC-D3-SCREW-ENGAGE",
    "output": "engage",
    "unit": "m",
    "limit": {
     "op": ">=",
-    "value": 0.003
+    "ref": "P:requirements.thread_engagement_motor_m3_min_m"
    },
    "verifies": [
     "R-JOINT-STACK"
@@ -703,8 +732,100 @@
     "FIN-003-LL"
    ],
    "how": "Probe the motor screw-hole depth on arrival (T-E1-MOTOR-RM); count turns on assembly",
-   "note": "limit = requirements.thread_engagement_min 1.0 x d, d = 3 mm; the R2 flat plate + pads gives 2.5 mm at 7 deg",
-   "value": 0.0035000000000000005
+   "note": "limit = requirements.thread_engagement_motor_m3_min_m 2.5 mm (D-178, C6 strip calculation for the X2814 3.0 mm blind base hole; the general 1.0 x d rule thread_engagement_min is unchanged); engagement 8 - 4.5 - 2 x 0.5 washers = 2.5 mm; independent of the cant (both plate faces on the cant plane); the R2 flat plate + pads would give 2.5 mm at 7 deg",
+   "value": 0.0025000000000000005
+  },
+  {
+   "id": "CALC-D3-RELEASE",
+   "type": "calculation",
+   "title": "Fin-root release film (D-179): length, spare width, mass",
+   "script": "redesign/team/D3/fins_calcs.py",
+   "function": "release",
+   "equation": "film = (x_end - x_release) x w x t; spare width = w - (t_fin + 2 leg_aft) (fin face plus both aft coves); mass = 4 strips x (x_end - x_release) x w x areal mass (one layer of the wing's 48 mm packing tape, EST)",
+   "inputs": {
+    "xr": "P:fin_detail.fin.root_fillet.release_x_m",
+    "xe": "P:fin_detail.fin.root_fillet.release_end_x_m",
+    "w": "P:fin_detail.fin.root_fillet.release_film_w_m",
+    "tb": "P:fins.board_t_m",
+    "la": "P:fin_detail.fin.root_fillet.leg_aft_m",
+    "c": "P:wing.chord_m",
+    "t": "P:fin_detail.fin.root_fillet.release_film_t_m",
+    "am": "P:fin_detail.fin.root_fillet.release_film_areal_kgm2"
+   },
+   "outputs": {
+    "len_m": 0.05000000000000002,
+    "spare_w_m": 0.0142,
+    "film_g": 0.5850000000000002,
+    "film_mm3": 292.50000000000006
+   },
+   "input_values": {
+    "xr": 0.22,
+    "xe": 0.27,
+    "w": 0.045,
+    "tb": 0.0048,
+    "la": 0.013,
+    "c": 0.32,
+    "t": 0.00013,
+    "am": 0.065
+   }
+  },
+  {
+   "id": "CL-D3-RELEASE-FILM-W",
+   "type": "claim",
+   "title": "Release film spare width beyond the fin face and both 13 mm aft coves",
+   "calc": "CALC-D3-RELEASE",
+   "output": "spare_w_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-JOINT-STACK"
+   ],
+   "parts": [
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "Rule across a laid strip: 7 mm of film visible each side of the cove toe; 0.05 mm feeler slides under the cove edge aft of x 0.22",
+   "note": "C2 D-179: root, coves and tape laps stay on the film from x 0.22 to the TE",
+   "value": 0.0142
+  },
+  {
+   "id": "CL-D3-RELEASE-LEN",
+   "type": "claim",
+   "title": "Release film length, x_release to release_end_x_m",
+   "calc": "CALC-D3-RELEASE",
+   "output": "len_m",
+   "unit": "m",
+   "parts": [
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "Rule on the laid strip: 50 mm (x 0.22 to 0.27)",
+   "note": "C2 asked 100 x 45 x 0.13 mm bodies",
+   "value": 0.05000000000000002
+  },
+  {
+   "id": "CL-D3-RELEASE-MASS",
+   "type": "claim",
+   "title": "Release film mass, four strips (EST)",
+   "calc": "CALC-D3-RELEASE",
+   "output": "film_g",
+   "unit": "g",
+   "parts": [
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "Weigh the four strips (T-D3-WEIGH)",
+   "note": "one strip each; x4 = 1.17 g; PTFE (C2) was 4.9 g",
+   "value": 0.5850000000000002
   },
   {
    "id": "CL-D3-COLLAR-H",
@@ -728,7 +849,7 @@
    ],
    "how": "C6 coupon T-C6-COLLAR; measure the printed collar",
    "note": "R4 (D-48): read against C4-R3 CL-C4-D3-COLLAR-H-REQ (envelope torsion 4.6 N m + brace shear). C6's own requirement on max(C1, C4) torsion + brace shear is CL-D3-COLLAR-H-C6 (CR-D3-25)",
-   "value": 1.9444378306387928
+   "value": 1.8066242911732493
   },
   {
    "id": "CL-D3-COLLAR-H-C6",
@@ -752,7 +873,7 @@
    ],
    "how": "C6 coupon T-C6-COLLAR; measure the printed collar",
    "note": "R5: drawn 15 mm (C6-R5 CL-C6-COLLAR-RF-15MM 1.15 on a 13.007 mm requirement). C6's live run now reads C1's CL-C1-FINHALF-T-LIM 12.67 N m (R4 7.40, wing-plane value) and needs 19.4 mm: CR-D3-36 asks C1/C6 which torsion governs before D3 redraws (20 mm fits: ring |z| 0.1395-0.1595, +3 g)",
-   "value": 1.7246272322462575
+   "value": 1.698132604514706
   },
   {
    "id": "CL-D3-TONGUE-FIT",
@@ -780,7 +901,7 @@
    ],
    "how": "Dry fit: the tongue drops into the board notch between the strips with the ring top at |z| 0.1595",
    "note": "D-48 condition for 16 -> 12 mm (C4 CR-C4-25); fins.py raises if it does not fit",
-   "value": 0.010626789793156712
+   "value": 0.010586417856294189
   },
   {
    "id": "CL-D3-TAIL-EMBED",
@@ -804,7 +925,7 @@
     "FIN-011-URO"
    ],
    "how": "Measure on the dry fit; C6 strip-anchor coupon",
-   "value": 1.1292161354703063
+   "value": 1.0850092597568177
   },
   {
    "id": "CL-D3-STRAP-EYE-RF",
@@ -852,7 +973,7 @@
    ],
    "how": "Dry-fit the D5 shoe on the cut half-fin",
    "note": "R4 (D-54): D5's step adopted (45.4 mm, |z| 0.2005), over D3's CR-D3-19",
-   "value": 1.0000000000000002
+   "value": 1.0000000000000009
   },
   {
    "id": "CL-D3-TIP-STEP-MISMATCH",
@@ -875,7 +996,7 @@
     "FIN-001-LL"
    ],
    "how": "Template check before cutting (D5 CL-D5-FIN-STEP-*)",
-   "value": 0.0
+   "value": 5.551115123125783e-17
   },
   {
    "id": "CL-D3-TIP-W",
@@ -1001,7 +1122,7 @@
     "FIN-009-LR"
    ],
    "how": "C4 CL-C4-D3-MS-BRACE; T-C4-TAP-D3",
-   "value": 2.2368318035647334
+   "value": 2.1333360412805495
   },
   {
    "id": "CL-D3-BRACE-KY",
@@ -1014,7 +1135,7 @@
     "FIN-009-UR"
    ],
    "how": "Information only since C4 CR-C4-16: the brace stores 2-6 % of the modal strain energy; the mode check is CL-C4-D3-SEP (two layers, brace 10 x 2: 0.39)",
-   "value": 2939173.393294017
+   "value": 2935658.9811032815
   },
   {
    "id": "CL-D3-BRACE-L",
@@ -1027,7 +1148,7 @@
     "FIN-009-UR"
    ],
    "how": "Measure on the jig",
-   "value": 0.13954165148800554
+   "value": 0.139520070240808
   },
   {
    "id": "CL-D3-BRACE-DZ",
@@ -1127,8 +1248,8 @@
     "FIN-001-LL"
    ],
    "how": "T-D3-WEIGH; sum of subsystems/fins/interfaces.json",
-   "value": 434.9,
-   "note": "from make_fins.py (CAD volumes x densities). R4 against the D-48 418 g: collar 16 -> 12 mm -2.0 g (not -3: the 12 mm ear already spanned the ring top), ESC pads 31 mm +0.8 g, and the 15 mm root fillets now CAD bodies at 0.55 g/cm3 (CL-D3-FILLET-MASS) in place of the 3 g/root estimate: +20 g where D-48 booked +3 g. R4b (CR-A3-26): forward sealing bead 6 -> 4 mm -1.6 g. The laminate itself did not grow (CL-D3-LAMINATE-MASS); the rest of the overrun is the C6 root fillet (D-63: 437 g). R5 (CR-A1-63): cheeks +5 mm and the 7.5 mm face_ahead (mounts 47.8 g), pins 2.5 mm, collar 15 mm (C6-R5 needs 13.007 mm), block edges R 3 mm -0.4 g: 440.3 g; lever taken: fillet mix 0.55 -> 0.45 g/cm3 -5.6 g (T-D3-WEIGH cup <= 9.0 g). Block fill (C4) and cheeks (withdrawn: length set by the reach to the collar) not taken"
+   "value": 479.4,
+   "note": "from make_fins.py (CAD volumes x densities). R4 against the D-48 418 g: collar 16 -> 12 mm -2.0 g (not -3: the 12 mm ear already spanned the ring top), ESC pads 31 mm +0.8 g, and the 15 mm root fillets now CAD bodies at 0.55 g/cm3 (CL-D3-FILLET-MASS) in place of the 3 g/root estimate: +20 g where D-48 booked +3 g. R4b (CR-A3-26): forward sealing bead 6 -> 4 mm -1.6 g. The laminate itself did not grow (CL-D3-LAMINATE-MASS); the rest of the overrun is the C6 root fillet (D-63: 437 g). R5 (CR-A1-63): cheeks +5 mm and the 7.5 mm face_ahead (mounts 47.8 g), pins 2.5 mm, collar 15 mm (C6-R5 needs 13.007 mm), block edges R 3 mm -0.4 g: 440.3 g; lever taken: fillet mix 0.55 -> 0.45 g/cm3 -5.6 g (T-D3-WEIGH cup <= 9.0 g). Block fill (C4) and cheeks (withdrawn: length set by the reach to the collar) not taken. R6 (design round 2026-11-14): 434.9 -> 476.1 g = RW 35046-S tubes +37.1 g (0.156 kg/m, D-147), mounts +4.0 g (cheeks 17 -> 21.5 mm and the 4.5 mm longer reach, D-146), CF 19 x 17 plug 0 g (S01R). Against the D-155 allocation 471 g: A3 to reconcile (D3-W2.md)"
   },
   {
    "id": "CL-D3-FILLET-MASS",
@@ -1142,7 +1263,7 @@
     "FIN-001-LL"
    ],
    "how": "T-D3-WEIGH (half-fin before / after fillets)",
-   "value": 16.4,
+   "value": 0.0,
    "note": "ASM-D3-FILLET-DENSITY 0.45 g/cm3 (R5 lever; 30.6 g at 0.55); was carried inside fin.root_joint_g 3.0 g per half-fin with the laps"
   },
   {
@@ -1157,7 +1278,7 @@
     "FIN-001-LL"
    ],
    "how": "T-D3-WEIGH (half-fin before its root fillets)",
-   "value": 19.05,
+   "value": 23.43,
    "note": "R3 FIN-001 22.32 g = laminate 19.32 + 3.0 g root-joint estimate. R4 laminate is the same within 0.1 g (D-54 stepped tip removes a little board); FIN-001 grew because the C6 15 mm fillets are now CAD bodies (CL-D3-FILLET-MASS). A one-layer tip zone is not offered: the square tip already needs the extended D5 cheeks to pass (CL-C4-D3-MS-FACE -0.54 as drawn)"
   }
  ]

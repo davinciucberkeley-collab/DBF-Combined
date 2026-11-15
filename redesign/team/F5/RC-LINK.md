@@ -40,29 +40,11 @@ log (ground) carry everything flight test needs. Upgrade paths if A1 later frees
 
 ## Channel map (EdgeTX model "K09L", AETR)
 
-ELRS sends ch 5 (AUX1) as a 2-position bit in every packet: it is the arm channel and **cannot carry six flight
-modes**. `K09L.param` puts the modes on ch 5 and arm on ch 8, so `CR-F5-01` asks F4 to swap them.
-
-| Ch | Function | Switch (Pocket) | ArduPilot | Status |
-|---|---|---|---|---|
-| 1–4 | roll, pitch, throttle, yaw | sticks, mode 2 | `RCMAP_*` default | `PROPOSED` |
-| 5 | arm / disarm | SA, 2-pos | `RC5_OPTION 153` (CR-F5-01) | `PROPOSED` |
-| 6 | flight mode, 6 positions | SC up = Q modes, SC down = FW; SB selects 1 of 3 | `FLTMODE_CH 6` (CR-F5-01) | `PROPOSED` |
-| 9 | emergency motor stop | SD, 2-pos | `RC9_OPTION 31` (F4) | `PROPOSED` |
-| 7, 8, 10–12 | spare | — | `RCn_OPTION 0` | `PROPOSED` |
-
-Mode outputs on ch 6 (ArduPilot band centres; confirm in Mission Planner radio calibration):
-
-| Position | SC · SB | Mode | Pulse | EdgeTX output |
-|---|---|---|---|---|
-| 1 | up · up | QSTABILIZE | 1165 µs | −65 % |
-| 2 | up · mid | QHOVER | 1295 µs | −40 % |
-| 3 | up · down | QLOITER | 1425 µs | −15 % |
-| 4 | down · up | FBWA (starts transition) | 1555 µs | +11 % |
-| 5 | down · mid | CRUISE | 1685 µs | +36 % |
-| 6 | down · down | RTL | 1815 µs | +62 % |
-
-Pocket switch names are taken from the manual and are `UNVERIFIED` until the radio arrives.
+**Superseded 2026-11-14 by `TRANSITION-SWITCH.md` §2–4 (F5-R3, B3 CL-4).** Summary: ch 1–4 sticks (CH3 overridden by
+the transition switch), ch 5 arm (SA), ch 6 flight mode from SB / SC and logical switches, ch 9 e-stop (SD). SC down
+from QSTABILIZE starts the timed forward transition; fixed-wing modes (FBWA, CRUISE, RTL) exist only after it. F4
+re-orders `FLTMODE1-6` to 17, 5, 7, 18, 11, 19 so that 988 / 1500 / 2012 µs are Q modes (CR-F5-15). The R2 table
+(SC down = FW modes on the plain switch) is withdrawn: it let FBWA start at hover throttle (B3 §2).
 
 ## ArduPilot link parameters (F4 writes them into `K09L.param`)
 
@@ -167,5 +149,6 @@ RSSI ≥ −112 + 10 + 20 log10(515/100) − 6 dB. A pass proves the margin with
 | Implementation loss 16 dB assumed | link margin and range-check prediction `UNVERIFIED` | `T-F5-RANGE` |
 | ELRS link-loss time 1.0 s assumed | failsafe time 2.5 s `UNVERIFIED` | `T-F5-FS-BENCH` |
 | BOM "Pocket Crush" vs Pocket ELRS manual | power range and switch names | I1 (CR-F5-06) |
-| Flight-mode channel on ch 5 in `K09L.param` | modes unusable over ELRS | F4 (CR-F5-01) |
+| Flight-mode channel on ch 5 in `K09L.param` | closed: `FLTMODE_CH` 6 in F4-R7 | F4 (CR-F5-01) |
+| FLTMODE order and RC3 calibration for the transition switch | override lands in the right stick step; Q modes at 988 / 1500 / 2012 µs | F4 (CR-F5-15, -16) |
 | Yaapu on the Pocket's 128 × 64 screen | fallback is the EdgeTX telemetry page | `T-F5-BENCH` |

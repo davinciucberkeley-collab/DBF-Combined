@@ -3,31 +3,31 @@
 
  Configuration: K09-L wing + fins (s5010, eta 0.606, twist +0.0 deg, fins Tr
      # Surfaces =   4
-     # Strips   =  74
-     # Vortices = 792
+     # Strips   =  82
+     # Vortices = 888
 
   Sref = 0.36800       Cref = 0.32000       Bref =  1.1500    
-  Xref = 0.56510E-01   Yref =  0.0000       Zref = 0.10000E-01
+  Xref = 0.56830E-01   Yref =  0.0000       Zref = 0.10000E-01
 
  Standard axis orientation,  X fwd, Z down         
 
  Run case:  -unnamed-                              
 
-  Alpha =  15.44509     pb/2V =  -0.00000     p'b/2V =  -0.00000
+  Alpha =  15.32657     pb/2V =  -0.00000     p'b/2V =  -0.00000
   Beta  =   0.00000     qc/2V =   0.00000
   Mach  =     0.000     rb/2V =  -0.00000     r'b/2V =  -0.00000
 
-  CXtot =   0.14907     Cltot =   0.00000     Cl'tot =   0.00000
-  CYtot =  -0.00000     Cmtot =   0.01024
-  CZtot =  -0.78879     Cntot =  -0.00000     Cn'tot =  -0.00000
+  CXtot =   0.14802     Cltot =   0.00000     Cl'tot =   0.00000
+  CYtot =   0.00000     Cmtot =   0.01024
+  CZtot =  -0.78893     Cntot =  -0.00000     Cn'tot =  -0.00000
 
   CLtot =   0.80000
-  CDtot =   0.06638
-  CDvis =   0.01133     CDind = 0.0550446
-  CLff  =   0.81521     CDff  = 0.0556391    | Trefftz
-  CYff  =  -0.00000         e =    1.0579    | Plane  
+  CDtot =   0.06577
+  CDvis =   0.01135     CDind = 0.0544246
+  CLff  =   0.81492     CDff  = 0.0553499    | Trefftz
+  CYff  =   0.00000         e =    1.0627    | Plane  
 
-   elevator        =  -9.38553
+   elevator        = -10.40342
    aileron         =   0.00000
 
  ---------------------------------------------------------------

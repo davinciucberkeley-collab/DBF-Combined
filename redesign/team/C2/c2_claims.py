@@ -134,6 +134,7 @@ passthrough("CALC-C2-FTORS-S", "Symmetric wing torsion mode, low corner", F + "f
 passthrough("CALC-C2-RING", "Spar wall ring stress at the block, no plug", F + "ring_no_plug_sigma_pa")
 passthrough("CALC-C2-RING-ANCHOR", "Spar wall ring stress under the brace anchor, no plug", F + "ring_anchor_sigma_pa")
 passthrough("CALC-C2-PLUG", "Plug bearing stress at the block", F + "plug_bearing_pa")
+passthrough("CALC-C2-ANCHOR-PLUG", "Plug bearing stress under the brace anchor", F + "anchor_plug_bearing_pa")
 passthrough("CALC-C2-BOND", "Spar slot bond shear", F + "spar_bond_tau_ult_pa")
 passthrough("CALC-C2-CHORD-TAPE", "Tape stress, chordwise bending aft of the spar", F + "chord_tape_sigma_ult_pa")
 passthrough("CALC-C2-CHORD-FOAM", "Bare-foam stress, chordwise bending aft of the spar", F + "chord_foam_only_sigma_ult_pa")
@@ -338,13 +339,28 @@ kit.claim("CL-C2-WING-ZETA", "Wing torsion-mode damping ratio, design lower boun
 kit.claim("CL-C2-STATION-IYY", "Fin station inertia about the spar axis (one side, MC-P)", calc="CALC-C2-STATION-IYY",
           unit="kg m2", parts=["FIN-001-UR", "FIN-001-LR", "FIN-002-R"],
           how="Follows the C1 mass model; check by a bifilar swing of one finished fin station about the spar line")
-kit.claim("CL-C2-RING-NO-PLUG", "Spar wall ring stress at the block bore end without a plug, design",
-          calc="CALC-C2-RING", unit="Pa", limit=("<=", I + "spar_hoop_allow_pa"), parts=["WNG-002", "FIN-004-L", "FIN-004-R"],
+# Closure round 2026-11-14: the two no-plug rows are records (no limit). The design has a plug at both places:
+# WNG-004-L/R under the block (|y| 0.320) and WNG-005-L/R under the brace anchors (|y| 0.242)
+# (subsystems/wing/parts.csv, wing.py, interfaces E-WNG-08..11), so "no plug" is an option not in the design.
+# The plugged design is checked by CL-C2-PLUG-BEARING and CL-C2-ANCHOR-PLUG-BEARING.
+kit.claim("CL-C2-RING-NO-PLUG", "Spar wall ring stress at the block bore end without a plug (option not in the "
+          "design, record)", calc="CALC-C2-RING", unit="Pa", parts=["WNG-002", "FIN-004-L", "FIN-004-R"],
           assumes=["ASM-C2-CONTACT"], cites=["SRC-C2-ROARK"],
-          how="Shows the plug is required (expected FAIL); the plug claim CL-C2-PLUG-BEARING carries the load")
-kit.claim("CL-C2-RING-ANCHOR", "Spar wall ring stress under the brace anchor without a plug, design",
-          calc="CALC-C2-RING-ANCHOR", unit="Pa", limit=("<=", I + "spar_hoop_allow_pa"), parts=["WNG-002"],
-          assumes=["ASM-C2-CONTACT"], how="Shows the anchor plug is required (expected FAIL)")
+          note="record, no limit (closure round 2026-11-14): the design has the plug WNG-004-L/R; this is the "
+               "no-plug option, 911 MPa vs the 40 MPa hoop allowable, kept to show why the plug is there",
+          how="Why the plug is needed; the design is CL-C2-PLUG-BEARING")
+kit.claim("CL-C2-RING-ANCHOR", "Spar wall ring stress under the brace anchor without a plug (option not in the "
+          "design, record)", calc="CALC-C2-RING-ANCHOR", unit="Pa", parts=["WNG-002"],
+          assumes=["ASM-C2-CONTACT"],
+          note="record, no limit (closure round 2026-11-14): the design has the plug WNG-005-L/R; this is the "
+               "no-plug option, 76 MPa vs the 40 MPa hoop allowable, kept to show why the plug is there",
+          how="Why the anchor plug is needed; the design is CL-C2-ANCHOR-PLUG-BEARING")
+kit.claim("CL-C2-ANCHOR-PLUG-BEARING", "Plug bearing stress under the brace anchor saddle, plug fitted, design",
+          calc="CALC-C2-ANCHOR-PLUG", unit="Pa", limit=("<=", I + "petg_bearing_allow_pa"), verifies=SM,
+          parts=["WNG-002", "WNG-005-L", "WNG-005-R"],
+          note="saddle line load w_anchor over the plug diameter (wing_struct.py local_spar); the plug is 30 % fill, "
+               "so the bearing allowable on the solid PETG is high by up to about 3x (EST); the margin is ~45x",
+          how="T-C4-BLOCK-PROOF with the plugs fitted: no wall crack under the anchor (light inside the tube)")
 kit.claim("CL-C2-PLUG-BEARING", "Plug bearing stress at the block, plug fitted, design", calc="CALC-C2-PLUG", unit="Pa",
           limit=("<=", I + "petg_bearing_allow_pa"), verifies=SM, parts=["WNG-002", "FIN-004-L", "FIN-004-R"],
           how="T-C4-BLOCK-PROOF with the plug fitted: no wall crack (inspect with a light inside the tube)")

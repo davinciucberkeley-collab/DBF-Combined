@@ -44,10 +44,11 @@ LEVELS = ("coarse", "medium", "fine", "xfine")
 # ------------------------------------------------------------------------------------------- as-designed geometry
 # Read from the CAD module on 2026-11-10 (fins.py geometry(), D3 R4; wing/params.json D1-R1). R5: z_collar_bottom
 # 0.1475 -> 0.1445 (D-70 13 mm collar; TUBE bracket only). 2026-11-13 (D-90/D-91: 22 mm collar, 18 mm grip):
-# z_le_top 0.1595 -> 0.1535, z_collar_bottom 0.1445 -> 0.1315. cad_check() below
+# z_le_top 0.1595 -> 0.1535, z_collar_bottom 0.1445 -> 0.1315. 2026-11-14 final re-run (cad_check stopped the script):
+# x_sq 0.2614 -> 0.251, z_step 0.2010 -> 0.2030 (CAD now). cad_check() below
 # re-reads the CAD and stops the script if any of these moved, so the assumption cannot silently go stale.
 FIN_CAD = {"x_le_board": 0.0565, "x_tube_front": 0.034, "z_le_top": 0.1535, "z_collar_bottom": 0.1315,
-           "x_sq": 0.2614, "h": 0.21, "z_step": 0.2010, "te": 0.32, "area_half_board": 0.04550}
+           "x_sq": 0.251, "h": 0.21, "z_step": 0.2030, "te": 0.32, "area_half_board": 0.04550}
 kit.assumption("ASM-B3-V-FIN-CAD", "As-designed half-fin outline (fins.py R4)",
                "x_le_board, x_tube_front, z_le_top, z_collar_bottom, x_sq, h, z_step, te (m); half-fin board area (m2)",
                basis="subsystems/fins/fusion/fins.py geometry() and half_fin_loop() evaluated on 2026-11-10 "
@@ -498,9 +499,21 @@ kit.assumption("ASM-B3-V-B1-CLMAX-TABLE", "B1 XFOIL section clmax vs elevon at t
                status="PROPOSED")
 
 
+# Final re-run 2026-11-14: CL-B3-V-CLMAX-B1-REPRO compares B3's code with B1's stored CLmax 0.8384, which B1 computed at B1's own
+# CG (CALC-B1V-STALL input xcg, A3-R6a era). Running B3's code at today's A3 CG (0.0589) compared two different CGs and read 0.066
+# (> 0.03) with nothing wrong in either code. The reproduction now runs at B1's stored CG, so it tests the code, not the CG drift.
+# The drift itself is the A3 CG claims (CL-B3-V-CG-A3-AFT etc.), and B1's stale basis is reported to B1 / A1.
+_B1V = json.loads((HERE.parent / "B1" / "claims.verify.json").read_text(encoding="utf-8"))
+_B1_CG = next(n for n in _B1V["nodes"] if n["id"] == "CALC-B1V-STALL")["input_values"]["xcg"]
+kit.assumption("ASM-B3-V-B1-CG", "CG at which B1's stored CLmax 0.8384 was computed (CALC-B1V-STALL input xcg)",
+               "B1's A3-roll-up CG x, read from team/B1/claims.verify.json on every run",
+               basis="team/B1/claims.verify.json CALC-B1V-STALL input_values.xcg (B1 sim_verify.py)", value=_B1_CG,
+               unit="m", status="PROPOSED")
+
+
 @kit.calc("CALC-B3-V-CLMAX-RECON", title="Trimmed CLmax: B1's basis reproduced, then B3's terms added one at a time",
           inputs={**SC.CS_IN, "fin": "ASM-B3-V-FIN-CAD", "gap": "ASM-B3-V-ELEVON-GAP", "zcg": P + "cg.z_target_m",
-                  "x_b1": "CL-A3-CG-X-PRED", "xnp_v": "CL-B3-V-XNP", "xnp_av": "CL-B3-V-XNP-AERO",
+                  "x_b1": "ASM-B3-V-B1-CG", "xnp_v": "CL-B3-V-XNP", "xnp_av": "CL-B3-V-XNP-AERO",
                   "tab_b1": "ASM-B3-V-B1-CLMAX-TABLE", "cl_b1": "CL-B1V-CLMAX-SIM", "cl_b2": "CL-B2R3-CLMAX-FWD"},
           units={**SC.CS_U, "gap": "m", "zcg": "m", "x_b1": "m", "xnp_v": "m", "xnp_av": "m"},
           assumes=["ASM-B3-CLMAX-FLAP"], cites=["SRC-B3-AVL"],

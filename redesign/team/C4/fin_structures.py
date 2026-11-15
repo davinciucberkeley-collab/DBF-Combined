@@ -1,5 +1,9 @@
 """C4 fin / motor-tube structures: modes, fin and tube strength, through-core block (K09-L).
 
+2026-11-14 (D-147): the fin tube reads its own keys: mass P:fins.tube.mass_per_m_kgm, E / G CL-C4-TUBE-E / -G
+(fin_structures_d3.py, from P:fins.tube.e_gpa / g_gpa). ASM-C4-G-TUBE and the E/G corners stay defined here for
+C2's wing spar. Run fin_structures_d3.py first.
+
 Run:  python -I redesign/team/C4/fin_structures.py      (about 5 s)
 Writes claims.json beside this file (proof chain), out/results.json (every number in BOOM-STRUCTURES.md) and
 fig-c4-campbell.svg. Then: python -I redesign/proofs/build_graph.py
@@ -70,8 +74,10 @@ asm("ASM-C4-FACE-SIGMA", "Foam-board face allowable 10 MPa", "Compressive (gover
     "paperboard compression 10-20 MPa; face wrinkling on a ~25 kg/m3 core ~25 MPa; take the lower", 10e6, "Pa")
 asm("ASM-C4-CORE-E", "Foam-board core modulus 10 MPa", "PS foam core, ~25 kg/m3", "Gibson-Ashby for PS", 10e6, "Pa")
 asm("ASM-C4-CORE-G", "Foam-board core shear 4 MPa", "PS foam core shear modulus", "Gibson-Ashby for PS", 4e6, "Pa")
-asm("ASM-C4-PROP-IP", "Prop polar inertia 7.5e-5 kg m2", "APC 11x5.5MR about the shaft (17 g, R 0.140 m)",
-    "m R^2 / 4.4 for a tapered 2-blade prop; bifilar swing of one prop replaces it (T-C4-PROP-SWING)", 7.5e-5, "kg m2")
+asm("ASM-C4-PROP-IP", "Prop polar inertia 1.02e-4 kg m2 (APC 11x5.5E/EP, D-161)",
+    "APC 11x5.5E / EP about the shaft (P:propulsion.prop_mass_kg 22.96 g, R 0.140 m)",
+    "m R^2 / 4.4 for a tapered 2-blade prop = 0.02296 x 0.140^2 / 4.4 = 1.023e-4; bifilar swing of one prop replaces it "
+    "(T-C4-PROP-SWING). Was 7.5e-5 for the 17 g 11x5.5MR (closure round D-161 update, C4.md)", 1.02e-4, "kg m2")
 asm("ASM-C4-MOUNT-DX", "Mount centroid 5 mm ahead of the tube axis", "Printed mount mass centre offset in x",
     "mount plate at x 0.034, clamp around the tube; D3's CAD replaces it", -0.005, "m")
 asm("ASM-C4-STRUT-DY", "Strut anchor 0.12 m inboard", "Brace anchor on the spar line, inboard of the fin",
@@ -100,8 +106,8 @@ asm("ASM-C4-STRUT-FIT-MASS", "Strut end fittings 4 g each", "Printed collar/ear 
     "PETG, ~3 cm3 at 1.27 g/cm3", 0.004, "kg")
 asm("ASM-C4-BLOCK-W", "Block spar-bore length 36 mm", "Spanwise length of the through-core block (= spar bore)",
     "C4 sizing choice: 7 mm walls each side of the 22 mm tube bore", 0.036, "m", status="PROPOSED")
-asm("ASM-C4-BLOCK-FILL", "Block effective fill 0.55", "Printed solid fraction: 4 perimeters + 40 % gyroid",
-    "G3 sets the slicer profile; walls carry the bearing", 0.55, "-", status="PROPOSED")
+asm("ASM-C4-BLOCK-FILL", "Block effective fill 0.449 (L2: 3 perimeters + 15 % gyroid)", "Printed solid fraction: 3 perimeters + 15 % gyroid",
+    "subsystems/fins/params.json fin_detail.block.fill_factor 0.449 (L2, closure round 2026-11-14); walls carry the bearing", 0.449, "-", status="PROPOSED")
 asm("ASM-C4-PETG-RHO", "PETG density 1270 kg/m3", "Prusament PETG", "datasheet", 1270.0, "kg/m3", status="PROPOSED",
     cites=["SRC-C4-PETG"])
 asm("ASM-C4-PETG-BEARING", "Printed PETG bearing allowable 20 MPa", "Bearing on a bore wall, layers in the x-y plane",
@@ -130,7 +136,7 @@ SF, FIT, PRT = P + "requirements.safety_factor_ult", "ASM-C1-FITTING-FACTOR", "A
 
 # ====================================================================== shared inputs
 GEOM = {"tube_x": P + "fins.tube.x_m", "od": P + "fins.tube.od_m", "idd": P + "fins.tube.id_m",
-        "mu": P + "wing.spar.mass_per_m_kgm", "tube_len": P + "fins.tube.length_m",
+        "mu": P + "fins.tube.mass_per_m_kgm", "tube_len": P + "fins.tube.length_m",
         "z_st": P + "propulsion.stations.z_m", "x_mount": P + "propulsion.stations.x_mount_m",
         "x_prop": P + "propulsion.stations.x_prop_plane_m", "x_te": P + "fins.te_x_m",
         "hh": P + "fins.half_height_m", "core_t": "ASM-C4-CORE-T-TUBE",
@@ -152,7 +158,7 @@ GEOM_UNITS = {"tube_x": "m", "od": "m", "idd": "m", "mu": "kg/m", "tube_len": "m
               "e_strip": "Pa", "e_w": "m", "e_t": "m", "e_dz": "m", "rho_cf": "kg/m3"}
 RPM = {"rpm_h": "CL-B4-HOVER-RPM", "rpm_c": "CL-B4-CRUISE-RPM", "rpm_x": "CL-B4-RPM-MAX"}
 RPM_UNITS = {"rpm_h": "rpm", "rpm_c": "rpm", "rpm_x": "rpm"}
-TUBE = {"E": "ASM-J1-E-TUBE", "G": "ASM-C4-G-TUBE"}
+TUBE = {"E": "CL-C4-TUBE-E", "G": "CL-C4-TUBE-G"}   # D-147: fin tube keys via fin_structures_d3.py CALC-C4-TUBE-EG
 TUBE_UNITS = {"E": "Pa", "G": "Pa"}
 MESH = (12, 10)
 
@@ -251,7 +257,7 @@ def modal_summary(g, E, G, layers, strut, rpm_h, rpm_c, rpm_x, lo=80.0, hi=330.0
           equation="(a) bare tube + tip mass vs Blevins f = sqrt(3EI/(L^3 (M + 0.24 m))) / 2pi ; "
                    "(b) cantilever foam-board plate 0.2 x 0.2 m vs Leissa lambda^2 = 3.492 (Kirchhoff limit, stiff core)",
           inputs={**{k: GEOM[k] for k in ("od", "idd", "mu", "hh", "m_motor", "m_prop", "m_mount", "t_board",
-                                           "areal", "t_face", "e_face", "e_core")}, "E": "ASM-J1-E-TUBE"},
+                                           "areal", "t_face", "e_face", "e_core")}, "E": TUBE["E"]},
           units={**{k: GEOM_UNITS[k] for k in ("od", "idd", "mu", "hh", "m_motor", "m_prop", "m_mount", "t_board",
                                               "areal", "t_face", "e_face", "e_core")}, "E": "Pa"},
           cites=["SRC-C4-BLEVINS", "SRC-C4-LEISSA"], tol=1e-4)
@@ -307,8 +313,8 @@ _modal_calc("CALC-C4-MODES-1LB", "Modes, recommended: 1-layer fin + CF brace + e
 
 
 def _worst_calc(cid, title, layers_ref, strut):
-    ins = {**GEOM, **RPM, "layers": layers_ref, "E0": "ASM-J1-E-TUBE", "E_lo": "ASM-C4-E-TUBE-LO",
-           "E_hi": "ASM-C4-E-TUBE-HI", "G0": "ASM-C4-G-TUBE", "G_lo": "ASM-C4-G-TUBE-LO", "G_hi": "ASM-C4-G-TUBE-HI"}
+    ins = {**GEOM, **RPM, "layers": layers_ref, "E0": TUBE["E"], "E_lo": "ASM-C4-E-TUBE-LO",
+           "E_hi": "ASM-C4-E-TUBE-HI", "G0": TUBE["G"], "G_lo": "ASM-C4-G-TUBE-LO", "G_hi": "ASM-C4-G-TUBE-HI"}
     uns = {**GEOM_UNITS, **RPM_UNITS, "layers": "-", "E0": "Pa", "E_lo": "Pa", "E_hi": "Pa", "G0": "Pa", "G_lo": "Pa",
            "G_hi": "Pa"}
 
@@ -572,11 +578,15 @@ kit.claim("CL-C4-F-LT-2L", "First station mode (lateral-torsion), current design
 kit.claim("CL-C4-F-FA-2L", "Second station mode (fore-aft, fin as shear web), current design", calc="CALC-C4-MODES-2L",
           output="f_st2",
           unit="Hz", parts=TUBES + HALF, how=TAP, note="Bare tube 180 Hz; the bonded fin lifts it to ~330 Hz.")
-kit.claim("CL-C4-SEP-2L", "Mode separation, current design", calc="CALC-C4-MODES-2L", output="sep_op", unit="-",
-          limit=(">=", LIMIT_SEP), verifies=R_VIB, parts=TUBES + HALF, how=TAP,
-          note="FAILS: the lateral-torsion mode sits at ~149 Hz, 4 % from 1P at the F4 cap and 17 % below 2P hover.")
-kit.claim("CL-C4-SEP-1L", "Mode separation, 1-layer fin, no brace", calc="CALC-C4-MODES-1L", output="sep_op", unit="-",
-          limit=(">=", LIMIT_SEP), verifies=R_VIB, parts=TUBES + HALF, how=TAP)
+kit.claim("CL-C4-SEP-2L", "Mode separation, R1 unbraced 2-layer fin (rejected R1 baseline, not the design)",
+          calc="CALC-C4-MODES-2L", output="sep_op", unit="-", parts=TUBES + HALF, how=TAP,
+          note="Information, no limit (closure round 2026-11-14, C4.md): the unbraced fin was the R1 starting point; "
+               "the design carries the CF brace (D-26 / D-93) and the RW 35046-S tube (D-147), whose separation of "
+               "record is CL-C4-SIM-SEP. Here the lateral-torsion mode sits at ~149 Hz.")
+kit.claim("CL-C4-SEP-1L", "Mode separation, 1-layer fin, no brace (rejected option)", calc="CALC-C4-MODES-1L",
+          output="sep_op", unit="-", parts=TUBES + HALF, how=TAP,
+          note="Information, no limit (closure round 2026-11-14): the 1-layer fin was rejected (CR-D3-02; "
+               "fin_detail.layers = 2, D-26) and the design is braced.")
 kit.claim("CL-C4-F-LT-REC", "First station mode, braced design (layers per params.json)", calc="CALC-C4-MODES-REC", output="f_st1",
           unit="Hz", parts=TUBES + HALF, how=TAP)
 kit.claim("CL-C4-F-FA-REC", "Second station mode, braced design (layers per params.json)", calc="CALC-C4-MODES-REC", output="f_st2", unit="Hz",
@@ -592,17 +602,21 @@ kit.claim("CL-C4-SEP-REC-WORST", "Mode separation, braced design, layers per par
 kit.claim("CL-C4-SEP-REC-WHIRL", "Whirl separation incl. prop gyroscopics, braced design (layers per params.json)", calc="CALC-C4-CAMPBELL",
           output="sep_whirl", unit="-", limit=(">=", LIMIT_SEP), verifies=R_VIB, parts=TUBES, how=TAP)
 kit.claim("CL-C4-SEP-BAND-REC", "Separation from the whole 80-330 Hz band (B4 target)", calc="CALC-C4-MODES-REC",
-          output="sep_band", unit="-", limit=(">=", LIMIT_SEP), parts=TUBES,
-          how="Needs every station mode >= 396 Hz. R-VIBRATION (A2) is met on the operating points instead, with an "
+          output="sep_band", unit="-", parts=TUBES,
+          how="Information, no limit (closure round 2026-11-14): R-VIBRATION (A2) makes the operating points the "
+              "criterion of record and B4's 80-330 Hz whole-band rule advisory (CR-C4-06). Needs every station mode >= 396 Hz. R-VIBRATION (A2) is met on the operating points instead, with an "
               "rpm-tracking harmonic notch as the backup (F4).",
           note="With 2 layers the first station mode is 392 Hz: 1 % short of the band rule. A2's R-VIBRATION is the basis.")
 kit.claim("CL-C4-SEP-BAND-1LB", "Separation from the 80-330 Hz band, recommended 1-layer design", calc="CALC-C4-MODES-1LB",
-          output="sep_band", unit="-", limit=(">=", LIMIT_SEP), parts=TUBES,
-          how="As CL-C4-SEP-BAND-REC.", note="FAILS (first station mode ~296 Hz inside the band); passes R-VIBRATION.")
-kit.claim("CL-C4-SEP-1LB", "Mode separation, recommended 1-layer fin + brace + edge strips (nominal)", calc="CALC-C4-MODES-1LB", output="sep_op",
-          unit="-", limit=(">=", LIMIT_SEP), verifies=R_VIB, parts=TUBES + HALF, how=TAP)
+          output="sep_band", unit="-", parts=TUBES,
+          how="As CL-C4-SEP-BAND-REC.", note="Information, no limit (closure round 2026-11-14): rejected 1-layer "
+          "option (CR-D3-02) and an advisory band rule (R-VIBRATION, CR-C4-06). First station mode ~296 Hz.")
+kit.claim("CL-C4-SEP-1LB", "Mode separation, R1 1-layer fin + brace + edge strips (rejected option, nominal)", calc="CALC-C4-MODES-1LB", output="sep_op",
+          unit="-", parts=TUBES + HALF, how=TAP,
+          note="Information, no limit (closure round 2026-11-14): 1-layer fin rejected (CR-D3-02, fin_detail.layers = 2).")
 kit.claim("CL-C4-SEP-1LB-WORST", "Mode separation, recommended 1-layer fin + brace + edge strips, worst tube E/G corner",
-          calc="CALC-C4-WORST-1LB", output="sep_op_worst", unit="-", limit=(">=", LIMIT_SEP), verifies=R_VIB,
+          calc="CALC-C4-WORST-1LB", output="sep_op_worst", unit="-",
+          note="Information, no limit (closure round 2026-11-14): 1-layer fin rejected (CR-D3-02).",
           parts=TUBES, how="Passes only if the measured tube E and G are near nominal (T-C4-TUBE-BEND/TORSION).")
 
 for tag, cid in (("2L", "CALC-C4-STATIC-2L"), ("1L", "CALC-C4-STATIC-1L")):
@@ -722,7 +736,7 @@ if __name__ == "__main__":
     kit.write()
     nodes = {n["id"]: n for n in json.loads((HERE / "claims.json").read_text(encoding="utf-8"))["nodes"]}
     g = _inputs()
-    E0, G0 = kit.value("ASM-J1-E-TUBE"), kit.value("ASM-C4-G-TUBE")
+    E0, G0 = kit.value(TUBE["E"]), kit.value(TUBE["G"])
     rpm = {k: kit.value(v) for k, v in RPM.items()}
     res = {"inputs": {**g, "E": E0, "G": G0, **rpm}, "configs": {}, "sensitivity": {}}
     configs = {"bare tube": (0, False), "1-layer fin": (1, False), "2-layer fin (current)": (2, False),

@@ -1,4 +1,8 @@
-"""K09-L landing (GER, D5, revision D5-R8): four crushable feet on the half-fin TE tips + two wingtip corner caps.
+"""K09-L landing (GER, D5, revision D5-R9): four crushable feet on the half-fin TE tips + two wingtip corner caps.
+
+R9 (closure 2026-11-14, D-165, C5 closure foot): foot 53 mm, stroke 43 mm, engagement 30 mm, cartridge 117 mm, sleeve
+74 mm, replace mark 6 mm; flange 2.2 mm (CL-D5-FLANGE-SF); pad z_outer 0.221 (whole foot 2 mm outboard, tip-over);
+tine inspection window starts piston.window_offset_m 10 mm aft of the sleeve end (CL-D5-SIDE-TINE-SF).
 
 R8 (2026-11-13, CR-H1-22): sleeve inside fillets R 2.0 (shoe.inside_fillet_r_m), rim y sides shoe.rim_side_t_m 4.6 mm,
 rim floor side shoe.rim_floor_t_m 0.4 mm, roof side rim_t (= lip, unchanged); tine chamfers 1.4 mm and rails 2.5 mm.
@@ -34,7 +38,7 @@ square tip (D3: flat, nothing on it, strips end at its front) runs from the step
 -X, -DEPTH, CR-D5-31 to D3); the strip ends meet the step front, where the back wall and the collar cheeks wrap them. stack()/bodies() are the single source of every station and body: build() realises them,
 team/D5/feet_calc.py computes the claims (stack, volumes, masses) from them.
 
-Registers: E-GER-05..08 piston-shoe slider along X (crush stroke 0 .. -38 mm), E-GER-09..20 contacts
+Registers: E-GER-05..08 piston-shoe slider along X (crush stroke 0 .. -stroke_max_m, 43 mm at R9), E-GER-09..20 contacts
 (cartridge bond, pad PSA, cartridge end bearing); KO-GROUND (only the pads may reach DP-GROUND).
 E-GER-01..04 (shoe on FIN-001-<st>) are contacts too: registered here, touch-checked once the fins (R3 ids) are
 modelled. The corner caps GER-007-R/L and their edges E-GER-21/22 (cap on WNG-001) are built and registered only when
@@ -70,7 +74,7 @@ LOCAL = {'w': 'wall_t_m', 'cs': 'slide_clear_m', 'cf': 'cartridge.clear_m', 'fy'
          'slot_w': 'piston.slot_w_m', 'rail': 'piston.window_rail_m', 'cap_span': 'cap.span_m',
          'cap_chord': 'cap.chord_m', 'cap_w': 'cap.wall_t_m',
          'ws': 'shoe.wall_t_m', 'r_in': 'shoe.inside_fillet_r_m', 'tc': 'piston.corner_chamfer_m',
-         'mark': 'piston.replace_mark_m'}
+         'mark': 'piston.replace_mark_m', 'twin_off': 'piston.window_offset_m'}
 
 
 def _lv(L, key):
@@ -132,7 +136,9 @@ def stack(n):
                                                                           # tine open-end bearing patch, D5 FEA)
     s['rim_top_margin'] = n['z_outer'] - (s['z_slv'][1] + n['rim_t'])     # rim top not above the pad edge
     s['z_win'] = (s['zc'] - n['win_z'] / 2, s['zc'] + n['win_z'] / 2)
-    s['x_twin'] = (s['x_slv_end'] + 0.003, s['x_flange'][0] - 0.003)    # tine inspection window (exposed at rest)
+    # tine inspection window (exposed at rest); R9: starts twin_off aft of the sleeve end (was 3 mm) so the windowed
+    # section carries F (a - twin_off) and the replace mark sits on the solid wall ahead of it
+    s['x_twin'] = (s['x_slv_end'] + n['twin_off'], s['x_flange'][0] - 0.003)
     s['te_clear_crushed'] = n['foot'] - n['stroke']
     s['shoe_len_on_fin'] = n['te'] - s['x_notch']
     return s

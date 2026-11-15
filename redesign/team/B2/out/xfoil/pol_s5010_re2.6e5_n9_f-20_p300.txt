@@ -1,0 +1,1 @@
+# XFOIL 6.99: alpha CL CD CDp Cm xtr_top xtr_bot

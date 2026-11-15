@@ -108,7 +108,8 @@ Time: about 2 days hands-on plus 2 × 24 h cures (practice cores extra).
 Parts: W01 XPS, W03/W04 spar tube, PETG plugs (W05), C05 epoxy, blocks `FIN-004`.
 Detail: [`subsystems/wing/BUILD.md`](subsystems/wing/BUILD.md) steps 1–8, [`subsystems/fins/BUILD.md`](subsystems/fins/BUILD.md) step 7.
 
-1. Hot-wire **two** cores from the S5010 templates in one 1.15 m pass each; keep both foam beds. Sand the LE
+1. Hot-wire **two** cores from the S5010 templates in one 1.15 m pass each; keep both foam beds. The elevon panels
+   are the trailing-edge strip of the same blank: they stay part of the core until stage 3. Sand the LE
    until no ridge can be felt. ⚠ Stall margin is +0.05 %; accept a core only by template gauge at three stations
    and log the real TE thickness ([MF-05, SW-16](review/MANUFACTURING.md#4-findings)).
 2. With the core in its lower bed, cut the spar slot from below, the block and anchor pockets, the servo pockets,
@@ -136,7 +137,9 @@ Parts: torque tubes `MEC-009` (H02), hinge tape.
 Detail: [`subsystems/wing/BUILD.md`](subsystems/wing/BUILD.md) step 9, [`subsystems/mechanisms/BUILD.md`](subsystems/mechanisms/BUILD.md) steps 1–4.
 
 1. Route the torque-tube grooves with a depth stop **while the core is still whole**, then cut the panels free
-   ([SW-17](review/STRUCTURE-WING.md#findings)). Leave R 3 mm at the fin-tab corners.
+   ([SW-17](review/STRUCTURE-WING.md#findings)). Leave R 3 mm at the fin-tab corners. Slide each panel about 10 mm
+   aft in the bed, clear of the kerf, and leave it there: it comes back against the core at stage 7, so keep that
+   strip of the bed clear through stages 4–6.
 2. Bevel the panel fronts 30° on the lower side; knife the horn-blade slots.
 3. Bond the torque tubes flush with microballoon epoxy. Cure 24 h. Tape the bevel face.
 
@@ -159,13 +162,16 @@ Detail: [`subsystems/fins/BUILD.md`](subsystems/fins/BUILD.md) steps 1–17.
 3. Bond the half-fin roots and run the cove fillets. ⚠ Weigh a cup from every fillet batch; the CG has no aft
    margin left ([MF-14](review/MANUFACTURING.md#4-findings), BR-00). ⚠ The lower roots have the rod notch under a
    fillet that already fails: pending C4 check [SC-04](review/SERVOS-CONTROLS.md#findings).
-4. **Station collars down the tubes first** (assembly check: the edge-strip ends sit in the collar tail slots, so
-   a collar cannot slide on once the strips are on). Collar height **22 mm** (D-90, ring 22 mm + 40 mm two-face
+4. **Station collars down the tubes first, each carrying its brace and brace anchor** (assembly check: the
+   edge-strip ends sit in the collar tail slots, so a collar cannot slide on once the strips are on; and both brace
+   ends sit 10 mm deep in blind slots, so the brace cannot be bowed in between a fixed anchor and a fixed ear without
+   straining the CF strip past its limit). On the bench, slide the brace `FIN-009` into the anchor `FIN-010` slot and
+   the collar `FIN-008` ear onto its other end, each along the brace axis, and bond. Then slide the collar down the
+   tube while the anchor drops into its pocket on the spar. Collar height **22 mm** (D-90, ring 22 mm + 40 mm two-face
    tail). Clock the collar notch with an inclinometer for the keyed mount (D-81). ⚠ Flight collars are under the CDR
    build hold until the `T-C6-LAP-PETG` and `T-C6-STRIP-ANCHOR` coupons read (CDR-02).
 5. Edge strips on both fin faces, ends into the collar tails; CF pins through strip-board-strip at **12 mm pitch**
-   (D-90). Then brace anchors `FIN-010` on the spar, braces `FIN-009` bowed into their slots (anchor end first, then
-   sprung into the collar ear), ESC pads `FIN-007`.
+   (D-90). Then the ESC pads `FIN-007`.
 6. Post-cure the collars in a heat tent (box, lamp, thermocouple), keeping XPS and tape cool
    ([SW-14](review/STRUCTURE-WING.md#findings)).
 
@@ -184,10 +190,15 @@ Time: about 8.5 h for the pod plus 3 × 24 h cures. The power stack (3 h) is bui
 Parts: pod board and prints `POD-*` (W02, W05), F01 AS150U, F02 wire, F07 caps, F08 FR4, C02 inserts, C06 nylon screws, D06 straps, H06 XT30U pairs; F04–F06 only if gate X12 (UBEC fallback, D-74).
 Detail: [`subsystems/pod/BUILD.md`](subsystems/pod/BUILD.md), [`subsystems/power/BUILD.md`](subsystems/power/BUILD.md).
 
-1. Build the pod box on the bench in parallel with stage 4: stop T, tray, walls, fillets, straps, inserts, **and the
-   pitot socket `POD-006` and carry handle `POD-007`** (assembly check: once the pod is in the recess neither can
-   reach its seat; the handle brackets wrap the pod walls).
-2. Lay the recess-step fillet on the wing, cure, then bond the pod into the recess. ⚠ Pod BUILD step 11 bonds the
+1. Build the pod box on the bench in parallel with stage 4: stop T, tray, **the pitot socket `POD-006`**, then the
+   board pieces glued round them one by one (floor, side walls, nose wall, nose lip, LE filler, aft wall), fillets,
+   **then the carry handle `POD-007`, then the aft deck**: held just under the grip, slid forward so the handle legs
+   enter its two slots (open to the deck's front edge, D-139), lowered along the legs onto the walls; inserts
+   (assembly check: once the pod is in the recess neither the socket nor the handle can reach its seat; the handle
+   brackets wrap the walls and its legs pass through the deck).
+2. Lay the recess-step fillet on the wing, cure, then bond the pod into the recess. Thread each pack strap down its
+   slot, under the tray in the floor groove and up the other slot, EVA pads on the tray; leave the strap ends open
+   until the pack is in (stage 11: pack in, then close the straps over it). ⚠ Pod BUILD step 11 bonds the
    handle bridge to a "slot fill" that does not exist on top of the wing ([SW-10](review/STRUCTURE-WING.md#findings));
    bond to the spar saddles only.
 3. Tray first, then the power stack (assembly-check order, D-89c): **the four XT30U pairs `HRN-113`, the airspeed
@@ -265,7 +276,8 @@ Time: per side about half a day plus 2 × 24 h cures.
 Parts: M01 servos, H02 mechanisms hardware, horns and frames `MEC-004…008`, horn backplates `MEC-013`.
 Detail: [`subsystems/mechanisms/BUILD.md`](subsystems/mechanisms/BUILD.md) steps 5–12.
 
-1. Hinge: use Blenderm or filament tape, top strip at neutral, lower strip with the panel full TE-up
+1. Slide the panels, with their torque tubes, forward out of the bed strip back against the core (the hinge gap
+   stays). Hinge: use Blenderm or filament tape, top strip at neutral, lower strip with the panel full TE-up
    ([SC-02](review/SERVOS-CONTROLS.md#findings)). Both panels of a side in one setup.
 2. Push each horn up into its panel slot from below (U-slot over the torque tube), then bond the backplate `MEC-013`
    on top (D-89c). Bond the inboard horn with the rod in place. ⚠ Slip-fit the outboard horn in a brass sleeve instead of bonding

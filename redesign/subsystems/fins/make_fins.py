@@ -1,4 +1,4 @@
-"""Write subsystems/fins/interfaces.json and parts.csv from the CAD module (one source). Owner: D3. Design R5 (CR-A1-63).
+"""Write subsystems/fins/interfaces.json and parts.csv from the CAD module (one source). Owner: D3. Design R6 (D-146, D-147; R5 CR-A1-63).
 
     python -I redesign/subsystems/fins/make_fins.py
 
@@ -16,7 +16,7 @@ line to the D3 stack. Thermal blocks (E-FIN-81...88) take t_design_c and heat_w 
 Mass rules (status UNVERIFIED until weighed, T-D3-WEIGH):
   board   laminate area x (areal mass x layers + laminating adhesive) + tape laps; root fillets = CAD volume x
           fin.root_fillet.gcc (bodies named 'root fillet' in the half-fin part)
-  tube    params wing.spar.mass_per_m_kgm (same 22 x 20 stock) x length
+  tube    params fins.tube.mass_per_m_kgm (Rock West 35046-S, D-147; was wing.spar.mass_per_m_kgm on 22 x 20 stock) x length
   CF      CAD volume x CF density + bond epoxy (plug, brace, strips, pins)
   printed CAD volume x density (PETG; ASA for mounts and ESC pads, D-42) x fill factor (+ hardware, + bond epoxy)
 """
@@ -73,20 +73,33 @@ def masses(ctx, specs, P, LP, G, mod):
                 v, cc = s.volume_centroid()
                 cc = c.to_world(cc)
                 cf_w = [cf_w[i] + v * cc[i] for i in range(3)]
+            fl = [s for s in c.shapes if s.name == mod.FILM]          # D-179 release film: not laminate, not fillet
+            vfl = sum(s.volume_centroid()[0] for s in fl)
+            cfl_w = [0.0, 0.0, 0.0]
+            for s in fl:
+                v, cc = s.volume_centroid()
+                cc = c.to_world(cc)
+                cfl_w = [cfl_w[i] + v * cc[i] for i in range(3)]
+            m_film = (vfl / G['film_t']) * G['film_areal'] * 1000 if fl else 0.0     # area x areal mass, g
+            V0, cg0 = V, cg
+            V = V0 - vfl
+            cg = [(V0 * cg0[i] - cfl_w[i]) / V for i in range(3)] if fl else cg0
             area = (V - vf) / G['t_fin']
             lay = G['layers']
             adh = l('fin.adhesive_kgm2', 'kg/m2') * (lay - 1)
             am = k9.val(P, 'fins.areal_mass_kgm2', 'kg/m2')
             m_lam = area * (am * lay + adh) * 1000 + l('fin.root_joint_g', 'g')
             m_fil = vf * 1e6 * G['fil_gcc']
-            m = m_lam + m_fil
+            m = m_lam + m_fil + m_film
             cg_lam = [(V * cg[i] - cf_w[i]) / (V - vf) for i in range(3)]
-            cg = [(m_lam * cg_lam[i] + m_fil * cf_w[i] / vf) / m for i in range(3)] if vf > 0 else cg
+            cg = [(m_lam * cg_lam[i] + m_fil * cf_w[i] / vf + (m_film * cfl_w[i] / vfl if fl else 0.0)) / m
+                  for i in range(3)] if vf > 0 else cg
             basis = ('area %.4f m2 x (%.2f x %d + %.3f) kg/m2 + tape laps %.1f g + root fillets %.1f cm3 x %.2f g/cm3 '
-                     '= %.1f g' % (area, am, lay, adh, l('fin.root_joint_g', 'g'), vf * 1e6, G['fil_gcc'], m_fil))
+                     '+ release film %.2f g = %.1f g' % (area, am, lay, adh, l('fin.root_joint_g', 'g'), vf * 1e6, G['fil_gcc'], m_film, m))
         elif rule == 'tube':
-            m = k9.val(P, 'wing.spar.mass_per_m_kgm', 'kg/m') * G['L_tube'] * 1000
-            basis = '%.3f kg/m x %.3f m' % (k9.val(P, 'wing.spar.mass_per_m_kgm', 'kg/m'), G['L_tube'])
+            mu = k9.val(P, 'fins.tube.mass_per_m_kgm', 'kg/m')          # D-147: own key (RW 35046-S), not the spar's
+            m = mu * G['L_tube'] * 1000
+            basis = '%.3f kg/m (fins.tube.mass_per_m_kgm) x %.3f m' % (mu, G['L_tube'])
         elif rule in ('plug', 'brace', 'strip', 'pins'):
             ep = {'plug': 'plug.epoxy_g', 'brace': 'brace.epoxy_g', 'strip': 'edge_strip.epoxy_g',
                   'pins': 'edge_strip.pin_epoxy_g'}[rule]
@@ -203,18 +216,22 @@ def fill_thermal(blk, claims, res):
 NOTES = {
     'board': 'two 4.8 mm boards spray-laminated (D-26), knife-cut together from the DXF of this outline (notch for the '
              'collar tongue, D5 stepped 45.4 mm tip); LE butts the tube; root fillets are microballoon epoxy (BUILD step 11)',
-    'tube': 'two per 1 000 mm stock length; scuff the bond zones (block, collars) with 120 grit',
+    'tube': 'Rock West 35046-S filament-wound 0.875 x 0.750 in (D-147), cut to length with a fine-tooth saw, tape-wrapped; '
+            'micrometer the OD at three stations on both tubes before any fin part is printed and set fins.tube.od_m to '
+            'the mean (bores follow); do not sand below 22.0 mm (outer +/-15 ply); scuff the bond zones (block, collars) '
+            'with 120 grit',
     'mount': 'ASA (D-42), 0.2 mm layers, 5 perimeters, enclosed printer; collar axis vertical on the bed; slit + ears '
              'outboard; A = UR/LL, B = UL/LR (mirror); drill the motor holes 3.4 mm through the pilots to the measured '
-             'pattern; plate face 7.5 mm ahead of the collar front, cheeks 17 mm (D-61), 18 mm grip (D-91)',
-    'block': 'PETG, 3 perimeters, 15 % gyroid, spar bore horizontal on the bed; sand the socket top/bottom flush; '
+             'pattern; 9 deg canted plate, face 12.0 mm ahead of the collar front, cheeks 21.5 mm (D-146), 18 mm grip (D-91)',
+    'block': 'PETG, 2 perimeters, 10 % gyroid (L2, pending C4 / C2), spar bore horizontal on the bed; sand the socket top/bottom flush; '
              'four vertical plan-form edges R 3 mm (D-68) to match the R 3 mm pocket corners',
     'eye': 'PETG, 100 %, printed on its side with the tie-hole axis vertical (layers stacked along x), so the tab '
            'bends in the layer plane (D-107, CL-C6-EYE-TAB-RF; foot-down it would bend across layers, RF 1.4); '
            'D-89c (SW-01): bonded round the outboard face of each bore boss after the spar and blocks have cured in '
-           'the core, 30 min epoxy + silica, boss and foot sanded 120 grit, skin tape cut back so the foot bonds '
+           'the core, 30 min epoxy, boss and foot sanded 120 grit, skin tape cut back so the foot bonds '
            'PETG to PETG (E-FIN-89...92, T-D3-EYE-BONDED)',
-    'plug': 'CF 20 x 18 offcut, 53 mm, sanded to slide in the 20 mm bore, laminating epoxy',
+    'plug': 'CF 19 x 17 tube, 53 mm (D-147 / A3 S01R), slides in the 19.05 mm bore (sand lightly only if tight), '
+            'laminating epoxy',
     'collar': 'PETG, 100 %, printed upside down on the tail cap (slots open upward on the bed), layers stacked along '
               'the tube axis: the strip pull along the tail and the ring hoop both lie in the layer plane (D-107 / '
               'CDR-01 f: CL-C6-STRIP-TAIL-NET-RF uses the in-plane value 23.5 MPa; do not print it on its side); '
@@ -233,14 +250,18 @@ def write_parts_csv(specs, M, P):
     for pid, name, mat, mob, rule in specs:
         base = '-'.join(pid.split('-')[:2])
         groups.setdefault(base, []).append((pid, name, mat, mob, rule))
-    cost = {'FIN-001': 0.40, 'FIN-002': 14.16, 'FIN-003': 0.40, 'FIN-004': 0.70, 'FIN-006': 1.06,
+    cost = {'FIN-001': 0.40, 'FIN-002': 59.49, 'FIN-003': 0.40, 'FIN-004': 0.70, 'FIN-006': 17.21,
             'FIN-007': 0.05, 'FIN-008': 0.15, 'FIN-009': 2.00, 'FIN-010': 0.10, 'FIN-011': 2.00, 'FIN-012': 0.75, 'FIN-013': 0.02}
     vendor = {'FIN-001': 'Dollar Tree / Adams foam board 20 x 30 in, $1.25 (SRC-K09-CARD)',
-              'FIN-002': 'SRC-CF-TUBE 22 x 20 x 1000 mm $28.32, two tubes per stock length (I1 fixes the listing)',
+              'FIN-002': 'SRC-RW-35046S Rock West 35046-S, 36 in minimum $118.97 EST incl. $20 cut (A1-STATUS from C4, '
+                         'checked 2026-11-14): two 344 mm tubes, no spare (closure cost lever S5); cost = half of the 36 in order; '
+                         'backorder 2-4 weeks, order first (D-147)',
               'FIN-003': 'fusion/fins.py (Fusion export STL), ASA ~$25/kg (D-42)',
               'FIN-004': 'fusion/fins.py, PETG',
-              'FIN-006': 'CF tube 20 x 18 x 1000 mm, $20 per metre (I1 D03): one length gives both FIN-006 plugs (2 x 53 mm) and '
-                          'C2 six 36 mm spar plugs (216 mm) with ~0.65 m spare (CR-I1-17); cost = 53 mm share',
+              'FIN-006': 'CF tube 19 x 17 x 1000 mm roll-wrapped 3K, EUR 29.78 at lindinger.at (R&G, checked 2026-11-14) = '
+                          '$34.43 EST at 1.156 USD/EUR (wise.com, 2026-11-14), shipping —; one length only for the two '
+                          'plugs (D-147 / A3 S01R; C2 spar plugs stay on 20 x 18): cost = half the length; I1 to find a '
+                          'US listing',
               'FIN-007': 'fusion/fins.py, ASA (D-42)', 'FIN-008': 'fusion/fins.py, PETG',
               'FIN-009': 'pultruded CF strip 10 x 2 x 1000 mm, ~$10 per length, 4 braces per length UNVERIFIED (I1, CR-D3-09)',
               'FIN-010': 'fusion/fins.py, PETG',
@@ -251,11 +272,13 @@ def write_parts_csv(specs, M, P):
                'block': '3D print', 'plug': 'cut + sand', 'pad': '3D print', 'collar': '3D print',
                'brace': 'cut', 'anchor': '3D print', 'eye': '3D print', 'strip': 'cut', 'pins': 'cut + drill + bond'}
     title = {'board': 'Half-fin, two-layer foam board (UR/UL/LR/LL)',
-             'tube': 'Motor tube CF 22x20, %.0f mm' % (k9.val(P, 'fins.tube.length_m', 'm') * 1000),
-             'mount': 'Motor mount ASA, 7 deg canted plate, slip clamp (prints A and B)',
+             'tube': 'Motor tube CF %.2f x %.2f (RW 35046-S), %.0f mm' % (k9.val(P, 'fins.tube.od_m', 'm') * 1000,
+                     k9.val(P, 'fins.tube.id_m', 'm') * 1000, k9.val(P, 'fins.tube.length_m', 'm') * 1000),
+             'mount': 'Motor mount ASA, %.0f deg canted plate, slip clamp (prints A and B)'
+                      % k9.val(P, 'propulsion.stations.cant_deg', 'deg'),
              'block': 'Through-core block (tube socket + spar saddle)',
              'eye': 'Strap eye, PETG, bonded on the bore boss (D-89c)',
-             'plug': 'Tube plug CF 20x18 x 53 mm', 'pad': 'ESC pad, ASA',
+             'plug': 'Tube plug CF 19x17 x 53 mm', 'pad': 'ESC pad, ASA',
              'collar': 'Station collar, 22 mm + 40 mm two-face tail', 'brace': 'Brace, CF strip 10 x 2 (C4 CR-C4-16)',
              'anchor': 'Brace anchor on the spar', 'strip': 'Edge strip, CF 10 x 1',
              'pins': 'Edge-strip pin set, CF rod 2.5 mm'}
@@ -271,9 +294,13 @@ def write_parts_csv(specs, M, P):
           ['FIN-102', 'M3 nyloc nut ISO 10511 A2', 6, 'buy', '-', 'A2 stainless', 0, 0.05, 'Bolt Depot',
            'mass inside FIN-003; reuse <= 3 times'],
           ['FIN-103', 'M3 washer ISO 7089 A2', 12, 'buy', '-', 'A2 stainless', 0, 0.03, 'Bolt Depot', 'mass inside FIN-003'],
+          ['FIN-108', 'M3 washer ISO 7089 A2, motor screws (2 per screw, 0.5 mm each, D-173)', 32, 'buy', '-', 'A2 stainless', 0, 0.03,
+           'Bolt Depot', '4 motors x 4 screws x 2; price = FIN-103 line; mass about 0.12 g each (EST, 7 / 3.2 / 0.5 mm A2) = 3.9 g, not in the declared fins mass: A3 to book; 8 spares not counted'],
+          ['FIN-109', 'Release film under the half-fin roots: Scotch Heavy Duty 48 mm packing tape, 4 strips 50 mm (D-179, to x 0.27)', 4, 'buy', '-', 'BOPP + acrylic', 0, 0.02,
+           'wing tape stock (WNG-003, Amazon B000087KUA 6 rolls $19.98 = $3.33 a roll, repo cost.csv seen 2026-11-01)', 'x 0.22 -> 0.27 under each root (the last 30 mm bonded); mass inside the half-fin (release film 0.29 g each EST); $0.02 = 0.4 m of a 54.8 m roll, no new purchase'],
           ['FIN-104', 'Hook-and-loop strap 10 x 200 mm + 25 x 40 mm tape', 4, 'buy', '-', 'nylon', 0, 0.40,
            'any (Velcro ONE-WRAP class)', 'ESC retention, one strap per ESC (E-FIN-65...68, CR-E3-02); mass with the ESC (propulsion)'],
-          ['FIN-105', '30 min epoxy + glass microballoons + colloidal silica (consumable)', 1, 'buy', '-', 'epoxy', 0, 0.0,
+          ['FIN-105', '30 min epoxy + glass microspheres, no silica (consumable)', 1, 'buy', '-', 'epoxy', 0, 0.0,
            'shared shop stock (G2)', 'mass inside the bonded parts'],
           ['FIN-106', 'Spray adhesive 3M 77 class (consumable)', 1, 'buy', '-', '-', 0, 0.0, 'shared shop stock (G2)',
            'laminates the two board layers (D-26); mass inside FIN-001 (fin.adhesive_kgm2)'],

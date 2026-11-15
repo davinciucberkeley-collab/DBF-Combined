@@ -218,7 +218,7 @@
    "outputs": {
     "H_vd_full_Nm": 0.4397590020096,
     "H_va_full_Nm": 0.24979552416000003,
-    "H_cruise_trim_Nm": 0.04090215215923201,
+    "H_cruise_trim_Nm": 0.042945215040000005,
     "share_out": 0.48888888888888893,
     "b_in_m": 0.22999999999999998,
     "b_out_m": 0.22000000000000003,
@@ -238,8 +238,8 @@
     ],
     "vd": 27.2,
     "va": 20.5,
-    "vc": 16.0,
-    "trim": -6.72,
+    "vc": 17.0,
+    "trim": -6.25,
     "defl": [
      -25,
      25
@@ -852,9 +852,9 @@
     "cover_t": "m"
    },
    "outputs": {
-    "rod_notch_side_m": 0.0021625000000000017,
-    "rod_notch_bottom_m": 0.003467219999999995,
-    "rod_core_skin_m": 0.002788659162443241,
+    "rod_notch_side_m": 0.0017500000000000016,
+    "rod_notch_bottom_m": 0.003054719999999995,
+    "rod_core_skin_m": 0.0023761591624432412,
     "horn_core_m": 0.0013815445688848517,
     "pushrod_skin_m": 0.002149734435402343,
     "clevis_boss_m": 0.0015586098111817237,
@@ -1053,7 +1053,7 @@
      -0.0003
     ],
     "rb": 0.0165,
-    "rod_d": 0.003175,
+    "rod_d": 0.004,
     "hw": 0.012,
     "depth": 0.012,
     "outline": [
@@ -1207,18 +1207,18 @@
     "ASM-D6-TAPE-G"
    ],
    "outputs": {
-    "lag_va_deg": 0.42097050966023103,
-    "lag_vd_deg": 0.7411084398977402,
-    "rod_sigma_vd_Pa": 98693110.09098677,
-    "rod_free_len_m": 0.0476,
-    "twist_out_va_deg": 2.3294401765659467,
+    "lag_va_deg": 0.9381598815915992,
+    "lag_vd_deg": 1.651607868641829,
+    "rod_sigma_vd_Pa": 87720573.07019655,
+    "rod_free_len_m": 0.08460000000000004,
+    "twist_out_va_deg": 1.6716272814624948,
     "twist_in_va_deg": 2.9571874817439077,
-    "twist_out_va_foam_only_deg": 16.324399086358714,
-    "out_total_va_deg": 2.7504106862261777,
+    "twist_out_va_foam_only_deg": 10.963470310848026,
+    "out_total_va_deg": 2.609787163054094,
     "GJ_Nm2": 0.28689365003229533,
     "GJ_tube_Nm2": 0.18113245143353648,
     "GJ_skin_Nm2": 0.06482238111142254,
-    "loss_out_va": 0.0789572250948345,
+    "loss_out_va": 0.07981672907157834,
     "loss_in_va": 0.07148608475229434,
     "loss_in_va_full_tube": 0.06832654985477583,
     "loss_in_va_no_tube": 0.1853463608739801
@@ -1228,10 +1228,10 @@
     "hvd": 0.4397590020096,
     "share": 0.48888888888888893,
     "rb": 0.0165,
-    "d": 0.003175,
+    "d": 0.004,
     "E": 110000000000.0,
     "ya": 0.285,
-    "yo": 0.355,
+    "yo": 0.392,
     "boss": 0.01,
     "ht": 0.0024,
     "tube": [
@@ -1448,7 +1448,7 @@
     ],
     "afrac": [
      0.7,
-     1.0
+     0.8
     ]
    }
   },
@@ -1481,18 +1481,18 @@
     "yo": "m"
    },
    "outputs": {
-    "mass_chosen_g": 0.8487350274883086,
-    "loss_out_steel_3_32": 0.09140114332340935,
-    "mass_steel_3_32_g": 2.3418179558428656,
-    "loss_out_cf_2mm": 0.16906491067243679,
-    "mass_cf_2mm_g": 0.3367787324648259,
-    "loss_out_steel_1_8": 0.07137975592095033,
-    "mass_steel_1_8_g": 4.164106228614514
+    "mass_chosen_g": 2.0910440702293673,
+    "loss_out_steel_3_32": 0.20669037493325693,
+    "mass_steel_3_32_g": 3.6350607075769865,
+    "loss_out_cf_2mm": 0.6427126580265379,
+    "mass_cf_2mm_g": 0.5227610175573418,
+    "loss_out_steel_1_8": 0.09428569326641328,
+    "mass_steel_1_8_g": 6.4636872802374565
    },
    "input_values": {
-    "lag": 0.42097050966023103,
-    "loss": 0.0789572250948345,
-    "d": 0.003175,
+    "lag": 0.9381598815915992,
+    "loss": 0.07981672907157834,
+    "d": 0.004,
     "E": 110000000000.0,
     "alt": [
      [
@@ -1515,7 +1515,7 @@
      25
     ],
     "ya": 0.285,
-    "yo": 0.355
+    "yo": 0.392
    }
   },
   {
@@ -1618,12 +1618,12 @@
     "alloc": "g"
    },
    "outputs": {
-    "mass_g": 72.6,
-    "over_g": -0.4000000000000057
+    "mass_g": 73.66,
+    "over_g": -0.3400000000000034
    },
    "input_values": {
-    "m": 72.6,
-    "alloc": 73
+    "m": 73.66,
+    "alloc": 74
    }
   },
   {
@@ -1666,7 +1666,7 @@
     "MEC-001-R"
    ],
    "how": "Information: holding load in cruise",
-   "value": 0.04090215215923201
+   "value": 0.042945215040000005
   },
   {
    "id": "CL-D6-SHARE-OUT",
@@ -1987,7 +1987,7 @@
     "MEC-006-R"
    ],
    "how": "T-D6-THROW feeler gauge",
-   "value": 0.0021625000000000017
+   "value": 0.0017500000000000016
   },
   {
    "id": "CL-D6-CLEAR-ROD-NOTCH-BOTTOM",
@@ -2009,7 +2009,7 @@
     "MEC-006-R"
    ],
    "how": "T-D6-THROW feeler gauge",
-   "value": 0.003467219999999995
+   "value": 0.003054719999999995
   },
   {
    "id": "CL-D6-CLEAR-ROD-CORE-SKIN",
@@ -2031,7 +2031,7 @@
     "MEC-006-R"
    ],
    "how": "T-D6-THROW feeler gauge",
-   "value": 0.002788659162443241
+   "value": 0.0023761591624432412
   },
   {
    "id": "CL-D6-CLEAR-HORN-CORE",
@@ -2161,7 +2161,7 @@
     "MEC-006-R"
    ],
    "how": "T-D6-TWIST",
-   "value": 0.42097050966023103
+   "value": 0.9381598815915992
   },
   {
    "id": "CL-D6-TWIST-OUT-VA",
@@ -2183,7 +2183,7 @@
     "MEC-009-RO"
    ],
    "how": "T-D6-TWIST: weight on the panel tip TE, protractor at both ends",
-   "value": 2.7504106862261777
+   "value": 2.609787163054094
   },
   {
    "id": "CL-D6-TWIST-IN-VA",
@@ -2225,7 +2225,7 @@
     "MEC-009-RO"
    ],
    "how": "T-D6-TWIST",
-   "value": 0.0789572250948345
+   "value": 0.07981672907157834
   },
   {
    "id": "CL-D6-EFF-LOSS-IN",
@@ -2291,7 +2291,7 @@
     "MEC-005-R"
    ],
    "how": "T-D6-WEIGH",
-   "value": 0.8487350274883086
+   "value": 2.0910440702293673
   },
   {
    "id": "CL-D6-EFF-LOSS-OUT-332-STEEL",
@@ -2305,7 +2305,7 @@
     "MEC-005-R"
    ],
    "how": "Information: rejected option (heavier and more lag than CF 1/8 in)",
-   "value": 0.09140114332340935
+   "value": 0.20669037493325693
   },
   {
    "id": "CL-D6-EFF-LOSS-OUT-2MM-CF",
@@ -2319,7 +2319,7 @@
     "MEC-005-R"
    ],
    "how": "Information: rejected option (above the 10 % limit)",
-   "value": 0.16906491067243679
+   "value": 0.6427126580265379
   },
   {
    "id": "CL-D6-ROD-MASS-R1",
@@ -2333,7 +2333,7 @@
     "MEC-005-R"
    ],
    "how": "Information: R1 baseline",
-   "value": 4.164106228614514
+   "value": 6.4636872802374565
   },
   {
    "id": "CL-D6-BOND-FRAME",
@@ -2385,7 +2385,7 @@
     "MEC-009-RO"
    ],
    "how": "Information: why the tubes and the closed skin are needed",
-   "value": 16.324399086358714
+   "value": 10.963470310848026
   },
   {
    "id": "CL-D6-ROD-STRESS",
@@ -2403,7 +2403,7 @@
     "MEC-005-R"
    ],
    "how": "No set in the rod after T-B2-HINGE",
-   "value": 98693110.09098677
+   "value": 87720573.07019655
   },
   {
    "id": "CL-D6-SERVO-SUPPLY",
@@ -2439,7 +2439,7 @@
     "MEC-001-R"
    ],
    "how": "T-D6-WEIGH: weigh every part on arrival",
-   "value": 72.6
+   "value": 73.66
   },
   {
    "id": "T-D6-THROW",

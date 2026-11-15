@@ -113,8 +113,15 @@ kit.assumption("ASM-B3-CD0", "Profile drag for the transition and mode models", 
                      "0.061 is the whole-aircraft value incl. props windmilling; both bracket the mode results)",
                value=0.020, unit="-")
 kit.assumption("ASM-B3-TRANS-USE-MAX", "Pitch differential allowed in transition",
-               "Fraction of the motors' pitch differential the quasi-steady transition may use",
-               basis="keeps 40 % for pitch rate, gusts and roll/yaw mixing; B3 choice", value=0.6, unit="-")
+               "Fraction of the pitch moment at the 30 % differential cap (R-HOVER-AUTHORITY) that the trim part of "
+               "the forward transition may use: the largest |M_aero| along the flown pitch-over (CALC-B3-TRANS-TD), "
+               "not the Iyy theta_dd transient, which belongs to the rate reserve",
+               basis="Design round 2026-11-14 (B3.md §2.3, A1.md D-149), value unchanged: the 0.40 kept back is the "
+                     "pitch-axis reserve for a 2 m/s vertical gust at the worst quasi-steady transition point (forward "
+                     "CG, 11 m/s: 0.353 of the cap) plus the R-HOVER-AUTHORITY 2.0 rad/s2 rate floor on Iyy (0.068): "
+                     "0.42 (team/B3/results/round1114.json reserve_at_qs_worst; 3 m/s gust: 0.60). Roll and yaw "
+                     "already hold their own share through the per-axis 30 % cap, so the earlier 'roll/yaw mixing' "
+                     "wording is retired. B3 choice", value=0.6, unit="-")
 kit.assumption("ASM-B3-ELEVON-TRANS", "Elevon pitch travel in transition",
                "Elevon deflection available for pitch during the transition", basis="25 deg travel less 10 deg kept for "
                "roll; B3 choice", value=15.0, unit="deg")
@@ -373,7 +380,7 @@ def cg_limits(b, c, ef, yin, yout, fy, fh, fle, fte, zref, xnp_a, xnp, dcm, eta,
                   "xnp_a": "CL-B3-XNP-AERO", "CLa": "CL-B3-CLA", "S": "CL-A1-WING-AREA", "c": P + "wing.chord_m",
                   "b": P + "wing.span_m", "cna": "ASM-B3-PROP-CNA", "up": "ASM-B3-UPWASH", "vt": "CL-B3-VT-TRIM",
                   "rho": P + "env.rho_kgm3", "m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2",
-                  "ld": P + "performance.ld_cruise", "dhdi": "CL-B4-SIM-DH-DI", "v_h": P + "performance.transition_min_ms"},
+                  "ld": P + "performance.ld_cruise", "dhdi": "CL-B4-SIM-DH-DI", "v_h": "ASM-B3-B4-INC-V"},
           units={"D": "m", "x_prop": "m", "x_aft": "m", "xnp": "m", "xnp_a": "m", "S": "m2", "c": "m", "b": "m",
                  "vt": "m/s", "rho": "kg/m3", "m": "kg", "g": "m/s2", "dhdi": "N/rad", "v_h": "m/s"},
           equation="arm = x_aft - x_prop ; dCma_p = n cna A/S up arm/c ; dCnb_p = -n cna A/S arm/b (per rad, about "
@@ -403,7 +410,7 @@ kit.claim("CL-B3-PROP-ARM-AFT", "Prop plane ahead of the aft CG limit", calc="CA
 kit.claim("CL-B3-PROP-CNB-AFT", "Prop Ribner yaw term at the aft CG limit", calc="CALC-B3-PROP-AFT",
           output="dCnb_props", unit="1/rad", assumes=["ASM-B3-PROP-CNA"],
           how="Included in CL-B3-CNB; T-B3-YAW-DOUBLET with and without props (glide) brackets it.")
-kit.claim("CL-B3-PROP-CNA-B4-RATIO", "Prop normal-force slope: B4 BEMT (dH/di at 15.6 m/s) / B3 Ribner assumption",
+kit.claim("CL-B3-PROP-CNA-B4-RATIO", "Prop normal-force slope: B4 BEMT (dH/di at ASM-B3-B4-INC-V) / B3 Ribner assumption",
           calc="CALC-B3-PROP-AFT", output="cna_ratio_b4", unit="-",
           how="Car-top rig side force vs incidence (B4); < 1 means the Ribner NP term is conservative.")
 kit.claim("CL-B3-PROP-XNP-B4-SHIFT", "Whole-aircraft NP shift if B4's BEMT slope replaced the Ribner assumption",
@@ -466,7 +473,9 @@ kit.claim("CL-B3-VT-TRIM", "Transition speed 1.3 Vs, forward CG limit (ARSPD_FBW
                    "x_cg + (Xnp_a - Xnp) ; commanded elevon = AVL / e_D6(V)")
 def trim_sweep(b, c, ef, yin, yout, fy, fh, fle, fte, zref, xnp_a, xnp, dcm, eta, tab, m, g, rho, S, lo, li, va,
                slop, vmax, x_t, x_aft, x_fwd, vs, vc):
-    speeds = [round(vs, 2)] + [v for v in (13.0, 14.0, 15.0, 16.0, 18.0, 20.0, 22.0, 25.0) if v > vs + 0.05]
+    # the cruise speed of record is always in the sweep (D-145 moved it 16 -> 17 m/s)
+    speeds = [round(vs, 2)] + sorted(v for v in {13.0, 14.0, 15.0, 16.0, 18.0, 20.0, 22.0, 25.0, float(vc)}
+                                     if v > vs + 0.05)
     cls = [2 * m * g / (rho * V * V * S) for V in speeds]
     rows = {}
     for tag, x in (("fwd", x_fwd), ("target", x_t), ("aft", x_aft)):
@@ -481,7 +490,7 @@ def trim_sweep(b, c, ef, yin, yout, fy, fh, fle, fte, zref, xnp_a, xnp, dcm, eta
 
 
 kit.claim("CL-B3-ELEVON-TRIM-CRUISE", "Elevon trim at cruise speed, CG target", calc="CALC-B3-TRIM-SWEEP",
-          output="delta_cruise", unit="deg", how="FBWA level flight at 16 m/s: servo output vs neutral (FC log).")
+          output="delta_cruise", unit="deg", how="FBWA level flight at the cruise speed (17 m/s, D-145): servo output vs neutral (FC log).")
 kit.claim("CL-B3-ALPHA-CRUISE", "Body angle at cruise speed, CG target", calc="CALC-B3-TRIM-SWEEP",
           output="alpha_cruise", unit="deg", how="FC pitch angle in level flight at 16 m/s (no wind).")
 
@@ -820,6 +829,15 @@ kit.assumption("ASM-B3-WTIP-CN", "Wing normal force with the wind along the span
                basis="review/CDR-2026-11-13/CDR-aero.md CDR-AE-04 (REVIEWER EST: 0.44 sin b cos b + 2 sin^2 b); "
                      "low-aspect-ratio plate theory (Hoerner, Fluid-Dynamic Lift, ch. 17, from memory, not re-read)",
                value=2.0, unit="-", status="UNVERIFIED")
+kit.source("SRC-B3-CD-PLATE2D", "Drag coefficient table (Wikipedia, 'Drag coefficient', table of measured shapes)",
+           "web", url="https://en.wikipedia.org/wiki/Drag_coefficient", checked="2026-11-14",
+           where="'Long flat plate perpendicular to flow (2D)': 1.98-2.05; 'Flat plate perpendicular to flow (3D)': 1.28")
+kit.assumption("ASM-B3-WTIP-CDC-MAX", "Upper end of the cross-flow Cd (pessimistic end for the wingtip-into-wind case)",
+               "Largest cross-flow drag coefficient the wing can have with the wind along the span: the sharp-edged "
+               "2-D flat plate normal to the flow",
+               basis="SRC-B3-CD-PLATE2D: 2-D plate 1.98-2.05 (upper end used). K09-L's section has a rounded leading "
+                     "edge and a finite length (3-D plate 1.28), both lower; so 2.05 bounds ASM-B3-WTIP-CN from above "
+                     "(closure round 2026-11-14)", value=2.05, unit="-", cites=["SRC-B3-CD-PLATE2D"])
 kit.assumption("ASM-B3-WTIP-ARM", "Centre of pressure of that force, ahead of mid-span toward the windward tip",
                "linear part at b/4 from mid-span, cross-flow part at b/8 (fractions of b: 0.25, 0.125). The moment "
                "grows with the heading error: the attitude is statically unstable towards broadside",
@@ -829,10 +847,18 @@ kit.assumption("ASM-B3-WTIP-ARM", "Centre of pressure of that force, ahead of mi
 kit.assumption("ASM-B3-WTIP-BETA", "Hover heading errors checked in the wingtip-into-wind attitude",
                "10 deg (weathervane hold) and 20 deg (the yaw step of the twin test M3)",
                basis="review/CDR-2026-11-13/CDR-aero.md CDR-AE-04 and measure M3", value=[10.0, 20.0], unit="deg")
-kit.assumption("ASM-B3-CANT-ALT", "Contingency motor cant", "10 deg instead of 7 deg, decided before any mount is printed "
-               "if the twin test M3 fails (yaw RCOU spread > 30 % or heading diverges)",
-               basis="review/CDR-2026-11-13/CDR-aero.md CDR-AE-04; needs D3 (mount) and E1 (26.1 mm blade-to-tube gap) "
-                     "re-runs: PROPOSED, not applied", value=10.0, unit="deg", status="PROPOSED")
+kit.assumption("ASM-B3-CANT-ALT", "Contingency motor cant", "10 deg instead of the 9 deg of record "
+               "(P:propulsion.stations.cant_deg, D-146), with mount face_ahead 14.0 mm. The 10 deg / 14 mm mounts are "
+               "printed as ready spares; they replace the 9 deg mounts if T-B3-HOVER-YAW-WTIP, before the first outdoor "
+               "hover, reads a wing moment above 1.023 x this model (yaw RCOU spread > 30 % or heading diverges)",
+               basis="review/DESIGN-ROUND-2026-11-14/A1.md#D-159 (trigger 1.045 -> 1.023 x model after B4's 9 deg yaw "
+                     "factors: CL-B3-HOVER-YAW-WTIP-CDC-AT-FAC) and D-146; B3.md §1.4 (14.0 mm gives a 26.1 mm "
+                     "blade-to-tube gap, E1 tip_gap); CDR-AE-04. PROPOSED, not applied. Closure round 2026-11-14: "
+                     "9 deg passes at the upper bound of the cross-flow Cd (CL-B3-HOVER-YAW-WTIP-20-CDMAX), so the "
+                     "test confirms and this stays a spare, not the planned fix. If ever fitted, it costs cos 10 / "
+                     "cos 9 = 0.9971 of thrust: E1's fresh T/W 2.001 at 70.2 A would read 1.995 < 2.0 (E1 re-check)",
+               value=10.0, unit="deg",
+               status="PROPOSED")
 kit.assumption("ASM-B3-GUST-DIFF-MAX", "Differential thrust allowed in the 8 m/s gust (survive-and-land case)",
                "40 % of hover thrust per motor (the 30 % of R-HOVER-AUTHORITY is the cap for the 5 m/s operating case; "
                "the mixer is not limited to it). 40 % leaves more than half of the 90 % the lower pair can give",
@@ -841,17 +867,18 @@ kit.assumption("ASM-B3-GUST-DIFF-MAX", "Differential thrust allowed in the 8 m/s
 
 
 @kit.calc("CALC-B3-HOVER-WTIP", title="Hover yaw with a wingtip into the wind (Q_WVANE_LAND / TAKEOFF 3): wing moment "
-          "against the yaw control power, 7 deg and 10 deg cant",
+          "against the yaw control power, cant of record (params, 9 deg D-146) and the 10 deg contingency",
           inputs={**HOV_IN, "Vg": P + "requirements.gust_survive_ms", "cdc": "ASM-B3-WTIP-CN", "arm": "ASM-B3-WTIP-ARM",
-                  "betas": "ASM-B3-WTIP-BETA", "cant2": "ASM-B3-CANT-ALT"},
+                  "betas": "ASM-B3-WTIP-BETA", "cant2": "ASM-B3-CANT-ALT", "cdmax": "ASM-B3-WTIP-CDC-MAX"},
           units={**HOV_U, "Vg": "m/s", "betas": "deg", "cant2": "deg"},
-          assumes=["ASM-B3-WTIP-CN", "ASM-B3-WTIP-ARM", "ASM-B3-WTIP-BETA", "ASM-B3-HOVER-DIFF", "ASM-B3-CANT-ALT"],
+          assumes=["ASM-B3-WTIP-CN", "ASM-B3-WTIP-ARM", "ASM-B3-WTIP-BETA", "ASM-B3-HOVER-DIFF", "ASM-B3-CANT-ALT",
+                   "ASM-B3-WTIP-CDC-MAX"],
           equation="M_wing(b, V) = q S [ (pi/2)(c/b) sin b cos b (b_span/4) + CDc sin^2 b (b_span/8) ] (destabilising) ; "
                    "M_fin(b, V) = 2 q A_fin CN90 cos b e, e = 0.75 sin b / (4 + pi cos b) x fin height (Kirchhoff plate "
                    "CP; restoring: the fins are broadside in this attitude) ; M_ctrl = 4 dT (kq_iso f_low + r sin cant), "
                    "dT = 30 % of hover thrust ; ratio = M_ctrl / M_wing (no fin credit) ; b_lim: M_wing = M_ctrl / fac")
 def hover_wtip(m, g, dl, split, tmax, sag, y, z, Qh, swirl, cant, dfrac, Ixx, Iyy, Izz, m_basic, rho, Vw, S, c, b, x_t,
-               cn90, xcp, fc, fh, fle, asym, fac, amin, swirl_lo, Vg, cdc, arm, betas, cant2):
+               cn90, xcp, fc, fh, fle, asym, fac, amin, swirl_lo, Vg, cdc, arm, betas, cant2, cdmax):
     Th = m * g * dl / 4
     dT = dfrac * Th
     kq_iso = Qh / Th
@@ -893,21 +920,31 @@ def hover_wtip(m, g, dl, split, tmax, sag, y, z, Qh, swirl, cant, dfrac, Ixx, Iy
     for bd in betas:
         out[f"M_wing_{bd:.0f}deg_5_Nm"], out[f"M_wing_{bd:.0f}deg_gust_Nm"] = m_wing(bd, Vw), m_wing(bd, Vg)
         out[f"M_fin_{bd:.0f}deg_5_Nm"] = m_fin(bd, Vw)
+    # cross-flow Cd sensitivity at the cant of record, 20 deg, 5 m/s (D-146 / D-159)
+    q5, b20 = 0.5 * rho * Vw * Vw, math.radians(20.0)
+    lin = q5 * S * (math.pi / 2) * (c / b) * math.sin(b20) * math.cos(b20) * arm[0] * b
+    cross = q5 * S * math.sin(b20) ** 2 * arm[1] * b
+    M0 = out["M_ctrl_Nm"]
+    out["ratio_20deg_5_cdc110"] = M0 / (lin + 1.10 * cdc * cross)
+    out["ratio_20deg_5_cdcmax"] = M0 / (lin + cdmax * cross)            # pessimistic end (closure round)
+    out["ratio_20deg_5_cdcmax_cant10"] = out["M_ctrl_Nm_cant10"] / (lin + cdmax * cross)   # D-163: E/EP props
+    out["cdc_at_factor_20deg_5"] = (M0 / fac - lin) / cross            # CDc at which the ratio falls to fac
+    out["wing_moment_factor_at_fac"] = (M0 / fac) / m_wing(20.0, Vw)   # model multiplier the 1.5 tolerates
     out["yaw_arm_gain_cant10"] = out["k_yaw_low_m_cant10"] / out["k_yaw_low_m"] - 1
-    out["lift_loss_cant10_vs_7"] = 1 - math.cos(math.radians(cant2)) / math.cos(math.radians(cant))
+    out["lift_loss_cant10_vs_cant"] = 1 - math.cos(math.radians(cant2)) / math.cos(math.radians(cant))
     out["lift_loss_cant10_vs_0"] = 1 - math.cos(math.radians(cant2))
     return out
 
 
 kit.claim("CL-B3-HOVER-YAW-WTIP-10", "Hover yaw control / wing moment, wingtip into a 5 m/s wind, 10 deg heading error "
-          "(7 deg cant, B4 half-fin factor, no fin credit)", calc="CALC-B3-HOVER-WTIP", output="ratio_10deg_5", unit="-",
+          "(params cant, 9 deg D-146; B4 half-fin factor, no fin credit)", calc="CALC-B3-HOVER-WTIP", output="ratio_10deg_5", unit="-",
           limit=(">=", P + "requirements.hover_ctrl_factor"), verifies=["R-HOVER-AUTHORITY", "R-WIND"],
           how="T-B3-HOVER-YAW-WTIP (twin TW3): QHOVER at 5 m/s, wingtip into wind; yaw RCOU spread <= 30 %.")
 kit.claim("CL-B3-HOVER-YAW-WTIP-20", "Hover yaw control / wing moment, wingtip into a 5 m/s wind, 20 deg heading error "
           "(the +/-20 deg yaw step of the twin test)", calc="CALC-B3-HOVER-WTIP", output="ratio_20deg_5", unit="-",
           limit=(">=", P + "requirements.hover_ctrl_factor"), verifies=["R-HOVER-AUTHORITY", "R-WIND"],
           how="T-B3-HOVER-YAW-WTIP: yaw steps of +/-20 deg; pass = heading returns with yaw RCOU spread <= 30 %. "
-              "A fail here selects the 10 deg cant (CL-B3-HOVER-YAW-WTIP-20-CANT10) before any mount is printed.")
+              "A fail here selects the 10 deg / 14.0 mm contingency (CL-B3-HOVER-YAW-WTIP-20-CANT10) before the flight mounts are printed.")
 kit.claim("CL-B3-HOVER-YAW-WTIP-20-FINS", "As CL-B3-HOVER-YAW-WTIP-20 with the fins' restoring moment credited",
           calc="CALC-B3-HOVER-WTIP", output="ratio_20deg_5_fins", unit="-", how="As CL-B3-HOVER-YAW-WTIP-20.")
 kit.claim("CL-B3-HOVER-YAW-WTIP-BETA", "Heading error at which the wingtip-into-wind yaw ratio falls to the 1.5 factor, "
@@ -923,13 +960,32 @@ kit.claim("CL-B3-HOVER-YAW-WTIP-BETA-GUST", "Heading error at which the wing mom
           "the 8 m/s gust", calc="CALC-B3-HOVER-WTIP", output="beta_at_unity_gust_deg", unit="deg",
           how="Information for the flight card: in a gust the wingtip-into-wind stance holds only for small heading "
               "errors; beyond this the aircraft turns broadside (then the pitch axis carries the wind).")
+kit.claim("CL-B3-HOVER-YAW-WTIP-20-CD110", "As CL-B3-HOVER-YAW-WTIP-20 with the cross-flow Cd 10 % higher "
+          "(ASM-B3-WTIP-CN x 1.1), information", calc="CALC-B3-HOVER-WTIP", output="ratio_20deg_5_cdc110", unit="-",
+          note="A1.md D-159: below 1.5 at 9 deg after B4's 9 deg yaw factors; accepted with the 1.023 trigger and the "
+               "10 deg / 14 mm spares", how="T-B3-HOVER-YAW-WTIP.")
+kit.claim("CL-B3-HOVER-YAW-WTIP-20-CDMAX", "As CL-B3-HOVER-YAW-WTIP-20 at the upper end of the cross-flow Cd "
+          "(ASM-B3-WTIP-CDC-MAX, sharp 2-D plate), no fin credit: the pessimistic end of T-B3-HOVER-YAW-WTIP",
+          calc="CALC-B3-HOVER-WTIP", output="ratio_20deg_5_cdcmax", unit="-",
+          limit=(">=", P + "requirements.hover_ctrl_factor"), verifies=["R-HOVER-AUTHORITY"],
+          note="Closure round 2026-11-14 (B3.md §3): the 9 deg cant passes at the physical upper bound of the "
+               "cross-flow Cd, so the hanging yaw test confirms and does not decide. The 10 deg spares stay spares",
+          how="T-B3-HOVER-YAW-WTIP: measured wing moment <= 1.023 x model (CDc <= 2.10).")
+kit.claim("CL-B3-HOVER-YAW-WTIP-20-CDMAX-CANT10", "As CL-B3-HOVER-YAW-WTIP-20-CDMAX at the 10 deg / 14 mm cant "
+          "(ASM-B3-CANT-ALT), information until A1 moves P:propulsion.stations.cant_deg", calc="CALC-B3-HOVER-WTIP",
+          output="ratio_20deg_5_cdcmax_cant10", unit="-",
+          note="Closure round D-163: with the E/EP props (D-161) the 9 deg value falls below 1.5 at the Cd upper bound",
+          how="T-B3-HOVER-YAW-WTIP on the 10 deg mounts.")
+kit.claim("CL-B3-HOVER-YAW-WTIP-CDC-AT-FAC", "Cross-flow Cd at which CL-B3-HOVER-YAW-WTIP-20 falls to 1.5 (model "
+          "value 2.0), information", calc="CALC-B3-HOVER-WTIP", output="cdc_at_factor_20deg_5", unit="-",
+          how="T-B3-HOVER-YAW-WTIP: the trigger of ASM-B3-CANT-ALT is wing_moment_factor_at_fac of this calc.")
 kit.claim("CL-B3-HOVER-YAW-WTIP-20-CANT10", "Contingency: as CL-B3-HOVER-YAW-WTIP-20 with 10 deg cant",
           calc="CALC-B3-HOVER-WTIP", output="ratio_20deg_5_cant10", unit="-",
           how="Only if the twin test fails: D3 re-draws the mount at 10 deg, E1 re-checks the blade-to-tube gap.")
-kit.claim("CL-B3-CANT10-ARM-GAIN", "Contingency: hover yaw arm gain from 7 to 10 deg cant (B4 half-fin factor)",
+kit.claim("CL-B3-CANT10-ARM-GAIN", "Contingency: hover yaw arm gain from the params cant (9 deg) to 10 deg (B4 half-fin factor)",
           calc="CALC-B3-HOVER-WTIP", output="yaw_arm_gain_cant10", unit="-", how="T-B4-YAW with a 10 deg wedge.")
-kit.claim("CL-B3-CANT10-LIFT-LOSS", "Contingency: lift lost going from 7 to 10 deg cant", calc="CALC-B3-HOVER-WTIP",
-          output="lift_loss_cant10_vs_7", unit="-", how="cos 10 / cos 7; E1 re-reads T/W at the gate.")
+kit.claim("CL-B3-CANT10-LIFT-LOSS", "Contingency: lift lost going from the params cant (9 deg) to 10 deg", calc="CALC-B3-HOVER-WTIP",
+          output="lift_loss_cant10_vs_cant", unit="-", how="cos 10 / cos(params cant); E1 re-reads T/W at the gate.")
 kit.claim("CL-B3-CANT10-YAW-ACCEL", "Contingency: hover yaw acceleration at 10 deg cant, 30 % differential",
           calc="CALC-B3-HOVER-WTIP", output="acc_yaw_rads2_cant10", unit="rad/s2", how="As CL-B3-HOVER-YAW-ACCEL-LOW.")
 
@@ -1150,108 +1206,444 @@ kit.claim("CL-B3-ELEVON-WASH-GAP", "Elevon to hover slipstream gap", calc="CALC-
 
 
 # ---------------------------------------------------------------------------------------------- transition
-@kit.calc("CALC-B3-TRANSITION", title="Quasi-steady transition pitch balance",
-          assumes=["ASM-B3-CN90", "ASM-B3-CD0", "ASM-B3-PROP-CNA", "ASM-B3-ELEVON-TRANS", "ASM-B3-ELEVON-POST"],
-          inputs={"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "rho": P + "env.rho_kgm3",
-                  "S": "CL-A1-WING-AREA", "c": P + "wing.chord_m", "b": P + "wing.span_m", "x_t": P + "cg.x_target_m",
-                  "x_fwd": "CL-B3-V-CG-FWD", "xnp": "CL-B3-XNP", "cm_np_thin": "CL-B3-CM-NP-THIN",
-                  "dcm": "CL-B2-DCM-VISC", "CLa": "CL-B3-CLA", "a0": "CL-B3-ALPHA0", "clmax": "CL-B3-CLMAX-TRIM",
-                  "cd0": "ASM-B3-CD0", "e": P + "wing.oswald_e", "cn90": "ASM-B3-CN90", "n": P + "propulsion.n_motors",
-                  "D": P + "propulsion.prop_diameter_m", "x_prop": P + "propulsion.stations.x_prop_plane_m",
-                  "cna": "ASM-B3-PROP-CNA", "tmax": P + "propulsion.thrust_max_per_motor_kg",
-                  "sag": P + "propulsion.voltage_sag", "z": P + "propulsion.stations.z_m",
-                  "dl": P + "propulsion.download_factor", "vc": P + "performance.cruise_ms",
-                  "CLd": "CL-B3-CLD", "Cmd_ref": "CL-B3-CMD", "xref": P + "cg.x_target_m", "eta": "CL-B2-ELEVON-ETA",
-                  "dp": "ASM-B3-ELEVON-TRANS", "fpost": "ASM-B3-ELEVON-POST", "lo": "CL-D6-EFF-LOSS-OUT",
-                  "li": "CL-D6-EFF-LOSS-IN", "va": "ASM-F4-VA-SCHED", "slop": "CL-D6-SLOP",
-                  "h_max": "CL-B4-SIM-H-MAX", "h_hov": "CL-B4-SIM-H-HOVERT", "v_h": P + "performance.transition_min_ms",
-                  "dfrac": "ASM-B3-HOVER-DIFF"},
-          units={"m": "kg", "g": "m/s2", "rho": "kg/m3", "S": "m2", "c": "m", "b": "m", "x_t": "m", "x_fwd": "m",
-                 "xnp": "m", "a0": "deg", "D": "m", "x_prop": "m", "tmax": "kg", "z": "m", "vc": "m/s",
-                 "xref": "m", "dp": "deg", "va": "m/s", "slop": "deg", "h_max": "N", "h_hov": "N", "v_h": "m/s"},
+# Design round 2026-11-14 (review/DESIGN-ROUND-2026-11-14/B3.md §2, A1.md D-149): the prop normal force is applied
+# with its physical sign (nose-up, props ahead of the CG) on B4's BEMT slope, the quasi-steady level pitch-over is kept
+# as information, and the pass line is the time-domain pitch-over the firmware flies.
+# Closure round 2026-11-14 (review/CLOSURE-ROUND-2026-11-14/B3.md, A2.md §2.3): the entry is a throttle ratio to the
+# learnt hover throttle plus a timed pre-climb, sized so that the pitch use, the gust reserve and the handover pass at
+# the LOW thrust edge and the sagged-pack thrust fraction (B1's 0.80) passes at the HIGH edge (team/B3/closure1114.py).
+kit.source("SRC-B3-AP-TAILSIT", "ArduPilot ArduPlane/tailsitter.cpp at tag Plane-4.7.2", "web",
+           url="https://raw.githubusercontent.com/ArduPilot/ardupilot/Plane-4.7.2/ArduPlane/tailsitter.cpp",
+           checked="2026-11-14",
+           where="Tailsitter_Transition::update, state ANGLE_WAIT_FW: nav_pitch_cd ramped at transition_rate_fw "
+                 "(Q_TAILSIT_RAT_FW); set_throttle_out(MAX(motors->get_throttle_hover(), "
+                 "attitude_control->get_throttle_in()), true, 0), comment 'set throttle at either hover throttle or "
+                 "current throttle, whichever is higher, through the transition'; VTOL control until |pitch| > "
+                 "Q_TAILSIT_ANGLE (transition_fw_complete, timeout (ANGLE + initial pitch) / RAT_FW x 1.5 s). "
+                 "Tailsitter_Transition::VTOL_update calls restart() every VTOL loop, so ANGLE_WAIT_FW starts at the "
+                 "mode change from the last Q-mode throttle_in. defaults_table_tailsitter: Q_A_ANGLE_BOOST 0, "
+                 "Q_TRANSITION_MS 2000; Tailsitter::setup uses Q_TRANSITION_MS only to default an unconfigured "
+                 "Q_TAILSIT_RAT_FW (ANGLE / (Q_TRANSITION_MS / 2000))")
+kit.source("SRC-B3-AP-ATCMULTI", "ArduPilot libraries/AC_AttitudeControl/AC_AttitudeControl_Multi.cpp at tag "
+           "Plane-4.7.2", "web",
+           url="https://raw.githubusercontent.com/ArduPilot/ardupilot/Plane-4.7.2/libraries/AC_AttitudeControl/"
+               "AC_AttitudeControl_Multi.cpp", checked="2026-11-14",
+           where="set_throttle_out: first statement '_throttle_in = throttle_in;', so MAX(hover, get_throttle_in()) "
+                 "is stored back each loop and the entry value is held to Q_TAILSIT_ANGLE whatever the stick does; "
+                 "get_throttle_boosted returns the input unchanged when ANGLE_BOOST is 0 (else x 1/cos tilt)")
+kit.source("SRC-B3-AP-QSTAB", "ArduPilot ArduPlane/mode_qstabilize.cpp and quadplane.cpp at tag Plane-4.7.2", "web",
+           url="https://raw.githubusercontent.com/ArduPilot/ardupilot/Plane-4.7.2/ArduPlane/mode_qstabilize.cpp",
+           checked="2026-11-14",
+           where="QSTABILIZE: hold_stabilize(get_pilot_throttle()) -> set_throttle_out(pilot throttle); "
+                 "get_pilot_throttle = throttle_curve(get_throttle_hover(), Q_THROTTLE_EXPO, stick) (quadplane.cpp); "
+                 "update_throttle_hover returns while the Z controller is not running, so the learnt hover throttle "
+                 "does not move in QSTABILIZE")
+kit.assumption("ASM-B3-TRANS-T0", "Forward-transition entry setting [r = throttle_in / learnt hover throttle, "
+               "pre-climb hold s]",
+               "Entry procedure (closure round 2026-11-14): hover in QSTABILIZE; set throttle_in = r x the learnt "
+               "Q_M_THST_HOVER (transmitter throttle override on the transition switch, not a stick position); hold "
+               "it for the pre-climb time (the aircraft climbs at (r dl - dl) g); then select FBWA. ArduPilot holds "
+               "MAX(hover, throttle_in) from the mode change to Q_TAILSIT_ANGLE (SRC-B3-AP-TAILSIT, "
+               "SRC-B3-AP-ATCMULTI), with Q_A_ANGLE_BOOST 0. Static thrust / W at entry = dl_true x r",
+               basis="team/B3/closure1114.py (results/closure1114.json design): window on static T0/W at 12 deg/s, "
+                     "70 deg, forward CG: low end 1.2827 at a 4 m/s pre-climb (use 0.60, gust 1.0, handover 12.94 "
+                     "m/s; 1.3278 from a steady hover), high end 0.80 x 1.7456 = 1.3968 (A2.md §2.3). r = 1.285 "
+                     "centres the realisation band of ASM-B3-TRANS-REALISE in it (edges 1.2908 / 1.3893). Hold 2.0 s "
+                     "gives >= 4.17 m/s at the low edge. Replaces D-149's '>= 1.4 W' (frac 0.802 > 0.80). The firmware "
+                     "law is read from source, so SITL S4c confirms it and is no longer a condition. FINAL RE-RUN 2026-11-14: hold "
+                     "2.0 -> 1.0 s. With the X2814 + 11x8E the thrust lapse with speed is smaller, the climb to 17 m/s at the "
+                     "high edge read 66.2 m (50 m start + 66.2 > the 110 m fence); 1.0 s reads 50.6 m, the low edge still "
+                     "credits 2.1 m/s and needs none (use 0.319 without it)",
+               value=[1.285, 1.0], unit="-,s", status="PROPOSED",
+               cites=["SRC-B3-AP-TAILSIT", "SRC-B3-AP-ATCMULTI", "SRC-B3-AP-QSTAB"])
+kit.assumption("ASM-B3-TRANS-REALISE", "Entry thrust realisation band [dl_true low, thrust-linearisation error, "
+               "pre-climb credit factor]",
+               "T0/W = dl_true x r x (1 +/- e_lin) with dl_true between the low value and P:propulsion."
+               "download_factor; vertical speed at the mode change credited as k x (T0 - dl) g x hold",
+               basis="dl_true low 1.025 = B4's SU2 download (CL-B4-SIM-DOWNLOAD, params note on "
+                     "propulsion.download_factor; 1.038 R3), high = the params key 1.06 kept until T-B4-INSTALLED. "
+                     "e_lin 2 % EST: Q_M_THST_EXPO fit between the hover and the entry throttle (0.49 -> 0.63), set "
+                     "from the stand. k = 0.8 EST: drag of the edge-on climb and the switch delay. B3 choice",
+               value=[1.025, 0.02, 0.8], unit="-,-,-", status="UNVERIFIED")
+kit.assumption("ASM-B3-FSW-TRANS", "Firmware transition settings [Q_TAILSIT_RAT_FW, Q_TAILSIT_ANGLE, Q_ASSIST_SPEED]",
+               "Pitch-over ramp rate, tilt at which the plane controller takes over, copter-assist speed",
+               basis="subsystems/flight-software/K09L.param (F4-R6): Q_TAILSIT_RAT_FW 12, Q_TAILSIT_ANGLE 70, "
+                     "Q_ASSIST_SPEED 14", value=[12.0, 70.0, 14.0], unit="deg/s,deg,m/s", cites=["SRC-B3-AP-TAILSIT"])
+kit.assumption("ASM-B3-TD-LOOP", "Pitch attitude loop in the time-domain pitch-over [wn rad/s, zeta]",
+               "2nd-order following of the ramped pitch target",
+               basis="EST, of the order of the hover pitch loop; the swept range 4-10 rad/s changes the hover-throttle "
+                     "peak by <= 0.003 (team/B3/results/round1114.json td_summary *_wn4 / *_wn10)",
+               value=[6.0, 1.0], unit="rad/s,-", status="UNVERIFIED")
+kit.assumption("ASM-B3-B4-INC-V", "Airspeed of B4's prop-at-incidence BEMT points",
+               "Speed at which CL-B4-SIM-H-MAX, -H-HOVERT, -DH-DI and -T-I45 are evaluated",
+               basis="team/B4/sim/claims.sim.json CALC-B4-SIM-INC input V = 17.0 m/s (B4 wave 2, at 9 deg cant; "
+                     "B4-W2.md). Kept as its own node, not P:performance.transition_min_ms, so the H-force speed only "
+                     "moves when B4's points move. The 15.6 m/s set is B4's -V156 information claims; never pair "
+                     "CL-B4-SIM-DH-DI (17 m/s) with 15.6",
+               value=17.0, unit="m/s")
+
+TRANS_IN = {"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "rho": P + "env.rho_kgm3",
+            "S": "CL-A1-WING-AREA", "c": P + "wing.chord_m", "b": P + "wing.span_m", "x_t": P + "cg.x_target_m",
+            "x_fwd": "CL-B3-V-CG-FWD", "xnp": "CL-B3-XNP", "cm_np_thin": "CL-B3-CM-NP-THIN",
+            "dcm": "CL-B2-DCM-VISC", "CLa": "CL-B3-CLA", "a0": "CL-B3-ALPHA0", "clmax": "CL-B3-CLMAX-TRIM",
+            "cd0": "ASM-B3-CD0", "e": P + "wing.oswald_e", "cn90": "ASM-B3-CN90", "n": P + "propulsion.n_motors",
+            "D": P + "propulsion.prop_diameter_m", "x_prop": P + "propulsion.stations.x_prop_plane_m",
+            "cna": "ASM-B3-PROP-CNA", "tmax": P + "propulsion.thrust_max_per_motor_kg",
+            "sag": P + "propulsion.voltage_sag", "z": P + "propulsion.stations.z_m",
+            "dl": P + "propulsion.download_factor", "vc": P + "performance.cruise_ms",
+            "CLd": "CL-B3-CLD", "Cmd_ref": "CL-B3-CMD", "xref": P + "cg.x_target_m", "eta": "CL-B2-ELEVON-ETA",
+            "dp": "ASM-B3-ELEVON-TRANS", "fpost": "ASM-B3-ELEVON-POST", "lo": "CL-D6-EFF-LOSS-OUT",
+            "li": "CL-D6-EFF-LOSS-IN", "va": "ASM-F4-VA-SCHED", "slop": "CL-D6-SLOP",
+            "h_max": "CL-B4-SIM-H-MAX", "h_hov": "CL-B4-SIM-H-HOVERT", "dHdi": "CL-B4-SIM-DH-DI",
+            "v_inc": "ASM-B3-B4-INC-V", "dfrac": "ASM-B3-HOVER-DIFF"}
+TRANS_U = {"m": "kg", "g": "m/s2", "rho": "kg/m3", "S": "m2", "c": "m", "b": "m", "x_t": "m", "x_fwd": "m",
+           "xnp": "m", "a0": "deg", "D": "m", "x_prop": "m", "tmax": "kg", "z": "m", "vc": "m/s",
+           "xref": "m", "dp": "deg", "va": "m/s", "slop": "deg", "h_max": "N", "h_hov": "N", "dHdi": "N/rad",
+           "v_inc": "m/s"}
+
+
+@kit.calc("CALC-B3-TRANSITION", title="Quasi-steady level transition pitch balance at hover thrust (information "
+          "since D-149), prop normal force signed",
+          assumes=["ASM-B3-CN90", "ASM-B3-CD0", "ASM-B3-PROP-CNA", "ASM-B3-ELEVON-TRANS", "ASM-B3-ELEVON-POST",
+                   "ASM-B3-B4-INC-V"],
+          inputs=TRANS_IN, units=TRANS_U,
           equation="level flight at V: T cos a = D, T sin a + L = W ; wing CP from Xnp (attached) to 0.5 c at 90 deg ; "
-                   "props' normal force at x_prop ; elevon (dp - slop) deg at Cmd eta e_D6(V) ; "
-                   "hub term (R5, B4 BEMT): M_hub = n H min(1, V/V_h) |x_cg - x_prop| added to |M_aero| at every "
-                   "point, H = CL-B4-SIM-H-MAX (hover rpm) or CL-B4-SIM-H-HOVERT (hover thrust held, bounding) ; "
-                   "use_full = (|M_aero| + M_hub - M_elevon) / (2 dT 2z), dT = min(T/4, Tmax sag - T/4) (lower pair "
-                   "to zero thrust: information) ; CDR-16: use_cap30 = (|M_aero| + M_hub) / (2 x 0.30 T_hover 2z), no "
-                   "elevon credit, the 30 % differential of R-HOVER-AUTHORITY (leaves roll and yaw their share)")
+                   "elevon (dp - slop) deg at Cmd eta e_D6(V) ; prop normal force at x_prop, SIGNED (props ahead of "
+                   "the CG: nose-up, against the nose-down wing moment; D-149): Np = max(k Np_Ribner, n H min(1, "
+                   "V/V_inc)) with variants nohub (k = 1, H = 0), bemt (k = dH/di / (cna A q(V_inc)), H = 0: the "
+                   "basis, smaller nose-up term = conservative), hmax (k = 1, H = CL-B4-SIM-H-MAX), hhov (k = 1, "
+                   "H = CL-B4-SIM-H-HOVERT, optimistic) ; use_cap30 = |M_aero| / (2 x 0.30 T_hover 2z), no elevon "
+                   "credit ; use_full = (|M_aero| - M_elevon) / (2 dT 2z), dT = min(T/4, Tmax sag - T/4) (information)")
 def transition(m, g, rho, S, c, b, x_t, x_fwd, xnp, cm_np_thin, dcm, CLa, a0, clmax, cd0, e, cn90, n, D, x_prop,
-               cna, tmax, sag, z, dl, vc, CLd, Cmd_ref, xref, eta, dp, fpost, lo, li, va, slop, h_max, h_hov, v_h, dfrac):
+               cna, tmax, sag, z, dl, vc, CLd, Cmd_ref, xref, eta, dp, fpost, lo, li, va, slop, h_max, h_hov, dHdi,
+               v_inc, dfrac):
     AR = b * b / S
     k_ind = 1 / (math.pi * e * AR)
     out = {}
     m_cap30 = 2 * (dfrac * m * g * dl / 4) * (2 * z)       # N m: the pitch moment of CALC-B3-HOVER at the 30 % cap
-    for hk, H in (("nohub", 0.0), ("hmax", h_max), ("hhov", h_hov)):
+    k_bemt = dHdi / (cna * (math.pi * D * D / 4) * 0.5 * rho * v_inc ** 2)
+    out["prop_slope_ratio_bemt"] = k_bemt
+    for hk, ks, H in (("nohub", 1.0, 0.0), ("bemt", k_bemt, 0.0), ("hmax", 1.0, h_max), ("hhov", 1.0, h_hov)):
         keys = {}
         for tag, x in (("target", x_t), ("fwd", x_fwd)):
             rows = []
             for V in sorted({0.0, 2.0, 4.0, 6.0, 8.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, vc}):
                 cmd = (Cmd_ref + CLd * (x - xref) / c) * eta * eff_mech(V, lo, li, va)
-                # B4's in-plane (H) force of each prop acts at its hub in the same sense as the Ribner normal force.
-                # At fixed rpm it grows with the advance ratio, so it is scaled V/V_h up to B4's 15.6 m/s
-                # worst-incidence value and held there. It overlaps the Ribner term (same physics): adding both,
-                # with no sign credit, is a bound.
-                hub = n * H * min(1.0, V / v_h) * abs(x - x_prop)
                 r = FM.transition_point(V, m, g, rho, S, c, x, xnp, cm_np_thin + dcm, CLa, math.radians(a0), clmax,
                                         cd0, k_ind, cn90, n, D, x_prop, cna, tmax * g * sag, z, 0.0, dl, cmd,
-                                        dp - slop, fpost, m_hub=hub)
+                                        dp - slop, fpost, np_scale=ks, np_min=n * H * min(1.0, V / v_inc))
                 rows.append([V, round(r["alpha_deg"], 1), round(r["TW"], 3), round(r["M_aero_Nm"], 3),
-                             round(hub, 3), round(r["M_elev_Nm"], 3), round(r["M_avail_Nm"], 3), round(r["use"], 3),
-                             round((abs(r["M_aero_Nm"]) + hub) / m_cap30, 3)])
-            keys[tag] = tag if hk == "hhov" else f"{tag}_{hk}"
+                             round(r["M_prop_Nm"], 3), round(r["M_elev_Nm"], 3), round(r["M_avail_Nm"], 3),
+                             round(r["use"], 3), round(abs(r["M_aero_Nm"]) / m_cap30, 3)])
+            keys[tag] = tag if hk == "bemt" else f"{tag}_{hk}"
             out[keys[tag]] = rows
         rows_all = [r for t in ("target", "fwd") for r in out[keys[t]]]
         out[f"use_max_{hk}"] = max(r[7] for r in rows_all)
         out[f"v_at_use_max_{hk}"] = max((r[7], r[0]) for r in rows_all)[1]
-        out[f"m_hub_max_{hk}"] = max(r[4] for r in rows_all)
+        out[f"m_prop_max_{hk}"] = max(r[4] for r in rows_all)
         out[f"use_cap30_max_{hk}"] = max(r[8] for r in rows_all)
         out[f"v_at_use_cap30_max_{hk}"] = max((r[8], r[0]) for r in rows_all)[1]
         out[f"m_motor_noelev_max_{hk}"] = max(r[8] for r in rows_all) * m_cap30
-    out["columns"] = ["V m/s", "alpha deg", "T/W", "M_aero N m", "M_hub N m", "M_elevon N m", "M_motor avail N m",
-                      "use (full differential, elevon credit)", "use (30 % cap, no elevon credit)"]
+    out["columns"] = ["V m/s", "alpha deg", "T/W", "M_aero N m (incl. signed prop term)", "M_prop N m (nose-up +)",
+                      "M_elevon N m", "M_motor avail N m", "use (full differential, elevon credit)",
+                      "use (30 % cap, no elevon credit)"]
     out["m_cap30_Nm"] = m_cap30
-    out["use_max"] = out["use_max_hhov"]
-    out["v_at_use_max"] = out["v_at_use_max_hhov"]
-    out["hub_use_delta"] = out["use_max_hhov"] - out["use_max_nohub"]
+    out["use_max"] = out["use_max_bemt"]
+    out["v_at_use_max"] = out["v_at_use_max_bemt"]
     out["tw_max"] = max(r[2] for r in out["target"])
     return out
 
 
-kit.claim("CL-B3-TRANS-PITCH-USE", "Transition: motor pitch moment needed / pitch moment at the 30 % differential cap, "
-          "worst speed, no elevon credit, with B4's prop H-force at hover thrust (CDR-16 re-base)",
-          calc="CALC-B3-TRANSITION",
-          output="use_cap30_max_hhov", unit="-", limit=("<=", "ASM-B3-TRANS-USE-MAX"), verifies=["R-TRANSITION"],
-          assumes=["ASM-B3-CN90"], note="CDR-AE-07: was 0.247 against 2 dT 2z with dT = min(T/4, Tmax - T/4), which "
-          "takes the lower pair to zero thrust and credits post-stall elevons outside the wash (now "
-          "CL-B3-TRANS-PITCH-USE-FULLDIFF, information). The level quasi-steady moment does not depend on the "
-          "pitch-over rate, so Q_TAILSIT_RAT_FW does not change this number: the levers are the hub-term bound "
-          "(CL-B3-TRANS-PITCH-USE-NOHUB-CAP30 is the Ribner-only value), the differential allowed in transition and "
-          "SITL S4 / the twin's logged RCOU split",
-          how="SITL with the AVL/flat-plate aero table (F4); then twin transitions: RCOU of upper vs lower pair "
-              "stays below 80 % of range.")
-
-kit.claim("CL-B3-TRANS-PITCH-USE-NOHUB-CAP30", "Transition: as CL-B3-TRANS-PITCH-USE, Ribner normal force only "
-          "(no hub H-force bound)", calc="CALC-B3-TRANSITION", output="use_cap30_max_nohub", unit="-",
-          limit=("<=", "ASM-B3-TRANS-USE-MAX"), how="As CL-B3-TRANS-PITCH-USE.")
-kit.claim("CL-B3-TRANS-PITCH-USE-HMAX-CAP30", "Transition: as CL-B3-TRANS-PITCH-USE, hub term at B4's hover-rpm H-force",
-          calc="CALC-B3-TRANSITION", output="use_cap30_max_hmax", unit="-", limit=("<=", "ASM-B3-TRANS-USE-MAX"),
-          how="As CL-B3-TRANS-PITCH-USE.")
+kit.claim("CL-B3-TRANS-PITCH-USE-QS", "Transition, quasi-steady level pitch-over at hover thrust: |M_aero| / pitch "
+          "moment at the 30 % cap, worst speed, prop normal force signed on B4's BEMT slope (information since D-149)",
+          calc="CALC-B3-TRANSITION", output="use_cap30_max_bemt", unit="-",
+          note="Design round 2026-11-14 (B3.md §2.1): the R5 value 0.909 added B4's H-force magnitude to |M_aero| with "
+               "no sign; the H-force acts at the hubs ahead of the CG, nose-up, the same physics and sense as the "
+               "Ribner term, against the nose-down wing moment. Signed on the BEMT slope this is 0.84. It describes a "
+               "pitch-over at hover thrust, which D-149 no longer flies: the pass line is CL-B3-TRANS-PITCH-USE "
+               "(time domain at the closure-round entry, ASM-B3-TRANS-T0)",
+          how="SITL stage B (F4) with hover-throttle entry: logged pitch differential vs this value.")
+kit.claim("CL-B3-TRANS-PITCH-USE-NOHUB-CAP30", "Transition, quasi-steady level at hover thrust, Ribner normal force "
+          "only (information since D-149)", calc="CALC-B3-TRANSITION", output="use_cap30_max_nohub", unit="-",
+          note="Information (closure round B3.md §2): the level pitch-over at hover thrust is a flight condition the "
+               "entry procedure excludes (ASM-B3-TRANS-T0: transmitter sequence; F4 bars the other entry paths). The "
+               "0.60 limit is unchanged and applies to the flown condition (CL-B3-TRANS-PITCH-USE). Not a loosened "
+               "limit. If the condition occurs anyway, the trim stays < 1.0 of the cap (CL-B3-TRANS-PITCH-USE-HOVERTHR)",
+          how="As CL-B3-TRANS-PITCH-USE-QS.")
+kit.claim("CL-B3-TRANS-PITCH-USE-HMAX-CAP30", "Transition, quasi-steady level at hover thrust, prop normal force "
+          "signed at the larger of Ribner and B4's hover-rpm H-force (information since D-149)",
+          calc="CALC-B3-TRANSITION", output="use_cap30_max_hmax", unit="-",
+          note="Information (closure round B3.md §2): the level pitch-over at hover thrust is a flight condition the "
+               "entry procedure excludes (ASM-B3-TRANS-T0: transmitter sequence; F4 bars the other entry paths). The "
+               "0.60 limit is unchanged and applies to the flown condition (CL-B3-TRANS-PITCH-USE). Not a loosened "
+               "limit. If the condition occurs anyway, the trim stays < 1.0 of the cap (CL-B3-TRANS-PITCH-USE-HOVERTHR)",
+          how="As CL-B3-TRANS-PITCH-USE-QS.")
 kit.claim("CL-B3-TRANS-PITCH-USE-FULLDIFF", "Transition: pitch differential used against the full differential "
           "(lower pair to zero thrust) with elevon credit: the pre-CDR basis, information only",
           calc="CALC-B3-TRANSITION", output="use_max", unit="-", how="Not a pass line (CDR-AE-07).")
-kit.claim("CL-B3-TRANS-MOTOR-MOMENT", "Largest motor pitch moment needed in the level pitch-over, no elevon credit, "
-          "hub bound", calc="CALC-B3-TRANSITION", output="m_motor_noelev_max_hhov", unit="N*m",
+kit.claim("CL-B3-TRANS-MOTOR-MOMENT", "Largest motor pitch moment needed in the level pitch-over at hover thrust, "
+          "no elevon credit, BEMT prop slope", calc="CALC-B3-TRANSITION", output="m_motor_noelev_max_bemt", unit="N*m",
           how="Fit of the pitch residual in the twin's transition log.")
 kit.claim("CL-B3-TRANS-PITCH-USE-NOHUB", "Transition: pitch differential used, worst, Ribner normal force only (R4 basis)",
           calc="CALC-B3-TRANSITION", output="use_max_nohub", unit="-", limit=("<=", "ASM-B3-TRANS-USE-MAX"),
           how="As CL-B3-TRANS-PITCH-USE.")
-kit.claim("CL-B3-TRANS-PITCH-USE-HMAX", "Transition: pitch differential used, worst, hub term at B4's hover-rpm H-force",
-          calc="CALC-B3-TRANSITION", output="use_max_hmax", unit="-", limit=("<=", "ASM-B3-TRANS-USE-MAX"),
-          how="As CL-B3-TRANS-PITCH-USE.")
-kit.claim("CL-B3-TRANS-HUB-MOMENT", "Largest prop hub (H-force) pitch moment in the pitch-over, hover thrust held",
-          calc="CALC-B3-TRANSITION", output="m_hub_max_hhov", unit="N*m",
+kit.claim("CL-B3-TRANS-PITCH-USE-HMAX", "Transition: pitch differential used, worst, prop normal force signed at "
+          "B4's hover-rpm H-force", calc="CALC-B3-TRANSITION", output="use_max_hmax", unit="-",
+          limit=("<=", "ASM-B3-TRANS-USE-MAX"), how="As CL-B3-TRANS-PITCH-USE.")
+kit.claim("CL-B3-TRANS-HUB-MOMENT", "Largest prop normal-force pitch moment (nose-up, signed) in the level "
+          "pitch-over, B4's H-force at hover thrust", calc="CALC-B3-TRANSITION", output="m_prop_max_hhov", unit="N*m",
           how="Car-top rig side-force cell (CL-B4-SIM-H-MAX how) or a fit of the pitch residual in the transition log.")
+
+
+@kit.calc("CALC-B3-TRANS-TD", title="Time-domain forward pitch-over as ArduPilot flies it (ANGLE_WAIT_FW, frozen "
+          "throttle), entry per ASM-B3-TRANS-T0 at the edges of the ASM-B3-TRANS-REALISE band",
+          assumes=["ASM-B3-TRANS-T0", "ASM-B3-TRANS-REALISE", "ASM-B3-FSW-TRANS", "ASM-B3-TD-LOOP", "ASM-B3-PROP-CNA",
+                   "ASM-B3-B4-INC-V", "ASM-B3-ELEVON-TRANS", "ASM-B3-ELEVON-POST", "ASM-B3-CN90", "ASM-B3-CD0"],
+          cites=["SRC-B3-AP-TAILSIT", "SRC-B3-AP-ATCMULTI"],
+          inputs={**TRANS_IN, "Iyy": "CL-A3-IYY", "m_basic": "CL-A3-MASS-BASIC", "T0": "ASM-B3-TRANS-T0",
+                  "rz": "ASM-B3-TRANS-REALISE", "fsw": "ASM-B3-FSW-TRANS", "loop": "ASM-B3-TD-LOOP",
+                  "T_I45": "CL-B4-SIM-T-I45", "vs_trip": "CL-B2R3-VS-GATE-FWD-TURB"},
+          units={**TRANS_U, "T0": "-,s", "fsw": "deg/s,deg,m/s", "loop": "rad/s,-", "vs_trip": "m/s"},
+          equation="entry static thrust / W: T0_lo = dl_lo r (1 - e_lin), T0_nom = dl r, T0_hi = dl r (1 + e_lin) ; "
+                   "vertical speed at the mode change w0_lo = k (T0_lo - dl_lo) g t_hold (credit), w0_hi = (T0_hi - 1) "
+                   "g t_hold (no drag: climb bound) ; 2-D rigid body (flight_models.pitchover_td): theta_cmd = 90 - "
+                   "RAT_FW t until the tilt > Q_TAILSIT_ANGLE, followed through wn, zeta ; T = T0 (1 - V cos a / Vp), "
+                   "Vp = V_inc cos 45 / (1 - T_I45) ; M_need = Iyy th_dd - M_aero (wing + prop normal force k x "
+                   "Ribner nose-up, k = B4 BEMT slope / Ribner) ; use_trim = max |M_aero| / (2 x 0.30 T_hover 2z) "
+                   "over the pitch-over and the copter-assisted phase (V < Q_ASSIST_SPEED); V_done = V at "
+                   "Q_TAILSIT_ANGLE ; Iyy scaled to the gate mass ; frac_sag = T0_hi W / (n Tmax sag)")
+def trans_td(m, g, rho, S, c, b, x_t, x_fwd, xnp, cm_np_thin, dcm, CLa, a0, clmax, cd0, e, cn90, n, D, x_prop,
+             cna, tmax, sag, z, dl, vc, CLd, Cmd_ref, xref, eta, dp, fpost, lo, li, va, slop, h_max, h_hov, dHdi,
+             v_inc, dfrac, Iyy, m_basic, T0, rz, fsw, loop, T_I45, vs_trip):
+    p = {"m": m, "g": g, "rho": rho, "S": S, "c": c, "b": b, "e": e, "a0": math.radians(a0), "CLa": CLa,
+         "clmax": clmax, "cd0": cd0, "cn90": cn90, "n": n, "D": D, "x_prop": x_prop, "cna": cna,
+         "cm_ac": cm_np_thin + dcm, "xnp": xnp, "dl": dl, "tmax": tmax * g * sag, "z": z, "dfrac": dfrac,
+         "Iyy": Iyy * m / m_basic, "Vp": v_inc * math.cos(math.radians(45)) / (1 - T_I45), "Cmd_ref": Cmd_ref,
+         "CLd": CLd, "xref": xref, "eta": eta, "lo": lo, "li": li, "va": va, "slop": slop, "fpost": fpost}
+    k_bemt = dHdi / (cna * (math.pi * D * D / 4) * 0.5 * rho * v_inc ** 2)
+    rate, ang, vas = fsw
+    wn, zeta = loop
+    r_ent, t_hold = T0
+    dl_lo, e_lin, k_cl = rz
+    t_lo, t_nom, t_hi = dl_lo * r_ent * (1 - e_lin), dl * r_ent, dl * r_ent * (1 + e_lin)
+    w0_lo = k_cl * (t_lo - dl_lo) * g * t_hold
+    w0_hi = (t_hi - 1.0) * g * t_hold
+    out = {"Vp_ms": p["Vp"], "Iyy_kgm2": p["Iyy"], "k_prop_bemt": k_bemt, "T0_W_low_edge": t_lo,
+           "T0_W_nominal": t_nom, "T0_W_high_edge": t_hi, "w0_credit_ms": w0_lo, "w0_max_ms": w0_hi,
+           "preclimb_h_max_m": 0.5 * (t_hi - 1.0) * g * t_hold ** 2,
+           "frac_sag_high_edge": t_hi * m / (n * tmax * sag), "frac_sag_nominal": t_nom * m / (n * tmax * sag),
+           "throttle_in_at_theta_h_0p49": r_ent * 0.49}
+    cases = {"T0_fwd": (x_fwd, t_lo, k_bemt, w0_lo), "T0_fwd_ribner": (x_fwd, t_lo, 1.0, w0_lo),
+             "T0_target": (x_t, t_lo, k_bemt, w0_lo), "T0nom_fwd": (x_fwd, t_nom, k_bemt, w0_lo),
+             "T0hi_fwd": (x_fwd, t_hi, k_bemt, w0_hi), "T0lo_nopreclimb_fwd": (x_fwd, t_lo, k_bemt, 0.0),
+             "hov_fwd": (x_fwd, None, k_bemt, 0.0), "hov_fwd_ribner": (x_fwd, None, 1.0, 0.0)}
+    for tag, (x, tw, kp, w0) in cases.items():
+        r = FM.pitchover_td(p, x, T0_W=tw, rate=rate, ang_done=ang, v_assist=vas, wn=wn, zeta=zeta, kprop=kp, w0=w0)
+        out[f"use_trim_{tag}"] = max(r["max_trim_only_pitchover"], r["peak_fw_assist"])
+        out[f"use_trim_po_{tag}"] = r["max_trim_only_pitchover"]
+        out[f"use_peak_incl_dyn_{tag}"] = r["peak_pitchover"]
+        out[f"use_fw_assist_{tag}"] = r["peak_fw_assist"]
+        out[f"sustained_0p5s_{tag}"] = r["sustained_pitchover"]
+        out[f"V_done_{tag}"] = r["V_done"]
+        out[f"t_done_{tag}"] = r["t_done_s"]
+        out[f"t_stalled_fw_{tag}"] = r["t_stalled_fw_s"]
+        out[f"alt_change_{tag}"] = r["alt_change_m"]
+        out[f"lower_motor_N_{tag}"] = r["lower_motor_N_at_peak"]
+        out[f"peak_with_gust3_{tag}"] = r["peak_use30_gust"]
+        out[f"T0_N_{tag}"] = r["T0_N"]
+    for tag, (tw, w0) in {"T0_fwd": (t_lo, w0_lo), "T0hi_fwd": (t_hi, w0_hi)}.items():
+        r2 = FM.pitchover_td(p, x_fwd, T0_W=tw, rate=rate, ang_done=ang, v_assist=vas, wn=wn, zeta=zeta,
+                             kprop=k_bemt, gust_w=2.0, w0=w0)
+        out[f"peak_with_gust2_{tag}"] = r2["peak_use30_gust"]
+    out["gust2_worst_edge"] = max(out["peak_with_gust2_T0_fwd"], out["peak_with_gust2_T0hi_fwd"])
+    out["V_done_margin_T0_fwd"] = out["V_done_T0_fwd"] - vs_trip
+    out["climb_max_incl_preclimb_m"] = out["alt_change_T0hi_fwd"] + out["preclimb_h_max_m"]
+    return out
+
+
+TD_NOTE = ("Closure round 2026-11-14 (review/CLOSURE-ROUND-2026-11-14/B3.md): evaluated at the LOW thrust edge of the "
+           "entry band (dl_true 1.025, linearisation -2 %), with the pre-climb credit; the high edge sets the B1 "
+           "thrust fraction (CL-B3-TRANS-ENTRY-FRAC-SAG). Design round: D-149, B3-W2.md")
+kit.claim("CL-B3-TRANS-PITCH-USE", "Transition: trim pitch moment / pitch moment at the 30 % differential cap, "
+          "time-domain pitch-over as the firmware flies it, entry per ASM-B3-TRANS-T0 at the low thrust edge, forward "
+          "CG, prop normal force signed on B4's BEMT slope, no elevon credit in the pitch-over",
+          calc="CALC-B3-TRANS-TD", output="use_trim_T0_fwd", unit="-", limit=("<=", "ASM-B3-TRANS-USE-MAX"),
+          verifies=["R-TRANSITION"], assumes=["ASM-B3-TRANS-T0", "ASM-B3-TRANS-REALISE"],
+          note=TD_NOTE + ". History: 0.909 (QS, unsigned H) -> 0.348 at 1.4 W (D-149) -> this. Hover-throttle entry: "
+               "CL-B3-TRANS-PITCH-USE-HOVERTHR (information; that entry is not flown)",
+          how="F4 SITL S4c confirms the held throttle (logic); stage B with the K09-L aero; twin transitions: RCOU "
+              "upper vs lower pair, pitch differential <= 0.60 x 30 % of hover thrust except transients < 0.5 s.")
+kit.claim("CL-B3-TRANS-ENTRY-FRAC-SAG", "Transition entry: static thrust at the HIGH edge of the entry band / "
+          "sagged-pack maximum thrust at the gate mass (the R-TRANSITION 20 % control reserve)",
+          calc="CALC-B3-TRANS-TD", output="frac_sag_high_edge", unit="-", limit=("<=", "ASM-B1-CTRL-RESERVE"),
+          verifies=["R-TRANSITION"], assumes=["ASM-B3-TRANS-T0", "ASM-B3-TRANS-REALISE"],
+          note="A2 closure §2.3: D-149's 1.4 W gave 1.4 / 1.7456 = 0.802. B1's CL-B1-TRANS-THRUST should read "
+               "T0_W_high_edge from CALC-B3-TRANS-TD as the held thrust (frozen-throttle law)",
+          how="Stand thrust at the entry throttle (T-E1-STAND) / the sagged maximum; transition RCOU log.")
+kit.claim("CL-B3-TRANS-T0-HIGH", "Transition entry: static thrust / weight at the high edge of the entry band "
+          "(input for B1)", calc="CALC-B3-TRANS-TD", output="T0_W_high_edge", unit="-",
+          how="As CL-B3-TRANS-ENTRY-FRAC-SAG.")
+kit.claim("CL-B3-TRANS-T0-LOW", "Transition entry: static thrust / weight at the low edge of the entry band",
+          calc="CALC-B3-TRANS-TD", output="T0_W_low_edge", unit="-", how="As CL-B3-TRANS-ENTRY-FRAC-SAG.")
+@kit.calc("CALC-B3-TRANS-FRAC-E1", title="Entry thrust fraction on E1's own worst-state T/W (final re-run)",
+          equation="frac = T0_high / TW_worst ; T0_high = CL-B3-TRANS-T0-HIGH (static thrust / W at the high edge of the "
+                   "entry band) ; TW_worst = CL-E1-TW-WORST-RBAND (E1: axial thrust / W at the gate, 80 A limiter, "
+                   "3.73 V/cell, 10 C, 80 C winding, R_m +10 %, sensor tolerance). No cos(cant) credit (conservative)",
+          inputs={"t0": "CL-B3-TRANS-T0-HIGH", "tw": "CL-E1-TW-WORST-RBAND"})
+def trans_frac_e1(t0, tw):
+    return {"frac": t0 / tw}
+
+
+kit.claim("CL-B3-TRANS-ENTRY-FRAC-E1", "Transition entry: static thrust at the HIGH edge of the entry band / E1's worst-state "
+          "thrust (E1 CL-E1-TW-WORST-RBAND)", calc="CALC-B3-TRANS-FRAC-E1", output="frac", unit="-",
+          limit=("<=", "ASM-B1-CTRL-RESERVE"), verifies=["R-TRANSITION"],
+          note="Final re-run 2026-11-14: params thrust_max_per_motor_kg x voltage_sag are the 75 A values (A1 to re-base to E1's "
+               "80 A band edge); this claim reads E1's worst-state T/W directly",
+          how="Same as CL-B3-TRANS-ENTRY-FRAC-SAG: log the throttle and thrust at the entry on the stand (T-E1-STAND).")
+kit.claim("CL-B3-TRANS-PITCH-USE-HOVERTHR", "Transition, time domain, entry at hover throttle (not flown: every "
+          "forward transition starts through ASM-B3-TRANS-T0), forward CG: trim use of the 30 % cap in the pitch-over",
+          calc="CALC-B3-TRANS-TD", output="use_trim_po_hov_fwd", unit="-",
+          note="After the handover (below the tripped stall) the copter-assisted phase needs use_fw_assist_hov_fwd of "
+               "the cap, stalled for t_stalled_fw_hov_fwd s (CALC-B3-TRANS-TD outputs). Still < 1.0 of the 30 % cap: "
+               "an unplanned hover-throttle entry eats the gust / rate reserve; it does not saturate",
+          how="SITL S4c with a hover-throttle entry (information).")
+kit.claim("CL-B3-TRANS-PITCH-USE-NOPRECLIMB", "Transition, time domain, low thrust edge entered from a steady hover "
+          "(pre-climb skipped; information: the transmitter sequence enforces the hold)", calc="CALC-B3-TRANS-TD",
+          output="use_trim_T0lo_nopreclimb_fwd", unit="-", how="As CL-B3-TRANS-PITCH-USE.")
+kit.claim("CL-B3-TRANS-GUST2-T0", "Transition, time domain, entry band edges, forward CG: trim plus the moment of a "
+          "2 m/s vertical gust at every point, fraction of the 30 % cap (the reserve the 0.60 limit holds)",
+          calc="CALC-B3-TRANS-TD", output="gust2_worst_edge", unit="-", limit=("<=", 1.0),
+          note="The gust increment uses atan(w / V): at low speed it over-states (a near-hover 'vertical gust' is "
+               "largely axial); the 3 m/s column is peak_with_gust3_T0_fwd (information)",
+          how="SITL stage B with the turbulence model; twin transitions in light wind first.")
+kit.claim("CL-B3-TRANS-PITCH-USE-T0-TARGET", "Transition, time domain, low thrust edge, target CG: trim use of the "
+          "30 % cap", calc="CALC-B3-TRANS-TD", output="use_trim_T0_target", unit="-",
+          how="As CL-B3-TRANS-PITCH-USE.")
+kit.claim("CL-B3-TRANS-V-HANDOVER", "Transition, time domain, low thrust edge, forward CG: airspeed when the tilt "
+          "reaches Q_TAILSIT_ANGLE (plane controller takes over)", calc="CALC-B3-TRANS-TD", output="V_done_T0_fwd",
+          unit="m/s", limit=(">=", "CL-B2R3-VS-GATE-FWD-TURB"), verifies=["R-TRANSITION"],
+          note="Q_ASSIST_SPEED 14 m/s keeps the motors stabilising below 14; at hover-throttle entry the handover is "
+               "below the tripped stall (CL-B3-TRANS-V-HANDOVER-HOVERTHR)",
+          how="SITL stage B and twin logs: airspeed at the 'Transition FW done' message.")
+kit.claim("CL-B3-TRANS-V-HANDOVER-HOVERTHR", "Transition, time domain, hover-throttle entry, forward CG: airspeed at "
+          "Q_TAILSIT_ANGLE (information)", calc="CALC-B3-TRANS-TD", output="V_done_hov_fwd", unit="m/s",
+          how="As CL-B3-TRANS-V-HANDOVER.")
+kit.claim("CL-B3-TRANS-CLIMB", "Transition, time domain, high thrust edge with the most pre-climb: height gained from "
+          "the start of the pre-climb to 17 m/s", calc="CALC-B3-TRANS-TD", output="climb_max_incl_preclimb_m",
+          unit="m", limit=("<=", 60.0), how="Twin logs; H2 / H3 start first transitions at 50 m AGL (fence 110 m: 50 + this < 110, so this <= 60; limit added in the final re-run).")
+kit.claim("CL-B3-TRANS-LOWER-MOTOR", "Transition, time domain, low thrust edge, forward CG: lower-pair thrust per "
+          "motor at the pitch-use peak", calc="CALC-B3-TRANS-TD", output="lower_motor_N_T0_fwd", unit="N",
+          limit=(">=", 0.0), how="RCOU of the lower pair at the peak (twin transitions).")
+
+
+# ---------------------------------------------------------------------------------------------- belly into wind
+# D-152 (A1.md, C5.md): land belly (-z face, the copter nose) into the wind. B3 confirms the heading stability under
+# Q_WVANE (NOSE_IN) at 5 m/s and in the 8 m/s gust.
+kit.source("SRC-B3-AP-WVANE", "ArduPilot libraries/AC_AttitudeControl/AC_WeatherVane.cpp at tag Plane-4.7.2", "web",
+           url="https://raw.githubusercontent.com/ArduPilot/ardupilot/Plane-4.7.2/libraries/AC_AttitudeControl/"
+               "AC_WeatherVane.cpp", checked="2026-11-14",
+           where="get_yaw_out, NOSE_IN: output = max(|roll| - ANG_MIN, 0) with the sign of roll (pitch used only with "
+                 "OPTIONS bit 0), x GAIN through a 0.98 / 0.02 low-pass; parameter defaults ANG_MIN 1.0 deg, HGT_MIN 0, "
+                 "SPD_MAX 0 and VELZ_MAX 0 on Plane (checks off); off while pilot yaw is non-zero")
+kit.assumption("ASM-B3-WVANE", "Weathervane settings [Q_WVANE_GAIN, Q_WVANE_ANG_MIN deg]",
+               "Yaw rate demand deg/s per deg of roll lean beyond the dead zone, NOSE_IN (belly into wind)",
+               basis="subsystems/flight-software/K09L.param Q_WVANE_ENABLE 1, Q_WVANE_GAIN 1; Q_WVANE_ANG_MIN not set, "
+                     "firmware default 1.0 deg (AC_WeatherVane.cpp)", value=[1.0, 1.0], unit="-,deg",
+               cites=["SRC-B3-AP-WVANE"])
+
+
+@kit.calc("CALC-B3-HOVER-BELLY", title="Hover yaw with the belly into the wind (D-152): aerodynamic yaw stiffness and "
+          "the weathervane dead band",
+          inputs={**HOV_IN, "Vg": P + "requirements.gust_survive_ms", "z_cg": P + "cg.z_target_m",
+                  "wv": "ASM-B3-WVANE"},
+          units={**HOV_U, "Vg": "m/s", "z_cg": "m", "wv": "-,deg"},
+          assumes=["ASM-B3-CN90", "ASM-B3-HOVER-DIFF", "ASM-B3-WVANE"], cites=["SRC-B3-AP-WVANE"],
+          equation="heading error psi from belly-into-wind ; wing broadside (restoring): M_w = q S CN90 cos psi e_w, "
+                   "e_w = 0.75 sin psi / (4 + pi cos psi) b (Kirchhoff CP shift toward the upwind tip, the form of "
+                   "M_fin in CALC-B3-HOVER-WTIP) ; upwind half-fins (destabilising, CP upwind of the CG): F_f = 2 kq q "
+                   "a_f psi fc fh, a_f = 2 pi A / (2 + sqrt(A^2 + 4)), A = fc / fh (Helmbold, EST), kq = (u/U)^2 at "
+                   "the fin quarter chord in front of a plate normal to the flow, u/U = x / sqrt(x^2 + (c/2)^2), "
+                   "x = 0.75 fh, and kq = 1 as a bound ; arm = 0.75 fh + z_cg ; downwind half-fins in the wake: 0 "
+                   "(their moment is restoring, so leaving them out is conservative) ; props: H-forces cancel in "
+                   "y/z-symmetric pairs ; M_net = M_w - M_f (restoring +) ; weathervane: roll lean phi = atan(F_f / "
+                   "W) ; dead band psi_db where phi = ANG_MIN ; with a roll trim error d the band reaches "
+                   "(ANG_MIN + d) on one side ; M_ctrl = 4 dT (kq_iso f_low + r sin cant)")
+def hover_belly(m, g, dl, split, tmax, sag, y, z, Qh, swirl, cant, dfrac, Ixx, Iyy, Izz, m_basic, rho, Vw, S, c, b,
+                x_t, cn90, xcp, fc, fh, fle, asym, fac, amin, swirl_lo, Vg, z_cg, wv):
+    W = m * g
+    Th = W * dl / 4
+    M_ctrl = 4 * dfrac * Th * (Qh / Th * swirl_lo + math.hypot(y, z) * math.sin(math.radians(cant)))
+    A = fc / fh
+    a_f = 2 * math.pi * A / (2 + math.sqrt(A * A + 4))
+    xq = 0.75 * fh
+    kq = (xq / math.hypot(xq, c / 2)) ** 2
+    arm = 0.75 * fh + z_cg
+    gain, ang_min = wv
+
+    def mw(psi, V):
+        q, p_ = 0.5 * rho * V * V, math.radians(psi)
+        return q * S * cn90 * math.cos(p_) * 0.75 * math.sin(p_) / (4 + math.pi * math.cos(p_)) * b
+
+    def ff(psi, V, k):
+        return 2 * k * 0.5 * rho * V * V * a_f * math.radians(psi) * fc * fh
+
+    def lean_deg(psi, V, k):
+        return math.degrees(math.atan(ff(psi, V, k) / W))
+
+    def psi_at_lean(phi, V, k):
+        lo, hi = 0.0, 60.0
+        if lean_deg(hi, V, k) < phi:
+            return hi
+        for _ in range(60):
+            mid = 0.5 * (lo + hi)
+            lo, hi = (mid, hi) if lean_deg(mid, V, k) < phi else (lo, mid)
+        return 0.5 * (lo + hi)
+
+    out = {"M_ctrl_Nm": M_ctrl, "fin_cla_per_rad": a_f, "kq_fin": kq, "fin_arm_m": arm}
+    for vt, V in (("5", Vw), ("gust", Vg)):
+        for psi in (10.0, 20.0, 30.0):
+            for kt, k in (("", kq), ("_kq1", 1.0)):
+                Mf = ff(psi, V, k) * arm
+                net = mw(psi, V) - Mf
+                out[f"M_net_{psi:.0f}deg_{vt}{kt}_Nm"] = net
+                if net < 0:
+                    out[f"ctrl_over_destab_{psi:.0f}deg_{vt}{kt}"] = M_ctrl / -net
+            out[f"M_wing_{psi:.0f}deg_{vt}_Nm"] = mw(psi, V)
+            out[f"M_fin_{psi:.0f}deg_{vt}_Nm"] = ff(psi, V, kq) * arm
+            out[f"lean_{psi:.0f}deg_{vt}_deg"] = lean_deg(psi, V, kq)
+        out[f"stiffness_{vt}_Nm_per_rad"] = (mw(1.0, V) - ff(1.0, V, kq) * arm) / math.radians(1.0)
+        out[f"stiffness_{vt}_kq1_Nm_per_rad"] = (mw(1.0, V) - ff(1.0, V, 1.0) * arm) / math.radians(1.0)
+        out[f"deadband_{vt}_deg"] = psi_at_lean(ang_min, V, kq)
+        out[f"deadband_{vt}_kq1_deg"] = psi_at_lean(ang_min, V, 1.0)
+        out[f"deadband_trim1deg_{vt}_deg"] = psi_at_lean(ang_min + 1.0, V, kq)
+        out[f"yaw_rate_30deg_{vt}_degs"] = gain * max(lean_deg(30.0, V, kq) - ang_min, 0.0)
+    return out
+
+
+kit.claim("CL-B3-HOVER-BELLY-YAW-NET-30", "Belly into a 5 m/s wind, 30 deg heading error: aerodynamic yaw moment "
+          "toward belly-into-wind (wing broadside restoring less the upwind half-fins, fin q not reduced)",
+          calc="CALC-B3-HOVER-BELLY", output="M_net_30deg_5_kq1_Nm", unit="N*m", limit=(">=", 0.0),
+          verifies=["R-WIND"],
+          note="D-152 condition 'B3 confirms weathervane stability'. EST model: Kirchhoff CP shift on a plate of "
+               "aspect ratio 0.28 and a low-AR fin slope; > 0 means the heading is statically stable about "
+               "belly-into-wind without any yaw control",
+          how="Twin hover logs (C5 M2): heading error and yaw RCOU at touchdown with the belly to the wind; hanging "
+              "yaw test in a measured 5 m/s wind (free to yaw, motors off): the aircraft settles belly to the wind.")
+kit.claim("CL-B3-HOVER-BELLY-YAW-STIFF", "Belly into a 5 m/s wind: aerodynamic yaw stiffness about belly-into-wind "
+          "(restoring +, fin q reduced in front of the wing)", calc="CALC-B3-HOVER-BELLY",
+          output="stiffness_5_Nm_per_rad", unit="N*m/rad", limit=(">=", 0.0), verifies=["R-WIND"],
+          how="As CL-B3-HOVER-BELLY-YAW-NET-30.")
+kit.claim("CL-B3-HOVER-BELLY-WVANE-DEADBAND", "Belly into a 5 m/s wind: heading error at which the roll lean reaches "
+          "Q_WVANE_ANG_MIN (inside it the weathervane does not act; the heading stays where the controller holds it)",
+          calc="CALC-B3-HOVER-BELLY", output="deadband_5_deg", unit="deg",
+          note="Compare with the +/-30 deg of D-152 (C5's 5.7 m/s at +/-30 deg)",
+          how="F4 SITL (D-152 condition): heading within +/-30 deg through touchdown in a 5 m/s crosswind; twin logs.")
+kit.claim("CL-B3-HOVER-BELLY-WVANE-DEADBAND-TRIM1", "As CL-B3-HOVER-BELLY-WVANE-DEADBAND with a 1 deg roll trim error "
+          "(the one-sided band)", calc="CALC-B3-HOVER-BELLY", output="deadband_trim1deg_5_deg", unit="deg",
+          how="H1 AHRS trim (level calibration) before the twin flights; twin logs.")
+kit.claim("CL-B3-HOVER-BELLY-YAW-NET-30-GUST", "Belly into the 8 m/s gust, 30 deg heading error: aerodynamic yaw moment "
+          "toward belly-into-wind (fin q not reduced)", calc="CALC-B3-HOVER-BELLY", output="M_net_30deg_gust_kq1_Nm",
+          unit="N*m", how="As CL-B3-HOVER-BELLY-YAW-NET-30.")
 
 
 # ---------------------------------------------------------------------------------------------- tests (planned)
@@ -1267,7 +1659,9 @@ kit.test("T-B3-HOVER-YAW-WTIP", "Twin (TW3): QHOVER at 5 m/s measured wind with 
          "+/-10 and +/-20 deg", verifies=["CL-B3-HOVER-YAW-WTIP-10", "CL-B3-HOVER-YAW-WTIP-20"],
          procedure="Hold heading with a wingtip into wind (Q_WVANE off for the test, heading by stick), step the heading "
                    "+/-10 then +/-20 deg and release. Pass: heading returns, yaw RCOU spread (diagonal pairs) <= 30 % "
-                   "of hover output. Fail: the 10 deg cant (ASM-B3-CANT-ALT) before any mount is printed.")
+                   "of hover output. Confirmation (closure round): the claim passes at the cross-flow Cd upper bound "
+                   "(CL-B3-HOVER-YAW-WTIP-20-CDMAX); a reading above 1.023 x model would mean the model form is wrong "
+                   "(not the Cd), and B3 re-opens the claim with the measured moment; the 10 deg spares exist for that.")
 kit.test("T-B3-HOVER-WIND", "Hover authority in wind",
          verifies=["CL-B3-HOVER-PITCH-RATIO", "CL-B3-HOVER-ROLL-RATIO", "CL-B3-HOVER-YAW-RATIO"],
          procedure="Tethered then free hover at 5 m/s measured wind; no motor output above 85 % or below 10 % (RCOU).")

@@ -58,17 +58,33 @@ slot in where marked **→**.
    up to z 3.2 mm (1.1 mm foam left under the upper face: go slowly). Knife the 2.5 mm horn-blade slots through each
    panel at |y| 284–286 mm (inboard) and 354–356 mm (outboard), x 254.4–289.6 mm. **Check:** panels 228 and 218 mm
    long, chord 70.4 mm; tube lies in the groove below the face; blade slides in the slot; corner radii by gauge.
+   **TE-corner chamfers (D-164, B4 CR-B4-32; params `wing.elevon.te_chamfer_m` [0.02, 0.07]).** Beside each fin-root tab cut
+   each panel's trailing corner on a straight line from the hinge-line end (|y| 300 inboard, 340 outboard) to the TE at
+   **|y| 280 (inboard panel, 20 mm set-back)** and **|y| 410 (outboard panel, 70 mm)**, both sides; the full-chord panel
+   is then |y| 71–280 and 410–559 mm. Mark the line from the template (`fusion/wing.py` `cham_xmax`), saw or hot-wire it,
+   sand the cut face square, tape both faces over the cut. The core, the hinge line, the servo pocket (x 172–208,
+   |y| 253–288, ahead of the hinge) and the inboard blade slot (y 285, the line is 52.8 mm aft of the hinge there) are not
+   touched. **Outboard link-horn slot (y 355): the line is only 15.1 mm aft of the hinge, so D6's 40 mm blade and the
+   outboard tube's first 5 mm (|y| 344–349) stand outside the panel: open item for D6 (`team/D1/CHANGE-REQUESTS.md`).**
+   **Check:** panel area 15.3 % of S (≥ 15 %, `CL-D1-ELEVON-FRAC`); line meets the TE at |y| 280 / 410 ± 1 mm.
 10. **→ Fins:** half-fin roots, anchors and fillets on bare foam (D3). **→ Harness:** ESC and servo leads into the
     grooves with tape tabs (F2), JR joint in its recess. No recess-step fillet (D-103 deleted it: C3-R4 FEA shows it
     does not lower the crash peak). **→ Pod:** shell bonded in the recess, the floor's aft end square on the step,
     and on the spar saddles (D2).
+    **Fin-root bond break (C2 closure round, D-179):** the fin roots are released from x 0.22 to the TE on D3's PTFE strips
+    (D3 BUILD step 11, params `fin_detail.fin.root_fillet.release_x_m`); keep the skin there clean and dry: no tape
+    laps, no epoxy, no skin-prep sanding aft of x 0.22 under the four roots.
 11. **Skin.** Lower surface first: spanwise strips from the TE forward, 10 % overlap, the forward strip ending at
     x 41.8 mm (it runs 4.8 mm under the LE strip); then upper the same (forward strip ends at x 40.8 mm). **Then the LE strip:**
     one continuous 100 mm strip per half-span (|y| 70–575 mm), laid last, upper edge on the pen line at x 45.5 mm, wrapped
     round the LE, lower edge at x 46.6 mm. **No seam, overlap edge or doubler edge within 32 mm of the LE** on either
     face (CR-B2-17); the block-pocket doublers are the only exception. No tape on the pod footprint (x 0–95 mm, |y| ≤ 70) or under the half-fin roots; lap 15 mm up both
-    fin faces. Doublers: one 60 mm chordwise band over each block pocket (upper x 120 → round the LE → lower
-    x 120) on top of the LE strip, continuous over the lip beads, slit round the tube and fin; one over each servo pocket on the lower face (x 120 → hinge), opening cut
+    fin faces. **Base skin over the blocks (structural, D-153):** every spanwise strip runs unbroken through
+    |y| 270–370 mm on both faces for x ≤ 240 mm: no strip end, butt joint, splice or overlap edge started or stopped in
+    that zone (C2 rule 2). Doublers: **block doubler, structural (C2-R5, D-153):** two extra layers (3 in all) of
+    60 mm chordwise band over each block pocket, |y| 290–350 mm (centred on 320), upper x 120 → round the LE → lower
+    x 120, on top of the LE strip, continuous over the lip beads; slit **only** round the tube boss and the half-fin
+    root, ≤ 2 mm clearance; one over each servo pocket on the lower face (x 120 → hinge), opening cut
     out. One
     extra strip folded round each tip edge. **Tab edges:** slit a 48 mm strip in half; fold one 24 mm strip over each
     fin-root tab side face (|y| 300 and 340) from the hinge round the R 3 mm corner to the TE, 12 mm onto each face
@@ -76,6 +92,22 @@ slot in where marked **→**.
     x 257.6–287.6 × 14 mm) and backplate (upper, x 263.6–287.6 × 12 mm). **Check:** no wrinkles at the LE,
     grooves and pockets visible under the tape; rule from the LE at five stations each side: both LE-strip
     edges ≥ 32 mm (`CL-D1-LE-SEAM-X`).
+    **Turbulator (D-168, B2; params `wing.turbulator`), laid after the hold point below is signed:** zigzag tape, 6 mm wide,
+    0.7 mm high, on the **lower** surface only, centred on **x 64.0 mm** (x/c 0.20; strip x 61–67), rule it from the LE at
+    five stations and pen the line before the tape goes on. Full span in pieces: one piece |y| 0 → 290 each side, then
+    290 → 305.6 (on the 3-layer doubler band), a **gap 305.6–334.4 at each half-fin root** (fin face 2.4 + 10 mm cove + 2 mm
+    clear: nothing is taped under the roots or coves), 334.4 → 350, then 350 → 572. The line is 1.8 mm ahead of the spar-slot cap
+    (x 68.8 from the LE) and crosses the aft ESC power groove (x 64.3, |y| 86–296) under the skin: no cut into either. **Do not**
+    slit, lift or replace any doubler layer for the turbulator: the D-153 band (|y| 290–350, lower x 0 → 120) stays unbroken and the
+    tape rides on top (3 layers + 0.7 mm). **Check:** pieces straight to ±0.5 mm, burnished, no lifted edge; weigh the tape used
+    (`WNG-009`, 5.9 g `EST`).
+    **HOLD POINT (structural, D-153; sign off before step 12).** The block-pocket corner strength claims pass only
+    with this tape (102 / 75 / 52 kPa at 50 % tape credit against 150 / 120 / 100 kPa; `review/DESIGN-ROUND-2026-11-14/C2.md`).
+    A second person checks, both blocks, both faces: (a) band edges at |y| 290 ± 2 and 350 ± 2 mm, so it covers the
+    pocket faces (|y| 301.85 / 338.15) and the bead toes 3 mm beyond; (b) band ends at x 120 ± 2 mm upper and lower;
+    (c) 2 doubler layers over the base skin, counted at the band edge; (d) slits only at the tube boss and half-fin
+    root, gap ≤ 2 mm (feeler); (e) no base-skin strip end or splice in |y| 270–370 for x ≤ 240. Any miss: strip and
+    re-lay that band. Do not fly a wing that has not passed this hold point.
 12. **→ Mechanisms (D6):** torque tubes in the panel grooves, servo frames in the pockets (lead up through the hole),
     horns, link through the lower fin slot, hinge tape, covers.
     **Check (T-D1-THROW):** each panel ±25° by hand, a 0.5 mm feeler passes at the lower edge at +25°.
@@ -89,3 +121,15 @@ slot in where marked **→**.
 
 Repair: a tip strike outboard of the spar end (|y| > 500 mm) is a re-cut: saw at y ±500 mm, bond a new 75 mm tip block
 (same templates), re-tape (C2 damage fuse).
+
+Repair of the block doubler band (structural, D-153): **replace in kind before flight.** A cut, lifted, torn or
+punctured band (or base skin under it) is peeled back to clean tape and re-laid as the original: 2 layers, |y| 290–350,
+upper x 120 → LE → lower x 120, slits only at the boss and root (≤ 2 mm), no new base-skin splice in |y| 270–370 for
+x ≤ 240; then repeat the step-11 hold-point check. No patch, no other tape, no CA. This goes on the H3 flight card.
+
+Status of the tape credit: the coupon test `T-C2-XPS-COUPON` (owner H1: taped and untaped XPS block coupons in
+torsion, pass = no foam crack at 1.5 × the scaled limit, plus 3 notched XPS beams for K_Ic) decides it. If the taped
+coupon fails, the fallback is the root-continuous glass D-cell: 1 ply Style 1080 cloth on the bias at ±45, upper
+x 120 → LE → lower x 120 mm, |y| 0 → 363 mm continuous across the centre, 2 mm cut-out round each tube boss, laid
+with laminating epoxy after the spar bond (step 8) and before the skin (step 11); +16.5 g `EST`, ≈ $43.55 `EST`,
+4 h `EST` (C2.md §2, option 6lt: 72 / 70 / 56 kPa). It is not drawn; D1 draws it only if A1 chooses it.

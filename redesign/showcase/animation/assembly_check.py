@@ -1,6 +1,6 @@
 """assembly_check.py - plans how a person puts K09-L together and checks every motion as a swept path.
 
-    python -I redesign/showcase/animation/assembly_check.py              # plan + check, about 25 min
+    python -I redesign/showcase/animation/assembly_check.py              # plan + check, about 20 min
     python -I redesign/showcase/animation/assembly_check.py --report-only  # rewrite the report from the last run
     python -I redesign/showcase/animation/assembly_check.py --legacy     # also score the old fly-in film
     python -I redesign/showcase/animation/assembly_check.py --steps 2.1,2.3,2.4,2.5   # debug a few steps
@@ -29,11 +29,27 @@ Motion of each rigid part (or bench sub-assembly), found from the geometry, not 
   3. if the straight path is blocked further out than 3 mm, a two-segment path: out along the direction to just
      short of the hit, then sideways along another axis until clear.
   The first collision-free candidate is the motion. Screws turn while they travel their last thread length.
-  Tape ('lay'), wet epoxy ('fill') and wires are not rigid: they are laid in place, so their final pose is what the
-  collision gate already checks; here they get the support check, and a wire laid AFTER a tape that it touches
-  (a lead under the skin) is a violation. Elevon panels swing about the gate's hinge joints, sampled every 1 deg.
-Support: every placed item must touch (within CONTACT_MM, or seated in a cut) something already placed, or be held by
-a fixture named in assembly_plan.OVERRIDES; the first part of a bench group is held on the bench. Others are listed.
+     A crossing triangle sample inside a CONVEX cutter of either body is removed material (exact plane test, numpy);
+     a long sliding contact (more than PAIR_CAP crossing triangles) is tested at every crossing triangle's centre and
+     at all 15 points of an even subset.
+No pair of parts is ever skipped by name. Every other motion is a real one, carried out and tested:
+  * built body by body (OVERRIDES kind 'built', the pod box): each CAD body planned and swept on its own; a STEPS item
+    'bench:NAME PART|SEL' places only some bodies (the aft deck after the handle);
+  * turned about a hinge line (kind 'hinge'): the hatch about the nose-lip edge, a pushrod about its Z-bend leg;
+    translation and angle keyframes sampled every 0.25 mm / 0.5 deg (sweep_keys); the elevon swing about the gate's
+    hinge joints every SWING_STEP_DEG, the hinge tape split into the part bonded to each panel (turns), the part
+    bonded to the core (stays) and the free span across the gap (the fold, reported);
+  * elastic (assembly_plan.ELASTIC): interference allowed only between the two named bodies and only up to the
+    deflection the strain allowable gives (cantilever 3 t d / 2 L^2, or end-on d / L), measured and reported;
+  * laid, wet or cut in place (kinds 'lay', 'fill', 'fixture', wires): no motion; tested where they lie against
+    everything placed (in_place). A lead whose end part is not on yet is laid to its first in-line connector and
+    its held run laid ('tails:') when that part is on; a strap's run over the pack is left open and wrapped after
+    the pack ('wrap:'); a wire laid after a tape it touches is a violation.
+  A body is never tested against itself (as in the gate): pieces of one CAD body (a split lead, a tape half) and the
+  strands of one wire are one body.
+Support: every placed item must touch (within CONTACT_MM, a bond line where interfaces.json joins the two parts, or the
+stated foam-tape thickness of that joint) something already placed, carry a laid wire through it (an in-line sleeve),
+or be held by a fixture named in assembly_plan.OVERRIDES; the first part of a bench group is held on the bench.
 """
 import argparse
 import datetime
@@ -118,6 +134,8 @@ def bl_main(argv):
     comps = {c['id']: c for c in job['comps']}
     info = ap.part_info()
     BONDED = ap.bonded_pairs()
+    GAPS = ap.bond_gaps()                          # pairs joined by a stated foam-tape layer: that thickness may separate them
+    GAP_SEARCH_MM = max([BOND_GAP_MM] + list(GAPS.values()))
 
     def prep(b):
         if hasattr(b, 'V'):
@@ -145,7 +163,7 @@ def bl_main(argv):
         def __init__(self, base, M):
             self.base, self.M = base, M
             self.pid, self.idx, self.name = base.pid, base.idx, base.name
-            for k in ('wire', 'r', 'ends', 'terms', 'inline'):
+            for k in ('wire', 'r', 'ends', 'terms', 'inline', 'src'):
                 if hasattr(base, k):
                     setattr(self, k, getattr(base, k))
             self.V = [M @ v for v in base.V]
@@ -158,6 +176,11 @@ def bl_main(argv):
             self.probe = self.V[0]
             self.vol = base.vol
             self._t = self._c = None
+            for k in ('axis', 'round', 'centre'):        # a posed copy keeps its body axis (translations only move
+                if hasattr(base, k):                       # the centre; rotated copies are never planned from)
+                    setattr(self, k, getattr(base, k))
+            if hasattr(base, 'centre'):
+                self.centre = M @ base.centre
 
         @property
         def tris(self):
@@ -179,6 +202,7 @@ def bl_main(argv):
 
         def __init__(self, base, tri_ids, tag):
             self.pid, self.idx, self.name = base.pid, base.idx, '%s %s' % (base.name, tag)
+            self.src = getattr(base, 'src', base)      # the CAD body this is a piece of
             for k in ('wire', 'r', 'ends', 'terms', 'inline', 'outs'):
                 if hasattr(base, k):
                     setattr(self, k, getattr(base, k))
@@ -309,7 +333,13 @@ def bl_main(argv):
                 for q in P[r_][keep[r_]]:
                     yield Vector(q)
 
+        def is_open(x):
+            return getattr(x, 'open_surface', False) or getattr(getattr(x, 'base', None), 'open_surface', False)
+
         for src, dst, ids in ((m, o, {i for i, _j in pairs}), (o, m, {j for _i, j in pairs})):
+            if is_open(dst) and not is_open(src):
+                continue            # inside an open piece (part of a split body) is undefined: the piece's own
+                #                     surface points are tested inside the closed body instead (the other direction)
             STAT['n0'] += len(ids)
             t_c = time.time()
             pts = list(points(src, dst, sorted(ids)))
@@ -339,7 +369,8 @@ def bl_main(argv):
             if getattr(y, 'open_surface', False) or getattr(getattr(y, 'base', None), 'open_surface', False):
                 continue
             if x.probe is not None and all(y.lo[i] <= x.lo[i] and x.hi[i] <= y.hi[i] for i in range(3)) \
-                    and cb.depth_inside(x.probe, y) > tol and not cb.removed(x.probe, y) and not cb.removed(x.probe, x):
+                    and cb.depth_inside(x.probe, y) > tol and not cb.removed(x.probe, y) and not cb.removed(x.probe, x) \
+                    and not cb.at_terminal(x.probe, m, o):
                 return min(x.hi[i] - x.lo[i] for i in range(3)) / 2, x.probe
         return None
 
@@ -363,7 +394,10 @@ def bl_main(argv):
                   for z in (b.lo[2], b.hi[2])]
             lo = [min(c[i] for c in cs) for i in range(3)]
             hi = [max(c[i] for c in cs) for i in range(3)]
-            near = [o for o in obst if (b.pid, o.pid) not in exempt and ov_box(lo, hi, o)]
+            near = [o for o in obst if (b.pid, o.pid) not in exempt and ov_box(lo, hi, o)
+                    and not (getattr(b, 'wire', False) and o.pid == b.pid)   # a wire is one conductor run, and
+                    and not (getattr(b, 'src', None) is not None and getattr(b, 'src', None) is getattr(o, 'src', 0))]
+            #     two pieces of one CAD body are one body: the gate never tests a body (or a wire) against itself
             if not near:
                 continue
             p = Posed(b, M)
@@ -505,7 +539,7 @@ def bl_main(argv):
         return sorted(coll.values(), key=lambda h: -h['depth_mm'])
 
     def contacts(movers, obst):
-        """Placed parts touching the movers: {part: smallest gap mm} for gaps up to BOND_GAP_MM (a vertex near a
+        """Placed parts touching the movers: {part: smallest gap mm} for gaps up to GAP_SEARCH_MM (a vertex near a
         surface, or near the face of that part's cut it is seated in), and the mean outward normal of the faces
         within CONTACT_MM (the mount face normal; for a seated part the cut's faces, so it points out of the pocket)."""
         gaps, acc, n = {}, Vector(), 0
@@ -514,13 +548,13 @@ def bl_main(argv):
             stride = max(1, len(V) // 1500)
             pts = V[::stride]
             for o in obst:
-                if not ov_box(m.lo, m.hi, o, BOND_GAP_MM + 0.05):
+                if not ov_box(m.lo, m.hi, o, GAP_SEARCH_MM + 0.05):
                     continue
                 g = gaps.get(o.pid, 1e9)
                 for v in pts:
-                    if not all(o.lo[i] - BOND_GAP_MM <= v[i] <= o.hi[i] + BOND_GAP_MM for i in range(3)):
+                    if not all(o.lo[i] - GAP_SEARCH_MM <= v[i] <= o.hi[i] + GAP_SEARCH_MM for i in range(3)):
                         continue
-                    loc, nrm, _i, d = o.bvh.find_nearest(v, BOND_GAP_MM)
+                    loc, nrm, _i, d = o.bvh.find_nearest(v, GAP_SEARCH_MM)
                     if loc is not None and not cb.removed(v, o):
                         g = min(g, d)
                         if d <= CONTACT_MM:
@@ -528,9 +562,9 @@ def bl_main(argv):
                             n += 1
                         continue
                     for c in o.cutters:
-                        if not all(c.lo[i] - BOND_GAP_MM <= v[i] <= c.hi[i] + BOND_GAP_MM for i in range(3)):
+                        if not all(c.lo[i] - GAP_SEARCH_MM <= v[i] <= c.hi[i] + GAP_SEARCH_MM for i in range(3)):
                             continue
-                        loc, nrm, _i, d = c.bvh.find_nearest(v, BOND_GAP_MM)
+                        loc, nrm, _i, d = c.bvh.find_nearest(v, GAP_SEARCH_MM)
                         if loc is not None:
                             g = min(g, d)
                             if d <= CONTACT_MM:
@@ -548,7 +582,8 @@ def bl_main(argv):
         """Contact within CONTACT_MM, or a bond line up to BOND_GAP_MM where interfaces.json joins the two parts."""
         out = {}
         for pid, g in gaps.items():
-            if g <= CONTACT_MM or any(frozenset((m, pid)) in BONDED for m in ids):
+            if g <= CONTACT_MM or any(frozenset((m, pid)) in BONDED and g <= GAPS.get(frozenset((m, pid)), BOND_GAP_MM)
+                                      for m in ids):
                 out[pid] = round(g, 3)
         return out
 
@@ -564,6 +599,22 @@ def bl_main(argv):
             ax = s.get('axis')
             v = AX.get(ax.upper()) if isinstance(ax, str) else (Vector(ax) if ax else None)
             b.axis = (R @ v).normalized() if v is not None else None
+            if s['kind'] == 'loft' and len(s.get('sections') or []) >= 2 and isinstance(ax, str):
+                # a loft runs from its first section to its last: its axis is the line through the section
+                # centroids (a brace strip cut square to y at both ends runs diagonally, not along y)
+                k = 'XYZ'.index(ax.upper())
+                o_ = [i for i in range(3) if i != k]
+
+                def cen(sec):
+                    lp = sec[1]
+                    q = [0.0, 0.0, 0.0]
+                    q[k] = sec[0]
+                    q[o_[0]] = sum(t[0] for t in lp) / len(lp)
+                    q[o_[1]] = sum(t[1] for t in lp) / len(lp)
+                    return Vector(q)
+                d_ = R @ (cen(s['sections'][-1]) - cen(s['sections'][0]))
+                if d_.length > 1e-9:
+                    b.axis = d_.normalized()
             b.round = s['kind'] == 'revolve'
             if s['kind'] == 'revolve':
                 b.centre = (Mw @ Vector(s['center'])) * 1000.0
@@ -576,7 +627,7 @@ def bl_main(argv):
     def geo_axes(movers):
         w = []
         for b in movers:
-            if b.axis is None:
+            if getattr(b, "axis", None) is None:
                 continue
             for i, (ax, wt) in enumerate(w):
                 if abs(ax.dot(b.axis)) > 0.999:
@@ -624,7 +675,8 @@ def bl_main(argv):
                     add(s)
         if nrm is not None:
             add(nrm)
-        for ax in axes + WORLD:
+        for ax in axes + geo_axes(tb) + WORLD:          # own axes, then along the part it seats on (a collar onto
+            #                                             a strip), then the world axes
             pair = (ax, -ax)
             if sc is not None:
                 pair = sorted(pair, key=lambda v: -v.dot(ctr - sc))
@@ -732,7 +784,10 @@ def bl_main(argv):
         for row in ap.ELASTIC:
             if not any(fnmatch.fnmatch(m, row['mover']) for m in mover_pids):
                 continue
-            d_allow = 2.0 * row['eps_allow'] * row['L_mm'] ** 2 / (3.0 * row['t_mm'])
+            if row.get('model') == 'axial':             # a board pressed end-on: eps = d / L
+                d_allow = row['eps_allow'] * row['L_mm']
+            else:
+                d_allow = 2.0 * row['eps_allow'] * row['L_mm'] ** 2 / (3.0 * row['t_mm'])
             out.append(dict(row, limit_mm=min(d_allow, row.get('cap_mm', d_allow)), d_allow_mm=d_allow))
         return out
 
@@ -741,12 +796,27 @@ def bl_main(argv):
         out = []
         for (rid, mp, mb, bp, bb), d in sorted(used.items()):
             row = rows[rid]
-            eps = 3.0 * row['t_mm'] * d / (2.0 * row['L_mm'] ** 2)
+            eps = d / row['L_mm'] if row.get('model') == 'axial' else 3.0 * row['t_mm'] * d / (2.0 * row['L_mm'] ** 2)
             out.append({'id': rid, 'mover': mp, 'mover_body': mb, 'blocker': bp, 'blocker_body': bb,
                         'deflection_mm': round(d, 3), 'strain_pct': round(100 * eps, 2),
                         'allow_pct': round(100 * row['eps_allow'], 2), 'limit_mm': round(row['limit_mm'], 3),
-                        'L_mm': row['L_mm'], 't_mm': row['t_mm'], 'ok': eps <= row['eps_allow'] + 1e-9,
+                        'L_mm': row['L_mm'], 't_mm': row.get('t_mm'), 'model': row.get('model', 'cantilever'),
+                        'ok': eps <= row['eps_allow'] + 1e-9,
                         'source': row['source']})
+        return out
+
+    def centres(bs, cap=1000):
+        """Triangle centres (mm, 0.1 mm) of bodies, an even subset of at most cap: written to the plan so the film
+        splits a part's faces as the check split its triangles (a strap's held run, a hinge-tape half), by the
+        nearest recorded centre."""
+        n = sum(len(b_.V) // 3 for b_ in bs)
+        k = max(1, n // cap)
+        out, j = [], 0
+        for b_ in bs:
+            for i in range(len(b_.V) // 3):
+                if j % k == 0:
+                    out.append([round(c, 1) for c in (b_.V[3 * i] + b_.V[3 * i + 1] + b_.V[3 * i + 2]) / 3])
+                j += 1
         return out
 
     def boxdist(pt, b):
@@ -839,93 +909,133 @@ def bl_main(argv):
                         'box_mm': [[round(c, 2) for c in b.lo], [round(c, 2) for c in b.hi]]})
             done.append(b)
             remaining.remove(b)
-            print('      built: %-28s %s %s' % (b.name[:28], 'ok ' if x['ok'] else 'HIT',
-                                                   ', '.join('%.2f' % c for c in (x.get('dir') or []))), flush=True)
+            print('      built: %-28s %s %s %s' % (b.name[:28], 'ok ' if x['ok'] else 'HIT',
+                                                   ', '.join('%.2f' % c for c in (x.get('dir') or [])),
+                                                   '' if x['ok'] else '-> %s (%s) %.2f mm' % (
+                                                       x['violation']['blocker'], x['violation'].get('blocker_body'),
+                                                       x['violation']['depth_mm'])), flush=True)
         gaps, _n = contacts(movers, obst)
         return dict(ok=ok, violation=next((q['violation'] for q in res if not q['ok']), None), samples=samples,
                     touched=supported_by(ids, gaps), ov=ap.override(ids[0]), path=[[0, 0, 0]], spin=None, dir=None,
                     built=res, motion='built body by body')
 
     def plan_hinge(ids, movers, obst, spec):
-        """A part hooked under a lip and swung down onto its seat (the hatch): the hinge line is the lip's free
-        edge on its underside (from the geometry of the named lip body, along its long side). The part comes in
-        open at angle th from above, slides along its own plane until its tongue is under the lip, then turns
-        about the hinge line to closed. Every pose is tested (sweep_keys). Opening angles are tried in the order
-        the row gives; the first that passes is the motion."""
-        tongue = next(b for b in movers if fnmatch.fnmatch(b.name or '', spec['body']))
-        lip = next(o for o in obst if o.pid == spec['host'] and fnmatch.fnmatch(o.name or '', spec['host_body']))
-        ext = [lip.hi[i] - lip.lo[i] for i in range(2)]
-        ai = 0 if ext[0] > ext[1] else 1
-        j = 1 - ai
-        axis = Vector((0, 0, 0))
-        axis[ai] = 1.0
-        mlo, mhi = union_box(movers)
-        mc = (Vector(mlo) + Vector(mhi)) / 2
-        lc = (Vector(lip.lo) + Vector(lip.hi)) / 2
-        out_sgn = 1.0 if mc[j] > lc[j] else -1.0
-        origin = Vector(lc)
-        origin[j] = lip.hi[j] if out_sgn > 0 else lip.lo[j]
-        origin[2] = lip.lo[2]
-        d = Vector((0, 0, 0))
-        d[j] = out_sgn
-        far = max((v for b in movers for v in b.V), key=lambda v: (v - origin).dot(d))
-        sg = 1.0 if (rot_about(axis, origin, 10.0) @ far).z > far.z else -1.0
-        engage = max(0.0, (origin - Vector(tongue.lo if out_sgn > 0 else tongue.hi)).dot(d))
-        n_all, tried = 0, []
-        for th in spec['angles']:
-            R = rot_about(axis, origin, sg * th).to_3x3()
-            sdir = R @ d
-            t1 = sdir * (engage + spec.get('clear_mm', 2.0))
-            t0 = t1 + Vector((0, 0, spec.get('lift_mm', 40.0)))
-            keys = [(list(t0), sg * th), (list(t1), sg * th), ([0, 0, 0], sg * th), ([0, 0, 0], 0.0)]
-            h, n = sweep_keys(movers, obst, (axis, origin), keys)
-            n_all += n
-            tried.append({'deg': th, 'hit': h})
+        """A part that goes on by a turn about a hinge line, every pose tested (sweep_keys). Two kinds of line, from
+        the geometry named in the OVERRIDES row:
+          pivot 'lip'  (the hatch): the free aft edge of the named lip body, along its long side, at its lower or its
+                       upper corner (both tried, lower first). The part comes in open at angle th from above, slides
+                       along its own plane until its tongue is under the lip, then turns closed about that edge.
+          pivot 'axis' (a pushrod Z-bend): the axis of the named revolve body of the part itself (the Z-bend leg in
+                       the servo-arm hole). The part, turned th about that axis (the far end swung clear), slides
+                       along the axis until the leg is through the hole, then turns back about it.
+        Angles and both turning senses are tried in the row's order; the first motion that passes is used."""
+        cands = []                                      # (axis, origin, slide direction, engage, lift, label)
+        if spec.get('pivot', 'lip') == 'lip':
+            tongue = next(b for b in movers if fnmatch.fnmatch(b.name or '', spec['body']))
+            lip = next(o for o in obst if o.pid == spec['host'] and fnmatch.fnmatch(o.name or '', spec['host_body']))
+            ext = [lip.hi[i] - lip.lo[i] for i in range(2)]
+            ai = 0 if ext[0] > ext[1] else 1
+            j = 1 - ai
+            axis = Vector((0, 0, 0))
+            axis[ai] = 1.0
+            mlo, mhi = union_box(movers)
+            mc = (Vector(mlo) + Vector(mhi)) / 2
+            lc = (Vector(lip.lo) + Vector(lip.hi)) / 2
+            out_sgn = 1.0 if mc[j] > lc[j] else -1.0
+            d = Vector((0, 0, 0))
+            d[j] = out_sgn
+            for zc, lab in ((lip.lo[2], 'lower'), (lip.hi[2], 'upper')):
+                origin = Vector(lc)
+                origin[j] = lip.hi[j] if out_sgn > 0 else lip.lo[j]
+                origin[2] = zc
+                engage = max(0.0, (origin - Vector(tongue.lo if out_sgn > 0 else tongue.hi)).dot(d))
+                far = max((v for b in movers for v in b.V), key=lambda v: (v - origin).dot(d))
+                sg = 1.0 if (rot_about(axis, origin, 10.0) @ far).z > far.z else -1.0
+                cands.append((axis, origin, d, engage, spec.get('lift_mm', 40.0), [sg],
+                              'the %s aft edge of %s %s' % (lab, lip.pid, lip.name)))
+        else:
+            leg = next(b for b in movers if fnmatch.fnmatch(b.name or '', spec['body']))
+            axis, origin = leg.axis.copy(), leg.centre.copy()
+            half = max(abs((v - origin).dot(axis)) for v in leg.V)
+            for d in (axis, -axis):
+                cands.append((axis, origin, d, 2 * half, 0.0, [1.0, -1.0],
+                              'the axis of %s %s' % (leg.pid, leg.name)))
+        n_all, tried, h, keys, used = 0, [], True, None, None
+        for axis, origin, d, engage, lift, signs, label in cands:
+            for th in spec['angles']:
+                for sg in signs:
+                    R = rot_about(axis, origin, sg * th).to_3x3()
+                    sdir = R @ d if spec.get('pivot', 'lip') == 'lip' else d
+                    t1 = sdir * (engage + spec.get('clear_mm', 2.0))
+                    keys = ([(list(t1 + Vector((0, 0, lift))), sg * th)] if lift else []) +                         [(list(t1), sg * th), ([0, 0, 0], sg * th), ([0, 0, 0], 0.0)]
+                    h, n = sweep_keys(movers, obst, (axis, origin), keys)
+                    n_all += n
+                    tried.append({'line': label, 'deg': sg * th, 'hit': h})
+                    if VERBOSE:
+                        print('      hinge %s, %g deg: %s' % (label, sg * th, 'clear' if h is None else
+                              'hit %s (%s) %.2f mm' % (h['blocker'], h.get('blocker_body'), h['depth_mm'])), flush=True)
+                    if h is None:
+                        used = (axis, origin, sdir, th * sg, label)
+                        break
+                if h is None:
+                    break
             if h is None:
                 break
+        if used is None:                                # report the line that got furthest (hit nearest the open end)
+            first = max(tried, key=lambda q: abs(q['hit'].get('deg') or 0.0))
+            axis, origin, d, engage, lift, signs, label = next(c_ for c_ in cands if c_[6] == first['line'])
+            th = first['deg']
+            sdir = (rot_about(axis, origin, th).to_3x3() @ d) if spec.get('pivot', 'lip') == 'lip' else d
+            t1 = sdir * (engage + spec.get('clear_mm', 2.0))
+            keys = ([(list(t1 + Vector((0, 0, lift))), th)] if lift else []) +                 [(list(t1), th), ([0, 0, 0], th), ([0, 0, 0], 0.0)]
+            h = first['hit']
+            used = (axis, origin, sdir, th, label)
+        axis, origin, sdir, th, label = used
         gaps, _n = contacts(movers, obst)
-        rot = {'axis': [round(c, 6) for c in axis], 'origin_mm': [round(c, 3) for c in origin]}
+        rot = {'axis': [round(c, 6) for c in axis], 'origin_mm': [round(c, 3) for c in origin], 'line': label}
         return dict(ok=h is None, violation=h, samples=n_all, touched=supported_by(ids, gaps),
                     ov=ap.override(ids[0]), spin=None, dir=[round(c, 4) for c in sdir], rot=rot,
-                    keys=[[[round(c, 3) for c in t], round(a, 3)] for t, a in keys],
-                    path=[[round(c, 3) for c in Vector(t)] for t, _a in keys[:3]],
-                    travel_mm=round(Vector(keys[0][0]).length, 1), open_deg=th, engage_mm=round(engage, 2),
-                    hinge_tried=tried, motion='hooked under the lip, then turned %g deg about the hinge line' % th)
+                    keys=[[[round(c, 3) for c in t], round(a_, 3)] for t, a_ in keys],
+                    path=[[round(c, 3) for c in Vector(t)] for t, _a in keys[:-1]],
+                    travel_mm=round(Vector(keys[0][0]).length, 1), open_deg=th,
+                    hinge_tried=[{'line': q['line'], 'deg': q['deg'],
+                                  'hit': None if q['hit'] is None else {k_: q['hit'].get(k_) for k_ in (
+                                      'blocker', 'blocker_body', 'depth_mm', 'deg')}} for q in tried],
+                    motion='turned %g deg about %s' % (th, label))
 
     # ---------------------------------------------------------------- the sequence
     acts, unnamed = ap.sequence(sorted(bodies), sorted(wb))
     only = set(s for s in a.steps.split(',') if s)
     placed, obst = [], []                          # aircraft: ids placed, their bodies
     bench = {}                                     # group -> [ids]
+    bench_b = {}                                   # group -> bodies on the bench so far (a part may come in two goes)
     lay_bodies = []                                # bodies of tapes laid so far
     results = []
     poses = {p['name']: p for p in job['poses']}
     swaps = []
 
-    made_in = {}                                   # id(solder-joint body) -> the build step it is made at
     pending_tails, tails_done, wire_span = [], [], {}   # held wire runs, laid ones, curve span of each wire
+    pending_wraps, wraps_done = [], []                  # strap runs left open until the pack is in
+    parked = {}                                         # PARK name -> members, carried, posed bodies, offset
 
     def place(ids):
         for pid in ids:
             placed.append(pid)
-            bs = bodies.get(pid) or wb.get(pid) or []
-            obst.extend(bs)
-            for b in bs:
-                if 'solder joint' in (b.name or ''):
-                    made_in[id(b)] = act['step']
+            obst.extend(bodies.get(pid) or wb.get(pid) or [])
 
     def step_obst(step):
-        """Obstacles for a part moved in `step`: a solder joint is made with the iron at the end of the step its part
-        is placed in (after the screws that hold the part; BUILD-GUIDE order), so it is not yet there for the other
-        parts of that same step (D-89c). From the next step on it is an obstacle like any body."""
-        return [o for o in obst if made_in.get(id(o)) != step]
+        """Obstacles for a part moved in `step`: everything already placed. (Until 2026-11-13 a solder joint was left
+        out for the rest of the step its part went in; with the power board on its pad above the frame screws
+        (D-135) no part needs that, so the rule is gone.)"""
+        return list(obst)
 
     snaps, reordered, moved_once, k = [], set(), set(), 0
     while k < len(acts):
         act = acts[k]
         del snaps[k:]
         snaps.append((len(placed), len(obst), len(lay_bodies), {g: len(v) for g, v in bench.items()},
-                      len(pending_tails), len(tails_done)))
+                      len(pending_tails), len(tails_done), {g: len(v) for g, v in bench_b.items()},
+                      len(pending_wraps), len(wraps_done)))
         t0 = time.time()
         r = dict(i=k, stage=act['stage'], step=act['step'], caption=act['caption'], type=act['type'], id=act['id'],
                  group=act.get('group'))
@@ -937,7 +1047,7 @@ def bl_main(argv):
             pick = None
             for p in lim:                              # the limit that raises the trailing edge (max x of a panel)
                 pid = next((m for m in p['moved'] if m.startswith('WNG-011')), None)
-                if not pid:
+                if not pid or pid not in bodies:
                     continue
                 te = max((v for b in bodies[pid] for v in b.V), key=lambda v: v.x)
                 R = Matrix(p['R'][pid])
@@ -969,24 +1079,48 @@ def bl_main(argv):
                     if pan is None:
                         tape_fix.append(tb)
                         continue
-                    ax_, o_ = Vector(sw[pan]['axis']), Vector(sw[pan]['origin_mm'])
-                    plo, phi = union_box(bodies[pan])
-                    pc = (Vector(plo) + Vector(phi)) / 2 - o_
-                    pc -= ax_ * pc.dot(ax_)
-                    side = [i for i in range(len(tb.V) // 3)
-                            if ((((tb.V[3 * i] + tb.V[3 * i + 1] + tb.V[3 * i + 2]) / 3 - o_)) -
-                                ax_ * (((tb.V[3 * i] + tb.V[3 * i + 1] + tb.V[3 * i + 2]) / 3 - o_).dot(ax_))).dot(pc) > 0]
-                    rest = sorted(set(range(len(tb.V) // 3)) - set(side))
+                    # a triangle turns with the panel where the tape is bonded to the panel: its centre within a bond
+                    # line (BOND_GAP_MM) of the panel's surface; the rest (on the core, across the gap) stays
+                    # each triangle: bonded to the panel (within a bond line of its surface: turns with it), bonded
+                    # to the core side (within a bond line of a fixed body: stays), or neither: the free span across
+                    # the hinge gap, the film that folds (the hinge itself; reported, not a rigid piece)
+                    hosts = [o for o in obst if o.pid not in members and o.pid != tp and ov_box(tb.lo, tb.hi, o, 1.0)
+                             and not getattr(o, 'wire', False)]
+                    side, rest, free = [], [], []
+                    for i in range(len(tb.V) // 3):
+                        c_ = (tb.V[3 * i] + tb.V[3 * i + 1] + tb.V[3 * i + 2]) / 3
+                        dp = min([q.bvh.find_nearest(c_, BOND_GAP_MM)[3] for q in bodies[pan]
+                                  if q.bvh.find_nearest(c_, BOND_GAP_MM)[0] is not None] or [9.0])
+                        dc = min([q.bvh.find_nearest(c_, BOND_GAP_MM)[3] for q in hosts
+                                  if all(q.lo[k_] - BOND_GAP_MM <= c_[k_] <= q.hi[k_] + BOND_GAP_MM for k_ in range(3))
+                                  and q.bvh.find_nearest(c_, BOND_GAP_MM)[0] is not None] or [9.0])
+                        if min(dp, dc) > BOND_GAP_MM:
+                            free.append(i)                  # bonded to neither: the free span that folds
+                        elif dp < dc:
+                            side.append(i)                  # nearer the panel's surface: bonded to the panel
+                        else:
+                            rest.append(i)                  # nearer the core side (core, skin): stays
+                    fs = r.setdefault('face_sets', {}).setdefault(tp, {})
                     if side:
                         sb_ = Sub(tb, side, '(on %s)' % pan)
                         sb_.swing_with = pan
                         tape_mov.append(sb_)
+                        fs.setdefault('panel:' + pan, []).extend(centres([sb_]))
                     if rest:
                         tape_fix.append(Sub(tb, rest, '(on the core)'))
+                        fs.setdefault('core', []).extend(centres([tape_fix[-1]]))
+                    span = None
+                    if free:
+                        fb_ = Sub(tb, free, '(free span)')
+                        fs.setdefault('fold', []).extend(centres([fb_]))
+                        span = [[round(c, 1) for c in fb_.lo], [round(c, 1) for c in fb_.hi]]
                     tape_split.setdefault(tp, []).append({'body': tb.name, 'panel': pan, 'tris_on_panel': len(side),
-                                                          'tris_on_core': len(rest)})
+                                                          'tris_on_core': len(rest), 'tris_free_span': len(free),
+                                                          'free_span_box_mm': span})
             r['tape_split'] = tape_split
             r['not_swept_against'] = []
+            CUR['allow'] = elastic_rows(members)
+            CUR['used'] = {}
             if run and members:
                 mv = [b for m in members for b in bodies[m]] + tape_mov
                 fixed = [b for b in obst if b.pid not in members and b.pid not in skip] + tape_fix
@@ -1005,7 +1139,50 @@ def bl_main(argv):
                 r.update(ok=hit is None, violation=hit, samples=n)
             else:
                 r.update(ok=True, samples=0)
+            if CUR['used']:
+                r['elastic'] = elastic_report(CUR['used'])
+            CUR['allow'], CUR['used'] = [], {}
             r['support'], r['fixture'] = sorted(set(placed) & {'WNG-001'}), None
+        elif typ in ('park', 'unpark'):
+            # slide the PARK members (and what they carry) by move_mm or back, swept against everything else placed
+            spec = ap.PARK[act['id']]
+            off = Vector(spec['move_mm'])
+            if typ == 'park':
+                mem = [m for m in placed if any(fnmatch.fnmatch(m, g_) for g_ in spec['members'])]
+                cur = [o for o in obst if o.pid in mem]
+            else:
+                pk = parked.get(act['id']) or {'members': [], 'carried': [], 'bodies': []}
+                mem = pk['members'] + pk['carried']
+                cur = pk['bodies']
+            ids_cur = {id(o) for o in cur}
+            rest = [o for o in obst if id(o) not in ids_cur]
+            base_b = [b for m in mem for b in bodies[m]]
+            u = off.normalized()
+            hit, n = (sweep(base_b, rest, u, Vector(), 0.0, off.length, set()) if run and base_b else (None, 0))
+            r.update(kind=typ, members=mem, ok=hit is None, violation=hit, samples=n, park_mm=[round(c, 3) for c in off],
+                     carried=(parked.get(act['id']) or {}).get('carried', []) if typ == 'unpark' else [],
+                     motion=('cut free and slid %g mm %s' if typ == 'park' else 'slid %g mm back %s to the seat')
+                     % (off.length, 'aft' if off.x > 0 else 'along %s' % list(off)),
+                     support=sorted({o.pid for o in rest for b in base_b if ov_box(b.lo, b.hi, o, CONTACT_MM)})[:6])
+            obst[:] = rest
+            if typ == 'park':
+                pb = [Posed(b, Matrix.Translation(off)) for b in base_b]
+                obst.extend(pb)
+                parked[act['id']] = {'members': mem, 'carried': [], 'bodies': pb, 'off': off, 'carry': spec['carry']}
+            else:
+                obst.extend(base_b)
+                parked.pop(act['id'], None)
+        elif typ == 'wrap':
+            todo = [w_ for w_ in pending_wraps if fnmatch.fnmatch(w_['part'], act['id']) and id(w_) not in wraps_done]
+            lay_b = [x for w_ in todo for x in w_['bodies']]
+            hits = in_place(lay_b, step_obst(act['step'])) if (run and lay_b) else []
+            r.update(kind='lay', type='wrap', members=[w_['part'] for w_ in todo], ok=not hits,
+                     violation=hits[0] if hits else None, samples=1 if lay_b else 0, path=[[0, 0, 0]],
+                     motion='wrapped in place', support=sorted({o.pid for o in obst for x in lay_b
+                                                                 if ov_box(x.lo, x.hi, o, CONTACT_MM)})[:8])
+            for w_ in todo:
+                wraps_done.append(id(w_))
+            obst.extend(lay_b)
         elif typ in ('wire', 'tails'):
             if typ == 'wire':
                 wid = act['id']
@@ -1086,17 +1263,51 @@ def bl_main(argv):
         else:
             ids = act['members'] if typ == 'install' else [act['id']]
             movers = [b for pid in ids for b in bodies[pid]]
+            carrier = next((nm_ for nm_, pk in parked.items()
+                            if typ == 'part' and any(fnmatch.fnmatch(act['id'], g_) for g_ in pk['carry'])), None)
+            if carrier:                                 # planned and placed in the parked frame of its host
+                movers = [Posed(b, Matrix.Translation(parked[carrier]['off'])) for b in movers]
+                r['parked_with'] = carrier
+                r['park_mm'] = [round(c, 3) for c in parked[carrier]['off']]
+            sel = act.get('bodies')
+            if sel:                                     # this go places only these bodies of the part
+                neg = sel.startswith('!')
+                movers = [b for b in movers if fnmatch.fnmatch(b.name or '', sel.lstrip('!')) != neg]
+                r['bodies_sel'] = sel
             kind = 'install' if typ == 'install' else ap.kind_of(act['id'], info)
             r.update(kind=kind, members=ids)
             if typ == 'bench':
                 g = act['group']
-                mates = [b for pid in bench.get(g, []) for b in bodies[pid]]
+                mates = list(bench_b.get(g, []))
                 oset = mates
             else:
                 oset = step_obst(act['step'])
             exempt = set()                              # no pair is ever skipped by name
             CUR['allow'] = elastic_rows([b.pid for b in movers])
             CUR['used'] = {}
+            place_b = None
+            hold = ap.override(act['id']).get('hold') if kind == 'lay' else None
+            if hold:
+                # a strap threaded under the tray now; the run above the tray top (round the pack) is left open and
+                # wrapped later ('wrap:' item). Each triangle goes by its centre height against the tray top.
+                z0 = max(v.hi[2] for v in bodies[hold['above']])
+                lay_m, held = [], []
+                for b_ in movers:
+                    if fnmatch.fnmatch(b_.name or '', hold['bodies']):
+                        up = [i for i in range(len(b_.V) // 3)
+                              if (b_.V[3 * i][2] + b_.V[3 * i + 1][2] + b_.V[3 * i + 2][2]) / 3 > z0]
+                        dn = sorted(set(range(len(b_.V) // 3)) - set(up))
+                        if dn:
+                            lay_m.append(Sub(b_, dn, '(threaded under the tray)'))
+                        if up:
+                            held.append(Sub(b_, up, '(wrapped over the pack)'))
+                    else:
+                        lay_m.append(b_)
+                pending_wraps.append(dict(part=act['id'], bodies=held))
+                r['hold'] = {'z_mm': round(z0, 3), 'bodies': hold['bodies'], 'above': hold['above'],
+                             'wrap_step': hold['wrap_step']}
+                r['face_sets'] = {act['id']: {'now': centres(lay_m), 'wrap': centres(held)}}
+                movers = place_b = lay_m
             if kind in ('lay', 'fill', 'fixture'):
                 # laid, wet or cut in place: no motion through anything; it must appear clear of what is placed
                 hits = in_place(movers, oset) if run else []
@@ -1149,6 +1360,9 @@ def bl_main(argv):
                 r.update(ok=True, skipped=True, samples=0, touched=touched, ov={}, path=[[0, 0, 60.0], [0, 0, 0]],
                          spin=None, dir=None)
             touched = r.pop('touched')
+            for w_ in wire_job.values():                # a sleeve or connector the run of a laid wire passes through
+                if w_['id'] in placed and any(i.split(':')[0] in ids for i in w_.get('inline', [])):
+                    touched.setdefault(w_['id'], 0.0)
             ovr = r.pop('ov') or {}
             r['support'] = sorted(touched)
             r['gaps_mm'] = touched
@@ -1174,7 +1388,17 @@ def bl_main(argv):
             blo, bhi = union_box(movers) if movers else ([0] * 3, [0] * 3)
             r['box_mm'] = [[round(c, 2) for c in blo], [round(c, 2) for c in bhi]]
             if typ == 'bench':
-                bench.setdefault(act['group'], []).append(act['id'])
+                if act['id'] not in bench.get(act['group'], []):
+                    bench.setdefault(act['group'], []).append(act['id'])
+                bench_b.setdefault(act['group'], []).extend(movers)
+            elif place_b is not None:
+                placed.extend(ids)
+                obst.extend(place_b)
+            elif carrier:
+                placed.extend(ids)
+                obst.extend(movers)
+                parked[carrier]['carried'] += ids
+                parked[carrier]['bodies'] += movers
             else:
                 place(ids)
         r['seconds'] = round(time.time() - t0, 1)
@@ -1201,9 +1425,9 @@ def bl_main(argv):
             trial_ok = False
             if j is not None and pair not in reordered and act['id'] not in moved_once and typ in ('part', 'bench'):
                 # try it first: does this part get in cleanly at the earlier position?
-                n_p, n_o, n_l, nb, _pt, _td = snaps[j]
+                n_p, n_o, n_l, nb, _pt, _td, nbb, _pw, _wd = snaps[j]
                 if typ == 'bench':
-                    t_obst = [b for pid in bench.get(act['group'], [])[:nb.get(act['group'], 0)] for b in bodies[pid]]
+                    t_obst = bench_b.get(act['group'], [])[:nbb.get(act['group'], 0)]
                 else:
                     t_obst = obst[:n_o]
                 trial_ok = plan_rigid(ids, movers, t_obst, kind, exempt).get('ok', False)
@@ -1219,7 +1443,14 @@ def bl_main(argv):
                           % (act['id'], acts[j]['id']), flush=True)
             if trial_ok:
                 moved_once.add(act['id'])
-                n_p, n_o, n_l, nb, n_pt, n_td = snaps[j]
+                n_p, n_o, n_l, nb, n_pt, n_td, nbb, n_pw, n_wd = snaps[j]
+                del pending_wraps[n_pw:]
+                del wraps_done[n_wd:]
+                for g in list(bench_b):
+                    if g in nbb:
+                        del bench_b[g][nbb[g]:]
+                    else:
+                        del bench_b[g]
                 del placed[n_p:]
                 del pending_tails[n_pt:]
                 del tails_done[n_td:]
@@ -1358,7 +1589,11 @@ def how(r):
     if k == 'wire':
         return 'held run laid in place' if r.get('tail_action') else 'laid in place'
     if k == 'hinge':
-        return 'slid, then rotated about the lip edge'
+        return 'slid, then rotated about its hinge line'
+    if k in ('park', 'unpark'):
+        return 'swept: %s' % r.get('motion', k)
+    if r.get('parked_with'):
+        return 'swept in the parked frame of the %s' % r['parked_with']
     if k == 'built':
         return 'built body by body (%d pieces swept)' % len(r.get('built') or [])
     if k in ('lay', 'fill', 'fixture'):
@@ -1381,7 +1616,7 @@ def write_md(rep, path, tol):
     uns = [r for r in acts if r.get('unsupported')]
     fix = [r for r in acts if r.get('fixture')]
     loose = [r for r in acts if r.get('loose_ends')]
-    rigid = [r for r in acts if r.get('kind') in ('slide', 'screw', 'install')]
+    rigid = [r for r in acts if r.get('kind') in ('slide', 'screw', 'install', 'park', 'unpark')]
     two = [r for r in rigid if r.get('path') and len(r['path']) >= 3]
     first = [r for r in rigid if r.get('first_fail')]
     rot = [r for r in acts if r.get('kind') in ('hinge', 'swing')]
@@ -1406,12 +1641,13 @@ def write_md(rep, path, tol):
          '| Swept, straight or two-segment (rigid parts, screws turning, bench sub-assemblies) | %d (%d two-segment) | '
          'the part re-meshed at every sample along its path and tested against every body already placed |'
          % (len(rigid), len(two)),
-         '| Rotated | %d | the hatch: slid under the nose lip, then turned about the lip edge (every 0.5 deg); the '
-         'elevon swing about the gate\'s hinge joints (every %g deg), the hinge-tape half on each panel turning with it |'
-         % (len(rot), SWING_STEP_DEG),
-         '| Built body by body | %d part, %d pieces | each foam-board piece of the pod box swept on its own path '
-         'against the tray, the inserts and the pieces already glued |' % (len(built), sum(len(r.get('built') or [])
-                                                                                          for r in built)),
+         '| Rotated | %d | turned about a hinge line from the geometry, translation and angle interpolated together '
+         '(every 0.25 mm and 0.5 deg): the hatch about the nose-lip edge, each pushrod about its Z-bend leg in the '
+         'servo-arm hole; the elevon swing about the gate\'s hinge joints (every %g deg), the hinge-tape half bonded to '
+         'each panel turning with it |' % (len(rot), SWING_STEP_DEG),
+         '| Built body by body | %d actions, %d pieces | each foam-board piece of the pod box swept on its own path '
+         'against the tray, the inserts and the pieces already glued (the aft deck after the handle) |'
+         % (len(built), sum(len(r.get('built') or []) for r in built)),
          '| Elastically checked | %d body pairs | interference allowed only between the named flexing body and the '
          'body it rides over, only up to the deflection its strain limit gives (table below) |' % len(ela),
          '| Laid, wet or cut in place | %d | no motion: the item appears where it lies (film: wiped on) and is tested '
@@ -1460,18 +1696,20 @@ def write_md(rep, path, tol):
         L.append('')
     if ela:
         L += ['## Elastic checks', '',
-              'A flexing feature may pass into the body it rides over only by the deflection its strain limit allows: '
-              'cantilever finger of free length L and thickness t, tip deflection d, root strain eps = 3 t d / (2 L^2) '
-              '(Roark, end-loaded cantilever; the snap-fit relation of the Bayer / Covestro snap-fit guide). d is the '
-              'deepest interference the sweep measured between exactly these two bodies (assembly_plan.ELASTIC). EST: '
-              'stand-in geometry, print-dependent allowable.', '',
-              '| Step | Action | Flexing body | Rides over | d mm | L x t mm | Strain % | Allowable % | Limit mm | OK | Source |',
+              'A flexing feature may pass into the body it rides over only by the deflection its strain limit allows. '
+              'Cantilever finger of free length L and thickness t, tip deflection d: root strain eps = 3 t d / (2 L^2) '
+              '(Roark, end-loaded cantilever; the snap-fit relation of the Bayer / Covestro snap-fit guide). A board '
+              'pressed end-on over its length L: eps = d / L. d is the deepest interference the sweep measured between '
+              'exactly these two bodies (assembly_plan.ELASTIC), never more than the row cap. EST: stand-in '
+              'geometry, print-dependent allowable.', '',
+              '| Step | Action | Flexing body | Rides over | d mm | Model, L (x t) mm | Strain % | Allowable % | Limit mm | OK | Source |',
               '|---|---|---|---|---|---|---|---|---|---|---|']
         for r in acts:
             for e in r.get('elastic') or []:
-                L.append('| %s | %s %s | %s (%s) | %s (%s) | %.3f | %g x %g | %.2f | %.2f | %.3f | %s | %s |' % (
+                L.append('| %s | %s %s | %s (%s) | %s (%s) | %.3f | %s | %.2f | %.2f | %.3f | %s | %s |' % (
                     r['step'], r['type'], r['id'], e['mover'], e['mover_body'], e['blocker'], e['blocker_body'],
-                    e['deflection_mm'], e['L_mm'], e['t_mm'], e['strain_pct'], e['allow_pct'], e['limit_mm'],
+                    e['deflection_mm'], ('cantilever, %g x %g' % (e['L_mm'], e['t_mm'])) if e.get('model') != 'axial'
+                    else 'end-on, %g' % e['L_mm'], e['strain_pct'], e['allow_pct'], e['limit_mm'],
                     'yes' if e['ok'] else '**no**', e['source']))
         L.append('')
     bow = rep.get('bow')
@@ -1489,24 +1727,43 @@ def write_md(rep, path, tol):
                  'the collar ear on the bench, each slid along the brace axis, and the three go on as one rigid '
                  'sub-assembly: the collar down the motor tube while the anchor drops into its pocket on the spar '
                  '(step 4.5a, swept).'), '']
+    pk = [r for r in acts if r.get('kind') in ('park', 'unpark')]
+    if pk:
+        L += ['## Parked and brought back', '',
+              'Parts slid away from their seat and later brought back (assembly_plan.PARK); both slides are swept '
+              'against everything placed. While parked they are obstacles at the parked pose, and parts bonded to them '
+              'meanwhile are planned in the parked frame and travel back with them.', '',
+              '| Step | Action | Parts | Move mm | Samples | Result |', '|---|---|---|---|---|---|']
+        for r in pk:
+            L.append('| %s | %s %s | %s | %s | %d | %s |' % (
+                r['step'], r['type'], r['id'], ', '.join(r.get('members') or []),
+                ', '.join('%g' % c for c in r.get('park_mm') or []), r.get('samples', 0),
+                'ok' if r.get('ok') else 'FAIL'))
+        L.append('')
     hg = [r for r in acts if r.get('kind') == 'hinge']
     if hg or [r for r in acts if r['type'] == 'swing']:
         L += ['## Rotations', '', '| Step | Part | Hinge line (axis; point mm) | Motion | Samples | Result |',
               '|---|---|---|---|---|---|']
         for r in hg:
             ro = r.get('rot') or {}
-            L.append('| %s | %s | %s; %s | open %s deg, slid %s mm along its own plane until the tongue is under the '
-                     'lip, then turned to closed (keys: %s) | %d | %s |' % (
-                         r['step'], r['id'], ', '.join('%.2f' % c for c in ro.get('axis', [])),
-                         ', '.join('%.1f' % c for c in ro.get('origin_mm', [])), r.get('open_deg'),
-                         r.get('engage_mm'), '; '.join('(%s) %g deg' % (', '.join('%.1f' % c for c in k[0]), k[1])
-                                                     for k in r.get('keys') or []),
-                         r.get('samples', 0), 'ok' if r.get('ok') else 'FAIL'))
+            tried = '; '.join('%s %+g deg: %s' % (q['line'].replace('the ', ''), q['deg'], 'clear' if not q['hit'] else
+                                                   '%s %s %.2f mm at %s deg' % (q['hit']['blocker'],
+                                                                                q['hit'].get('blocker_body'),
+                                                                                q['hit']['depth_mm'], q['hit'].get('deg')))
+                              for q in (r.get('hinge_tried') or [])[:12])
+            L.append('| %s | %s | %s (axis %s; point %s) | %s; keyframes (translation mm, deg): %s. Tried: %s | %d | %s |' % (
+                         r['step'], r['id'], ro.get('line', '—'), ', '.join('%.2f' % c for c in ro.get('axis', [])),
+                         ', '.join('%.1f' % c for c in ro.get('origin_mm', [])), r.get('motion', ''),
+                         '; '.join('(%s) %g' % (', '.join('%.1f' % c for c in k[0]), k[1]) for k in r.get('keys') or []),
+                         tried or '—', r.get('samples', 0), 'ok' if r.get('ok') else 'FAIL'))
         for r in acts:
             if r['type'] != 'swing':
                 continue
-            ts = '; '.join('%s: %s' % (tp, ', '.join('%s %d on panel / %d on core' % (q['body'], q['tris_on_panel'],
-                                                                                    q['tris_on_core']) for q in v))
+            ts = '; '.join('%s: %s' % (tp, ', '.join(
+                '%s with %s: %d triangles turn with the panel, %d stay on the core, %d in the free span that folds%s' % (
+                    q['body'], q['panel'], q['tris_on_panel'], q['tris_on_core'], q.get('tris_free_span', 0),
+                    (' (x %.1f-%.1f mm)' % (q['free_span_box_mm'][0][0], q['free_span_box_mm'][1][0]))
+                    if q.get('free_span_box_mm') else '') for q in v))
                            for tp, v in (r.get('tape_split') or {}).items())
             L.append('| %s | %s | gate hinge joints | panels and what is bonded to them to the TE-up limit; hinge tape '
                      'split at the hinge line, each half with its side (%s) | %d | %s |' % (
@@ -1603,11 +1860,12 @@ def write_md(rep, path, tol):
           'starts 0.05 mm off the seat.',
           '- Tape, straps and wires are flexible: they are tested where they lie, not as a rigid sweep; a wire is '
           'also failed if it is laid after a tape it lies against.',
+          '- A body is never tested against itself (as in the gate): two pieces of one CAD body, such as a lead split '
+          'at its connector or the two halves of a hinge-tape strip at its fold, are one body; so are the strands of '
+          'one wire.',
           '- Hands, tools and clearance for them (a hex key on a pinch bolt, a soldering iron): not modelled.',
           '- Gravity: no dynamics; a part counts as supported when it touches something placed or a named fixture.',
           '- Bench sub-assemblies are checked against their bench-mates only, then moved on as one body.',
-          '- A solder joint is made at the end of the step its part goes on (BUILD-GUIDE order), so it is not an '
-          'obstacle for the other parts of that same step.',
           '- Real Fusion geometry (UNVERIFIED-IN-FUSION, as the gate).', '']
     with open(path, 'w', encoding='utf-8') as f:
         f.write('\n'.join(L))

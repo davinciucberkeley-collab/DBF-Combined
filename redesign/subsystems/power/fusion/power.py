@@ -9,13 +9,14 @@ BEC (6 V jumper) feeds the servos through the FC's Vx rail, and the deck is draw
   PWR-002 AS150U aircraft  aircraft half (cups facing -x) in the frame's cradle + the two 10 AWG main jumpers
   PWR-003 power board      CoreWing F405 Wing V2 power board (V/I sense, servo BEC on the 6 V jumper), separated
                            from the FC stack (case S), foam-taped on the frame deck, pads aft at the deck window;
-                           52 x 32 mm (manual), height UNVERIFIED (BOARD-CHECK.md)
+                           52 x 32 mm (manual), height UNVERIFIED (BOARD-CHECK.md). R7 (D-173b): restored
   PWR-004 bus board        FR4 strip with two tinned 8 AWG bus bars, foam-taped on D2's PDB plate between the boss
                            rows, under the deck: 4 ESC pigtails (XT30U at the side exits) leave from its bars
   PWR-006 power frame      printed PETG: deck (56 x 34 mm board seat = KO-PWR-BOARD footprint) on 4 nylon spacers
                            over D2's four M3 inserts (one screw stack per corner), wire window, AS150U cradle
                            (housing bonded + 1 tie), two legs, lead tunnel
-  PWR-008 ESC capacitor    680 uF 25 V low-ESR, foam-taped on each half-fin beside the ESC power end (x4, quad)
+  PWR-008 / -009 / -010  ESC capacitors, three 560 uF 35 V hybrid cans per ESC (R8), foam-taped on each half-fin
+                           beside the ESC power end (x4 each, quad)
 
 Stack in the left channel, bottom up (z, m): pod floor 0.0198 | PDB plate 0.0208 | bus board 0.0224, bars to 0.0257 |
 bosses to 0.0268 | 10 mm nylon spacers | deck 0.0368-0.0388 | power board to 0.0488. The AS150U sits on the cradle
@@ -166,7 +167,7 @@ def build(ctx):
     for i, b in enumerate(G['legs']):
         fr.box(*b, name='petg cradle leg %d' % i)
 
-    # PWR-003 power board on the deck; PWR-002 AS150U aircraft half in the cradle
+    # PWR-003 power board on the deck; PWR-002 AS150U aircraft half in the cradle (R7, D-173b: restored)
     pb = ctx.part('PWR-003')
     pb.box(*G['board'], name='power board envelope')
     # CDR-17 (CDR-EL-03): case S as power SPEC.md says: the board sits on a 3.3 mm foam pad (three layers of PWR-106
@@ -205,8 +206,15 @@ def build(ctx):
     x0 = esc['x1'] + L['cap_gap_x_m']
     zc = (esc['z0'] + esc['z1']) / 2
     cap = ctx.part('PWR-008-UR')
-    cap.cylinder('X', (x0, face + cd / 2, zc), cl, cd / 2, name='680 uF cap can')   # D-88: the round can, not a box
+    cap.cylinder('X', (x0, face + cd / 2, zc), cl, cd / 2, name='560 uF hybrid cap can (35PZJ560M10X15)')   # D-88: the round can
     k9.quad(ctx, {s: 'PWR-008-' + s for s in ST})
+    # R6: second can per ESC (L6 rejected, team/F1 CALC-F1-ESC-CAP), cap_pitch_m toward the wing, legs paralleled
+    cap2 = ctx.part('PWR-009-UR')
+    cap2.cylinder('X', (x0, face + cd / 2, zc - L['cap_pitch_m']), cl, cd / 2, name='560 uF hybrid cap can, second')
+    k9.quad(ctx, {s: 'PWR-009-' + s for s in ST})
+    cap3 = ctx.part('PWR-010-UR')                                  # R8: third can toward the fin tip
+    cap3.cylinder('X', (x0, face + cd / 2, zc + L['cap_pitch_m']), cl, cd / 2, name='560 uF hybrid cap can, third')
+    k9.quad(ctx, {s: 'PWR-010-' + s for s in ST})
 
     build_frame_hardware(ctx, G)
 
@@ -217,6 +225,8 @@ def build(ctx):
     ctx.contact('E-PWR-05', 'bus board on foam tape on the PDB plate, under the deck')
     for i, s in enumerate(ST):
         ctx.contact('E-PWR-%d' % (11 + i), 'ESC cap %s foam-taped on the half-fin face' % s)
+        ctx.contact('E-PWR-%d' % (15 + i), 'second ESC cap %s foam-taped on the half-fin face' % s)
+        ctx.contact('E-PWR-%d' % (19 + i), 'third ESC cap %s foam-taped on the half-fin face' % s)
 
 
 def build_frame_hardware(ctx, G):

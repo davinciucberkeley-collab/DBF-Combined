@@ -8,6 +8,13 @@ Every pass line below is a claim in `team/H1/claims.json` (from `ground_tests.py
 owns the claim they verify. H1 builds the rigs, runs the cards and writes the logs, and the owner marks the test `run`
 with the H1 log as evidence.
 
+**R4 changes (final re-run 2026-11-14, D-173 / D-174 / D-175).** The stand pass lines follow E1 for the SunnySky X2814 V3 KV900 with the
+APC 11x8E at the 80 A limiter, 2.70 kg, 10 deg (GT-02). GT-02a adds the motor screw-hole depth probe and the prop-adapter hand check.
+GT-05 accepts packs at <= 3.8 mOhm per cell group (E2 D-173, Gens Ace Shorty 6000 HV). GT-16 and GT-17 read C4's closure lines
+(E >= 78.6 GPa, G >= 10.27 GPa, mount >= 2 548 N m/rad) and GT-16 runs on the Rock West 35046-S tube (`W10`), not the Aloft `W03`.
+Where an R3 sentence below still names the 11x5.5MR, the X3108S, 14.8 V or 25 A, this block and the tables of GT-02, GT-05, GT-16, GT-17
+override it.
+
 **R3 changes.** GT-09 fin proof on the as-drawn article with two strain-gauge bridges and a 25 mm dial (CR-C4-36,
 CR-C4-38). GT-17 pass level ≥ max(1 100, `CL-C4-D3-MOUNT-K-REQ`), 1 966 N·m/rad at C4's 15:01 re-publish, with the wall moved to 5.0 m (CR-C4-41). GT-15 lever rebuilt 15:1 / 9:1 with steel
 pivot plates, ≥ 2 942 N (CR-C6-33, CR-C6-39). `T-C3-STOP-PUSH` on bonded tray pieces, and `T-C3-POD-PROOF` + 200 N on the
@@ -27,7 +34,7 @@ soldering kit and hot-wire gear is due before 20 Nov (D-72).** The request is re
 | GT-03 | Installed run, fin swirl | `T-B4-INSTALLED` `T-B4-YAW` (B4) | 1 – 8 Dec |
 | GT-04 | Motor, ESC, wire and connector thermal | `T-E3-MOTOR-TAU` `T-E3-ESC-PAD` `T-E3-ESC-PAD-CFD` (E3), `T-F1-WIRE-HEAT` `T-F1-CONN-HEAT` (F1) | with GT-02, ≤ 8 Dec |
 | GT-05 | Packs: weigh, capacity, IR | `T-E2-WEIGH` `T-E2-CAPACITY` `T-E2-IR` (E2) | on arrival |
-| GT-16 | Tube bend, torsion (GJ) and ring crush (Aloft `W03`) | `T-C4-TUBE-BEND` (= `T-J1-TUBE-BEND`), `T-C4-TUBE-TORSION` (C4); E_hoop to C2 | tube arrives ~27 Nov; **result to I1 by 10 Dec** |
+| GT-16 | Tube bend, torsion (GJ) and ring crush (Rock West `W10`) | `T-C4-TUBE-BEND` (= `T-J1-TUBE-BEND`), `T-C4-TUBE-TORSION` (C4); E_hoop to C2 | tube arrives 4-18 Dec (back-order); **before the first cut** |
 | GT-17 | Mount rocking stiffness | `T-C4-MOUNT-STIFF` (C4), `T-C6-CANT-SEAT` `T-C6-PROPNUT` (C6) | first printed ASA mount (Dec) |
 | GT-15 | Coupons | C2, C3, C4, C6, D5 coupon tests (table in GT-15) | first prints and foam, Dec – 16 Jan |
 | GT-06 | Weigh parts and aircraft | `T-A3-WEIGH-PARTS` (A3), `T-A1-WEIGH` (A1) | as parts arrive; build end |
@@ -112,25 +119,39 @@ On fail: shield and shorten the HX711 leads, re-seat the cell; a session failing
 
 Figure `FIG H1-01`. CR-E1-11, CR-B4-09, CR-B1-16, CR-C1-07, CR-A1-41.
 
-**2a Incoming check, 5 motors and the ESCs (`T-E1-MOTOR-RM`).** Weigh (0.1 g), calipers (bolt pattern, hole depth,
-lead length, adapter). Rm: 2.00 A from the Jacobs bench supply line-to-line, 4-wire, three pairs, corrected to 25 °C
+**2a Incoming check, 5 SunnySky X2814 V3 KV900 motors and the ESCs (`T-E1-MOTOR-RM`).** Weigh (0.1 g), calipers (bolt pattern 4 x M3 on
+19 / 25 mm, lead length, adapter). Rm: 2.00 A from the Jacobs bench supply line-to-line, 4-wire, three pairs, corrected to 25 °C
 at 0.393 %/K. I0 and Kv at 10.0 V no prop.
+
+*Motor screw-hole depth probe (E1 `CL-E1-SCREW-ENGAGE`, zero margin).* The base holes are 3.0 mm deep (bell holes 3.5 mm). With a depth gauge
+or a 2.5 mm drill shank marked at 3.0 mm, probe all 4 base holes of each motor and record the depth. The M3x8 stack (plate 4.5 mm + 2 x 0.5 mm washers +
+engagement) needs >= 2.5 mm of thread (C6 D-178, `requirements.thread_engagement_motor_m3_min_m`). Any hole < 3.0 mm: that motor is not fitted until D3
+thickens the plate (E1). A hole is also rejected if the probe finds a thread shorter than 2.5 mm.
+
+*Prop-adapter hand check (E1 rev 12).* The M6 post is left-hand thread on the CW motors (UR, LL) and right-hand on the CCW motors. On each motor
+with its own adapter and the M6 thin nut (3.2 mm, BOM `B06`), hand-tighten and spin: the nut must tighten with the prop torque, not loosen
+(a loose nut on spin-down = wrong hand). Mark each motor box with its position. The adapter ring seats on the 3 x M2.5 pattern on 15 mm: no rocking by hand.
 
 | Pass | Limit | Source |
 |---|---|---|
-| Rm line-to-line, 25 °C | 86 mΩ ± 20 % | `ASM-E1-RM` (CR-H1-05) |
+| Rm line-to-line, 25 °C | **77.4 - 94.6 mΩ** (E1 `ASM-E1-RM-BAND`; the R3 86 mΩ ± 20 % is replaced); >= 131 mΩ rejected | `T-E1-MOTOR-RM` |
+| Base screw-hole depth, 4 holes | each >= **3.0 mm** (engagement >= 2.5 mm) | `CL-E1-SCREW-ENGAGE`, C6 D-178 |
+| Adapter hand | tightens with the prop torque; CW motors (UR, LL) LH | E1 rev 12 |
 | I0 at 10 V / Kv | 0.9 A ± 30 % / 900 rpm/V ± 5 % | `ASM-E1-I0`, `ASM-E1-KV` |
 | Spread, 4 flight motors | Kv ≤ 3 %, Rm ≤ 10 %, I0 ≤ 20 % | fit the spare instead of an outlier |
 
-**2b A/B, 11×5.5MR vs 11×4.5MR (`T-E1-STAND`, `T-B4-STAND`).** Order A B B A; nut 1.5 N·m; 0 → 100 % in 10 % steps,
-3 s each, mean of the last 2 s. 0–60 % on the held 14.8 V supply; 70–100 % on a pack at 15.2 ± 0.1 V rest. Hover
-point 60 s at 690 gf. Ten 10 → 100 % punches (< 50 ms).
+**2b Stand run, X2814 + APC 11x8E (`T-E1-STAND`, `T-B4-STAND`).** The 11x5.5MR vs 11x4.5MR A/B is withdrawn (B04 deleted; the E is the flight prop and the stand confirms it). One motor, 11x8E on the LH/RH adapter, nut 1.5 N·m; 0 → 100 % in 10 % steps,
+3 s each, mean of the last 2 s. 0–60 % on the held supply; 70–100 % on a pack at 17.4 ± 0.1 V rest (full LiHV). Hover
+point 60 s at ~700 gf. Ten 10 → 100 % punches (< 50 ms). Repeat the point at a held 11.9 V.
 
 | Pass | Limit | Source |
 |---|---|---|
-| Repeatability A vs A at hover | ≤ 1 % power | resolves `CL-B1-HOVER-PROP-RATIO` 1.019 |
-| Hover torque | report vs 0.114 N·m | `CL-B4-HOVER-Q` |
-| Full-throttle rpm, 14.8 V | ≤ 9 545 rpm | `CL-B4-RPM-MAX` 9 319 |
+| Fresh thrust at the 80 A limiter share (20 A per motor), 17.4 V | >= **1 371 gf** (`CL-H1-T-PASS-FRESH`: T/W 2.0 at 2.70 kg / (4 cos 10°)); E1 predicts 1 417 gf (T/W 2.067); acceptance with U95 1 383 gf | `CL-E1-TW-FRESH`, `CL-H1-T-FRESH-ACCEPT` |
+| Thrust at a held 11.9 V | >= **1 097 gf** (`CL-E1-T-NEED-SAG`); E1 predicts 1 211 gf | `CL-E1-T-STAND`, `CL-H1-T-STAND-119-PASS` |
+| Phase current, one motor at Q_M_SPIN_MAX 0.81 | <= 50 A winding (E1 predicts 46.1 A at R_m -10 %), ESC <= 45 A (37.3 A) | `CL-E1-SPIN-I-WIND`, `-SPIN-I-ESC` |
+| Hover torque | report vs `CL-B4-HOVER-Q` | `CL-B4-HOVER-Q` |
+| Full-throttle rpm | report; the in-flight max `CL-B4-RPM-MAX` is 10 468 rpm (E1 one-motor cap 9 964) | `CL-B4-RPM-MAX` |
+| kT 0.885 / kP 1.021 on the 11x8E (E1 fit factors) | within the maker-curve tolerance of E1 | `T-E1-STAND` |
 | Punch test | 10 of 10 clean | `CL-E1-MAKER-SUPPLY` |
 
 **2c B1 points (CR-B1-16).** Static at 690 gf; full throttle at 14.0 V and at 13.6 V with the 25 A share; rpm vs
@@ -138,21 +159,21 @@ point 60 s at 690 gf. Ten 10 → 100 % punches (< 50 ms).
 
 **2d Peak thrust at the F4 cap, fresh 16.8 V pack (`T-C1-THRUST-FRESH`, CR-C1-07, CR-H1-01).**
 
-1. Pack 4.20 V/cell, rested 10 min, 25 ± 3 °C; `K09L-STAND.param` loaded (Q_M_SPIN_MAX 0.84), limiter off.
+1. Pack 4.35 V/cell (LiHV, charged in the charger LiHV mode, H3 card), rested 10 min, 25 ± 3 °C; `K09L-STAND.param` loaded (Q_M_SPIN_MAX 0.81), limiter off.
 2. Step 10 → 100 % for 2 s; three steps 60 s apart. Peak thrust, torque, current, rpm, V at the ESC.
-3. Limiter share on (`Q_M_BAT_CURR_MAX` 25 A for one station): three steps; thrust and current.
+3. Limiter share on (`Q_M_BAT_CURR_MAX` 80 A pack = 20 A per motor): three steps; thrust and current.
 
 | Pass | Limit | Claim |
 |---|---|---|
-| Peak thrust, max of 3, ρ-corrected | ≤ **20.98 N** pass; 20.98–21.1 N retest with 5 more steps; > 21.1 N fail | `CL-H1-T-PEAK-ACCEPT` (21.1 N − U95 0.12 N), `P:requirements.thrust_limit_per_motor_n` |
+| Peak thrust, max of 3, ρ-corrected | ≤ **21.98 N** pass; 21.98–22.1 N retest with 5 more steps; > 22.1 N fail (D-166 limit) | `CL-H1-T-PEAK-ACCEPT` (22.1 N − U95 0.12 N), `P:requirements.thrust_limit_per_motor_n` |
 | Peak torque | ≤ 0.42 N·m | `CL-C1-MOTOR-TORQUE` |
-| Peak current, unlimited | ≤ 55 A (abort) | `CL-H1-STEP-I` 51.6 A |
-| Limited thrust, fresh | ≥ **1.391 kgf** | `CL-H1-T-FRESH-ACCEPT` (1.378 + U95) → `R-HOVER-TW` |
-| Per-motor current, limiter on | ≤ 25 A | `CL-E1-ILIM-I` 24.75 A |
+| Peak current, unlimited | ≤ 55 A (abort) | `CL-H1-STEP-I` 38.2 A |
+| Limited thrust, fresh | ≥ **1.371 kgf** pass line; accept ≥ **1.383 kgf** | `CL-H1-T-PASS-FRESH`, `CL-H1-T-FRESH-ACCEPT` → `R-HOVER-TW` |
+| Per-motor current, limiter on | ≤ `propulsion.motor_max_a` (E1 predicts 28.5 A winding) | `CL-E1-ILIM-I` |
 
-The prediction (`CL-C1-T-CAP` 21.08 N) sits inside the 0.12 N guard band, so a retest is likely. Whatever the
+Whatever the
 result, A1 sets `requirements.thrust_limit_per_motor_n` to the measured peak rounded up to 0.5 N (CR-H1-01); above
-21.1 N, C1 re-runs every load case first. Limited thrust below 1.391 kgf → E1/A1 (`R-HOVER-TW`).
+22.1 N, C1 re-runs every load case first. Limited thrust below 1.371 kgf → E1/A1 (`R-HOVER-TW`).
 
 **2e Cold pack, 3.6 V/cell at 10 °C (`T-A1-THRUST-STATION` sag case, `T-E2-IR`).**
 
@@ -162,8 +183,8 @@ result, A1 sets `requirements.thrust_limit_per_motor_n` to the measured peak rou
 
 | Pass | Limit | Claim |
 |---|---|---|
-| Full-throttle thrust, cold 20 % pack | ≥ **1.115 kgf** (predicted 1.379 at sag 0.851) | `CL-H1-T-SAG-ACCEPT` (1.102 + U95) → `CL-H1-T-PASS-SAG`, `R-HOVER-TW` |
-| IR at 10 °C | ≤ 7.5 mΩ/cell | `CL-H1-PACK-IR10-MAX` |
+| Full-throttle thrust, cold 20 % pack | ≥ **1.097 kgf** pass line (T/W 1.6); accept ≥ **1.109 kgf**; predicted 1.181 at sag 0.872 | `CL-H1-T-PASS-SAG`, `CL-H1-T-SAG-ACCEPT`, `R-HOVER-TW` |
+| IR at 10 °C | ≤ **5.7 mΩ per cell group** (3.8 mΩ at 25 °C x the cold factor) | `CL-H1-PACK-IR10-MAX` |
 
 On fail: E2 and E1 replace `propulsion.voltage_sag` (0.76) with the measured ratio; A1 decides prop or limiter.
 
@@ -244,10 +265,10 @@ Tests `T-E2-WEIGH`, `T-E2-CAPACITY`, `T-E2-IR`. One row per pack in `team/E2/pac
 
 | Pass | Limit | Source |
 |---|---|---|
-| Mass incl. leads | ≤ `CL-E2-PACK-ACCEPT-KG` (0.593 kg today; 551 g expected) | `CL-E2-PACK-MASS`; A3 re-runs |
-| Fits the pod bay | ≤ 160 × 52 × 53 mm | `README.md` |
-| Capacity at 1C | ≥ 5.98 Ah | `CL-H1-PACK-CAP-MIN` |
-| IR at 25 °C / spread on arrival | ≤ 5 mΩ/cell / ≤ 0.02 V | `T-E2-IR`, H3 |
+| Mass incl. leads | ≤ the A3 pack line (Gens Ace Shorty 6000 HV listed 410 ± 10 g; the E2 worst case 424 g) | `CL-E2-PACK-MASS`; A3 re-runs |
+| Fits the pod bay | ≤ 98 × 47 × 46 mm listed (+ tolerance) in the 160 × 52 × 53 mm bay | `README.md` |
+| Capacity at 1C, to 3.5 V/cell | ≥ 5.52 Ah (92 % of 6.0 Ah) | `CL-H1-PACK-CAP-MIN` |
+| IR at 25 °C, per cell group (4S2P) / spread on arrival | ≤ **3.8 mΩ per group** / ≤ 0.02 V | `T-E2-IR` (E2 D-173), H3 |
 
 ## GT-06 Mass
 
@@ -499,43 +520,47 @@ the jugs, face shields, nobody under the long arm.
 
 Torque checks (0.20 N·m) without a torque driver: 2.0 N on a spring scale at 0.10 m on the hex key.
 
-## GT-16 Tube bend and torsion (Aloft `W03`) — result to I1 by 10 Dec
+## GT-16 Tube bend and torsion (Rock West 35046-S, `W10`) — before the first cut
 
-`T-C4-TUBE-BEND` (= `T-J1-TUBE-BEND`), `T-C4-TUBE-TORSION` with GJ (CR-C2-15), CR-C4-21, CR-I1-08. Run on arrival
-(~27 Nov); weigh first. One specimen gives C4 E and G, and C2 the three values its 3-D FEA assumes
-(`ASM-C2-TUBE-ET`: E axial 70 GPa, G 3 GPa, E hoop 8 GPa). The pass lines of this card are C4's live claims
-`CL-C4-D3-TUBE-E-REQ` and `-G-REQ` (CDR-19): read `CL-H1-TUBE-E-PASS` / `-G-PASS` on the day, not this table.
+`T-C4-TUBE-BEND` (= `T-J1-TUBE-BEND`), `T-C4-TUBE-TORSION` with GJ (CR-C2-15), CR-C4-21. Run on arrival, **on the uncut 48 in tube** (`W10` is one
+tube, $32.99 x 4 ft + one $20 cut charge, so the 1.22 m length is intact); the tests are non-destructive (peak stress 17 MPa bend, 6 MPa torsion).
+Weigh and measure OD / ID first (caliper `K13`). The tube then goes to the saw: FIN-002 x2 and one spare at 344 mm, and the 187 mm offcut is the ring-crush
+coupon (the offcut length is 1 219 - 3 x 344 = 187 mm). One specimen gives C4 E and G and C2 the three values its 3-D FEA assumes
+(`ASM-C2-TUBE-ET`). **The tube is on back-order, 2-4 weeks from the 20 Nov order (arrival 4-18 Dec): the R3 "result by 10 Dec" cannot hold;
+the card runs the day it arrives and C4 / D3 must not release FIN-002 cutting before it passes.** The pass lines are C4's closure lines
+(`ASM-H1-C4-LINES`; C4 `claims.d3.json` is stale until C4 re-runs after D3 R8).
 
 1. Span 0.80 m on two 22 mm dowels; printed saddle at mid-span; 0.5 kg steps to 4.0 kg and back.
-2. Deflection: dial indicator (borrowed) or caliper depth rod against a fixed bar (U95 0.03 mm).
-3. E = F L³ / (48 I δ) from the slope of 8 steps, I = 3.645 × 10⁻⁹ m⁴ (`CALC-H1-BEND`).
+2. Deflection: dial indicator (if the team or Jacobs has one) or caliper depth rod against a fixed bar (U95 0.03 mm).
+3. E = F L³ / (48 I δ) from the slope of 8 steps, I = 5.245 × 10⁻⁹ m⁴ (OD 22.10 / ID 19.05 mm, `CALC-H1-BEND`).
 4. **Torsion (GJ).** 0.40 m clamped in printed V-blocks, 0.30 m lever clamped at the far end, 0.5–2.0 kg in 0.5 kg
    steps, both senses (T up to 5.88 N·m). Two laser pointers in printed clamps on the tube **0.30 m apart**; spots on
    a wall 3.0 m away, read to ±1 mm. Twist over the gauge length Δθ = atan(s₂/L) − atan(s₁/L), so grip slip and
-   lever-clamp rotation drop out. GJ = T L_g / Δθ from the slope; G = GJ / J, J = 7.29 × 10⁻⁹ m⁴.
-5. **Ring crush (E_hoop).** 20 mm ring cut from the offcut; flat plates on the 20 kgf cell under the drill press,
-   4 N steps to 20 N; dial (0.01 mm) on the upper plate. E_hoop = 0.1488 P R³ / (δ I), R = 10.5 mm, I = b t³/12.
+   lever-clamp rotation drop out. GJ = T L_g / Δθ from the slope; G = GJ / J, J = 1.049 × 10⁻⁸ m⁴.
+5. **Ring crush (E_hoop).** 20 mm ring cut from the 187 mm offcut; flat plates on the 20 kgf cell under the drill press,
+   16 N steps to 80 N (the R3 20 N gave only 0.07 mm on this stiffer wall, U 21 %); dial (0.01 mm) on the upper plate.
+   E_hoop = 0.1488 P R³ / (δ I), R = 10.3 mm, I = b t³/12.
 
 | Pass | Limit | Claim |
 |---|---|---|
-| Deflection at 4.0 kg (E ≥ **78.6 GPa**, `CL-C4-D3-TUBE-E-REQ`) | ≤ **1.43 mm** (1.46 mm at 78.6 GPa − U95); 1.61 mm was the old 70 GPa line | `CL-H1-TUBE-E-PASS`, `CL-H1-TUBE-DEFL-ACCEPT` |
-| Peak stress | 23.7 MPa (tube stays usable as the spare) | `CL-H1-TUBE-SIGMA` |
-| E read uncertainty | 1.8 % | `CL-H1-TUBE-E-U` |
-| GJ (both senses agree within 5 %) | ≥ **31.4 N·m²** (G ≥ **4.31 GPa**, `CL-C4-D3-TUBE-G-REQ`): twist over the 0.30 m gauge ≤ **3.22°** at 2.0 kg. Below it the ±45° fallback tube is ordered. 21.9 N·m² (G 3 GPa) was C4's low corner only | `CL-H1-TUBE-G-PASS`, `CL-H1-TORS-GJ-PASS`, `-TWIST-PASS`, `CL-H1-TORS-GJ-LO` |
-| GJ read uncertainty (G 10 GPa, 73 mm spot difference) | 1.9 % | `CL-H1-TORS-U` |
-| Torsion peak shear | 8.9 MPa (≤ 30, tube stays usable) | `CL-H1-TORS-TAU` |
-| Ring δ at 20 N / E_hoop uncertainty | 0.26 mm at 8 GPa / 5.5 % | `CL-H1-RING-DEFL`, `-U` |
+| Deflection at 4.0 kg (E ≥ **78.6 GPa**, C4 knock-down) | ≤ **0.98 mm** (1.01 mm at 78.6 GPa − U95 0.03 mm) | `CL-H1-TUBE-E-PASS`, `CL-H1-TUBE-DEFL-ACCEPT` |
+| Peak stress | 16.5 MPa (tube stays usable) | `CL-H1-TUBE-SIGMA` |
+| E read uncertainty | 3.0 % | `CL-H1-TUBE-E-U` |
+| GJ (both senses agree within 5 %) | ≥ **107.7 N·m²** (G ≥ **10.27 GPa**): twist over the 0.30 m gauge ≤ **0.94°** at 2.0 kg. Below it C4's knock-down separation 0.20 is not met (`CL-C4-SIM-SEP-KNOCK`, 0.208 at the pass line) and C4 / A1 decide | `CL-H1-TUBE-G-PASS`, `CL-H1-TORS-GJ-PASS`, `-TWIST-PASS` |
+| GJ read uncertainty | 2.8 % | `CL-H1-TORS-U` |
+| Torsion peak shear | 6.2 MPa | `CL-H1-TORS-TAU` |
+| Ring δ at 80 N / E_hoop uncertainty | 0.27 mm at E_t of `ASM-C2-TUBE-ET` / 5.2 % | `CL-H1-RING-DEFL`, `-U` |
 
-Pass → I1 orders `W04` from Aloft. Fail or no result by 10 Dec → overseas tube, order by 15 Dec (I1). C4 replaces
-its E/G assumptions, and C2 its `ASM-C2-TUBE-ET` G and hoop values, with the measured values either way.
+Open: the U95 on the twist read at the new pass line is 0.94° over the gauge (4 times smaller than the R3 line): re-check that the 3 m wall read (±1 mm) still
+resolves it (spot difference at G 10.27 GPa is 50 mm, `CL-H1-TORS-U` 2.8 %). Pass → C4 releases the fin-tube cut. Fail → C4 and A1 (no
+cheaper or alternative tube passes C4's lines, C4 closure D-173).
 
 ## GT-17 Mount rocking stiffness
 
 `T-C4-MOUNT-STIFF`, with `T-C6-CANT-SEAT` and `T-C6-PROPNUT` on the same first ASA mount. Figure `FIG H1-08`.
 
-Pass level **≥ max(1 100, `CL-C4-D3-MOUNT-K-REQ`) about both rocking axes**: 1 100 is CR-C4-41's floor. C4's
-claim is **1 642 N·m/rad** today (2026-11-13, D-91 mount with the D-89c cheek); the card reads the claim on the day.
-C4's estimate of the mount as drawn is 2 259 N·m/rad (`CL-C4-D3-MOUNT-K-EST`, × 1.38 of the pass level). C4's readout
+Pass level **≥ 2 548 N·m/rad about both rocking axes** (C4 closure 2026-11-14, knock-down line; CR-C4-41's floor of 1 100 is below it). C4's model value after D3 R8
+is **2 950 N·m/rad** (`ASM-C4-MOUNT-K-ROCK`, × 1.16 of the pass level; 3 321 at the nominal ASA). C4's claim file is stale until C4 re-runs, so the card reads the closure line. C4's readout
 (two 0.01 mm dial gauges at 0.5 kg) sees 5.2 µm at the pass stiffness, under one division (`CL-H1-MSTIFF-DIAL-UM`),
 so GT-17 uses an optical lever (CR-H1-10).
 
@@ -549,8 +574,8 @@ so GT-17 uses an optical lever (CR-H1-10).
 
 | Pass | Limit | Claim |
 |---|---|---|
-| Net spot travel at 1.7 kg, y and z | ≤ **5.56 mm** (5.86 mm at 1 642 N·m/rad − 0.3 mm read) | `CL-H1-MSTIFF-SPOT-ACCEPT` → `CL-H1-MSTIFF-K-PASS` = `CL-C4-D3-MOUNT-K-REQ` |
-| k uncertainty at the pass line | 5.1 % (≤ 10 %) | `CL-H1-MSTIFF-U` |
+| Net spot travel at 1.7 kg, y and z | ≤ **3.90 mm** (4.2 mm at 2 548 N·m/rad − 0.3 mm read; arm a from the new mount stations) | `CL-H1-MSTIFF-SPOT-ACCEPT` → `CL-H1-MSTIFF-K-PASS` |
+| k uncertainty at the pass line | 7.1 % (≤ 10 %) | `CL-H1-MSTIFF-U` |
 | `T-C6-CANT-SEAT` | ≥ 6 turns from first bite; 0.05 mm feeler does not enter | C6 |
 | `T-C6-PROPNUT`: 1.5 N·m on/off × 10 | witness line and lip cap unmoved | C6 |
 
@@ -609,7 +634,7 @@ poster PNG; autoplay-muted-loop with controls.
 
 Bought new for ground test: I1 lines `G12` $17.00 (1 kgf bar cell + HX711, 5 K-type probes) and `G13` $9.00 (foil
 gauges + cyanoacrylate kit, CR-C4-38): $26.00, $6 over the D-39 $20 line (`CL-I1-GROUNDTEST-BOUGHT`; A1's decision).
-Already in the baseline BOM: `G04` watt meter, `G05` IR thermometer, `G06` 20 kgf cell + HX711 + Nano, `B04` 11×4.5MR
+Already in the baseline BOM: `G04` watt meter, `G05` IR thermometer, `G06` 20 kgf cell + HX711 + Nano, `B04` 11×4.5MR (deleted R7)
 props. Everything else is borrowed.
 
 **Jacobs Maker Pass (rewritten 2026-11-13, `T-I1-BORROW`).** The owner pays the Maker Pass outside the budget. It is drop-in, in-lab access, not equipment loans

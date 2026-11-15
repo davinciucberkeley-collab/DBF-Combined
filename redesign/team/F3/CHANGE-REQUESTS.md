@@ -35,3 +35,10 @@
 |---|---|---|---|
 | CR-F3-22 | F2, A4 | Avionics now acknowledges `E-HRN-22`…`32`. Each was checked against AVIONICS.md §5.1: outputs 1–4 DShot300 bidir (LR/UL/LL/UR), 5/6 elevons, SERIAL5 GPS + I2C1, SERIAL6 CRSF, airspeed Y-branch 0x28. The I²C total of 0.461 m is ≤ 0.5 m (`CL-F2-I2C-LEN`). F2: if `T-F3-ARRIVAL` finds the output pads and Vx on the CoreWing power board, re-end `E-HRN-22` and `-24`…`-29` on `PWR-003` (CR-F1-29). F3 reports this on arrival | merge_check one-sided warnings 12 → 0 |
 | CR-F3-23 | D7, F5, A4 | `E-TRN-21` acknowledged (answers CR-D7-20). The boom is 0.115 m × 10 mm in the 220 × 25 mm slot (`CL-F3-BOOM-STOW-L` +48 %, `-W` +60 %); 4.84 g, below D7's 10 g load basis. `E-AVN-09` moved from `edges_pending` to `edges` now that F5 declares `GND-001` (closes CR-F3-18's pending note) | clears "ground acknowledges an edge nobody declares" |
+
+## Closure round 2026-11-14 (option C evaluation, `review/CLOSURE-ROUND-2026-11-14/F3.md`)
+
+| Id | To | What | Why (numbers) |
+|---|---|---|---|
+| CR-F3-24 | A1, I1, D2, F1, F2, F4, A3 | **Only if A1 picks option C (CR-F4-42):** replace the CoreWing F405 Wing V2 (`AVN-001` + `PWR-003`) with the Holybro Kakute H743-Wing (Plane 4.7.2 `KakuteH7-Wing`, Lua enabled), on the `PWR-006` deck seat on 4 × 7.6 mm gel cubes. Each role's exact items are in F3.md §7 | Lua yes; bidirectional DShot 1–4 (TIM1); 90 A sense ≥ 73.2 A; servo BEC 6 A ≥ 5.6 A (+7 %); +$39.15 to +$79.33 with tax; −9.1 g `EST` (+7.5 g pessimistic); CG +0.18 mm aft. SpeedyBee F405 Wing fails (no Lua, 4.5 A BEC); Matek H743-WING V3 / H7A3-WING discontinued, H743-WLITE EOL (fallback) |
+| CR-F3-47 | A1, A3, D2, F1, F2, F4, I1 | D-173b (2026-11-14) reverses D-161c: CR-F3-24 is void and CR-F3-40...46 are withdrawn. CoreWing F405 Wing APP V2 FC back in the right channel on 4 x 5 mm gel cubes, power board `PWR-003` back on the deck. Avionics 35.42 g CAD; allocation 36 g unchanged. D2: un-retire the right-channel FC tray keys and retire `fc_seat_m` / `usb_spot_m` (F3.md "D-173b revert") | No Lua needed: fixed `Q_M_SPIN_MAX` 0.81 with the X2814 V3 (A1 D-173b) |

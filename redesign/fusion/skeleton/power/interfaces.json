@@ -23,10 +23,10 @@
    "name": "Disconnect, main leads, UBEC (lump)",
    "subsystem": "power",
    "status": "MODELLED",
-   "mass_g": 77.0,
+   "mass_g": 76.0,
    "material": "copper + PVC",
    "cg_xyz_m": [
-    -0.125,
+    -0.132,
     0.0,
     0.028
    ],

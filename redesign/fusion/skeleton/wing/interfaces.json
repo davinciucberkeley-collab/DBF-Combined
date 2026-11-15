@@ -8,7 +8,7 @@
    "name": "Wing core (one piece, elevons cut out)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 273.0,
+   "mass_g": 271.0,
    "material": "XPS foam F-250 + packing-tape skin",
    "cg_xyz_m": [
     0.1182,
@@ -24,7 +24,7 @@
    "subsystem": "wing",
    "status": "MODELLED",
    "mass_g": 102.0,
-   "material": "CF tube 22x20 (bought)",
+   "material": "CF tube (bought)",
    "cg_xyz_m": [
     0.08,
     0.0,

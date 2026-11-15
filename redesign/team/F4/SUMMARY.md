@@ -1,5 +1,7 @@
 # F4 — flight-control software
 
+**R7, 2026-11-14 (design round, wave 2).** `Q_M_BAT_CURR_MAX` 100 → 70 (D-148), `BATT_CAPACITY` 6 500 → 5 980 placeholder and `BATT_LOW_MAH` 2 600 → 2 700 (D-154), `Q_WVANE_LAND` 3 → 1 belly into wind plus `Q_WVANE_HGT_MIN` / `VELZ_MAX` / `SPD_MAX` 0 (D-152), forward-transition entry procedure and SITL S4c (D-149), S21 landing heading. `CL-F4-BATT-LOW` now reads `CL-E2-BATT-LOW-MAH-V17`. Report: `review/DESIGN-ROUND-2026-11-14/F4-W2.md`.
+
 **R6, 2026-11-13 (CDR fix round, stream S3; CDR-07, -14, -15, -16, -26).** `K09L.param` is now 158 parameters; every name is in
 ArduPilot's published 4.7.1 Plane list (`ap_plane_param_names_4.7.1.txt`, checked offline by `fsw_check.py`) and 156 were read back in
 SITL. The "88 of 155 unmatched" were unchecked, not wrong: three real name faults were found (`FS_SHORT_TIMEOUT` removed in 4.7, the six

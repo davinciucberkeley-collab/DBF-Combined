@@ -3,7 +3,8 @@
  "generated_by": "redesign/team/C5/landing_sim_claims.py",
  "params": [
   "../../params/params.json",
-  "../../subsystems/landing/params.json"
+  "../../subsystems/landing/params.json",
+  "../../subsystems/flight-software/params.json"
  ],
  "nodes": [
   {
@@ -11,8 +12,8 @@
    "type": "assumption",
    "title": "3-D sim: worst stroke, 10 deg envelope, gate mass",
    "text": "Largest foot stroke in the design landing (sink requirements.landing_sink_ms, lift 2/3 W) over every touchdown tilt <= 10 deg in any direction (2.5 deg x 24 azimuths), at the 2.6 kg gate mass (A3-R6a inertia scaled), CG at the D-62 target",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 928 s run, sink 1.2 m/s); dt 40 us, dt ladder to 5 us changes it by 0.007 mm",
-   "value": 0.02524438816663292,
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 592 s run, sink 1.2 m/s); dt 40 us, dt ladder to 5 us changes it by 0.008 mm",
+   "value": 0.02699735846752187,
    "unit": "m",
    "status": "PROPOSED"
   },
@@ -21,8 +22,8 @@
    "type": "assumption",
    "title": "3-D sim: worst stroke, pitch-only or roll-only",
    "text": "As ASM-C5-SIM3D-STROKE, touchdown tilt about one stance axis only (the planar model's cases)",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 928 s run, sink 1.2 m/s)",
-   "value": 0.02378191340839332,
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 592 s run, sink 1.2 m/s)",
+   "value": 0.024842950373789766,
    "unit": "m",
    "status": "PROPOSED"
   },
@@ -31,8 +32,8 @@
    "type": "assumption",
    "title": "3-D sim: worst stroke at the A3 basic mass",
    "text": "As ASM-C5-SIM3D-STROKE at the as-designed A3-R6a basic mass 2.322 kg",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 928 s run, sink 1.2 m/s)",
-   "value": 0.02303919347589645,
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 592 s run, sink 1.2 m/s)",
+   "value": 0.022998153766763636,
    "unit": "m",
    "status": "PROPOSED"
   },
@@ -41,7 +42,7 @@
    "type": "assumption",
    "title": "3-D sim: tilt that uses up the stroke",
    "text": "Smallest touchdown tilt magnitude (2.5 deg steps, any direction, design sink, gate mass) at which a foot passes the usable stroke; when no case inside the 10 deg envelope bottoms, the largest tilt simulated (10 deg)",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 928 s run, sink 1.2 m/s)",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 592 s run, sink 1.2 m/s)",
    "value": 10.000000000000002,
    "unit": "deg",
    "status": "PROPOSED"
@@ -61,8 +62,8 @@
    "type": "assumption",
    "title": "3-D sim: peak load factor, level, A3 basic mass",
    "text": "Peak crusher force on the airframe / weight, level design landing at the as-designed A3-R6a basic mass with the 550 g pack",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 928 s run, sink 1.2 m/s)",
-   "value": 6.345985312209709,
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 592 s run, sink 1.2 m/s)",
+   "value": 6.510910888398161,
    "unit": "-",
    "status": "PROPOSED"
   },
@@ -71,8 +72,8 @@
    "type": "assumption",
    "title": "3-D sim: peak load factor, level, lightest flying mass",
    "text": "As ASM-C5-SIM3D-N at A3-R6a basic with the D-64 546 g pack (the lightest flying mass; the crush plateau is fixed, so n rises as the mass falls)",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 928 s run, sink 1.2 m/s); m = 2.4053 kg",
-   "value": 6.356538472635334,
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 592 s run, sink 1.2 m/s); m = 2.4803 kg",
+   "value": 6.164405744810153,
    "unit": "-",
    "status": "PROPOSED"
   },
@@ -81,8 +82,8 @@
    "type": "assumption",
    "title": "3-D sim: peak load factor anywhere in the envelope, lightest mass",
    "text": "Largest CG load factor over the whole 10 deg envelope at the lightest mass (tilted cases included)",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 928 s run, sink 1.2 m/s)",
-   "value": 6.427610064328757,
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 592 s run, sink 1.2 m/s)",
+   "value": 6.235363180466068,
    "unit": "-",
    "status": "PROPOSED"
   },
@@ -91,8 +92,8 @@
    "type": "assumption",
    "title": "3-D sim: sustained foot side load at the design sink",
    "text": "Largest transverse (side) load on one foot, 1 ms filtered, over every design-envelope case (4 masses), every sink-sweep row at or below the design sink and every drift-sweep row (0.3 m/s drift, 10 deg) that stays inside the usable stroke, pad mu = ASM-D5-PAD-MU (0.40, D-105)",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 928 s run, sink 1.2 m/s) + sim/out/drift_sweep.json; without drift 24.11 N; sink sweep to 1.3 m/s 24.12 N; the unfiltered peak includes the 0.2 ms piston-mass impact on the pad (26.0 N)",
-   "value": 24.28056248705196,
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 592 s run, sink 1.2 m/s) + sim/out/drift_sweep.json; without drift 24.11 N; sink sweep to 1.3 m/s 24.12 N; the unfiltered peak includes the 0.2 ms piston-mass impact on the pad (25.9 N)",
+   "value": 24.277498137283033,
    "unit": "N",
    "status": "PROPOSED"
   },
@@ -101,8 +102,8 @@
    "type": "assumption",
    "title": "3-D sim: sustained foot side load, pad mu 0.5",
    "text": "As ASM-C5-SIM3D-SIDE over the gate-mass 10 deg envelope with a pad face of mu 0.5 on the landing mat",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 928 s run, sink 1.2 m/s); governing single case re-run in side_check.py: 28.8 N",
-   "value": 28.824389101386522,
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 592 s run, sink 1.2 m/s); governing single case re-run in side_check.py: 28.8 N",
+   "value": 28.833996456230132,
    "unit": "N",
    "status": "PROPOSED"
   },
@@ -111,8 +112,8 @@
    "type": "assumption",
    "title": "3-D sim: sustained foot side load, bare neoprene pad mu 0.7",
    "text": "As ASM-C5-SIM3D-SIDE over the gate-mass 10 deg envelope with mu 0.7 (the D-65 basis: no low-friction pad face, or a face that has worn through)",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 928 s run, sink 1.2 m/s); stroke 35.1 mm; governing single case re-run in side_check.py: 38.6 N",
-   "value": 38.92832855257923,
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 592 s run, sink 1.2 m/s); stroke 37.7 mm; governing single case re-run in side_check.py: 38.7 N",
+   "value": 38.91378280942994,
    "unit": "N",
    "status": "PROPOSED"
   },
@@ -121,7 +122,7 @@
    "type": "assumption",
    "title": "3-D sim: wingtip strike onset tilt",
    "text": "Smallest touchdown tilt (design sink, any direction, any mass) at which the wingtip TE corner reaches the ground",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 928 s run, sink 1.2 m/s) (wingtip contact itself not modelled: the corner cap GER-007 takes it)",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 592 s run, sink 1.2 m/s) (wingtip contact itself not modelled: the corner cap GER-007 takes it)",
    "value": 10.0,
    "unit": "deg",
    "status": "PROPOSED"
@@ -131,18 +132,99 @@
    "type": "assumption",
    "title": "3-D sim: broadside landing wind limit",
    "text": "Largest wind (0.5 m/s steps) for which a touchdown tilted by the hover lean + 10 deg toward the narrow pod-side pad line, drifting 0.3 m/s toward it, does not tip; wind gone at touchdown (lull), sink 0.5 m/s and the design sink, A3 basic mass",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 928 s run, sink 1.2 m/s)",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 592 s run, sink 1.2 m/s)",
    "value": 4.5,
    "unit": "m/s",
    "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C5-SIM3D-V-HEADING",
+   "type": "assumption",
+   "title": "3-D sim: landing wind limit by heading",
+   "text": "Rows [lean azimuth deg, lull limit m/s, all-modes limit m/s]: largest wind (0.1 m/s steps, 3.5-7.0) for which a touchdown tilted by the hover lean + 10 deg toward the azimuth (0 = pod (+z) face to the wind, 90 = wingtip, 180 = belly (-z) face), drifting 0.3 m/s the same way, does not tip; lull = wind gone at touchdown (the claim's case), all = lull and steady; sink 0.5 m/s and the design sink, A3 basic mass; the lean uses the full broadside area at every azimuth (conservative off the broadside)",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 592 s run, sink 1.2 m/s) section 3b (C5-W2); 7.0 = top of the sweep",
+   "value": [
+    [
+     0.0,
+     4.6,
+     4.6
+    ],
+    [
+     30.0,
+     5.0,
+     5.0
+    ],
+    [
+     60.0,
+     7.0,
+     6.7
+    ],
+    [
+     90.0,
+     6.6,
+     6.6
+    ],
+    [
+     120.0,
+     7.0,
+     6.5
+    ],
+    [
+     150.0,
+     5.6,
+     5.3
+    ],
+    [
+     180.0,
+     5.2,
+     4.9
+    ],
+    [
+     210.0,
+     5.5,
+     5.4
+    ],
+    [
+     240.0,
+     7.0,
+     6.5
+    ],
+    [
+     270.0,
+     6.7,
+     6.7
+    ],
+    [
+     300.0,
+     7.0,
+     6.6
+    ],
+    [
+     330.0,
+     5.0,
+     5.0
+    ]
+   ],
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C5-HEADING-ERR",
+   "type": "assumption",
+   "title": "Touchdown heading error 30 deg",
+   "text": "Largest error of the touchdown heading about the one Q_WVANE_LAND commands, wind 5 m/s",
+   "basis": "F4-W2.md SITL S21 pass line (belly within +/-30 deg of the wind from 6 m to land-detect); not run yet; twin logs (C5 M2) replace it",
+   "value": 30.0,
+   "unit": "deg",
+   "status": "UNVERIFIED"
   },
   {
    "id": "ASM-C5-SIM3D-V-SPANWISE",
    "type": "assumption",
    "title": "3-D sim: span-into-wind landing wind limit",
    "text": "As ASM-C5-SIM3D-V-BROADSIDE, lean and error toward a wide (fin) pad line",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 928 s run, sink 1.2 m/s) (12 m/s is the top of the sweep)",
-   "value": 8.5,
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 592 s run, sink 1.2 m/s) (12 m/s is the top of the sweep)",
+   "value": 8.0,
    "unit": "m/s",
    "status": "PROPOSED"
   },
@@ -151,7 +233,7 @@
    "type": "assumption",
    "title": "3-D sim: drift cases that tip",
    "text": "Number of the 128 drift cases (0.3 m/s, 8 directions x 8 tilts of 10 deg x 2 sinks) that tip over",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 928 s run, sink 1.2 m/s)",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 592 s run, sink 1.2 m/s)",
    "value": 0.0,
    "unit": "-",
    "status": "PROPOSED"
@@ -161,7 +243,7 @@
    "type": "assumption",
    "title": "3-D sim: sink speed limit at 10 deg with 0.3 m/s drift",
    "text": "Largest sink speed (0.05 m/s steps, 0.9-1.2) at which a 10 deg touchdown (8 attitudes) drifting 0.3 m/s in 8 directions stays inside the usable stroke, gate mass",
-   "basis": "sim/out/drift_sweep.json (sim/drift_sweep.py, C5-R6): 1.2 m/s gives 28.7 mm at the gate, 28.0 mm at A3 predicted",
+   "basis": "sim/out/drift_sweep.json (sim/drift_sweep.py, C5-R6): 1.2 m/s gives 28.7 mm at the gate, 28.4 mm at A3 predicted",
    "value": 1.2,
    "unit": "m/s",
    "status": "PROPOSED"
@@ -171,7 +253,7 @@
    "type": "assumption",
    "title": "3-D sim: free-drop height for the 10 deg corner drop",
    "text": "Largest pad-to-floor free-drop height (no rotor lift, 5 mm steps) at which a 10 deg touchdown in any of 24 directions stays inside the usable stroke, gate mass",
-   "basis": "sim/out/test_height.json (sim/test_height.py, C5-R6): 50 mm gives 28.1 mm, 55 mm 29.4 mm",
+   "basis": "sim/out/test_height.json (sim/test_height.py, C5-R6): 50 mm gives 28.0 mm, 55 mm 29.2 mm",
    "value": 0.0734,
    "unit": "m",
    "status": "PROPOSED"
@@ -191,21 +273,21 @@
    "type": "assumption",
    "title": "3-D sim: input snapshot",
    "text": "Input values the simulation ran with, in the order of the CALC-C5-SIM-STALE inputs",
-   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 928 s run, sink 1.2 m/s)",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py C5-R6, 592 s run, sink 1.2 m/s)",
    "value": [
-    2.6,
-    2.4093400000000003,
-    2.5395342999999997,
+    2.7,
+    2.3483100000000006,
+    2.4795479,
     39.19118,
     35.778886797385326,
-    0.038,
+    0.043,
     0.667,
     0.4,
-    0.018013065235384675,
+    0.01535900972106832,
     0.3,
-    0.10199999999999998,
+    0.11699999999999999,
     1.2,
-    0.319
+    0.324
    ],
    "unit": "-",
    "status": "PROPOSED"
@@ -338,7 +420,7 @@
     "h_t": "ASM-C5-TEST-CORNER-H",
     "side_hand": "CL-C5-FOOT-SIDE-LOAD",
     "s_hand": "CL-C5-DYN-PAIR-CUR",
-    "vb_hand": "CL-C5-V-LAND-BROADSIDE",
+    "vb_hand": "CL-C5-V-LAND-POD-FACE",
     "k_ult": "P:requirements.safety_factor_ult"
    },
    "units": {
@@ -361,54 +443,148 @@
     "vb_hand": "m/s"
    },
    "outputs": {
-    "stroke_m": 0.02524438816663292,
-    "stroke_axes_m": 0.02378191340839332,
-    "stroke_a3_m": 0.02303919347589645,
+    "stroke_m": 0.02699735846752187,
+    "stroke_axes_m": 0.024842950373789766,
+    "stroke_a3_m": 0.022998153766763636,
     "bottom_tilt_deg": 10.000000000000002,
     "v_sink_10_ms": 1.3,
-    "n": 6.345985312209709,
-    "n_light": 6.356538472635334,
-    "n_env_light": 6.427610064328757,
+    "n": 6.510910888398161,
+    "n_light": 6.164405744810153,
+    "n_env_light": 6.235363180466068,
     "side_N": 24.5,
     "side_ult_N": 36.75,
-    "side_run_N": 24.28056248705196,
-    "side_mu05_N": 28.824389101386522,
-    "side_mu05_ult_N": 43.23658365207979,
-    "side_mu07_N": 38.92832855257923,
-    "side_mu07_over_design": 1.58891136949303,
-    "side_vs_hand": 1.6242357434584473,
-    "stroke_vs_planar": 1.1701667945862577,
+    "side_run_N": 24.277498137283033,
+    "side_mu05_N": 28.833996456230132,
+    "side_mu05_ult_N": 43.2509946843452,
+    "side_mu07_N": 38.91378280942994,
+    "side_mu07_over_design": 1.5883176656910178,
+    "side_vs_hand": 1.4665369523905452,
+    "stroke_vs_planar": 1.179151244622751,
     "strike_tilt_deg": 10.0,
     "v_broadside_ms": 4.5,
-    "v_broadside_vs_hand": 1.0033510542089967,
-    "v_spanwise_ms": 8.5,
+    "v_broadside_vs_hand": 1.0066827174382458,
+    "v_spanwise_ms": 8.0,
     "drift_tips": 0.0,
     "v_sink_drift_ms": 1.2,
     "test_corner_h_m": 0.0734
    },
    "input_values": {
-    "s": 0.02524438816663292,
-    "n": 6.345985312209709,
-    "n_l": 6.356538472635334,
-    "n_env": 6.427610064328757,
-    "s_ax": 0.02378191340839332,
-    "s_a3": 0.02303919347589645,
+    "s": 0.02699735846752187,
+    "n": 6.510910888398161,
+    "n_l": 6.164405744810153,
+    "n_env": 6.235363180466068,
+    "s_ax": 0.024842950373789766,
+    "s_a3": 0.022998153766763636,
     "bt": 10.000000000000002,
     "v10": 1.3,
-    "side": 24.28056248705196,
+    "side": 24.277498137283033,
     "side_d": 24.5,
-    "side_mu": 28.824389101386522,
-    "side_mu7": 38.92832855257923,
+    "side_mu": 28.833996456230132,
+    "side_mu7": 38.91378280942994,
     "strike": 10.0,
     "vb": 4.5,
-    "vs": 8.5,
+    "vs": 8.0,
     "tips": 0.0,
     "v_dr": 1.2,
     "h_t": 0.0734,
-    "side_hand": 14.948915257431734,
-    "s_hand": 0.021573324660574322,
-    "vb_hand": 4.484970620325532,
+    "side_hand": 16.554303727368904,
+    "s_hand": 0.022895585778870298,
+    "vb_hand": 4.470127401661735,
     "k_ult": 1.5
+   }
+  },
+  {
+   "id": "CALC-C5-SIM3D-HEADING",
+   "type": "calculation",
+   "title": "Landing wind limit at the commanded landing heading (D-152)",
+   "script": "redesign/team/C5/landing_sim_claims.py",
+   "function": "heading",
+   "equation": "Q_WVANE_LAND -> headings: 1 nose (belly, lean azimuth 180), 2 nose or tail (180, 0), 3 side (90, 270), 4 tail (0), 0 / -1 no weathervane (every azimuth) ; azimuths used = each heading +/- err (the sim grid is 30 deg) ; limit = min lull limit over them ; all-modes and pod-face (azimuth 0) values are reported",
+   "inputs": {
+    "wv": "P:fsw.wvane_land",
+    "tab": "ASM-C5-SIM3D-V-HEADING",
+    "err": "ASM-C5-HEADING-ERR"
+   },
+   "units": {
+    "err": "deg"
+   },
+   "outputs": {
+    "v_land_heading_ms": 5.2,
+    "v_land_heading_all_ms": 4.9,
+    "v_pod_face_ms": 4.6,
+    "v_pod_face_all_ms": 4.6,
+    "v_heading_exact_ms": 5.2,
+    "azimuths_deg": [
+     150,
+     180,
+     210
+    ]
+   },
+   "input_values": {
+    "wv": 1,
+    "tab": [
+     [
+      0.0,
+      4.6,
+      4.6
+     ],
+     [
+      30.0,
+      5.0,
+      5.0
+     ],
+     [
+      60.0,
+      7.0,
+      6.7
+     ],
+     [
+      90.0,
+      6.6,
+      6.6
+     ],
+     [
+      120.0,
+      7.0,
+      6.5
+     ],
+     [
+      150.0,
+      5.6,
+      5.3
+     ],
+     [
+      180.0,
+      5.2,
+      4.9
+     ],
+     [
+      210.0,
+      5.5,
+      5.4
+     ],
+     [
+      240.0,
+      7.0,
+      6.5
+     ],
+     [
+      270.0,
+      6.7,
+      6.7
+     ],
+     [
+      300.0,
+      7.0,
+      6.6
+     ],
+     [
+      330.0,
+      5.0,
+      5.0
+     ]
+    ],
+    "err": 30.0
    }
   },
   {
@@ -440,33 +616,33 @@
    },
    "input_values": {
     "snap": [
-     2.6,
-     2.4093400000000003,
-     2.5395342999999997,
+     2.7,
+     2.3483100000000006,
+     2.4795479,
      39.19118,
      35.778886797385326,
-     0.038,
+     0.043,
      0.667,
      0.4,
-     0.018013065235384675,
+     0.01535900972106832,
      0.3,
-     0.10199999999999998,
+     0.11699999999999999,
      1.2,
-     0.319
+     0.324
     ],
-    "m_gate": 2.6,
-    "m_a3": 2.4093400000000003,
-    "m_pred": 2.5395342999999997,
+    "m_gate": 2.7,
+    "m_a3": 2.3483100000000006,
+    "m_pred": 2.4795479,
     "F_up": 39.19118,
     "F_lo": 35.778886797385326,
-    "s_av": 0.038,
+    "s_av": 0.043,
     "lam": 0.667,
     "mu": 0.4,
-    "z_cg": 0.018013065235384675,
+    "z_cg": 0.01535900972106832,
     "v_td": 0.3,
-    "L_cart": 0.10199999999999998,
+    "L_cart": 0.11699999999999999,
     "v_sink": 1.2,
-    "x_cg_h": 0.319
+    "x_cg_h": 0.324
    }
   },
   {
@@ -492,21 +668,21 @@
     "allow": "Pa"
    },
    "outputs": {
-    "sigma_hand_MPa": 69.45351341911818,
-    "sf_hand": 0.3383558130196946,
+    "sigma_hand_MPa": 76.9122398698048,
+    "sf_hand": 0.3055430454213821,
     "sigma_design_MPa": 113.82839821253606,
     "sf_design": 0.20645111737513597,
-    "sf_d5_beam": 1.200371795200472,
+    "sf_d5_beam": 1.2589027189620212,
     "side_capacity_N": 5.058052375690831
    },
    "input_values": {
     "k": 0.9577398345845318,
     "lever": 3.234042553191489,
     "side_d": 24.5,
-    "side_hand": 14.948915257431734,
+    "side_hand": 16.554303727368904,
     "k_ult": 1.5,
     "allow": 23500000.0,
-    "sf_d5": 1.200371795200472
+    "sf_d5": 1.2589027189620212
    }
   },
   {
@@ -539,8 +715,8 @@
     "sigma_design_MPa": 23.06595313086744,
     "rf_design": 1.0188176428986022,
     "rf_design_gci": 1.0164917057679697,
-    "rf_run": 1.028025288307331,
-    "rf_mu05": 0.8659691680964392,
+    "rf_run": 1.028155047520445,
+    "rf_mu05": 0.8656806311572688,
     "side_capacity_N": 24.961032251015755,
     "side_ult_N": 36.75,
     "sigma_edge_MPa": 47.49538163014767,
@@ -550,8 +726,8 @@
     "k": 0.2853793654516761,
     "lever": 2.199335548172757,
     "side_d": 24.5,
-    "side_run": 24.28056248705196,
-    "side_mu": 28.824389101386522,
+    "side_run": 24.277498137283033,
+    "side_mu": 28.833996456230132,
     "k_ult": 1.5,
     "allow": 23500000.0,
     "gci": 0.0022882007963609063,
@@ -588,8 +764,8 @@
     "sigma_design_MPa": 18.493058116281798,
     "rf_design": 1.2707471015467124,
     "rf_design_gci": 1.265438513206856,
-    "rf_run": 1.2822315794577182,
-    "rf_mu05": 1.0801028212041748,
+    "rf_run": 1.2823934250491378,
+    "rf_mu05": 1.0797429359178379,
     "side_capacity_N": 31.133303987894454,
     "side_ult_N": 36.75,
     "sigma_edge_MPa": 25.584888899526472,
@@ -599,8 +775,8 @@
     "k": 0.22880204258383469,
     "lever": 2.199335548172757,
     "side_d": 24.5,
-    "side_run": 24.28056248705196,
-    "side_mu": 28.824389101386522,
+    "side_run": 24.277498137283033,
+    "side_mu": 28.833996456230132,
     "k_ult": 1.5,
     "allow": 23500000.0,
     "gci": 0.0041950583014921956,
@@ -641,7 +817,7 @@
    ],
    "how": "T-C5-AIRCRAFT-DROP corner drops (tilted board), flange-to-rim gap before and after.",
    "note": "C5-R6: 1.2 m/s (D-65) with the D-62 CG; 0.1 mm inside the usable stroke at the 2.6 kg gate, 2.4 mm at A3's predicted 2.436 kg. Cross-checks CL-C5-DYN-PAIR-CUR (planar) with 6 DOF, friction, combined pitch + roll and pad edges",
-   "value": 0.02524438816663292
+   "value": 0.02699735846752187
   },
   {
    "id": "CL-C5-SIM3D-N",
@@ -677,7 +853,7 @@
    ],
    "how": "T-C5-AIRCRAFT-DROP accelerometer at the CG, 100 Hz low-pass, at the weighed mass.",
    "note": "n = 4 x 37.5 N / (2.32 kg g) = 6.59, set by the crush plateau, not by the sink speed (D-65 raised landing_n_design to 6.6)",
-   "value": 6.345985312209709
+   "value": 6.510910888398161
   },
   {
    "id": "CL-C5-SIM3D-N-LIGHT",
@@ -713,7 +889,7 @@
    ],
    "how": "T-C5-AIRCRAFT-DROP at the lightest weighed configuration.",
    "note": "the D-64 lightest pack takes 4 g off A3-R6a basic: n reaches the 6.6 limit to the second decimal. Holds only while the flying mass stays >= 2.317 kg; the R5 additions (about +21 g, ASM-A1-R5-ADDED-G) give about 0.06 back",
-   "value": 6.356538472635334
+   "value": 6.164405744810153
   },
   {
    "id": "CL-C5-SIM3D-N-ENV",
@@ -745,7 +921,7 @@
     "GER-008-LL"
    ],
    "how": "As CL-C5-SIM3D-N-LIGHT, tilted drops.",
-   "value": 6.427610064328757
+   "value": 6.235363180466068
   },
   {
    "id": "CL-C5-SIM3D-STROKE-AXES",
@@ -777,7 +953,7 @@
     "GER-008-LL"
    ],
    "how": "T-C5-AIRCRAFT-DROP pitch and roll drops.",
-   "value": 0.02378191340839332
+   "value": 0.024842950373789766
   },
   {
    "id": "CL-C5-SIM3D-STROKE-A3",
@@ -809,7 +985,7 @@
     "GER-008-LL"
    ],
    "how": "As CL-C5-SIM3D-STROKE at the weighed mass.",
-   "value": 0.02303919347589645
+   "value": 0.022998153766763636
   },
   {
    "id": "CL-C5-SIM3D-BOTTOM-TILT",
@@ -844,7 +1020,7 @@
     "GER-008-LL"
    ],
    "how": "T-C5-AIRCRAFT-DROP corner drop at 10 deg diagonal at the 1.2 m/s-equivalent height (run on the rig first).",
-   "note": "C5-R6 at 1.2 m/s: no case inside the 10 deg envelope reaches the usable stroke (value = largest tilt simulated); at 1.5 m/s it was 5.0 deg (C5-S1)",
+   "note": "C5-R6 at 1.2 m/s: no case inside the 10 deg envelope reaches the usable stroke, so the value is the top of the sweep (10 deg), NOT a stroke used up at 10 deg; the stroke margin is CL-C5-SIM3D-STROKE (about 10 mm at the gate) and the mass capacity CL-C5-SIM3D-MASS-MAX (C5 closure 2026-11-14 corrects the A2 / D-160 reading); at 1.5 m/s it was 5.0 deg (C5-S1)",
    "value": 10.000000000000002
   },
   {
@@ -971,7 +1147,7 @@
    ],
    "how": "As CL-C5-SIM3D-SIDE-LOAD.",
    "note": "the scrub load saturates near mu x plateau + a tilt component, so it barely depends on the sink speed and is not proportional to mu: 24.3 N at mu 0.40, 28.8 N at 0.5, 38.9 N at 0.7",
-   "value": 24.28056248705196
+   "value": 24.277498137283033
   },
   {
    "id": "CL-C5-SIM3D-SIDE-MU05",
@@ -1000,7 +1176,7 @@
    ],
    "how": "T-D5-PAD-MU on the chosen pad face and the landing mat (incline, 5 repeats).",
    "note": "record, no limit: what the side load becomes if the pad face misses the D-105 target by 0.1",
-   "value": 28.824389101386522
+   "value": 28.833996456230132
   },
   {
    "id": "CL-C5-SIM3D-SIDE-MU05-ULT",
@@ -1028,7 +1204,7 @@
     "GER-008-LL"
    ],
    "how": "T-D5-SIDE.",
-   "value": 43.23658365207979
+   "value": 43.2509946843452
   },
   {
    "id": "CL-C5-SIM3D-SIDE-MU07",
@@ -1057,7 +1233,7 @@
    ],
    "how": "Pre-flight: pad face present and unworn on all four feet.",
    "note": "record, no limit: the D-65 case. A pad that has lost its low-friction face puts this load on a fin designed for the D-105 cap, so the pad face is a pre-flight inspection item (flight card, H3)",
-   "value": 38.92832855257923
+   "value": 38.91378280942994
   },
   {
    "id": "CL-C5-SIM3D-SIDE-MU07-RATIO",
@@ -1086,7 +1262,7 @@
    ],
    "how": "As CL-C5-SIM3D-SIDE-MU07.",
    "note": "above the 1.5 ultimate factor: a landing at 1.2 m/s and 10 deg on bare neoprene is past the fin's ultimate design load",
-   "value": 1.58891136949303
+   "value": 1.5883176656910178
   },
   {
    "id": "CL-C5-SIM3D-STRIKE-TILT",
@@ -1110,9 +1286,9 @@
   {
    "id": "CL-C5-SIM3D-V-BROADSIDE",
    "type": "claim",
-   "title": "3-D sim broadside landing wind limit",
-   "calc": "CALC-C5-SIM3D",
-   "output": "v_broadside_ms",
+   "title": "3-D sim landing wind limit at the commanded landing heading (Q_WVANE_LAND +/- 30 deg)",
+   "calc": "CALC-C5-SIM3D-HEADING",
+   "output": "v_land_heading_ms",
    "unit": "m/s",
    "limit": {
     "op": ">=",
@@ -1121,9 +1297,31 @@
    "verifies": [
     "R-WIND"
    ],
-   "how": "Landing practice in measured wind (H2), anemometer; count tip-overs.",
-   "note": "dynamic re-check of CL-C5-V-LAND-BROADSIDE (static, pivot stuck): crushing feet, friction, sink. FAILS: land with a wingtip into the wind (CR-C5-05, rule S1)",
-   "value": 4.5
+   "how": "SITL S21 heading hold; landing practice in measured wind (H2), anemometer, heading logged; count tip-overs.",
+   "note": "C5-W2 (D-152): lull limit at the heading fsw.wvane_land sets (1 = belly into the wind), worst of the heading and +/- 30 deg; was the pod-face-to-wind case (4.5 m/s, now CL-C5-SIM3D-V-POD-FACE). Conditions: F4 SITL S21, B3 weathervane stability, H3 card 'land belly into the wind, never pod face to the wind'",
+   "value": 5.2
+  },
+  {
+   "id": "CL-C5-SIM3D-V-HEADING-ALL",
+   "type": "claim",
+   "title": "3-D sim landing wind limit at the commanded heading, lull and steady (information)",
+   "calc": "CALC-C5-SIM3D-HEADING",
+   "output": "v_land_heading_all_ms",
+   "unit": "m/s",
+   "how": "As above.",
+   "note": "C5-W2: includes the steady-wind modes; the claim's definition is the lull",
+   "value": 4.9
+  },
+  {
+   "id": "CL-C5-SIM3D-V-POD-FACE",
+   "type": "claim",
+   "title": "3-D sim landing wind limit, pod (+z) face to the wind (information)",
+   "calc": "CALC-C5-SIM3D-HEADING",
+   "output": "v_pod_face_ms",
+   "unit": "m/s",
+   "how": "H3 flight card.",
+   "note": "C5-W2 (D-152): information row, no limit; flight-card rule: abort and re-orient if the pod faces the wind",
+   "value": 4.6
   },
   {
    "id": "CL-C5-SIM3D-V-SPANWISE",
@@ -1140,7 +1338,7 @@
     "R-WIND"
    ],
    "how": "As above, wingtip into the wind.",
-   "value": 8.5
+   "value": 8.0
   },
   {
    "id": "CL-C5-SIM3D-DRIFT-TIPS",
@@ -1276,7 +1474,7 @@
    ],
    "how": "As CL-C5-FEA-SHOE-SF.",
    "note": "record, no limit: off-design (pad face missing its D-105 target by 0.1), on the C6 in-plane value 23.5 MPa; below 1, so the pad face is an acceptance item (T-D5-PAD-MU) and a pre-flight check",
-   "value": 0.8659691680964392
+   "value": 0.8656806311572688
   },
   {
    "id": "CL-C5-FEA-SHOE-SF-EDGE",
@@ -1384,7 +1582,7 @@
    ],
    "how": "None: superseded.",
    "note": "C5-S1 record (0.38 at D5's 34.4 N ult basis); the live CL-C5-FOOT-SIDE-LOAD moves with the sink speed, so this re-computes; superseded by D-65",
-   "value": 0.3383558130196946
+   "value": 0.3055430454213821
   },
   {
    "id": "CL-C5-FEA-SIDE-CAPACITY",
@@ -1401,6 +1599,234 @@
    ],
    "how": "None: superseded.",
    "value": 5.058052375690831
+  },
+  {
+   "id": "ASM-C5-SIM3D-SET-NORMAL",
+   "type": "assumption",
+   "title": "3-D sim: worst-foot permanent set of one level 0.5 m/s touchdown",
+   "text": "Permanent set of the most loaded foot after one level normal touchdown (ASM-D5-NORMAL-SINK) at the gate mass, low plateau (x0.90 of ASM-D5-CART-PLATEAU, the ~10 % band), D5 set convention (s_max - eps_y L/4 - eps_e L/2)",
+   "basis": "team/C5/cr1114/out/cart_life.json (cr1114/cart_life.py, 3-D sim, plateau x0.90, gate 2.700 kg, mark 6.0 mm); nominal plateau 1.76 mm; a 2.5 deg touchdown 4.80 mm",
+   "value": 0.002034785950186713,
+   "unit": "m",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C5-SIM3D-HARD-WORN",
+   "type": "assumption",
+   "title": "3-D sim: hard-landing stroke from a cartridge worn to the mark",
+   "text": "Worst stroke of the 1.2 m/s / 10 deg envelope at the gate mass, low plateau, starting from a cartridge worn to the replace mark plus one normal set (stance that much lower)",
+   "basis": "team/C5/cr1114/out/cart_life.json (cr1114/cart_life.py, 3-D sim, plateau x0.90, gate 2.700 kg, mark 6.0 mm)",
+   "value": 0.02975741632762148,
+   "unit": "m",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C5-CART-LIFE-INPUTS",
+   "type": "assumption",
+   "title": "Cartridge-life record: input snapshot",
+   "text": "gate mass, replace mark, flange gap, cartridge length the cart_life.py record ran with",
+   "basis": "team/C5/cr1114/out/cart_life.json (cr1114/cart_life.py, 3-D sim, plateau x0.90, gate 2.700 kg, mark 6.0 mm)",
+   "value": [
+    2.7,
+    0.006,
+    0.043,
+    0.11699999999999999
+   ],
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-C5-CART-LIFE",
+   "type": "calculation",
+   "title": "Cartridge life and honest replace mark (3-D set, sortie rule)",
+   "script": "redesign/team/C5/landing_sim_claims.py",
+   "function": "cart_life",
+   "equation": "landings = mark / set_n ; honest margin = (s_av - guard) - mark - set_n - hard (a foot just short of its mark flies a sortie: one normal touchdown, then the hard landing) ; stale = inputs that differ from the record",
+   "inputs": {
+    "set_n": "ASM-C5-SIM3D-SET-NORMAL",
+    "hard": "ASM-C5-SIM3D-HARD-WORN",
+    "mark": "P:landing.piston.replace_mark_m",
+    "s_av": "CL-D5-STROKE-AVAIL",
+    "guard": "ASM-C5-DROP-GUARD",
+    "snap": "ASM-C5-CART-LIFE-INPUTS",
+    "m_gate": "P:requirements.mtow_gate_kg",
+    "L_cart": "CL-D5-CART-LEN"
+   },
+   "units": {
+    "set_n": "m",
+    "hard": "m",
+    "mark": "m",
+    "s_av": "m",
+    "guard": "m",
+    "m_gate": "kg",
+    "L_cart": "m"
+   },
+   "outputs": {
+    "landings": 2.948713106383223,
+    "honest_margin_m": 0.002207797722191804,
+    "stale_count": 0.0
+   },
+   "input_values": {
+    "set_n": 0.002034785950186713,
+    "hard": 0.02975741632762148,
+    "mark": 0.006,
+    "s_av": 0.043,
+    "guard": 0.003,
+    "snap": [
+     2.7,
+     0.006,
+     0.043,
+     0.11699999999999999
+    ],
+    "m_gate": 2.7,
+    "L_cart": 0.11699999999999999
+   }
+  },
+  {
+   "id": "CL-C5-LANDINGS-PER-CARTRIDGE",
+   "type": "claim",
+   "title": "Normal 0.5 m/s landings before the replace mark (3-D worst-foot set)",
+   "calc": "CALC-C5-CART-LIFE",
+   "output": "landings",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "ASM-C5-TD-PER-SORTIE"
+   },
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-008-LR",
+    "GER-008-LL"
+   ],
+   "how": "H2 records the flange gap of every foot after each landing for the first 10 flights; T-D5-COUPON gives the plateau.",
+   "note": "C5 closure 2026-11-14: limit re-derived with A2 2.5 (was 5, no basis) = touchdowns per sortie (1 landing + 1 go-around touchdown); value on the 3-D worst-foot set at the low plateau (the symmetric hand value is CL-C5-LANDINGS-PER-CARTRIDGE-HAND). Passes with margin once D5 draws the C5 closure foot (stroke 43 mm, engagement 30 mm, mark 6 mm)",
+   "value": 2.948713106383223
+  },
+  {
+   "id": "CL-C5-MARK-HONEST-MARGIN",
+   "type": "claim",
+   "title": "Hard landing still fits from the replace mark after one more normal touchdown",
+   "calc": "CALC-C5-CART-LIFE",
+   "output": "honest_margin_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-LANDING-IMPACT"
+   ],
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-008-LR",
+    "GER-008-LL"
+   ],
+   "how": "T-C5-AIRCRAFT-DROP corner drop on a foot pre-crushed to the mark (H1 crushes it on the press).",
+   "note": "C5 closure 2026-11-14: (s_av - guard) - mark - set - hard, gate mass, low plateau; the 3 mm guard is kept on top",
+   "value": 0.002207797722191804
+  },
+  {
+   "id": "CL-C5-CART-LIFE-STALE",
+   "type": "claim",
+   "title": "Cartridge-life record inputs changed since the run",
+   "calc": "CALC-C5-CART-LIFE",
+   "output": "stale_count",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.0
+   },
+   "how": "Re-run team/C5/cr1114/cart_life.py, then this script.",
+   "value": 0.0
+  },
+  {
+   "id": "ASM-C5-SIM3D-MASS-MAX",
+   "type": "assumption",
+   "title": "3-D sim: largest mass whose hard landing stays in the usable stroke",
+   "text": "Largest swept mass (2.60-2.90 kg) at which the 1.2 m/s / 10 deg envelope on a fresh cartridge at the low plateau stays inside the usable stroke (CG fixed, inertia scaled with mass)",
+   "basis": "team/C5/cr1114/out/mass_sweep.json (cr1114/mass_sweep.py); at 2.90 kg the margin is 2.3 mm, so the true limit is above the sweep (about 3.0 kg, EST)",
+   "value": 2.9,
+   "unit": "kg",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-C5-MASS-CAP",
+   "type": "calculation",
+   "title": "Foot hard-landing mass capacity",
+   "script": "redesign/team/C5/landing_sim_claims.py",
+   "function": "mass_cap",
+   "equation": "record",
+   "inputs": {
+    "m": "ASM-C5-SIM3D-MASS-MAX"
+   },
+   "units": {
+    "m": "kg"
+   },
+   "outputs": {
+    "m_max_kg": 2.9
+   },
+   "input_values": {
+    "m": 2.9
+   }
+  },
+  {
+   "id": "CL-C5-SIM3D-MASS-MAX",
+   "type": "claim",
+   "title": "Largest mass the fresh foot carries through the hard landing (low plateau)",
+   "calc": "CALC-C5-MASS-CAP",
+   "output": "m_max_kg",
+   "unit": "kg",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.mtow_gate_kg"
+   },
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-008-LR",
+    "GER-008-LL"
+   ],
+   "how": "T-C5-AIRCRAFT-DROP with ballast to the gate mass.",
+   "note": "C5 closure 2026-11-14: the foot stroke does not bind the mass gate below about 2.9 kg; the cartridge life with an honest mark (CL-C5-LANDINGS-PER-CARTRIDGE) is what sizes the foot",
+   "value": 2.9
   },
   {
    "id": "T-C5-SHOE-SIDE-FAIL",

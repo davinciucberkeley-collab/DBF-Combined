@@ -7,7 +7,7 @@
   {"id": "CT-M3-SHCS-NYLOC", "kind": "mechanical", "method": "fastened", "spec": "M3 SHCS through clearance hole, nyloc nut"},
   {"id": "CT-M3-SHCS-MOTOR", "kind": "mechanical", "method": "fastened", "spec": "M3 SHCS into motor base tapped hole (manufacturer pattern)"},
   {"id": "CT-M4-SHCS-NYLOC", "kind": "mechanical", "method": "fastened", "spec": "M4 SHCS through clearance hole, nyloc nut"},
-  {"id": "CT-PROP-ADAPTER", "kind": "mechanical", "method": "fastened", "spec": "bolt-on prop adapter, 4 x M3x4 SHCS into the motor bell, pilot on the shaft"},
+  {"id": "CT-PROP-ADAPTER", "kind": "mechanical", "method": "fastened", "spec": "bolt-on prop adapter, 3 x M2.5 SHCS on a 15 mm circle into the motor bell, pilot on the shaft"},
   {"id": "CT-PROP-NUT", "kind": "mechanical", "method": "fastened", "spec": "M6x1 nut and washer clamp the prop hub on the adapter post (field joint)"},
   {"id": "CT-SERVO-SPLINE", "kind": "mechanical", "method": "fastened", "spec": "servo arm on the output spline, M2 retaining screw"},
   {"id": "CT-EPOXY", "kind": "mechanical", "method": "bonded", "spec": "epoxy bond (30 min laminating epoxy), surfaces scuffed"},

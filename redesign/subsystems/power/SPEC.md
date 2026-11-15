@@ -1,5 +1,8 @@
 # Power
 
+> **R8 (closure round 2026-11-14, D-173b / D-174):** CoreWing F405 Wing APP V2 with power board `PWR-003` on the deck (the D-161c Kakute is reverted). Main path AS150U → power board → bus board, 10 AWG, no S-loops. Limiter 80 A; pack Gens Ace Redline 4S 6000 HV Shorty (17.4 V full) with two 5 mm bullets and 10 AWG 0.10 m pigtails. ESC branch connectors: **XT60H** (one per ESC; the XT30U is rated 20 A max / 30 A instantaneous against 40 A in a one-motor transient). ESC caps: three Rubycon 35PZJ560M10X15 (560 µF 35 V hybrid, lead wire) per ESC, `PWR-008` / `-009` / `-010`. Analysis: `team/F1/claims.json` and `review/CLOSURE-ROUND-2026-11-14/F1.md` § D-173. Where the text below says 680 µF or XT30U, R8 governs.
+
+
 Status: `MODELLED` (F1, revision PWR-R1 on params A1-R3, 2026-11-09; D-74 applied 2026-11-11: UBEC and fuse out
 of every model, deck 56 mm). CAD `fusion/power.py`; graph and BOM from `make_power.py`; claims `power_claims.py` (15). Analysis behind the choices: `team/F1/POWER.md` (F1-R2).
 

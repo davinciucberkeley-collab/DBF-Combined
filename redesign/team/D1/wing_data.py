@@ -67,9 +67,13 @@ PARTS = [
      'x 0.0688-0.0912 from the lower skin to the spar, every span segment where the spar runs in foam (not in the block or anchor pockets); '
      'stops at the lip beads and round the pod-tie channels; foam mass counted in WNG-001', {}),
     ('WNG-011', 'Elevon inboard', 'XPS foam F-250 + packing-tape skin', 'make', 'cut from the core after the hot-wire pass; tape both faces',
-     'subsystems/wing/fusion/wing.py', 'y 0.071-0.299, hinge x 0.2496 on the upper skin, lower edge bevelled 30 deg; D6 torque-tube groove (open below) |y| 0.1335-0.296 and 2.5 mm horn-blade slot at y 0.285; outboard front corner relieved round the R 3 mm tab fill; tape cut back for the horn flange (14 mm) and backplate (12 mm)', {}),
+     'subsystems/wing/fusion/wing.py', 'y 0.071-0.299 (TE corner chamfered beside the fin-root tab: full chord to y 0.280, 20 mm set-back, D-164), hinge x 0.2496 on the upper skin, lower edge bevelled 30 deg; D6 torque-tube groove (open below) |y| 0.1335-0.296 and 2.5 mm horn-blade slot at y 0.285; outboard front corner relieved round the R 3 mm tab fill; tape cut back for the horn flange (14 mm) and backplate (12 mm)', {}),
     ('WNG-012', 'Elevon outboard', 'XPS foam F-250 + packing-tape skin', 'make', 'cut from the core after the hot-wire pass; tape both faces',
-     'subsystems/wing/fusion/wing.py', 'y 0.341-0.559, hinge x 0.2496 on the upper skin, lower edge bevelled 30 deg; D6 torque-tube groove |y| 0.344-0.556 and 2.5 mm link-horn slot at y 0.355; inboard front corner relieved round the R 3 mm tab fill; tape cut back for the horn flange and backplate', {}),
+     'subsystems/wing/fusion/wing.py', 'y 0.341-0.559 (TE corner chamfered beside the fin-root tab: full chord from y 0.410, 70 mm set-back, D-164), hinge x 0.2496 on the upper skin, lower edge bevelled 30 deg; D6 torque-tube groove |y| 0.344-0.556 and 2.5 mm link-horn slot at y 0.355; inboard front corner relieved round the R 3 mm tab fill; tape cut back for the horn flange and backplate', {}),
+    ('WNG-009', 'Lower-surface zigzag turbulator tape', 'zigzag trip tape, 0.7 mm (bought)', 'buy',
+     'cut to the strip lengths, laid on the finished lower skin after the D-153 hold point, burnished', 'review/CLOSURE-ROUND-2026-11-14/B2.md (tape not yet sourced)',
+     'D-168: strip 6 mm wide x 0.7 mm centred on x/c 0.20 (x 0.061-0.067), lower surface only, |y| <= 0.572; broken at the half-fin root coves '
+     '(|y - 0.320| < 14.4 mm); over the block doubler band |y| 0.290-0.350 it rides on the 3 tape layers; mass = solid envelope x 1.3 g/cm3 (EST)', {}),
     ('WNG-020', 'FAA registration label', 'vinyl label (printed)', 'make', 'print, laminate, apply',
      'registration number from H3 (FAADroneZone)', 'right wing upper surface x 0.115-0.215, y 0.375-0.405; visible without tools', {'carried': True}),
 ]
@@ -136,6 +140,8 @@ def shape_mass(mod, g, P, L, s):
         return V * rho * 1000, cg
     if nm.startswith('bead ') or nm.startswith('fillet '):
         return V * k9.lval(L, 'block_pocket.bead_density_gcc', 'g/cm3') * 1e6, cg
+    if nm == 'tape turbulator':
+        return V * k9.lval(L, 'turbulator.density_gcc', 'g/cm3') * 1e6, cg
     if nm == 'tape tab edge':
         return perimeter(s.loops[0]) * k9.lval(L, 'skin.tab_edge_tape_w_m', 'm') * ar * 1000, cg
     if nm == 'tape tip edge':
@@ -178,7 +184,7 @@ def masses(ctx, P, g, mod):
             nm = s.name or ''
             k = ('XPS' if nm.startswith('xps') else 'microballoon epoxy' if nm.startswith(('bead', 'fillet')) else
                  'tape doubler' if 'doubler' in nm else 'tape LE strip' if 'LE strip' in nm else
-                 'tape tab edge' if 'tab edge' in nm else 'tape tip' if 'tip' in nm else 'tape')
+                 'zigzag tape' if 'turbulator' in nm else 'tape tab edge' if 'tab edge' in nm else 'tape tip' if 'tip' in nm else 'tape')
             br[k] = br.get(k, 0.0) + gm
         if iid == 'WNG-001':                            # the slot strip is drawn as WNG-008: take it out of the core
             cap = ctx.components.get('WNG-008')
@@ -192,6 +198,15 @@ def masses(ctx, P, g, mod):
             M += fill
             mom = [mom[0] + fill * g['xs'], mom[1], mom[2] + fill * g['zs']]
             br['slot fill (C2)'] = fill
+        if iid == 'WNG-003':                            # D-140: skin + servo doubler cut out round both servo covers
+            sx0, sx1, sy0, sy1, _z0, _z1 = mod.cover_footprint(g)
+            area = (sx1 - sx0) * (sy1 - sy0)
+            cut = 2 * 2 * area * k9.val(P, 'wing.skin.areal_mass_kgm2', 'kg/m2') * 1000   # 2 sides x 2 layers
+            yc = 0.0                                    # symmetric pair: the y moment does not move
+            xc, zc = (sx0 + sx1) / 2, mom[2] / M
+            mom = [mom[0] - cut * xc, mom[1] - cut * yc, mom[2] - cut * zc]
+            M -= cut
+            br['tape servo openings cut'] = -cut
         if base(iid) in PATCH_PANEL:                    # bare-foam patches under D6's horn flange and backplate
             Mh = k9.local('mechanisms')
             fl = k9.lval(Mh, 'mec.horn.flange_mm', 'mm', [8.0, 38.0, 14.0, 1.2])
@@ -232,7 +247,10 @@ def readouts(ctx, P, g, mod):
     r['tube_groove_cover'] = min(mod.surf(g, x, 'upper') for x in (gx0, gx1)) - gzc
     # elevon area fraction (panels as built, end gaps off)
     span_e = sum((b - a) - 2 * g['e_gap'] for a, b in g['spans']) * 2
-    r['elevon_area_frac'] = span_e * (g['c'] - g['xh']) / (2 * g['half'] * g['c'])
+    cham = 2 * 0.5 * sum(g['te_cham']) * (g['c'] - g['xh'])                    # two triangles per side, D-164
+    r['elevon_area_frac_nocham'] = span_e * (g['c'] - g['xh']) / (2 * g['half'] * g['c'])
+    r['elevon_area_frac'] = (span_e * (g['c'] - g['xh']) - cham) / (2 * g['half'] * g['c'])
+    r['cham_area_m2'] = cham
     # hinge clearance: lower bevel corner of the panel against the core aft face (vertical at x_h) at both stops
     t, b = g['t_hinge'], g['bevel']
     zl = mod.surf(g, g['xh'] + b, 'lower') - mod.surf(g, g['xh'], 'upper')
@@ -375,6 +393,15 @@ def edges(g, r, M):
               'bond': {'adhesive': bond_foam, 'area_mm2': '—', 'prep': 'slot vacuumed, foam dust off', 'cure': cure,
                        'load_n': 'closes the slot; the spar bond is sized as E-WNG-01 (CL-C2-SPAR-BOND-TAU)',
                        'load_case': 'C1 flight envelope', 'sized_by': 'C2'}})
+    E.append({'id': 'E-WNG-19', 'part_a': 'WNG-009', 'part_b': 'WNG-003', 'via': 'CT-TAPE-SKIN', 'owner': 'wing',
+              'notes': 'zigzag trip tape on the lower skin, strip %.0f mm wide centred on x %.4f (x/c 0.20), %.1f mm high, both half-spans '
+                       'from y = 0 to |y| %.3f; broken at each half-fin root cove (|y - %.3f| < %.1f mm); laid after the block-doubler '
+                       'hold point (BUILD step 11) so it never replaces a doubler layer; stops 1.8 mm ahead of the spar-slot cap (x %.4f)'
+                       % (g['tb_w'] * 1000, g['tb_x'], g['tb_h'] * 1000, g['half'] - g['tb_tip'], g['y_fin'], g['tb_stop'] * 1000,
+                          g['x_slot'][0]),
+              'retention': {'item': 'zigzag tape, pressure-sensitive adhesive on the packing-tape skin', 'count': 'continuous strips',
+                            'load_n': 'none (aerodynamic device, non-structural)',
+                            'inspection': 'pre-flight: no lifted edge or missing section (a lifted trip is a laminar wedge); H2 tuft / oil-flow check'}})
     return E
 
 
@@ -403,7 +430,7 @@ def parts_csv(M):
     cost = k9.lval(L, 'cost_usd', 'USD')
     unit_cost = {'WNG-001': cost['xps_sheet'] / cost['cores_per_sheet'] + cost['epoxy'], 'WNG-002': cost['spar'],
                  'WNG-003': cost['tape_roll'] * cost['rolls'] + cost['le_tape_roll'], 'WNG-004': cost['petg_plugs'] / 4, 'WNG-005': cost['petg_plugs'] / 4,
-                 'WNG-006': 0.0, 'WNG-008': 0.0, 'WNG-011': 0.0, 'WNG-012': 0.0, 'WNG-020': cost['label']}
+                 'WNG-006': 0.0, 'WNG-008': 0.0, 'WNG-009': None, 'WNG-011': 0.0, 'WNG-012': 0.0, 'WNG-020': cost['label']}
     buf = io.StringIO()
     w = csv.writer(buf, lineterminator='\n')
     w.writerow(['part_id', 'name', 'qty', 'make_or_buy', 'process', 'material', 'mass_g', 'unit_cost_usd', 'vendor_or_file', 'notes'])
@@ -414,7 +441,7 @@ def parts_csv(M):
         note = notes + ('; per-unit mass = mean of %s' % ', '.join('%s %.1f g' % (i[-1], m) for i, m in zip(inst, ms)) if len(inst) > 1 else '')
         if pid == 'WNG-001':
             note += '; mass incl. the 15 g slot fill (C2); cost incl. the wing epoxy, microballoons and silica ($%.2f, shared kit)' % cost['epoxy']
-        w.writerow([pid, name, len(inst), mob, proc, mat, '%.1f' % mean, '%.2f' % unit_cost[pid], vend, note])
+        w.writerow([pid, name, len(inst), mob, proc, mat, '%.1f' % mean, '—' if unit_cost[pid] is None else '%.2f' % unit_cost[pid], vend, note])
     return buf.getvalue()
 
 
