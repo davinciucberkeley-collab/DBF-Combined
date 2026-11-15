@@ -41,6 +41,10 @@
   {"id": "CT-JST-GH-6", "kind": "electrical", "method": "connector", "spec": "JST-GH 6-pin (telemetry / GPS)"},
   {"id": "CT-ELRS-RF", "kind": "electrical", "method": "radio", "spec": "ExpressLRS 2.4 GHz radio link, CRSF to the FC (control and telemetry); no wire"},
   {"id": "CT-THERMAL-PAD", "kind": "thermal", "method": "conductive", "spec": "thermal pad between heat source and sink"},
-  {"id": "CT-THERMAL-CONTACT", "kind": "thermal", "method": "conductive", "spec": "dry contact of a heat source on the part that carries it (conduction path; treated as insulating where the thermal block says so)"}
+  {"id": "CT-THERMAL-CONTACT", "kind": "thermal", "method": "conductive", "spec": "dry contact of a heat source on the part that carries it (conduction path; treated as insulating where the thermal block says so)"},
+  {"id": "CT-HW-SEATED", "kind": "mechanical", "method": "fastened", "spec": "loose hardware (screw, nut, washer) seated in the hole or pocket of the part it fastens; named in collide.py MOVE_VIA, added for concept A (2026-11-15)"},
+  {"id": "CT-A-M25-SHCS-MOTOR", "kind": "mechanical", "method": "fastened", "spec": "concept A: 4 x M2.5 SHCS through 2.9 mm clearance holes in the printed motor cup into the T-Motor MN2212 base (4-M2.5 on a 19 x 16 mm rectangle, T-Motor drawing)"},
+  {"id": "CT-A-PROP-ADAPTER", "kind": "mechanical", "method": "fastened", "spec": "concept A: T-Motor MN2212 prop adapter (Phi19 x 4.5 flange, M5 stud) on the bell top, 2 x M3 at 12 mm pitch (Phi3.2 holes, Phi5.7 counterbore), Phi4 shaft bore (T-Motor drawing)"},
+  {"id": "CT-A-PROP-NUT", "kind": "mechanical", "method": "fastened", "spec": "concept A: APC hub with its adapter ring (ID 5 mm, EST) on the M5 stud of the T-Motor adapter, clamped by an M5 spinner nut Phi12 x 16 (field joint); replaces the M6x1 text of CT-PROP-NUT, which is the K09-L meaning"}
  ]
 }

@@ -3,11 +3,28 @@
  "subsystem": "harness",
  "parts": [
   {
+   "id": "HRN-002",
+   "name": "XT60 female + 14 AWG tail to the ESC (modelled)",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 8.0,
+   "material": "copper / silicone / nylon",
+   "cg_xyz_m": [
+    0.1033,
+    0.0635,
+    0.0164
+   ],
+   "make_or_buy": "buy",
+   "electrical": "bus",
+   "carried": true,
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
    "id": "HRN-001",
    "name": "Harness remainder (wire, connectors, ties, tubing; MASS-GATE avionics 110 g less itemised parts) - lumped",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 55.5,
+   "mass_g": 42.9,
    "material": "copper / silicone",
    "cg_xyz_m": [
     0.03,
@@ -22,6 +39,18 @@
  ],
  "edges": [
   {
+   "id": "E-HRN-21",
+   "part_a": "HRN-002",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "harness",
+   "notes": "XT60 pair and tail taped on the skin (foam tape) and tied",
+   "retention": {
+    "item": "VHB-class tape",
+    "count": 1
+   }
+  },
+  {
    "id": "E-HRN-20",
    "part_a": "HRN-001",
    "part_b": "WNG-001",
@@ -32,21 +61,43 @@
   {
    "id": "E-HRN-01",
    "part_a": "PWR-001",
-   "part_b": "PRP-003",
+   "part_b": "HRN-002",
    "via": "CT-XT60",
    "owner": "harness",
-   "notes": "pack main lead (XT60 at the pack, disconnect) to the ESC battery pads",
+   "notes": "pack lead XT60 male mated to the ESC-side XT60 female (disconnect); both lead pairs run outboard of the plate",
    "wire": {
     "gauge_awg": 14,
     "connector": "XT60",
     "route_id": "R-A-01",
     "support_points": [
-     "rear tray lip",
-     "plate front edge"
+     "tape on the skin"
     ],
     "bend_radius_mm": 6,
     "strain_relief": "heat-shrink + tie",
     "disconnect": true
+   },
+   "current_a": {
+    "cont": 11,
+    "peak": 41
+   }
+  },
+  {
+   "id": "E-HRN-12",
+   "part_a": "HRN-002",
+   "part_b": "PRP-003",
+   "via": "CT-SOLDER-DC",
+   "owner": "harness",
+   "notes": "14 AWG tail from the XT60 female to the ESC battery pads (flat pair, inboard over the ESC)",
+   "wire": {
+    "gauge_awg": 14,
+    "connector": "solder + heat-shrink",
+    "route_id": "R-A-12",
+    "support_points": [
+     "tie at the plate edge"
+    ],
+    "bend_radius_mm": 6,
+    "strain_relief": "heat-shrink + tie",
+    "disconnect": false
    },
    "current_a": {
     "cont": 11,
@@ -59,9 +110,9 @@
    "part_b": "PRP-001-UR",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "motor phase leads UR: ESC pad, over the LE, along the arm on the aft side, through the cup hole",
+   "notes": "motor phase leads UR (3 x 20 AWG, V T-Motor page): ESC pad, over the LE, along the arm on the aft side, through the cup hole",
    "wire": {
-    "gauge_awg": 18,
+    "gauge_awg": 20,
     "connector": "solder + heat-shrink",
     "route_id": "R-A-02",
     "support_points": [
@@ -84,9 +135,9 @@
    "part_b": "PRP-001-UL",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "motor phase leads UL: ESC pad, over the LE, along the arm on the aft side, through the cup hole",
+   "notes": "motor phase leads UL (3 x 20 AWG, V T-Motor page): ESC pad, over the LE, along the arm on the aft side, through the cup hole",
    "wire": {
-    "gauge_awg": 18,
+    "gauge_awg": 20,
     "connector": "solder + heat-shrink",
     "route_id": "R-A-03",
     "support_points": [
@@ -109,9 +160,9 @@
    "part_b": "PRP-001-LR",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "motor phase leads LR: ESC pad, over the LE, along the arm on the aft side, through the cup hole",
+   "notes": "motor phase leads LR (3 x 20 AWG, V T-Motor page): ESC pad, over the LE, along the arm on the aft side, through the cup hole",
    "wire": {
-    "gauge_awg": 18,
+    "gauge_awg": 20,
     "connector": "solder + heat-shrink",
     "route_id": "R-A-04",
     "support_points": [
@@ -134,9 +185,9 @@
    "part_b": "PRP-001-LL",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "motor phase leads LL: ESC pad, over the LE, along the arm on the aft side, through the cup hole",
+   "notes": "motor phase leads LL (3 x 20 AWG, V T-Motor page): ESC pad, over the LE, along the arm on the aft side, through the cup hole",
    "wire": {
-    "gauge_awg": 18,
+    "gauge_awg": 20,
     "connector": "solder + heat-shrink",
     "route_id": "R-A-05",
     "support_points": [
@@ -159,7 +210,7 @@
    "part_b": "AVN-002",
    "via": "CT-JST-GH-6",
    "owner": "harness",
-   "notes": "ESC lead to the FC (VBAT, signals, telemetry)",
+   "notes": "ESC lead to the FC (VBAT, signals, telemetry): 6 conductors, soldered to the FC pads (the Kakute has pads, not sockets: docs.holybro.com pinout 2026-11-15)",
    "wire": {
     "gauge_awg": 26,
     "connector": "JST-GH 6-pin",
@@ -178,7 +229,7 @@
    "part_b": "MEC-001-R",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "servo lead R: FC servo pad, over the plate, laid on the skin to the servo pocket",
+   "notes": "servo lead R: 3-conductor ribbon, soldered to the FC pad M5/M6 (JR plug cut off; the FC has pads only), laid on the skin to the servo",
    "wire": {
     "gauge_awg": 26,
     "connector": "JR 3-pin",
@@ -198,7 +249,7 @@
    "part_b": "MEC-001-L",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "servo lead L: FC servo pad, over the plate, laid on the skin to the servo pocket",
+   "notes": "servo lead L: 3-conductor ribbon, soldered to the FC pad M5/M6 (JR plug cut off; the FC has pads only), laid on the skin to the servo",
    "wire": {
     "gauge_awg": 26,
     "connector": "JR 3-pin",
@@ -218,7 +269,7 @@
    "part_b": "AVN-003",
    "via": "CT-JST-GH-4",
    "owner": "harness",
-   "notes": "RX UART lead",
+   "notes": "RX UART (CRSF wire soldered at the RX pads) lead",
    "wire": {
     "gauge_awg": 28,
     "connector": "CT-JST-GH-4",
@@ -237,7 +288,7 @@
    "part_b": "AVN-004",
    "via": "CT-JST-GH-6",
    "owner": "harness",
-   "notes": "GPS lead",
+   "notes": "GPS (plug on the GPS board, other end soldered to the FC) lead",
    "wire": {
     "gauge_awg": 28,
     "connector": "CT-JST-GH-6",
@@ -256,7 +307,7 @@
    "part_b": "AVN-005",
    "via": "CT-JST-GH-4",
    "owner": "harness",
-   "notes": "airspeed I2C lead",
+   "notes": "airspeed I2C (plug on the MS4525 board, other end soldered to the FC) lead",
    "wire": {
     "gauge_awg": 28,
     "connector": "CT-JST-GH-4",

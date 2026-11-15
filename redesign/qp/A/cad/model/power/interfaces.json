@@ -9,26 +9,66 @@
    "status": "MODELLED",
    "mass_g": 270.0,
    "material": "LiPo",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    -0.008,
+    0.0018,
+    0.0225
+   ],
    "make_or_buy": "buy",
    "electrical": "source",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "PWR-002",
+   "name": "Pack strap 25 mm hook-and-loop (round pack and tray)",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "material": "hook-and-loop nylon",
+   "cg_xyz_m": [
+    -0.015,
+    0.0,
+    0.0155
+   ],
+   "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   }
  ],
  "edges": [
   {
    "id": "E-PWR-01",
-   "part_a": "PWR-001",
+   "part_a": "PWR-002",
    "part_b": "CGE-008",
    "via": "CT-STRAP-VELCRO",
    "owner": "power",
-   "notes": "hook-and-loop strap round pack and tray, lips fore and aft",
+   "notes": "hook-and-loop strap round pack and tray: over the pack top, outside the tray end walls, under the tray plate AND the 12 mm bridge tube CGE-004 (tangent to the plate underside, z -6..6)",
    "retention": {
     "item": "25 mm strap",
     "count": 1,
     "load_n": 38.8
    },
    "field_joint": true
+  },
+  {
+   "id": "E-PWR-02",
+   "part_a": "PWR-001",
+   "part_b": "CGE-008",
+   "via": "CT-STRAP-VELCRO",
+   "owner": "power",
+   "notes": "pack sits on the tray floor on a hook-and-loop anti-slip pad (pad not drawn, EST), between the integral lips; strap PWR-002 holds it",
+   "retention": {
+    "item": "anti-slip pad + strap",
+    "count": 1
+   },
+   "field_joint": true
+  },
+  {
+   "id": "E-PWR-03",
+   "part_a": "PWR-002",
+   "part_b": "PWR-001",
+   "via": "CT-STRAP-VELCRO",
+   "owner": "power",
+   "notes": "strap bears on the pack top face"
   }
  ],
  "acknowledges": [

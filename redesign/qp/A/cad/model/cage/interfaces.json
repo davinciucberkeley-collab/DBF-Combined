@@ -4,12 +4,16 @@
  "parts": [
   {
    "id": "CGE-001",
-   "name": "Hub disc (printed shell, envelope; QP-4 FIXES: 16 -> 13 g, 2 perimeters, 10 % infill, EST)",
+   "name": "Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 0.8 mm walls, mass = drawn volume x 1.27)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 13.0,
+   "mass_g": 13.1,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    -0.0721,
+    0.0,
+    0.0002
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -20,7 +24,11 @@
    "status": "MODELLED",
    "mass_g": 13.5,
    "material": "CFRP tube",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    -0.075,
+    0.1269,
+    0.0868
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -31,7 +39,11 @@
    "status": "MODELLED",
    "mass_g": 4.0,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    -0.0797,
+    0.2229,
+    0.1543
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -42,7 +54,11 @@
    "status": "MODELLED",
    "mass_g": 13.5,
    "material": "CFRP tube",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    -0.075,
+    -0.1269,
+    0.0868
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -53,7 +69,11 @@
    "status": "MODELLED",
    "mass_g": 4.0,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    -0.0797,
+    -0.2246,
+    0.1519
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -64,7 +84,11 @@
    "status": "MODELLED",
    "mass_g": 13.5,
    "material": "CFRP tube",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    -0.075,
+    0.1269,
+    -0.0868
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -75,7 +99,11 @@
    "status": "MODELLED",
    "mass_g": 4.0,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    -0.0797,
+    0.2246,
+    -0.1519
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -86,7 +114,11 @@
    "status": "MODELLED",
    "mass_g": 13.5,
    "material": "CFRP tube",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    -0.075,
+    -0.1269,
+    -0.0868
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -97,7 +129,11 @@
    "status": "MODELLED",
    "mass_g": 4.0,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    -0.0797,
+    -0.2229,
+    -0.1543
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -108,7 +144,11 @@
    "status": "MODELLED",
    "mass_g": 8.5,
    "material": "CFRP tube",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    -0.023,
+    0.0,
+    0.0
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -119,7 +159,11 @@
    "status": "MODELLED",
    "mass_g": 6.5,
    "material": "CFRP tube",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    -0.0075,
+    0.154,
+    0.0
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -130,7 +174,11 @@
    "status": "MODELLED",
    "mass_g": 1.5,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.0488,
+    0.2904,
+    0.0
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -141,7 +189,11 @@
    "status": "MODELLED",
    "mass_g": 6.5,
    "material": "CFRP tube",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    -0.0075,
+    -0.154,
+    0.0
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -152,7 +204,11 @@
    "status": "MODELLED",
    "mass_g": 1.5,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.0488,
+    -0.2904,
+    0.0
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -163,18 +219,26 @@
    "status": "MODELLED",
    "mass_g": 2.0,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.051,
+    0.0,
+    0.0
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "CGE-008",
-   "name": "Pack tray (66 x 109 mm plate, trim slots; 4.0 g at 44 mm scaled by plate area + longer walls, EST)",
+   "name": "Pack tray (66 x 109 mm plate, integral lips at the trim ends, lead notch; 4.0 g at 44 mm scaled by plate area + longer walls, EST)",
    "subsystem": "cage",
    "status": "MODELLED",
    "mass_g": 3.8,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    -0.0116,
+    0.0,
+    0.0107
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   }
@@ -330,6 +394,7 @@
   "E-PRP-03",
   "E-PRP-05",
   "E-PRP-07",
-  "E-PWR-01"
+  "E-PWR-01",
+  "E-PWR-02"
  ]
 }

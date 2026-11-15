@@ -1,5 +1,5 @@
 {
- "bodies": 175,
+ "bodies": 444,
  "defects": [
   "WNG-008-LL body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
   "WNG-008-LL body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)",
@@ -11,10 +11,27 @@
   "WNG-008-RU body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)"
  ],
  "kinks": [],
- "parts": 78,
+ "parts": 96,
  "poses": [
   {
-   "hits": [],
+   "hits": [
+    {
+     "a": "HWC-001",
+     "at_mm": [
+      70.26,
+      9.03,
+      12.66
+     ],
+     "b": "HWC-003",
+     "bodies": [
+      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm",
+      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm",
+      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm",
+      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm"
+     ],
+     "depth_mm": 0.034
+    }
+   ],
    "moved": null,
    "name": "static",
    "not_swept_against": null
@@ -24,6 +41,8 @@
    "moved": [
     "MEC-004-L",
     "MEC-004-R",
+    "MEC-005-L",
+    "MEC-005-R",
     "WNG-006-L",
     "WNG-006-R",
     "WNG-007-L",
@@ -40,43 +59,12 @@
    ]
   },
   {
-   "hits": [
-    {
-     "a": "WNG-006-R",
-     "at_mm": [
-      179.67,
-      338.64,
-      -6.11
-     ],
-     "b": "WNG-008-RL",
-     "bodies": [
-      "WNG-006-R \"elevon\" x WNG-008-RL \"lens cap arch\" 0.01 mm",
-      "WNG-006-R \"elevon\" x WNG-008-RL \"lens cap end wall\" 0.01 mm",
-      "WNG-006-R \"elevon\" x WNG-008-RL \"cap bonding flange\" 0.01 mm",
-      "WNG-006-R \"elevon\" x WNG-008-RL \"cap bonding flange\" 0.01 mm"
-     ],
-     "depth_mm": 0.014
-    },
-    {
-     "a": "WNG-006-L",
-     "at_mm": [
-      179.67,
-      -338.64,
-      -6.11
-     ],
-     "b": "WNG-008-LL",
-     "bodies": [
-      "WNG-006-L \"elevon\" x WNG-008-LL \"lens cap arch\" 0.01 mm",
-      "WNG-006-L \"elevon\" x WNG-008-LL \"lens cap end wall\" 0.01 mm",
-      "WNG-006-L \"elevon\" x WNG-008-LL \"cap bonding flange\" 0.01 mm",
-      "WNG-006-L \"elevon\" x WNG-008-LL \"cap bonding flange\" 0.01 mm"
-     ],
-     "depth_mm": 0.014
-    }
-   ],
+   "hits": [],
    "moved": [
     "MEC-004-L",
     "MEC-004-R",
+    "MEC-005-L",
+    "MEC-005-R",
     "WNG-006-L",
     "WNG-006-R",
     "WNG-007-L",
@@ -93,7 +81,7 @@
    ]
   }
  ],
- "seconds": 89.4,
+ "seconds": 107.0,
  "skipped": [
   [
    "HRD-001",
@@ -105,5 +93,5 @@
   ]
  ],
  "wire_ends": [],
- "wire_strands": 11
+ "wire_strands": 41
 }

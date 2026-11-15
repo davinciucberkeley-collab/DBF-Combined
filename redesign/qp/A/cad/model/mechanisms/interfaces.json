@@ -9,7 +9,11 @@
    "status": "MODELLED",
    "mass_g": 20.5,
    "material": "plastic / metal gear",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1411,
+    0.2,
+    0.0002
+   ],
    "make_or_buy": "buy",
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -21,18 +25,41 @@
    "status": "MODELLED",
    "mass_g": 1.0,
    "material": "nylon",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1405,
+    0.1959,
+    0.0077
+   ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "MEC-003-R",
-   "name": "Pushrod 1.2 mm (R)",
+   "name": "Pushrod 1.2 mm with Z-bend and clevis (R)",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 1.0,
+   "mass_g": 0.97,
    "material": "steel",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1731,
+    0.188,
+    0.0093
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "MEC-005-R",
+   "name": "Clevis pin 1.0 x 4.4 mm (R); mass CALC steel, carried inside the 1.0 g rod before D-194",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.03,
+   "material": "steel",
+   "cg_xyz_m": [
+    0.193,
+    0.188,
+    0.0093
+   ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -43,7 +70,26 @@
    "status": "MODELLED",
    "mass_g": 1.0,
    "material": "nylon",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1987,
+    0.188,
+    0.0042
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "HWC-002-R",
+   "name": "Servo arm screw M2 x 6 pan (R)",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.27,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.1405,
+    0.2,
+    0.0073
+   ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -54,7 +100,11 @@
    "status": "MODELLED",
    "mass_g": 20.5,
    "material": "plastic / metal gear",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1411,
+    -0.2,
+    0.0002
+   ],
    "make_or_buy": "buy",
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -66,18 +116,41 @@
    "status": "MODELLED",
    "mass_g": 1.0,
    "material": "nylon",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1405,
+    -0.1959,
+    0.0077
+   ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "MEC-003-L",
-   "name": "Pushrod 1.2 mm (L)",
+   "name": "Pushrod 1.2 mm with Z-bend and clevis (L)",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 1.0,
+   "mass_g": 0.97,
    "material": "steel",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1731,
+    -0.188,
+    0.0093
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "MEC-005-L",
+   "name": "Clevis pin 1.0 x 4.4 mm (L); mass CALC steel, carried inside the 1.0 g rod before D-194",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.03,
+   "material": "steel",
+   "cg_xyz_m": [
+    0.193,
+    -0.188,
+    0.0093
+   ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -88,7 +161,26 @@
    "status": "MODELLED",
    "mass_g": 1.0,
    "material": "nylon",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1987,
+    -0.188,
+    0.0042
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "HWC-002-L",
+   "name": "Servo arm screw M2 x 6 pan (L)",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.27,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.1405,
+    -0.2,
+    0.0073
+   ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   }
@@ -108,12 +200,12 @@
    "part_b": "MEC-001-R",
    "via": "CT-SERVO-SPLINE",
    "owner": "mechanisms",
-   "notes": "arm on the output spline",
+   "notes": "arm on the 23T output spline (V readymaderc 85975; the old 25T was an ES3352 copy)",
    "joint_stack": {
     "fastener": "M2x6 retaining screw",
     "count": 1,
     "grade": "A2-70",
-    "hole": "arm bore on the 25T spline",
+    "hole": "arm bore on the 23T spline",
     "insert": "none",
     "engagement_mm": 4.0,
     "min_engagement_mm": 3.0,
@@ -131,7 +223,7 @@
    "part_b": "MEC-002-R",
    "via": "CT-CLEVIS",
    "owner": "mechanisms",
-   "notes": "rod end in the arm hole",
+   "notes": "rod Z-bend in the arm tip hole (vertical pin)",
    "motion": {
     "axis": "Z",
     "range_deg": [
@@ -146,7 +238,7 @@
    "part_b": "MEC-004-R",
    "via": "CT-CLEVIS",
    "owner": "mechanisms",
-   "notes": "rod end in the horn hole",
+   "notes": "rod clevis on the horn hole (horizontal pin)",
    "motion": {
     "axis": "Y",
     "range_deg": [
@@ -164,6 +256,93 @@
    "notes": "horn bonded on the elevon upper skin"
   },
   {
+   "id": "E-MEC-PIN-R4",
+   "part_a": "MEC-005-R",
+   "part_b": "MEC-004-R",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "hardware": true,
+   "notes": "clevis pin through the horn hole (pressed in along y after the clevis is lowered onto the blade); moves with the horn",
+   "joint_stack": {
+    "fastener": "1.0 mm clevis pin",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "horn hole 1.5 mm",
+    "insert": "none",
+    "engagement_mm": 2.0,
+    "min_engagement_mm": 2.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 40,
+    "removal_order": 40
+   }
+  },
+  {
+   "id": "E-MEC-PIN-R3",
+   "part_a": "MEC-005-R",
+   "part_b": "MEC-003-R",
+   "via": "CT-CLEVIS",
+   "owner": "mechanisms",
+   "notes": "clevis pin through the cheek holes of the rod (the rod turns on it); linkage path not modelled in the poses",
+   "motion": {
+    "axis": "Y",
+    "range_deg": [
+     -21.0,
+     21.0
+    ]
+   }
+  },
+  {
+   "id": "E-MEC-HW-R2",
+   "part_a": "HWC-002-R",
+   "part_b": "MEC-002-R",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "hardware": true,
+   "notes": "arm retaining screw (hardware of the spline joint)",
+   "joint_stack": {
+    "fastener": "M2x6 pan",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "arm bore / output-shaft thread",
+    "insert": "none",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 3.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 20,
+    "removal_order": 20
+   }
+  },
+  {
+   "id": "E-MEC-HW-R1",
+   "part_a": "HWC-002-R",
+   "part_b": "MEC-001-R",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "hardware": true,
+   "notes": "arm retaining screw (hardware of the spline joint)",
+   "joint_stack": {
+    "fastener": "M2x6 pan",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "arm bore / output-shaft thread",
+    "insert": "none",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 3.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 20,
+    "removal_order": 20
+   }
+  },
+  {
    "id": "E-MEC-06",
    "part_a": "MEC-001-L",
    "part_b": "WNG-001",
@@ -177,12 +356,12 @@
    "part_b": "MEC-001-L",
    "via": "CT-SERVO-SPLINE",
    "owner": "mechanisms",
-   "notes": "arm on the output spline",
+   "notes": "arm on the 23T output spline (V readymaderc 85975; the old 25T was an ES3352 copy)",
    "joint_stack": {
     "fastener": "M2x6 retaining screw",
     "count": 1,
     "grade": "A2-70",
-    "hole": "arm bore on the 25T spline",
+    "hole": "arm bore on the 23T spline",
     "insert": "none",
     "engagement_mm": 4.0,
     "min_engagement_mm": 3.0,
@@ -200,7 +379,7 @@
    "part_b": "MEC-002-L",
    "via": "CT-CLEVIS",
    "owner": "mechanisms",
-   "notes": "rod end in the arm hole",
+   "notes": "rod Z-bend in the arm tip hole (vertical pin)",
    "motion": {
     "axis": "Z",
     "range_deg": [
@@ -215,7 +394,7 @@
    "part_b": "MEC-004-L",
    "via": "CT-CLEVIS",
    "owner": "mechanisms",
-   "notes": "rod end in the horn hole",
+   "notes": "rod clevis on the horn hole (horizontal pin)",
    "motion": {
     "axis": "Y",
     "range_deg": [
@@ -231,6 +410,93 @@
    "via": "CT-EPOXY",
    "owner": "mechanisms",
    "notes": "horn bonded on the elevon upper skin"
+  },
+  {
+   "id": "E-MEC-PIN-L4",
+   "part_a": "MEC-005-L",
+   "part_b": "MEC-004-L",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "hardware": true,
+   "notes": "clevis pin through the horn hole (pressed in along y after the clevis is lowered onto the blade); moves with the horn",
+   "joint_stack": {
+    "fastener": "1.0 mm clevis pin",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "horn hole 1.5 mm",
+    "insert": "none",
+    "engagement_mm": 2.0,
+    "min_engagement_mm": 2.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 40,
+    "removal_order": 40
+   }
+  },
+  {
+   "id": "E-MEC-PIN-L3",
+   "part_a": "MEC-005-L",
+   "part_b": "MEC-003-L",
+   "via": "CT-CLEVIS",
+   "owner": "mechanisms",
+   "notes": "clevis pin through the cheek holes of the rod (the rod turns on it); linkage path not modelled in the poses",
+   "motion": {
+    "axis": "Y",
+    "range_deg": [
+     -21.0,
+     21.0
+    ]
+   }
+  },
+  {
+   "id": "E-MEC-HW-L2",
+   "part_a": "HWC-002-L",
+   "part_b": "MEC-002-L",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "hardware": true,
+   "notes": "arm retaining screw (hardware of the spline joint)",
+   "joint_stack": {
+    "fastener": "M2x6 pan",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "arm bore / output-shaft thread",
+    "insert": "none",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 3.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 20,
+    "removal_order": 20
+   }
+  },
+  {
+   "id": "E-MEC-HW-L1",
+   "part_a": "HWC-002-L",
+   "part_b": "MEC-001-L",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "hardware": true,
+   "notes": "arm retaining screw (hardware of the spline joint)",
+   "joint_stack": {
+    "fastener": "M2x6 pan",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "arm bore / output-shaft thread",
+    "insert": "none",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 3.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 20,
+    "removal_order": 20
+   }
   }
  ],
  "acknowledges": [

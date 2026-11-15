@@ -9,7 +9,11 @@
    "status": "MODELLED",
    "mass_g": 8.0,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.0923,
+    0.0,
+    0.0123
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -20,19 +24,27 @@
    "status": "MODELLED",
    "mass_g": 17.0,
    "material": "PCB",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.0599,
+    0.0,
+    0.0269
+   ],
    "make_or_buy": "buy",
    "electrical": "bus",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "AVN-007",
-   "name": "Foam-tape pads x4 (FC hard mount, 1.5 mm)",
+   "name": "Foam-tape pads x4 (FC hard mount, 3.0 mm)",
    "subsystem": "avionics",
    "status": "MODELLED",
    "mass_g": 1.0,
    "material": "VHB-class foam tape",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.06,
+    0.0,
+    0.0154
+   ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -41,9 +53,13 @@
    "name": "Receiver RP3 V2 ELRS",
    "subsystem": "avionics",
    "status": "MODELLED",
-   "mass_g": 3.0,
+   "mass_g": 4.6,
    "material": "PCB",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1178,
+    -0.046,
+    0.0152
+   ],
    "make_or_buy": "buy",
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -55,7 +71,11 @@
    "status": "MODELLED",
    "mass_g": 13.5,
    "material": "PCB",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.0575,
+    0.0396,
+    0.0172
+   ],
    "make_or_buy": "buy",
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -67,7 +87,11 @@
    "status": "MODELLED",
    "mass_g": 3.0,
    "material": "PCB",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.0528,
+    -0.0446,
+    0.0165
+   ],
    "make_or_buy": "buy",
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -79,7 +103,41 @@
    "status": "MODELLED",
    "mass_g": 5.0,
    "material": "brass tube",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    -0.0425,
+    0.41,
+    0.0
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "HWC-001",
+   "name": "FC mounting screws: 4 x M2 x 25 pan screw (stock)",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 2.97,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.06,
+    0.0,
+    0.0265
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "HWC-003",
+   "name": "FC mounting nuts: 4 x M2 thin nut (DIN 439 1.2 mm) in the plate hex pockets",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 0.41,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.06,
+    -0.0,
+    0.0129
+   ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   }
@@ -152,6 +210,78 @@
    "via": "CT-EPOXY",
    "owner": "avionics",
    "notes": "pitot in a groove in the LE at y = +0.41 (outside the rotor wash, EST)"
+  },
+  {
+   "id": "E-AVN-08",
+   "part_a": "HWC-001",
+   "part_b": "AVN-002",
+   "via": "CT-HW-SEATED",
+   "owner": "avionics",
+   "hardware": true,
+   "notes": "four M2 screws through the stack standoffs (hardware of E-AVN-03)",
+   "joint_stack": {
+    "fastener": "M2 x 25 pan screw (stock)",
+    "count": 4,
+    "grade": "A2-70",
+    "hole": "boards 2.2 mm clearance (EST), standoffs ID 2.2",
+    "insert": "none",
+    "engagement_mm": 1.2,
+    "min_engagement_mm": 1.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 30,
+    "removal_order": 30
+   }
+  },
+  {
+   "id": "E-AVN-09",
+   "part_a": "HWC-001",
+   "part_b": "HWC-003",
+   "via": "CT-HW-SEATED",
+   "owner": "avionics",
+   "hardware": true,
+   "notes": "screw threads into the nut (stock M2 x 25: tip 0.1 mm short of to 0.6 mm past the nut bottom)",
+   "joint_stack": {
+    "fastener": "M2 x 25 pan screw into M2 thin nut",
+    "count": 4,
+    "grade": "A2-70",
+    "hole": "nut thread",
+    "insert": "none",
+    "engagement_mm": 1.1,
+    "min_engagement_mm": 1.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 31,
+    "removal_order": 31
+   }
+  },
+  {
+   "id": "E-AVN-10",
+   "part_a": "HWC-003",
+   "part_b": "AVN-001",
+   "via": "CT-HW-SEATED",
+   "owner": "avionics",
+   "hardware": true,
+   "notes": "four M2 thin nuts trapped in hex pockets on the plate underside (seated before the plate goes on the skin)",
+   "joint_stack": {
+    "fastener": "M2 pan screw + M2 thin nut (DIN 439, 1.2 mm)",
+    "count": 4,
+    "grade": "A2-70",
+    "hole": "2.2 mm hole + hex pocket in the plate (plate 1.5-2.1 mm)",
+    "insert": "none",
+    "engagement_mm": 1.2,
+    "min_engagement_mm": 1.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 30,
+    "removal_order": 30
+   }
   }
  ],
  "acknowledges": [

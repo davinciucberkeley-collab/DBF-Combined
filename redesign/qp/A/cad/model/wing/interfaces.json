@@ -7,9 +7,13 @@
    "name": "Wing core, XPS 25 kg/m3 + tape skin + glue + hinge tape (lumped)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 102.0,
+   "mass_g": 100.1,
    "material": "XPS foam 25 kg/m3 + packing tape",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.0869,
+    0.0,
+    -0.0008
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -20,7 +24,11 @@
    "status": "MODELLED",
    "mass_g": 49.8,
    "material": "CFRP tube",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.06,
+    -0.0,
+    0.0
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -31,7 +39,11 @@
    "status": "MODELLED",
    "mass_g": 1.2,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.06,
+    -0.0,
+    0.0
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -42,7 +54,11 @@
    "status": "MODELLED",
    "mass_g": 1.2,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.06,
+    0.3,
+    0.0
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -53,7 +69,11 @@
    "status": "MODELLED",
    "mass_g": 1.2,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.06,
+    -0.3,
+    0.0
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -64,7 +84,11 @@
    "status": "MODELLED",
    "mass_g": 1.2,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.06,
+    0.38,
+    0.0
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -75,7 +99,11 @@
    "status": "MODELLED",
    "mass_g": 1.2,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.06,
+    -0.38,
+    0.0
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -84,9 +112,13 @@
    "name": "Elevon right",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 8.0,
+   "mass_g": 6.7,
    "material": "XPS foam + tape",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.2042,
+    0.195,
+    -0.0048
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -95,9 +127,13 @@
    "name": "Elevon left",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 8.0,
+   "mass_g": 6.7,
    "material": "XPS foam + tape",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.2042,
+    -0.195,
+    -0.0048
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -108,7 +144,11 @@
    "status": "MODELLED",
    "mass_g": 16.1,
    "material": "lead + PETG/CF",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1654,
+    0.285,
+    -0.003
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -117,9 +157,13 @@
    "name": "Lens cap + stop bosses (R, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.0,
+   "mass_g": 3.8,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1579,
+    0.285,
+    0.0059
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -128,9 +172,13 @@
    "name": "Lens cap + stop bosses (R, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.2,
+   "mass_g": 3.8,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1595,
+    0.285,
+    -0.0113
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -141,7 +189,11 @@
    "status": "MODELLED",
    "mass_g": 2.0,
    "material": "PETG + silicone",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1837,
+    0.3607,
+    0.0003
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -152,7 +204,11 @@
    "status": "MODELLED",
    "mass_g": 0.5,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1837,
+    0.3566,
+    0.0003
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -163,7 +219,11 @@
    "status": "MODELLED",
    "mass_g": 16.1,
    "material": "lead + PETG/CF",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1654,
+    -0.285,
+    -0.003
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -172,9 +232,13 @@
    "name": "Lens cap + stop bosses (L, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.0,
+   "mass_g": 3.8,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1579,
+    -0.285,
+    0.0059
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -183,9 +247,13 @@
    "name": "Lens cap + stop bosses (L, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.2,
+   "mass_g": 3.8,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1595,
+    -0.285,
+    -0.0113
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -196,7 +264,11 @@
    "status": "MODELLED",
    "mass_g": 2.0,
    "material": "PETG + silicone",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1837,
+    -0.3607,
+    0.0003
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -207,7 +279,11 @@
    "status": "MODELLED",
    "mass_g": 0.5,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1837,
+    -0.3566,
+    0.0003
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   }
@@ -396,8 +472,11 @@
   "E-CGE-14",
   "E-CGE-17",
   "E-FIN-04",
-  "E-FIN-10",
+  "E-FIN-08",
+  "E-FIN-12",
+  "E-FIN-16",
   "E-HRN-20",
+  "E-HRN-21",
   "E-MEC-01",
   "E-MEC-05",
   "E-MEC-06",

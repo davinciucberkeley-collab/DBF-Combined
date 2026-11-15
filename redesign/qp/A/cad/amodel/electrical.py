@@ -1,70 +1,298 @@
-"""amodel/electrical.py - LANE C (avionics, power, mechanisms, harness, hardware): pack (PWR-001), avionics plate + FC/RX/GPS/
-airspeed/pitot (AVN-*), servos/arms/pushrods/horns (MEC-*), landing feet (GER-*, kept here so the PARTS/EDGES registration order
-stays identical: it sits on the fin tubes, lane A reviews it), harness + hardware lumps (HRN-001, HRD-001), electrical edges and wires,
-and builders build_power / build_avionics / build_mechanisms / build_landing / build_harness / build_assembly (the generic joint
-pass over EDGES). Split from a_model.py; no geometry change. Lane C also owns gen_interfaces.py.
+"""amodel/electrical.py - LANE C (avionics, power, mechanisms, harness, hardware): pack (PWR-001) + strap (PWR-002), avionics plate +
+FC stack / RX / GPS / airspeed / pitot (AVN-*), servos / arms / pushrods / horns (MEC-*), landing feet (GER-*, kept here so the
+PARTS/EDGES registration order stays identical), harness wires (real gauges), XT60 female + tail (HRN-002), modelled hardware sets
+(HWC-*), the remaining lumps (HRN-001, HRD-001), electrical edges, and builders build_power / build_avionics / build_mechanisms /
+build_landing / build_harness / build_assembly (the generic joint pass over EDGES). Lane C also owns gen_interfaces.py.
 
-Lane C edits only this file. It reads shared constants from common.py (see its header: PACK_X, TRIM, TRAY_X1, SERVO_Y, SV_Z1,
-PLATE_*/ZP, FIN_*, YFIN, XFIN_T, ELEV_POSE ...): changing those needs coordination. It imports ESC_PADS and ESC_TOP from
-propulsion.py (lane B). Constants defined HERE are lane C's alone: PACK_L/W/H, PACK_Z0, X_GROUND, FC_*, GEL, GEL_XY, RX_B, GPS_B,
-AS_B, FC_PADS, FC_TOP, SV_X0/X1/DY/Z0, ARM_X0/X1/Z1, ROD_Z, HORN_X0/X1.
-IMPORT ORDER MATTERS: PARTS/EDGES are ordered tables; amodel/__init__.py imports wing, propulsion, electrical in that order.
+CAD FIDELITY ROUND (2026-11-15, QP-5 CAD-FIDELITY-AUDIT.md lane C). Source labels in comments:
+  V  = vendor page read 2026-11-15 (URL given); DOC = repo document; CALC = computed here; ISO = standard value;
+  EST = estimate / CAD interpretation, NOT published: every EST dimension is "measure on arrival" and is listed in the lane C report;
+  "-" = not published, not drawn.
+Lane C edits only this file. It reads shared constants from common.py (PACK_X, TRIM, TRAY_X1, SERVO_Y, SV_Z1, PLATE_*/ZP, FIN_*,
+YFIN, XFIN_T, ELEV_POSE ...) and imports ESC_PADS / ESC_TOP from propulsion.py (lane B): every wire route that ends on the ESC uses
+those names, so moving the ESC pads moves the routes. IMPORT ORDER MATTERS: amodel/__init__.py imports wing, propulsion,
+electrical in that order.
 """
+import math
+
 from .common import *   # noqa: F401,F403
+from .wing import HINGE_Z   # noqa: F401  (read only: hinge axis height for the horn hole radius)
 from .propulsion import ESC_PADS, ESC_TOP   # noqa: F401  (harness wires land on the ESC pads; lane B owns them)
 
+MM = 0.001
+
+
+# ------------------------------------------------------------------ small geometry helpers (2-D loops, 3-D vectors)
+def _ring(cx, cy, r, n=14, ph=0.0):
+    return [(cx + r * math.cos(ph + 2 * math.pi * i / n), cy + r * math.sin(ph + 2 * math.pi * i / n)) for i in range(n)]
+
+
+def _rrect(x0, y0, x1, y1, r, n=4):
+    """Counter-clockwise rounded rectangle."""
+    pts = []
+    for cx, cy, a0 in ((x1 - r, y0 + r, -90), (x1 - r, y1 - r, 0), (x0 + r, y1 - r, 90), (x0 + r, y0 + r, 180)):
+        for i in range(n + 1):
+            a = math.radians(a0 + 90.0 * i / n)
+            pts.append((cx + r * math.cos(a), cy + r * math.sin(a)))
+    return pts
+
+
+def _hex(cx, cy, af, ph=math.pi / 6):
+    return _ring(cx, cy, af / math.sqrt(3), 6, ph)
+
+
+def _sub(a, b):
+    return tuple(a[i] - b[i] for i in range(3))
+
+
+def _add(a, b):
+    return tuple(a[i] + b[i] for i in range(3))
+
+
+def _mul(a, k):
+    return tuple(a[i] * k for i in range(3))
+
+
+def _dot(a, b):
+    return sum(a[i] * b[i] for i in range(3))
+
+
+def _cross(a, b):
+    return (a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0])
+
+
+def _unit(a):
+    n = math.sqrt(_dot(a, a))
+    return tuple(c / n for c in a)
+
+
+def _strands(P, d, offs):
+    """Round strands of diameter d laid along polyline P. offs: list of (a, b) offsets (m) along (side, up), constant, or a list of (a, b)
+    per vertex. Rotation-minimising frame per segment; each corner is MITRED (the two offset lines are intersected), so strands of one
+    bundle keep their spacing round a bend (D-194: the old per-vertex offsets let strands cross by 0.4-0.5 mm at corners).
+    Returns [(polyline, d), ...] for ctx.wire(strands=)."""
+    n = len(P)
+    segs = [_unit(_sub(P[i + 1], P[i])) for i in range(n - 1)]
+    ref = (0.0, 0.0, 1.0) if abs(segs[0][2]) < 0.9 else (1.0, 0.0, 0.0)
+    side = _unit(_cross(ref, segs[0]))
+    fr = [(side, _cross(segs[0], side))]
+    for i in range(1, n - 1):
+        e0, e1 = segs[i - 1], segs[i]
+        ax = _cross(e0, e1)
+        if _dot(ax, ax) < 1e-12:
+            fr.append(fr[-1])
+            continue
+        ax = _unit(ax)
+        cth, sth = _dot(e0, e1), _dot(_cross(e0, e1), ax)
+
+        def rot(v):          # Rodrigues rotation about ax by the bend angle
+            return _add(_add(_mul(v, cth), _mul(_cross(ax, v), sth)), _mul(ax, _dot(ax, v) * (1 - cth)))
+        sd = rot(fr[-1][0])
+        fr.append((sd, _cross(e1, sd)))
+    out = []
+    for o in offs:
+        off = []
+        for i in range(n - 1):
+            a_, b_ = o[i] if isinstance(o, list) else o
+            off.append(_add(_mul(fr[i][0], a_), _mul(fr[i][1], b_)))
+        line = [_add(P[0], off[0])]
+        for i in range(1, n - 1):
+            q1, q2 = _add(P[i], off[i - 1]), _add(P[i], off[i])
+            e0, e1 = segs[i - 1], segs[i]
+            w = _sub(q2, q1)
+            c = _dot(e0, e1)
+            den = 1 - c * c
+            if den < 1e-9:
+                line.append(q1)
+                continue
+            sct = (_dot(w, e0) - c * _dot(w, e1)) / den       # q1 + s e0 meets q2 + u e1 (coplanar for a rotation-minimising frame)
+            line.append(_add(q1, _mul(e0, sct)))
+        line.append(_add(P[-1], off[-1]))
+        out.append((line, d))
+    return out
+
+
+def _terms(ctx, eid, margin=0.0003):
+    """Solder joint / crimp block (EST) on the host part at each strand end of the wire just registered, so the strand ends sit in a part
+    (a wire end must be seated). Block = strand diameter + 2 x margin, centred on the end point."""
+    w = ctx.wires[-1]
+    ed = [e for e in EDGES if e['id'] == eid][0]
+    pa, pb = ed['part_a'], ed['part_b']
+    for line, d in (w.strands or [(w.points, w.dia)]):
+        for pt in (line[0], line[-1]):
+            def _dist(pid):                                  # distance from the end point to the part's world bounding box
+                (l0, l1) = ctx.components[pid].bbox()
+                return math.sqrt(sum(max(l0[k] - pt[k], 0.0, pt[k] - l1[k]) ** 2 for k in range(3)))
+            host = pa if _dist(pa) <= _dist(pb) else pb
+            h = ctx.components.get(host)
+            if h is None:
+                continue
+            r = d / 2 + margin
+            pt = h.to_local(pt)
+            h.box((pt[0] - r, pt[1] - r, pt[2] - r), (pt[0] + r, pt[1] + r, pt[2] + r), name='solder joint / crimp at the wire end (EST)')
+
+
+def _tri(d):
+    r = d / math.sqrt(3)
+    return [(r * math.cos(math.radians(a)), r * math.sin(math.radians(a))) for a in (90, 210, 330)]
+
+
+def _legs(part, P, d, name, ext=True):
+    """Round wire body along an axis-aligned polyline P (cylinders; interior ends extended by the radius so corners close)."""
+    r = d / 2
+    for i in range(len(P) - 1):
+        a, b = P[i], P[i + 1]
+        k = [j for j in range(3) if abs(b[j] - a[j]) > 1e-9]
+        assert len(k) == 1, 'wire leg not axis-aligned'
+        k = k[0]
+        s = 1.0 if b[k] > a[k] else -1.0
+        p0, p1 = list(a), list(b)
+        if ext and i > 0:
+            p0[k] -= s * r
+        if ext and i < len(P) - 2:
+            p1[k] += s * r
+        part.cylinder('XYZ'[k], tuple(p0), p1[k] - p0[k], r, name=name)
+
+
+def _pcb(part, x0, y0, x1, y1, z0, t, holes=(), hole_r=1.1 * MM, r=1.0 * MM, name='PCB'):
+    loops = [_rrect(x0, y0, x1, y1, r, 3)] + [_ring(hx, hy, hole_r, 12) for hx, hy in holes]
+    part.prism('Z', z0, loops, t, name=name)
+
+
+def _pad(part, x, y, z, name, s=1.6 * MM, h=0.25 * MM):
+    part.box((x - s / 2, y - s / 2, z), (x + s / 2, y + s / 2, z + h), name=name)
+
+
+RHO_STEEL, RHO_PA66, RHO_BRASS = 7.9, 1.14, 8.5          # g/cm3 ISO / catalogue (A2 stainless 7.9, nylon PA66 1.14)
+
+
+def _g_screw(d, L, dk, k, rho=RHO_STEEL):
+    """CALC: pan-head screw mass g (shank + 0.85 x head disc for the dome and recess)."""
+    return rho * (math.pi / 4 * d * d * L + 0.85 * math.pi / 4 * dk * dk * k) * 1e6
+
+
+def _g_nut(af, m, d, rho=RHO_STEEL):
+    return rho * ((math.sqrt(3) / 2 * af * af - math.pi / 4 * d * d) * m) * 1e6
+
+
 # ------------------------------------------------------------------ lane C constants (m)
-PACK_L, PACK_W, PACK_H = 0.105, 0.035, 0.029                    # V RMRC Tattu 2300 4S: 105 x 35 x 29
+PACK_L, PACK_W, PACK_H = 0.105, 0.035, 0.029                    # V RMRC Tattu 2300 4S 105 x 35 x 29 (readymaderc.com/products/details/tattu-2300-75c-4s1p-xt60, 2026-11-15; EU retailers list 105 x 33 x 28)
 PACK_Z0 = 0.008
+PACK_R = 3.0 * MM                           # EST pouch corner radius under the shrink (not published): measure
+LEAD_D = 3.0 * MM                           # EST 14 AWG silicone insulation OD (V: Tattu page lists "14 AWG", no OD): measure
+LEAD_LEN = 0.100                            # V nextfpv / gravesrc "about 100 mm" (audit; one retailer says 35/60 mm): measure on arrival
+LEAD_PITCH = 7.2 * MM                       # EST XT60 pin pitch (Amass XT60: two 3.5 mm pins; not fetched): measure
+XT60_W, XT60_H = 15.5 * MM, 8.1 * MM        # V Pololu 2174/2175 listing "15.5 x 8.1 x 20.5" (pololu.com/product/2174, 2026-11-15); Amass drawing not readable (components101 PDF is an image)
+XT60_L = 12.0 * MM                          # EST: each half 12 mm so a mated pair is 24 mm (V Fingertech listing, robotshop.com, "mated length 24 mm"); Pololu 20.5 mm probably includes solder cups
+XT60_CH = 2.0 * MM                          # EST keying chamfer on the lower corners
+PACK_XL = 0.0025                            # EST: power leads leave the pack end face in its aft 10 mm (x -2.5..7.5), clear of the 25 mm strap (x -27.5..-2.5)
+PACK_ZL = PACK_Z0 + PACK_H / 2              # lead exit height: mid thickness (EST)
+LEAD_Y1 = 0.0635                            # EST: leads leave the end face (y +52.5 mm) 11 mm, then run aft on the skin outboard of the plate (half width 55)
+_xt0 = 0.085                                # male housing starts here (EST), female to _xt0 + 2 XT60_L
+XT_Z = max(zu(x) for x in (_xt0, _xt0 + 2 * XT60_L)) + XT60_H / 2 + 0.0002          # CALC: connector centre height, sits on the skin
+STRAP_W, STRAP_T = 25 * MM, 1.6 * MM        # BOM W/E-PWR-01: 25 mm strap; thickness EST (hook + loop, 2 layers)
+STRAP_X0 = PACK_X[0]                        # strap fore edge (nominal pack position): strap x -27.5..-2.5 (pack at trim 0)
 X_GROUND = 0.3375                           # EST: pad aft face (pad 30 mm DOC)
 FC_X0 = 0.045                                                          # QP-4: FC hard-mounted ON the spar centre (spar axis x 0.060 = FC centre); ESC moved aft of it
-GEL = 0.0015                                                           # EST thin foam tape (1.5 mm): FC HARD-MOUNTED (BOARD s3 D-186, s1 item 5); was 5 mm gel pads. CAD gates must be re-run
-FC_B = ((FC_X0, -0.0125, ZP + GEL), (FC_X0 + 0.030, 0.0125, ZP + GEL + 0.020))             # V Kakute Wing Mini 30 x 25 x 20 (stack envelope)
-RX_B = ((0.102, -0.0525, ZP), (0.122, -0.0405, ZP + 0.004))            # EST RP3 V2 (moved aft-left: the ESC took its place)
-GPS_B = ((0.045, 0.0275, ZP), (0.070, 0.0525, ZP + 0.008))             # EST TBS M10Q
-AS_B = ((0.045, -0.0525, ZP), (0.060, -0.0375, ZP + 0.008))            # EST MS4525 board
-_f = FC_X0 - 0.071
-FC_PADS = {'ESC': (0.0745 + _f, 0.0), 'GPS': (0.0745 + _f, 0.008), 'I2C': (0.0745 + _f, -0.008), 'S5': (0.0875 + _f, 0.009),
-           'S6': (0.0875 + _f, -0.009), 'RX': (0.0975 + _f, 0.0)}
-FC_TOP = ZP + GEL + 0.020
-GEL_XY = [(0.048, -0.0095), (0.048, 0.0095), (0.072, -0.0095), (0.072, 0.0095)]    # EST under the four M2 holes
-SV_X0, SV_X1, SV_DY, SV_Z0 = 0.1270, 0.1554, 0.01335, -0.0013    # SERVO.md: EMAX ES3054HV 28.4 x 13.0 x 26.7 (servodatabase / getfpv, 2026-11-15; spline kept at x 140.5); SV_Z1 = 0.0117 is in common.py
-ARM_X0, ARM_X1, ARM_Z1 = 0.1405, 0.1525, SV_Z1 + 0.0020   # FIXES2: servo arm 19 -> 12 mm (pushrod end at 12 mm radius = horn radius 12.9 mm; the QP-4 CAD arm was longer than the horn, which the SERVO.md torque check assumed equal)
-ROD_Z = 0.0127
-HORN_X0, HORN_X1 = 0.195, 0.209
+GEL = 0.0030                                                           # EST foam tape 3.0 mm (was 1.5; D-194 stock-screw stack height): FC HARD-MOUNTED (BOARD s3 D-186, s1 item 5)
+T_PCB = 1.6 * MM                            # EST PCB thickness (not published): measure
+FC_CX = FC_X0 + 0.015
+FC_HOLES = [(FC_CX + sx * 0.010, sy * 0.010) for sx in (-1, 1) for sy in (-1, 1)]   # V Holybro 20 x 20 mm M2 pattern (phone-readable on retailer pages, 2026-11-15)
+GEL_XY = FC_HOLES                           # tape pads sit under the four M2 holes (was 24 x 19 EST)
+FC_TOP = ZP + GEL + 0.020                   # V Holybro stack height 20 mm (envelope kept: bottom board on the pads, top board at the top)
+FC_B = ((FC_X0, -0.0125, ZP + GEL), (FC_X0 + 0.030, 0.0125, FC_TOP))   # V Holybro 30 x 25 x 20 stack (holybro.com/products/kakute-f405-wing-mini)
+FC_ZB = ZP + GEL                            # bottom board underside
+FC_ZB_TOP = FC_ZB + T_PCB
+FC_STANDOFF = (FC_TOP - T_PCB) - FC_ZB_TOP  # CALC 16.8 mm: ASSUMES the two boards are at the bottom and top of the 20 mm stack: spacing is NOT published ("-")
+# solder pad layout (EST: the Holybro pinout page gives pad names only, board images not readable): (x, y, z)
+FC_PADS = {'ESC': (0.0475, 0.0, FC_ZB_TOP), 'S5': (0.0725, 0.005, FC_ZB_TOP), 'S6': (0.0725, -0.005, FC_ZB_TOP),
+           'GPS': (0.0475, 0.005, FC_TOP), 'I2C': (0.0475, -0.005, FC_TOP), 'RX': (0.0725, 0.0, FC_TOP)}
+RX_B = ((0.102, -0.0525), (0.124, -0.0395))  # V RadioMaster RP3 V2 22 x 13 x 4 mm (readymaderc 85670, 2026-11-15): 22 along x, 13 along y
+RX_T = 4.0 * MM
+GPS_B = ((0.045, 0.0275), (0.070, 0.0525))   # V TBS M10Q 25 x 25 x 7.7 mm (readymaderc 86501)
+GPS_T = 7.7 * MM
+AS_B = ((0.045, -0.0525), (0.060, -0.0375))  # EST RMRC MS4525 board 15 x 15 (size not published)
+AS_T = 8.0 * MM                             # EST
+SV_X0, SV_X1, SV_DY, SV_Z0 = 0.1270, 0.1554, 0.01335, -0.0013 - WING_DZ    # SERVO.md: EMAX ES3054HV 28.4 x 13.0 x 26.7 (servodatabase / getfpv, 2026-11-15); ears, output boss: "-" (no drawing)
+SV_XS = 0.1405                              # spline axis x (kept; spline axis is vertical, arm turns in the x-y plane)
+ARM_R = 12.0 * MM                           # FIXES2 s1.3: servo arm 12 mm to the pushrod hole
+ARM_Z0 = SV_Z1                              # arm sits on the case top (output boss height "-": measure; a real boss lifts the arm)
+ARM_T = 2.0 * MM                            # EST arm thickness
+ARM_Z1 = ARM_Z0 + ARM_T
+ROD_D = 1.2 * MM                            # V RMRC linkage set 1.2 mm rods
+ROD_Z = ARM_Z1 + ROD_D / 2                  # rod rests on the arm top, Z-bent down through the arm hole
+HORN_R = 12.9 * MM                          # FIXES2 s1.3: rod hole radius from the hinge axis
+HORN_XH = XH + math.sqrt(HORN_R ** 2 - (ROD_Z - HINGE_Z) ** 2)     # CALC hole x on the 12.9 mm radius
+HORN_X0, HORN_X1 = HORN_XH - 0.0015, HORN_XH + 0.0135      # EST blade 15 mm long (horn size "-": RMRC lists "20 mm horns"); D-194: blade starts 1.5 mm ahead of the hole, the clevis sleeve ends 2.0 mm ahead of it
+ROD_Y = lambda sy: sy * (SERVO_Y - ARM_R)   # arm tip (neutral) and horn hole share this y: the rod runs parallel to x
+HORN_TOP = ROD_Z + 0.0022                   # EST blade top 2.2 mm above the hole axis
+SPLINE_TEETH = 23                           # V readymaderc 85975 "23T output gear spline" (read 2026-11-15); the old stack said 25T (ES3352 copy): RESOLVED to 23T
+
+# hardware masses CALC (HW_DIMS M2: pan dk 3.8 k 1.6; thin nut af 4.0 m 1.2; nut ISO 4035/DIN 439 EST)
+FCS_L = {}                                  # per-hole screw length, filled below
+_NUT_M = 1.2 * MM
+
+
+def _nut_bottom(x):
+    return max(zu(x + dx) for dx in (-2.4 * MM, 0.0, 2.4 * MM)) + 0.0001
+
+
+FCS_STOCK = 0.025                                              # D-194: stock M2 x 25 pan screw (stock lengths 20/22/25/30); pads 3.0 mm (generic 3 mm double-sided foam tape, EST) set the stack height
+FCS_L = {h: FCS_STOCK for h in FC_HOLES}      # stock M2 x 25: tips end 0.1 mm short of to 0.6 mm past the nut bottom (the core carries 4 shop relief holes for the tips: HWC-001 is a core seat guest)
+M_FC_SCREWS = round(sum(_g_screw(2.0 * MM, L, 3.8 * MM, 1.6 * MM) for L in FCS_L.values()), 2)
+M_FC_NUTS = round(4 * _g_nut(4.0 * MM, _NUT_M, 2.0 * MM), 2)
+M_FC_SET = round(M_FC_SCREWS + M_FC_NUTS, 2)    # HWC-001 screws + HWC-003 nuts (nuts are seated in the plate before the plate goes on the skin: separate build step)
+M_ARM_SCREW = round(_g_screw(2.0 * MM, 6.0 * MM, 3.8 * MM, 1.6 * MM), 2)     # M2 x 6 pan (kept from the old stack)
+M_STANDOFFS = 4 * RHO_PA66 * math.pi / 4 * (4.0 ** 2 - 2.2 ** 2) * FC_STANDOFF   # g, nylon standoffs (part of AVN-002's 17 g)
+M_XT60_F = 3.0                              # EST g: XT60 female half
+M_TAIL = 5.0   # EST 2 x 0.10 m of 14 AWG at 25 g/m (V: RMRC wire page lists no mass) = 5 g
+M_STRAP = 3.0                               # EST g: 25 mm hook-and-loop, 0.32 m
 
 
 # ------------------------------------------------------------------ parts
 # power / avionics
 P('PWR-001', 'Pack Tattu 2300 mAh 4S 75C', 'power', 270.0, 'LiPo', 'buy', 'source')
-P('AVN-001', 'Avionics plate', 'avionics', 8.0, 'PETG (printed)')   # QP-4 FIXES 12 -> 8 g: 4 lightening windows, EST
+P('PWR-002', 'Pack strap 25 mm hook-and-loop (round pack and tray)', 'power', M_STRAP, 'hook-and-loop nylon', 'buy')
+P('AVN-001', 'Avionics plate', 'avionics', 8.0, 'PETG (printed)')   # QP-4 FIXES 12 -> 8 g: 4 lightening windows (now drawn)
 P('AVN-002', 'Flight controller Kakute F405 Wing Mini', 'avionics', 17.0, 'PCB', 'buy', 'bus')
-P('AVN-007', 'Foam-tape pads x4 (FC hard mount, 1.5 mm)', 'avionics', 1.0, 'VHB-class foam tape', 'buy')
-P('AVN-003', 'Receiver RP3 V2 ELRS', 'avionics', 3.0, 'PCB', 'buy', 'sink')
+P('AVN-007', 'Foam-tape pads x4 (FC hard mount, 3.0 mm)', 'avionics', 1.0, 'VHB-class foam tape', 'buy')
+P('AVN-003', 'Receiver RP3 V2 ELRS', 'avionics', 4.6, 'PCB', 'buy', 'sink')       # V 4.6 g with antennas (readymaderc 85670)
 P('AVN-004', 'GPS TBS M10Q + compass', 'avionics', 13.5, 'PCB', 'buy', 'sink')
 P('AVN-005', 'Airspeed sensor MS4525 board', 'avionics', 3.0, 'PCB', 'buy', 'sink')
 P('AVN-006', 'Pitot probe', 'avionics', 5.0, 'brass tube', 'buy')
+P('HWC-001', 'FC mounting screws: 4 x M2 x 25 pan screw (stock)', 'avionics', M_FC_SCREWS, 'A2 stainless', 'buy')
+P('HWC-003', 'FC mounting nuts: 4 x M2 thin nut (DIN 439 1.2 mm) in the plate hex pockets', 'avionics', M_FC_NUTS, 'A2 stainless', 'buy')
 # mechanisms (30 g with linkage)
 for s in 'RL':
     P('MEC-001-' + s, 'Servo EMAX ES3054HV (%s)' % s, 'mechanisms', 20.5, 'plastic / metal gear', 'buy', 'sink')
     P('MEC-002-' + s, 'Servo arm (%s)' % s, 'mechanisms', 1.0, 'nylon', 'buy')
-    P('MEC-003-' + s, 'Pushrod 1.2 mm (%s)' % s, 'mechanisms', 1.0, 'steel', 'buy')
+    P('MEC-003-' + s, 'Pushrod 1.2 mm with Z-bend and clevis (%s)' % s, 'mechanisms', 0.97, 'steel', 'buy')
+    P('MEC-005-' + s, 'Clevis pin 1.0 x 4.4 mm (%s); mass CALC steel, carried inside the 1.0 g rod before D-194' % s, 'mechanisms', 0.03, 'steel', 'buy')
     P('MEC-004-' + s, 'Control horn (%s)' % s, 'mechanisms', 1.0, 'nylon', 'buy')
+    P('HWC-002-' + s, 'Servo arm screw M2 x 6 pan (%s)' % s, 'mechanisms', M_ARM_SCREW, 'A2 stainless', 'buy')
 # landing
 for s in ST:
     P('GER-001-' + s, 'Foot shoe (%s)' % s, 'landing', 1.4, 'PETG (printed)')
     P('GER-002-' + s, 'Foot pad EVA/PE 12x15x30 (%s)' % s, 'landing', 0.7, 'EVA / PE foam')
-# harness / hardware lumps (proxies: mass and CG count, not drawn)
+# harness: XT60 female + tail (modelled), remaining lump
+P('HRN-002', 'XT60 female + 14 AWG tail to the ESC (modelled)', 'harness', M_XT60_F + M_TAIL, 'copper / silicone / nylon', 'buy', 'bus', carried=True)
 P('HRN-001', 'Harness remainder (wire, connectors, ties, tubing; MASS-GATE avionics 110 g less itemised parts) - lumped',
   'harness', None, 'copper / silicone', cg=[0.030, 0.0, 0.020], mass_proxy=True, carried=True)
-P('HRD-001', 'Hardware: screws, nuts, epoxy fillets, paint (MASS-GATE 40 g less rib saddles) - lumped', 'assembly',
-  30.0, 'steel / epoxy', cg=[0.100, 0.0, 0.0], mass_proxy=True, carried=True)   # QP-4 FIXES 37 -> 30 g: no paint (tape-skinned), EST bottom-up in FIXES.md
-PARTS['HRN-001']['mass_g'] = round(106.0 - sum(PARTS[k]['mass_g'] for k in PARTS if k.startswith('AVN-')), 1)
+HRD_BASE_G = 30.0                           # QP-4 FIXES 37 -> 30 g (before this round)
+HRD_C_MODELLED_G = round(M_FC_SET + 2 * M_ARM_SCREW, 2)    # lane C hardware now drawn (lanes A and B subtract theirs)
+P('HRD-001', 'Hardware: screws, nuts, epoxy fillets, paint (MASS-GATE 40 g less rib saddles) - lumped, less modelled sets', 'assembly',
+  round(HRD_BASE_G - HRD_C_MODELLED_G, 2), 'steel / epoxy', cg=[0.100, 0.0, 0.0], mass_proxy=True, carried=True)
+HRN_BASE_G = 106.0
+PARTS['HRN-001']['mass_g'] = round(HRN_BASE_G - sum(PARTS[k]['mass_g'] for k in PARTS if k.startswith('AVN-'))
+                                   - PARTS['HRN-002']['mass_g'] - PARTS['PWR-002']['mass_g'], 1)
 
 # ------------------------------------------------------------------ edges
 # power
-E(en('PWR'), 'PWR-001', 'CGE-008', 'CT-STRAP-VELCRO', 'power', 'hook-and-loop strap round pack and tray, lips fore and aft',
+E(en('PWR'), 'PWR-002', 'CGE-008', 'CT-STRAP-VELCRO', 'power', 'hook-and-loop strap round pack and tray: over the pack top, outside the tray end walls, under the tray plate AND the 12 mm bridge tube CGE-004 (tangent to the plate underside, z -6..6)',
   retention=dict(item='25 mm strap', count=1, load_n=38.8), field_joint=True)
+E(en('PWR'), 'PWR-001', 'CGE-008', 'CT-STRAP-VELCRO', 'power', 'pack sits on the tray floor on a hook-and-loop anti-slip pad (pad not drawn, EST), between the integral lips; strap PWR-002 holds it',
+  retention=dict(item='anti-slip pad + strap', count=1), field_joint=True)
+E(en('PWR'), 'PWR-002', 'PWR-001', 'CT-STRAP-VELCRO', 'power', 'strap bears on the pack top face')
 # avionics
 E(en('AVN'), 'AVN-001', 'WNG-001', CA, 'avionics', 'plate base follows the upper skin (same vertices as the core)')
 E(en('AVN'), 'AVN-007', 'AVN-001', 'CT-GEL-PAD', 'avionics', 'four thin foam-tape pads on the plate (FC on the wing centre, not on the cage hub: SITL-FLIGHT follow-up 2; hard mount, BOARD D-186)')
@@ -72,103 +300,235 @@ E(en('AVN'), 'AVN-002', 'AVN-007', 'CT-GEL-PAD', 'avionics', 'FC on the tape pad
 for pid in ('AVN-003', 'AVN-004', 'AVN-005'):
     E(en('AVN'), pid, 'AVN-001', TAPEF, 'avionics', 'foam tape + tie', retention=dict(item='VHB-class tape', count=1))
 E(en('AVN'), 'AVN-006', 'WNG-001', EPX, 'avionics', 'pitot in a groove in the LE at y = +0.41 (outside the rotor wash, EST)')
+_e_fc = en('AVN')
+EDGES.append(dict(id=_e_fc, part_a='HWC-001', part_b='AVN-002', via='CT-HW-SEATED', owner='avionics', hardware=True,
+                  notes='four M2 screws through the stack standoffs (hardware of E-AVN-03)',
+                  joint_stack=STACK('M2 x 25 pan screw (stock)', 4, 'boards 2.2 mm clearance (EST), standoffs ID 2.2', 30,
+                                    eng=1.2, mineng=1.0)))
+_e_fs = en('AVN')
+EDGES.append(dict(id=_e_fs, part_a='HWC-001', part_b='HWC-003', via='CT-HW-SEATED', owner='avionics', hardware=True,
+                  notes='screw threads into the nut (stock M2 x 25: tip 0.1 mm short of to 0.6 mm past the nut bottom)',
+                  joint_stack=STACK('M2 x 25 pan screw into M2 thin nut', 4, 'nut thread', 31, eng=1.1, mineng=1.0)))
+_e_fp = en('AVN')
+EDGES.append(dict(id=_e_fp, part_a='HWC-003', part_b='AVN-001', via='CT-HW-SEATED', owner='avionics', hardware=True,
+                  notes='four M2 thin nuts trapped in hex pockets on the plate underside (seated before the plate goes on the skin)',
+                  joint_stack=STACK('M2 pan screw + M2 thin nut (DIN 439, 1.2 mm)', 4, '2.2 mm hole + hex pocket in the plate (plate 1.5-2.1 mm)', 30,
+                                    eng=1.2, mineng=1.0)))
 # mechanisms
 for s in 'RL':
     E(en('MEC'), 'MEC-001-' + s, 'WNG-001', EPX, 'mechanisms', 'servo in its pocket')
-    E(en('MEC'), 'MEC-002-' + s, 'MEC-001-' + s, 'CT-SERVO-SPLINE', 'mechanisms', 'arm on the output spline',
-      joint_stack=STACK('M2x6 retaining screw', 1, 'arm bore on the 25T spline', 20, eng=4.0, mineng=3.0))
-    E(en('MEC'), 'MEC-003-' + s, 'MEC-002-' + s, 'CT-CLEVIS', 'mechanisms', 'rod end in the arm hole',
+    E(en('MEC'), 'MEC-002-' + s, 'MEC-001-' + s, 'CT-SERVO-SPLINE', 'mechanisms', 'arm on the 23T output spline (V readymaderc 85975; the old 25T was an ES3352 copy)',
+      joint_stack=STACK('M2x6 retaining screw', 1, 'arm bore on the 23T spline', 20, eng=4.0, mineng=3.0))
+    E(en('MEC'), 'MEC-003-' + s, 'MEC-002-' + s, 'CT-CLEVIS', 'mechanisms', 'rod Z-bend in the arm tip hole (vertical pin)',
       motion=dict(axis='Z', range_deg=[-30, 30]))
-    E(en('MEC'), 'MEC-003-' + s, 'MEC-004-' + s, 'CT-CLEVIS', 'mechanisms', 'rod end in the horn hole',
+    E(en('MEC'), 'MEC-003-' + s, 'MEC-004-' + s, 'CT-CLEVIS', 'mechanisms', 'rod clevis on the horn hole (horizontal pin)',
       motion=dict(axis='Y', range_deg=[-ELEV_POSE, ELEV_POSE]))
     E(en('MEC'), 'MEC-004-' + s, 'WNG-006-' + s, EPX, 'mechanisms', 'horn bonded on the elevon upper skin')
+    EDGES.append(dict(id='E-MEC-PIN-%s4' % s, part_a='MEC-005-' + s, part_b='MEC-004-' + s, via='CT-HW-SEATED', owner='mechanisms', hardware=True,
+                      notes='clevis pin through the horn hole (pressed in along y after the clevis is lowered onto the blade); moves with the horn',
+                      joint_stack=STACK('1.0 mm clevis pin', 1, 'horn hole 1.5 mm', 40, eng=2.0, mineng=2.0)))
+    EDGES.append(dict(id='E-MEC-PIN-%s3' % s, part_a='MEC-005-' + s, part_b='MEC-003-' + s, via='CT-CLEVIS', owner='mechanisms',
+                      notes='clevis pin through the cheek holes of the rod (the rod turns on it); linkage path not modelled in the poses',
+                      motion=dict(axis='Y', range_deg=[-ELEV_POSE, ELEV_POSE])))
+    for tgt in ('MEC-002-', 'MEC-001-'):
+        EDGES.append(dict(id='E-MEC-HW-%s%s' % (s, tgt[6]), part_a='HWC-002-' + s, part_b=tgt + s, via='CT-HW-SEATED', owner='mechanisms',
+                          hardware=True, notes='arm retaining screw (hardware of the spline joint)',
+                          joint_stack=STACK('M2x6 pan', 1, 'arm bore / output-shaft thread', 20, eng=4.0, mineng=3.0)))
 # landing
 for s in ST:
     tube = 'FIN-001-' + ('R' if ST[s][0] > 0 else 'L')
     E(en('GER'), 'GER-001-' + s, tube, EPX, 'landing', 'shoe cap on the tube end')
     E(en('GER'), 'GER-002-' + s, 'GER-001-' + s, TAPEF, 'landing', 'pad PSA on the shoe plate')
 # lumps (non-structural: located by ties)
+E('E-HRN-21', 'HRN-002', 'WNG-001', TAPEF, 'harness', 'XT60 pair and tail taped on the skin (foam tape) and tied', retention=dict(item='VHB-class tape', count=1))
 E('E-HRN-20', 'HRN-001', 'WNG-001', 'CT-TIE', 'harness', 'harness lump: ties and tape on the wing')
 E('E-ASM-01', 'HRD-001', 'WNG-001', 'CT-TIE', 'assembly', 'hardware lump')
-# electrical (owner harness); ELEC[eid] = wire diameter in the CAD
-EDGES.append(dict(id='E-HRN-01', part_a='PWR-001', part_b='PRP-003', via='CT-XT60', owner='harness',
-                  notes='pack main lead (XT60 at the pack, disconnect) to the ESC battery pads',
-                  wire=WIRE(14, 'XT60', 'R-A-01', ['rear tray lip', 'plate front edge'], 6, 'heat-shrink + tie', True),
+# electrical (owner harness); ELEC[eid] = wire diameter in the CAD (bundle envelope; strands carry the real diameters)
+EDGES.append(dict(id='E-HRN-01', part_a='PWR-001', part_b='HRN-002', via='CT-XT60', owner='harness',
+                  notes='pack lead XT60 male mated to the ESC-side XT60 female (disconnect); both lead pairs run outboard of the plate',
+                  wire=WIRE(14, 'XT60', 'R-A-01', ['tape on the skin'], 6, 'heat-shrink + tie', True),
                   current_a=dict(cont=11, peak=41)))
-ELEC['E-HRN-01'] = 0.004
+ELEC['E-HRN-01'] = 0.003
+EDGES.append(dict(id='E-HRN-12', part_a='HRN-002', part_b='PRP-003', via='CT-SOLDER-DC', owner='harness',
+                  notes='14 AWG tail from the XT60 female to the ESC battery pads (flat pair, inboard over the ESC)',
+                  wire=WIRE(14, 'solder + heat-shrink', 'R-A-12', ['tie at the plate edge'], 6, 'heat-shrink + tie'),
+                  current_a=dict(cont=11, peak=41)))
+ELEC['E-HRN-12'] = 0.0063
 for i, s in enumerate(ST):
     eid = 'E-HRN-%02d' % (2 + i)
     EDGES.append(dict(id=eid, part_a='PRP-003', part_b='PRP-001-' + s, via='CT-SOLDER-PHASE', owner='harness',
-                      notes='motor phase leads %s: ESC pad, over the LE, along the arm on the aft side, through the cup hole' % s,
-                      wire=WIRE(18, 'solder + heat-shrink', 'R-A-%02d' % (2 + i),
+                      notes='motor phase leads %s (3 x 20 AWG, V T-Motor page): ESC pad, over the LE, along the arm on the aft side, through the cup hole' % s,
+                      wire=WIRE(20, 'solder + heat-shrink', 'R-A-%02d' % (2 + i),
                                 ['tie at the plate edge', 'tie along the arm every 0.1 m', 'cup hole grommet'], 6,
                                 'heat-shrink + tie at the cup'),
                       current_a=dict(cont=10.9, peak=12.1)))
-    ELEC[eid] = 0.004
+    ELEC[eid] = 0.0043
 EDGES.append(dict(id='E-HRN-06', part_a='PRP-003', part_b='AVN-002', via='CT-JST-GH-6', owner='harness',
-                  notes='ESC lead to the FC (VBAT, signals, telemetry)',
+                  notes='ESC lead to the FC (VBAT, signals, telemetry): 6 conductors, soldered to the FC pads (the Kakute has pads, not sockets: docs.holybro.com pinout 2026-11-15)',
                   wire=WIRE(26, 'JST-GH 6-pin', 'R-A-06', ['tie on the plate'], 3, 'strain loop')))
-ELEC['E-HRN-06'] = 0.0025
+ELEC['E-HRN-06'] = 0.0078
 for i, s in enumerate('RL'):
     eid = 'E-HRN-%02d' % (7 + i)
     EDGES.append(dict(id=eid, part_a='AVN-002', part_b='MEC-001-' + s, via='CT-SERVO-JR', owner='harness',
-                      notes='servo lead %s: FC servo pad, over the plate, laid on the skin to the servo pocket' % s,
+                      notes='servo lead %s: 3-conductor ribbon, soldered to the FC pad M5/M6 (JR plug cut off; the FC has pads only), laid on the skin to the servo' % s,
                       wire=WIRE(26, 'JR 3-pin', 'R-A-%02d' % (7 + i), ['tie at the plate edge', 'tape on the skin'], 3,
                                 'strain loop')))
-    ELEC[eid] = 0.0025
-for eid, a, b, ct, nm in (('E-HRN-09', 'AVN-002', 'AVN-003', 'CT-JST-GH-4', 'RX UART'),
-                          ('E-HRN-10', 'AVN-002', 'AVN-004', 'CT-JST-GH-6', 'GPS'),
-                          ('E-HRN-11', 'AVN-002', 'AVN-005', 'CT-JST-GH-4', 'airspeed I2C')):
+    ELEC[eid] = 0.0036
+for eid, a, b, ct, nm, nc in (('E-HRN-09', 'AVN-002', 'AVN-003', 'CT-JST-GH-4', 'RX UART (CRSF wire soldered at the RX pads)', 4),
+                              ('E-HRN-10', 'AVN-002', 'AVN-004', 'CT-JST-GH-6', 'GPS (plug on the GPS board, other end soldered to the FC)', 6),
+                              ('E-HRN-11', 'AVN-002', 'AVN-005', 'CT-JST-GH-4', 'airspeed I2C (plug on the MS4525 board, other end soldered to the FC)', 4)):
     EDGES.append(dict(id=eid, part_a=a, part_b=b, via=ct, owner='harness', notes=nm + ' lead',
                       wire=WIRE(28, ct, 'R-' + eid[2:], ['tie on the plate'], 3, 'strain loop')))
-    ELEC[eid] = 0.0015
+    ELEC[eid] = 1.0 * MM * nc               # ribbon width (flat ribbon of nc x 1.0 mm)
 
 
 # ------------------------------------------------------------------ geometry builders
+def _xt60_loop(cx, cz, w=XT60_W, h=XT60_H, ch=XT60_CH):
+    """XT60 housing outline in the (y, z) plane (EST keying: the two lower corners chamfered)."""
+    return [(cx - w / 2 + ch, cz - h / 2), (cx + w / 2 - ch, cz - h / 2), (cx + w / 2, cz - h / 2 + ch), (cx + w / 2, cz + h / 2),
+            (cx - w / 2, cz + h / 2), (cx - w / 2, cz - h / 2 + ch)]
+
+
+def _lead_path(k):
+    """Centre line of pack lead k (+-1: outer / inner) from the end face to the male housing back (axis-aligned legs)."""
+    dx = k * LEAD_D * 0.53
+    y1 = LEAD_Y1 + k * LEAD_PITCH / 2
+    return [(PACK_XL + dx, PACK_L / 2, PACK_ZL), (PACK_XL + dx, y1, PACK_ZL), (PACK_XL + dx, y1, XT_Z), (_xt0, y1, XT_Z)]
+
+
 def build_power(ctx):
     pk = ctx.part('PWR-001', rgb=(0.15, 0.15, 0.6))
-    pk.box((PACK_X[0], -PACK_L / 2, PACK_Z0), (PACK_X[1], PACK_L / 2, PACK_Z0 + PACK_H), name='pack cells')
-    pk.box((PACK_X[1], -0.004, 0.0300), (PACK_X[1] + 0.0055, 0.004, 0.0350), name='lead exit')
+    pk.prism('Y', -PACK_L / 2, [_rrect(PACK_X[0], PACK_Z0, PACK_X[1], PACK_Z0 + PACK_H, PACK_R, 4)], PACK_L, name='pack cells (shrink-wrapped pouch)')
+    for k, nm in ((-1, 'lead (black)'), (1, 'lead (red)')):
+        _legs(pk, _lead_path(k), LEAD_D, 'pack ' + nm)
+    yc = LEAD_Y1
+    pk.prism('X', _xt0, [_xt60_loop(yc, XT_Z)], XT60_L, name='XT60 male housing')
+    # balance lead: 5 x 26 AWG-class (EST 1.2 mm OD), leaves the end face aft of the strap, up over the top edge and inboard along the pack top, JST-XH 5-pin plug
+    bx = PACK_X[1] - 0.0065
+    zt = PACK_Z0 + PACK_H
+    pts = [(bx, PACK_L / 2, PACK_ZL), (bx, PACK_L / 2 + 0.0015, PACK_ZL), (bx, PACK_L / 2 + 0.0015, zt + 0.0006), (bx, 0.017, zt + 0.0006)]
+    _legs(pk, pts, 1.2 * MM, 'balance lead (5 wires bundled)')
+    pk.box((bx - 2.9 * MM, 0.017 - 14.8 * MM, zt), (bx + 2.9 * MM, 0.017, zt + 9.8 * MM - 2.6 * MM), name='JST-XH 5-pin plug (EST height; V octopart 14.8 x 5.7 mm)')   # housing 14.8 x 5.7 V (octopart/JST XHP-5 listing 2026-11-15); height listing 9.8 mm is the mounted height: 7.2 EST drawn
+    # strap loop: axis x, ring around tray + pack
+    ctx_strap = ctx.part('PWR-002', rgb=(0.1, 0.1, 0.1))
+    yi = 0.0545
+    ctx_strap.prism('X', STRAP_X0, [_rrect(-yi - STRAP_T, -0.006 - STRAP_T, yi + STRAP_T, PACK_Z0 + PACK_H + STRAP_T, 0.0012, 3),
+                                    [(-yi, -0.006), (yi, -0.006), (yi, PACK_Z0 + PACK_H), (-yi, PACK_Z0 + PACK_H)]], STRAP_W, name='strap loop')
 
 
 def build_avionics(ctx):
+    # ---- plate with the four lightening windows (QP-4 FIXES: the 8 g assumes them)
     pl = ctx.part('AVN-001', rgb=(0.9, 0.9, 0.9))
     loop = [(XS[i], zu(XS[i])) for i in range(PLATE_I0, PLATE_I1 + 1)] + [(PLATE_X1, ZP), (PLATE_X0, ZP)]
     pl.prism('Y', -PLATE_Y, [loop], 2 * PLATE_Y, name='plate')
+    for (wx0, wx1, wy0, wy1) in ((0.080, 0.122, 0.021, 0.040), (0.080, 0.122, -0.040, -0.021),
+                                 (0.049, 0.072, 0.0155, 0.026), (0.049, 0.072, -0.026, -0.0155)):
+        pl.cut_box((wx0, wy0, -0.05), (wx1, wy1, ZP + 0.01), name='lightening window')       # EST layout, clear of the boards
+    for hx, hy in FC_HOLES:
+        pl.cut_cylinder('Z', (hx, hy, -0.05), ZP + 0.05, 1.1 * MM, name='M2 clearance hole')
+        nb = _nut_bottom(hx)
+        pl.cut_prism('Z', nb - 0.0001, [_hex(hx, hy, 4.2 * MM)], _NUT_M + 0.0003, name='M2 nut pocket')
+    # ---- foam-tape pads (one per M2 hole)
     gl = ctx.part('AVN-007', rgb=(0.6, 0.8, 0.9))
     for gx, gy in GEL_XY:
-        gl.box((gx - 0.003, gy - 0.003, ZP), (gx + 0.003, gy + 0.003, ZP + GEL), name='foam tape pad')
+        gl.prism('Z', ZP, [[(gx - 3 * MM, gy - 3 * MM), (gx + 3 * MM, gy - 3 * MM), (gx + 3 * MM, gy + 3 * MM), (gx - 3 * MM, gy + 3 * MM)],
+                           _ring(gx, gy, 1.1 * MM, 12)], GEL, name='foam tape pad')
+    # ---- FC stack: bottom (power) board, 4 nylon standoffs, top (FC) board, solder pads
     fc = ctx.part('AVN-002', rgb=(0.1, 0.1, 0.5))
-    fc.box(*FC_B, name='FC board envelope')
-    for k, (x, y) in FC_PADS.items():
-        nm = {'S5': 'servo pad S5', 'S6': 'servo pad S6'}.get(k, k + ' header')
-        fc.box((x - 0.002, y - 0.002, FC_TOP), (x + 0.002, y + 0.002, FC_TOP + 0.003), name=nm)
+    _pcb(fc, FC_X0, -0.0125, FC_X0 + 0.030, 0.0125, FC_ZB, T_PCB, FC_HOLES, r=1.5 * MM, name='Kakute power board (EST 1.6 mm)')
+    _pcb(fc, FC_X0, -0.0125, FC_X0 + 0.030, 0.0125, FC_TOP - T_PCB, T_PCB, FC_HOLES, r=1.5 * MM, name='Kakute FC board (EST 1.6 mm)')
+    for hx, hy in FC_HOLES:
+        k9.hw_washer(fc, 'Z', (hx, hy, FC_ZB_TOP), 1, 'M2', od=4.0 * MM, t=FC_STANDOFF, idia=2.2 * MM, name='nylon standoff (EST 4 mm OD)')
+    for k, (x, y, z) in FC_PADS.items():
+        _pad(fc, x, y, z, {'S5': 'servo pad S5', 'S6': 'servo pad S6', 'ESC': 'ESC signal pad', 'GPS': 'GPS pad', 'I2C': 'I2C pad', 'RX': 'RX pad'}[k])
+    # ---- FC mounting hardware set (screws from the top board down to a thin nut under the plate)
+    hw = ctx.part('HWC-001', rgb=(0.7, 0.7, 0.75))
+    for hx, hy in FC_HOLES:
+        L = FCS_L[(hx, hy)]
+        k9.hw_screw(hw, 'Z', (hx, hy, FC_TOP), -1, 'M2', L, 'pan', name='M2 pan screw')
+    hn = ctx.part('HWC-003', rgb=(0.7, 0.7, 0.75))
+    for hx, hy in FC_HOLES:
+        nb = _nut_bottom(hx)
+        hex_ = _hex(hx, hy, 4.0 * MM)
+        hn.prism('Z', nb, [hex_, _ring(hx, hy, 1.0 * MM, 12)], _NUT_M, name='M2 thin nut')
+    # ---- receiver RP3 V2: PCB, RF shield, solder pads, 2 antennas (65 mm class, drawn 50 mm: hinge at x 183.75)
     rx = ctx.part('AVN-003', rgb=(0.2, 0.2, 0.2))
-    rx.box(*RX_B, name='RX board envelope')
-    rx.box((0.1045, -0.0485, ZP + 0.004), (0.1085, -0.0445, ZP + 0.007), name='UART header')
+    (rx0, ry0), (rx1, ry1) = RX_B
+    _pcb(rx, rx0, ry0, rx1, ry1, ZP, 1.2 * MM, r=1.0 * MM, name='RP3 V2 PCB (EST 1.2 mm)')
+    rx.box((rx0 + 6 * MM, ry0 + 2.5 * MM, ZP + 1.2 * MM), (rx0 + 16 * MM, ry1 - 2.5 * MM, ZP + RX_T), name='RF shield / SoC (EST: total height 4 mm V)')
+    for j in range(4):
+        _pad(rx, rx0 + 1.2 * MM, ry0 + 2.2 * MM + j * 2.8 * MM, ZP + 1.2 * MM, 'CRSF pad %d' % j)
+    for j, ya in enumerate((ry0 + 2.5 * MM, ry1 - 2.5 * MM)):
+        ant = [(rx1, ya, ZP + 0.6 * MM), (rx1 + 0.050, ya, ZP + 0.6 * MM)]
+        _legs(rx, ant, 1.1 * MM, 'antenna %d (EST OD 1.1 mm, 65 mm V, drawn 50 mm)' % (j + 1))
+    # ---- GPS TBS M10Q: PCB, patch, JST-SH plug, cable stub
     gp = ctx.part('AVN-004', rgb=(0.3, 0.3, 0.3))
-    gp.box(*GPS_B, name='GPS envelope')
-    gp.box((0.0465, 0.0285, ZP + 0.008), (0.0505, 0.0325, ZP + 0.011), name='JST-SH plug')
+    (gx0, gy0), (gx1, gy1) = GPS_B
+    _pcb(gp, gx0, gy0, gx1, gy1, ZP, T_PCB, r=1.0 * MM, name='M10Q PCB (EST 1.6 mm)')
+    gcx, gcy = (gx0 + gx1) / 2, (gy0 + gy1) / 2
+    gp.box((gcx - 9 * MM, gcy - 9 * MM, ZP + T_PCB), (gcx + 9 * MM, gcy + 9 * MM, ZP + GPS_T), name='GNSS patch (EST 18 x 18; total height 7.7 V)')
+    gp.box((gcx - 3.9 * MM, gy0, ZP + T_PCB), (gcx + 3.9 * MM, gy0 + 4.2 * MM, ZP + T_PCB + 3.5 * MM), name='JST-SH 6-pin plug (ASSUMED connector, EST size)')
+    # ---- airspeed board MS4525 (EST 15 x 15): PCB, sensor, 2 barbed ports, JST-GH plug
     asd = ctx.part('AVN-005', rgb=(0.3, 0.3, 0.3))
-    asd.box(*AS_B, name='airspeed board envelope')
-    asd.box((0.0465, -0.0325, ZP + 0.008), (0.0505, -0.0285, ZP + 0.011), name='I2C header')
+    (ax0, ay0), (ax1, ay1) = AS_B
+    _pcb(asd, ax0, ay0, ax1, ay1, ZP, T_PCB, r=1.0 * MM, name='MS4525 board (EST 15 x 15 x 1.6)')
+    acx, acy = (ax0 + ax1) / 2, (ay0 + ay1) / 2
+    asd.box((acx - 3 * MM, acy - 4.5 * MM, ZP + T_PCB), (acx + 3 * MM, acy + 0.5 * MM, ZP + AS_T), name='MS4525DO sensor body (EST)')
+    for j, ya in enumerate((acy - 3.0 * MM, acy - 0.5 * MM)):
+        asd.cylinder('X', (acx + 3 * MM, ya, ZP + 5.5 * MM), 5 * MM, 1.1 * MM, name='barbed port %d (EST OD 2.2)' % (j + 1))
+    asd.box((acx - 3.2 * MM, ay1 - 4.0 * MM, ZP + T_PCB), (acx + 3.2 * MM, ay1, ZP + T_PCB + 4.2 * MM), name='JST-GH 4-pin plug (EST size)')
+    # ---- pitot: brass probe + silicone tube stub on its rear
     pt = ctx.part('AVN-006', rgb=(0.8, 0.7, 0.2))
-    pt.tube('X', (-0.130, YFIN + 0.030, 0.0), 0.175, 0.0015, 0.0010, name='pitot tube')
+    pt.tube('X', (-0.130, YFIN + 0.030, 0.0), 0.175, 0.0015, 0.0010, name='pitot tube (EST 175 x 3 mm; RMRC gives no size)')
+    # silicone tubing 2/4 mm (V RMRC): rear connection and run to the sensor NOT designed (rib saddle FIN-005 and spar are at x >= 0.0485): not drawn
+
+
+def _arm_loop(cx, cy, ux, uy):
+    """Tapered servo arm outline (hub r 4, tip r 2, EST) from the hub centre towards unit (ux, uy), tip at ARM_R."""
+    ph = math.atan2(uy, ux)
+    pts = [(cx + 4.0 * MM * math.cos(ph + math.radians(90 + 180 * i / 8)), cy + 4.0 * MM * math.sin(ph + math.radians(90 + 180 * i / 8)))
+           for i in range(9)]
+    tx, ty = cx + ux * ARM_R, cy + uy * ARM_R
+    pts += [(tx + 2.0 * MM * math.cos(ph + math.radians(-90 + 180 * i / 8)), ty + 2.0 * MM * math.sin(ph + math.radians(-90 + 180 * i / 8)))
+            for i in range(9)]
+    return pts
 
 
 def build_mechanisms(ctx):
     for s, sy in (('R', 1), ('L', -1)):
         yc = sy * SERVO_Y
         sv = ctx.part('MEC-001-' + s, rgb=(0.2, 0.2, 0.2))
-        sv.box((SV_X0, yc - SV_DY, SV_Z0), (SV_X1, yc + SV_DY, SV_Z1), name='servo case')
-        sv.box((0.1285, yc - 0.003, SV_Z1), (0.1325, yc + 0.003, SV_Z1 + 0.003), name='servo lead exit')
+        sv.box((SV_X0, yc - SV_DY, SV_Z0), (SV_X1, yc + SV_DY, SV_Z1), name='servo case (overall 28.4 x 26.7 x 13.0; ears and output boss "-")')
+        sv.cylinder('Z', (0.1305, yc, SV_Z1), 0.003, 0.0020, name='servo lead strain-relief boot (EST)')
+        # arm: neutral tip points inboard, perpendicular to the rod (rod parallel to x)
+        ux, uy = 0.0, -sy
         ar = ctx.part('MEC-002-' + s, rgb=(0.9, 0.9, 0.9))
-        ar.box((ARM_X0, yc - 0.003, SV_Z1), (ARM_X1, yc + 0.003, ARM_Z1), name='servo arm')
-        rd = ctx.part('MEC-003-' + s, rgb=(0.6, 0.6, 0.6))
-        rd.cylinder('X', (ARM_X1, yc, ROD_Z), HORN_X0 - ARM_X1, 0.0006, name='pushrod')
-        zb = zu(HORN_X0)
+        loops = [_arm_loop(SV_XS, yc, ux, uy), _ring(SV_XS, yc, 1.1 * MM, 12), _ring(SV_XS, yc + uy * ARM_R, 0.75 * MM, 12)]
+        ar.prism('Z', ARM_Z0, loops, ARM_T, name='servo arm (hub bore for the 23T spline; hole row beyond the used hole "-")')
+        # screw
+        hw = ctx.part('HWC-002-' + s, rgb=(0.7, 0.7, 0.75))
+        k9.hw_screw(hw, 'Z', (SV_XS, yc, ARM_Z1), -1, 'M2', 0.006, 'pan', name='M2x6 pan screw')
+        ctx.seat('MEC-001-' + s, 'HWC-002-' + s, 'output-shaft thread for the arm screw', bodies=('shank',))
+        # horn: base plate + blade with the rod hole
+        zb = max(zu(HORN_X0 - 0.002), zu(HORN_X0), zu(HORN_X1))      # D-194: base plate flat on the highest skin point it covers (epoxy fills the rest)
+        hy = ROD_Y(sy)
         hn = ctx.part('MEC-004-' + s, rgb=(0.9, 0.9, 0.9))
-        hn.box((HORN_X0, yc - 0.001, zb), (HORN_X1, yc + 0.001, zb + 0.010), name='control horn')
+        hn.box((HORN_X0 - 0.002, hy - 4 * MM, zb), (HORN_X1, hy + 4 * MM, zb + 1.0 * MM), name='horn base plate (EST 20 x 8 x 1.0)')
+        blade = _rrect(HORN_X0, zb + 1.0 * MM, HORN_X1, HORN_TOP, 1.5 * MM, 3)
+        hn.prism('Y', hy - 1.0 * MM, [blade, _ring(HORN_XH, ROD_Z, 0.75 * MM, 12)], 2.0 * MM, name='horn blade 2 mm (hole at R 12.9 from the hinge)')
+        # pushrod: Z-bend pin in the arm hole, rod to the horn, clevis straddling the blade
+        tipx, tipy = SV_XS, yc + uy * ARM_R
+        rd = ctx.part('MEC-003-' + s, rgb=(0.6, 0.6, 0.6))
+        rd.cylinder('Z', (tipx, tipy, ARM_Z0 + 0.0001), ROD_Z - ARM_Z0 - 0.0001, ROD_D / 2, name='rod Z-bend pin (flush with the arm underside)')
+        xe = HORN_XH - 0.0040                                   # clevis body starts here (4 mm before the hole)
+        rd.cylinder('X', (tipx, tipy, ROD_Z), xe - tipx, ROD_D / 2, name='pushrod')
+        rd.tube('X', (xe, tipy, ROD_Z), 0.0020, 1.5 * MM, ROD_D / 2, name='clevis sleeve (EST OD 3.0, 2 mm; fork cheeks follow)')
+        for sg in (-1, 1):
+            yb = tipy + sg * 1.5 * MM
+            rd.box((xe + 0.0020, yb - 0.4 * MM, ROD_Z - 1.6 * MM), (HORN_XH + 1.5 * MM, yb + 0.4 * MM, ROD_Z + 1.6 * MM), name='clevis cheek (EST 0.8 x 3.2)')
+        pn = ctx.part('MEC-005-' + s, rgb=(0.8, 0.8, 0.85))
+        pn.cylinder('Y', (HORN_XH, tipy - 2.2 * MM, ROD_Z), 4.4 * MM, 0.5 * MM, name='clevis pin 1.0 mm (EST)')
+        ctx.seat('MEC-003-' + s, 'MEC-005-' + s, 'pin holes in the clevis cheeks')
 
 
 def build_landing(ctx):
@@ -196,37 +556,82 @@ def _arm_line(st):
     return a0, h1, h2
 
 
+# D-194: the harness routes were tuned at absolute heights for the old datum; they follow the skin (-WING_DZ) and the FC stack (+1.5 mm pads)
+_DZ = -WING_DZ
+_ZF = 0.044 - WING_DZ + 0.0015
+
+
 def build_harness(ctx):
     h = ctx.part('HRN-001', proxy=True)
     h.cylinder('X', (0.030, 0.0, 0.005), 0.002, 0.001, name='harness lump')
     z_pad = ESC_TOP + 0.002
     bx, by = ESC_PADS['BAT']
-    x0 = PACK_X[1] + 0.0025                                  # lead leaves the pack, passes round the FC (y -26.5 mm) to the ESC battery pad
-    xb = FC_B[1][0] + 0.0035
-    ctx.wire('E-HRN-01', [(x0, 0.0, 0.0325), (x0, -0.0265, 0.0325), (xb, -0.0265, 0.0325), (xb, 0.0, 0.0325), (bx, 0.0, 0.0325), (bx, by, z_pad)], dia=0.004)
+    # XT60 female half (mated to the male on the pack lead), tail to the ESC battery pads
+    hf = ctx.part('HRN-002', rgb=(0.15, 0.15, 0.15))
+    hf.prism('X', _xt0 + XT60_L, [_xt60_loop(LEAD_Y1, XT_Z)], XT60_L, name='XT60 female housing')
+    xe = _xt0 + 2 * XT60_L
+    m = 0.5 * MM
+    ctx.wire('E-HRN-01', [(_xt0 + XT60_L - m, LEAD_Y1, XT_Z), (_xt0 + XT60_L + m, LEAD_Y1, XT_Z)], dia=0.003)
+    z_hi = ESC_TOP + 0.008
+    # D-194: BAT pad moved to the aft-right corner of the ESC (pad layout is EST). Tail: out of the female back, outboard of the ESC (x 122, past its
+    # aft edge 117) inboard along y over the plate at connector height, up and forward above the ESC, down onto the pad. Strands +-1.6 mm.
+    tx = 0.122
+    tail = [(xe - 0.001, LEAD_Y1, XT_Z), (tx, LEAD_Y1, XT_Z), (tx, by, XT_Z), (tx, by, z_hi), (bx, by, z_hi), (bx, by, z_pad)]
+    off = [(LEAD_D * 0.53, 0.0), (-LEAD_D * 0.53, 0.0)]
+    ctx.wire('E-HRN-12', tail, dia=ELEC['E-HRN-12'], strands=_strands(tail, LEAD_D, off))
+    _terms(ctx, 'E-HRN-12')
     for i, st in enumerate(ST):
         px, py = ESC_PADS[st]
         sy, sz = ST[st]
         a0, h1, h2 = _arm_line(st)
-        zl_, yl = (0.040, 0.062) if sz > 0 else (0.0325, 0.088)
+        zl_, yl = (0.040 + _DZ, 0.062) if sz > 0 else (0.0325 + _DZ, 0.088)
         yl *= sy
         pts = [(px, py, z_pad), (px, py, zl_), (px, yl, zl_), (a0[0], yl, zl_), a0, h1, h2]
-        ctx.wire('E-HRN-%02d' % (2 + i), pts, dia=0.004)
+        ctx.wire('E-HRN-%02d' % (2 + i), pts, dia=ELEC['E-HRN-%02d' % (2 + i)], strands=_strands(pts, 2.0 * MM, _tri(2.0 * MM)))
+        _terms(ctx, 'E-HRN-%02d' % (2 + i))
     sx, sy_ = ESC_PADS['SIG']
-    fx, fy = FC_PADS['ESC']
-    ctx.wire('E-HRN-06', [(sx, sy_, z_pad), (sx, sy_, 0.052), (fx, fy, 0.052), (fx, fy, FC_TOP + 0.0015)], dia=0.0025)
+    fx, fy, fz = FC_PADS['ESC']
+    # D-194: ESC signal ribbon straight inboard along y = 0 over the ESC at 24 mm, down at x 78 (4 mm ahead of the ESC), into the FC stack between the
+    # boards at 19.1 mm to the ESC pad on the bottom board. 6 x 26 AWG as a 3 x 2 bundle (not a flat ribbon: no in-plane inner strand shortening).
+    _zr = ESC_TOP + 0.0046
+    pts = [(sx, sy_, z_pad), (sx, sy_, _zr), (0.078, sy_, _zr), (0.078, sy_, fz + 0.0016), (fx, fy, fz + 0.0016)]
+    wd = 1.3 * MM                                              # EST 26 AWG silicone OD
+    rib = [((j % 3 - 1) * wd, (j // 3 - 0.5) * wd) for j in range(6)]
+    ctx.wire('E-HRN-06', pts, dia=ELEC['E-HRN-06'], strands=_strands(pts, wd, rib))
+    _terms(ctx, 'E-HRN-06')
     for i, (key, sg) in enumerate((('S5', 1), ('S6', -1))):
-        x, y = FC_PADS[key]
+        x, y, z = FC_PADS[key]
         yc = sg * SERVO_Y
-        pts = [(x, y, FC_TOP + 0.0015), (x, y, 0.048), (x, sg * 0.075, 0.048), (x, sg * 0.075, 0.016), (x, yc, 0.016),
-               (0.1305, yc, 0.016), (0.1305, yc, SV_Z1 + 0.0015)]
-        ctx.wire('E-HRN-%02d' % (7 + i), pts, dia=0.0025)
-    x, y = FC_PADS['RX']
-    ctx.wire('E-HRN-09', [(x, y, FC_TOP + 0.0015), (x, y, 0.050), (x, -0.0465, 0.050), (0.1065, -0.0465, 0.050), (0.1065, -0.0465, ZP + 0.0055)], dia=0.0015)
-    x, y = FC_PADS['GPS']
-    ctx.wire('E-HRN-10', [(x, y, FC_TOP + 0.0015), (x, y, 0.054), (x, 0.0305, 0.054), (x, 0.0305, ZP + 0.0095)], dia=0.0015)
-    x, y = FC_PADS['I2C']
-    ctx.wire('E-HRN-11', [(x, y, FC_TOP + 0.0015), (x, y, 0.054), (x, -0.0305, 0.054), (x, -0.0305, ZP + 0.0095)], dia=0.0015)
+        z0 = z + 0.0006
+        zs = zu(0.1305) + 0.003
+        # D-194: out of the FC aft between the boards (clear of the standoffs and screws), outboard of the XT60 pair (y 76 > 71.25), 14.5 mm high over the skin
+        pts = [(x, y, z0), (0.0775, y, z0), (0.0775, sg * 0.076, z0), (0.0775, sg * 0.076, 0.0147), (0.1305, sg * 0.076, 0.0147),
+               (0.1305, yc, 0.0147), (0.1305, yc, SV_Z1 + 0.003)]
+        ctx.wire('E-HRN-%02d' % (7 + i), pts, dia=ELEC['E-HRN-%02d' % (7 + i)], strands=_strands(pts, 1.2 * MM, [(-1.2 * MM, 0.0), (0.0, 0.0), (1.2 * MM, 0.0)]))
+        _terms(ctx, 'E-HRN-%02d' % (7 + i))
+    # RX CRSF wire: FC top board RX pad -> RX pads
+    x, y, z = FC_PADS['RX']
+    (rx0, ry0), _ = RX_B
+    rpx, rpy = rx0 + 1.2 * MM, ry0 + 2.2 * MM + 1.5 * 2.8 * MM
+    pts = [(x, y, z + 0.0006), (x, y, _ZF), (x, rpy, _ZF), (rpx, rpy, _ZF), (rpx, rpy, ZP + 1.2 * MM + 0.0006)]
+    wd = 1.0 * MM
+    ctx.wire('E-HRN-09', pts, dia=ELEC['E-HRN-09'], strands=_strands(pts, wd, [((j - 1.5) * wd, 0.0) for j in range(4)]))
+    _terms(ctx, 'E-HRN-09')
+    # GPS cable: GPS plug (inner edge) -> FC GPS pad
+    x, y, z = FC_PADS['GPS']
+    (gx0, gy0), (gx1, gy1) = GPS_B
+    gcx = (gx0 + gx1) / 2
+    pts = [(gcx, gy0 + 4.2 * MM, ZP + T_PCB + 1.8 * MM), (gcx, gy0 + 8.0 * MM, ZP + T_PCB + 1.8 * MM), (gcx, gy0 + 8.0 * MM, _ZF), (x, y, _ZF),
+           (x, y, z + 0.0006)]
+    ctx.wire('E-HRN-10', pts, dia=ELEC['E-HRN-10'], strands=_strands(pts, wd, [((j - 2.5) * wd, 0.0) for j in range(6)]))
+    _terms(ctx, 'E-HRN-10')
+    # airspeed cable: JST-GH plug -> FC I2C pad
+    x, y, z = FC_PADS['I2C']
+    (ax0, ay0), (ax1, ay1) = AS_B
+    acx = (ax0 + ax1) / 2
+    pts = [(acx, ay1, ZP + T_PCB + 2.1 * MM), (acx, ay1 + 4.0 * MM, ZP + T_PCB + 2.1 * MM), (acx, ay1 + 4.0 * MM, _ZF), (x, y, _ZF), (x, y, z + 0.0006)]
+    ctx.wire('E-HRN-11', pts, dia=ELEC['E-HRN-11'], strands=_strands(pts, wd, [((j - 1.5) * wd, 0.0) for j in range(4)]))
+    _terms(ctx, 'E-HRN-11')
 
 
 def build_assembly(ctx):
@@ -252,7 +657,7 @@ def build_assembly(ctx):
                          limits=(-ELEV_POSE, ELEV_POSE))
         elif via == 'CT-CLEVIS':
             ctx.revolute(e['id'], e['part_a'], e['part_b'], at, e['motion']['axis'])
-        elif via in ('CT-M3-SHCS-MOTOR', 'CT-PROP-NUT', 'CT-SERVO-SPLINE'):
+        elif via in ('CT-A-M25-SHCS-MOTOR', 'CT-A-PROP-NUT', 'CT-A-PROP-ADAPTER', 'CT-SERVO-SPLINE') or e.get('hardware'):
             ctx.rigid(e['id'], e['part_a'], e['part_b'], at)
         else:
             ctx.contact(e['id'], via)

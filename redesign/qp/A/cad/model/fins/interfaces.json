@@ -9,7 +9,11 @@
    "status": "MODELLED",
    "mass_g": 27.1,
    "material": "CFRP tube",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.294,
+    0.38,
+    -0.0
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -20,7 +24,11 @@
    "status": "MODELLED",
    "mass_g": 14.8,
    "material": "CFRP tube",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1782,
+    0.38,
+    0.0
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -31,7 +39,11 @@
    "status": "MODELLED",
    "mass_g": 3.2,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.2831,
+    0.38,
+    0.0
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -42,7 +54,11 @@
    "status": "MODELLED",
    "mass_g": 8.4,
    "material": "XPS foam + tape",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.2395,
+    0.38,
+    0.0
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -53,7 +69,26 @@
    "status": "MODELLED",
    "mass_g": 1.0,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.0671,
+    0.38,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "FIN-006-R",
+   "name": "Rib fairing, upper (R): XPS + tape blister over the 14 mm rib where the S5010 skin is thinner than the tube (D-194); mass EST",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.3,
+   "material": "XPS foam + tape",
+   "cg_xyz_m": [
+    0.1569,
+    0.38,
+    0.004
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -64,7 +99,11 @@
    "status": "MODELLED",
    "mass_g": 27.1,
    "material": "CFRP tube",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.294,
+    -0.38,
+    -0.0
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -75,7 +114,11 @@
    "status": "MODELLED",
    "mass_g": 14.8,
    "material": "CFRP tube",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.1782,
+    -0.38,
+    0.0
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -86,7 +129,11 @@
    "status": "MODELLED",
    "mass_g": 3.2,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.2831,
+    -0.38,
+    0.0
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -97,7 +144,11 @@
    "status": "MODELLED",
    "mass_g": 8.4,
    "material": "XPS foam + tape",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.2395,
+    -0.38,
+    0.0
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -108,7 +159,26 @@
    "status": "MODELLED",
    "mass_g": 1.0,
    "material": "PETG (printed)",
-   "cg_xyz_m": null,
+   "cg_xyz_m": [
+    0.0671,
+    -0.38,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "FIN-006-L",
+   "name": "Rib fairing, upper (L): XPS + tape blister over the 14 mm rib where the S5010 skin is thinner than the tube (D-194); mass EST",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.3,
+   "material": "XPS foam + tape",
+   "cg_xyz_m": [
+    0.1569,
+    -0.38,
+    0.004
+   ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   }
@@ -164,6 +234,22 @@
   },
   {
    "id": "E-FIN-07",
+   "part_a": "FIN-006-R",
+   "part_b": "FIN-002-R",
+   "via": "CT-CA",
+   "owner": "fins",
+   "notes": "rib fairing over the rib top (foam-safe CA), sits on the core skin"
+  },
+  {
+   "id": "E-FIN-08",
+   "part_a": "FIN-006-R",
+   "part_b": "WNG-001",
+   "via": "CT-CA",
+   "owner": "fins",
+   "notes": "rib fairing bonded on the upper skin"
+  },
+  {
+   "id": "E-FIN-09",
    "part_a": "FIN-003-L",
    "part_b": "FIN-001-L",
    "via": "CT-EPOXY",
@@ -171,7 +257,7 @@
    "notes": "root block wraps the tube"
   },
   {
-   "id": "E-FIN-08",
+   "id": "E-FIN-10",
    "part_a": "FIN-003-L",
    "part_b": "FIN-002-L",
    "via": "CT-EPOXY",
@@ -179,7 +265,7 @@
    "notes": "rib end in the block socket"
   },
   {
-   "id": "E-FIN-09",
+   "id": "E-FIN-11",
    "part_a": "FIN-002-L",
    "part_b": "FIN-005-L",
    "via": "CT-EPOXY",
@@ -187,7 +273,7 @@
    "notes": "rib start in the saddle socket"
   },
   {
-   "id": "E-FIN-10",
+   "id": "E-FIN-12",
    "part_a": "FIN-005-L",
    "part_b": "WNG-002",
    "via": "CT-EPOXY",
@@ -195,7 +281,7 @@
    "notes": "saddle wraps the spar (60 mm)"
   },
   {
-   "id": "E-FIN-11",
+   "id": "E-FIN-13",
    "part_a": "FIN-004-L",
    "part_b": "FIN-001-L",
    "via": "CT-CA",
@@ -203,12 +289,28 @@
    "notes": "fairing in the tube slot (foam-safe CA)"
   },
   {
-   "id": "E-FIN-12",
+   "id": "E-FIN-14",
    "part_a": "FIN-004-L",
    "part_b": "FIN-002-L",
    "via": "CT-CA",
    "owner": "fins",
    "notes": "fairing round the rib"
+  },
+  {
+   "id": "E-FIN-15",
+   "part_a": "FIN-006-L",
+   "part_b": "FIN-002-L",
+   "via": "CT-CA",
+   "owner": "fins",
+   "notes": "rib fairing over the rib top (foam-safe CA), sits on the core skin"
+  },
+  {
+   "id": "E-FIN-16",
+   "part_a": "FIN-006-L",
+   "part_b": "WNG-001",
+   "via": "CT-CA",
+   "owner": "fins",
+   "notes": "rib fairing bonded on the upper skin"
   }
  ],
  "acknowledges": [

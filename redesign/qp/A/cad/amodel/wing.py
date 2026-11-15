@@ -14,7 +14,17 @@ ELEV_LIM = 20.0                             # deg EST (A documents give none): c
 GAP_Y = 0.0005
 PLUG_R = 0.0049
 R_IN = R_M - 0.245                          # DOC: arm tube 0.245 long
-HUB_R, HUB_X0, HUB_X1 = 0.050, -0.105, -0.045      # EST hub disc (envelope of a printed shell; 16 g)
+HUB_X0, HUB_X1 = -0.102, -0.045             # hub x range: front floor 2 mm ahead of the bridge end (x -0.100), aft face = tray face (x -0.045)
+HUB_W = 0.0008                              # EST printed wall = 2 perimeters at 0.4 mm (the QP-4 FIXES basis of the 13 g hub); at 1.2 mm (3 perimeters) the drawn hub is 19.1 g
+HUB_RB = 0.006 + HUB_W                      # boss outer radius round a 12 mm tube (7.2 mm)
+HUB_SOCK = 0.025                            # arm socket depth 25 mm (STRUCTURES iter 2 iter2_margins.py assumes 25 mm; the old disc gave 18.8 mm)
+HUB_ARM_R0 = R_IN - 0.002                   # arm socket floor (2 mm)
+HUB_ARM_R1 = R_IN + HUB_SOCK                # open mouth of the arm socket (r 56.2 mm)
+HUB_SPOKE_D = 0.022                         # radial web depth along x (sleeve to socket), one wall (HUB_W) thick
+HUB_STRUT_S = (-0.017, 0.032)               # strut socket: from 17 mm behind the strut end (web to the bridge sleeve) to 32 mm ahead (30 mm socket)
+PACK_XL_, PACK_ZL_ = 0.0025, 0.008 + 0.0145   # lead exit x and z (= electrical.PACK_XL, PACK_ZL; keep equal)
+CUP_PAT = (0.019, 0.016)                    # MN2212 mounting pattern 19 mm (along the arm, y) x 16 mm (z): retailers list 16x19 and 19x25 (getfpv MN2212 V2.0 page, search 2026-11-15; T-Motor drawing: 4-M2.5 on 19 x 16 (read 2026-11-15); cup holes M2.5 clearance 2.9 mm, D-194)
+CUP_R = 0.006                               # plate corner radius (EST)
 ARM_OD, ARM_ID = 0.012, 0.010               # DOC iteration 2: arms 12x10
 BR_OD, BR_ID, BR_X0, BR_X1 = 0.012, 0.010, -0.100, 0.054       # DOC bridge 12x10 (0.16 m in DOC; 0.154 here, ends on the saddle)
 STRUT_OD, STRUT_ID = 0.006, 0.0045          # DOC 6x4.5
@@ -25,8 +35,8 @@ RIB_X1 = XFIN_T - FIN_OD / 2                # rib ends on the tube front
 
 
 def cove_x():
-    """Lower end of the slanted core back face (cove for the elevon nose, deflection ELEV_STOP + 2 deg)."""
-    t = math.tan(math.radians(ELEV_STOP + 4.0))
+    """Lower end of the slanted core back face (cove for the elevon nose, deflection ELEV_STOP + 6 deg)."""
+    t = math.tan(math.radians(ELEV_STOP + 6.0))        # D-194: +4 -> +6 deg (the S5010 core grazed the elevon nose by 0.08 mm at +21 deg)
     x = XH
     for _ in range(60):
         x = XH - (zu(XH) - zl(x)) * t
@@ -45,7 +55,7 @@ def core_loop():
 BAL_YC, BAL_W = 0.285, 0.106                # QP-4 FIXES D-187 v2: lead STRIP centre y, length (spanwise y 0.232-0.338; clear of the servo pocket edge y 0.2225 and the elevon tip 0.35)
 BAL_ARM_DY = 0.035                          # two horn tabs at BAL_YC +- this
 BAL_REACH, BAL_L, BAL_T = 0.020, 0.010, 0.0013        # lead centre 20 mm ahead of the hinge axis; strip 10 x 1.3 mm section x 106 mm = 15.6 g at 11.34 g/cm3 (FIXES.md: fits the section to 2 mm of skin poke, printed lens caps)
-BAL_DZ = -0.0060                            # lead centre z below the hinge axis: centres the sweep in the 16.8 mm section; +-20 deg at 30 mm still pokes up to 5.5 mm through both skins (CAD.md QP-4)
+BAL_DZ = -0.0033                            # lead centre z below the hinge axis: D-193 S5010 (8.6 mm deep at the hinge): -3.3 mm balances the +-21 deg sweep so lead pokes ~3.0 mm through BOTH skins (was -6.0 mm in the 16.8 mm placeholder section; at -6.0 on S5010 the lower cap would poke 5.7 mm)
 BAL_ARM_W, BAL_ARM_T = 0.006, 0.0012        # horn arm (CF-reinforced PETG strip) width, thickness
 HINGE_Z = zu(XH)
 
@@ -112,7 +122,7 @@ def bal_sweep_loop(margin=0.0005):
     return _ccw(out)
 
 # ------------------------------------------------------------------ FIXES2: lens caps, mechanical stops, hinge damper
-CAP_WALL, CAP_CLR, CAP_SLOPE = 0.0006, 0.0005, 0.20      # printed single wall 0.6 mm (vase-mode print, EST); clearance lead / tab to the cap cavity at the stop >= 0.5 mm; ramp 1:5
+CAP_WALL, CAP_CLR, CAP_SLOPE = 0.0006, 0.00052, 0.20      # printed single wall 0.6 mm (vase-mode print, EST); clearance lead / tab to the cap cavity at the stop >= 0.5 mm; ramp 1:5
 CAP_Y0, CAP_Y1 = BAL_YC - BAL_W / 2 - 0.002, BAL_YC + BAL_W / 2 + 0.002
 BOSS_S = (0.62, 0.90)                       # stop boss touches the tab face between 55 % and 85 % of the tab length from the root (clear of the lead by >= 0.5 mm)
 BOSS_W = 0.006                              # boss width (= tab width)
@@ -172,6 +182,14 @@ def cap_profile(side):
     n0 = int(math.ceil(ho[0] / (CAP_SLOPE * dx))); n1 = int(math.ceil(ho[-1] / (CAP_SLOPE * dx)))
     xs = [xs[0] - dx * (n0 - i) for i in range(n0)] + xs + [xs[-1] + dx * (i + 1) for i in range(n1)]
     ho = [ho[0] * (i / float(n0)) for i in range(n0)] + ho + [ho[-1] * (1 - (i + 1) / float(n1)) for i in range(n1)]
+    # D-194: the aft ramp must not run on over the elevon nose (the cap is fixed on the core; at the stop and in the static check the ramp end hung 0.45 mm
+    # into the elevon, lower side x 185 vs hinge 183.75): cut the shell 4.0 mm ahead of the hinge line: the elevon's lower nose corner (9 mm below the hinge axis) swings 3.2 mm
+    # forward at +21 deg and grazed the cap end by 0.22 mm at a 0.6 mm cut. Nothing needed is lost (lead / tab envelope ends at x 172, boss reach 176.4).
+    xcut = XH - 0.0040
+    if xs[-1] > xcut:
+        k = max(i for i, x in enumerate(xs) if x <= xcut)
+        hcut = ho[k] + (ho[k + 1] - ho[k]) * (xcut - xs[k]) / (xs[k + 1] - xs[k])
+        xs, ho = xs[:k + 1] + [xcut], ho[:k + 1] + [hcut]
     return xs, ho
 
 
@@ -245,15 +263,108 @@ DMP_C = 2 * math.pi * DMP_MU * DMP_L_ACT * ((DMP_R_SLV - DMP_T_SLV / 2) ** 3 / (
 
 
 
+# ------------------------------------------------------------------ D-193 hub (CGE-001) and cup geometry helpers
+def _ut(phi_deg):
+    a = math.radians(phi_deg)
+    return (math.cos(a), math.sin(a)), (-math.sin(a), math.cos(a))
+
+
+def _round_boss(r0, r1, R, c, plane_pts):
+    """Sections of a round boss of radius R: axis in a plane normal to the loft axis, c = loft-axis coordinate of the boss axis.
+    plane_pts(a, w) -> (u, v) of the rectangle corner at axial position a and half width w. 13 sections, 15 deg apart."""
+    secs = []
+    for k in range(13):
+        th = math.radians(-90 + 15 * k)
+        hw = max(R * math.cos(th), 0.0003)
+        secs.append((c + R * math.sin(th), [plane_pts(r0, -hw), plane_pts(r1, -hw), plane_pts(r1, hw), plane_pts(r0, hw)]))
+    return secs
+
+
+def hub_arm_boss(phi_deg):
+    u, t = _ut(phi_deg)
+    return _round_boss(HUB_ARM_R0, HUB_ARM_R1, HUB_RB, HUB[0], lambda a, w: (a * u[0] + w * t[0], a * u[1] + w * t[1]))
+
+
+def hub_arm_spoke(phi_deg):
+    """Thin radial web (loop in y,z) from the bridge sleeve to the socket floor."""
+    u, t = _ut(phi_deg)
+    a0, a1, h = HUB_RB - 0.0006, HUB_ARM_R0 + 0.0006, HUB_W / 2
+    return [(a * u[0] + w * t[0], a * u[1] + w * t[1]) for a, w in ((a0, -h), (a1, -h), (a1, h), (a0, h))]
+
+
+def _strut_dir():
+    d = (STRUT_E[0] - STRUT_S[0], STRUT_E[1] - STRUT_S[1])
+    L_ = math.hypot(*d)
+    return d[0] / L_, d[1] / L_
+
+
+def hub_strut_pt(sg, a, w):
+    """Point (x, y) of the strut socket frame: a along the strut axis from its inner end, w across (sg = +1 right, -1 left)."""
+    ux, uy = _strut_dir()
+    uy *= sg
+    return (STRUT_S[0] + a * ux - w * uy, sg * STRUT_S[1] + a * uy + w * ux)
+
+
+def hub_strut_boss(sg):
+    R = STRUT_OD / 2 + HUB_W
+    return _round_boss(-0.002, HUB_STRUT_S[1], R, 0.0, lambda a, w: hub_strut_pt(sg, a, w)), R
+
+
+def hub_strut_web(sg):
+    return [hub_strut_pt(sg, HUB_STRUT_S[0], -0.003), hub_strut_pt(sg, -0.0015, -0.003), hub_strut_pt(sg, -0.0015, 0.003), hub_strut_pt(sg, HUB_STRUT_S[0], 0.003)]
+
+
+HUB_PAD = ((HUB_X1 - 0.0012, -0.040, 0.003), (HUB_X1, 0.040, 0.011))      # tray pad flange on the aft face (tray plate z 6..8 mm lands on it)
+
+
+def hub_mass_g():
+    """Mass of the drawn hub: analytic volumes of the bodies minus the tube bores (overlaps of the webs with the bosses ignored,
+    < 0.2 g), PETG 1.27 g/cm3 solid wall. This is the drawn-volume mass; the old 13 g was an EST for a 2-perimeter 10 % infill disc."""
+    rb = BR_OD / 2
+    v = math.pi * HUB_RB ** 2 * (HUB_X1 - HUB_X0) - math.pi * rb ** 2 * (HUB_X1 + 0.100)
+    v += 4 * (math.pi * HUB_RB ** 2 * (HUB_ARM_R1 - HUB_ARM_R0) - math.pi * (ARM_OD / 2) ** 2 * (HUB_ARM_R1 - R_IN))
+    v += 4 * HUB_W * HUB_SPOKE_D * ((HUB_ARM_R0 + 0.0006) - (HUB_RB - 0.0006))
+    Rs = STRUT_OD / 2 + HUB_W
+    ls = HUB_STRUT_S[1] + 0.002
+    v += 2 * (math.pi * Rs ** 2 * ls - math.pi * (STRUT_OD / 2) ** 2 * HUB_STRUT_S[1] + HUB_W * 0.006 * (-HUB_STRUT_S[0] - 0.0015))
+    v += (HUB_PAD[1][0] - HUB_PAD[0][0]) * (HUB_PAD[1][1] - HUB_PAD[0][1]) * (HUB_PAD[1][2] - HUB_PAD[0][2])
+    return v * 1e6 * RHO_PETG
+
+
+def _rrect(hy, hz, r, n=6):
+    """Rounded-rectangle loop in (y, z), half sizes hy, hz, corner radius r."""
+    out = []
+    for cy, cz, a0 in ((hy - r, hz - r, 0.0), (-hy + r, hz - r, 90.0), (-hy + r, -hz + r, 180.0), (hy - r, -hz + r, 270.0)):
+        for k in range(n + 1):
+            a = math.radians(a0 + 90.0 * k / n)
+            out.append((cy + r * math.cos(a), cz + r * math.sin(a)))
+    return out
+
+
+# D-194 rib fairing: with the datum 5 mm lower the 14 mm rib (axis z 0) stays inside both skins to x 0.135 and then rises out of the upper skin (zu < 7 mm,
+# 6.2 mm proud at the hinge x 0.184); the lower skin never exposes it. Blister 17 mm wide, top 1.5 mm over the tube, from x 0.130 to the hinge,
+# trimmed by the core and the rib when built. Outboard of the elevon (y 0.35) so no clearance issue. Basis: structures keep the 14x12 rib (STRUCTURES-R), so it is faired not shrunk.
+RIBF_X0 = 0.130
+RIBF_LOOP = [(YFIN + dy, z) for dy, z in ((-0.0085, 0.0005), (0.0085, 0.0005), (0.0085, 0.0030), (0.0065, 0.0065), (0.0035, 0.0084),
+                                          (-0.0035, 0.0084), (-0.0065, 0.0065), (-0.0085, 0.0030))]
+
+
+def fin_fairing_loop():
+    """XPS fairing section (x, y): elliptical leading edge 4 mm long x 3 mm thick, straight sides, ends at the tube axis (hidden by the tube)."""
+    x0, a, b = XH + 0.0003, 0.004, 0.0015
+    el = [(x0 + a + a * math.cos(math.radians(th)), b * math.sin(math.radians(th))) for th in range(100, 261, 10)]
+    return [(XFIN_T, b), (x0 + a, b)] + el + [(x0 + a, -b), (XFIN_T, -b)]
+
+
 # ------------------------------------------------------------------ wing / fins / cage parts
 # wing (MASS-GATE 220 allocation; STRUCTURES iteration 2: 191 g)
-P('WNG-001', 'Wing core, XPS 25 kg/m3 + tape skin + glue + hinge tape (lumped)', 'wing', 102.0, 'XPS foam 25 kg/m3 + packing tape')   # QP-4 FIXES item 3: 116 - 13.7 (foam 82 g x 5/30) - 0.3 (elevon span moved 10 mm)
+P('WNG-001', 'Wing core, XPS 25 kg/m3 + tape skin + glue + hinge tape (lumped)', 'wing', 100.1, 'XPS foam 25 kg/m3 + packing tape')   # QP-4 FIXES item 3: 116 - 13.7 (foam 82 g x 5/30) - 0.3 (elevon span moved 10 mm); D-193 S5010: core section area 3457 -> 3372 mm2 (CALC from core_loop, hinge-forward part) = -85 mm2 x 0.90 m x 25 kg/m3 = -1.9 g
 P('WNG-002', 'Spar, CF tube 12x10 x 0.90 m', 'wing', round(tube_g(0.90, SPAR_OD, SPAR_ID), 1), 'CFRP tube')
 for pid, nm in (('WNG-003-C', 'centre'), ('WNG-004-R', 'right strut'), ('WNG-004-L', 'left strut'),
                 ('WNG-005-R', 'right rib'), ('WNG-005-L', 'left rib')):
     P(pid, 'Spar plug (%s clamp)' % nm, 'wing', 1.2, 'PETG (printed)')   # QP-4 FIXES 1.65 -> 1.2 g (1.2 mm wall, EST)
-P('WNG-006-R', 'Elevon right', 'wing', 8.0, 'XPS foam + tape')   # 8.5 - 0.73 (foam 4.4 g x 5/30) + 0.26 (10 mm more span)
-P('WNG-006-L', 'Elevon left', 'wing', 8.0, 'XPS foam + tape')
+P('WNG-006-R', 'Elevon right', 'wing', 6.7, 'XPS foam + tape')   # 8.5 - 0.73 (foam 4.4 g x 5/30) + 0.26 (10 mm more span); D-193 S5010: aft-section area 410 -> 247 mm2 (CALC) x 0.309 m x 25 kg/m3 = -1.26 g per elevon
+P('WNG-006-L', 'Elevon left', 'wing', 6.7, 'XPS foam + tape')
 for s_ in 'RL':
     P('WNG-007-' + s_, 'Elevon balance (D-187 v2, %s): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)' % s_, 'wing', 16.1, 'lead + PETG/CF')
     for sd in 'UL':      # FIXES2: lens caps with the mechanical stop bosses (mass from the drawn volume, PETG 1.27 g/cm3)
@@ -268,8 +379,9 @@ for s in 'RL':
     P('FIN-003-' + s, 'Fin root block (%s)' % s, 'fins', 3.2, 'PETG (printed)')
     P('FIN-004-' + s, 'Fin fairing 3 mm XPS + tape (%s)' % s, 'fins', 8.4, 'XPS foam + tape')
     P('FIN-005-' + s, 'Rib saddle on spar (%s)' % s, 'fins', 1.0, 'PETG (printed)')
+    P('FIN-006-' + s, 'Rib fairing, upper (%s): XPS + tape blister over the 14 mm rib where the S5010 skin is thinner than the tube (D-194); mass EST' % s, 'fins', 0.3, 'XPS foam + tape')
 # cage (allocation 135; STRUCTURES iteration 2: 122 g)
-P('CGE-001', 'Hub disc (printed shell, envelope; QP-4 FIXES: 16 -> 13 g, 2 perimeters, 10 % infill, EST)', 'cage', 13.0, 'PETG (printed)')
+P('CGE-001', 'Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 0.8 mm walls, mass = drawn volume x 1.27)', 'cage', round(hub_mass_g(), 1), 'PETG (printed)')
 for s in ST:
     P('CGE-002-' + s, 'Arm 12x10 x 0.245 (%s)' % s, 'cage', round(tube_g(0.245, ARM_OD, ARM_ID), 1), 'CFRP tube')
     P('CGE-003-' + s, 'Motor cup (%s; QP-4 FIXES 5 -> 4 g, EST, C1 to re-check prop-strike)' % s, 'cage', 4.0, 'PETG (printed)')
@@ -278,7 +390,7 @@ for s in 'RL':
     P('CGE-005-' + s, 'V strut 6x4.5 (%s)' % s, 'cage', 6.5, 'CFRP tube')
     P('CGE-007-' + s, 'Strut clamp on spar (%s)' % s, 'cage', 1.5, 'PETG (printed)')
 P('CGE-006', 'Bridge saddle on spar', 'cage', 2.0, 'PETG (printed)')
-P('CGE-008', 'Pack tray (66 x 109 mm plate, trim slots; 4.0 g at 44 mm scaled by plate area + longer walls, EST)', 'cage', 3.8, 'PETG (printed)')   # QP-4 FIXES 5.3 -> 3.8 g: 1.5 mm floor with ribs, EST
+P('CGE-008', 'Pack tray (66 x 109 mm plate, integral lips at the trim ends, lead notch; 4.0 g at 44 mm scaled by plate area + longer walls, EST)', 'cage', 3.8, 'PETG (printed)')   # QP-4 FIXES 5.3 -> 3.8 g: 1.5 mm floor with ribs, EST
 
 # ------------------------------------------------------------------ wing / fins / cage edges
 # wing
@@ -303,6 +415,8 @@ for s in 'RL':
     E(en('FIN'), 'FIN-005-' + s, 'WNG-002', EPX, 'fins', 'saddle wraps the spar (60 mm)')
     E(en('FIN'), 'FIN-004-' + s, 'FIN-001-' + s, CA, 'fins', 'fairing in the tube slot (foam-safe CA)')
     E(en('FIN'), 'FIN-004-' + s, 'FIN-002-' + s, CA, 'fins', 'fairing round the rib')
+    E(en('FIN'), 'FIN-006-' + s, 'FIN-002-' + s, CA, 'fins', 'rib fairing over the rib top (foam-safe CA), sits on the core skin')
+    E(en('FIN'), 'FIN-006-' + s, 'WNG-001', CA, 'fins', 'rib fairing bonded on the upper skin')
 # cage
 for s in ST:
     E(en('CGE'), 'CGE-002-' + s, 'CGE-001', EPX, 'cage', 'arm in hub socket')
@@ -375,7 +489,7 @@ def build_wing(ctx):
         y0, y1 = sorted((sy * SERVO_Y - 0.0225, sy * SERVO_Y + 0.0225))
         core.cut_box((0.1245, y0, SV_Z1), (0.1655, y1, 0.020), name='servo pocket')
     core.cut_box((0.0, -0.0065, -0.05), (0.056, 0.0065, 0.0075), name='bridge slot (open below)')
-    core.cut_box((-0.010, -0.0555, 0.0055), (0.0225, 0.0555, 0.050), name='pack tray slot (open above)')
+    core.cut_box((-0.010, -0.0570, 0.0055), (0.0225, 0.0570, 0.050), name='pack tray slot (open above; y +-57 clears the 25 mm strap, outer face 56.1, over the whole trim travel)')
     core.cut_box((0.0295, -0.0165, -0.05), (0.0710, 0.0165, 0.0115), name='saddle slot (open below)')
     core.cut_box((0.0335, 0.2705, -0.05), (0.0710, 0.3095, 0.0075), name='clamp slot R (open below)')
     core.cut_box((0.0335, -0.3095, -0.05), (0.0710, -0.2705, 0.0075), name='clamp slot L (open below)')
@@ -391,7 +505,7 @@ def build_wing(ctx):
         loop = [(p0[0] + nx, sg * (p0[1] + ny)), (p1[0] + nx, sg * (p1[1] + ny)), (p1[0] - nx, sg * (p1[1] - ny)),
                 (p0[0] - nx, sg * (p0[1] - ny))]
         core.cut_prism('Z', -0.05, [loop], 0.055, name='strut slot (open below, 0.5 mm clear)')
-    guests = ['WNG-002', 'CGE-004', 'CGE-005-R', 'CGE-005-L', 'CGE-006', 'CGE-007-R', 'CGE-007-L', 'FIN-002-R', 'FIN-002-L',
+    guests = ['HWC-001', 'HWC-003', 'WNG-002', 'CGE-004', 'CGE-005-R', 'CGE-005-L', 'CGE-006', 'CGE-007-R', 'CGE-007-L', 'FIN-002-R', 'FIN-002-L',
               'FIN-005-R', 'FIN-005-L', 'AVN-006', 'MEC-001-R', 'MEC-001-L', 'CGE-008']
     for g in guests:
         ctx.seat('WNG-001', g, 'groove / bore / pocket cut in the core for ' + g, shop=True)
@@ -413,8 +527,11 @@ def build_fins(ctx):
     b.box((0.2550, YFIN - 0.0095, -0.0095), (RIB_X1, YFIN + 0.0095, 0.0095), name='root block rib socket')
     ctx.mirror('FIN-003-R', 'FIN-003-L', plane='XZ')
     f = ctx.part('FIN-004-R', rgb=(0.95, 0.95, 0.8))
-    f.box((XH + 0.0003, YFIN - 0.0015, -FIN_H), (XFIN_T, YFIN + 0.0015, FIN_H), name='fairing')
+    f.prism('Z', -FIN_H, [[(x_, YFIN + y_) for x_, y_ in fin_fairing_loop()]], 2 * FIN_H, name='fairing')
     ctx.mirror('FIN-004-R', 'FIN-004-L', plane='XZ')
+    rf = ctx.part('FIN-006-R', rgb=(0.95, 0.95, 0.8))
+    rf.prism('X', RIBF_X0, [RIBF_LOOP], XH - RIBF_X0, name='rib fairing blister')
+    ctx.mirror('FIN-006-R', 'FIN-006-L', plane='XZ')
     sdl = ctx.part('FIN-005-R', rgb=(0.9, 0.9, 0.9))
     sdl.tube('Y', (SPAR_X, YFIN - 0.030, 0.0), 0.060, 0.0105, SPAR_OD / 2, name='rib saddle ring')
     sdl.box((0.0665, YFIN - 0.0095, -0.0095), (0.0905, YFIN + 0.0095, 0.0095), name='rib saddle socket')
@@ -428,22 +545,35 @@ def build_fins(ctx):
         ctx.seat('FIN-003-' + s, 'FIN-002-' + s, 'block rib socket')
         ctx.seat('FIN-005-' + s, 'WNG-002', 'saddle bore on the spar')
         ctx.seat('FIN-005-' + s, 'FIN-002-' + s, 'saddle rib socket')
+        ctx.seat('FIN-006-' + s, 'FIN-002-' + s, 'rib groove')
+        ctx.seat('FIN-006-' + s, 'WNG-001', 'blister trimmed to the skin (sits on it)')
     for st in ST:
         ctx.seat('FIN-004-' + ('R' if ST[st][0] > 0 else 'L'), 'GER-001-' + st, 'fairing notch for the shoe')
 
 
 def build_cage(ctx):
     hub = ctx.part('CGE-001', rgb=(0.9, 0.9, 0.9))
-    hub.cylinder('X', (HUB_X0, 0.0, 0.0), HUB_X1 - HUB_X0, HUB_R, name='hub disc')
+    hub.cylinder('X', (HUB_X0, 0.0, 0.0), HUB_X1 - HUB_X0, HUB_RB, name='hub bridge sleeve')
+    hub.cut_cylinder('X', (-0.100, 0.0, 0.0), HUB_X1 + 0.001 + 0.100, BR_OD / 2, name='bridge socket bore (blind, 2 mm front floor)')
+    hub.box(HUB_PAD[0], HUB_PAD[1], name='hub tray pad flange')
+    for st in ST:
+        hub.loft('X', hub_arm_boss(PHI[st]), name='hub arm socket boss')
+        hub.prism('X', HUB[0] - HUB_SPOKE_D / 2, [hub_arm_spoke(PHI[st])], HUB_SPOKE_D, name='hub radial web')
     for st in ST:
         arm = ctx.part('CGE-002-' + st, at=HUB, rotate=('X', PHI[st]), rgb=(0.1, 0.1, 0.1))
         arm.tube('Y', (0.0, R_IN, 0.0), R_M - R_IN, ARM_OD / 2, ARM_ID / 2, name='arm tube')
         cup = ctx.part('CGE-003-' + st, at=station(st), rotate=mrot(st), rgb=(0.9, 0.9, 0.9))
-        cup.box((-0.012, -0.0165, -0.0165), (-0.007, 0.0165, 0.0165), name='cup motor plate')
+        cup.prism('X', -0.012, [_rrect(0.0165, 0.0165, CUP_R)], 0.005, name='cup motor plate')
         cup.tube('Y', (0.0, -0.025, 0.0), 0.0285, 0.0095, ARM_OD / 2, name='cup arm sleeve')
-        cup.cut_cylinder('X', (-0.0125, 0.0, 0.0135), 0.006, 0.003, name='lead hole')
+        for sy_ in (1, -1):
+            for sz_ in (1, -1):
+                cup.cut_cylinder('X', (-0.0125, sy_ * CUP_PAT[0] / 2, sz_ * CUP_PAT[1] / 2), 0.006, 0.00145, name='motor screw hole M2.5 clearance 2.9 mm (ISO 273 medium; pattern V T-Motor drawing)')
+        cup.cut_cylinder('X', (-0.0125, 0.0, 0.0), 0.006, 0.004, name='motor rear relief 8 mm (EST)')
+        cup.cut_box((-0.0125, -0.003, 0.0105), (-0.0065, 0.003, 0.0175), name='phase-lead slot (open to the plate edge)')
         ctx.seat('CGE-003-' + st, 'CGE-002-' + st, 'arm socket')
         ctx.seat('CGE-001', 'CGE-002-' + st, 'arm socket in the hub')
+        ctx.components['CGE-001'].cut(fk.Shape('revolve', 'arm socket bore (12 mm, 25 mm deep)', axis='Y', center=(0.0, R_IN, 0.0),
+                                               profile=[(0.0, 0.0), (HUB_SOCK + 0.002, 0.0), (HUB_SOCK + 0.002, ARM_OD / 2), (0.0, ARM_OD / 2)]), arm.matrix(), 'arm socket bore, 25 mm deep')
     br = ctx.part('CGE-004', rgb=(0.1, 0.1, 0.1))
     br.tube('X', (BR_X0, 0.0, 0.0), BR_X1 - BR_X0, BR_OD / 2, BR_ID / 2, name='bridge tube')
     ctx.seat('CGE-001', 'CGE-004', 'bridge socket in the hub')
@@ -454,6 +584,11 @@ def build_cage(ctx):
         st_ = ctx.part('CGE-005-' + s, at=(STRUT_S[0], sg * STRUT_S[1], 0.0), rotate=('Z', sg * ang), rgb=(0.1, 0.1, 0.1))
         st_.tube('X', (0.0, 0.0, 0.0), L, STRUT_OD / 2, STRUT_ID / 2, name='strut tube')
         ctx.seat('CGE-001', 'CGE-005-' + s, 'strut socket in the hub')
+        secs_, Rs_ = hub_strut_boss(sg)
+        ctx.components['CGE-001'].loft('Z', secs_, name='hub strut socket boss')
+        ctx.components['CGE-001'].prism('Z', -HUB_W / 2, [hub_strut_web(sg)], HUB_W, name='hub strut web')
+        ctx.components['CGE-001'].cut(fk.Shape('revolve', 'strut socket bore (6 mm)', axis='X', center=(0.0, 0.0, 0.0),
+                                               profile=[(0.0, 0.0), (HUB_STRUT_S[1] + 0.002, 0.0), (HUB_STRUT_S[1] + 0.002, STRUT_OD / 2), (0.0, STRUT_OD / 2)]), st_.matrix(), 'strut socket bore')
         ctx.components['WNG-001'].cut(fk.Shape('revolve', 'strut groove (0.5 mm per side clearance)', axis='X', center=(0.0, 0.0, 0.0),
                                                profile=[(0.0, 0.0), (L + 0.002, 0.0), (L + 0.002, STRUT_OD / 2 + 0.0005),
                                                         (0.0, STRUT_OD / 2 + 0.0005)]), st_.matrix(), 'strut groove, bonded slip fit clearance EST')
@@ -474,8 +609,10 @@ def build_cage(ctx):
     tr.box((-0.045, -0.0545, 0.006), (TRAY_X1, 0.0545, 0.008), name='tray plate')
     tr.box((PACK_X[0] - TRIM, 0.0525, 0.008), (PACK_X[1] + TRIM, 0.0545, 0.030), name='tray end wall R')
     tr.box((PACK_X[0] - TRIM, -0.0545, 0.008), (PACK_X[1] + TRIM, -0.0525, 0.030), name='tray end wall L')
-    tr.box((PACK_X[0] - 0.002, -0.0545, 0.008), (PACK_X[0], 0.0545, 0.020), name='tray front lip')
-    tr.box((PACK_X[1], -0.0545, 0.008), (PACK_X[1] + 0.002, 0.0545, 0.018), name='tray rear lip')
-    for xl in (PACK_X[0] - 0.001, PACK_X[1] + 0.001):          # trim slots: the M3 lip bolts slide +-TRIM (lips re-bolt with the pack)
-        for sy_ in (1, -1):
-            tr.cut_box((xl - TRIM - 0.0017, sy_ * 0.040 - 0.0017, 0.005), (xl + TRIM + 0.0017, sy_ * 0.040 + 0.0017, 0.009), name='trim slot')
+    # D-194: the tray is ONE printed part (bonded to the hub pad, no bolts). The lips are integral and sit at the ends of the +-TRIM travel; the
+    # pack is placed against a lip (trim -10 / +10) or on foam shims between (not drawn, EST) and held by the strap PWR-002. The old slotted
+    # M3 lip bolts (ASDRAWN s5 item 5, 'not drawn') are dropped: lips were drawn as part of the tray, so bolts had nothing to move.
+    tr.box((PACK_X[0] - TRIM - 0.002, -0.0545, 0.008), (PACK_X[0] - TRIM, 0.0545, 0.020), name='tray front lip')
+    tr.box((PACK_X[1] + TRIM, -0.0545, 0.008), (PACK_X[1] + TRIM + 0.002, 0.0545, 0.018), name='tray rear lip')
+    # lead notch in end wall R for the 14 AWG pack leads, the XT60 and the balance lead over the whole trim travel (leads at pack z mid-thickness)
+    tr.cut_box((PACK_XL_ - TRIM - 0.0081, 0.0520, PACK_ZL_ - 0.0030), (PACK_XL_ + TRIM + 0.0081, 0.0550, 0.0310), name='lead notch in end wall R, open to the wall top so the pack drops in with its leads (D-194)')

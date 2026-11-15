@@ -36,7 +36,9 @@ ELEV_Y0, ELEV_Y1 = 0.04, 0.35               # elevon y range; QP-4 FIXES item 2:
 ELEV_STOP = 21.0                            # QP-4 FIXES2: MECHANICAL stops at +-21 deg (1 deg overtravel past the 20 deg authority, covers servo calibration)
 ELEV_POSE = float(os.environ.get('A_ELEV_POSE', str(ELEV_STOP)))   # angle of the collision-sweep poses (joint limits); default = the stop; env A_ELEV_POSE = 20 or 22 for the +-20 / +-22 deg checks
 SPAR_X, SPAR_OD, SPAR_ID = 0.060, 0.012, 0.010     # DOC iteration 2: CF 12x10 at x 60
-COORDS = k9.reflex_placeholder(0.095, camber=0.012)      # EST: no A section file; 9.5 % t/c (DOC), K09-L placeholder camber
+WING_DZ = float(os.environ.get('A_WING_DZ', '0.005'))                            # D-194 (integrator): airfoil datum lowered 5.0 mm so the 12 mm spar bore (z 0) sits at mid-thickness of the S5010: foam above/below the bore 6.3 / 5.6 mm (was 11.3 / 0.6 mm at x 54-66, S5010 chord line z 0 -> lower skin -6.6 mm). CALC from s5010.dat
+COORDS = k9.read_dat(os.path.join(REDESIGN, 'subsystems', 'wing', 's5010.dat'))   # D-193 (A1): Selig S5010, published coordinates, unscaled, 9.82 % t/c (UIUC s5010.dat, checked 2026-11-09; K09-L D-02); replaces reflex_placeholder(0.095, camber 0.012)
+COORDS = [(x_, z_ - WING_DZ / C) for x_, z_ in COORDS]   # re-datum (normalised coordinates), see WING_DZ
 HUB = (-0.075, 0.0, 0.0)                    # DOC: hub (-75, 0, 0)
 YM, ZM = 0.228, 0.156                       # DOC: motors at y 0.228 / z 0.156
 R_M = math.hypot(YM, ZM)                    # 0.2762 (DOC radius 0.276)
@@ -47,7 +49,7 @@ PACK_X = (-0.0275, 0.0075)                  # QP-4 7.2 #2: pack moved 10 mm aft 
 TRIM = 0.010                                # +-10 mm pack trim travel (about +-2.2 mm of CG)
 TRAY_X1 = 0.0215                            # tray plate aft end (pack aft edge at +TRIM is 17.5 mm; core tray slot ends at 0.0225)
 SERVO_Y = 0.200                             # EST (DOC landing_a: servo y 0.30 is in the elevon; moved inboard)
-SV_Z1 = 0.0117                              # servo case top (servo case 28.4 x 13.0 x 26.7, see electrical.py); the core servo pocket opens at this z
+SV_Z1 = 0.0117 - WING_DZ                              # servo case top (servo case 28.4 x 13.0 x 26.7, see electrical.py); the core servo pocket opens at this z
 
 PHI = {s: math.degrees(math.atan2(ST[s][1] * ZM, ST[s][0] * YM)) for s in ST}
 
