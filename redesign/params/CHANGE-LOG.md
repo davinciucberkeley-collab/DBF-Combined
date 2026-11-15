@@ -870,3 +870,17 @@ B1, B3, B4, C1, C2, C3, C4, C5, E1, E2), wave 3 (A3, D7). Each role's record is 
 | **D-157** | **Pack-current limiter 70.2 A with sensor calibration ±1.1 %** | E1; F4 | `performance.full_throttle_current_a` 70.2, `cruise_power_w` 295, `propulsion.thrust_max_per_motor_kg` 1.62 → 1.309, `current_max_per_motor_a` 24.8 → 17.30, `voltage_sag` 0.85 → 0.867, `performance.hover_current_a` 27.5, `hover_power_w` 407 | At 9° the window is 69.37–71.07 A; 70 A with ±1.5 % failed T/W (1.993). At 70.2 A / ±1.1 %: 24.98 A, T/W 2.001 |
 | **D-158** | **Mirrored spin-map case closed by a hold point** | B4 | none | `CL-B4-ELEVON-HOVER-ALT` −8.6 mm on a mis-built map; inclinometer and hanging yaw test before the first hover. J6 to accept |
 | **D-159** | **Cant stays 9°; contingency trigger 1.023 × model; 10° / 14 mm mounts printed as spares** | B3, B4 | `ASM-B3-CANT-ALT` | Hover yaw 1.534 (+2.3 %); 1.468 at cross-flow Cd +10 %. `T-B3-HOVER-YAW-WTIP` decides |
+
+## 2026-11-14 / 15 · Concept A (scaled quad tailsitter) decisions (D-182 … D-188; Dillon Alcouffe)
+
+Concept A is designed in `redesign/qp/A/`, not in `params.json`; the K09-L entries above are the record of the previous design. Details are in the reports cited.
+
+| ID | Decision | Owner | Changed | Basis |
+|---|---|---|---|---|
+| **D-182** | **Configuration: concept A, scaled quad tailsitter** (0.90 m wing, 4 x MN2212 KV780, 4S). Reverses D-181 (quadplane) | J6 board | `qp/A/` workspace | Four concepts sized to equal depth, `review/QP-1/BOARD.md`; K09-L cheapest workable build about $2,577 (`review/CLOSURE-ROUND-2026-11-14/DESIGN-TO-COST.md`) |
+| **D-183** | **Cost levers, APC 9x4.5MR/MRP props, Q_M_SPIN_MAX 0.90; D-183b pack Tattu 4S 2300** | E1, E2, I1 | `qp/A/BOM-A.csv`, `A.param` | `review/QP-2/D183.md` |
+| **D-184** | **Arms x1.2, cant 16 deg; wind limit 5 m/s edge-on within +-10 deg, belly-on 3 m/s** | A2, A3 | `qp/A/A.param`, flight card | `review/QP-2/D184.md`, `WIND.md` |
+| **D-185** | **Vibration rule: strongly coupled modes (coupling >= 0.5) 20 % separation; weakly coupled modes pass a forced-response check** | J6 board | `qp/A/REQUIREMENTS-A.md` | `review/QP-3/BOARD.md` |
+| **D-186** | **SITL follow-ups: THR_MAX 68 + FWD_BAT, VD 24, RAT_VT 24, LOITER 40, 150 m racetrack, fence 240 m; above 3 m/s yaw edge-on before QLAND** | B, F | `qp/A/A.param` | `review/QP-3/SITL-FLIGHT.md`, `review/QP-3/BOARD.md` |
+| **D-187** | **Elevon mass balance v2: 15.6 g lead strip at 20 mm per elevon** | D6 | `qp/A/cad/a_model.py` | `review/QP-4/FIXES.md`, `BOARD.md` |
+| **D-188** | **Elevon flutter closed by a hinge viscous damper** (dimethicone 12,500 cSt shear drum, c = 1.03e-3 N m s/rad, 2.5 g per elevon); preload strips for slack only; servo arm 19 -> 12 mm; PETG caps with mechanical stops at +-21 deg; spar bond over abs(y) <= 0.20 m | D6, C2, A5; accepted by A1 | `qp/A/cad/a_model.py`, `a_assembly_plan.py`, `BOM-A.csv` R12/R13, `MASS-GATE.md` s7 | `review/QP-4/FIXES2.md`: no passive balance passes below 73.5 g lead per elevon; with the damper no instability at any K 0.01-20, 0 % structural damping, lowest onset 35.5 m/s hot `EST` (line 28.8). Collision 0 at +-20/+-21, assembly 28/28. BOM $1,775.09, G7 PASS (+$105.08). Mass predicted 1,423.9 g `EST`. Coupon test E1 (FIXES2 s8) must pass before the main order |

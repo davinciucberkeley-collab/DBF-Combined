@@ -98,6 +98,18 @@
    "pairs": []
   },
   {
+   "id": "B4",
+   "parts": [
+    "WNG-009-R",
+    "WNG-010-R",
+    "WNG-009-L",
+    "WNG-010-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
    "id": "C1",
    "parts": [
     "FIN-002-R",
@@ -114,6 +126,26 @@
     "WNG-006-L",
     "WNG-007-R",
     "WNG-007-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "C2a",
+   "parts": [
+    "WNG-008-RU",
+    "WNG-008-LU"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "C2b",
+   "parts": [
+    "WNG-008-RL",
+    "WNG-008-LL"
    ],
    "worst_mm": 0.0,
    "first_hit_t_mm": null,

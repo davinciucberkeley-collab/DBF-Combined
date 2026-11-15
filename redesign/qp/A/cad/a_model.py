@@ -26,7 +26,9 @@ C, B = 0.245, 0.90                          # DOC STRUCTURES s1: chord, span
 ELEV_FRAC = 0.25                            # EST elevon chord fraction (A documents give none)
 XH = C * (1 - ELEV_FRAC)                    # hinge station
 ELEV_Y0, ELEV_Y1 = 0.04, 0.35               # elevon y range; QP-4 FIXES item 2: outboard end 0.34 -> 0.35 for roll rate (fin plane y 0.372 inner face: 22 mm clear); inboard end EST
-ELEV_LIM = 20.0                             # deg EST (A documents give none)
+ELEV_LIM = 20.0                             # deg EST (A documents give none): control authority, software limit SERVO5/6
+ELEV_STOP = 21.0                            # QP-4 FIXES2: MECHANICAL stops at +-21 deg (1 deg overtravel past the 20 deg authority, covers servo calibration)
+ELEV_POSE = float(os.environ.get('A_ELEV_POSE', str(ELEV_STOP)))   # angle of the collision-sweep poses (joint limits); default = the stop; env A_ELEV_POSE = 20 or 22 for the +-20 / +-22 deg checks
 GAP_Y = 0.0005
 SPAR_X, SPAR_OD, SPAR_ID = 0.060, 0.012, 0.010     # DOC iteration 2: CF 12x10 at x 60
 PLUG_R = 0.0049
@@ -106,8 +108,8 @@ XS = [XH * (1 - math.cos(math.pi * i / NST)) / 2 for i in range(NST + 1)]
 
 
 def cove_x():
-    """Lower end of the slanted core back face (cove for the elevon nose, deflection ELEV_LIM + 2 deg)."""
-    t = math.tan(math.radians(ELEV_LIM + 4.0))
+    """Lower end of the slanted core back face (cove for the elevon nose, deflection ELEV_STOP + 2 deg)."""
+    t = math.tan(math.radians(ELEV_STOP + 4.0))
     x = XH
     for _ in range(60):
         x = XH - (zu(XH) - zl(x)) * t
@@ -150,7 +152,7 @@ GEL_XY = [(0.048, -0.0095), (0.048, 0.0095), (0.072, -0.0095), (0.072, 0.0095)] 
 ESC_TOP = ZP + 0.0055
 
 SV_X0, SV_X1, SV_DY, SV_Z0, SV_Z1 = 0.1270, 0.1554, 0.01335, -0.0013, 0.0117    # SERVO.md: EMAX ES3054HV 28.4 x 13.0 x 26.7 (servodatabase / getfpv, 2026-11-15; spline kept at x 140.5)
-ARM_X0, ARM_X1, ARM_Z1 = 0.1405, 0.1595, SV_Z1 + 0.0020
+ARM_X0, ARM_X1, ARM_Z1 = 0.1405, 0.1525, SV_Z1 + 0.0020   # FIXES2: servo arm 19 -> 12 mm (pushrod end at 12 mm radius = horn radius 12.9 mm; the QP-4 CAD arm was longer than the horn, which the SERVO.md torque check assumed equal)
 ROD_Z = 0.0127
 HORN_X0, HORN_X1 = 0.195, 0.209
 
@@ -211,7 +213,7 @@ def _hull(pts):
 def bal_sweep_loop(margin=0.0005):
     """Convex hull of the horn and lead over -ELEV_LIM..+ELEV_LIM (5 deg steps), grown by margin: the pocket cut in the core."""
     pts = []
-    for a in range(-int(ELEV_LIM), int(ELEV_LIM) + 1, 4):
+    for a in range(-int(ELEV_STOP) - 1, int(ELEV_STOP) + 2, 2):      # FIXES2: pocket covers the mechanical stop +1 deg
         for l in (bal_arm_loop(), bal_lead_loop()):
             pts += [_rot_pt(p, a) for p in l]
     for l in (bal_arm_loop(), bal_lead_loop()):          # install path: the elevon with its balance slides in 25 mm from aft (assembly step C2)
@@ -224,6 +226,139 @@ def bal_sweep_loop(margin=0.0005):
         d = math.hypot(p[0] - cx, p[1] - cz)
         out.append((p[0] + (p[0] - cx) / d * margin, p[1] + (p[1] - cz) / d * margin))
     return _ccw(out)
+
+
+# ------------------------------------------------------------------ FIXES2: lens caps, mechanical stops, hinge damper
+CAP_WALL, CAP_CLR, CAP_SLOPE = 0.0006, 0.0005, 0.20      # printed single wall 0.6 mm (vase-mode print, EST); clearance lead / tab to the cap cavity at the stop >= 0.5 mm; ramp 1:5
+CAP_Y0, CAP_Y1 = BAL_YC - BAL_W / 2 - 0.002, BAL_YC + BAL_W / 2 + 0.002
+BOSS_S = (0.62, 0.90)                       # stop boss touches the tab face between 55 % and 85 % of the tab length from the root (clear of the lead by >= 0.5 mm)
+BOSS_W = 0.006                              # boss width (= tab width)
+RHO_PETG = 1.27                             # g/cm3
+
+
+def _edge_pts(l, step=0.0005):
+    out = []
+    for i in range(len(l)):
+        p, q = l[i], l[(i + 1) % len(l)]
+        n = max(1, int(math.hypot(q[0] - p[0], q[1] - p[1]) / step))
+        out += [(p[0] + (q[0] - p[0]) * k / n, p[1] + (q[1] - p[1]) * k / n) for k in range(n)]
+    return out
+
+
+def _skin(side, x):
+    return zu(x) if side == 'U' else zl(x)
+
+
+def _out(side, x, h):                       # z of the point h outside the skin at x
+    return _skin(side, x) + h if side == 'U' else _skin(side, x) - h
+
+
+def _h_of(side, x, z):                      # height of z outside the skin
+    return z - zu(x) if side == 'U' else zl(x) - z
+
+
+def cap_env(side):
+    """Height outside the skin needed by the lead strip and tabs over -STOP..+STOP, per 1 mm bin of x."""
+    env = {}
+    pts0 = _edge_pts(bal_lead_loop()) + _edge_pts(bal_arm_loop())
+    for k in range(-42, 43):
+        a = ELEV_STOP * k / 42.0
+        for p in pts0:
+            x, z = _rot_pt(p, a)
+            b = int(round(x * 1000))
+            env[b] = max(env.get(b, -1.0), _h_of(side, x, z))
+    return env
+
+
+def cap_profile(side):
+    """(xs list m, h_out list m): outer lens profile above the skin; inner = h_out - CAP_WALL. Covers the lead sweep + CAP_CLR + wall, and the tab bosses."""
+    env = cap_env(side)
+    need = {b: h + CAP_CLR for b, h in env.items() if h + CAP_CLR > 0.0002}
+    xa, xb = min(need), max(need)
+    xb = max(xb, int(round(max(p[0] for p in boss_loop(side)) * 1000)) + 1)       # boss reach on the tab
+    bins = list(range(xa - 1, xb + 2))
+    ho = [max(need.get(b, 0.0) + CAP_WALL, need.get(b - 1, 0.0) + CAP_WALL, need.get(b + 1, 0.0) + CAP_WALL) if b in need or (b - 1) in need or (b + 1) in need else CAP_WALL for b in bins]
+    dx = 0.001
+    for _ in range(2):
+        for i in range(1, len(ho)):
+            ho[i] = max(ho[i], ho[i - 1] - CAP_SLOPE * dx)
+        for i in range(len(ho) - 2, -1, -1):
+            ho[i] = max(ho[i], ho[i + 1] - CAP_SLOPE * dx)
+    xs = [b / 1000.0 for b in bins]
+    # ends: ramp down to the skin
+    n0 = int(math.ceil(ho[0] / (CAP_SLOPE * dx))); n1 = int(math.ceil(ho[-1] / (CAP_SLOPE * dx)))
+    xs = [xs[0] - dx * (n0 - i) for i in range(n0)] + xs + [xs[-1] + dx * (i + 1) for i in range(n1)]
+    ho = [ho[0] * (i / float(n0)) for i in range(n0)] + ho + [ho[-1] * (1 - (i + 1) / float(n1)) for i in range(n1)]
+    return xs, ho
+
+
+def cap_loop(side):
+    xs, ho = cap_profile(side)
+    outer = [(x, _out(side, x, h)) for x, h in zip(xs, ho)]
+    inner = [(x, _out(side, x, max(h - CAP_WALL, 0.0))) for x, h in zip(xs, ho)]
+    return _ccw(outer + inner[::-1]), outer, inner
+
+
+def cap_end_loop(side):
+    xs, ho = cap_profile(side)
+    outer = [(x, _out(side, x, h)) for x, h in zip(xs, ho)]
+    base = [(x, _skin(side, x)) for x in xs]
+    return _ccw(outer + base[::-1])
+
+
+def boss_loop(side):
+    """Stop boss: bottom face coincides with the tab face rotated to the stop angle (+STOP upper / -STOP lower); top buried in the cap wall."""
+    a = ELEV_STOP if side == 'U' else -ELEV_STOP
+    xr, zr_ = XH - 0.0004, HINGE_Z - 0.0035
+    t = BAL_ARM_T / 2
+    xe = XH - BAL_REACH + BAL_L / 2
+    zc = HINGE_Z + BAL_DZ
+    sg = 1 if side == 'U' else -1
+    A = (xr, zr_ + sg * t)
+    Bp = (xe, zc + sg * t)
+    p0 = _rot_pt((A[0] + (Bp[0] - A[0]) * BOSS_S[0], A[1] + (Bp[1] - A[1]) * BOSS_S[0]), a)
+    p1 = _rot_pt((A[0] + (Bp[0] - A[0]) * BOSS_S[1], A[1] + (Bp[1] - A[1]) * BOSS_S[1]), a)
+    top = lambda p: (p[0], _out(side, p[0], CAP_WALL * 0.5))
+    return _ccw([p0, p1, top(p1), top(p0)])
+
+
+CAP_FL_W, CAP_FL_T = 0.003, 0.0004          # bonding flange: 3 mm wide, 0.4 mm thick on both y sides and the fore end (none at the aft end: it faces the elevon)
+
+
+def cap_flange_loops(side):
+    """(side strip loop along x, fore strip loop) in the XZ plane: thin band on the skin."""
+    xs, ho = cap_profile(side)
+    band = [(x, _skin(side, x)) for x in xs] + [(x, _out(side, x, CAP_FL_T)) for x in xs[::-1]]
+    fore = [(xs[0] - CAP_FL_W, _skin(side, xs[0] - CAP_FL_W)), (xs[0], _skin(side, xs[0])), (xs[0], _out(side, xs[0], CAP_FL_T)), (xs[0] - CAP_FL_W, _out(side, xs[0] - CAP_FL_W, CAP_FL_T))]
+    return _ccw(band), _ccw(fore)
+
+
+def cap_mass_g(side):
+    L = cap_loop(side)[0]
+    a_arch = abs(_poly_area(L))
+    a_end = abs(_poly_area(cap_end_loop(side)))
+    ly = CAP_Y1 - CAP_Y0
+    vol = a_arch * (ly - 2 * CAP_WALL) + 2 * a_end * CAP_WALL
+    bl = boss_loop(side)
+    vol += 2 * abs(_poly_area(bl)) * BOSS_W
+    fb, ff = cap_flange_loops(side)
+    vol += 2 * abs(_poly_area(fb)) * CAP_FL_W + abs(_poly_area(ff)) * (CAP_Y1 - CAP_Y0 + 2 * CAP_FL_W)
+    return vol * 1e6 * RHO_PETG
+
+
+# hinge viscous damper (coaxial shear drum on the hinge axis, in the 22 mm gap between the elevon tip and the fin, fluid 12,500 cSt, mu 12.2 Pa s)
+DMP_YE = ELEV_Y1 - GAP_Y                    # elevon tip face y
+DMP_R_OUT, DMP_R_BORE, DMP_R_SLV, DMP_T_SLV, DMP_R_PIN, DMP_R_PIN_I = 0.00635, 0.00555, 0.00500, 0.0005, 0.00445, 0.0032
+DMP_FLANGE = (DMP_YE, DMP_YE + 0.0010)      # rotor flange disc bonded on the elevon tip face
+DMP_SLV = (DMP_YE + 0.0010, DMP_YE + 0.0180)    # rotor sleeve 17 mm
+DMP_H0, DMP_H1 = DMP_YE + 0.0012, DMP_YE + 0.0195   # housing tube y range; fin-side end disc is the last 0.8 mm
+DMP_MU = 12.2                               # Pa s: 12,500 cSt x 0.974 (Dow PMX-200 / Clearco PSF-12500 data sheets, read 2026-11-15)
+DMP_GAP = DMP_R_BORE - (DMP_R_SLV + DMP_T_SLV / 2)
+DMP_L_ACT = 0.0160                          # sleeve length inside both gaps (overlap with the pin and bore)
+DMP_STATOR_G = round(((math.pi * (DMP_R_OUT ** 2 - DMP_R_BORE ** 2) * (DMP_H1 - DMP_H0) + math.pi * DMP_R_OUT ** 2 * 0.0008 + math.pi * (DMP_R_PIN ** 2 - DMP_R_PIN_I ** 2) * 0.0165) * 1e6 * RHO_PETG)
+                     + 2 * math.pi * DMP_R_SLV * DMP_GAP * DMP_L_ACT * 1e6 * 0.974 + 0.4, 1)      # housing + pin + fluid in both gaps + 0.4 g strips (silicone, EST)
+DMP_ROTOR_G = round((math.pi * (DMP_R_SLV + DMP_T_SLV / 2) ** 2 - math.pi * (DMP_R_SLV - DMP_T_SLV / 2) ** 2) * 0.0170 * 1e6 * RHO_PETG + math.pi * 0.0056 ** 2 * 0.0010 * 1e6 * RHO_PETG, 1)
+DMP_C = 2 * math.pi * DMP_MU * DMP_L_ACT * ((DMP_R_SLV - DMP_T_SLV / 2) ** 3 / (DMP_R_SLV - DMP_T_SLV / 2 - DMP_R_PIN) + (DMP_R_SLV + DMP_T_SLV / 2) ** 3 / DMP_GAP)   # N m s/rad per elevon, 25 C, both gaps
 
 
 # ------------------------------------------------------------------ parts table
@@ -248,7 +383,12 @@ for pid, nm in (('WNG-003-C', 'centre'), ('WNG-004-R', 'right strut'), ('WNG-004
 P('WNG-006-R', 'Elevon right', 'wing', 8.0, 'XPS foam + tape')   # 8.5 - 0.73 (foam 4.4 g x 5/30) + 0.26 (10 mm more span)
 P('WNG-006-L', 'Elevon left', 'wing', 8.0, 'XPS foam + tape')
 for s_ in 'RL':
-    P('WNG-007-' + s_, 'Elevon balance (D-187 v2, %s): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g + 2 printed lens caps 1.0 g' % s_, 'wing', 17.1, 'lead + PETG/CF')
+    P('WNG-007-' + s_, 'Elevon balance (D-187 v2, %s): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)' % s_, 'wing', 16.1, 'lead + PETG/CF')
+    for sd in 'UL':      # FIXES2: lens caps with the mechanical stop bosses (mass from the drawn volume, PETG 1.27 g/cm3)
+        P('WNG-008-%s%s' % (s_, sd), 'Lens cap + stop bosses (%s, %s skin): wall %.1f mm, >= %.1f mm clearance to the lead at the +-%.0f deg stop' % (s_, 'upper' if sd == 'U' else 'lower', CAP_WALL * 1e3, CAP_CLR * 1e3, ELEV_STOP),
+          'wing', round(cap_mass_g(sd), 1), 'PETG (printed)')
+    P('WNG-009-' + s_, 'Hinge damper stator (%s): printed housing + pin, 12,500 cSt silicone fluid, 2 silicone preload strips' % s_, 'wing', DMP_STATOR_G, 'PETG + silicone')
+    P('WNG-010-' + s_, 'Hinge damper rotor (%s): sleeve + flange bonded on the elevon tip' % s_, 'wing', DMP_ROTOR_G, 'PETG (printed)')
 # fins (allocation 70 g; STRUCTURES iteration 2: 119 g)
 for s in 'RL':
     P('FIN-001-' + s, 'Fin tube 16x14 x 0.36 m (%s)' % s, 'fins', round(tube_g(0.36, FIN_OD, FIN_ID), 1), 'CFRP tube')
@@ -327,14 +467,19 @@ def en(prefix):
 
 EPX, CA, TAPEF = 'CT-EPOXY', 'CT-CA', 'CT-TAPE-FOAM'
 # wing
-E('E-WNG-01', 'WNG-002', 'WNG-001', EPX, 'wing', 'spar bonded in its bore; build rule: bond over |y| <= 0.15 m (STRUCTURES iter 2)')
+E('E-WNG-01', 'WNG-002', 'WNG-001', EPX, 'wing', 'spar bonded in its bore; build rule: bond over |y| <= 0.20 m (FIXES2: 0.15 m gave foam shear 78 kPa, MS +0.11 at the board allowable 103 kPa scale; 0.20 m gives 58 kPa, MS +0.48)')
 for pid in ('WNG-003-C', 'WNG-004-R', 'WNG-004-L', 'WNG-005-R', 'WNG-005-L'):
     E(en('WNG'), pid, 'WNG-002', EPX, 'wing', 'plug in the spar bore under a clamp (C2 rule)')
 for s in 'RL':
     E('E-WNG-1' + ('0' if s == 'R' else '1'), 'WNG-006-' + s, 'WNG-001', 'CT-TAPE-HINGE', 'wing', 'tape hinge, upper surface',
-      motion=dict(axis='Y', range_deg=[-ELEV_LIM, ELEV_LIM]))
+      motion=dict(axis='Y', range_deg=[-ELEV_POSE, ELEV_POSE]))
 for s in 'RL':
     E('E-WNG-2' + ('0' if s == 'R' else '1'), 'WNG-007-' + s, 'WNG-006-' + s, EPX, 'wing', 'balance horn root bonded to the elevon nose face (D-187)')
+    for k_, sd in enumerate('UL'):
+        E('E-WNG-3%d%s' % (k_, s), 'WNG-008-%s%s' % (s, sd), 'WNG-001', EPX, 'wing', 'lens cap flange bonded on the tape skin over the strip window; the stop bosses pass through the window to the tab (FIXES2)')
+    E('E-WNG-4' + s, 'WNG-009-' + s, 'WNG-001', EPX, 'wing', 'damper housing bonded in the core notch at the elevon tip, axis on the hinge line (FIXES2)')
+    E('E-WNG-5' + s, 'WNG-010-' + s, 'WNG-006-' + s, EPX, 'wing', 'damper rotor flange bonded on the elevon tip face (FIXES2)')
+    E('E-WNG-6' + s, 'WNG-010-' + s, 'WNG-009-' + s, EPX, 'wing', 'rotor sleeve in the fluid-filled annulus of the stator, 0.30 mm gaps, not bonded (modelled as a bonded contact so the sequence check sees support; FIXES2)')
 # fins
 for s in 'RL':
     E(en('FIN'), 'FIN-003-' + s, 'FIN-001-' + s, EPX, 'fins', 'root block wraps the tube')
@@ -384,7 +529,7 @@ for s in 'RL':
     E(en('MEC'), 'MEC-003-' + s, 'MEC-002-' + s, 'CT-CLEVIS', 'mechanisms', 'rod end in the arm hole',
       motion=dict(axis='Z', range_deg=[-30, 30]))
     E(en('MEC'), 'MEC-003-' + s, 'MEC-004-' + s, 'CT-CLEVIS', 'mechanisms', 'rod end in the horn hole',
-      motion=dict(axis='Y', range_deg=[-ELEV_LIM, ELEV_LIM]))
+      motion=dict(axis='Y', range_deg=[-ELEV_POSE, ELEV_POSE]))
     E(en('MEC'), 'MEC-004-' + s, 'WNG-006-' + s, EPX, 'mechanisms', 'horn bonded on the elevon upper skin')
 # landing
 for s in ST:
@@ -446,6 +591,40 @@ def build_wing(ctx):
         bw.prism('Y', BAL_YC + dy_ - BAL_ARM_W / 2, [bal_arm_loop()], BAL_ARM_W, name='balance horn tab')
     bw.prism('Y', BAL_YC - BAL_W / 2, [bal_lead_loop()], BAL_W, name='balance lead block')
     ctx.mirror('WNG-007-R', 'WNG-007-L', plane='XZ')
+    for sd in 'UL':                                       # FIXES2: lens caps with stop bosses (right side; left by mirror)
+        cp = ctx.part('WNG-008-R' + sd, rgb=(0.8, 0.8, 0.85))
+        wl = CAP_WALL
+        cp.prism('Y', CAP_Y0 + wl, [cap_loop(sd)[0]], CAP_Y1 - CAP_Y0 - 2 * wl, name='lens cap arch')
+        cp.prism('Y', CAP_Y0, [cap_end_loop(sd)], wl, name='lens cap end wall')
+        cp.prism('Y', CAP_Y1 - wl, [cap_end_loop(sd)], wl, name='lens cap end wall')
+        for dy_ in (-BAL_ARM_DY, BAL_ARM_DY):
+            cp.prism('Y', BAL_YC + dy_ - BOSS_W / 2, [boss_loop(sd)], BOSS_W, name='mechanical stop boss')
+        fb_, ff_ = cap_flange_loops(sd)
+        cp.prism('Y', CAP_Y0 - CAP_FL_W, [fb_], CAP_FL_W, name='cap bonding flange')
+        cp.prism('Y', CAP_Y1, [fb_], CAP_FL_W, name='cap bonding flange')
+        cp.prism('Y', CAP_Y0 - CAP_FL_W, [ff_], CAP_Y1 - CAP_Y0 + 2 * CAP_FL_W, name='cap bonding flange (fore)')
+        ctx.mirror('WNG-008-R' + sd, 'WNG-008-L' + sd, plane='XZ')
+    for sd in 'UL':                                       # core pockets for the bosses (grown 0.3 mm) so they sit in air
+        for sy in (1, -1):
+            for dy_ in (-BAL_ARM_DY, BAL_ARM_DY):
+                yc_ = sy * (BAL_YC + dy_)
+                bl = boss_loop(sd)
+                cx_ = sum(p[0] for p in bl) / 4.0
+                cz_ = sum(p[1] for p in bl) / 4.0
+                gl = [(p[0] + (p[0] - cx_) / math.hypot(p[0] - cx_, p[1] - cz_) * 0.0003, p[1] + (p[1] - cz_) / math.hypot(p[0] - cx_, p[1] - cz_) * 0.0003) for p in bl]
+                core.cut_prism('Y', yc_ - BOSS_W / 2 - 0.0003, [_ccw(gl)], BOSS_W + 0.0006, name='stop boss pocket')
+    ro = ctx.part('WNG-010-R', rgb=(0.9, 0.6, 0.2))        # hinge damper: rotor sleeve + flange on the elevon tip, stator housing in a core notch
+    ro.tube('Y', (XH, DMP_SLV[0], HINGE_Z), DMP_SLV[1] - DMP_SLV[0], DMP_R_SLV + DMP_T_SLV / 2, DMP_R_SLV - DMP_T_SLV / 2, name='damper rotor sleeve')
+    ro.cylinder('Y', (XH, DMP_FLANGE[0], HINGE_Z), DMP_FLANGE[1] - DMP_FLANGE[0], 0.0056, name='damper rotor flange')
+    ctx.mirror('WNG-010-R', 'WNG-010-L', plane='XZ')
+    st = ctx.part('WNG-009-R', rgb=(0.5, 0.6, 0.7))
+    st.tube('Y', (XH, DMP_H0, HINGE_Z), DMP_H1 - DMP_H0, DMP_R_OUT, DMP_R_BORE, name='damper housing')
+    st.cylinder('Y', (XH, DMP_H1 - 0.0008, HINGE_Z), 0.0008, DMP_R_OUT, name='damper end disc')
+    st.tube('Y', (XH, DMP_H1 - 0.0008, HINGE_Z), -0.0165, DMP_R_PIN, DMP_R_PIN_I, name='damper stator pin')
+    ctx.mirror('WNG-009-R', 'WNG-009-L', plane='XZ')
+    for sy in (1, -1):                                    # notch in the core for the housing and flange (the core ends at the hinge x = XH here)
+        ya, yb = sorted((sy * (DMP_YE - 0.0003), sy * (DMP_H1 + 0.0004)))
+        core.cut_box((XH - DMP_R_OUT - 0.0004, ya, HINGE_Z - DMP_R_OUT - 0.0004), (XH + 0.001, yb, HINGE_Z + 0.001), name='elevon-tip damper notch')
     for sy in (1, -1):                                    # pocket for the balance horn and lead over the full elevon travel
         ya, yb = sorted((sy * (BAL_YC - BAL_W / 2 - 0.001), sy * (BAL_YC + BAL_W / 2 + 0.001)))
         core.cut_prism('Y', ya, [bal_sweep_loop()], yb - ya, name='elevon balance pocket (strip window)')
@@ -699,7 +878,7 @@ def build_assembly(ctx):
         if via == 'CT-TAPE-HINGE':
             sgn = 1 if e['part_a'].endswith('R') else -1
             ctx.revolute(e['id'], e['part_a'], e['part_b'], (XH, sgn * (ELEV_Y0 + ELEV_Y1) / 2, zu(XH)), 'Y',
-                         limits=(-ELEV_LIM, ELEV_LIM))
+                         limits=(-ELEV_POSE, ELEV_POSE))
         elif via == 'CT-CLEVIS':
             ctx.revolute(e['id'], e['part_a'], e['part_b'], at, e['motion']['axis'])
         elif via in ('CT-M3-SHCS-MOTOR', 'CT-PROP-NUT', 'CT-SERVO-SPLINE'):

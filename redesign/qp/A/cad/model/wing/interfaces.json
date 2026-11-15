@@ -139,10 +139,10 @@
   },
   {
    "id": "WNG-007-R",
-   "name": "Elevon balance (D-187 v2, R): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g + 2 printed lens caps 1.0 g",
+   "name": "Elevon balance (D-187 v2, R): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 17.1,
+   "mass_g": 16.1,
    "material": "lead + PETG/CF",
    "cg_xyz_m": [
     0.1654,
@@ -153,16 +153,136 @@
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
-   "id": "WNG-007-L",
-   "name": "Elevon balance (D-187 v2, L): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g + 2 printed lens caps 1.0 g",
+   "id": "WNG-008-RU",
+   "name": "Lens cap + stop bosses (R, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 17.1,
+   "mass_g": 3.0,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.1604,
+    0.285,
+    0.0097
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-008-RL",
+   "name": "Lens cap + stop bosses (R, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 3.2,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.164,
+    0.285,
+    -0.0079
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-009-R",
+   "name": "Hinge damper stator (R): printed housing + pin, 12,500 cSt silicone fluid, 2 silicone preload strips",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 2.0,
+   "material": "PETG + silicone",
+   "cg_xyz_m": [
+    0.1837,
+    0.3607,
+    0.0064
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-010-R",
+   "name": "Hinge damper rotor (R): sleeve + flange bonded on the elevon tip",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.1837,
+    0.3566,
+    0.0064
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-007-L",
+   "name": "Elevon balance (D-187 v2, L): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 16.1,
    "material": "lead + PETG/CF",
    "cg_xyz_m": [
     0.1654,
     -0.285,
     0.0006
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-008-LU",
+   "name": "Lens cap + stop bosses (L, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.1604,
+    -0.285,
+    0.0097
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-008-LL",
+   "name": "Lens cap + stop bosses (L, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 3.2,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.164,
+    -0.285,
+    -0.0079
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-009-L",
+   "name": "Hinge damper stator (L): printed housing + pin, 12,500 cSt silicone fluid, 2 silicone preload strips",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 2.0,
+   "material": "PETG + silicone",
+   "cg_xyz_m": [
+    0.1837,
+    -0.3607,
+    0.0064
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-010-L",
+   "name": "Hinge damper rotor (L): sleeve + flange bonded on the elevon tip",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.1837,
+    -0.3566,
+    0.0064
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -175,7 +295,7 @@
    "part_b": "WNG-001",
    "via": "CT-EPOXY",
    "owner": "wing",
-   "notes": "spar bonded in its bore; build rule: bond over |y| <= 0.15 m (STRUCTURES iter 2)"
+   "notes": "spar bonded in its bore; build rule: bond over |y| <= 0.20 m (FIXES2: 0.15 m gave foam shear 78 kPa, MS +0.11 at the board allowable 103 kPa scale; 0.20 m gives 58 kPa, MS +0.48)"
   },
   {
    "id": "E-WNG-02",
@@ -227,8 +347,8 @@
    "motion": {
     "axis": "Y",
     "range_deg": [
-     -20.0,
-     20.0
+     -21.0,
+     21.0
     ]
    }
   },
@@ -242,8 +362,8 @@
    "motion": {
     "axis": "Y",
     "range_deg": [
-     -20.0,
-     20.0
+     -21.0,
+     21.0
     ]
    }
   },
@@ -256,12 +376,92 @@
    "notes": "balance horn root bonded to the elevon nose face (D-187)"
   },
   {
+   "id": "E-WNG-30R",
+   "part_a": "WNG-008-RU",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "lens cap flange bonded on the tape skin over the strip window; the stop bosses pass through the window to the tab (FIXES2)"
+  },
+  {
+   "id": "E-WNG-31R",
+   "part_a": "WNG-008-RL",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "lens cap flange bonded on the tape skin over the strip window; the stop bosses pass through the window to the tab (FIXES2)"
+  },
+  {
+   "id": "E-WNG-4R",
+   "part_a": "WNG-009-R",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "damper housing bonded in the core notch at the elevon tip, axis on the hinge line (FIXES2)"
+  },
+  {
+   "id": "E-WNG-5R",
+   "part_a": "WNG-010-R",
+   "part_b": "WNG-006-R",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "damper rotor flange bonded on the elevon tip face (FIXES2)"
+  },
+  {
+   "id": "E-WNG-6R",
+   "part_a": "WNG-010-R",
+   "part_b": "WNG-009-R",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "rotor sleeve in the fluid-filled annulus of the stator, 0.30 mm gaps, not bonded (modelled as a bonded contact so the sequence check sees support; FIXES2)"
+  },
+  {
    "id": "E-WNG-21",
    "part_a": "WNG-007-L",
    "part_b": "WNG-006-L",
    "via": "CT-EPOXY",
    "owner": "wing",
    "notes": "balance horn root bonded to the elevon nose face (D-187)"
+  },
+  {
+   "id": "E-WNG-30L",
+   "part_a": "WNG-008-LU",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "lens cap flange bonded on the tape skin over the strip window; the stop bosses pass through the window to the tab (FIXES2)"
+  },
+  {
+   "id": "E-WNG-31L",
+   "part_a": "WNG-008-LL",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "lens cap flange bonded on the tape skin over the strip window; the stop bosses pass through the window to the tab (FIXES2)"
+  },
+  {
+   "id": "E-WNG-4L",
+   "part_a": "WNG-009-L",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "damper housing bonded in the core notch at the elevon tip, axis on the hinge line (FIXES2)"
+  },
+  {
+   "id": "E-WNG-5L",
+   "part_a": "WNG-010-L",
+   "part_b": "WNG-006-L",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "damper rotor flange bonded on the elevon tip face (FIXES2)"
+  },
+  {
+   "id": "E-WNG-6L",
+   "part_a": "WNG-010-L",
+   "part_b": "WNG-009-L",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "rotor sleeve in the fluid-filled annulus of the stator, 0.30 mm gaps, not bonded (modelled as a bonded contact so the sequence check sees support; FIXES2)"
   }
  ],
  "acknowledges": [

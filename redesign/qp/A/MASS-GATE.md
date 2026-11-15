@@ -71,3 +71,7 @@ The earlier 24.8 mm prediction assumed the rest of the aircraft at 35.7 mm; the 
 ## 6. What triggers a re-sit
 
 Predicted mass > 1.44 kg; structure above 473 g (any growth needs the board, D-185); as-built CG outside 20-26 mm (A-P4); as-built > 1.50 kg (R3); sag T/W at the bench < 1.6 at the as-weighed mass (capped, 0.90); C3 window < +-5 %; bench yaw authority < 0.35 N m (0.30 reopens the 5 m/s card).
+
+## 7. QP-4 FIXES2 update (2026-11-15; supersedes the QP-3 tables above where they differ; full text `review/QP-4/FIXES2.md`)
+
+Basic mass (CAD, `cad_mass.json`) **1,231.3 g** (FIXES 1,215.9): +15.4 g in the wing group = 4 printed lens caps with stop bosses and bonding flanges 12.4 g (FIXES carried 2 g), 2 hinge dampers 5.0 g (new), balance tabs/lead 32.2 g (was 34.2 with the caps counted inside). CG 24.4 mm (band 20-26; pack trim -/+ 10 mm). Predicted (basic x 1.1174 + 48): **1,423.9 g** (headroom 16 g to 1,440); `mission_gate_a.py` 1,419 g; capped +-5 % window mass limit 1.486 kg. The predicted total stays <= 1,440 only if >= **27.2 g** of the 41.6 g `EST` cuts are real (was 11.8 g). Fallback worth 5.6 g: lead 15.6 -> 12.8 g per elevon (the damper carries the flutter margin; FIXES2 s2.4). Structure (CAD groups wing 223.4 + fins 109 + feet 8.4 + hardware 30 + cage 113.3): **484.1 g** with the cuts (ceiling 494 g, 9.9 g under), about 521 g without them (FIXES 506).

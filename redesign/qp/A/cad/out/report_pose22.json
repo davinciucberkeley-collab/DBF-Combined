@@ -1,0 +1,160 @@
+{
+ "bodies": 175,
+ "defects": [
+  "WNG-008-LL body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-LL body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-LU body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-LU body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-RL body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-RL body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-RU body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-RU body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)"
+ ],
+ "kinks": [],
+ "parts": 78,
+ "poses": [
+  {
+   "hits": [],
+   "moved": null,
+   "name": "static",
+   "not_swept_against": null
+  },
+  {
+   "hits": [
+    {
+     "a": "WNG-007-R",
+     "at_mm": [
+      173.38,
+      322.25,
+      -4.39
+     ],
+     "b": "WNG-008-RL",
+     "bodies": [
+      "WNG-007-R \"balance horn tab\" x WNG-008-RL \"mechanical stop boss\" 0.25 mm",
+      "WNG-007-R \"balance horn tab\" x WNG-008-RL \"mechanical stop boss\" 0.25 mm"
+     ],
+     "depth_mm": 0.252
+    },
+    {
+     "a": "WNG-007-L",
+     "at_mm": [
+      173.38,
+      -321.5,
+      -4.39
+     ],
+     "b": "WNG-008-LL",
+     "bodies": [
+      "WNG-007-L \"balance horn tab\" x WNG-008-LL \"mechanical stop boss\" 0.25 mm",
+      "WNG-007-L \"balance horn tab\" x WNG-008-LL \"mechanical stop boss\" 0.25 mm"
+     ],
+     "depth_mm": 0.252
+    }
+   ],
+   "moved": [
+    "MEC-004-L",
+    "MEC-004-R",
+    "WNG-006-L",
+    "WNG-006-R",
+    "WNG-007-L",
+    "WNG-007-R",
+    "WNG-010-L",
+    "WNG-010-R"
+   ],
+   "name": "elevons at lower limit (E-WNG-10 -22, E-WNG-11 -22)",
+   "not_swept_against": [
+    "MEC-003-L",
+    "MEC-003-R",
+    "WNG-009-L",
+    "WNG-009-R"
+   ]
+  },
+  {
+   "hits": [
+    {
+     "a": "WNG-007-R",
+     "at_mm": [
+      169.26,
+      248.5,
+      6.44
+     ],
+     "b": "WNG-008-RU",
+     "bodies": [
+      "WNG-007-R \"balance horn tab\" x WNG-008-RU \"mechanical stop boss\" 0.25 mm",
+      "WNG-007-R \"balance horn tab\" x WNG-008-RU \"mechanical stop boss\" 0.25 mm"
+     ],
+     "depth_mm": 0.248
+    },
+    {
+     "a": "WNG-001",
+     "at_mm": [
+      182.15,
+      195.0,
+      3.13
+     ],
+     "b": "WNG-006-R",
+     "bodies": [
+      "WNG-006-R \"elevon\" x WNG-001 \"core box\" 0.07 mm"
+     ],
+     "depth_mm": 0.069
+    },
+    {
+     "a": "WNG-007-L",
+     "at_mm": [
+      169.26,
+      -251.5,
+      6.44
+     ],
+     "b": "WNG-008-LU",
+     "bodies": [
+      "WNG-007-L \"balance horn tab\" x WNG-008-LU \"mechanical stop boss\" 0.25 mm",
+      "WNG-007-L \"balance horn tab\" x WNG-008-LU \"mechanical stop boss\" 0.25 mm"
+     ],
+     "depth_mm": 0.248
+    },
+    {
+     "a": "WNG-001",
+     "at_mm": [
+      182.15,
+      -40.5,
+      3.13
+     ],
+     "b": "WNG-006-L",
+     "bodies": [
+      "WNG-006-L \"elevon\" x WNG-001 \"core box\" 0.07 mm"
+     ],
+     "depth_mm": 0.069
+    }
+   ],
+   "moved": [
+    "MEC-004-L",
+    "MEC-004-R",
+    "WNG-006-L",
+    "WNG-006-R",
+    "WNG-007-L",
+    "WNG-007-R",
+    "WNG-010-L",
+    "WNG-010-R"
+   ],
+   "name": "elevons at upper limit (E-WNG-10 +22, E-WNG-11 +22)",
+   "not_swept_against": [
+    "MEC-003-L",
+    "MEC-003-R",
+    "WNG-009-L",
+    "WNG-009-R"
+   ]
+  }
+ ],
+ "seconds": 91.0,
+ "skipped": [
+  [
+   "HRD-001",
+   "mass proxy"
+  ],
+  [
+   "HRN-001",
+   "mass proxy"
+  ]
+ ],
+ "wire_ends": [],
+ "wire_strands": 11
+}

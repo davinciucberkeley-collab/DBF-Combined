@@ -55,7 +55,7 @@ out = dict(mass_basic_kg=M, cg_x_m=X[0], cg_y_m=X[1], cg_z_m=X[2],
            prop_hub_x_aft_of_LE_m=hub[0], motor_station_y=m.YM, motor_station_z=m.ZM, x_ground_m=m.X_GROUND, fin_y_m=m.YFIN, fin_h_m=m.FIN_H,
            elevon=dict(hinge_inertia_one_elevon_kgm2=Ih_elevon, hinge_inertia_balance_one_kgm2=Ih_bal, hinge_inertia_total_kgm2=Ih_elevon + Ih_bal,
                        cg_aft_of_hinge_unbalanced_m=cg_off_unbal, cg_aft_of_hinge_balanced_m=cg_off_bal, y0=m.ELEV_Y0, y1=m.ELEV_Y1, lim_deg=m.ELEV_LIM,
-                       balance_mass_each_g=17.1),
+                       balance_mass_each_g=m.PARTS["WNG-007-R"]["mass_g"])   # FIXES2: 16.1 g (lead 15.6 + tabs 0.5); caps are WNG-008, damper WNG-009/010,
            pack_x_m=list(m.PACK_X), trim_m=m.TRIM)
 json.dump(out, open(os.path.join(HERE, "cad_mass.json"), "w"), indent=1)
 print(json.dumps(out, indent=1))

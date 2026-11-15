@@ -1,0 +1,109 @@
+{
+ "bodies": 175,
+ "defects": [
+  "WNG-008-LL body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-LL body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-LU body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-LU body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-RL body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-RL body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-RU body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-RU body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)"
+ ],
+ "kinks": [],
+ "parts": 78,
+ "poses": [
+  {
+   "hits": [],
+   "moved": null,
+   "name": "static",
+   "not_swept_against": null
+  },
+  {
+   "hits": [],
+   "moved": [
+    "MEC-004-L",
+    "MEC-004-R",
+    "WNG-006-L",
+    "WNG-006-R",
+    "WNG-007-L",
+    "WNG-007-R",
+    "WNG-010-L",
+    "WNG-010-R"
+   ],
+   "name": "elevons at lower limit (E-WNG-10 -20, E-WNG-11 -20)",
+   "not_swept_against": [
+    "MEC-003-L",
+    "MEC-003-R",
+    "WNG-009-L",
+    "WNG-009-R"
+   ]
+  },
+  {
+   "hits": [
+    {
+     "a": "WNG-006-R",
+     "at_mm": [
+      179.67,
+      338.64,
+      -6.11
+     ],
+     "b": "WNG-008-RL",
+     "bodies": [
+      "WNG-006-R \"elevon\" x WNG-008-RL \"lens cap arch\" 0.01 mm",
+      "WNG-006-R \"elevon\" x WNG-008-RL \"lens cap end wall\" 0.01 mm",
+      "WNG-006-R \"elevon\" x WNG-008-RL \"cap bonding flange\" 0.01 mm",
+      "WNG-006-R \"elevon\" x WNG-008-RL \"cap bonding flange\" 0.01 mm"
+     ],
+     "depth_mm": 0.014
+    },
+    {
+     "a": "WNG-006-L",
+     "at_mm": [
+      179.67,
+      -338.64,
+      -6.11
+     ],
+     "b": "WNG-008-LL",
+     "bodies": [
+      "WNG-006-L \"elevon\" x WNG-008-LL \"lens cap arch\" 0.01 mm",
+      "WNG-006-L \"elevon\" x WNG-008-LL \"lens cap end wall\" 0.01 mm",
+      "WNG-006-L \"elevon\" x WNG-008-LL \"cap bonding flange\" 0.01 mm",
+      "WNG-006-L \"elevon\" x WNG-008-LL \"cap bonding flange\" 0.01 mm"
+     ],
+     "depth_mm": 0.014
+    }
+   ],
+   "moved": [
+    "MEC-004-L",
+    "MEC-004-R",
+    "WNG-006-L",
+    "WNG-006-R",
+    "WNG-007-L",
+    "WNG-007-R",
+    "WNG-010-L",
+    "WNG-010-R"
+   ],
+   "name": "elevons at upper limit (E-WNG-10 +20, E-WNG-11 +20)",
+   "not_swept_against": [
+    "MEC-003-L",
+    "MEC-003-R",
+    "WNG-009-L",
+    "WNG-009-R"
+   ]
+  }
+ ],
+ "seconds": 90.1,
+ "skipped": [
+  [
+   "HRD-001",
+   "mass proxy"
+  ],
+  [
+   "HRN-001",
+   "mass proxy"
+  ]
+ ],
+ "wire_ends": [],
+ "wire_strands": 11
+}
