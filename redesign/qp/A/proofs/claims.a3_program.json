@@ -1,0 +1,810 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/qp/A/proofs/claims_a3_program.py",
+ "params": [
+  "../params-A.json"
+ ],
+ "nodes": [
+  {
+   "id": "CALC-A-COST",
+   "type": "calculation",
+   "title": "bom cost",
+   "script": "redesign/qp/A/proofs/claims_a3_program.py",
+   "function": "bom_cost",
+   "equation": "total = goods x (1 + tax) + shipping + FAA + crash reserve; +30 % on the unverified lines for the margin (bom_a.py)",
+   "inputs": {
+    "rows": "P:cost.bom_rows",
+    "tax": "P:cost.tax",
+    "faa": "P:cost.faa_usd",
+    "ship": "P:cost.ship_usd",
+    "bump": "P:cost.bump",
+    "tubes": "P:cost.reserve_tube_ids",
+    "budget": "P:req.budget_usd"
+   },
+   "outputs": {
+    "total_usd": 1775.0897125000001,
+    "total_30_usd": 1894.91547625,
+    "margin_usd": 224.91028749999987,
+    "margin_30_usd": 105.08452375000002,
+    "reserve_usd": 327.4303875,
+    "shipping_usd": 55.13
+   },
+   "input_values": {
+    "rows": [
+     [
+      "P01",
+      "propulsion",
+      "TMotor",
+      5.0,
+      46.9,
+      false
+     ],
+     [
+      "P02",
+      "propulsion",
+      "RMRC",
+      1.0,
+      9.4,
+      false
+     ],
+     [
+      "P04",
+      "propulsion",
+      "RMRC",
+      1.0,
+      45.66,
+      false
+     ],
+     [
+      "W01",
+      "power",
+      "RMRC",
+      2.0,
+      37.09,
+      false
+     ],
+     [
+      "W02",
+      "power",
+      "RMRC",
+      1.0,
+      63.71,
+      false
+     ],
+     [
+      "W03",
+      "power",
+      "RMRC",
+      2.0,
+      7.61,
+      false
+     ],
+     [
+      "W04",
+      "power",
+      "Local",
+      1.0,
+      13.99,
+      false
+     ],
+     [
+      "W05",
+      "power",
+      "RMRC",
+      1.0,
+      23.92,
+      false
+     ],
+     [
+      "W06",
+      "power",
+      "Local",
+      1.0,
+      6.0,
+      true
+     ],
+     [
+      "V01",
+      "avionics",
+      "RMRC",
+      1.0,
+      76.99,
+      false
+     ],
+     [
+      "V02",
+      "avionics",
+      "RMRC",
+      1.0,
+      23.08,
+      false
+     ],
+     [
+      "V03",
+      "avionics",
+      "RMRC",
+      1.0,
+      95.98,
+      false
+     ],
+     [
+      "V04",
+      "avionics",
+      "RMRC",
+      1.0,
+      19.76,
+      false
+     ],
+     [
+      "V05",
+      "avionics",
+      "RMRC",
+      1.0,
+      59.99,
+      false
+     ],
+     [
+      "M01",
+      "mechanisms",
+      "RMRC",
+      3.0,
+      13.99,
+      false
+     ],
+     [
+      "M02",
+      "mechanisms",
+      "RMRC",
+      1.0,
+      8.99,
+      false
+     ],
+     [
+      "R01",
+      "airframe",
+      "Local",
+      1.0,
+      70.0,
+      true
+     ],
+     [
+      "R02",
+      "airframe",
+      "RMRC",
+      1.0,
+      27.46,
+      false
+     ],
+     [
+      "R08",
+      "airframe",
+      "RMRC",
+      3.0,
+      12.26,
+      false
+     ],
+     [
+      "R09",
+      "airframe",
+      "RMRC",
+      1.0,
+      15.34,
+      true
+     ],
+     [
+      "R10",
+      "airframe",
+      "RMRC",
+      1.0,
+      4.4,
+      false
+     ],
+     [
+      "R03",
+      "airframe",
+      "Prusa",
+      1.0,
+      23.99,
+      false
+     ],
+     [
+      "R05",
+      "airframe",
+      "Amazon",
+      1.0,
+      20.0,
+      true
+     ],
+     [
+      "R07",
+      "airframe",
+      "RMRC",
+      1.0,
+      13.98,
+      false
+     ],
+     [
+      "R06",
+      "airframe",
+      "Amazon",
+      1.0,
+      5.0,
+      true
+     ],
+     [
+      "G01",
+      "ground_test",
+      "RMRC",
+      1.0,
+      35.31,
+      false
+     ],
+     [
+      "G02",
+      "ground_test",
+      "Amazon",
+      1.0,
+      50.95,
+      true
+     ],
+     [
+      "G03",
+      "ground_test",
+      "Local",
+      1.0,
+      25.0,
+      true
+     ],
+     [
+      "G04",
+      "ground_test",
+      "Local",
+      1.0,
+      0.0,
+      true
+     ],
+     [
+      "G05",
+      "ground_test",
+      "Amazon",
+      1.0,
+      25.0,
+      true
+     ],
+     [
+      "B01",
+      "ground_test",
+      "RMRC",
+      1.0,
+      15.99,
+      false
+     ],
+     [
+      "B02",
+      "ground_test",
+      "RMRC",
+      1.0,
+      12.99,
+      false
+     ],
+     [
+      "B03",
+      "ground_test",
+      "Amazon",
+      1.0,
+      17.0,
+      true
+     ],
+     [
+      "B04",
+      "ground_test",
+      "Amazon",
+      1.0,
+      15.0,
+      true
+     ],
+     [
+      "B05",
+      "ground_test",
+      "SparkFun",
+      1.0,
+      0.0,
+      false
+     ],
+     [
+      "R11",
+      "airframe",
+      "Local",
+      1.0,
+      10.0,
+      true
+     ],
+     [
+      "R12",
+      "airframe",
+      "Amazon",
+      1.0,
+      15.0,
+      true
+     ],
+     [
+      "R13",
+      "airframe",
+      "Amazon",
+      1.0,
+      6.0,
+      true
+     ]
+    ],
+    "tax": 0.1025,
+    "faa": 5.0,
+    "ship": [
+     [
+      "RMRC",
+      15.0
+     ],
+     [
+      "TMotor",
+      10.71
+     ],
+     [
+      "Amazon",
+      10.71
+     ],
+     [
+      "Prusa",
+      10.71
+     ],
+     [
+      "SparkFun",
+      8.0
+     ],
+     [
+      "Local",
+      0.0
+     ]
+    ],
+    "bump": 0.3,
+    "tubes": [
+     "R02",
+     "R08",
+     "R09",
+     "R10"
+    ],
+    "budget": 2000.0
+   }
+  },
+  {
+   "id": "CL-A-COST-TOTAL",
+   "type": "claim",
+   "title": "BOM total incl. tax, shipping, FAA and crash reserve",
+   "calc": "CALC-A-COST",
+   "output": "total_usd",
+   "unit": "USD",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.g7_total_usd"
+   },
+   "verifies": [
+    "A-U1"
+   ],
+   "how": "python -I qp/A/bom_a.py (reads BOM-A.csv): $1,775.09; gate G7 total <= $1,800. 14 of 38 lines are unverified (U / EST).",
+   "value": 1775.0897125000001
+  },
+  {
+   "id": "CL-A-COST-MARGIN30",
+   "type": "claim",
+   "title": "Margin to $2,000 if the unverified lines run 30 % over",
+   "calc": "CALC-A-COST",
+   "output": "margin_30_usd",
+   "unit": "USD",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.g7_margin_usd"
+   },
+   "verifies": [
+    "A-U1"
+   ],
+   "how": "python -I qp/A/bom_a.py: +$105.08 at +30 %; gate G7 margin >= $100. Two new EST lines (R12 / R13): if either rises by > $9 the margin falls under $100.",
+   "value": 105.08452375000002
+  },
+  {
+   "id": "CL-A-COST-BUDGET",
+   "type": "claim",
+   "title": "BOM total with the unverified lines +30 % against the $2,000 budget",
+   "calc": "CALC-A-COST",
+   "output": "total_30_usd",
+   "unit": "USD",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.budget_usd"
+   },
+   "verifies": [
+    "A-U1"
+   ],
+   "how": "python -I qp/A/bom_a.py; Makers Pass outside the budget (user, memory).",
+   "value": 1894.91547625
+  },
+  {
+   "id": "CALC-A-SCHED",
+   "type": "calculation",
+   "title": "schedule",
+   "script": "redesign/qp/A/proofs/claims_a3_program.py",
+   "function": "schedule",
+   "equation": "schedule_a.py: gates F01-F06 at booked x p mornings a week, one crash loop after F04; slack = deadline - end of F06; latest-safe F01 start by search",
+   "inputs": {
+    "gates": "P:sched.gates",
+    "start": "P:sched.start",
+    "deadline": "P:sched.deadline",
+    "repair": "P:sched.repair_days",
+    "redo": "P:sched.redo",
+    "recess": "P:sched.recess",
+    "booked": "P:sched.booked",
+    "p": "P:sched.p_fly",
+    "p_sens": "P:sched.p_fly_sens",
+    "req_f01": "P:sched.latest_safe_f01"
+   },
+   "outputs": {
+    "slack_days": 11,
+    "f01_slack_days": 10,
+    "f01_to_req_days": 10,
+    "slack_sens_days": -5
+   },
+   "input_values": {
+    "gates": [
+     2,
+     5,
+     4,
+     3,
+     5,
+     3
+    ],
+    "start": "2027-02-08",
+    "deadline": "2027-04-30",
+    "repair": 11,
+    "redo": 3,
+    "recess": [
+     "2027-03-22",
+     "2027-03-26"
+    ],
+    "booked": 4,
+    "p": 0.72,
+    "p_sens": 0.6,
+    "req_f01": "2027-02-18"
+   }
+  },
+  {
+   "id": "CL-A-SCHED-SLACK",
+   "type": "claim",
+   "title": "Slack between the end of F06 and 2027-04-30 (baseline)",
+   "calc": "CALC-A-SCHED",
+   "output": "slack_days",
+   "unit": "d",
+   "limit": {
+    "op": ">=",
+    "value": 0
+   },
+   "verifies": [
+    "A-U2"
+   ],
+   "how": "python -I qp/A/schedule_a.py; baseline 4 booked mornings a week, p 0.72, one crash loop; F06 ends 19 Apr. Flyable fraction is EST (RFS wind unmeasured).",
+   "value": 11
+  },
+  {
+   "id": "CL-A-SCHED-F01",
+   "type": "claim",
+   "title": "Latest-safe F01 start minus the planned start (8 Feb)",
+   "calc": "CALC-A-SCHED",
+   "output": "f01_slack_days",
+   "unit": "d",
+   "limit": {
+    "op": ">=",
+    "value": 0
+   },
+   "verifies": [
+    "A-D8"
+   ],
+   "how": "schedule_a.py latest_start(): 18 Feb on the baseline; re-plan when the main order is not placed by 28 Dec.",
+   "value": 10
+  },
+  {
+   "id": "CL-A-SCHED-F01-DATE",
+   "type": "claim",
+   "title": "Days from the planned F01 start to the 2027-02-18 trigger",
+   "calc": "CALC-A-SCHED",
+   "output": "f01_to_req_days",
+   "unit": "d",
+   "limit": {
+    "op": ">=",
+    "value": 0
+   },
+   "verifies": [
+    "A-D8"
+   ],
+   "how": "First tethered hover 8-13 Feb; trigger 2027-02-18 (BOARD QP-3 R4).",
+   "value": 10
+  },
+  {
+   "id": "CL-A-SCHED-SENS",
+   "type": "claim",
+   "title": "Slack at p 0.60 (sensitivity, not the baseline)",
+   "calc": "CALC-A-SCHED",
+   "output": "slack_sens_days",
+   "unit": "d",
+   "how": "schedule_a.py with p 0.60.",
+   "note": "Sensitivity, no limit stated: SCHEDULE-A.md lists p 0.60 as a sensitivity; it ends 5 days after the deadline with 4 booked mornings and one crash loop (5 booked mornings: +12 d).",
+   "value": -5
+  },
+  {
+   "id": "CALC-A-BOX",
+   "type": "calculation",
+   "title": "box fit",
+   "script": "redesign/qp/A/proofs/claims_a3_program.py",
+   "function": "box_fit",
+   "equation": "max over the three sorted dimensions of packed / limit (1.0 = exactly at the box limit)",
+   "inputs": {
+    "box": "P:box.packed_m",
+    "lim": "P:req.box_limit_m"
+   },
+   "assumes": [
+    "ASM-A-TRUNK"
+   ],
+   "outputs": {
+    "ratio": 1.0
+   },
+   "input_values": {
+    "box": [
+     0.9,
+     0.5,
+     0.39
+    ],
+    "lim": [
+     1.2,
+     0.5,
+     0.4
+    ]
+   }
+  },
+  {
+   "id": "CL-A-BOX-FIT",
+   "type": "claim",
+   "title": "Packed box against the 1.2 x 0.5 x 0.4 m car-trunk box",
+   "calc": "CALC-A-BOX",
+   "output": "ratio",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 1.0
+   },
+   "verifies": [
+    "A-U3"
+   ],
+   "how": "Measure the team's car trunk opening and floor (subsystems/transport/CAR-FIT.md procedure) and the packed aircraft with props on.",
+   "assumes": [
+    "ASM-A-TRUNK"
+   ],
+   "note": "limit 1.0 = the C3(a) box limit; the width 0.50 m sits exactly on the 0.50 m limit (ratio 1.00).",
+   "value": 1.0
+  },
+  {
+   "id": "CALC-A-COLL-COUNT-READ",
+   "type": "calculation",
+   "title": "Stored result: Part overlaps deeper than the tolerance (neutral, +-20, +-21 deg)",
+   "script": "redesign/qp/A/proofs/claims_a3_program.py",
+   "function": "read_value",
+   "equation": "count of hits with depth > tolerance in cad/out/report_pose20.json and report_pose21.json; read, not re-run",
+   "inputs": {
+    "v": "P:cad3d.n_over_tol"
+   },
+   "outputs": {
+    "v": 0
+   },
+   "input_values": {
+    "v": 0
+   }
+  },
+  {
+   "id": "CL-A-COLL-COUNT",
+   "type": "claim",
+   "title": "Part overlaps deeper than the tolerance (neutral, +-20, +-21 deg)",
+   "calc": "CALC-A-COLL-COUNT-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0
+   },
+   "verifies": [
+    "A-U4"
+   ],
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L",
+    "WNG-008-RU",
+    "WNG-008-RL",
+    "WNG-008-LU",
+    "WNG-008-LL"
+   ],
+   "how": "python -I qp/A/cad/collide_a.py (Blender, 78 parts, 175 bodies, 0.05 mm); A_ELEV_POSE=20|22 for the other poses.",
+   "value": 0
+  },
+  {
+   "id": "CALC-A-COLL-DEPTH-READ",
+   "type": "calculation",
+   "title": "Stored result: Deepest part overlap at any reachable pose",
+   "script": "redesign/qp/A/proofs/claims_a3_program.py",
+   "function": "read_value",
+   "equation": "largest depth_mm over the reachable poses in the stored reports; read, not re-run",
+   "inputs": {
+    "v": "P:cad3d.max_depth_mm"
+   },
+   "outputs": {
+    "v": 0.014
+   },
+   "input_values": {
+    "v": 0.014
+   }
+  },
+  {
+   "id": "CL-A-COLL-DEPTH",
+   "type": "claim",
+   "title": "Deepest part overlap at any reachable pose",
+   "calc": "CALC-A-COLL-DEPTH-READ",
+   "output": "v",
+   "unit": "mm",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.coll_tol_mm"
+   },
+   "verifies": [
+    "A-U4"
+   ],
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L",
+    "WNG-008-RU",
+    "WNG-008-RL",
+    "WNG-008-LU",
+    "WNG-008-LL"
+   ],
+   "how": "collide_a.py report: the only hits under the 0.05 mm gate are two 0.014 mm touches at +20 deg (elevon on the lower lens cap); +-22 deg is past the stop and is not a reachable pose.",
+   "value": 0.014
+  },
+  {
+   "id": "CALC-A-WIRE-ENDS-READ",
+   "type": "calculation",
+   "title": "Stored result: Wire ends not seated in a part",
+   "script": "redesign/qp/A/proofs/claims_a3_program.py",
+   "function": "read_value",
+   "equation": "len(wire_ends) in cad/out/report.json; read, not re-run",
+   "inputs": {
+    "v": "P:cad3d.wire_ends_open"
+   },
+   "outputs": {
+    "v": 0
+   },
+   "input_values": {
+    "v": 0
+   }
+  },
+  {
+   "id": "CL-A-WIRE-ENDS",
+   "type": "claim",
+   "title": "Wire ends not seated in a part",
+   "calc": "CALC-A-WIRE-ENDS-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0
+   },
+   "verifies": [
+    "A-U4"
+   ],
+   "how": "collide_a.py wire_ends check (11 strands).",
+   "value": 0
+  },
+  {
+   "id": "CALC-A-WIRE-FOLDS-READ",
+   "type": "calculation",
+   "title": "Stored result: Wire folds (kinks)",
+   "script": "redesign/qp/A/proofs/claims_a3_program.py",
+   "function": "read_value",
+   "equation": "len(kinks) in cad/out/report.json; read, not re-run",
+   "inputs": {
+    "v": "P:cad3d.wire_kinks"
+   },
+   "outputs": {
+    "v": 0
+   },
+   "input_values": {
+    "v": 0
+   }
+  },
+  {
+   "id": "CL-A-WIRE-FOLDS",
+   "type": "claim",
+   "title": "Wire folds (kinks)",
+   "calc": "CALC-A-WIRE-FOLDS-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0
+   },
+   "verifies": [
+    "A-U4"
+   ],
+   "how": "collide_a.py kinks check.",
+   "value": 0
+  },
+  {
+   "id": "CALC-A-ASSY-STEPS-READ",
+   "type": "calculation",
+   "title": "Stored result: Build steps that pass the assembly sweep",
+   "script": "redesign/qp/A/proofs/claims_a3_program.py",
+   "function": "read_value",
+   "equation": "steps with no blocking pair in cad/out/assembly.json; read, not re-run",
+   "inputs": {
+    "v": "P:cad3d.assy_steps_ok"
+   },
+   "outputs": {
+    "v": 28
+   },
+   "input_values": {
+    "v": 28
+   }
+  },
+  {
+   "id": "CL-A-ASSY-STEPS",
+   "type": "claim",
+   "title": "Build steps that pass the assembly sweep",
+   "calc": "CALC-A-ASSY-STEPS-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:cad3d.assy_steps"
+   },
+   "verifies": [
+    "A-U4"
+   ],
+   "how": "python -I qp/A/cad/a_assembly.py: 28 of 28 steps, 0 blocked, 0 unsupported, no wire laid before its ends.",
+   "value": 28
+  },
+  {
+   "id": "CALC-A-ASSY-PARTS-READ",
+   "type": "calculation",
+   "title": "Stored result: Parts placed by the build sequence",
+   "script": "redesign/qp/A/proofs/claims_a3_program.py",
+   "function": "read_value",
+   "equation": "parts across the steps of cad/out/assembly.json; read, not re-run",
+   "inputs": {
+    "v": "P:cad3d.assy_parts_placed"
+   },
+   "outputs": {
+    "v": 78
+   },
+   "input_values": {
+    "v": 78
+   }
+  },
+  {
+   "id": "CL-A-ASSY-PARTS",
+   "type": "claim",
+   "title": "Parts placed by the build sequence",
+   "calc": "CALC-A-ASSY-PARTS-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:cad3d.parts"
+   },
+   "verifies": [
+    "A-U4"
+   ],
+   "how": "a_assembly.py: 78 of 78 parts placed, none missing from the sequence.",
+   "value": 78
+  }
+ ]
+}

@@ -834,7 +834,7 @@
     if (data.error) { $('#statusline').innerHTML = `<span class="sdot"></span><span>${data.error}</span>`; return; }
     model = M.build(data.g);
     issues = M.buildIssues(model.meta);
-    $('#dataset').textContent = data.name === 'examples' ? 'demo aircraft (examples/)' : data.name;
+    $('#dataset').textContent = data.name === 'examples' ? 'demo aircraft (examples/)' : (data.g && data.g.meta && data.g.meta.dataset === 'concept-a' ? 'concept A, scaled quad tailsitter (D-182)' : data.name);
     if (!EMBED) document.title = 'Proof Chain Explorer' + (data.name === 'examples' ? ' · demo' : '');
     renderStatusLine(data.note);
     renderHome();

@@ -627,7 +627,7 @@ function summaryHtml() {
   }
   h += '<div class="v-keys"><span class="ds-kbd">1</span>Aircraft<span class="ds-kbd">2</span>Inside &amp; wiring<span class="ds-kbd">3</span>Structure<span class="ds-kbd">4</span>Exploded' +
     '<span class="ds-kbd">H</span>Fasteners<span class="ds-kbd">F</span>Focus selected<span class="ds-kbd">Esc</span>Show full aircraft<span class="ds-kbd">/</span>Search</div>' +
-    '<p class="ds-source">Declared masses from the merged concept A interfaces.json; gate and CG band from qp/A/cad/model/mass_budget.json (no per-subsystem allocations, no claims graph for concept A); geometry from the concept A CAD (qp/A/cad/model) via blender/export_glb.py; vendor and cost are not mapped to CAD part ids.</p></div>';
+    '<p class="ds-source">Declared masses from the merged concept A interfaces.json; gate and CG band from qp/A/cad/model/mass_budget.json (no per-subsystem allocations); claims from the concept A proof graph (qp/A/proofs/out/graph.json); geometry from the concept A CAD (qp/A/cad/model) via blender/export_glb.py; vendor and cost are not mapped to CAD part ids.</p></div>';
   return h;
 }
 
@@ -743,7 +743,7 @@ export async function start() {
   readColours(); wire(); hint();
   progress(0, 'reading part data');
   let data;
-  try { const r = await fetch('data/viewer-data.json?v=20261115a'); if (!r.ok) throw new Error('HTTP ' + r.status); data = await r.json(); }
+  try { const r = await fetch('data/viewer-data.json?v=20261115b'); if (!r.ok) throw new Error('HTTP ' + r.status); data = await r.json(); }
   catch (e) { loadFailed('Part data not found', esc(e.message) + '<br>data/viewer-data.json is built by redesign/viewer/build_data.py --out site/data'); return; }
   S.data = data; S.idx = M.index(data);
   if (!data.parts.some(p => p.flight === false)) { const kb = $('#kit'); if (kb) kb.style.display = 'none'; }   // concept A has no ground kit / transport box in the model

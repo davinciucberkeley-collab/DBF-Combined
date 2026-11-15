@@ -2,7 +2,7 @@
 // the decision page's morphological chart and concept table (logic from redesign/config-study/web/index.html),
 // the render / plot lightbox, and the 3-D explorer (viewer.js). Everything is relative: works on GitHub Pages and as an artifact.
 import { DIMS, C } from './data/concepts.js?v=20261111d';
-import { start as startViewer, viewer } from './viewer.js?v=20261115a';
+import { start as startViewer, viewer } from './viewer.js?v=20261115b';
 
 const ROUTES = ['aircraft', 'decision', 'team', 'subsystems', 'simulations', 'build', 'proof', 'status', 'bom', 'docs'];
 const TITLES = { aircraft: 'Aircraft', decision: 'Decision', team: 'Team', subsystems: 'Subsystems', simulations: 'Simulations', build: 'Build guide', proof: 'Proof chain', status: 'Status', bom: 'BOM', docs: 'Docs' };
@@ -35,7 +35,7 @@ function route() {
   document.querySelectorAll('main > .view').forEach(v => { v.hidden = v.id !== name; });
   document.querySelectorAll('#nav a').forEach(a => { if (a.getAttribute('href') === '#' + name) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   document.body.dataset.route = name;
-  document.title = 'K09-L · ' + TITLES[name];
+  document.title = (name === 'proof' || name === 'aircraft' ? 'Concept A' : 'K09-L') + ' · ' + TITLES[name];     // the proof chain and the 3-D model show concept A (D-182)
   if (target) target.scrollIntoView({ block: 'start' }); else if (current !== name) window.scrollTo(0, 0);
   current = name;
   if (name === 'proof') enterProof(); else lastOutside = name === 'aircraft' ? '#aircraft' : location.hash;
@@ -53,7 +53,7 @@ function enterProof() {
   const home = document.getElementById('home');
   if (home) home.innerHTML = '<p class="sub">Loading the proof graph (about 7 MB, once)…</p>';
   window.PROOF_EMBED = { root: document.getElementById('proofapp'), base: 'proofs/', repo: GH_ROOT };
-  loadScript('proofs/model.js?v=20261112a').then(() => loadScript('proofs/app.js?v=20261112a'))
+  loadScript('proofs/model.js?v=20261112a').then(() => loadScript('proofs/app.js?v=20261115a'))
     .catch(e => { if (home) home.innerHTML = '<p class="sub">Could not load ' + esc(e.message) + '. The standalone viewer is <a href="proofs/index.html">proofs/index.html</a>.</p>'; });
 }
 document.addEventListener('click', e => {

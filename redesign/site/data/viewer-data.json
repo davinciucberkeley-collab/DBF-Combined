@@ -1,11 +1,11 @@
 {
  "schema": "dbf-viewer/1",
  "dataset": "concept-a",
- "generated": "2026-11-15 20:04 UTC",
+ "generated": "2026-11-15 20:28 UTC",
  "sources": {
   "glb": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/glb",
   "interfaces": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/itf/interfaces.json",
-  "proofs": "redesign/qp/A/cad/out/none.json",
+  "proofs": "redesign/qp/A/proofs/out/graph.json",
   "budget": "redesign/qp/A/cad/model/mass_budget.json",
   "csv": []
  },
@@ -2894,7 +2894,1080 @@
    "spec": "XT90 (battery main, high current)"
   }
  },
- "claims": [],
+ "claims": [
+  {
+   "id": "CL-A-MASS-PRED",
+   "title": "Predicted take-off mass (CAD basic x growth + overrun)",
+   "value": 1.4238993160000002,
+   "unit": "kg",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.mass_target_kg",
+    "resolved": 1.44
+   },
+   "status": "UNVERIFIED",
+   "how": "Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).",
+   "margin": 0.011181030555555384,
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "PWR-001",
+    "CGE-001",
+    "FIN-001-R",
+    "FIN-001-L"
+   ]
+  },
+  {
+   "id": "CL-A-CG",
+   "title": "CG aft of the leading edge, CAD as drawn",
+   "value": 24.35429044780483,
+   "unit": "mm",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.cg_lo_mm",
+    "resolved": 20.0
+   },
+   "status": "CHECKED",
+   "how": "CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.",
+   "margin": 0.21771452239024142,
+   "parts": [
+    "PWR-001",
+    "CGE-008",
+    "WNG-001",
+    "WNG-002"
+   ]
+  },
+  {
+   "id": "CL-A-CG-HI",
+   "title": "CG aft limit of the design band",
+   "value": 24.35429044780483,
+   "unit": "mm",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.cg_hi_mm",
+    "resolved": 26.0
+   },
+   "status": "CHECKED",
+   "how": "CG breadboard (M5); band 20-26 mm, hard aft limit 28.5 mm.",
+   "margin": 0.06329652123827582,
+   "parts": [
+    "PWR-001",
+    "CGE-008"
+   ]
+  },
+  {
+   "id": "CL-A-CG-TRIM-AFT",
+   "title": "CG at the aft end of the pack trim travel",
+   "value": 26.54702356782042,
+   "unit": "mm",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.cg_hard_aft_mm",
+    "resolved": 28.5
+   },
+   "status": "CHECKED",
+   "how": "Slide the pack to the aft slot stop and re-measure CG (M5).",
+   "margin": 0.06852548884840627,
+   "parts": [
+    "PWR-001",
+    "CGE-008"
+   ]
+  },
+  {
+   "id": "CL-A-CG-TRIM-FWD",
+   "title": "CG at the forward end of the pack trim travel",
+   "value": 22.161557327789236,
+   "unit": "mm",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.cg_lo_mm",
+    "resolved": 20.0
+   },
+   "status": "CHECKED",
+   "how": "Slide the pack to the forward slot stop and re-measure CG (M5).",
+   "margin": 0.10807786638946179,
+   "parts": [
+    "PWR-001",
+    "CGE-008"
+   ]
+  },
+  {
+   "id": "CL-A-SM",
+   "title": "Static margin at the CAD CG",
+   "value": 6.671718184569459,
+   "unit": "% chord",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.sm_min_pct",
+    "resolved": 5.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Measure NP on the built aircraft (M5, M6); SM >= 5 % chord.",
+   "margin": 0.33434363691389174,
+   "parts": [
+    "WNG-001"
+   ]
+  },
+  {
+   "id": "CL-A-TW-FRESH-GATE",
+   "title": "Hover T/W fresh at the 1.50 kg gate (0.90 cap)",
+   "value": 2.3029375993365515,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.tw_fresh_min",
+    "resolved": 2.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
+   "margin": 0.15146879966827576,
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL",
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ]
+  },
+  {
+   "id": "CL-A-TW-SAG-GATE",
+   "title": "Hover T/W sagged pack at the 1.50 kg gate (0.90 cap)",
+   "value": 1.8205039155806164,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.tw_sag_min",
+    "resolved": 1.6
+   },
+   "status": "UNVERIFIED",
+   "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
+   "margin": 0.1378149472378852,
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL",
+    "PWR-001"
+   ]
+  },
+  {
+   "id": "CL-A-TW-FRESH-PRED",
+   "title": "Hover T/W fresh at the predicted mass (0.90 cap)",
+   "value": 2.426018722102418,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.tw_fresh_min",
+    "resolved": 2.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
+   "margin": 0.21300936105120893,
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ]
+  },
+  {
+   "id": "CL-A-TW-SAG-PRED",
+   "title": "Hover T/W sagged pack at the predicted mass (0.90 cap)",
+   "value": 1.9178012396565576,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.tw_sag_min",
+    "resolved": 1.6
+   },
+   "status": "UNVERIFIED",
+   "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
+   "margin": 0.19862577478534843,
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL",
+    "PWR-001"
+   ]
+  },
+  {
+   "id": "CL-A-WINDOW-PRED",
+   "title": "Transition entry window at the predicted mass (0.90 cap)",
+   "value": 7.1307195279760185,
+   "unit": "%",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.window_min_pct",
+    "resolved": 5.0
+   },
+   "status": "UNVERIFIED",
+   "how": "C3 time-domain pitch-over run at the as-weighed mass (T-A-C3-PITCHOVER); the window uses 1.33 W low and 0.80 x T/W sag high.",
+   "margin": 0.4261439055952037,
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ]
+  },
+  {
+   "id": "CL-A-WINDOW-GATE",
+   "title": "Transition entry window at the 1.50 kg gate (0.90 cap)",
+   "value": 4.536426584931853,
+   "unit": "%",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.window_min_pct",
+    "resolved": 5.0
+   },
+   "status": "UNVERIFIED",
+   "how": "C3 run at the as-weighed mass; MASS-GATE s1: +-5 % holds to 1.486 kg, above it the aircraft flies only if the run shows >= +-5 %.",
+   "margin": -0.09271468301362944,
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ]
+  },
+  {
+   "id": "CL-A-MOTOR-I",
+   "title": "One motor at the 0.90 spin cap, winding current",
+   "value": 12.079418040950374,
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.motor_rating_a",
+    "resolved": 13.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Bench M2: one motor at duty 0.90 for 180 s, phase A <= 13 A, can <= 80 C. Without Q_M_SPIN_MAX 0.90 the same case is 14.3 A (prop_a.py).",
+   "margin": 0.07081399684997122,
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL",
+    "PRP-003"
+   ]
+  },
+  {
+   "id": "CL-A-ESC-I",
+   "title": "ESC channel and connector current required (1.25 x uncapped peak)",
+   "value": 17.836356822386307,
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.esc_rating_a",
+    "resolved": 35.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Compare the SpeedyBee BLS 35A Mini V2 page (35 A continuous per channel) with 1.25 x 14.3 A.",
+   "margin": 0.49038980507467694,
+   "parts": [
+    "PRP-003"
+   ]
+  },
+  {
+   "id": "CL-A-CRUISE-AVAIL",
+   "title": "Cruise time to BATT_LOW at the predicted mass",
+   "value": 271.8732379099456,
+   "unit": "s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-A-CRUISE-NEED",
+    "resolved": 204.55636934924914
+   },
+   "status": "UNVERIFIED",
+   "how": "Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).",
+   "margin": 0.3290871302362776,
+   "parts": [
+    "PWR-001",
+    "PRP-003"
+   ]
+  },
+  {
+   "id": "CL-A-STALL",
+   "title": "1.3 x clean stall speed at the 1.50 kg gate",
+   "value": 15.846723205875604,
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "P:mission.cruise_ms",
+    "resolved": 17.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Measured stall on the first cruise sorties (T-A-FIRST-CRUISE) replaces CLmax 0.75; 12.19 m/s stall, 15.85 m/s at 1.3 Vs (MISSION s1).",
+   "margin": 0.06783981141908214,
+   "parts": [
+    "WNG-001"
+   ]
+  },
+  {
+   "id": "CL-A-YAW-MODEL",
+   "title": "Hover yaw authority (model) at +-0.10 throttle",
+   "value": 0.34645485319161623,
+   "unit": "N m",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.yaw_pass_nm",
+    "resolved": 0.35
+   },
+   "status": "UNVERIFIED",
+   "how": "Hanging yaw test (M3) on the bench: >= 0.35 N m go; 0.30-0.35 go with the 4 m/s card; < 0.30 R2.",
+   "margin": -0.010128990881096422,
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL",
+    "CGE-002-UR",
+    "CGE-002-UL",
+    "CGE-002-LR",
+    "CGE-002-LL"
+   ]
+  },
+  {
+   "id": "CL-A-WIND-LEAN",
+   "title": "Belly-on hover lean at 5 m/s (SITL max)",
+   "value": 31.5,
+   "unit": "deg",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.lean_max_deg",
+    "resolved": 40.0
+   },
+   "status": "CHECKED",
+   "how": "Tethered hover with the wing edge into the wind (M9); the heading rule keeps the belly out of the wind above 3 m/s.",
+   "margin": 0.2125,
+   "parts": [
+    "WNG-001"
+   ]
+  },
+  {
+   "id": "CL-A-WIND-OUTPUT",
+   "title": "Peak motor output in 5 m/s turbulence hover (SITL)",
+   "value": 0.87,
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.motor_out_max",
+    "resolved": 0.85
+   },
+   "status": "UNVERIFIED",
+   "how": "Log motor outputs in the tethered turbulence hover (M9); no motor above 85 %, none held at the 0.90 cap for more than 1 s.",
+   "margin": -0.023529411764705903,
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ]
+  },
+  {
+   "id": "CL-A-TIPOVER",
+   "title": "Static tip-over angle on the fin tips",
+   "value": 33.2,
+   "unit": "deg",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.tipover_min_deg",
+    "resolved": 30.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Tilt test of the built aircraft on its feet (CG 20-26 mm): tips over at >= 30 deg.",
+   "margin": 0.10666666666666676,
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "FIN-001-R",
+    "FIN-001-L"
+   ]
+  },
+  {
+   "id": "CL-A-ROLL-141",
+   "title": "Peak roll rate in SITL, 1.41 kg",
+   "value": 92.9,
+   "unit": "deg/s",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.roll_min_degs",
+    "resolved": 90.0
+   },
+   "status": "CHECKED",
+   "how": "Measure the roll rate on the first cruise (M8 extended); the surface is at its 20 deg stop at the peak, +3-5 % is smaller than the EST aero error.",
+   "margin": 0.032222222222222284,
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L"
+   ]
+  },
+  {
+   "id": "CL-A-ROLL-GATE",
+   "title": "Peak roll rate in SITL, 1.50 kg gate",
+   "value": 94.1,
+   "unit": "deg/s",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.roll_min_degs",
+    "resolved": 90.0
+   },
+   "status": "CHECKED",
+   "how": "Measure the roll rate on the first cruise (T-A-FIRST-CRUISE).",
+   "margin": 0.045555555555555495,
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L"
+   ]
+  },
+  {
+   "id": "CL-A-PITCH-USE",
+   "title": "Elevon use in transition (share of the 20 deg stop)",
+   "value": 0.48,
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.pitch_use_max",
+    "resolved": 0.6
+   },
+   "status": "CHECKED",
+   "how": "C3 pitch-over run and SITL transition logs (FIXES s5.1: peak 8.9-9.6 deg).",
+   "margin": 0.2,
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L"
+   ]
+  },
+  {
+   "id": "CL-A-FLUTTER-ELEVON-NOM",
+   "title": "Elevon flutter onset with the hinge damper, nominal 25 C (lowest of kd / nom / hi)",
+   "value": 40.5,
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-A-FLUTTER-LINE",
+    "resolved": 28.799999999999997
+   },
+   "status": "UNVERIFIED",
+   "how": "E1 coupon (FIXES2 s8): ring-down damping c >= 7.1e-4 N m s/rad at 25 C, c(50 C) >= 4.0e-4; the model holds for every K from 0.01 to 20 N m/rad, so free play does not matter while the damper is filled and sealed (O-rings BOM R13, fill checked every preflight).",
+   "margin": 0.40625000000000017,
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L",
+    "WNG-007-R",
+    "WNG-007-L",
+    "WNG-009-R",
+    "WNG-009-L",
+    "WNG-010-R",
+    "WNG-010-L"
+   ]
+  },
+  {
+   "id": "CL-A-FLUTTER-ELEVON-HOT",
+   "title": "Elevon flutter onset with the hinge damper, hot 50 C (lowest of kd / nom / hi)",
+   "value": 35.5,
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-A-FLUTTER-LINE",
+    "resolved": 28.799999999999997
+   },
+   "status": "UNVERIFIED",
+   "how": "E1 coupon (FIXES2 s8): ring-down damping c >= 7.1e-4 N m s/rad at 25 C, c(50 C) >= 4.0e-4; the model holds for every K from 0.01 to 20 N m/rad, so free play does not matter while the damper is filled and sealed (O-rings BOM R13, fill checked every preflight).",
+   "margin": 0.232638888888889,
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L",
+    "WNG-007-R",
+    "WNG-007-L",
+    "WNG-009-R",
+    "WNG-009-L",
+    "WNG-010-R",
+    "WNG-010-L"
+   ]
+  },
+  {
+   "id": "CL-A-FLUTTER-ELEVON-COLD",
+   "title": "Elevon flutter onset with the hinge damper, cold 0 C (lowest of kd / nom / hi)",
+   "value": 44.5,
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-A-FLUTTER-LINE",
+    "resolved": 28.799999999999997
+   },
+   "status": "UNVERIFIED",
+   "how": "E1 coupon (FIXES2 s8): ring-down damping c >= 7.1e-4 N m s/rad at 25 C, c(50 C) >= 4.0e-4; the model holds for every K from 0.01 to 20 N m/rad, so free play does not matter while the damper is filled and sealed (O-rings BOM R13, fill checked every preflight).",
+   "margin": 0.5451388888888891,
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L",
+    "WNG-007-R",
+    "WNG-007-L",
+    "WNG-009-R",
+    "WNG-009-L",
+    "WNG-010-R",
+    "WNG-010-L"
+   ]
+  },
+  {
+   "id": "CL-A-FLUTTER-HALF",
+   "title": "Elevon flutter onset with a half-filled (leaking) damper, kd corner",
+   "value": 28.5,
+   "unit": "m/s",
+   "limit": null,
+   "status": "UNVERIFIED",
+   "how": "Fault case, no limit stated: seal with the two O-rings (BOM R13) and check the fill at every preflight (FIXES2 s1.3, s9).",
+   "margin": null,
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L",
+    "WNG-007-R",
+    "WNG-007-L",
+    "WNG-009-R",
+    "WNG-009-L",
+    "WNG-010-R",
+    "WNG-010-L"
+   ]
+  },
+  {
+   "id": "CL-A-FLUTTER-WING",
+   "title": "Wing bending-torsion flutter speed, lowest case (fins off, kd corner)",
+   "value": 34.6,
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-A-FLUTTER-LINE",
+    "resolved": 28.799999999999997
+   },
+   "status": "CHECKED",
+   "how": "Tap / ground-vibration test with the fin on one tip (12 Hz and 44 Hz modes); FLUTTER.md open item 3.",
+   "margin": 0.20138888888888906,
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "FIN-001-R",
+    "FIN-001-L"
+   ]
+  },
+  {
+   "id": "CL-A-DIVERGENCE",
+   "title": "Torsional divergence speed (kd corner, EA 0.10 c aft)",
+   "value": 128.0,
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-A-FLUTTER-LINE",
+    "resolved": 28.799999999999997
+   },
+   "status": "CHECKED",
+   "how": "Torsion coupon (FLUTTER.md): measured GJ >= 2 N m2; divergence needs only > 0.2 N m2.",
+   "margin": 3.444444444444445,
+   "parts": [
+    "WNG-001",
+    "WNG-002"
+   ]
+  },
+  {
+   "id": "CL-A-REVERSAL",
+   "title": "Control reversal speed, 3-D lift basis (kd corner)",
+   "value": 37.0,
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-A-FLUTTER-LINE",
+    "resolved": 28.799999999999997
+   },
+   "status": "CHECKED",
+   "how": "Measure elevon effectiveness vs airspeed on the first cruise sorties.",
+   "margin": 0.2847222222222224,
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L"
+   ]
+  },
+  {
+   "id": "CL-A-GUST-N",
+   "title": "Gust load factor at VD 24 (U 4 m/s)",
+   "value": 3.01,
+   "unit": "g",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.n_limit",
+    "resolved": 3.4
+   },
+   "status": "CHECKED",
+   "how": "Airspeed limit VD 24 m/s on the flight card; the wing stalls before n 5.03 (stall line 3.96).",
+   "margin": 0.11470588235294121,
+   "parts": [
+    "WNG-002"
+   ]
+  },
+  {
+   "id": "CL-A-MS-SPAR",
+   "title": "Spar 12x10 root bending, MS at 1.5 x n 3.4",
+   "value": 2.73,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min",
+    "resolved": 0.0
+   },
+   "status": "CHECKED",
+   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "margin": 2.73,
+   "parts": [
+    "WNG-002"
+   ]
+  },
+  {
+   "id": "CL-A-MS-BOND",
+   "title": "Rib saddle on the spar (thinnest bond), MS",
+   "value": 0.34,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min",
+    "resolved": 0.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "margin": 0.34,
+   "parts": [
+    "FIN-005-R",
+    "FIN-005-L",
+    "WNG-002"
+   ]
+  },
+  {
+   "id": "CL-A-MS-ARM",
+   "title": "Motor arm 12x10 under a 30 N prop strike, MS",
+   "value": 1.41,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min",
+    "resolved": 0.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "margin": 1.41,
+   "parts": [
+    "CGE-002-UR",
+    "CGE-002-UL",
+    "CGE-002-LR",
+    "CGE-002-LL"
+   ]
+  },
+  {
+   "id": "CL-A-MS-ARM-SOCKET",
+   "title": "Motor arm in its socket, strike couple, MS",
+   "value": 0.48,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min",
+    "resolved": 0.0
+   },
+   "status": "CHECKED",
+   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "margin": 0.48,
+   "parts": [
+    "CGE-002-UR",
+    "CGE-002-UL",
+    "CGE-002-LR",
+    "CGE-002-LL",
+    "CGE-001"
+   ]
+  },
+  {
+   "id": "CL-A-MS-RIB",
+   "title": "Fin rib 14x12 torsion under one foot load, MS",
+   "value": 0.6,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min",
+    "resolved": 0.0
+   },
+   "status": "CHECKED",
+   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "margin": 0.6,
+   "parts": [
+    "FIN-002-R",
+    "FIN-002-L"
+   ]
+  },
+  {
+   "id": "CL-A-MS-FIN",
+   "title": "Fin tube 16x14 in-plane bending at the foot load, MS",
+   "value": 3.44,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min",
+    "resolved": 0.0
+   },
+   "status": "CHECKED",
+   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "margin": 3.44,
+   "parts": [
+    "FIN-001-R",
+    "FIN-001-L"
+   ]
+  },
+  {
+   "id": "CL-A-MS-PACK-CRASH",
+   "title": "Bridge under pack + hub at the 12 g crash, MS (pack retention)",
+   "value": 2.87,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min",
+    "resolved": 0.0
+   },
+   "status": "CHECKED",
+   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "margin": 2.87,
+   "parts": [
+    "CGE-004",
+    "CGE-008",
+    "PWR-001"
+   ]
+  },
+  {
+   "id": "CL-A-LANDING-STROKE",
+   "title": "Landing crush stroke at 1.2 m/s on the fin-tip feet",
+   "value": 15.2,
+   "unit": "mm",
+   "limit": {
+    "op": "<=",
+    "ref": "P:struct.landing_stroke_max_mm",
+    "resolved": 20.0
+   },
+   "status": "CHECKED",
+   "how": "Drop test of the feet at 1.2 m/s on the built aircraft; 20 mm available.",
+   "margin": 0.24000000000000005,
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL"
+   ]
+  },
+  {
+   "id": "CL-A-FOAM-SPAR-BOND",
+   "title": "Foam shear around the spar, bond over |y| <= 0.20 m (FIXES2 rule), MS at 103 kPa basis",
+   "value": 0.48,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min",
+    "resolved": 0.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Weigh and test a FOAMULAR 150 block (M11); pull coupon for the cap bond (E1 step 5): tape-skin peel has no allowable.",
+   "margin": 0.48,
+   "parts": [
+    "WNG-001",
+    "WNG-002"
+   ]
+  },
+  {
+   "id": "CL-A-FOAM-FIN-SLOT",
+   "title": "Foam bearing at the fin slot, MS at 103 kPa",
+   "value": 0.81,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min",
+    "resolved": 0.0
+   },
+   "status": "CHECKED",
+   "how": "Weigh and test a FOAMULAR 150 block (M11); pull coupon for the cap bond (E1 step 5): tape-skin peel has no allowable.",
+   "margin": 0.81,
+   "parts": [
+    "WNG-001",
+    "FIN-003-R",
+    "FIN-003-L"
+   ]
+  },
+  {
+   "id": "CL-A-FOAM-TRAY",
+   "title": "Pack tray on the LE slot floor, 12 g crash, quarter floor carrying, MS at 103 kPa",
+   "value": 0.36,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min",
+    "resolved": 0.0
+   },
+   "status": "CHECKED",
+   "how": "Weigh and test a FOAMULAR 150 block (M11); pull coupon for the cap bond (E1 step 5): tape-skin peel has no allowable.",
+   "margin": 0.36,
+   "parts": [
+    "WNG-001",
+    "CGE-008",
+    "PWR-001"
+   ]
+  },
+  {
+   "id": "CL-A-FOAM-SERVO",
+   "title": "Servo stalled into the stop, epoxy on four pocket walls, MS (shear)",
+   "value": 0.73,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min",
+    "resolved": 0.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Weigh and test a FOAMULAR 150 block (M11); pull coupon for the cap bond (E1 step 5): tape-skin peel has no allowable.",
+   "margin": 0.73,
+   "parts": [
+    "WNG-001",
+    "MEC-001-R",
+    "MEC-001-L"
+   ]
+  },
+  {
+   "id": "CL-A-FOAM-CAP-PEEL",
+   "title": "Stop reaction peeling a lens cap off the tape skin, MS on the foam (tension)",
+   "value": 0.37,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min",
+    "resolved": 0.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Weigh and test a FOAMULAR 150 block (M11); pull coupon for the cap bond (E1 step 5): tape-skin peel has no allowable.",
+   "margin": 0.37,
+   "parts": [
+    "WNG-008-RU",
+    "WNG-008-RL",
+    "WNG-008-LU",
+    "WNG-008-LL"
+   ]
+  },
+  {
+   "id": "CL-A-VIB-LOW",
+   "title": "Highest strongly coupled mode below the rotor bands (hi corner)",
+   "value": 78.0,
+   "unit": "Hz",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-A-VIB-LOW-LIMIT",
+    "resolved": 83.58333333333333
+   },
+   "status": "CHECKED",
+   "how": "Tap test of the built cage (T-A-TAP): modes within +-20 % of FE or re-tune. Margin is about 7 % at the hi corner, 31 % at kd.",
+   "margin": 0.06679960119641072,
+   "parts": [
+    "CGE-002-UR",
+    "CGE-002-UL",
+    "CGE-002-LR",
+    "CGE-002-LL",
+    "CGE-004",
+    "WNG-002"
+   ]
+  },
+  {
+   "id": "CL-A-VIB-HIGH",
+   "title": "Lowest strongly coupled mode above the rotor bands (kd corner, fin f1)",
+   "value": 432.0,
+   "unit": "Hz",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-A-VIB-HIGH-LIMIT",
+    "resolved": 303.59999999999997
+   },
+   "status": "CHECKED",
+   "how": "Fin tap test at build (T-A-TAP): f1 432-525 Hz in FE.",
+   "margin": 0.4229249011857709,
+   "parts": [
+    "FIN-001-R",
+    "FIN-001-L"
+   ]
+  },
+  {
+   "id": "CL-A-VIB-FC",
+   "title": "Flight-controller vibration, worst of the forced-response sweep",
+   "value": 28.5,
+   "unit": "m/s2",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.vibe_max_ms2",
+    "resolved": 30.0
+   },
+   "status": "CHECKED",
+   "how": "IMU VIBE < 30 m/s2 in the first tethered hover (T-A-TETHER-VIBE). The worst point (10,500 rpm) is unreachable; at the 0.90 cap (9,349 rpm) the sweep reads 19.6-20.1.",
+   "margin": 0.05,
+   "parts": [
+    "AVN-002",
+    "AVN-001",
+    "AVN-007"
+   ]
+  },
+  {
+   "id": "CL-A-VIB-GM",
+   "title": "Rate-loop gain margin, minimum over axes and corners (nominal modes)",
+   "value": 2.06,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.gm_min",
+    "resolved": 2.0
+   },
+   "status": "CHECKED",
+   "how": "Re-run sitl/fu_cage.py with the built-cage tap-test frequencies; hard-mounted FC.",
+   "margin": 0.030000000000000027,
+   "parts": [
+    "AVN-002",
+    "CGE-004",
+    "CGE-002-UR"
+   ]
+  },
+  {
+   "id": "CL-A-VIB-GM-SHIFT",
+   "title": "Rate-loop gain margin with the cage modes shifted +-20 %",
+   "value": 1.64,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.gm_min",
+    "resolved": 2.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Tap test of the built cage (T-A-TAP): pitch mode 12-16 Hz, roll 21-43 Hz; outside that window re-tune the rate loop.",
+   "margin": -0.18000000000000005,
+   "parts": [
+    "AVN-002",
+    "CGE-004",
+    "CGE-002-UR"
+   ]
+  },
+  {
+   "id": "CL-A-SERVO-FACTOR",
+   "title": "Servo torque factor at 7.2 V, 25 C (ES3054HV)",
+   "value": 1.555947481873408,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.servo_factor_min",
+    "resolved": 1.5
+   },
+   "status": "UNVERIFIED",
+   "how": "M12: measure the rail under two-servo load (7.2 V jumper set; at 6.0 V the factor is 1.30 and fails); E1 measures the hinge and damper torque.",
+   "margin": 0.03729832124893869,
+   "parts": [
+    "MEC-001-R",
+    "MEC-001-L",
+    "MEC-002-R",
+    "MEC-002-L",
+    "MEC-004-R",
+    "MEC-004-L"
+   ]
+  },
+  {
+   "id": "CL-A-SERVO-COLD",
+   "title": "Servo torque factor at 7.2 V, damper at 0 C, real arm ratio",
+   "value": 1.5815267741337782,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.servo_factor_min",
+    "resolved": 1.5
+   },
+   "status": "UNVERIFIED",
+   "how": "E1 step 6: ring-down at 0 C; confirm the slew + VD hinge-moment bounding case on the bench.",
+   "margin": 0.05435118275585212,
+   "parts": [
+    "MEC-001-R",
+    "MEC-001-L",
+    "MEC-002-R",
+    "MEC-002-L",
+    "MEC-004-R",
+    "MEC-004-L"
+   ]
+  },
+  {
+   "id": "CL-A-SERVO-RATIO",
+   "title": "Servo stall torque over the hinge moment at VD (A-P11 wording)",
+   "value": 2.6291390728476824,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.servo_ratio_min",
+    "resolved": 1.5
+   },
+   "status": "UNVERIFIED",
+   "how": "Bench: stall torque of the flight servo at 7.2 V.",
+   "margin": 0.7527593818984549,
+   "parts": [
+    "MEC-001-R",
+    "MEC-001-L",
+    "MEC-002-R",
+    "MEC-002-L",
+    "MEC-004-R",
+    "MEC-004-L"
+   ]
+  },
+  {
+   "id": "CL-A-COLL-COUNT",
+   "title": "Part overlaps deeper than the tolerance (neutral, +-20, +-21 deg)",
+   "value": 0,
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0,
+    "resolved": 0
+   },
+   "status": "CHECKED",
+   "how": "python -I qp/A/cad/collide_a.py (Blender, 78 parts, 175 bodies, 0.05 mm); A_ELEV_POSE=20|22 for the other poses.",
+   "margin": 0.0,
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L",
+    "WNG-008-RU",
+    "WNG-008-RL",
+    "WNG-008-LU",
+    "WNG-008-LL"
+   ]
+  },
+  {
+   "id": "CL-A-COLL-DEPTH",
+   "title": "Deepest part overlap at any reachable pose",
+   "value": 0.014,
+   "unit": "mm",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.coll_tol_mm",
+    "resolved": 0.05
+   },
+   "status": "CHECKED",
+   "how": "collide_a.py report: the only hits under the 0.05 mm gate are two 0.014 mm touches at +20 deg (elevon on the lower lens cap); +-22 deg is past the stop and is not a reachable pose.",
+   "margin": 0.7200000000000001,
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L",
+    "WNG-008-RU",
+    "WNG-008-RL",
+    "WNG-008-LU",
+    "WNG-008-LL"
+   ]
+  }
+ ],
  "proofs_viewer": "../proofs/viewer/index.html?data=redesign#node={id}",
  "budget": {
   "_note": "concept A: gate 1.50 kg (MASS-GATE s1); CG band 4.0..28.5 mm aft of the LE (forward limit / aft hard limit, MASS-GATE s5)",
@@ -2905,7 +3978,5 @@
    0.0285
   ]
  },
- "warnings": [
-  "no proof graph at redesign/qp/A/cad/out/none.json (run proofs/build_graph.py)"
- ]
+ "warnings": []
 }
