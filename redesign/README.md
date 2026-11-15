@@ -1,4 +1,9 @@
-# Redesign v1 — K09-L quad tailsitter
+# Redesign v1: concept A quad tailsitter (K09-L record below)
+
+> **Current design (2026-11-15): concept A, a scaled quad tailsitter (D-182).** K09-L, described below, could not be
+> built new within $2,000 (cheapest workable build about $2,577) and is kept as the record. Concept A: 0.90 m wing,
+> 4 x T-Motor MN2212 KV780 on 4S, about 1.42 kg predicted (`EST`), BOM $1,775 of $2,000. Design, reports and status:
+> [qp/README.md](qp/README.md). Decisions D-182 to D-188: [CHANGE-LOG.md](params/CHANGE-LOG.md). The Explorer's 3-D model and renders still show K09-L.
 
 Status: `PROPOSED` design, frame revision **A1-R5** (2026-11-10). Nothing is `VERIFIED`: no part has been bought,
 weighed, built or flown. The configuration is reversible until the mid-December order on the conditions in

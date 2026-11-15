@@ -178,6 +178,7 @@
   <div class="page">
   <section class="c hero about" id="about">
     <div class="lede">
+    <div class="ds-rowlabel">Current design: concept A (D-182) <span>This page, the 3-D model and the renders show K09-L, the previous design (2.6 kg, $2,577 cheapest build, over budget). Concept A is a 0.90 m, about 1.42 kg (EST) scaled quad tailsitter at $1,775: see the Decision page.</span></div>
     <span class="secno">About the aircraft · revision A1-R5 · 2026-11-10</span>
     <h1 class="ds-display">K09-L: a 2.6 kg quad tailsitter. One flying wing on four fixed motors, standing on its fin tips, built for $2,000.</h1>
     <p class="ds-body">A 1.15 × 0.32 m hot-wired XPS wing (S5010 section, one 22 × 20 mm carbon spar) with two foam-board fins at ±0.32 m span. A vertical carbon tube through each fin carries a SunnySky X3108S motor and APC 11 × 5.5MR prop at each end, four motors in an X, each canted 7° for hover yaw. It takes off as a quadcopter, pitches 90° nose-down for 16 m/s cruise on the same four motors, and pitches back up to land on four crushable feet. Two elevon pairs, one 4S 6500 mAh pack in a pod on the upper surface, ArduPilot Plane in tailsitter mode. One piece in one box: five minutes from car to armed, one person, one spanner.</p>
@@ -400,7 +401,7 @@
 <section class="c hero" id="cs-decision-d182">
   <div class="lede">
     <span class="secno">Current decision · D-182 · 2026-11-14 · J6 board</span>
-    <h1 class="ds-display">Build concept A: a scaled quad tailsitter. 0.90 m wing, four fixed motors on 4S, about 1.2 kg (EST), small enough to travel in one piece.</h1>
+    <h1 class="ds-display">Build concept A: a scaled quad tailsitter. 0.90 m wing, four fixed motors on 4S, about 1.2 kg (EST), packed into one car trunk.</h1>
     <p class="ds-body">After sizing four concepts to the same depth (QP-1), the J6 board chose A: about $1,499 re-priced, +$501 margin (+$387 if EST/U lines run 30 % over). Fallback: B, the small quadplane, after re-pricing (about $1,883, +$117, +$8 at +30 %: fails the $100 rule). Lifeboat: D2, ZOHD Altus kit, if there is no tethered hover by 2027-02-15. Transport rule (user): the packed aircraft must fit one standard car trunk (two at most), not one piece, so B's plug-in wing is allowed; A's one-piece fit is a convenience and the choice rests on cost margin and growth headroom. Reversal trigger R1: a lift motor of $25 or less that passes a 4S bench test makes B score 79. Conditions C1-C8 (14 deg cant, 1.50 kg mass gate, SM &ge; 5 %) and first actions (SITL by 2026-11-30, bench kit and yaw test by 2026-12-10, one BOM) are in the board record. <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-1/BOARD.md" target="_blank" rel="noopener">QP-1/BOARD.md</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/config-study/tiebreak/DECISION.md" target="_blank" rel="noopener">tiebreak/DECISION.md</a></p>
   </div>
   <div class="scroll wide"><table class="ds-table">
@@ -413,8 +414,27 @@
       <tr><td class="first"><b>D2 ZOHD Altus VTOL PNP</b></td><td>1,552 / +448</td><td>+346</td><td>1.16 kg</td><td>59</td><td>lifeboat: hover T/W 1.82 EST under the 2.0 gate, no ArduPilot file</td></tr>
     </tbody>
   </table></div>
-  <p class="ds-body">Next steps: SITL crosswind hover, bench thrust and yaw tests, one BOM and one mission definition before the 15 Dec order. Reverses on R1-R5 (BOARD §5).</p>
+  <p class="ds-body">Reverses on R1-R5 (BOARD §5).</p>
   <p class="ds-body"><b>D-181 (small quadplane B, provisional) was superseded the same day.</b> It rested on $1,625 with X2212 lift thrust no one had measured; B's own sizing moved to MN3110 motors and 2.06-2.18 kg, which removed the cost case.</p>
+</section>
+
+<section class="c" id="cs-baseline-a">
+  <header><span class="secno">Concept A baseline · 2026-11-15 · after QP-2 to QP-4</span><h2 class="ds-h2">Validated on paper, in SITL and in the 3-D gates. Nothing bought yet.</h2></header>
+  <div class="scroll wide"><table class="ds-table">
+    <caption>Current numbers (EST = estimate; nothing is weighed or flown)</caption>
+    <thead><tr><th>Item</th><th>Value</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td class="first">Take-off mass, predicted</td><td>1,423.9 g EST (target ≤ 1,440; weigh-in gate 1,500)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/MASS-GATE.md" target="_blank" rel="noopener">MASS-GATE.md</a> s7</td></tr>
+      <tr><td class="first">Propulsion</td><td>4 × T-Motor MN2212 KV780, APC 9x4.5MR/MRP, 16° cant; 2 × Tattu 4S 2300</td><td>D-183, D-184</td></tr>
+      <tr><td class="first">Hover T/W at 1.44 kg (spin cap 0.90)</td><td>2.40 fresh / 1.90 sagged EST</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/mission_gate_a.py" target="_blank" rel="noopener">mission_gate_a.py</a></td></tr>
+      <tr><td class="first">Cruise to battery-low at 17 m/s</td><td>4.56 min EST (need 3.41)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/mission_gate_a.py" target="_blank" rel="noopener">mission_gate_a.py</a></td></tr>
+      <tr><td class="first">Wind limit</td><td>5 m/s edge-on within ±10°; belly-on 3 m/s; yaw edge-on before landing above 3 m/s</td><td>D-184, D-186</td></tr>
+      <tr><td class="first">Elevon flutter</td><td>hinge viscous damper (2.5 g per elevon): no flutter at any linkage stiffness, lowest onset 35.5 m/s hot EST (line 28.8)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-4/FIXES2.md" target="_blank" rel="noopener">QP-4/FIXES2.md</a> (D-188)</td></tr>
+      <tr><td class="first">3-D physics gates</td><td>collision 0 at neutral, ±20° and the ±21° stops; assembly 28 of 28 steps</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/cad/out/REPORT.md" target="_blank" rel="noopener">cad/out/REPORT.md</a></td></tr>
+      <tr><td class="first">Cost</td><td>$1,775.09 all new; +$105 if unverified lines run 30 % over (G7 pass)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/BOM-A.csv" target="_blank" rel="noopener">BOM-A.csv</a></td></tr>
+    </tbody>
+  </table></div>
+  <p class="ds-body">Bench Order 1 (about $1,014 with three elevon servos) is approved for early December. The main order waits on the bench thrust and yaw tests, the elevon coupon test E1, weighing foam and printed parts (≥ 27.2 g of the estimated cuts must be real), the T-Motor stock answer and a written plan for four test mornings a week from 8 February 2027. Decisions: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/params/CHANGE-LOG.md" target="_blank" rel="noopener">CHANGE-LOG.md</a> (D-182 to D-188) · workspace <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/README.md" target="_blank" rel="noopener">qp/README.md</a> · board <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-4/BOARD.md" target="_blank" rel="noopener">QP-4/BOARD.md</a>.</p>
 </section>
 
 <div class="ds-rowlabel">Previous decision (K09-L; superseded 2026-11-14 by D-181, then D-182) <span>K09-L, decided 2026-11-09; kept as the record. The pages below still describe K09-L.</span></div>

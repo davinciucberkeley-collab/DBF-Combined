@@ -1,4 +1,9 @@
-# DBF-Combined: K09-L quad-tailsitter VTOL (UC Berkeley MEng capstone)
+# DBF-Combined: quad-tailsitter VTOL, concept A (UC Berkeley MEng capstone)
+
+> **Current design (2026-11-15): concept A, a scaled quad tailsitter (D-182).** K09-L, described below, could not be
+> built new within $2,000 (cheapest workable build about $2,577) and is kept as the record. Concept A: 0.90 m wing,
+> 4 x T-Motor MN2212 KV780 on 4S, about 1.42 kg predicted (`EST`), BOM $1,775 of $2,000. Design, reports and status:
+> [redesign/qp/README.md](redesign/qp/README.md). Decisions D-182 to D-188: [CHANGE-LOG.md](redesign/params/CHANGE-LOG.md). The Explorer's 3-D model and renders still show K09-L.
 
 K09-L is the VTOL demonstrator a four-person UC Berkeley MEng capstone team will build and fly. It is a quad
 tailsitter: a 1.15 m flat flying wing with two fins, each fin carrying two fixed motors (four in all, one above and

@@ -187,6 +187,8 @@ Saturation: round 1 added 6 new options from external sources and 5 from this ag
 
 ## 6. Re-study 2026-11-14 (D-181, reversed by D-182 the same day)
 
+**Baseline 2026-11-15 (after QP-2 to QP-4):** A carries on as selected. Since the re-study table below: props APC 9x4.5MR/MRP, 16° cant, 2 × Tattu 4S 2300, ES3054HV elevon servos, elevon balance plus a hinge viscous damper (D-183 to D-188). Predicted 1.42 kg `EST`, BOM $1,775 (`../../qp/README.md`). The 1.23 kg / $1,461 in the row for A are the re-study numbers.
+
 **Update (D-182, J6 board, Opus chair, 2026-11-14): D-181 is reversed. Concept A is SELECTED, B is the fallback, D2 the lifeboat. The D-181 marking in the first table is struck through and kept as the record; the QP-1 table after it holds the detailed sizing.**
 
 Status: the v1 content above is kept as the record. K09-L could not be built new within $2,000 (cheapest workable
