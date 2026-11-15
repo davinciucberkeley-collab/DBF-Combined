@@ -386,7 +386,7 @@
    "note": "FIXES2 s7 / MASS-GATE s7: pack trim +-10 mm in the tray slots"
   },
   "cg_x_mm": {
-   "value": 24.35429044780483,
+   "value": 24.386184157097144,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_x_m, aft of the wing leading edge"

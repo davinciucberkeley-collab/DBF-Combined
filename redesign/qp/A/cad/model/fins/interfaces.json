@@ -9,11 +9,7 @@
    "status": "MODELLED",
    "mass_g": 27.1,
    "material": "CFRP tube",
-   "cg_xyz_m": [
-    0.294,
-    0.38,
-    -0.0
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -24,11 +20,7 @@
    "status": "MODELLED",
    "mass_g": 14.8,
    "material": "CFRP tube",
-   "cg_xyz_m": [
-    0.1782,
-    0.38,
-    0.0
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -39,11 +31,7 @@
    "status": "MODELLED",
    "mass_g": 3.2,
    "material": "PETG (printed)",
-   "cg_xyz_m": [
-    0.2831,
-    0.38,
-    0.0
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -54,11 +42,7 @@
    "status": "MODELLED",
    "mass_g": 8.4,
    "material": "XPS foam + tape",
-   "cg_xyz_m": [
-    0.239,
-    0.38,
-    0.0
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -69,11 +53,7 @@
    "status": "MODELLED",
    "mass_g": 1.0,
    "material": "PETG (printed)",
-   "cg_xyz_m": [
-    0.0671,
-    0.38,
-    0.0
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -84,11 +64,7 @@
    "status": "MODELLED",
    "mass_g": 27.1,
    "material": "CFRP tube",
-   "cg_xyz_m": [
-    0.294,
-    -0.38,
-    -0.0
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -99,11 +75,7 @@
    "status": "MODELLED",
    "mass_g": 14.8,
    "material": "CFRP tube",
-   "cg_xyz_m": [
-    0.1782,
-    -0.38,
-    0.0
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -114,11 +86,7 @@
    "status": "MODELLED",
    "mass_g": 3.2,
    "material": "PETG (printed)",
-   "cg_xyz_m": [
-    0.2831,
-    -0.38,
-    0.0
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -129,11 +97,7 @@
    "status": "MODELLED",
    "mass_g": 8.4,
    "material": "XPS foam + tape",
-   "cg_xyz_m": [
-    0.239,
-    -0.38,
-    0.0
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -144,11 +108,7 @@
    "status": "MODELLED",
    "mass_g": 1.0,
    "material": "PETG (printed)",
-   "cg_xyz_m": [
-    0.0671,
-    -0.38,
-    0.0
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   }

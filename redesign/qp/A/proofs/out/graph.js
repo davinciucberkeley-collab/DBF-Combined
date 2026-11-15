@@ -2,7 +2,7 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-15 21:16 UTC",
+  "generated": "2026-11-15 21:30 UTC",
   "dataset": "concept-a",
   "ok": true,
   "errors": [],
@@ -1329,11 +1329,11 @@ window.PROOF_GRAPH = {
    },
    "outputs": {
     "shift_mm": 2.1927331200155926,
-    "fwd_mm": 22.161557327789236,
-    "aft_mm": 26.54702356782042
+    "fwd_mm": 22.19345103708155,
+    "aft_mm": 26.578917277112737
    },
    "input_values": {
-    "cg": 24.35429044780483,
+    "cg": 24.386184157097144,
     "pack": 270.0,
     "trim": 10.0,
     "basic": 1.23134
@@ -1362,11 +1362,11 @@ window.PROOF_GRAPH = {
     "ASM-A-NP"
    ],
    "outputs": {
-    "sm_pct": 6.671718184569459
+    "sm_pct": 6.658700344041983
    },
    "input_values": {
     "np": 40.7,
-    "cg": 24.35429044780483,
+    "cg": 24.386184157097144,
     "c": 245.0
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
@@ -1384,10 +1384,10 @@ window.PROOF_GRAPH = {
     "v": "P:mass.cg_x_mm"
    },
    "outputs": {
-    "v": 24.35429044780483
+    "v": 24.386184157097144
    },
    "input_values": {
-    "v": 24.35429044780483
+    "v": 24.386184157097144
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1415,10 +1415,10 @@ window.PROOF_GRAPH = {
     "WNG-002"
    ],
    "how": "CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.",
-   "value": 24.35429044780483,
+   "value": 24.386184157097144,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.21771452239024142,
+   "margin": 0.21930920785485722,
    "importance": 1
   },
   {
@@ -1432,10 +1432,10 @@ window.PROOF_GRAPH = {
     "v": "P:mass.cg_x_mm"
    },
    "outputs": {
-    "v": 24.35429044780483
+    "v": 24.386184157097144
    },
    "input_values": {
-    "v": 24.35429044780483
+    "v": 24.386184157097144
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1461,10 +1461,10 @@ window.PROOF_GRAPH = {
     "CGE-008"
    ],
    "how": "CG breadboard (M5); band 20-26 mm, hard aft limit 28.5 mm.",
-   "value": 24.35429044780483,
+   "value": 24.386184157097144,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.06329652123827582,
+   "margin": 0.062069840111648296,
    "importance": 1
   },
   {
@@ -1487,10 +1487,10 @@ window.PROOF_GRAPH = {
     "CGE-008"
    ],
    "how": "Slide the pack to the aft slot stop and re-measure CG (M5).",
-   "value": 26.54702356782042,
+   "value": 26.578917277112737,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.06852548884840627,
+   "margin": 0.06740641132937765,
    "importance": 1
   },
   {
@@ -1513,10 +1513,10 @@ window.PROOF_GRAPH = {
     "CGE-008"
    ],
    "how": "Slide the pack to the forward slot stop and re-measure CG (M5).",
-   "value": 22.161557327789236,
+   "value": 22.19345103708155,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.10807786638946179,
+   "margin": 0.10967255185407758,
    "importance": 1
   },
   {
@@ -1541,7 +1541,7 @@ window.PROOF_GRAPH = {
    "assumes": [
     "ASM-A-NP"
    ],
-   "value": 6.671718184569459,
+   "value": 6.658700344041983,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses ASM-A-NP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -1549,7 +1549,7 @@ window.PROOF_GRAPH = {
     "uses ASM-A-NP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.33434363691389174,
+   "margin": 0.33174006880839657,
    "importance": 1
   },
   {
@@ -6548,7 +6548,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "mass.cg_x_mm",
    "file": "redesign/qp/A/params-A.json",
-   "value": 24.35429044780483,
+   "value": 24.386184157097144,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_x_m, aft of the wing leading edge",

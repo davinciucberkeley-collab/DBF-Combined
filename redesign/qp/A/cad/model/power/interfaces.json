@@ -9,11 +9,7 @@
    "status": "MODELLED",
    "mass_g": 270.0,
    "material": "LiPo",
-   "cg_xyz_m": [
-    -0.01,
-    0.0,
-    0.0225
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "buy",
    "electrical": "source",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"

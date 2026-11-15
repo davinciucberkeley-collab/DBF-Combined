@@ -9,11 +9,7 @@
    "status": "MODELLED",
    "mass_g": 8.0,
    "material": "PETG (printed)",
-   "cg_xyz_m": [
-    0.0886,
-    0.0,
-    0.0148
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -24,11 +20,7 @@
    "status": "MODELLED",
    "mass_g": 17.0,
    "material": "PCB",
-   "cg_xyz_m": [
-    0.0599,
-    0.0,
-    0.0278
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "buy",
    "electrical": "bus",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -40,11 +32,7 @@
    "status": "MODELLED",
    "mass_g": 1.0,
    "material": "VHB-class foam tape",
-   "cg_xyz_m": [
-    0.06,
-    0.0,
-    0.0168
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -55,11 +43,7 @@
    "status": "MODELLED",
    "mass_g": 3.0,
    "material": "PCB",
-   "cg_xyz_m": [
-    0.1117,
-    -0.0465,
-    0.0182
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "buy",
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -71,11 +55,7 @@
    "status": "MODELLED",
    "mass_g": 13.5,
    "material": "PCB",
-   "cg_xyz_m": [
-    0.0574,
-    0.0399,
-    0.0201
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "buy",
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -87,11 +67,7 @@
    "status": "MODELLED",
    "mass_g": 3.0,
    "material": "PCB",
-   "cg_xyz_m": [
-    0.0524,
-    -0.0446,
-    0.0202
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "buy",
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -103,11 +79,7 @@
    "status": "MODELLED",
    "mass_g": 5.0,
    "material": "brass tube",
-   "cg_xyz_m": [
-    -0.0425,
-    0.41,
-    0.0
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   }

@@ -285,11 +285,11 @@
    },
    "outputs": {
     "shift_mm": 2.1927331200155926,
-    "fwd_mm": 22.161557327789236,
-    "aft_mm": 26.54702356782042
+    "fwd_mm": 22.19345103708155,
+    "aft_mm": 26.578917277112737
    },
    "input_values": {
-    "cg": 24.35429044780483,
+    "cg": 24.386184157097144,
     "pack": 270.0,
     "trim": 10.0,
     "basic": 1.23134
@@ -315,11 +315,11 @@
     "ASM-A-NP"
    ],
    "outputs": {
-    "sm_pct": 6.671718184569459
+    "sm_pct": 6.658700344041983
    },
    "input_values": {
     "np": 40.7,
-    "cg": 24.35429044780483,
+    "cg": 24.386184157097144,
     "c": 245.0
    }
   },
@@ -334,10 +334,10 @@
     "v": "P:mass.cg_x_mm"
    },
    "outputs": {
-    "v": 24.35429044780483
+    "v": 24.386184157097144
    },
    "input_values": {
-    "v": 24.35429044780483
+    "v": 24.386184157097144
    }
   },
   {
@@ -361,7 +361,7 @@
     "WNG-002"
    ],
    "how": "CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.",
-   "value": 24.35429044780483
+   "value": 24.386184157097144
   },
   {
    "id": "CALC-A-CG-HI-READ",
@@ -374,10 +374,10 @@
     "v": "P:mass.cg_x_mm"
    },
    "outputs": {
-    "v": 24.35429044780483
+    "v": 24.386184157097144
    },
    "input_values": {
-    "v": 24.35429044780483
+    "v": 24.386184157097144
    }
   },
   {
@@ -399,7 +399,7 @@
     "CGE-008"
    ],
    "how": "CG breadboard (M5); band 20-26 mm, hard aft limit 28.5 mm.",
-   "value": 24.35429044780483
+   "value": 24.386184157097144
   },
   {
    "id": "CL-A-CG-TRIM-AFT",
@@ -420,7 +420,7 @@
     "CGE-008"
    ],
    "how": "Slide the pack to the aft slot stop and re-measure CG (M5).",
-   "value": 26.54702356782042
+   "value": 26.578917277112737
   },
   {
    "id": "CL-A-CG-TRIM-FWD",
@@ -441,7 +441,7 @@
     "CGE-008"
    ],
    "how": "Slide the pack to the forward slot stop and re-measure CG (M5).",
-   "value": 22.161557327789236
+   "value": 22.19345103708155
   },
   {
    "id": "CL-A-SM",
@@ -464,7 +464,7 @@
    "assumes": [
     "ASM-A-NP"
    ],
-   "value": 6.671718184569459
+   "value": 6.658700344041983
   },
   {
    "id": "CALC-A-CG-LATERAL-READ",

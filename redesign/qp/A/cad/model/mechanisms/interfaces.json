@@ -9,11 +9,7 @@
    "status": "MODELLED",
    "mass_g": 20.5,
    "material": "plastic / metal gear",
-   "cg_xyz_m": [
-    0.1411,
-    0.2,
-    0.0053
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "buy",
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -25,11 +21,7 @@
    "status": "MODELLED",
    "mass_g": 1.0,
    "material": "nylon",
-   "cg_xyz_m": [
-    0.1465,
-    0.2,
-    0.0127
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -40,11 +32,7 @@
    "status": "MODELLED",
    "mass_g": 1.0,
    "material": "steel",
-   "cg_xyz_m": [
-    0.1738,
-    0.2,
-    0.0127
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -55,11 +43,7 @@
    "status": "MODELLED",
    "mass_g": 1.0,
    "material": "nylon",
-   "cg_xyz_m": [
-    0.202,
-    0.2,
-    0.0102
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -70,11 +54,7 @@
    "status": "MODELLED",
    "mass_g": 20.5,
    "material": "plastic / metal gear",
-   "cg_xyz_m": [
-    0.1411,
-    -0.2,
-    0.0053
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "buy",
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -86,11 +66,7 @@
    "status": "MODELLED",
    "mass_g": 1.0,
    "material": "nylon",
-   "cg_xyz_m": [
-    0.1465,
-    -0.2,
-    0.0127
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -101,11 +77,7 @@
    "status": "MODELLED",
    "mass_g": 1.0,
    "material": "steel",
-   "cg_xyz_m": [
-    0.1738,
-    -0.2,
-    0.0127
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
@@ -116,11 +88,7 @@
    "status": "MODELLED",
    "mass_g": 1.0,
    "material": "nylon",
-   "cg_xyz_m": [
-    0.202,
-    -0.2,
-    0.0102
-   ],
+   "cg_xyz_m": null,
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   }
