@@ -1,12 +1,15 @@
-# Small quadplane VTOL — student project
+# Scaled quad tailsitter VTOL (concept A) — student project
 
-**Configuration changed 2026-11-14 (D-181, `redesign/config-study/RESTUDY-2026-11-14.md`):**
+**Configuration changed 2026-11-14 (D-182, J6 board, `redesign/review/QP-1/BOARD.md`):**
 K09-L could not be built new within the $2,000 limit (cheapest workable build
 about $2,577, `redesign/review/CLOSURE-ROUND-2026-11-14/DESIGN-TO-COST.md`).
-The new configuration is a **small quadplane**: four fixed lift motors plus one
-cruise pusher on a foam wing, about 1.9 kg (estimate), ArduPilot QuadPlane;
-fallback the ZOHD Altus VTOL kit. The K09-L description below is the previous
-design, kept as the record until the new design documents replace it.
+After sizing four concepts to the same depth (`redesign/review/QP-1/`), the board
+chose **concept A, a scaled-down quad tailsitter**: about 1.23 kg, 0.90 m wing,
+T-Motor MN2212 KV780 on 4S, 4S 2000 mAh packs, one-piece in the car box,
+about $1,499 (margin about +$501, estimate). Fallback: B, the small quadplane,
+after re-pricing; lifeboat: the ZOHD Altus VTOL kit if there is no tethered hover
+by 2027-02-15. D-181 (quadplane, provisional) is reversed. The K09-L description
+below is the previous design, kept as the record; its lessons apply to concept A.
 
 The previous design (team decision 2026-11-13, see `redesign/CONFIGURATION.md`)
 was **K09-L**: a quad tailsitter. A flat flying wing about 1.15 × 0.30 m with
@@ -22,8 +25,9 @@ that concept.
   shipping, tax). The Jacobs Hall Makers Pass is paid outside this budget.
 - Built and flight-tested by the end of April 2027.
 - Portable: a team of 4 moves it routinely; hard cap under 25 kg (55 lb).
-  K09-L travels in one piece in a ~1.25 × 0.55 × 0.45 m box that fits a
-  standard car.
+  It need not travel in one piece (user, 2026-11-14), but the packed aircraft
+  must fit in one standard car trunk, two at most. (K09-L travelled in one
+  piece in a ~1.25 × 0.55 × 0.45 m box.)
 - Passes a 3-D physics simulation: every build step and the assembled
   aircraft (`redesign/showcase/animation/assembly_check.py`, collision
   `redesign/collision/collide.py --glb`) with no part interpenetration, no

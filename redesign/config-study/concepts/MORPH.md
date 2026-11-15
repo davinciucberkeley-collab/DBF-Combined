@@ -185,7 +185,9 @@ Saturation: round 1 added 6 new options from external sources and 5 from this ag
 
 ---
 
-## 6. Re-study 2026-11-14 (D-181)
+## 6. Re-study 2026-11-14 (D-181, reversed by D-182 the same day)
+
+**Update (D-182, J6 board, Opus chair, 2026-11-14): D-181 is reversed. Concept A is SELECTED, B is the fallback, D2 the lifeboat. The D-181 marking in the first table is struck through and kept as the record; the QP-1 table after it holds the detailed sizing.**
 
 Status: the v1 content above is kept as the record. K09-L could not be built new within $2,000 (cheapest workable
 build about $2,577, gap $577; `../review/CLOSURE-ROUND-2026-11-14/DESIGN-TO-COST.md` §0, §5). The re-study
@@ -196,14 +198,27 @@ New options proposed there (chart rows above): **E7**, **E8**, **B7**. D6 needs 
 
 | Code | Candidate | Code string (D1..D11) | MTOW kg `EST` | Total $ incl. crash reserve | Margin $ | Status |
 |---|---|---|---|---|---|---|
-| A | Scaled quad tailsitter | L3 T3 X3 W2 C3 R5 G2 P3 M1 E7 B1 | 1.23 | 1,461 | +539 | Not selected (carry-over option) |
-| **B** | **Small quadplane 4+1** | L1 T1 X1 W1 C1 or C2 (`EST`) R1 G1 P1 M1 E7 B1 | **1.88** | **1,625** | **+375** (about +175 with parts +30 %) | **SELECTED (D-181)** |
+| A | Scaled quad tailsitter | L3 T3 X3 W2 C3 R5 G2 P3 M1 E7 B1 | 1.23 | 1,461 | +539 | ~~Not selected~~ now SELECTED by D-182 (see QP-1 table) |
+| **B** | **Small quadplane 4+1** | L1 T1 X1 W1 C1 or C2 (`EST`) R1 G1 P1 M1 E7 B1 | **1.88** | **1,625** | **+375** (about +175 with parts +30 %) | ~~SELECTED (D-181)~~ reversed by D-182; now fallback |
 | C | Dual-motor tailsitter | L3 T3 X3 W2 C3 R6 G2 P3 M1 E7 B1 | 1.02 | 1,351 | +649 | Rejected: any motor-out is fatal |
 | D1 | HEEWING T1-S VTOL PNP + F405 + GPS | L2 T3 X2 W1 C2 (`EST`) R3 G4 P6 M5 E7 B7 | 0.90 | 1,666 | +334 | Rejected: hover T/W 1.64 at its 1.6 limit |
-| **D2** | **ZOHD Altus VTOL PNP** | L2 T3 X2 W1 C2 R3 G4 P6 M5 E7 B7 | 1.16 | 1,549 | +451 | **FALLBACK** |
+| **D2** | **ZOHD Altus VTOL PNP** | L2 T3 X2 W1 C2 R3 G4 P6 M5 E7 B7 | 1.16 | 1,549 | +451 | ~~FALLBACK~~ lifeboat under D-182 (date trigger R4) |
 | D3 | HEEWING T2 Cruza 1.2 m + VTOL kit | L2 T3 X2 W1 C2 (`EST`) R3 G4 P6 M5 E2 B7 | 2.23 | 1,934 | +66 | Rejected: misses the $100 margin |
 
-Source: `RESTUDY-2026-11-14.md` §2 (cost, margin, mass), §5 (code strings). Why B: lowest-risk concept that clears the
+Source: `RESTUDY-2026-11-14.md` §2 (cost, margin, mass), §5 (code strings). Why B (D-181, reversed): lowest-risk concept that clears the
 $100 margin; most-flown ArduPilot VTOL layout (`Q_ENABLE=1`), lift on dedicated motors, lands on gear, so none of K09-L's
 tailsitter problems (hover yaw in wind, narrow transition entry, fin-tip landing, tip-over, climb-out). A smaller
-tailsitter (A) is worse in wind. Decision record: `tiebreak/DECISION.md`, "Re-decision 2026-11-14 (D-181)".
+tailsitter (A) is worse in wind. D-181 record: `tiebreak/DECISION.md`, "Re-decision 2026-11-14 (D-181)".
+
+### QP-1 detailed sizing and board (D-182, 2026-11-14)
+
+T = K06, scratch tilt-tricopter (code string from the K06 row of the chart above). Sources: `../review/QP-1/BOARD.md` (§1 re-priced totals, §3 scores), `SIZING-A.md`, `SIZING.md` (B), `SIZING-T.md`, `COST.md`. Masses `EST`; totals re-priced with the sized parts (BOARD §1); D2 mass is the RESTUDY value.
+
+| Code | Concept | Code string (D1..D11) | Mass kg `EST` | Total $ / margin $ (sized parts) | Margin at EST/U lines +30 % | Score /100 | Status |
+|---|---|---|---|---|---|---|---|
+| **A** | Scaled quad tailsitter, 0.90 m wing, 4 x MN2212 KV780, 4S | L3 T3 X3 W2 C3 R5 G2 P3 M1 E7 B1 | 1.23 (board re-roll 1.37) | 1,499 / +501 | +387 | **71** | **SELECTED (D-182)** |
+| **B** | Small quadplane 4+1, 1.20 m wing | L1 T1 X1 W1 C1 or C2 (`EST`) R1 G1 P1 M1 E7 B1 | 2.18 (SIZING.md 2.06) | 1,883 / +117 | +8 (fails the $100 rule) | 67 | **FALLBACK** (after re-pricing; triggers R1, R2) |
+| **T** | Tilt-tricopter K06, 1.20 m flying wing | L2 T3 X2 W1/W2 C3 R3 G1 P1 M1 E1 B1 | 1.75 (1.85 with growth allowance) | 1,605 / +395 | +184 | 45 | Not selected: motor-out fatal on 3 motors, tilt-servo single point of failure |
+| **D2** | ZOHD Altus VTOL PNP | L2 T3 X2 W1 C2 R3 G4 P6 M5 E7 B7 | 1.16 | 1,552 / +448 | +346 | 59 | **LIFEBOAT** (R4: no tethered hover by 2027-02-15) |
+
+Selection: concept A, about 1.23 kg per the D-182 record (frozen mass gate 1.50 kg, condition C5), one piece in the car box (a convenience only: the constraint is that the packed aircraft fits one car trunk, two at most, so B's two-piece plug-in wing is allowed), about $1,499 re-priced (+$501; +$387 at +30 %). Why: B has +$117 margin, +$8 at +30 %, 4 % mass headroom to its T/W gate; A has 18 % headroom and its weak points (hover yaw, wind lean, fin vibration, static margin) can be tested with $0 SITL and under $60 of bench tests before the 15 Dec order. Reversal trigger R1: a lift motor of $25 or less that passes a 4S bench test makes B score 79. D-181 (B, provisional) is reversed. Record: `tiebreak/DECISION.md`, "Re-decision 2026-11-14 (D-182, J6 board)".
