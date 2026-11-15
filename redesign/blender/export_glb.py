@@ -75,6 +75,8 @@ def main():
                                     list(be.objects.values()) + list(be.wires.values()) + joints, be)}
     subs = sorted({c.subsystem for c in ctx.components.values()})
     for s in subs:
+        if s + '.glb' in files:   # a subsystem called 'assembly' (concept A) must not overwrite the whole-aircraft file
+            continue
         objs = [be.objects[p] for p, c in ctx.components.items() if c.subsystem == s]
         objs += [be.wires[w.edge] for w in ctx.wires if w.sub == s and w.edge in be.wires]
         files[s + '.glb'] = export(os.path.join(d, s + '.glb'), objs, be)

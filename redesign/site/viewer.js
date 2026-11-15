@@ -1,11 +1,11 @@
 // 3-D aircraft explorer: three.js (ES modules from jsDelivr via the import map in app.html) + the viewer rules in model.js.
 // Adapted from redesign/viewer/app.js: modes (Aircraft / Inside & wiring / Structure / Exploded), part browser, part panel,
-// focus, plus a cruise / hover attitude toggle and a ground-kit toggle. Data: data/viewer-data.json; geometry: assets/k09l.glb.
+// focus, plus a cruise / hover attitude toggle and a ground-kit toggle. Data: data/viewer-data.json; geometry: assets/concept-a.glb.
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import M from './model.js?v=20261111d';
+import M from './model.js?v=20261115a';
 
 const GH = 'https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/';
 const $ = s => document.querySelector(s);
@@ -260,7 +260,7 @@ function lookOf(p) {
   const mat = String(p.material || '').toLowerCase(), name = String(p.name || '').toLowerCase(), id = String(p.id || '');
   const has = re => re.test(mat);
   if (/^PRP-001/.test(id) || has(/^motor/)) return 'motor';
-  if (/^PRP-003/.test(id) || /\bprop\b/.test(name) && has(/nylon/)) return 'prop';
+  if (/\bprop\b/.test(name) && has(/nylon/)) return 'prop';
   if (/^HRN-/.test(id) || has(/copper \+ silicone|wire/)) return 'wire';
   if (has(/lipo/)) return 'battery';
   if (has(/fr4/)) return 'pcb';
@@ -612,7 +612,7 @@ function summaryHtml() {
   const d = S.data, mc = M.massCG(d), by = {};
   for (const p of d.parts) if (p.flight !== false) by[p.status] = (by[p.status] || 0) + 1;
   const lim = mc.limit_g, over = lim !== null && mc.total_g > lim;
-  let h = '<div class="ds-panel v-summary"><h2>K09-L as designed</h2><p>Click a part for its numbers, interfaces and claims; double-click to focus. ' +
+  let h = '<div class="ds-panel v-summary"><h2>Concept A as modelled</h2><p>Click a part for its numbers, interfaces and claims; double-click to focus. ' +
     'Modes: <b>Aircraft</b>, <b>Inside &amp; wiring</b> (skins x-rayed, electrical parts solid), <b>Structure</b> (load path only), <b>Exploded</b> (slider).</p>' +
     '<div class="ds-row">' + M.STATUSES.filter(s => by[s]).map(s => badge(s) + '<span class="ds-meta ds-mono">' + by[s] + '</span>').join(' ') + '</div>' +
     kv([['Flight parts', M.fmtNum(mc.count)], ['Declared mass', M.fmtMass(mc.total_g) + (lim !== null ? ' <span class="ds-meta">of ' + M.fmtMass(lim) + ' gate</span>' : '')],
@@ -627,7 +627,7 @@ function summaryHtml() {
   }
   h += '<div class="v-keys"><span class="ds-kbd">1</span>Aircraft<span class="ds-kbd">2</span>Inside &amp; wiring<span class="ds-kbd">3</span>Structure<span class="ds-kbd">4</span>Exploded' +
     '<span class="ds-kbd">H</span>Fasteners<span class="ds-kbd">F</span>Focus selected<span class="ds-kbd">Esc</span>Show full aircraft<span class="ds-kbd">/</span>Search</div>' +
-    '<p class="ds-source">Declared masses from interfaces.json (A3-R7 roll-up in MASS-CG.md); allocations from params/mass_budget.json; geometry from blender/export_glb.py; ground tools excluded.</p></div>';
+    '<p class="ds-source">Declared masses from the merged concept A interfaces.json; gate and CG band from qp/A/cad/model/mass_budget.json (no per-subsystem allocations, no claims graph for concept A); geometry from the concept A CAD (qp/A/cad/model) via blender/export_glb.py; vendor and cost are not mapped to CAD part ids.</p></div>';
   return h;
 }
 
@@ -743,9 +743,10 @@ export async function start() {
   readColours(); wire(); hint();
   progress(0, 'reading part data');
   let data;
-  try { const r = await fetch('data/viewer-data.json?v=20261112a'); if (!r.ok) throw new Error('HTTP ' + r.status); data = await r.json(); }
+  try { const r = await fetch('data/viewer-data.json?v=20261115a'); if (!r.ok) throw new Error('HTTP ' + r.status); data = await r.json(); }
   catch (e) { loadFailed('Part data not found', esc(e.message) + '<br>data/viewer-data.json is built by redesign/viewer/build_data.py --out site/data'); return; }
   S.data = data; S.idx = M.index(data);
+  if (!data.parts.some(p => p.flight === false)) { const kb = $('#kit'); if (kb) kb.style.display = 'none'; }   // concept A has no ground kit / transport box in the model
   renderCounts(); renderTree(); renderPanel();
   if (!initThree()) { loadFailed('3-D is not available', 'This browser could not start WebGL. The part list and panel still work.'); return; }
   const total = (data.glb && data.glb.bytes) || 3443204;
@@ -762,11 +763,11 @@ export async function start() {
     if (nParts) {
       for (let i = 1; i <= nParts; i++) {
         progress(0.5 * i / nParts, 'loading model (embedded copy, part ' + i + ' of ' + nParts + ')');
-        await addScript('data/assembly.glb.part' + i + '.js?v=20261112a');
+        await addScript('data/assembly.glb.part' + i + '.js?v=20261115a');
       }
     } else {
       progress(0.5, 'loading model (embedded copy)');
-      await addScript('data/assembly.glb.js?v=20261112a');
+      await addScript('data/assembly.glb.js?v=20261115a');
     }
     const b64 = nParts ? window.VIEWER_GLB_B64_PARTS.join('') : (window.VIEWER_GLB_B64 || '');
     window.VIEWER_GLB_B64_PARTS = null; window.VIEWER_GLB_B64 = null;
@@ -776,12 +777,12 @@ export async function start() {
   };
   let gltf;
   try {
-    gltf = await new Promise((res, rej) => new GLTFLoader().load('assets/k09l.glb?v=20261112a', res,
+    gltf = await new Promise((res, rej) => new GLTFLoader().load('assets/concept-a.glb?v=20261115a', res,
       ev => { const got = ev.loaded || 0; progress(Math.min(got / total, 1), kB(got) + ' of ' + kB(total)); }, rej));
   } catch (e) {
     // hosts that do not serve .glb (claude.ai artifacts) and file:// get the same bytes as base64 in a script
     try { gltf = await loadGlbScript(); }
-    catch (e2) { loadFailed('Model could not be loaded', esc((e && e.message) || e) + '<br>assets/k09l.glb'); return; }
+    catch (e2) { loadFailed('Model could not be loaded', esc((e && e.message) || e) + '<br>assets/concept-a.glb'); return; }
   }
   progress(1, 'building scene');
   buildModel(gltf);

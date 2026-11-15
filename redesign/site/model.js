@@ -5,7 +5,7 @@ const MODES = ['whole', 'inside', 'structure', 'exploded'];
 // part-id prefix -> design-system subsystem key (tokens.css --sub-*); BRIEF.md lists the prefixes
 const PREFIXES = ['WNG', 'FUS', 'BMS', 'TAL', 'GER', 'PSH', 'PWR', 'HRN', 'AVN'];
 // K09-L prefixes (BRIEF.md) -> hue keys: fins on the booms hue, pod on the fuselage hue, mechanisms on the tail hue
-const PREFIX_MAP = { WNG: 'WNG', FIN: 'BMS', BMS: 'BMS', POD: 'FUS', FUS: 'FUS', MEC: 'TAL', TAL: 'TAL', GER: 'GER', PRP: 'PSH', PSH: 'PSH', PWR: 'PWR', HRN: 'HRN', AVN: 'AVN' };
+const PREFIX_MAP = { WNG: 'WNG', FIN: 'BMS', BMS: 'BMS', POD: 'FUS', FUS: 'FUS', MEC: 'TAL', TAL: 'TAL', GER: 'GER', PRP: 'PSH', PSH: 'PSH', PWR: 'PWR', CGE: 'BMS', HRN: 'HRN', AVN: 'AVN' };
 
 const subKey = id => PREFIX_MAP[String(id || '').split('-')[0].toUpperCase()] || 'OTHER';
 
