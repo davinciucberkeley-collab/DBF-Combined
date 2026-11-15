@@ -1,0 +1,40 @@
+{
+"tag": "ge",
+"args": [
+"wind=5",
+"gust=2",
+"from=90",
+"hold=45",
+"gust_at=20"
+],
+"summary": {
+"n": 807,
+"t_window": [
+8.027,
+48.999
+],
+"wind_ms": 7.0,
+"lean_max": 17.1,
+"lean_mean": 10.4,
+"lean_pre": 1.1,
+"u_max": 0.776,
+"u_mean_max": 0.701,
+"t_cap_s": 0.0,
+"t_cap_run_s": 0.0,
+"t_ge85_s": 0.0,
+"u_min": 0.423,
+"t_floor_s": 0.0,
+"t_floor_run_s": 0.0,
+"yaw_err_max": 2.2,
+"yaw_err_rms": 1.85,
+"pos_err_max": 1.27,
+"pos_err_rms": 0.43,
+"pos_err_last20_mean": 0.43,
+"alt_dev_max": 0.08,
+"diag_spread_max": 0.007,
+"diag_spread_mean": 0.003
+},
+"armed": true,
+"reached_alt": true,
+"events": []
+}

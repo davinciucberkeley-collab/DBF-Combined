@@ -1,0 +1,40 @@
+{
+"tag": "w_h60t",
+"args": [
+"inst=3",
+"hold=45",
+"wind=5",
+"from=60",
+"turb=1.0"
+],
+"summary": {
+"n": 807,
+"t_window": [
+8.027,
+48.999
+],
+"wind_ms": 7.38,
+"lean_max": 23.1,
+"lean_mean": 13.9,
+"lean_pre": 1.1,
+"u_max": 0.855,
+"u_mean_max": 0.731,
+"t_cap_s": 0.0,
+"t_cap_run_s": 0.0,
+"t_ge85_s": 0.05,
+"u_min": 0.15,
+"t_floor_s": 1.85,
+"t_floor_run_s": 0.8,
+"yaw_err_max": 34.2,
+"yaw_err_rms": 6.81,
+"pos_err_max": 3.52,
+"pos_err_rms": 1.99,
+"pos_err_last20_mean": 1.64,
+"alt_dev_max": 0.2,
+"diag_spread_max": 0.909,
+"diag_spread_mean": 0.313
+},
+"armed": true,
+"reached_alt": true,
+"events": []
+}

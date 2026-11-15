@@ -1,0 +1,42 @@
+{
+"tag": "w_ac60t",
+"args": [
+"inst=2",
+"hold=45",
+"wind=5",
+"from=60",
+"turb=1.0",
+"arm=1.2",
+"cant=16"
+],
+"summary": {
+"n": 807,
+"t_window": [
+8.027,
+48.999
+],
+"wind_ms": 7.38,
+"lean_max": 20.4,
+"lean_mean": 13.4,
+"lean_pre": 1.0,
+"u_max": 0.836,
+"u_mean_max": 0.711,
+"t_cap_s": 0.0,
+"t_cap_run_s": 0.0,
+"t_ge85_s": 0.0,
+"u_min": 0.193,
+"t_floor_s": 0.0,
+"t_floor_run_s": 0.0,
+"yaw_err_max": 11.7,
+"yaw_err_rms": 4.12,
+"pos_err_max": 3.22,
+"pos_err_rms": 1.73,
+"pos_err_last20_mean": 1.47,
+"alt_dev_max": 0.23,
+"diag_spread_max": 0.578,
+"diag_spread_mean": 0.233
+},
+"armed": true,
+"reached_alt": true,
+"events": []
+}

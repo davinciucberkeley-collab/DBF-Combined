@@ -1,0 +1,40 @@
+{
+"tag": "w_wv45",
+"args": [
+"inst=2",
+"hold=40",
+"wind=5",
+"from=45",
+"P:Q_WVANE_ENABLE=1"
+],
+"summary": {
+"n": 708,
+"t_window": [
+8.027,
+43.967
+],
+"wind_ms": 5.0,
+"lean_max": 30.0,
+"lean_mean": 28.0,
+"lean_pre": 1.1,
+"u_max": 0.735,
+"u_mean_max": 0.724,
+"t_cap_s": 0.0,
+"t_cap_run_s": 0.0,
+"t_ge85_s": 0.0,
+"u_min": 0.43,
+"t_floor_s": 0.0,
+"t_floor_run_s": 0.0,
+"yaw_err_max": 31.8,
+"yaw_err_rms": 30.54,
+"pos_err_max": 4.72,
+"pos_err_rms": 3.17,
+"pos_err_last20_mean": 2.63,
+"alt_dev_max": 0.14,
+"diag_spread_max": 0.221,
+"diag_spread_mean": 0.15
+},
+"armed": true,
+"reached_alt": true,
+"events": []
+}

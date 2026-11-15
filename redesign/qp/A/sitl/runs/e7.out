@@ -1,0 +1,38 @@
+{
+"tag": "e7",
+"args": [
+"wind=7",
+"from=90",
+"hold=40"
+],
+"summary": {
+"n": 708,
+"t_window": [
+8.027,
+43.967
+],
+"wind_ms": 7.0,
+"lean_max": 21.3,
+"lean_mean": 18.8,
+"lean_pre": 1.1,
+"u_max": 0.809,
+"u_mean_max": 0.782,
+"t_cap_s": 0.0,
+"t_cap_run_s": 0.0,
+"t_ge85_s": 0.0,
+"u_min": 0.408,
+"t_floor_s": 0.0,
+"t_floor_run_s": 0.0,
+"yaw_err_max": 1.3,
+"yaw_err_rms": 0.55,
+"pos_err_max": 3.09,
+"pos_err_rms": 1.4,
+"pos_err_last20_mean": 1.14,
+"alt_dev_max": 0.12,
+"diag_spread_max": 0.008,
+"diag_spread_mean": 0.001
+},
+"armed": true,
+"reached_alt": true,
+"events": []
+}

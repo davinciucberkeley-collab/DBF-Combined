@@ -1,0 +1,229 @@
+# Concept A (scaled quad tailsitter, J6 board D-182) - ArduPilot Plane parameter file, DRAFT QP-2-R1 (owner F4 / B3, 2026-11-14; D-183 props/pack, D-184 arm x1.2 + cant 16 deg)
+# Status: PROPOSED, starting set only. Not loaded on hardware. SITL ran a hover-only JSON model of A (qp/A/sitl/SITL-A.md);
+#   gains and hover limits below are tuned on that EST model, so every one is a bench-test starting value, not a result.
+# Derived from subsystems/flight-software/K09L.param R11 (names checked there against ArduPlane 4.7.x, SITL 4.7.3-beta1).
+#   A-specific changes are marked "A:". Lines kept from K09-L carry the K09-L lesson in the comment.
+# Source of A's numbers: redesign/qp/sizing_A/sizing_a.py (mass 1.23-1.37 kg, MN2212 KV780, 9545, 4S), review/QP-1/BOARD.md C1-C8.
+# Board-only lines (not in SITL): SERVO_BLH_BDMASK, SERVO_BLH_POLES. Board choice (Kakute or CoreWing, BOARD C6) is open:
+#   BATT_VOLT_MULT / BATT_AMP_PERVLT, SERIALn, GPS/INS offsets and RC maps below are the K09-L CoreWing values or "-" (omitted).
+# Frame: x aft, y right, z up in cruise. Hover copter frame: forward = belly, right = right wing, down = tail. Motor map as K09-L.
+
+# ---------------------------------------------------------------- 1 Frame: copter-motor tailsitter (K09-L unchanged)
+# enable the QuadPlane VTOL code (reboot after setting)
+Q_ENABLE,1
+# tailsitter on the quad motors
+Q_TAILSIT_ENABLE,1
+# frame class 1 = Quad (K09-L lesson: class 1, not 10, so the tailsitter defaults table is NOT applied; Q_A_ANGLE_BOOST is set below)
+Q_FRAME_CLASS,1
+# X frame: A=output 1, B=4, C=2, D=3 (K09-L S2 test), same wiring as K09-L
+Q_FRAME_TYPE,1
+# all four motors run in fixed-wing flight (no pusher)
+Q_TAILSIT_MOTMX,15
+# Q_OPTIONS 262400 = bit 8 (assist keeps plane pitch controller) + bit 18, as K09-L (R8 lesson: see K09L.param)
+Q_OPTIONS,262400
+# boot in QSTABILIZE (K09-L R-SPIRAL: a reset in the air must come up in a manual hover mode)
+INITIAL_MODE,17
+SERVO1_FUNCTION,33
+SERVO2_FUNCTION,34
+SERVO3_FUNCTION,35
+SERVO4_FUNCTION,36
+# elevons (K09-L map)
+SERVO5_FUNCTION,77
+SERVO6_FUNCTION,78
+# DShot600 on outputs 1-4 (needs the DShot ESC of BOARD C6)
+Q_M_PWM_TYPE,5
+SERVO_BLH_BDMASK,15
+# MN2212 = 12N14P = 14 poles (K09-L value 14 was for its own motor; A: 14 from the 12N14P winding, check the datasheet - not read)
+SERVO_BLH_POLES,14
+SERVO_DSHOT_ESC,1
+SERVO5_REVERSED,1
+SERVO5_TRIM,1500
+SERVO5_MIN,1003
+SERVO5_MAX,1976
+SERVO6_REVERSED,0
+SERVO6_TRIM,1500
+SERVO6_MIN,1024
+SERVO6_MAX,1997
+MIXING_GAIN,0.65
+
+# ---------------------------------------------------------------- 2 Motors and thrust
+# A: spin cap 0.90, REQUIRED (D-183): APC 9x4.5MR uncapped full duty is 13.0 A (14.3 A one motor at 1.50 kg) vs the 13 A / 180 s rating; at 0.90 one motor is 12.1 A phase / 10.9 A bus (prop_a.py).
+#   SITL: with this cap the hover cases in wind never need more than the numbers in SITL-A.md; K09-L lesson: the motor has no burst rating
+Q_M_SPIN_MAX,0.90
+# A: pack limit. sizing_a.py peak pack current 41 A (4 x 10.3 A table at 100 %); no limiter needed below that - EST
+Q_M_BAT_CURR_MAX,41
+Q_M_BAT_IDX,0
+Q_M_BAT_CURR_TC,1
+# 4S LiPo full / empty (3.3 V/cell). Thrust compensation by voltage is ON (K09-L R10 practice); SITL has no battery model so it is inert there
+Q_M_BAT_VOLT_MAX,16.8
+Q_M_BAT_VOLT_MIN,13.2
+# spin-min 0.15 (K09-L); A hover thrust 402 gf/motor at the 1.50 kg gate (cant 16) = 0.35 of the 1138 gf APC table maximum (prop_a.py, x0.93 derate)
+Q_M_SPIN_MIN,0.15
+# A: expo 0.55, a fit of the maker's table (u 0.5 / 0.65 / 0.75 / 0.85 -> 0.32 / 0.52 / 0.66 / 0.81 of full thrust gives expo 0.72 / 0.58 / 0.49 / 0.33); K09-L 0.65. EST
+Q_M_THST_EXPO,0.55
+# A: hover in thrust space is 0.36 fresh (0.46 on the sagged pack); start in between, learned in flight
+Q_M_THST_HOVER,0.42
+Q_M_HOVER_LEARN,2
+# fixed-wing throttle limit. A: 0.60 = about 410 g/motor on the table, above the 122 W planning cruise (30 W/motor = 50 % throttle, EST). C7 bench decides
+THR_MAX,60
+FWD_BAT_VOLT_MAX,16.8
+FWD_BAT_VOLT_MIN,13.2
+FWD_BAT_IDX,0
+THR_MIN,10
+
+# ---------------------------------------------------------------- 3 Hover attitude (tuned on the SITL EST model, QP-2)
+# A: lean limit 45 deg (D-184 keeps it; board C2 "Q_ANGLE_MAX about 45"). In ArduPlane 4.7.3-beta1 SITL there is NO Q_ANGLE_MAX (read back: absent); the limit is
+#   Q_A_ANGLE_MAX in degrees (stock 30, K09-L left it at 30). Sizing: lean 29 deg at 5 m/s broadside, 47 deg at 7 m/s. SITL-A.md shows what the cases need
+Q_A_ANGLE_MAX,45
+# Q_LOIT_ANG_MAX (stock 15) and Q_P_NE_* are left at the stock values: raising Q_LOIT_ANG_MAX to 40 changed nothing in SITL, and Q_P_NE_VEL_I 1.5 / Q_P_NE_POS_P 1.0
+#   made the 5 m/s belly hover oscillate (lean 31-35 deg, yaw 11 deg). Position hold at 29 deg lean is an open tuning item (SITL-A.md)
+# hover body-rate limits (deg/s), K09-L values
+Q_A_RATE_R_MAX,120
+Q_A_RATE_P_MAX,120
+Q_A_RATE_Y_MAX,90
+# A: roll/pitch rate loop. K09-L 0.08 was for 2.6 kg / 5.5 s of pack; A has I_z 0.05 and I_y 0.03 kg m2 (EST, a_plant.py) so P is higher. Starting values
+Q_A_RAT_RLL_P,0.25
+Q_A_RAT_RLL_I,0.25
+Q_A_RAT_RLL_D,0.004
+Q_A_RAT_RLL_FLTD,32
+Q_A_RAT_PIT_P,0.25
+Q_A_RAT_PIT_I,0.25
+Q_A_RAT_PIT_D,0.004
+Q_A_RAT_PIT_FLTD,32
+# yaw: K09-L values. A's yaw authority comes from cant 16 deg + arm x1.2 + reaction (WIND.md D-184: about 0.35 N m at +-0.10 throttle EST; the hanging yaw test must confirm >= 0.35, fail < 0.30)
+Q_A_RAT_YAW_P,0.40
+Q_A_RAT_YAW_I,0.04
+# yaw acceleration limit deg/s/s (K09-L; A has a smaller I_x so this could rise)
+Q_A_ACC_Y_MAX,135
+# descent and landing: K09-L (A's sizing 1.2 m/s hard-landing load 12 g, so the final 0.3 m/s stays)
+Q_WP_SPD_DN,1.2
+Q_PILOT_SPD_DN,1.0
+Q_LAND_FINAL_SPD,0.3
+Q_LAND_FINAL_ALT,6
+# A: weathervane OFF (D-184, WIND.md): it turns the belly into the wind (lean 30 deg, hold 4.7 m off), the wrong way for A. Only the enable line is kept, at 0; no other Q_WVANE
+#   parameter is set. Wind rule: pilot holds the wing edge into the wind within +-10 deg (+-20 deg steady only), belly-on only to 3 m/s; limit 5 m/s mean, gust <= 8 m/s
+Q_WVANE_ENABLE,0
+
+# ---------------------------------------------------------------- 4 Transition (K09-L lessons, A numbers where they exist)
+# pitch-over rate cap 12 deg/s (K09-L B3 entry law, A's sizing used the same 12 deg/s to 70 deg). C3 time-domain pitch-over still to run
+Q_TAILSIT_RAT_FW,12
+# inert while RAT_FW is set (K09-L); kept so the firmware would derive 70 / (11.667 / 2) = 12 deg/s
+Q_TRANSITION_MS,11667
+# K09-L R8: boost must be SET to 0 (class 1 does not get the tailsitter defaults); throttle held through the pitch-over
+Q_A_ANGLE_BOOST,0
+Q_THROTTLE_EXPO,0.2
+# back-transition pitch-up rate and throttle (K09-L: slower pitch-up balloons more, stage A S5a); A: unverified, stage B needed
+Q_TAILSIT_RAT_VT,30
+Q_TAILSIT_ANGLE,70
+Q_TAILSIT_ANG_VT,0
+Q_TAILSIT_THR_VT,55
+Q_TAILSIT_GSCMSK,1
+# A: disk loading 66 N/m2 = 6.7 kg/m2 (sizing_a.py; K09-L 10.6)
+Q_TAILSIT_DSKLD,6.7
+# Q-assist: OFF in angle and altitude (K09-L: assist adds no lift on the same motors and bypasses the 35 deg/s clamp); speed assist below 13 m/s
+Q_ASSIST_SPEED,13
+Q_ASSIST_ALT,0
+Q_ASSIST_ANGLE,0
+# failed transition: QRTL after 15 s (K09-L)
+Q_TRANS_FAIL,15
+Q_TRANS_FAIL_ACT,1
+
+# ---------------------------------------------------------------- 5 Fixed wing (A: cruise 15 m/s, Vs 11.0 m/s EST, sizing_a.py s2)
+AIRSPEED_CRUISE,17
+# integer parameter (14.5 read back as 14 in SITL). 1.3 x Vs = 14.3, so 15; K09-L kept MIN = cruise
+AIRSPEED_MIN,16
+AIRSPEED_MAX,18
+AIRSPEED_STALL,12.2
+SCALING_SPEED,15
+ROLL_LIMIT_DEG,45
+PTCH_LIM_MAX_DEG,20
+PTCH_LIM_MIN_DEG,-10
+RLL2SRV_RMAX,150
+# pitch-rate caps (K09-L: from its torsion mode and CL-F4-PTCH-RMAX-TURN). A: a 45 deg bank level turn at 15 m/s needs g tan(phi) sin(phi) / V = 26.5 deg/s
+#   (K09-L 17 m/s: 23.4), so UP 35 still covers it. No A structural basis for the cap yet (fin f1 / wing torsion not computed): keep the K09-L numbers
+PTCH2SRV_RMAX_UP,35
+PTCH2SRV_RMAX_DN,20
+TECS_CLMB_MAX,3
+TECS_SINK_MAX,2.5
+ARSPD_TYPE,1
+ARSPD_BUS,0
+ARSPD_TUBE_ORDR,2
+ARSPD_USE,1
+RUDD_DT_GAIN,35
+YAW2SRV_DAMP,0.1
+YAW2SRV_SLIP,0
+INS_GYRO_RATE,0
+INS_GYRO_FILTER,40
+# A: harmonic notch on bidirectional DShot rpm. Hover 1P is 71 Hz fresh / 76 Hz sagged (sizing_a.py s4); K09-L used 70 Hz, BW 35. Fin f1 is 219 Hz ideal
+INS_HNTCH_ENABLE,1
+INS_HNTCH_MODE,3
+INS_HNTCH_REF,1
+INS_HNTCH_FREQ,70
+INS_HNTCH_BW,35
+INS_HNTCH_HMNCS,3
+INS_LOG_BAT_MASK,1
+INS_LOG_BAT_OPT,5
+
+# ---------------------------------------------------------------- 6 Battery and failsafes (K09-L lessons)
+BATT_MONITOR,4
+BATT_VOLT_MULT,11.05
+BATT_AMP_PERVLT,64
+# A: one Tattu 2300 mAh 4S 75C pack in flight (D-183b: the 2300, not the CNHL 3000; mission_gate_a.py: 24.5 Wh usable of 34.0 Wh). Two packs are bought, flown one at a time
+BATT_CAPACITY,2300
+# remaining-capacity triggers: usable = 0.90 worn-pack floor x 0.80 (20 % reserve) = 72 % of 2300 = 1656 mAh, so BATT_LOW fires at 2300 - 1656 = 644, set 650 mAh left (28 %).
+#   That budget covers hover 180 s incl the 40 s go-around, two transitions, climb and 4.81 min of cruise at 1.381 kg (3.41 min needed). Critical at 15 % = 345 mAh
+BATT_LOW_MAH,650
+BATT_CRT_MAH,345
+BATT_LOW_VOLT,14.4
+BATT_CRT_VOLT,14.0
+BATT_FS_VOLTSRC,1
+# K09-L S8: in a hover mode a low battery must QLAND (6), not RTL, because RTL starts a forward transition at hover throttle
+BATT_FS_LOW_ACT,6
+BATT_FS_CRT_ACT,4
+BATT_ARM_VOLT,16.0
+SERIAL6_PROTOCOL,23
+RSSI_TYPE,3
+RC_OPTIONS,8480
+THR_FAILSAFE,1
+# K09-L S7: RC loss declared 1.0 s after the last frame, QLAND in Q modes within 1.2 s
+RC_FS_TIMEOUT,1.0
+FS_SHORT_ACTN,0
+FS_LONG_ACTN,1
+FS_LONG_TIMEOUT,5
+FS_GCS_ENABL,0
+Q_RTL_MODE,2
+RTL_ALTITUDE,50
+Q_RTL_ALT,50
+Q_FW_LND_APR_RAD,60
+RTL_RADIUS,60
+WP_LOITER_RAD,60
+Q_TRANS_DECEL,2.0
+FS_EKF_THRESH,0.8
+
+# ---------------------------------------------------------------- 7 Switches, fence, sensors
+# K09-L R9 slot order on CH6: QSTABILIZE, FBWA, CRUISE, QHOVER, RTL, QLOITER
+FLTMODE_CH,6
+FLTMODE1,17
+FLTMODE2,5
+FLTMODE3,7
+FLTMODE4,18
+FLTMODE5,11
+FLTMODE6,19
+RC3_MIN,988
+RC3_MAX,2012
+RC3_TRIM,988
+RC3_DZ,30
+RC5_OPTION,153
+RC6_OPTION,0
+RC9_OPTION,31
+ARMING_RUDDER,0
+# fence: K09-L S9 lesson, in a Q mode a breach starts RTL = a forward transition at hover throttle, and the mode switch is refused during recovery.
+#   A: 110 m ceiling unchanged (the mission is 31 m climb, sizing_a.py); the flight card must say a breach is a pitch-over
+FENCE_ENABLE,1
+FENCE_TYPE,3
+FENCE_ACTION,1
+FENCE_ALT_MAX,110
+FENCE_RADIUS,250
+FENCE_MARGIN,10
+AHRS_ORIENTATION,0
+# IMU / GPS / compass offsets: "-" for A (no CAD position yet); the K09-L values do not apply

@@ -1,0 +1,41 @@
+{
+"tag": "w_h80g",
+"args": [
+"inst=0",
+"hold=45",
+"wind=5",
+"from=80",
+"gust=2",
+"gust_at=20"
+],
+"summary": {
+"n": 807,
+"t_window": [
+8.027,
+48.999
+],
+"wind_ms": 7.0,
+"lean_max": 16.2,
+"lean_mean": 10.1,
+"lean_pre": 1.1,
+"u_max": 0.822,
+"u_mean_max": 0.716,
+"t_cap_s": 0.0,
+"t_cap_run_s": 0.0,
+"t_ge85_s": 0.0,
+"u_min": 0.286,
+"t_floor_s": 0.0,
+"t_floor_run_s": 0.0,
+"yaw_err_max": 8.4,
+"yaw_err_rms": 2.4,
+"pos_err_max": 1.17,
+"pos_err_rms": 0.45,
+"pos_err_last20_mean": 0.47,
+"alt_dev_max": 0.07,
+"diag_spread_max": 0.361,
+"diag_spread_mean": 0.091
+},
+"armed": true,
+"reached_alt": true,
+"events": []
+}

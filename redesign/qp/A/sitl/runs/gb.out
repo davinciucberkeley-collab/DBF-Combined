@@ -1,0 +1,40 @@
+{
+"tag": "gb",
+"args": [
+"wind=5",
+"gust=2",
+"from=0",
+"hold=45",
+"gust_at=20"
+],
+"summary": {
+"n": 807,
+"t_window": [
+8.027,
+48.999
+],
+"wind_ms": 7.0,
+"lean_max": 34.0,
+"lean_mean": 29.6,
+"lean_pre": 1.1,
+"u_max": 0.725,
+"u_mean_max": 0.702,
+"t_cap_s": 0.0,
+"t_cap_run_s": 0.0,
+"t_ge85_s": 0.0,
+"u_min": 0.429,
+"t_floor_s": 0.0,
+"t_floor_run_s": 0.0,
+"yaw_err_max": 2.1,
+"yaw_err_rms": 1.89,
+"pos_err_max": 6.55,
+"pos_err_rms": 4.84,
+"pos_err_last20_mean": 4.37,
+"alt_dev_max": 0.15,
+"diag_spread_max": 0.037,
+"diag_spread_mean": 0.023
+},
+"armed": true,
+"reached_alt": true,
+"events": []
+}

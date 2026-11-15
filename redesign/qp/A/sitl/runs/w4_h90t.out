@@ -1,0 +1,40 @@
+{
+"tag": "w4_h90t",
+"args": [
+"inst=3",
+"hold=45",
+"wind=4",
+"from=90",
+"turb=1.0"
+],
+"summary": {
+"n": 807,
+"t_window": [
+8.027,
+48.999
+],
+"wind_ms": 6.98,
+"lean_max": 16.9,
+"lean_mean": 7.5,
+"lean_pre": 1.1,
+"u_max": 0.82,
+"u_mean_max": 0.693,
+"t_cap_s": 0.0,
+"t_cap_run_s": 0.0,
+"t_ge85_s": 0.0,
+"u_min": 0.292,
+"t_floor_s": 0.0,
+"t_floor_run_s": 0.0,
+"yaw_err_max": 11.1,
+"yaw_err_rms": 3.4,
+"pos_err_max": 1.73,
+"pos_err_rms": 0.81,
+"pos_err_last20_mean": 0.59,
+"alt_dev_max": 0.14,
+"diag_spread_max": 0.462,
+"diag_spread_mean": 0.074
+},
+"armed": true,
+"reached_alt": true,
+"events": []
+}
