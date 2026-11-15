@@ -64,8 +64,9 @@ Q_M_THST_EXPO,0.55
 # A: hover in thrust space is 0.36 fresh (0.46 on the sagged pack); start in between, learned in flight
 Q_M_THST_HOVER,0.42
 Q_M_HOVER_LEARN,2
-# fixed-wing throttle limit. A: 0.60 = about 410 g/motor on the table, above the 122 W planning cruise (30 W/motor = 50 % throttle, EST). C7 bench decides
-THR_MAX,60
+# fixed-wing throttle limit. QP-3 (SITL-FLIGHT.md, APC 9x4.5MR PER3 x0.93 in forward flight): level cruise at 17 m/s needs motor duty 0.62-0.65 fresh, 0.70 at the 3.73 V/cell sag state
+#   (about 145 W electric); the old 60 (duty 0.60) cannot hold 17 m/s on a sagged pack (settles at 15.3 m/s and sinks 1 m/s). 80 leaves 0.10 duty for the climb after the pitch-over and gusts; the 0.90 spin cap still bounds the motor. EST until C7 / thrust stand
+THR_MAX,80
 FWD_BAT_VOLT_MAX,16.8
 FWD_BAT_VOLT_MIN,13.2
 FWD_BAT_IDX,0
@@ -105,7 +106,9 @@ Q_LAND_FINAL_ALT,6
 Q_WVANE_ENABLE,0
 
 # ---------------------------------------------------------------- 4 Transition (K09-L lessons, A numbers where they exist)
-# pitch-over rate cap 12 deg/s (K09-L B3 entry law, A's sizing used the same 12 deg/s to 70 deg). C3 time-domain pitch-over still to run
+# pitch-over rate cap 12 deg/s (K09-L B3 entry law, A's sizing used the same 12 deg/s to 70 deg). QP-3 SITL ran the entry (held throttle, 1.0 s pre-climb in QSTABILIZE, then FBWA):
+#   transmitter throttle override = static T/W 1.33-1.42 at the sag state (window centre 1.38 at 1.50 kg, 1.44 at 1.381 kg); at the learnt Q_M_THST_HOVER about 0.46-0.51 in SITL that is a
+#   stick of about 1790-1800 us. The K09-L ratio 1.285 x learnt hover throttle gives T/W 1.285 = BELOW A's 1.33 low edge (still flew, but see SITL-FLIGHT.md). Pre-climb 0 raises elevon use from 0.53 to 0.91
 Q_TAILSIT_RAT_FW,12
 # inert while RAT_FW is set (K09-L); kept so the firmware would derive 70 / (11.667 / 2) = 12 deg/s
 Q_TRANSITION_MS,11667
@@ -128,13 +131,14 @@ Q_ASSIST_ANGLE,0
 Q_TRANS_FAIL,15
 Q_TRANS_FAIL_ACT,1
 
-# ---------------------------------------------------------------- 5 Fixed wing (A: cruise 15 m/s, Vs 11.0 m/s EST, sizing_a.py s2)
+# ---------------------------------------------------------------- 5 Fixed wing (A: cruise 17 m/s, Vs 11.70 / 12.19 m/s at 1.381 / 1.50 kg EST, MISSION.md s1; QP-3 SITL-FLIGHT.md)
 AIRSPEED_CRUISE,17
 # integer parameter (14.5 read back as 14 in SITL). 1.3 x Vs = 14.3, so 15; K09-L kept MIN = cruise
 AIRSPEED_MIN,16
 AIRSPEED_MAX,18
 AIRSPEED_STALL,12.2
-SCALING_SPEED,15
+# QP-3: servo-gain scaling speed = cruise (was 15, left from the 15 m/s draft). Not tested separately in SITL (FBWA / CRUISE flew stable at 17 m/s with the stock gains, elevon peak 8.6 deg)
+SCALING_SPEED,17
 ROLL_LIMIT_DEG,45
 PTCH_LIM_MAX_DEG,20
 PTCH_LIM_MIN_DEG,-10

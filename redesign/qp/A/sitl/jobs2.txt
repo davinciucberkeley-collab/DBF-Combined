@@ -1,0 +1,16 @@
+S_r120 case=trans mass=1.50 wind=0 r=1.20 hold=25 cruise_s=8
+S_r1285 case=trans mass=1.50 wind=0 r=1.285 hold=25 cruise_s=8
+S_r133 case=trans mass=1.50 wind=0 r=1.33 hold=25 cruise_s=8
+S_r142 case=trans mass=1.50 wind=0 r=1.42 hold=25 cruise_s=8
+S_r160 case=trans mass=1.50 wind=0 r=1.60 hold=25 cruise_s=8
+S_nopc case=trans mass=1.50 wind=0 r=1.33 preclimb=0 hold=25 cruise_s=8
+S_el60 case=trans mass=1.50 wind=0 r=1.33 elv_scale=0.6 hold=25 cruise_s=8
+S_slip case=trans mass=1.50 wind=0 r=1.33 slip=1.0 hold=25 cruise_s=8
+S_t5lo case=trans mass=1.50 wind=5 from=180 r=1.33 hold=25 cruise_s=8
+S_h5hi case=trans mass=1.50 wind=5 from=0 r=1.42 hold=25 cruise_s=8
+S_gust case=trans mass=1.50 wind=5 from=90 gust=3 turb=1.0 r=1.33 hold=25 cruise_s=8
+S_fresh case=trans mass=1.50 wind=0 vrest=16.8 hold=25 cruise_s=8
+Ta_h5y case=trans mass=1.381 wind=5 from=0 chain=1 yawcmd=0.82 hold=30 cruise_s=15
+Tb_h5y case=trans mass=1.50 wind=5 from=0 chain=1 yawcmd=0.82 hold=30 cruise_s=15
+Fb_moC2 case=moC mass=1.50 land=1 hold=25 cruise_s=15
+Fa_moC2 case=moC mass=1.381 land=1 hold=25 cruise_s=15

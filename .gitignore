@@ -116,3 +116,6 @@ redesign/collision/out/blender.log
 redesign/team/C2/fea/out/c2r5/*.npz
 redesign/team/C2/fea/out/c2r5/*.log
 redesign/team/C2/fea/out/c2r5/*.pkl
+
+# SITL run logs (QP-3, ~1.2 GB): regenerate with redesign/qp/A/sitl/run_*.py
+redesign/qp/A/sitl/runs/
