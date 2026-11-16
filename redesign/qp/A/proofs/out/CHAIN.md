@@ -7,17 +7,17 @@ Parameter files: `redesign/qp/A/params-A.json`
 | Requirement | Status | Claims | Smallest margin |
 |---|---|---|---|
 | [A-D2](#a-d2) Mission: 3.0 min hover, 3.41 min cruise at 17 m/s | **UNVERIFIED** | 2 | +3% |
-| [A-D3](#a-d3) Design target <= 1.44 kg; structure <= 494 g | **UNVERIFIED** | 4 | +1% |
+| [A-D3](#a-d3) Design target <= 1.46 kg; structure <= 494 g | **UNVERIFIED** | 4 | +0% |
 | [A-D8](#a-d8) First tethered hover by 2027-02-18 | **UNVERIFIED** | 2 | — |
-| [A-P1](#a-p1) Mass gate 1.47 kg and T/W at the gate | **UNVERIFIED** | 3 | +3% |
-| [A-P10](#a-p10) Vibration rule D-185 | **CHECKED** | 7 | +1% |
-| [A-P11](#a-p11) Cruise control authority | **UNVERIFIED** | 6 | +3% |
+| [A-P1](#a-p1) Mass gate 1.47 kg and T/W at the gate | **UNVERIFIED** | 3 | +1% |
+| [A-P10](#a-p10) Vibration rule D-185 | **CHECKED** | 7 | +8% |
+| [A-P11](#a-p11) Cruise control authority | **UNVERIFIED** | 6 | +4% |
 | [A-P13](#a-p13) Loads and flutter (G8) | **UNVERIFIED** | 21 | +11% |
 | [A-P16](#a-p16) Motor and ESC current | **UNVERIFIED** | 2 | +7% |
 | [A-P2](#a-p2) Hover T/W >= 2.0 fresh, >= 1.6 worst pack state | **UNVERIFIED** | 4 | +16% |
 | [A-P24](#a-p24) Fence and run-out | **UNVERIFIED** | 1 | +8% |
-| [A-P3](#a-p3) Transition window >= +-5 % | **UNVERIFIED** | 3 | +4% |
-| [A-P4](#a-p4) CG band, static margin, lateral CG | **UNVERIFIED** | 6 | +6% |
+| [A-P3](#a-p3) Transition window >= +-5 % | **UNVERIFIED** | 3 | +2% |
+| [A-P4](#a-p4) CG band, static margin, lateral CG | **UNVERIFIED** | 6 | +2% |
 | [A-P5](#a-p5) Pack retained at 12 g crash | **CHECKED** | 1 | — |
 | [A-P6](#a-p6) Stall: 1.3 Vs below cruise | **UNVERIFIED** | 1 | +8% |
 | [A-P7](#a-p7) Hover yaw authority >= 0.35 N m | **UNVERIFIED** | 3 | +4% |
@@ -55,7 +55,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-d2
       - `SRC-A-MISSION` (see above)
     - `runin` ← param `P:mission.runin_laps` = 0.5 — **CHECKED**
       - `SRC-A-MISSION` (see above)
-- claim **CL-A-CRUISE-AVAIL** Cruise time to BATT_LOW at the predicted mass = **270.5 s** (limit >= 204.6 s, margin +32%) — **UNVERIFIED**
+- claim **CL-A-CRUISE-AVAIL** Cruise time to BATT_LOW at the predicted mass = **258.7 s** (limit >= 204.6 s, margin +26%) — **UNVERIFIED**
   - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)
   - ⚠ uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)
   - ⚠ uses P:prop.esc_eff, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py hover: input power = V I / 0.98)
@@ -93,7 +93,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-d2
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py hover: x 1.10 control margin (MISSION s4)
       - `SRC-A-PROPA` (see above)
     - `g` ← `P:env.g_ms2` (see above)
-    - `m` ← claim **CL-A-MASS-PRED** Predicted take-off mass (CAD basic x growth + overrun) = **1.423 kg** (limit <= 1.44 kg, margin +1%) — **UNVERIFIED** — chain under [A-D3](#a-d3)
+    - `m` ← claim **CL-A-MASS-PRED** Predicted take-off mass (CAD basic x growth + overrun) = **1.454 kg** (limit <= 1.46 kg, margin +0%) — **UNVERIFIED** — chain under [A-D3](#a-d3)
     - `pack_ah` ← param `P:mission.pack_ah` = 2.3 Ah — **CHECKED**
       - `SRC-A-MGATE` (see above)
     - `pack_v` ← param `P:mission.pack_v` = 14.8 V — **CHECKED**
@@ -125,17 +125,17 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-d2
 
 ## A-D3
 
-**Design target <= 1.44 kg; structure <= 494 g** — Predicted mass incl. growth and overrun <= 1.44 kg; structure ceiling 494 g (BOARD QP-4 s1) — **UNVERIFIED**  
+**Design target <= 1.46 kg; structure <= 494 g** — Predicted mass incl. growth and overrun <= 1.46 kg (D-195; was 1.44); structure ceiling 494 g (BOARD QP-4 s1) — **UNVERIFIED**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-d3
 
-- claim **CL-A-MASS-PRED** Predicted take-off mass (CAD basic x growth + overrun) = **1.423 kg** (limit <= 1.44 kg, margin +1%) — **UNVERIFIED**
+- claim **CL-A-MASS-PRED** Predicted take-off mass (CAD basic x growth + overrun) = **1.454 kg** (limit <= 1.46 kg, margin +0%) — **UNVERIFIED**
   - ⚠ uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))
   - ⚠ uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)
   - how to verify: Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).
   - parts: WNG-001, WNG-002, PWR-001, CGE-001, FIN-001-R, FIN-001-L
   - test `T-A-WEIGH` Weigh-in: foam block, printed parts, epoxy joint, lead strip, one servo, then the aircraft (planned) — **PROPOSED**
   - calc `CALC-A-MASS-PRED` `redesign/qp/A/proofs/claims_a1_flight.py::mass_pred()`: `m = basic_CAD x growth_factor + overrun_frac x gate   (MASS-GATE s7)` — **CHECKED**
-    - `basic` ← param `P:mass.basic_cad_kg` = 1.231 kg — **CHECKED**
+    - `basic` ← param `P:mass.basic_cad_kg` = 1.259 kg — **CHECKED**
       - source `SRC-A-CADMASS` [CAD mass and CG (sitl/cad_mass.json)](redesign/qp/A/sitl/cad_mass.json), mass_basic_kg, cg_x_m, cg_y_m (regenerated by FIXES2, 2026-11-15), checked 2026-11-15 — **CHECKED**
     - `gf` ← param `P:mass.growth_factor` = 1.117 — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA)
@@ -145,20 +145,20 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-d3
       - `SRC-A-MASSGATE` (see above)
     - `gate` ← param `P:req.mass_gate_kg` = 1.47 kg — **CHECKED**
       - source `SRC-A-REQ` [Concept A requirements (REQUIREMENTS-A.md)](redesign/qp/A/REQUIREMENTS-A.md), limits of A-U1 ... A-D12; status PROPOSED, owner A2, checked 2026-11-15 — **CHECKED**
-  - param `P:req.mass_target_kg` = 1.44 kg — **CHECKED**
+  - param `P:req.mass_target_kg` = 1.46 kg — **CHECKED**
     - `SRC-A-REQ` (see above)
-- claim **CL-A-MASS-ITEM** Predicted mass, itemised growth by maturity (cross-check) = **1.418 kg** (limit <= 1.44 kg, margin +2%) — **UNVERIFIED**
-  - ⚠ uses P:mass.itemised_g_growth, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py `items`: [basic g, growth fraction by maturity]: wing, fins, motors, props, ESC, pack, avionics, servos, cage, hardware)
+- claim **CL-A-MASS-ITEM** Predicted mass, itemised growth by maturity (cross-check) = **1.448 kg** (limit <= 1.46 kg, margin +1%) — **UNVERIFIED**
+  - ⚠ uses P:mass.itemised_g_growth, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py `items` (D-195, CAD 2026-11-15): [basic g, growth fraction by maturity]: wing, fins + feet, motors, props, adapters + spinner nuts (CALC 10 %), ESC, pack, strap, avionics + harness, servos, cage, hardware)
   - ⚠ uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)
-  - how to verify: python -I qp/A/mission_gate_a.py prints 1,419 g; both methods must stay <= 1.44 kg.
+  - how to verify: python -I qp/A/mission_gate_a.py prints 1,449 g (D-195); both methods must stay <= 1.46 kg.
   - calc `CALC-A-MASS-ITEM` `redesign/qp/A/proofs/claims_a1_flight.py::mass_itemised()`: `m = (sum of item g x (1 + maturity growth) + overrun) / 1000   (mission_gate_a.py items)` — **CHECKED**
-    - `items` ← param `P:mass.itemised_g_growth` = table (10 rows) g, fraction — **UNVERIFIED**
-      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py `items`: [basic g, growth fraction by maturity]: wing, fins, motors, props, ESC, pack, avionics, servos, cage, hardware
+    - `items` ← param `P:mass.itemised_g_growth` = table (12 rows) g, fraction — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py `items` (D-195, CAD 2026-11-15): [basic g, growth fraction by maturity]: wing, fins + feet, motors, props, adapters + spinner nuts (CALC 10 %), ESC, pack, strap, avionics + harness, servos, cage, hardware
       - source `SRC-A-MGATE` [mission_gate_a.py (mission and mass-gate arithmetic)](redesign/qp/A/mission_gate_a.py), items list, stall, T/W, energy and cruise-to-BATT_LOW lines, checked 2026-11-15 — **CHECKED**
     - `over` ← `P:mass.overrun_frac` (see above)
     - `gate` ← `P:req.mass_gate_kg` (see above)
   - `P:req.mass_target_kg` (see above)
-- claim **CL-A-CUTS-REQUIRED** EST cuts that must be real for <= 1.44 kg = **26.33 g** (limit <= 41.6 g, margin +37%) — **UNVERIFIED**
+- claim **CL-A-CUTS-REQUIRED** EST cuts that must be real for <= 1.46 kg = **36.23 g** (limit <= 41.6 g, margin +13%) — **UNVERIFIED**
   - ⚠ uses ASM-A-CUTS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses P:mass.est_cuts_g, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s5, s7: 41.6 g of EST cuts already in the CAD basic mass (foam 16.6, printed 18.0, hardware 7.0))
   - ⚠ uses CL-A-MASS-PRED, which is UNVERIFIED
@@ -167,7 +167,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-d3
   - ⚠ uses P:mass.est_cuts_g, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s5, s7: 41.6 g of EST cuts already in the CAD basic mass (foam 16.6, printed 18.0, hardware 7.0))
   - how to verify: Weigh a FOAMULAR 150 block, a printed cup / hub, an epoxy joint (M11, BOARD QP-4 s1); >= 27.2 g of the 41.6 g must be real. Fallback: lead 15.6 -> 12.8 g (-5.6 g).
   - `T-A-WEIGH` (see above)
-  - assumption `ASM-A-CUTS` Predicted mass <= 1.44 kg holds only if the foam (25 kg/m3), printed parts and hardware lump weigh in at their cut values (basis: BOARD QP-4 s1 and FIXES2 s5: none of the three cuts is weighed; the foam row alone (16.6 g) was the first line; M11 weighs a FOAMULAR 150 block) — **UNVERIFIED**
+  - assumption `ASM-A-CUTS` Predicted mass <= 1.46 kg (D-195; was 1.44) holds only if the foam (25 kg/m3), printed parts and hardware lump weigh in at their cut values (basis: BOARD QP-4 s1 and FIXES2 s5: none of the three cuts is weighed; the foam row alone (16.6 g) was the first line; M11 weighs a FOAMULAR 150 block) — **UNVERIFIED**
     - ⚠ assumption marked UNVERIFIED by its author
   - calc `CALC-A-CUTS` `redesign/qp/A/proofs/claims_a1_flight.py::cuts_required()`: `X = cuts - (target - m_pred) / growth_factor   (grams of the EST cuts that must be real)` — **CHECKED**
     - `cuts` ← param `P:mass.est_cuts_g` = 41.6 g — **UNVERIFIED**
@@ -178,16 +178,16 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-d3
     - `gf` ← `P:mass.growth_factor` (see above)
     - `ASM-A-CUTS` (see above)
   - `P:mass.est_cuts_g` (see above)
-- claim **CL-A-STRUCT-MASS** Structure mass (CAD groups, with the EST cuts) = **484.1 g** (limit <= 494 g, margin +2%) — **UNVERIFIED**
-  - ⚠ uses P:mass.structure_groups_g, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s4: wing 223.4 + fins 109 + feet 8.4 + hardware 30 + cage 113.3 = 484.1 g with the EST cuts)
+- claim **CL-A-STRUCT-MASS** Structure mass (CAD groups, with the EST cuts) = **479.2 g** (limit <= 494 g, margin +3%) — **UNVERIFIED**
+  - ⚠ uses P:mass.structure_groups_g, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-195: CAD part table 2026-11-15: wing 221.7 + fins 109.6 + feet 8.4 + hardware HRD-001 26.08 + cage 113.4 = 479.3 g with the EST cuts)
   - ⚠ uses ASM-A-CUTS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - how to verify: Weigh the airframe groups (wing, fins, feet, hardware, cage); ceiling 494 g, about 521 g without the cuts (FIXES2 s4).
   - `T-A-WEIGH` (see above)
   - `ASM-A-CUTS` (see above)
   - calc `CALC-A-STRUCT` `redesign/qp/A/proofs/claims_a1_flight.py::structure_mass()`: `structure = wing + fins + feet + hardware + cage (CAD groups, with the EST cuts)` — **CHECKED**
     - `g` ← param `P:mass.structure_groups_g` = table (5 rows) g — **UNVERIFIED**
-      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s4: wing 223.4 + fins 109 + feet 8.4 + hardware 30 + cage 113.3 = 484.1 g with the EST cuts
-      - `SRC-A-FIXES2` (see above)
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: D-195: CAD part table 2026-11-15: wing 221.7 + fins 109.6 + feet 8.4 + hardware HRD-001 26.08 + cage 113.4 = 479.3 g with the EST cuts
+      - `SRC-A-CADMASS` (see above)
   - param `P:req.structure_ceiling_g` = 494 g — **CHECKED**
     - source `SRC-A-BOARD4` [QP-4 board re-sit (BOARD.md)](redesign/review/QP-4/BOARD.md), s1 structure ceiling 494 g, s3 pitch-use basis, G1-G10, checked 2026-11-15 — **CHECKED**
 
@@ -246,13 +246,13 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-d8
 **Mass gate 1.47 kg and T/W at the gate** — As-built mass <= 1.47 kg; at the gate T/W fresh >= 2.0 and sag >= 1.6 with Q_M_SPIN_MAX 0.90 — **UNVERIFIED**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-p1
 
-- claim **CL-A-MASS-GATE-ROOM** Predicted mass against the 1.47 kg gate = **1.423 kg** (limit <= 1.47 kg, margin +3%) — **UNVERIFIED**
+- claim **CL-A-MASS-GATE-ROOM** Predicted mass against the 1.47 kg gate = **1.454 kg** (limit <= 1.47 kg, margin +1%) — **UNVERIFIED**
   - ⚠ uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))
   - ⚠ uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)
   - how to verify: As-built weigh-in <= 1.47 kg (D-190, MASS-GATE s8); the +-5 % window holds to 1.478 kg.
   - test `T-A-WEIGH` Weigh-in: foam block, printed parts, epoxy joint, lead strip, one servo, then the aircraft (planned) — **PROPOSED**
   - calc `CALC-A-MASS-PRED` `redesign/qp/A/proofs/claims_a1_flight.py::mass_pred()`: `m = basic_CAD x growth_factor + overrun_frac x gate   (MASS-GATE s7)` — **CHECKED**
-    - `basic` ← param `P:mass.basic_cad_kg` = 1.231 kg — **CHECKED**
+    - `basic` ← param `P:mass.basic_cad_kg` = 1.259 kg — **CHECKED**
       - source `SRC-A-CADMASS` [CAD mass and CG (sitl/cad_mass.json)](redesign/qp/A/sitl/cad_mass.json), mass_basic_kg, cg_x_m, cg_y_m (regenerated by FIXES2, 2026-11-15), checked 2026-11-15 — **CHECKED**
     - `gf` ← param `P:mass.growth_factor` = 1.117 — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA)
@@ -339,7 +339,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p10
     - `f` ← param `P:sim.cruise_2p_hz_hi` = 253 Hz — **CHECKED**
       - `SRC-A-REQ` (see above)
     - `sep` ← `P:req.band_sep` (see above)
-- claim **CL-A-VIB-LOW** Highest strongly coupled mode below the rotor bands (hi corner) = **78 Hz** (limit <= 83.58 Hz, margin +7%) — **CHECKED**
+- claim **CL-A-VIB-LOW** Highest strongly coupled mode below the rotor bands (hi corner) = **77 Hz** (limit <= 83.58 Hz, margin +8%) — **CHECKED**
   - how to verify: Tap test of the built cage (T-A-TAP): modes within +-20 % of FE or re-tune. Margin is about 7 % at the hi corner, 31 % at kd.
   - parts: CGE-002-UR, CGE-002-UL, CGE-002-LR, CGE-002-LL, CGE-004, WNG-002
   - test `T-A-TAP` Tap test: built cage and fin against the FE modes (planned) — **PROPOSED**
@@ -355,7 +355,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p10
     - `x` ← param `P:sim.vib_above_hz` = table (3 rows) Hz — **CHECKED**
       - `SRC-A-ITER3` (see above)
   - `CL-A-VIB-HIGH-LIMIT` (see above)
-- claim **CL-A-VIB-FC** Flight-controller vibration, worst of the forced-response sweep = **28.5 m/s2** (limit <= 30 m/s2, margin +5%) — **CHECKED**
+- claim **CL-A-VIB-FC** Flight-controller vibration, worst of the forced-response sweep = **27.1 m/s2** (limit <= 30 m/s2, margin +10%) — **CHECKED**
   - how to verify: IMU VIBE < 30 m/s2 in the first tethered hover (T-A-TETHER-VIBE). The worst point (10,500 rpm) is unreachable; at the 0.90 cap (9,349 rpm) the sweep reads 19.6-20.1.
   - parts: AVN-002, AVN-001, AVN-007
   - test `T-A-TETHER-VIBE` First tethered hover, IMU VIBE (planned) — **PROPOSED**
@@ -364,7 +364,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p10
       - `SRC-A-ITER3` (see above)
   - param `P:req.vibe_max_ms2` = 30 m/s2 — **CHECKED**
     - `SRC-A-REQ` (see above)
-- claim **CL-A-VIB-GM** Rate-loop gain margin, minimum over axes and corners (nominal modes) = **2.13** (limit >= 2, margin +6%) — **CHECKED**
+- claim **CL-A-VIB-GM** Rate-loop gain margin, minimum over axes and corners (nominal modes) = **2.19** (limit >= 2, margin +9%) — **CHECKED**
   - how to verify: Re-run sitl/fu_cage.py with the built-cage tap-test frequencies; hard-mounted FC.
   - parts: AVN-002, CGE-004, CGE-002-UR
   - calc `CALC-A-VIB-GM` `redesign/qp/A/proofs/claims_a2_struct.py::lowest()`: `smallest gain margin over pitch / roll / yaw x kd / nom / hi at the nominal mode frequencies (fu_cage.py); read from iter3_run.md, not re-run` — **CHECKED**
@@ -372,7 +372,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p10
       - `SRC-A-ITER3` (see above)
   - param `P:req.gm_min` = 2 — **CHECKED**
     - `SRC-A-REQ` (see above)
-- claim **CL-A-VIB-GM-SHIFT** Rate-loop gain margin with the cage modes shifted +-20 % = **2.03** (limit >= 2, margin +1%) — **CHECKED**
+- claim **CL-A-VIB-GM-SHIFT** Rate-loop gain margin with the cage modes shifted +-20 % = **2.16** (limit >= 2, margin +8%) — **CHECKED**
   - how to verify: Tap test of the built cage (T-A-TAP): first pitch mode 9-17 Hz, first roll mode 21-43 Hz (GM >= 2 grid, iter3_run.md); outside that window re-tune the rate loop.
   - parts: AVN-002, CGE-004, CGE-002-UR
   - `T-A-TAP` (see above)
@@ -388,28 +388,28 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p10
 **Cruise control authority** — Roll rate >= 90 deg/s within +-20 deg; pitch use <= 0.60 of the stop; servo torque factor >= 1.5 at the 7.2 V rail — **UNVERIFIED**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-p11
 
-- claim **CL-A-ROLL-141** Peak roll rate in SITL, 1.41 kg = **92.9 deg/s** (limit >= 90 deg/s, margin +3%) — **CHECKED**
+- claim **CL-A-ROLL-141** Peak roll rate in SITL at cruise speed, 1.455 kg (D-195 target mass) = **106.9 deg/s** (limit >= 90 deg/s, margin +19%) — **CHECKED**
   - how to verify: Measure the roll rate on the first cruise (M8 extended); the surface is at its 20 deg stop at the peak, +3-5 % is smaller than the EST aero error.
   - parts: WNG-006-R, WNG-006-L
-  - calc `CALC-A-ROLL-141-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `SITL case=roll (FIXES s2: 5,323 / 57.3); read, not re-run` — **CHECKED**
-    - `v` ← param `P:sim.roll_141_degs` = 92.9 deg/s — **CHECKED**
-      - source `SRC-A-FIXES` [QP-4 fixes (FIXES.md)](redesign/review/QP-4/FIXES.md), s1.3 wing flutter, s2 roll rate, s5 SITL re-run, checked 2026-11-15 — **CHECKED**
+  - calc `CALC-A-ROLL-141-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `SITL case=roll, run R5_rt65 (6,126 / 57.3), D-195; read, not re-run` — **CHECKED**
+    - `v` ← param `P:sim.roll_141_degs` = 106.9 deg/s — **CHECKED**
+      - source `SRC-A-D195SITL` [QP-5 SITL runs R5_* (sitl/results_fwd.jsonl, runs/R5_*)](redesign/qp/A/sitl/jobs_qp5.txt), cant 17, D-191 gains, CAD mass / CG / inertia 2026-11-15, S5010 aero; batch_qp5.sh, checked 2026-11-15 — **CHECKED**
   - param `P:req.roll_min_degs` = 90 deg/s — **CHECKED**
     - source `SRC-A-REQ` [Concept A requirements (REQUIREMENTS-A.md)](redesign/qp/A/REQUIREMENTS-A.md), limits of A-U1 ... A-D12; status PROPOSED, owner A2, checked 2026-11-15 — **CHECKED**
-- claim **CL-A-ROLL-GATE** Peak roll rate in SITL, 1.50 kg (30 g over the 1.47 kg gate, conservative) = **94.1 deg/s** (limit >= 90 deg/s, margin +5%) — **CHECKED**
+- claim **CL-A-ROLL-GATE** Peak roll rate in SITL at cruise speed, 1.47 kg (the gate) = **106.4 deg/s** (limit >= 90 deg/s, margin +18%) — **CHECKED**
   - how to verify: Measure the roll rate on the first cruise (T-A-FIRST-CRUISE).
   - parts: WNG-006-R, WNG-006-L
   - test `T-A-FIRST-CRUISE` First cruise: roll rate and measured stall (M8 extended) (planned) — **PROPOSED**
-  - calc `CALC-A-ROLL-GATE-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `SITL case=roll (FIXES s2: 5,392 / 57.3); read, not re-run` — **CHECKED**
-    - `v` ← param `P:sim.roll_150_degs` = 94.1 deg/s — **CHECKED**
-      - `SRC-A-FIXES` (see above)
+  - calc `CALC-A-ROLL-GATE-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `SITL case=roll, run R5_rt65g, D-195; read, not re-run` — **CHECKED**
+    - `v` ← param `P:sim.roll_150_degs` = 106.4 deg/s — **CHECKED**
+      - `SRC-A-D195SITL` (see above)
   - `P:req.roll_min_degs` (see above)
-- claim **CL-A-PITCH-USE** Elevon use in transition (share of the 20 deg stop) = **0.48** (limit <= 0.6, margin +20%) — **CHECKED**
-  - how to verify: C3 pitch-over run and SITL transition logs (FIXES s5.1: peak 8.9-9.6 deg).
+- claim **CL-A-PITCH-USE** Elevon use in transition (share of the 20 deg stop) = **0.575** (limit <= 0.6, margin +4%) — **CHECKED**
+  - how to verify: C3 pitch-over run and SITL transition logs (D-195: peak 11.5 deg at the CAD CG, 12.0 at the forward trim end; was 8.9-9.6 before the S5010 section, CG 21.5 and the corrected trim).
   - parts: WNG-006-R, WNG-006-L
   - calc `CALC-A-PITCH-USE` `redesign/qp/A/proofs/claims_a1_flight.py::pitch_use()`: `use = peak transition elevon / the 20 deg stop (BOARD QP-4 s3 basis)` — **CHECKED**
-    - `peak` ← param `P:sim.elevon_peak_deg` = 9.6 deg — **CHECKED**
-      - `SRC-A-FIXES` (see above)
+    - `peak` ← param `P:sim.elevon_peak_deg` = 11.5 deg — **CHECKED**
+      - `SRC-A-D195SITL` (see above)
     - `stop` ← param `P:sim.elevon_stop_deg` = 20 deg — **CHECKED**
       - source `SRC-A-FIXES2` [QP-4 fixes 2 (FIXES2.md, supersedes FIXES where they differ)](redesign/review/QP-4/FIXES2.md), s1 flutter with damper, s2 servo, s3 gates, s6 foam, s7 mass and cost, checked 2026-11-15 — **CHECKED**
   - param `P:req.pitch_use_max` = 0.6 — **CHECKED**
@@ -481,23 +481,23 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
       - source `SRC-A-REQ` [Concept A requirements (REQUIREMENTS-A.md)](redesign/qp/A/REQUIREMENTS-A.md), limits of A-U1 ... A-D12; status PROPOSED, owner A2, checked 2026-11-15 — **CHECKED**
     - `vd` ← param `P:req.vd_ms` = 24 m/s — **CHECKED**
       - `SRC-A-REQ` (see above)
-- claim **CL-A-FLUTTER-ELEVON-NOM** Elevon flutter onset with the hinge damper, nominal 25 C (lowest of kd / nom / hi) = **40.5 m/s** (limit >= 28.8 m/s, margin +41%) — **UNVERIFIED**
+- claim **CL-A-FLUTTER-ELEVON-NOM** Elevon flutter onset with the hinge damper, nominal 25 C (lowest of kd / nom / hi) = **42 m/s** (limit >= 28.8 m/s, margin +46%) — **UNVERIFIED**
   - ⚠ uses ASM-A-RELIABLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-A-RELIABLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - how to verify: E1 coupon (FIXES2 s8): ring-down damping c >= 7.1e-4 N m s/rad at 25 C, c(50 C) >= 4.0e-4; the model holds for every K from 0.01 to 20 N m/rad, so free play does not matter while the damper is filled and sealed (O-rings BOM R13, fill checked every preflight).
   - parts: WNG-006-R, WNG-006-L, WNG-007-R, WNG-007-L, WNG-009-R, WNG-009-L, WNG-010-R, WNG-010-L
   - test `T-A-ELEVON-E1` Elevon coupon E1: K, free play, ring-down, stop, damper over temperature (planned) — **PROPOSED**
-  - assumption `ASM-A-RELIABLE` Half-fill damper (28.5 m/s at kd) is excluded by O-rings and a preflight fill check (basis: FIXES2 s1.3 and s9 item 2: a leaking damper loses the margin; seal with the BOM R13 O-rings, check the fill every preflight) — **UNVERIFIED**
+  - assumption `ASM-A-RELIABLE` Half-fill damper (33.0 m/s at kd, D-195; 28.5 before the 6.7 g elevon) is excluded by O-rings and a preflight fill check (basis: FIXES2 s1.3 and s9 item 2: a leaking damper loses the margin; seal with the BOM R13 O-rings, check the fill every preflight) — **UNVERIFIED**
     - ⚠ assumption marked UNVERIFIED by its author
   - calc `CALC-A-FLUTTER-ELEVON-NOM` `redesign/qp/A/proofs/claims_a2_struct.py::lowest()`: `min over the three wing corners (kd / nom / hi) of the lowest onset over the K grid 0.01-20 N m/rad, read from structures/fixes2_cdamp.md (p-method, 600 K points, V <= 60 m/s); not re-run` — **CHECKED**
     - `x` ← param `P:sim.flutter_nom_ms` = table (3 rows) m/s — **CHECKED**
-      - source `SRC-A-CDAMP` [Elevon flutter with the hinge damper (fixes2_cdamp.md)](redesign/qp/A/structures/fixes2_cdamp.md), lowest onset over the K grid, hot / nominal / cold, kd / nom / hi, checked 2026-11-15 — **CHECKED**
+      - source `SRC-A-D195FL` [Elevon flutter with the CAD of 2026-11-15 (flutter_d195.md)](redesign/qp/A/structures/flutter_d195.md), elevon 6.7 g, hinge inertia 1.485e-5, lead 15.6 g at 20 mm, damper c 1.03e-3 hot / nominal / cold / half; p-method K sweep, checked 2026-11-15 — **CHECKED**
     - `ASM-A-RELIABLE` (see above)
   - `CL-A-FLUTTER-LINE` (see above)
-- claim **CL-A-FLUTTER-ELEVON-HOT** Elevon flutter onset with the hinge damper, hot 50 C (lowest of kd / nom / hi) = **35.5 m/s** (limit >= 28.8 m/s, margin +23%) — **UNVERIFIED**
+- claim **CL-A-FLUTTER-ELEVON-HOT** Elevon flutter onset with the hinge damper, hot 50 C (lowest of kd / nom / hi) = **38.5 m/s** (limit >= 28.8 m/s, margin +34%) — **UNVERIFIED**
   - ⚠ uses ASM-A-DAMPER-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-A-RELIABLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
-  - ⚠ uses P:sim.flutter_hot_ms, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: fixes2_cdamp.md: hot 50 C (EST x0.6) lowest onset, wing corners kd / nom / hi)
+  - ⚠ uses P:sim.flutter_hot_ms, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: flutter_d195.md case B (D-195, elevon 6.7 g, hinge inertia 1.485e-5): hot 50 C (EST x0.6) lowest onset, wing corners kd / nom / hi)
   - ⚠ uses ASM-A-DAMPER-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-A-RELIABLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - how to verify: E1 coupon (FIXES2 s8): ring-down damping c >= 7.1e-4 N m s/rad at 25 C, c(50 C) >= 4.0e-4; the model holds for every K from 0.01 to 20 N m/rad, so free play does not matter while the damper is filled and sealed (O-rings BOM R13, fill checked every preflight).
@@ -508,15 +508,15 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
   - `ASM-A-RELIABLE` (see above)
   - calc `CALC-A-FLUTTER-ELEVON-HOT` `redesign/qp/A/proofs/claims_a2_struct.py::lowest()`: `min over the three wing corners (kd / nom / hi) of the lowest onset over the K grid 0.01-20 N m/rad, read from structures/fixes2_cdamp.md (p-method, 600 K points, V <= 60 m/s); not re-run` — **CHECKED**
     - `x` ← param `P:sim.flutter_hot_ms` = table (3 rows) m/s — **UNVERIFIED**
-      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: fixes2_cdamp.md: hot 50 C (EST x0.6) lowest onset, wing corners kd / nom / hi
-      - `SRC-A-CDAMP` (see above)
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: flutter_d195.md case B (D-195, elevon 6.7 g, hinge inertia 1.485e-5): hot 50 C (EST x0.6) lowest onset, wing corners kd / nom / hi
+      - `SRC-A-D195FL` (see above)
     - `ASM-A-DAMPER-T` (see above)
     - `ASM-A-RELIABLE` (see above)
   - `CL-A-FLUTTER-LINE` (see above)
-- claim **CL-A-FLUTTER-ELEVON-COLD** Elevon flutter onset with the hinge damper, cold 0 C (lowest of kd / nom / hi) = **44.5 m/s** (limit >= 28.8 m/s, margin +55%) — **UNVERIFIED**
+- claim **CL-A-FLUTTER-ELEVON-COLD** Elevon flutter onset with the hinge damper, cold 0 C (lowest of kd / nom / hi) = **45 m/s** (limit >= 28.8 m/s, margin +56%) — **UNVERIFIED**
   - ⚠ uses ASM-A-DAMPER-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-A-RELIABLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
-  - ⚠ uses P:sim.flutter_cold_ms, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: fixes2_cdamp.md: cold 0 C (EST x2), kd / nom / hi)
+  - ⚠ uses P:sim.flutter_cold_ms, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: flutter_d195.md case D: cold 0 C (EST x2), kd / nom / hi)
   - ⚠ uses ASM-A-DAMPER-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-A-RELIABLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - how to verify: E1 coupon (FIXES2 s8): ring-down damping c >= 7.1e-4 N m s/rad at 25 C, c(50 C) >= 4.0e-4; the model holds for every K from 0.01 to 20 N m/rad, so free play does not matter while the damper is filled and sealed (O-rings BOM R13, fill checked every preflight).
@@ -526,19 +526,19 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
   - `ASM-A-RELIABLE` (see above)
   - calc `CALC-A-FLUTTER-ELEVON-COLD` `redesign/qp/A/proofs/claims_a2_struct.py::lowest()`: `min over the three wing corners (kd / nom / hi) of the lowest onset over the K grid 0.01-20 N m/rad, read from structures/fixes2_cdamp.md (p-method, 600 K points, V <= 60 m/s); not re-run` — **CHECKED**
     - `x` ← param `P:sim.flutter_cold_ms` = table (3 rows) m/s — **UNVERIFIED**
-      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: fixes2_cdamp.md: cold 0 C (EST x2), kd / nom / hi
-      - `SRC-A-CDAMP` (see above)
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: flutter_d195.md case D: cold 0 C (EST x2), kd / nom / hi
+      - `SRC-A-D195FL` (see above)
     - `ASM-A-DAMPER-T` (see above)
     - `ASM-A-RELIABLE` (see above)
   - `CL-A-FLUTTER-LINE` (see above)
-- claim **CL-A-FLUTTER-WING** Wing bending-torsion flutter speed, lowest case (fins off, kd corner) = **34.6 m/s** (limit >= 28.8 m/s, margin +20%) — **CHECKED**
+- claim **CL-A-FLUTTER-WING** Wing bending-torsion flutter speed, lowest case (fins off, kd corner) = **33.4 m/s** (limit >= 28.8 m/s, margin +16%) — **CHECKED**
   - how to verify: Tap / ground-vibration test with the fin on one tip (12 Hz and 44 Hz modes); FLUTTER.md open item 3.
   - parts: WNG-001, WNG-002, FIN-001-R, FIN-001-L
   - calc `CALC-A-FLUTTER-WING` `redesign/qp/A/proofs/claims_a2_struct.py::wing_flutter_lowest()`: `min over kd / nom / hi of the base case and of the fins-off sensitivity (Ritz + strip Theodorsen, balance lumps on the wing); read from FIXES s1.3, not re-run` — **CHECKED**
     - `base` ← param `P:sim.wing_flutter_ms` = table (3 rows) m/s — **CHECKED**
-      - source `SRC-A-FIXES` [QP-4 fixes (FIXES.md)](redesign/review/QP-4/FIXES.md), s1.3 wing flutter, s2 roll rate, s5 SITL re-run, checked 2026-11-15 — **CHECKED**
+      - source `SRC-A-D195FW` [Wing bending-torsion flutter with the CAD of 2026-11-15 (flutter_d195_wing.md)](redesign/qp/A/structures/flutter_d195_wing.md), Ritz + strip Theodorsen, lumps 26.6 g per semispan, checked 2026-11-15 — **CHECKED**
     - `nofin` ← param `P:sim.wing_flutter_nofin_ms` = table (3 rows) m/s — **CHECKED**
-      - `SRC-A-FIXES` (see above)
+      - `SRC-A-D195FW` (see above)
   - `CL-A-FLUTTER-LINE` (see above)
 - claim **CL-A-DIVERGENCE** Torsional divergence speed (kd corner, EA 0.10 c aft) = **128 m/s** (limit >= 28.8 m/s, margin +344%) — **CHECKED**
   - how to verify: Torsion coupon (FLUTTER.md): measured GJ >= 2 N m2; divergence needs only > 0.2 N m2.
@@ -552,7 +552,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
   - parts: WNG-006-R, WNG-006-L
   - calc `CALC-A-REVERSAL` `redesign/qp/A/proofs/claims_a2_struct.py::lowest()`: `min over kd / nom (3-D lift basis, y 0.04-0.35, e/c 0.10); read from FIXES s1.3, not re-run` — **CHECKED**
     - `x` ← param `P:sim.reversal_3d_ms` = table (2 rows) m/s — **CHECKED**
-      - `SRC-A-FIXES` (see above)
+      - source `SRC-A-FIXES` [QP-4 fixes (FIXES.md)](redesign/review/QP-4/FIXES.md), s1.3 wing flutter, s2 roll rate, s5 SITL re-run, checked 2026-11-15 — **CHECKED**
   - `CL-A-FLUTTER-LINE` (see above)
 - claim **CL-A-GUST-N** Gust load factor at VD 24 (U 4 m/s) = **3.01 g** (limit <= 3.4 g, margin +11%) — **CHECKED**
   - how to verify: Airspeed limit VD 24 m/s on the flight card; the wing stalls before n 5.03 (stall line 3.96).
@@ -588,12 +588,17 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: iter2_margins.md: arm 12x10 prop strike 30 N, 144.9 vs 350 MPa
       - `SRC-A-ITER2M` (see above)
   - `P:req.ms_min` (see above)
-- claim **CL-A-MS-ARM-SOCKET** Motor arm in its socket, strike couple, MS = **0.48** (limit >= 0, margin +0.48 abs) — **CHECKED**
+- claim **CL-A-MS-ARM-SOCKET** Motor arm in its socket, strike couple, MS = **0.48** (limit >= 0, margin +0.48 abs) — **UNVERIFIED**
+  - ⚠ uses ASM-A-HUB-WALL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
+  - ⚠ uses ASM-A-HUB-WALL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - how to verify: Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.
   - parts: CGE-002-UR, CGE-002-UL, CGE-002-LR, CGE-002-LL, CGE-001
+  - assumption `ASM-A-HUB-WALL` The 0.48 socket margin is a bond margin; the thin-wall hoop check is not demonstrated at 0.8 mm (basis: D-195, structures/qp5_checks.md s2: a crude ring model (hoop tension 2F/(pi l t), F 332 N, allowable 20 MPa EST) gives MS -0.58 at 0.8 mm and passes only from 2.0 mm walls (+7.1 g); the model is conservative (epoxy fill, bonded tube) but unproven: print, bond and pull-test a socket coupon before the hub is printed in earnest) — **UNVERIFIED**
+    - ⚠ assumption marked UNVERIFIED by its author
   - calc `CALC-A-MS-ARM-SOCKET-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md (stress already carries the 1.5 factor); read, not re-run` — **CHECKED**
     - `v` ← param `P:struct.ms_arm_socket` = 0.48 — **CHECKED**
       - `SRC-A-ITER2M` (see above)
+    - `ASM-A-HUB-WALL` (see above)
   - `P:req.ms_min` (see above)
 - claim **CL-A-MS-RIB** Fin rib 14x12 torsion under one foot load, MS = **0.6** (limit >= 0, margin +0.6 abs) — **CHECKED**
   - how to verify: Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.
@@ -809,7 +814,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p2
   - `CALC-A-TW-GATE` (see above)
   - param `P:req.tw_sag_min` = 1.6 — **CHECKED**
     - `SRC-A-REQ` (see above)
-- claim **CL-A-TW-FRESH-PRED** Hover T/W fresh at the predicted mass (0.90 cap) = **2.415** (limit >= 2, margin +21%) — **UNVERIFIED**
+- claim **CL-A-TW-FRESH-PRED** Hover T/W fresh at the predicted mass (0.90 cap) = **2.364** (limit >= 2, margin +18%) — **UNVERIFIED**
   - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)
   - ⚠ uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))
   - ⚠ uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)
@@ -833,9 +838,9 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p2
     - `g` ← `P:env.g_ms2` (see above)
     - `lo` ← `P:req.entry_low_w` (see above)
     - `hi_frac` ← `P:req.entry_high_frac` (see above)
-    - `m` ← claim **CL-A-MASS-PRED** Predicted take-off mass (CAD basic x growth + overrun) = **1.423 kg** (limit <= 1.44 kg, margin +1%) — **UNVERIFIED** — chain under [A-D3](#a-d3)
+    - `m` ← claim **CL-A-MASS-PRED** Predicted take-off mass (CAD basic x growth + overrun) = **1.454 kg** (limit <= 1.46 kg, margin +0%) — **UNVERIFIED** — chain under [A-D3](#a-d3)
   - `P:req.tw_fresh_min` (see above)
-- claim **CL-A-TW-SAG-PRED** Hover T/W sagged pack at the predicted mass (0.90 cap) = **1.909** (limit >= 1.6, margin +19%) — **UNVERIFIED**
+- claim **CL-A-TW-SAG-PRED** Hover T/W sagged pack at the predicted mass (0.90 cap) = **1.868** (limit >= 1.6, margin +17%) — **UNVERIFIED**
   - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)
   - ⚠ uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))
   - ⚠ uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)
@@ -890,7 +895,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p24
 **Transition window >= +-5 %** — Transition entry window >= +-5 % of the weight-ratio entry thrust: entry >= 1.33 W, <= 0.80 x T/W sag — **UNVERIFIED**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-p3
 
-- claim **CL-A-WINDOW-PRED** Transition entry window at the predicted mass (0.90 cap) = **6.907 %** (limit >= 5 %, margin +38%) — **UNVERIFIED**
+- claim **CL-A-WINDOW-PRED** Transition entry window at the predicted mass (0.90 cap) = **5.832 %** (limit >= 5 %, margin +17%) — **UNVERIFIED**
   - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)
   - ⚠ uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))
   - ⚠ uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)
@@ -935,7 +940,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p3
       - source `SRC-A-REQ` [Concept A requirements (REQUIREMENTS-A.md)](redesign/qp/A/REQUIREMENTS-A.md), limits of A-U1 ... A-D12; status PROPOSED, owner A2, checked 2026-11-15 — **CHECKED**
     - `hi_frac` ← param `P:req.entry_high_frac` = 0.8 — **CHECKED**
       - `SRC-A-REQ` (see above)
-    - `m` ← claim **CL-A-MASS-PRED** Predicted take-off mass (CAD basic x growth + overrun) = **1.423 kg** (limit <= 1.44 kg, margin +1%) — **UNVERIFIED** — chain under [A-D3](#a-d3)
+    - `m` ← claim **CL-A-MASS-PRED** Predicted take-off mass (CAD basic x growth + overrun) = **1.454 kg** (limit <= 1.46 kg, margin +0%) — **UNVERIFIED** — chain under [A-D3](#a-d3)
   - param `P:req.window_min_pct` = 5 % — **CHECKED**
     - `SRC-A-REQ` (see above)
 - claim **CL-A-WINDOW-GATE** Transition entry window at the 1.47 kg gate (0.90 cap) = **5.286 %** (limit >= 5 %, margin +6%) — **UNVERIFIED**
@@ -965,7 +970,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p3
     - `m` ← param `P:req.mass_gate_kg` = 1.47 kg — **CHECKED**
       - `SRC-A-REQ` (see above)
   - `P:req.window_min_pct` (see above)
-- claim **CL-A-WINDOW-MASS** Largest mass with a +-5 % window (0.90 cap) = **1.478 kg** (limit >= 1.423 kg, margin +4%) — **UNVERIFIED**
+- claim **CL-A-WINDOW-MASS** Largest mass with a +-5 % window (0.90 cap) = **1.478 kg** (limit >= 1.454 kg, margin +2%) — **UNVERIFIED**
   - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)
   - ⚠ uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))
   - ⚠ uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)
@@ -993,27 +998,27 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p3
 
 ## A-P4
 
-**CG band, static margin, lateral CG** — CG 20-26 mm aft of LE (hard aft 28.5 mm), static margin >= 5 % chord, lateral CG <= 5 mm, pack trim +-10 mm — **UNVERIFIED**  
+**CG band, static margin, lateral CG** — CG 19-26 mm aft of LE (D-195; was 20-26; hard aft 28.5 mm), static margin >= 5 % chord, lateral CG <= 5 mm, pack trim +-10 mm — **UNVERIFIED**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-p4
 
-- claim **CL-A-CG** CG aft of the leading edge, CAD as drawn = **24.39 mm** (limit >= 20 mm, margin +22%) — **CHECKED**
+- claim **CL-A-CG** CG aft of the leading edge, CAD as drawn = **21.47 mm** (limit >= 19 mm, margin +13%) — **CHECKED**
   - how to verify: CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.
   - parts: PWR-001, CGE-008, WNG-001, WNG-002
   - test `T-A-CG-BREADBOARD` CG breadboard on a knife edge (M5, M6) (planned) — **PROPOSED**
   - calc `CALC-A-CG-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `CG from sitl/cad_mass.json (CAD centroids of every part); read, not recomputed` — **CHECKED**
-    - `v` ← param `P:mass.cg_x_mm` = 24.39 mm — **CHECKED**
+    - `v` ← param `P:mass.cg_x_mm` = 21.47 mm — **CHECKED**
       - source `SRC-A-CADMASS` [CAD mass and CG (sitl/cad_mass.json)](redesign/qp/A/sitl/cad_mass.json), mass_basic_kg, cg_x_m, cg_y_m (regenerated by FIXES2, 2026-11-15), checked 2026-11-15 — **CHECKED**
-  - param `P:req.cg_lo_mm` = 20 mm — **CHECKED**
+  - param `P:req.cg_lo_mm` = 19 mm — **CHECKED**
     - source `SRC-A-REQ` [Concept A requirements (REQUIREMENTS-A.md)](redesign/qp/A/REQUIREMENTS-A.md), limits of A-U1 ... A-D12; status PROPOSED, owner A2, checked 2026-11-15 — **CHECKED**
-- claim **CL-A-CG-HI** CG aft limit of the design band = **24.39 mm** (limit <= 26 mm, margin +6%) — **CHECKED**
-  - how to verify: CG breadboard (M5); band 20-26 mm, hard aft limit 28.5 mm.
+- claim **CL-A-CG-HI** CG aft limit of the design band = **21.47 mm** (limit <= 26 mm, margin +17%) — **CHECKED**
+  - how to verify: CG breadboard (M5); band 19-26 mm (D-195), hard aft limit 28.5 mm.
   - parts: PWR-001, CGE-008
   - `T-A-CG-BREADBOARD` (see above)
   - calc `CALC-A-CG-HI-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `CG from sitl/cad_mass.json; read, not recomputed` — **CHECKED**
     - `v` ← `P:mass.cg_x_mm` (see above)
   - param `P:req.cg_hi_mm` = 26 mm — **CHECKED**
     - `SRC-A-REQ` (see above)
-- claim **CL-A-CG-TRIM-AFT** CG at the aft end of the pack trim travel = **26.58 mm** (limit <= 28.5 mm, margin +7%) — **CHECKED**
+- claim **CL-A-CG-TRIM-AFT** CG at the aft end of the pack trim travel = **23.62 mm** (limit <= 28.5 mm, margin +17%) — **CHECKED**
   - how to verify: Slide the pack to the aft slot stop and re-measure CG (M5).
   - parts: PWR-001, CGE-008
   - calc `CALC-A-CG-TRIM` `redesign/qp/A/proofs/claims_a1_flight.py::cg_trim()`: `shift = m_pack x trim / m_basic ; ends = CG +- shift` — **CHECKED**
@@ -1022,16 +1027,16 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p4
       - source `SRC-A-BOM` [BOM-A.csv (single BOM, 38 lines)](redesign/qp/A/BOM-A.csv), vendor price per line; date_checked column 2026-11-14 / 15 for verified lines, checked 2026-11-15 — **CHECKED**
     - `trim` ← param `P:mass.pack_trim_mm` = 10 mm — **CHECKED**
       - source `SRC-A-FIXES2` [QP-4 fixes 2 (FIXES2.md, supersedes FIXES where they differ)](redesign/review/QP-4/FIXES2.md), s1 flutter with damper, s2 servo, s3 gates, s6 foam, s7 mass and cost, checked 2026-11-15 — **CHECKED**
-    - `basic` ← param `P:mass.basic_cad_kg` = 1.231 kg — **CHECKED**
+    - `basic` ← param `P:mass.basic_cad_kg` = 1.259 kg — **CHECKED**
       - `SRC-A-CADMASS` (see above)
   - param `P:req.cg_hard_aft_mm` = 28.5 mm — **CHECKED**
     - `SRC-A-REQ` (see above)
-- claim **CL-A-CG-TRIM-FWD** CG at the forward end of the pack trim travel = **22.19 mm** (limit >= 20 mm, margin +11%) — **CHECKED**
+- claim **CL-A-CG-TRIM-FWD** CG at the forward end of the pack trim travel = **19.33 mm** (limit >= 19 mm, margin +2%) — **CHECKED**
   - how to verify: Slide the pack to the forward slot stop and re-measure CG (M5).
   - parts: PWR-001, CGE-008
   - `CALC-A-CG-TRIM` (see above)
   - `P:req.cg_lo_mm` (see above)
-- claim **CL-A-SM** Static margin at the CAD CG = **6.659 % chord** (limit >= 5 % chord, margin +33%) — **UNVERIFIED**
+- claim **CL-A-SM** Static margin at the CAD CG = **7.848 % chord** (limit >= 5 % chord, margin +57%) — **UNVERIFIED**
   - ⚠ uses ASM-A-NP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-A-NP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-A-NP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -1048,11 +1053,11 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p4
     - `ASM-A-NP` (see above)
   - param `P:req.sm_min_pct` = 5 % chord — **CHECKED**
     - `SRC-A-REQ` (see above)
-- claim **CL-A-CG-LATERAL** Lateral CG offset (CAD) = **1.88 mm** (limit <= 5 mm, margin +62%) — **CHECKED**
+- claim **CL-A-CG-LATERAL** Lateral CG offset (CAD) = **2.573 mm** (limit <= 5 mm, margin +49%) — **CHECKED**
   - how to verify: Hang the built aircraft on its spar centre; lateral CG <= 5 mm.
   - `T-A-CG-BREADBOARD` (see above)
   - calc `CALC-A-CG-LATERAL-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `cg_y from sitl/cad_mass.json; read, not recomputed` — **CHECKED**
-    - `v` ← param `P:mass.cg_y_mm` = 1.88 mm — **CHECKED**
+    - `v` ← param `P:mass.cg_y_mm` = 2.573 mm — **CHECKED**
       - `SRC-A-CADMASS` (see above)
   - param `P:req.cg_lateral_max_mm` = 5 mm — **CHECKED**
     - `SRC-A-REQ` (see above)
@@ -1083,7 +1088,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p6
   - how to verify: Measured stall on the first cruise sorties (T-A-FIRST-CRUISE) replaces CLmax 0.75; 12.07 m/s stall, 15.69 m/s at 1.3 Vs at 1.47 kg (12.19 / 15.85 at 1.50 kg, MISSION s1).
   - parts: WNG-001
   - test `T-A-FIRST-CRUISE` First cruise: roll rate and measured stall (M8 extended) (planned) — **PROPOSED**
-  - assumption `ASM-A-CLMAX` Wing section CLmax 0.75 sets every stall number = 0.75 (basis: EST in MISSION s1 (SIZING-A s2); the measured stall replaces it before airspeed limits are frozen) — **UNVERIFIED**
+  - assumption `ASM-A-CLMAX` Wing section CLmax 0.75 sets every stall number = 0.75 (basis: EST in MISSION s1 (SIZING-A s2); D-195: S5010 2-D CFD stall 11 deg (Mat Yazik et al., abstract) with CLa 3.74 /rad and alpha0 -0.52 deg gives 0.75, consistent; no measured S5010 CLmax found (airfoiltools unreachable 2026-11-15); the measured stall replaces it before airspeed limits are frozen) — **UNVERIFIED**
     - ⚠ assumption marked UNVERIFIED by its author
   - calc `CALC-A-STALL` `redesign/qp/A/proofs/claims_a1_flight.py::stall()`: `1.3 Vs = 1.3 sqrt(2 m g / (rho S CLmax)) at the gate mass` — **CHECKED**
     - `m` ← param `P:req.mass_gate_kg` = 1.47 kg — **CHECKED**
@@ -1165,7 +1170,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p8
   - `T-A-WIND-HEADING` (see above)
   - calc `CALC-A-WIND-OUTPUT-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `SITL turbulence cases N4_* (sitl/results.jsonl, run_case.py, A.param D-191, arm 1.2, cant 17); read, not re-run` — **CHECKED**
     - `v` ← param `P:sim.wind_ge85_s` = 0.2 s — **CHECKED**
-      - source `SRC-A-CLAIMSFIX` [QP-4 claims fix (CLAIMS-FIX.md): cant 17, gate 1.47 kg, pitch / yaw rate gains, 4 m/s hover wind](redesign/review/QP-4/CLAIMS-FIX.md), s1 window gate, s2 yaw, s3 wind output, s4 gain margin; SITL runs N4_* in qp/A/sitl/results.jsonl, checked 2026-11-15 — **CHECKED**
+      - source `SRC-A-D195SITL` [QP-5 SITL runs R5_* (sitl/results_fwd.jsonl, runs/R5_*)](redesign/qp/A/sitl/jobs_qp5.txt), cant 17, D-191 gains, CAD mass / CG / inertia 2026-11-15, S5010 aero; batch_qp5.sh, checked 2026-11-15 — **CHECKED**
   - param `P:req.motor_ge85_s_max` = 0.5 s — **CHECKED**
     - source `SRC-A-REQ` [Concept A requirements (REQUIREMENTS-A.md)](redesign/qp/A/REQUIREMENTS-A.md), limits of A-U1 ... A-D12; status PROPOSED, owner A2, checked 2026-11-15 — **CHECKED**
 - claim **CL-A-WIND-CAP** Time any motor is at the 0.90 spin cap, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack) = **0 s** (limit <= 0 s, margin +0 s abs) — **CHECKED**
@@ -1173,7 +1178,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p8
   - parts: PRP-001-UR, PRP-001-UL, PRP-001-LR, PRP-001-LL
   - calc `CALC-A-WIND-CAP-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `same seven SITL runs; read, not re-run` — **CHECKED**
     - `v` ← param `P:sim.wind_cap_s` = 0 s — **CHECKED**
-      - `SRC-A-CLAIMSFIX` (see above)
+      - `SRC-A-D195SITL` (see above)
   - param `P:req.motor_cap_s_max` = 0 s — **CHECKED**
     - `SRC-A-REQ` (see above)
 
@@ -1300,17 +1305,17 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-u4
   - parts: WNG-006-R, WNG-006-L, WNG-008-RU, WNG-008-RL, WNG-008-LU, WNG-008-LL
   - calc `CALC-A-COLL-COUNT-READ` `redesign/qp/A/proofs/claims_a3_program.py::read_value()`: `count of hits with depth > tolerance in cad/out/report_pose20.json and report_pose21.json; read, not re-run` — **CHECKED**
     - `v` ← param `P:cad3d.n_over_tol` = 0 — **CHECKED**
-      - source `SRC-A-COLL` [Collision gate output (cad/out/report*.json, REPORT.md)](redesign/qp/A/cad/out/REPORT.md), report_pose20 / report_pose21 / report.json: 78 parts, 175 bodies, tolerance 0.05 mm, checked 2026-11-15 — **CHECKED**
-- claim **CL-A-COLL-DEPTH** Deepest part overlap at any reachable pose = **0.014 mm** (limit <= 0.05 mm, margin +72%) — **CHECKED**
-  - how to verify: collide_a.py report: the only hits under the 0.05 mm gate are two 0.014 mm touches at +20 deg (elevon on the lower lens cap); +-22 deg is past the stop and is not a reachable pose.
-  - parts: WNG-006-R, WNG-006-L, WNG-008-RU, WNG-008-RL, WNG-008-LU, WNG-008-LL
+      - source `SRC-A-COLL` [Collision gate output (cad/out/report*.json, REPORT.md)](redesign/qp/A/cad/out/REPORT.md), report_pose20 / report_pose21 / report.json: 96 parts, 444 bodies, tolerance 0.05 mm (2026-11-15, D-194), checked 2026-11-15 — **CHECKED**
+- claim **CL-A-COLL-DEPTH** Deepest part overlap at any reachable pose = **0.042 mm** (limit <= 0.05 mm, margin +16%) — **CHECKED**
+  - how to verify: collide_a.py report (D-194): the only hits under the 0.05 mm gate are the two balance horn tabs touching their stop bosses at the +21 deg stop (0.042 mm, WNG-007 on WNG-008, a designed contact) and one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); +-22 deg is past the stop and is not a reachable pose.
+  - parts: WNG-007-R, WNG-007-L, WNG-008-RU, WNG-008-LU, HWC-001, HWC-003
   - calc `CALC-A-COLL-DEPTH-READ` `redesign/qp/A/proofs/claims_a3_program.py::read_value()`: `largest depth_mm over the reachable poses in the stored reports; read, not re-run` — **CHECKED**
-    - `v` ← param `P:cad3d.max_depth_mm` = 0.014 mm — **CHECKED**
+    - `v` ← param `P:cad3d.max_depth_mm` = 0.042 mm — **CHECKED**
       - `SRC-A-COLL` (see above)
   - param `P:req.coll_tol_mm` = 0.05 mm — **CHECKED**
     - `SRC-A-COLL` (see above)
 - claim **CL-A-WIRE-ENDS** Wire ends not seated in a part = **0** (limit <= 0, margin +0 abs) — **CHECKED**
-  - how to verify: collide_a.py wire_ends check (11 strands).
+  - how to verify: collide_a.py wire_ends check (41 strands).
   - calc `CALC-A-WIRE-ENDS-READ` `redesign/qp/A/proofs/claims_a3_program.py::read_value()`: `len(wire_ends) in cad/out/report.json; read, not re-run` — **CHECKED**
     - `v` ← param `P:cad3d.wire_ends_open` = 0 — **CHECKED**
       - `SRC-A-COLL` (see above)
@@ -1319,19 +1324,19 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-u4
   - calc `CALC-A-WIRE-FOLDS-READ` `redesign/qp/A/proofs/claims_a3_program.py::read_value()`: `len(kinks) in cad/out/report.json; read, not re-run` — **CHECKED**
     - `v` ← param `P:cad3d.wire_kinks` = 0 — **CHECKED**
       - `SRC-A-COLL` (see above)
-- claim **CL-A-ASSY-STEPS** Build steps that pass the assembly sweep = **28** (limit >= 28, margin +0%) — **CHECKED**
+- claim **CL-A-ASSY-STEPS** Build steps that pass the assembly sweep = **35** (limit >= 35, margin +0%) — **CHECKED**
   - how to verify: python -I qp/A/cad/a_assembly.py: 28 of 28 steps, 0 blocked, 0 unsupported, no wire laid before its ends.
   - calc `CALC-A-ASSY-STEPS-READ` `redesign/qp/A/proofs/claims_a3_program.py::read_value()`: `steps with no blocking pair in cad/out/assembly.json; read, not re-run` — **CHECKED**
-    - `v` ← param `P:cad3d.assy_steps_ok` = 28 — **CHECKED**
-      - source `SRC-A-ASSY` [Build-sequence check output (cad/out/assembly.json, ASSEMBLY.md)](redesign/qp/A/cad/out/ASSEMBLY.md), 28 steps, 78 of 78 parts, checked 2026-11-15 — **CHECKED**
-  - param `P:cad3d.assy_steps` = 28 — **CHECKED**
+    - `v` ← param `P:cad3d.assy_steps_ok` = 35 — **CHECKED**
+      - source `SRC-A-ASSY` [Build-sequence check output (cad/out/assembly.json, ASSEMBLY.md)](redesign/qp/A/cad/out/ASSEMBLY.md), 35 steps, 96 of 96 parts (2026-11-15, D-194), checked 2026-11-15 — **CHECKED**
+  - param `P:cad3d.assy_steps` = 35 — **CHECKED**
     - `SRC-A-ASSY` (see above)
-- claim **CL-A-ASSY-PARTS** Parts placed by the build sequence = **78** (limit >= 78, margin +0%) — **CHECKED**
+- claim **CL-A-ASSY-PARTS** Parts placed by the build sequence = **96** (limit >= 96, margin +0%) — **CHECKED**
   - how to verify: a_assembly.py: 78 of 78 parts placed, none missing from the sequence.
   - calc `CALC-A-ASSY-PARTS-READ` `redesign/qp/A/proofs/claims_a3_program.py::read_value()`: `parts across the steps of cad/out/assembly.json; read, not re-run` — **CHECKED**
-    - `v` ← param `P:cad3d.assy_parts_placed` = 78 — **CHECKED**
+    - `v` ← param `P:cad3d.assy_parts_placed` = 96 — **CHECKED**
       - `SRC-A-ASSY` (see above)
-  - param `P:cad3d.parts` = 78 — **CHECKED**
+  - param `P:cad3d.parts` = 96 — **CHECKED**
     - `SRC-A-COLL` (see above)
 
 ## A-U5
@@ -1339,12 +1344,12 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-u4
 **Mass under 25 kg** — Take-off mass < 25 kg (55 lb) — **UNVERIFIED**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-u5
 
-- claim **CL-A-MASS-USER** Predicted mass against the 25 kg user cap = **1.423 kg** (limit <= 25 kg, margin +94%) — **UNVERIFIED**
+- claim **CL-A-MASS-USER** Predicted mass against the 25 kg user cap = **1.454 kg** (limit <= 25 kg, margin +94%) — **UNVERIFIED**
   - ⚠ uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))
   - ⚠ uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)
   - how to verify: Weigh-in.
   - calc `CALC-A-MASS-PRED` `redesign/qp/A/proofs/claims_a1_flight.py::mass_pred()`: `m = basic_CAD x growth_factor + overrun_frac x gate   (MASS-GATE s7)` — **CHECKED**
-    - `basic` ← param `P:mass.basic_cad_kg` = 1.231 kg — **CHECKED**
+    - `basic` ← param `P:mass.basic_cad_kg` = 1.259 kg — **CHECKED**
       - source `SRC-A-CADMASS` [CAD mass and CG (sitl/cad_mass.json)](redesign/qp/A/sitl/cad_mass.json), mass_basic_kg, cg_x_m, cg_y_m (regenerated by FIXES2, 2026-11-15), checked 2026-11-15 — **CHECKED**
     - `gf` ← param `P:mass.growth_factor` = 1.117 — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA)
@@ -1360,16 +1365,16 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-u5
 ## Claims not tied to a requirement
 
 - claim **CL-A-CRUISE-RADIUS** Turn radius at 17 m/s, 30 deg bank = **51.04 m** — **UNVERIFIED** — chain printed above
-- claim **CL-A-FLUTTER-HALF** Elevon flutter onset with a half-filled (leaking) damper, kd corner = **28.5 m/s** — **UNVERIFIED**
+- claim **CL-A-FLUTTER-HALF** Elevon flutter onset with a half-filled (leaking) damper, kd corner = **33 m/s** — **UNVERIFIED**
   - ⚠ uses ASM-A-RELIABLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-A-RELIABLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - how to verify: Fault case, no limit stated: seal with the two O-rings (BOM R13) and check the fill at every preflight (FIXES2 s1.3, s9).
   - parts: WNG-006-R, WNG-006-L, WNG-007-R, WNG-007-L, WNG-009-R, WNG-009-L, WNG-010-R, WNG-010-L
-  - assumption `ASM-A-RELIABLE` Half-fill damper (28.5 m/s at kd) is excluded by O-rings and a preflight fill check (basis: FIXES2 s1.3 and s9 item 2: a leaking damper loses the margin; seal with the BOM R13 O-rings, check the fill every preflight) — **UNVERIFIED**
+  - assumption `ASM-A-RELIABLE` Half-fill damper (33.0 m/s at kd, D-195; 28.5 before the 6.7 g elevon) is excluded by O-rings and a preflight fill check (basis: FIXES2 s1.3 and s9 item 2: a leaking damper loses the margin; seal with the BOM R13 O-rings, check the fill every preflight) — **UNVERIFIED**
     - ⚠ assumption marked UNVERIFIED by its author
   - calc `CALC-A-FLUTTER-HALF-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `min onset, half of the hot damper c, kd corner; read from structures/fixes2_cdamp.md, not re-run` — **CHECKED**
-    - `v` ← param `P:sim.flutter_half_kd_ms` = 28.5 m/s — **CHECKED**
-      - source `SRC-A-CDAMP` [Elevon flutter with the hinge damper (fixes2_cdamp.md)](redesign/qp/A/structures/fixes2_cdamp.md), lowest onset over the K grid, hot / nominal / cold, kd / nom / hi, checked 2026-11-15 — **CHECKED**
+    - `v` ← param `P:sim.flutter_half_kd_ms` = 33 m/s — **CHECKED**
+      - source `SRC-A-D195FL` [Elevon flutter with the CAD of 2026-11-15 (flutter_d195.md)](redesign/qp/A/structures/flutter_d195.md), elevon 6.7 g, hinge inertia 1.485e-5, lead 15.6 g at 20 mm, damper c 1.03e-3 hot / nominal / cold / half; p-method K sweep, checked 2026-11-15 — **CHECKED**
     - `ASM-A-RELIABLE` (see above)
 - claim **CL-A-SCHED-SENS** Slack at p 0.60 (sensitivity, not the baseline) = **-5 d** — **UNVERIFIED**
   - ⚠ uses P:sched.gates, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: schedule_a.py GATES: F01-F06 = 22 flown mornings (H2 plan numbers))

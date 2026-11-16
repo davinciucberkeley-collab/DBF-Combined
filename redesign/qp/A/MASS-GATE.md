@@ -90,3 +90,24 @@ Motor cant 16 -> **17 deg** (D-189, for hover yaw authority 0.3465 -> 0.363 N m;
 Largest mass for a +-5 % capped window: **1.478 kg** (1.486 kg at cant 16). T/W sag >= 1.6 capped holds to 1.698 kg, fresh >= 2.0 capped to 1.718 kg. **The weigh-in gate is 1.47 kg**, the largest 0.01-kg step under 1.478 kg; the C3 "fly above the limit if the run shows >= +-5 %" rule of s1 is withdrawn (gate and window now agree). Headroom of the predicted 1,419 g (`mission_gate_a.py`; 1,423.9 g by the s7 formula) to the gate: 46-51 g; to the 1.44 kg target unchanged (16-21 g). The A-D3 target and the s6 re-sit triggers are unchanged except "as-built > 1.47 kg".
 
 Analyses that still use 1.50 kg and remain conservative (heavier than the gate): mission energy lines (`mission_gate_a.py` prints 1.47 and 1.50), one-motor current 12.1 A (`prop_a.py one_motor(m=1.50)`), SITL roll rate at 1.50 kg (94.1 deg/s: more inertia, lower rate), SITL transition and landing cases at 1.41 / 1.50 kg, C1 loads at VD (n at 1.50 kg), structures iter. 3 loads at the gate mass. Not re-run at cant 17 (cant 16 baked in `run_fwd.py`): the forward-flight SITL cases (thrust cos 17 vs cos 16 is -0.5 %, `EST` effect far below the aero model error).
+
+
+## 9. QP-5 update (2026-11-15, D-195; after the CAD fidelity round D-193 / D-194; supersedes s1 and s7 where they differ)
+
+Reproduce: `python -I mission_gate_a.py` (items re-based on the CAD part table), `python -I aero_s5010.py`. Source of the mass change: `review/QP-5/CAD-INTEGRATION.md` s4.
+
+**Basic mass 1,259.14 g (CAD), CG 21.47 mm aft of the LE, SM 7.8 %.** Predicted mass, two methods, both `EST`: itemised growth by maturity **1,449 g** (`mission_gate_a.py`: basic 1,259.1 + growth 142.2 + overrun 48); flat rule basic x 1.1174 + 47 g (overrun 3.2 % of the 1.47 kg gate) **1,454 g** (the CAD-INTEGRATION 1,455 g used 48 g). Headroom to the 1.47 kg gate 16-21 g; **over the old 1.44 kg target by 9-14 g**.
+
+**Decision (D-195): accept, re-base the design target to 1.46 kg; do not cut.** Reasons: (1) 28.8 g of the 44.3 g added (the net change is +27.8 g after 21.0 g of lump reductions) is the T-Motor prop adapter and spinner nut, real parts that no earlier lump carried: cutting 15 g elsewhere means removing structure the 3-D model already shows as minimal (structure 479.3 g, ceiling 494 g, 15 g spare); (2) the predicted figure already holds a 48 g overrun and 142 g (11.3 %) of EST growth, so the 1.47 kg gate is reached only if the as-built aircraft is 211 g (16.8 %) over the CAD basic, against 190 g allowed in the prediction; (3) at 1.455 / 1.46 kg the capped transition window is +-5.8 / +-5.6 % (floor 5 %), hover T/W 2.36 fresh / 1.87 sagged capped (limits 2.0 / 1.6), and cruise to BATT_LOW 4.31 min against 3.41 needed (1.5 spare laps), so no performance limit is touched; (4) the weigh-in gate (1.47 kg, D-190) is the hard limit and is unchanged; the target is a derived requirement owned by the team. The 1.44 kg target had 16-21 g of headroom to the gate at QP-4; the new 1.46 kg target keeps 16 g.
+Fallbacks if the as-weighed mass runs high (not applied): elevon lead 15.6 -> 12.8 g per elevon, -5.6 g (flutter with the damper holds: `structures/flutter_d195.md` case F, onset 37.5 m/s kd hot, line 28.8); T-Motor hardware pack may contain the adapter (BOM line absent either way, confirm on the first order); hub arm bosses to 2.0 mm walls would cost **+7.1 g** (`structures/qp5_checks.md` s2, open).
+
+| At | T/W fresh (cap) | T/W sag (cap) | Window with the 0.90 cap | Cruise to BATT_LOW (min, need 3.41) | Pack margin |
+|---|---|---|---|---|---|
+| 1.449 kg (itemised) | 2.37 | 1.87 | +-6.0 % | 4.34 | 1.12x |
+| 1.455 kg | 2.36 | 1.87 | +-5.8 % | 4.31 | 1.11x |
+| 1.46 kg (target) | 2.35 | 1.86 | +-5.6 % | 4.27 | 1.11x |
+| 1.47 kg (gate) | 2.34 | 1.85 | +-5.3 % | 4.21 | 1.10x |
+
+Stall (CLmax 0.75 `EST`) at 1.455 kg 11.99 m/s, 1.3 Vs 15.6 m/s against 17 m/s cruise. Hover 211 W, 14.2 A from the pack. The 1.50 kg lines of s8 stay conservative.
+
+**CG and static margin (D-195).** CG 21.47 mm; pack trim +-10 mm moves it by 2.14 mm (270 g x 10 / 1,259 g): **19.33 to 23.61 mm**, SM 8.7 to 7.0 %. NP 40.7 mm (`EST`, unchanged): the S5010 section aerodynamic centre is at 0.25 c (own panel check 0.248 c, `aero_s5010.py`) and the CAD prop plane (x -110 mm, not -85 mm of SIZING-A) lowers it to 39.6 mm with the same rule (SM 7.4 %), still above the 5 % limit by 2.4 % chord. Trim elevon at 17 m/s and 1.455 kg: **4.8 deg TE up** (alpha 5.1 deg), 4.1 deg at the aft trim end, 5.5 deg at the forward end; stop 21 deg.

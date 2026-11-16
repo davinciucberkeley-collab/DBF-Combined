@@ -23,7 +23,8 @@ CADM = _json.load(open(_cp)) if _os.path.exists(_cp) else None
 NP_X = 0.0407                                              # neutral point aft of the LE, m (SIZING-A, EST; the M5 CG breadboard measures it)
 CG_X = CADM["cg_x_m"] if CADM else 0.0246
 if CADM: SM = (NP_X - CG_X) / C_W
-CM0 = 0.015                                                # reflexed flying-wing section Cm about the AC (EST, S5010-like); trim needs a little up elevon
+CM0 = 0.008                                                # S5010 section Cm0 about c/4, +0.0080 (aerodesign.de profile_s.htm, read 2026-11-15; own panel check 0.007, aero_s5010.py); D-195
+A0 = math.radians(-0.52)                                   # S5010 zero-lift angle, -0.52 deg (same table; own panel check -0.51 deg); wing CL = CLA (alpha - A0)
 CMQ, CLP = -1.0, -0.30                                     # pitch and roll damping, nondimensional (EST: thin-airfoil -pi/2 reduced for AR; Helmbold-type Clp)
 CLB = -0.04                                                # dihedral effect per rad (EST)
 # ---------------- elevons (EST, not in REQUIREMENTS-A or SIZING-A: only "2 elevons")
@@ -57,7 +58,7 @@ def clip(x, a, b): return a if x < a else (b if x > b else x)
 def sgn(x): return 1.0 if x >= 0 else -1.0
 
 def cl_att(a):
-    x = CLA * a / CLMAX
+    x = CLA * (a - A0) / CLMAX
     return CLMAX * x / (1 + abs(x) ** PCLIP) ** (1.0 / PCLIP)
 
 def fatt(a, u):

@@ -106,7 +106,7 @@ class Frame:
 
 
 def build(kind="nom", y_fin=Y_FIN, rib_wall=0.8e-3, rib_wh=(30e-3, 14e-3), arm_len_scale=1.0, hub_bridge=(24e-3, 30e-3, 1.5e-3),
-          foot_pad_m=0.003, wing_g=212.0, pack_g=270.0, motor_g=65.0+11.06+5.0, avionics_g=110.0, fin_skin_t=0.1e-3, fin_core=15e-3,
+          foot_pad_m=0.003, wing_g=212.0, pack_g=270.0, motor_g=65.0+11.06+5.0+4.3+2.9, avionics_g=110.0, fin_skin_t=0.1e-3, fin_core=15e-3,
           fin_E_skin=50e9, root_fix=None, verbose=False, arm_tube=(14e-3, 12e-3), bridge_cf=True, bridge_tube=(8e-3, 6e-3), spar_tube=(16e-3, 14e-3), rib_tube=None, bridge_cfg='single', bridge_yv=0.12, vtube=(8e-3, 6e-3), fin_strip=None, arm_E_scale=1.0, fin_tube=None, x_fin=None):
     E = E_CF[kind]; G = G_CF[kind]; Ep = E_PETG[kind]; Gp = G_PETG[kind]
     F = Frame()

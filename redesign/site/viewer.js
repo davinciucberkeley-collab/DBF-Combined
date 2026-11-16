@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import M from './model.js?v=20261115a';
+import M from './model.js?v=20261115b';
 
 const GH = 'https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/';
 const $ = s => document.querySelector(s);
@@ -763,11 +763,11 @@ export async function start() {
     if (nParts) {
       for (let i = 1; i <= nParts; i++) {
         progress(0.5 * i / nParts, 'loading model (embedded copy, part ' + i + ' of ' + nParts + ')');
-        await addScript('data/assembly.glb.part' + i + '.js?v=20261115a');
+        await addScript('data/assembly.glb.part' + i + '.js?v=20261115b');
       }
     } else {
       progress(0.5, 'loading model (embedded copy)');
-      await addScript('data/assembly.glb.js?v=20261115a');
+      await addScript('data/assembly.glb.js?v=20261115b');
     }
     const b64 = nParts ? window.VIEWER_GLB_B64_PARTS.join('') : (window.VIEWER_GLB_B64 || '');
     window.VIEWER_GLB_B64_PARTS = null; window.VIEWER_GLB_B64 = null;
@@ -777,7 +777,7 @@ export async function start() {
   };
   let gltf;
   try {
-    gltf = await new Promise((res, rej) => new GLTFLoader().load('assets/concept-a.glb?v=20261115a', res,
+    gltf = await new Promise((res, rej) => new GLTFLoader().load('assets/concept-a.glb?v=20261115b', res,
       ev => { const got = ev.loaded || 0; progress(Math.min(got / total, 1), kB(got) + ' of ' + kB(total)); }, rej));
   } catch (e) {
     // hosts that do not serve .glb (claude.ai artifacts) and file:// get the same bytes as base64 in a script

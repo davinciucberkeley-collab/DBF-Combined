@@ -23,10 +23,10 @@
     "gate": "kg"
    },
    "outputs": {
-    "m_kg": 1.4229393160000001
+    "m_kg": 1.4540030359999998
    },
    "input_values": {
-    "basic": 1.23134,
+    "basic": 1.25914,
     "gf": 1.1174,
     "over": 0.032,
     "gate": 1.47
@@ -48,16 +48,16 @@
     "gate": "kg"
    },
    "outputs": {
-    "m_kg": 1.4179199999999998
+    "m_kg": 1.4483670000000002
    },
    "input_values": {
     "items": [
      [
-      223.4,
+      221.7,
       0.2
      ],
      [
-      117.4,
+      118.0,
       0.2
      ],
      [
@@ -69,7 +69,11 @@
       0.05
      ],
      [
-      20,
+      28.8,
+      0.1
+     ],
+     [
+      20.04,
       0.2
      ],
      [
@@ -77,19 +81,23 @@
       0.0
      ],
      [
-      106,
+      3.0,
       0.2
      ],
      [
-      47,
+      106.38,
+      0.2
+     ],
+     [
+      47.54,
       0.05
      ],
      [
-      113.3,
+      113.4,
       0.2
      ],
      [
-      30,
+      26.08,
       0.2
      ]
     ],
@@ -118,12 +126,12 @@
     "ASM-A-CUTS"
    ],
    "outputs": {
-    "x_g": 26.331802398425072
+    "x_g": 36.233109003042635
    },
    "input_values": {
     "cuts": 41.6,
-    "target": 1.44,
-    "m": 1.4229393160000001,
+    "target": 1.46,
+    "m": 1.4540030359999998,
     "gf": 1.1174
    }
   },
@@ -138,15 +146,15 @@
     "g": "P:mass.structure_groups_g"
    },
    "outputs": {
-    "g": 484.1
+    "g": 479.2
    },
    "input_values": {
     "g": [
-     223.4,
-     109.0,
+     221.7,
+     109.6,
      8.4,
-     30.0,
-     113.3
+     26.1,
+     113.4
     ]
    }
   },
@@ -173,7 +181,7 @@
     "FIN-001-L"
    ],
    "how": "Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).",
-   "value": 1.4229393160000001
+   "value": 1.4540030359999998
   },
   {
    "id": "CL-A-MASS-ITEM",
@@ -189,8 +197,8 @@
    "verifies": [
     "A-D3"
    ],
-   "how": "python -I qp/A/mission_gate_a.py prints 1,419 g; both methods must stay <= 1.44 kg.",
-   "value": 1.4179199999999998
+   "how": "python -I qp/A/mission_gate_a.py prints 1,449 g (D-195); both methods must stay <= 1.46 kg.",
+   "value": 1.4483670000000002
   },
   {
    "id": "CL-A-MASS-GATE-ROOM",
@@ -207,7 +215,7 @@
     "A-P1"
    ],
    "how": "As-built weigh-in <= 1.47 kg (D-190, MASS-GATE s8); the +-5 % window holds to 1.478 kg.",
-   "value": 1.4229393160000001
+   "value": 1.4540030359999998
   },
   {
    "id": "CL-A-MASS-USER",
@@ -224,12 +232,12 @@
     "A-U5"
    ],
    "how": "Weigh-in.",
-   "value": 1.4229393160000001
+   "value": 1.4540030359999998
   },
   {
    "id": "CL-A-CUTS-REQUIRED",
    "type": "claim",
-   "title": "EST cuts that must be real for <= 1.44 kg",
+   "title": "EST cuts that must be real for <= 1.46 kg",
    "calc": "CALC-A-CUTS",
    "output": "x_g",
    "unit": "g",
@@ -244,7 +252,7 @@
    "assumes": [
     "ASM-A-CUTS"
    ],
-   "value": 26.331802398425072
+   "value": 36.233109003042635
   },
   {
    "id": "CL-A-STRUCT-MASS",
@@ -264,7 +272,7 @@
    "assumes": [
     "ASM-A-CUTS"
    ],
-   "value": 484.1
+   "value": 479.2
   },
   {
    "id": "CALC-A-CG-TRIM",
@@ -284,15 +292,15 @@
     "basic": "kg"
    },
    "outputs": {
-    "shift_mm": 2.1927331200155926,
-    "fwd_mm": 22.19345103708155,
-    "aft_mm": 26.578917277112737
+    "shift_mm": 2.1443207268453075,
+    "fwd_mm": 19.326904077386157,
+    "aft_mm": 23.615545531076773
    },
    "input_values": {
-    "cg": 24.386184157097144,
+    "cg": 21.471224804231465,
     "pack": 270.0,
     "trim": 10.0,
-    "basic": 1.23134
+    "basic": 1.25914
    }
   },
   {
@@ -315,11 +323,11 @@
     "ASM-A-NP"
    ],
    "outputs": {
-    "sm_pct": 6.658700344041983
+    "sm_pct": 7.84847967174226
    },
    "input_values": {
     "np": 40.7,
-    "cg": 24.386184157097144,
+    "cg": 21.471224804231465,
     "c": 245.0
    }
   },
@@ -334,10 +342,10 @@
     "v": "P:mass.cg_x_mm"
    },
    "outputs": {
-    "v": 24.386184157097144
+    "v": 21.471224804231465
    },
    "input_values": {
-    "v": 24.386184157097144
+    "v": 21.471224804231465
    }
   },
   {
@@ -361,7 +369,7 @@
     "WNG-002"
    ],
    "how": "CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.",
-   "value": 24.386184157097144
+   "value": 21.471224804231465
   },
   {
    "id": "CALC-A-CG-HI-READ",
@@ -374,10 +382,10 @@
     "v": "P:mass.cg_x_mm"
    },
    "outputs": {
-    "v": 24.386184157097144
+    "v": 21.471224804231465
    },
    "input_values": {
-    "v": 24.386184157097144
+    "v": 21.471224804231465
    }
   },
   {
@@ -398,8 +406,8 @@
     "PWR-001",
     "CGE-008"
    ],
-   "how": "CG breadboard (M5); band 20-26 mm, hard aft limit 28.5 mm.",
-   "value": 24.386184157097144
+   "how": "CG breadboard (M5); band 19-26 mm (D-195), hard aft limit 28.5 mm.",
+   "value": 21.471224804231465
   },
   {
    "id": "CL-A-CG-TRIM-AFT",
@@ -420,7 +428,7 @@
     "CGE-008"
    ],
    "how": "Slide the pack to the aft slot stop and re-measure CG (M5).",
-   "value": 26.578917277112737
+   "value": 23.615545531076773
   },
   {
    "id": "CL-A-CG-TRIM-FWD",
@@ -441,7 +449,7 @@
     "CGE-008"
    ],
    "how": "Slide the pack to the forward slot stop and re-measure CG (M5).",
-   "value": 22.19345103708155
+   "value": 19.326904077386157
   },
   {
    "id": "CL-A-SM",
@@ -464,7 +472,7 @@
    "assumes": [
     "ASM-A-NP"
    ],
-   "value": 6.658700344041983
+   "value": 7.84847967174226
   },
   {
    "id": "CALC-A-CG-LATERAL-READ",
@@ -477,10 +485,10 @@
     "v": "P:mass.cg_y_mm"
    },
    "outputs": {
-    "v": 1.8803498627511488
+    "v": 2.5725495179249327
    },
    "input_values": {
-    "v": 1.8803498627511488
+    "v": 2.5725495179249327
    }
   },
   {
@@ -498,7 +506,7 @@
     "A-P4"
    ],
    "how": "Hang the built aircraft on its spar centre; lateral CG <= 5 mm.",
-   "value": 1.8803498627511488
+   "value": 2.5725495179249327
   },
   {
    "id": "CALC-A-TW-GATE",
@@ -626,12 +634,12 @@
     "m": "kg"
    },
    "outputs": {
-    "fresh_cap": 2.4151367640630097,
-    "sag_cap": 1.9091989018313236,
-    "fresh_unc": 2.845004771419634,
-    "sag_unc": 2.2557056981762726,
-    "window_cap_pct": 6.907046439576228,
-    "window_unc_pct": 15.139728331577386,
+    "fresh_cap": 2.363539119255507,
+    "sag_cap": 1.8684102523977228,
+    "fresh_unc": 2.7842233084997434,
+    "sag_unc": 2.2075141824258533,
+    "window_cap_pct": 5.831647866379391,
+    "window_unc_pct": 14.083002199341305,
     "sag_cap_gf": 2716.674179479815
    },
    "input_values": {
@@ -691,7 +699,7 @@
     "g": 9.807,
     "lo": 1.33,
     "hi_frac": 0.8,
-    "m": 1.4229393160000001
+    "m": 1.4540030359999998
    }
   },
   {
@@ -768,7 +776,7 @@
     "PRP-001-LL"
    ],
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "value": 2.4151367640630097
+   "value": 2.363539119255507
   },
   {
    "id": "CL-A-TW-SAG-PRED",
@@ -792,7 +800,7 @@
     "PWR-001"
    ],
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "value": 1.9091989018313236
+   "value": 1.8684102523977228
   },
   {
    "id": "CL-A-WINDOW-PRED",
@@ -815,7 +823,7 @@
     "PRP-001-LL"
    ],
    "how": "C3 time-domain pitch-over run at the as-weighed mass (T-A-C3-PITCHOVER); the window uses 1.33 W low and 0.80 x T/W sag high.",
-   "value": 6.907046439576228
+   "value": 5.831647866379391
   },
   {
    "id": "CL-A-WINDOW-GATE",
@@ -1228,10 +1236,10 @@
     "m": "kg"
    },
    "outputs": {
-    "cruise_s": 270.5393752779971,
+    "cruise_s": 258.7358729580236,
     "usable_wh": 24.5088,
-    "hover_w": 203.7634870174536,
-    "cruise_w": 164.57961687260482
+    "hover_w": 210.35513209790537,
+    "cruise_w": 166.65403332309734
    },
    "input_values": {
     "apc_table": [
@@ -1285,7 +1293,7 @@
     "esc_eff": 0.98,
     "ctrl_margin": 1.1,
     "g": 9.807,
-    "m": 1.4229393160000001,
+    "m": 1.4540030359999998,
     "pack_ah": 2.3,
     "pack_v": 14.8,
     "floor_frac": 0.9,
@@ -1370,7 +1378,7 @@
     "PRP-003"
    ],
    "how": "Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).",
-   "value": 270.5393752779971
+   "value": 258.7358729580236
   },
   {
    "id": "CL-A-FENCE",
@@ -1720,24 +1728,24 @@
   {
    "id": "CALC-A-ROLL-141-READ",
    "type": "calculation",
-   "title": "Stored result: Peak roll rate in SITL, 1.41 kg",
+   "title": "Stored result: Peak roll rate in SITL at cruise speed, 1.455 kg (D-195 target mass)",
    "script": "redesign/qp/A/proofs/claims_a1_flight.py",
    "function": "read_value",
-   "equation": "SITL case=roll (FIXES s2: 5,323 / 57.3); read, not re-run",
+   "equation": "SITL case=roll, run R5_rt65 (6,126 / 57.3), D-195; read, not re-run",
    "inputs": {
     "v": "P:sim.roll_141_degs"
    },
    "outputs": {
-    "v": 92.9
+    "v": 106.9
    },
    "input_values": {
-    "v": 92.9
+    "v": 106.9
    }
   },
   {
    "id": "CL-A-ROLL-141",
    "type": "claim",
-   "title": "Peak roll rate in SITL, 1.41 kg",
+   "title": "Peak roll rate in SITL at cruise speed, 1.455 kg (D-195 target mass)",
    "calc": "CALC-A-ROLL-141-READ",
    "output": "v",
    "unit": "deg/s",
@@ -1753,29 +1761,29 @@
     "WNG-006-L"
    ],
    "how": "Measure the roll rate on the first cruise (M8 extended); the surface is at its 20 deg stop at the peak, +3-5 % is smaller than the EST aero error.",
-   "value": 92.9
+   "value": 106.9
   },
   {
    "id": "CALC-A-ROLL-GATE-READ",
    "type": "calculation",
-   "title": "Stored result: Peak roll rate in SITL, 1.50 kg (30 g over the 1.47 kg gate, conservative)",
+   "title": "Stored result: Peak roll rate in SITL at cruise speed, 1.47 kg (the gate)",
    "script": "redesign/qp/A/proofs/claims_a1_flight.py",
    "function": "read_value",
-   "equation": "SITL case=roll (FIXES s2: 5,392 / 57.3); read, not re-run",
+   "equation": "SITL case=roll, run R5_rt65g, D-195; read, not re-run",
    "inputs": {
     "v": "P:sim.roll_150_degs"
    },
    "outputs": {
-    "v": 94.1
+    "v": 106.4
    },
    "input_values": {
-    "v": 94.1
+    "v": 106.4
    }
   },
   {
    "id": "CL-A-ROLL-GATE",
    "type": "claim",
-   "title": "Peak roll rate in SITL, 1.50 kg (30 g over the 1.47 kg gate, conservative)",
+   "title": "Peak roll rate in SITL at cruise speed, 1.47 kg (the gate)",
    "calc": "CALC-A-ROLL-GATE-READ",
    "output": "v",
    "unit": "deg/s",
@@ -1791,7 +1799,7 @@
     "WNG-006-L"
    ],
    "how": "Measure the roll rate on the first cruise (T-A-FIRST-CRUISE).",
-   "value": 94.1
+   "value": 106.4
   },
   {
    "id": "CALC-A-PITCH-USE",
@@ -1809,10 +1817,10 @@
     "stop": "deg"
    },
    "outputs": {
-    "use": 0.48
+    "use": 0.575
    },
    "input_values": {
-    "peak": 9.6,
+    "peak": 11.5,
     "stop": 20.0
    }
   },
@@ -1834,8 +1842,8 @@
     "WNG-006-R",
     "WNG-006-L"
    ],
-   "how": "C3 pitch-over run and SITL transition logs (FIXES s5.1: peak 8.9-9.6 deg).",
-   "value": 0.48
+   "how": "C3 pitch-over run and SITL transition logs (D-195: peak 11.5 deg at the CAD CG, 12.0 at the forward trim end; was 8.9-9.6 before the S5010 section, CG 21.5 and the corrected trim).",
+   "value": 0.575
   }
  ]
 }

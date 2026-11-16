@@ -639,10 +639,10 @@
     "v": "P:cad3d.max_depth_mm"
    },
    "outputs": {
-    "v": 0.014
+    "v": 0.042
    },
    "input_values": {
-    "v": 0.014
+    "v": 0.042
    }
   },
   {
@@ -660,15 +660,15 @@
     "A-U4"
    ],
    "parts": [
-    "WNG-006-R",
-    "WNG-006-L",
+    "WNG-007-R",
+    "WNG-007-L",
     "WNG-008-RU",
-    "WNG-008-RL",
     "WNG-008-LU",
-    "WNG-008-LL"
+    "HWC-001",
+    "HWC-003"
    ],
-   "how": "collide_a.py report: the only hits under the 0.05 mm gate are two 0.014 mm touches at +20 deg (elevon on the lower lens cap); +-22 deg is past the stop and is not a reachable pose.",
-   "value": 0.014
+   "how": "collide_a.py report (D-194): the only hits under the 0.05 mm gate are the two balance horn tabs touching their stop bosses at the +21 deg stop (0.042 mm, WNG-007 on WNG-008, a designed contact) and one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); +-22 deg is past the stop and is not a reachable pose.",
+   "value": 0.042
   },
   {
    "id": "CALC-A-WIRE-ENDS-READ",
@@ -701,7 +701,7 @@
    "verifies": [
     "A-U4"
    ],
-   "how": "collide_a.py wire_ends check (11 strands).",
+   "how": "collide_a.py wire_ends check (41 strands).",
    "value": 0
   },
   {
@@ -749,10 +749,10 @@
     "v": "P:cad3d.assy_steps_ok"
    },
    "outputs": {
-    "v": 28
+    "v": 35
    },
    "input_values": {
-    "v": 28
+    "v": 35
    }
   },
   {
@@ -770,7 +770,7 @@
     "A-U4"
    ],
    "how": "python -I qp/A/cad/a_assembly.py: 28 of 28 steps, 0 blocked, 0 unsupported, no wire laid before its ends.",
-   "value": 28
+   "value": 35
   },
   {
    "id": "CALC-A-ASSY-PARTS-READ",
@@ -783,10 +783,10 @@
     "v": "P:cad3d.assy_parts_placed"
    },
    "outputs": {
-    "v": 78
+    "v": 96
    },
    "input_values": {
-    "v": 78
+    "v": 96
    }
   },
   {
@@ -804,7 +804,7 @@
     "A-U4"
    ],
    "how": "a_assembly.py: 78 of 78 parts placed, none missing from the sequence.",
-   "value": 78
+   "value": 96
   }
  ]
 }

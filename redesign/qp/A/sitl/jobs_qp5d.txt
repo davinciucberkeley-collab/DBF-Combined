@@ -1,0 +1,2 @@
+R5_rt65g case=roll mass=1.47 wind=0 from=0 hold=25 cruise_s=16 rollthr=1650 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+R5_rt65f case=roll mass=1.47 wind=0 from=0 hold=25 cruise_s=16 rollthr=1650 cg=19.3 P:THR_MAX=80 P:Q_WVANE_ENABLE=0

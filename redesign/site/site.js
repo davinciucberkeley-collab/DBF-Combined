@@ -53,7 +53,7 @@ function enterProof() {
   const home = document.getElementById('home');
   if (home) home.innerHTML = '<p class="sub">Loading the proof graph (about 7 MB, once)…</p>';
   window.PROOF_EMBED = { root: document.getElementById('proofapp'), base: 'proofs/', repo: GH_ROOT };
-  loadScript('proofs/model.js?v=20261112a').then(() => loadScript('proofs/app.js?v=20261115a'))
+  loadScript('proofs/model.js?v=20261112a').then(() => loadScript('proofs/app.js?v=20261115b'))
     .catch(e => { if (home) home.innerHTML = '<p class="sub">Could not load ' + esc(e.message) + '. The standalone viewer is <a href="proofs/index.html">proofs/index.html</a>.</p>'; });
 }
 document.addEventListener('click', e => {

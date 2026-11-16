@@ -12,7 +12,7 @@ User constraints (root `CLAUDE.md`):
 - The packed aircraft fits one car trunk (two at most).
 - Passes the 3-D physics checks.
 
-Everything else is derived by the team and written with its basis. Decisions D-182 to D-188 are logged in
+Everything else is derived by the team and written with its basis. Decisions D-182 to D-195 are logged in
 `../params/CHANGE-LOG.md`.
 
 ## The aircraft (baseline 2026-11-15)
@@ -30,13 +30,13 @@ The electronics and flight software:
 
 | Number | Value | Source |
 |---|---|---|
-| Take-off mass, predicted | 1,423.9 g `EST` (target ≤ 1,440, weigh-in gate 1,500) | `A/MASS-GATE.md` s7 |
-| Basic mass (CAD) | 1,231.3 g, CG 24.4 mm aft of LE (band 20-26) | `A/sitl/cad_mass.json` |
-| Hover T/W at 1.44 kg, spin-capped | 2.40 fresh, 1.90 sagged `EST` | `A/mission_gate_a.py` |
-| Cruise to BATT_LOW at 1.419 kg, 17 m/s | 4.56 min (need 3.41) `EST` | `A/mission_gate_a.py` |
-| Elevon flutter, lowest onset (with damper) | 35.5 m/s hot `EST` (line 28.8) | `../review/QP-4/FIXES2.md` |
+| Take-off mass, predicted | 1,449 g itemised / 1,454 g flat rule `EST` (target ≤ 1,460 since D-195, weigh-in gate 1,470) | `A/MASS-GATE.md` s9 |
+| Basic mass (CAD) | 1,259.1 g, CG 21.5 mm aft of LE (band 19-26), SM 7.8 % `EST` | `A/sitl/cad_mass.json` |
+| Hover T/W at 1.455 kg, spin-capped | 2.36 fresh, 1.87 sagged `EST` (transition window ±5.8 %) | `A/mission_gate_a.py` |
+| Cruise to BATT_LOW at 1.455 kg, 17 m/s | 4.31 min (need 3.41) `EST` | `A/mission_gate_a.py` |
+| Elevon flutter, lowest onset (with damper) | 38.5 m/s hot `EST` (line 28.8); wing 33.4 m/s fins off | `A/structures/flutter_d195.md` |
 | BOM total | $1,775.09; +$105.08 margin if unverified lines run 30 % over (G7 PASS) | `A/bom_a.py` |
-| 3-D gates | collision 0 at neutral, ±20° and ±21°; assembly 28/28 steps | `A/cad/out/REPORT.md`, `ASSEMBLY.md` |
+| 3-D gates | collision 0 at neutral, ±20° and ±21°; assembly 35/35 steps, 96/96 parts | `A/cad/out/REPORT.md`, `ASSEMBLY.md` |
 
 Nothing is bought, weighed, built or flown.
 
@@ -48,13 +48,14 @@ Nothing is bought, weighed, built or flown.
 | QP-2 | SITL, wind, bench plan, baseline; D-183, D-184 | `../review/QP-2/` |
 | QP-3 | SITL flight, structures, cost and schedule, CAD with the 3-D gates; D-185, D-186 | `../review/QP-3/` |
 | QP-4 | Pre-order items, board re-sit, fixes (D-187 balance; D-188 hinge damper, caps, stops, foam at 103 kPa) | `../review/QP-4/` |
+| QP-5 | CAD fidelity round (D-193, D-194) and the re-run of the analyses it invalidated (D-195) | `../review/QP-5/` |
 
 ## Before the main order
 
 Order 1, the bench kit (`A/ORDER-1.csv` plus 3 servos), is approved for early December. The main order waits on:
 - the bench thrust, yaw and current tests;
 - elevon coupon test E1 (`../review/QP-4/FIXES2.md` s8);
-- weighing the foam, printed parts and epoxy (at least 27.2 g of the estimated cuts must be real);
+- weighing the foam, printed parts and epoxy (at least 36.2 g of the 41.6 g of estimated cuts must be real for the 1.46 kg target);
 - the T-Motor stock answer;
 - the written plan for four test mornings a week from 8 February 2027 (`../review/QP-4/BOARD.md`).
 

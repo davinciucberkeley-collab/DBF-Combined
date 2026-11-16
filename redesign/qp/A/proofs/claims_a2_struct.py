@@ -49,7 +49,7 @@ for cid, title, param, extra in [
               assumes=extra + ["ASM-A-RELIABLE"], how=ELEVON_HOW)
 stored("CL-A-FLUTTER-HALF", "Elevon flutter onset with a half-filled (leaking) damper, kd corner", "P:sim.flutter_half_kd_ms", "m/s", parts=PARTS_EL, assumes=["ASM-A-RELIABLE"],
        how="Fault case, no limit stated: seal with the two O-rings (BOM R13) and check the fill at every preflight (FIXES2 s1.3, s9).",
-       note="Fault case, not a requirement. 28.5 m/s is 0.3 m/s under the 28.8 line (16 of 600 K points, 0.045 % damping short); nom and hi corners pass (30.0 / 32.5). Recorded without a limit on purpose: the mitigation is the seal and the preflight check.",
+       note="Fault case, not a requirement. D-195: 33.0 m/s (kd; nom 35.0, hi 39.0), all above the 28.8 line; the lighter 6.7 g elevon removed the old 0.3 m/s shortfall. Recorded without a limit on purpose: the mitigation is the seal and the preflight check.",
        equation="min onset, half of the hot damper c, kd corner; read from structures/fixes2_cdamp.md, not re-run")
 
 # ================================================================ wing flutter, divergence, reversal, gust
@@ -83,7 +83,7 @@ for cid, title, param, parts, reqs in [
         ("CL-A-MS-RIB", "Fin rib 14x12 torsion under one foot load, MS", "P:struct.ms_rib_torsion", ["FIN-002-R", "FIN-002-L"], ["A-P13"]),
         ("CL-A-MS-FIN", "Fin tube 16x14 in-plane bending at the foot load, MS", "P:struct.ms_fin_inplane", ["FIN-001-R", "FIN-001-L"], ["A-P13"]),
         ("CL-A-MS-PACK-CRASH", "Bridge under pack + hub at the 12 g crash, MS (pack retention)", "P:struct.ms_bridge_crash", ["CGE-004", "CGE-008", "PWR-001"], ["A-P5", "A-P13"])]:
-    stored(cid, title, param, "-", limit=(">=", "P:req.ms_min"), verifies=reqs, parts=parts,
+    stored(cid, title, param, "-", limit=(">=", "P:req.ms_min"), verifies=reqs, parts=parts, assumes=(["ASM-A-HUB-WALL"] if cid == "CL-A-MS-ARM-SOCKET" else []),
            how="Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
            equation="MS = allowable / design stress - 1 from structures/iter2_margins.md (stress already carries the 1.5 factor); read, not re-run")
 stored("CL-A-LANDING-STROKE", "Landing crush stroke at 1.2 m/s on the fin-tip feet", "P:struct.landing_stroke_mm", "mm", limit=("<=", "P:struct.landing_stroke_max_mm"), verifies=["A-P13"],

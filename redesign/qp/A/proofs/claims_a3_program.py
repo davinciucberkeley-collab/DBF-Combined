@@ -114,10 +114,10 @@ CAD_PARTS = ["WNG-006-R", "WNG-006-L", "WNG-008-RU", "WNG-008-RL", "WNG-008-LU",
 stored("CL-A-COLL-COUNT", "Part overlaps deeper than the tolerance (neutral, +-20, +-21 deg)", "P:cad3d.n_over_tol", "-", limit=("<=", 0), verifies=["A-U4"], parts=CAD_PARTS,
        how="python -I qp/A/cad/collide_a.py (Blender, 78 parts, 175 bodies, 0.05 mm); A_ELEV_POSE=20|22 for the other poses.",
        equation="count of hits with depth > tolerance in cad/out/report_pose20.json and report_pose21.json; read, not re-run")
-stored("CL-A-COLL-DEPTH", "Deepest part overlap at any reachable pose", "P:cad3d.max_depth_mm", "mm", limit=("<=", "P:req.coll_tol_mm"), verifies=["A-U4"], parts=CAD_PARTS,
-       how="collide_a.py report: the only hits under the 0.05 mm gate are two 0.014 mm touches at +20 deg (elevon on the lower lens cap); +-22 deg is past the stop and is not a reachable pose.",
+stored("CL-A-COLL-DEPTH", "Deepest part overlap at any reachable pose", "P:cad3d.max_depth_mm", "mm", limit=("<=", "P:req.coll_tol_mm"), verifies=["A-U4"], parts=["WNG-007-R", "WNG-007-L", "WNG-008-RU", "WNG-008-LU", "HWC-001", "HWC-003"],
+       how="collide_a.py report (D-194): the only hits under the 0.05 mm gate are the two balance horn tabs touching their stop bosses at the +21 deg stop (0.042 mm, WNG-007 on WNG-008, a designed contact) and one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); +-22 deg is past the stop and is not a reachable pose.",
        equation="largest depth_mm over the reachable poses in the stored reports; read, not re-run")
-stored("CL-A-WIRE-ENDS", "Wire ends not seated in a part", "P:cad3d.wire_ends_open", "-", limit=("<=", 0), verifies=["A-U4"], how="collide_a.py wire_ends check (11 strands).",
+stored("CL-A-WIRE-ENDS", "Wire ends not seated in a part", "P:cad3d.wire_ends_open", "-", limit=("<=", 0), verifies=["A-U4"], how="collide_a.py wire_ends check (41 strands).",
        equation="len(wire_ends) in cad/out/report.json; read, not re-run")
 stored("CL-A-WIRE-FOLDS", "Wire folds (kinks)", "P:cad3d.wire_kinks", "-", limit=("<=", 0), verifies=["A-U4"], how="collide_a.py kinks check.", equation="len(kinks) in cad/out/report.json; read, not re-run")
 stored("CL-A-ASSY-STEPS", "Build steps that pass the assembly sweep", "P:cad3d.assy_steps_ok", "-", limit=(">=", "P:cad3d.assy_steps"), verifies=["A-U4"],

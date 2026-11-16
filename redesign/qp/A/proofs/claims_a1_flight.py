@@ -105,12 +105,12 @@ kit.claim("CL-A-MASS-PRED", "Predicted take-off mass (CAD basic x growth + overr
           limit=("<=", "P:req.mass_target_kg"), verifies=["A-D3"], parts=["WNG-001", "WNG-002", "PWR-001", "CGE-001", "FIN-001-R", "FIN-001-L"],
           how="Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).")
 kit.claim("CL-A-MASS-ITEM", "Predicted mass, itemised growth by maturity (cross-check)", calc="CALC-A-MASS-ITEM", output="m_kg", unit="kg",
-          limit=("<=", "P:req.mass_target_kg"), verifies=["A-D3"], how="python -I qp/A/mission_gate_a.py prints 1,419 g; both methods must stay <= 1.44 kg.")
+          limit=("<=", "P:req.mass_target_kg"), verifies=["A-D3"], how="python -I qp/A/mission_gate_a.py prints 1,449 g (D-195); both methods must stay <= 1.46 kg.")
 kit.claim("CL-A-MASS-GATE-ROOM", "Predicted mass against the 1.47 kg gate", calc="CALC-A-MASS-PRED", output="m_kg", unit="kg",
           limit=("<=", "P:req.mass_gate_kg"), verifies=["A-P1"], how="As-built weigh-in <= 1.47 kg (D-190, MASS-GATE s8); the +-5 % window holds to 1.478 kg.")
 kit.claim("CL-A-MASS-USER", "Predicted mass against the 25 kg user cap", calc="CALC-A-MASS-PRED", output="m_kg", unit="kg",
           limit=("<=", "P:req.mass_user_max_kg"), verifies=["A-U5"], how="Weigh-in.")
-kit.claim("CL-A-CUTS-REQUIRED", "EST cuts that must be real for <= 1.44 kg", calc="CALC-A-CUTS", output="x_g", unit="g",
+kit.claim("CL-A-CUTS-REQUIRED", "EST cuts that must be real for <= 1.46 kg", calc="CALC-A-CUTS", output="x_g", unit="g",
           limit=("<=", "P:mass.est_cuts_g"), verifies=["A-D3"], assumes=["ASM-A-CUTS"],
           how="Weigh a FOAMULAR 150 block, a printed cup / hub, an epoxy joint (M11, BOARD QP-4 s1); >= 27.2 g of the 41.6 g must be real. Fallback: lead 15.6 -> 12.8 g (-5.6 g).")
 kit.claim("CL-A-STRUCT-MASS", "Structure mass (CAD groups, with the EST cuts)", calc="CALC-A-STRUCT", output="g", unit="g",
@@ -136,7 +136,7 @@ stored("CL-A-CG", "CG aft of the leading edge, CAD as drawn", "P:mass.cg_x_mm", 
        parts=["PWR-001", "CGE-008", "WNG-001", "WNG-002"], how="CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.",
        equation="CG from sitl/cad_mass.json (CAD centroids of every part); read, not recomputed")
 stored("CL-A-CG-HI", "CG aft limit of the design band", "P:mass.cg_x_mm", "mm", limit=("<=", "P:req.cg_hi_mm"), verifies=["A-P4"], parts=["PWR-001", "CGE-008"],
-       how="CG breadboard (M5); band 20-26 mm, hard aft limit 28.5 mm.", equation="CG from sitl/cad_mass.json; read, not recomputed")
+       how="CG breadboard (M5); band 19-26 mm (D-195), hard aft limit 28.5 mm.", equation="CG from sitl/cad_mass.json; read, not recomputed")
 kit.claim("CL-A-CG-TRIM-AFT", "CG at the aft end of the pack trim travel", calc="CALC-A-CG-TRIM", output="aft_mm", unit="mm",
           limit=("<=", "P:req.cg_hard_aft_mm"), verifies=["A-P4"], parts=["PWR-001", "CGE-008"], how="Slide the pack to the aft slot stop and re-measure CG (M5).")
 kit.claim("CL-A-CG-TRIM-FWD", "CG at the forward end of the pack trim travel", calc="CALC-A-CG-TRIM", output="fwd_mm", unit="mm",
@@ -321,11 +321,11 @@ stored("CL-A-TIPOVER", "Static tip-over angle on the fin tips", "P:sim.tipover_d
 
 
 # ================================================================ roll, pitch use
-stored("CL-A-ROLL-141", "Peak roll rate in SITL, 1.41 kg", "P:sim.roll_141_degs", "deg/s", limit=(">=", "P:req.roll_min_degs"), verifies=["A-P11"], parts=["WNG-006-R", "WNG-006-L"],
+stored("CL-A-ROLL-141", "Peak roll rate in SITL at cruise speed, 1.455 kg (D-195 target mass)", "P:sim.roll_141_degs", "deg/s", limit=(">=", "P:req.roll_min_degs"), verifies=["A-P11"], parts=["WNG-006-R", "WNG-006-L"],
        how="Measure the roll rate on the first cruise (M8 extended); the surface is at its 20 deg stop at the peak, +3-5 % is smaller than the EST aero error.",
-       equation="SITL case=roll (FIXES s2: 5,323 / 57.3); read, not re-run")
-stored("CL-A-ROLL-GATE", "Peak roll rate in SITL, 1.50 kg (30 g over the 1.47 kg gate, conservative)", "P:sim.roll_150_degs", "deg/s", limit=(">=", "P:req.roll_min_degs"), verifies=["A-P11"], parts=["WNG-006-R", "WNG-006-L"],
-       how="Measure the roll rate on the first cruise (T-A-FIRST-CRUISE).", equation="SITL case=roll (FIXES s2: 5,392 / 57.3); read, not re-run")
+       equation="SITL case=roll, run R5_rt65 (6,126 / 57.3), D-195; read, not re-run")
+stored("CL-A-ROLL-GATE", "Peak roll rate in SITL at cruise speed, 1.47 kg (the gate)", "P:sim.roll_150_degs", "deg/s", limit=(">=", "P:req.roll_min_degs"), verifies=["A-P11"], parts=["WNG-006-R", "WNG-006-L"],
+       how="Measure the roll rate on the first cruise (T-A-FIRST-CRUISE).", equation="SITL case=roll, run R5_rt65g, D-195; read, not re-run")
 
 
 @kit.calc("CALC-A-PITCH-USE", equation="use = peak transition elevon / the 20 deg stop (BOARD QP-4 s3 basis)", inputs={"peak": "P:sim.elevon_peak_deg", "stop": "P:sim.elevon_stop_deg"},
@@ -335,7 +335,7 @@ def pitch_use(peak, stop):
 
 
 kit.claim("CL-A-PITCH-USE", "Elevon use in transition (share of the 20 deg stop)", calc="CALC-A-PITCH-USE", output="use", unit="-",
-          limit=("<=", "P:req.pitch_use_max"), verifies=["A-P11"], parts=["WNG-006-R", "WNG-006-L"], how="C3 pitch-over run and SITL transition logs (FIXES s5.1: peak 8.9-9.6 deg).")
+          limit=("<=", "P:req.pitch_use_max"), verifies=["A-P11"], parts=["WNG-006-R", "WNG-006-L"], how="C3 pitch-over run and SITL transition logs (D-195: peak 11.5 deg at the CAD CG, 12.0 at the forward trim end; was 8.9-9.6 before the S5010 section, CG 21.5 and the corrected trim).")
 
 if __name__ == "__main__":
     kit.write()

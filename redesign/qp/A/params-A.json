@@ -22,10 +22,10 @@
    "note": "A-P1 / MASS-GATE s8 (D-190): weigh-in gate 1.47 kg = the largest 0.01-kg step under the +-5 % window mass limit 1.478 kg at cant 17 (was 1.50, BOARD C5)"
   },
   "mass_target_kg": {
-   "value": 1.44,
+   "value": 1.46,
    "unit": "kg",
    "source": "SRC-A-REQ",
-   "note": "A-D3: design target <= 1.44 kg predicted incl. growth"
+   "note": "A-D3 (D-195): design target <= 1.46 kg predicted incl. growth and overrun (was 1.44; the CAD fidelity round added 27.8 g basic; gate 1.47 kg unchanged)"
   },
   "mass_user_max_kg": {
    "value": 25.0,
@@ -76,10 +76,10 @@
    "note": "A-P4"
   },
   "cg_lo_mm": {
-   "value": 20.0,
+   "value": 19.0,
    "unit": "mm",
    "source": "SRC-A-REQ",
-   "note": "A-P4 band 20-26 mm aft of LE"
+   "note": "A-P4 band 19-26 mm aft of LE (D-195: forward edge 20 -> 19; SITL transition and roll at CG 19.3 pass, pitch use 0.59)"
   },
   "cg_hi_mm": {
    "value": 26.0,
@@ -286,7 +286,7 @@
  },
  "mass": {
   "basic_cad_kg": {
-   "value": 1.23134,
+   "value": 1.25914,
    "unit": "kg",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json mass_basic_kg (CAD, no growth)"
@@ -315,11 +315,11 @@
   "itemised_g_growth": {
    "value": [
     [
-     223.4,
+     221.7,
      0.2
     ],
     [
-     117.4,
+     118.0,
      0.2
     ],
     [
@@ -331,7 +331,11 @@
      0.05
     ],
     [
-     20,
+     28.8,
+     0.1
+    ],
+    [
+     20.04,
      0.2
     ],
     [
@@ -339,38 +343,42 @@
      0.0
     ],
     [
-     106,
+     3.0,
      0.2
     ],
     [
-     47,
+     106.38,
+     0.2
+    ],
+    [
+     47.54,
      0.05
     ],
     [
-     113.3,
+     113.4,
      0.2
     ],
     [
-     30,
+     26.08,
      0.2
     ]
    ],
    "unit": "g, fraction",
    "source": "SRC-A-MGATE",
-   "note": "mission_gate_a.py `items`: [basic g, growth fraction by maturity]: wing, fins, motors, props, ESC, pack, avionics, servos, cage, hardware",
+   "note": "mission_gate_a.py `items` (D-195, CAD 2026-11-15): [basic g, growth fraction by maturity]: wing, fins + feet, motors, props, adapters + spinner nuts (CALC 10 %), ESC, pack, strap, avionics + harness, servos, cage, hardware",
    "status": "UNVERIFIED"
   },
   "structure_groups_g": {
    "value": [
-    223.4,
-    109.0,
+    221.7,
+    109.6,
     8.4,
-    30.0,
-    113.3
+    26.1,
+    113.4
    ],
    "unit": "g",
-   "source": "SRC-A-FIXES2",
-   "note": "FIXES2 s4: wing 223.4 + fins 109 + feet 8.4 + hardware 30 + cage 113.3 = 484.1 g with the EST cuts",
+   "source": "SRC-A-CADMASS",
+   "note": "D-195: CAD part table 2026-11-15: wing 221.7 + fins 109.6 + feet 8.4 + hardware HRD-001 26.08 + cage 113.4 = 479.3 g with the EST cuts",
    "status": "UNVERIFIED"
   },
   "pack_g": {
@@ -386,13 +394,13 @@
    "note": "FIXES2 s7 / MASS-GATE s7: pack trim +-10 mm in the tray slots"
   },
   "cg_x_mm": {
-   "value": 24.386184157097144,
+   "value": 21.471224804231465,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_x_m, aft of the wing leading edge"
   },
   "cg_y_mm": {
-   "value": 1.8803498627511488,
+   "value": 2.5725495179249327,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_y_m (lateral)"
@@ -748,22 +756,22 @@
  },
  "sim": {
   "roll_141_degs": {
-   "value": 92.9,
+   "value": 106.9,
    "unit": "deg/s",
-   "source": "SRC-A-FIXES",
-   "note": "FIXES s2: SITL case=roll 1.41 kg (5,323 / 57.3)"
+   "source": "SRC-A-D195SITL",
+   "note": "D-195: SITL case=roll, 1.455 kg (target), cant 17, D-191 gains, CAD CG 21.47, S5010 aero, FBWA throttle held (rollthr 1650, 16.3-19 m/s), run R5_rt65: 6,126 / 57.3. Roll steps at the old 1500 stick decelerate to 14.4 m/s and give 86.7 deg/s (R5_roll, elevon at its stop): not a cruise state"
   },
   "roll_150_degs": {
-   "value": 94.1,
+   "value": 106.4,
    "unit": "deg/s",
-   "source": "SRC-A-FIXES",
-   "note": "FIXES s2: SITL case=roll 1.50 kg (5,392 / 57.3)"
+   "source": "SRC-A-D195SITL",
+   "note": "D-195: SITL case=roll, 1.47 kg (the gate), same conditions, run R5_rt65g (106.7 at the forward trim end CG 19.3, R5_rt65f)"
   },
   "elevon_peak_deg": {
-   "value": 9.6,
+   "value": 11.5,
    "unit": "deg",
-   "source": "SRC-A-FIXES",
-   "note": "FIXES s5.1: worst elevon peak in transition, 1.50 kg, 5 m/s cross"
+   "source": "SRC-A-D195SITL",
+   "note": "D-195: worst elevon peak in the transition runs at the CAD CG, 1.455 / 1.47 kg (R5_t0, R5_g0 11.5; wind 4 m/s 10.3; CG 19.3 forward trim end 12.0, R5_cgf)"
   },
   "elevon_stop_deg": {
    "value": 20.0,
@@ -780,20 +788,20 @@
   "wind_ge85_s": {
    "value": 0.2,
    "unit": "s",
-   "source": "SRC-A-CLAIMSFIX",
-   "note": "CLAIMS-FIX s3 table: 4 m/s turbulence 1.0 m/s, 1.47 kg, worst pack (thrust scale 0.767), arm 1.2, cant 17, A.param D-191: longest time at or above 0.85 over the seven runs (0 / 0 / 0.15 / 0.05 / 0.20 / 0 / 0), runs N4_g90, N4_g70s2, N4_g60, N4_g80, N4_g60s3, N4_g60s2, N4_g70 (sitl/results.jsonl)"
+   "source": "SRC-A-D195SITL",
+   "note": "D-195: 4 m/s mean, turbulence 1.0 m/s, 1.455 kg, worst pack (thrust scale 0.767), arm 1.2, cant 17, A.param D-191, CAD inertia / CG: longest time at or above 0.85 over the seven runs (0 / 0 / 0 / 0.20 / 0 / 0 / 0), runs R5_h60, h60s2, h60s3, h70, h70s2, h80, h90 (sitl/results.jsonl; same as CLAIMS-FIX N4 at 1.47 kg)"
   },
   "wind_cap_s": {
    "value": 0.0,
    "unit": "s",
-   "source": "SRC-A-CLAIMSFIX",
-   "note": "same seven runs: time at the 0.90 cap, all 0"
+   "source": "SRC-A-D195SITL",
+   "note": "same seven R5_h* runs: time at the 0.90 cap, all 0"
   },
   "wind_peak": {
-   "value": 0.873,
+   "value": 0.884,
    "unit": "-",
-   "source": "SRC-A-CLAIMSFIX",
-   "note": "same seven runs: highest instantaneous output (seed 3, from 60 deg); reported, not a limit"
+   "source": "SRC-A-D195SITL",
+   "note": "same seven R5_h* runs: highest instantaneous output (seed 3, from 60 deg; 0.873 at the CLAIMS-FIX 1.47 kg runs); reported, not a limit"
   },
   "tipover_deg": {
    "value": 33.2,
@@ -810,61 +818,61 @@
   },
   "flutter_hot_ms": {
    "value": [
-    35.5,
-    38.0,
-    41.5
+    38.5,
+    41.5,
+    46.0
    ],
    "unit": "m/s",
-   "source": "SRC-A-CDAMP",
-   "note": "fixes2_cdamp.md: hot 50 C (EST x0.6) lowest onset, wing corners kd / nom / hi",
+   "source": "SRC-A-D195FL",
+   "note": "flutter_d195.md case B (D-195, elevon 6.7 g, hinge inertia 1.485e-5): hot 50 C (EST x0.6) lowest onset, wing corners kd / nom / hi",
    "status": "UNVERIFIED"
   },
   "flutter_nom_ms": {
    "value": [
-    40.5,
-    43.5,
-    48.5
+    42.0,
+    45.5,
+    50.5
    ],
    "unit": "m/s",
-   "source": "SRC-A-CDAMP",
-   "note": "fixes2_cdamp.md: nominal 25 C, kd / nom / hi"
+   "source": "SRC-A-D195FL",
+   "note": "flutter_d195.md case C: nominal 25 C, kd / nom / hi"
   },
   "flutter_cold_ms": {
    "value": [
-    44.5,
-    48.5,
-    54.5
+    45.0,
+    49.0,
+    55.0
    ],
    "unit": "m/s",
-   "source": "SRC-A-CDAMP",
-   "note": "fixes2_cdamp.md: cold 0 C (EST x2), kd / nom / hi",
+   "source": "SRC-A-D195FL",
+   "note": "flutter_d195.md case D: cold 0 C (EST x2), kd / nom / hi",
    "status": "UNVERIFIED"
   },
   "flutter_half_kd_ms": {
-   "value": 28.5,
+   "value": 33.0,
    "unit": "m/s",
-   "source": "SRC-A-CDAMP",
-   "note": "fixes2_cdamp.md: half-filled / leaking damper, kd corner, onset 28.5 at K 0.74 (FAIL row)"
+   "source": "SRC-A-D195FL",
+   "note": "flutter_d195.md case E: half-filled / leaking damper (0.3 x c), kd corner, onset 33.0 at K 0.54 (PASS; was 28.5 at the 9.6 g elevon)"
   },
   "wing_flutter_ms": {
    "value": [
-    46.2,
-    49.7,
-    56.4
+    46.1,
+    49.4,
+    56.3
    ],
    "unit": "m/s",
-   "source": "SRC-A-FIXES",
-   "note": "FIXES s1.3: bending-torsion with the balance, fin on tip, kd / nom / hi"
+   "source": "SRC-A-D195FW",
+   "note": "flutter_d195_wing.md: bending-torsion with the balance, fin on tip, kd / nom / hi (D-195 masses)"
   },
   "wing_flutter_nofin_ms": {
    "value": [
-    34.6,
-    41.4,
-    48.3
+    33.4,
+    39.4,
+    45.9
    ],
    "unit": "m/s",
-   "source": "SRC-A-FIXES",
-   "note": "FIXES s1.3: fins off (worst sensitivity), kd / nom / hi"
+   "source": "SRC-A-D195FW",
+   "note": "flutter_d195_wing.md: fins off (worst sensitivity), kd / nom / hi"
   },
   "divergence_ms": {
    "value": 128.0,
@@ -892,9 +900,9 @@
   },
   "vib_below_hz": {
    "value": [
-    64.0,
-    68.0,
-    78.0
+    63.0,
+    67.0,
+    77.0
    ],
    "unit": "Hz",
    "source": "SRC-A-ITER3",
@@ -903,8 +911,8 @@
   "vib_above_hz": {
    "value": [
     432.0,
-    463.0,
-    525.0
+    462.0,
+    524.0
    ],
    "unit": "Hz",
    "source": "SRC-A-ITER3",
@@ -924,12 +932,12 @@
   },
   "vib_fc_ms2": {
    "value": [
+    25.8,
     27.1,
-    28.5,
-    25.1,
-    25.1,
-    25.0,
-    25.0
+    23.9,
+    23.9,
+    23.7,
+    23.7
    ],
    "unit": "m/s2",
    "source": "SRC-A-ITER3",
@@ -937,31 +945,31 @@
   },
   "gm_nominal": {
    "value": [
-    3.48,
-    3.76,
-    5.28,
+    4.19,
+    4.25,
+    5.88,
     2.37,
-    2.64,
-    3.54,
-    2.13,
-    2.16,
-    2.16
+    2.56,
+    3.32,
+    2.19,
+    2.23,
+    2.23
    ],
    "unit": "-",
    "source": "SRC-A-ITER3",
-   "note": "iter3_run.md control-band table (rerun 2026-11-15 with A.param D-191, cant 17), min GM at nominal mode frequencies: pit / rll / yaw x kd, nom, hi"
+   "note": "iter3_run.md control-band table (rerun D-195 with fe_a.py motor lump +7.2 g for the adapter and spinner nut, A.param D-191, cant 17), min GM at nominal mode frequencies: pit / rll / yaw x kd, nom, hi"
   },
   "gm_shifted": {
    "value": [
-    2.33,
-    2.33,
-    3.27,
-    2.03,
-    2.06,
+    2.81,
+    2.68,
+    4.06,
+    2.16,
+    2.16,
     2.3,
-    2.09,
-    2.09,
-    2.13
+    2.16,
+    2.16,
+    2.19
    ],
    "unit": "-",
    "source": "SRC-A-ITER3",
@@ -969,15 +977,15 @@
   },
   "gm_shifted_up": {
    "value": [
-    5.44,
-    5.12,
-    2.44,
-    3.43,
-    4.25,
-    7.07,
-    2.16,
-    2.16,
-    2.19
+    6.06,
+    5.7,
+    2.89,
+    3.22,
+    3.88,
+    6.06,
+    2.23,
+    2.26,
+    2.26
    ],
    "unit": "-",
    "source": "SRC-A-ITER3",
@@ -1601,16 +1609,16 @@
    "note": "cad/out/report_pose20.json + report_pose21.json (= report.json): overlaps deeper than the tolerance at neutral, +-20 and +-21 deg"
   },
   "max_depth_mm": {
-   "value": 0.014,
+   "value": 0.042,
    "unit": "mm",
    "source": "SRC-A-COLL",
-   "note": "deepest overlap at any reachable pose (neutral, +-20, +-21 deg); the two +20 deg hits are 0.014 mm"
+   "note": "deepest overlap at any reachable pose (neutral, +-20, +-21 deg): 0.042 mm, balance tab on its stop boss at +21 deg (D-194)"
   },
   "wire_ends_open": {
    "value": 0,
    "unit": "-",
    "source": "SRC-A-COLL",
-   "note": "report.json wire_ends: wire ends not seated in a part (11 strands)"
+   "note": "report.json wire_ends: wire ends not seated in a part (41 strands)"
   },
   "wire_kinks": {
    "value": 0,
@@ -1619,28 +1627,28 @@
    "note": "report.json kinks (wire folds)"
   },
   "parts": {
-   "value": 78,
+   "value": 96,
    "unit": "-",
    "source": "SRC-A-COLL",
    "note": "report.json parts checked"
   },
   "assy_steps": {
-   "value": 28,
+   "value": 35,
    "unit": "-",
    "source": "SRC-A-ASSY",
    "note": "assembly.json steps"
   },
   "assy_steps_ok": {
-   "value": 28,
+   "value": 35,
    "unit": "-",
    "source": "SRC-A-ASSY",
-   "note": "assembly.json steps with no blocking pair at or above the tolerance (28 of 28 in ASSEMBLY.md)"
+   "note": "assembly.json steps with no blocking pair at or above the tolerance (35 of 35 in ASSEMBLY.md)"
   },
   "assy_parts_placed": {
-   "value": 78,
+   "value": 96,
    "unit": "-",
    "source": "SRC-A-ASSY",
-   "note": "assembly.json parts placed (78 of 78)"
+   "note": "assembly.json parts placed (96 of 96)"
   }
  }
 }

@@ -111,7 +111,7 @@
    "kind": "file",
    "url": "redesign/qp/A/cad/out/REPORT.md",
    "checked": "2026-11-15",
-   "where": "report_pose20 / report_pose21 / report.json: 78 parts, 175 bodies, tolerance 0.05 mm"
+   "where": "report_pose20 / report_pose21 / report.json: 96 parts, 444 bodies, tolerance 0.05 mm (2026-11-15, D-194)"
   },
   {
    "id": "SRC-A-ASSY",
@@ -120,7 +120,7 @@
    "kind": "file",
    "url": "redesign/qp/A/cad/out/ASSEMBLY.md",
    "checked": "2026-11-15",
-   "where": "28 steps, 78 of 78 parts"
+   "where": "35 steps, 96 of 96 parts (2026-11-15, D-194)"
   },
   {
    "id": "SRC-A-SIZING",
@@ -195,6 +195,42 @@
    "where": "modes vs rotor bands, forced response, control-band GM, C1 loads at VD 24"
   },
   {
+   "id": "SRC-A-D195FL",
+   "type": "source",
+   "title": "Elevon flutter with the CAD of 2026-11-15 (flutter_d195.md)",
+   "kind": "file",
+   "url": "redesign/qp/A/structures/flutter_d195.md",
+   "checked": "2026-11-15",
+   "where": "elevon 6.7 g, hinge inertia 1.485e-5, lead 15.6 g at 20 mm, damper c 1.03e-3 hot / nominal / cold / half; p-method K sweep"
+  },
+  {
+   "id": "SRC-A-D195FW",
+   "type": "source",
+   "title": "Wing bending-torsion flutter with the CAD of 2026-11-15 (flutter_d195_wing.md)",
+   "kind": "file",
+   "url": "redesign/qp/A/structures/flutter_d195_wing.md",
+   "checked": "2026-11-15",
+   "where": "Ritz + strip Theodorsen, lumps 26.6 g per semispan"
+  },
+  {
+   "id": "SRC-A-D195",
+   "type": "source",
+   "title": "QP-5 analyses (ANALYSES.md): S5010 aero, mass decision, flutter, SITL at cant 17, G7",
+   "kind": "repo",
+   "url": "redesign/review/QP-5/ANALYSES.md",
+   "checked": "2026-11-15",
+   "where": "results with sources and open items"
+  },
+  {
+   "id": "SRC-A-D195SITL",
+   "type": "source",
+   "title": "QP-5 SITL runs R5_* (sitl/results_fwd.jsonl, runs/R5_*)",
+   "kind": "file",
+   "url": "redesign/qp/A/sitl/jobs_qp5.txt",
+   "checked": "2026-11-15",
+   "where": "cant 17, D-191 gains, CAD mass / CG / inertia 2026-11-15, S5010 aero; batch_qp5.sh"
+  },
+  {
    "id": "SRC-A-FLUTTER",
    "type": "source",
    "title": "QP-4 flutter / divergence (FLUTTER.md)",
@@ -253,7 +289,7 @@
    "type": "assumption",
    "title": "Clean CLmax 0.75",
    "text": "Wing section CLmax 0.75 sets every stall number",
-   "basis": "EST in MISSION s1 (SIZING-A s2); the measured stall replaces it before airspeed limits are frozen",
+   "basis": "EST in MISSION s1 (SIZING-A s2); D-195: S5010 2-D CFD stall 11 deg (Mat Yazik et al., abstract) with CLa 3.74 /rad and alpha0 -0.52 deg gives 0.75, consistent; no measured S5010 CLmax found (airfoiltools unreachable 2026-11-15); the measured stall replaces it before airspeed limits are frozen",
    "value": 0.75,
    "unit": "-",
    "status": "UNVERIFIED"
@@ -272,8 +308,16 @@
    "id": "ASM-A-CUTS",
    "type": "assumption",
    "title": "41.6 g of EST cuts are real",
-   "text": "Predicted mass <= 1.44 kg holds only if the foam (25 kg/m3), printed parts and hardware lump weigh in at their cut values",
+   "text": "Predicted mass <= 1.46 kg (D-195; was 1.44) holds only if the foam (25 kg/m3), printed parts and hardware lump weigh in at their cut values",
    "basis": "BOARD QP-4 s1 and FIXES2 s5: none of the three cuts is weighed; the foam row alone (16.6 g) was the first line; M11 weighs a FOAMULAR 150 block",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-A-HUB-WALL",
+   "type": "assumption",
+   "title": "Printed hub socket walls (0.8 mm, EST) carry the prop-strike couple",
+   "text": "The 0.48 socket margin is a bond margin; the thin-wall hoop check is not demonstrated at 0.8 mm",
+   "basis": "D-195, structures/qp5_checks.md s2: a crude ring model (hoop tension 2F/(pi l t), F 332 N, allowable 20 MPa EST) gives MS -0.58 at 0.8 mm and passes only from 2.0 mm walls (+7.1 g); the model is conservative (epoxy fill, bonded tube) but unproven: print, bond and pull-test a socket coupon before the hub is printed in earnest",
    "status": "UNVERIFIED"
   },
   {
@@ -304,7 +348,7 @@
    "id": "ASM-A-RELIABLE",
    "type": "assumption",
    "title": "Cap and damper drag and damper leak mitigations hold",
-   "text": "Half-fill damper (28.5 m/s at kd) is excluded by O-rings and a preflight fill check",
+   "text": "Half-fill damper (33.0 m/s at kd, D-195; 28.5 before the 6.7 g elevon) is excluded by O-rings and a preflight fill check",
    "basis": "FIXES2 s1.3 and s9 item 2: a leaking damper loses the margin; seal with the BOM R13 O-rings, check the fill every preflight",
    "status": "UNVERIFIED"
   },
@@ -360,8 +404,8 @@
   {
    "id": "A-D3",
    "type": "requirement",
-   "title": "Design target <= 1.44 kg; structure <= 494 g",
-   "text": "Predicted mass incl. growth and overrun <= 1.44 kg; structure ceiling 494 g (BOARD QP-4 s1)",
+   "title": "Design target <= 1.46 kg; structure <= 494 g",
+   "text": "Predicted mass incl. growth and overrun <= 1.46 kg (D-195; was 1.44); structure ceiling 494 g (BOARD QP-4 s1)",
    "ref": "qp/A/REQUIREMENTS-A.md#a-d3"
   },
   {
@@ -382,7 +426,7 @@
    "id": "A-P4",
    "type": "requirement",
    "title": "CG band, static margin, lateral CG",
-   "text": "CG 20-26 mm aft of LE (hard aft 28.5 mm), static margin >= 5 % chord, lateral CG <= 5 mm, pack trim +-10 mm",
+   "text": "CG 19-26 mm aft of LE (D-195; was 20-26; hard aft 28.5 mm), static margin >= 5 % chord, lateral CG <= 5 mm, pack trim +-10 mm",
    "ref": "qp/A/REQUIREMENTS-A.md#a-p4"
   },
   {

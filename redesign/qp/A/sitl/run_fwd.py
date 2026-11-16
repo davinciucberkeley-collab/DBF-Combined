@@ -53,16 +53,17 @@ RC3 = (P("RC3_MIN", 988), P("RC3_MAX", 2012), P("RC3_DZ", 30))
 W_N = MASS * 9.81
 vrest = float(kv.get("vrest", 14.92))
 wind = float(kv.get("wind", 0.0)); wfrom = float(kv.get("from", 0.0))
-cfg = dict(out=os.path.join(run, "case"), fwd=1, mass=MASS, cant_deg=16.0, arm=1.2, wind=wind, wind_from_deg=wfrom, gust=float(kv.get("gust", 0)) if case != "trans" else 0.0,
+cfg = dict(out=os.path.join(run, "case"), fwd=1, mass=MASS, cant_deg=float(kv.get("cant", 17.0)), arm=1.2, wind=wind, wind_from_deg=wfrom, gust=float(kv.get("gust", 0)) if case != "trans" else 0.0,
            gust_at=float(kv.get("gust_at", 20)), turb=float(kv.get("turb", 0)), seed=int(kv.get("seed", 1)), inst=INST, vrest=vrest, slip=float(kv.get("slip", 0)),
            es5=float(kv.get("es5", 1)), es6=float(kv.get("es6", -1)), cmd_file=os.path.join(run, "cmd.json"), max_t=float(kv.get("tmax", 900)),
            wind_alt=float(kv.get("wind_alt", 40.0)))
 if case == "takeoff": cfg["wind_t0"] = 5.0
 if case == "land": cfg["wind_alt"] = 14.0
 if "elv_scale" in kv: cfg["elv_scale"] = float(kv["elv_scale"])
+if "cg" in kv: cfg["cg_aft"] = float(kv["cg"]) * 1e-3     # CG aft of the LE, mm (pack trim ends), re-references the aero arms (a_aero.set_cg)
 
 # ---- static thrust model for the entry throttle (same functions the plant uses)
-CANT = math.radians(16.0)
+CANT = math.radians(float(kv.get("cant", 17.0)))   # D-195: was 16 (D-189 moved the cant to 17)
 HOT = 0.97 if vrest < 15.5 else 1.0
 def static(u):
     vb = vrest
@@ -197,6 +198,7 @@ try:
             run_for(220, lambda: seen("Land complete") or (st["alt"] < 0.4 and not st["armed"]))
             run_for(6)
         if case == "roll":                                    # QP-4: FBWA roll steps in cruise (right, left), peak roll rate from the plant csv (p)
+            rc[2] = int(kv.get("rollthr", 1500))                 # D-195: FBWA throttle stick, to hold 17 m/s through the steps (default 1500 decelerates to 14.5 m/s)
             rc[5] = FBWA; run_for(2); mk["t_roll0"] = st["t"]
             rc[0] = 1900; run_for(3); mk["t_roll1"] = st["t"]; rc[0] = 1100; run_for(4); mk["t_roll2"] = st["t"]; rc[0] = 1500; run_for(4)
             mk["t_roll3"] = st["t"]

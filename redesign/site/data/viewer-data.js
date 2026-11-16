@@ -2,19 +2,19 @@
 window.VIEWER_DATA = {
  "schema": "dbf-viewer/1",
  "dataset": "concept-a",
- "generated": "2026-11-15 20:28 UTC",
+ "generated": "2026-11-16 00:23 UTC",
  "sources": {
-  "glb": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/glb",
-  "interfaces": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/itf/interfaces.json",
+  "glb": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/glbA",
+  "interfaces": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/mi/interfaces.json",
   "proofs": "redesign/qp/A/proofs/out/graph.json",
   "budget": "redesign/qp/A/cad/model/mass_budget.json",
   "csv": []
  },
  "glb": {
   "file": "assembly.glb",
-  "bytes": 1515080,
+  "bytes": 3440616,
   "js_parts": 1,
-  "sha256": "5fadd4b63ef2a8e6fce504195f54539492732c9bda4ed62d3f356b6a0b1d643a"
+  "sha256": "529cdbc042601ce4b2a5bed5adb01c4395f41502a0d856141c0d9a8e71fc888b"
  },
  "frame": "aircraft frame: metres, x aft, y right, z up. glTF (x, y, z) = aircraft (x, z, -y).",
  "parts": [
@@ -26,9 +26,9 @@ window.VIEWER_DATA = {
    "mass_g": 8.0,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0886,
+    0.0923,
     0.0,
-    0.0148
+    0.0123
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -45,7 +45,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.0599,
     0.0,
-    0.0278
+    0.0269
    ],
    "make_or_buy": "buy",
    "electrical": "bus",
@@ -58,12 +58,12 @@ window.VIEWER_DATA = {
    "name": "Receiver RP3 V2 ELRS",
    "subsystem": "avionics",
    "status": "MODELLED",
-   "mass_g": 3.0,
+   "mass_g": 4.6,
    "material": "PCB",
    "cg_xyz_m": [
-    0.1117,
-    -0.0465,
-    0.0182
+    0.1178,
+    -0.046,
+    0.0152
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -79,9 +79,9 @@ window.VIEWER_DATA = {
    "mass_g": 13.5,
    "material": "PCB",
    "cg_xyz_m": [
-    0.0574,
-    0.0399,
-    0.0201
+    0.0575,
+    0.0396,
+    0.0172
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -97,9 +97,9 @@ window.VIEWER_DATA = {
    "mass_g": 3.0,
    "material": "PCB",
    "cg_xyz_m": [
-    0.0524,
+    0.0528,
     -0.0446,
-    0.0202
+    0.0165
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -126,7 +126,7 @@ window.VIEWER_DATA = {
   },
   {
    "id": "AVN-007",
-   "name": "Foam-tape pads x4 (FC hard mount, 1.5 mm)",
+   "name": "Foam-tape pads x4 (FC hard mount, 3.0 mm)",
    "subsystem": "avionics",
    "status": "MODELLED",
    "mass_g": 1.0,
@@ -134,7 +134,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.06,
     0.0,
-    0.0168
+    0.0154
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -143,15 +143,15 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CGE-001",
-   "name": "Hub disc (printed shell, envelope; QP-4 FIXES: 16 -> 13 g, 2 perimeters, 10 % infill, EST)",
+   "name": "Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 0.8 mm walls, mass = drawn volume x 1.27)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 13.0,
+   "mass_g": 13.1,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.075,
+    -0.0721,
     0.0,
-    0.0
+    0.0002
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -234,8 +234,8 @@ window.VIEWER_DATA = {
    "mass_g": 4.0,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0798,
-    -0.223,
+    -0.0797,
+    -0.2229,
     -0.1543
    ],
    "make_or_buy": "make",
@@ -251,9 +251,9 @@ window.VIEWER_DATA = {
    "mass_g": 4.0,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0798,
+    -0.0797,
     0.2246,
-    -0.152
+    -0.1519
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -268,9 +268,9 @@ window.VIEWER_DATA = {
    "mass_g": 4.0,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0798,
+    -0.0797,
     -0.2246,
-    0.152
+    0.1519
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -285,8 +285,8 @@ window.VIEWER_DATA = {
    "mass_g": 4.0,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0798,
-    0.223,
+    -0.0797,
+    0.2229,
     0.1543
    ],
    "make_or_buy": "make",
@@ -398,13 +398,13 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CGE-008",
-   "name": "Pack tray (66 x 109 mm plate, trim slots; 4.0 g at 44 mm scaled by plate area + longer walls, EST)",
+   "name": "Pack tray (66 x 109 mm plate, integral lips at the trim ends, lead notch; 4.0 g at 44 mm scaled by plate area + longer walls, EST)",
    "subsystem": "cage",
    "status": "MODELLED",
    "mass_g": 3.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0114,
+    -0.0116,
     0.0,
     0.0107
    ],
@@ -523,7 +523,7 @@ window.VIEWER_DATA = {
    "mass_g": 8.4,
    "material": "XPS foam + tape",
    "cg_xyz_m": [
-    0.239,
+    0.2395,
     -0.38,
     0.0
    ],
@@ -540,7 +540,7 @@ window.VIEWER_DATA = {
    "mass_g": 8.4,
    "material": "XPS foam + tape",
    "cg_xyz_m": [
-    0.239,
+    0.2395,
     0.38,
     0.0
    ],
@@ -577,6 +577,40 @@ window.VIEWER_DATA = {
     0.0671,
     0.38,
     0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "spec": null
+  },
+  {
+   "id": "FIN-006-L",
+   "name": "Rib fairing, upper (L): XPS + tape blister over the 14 mm rib where the S5010 skin is thinner than the tube (D-194); mass EST",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.3,
+   "material": "XPS foam + tape",
+   "cg_xyz_m": [
+    0.1569,
+    -0.38,
+    0.004
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "spec": null
+  },
+  {
+   "id": "FIN-006-R",
+   "name": "Rib fairing, upper (R): XPS + tape blister over the 14 mm rib where the S5010 skin is thinner than the tube (D-194); mass EST",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.3,
+   "material": "XPS foam + tape",
+   "cg_xyz_m": [
+    0.1569,
+    0.38,
+    0.004
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -721,10 +755,10 @@ window.VIEWER_DATA = {
   },
   {
    "id": "HRD-001",
-   "name": "Hardware: screws, nuts, epoxy fillets, paint (MASS-GATE 40 g less rib saddles) - lumped",
+   "name": "Hardware: screws, nuts, epoxy fillets, paint (MASS-GATE 40 g less rib saddles) - lumped, less modelled sets",
    "subsystem": "assembly",
    "status": "MODELLED",
-   "mass_g": 30.0,
+   "mass_g": 26.08,
    "material": "steel / epoxy",
    "cg_xyz_m": [
     0.1,
@@ -743,7 +777,7 @@ window.VIEWER_DATA = {
    "name": "Harness remainder (wire, connectors, ties, tubing; MASS-GATE avionics 110 g less itemised parts) - lumped",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 55.5,
+   "mass_g": 42.9,
    "material": "copper / silicone",
    "cg_xyz_m": [
     0.03,
@@ -758,6 +792,93 @@ window.VIEWER_DATA = {
    "spec": null
   },
   {
+   "id": "HRN-002",
+   "name": "XT60 female + 14 AWG tail to the ESC (modelled)",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 8.0,
+   "material": "copper / silicone / nylon",
+   "cg_xyz_m": [
+    0.1033,
+    0.0635,
+    0.0164
+   ],
+   "make_or_buy": "buy",
+   "electrical": "bus",
+   "carried": true,
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "spec": null
+  },
+  {
+   "id": "HWC-001",
+   "name": "FC mounting screws: 4 x M2 x 25 pan screw (stock)",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 2.97,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.06,
+    0.0,
+    0.0265
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "spec": null
+  },
+  {
+   "id": "HWC-002-L",
+   "name": "Servo arm screw M2 x 6 pan (L)",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.27,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.1405,
+    -0.2,
+    0.0073
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "spec": null
+  },
+  {
+   "id": "HWC-002-R",
+   "name": "Servo arm screw M2 x 6 pan (R)",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.27,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.1405,
+    0.2,
+    0.0073
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "spec": null
+  },
+  {
+   "id": "HWC-003",
+   "name": "FC mounting nuts: 4 x M2 thin nut (DIN 439 1.2 mm) in the plate hex pockets",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 0.41,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.06,
+    -0.0,
+    0.0129
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "spec": null
+  },
+  {
    "id": "MEC-001-L",
    "name": "Servo EMAX ES3054HV (L)",
    "subsystem": "mechanisms",
@@ -767,7 +888,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.1411,
     -0.2,
-    0.0053
+    0.0002
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -785,7 +906,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.1411,
     0.2,
-    0.0053
+    0.0002
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -801,9 +922,9 @@ window.VIEWER_DATA = {
    "mass_g": 1.0,
    "material": "nylon",
    "cg_xyz_m": [
-    0.1465,
-    -0.2,
-    0.0127
+    0.1405,
+    -0.1959,
+    0.0077
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -818,9 +939,9 @@ window.VIEWER_DATA = {
    "mass_g": 1.0,
    "material": "nylon",
    "cg_xyz_m": [
-    0.1465,
-    0.2,
-    0.0127
+    0.1405,
+    0.1959,
+    0.0077
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -829,15 +950,15 @@ window.VIEWER_DATA = {
   },
   {
    "id": "MEC-003-L",
-   "name": "Pushrod 1.2 mm (L)",
+   "name": "Pushrod 1.2 mm with Z-bend and clevis (L)",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 1.0,
+   "mass_g": 0.97,
    "material": "steel",
    "cg_xyz_m": [
-    0.1738,
-    -0.2,
-    0.0127
+    0.1731,
+    -0.188,
+    0.0093
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -846,15 +967,15 @@ window.VIEWER_DATA = {
   },
   {
    "id": "MEC-003-R",
-   "name": "Pushrod 1.2 mm (R)",
+   "name": "Pushrod 1.2 mm with Z-bend and clevis (R)",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 1.0,
+   "mass_g": 0.97,
    "material": "steel",
    "cg_xyz_m": [
-    0.1738,
-    0.2,
-    0.0127
+    0.1731,
+    0.188,
+    0.0093
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -869,9 +990,9 @@ window.VIEWER_DATA = {
    "mass_g": 1.0,
    "material": "nylon",
    "cg_xyz_m": [
-    0.202,
-    -0.2,
-    0.0102
+    0.1987,
+    -0.188,
+    0.0042
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -886,9 +1007,43 @@ window.VIEWER_DATA = {
    "mass_g": 1.0,
    "material": "nylon",
    "cg_xyz_m": [
-    0.202,
-    0.2,
-    0.0102
+    0.1987,
+    0.188,
+    0.0042
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "spec": null
+  },
+  {
+   "id": "MEC-005-L",
+   "name": "Clevis pin 1.0 x 4.4 mm (L); mass CALC steel, carried inside the 1.0 g rod before D-194",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.03,
+   "material": "steel",
+   "cg_xyz_m": [
+    0.193,
+    -0.188,
+    0.0093
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "spec": null
+  },
+  {
+   "id": "MEC-005-R",
+   "name": "Clevis pin 1.0 x 4.4 mm (R); mass CALC steel, carried inside the 1.0 g rod before D-194",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.03,
+   "material": "steel",
+   "cg_xyz_m": [
+    0.193,
+    0.188,
+    0.0093
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -903,9 +1058,9 @@ window.VIEWER_DATA = {
    "mass_g": 65.0,
    "material": "Al / Cu / NdFeB",
    "cg_xyz_m": [
-    -0.0993,
-    -0.224,
-    -0.1619
+    -0.0988,
+    -0.2238,
+    -0.1621
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -921,9 +1076,9 @@ window.VIEWER_DATA = {
    "mass_g": 65.0,
    "material": "Al / Cu / NdFeB",
    "cg_xyz_m": [
-    -0.0993,
-    0.232,
-    -0.1501
+    -0.0988,
+    0.2322,
+    -0.1499
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -939,9 +1094,9 @@ window.VIEWER_DATA = {
    "mass_g": 65.0,
    "material": "Al / Cu / NdFeB",
    "cg_xyz_m": [
-    -0.0993,
-    -0.232,
-    0.1501
+    -0.0988,
+    -0.2322,
+    0.1499
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -957,9 +1112,9 @@ window.VIEWER_DATA = {
    "mass_g": 65.0,
    "material": "Al / Cu / NdFeB",
    "cg_xyz_m": [
-    -0.0993,
-    0.224,
-    0.1619
+    -0.0988,
+    0.2238,
+    0.1621
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -969,15 +1124,15 @@ window.VIEWER_DATA = {
   },
   {
    "id": "PRP-002-LL",
-   "name": "Prop APC 9x4.5MR (LL), swept disc",
+   "name": "Prop APC 9x4.5MRP (LL), CW reverse",
    "subsystem": "propulsion",
    "status": "MODELLED",
    "mass_g": 11.06,
    "material": "nylon-glass composite",
    "cg_xyz_m": [
-    -0.1207,
-    -0.2206,
-    -0.1668
+    -0.1229,
+    -0.2197,
+    -0.1681
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -986,15 +1141,15 @@ window.VIEWER_DATA = {
   },
   {
    "id": "PRP-002-LR",
-   "name": "Prop APC 9x4.5MR (LR), swept disc",
+   "name": "Prop APC 9x4.5MR (LR), CCW standard",
    "subsystem": "propulsion",
    "status": "MODELLED",
    "mass_g": 11.06,
    "material": "nylon-glass composite",
    "cg_xyz_m": [
-    -0.1207,
-    0.2354,
-    -0.1452
+    -0.1229,
+    0.2363,
+    -0.1439
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -1003,15 +1158,15 @@ window.VIEWER_DATA = {
   },
   {
    "id": "PRP-002-UL",
-   "name": "Prop APC 9x4.5MR (UL), swept disc",
+   "name": "Prop APC 9x4.5MR (UL), CCW standard",
    "subsystem": "propulsion",
    "status": "MODELLED",
    "mass_g": 11.06,
    "material": "nylon-glass composite",
    "cg_xyz_m": [
-    -0.1207,
-    -0.2354,
-    0.1452
+    -0.1229,
+    -0.2363,
+    0.1439
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -1020,15 +1175,15 @@ window.VIEWER_DATA = {
   },
   {
    "id": "PRP-002-UR",
-   "name": "Prop APC 9x4.5MR (UR), swept disc",
+   "name": "Prop APC 9x4.5MRP (UR), CW reverse",
    "subsystem": "propulsion",
    "status": "MODELLED",
    "mass_g": 11.06,
    "material": "nylon-glass composite",
    "cg_xyz_m": [
-    -0.1207,
-    0.2206,
-    0.1668
+    -0.1229,
+    0.2197,
+    0.1681
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -1043,12 +1198,148 @@ window.VIEWER_DATA = {
    "mass_g": 20.0,
    "material": "PCB",
    "cg_xyz_m": [
-    0.0989,
-    0.0,
-    0.0194
+    0.0994,
+    0.0003,
+    0.0169
    ],
    "make_or_buy": "buy",
    "electrical": "bus",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "spec": null
+  },
+  {
+   "id": "PRP-004-LL",
+   "name": "Prop adapter, T-Motor (Phi19 x 4.5 flange + M5 stud) (LL); mass CALC 6061, EST",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 4.3,
+   "material": "6061 aluminium",
+   "cg_xyz_m": [
+    -0.116,
+    -0.2209,
+    -0.1663
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "spec": null
+  },
+  {
+   "id": "PRP-004-LR",
+   "name": "Prop adapter, T-Motor (Phi19 x 4.5 flange + M5 stud) (LR); mass CALC 6061, EST",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 4.3,
+   "material": "6061 aluminium",
+   "cg_xyz_m": [
+    -0.116,
+    0.2351,
+    -0.1457
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "spec": null
+  },
+  {
+   "id": "PRP-004-UL",
+   "name": "Prop adapter, T-Motor (Phi19 x 4.5 flange + M5 stud) (UL); mass CALC 6061, EST",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 4.3,
+   "material": "6061 aluminium",
+   "cg_xyz_m": [
+    -0.116,
+    -0.2351,
+    0.1457
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "spec": null
+  },
+  {
+   "id": "PRP-004-UR",
+   "name": "Prop adapter, T-Motor (Phi19 x 4.5 flange + M5 stud) (UR); mass CALC 6061, EST",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 4.3,
+   "material": "6061 aluminium",
+   "cg_xyz_m": [
+    -0.116,
+    0.2209,
+    0.1663
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "spec": null
+  },
+  {
+   "id": "PRP-005-LL",
+   "name": "Spinner nut, T-Motor (Phi12 x 16, M5) (LL); mass CALC 6061, EST",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 2.9,
+   "material": "6061 aluminium",
+   "cg_xyz_m": [
+    -0.1306,
+    -0.2184,
+    -0.17
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "spec": null
+  },
+  {
+   "id": "PRP-005-LR",
+   "name": "Spinner nut, T-Motor (Phi12 x 16, M5) (LR); mass CALC 6061, EST",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 2.9,
+   "material": "6061 aluminium",
+   "cg_xyz_m": [
+    -0.1306,
+    0.2376,
+    -0.142
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "spec": null
+  },
+  {
+   "id": "PRP-005-UL",
+   "name": "Spinner nut, T-Motor (Phi12 x 16, M5) (UL); mass CALC 6061, EST",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 2.9,
+   "material": "6061 aluminium",
+   "cg_xyz_m": [
+    -0.1306,
+    -0.2376,
+    0.142
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "spec": null
+  },
+  {
+   "id": "PRP-005-UR",
+   "name": "Spinner nut, T-Motor (Phi12 x 16, M5) (UR); mass CALC 6061, EST",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 2.9,
+   "material": "6061 aluminium",
+   "cg_xyz_m": [
+    -0.1306,
+    0.2184,
+    0.17
+   ],
+   "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
    "spec": null
@@ -1061,8 +1352,8 @@ window.VIEWER_DATA = {
    "mass_g": 270.0,
    "material": "LiPo",
    "cg_xyz_m": [
-    -0.01,
-    0.0,
+    -0.008,
+    0.0018,
     0.0225
    ],
    "make_or_buy": "buy",
@@ -1072,16 +1363,33 @@ window.VIEWER_DATA = {
    "spec": null
   },
   {
+   "id": "PWR-002",
+   "name": "Pack strap 25 mm hook-and-loop (round pack and tray)",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "material": "hook-and-loop nylon",
+   "cg_xyz_m": [
+    -0.015,
+    0.0,
+    0.0155
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "spec": null
+  },
+  {
    "id": "WNG-001",
    "name": "Wing core, XPS 25 kg/m3 + tape skin + glue + hinge tape (lumped)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 102.0,
+   "mass_g": 100.1,
    "material": "XPS foam 25 kg/m3 + packing tape",
    "cg_xyz_m": [
-    0.0902,
+    0.0869,
     0.0,
-    0.0021
+    -0.0008
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -1195,12 +1503,12 @@ window.VIEWER_DATA = {
    "name": "Elevon left",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 8.0,
+   "mass_g": 6.7,
    "material": "XPS foam + tape",
    "cg_xyz_m": [
-    0.2055,
+    0.2042,
     -0.195,
-    -0.0001
+    -0.0048
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -1212,12 +1520,12 @@ window.VIEWER_DATA = {
    "name": "Elevon right",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 8.0,
+   "mass_g": 6.7,
    "material": "XPS foam + tape",
    "cg_xyz_m": [
-    0.2055,
+    0.2042,
     0.195,
-    -0.0001
+    -0.0048
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -1234,7 +1542,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.1654,
     -0.285,
-    0.0006
+    -0.003
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -1251,7 +1559,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.1654,
     0.285,
-    0.0006
+    -0.003
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -1263,12 +1571,12 @@ window.VIEWER_DATA = {
    "name": "Lens cap + stop bosses (L, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.2,
+   "mass_g": 3.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.164,
+    0.1595,
     -0.285,
-    -0.0079
+    -0.0113
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -1280,12 +1588,12 @@ window.VIEWER_DATA = {
    "name": "Lens cap + stop bosses (L, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.0,
+   "mass_g": 3.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1604,
+    0.1579,
     -0.285,
-    0.0097
+    0.0059
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -1297,12 +1605,12 @@ window.VIEWER_DATA = {
    "name": "Lens cap + stop bosses (R, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.2,
+   "mass_g": 3.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.164,
+    0.1595,
     0.285,
-    -0.0079
+    -0.0113
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -1314,12 +1622,12 @@ window.VIEWER_DATA = {
    "name": "Lens cap + stop bosses (R, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.0,
+   "mass_g": 3.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1604,
+    0.1579,
     0.285,
-    0.0097
+    0.0059
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -1336,7 +1644,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.1837,
     -0.3607,
-    0.0064
+    0.0003
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -1353,7 +1661,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.1837,
     0.3607,
-    0.0064
+    0.0003
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -1370,7 +1678,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.1837,
     -0.3566,
-    0.0064
+    0.0003
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -1387,7 +1695,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.1837,
     0.3566,
-    0.0064
+    0.0003
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -1478,6 +1786,81 @@ window.VIEWER_DATA = {
    "via": "CT-EPOXY",
    "owner": "avionics",
    "notes": "pitot in a groove in the LE at y = +0.41 (outside the rotor wash, EST)",
+   "declared_in": "avionics"
+  },
+  {
+   "id": "E-AVN-08",
+   "part_a": "HWC-001",
+   "part_b": "AVN-002",
+   "via": "CT-HW-SEATED",
+   "owner": "avionics",
+   "hardware": true,
+   "notes": "four M2 screws through the stack standoffs (hardware of E-AVN-03)",
+   "joint_stack": {
+    "fastener": "M2 x 25 pan screw (stock)",
+    "count": 4,
+    "grade": "A2-70",
+    "hole": "boards 2.2 mm clearance (EST), standoffs ID 2.2",
+    "insert": "none",
+    "engagement_mm": 1.2,
+    "min_engagement_mm": 1.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 30,
+    "removal_order": 30
+   },
+   "declared_in": "avionics"
+  },
+  {
+   "id": "E-AVN-09",
+   "part_a": "HWC-001",
+   "part_b": "HWC-003",
+   "via": "CT-HW-SEATED",
+   "owner": "avionics",
+   "hardware": true,
+   "notes": "screw threads into the nut (stock M2 x 25: tip 0.1 mm short of to 0.6 mm past the nut bottom)",
+   "joint_stack": {
+    "fastener": "M2 x 25 pan screw into M2 thin nut",
+    "count": 4,
+    "grade": "A2-70",
+    "hole": "nut thread",
+    "insert": "none",
+    "engagement_mm": 1.1,
+    "min_engagement_mm": 1.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 31,
+    "removal_order": 31
+   },
+   "declared_in": "avionics"
+  },
+  {
+   "id": "E-AVN-10",
+   "part_a": "HWC-003",
+   "part_b": "AVN-001",
+   "via": "CT-HW-SEATED",
+   "owner": "avionics",
+   "hardware": true,
+   "notes": "four M2 thin nuts trapped in hex pockets on the plate underside (seated before the plate goes on the skin)",
+   "joint_stack": {
+    "fastener": "M2 pan screw + M2 thin nut (DIN 439, 1.2 mm)",
+    "count": 4,
+    "grade": "A2-70",
+    "hole": "2.2 mm hole + hex pocket in the plate (plate 1.5-2.1 mm)",
+    "insert": "none",
+    "engagement_mm": 1.2,
+    "min_engagement_mm": 1.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 30,
+    "removal_order": 30
+   },
    "declared_in": "avionics"
   },
   {
@@ -1698,6 +2081,24 @@ window.VIEWER_DATA = {
   },
   {
    "id": "E-FIN-07",
+   "part_a": "FIN-006-R",
+   "part_b": "FIN-002-R",
+   "via": "CT-CA",
+   "owner": "fins",
+   "notes": "rib fairing over the rib top (foam-safe CA), sits on the core skin",
+   "declared_in": "fins"
+  },
+  {
+   "id": "E-FIN-08",
+   "part_a": "FIN-006-R",
+   "part_b": "WNG-001",
+   "via": "CT-CA",
+   "owner": "fins",
+   "notes": "rib fairing bonded on the upper skin",
+   "declared_in": "fins"
+  },
+  {
+   "id": "E-FIN-09",
    "part_a": "FIN-003-L",
    "part_b": "FIN-001-L",
    "via": "CT-EPOXY",
@@ -1706,7 +2107,7 @@ window.VIEWER_DATA = {
    "declared_in": "fins"
   },
   {
-   "id": "E-FIN-08",
+   "id": "E-FIN-10",
    "part_a": "FIN-003-L",
    "part_b": "FIN-002-L",
    "via": "CT-EPOXY",
@@ -1715,7 +2116,7 @@ window.VIEWER_DATA = {
    "declared_in": "fins"
   },
   {
-   "id": "E-FIN-09",
+   "id": "E-FIN-11",
    "part_a": "FIN-002-L",
    "part_b": "FIN-005-L",
    "via": "CT-EPOXY",
@@ -1724,7 +2125,7 @@ window.VIEWER_DATA = {
    "declared_in": "fins"
   },
   {
-   "id": "E-FIN-10",
+   "id": "E-FIN-12",
    "part_a": "FIN-005-L",
    "part_b": "WNG-002",
    "via": "CT-EPOXY",
@@ -1733,7 +2134,7 @@ window.VIEWER_DATA = {
    "declared_in": "fins"
   },
   {
-   "id": "E-FIN-11",
+   "id": "E-FIN-13",
    "part_a": "FIN-004-L",
    "part_b": "FIN-001-L",
    "via": "CT-CA",
@@ -1742,12 +2143,30 @@ window.VIEWER_DATA = {
    "declared_in": "fins"
   },
   {
-   "id": "E-FIN-12",
+   "id": "E-FIN-14",
    "part_a": "FIN-004-L",
    "part_b": "FIN-002-L",
    "via": "CT-CA",
    "owner": "fins",
    "notes": "fairing round the rib",
+   "declared_in": "fins"
+  },
+  {
+   "id": "E-FIN-15",
+   "part_a": "FIN-006-L",
+   "part_b": "FIN-002-L",
+   "via": "CT-CA",
+   "owner": "fins",
+   "notes": "rib fairing over the rib top (foam-safe CA), sits on the core skin",
+   "declared_in": "fins"
+  },
+  {
+   "id": "E-FIN-16",
+   "part_a": "FIN-006-L",
+   "part_b": "WNG-001",
+   "via": "CT-CA",
+   "owner": "fins",
+   "notes": "rib fairing bonded on the upper skin",
    "declared_in": "fins"
   },
   {
@@ -1825,17 +2244,16 @@ window.VIEWER_DATA = {
   {
    "id": "E-HRN-01",
    "part_a": "PWR-001",
-   "part_b": "PRP-003",
+   "part_b": "HRN-002",
    "via": "CT-XT60",
    "owner": "harness",
-   "notes": "pack main lead (XT60 at the pack, disconnect) to the ESC battery pads",
+   "notes": "pack lead XT60 male mated to the ESC-side XT60 female (disconnect); both lead pairs run outboard of the plate",
    "wire": {
     "gauge_awg": 14,
     "connector": "XT60",
     "route_id": "R-A-01",
     "support_points": [
-     "rear tray lip",
-     "plate front edge"
+     "tape on the skin"
     ],
     "bend_radius_mm": 6,
     "strain_relief": "heat-shrink + tie",
@@ -1853,9 +2271,9 @@ window.VIEWER_DATA = {
    "part_b": "PRP-001-UR",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "motor phase leads UR: ESC pad, over the LE, along the arm on the aft side, through the cup hole",
+   "notes": "motor phase leads UR (3 x 20 AWG, V T-Motor page): ESC pad, over the LE, along the arm on the aft side, through the cup hole",
    "wire": {
-    "gauge_awg": 18,
+    "gauge_awg": 20,
     "connector": "solder + heat-shrink",
     "route_id": "R-A-02",
     "support_points": [
@@ -1879,9 +2297,9 @@ window.VIEWER_DATA = {
    "part_b": "PRP-001-UL",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "motor phase leads UL: ESC pad, over the LE, along the arm on the aft side, through the cup hole",
+   "notes": "motor phase leads UL (3 x 20 AWG, V T-Motor page): ESC pad, over the LE, along the arm on the aft side, through the cup hole",
    "wire": {
-    "gauge_awg": 18,
+    "gauge_awg": 20,
     "connector": "solder + heat-shrink",
     "route_id": "R-A-03",
     "support_points": [
@@ -1905,9 +2323,9 @@ window.VIEWER_DATA = {
    "part_b": "PRP-001-LR",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "motor phase leads LR: ESC pad, over the LE, along the arm on the aft side, through the cup hole",
+   "notes": "motor phase leads LR (3 x 20 AWG, V T-Motor page): ESC pad, over the LE, along the arm on the aft side, through the cup hole",
    "wire": {
-    "gauge_awg": 18,
+    "gauge_awg": 20,
     "connector": "solder + heat-shrink",
     "route_id": "R-A-04",
     "support_points": [
@@ -1931,9 +2349,9 @@ window.VIEWER_DATA = {
    "part_b": "PRP-001-LL",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "motor phase leads LL: ESC pad, over the LE, along the arm on the aft side, through the cup hole",
+   "notes": "motor phase leads LL (3 x 20 AWG, V T-Motor page): ESC pad, over the LE, along the arm on the aft side, through the cup hole",
    "wire": {
-    "gauge_awg": 18,
+    "gauge_awg": 20,
     "connector": "solder + heat-shrink",
     "route_id": "R-A-05",
     "support_points": [
@@ -1957,7 +2375,7 @@ window.VIEWER_DATA = {
    "part_b": "AVN-002",
    "via": "CT-JST-GH-6",
    "owner": "harness",
-   "notes": "ESC lead to the FC (VBAT, signals, telemetry)",
+   "notes": "ESC lead to the FC (VBAT, signals, telemetry): 6 conductors, soldered to the FC pads (the Kakute has pads, not sockets: docs.holybro.com pinout 2026-11-15)",
    "wire": {
     "gauge_awg": 26,
     "connector": "JST-GH 6-pin",
@@ -1977,7 +2395,7 @@ window.VIEWER_DATA = {
    "part_b": "MEC-001-R",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "servo lead R: FC servo pad, over the plate, laid on the skin to the servo pocket",
+   "notes": "servo lead R: 3-conductor ribbon, soldered to the FC pad M5/M6 (JR plug cut off; the FC has pads only), laid on the skin to the servo",
    "wire": {
     "gauge_awg": 26,
     "connector": "JR 3-pin",
@@ -1998,7 +2416,7 @@ window.VIEWER_DATA = {
    "part_b": "MEC-001-L",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "servo lead L: FC servo pad, over the plate, laid on the skin to the servo pocket",
+   "notes": "servo lead L: 3-conductor ribbon, soldered to the FC pad M5/M6 (JR plug cut off; the FC has pads only), laid on the skin to the servo",
    "wire": {
     "gauge_awg": 26,
     "connector": "JR 3-pin",
@@ -2019,7 +2437,7 @@ window.VIEWER_DATA = {
    "part_b": "AVN-003",
    "via": "CT-JST-GH-4",
    "owner": "harness",
-   "notes": "RX UART lead",
+   "notes": "RX UART (CRSF wire soldered at the RX pads) lead",
    "wire": {
     "gauge_awg": 28,
     "connector": "CT-JST-GH-4",
@@ -2039,7 +2457,7 @@ window.VIEWER_DATA = {
    "part_b": "AVN-004",
    "via": "CT-JST-GH-6",
    "owner": "harness",
-   "notes": "GPS lead",
+   "notes": "GPS (plug on the GPS board, other end soldered to the FC) lead",
    "wire": {
     "gauge_awg": 28,
     "connector": "CT-JST-GH-6",
@@ -2059,7 +2477,7 @@ window.VIEWER_DATA = {
    "part_b": "AVN-005",
    "via": "CT-JST-GH-4",
    "owner": "harness",
-   "notes": "airspeed I2C lead",
+   "notes": "airspeed I2C (plug on the MS4525 board, other end soldered to the FC) lead",
    "wire": {
     "gauge_awg": 28,
     "connector": "CT-JST-GH-4",
@@ -2074,12 +2492,49 @@ window.VIEWER_DATA = {
    "declared_in": "harness"
   },
   {
+   "id": "E-HRN-12",
+   "part_a": "HRN-002",
+   "part_b": "PRP-003",
+   "via": "CT-SOLDER-DC",
+   "owner": "harness",
+   "notes": "14 AWG tail from the XT60 female to the ESC battery pads (flat pair, inboard over the ESC)",
+   "wire": {
+    "gauge_awg": 14,
+    "connector": "solder + heat-shrink",
+    "route_id": "R-A-12",
+    "support_points": [
+     "tie at the plate edge"
+    ],
+    "bend_radius_mm": 6,
+    "strain_relief": "heat-shrink + tie",
+    "disconnect": false
+   },
+   "current_a": {
+    "cont": 11,
+    "peak": 41
+   },
+   "declared_in": "harness"
+  },
+  {
    "id": "E-HRN-20",
    "part_a": "HRN-001",
    "part_b": "WNG-001",
    "via": "CT-TIE",
    "owner": "harness",
    "notes": "harness lump: ties and tape on the wing",
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-21",
+   "part_a": "HRN-002",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "harness",
+   "notes": "XT60 pair and tail taped on the skin (foam tape) and tied",
+   "retention": {
+    "item": "VHB-class tape",
+    "count": 1
+   },
    "declared_in": "harness"
   },
   {
@@ -2097,12 +2552,12 @@ window.VIEWER_DATA = {
    "part_b": "MEC-001-R",
    "via": "CT-SERVO-SPLINE",
    "owner": "mechanisms",
-   "notes": "arm on the output spline",
+   "notes": "arm on the 23T output spline (V readymaderc 85975; the old 25T was an ES3352 copy)",
    "joint_stack": {
     "fastener": "M2x6 retaining screw",
     "count": 1,
     "grade": "A2-70",
-    "hole": "arm bore on the 25T spline",
+    "hole": "arm bore on the 23T spline",
     "insert": "none",
     "engagement_mm": 4.0,
     "min_engagement_mm": 3.0,
@@ -2121,7 +2576,7 @@ window.VIEWER_DATA = {
    "part_b": "MEC-002-R",
    "via": "CT-CLEVIS",
    "owner": "mechanisms",
-   "notes": "rod end in the arm hole",
+   "notes": "rod Z-bend in the arm tip hole (vertical pin)",
    "motion": {
     "axis": "Z",
     "range_deg": [
@@ -2137,7 +2592,7 @@ window.VIEWER_DATA = {
    "part_b": "MEC-004-R",
    "via": "CT-CLEVIS",
    "owner": "mechanisms",
-   "notes": "rod end in the horn hole",
+   "notes": "rod clevis on the horn hole (horizontal pin)",
    "motion": {
     "axis": "Y",
     "range_deg": [
@@ -2171,12 +2626,12 @@ window.VIEWER_DATA = {
    "part_b": "MEC-001-L",
    "via": "CT-SERVO-SPLINE",
    "owner": "mechanisms",
-   "notes": "arm on the output spline",
+   "notes": "arm on the 23T output spline (V readymaderc 85975; the old 25T was an ES3352 copy)",
    "joint_stack": {
     "fastener": "M2x6 retaining screw",
     "count": 1,
     "grade": "A2-70",
-    "hole": "arm bore on the 25T spline",
+    "hole": "arm bore on the 23T spline",
     "insert": "none",
     "engagement_mm": 4.0,
     "min_engagement_mm": 3.0,
@@ -2195,7 +2650,7 @@ window.VIEWER_DATA = {
    "part_b": "MEC-002-L",
    "via": "CT-CLEVIS",
    "owner": "mechanisms",
-   "notes": "rod end in the arm hole",
+   "notes": "rod Z-bend in the arm tip hole (vertical pin)",
    "motion": {
     "axis": "Z",
     "range_deg": [
@@ -2211,7 +2666,7 @@ window.VIEWER_DATA = {
    "part_b": "MEC-004-L",
    "via": "CT-CLEVIS",
    "owner": "mechanisms",
-   "notes": "rod end in the horn hole",
+   "notes": "rod clevis on the horn hole (horizontal pin)",
    "motion": {
     "axis": "Y",
     "range_deg": [
@@ -2231,19 +2686,201 @@ window.VIEWER_DATA = {
    "declared_in": "mechanisms"
   },
   {
+   "id": "E-MEC-HW-L1",
+   "part_a": "HWC-002-L",
+   "part_b": "MEC-001-L",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "hardware": true,
+   "notes": "arm retaining screw (hardware of the spline joint)",
+   "joint_stack": {
+    "fastener": "M2x6 pan",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "arm bore / output-shaft thread",
+    "insert": "none",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 3.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 20,
+    "removal_order": 20
+   },
+   "declared_in": "mechanisms"
+  },
+  {
+   "id": "E-MEC-HW-L2",
+   "part_a": "HWC-002-L",
+   "part_b": "MEC-002-L",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "hardware": true,
+   "notes": "arm retaining screw (hardware of the spline joint)",
+   "joint_stack": {
+    "fastener": "M2x6 pan",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "arm bore / output-shaft thread",
+    "insert": "none",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 3.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 20,
+    "removal_order": 20
+   },
+   "declared_in": "mechanisms"
+  },
+  {
+   "id": "E-MEC-HW-R1",
+   "part_a": "HWC-002-R",
+   "part_b": "MEC-001-R",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "hardware": true,
+   "notes": "arm retaining screw (hardware of the spline joint)",
+   "joint_stack": {
+    "fastener": "M2x6 pan",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "arm bore / output-shaft thread",
+    "insert": "none",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 3.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 20,
+    "removal_order": 20
+   },
+   "declared_in": "mechanisms"
+  },
+  {
+   "id": "E-MEC-HW-R2",
+   "part_a": "HWC-002-R",
+   "part_b": "MEC-002-R",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "hardware": true,
+   "notes": "arm retaining screw (hardware of the spline joint)",
+   "joint_stack": {
+    "fastener": "M2x6 pan",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "arm bore / output-shaft thread",
+    "insert": "none",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 3.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 20,
+    "removal_order": 20
+   },
+   "declared_in": "mechanisms"
+  },
+  {
+   "id": "E-MEC-PIN-L3",
+   "part_a": "MEC-005-L",
+   "part_b": "MEC-003-L",
+   "via": "CT-CLEVIS",
+   "owner": "mechanisms",
+   "notes": "clevis pin through the cheek holes of the rod (the rod turns on it); linkage path not modelled in the poses",
+   "motion": {
+    "axis": "Y",
+    "range_deg": [
+     -21.0,
+     21.0
+    ]
+   },
+   "declared_in": "mechanisms"
+  },
+  {
+   "id": "E-MEC-PIN-L4",
+   "part_a": "MEC-005-L",
+   "part_b": "MEC-004-L",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "hardware": true,
+   "notes": "clevis pin through the horn hole (pressed in along y after the clevis is lowered onto the blade); moves with the horn",
+   "joint_stack": {
+    "fastener": "1.0 mm clevis pin",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "horn hole 1.5 mm",
+    "insert": "none",
+    "engagement_mm": 2.0,
+    "min_engagement_mm": 2.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 40,
+    "removal_order": 40
+   },
+   "declared_in": "mechanisms"
+  },
+  {
+   "id": "E-MEC-PIN-R3",
+   "part_a": "MEC-005-R",
+   "part_b": "MEC-003-R",
+   "via": "CT-CLEVIS",
+   "owner": "mechanisms",
+   "notes": "clevis pin through the cheek holes of the rod (the rod turns on it); linkage path not modelled in the poses",
+   "motion": {
+    "axis": "Y",
+    "range_deg": [
+     -21.0,
+     21.0
+    ]
+   },
+   "declared_in": "mechanisms"
+  },
+  {
+   "id": "E-MEC-PIN-R4",
+   "part_a": "MEC-005-R",
+   "part_b": "MEC-004-R",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "hardware": true,
+   "notes": "clevis pin through the horn hole (pressed in along y after the clevis is lowered onto the blade); moves with the horn",
+   "joint_stack": {
+    "fastener": "1.0 mm clevis pin",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "horn hole 1.5 mm",
+    "insert": "none",
+    "engagement_mm": 2.0,
+    "min_engagement_mm": 2.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 40,
+    "removal_order": 40
+   },
+   "declared_in": "mechanisms"
+  },
+  {
    "id": "E-PRP-01",
    "part_a": "PRP-001-UR",
    "part_b": "CGE-003-UR",
-   "via": "CT-M3-SHCS-MOTOR",
+   "via": "CT-A-M25-SHCS-MOTOR",
    "owner": "propulsion",
-   "notes": "motor on the cup plate, 16 deg cant in the cup",
+   "notes": "motor on the cup plate, 17 deg cant in the cup; 4 x M2.5x8 on the 19 x 16 base pattern of the T-Motor drawing",
    "joint_stack": {
-    "fastener": "M3x8 SHCS",
+    "fastener": "M2.5x8 SHCS",
     "count": 4,
     "grade": "A2-70",
-    "hole": "3.4 mm clearance in the cup plate (EST pattern); motor base tapped M3",
+    "hole": "2.9 mm (ISO 273 medium M2.5) clearance holes in the cup plate (CUP_PAT 19 x 16, D-194); motor base tapped M2.5 (drawing 4-M2.5; length EST)",
     "insert": "none",
-    "engagement_mm": 2.5,
+    "engagement_mm": 3.0,
     "min_engagement_mm": 2.0,
     "washer_nut": "none",
     "torque": "snug + threadlocker",
@@ -2257,18 +2894,18 @@ window.VIEWER_DATA = {
   {
    "id": "E-PRP-02",
    "part_a": "PRP-002-UR",
-   "part_b": "PRP-001-UR",
-   "via": "CT-PROP-NUT",
+   "part_b": "PRP-004-UR",
+   "via": "CT-A-PROP-NUT",
    "owner": "propulsion",
-   "notes": "APC adapter ring + prop nut on the shaft",
+   "notes": "APC hub on the T-Motor adapter stud (APC adapter ring), clamped by the spinner nut",
    "joint_stack": {
-    "fastener": "M6x1 prop nut + washer",
+    "fastener": "M5 spinner nut (T-Motor)",
     "count": 1,
     "grade": "A2-70",
-    "hole": "adapter ring on the 4 mm shaft (EST)",
+    "hole": "APC adapter ring (ID 5, EST) on the M5 stud",
     "insert": "none",
-    "engagement_mm": 6.0,
-    "min_engagement_mm": 4.0,
+    "engagement_mm": 9.0,
+    "min_engagement_mm": 5.0,
     "washer_nut": "none",
     "torque": "snug + threadlocker",
     "tool": "2.0 mm hex key",
@@ -2283,16 +2920,16 @@ window.VIEWER_DATA = {
    "id": "E-PRP-03",
    "part_a": "PRP-001-UL",
    "part_b": "CGE-003-UL",
-   "via": "CT-M3-SHCS-MOTOR",
+   "via": "CT-A-M25-SHCS-MOTOR",
    "owner": "propulsion",
-   "notes": "motor on the cup plate, 16 deg cant in the cup",
+   "notes": "motor on the cup plate, 17 deg cant in the cup; 4 x M2.5x8 on the 19 x 16 base pattern of the T-Motor drawing",
    "joint_stack": {
-    "fastener": "M3x8 SHCS",
+    "fastener": "M2.5x8 SHCS",
     "count": 4,
     "grade": "A2-70",
-    "hole": "3.4 mm clearance in the cup plate (EST pattern); motor base tapped M3",
+    "hole": "2.9 mm (ISO 273 medium M2.5) clearance holes in the cup plate (CUP_PAT 19 x 16, D-194); motor base tapped M2.5 (drawing 4-M2.5; length EST)",
     "insert": "none",
-    "engagement_mm": 2.5,
+    "engagement_mm": 3.0,
     "min_engagement_mm": 2.0,
     "washer_nut": "none",
     "torque": "snug + threadlocker",
@@ -2306,18 +2943,18 @@ window.VIEWER_DATA = {
   {
    "id": "E-PRP-04",
    "part_a": "PRP-002-UL",
-   "part_b": "PRP-001-UL",
-   "via": "CT-PROP-NUT",
+   "part_b": "PRP-004-UL",
+   "via": "CT-A-PROP-NUT",
    "owner": "propulsion",
-   "notes": "APC adapter ring + prop nut on the shaft",
+   "notes": "APC hub on the T-Motor adapter stud (APC adapter ring), clamped by the spinner nut",
    "joint_stack": {
-    "fastener": "M6x1 prop nut + washer",
+    "fastener": "M5 spinner nut (T-Motor)",
     "count": 1,
     "grade": "A2-70",
-    "hole": "adapter ring on the 4 mm shaft (EST)",
+    "hole": "APC adapter ring (ID 5, EST) on the M5 stud",
     "insert": "none",
-    "engagement_mm": 6.0,
-    "min_engagement_mm": 4.0,
+    "engagement_mm": 9.0,
+    "min_engagement_mm": 5.0,
     "washer_nut": "none",
     "torque": "snug + threadlocker",
     "tool": "2.0 mm hex key",
@@ -2332,16 +2969,16 @@ window.VIEWER_DATA = {
    "id": "E-PRP-05",
    "part_a": "PRP-001-LR",
    "part_b": "CGE-003-LR",
-   "via": "CT-M3-SHCS-MOTOR",
+   "via": "CT-A-M25-SHCS-MOTOR",
    "owner": "propulsion",
-   "notes": "motor on the cup plate, 16 deg cant in the cup",
+   "notes": "motor on the cup plate, 17 deg cant in the cup; 4 x M2.5x8 on the 19 x 16 base pattern of the T-Motor drawing",
    "joint_stack": {
-    "fastener": "M3x8 SHCS",
+    "fastener": "M2.5x8 SHCS",
     "count": 4,
     "grade": "A2-70",
-    "hole": "3.4 mm clearance in the cup plate (EST pattern); motor base tapped M3",
+    "hole": "2.9 mm (ISO 273 medium M2.5) clearance holes in the cup plate (CUP_PAT 19 x 16, D-194); motor base tapped M2.5 (drawing 4-M2.5; length EST)",
     "insert": "none",
-    "engagement_mm": 2.5,
+    "engagement_mm": 3.0,
     "min_engagement_mm": 2.0,
     "washer_nut": "none",
     "torque": "snug + threadlocker",
@@ -2355,18 +2992,18 @@ window.VIEWER_DATA = {
   {
    "id": "E-PRP-06",
    "part_a": "PRP-002-LR",
-   "part_b": "PRP-001-LR",
-   "via": "CT-PROP-NUT",
+   "part_b": "PRP-004-LR",
+   "via": "CT-A-PROP-NUT",
    "owner": "propulsion",
-   "notes": "APC adapter ring + prop nut on the shaft",
+   "notes": "APC hub on the T-Motor adapter stud (APC adapter ring), clamped by the spinner nut",
    "joint_stack": {
-    "fastener": "M6x1 prop nut + washer",
+    "fastener": "M5 spinner nut (T-Motor)",
     "count": 1,
     "grade": "A2-70",
-    "hole": "adapter ring on the 4 mm shaft (EST)",
+    "hole": "APC adapter ring (ID 5, EST) on the M5 stud",
     "insert": "none",
-    "engagement_mm": 6.0,
-    "min_engagement_mm": 4.0,
+    "engagement_mm": 9.0,
+    "min_engagement_mm": 5.0,
     "washer_nut": "none",
     "torque": "snug + threadlocker",
     "tool": "2.0 mm hex key",
@@ -2381,16 +3018,16 @@ window.VIEWER_DATA = {
    "id": "E-PRP-07",
    "part_a": "PRP-001-LL",
    "part_b": "CGE-003-LL",
-   "via": "CT-M3-SHCS-MOTOR",
+   "via": "CT-A-M25-SHCS-MOTOR",
    "owner": "propulsion",
-   "notes": "motor on the cup plate, 16 deg cant in the cup",
+   "notes": "motor on the cup plate, 17 deg cant in the cup; 4 x M2.5x8 on the 19 x 16 base pattern of the T-Motor drawing",
    "joint_stack": {
-    "fastener": "M3x8 SHCS",
+    "fastener": "M2.5x8 SHCS",
     "count": 4,
     "grade": "A2-70",
-    "hole": "3.4 mm clearance in the cup plate (EST pattern); motor base tapped M3",
+    "hole": "2.9 mm (ISO 273 medium M2.5) clearance holes in the cup plate (CUP_PAT 19 x 16, D-194); motor base tapped M2.5 (drawing 4-M2.5; length EST)",
     "insert": "none",
-    "engagement_mm": 2.5,
+    "engagement_mm": 3.0,
     "min_engagement_mm": 2.0,
     "washer_nut": "none",
     "torque": "snug + threadlocker",
@@ -2404,18 +3041,18 @@ window.VIEWER_DATA = {
   {
    "id": "E-PRP-08",
    "part_a": "PRP-002-LL",
-   "part_b": "PRP-001-LL",
-   "via": "CT-PROP-NUT",
+   "part_b": "PRP-004-LL",
+   "via": "CT-A-PROP-NUT",
    "owner": "propulsion",
-   "notes": "APC adapter ring + prop nut on the shaft",
+   "notes": "APC hub on the T-Motor adapter stud (APC adapter ring), clamped by the spinner nut",
    "joint_stack": {
-    "fastener": "M6x1 prop nut + washer",
+    "fastener": "M5 spinner nut (T-Motor)",
     "count": 1,
     "grade": "A2-70",
-    "hole": "adapter ring on the 4 mm shaft (EST)",
+    "hole": "APC adapter ring (ID 5, EST) on the M5 stud",
     "insert": "none",
-    "engagement_mm": 6.0,
-    "min_engagement_mm": 4.0,
+    "engagement_mm": 9.0,
+    "min_engagement_mm": 5.0,
     "washer_nut": "none",
     "torque": "snug + threadlocker",
     "tool": "2.0 mm hex key",
@@ -2440,18 +3077,241 @@ window.VIEWER_DATA = {
    "declared_in": "propulsion"
   },
   {
+   "id": "E-PRP-10",
+   "part_a": "PRP-004-UR",
+   "part_b": "PRP-001-UR",
+   "via": "CT-A-PROP-ADAPTER",
+   "owner": "propulsion",
+   "notes": "T-Motor prop adapter flange on the bell top, 2 x M3 at 12 mm pitch (drawing: 2-Phi3.2, Phi5.7 counterbore)",
+   "joint_stack": {
+    "fastener": "M3x6 SHCS",
+    "count": 2,
+    "grade": "A2-70",
+    "hole": "Phi3.2 holes with Phi5.7 counterbore in the flange; bell-top thread and thickness not published (EST)",
+    "insert": "none",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 2.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 20,
+    "removal_order": 20
+   },
+   "field_joint": true,
+   "declared_in": "propulsion"
+  },
+  {
+   "id": "E-PRP-11",
+   "part_a": "PRP-005-UR",
+   "part_b": "PRP-004-UR",
+   "via": "CT-A-PROP-NUT",
+   "owner": "propulsion",
+   "notes": "spinner nut threaded on the M5 stud",
+   "joint_stack": {
+    "fastener": "M5 thread (cone nut)",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "internal M5 thread, 12 mm deep (drawing)",
+    "insert": "none",
+    "engagement_mm": 9.0,
+    "min_engagement_mm": 5.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 30,
+    "removal_order": 30
+   },
+   "field_joint": true,
+   "declared_in": "propulsion"
+  },
+  {
+   "id": "E-PRP-12",
+   "part_a": "PRP-004-UL",
+   "part_b": "PRP-001-UL",
+   "via": "CT-A-PROP-ADAPTER",
+   "owner": "propulsion",
+   "notes": "T-Motor prop adapter flange on the bell top, 2 x M3 at 12 mm pitch (drawing: 2-Phi3.2, Phi5.7 counterbore)",
+   "joint_stack": {
+    "fastener": "M3x6 SHCS",
+    "count": 2,
+    "grade": "A2-70",
+    "hole": "Phi3.2 holes with Phi5.7 counterbore in the flange; bell-top thread and thickness not published (EST)",
+    "insert": "none",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 2.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 21,
+    "removal_order": 21
+   },
+   "field_joint": true,
+   "declared_in": "propulsion"
+  },
+  {
+   "id": "E-PRP-13",
+   "part_a": "PRP-005-UL",
+   "part_b": "PRP-004-UL",
+   "via": "CT-A-PROP-NUT",
+   "owner": "propulsion",
+   "notes": "spinner nut threaded on the M5 stud",
+   "joint_stack": {
+    "fastener": "M5 thread (cone nut)",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "internal M5 thread, 12 mm deep (drawing)",
+    "insert": "none",
+    "engagement_mm": 9.0,
+    "min_engagement_mm": 5.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 31,
+    "removal_order": 31
+   },
+   "field_joint": true,
+   "declared_in": "propulsion"
+  },
+  {
+   "id": "E-PRP-14",
+   "part_a": "PRP-004-LR",
+   "part_b": "PRP-001-LR",
+   "via": "CT-A-PROP-ADAPTER",
+   "owner": "propulsion",
+   "notes": "T-Motor prop adapter flange on the bell top, 2 x M3 at 12 mm pitch (drawing: 2-Phi3.2, Phi5.7 counterbore)",
+   "joint_stack": {
+    "fastener": "M3x6 SHCS",
+    "count": 2,
+    "grade": "A2-70",
+    "hole": "Phi3.2 holes with Phi5.7 counterbore in the flange; bell-top thread and thickness not published (EST)",
+    "insert": "none",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 2.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 22,
+    "removal_order": 22
+   },
+   "field_joint": true,
+   "declared_in": "propulsion"
+  },
+  {
+   "id": "E-PRP-15",
+   "part_a": "PRP-005-LR",
+   "part_b": "PRP-004-LR",
+   "via": "CT-A-PROP-NUT",
+   "owner": "propulsion",
+   "notes": "spinner nut threaded on the M5 stud",
+   "joint_stack": {
+    "fastener": "M5 thread (cone nut)",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "internal M5 thread, 12 mm deep (drawing)",
+    "insert": "none",
+    "engagement_mm": 9.0,
+    "min_engagement_mm": 5.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 32,
+    "removal_order": 32
+   },
+   "field_joint": true,
+   "declared_in": "propulsion"
+  },
+  {
+   "id": "E-PRP-16",
+   "part_a": "PRP-004-LL",
+   "part_b": "PRP-001-LL",
+   "via": "CT-A-PROP-ADAPTER",
+   "owner": "propulsion",
+   "notes": "T-Motor prop adapter flange on the bell top, 2 x M3 at 12 mm pitch (drawing: 2-Phi3.2, Phi5.7 counterbore)",
+   "joint_stack": {
+    "fastener": "M3x6 SHCS",
+    "count": 2,
+    "grade": "A2-70",
+    "hole": "Phi3.2 holes with Phi5.7 counterbore in the flange; bell-top thread and thickness not published (EST)",
+    "insert": "none",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 2.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 23,
+    "removal_order": 23
+   },
+   "field_joint": true,
+   "declared_in": "propulsion"
+  },
+  {
+   "id": "E-PRP-17",
+   "part_a": "PRP-005-LL",
+   "part_b": "PRP-004-LL",
+   "via": "CT-A-PROP-NUT",
+   "owner": "propulsion",
+   "notes": "spinner nut threaded on the M5 stud",
+   "joint_stack": {
+    "fastener": "M5 thread (cone nut)",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "internal M5 thread, 12 mm deep (drawing)",
+    "insert": "none",
+    "engagement_mm": 9.0,
+    "min_engagement_mm": 5.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 33,
+    "removal_order": 33
+   },
+   "field_joint": true,
+   "declared_in": "propulsion"
+  },
+  {
    "id": "E-PWR-01",
-   "part_a": "PWR-001",
+   "part_a": "PWR-002",
    "part_b": "CGE-008",
    "via": "CT-STRAP-VELCRO",
    "owner": "power",
-   "notes": "hook-and-loop strap round pack and tray, lips fore and aft",
+   "notes": "hook-and-loop strap round pack and tray: over the pack top, outside the tray end walls, under the tray plate AND the 12 mm bridge tube CGE-004 (tangent to the plate underside, z -6..6)",
    "retention": {
     "item": "25 mm strap",
     "count": 1,
     "load_n": 38.8
    },
    "field_joint": true,
+   "declared_in": "power"
+  },
+  {
+   "id": "E-PWR-02",
+   "part_a": "PWR-001",
+   "part_b": "CGE-008",
+   "via": "CT-STRAP-VELCRO",
+   "owner": "power",
+   "notes": "pack sits on the tray floor on a hook-and-loop anti-slip pad (pad not drawn, EST), between the integral lips; strap PWR-002 holds it",
+   "retention": {
+    "item": "anti-slip pad + strap",
+    "count": 1
+   },
+   "field_joint": true,
+   "declared_in": "power"
+  },
+  {
+   "id": "E-PWR-03",
+   "part_a": "PWR-002",
+   "part_b": "PWR-001",
+   "via": "CT-STRAP-VELCRO",
+   "owner": "power",
+   "notes": "strap bears on the pack top face",
    "declared_in": "power"
   },
   {
@@ -2650,6 +3510,24 @@ window.VIEWER_DATA = {
   }
  ],
  "connection_types": {
+  "CT-A-M25-SHCS-MOTOR": {
+   "id": "CT-A-M25-SHCS-MOTOR",
+   "kind": "mechanical",
+   "method": "fastened",
+   "spec": "concept A: 4 x M2.5 SHCS through 2.9 mm clearance holes in the printed motor cup into the T-Motor MN2212 base (4-M2.5 on a 19 x 16 mm rectangle, T-Motor drawing)"
+  },
+  "CT-A-PROP-ADAPTER": {
+   "id": "CT-A-PROP-ADAPTER",
+   "kind": "mechanical",
+   "method": "fastened",
+   "spec": "concept A: T-Motor MN2212 prop adapter (Phi19 x 4.5 flange, M5 stud) on the bell top, 2 x M3 at 12 mm pitch (Phi3.2 holes, Phi5.7 counterbore), Phi4 shaft bore (T-Motor drawing)"
+  },
+  "CT-A-PROP-NUT": {
+   "id": "CT-A-PROP-NUT",
+   "kind": "mechanical",
+   "method": "fastened",
+   "spec": "concept A: APC hub with its adapter ring (ID 5 mm, EST) on the M5 stud of the T-Motor adapter, clamped by an M5 spinner nut Phi12 x 16 (field joint); replaces the M6x1 text of CT-PROP-NUT, which is the K09-L meaning"
+  },
   "CT-AS150U": {
    "id": "CT-AS150U",
    "kind": "electrical",
@@ -2703,6 +3581,12 @@ window.VIEWER_DATA = {
    "kind": "mechanical",
    "method": "strapped",
    "spec": "hatch: printed tongue under a fixed lip at one end, hook-and-loop tab at the other (tool-free, no magnets)"
+  },
+  "CT-HW-SEATED": {
+   "id": "CT-HW-SEATED",
+   "kind": "mechanical",
+   "method": "fastened",
+   "spec": "loose hardware (screw, nut, washer) seated in the hole or pocket of the part it fastens; named in collide.py MOVE_VIA, added for concept A (2026-11-15)"
   },
   "CT-JST-GH-4": {
    "id": "CT-JST-GH-4",
@@ -2899,16 +3783,16 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-MASS-PRED",
    "title": "Predicted take-off mass (CAD basic x growth + overrun)",
-   "value": 1.4238993160000002,
+   "value": 1.4540030359999998,
    "unit": "kg",
    "limit": {
     "op": "<=",
     "ref": "P:req.mass_target_kg",
-    "resolved": 1.44
+    "resolved": 1.46
    },
    "status": "UNVERIFIED",
    "how": "Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).",
-   "margin": 0.011181030555555384,
+   "margin": 0.004107509589041205,
    "parts": [
     "WNG-001",
     "WNG-002",
@@ -2921,16 +3805,16 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG",
    "title": "CG aft of the leading edge, CAD as drawn",
-   "value": 24.35429044780483,
+   "value": 21.471224804231465,
    "unit": "mm",
    "limit": {
     "op": ">=",
     "ref": "P:req.cg_lo_mm",
-    "resolved": 20.0
+    "resolved": 19.0
    },
    "status": "CHECKED",
    "how": "CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.",
-   "margin": 0.21771452239024142,
+   "margin": 0.1300644633806034,
    "parts": [
     "PWR-001",
     "CGE-008",
@@ -2941,7 +3825,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-HI",
    "title": "CG aft limit of the design band",
-   "value": 24.35429044780483,
+   "value": 21.471224804231465,
    "unit": "mm",
    "limit": {
     "op": "<=",
@@ -2949,8 +3833,8 @@ window.VIEWER_DATA = {
     "resolved": 26.0
    },
    "status": "CHECKED",
-   "how": "CG breadboard (M5); band 20-26 mm, hard aft limit 28.5 mm.",
-   "margin": 0.06329652123827582,
+   "how": "CG breadboard (M5); band 19-26 mm (D-195), hard aft limit 28.5 mm.",
+   "margin": 0.1741836613757129,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -2959,7 +3843,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-TRIM-AFT",
    "title": "CG at the aft end of the pack trim travel",
-   "value": 26.54702356782042,
+   "value": 23.615545531076773,
    "unit": "mm",
    "limit": {
     "op": "<=",
@@ -2968,7 +3852,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "Slide the pack to the aft slot stop and re-measure CG (M5).",
-   "margin": 0.06852548884840627,
+   "margin": 0.17138436733063955,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -2977,16 +3861,16 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-TRIM-FWD",
    "title": "CG at the forward end of the pack trim travel",
-   "value": 22.161557327789236,
+   "value": 19.326904077386157,
    "unit": "mm",
    "limit": {
     "op": ">=",
     "ref": "P:req.cg_lo_mm",
-    "resolved": 20.0
+    "resolved": 19.0
    },
    "status": "CHECKED",
    "how": "Slide the pack to the forward slot stop and re-measure CG (M5).",
-   "margin": 0.10807786638946179,
+   "margin": 0.017205477757166153,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -2995,7 +3879,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-SM",
    "title": "Static margin at the CAD CG",
-   "value": 6.671718184569459,
+   "value": 7.84847967174226,
    "unit": "% chord",
    "limit": {
     "op": ">=",
@@ -3004,15 +3888,15 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Measure NP on the built aircraft (M5, M6); SM >= 5 % chord.",
-   "margin": 0.33434363691389174,
+   "margin": 0.569695934348452,
    "parts": [
     "WNG-001"
    ]
   },
   {
    "id": "CL-A-TW-FRESH-GATE",
-   "title": "Hover T/W fresh at the 1.50 kg gate (0.90 cap)",
-   "value": 2.3029375993365515,
+   "title": "Hover T/W fresh at the 1.47 kg gate (0.90 cap)",
+   "value": 2.337818404831478,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -3021,7 +3905,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "margin": 0.15146879966827576,
+   "margin": 0.16890920241573903,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -3035,8 +3919,8 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-A-TW-SAG-GATE",
-   "title": "Hover T/W sagged pack at the 1.50 kg gate (0.90 cap)",
-   "value": 1.8205039155806164,
+   "title": "Hover T/W sagged pack at the 1.47 kg gate (0.90 cap)",
+   "value": 1.8480776731155204,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -3045,7 +3929,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "margin": 0.1378149472378852,
+   "margin": 0.1550485456972002,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -3057,7 +3941,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-TW-FRESH-PRED",
    "title": "Hover T/W fresh at the predicted mass (0.90 cap)",
-   "value": 2.426018722102418,
+   "value": 2.363539119255507,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -3066,7 +3950,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "margin": 0.21300936105120893,
+   "margin": 0.18176955962775354,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -3077,7 +3961,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-TW-SAG-PRED",
    "title": "Hover T/W sagged pack at the predicted mass (0.90 cap)",
-   "value": 1.9178012396565576,
+   "value": 1.8684102523977228,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -3086,7 +3970,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "margin": 0.19862577478534843,
+   "margin": 0.16775640774857672,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -3098,7 +3982,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-WINDOW-PRED",
    "title": "Transition entry window at the predicted mass (0.90 cap)",
-   "value": 7.1307195279760185,
+   "value": 5.831647866379391,
    "unit": "%",
    "limit": {
     "op": ">=",
@@ -3107,7 +3991,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "C3 time-domain pitch-over run at the as-weighed mass (T-A-C3-PITCHOVER); the window uses 1.33 W low and 0.80 x T/W sag high.",
-   "margin": 0.4261439055952037,
+   "margin": 0.16632957327587813,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -3117,8 +4001,8 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-A-WINDOW-GATE",
-   "title": "Transition entry window at the 1.50 kg gate (0.90 cap)",
-   "value": 4.536426584931853,
+   "title": "Transition entry window at the 1.47 kg gate (0.90 cap)",
+   "value": 5.286243188313403,
    "unit": "%",
    "limit": {
     "op": ">=",
@@ -3126,8 +4010,8 @@ window.VIEWER_DATA = {
     "resolved": 5.0
    },
    "status": "UNVERIFIED",
-   "how": "C3 run at the as-weighed mass; MASS-GATE s1: +-5 % holds to 1.486 kg, above it the aircraft flies only if the run shows >= +-5 %.",
-   "margin": -0.09271468301362944,
+   "how": "C3 run at the as-weighed mass; MASS-GATE s8: +-5 % holds to 1.478 kg at cant 17, gate 1.47 kg.",
+   "margin": 0.05724863766268058,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -3138,7 +4022,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-MOTOR-I",
    "title": "One motor at the 0.90 spin cap, winding current",
-   "value": 12.079418040950374,
+   "value": 12.077257782615476,
    "unit": "A",
    "limit": {
     "op": "<=",
@@ -3147,7 +4031,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Bench M2: one motor at duty 0.90 for 180 s, phase A <= 13 A, can <= 80 C. Without Q_M_SPIN_MAX 0.90 the same case is 14.3 A (prop_a.py).",
-   "margin": 0.07081399684997122,
+   "margin": 0.07098017056804032,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -3159,7 +4043,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-ESC-I",
    "title": "ESC channel and connector current required (1.25 x uncapped peak)",
-   "value": 17.836356822386307,
+   "value": 17.83305726953393,
    "unit": "A",
    "limit": {
     "op": "<=",
@@ -3168,7 +4052,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Compare the SpeedyBee BLS 35A Mini V2 page (35 A continuous per channel) with 1.25 x 14.3 A.",
-   "margin": 0.49038980507467694,
+   "margin": 0.4904840780133162,
    "parts": [
     "PRP-003"
    ]
@@ -3176,7 +4060,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CRUISE-AVAIL",
    "title": "Cruise time to BATT_LOW at the predicted mass",
-   "value": 271.8732379099456,
+   "value": 258.7358729580236,
    "unit": "s",
    "limit": {
     "op": ">=",
@@ -3185,7 +4069,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).",
-   "margin": 0.3290871302362776,
+   "margin": 0.26486343975078647,
    "parts": [
     "PWR-001",
     "PRP-003"
@@ -3193,8 +4077,8 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-A-STALL",
-   "title": "1.3 x clean stall speed at the 1.50 kg gate",
-   "value": 15.846723205875604,
+   "title": "1.3 x clean stall speed at the 1.47 kg gate",
+   "value": 15.687455613845213,
    "unit": "m/s",
    "limit": {
     "op": "<=",
@@ -3202,8 +4086,8 @@ window.VIEWER_DATA = {
     "resolved": 17.0
    },
    "status": "UNVERIFIED",
-   "how": "Measured stall on the first cruise sorties (T-A-FIRST-CRUISE) replaces CLmax 0.75; 12.19 m/s stall, 15.85 m/s at 1.3 Vs (MISSION s1).",
-   "margin": 0.06783981141908214,
+   "how": "Measured stall on the first cruise sorties (T-A-FIRST-CRUISE) replaces CLmax 0.75; 12.07 m/s stall, 15.69 m/s at 1.3 Vs at 1.47 kg (12.19 / 15.85 at 1.50 kg, MISSION s1).",
+   "margin": 0.07720849330322277,
    "parts": [
     "WNG-001"
    ]
@@ -3211,7 +4095,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-YAW-MODEL",
    "title": "Hover yaw authority (model) at +-0.10 throttle",
-   "value": 0.34645485319161623,
+   "value": 0.363139266754344,
    "unit": "N m",
    "limit": {
     "op": ">=",
@@ -3220,7 +4104,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Hanging yaw test (M3) on the bench: >= 0.35 N m go; 0.30-0.35 go with the 4 m/s card; < 0.30 R2.",
-   "margin": -0.010128990881096422,
+   "margin": 0.037540762155268616,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -3251,17 +4135,37 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-A-WIND-OUTPUT",
-   "title": "Peak motor output in 5 m/s turbulence hover (SITL)",
-   "value": 0.87,
-   "unit": "-",
+   "title": "Longest time any motor is at or above 0.85 output, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)",
+   "value": 0.2,
+   "unit": "s",
    "limit": {
     "op": "<=",
-    "ref": "P:req.motor_out_max",
-    "resolved": 0.85
+    "ref": "P:req.motor_ge85_s_max",
+    "resolved": 0.5
    },
-   "status": "UNVERIFIED",
-   "how": "Log motor outputs in the tethered turbulence hover (M9); no motor above 85 %, none held at the 0.90 cap for more than 1 s.",
-   "margin": -0.023529411764705903,
+   "status": "CHECKED",
+   "how": "Log motor outputs in the tethered turbulence hover (M9) at <= 4 m/s mean: no motor above 0.85 for more than 0.5 s, none at the 0.90 cap.",
+   "margin": 0.6,
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ]
+  },
+  {
+   "id": "CL-A-WIND-CAP",
+   "title": "Time any motor is at the 0.90 spin cap, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)",
+   "value": 0.0,
+   "unit": "s",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.motor_cap_s_max",
+    "resolved": 0.0
+   },
+   "status": "CHECKED",
+   "how": "Log motor outputs in the tethered turbulence hover (M9): no sample at the cap.",
+   "margin": 0.0,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -3293,8 +4197,8 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-A-ROLL-141",
-   "title": "Peak roll rate in SITL, 1.41 kg",
-   "value": 92.9,
+   "title": "Peak roll rate in SITL at cruise speed, 1.455 kg (D-195 target mass)",
+   "value": 106.9,
    "unit": "deg/s",
    "limit": {
     "op": ">=",
@@ -3303,7 +4207,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "Measure the roll rate on the first cruise (M8 extended); the surface is at its 20 deg stop at the peak, +3-5 % is smaller than the EST aero error.",
-   "margin": 0.032222222222222284,
+   "margin": 0.18777777777777785,
    "parts": [
     "WNG-006-R",
     "WNG-006-L"
@@ -3311,8 +4215,8 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-A-ROLL-GATE",
-   "title": "Peak roll rate in SITL, 1.50 kg gate",
-   "value": 94.1,
+   "title": "Peak roll rate in SITL at cruise speed, 1.47 kg (the gate)",
+   "value": 106.4,
    "unit": "deg/s",
    "limit": {
     "op": ">=",
@@ -3321,7 +4225,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "Measure the roll rate on the first cruise (T-A-FIRST-CRUISE).",
-   "margin": 0.045555555555555495,
+   "margin": 0.18222222222222229,
    "parts": [
     "WNG-006-R",
     "WNG-006-L"
@@ -3330,7 +4234,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-PITCH-USE",
    "title": "Elevon use in transition (share of the 20 deg stop)",
-   "value": 0.48,
+   "value": 0.575,
    "unit": "-",
    "limit": {
     "op": "<=",
@@ -3338,8 +4242,8 @@ window.VIEWER_DATA = {
     "resolved": 0.6
    },
    "status": "CHECKED",
-   "how": "C3 pitch-over run and SITL transition logs (FIXES s5.1: peak 8.9-9.6 deg).",
-   "margin": 0.2,
+   "how": "C3 pitch-over run and SITL transition logs (D-195: peak 11.5 deg at the CAD CG, 12.0 at the forward trim end; was 8.9-9.6 before the S5010 section, CG 21.5 and the corrected trim).",
+   "margin": 0.041666666666666706,
    "parts": [
     "WNG-006-R",
     "WNG-006-L"
@@ -3348,7 +4252,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-FLUTTER-ELEVON-NOM",
    "title": "Elevon flutter onset with the hinge damper, nominal 25 C (lowest of kd / nom / hi)",
-   "value": 40.5,
+   "value": 42.0,
    "unit": "m/s",
    "limit": {
     "op": ">=",
@@ -3357,7 +4261,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "E1 coupon (FIXES2 s8): ring-down damping c >= 7.1e-4 N m s/rad at 25 C, c(50 C) >= 4.0e-4; the model holds for every K from 0.01 to 20 N m/rad, so free play does not matter while the damper is filled and sealed (O-rings BOM R13, fill checked every preflight).",
-   "margin": 0.40625000000000017,
+   "margin": 0.4583333333333335,
    "parts": [
     "WNG-006-R",
     "WNG-006-L",
@@ -3372,7 +4276,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-FLUTTER-ELEVON-HOT",
    "title": "Elevon flutter onset with the hinge damper, hot 50 C (lowest of kd / nom / hi)",
-   "value": 35.5,
+   "value": 38.5,
    "unit": "m/s",
    "limit": {
     "op": ">=",
@@ -3381,7 +4285,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "E1 coupon (FIXES2 s8): ring-down damping c >= 7.1e-4 N m s/rad at 25 C, c(50 C) >= 4.0e-4; the model holds for every K from 0.01 to 20 N m/rad, so free play does not matter while the damper is filled and sealed (O-rings BOM R13, fill checked every preflight).",
-   "margin": 0.232638888888889,
+   "margin": 0.3368055555555557,
    "parts": [
     "WNG-006-R",
     "WNG-006-L",
@@ -3396,7 +4300,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-FLUTTER-ELEVON-COLD",
    "title": "Elevon flutter onset with the hinge damper, cold 0 C (lowest of kd / nom / hi)",
-   "value": 44.5,
+   "value": 45.0,
    "unit": "m/s",
    "limit": {
     "op": ">=",
@@ -3405,7 +4309,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "E1 coupon (FIXES2 s8): ring-down damping c >= 7.1e-4 N m s/rad at 25 C, c(50 C) >= 4.0e-4; the model holds for every K from 0.01 to 20 N m/rad, so free play does not matter while the damper is filled and sealed (O-rings BOM R13, fill checked every preflight).",
-   "margin": 0.5451388888888891,
+   "margin": 0.5625000000000001,
    "parts": [
     "WNG-006-R",
     "WNG-006-L",
@@ -3420,7 +4324,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-FLUTTER-HALF",
    "title": "Elevon flutter onset with a half-filled (leaking) damper, kd corner",
-   "value": 28.5,
+   "value": 33.0,
    "unit": "m/s",
    "limit": null,
    "status": "UNVERIFIED",
@@ -3440,7 +4344,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-FLUTTER-WING",
    "title": "Wing bending-torsion flutter speed, lowest case (fins off, kd corner)",
-   "value": 34.6,
+   "value": 33.4,
    "unit": "m/s",
    "limit": {
     "op": ">=",
@@ -3449,7 +4353,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "Tap / ground-vibration test with the fin on one tip (12 Hz and 44 Hz modes); FLUTTER.md open item 3.",
-   "margin": 0.20138888888888906,
+   "margin": 0.1597222222222223,
    "parts": [
     "WNG-001",
     "WNG-002",
@@ -3576,7 +4480,7 @@ window.VIEWER_DATA = {
     "ref": "P:req.ms_min",
     "resolved": 0.0
    },
-   "status": "CHECKED",
+   "status": "UNVERIFIED",
    "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
    "margin": 0.48,
    "parts": [
@@ -3764,7 +4668,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-VIB-LOW",
    "title": "Highest strongly coupled mode below the rotor bands (hi corner)",
-   "value": 78.0,
+   "value": 77.0,
    "unit": "Hz",
    "limit": {
     "op": "<=",
@@ -3773,7 +4677,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "Tap test of the built cage (T-A-TAP): modes within +-20 % of FE or re-tune. Margin is about 7 % at the hi corner, 31 % at kd.",
-   "margin": 0.06679960119641072,
+   "margin": 0.07876370887337981,
    "parts": [
     "CGE-002-UR",
     "CGE-002-UL",
@@ -3804,7 +4708,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-VIB-FC",
    "title": "Flight-controller vibration, worst of the forced-response sweep",
-   "value": 28.5,
+   "value": 27.1,
    "unit": "m/s2",
    "limit": {
     "op": "<=",
@@ -3813,7 +4717,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "IMU VIBE < 30 m/s2 in the first tethered hover (T-A-TETHER-VIBE). The worst point (10,500 rpm) is unreachable; at the 0.90 cap (9,349 rpm) the sweep reads 19.6-20.1.",
-   "margin": 0.05,
+   "margin": 0.09666666666666662,
    "parts": [
     "AVN-002",
     "AVN-001",
@@ -3823,7 +4727,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-VIB-GM",
    "title": "Rate-loop gain margin, minimum over axes and corners (nominal modes)",
-   "value": 2.06,
+   "value": 2.19,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -3832,7 +4736,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "Re-run sitl/fu_cage.py with the built-cage tap-test frequencies; hard-mounted FC.",
-   "margin": 0.030000000000000027,
+   "margin": 0.09499999999999997,
    "parts": [
     "AVN-002",
     "CGE-004",
@@ -3842,16 +4746,16 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-VIB-GM-SHIFT",
    "title": "Rate-loop gain margin with the cage modes shifted +-20 %",
-   "value": 1.64,
+   "value": 2.16,
    "unit": "-",
    "limit": {
     "op": ">=",
     "ref": "P:req.gm_min",
     "resolved": 2.0
    },
-   "status": "UNVERIFIED",
-   "how": "Tap test of the built cage (T-A-TAP): pitch mode 12-16 Hz, roll 21-43 Hz; outside that window re-tune the rate loop.",
-   "margin": -0.18000000000000005,
+   "status": "CHECKED",
+   "how": "Tap test of the built cage (T-A-TAP): first pitch mode 9-17 Hz, first roll mode 21-43 Hz (GM >= 2 grid, iter3_run.md); outside that window re-tune the rate loop.",
+   "margin": 0.08000000000000007,
    "parts": [
     "AVN-002",
     "CGE-004",
@@ -3949,7 +4853,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-COLL-DEPTH",
    "title": "Deepest part overlap at any reachable pose",
-   "value": 0.014,
+   "value": 0.042,
    "unit": "mm",
    "limit": {
     "op": "<=",
@@ -3957,15 +4861,15 @@ window.VIEWER_DATA = {
     "resolved": 0.05
    },
    "status": "CHECKED",
-   "how": "collide_a.py report: the only hits under the 0.05 mm gate are two 0.014 mm touches at +20 deg (elevon on the lower lens cap); +-22 deg is past the stop and is not a reachable pose.",
-   "margin": 0.7200000000000001,
+   "how": "collide_a.py report (D-194): the only hits under the 0.05 mm gate are the two balance horn tabs touching their stop bosses at the +21 deg stop (0.042 mm, WNG-007 on WNG-008, a designed contact) and one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); +-22 deg is past the stop and is not a reachable pose.",
+   "margin": 0.16,
    "parts": [
-    "WNG-006-R",
-    "WNG-006-L",
+    "WNG-007-R",
+    "WNG-007-L",
     "WNG-008-RU",
-    "WNG-008-RL",
     "WNG-008-LU",
-    "WNG-008-LL"
+    "HWC-001",
+    "HWC-003"
    ]
   }
  ],

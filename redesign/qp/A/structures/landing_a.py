@@ -11,7 +11,7 @@ MU = 0.40          # pad friction cap (K09-L D-105 pad_mu_max, carried)
 CASES_HARD, CASES_NORM = 1.2, 0.5        # m/s sink: hard landing (K09-L landing_sink_ms 1.2) and normal touchdown (K09-L v_normal 0.5)
 ATT_ERR = 10.0                           # deg attitude error at touchdown (K09-L landing_attitude_err_deg)
 # mass list: (g, x aft of LE, y, z) ; scaled to M_GATE; from structures_a mass roll-up and MASS-GATE s2
-ITEMS = [(213, 0.095, 0, 0), (125, 0.24, 0.38, 0), (4*81.06, -0.075, 0.228, 0.156), (64, -0.075, 0.114, 0.078), (46, -0.045, 0, 0),
+ITEMS = [(213, 0.095, 0, 0), (125, 0.24, 0.38, 0), (4*88.26, -0.075, 0.228, 0.156), (64, -0.075, 0.114, 0.078), (46, -0.045, 0, 0),
          (20, 0.05, 0, 0), (270, -0.020, 0, 0), (110, 0.06, 0, 0), (30, 0.20, 0.30, 0), (40, 0.10, 0, 0)]
 
 
