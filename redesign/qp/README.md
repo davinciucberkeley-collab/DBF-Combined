@@ -38,7 +38,7 @@ The electronics and flight software:
 | Cruise to BATT_LOW at 1.46 kg, 17 m/s | 4.27 min (need 3.41) `EST` | `A/mission_gate_a.py` |
 | Elevon flutter, lowest onset (with damper) | 38.5 m/s hot `EST` (line 28.8); wing 33.4 m/s fins off | `A/structures/flutter_d195.md` |
 | BOM total | $1,775.09; +$105.08 margin if unverified lines run 30 % over (G7 PASS) | `A/bom_a.py` |
-| 3-D gates | collision 0 at neutral, ±20° and ±21°; assembly 41 steps (5 are wire threading / laying markers), 97/97 parts; wires: 4.27 strand-m exposed (was 9.09), `../review/QP-5/HARNESS-ENCLOSED.md` | `A/cad/out/REPORT.md`, `ASSEMBLY.md` |
+| 3-D gates | collision 0 at neutral, ±20° and ±21°, wire ends seated, no folds; assembly 45 steps, 104/104 parts; exposed wire 0.87 strand-m (was 9.09; D-198, D-199) | `A/cad/out/REPORT.md`, `ASSEMBLY.md`, `../review/QP-5/HARNESS-ENCLOSED.md` |
 
 Nothing is bought, weighed, built or flown.
 
@@ -51,6 +51,10 @@ Nothing is bought, weighed, built or flown.
 | QP-3 | SITL flight, structures, cost and schedule, CAD with the 3-D gates; D-185, D-186 | `../review/QP-3/` |
 | QP-4 | Pre-order items, board re-sit, fixes (D-187 balance; D-188 hinge damper, caps, stops, foam at 103 kPa) | `../review/QP-4/` |
 | QP-5 | CAD fidelity round (D-193, D-194) and the re-run of the analyses it invalidated (D-195) | `../review/QP-5/` |
+
+## Build guide
+
+Step-by-step build for the team: `A/BUILD-GUIDE-A.md` (45 steps in 10 stages, parts, tools, checks, EST times; generated from `A/cad/a_build_steps.py`). The build film in the Explorer follows it.
 
 ## Before the main order
 

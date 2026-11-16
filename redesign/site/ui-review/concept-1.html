@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Concept 1 · Drawing sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* palette tokens, light = paper */
+  --paper:#f2eee4; --sheet:#faf8f2; --ink:#1c2430; --ink-2:#4a5463; --ink-3:#7a8190;
+  --rule:#c9c3b3; --rule-strong:#1c2430; --rev:#b4420f; --dim:#255f85; --ok:#2f6b4f; --warn:#8a5a00;
+  /* spacing scale (px): 4 8 12 16 24 32 48 80 */
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:48px;--s8:80px;
+  --serif:"Newsreader",Georgia,serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --paper:#0c1a2b; --sheet:#0f2036; --ink:#dbe7f3; --ink-2:#9bb2c8; --ink-3:#6f879f;
+  --rule:#27425e; --rule-strong:#9bb2c8; --rev:#ff9a5c; --dim:#6cc4f0; --ok:#7fd4a8; --warn:#e8bd5c;}}
+:root[data-theme=dark]{
+  --paper:#0c1a2b; --sheet:#0f2036; --ink:#dbe7f3; --ink-2:#9bb2c8; --ink-3:#6f879f;
+  --rule:#27425e; --rule-strong:#9bb2c8; --rev:#ff9a5c; --dim:#6cc4f0; --ok:#7fd4a8; --warn:#e8bd5c;}
+*{box-sizing:border-box}
+html{background:var(--paper);color:var(--ink);font:400 17px/1.55 var(--serif);-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh}
+a{color:inherit;text-decoration-color:var(--rev);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--rev);outline-offset:2px}
+.mono,.tb dd,.sheetnav,th,.n,.state,.cap,.eyebrow,.legend{font-family:var(--mono);font-feature-settings:"zero","tnum"}
+.wrap{max-width:1180px;margin:0 auto;padding:0 var(--s5)}
+/* title block */
+.tb{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr 1fr;border:1.5px solid var(--rule-strong);margin:var(--s5) 0 0;background:var(--sheet)}
+.tb>div{padding:var(--s2) var(--s3);border-left:1px solid var(--rule-strong)} .tb>div:first-child{border-left:0}
+.tb dt{font:500 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin:0 0 var(--s1)}
+.tb dd{margin:0;font-size:13px;line-height:1.35}
+.tb .proj dd{font:500 19px/1.2 var(--serif)}
+.sheetnav{display:flex;gap:0;border:1.5px solid var(--rule-strong);border-top:0;font-size:12px;background:var(--sheet);overflow:hidden}
+.sheetnav a{flex:1;padding:var(--s2) var(--s3);text-decoration:none;border-left:1px solid var(--rule);white-space:nowrap}
+.sheetnav a:first-child{border-left:0}
+.sheetnav a b{color:var(--ink-3);font-weight:400;margin-right:var(--s2)}
+.sheetnav a[aria-current]{background:var(--ink);color:var(--paper)} .sheetnav a[aria-current] b{color:var(--paper)}
+.menu{display:none}
+.theme{font:12px var(--mono);background:none;border:1px solid var(--rule-strong);color:var(--ink);padding:2px 8px;cursor:pointer}
+/* sheets */
+.page{padding:var(--s7) 0 var(--s8);border-bottom:1px solid var(--rule)}
+.pagemark{font:11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin:0 0 var(--s5);display:flex;justify-content:space-between}
+h1{font:500 44px/1.05 var(--serif);letter-spacing:-.01em;margin:0 0 var(--s3)}
+h2{font:500 24px/1.2 var(--serif);margin:var(--s7) 0 var(--s3);display:flex;gap:var(--s3);align-items:baseline}
+h2 .n{font-size:12px;color:var(--rev)}
+.lede{max-width:62ch;color:var(--ink-2);margin:0}
+.eyebrow{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin:0 0 var(--s2)}
+/* figure */
+.sheetgrid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:var(--s6);margin-top:var(--s6)}
+figure{margin:0}
+.frame{position:relative;border:1px solid var(--rule-strong);background:var(--sheet);aspect-ratio:16/10;overflow:hidden}
+.frame img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.7)}
+:root[data-theme=dark] .frame img{filter:saturate(.6) brightness(.85)}
+.frame::before,.frame::after{content:"";position:absolute;width:14px;height:14px;border:2px solid var(--rev)}
+.frame::before{top:8px;left:8px;border-right:0;border-bottom:0}.frame::after{right:8px;bottom:8px;border-left:0;border-top:0}
+.hint{position:absolute;left:var(--s3);bottom:var(--s3);font:11px var(--mono);background:var(--sheet);border:1px solid var(--rule);padding:2px 8px;color:var(--ink-2)}
+.modes{display:flex;gap:var(--s4);font:12px var(--mono);margin:0 0 var(--s2);flex-wrap:wrap}
+.modes span{color:var(--ink-3)} .modes .on{color:var(--ink);border-bottom:2px solid var(--rev)}
+.cap{font-size:12px;color:var(--ink-2);margin-top:var(--s2)}
+.cap b{color:var(--ink)}
+.notes{border-top:1.5px solid var(--rule-strong);font-size:14px}
+.notes dl{margin:0}
+.notes .row{display:flex;justify-content:space-between;gap:var(--s3);padding:var(--s2) 0;border-bottom:1px solid var(--rule)}
+.notes dt{color:var(--ink-2)} .notes dd{margin:0;font:500 14px var(--mono);text-align:right}
+.notes dd small{display:block;font-weight:400;color:var(--ink-3);font-size:11px}
+.notes h3{font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin:var(--s5) 0 var(--s2)}
+/* tables */
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{font-size:10.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;text-align:left;color:var(--ink-3);border-bottom:1.5px solid var(--rule-strong);padding:var(--s2) var(--s3) var(--s2) 0;white-space:nowrap}
+td{padding:var(--s3) var(--s3) var(--s3) 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.num{text-align:right;font-family:var(--mono);font-size:13px;white-space:nowrap} th.num{text-align:right}
+td.id{font:12px var(--mono);color:var(--ink-3);white-space:nowrap}
+.bar{display:block;height:3px;background:var(--rule);margin-top:5px}.bar i{display:block;height:3px;background:var(--dim)}
+.state{font-size:11.5px;white-space:nowrap} .state::before{content:"";display:inline-block;width:8px;height:8px;border:1.5px solid currentColor;margin-right:7px;vertical-align:-1px}
+.s-done{color:var(--ok)} .s-done::before{background:currentColor}
+.s-partial{color:var(--warn)} .s-partial::before{background:linear-gradient(90deg,currentColor 50%,transparent 50%)}
+.s-todo{color:var(--ink-3)}
+.s-open{color:var(--rev)} .s-open::before{background:currentColor}
+.s-unverified{color:var(--warn)}.s-marginal{color:var(--warn)}
+.legend{font-size:11.5px;color:var(--ink-2);border:1px solid var(--rule);padding:var(--s2) var(--s3);margin:var(--s4) 0;display:flex;gap:var(--s5);flex-wrap:wrap}
+.src{font:11.5px var(--mono);color:var(--ink-3)}
+/* figures row (BOM) */
+.figs{display:grid;grid-template-columns:repeat(4,1fr);border-top:1.5px solid var(--rule-strong);border-bottom:1px solid var(--rule);margin:var(--s6) 0}
+.figs>div{padding:var(--s4) var(--s4) var(--s4) 0;border-left:1px solid var(--rule);padding-left:var(--s4)} .figs>div:first-child{border-left:0;padding-left:0}
+.figs .k{font:10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.figs .v{font:500 34px/1.1 var(--serif);margin:var(--s1) 0}
+.figs .l{font-size:12.5px;color:var(--ink-2);line-height:1.4}
+.hbar{display:grid;grid-template-columns:110px 1fr 80px;align-items:center;gap:var(--s3);font-size:14px;padding:5px 0}
+.hbar i{display:block;height:8px;background:repeating-linear-gradient(90deg,var(--dim) 0 3px,transparent 3px 5px)}
+.hbar b{font:13px var(--mono);text-align:right;font-weight:400}
+.scroll{overflow-x:auto}
+footer{padding:var(--s6) 0;font:12px var(--mono);color:var(--ink-3);display:flex;justify-content:space-between;gap:var(--s4);flex-wrap:wrap}
+@media (max-width:760px){
+  html{font-size:16px}.wrap{padding:0 var(--s4)}
+  .tb{grid-template-columns:1fr 1fr}.tb .proj{grid-column:1/-1}.tb>div{border-top:1px solid var(--rule-strong)}.tb>div:nth-child(2){border-left:0}
+  .tb>div:nth-child(2),.tb>div:nth-child(3),.tb>div:nth-child(4),.tb>div:nth-child(5){border-top:1px solid var(--rule-strong)}
+  .tb>div:nth-child(3){border-left:0}
+  .sheetnav{display:none}
+  .menu{display:block;border:1.5px solid var(--rule-strong);border-top:0;background:var(--sheet);font:13px var(--mono)}
+  .menu summary{padding:var(--s3);cursor:pointer;list-style:none;display:flex;justify-content:space-between}
+  .menu a{display:block;padding:var(--s3);border-top:1px solid var(--rule);text-decoration:none} .menu a b{color:var(--ink-3);margin-right:var(--s3);font-weight:400}
+  h1{font-size:32px}.sheetgrid{grid-template-columns:1fr}
+  .figs{grid-template-columns:1fr 1fr}.figs>div:nth-child(3){border-left:0;padding-left:0}.figs>div{border-top:1px solid var(--rule)}
+  .hbar{grid-template-columns:84px 1fr 64px}
+  .col-hide{display:none}
+}
+</style></head><body>
+<!--
+ CONCEPT 1 "Drawing sheet" (engineering notebook / technical drawing)
+ Type: Newsreader (text and headings) + IBM Plex Mono (data, labels). Mono is used only for identifiers, numbers and labels.
+ Light = paper #f2eee4 / ink #1c2430 / revision orange #b4420f; dark = blueprint #0c1a2b / #dbe7f3 / #ff9a5c.
+ Spacing 4 8 12 16 24 32 48 80. Radius 0 everywhere. Nav: title block + numbered sheet strip (menu button under 760 px).
+-->
+<div class="wrap">
+ <dl class="tb">
+  <div class="proj"><dt>Project</dt><dd>Concept A, scaled quad tailsitter</dd></div>
+  <div><dt>Decision</dt><dd>D-182 (J6 board)</dd></div>
+  <div><dt>Revision</dt><dd>D-199</dd></div>
+  <div><dt>Data built</dt><dd>2026-11-16 07:46Z</dd></div>
+  <div><dt>Display</dt><dd><button class="theme" onclick="var r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark'">light / dark</button></dd></div>
+ </dl>
+ <nav class="sheetnav" aria-label="Sheets"><a href="#aircraft" aria-current="page"><b>1</b>Aircraft</a><a href="#decision"><b>2</b>Decision</a><a href="#team"><b>3</b>Team</a><a href="#subsystems"><b>4</b>Subsystems</a><a href="#build-guide"><b>5</b>Build guide</a><a href="#proofs"><b>6</b>Proofs</a><a href="#status"><b>7</b>Status</a><a href="#bom"><b>8</b>BOM</a><a href="#docs"><b>9</b>Docs</a></nav>
+ <details class="menu"><summary><span>1 Aircraft</span><span>Sheets +</span></summary><a href="#aircraft" aria-current="page"><b>1</b>Aircraft</a><a href="#decision"><b>2</b>Decision</a><a href="#team"><b>3</b>Team</a><a href="#subsystems"><b>4</b>Subsystems</a><a href="#build-guide"><b>5</b>Build guide</a><a href="#proofs"><b>6</b>Proofs</a><a href="#status"><b>7</b>Status</a><a href="#bom"><b>8</b>BOM</a><a href="#docs"><b>9</b>Docs</a></details>
+
+ <main>
+ <section class="page" id="aircraft">
+  <p class="pagemark"><span>Sheet 1 of 9</span><span>Aircraft, 3-D model</span></p>
+  <h1>Aircraft</h1>
+  <p class="lede">106 flight parts, 1,263 g declared, 141 interfaces. Select a part for its numbers, interfaces and claims; double-click to focus.</p>
+  <div class="sheetgrid">
+   <figure>
+    <div class="modes"><span class="on">Aircraft</span><span>Inside &amp; wiring</span><span>Structure</span><span>Exploded</span><span>|</span><span class="on">Cruise</span><span>Hover</span></div>
+    <div class="frame"><img src="../assets/renders/a-hero-iso.webp" alt="Placeholder for the 3-D viewer: render of concept A"><span class="hint">drag rotate / scroll zoom / click part / H fasteners</span></div>
+    <figcaption class="cap"><b>Fig. 1</b> Concept A as modelled. Viewer area (placeholder: render a-hero-iso). Source: assets/concept-a.glb, built 2026-11-16.</figcaption>
+   </figure>
+   <aside class="notes" aria-label="Key numbers">
+    <h3 style="margin-top:var(--s3)">Key numbers</h3>
+    <dl>
+     <div class="row"><dt>Declared mass</dt><dd>1,263 g<small>of 1,500 g gate</small></dd></div>
+     <div class="row"><dt>CG x</dt><dd>0.021 m<small>target 0.004 to 0.029</small></dd></div>
+     <div class="row"><dt>Claims</dt><dd>63<small>0 failing</small></dd></div>
+     <div class="row"><dt>Interfaces</dt><dd>141</dd></div>
+    </dl>
+    <h3>Mass by subsystem</h3>
+    <table><tbody><tr><td>propulsion<span class="bar"><i style="width:100%"></i></span></td><td class="num">353 g</td></tr><tr><td>power<span class="bar"><i style="width:79%"></i></span></td><td class="num">279 g</td></tr><tr><td>wing<span class="bar"><i style="width:62%"></i></span></td><td class="num">222 g</td></tr><tr><td>cage<span class="bar"><i style="width:33%"></i></span></td><td class="num">119 g</td></tr><tr><td>fins<span class="bar"><i style="width:31%"></i></span></td><td class="num">110 g</td></tr><tr><td>avionics<span class="bar"><i style="width:18%"></i></span></td><td class="num">65 g</td></tr><tr><td>mechanisms<span class="bar"><i style="width:13%"></i></span></td><td class="num">48 g</td></tr><tr><td>harness<span class="bar"><i style="width:9%"></i></span></td><td class="num">33 g</td></tr><tr><td>assembly<span class="bar"><i style="width:7%"></i></span></td><td class="num">26 g</td></tr><tr><td>wiring<span class="bar"><i style="width:3%"></i></span></td><td class="num">14 g</td></tr><tr><td>landing<span class="bar"><i style="width:2%"></i></span></td><td class="num">8.4 g</td></tr></tbody></table>
+   </aside>
+  </div>
+ </section>
+
+ <section class="page" id="status">
+  <nav class="sheetnav" aria-label="Sheets" style="margin-bottom:var(--s6);border-top:1.5px solid var(--rule-strong)"><a href="#aircraft"><b>1</b>Aircraft</a><a href="#decision"><b>2</b>Decision</a><a href="#team"><b>3</b>Team</a><a href="#subsystems"><b>4</b>Subsystems</a><a href="#build-guide"><b>5</b>Build guide</a><a href="#proofs"><b>6</b>Proofs</a><a href="#status" aria-current="page"><b>7</b>Status</a><a href="#bom"><b>8</b>BOM</a><a href="#docs"><b>9</b>Docs</a></nav>
+  <p class="pagemark"><span>Sheet 7 of 9</span><span>Status, concept A (D-182), 2026-11-15</span></p>
+  <h1>Status</h1>
+  <p class="lede">Five of ten phases done, one partial, four not started. Nothing bought, built or flown. Done means the round delivered and its decisions are logged in CHANGE-LOG; it does not mean verified. Claims: strict build, 0 failing.</p>
+  <h2><span class="n">7.1</span>Programme</h2>
+  <div class="scroll"><table><thead><tr><th>No.</th><th>Phase</th><th class="col-hide">Reference</th><th>State</th></tr></thead><tbody><tr><td class="id">01</td><td><b style="font-weight:500">Re-study and selection</b><br><span style="color:var(--ink-2)">Re-study 2026-11-14, QP-1 sizing of A, B, T, D2; J6 board picks A</span></td><td class="col-hide src">D-182</td><td><span class="state s-done">Done</span></td></tr><tr><td class="id">02</td><td><b style="font-weight:500">Sizing and SITL</b><br><span style="color:var(--ink-2)">QP-2: wind, bench plan, baseline</span></td><td class="col-hide src">D-183, D-184</td><td><span class="state s-done">Done</span></td></tr><tr><td class="id">03</td><td><b style="font-weight:500">Pre-order validation</b><br><span style="color:var(--ink-2)">QP-3: SITL flight, structures, cost and schedule, CAD through the 3-D gates</span></td><td class="col-hide src">D-185, D-186</td><td><span class="state s-done">Done</span></td></tr><tr><td class="id">04</td><td><b style="font-weight:500">Fixes and board re-sit</b><br><span style="color:var(--ink-2)">QP-4: elevon balance and hinge damper, caps and stops. Order 1 YES, main order NOT YET</span></td><td class="col-hide src">D-187, D-188</td><td><span class="state s-done">Done</span></td></tr><tr><td class="id">05</td><td><b style="font-weight:500">Claims and real-shape CAD</b><br><span style="color:var(--ink-2)">QP-5: claims cleared, CAD to vendor geometry, analyses on it, hub walls, arms and motor cups</span></td><td class="col-hide src">D-189 to D-197</td><td><span class="state s-done">Done</span></td></tr><tr><td class="id">06</td><td><b style="font-weight:500">Enclosed wiring</b><br><span style="color:var(--ink-2)">C8: phase leads enclosed from motor to ESC; exposed wire 9.09 to 0.87 strand-m; pitot tube run not designed</span></td><td class="col-hide src">D-199</td><td><span class="state s-partial">Partial</span></td></tr><tr><td class="id">07</td><td><b style="font-weight:500">Order 1 and bench</b><br><span style="color:var(--ink-2)">Bench kit early December: thrust, current, yaw (M1 to M4), elevon coupon, weigh-in</span></td><td class="col-hide src">by 4 Dec</td><td><span class="state s-todo">Not started</span></td></tr><tr><td class="id">08</td><td><b style="font-weight:500">Main order</b><br><span style="color:var(--ink-2)">Gates G1 to G9 (QP-4 board s4); latest safe date 28 Dec</span></td><td class="col-hide src">28 Dec</td><td><span class="state s-todo">Not started</span></td></tr><tr><td class="id">09</td><td><b style="font-weight:500">Build and tethered hover</b><br><span style="color:var(--ink-2)">January to February; lifeboat (ZOHD Altus) if no tethered hover</span></td><td class="col-hide src">15 Feb 2027</td><td><span class="state s-todo">Not started</span></td></tr><tr><td class="id">10</td><td><b style="font-weight:500">Flight test</b><br><span style="color:var(--ink-2)">Transition round trip and the mission profile</span></td><td class="col-hide src">30 Apr 2027</td><td><span class="state s-todo">Not started</span></td></tr></tbody></table></div>
+  <h2><span class="n">7.2</span>Open issues</h2>
+  <div class="legend"><span>Open: needs work</span><span>Unverified: analysed, not tested</span><span>Marginal: passes with little room</span><span>Est: estimate</span></div>
+  <div class="scroll"><table><thead><tr><th>No.</th><th>Issue and source</th><th class="col-hide">Owner</th><th>State</th></tr></thead><tbody><tr><td class="id">1</td><td><b style="font-weight:500">Exposed wiring (hard constraint C8).</b> After D-199, 0.87 strand-m are still outside the skin (was 9.09; 0.60 without the vendor pack leads). Left: vendor pack leads and battery tail to the cover slot, short RX / airspeed / servo lead stubs, and the pitot silicone tube, not designed (0.45 m, needs a foam groove across the spar).<div class="src" style="margin-top:4px">CLAUDE.md C8; HARNESS-ENCLOSED.md s5</div></td><td class="col-hide">harness, CAD</td><td><span class="state s-open">Open</span></td></tr><tr><td class="id">2</td><td><b style="font-weight:500">Hub arm-socket wall.</b> 2.0 mm over the 12 mm mouth: the rough hoop check passes only with a 12 mm bearing patch (MS +0.05; -0.47 at 6 mm).<div class="src" style="margin-top:4px">ASM-A-HUB-WALL, D-196; qp5_checks.md s2</div></td><td class="col-hide">structures, bench</td><td><span class="state s-unverified">Unverified</span></td></tr><tr><td class="id">3</td><td><b style="font-weight:500">Mass has about 4 g of room.</b> Predicted 1,455.6 g against the 1.46 kg target (weigh-in gate 1.47 kg) after D-198; the estimated cuts must prove real at the weigh-in.<div class="src" style="margin-top:4px">CL-A-MASS-PRED, CL-A-CUTS-REQUIRED; MASS-GATE.md s11</div></td><td class="col-hide">mass (A3)</td><td><span class="state s-unverified">Unverified</span></td></tr><tr><td class="id">4</td><td><b style="font-weight:500">Elevon flutter.</b> Cleared only with the silicone-fluid hinge damper (lowest onset 38.5 m/s hot against the 28.8 m/s line); the coupon must show K >= 2, free play <= 0.5 deg, damping >= 1 %.<div class="src" style="margin-top:4px">G8, D-188; flutter_d195.md</div></td><td class="col-hide">structures (C1, C2)</td><td><span class="state s-unverified">Unverified</span></td></tr><tr><td class="id">5</td><td><b style="font-weight:500">Gusty hover heading.</b> Excursion 25.4 deg in one of seven turbulence seeds (8.5 to 14.0 deg in the rest); flown with the pilot holding heading.<div class="src" style="margin-top:4px">A-P8a; QP-5/ANALYSES.md</div></td><td class="col-hide">flight controls</td><td><span class="state s-marginal">Marginal</span></td></tr></tbody></table></div>
+ </section>
+
+ <section class="page" id="bom">
+  <nav class="sheetnav" aria-label="Sheets" style="margin-bottom:var(--s6);border-top:1.5px solid var(--rule-strong)"><a href="#aircraft"><b>1</b>Aircraft</a><a href="#decision"><b>2</b>Decision</a><a href="#team"><b>3</b>Team</a><a href="#subsystems"><b>4</b>Subsystems</a><a href="#build-guide"><b>5</b>Build guide</a><a href="#proofs"><b>6</b>Proofs</a><a href="#status"><b>7</b>Status</a><a href="#bom" aria-current="page"><b>8</b>BOM</a><a href="#docs"><b>9</b>Docs</a></nav>
+  <p class="pagemark"><span>Sheet 8 of 9</span><span>Bill of materials, prices read 2026-11-14/15</span></p>
+  <h1>Bill of materials</h1>
+  <p class="lede">41 lines, all bought new, against the $2,000 limit. V = price read on the vendor page, EST = estimate. Totals add tax 10.25 %, shipping (estimate) and the FAA fee, then a crash reserve. Nothing is bought yet.</p>
+  <div class="figs">
+   <div><div class="k">Total, with reserve</div><div class="v">$1,779.47</div><div class="l">spend $1,452.04 + reserve $327.43</div></div>
+   <div><div class="k">Margin to $2,000</div><div class="v">$220.53</div><div class="l">+$100.05 if unverified lines run 30 % over</div></div>
+   <div><div class="k">Goods</div><div class="v">$1,262.50</div><div class="l">+ tax $129.41, shipping $55.13 EST, FAA $5</div></div>
+   <div><div class="k">Order 1, early Dec</div><div class="v">$967.90</div><div class="l">bench kit, 2 motors (ORDER-1.csv)</div></div>
+  </div>
+  <h2><span class="n">8.1</span>Where the money goes, incl. tax</h2>
+  <div style="max-width:640px"><div class="hbar"><span>propulsion</span><i style="width:100%"></i><b>$319.24</b></div><div class="hbar"><span>avionics</span><i style="width:95%"></i><b>$304.07</b></div><div class="hbar"><span>airframe</span><i style="width:85%"></i><b>$273.36</b></div><div class="hbar"><span>power</span><i style="width:69%"></i><b>$221.59</b></div><div class="hbar"><span>ground test</span><i style="width:68%"></i><b>$217.46</b></div><div class="hbar"><span>mechanisms</span><i style="width:17%"></i><b>$56.18</b></div></div>
+  <h2><span class="n">8.2</span>Lines</h2>
+  <div class="scroll"><table><thead><tr><th>Line</th><th>Item</th><th class="col-hide">Group</th><th class="col-hide">Vendor</th><th class="num">Qty</th><th class="num">Unit</th><th class="num">Ext</th><th class="num">Price</th></tr></thead><tbody><tr><td class="id">P01</td><td>T-Motor MN2212 V2.0 KV780 (4 + 1 spare)</td><td class="col-hide">propulsion</td><td class="col-hide">T-Motor</td><td class="num">5</td><td class="num">$46.90</td><td class="num">$234.50</td><td class="num">V</td></tr><tr><td class="id">P02</td><td>APC 9x4.5MR 4-pack (2 standard + 2 reverse rotation)</td><td class="col-hide">propulsion</td><td class="col-hide">RMRC</td><td class="num">1</td><td class="num">$9.40</td><td class="num">$9.40</td><td class="num">V</td></tr><tr><td class="id">P04</td><td>SpeedyBee BLS 35A Mini V2 4-in-1 ESC 20x20 (DShot300/600)</td><td class="col-hide">propulsion</td><td class="col-hide">RMRC</td><td class="num">1</td><td class="num">$45.66</td><td class="num">$45.66</td><td class="num">V</td></tr><tr><td class="id">W01</td><td>Tattu 2300 mAh 4S 75C XT60 270 g (2 flight packs)</td><td class="col-hide">power</td><td class="col-hide">RMRC</td><td class="num">2</td><td class="num">$37.09</td><td class="num">$74.18</td><td class="num">V</td></tr><tr><td class="id">W02</td><td>ToolkitRC M6AC charger</td><td class="col-hide">power</td><td class="col-hide">RMRC</td><td class="num">1</td><td class="num">$63.71</td><td class="num">$63.71</td><td class="num">V</td></tr><tr><td class="id">W03</td><td>TBS LiPo bag</td><td class="col-hide">power</td><td class="col-hide">RMRC</td><td class="num">2</td><td class="num">$7.61</td><td class="num">$15.22</td><td class="num">V</td></tr><tr><td class="id">W04</td><td>Metal ammo can (pack storage)</td><td class="col-hide">power</td><td class="col-hide">Local</td><td class="num">1</td><td class="num">$13.99</td><td class="num">$13.99</td><td class="num">V</td></tr><tr><td class="id">W05</td><td>Wire 14 AWG silicone, XT60 5-pair, heat shrink</td><td class="col-hide">power</td><td class="col-hide">RMRC</td><td class="num">1</td><td class="num">$19.94</td><td class="num">$19.94</td><td class="num">V</td></tr><tr><td class="id">W06</td><td>Threadlocker</td><td class="col-hide">power</td><td class="col-hide">Local</td><td class="num">1</td><td class="num">$6.00</td><td class="num">$6.00</td><td class="num">EST</td></tr><tr><td class="id">W07</td><td>Wire 20 AWG silicone: phase-lead extension</td><td class="col-hide">power</td><td class="col-hide">RMRC</td><td class="num">1</td><td class="num">$3.96</td><td class="num">$3.96</td><td class="num">V</td></tr><tr><td class="id">W08</td><td>Battery strap 20 x 300 mm (2 pcs)</td><td class="col-hide">power</td><td class="col-hide">RMRC</td><td class="num">1</td><td class="num">$1.99</td><td class="num">$1.99</td><td class="num">V</td></tr><tr><td class="id">W09</td><td>Anti-slip pad: silicone rubber sheet 1 mm</td><td class="col-hide">power</td><td class="col-hide">Amazon</td><td class="num">1</td><td class="num">$2.00</td><td class="num">$2.00</td><td class="num">EST</td></tr></tbody></table></div>
+  <p class="src" style="margin-top:var(--s3)">12 of 41 lines shown. Source: qp/A/BOM-A.csv, totals from bom_a.py.</p>
+ </section>
+ </main>
+ <footer><span>Concept A, redesign/ on GitHub</span><span>Every number on this page comes from a file in redesign/.</span></footer>
+</div>
+<script>if(location.hash==='#dark')document.documentElement.dataset.theme='dark'</script>
+</body></html>

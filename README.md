@@ -17,7 +17,7 @@
 
 *Concept A in cruise attitude (current design), rendered in Blender from the CAD model in `redesign/qp/A/cad`
 (real APC 9x4.5MR props, motors, cage, wing, fins, linkage). Films: [how it flies](redesign/showcase/concept-a/animation/a-how-it-flies.mp4),
-[whole build](redesign/showcase/concept-a/animation/a-build.mp4) (41 steps in 10 stages, one clip each in the same folder).
+[whole build](redesign/showcase/concept-a/animation/a-build.mp4) (45 steps in 10 stages with step cards, callouts and checkpoints, one clip each in the same folder; written guide: [redesign/qp/A/BUILD-GUIDE-A.md](redesign/qp/A/BUILD-GUIDE-A.md)).
 More renders: [redesign/SHOWCASE.md](redesign/SHOWCASE.md). Status: design on paper, nothing bought, built or flown yet.*
 
 **K09-L (previous design, kept as the record).** K09-L is the VTOL demonstrator a four-person UC Berkeley MEng capstone team will build and fly. It is a quad
@@ -43,7 +43,7 @@ complete on paper, nothing bought, built or flown yet.*
 - **On GitHub, no install:** read [redesign/SHOWCASE.md](redesign/SHOWCASE.md) for the renders, the flight animation,
   STL models that rotate in the browser, the morphological chart, the decision and the simulation figures.
 - **Building it:** [redesign/BUILD-GUIDE.md](redesign/BUILD-GUIDE.md) is the short, ordered build guide, with an animated clip per
-  stage (K09-L, previous design: [whole build](redesign/showcase/animation/build/k09l-build.mp4); concept A: [whole build](redesign/showcase/concept-a/animation/a-build.mp4)). Read
+  stage (K09-L, previous design: [whole build](redesign/showcase/animation/build/k09l-build.mp4); concept A: [whole build](redesign/showcase/concept-a/animation/a-build.mp4), written guide [redesign/qp/A/BUILD-GUIDE-A.md](redesign/qp/A/BUILD-GUIDE-A.md)). Read
   [redesign/review/BUILDABILITY-REVIEW.md](redesign/review/BUILDABILITY-REVIEW.md) first: 6 blockers and 30 major
   build problems found by a buildability review, to fix before more CFD/FEA or any cutting.
 

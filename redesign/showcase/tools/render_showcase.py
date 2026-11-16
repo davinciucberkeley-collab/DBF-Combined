@@ -43,7 +43,19 @@ def args():
                     help='module root to build (default: K09-L, redesign/subsystems); concept A: redesign/qp/A/cad/model')
     ap.add_argument('--renders', default=os.path.join(SHOW, 'renders'), help='folder for the final PNGs')
     argv = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
-    return ap.parse_args(argv)
+    a = ap.parse_args(argv)
+    # Absolute paths only. A relative path given to Blender's render.filepath is resolved against the drive root when no .blend
+    # is loaded (the concept A run wrote its raw PNGs to C:/redesign/...). Relative arguments are taken from the repo root
+    # (the folder that holds redesign/), so the result does not depend on the current directory.
+    repo = os.path.dirname(REDESIGN)
+
+    def absp(p):
+        return p if p is None or os.path.isabs(p) else os.path.normpath(os.path.join(repo, p))
+    a.spec, a.root, a.renders = absp(a.spec), absp(a.root), absp(a.renders)
+    if a.root and os.path.normpath(a.root).replace(os.sep, '/').endswith('qp/A/cad/model') and a.work == os.path.join(SHOW, '_work'):
+        a.work = os.path.join(SHOW, 'concept-a', '_work')          # concept A raw renders live inside the repo, next to its renders
+    a.work = absp(a.work)
+    return a
 
 
 def expand(pats, spec):

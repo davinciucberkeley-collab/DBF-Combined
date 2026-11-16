@@ -16,7 +16,7 @@
 ![Concept A in cruise attitude, isometric render](showcase/concept-a/renders/hero-iso.webp)
 
 *Concept A (current design) in cruise attitude, from the CAD model in `qp/A/cad`. Films: [how it flies](showcase/concept-a/animation/a-how-it-flies.mp4),
-[whole build](showcase/concept-a/animation/a-build.mp4). The general-arrangement sheet below is K09-L (previous design);
+[whole build](showcase/concept-a/animation/a-build.mp4) (written guide: [qp/A/BUILD-GUIDE-A.md](qp/A/BUILD-GUIDE-A.md)). The general-arrangement sheet below is K09-L (previous design);
 concept A's is [showcase/concept-a/drawing/a-sheet.svg](showcase/concept-a/drawing/a-sheet.svg).*
 
 **K09-L record below.** Status: `PROPOSED` design, frame revision **A1-R5** (2026-11-10). Nothing is `VERIFIED`: no part has been bought,
