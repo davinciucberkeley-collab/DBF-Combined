@@ -38,6 +38,10 @@ that concept.
   data sheet (props with real blades, motors, servos, connectors, boards,
   fasteners), no stand-in disks or boxes. Where a dimension is unknown, say so
   and mark the part, never invent it.
+- Limit exposed wiring (user, 2026-11-15): route wires inside the arm tubes,
+  wing-core channels, fairings or covers. Any wire left exposed outside the
+  skin (e.g. the last few mm at a motor or connector) is listed with its
+  length and the reason it cannot be enclosed, and kept to the minimum.
 
 Within these constraints the engineering agents (`redesign/TEAM.md`) make the
 design decisions, including mass, mission and performance trade-offs; log

@@ -177,6 +177,15 @@
    "where": "MS at the 103 kPa basis (compressive 103 V data sheet; tension 129, shear 86 EST)"
   },
   {
+   "id": "SRC-A-ARMCUP",
+   "type": "source",
+   "title": "Arm and motor-cup checks (arm_cup_checks.md)",
+   "kind": "file",
+   "url": "redesign/qp/A/structures/arm_cup_checks.md",
+   "checked": "2026-11-15",
+   "where": "MS table, limit loads x 1.5 x 1.15 (x 1.25 printed/bonded); allowables EST"
+  },
+  {
    "id": "SRC-A-ITER2M",
    "type": "source",
    "title": "Structures iteration 2 margins (iter2_margins.md)",
@@ -317,7 +326,7 @@
    "type": "assumption",
    "title": "Printed hub socket walls (2.0 mm, D-196) carry the prop-strike couple",
    "text": "The 0.48 socket margin is a bond margin; the wall hoop check passes the crude ring model only with a 12 mm bearing patch",
-   "basis": "D-196, structures/qp5_checks.md s2/s2b: arm-socket wall raised 0.8 -> 2.0 mm, bridge sleeve 1.2 mm (hub 13.1 -> 22.0 g). Ring model (hoop 2F/(pi l t), F 332 N, allowable 20 MPa EST): MS +0.05 at l 12 mm, -0.47 at l 6 mm; sleeve +0.44 / -0.28. Unproven until the bench coupon: print a socket at 2.0 mm, bond a 12 mm tube, load to 1.5 x 332 N",
+   "basis": "D-196, structures/qp5_checks.md s2/s2b: arm-socket wall raised 0.8 -> 2.0 mm over the 12 mm mouth zone, bridge sleeve 1.2 mm (hub 13.1 -> 17.7 g). Ring model (hoop 2F/(pi l t), F 332 N, allowable 20 MPa EST): MS +0.05 at l 12 mm, -0.47 at l 6 mm; sleeve +0.44 / -0.28. Unproven until the bench coupon: print a socket at 2.0 mm, bond a 12 mm tube, load to 1.5 x 332 N",
    "status": "UNVERIFIED"
   },
   {

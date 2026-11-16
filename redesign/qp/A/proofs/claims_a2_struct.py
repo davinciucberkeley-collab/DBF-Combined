@@ -80,12 +80,20 @@ for cid, title, param, parts, reqs in [
         ("CL-A-MS-BOND", "Rib saddle on the spar (thinnest bond), MS", "P:struct.ms_bond_thin", ["FIN-005-R", "FIN-005-L", "WNG-002"], ["A-P13"]),
         ("CL-A-MS-ARM", "Motor arm 12x10 under a 30 N prop strike, MS", "P:struct.ms_arm_strike", ["CGE-002-UR", "CGE-002-UL", "CGE-002-LR", "CGE-002-LL"], ["A-P13"]),
         ("CL-A-MS-ARM-SOCKET", "Motor arm in its socket, strike couple, MS", "P:struct.ms_arm_socket", ["CGE-002-UR", "CGE-002-UL", "CGE-002-LR", "CGE-002-LL", "CGE-001"], ["A-P13"]),
+        ("CL-A-MS-CUP-HEADPULL", "Motor cup head pull-through (PETG) at the 0.90 cap thrust + 1P, MS", "P:struct.ms_cup_op_headpull", ["CGE-003-UR", "CGE-003-UL", "CGE-003-LR", "CGE-003-LL"], ["A-P13"]),
+        ("CL-A-MS-CUP-STRIKE", "Motor cup head pull-through under the 30 N transverse prop strike, MS", "P:struct.ms_cup_headpull_strike", ["CGE-003-UR", "CGE-003-UL", "CGE-003-LR", "CGE-003-LL"], ["A-P13"]),
+        ("CL-A-MS-CUP-PLATE", "Motor cup plate bending past the sleeve end under the strike, MS", "P:struct.ms_cup_plate_strike", ["CGE-003-UR", "CGE-003-UL", "CGE-003-LR", "CGE-003-LL"], ["A-P13"]),
+        ("CL-A-MS-CUP-HOLE", "Motor cup screw-hole bearing under a blade-stop torque, MS", "P:struct.ms_cup_screw_hole_s3", ["CGE-003-UR", "CGE-003-UL", "CGE-003-LR", "CGE-003-LL"], ["A-P13"]),
+        ("CL-A-MS-CUP-BOND", "Motor cup to arm bond under strike torsion + torque, MS", "P:struct.ms_cup_bond_strike", ["CGE-003-UR", "CGE-003-UL", "CGE-003-LR", "CGE-003-LL"] + ["CGE-002-UR", "CGE-002-UL", "CGE-002-LR", "CGE-002-LL"], ["A-P13"]),
+        ("CL-A-MS-ARM-BLADE", "Motor arm 12x10 root bending with the blade-offset strike lever, MS", "P:struct.ms_arm_strike_blade", ["CGE-002-UR", "CGE-002-UL", "CGE-002-LR", "CGE-002-LL"], ["A-P13"]),
+        ("CL-A-MS-FATIGUE-HUBWALL", "Hub arm-socket wall, 2000 cycles to the cap thrust, MS", "P:struct.ms_fatigue_hub_wall", ["CGE-001"], ["A-P13"]),
+        ("CL-A-MS-FATIGUE-ARM", "Arm tube bending amplitude at 4e6 cycles of 1P, MS", "P:struct.ms_fatigue_arm", ["CGE-002-UR", "CGE-002-UL", "CGE-002-LR", "CGE-002-LL"], ["A-P13"]),
         ("CL-A-MS-RIB", "Fin rib 14x12 torsion under one foot load, MS", "P:struct.ms_rib_torsion", ["FIN-002-R", "FIN-002-L"], ["A-P13"]),
         ("CL-A-MS-FIN", "Fin tube 16x14 in-plane bending at the foot load, MS", "P:struct.ms_fin_inplane", ["FIN-001-R", "FIN-001-L"], ["A-P13"]),
         ("CL-A-MS-PACK-CRASH", "Bridge under pack + hub at the 12 g crash, MS (pack retention)", "P:struct.ms_bridge_crash", ["CGE-004", "CGE-008", "PWR-001"], ["A-P5", "A-P13"])]:
     stored(cid, title, param, "-", limit=(">=", "P:req.ms_min"), verifies=reqs, parts=parts, assumes=(["ASM-A-HUB-WALL"] if cid == "CL-A-MS-ARM-SOCKET" else []),
-           how="Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
-           equation="MS = allowable / design stress - 1 from structures/iter2_margins.md (stress already carries the 1.5 factor); read, not re-run")
+           how="Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+           equation="MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run")
 stored("CL-A-LANDING-STROKE", "Landing crush stroke at 1.2 m/s on the fin-tip feet", "P:struct.landing_stroke_mm", "mm", limit=("<=", "P:struct.landing_stroke_max_mm"), verifies=["A-P13"],
        parts=["GER-001-UR", "GER-001-UL", "GER-001-LR", "GER-001-LL", "GER-002-UR", "GER-002-UL", "GER-002-LR", "GER-002-LL"],
        how="Drop test of the feet at 1.2 m/s on the built aircraft; 20 mm available.", equation="landing_a.py via STRUCTURES iteration 2 (A-P13 basis); read, not re-run")

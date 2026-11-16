@@ -1097,6 +1097,62 @@
    "source": "SRC-A-ITER2M",
    "note": "iter2_margins.md: arm 12x10 in socket, strike couple"
   },
+  "ms_cup_headpull_strike": {
+   "value": 1.55,
+   "unit": "-",
+   "source": "SRC-A-ARMCUP",
+   "note": "arm_cup_checks.md: cup head pull-through under the 30 N transverse prop strike, 7.8 vs 20 MPa (PETG bearing EST)",
+   "status": "UNVERIFIED"
+  },
+  "ms_cup_plate_strike": {
+   "value": 0.49,
+   "unit": "-",
+   "source": "SRC-A-ARMCUP",
+   "note": "arm_cup_checks.md: cup plate cantilever bending past the sleeve end under the strike, 6.4 vs 9.5 MPa (interlayer EST)",
+   "status": "UNVERIFIED"
+  },
+  "ms_cup_screw_hole_s3": {
+   "value": 0.39,
+   "unit": "-",
+   "source": "SRC-A-ARMCUP",
+   "note": "arm_cup_checks.md: hole bearing under a blade-stop torque 2.4 N m, 14.4 vs 20 MPa (EST, friction ignored)",
+   "status": "UNVERIFIED"
+  },
+  "ms_cup_bond_strike": {
+   "value": 1.88,
+   "unit": "-",
+   "source": "SRC-A-ARMCUP",
+   "note": "arm_cup_checks.md: cup-to-arm bond, strike torsion + torque couple, 0.69 vs 2.0 MPa (EST)",
+   "status": "UNVERIFIED"
+  },
+  "ms_arm_strike_blade": {
+   "value": 0.82,
+   "unit": "-",
+   "source": "SRC-A-ARMCUP",
+   "note": "arm_cup_checks.md: arm root bending with the blade offset (30 N x 0.326 m = 9.8 N m), 192 vs 350 MPa",
+   "status": "UNVERIFIED"
+  },
+  "ms_cup_op_headpull": {
+   "value": 14.82,
+   "unit": "-",
+   "source": "SRC-A-ARMCUP",
+   "note": "arm_cup_checks.md: cup head pull-through at the 0.90 cap thrust + 1P, 1.26 vs 20 MPa",
+   "status": "UNVERIFIED"
+  },
+  "ms_fatigue_hub_wall": {
+   "value": 1.17,
+   "unit": "-",
+   "source": "SRC-A-ARMCUP",
+   "note": "arm_cup_checks.md: hub arm-socket wall, 2000 cycles 0 to cap, 6 mm patch, 4.6 vs 10 MPa (knock-down EST)",
+   "status": "UNVERIFIED"
+  },
+  "ms_fatigue_arm": {
+   "value": 15.32,
+   "unit": "-",
+   "source": "SRC-A-ARMCUP",
+   "note": "arm_cup_checks.md: arm tube bending amplitude 8.6 vs 140 MPa at 4e6 cycles (knock-down 0.40 EST)",
+   "status": "UNVERIFIED"
+  },
   "landing_stroke_mm": {
    "value": 15.2,
    "unit": "mm",

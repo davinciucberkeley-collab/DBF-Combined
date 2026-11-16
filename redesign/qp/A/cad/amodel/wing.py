@@ -577,6 +577,8 @@ def build_cage(ctx):
         for sy_ in (1, -1):
             for sz_ in (1, -1):
                 cup.cut_cylinder('X', (-0.0125, sy_ * CUP_PAT[0] / 2, sz_ * CUP_PAT[1] / 2), 0.006, 0.00145, name='motor screw hole M2.5 clearance 2.9 mm (ISO 273 medium; pattern V T-Motor drawing)')
+        for sz_ in (1, -1):                          # D-197: the y = -9.5 mm screw heads sit in the sleeve wall; print the pocket (was only implied by the seat cut)
+            cup.cut_cylinder('X', (-0.0070, -CUP_PAT[0] / 2, sz_ * CUP_PAT[1] / 2), 0.0030, 0.00250, name='screw head pocket 5.0 mm in the sleeve wall (D-197, structures/arm_cup_checks.md)')
         cup.cut_cylinder('X', (-0.0125, 0.0, 0.0), 0.006, 0.004, name='motor rear relief 8 mm (EST)')
         cup.cut_box((-0.0125, -0.003, 0.0105), (-0.0065, 0.003, 0.0175), name='phase-lead slot (open to the plate edge)')
         ctx.seat('CGE-003-' + st, 'CGE-002-' + st, 'arm socket')

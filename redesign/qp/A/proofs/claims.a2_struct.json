@@ -423,7 +423,7 @@
    "title": "Stored result: Spar 12x10 root bending, MS at 1.5 x n 3.4",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "read_value",
-   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md (stress already carries the 1.5 factor); read, not re-run",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
    "inputs": {
     "v": "P:struct.ms_spar"
    },
@@ -451,7 +451,7 @@
    "parts": [
     "WNG-002"
    ],
-   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "value": 2.73
   },
   {
@@ -460,7 +460,7 @@
    "title": "Stored result: Rib saddle on the spar (thinnest bond), MS",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "read_value",
-   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md (stress already carries the 1.5 factor); read, not re-run",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
    "inputs": {
     "v": "P:struct.ms_bond_thin"
    },
@@ -490,7 +490,7 @@
     "FIN-005-L",
     "WNG-002"
    ],
-   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "value": 0.34
   },
   {
@@ -499,7 +499,7 @@
    "title": "Stored result: Motor arm 12x10 under a 30 N prop strike, MS",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "read_value",
-   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md (stress already carries the 1.5 factor); read, not re-run",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
    "inputs": {
     "v": "P:struct.ms_arm_strike"
    },
@@ -530,7 +530,7 @@
     "CGE-002-LR",
     "CGE-002-LL"
    ],
-   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "value": 1.41
   },
   {
@@ -539,7 +539,7 @@
    "title": "Stored result: Motor arm in its socket, strike couple, MS",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "read_value",
-   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md (stress already carries the 1.5 factor); read, not re-run",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
    "inputs": {
     "v": "P:struct.ms_arm_socket"
    },
@@ -574,11 +574,332 @@
     "CGE-002-LL",
     "CGE-001"
    ],
-   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "assumes": [
     "ASM-A-HUB-WALL"
    ],
    "value": 0.48
+  },
+  {
+   "id": "CALC-A-MS-CUP-HEADPULL-READ",
+   "type": "calculation",
+   "title": "Stored result: Motor cup head pull-through (PETG) at the 0.90 cap thrust + 1P, MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_cup_op_headpull"
+   },
+   "outputs": {
+    "v": 14.82
+   },
+   "input_values": {
+    "v": 14.82
+   }
+  },
+  {
+   "id": "CL-A-MS-CUP-HEADPULL",
+   "type": "claim",
+   "title": "Motor cup head pull-through (PETG) at the 0.90 cap thrust + 1P, MS",
+   "calc": "CALC-A-MS-CUP-HEADPULL-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-003-UR",
+    "CGE-003-UL",
+    "CGE-003-LR",
+    "CGE-003-LL"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 14.82
+  },
+  {
+   "id": "CALC-A-MS-CUP-STRIKE-READ",
+   "type": "calculation",
+   "title": "Stored result: Motor cup head pull-through under the 30 N transverse prop strike, MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_cup_headpull_strike"
+   },
+   "outputs": {
+    "v": 1.55
+   },
+   "input_values": {
+    "v": 1.55
+   }
+  },
+  {
+   "id": "CL-A-MS-CUP-STRIKE",
+   "type": "claim",
+   "title": "Motor cup head pull-through under the 30 N transverse prop strike, MS",
+   "calc": "CALC-A-MS-CUP-STRIKE-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-003-UR",
+    "CGE-003-UL",
+    "CGE-003-LR",
+    "CGE-003-LL"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 1.55
+  },
+  {
+   "id": "CALC-A-MS-CUP-PLATE-READ",
+   "type": "calculation",
+   "title": "Stored result: Motor cup plate bending past the sleeve end under the strike, MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_cup_plate_strike"
+   },
+   "outputs": {
+    "v": 0.49
+   },
+   "input_values": {
+    "v": 0.49
+   }
+  },
+  {
+   "id": "CL-A-MS-CUP-PLATE",
+   "type": "claim",
+   "title": "Motor cup plate bending past the sleeve end under the strike, MS",
+   "calc": "CALC-A-MS-CUP-PLATE-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-003-UR",
+    "CGE-003-UL",
+    "CGE-003-LR",
+    "CGE-003-LL"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 0.49
+  },
+  {
+   "id": "CALC-A-MS-CUP-HOLE-READ",
+   "type": "calculation",
+   "title": "Stored result: Motor cup screw-hole bearing under a blade-stop torque, MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_cup_screw_hole_s3"
+   },
+   "outputs": {
+    "v": 0.39
+   },
+   "input_values": {
+    "v": 0.39
+   }
+  },
+  {
+   "id": "CL-A-MS-CUP-HOLE",
+   "type": "claim",
+   "title": "Motor cup screw-hole bearing under a blade-stop torque, MS",
+   "calc": "CALC-A-MS-CUP-HOLE-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-003-UR",
+    "CGE-003-UL",
+    "CGE-003-LR",
+    "CGE-003-LL"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 0.39
+  },
+  {
+   "id": "CALC-A-MS-CUP-BOND-READ",
+   "type": "calculation",
+   "title": "Stored result: Motor cup to arm bond under strike torsion + torque, MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_cup_bond_strike"
+   },
+   "outputs": {
+    "v": 1.88
+   },
+   "input_values": {
+    "v": 1.88
+   }
+  },
+  {
+   "id": "CL-A-MS-CUP-BOND",
+   "type": "claim",
+   "title": "Motor cup to arm bond under strike torsion + torque, MS",
+   "calc": "CALC-A-MS-CUP-BOND-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-003-UR",
+    "CGE-003-UL",
+    "CGE-003-LR",
+    "CGE-003-LL",
+    "CGE-002-UR",
+    "CGE-002-UL",
+    "CGE-002-LR",
+    "CGE-002-LL"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 1.88
+  },
+  {
+   "id": "CALC-A-MS-ARM-BLADE-READ",
+   "type": "calculation",
+   "title": "Stored result: Motor arm 12x10 root bending with the blade-offset strike lever, MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_arm_strike_blade"
+   },
+   "outputs": {
+    "v": 0.82
+   },
+   "input_values": {
+    "v": 0.82
+   }
+  },
+  {
+   "id": "CL-A-MS-ARM-BLADE",
+   "type": "claim",
+   "title": "Motor arm 12x10 root bending with the blade-offset strike lever, MS",
+   "calc": "CALC-A-MS-ARM-BLADE-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-002-UR",
+    "CGE-002-UL",
+    "CGE-002-LR",
+    "CGE-002-LL"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 0.82
+  },
+  {
+   "id": "CALC-A-MS-FATIGUE-HUBWALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Hub arm-socket wall, 2000 cycles to the cap thrust, MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_fatigue_hub_wall"
+   },
+   "outputs": {
+    "v": 1.17
+   },
+   "input_values": {
+    "v": 1.17
+   }
+  },
+  {
+   "id": "CL-A-MS-FATIGUE-HUBWALL",
+   "type": "claim",
+   "title": "Hub arm-socket wall, 2000 cycles to the cap thrust, MS",
+   "calc": "CALC-A-MS-FATIGUE-HUBWALL-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-001"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 1.17
+  },
+  {
+   "id": "CALC-A-MS-FATIGUE-ARM-READ",
+   "type": "calculation",
+   "title": "Stored result: Arm tube bending amplitude at 4e6 cycles of 1P, MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_fatigue_arm"
+   },
+   "outputs": {
+    "v": 15.32
+   },
+   "input_values": {
+    "v": 15.32
+   }
+  },
+  {
+   "id": "CL-A-MS-FATIGUE-ARM",
+   "type": "claim",
+   "title": "Arm tube bending amplitude at 4e6 cycles of 1P, MS",
+   "calc": "CALC-A-MS-FATIGUE-ARM-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-002-UR",
+    "CGE-002-UL",
+    "CGE-002-LR",
+    "CGE-002-LL"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 15.32
   },
   {
    "id": "CALC-A-MS-RIB-READ",
@@ -586,7 +907,7 @@
    "title": "Stored result: Fin rib 14x12 torsion under one foot load, MS",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "read_value",
-   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md (stress already carries the 1.5 factor); read, not re-run",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
    "inputs": {
     "v": "P:struct.ms_rib_torsion"
    },
@@ -615,7 +936,7 @@
     "FIN-002-R",
     "FIN-002-L"
    ],
-   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "value": 0.6
   },
   {
@@ -624,7 +945,7 @@
    "title": "Stored result: Fin tube 16x14 in-plane bending at the foot load, MS",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "read_value",
-   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md (stress already carries the 1.5 factor); read, not re-run",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
    "inputs": {
     "v": "P:struct.ms_fin_inplane"
    },
@@ -653,7 +974,7 @@
     "FIN-001-R",
     "FIN-001-L"
    ],
-   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "value": 3.44
   },
   {
@@ -662,7 +983,7 @@
    "title": "Stored result: Bridge under pack + hub at the 12 g crash, MS (pack retention)",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "read_value",
-   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md (stress already carries the 1.5 factor); read, not re-run",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
    "inputs": {
     "v": "P:struct.ms_bridge_crash"
    },
@@ -693,7 +1014,7 @@
     "CGE-008",
     "PWR-001"
    ],
-   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "value": 2.87
   },
   {

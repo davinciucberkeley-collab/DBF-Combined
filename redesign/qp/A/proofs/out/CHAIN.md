@@ -12,7 +12,7 @@ Parameter files: `redesign/qp/A/params-A.json`
 | [A-P1](#a-p1) Mass gate 1.47 kg and T/W at the gate | **UNVERIFIED** | 3 | +1% |
 | [A-P10](#a-p10) Vibration rule D-185 | **CHECKED** | 7 | +8% |
 | [A-P11](#a-p11) Cruise control authority | **UNVERIFIED** | 6 | +4% |
-| [A-P13](#a-p13) Loads and flutter (G8) | **UNVERIFIED** | 21 | +11% |
+| [A-P13](#a-p13) Loads and flutter (G8) | **UNVERIFIED** | 29 | +11% |
 | [A-P16](#a-p16) Motor and ESC current | **UNVERIFIED** | 2 | +7% |
 | [A-P2](#a-p2) Hover T/W >= 2.0 fresh, >= 1.6 worst pack state | **UNVERIFIED** | 4 | +16% |
 | [A-P24](#a-p24) Fence and run-out | **UNVERIFIED** | 1 | +8% |
@@ -563,27 +563,27 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
   - param `P:req.n_limit` = 3.4 g — **CHECKED**
     - `SRC-A-REQ` (see above)
 - claim **CL-A-MS-SPAR** Spar 12x10 root bending, MS at 1.5 x n 3.4 = **2.73** (limit >= 0, margin +2.73 abs) — **CHECKED**
-  - how to verify: Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.
+  - how to verify: Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.
   - parts: WNG-002
-  - calc `CALC-A-MS-SPAR-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md (stress already carries the 1.5 factor); read, not re-run` — **CHECKED**
+  - calc `CALC-A-MS-SPAR-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run` — **CHECKED**
     - `v` ← param `P:struct.ms_spar` = 2.73 — **CHECKED**
       - source `SRC-A-ITER2M` [Structures iteration 2 margins (iter2_margins.md)](redesign/qp/A/structures/iter2_margins.md), MS table at 1.5 x limit, checked 2026-11-15 — **CHECKED**
   - param `P:req.ms_min` = 0 — **CHECKED**
     - `SRC-A-REQ` (see above)
 - claim **CL-A-MS-BOND** Rib saddle on the spar (thinnest bond), MS = **0.34** (limit >= 0, margin +0.34 abs) — **UNVERIFIED**
   - ⚠ uses P:struct.ms_bond_thin, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: iter2_margins.md: rib saddle on the 12 mm spar (thinnest bond))
-  - how to verify: Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.
+  - how to verify: Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.
   - parts: FIN-005-R, FIN-005-L, WNG-002
-  - calc `CALC-A-MS-BOND-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md (stress already carries the 1.5 factor); read, not re-run` — **CHECKED**
+  - calc `CALC-A-MS-BOND-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run` — **CHECKED**
     - `v` ← param `P:struct.ms_bond_thin` = 0.34 — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: iter2_margins.md: rib saddle on the 12 mm spar (thinnest bond)
       - `SRC-A-ITER2M` (see above)
   - `P:req.ms_min` (see above)
 - claim **CL-A-MS-ARM** Motor arm 12x10 under a 30 N prop strike, MS = **1.41** (limit >= 0, margin +1.41 abs) — **UNVERIFIED**
   - ⚠ uses P:struct.ms_arm_strike, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: iter2_margins.md: arm 12x10 prop strike 30 N, 144.9 vs 350 MPa)
-  - how to verify: Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.
+  - how to verify: Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.
   - parts: CGE-002-UR, CGE-002-UL, CGE-002-LR, CGE-002-LL
-  - calc `CALC-A-MS-ARM-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md (stress already carries the 1.5 factor); read, not re-run` — **CHECKED**
+  - calc `CALC-A-MS-ARM-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run` — **CHECKED**
     - `v` ← param `P:struct.ms_arm_strike` = 1.41 — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: iter2_margins.md: arm 12x10 prop strike 30 N, 144.9 vs 350 MPa
       - `SRC-A-ITER2M` (see above)
@@ -591,33 +591,105 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
 - claim **CL-A-MS-ARM-SOCKET** Motor arm in its socket, strike couple, MS = **0.48** (limit >= 0, margin +0.48 abs) — **UNVERIFIED**
   - ⚠ uses ASM-A-HUB-WALL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-A-HUB-WALL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
-  - how to verify: Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.
+  - how to verify: Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.
   - parts: CGE-002-UR, CGE-002-UL, CGE-002-LR, CGE-002-LL, CGE-001
-  - assumption `ASM-A-HUB-WALL` The 0.48 socket margin is a bond margin; the wall hoop check passes the crude ring model only with a 12 mm bearing patch (basis: D-196, structures/qp5_checks.md s2/s2b: arm-socket wall raised 0.8 -> 2.0 mm, bridge sleeve 1.2 mm (hub 13.1 -> 22.0 g). Ring model (hoop 2F/(pi l t), F 332 N, allowable 20 MPa EST): MS +0.05 at l 12 mm, -0.47 at l 6 mm; sleeve +0.44 / -0.28. Unproven until the bench coupon: print a socket at 2.0 mm, bond a 12 mm tube, load to 1.5 x 332 N) — **UNVERIFIED**
+  - assumption `ASM-A-HUB-WALL` The 0.48 socket margin is a bond margin; the wall hoop check passes the crude ring model only with a 12 mm bearing patch (basis: D-196, structures/qp5_checks.md s2/s2b: arm-socket wall raised 0.8 -> 2.0 mm over the 12 mm mouth zone, bridge sleeve 1.2 mm (hub 13.1 -> 17.7 g). Ring model (hoop 2F/(pi l t), F 332 N, allowable 20 MPa EST): MS +0.05 at l 12 mm, -0.47 at l 6 mm; sleeve +0.44 / -0.28. Unproven until the bench coupon: print a socket at 2.0 mm, bond a 12 mm tube, load to 1.5 x 332 N) — **UNVERIFIED**
     - ⚠ assumption marked UNVERIFIED by its author
-  - calc `CALC-A-MS-ARM-SOCKET-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md (stress already carries the 1.5 factor); read, not re-run` — **CHECKED**
+  - calc `CALC-A-MS-ARM-SOCKET-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run` — **CHECKED**
     - `v` ← param `P:struct.ms_arm_socket` = 0.48 — **CHECKED**
       - `SRC-A-ITER2M` (see above)
     - `ASM-A-HUB-WALL` (see above)
   - `P:req.ms_min` (see above)
+- claim **CL-A-MS-CUP-HEADPULL** Motor cup head pull-through (PETG) at the 0.90 cap thrust + 1P, MS = **14.82** (limit >= 0, margin +14.8 abs) — **UNVERIFIED**
+  - ⚠ uses P:struct.ms_cup_op_headpull, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: arm_cup_checks.md: cup head pull-through at the 0.90 cap thrust + 1P, 1.26 vs 20 MPa)
+  - how to verify: Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.
+  - parts: CGE-003-UR, CGE-003-UL, CGE-003-LR, CGE-003-LL
+  - calc `CALC-A-MS-CUP-HEADPULL-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run` — **CHECKED**
+    - `v` ← param `P:struct.ms_cup_op_headpull` = 14.82 — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: arm_cup_checks.md: cup head pull-through at the 0.90 cap thrust + 1P, 1.26 vs 20 MPa
+      - source `SRC-A-ARMCUP` [Arm and motor-cup checks (arm_cup_checks.md)](redesign/qp/A/structures/arm_cup_checks.md), MS table, limit loads x 1.5 x 1.15 (x 1.25 printed/bonded); allowables EST, checked 2026-11-15 — **CHECKED**
+  - `P:req.ms_min` (see above)
+- claim **CL-A-MS-CUP-STRIKE** Motor cup head pull-through under the 30 N transverse prop strike, MS = **1.55** (limit >= 0, margin +1.55 abs) — **UNVERIFIED**
+  - ⚠ uses P:struct.ms_cup_headpull_strike, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: arm_cup_checks.md: cup head pull-through under the 30 N transverse prop strike, 7.8 vs 20 MPa (PETG bearing EST))
+  - how to verify: Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.
+  - parts: CGE-003-UR, CGE-003-UL, CGE-003-LR, CGE-003-LL
+  - calc `CALC-A-MS-CUP-STRIKE-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run` — **CHECKED**
+    - `v` ← param `P:struct.ms_cup_headpull_strike` = 1.55 — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: arm_cup_checks.md: cup head pull-through under the 30 N transverse prop strike, 7.8 vs 20 MPa (PETG bearing EST)
+      - `SRC-A-ARMCUP` (see above)
+  - `P:req.ms_min` (see above)
+- claim **CL-A-MS-CUP-PLATE** Motor cup plate bending past the sleeve end under the strike, MS = **0.49** (limit >= 0, margin +0.49 abs) — **UNVERIFIED**
+  - ⚠ uses P:struct.ms_cup_plate_strike, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: arm_cup_checks.md: cup plate cantilever bending past the sleeve end under the strike, 6.4 vs 9.5 MPa (interlayer EST))
+  - how to verify: Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.
+  - parts: CGE-003-UR, CGE-003-UL, CGE-003-LR, CGE-003-LL
+  - calc `CALC-A-MS-CUP-PLATE-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run` — **CHECKED**
+    - `v` ← param `P:struct.ms_cup_plate_strike` = 0.49 — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: arm_cup_checks.md: cup plate cantilever bending past the sleeve end under the strike, 6.4 vs 9.5 MPa (interlayer EST)
+      - `SRC-A-ARMCUP` (see above)
+  - `P:req.ms_min` (see above)
+- claim **CL-A-MS-CUP-HOLE** Motor cup screw-hole bearing under a blade-stop torque, MS = **0.39** (limit >= 0, margin +0.39 abs) — **UNVERIFIED**
+  - ⚠ uses P:struct.ms_cup_screw_hole_s3, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: arm_cup_checks.md: hole bearing under a blade-stop torque 2.4 N m, 14.4 vs 20 MPa (EST, friction ignored))
+  - how to verify: Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.
+  - parts: CGE-003-UR, CGE-003-UL, CGE-003-LR, CGE-003-LL
+  - calc `CALC-A-MS-CUP-HOLE-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run` — **CHECKED**
+    - `v` ← param `P:struct.ms_cup_screw_hole_s3` = 0.39 — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: arm_cup_checks.md: hole bearing under a blade-stop torque 2.4 N m, 14.4 vs 20 MPa (EST, friction ignored)
+      - `SRC-A-ARMCUP` (see above)
+  - `P:req.ms_min` (see above)
+- claim **CL-A-MS-CUP-BOND** Motor cup to arm bond under strike torsion + torque, MS = **1.88** (limit >= 0, margin +1.88 abs) — **UNVERIFIED**
+  - ⚠ uses P:struct.ms_cup_bond_strike, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: arm_cup_checks.md: cup-to-arm bond, strike torsion + torque couple, 0.69 vs 2.0 MPa (EST))
+  - how to verify: Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.
+  - parts: CGE-003-UR, CGE-003-UL, CGE-003-LR, CGE-003-LL, CGE-002-UR, CGE-002-UL, CGE-002-LR, CGE-002-LL
+  - calc `CALC-A-MS-CUP-BOND-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run` — **CHECKED**
+    - `v` ← param `P:struct.ms_cup_bond_strike` = 1.88 — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: arm_cup_checks.md: cup-to-arm bond, strike torsion + torque couple, 0.69 vs 2.0 MPa (EST)
+      - `SRC-A-ARMCUP` (see above)
+  - `P:req.ms_min` (see above)
+- claim **CL-A-MS-ARM-BLADE** Motor arm 12x10 root bending with the blade-offset strike lever, MS = **0.82** (limit >= 0, margin +0.82 abs) — **UNVERIFIED**
+  - ⚠ uses P:struct.ms_arm_strike_blade, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: arm_cup_checks.md: arm root bending with the blade offset (30 N x 0.326 m = 9.8 N m), 192 vs 350 MPa)
+  - how to verify: Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.
+  - parts: CGE-002-UR, CGE-002-UL, CGE-002-LR, CGE-002-LL
+  - calc `CALC-A-MS-ARM-BLADE-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run` — **CHECKED**
+    - `v` ← param `P:struct.ms_arm_strike_blade` = 0.82 — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: arm_cup_checks.md: arm root bending with the blade offset (30 N x 0.326 m = 9.8 N m), 192 vs 350 MPa
+      - `SRC-A-ARMCUP` (see above)
+  - `P:req.ms_min` (see above)
+- claim **CL-A-MS-FATIGUE-HUBWALL** Hub arm-socket wall, 2000 cycles to the cap thrust, MS = **1.17** (limit >= 0, margin +1.17 abs) — **UNVERIFIED**
+  - ⚠ uses P:struct.ms_fatigue_hub_wall, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: arm_cup_checks.md: hub arm-socket wall, 2000 cycles 0 to cap, 6 mm patch, 4.6 vs 10 MPa (knock-down EST))
+  - how to verify: Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.
+  - parts: CGE-001
+  - calc `CALC-A-MS-FATIGUE-HUBWALL-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run` — **CHECKED**
+    - `v` ← param `P:struct.ms_fatigue_hub_wall` = 1.17 — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: arm_cup_checks.md: hub arm-socket wall, 2000 cycles 0 to cap, 6 mm patch, 4.6 vs 10 MPa (knock-down EST)
+      - `SRC-A-ARMCUP` (see above)
+  - `P:req.ms_min` (see above)
+- claim **CL-A-MS-FATIGUE-ARM** Arm tube bending amplitude at 4e6 cycles of 1P, MS = **15.32** (limit >= 0, margin +15.3 abs) — **UNVERIFIED**
+  - ⚠ uses P:struct.ms_fatigue_arm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: arm_cup_checks.md: arm tube bending amplitude 8.6 vs 140 MPa at 4e6 cycles (knock-down 0.40 EST))
+  - how to verify: Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.
+  - parts: CGE-002-UR, CGE-002-UL, CGE-002-LR, CGE-002-LL
+  - calc `CALC-A-MS-FATIGUE-ARM-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run` — **CHECKED**
+    - `v` ← param `P:struct.ms_fatigue_arm` = 15.32 — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: arm_cup_checks.md: arm tube bending amplitude 8.6 vs 140 MPa at 4e6 cycles (knock-down 0.40 EST)
+      - `SRC-A-ARMCUP` (see above)
+  - `P:req.ms_min` (see above)
 - claim **CL-A-MS-RIB** Fin rib 14x12 torsion under one foot load, MS = **0.6** (limit >= 0, margin +0.6 abs) — **CHECKED**
-  - how to verify: Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.
+  - how to verify: Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.
   - parts: FIN-002-R, FIN-002-L
-  - calc `CALC-A-MS-RIB-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md (stress already carries the 1.5 factor); read, not re-run` — **CHECKED**
+  - calc `CALC-A-MS-RIB-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run` — **CHECKED**
     - `v` ← param `P:struct.ms_rib_torsion` = 0.6 — **CHECKED**
       - `SRC-A-ITER2M` (see above)
   - `P:req.ms_min` (see above)
 - claim **CL-A-MS-FIN** Fin tube 16x14 in-plane bending at the foot load, MS = **3.44** (limit >= 0, margin +3.44 abs) — **CHECKED**
-  - how to verify: Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.
+  - how to verify: Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.
   - parts: FIN-001-R, FIN-001-L
-  - calc `CALC-A-MS-FIN-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md (stress already carries the 1.5 factor); read, not re-run` — **CHECKED**
+  - calc `CALC-A-MS-FIN-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run` — **CHECKED**
     - `v` ← param `P:struct.ms_fin_inplane` = 3.44 — **CHECKED**
       - `SRC-A-ITER2M` (see above)
   - `P:req.ms_min` (see above)
 - claim **CL-A-MS-PACK-CRASH** Bridge under pack + hub at the 12 g crash, MS (pack retention) = **2.87** (limit >= 0, margin +2.87 abs) — **CHECKED**
-  - how to verify: Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.
+  - how to verify: Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.
   - parts: CGE-004, CGE-008, PWR-001
-  - calc `CALC-A-MS-PACK-CRASH-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md (stress already carries the 1.5 factor); read, not re-run` — **CHECKED**
+  - calc `CALC-A-MS-PACK-CRASH-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run` — **CHECKED**
     - `v` ← param `P:struct.ms_bridge_crash` = 2.87 — **CHECKED**
       - `SRC-A-ITER2M` (see above)
   - `P:req.ms_min` (see above)
@@ -1070,9 +1142,9 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p4
 Defined in: qp/A/REQUIREMENTS-A.md#a-p5
 
 - claim **CL-A-MS-PACK-CRASH** Bridge under pack + hub at the 12 g crash, MS (pack retention) = **2.87** (limit >= 0, margin +2.87 abs) — **CHECKED**
-  - how to verify: Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.
+  - how to verify: Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.
   - parts: CGE-004, CGE-008, PWR-001
-  - calc `CALC-A-MS-PACK-CRASH-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md (stress already carries the 1.5 factor); read, not re-run` — **CHECKED**
+  - calc `CALC-A-MS-PACK-CRASH-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run` — **CHECKED**
     - `v` ← param `P:struct.ms_bridge_crash` = 2.87 — **CHECKED**
       - source `SRC-A-ITER2M` [Structures iteration 2 margins (iter2_margins.md)](redesign/qp/A/structures/iter2_margins.md), MS table at 1.5 x limit, checked 2026-11-15 — **CHECKED**
   - param `P:req.ms_min` = 0 — **CHECKED**
