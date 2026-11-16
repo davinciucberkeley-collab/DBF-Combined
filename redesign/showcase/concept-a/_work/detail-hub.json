@@ -7,8 +7,8 @@
  "scene": "studio",
  "engine": "CYCLES",
  "device": "GPU",
- "samples": 64,
- "render_s": 68.29,
+ "samples": 48,
+ "render_s": 54.93,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -112,6 +112,36 @@
    ]
   },
   {
+   "item": "HRN-004-UR",
+   "x": 690.1,
+   "y": 458.4,
+   "title": "HRN-004-UR",
+   "text": "Printed hub conduit (phase leads)",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    -0.065,
+    0.0161,
+    0.0178
+   ]
+  },
+  {
+   "item": "HRN-003-R",
+   "x": 706.0,
+   "y": 467.7,
+   "title": "HRN-003-R",
+   "text": "Raceway under the tray",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    -0.0501,
+    0.0142,
+    0.0033
+   ]
+  },
+  {
    "item": "CGE-006",
    "x": 811.2,
    "y": 390.8,
@@ -129,16 +159,16 @@
   {
    "item": "CGE-008",
    "x": 754.7,
-   "y": 425.5,
+   "y": 424.7,
    "title": "CGE-008",
    "text": "Pack tray",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.0004,
-    0.0089,
-    0.006
+    -0.0024,
+    0.0078,
+    0.008
    ]
   }
  ],
@@ -218,7 +248,7 @@
    "role": "context",
    "name": "Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 2.0 mm arm-socket mouth walls, 1.2 mm sleeve (D-196), 0.8 mm webs, mass = drawn volume x 1.27)",
    "status": "MODELLED",
-   "mass_g": 17.7,
+   "mass_g": 17.5,
    "subsystem": "cage",
    "bbox_px": [
     626,
@@ -432,7 +462,7 @@
    "subsystem": "cage",
    "bbox_px": [
     651,
-    373,
+    372,
     867,
     490
    ]
@@ -446,7 +476,7 @@
    "subsystem": "propulsion",
    "bbox_px": [
     807,
-    313,
+    316,
     883,
     361
    ]
@@ -462,7 +492,91 @@
     667,
     306,
     853,
-    470
+    468
+   ]
+  },
+  {
+   "id": "HRN-003-R",
+   "role": "context",
+   "name": "Phase-lead raceway (D-199, R): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
+   "status": "MODELLED",
+   "mass_g": 1.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    684,
+    401,
+    765,
+    480
+   ]
+  },
+  {
+   "id": "HRN-003-L",
+   "role": "context",
+   "name": "Phase-lead raceway (D-199, L): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
+   "status": "MODELLED",
+   "mass_g": 1.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    741,
+    417,
+    821,
+    498
+   ]
+  },
+  {
+   "id": "HRN-004-UR",
+   "role": "context",
+   "name": "Hub conduit (D-199, UR): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    666,
+    436,
+    709,
+    479
+   ]
+  },
+  {
+   "id": "HRN-004-UL",
+   "role": "context",
+   "name": "Hub conduit (D-199, UL): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    723,
+    455,
+    766,
+    494
+   ]
+  },
+  {
+   "id": "HRN-004-LR",
+   "role": "context",
+   "name": "Hub conduit (D-199, LR): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    662,
+    466,
+    705,
+    515
+   ]
+  },
+  {
+   "id": "HRN-004-LL",
+   "role": "context",
+   "name": "Hub conduit (D-199, LL): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    729,
+    485,
+    771,
+    538
    ]
   }
  ],
@@ -487,6 +601,8 @@
   "E-HRN-10",
   "E-HRN-11",
   "E-HRN-12",
+  "E-HRN-13",
+  "E-HRN-14",
   "FIN-001-L",
   "FIN-001-R",
   "FIN-002-L",
@@ -541,6 +657,7 @@
   "PRP-005-UL",
   "PRP-005-UR",
   "PWR-002",
+  "PWR-003",
   "WNG-005-L",
   "WNG-005-R",
   "WNG-006-L",

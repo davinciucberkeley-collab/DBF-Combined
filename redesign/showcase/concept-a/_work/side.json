@@ -7,8 +7,8 @@
  "scene": "studio",
  "engine": "CYCLES",
  "device": "GPU",
- "samples": 64,
- "render_s": 27.84,
+ "samples": 48,
+ "render_s": 28.65,
  "explode": 0.0,
  "camera": {
   "preset": "side",
@@ -480,7 +480,7 @@
    "role": "context",
    "name": "Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 2.0 mm arm-socket mouth walls, 1.2 mm sleeve (D-196), 0.8 mm webs, mass = drawn volume x 1.27)",
    "status": "MODELLED",
-   "mass_g": 17.7,
+   "mass_g": 17.5,
    "subsystem": "cage",
    "bbox_px": [
     417,
@@ -946,22 +946,36 @@
    "subsystem": "power",
    "bbox_px": [
     559,
-    416,
+    414,
     797,
+    483
+   ]
+  },
+  {
+   "id": "PWR-003",
+   "role": "context",
+   "name": "Anti-slip pad 100 x 30 x 1.0 mm silicone rubber sheet on the tray floor (BOM W09; thickness, size and density EST)",
+   "status": "MODELLED",
+   "mass_g": 3.5,
+   "subsystem": "power",
+   "bbox_px": [
+    564,
+    483,
+    621,
     485
    ]
   },
   {
    "id": "PWR-002",
    "role": "context",
-   "name": "Pack strap 25 mm hook-and-loop (round pack and tray)",
+   "name": "Pack strap 20 x 300 mm with buckle (STRIX, BOM W08; round pack and tray)",
    "status": "MODELLED",
-   "mass_g": 3.0,
+   "mass_g": 5.5,
    "subsystem": "power",
    "bbox_px": [
     559,
-    426,
-    607,
+    424,
+    597,
     514
    ]
   },
@@ -1001,7 +1015,7 @@
    "mass_g": 17.0,
    "subsystem": "avionics",
    "bbox_px": [
-    697,
+    698,
     427,
     755,
     468
@@ -1043,7 +1057,7 @@
    "mass_g": 4.6,
    "subsystem": "avionics",
    "bbox_px": [
-    804,
+    806,
     466,
     944,
     474
@@ -1080,7 +1094,7 @@
   {
    "id": "AVN-008",
    "role": "context",
-   "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead pad runs; notches for the 4 phase bundles and the battery tail",
+   "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead runs from the foam ditch to the ESC pads; notches for the sensor leads and the battery tail",
    "status": "MODELLED",
    "mass_g": 9.6,
    "subsystem": "avionics",
@@ -1386,6 +1400,90 @@
    ]
   },
   {
+   "id": "HRN-003-R",
+   "role": "context",
+   "name": "Phase-lead raceway (D-199, R): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
+   "status": "MODELLED",
+   "mass_g": 1.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    500,
+    489,
+    655,
+    501
+   ]
+  },
+  {
+   "id": "HRN-003-L",
+   "role": "context",
+   "name": "Phase-lead raceway (D-199, L): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
+   "status": "MODELLED",
+   "mass_g": 1.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    500,
+    489,
+    655,
+    501
+   ]
+  },
+  {
+   "id": "HRN-004-UR",
+   "role": "context",
+   "name": "Hub conduit (D-199, UR): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    461,
+    460,
+    522,
+    489
+   ]
+  },
+  {
+   "id": "HRN-004-UL",
+   "role": "context",
+   "name": "Hub conduit (D-199, UL): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    461,
+    460,
+    522,
+    489
+   ]
+  },
+  {
+   "id": "HRN-004-LR",
+   "role": "context",
+   "name": "Hub conduit (D-199, LR): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    461,
+    501,
+    522,
+    531
+   ]
+  },
+  {
+   "id": "HRN-004-LL",
+   "role": "context",
+   "name": "Hub conduit (D-199, LL): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    461,
+    501,
+    522,
+    531
+   ]
+  },
+  {
    "id": "HRN-002",
    "role": "context",
    "name": "XT60 female + 14 AWG tail to the ESC (modelled)",
@@ -1395,7 +1493,7 @@
    "bbox_px": [
     797,
     461,
-    821,
+    822,
     477
    ]
   },
@@ -1421,10 +1519,38 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    816,
-    442,
-    850,
+    810,
+    453,
+    839,
     472
+   ]
+  },
+  {
+   "id": "E-HRN-13",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    611,
+    452,
+    774,
+    492
+   ]
+  },
+  {
+   "id": "E-HRN-14",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    623,
+    424,
+    625,
+    456
    ]
   },
   {
@@ -1438,7 +1564,7 @@
     443,
     187,
     777,
-    473
+    499
    ]
   },
   {
@@ -1450,9 +1576,9 @@
    "subsystem": "harness",
    "bbox_px": [
     443,
-    194,
+    195,
     777,
-    473
+    499
    ]
   },
   {
@@ -1464,9 +1590,9 @@
    "subsystem": "harness",
    "bbox_px": [
     443,
-    444,
-    800,
-    805
+    443,
+    799,
+    804
    ]
   },
   {
@@ -1478,8 +1604,8 @@
    "subsystem": "harness",
    "bbox_px": [
     443,
-    445,
-    800,
+    443,
+    799,
     812
    ]
   },
@@ -1493,7 +1619,7 @@
    "bbox_px": [
     702,
     452,
-    833,
+    831,
     464
    ]
   },
@@ -1533,9 +1659,9 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    749,
-    419,
-    812,
+    748,
+    420,
+    811,
     470
    ]
   },
@@ -1547,10 +1673,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    698,
+    699,
     420,
-    727,
-    468
+    725,
+    469
    ]
   },
   {
@@ -1561,10 +1687,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    699,
-    421,
-    716,
-    467
+    700,
+    420,
+    714,
+    468
    ]
   }
  ],

@@ -97,6 +97,28 @@
    "pairs": []
   },
   {
+   "id": "B2a",
+   "parts": [
+    "HRN-003-R",
+    "HRN-003-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B2b",
+   "parts": [
+    "HRN-004-UR",
+    "HRN-004-UL",
+    "HRN-004-LR",
+    "HRN-004-LL"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
    "id": "B3",
    "parts": [
     "CGE-008"
@@ -344,6 +366,15 @@
    "id": "E3a",
    "parts": [
     "HWC-001"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "E3c",
+   "parts": [
+    "PWR-003"
    ],
    "worst_mm": 0.0,
    "first_hit_t_mm": null,

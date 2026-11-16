@@ -147,8 +147,8 @@
    "n_parts": 2
   },
   {
-   "id": "B3",
-   "caption": "Pack tray lowered from above into the core tray slot, bonded to the hub aft face",
+   "id": "B2a",
+   "caption": "D-199: phase-lead raceways R and L lowered from above into their foam grooves (through the slots in the hub pad flange), before the tray",
    "dir": [
     0,
     0,
@@ -163,6 +163,59 @@
    "t_mv0": 15.499999999999998,
    "t_mv1": 16.299999999999997,
    "t_end": 16.499999999999996,
+   "n_parts": 2
+  },
+  {
+   "id": "B2b",
+   "caption": "D-199: hub conduits (4) pushed in from aft along the hub webs, each docking on its socket floor face and on its raceway window",
+   "dir": [
+    -1,
+    0,
+    0
+   ],
+   "travel": 40.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 2,
+   "first_in_stage": false,
+   "t_cam0": 16.499999999999996,
+   "t_mv0": 16.949999999999996,
+   "t_mv1": 17.749999999999996,
+   "t_end": 17.949999999999996,
+   "n_parts": 4
+  },
+  {
+   "id": "B2c",
+   "caption": "THREAD: feed the free ends of the 12 phase strands (B0) through their hub conduit, the raceway and the foam ditch (fish thread from the ditch end); the free ends stay out at x 29 mm for the ESC pads",
+   "dir": null,
+   "travel": 0.0,
+   "edges": [],
+   "visual_mm": 0.0,
+   "stage": 2,
+   "first_in_stage": false,
+   "t_cam0": 17.949999999999996,
+   "t_mv0": 18.399999999999995,
+   "t_mv1": 18.999999999999996,
+   "t_end": 19.199999999999996,
+   "n_parts": 0
+  },
+  {
+   "id": "B3",
+   "caption": "Pack tray lowered from above into the core tray slot, bonded to the hub aft face",
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "travel": 30.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 2,
+   "first_in_stage": false,
+   "t_cam0": 19.199999999999996,
+   "t_mv0": 19.649999999999995,
+   "t_mv1": 20.449999999999996,
+   "t_end": 20.649999999999995,
    "n_parts": 1
   },
   {
@@ -178,11 +231,11 @@
    "visual_mm": 70.0,
    "stage": 2,
    "first_in_stage": false,
-   "t_cam0": 16.499999999999996,
-   "t_mv0": 16.949999999999996,
-   "t_mv1": 17.749999999999996,
-   "t_end": 17.949999999999996,
-   "t_stage_end": 18.549999999999997,
+   "t_cam0": 20.649999999999995,
+   "t_mv0": 21.099999999999994,
+   "t_mv1": 21.899999999999995,
+   "t_end": 22.099999999999994,
+   "t_stage_end": 22.699999999999996,
    "n_parts": 4
   },
   {
@@ -198,10 +251,10 @@
    "visual_mm": 300.0,
    "stage": 3,
    "first_in_stage": true,
-   "t_cam0": 18.549999999999997,
-   "t_mv0": 19.349999999999998,
-   "t_mv1": 20.45,
-   "t_end": 20.65,
+   "t_cam0": 22.699999999999996,
+   "t_mv0": 23.499999999999996,
+   "t_mv1": 24.599999999999998,
+   "t_end": 24.799999999999997,
    "n_parts": 2
   },
   {
@@ -217,11 +270,11 @@
    "visual_mm": 70.0,
    "stage": 3,
    "first_in_stage": false,
-   "t_cam0": 20.65,
-   "t_mv0": 21.099999999999998,
-   "t_mv1": 21.9,
-   "t_end": 22.099999999999998,
-   "t_stage_end": 22.7,
+   "t_cam0": 24.799999999999997,
+   "t_mv0": 25.249999999999996,
+   "t_mv1": 26.049999999999997,
+   "t_end": 26.249999999999996,
+   "t_stage_end": 26.849999999999998,
    "n_parts": 2
   },
   {
@@ -237,10 +290,10 @@
    "visual_mm": 70.0,
    "stage": 4,
    "first_in_stage": true,
-   "t_cam0": 22.7,
-   "t_mv0": 23.5,
-   "t_mv1": 24.3,
-   "t_end": 24.5,
+   "t_cam0": 26.849999999999998,
+   "t_mv0": 27.65,
+   "t_mv1": 28.45,
+   "t_end": 28.65,
    "n_parts": 4
   },
   {
@@ -256,10 +309,10 @@
    "visual_mm": 70.0,
    "stage": 4,
    "first_in_stage": false,
-   "t_cam0": 24.5,
-   "t_mv0": 24.95,
-   "t_mv1": 25.75,
-   "t_end": 25.95,
+   "t_cam0": 28.65,
+   "t_mv0": 29.099999999999998,
+   "t_mv1": 29.9,
+   "t_end": 30.099999999999998,
    "n_parts": 2
   },
   {
@@ -275,11 +328,11 @@
    "visual_mm": 70.0,
    "stage": 4,
    "first_in_stage": false,
-   "t_cam0": 25.95,
-   "t_mv0": 26.4,
-   "t_mv1": 27.2,
-   "t_end": 27.4,
-   "t_stage_end": 28.0,
+   "t_cam0": 30.099999999999998,
+   "t_mv0": 30.549999999999997,
+   "t_mv1": 31.349999999999998,
+   "t_end": 31.549999999999997,
+   "t_stage_end": 32.15,
    "n_parts": 2
   },
   {
@@ -295,10 +348,10 @@
    "visual_mm": 70.0,
    "stage": 5,
    "first_in_stage": true,
-   "t_cam0": 28.0,
-   "t_mv0": 28.8,
-   "t_mv1": 29.6,
-   "t_end": 29.8,
+   "t_cam0": 32.15,
+   "t_mv0": 32.949999999999996,
+   "t_mv1": 33.74999999999999,
+   "t_end": 33.949999999999996,
    "n_parts": 1
   },
   {
@@ -314,10 +367,10 @@
    "visual_mm": 70.0,
    "stage": 5,
    "first_in_stage": false,
-   "t_cam0": 29.8,
-   "t_mv0": 30.25,
-   "t_mv1": 31.05,
-   "t_end": 31.25,
+   "t_cam0": 33.949999999999996,
+   "t_mv0": 34.4,
+   "t_mv1": 35.199999999999996,
+   "t_end": 35.4,
    "n_parts": 1
   },
   {
@@ -333,10 +386,10 @@
    "visual_mm": 70.0,
    "stage": 5,
    "first_in_stage": false,
-   "t_cam0": 31.25,
-   "t_mv0": 31.7,
-   "t_mv1": 32.5,
-   "t_end": 32.7,
+   "t_cam0": 35.4,
+   "t_mv0": 35.85,
+   "t_mv1": 36.65,
+   "t_end": 36.85,
    "n_parts": 2
   },
   {
@@ -352,11 +405,11 @@
    "visual_mm": 450.0,
    "stage": 5,
    "first_in_stage": false,
-   "t_cam0": 32.7,
-   "t_mv0": 33.150000000000006,
-   "t_mv1": 34.25000000000001,
-   "t_end": 34.45000000000001,
-   "t_stage_end": 35.05000000000001,
+   "t_cam0": 36.85,
+   "t_mv0": 37.300000000000004,
+   "t_mv1": 38.400000000000006,
+   "t_end": 38.60000000000001,
+   "t_stage_end": 39.20000000000001,
    "n_parts": 2
   },
   {
@@ -372,10 +425,10 @@
    "visual_mm": 70.0,
    "stage": 6,
    "first_in_stage": true,
-   "t_cam0": 35.05000000000001,
-   "t_mv0": 35.85000000000001,
-   "t_mv1": 36.650000000000006,
-   "t_end": 36.85000000000001,
+   "t_cam0": 39.20000000000001,
+   "t_mv0": 40.00000000000001,
+   "t_mv1": 40.800000000000004,
+   "t_end": 41.00000000000001,
    "n_parts": 2
   },
   {
@@ -391,10 +444,10 @@
    "visual_mm": 70.0,
    "stage": 6,
    "first_in_stage": false,
-   "t_cam0": 36.85000000000001,
-   "t_mv0": 37.30000000000001,
-   "t_mv1": 38.10000000000001,
-   "t_end": 38.30000000000001,
+   "t_cam0": 41.00000000000001,
+   "t_mv0": 41.45000000000001,
+   "t_mv1": 42.25000000000001,
+   "t_end": 42.45000000000001,
    "n_parts": 2
   },
   {
@@ -410,11 +463,11 @@
    "visual_mm": 70.0,
    "stage": 6,
    "first_in_stage": false,
-   "t_cam0": 38.30000000000001,
-   "t_mv0": 38.750000000000014,
-   "t_mv1": 39.55000000000001,
-   "t_end": 39.750000000000014,
-   "t_stage_end": 40.350000000000016,
+   "t_cam0": 42.45000000000001,
+   "t_mv0": 42.90000000000001,
+   "t_mv1": 43.70000000000001,
+   "t_end": 43.90000000000001,
+   "t_stage_end": 44.500000000000014,
    "n_parts": 4
   },
   {
@@ -430,10 +483,10 @@
    "visual_mm": 70.0,
    "stage": 7,
    "first_in_stage": true,
-   "t_cam0": 40.350000000000016,
-   "t_mv0": 41.15000000000001,
-   "t_mv1": 41.95000000000001,
-   "t_end": 42.15000000000001,
+   "t_cam0": 44.500000000000014,
+   "t_mv0": 45.30000000000001,
+   "t_mv1": 46.10000000000001,
+   "t_end": 46.30000000000001,
    "n_parts": 2
   },
   {
@@ -445,10 +498,10 @@
    "visual_mm": 0.0,
    "stage": 7,
    "first_in_stage": false,
-   "t_cam0": 42.15000000000001,
-   "t_mv0": 42.600000000000016,
-   "t_mv1": 43.20000000000002,
-   "t_end": 43.40000000000002,
+   "t_cam0": 46.30000000000001,
+   "t_mv0": 46.750000000000014,
+   "t_mv1": 47.350000000000016,
+   "t_end": 47.55000000000002,
    "n_parts": 0
   },
   {
@@ -464,10 +517,10 @@
    "visual_mm": 70.0,
    "stage": 7,
    "first_in_stage": false,
-   "t_cam0": 43.40000000000002,
-   "t_mv0": 43.85000000000002,
-   "t_mv1": 44.65000000000002,
-   "t_end": 44.85000000000002,
+   "t_cam0": 47.55000000000002,
+   "t_mv0": 48.00000000000002,
+   "t_mv1": 48.80000000000002,
+   "t_end": 49.00000000000002,
    "n_parts": 2
   },
   {
@@ -483,10 +536,10 @@
    "visual_mm": 70.0,
    "stage": 7,
    "first_in_stage": false,
-   "t_cam0": 44.85000000000002,
-   "t_mv0": 45.300000000000026,
-   "t_mv1": 46.10000000000002,
-   "t_end": 46.300000000000026,
+   "t_cam0": 49.00000000000002,
+   "t_mv0": 49.450000000000024,
+   "t_mv1": 50.25000000000002,
+   "t_end": 50.450000000000024,
    "n_parts": 2
   },
   {
@@ -502,10 +555,10 @@
    "visual_mm": 70.0,
    "stage": 7,
    "first_in_stage": false,
-   "t_cam0": 46.300000000000026,
-   "t_mv0": 46.75000000000003,
-   "t_mv1": 47.550000000000026,
-   "t_end": 47.75000000000003,
+   "t_cam0": 50.450000000000024,
+   "t_mv0": 50.90000000000003,
+   "t_mv1": 51.700000000000024,
+   "t_end": 51.90000000000003,
    "n_parts": 2
   },
   {
@@ -521,10 +574,10 @@
    "visual_mm": 70.0,
    "stage": 7,
    "first_in_stage": false,
-   "t_cam0": 47.75000000000003,
-   "t_mv0": 48.20000000000003,
-   "t_mv1": 49.00000000000003,
-   "t_end": 49.20000000000003,
+   "t_cam0": 51.90000000000003,
+   "t_mv0": 52.35000000000003,
+   "t_mv1": 53.15000000000003,
+   "t_end": 53.35000000000003,
    "n_parts": 2
   },
   {
@@ -540,10 +593,10 @@
    "visual_mm": 70.0,
    "stage": 7,
    "first_in_stage": false,
-   "t_cam0": 49.20000000000003,
-   "t_mv0": 49.650000000000034,
-   "t_mv1": 50.45000000000003,
-   "t_end": 50.650000000000034,
+   "t_cam0": 53.35000000000003,
+   "t_mv0": 53.80000000000003,
+   "t_mv1": 54.60000000000003,
+   "t_end": 54.80000000000003,
    "n_parts": 1
   },
   {
@@ -559,11 +612,11 @@
    "visual_mm": 70.0,
    "stage": 7,
    "first_in_stage": false,
-   "t_cam0": 50.650000000000034,
-   "t_mv0": 51.10000000000004,
-   "t_mv1": 51.900000000000034,
-   "t_end": 52.10000000000004,
-   "t_stage_end": 52.70000000000004,
+   "t_cam0": 54.80000000000003,
+   "t_mv0": 55.250000000000036,
+   "t_mv1": 56.05000000000003,
+   "t_end": 56.250000000000036,
+   "t_stage_end": 56.85000000000004,
    "n_parts": 1
   },
   {
@@ -579,10 +632,10 @@
    "visual_mm": 250.0,
    "stage": 8,
    "first_in_stage": true,
-   "t_cam0": 52.70000000000004,
-   "t_mv0": 53.500000000000036,
-   "t_mv1": 54.60000000000004,
-   "t_end": 54.80000000000004,
+   "t_cam0": 56.85000000000004,
+   "t_mv0": 57.650000000000034,
+   "t_mv1": 58.750000000000036,
+   "t_end": 58.95000000000004,
    "n_parts": 1
   },
   {
@@ -598,10 +651,10 @@
    "visual_mm": 70.0,
    "stage": 8,
    "first_in_stage": false,
-   "t_cam0": 54.80000000000004,
-   "t_mv0": 55.25000000000004,
-   "t_mv1": 56.05000000000004,
-   "t_end": 56.25000000000004,
+   "t_cam0": 58.95000000000004,
+   "t_mv0": 59.40000000000004,
+   "t_mv1": 60.20000000000004,
+   "t_end": 60.40000000000004,
    "n_parts": 2
   },
   {
@@ -617,10 +670,10 @@
    "visual_mm": 70.0,
    "stage": 8,
    "first_in_stage": false,
-   "t_cam0": 56.25000000000004,
-   "t_mv0": 56.700000000000045,
-   "t_mv1": 57.50000000000004,
-   "t_end": 57.700000000000045,
+   "t_cam0": 60.40000000000004,
+   "t_mv0": 60.850000000000044,
+   "t_mv1": 61.65000000000004,
+   "t_end": 61.850000000000044,
    "n_parts": 6
   },
   {
@@ -636,10 +689,10 @@
    "visual_mm": 70.0,
    "stage": 8,
    "first_in_stage": false,
-   "t_cam0": 57.700000000000045,
-   "t_mv0": 58.15000000000005,
-   "t_mv1": 58.950000000000045,
-   "t_end": 59.15000000000005,
+   "t_cam0": 61.850000000000044,
+   "t_mv0": 62.30000000000005,
+   "t_mv1": 63.100000000000044,
+   "t_end": 63.30000000000005,
    "n_parts": 1
   },
   {
@@ -658,12 +711,31 @@
    "visual_mm": 0.0,
    "stage": 8,
    "first_in_stage": false,
-   "t_cam0": 59.15000000000005,
-   "t_mv0": 59.60000000000005,
-   "t_mv1": 60.20000000000005,
-   "t_end": 60.400000000000055,
-   "t_stage_end": 61.00000000000006,
+   "t_cam0": 63.30000000000005,
+   "t_mv0": 63.75000000000005,
+   "t_mv1": 64.35000000000005,
+   "t_end": 64.55000000000005,
+   "t_stage_end": 65.15000000000005,
    "n_parts": 0
+  },
+  {
+   "id": "E3c",
+   "caption": "Anti-slip pad stuck on the tray floor",
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "travel": 10.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 9,
+   "first_in_stage": true,
+   "t_cam0": 65.15000000000005,
+   "t_mv0": 65.95000000000005,
+   "t_mv1": 66.75000000000004,
+   "t_end": 66.95000000000005,
+   "n_parts": 1
   },
   {
    "id": "E4",
@@ -677,11 +749,11 @@
    "edges": [],
    "visual_mm": 70.0,
    "stage": 9,
-   "first_in_stage": true,
-   "t_cam0": 61.00000000000006,
-   "t_mv0": 61.800000000000054,
-   "t_mv1": 62.60000000000005,
-   "t_end": 62.800000000000054,
+   "first_in_stage": false,
+   "t_cam0": 66.95000000000005,
+   "t_mv0": 67.40000000000005,
+   "t_mv1": 68.20000000000005,
+   "t_end": 68.40000000000005,
    "n_parts": 1
   },
   {
@@ -697,27 +769,29 @@
    "visual_mm": 70.0,
    "stage": 9,
    "first_in_stage": false,
-   "t_cam0": 62.800000000000054,
-   "t_mv0": 63.25000000000006,
-   "t_mv1": 64.05000000000005,
-   "t_end": 64.25000000000006,
+   "t_cam0": 68.40000000000005,
+   "t_mv0": 68.85000000000005,
+   "t_mv1": 69.65000000000005,
+   "t_end": 69.85000000000005,
    "n_parts": 1
   },
   {
    "id": "E4b",
-   "caption": "LAY: mate the pack XT60 male to the XT60 female (E4a) (done in E4a)",
+   "caption": "LAY: mate the pack XT60 male to the XT60 female (E4a) (done in E4a); the vendor pack power leads (E-HRN-13) and balance lead (E-HRN-14) come on the pack and are taped to the skin along their route, the balance plug on the pack top",
    "dir": null,
    "travel": 0.0,
    "edges": [
-    "E-HRN-01"
+    "E-HRN-01",
+    "E-HRN-13",
+    "E-HRN-14"
    ],
    "visual_mm": 0.0,
    "stage": 9,
    "first_in_stage": false,
-   "t_cam0": 64.25000000000006,
-   "t_mv0": 64.70000000000006,
-   "t_mv1": 65.30000000000005,
-   "t_end": 65.50000000000006,
+   "t_cam0": 69.85000000000005,
+   "t_mv0": 70.30000000000005,
+   "t_mv1": 70.90000000000005,
+   "t_end": 71.10000000000005,
    "n_parts": 0
   },
   {
@@ -729,15 +803,15 @@
    "visual_mm": 0.0,
    "stage": 9,
    "first_in_stage": false,
-   "t_cam0": 65.50000000000006,
-   "t_mv0": 65.95000000000006,
-   "t_mv1": 66.55000000000005,
-   "t_end": 66.75000000000006,
+   "t_cam0": 71.10000000000005,
+   "t_mv0": 71.55000000000005,
+   "t_mv1": 72.15000000000005,
+   "t_end": 72.35000000000005,
    "n_parts": 1
   },
   {
    "id": "E6",
-   "caption": "LAY: solder the battery tail to the ESC BAT pads and the 4 x 3 phase leads (free ends from B0, run over the wing at z 29 / 27.5 mm) to the ESC motor pads; heat-shrink; ties at the hub aft face and at the plate edge",
+   "caption": "LAY: solder the battery tail to the ESC BAT pads and the 4 x 3 phase leads (free ends from B0 / B2c: out of the foam ditch, up to z 16, over the plate beside the FC, up to z 28 under the cover roof) to the ESC motor pads; heat-shrink",
    "dir": null,
    "travel": 0.0,
    "edges": [
@@ -750,15 +824,15 @@
    "visual_mm": 0.0,
    "stage": 9,
    "first_in_stage": false,
-   "t_cam0": 66.75000000000006,
-   "t_mv0": 67.20000000000006,
-   "t_mv1": 67.80000000000005,
-   "t_end": 68.00000000000006,
+   "t_cam0": 72.35000000000005,
+   "t_mv0": 72.80000000000005,
+   "t_mv1": 73.40000000000005,
+   "t_end": 73.60000000000005,
    "n_parts": 0
   },
   {
    "id": "E7",
-   "caption": "Bay cover lowered over the FC stack and ESC onto the plate (the bundles and sensor leads drop into the roof-open notches), foam tape + two ties",
+   "caption": "Bay cover lowered over the FC stack and ESC onto the plate (the sensor leads and the battery tail drop into the roof-open notches; the phase bundles are already inside), foam tape + two ties",
    "dir": [
     0,
     0,
@@ -769,11 +843,11 @@
    "visual_mm": 70.0,
    "stage": 9,
    "first_in_stage": false,
-   "t_cam0": 68.00000000000006,
-   "t_mv0": 68.45000000000006,
-   "t_mv1": 69.25000000000006,
-   "t_end": 69.45000000000006,
-   "t_stage_end": 70.05000000000005,
+   "t_cam0": 73.60000000000005,
+   "t_mv0": 74.05000000000005,
+   "t_mv1": 74.85000000000005,
+   "t_end": 75.05000000000005,
+   "t_stage_end": 75.65000000000005,
    "n_parts": 1
   }
  ],
@@ -807,15 +881,18 @@
   },
   {
    "n": 3,
-   "title": "Rib saddles, pack tray, hinge dampers",
+   "title": "Rib saddles, phase-lead raceways, pack tray, hinge dampers",
    "steps": [
     "B2",
+    "B2a",
+    "B2b",
+    "B2c",
     "B3",
     "B4"
    ],
    "frames": [
     317,
-    444
+    543
    ]
   },
   {
@@ -826,8 +903,8 @@
     "C1a"
    ],
    "frames": [
-    445,
-    543
+    544,
+    643
    ]
   },
   {
@@ -839,8 +916,8 @@
     "C2b"
    ],
    "frames": [
-    544,
-    671
+    644,
+    770
    ]
   },
   {
@@ -853,8 +930,8 @@
     "C6"
    ],
    "frames": [
-    672,
-    840
+    771,
+    939
    ]
   },
   {
@@ -866,8 +943,8 @@
     "C9"
    ],
    "frames": [
-    841,
-    967
+    940,
+    1067
    ]
   },
   {
@@ -884,8 +961,8 @@
     "D5b"
    ],
    "frames": [
-    968,
-    1263
+    1068,
+    1363
    ]
   },
   {
@@ -899,14 +976,15 @@
     "E3b"
    ],
    "frames": [
-    1264,
-    1463
+    1364,
+    1562
    ]
   },
   {
    "n": 10,
    "title": "Pack, XT60, strap, phase leads, bay cover",
    "steps": [
+    "E3c",
     "E4",
     "E4a",
     "E4b",
@@ -915,11 +993,11 @@
     "E7"
    ],
    "frames": [
-    1464,
-    1680
+    1563,
+    1814
    ]
   }
  ],
  "fps": 24,
- "frames": 1741
+ "frames": 1875
 }

@@ -286,7 +286,7 @@
  },
  "mass": {
   "basic_cad_kg": {
-   "value": 1.25974,
+   "value": 1.26264,
    "unit": "kg",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json mass_basic_kg (CAD, no growth)"
@@ -365,7 +365,7 @@
    ],
    "unit": "g, fraction",
    "source": "SRC-A-MGATE",
-   "note": "mission_gate_a.py `items` (D-195, cage +3.6 g D-196 hub walls; D-198: bay cover, bottom-up harness, cup collars; CAD 2026-11-15): [basic g, growth fraction by maturity]: wing, fins + feet, motors, props, adapters + spinner nuts (CALC 10 %), ESC, pack, strap, avionics + harness, servos, cage, hardware",
+   "note": "mission_gate_a.py `items` (D-195, cage +3.6 g D-196 hub walls; D-198: bay cover, bottom-up harness, cup collars; D-199: raceways, hub conduits, shorter phase extensions, 20 mm strap, drawn pad; CAD 2026-11-15): [basic g, growth fraction by maturity]: wing, fins + feet, motors, props, adapters + spinner nuts (CALC 10 %), ESC, pack, strap, avionics + harness, servos, cage, hardware",
    "status": "UNVERIFIED"
   },
   "structure_groups_g": {
@@ -394,19 +394,19 @@
    "note": "FIXES2 s7 / MASS-GATE s7: pack trim 10 mm aft in the tray slots"
   },
   "pack_trim_fwd_mm": {
-   "value": 8.0,
+   "value": 6.0,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
-   "note": "D-196: forward pack travel 8 mm (tray front lip 2 mm aft); cad_mass.json trim_fwd_m"
+   "note": "D-199: forward pack travel 6 mm (D-196: 8 mm) (tray front lip 2 mm aft); cad_mass.json trim_fwd_m"
   },
   "cg_x_mm": {
-   "value": 21.31537301347897,
+   "value": 20.68488088449598,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_x_m, aft of the wing leading edge"
   },
   "cg_y_mm": {
-   "value": 2.5713242415101525,
+   "value": 2.3932791611227264,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_y_m (lateral)"
@@ -1263,7 +1263,7 @@
      "power",
      "RMRC",
      1.0,
-     23.92,
+     19.94,
      false
     ],
     [
@@ -1272,6 +1272,30 @@
      "Local",
      1.0,
      6.0,
+     true
+    ],
+    [
+     "W07",
+     "power",
+     "RMRC",
+     1.0,
+     3.96,
+     false
+    ],
+    [
+     "W08",
+     "power",
+     "RMRC",
+     1.0,
+     1.99,
+     false
+    ],
+    [
+     "W09",
+     "power",
+     "Amazon",
+     1.0,
+     2.0,
      true
     ],
     [
@@ -1689,25 +1713,25 @@
    "note": "report.json kinks (wire folds)"
   },
   "parts": {
-   "value": 97,
+   "value": 104,
    "unit": "-",
    "source": "SRC-A-COLL",
    "note": "report.json parts checked"
   },
   "assy_steps": {
-   "value": 36,
+   "value": 39,
    "unit": "-",
    "source": "SRC-A-ASSY",
    "note": "assembly.json steps"
   },
   "assy_steps_ok": {
-   "value": 36,
+   "value": 39,
    "unit": "-",
    "source": "SRC-A-ASSY",
    "note": "assembly.json steps with no blocking pair at or above the tolerance (35 of 35 in ASSEMBLY.md)"
   },
   "assy_parts_placed": {
-   "value": 97,
+   "value": 104,
    "unit": "-",
    "source": "SRC-A-ASSY",
    "note": "assembly.json parts placed (96 of 96)"

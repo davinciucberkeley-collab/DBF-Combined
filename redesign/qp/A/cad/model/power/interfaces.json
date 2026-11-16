@@ -10,9 +10,9 @@
    "mass_g": 270.0,
    "material": "LiPo",
    "cg_xyz_m": [
-    -0.008,
-    0.0018,
-    0.0225
+    -0.0084,
+    0.001,
+    0.0235
    ],
    "make_or_buy": "buy",
    "electrical": "source",
@@ -20,15 +20,30 @@
   },
   {
    "id": "PWR-002",
-   "name": "Pack strap 25 mm hook-and-loop (round pack and tray)",
+   "name": "Pack strap 20 x 300 mm with buckle (STRIX, BOM W08; round pack and tray)",
    "subsystem": "power",
    "status": "MODELLED",
-   "mass_g": 3.0,
-   "material": "hook-and-loop nylon",
+   "mass_g": 5.5,
+   "material": "nylon webbing + plastic buckle",
    "cg_xyz_m": [
-    -0.015,
+    -0.0175,
     0.0,
-    0.0155
+    0.016
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "PWR-003",
+   "name": "Anti-slip pad 100 x 30 x 1.0 mm silicone rubber sheet on the tray floor (BOM W09; thickness, size and density EST)",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 3.5,
+   "material": "silicone rubber",
+   "cg_xyz_m": [
+    -0.01,
+    0.0,
+    0.0085
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -41,9 +56,9 @@
    "part_b": "CGE-008",
    "via": "CT-STRAP-VELCRO",
    "owner": "power",
-   "notes": "hook-and-loop strap round pack and tray: over the pack top, outside the tray end walls, under the tray plate AND the 12 mm bridge tube CGE-004 (tangent to the plate underside, z -6..6)",
+   "notes": "buckle strap round pack and tray: over the pack top, outside the tray end walls, under the tray plate AND the 12 mm bridge tube CGE-004 (tangent to the plate underside, z -6..6)",
    "retention": {
-    "item": "25 mm strap",
+    "item": "20 mm strap",
     "count": 1,
     "load_n": 38.8
    },
@@ -55,7 +70,7 @@
    "part_b": "CGE-008",
    "via": "CT-STRAP-VELCRO",
    "owner": "power",
-   "notes": "pack sits on the tray floor on a hook-and-loop anti-slip pad (pad not drawn, EST), between the integral lips; strap PWR-002 holds it",
+   "notes": "pack sits on the anti-slip pad PWR-003 on the tray floor, between the integral lips; strap PWR-002 holds it",
    "retention": {
     "item": "anti-slip pad + strap",
     "count": 1
@@ -64,6 +79,14 @@
   },
   {
    "id": "E-PWR-03",
+   "part_a": "PWR-003",
+   "part_b": "CGE-008",
+   "via": "CT-TAPE-FOAM",
+   "owner": "power",
+   "notes": "pad stuck on the tray plate (adhesive-backed sheet, EST)"
+  },
+  {
+   "id": "E-PWR-04",
    "part_a": "PWR-002",
    "part_b": "PWR-001",
    "via": "CT-STRAP-VELCRO",
@@ -72,6 +95,8 @@
   }
  ],
  "acknowledges": [
-  "E-HRN-01"
+  "E-HRN-01",
+  "E-HRN-13",
+  "E-HRN-14"
  ]
 }

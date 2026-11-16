@@ -2,21 +2,21 @@
 window.VIEWER_DATA = {
  "schema": "dbf-viewer/1",
  "dataset": "concept-a",
- "generated": "2026-11-16 04:29 UTC",
+ "generated": "2026-11-16 07:46 UTC",
  "sources": {
-  "glb": "../../../../../AppData/Local/Temp/claude/glbA",
-  "interfaces": "../../../../../AppData/Local/Temp/claude/merge/interfaces.json",
+  "glb": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/glb",
+  "interfaces": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/merged/interfaces.json",
   "proofs": "redesign/qp/A/proofs/out/graph.json",
   "budget": "redesign/qp/A/cad/model/mass_budget.json",
   "csv": [
-   "../qp/A/cad/out/parts-a.csv"
+   "redesign/qp/A/cad/out/parts-a.csv"
   ]
  },
  "glb": {
   "file": "assembly.glb",
-  "bytes": 3810320,
+  "bytes": 7392508,
   "js_parts": 1,
-  "sha256": "55b45cca5a71d04daaccdc6fe4d74b301a9cc2c089f6b48c8145eeb92c40af90"
+  "sha256": "de2513e845cb8f1ce1351175c64e751e7163f79684095b2fcd2e41b18e314a99"
  },
  "frame": "aircraft frame: metres, x aft, y right, z up. glTF (x, y, z) = aircraft (x, z, -y).",
  "parts": [
@@ -35,10 +35,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step E2 \"Avionics plate on the skin with its four M2 thin nuts already seated in the hex pockets\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-09.mp4"
+   "how_url": "assets/animation/build/a-stage-09.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 69",
+   "spec": null
   },
   {
    "id": "AVN-002",
@@ -56,10 +60,14 @@ window.VIEWER_DATA = {
    "electrical": "bus",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM V03 RMRC; fitted in build step E3 \"ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS, airspeed on the plate\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
    "vendor_url": "https://www.readymaderc.com/products/details/87184-holybro-kakute-f405-wing-mini-flight-controller",
-   "how_url": "assets/animation/build/a-stage-09.mp4"
+   "how_url": "assets/animation/build/a-stage-09.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 70",
+   "spec": null
   },
   {
    "id": "AVN-003",
@@ -77,10 +85,14 @@ window.VIEWER_DATA = {
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM V02 RMRC; fitted in build step E3 \"ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS, airspeed on the plate\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
    "vendor_url": "https://www.readymaderc.com/products/details/85670-radiomaster-rp3-expresslrs-2-4ghz-nano-receiver-v2",
-   "how_url": "assets/animation/build/a-stage-09.mp4"
+   "how_url": "assets/animation/build/a-stage-09.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 72",
+   "spec": null
   },
   {
    "id": "AVN-004",
@@ -91,17 +103,21 @@ window.VIEWER_DATA = {
    "material": "PCB",
    "cg_xyz_m": [
     0.0575,
-    0.0396,
+    0.0395,
     0.0172
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM V04 RMRC; fitted in build step E3 \"ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS, airspeed on the plate\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
    "vendor_url": "https://www.readymaderc.com/products/details/86501-tbs-m10q-gps-receiver-with-glonass",
-   "how_url": "assets/animation/build/a-stage-09.mp4"
+   "how_url": "assets/animation/build/a-stage-09.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 73",
+   "spec": null
   },
   {
    "id": "AVN-005",
@@ -119,10 +135,14 @@ window.VIEWER_DATA = {
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM V05 RMRC; fitted in build step E3 \"ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS, airspeed on the plate\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
    "vendor_url": "https://www.readymaderc.com/products/details/rmrc-digital-air-speed-sensor-pixhawk-ii-2",
-   "how_url": "assets/animation/build/a-stage-09.mp4"
+   "how_url": "assets/animation/build/a-stage-09.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 74",
+   "spec": null
   },
   {
    "id": "AVN-006",
@@ -139,10 +159,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM V05 RMRC (pitot probe comes in the V05 airspeed kit); fitted in build step E1 \"Pitot into its groove from the front\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
    "vendor_url": "https://www.readymaderc.com/products/details/rmrc-digital-air-speed-sensor-pixhawk-ii-2",
-   "how_url": "assets/animation/build/a-stage-09.mp4"
+   "how_url": "assets/animation/build/a-stage-09.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 75",
+   "spec": null
   },
   {
    "id": "AVN-007",
@@ -159,14 +183,18 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM R05 Amazon (foam tape from the local fastener / tape line); fitted in build step E3 \"ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS, airspeed on the plate\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
    "vendor_url": null,
-   "how_url": "assets/animation/build/a-stage-09.mp4"
+   "how_url": "assets/animation/build/a-stage-09.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 71",
+   "spec": null
   },
   {
    "id": "AVN-008",
-   "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead pad runs; notches for the 4 phase bundles and the battery tail",
+   "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead runs from the foam ditch to the ESC pads; notches for the sensor leads and the battery tail",
    "subsystem": "avionics",
    "status": "MODELLED",
    "mass_g": 9.6,
@@ -179,17 +207,21 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step E7 \"Bay cover lowered over the FC stack and ESC onto the plate (the sensor leads and the battery tail drop into the roof-open notches; the phase bundles are already inside), foam tape + two ties\", stage 10 (Pack, XT60, strap, phase leads, bay cover)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-10.mp4"
+   "how_url": "assets/animation/build/a-stage-10.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 76",
+   "spec": null
   },
   {
    "id": "CGE-001",
    "name": "Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 2.0 mm arm-socket mouth walls, 1.2 mm sleeve (D-196), 0.8 mm webs, mass = drawn volume x 1.27)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 17.7,
+   "mass_g": 17.5,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0724,
@@ -199,10 +231,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 33",
+   "spec": null
   },
   {
    "id": "CGE-002-LL",
@@ -219,10 +255,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (cut from the 12x10 tube) from BOM R08 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-12mm-x-10mm-1m-long",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 40",
+   "spec": null
   },
   {
    "id": "CGE-002-LR",
@@ -239,10 +279,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (cut from the 12x10 tube) from BOM R08 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-12mm-x-10mm-1m-long",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 38",
+   "spec": null
   },
   {
    "id": "CGE-002-UL",
@@ -259,10 +303,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (cut from the 12x10 tube) from BOM R08 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-12mm-x-10mm-1m-long",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 36",
+   "spec": null
   },
   {
    "id": "CGE-002-UR",
@@ -279,10 +327,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (cut from the 12x10 tube) from BOM R08 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-12mm-x-10mm-1m-long",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 34",
+   "spec": null
   },
   {
    "id": "CGE-003-LL",
@@ -299,10 +351,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 41",
+   "spec": null
   },
   {
    "id": "CGE-003-LR",
@@ -319,10 +375,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 39",
+   "spec": null
   },
   {
    "id": "CGE-003-UL",
@@ -339,10 +399,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 37",
+   "spec": null
   },
   {
    "id": "CGE-003-UR",
@@ -359,10 +423,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 35",
+   "spec": null
   },
   {
    "id": "CGE-004",
@@ -379,10 +447,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (cut from the 12x10 tube) from BOM R08 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-12mm-x-10mm-1m-long",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 42",
+   "spec": null
   },
   {
    "id": "CGE-005-L",
@@ -399,10 +471,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (cut from the 6x4.5 tube) from BOM R10 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-6mm-x-4-5mm-1m-long",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 45",
+   "spec": null
   },
   {
    "id": "CGE-005-R",
@@ -419,10 +495,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (cut from the 6x4.5 tube) from BOM R10 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-6mm-x-4-5mm-1m-long",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 43",
+   "spec": null
   },
   {
    "id": "CGE-006",
@@ -439,10 +519,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 47",
+   "spec": null
   },
   {
    "id": "CGE-007-L",
@@ -459,10 +543,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 46",
+   "spec": null
   },
   {
    "id": "CGE-007-R",
@@ -479,10 +567,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 44",
+   "spec": null
   },
   {
    "id": "CGE-008",
@@ -492,17 +584,21 @@ window.VIEWER_DATA = {
    "mass_g": 3.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0112,
+    -0.0108,
     0.0,
     0.0106
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B3 \"Pack tray lowered from above into the core tray slot, bonded to the hub aft face\", stage 3 (Rib saddles, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-03.mp4"
+   "how_url": "assets/animation/build/a-stage-03.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 48",
+   "spec": null
   },
   {
    "id": "FIN-001-L",
@@ -519,10 +615,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (cut from the 16x14 tube) from BOM R02 RMRC; fitted in build step C6 \"Fin tubes down through the blocks\", stage 6 (Fins: fairings, root blocks, tubes)",
    "vendor_url": "https://www.readymaderc.com/products/details/86475-carbon-fiber-tube-16mm-x-14mm-1m-long",
-   "how_url": "assets/animation/build/a-stage-06.mp4"
+   "how_url": "assets/animation/build/a-stage-06.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 27",
+   "spec": null
   },
   {
    "id": "FIN-001-R",
@@ -539,10 +639,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (cut from the 16x14 tube) from BOM R02 RMRC; fitted in build step C6 \"Fin tubes down through the blocks\", stage 6 (Fins: fairings, root blocks, tubes)",
    "vendor_url": "https://www.readymaderc.com/products/details/86475-carbon-fiber-tube-16mm-x-14mm-1m-long",
-   "how_url": "assets/animation/build/a-stage-06.mp4"
+   "how_url": "assets/animation/build/a-stage-06.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 21",
+   "spec": null
   },
   {
    "id": "FIN-002-L",
@@ -559,10 +663,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (cut from the 14x12 tube) from BOM R09 RMRC; fitted in build step C1 \"Ribs in from aft into the saddle sockets\", stage 4 (Fin ribs and rib fairings)",
    "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-14mm-x-12mm-1m-long",
-   "how_url": "assets/animation/build/a-stage-04.mp4"
+   "how_url": "assets/animation/build/a-stage-04.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 28",
+   "spec": null
   },
   {
    "id": "FIN-002-R",
@@ -579,10 +687,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (cut from the 14x12 tube) from BOM R09 RMRC; fitted in build step C1 \"Ribs in from aft into the saddle sockets\", stage 4 (Fin ribs and rib fairings)",
    "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-14mm-x-12mm-1m-long",
-   "how_url": "assets/animation/build/a-stage-04.mp4"
+   "how_url": "assets/animation/build/a-stage-04.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 22",
+   "spec": null
   },
   {
    "id": "FIN-003-L",
@@ -599,10 +711,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step C5 \"Root blocks onto the rib ends from aft\", stage 6 (Fins: fairings, root blocks, tubes)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-06.mp4"
+   "how_url": "assets/animation/build/a-stage-06.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 29",
+   "spec": null
   },
   {
    "id": "FIN-003-R",
@@ -619,10 +735,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step C5 \"Root blocks onto the rib ends from aft\", stage 6 (Fins: fairings, root blocks, tubes)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-06.mp4"
+   "how_url": "assets/animation/build/a-stage-06.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 23",
+   "spec": null
   },
   {
    "id": "FIN-004-L",
@@ -639,10 +759,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (XPS + tape) from BOM R01 Local; fitted in build step C4 \"Fairing, left, from outboard\", stage 6 (Fins: fairings, root blocks, tubes)",
    "vendor_url": null,
-   "how_url": "assets/animation/build/a-stage-06.mp4"
+   "how_url": "assets/animation/build/a-stage-06.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 30",
+   "spec": null
   },
   {
    "id": "FIN-004-R",
@@ -659,10 +783,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (XPS + tape) from BOM R01 Local; fitted in build step C3 \"Fairing, right, from outboard\", stage 6 (Fins: fairings, root blocks, tubes)",
    "vendor_url": null,
-   "how_url": "assets/animation/build/a-stage-06.mp4"
+   "how_url": "assets/animation/build/a-stage-06.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 24",
+   "spec": null
   },
   {
    "id": "FIN-005-L",
@@ -679,10 +807,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B2 \"Rib saddles snap on the spar from below\", stage 3 (Rib saddles, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-03.mp4"
+   "how_url": "assets/animation/build/a-stage-03.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 31",
+   "spec": null
   },
   {
    "id": "FIN-005-R",
@@ -699,10 +831,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B2 \"Rib saddles snap on the spar from below\", stage 3 (Rib saddles, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-03.mp4"
+   "how_url": "assets/animation/build/a-stage-03.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 25",
+   "spec": null
   },
   {
    "id": "FIN-006-L",
@@ -719,10 +855,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (XPS + tape) from BOM R01 Local; fitted in build step C1a \"Rib fairings (upper blisters over the rib where it leaves the skin) lowered onto the skin from above, bonded\", stage 4 (Fin ribs and rib fairings)",
    "vendor_url": null,
-   "how_url": "assets/animation/build/a-stage-04.mp4"
+   "how_url": "assets/animation/build/a-stage-04.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 32",
+   "spec": null
   },
   {
    "id": "FIN-006-R",
@@ -739,10 +879,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (XPS + tape) from BOM R01 Local; fitted in build step C1a \"Rib fairings (upper blisters over the rib where it leaves the skin) lowered onto the skin from above, bonded\", stage 4 (Fin ribs and rib fairings)",
    "vendor_url": null,
-   "how_url": "assets/animation/build/a-stage-04.mp4"
+   "how_url": "assets/animation/build/a-stage-04.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 26",
+   "spec": null
   },
   {
    "id": "GER-001-LL",
@@ -759,10 +903,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step C8 \"Lower shoes on the tube ends\", stage 7 (Landing feet)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-07.mp4"
+   "how_url": "assets/animation/build/a-stage-07.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 103",
+   "spec": null
   },
   {
    "id": "GER-001-LR",
@@ -779,10 +927,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step C8 \"Lower shoes on the tube ends\", stage 7 (Landing feet)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-07.mp4"
+   "how_url": "assets/animation/build/a-stage-07.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 101",
+   "spec": null
   },
   {
    "id": "GER-001-UL",
@@ -799,10 +951,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step C7 \"Upper shoes on the tube ends\", stage 7 (Landing feet)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-07.mp4"
+   "how_url": "assets/animation/build/a-stage-07.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 99",
+   "spec": null
   },
   {
    "id": "GER-001-UR",
@@ -819,10 +975,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step C7 \"Upper shoes on the tube ends\", stage 7 (Landing feet)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-07.mp4"
+   "how_url": "assets/animation/build/a-stage-07.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 97",
+   "spec": null
   },
   {
    "id": "GER-002-LL",
@@ -839,10 +999,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (foot pads (BOM R03 line text)) from BOM R03 Prusa; fitted in build step C9 \"Foot pads on the shoe plates\", stage 7 (Landing feet)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-07.mp4"
+   "how_url": "assets/animation/build/a-stage-07.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 104",
+   "spec": null
   },
   {
    "id": "GER-002-LR",
@@ -859,10 +1023,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (foot pads (BOM R03 line text)) from BOM R03 Prusa; fitted in build step C9 \"Foot pads on the shoe plates\", stage 7 (Landing feet)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-07.mp4"
+   "how_url": "assets/animation/build/a-stage-07.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 102",
+   "spec": null
   },
   {
    "id": "GER-002-UL",
@@ -879,10 +1047,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (foot pads (BOM R03 line text)) from BOM R03 Prusa; fitted in build step C9 \"Foot pads on the shoe plates\", stage 7 (Landing feet)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-07.mp4"
+   "how_url": "assets/animation/build/a-stage-07.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 100",
+   "spec": null
   },
   {
    "id": "GER-002-UR",
@@ -899,10 +1071,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (foot pads (BOM R03 line text)) from BOM R03 Prusa; fitted in build step C9 \"Foot pads on the shoe plates\", stage 7 (Landing feet)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-07.mp4"
+   "how_url": "assets/animation/build/a-stage-07.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 98",
+   "spec": null
   },
   {
    "id": "HRD-001",
@@ -921,17 +1097,21 @@ window.VIEWER_DATA = {
    "carried": true,
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (screws, nuts, epoxy, CA) from BOM R05 Amazon, R07 RMRC",
    "vendor_url": "https://www.readymaderc.com/collections/airplanes/build-and-repair-parts/glue-and-epoxy",
-   "how_url": null
+   "how_url": null,
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 107",
+   "spec": null
   },
   {
    "id": "HRN-001",
    "name": "Harness remainder, bottom-up (D-198): phase-lead extensions, splices, ESC ribbon, sensor leads, servo ties, sleeves / ties / tape / solder - lumped",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 28.1,
+   "mass_g": 18.4,
    "material": "copper / silicone",
    "cg_xyz_m": [
     0.03,
@@ -943,10 +1123,14 @@ window.VIEWER_DATA = {
    "carried": true,
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (wire, heat-shrink, ties) from BOM W07 RMRC, W05 RMRC",
    "vendor_url": "https://www.readymaderc.com/products/details/premium-silicone-wire-20ga-red-1m",
-   "how_url": null
+   "how_url": null,
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 106",
+   "spec": null
   },
   {
    "id": "HRN-002",
@@ -965,10 +1149,158 @@ window.VIEWER_DATA = {
    "carried": true,
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM W05 RMRC (XT60 and 14 AWG from the W05 kit); fitted in build step E4a \"XT60 female with its tail mated to the pack lead XT60 male (plugs on from aft, taped on the skin; tail soldered to the ESC pads after)\", stage 10 (Pack, XT60, strap, phase leads, bay cover)",
    "vendor_url": "https://www.readymaderc.com/products/details/premium-silicone-wire-14ga-red-1m",
-   "how_url": "assets/animation/build/a-stage-10.mp4"
+   "how_url": "assets/animation/build/a-stage-10.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 105",
+   "spec": null
+  },
+  {
+   "id": "HRN-003-L",
+   "name": "Phase-lead raceway (D-199, L): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 1.8,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0189,
+    -0.019,
+    0.0027
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "vendor": "Made (printed PETG raceway) from BOM R03 Prusa; fitted in build step B2a \"D-199: phase-lead raceways R and L lowered from above into their foam grooves (through the slots in the hub pad flange), before the tray\"",
+   "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
+   "how_url": null,
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 92",
+   "spec": null
+  },
+  {
+   "id": "HRN-003-R",
+   "name": "Phase-lead raceway (D-199, R): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 1.8,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0189,
+    0.019,
+    0.0027
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "vendor": "Made (printed PETG raceway) from BOM R03 Prusa; fitted in build step B2a \"D-199: phase-lead raceways R and L lowered from above into their foam grooves (through the slots in the hub pad flange), before the tray\"",
+   "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
+   "how_url": null,
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 91",
+   "spec": null
+  },
+  {
+   "id": "HRN-004-LL",
+   "name": "Hub conduit (D-199, LL): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0579,
+    -0.0214,
+    -0.0091
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "vendor": "Made (printed PETG conduit) from BOM R03 Prusa; fitted in build step B2b \"D-199: hub conduits (4) pushed in from aft along the hub webs, each docking on its socket floor face and on its raceway window\"",
+   "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
+   "how_url": null,
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 96",
+   "spec": null
+  },
+  {
+   "id": "HRN-004-LR",
+   "name": "Hub conduit (D-199, LR): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0579,
+    0.0214,
+    -0.0091
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "vendor": "Made (printed PETG conduit) from BOM R03 Prusa; fitted in build step B2b \"D-199: hub conduits (4) pushed in from aft along the hub webs, each docking on its socket floor face and on its raceway window\"",
+   "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
+   "how_url": null,
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 95",
+   "spec": null
+  },
+  {
+   "id": "HRN-004-UL",
+   "name": "Hub conduit (D-199, UL): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0579,
+    -0.0173,
+    0.015
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "vendor": "Made (printed PETG conduit) from BOM R03 Prusa; fitted in build step B2b \"D-199: hub conduits (4) pushed in from aft along the hub webs, each docking on its socket floor face and on its raceway window\"",
+   "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
+   "how_url": null,
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 94",
+   "spec": null
+  },
+  {
+   "id": "HRN-004-UR",
+   "name": "Hub conduit (D-199, UR): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0579,
+    0.0173,
+    0.015
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "vendor": "Made (printed PETG conduit) from BOM R03 Prusa; fitted in build step B2b \"D-199: hub conduits (4) pushed in from aft along the hub webs, each docking on its socket floor face and on its raceway window\"",
+   "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
+   "how_url": null,
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 93",
+   "spec": null
   },
   {
    "id": "HWC-001",
@@ -985,10 +1317,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM R05 Amazon (stock screws / nuts, local); fitted in build step E3a \"Four M2 x 25 screws down through the FC stack into the nuts\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
    "vendor_url": null,
-   "how_url": "assets/animation/build/a-stage-09.mp4"
+   "how_url": "assets/animation/build/a-stage-09.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 77",
+   "spec": null
   },
   {
    "id": "HWC-002-L",
@@ -1005,10 +1341,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM R05 Amazon (stock screws / nuts, local); fitted in build step D2a \"Arm screws M2x6 into the servo output shafts\", stage 8 (Servos, pushrods, horns, lead threading)",
    "vendor_url": null,
-   "how_url": "assets/animation/build/a-stage-08.mp4"
+   "how_url": "assets/animation/build/a-stage-08.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 90",
+   "spec": null
   },
   {
    "id": "HWC-002-R",
@@ -1025,10 +1365,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM R05 Amazon (stock screws / nuts, local); fitted in build step D2a \"Arm screws M2x6 into the servo output shafts\", stage 8 (Servos, pushrods, horns, lead threading)",
    "vendor_url": null,
-   "how_url": "assets/animation/build/a-stage-08.mp4"
+   "how_url": "assets/animation/build/a-stage-08.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 84",
+   "spec": null
   },
   {
    "id": "HWC-003",
@@ -1045,10 +1389,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM R05 Amazon (stock screws / nuts, local); fitted in build step E2 \"Avionics plate on the skin with its four M2 thin nuts already seated in the hex pockets\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
    "vendor_url": null,
-   "how_url": "assets/animation/build/a-stage-09.mp4"
+   "how_url": "assets/animation/build/a-stage-09.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 78",
+   "spec": null
   },
   {
    "id": "MEC-001-L",
@@ -1066,10 +1414,14 @@ window.VIEWER_DATA = {
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM M01 RMRC; fitted in build step D1 \"Servos into their pockets\", stage 8 (Servos, pushrods, horns, lead threading)",
    "vendor_url": "https://www.readymaderc.com/products/details/85975-emax-es3054-hv-high-voltage-17g-metal-gear-digital-servo",
-   "how_url": "assets/animation/build/a-stage-08.mp4"
+   "how_url": "assets/animation/build/a-stage-08.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 85",
+   "spec": null
   },
   {
    "id": "MEC-001-R",
@@ -1087,10 +1439,14 @@ window.VIEWER_DATA = {
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM M01 RMRC; fitted in build step D1 \"Servos into their pockets\", stage 8 (Servos, pushrods, horns, lead threading)",
    "vendor_url": "https://www.readymaderc.com/products/details/85975-emax-es3054-hv-high-voltage-17g-metal-gear-digital-servo",
-   "how_url": "assets/animation/build/a-stage-08.mp4"
+   "how_url": "assets/animation/build/a-stage-08.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 79",
+   "spec": null
   },
   {
    "id": "MEC-002-L",
@@ -1107,10 +1463,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM M01 RMRC (arm supplied with the servo); fitted in build step D2 \"Servo arms on the splines\", stage 8 (Servos, pushrods, horns, lead threading)",
    "vendor_url": "https://www.readymaderc.com/products/details/85975-emax-es3054-hv-high-voltage-17g-metal-gear-digital-servo",
-   "how_url": "assets/animation/build/a-stage-08.mp4"
+   "how_url": "assets/animation/build/a-stage-08.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 86",
+   "spec": null
   },
   {
    "id": "MEC-002-R",
@@ -1127,10 +1487,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM M01 RMRC (arm supplied with the servo); fitted in build step D2 \"Servo arms on the splines\", stage 8 (Servos, pushrods, horns, lead threading)",
    "vendor_url": "https://www.readymaderc.com/products/details/85975-emax-es3054-hv-high-voltage-17g-metal-gear-digital-servo",
-   "how_url": "assets/animation/build/a-stage-08.mp4"
+   "how_url": "assets/animation/build/a-stage-08.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 80",
+   "spec": null
   },
   {
    "id": "MEC-003-L",
@@ -1147,10 +1511,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM M02 RMRC; fitted in build step D4 \"Pushrods into arm hole (Z-bend) and over the horn blade (clevis cheeks straddle it; pin follows in D5)\", stage 8 (Servos, pushrods, horns, lead threading)",
    "vendor_url": "https://www.readymaderc.com/products/details/rmrc-10pc-pushrod-linkage-set-control-horn",
-   "how_url": "assets/animation/build/a-stage-08.mp4"
+   "how_url": "assets/animation/build/a-stage-08.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 87",
+   "spec": null
   },
   {
    "id": "MEC-003-R",
@@ -1167,10 +1535,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM M02 RMRC; fitted in build step D4 \"Pushrods into arm hole (Z-bend) and over the horn blade (clevis cheeks straddle it; pin follows in D5)\", stage 8 (Servos, pushrods, horns, lead threading)",
    "vendor_url": "https://www.readymaderc.com/products/details/rmrc-10pc-pushrod-linkage-set-control-horn",
-   "how_url": "assets/animation/build/a-stage-08.mp4"
+   "how_url": "assets/animation/build/a-stage-08.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 81",
+   "spec": null
   },
   {
    "id": "MEC-004-L",
@@ -1187,10 +1559,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM M02 RMRC; fitted in build step D3 \"Horns on the elevons\", stage 8 (Servos, pushrods, horns, lead threading)",
    "vendor_url": "https://www.readymaderc.com/products/details/rmrc-10pc-pushrod-linkage-set-control-horn",
-   "how_url": "assets/animation/build/a-stage-08.mp4"
+   "how_url": "assets/animation/build/a-stage-08.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 89",
+   "spec": null
   },
   {
    "id": "MEC-004-R",
@@ -1207,10 +1583,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM M02 RMRC; fitted in build step D3 \"Horns on the elevons\", stage 8 (Servos, pushrods, horns, lead threading)",
    "vendor_url": "https://www.readymaderc.com/products/details/rmrc-10pc-pushrod-linkage-set-control-horn",
-   "how_url": "assets/animation/build/a-stage-08.mp4"
+   "how_url": "assets/animation/build/a-stage-08.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 83",
+   "spec": null
   },
   {
    "id": "MEC-005-L",
@@ -1227,10 +1607,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM M02 RMRC (clevis pin from the M02 linkage set); fitted in build step D5b \"Clevis pin L pressed in along y (from outboard)\", stage 8 (Servos, pushrods, horns, lead threading)",
    "vendor_url": "https://www.readymaderc.com/products/details/rmrc-10pc-pushrod-linkage-set-control-horn",
-   "how_url": "assets/animation/build/a-stage-08.mp4"
+   "how_url": "assets/animation/build/a-stage-08.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 88",
+   "spec": null
   },
   {
    "id": "MEC-005-R",
@@ -1247,10 +1631,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM M02 RMRC (clevis pin from the M02 linkage set); fitted in build step D5 \"Clevis pin R pressed in along y through the cheeks and the horn hole (from outboard)\", stage 8 (Servos, pushrods, horns, lead threading)",
    "vendor_url": "https://www.readymaderc.com/products/details/rmrc-10pc-pushrod-linkage-set-control-horn",
-   "how_url": "assets/animation/build/a-stage-08.mp4"
+   "how_url": "assets/animation/build/a-stage-08.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 82",
+   "spec": null
   },
   {
    "id": "PRP-001-LL",
@@ -1268,10 +1656,14 @@ window.VIEWER_DATA = {
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM P01 TMotor; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 55",
+   "spec": null
   },
   {
    "id": "PRP-001-LR",
@@ -1289,10 +1681,14 @@ window.VIEWER_DATA = {
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM P01 TMotor; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 53",
+   "spec": null
   },
   {
    "id": "PRP-001-UL",
@@ -1310,10 +1706,14 @@ window.VIEWER_DATA = {
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM P01 TMotor; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 51",
+   "spec": null
   },
   {
    "id": "PRP-001-UR",
@@ -1331,10 +1731,14 @@ window.VIEWER_DATA = {
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM P01 TMotor; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 49",
+   "spec": null
   },
   {
    "id": "PRP-002-LL",
@@ -1351,10 +1755,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM P02 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://www.readymaderc.com/products/details/86771-apc-multirotor-9x4-5-2-blade-4-pack-with-adapter-rings",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 56",
+   "spec": null
   },
   {
    "id": "PRP-002-LR",
@@ -1371,10 +1779,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM P02 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://www.readymaderc.com/products/details/86771-apc-multirotor-9x4-5-2-blade-4-pack-with-adapter-rings",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 54",
+   "spec": null
   },
   {
    "id": "PRP-002-UL",
@@ -1391,10 +1803,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM P02 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://www.readymaderc.com/products/details/86771-apc-multirotor-9x4-5-2-blade-4-pack-with-adapter-rings",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 52",
+   "spec": null
   },
   {
    "id": "PRP-002-UR",
@@ -1411,10 +1827,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM P02 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://www.readymaderc.com/products/details/86771-apc-multirotor-9x4-5-2-blade-4-pack-with-adapter-rings",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 50",
+   "spec": null
   },
   {
    "id": "PRP-003",
@@ -1424,7 +1844,7 @@ window.VIEWER_DATA = {
    "mass_g": 20.0,
    "material": "PCB",
    "cg_xyz_m": [
-    0.0995,
+    0.0994,
     0.0003,
     0.0169
    ],
@@ -1432,10 +1852,14 @@ window.VIEWER_DATA = {
    "electrical": "bus",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM P04 RMRC; fitted in build step E3 \"ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS, airspeed on the plate\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
    "vendor_url": "https://www.readymaderc.com/products/details/86873-speedybee-bls-35a-mini-v2-20x20-4-in-1-esc",
-   "how_url": "assets/animation/build/a-stage-09.mp4"
+   "how_url": "assets/animation/build/a-stage-09.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 57",
+   "spec": null
   },
   {
    "id": "PRP-004-LL",
@@ -1452,10 +1876,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM P01 TMotor (T-Motor prop adapter: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 64",
+   "spec": null
   },
   {
    "id": "PRP-004-LR",
@@ -1472,10 +1900,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM P01 TMotor (T-Motor prop adapter: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 62",
+   "spec": null
   },
   {
    "id": "PRP-004-UL",
@@ -1492,10 +1924,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM P01 TMotor (T-Motor prop adapter: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 60",
+   "spec": null
   },
   {
    "id": "PRP-004-UR",
@@ -1512,10 +1948,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM P01 TMotor (T-Motor prop adapter: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 58",
+   "spec": null
   },
   {
    "id": "PRP-005-LL",
@@ -1532,10 +1972,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM P01 TMotor (T-Motor spinner nut: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 65",
+   "spec": null
   },
   {
    "id": "PRP-005-LR",
@@ -1552,10 +1996,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM P01 TMotor (T-Motor spinner nut: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 63",
+   "spec": null
   },
   {
    "id": "PRP-005-UL",
@@ -1572,10 +2020,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM P01 TMotor (T-Motor spinner nut: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 61",
+   "spec": null
   },
   {
    "id": "PRP-005-UR",
@@ -1592,10 +2044,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM P01 TMotor (T-Motor spinner nut: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
-   "how_url": "assets/animation/build/a-stage-02.mp4"
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 59",
+   "spec": null
   },
   {
    "id": "PWR-001",
@@ -1605,38 +2061,70 @@ window.VIEWER_DATA = {
    "mass_g": 270.0,
    "material": "LiPo",
    "cg_xyz_m": [
-    -0.008,
-    0.0018,
-    0.0225
+    -0.0084,
+    0.001,
+    0.0235
    ],
    "make_or_buy": "buy",
    "electrical": "source",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Bought: BOM W01 RMRC; fitted in build step E4 \"Pack into the tray\", stage 10 (Pack, XT60, strap, phase leads, bay cover)",
    "vendor_url": "https://www.readymaderc.com/products/details/tattu-2300-75c-4s1p-xt60",
-   "how_url": "assets/animation/build/a-stage-10.mp4"
+   "how_url": "assets/animation/build/a-stage-10.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 66",
+   "spec": null
   },
   {
    "id": "PWR-002",
-   "name": "Pack strap 25 mm hook-and-loop (round pack and tray)",
+   "name": "Pack strap 20 x 300 mm with buckle (STRIX, BOM W08; round pack and tray)",
    "subsystem": "power",
    "status": "MODELLED",
-   "mass_g": 3.0,
-   "material": "hook-and-loop nylon",
+   "mass_g": 5.5,
+   "material": "nylon webbing + plastic buckle",
    "cg_xyz_m": [
-    -0.015,
+    -0.0175,
     0.0,
-    0.0155
+    0.016
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
-   "vendor": "Bought: BOM — (no BOM line: pack strap not yet priced); fitted in build step E5 \"Pack strap threaded under the bridge tube and closed over the pack (FLEXIBLE: no rigid insertion path exists, so this step checks the fitted position only, travel 0; the threading is by hand)\", stage 10 (Pack, XT60, strap, phase leads, bay cover)",
+   "vendor": "Bought: BOM W08 RMRC (STRIX 20 x 300 mm buckle strap); fitted in build step E5 \"Pack strap threaded under the bridge tube and closed over the pack (FLEXIBLE: no rigid insertion path exists, so this step checks the fitted position only, travel 0; the threading is by hand)\", stage 10 (Pack, XT60, strap, phase leads, bay cover)",
+   "vendor_url": "https://www.readymaderc.com/products/details/strix-battery-strap-20-300-mm-2pcs",
+   "how_url": "assets/animation/build/a-stage-10.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 67",
+   "spec": null
+  },
+  {
+   "id": "PWR-003",
+   "name": "Anti-slip pad 100 x 30 x 1.0 mm silicone rubber sheet on the tray floor (BOM W09; thickness, size and density EST)",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 3.5,
+   "material": "silicone rubber",
+   "cg_xyz_m": [
+    -0.01,
+    0.0,
+    0.0085
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "vendor": "Bought: BOM W09 Amazon (silicone rubber sheet cut to 100 x 30 x 1 mm (EST)); fitted in build step E3c \"Anti-slip pad stuck on the tray floor\"",
    "vendor_url": null,
-   "how_url": "assets/animation/build/a-stage-10.mp4"
+   "how_url": null,
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 68",
+   "spec": null
   },
   {
    "id": "WNG-001",
@@ -1653,10 +2141,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (hot-wired XPS, tape skin) from BOM R01 Local; fitted in build step A1 \"Wing core on the bench (lower surface up)\", stage 1 (Wing core and spar)",
    "vendor_url": null,
-   "how_url": "assets/animation/build/a-stage-01.mp4"
+   "how_url": "assets/animation/build/a-stage-01.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 2",
+   "spec": null
   },
   {
    "id": "WNG-002",
@@ -1673,10 +2165,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (cut from the 12x10 tube) from BOM R08 RMRC; fitted in build step A2 \"Spar through the core bore from the right tip\", stage 1 (Wing core and spar)",
    "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-12mm-x-10mm-1m-long",
-   "how_url": "assets/animation/build/a-stage-01.mp4"
+   "how_url": "assets/animation/build/a-stage-01.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 3",
+   "spec": null
   },
   {
    "id": "WNG-003-C",
@@ -1693,10 +2189,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step A3 \"Centre plug up the bore\", stage 1 (Wing core and spar)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-01.mp4"
+   "how_url": "assets/animation/build/a-stage-01.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 4",
+   "spec": null
   },
   {
    "id": "WNG-004-L",
@@ -1713,10 +2213,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step A5 \"Left plugs up the bore from the left tip\", stage 1 (Wing core and spar)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-01.mp4"
+   "how_url": "assets/animation/build/a-stage-01.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 6",
+   "spec": null
   },
   {
    "id": "WNG-004-R",
@@ -1733,10 +2237,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step A4 \"Right plugs up the bore\", stage 1 (Wing core and spar)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-01.mp4"
+   "how_url": "assets/animation/build/a-stage-01.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 5",
+   "spec": null
   },
   {
    "id": "WNG-005-L",
@@ -1753,10 +2261,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step A5 \"Left plugs up the bore from the left tip\", stage 1 (Wing core and spar)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-01.mp4"
+   "how_url": "assets/animation/build/a-stage-01.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 8",
+   "spec": null
   },
   {
    "id": "WNG-005-R",
@@ -1773,10 +2285,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step A4 \"Right plugs up the bore\", stage 1 (Wing core and spar)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-01.mp4"
+   "how_url": "assets/animation/build/a-stage-01.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 7",
+   "spec": null
   },
   {
    "id": "WNG-006-L",
@@ -1793,10 +2309,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (XPS + tape) from BOM R01 Local; fitted in build step C2 \"Elevons with their balance horns on from aft (horn and lead enter the core pocket; tape hinge after)\", stage 5 (Elevons, balance strips, lens caps)",
    "vendor_url": null,
-   "how_url": "assets/animation/build/a-stage-05.mp4"
+   "how_url": "assets/animation/build/a-stage-05.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 10",
+   "spec": null
   },
   {
    "id": "WNG-006-R",
@@ -1813,10 +2333,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (XPS + tape) from BOM R01 Local; fitted in build step C2 \"Elevons with their balance horns on from aft (horn and lead enter the core pocket; tape hinge after)\", stage 5 (Elevons, balance strips, lens caps)",
    "vendor_url": null,
-   "how_url": "assets/animation/build/a-stage-05.mp4"
+   "how_url": "assets/animation/build/a-stage-05.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 9",
+   "spec": null
   },
   {
    "id": "WNG-007-L",
@@ -1833,10 +2357,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (lead strip) from BOM R11 Local; fitted in build step C2 \"Elevons with their balance horns on from aft (horn and lead enter the core pocket; tape hinge after)\", stage 5 (Elevons, balance strips, lens caps)",
    "vendor_url": null,
-   "how_url": "assets/animation/build/a-stage-05.mp4"
+   "how_url": "assets/animation/build/a-stage-05.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 16",
+   "spec": null
   },
   {
    "id": "WNG-007-R",
@@ -1853,10 +2381,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (lead strip) from BOM R11 Local; fitted in build step C2 \"Elevons with their balance horns on from aft (horn and lead enter the core pocket; tape hinge after)\", stage 5 (Elevons, balance strips, lens caps)",
    "vendor_url": null,
-   "how_url": "assets/animation/build/a-stage-05.mp4"
+   "how_url": "assets/animation/build/a-stage-05.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 11",
+   "spec": null
   },
   {
    "id": "WNG-008-LL",
@@ -1873,10 +2405,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step C2b \"Lower lens caps (with stop bosses) raised onto the skin, bonded\", stage 5 (Elevons, balance strips, lens caps)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-05.mp4"
+   "how_url": "assets/animation/build/a-stage-05.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 18",
+   "spec": null
   },
   {
    "id": "WNG-008-LU",
@@ -1893,10 +2429,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step C2a \"Upper lens caps (with stop bosses) lowered onto the skin over the strip windows, bonded\", stage 5 (Elevons, balance strips, lens caps)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-05.mp4"
+   "how_url": "assets/animation/build/a-stage-05.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 17",
+   "spec": null
   },
   {
    "id": "WNG-008-RL",
@@ -1913,10 +2453,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step C2b \"Lower lens caps (with stop bosses) raised onto the skin, bonded\", stage 5 (Elevons, balance strips, lens caps)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-05.mp4"
+   "how_url": "assets/animation/build/a-stage-05.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 13",
+   "spec": null
   },
   {
    "id": "WNG-008-RU",
@@ -1933,10 +2477,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step C2a \"Upper lens caps (with stop bosses) lowered onto the skin over the strip windows, bonded\", stage 5 (Elevons, balance strips, lens caps)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-05.mp4"
+   "how_url": "assets/animation/build/a-stage-05.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 12",
+   "spec": null
   },
   {
    "id": "WNG-009-L",
@@ -1953,10 +2501,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG + silicone fluid) from BOM R03 Prusa, R12 Amazon; fitted in build step B4 \"Hinge damper units (stator with rotor in its annulus, silicone fluid filled) into the core notches at the elevon tips from aft, before the ribs; the notch is open aft\", stage 3 (Rib saddles, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-03.mp4"
+   "how_url": "assets/animation/build/a-stage-03.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 19",
+   "spec": null
   },
   {
    "id": "WNG-009-R",
@@ -1973,10 +2525,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG + silicone fluid) from BOM R03 Prusa, R12 Amazon; fitted in build step B4 \"Hinge damper units (stator with rotor in its annulus, silicone fluid filled) into the core notches at the elevon tips from aft, before the ribs; the notch is open aft\", stage 3 (Rib saddles, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-03.mp4"
+   "how_url": "assets/animation/build/a-stage-03.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 14",
+   "spec": null
   },
   {
    "id": "WNG-010-L",
@@ -1993,10 +2549,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B4 \"Hinge damper units (stator with rotor in its annulus, silicone fluid filled) into the core notches at the elevon tips from aft, before the ribs; the notch is open aft\", stage 3 (Rib saddles, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-03.mp4"
+   "how_url": "assets/animation/build/a-stage-03.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 20",
+   "spec": null
   },
   {
    "id": "WNG-010-R",
@@ -2013,10 +2573,14 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "spec": null,
    "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B4 \"Hinge damper units (stator with rotor in its annulus, silicone fluid filled) into the core notches at the elevon tips from aft, before the ribs; the notch is open aft\", stage 3 (Rib saddles, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": "assets/animation/build/a-stage-03.mp4"
+   "how_url": "assets/animation/build/a-stage-03.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 15",
+   "spec": null
   }
  ],
  "edges": [
@@ -2853,6 +3417,51 @@ window.VIEWER_DATA = {
    "declared_in": "harness"
   },
   {
+   "id": "E-HRN-13",
+   "part_a": "PWR-001",
+   "part_b": "HRN-002",
+   "via": "CT-SOLDER-DC",
+   "owner": "harness",
+   "notes": "D-199: pack power leads (vendor, 14 AWG about 100 mm) from the pack end face through the tray end-wall notch, down to the skin and along it to the XT60 male; taped on the skin",
+   "wire": {
+    "gauge_awg": 14,
+    "connector": "vendor leads to XT60 male",
+    "route_id": "R-A-13",
+    "support_points": [
+     "tray end-wall notch",
+     "tape on the skin"
+    ],
+    "bend_radius_mm": 6,
+    "strain_relief": "vendor heat-shrink",
+    "disconnect": false
+   },
+   "current_a": {
+    "cont": 11,
+    "peak": 41
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-14",
+   "part_a": "PWR-001",
+   "part_b": "HRN-002",
+   "via": "CT-SOLDER-DC",
+   "owner": "harness",
+   "notes": "D-199: pack balance lead (5 conductors, EST 1.2 mm bundle) from the end face over the top edge to the JST-XH plug on the pack top",
+   "wire": {
+    "gauge_awg": 26,
+    "connector": "JST-XH 5-pin",
+    "route_id": "R-A-14",
+    "support_points": [
+     "pack top"
+    ],
+    "bend_radius_mm": 4,
+    "strain_relief": "vendor lead",
+    "disconnect": false
+   },
+   "declared_in": "harness"
+  },
+  {
    "id": "E-HRN-20",
    "part_a": "HRN-001",
    "part_b": "WNG-001",
@@ -2872,6 +3481,114 @@ window.VIEWER_DATA = {
     "item": "VHB-class tape",
     "count": 1
    },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-30",
+   "part_a": "HRN-003-R",
+   "part_b": "CGE-008",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "raceway bonded to the tray plate underside (top face z 6.0), lowered from above before the tray, in its foam groove (D-199)",
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-31",
+   "part_a": "HRN-003-L",
+   "part_b": "CGE-008",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "raceway bonded to the tray plate underside (top face z 6.0), lowered from above before the tray, in its foam groove (D-199)",
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-32",
+   "part_a": "HRN-003-R",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "harness",
+   "notes": "raceway taped in its foam groove (D-199)",
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-33",
+   "part_a": "HRN-003-L",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "harness",
+   "notes": "raceway taped in its foam groove (D-199)",
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-40",
+   "part_a": "HRN-004-UR",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "hub conduit bonded to the hub web face and the arm-socket floor face (D-199)",
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-41",
+   "part_a": "HRN-004-UL",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "hub conduit bonded to the hub web face and the arm-socket floor face (D-199)",
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-42",
+   "part_a": "HRN-004-LR",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "hub conduit bonded to the hub web face and the arm-socket floor face (D-199)",
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-43",
+   "part_a": "HRN-004-LL",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "hub conduit bonded to the hub web face and the arm-socket floor face (D-199)",
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-50",
+   "part_a": "HRN-004-UR",
+   "part_b": "HRN-003-R",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "conduit leg B bonded on the raceway window (D-199)",
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-51",
+   "part_a": "HRN-004-UL",
+   "part_b": "HRN-003-L",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "conduit leg B bonded on the raceway window (D-199)",
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-52",
+   "part_a": "HRN-004-LR",
+   "part_b": "HRN-003-R",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "conduit leg B bonded on the raceway window (D-199)",
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-53",
+   "part_a": "HRN-004-LL",
+   "part_b": "HRN-003-L",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "conduit leg B bonded on the raceway window (D-199)",
    "declared_in": "harness"
   },
   {
@@ -3619,9 +4336,9 @@ window.VIEWER_DATA = {
    "part_b": "CGE-008",
    "via": "CT-STRAP-VELCRO",
    "owner": "power",
-   "notes": "hook-and-loop strap round pack and tray: over the pack top, outside the tray end walls, under the tray plate AND the 12 mm bridge tube CGE-004 (tangent to the plate underside, z -6..6)",
+   "notes": "buckle strap round pack and tray: over the pack top, outside the tray end walls, under the tray plate AND the 12 mm bridge tube CGE-004 (tangent to the plate underside, z -6..6)",
    "retention": {
-    "item": "25 mm strap",
+    "item": "20 mm strap",
     "count": 1,
     "load_n": 38.8
    },
@@ -3634,7 +4351,7 @@ window.VIEWER_DATA = {
    "part_b": "CGE-008",
    "via": "CT-STRAP-VELCRO",
    "owner": "power",
-   "notes": "pack sits on the tray floor on a hook-and-loop anti-slip pad (pad not drawn, EST), between the integral lips; strap PWR-002 holds it",
+   "notes": "pack sits on the anti-slip pad PWR-003 on the tray floor, between the integral lips; strap PWR-002 holds it",
    "retention": {
     "item": "anti-slip pad + strap",
     "count": 1
@@ -3644,6 +4361,15 @@ window.VIEWER_DATA = {
   },
   {
    "id": "E-PWR-03",
+   "part_a": "PWR-003",
+   "part_b": "CGE-008",
+   "via": "CT-TAPE-FOAM",
+   "owner": "power",
+   "notes": "pad stuck on the tray plate (adhesive-backed sheet, EST)",
+   "declared_in": "power"
+  },
+  {
+   "id": "E-PWR-04",
    "part_a": "PWR-002",
    "part_b": "PWR-001",
    "via": "CT-STRAP-VELCRO",
@@ -4120,7 +4846,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-MASS-PRED",
    "title": "Predicted take-off mass (CAD basic x growth + overrun)",
-   "value": 1.454673476,
+   "value": 1.457913936,
    "unit": "kg",
    "limit": {
     "op": "<=",
@@ -4129,7 +4855,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).",
-   "margin": 0.0036483041095890408,
+   "margin": 0.0014288109589041087,
    "parts": [
     "WNG-001",
     "WNG-002",
@@ -4142,7 +4868,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG",
    "title": "CG aft of the leading edge, CAD as drawn",
-   "value": 21.31537301347897,
+   "value": 20.68488088449598,
    "unit": "mm",
    "limit": {
     "op": ">=",
@@ -4151,7 +4877,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.",
-   "margin": 0.12186173755152464,
+   "margin": 0.08867794128926203,
    "parts": [
     "PWR-001",
     "CGE-008",
@@ -4162,7 +4888,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-HI",
    "title": "CG aft limit of the design band",
-   "value": 21.31537301347897,
+   "value": 20.68488088449598,
    "unit": "mm",
    "limit": {
     "op": "<=",
@@ -4171,7 +4897,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "CG breadboard (M5); band 19-26 mm (D-195), hard aft limit 28.5 mm.",
-   "margin": 0.1801779610200397,
+   "margin": 0.20442765828861623,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -4180,7 +4906,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-TRIM-AFT",
    "title": "CG at the aft end of the pack trim travel",
-   "value": 23.45867242446854,
+   "value": 22.823257618957108,
    "unit": "mm",
    "limit": {
     "op": "<=",
@@ -4189,7 +4915,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "Slide the pack to the aft slot stop and re-measure CG (M5).",
-   "margin": 0.17688868686075304,
+   "margin": 0.19918394319448746,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -4198,7 +4924,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-TRIM-FWD",
    "title": "CG at the forward end of the pack trim travel",
-   "value": 19.600733484687314,
+   "value": 19.4018548438193,
    "unit": "mm",
    "limit": {
     "op": ">=",
@@ -4207,7 +4933,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "Slide the pack to the forward slot stop and re-measure CG (M5).",
-   "margin": 0.03161755182564812,
+   "margin": 0.021150254937857937,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -4216,7 +4942,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-SM",
    "title": "Static margin at the CAD CG",
-   "value": 7.912092647559605,
+   "value": 8.169436373675113,
    "unit": "% chord",
    "limit": {
     "op": ">=",
@@ -4225,7 +4951,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Measure NP on the built aircraft (M5, M6); SM >= 5 % chord.",
-   "margin": 0.5824185295119211,
+   "margin": 0.6338872747350226,
    "parts": [
     "WNG-001"
    ]
@@ -4278,7 +5004,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-TW-FRESH-PRED",
    "title": "Hover T/W fresh at the predicted mass (0.90 cap)",
-   "value": 2.3624497949547223,
+   "value": 2.357198851210016,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -4287,7 +5013,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "margin": 0.18122489747736115,
+   "margin": 0.17859942560500808,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -4298,7 +5024,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-TW-SAG-PRED",
    "title": "Hover T/W sagged pack at the predicted mass (0.90 cap)",
-   "value": 1.8675491265228892,
+   "value": 1.8633981831145725,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -4307,7 +5033,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "margin": 0.16721820407680568,
+   "margin": 0.16462386444660776,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -4319,7 +5045,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-WINDOW-PRED",
    "title": "Transition entry window at the predicted mass (0.90 cap)",
-   "value": 5.808676286747981,
+   "value": 5.697787419859948,
    "unit": "%",
    "limit": {
     "op": ">=",
@@ -4328,7 +5054,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "C3 time-domain pitch-over run at the as-weighed mass (T-A-C3-PITCHOVER); the window uses 1.33 W low and 0.80 x T/W sag high.",
-   "margin": 0.1617352573495962,
+   "margin": 0.13955748397198953,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -4397,7 +5123,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CRUISE-AVAIL",
    "title": "Cruise time to BATT_LOW at the predicted mass",
-   "value": 258.4845393542278,
+   "value": 257.27175786227446,
    "unit": "s",
    "limit": {
     "op": ">=",
@@ -4406,7 +5132,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).",
-   "margin": 0.26363476325151464,
+   "margin": 0.25770592566111566,
    "parts": [
     "PWR-001",
     "PRP-003"

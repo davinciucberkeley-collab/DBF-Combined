@@ -7,8 +7,8 @@
  "scene": "studio",
  "engine": "CYCLES",
  "device": "GPU",
- "samples": 64,
- "render_s": 60.52,
+ "samples": 48,
+ "render_s": 49.25,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -604,6 +604,8 @@
   "E-HRN-10",
   "E-HRN-11",
   "E-HRN-12",
+  "E-HRN-13",
+  "E-HRN-14",
   "FIN-001-L",
   "FIN-001-R",
   "FIN-002-L",
@@ -625,6 +627,12 @@
   "HRD-001",
   "HRN-001",
   "HRN-002",
+  "HRN-003-L",
+  "HRN-003-R",
+  "HRN-004-LL",
+  "HRN-004-LR",
+  "HRN-004-UL",
+  "HRN-004-UR",
   "HWC-001",
   "HWC-002-L",
   "HWC-002-R",
@@ -647,7 +655,8 @@
   "PRP-005-UL",
   "PRP-005-UR",
   "PWR-001",
-  "PWR-002"
+  "PWR-002",
+  "PWR-003"
  ],
  "clipped": [],
  "legend": [

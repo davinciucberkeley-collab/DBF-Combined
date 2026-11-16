@@ -53,14 +53,14 @@ T_MOVE = {'long': 1.1, 'short': 0.8, 'appear': 0.6}
 STAGES = [
     ('Wing core and spar', ['A1', 'A2', 'A3', 'A4', 'A5']),
     ('Cage unit: motor leads threaded, motors, props', ['B0', 'B1']),
-    ('Rib saddles, pack tray, hinge dampers', ['B2', 'B3', 'B4']),
+    ('Rib saddles, phase-lead raceways, pack tray, hinge dampers', ['B2', 'B2a', 'B2b', 'B2c', 'B3', 'B4']),
     ('Fin ribs and rib fairings', ['C1', 'C1a']),
     ('Elevons, balance strips, lens caps', ['C2', 'C2a', 'C2b']),
     ('Fins: fairings, root blocks, tubes', ['C3', 'C4', 'C5', 'C6']),
     ('Landing feet', ['C7', 'C8', 'C9']),
     ('Servos, pushrods, horns, lead threading', ['D1', 'D0', 'D2', 'D2a', 'D3', 'D4', 'D5', 'D5b']),
     ('Avionics: pitot, plate, ESC, FC, leads', ['E1', 'E2', 'E3', 'E3a', 'E3b']),
-    ('Pack, XT60, strap, phase leads, bay cover', ['E4', 'E4a', 'E4b', 'E5', 'E6', 'E7']),
+    ('Pack, XT60, strap, phase leads, bay cover', ['E3c', 'E4', 'E4a', 'E4b', 'E5', 'E6', 'E7']),
 ]
 # per-step camera direction (azimuth from the nose, 90 = left; elevation) where the default (38, 30) hides the part
 VIEW = {'B1': (-40, -22), 'B2': (35, -28), 'C2b': (35, -30), 'C8': (60, 8), 'C9': (60, 12), 'C7': (60, 12),
@@ -80,7 +80,7 @@ def load_plan():
 
 
 # D-198 marker steps (threading / laying wires place no part): the camera frames these parts instead
-MARKER_FOCUS = {'B0': ['WNG-001', 'WNG-002'], 'D0': ['MEC-001-R', 'WNG-001'], 'E3b': ['AVN-002', 'PRP-003', 'AVN-001'],
+MARKER_FOCUS = {'B0': ['WNG-001', 'WNG-002'], 'B2c': ['HRN-003-R', 'HRN-003-L', 'CGE-001'], 'D0': ['MEC-001-R', 'WNG-001'], 'E3b': ['AVN-002', 'PRP-003', 'AVN-001'],
                 'E4b': ['HRN-002', 'PWR-001', 'CGE-008'], 'E6': ['PRP-003', 'AVN-001', 'CGE-001']}
 
 
@@ -342,6 +342,8 @@ def blender_render(argv):
                     tint(p, False)
         ctr, view, dist = cam_view(cam_c)
         look(cam, ctr + view * dist, ctr)
+        below = (ctr + view * dist).z < floor.location.z + 0.06     # D-199: camera under the stage floor (views from below): hide the floor and its shadow blob so the frame is not blank
+        floor.hide_render = below
         caz = math.atan2(view.y, view.x)
         for lo_, daz, lel, dd in lights:
             aa, ee = caz + math.radians(daz), math.radians(lel)
@@ -349,7 +351,7 @@ def blender_render(argv):
             look(lo_, loc, ctr, Vector((0, 0, 1)) if lel < 85 else Vector((1, 0, 0)))
         blob_s.default_value = (0.55, 0.9, 1.0)
         blob_c.default_value = (full_c.x, 0.0, 0.0)
-        blob_op.default_value = 0.35
+        blob_op.default_value = 0.0 if below else 0.35
         bpy.context.view_layer.update()
         return (tuple(state), tuple(round(v, 3) for v in (*cam_c[0], cam_c[1], cam_c[2], cam_c[3])))
 

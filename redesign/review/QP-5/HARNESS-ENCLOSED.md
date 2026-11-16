@@ -2,6 +2,8 @@
 
 Rule (root `CLAUDE.md`, user 2026-11-15): route wires inside the arm tubes, wing-core channels, fairings or covers; list every wire left exposed with its length and the reason, and keep it to the minimum.
 
+**Update D-199 (same day, section at the end): the hub-to-ESC run is now enclosed and exposed wire is 0.87 strand-m. The D-198 text below is kept as the record.**
+
 **Verdict.** Exposed wire fell from **9.09 to 4.27 strand-metres** (2.87 to 1.39 m of cable path, both -52 %). Gone from view: the four motor lead runs along the arms (0.27 m per motor, 12 strands), the servo leads over the skin (0.21 m each, now in foam grooves), and the FC / ESC board wiring (now under a printed bay cover). Not solved: the **hub to bay run of the motor phase leads** (0.26-0.34 m per motor, 3.6 of the 4.27 strand-metres left). No enclosure for it passed the structure or geometry checks; the reasons and a proposed next step are in section 5. Nothing was invented: every new dimension is a drawn CAD feature, and the unknown ones are marked `EST`.
 
 Reproduce: `python -I redesign/qp/A/cad/wire_inventory.py` (this build) and `... wire_inventory.py <folder with the D-197 cad copy>` (before). Per segment, by midpoint: ARM = inside cup collar / arm bore, GROOVE = foam channel, COVER = under AVN-008, EXPOSED = the rest.
@@ -90,3 +92,66 @@ Total exposed in the CAD wires: 4.271 strand-metres, 1.393 m of cable path. Next
 ## 7. Measure on arrival
 
 Motor lead OD and length (stock 400 mm), the lead exit position on the motor base, the bundle pull force through the 4 mm collar bend, bundle fill in the bore, bay cover fit round the FC screw heads, groove depth against the skin tape, pitot tube route.
+
+---
+
+# D-199 (2026-11-15): the hub-to-ESC phase run enclosed, smooth wires, battery tail under the cover
+
+Rule unchanged (root `CLAUDE.md`, user 2026-11-15). **Verdict.** Every phase-lead bundle is now enclosed from the motor to the ESC pad (264 mm in the arm bore, 111 mm in printed conduits and the raceway, 10 mm in a foam ditch, 71-85 mm under the bay cover; about 1 mm of 0.46-0.47 m left in the open at a joint). Exposed wire fell from **4.27 strand-m (D-198 count; 4.54 with the pack leads, see below) to 0.87 strand-m** (all strands, 1 mm sampling), 0.60 without the vendor pack leads. Reproduce: `python -I redesign/qp/A/cad/wire_inventory.py` (classes ARM, RACE = printed raceway or hub conduit, GROOVE = foam channel, COVER, EXPOSED, per 1 mm sample; also the minimum bend radius of each centre line). Not hidden: the build mass rose 2.9 g (D-199.4), the predicted take-off mass sits 1.9 g under the 1,460 g target.
+
+## D-199.1 What was built
+
+| Item | Design | Basis |
+|---|---|---|
+| Raceway HRN-003-R / -L (new, 1.8 g each) | Closed printed channel, 0.6 mm walls, outer 9.6 x 6.6 mm, interior 8.4 x 5.4 mm, from x -58.2 to the tray end x 22.5 under the tray plate (top face touches the plate underside z 6.0), lanes y 17 (upper-arm bundle) and y 21 (lower-arm bundle), bundle centre z 2.7. Lowered from above before the tray (step B2a). Strand fill 15.3 of 45.4 mm2 = 34 % | `amodel/common.py` RW_*, `electrical.py` `build_raceway`; wall basis EST as AVN-008 |
+| Hub conduits HRN-004-UR/UL/LR/LL (new, 0.8 g each) | Leg A: L-shaped 0.6 mm wall in the arm frame hugging the hub web (the web is the third wall), from the socket floor face, r 20.2-29.2 mm, x -78.6 to -47.5, fill about 36 %; leg B: vertical drop (upper arms) or rise (lower arms) at x -52 into a window of the raceway. Pushed in from aft along the webs (step B2b) | arm-frame geometry, strut socket boss clear by 5.2 mm |
+| Hub pad flange | Two 10.6 mm slots (full pad height) let the raceways through; the tray plate still bonds on the pad over the remaining 59 of 80 mm width | `wing.py`, hub 17.7 -> 17.5 g |
+| Foam core | Raceway groove x 0-22.5, |y| 14.0-24.0 (down to z -0.8, 9.4 mm of foam left below at x 20) and an open ditch x 22.5-32 under the cover roof. Foam removed about 0.1 g (not deducted, WNG-001 is a lump) | `wing.py` |
+| Bundle path | Motor, collar (4 mm), arm bore, floor hole, conduit A (4 mm bend), conduit B (6 mm bend), raceway, ditch (6 mm rise at x 29), up to z 17 inside the cover, 0.8 mm drape on the free 39-45 mm run over the plate, up to z 28 under the roof, slanting down to the pad. Every bend >= 4.00 mm (centre line, `wire_inventory.py`) | `phase_route()` |
+| Cover AVN-008 | Phase notches removed (the bundles no longer cross the wall); the battery tail slot and a new GPS lead slot are open at the bottom and closed at the top; the RX and airspeed lead notches keep their roof-open form | `electrical.py` |
+
+## D-199.2 Exposed wire, before and after (strand centre-line lengths from the CAD wires)
+
+| # | Wire | D-198 exposed (strand-m) | D-199 exposed (strand-m) | What remains and why |
+|---|---|---|---|---|
+| 1 | Phase bundles, hub to ESC (4 x 3 strands) | 3.6 (0.26 / 0.34 m per motor) | 0.006 | joint samples only; enclosed in conduits, raceway, ditch, cover |
+| 2 | Battery tail, XT60 female to the cover slot (2 strands 14 AWG) | 0.13 | 0.086 (0.043 m each) | the XT60 pair must stay outboard of the pack end (field disconnect); the tail lies on the plate and enters the cover through a bottom-open slot (it used to loop out through roof notches) |
+| 3 | Vendor pack power leads (2 x 14 AWG), pack face to the XT60 male | 0.20, not counted (drawn as pack bodies) | 0.214 (0.107 m each) | vendor leads, now wires E-HRN-13 following the skin (taped); not ours to bury |
+| 4 | Pack balance lead (1 bundle) | 0.054, not counted | 0.054 | vendor lead, now wire E-HRN-14 |
+| 5 | RX CRSF lead | 0.22 | 0.292 | the receiver and its antennas must stay outside the cover (the new count samples the notch exit at 1 mm) |
+| 6 | Airspeed lead | 0.11 | 0.128 | board outside the cover near the pitot |
+| 7 | GPS lead | 0.16 | 0.018 | leaves the plug inboard through a low bottom-open slot; only 3 mm outside |
+| 8 | Servo leads, pocket wall to the boot | 0.07 | 0.072 | the servo pocket must stay open for the +-20 deg arm sweep |
+| 9 | XT60 mating link, connectors | 0.001 | 0.001 | connectors |
+| | **Total** | **4.27 (4.54 with 3 and 4)** | **0.87** | `out/wire_inventory.json` |
+
+Pitot silicone tube: still **not designed** (no length claimed). Not cheap: the probe is on the right fin (y +0.41), the MS4525 board at y -0.04 to -0.05, 0.45 m apart; a 2 / 4 mm tube needs a foam groove across the spar (ligament 6.3 mm over the bore) and a new sensor position check. Open item, owner harness.
+
+## D-199.3 Wire geometry: modelled vs simplified (user: the wires looked like bent rods)
+
+| Modelled | Simplified or not modelled |
+|---|---|
+| Every centre line is a smooth dense curve: circular arcs of the stated radius at each corner (4 mm at the arm collar and floor hole, 6 mm in conduit B, the raceway and for 14 AWG, 2.5-4 mm for the 28 AWG leads), legs subdivided every 3 mm; radii limited to 90 % of a leg; `wire_inventory.py` prints the minimum | Radii are chosen, not measured; real wire relaxes to larger radii |
+| Phase-lead triples are lightly twisted, one turn per 80 mm (`PH_LAY`, EST), as tied with heat-shrink and ties | Twist handedness and pitch are EST; splice and heat-shrink bumps are not drawn |
+| Free runs sag: 0.8 mm on the 39-45 mm phase run over the plate | Drape is a half-sine, not a catenary; only where the cover and the boards leave the clearance |
+| Sensor leads are round twisted clusters (2 x 2 or 3 x 2 strands) instead of flat ribbons, so the inside strand of a bend keeps a positive radius | The real 28 AWG leads are flat ribbons |
+| Pack power leads follow the skin (taped, 2.4 mm above it) from the tray notch to the XT60 male instead of floating 10 mm over the wing | Tape and ties are not drawn |
+| Routed lengths are the dense-curve lengths: phase extensions 1.10 m in all (was 2.47 m), `HRN_ITEMS` 7.8 g (was 17.5 g) | Stock length 0.40 m and the 30 mm splice overlap are EST as in D-198 |
+| Battery tail: 6 mm bend (14 AWG), starts at the female housing back, under the cover from y 26.5 mm, climbs to z 23.5 over the ESC aft edge; BAT pad moved 5.5 mm forward (x 104.5) so the last leg is 14 mm | The pad layout is EST (moved, not measured) |
+
+## D-199.4 Mass
+
+| Item | g |
+|---|---|
+| Raceways 2 x 1.8, conduits 4 x 0.8 (drawn wall volume x 1.27) | +6.8 |
+| Phase extension wire (route 0.456-0.470 m instead of 0.53-0.62 m: 1.10 m of wire instead of 2.47 m) | -9.7 |
+| Hub pad slots | -0.2 |
+| Strap: STRIX 20 x 300 mm buckle strap (5.5 g each, V, BOM W08) replaces the EST 3.0 g 25 mm hook-and-loop strap | +2.5 |
+| Anti-slip pad now drawn (100 x 30 x 1.0 mm silicone rubber, 3.5 g EST, BOM W09; the pack stands 1 mm higher) | +3.5 |
+| **Net CAD basic mass** | **1,259.74 -> 1,262.64 g (+2.9)** |
+
+The raceway pays for itself (-2.9 g net with the shorter route); the strap and the pad are real parts that no earlier line carried. Predicted take-off mass: itemised 1,454 g (was 1,450), flat rule 1,458.1 g (was 1,455.6); target 1,460, gate 1,470. CG 20.68 mm (was 21.32); forward pack travel cut from 8 to 6 mm (`TRIM_FWD`) so the forward-trim CG is 19.4 mm (>= 19.3, the SITL-tested end); aft trim end 22.8 mm.
+
+## D-199.5 Checks
+
+`arm_cup_checks.py` and `qp5_checks.py` re-run: unchanged (no load path touched: the pad flange only bonds the tray; hub socket wall, bridge sleeve, spar foam and cup plate untouched). Worst margins as D-198: tip-over arm bending +0.33, strike S2 plate cantilever +0.37, strike S3 hole bearing +0.39. Pad flange bond (pack inertia 270 g x 10 g = 26 N): bond width reduced from 80 to 59 mm, no check covers it (open: bench coupon with the hub coupon). Collision at neutral, +-20 and +-21 deg: 0 pairs deeper than 0.05 mm, wire ends 0, wire folds 0 (104 parts, 472 bodies); at +-22 deg only the 4 stop-boss contacts (0.24-0.28 mm). Assembly: new steps B2a raceways (from above), B2b conduits (from aft), B2c thread the phase leads, E3c pad; E-HRN-13 / -14 laid with the XT60 mate.

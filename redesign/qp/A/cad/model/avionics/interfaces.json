@@ -73,7 +73,7 @@
    "material": "PCB",
    "cg_xyz_m": [
     0.0575,
-    0.0396,
+    0.0395,
     0.0172
    ],
    "make_or_buy": "buy",
@@ -113,7 +113,7 @@
   },
   {
    "id": "AVN-008",
-   "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead pad runs; notches for the 4 phase bundles and the battery tail",
+   "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead runs from the foam ditch to the ESC pads; notches for the sensor leads and the battery tail",
    "subsystem": "avionics",
    "status": "MODELLED",
    "mass_g": 9.6,

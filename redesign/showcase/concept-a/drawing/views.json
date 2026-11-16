@@ -689,15 +689,25 @@
      "subsystem": "power",
      "name": "Pack Tattu 2300 mAh 4S 75C"
     },
+    "PWR-003": {
+     "bbox_px": [
+      595.0,
+      196.3,
+      735.0,
+      238.3
+     ],
+     "subsystem": "power",
+     "name": "Anti-slip pad 100 x 30 x 1.0 mm silicone rubber sheet on the tray floor (BOM W09; thickness, size and density EST)"
+    },
     "PWR-002": {
      "bbox_px": [
       586.5,
       192.8,
       743.5,
-      227.8
+      220.8
      ],
      "subsystem": "power",
-     "name": "Pack strap 25 mm hook-and-loop (round pack and tray)"
+     "name": "Pack strap 20 x 300 mm with buckle (STRIX, BOM W08; round pack and tray)"
     },
     "AVN-001": {
      "bbox_px": [
@@ -722,7 +732,7 @@
     "AVN-002": {
      "bbox_px": [
       647.5,
-      293.9,
+      294.3,
       682.5,
       336.3
      ],
@@ -752,7 +762,7 @@
     "AVN-003": {
      "bbox_px": [
       591.5,
-      372.6,
+      373.9,
       609.7,
       474.9
      ],
@@ -787,7 +797,7 @@
       408.4
      ],
      "subsystem": "avionics",
-     "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead pad runs; notches for the 4 phase bundles and the battery tail"
+     "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead runs from the foam ditch to the ESC pads; notches for the sensor leads and the battery tail"
     },
     "AVN-006": {
      "bbox_px": [
@@ -1004,7 +1014,7 @@
       743.1,
       367.1,
       764.7,
-      385.1
+      385.8
      ],
      "subsystem": "harness",
      "name": "XT60 female + 14 AWG tail to the ESC (modelled)"
@@ -1664,7 +1674,7 @@
     "PRP-003": {
      "bbox_px": [
       640.5,
-      325.3,
+      325.1,
       689.5,
       338.6
      ],
@@ -1674,22 +1684,32 @@
     "PWR-001": {
      "bbox_px": [
       565.3,
-      296.1,
+      294.7,
       738.5,
-      346.8
+      345.4
      ],
      "subsystem": "power",
      "name": "Pack Tattu 2300 mAh 4S 75C"
     },
+    "PWR-003": {
+     "bbox_px": [
+      595.0,
+      345.4,
+      735.0,
+      346.8
+     ],
+     "subsystem": "power",
+     "name": "Anti-slip pad 100 x 30 x 1.0 mm silicone rubber sheet on the tray floor (BOM W09; thickness, size and density EST)"
+    },
     "PWR-002": {
      "bbox_px": [
       586.5,
-      304.0,
+      302.6,
       743.5,
       368.6
      ],
      "subsystem": "power",
-     "name": "Pack strap 25 mm hook-and-loop (round pack and tray)"
+     "name": "Pack strap 20 x 300 mm with buckle (STRIX, BOM W08; round pack and tray)"
     },
     "AVN-001": {
      "bbox_px": [
@@ -1779,7 +1799,7 @@
       347.0
      ],
      "subsystem": "avionics",
-     "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead pad runs; notches for the 4 phase bundles and the battery tail"
+     "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead runs from the foam ditch to the ESC pads; notches for the sensor leads and the battery tail"
     },
     "AVN-006": {
      "bbox_px": [
@@ -2656,7 +2676,7 @@
     "PRP-003": {
      "bbox_px": [
       346.1,
-      325.3,
+      325.1,
       395.1,
       338.6
      ],
@@ -2666,22 +2686,32 @@
     "PWR-001": {
      "bbox_px": [
       192.8,
-      296.1,
+      294.7,
       367.1,
-      346.8
+      345.4
      ],
      "subsystem": "power",
      "name": "Pack Tattu 2300 mAh 4S 75C"
     },
+    "PWR-003": {
+     "bbox_px": [
+      196.3,
+      345.4,
+      238.3,
+      346.8
+     ],
+     "subsystem": "power",
+     "name": "Anti-slip pad 100 x 30 x 1.0 mm silicone rubber sheet on the tray floor (BOM W09; thickness, size and density EST)"
+    },
     "PWR-002": {
      "bbox_px": [
       192.8,
-      304.0,
-      227.8,
+      302.6,
+      220.8,
       368.6
      ],
      "subsystem": "power",
-     "name": "Pack strap 25 mm hook-and-loop (round pack and tray)"
+     "name": "Pack strap 20 x 300 mm with buckle (STRIX, BOM W08; round pack and tray)"
     },
     "AVN-001": {
      "bbox_px": [
@@ -2705,7 +2735,7 @@
     },
     "AVN-002": {
      "bbox_px": [
-      293.9,
+      294.3,
       304.4,
       336.3,
       334.4
@@ -2735,7 +2765,7 @@
     },
     "AVN-003": {
      "bbox_px": [
-      372.6,
+      373.9,
       333.0,
       474.9,
       338.6
@@ -2771,7 +2801,7 @@
       347.0
      ],
      "subsystem": "avionics",
-     "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead pad runs; notches for the 4 phase bundles and the battery tail"
+     "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead runs from the foam ditch to the ESC pads; notches for the sensor leads and the battery tail"
     },
     "AVN-006": {
      "bbox_px": [
@@ -2987,7 +3017,7 @@
      "bbox_px": [
       367.1,
       329.5,
-      385.1,
+      385.8,
       340.9
      ],
      "subsystem": "harness",

@@ -13,7 +13,7 @@ Classes: **USER** user constraint; **PHYSICAL** physical, safety or legal limit;
 | A-U4 | 3-D physics pass: no floating parts, no phasing, assembly swept | USER | carry | `CLAUDE.md` |
 | A-U5 | Mass < 25 kg (55 lb) | USER/LEGAL | carry | `CLAUDE.md`; A 1.47 kg gate |
 | A-U6 | CAD fidelity: every part modelled to its real shape and dimensions from the vendor drawing or data sheet (props with real blades, motors, servos, connectors, boards, fasteners); no stand-in disks or boxes; unknown dimensions flagged, never invented | USER | carry | root `CLAUDE.md` (user, 2026-11-15); D-193, D-194; `review/QP-5/CAD-FIDELITY-AUDIT.md` |
-| A-U7 | Limit exposed wiring: wires inside the arm tubes, wing-core channels, fairings or covers; every wire left outside the skin listed with length and reason, kept to the minimum | USER | carry | root `CLAUDE.md` (user, 2026-11-15); D-198: exposed wire 9.09 to 4.27 strand-m, remainder listed with length and reason in `review/QP-5/HARNESS-ENCLOSED.md` s5 (hub-to-ESC phase run not enclosed) |
+| A-U7 | Limit exposed wiring: wires inside the arm tubes, wing-core channels, fairings or covers; every wire left outside the skin listed with length and reason, kept to the minimum | USER | carry | root `CLAUDE.md` (user, 2026-11-15); D-198: exposed wire 9.09 to 4.27 strand-m; D-199: hub-to-ESC phase run enclosed (raceway, hub conduits, foam ditch, cover), exposed 0.87 strand-m (0.60 without the vendor pack leads), remainder listed with length and reason in `review/QP-5/HARNESS-ENCLOSED.md` D-199.2 (battery tail, pack leads, RX / airspeed / servo leads, pitot tube not designed) |
 
 ## 2. Configuration, mission, mass
 

@@ -7,7 +7,7 @@ Marker steps (parts = []) carry the wires: a 7th element lists the electrical ed
 end parts of each edge are already on (earlier step) and that every electrical edge is laid exactly once. THREAD steps are marker steps that must come
 before the step named in THREAD_BEFORE (the leads are fed through the tubes and channels while the ends are still free).
 Not in the sequence: tape skin, hinge tape, epoxy fillets (not drawn). Wires are checked in place by collide_a.py.
-D-198: enclosed routes (motor leads in the arm bores, servo leads in foam grooves) are threaded, then soldered after the boards are on."""
+D-198/199: enclosed routes (motor leads in the arm bores, hub conduits, raceways and the foam ditch, servo leads in foam grooves) are threaded, then soldered after the boards are on."""
 ST = ('UR', 'UL', 'LR', 'LL')
 CAGE = (['CGE-00%d' % i for i in (1, 4, 6)] + ['CGE-002-' + s for s in ST] + ['CGE-003-' + s for s in ST] +
         ['CGE-005-R', 'CGE-005-L', 'CGE-007-R', 'CGE-007-L'] + ['PRP-001-' + s for s in ST] + ['PRP-004-' + s for s in ST] + ['PRP-002-' + s for s in ST] + ['PRP-005-' + s for s in ST])
@@ -22,6 +22,9 @@ STEPS = [
     ('B1', 'Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked '
            'from below: clips snap on the spar', CAGE, (0, 0, 1), 30, 3),
     ('B2', 'Rib saddles snap on the spar from below', ['FIN-005-R', 'FIN-005-L'], (0, 0, 1), 30, 3),
+    ('B2a', 'D-199: phase-lead raceways R and L lowered from above into their foam grooves (through the slots in the hub pad flange), before the tray', ['HRN-003-R', 'HRN-003-L'], (0, 0, -1), 30, 3),
+    ('B2b', 'D-199: hub conduits (4) pushed in from aft along the hub webs, each docking on its socket floor face and on its raceway window', ['HRN-004-UR', 'HRN-004-UL', 'HRN-004-LR', 'HRN-004-LL'], (-1, 0, 0), 40, 4),
+    ('B2c', 'THREAD: feed the free ends of the 12 phase strands (B0) through their hub conduit, the raceway and the foam ditch (fish thread from the ditch end); the free ends stay out at x 29 mm for the ESC pads', [], None, 0, 0),
     ('B3', 'Pack tray lowered from above into the core tray slot, bonded to the hub aft face', ['CGE-008'], (0, 0, -1), 30, 3),
     ('B4', 'Hinge damper units (stator with rotor in its annulus, silicone fluid filled) into the core notches at the elevon tips from aft, before the ribs; the notch is open aft', ['WNG-009-R', 'WNG-010-R', 'WNG-009-L', 'WNG-010-L'], (-1, 0, 0), 30, 5),
     ('C1', 'Ribs in from aft into the saddle sockets', ['FIN-002-R', 'FIN-002-L'], (-1, 0, 0), 300, 60),
@@ -49,12 +52,13 @@ STEPS = [
     ('E3', 'ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS, airspeed on the plate', ['PRP-003', 'AVN-007', 'AVN-002', 'AVN-003', 'AVN-004', 'AVN-005'], (0, 0, -1), 30, 5),
     ('E3a', 'Four M2 x 25 screws down through the FC stack into the nuts', ['HWC-001'], (0, 0, -1), 20, 5),
     ('E3b', 'LAY: solder the ESC signal ribbon to the FC, the servo leads to the FC pads S5 / S6, the RX CRSF lead, the GPS and airspeed leads (JST plugs on the sensor boards)', [], None, 0, 0, ['E-HRN-06', 'E-HRN-07', 'E-HRN-08', 'E-HRN-09', 'E-HRN-10', 'E-HRN-11']),
+    ('E3c', 'Anti-slip pad stuck on the tray floor', ['PWR-003'], (0, 0, -1), 10, 2),
     ('E4', 'Pack into the tray', ['PWR-001'], (0, 0, -1), 30, 5),
     ('E4a', 'XT60 female with its tail mated to the pack lead XT60 male (plugs on from aft, taped on the skin; tail soldered to the ESC pads after)', ['HRN-002'], (-1, 0, 0), 15, 3),
-    ('E4b', 'LAY: mate the pack XT60 male to the XT60 female (E4a) (done in E4a)', [], None, 0, 0, ['E-HRN-01']),
+    ('E4b', 'LAY: mate the pack XT60 male to the XT60 female (E4a) (done in E4a); the vendor pack power leads (E-HRN-13) and balance lead (E-HRN-14) come on the pack and are taped to the skin along their route, the balance plug on the pack top', [], None, 0, 0, ['E-HRN-01', 'E-HRN-13', 'E-HRN-14']),
     ('E5', 'Pack strap threaded under the bridge tube and closed over the pack (FLEXIBLE: no rigid insertion path exists, so this step checks the fitted position only, travel 0; the threading is by hand)', ['PWR-002'], None, 0, 0),
-    ('E6', 'LAY: solder the battery tail to the ESC BAT pads and the 4 x 3 phase leads (free ends from B0, run over the wing at z 29 / 27.5 mm) to the ESC motor pads; heat-shrink; ties at the hub aft face and at the plate edge', [], None, 0, 0, ['E-HRN-12', 'E-HRN-02', 'E-HRN-03', 'E-HRN-04', 'E-HRN-05']),
-    ('E7', 'Bay cover lowered over the FC stack and ESC onto the plate (the bundles and sensor leads drop into the roof-open notches), foam tape + two ties', ['AVN-008'], (0, 0, -1), 40, 4),
+    ('E6', 'LAY: solder the battery tail to the ESC BAT pads and the 4 x 3 phase leads (free ends from B0 / B2c: out of the foam ditch, up to z 16, over the plate beside the FC, up to z 28 under the cover roof) to the ESC motor pads; heat-shrink', [], None, 0, 0, ['E-HRN-12', 'E-HRN-02', 'E-HRN-03', 'E-HRN-04', 'E-HRN-05']),
+    ('E7', 'Bay cover lowered over the FC stack and ESC onto the plate (the sensor leads and the battery tail drop into the roof-open notches; the phase bundles are already inside), foam tape + two ties', ['AVN-008'], (0, 0, -1), 40, 4),
 ]
-THREAD_BEFORE = {'B0': 'B1', 'D0': 'E2'}
+THREAD_BEFORE = {'B0': 'B1', 'D0': 'E2', 'B2c': 'E2'}
 

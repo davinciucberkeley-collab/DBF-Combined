@@ -7,8 +7,8 @@
  "scene": "studio",
  "engine": "CYCLES",
  "device": "GPU",
- "samples": 64,
- "render_s": 68.69,
+ "samples": 48,
+ "render_s": 57.51,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -57,7 +57,7 @@
  "callouts": [
   {
    "item": "AVN-002",
-   "x": 762.4,
+   "x": 761.0,
    "y": 373.1,
    "title": "AVN-002",
    "text": "Flight controller Kakute F405",
@@ -65,15 +65,15 @@
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0609,
-    -0.0036,
+    0.0601,
+    -0.0025,
     0.0369
    ]
   },
   {
    "item": "PWR-001",
-   "x": 700.9,
-   "y": 425.6,
+   "x": 700.8,
+   "y": 425.0,
    "title": "PWR-001",
    "text": "4S 2300 mAh pack",
    "detail": null,
@@ -82,67 +82,67 @@
    "world_m": [
     -0.0275,
     -0.003,
-    0.0272
+    0.0279
    ]
   },
   {
    "item": "CGE-008",
    "x": 692.9,
-   "y": 442.0,
+   "y": 441.7,
    "title": "CGE-008",
    "text": "Pack tray",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.0375,
-    -0.0016,
-    0.0139
+    -0.0355,
+    0.0002,
+    0.0123
    ]
   },
   {
    "item": "PRP-003",
-   "x": 789.9,
-   "y": 366.7,
+   "x": 791.7,
+   "y": 368.8,
    "title": "PRP-003",
    "text": "4-in-1 ESC",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.1047,
-    -0.0015,
+    0.103,
+    -0.005,
     0.0194
    ]
   },
   {
    "item": "E-HRN-02",
-   "x": 649.4,
-   "y": 395.7,
+   "x": 559.7,
+   "y": 349.0,
    "title": "E-HRN-02",
    "text": "Phase leads to the motors",
    "detail": "bend >= 4 mm",
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.0241,
-    0.0615,
-    0.0302
+    -0.076,
+    0.1205,
+    0.0851
    ]
   },
   {
    "item": "WNG-002",
-   "x": 839.5,
-   "y": 442.5,
+   "x": 812.2,
+   "y": 429.7,
    "title": "WNG-002",
    "text": "CF spar 12 x 10",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0558,
-    -0.0977,
-    0.0027
+    0.0559,
+    -0.066,
+    0.0029
    ]
   }
  ],
@@ -586,7 +586,7 @@
    "role": "context",
    "name": "Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 2.0 mm arm-socket mouth walls, 1.2 mm sleeve (D-196), 0.8 mm webs, mass = drawn volume x 1.27)",
    "status": "MODELLED",
-   "mass_g": 17.7,
+   "mass_g": 17.5,
    "subsystem": "cage",
    "bbox_px": [
     618,
@@ -1038,7 +1038,7 @@
    "subsystem": "propulsion",
    "bbox_px": [
     759,
-    354,
+    355,
     811,
     388
    ]
@@ -1054,20 +1054,34 @@
     654,
     343,
     768,
-    462
+    461
+   ]
+  },
+  {
+   "id": "PWR-003",
+   "role": "context",
+   "name": "Anti-slip pad 100 x 30 x 1.0 mm silicone rubber sheet on the tray floor (BOM W09; thickness, size and density EST)",
+   "status": "MODELLED",
+   "mass_g": 3.5,
+   "subsystem": "power",
+   "bbox_px": [
+    659,
+    405,
+    764,
+    460
    ]
   },
   {
    "id": "PWR-002",
    "role": "context",
-   "name": "Pack strap 25 mm hook-and-loop (round pack and tray)",
+   "name": "Pack strap 20 x 300 mm with buckle (STRIX, BOM W08; round pack and tray)",
    "status": "MODELLED",
-   "mass_g": 3.0,
+   "mass_g": 5.5,
    "subsystem": "power",
    "bbox_px": [
     651,
-    380,
-    764,
+    382,
+    761,
     478
    ]
   },
@@ -1186,7 +1200,7 @@
   {
    "id": "AVN-008",
    "role": "ghost",
-   "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead pad runs; notches for the 4 phase bundles and the battery tail",
+   "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead runs from the foam ditch to the ESC pads; notches for the sensor leads and the battery tail",
    "status": "MODELLED",
    "mass_g": 9.6,
    "subsystem": "avionics",
@@ -1492,6 +1506,90 @@
    ]
   },
   {
+   "id": "HRN-003-R",
+   "role": "context",
+   "name": "Phase-lead raceway (D-199, R): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
+   "status": "MODELLED",
+   "mass_g": 1.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    657,
+    409,
+    722,
+    459
+   ]
+  },
+  {
+   "id": "HRN-003-L",
+   "role": "context",
+   "name": "Phase-lead raceway (D-199, L): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
+   "status": "MODELLED",
+   "mass_g": 1.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    689,
+    423,
+    754,
+    475
+   ]
+  },
+  {
+   "id": "HRN-004-UR",
+   "role": "context",
+   "name": "Hub conduit (D-199, UR): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    641,
+    431,
+    673,
+    458
+   ]
+  },
+  {
+   "id": "HRN-004-UL",
+   "role": "context",
+   "name": "Hub conduit (D-199, UL): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    673,
+    448,
+    705,
+    472
+   ]
+  },
+  {
+   "id": "HRN-004-LR",
+   "role": "context",
+   "name": "Hub conduit (D-199, LR): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    640,
+    449,
+    672,
+    480
+   ]
+  },
+  {
+   "id": "HRN-004-LL",
+   "role": "context",
+   "name": "Hub conduit (D-199, LL): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    677,
+    466,
+    709,
+    500
+   ]
+  },
+  {
    "id": "HRN-002",
    "role": "context",
    "name": "XT60 female + 14 AWG tail to the ESC (modelled)",
@@ -1527,10 +1625,38 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    736,
-    336,
-    793,
-    359
+    737,
+    339,
+    787,
+    362
+   ]
+  },
+  {
+   "id": "E-HRN-13",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    664,
+    352,
+    728,
+    405
+   ]
+  },
+  {
+   "id": "E-HRN-14",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    676,
+    375,
+    708,
+    391
    ]
   },
   {
@@ -1542,9 +1668,9 @@
    "subsystem": "harness",
    "bbox_px": [
     454,
-    237,
-    767,
-    454
+    238,
+    766,
+    453
    ]
   },
   {
@@ -1555,8 +1681,8 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    678,
-    371,
+    679,
+    376,
     877,
     469
    ]
@@ -1570,7 +1696,7 @@
    "subsystem": "harness",
    "bbox_px": [
     482,
-    330,
+    357,
     774,
     518
    ]
@@ -1583,9 +1709,9 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    682,
-    366,
-    870,
+    683,
+    371,
+    868,
     723
    ]
   },
@@ -1598,7 +1724,7 @@
    "subsystem": "harness",
    "bbox_px": [
     749,
-    356,
+    358,
     797,
     395
    ]
@@ -1611,7 +1737,7 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    622,
+    623,
     292,
     768,
     381
@@ -1639,8 +1765,8 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    765,
-    361,
+    766,
+    362,
     828,
     388
    ]
@@ -1653,10 +1779,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    725,
-    355,
-    749,
-    380
+    732,
+    360,
+    748,
+    382
    ]
   },
   {
@@ -1669,8 +1795,8 @@
    "bbox_px": [
     753,
     376,
-    787,
-    409
+    786,
+    408
    ]
   }
  ],

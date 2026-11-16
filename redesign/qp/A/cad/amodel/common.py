@@ -47,7 +47,7 @@ YFIN, XFIN_T, FIN_H = 0.38, 0.294, 0.18     # DOC: fins at y 380, tube at x 0.29
 FIN_OD, FIN_ID = 0.016, 0.014               # DOC 16x14 tube
 PACK_X = (-0.0275, 0.0075)                  # QP-4 7.2 #2: pack moved 10 mm aft (centre -10 mm; was -20 mm) so the CAD CG lands mid-band (23 mm) WITH the D-187 elevon balance and the ES3054HV servos; trim +-10 mm in the tray slots
 TRIM = 0.010                                # +-10 mm pack trim travel (about +-2.2 mm of CG)
-TRIM_FWD = 0.008                            # D-196: forward travel 8 mm (front lip 2 mm aft) so the forward-trim CG stays >= 19.3 mm, the SITL-tested end (CG 21.1 after the hub walls)
+TRIM_FWD = 0.006                            # D-199: forward travel 6 mm (D-196: 8 mm): the raceways, 20 mm strap and drawn pad moved the CAD CG to 20.68 mm, so the forward-trim CG must stay >= 19.3 mm, the SITL-tested end (19.4 mm at 6 mm)
 TRAY_X1 = 0.0215                            # tray plate aft end (pack aft edge at +TRIM is 17.5 mm; core tray slot ends at 0.0225)
 SERVO_Y = 0.200                             # EST (DOC landing_a: servo y 0.30 is in the elevon; moved inboard)
 SV_Z1 = 0.0117 - WING_DZ                              # servo case top (servo case 28.4 x 13.0 x 26.7, see electrical.py); the core servo pocket opens at this z
@@ -110,6 +110,23 @@ def a2w(st, q):
 def ph_arm_xz(st, R_IN_):
     """Arm-local (x, z) of the bundle in the arm bore at the hub end (down the diagonal from the motor end)."""
     return (PH_XC * math.cos(math.radians(CANT)), PH_DT * arm_up_sign(st))
+
+
+# ------------------------------------------------------------------ D-199 phase-lead raceway (shared: wing.py cuts the hub pad and the foam, electrical.py draws the printed parts and routes the bundles)
+# One closed printed raceway per side (HRN-003-R / -L) runs from the hub aft face under the pack tray plate to the tray end (x 22.5), carrying the upper-arm and the
+# lower-arm bundle of that side side by side; four printed hub conduits (HRN-004-*) take each bundle from the arm-socket floor hole, along the hub web, down (upper
+# arms) or up (lower arms) into it. Past the tray end the bundles run in an open foam ditch under the bay cover, rise inside the cover and reach the ESC pads.
+# All dimensions are drawn CAD features (printed, 0.6 mm wall, EST basis as the cover and lens caps); bundle = tri of 3 x 1.8 mm strands, envelope 3.88 mm.
+RW_T = 0.0006                               # EST printed wall, 1 perimeter (as AVN-008)
+RW_YO, RW_YI = (0.0142, 0.0238), (0.0148, 0.0232)     # raceway outer / interior y range (right side), interior 8.4 mm: two bundles side by side (lanes y 17.0 and 21.0, 4.0 apart)
+RW_ZO, RW_ZI = (-0.0006, 0.0060), (0.0, 0.0054)       # outer z -0.6..6.0 (the top touches the tray plate underside z 6.0); interior 5.4 mm (bundle centre z 2.7)
+RW_XO0, RW_XI0, RW_X1 = -0.0588, -0.0582, 0.0225      # outer front, interior front, aft end (open) = end of the core tray slot
+RW_YU, RW_YL, RW_ZB = 0.0170, 0.0210, 0.0027          # bundle lanes (upper-arm, lower-arm bundle) and bundle centre height in the raceway
+RW_XD = -0.052                              # x of the vertical drop (hub conduit leg B) behind the hub; the arc of the 4 mm bend starts 4 mm ahead of it, inside leg B; strut socket boss clear by >= 1.4 mm
+DITCH_X1 = 0.0320                           # foam ditch (open top, under the bay cover) x 22.5..32; the bundles rise at x 29
+RW_XR = 0.029
+PADN_X = (-0.0467, -0.0440)                 # hub tray-pad notch, x (pad x -46.2..-45)
+PADN_Y, PADN_Z = (0.0138, 0.0244), (0.0029, 0.0111)   # y and z of the notch (full pad height so the raceway can be lowered from above)
 
 
 # ------------------------------------------------------------------ airfoil helpers

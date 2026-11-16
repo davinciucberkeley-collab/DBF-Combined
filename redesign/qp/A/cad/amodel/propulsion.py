@@ -51,7 +51,7 @@ ESC_B = ((ESC_X0, -0.0175, ZP), (ESC_X0 + 0.035, 0.0175, ZP + 0.0055))  # V Spee
 PAD = 0.003                                                             # half size of an ESC pad body
 _e = ESC_X0 - 0.031
 ESC_PADS = {'UR': (0.034 + _e, 0.013), 'LR': (0.046 + _e, 0.013), 'UL': (0.034 + _e, -0.013), 'LL': (0.046 + _e, -0.013),
-            'BAT': (0.110, 0.012), 'SIG': (0.0635 + _e, 0.0)}
+            'BAT': (0.1045, 0.012), 'SIG': (0.0635 + _e, 0.0)}
 ESC_TOP = ZP + 0.0055
 ESC_PCB_T = 0.0016                                                      # EST: PCB thickness (not published)
 ESC_HOLE_D, ESC_HOLE_PITCH = 0.0035, 0.020                              # V: 20 x 20 pattern, 3.5 mm holes (M2 and M3 compatible)

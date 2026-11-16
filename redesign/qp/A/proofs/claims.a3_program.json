@@ -22,10 +22,10 @@
     "budget": "P:req.budget_usd"
    },
    "outputs": {
-    "total_usd": 1775.0897125000001,
-    "total_30_usd": 1894.91547625,
-    "margin_usd": 224.91028749999987,
-    "margin_30_usd": 105.08452375000002,
+    "total_usd": 1779.4666375000002,
+    "total_30_usd": 1899.9539012500002,
+    "margin_usd": 220.53336249999984,
+    "margin_30_usd": 100.04609874999983,
     "reserve_usd": 327.4303875,
     "shipping_usd": 55.13
    },
@@ -92,7 +92,7 @@
       "power",
       "RMRC",
       1.0,
-      23.92,
+      19.94,
       false
      ],
      [
@@ -101,6 +101,30 @@
       "Local",
       1.0,
       6.0,
+      true
+     ],
+     [
+      "W07",
+      "power",
+      "RMRC",
+      1.0,
+      3.96,
+      false
+     ],
+     [
+      "W08",
+      "power",
+      "RMRC",
+      1.0,
+      1.99,
+      false
+     ],
+     [
+      "W09",
+      "power",
+      "Amazon",
+      1.0,
+      2.0,
       true
      ],
      [
@@ -389,7 +413,7 @@
     "A-U1"
    ],
    "how": "python -I qp/A/bom_a.py (reads BOM-A.csv): $1,775.09; gate G7 total <= $1,800. 14 of 38 lines are unverified (U / EST).",
-   "value": 1775.0897125000001
+   "value": 1779.4666375000002
   },
   {
    "id": "CL-A-COST-MARGIN30",
@@ -406,7 +430,7 @@
     "A-U1"
    ],
    "how": "python -I qp/A/bom_a.py: +$105.08 at +30 %; gate G7 margin >= $100. Two new EST lines (R12 / R13): if either rises by > $9 the margin falls under $100.",
-   "value": 105.08452375000002
+   "value": 100.04609874999983
   },
   {
    "id": "CL-A-COST-BUDGET",
@@ -423,7 +447,7 @@
     "A-U1"
    ],
    "how": "python -I qp/A/bom_a.py; Makers Pass outside the budget (user, memory).",
-   "value": 1894.91547625
+   "value": 1899.9539012500002
   },
   {
    "id": "CALC-A-SCHED",
@@ -749,10 +773,10 @@
     "v": "P:cad3d.assy_steps_ok"
    },
    "outputs": {
-    "v": 36
+    "v": 39
    },
    "input_values": {
-    "v": 36
+    "v": 39
    }
   },
   {
@@ -770,7 +794,7 @@
     "A-U4"
    ],
    "how": "python -I qp/A/cad/a_assembly.py: 28 of 28 steps, 0 blocked, 0 unsupported, no wire laid before its ends.",
-   "value": 36
+   "value": 39
   },
   {
    "id": "CALC-A-ASSY-PARTS-READ",
@@ -783,10 +807,10 @@
     "v": "P:cad3d.assy_parts_placed"
    },
    "outputs": {
-    "v": 97
+    "v": 104
    },
    "input_values": {
-    "v": 97
+    "v": 104
    }
   },
   {
@@ -804,7 +828,7 @@
     "A-U4"
    ],
    "how": "a_assembly.py: 78 of 78 parts placed, none missing from the sequence.",
-   "value": 97
+   "value": 104
   }
  ]
 }

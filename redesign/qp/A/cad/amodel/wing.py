@@ -27,7 +27,7 @@ HUB_ARM_R0 = R_IN - 0.002                   # arm socket floor (2 mm)
 HUB_ARM_R1 = R_IN + HUB_SOCK                # open mouth of the arm socket (r 56.2 mm)
 HUB_SPOKE_D = 0.022                         # radial web depth along x (sleeve to socket), one wall (HUB_W) thick
 HUB_STRUT_S = (-0.017, 0.032)               # strut socket: from 17 mm behind the strut end (web to the bridge sleeve) to 32 mm ahead (30 mm socket)
-PACK_XL_, PACK_ZL_ = 0.0025, 0.008 + 0.0145   # lead exit x and z (= electrical.PACK_XL, PACK_ZL; keep equal)
+PACK_XL_, PACK_ZL_ = 0.0025, 0.009 + 0.0145   # lead exit x and z (= electrical.PACK_XL, PACK_ZL; keep equal)
 CUP_PAT = (0.019, 0.016)                    # MN2212 mounting pattern 19 mm (along the arm, y) x 16 mm (z): retailers list 16x19 and 19x25 (getfpv MN2212 V2.0 page, search 2026-11-15; T-Motor drawing: 4-M2.5 on 19 x 16 (read 2026-11-15); cup holes M2.5 clearance 2.9 mm, D-194)
 CUP_R = 0.006                               # plate corner radius (EST)
 ARM_OD, ARM_ID = 0.012, 0.010               # DOC iteration 2: arms 12x10
@@ -336,6 +336,7 @@ def hub_mass_g():
     ls = HUB_STRUT_S[1] + 0.002
     v += 2 * (math.pi * Rs ** 2 * ls - math.pi * (STRUT_OD / 2) ** 2 * HUB_STRUT_S[1] + HUB_W * 0.006 * (-HUB_STRUT_S[0] - 0.0015))
     v += (HUB_PAD[1][0] - HUB_PAD[0][0]) * (HUB_PAD[1][1] - HUB_PAD[0][1]) * (HUB_PAD[1][2] - HUB_PAD[0][2])
+    v -= 2 * (HUB_X1 - (HUB_X1 - 0.0012)) * (PADN_Y[1] - PADN_Y[0]) * (HUB_PAD[1][2] - HUB_PAD[0][2])   # D-199: two raceway notches in the tray pad flange
     return v * 1e6 * RHO_PETG
 
 
@@ -499,6 +500,11 @@ def build_wing(ctx):
     core.cut_box((0.0, -0.0065, -0.05), (0.056, 0.0065, 0.0075), name='bridge slot (open below)')
     core.cut_box((-0.010, -0.0570, 0.0055), (0.0225, 0.0570, 0.050), name='pack tray slot (open above; y +-57 clears the 25 mm strap, outer face 56.1, over the whole trim travel)')
     core.cut_box((0.0295, -0.0165, -0.05), (0.0710, 0.0165, 0.0115), name='saddle slot (open below)')
+    for sy in (1, -1):                                    # D-199: raceway groove under the tray slot, then the open ditch under the bay cover
+        ya, yb = sorted((sy * (RW_YO[0] - 0.0002), sy * (RW_YO[1] + 0.0002)))
+        core.cut_box((0.0, ya, RW_ZO[0] - 0.0002), (RW_X1 + 0.0001, yb, RW_ZO[1] + 0.0002), name='phase-lead raceway groove (D-199)')
+        ya, yb = sorted((sy * RW_YI[0], sy * RW_YI[1]))
+        core.cut_box((RW_X1, ya, RW_ZI[0]), (DITCH_X1, yb, 0.0140), name='phase-lead ditch, open top under the bay cover (D-199)')
     core.cut_box((0.0335, 0.2705, -0.05), (0.0710, 0.3095, 0.0075), name='clamp slot R (open below)')
     core.cut_box((0.0335, -0.3095, -0.05), (0.0710, -0.2705, 0.0075), name='clamp slot L (open below)')
     for sg in (1, -1):
@@ -514,7 +520,7 @@ def build_wing(ctx):
                 (p0[0] - nx, sg * (p0[1] - ny))]
         core.cut_prism('Z', -0.05, [loop], 0.055, name='strut slot (open below, 0.5 mm clear)')
     guests = ['HWC-001', 'HWC-003', 'WNG-002', 'CGE-004', 'CGE-005-R', 'CGE-005-L', 'CGE-006', 'CGE-007-R', 'CGE-007-L', 'FIN-002-R', 'FIN-002-L',
-              'FIN-005-R', 'FIN-005-L', 'AVN-006', 'MEC-001-R', 'MEC-001-L', 'CGE-008']
+              'FIN-005-R', 'FIN-005-L', 'AVN-006', 'MEC-001-R', 'MEC-001-L', 'CGE-008', 'HRN-003-R', 'HRN-003-L']
     for g in guests:
         ctx.seat('WNG-001', g, 'groove / bore / pocket cut in the core for ' + g, shop=True)
 
@@ -564,6 +570,9 @@ def build_cage(ctx):
     hub.cylinder('X', (HUB_X0, 0.0, 0.0), HUB_X1 - HUB_X0, HUB_RS, name='hub bridge sleeve')
     hub.cut_cylinder('X', (-0.100, 0.0, 0.0), HUB_X1 + 0.001 + 0.100, BR_OD / 2, name='bridge socket bore (blind, 2 mm front floor)')
     hub.box(HUB_PAD[0], HUB_PAD[1], name='hub tray pad flange')
+    for sy_ in (1, -1):                          # D-199: slots in the pad flange let the phase-lead raceways (HRN-003) pass under the tray plate
+        ya_, yb_ = sorted((sy_ * PADN_Y[0], sy_ * PADN_Y[1]))
+        hub.cut_box((PADN_X[0], ya_, PADN_Z[0]), (PADN_X[1], yb_, PADN_Z[1]), name='raceway slot in the tray pad flange (D-199)')
     for st in ST:
         hub.loft('X', hub_arm_boss(PHI[st], mouth=False), name='hub arm socket boss (0.8 mm wall)')
         hub.loft('X', hub_arm_boss(PHI[st]), name='hub arm socket mouth (2.0 mm wall, D-196)')

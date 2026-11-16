@@ -49,7 +49,7 @@ MAP = [
     ('PRP-001', 'buy', ['P01'], ''), ('PRP-002', 'buy', ['P02'], ''), ('PRP-003', 'buy', ['P04'], ''),
     ('PRP-004', 'buy', ['P01'], 'T-Motor prop adapter: confirm it ships in the motor hardware pack (no own BOM line)'),
     ('PRP-005', 'buy', ['P01'], 'T-Motor spinner nut: confirm it ships in the motor hardware pack (no own BOM line)'),
-    ('PWR-001', 'buy', ['W01'], ''), ('PWR-002', 'buy', [], 'no BOM line: pack strap not yet priced'),
+    ('PWR-001', 'buy', ['W01'], ''), ('PWR-002', 'buy', ['W08'], 'STRIX 20 x 300 mm buckle strap'), ('PWR-003', 'buy', ['W09'], 'silicone rubber sheet cut to 100 x 30 x 1 mm (EST)'),
     ('WNG-001', 'make', ['R01'], 'hot-wired XPS, tape skin'), ('WNG-002', 'make', ['R08'], 'cut from the 12x10 tube'),
     ('WNG-003', 'make', ['R03'], 'printed PETG'), ('WNG-004', 'make', ['R03'], 'printed PETG'), ('WNG-005', 'make', ['R03'], 'printed PETG'),
     ('WNG-006', 'make', ['R01'], 'XPS + tape'), ('WNG-007', 'make', ['R11'], 'lead strip'),

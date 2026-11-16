@@ -53,11 +53,11 @@ F.append({"id": "detail-propulsion",
           "camera": {"preset": "closeup", "fit": ["PRP-*-UR", "CGE-003-UR", "CGE-002-UR"], "az": -35, "el": 22, "lens": 50},
           "caption": {"title": "Propulsion station (upper right)",
                       "sub": "MN2212 on a canted cup at the end of a CF arm, APC 9x4.5MR prop on its adapter and spinner nut"}})
-F.append({"id": "detail-hub", "context": ["CGE-*", "WNG-002", "WNG-003-C", "WNG-004-*", "PWR-001", "PRP-003", "WNG-001"],
+F.append({"id": "detail-hub", "context": ["CGE-*", "HRN-003-*", "HRN-004-*", "WNG-002", "WNG-003-C", "WNG-004-*", "PWR-001", "PRP-003", "WNG-001"],
           "ghost": ["WNG-001", "PWR-001"], "hide": ["E-*"],
           "callouts": [{"item": "CGE-001", "text": "Printed hub, 4 arm sockets"},
                        {"item": "CGE-002-UR", "text": "Arm CF 12 x 10"}, {"item": "CGE-004", "text": "Bridge tube"},
-                       {"item": "CGE-005-R", "text": "V strut to the spar"},
+                       {"item": "CGE-005-R", "text": "V strut to the spar"}, {"item": "HRN-004-UR", "text": "Printed hub conduit (phase leads)"}, {"item": "HRN-003-R", "text": "Raceway under the tray"},
                        {"item": "CGE-006", "text": "Bridge saddle on spar"}, {"item": "CGE-008", "text": "Pack tray"}],
           "camera": {"preset": "closeup", "fit": ["CGE-001", "CGE-002-*", "CGE-004", "CGE-005-*", "CGE-006", "CGE-008"],
                      "az": 28, "el": 34, "lens": 50},
@@ -110,15 +110,15 @@ F.append({"id": "detail-wing", "context": ["WNG-*", "FIN-005-*", "MEC-*"], "xray
           "camera": {"preset": "iso", "az": 205, "el": 50, "lens": 50},
           "caption": {"title": "Wing: one-piece XPS core, CF spar, two elevons",
                       "sub": "Core ghosted to show the spar, plugs, balance strips and dampers"}})
-F.append({"id": "detail-harness", "context": ["E-*", "HRN-002", "PWR-001", "AVN-*", "PRP-003", "PRP-001-*", "CGE-008"],
+F.append({"id": "detail-harness", "context": ["E-*", "HRN-002", "HRN-003-*", "HRN-004-*", "PWR-001", "PWR-003", "AVN-*", "PRP-003", "PRP-001-*", "CGE-008"],
           "ghost": ["WNG-001", "CGE-002-*", "CGE-001", "CGE-003-*", "AVN-008"],
-          "callouts": [{"item": "E-HRN-02", "text": "Phase leads, upper right: inside the arm (ghosted)"},
+          "callouts": [{"item": "E-HRN-02", "text": "Phase leads, upper right: arm, hub conduit, raceway, cover"},
                        {"item": "E-HRN-04", "text": "ESC leads, lower right motor"},
                        {"item": "E-HRN-07", "text": "Servo lead, right"}, {"item": "HRN-002", "text": "XT60 pack connector"},
                        {"item": "PRP-003", "text": "4-in-1 ESC"}, {"item": "PWR-001", "text": "Flight pack"}],
           "camera": {"preset": "iso", "az": 30, "el": 40, "lens": 50, "fit": ["PRP-001-*", "PRP-003", "PWR-001", "AVN-001"]},
           "caption": {"title": "Wiring harness routing",
-                      "sub": "Phase leads run inside the arm tubes (arms ghosted); servo leads in foam grooves; bay cover ghosted; XT60 from the pack"}})
+                      "sub": "Phase leads run inside the arm tubes, printed hub conduits and a raceway under the tray, then a foam ditch and the bay cover (ghosted); servo leads in foam grooves"}})
 S["figures"] = F
 if __name__ == '__main__':
     json.dump(S, open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'showcase-a.json'), 'w'), indent=1)

@@ -7,8 +7,8 @@
  "scene": "studio",
  "engine": "CYCLES",
  "device": "GPU",
- "samples": 64,
- "render_s": 57.63,
+ "samples": 48,
+ "render_s": 48.35,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -480,7 +480,7 @@
    "role": "context",
    "name": "Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 2.0 mm arm-socket mouth walls, 1.2 mm sleeve (D-196), 0.8 mm webs, mass = drawn volume x 1.27)",
    "status": "MODELLED",
-   "mass_g": 17.7,
+   "mass_g": 17.5,
    "subsystem": "cage",
    "bbox_px": [
     701,
@@ -933,7 +933,7 @@
    "bbox_px": [
     770,
     390,
-    811,
+    810,
     441
    ]
   },
@@ -947,22 +947,36 @@
    "bbox_px": [
     716,
     243,
-    862,
+    863,
     402
+   ]
+  },
+  {
+   "id": "PWR-003",
+   "role": "context",
+   "name": "Anti-slip pad 100 x 30 x 1.0 mm silicone rubber sheet on the tray floor (BOM W09; thickness, size and density EST)",
+   "status": "MODELLED",
+   "mass_g": 3.5,
+   "subsystem": "power",
+   "bbox_px": [
+    731,
+    252,
+    838,
+    307
    ]
   },
   {
    "id": "PWR-002",
    "role": "context",
-   "name": "Pack strap 25 mm hook-and-loop (round pack and tray)",
+   "name": "Pack strap 20 x 300 mm with buckle (STRIX, BOM W08; round pack and tray)",
    "status": "MODELLED",
-   "mass_g": 3.0,
+   "mass_g": 5.5,
    "subsystem": "power",
    "bbox_px": [
     713,
     241,
     867,
-    302
+    295
    ]
   },
   {
@@ -1080,7 +1094,7 @@
   {
    "id": "AVN-008",
    "role": "context",
-   "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead pad runs; notches for the 4 phase bundles and the battery tail",
+   "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead runs from the foam ditch to the ESC pads; notches for the sensor leads and the battery tail",
    "status": "MODELLED",
    "mass_g": 9.6,
    "subsystem": "avionics",
@@ -1386,6 +1400,90 @@
    ]
   },
   {
+   "id": "HRN-003-R",
+   "role": "context",
+   "name": "Phase-lead raceway (D-199, R): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
+   "status": "MODELLED",
+   "mass_g": 1.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    751,
+    212,
+    767,
+    320
+   ]
+  },
+  {
+   "id": "HRN-003-L",
+   "role": "context",
+   "name": "Phase-lead raceway (D-199, L): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
+   "status": "MODELLED",
+   "mass_g": 1.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    792,
+    218,
+    807,
+    327
+   ]
+  },
+  {
+   "id": "HRN-004-UR",
+   "role": "context",
+   "name": "Hub conduit (D-199, UR): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    759,
+    183,
+    777,
+    229
+   ]
+  },
+  {
+   "id": "HRN-004-UL",
+   "role": "context",
+   "name": "Hub conduit (D-199, UL): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    797,
+    189,
+    816,
+    235
+   ]
+  },
+  {
+   "id": "HRN-004-LR",
+   "role": "context",
+   "name": "Hub conduit (D-199, LR): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    738,
+    189,
+    757,
+    233
+   ]
+  },
+  {
+   "id": "HRN-004-LL",
+   "role": "context",
+   "name": "Hub conduit (D-199, LL): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "subsystem": "harness",
+   "bbox_px": [
+    785,
+    194,
+    802,
+    240
+   ]
+  },
+  {
    "id": "HRN-002",
    "role": "context",
    "name": "XT60 female + 14 AWG tail to the ESC (modelled)",
@@ -1396,7 +1494,7 @@
     716,
     397,
     736,
-    416
+    417
    ]
   },
   {
@@ -1422,9 +1520,37 @@
    "subsystem": "harness",
    "bbox_px": [
     722,
-    412,
-    789,
-    444
+    413,
+    786,
+    434
+   ]
+  },
+  {
+   "id": "E-HRN-13",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    712,
+    278,
+    742,
+    386
+   ]
+  },
+  {
+   "id": "E-HRN-14",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    739,
+    284,
+    790,
+    291
    ]
   },
   {
@@ -1437,7 +1563,7 @@
    "bbox_px": [
     669,
     125,
-    787,
+    784,
     395
    ]
   },
@@ -1449,10 +1575,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    805,
+    795,
     180,
-    1158,
-    408
+    1159,
+    400
    ]
   },
   {
@@ -1465,8 +1591,8 @@
    "bbox_px": [
     400,
     175,
-    786,
-    411
+    783,
+    409
    ]
   },
   {
@@ -1478,9 +1604,9 @@
    "subsystem": "harness",
    "bbox_px": [
     788,
-    197,
+    198,
     923,
-    429
+    415
    ]
   },
   {
@@ -1494,7 +1620,7 @@
     790,
     349,
     798,
-    434
+    433
    ]
   },
   {
@@ -1533,10 +1659,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    804,
+    805,
     374,
     858,
-    432
+    431
    ]
   },
   {
@@ -1547,10 +1673,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    754,
-    340,
-    805,
-    361
+    759,
+    342,
+    804,
+    360
    ]
   },
   {
@@ -1562,9 +1688,9 @@
    "subsystem": "harness",
    "bbox_px": [
     810,
-    343,
+    344,
     843,
-    366
+    365
    ]
   }
  ],

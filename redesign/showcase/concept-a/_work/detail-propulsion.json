@@ -7,8 +7,8 @@
  "scene": "studio",
  "engine": "CYCLES",
  "device": "GPU",
- "samples": 64,
- "render_s": 60.01,
+ "samples": 48,
+ "render_s": 48.76,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -144,7 +144,7 @@
    "role": "ghost",
    "name": "Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 2.0 mm arm-socket mouth walls, 1.2 mm sleeve (D-196), 0.8 mm webs, mass = drawn volume x 1.27)",
    "status": "MODELLED",
-   "mass_g": 17.7,
+   "mass_g": 17.5,
    "subsystem": "cage",
    "bbox_px": [
     1098,
@@ -275,8 +275,8 @@
    "bbox_px": [
     602,
     417,
-    1253,
-    746
+    1249,
+    749
    ]
   }
  ],
@@ -311,6 +311,8 @@
   "E-HRN-10",
   "E-HRN-11",
   "E-HRN-12",
+  "E-HRN-13",
+  "E-HRN-14",
   "FIN-001-L",
   "FIN-001-R",
   "FIN-002-L",
@@ -334,6 +336,12 @@
   "HRD-001",
   "HRN-001",
   "HRN-002",
+  "HRN-003-L",
+  "HRN-003-R",
+  "HRN-004-LL",
+  "HRN-004-LR",
+  "HRN-004-UL",
+  "HRN-004-UR",
   "HWC-001",
   "HWC-002-L",
   "HWC-002-R",
@@ -363,6 +371,7 @@
   "PRP-005-UL",
   "PWR-001",
   "PWR-002",
+  "PWR-003",
   "WNG-001",
   "WNG-002",
   "WNG-003-C",

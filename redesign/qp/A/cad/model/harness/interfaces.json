@@ -3,6 +3,96 @@
  "subsystem": "harness",
  "parts": [
   {
+   "id": "HRN-003-R",
+   "name": "Phase-lead raceway (D-199, R): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 1.8,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0189,
+    0.019,
+    0.0027
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "HRN-003-L",
+   "name": "Phase-lead raceway (D-199, L): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 1.8,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0189,
+    -0.019,
+    0.0027
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "HRN-004-UR",
+   "name": "Hub conduit (D-199, UR): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0579,
+    0.0173,
+    0.015
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "HRN-004-UL",
+   "name": "Hub conduit (D-199, UL): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0579,
+    -0.0173,
+    0.015
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "HRN-004-LR",
+   "name": "Hub conduit (D-199, LR): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0579,
+    0.0214,
+    -0.0091
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "HRN-004-LL",
+   "name": "Hub conduit (D-199, LL): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0579,
+    -0.0214,
+    -0.0091
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
    "id": "HRN-002",
    "name": "XT60 female + 14 AWG tail to the ESC (modelled)",
    "subsystem": "harness",
@@ -24,7 +114,7 @@
    "name": "Harness remainder, bottom-up (D-198): phase-lead extensions, splices, ESC ribbon, sensor leads, servo ties, sleeves / ties / tape / solder - lumped",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 28.1,
+   "mass_g": 18.4,
    "material": "copper / silicone",
    "cg_xyz_m": [
     0.03,
@@ -38,6 +128,102 @@
   }
  ],
  "edges": [
+  {
+   "id": "E-HRN-30",
+   "part_a": "HRN-003-R",
+   "part_b": "CGE-008",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "raceway bonded to the tray plate underside (top face z 6.0), lowered from above before the tray, in its foam groove (D-199)"
+  },
+  {
+   "id": "E-HRN-32",
+   "part_a": "HRN-003-R",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "harness",
+   "notes": "raceway taped in its foam groove (D-199)"
+  },
+  {
+   "id": "E-HRN-33",
+   "part_a": "HRN-003-L",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "harness",
+   "notes": "raceway taped in its foam groove (D-199)"
+  },
+  {
+   "id": "E-HRN-31",
+   "part_a": "HRN-003-L",
+   "part_b": "CGE-008",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "raceway bonded to the tray plate underside (top face z 6.0), lowered from above before the tray, in its foam groove (D-199)"
+  },
+  {
+   "id": "E-HRN-40",
+   "part_a": "HRN-004-UR",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "hub conduit bonded to the hub web face and the arm-socket floor face (D-199)"
+  },
+  {
+   "id": "E-HRN-50",
+   "part_a": "HRN-004-UR",
+   "part_b": "HRN-003-R",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "conduit leg B bonded on the raceway window (D-199)"
+  },
+  {
+   "id": "E-HRN-41",
+   "part_a": "HRN-004-UL",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "hub conduit bonded to the hub web face and the arm-socket floor face (D-199)"
+  },
+  {
+   "id": "E-HRN-51",
+   "part_a": "HRN-004-UL",
+   "part_b": "HRN-003-L",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "conduit leg B bonded on the raceway window (D-199)"
+  },
+  {
+   "id": "E-HRN-42",
+   "part_a": "HRN-004-LR",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "hub conduit bonded to the hub web face and the arm-socket floor face (D-199)"
+  },
+  {
+   "id": "E-HRN-52",
+   "part_a": "HRN-004-LR",
+   "part_b": "HRN-003-R",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "conduit leg B bonded on the raceway window (D-199)"
+  },
+  {
+   "id": "E-HRN-43",
+   "part_a": "HRN-004-LL",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "hub conduit bonded to the hub web face and the arm-socket floor face (D-199)"
+  },
+  {
+   "id": "E-HRN-53",
+   "part_a": "HRN-004-LL",
+   "part_b": "HRN-003-L",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "conduit leg B bonded on the raceway window (D-199)"
+  },
   {
    "id": "E-HRN-21",
    "part_a": "HRN-002",
@@ -102,6 +288,49 @@
    "current_a": {
     "cont": 11,
     "peak": 41
+   }
+  },
+  {
+   "id": "E-HRN-13",
+   "part_a": "PWR-001",
+   "part_b": "HRN-002",
+   "via": "CT-SOLDER-DC",
+   "owner": "harness",
+   "notes": "D-199: pack power leads (vendor, 14 AWG about 100 mm) from the pack end face through the tray end-wall notch, down to the skin and along it to the XT60 male; taped on the skin",
+   "wire": {
+    "gauge_awg": 14,
+    "connector": "vendor leads to XT60 male",
+    "route_id": "R-A-13",
+    "support_points": [
+     "tray end-wall notch",
+     "tape on the skin"
+    ],
+    "bend_radius_mm": 6,
+    "strain_relief": "vendor heat-shrink",
+    "disconnect": false
+   },
+   "current_a": {
+    "cont": 11,
+    "peak": 41
+   }
+  },
+  {
+   "id": "E-HRN-14",
+   "part_a": "PWR-001",
+   "part_b": "HRN-002",
+   "via": "CT-SOLDER-DC",
+   "owner": "harness",
+   "notes": "D-199: pack balance lead (5 conductors, EST 1.2 mm bundle) from the end face over the top edge to the JST-XH plug on the pack top",
+   "wire": {
+    "gauge_awg": 26,
+    "connector": "JST-XH 5-pin",
+    "route_id": "R-A-14",
+    "support_points": [
+     "pack top"
+    ],
+    "bend_radius_mm": 4,
+    "strain_relief": "vendor lead",
+    "disconnect": false
    }
   },
   {

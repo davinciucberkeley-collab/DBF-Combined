@@ -143,3 +143,17 @@ Bay cover AVN-008 (0.6 mm printed PETG, 9.6 g) and lead collars (+0.3 g per cup)
 | Structure | 482.8 g | 485 g | <= 494 g | CL-A-STRUCT-MASS |
 
 The target has 4 g of room (flat rule). The bottom-up harness list is `EST` apart from the wire mass per metre; weigh the wire when it arrives. The cover adds frontal area in cruise; the drag was not re-modelled (open).
+
+## 12 D-199 raceway, strap and pad (2026-11-15)
+
+Raceways HRN-003 (2 x 1.8 g) and hub conduits HRN-004 (4 x 0.8 g) are added (+6.8 g); the shorter enclosed route cuts the phase-lead extension wire from 2.47 m to 1.10 m (`HRN_ITEMS` 17.5 -> 7.8 g, harness remainder 28.1 -> 18.4 g, -9.7 g); the hub tray-pad slots take 0.2 g off the hub; the pack strap is the real STRIX 20 x 300 mm buckle strap (5.5 g, V, was an EST 3.0 g, +2.5 g) and the anti-slip pad is now drawn (3.5 g EST, +3.5 g). Detail: `../../review/QP-5/HARNESS-ENCLOSED.md` D-199.4.
+
+| Quantity | D-198 | D-199 | Limit | Source |
+|---|---|---|---|---|
+| CAD basic mass | 1,259.7 g | 1,262.6 g | — | `sitl/cad_mass.json` |
+| CG (CAD) | 21.32 mm | 20.68 mm | band 19-26 | `sitl/cad_mass.json` |
+| CG at the trim ends | 19.60 / 23.46 mm | 19.4 / 22.8 mm (forward travel 8 -> 6 mm) | >= 19 / <= 28.5 | CL-A-CG-TRIM-FWD / AFT |
+| Predicted, itemised `EST` | 1,450 g | 1,454 g | — | `mission_gate_a.py` |
+| Predicted, flat rule `EST` | 1,455.6 g | 1,458.1 g | <= 1,460 (target), 1,470 (gate) | CL-A-MASS-PRED |
+
+The target has 1.9 g of room (flat rule). The strap mass is a vendor listing; the pad (size, thickness 1.0 mm, density 1.15 g/cm3) is `EST`: weigh both on arrival. The raceway and conduit walls are the drawn volume x 1.27 (0.6 mm walls, `EST` basis as the cover).

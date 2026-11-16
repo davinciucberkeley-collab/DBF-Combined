@@ -7,7 +7,7 @@
    "name": "Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 2.0 mm arm-socket mouth walls, 1.2 mm sleeve (D-196), 0.8 mm webs, mass = drawn volume x 1.27)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 17.7,
+   "mass_g": 17.5,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0724,
@@ -235,7 +235,7 @@
    "mass_g": 3.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0112,
+    -0.0108,
     0.0,
     0.0106
    ],
@@ -390,11 +390,18 @@
   }
  ],
  "acknowledges": [
+  "E-HRN-30",
+  "E-HRN-31",
+  "E-HRN-40",
+  "E-HRN-41",
+  "E-HRN-42",
+  "E-HRN-43",
   "E-PRP-01",
   "E-PRP-03",
   "E-PRP-05",
   "E-PRP-07",
   "E-PWR-01",
-  "E-PWR-02"
+  "E-PWR-02",
+  "E-PWR-03"
  ]
 }

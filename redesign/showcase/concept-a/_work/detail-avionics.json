@@ -7,8 +7,8 @@
  "scene": "studio",
  "engine": "CYCLES",
  "device": "GPU",
- "samples": 64,
- "render_s": 80.83,
+ "samples": 48,
+ "render_s": 64.42,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -63,22 +63,22 @@
   },
   {
    "item": "AVN-003",
-   "x": 1218.3,
-   "y": 304.5,
+   "x": 1205.1,
+   "y": 311.5,
    "title": "AVN-003",
    "text": "ELRS receiver",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.1196,
-    -0.0504,
-    0.0151
+    0.1135,
+    -0.05,
+    0.0173
    ]
   },
   {
    "item": "AVN-004",
-   "x": 698.3,
+   "x": 692.5,
    "y": 329.7,
    "title": "AVN-004",
    "text": "GPS + compass",
@@ -86,8 +86,8 @@
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0511,
-    0.0353,
+    0.0505,
+    0.0363,
     0.0216
    ]
   },
@@ -108,23 +108,23 @@
   },
   {
    "item": "PRP-003",
-   "x": 939.9,
-   "y": 228.7,
+   "x": 995.8,
+   "y": 261.2,
    "title": "PRP-003",
    "text": "4-in-1 ESC",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.1124,
-    0.0119,
-    0.0161
+    0.1044,
+    -0.0056,
+    0.0194
    ]
   },
   {
    "item": "PWR-001",
-   "x": 639.8,
-   "y": 609.8,
+   "x": 639.7,
+   "y": 607.1,
    "title": "PWR-001",
    "text": "4S 2300 mAh pack",
    "detail": null,
@@ -133,7 +133,7 @@
    "world_m": [
     -0.0275,
     -0.0002,
-    0.0249
+    0.0256
    ]
   }
  ],
@@ -161,7 +161,7 @@
    "subsystem": "cage",
    "bbox_px": [
     350,
-    399,
+    395,
     1022,
     853
    ]
@@ -175,7 +175,7 @@
    "subsystem": "propulsion",
    "bbox_px": [
     848,
-    197,
+    203,
     1072,
     358
    ]
@@ -191,20 +191,34 @@
     400,
     168,
     984,
-    771
+    768
+   ]
+  },
+  {
+   "id": "PWR-003",
+   "role": "context",
+   "name": "Anti-slip pad 100 x 30 x 1.0 mm silicone rubber sheet on the tray floor (BOM W09; thickness, size and density EST)",
+   "status": "MODELLED",
+   "mass_g": 3.5,
+   "subsystem": "power",
+   "bbox_px": [
+    430,
+    482,
+    960,
+    764
    ]
   },
   {
    "id": "PWR-002",
    "role": "context",
-   "name": "Pack strap 25 mm hook-and-loop (round pack and tray)",
+   "name": "Pack strap 20 x 300 mm with buckle (STRIX, BOM W08; round pack and tray)",
    "status": "MODELLED",
-   "mass_g": 3.0,
+   "mass_g": 5.5,
    "subsystem": "power",
    "bbox_px": [
-    383,
-    380,
-    976,
+    382,
+    390,
+    964,
     841
    ]
   },
@@ -323,7 +337,7 @@
   {
    "id": "AVN-008",
    "role": "ghost",
-   "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead pad runs; notches for the 4 phase bundles and the battery tail",
+   "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead runs from the foam ditch to the ESC pads; notches for the sensor leads and the battery tail",
    "status": "MODELLED",
    "mass_g": 9.6,
    "subsystem": "avionics",
@@ -370,10 +384,38 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    712,
-    129,
-    972,
-    223
+    713,
+    145,
+    952,
+    235
+   ]
+  },
+  {
+   "id": "E-HRN-13",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    432,
+    212,
+    689,
+    487
+   ]
+  },
+  {
+   "id": "E-HRN-14",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    490,
+    352,
+    658,
+    421
    ]
   },
   {
@@ -384,10 +426,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    -745,
-    -261,
-    884,
-    783
+    -743,
+    -257,
+    880,
+    777
    ]
   },
   {
@@ -398,10 +440,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    572,
-    280,
-    2079,
-    862
+    577,
+    305,
+    2081,
+    861
    ]
   },
   {
@@ -413,9 +455,9 @@
    "subsystem": "harness",
    "bbox_px": [
     -311,
-    114,
-    909,
-    973
+    225,
+    906,
+    972
    ]
   },
   {
@@ -426,9 +468,9 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    596,
-    254,
-    1603,
+    601,
+    277,
+    1599,
     1985
    ]
   },
@@ -441,8 +483,8 @@
    "subsystem": "harness",
    "bbox_px": [
     832,
-    204,
-    1005,
+    213,
+    1003,
     408
    ]
   },
@@ -454,9 +496,9 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    197,
+    200,
     -27,
-    897,
+    895,
     333
    ]
   },
@@ -469,9 +511,9 @@
    "subsystem": "harness",
    "bbox_px": [
     914,
-    325,
+    326,
     1942,
-    672
+    670
    ]
   },
   {
@@ -482,10 +524,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    893,
-    235,
+    896,
+    241,
     1181,
-    344
+    342
    ]
   },
   {
@@ -496,10 +538,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    704,
-    231,
-    833,
-    343
+    735,
+    253,
+    827,
+    350
    ]
   },
   {
@@ -510,10 +552,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    859,
-    322,
-    1023,
-    464
+    857,
+    325,
+    1021,
+    463
    ]
   }
  ],
@@ -556,6 +598,12 @@
   "GER-002-UR",
   "HRD-001",
   "HRN-001",
+  "HRN-003-L",
+  "HRN-003-R",
+  "HRN-004-LL",
+  "HRN-004-LR",
+  "HRN-004-UL",
+  "HRN-004-UR",
   "HWC-002-L",
   "HWC-002-R",
   "MEC-001-L",
