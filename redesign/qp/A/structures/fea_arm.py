@@ -64,6 +64,9 @@ HOLE_R, HEAD_R = 1.45, 2.25       # M2.5 clearance 2.9 mm; ISO 4762 M2.5 head 4.
 POCKET_R, POCKET_X = 2.65, (-7.2, -3.8)
 RELIEF_R, RELIEF_X = 4.0, (-12.7, -6.4)
 BASE_R = 13.0                     # EST: MN2212 base footprint radius on the plate front face (T-Motor drawing not read for it)
+BOX_YEND = None                      # D-202: y where the box spoke ends (None: at the mouth); --box 5th value
+BOX_DEEP_R = None                    # D-202: deep socket boss radius (None: HUB_RBI as drawn); --box 6th value
+BOX = [11.0, 7.0, 1.6, 10.0]        # box spoke half-depth x, half-width z, wall, core radius (mm); --box overrides
 SPK_RO, SPK_RI = 6.8, 5.2           # fix candidate (FEA-ARM.md): hollow spoke OD 13.6 = the boss OD, 1.6 mm wall (4 perimeters)
 X_PROP = 47.0                     # prop mid-plane from the arm axis (arm_cup_checks.py X_PROP, EST)
 
@@ -94,16 +97,33 @@ def build_mesh(level, path, variant='asdrawn'):
     occ = gmsh.model.occ
     # hub
     slv = occ.addCylinder(SLV_X0, 0, 0, SLV_X1 - SLV_X0, 0, 0, SLV_R)
-    if variant == 'spoke':                                 # design-fix candidate: hollow round spoke instead of the web
+    extra_hub = []
+    if variant == 'box':                                   # hub fix (D-202): box spokes merged into a thick core round the bridge tube
+        hx, hz, bw, rc = BOX
+        core = occ.addCylinder(-hx, 0, 0, 2 * hx, 0, 0, rc)
+        if BOX_YEND:                                       # box to the socket floor, then a lofted taper (rectangle -> circle) onto the deep boss
+            web = occ.addBox(-hx, 0, -hz, 2 * hx, B_R0, 2 * hz)
+            rdeep = BOX_DEEP_R or B_RI
+            cone = occ.addCone(0, B_R0, 0, 0, BOX_YEND - B_R0, 0, hx, rdeep)
+            slab = occ.addBox(-hx - 1, B_R0 - 1, -max(hz, rdeep), 2 * hx + 2, BOX_YEND - B_R0 + 2, 2 * max(hz, rdeep))
+            taper, _ = occ.intersect([(3, cone)], [(3, slab)])
+            extra_hub.extend(taper)
+        else:
+            web = occ.addBox(-hx, 0, -hz, 2 * hx, B_R1 - B_MOUTH, 2 * hz)   # D-202: the box also wraps the deep socket
+        slv, _ = occ.fuse([(3, slv)], [(3, core)]); slv = slv[0][1]
+    elif variant == 'spoke':                                 # design-fix candidate: hollow round spoke instead of the web
         web = occ.addCylinder(0, WEB_Y0, 0, 0, WEB_Y1 - WEB_Y0, 0, SPK_RO)
     else:
         web = occ.addBox(-WEB_D / 2, WEB_Y0, -WEB_T / 2, WEB_D, WEB_Y1 - WEB_Y0, WEB_T)
-    b_in = occ.addCylinder(0, B_R0, 0, 0, B_R1 - B_MOUTH - B_R0, 0, B_RI)
+    b_in = occ.addCylinder(0, B_R0, 0, 0, B_R1 - B_MOUTH - B_R0, 0, (BOX_DEEP_R or B_RI) if variant == 'box' else B_RI)
     b_mo = occ.addCylinder(0, B_R1 - B_MOUTH, 0, 0, B_MOUTH, 0, B_RO)
-    hub, _ = occ.fuse([(3, slv)], [(3, web), (3, b_in), (3, b_mo)])
+    hub, _ = occ.fuse([(3, slv)], [(3, web), (3, b_in), (3, b_mo)] + extra_hub)
     bore = occ.addCylinder(SLV_X0 - 1, 0, 0, SLV_X1 - SLV_X0 + 2, 0, 0, SLV_BORE)
     sock = occ.addCylinder(0, R_IN, 0, 0, B_R1 + 2 - R_IN, 0, TUBE_RO)
     hcuts = [(3, bore), (3, sock)]
+    if variant == 'box':                                   # spoke cavity (phase-lead conduit), closed by the core and the socket floor
+        hx, hz, bw, rc = BOX
+        hcuts.append((3, occ.addBox(-hx + bw, rc + 0.5, -hz + bw, 2 * (hx - bw), B_R0 - rc - 0.5, 2 * (hz - bw))))
     if variant == 'spoke':                                 # bore of the spoke (lead conduit), closed by the sleeve wall and the socket floor
         hcuts.append((3, occ.addCylinder(0, SLV_R + 0.3, 0, 0, B_R0 - SLV_R - 0.3, 0, SPK_RI)))
     hub, _ = occ.cut(hub, hcuts)
@@ -141,14 +161,16 @@ def build_mesh(level, path, variant='asdrawn'):
     for (d, t), kids in zip(hub + tube + cup, mp[:len(hub + tube + cup)]):
         name = 'hub' if (d, t) in hub else 'tube' if (d, t) in tube else 'cup'
         groups[name] += [k[1] for k in kids]
+    hub_vol = sum(occ.getMass(3, t) for t in set(groups['hub']))    # mm3, the modelled hub sector (one arm + the sleeve)
     for i, (k, v) in enumerate(groups.items()):
         gmsh.model.addPhysicalGroup(3, sorted(set(v)), i + 1, name=k)
     # size field: fine at the hub and cup, coarse along the free tube
     f = gmsh.model.mesh.field
     s = {0: 1.0, 1: 0.78, 2: 0.6}[level]                  # refinement factor per level
     boxes = [  # (size at level 0, box x0 x1 y0 y1 z0 z1): web 0.8 mm thick, boss walls, sleeve, tube root, tube, cup
-        ((0.45, (-WEB_D / 2 - 0.5, WEB_D / 2 + 0.5, WEB_Y0 - 0.5, WEB_Y1 + 0.5, -1.0, 1.0)) if variant != 'spoke' else
-         (0.6, (-SPK_RO - 0.5, SPK_RO + 0.5, WEB_Y0 - 0.5, WEB_Y1 + 0.5, -SPK_RO - 0.5, SPK_RO + 0.5))),
+        {'asdrawn': (0.45, (-WEB_D / 2 - 0.5, WEB_D / 2 + 0.5, WEB_Y0 - 0.5, WEB_Y1 + 0.5, -1.0, 1.0)),
+         'spoke': (0.6, (-SPK_RO - 0.5, SPK_RO + 0.5, WEB_Y0 - 0.5, WEB_Y1 + 0.5, -SPK_RO - 0.5, SPK_RO + 0.5)),
+         'box': (min(0.6, BOX[2] * 0.4), (-BOX[0] - 0.5, BOX[0] + 0.5, -BOX[3] - 0.5, WEB_Y1 + 0.5, -max(BOX[1], BOX[3]) - 0.5, max(BOX[1], BOX[3]) + 0.5))}[variant],
         (0.75, (-B_RO - 0.5, B_RO + 0.5, B_R0 - 0.5, B_R1 + 0.5, -B_RO - 0.5, B_RO + 0.5)),
         (0.9, (SLV_X0 - 0.5, SLV_X1 + 0.5, -SLV_R - 0.5, SLV_R + 0.5, -SLV_R - 0.5, SLV_R + 0.5)),
         (0.8, (-6.5, 6.5, R_IN - 1, B_R1 + 20, -6.5, 6.5)),
@@ -186,7 +208,8 @@ def build_mesh(level, path, variant='asdrawn'):
     used = np.unique(E)
     remap = -np.ones(len(X), int); remap[used] = np.arange(len(used))
     gmsh.finalize()
-    np.savez_compressed(path, X=X[used], E=remap[E], M=M, h=h)
+    print('hub sector volume %.0f mm3 = %.2f g PETG' % (hub_vol, hub_vol * 1.27e-3), flush=True)
+    np.savez_compressed(path, X=X[used], E=remap[E], M=M, h=h, hub_vol=hub_vol)
     return X[used], remap[E], M
 
 
@@ -391,8 +414,9 @@ def solve(Kf, RHS):
 
 
 def run(level, variant='asdrawn'):
+    tag, variant = variant, ('box' if variant.startswith('box') else variant)
     os.makedirs(OUT, exist_ok=True)
-    mp = os.path.join(OUT, 'mesh_L%d_%s.npz' % (level, variant))
+    mp = os.path.join(OUT, 'mesh_L%d_%s.npz' % (level, tag))
     t0 = time.time()
     if os.path.exists(mp):
         d = np.load(mp); X, E, M = d['X'], d['E'], d['M']
@@ -560,18 +584,25 @@ def checks(res):
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('--level', default='1')
-    ap.add_argument('--variant', default='asdrawn', choices=['asdrawn', 'spoke'])
+    ap.add_argument('--variant', default='asdrawn', choices=['asdrawn', 'spoke', 'box'])
+    ap.add_argument('--box', default=None, help='hx,hz,wall,core_r in mm')
+    ap.add_argument('--tag', default='')
     a = ap.parse_args()
     levels = [0, 1, 2] if a.level == 'all' else [int(a.level)]
     for lv in levels:
-        res = run(lv, a.variant)
+        if a.box:
+            vals = [float(v) for v in a.box.split(',')]
+            BOX[:] = vals[:4]
+            globals()['BOX_YEND'] = vals[4] if len(vals) > 4 else None
+            globals()['BOX_DEEP_R'] = vals[5] if len(vals) > 5 else None
+        res = run(lv, a.variant + a.tag)
         ev = evaluate(res)
         bonds = {name: bond_tractions(res, combos) for name, fl, combos in load_cases()}
         ck = checks(res)
         out = dict(info=res['info'], checks=ck, cases=ev, bonds=bonds,
                    loads=dict(T_CAP=T_CAP, Q_CAP=Q_CAP, T_UNC=T_UNC, Q_UNC=Q_UNC, F_1P=F_1P, M_GYRO_Nm=M_GYRO, I_ROT=I_ROT, PITCH_RATE=PITCH_RATE))
-        json.dump(out, open(os.path.join(OUT, 'result_L%d_%s.json' % (lv, a.variant)), 'w'), indent=1)
-        save_field(res, os.path.join(OUT, 'field_L%d_%s.npz' % (lv, a.variant)))
+        json.dump(out, open(os.path.join(OUT, 'result_L%d_%s.json' % (lv, a.variant + a.tag)), 'w'), indent=1)
+        save_field(res, os.path.join(OUT, 'field_L%d_%s.npz' % (lv, a.variant + a.tag)))
         print(json.dumps(res['info']))
         print(json.dumps(ck))
         for c in ev:
