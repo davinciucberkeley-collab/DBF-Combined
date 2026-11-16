@@ -4,6 +4,8 @@ Structures engineer, 2026-11-15. Status `CALC`, nothing tested. Numbers: `redesi
 
 ## 1. Answer
 
+> **2026-11-16, FEA-ARM.md:** the 3-D FEA confirms the tube and cup numbers below, but this report assumed the hub held the socket rigidly. It does not: the 0.8 mm radial web that joins each socket to the hub sleeve fails at the worst flight case (392 MPa against 20, factor of safety 0.05). "Good enough for flight" below applies to the tube and the cup only; the hub needs a redesign (D-201).
+
 **Yes for the carbon arm tubes and for the printed motor cups; not yet proven for the printed hub sockets, and one cup detail needs a CAD fix.** In plain terms:
 
 - The 12 x 10 carbon arm tube is the strongest part of the chain. Thrust at the 0.90 cap bends it at 43 MPa against 350 (MS +7.2). A 30 N prop strike that includes the blade offset (30 N x 0.326 m = 9.8 N m) gives 192 MPa (MS +0.82); the earlier +1.41 used 7.4 N m and left the blade offset out.
