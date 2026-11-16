@@ -4,8 +4,9 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import M from './model.js?v=20261116c';
+import M from './model.js?v=20261116e';
 
 const GH = 'https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/';
 const $ = s => document.querySelector(s);
@@ -72,13 +73,13 @@ function initThree() {
   G.controls = new OrbitControls(G.camera, canvas);
   Object.assign(G.controls, { enableDamping: true, dampingFactor: 0.12, screenSpacePanning: true, zoomToCursor: true });
   G.controls.addEventListener('change', requestRender);
-  new ResizeObserver(resize).observe($('#stage'));
+  new ResizeObserver(resize).observe($('#canvas'));   // the canvas fills the stage on wide screens and sits under the toolbar on narrow ones
   resize();
   requestAnimationFrame(loop);
   return true;
 }
 function resize() {
-  const st = $('#stage'), w = st.clientWidth, h = st.clientHeight;
+  const st = $('#canvas'), w = st.clientWidth, h = st.clientHeight;
   if (!w || !h) return;   // the Aircraft page is hidden: keep the last size
   G.renderer.setSize(w, h, false);
   G.camera.aspect = w / h; G.camera.updateProjectionMatrix();
@@ -628,9 +629,10 @@ function summaryHtml() {
       ['Interfaces', M.fmtNum(d.edges.length)], ['Claims', M.fmtNum(d.claims.length)], ['Data built', esc(d.generated)]]);
   if (lim !== null) h += '<div class="v-meter' + (over ? ' over' : '') + '"><i style="width:' + Math.min(100, mc.total_g / lim * 100).toFixed(1) + '%"></i></div>';
   if (mc.subsystems.length) {
-    h += '<table class="v-subtable"><tr><th>Subsystem</th><th>Mass</th><th>Allocation</th></tr>';
+    const hasAlloc = mc.subsystems.some(s => s.alloc_g !== null);   // the column is dropped when no subsystem has an allocation
+    h += '<table class="v-subtable"><tr><th>Subsystem</th><th>Mass</th>' + (hasAlloc ? '<th>Allocation</th>' : '') + '</tr>';
     for (const s of mc.subsystems) h += '<tr><td>' + esc(s.subsystem) + '</td><td' + (s.alloc_g !== null && s.mass_g > s.alloc_g ? ' class="over"' : '') + '>' +
-      M.fmtMass(s.mass_g) + '</td><td>' + M.fmtMass(s.alloc_g) + '</td></tr>';
+      M.fmtMass(s.mass_g) + '</td>' + (hasAlloc ? '<td>' + M.fmtMass(s.alloc_g) + '</td>' : '') + '</tr>';
     h += '</table>';
   }
   h += '<div class="v-keys"><span class="ds-kbd">1</span>Aircraft<span class="ds-kbd">2</span>Inside &amp; wiring<span class="ds-kbd">3</span>Structure<span class="ds-kbd">4</span>Exploded' +
@@ -665,6 +667,15 @@ function hint() {
 function renderCounts() {
   const d = S.data, mc = M.massCG(d);
   $('#counts').textContent = M.fmtNum(mc.count) + ' flight parts · ' + M.fmtMass(mc.total_g) + ' · ' + M.fmtNum(d.edges.length) + ' interfaces';
+  // top status bar on the Aircraft page (same numbers as the inspector summary)
+  const put = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
+  const lim = mc.limit_g, over = lim !== null && mc.total_g > lim;
+  put('sb-mass', M.fmtMass(mc.total_g) + (lim !== null ? ' <small>of ' + M.fmtMass(lim) + ' gate' + (over ? ', over' : '') + '</small>' : ''));
+  put('sb-cg', mc.cg ? M.fmtNum(mc.cg[0], 3) + ' m' + (mc.cg_range ? ' <small>target ' + M.fmtNum(mc.cg_range[0], 3) + '–' + M.fmtNum(mc.cg_range[1], 3) + '</small>' : '') : '—');
+  put('sb-claims', M.fmtNum(d.claims.length) + ' <small>' + M.fmtNum(d.edges.length) + ' interfaces</small>');
+  put('sb-parts', M.fmtNum(mc.count));
+  put('sb-built', esc(d.generated));
+  const sbar = document.getElementById('statusbar'); if (sbar) sbar.classList.toggle('over', over);
 }
 
 // ---------------- events ----------------
@@ -742,7 +753,8 @@ export const viewer = {
   themeChanged,
   setQuery(q) { const s = $('#search'); if (!s) return; s.value = q; S.query = q; S.ov = {}; if (S.data) renderTree(); },
   resize() { if (G.renderer) resize(); },
-  selectPart(id) { if (!S.idx || !S.idx.parts.has(id)) return false; select({ type: 'part', id }, { focus: true }); return true; },
+  selectPart(id) { if (!S.idx || !S.ready || !S.idx.parts.has(id)) return false;   // wait for the model: focusing needs the scene
+    select({ type: 'part', id }, { focus: true }); return true; },
   state: S,
   setFasteners: on => setFast(!!on),
 };
@@ -751,46 +763,38 @@ export async function start() {
   readColours(); wire(); hint();
   progress(0, 'reading part data');
   let data;
-  try { const r = await fetch('data/viewer-data.json?v=20261116c'); if (!r.ok) throw new Error('HTTP ' + r.status); data = await r.json(); }
+  try { const r = await fetch('data/viewer-data.json?v=20261116e'); if (!r.ok) throw new Error('HTTP ' + r.status); data = await r.json(); }
   catch (e) { loadFailed('Part data not found', esc(e.message) + '<br>data/viewer-data.json is built by redesign/viewer/build_data.py --out site/data'); return; }
   S.data = data; S.idx = M.index(data);
   if (!data.parts.some(p => p.flight === false)) { const kb = $('#kit'); if (kb) kb.style.display = 'none'; }   // concept A has no ground kit / transport box in the model
   renderCounts(); renderTree(); renderPanel();
   if (!initThree()) { loadFailed('3-D is not available', 'This browser could not start WebGL. The part list and panel still work.'); return; }
-  const total = (data.glb && data.glb.bytes) || 3443204;
-  // the embedded copy comes in parts (data/assembly.glb.part1.js ... partN.js, N = data.glb.js_parts): a host that
-  // caps a file's size (claude.ai artifacts: 16 MB per text file) takes each part; build_data.py writes them
-  const nParts = (data.glb && data.glb.js_parts) || 0;
+  // The model is meshopt-compressed (gltf-transform meshopt, 16-bit positions per mesh, 12-bit normals; 7.4 MB -> 1.6 MB).
+  // assets/concept-a.opt.glb is fetched as a binary; hosts that do not serve .glb (claude.ai artifacts) and file://
+  // get the same bytes as base64 in data/assembly.opt.glb.part1.js. The decoder is three's own, from the pinned jsDelivr import map.
+  const total = 1587964;
+  const mkLoader = () => new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
   const addScript = src => new Promise((ok, no) => {
     const s = document.createElement('script');
     s.src = src; s.onload = ok; s.onerror = () => no(new Error(src.split('?')[0] + ' not found'));
     document.head.appendChild(s);
   });
   const loadGlbScript = async () => {
-    window.VIEWER_GLB_B64_PARTS = []; window.VIEWER_GLB_B64 = null;
-    if (nParts) {
-      for (let i = 1; i <= nParts; i++) {
-        progress(0.5 * i / nParts, 'loading model (embedded copy, part ' + i + ' of ' + nParts + ')');
-        await addScript('data/assembly.glb.part' + i + '.js?v=20261116c');
-      }
-    } else {
-      progress(0.5, 'loading model (embedded copy)');
-      await addScript('data/assembly.glb.js?v=20261116c');
-    }
-    const b64 = nParts ? window.VIEWER_GLB_B64_PARTS.join('') : (window.VIEWER_GLB_B64 || '');
-    window.VIEWER_GLB_B64_PARTS = null; window.VIEWER_GLB_B64 = null;
-    const bin = atob(b64), buf = new Uint8Array(bin.length);
+    window.VIEWER_GLB_B64_PARTS = [];
+    progress(0.5, 'loading model (embedded copy)');
+    await addScript('data/assembly.opt.glb.part1.js?v=20261116e');
+    const bin = atob(window.VIEWER_GLB_B64_PARTS.join('')), buf = new Uint8Array(bin.length);
+    window.VIEWER_GLB_B64_PARTS = null;
     for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
-    return new Promise((res, rej) => new GLTFLoader().parse(buf.buffer, '', res, rej));
+    return new Promise((res, rej) => mkLoader().parse(buf.buffer, '', res, rej));
   };
   let gltf;
   try {
-    gltf = await new Promise((res, rej) => new GLTFLoader().load('assets/concept-a.glb?v=20261115c', res,
+    gltf = await new Promise((res, rej) => mkLoader().load('assets/concept-a.opt.glb?v=20261116e', res,
       ev => { const got = ev.loaded || 0; progress(Math.min(got / total, 1), kB(got) + ' of ' + kB(total)); }, rej));
   } catch (e) {
-    // hosts that do not serve .glb (claude.ai artifacts) and file:// get the same bytes as base64 in a script
     try { gltf = await loadGlbScript(); }
-    catch (e2) { loadFailed('Model could not be loaded', esc((e && e.message) || e) + '<br>assets/concept-a.glb'); return; }
+    catch (e2) { loadFailed('Model could not be loaded', esc((e && e.message) || e) + '<br>assets/concept-a.opt.glb'); return; }
   }
   progress(1, 'building scene');
   buildModel(gltf);

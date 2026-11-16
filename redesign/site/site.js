@@ -1,8 +1,8 @@
-// K09-L explorer shell: hash router (#aircraft #decision #team #subsystems #status #docs), theme toggle,
+// Concept A explorer shell: hash router (#aircraft #decision #team #subsystems #status #docs), theme toggle,
 // the decision page's morphological chart and concept table (logic from redesign/config-study/web/index.html),
 // the render / plot lightbox, and the 3-D explorer (viewer.js). Everything is relative: works on GitHub Pages and as an artifact.
 import { DIMS, C } from './data/concepts.js?v=20261115f';
-import { start as startViewer, viewer } from './viewer.js?v=20261116c';
+import { start as startViewer, viewer } from './viewer.js?v=20261116e';
 
 const ROUTES = ['aircraft', 'decision', 'team', 'subsystems', 'build', 'proof', 'status', 'bom', 'docs'];
 const TITLES = { aircraft: 'Aircraft', decision: 'Decision', team: 'Team', subsystems: 'Subsystems', build: 'Build guide', proof: 'Proof chain', status: 'Status', bom: 'BOM', docs: 'Docs' };
@@ -19,6 +19,56 @@ function paintTheme() { themeBtn.innerHTML = '<svg><use href="#i-' + (isDark() ?
 themeBtn.addEventListener('click', () => { const next = isDark() ? 'light' : 'dark'; root.setAttribute('data-theme', next); store.set('theme', next); paintTheme(); viewer.themeChanged(); if (window.ProofEmbed) window.ProofEmbed.themeChanged(); });
 if (window.matchMedia) matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paintTheme);
 paintTheme();
+
+
+// ---------------- navigation drawer (<= 768 px) and the "On this page" rail ----------------
+const menuBtn = document.getElementById('menu'), sideNav = document.getElementById('nav'), scrim = document.getElementById('scrim'), shell = document.querySelector('.shell'), rail = document.getElementById('rail');
+const narrow = window.matchMedia ? matchMedia('(max-width: 768px)') : { matches: false, addEventListener() {} };
+function openNav() {
+  document.body.classList.add('nav-open'); menuBtn.setAttribute('aria-expanded', 'true'); scrim.hidden = false;
+  const first = sideNav.querySelector('a[aria-current="page"]') || sideNav.querySelector('a'); if (first) first.focus();
+}
+function closeNav(refocus) {
+  if (!document.body.classList.contains('nav-open')) return;
+  document.body.classList.remove('nav-open'); menuBtn.setAttribute('aria-expanded', 'false'); scrim.hidden = true;
+  if (refocus) menuBtn.focus();
+}
+menuBtn.addEventListener('click', () => document.body.classList.contains('nav-open') ? closeNav(true) : openNav());
+scrim.addEventListener('click', () => closeNav(true));
+sideNav.addEventListener('click', e => { if (e.target.closest('a') && narrow.matches) closeNav(false); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('nav-open')) { closeNav(true); }
+  else if (e.key === 'Tab' && document.body.classList.contains('nav-open') && narrow.matches) {   // keep focus inside the open drawer
+    const f = [menuBtn, ...sideNav.querySelectorAll('a')], i = f.indexOf(document.activeElement);
+    if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); } else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); } } });
+narrow.addEventListener('change', () => { if (!narrow.matches) closeNav(false); });
+// the drawer is inert when closed on a phone, so Tab never lands on hidden links
+function syncInert() { const off = narrow.matches && !document.body.classList.contains('nav-open'); if ('inert' in sideNav) sideNav.inert = off; }
+new MutationObserver(syncInert).observe(document.body, { attributes: true, attributeFilter: ['class'] }); narrow.addEventListener('change', syncInert); syncInert();
+
+let railFor = null, railIO = null;
+const slug = t => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48);
+function buildRail(name) {
+  const view = document.getElementById(name), show = view && name !== 'aircraft' && name !== 'proof';
+  if (railIO) { railIO.disconnect(); railIO = null; }
+  let items = [];
+  if (show) {
+    view.querySelectorAll('h2, h3.ds-h2[id]').forEach(h => {
+      if (h.closest('details:not([open])') || h.closest('.md .md-sec') && h.tagName !== 'H2') return;
+      const sec = h.closest('section[id]'), id = (h.tagName === 'H2' && sec && sec.querySelector('h2') === h && sec.id) || h.id || (h.id = slug(h.textContent));
+      const t = h.textContent.trim().replace(/\s+/g, ' '); if (!id || !t || items.some(i => i.id === id)) return;
+      items.push({ id, t, el: h });
+    });
+  }
+  shell.classList.toggle('has-rail', items.length > 1); rail.hidden = items.length < 2;
+  if (items.length < 2) { rail.innerHTML = ''; return; }
+  rail.innerHTML = '<h2>On this page</h2>' + items.map(i => '<a href="#' + i.id + '">' + esc(i.t) + '</a>').join('');
+  if (!('IntersectionObserver' in window)) return;
+  const links = new Map(items.map((i, k) => [i.el, rail.children[k + 1]]));
+  railIO = new IntersectionObserver(es => es.forEach(en => { if (!en.isIntersecting) return;
+    rail.querySelectorAll('a').forEach(a => a.removeAttribute('aria-current')); const a = links.get(en.target); if (a) a.setAttribute('aria-current', 'true'); }),
+    { rootMargin: '-72px 0px -70% 0px' });
+  items.forEach(i => railIO.observe(i.el));
+}
 
 // ---------------- router ----------------
 let current = null, lastOutside = '#aircraft', hops = 0, focusPartId = null;
@@ -42,6 +92,7 @@ function route() {
   if (name === 'build') { watchBuildToc(); const h = hydrateBuild(); if (target) h.then(() => target.scrollIntoView({ block: 'start', behavior: 'instant' })); }
   if (name === 'aircraft') { viewer.resize(); if (focusPartId) focusPart(focusPartId); focusPartId = null; }
   if (name === 'decision') redrawMorph();
+  closeNav(false); buildRail(name);
 }
 window.addEventListener('hashchange', route);
 
