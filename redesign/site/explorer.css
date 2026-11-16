@@ -329,3 +329,17 @@ main p, main li, main dd, main dt, main code, main summary, .md * { overflow-wra
 .ds-concept dd { overflow-wrap: anywhere; }
 .ds-brand { min-height: 44px; }
 code.ds-inline, .ds-inline { font-size: inherit; }
+
+/* build guide, one section at a time (2026-11-16): folded steps and the Previous / Next pager */
+#build .md-sec { border-top: 0; margin-top: 0; padding-top: 0; }
+details.md-step { border: 1px solid var(--line); margin: 8px 0; background: var(--panel); }
+details.md-step > summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; padding: 10px 14px; min-height: 44px; }
+details.md-step > summary::-webkit-details-marker { display: none; }
+details.md-step > summary::before { content: "+"; font-family: var(--font-mono, monospace); width: 1ch; color: var(--fg-2); }
+details.md-step[open] > summary::before { content: "\2212"; }
+details.md-step > summary .md-h3 { margin: 0; font-size: var(--text-md, 1rem); }
+details.md-step[open] { padding-bottom: 6px; }
+details.md-step > :not(summary) { margin-left: 14px; margin-right: 14px; }
+.md-pager { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin: 24px 0 8px; padding-top: 16px; border-top: 1px solid var(--line); }
+.md-pager .pg-n { color: var(--fg-2); font-size: var(--text-sm, .875rem); }
+.md-pager .ds-btn { max-width: 100%; white-space: normal; text-align: left; }

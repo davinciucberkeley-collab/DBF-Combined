@@ -16,6 +16,9 @@ import sys
 
 from PIL import Image
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'tools'))
+import mp4_faststart  # noqa: E402
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 REDESIGN = os.path.dirname(os.path.dirname(HERE))
 WORK = os.path.join(HERE, '_work')
@@ -68,6 +71,8 @@ def main():
                 dst = os.path.join(SITE, 'animation', fn)
             else:
                 continue
+            if fn.endswith('.mp4'):
+                mp4_faststart.faststart(p)                # index first, so the Explorer player can seek (2026-11-16)
             shutil.copyfile(p, dst)
             print('copied %-24s -> %s (%.2f MB)' % (fn, os.path.relpath(dst, SITE), os.path.getsize(dst) / 1e6))
 

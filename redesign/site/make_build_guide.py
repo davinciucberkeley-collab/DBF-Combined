@@ -10,6 +10,9 @@ What it does with the Markdown:
   - headings (ids `build-<slug>`; stage N gets `build-stage-N`), paragraphs, lists (nested), tables, code, rules;
   - each `## Stage N:` section (N = 1..10) gets its clip, assets/animation/build/a-stage-NN.mp4 with the a-stage-NN.webp poster,
     straight after the heading; checklist items "- [ ] ..." get an empty box;
+  - one section shows at a time (site.js pages through them; user 2026-11-16: "limit the long scroll"): the text before the
+    first `##` becomes the "Overview" section, the guide's own "Contents" list is dropped (the nav replaces it), and every
+    `###` step folds into a <details class="md-step"> whose summary is the step heading;
   - images under showcase/renders/ point at assets/renders/ and open in the page lightbox; images and clip posters carry
     data-src / data-poster and site.js fills them in when the guide is first opened (about 10 MB stays off the first load); an image that has no copy in
     the site (review/img/...) becomes a link to the file on GitHub;
@@ -151,7 +154,9 @@ def render(md):
     lines = md.split('\n')
     out, toc, i = [], [], 0
     stage = None
-    open_section = False
+    out.append('<section class="md-sec" id="build-overview">')
+    toc.append(('build-overview', 'Overview', None))
+    open_section, open_step, skip = True, False, False
     title = 'Build guide'
     while i < len(lines):
         ln = lines[i]
@@ -172,6 +177,13 @@ def render(md):
                 title = text
                 i += 1
                 continue
+            skip = level == 2 and text == 'Contents'
+            if skip:
+                i += 1
+                continue
+            if open_step and level <= 3:
+                out.append('</details>')
+                open_step = False
             sm = STAGE_RE.match(text) if level == 2 else None
             hid = 'build-stage-%s' % sm.group(1) if sm else 'build-' + slug(text)
             if level == 2:
@@ -180,13 +192,17 @@ def render(md):
                 out.append('<section class="md-sec" id="%s">' % hid)
                 open_section = True
                 toc.append((hid, text, sm.group(1) if sm else None))
-            out.append('<h%d class="md-h%d">%s</h%d>' % (level, level, inline(text), level))
+            if level == 3:
+                out.append('<details class="md-step" id="%s"><summary><h3 class="md-h3">%s</h3></summary>' % (hid, inline(text)))
+                open_step = True
+            else:
+                out.append('<h%d class="md-h%d">%s</h%d>' % (level, level, inline(text), level))
             stage = int(sm.group(1)) if sm else (None if level == 2 else stage)
             if stage in STAGE_TITLE_VIDEOS and level == 2:
                 out.append(stage_video(stage))
             i += 1
             continue
-        if re.match(r'^-{3,}\s*$', ln):
+        if re.match(r'^-{3,}\s*$', ln) or skip:
             i += 1
             continue
         if ln.lstrip().startswith('|') and i + 1 < len(lines) and re.match(r'^\s*\|[\s:|-]+\|\s*$', lines[i + 1]):
@@ -218,6 +234,8 @@ def render(md):
             (chunks.append([p]) if LABEL_RE.match(p) else chunks[-1].append(p))
         cls = ' class="md-meta"' if stage in STAGE_TITLE_VIDEOS and LABEL_RE.match(para[0]) else ''
         out.append('<p%s>%s</p>' % (cls, '<br>'.join(inline(' '.join(c)) for c in chunks)))
+    if open_step:
+        out.append('</details>')
     if open_section:
         out.append('</section>')
     return title, toc, '\n'.join(out)

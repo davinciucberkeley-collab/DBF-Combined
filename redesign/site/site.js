@@ -86,10 +86,11 @@ function route() {
   document.querySelectorAll('#nav a').forEach(a => { if (a.getAttribute('href') === '#' + name) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   document.body.dataset.route = name;
   document.title = 'Concept A · ' + TITLES[name];     // concept A is the current design (D-182)
+  if (name === 'build') { watchBuildToc(); if (target) openBuildTarget(target); }
   if (target) target.scrollIntoView({ block: 'start' }); else if (current !== name) window.scrollTo(0, 0);
   current = name;
   if (name === 'proof') enterProof(); else lastOutside = name === 'aircraft' ? '#aircraft' : location.hash;
-  if (name === 'build') { watchBuildToc(); const h = hydrateBuild(); if (target) h.then(() => target.scrollIntoView({ block: 'start', behavior: 'instant' })); }
+  if (name === 'build') { const h = hydrateBuild(); if (target) h.then(() => target.scrollIntoView({ block: 'start', behavior: 'instant' })); }
   if (name === 'aircraft') { viewer.resize(); if (focusPartId) focusPart(focusPartId); focusPartId = null; }
   if (name === 'decision') redrawMorph();
   closeNav(false); buildRail(name);
@@ -125,18 +126,68 @@ function hydrateBuild() {                                    // images and clip 
   buildReady = Promise.race([Promise.all(imgs.map(i => new Promise(r => { i.onload = i.onerror = r; i.src = i.dataset.src; }))), new Promise(r => setTimeout(r, 4000))]);
   return buildReady;
 }
+// One section of the guide shows at a time (user 2026-11-16: limit the long scroll). The contents list and the
+// Previous / Next buttons switch sections; a link to a step (#build-a1 ...) opens its section and unfolds the step.
+let buildSec = null;
+function showBuildSec(id, scroll) {
+  const secs = Array.from(document.querySelectorAll('#build .md-sec'));
+  if (!secs.length) return;
+  const k = Math.max(0, secs.findIndex(s => s.id === id));
+  secs.forEach((s, j) => { s.hidden = j !== k; });
+  buildSec = secs[k].id;
+  document.querySelectorAll('#build .md-toc a').forEach(a => {
+    if (a.getAttribute('href') === '#' + buildSec) { a.setAttribute('aria-current', 'true'); a.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }
+    else a.removeAttribute('aria-current');
+  });
+  const pg = document.getElementById('build-pager');
+  if (pg) {
+    const name = s => { const a = document.querySelector('#build .md-toc a[href="#' + s.id + '"]'); return a ? a.textContent : s.id; };
+    const prev = secs[k - 1], next = secs[k + 1];
+    pg.innerHTML = (prev ? '<button type="button" class="ds-btn" data-bsec="' + prev.id + '">&larr; ' + esc(name(prev)) + '</button>' : '<span></span>') +
+      '<span class="pg-n">' + (k + 1) + ' of ' + secs.length + '</span>' +
+      (next ? '<button type="button" class="ds-btn primary" data-bsec="' + next.id + '">' + esc(name(next)) + ' &rarr;</button>' : '<span></span>');
+  }
+  if (scroll) secs[k].scrollIntoView({ block: 'start', behavior: 'instant' });      // md-sec scroll-margin clears the top bar and the sticky contents
+}
 let tocWatch = false;
 function watchBuildToc() {
-  if (tocWatch || !('IntersectionObserver' in window)) return;
+  if (tocWatch) return;
   tocWatch = true;
-  const links = new Map(Array.from(document.querySelectorAll('.md-toc a')).map(a => [a.getAttribute('href').slice(1), a]));
-  const io = new IntersectionObserver(es => es.forEach(en => {
-    if (!en.isIntersecting) return;
-    links.forEach(a => a.removeAttribute('aria-current'));
-    const a = links.get(en.target.id); if (a) a.setAttribute('aria-current', 'true');
-  }), { rootMargin: '-15% 0px -75% 0px' });
-  document.querySelectorAll('.md-sec').forEach(sec => io.observe(sec));
+  const art = document.querySelector('#build article.md');
+  if (art && !document.getElementById('build-pager')) art.insertAdjacentHTML('afterend', '<nav class="md-pager" id="build-pager" aria-label="Guide sections"></nav>');
+  document.getElementById('build').addEventListener('click', e => {
+    const t = e.target.closest('.md-toc a, [data-bsec]');
+    if (!t) return;
+    e.preventDefault();
+    showBuildSec(t.dataset.bsec || t.getAttribute('href').slice(1), true);
+  });
+  showBuildSec(buildSec, false);
 }
+function openBuildTarget(el) {                               // a deep link into the guide: show its section, unfold its step
+  const sec = el.closest('.md-sec'); if (sec) showBuildSec(sec.id, false);
+  const st = el.closest('details.md-step'); if (st) st.open = true;
+}
+
+// ---------------- videos: load the whole file once, so the slider can seek even where the host serves no byte ranges ----------------
+const vidBlobs = new Map();
+document.addEventListener('play', e => {
+  const v = e.target;
+  if (!(v instanceof HTMLVideoElement)) return;
+  const src = v.currentSrc || v.src;
+  if (!src || src.startsWith('blob:')) return;
+  let p = vidBlobs.get(src);
+  if (!p) { p = fetch(src, { cache: 'no-store' }).then(r => r.ok ? r.blob() : Promise.reject(new Error(r.status))).then(b => URL.createObjectURL(b)); vidBlobs.set(src, p); }
+  p.then(u => {
+    if ((v.currentSrc || v.src) !== src) return;          // the stage buttons switched the clip meanwhile
+    const at = v._seekTo != null ? v._seekTo : v.currentTime, playing = !v.paused; v._seekTo = null;
+    v.addEventListener('loadedmetadata', () => { v.currentTime = at; if (playing) v.play().catch(() => {}); }, { once: true });
+    v.src = u;
+  }).catch(() => vidBlobs.delete(src));
+}, true);
+document.addEventListener('seeking', e => {                  // a seek made before the whole file is in: keep it and apply it after the swap
+  const v = e.target;
+  if (v instanceof HTMLVideoElement && !(v.currentSrc || v.src).startsWith('blob:')) v._seekTo = v.currentTime;
+}, true);
 
 // ---------------- decision page: morphological chart and the 43-concept table ----------------
 const FAM = { K: 'Conventional', B: 'Buy-and-modify', U: 'Unconventional' };
