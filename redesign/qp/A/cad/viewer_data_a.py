@@ -12,7 +12,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 RED = os.path.dirname(os.path.dirname(os.path.dirname(HERE)))
 sys.path.insert(0, os.path.join(RED, 'viewer'))
 import build_data  # noqa: E402
+import subprocess  # noqa: E402
+subprocess.run([sys.executable, '-I', os.path.join(HERE, 'parts_links_a.py')], check=True)   # CAD part -> BOM line / build clip (Vendor / file)
 
 sys.argv[1:1] = ['--budget', os.path.join(HERE, 'model', 'mass_budget.json'), '--proofs', os.path.join(os.path.dirname(HERE), 'proofs', 'out', 'graph.json'),
-                 '--csv', os.path.join(HERE, 'out', 'no-parts.csv'), '--no-spec', '--dataset', 'concept-a']
+                 '--csv', os.path.join(HERE, 'out', 'parts-a.csv'), '--no-spec', '--dataset', 'concept-a']
 sys.exit(build_data.main())

@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import M from './model.js?v=20261116a';
+import M from './model.js?v=20261116b';
 
 const GH = 'https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/';
 const $ = s => document.querySelector(s);
@@ -543,6 +543,14 @@ function claimHtml(c) {
     (c.how ? '<div class="how">Verify: ' + esc(c.how) + '</div>' : '') +
     '<div class="how"><a class="ds-link" href="#proof-' + esc(encodeURIComponent(c.id)) + '">Open the proof chain</a></div></div>' + badge(c.status) + '</li>';
 }
+// vendor page (buy parts, or the material line for made parts) and the build-film stage clip that shows the part going on
+function srcLinks(p) {
+  const ok = u => /^https?:\/\//.test(u) || /^assets\/[\w./-]+$/.test(u);
+  const L = [];
+  if (p.vendor_url && ok(p.vendor_url)) L.push('<a class="ds-link" href="' + esc(p.vendor_url) + '" target="_blank" rel="noopener">' + (p.make_or_buy === 'make' ? 'material vendor' : 'vendor page') + ' &#8599;</a>');
+  if (p.how_url && ok(p.how_url)) L.push('<a class="ds-link" href="' + esc(p.how_url) + '" target="_blank" rel="noopener">' + 'build clip: where it goes on' + ' &#8599;</a>');
+  return L.length ? '<br>' + L.join(' &middot; ') : '';
+}
 function renderPanel() {
   const I = $('#inspector');
   if (!S.sel) { I.innerHTML = summaryHtml(); return; }
@@ -551,7 +559,7 @@ function renderPanel() {
   const e = G.parts.get(id);
   const nums = [['Mass', M.fmtMass(p.mass_g) + (p.flight === false ? ' <span class="ds-meta">(ground, not flying mass)</span>' : '')], ['Material', esc(p.material || '—')],
     ['Make / buy', esc(p.make_or_buy || '—') + (typeof p.unit_cost_usd === 'number' ? ' · $' + M.fmtNum(p.unit_cost_usd, 2) : '')],
-    ['Vendor / file', esc(p.vendor || '—')]];
+    ['Vendor / file', esc(p.vendor || '—') + srcLinks(p)]];
   if (p.qty && p.qty !== 1) nums.push(['Qty', M.fmtNum(p.qty)]);
   if (p.process) nums.push(['Process', esc(p.process)]);
   nums.push(['CG x y z', Array.isArray(p.cg_xyz_m) ? p.cg_xyz_m.map(v => M.fmtNum(v, 3)).join(', ') + ' m' : '—']);
@@ -627,7 +635,7 @@ function summaryHtml() {
   }
   h += '<div class="v-keys"><span class="ds-kbd">1</span>Aircraft<span class="ds-kbd">2</span>Inside &amp; wiring<span class="ds-kbd">3</span>Structure<span class="ds-kbd">4</span>Exploded' +
     '<span class="ds-kbd">H</span>Fasteners<span class="ds-kbd">F</span>Focus selected<span class="ds-kbd">Esc</span>Show full aircraft<span class="ds-kbd">/</span>Search</div>' +
-    '<p class="ds-source">Declared masses from the merged concept A interfaces.json; gate and CG band from qp/A/cad/model/mass_budget.json (no per-subsystem allocations); claims from the concept A proof graph (qp/A/proofs/out/graph.json); geometry from the concept A CAD (qp/A/cad/model) via blender/export_glb.py; vendor and cost are not mapped to CAD part ids.</p></div>';
+    '<p class="ds-source">Declared masses from the merged concept A interfaces.json; gate and CG band from qp/A/cad/model/mass_budget.json (no per-subsystem allocations); claims from the concept A proof graph (qp/A/proofs/out/graph.json); geometry from the concept A CAD (qp/A/cad/model) via blender/export_glb.py; vendor links map each CAD part to its BOM-A line (qp/A/cad/parts_links_a.py); cost per part is not split out.</p></div>';
   return h;
 }
 
@@ -743,7 +751,7 @@ export async function start() {
   readColours(); wire(); hint();
   progress(0, 'reading part data');
   let data;
-  try { const r = await fetch('data/viewer-data.json?v=20261115c'); if (!r.ok) throw new Error('HTTP ' + r.status); data = await r.json(); }
+  try { const r = await fetch('data/viewer-data.json?v=20261116b'); if (!r.ok) throw new Error('HTTP ' + r.status); data = await r.json(); }
   catch (e) { loadFailed('Part data not found', esc(e.message) + '<br>data/viewer-data.json is built by redesign/viewer/build_data.py --out site/data'); return; }
   S.data = data; S.idx = M.index(data);
   if (!data.parts.some(p => p.flight === false)) { const kb = $('#kit'); if (kb) kb.style.display = 'none'; }   // concept A has no ground kit / transport box in the model

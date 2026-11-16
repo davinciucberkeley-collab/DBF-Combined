@@ -142,7 +142,8 @@ def main():
         if p is None:
             warn.append('%s is in %s but not in interfaces.json' % (pid, r['csv_ref']))
             continue
-        p.update(vendor=r.get('vendor_or_file') or None, unit_cost_usd=num(r.get('unit_cost_usd')),
+        p.update(vendor=r.get('vendor_or_file') or None, vendor_url=r.get('url') or None, how_url=r.get('how_url') or None,
+                 unit_cost_usd=num(r.get('unit_cost_usd')),
                  qty=num(r.get('qty')), process=r.get('process') or None, csv_ref=r['csv_ref'])
 
     # ---- SPEC.md links (real aircraft only) ----
