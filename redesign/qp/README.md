@@ -14,7 +14,7 @@ User constraints (root `CLAUDE.md`):
 - The CAD looks exactly like the physical aircraft: real shapes from vendor drawings, no stand-in disks or boxes (2026-11-15).
 - Limit exposed wiring: wires inside tubes, core channels or covers; every exposed length listed with its reason (2026-11-15).
 
-Everything else is derived by the team and written with its basis. Decisions D-182 to D-195 are logged in
+Everything else is derived by the team and written with its basis. Decisions D-182 to D-200 are logged in
 `../params/CHANGE-LOG.md`.
 
 ## The aircraft (baseline 2026-11-15)
@@ -37,7 +37,7 @@ The electronics and flight software:
 | Hover T/W at 1.46 kg, spin-capped | 2.35 fresh, 1.86 sagged `EST` (transition window ±5.6 %) | `A/mission_gate_a.py` |
 | Cruise to BATT_LOW at 1.46 kg, 17 m/s | 4.27 min (need 3.41) `EST` | `A/mission_gate_a.py` |
 | Elevon flutter, lowest onset (with damper) | 38.5 m/s hot `EST` (line 28.8); wing 33.4 m/s fins off | `A/structures/flutter_d195.md` |
-| BOM total | $1,775.09; +$105.08 margin if unverified lines run 30 % over (G7 PASS) | `A/bom_a.py` |
+| BOM total | $1,779.47; +$100.05 margin if unverified lines run 30 % over (G7 PASS) | `A/bom_a.py` |
 | 3-D gates | collision 0 at neutral, ±20° and ±21°, wire ends seated, no folds; assembly 45 steps, 104/104 parts; exposed wire 0.87 strand-m (was 9.09; D-198, D-199) | `A/cad/out/REPORT.md`, `ASSEMBLY.md`, `../review/QP-5/HARNESS-ENCLOSED.md` |
 
 Nothing is bought, weighed, built or flown.
@@ -50,7 +50,7 @@ Nothing is bought, weighed, built or flown.
 | QP-2 | SITL, wind, bench plan, baseline; D-183, D-184 | `../review/QP-2/` |
 | QP-3 | SITL flight, structures, cost and schedule, CAD with the 3-D gates; D-185, D-186 | `../review/QP-3/` |
 | QP-4 | Pre-order items, board re-sit, fixes (D-187 balance; D-188 hinge damper, caps, stops, foam at 103 kPa) | `../review/QP-4/` |
-| QP-5 | CAD fidelity round (D-193, D-194) and the re-run of the analyses it invalidated (D-195) | `../review/QP-5/` |
+| QP-5 | CAD fidelity round (D-193, D-194), the re-run of the analyses it invalidated (D-195), hub wall (D-196), arms and motor cups (D-197), enclosed harness (D-198, D-199), fin rib length (D-200) | `../review/QP-5/` |
 
 ## Build guide
 

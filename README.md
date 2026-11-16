@@ -1,9 +1,9 @@
 # DBF-Combined: quad-tailsitter VTOL, concept A (UC Berkeley MEng capstone)
 
-> **Current design (2026-11-15): concept A, a scaled quad tailsitter (D-182).** K09-L, described below, could not be
+> **Current design (2026-11-16): concept A, a scaled quad tailsitter (D-182).** K09-L, described below, could not be
 > built new within $2,000 (cheapest workable build about $2,577) and is kept as the record. Concept A: 0.90 m wing,
-> 4 x T-Motor MN2212 KV780 on 4S, about 1.46 kg predicted (`EST`), BOM $1,775 of $2,000. Design, reports and status:
-> [redesign/qp/README.md](redesign/qp/README.md). Decisions D-182 to D-197: [CHANGE-LOG.md](redesign/params/CHANGE-LOG.md). The Explorer's renders, flight and build films and general-arrangement sheet now show concept A (the K09-L ones are kept as the record).
+> 4 x T-Motor MN2212 KV780 on 4S, about 1.456 kg predicted (`EST`), BOM $1,779 of $2,000 (+$100 margin if unverified prices run 30 % over). Design, reports and status:
+> [redesign/qp/README.md](redesign/qp/README.md). Decisions D-182 to D-200: [CHANGE-LOG.md](redesign/params/CHANGE-LOG.md). The Explorer's renders, flight and build films and general-arrangement sheet now show concept A (the K09-L ones are kept as the record).
 
 **Hard constraints (team lead; full text in [CLAUDE.md](CLAUDE.md)):**
 1. $2,000 total, all bought new (tax, shipping, packs, charger, radio, test gear, spares); the Jacobs Hall Makers Pass is outside it.
@@ -37,9 +37,9 @@ complete on paper, nothing bought, built or flown yet.*
 ## Open it
 
 - **Windows, with Python installed:** double-click `00 - OPEN THE K09-L EXPLORER (double-click me).bat` in the repo
-  folder. It serves `redesign/site/` on `http://localhost:8765/` and opens the K09-L Explorer in your browser: a
-  rotatable 3-D model, the configuration decision, the engineering team, simulations, proof chains, the BOM and every
-  document. Close the console window to stop it.
+  folder. It serves `redesign/site/` on `http://localhost:8765/` and opens the Explorer in your browser, now showing concept A: a
+  rotatable 3-D model with a vendor link or build clip for every part, the configuration decision and morph chart, the
+  concept A BOM and status, proof chains and every document (the Simulations tab is removed until concept A is final). Close the console window to stop it.
 - **On GitHub, no install:** read [redesign/SHOWCASE.md](redesign/SHOWCASE.md) for the renders, the flight animation,
   STL models that rotate in the browser, the morphological chart, the decision and the simulation figures.
 - **Building it:** [redesign/BUILD-GUIDE.md](redesign/BUILD-GUIDE.md) is the short, ordered build guide, with an animated clip per
@@ -74,18 +74,18 @@ Frame revision A1-R5 (2026-11-10). "Modelled" means computed by analysis or simu
 
 | Path | What it is |
 |---|---|
-| [`redesign/`](redesign/README.md) | Everything for K09-L. Start with its [README](redesign/README.md) (aircraft, key numbers, subsystems, simulations) |
+| [`redesign/`](redesign/README.md) | Everything for the redesign. Concept A (current) is in [`redesign/qp/`](redesign/qp/README.md); the K09-L record is described in the [README](redesign/README.md) |
 | [`redesign/config-study/`](redesign/config-study/README.md) | How K09-L was chosen: requirements, morphological chart, 43 concepts, shortlist, judging, tie-break. Decision: [`CONFIGURATION.md`](redesign/CONFIGURATION.md) |
 | [`redesign/team/<role>/`](redesign/TEAM.md) | One folder per engineering role (A systems, B aero, C structures, D CAD, E propulsion, F electrical, H test, I programme, J support), each with `SUMMARY.md`, scripts, `claims.json` and change requests |
-| [`redesign/params/`](redesign/params/params.json) | `params.json` (every top-level number), [`CHANGE-LOG.md`](redesign/params/CHANGE-LOG.md) (decisions D-01 to D-73), `mass_budget.json` |
+| [`redesign/params/`](redesign/params/params.json) | `params.json` (every top-level number), [`CHANGE-LOG.md`](redesign/params/CHANGE-LOG.md) (decisions D-01 to D-200), `mass_budget.json` |
 | [`redesign/subsystems/`](redesign/subsystems/wing/SPEC.md) | Per-subsystem spec, parts list, interfaces and Fusion module (wing, fins, pod, landing, propulsion, power, avionics, harness, mechanisms, transport, flight software, ground) |
 | [`redesign/interfaces/`](redesign/interfaces/REPORT.md) | Interface graph (parts and joints) and its checker `merge_check.py` |
 | [`redesign/fusion/`](redesign/fusion/DATUMS.md) | Fusion framework: `BuildAll` script, backends, `check.py`, skeleton, datums |
 | [`redesign/proofs/`](redesign/PROOFS.md) | Proof chains from requirement to claim to calculation to source; `build_graph.py` rebuilds and flags drift |
-| `redesign/site/` | The K09-L Explorer web app opened by the `.bat` file |
+| `redesign/site/` | The Explorer web app opened by the `.bat` file (concept A; the `.bat` keeps its old K09-L name) |
 | [`redesign/showcase/`](redesign/SHOWCASE.md) | Renders, flight and build animations, STL models, page snapshots |
 | [`redesign/design-system/`](redesign/design-system/README.md) | Visual standard for every output (tokens, components, Blender style) |
-| BOM | [`redesign/team/I1/K09L-BOM.xlsx`](redesign/team/I1/K09L-BOM.xlsx) (Excel with live formulas), [`BOM.csv`](redesign/team/I1/BOM.csv), [`ORDER-PLAN.md`](redesign/team/I1/ORDER-PLAN.md) |
+| BOM | Concept A: [`redesign/qp/A/BOM-A.csv`](redesign/qp/A/BOM-A.csv), totals [`bom_a.py`](redesign/qp/A/bom_a.py), [`ORDER-1.csv`](redesign/qp/A/ORDER-1.csv). K09-L record: [`redesign/team/I1/K09L-BOM.xlsx`](redesign/team/I1/K09L-BOM.xlsx) (Excel with live formulas), [`BOM.csv`](redesign/team/I1/BOM.csv), [`ORDER-PLAN.md`](redesign/team/I1/ORDER-PLAN.md) |
 | Legacy (C0 era) | `analysis/`, `cad/` (SOLIDWORKS), `docs/`, `firmware/`, `review/`, the root `*.html` pages, `inventory/`, `fusion/` (C0 v0.3.1 scripts), `concepts/`, `sim/`, `explorations/tiltwing/`, `tools/`, [`DECISIONS.md`](DECISIONS.md). Imported on 2026-11-08 from DBF-VTOL, DillonVTOL, TiltWing and OpenCAEModel; superseded by K09-L. Source commits and what was left out: [`PROVENANCE.md`](PROVENANCE.md) |
 
 ## Status and next steps
