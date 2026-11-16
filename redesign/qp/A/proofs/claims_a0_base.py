@@ -68,8 +68,8 @@ kit.assumption("ASM-A-NP", "Neutral point 40.7 mm aft of LE", "Static margin use
 kit.assumption("ASM-A-CUTS", "41.6 g of EST cuts are real", "Predicted mass <= 1.46 kg (D-195; was 1.44) holds only if the foam (25 kg/m3), printed parts and hardware lump weigh in at their cut values",
                basis="BOARD QP-4 s1 and FIXES2 s5: none of the three cuts is weighed; the foam row alone (16.6 g) was the first line; M11 weighs a FOAMULAR 150 block",
                status="UNVERIFIED")
-kit.assumption("ASM-A-HUB-WALL", "Printed hub socket walls (0.8 mm, EST) carry the prop-strike couple", "The 0.48 socket margin is a bond margin; the thin-wall hoop check is not demonstrated at 0.8 mm",
-               basis="D-195, structures/qp5_checks.md s2: a crude ring model (hoop tension 2F/(pi l t), F 332 N, allowable 20 MPa EST) gives MS -0.58 at 0.8 mm and passes only from 2.0 mm walls (+7.1 g); the model is conservative (epoxy fill, bonded tube) but unproven: print, bond and pull-test a socket coupon before the hub is printed in earnest",
+kit.assumption("ASM-A-HUB-WALL", "Printed hub socket walls (2.0 mm, D-196) carry the prop-strike couple", "The 0.48 socket margin is a bond margin; the wall hoop check passes the crude ring model only with a 12 mm bearing patch",
+               basis="D-196, structures/qp5_checks.md s2/s2b: arm-socket wall raised 0.8 -> 2.0 mm over the 12 mm mouth zone, bridge sleeve 1.2 mm (hub 13.1 -> 17.7 g). Ring model (hoop 2F/(pi l t), F 332 N, allowable 20 MPa EST): MS +0.05 at l 12 mm, -0.47 at l 6 mm; sleeve +0.44 / -0.28. Unproven until the bench coupon: print a socket at 2.0 mm, bond a 12 mm tube, load to 1.5 x 332 N",
                status="UNVERIFIED")
 kit.assumption("ASM-A-FOAM-ALLOW", "Foam tension 129 kPa and shear 86 kPa", "Foam shear and tension allowables are the old 150 / 100 kPa scaled by 103 / 120",
                basis="FIXES2 s6: the FOAMULAR 150 data sheet has no tension or shear row (searched 2026-11-15); the 103 kPa compressive value is the data sheet (OC, ASTM D1621)",

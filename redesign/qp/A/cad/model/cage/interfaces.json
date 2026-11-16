@@ -4,13 +4,13 @@
  "parts": [
   {
    "id": "CGE-001",
-   "name": "Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 0.8 mm walls, mass = drawn volume x 1.27)",
+   "name": "Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 2.0 mm arm-socket mouth walls, 1.2 mm sleeve (D-196), 0.8 mm webs, mass = drawn volume x 1.27)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 13.1,
+   "mass_g": 17.7,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0721,
+    -0.0724,
     0.0,
     0.0002
    ],
@@ -235,9 +235,9 @@
    "mass_g": 3.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0116,
+    -0.0112,
     0.0,
-    0.0107
+    0.0106
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"

@@ -20,6 +20,20 @@ Allowable: printed PETG, XY, knock-down 20 MPa (structures_run.md line 212 'PETG
 | 1.6 | 23.7 | -0.16 | 47.5 | -0.58 | FAIL |
 | 2.0 | 19.0 | +0.05 | 38.0 | -0.47 | PASS (l 12 only) |
 
+D-196 (2026-11-15): arm-socket wall set to 2.0 mm over the outer 12 mm of each socket (HUB_SOCK_W, HUB_MOUTH, cad/amodel/wing.py; 0.8 mm deeper in, where the arm tube is bonded and the bearing patch does not reach). It passes this crude model only with the 12 mm bearing patch (MS above); the 6 mm patch still fails, so the claim stays UNVERIFIED until the socket coupon pull test (print, bond, load to 332 N x 1.5) on the bench.
+
+## 2b Bridge sleeve wall (D-196: 1.2 mm, HUB_SLV_W)
+
+Load: strike couple 8.3 N m reacted along the 57 mm bridge sleeve -> F = 146 N; same ring model and allowable as s2.
+
+| wall t (mm) | l = 12 mm: sigma (MPa) | MS | l = 6 mm: sigma (MPa) | MS |
+|---|---|---|---|---|
+| 0.8 | 20.8 | -0.04 | 41.6 | -0.52 |
+| 1.2 | 13.9 | +0.44 | 27.8 | -0.28 |
+| 2.0 | 8.3 | +1.40 | 16.7 | +0.20 |
+
+1.2 mm matches the socket case (passes at l = 12 mm); the coupon test covers both. Hub CGE-001 drawn mass 13.1 -> 17.7 g (+4.6 g; a full-length 2.0 mm socket and sleeve would be 24.7 g).
+
 ## 3 Spar foam after the datum change (foam above / below the 12 mm bore 6.27 / 5.62 mm, min 5.65 mm over x 54-66: CAD-INTEGRATION s3 item 1)
 
 | check | shear stress (kPa) | allowable 86 kPa (EST, foam_103.py) | MS |

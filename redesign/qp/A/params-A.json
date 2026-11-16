@@ -286,7 +286,7 @@
  },
  "mass": {
   "basic_cad_kg": {
-   "value": 1.25914,
+   "value": 1.26374,
    "unit": "kg",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json mass_basic_kg (CAD, no growth)"
@@ -355,7 +355,7 @@
      0.05
     ],
     [
-     113.4,
+     117.0,
      0.2
     ],
     [
@@ -365,7 +365,7 @@
    ],
    "unit": "g, fraction",
    "source": "SRC-A-MGATE",
-   "note": "mission_gate_a.py `items` (D-195, CAD 2026-11-15): [basic g, growth fraction by maturity]: wing, fins + feet, motors, props, adapters + spinner nuts (CALC 10 %), ESC, pack, strap, avionics + harness, servos, cage, hardware",
+   "note": "mission_gate_a.py `items` (D-195, cage +3.6 g D-196 hub walls; CAD 2026-11-15): [basic g, growth fraction by maturity]: wing, fins + feet, motors, props, adapters + spinner nuts (CALC 10 %), ESC, pack, strap, avionics + harness, servos, cage, hardware",
    "status": "UNVERIFIED"
   },
   "structure_groups_g": {
@@ -374,11 +374,11 @@
     109.6,
     8.4,
     26.1,
-    113.4
+    117.0
    ],
    "unit": "g",
    "source": "SRC-A-CADMASS",
-   "note": "D-195: CAD part table 2026-11-15: wing 221.7 + fins 109.6 + feet 8.4 + hardware HRD-001 26.08 + cage 113.4 = 479.3 g with the EST cuts",
+   "note": "D-195: CAD part table 2026-11-15: wing 221.7 + fins 109.6 + feet 8.4 + hardware HRD-001 26.08 + cage 117.0 (D-196: hub 17.7 g, was 13.1) = 482.9 g with the EST cuts",
    "status": "UNVERIFIED"
   },
   "pack_g": {
@@ -391,16 +391,22 @@
    "value": 10.0,
    "unit": "mm",
    "source": "SRC-A-FIXES2",
-   "note": "FIXES2 s7 / MASS-GATE s7: pack trim +-10 mm in the tray slots"
+   "note": "FIXES2 s7 / MASS-GATE s7: pack trim 10 mm aft in the tray slots"
+  },
+  "pack_trim_fwd_mm": {
+   "value": 8.0,
+   "unit": "mm",
+   "source": "SRC-A-CADMASS",
+   "note": "D-196: forward pack travel 8 mm (tray front lip 2 mm aft); cad_mass.json trim_fwd_m"
   },
   "cg_x_mm": {
-   "value": 21.471224804231465,
+   "value": 21.12762751831864,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_x_m, aft of the wing leading edge"
   },
   "cg_y_mm": {
-   "value": 2.5725495179249327,
+   "value": 2.5631854653647106,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_y_m (lateral)"

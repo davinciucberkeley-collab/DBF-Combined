@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import M from './model.js?v=20261115b';
+import M from './model.js?v=20261115c';
 
 const GH = 'https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/';
 const $ = s => document.querySelector(s);
@@ -743,7 +743,7 @@ export async function start() {
   readColours(); wire(); hint();
   progress(0, 'reading part data');
   let data;
-  try { const r = await fetch('data/viewer-data.json?v=20261115b'); if (!r.ok) throw new Error('HTTP ' + r.status); data = await r.json(); }
+  try { const r = await fetch('data/viewer-data.json?v=20261115c'); if (!r.ok) throw new Error('HTTP ' + r.status); data = await r.json(); }
   catch (e) { loadFailed('Part data not found', esc(e.message) + '<br>data/viewer-data.json is built by redesign/viewer/build_data.py --out site/data'); return; }
   S.data = data; S.idx = M.index(data);
   if (!data.parts.some(p => p.flight === false)) { const kb = $('#kit'); if (kb) kb.style.display = 'none'; }   // concept A has no ground kit / transport box in the model
@@ -763,11 +763,11 @@ export async function start() {
     if (nParts) {
       for (let i = 1; i <= nParts; i++) {
         progress(0.5 * i / nParts, 'loading model (embedded copy, part ' + i + ' of ' + nParts + ')');
-        await addScript('data/assembly.glb.part' + i + '.js?v=20261115b');
+        await addScript('data/assembly.glb.part' + i + '.js?v=20261115c');
       }
     } else {
       progress(0.5, 'loading model (embedded copy)');
-      await addScript('data/assembly.glb.js?v=20261115b');
+      await addScript('data/assembly.glb.js?v=20261115c');
     }
     const b64 = nParts ? window.VIEWER_GLB_B64_PARTS.join('') : (window.VIEWER_GLB_B64 || '');
     window.VIEWER_GLB_B64_PARTS = null; window.VIEWER_GLB_B64 = null;
@@ -777,7 +777,7 @@ export async function start() {
   };
   let gltf;
   try {
-    gltf = await new Promise((res, rej) => new GLTFLoader().load('assets/concept-a.glb?v=20261115b', res,
+    gltf = await new Promise((res, rej) => new GLTFLoader().load('assets/concept-a.glb?v=20261115c', res,
       ev => { const got = ev.loaded || 0; progress(Math.min(got / total, 1), kB(got) + ' of ' + kB(total)); }, rej));
   } catch (e) {
     // hosts that do not serve .glb (claude.ai artifacts) and file:// get the same bytes as base64 in a script

@@ -119,11 +119,12 @@ kit.claim("CL-A-STRUCT-MASS", "Structure mass (CAD groups, with the EST cuts)", 
 
 
 # ================================================================ CG, static margin
-@kit.calc("CALC-A-CG-TRIM", equation="shift = m_pack x trim / m_basic ; ends = CG +- shift", inputs={"cg": "P:mass.cg_x_mm", "pack": "P:mass.pack_g", "trim": "P:mass.pack_trim_mm",
+@kit.calc("CALC-A-CG-TRIM", equation="ends = CG - m_pack x trim_fwd / m_basic, CG + m_pack x trim / m_basic", inputs={"cg": "P:mass.cg_x_mm", "pack": "P:mass.pack_g", "trim": "P:mass.pack_trim_mm", "trim_fwd": "P:mass.pack_trim_fwd_mm",
                                                                                                 "basic": "P:mass.basic_cad_kg"}, units={"cg": "mm", "basic": "kg"})
-def cg_trim(cg, pack, trim, basic):
+def cg_trim(cg, pack, trim, trim_fwd, basic):
     s = pack * trim / (basic * 1000)
-    return {"shift_mm": s, "fwd_mm": cg - s, "aft_mm": cg + s}
+    sf = pack * trim_fwd / (basic * 1000)
+    return {"shift_mm": s, "fwd_mm": cg - sf, "aft_mm": cg + s}
 
 
 @kit.calc("CALC-A-SM", equation="SM = (NP - CG) / chord x 100", inputs={"np": "ASM-A-NP", "cg": "P:mass.cg_x_mm", "c": "P:cg.chord_mm"}, units={"cg": "mm", "c": "mm"},

@@ -32,6 +32,18 @@ for t in (0.8, 1.2, 1.6, 2.0):
         s = KP * 2 * F / (math.pi * l * t * 1e-3); out += [s / 1e6, 20e6 / s - 1]
     P("| %.1f | %.1f | %+.2f | %.1f | %+.2f | %s |" % (t, out[0], out[1], out[2], out[3], "PASS" if out[3] >= 0 else ("PASS (l 12 only)" if out[1] >= 0 else "FAIL")))
 P()
+P("D-196 (2026-11-15): arm-socket wall set to 2.0 mm over the outer 12 mm of each socket (HUB_SOCK_W, HUB_MOUTH, cad/amodel/wing.py; 0.8 mm deeper in, where the arm tube is bonded and the bearing patch does not reach). It passes this crude model only with the 12 mm bearing patch (MS above); the 6 mm patch still fails, so the claim stays UNVERIFIED until the socket coupon pull test (print, bond, load to 332 N x 1.5) on the bench.")
+P(); P("## 2b Bridge sleeve wall (D-196: 1.2 mm, HUB_SLV_W)"); P()
+Fs = 8.3 / 0.057               # N, same strike couple reacted over the 57 mm sleeve (HUB_X1 - HUB_X0, wing.py)
+P("Load: strike couple 8.3 N m reacted along the 57 mm bridge sleeve -> F = %.0f N; same ring model and allowable as s2." % Fs); P()
+P("| wall t (mm) | l = 12 mm: sigma (MPa) | MS | l = 6 mm: sigma (MPa) | MS |"); P("|---|---|---|---|---|")
+for t in (0.8, 1.2, 2.0):
+    out = []
+    for l in (12e-3, 6e-3):
+        s_ = KP * 2 * Fs / (math.pi * l * t * 1e-3); out += [s_ / 1e6, 20e6 / s_ - 1]
+    P("| %.1f | %.1f | %+.2f | %.1f | %+.2f |" % (t, out[0], out[1], out[2], out[3]))
+P(); P("1.2 mm matches the socket case (passes at l = 12 mm); the coupon test covers both. Hub CGE-001 drawn mass 13.1 -> 17.7 g (+4.6 g; a full-length 2.0 mm socket and sleeve would be 24.7 g).")
+P()
 # ---------------------------------------------------------------- 3 spar foam
 P("## 3 Spar foam after the datum change (foam above / below the 12 mm bore 6.27 / 5.62 mm, min 5.65 mm over x 54-66: CAD-INTEGRATION s3 item 1)"); P()
 allow_sh = 100e3 * 103 / 120      # foam_103.py shear allowable (EST)

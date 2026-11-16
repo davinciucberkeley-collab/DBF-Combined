@@ -315,9 +315,9 @@
   {
    "id": "ASM-A-HUB-WALL",
    "type": "assumption",
-   "title": "Printed hub socket walls (0.8 mm, EST) carry the prop-strike couple",
-   "text": "The 0.48 socket margin is a bond margin; the thin-wall hoop check is not demonstrated at 0.8 mm",
-   "basis": "D-195, structures/qp5_checks.md s2: a crude ring model (hoop tension 2F/(pi l t), F 332 N, allowable 20 MPa EST) gives MS -0.58 at 0.8 mm and passes only from 2.0 mm walls (+7.1 g); the model is conservative (epoxy fill, bonded tube) but unproven: print, bond and pull-test a socket coupon before the hub is printed in earnest",
+   "title": "Printed hub socket walls (2.0 mm, D-196) carry the prop-strike couple",
+   "text": "The 0.48 socket margin is a bond margin; the wall hoop check passes the crude ring model only with a 12 mm bearing patch",
+   "basis": "D-196, structures/qp5_checks.md s2/s2b: arm-socket wall raised 0.8 -> 2.0 mm, bridge sleeve 1.2 mm (hub 13.1 -> 22.0 g). Ring model (hoop 2F/(pi l t), F 332 N, allowable 20 MPa EST): MS +0.05 at l 12 mm, -0.47 at l 6 mm; sleeve +0.44 / -0.28. Unproven until the bench coupon: print a socket at 2.0 mm, bond a 12 mm tube, load to 1.5 x 332 N",
    "status": "UNVERIFIED"
   },
   {

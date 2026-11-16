@@ -111,3 +111,19 @@ Fallbacks if the as-weighed mass runs high (not applied): elevon lead 15.6 -> 12
 Stall (CLmax 0.75 `EST`) at 1.455 kg 11.99 m/s, 1.3 Vs 15.6 m/s against 17 m/s cruise. Hover 211 W, 14.2 A from the pack. The 1.50 kg lines of s8 stay conservative.
 
 **CG and static margin (D-195).** CG 21.47 mm; pack trim +-10 mm moves it by 2.14 mm (270 g x 10 / 1,259 g): **19.33 to 23.61 mm**, SM 8.7 to 7.0 %. NP 40.7 mm (`EST`, unchanged): the S5010 section aerodynamic centre is at 0.25 c (own panel check 0.248 c, `aero_s5010.py`) and the CAD prop plane (x -110 mm, not -85 mm of SIZING-A) lowers it to 39.6 mm with the same rule (SM 7.4 %), still above the 5 % limit by 2.4 % chord. Trim elevon at 17 m/s and 1.455 kg: **4.8 deg TE up** (alpha 5.1 deg), 4.1 deg at the aft trim end, 5.5 deg at the forward end; stop 21 deg.
+
+## 10 D-196 hub socket walls (2026-11-15)
+
+Arm-socket wall 2.0 mm over the 12 mm mouth zone, 1.2 mm bridge sleeve: hub 13.1 -> 17.7 g (`cad/amodel/wing.py`, `structures/qp5_checks.md` s2/s2b). Pack forward trim travel 10 -> 8 mm (tray front lip 2 mm aft).
+
+| Quantity | D-195 | D-196 | Limit | Source |
+|---|---|---|---|---|
+| CAD basic mass | 1,259.1 g | 1,263.7 g | — | `sitl/cad_mass.json` |
+| CG (CAD) | 21.47 mm | 21.13 mm | band 19-26 | `sitl/cad_mass.json` |
+| CG at the trim ends | 19.33 / 23.61 mm | 19.42 / 23.26 mm | >= 19 / <= 28.5 | claims CL-A-CG-TRIM-FWD / AFT |
+| Predicted, itemised `EST` | 1,449 g | 1,454 g | — | `mission_gate_a.py` |
+| Predicted, flat rule `EST` | 1,454 g | 1,459 g | <= 1,460 (target), 1,470 (gate) | CL-A-MASS-PRED |
+| EST cuts that must be real | 36.2 g | 40.8 g | <= 41.6 g | CL-A-CUTS-REQUIRED |
+| Structure | 479.3 g | 482.8 g | <= 494 g | CL-A-STRUCT-MASS |
+
+The target now has 1 g of room. Any further growth is cut (fallback: lead strip 15.6 -> 12.8 g, re-run flutter) or re-decided against the 1.47 kg gate.

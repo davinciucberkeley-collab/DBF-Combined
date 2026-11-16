@@ -47,6 +47,7 @@ YFIN, XFIN_T, FIN_H = 0.38, 0.294, 0.18     # DOC: fins at y 380, tube at x 0.29
 FIN_OD, FIN_ID = 0.016, 0.014               # DOC 16x14 tube
 PACK_X = (-0.0275, 0.0075)                  # QP-4 7.2 #2: pack moved 10 mm aft (centre -10 mm; was -20 mm) so the CAD CG lands mid-band (23 mm) WITH the D-187 elevon balance and the ES3054HV servos; trim +-10 mm in the tray slots
 TRIM = 0.010                                # +-10 mm pack trim travel (about +-2.2 mm of CG)
+TRIM_FWD = 0.008                            # D-196: forward travel 8 mm (front lip 2 mm aft) so the forward-trim CG stays >= 19.3 mm, the SITL-tested end (CG 21.1 after the hub walls)
 TRAY_X1 = 0.0215                            # tray plate aft end (pack aft edge at +TRIM is 17.5 mm; core tray slot ends at 0.0225)
 SERVO_Y = 0.200                             # EST (DOC landing_a: servo y 0.30 is in the elevon; moved inboard)
 SV_Z1 = 0.0117 - WING_DZ                              # servo case top (servo case 28.4 x 13.0 x 26.7, see electrical.py); the core servo pocket opens at this z

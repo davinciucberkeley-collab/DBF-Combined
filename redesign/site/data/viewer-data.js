@@ -2,19 +2,19 @@
 window.VIEWER_DATA = {
  "schema": "dbf-viewer/1",
  "dataset": "concept-a",
- "generated": "2026-11-16 00:23 UTC",
+ "generated": "2026-11-16 01:09 UTC",
  "sources": {
-  "glb": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/glbA",
-  "interfaces": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/mi/interfaces.json",
+  "glb": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/glb_a/glb",
+  "interfaces": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/glb_a/mi/interfaces.json",
   "proofs": "redesign/qp/A/proofs/out/graph.json",
   "budget": "redesign/qp/A/cad/model/mass_budget.json",
   "csv": []
  },
  "glb": {
   "file": "assembly.glb",
-  "bytes": 3440616,
+  "bytes": 3549452,
   "js_parts": 1,
-  "sha256": "529cdbc042601ce4b2a5bed5adb01c4395f41502a0d856141c0d9a8e71fc888b"
+  "sha256": "4e890ce95c9a83a69193c5df25b29d74bf35c2f8bfc6dd0ff3465a129face00a"
  },
  "frame": "aircraft frame: metres, x aft, y right, z up. glTF (x, y, z) = aircraft (x, z, -y).",
  "parts": [
@@ -143,13 +143,13 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CGE-001",
-   "name": "Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 0.8 mm walls, mass = drawn volume x 1.27)",
+   "name": "Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 2.0 mm arm-socket mouth walls, 1.2 mm sleeve (D-196), 0.8 mm webs, mass = drawn volume x 1.27)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 13.1,
+   "mass_g": 17.7,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0721,
+    -0.0724,
     0.0,
     0.0002
    ],
@@ -404,9 +404,9 @@ window.VIEWER_DATA = {
    "mass_g": 3.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0116,
+    -0.0112,
     0.0,
-    0.0107
+    0.0106
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -3783,7 +3783,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-MASS-PRED",
    "title": "Predicted take-off mass (CAD basic x growth + overrun)",
-   "value": 1.4540030359999998,
+   "value": 1.459143076,
    "unit": "kg",
    "limit": {
     "op": "<=",
@@ -3792,7 +3792,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).",
-   "margin": 0.004107509589041205,
+   "margin": 0.0005869342465753675,
    "parts": [
     "WNG-001",
     "WNG-002",
@@ -3805,7 +3805,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG",
    "title": "CG aft of the leading edge, CAD as drawn",
-   "value": 21.471224804231465,
+   "value": 21.12762751831864,
    "unit": "mm",
    "limit": {
     "op": ">=",
@@ -3814,7 +3814,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.",
-   "margin": 0.1300644633806034,
+   "margin": 0.11198039570098105,
    "parts": [
     "PWR-001",
     "CGE-008",
@@ -3825,7 +3825,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-HI",
    "title": "CG aft limit of the design band",
-   "value": 21.471224804231465,
+   "value": 21.12762751831864,
    "unit": "mm",
    "limit": {
     "op": "<=",
@@ -3834,7 +3834,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "CG breadboard (M5); band 19-26 mm (D-195), hard aft limit 28.5 mm.",
-   "margin": 0.1741836613757129,
+   "margin": 0.18739894160312923,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -3843,7 +3843,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-TRIM-AFT",
    "title": "CG at the aft end of the pack trim travel",
-   "value": 23.615545531076773,
+   "value": 23.264142940794784,
    "unit": "mm",
    "limit": {
     "op": "<=",
@@ -3852,7 +3852,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "Slide the pack to the aft slot stop and re-measure CG (M5).",
-   "margin": 0.17138436733063955,
+   "margin": 0.18371428277913038,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -3861,7 +3861,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-TRIM-FWD",
    "title": "CG at the forward end of the pack trim travel",
-   "value": 19.326904077386157,
+   "value": 19.418415180337725,
    "unit": "mm",
    "limit": {
     "op": ">=",
@@ -3870,7 +3870,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "Slide the pack to the forward slot stop and re-measure CG (M5).",
-   "margin": 0.017205477757166153,
+   "margin": 0.022021851596722354,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -3879,7 +3879,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-SM",
    "title": "Static margin at the CAD CG",
-   "value": 7.84847967174226,
+   "value": 7.98872346191076,
    "unit": "% chord",
    "limit": {
     "op": ">=",
@@ -3888,7 +3888,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Measure NP on the built aircraft (M5, M6); SM >= 5 % chord.",
-   "margin": 0.569695934348452,
+   "margin": 0.5977446923821519,
    "parts": [
     "WNG-001"
    ]
@@ -3941,7 +3941,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-TW-FRESH-PRED",
    "title": "Hover T/W fresh at the predicted mass (0.90 cap)",
-   "value": 2.363539119255507,
+   "value": 2.355213214952934,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -3950,7 +3950,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "margin": 0.18176955962775354,
+   "margin": 0.17760660747646706,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -3961,7 +3961,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-TW-SAG-PRED",
    "title": "Hover T/W sagged pack at the predicted mass (0.90 cap)",
-   "value": 1.8684102523977228,
+   "value": 1.8618285102836722,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -3970,7 +3970,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "margin": 0.16775640774857672,
+   "margin": 0.1636428189272951,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -3982,7 +3982,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-WINDOW-PRED",
    "title": "Transition entry window at the predicted mass (0.90 cap)",
-   "value": 5.831647866379391,
+   "value": 5.655786902442541,
    "unit": "%",
    "limit": {
     "op": ">=",
@@ -3991,7 +3991,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "C3 time-domain pitch-over run at the as-weighed mass (T-A-C3-PITCHOVER); the window uses 1.33 W low and 0.80 x T/W sag high.",
-   "margin": 0.16632957327587813,
+   "margin": 0.13115738048850822,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -4060,7 +4060,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CRUISE-AVAIL",
    "title": "Cruise time to BATT_LOW at the predicted mass",
-   "value": 258.7358729580236,
+   "value": 256.812600846422,
    "unit": "s",
    "limit": {
     "op": ">=",
@@ -4069,7 +4069,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).",
-   "margin": 0.26486343975078647,
+   "margin": 0.25546127780530387,
    "parts": [
     "PWR-001",
     "PRP-003"

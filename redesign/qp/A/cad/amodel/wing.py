@@ -16,7 +16,12 @@ PLUG_R = 0.0049
 R_IN = R_M - 0.245                          # DOC: arm tube 0.245 long
 HUB_X0, HUB_X1 = -0.102, -0.045             # hub x range: front floor 2 mm ahead of the bridge end (x -0.100), aft face = tray face (x -0.045)
 HUB_W = 0.0008                              # EST printed wall = 2 perimeters at 0.4 mm (the QP-4 FIXES basis of the 13 g hub); at 1.2 mm (3 perimeters) the drawn hub is 19.1 g
-HUB_RB = 0.006 + HUB_W                      # boss outer radius round a 12 mm tube (7.2 mm)
+HUB_SOCK_W = 0.002                          # D-196: arm-socket boss wall 2.0 mm (5 perimeters); 0.8 mm failed the hoop check (structures/qp5_checks.md s2, MS -0.58)
+HUB_RB = 0.006 + HUB_SOCK_W                 # arm-socket boss outer radius over the mouth zone (8.0 mm)
+HUB_MOUTH = 0.012                           # D-196: 2.0 mm wall over the outer 12 mm of the socket (the bearing patch of qp5_checks s2); deeper the boss steps to the 0.8 mm wall
+HUB_RBI = 0.006 + HUB_W                     # arm-socket boss outer radius inboard of the mouth zone (6.8 mm)
+HUB_SLV_W = 0.0012                          # D-196: bridge-sleeve wall 1.2 mm (3 perimeters), structures/qp5_checks.md s2b
+HUB_RS = 0.006 + HUB_SLV_W                  # bridge-sleeve outer radius (7.2 mm)
 HUB_SOCK = 0.025                            # arm socket depth 25 mm (STRUCTURES iter 2 iter2_margins.py assumes 25 mm; the old disc gave 18.8 mm)
 HUB_ARM_R0 = R_IN - 0.002                   # arm socket floor (2 mm)
 HUB_ARM_R1 = R_IN + HUB_SOCK                # open mouth of the arm socket (r 56.2 mm)
@@ -280,15 +285,18 @@ def _round_boss(r0, r1, R, c, plane_pts):
     return secs
 
 
-def hub_arm_boss(phi_deg):
+def hub_arm_boss(phi_deg, mouth=True):
     u, t = _ut(phi_deg)
-    return _round_boss(HUB_ARM_R0, HUB_ARM_R1, HUB_RB, HUB[0], lambda a, w: (a * u[0] + w * t[0], a * u[1] + w * t[1]))
+    pp = lambda a, w: (a * u[0] + w * t[0], a * u[1] + w * t[1])
+    if mouth:
+        return _round_boss(HUB_ARM_R1 - HUB_MOUTH, HUB_ARM_R1, HUB_RB, HUB[0], pp)
+    return _round_boss(HUB_ARM_R0, HUB_ARM_R1 - HUB_MOUTH, HUB_RBI, HUB[0], pp)
 
 
 def hub_arm_spoke(phi_deg):
     """Thin radial web (loop in y,z) from the bridge sleeve to the socket floor."""
     u, t = _ut(phi_deg)
-    a0, a1, h = HUB_RB - 0.0006, HUB_ARM_R0 + 0.0006, HUB_W / 2
+    a0, a1, h = HUB_RS - 0.0006, HUB_ARM_R0 + 0.0006, HUB_W / 2
     return [(a * u[0] + w * t[0], a * u[1] + w * t[1]) for a, w in ((a0, -h), (a1, -h), (a1, h), (a0, h))]
 
 
@@ -321,9 +329,9 @@ def hub_mass_g():
     """Mass of the drawn hub: analytic volumes of the bodies minus the tube bores (overlaps of the webs with the bosses ignored,
     < 0.2 g), PETG 1.27 g/cm3 solid wall. This is the drawn-volume mass; the old 13 g was an EST for a 2-perimeter 10 % infill disc."""
     rb = BR_OD / 2
-    v = math.pi * HUB_RB ** 2 * (HUB_X1 - HUB_X0) - math.pi * rb ** 2 * (HUB_X1 + 0.100)
-    v += 4 * (math.pi * HUB_RB ** 2 * (HUB_ARM_R1 - HUB_ARM_R0) - math.pi * (ARM_OD / 2) ** 2 * (HUB_ARM_R1 - R_IN))
-    v += 4 * HUB_W * HUB_SPOKE_D * ((HUB_ARM_R0 + 0.0006) - (HUB_RB - 0.0006))
+    v = math.pi * HUB_RS ** 2 * (HUB_X1 - HUB_X0) - math.pi * rb ** 2 * (HUB_X1 + 0.100)
+    v += 4 * (math.pi * HUB_RB ** 2 * HUB_MOUTH + math.pi * HUB_RBI ** 2 * (HUB_ARM_R1 - HUB_MOUTH - HUB_ARM_R0) - math.pi * (ARM_OD / 2) ** 2 * (HUB_ARM_R1 - R_IN))
+    v += 4 * HUB_W * HUB_SPOKE_D * ((HUB_ARM_R0 + 0.0006) - (HUB_RS - 0.0006))
     Rs = STRUT_OD / 2 + HUB_W
     ls = HUB_STRUT_S[1] + 0.002
     v += 2 * (math.pi * Rs ** 2 * ls - math.pi * (STRUT_OD / 2) ** 2 * HUB_STRUT_S[1] + HUB_W * 0.006 * (-HUB_STRUT_S[0] - 0.0015))
@@ -381,7 +389,7 @@ for s in 'RL':
     P('FIN-005-' + s, 'Rib saddle on spar (%s)' % s, 'fins', 1.0, 'PETG (printed)')
     P('FIN-006-' + s, 'Rib fairing, upper (%s): XPS + tape blister over the 14 mm rib where the S5010 skin is thinner than the tube (D-194); mass EST' % s, 'fins', 0.3, 'XPS foam + tape')
 # cage (allocation 135; STRUCTURES iteration 2: 122 g)
-P('CGE-001', 'Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 0.8 mm walls, mass = drawn volume x 1.27)', 'cage', round(hub_mass_g(), 1), 'PETG (printed)')
+P('CGE-001', 'Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 2.0 mm arm-socket mouth walls, 1.2 mm sleeve (D-196), 0.8 mm webs, mass = drawn volume x 1.27)', 'cage', round(hub_mass_g(), 1), 'PETG (printed)')
 for s in ST:
     P('CGE-002-' + s, 'Arm 12x10 x 0.245 (%s)' % s, 'cage', round(tube_g(0.245, ARM_OD, ARM_ID), 1), 'CFRP tube')
     P('CGE-003-' + s, 'Motor cup (%s; QP-4 FIXES 5 -> 4 g, EST, C1 to re-check prop-strike)' % s, 'cage', 4.0, 'PETG (printed)')
@@ -553,11 +561,12 @@ def build_fins(ctx):
 
 def build_cage(ctx):
     hub = ctx.part('CGE-001', rgb=(0.9, 0.9, 0.9))
-    hub.cylinder('X', (HUB_X0, 0.0, 0.0), HUB_X1 - HUB_X0, HUB_RB, name='hub bridge sleeve')
+    hub.cylinder('X', (HUB_X0, 0.0, 0.0), HUB_X1 - HUB_X0, HUB_RS, name='hub bridge sleeve')
     hub.cut_cylinder('X', (-0.100, 0.0, 0.0), HUB_X1 + 0.001 + 0.100, BR_OD / 2, name='bridge socket bore (blind, 2 mm front floor)')
     hub.box(HUB_PAD[0], HUB_PAD[1], name='hub tray pad flange')
     for st in ST:
-        hub.loft('X', hub_arm_boss(PHI[st]), name='hub arm socket boss')
+        hub.loft('X', hub_arm_boss(PHI[st], mouth=False), name='hub arm socket boss (0.8 mm wall)')
+        hub.loft('X', hub_arm_boss(PHI[st]), name='hub arm socket mouth (2.0 mm wall, D-196)')
         hub.prism('X', HUB[0] - HUB_SPOKE_D / 2, [hub_arm_spoke(PHI[st])], HUB_SPOKE_D, name='hub radial web')
     for st in ST:
         arm = ctx.part('CGE-002-' + st, at=HUB, rotate=('X', PHI[st]), rgb=(0.1, 0.1, 0.1))
@@ -607,12 +616,12 @@ def build_cage(ctx):
     ctx.mirror('CGE-007-R', 'CGE-007-L', plane='XZ')
     tr = ctx.part('CGE-008', rgb=(0.9, 0.9, 0.9))
     tr.box((-0.045, -0.0545, 0.006), (TRAY_X1, 0.0545, 0.008), name='tray plate')
-    tr.box((PACK_X[0] - TRIM, 0.0525, 0.008), (PACK_X[1] + TRIM, 0.0545, 0.030), name='tray end wall R')
-    tr.box((PACK_X[0] - TRIM, -0.0545, 0.008), (PACK_X[1] + TRIM, -0.0525, 0.030), name='tray end wall L')
+    tr.box((PACK_X[0] - TRIM_FWD, 0.0525, 0.008), (PACK_X[1] + TRIM, 0.0545, 0.030), name='tray end wall R')
+    tr.box((PACK_X[0] - TRIM_FWD, -0.0545, 0.008), (PACK_X[1] + TRIM, -0.0525, 0.030), name='tray end wall L')
     # D-194: the tray is ONE printed part (bonded to the hub pad, no bolts). The lips are integral and sit at the ends of the +-TRIM travel; the
     # pack is placed against a lip (trim -10 / +10) or on foam shims between (not drawn, EST) and held by the strap PWR-002. The old slotted
     # M3 lip bolts (ASDRAWN s5 item 5, 'not drawn') are dropped: lips were drawn as part of the tray, so bolts had nothing to move.
-    tr.box((PACK_X[0] - TRIM - 0.002, -0.0545, 0.008), (PACK_X[0] - TRIM, 0.0545, 0.020), name='tray front lip')
+    tr.box((PACK_X[0] - TRIM_FWD - 0.002, -0.0545, 0.008), (PACK_X[0] - TRIM_FWD, 0.0545, 0.020), name='tray front lip')
     tr.box((PACK_X[1] + TRIM, -0.0545, 0.008), (PACK_X[1] + TRIM + 0.002, 0.0545, 0.018), name='tray rear lip')
     # lead notch in end wall R for the 14 AWG pack leads, the XT60 and the balance lead over the whole trim travel (leads at pack z mid-thickness)
     tr.cut_box((PACK_XL_ - TRIM - 0.0081, 0.0520, PACK_ZL_ - 0.0030), (PACK_XL_ + TRIM + 0.0081, 0.0550, 0.0310), name='lead notch in end wall R, open to the wall top so the pack drops in with its leads (D-194)')

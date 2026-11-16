@@ -2,7 +2,7 @@
 // the decision page's morphological chart and concept table (logic from redesign/config-study/web/index.html),
 // the render / plot lightbox, and the 3-D explorer (viewer.js). Everything is relative: works on GitHub Pages and as an artifact.
 import { DIMS, C } from './data/concepts.js?v=20261111d';
-import { start as startViewer, viewer } from './viewer.js?v=20261115b';
+import { start as startViewer, viewer } from './viewer.js?v=20261115c';
 
 const ROUTES = ['aircraft', 'decision', 'team', 'subsystems', 'simulations', 'build', 'proof', 'status', 'bom', 'docs'];
 const TITLES = { aircraft: 'Aircraft', decision: 'Decision', team: 'Team', subsystems: 'Subsystems', simulations: 'Simulations', build: 'Build guide', proof: 'Proof chain', status: 'Status', bom: 'BOM', docs: 'Docs' };
@@ -53,7 +53,7 @@ function enterProof() {
   const home = document.getElementById('home');
   if (home) home.innerHTML = '<p class="sub">Loading the proof graph (about 7 MB, once)…</p>';
   window.PROOF_EMBED = { root: document.getElementById('proofapp'), base: 'proofs/', repo: GH_ROOT };
-  loadScript('proofs/model.js?v=20261112a').then(() => loadScript('proofs/app.js?v=20261115b'))
+  loadScript('proofs/model.js?v=20261112a').then(() => loadScript('proofs/app.js?v=20261115c'))
     .catch(e => { if (home) home.innerHTML = '<p class="sub">Could not load ' + esc(e.message) + '. The standalone viewer is <a href="proofs/index.html">proofs/index.html</a>.</p>'; });
 }
 document.addEventListener('click', e => {
