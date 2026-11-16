@@ -11,8 +11,8 @@
    "material": "Al / Cu / NdFeB",
    "cg_xyz_m": [
     -0.0988,
-    0.2238,
-    0.1621
+    0.2239,
+    0.162
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -42,8 +42,8 @@
    "material": "Al / Cu / NdFeB",
    "cg_xyz_m": [
     -0.0988,
-    -0.2322,
-    0.1499
+    -0.2321,
+    0.15
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -73,8 +73,8 @@
    "material": "Al / Cu / NdFeB",
    "cg_xyz_m": [
     -0.0988,
-    0.2322,
-    -0.1499
+    0.2321,
+    -0.15
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -104,8 +104,8 @@
    "material": "Al / Cu / NdFeB",
    "cg_xyz_m": [
     -0.0988,
-    -0.2238,
-    -0.1621
+    -0.2239,
+    -0.162
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -134,7 +134,7 @@
    "mass_g": 20.0,
    "material": "PCB",
    "cg_xyz_m": [
-    0.0994,
+    0.0995,
     0.0003,
     0.0169
    ],

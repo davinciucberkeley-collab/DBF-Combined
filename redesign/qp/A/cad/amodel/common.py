@@ -86,6 +86,32 @@ def mworld(st, p):
     s = station(st)
     return tuple(q[i] + s[i] for i in range(3))
 
+# ------------------------------------------------------------------ D-198 phase-lead conduit (shared: wing.py cuts it, electrical.py lays it)
+PH_D = 0.0018                               # V phase-lead strand OD 1.8 mm: Pimoroni 20 AWG silicone listing (shop.pimoroni.com/en-us/products/dual-silicone-wire-per-metre, read 2026-11-15: OD 1.8 mm, 14.2 g per metre for the 2-conductor cable); the T-Motor MN2212 page lists 20 AWG x 400 mm leads (store.tmotor.com/goods-388-MN2212-V20.html, 2026-11-15) but not their OD: measure on arrival
+PH_RHO = PH_D / math.sqrt(3.0)              # tri-bundle: strand centres on a circle of this radius
+PH_ENV = PH_RHO + PH_D / 2                  # bundle envelope radius (1.94 mm)
+PH_HOLE_R = 0.0024                          # printed lead hole radius (envelope + 0.46 mm)
+PH_Y = 0.0055                               # cup lead hole y (cup frame): collar bore y 3.5..8.0 holds the bend
+PH_XC = -0.0010                             # arm-run bundle x in the cup frame
+PH_DT = 0.0027                              # bundle offset from the arm axis toward the up side (arm bore ID 10: 1.0 + 2.7 -> 2.9 + 1.94 = 4.83 < 5.0)
+
+
+def arm_up_sign(st):
+    """+1 if the arm-local +z (t) axis points up (cos phi > 0), else -1: the bundle sits on the up side of the bore."""
+    return 1.0 if ST[st][0] > 0 else -1.0
+
+
+def a2w(st, q):
+    """Arm-local point (x, y along the arm, z = t) -> world."""
+    p = fk.mat_vec(fk.rot_matrix('X', PHI[st]), q)
+    return (HUB[0] + p[0], HUB[1] + p[1], HUB[2] + p[2])
+
+
+def ph_arm_xz(st, R_IN_):
+    """Arm-local (x, z) of the bundle in the arm bore at the hub end (down the diagonal from the motor end)."""
+    return (PH_XC * math.cos(math.radians(CANT)), PH_DT * arm_up_sign(st))
+
+
 # ------------------------------------------------------------------ airfoil helpers
 def zu(x):
     return k9.surface_z(COORDS, C, x / C, 'upper')

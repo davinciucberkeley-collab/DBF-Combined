@@ -3,7 +3,11 @@ body, direction of the final motion INTO the seat (world vector), travel (mm) an
 (1) support: every placed part has a mechanical edge to something already placed or to a part of its own step,
 (2) the swept path: the member bodies, moved from seat - dir * travel to the seat, never penetrate (> 0.05 mm) a part placed
 earlier (cuts, bores and pockets count as empty), and (3) every electrical edge is laid after both end parts are on.
-Not in the sequence: laid wires (checked in place by collide_a.py), tape skin, hinge tape, epoxy fillets (not drawn)."""
+Marker steps (parts = []) carry the wires: a 7th element lists the electrical edges LAID (soldered / mated) in that step; a_assembly.py checks that both
+end parts of each edge are already on (earlier step) and that every electrical edge is laid exactly once. THREAD steps are marker steps that must come
+before the step named in THREAD_BEFORE (the leads are fed through the tubes and channels while the ends are still free).
+Not in the sequence: tape skin, hinge tape, epoxy fillets (not drawn). Wires are checked in place by collide_a.py.
+D-198: enclosed routes (motor leads in the arm bores, servo leads in foam grooves) are threaded, then soldered after the boards are on."""
 ST = ('UR', 'UL', 'LR', 'LL')
 CAGE = (['CGE-00%d' % i for i in (1, 4, 6)] + ['CGE-002-' + s for s in ST] + ['CGE-003-' + s for s in ST] +
         ['CGE-005-R', 'CGE-005-L', 'CGE-007-R', 'CGE-007-L'] + ['PRP-001-' + s for s in ST] + ['PRP-004-' + s for s in ST] + ['PRP-002-' + s for s in ST] + ['PRP-005-' + s for s in ST])
@@ -14,6 +18,7 @@ STEPS = [
     ('A3', 'Centre plug up the bore', ['WNG-003-C'], (0, -1, 0), 600, 100),
     ('A4', 'Right plugs up the bore', ['WNG-004-R', 'WNG-005-R'], (0, -1, 0), 600, 100),
     ('A5', 'Left plugs up the bore from the left tip', ['WNG-004-L', 'WNG-005-L'], (0, 1, 0), 600, 100),
+    ('B0', 'THREAD (bench, before the motors go on the cups): feed the three 20 AWG leads of each motor (400 mm stock + extension, EST) from the cup side through the 4.8 mm lead hole, the collar and the arm bore, out of the 4.8 mm hub socket floor hole; free ends hang out of the hub; then screw the motors on (B1)', [], None, 0, 0),
     ('B1', 'Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked '
            'from below: clips snap on the spar', CAGE, (0, 0, 1), 30, 3),
     ('B2', 'Rib saddles snap on the spar from below', ['FIN-005-R', 'FIN-005-L'], (0, 0, 1), 30, 3),
@@ -39,10 +44,17 @@ STEPS = [
     ('D5', 'Clevis pin R pressed in along y through the cheeks and the horn hole (from outboard)', ['MEC-005-R'], (0, -1, 0), 6, 1),
     ('D5b', 'Clevis pin L pressed in along y (from outboard)', ['MEC-005-L'], (0, 1, 0), 6, 1),
     ('E1', 'Pitot into its groove from the front', ['AVN-006'], (1, 0, 0), 250, 50),
+    ('D0', 'THREAD: each servo 3-wire lead is fed from the servo pocket along its foam groove (3 mm under the skin, aft of the spar) to the slit at x 83 mm / |y| 24 mm with a fish wire; the free end stays out of the slit for the FC pads', [], None, 0, 0),
     ('E2', 'Avionics plate on the skin with its four M2 thin nuts already seated in the hex pockets', ['AVN-001', 'HWC-003'], (0, 0, -1), 20, 5),
     ('E3', 'ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS, airspeed on the plate', ['PRP-003', 'AVN-007', 'AVN-002', 'AVN-003', 'AVN-004', 'AVN-005'], (0, 0, -1), 30, 5),
     ('E3a', 'Four M2 x 25 screws down through the FC stack into the nuts', ['HWC-001'], (0, 0, -1), 20, 5),
+    ('E3b', 'LAY: solder the ESC signal ribbon to the FC, the servo leads to the FC pads S5 / S6, the RX CRSF lead, the GPS and airspeed leads (JST plugs on the sensor boards)', [], None, 0, 0, ['E-HRN-06', 'E-HRN-07', 'E-HRN-08', 'E-HRN-09', 'E-HRN-10', 'E-HRN-11']),
     ('E4', 'Pack into the tray', ['PWR-001'], (0, 0, -1), 30, 5),
     ('E4a', 'XT60 female with its tail mated to the pack lead XT60 male (plugs on from aft, taped on the skin; tail soldered to the ESC pads after)', ['HRN-002'], (-1, 0, 0), 15, 3),
+    ('E4b', 'LAY: mate the pack XT60 male to the XT60 female (E4a) (done in E4a)', [], None, 0, 0, ['E-HRN-01']),
     ('E5', 'Pack strap threaded under the bridge tube and closed over the pack (FLEXIBLE: no rigid insertion path exists, so this step checks the fitted position only, travel 0; the threading is by hand)', ['PWR-002'], None, 0, 0),
+    ('E6', 'LAY: solder the battery tail to the ESC BAT pads and the 4 x 3 phase leads (free ends from B0, run over the wing at z 29 / 27.5 mm) to the ESC motor pads; heat-shrink; ties at the hub aft face and at the plate edge', [], None, 0, 0, ['E-HRN-12', 'E-HRN-02', 'E-HRN-03', 'E-HRN-04', 'E-HRN-05']),
+    ('E7', 'Bay cover lowered over the FC stack and ESC onto the plate (the bundles and sensor leads drop into the roof-open notches), foam tape + two ties', ['AVN-008'], (0, 0, -1), 40, 4),
 ]
+THREAD_BEFORE = {'B0': 'B1', 'D0': 'E2'}
+

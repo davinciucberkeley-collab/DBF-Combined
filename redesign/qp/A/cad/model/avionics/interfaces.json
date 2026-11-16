@@ -112,6 +112,21 @@
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
+   "id": "AVN-008",
+   "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead pad runs; notches for the 4 phase bundles and the battery tail",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 9.6,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.0732,
+    0.0,
+    0.0298
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
    "id": "HWC-001",
    "name": "FC mounting screws: 4 x M2 x 25 pan screw (stock)",
    "subsystem": "avionics",
@@ -213,6 +228,18 @@
   },
   {
    "id": "E-AVN-08",
+   "part_a": "AVN-008",
+   "part_b": "AVN-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "avionics",
+   "notes": "cover stands on the plate (and its front ramp on the skin ahead of the plate), foam tape + two ties; removable for FC access (D-198)",
+   "retention": {
+    "item": "VHB-class tape + ties",
+    "count": 1
+   }
+  },
+  {
+   "id": "E-AVN-09",
    "part_a": "HWC-001",
    "part_b": "AVN-002",
    "via": "CT-HW-SEATED",
@@ -236,7 +263,7 @@
    }
   },
   {
-   "id": "E-AVN-09",
+   "id": "E-AVN-10",
    "part_a": "HWC-001",
    "part_b": "HWC-003",
    "via": "CT-HW-SEATED",
@@ -260,7 +287,7 @@
    }
   },
   {
-   "id": "E-AVN-10",
+   "id": "E-AVN-11",
    "part_a": "HWC-003",
    "part_b": "AVN-001",
    "via": "CT-HW-SEATED",

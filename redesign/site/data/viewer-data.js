@@ -2,19 +2,19 @@
 window.VIEWER_DATA = {
  "schema": "dbf-viewer/1",
  "dataset": "concept-a",
- "generated": "2026-11-16 01:09 UTC",
+ "generated": "2026-11-16 04:29 UTC",
  "sources": {
-  "glb": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/glb_a/glb",
-  "interfaces": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/glb_a/mi/interfaces.json",
+  "glb": "../../../../../AppData/Local/Temp/claude/glbA",
+  "interfaces": "../../../../../AppData/Local/Temp/claude/merge/interfaces.json",
   "proofs": "redesign/qp/A/proofs/out/graph.json",
   "budget": "redesign/qp/A/cad/model/mass_budget.json",
   "csv": []
  },
  "glb": {
   "file": "assembly.glb",
-  "bytes": 3549452,
+  "bytes": 3810320,
   "js_parts": 1,
-  "sha256": "4e890ce95c9a83a69193c5df25b29d74bf35c2f8bfc6dd0ff3465a129face00a"
+  "sha256": "55b45cca5a71d04daaccdc6fe4d74b301a9cc2c089f6b48c8145eeb92c40af90"
  },
  "frame": "aircraft frame: metres, x aft, y right, z up. glTF (x, y, z) = aircraft (x, z, -y).",
  "parts": [
@@ -142,6 +142,23 @@ window.VIEWER_DATA = {
    "spec": null
   },
   {
+   "id": "AVN-008",
+   "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead pad runs; notches for the 4 phase bundles and the battery tail",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 9.6,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.0732,
+    0.0,
+    0.0298
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "spec": null
+  },
+  {
    "id": "CGE-001",
    "name": "Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 2.0 mm arm-socket mouth walls, 1.2 mm sleeve (D-196), 0.8 mm webs, mass = drawn volume x 1.27)",
    "subsystem": "cage",
@@ -228,15 +245,15 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CGE-003-LL",
-   "name": "Motor cup (LL; QP-4 FIXES 5 -> 4 g, EST, C1 to re-check prop-strike)",
+   "name": "Motor cup (LL; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 4.0,
+   "mass_g": 4.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0797,
-    -0.2229,
-    -0.1543
+    -0.0796,
+    -0.2232,
+    -0.1544
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -245,15 +262,15 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CGE-003-LR",
-   "name": "Motor cup (LR; QP-4 FIXES 5 -> 4 g, EST, C1 to re-check prop-strike)",
+   "name": "Motor cup (LR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 4.0,
+   "mass_g": 4.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0797,
-    0.2246,
-    -0.1519
+    -0.0796,
+    0.2248,
+    -0.1521
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -262,15 +279,15 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CGE-003-UL",
-   "name": "Motor cup (UL; QP-4 FIXES 5 -> 4 g, EST, C1 to re-check prop-strike)",
+   "name": "Motor cup (UL; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 4.0,
+   "mass_g": 4.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0797,
-    -0.2246,
-    0.1519
+    -0.0796,
+    -0.2248,
+    0.1521
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -279,15 +296,15 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CGE-003-UR",
-   "name": "Motor cup (UR; QP-4 FIXES 5 -> 4 g, EST, C1 to re-check prop-strike)",
+   "name": "Motor cup (UR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 4.0,
+   "mass_g": 4.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0797,
-    0.2229,
-    0.1543
+    -0.0796,
+    0.2232,
+    0.1544
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -774,10 +791,10 @@ window.VIEWER_DATA = {
   },
   {
    "id": "HRN-001",
-   "name": "Harness remainder (wire, connectors, ties, tubing; MASS-GATE avionics 110 g less itemised parts) - lumped",
+   "name": "Harness remainder, bottom-up (D-198): phase-lead extensions, splices, ESC ribbon, sensor leads, servo ties, sleeves / ties / tape / solder - lumped",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 42.9,
+   "mass_g": 28.1,
    "material": "copper / silicone",
    "cg_xyz_m": [
     0.03,
@@ -1059,8 +1076,8 @@ window.VIEWER_DATA = {
    "material": "Al / Cu / NdFeB",
    "cg_xyz_m": [
     -0.0988,
-    -0.2238,
-    -0.1621
+    -0.2239,
+    -0.162
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -1077,8 +1094,8 @@ window.VIEWER_DATA = {
    "material": "Al / Cu / NdFeB",
    "cg_xyz_m": [
     -0.0988,
-    0.2322,
-    -0.1499
+    0.2321,
+    -0.15
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -1095,8 +1112,8 @@ window.VIEWER_DATA = {
    "material": "Al / Cu / NdFeB",
    "cg_xyz_m": [
     -0.0988,
-    -0.2322,
-    0.1499
+    -0.2321,
+    0.15
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -1113,8 +1130,8 @@ window.VIEWER_DATA = {
    "material": "Al / Cu / NdFeB",
    "cg_xyz_m": [
     -0.0988,
-    0.2238,
-    0.1621
+    0.2239,
+    0.162
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -1198,7 +1215,7 @@ window.VIEWER_DATA = {
    "mass_g": 20.0,
    "material": "PCB",
    "cg_xyz_m": [
-    0.0994,
+    0.0995,
     0.0003,
     0.0169
    ],
@@ -1790,6 +1807,19 @@ window.VIEWER_DATA = {
   },
   {
    "id": "E-AVN-08",
+   "part_a": "AVN-008",
+   "part_b": "AVN-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "avionics",
+   "notes": "cover stands on the plate (and its front ramp on the skin ahead of the plate), foam tape + two ties; removable for FC access (D-198)",
+   "retention": {
+    "item": "VHB-class tape + ties",
+    "count": 1
+   },
+   "declared_in": "avionics"
+  },
+  {
+   "id": "E-AVN-09",
    "part_a": "HWC-001",
    "part_b": "AVN-002",
    "via": "CT-HW-SEATED",
@@ -1814,7 +1844,7 @@ window.VIEWER_DATA = {
    "declared_in": "avionics"
   },
   {
-   "id": "E-AVN-09",
+   "id": "E-AVN-10",
    "part_a": "HWC-001",
    "part_b": "HWC-003",
    "via": "CT-HW-SEATED",
@@ -1839,7 +1869,7 @@ window.VIEWER_DATA = {
    "declared_in": "avionics"
   },
   {
-   "id": "E-AVN-10",
+   "id": "E-AVN-11",
    "part_a": "HWC-003",
    "part_b": "AVN-001",
    "via": "CT-HW-SEATED",
@@ -2271,18 +2301,20 @@ window.VIEWER_DATA = {
    "part_b": "PRP-001-UR",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "motor phase leads UR (3 x 20 AWG, V T-Motor page): ESC pad, over the LE, along the arm on the aft side, through the cup hole",
+   "notes": "motor phase leads UR (3 x 20 AWG, OD 1.8 mm, V T-Motor / Pimoroni): out of the motor base through the cup lead hole into the cup collar, inside the arm bore to the hub end, out through the socket floor hole, then exposed over the hub and wing (D-198) to the ESC pad",
    "wire": {
     "gauge_awg": 20,
     "connector": "solder + heat-shrink",
     "route_id": "R-A-02",
     "support_points": [
-     "tie at the plate edge",
-     "tie along the arm every 0.1 m",
-     "cup hole grommet"
+     "cup collar",
+     "inside the arm tube",
+     "hub socket floor hole",
+     "tie at the hub aft face",
+     "tie at the plate edge"
     ],
-    "bend_radius_mm": 6,
-    "strain_relief": "heat-shrink + tie at the cup",
+    "bend_radius_mm": 4,
+    "strain_relief": "heat-shrink + tie at the floor hole",
     "disconnect": false
    },
    "current_a": {
@@ -2297,18 +2329,20 @@ window.VIEWER_DATA = {
    "part_b": "PRP-001-UL",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "motor phase leads UL (3 x 20 AWG, V T-Motor page): ESC pad, over the LE, along the arm on the aft side, through the cup hole",
+   "notes": "motor phase leads UL (3 x 20 AWG, OD 1.8 mm, V T-Motor / Pimoroni): out of the motor base through the cup lead hole into the cup collar, inside the arm bore to the hub end, out through the socket floor hole, then exposed over the hub and wing (D-198) to the ESC pad",
    "wire": {
     "gauge_awg": 20,
     "connector": "solder + heat-shrink",
     "route_id": "R-A-03",
     "support_points": [
-     "tie at the plate edge",
-     "tie along the arm every 0.1 m",
-     "cup hole grommet"
+     "cup collar",
+     "inside the arm tube",
+     "hub socket floor hole",
+     "tie at the hub aft face",
+     "tie at the plate edge"
     ],
-    "bend_radius_mm": 6,
-    "strain_relief": "heat-shrink + tie at the cup",
+    "bend_radius_mm": 4,
+    "strain_relief": "heat-shrink + tie at the floor hole",
     "disconnect": false
    },
    "current_a": {
@@ -2323,18 +2357,20 @@ window.VIEWER_DATA = {
    "part_b": "PRP-001-LR",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "motor phase leads LR (3 x 20 AWG, V T-Motor page): ESC pad, over the LE, along the arm on the aft side, through the cup hole",
+   "notes": "motor phase leads LR (3 x 20 AWG, OD 1.8 mm, V T-Motor / Pimoroni): out of the motor base through the cup lead hole into the cup collar, inside the arm bore to the hub end, out through the socket floor hole, then exposed over the hub and wing (D-198) to the ESC pad",
    "wire": {
     "gauge_awg": 20,
     "connector": "solder + heat-shrink",
     "route_id": "R-A-04",
     "support_points": [
-     "tie at the plate edge",
-     "tie along the arm every 0.1 m",
-     "cup hole grommet"
+     "cup collar",
+     "inside the arm tube",
+     "hub socket floor hole",
+     "tie at the hub aft face",
+     "tie at the plate edge"
     ],
-    "bend_radius_mm": 6,
-    "strain_relief": "heat-shrink + tie at the cup",
+    "bend_radius_mm": 4,
+    "strain_relief": "heat-shrink + tie at the floor hole",
     "disconnect": false
    },
    "current_a": {
@@ -2349,18 +2385,20 @@ window.VIEWER_DATA = {
    "part_b": "PRP-001-LL",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "motor phase leads LL (3 x 20 AWG, V T-Motor page): ESC pad, over the LE, along the arm on the aft side, through the cup hole",
+   "notes": "motor phase leads LL (3 x 20 AWG, OD 1.8 mm, V T-Motor / Pimoroni): out of the motor base through the cup lead hole into the cup collar, inside the arm bore to the hub end, out through the socket floor hole, then exposed over the hub and wing (D-198) to the ESC pad",
    "wire": {
     "gauge_awg": 20,
     "connector": "solder + heat-shrink",
     "route_id": "R-A-05",
     "support_points": [
-     "tie at the plate edge",
-     "tie along the arm every 0.1 m",
-     "cup hole grommet"
+     "cup collar",
+     "inside the arm tube",
+     "hub socket floor hole",
+     "tie at the hub aft face",
+     "tie at the plate edge"
     ],
-    "bend_radius_mm": 6,
-    "strain_relief": "heat-shrink + tie at the cup",
+    "bend_radius_mm": 4,
+    "strain_relief": "heat-shrink + tie at the floor hole",
     "disconnect": false
    },
    "current_a": {
@@ -3783,7 +3821,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-MASS-PRED",
    "title": "Predicted take-off mass (CAD basic x growth + overrun)",
-   "value": 1.459143076,
+   "value": 1.454673476,
    "unit": "kg",
    "limit": {
     "op": "<=",
@@ -3792,7 +3830,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).",
-   "margin": 0.0005869342465753675,
+   "margin": 0.0036483041095890408,
    "parts": [
     "WNG-001",
     "WNG-002",
@@ -3805,7 +3843,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG",
    "title": "CG aft of the leading edge, CAD as drawn",
-   "value": 21.12762751831864,
+   "value": 21.31537301347897,
    "unit": "mm",
    "limit": {
     "op": ">=",
@@ -3814,7 +3852,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.",
-   "margin": 0.11198039570098105,
+   "margin": 0.12186173755152464,
    "parts": [
     "PWR-001",
     "CGE-008",
@@ -3825,7 +3863,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-HI",
    "title": "CG aft limit of the design band",
-   "value": 21.12762751831864,
+   "value": 21.31537301347897,
    "unit": "mm",
    "limit": {
     "op": "<=",
@@ -3834,7 +3872,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "CG breadboard (M5); band 19-26 mm (D-195), hard aft limit 28.5 mm.",
-   "margin": 0.18739894160312923,
+   "margin": 0.1801779610200397,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -3843,7 +3881,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-TRIM-AFT",
    "title": "CG at the aft end of the pack trim travel",
-   "value": 23.264142940794784,
+   "value": 23.45867242446854,
    "unit": "mm",
    "limit": {
     "op": "<=",
@@ -3852,7 +3890,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "Slide the pack to the aft slot stop and re-measure CG (M5).",
-   "margin": 0.18371428277913038,
+   "margin": 0.17688868686075304,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -3861,7 +3899,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-TRIM-FWD",
    "title": "CG at the forward end of the pack trim travel",
-   "value": 19.418415180337725,
+   "value": 19.600733484687314,
    "unit": "mm",
    "limit": {
     "op": ">=",
@@ -3870,7 +3908,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "Slide the pack to the forward slot stop and re-measure CG (M5).",
-   "margin": 0.022021851596722354,
+   "margin": 0.03161755182564812,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -3879,7 +3917,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-SM",
    "title": "Static margin at the CAD CG",
-   "value": 7.98872346191076,
+   "value": 7.912092647559605,
    "unit": "% chord",
    "limit": {
     "op": ">=",
@@ -3888,7 +3926,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Measure NP on the built aircraft (M5, M6); SM >= 5 % chord.",
-   "margin": 0.5977446923821519,
+   "margin": 0.5824185295119211,
    "parts": [
     "WNG-001"
    ]
@@ -3941,7 +3979,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-TW-FRESH-PRED",
    "title": "Hover T/W fresh at the predicted mass (0.90 cap)",
-   "value": 2.355213214952934,
+   "value": 2.3624497949547223,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -3950,7 +3988,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "margin": 0.17760660747646706,
+   "margin": 0.18122489747736115,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -3961,7 +3999,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-TW-SAG-PRED",
    "title": "Hover T/W sagged pack at the predicted mass (0.90 cap)",
-   "value": 1.8618285102836722,
+   "value": 1.8675491265228892,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -3970,7 +4008,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "margin": 0.1636428189272951,
+   "margin": 0.16721820407680568,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -3982,7 +4020,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-WINDOW-PRED",
    "title": "Transition entry window at the predicted mass (0.90 cap)",
-   "value": 5.655786902442541,
+   "value": 5.808676286747981,
    "unit": "%",
    "limit": {
     "op": ">=",
@@ -3991,7 +4029,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "C3 time-domain pitch-over run at the as-weighed mass (T-A-C3-PITCHOVER); the window uses 1.33 W low and 0.80 x T/W sag high.",
-   "margin": 0.13115738048850822,
+   "margin": 0.1617352573495962,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -4060,7 +4098,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CRUISE-AVAIL",
    "title": "Cruise time to BATT_LOW at the predicted mass",
-   "value": 256.812600846422,
+   "value": 258.4845393542278,
    "unit": "s",
    "limit": {
     "op": ">=",
@@ -4069,7 +4107,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).",
-   "margin": 0.25546127780530387,
+   "margin": 0.26363476325151464,
    "parts": [
     "PWR-001",
     "PRP-003"
@@ -4425,7 +4463,7 @@ window.VIEWER_DATA = {
     "resolved": 0.0
    },
    "status": "CHECKED",
-   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "margin": 2.73,
    "parts": [
     "WNG-002"
@@ -4442,7 +4480,7 @@ window.VIEWER_DATA = {
     "resolved": 0.0
    },
    "status": "UNVERIFIED",
-   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "margin": 0.34,
    "parts": [
     "FIN-005-R",
@@ -4461,7 +4499,7 @@ window.VIEWER_DATA = {
     "resolved": 0.0
    },
    "status": "UNVERIFIED",
-   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "margin": 1.41,
    "parts": [
     "CGE-002-UR",
@@ -4481,7 +4519,7 @@ window.VIEWER_DATA = {
     "resolved": 0.0
    },
    "status": "UNVERIFIED",
-   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "margin": 0.48,
    "parts": [
     "CGE-002-UR",
@@ -4489,6 +4527,167 @@ window.VIEWER_DATA = {
     "CGE-002-LR",
     "CGE-002-LL",
     "CGE-001"
+   ]
+  },
+  {
+   "id": "CL-A-MS-CUP-HEADPULL",
+   "title": "Motor cup head pull-through (PETG) at the 0.90 cap thrust + 1P, MS",
+   "value": 14.82,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min",
+    "resolved": 0.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "margin": 14.82,
+   "parts": [
+    "CGE-003-UR",
+    "CGE-003-UL",
+    "CGE-003-LR",
+    "CGE-003-LL"
+   ]
+  },
+  {
+   "id": "CL-A-MS-CUP-STRIKE",
+   "title": "Motor cup head pull-through under the 30 N transverse prop strike, MS",
+   "value": 1.55,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min",
+    "resolved": 0.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "margin": 1.55,
+   "parts": [
+    "CGE-003-UR",
+    "CGE-003-UL",
+    "CGE-003-LR",
+    "CGE-003-LL"
+   ]
+  },
+  {
+   "id": "CL-A-MS-CUP-PLATE",
+   "title": "Motor cup plate bending past the sleeve end under the strike, MS",
+   "value": 0.49,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min",
+    "resolved": 0.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "margin": 0.49,
+   "parts": [
+    "CGE-003-UR",
+    "CGE-003-UL",
+    "CGE-003-LR",
+    "CGE-003-LL"
+   ]
+  },
+  {
+   "id": "CL-A-MS-CUP-HOLE",
+   "title": "Motor cup screw-hole bearing under a blade-stop torque, MS",
+   "value": 0.39,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min",
+    "resolved": 0.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "margin": 0.39,
+   "parts": [
+    "CGE-003-UR",
+    "CGE-003-UL",
+    "CGE-003-LR",
+    "CGE-003-LL"
+   ]
+  },
+  {
+   "id": "CL-A-MS-CUP-BOND",
+   "title": "Motor cup to arm bond under strike torsion + torque, MS",
+   "value": 1.88,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min",
+    "resolved": 0.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "margin": 1.88,
+   "parts": [
+    "CGE-003-UR",
+    "CGE-003-UL",
+    "CGE-003-LR",
+    "CGE-003-LL",
+    "CGE-002-UR",
+    "CGE-002-UL",
+    "CGE-002-LR",
+    "CGE-002-LL"
+   ]
+  },
+  {
+   "id": "CL-A-MS-ARM-BLADE",
+   "title": "Motor arm 12x10 root bending with the blade-offset strike lever, MS",
+   "value": 0.82,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min",
+    "resolved": 0.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "margin": 0.82,
+   "parts": [
+    "CGE-002-UR",
+    "CGE-002-UL",
+    "CGE-002-LR",
+    "CGE-002-LL"
+   ]
+  },
+  {
+   "id": "CL-A-MS-FATIGUE-HUBWALL",
+   "title": "Hub arm-socket wall, 2000 cycles to the cap thrust, MS",
+   "value": 1.17,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min",
+    "resolved": 0.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "margin": 1.17,
+   "parts": [
+    "CGE-001"
+   ]
+  },
+  {
+   "id": "CL-A-MS-FATIGUE-ARM",
+   "title": "Arm tube bending amplitude at 4e6 cycles of 1P, MS",
+   "value": 15.32,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min",
+    "resolved": 0.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "margin": 15.32,
+   "parts": [
+    "CGE-002-UR",
+    "CGE-002-UL",
+    "CGE-002-LR",
+    "CGE-002-LL"
    ]
   },
   {
@@ -4502,7 +4701,7 @@ window.VIEWER_DATA = {
     "resolved": 0.0
    },
    "status": "CHECKED",
-   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "margin": 0.6,
    "parts": [
     "FIN-002-R",
@@ -4520,7 +4719,7 @@ window.VIEWER_DATA = {
     "resolved": 0.0
    },
    "status": "CHECKED",
-   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "margin": 3.44,
    "parts": [
     "FIN-001-R",
@@ -4538,7 +4737,7 @@ window.VIEWER_DATA = {
     "resolved": 0.0
    },
    "status": "CHECKED",
-   "how": "Re-run qp/A/structures/iter2_run.py (FE, 1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond before the wing is cut.",
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "margin": 2.87,
    "parts": [
     "CGE-004",

@@ -1,0 +1,615 @@
+{
+ "id": "detail-avionics",
+ "size": [
+  1600,
+  1000
+ ],
+ "scene": "studio",
+ "engine": "CYCLES",
+ "device": "GPU",
+ "samples": 64,
+ "render_s": 80.83,
+ "explode": 0.0,
+ "camera": {
+  "preset": "closeup",
+  "az_deg": 30,
+  "el_deg": 42,
+  "ortho": false,
+  "lens_mm": 70,
+  "location_m": [
+   -0.368,
+   -0.2306,
+   0.4212
+  ],
+  "fit": [
+   "CGE-008",
+   "PRP-003",
+   "PWR-001",
+   "AVN-001",
+   "AVN-002"
+  ],
+  "frame": [
+   0.22,
+   0.78,
+   0.07,
+   0.93
+  ]
+ },
+ "caption": {
+  "title": "Avionics plate, ESC and pack",
+  "sub": "Everything on the upper wing surface behind the hub; pack strapped into the tray"
+ },
+ "subject_px": [
+  -1220,
+  -320,
+  3490,
+  1985
+ ],
+ "callouts": [
+  {
+   "item": "AVN-002",
+   "x": 848.8,
+   "y": 351.7,
+   "title": "AVN-002",
+   "text": "Flight controller",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.045,
+    -0.0032,
+    0.0358
+   ]
+  },
+  {
+   "item": "AVN-003",
+   "x": 1218.3,
+   "y": 304.5,
+   "title": "AVN-003",
+   "text": "ELRS receiver",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.1196,
+    -0.0504,
+    0.0151
+   ]
+  },
+  {
+   "item": "AVN-004",
+   "x": 698.3,
+   "y": 329.7,
+   "title": "AVN-004",
+   "text": "GPS + compass",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.0511,
+    0.0353,
+    0.0216
+   ]
+  },
+  {
+   "item": "AVN-005",
+   "x": 1053.3,
+   "y": 476.0,
+   "title": "AVN-005",
+   "text": "Airspeed sensor",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.0495,
+    -0.0466,
+    0.0191
+   ]
+  },
+  {
+   "item": "PRP-003",
+   "x": 939.9,
+   "y": 228.7,
+   "title": "PRP-003",
+   "text": "4-in-1 ESC",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.1124,
+    0.0119,
+    0.0161
+   ]
+  },
+  {
+   "item": "PWR-001",
+   "x": 639.8,
+   "y": 609.8,
+   "title": "PWR-001",
+   "text": "4S 2300 mAh pack",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    -0.0275,
+    -0.0002,
+    0.0249
+   ]
+  }
+ ],
+ "shown": [
+  {
+   "id": "WNG-001",
+   "role": "ghost",
+   "name": "Wing core, XPS 25 kg/m3 + tape skin + glue + hinge tape (lumped)",
+   "status": "MODELLED",
+   "mass_g": 100.1,
+   "subsystem": "wing",
+   "bbox_px": [
+    -828,
+    -320,
+    3490,
+    1750
+   ]
+  },
+  {
+   "id": "CGE-008",
+   "role": "context",
+   "name": "Pack tray (66 x 109 mm plate, integral lips at the trim ends, lead notch; 4.0 g at 44 mm scaled by plate area + longer walls, EST)",
+   "status": "MODELLED",
+   "mass_g": 3.8,
+   "subsystem": "cage",
+   "bbox_px": [
+    350,
+    399,
+    1022,
+    853
+   ]
+  },
+  {
+   "id": "PRP-003",
+   "role": "context",
+   "name": "ESC SpeedyBee BLS 35A Mini V2 4-in-1 with leads",
+   "status": "MODELLED",
+   "mass_g": 20.0,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    848,
+    197,
+    1072,
+    358
+   ]
+  },
+  {
+   "id": "PWR-001",
+   "role": "context",
+   "name": "Pack Tattu 2300 mAh 4S 75C",
+   "status": "MODELLED",
+   "mass_g": 270.0,
+   "subsystem": "power",
+   "bbox_px": [
+    400,
+    168,
+    984,
+    771
+   ]
+  },
+  {
+   "id": "PWR-002",
+   "role": "context",
+   "name": "Pack strap 25 mm hook-and-loop (round pack and tray)",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "subsystem": "power",
+   "bbox_px": [
+    383,
+    380,
+    976,
+    841
+   ]
+  },
+  {
+   "id": "AVN-001",
+   "role": "context",
+   "name": "Avionics plate",
+   "status": "MODELLED",
+   "mass_g": 8.0,
+   "subsystem": "avionics",
+   "bbox_px": [
+    592,
+    144,
+    1252,
+    547
+   ]
+  },
+  {
+   "id": "AVN-007",
+   "role": "context",
+   "name": "Foam-tape pads x4 (FC hard mount, 3.0 mm)",
+   "status": "MODELLED",
+   "mass_g": 1.0,
+   "subsystem": "avionics",
+   "bbox_px": [
+    783,
+    324,
+    957,
+    447
+   ]
+  },
+  {
+   "id": "AVN-002",
+   "role": "context",
+   "name": "Flight controller Kakute F405 Wing Mini",
+   "status": "MODELLED",
+   "mass_g": 17.0,
+   "subsystem": "avionics",
+   "bbox_px": [
+    782,
+    244,
+    960,
+    439
+   ]
+  },
+  {
+   "id": "HWC-001",
+   "role": "context",
+   "name": "FC mounting screws: 4 x M2 x 25 pan screw (stock)",
+   "status": "MODELLED",
+   "mass_g": 2.97,
+   "subsystem": "avionics",
+   "bbox_px": [
+    793,
+    249,
+    949,
+    444
+   ]
+  },
+  {
+   "id": "HWC-003",
+   "role": "context",
+   "name": "FC mounting nuts: 4 x M2 thin nut (DIN 439 1.2 mm) in the plate hex pockets",
+   "status": "MODELLED",
+   "mass_g": 0.41,
+   "subsystem": "avionics",
+   "bbox_px": [
+    793,
+    341,
+    946,
+    448
+   ]
+  },
+  {
+   "id": "AVN-003",
+   "role": "context",
+   "name": "Receiver RP3 V2 ELRS",
+   "status": "MODELLED",
+   "mass_g": 4.6,
+   "subsystem": "avionics",
+   "bbox_px": [
+    1136,
+    161,
+    1320,
+    357
+   ]
+  },
+  {
+   "id": "AVN-004",
+   "role": "context",
+   "name": "GPS TBS M10Q + compass",
+   "status": "MODELLED",
+   "mass_g": 13.5,
+   "subsystem": "avionics",
+   "bbox_px": [
+    614,
+    269,
+    776,
+    386
+   ]
+  },
+  {
+   "id": "AVN-005",
+   "role": "context",
+   "name": "Airspeed sensor MS4525 board",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "subsystem": "avionics",
+   "bbox_px": [
+    1002,
+    437,
+    1101,
+    518
+   ]
+  },
+  {
+   "id": "AVN-008",
+   "role": "ghost",
+   "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead pad runs; notches for the 4 phase bundles and the battery tail",
+   "status": "MODELLED",
+   "mass_g": 9.6,
+   "subsystem": "avionics",
+   "bbox_px": [
+    660,
+    113,
+    1138,
+    566
+   ]
+  },
+  {
+   "id": "AVN-006",
+   "role": "context",
+   "name": "Pitot probe",
+   "status": "MODELLED",
+   "mass_g": 5.0,
+   "subsystem": "avionics",
+   "bbox_px": [
+    -1220,
+    -62,
+    -575,
+    325
+   ]
+  },
+  {
+   "id": "HRN-002",
+   "role": "context",
+   "name": "XT60 female + 14 AWG tail to the ESC (modelled)",
+   "status": "MODELLED",
+   "mass_g": 8.0,
+   "subsystem": "harness",
+   "bbox_px": [
+    667,
+    140,
+    757,
+    216
+   ]
+  },
+  {
+   "id": "E-HRN-12",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    712,
+    129,
+    972,
+    223
+   ]
+  },
+  {
+   "id": "E-HRN-02",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    -745,
+    -261,
+    884,
+    783
+   ]
+  },
+  {
+   "id": "E-HRN-03",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    572,
+    280,
+    2079,
+    862
+   ]
+  },
+  {
+   "id": "E-HRN-04",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    -311,
+    114,
+    909,
+    973
+   ]
+  },
+  {
+   "id": "E-HRN-05",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    596,
+    254,
+    1603,
+    1985
+   ]
+  },
+  {
+   "id": "E-HRN-06",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    832,
+    204,
+    1005,
+    408
+   ]
+  },
+  {
+   "id": "E-HRN-07",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    197,
+    -27,
+    897,
+    333
+   ]
+  },
+  {
+   "id": "E-HRN-08",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    914,
+    325,
+    1942,
+    672
+   ]
+  },
+  {
+   "id": "E-HRN-09",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    893,
+    235,
+    1181,
+    344
+   ]
+  },
+  {
+   "id": "E-HRN-10",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    704,
+    231,
+    833,
+    343
+   ]
+  },
+  {
+   "id": "E-HRN-11",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    859,
+    322,
+    1023,
+    464
+   ]
+  }
+ ],
+ "hidden": [
+  "CGE-001",
+  "CGE-002-LL",
+  "CGE-002-LR",
+  "CGE-002-UL",
+  "CGE-002-UR",
+  "CGE-003-LL",
+  "CGE-003-LR",
+  "CGE-003-UL",
+  "CGE-003-UR",
+  "CGE-004",
+  "CGE-005-L",
+  "CGE-005-R",
+  "CGE-006",
+  "CGE-007-L",
+  "CGE-007-R",
+  "E-HRN-01",
+  "FIN-001-L",
+  "FIN-001-R",
+  "FIN-002-L",
+  "FIN-002-R",
+  "FIN-003-L",
+  "FIN-003-R",
+  "FIN-004-L",
+  "FIN-004-R",
+  "FIN-005-L",
+  "FIN-005-R",
+  "FIN-006-L",
+  "FIN-006-R",
+  "GER-001-LL",
+  "GER-001-LR",
+  "GER-001-UL",
+  "GER-001-UR",
+  "GER-002-LL",
+  "GER-002-LR",
+  "GER-002-UL",
+  "GER-002-UR",
+  "HRD-001",
+  "HRN-001",
+  "HWC-002-L",
+  "HWC-002-R",
+  "MEC-001-L",
+  "MEC-001-R",
+  "MEC-002-L",
+  "MEC-002-R",
+  "MEC-003-L",
+  "MEC-003-R",
+  "MEC-004-L",
+  "MEC-004-R",
+  "MEC-005-L",
+  "MEC-005-R",
+  "PRP-001-LL",
+  "PRP-001-LR",
+  "PRP-001-UL",
+  "PRP-001-UR",
+  "PRP-002-LL",
+  "PRP-002-LR",
+  "PRP-002-UL",
+  "PRP-002-UR",
+  "PRP-004-LL",
+  "PRP-004-LR",
+  "PRP-004-UL",
+  "PRP-004-UR",
+  "PRP-005-LL",
+  "PRP-005-LR",
+  "PRP-005-UL",
+  "PRP-005-UR",
+  "WNG-002",
+  "WNG-003-C",
+  "WNG-004-L",
+  "WNG-004-R",
+  "WNG-005-L",
+  "WNG-005-R",
+  "WNG-006-L",
+  "WNG-006-R",
+  "WNG-007-L",
+  "WNG-007-R",
+  "WNG-008-LL",
+  "WNG-008-LU",
+  "WNG-008-RL",
+  "WNG-008-RU",
+  "WNG-009-L",
+  "WNG-009-R",
+  "WNG-010-L",
+  "WNG-010-R"
+ ],
+ "clipped": [],
+ "legend": [
+  "context",
+  "ghost"
+ ],
+ "files": {
+  "png": "detail-avionics.png",
+  "jpg": "detail-avionics.jpg"
+ }
+}

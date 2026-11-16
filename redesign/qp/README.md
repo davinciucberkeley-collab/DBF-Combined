@@ -32,13 +32,13 @@ The electronics and flight software:
 
 | Number | Value | Source |
 |---|---|---|
-| Take-off mass, predicted | 1,454 g itemised / 1,459 g flat rule `EST` (target ≤ 1,460 since D-195, weigh-in gate 1,470; 1 g of room after D-196) | `A/MASS-GATE.md` s10 |
-| Basic mass (CAD) | 1,263.7 g, CG 21.1 mm aft of LE (band 19-26; trim ends 19.4 / 23.3), SM 8.0 % `EST` | `A/sitl/cad_mass.json` |
+| Take-off mass, predicted | 1,450 g itemised / 1,455.6 g flat rule `EST` (target ≤ 1,460 since D-195, weigh-in gate 1,470; 4 g of room after D-198) | `A/MASS-GATE.md` s10 |
+| Basic mass (CAD) | 1,259.7 g, CG 21.3 mm aft of LE (band 19-26; trim ends 19.6 / 23.5), SM 7.9 % `EST` | `A/sitl/cad_mass.json` |
 | Hover T/W at 1.46 kg, spin-capped | 2.35 fresh, 1.86 sagged `EST` (transition window ±5.6 %) | `A/mission_gate_a.py` |
 | Cruise to BATT_LOW at 1.46 kg, 17 m/s | 4.27 min (need 3.41) `EST` | `A/mission_gate_a.py` |
 | Elevon flutter, lowest onset (with damper) | 38.5 m/s hot `EST` (line 28.8); wing 33.4 m/s fins off | `A/structures/flutter_d195.md` |
 | BOM total | $1,775.09; +$105.08 margin if unverified lines run 30 % over (G7 PASS) | `A/bom_a.py` |
-| 3-D gates | collision 0 at neutral, ±20° and ±21°; assembly 35/35 steps, 96/96 parts | `A/cad/out/REPORT.md`, `ASSEMBLY.md` |
+| 3-D gates | collision 0 at neutral, ±20° and ±21°; assembly 41 steps (5 are wire threading / laying markers), 97/97 parts; wires: 4.27 strand-m exposed (was 9.09), `../review/QP-5/HARNESS-ENCLOSED.md` | `A/cad/out/REPORT.md`, `ASSEMBLY.md` |
 
 Nothing is bought, weighed, built or flown.
 

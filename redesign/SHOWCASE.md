@@ -7,6 +7,46 @@ what is finished and what is not is in [STATUS.md](STATUS.md); next steps for th
 
 > **Interactive version:** [`site/index.html`](site/index.html) is the whole programme as one web app: a rotatable 3-D model of the K09-L (aircraft, inside & wiring, structure, exploded), the clickable morphological chart, team, subsystems, simulations, status and documents. Open it from a local clone, or online once GitHub Pages is enabled for this branch.
 
+## Concept A (current design, D-182)
+
+![Concept A in cruise attitude](showcase/concept-a/renders/hero-iso.webp)
+*Concept A in cruise attitude: a 0.90 m flying wing with two fins and a four-arm motor cage carrying four APC 9x4.5MR
+props. Rendered in Blender from the CAD model in [`qp/A/cad`](qp/A/cad) (real part geometry, no stand-ins).*
+
+**How it flies** ([MP4](showcase/concept-a/animation/a-how-it-flies.mp4), 20 s; the real blades spin and are drawn with a blur fan):
+vertical take-off on the fin tips, 90 degree pitch-over to cruise at 17 m/s, back-transition, landing. Phase timing is illustrative.
+
+**How it is built** ([whole build, MP4](showcase/concept-a/animation/a-build.mp4)): the 41 steps (35 place parts, 5 thread or lay wires, plus the bay cover) of [`a_assembly_plan.py`](qp/A/cad/a_assembly_plan.py), grouped in 10 stages, with the
+direction and travel of the swept-path check ([`ASSEMBLY.md`](qp/A/cad/out/ASSEMBLY.md), 35 of 35 clear). Approach distances under 70 mm are drawn
+from 70 mm along the same direction (that extra length is not part of the check). One clip per stage:
+
+1. [Wing core and spar](showcase/concept-a/animation/stage-01.mp4) ([still](showcase/concept-a/animation/stage-01.webp))
+2. [Cage unit: hub, arms, motors, props](showcase/concept-a/animation/stage-02.mp4) ([still](showcase/concept-a/animation/stage-02.webp))
+3. [Rib saddles, pack tray, hinge dampers](showcase/concept-a/animation/stage-03.mp4) ([still](showcase/concept-a/animation/stage-03.webp))
+4. [Fin ribs and rib fairings](showcase/concept-a/animation/stage-04.mp4) ([still](showcase/concept-a/animation/stage-04.webp))
+5. [Elevons, balance strips, lens caps](showcase/concept-a/animation/stage-05.mp4) ([still](showcase/concept-a/animation/stage-05.webp))
+6. [Fins: fairings, root blocks, tubes](showcase/concept-a/animation/stage-06.mp4) ([still](showcase/concept-a/animation/stage-06.webp))
+7. [Landing feet](showcase/concept-a/animation/stage-07.mp4) ([still](showcase/concept-a/animation/stage-07.webp))
+8. [Servos, pushrods, horns](showcase/concept-a/animation/stage-08.mp4) ([still](showcase/concept-a/animation/stage-08.webp))
+9. [Avionics: pitot, plate, ESC, FC](showcase/concept-a/animation/stage-09.mp4) ([still](showcase/concept-a/animation/stage-09.webp))
+10. [Pack, XT60, strap](showcase/concept-a/animation/stage-10.mp4) ([still](showcase/concept-a/animation/stage-10.webp))
+
+| | |
+|---|---|
+| ![hover-pose](showcase/concept-a/renders/hover-pose.webp) <br> Standing nose-up on its four fin-tip feet (take-off and landing pose). | ![exploded](showcase/concept-a/renders/exploded.webp) <br> Exploded view, labelled by subsystem. |
+| ![cutaway-xray](showcase/concept-a/renders/cutaway-xray.webp) <br> X-ray: cage, pack tray, pack, flight controller, ESC and the harness. | ![front](showcase/concept-a/renders/front.webp) <br> Front view (orthographic). |
+| ![side](showcase/concept-a/renders/side.webp) <br> Left side view (orthographic). | ![top](showcase/concept-a/renders/top.webp) <br> Top view (orthographic), nose up. |
+| ![detail-wing](showcase/concept-a/renders/detail-wing.webp) <br> Wing: XPS core (ghosted), carbon spar, plugs, elevons, balance strips, hinge dampers. | ![detail-hub](showcase/concept-a/renders/detail-hub.webp) <br> Hub and cage: printed hub, CF arms, bridge tube, V struts, pack tray. |
+| ![detail-propulsion](showcase/concept-a/renders/detail-propulsion.webp) <br> Propulsion station: MN2212 on a canted cup, APC 9x4.5MR prop, adapter, spinner nut. | ![detail-linkage](showcase/concept-a/renders/detail-linkage.webp) <br> Elevon linkage: servo, arm, pushrod, horn, balance strip, hinge damper. |
+| ![detail-avionics](showcase/concept-a/renders/detail-avionics.webp) <br> Avionics plate, 4-in-1 ESC and pack in the tray. | ![detail-fin](showcase/concept-a/renders/detail-fin.webp) <br> Fin: carbon tube, rib tube on a spar saddle, root block, fairing, shoes and pads. |
+| ![detail-foot](showcase/concept-a/renders/detail-foot.webp) <br> Landing foot: printed shoe and EVA/PE pad. | ![detail-harness](showcase/concept-a/renders/detail-harness.webp) <br> Harness: phase leads inside the arm tubes (arms ghosted), servo leads in foam grooves, bay cover ghosted, XT60. |
+
+No transport-box render yet: `qp/A` defines the packed envelope (0.90 x 0.50 x 0.39 m) but has no box CAD. General arrangement:
+[showcase/concept-a/drawing/a-sheet.svg](showcase/concept-a/drawing/a-sheet.svg). Regenerate (details in the script docstrings): `showcase/tools/render_showcase.py --root qp/A/cad/model --spec blender/specs/showcase-a.json`, `showcase/animation/render_animation.py --concept a`, `showcase/concept-a/render_build_a.py`,
+then `showcase/concept-a/publish_assets.py`.
+
+## K09-L (previous design, kept as the record)
+
 **How it flies**: nothing tilts mechanically; differential thrust between the top-side and belly-side motors rotates the whole aircraft, helped by the elevons (20 s, [MP4 with full quality](showcase/animation/k09l-how-it-flies.mp4)):
 
 ![K09-L flight sequence: vertical take-off, 90° transition, cruise, back-transition, vertical landing](showcase/animation/k09l-how-it-flies.gif)

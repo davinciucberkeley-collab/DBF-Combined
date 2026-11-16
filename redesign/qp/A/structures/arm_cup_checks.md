@@ -6,7 +6,7 @@ Reproduce: `python -I redesign/qp/A/structures/arm_cup_checks.py`. Limit loads x
 - Arm 12x10 CFRP: I 527 mm4, Z 87.8 mm3, EI 36.9 N m2 (E 70 GPa nom; kd 61 GPa gives 32.1); lever to the motor axis 246 mm.
 - Thrust at the 0.90 spin cap 8.81 N / shaft torque 130 N mm (prop_a.py: APC 9x4.5MR PER3 table, 9349 rpm, P = 128 W, Q = P/omega); uncapped fault 10.38 N / 153 N mm at 10142 rpm (structures_a.py: the 0.153 N m value). Hover 3.96 N per motor (prop_a.py, 1.50 kg).
 - 1P unbalance 1 g mm (iter3_run.md EST): force 0.96 N at the cap rpm, 0.63 N at cruise 7,600 rpm.
-- Cup (wing.py L575-584): plate 33 x 33 x 5 mm (corner R 6), 4 holes 2.9 mm on 19 x 16; arm sleeve OD 19 / ID 12 / 28.5 mm long (y -25 .. +3.5); 25 mm embed, epoxy. **There are no screw bosses and no nut: the screws are M2.5x8 SHCS with heads on the plate REAR face, threading 3 mm into the tapped aluminium motor base** (propulsion.py `_m25_screw`, E-PRP STACK eng 3.0). The motor is pulled away from the plate by thrust, so the head bears on the PETG (pull-through) and the thread is loaded in tension.
+- Cup (wing.py L575-584): plate 33 x 33 x 5 mm (corner R 6), 4 holes 2.9 mm on 19 x 16; arm sleeve OD 19.2 / ID 12.2 (0.1 mm epoxy gap, D-198) / 28.5 mm long (y -25 .. +3.5) + a 1.0 mm wall lead collar y 3.5 .. 8.8 and a 4.8 mm lead hole through the plate at y 5.5 mm (D-198; net plate section 30.3 x 5 mm at the sleeve end); 25 mm embed, epoxy. **There are no screw bosses and no nut: the screws are M2.5x8 SHCS with heads on the plate REAR face, threading 3 mm into the tapped aluminium motor base** (propulsion.py `_m25_screw`, E-PRP STACK eng 3.0). The motor is pulled away from the plate by thrust, so the head bears on the PETG (pull-through) and the thread is loaded in tension.
 - Strike (structures_a.py: 30 N EST): S1 axial 30 N along the shaft; S2 transverse 30 N at the prop plane 47 mm above the arm axis (35 mm above the motor base face, EST); S3 tangential blade stop, torque 2.4 N m about the shaft (r 80 mm EST). The repo's existing 7.4 N m arm-root number assumes force only; S3 adds the blade offset to the arm-root moment (arm row below).
 
 ## 1. Table
@@ -16,7 +16,7 @@ Reproduce: `python -I redesign/qp/A/structures/arm_cup_checks.py`. Limit loads x
 | Thread strip in tapped Al motor base, 3.0 mm engagement (2.0 min) | 5.5 N/screw | 1.36 MPa | 90.0 MPa | +65.13 | PASS (base alloy and thread depth not published (EST); min engagement used) |
 | Head pull-through: PETG bearing under the 4.5 mm head (annulus 9.3 mm2) | 5.5 N/screw | 1.26 MPa | 20.0 MPa | +14.82 | PASS (no counterbore, no washer) |
 | Plate punching shear round the head (pi x 4.5 x 5 mm), cross-layer allowable | 5.5 N/screw | 0.17 MPa | 9.5 MPa | +56.11 | PASS (printed with the shaft axis up: layer plane = plate plane (EST); worst case interlayer allowable used) |
-| Plate bending, cantilever 6 mm past the sleeve end (2 screws, section 33 x 5 mm) | 65 N mm | 1.03 MPa | 9.5 MPa | +8.26 | PASS (plate in bending uses the interlayer allowable (worst)) |
+| Plate bending, cantilever 6 mm past the sleeve end (2 screws, net section 30.3 x 5 mm after the D-198 lead hole) | 65 N mm | 1.12 MPa | 9.5 MPa | +7.51 | PASS (plate in bending uses the interlayer allowable (worst)) |
 | Hole bearing, motor torque 0.130 N m shared on 2 of 4 screws (hole 2.9 x 5 mm) | 5.2 N/screw | 0.78 MPa | 20.0 MPa | +24.62 | PASS (friction of the clamped base ignored) |
 | Cup-to-arm bond (25 mm embed, 12 mm tube), thrust shear + torque couple | 8.8 N, 130 N mm | 0.03 MPa | 2.0 MPa | +63.02 | PASS (end-loaded sleeve: no thrust couple (thrust line passes through the arm axis); allowable E-FIN-13 EST) |
 | Sleeve wall hoop at the mouth, torque couple (3.5 mm wall, 6 mm bearing patch) | 5 N | 0.34 MPa | 20.0 MPa | +57.66 | PASS (same ring model as qp5_checks s2) |
@@ -26,7 +26,7 @@ Reproduce: `python -I redesign/qp/A/structures/arm_cup_checks.py`. Limit loads x
 | Strike S2 transverse 30 N (35 mm above base face): worst screw tension, + hover thrust share | 1050 N mm -> 33.8 N/screw | 7.84 MPa | 20.0 MPa | +1.55 | PASS (head pull-through; a blade force along z loads the 16 mm axis) |
 | Strike S2: M2.5 screw tension | 33.8 N/screw | 17.20 MPa | 450.0 MPa | +25.16 | PASS |
 | Strike S2: thread strip, 2.0 mm min engagement | 33.8 N/screw | 8.44 MPa | 90.0 MPa | +9.67 | PASS |
-| Strike S2: plate cantilever bending beyond the sleeve end | 406 N mm | 6.36 MPa | 9.5 MPa | +0.49 | PASS |
+| Strike S2: plate cantilever bending beyond the sleeve end | 406 N mm | 6.92 MPa | 9.5 MPa | +0.37 | PASS |
 | Strike S3 blade stop: hole bearing, torque 2.4 N m on 2 of 4 screws | 97 N/screw | 14.37 MPa | 20.0 MPa | +0.39 | PASS |
 | Strike S3: M2.5 screw shear (shank, 2 screws), single shear | 97 N/screw | 49.17 MPa | 270.0 MPa | +4.49 | PASS (friction of the clamped base would share this load) |
 | Strike S2/S3: cup-to-arm bond, torsion 30 N x 47 mm + torque couple 2.4 N m / 25 mm | 1.41 N m + 2.4 N m | 0.69 MPa | 2.0 MPa | +1.88 | PASS (vector sum of the two shear flows (EST convention of iter2_margins s1)) |
@@ -43,7 +43,7 @@ Reproduce: `python -I redesign/qp/A/structures/arm_cup_checks.py`. Limit loads x
 | FATIGUE hub arm-socket wall, 0 -> cap thrust cycles, 6 mm patch | 87 N | 4.60 MPa | 10.0 MPa | +1.17 | PASS (0.5 x static at ~1e3-1e4 cycles EST; the l = 12 mm patch halves it) |
 | FATIGUE cup-to-arm bond, 1P couple + torque ripple | 1P 2.07 N at 47 mm | 0.01 MPa | 0.6 MPa | +66.22 | PASS |
 | FATIGUE cup head pull-through (PETG), amplitude per screw | 2.8 N | 0.30 MPa | 4.0 MPa | +12.46 | PASS |
-| FATIGUE cup plate cantilever bending, amplitude | 33 N mm | 0.24 MPa | 1.9 MPa | +6.88 | PASS (interlayer endurance 0.20 x 9.5 MPa) |
+| FATIGUE cup plate cantilever bending, amplitude | 33 N mm | 0.26 MPa | 1.9 MPa | +6.25 | PASS (interlayer endurance 0.20 x 9.5 MPa) |
 | FATIGUE M2.5 screw, amplitude (joint stiffness share 0.25 of the load; preload not published) | 2.8 N | 0.20 MPa | 56.2 MPa | +275.09 | PASS (loosening, not fatigue, is the risk: threadlocker + bench retorque) |
 | Arm tip deflection at the cap (kd E 61 GPa, cantilever, rigid hub) | 8.8 N | 1.36 mm | - (info) | | INFO (nom E 70: 1.19 mm) |
 | Thrust-line tilt at the cap: arm slope + torque slope (kd), toward the hub | 8.8 N + 130 N mm | 0.48 + 0.06 deg | - (no limit in the repo; info) | | INFO (lateral thrust 0.073 N per motor (0.8 % of thrust), same sense on the 4 arms (toward the hub): no net force, a symmetric trim of the 17 deg cant) |

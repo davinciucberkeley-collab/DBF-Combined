@@ -392,7 +392,7 @@ for s in 'RL':
 P('CGE-001', 'Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 2.0 mm arm-socket mouth walls, 1.2 mm sleeve (D-196), 0.8 mm webs, mass = drawn volume x 1.27)', 'cage', round(hub_mass_g(), 1), 'PETG (printed)')
 for s in ST:
     P('CGE-002-' + s, 'Arm 12x10 x 0.245 (%s)' % s, 'cage', round(tube_g(0.245, ARM_OD, ARM_ID), 1), 'CFRP tube')
-    P('CGE-003-' + s, 'Motor cup (%s; QP-4 FIXES 5 -> 4 g, EST, C1 to re-check prop-strike)' % s, 'cage', 4.0, 'PETG (printed)')
+    P('CGE-003-' + s, 'Motor cup (%s; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)' % s, 'cage', 4.3, 'PETG (printed)')
 P('CGE-004', 'Bridge 12x10', 'cage', round(tube_g(BR_X1 - BR_X0, BR_OD, BR_ID), 1), 'CFRP tube')
 for s in 'RL':
     P('CGE-005-' + s, 'V strut 6x4.5 (%s)' % s, 'cage', 6.5, 'CFRP tube')
@@ -573,14 +573,21 @@ def build_cage(ctx):
         arm.tube('Y', (0.0, R_IN, 0.0), R_M - R_IN, ARM_OD / 2, ARM_ID / 2, name='arm tube')
         cup = ctx.part('CGE-003-' + st, at=station(st), rotate=mrot(st), rgb=(0.9, 0.9, 0.9))
         cup.prism('X', -0.012, [_rrect(0.0165, 0.0165, CUP_R)], 0.005, name='cup motor plate')
-        cup.tube('Y', (0.0, -0.025, 0.0), 0.0285, 0.0095, ARM_OD / 2, name='cup arm sleeve')
+        cup.tube('Y', (0.0, -0.025, 0.0), 0.0285, 0.0096, ARM_OD / 2 + 0.0001, name='cup arm sleeve (bore 12.2 mm: 0.1 mm epoxy gap round the 12 mm arm, D-198: no coincident cylinder faces)')
         for sy_ in (1, -1):
             for sz_ in (1, -1):
-                cup.cut_cylinder('X', (-0.0125, sy_ * CUP_PAT[0] / 2, sz_ * CUP_PAT[1] / 2), 0.006, 0.00145, name='motor screw hole M2.5 clearance 2.9 mm (ISO 273 medium; pattern V T-Motor drawing)')
+                cup.cut_cylinder('X', (-0.0126, sy_ * CUP_PAT[0] / 2, sz_ * CUP_PAT[1] / 2), 0.0055, 0.00145, name='motor screw hole M2.5 clearance 2.9 mm (ISO 273 medium; pattern V T-Motor drawing)')
         for sz_ in (1, -1):                          # D-197: the y = -9.5 mm screw heads sit in the sleeve wall; print the pocket (was only implied by the seat cut)
-            cup.cut_cylinder('X', (-0.0070, -CUP_PAT[0] / 2, sz_ * CUP_PAT[1] / 2), 0.0030, 0.00250, name='screw head pocket 5.0 mm in the sleeve wall (D-197, structures/arm_cup_checks.md)')
-        cup.cut_cylinder('X', (-0.0125, 0.0, 0.0), 0.006, 0.004, name='motor rear relief 8 mm (EST)')
-        cup.cut_box((-0.0125, -0.003, 0.0105), (-0.0065, 0.003, 0.0175), name='phase-lead slot (open to the plate edge)')
+            cup.cut_cylinder('X', (-0.0072, -CUP_PAT[0] / 2, sz_ * CUP_PAT[1] / 2), 0.0034, 0.00265, name='screw head pocket 5.0 mm in the sleeve wall (D-197, structures/arm_cup_checks.md)')
+        cup.cut_cylinder('X', (-0.0127, 0.0, 0.0), 0.0063, 0.004, name='motor rear relief 8 mm (EST)')
+        # D-198: phase-lead conduit. Lead hole through the plate and sleeve wall into a collar bore (the 4 mm bend stays inside), the lead
+        # then runs inside the arm bore. The old open slot at z 10.5..17.5 (leads outside the arm) is dropped.
+        cup.tube('Y', (0.0, 0.0035, 0.0), 0.0045, 0.0070, ARM_OD / 2 + 0.0001, name='lead collar (D-198, 1.0 mm wall)')
+        cup.cylinder('Y', (0.0, 0.0080, 0.0), 0.0008, 0.0070, name='lead collar end cap (D-198, 0.8 mm)')
+        cup.cut_cylinder('X', (-0.0128, PH_Y, 0.0), 0.0085, PH_HOLE_R, name='phase-lead hole 4.8 mm (D-198)')
+        xa_, za_ = ph_arm_xz(st, R_IN)
+        ctx.components['CGE-001'].cut(fk.Shape('revolve', 'phase-lead hole through the socket floor (D-198)', axis='Y', center=(xa_, R_IN - 0.0030, za_),
+                                               profile=[(0.0, 0.0), (0.0035, 0.0), (0.0035, PH_HOLE_R), (0.0, PH_HOLE_R)]), arm.matrix(), 'phase-lead hole through the socket floor, D-198')
         ctx.seat('CGE-003-' + st, 'CGE-002-' + st, 'arm socket')
         ctx.seat('CGE-001', 'CGE-002-' + st, 'arm socket in the hub')
         ctx.components['CGE-001'].cut(fk.Shape('revolve', 'arm socket bore (12 mm, 25 mm deep)', axis='Y', center=(0.0, R_IN, 0.0),

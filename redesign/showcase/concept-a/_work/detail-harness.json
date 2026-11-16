@@ -1,0 +1,760 @@
+{
+ "id": "detail-harness",
+ "size": [
+  1600,
+  1000
+ ],
+ "scene": "studio",
+ "engine": "CYCLES",
+ "device": "GPU",
+ "samples": 64,
+ "render_s": 83.28,
+ "explode": 0.0,
+ "camera": {
+  "preset": "iso",
+  "az_deg": 30,
+  "el_deg": 40,
+  "ortho": false,
+  "lens_mm": 50,
+  "location_m": [
+   -0.8669,
+   -0.4678,
+   0.7589
+  ],
+  "fit": [
+   "PRP-001-UR",
+   "PRP-001-UL",
+   "PRP-001-LR",
+   "PRP-001-LL",
+   "PRP-003",
+   "PWR-001",
+   "AVN-001"
+  ],
+  "frame": [
+   0.22,
+   0.78,
+   0.07,
+   0.93
+  ]
+ },
+ "caption": {
+  "title": "Wiring harness routing",
+  "sub": "Phase leads run inside the arm tubes (arms ghosted); servo leads in foam grooves; bay cover ghosted; XT60 from the pack"
+ },
+ "subject_px": [
+  135,
+  68,
+  1751,
+  908
+ ],
+ "callouts": [
+  {
+   "item": "E-HRN-02",
+   "x": 637.7,
+   "y": 335.4,
+   "title": "E-HRN-02",
+   "text": "Phase leads, upper right: inside the arm (ghosted)",
+   "detail": "bend >= 4 mm",
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    -0.0746,
+    0.0897,
+    0.064
+   ]
+  },
+  {
+   "item": "E-HRN-04",
+   "x": 671.0,
+   "y": 362.4,
+   "title": "E-HRN-04",
+   "text": "ESC leads, lower right motor",
+   "detail": "bend >= 4 mm",
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    -0.0471,
+    0.0877,
+    0.0292
+   ]
+  },
+  {
+   "item": "E-HRN-07",
+   "x": 705.9,
+   "y": 248.3,
+   "title": "E-HRN-07",
+   "text": "Servo lead, right",
+   "detail": "bend >= 3 mm",
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.0839,
+    0.1471,
+    0.0093
+   ]
+  },
+  {
+   "item": "HRN-002",
+   "x": 838.9,
+   "y": 257.3,
+   "title": "HRN-002",
+   "text": "XT60 pack connector",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.1013,
+    0.0646,
+    0.0203
+   ]
+  },
+  {
+   "item": "PRP-003",
+   "x": 926.3,
+   "y": 278.3,
+   "title": "PRP-003",
+   "text": "4-in-1 ESC",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.1089,
+    0.0099,
+    0.0195
+   ]
+  },
+  {
+   "item": "PWR-001",
+   "x": 832.8,
+   "y": 371.3,
+   "title": "PWR-001",
+   "text": "Flight pack",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    -0.0188,
+    0.0013,
+    0.037
+   ]
+  }
+ ],
+ "shown": [
+  {
+   "id": "WNG-001",
+   "role": "ghost",
+   "name": "Wing core, XPS 25 kg/m3 + tape skin + glue + hinge tape (lumped)",
+   "status": "MODELLED",
+   "mass_g": 100.1,
+   "subsystem": "wing",
+   "bbox_px": [
+    234,
+    68,
+    1751,
+    701
+   ]
+  },
+  {
+   "id": "CGE-001",
+   "role": "ghost",
+   "name": "Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 2.0 mm arm-socket mouth walls, 1.2 mm sleeve (D-196), 0.8 mm webs, mass = drawn volume x 1.27)",
+   "status": "MODELLED",
+   "mass_g": 17.7,
+   "subsystem": "cage",
+   "bbox_px": [
+    697,
+    398,
+    889,
+    565
+   ]
+  },
+  {
+   "id": "CGE-002-UR",
+   "role": "ghost",
+   "name": "Arm 12x10 x 0.245 (UR)",
+   "status": "MODELLED",
+   "mass_g": 13.5,
+   "subsystem": "cage",
+   "bbox_px": [
+    403,
+    110,
+    749,
+    449
+   ]
+  },
+  {
+   "id": "CGE-003-UR",
+   "role": "ghost",
+   "name": "Motor cup (UR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
+   "status": "MODELLED",
+   "mass_g": 4.3,
+   "subsystem": "cage",
+   "bbox_px": [
+    365,
+    83,
+    458,
+    165
+   ]
+  },
+  {
+   "id": "CGE-002-UL",
+   "role": "ghost",
+   "name": "Arm 12x10 x 0.245 (UL)",
+   "status": "MODELLED",
+   "mass_g": 13.5,
+   "subsystem": "cage",
+   "bbox_px": [
+    817,
+    363,
+    1224,
+    483
+   ]
+  },
+  {
+   "id": "CGE-003-UL",
+   "role": "ghost",
+   "name": "Motor cup (UL; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
+   "status": "MODELLED",
+   "mass_g": 4.3,
+   "subsystem": "cage",
+   "bbox_px": [
+    1158,
+    354,
+    1258,
+    424
+   ]
+  },
+  {
+   "id": "CGE-002-LR",
+   "role": "ghost",
+   "name": "Arm 12x10 x 0.245 (LR)",
+   "status": "MODELLED",
+   "mass_g": 13.5,
+   "subsystem": "cage",
+   "bbox_px": [
+    460,
+    481,
+    750,
+    568
+   ]
+  },
+  {
+   "id": "CGE-003-LR",
+   "role": "ghost",
+   "name": "Motor cup (LR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
+   "status": "MODELLED",
+   "mass_g": 4.3,
+   "subsystem": "cage",
+   "bbox_px": [
+    430,
+    534,
+    505,
+    592
+   ]
+  },
+  {
+   "id": "CGE-002-LL",
+   "role": "ghost",
+   "name": "Arm 12x10 x 0.245 (LL)",
+   "status": "MODELLED",
+   "mass_g": 13.5,
+   "subsystem": "cage",
+   "bbox_px": [
+    817,
+    514,
+    1155,
+    846
+   ]
+  },
+  {
+   "id": "CGE-003-LL",
+   "role": "ghost",
+   "name": "Motor cup (LL; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
+   "status": "MODELLED",
+   "mass_g": 4.3,
+   "subsystem": "cage",
+   "bbox_px": [
+    1102,
+    792,
+    1172,
+    877
+   ]
+  },
+  {
+   "id": "CGE-008",
+   "role": "context",
+   "name": "Pack tray (66 x 109 mm plate, integral lips at the trim ends, lead notch; 4.0 g at 44 mm scaled by plate area + longer walls, EST)",
+   "status": "MODELLED",
+   "mass_g": 3.8,
+   "subsystem": "cage",
+   "bbox_px": [
+    725,
+    335,
+    956,
+    475
+   ]
+  },
+  {
+   "id": "PRP-001-UR",
+   "role": "context",
+   "name": "Motor MN2212 V2.0 KV780 (UR)",
+   "status": "MODELLED",
+   "mass_g": 65.0,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    351,
+    93,
+    431,
+    163
+   ]
+  },
+  {
+   "id": "PRP-001-UL",
+   "role": "context",
+   "name": "Motor MN2212 V2.0 KV780 (UL)",
+   "status": "MODELLED",
+   "mass_g": 65.0,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    1166,
+    364,
+    1246,
+    461
+   ]
+  },
+  {
+   "id": "PRP-001-LR",
+   "role": "context",
+   "name": "Motor MN2212 V2.0 KV780 (LR)",
+   "status": "MODELLED",
+   "mass_g": 65.0,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    406,
+    543,
+    478,
+    600
+   ]
+  },
+  {
+   "id": "PRP-001-LL",
+   "role": "context",
+   "name": "Motor MN2212 V2.0 KV780 (LL)",
+   "status": "MODELLED",
+   "mass_g": 65.0,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    1086,
+    826,
+    1165,
+    908
+   ]
+  },
+  {
+   "id": "PRP-003",
+   "role": "context",
+   "name": "ESC SpeedyBee BLS 35A Mini V2 4-in-1 with leads",
+   "status": "MODELLED",
+   "mass_g": 20.0,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    893,
+    267,
+    974,
+    323
+   ]
+  },
+  {
+   "id": "PWR-001",
+   "role": "context",
+   "name": "Pack Tattu 2300 mAh 4S 75C",
+   "status": "MODELLED",
+   "mass_g": 270.0,
+   "subsystem": "power",
+   "bbox_px": [
+    744,
+    258,
+    943,
+    451
+   ]
+  },
+  {
+   "id": "AVN-001",
+   "role": "context",
+   "name": "Avionics plate",
+   "status": "MODELLED",
+   "mass_g": 8.0,
+   "subsystem": "avionics",
+   "bbox_px": [
+    802,
+    250,
+    1039,
+    384
+   ]
+  },
+  {
+   "id": "AVN-007",
+   "role": "context",
+   "name": "Foam-tape pads x4 (FC hard mount, 3.0 mm)",
+   "status": "MODELLED",
+   "mass_g": 1.0,
+   "subsystem": "avionics",
+   "bbox_px": [
+    871,
+    311,
+    933,
+    351
+   ]
+  },
+  {
+   "id": "AVN-002",
+   "role": "context",
+   "name": "Flight controller Kakute F405 Wing Mini",
+   "status": "MODELLED",
+   "mass_g": 17.0,
+   "subsystem": "avionics",
+   "bbox_px": [
+    871,
+    281,
+    934,
+    348
+   ]
+  },
+  {
+   "id": "AVN-003",
+   "role": "context",
+   "name": "Receiver RP3 V2 ELRS",
+   "status": "MODELLED",
+   "mass_g": 4.6,
+   "subsystem": "avionics",
+   "bbox_px": [
+    997,
+    256,
+    1066,
+    322
+   ]
+  },
+  {
+   "id": "AVN-004",
+   "role": "context",
+   "name": "GPS TBS M10Q + compass",
+   "status": "MODELLED",
+   "mass_g": 13.5,
+   "subsystem": "avionics",
+   "bbox_px": [
+    810,
+    292,
+    868,
+    332
+   ]
+  },
+  {
+   "id": "AVN-005",
+   "role": "context",
+   "name": "Airspeed sensor MS4525 board",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "subsystem": "avionics",
+   "bbox_px": [
+    949,
+    347,
+    984,
+    374
+   ]
+  },
+  {
+   "id": "AVN-008",
+   "role": "ghost",
+   "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead pad runs; notches for the 4 phase bundles and the battery tail",
+   "status": "MODELLED",
+   "mass_g": 9.6,
+   "subsystem": "avionics",
+   "bbox_px": [
+    828,
+    237,
+    998,
+    390
+   ]
+  },
+  {
+   "id": "AVN-006",
+   "role": "context",
+   "name": "Pitot probe",
+   "status": "MODELLED",
+   "mass_g": 5.0,
+   "subsystem": "avionics",
+   "bbox_px": [
+    135,
+    174,
+    329,
+    314
+   ]
+  },
+  {
+   "id": "HRN-002",
+   "role": "context",
+   "name": "XT60 female + 14 AWG tail to the ESC (modelled)",
+   "status": "MODELLED",
+   "mass_g": 8.0,
+   "subsystem": "harness",
+   "bbox_px": [
+    825,
+    248,
+    858,
+    275
+   ]
+  },
+  {
+   "id": "E-HRN-01",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    834,
+    264,
+    839,
+    270
+   ]
+  },
+  {
+   "id": "E-HRN-12",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    841,
+    244,
+    937,
+    276
+   ]
+  },
+  {
+   "id": "E-HRN-02",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    388,
+    109,
+    906,
+    452
+   ]
+  },
+  {
+   "id": "E-HRN-03",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    809,
+    294,
+    1229,
+    474
+   ]
+  },
+  {
+   "id": "E-HRN-04",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    444,
+    238,
+    915,
+    570
+   ]
+  },
+  {
+   "id": "E-HRN-05",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    814,
+    286,
+    1155,
+    865
+   ]
+  },
+  {
+   "id": "E-HRN-06",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    889,
+    270,
+    950,
+    338
+   ]
+  },
+  {
+   "id": "E-HRN-07",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    644,
+    187,
+    911,
+    314
+   ]
+  },
+  {
+   "id": "E-HRN-08",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    917,
+    311,
+    1276,
+    422
+   ]
+  },
+  {
+   "id": "E-HRN-09",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    910,
+    278,
+    1012,
+    318
+   ]
+  },
+  {
+   "id": "E-HRN-10",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    843,
+    276,
+    890,
+    317
+   ]
+  },
+  {
+   "id": "E-HRN-11",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    899,
+    306,
+    956,
+    356
+   ]
+  }
+ ],
+ "hidden": [
+  "CGE-004",
+  "CGE-005-L",
+  "CGE-005-R",
+  "CGE-006",
+  "CGE-007-L",
+  "CGE-007-R",
+  "FIN-001-L",
+  "FIN-001-R",
+  "FIN-002-L",
+  "FIN-002-R",
+  "FIN-003-L",
+  "FIN-003-R",
+  "FIN-004-L",
+  "FIN-004-R",
+  "FIN-005-L",
+  "FIN-005-R",
+  "FIN-006-L",
+  "FIN-006-R",
+  "GER-001-LL",
+  "GER-001-LR",
+  "GER-001-UL",
+  "GER-001-UR",
+  "GER-002-LL",
+  "GER-002-LR",
+  "GER-002-UL",
+  "GER-002-UR",
+  "HRD-001",
+  "HRN-001",
+  "HWC-001",
+  "HWC-002-L",
+  "HWC-002-R",
+  "HWC-003",
+  "MEC-001-L",
+  "MEC-001-R",
+  "MEC-002-L",
+  "MEC-002-R",
+  "MEC-003-L",
+  "MEC-003-R",
+  "MEC-004-L",
+  "MEC-004-R",
+  "MEC-005-L",
+  "MEC-005-R",
+  "PRP-002-LL",
+  "PRP-002-LR",
+  "PRP-002-UL",
+  "PRP-002-UR",
+  "PRP-004-LL",
+  "PRP-004-LR",
+  "PRP-004-UL",
+  "PRP-004-UR",
+  "PRP-005-LL",
+  "PRP-005-LR",
+  "PRP-005-UL",
+  "PRP-005-UR",
+  "PWR-002",
+  "WNG-002",
+  "WNG-003-C",
+  "WNG-004-L",
+  "WNG-004-R",
+  "WNG-005-L",
+  "WNG-005-R",
+  "WNG-006-L",
+  "WNG-006-R",
+  "WNG-007-L",
+  "WNG-007-R",
+  "WNG-008-LL",
+  "WNG-008-LU",
+  "WNG-008-RL",
+  "WNG-008-RU",
+  "WNG-009-L",
+  "WNG-009-R",
+  "WNG-010-L",
+  "WNG-010-R"
+ ],
+ "clipped": [],
+ "legend": [
+  "context",
+  "ghost"
+ ],
+ "files": {
+  "png": "detail-harness.png",
+  "jpg": "detail-harness.jpg"
+ }
+}

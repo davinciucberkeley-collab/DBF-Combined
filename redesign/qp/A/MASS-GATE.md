@@ -127,3 +127,19 @@ Arm-socket wall 2.0 mm over the 12 mm mouth zone, 1.2 mm bridge sleeve: hub 13.1
 | Structure | 479.3 g | 482.8 g | <= 494 g | CL-A-STRUCT-MASS |
 
 The target now has 1 g of room. Any further growth is cut (fallback: lead strip 15.6 -> 12.8 g, re-run flutter) or re-decided against the 1.47 kg gate.
+
+## 11 D-198 harness enclosure (2026-11-15)
+
+Bay cover AVN-008 (0.6 mm printed PETG, 9.6 g) and lead collars (+0.3 g per cup) are added; the lumped harness remainder is now a bottom-up list (`cad/amodel/electrical.py` `HRN_ITEMS`, 28.1 g, was the 50.9 g remainder of the 110 g avionics allocation). The bottom-up list carries 17.5 g of phase-lead extension wire (route 0.53-0.62 m against the 0.40 m stock leads) that the old lump did not itemise. Detail: `../../review/QP-5/HARNESS-ENCLOSED.md` s4.
+
+| Quantity | D-196 | D-198 | Limit | Source |
+|---|---|---|---|---|
+| CAD basic mass | 1,263.7 g | 1,259.7 g | — | `sitl/cad_mass.json` |
+| CG (CAD) | 21.13 mm | 21.32 mm | band 19-26 | `sitl/cad_mass.json` |
+| CG at the trim ends | 19.42 / 23.26 mm | 19.60 / 23.46 mm | >= 19 / <= 28.5 | CL-A-CG-TRIM-FWD / AFT |
+| Predicted, itemised `EST` | 1,454 g | 1,450 g | — | `mission_gate_a.py` |
+| Predicted, flat rule `EST` | 1,459 g | 1,455.6 g | <= 1,460 (target), 1,470 (gate) | CL-A-MASS-PRED |
+| EST cuts that must be real | 40.8 g | 36.8 g | <= 41.6 g | CL-A-CUTS-REQUIRED |
+| Structure | 482.8 g | 485 g | <= 494 g | CL-A-STRUCT-MASS |
+
+The target has 4 g of room (flat rule). The bottom-up harness list is `EST` apart from the wire mass per metre; weigh the wire when it arrives. The cover adds frontal area in cruise; the drag was not re-modelled (open).

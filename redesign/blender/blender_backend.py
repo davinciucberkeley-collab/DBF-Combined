@@ -865,3 +865,18 @@ def build(examples=True, root=None, mode='material', log=print):
     for sev, code, item, msg in ctx.issues:
         log('%s %s %s: %s' % (sev, code, item, msg))
     return be, ctx, graph, results
+
+
+def solid_tape(be, hex_='#D3DCE6'):
+    """Showcase option (concept A): the 'packing tape' LOOK is a 22 % clear skin that shows the taped-over grooves of the
+    K09-L core. On concept A's plain tape-skinned XPS core and elevons it reads as a ghosted wing, so the showcase
+    renders swap every see-through part material for one opaque light foam-and-tape material (geometry unchanged)."""
+    m = _principled('xps + tape (solid)', srgb(hex_), 0.3, 0.0, 0.15)
+    n = 0
+    for ob in list(be.objects.values()):
+        for slot in ob.material_slots:
+            mat = slot.material
+            if mat is not None and mat.diffuse_color[3] < 0.99:
+                slot.material = m
+                n += 1
+    return n

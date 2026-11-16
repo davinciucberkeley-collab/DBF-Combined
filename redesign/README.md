@@ -3,7 +3,7 @@
 > **Current design (2026-11-15): concept A, a scaled quad tailsitter (D-182).** K09-L, described below, could not be
 > built new within $2,000 (cheapest workable build about $2,577) and is kept as the record. Concept A: 0.90 m wing,
 > 4 x T-Motor MN2212 KV780 on 4S, about 1.46 kg predicted (`EST`), BOM $1,775 of $2,000. Design, reports and status:
-> [qp/README.md](qp/README.md). Decisions D-182 to D-197: [CHANGE-LOG.md](params/CHANGE-LOG.md). The Explorer's 3-D model shows concept A with its real parts; concept A renders and films are being re-made after the wiring re-route.
+> [qp/README.md](qp/README.md). Decisions D-182 to D-197: [CHANGE-LOG.md](params/CHANGE-LOG.md). The Explorer's renders, flight and build films and general-arrangement sheet now show concept A (the K09-L ones are kept as the record).
 
 **Hard constraints (team lead; full text in [CLAUDE.md](../CLAUDE.md)):**
 1. $2,000 total, all bought new (tax, shipping, packs, charger, radio, test gear, spares); the Jacobs Hall Makers Pass is outside it.
@@ -13,7 +13,13 @@
 5. **The CAD looks exactly like the physical aircraft** (2026-11-15): every part at its real shape and size from the vendor drawing or data sheet, real prop blades, no stand-in disks or boxes; unknown dimensions flagged, never invented.
 6. **Limit exposed wiring** (2026-11-15): wires inside the arm tubes, wing-core channels, fairings or covers; any wire left outside the skin is listed with its length and reason, and kept to the minimum.
 
-Status: `PROPOSED` design, frame revision **A1-R5** (2026-11-10). Nothing is `VERIFIED`: no part has been bought,
+![Concept A in cruise attitude, isometric render](showcase/concept-a/renders/hero-iso.webp)
+
+*Concept A (current design) in cruise attitude, from the CAD model in `qp/A/cad`. Films: [how it flies](showcase/concept-a/animation/a-how-it-flies.mp4),
+[whole build](showcase/concept-a/animation/a-build.mp4). The general-arrangement sheet below is K09-L (previous design);
+concept A's is [showcase/concept-a/drawing/a-sheet.svg](showcase/concept-a/drawing/a-sheet.svg).*
+
+**K09-L record below.** Status: `PROPOSED` design, frame revision **A1-R5** (2026-11-10). Nothing is `VERIFIED`: no part has been bought,
 weighed, built or flown. The configuration is reversible until the mid-December order on the conditions in
 [`CONFIGURATION.md`](CONFIGURATION.md). Where things stand: [`STATUS.md`](STATUS.md). What the team does next:
 [`HANDOFF.md`](HANDOFF.md).
@@ -63,7 +69,7 @@ All at the 2.6 kg gate unless stated. Live values: `python -I redesign/team/A1/f
 
 ## General arrangement
 
-![K09-L general arrangement, three views to scale](team/A1/ga-3view.svg)
+![K09-L (previous design) general arrangement, three views to scale](team/A1/ga-3view.svg)
 
 `FIG A1-01 — General arrangement at A1-R5, drawn from params.json by team/A1/draw_ga.py.`
 

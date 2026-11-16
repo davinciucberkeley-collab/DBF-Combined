@@ -1,0 +1,689 @@
+{
+ "_note": "Showcase renders of concept A (D-182, scaled quad tailsitter, 0.90 m wing) for the READMEs and the Explorer. Driver: redesign/showcase/tools/render_showcase.py --root redesign/qp/A/cad/model --spec this file --work redesign/showcase/concept-a/_work --renders redesign/showcase/concept-a/renders. Same keys as showcase.json (K09-L). No transport-box figure: qp/A has no transport/box CAD (TRN-* parts) yet.",
+ "scene": "studio",
+ "solid_tape": true,
+ "flight": [
+  "WNG-*",
+  "FIN-*",
+  "CGE-*",
+  "GER-*",
+  "PRP-*",
+  "MEC-*",
+  "PWR-*",
+  "AVN-*",
+  "HRN-*",
+  "HWC-*",
+  "E-*"
+ ],
+ "figures": [
+  {
+   "id": "hero-iso",
+   "size": [
+    2000,
+    1250
+   ],
+   "annotate": false,
+   "context": [
+    "@flight"
+   ],
+   "camera": {
+    "preset": "iso",
+    "az": 32,
+    "el": 24,
+    "lens": 50,
+    "frame": [
+     0.05,
+     0.95,
+     0.08,
+     0.92
+    ]
+   }
+  },
+  {
+   "id": "hover-pose",
+   "context": [
+    "@flight"
+   ],
+   "rotate_y_deg": 90,
+   "camera": {
+    "preset": "iso",
+    "az": 36,
+    "el": 18,
+    "lens": 50,
+    "frame": [
+     0.16,
+     0.84,
+     0.05,
+     0.95
+    ]
+   },
+   "caption": {
+    "title": "Hover / ground pose: standing nose-up on the four fin-tip feet",
+    "sub": "Tailsitter attitude for take-off and landing; the four props sit at the top, the feet are on the ground"
+   }
+  },
+  {
+   "id": "front",
+   "context": [
+    "@flight"
+   ],
+   "camera": "front",
+   "caption": {
+    "title": "Front view (orthographic)",
+    "sub": "0.90 m flying wing, two fins, four APC 9x4.5MR props on the cage arms"
+   }
+  },
+  {
+   "id": "side",
+   "context": [
+    "@flight"
+   ],
+   "camera": "side",
+   "caption": {
+    "title": "Left side view (orthographic)",
+    "sub": "Cage and props forward of the wing; fin-tip feet aft"
+   }
+  },
+  {
+   "id": "top",
+   "context": [
+    "@flight"
+   ],
+   "camera": "top",
+   "caption": {
+    "title": "Top view (orthographic)",
+    "sub": "Nose to the top of the image"
+   }
+  },
+  {
+   "id": "exploded",
+   "context": [
+    "@flight"
+   ],
+   "hide": [
+    "E-*"
+   ],
+   "sub_explode": {
+    "wing": [
+     0,
+     0,
+     0
+    ],
+    "cage": [
+     -0.22,
+     0,
+     0
+    ],
+    "propulsion": [
+     -0.5,
+     0.1,
+     0
+    ],
+    "avionics": [
+     0.0,
+     0,
+     0.32
+    ],
+    "power": [
+     0,
+     0,
+     0.58
+    ],
+    "harness": [
+     0.0,
+     0,
+     -0.45
+    ],
+    "fins": [
+     0.22,
+     0.22,
+     0
+    ],
+    "landing": [
+     0.44,
+     0.22,
+     0
+    ],
+    "mechanisms": [
+     0.1,
+     0.1,
+     -0.3
+    ]
+   },
+   "sub_override": {
+    "PRP-003": "avionics"
+   },
+   "sub_labels": {
+    "wing": "Wing core, spar, elevons",
+    "cage": "Cage (hub, arms, struts)",
+    "propulsion": "Motors + APC props",
+    "avionics": "Avionics",
+    "power": "Pack + strap",
+    "harness": "XT60",
+    "fins": "Fins",
+    "landing": "Feet",
+    "mechanisms": "Elevon linkage"
+   },
+   "camera": {
+    "preset": "iso",
+    "az": 34,
+    "el": 28,
+    "lens": 50
+   },
+   "caption": {
+    "title": "Exploded view by subsystem",
+    "sub": "Illustrative separation; wiring hidden"
+   }
+  },
+  {
+   "id": "cutaway-xray",
+   "context": [
+    "@flight"
+   ],
+   "xray": [
+    "WNG-001",
+    "FIN-004-*",
+    "FIN-006-*",
+    "WNG-008-*",
+    "AVN-008",
+    "CGE-002-*"
+   ],
+   "callouts": [
+    {
+     "item": "AVN-002",
+     "text": "Flight controller Kakute F405"
+    },
+    {
+     "item": "PWR-001",
+     "text": "4S 2300 mAh pack"
+    },
+    {
+     "item": "CGE-008",
+     "text": "Pack tray"
+    },
+    {
+     "item": "PRP-003",
+     "text": "4-in-1 ESC"
+    },
+    {
+     "item": "E-HRN-02",
+     "text": "Phase leads to the motors"
+    },
+    {
+     "item": "WNG-002",
+     "text": "CF spar 12 x 10"
+    }
+   ],
+   "camera": {
+    "preset": "iso",
+    "az": 38,
+    "el": 38,
+    "lens": 50,
+    "fit": [
+     "WNG-001",
+     "CGE-001",
+     "CGE-002-*",
+     "PRP-001-*",
+     "PRP-002-*"
+    ]
+   },
+   "caption": {
+    "title": "X-ray: cage, pack tray, avionics and wiring",
+    "sub": "Wing core and fairings ghosted"
+   }
+  },
+  {
+   "id": "detail-propulsion",
+   "context": [
+    "PRP-*-UR",
+    "CGE-003-UR",
+    "CGE-002-UR",
+    "CGE-001",
+    "CGE-004",
+    "CGE-005-R",
+    "E-HRN-02"
+   ],
+   "ghost": [
+    "CGE-001"
+   ],
+   "callouts": [
+    {
+     "item": "PRP-001-UR",
+     "text": "T-Motor MN2212 KV780"
+    },
+    {
+     "item": "PRP-002-UR",
+     "text": "APC 9x4.5MR prop (real blade)"
+    },
+    {
+     "item": "PRP-004-UR",
+     "text": "Prop adapter"
+    },
+    {
+     "item": "PRP-005-UR",
+     "text": "Spinner nut"
+    },
+    {
+     "item": "CGE-003-UR",
+     "text": "Canted motor cup (17 deg)"
+    },
+    {
+     "item": "CGE-002-UR",
+     "text": "Arm 12 x 10 CF tube"
+    }
+   ],
+   "camera": {
+    "preset": "closeup",
+    "fit": [
+     "PRP-*-UR",
+     "CGE-003-UR",
+     "CGE-002-UR"
+    ],
+    "az": -35,
+    "el": 22,
+    "lens": 50
+   },
+   "caption": {
+    "title": "Propulsion station (upper right)",
+    "sub": "MN2212 on a canted cup at the end of a CF arm, APC 9x4.5MR prop on its adapter and spinner nut"
+   }
+  },
+  {
+   "id": "detail-hub",
+   "context": [
+    "CGE-*",
+    "WNG-002",
+    "WNG-003-C",
+    "WNG-004-*",
+    "PWR-001",
+    "PRP-003",
+    "WNG-001"
+   ],
+   "ghost": [
+    "WNG-001",
+    "PWR-001"
+   ],
+   "hide": [
+    "E-*"
+   ],
+   "callouts": [
+    {
+     "item": "CGE-001",
+     "text": "Printed hub, 4 arm sockets"
+    },
+    {
+     "item": "CGE-002-UR",
+     "text": "Arm CF 12 x 10"
+    },
+    {
+     "item": "CGE-004",
+     "text": "Bridge tube"
+    },
+    {
+     "item": "CGE-005-R",
+     "text": "V strut to the spar"
+    },
+    {
+     "item": "CGE-006",
+     "text": "Bridge saddle on spar"
+    },
+    {
+     "item": "CGE-008",
+     "text": "Pack tray"
+    }
+   ],
+   "camera": {
+    "preset": "closeup",
+    "fit": [
+     "CGE-001",
+     "CGE-002-*",
+     "CGE-004",
+     "CGE-005-*",
+     "CGE-006",
+     "CGE-008"
+    ],
+    "az": 28,
+    "el": 34,
+    "lens": 50
+   },
+   "caption": {
+    "title": "Hub and cage",
+    "sub": "Hub, arms, bridge tube and V struts clip onto the spar; pack tray bonded to the hub aft face"
+   }
+  },
+  {
+   "id": "detail-linkage",
+   "context": [
+    "MEC-*-R",
+    "HWC-002-R",
+    "WNG-006-R",
+    "WNG-007-R",
+    "WNG-008-R*",
+    "WNG-009-R",
+    "WNG-010-R",
+    "WNG-001",
+    "WNG-002"
+   ],
+   "ghost": [
+    "WNG-001",
+    "WNG-008-RU",
+    "WNG-008-RL"
+   ],
+   "hide": [
+    "E-*"
+   ],
+   "callouts": [
+    {
+     "item": "MEC-001-R",
+     "text": "Servo EMAX ES3054HV"
+    },
+    {
+     "item": "MEC-002-R",
+     "text": "Servo arm"
+    },
+    {
+     "item": "MEC-003-R",
+     "text": "1.2 mm pushrod + clevis"
+    },
+    {
+     "item": "MEC-004-R",
+     "text": "Control horn"
+    },
+    {
+     "item": "WNG-007-R",
+     "text": "Balance lead strip"
+    },
+    {
+     "item": "WNG-009-R",
+     "text": "Hinge damper (silicone)"
+    }
+   ],
+   "camera": {
+    "preset": "closeup",
+    "fit": [
+     "MEC-001-R",
+     "MEC-003-R",
+     "MEC-004-R",
+     "WNG-007-R",
+     "WNG-009-R"
+    ],
+    "az": 15,
+    "el": 50,
+    "lens": 50
+   },
+   "caption": {
+    "title": "Elevon linkage, balance and hinge damper (right)",
+    "sub": "Servo, arm, pushrod and horn; lead balance strip behind lens caps; fluid damper at the elevon tip"
+   }
+  },
+  {
+   "id": "detail-avionics",
+   "context": [
+    "AVN-*",
+    "PRP-003",
+    "PWR-*",
+    "CGE-008",
+    "HWC-001",
+    "HWC-003",
+    "HRN-002",
+    "E-HRN-0[6-9]",
+    "E-HRN-1*",
+    "E-HRN-0[2-5]",
+    "WNG-001"
+   ],
+   "ghost": [
+    "WNG-001",
+    "AVN-008"
+   ],
+   "callouts": [
+    {
+     "item": "AVN-002",
+     "text": "Flight controller"
+    },
+    {
+     "item": "AVN-003",
+     "text": "ELRS receiver"
+    },
+    {
+     "item": "AVN-004",
+     "text": "GPS + compass"
+    },
+    {
+     "item": "AVN-005",
+     "text": "Airspeed sensor"
+    },
+    {
+     "item": "PRP-003",
+     "text": "4-in-1 ESC"
+    },
+    {
+     "item": "PWR-001",
+     "text": "4S 2300 mAh pack"
+    }
+   ],
+   "camera": {
+    "preset": "closeup",
+    "fit": [
+     "AVN-001",
+     "AVN-002",
+     "PRP-003",
+     "PWR-001",
+     "CGE-008"
+    ],
+    "az": 30,
+    "el": 42,
+    "lens": 50
+   },
+   "caption": {
+    "title": "Avionics plate, ESC and pack",
+    "sub": "Everything on the upper wing surface behind the hub; pack strapped into the tray"
+   }
+  },
+  {
+   "id": "detail-fin",
+   "context": [
+    "FIN-*-R",
+    "GER-*-UR",
+    "GER-*-LR",
+    "WNG-001",
+    "WNG-002",
+    "WNG-005-R"
+   ],
+   "ghost": [
+    "WNG-001"
+   ],
+   "callouts": [
+    {
+     "item": "FIN-001-R",
+     "text": "Fin tube 16 x 14 x 0.36 m"
+    },
+    {
+     "item": "FIN-002-R",
+     "text": "Rib tube 14 x 12"
+    },
+    {
+     "item": "FIN-003-R",
+     "text": "Root block"
+    },
+    {
+     "item": "FIN-004-R",
+     "text": "Fin fairing (XPS + tape)"
+    },
+    {
+     "item": "FIN-005-R",
+     "text": "Rib saddle on spar"
+    },
+    {
+     "item": "GER-001-UR",
+     "text": "Foot shoe"
+    }
+   ],
+   "camera": {
+    "preset": "closeup",
+    "fit": [
+     "FIN-001-R",
+     "FIN-002-R",
+     "FIN-003-R",
+     "FIN-005-R",
+     "GER-001-UR",
+     "GER-001-LR"
+    ],
+    "az": -40,
+    "el": 18,
+    "lens": 50
+   },
+   "caption": {
+    "title": "Right fin",
+    "sub": "CF tube through the root block, rib tube clipped to the spar by a saddle, XPS fairing, shoes and pads at the tips"
+   }
+  },
+  {
+   "id": "detail-foot",
+   "context": [
+    "GER-00?-LR",
+    "FIN-001-R",
+    "FIN-003-R",
+    "FIN-004-R"
+   ],
+   "ghost": [
+    "FIN-004-R"
+   ],
+   "callouts": [
+    {
+     "item": "GER-001-LR",
+     "text": "Foot shoe"
+    },
+    {
+     "item": "GER-002-LR",
+     "text": "EVA/PE foot pad 12 x 15 x 30"
+    },
+    {
+     "item": "FIN-001-R",
+     "text": "Fin tube end"
+    }
+   ],
+   "camera": {
+    "preset": "closeup",
+    "fit": [
+     "GER-001-LR",
+     "GER-002-LR"
+    ],
+    "az": 230,
+    "el": 22,
+    "lens": 60
+   },
+   "caption": {
+    "title": "Landing foot (lower right fin tip)",
+    "sub": "Printed shoe on the tube end, foam pad takes the touchdown"
+   }
+  },
+  {
+   "id": "detail-wing",
+   "context": [
+    "WNG-*",
+    "FIN-005-*",
+    "MEC-*"
+   ],
+   "xray": [
+    "WNG-001"
+   ],
+   "callouts": [
+    {
+     "item": "WNG-002",
+     "text": "CF spar 12 x 10 x 0.90 m"
+    },
+    {
+     "item": "WNG-001",
+     "text": "XPS core S5010 (ghosted)"
+    },
+    {
+     "item": "WNG-006-L",
+     "text": "Elevon"
+    },
+    {
+     "item": "WNG-004-L",
+     "text": "Spar plug (strut clamp)"
+    },
+    {
+     "item": "WNG-008-LU",
+     "text": "Lens cap over the balance"
+    },
+    {
+     "item": "WNG-009-L",
+     "text": "Hinge damper"
+    }
+   ],
+   "camera": {
+    "preset": "iso",
+    "az": 205,
+    "el": 50,
+    "lens": 50
+   },
+   "caption": {
+    "title": "Wing: one-piece XPS core, CF spar, two elevons",
+    "sub": "Core ghosted to show the spar, plugs, balance strips and dampers"
+   }
+  },
+  {
+   "id": "detail-harness",
+   "context": [
+    "E-*",
+    "HRN-002",
+    "PWR-001",
+    "AVN-*",
+    "PRP-003",
+    "PRP-001-*",
+    "CGE-008"
+   ],
+   "ghost": [
+    "WNG-001",
+    "CGE-002-*",
+    "CGE-001",
+    "CGE-003-*",
+    "AVN-008"
+   ],
+   "callouts": [
+    {
+     "item": "E-HRN-02",
+     "text": "Phase leads, upper right: inside the arm (ghosted)"
+    },
+    {
+     "item": "E-HRN-04",
+     "text": "ESC leads, lower right motor"
+    },
+    {
+     "item": "E-HRN-07",
+     "text": "Servo lead, right"
+    },
+    {
+     "item": "HRN-002",
+     "text": "XT60 pack connector"
+    },
+    {
+     "item": "PRP-003",
+     "text": "4-in-1 ESC"
+    },
+    {
+     "item": "PWR-001",
+     "text": "Flight pack"
+    }
+   ],
+   "camera": {
+    "preset": "iso",
+    "az": 30,
+    "el": 40,
+    "lens": 50,
+    "fit": [
+     "PRP-001-*",
+     "PRP-003",
+     "PWR-001",
+     "AVN-001"
+    ]
+   },
+   "caption": {
+    "title": "Wiring harness routing",
+    "sub": "Phase leads run inside the arm tubes (arms ghosted); servo leads in foam grooves; bay cover ghosted; XT60 from the pack"
+   }
+  }
+ ]
+}

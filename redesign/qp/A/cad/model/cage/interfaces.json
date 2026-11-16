@@ -34,15 +34,15 @@
   },
   {
    "id": "CGE-003-UR",
-   "name": "Motor cup (UR; QP-4 FIXES 5 -> 4 g, EST, C1 to re-check prop-strike)",
+   "name": "Motor cup (UR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 4.0,
+   "mass_g": 4.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0797,
-    0.2229,
-    0.1543
+    -0.0796,
+    0.2232,
+    0.1544
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -64,15 +64,15 @@
   },
   {
    "id": "CGE-003-UL",
-   "name": "Motor cup (UL; QP-4 FIXES 5 -> 4 g, EST, C1 to re-check prop-strike)",
+   "name": "Motor cup (UL; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 4.0,
+   "mass_g": 4.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0797,
-    -0.2246,
-    0.1519
+    -0.0796,
+    -0.2248,
+    0.1521
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -94,15 +94,15 @@
   },
   {
    "id": "CGE-003-LR",
-   "name": "Motor cup (LR; QP-4 FIXES 5 -> 4 g, EST, C1 to re-check prop-strike)",
+   "name": "Motor cup (LR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 4.0,
+   "mass_g": 4.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0797,
-    0.2246,
-    -0.1519
+    -0.0796,
+    0.2248,
+    -0.1521
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -124,15 +124,15 @@
   },
   {
    "id": "CGE-003-LL",
-   "name": "Motor cup (LL; QP-4 FIXES 5 -> 4 g, EST, C1 to re-check prop-strike)",
+   "name": "Motor cup (LL; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 4.0,
+   "mass_g": 4.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0797,
-    -0.2229,
-    -0.1543
+    -0.0796,
+    -0.2232,
+    -0.1544
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"

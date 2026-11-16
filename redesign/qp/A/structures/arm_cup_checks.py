@@ -90,7 +90,7 @@ P("## 0. Inputs")
 P(f"- Arm 12x10 CFRP: I {I_ARM*1e12:.0f} mm4, Z {Z_ARM*1e9:.1f} mm3, EI {EI_NOM:.1f} N m2 (E 70 GPa nom; kd 61 GPa gives {EI_KD:.1f}); lever to the motor axis {L_ARM*1e3:.0f} mm.")
 P(f"- Thrust at the 0.90 spin cap {T_CAP:.2f} N / shaft torque {Q_CAP*1e3:.0f} N mm (prop_a.py: APC 9x4.5MR PER3 table, {N_CAP:.0f} rpm, P = {tp(N_CAP)[1]:.0f} W, Q = P/omega); uncapped fault {T_UNC:.2f} N / {Q_UNC*1e3:.0f} N mm at {N_UNC:.0f} rpm (structures_a.py: the 0.153 N m value). Hover {T_HOV:.2f} N per motor (prop_a.py, 1.50 kg).")
 P(f"- 1P unbalance 1 g mm (iter3_run.md EST): force {U_UNB*(N_CAP*2*math.pi/60)**2:.2f} N at the cap rpm, {U_UNB*(7600*2*math.pi/60)**2:.2f} N at cruise 7,600 rpm.")
-P("- Cup (wing.py L575-584): plate 33 x 33 x 5 mm (corner R 6), 4 holes 2.9 mm on 19 x 16; arm sleeve OD 19 / ID 12 / 28.5 mm long (y -25 .. +3.5); 25 mm embed, epoxy. **There are no screw bosses and no nut: the screws are M2.5x8 SHCS with heads on the plate REAR face, threading 3 mm into the tapped aluminium motor base** (propulsion.py `_m25_screw`, E-PRP STACK eng 3.0). The motor is pulled away from the plate by thrust, so the head bears on the PETG (pull-through) and the thread is loaded in tension.")
+P("- Cup (wing.py L575-584): plate 33 x 33 x 5 mm (corner R 6), 4 holes 2.9 mm on 19 x 16; arm sleeve OD 19.2 / ID 12.2 (0.1 mm epoxy gap, D-198) / 28.5 mm long (y -25 .. +3.5) + a 1.0 mm wall lead collar y 3.5 .. 8.8 and a 4.8 mm lead hole through the plate at y 5.5 mm (D-198; net plate section 30.3 x 5 mm at the sleeve end); 25 mm embed, epoxy. **There are no screw bosses and no nut: the screws are M2.5x8 SHCS with heads on the plate REAR face, threading 3 mm into the tapped aluminium motor base** (propulsion.py `_m25_screw`, E-PRP STACK eng 3.0). The motor is pulled away from the plate by thrust, so the head bears on the PETG (pull-through) and the thread is loaded in tension.")
 P(f"- Strike (structures_a.py: 30 N EST): S1 axial 30 N along the shaft; S2 transverse 30 N at the prop plane {X_PROP*1e3:.0f} mm above the arm axis ({LEV*1e3:.0f} mm above the motor base face, EST); S3 tangential blade stop, torque {F_STRIKE*R_B:.1f} N m about the shaft (r {R_B*1e3:.0f} mm EST). The repo's existing 7.4 N m arm-root number assumes force only; S3 adds the blade offset to the arm-root moment (arm row below).")
 P("")
 
@@ -107,8 +107,9 @@ A_PUNCH = math.pi * HEAD_D * PLATE_T
 mrow("Plate punching shear round the head (pi x 4.5 x 5 mm), cross-layer allowable", f"{P_op:.1f} N/screw", P_op * KP / A_PUNCH / 1e6, PETG_ILAY / 1e6, "printed with the shaft axis up: layer plane = plate plane (EST); worst case interlayer allowable used")
 # plate cantilever beyond the sleeve end (y +3.5 .. +9.5): two +y screws, 6 mm lever; section 33 x 5
 M_pl = 2 * P_op * (PAT_Y / 2 - SLV_Y1)
-Z_pl = PLATE_W * PLATE_T ** 2 / 6
-mrow("Plate bending, cantilever 6 mm past the sleeve end (2 screws, section 33 x 5 mm)", f"{M_pl*1e3:.0f} N mm", M_pl * KP / Z_pl / 1e6, PETG_ILAY / 1e6, "plate in bending uses the interlayer allowable (worst)")
+LEAD_CHORD = 2 * (0.0024 ** 2 - (0.0055 - 0.0035) ** 2) ** 0.5       # D-198: 4.8 mm lead hole at y 5.5 mm; its chord at the sleeve end plane y 3.5 mm = 2.66 mm (wing.py PH_HOLE_R, PH_Y)
+Z_pl = (PLATE_W - LEAD_CHORD) * PLATE_T ** 2 / 6                       # net section at the sleeve end plane (the governing section of the 6 mm cantilever)
+mrow("Plate bending, cantilever 6 mm past the sleeve end (2 screws, net section 30.3 x 5 mm after the D-198 lead hole)", f"{M_pl*1e3:.0f} N mm", M_pl * KP / Z_pl / 1e6, PETG_ILAY / 1e6, "plate in bending uses the interlayer allowable (worst)")
 # motor torque on the screws: shear/bearing on 2 screws (friction ignored), 3x worst-case sharing
 V_Q = Q / (4 * R_PAT) * 2.0
 mrow("Hole bearing, motor torque 0.130 N m shared on 2 of 4 screws (hole 2.9 x 5 mm)", f"{V_Q:.1f} N/screw", V_Q * KP / (HOLE_D * PLATE_T) / 1e6, PETG_BEAR / 1e6, "friction of the clamped base ignored")

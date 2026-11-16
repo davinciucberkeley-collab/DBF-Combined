@@ -1,0 +1,925 @@
+{
+ "steps": [
+  {
+   "id": "A1",
+   "caption": "Wing core on the bench (lower surface up)",
+   "dir": null,
+   "travel": 0.0,
+   "edges": [],
+   "visual_mm": 0.0,
+   "stage": 0,
+   "first_in_stage": true,
+   "t_cam0": 0.4,
+   "t_mv0": 1.2000000000000002,
+   "t_mv1": 1.8000000000000003,
+   "t_end": 2.0000000000000004,
+   "n_parts": 1
+  },
+  {
+   "id": "A2",
+   "caption": "Spar through the core bore from the right tip",
+   "dir": [
+    0,
+    -1,
+    0
+   ],
+   "travel": 700.0,
+   "edges": [],
+   "visual_mm": 450.0,
+   "stage": 0,
+   "first_in_stage": false,
+   "t_cam0": 2.0000000000000004,
+   "t_mv0": 2.4500000000000006,
+   "t_mv1": 3.5500000000000007,
+   "t_end": 3.750000000000001,
+   "n_parts": 1
+  },
+  {
+   "id": "A3",
+   "caption": "Centre plug up the bore",
+   "dir": [
+    0,
+    -1,
+    0
+   ],
+   "travel": 600.0,
+   "edges": [],
+   "visual_mm": 450.0,
+   "stage": 0,
+   "first_in_stage": false,
+   "t_cam0": 3.750000000000001,
+   "t_mv0": 4.200000000000001,
+   "t_mv1": 5.300000000000001,
+   "t_end": 5.500000000000001,
+   "n_parts": 1
+  },
+  {
+   "id": "A4",
+   "caption": "Right plugs up the bore",
+   "dir": [
+    0,
+    -1,
+    0
+   ],
+   "travel": 600.0,
+   "edges": [],
+   "visual_mm": 450.0,
+   "stage": 0,
+   "first_in_stage": false,
+   "t_cam0": 5.500000000000001,
+   "t_mv0": 5.950000000000001,
+   "t_mv1": 7.050000000000001,
+   "t_end": 7.250000000000001,
+   "n_parts": 2
+  },
+  {
+   "id": "A5",
+   "caption": "Left plugs up the bore from the left tip",
+   "dir": [
+    0,
+    1,
+    0
+   ],
+   "travel": 600.0,
+   "edges": [],
+   "visual_mm": 450.0,
+   "stage": 0,
+   "first_in_stage": false,
+   "t_cam0": 7.250000000000001,
+   "t_mv0": 7.700000000000001,
+   "t_mv1": 8.8,
+   "t_end": 9.0,
+   "t_stage_end": 9.6,
+   "n_parts": 2
+  },
+  {
+   "id": "B0",
+   "caption": "THREAD (bench, before the motors go on the cups): feed the three 20 AWG leads of each motor (400 mm stock + extension, EST) from the cup side through the 4.8 mm lead hole, the collar and the arm bore, out of the 4.8 mm hub socket floor hole; free ends hang out of the hub; then screw the motors on (B1)",
+   "dir": null,
+   "travel": 0.0,
+   "edges": [],
+   "visual_mm": 0.0,
+   "stage": 1,
+   "first_in_stage": true,
+   "t_cam0": 9.6,
+   "t_mv0": 10.4,
+   "t_mv1": 11.0,
+   "t_end": 11.2,
+   "n_parts": 0
+  },
+  {
+   "id": "B1",
+   "caption": "Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar",
+   "dir": [
+    0,
+    0,
+    1
+   ],
+   "travel": 30.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 1,
+   "first_in_stage": false,
+   "t_cam0": 11.2,
+   "t_mv0": 11.649999999999999,
+   "t_mv1": 12.45,
+   "t_end": 12.649999999999999,
+   "t_stage_end": 13.249999999999998,
+   "n_parts": 31
+  },
+  {
+   "id": "B2",
+   "caption": "Rib saddles snap on the spar from below",
+   "dir": [
+    0,
+    0,
+    1
+   ],
+   "travel": 30.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 2,
+   "first_in_stage": true,
+   "t_cam0": 13.249999999999998,
+   "t_mv0": 14.049999999999999,
+   "t_mv1": 14.85,
+   "t_end": 15.049999999999999,
+   "n_parts": 2
+  },
+  {
+   "id": "B3",
+   "caption": "Pack tray lowered from above into the core tray slot, bonded to the hub aft face",
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "travel": 30.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 2,
+   "first_in_stage": false,
+   "t_cam0": 15.049999999999999,
+   "t_mv0": 15.499999999999998,
+   "t_mv1": 16.299999999999997,
+   "t_end": 16.499999999999996,
+   "n_parts": 1
+  },
+  {
+   "id": "B4",
+   "caption": "Hinge damper units (stator with rotor in its annulus, silicone fluid filled) into the core notches at the elevon tips from aft, before the ribs; the notch is open aft",
+   "dir": [
+    -1,
+    0,
+    0
+   ],
+   "travel": 30.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 2,
+   "first_in_stage": false,
+   "t_cam0": 16.499999999999996,
+   "t_mv0": 16.949999999999996,
+   "t_mv1": 17.749999999999996,
+   "t_end": 17.949999999999996,
+   "t_stage_end": 18.549999999999997,
+   "n_parts": 4
+  },
+  {
+   "id": "C1",
+   "caption": "Ribs in from aft into the saddle sockets",
+   "dir": [
+    -1,
+    0,
+    0
+   ],
+   "travel": 300.0,
+   "edges": [],
+   "visual_mm": 300.0,
+   "stage": 3,
+   "first_in_stage": true,
+   "t_cam0": 18.549999999999997,
+   "t_mv0": 19.349999999999998,
+   "t_mv1": 20.45,
+   "t_end": 20.65,
+   "n_parts": 2
+  },
+  {
+   "id": "C1a",
+   "caption": "Rib fairings (upper blisters over the rib where it leaves the skin) lowered onto the skin from above, bonded",
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "travel": 15.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 3,
+   "first_in_stage": false,
+   "t_cam0": 20.65,
+   "t_mv0": 21.099999999999998,
+   "t_mv1": 21.9,
+   "t_end": 22.099999999999998,
+   "t_stage_end": 22.7,
+   "n_parts": 2
+  },
+  {
+   "id": "C2",
+   "caption": "Elevons with their balance horns on from aft (horn and lead enter the core pocket; tape hinge after)",
+   "dir": [
+    -1,
+    0,
+    0
+   ],
+   "travel": 25.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 4,
+   "first_in_stage": true,
+   "t_cam0": 22.7,
+   "t_mv0": 23.5,
+   "t_mv1": 24.3,
+   "t_end": 24.5,
+   "n_parts": 4
+  },
+  {
+   "id": "C2a",
+   "caption": "Upper lens caps (with stop bosses) lowered onto the skin over the strip windows, bonded",
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "travel": 15.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 4,
+   "first_in_stage": false,
+   "t_cam0": 24.5,
+   "t_mv0": 24.95,
+   "t_mv1": 25.75,
+   "t_end": 25.95,
+   "n_parts": 2
+  },
+  {
+   "id": "C2b",
+   "caption": "Lower lens caps (with stop bosses) raised onto the skin, bonded",
+   "dir": [
+    0,
+    0,
+    1
+   ],
+   "travel": 15.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 4,
+   "first_in_stage": false,
+   "t_cam0": 25.95,
+   "t_mv0": 26.4,
+   "t_mv1": 27.2,
+   "t_end": 27.4,
+   "t_stage_end": 28.0,
+   "n_parts": 2
+  },
+  {
+   "id": "C3",
+   "caption": "Fairing, right, from outboard",
+   "dir": [
+    0,
+    -1,
+    0
+   ],
+   "travel": 40.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 5,
+   "first_in_stage": true,
+   "t_cam0": 28.0,
+   "t_mv0": 28.8,
+   "t_mv1": 29.6,
+   "t_end": 29.8,
+   "n_parts": 1
+  },
+  {
+   "id": "C4",
+   "caption": "Fairing, left, from outboard",
+   "dir": [
+    0,
+    1,
+    0
+   ],
+   "travel": 40.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 5,
+   "first_in_stage": false,
+   "t_cam0": 29.8,
+   "t_mv0": 30.25,
+   "t_mv1": 31.05,
+   "t_end": 31.25,
+   "n_parts": 1
+  },
+  {
+   "id": "C5",
+   "caption": "Root blocks onto the rib ends from aft",
+   "dir": [
+    -1,
+    0,
+    0
+   ],
+   "travel": 60.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 5,
+   "first_in_stage": false,
+   "t_cam0": 31.25,
+   "t_mv0": 31.7,
+   "t_mv1": 32.5,
+   "t_end": 32.7,
+   "n_parts": 2
+  },
+  {
+   "id": "C6",
+   "caption": "Fin tubes down through the blocks",
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "travel": 500.0,
+   "edges": [],
+   "visual_mm": 450.0,
+   "stage": 5,
+   "first_in_stage": false,
+   "t_cam0": 32.7,
+   "t_mv0": 33.150000000000006,
+   "t_mv1": 34.25000000000001,
+   "t_end": 34.45000000000001,
+   "t_stage_end": 35.05000000000001,
+   "n_parts": 2
+  },
+  {
+   "id": "C7",
+   "caption": "Upper shoes on the tube ends",
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "travel": 30.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 6,
+   "first_in_stage": true,
+   "t_cam0": 35.05000000000001,
+   "t_mv0": 35.85000000000001,
+   "t_mv1": 36.650000000000006,
+   "t_end": 36.85000000000001,
+   "n_parts": 2
+  },
+  {
+   "id": "C8",
+   "caption": "Lower shoes on the tube ends",
+   "dir": [
+    0,
+    0,
+    1
+   ],
+   "travel": 30.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 6,
+   "first_in_stage": false,
+   "t_cam0": 36.85000000000001,
+   "t_mv0": 37.30000000000001,
+   "t_mv1": 38.10000000000001,
+   "t_end": 38.30000000000001,
+   "n_parts": 2
+  },
+  {
+   "id": "C9",
+   "caption": "Foot pads on the shoe plates",
+   "dir": [
+    -1,
+    0,
+    0
+   ],
+   "travel": 30.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 6,
+   "first_in_stage": false,
+   "t_cam0": 38.30000000000001,
+   "t_mv0": 38.750000000000014,
+   "t_mv1": 39.55000000000001,
+   "t_end": 39.750000000000014,
+   "t_stage_end": 40.350000000000016,
+   "n_parts": 4
+  },
+  {
+   "id": "D1",
+   "caption": "Servos into their pockets",
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "travel": 30.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 7,
+   "first_in_stage": true,
+   "t_cam0": 40.350000000000016,
+   "t_mv0": 41.15000000000001,
+   "t_mv1": 41.95000000000001,
+   "t_end": 42.15000000000001,
+   "n_parts": 2
+  },
+  {
+   "id": "D0",
+   "caption": "THREAD: each servo 3-wire lead is fed from the servo pocket along its foam groove (3 mm under the skin, aft of the spar) to the slit at x 83 mm / |y| 24 mm with a fish wire; the free end stays out of the slit for the FC pads",
+   "dir": null,
+   "travel": 0.0,
+   "edges": [],
+   "visual_mm": 0.0,
+   "stage": 7,
+   "first_in_stage": false,
+   "t_cam0": 42.15000000000001,
+   "t_mv0": 42.600000000000016,
+   "t_mv1": 43.20000000000002,
+   "t_end": 43.40000000000002,
+   "n_parts": 0
+  },
+  {
+   "id": "D2",
+   "caption": "Servo arms on the splines",
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "travel": 15.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 7,
+   "first_in_stage": false,
+   "t_cam0": 43.40000000000002,
+   "t_mv0": 43.85000000000002,
+   "t_mv1": 44.65000000000002,
+   "t_end": 44.85000000000002,
+   "n_parts": 2
+  },
+  {
+   "id": "D2a",
+   "caption": "Arm screws M2x6 into the servo output shafts",
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "travel": 10.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 7,
+   "first_in_stage": false,
+   "t_cam0": 44.85000000000002,
+   "t_mv0": 45.300000000000026,
+   "t_mv1": 46.10000000000002,
+   "t_end": 46.300000000000026,
+   "n_parts": 2
+  },
+  {
+   "id": "D3",
+   "caption": "Horns on the elevons",
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "travel": 15.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 7,
+   "first_in_stage": false,
+   "t_cam0": 46.300000000000026,
+   "t_mv0": 46.75000000000003,
+   "t_mv1": 47.550000000000026,
+   "t_end": 47.75000000000003,
+   "n_parts": 2
+  },
+  {
+   "id": "D4",
+   "caption": "Pushrods into arm hole (Z-bend) and over the horn blade (clevis cheeks straddle it; pin follows in D5)",
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "travel": 10.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 7,
+   "first_in_stage": false,
+   "t_cam0": 47.75000000000003,
+   "t_mv0": 48.20000000000003,
+   "t_mv1": 49.00000000000003,
+   "t_end": 49.20000000000003,
+   "n_parts": 2
+  },
+  {
+   "id": "D5",
+   "caption": "Clevis pin R pressed in along y through the cheeks and the horn hole (from outboard)",
+   "dir": [
+    0,
+    -1,
+    0
+   ],
+   "travel": 6.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 7,
+   "first_in_stage": false,
+   "t_cam0": 49.20000000000003,
+   "t_mv0": 49.650000000000034,
+   "t_mv1": 50.45000000000003,
+   "t_end": 50.650000000000034,
+   "n_parts": 1
+  },
+  {
+   "id": "D5b",
+   "caption": "Clevis pin L pressed in along y (from outboard)",
+   "dir": [
+    0,
+    1,
+    0
+   ],
+   "travel": 6.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 7,
+   "first_in_stage": false,
+   "t_cam0": 50.650000000000034,
+   "t_mv0": 51.10000000000004,
+   "t_mv1": 51.900000000000034,
+   "t_end": 52.10000000000004,
+   "t_stage_end": 52.70000000000004,
+   "n_parts": 1
+  },
+  {
+   "id": "E1",
+   "caption": "Pitot into its groove from the front",
+   "dir": [
+    1,
+    0,
+    0
+   ],
+   "travel": 250.0,
+   "edges": [],
+   "visual_mm": 250.0,
+   "stage": 8,
+   "first_in_stage": true,
+   "t_cam0": 52.70000000000004,
+   "t_mv0": 53.500000000000036,
+   "t_mv1": 54.60000000000004,
+   "t_end": 54.80000000000004,
+   "n_parts": 1
+  },
+  {
+   "id": "E2",
+   "caption": "Avionics plate on the skin with its four M2 thin nuts already seated in the hex pockets",
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "travel": 20.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 8,
+   "first_in_stage": false,
+   "t_cam0": 54.80000000000004,
+   "t_mv0": 55.25000000000004,
+   "t_mv1": 56.05000000000004,
+   "t_end": 56.25000000000004,
+   "n_parts": 2
+  },
+  {
+   "id": "E3",
+   "caption": "ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS, airspeed on the plate",
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "travel": 30.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 8,
+   "first_in_stage": false,
+   "t_cam0": 56.25000000000004,
+   "t_mv0": 56.700000000000045,
+   "t_mv1": 57.50000000000004,
+   "t_end": 57.700000000000045,
+   "n_parts": 6
+  },
+  {
+   "id": "E3a",
+   "caption": "Four M2 x 25 screws down through the FC stack into the nuts",
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "travel": 20.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 8,
+   "first_in_stage": false,
+   "t_cam0": 57.700000000000045,
+   "t_mv0": 58.15000000000005,
+   "t_mv1": 58.950000000000045,
+   "t_end": 59.15000000000005,
+   "n_parts": 1
+  },
+  {
+   "id": "E3b",
+   "caption": "LAY: solder the ESC signal ribbon to the FC, the servo leads to the FC pads S5 / S6, the RX CRSF lead, the GPS and airspeed leads (JST plugs on the sensor boards)",
+   "dir": null,
+   "travel": 0.0,
+   "edges": [
+    "E-HRN-06",
+    "E-HRN-07",
+    "E-HRN-08",
+    "E-HRN-09",
+    "E-HRN-10",
+    "E-HRN-11"
+   ],
+   "visual_mm": 0.0,
+   "stage": 8,
+   "first_in_stage": false,
+   "t_cam0": 59.15000000000005,
+   "t_mv0": 59.60000000000005,
+   "t_mv1": 60.20000000000005,
+   "t_end": 60.400000000000055,
+   "t_stage_end": 61.00000000000006,
+   "n_parts": 0
+  },
+  {
+   "id": "E4",
+   "caption": "Pack into the tray",
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "travel": 30.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 9,
+   "first_in_stage": true,
+   "t_cam0": 61.00000000000006,
+   "t_mv0": 61.800000000000054,
+   "t_mv1": 62.60000000000005,
+   "t_end": 62.800000000000054,
+   "n_parts": 1
+  },
+  {
+   "id": "E4a",
+   "caption": "XT60 female with its tail mated to the pack lead XT60 male (plugs on from aft, taped on the skin; tail soldered to the ESC pads after)",
+   "dir": [
+    -1,
+    0,
+    0
+   ],
+   "travel": 15.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 9,
+   "first_in_stage": false,
+   "t_cam0": 62.800000000000054,
+   "t_mv0": 63.25000000000006,
+   "t_mv1": 64.05000000000005,
+   "t_end": 64.25000000000006,
+   "n_parts": 1
+  },
+  {
+   "id": "E4b",
+   "caption": "LAY: mate the pack XT60 male to the XT60 female (E4a) (done in E4a)",
+   "dir": null,
+   "travel": 0.0,
+   "edges": [
+    "E-HRN-01"
+   ],
+   "visual_mm": 0.0,
+   "stage": 9,
+   "first_in_stage": false,
+   "t_cam0": 64.25000000000006,
+   "t_mv0": 64.70000000000006,
+   "t_mv1": 65.30000000000005,
+   "t_end": 65.50000000000006,
+   "n_parts": 0
+  },
+  {
+   "id": "E5",
+   "caption": "Pack strap threaded under the bridge tube and closed over the pack (FLEXIBLE: no rigid insertion path exists, so this step checks the fitted position only, travel 0; the threading is by hand)",
+   "dir": null,
+   "travel": 0.0,
+   "edges": [],
+   "visual_mm": 0.0,
+   "stage": 9,
+   "first_in_stage": false,
+   "t_cam0": 65.50000000000006,
+   "t_mv0": 65.95000000000006,
+   "t_mv1": 66.55000000000005,
+   "t_end": 66.75000000000006,
+   "n_parts": 1
+  },
+  {
+   "id": "E6",
+   "caption": "LAY: solder the battery tail to the ESC BAT pads and the 4 x 3 phase leads (free ends from B0, run over the wing at z 29 / 27.5 mm) to the ESC motor pads; heat-shrink; ties at the hub aft face and at the plate edge",
+   "dir": null,
+   "travel": 0.0,
+   "edges": [
+    "E-HRN-12",
+    "E-HRN-02",
+    "E-HRN-03",
+    "E-HRN-04",
+    "E-HRN-05"
+   ],
+   "visual_mm": 0.0,
+   "stage": 9,
+   "first_in_stage": false,
+   "t_cam0": 66.75000000000006,
+   "t_mv0": 67.20000000000006,
+   "t_mv1": 67.80000000000005,
+   "t_end": 68.00000000000006,
+   "n_parts": 0
+  },
+  {
+   "id": "E7",
+   "caption": "Bay cover lowered over the FC stack and ESC onto the plate (the bundles and sensor leads drop into the roof-open notches), foam tape + two ties",
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "travel": 40.0,
+   "edges": [],
+   "visual_mm": 70.0,
+   "stage": 9,
+   "first_in_stage": false,
+   "t_cam0": 68.00000000000006,
+   "t_mv0": 68.45000000000006,
+   "t_mv1": 69.25000000000006,
+   "t_end": 69.45000000000006,
+   "t_stage_end": 70.05000000000005,
+   "n_parts": 1
+  }
+ ],
+ "stages": [
+  {
+   "n": 1,
+   "title": "Wing core and spar",
+   "steps": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5"
+   ],
+   "frames": [
+    9,
+    229
+   ]
+  },
+  {
+   "n": 2,
+   "title": "Cage unit: motor leads threaded, motors, props",
+   "steps": [
+    "B0",
+    "B1"
+   ],
+   "frames": [
+    230,
+    316
+   ]
+  },
+  {
+   "n": 3,
+   "title": "Rib saddles, pack tray, hinge dampers",
+   "steps": [
+    "B2",
+    "B3",
+    "B4"
+   ],
+   "frames": [
+    317,
+    444
+   ]
+  },
+  {
+   "n": 4,
+   "title": "Fin ribs and rib fairings",
+   "steps": [
+    "C1",
+    "C1a"
+   ],
+   "frames": [
+    445,
+    543
+   ]
+  },
+  {
+   "n": 5,
+   "title": "Elevons, balance strips, lens caps",
+   "steps": [
+    "C2",
+    "C2a",
+    "C2b"
+   ],
+   "frames": [
+    544,
+    671
+   ]
+  },
+  {
+   "n": 6,
+   "title": "Fins: fairings, root blocks, tubes",
+   "steps": [
+    "C3",
+    "C4",
+    "C5",
+    "C6"
+   ],
+   "frames": [
+    672,
+    840
+   ]
+  },
+  {
+   "n": 7,
+   "title": "Landing feet",
+   "steps": [
+    "C7",
+    "C8",
+    "C9"
+   ],
+   "frames": [
+    841,
+    967
+   ]
+  },
+  {
+   "n": 8,
+   "title": "Servos, pushrods, horns, lead threading",
+   "steps": [
+    "D1",
+    "D0",
+    "D2",
+    "D2a",
+    "D3",
+    "D4",
+    "D5",
+    "D5b"
+   ],
+   "frames": [
+    968,
+    1263
+   ]
+  },
+  {
+   "n": 9,
+   "title": "Avionics: pitot, plate, ESC, FC, leads",
+   "steps": [
+    "E1",
+    "E2",
+    "E3",
+    "E3a",
+    "E3b"
+   ],
+   "frames": [
+    1264,
+    1463
+   ]
+  },
+  {
+   "n": 10,
+   "title": "Pack, XT60, strap, phase leads, bay cover",
+   "steps": [
+    "E4",
+    "E4a",
+    "E4b",
+    "E5",
+    "E6",
+    "E7"
+   ],
+   "frames": [
+    1464,
+    1680
+   ]
+  }
+ ],
+ "fps": 24,
+ "frames": 1741
+}

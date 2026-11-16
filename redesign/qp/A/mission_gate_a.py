@@ -31,8 +31,8 @@ items = [("wing: foam core + 12x10 spar + 2 elevons (6.7 g each) + 2 balances 32
          ("4 x MN2212 with cables (65 g, T-Motor page)", 260, "DATASHEET", .05), ("4 x APC 9x4.5MR/MRP (11.06 g each, RMRC page)", 44.2, "DATASHEET", .05),
          ("4 x prop adapter 4.3 g + 4 x spinner nut 2.9 g (CALC, 6061; no source lump, CAD-INTEGRATION s4)", 28.8, "CALC", .10),
          ("ESC 4-in-1 board + leads/caps (page; leads EST)", 20.04, "EST", .20), ("1 x Tattu 2300 (listing 270 g)", 270, "pack", 0.0), ("pack strap PWR-002 (EST)", 3.0, "EST", .20),
-         ("FC stack + GPS + RX + airspeed + plate + wiring harness (CAD avionics 55.48 + harness 50.9)", 106.38, "EST", .20), ("2 x ES3054HV 20.5 g + linkage (CAD mechanisms 47.54)", 47.54, "DATASHEET", .05),
-         ("motor cage incl. tray, hub 17.7 g (D-196: 2.0 mm socket mouths, 1.2 mm sleeve), cups (CAD)", 117.0, "EST", .20), ("hardware, tape (HRD-001 CAD lump 26.08 g)", 26.08, "EST", .20)]
+         ("FC stack + GPS + RX + airspeed + plate + bay cover 9.6 g + wiring harness (CAD avionics 65.08 + harness 36.1, D-198: bottom-up harness, was the 50.9 g allocation remainder)", 101.18, "EST", .20), ("2 x ES3054HV 20.5 g + linkage (CAD mechanisms 47.54)", 47.54, "DATASHEET", .05),
+         ("motor cage incl. tray, hub 17.7 g (D-196: 2.0 mm socket mouths, 1.2 mm sleeve), cups 4.3 g each with the D-198 lead collar (CAD 119.2)", 119.2, "EST", .20), ("hardware, tape (HRD-001 CAD lump 26.08 g)", 26.08, "EST", .20)]
 base = sum(i[1] for i in items); gr = sum(i[1]*i[3] for i in items); OVER = 0.032*1500
 PRED = base+gr+OVER; M = PRED/1000
 print(f"basic {base} g; growth {gr:.1f} g; predicted {base+gr:.1f} g; overrun {OVER:.0f} g; predicted+overrun {PRED:.0f} g; headroom to the 1.47 kg gate {1470-PRED:.0f} g (to the old 1.50 kg: {1500-PRED:.0f} g), to 1440 {1440-PRED:.0f} g")
@@ -71,7 +71,7 @@ for V_ in (17.0,):
 print("hard landing 1.2 m/s on 6 mm crush: decel g =", round(1.2**2/(2*0.006)/G, 1), "; impact energy at 1.50 kg (J) =", round(0.5*1.5*1.44, 2))
 # CG (QP-4): anchored on the CAD (QP-3 CAD s4): basic 1,204.6 g, CG 16.2 mm aft of LE with the pack centred at x -20 mm. The old 'rest of aircraft 35.7 mm' estimate is withdrawn.
 NP, CHORD = 40.7, 245.0
-CAD_BASIC, CAD_CG, PACK_X = 1263.74, 21.13, -10.0   # D-196 (hub walls; was 1259.14 / 21.47 at D-195): as-drawn CAD 2026-11-15, cad_mass.json (was 1215.9 / 22.5 at QP-4 FIXES)
+CAD_BASIC, CAD_CG, PACK_X = 1259.74, 21.32, -10.0   # D-198 (bay cover +9.6 g, bottom-up harness -22.8 g, cup collars +1.2 g; was 1263.74 / 21.13 at D-196); older: D-196 (hub walls; was 1259.14 / 21.47 at D-195): as-drawn CAD 2026-11-15, cad_mass.json (was 1215.9 / 22.5 at QP-4 FIXES)
 cg = CAD_CG
 for px in (-20.0, -3.0, +7.0):
     print(f"CAD CG with the pack centre at x {px:+.0f} mm: {CAD_CG + 270*(px-PACK_X)/CAD_BASIC:.1f} mm aft of LE, SM {(NP-(CAD_CG + 270*(px-PACK_X)/CAD_BASIC))/CHORD*100:.1f} %")

@@ -1,0 +1,395 @@
+{
+ "id": "detail-propulsion",
+ "size": [
+  1600,
+  1000
+ ],
+ "scene": "studio",
+ "engine": "CYCLES",
+ "device": "GPU",
+ "samples": 64,
+ "render_s": 60.01,
+ "explode": 0.0,
+ "camera": {
+  "preset": "closeup",
+  "az_deg": -35,
+  "el_deg": 22,
+  "ortho": false,
+  "lens_mm": 70,
+  "location_m": [
+   -0.6629,
+   0.587,
+   0.4168
+  ],
+  "fit": [
+   "CGE-002-UR",
+   "CGE-003-UR",
+   "PRP-001-UR",
+   "PRP-004-UR",
+   "PRP-005-UR",
+   "PRP-002-UR"
+  ],
+  "frame": [
+   0.22,
+   0.78,
+   0.07,
+   0.93
+  ]
+ },
+ "caption": {
+  "title": "Propulsion station (upper right)",
+  "sub": "MN2212 on a canted cup at the end of a CF arm, APC 9x4.5MR prop on its adapter and spinner nut"
+ },
+ "subject_px": [
+  213,
+  237,
+  1431,
+  931
+ ],
+ "callouts": [
+  {
+   "item": "PRP-001-UR",
+   "x": 666.9,
+   "y": 464.3,
+   "title": "PRP-001-UR",
+   "text": "T-Motor MN2212 KV780",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    -0.1088,
+    0.2357,
+    0.1607
+   ]
+  },
+  {
+   "item": "PRP-002-UR",
+   "x": 648.2,
+   "y": 386.4,
+   "title": "PRP-002-UR",
+   "text": "APC 9x4.5MR prop (real blade)",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    -0.125,
+    0.2504,
+    0.1873
+   ]
+  },
+  {
+   "item": "PRP-004-UR",
+   "x": 711.2,
+   "y": 465.3,
+   "title": "PRP-004-UR",
+   "text": "Prop adapter",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    -0.1172,
+    0.2292,
+    0.1617
+   ]
+  },
+  {
+   "item": "PRP-005-UR",
+   "x": 781.0,
+   "y": 438.6,
+   "title": "PRP-005-UR",
+   "text": "Spinner nut",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    -0.135,
+    0.2224,
+    0.1722
+   ]
+  },
+  {
+   "item": "CGE-003-UR",
+   "x": 593.9,
+   "y": 466.6,
+   "title": "CGE-003-UR",
+   "text": "Canted motor cup (17 deg)",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    -0.0903,
+    0.2438,
+    0.156
+   ]
+  },
+  {
+   "item": "CGE-002-UR",
+   "x": 955.8,
+   "y": 603.7,
+   "title": "CGE-002-UR",
+   "text": "Arm 12 x 10 CF tube",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    -0.081,
+    0.1301,
+    0.0892
+   ]
+  }
+ ],
+ "shown": [
+  {
+   "id": "CGE-001",
+   "role": "ghost",
+   "name": "Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 2.0 mm arm-socket mouth walls, 1.2 mm sleeve (D-196), 0.8 mm webs, mass = drawn volume x 1.27)",
+   "status": "MODELLED",
+   "mass_g": 17.7,
+   "subsystem": "cage",
+   "bbox_px": [
+    1098,
+    617,
+    1431,
+    931
+   ]
+  },
+  {
+   "id": "CGE-002-UR",
+   "role": "context",
+   "name": "Arm 12x10 x 0.245 (UR)",
+   "status": "MODELLED",
+   "mass_g": 13.5,
+   "subsystem": "cage",
+   "bbox_px": [
+    600,
+    410,
+    1243,
+    760
+   ]
+  },
+  {
+   "id": "CGE-003-UR",
+   "role": "context",
+   "name": "Motor cup (UR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
+   "status": "MODELLED",
+   "mass_g": 4.3,
+   "subsystem": "cage",
+   "bbox_px": [
+    570,
+    350,
+    720,
+    517
+   ]
+  },
+  {
+   "id": "CGE-004",
+   "role": "context",
+   "name": "Bridge 12x10",
+   "status": "MODELLED",
+   "mass_g": 8.5,
+   "subsystem": "cage",
+   "bbox_px": [
+    999,
+    606,
+    1364,
+    823
+   ]
+  },
+  {
+   "id": "CGE-005-R",
+   "role": "context",
+   "name": "V strut 6x4.5 (R)",
+   "status": "MODELLED",
+   "mass_g": 6.5,
+   "subsystem": "cage",
+   "bbox_px": [
+    213,
+    769,
+    1210,
+    883
+   ]
+  },
+  {
+   "id": "PRP-001-UR",
+   "role": "context",
+   "name": "Motor MN2212 V2.0 KV780 (UR)",
+   "status": "MODELLED",
+   "mass_g": 65.0,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    583,
+    375,
+    770,
+    497
+   ]
+  },
+  {
+   "id": "PRP-004-UR",
+   "role": "context",
+   "name": "Prop adapter, T-Motor (Phi19 x 4.5 flange + M5 stud) (UR); mass CALC 6061, EST",
+   "status": "MODELLED",
+   "mass_g": 4.3,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    689,
+    395,
+    803,
+    479
+   ]
+  },
+  {
+   "id": "PRP-005-UR",
+   "role": "context",
+   "name": "Spinner nut, T-Motor (Phi12 x 16, M5) (UR); mass CALC 6061, EST",
+   "status": "MODELLED",
+   "mass_g": 2.9,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    745,
+    411,
+    820,
+    464
+   ]
+  },
+  {
+   "id": "PRP-002-UR",
+   "role": "context",
+   "name": "Prop APC 9x4.5MRP (UR), CW reverse",
+   "status": "MODELLED",
+   "mass_g": 11.06,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    352,
+    237,
+    1073,
+    601
+   ]
+  },
+  {
+   "id": "E-HRN-02",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    602,
+    417,
+    1253,
+    746
+   ]
+  }
+ ],
+ "hidden": [
+  "AVN-001",
+  "AVN-002",
+  "AVN-003",
+  "AVN-004",
+  "AVN-005",
+  "AVN-006",
+  "AVN-007",
+  "AVN-008",
+  "CGE-002-LL",
+  "CGE-002-LR",
+  "CGE-002-UL",
+  "CGE-003-LL",
+  "CGE-003-LR",
+  "CGE-003-UL",
+  "CGE-005-L",
+  "CGE-006",
+  "CGE-007-L",
+  "CGE-007-R",
+  "CGE-008",
+  "E-HRN-01",
+  "E-HRN-03",
+  "E-HRN-04",
+  "E-HRN-05",
+  "E-HRN-06",
+  "E-HRN-07",
+  "E-HRN-08",
+  "E-HRN-09",
+  "E-HRN-10",
+  "E-HRN-11",
+  "E-HRN-12",
+  "FIN-001-L",
+  "FIN-001-R",
+  "FIN-002-L",
+  "FIN-002-R",
+  "FIN-003-L",
+  "FIN-003-R",
+  "FIN-004-L",
+  "FIN-004-R",
+  "FIN-005-L",
+  "FIN-005-R",
+  "FIN-006-L",
+  "FIN-006-R",
+  "GER-001-LL",
+  "GER-001-LR",
+  "GER-001-UL",
+  "GER-001-UR",
+  "GER-002-LL",
+  "GER-002-LR",
+  "GER-002-UL",
+  "GER-002-UR",
+  "HRD-001",
+  "HRN-001",
+  "HRN-002",
+  "HWC-001",
+  "HWC-002-L",
+  "HWC-002-R",
+  "HWC-003",
+  "MEC-001-L",
+  "MEC-001-R",
+  "MEC-002-L",
+  "MEC-002-R",
+  "MEC-003-L",
+  "MEC-003-R",
+  "MEC-004-L",
+  "MEC-004-R",
+  "MEC-005-L",
+  "MEC-005-R",
+  "PRP-001-LL",
+  "PRP-001-LR",
+  "PRP-001-UL",
+  "PRP-002-LL",
+  "PRP-002-LR",
+  "PRP-002-UL",
+  "PRP-003",
+  "PRP-004-LL",
+  "PRP-004-LR",
+  "PRP-004-UL",
+  "PRP-005-LL",
+  "PRP-005-LR",
+  "PRP-005-UL",
+  "PWR-001",
+  "PWR-002",
+  "WNG-001",
+  "WNG-002",
+  "WNG-003-C",
+  "WNG-004-L",
+  "WNG-004-R",
+  "WNG-005-L",
+  "WNG-005-R",
+  "WNG-006-L",
+  "WNG-006-R",
+  "WNG-007-L",
+  "WNG-007-R",
+  "WNG-008-LL",
+  "WNG-008-LU",
+  "WNG-008-RL",
+  "WNG-008-RU",
+  "WNG-009-L",
+  "WNG-009-R",
+  "WNG-010-L",
+  "WNG-010-R"
+ ],
+ "clipped": [],
+ "legend": [
+  "context",
+  "ghost"
+ ],
+ "files": {
+  "png": "detail-propulsion.png",
+  "jpg": "detail-propulsion.jpg"
+ }
+}

@@ -215,9 +215,8 @@ def build_propulsion(ctx):
         m.cylinder('X', (X_FACE, 0.0, 0.0), SHAFT_REAR, SHAFT_D / 2, name='shaft stub, base side')
         for sy in (1, -1):
             for sz in (1, -1):
-                _m25_screw(m, (X_FACE + 0.005, sy * BASE_PAT[0] / 2, sz * BASE_PAT[1] / 2), -1, 0.008, 'motor screw')
-        for dy in (-0.0019, 0.0, 0.0019):                # phase leads 3 x 20 AWG, about 2 mm over the insulation (EST), exit at the cup lead hole
-            m.cylinder('X', (-0.0155, dy, 0.0135), 0.0055, 0.001, name='phase lead (20 AWG, EST)')
+                _m25_screw(m, (X_FACE + 0.0049, sy * BASE_PAT[0] / 2, sz * BASE_PAT[1] / 2), -1, 0.008, 'motor screw')
+        # D-198: the 3 x 20 AWG phase leads are drawn as the harness strands E-HRN-02..05 (start inside the base ring at y 5.5 mm: exit position EST, not on the T-Motor drawing)
         ctx.seat('CGE-003-' + st, 'PRP-001-' + st, 'motor shaft-stub relief and M3 clearance holes + head counterbores',
                  bodies=('shaft stub', 'motor screw'))
         # ---- T-Motor prop adapter and spinner nut

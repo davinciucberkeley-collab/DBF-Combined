@@ -375,8 +375,17 @@
    "worst_mm": 0.0,
    "first_hit_t_mm": null,
    "pairs": []
+  },
+  {
+   "id": "E7",
+   "parts": [
+    "AVN-008"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
   }
  ],
  "tol_mm": 0.05,
- "flipped": 1624
+ "flipped": 1596
 }

@@ -21,10 +21,10 @@
   },
   {
    "id": "HRN-001",
-   "name": "Harness remainder (wire, connectors, ties, tubing; MASS-GATE avionics 110 g less itemised parts) - lumped",
+   "name": "Harness remainder, bottom-up (D-198): phase-lead extensions, splices, ESC ribbon, sensor leads, servo ties, sleeves / ties / tape / solder - lumped",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 42.9,
+   "mass_g": 28.1,
    "material": "copper / silicone",
    "cg_xyz_m": [
     0.03,
@@ -110,18 +110,20 @@
    "part_b": "PRP-001-UR",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "motor phase leads UR (3 x 20 AWG, V T-Motor page): ESC pad, over the LE, along the arm on the aft side, through the cup hole",
+   "notes": "motor phase leads UR (3 x 20 AWG, OD 1.8 mm, V T-Motor / Pimoroni): out of the motor base through the cup lead hole into the cup collar, inside the arm bore to the hub end, out through the socket floor hole, then exposed over the hub and wing (D-198) to the ESC pad",
    "wire": {
     "gauge_awg": 20,
     "connector": "solder + heat-shrink",
     "route_id": "R-A-02",
     "support_points": [
-     "tie at the plate edge",
-     "tie along the arm every 0.1 m",
-     "cup hole grommet"
+     "cup collar",
+     "inside the arm tube",
+     "hub socket floor hole",
+     "tie at the hub aft face",
+     "tie at the plate edge"
     ],
-    "bend_radius_mm": 6,
-    "strain_relief": "heat-shrink + tie at the cup",
+    "bend_radius_mm": 4,
+    "strain_relief": "heat-shrink + tie at the floor hole",
     "disconnect": false
    },
    "current_a": {
@@ -135,18 +137,20 @@
    "part_b": "PRP-001-UL",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "motor phase leads UL (3 x 20 AWG, V T-Motor page): ESC pad, over the LE, along the arm on the aft side, through the cup hole",
+   "notes": "motor phase leads UL (3 x 20 AWG, OD 1.8 mm, V T-Motor / Pimoroni): out of the motor base through the cup lead hole into the cup collar, inside the arm bore to the hub end, out through the socket floor hole, then exposed over the hub and wing (D-198) to the ESC pad",
    "wire": {
     "gauge_awg": 20,
     "connector": "solder + heat-shrink",
     "route_id": "R-A-03",
     "support_points": [
-     "tie at the plate edge",
-     "tie along the arm every 0.1 m",
-     "cup hole grommet"
+     "cup collar",
+     "inside the arm tube",
+     "hub socket floor hole",
+     "tie at the hub aft face",
+     "tie at the plate edge"
     ],
-    "bend_radius_mm": 6,
-    "strain_relief": "heat-shrink + tie at the cup",
+    "bend_radius_mm": 4,
+    "strain_relief": "heat-shrink + tie at the floor hole",
     "disconnect": false
    },
    "current_a": {
@@ -160,18 +164,20 @@
    "part_b": "PRP-001-LR",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "motor phase leads LR (3 x 20 AWG, V T-Motor page): ESC pad, over the LE, along the arm on the aft side, through the cup hole",
+   "notes": "motor phase leads LR (3 x 20 AWG, OD 1.8 mm, V T-Motor / Pimoroni): out of the motor base through the cup lead hole into the cup collar, inside the arm bore to the hub end, out through the socket floor hole, then exposed over the hub and wing (D-198) to the ESC pad",
    "wire": {
     "gauge_awg": 20,
     "connector": "solder + heat-shrink",
     "route_id": "R-A-04",
     "support_points": [
-     "tie at the plate edge",
-     "tie along the arm every 0.1 m",
-     "cup hole grommet"
+     "cup collar",
+     "inside the arm tube",
+     "hub socket floor hole",
+     "tie at the hub aft face",
+     "tie at the plate edge"
     ],
-    "bend_radius_mm": 6,
-    "strain_relief": "heat-shrink + tie at the cup",
+    "bend_radius_mm": 4,
+    "strain_relief": "heat-shrink + tie at the floor hole",
     "disconnect": false
    },
    "current_a": {
@@ -185,18 +191,20 @@
    "part_b": "PRP-001-LL",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "motor phase leads LL (3 x 20 AWG, V T-Motor page): ESC pad, over the LE, along the arm on the aft side, through the cup hole",
+   "notes": "motor phase leads LL (3 x 20 AWG, OD 1.8 mm, V T-Motor / Pimoroni): out of the motor base through the cup lead hole into the cup collar, inside the arm bore to the hub end, out through the socket floor hole, then exposed over the hub and wing (D-198) to the ESC pad",
    "wire": {
     "gauge_awg": 20,
     "connector": "solder + heat-shrink",
     "route_id": "R-A-05",
     "support_points": [
-     "tie at the plate edge",
-     "tie along the arm every 0.1 m",
-     "cup hole grommet"
+     "cup collar",
+     "inside the arm tube",
+     "hub socket floor hole",
+     "tie at the hub aft face",
+     "tie at the plate edge"
     ],
-    "bend_radius_mm": 6,
-    "strain_relief": "heat-shrink + tie at the cup",
+    "bend_radius_mm": 4,
+    "strain_relief": "heat-shrink + tie at the floor hole",
     "disconnect": false
    },
    "current_a": {

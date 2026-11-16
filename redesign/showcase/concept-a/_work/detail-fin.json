@@ -1,0 +1,434 @@
+{
+ "id": "detail-fin",
+ "size": [
+  1600,
+  1000
+ ],
+ "scene": "studio",
+ "engine": "CYCLES",
+ "device": "GPU",
+ "samples": 64,
+ "render_s": 61.36,
+ "explode": 0.0,
+ "camera": {
+  "preset": "closeup",
+  "az_deg": -40,
+  "el_deg": 18,
+  "ortho": false,
+  "lens_mm": 70,
+  "location_m": [
+   -0.6916,
+   1.0944,
+   0.402
+  ],
+  "fit": [
+   "FIN-001-R",
+   "FIN-002-R",
+   "FIN-003-R",
+   "FIN-005-R",
+   "GER-001-UR",
+   "GER-001-LR"
+  ],
+  "frame": [
+   0.22,
+   0.78,
+   0.07,
+   0.93
+  ]
+ },
+ "caption": {
+  "title": "Right fin",
+  "sub": "CF tube through the root block, rib tube clipped to the spar by a saddle, XPS fairing, shoes and pads at the tips"
+ },
+ "subject_px": [
+  501,
+  58,
+  2260,
+  1007
+ ],
+ "callouts": [
+  {
+   "item": "FIN-001-R",
+   "x": 583.7,
+   "y": 335.4,
+   "title": "FIN-001-R",
+   "text": "Fin tube 16 x 14 x 0.36 m",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.2881,
+    0.3854,
+    0.0794
+   ]
+  },
+  {
+   "item": "FIN-002-R",
+   "x": 856.9,
+   "y": 624.7,
+   "title": "FIN-002-R",
+   "text": "Rib tube 14 x 12",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.121,
+    0.3851,
+    0.0032
+   ]
+  },
+  {
+   "item": "FIN-003-R",
+   "x": 592.6,
+   "y": 525.7,
+   "title": "FIN-003-R",
+   "text": "Root block",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.2793,
+    0.3895,
+    0.0021
+   ]
+  },
+  {
+   "item": "FIN-004-R",
+   "x": 679.0,
+   "y": 428.7,
+   "title": "FIN-004-R",
+   "text": "Fin fairing (XPS + tape)",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.2316,
+    0.3815,
+    0.0526
+   ]
+  },
+  {
+   "item": "FIN-005-R",
+   "x": 982.1,
+   "y": 674.9,
+   "title": "FIN-005-R",
+   "text": "Rib saddle on spar",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.0507,
+    0.3878,
+    0.0049
+   ]
+  },
+  {
+   "item": "GER-001-UR",
+   "x": 569.5,
+   "y": 91.8,
+   "title": "GER-001-UR",
+   "text": "Foot shoe",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.2888,
+    0.3891,
+    0.1782
+   ]
+  }
+ ],
+ "shown": [
+  {
+   "id": "WNG-001",
+   "role": "ghost",
+   "name": "Wing core, XPS 25 kg/m3 + tape skin + glue + hinge tape (lumped)",
+   "status": "MODELLED",
+   "mass_g": 100.1,
+   "subsystem": "wing",
+   "bbox_px": [
+    614,
+    259,
+    2260,
+    794
+   ]
+  },
+  {
+   "id": "WNG-002",
+   "role": "context",
+   "name": "Spar, CF tube 12x10 x 0.90 m",
+   "status": "MODELLED",
+   "mass_g": 49.8,
+   "subsystem": "wing",
+   "bbox_px": [
+    819,
+    291,
+    2159,
+    740
+   ]
+  },
+  {
+   "id": "WNG-005-R",
+   "role": "context",
+   "name": "Spar plug (right rib clamp)",
+   "status": "MODELLED",
+   "mass_g": 1.2,
+   "subsystem": "wing",
+   "bbox_px": [
+    950,
+    656,
+    1010,
+    695
+   ]
+  },
+  {
+   "id": "FIN-001-R",
+   "role": "context",
+   "name": "Fin tube 16x14 x 0.36 m (R)",
+   "status": "MODELLED",
+   "mass_g": 27.1,
+   "subsystem": "fins",
+   "bbox_px": [
+    560,
+    79,
+    618,
+    924
+   ]
+  },
+  {
+   "id": "FIN-002-R",
+   "role": "context",
+   "name": "Fin rib tube 14x12 (R)",
+   "status": "MODELLED",
+   "mass_g": 14.8,
+   "subsystem": "fins",
+   "bbox_px": [
+    588,
+    505,
+    974,
+    686
+   ]
+  },
+  {
+   "id": "FIN-003-R",
+   "role": "context",
+   "name": "Fin root block (R)",
+   "status": "MODELLED",
+   "mass_g": 3.2,
+   "subsystem": "fins",
+   "bbox_px": [
+    560,
+    439,
+    667,
+    595
+   ]
+  },
+  {
+   "id": "FIN-004-R",
+   "role": "context",
+   "name": "Fin fairing 3 mm XPS + tape (R)",
+   "status": "MODELLED",
+   "mass_g": 8.4,
+   "subsystem": "fins",
+   "bbox_px": [
+    590,
+    86,
+    762,
+    1007
+   ]
+  },
+  {
+   "id": "FIN-006-R",
+   "role": "context",
+   "name": "Rib fairing, upper (R): XPS + tape blister over the 14 mm rib where the S5010 skin is thinner than the tube (D-194); mass EST",
+   "status": "MODELLED",
+   "mass_g": 0.3,
+   "subsystem": "fins",
+   "bbox_px": [
+    743,
+    564,
+    860,
+    605
+   ]
+  },
+  {
+   "id": "FIN-005-R",
+   "role": "context",
+   "name": "Rib saddle on spar (R)",
+   "status": "MODELLED",
+   "mass_g": 1.0,
+   "subsystem": "fins",
+   "bbox_px": [
+    897,
+    622,
+    1061,
+    724
+   ]
+  },
+  {
+   "id": "GER-001-UR",
+   "role": "context",
+   "name": "Foot shoe (UR)",
+   "status": "MODELLED",
+   "mass_g": 1.4,
+   "subsystem": "landing",
+   "bbox_px": [
+    539,
+    67,
+    608,
+    118
+   ]
+  },
+  {
+   "id": "GER-002-UR",
+   "role": "context",
+   "name": "Foot pad EVA/PE 12x15x30 (UR)",
+   "status": "MODELLED",
+   "mass_g": 0.7,
+   "subsystem": "landing",
+   "bbox_px": [
+    501,
+    58,
+    576,
+    103
+   ]
+  },
+  {
+   "id": "GER-001-LR",
+   "role": "context",
+   "name": "Foot shoe (LR)",
+   "status": "MODELLED",
+   "mass_g": 1.4,
+   "subsystem": "landing",
+   "bbox_px": [
+    560,
+    873,
+    624,
+    933
+   ]
+  },
+  {
+   "id": "GER-002-LR",
+   "role": "context",
+   "name": "Foot pad EVA/PE 12x15x30 (LR)",
+   "status": "MODELLED",
+   "mass_g": 0.7,
+   "subsystem": "landing",
+   "bbox_px": [
+    525,
+    859,
+    594,
+    916
+   ]
+  }
+ ],
+ "hidden": [
+  "AVN-001",
+  "AVN-002",
+  "AVN-003",
+  "AVN-004",
+  "AVN-005",
+  "AVN-006",
+  "AVN-007",
+  "AVN-008",
+  "CGE-001",
+  "CGE-002-LL",
+  "CGE-002-LR",
+  "CGE-002-UL",
+  "CGE-002-UR",
+  "CGE-003-LL",
+  "CGE-003-LR",
+  "CGE-003-UL",
+  "CGE-003-UR",
+  "CGE-004",
+  "CGE-005-L",
+  "CGE-005-R",
+  "CGE-006",
+  "CGE-007-L",
+  "CGE-007-R",
+  "CGE-008",
+  "E-HRN-01",
+  "E-HRN-02",
+  "E-HRN-03",
+  "E-HRN-04",
+  "E-HRN-05",
+  "E-HRN-06",
+  "E-HRN-07",
+  "E-HRN-08",
+  "E-HRN-09",
+  "E-HRN-10",
+  "E-HRN-11",
+  "E-HRN-12",
+  "FIN-001-L",
+  "FIN-002-L",
+  "FIN-003-L",
+  "FIN-004-L",
+  "FIN-005-L",
+  "FIN-006-L",
+  "GER-001-LL",
+  "GER-001-UL",
+  "GER-002-LL",
+  "GER-002-UL",
+  "HRD-001",
+  "HRN-001",
+  "HRN-002",
+  "HWC-001",
+  "HWC-002-L",
+  "HWC-002-R",
+  "HWC-003",
+  "MEC-001-L",
+  "MEC-001-R",
+  "MEC-002-L",
+  "MEC-002-R",
+  "MEC-003-L",
+  "MEC-003-R",
+  "MEC-004-L",
+  "MEC-004-R",
+  "MEC-005-L",
+  "MEC-005-R",
+  "PRP-001-LL",
+  "PRP-001-LR",
+  "PRP-001-UL",
+  "PRP-001-UR",
+  "PRP-002-LL",
+  "PRP-002-LR",
+  "PRP-002-UL",
+  "PRP-002-UR",
+  "PRP-003",
+  "PRP-004-LL",
+  "PRP-004-LR",
+  "PRP-004-UL",
+  "PRP-004-UR",
+  "PRP-005-LL",
+  "PRP-005-LR",
+  "PRP-005-UL",
+  "PRP-005-UR",
+  "PWR-001",
+  "PWR-002",
+  "WNG-003-C",
+  "WNG-004-L",
+  "WNG-004-R",
+  "WNG-005-L",
+  "WNG-006-L",
+  "WNG-006-R",
+  "WNG-007-L",
+  "WNG-007-R",
+  "WNG-008-LL",
+  "WNG-008-LU",
+  "WNG-008-RL",
+  "WNG-008-RU",
+  "WNG-009-L",
+  "WNG-009-R",
+  "WNG-010-L",
+  "WNG-010-R"
+ ],
+ "clipped": [],
+ "legend": [
+  "context",
+  "ghost"
+ ],
+ "files": {
+  "png": "detail-fin.png",
+  "jpg": "detail-fin.jpg"
+ }
+}

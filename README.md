@@ -3,7 +3,7 @@
 > **Current design (2026-11-15): concept A, a scaled quad tailsitter (D-182).** K09-L, described below, could not be
 > built new within $2,000 (cheapest workable build about $2,577) and is kept as the record. Concept A: 0.90 m wing,
 > 4 x T-Motor MN2212 KV780 on 4S, about 1.46 kg predicted (`EST`), BOM $1,775 of $2,000. Design, reports and status:
-> [redesign/qp/README.md](redesign/qp/README.md). Decisions D-182 to D-197: [CHANGE-LOG.md](redesign/params/CHANGE-LOG.md). The Explorer's 3-D model shows concept A with its real parts; concept A renders and films are being re-made after the wiring re-route.
+> [redesign/qp/README.md](redesign/qp/README.md). Decisions D-182 to D-197: [CHANGE-LOG.md](redesign/params/CHANGE-LOG.md). The Explorer's renders, flight and build films and general-arrangement sheet now show concept A (the K09-L ones are kept as the record).
 
 **Hard constraints (team lead; full text in [CLAUDE.md](CLAUDE.md)):**
 1. $2,000 total, all bought new (tax, shipping, packs, charger, radio, test gear, spares); the Jacobs Hall Makers Pass is outside it.
@@ -13,7 +13,14 @@
 5. **The CAD looks exactly like the physical aircraft** (2026-11-15): every part at its real shape and size from the vendor drawing or data sheet, real prop blades, no stand-in disks or boxes; unknown dimensions flagged, never invented.
 6. **Limit exposed wiring** (2026-11-15): wires inside the arm tubes, wing-core channels, fairings or covers; any wire left outside the skin is listed with its length and reason, and kept to the minimum.
 
-K09-L is the VTOL demonstrator a four-person UC Berkeley MEng capstone team will build and fly. It is a quad
+![Concept A in cruise attitude, isometric render](redesign/showcase/concept-a/renders/hero-iso.webp)
+
+*Concept A in cruise attitude (current design), rendered in Blender from the CAD model in `redesign/qp/A/cad`
+(real APC 9x4.5MR props, motors, cage, wing, fins, linkage). Films: [how it flies](redesign/showcase/concept-a/animation/a-how-it-flies.mp4),
+[whole build](redesign/showcase/concept-a/animation/a-build.mp4) (41 steps in 10 stages, one clip each in the same folder).
+More renders: [redesign/SHOWCASE.md](redesign/SHOWCASE.md). Status: design on paper, nothing bought, built or flown yet.*
+
+**K09-L (previous design, kept as the record).** K09-L is the VTOL demonstrator a four-person UC Berkeley MEng capstone team will build and fly. It is a quad
 tailsitter: a 1.15 m flat flying wing with two fins, each fin carrying two fixed motors (four in all, one above and
 one below the wing on each side), and two elevons for roll and pitch in cruise. It stands on its four fin tips, takes
 off as a quadcopter, pitches 90° to cruise on the wing at 16 m/s, and pitches back to land. Power is one 4S 6500 mAh
@@ -22,7 +29,7 @@ LiPo; the flight controller runs ArduPilot Plane in tailsitter mode. A configura
 Jacobs Hall, transportable in one piece in a car, parts ordered mid-December 2026, build January to early
 February 2027, everything done by **2027-04-30**. The CAD is scripted for Autodesk Fusion only.
 
-![K09-L in cruise attitude, isometric render](redesign/showcase/renders/hero-iso.png)
+![K09-L (previous design) in cruise attitude, isometric render](redesign/showcase/renders/hero-iso.png)
 
 *K09-L in cruise attitude, rendered in Blender from the same scripts that build the Fusion model. Status: design
 complete on paper, nothing bought, built or flown yet.*
@@ -36,7 +43,7 @@ complete on paper, nothing bought, built or flown yet.*
 - **On GitHub, no install:** read [redesign/SHOWCASE.md](redesign/SHOWCASE.md) for the renders, the flight animation,
   STL models that rotate in the browser, the morphological chart, the decision and the simulation figures.
 - **Building it:** [redesign/BUILD-GUIDE.md](redesign/BUILD-GUIDE.md) is the short, ordered build guide, with an animated clip per
-  stage ([whole build](redesign/showcase/animation/build/k09l-build.mp4)). Read
+  stage (K09-L, previous design: [whole build](redesign/showcase/animation/build/k09l-build.mp4); concept A: [whole build](redesign/showcase/concept-a/animation/a-build.mp4)). Read
   [redesign/review/BUILDABILITY-REVIEW.md](redesign/review/BUILDABILITY-REVIEW.md) first: 6 blockers and 30 major
   build problems found by a buildability review, to fix before more CFD/FEA or any cutting.
 
