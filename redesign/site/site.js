@@ -1,11 +1,11 @@
-// K09-L explorer shell: hash router (#aircraft #decision #team #subsystems #simulations #status #docs), theme toggle,
+// K09-L explorer shell: hash router (#aircraft #decision #team #subsystems #status #docs), theme toggle,
 // the decision page's morphological chart and concept table (logic from redesign/config-study/web/index.html),
 // the render / plot lightbox, and the 3-D explorer (viewer.js). Everything is relative: works on GitHub Pages and as an artifact.
 import { DIMS, C } from './data/concepts.js?v=20261115f';
 import { start as startViewer, viewer } from './viewer.js?v=20261115c';
 
-const ROUTES = ['aircraft', 'decision', 'team', 'subsystems', 'simulations', 'build', 'proof', 'status', 'bom', 'docs'];
-const TITLES = { aircraft: 'Aircraft', decision: 'Decision', team: 'Team', subsystems: 'Subsystems', simulations: 'Simulations', build: 'Build guide', proof: 'Proof chain', status: 'Status', bom: 'BOM', docs: 'Docs' };
+const ROUTES = ['aircraft', 'decision', 'team', 'subsystems', 'build', 'proof', 'status', 'bom', 'docs'];
+const TITLES = { aircraft: 'Aircraft', decision: 'Decision', team: 'Team', subsystems: 'Subsystems', build: 'Build guide', proof: 'Proof chain', status: 'Status', bom: 'BOM', docs: 'Docs' };
 const GH_ROOT = 'https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/';
 const store = { get(k) { try { return localStorage.getItem('k09l.' + k); } catch (e) { return null; } },
   set(k, v) { try { localStorage.setItem('k09l.' + k, v); } catch (e) { /* storage blocked: fine */ } } };
