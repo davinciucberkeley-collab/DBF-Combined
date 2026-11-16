@@ -11,6 +11,8 @@ User constraints (root `CLAUDE.md`):
 - Flight-tested by 30 April 2027.
 - The packed aircraft fits one car trunk (two at most).
 - Passes the 3-D physics checks.
+- The CAD looks exactly like the physical aircraft: real shapes from vendor drawings, no stand-in disks or boxes (2026-11-15).
+- Limit exposed wiring: wires inside tubes, core channels or covers; every exposed length listed with its reason (2026-11-15).
 
 Everything else is derived by the team and written with its basis. Decisions D-182 to D-195 are logged in
 `../params/CHANGE-LOG.md`.

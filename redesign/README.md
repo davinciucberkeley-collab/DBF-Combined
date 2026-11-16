@@ -2,8 +2,16 @@
 
 > **Current design (2026-11-15): concept A, a scaled quad tailsitter (D-182).** K09-L, described below, could not be
 > built new within $2,000 (cheapest workable build about $2,577) and is kept as the record. Concept A: 0.90 m wing,
-> 4 x T-Motor MN2212 KV780 on 4S, about 1.42 kg predicted (`EST`), BOM $1,775 of $2,000. Design, reports and status:
-> [qp/README.md](qp/README.md). Decisions D-182 to D-188: [CHANGE-LOG.md](params/CHANGE-LOG.md). The Explorer's 3-D model and renders still show K09-L.
+> 4 x T-Motor MN2212 KV780 on 4S, about 1.46 kg predicted (`EST`), BOM $1,775 of $2,000. Design, reports and status:
+> [qp/README.md](qp/README.md). Decisions D-182 to D-197: [CHANGE-LOG.md](params/CHANGE-LOG.md). The Explorer's 3-D model shows concept A with its real parts; concept A renders and films are being re-made after the wiring re-route.
+
+**Hard constraints (team lead; full text in [CLAUDE.md](../CLAUDE.md)):**
+1. $2,000 total, all bought new (tax, shipping, packs, charger, radio, test gear, spares); the Jacobs Hall Makers Pass is outside it.
+2. Built and flight-tested by 2027-04-30.
+3. The packed aircraft fits one car trunk (two at most); a team of 4 moves it; under 25 kg.
+4. Passes the 3-D physics checks: every build step and the assembled aircraft, no part interpenetration, no open wire ends, no exemptions; flight cases in the 3-D sims pass.
+5. **The CAD looks exactly like the physical aircraft** (2026-11-15): every part at its real shape and size from the vendor drawing or data sheet, real prop blades, no stand-in disks or boxes; unknown dimensions flagged, never invented.
+6. **Limit exposed wiring** (2026-11-15): wires inside the arm tubes, wing-core channels, fairings or covers; any wire left outside the skin is listed with its length and reason, and kept to the minimum.
 
 Status: `PROPOSED` design, frame revision **A1-R5** (2026-11-10). Nothing is `VERIFIED`: no part has been bought,
 weighed, built or flown. The configuration is reversible until the mid-December order on the conditions in

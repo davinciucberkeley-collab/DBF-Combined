@@ -12,6 +12,8 @@ Classes: **USER** user constraint; **PHYSICAL** physical, safety or legal limit;
 | A-U3 | Transport: multi-piece allowed; must fit **one car trunk, two pieces at most**; team of 4 carries it | USER | adapt | user rule given for this round (replaces "one piece in a car box", D-J6-2). A is one piece, 0.90 x 0.50 x 0.39 m props on; trunk size `—` (no car measured) |
 | A-U4 | 3-D physics pass: no floating parts, no phasing, assembly swept | USER | carry | `CLAUDE.md` |
 | A-U5 | Mass < 25 kg (55 lb) | USER/LEGAL | carry | `CLAUDE.md`; A 1.47 kg gate |
+| A-U6 | CAD fidelity: every part modelled to its real shape and dimensions from the vendor drawing or data sheet (props with real blades, motors, servos, connectors, boards, fasteners); no stand-in disks or boxes; unknown dimensions flagged, never invented | USER | carry | root `CLAUDE.md` (user, 2026-11-15); D-193, D-194; `review/QP-5/CAD-FIDELITY-AUDIT.md` |
+| A-U7 | Limit exposed wiring: wires inside the arm tubes, wing-core channels, fairings or covers; every wire left outside the skin listed with length and reason, kept to the minimum | USER | carry | root `CLAUDE.md` (user, 2026-11-15); harness re-route in progress (`review/QP-5/HARNESS-ENCLOSED.md` when done) |
 
 ## 2. Configuration, mission, mass
 
