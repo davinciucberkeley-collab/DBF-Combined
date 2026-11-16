@@ -2,10 +2,10 @@
 window.VIEWER_DATA = {
  "schema": "dbf-viewer/1",
  "dataset": "concept-a",
- "generated": "2026-11-16 07:46 UTC",
+ "generated": "2026-11-16 15:56 UTC",
  "sources": {
-  "glb": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/glb",
-  "interfaces": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/merged/interfaces.json",
+  "glb": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/glb200/glb",
+  "interfaces": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/glb200/mi/interfaces.json",
   "proofs": "redesign/qp/A/proofs/out/graph.json",
   "budget": "redesign/qp/A/cad/model/mass_budget.json",
   "csv": [
@@ -16,7 +16,7 @@ window.VIEWER_DATA = {
   "file": "assembly.glb",
   "bytes": 7392508,
   "js_parts": 1,
-  "sha256": "de2513e845cb8f1ce1351175c64e751e7163f79684095b2fcd2e41b18e314a99"
+  "sha256": "b364c940965e89e4c85db2dff51a77a6dd99864e9b149ec584a2b119a22fb124"
  },
  "frame": "aircraft frame: metres, x aft, y right, z up. glTF (x, y, z) = aircraft (x, z, -y).",
  "parts": [
@@ -591,7 +591,7 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B3 \"Pack tray lowered from above into the core tray slot, bonded to the hub aft face\", stage 3 (Rib saddles, pack tray, hinge dampers)",
+   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B3 \"Pack tray lowered from above into the core tray slot, bonded to the hub aft face\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
    "how_url": "assets/animation/build/a-stage-03.mp4",
    "unit_cost_usd": null,
@@ -653,7 +653,7 @@ window.VIEWER_DATA = {
    "name": "Fin rib tube 14x12 (L)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 14.8,
+   "mass_g": 14.1,
    "material": "CFRP tube",
    "cg_xyz_m": [
     0.1782,
@@ -677,7 +677,7 @@ window.VIEWER_DATA = {
    "name": "Fin rib tube 14x12 (R)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 14.8,
+   "mass_g": 14.1,
    "material": "CFRP tube",
    "cg_xyz_m": [
     0.1782,
@@ -807,7 +807,7 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B2 \"Rib saddles snap on the spar from below\", stage 3 (Rib saddles, pack tray, hinge dampers)",
+   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B2 \"Rib saddles snap on the spar from below\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
    "how_url": "assets/animation/build/a-stage-03.mp4",
    "unit_cost_usd": null,
@@ -831,7 +831,7 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B2 \"Rib saddles snap on the spar from below\", stage 3 (Rib saddles, pack tray, hinge dampers)",
+   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B2 \"Rib saddles snap on the spar from below\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
    "how_url": "assets/animation/build/a-stage-03.mp4",
    "unit_cost_usd": null,
@@ -1173,9 +1173,9 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG raceway) from BOM R03 Prusa; fitted in build step B2a \"D-199: phase-lead raceways R and L lowered from above into their foam grooves (through the slots in the hub pad flange), before the tray\"",
+   "vendor": "Made (printed PETG raceway) from BOM R03 Prusa; fitted in build step B2a \"D-199: phase-lead raceways R and L lowered from above into their foam grooves (through the slots in the hub pad flange), before the tray\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": null,
+   "how_url": "assets/animation/build/a-stage-03.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
@@ -1197,9 +1197,9 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG raceway) from BOM R03 Prusa; fitted in build step B2a \"D-199: phase-lead raceways R and L lowered from above into their foam grooves (through the slots in the hub pad flange), before the tray\"",
+   "vendor": "Made (printed PETG raceway) from BOM R03 Prusa; fitted in build step B2a \"D-199: phase-lead raceways R and L lowered from above into their foam grooves (through the slots in the hub pad flange), before the tray\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": null,
+   "how_url": "assets/animation/build/a-stage-03.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
@@ -1221,9 +1221,9 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG conduit) from BOM R03 Prusa; fitted in build step B2b \"D-199: hub conduits (4) pushed in from aft along the hub webs, each docking on its socket floor face and on its raceway window\"",
+   "vendor": "Made (printed PETG conduit) from BOM R03 Prusa; fitted in build step B2b \"D-199: hub conduits (4) pushed in from aft along the hub webs, each docking on its socket floor face and on its raceway window\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": null,
+   "how_url": "assets/animation/build/a-stage-03.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
@@ -1245,9 +1245,9 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG conduit) from BOM R03 Prusa; fitted in build step B2b \"D-199: hub conduits (4) pushed in from aft along the hub webs, each docking on its socket floor face and on its raceway window\"",
+   "vendor": "Made (printed PETG conduit) from BOM R03 Prusa; fitted in build step B2b \"D-199: hub conduits (4) pushed in from aft along the hub webs, each docking on its socket floor face and on its raceway window\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": null,
+   "how_url": "assets/animation/build/a-stage-03.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
@@ -1269,9 +1269,9 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG conduit) from BOM R03 Prusa; fitted in build step B2b \"D-199: hub conduits (4) pushed in from aft along the hub webs, each docking on its socket floor face and on its raceway window\"",
+   "vendor": "Made (printed PETG conduit) from BOM R03 Prusa; fitted in build step B2b \"D-199: hub conduits (4) pushed in from aft along the hub webs, each docking on its socket floor face and on its raceway window\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": null,
+   "how_url": "assets/animation/build/a-stage-03.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
@@ -1293,9 +1293,9 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG conduit) from BOM R03 Prusa; fitted in build step B2b \"D-199: hub conduits (4) pushed in from aft along the hub webs, each docking on its socket floor face and on its raceway window\"",
+   "vendor": "Made (printed PETG conduit) from BOM R03 Prusa; fitted in build step B2b \"D-199: hub conduits (4) pushed in from aft along the hub webs, each docking on its socket floor face and on its raceway window\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
-   "how_url": null,
+   "how_url": "assets/animation/build/a-stage-03.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
@@ -2117,9 +2117,9 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM W09 Amazon (silicone rubber sheet cut to 100 x 30 x 1 mm (EST)); fitted in build step E3c \"Anti-slip pad stuck on the tray floor\"",
+   "vendor": "Bought: BOM W09 Amazon (silicone rubber sheet cut to 100 x 30 x 1 mm (EST)); fitted in build step E3c \"Anti-slip pad stuck on the tray floor\", stage 10 (Pack, XT60, strap, phase leads, bay cover)",
    "vendor_url": null,
-   "how_url": null,
+   "how_url": "assets/animation/build/a-stage-10.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
@@ -2501,7 +2501,7 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG + silicone fluid) from BOM R03 Prusa, R12 Amazon; fitted in build step B4 \"Hinge damper units (stator with rotor in its annulus, silicone fluid filled) into the core notches at the elevon tips from aft, before the ribs; the notch is open aft\", stage 3 (Rib saddles, pack tray, hinge dampers)",
+   "vendor": "Made (printed PETG + silicone fluid) from BOM R03 Prusa, R12 Amazon; fitted in build step B4 \"Hinge damper units (stator with rotor in its annulus, silicone fluid filled) into the core notches at the elevon tips from aft, before the ribs; the notch is open aft\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
    "how_url": "assets/animation/build/a-stage-03.mp4",
    "unit_cost_usd": null,
@@ -2525,7 +2525,7 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG + silicone fluid) from BOM R03 Prusa, R12 Amazon; fitted in build step B4 \"Hinge damper units (stator with rotor in its annulus, silicone fluid filled) into the core notches at the elevon tips from aft, before the ribs; the notch is open aft\", stage 3 (Rib saddles, pack tray, hinge dampers)",
+   "vendor": "Made (printed PETG + silicone fluid) from BOM R03 Prusa, R12 Amazon; fitted in build step B4 \"Hinge damper units (stator with rotor in its annulus, silicone fluid filled) into the core notches at the elevon tips from aft, before the ribs; the notch is open aft\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
    "how_url": "assets/animation/build/a-stage-03.mp4",
    "unit_cost_usd": null,
@@ -2549,7 +2549,7 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B4 \"Hinge damper units (stator with rotor in its annulus, silicone fluid filled) into the core notches at the elevon tips from aft, before the ribs; the notch is open aft\", stage 3 (Rib saddles, pack tray, hinge dampers)",
+   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B4 \"Hinge damper units (stator with rotor in its annulus, silicone fluid filled) into the core notches at the elevon tips from aft, before the ribs; the notch is open aft\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
    "how_url": "assets/animation/build/a-stage-03.mp4",
    "unit_cost_usd": null,
@@ -2573,7 +2573,7 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B4 \"Hinge damper units (stator with rotor in its annulus, silicone fluid filled) into the core notches at the elevon tips from aft, before the ribs; the notch is open aft\", stage 3 (Rib saddles, pack tray, hinge dampers)",
+   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B4 \"Hinge damper units (stator with rotor in its annulus, silicone fluid filled) into the core notches at the elevon tips from aft, before the ribs; the notch is open aft\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
    "how_url": "assets/animation/build/a-stage-03.mp4",
    "unit_cost_usd": null,
@@ -4846,7 +4846,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-MASS-PRED",
    "title": "Predicted take-off mass (CAD basic x growth + overrun)",
-   "value": 1.457913936,
+   "value": 1.456349576,
    "unit": "kg",
    "limit": {
     "op": "<=",
@@ -4855,7 +4855,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).",
-   "margin": 0.0014288109589041087,
+   "margin": 0.002500290410958856,
    "parts": [
     "WNG-001",
     "WNG-002",
@@ -4868,7 +4868,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG",
    "title": "CG aft of the leading edge, CAD as drawn",
-   "value": 20.68488088449598,
+   "value": 20.51003615489518,
    "unit": "mm",
    "limit": {
     "op": ">=",
@@ -4877,7 +4877,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.",
-   "margin": 0.08867794128926203,
+   "margin": 0.07947558709974625,
    "parts": [
     "PWR-001",
     "CGE-008",
@@ -4888,7 +4888,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-HI",
    "title": "CG aft limit of the design band",
-   "value": 20.68488088449598,
+   "value": 20.51003615489518,
    "unit": "mm",
    "limit": {
     "op": "<=",
@@ -4897,7 +4897,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "CG breadboard (M5); band 19-26 mm (D-195), hard aft limit 28.5 mm.",
-   "margin": 0.20442765828861623,
+   "margin": 0.21115245558095466,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -4906,7 +4906,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-TRIM-AFT",
    "title": "CG at the aft end of the pack trim travel",
-   "value": 22.823257618957108,
+   "value": 22.650786527544316,
    "unit": "mm",
    "limit": {
     "op": "<=",
@@ -4915,7 +4915,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "Slide the pack to the aft slot stop and re-measure CG (M5).",
-   "margin": 0.19918394319448746,
+   "margin": 0.20523556043704155,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -4924,7 +4924,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-TRIM-FWD",
    "title": "CG at the forward end of the pack trim travel",
-   "value": 19.4018548438193,
+   "value": 19.225585931305694,
    "unit": "mm",
    "limit": {
     "op": ">=",
@@ -4933,7 +4933,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "Slide the pack to the forward slot stop and re-measure CG (M5).",
-   "margin": 0.021150254937857937,
+   "margin": 0.011872943752931289,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -4942,7 +4942,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-SM",
    "title": "Static margin at the CAD CG",
-   "value": 8.169436373675113,
+   "value": 8.240801569430541,
    "unit": "% chord",
    "limit": {
     "op": ">=",
@@ -4951,7 +4951,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Measure NP on the built aircraft (M5, M6); SM >= 5 % chord.",
-   "margin": 0.6338872747350226,
+   "margin": 0.6481603138861083,
    "parts": [
     "WNG-001"
    ]
@@ -5004,7 +5004,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-TW-FRESH-PRED",
    "title": "Hover T/W fresh at the predicted mass (0.90 cap)",
-   "value": 2.357198851210016,
+   "value": 2.359730872131124,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -5013,7 +5013,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "margin": 0.17859942560500808,
+   "margin": 0.17986543606556205,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -5024,7 +5024,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-TW-SAG-PRED",
    "title": "Hover T/W sagged pack at the predicted mass (0.90 cap)",
-   "value": 1.8633981831145725,
+   "value": 1.8653997805536593,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -5033,7 +5033,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "margin": 0.16462386444660776,
+   "margin": 0.165874862846037,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -5045,7 +5045,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-WINDOW-PRED",
    "title": "Transition entry window at the predicted mass (0.90 cap)",
-   "value": 5.697787419859948,
+   "value": 5.751290942902483,
    "unit": "%",
    "limit": {
     "op": ">=",
@@ -5054,7 +5054,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "C3 time-domain pitch-over run at the as-weighed mass (T-A-C3-PITCHOVER); the window uses 1.33 W low and 0.80 x T/W sag high.",
-   "margin": 0.13955748397198953,
+   "margin": 0.15025818858049664,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -5123,7 +5123,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CRUISE-AVAIL",
    "title": "Cruise time to BATT_LOW at the predicted mass",
-   "value": 257.27175786227446,
+   "value": 257.8568258115407,
    "unit": "s",
    "limit": {
     "op": ">=",
@@ -5132,7 +5132,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).",
-   "margin": 0.25770592566111566,
+   "margin": 0.26056610523473406,
    "parts": [
     "PWR-001",
     "PRP-003"

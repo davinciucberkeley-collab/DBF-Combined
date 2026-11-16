@@ -22,7 +22,7 @@
    "name": "Fin rib tube 14x12 (R)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 14.8,
+   "mass_g": 14.1,
    "material": "CFRP tube",
    "cg_xyz_m": [
     0.1782,
@@ -112,7 +112,7 @@
    "name": "Fin rib tube 14x12 (L)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 14.8,
+   "mass_g": 14.1,
    "material": "CFRP tube",
    "cg_xyz_m": [
     0.1782,

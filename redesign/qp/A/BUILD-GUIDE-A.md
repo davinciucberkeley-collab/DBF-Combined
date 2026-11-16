@@ -59,7 +59,7 @@ Status `PROPOSED`, nothing built yet. Written for a team of four students at Jac
 | Arms `CGE-002-*` | 12x10 CF (R08, tube 2) | 245 | 4 | B0 | 13.5 each | `wing.py` `R_M - R_IN` |
 | Bridge `CGE-004` | 12x10 CF (R08, tube 3) | 154 | 1 | B0 | 8.5 | `wing.py` `BR_X1 - BR_X0` |
 | V struts `CGE-005-*` | 6x4.5 CF (R10) | 286.2 | 2 | B0 | 6.5 each (CAD part value, EST) | `wing.py` `STRUT_S`, `STRUT_E` |
-| Fin ribs `FIN-002-*` | 14x12 CF (R09) | 215.5 | 2 | C1 | 14.8 each (carries the 227 mm value; 215.5 mm = 14.1 g) | `wing.py` `RIB_X1 - RIB_X0` |
+| Fin ribs `FIN-002-*` | 14x12 CF (R09) | 215.5 | 2 | C1 | 14.1 each (from the drawn 215.5 mm, D-200) | `wing.py` `RIB_X1 - RIB_X0` |
 | Fin tubes `FIN-001-*` | 16x14 CF (R02) | 360 | 2 | C6 | 27.1 each | `common.py` `FIN_H` |
 
 Cut square: tape round the cut line, cut through the tape, sand the end flat. Wear a mask or cut wet.
@@ -626,9 +626,9 @@ Film clip: `assets/animation/build/a-stage-04.mp4` (Explorer, "How it's built", 
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `FIN-002` x2 | Fin rib tube 14x12 | made | R09 RMRC | 29.6 |
+| `FIN-002` x2 | Fin rib tube 14x12 | made | R09 RMRC | 28.2 |
 
-Mass placed by this step 29.6 g; running total of placed parts 651.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 28.2 g; running total of placed parts 649.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -638,7 +638,7 @@ Mass placed by this step 29.6 g; running total of placed parts 651.3 g (CAD; the
 
 **Make it:**
 
-- Cut 2 ribs, each 215.5 mm (CAD `RIB_X1 - RIB_X0`: x 70.5 to 286.0 mm). NOTE: the CAD part mass 14.8 g and BOM R09 (2 x 0.227 m) assume 227 mm: the drawn rib is 215.5 mm. Build to the CAD length, 215.5 mm, and tell the CAD owner (Open items).
+- Cut 2 ribs, each 215.5 mm (CAD `RIB_X1 - RIB_X0`: x 70.5 to 286.0 mm). Mass 14.1 g each (D-200: CAD mass and BOM R09 now use the drawn 215.5 mm).
 
 **Fit it:**
 
@@ -667,7 +667,7 @@ Mass placed by this step 29.6 g; running total of placed parts 651.3 g (CAD; the
 |---|---|---|---|---|
 | `FIN-006` x2 | Rib fairing, upper | made | R01 Local | 0.6 |
 
-Mass placed by this step 0.6 g; running total of placed parts 651.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 0.6 g; running total of placed parts 650.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -707,7 +707,7 @@ Film clip: `assets/animation/build/a-stage-05.mp4` (Explorer, "How it's built", 
 | `WNG-006` x2 | Elevon right | made | R01 Local | 13.4 |
 | `WNG-007` x2 | Elevon balance | made | R11 Local | 32.2 |
 
-Mass placed by this step 45.6 g; running total of placed parts 697.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 45.6 g; running total of placed parts 696.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -749,7 +749,7 @@ Mass placed by this step 45.6 g; running total of placed parts 697.5 g (CAD; the
 |---|---|---|---|---|
 | `WNG-008` x2 | Lens cap + stop bosses: wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop | made | R03 Prusa | 7.6 |
 
-Mass placed by this step 7.6 g; running total of placed parts 705.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 7.6 g; running total of placed parts 703.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -784,7 +784,7 @@ Mass placed by this step 7.6 g; running total of placed parts 705.1 g (CAD; the 
 |---|---|---|---|---|
 | `WNG-008` x2 | Lens cap + stop bosses: wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop | made | R03 Prusa | 7.6 |
 
-Mass placed by this step 7.6 g; running total of placed parts 712.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 7.6 g; running total of placed parts 711.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -823,7 +823,7 @@ Film clip: `assets/animation/build/a-stage-06.mp4` (Explorer, "How it's built", 
 |---|---|---|---|---|
 | `FIN-004-R` x1 | Fin fairing 3 mm XPS + tape | made | R01 Local | 8.4 |
 
-Mass placed by this step 8.4 g; running total of placed parts 721.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 8.4 g; running total of placed parts 719.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -858,7 +858,7 @@ Mass placed by this step 8.4 g; running total of placed parts 721.1 g (CAD; the 
 |---|---|---|---|---|
 | `FIN-004-L` x1 | Fin fairing 3 mm XPS + tape | made | R01 Local | 8.4 |
 
-Mass placed by this step 8.4 g; running total of placed parts 729.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 8.4 g; running total of placed parts 728.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **Tools:** as C3.
 
@@ -889,7 +889,7 @@ Mass placed by this step 8.4 g; running total of placed parts 729.5 g (CAD; the 
 |---|---|---|---|---|
 | `FIN-003` x2 | Fin root block | made | R03 Prusa | 6.4 |
 
-Mass placed by this step 6.4 g; running total of placed parts 735.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 6.4 g; running total of placed parts 734.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -925,7 +925,7 @@ Mass placed by this step 6.4 g; running total of placed parts 735.9 g (CAD; the 
 |---|---|---|---|---|
 | `FIN-001` x2 | Fin tube 16x14 x 0.36 m | made | R02 RMRC | 54.2 |
 
-Mass placed by this step 54.2 g; running total of placed parts 790.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 54.2 g; running total of placed parts 788.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -969,7 +969,7 @@ Film clip: `assets/animation/build/a-stage-07.mp4` (Explorer, "How it's built", 
 |---|---|---|---|---|
 | `GER-001` x2 | Foot shoe | made | R03 Prusa | 2.8 |
 
-Mass placed by this step 2.8 g; running total of placed parts 792.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 2.8 g; running total of placed parts 791.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -1004,7 +1004,7 @@ Mass placed by this step 2.8 g; running total of placed parts 792.9 g (CAD; the 
 |---|---|---|---|---|
 | `GER-001` x2 | Foot shoe | made | R03 Prusa | 2.8 |
 
-Mass placed by this step 2.8 g; running total of placed parts 795.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 2.8 g; running total of placed parts 794.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **Tools:** epoxy.
 
@@ -1035,7 +1035,7 @@ Mass placed by this step 2.8 g; running total of placed parts 795.7 g (CAD; the 
 |---|---|---|---|---|
 | `GER-002` x4 | Foot pad EVA/PE 12x15x30 | made | R03 Prusa | 2.8 |
 
-Mass placed by this step 2.8 g; running total of placed parts 798.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 2.8 g; running total of placed parts 797.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -1074,7 +1074,7 @@ Film clip: `assets/animation/build/a-stage-08.mp4` (Explorer, "How it's built", 
 |---|---|---|---|---|
 | `MEC-001` x2 | Servo EMAX ES3054HV | bought | M01 RMRC | 41.0 |
 
-Mass placed by this step 41.0 g; running total of placed parts 839.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 41.0 g; running total of placed parts 838.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -1129,7 +1129,7 @@ Mass placed by this step 41.0 g; running total of placed parts 839.5 g (CAD; the
 |---|---|---|---|---|
 | `MEC-002` x2 | Servo arm | bought | M01 RMRC | 2.0 |
 
-Mass placed by this step 2.0 g; running total of placed parts 841.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 2.0 g; running total of placed parts 840.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **Tools:** servo tester.
 
@@ -1160,7 +1160,7 @@ Mass placed by this step 2.0 g; running total of placed parts 841.5 g (CAD; the 
 |---|---|---|---|---|
 | `HWC-002` x2 | Servo arm screw M2 x 6 pan | bought | R05 Amazon | 0.5 |
 
-Mass placed by this step 0.5 g; running total of placed parts 842.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 0.5 g; running total of placed parts 840.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **Tools:** 1.5 mm / small screwdriver, threadlocker.
 
@@ -1187,7 +1187,7 @@ Mass placed by this step 0.5 g; running total of placed parts 842.1 g (CAD; the 
 |---|---|---|---|---|
 | `MEC-004` x2 | Control horn | bought | M02 RMRC | 2.0 |
 
-Mass placed by this step 2.0 g; running total of placed parts 844.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 2.0 g; running total of placed parts 842.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -1218,7 +1218,7 @@ Mass placed by this step 2.0 g; running total of placed parts 844.1 g (CAD; the 
 |---|---|---|---|---|
 | `MEC-003` x2 | Pushrod 1.2 mm with Z-bend and clevis | bought | M02 RMRC | 1.9 |
 
-Mass placed by this step 1.9 g; running total of placed parts 846.0 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 1.9 g; running total of placed parts 844.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **Tools:** Z-bend pliers, small pliers, calipers.
 
@@ -1245,7 +1245,7 @@ Mass placed by this step 1.9 g; running total of placed parts 846.0 g (CAD; the 
 |---|---|---|---|---|
 | `MEC-005-R` x1 | Clevis pin 1.0 x 4.4 mm | bought | M02 RMRC | 0.0 |
 
-Mass placed by this step 0.0 g; running total of placed parts 846.0 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 0.0 g; running total of placed parts 844.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **Tools:** tweezers, small pliers.
 
@@ -1272,7 +1272,7 @@ Mass placed by this step 0.0 g; running total of placed parts 846.0 g (CAD; the 
 |---|---|---|---|---|
 | `MEC-005-L` x1 | Clevis pin 1.0 x 4.4 mm | bought | M02 RMRC | 0.0 |
 
-Mass placed by this step 0.0 g; running total of placed parts 846.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 0.0 g; running total of placed parts 844.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **Tools:** tweezers, servo tester.
 
@@ -1303,7 +1303,7 @@ Film clip: `assets/animation/build/a-stage-09.mp4` (Explorer, "How it's built", 
 |---|---|---|---|---|
 | `AVN-006` x1 | Pitot probe | bought | V05 RMRC | 5.0 |
 
-Mass placed by this step 5.0 g; running total of placed parts 851.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 5.0 g; running total of placed parts 849.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -1339,7 +1339,7 @@ Mass placed by this step 5.0 g; running total of placed parts 851.1 g (CAD; the 
 | `AVN-001` x1 | Avionics plate | made | R03 Prusa | 8.0 |
 | `HWC-003` x1 | FC mounting nuts: 4 x M2 thin nut | bought | R05 Amazon | 0.4 |
 
-Mass placed by this step 8.4 g; running total of placed parts 859.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 8.4 g; running total of placed parts 858.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -1379,7 +1379,7 @@ Mass placed by this step 8.4 g; running total of placed parts 859.5 g (CAD; the 
 | `AVN-004` x1 | GPS TBS M10Q + compass | bought | V04 RMRC | 13.5 |
 | `AVN-005` x1 | Airspeed sensor MS4525 board | bought | V05 RMRC | 3.0 |
 
-Mass placed by this step 59.1 g; running total of placed parts 918.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 59.1 g; running total of placed parts 917.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -1415,7 +1415,7 @@ Mass placed by this step 59.1 g; running total of placed parts 918.6 g (CAD; the
 |---|---|---|---|---|
 | `HWC-001` x1 | FC mounting screws: 4 x M2 x 25 pan screw | bought | R05 Amazon | 3.0 |
 
-Mass placed by this step 3.0 g; running total of placed parts 921.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 3.0 g; running total of placed parts 920.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **Tools:** small screwdriver.
 
@@ -1474,7 +1474,7 @@ Film clip: `assets/animation/build/a-stage-10.mp4` (Explorer, "How it's built", 
 |---|---|---|---|---|
 | `PWR-003` x1 | Anti-slip pad 100 x 30 x 1.0 mm silicone rubber sheet on the tray floor | bought | W09 Amazon | 3.5 |
 
-Mass placed by this step 3.5 g; running total of placed parts 925.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 3.5 g; running total of placed parts 923.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -1505,7 +1505,7 @@ Mass placed by this step 3.5 g; running total of placed parts 925.1 g (CAD; the 
 |---|---|---|---|---|
 | `PWR-001` x1 | Pack Tattu 2300 mAh 4S 75C | bought | W01 RMRC | 270.0 |
 
-Mass placed by this step 270.0 g; running total of placed parts 1195.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 270.0 g; running total of placed parts 1193.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -1540,7 +1540,7 @@ Mass placed by this step 270.0 g; running total of placed parts 1195.1 g (CAD; t
 |---|---|---|---|---|
 | `HRN-002` x1 | XT60 female + 14 AWG tail to the ESC | bought | W05 RMRC | 8.0 |
 
-Mass placed by this step 8.0 g; running total of placed parts 1203.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 8.0 g; running total of placed parts 1201.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -1591,7 +1591,7 @@ Mass placed by this step 8.0 g; running total of placed parts 1203.1 g (CAD; the
 |---|---|---|---|---|
 | `PWR-002` x1 | Pack strap 20 x 300 mm with buckle | bought | W08 RMRC | 5.5 |
 
-Mass placed by this step 5.5 g; running total of placed parts 1208.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 5.5 g; running total of placed parts 1207.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **Tools:** none.
 
@@ -1642,7 +1642,7 @@ Mass placed by this step 5.5 g; running total of placed parts 1208.6 g (CAD; the
 |---|---|---|---|---|
 | `AVN-008` x1 | Bay cover | made | R03 Prusa | 9.6 |
 
-Mass placed by this step 9.6 g; running total of placed parts 1218.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 9.6 g; running total of placed parts 1216.8 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -1665,7 +1665,7 @@ Mass placed by this step 9.6 g; running total of placed parts 1218.2 g (CAD; the
 
 ## 14. After the last step
 
-1. **Weigh-in.** Weigh the aircraft with the pack. The gate is **1.47 kg** (`MASS-GATE.md` s8, D-190); the CAD basic mass is 1262.6 g (placed parts 1218.2 g plus the harness lump 18.4 g and the hardware lump 26.1 g) and the design target is 1.46 kg predicted including growth and overrun (`params-A.json`). If the weight is above the gate the aircraft does not fly until the C3 window check is re-run at the as-weighed mass (`MASS-GATE.md` s6).
+1. **Weigh-in.** Weigh the aircraft with the pack. The gate is **1.47 kg** (`MASS-GATE.md` s8, D-190); the CAD basic mass is 1261.2 g (placed parts 1216.8 g plus the harness lump 18.4 g and the hardware lump 26.1 g) and the design target is 1.46 kg predicted including growth and overrun (`params-A.json`). If the weight is above the gate the aircraft does not fly until the C3 window check is re-run at the as-weighed mass (`MASS-GATE.md` s6).
 2. **CG.** Balance the aircraft on a knife edge in the cruise attitude: the band is **19-26 mm aft of the wing leading edge**, hard aft limit 28.5 mm, lateral within 5 mm (`params-A.json`, A-P4). Move the pack in the tray slots (6 mm forward, 10 mm aft of nominal, about 2.2 mm of CG per 10 mm, `common.py` `TRIM`): no ballast first.
 3. **Controls.** Each elevon +-20 deg (servo limit), stops at +-21 deg; both surfaces move the right way for the stick (EST: check with the TX, props off).
 4. **Power-up, props OFF.** First power-up with the props removed. Check each motor direction: UR and LL clockwise, UL and LR counter-clockwise, seen from the thrust side (BOM P02, MR and MRP); if one is wrong swap two phase leads (EST). Then fit the props, props-on tests only on the thrust stand (`bench_analysis.py`, `SCHEDULE-A.md` B3).
@@ -1690,14 +1690,14 @@ Mass placed by this step 9.6 g; running total of placed parts 1218.2 g (CAD; the
 
 The steps total **37.7 h** hands-on (`EST`; machine time for printing and the 24 h cures are not counted). `SCHEDULE-A.md` plans 53 h of build (range 41-66 h), including 10 h of checks and a 2 h range check (`EST`, K09-L 82 h x 0.65). This guide steps 37.7 h plus those 12 h is 49.7 h, inside that range.
 
-**Mass check at the end:** the CAD basic mass is 1262.64 g (`a_model.py`); the pack is 270 g of that.
+**Mass check at the end:** the CAD basic mass is 1261.24 g (`a_model.py`); the pack is 270 g of that.
 
 ### Open items (not in the repo, or in conflict)
 
 - **Hot-wire cutter and power supply:** no BOM-A line and not a Jacobs tool (SCHEDULE-A B1 says "workspace W"; the K09-L BOM bought the gear). Needed for stage 1 and for C3/C4 fairings.
 - **STL files, print orientation and slicer settings for every printed part:** not in the repo for concept A (only K09-L G3 PRINT-LIST). The guide gives the CAD wall thicknesses and an `EST` orientation; export the STLs from `a_model.py`.
 - **S5010 hot-wire templates:** not generated for concept A (`redesign/manufacturing/hotwire.py` is K09-L). The airfoil file is `redesign/subsystems/wing/s5010.dat`.
-- **Fin rib length:** the CAD draws 215.5 mm (x 70.5-286.0 mm); the part mass (14.8 g) and BOM R09 (2 x 0.227 m) assume 227 mm. The guide builds to the CAD. CAD owner to confirm which is right.
+- **Fin rib length (resolved, D-200):** the CAD draws 215.5 mm (x 70.5-286.0 mm); the part mass (now 14.1 g) and BOM R09 (2 x 0.2155 m) follow the drawing.
 - **Motor screws M2.5x8:** named in ARMS.md, but no BOM line; check whether the T-Motor box includes them. Prop adapters and spinner nuts: BOM P01 note says confirm they ship in the motor box.
 - **Motor direction change:** the ESC configuration steps (BLHeli_S, DShot) are not written for concept A; swapping two phase leads reverses a brushless motor (EST).
 - **Pitot tube route:** the silicone tube from the probe (right) to the sensor board (left, 0.45 m away) is not designed in the CAD (HARNESS-ENCLOSED D-199.2).

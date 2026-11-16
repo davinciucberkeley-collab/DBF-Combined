@@ -2,9 +2,20 @@
     python -I redesign/qp/A/cad/viewer_data_a.py --glb DIR_WITH_assembly.glb --interfaces merged_interfaces.json --out redesign/site/data
 Merged interfaces: python -I redesign/interfaces/merge_check.py --root redesign/qp/A/cad/model --out SOME_DIR
 Mass budget: qp/A/cad/model/mass_budget.json. Claims: qp/A/proofs/out/graph.json (build it first:
-python -I redesign/qp/A/proofs/run_all.py); a claim's `parts` ids (CAD part ids) become the part panel's "Claims about this part". No cost/vendor: BOM-A.csv ids (P01, W01 ...) are
-purchase lines, not CAD part ids (WNG-001 ...), so there is no mapping; the inspector shows no cost for A."""
+python -I redesign/qp/A/proofs/run_all.py); a claim's `parts` ids (CAD part ids) become the part panel's "Claims about this part".
+Vendor / file: parts_links_a.py maps each CAD part id to its BOM-A line and build-film clip (out/parts-a.csv), run first.
+
+After build_data writes the plain model, this script also makes the files the Explorer actually loads (site/viewer.js):
+  site/assets/concept-a.glb          plain GLB (kept for the record and for other tools)
+  site/assets/concept-a.opt.glb      meshopt-compressed GLB (gltf-transform, 16-bit positions, 12-bit normals)
+  site/data/assembly.opt.glb.partN.js  the compressed bytes as base64, for hosts that do not serve .glb (claude.ai artifacts)
+and removes the uncompressed assembly.glb / .glb.js / .glb.partN.js from the data folder (nothing loads them).
+Needs Node (npx) on the PATH; the gltf-transform CLI version is pinned below."""
+import base64
+import glob
 import os
+import shutil
+import subprocess
 import sys
 
 sys.dont_write_bytecode = True
@@ -12,9 +23,51 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 RED = os.path.dirname(os.path.dirname(os.path.dirname(HERE)))
 sys.path.insert(0, os.path.join(RED, 'viewer'))
 import build_data  # noqa: E402
-import subprocess  # noqa: E402
-subprocess.run([sys.executable, '-I', os.path.join(HERE, 'parts_links_a.py')], check=True)   # CAD part -> BOM line / build clip (Vendor / file)
 
-sys.argv[1:1] = ['--budget', os.path.join(HERE, 'model', 'mass_budget.json'), '--proofs', os.path.join(os.path.dirname(HERE), 'proofs', 'out', 'graph.json'),
-                 '--csv', os.path.join(HERE, 'out', 'parts-a.csv'), '--no-spec', '--dataset', 'concept-a']
-sys.exit(build_data.main())
+GLTF_TRANSFORM = '@gltf-transform/cli@4.5.1'     # pinned: the version used for the first compressed model (2026-11-16)
+QUANT = ['--quantize-position', '16', '--quantize-normal', '12']
+
+
+def compress(out):
+    """Plain assembly.glb in `out` -> assets/concept-a.glb + concept-a.opt.glb + out/assembly.opt.glb.partN.js."""
+    src = os.path.join(out, 'assembly.glb')
+    if not os.path.isfile(src):
+        print('viewer_data_a: no assembly.glb in %s, nothing to compress' % out)
+        return
+    assets = os.path.join(os.path.dirname(os.path.abspath(out)), 'assets')
+    os.makedirs(assets, exist_ok=True)
+    plain, opt = os.path.join(assets, 'concept-a.glb'), os.path.join(assets, 'concept-a.opt.glb')
+    shutil.copyfile(src, plain)
+    npx = shutil.which('npx') or shutil.which('npx.cmd')
+    if not npx:
+        raise SystemExit('viewer_data_a: npx not found; install Node to compress the model (the viewer loads only the .opt files)')
+    subprocess.run([npx, '--yes', GLTF_TRANSFORM, 'meshopt', plain, opt] + QUANT, check=True)
+    b = open(opt, 'rb').read()
+    b64 = base64.b64encode(b).decode()
+    for f in glob.glob(os.path.join(out, 'assembly.opt.glb.part*.js')):
+        os.remove(f)
+    n = 0
+    for i in range(0, len(b64), build_data.PART_CHARS):
+        n += 1
+        with open(os.path.join(out, 'assembly.opt.glb.part%d.js' % n), 'w', encoding='ascii', newline='\n') as f:
+            f.write('(window.VIEWER_GLB_B64_PARTS = window.VIEWER_GLB_B64_PARTS || []).push("%s");\n' % b64[i:i + build_data.PART_CHARS])
+    if n > 1:
+        print('viewer_data_a: WARNING compressed model needs %d parts; site/viewer.js loads only part1' % n)
+    for f in [src, os.path.join(out, 'assembly.glb.js')] + glob.glob(os.path.join(out, 'assembly.glb.part*.js')):
+        if os.path.exists(f):
+            os.remove(f)
+    print('viewer_data_a: model %.2f MB -> %.2f MB compressed (%s), %d embedded part(s)'
+          % (os.path.getsize(plain) / 1e6, len(b) / 1e6, os.path.relpath(opt, RED), n))
+
+
+if __name__ == '__main__':
+    subprocess.run([sys.executable, '-I', os.path.join(HERE, 'parts_links_a.py')], check=True)   # CAD part -> BOM line / build clip
+    argv = sys.argv[1:]
+    out = argv[argv.index('--out') + 1] if '--out' in argv else None
+    sys.argv[1:1] = ['--budget', os.path.join(HERE, 'model', 'mass_budget.json'), '--proofs', os.path.join(os.path.dirname(HERE), 'proofs', 'out', 'graph.json'),
+                     '--csv', os.path.join(HERE, 'out', 'parts-a.csv'), '--no-spec', '--dataset', 'concept-a']
+    rc = build_data.main()
+    if rc:
+        sys.exit(rc)
+    if out:
+        compress(out)

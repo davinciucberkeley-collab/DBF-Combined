@@ -27,7 +27,7 @@ print(f"R {R:.1f} m; reference lap (300 m leg) {lap_ref:.1f} m = {tl_ref:.2f} s;
 print(f"flown: leg {LEG:.0f} m, lap {lap:.1f} m = {tl:.2f} s, {(cruise_s-settle)/tl:.1f} laps of cruise after the {settle:.0f} s settle; racetrack far point {LEG/2+R:.0f} m; any-direction bound after BATT_LOW L/2 + 51 + 94 = {LEG/2+R+94:.0f} m vs fence 250 - 10 = 240 m (margin {240-(LEG/2+R+94):.0f} m)")
 # ---- mass roll-up (basic g, maturity, growth by ASM-A3-MGA: EST 20, CALC 10, DATASHEET 5, CAD 5, WEIGHED 1, pack 0) ----
 items = [("wing: foam core + 12x10 spar + 2 elevons (6.7 g each) + 2 balances 32.2 g + 4 lens caps + 2 hinge dampers (CAD 2026-11-15, D-193/D-194; S5010 section)", 221.7, "EST", .20),
-         ("2 fins + 4 landing feet (CAD: fins 109.6 incl. rib fairings + feet 8.4, EST)", 118.0, "EST", .20),
+         ("2 fins + 4 landing feet (CAD: fins 108.2 incl. rib fairings, D-200 rib at drawn length + feet 8.4, EST)", 116.6, "EST", .20),
          ("4 x MN2212 with cables (65 g, T-Motor page)", 260, "DATASHEET", .05), ("4 x APC 9x4.5MR/MRP (11.06 g each, RMRC page)", 44.2, "DATASHEET", .05),
          ("4 x prop adapter 4.3 g + 4 x spinner nut 2.9 g (CALC, 6061; no source lump, CAD-INTEGRATION s4)", 28.8, "CALC", .10),
          ("ESC 4-in-1 board + leads/caps (page; leads EST)", 20.04, "EST", .20), ("1 x Tattu 2300 (listing 270 g)", 270, "pack", 0.0), ("pack strap PWR-002 20 mm buckle strap 5.5 g (V, STRIX listing) + anti-slip pad PWR-003 3.5 g (EST), D-199", 9.0, "EST", .20),
@@ -71,7 +71,7 @@ for V_ in (17.0,):
 print("hard landing 1.2 m/s on 6 mm crush: decel g =", round(1.2**2/(2*0.006)/G, 1), "; impact energy at 1.50 kg (J) =", round(0.5*1.5*1.44, 2))
 # CG (QP-4): anchored on the CAD (QP-3 CAD s4): basic 1,204.6 g, CG 16.2 mm aft of LE with the pack centred at x -20 mm. The old 'rest of aircraft 35.7 mm' estimate is withdrawn.
 NP, CHORD = 40.7, 245.0
-CAD_BASIC, CAD_CG, PACK_X = 1262.64, 20.68, -10.0   # D-199 (raceways + hub conduits +6.8 g, phase extensions -9.7 g, buckle strap +2.5 g, drawn pad +3.5 g, hub slots -0.2 g; was 1259.74 / 21.32 at D-198); D-198 (bay cover +9.6 g, bottom-up harness -22.8 g, cup collars +1.2 g; was 1263.74 / 21.13 at D-196); older: D-196 (hub walls; was 1259.14 / 21.47 at D-195): as-drawn CAD 2026-11-15, cad_mass.json (was 1215.9 / 22.5 at QP-4 FIXES)
+CAD_BASIC, CAD_CG, PACK_X = 1261.24, 20.51, -10.0   # D-200 fin ribs at the drawn 215.5 mm (-1.4 g); D-199 (raceways + hub conduits +6.8 g, phase extensions -9.7 g, buckle strap +2.5 g, drawn pad +3.5 g, hub slots -0.2 g; was 1259.74 / 21.32 at D-198); D-198 (bay cover +9.6 g, bottom-up harness -22.8 g, cup collars +1.2 g; was 1263.74 / 21.13 at D-196); older: D-196 (hub walls; was 1259.14 / 21.47 at D-195): as-drawn CAD 2026-11-15, cad_mass.json (was 1215.9 / 22.5 at QP-4 FIXES)
 cg = CAD_CG
 for px in (-20.0, -3.0, +7.0):
     print(f"CAD CG with the pack centre at x {px:+.0f} mm: {CAD_CG + 270*(px-PACK_X)/CAD_BASIC:.1f} mm aft of LE, SM {(NP-(CAD_CG + 270*(px-PACK_X)/CAD_BASIC))/CHORD*100:.1f} %")

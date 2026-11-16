@@ -139,7 +139,7 @@ def main():
     A('| Arms `CGE-002-*` | 12x10 CF (R08, tube 2) | 245 | 4 | B0 | %.1f each | `wing.py` `R_M - R_IN` |' % m.PARTS['CGE-002-UR']['mass_g'])
     A('| Bridge `CGE-004` | 12x10 CF (R08, tube 3) | 154 | 1 | B0 | %.1f | `wing.py` `BR_X1 - BR_X0` |' % m.PARTS['CGE-004']['mass_g'])
     A('| V struts `CGE-005-*` | 6x4.5 CF (R10) | 286.2 | 2 | B0 | %.1f each (CAD part value, EST) | `wing.py` `STRUT_S`, `STRUT_E` |' % m.PARTS['CGE-005-R']['mass_g'])
-    A('| Fin ribs `FIN-002-*` | 14x12 CF (R09) | 215.5 | 2 | C1 | %.1f each (carries the 227 mm value; 215.5 mm = 14.1 g) | `wing.py` `RIB_X1 - RIB_X0` |' % m.PARTS['FIN-002-R']['mass_g'])
+    A('| Fin ribs `FIN-002-*` | 14x12 CF (R09) | 215.5 | 2 | C1 | %.1f each (from the drawn 215.5 mm, D-200) | `wing.py` `RIB_X1 - RIB_X0` |' % m.PARTS['FIN-002-R']['mass_g'])
     A('| Fin tubes `FIN-001-*` | 16x14 CF (R02) | 360 | 2 | C6 | %.1f each | `common.py` `FIN_H` |' % m.PARTS['FIN-001-R']['mass_g'])
     A('')
     A('Cut square: tape round the cut line, cut through the tape, sand the end flat. Wear a mask or cut wet.')
@@ -310,7 +310,7 @@ OPEN_ITEMS = [
     '**Hot-wire cutter and power supply:** no BOM-A line and not a Jacobs tool (SCHEDULE-A B1 says "workspace W"; the K09-L BOM bought the gear). Needed for stage 1 and for C3/C4 fairings.',
     '**STL files, print orientation and slicer settings for every printed part:** not in the repo for concept A (only K09-L G3 PRINT-LIST). The guide gives the CAD wall thicknesses and an `EST` orientation; export the STLs from `a_model.py`.',
     '**S5010 hot-wire templates:** not generated for concept A (`redesign/manufacturing/hotwire.py` is K09-L). The airfoil file is `redesign/subsystems/wing/s5010.dat`.',
-    '**Fin rib length:** the CAD draws 215.5 mm (x 70.5-286.0 mm); the part mass (14.8 g) and BOM R09 (2 x 0.227 m) assume 227 mm. The guide builds to the CAD. CAD owner to confirm which is right.',
+    '**Fin rib length (resolved, D-200):** the CAD draws 215.5 mm (x 70.5-286.0 mm); the part mass (now 14.1 g) and BOM R09 (2 x 0.2155 m) follow the drawing.',
     '**Motor screws M2.5x8:** named in ARMS.md, but no BOM line; check whether the T-Motor box includes them. Prop adapters and spinner nuts: BOM P01 note says confirm they ship in the motor box.',
     '**Motor direction change:** the ESC configuration steps (BLHeli_S, DShot) are not written for concept A; swapping two phase leads reverses a brushless motor (EST).',
     '**Pitot tube route:** the silicone tube from the probe (right) to the sensor board (left, 0.45 m away) is not designed in the CAD (HARNESS-ENCLOSED D-199.2).',

@@ -32,8 +32,8 @@ The electronics and flight software:
 
 | Number | Value | Source |
 |---|---|---|
-| Take-off mass, predicted | 1,454 g itemised / 1,458.1 g flat rule `EST` (target ≤ 1,460 since D-195, weigh-in gate 1,470; 1.9 g of room after D-199) | `A/MASS-GATE.md` s10 |
-| Basic mass (CAD) | 1,262.6 g, CG 20.7 mm aft of LE (band 19-26; trim ends 19.4 / 22.8 with the 6 mm forward travel), SM 8.2 % `EST` | `A/sitl/cad_mass.json` |
+| Take-off mass, predicted | 1,452 g itemised / 1,456 g flat rule `EST` (target ≤ 1,460 since D-195, weigh-in gate 1,470; about 4 g of room after D-200) | `A/MASS-GATE.md` s10 |
+| Basic mass (CAD) | 1,261.2 g, CG 20.5 mm aft of LE (band 19-26; trim ends 19.2 / 22.6 with the 6 mm forward travel), SM 8.2 % `EST` | `A/sitl/cad_mass.json` |
 | Hover T/W at 1.46 kg, spin-capped | 2.35 fresh, 1.86 sagged `EST` (transition window ±5.6 %) | `A/mission_gate_a.py` |
 | Cruise to BATT_LOW at 1.46 kg, 17 m/s | 4.27 min (need 3.41) `EST` | `A/mission_gate_a.py` |
 | Elevon flutter, lowest onset (with damper) | 38.5 m/s hot `EST` (line 28.8); wing 33.4 m/s fins off | `A/structures/flutter_d195.md` |
