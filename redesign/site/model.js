@@ -57,9 +57,11 @@ function isStructural(p, idx) {
 }
 
 // How a part is drawn in a mode: 'solid' | 'ghost' | 'hidden'. Wires and joint markers: see showWires/showJoints.
-// Harness bundle bodies (HRN-001, HRN-002-x) are lumped-mass proxies placed for the mass/CG roll-up; the real wires
+// Harness bundle bodies flagged mass_proxy (concept A: HRN-001) are lumped-mass proxies placed for the mass/CG roll-up; the real wires
 // are drawn as routed tubes, so the proxies are never drawn (they stay in the part list and the mass totals).
-const isMassProxy = p => !!p.mass_proxy || /^HRN-00[12]/.test(p.id || '');
+// Concept A: only parts flagged mass_proxy by the CAD (HRN-001) are hidden. The old K09-L id rule (HRN-001/002) hid the real,
+// modelled XT60 female (HRN-002), so the battery tail looked like it ended in mid-air (user report 2026-11-16).
+const isMassProxy = p => !!p.mass_proxy;
 function role(mode, p, idx) {
   if (isMassProxy(p)) return 'hidden';
   if (mode === 'inside') return p.electrical ? 'solid' : 'ghost';
