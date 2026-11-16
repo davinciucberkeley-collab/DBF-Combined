@@ -1,7 +1,7 @@
 // K09-L explorer shell: hash router (#aircraft #decision #team #subsystems #simulations #status #docs), theme toggle,
 // the decision page's morphological chart and concept table (logic from redesign/config-study/web/index.html),
 // the render / plot lightbox, and the 3-D explorer (viewer.js). Everything is relative: works on GitHub Pages and as an artifact.
-import { DIMS, C } from './data/concepts.js?v=20261111d';
+import { DIMS, C } from './data/concepts.js?v=20261115f';
 import { start as startViewer, viewer } from './viewer.js?v=20261115c';
 
 const ROUTES = ['aircraft', 'decision', 'team', 'subsystems', 'simulations', 'build', 'proof', 'status', 'bom', 'docs'];
@@ -35,7 +35,7 @@ function route() {
   document.querySelectorAll('main > .view').forEach(v => { v.hidden = v.id !== name; });
   document.querySelectorAll('#nav a').forEach(a => { if (a.getAttribute('href') === '#' + name) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   document.body.dataset.route = name;
-  document.title = (name === 'proof' || name === 'aircraft' ? 'Concept A' : 'K09-L') + ' · ' + TITLES[name];     // the proof chain and the 3-D model show concept A (D-182)
+  document.title = (name === 'build' ? 'K09-L (previous design)' : 'Concept A') + ' · ' + TITLES[name];     // concept A is the current design (D-182); the build guide page is still K09-L's
   if (target) target.scrollIntoView({ block: 'start' }); else if (current !== name) window.scrollTo(0, 0);
   current = name;
   if (name === 'proof') enterProof(); else lastOutside = name === 'aircraft' ? '#aircraft' : location.hash;
@@ -89,9 +89,9 @@ function watchBuildToc() {
 
 // ---------------- decision page: morphological chart and the 43-concept table ----------------
 const FAM = { K: 'Conventional', B: 'Buy-and-modify', U: 'Unconventional' };
-const SHORT = ['K09', 'K01', 'K19', 'K06', 'B08', 'B09', 'U01'];
+const SHORT = ['A', 'B', 'D2', 'K09', 'K01', 'K06', 'K19'];
 const byId = {}; C.forEach(c => { byId[c[0]] = c; });
-const CHOSEN = byId.K09[2].split(' '), RUNNER = byId.K01[2].split(' ');
+const CHOSEN = byId.A[2].split(' '), RUNNER = byId.B[2].split(' ');
 const used = {}; C.forEach(c => { c[2].split(' ').forEach(o => { used[o] = (used[o] || 0) + 1; }); });
 const label = c => c[0] === 'K09' ? 'K09-L' : c[0];
 let overlay, cells = {}, selected = null, grid, note;
@@ -106,7 +106,7 @@ function initMorph() {
       else if (RUNNER.indexOf(code) >= 0) { cls += ' runner'; tag = 'RUNNER-UP'; }
       else if (!used[code]) { cls += ' empty'; tag = '—'; }
       else cls += ' rejected';
-      const pic = used[code] || CHOSEN.indexOf(code) >= 0 ? '<svg aria-hidden="true"><use href="#sk-' + code + '"/></svg>' : '—';
+      const pic = (used[code] || CHOSEN.indexOf(code) >= 0) && document.getElementById('sk-' + code) ? '<svg aria-hidden="true"><use href="#sk-' + code + '"/></svg>' : '—';
       html += '<div class="' + cls + '" data-opt="' + code + '" title="' + code + ' · ' + esc(o[1]) + (used[code] ? ' · ' + used[code] + ' concept' + (used[code] > 1 ? 's' : '') : ' · no concept') + '"><span class="code">' + code + (o[2] ? ' <em>· ' + o[2] + '</em>' : '') + '</span><span class="tag">' + tag + '</span><div class="pic">' + pic + '</div><span class="name">' + esc(o[1]) + '</span></div>';
     });
     html += '</div>';
@@ -131,7 +131,7 @@ function initMorph() {
     while (overlay.firstChild) overlay.removeChild(overlay.firstChild);
     drawPath(CHOSEN, 'chosen', -7);
     drawPath(RUNNER, 'runner', 7);
-    if (selected && selected[0] !== 'K09' && selected[0] !== 'K01') drawPath(selected[2].split(' '), 'sel', 0);
+    if (selected && selected[0] !== 'A' && selected[0] !== 'B') drawPath(selected[2].split(' '), 'sel', 0);
   };
   const chips = document.getElementById('morph-chips'), sel = document.getElementById('morph-select');
   SHORT.forEach(id => { const c = byId[id]; const b = document.createElement('button'); b.type = 'button'; b.className = 'ds-chip'; b.setAttribute('data-id', id); b.setAttribute('aria-pressed', 'false');
@@ -171,7 +171,7 @@ function selectConcept(id) {
     const out = selected[3] + (selected[4] ? ' → ' + selected[4] : '');
     note.innerHTML = '<span class="ds-mono">' + label(selected) + '</span><span>' + esc(selected[1]) + '</span><span class="ds-badge" data-outcome="' + selected[3] + '">' + out + '</span><span class="ds-mono" style="font-weight:400;color:var(--fg-3)">' + selected[2] + '</span><span style="flex-basis:100%">' + esc(selected[6]) + '</span>';
   } else {
-    note.innerHTML = '<span class="ds-mono">K09-L</span><span>' + esc(byId.K09[2]) + '</span><span style="color:var(--fg-3)">·</span><span class="ds-mono">K01</span><span>' + esc(byId.K01[2]) + '</span><span style="flex-basis:100%">K09-L differs from the K09 card by one cell: C4 (fins only, differential thrust) became C3 (elevons), on the skeptic’s advice. Pick a concept to see its path.</span>';
+    note.innerHTML = '<span class="ds-mono">A</span><span>' + esc(byId.A[2]) + '</span><span style="color:var(--fg-3)">·</span><span class="ds-mono">B</span><span>' + esc(byId.B[2]) + '</span><span style="flex-basis:100%">Concept A (D-182) is the current design; B is the fallback. A shares K09-L’s path except R7 (motors in an X on carbon arms, not on the fins) and E7 (two 4S 2300 mAh packs). Pick K09 to see the previous choice.</span>';
   }
   redrawMorph();
 }

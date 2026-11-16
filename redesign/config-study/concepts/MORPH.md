@@ -187,6 +187,8 @@ Saturation: round 1 added 6 new options from external sources and 5 from this ag
 
 ## 6. Re-study 2026-11-14 (D-181, reversed by D-182 the same day)
 
+**Code string as designed (2026-11-15):** concept A is `L3 T3 X3 W2 C3 R7 G2 P3 M1 E7 B1`. The re-study and QP-1 tables carry R5 (4 rotors on the wing/fin tips, the K09 layout); the concept A CAD puts the four motors in an X on 12x10 carbon arms from a central hub (`../../qp/A/cad/amodel/wing.py`, CGE-001/CGE-002), which is R7 (4 rotors in X on a frame). The tables below are left as written; the Explorer chart draws A as designed, with B as the fallback path.
+
 **Baseline 2026-11-15 (after QP-2 to QP-4):** A carries on as selected. Since the re-study table below: props APC 9x4.5MR/MRP, 16° cant, 2 × Tattu 4S 2300, ES3054HV elevon servos, elevon balance plus a hinge viscous damper (D-183 to D-188). Predicted 1.42 kg `EST`, BOM $1,775 (`../../qp/README.md`). The 1.23 kg / $1,461 in the row for A are the re-study numbers.
 
 **Update (D-182, J6 board, Opus chair, 2026-11-14): D-181 is reversed. Concept A is SELECTED, B is the fallback, D2 the lifeboat. The D-181 marking in the first table is struck through and kept as the record; the QP-1 table after it holds the detailed sizing.**

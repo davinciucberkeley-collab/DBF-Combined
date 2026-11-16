@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>K09-L Explorer</title>
+<title>Concept A Explorer</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Scaled quad tailsitter (D-182, J6 board, 2026-11-14; D-181 quadplane superseded the same day; previously K09-L): 3-D aircraft explorer, configuration decision, team, subsystems, simulations, status and documents. UC Berkeley MEng capstone DBF VTOL redesign.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M2 13l9-2 2-8h2l-1 8 8 2v2l-8 1-1 5h-2l-1-5-8-1z' fill='%231F5FC7'/%3E%3C/svg%3E">
@@ -419,18 +419,19 @@
 </section>
 
 <section class="c" id="cs-baseline-a">
-  <header><span class="secno">Concept A baseline · 2026-11-15 · after QP-2 to QP-4</span><h2 class="ds-h2">Validated on paper, in SITL and in the 3-D gates. Nothing bought yet.</h2></header>
+  <header><span class="secno">Concept A baseline · 2026-11-15 · after QP-2 to QP-5 (D-182 to D-197)</span><h2 class="ds-h2">Validated on paper, in SITL and in the 3-D gates. Nothing bought yet.</h2></header>
   <div class="scroll wide"><table class="ds-table">
     <caption>Current numbers (EST = estimate; nothing is weighed or flown)</caption>
     <thead><tr><th>Item</th><th>Value</th><th>Source</th></tr></thead>
     <tbody>
-      <tr><td class="first">Take-off mass, predicted</td><td>1,423.9 g EST (target ≤ 1,440; weigh-in gate 1,500)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/MASS-GATE.md" target="_blank" rel="noopener">MASS-GATE.md</a> s7</td></tr>
-      <tr><td class="first">Propulsion</td><td>4 × T-Motor MN2212 KV780, APC 9x4.5MR/MRP, 16° cant; 2 × Tattu 4S 2300</td><td>D-183, D-184</td></tr>
-      <tr><td class="first">Hover T/W at 1.44 kg (spin cap 0.90)</td><td>2.40 fresh / 1.90 sagged EST</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/mission_gate_a.py" target="_blank" rel="noopener">mission_gate_a.py</a></td></tr>
-      <tr><td class="first">Cruise to battery-low at 17 m/s</td><td>4.56 min EST (need 3.41)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/mission_gate_a.py" target="_blank" rel="noopener">mission_gate_a.py</a></td></tr>
-      <tr><td class="first">Wind limit</td><td>5 m/s edge-on within ±10°; belly-on 3 m/s; yaw edge-on before landing above 3 m/s</td><td>D-184, D-186</td></tr>
-      <tr><td class="first">Elevon flutter</td><td>hinge viscous damper (2.5 g per elevon): no flutter at any linkage stiffness, lowest onset 35.5 m/s hot EST (line 28.8)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-4/FIXES2.md" target="_blank" rel="noopener">QP-4/FIXES2.md</a> (D-188)</td></tr>
-      <tr><td class="first">3-D physics gates</td><td>collision 0 at neutral, ±20° and the ±21° stops; assembly 28 of 28 steps</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/cad/out/REPORT.md" target="_blank" rel="noopener">cad/out/REPORT.md</a></td></tr>
+      <tr><td class="first">Take-off mass, predicted</td><td>1,459 g EST flat rule, 1,454 g itemised (target ≤ 1,460, D-195; weigh-in gate 1,470, D-190); CAD basic 1,263.7 g, CG 21.1 mm</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/MASS-GATE.md" target="_blank" rel="noopener">MASS-GATE.md</a> s10</td></tr>
+      <tr><td class="first">Propulsion</td><td>4 × T-Motor MN2212 KV780, APC 9x4.5MR/MRP, 17° cant; 2 × Tattu 4S 2300</td><td>D-183, D-184, D-189</td></tr>
+      <tr><td class="first">Hover T/W at 1.46 kg (spin cap 0.90)</td><td>2.35 fresh / 1.86 sagged EST (limits 2.0 / 1.6)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/mission_gate_a.py" target="_blank" rel="noopener">mission_gate_a.py</a></td></tr>
+      <tr><td class="first">Cruise to battery-low at 17 m/s</td><td>4.27 min EST at 1.46 kg (need 3.41)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/mission_gate_a.py" target="_blank" rel="noopener">mission_gate_a.py</a></td></tr>
+      <tr><td class="first">Wind limit</td><td>4 m/s mean, 6.4 m/s gust; edge-on within ±10°; no motor above 0.85 for more than 0.5 s</td><td>D-184, D-186, D-192</td></tr>
+      <tr><td class="first">Elevon flutter</td><td>hinge viscous damper (2.5 g per elevon): no flutter at any linkage stiffness, lowest onset 38.5 m/s hot EST (line 28.8), re-run on the real-shape CAD</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-4/FIXES2.md" target="_blank" rel="noopener">QP-4/FIXES2.md</a> (D-188)</td></tr>
+      <tr><td class="first">3-D physics gates</td><td>collision 0 at neutral, ±20° and the ±21° stops; assembly 35 of 35 steps, 96 parts, no exemptions</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/cad/out/REPORT.md" target="_blank" rel="noopener">cad/out/REPORT.md</a></td></tr>
+      <tr><td class="first">Arms and motor cups</td><td>lowest margin +0.39 (cup hole bearing, prop strike); fatigue over 10 h lowest +1.17; hub socket wall 2.0 mm awaits a bench coupon</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-5/ARMS.md" target="_blank" rel="noopener">QP-5/ARMS.md</a> (D-196, D-197)</td></tr>
       <tr><td class="first">Cost</td><td>$1,775.09 all new; +$105 if unverified lines run 30 % over (G7 pass)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/BOM-A.csv" target="_blank" rel="noopener">BOM-A.csv</a></td></tr>
     </tbody>
   </table></div>
@@ -458,7 +459,7 @@
 </section>
 
 <section class="c" id="case">
-  <header><span class="secno">Why K09-L, and when to reverse it</span><h2 class="ds-h2">Chosen from 43 concepts after a morphological study, a trade matrix and a tie-break against the lean twin-boom quadplane K01. Reversible until the mid-December order.</h2></header>
+  <header><span class="secno">Previous decision · K09-L · 2026-11-13 · superseded by D-182</span><h2 class="ds-h2">Kept as the record. K09-L was chosen from 43 concepts after a morphological study, a trade matrix and a tie-break against the lean twin-boom quadplane K01; it could not be built new within $2,000 (cheapest workable build $2,577), so the 2026-11-14 re-study chose concept A.</h2></header>
   <div class="decision">
     <div class="ds-card">
       <header><h3 class="ds-h2">The case</h3><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></header>
@@ -493,23 +494,26 @@
 
 </section>
 <section class="c" id="constraints">
-  <header><span class="secno">The real constraints</span><h2 class="ds-h2">Five things the team lead fixed. Everything else in the study is a proposal.</h2><p class="use">Derived numbers (planning cap $1 850, 1.2 m box, T/W ≥ 1.6, 5 m/s hover) came from a previous agent and are used as working thresholds, not gates.</p></header>
+  <header><span class="secno">The real constraints</span><h2 class="ds-h2">Eight things the team lead fixed. Everything else is derived by the team and logged with its basis.</h2><p class="use">Derived numbers (mass target 1.46 kg, weigh-in gate 1.47 kg, T/W &ge; 2.0 fresh, hover wind 4 m/s) are the engineering team's, written in CHANGE-LOG with their reasons, and may be re-derived; these eight may not.</p></header>
   <div class="constraints">
-    <div class="constraint"><span class="n">C1 · hard</span><b>$2 000 total</b><span>Tax, shipping, batteries, charger, radio, tools the team does not own, spares.</span><span class="how">K09-L: $1 679 pess. · $321 left</span></div>
-    <div class="constraint"><span class="n">C2 · hard</span><b>VTOL</b><span>Vertical take-off, transition, cruise, transition back, vertical landing. No payload.</span><span class="how">pitch-over tailsitter, 4 motors</span></div>
-    <div class="constraint"><span class="n">C3 · hard, unquantified</span><b>Easy to transport</b><span>A normal car; carried and assembled by one or two people.</span><span class="how">one piece · 1.25 m box · 5 min</span></div>
-    <div class="constraint"><span class="n">C4 · hard</span><b>Student-built</b><span>Jacobs Hall: FDM, laser, hot-wire foam, hand tools. A bought PNP designs nothing.</span><span class="how">XPS core, CF spar, PETG prints</span></div>
-    <div class="constraint"><span class="n">C5 · hard</span><b>Schedule</b><span>Order mid-December 2026; build Jan–Feb; done by end of April 2027, including one crash repair.</span><span class="how">hover wk 3–4 · 8 wk left for transition</span></div>
+    <div class="constraint"><span class="n">C1 · hard</span><b>$2 000 total, all new</b><span>Hardware, spares, batteries, charger, radio, test gear, shipping, tax. The Jacobs Hall Makers Pass is paid outside it.</span><span class="how">concept A: $1 775 · $225 left (+$105 at +30 %)</span></div>
+    <div class="constraint"><span class="n">C2 · hard</span><b>VTOL</b><span>Vertical take-off, transition, cruise, transition back, vertical landing. No payload.</span><span class="how">quad tailsitter, 4 fixed motors</span></div>
+    <div class="constraint"><span class="n">C3 · hard</span><b>Fits one car trunk</b><span>Need not travel in one piece, but the packed aircraft fits one standard car trunk, two at most; a team of 4 moves it; under 25 kg.</span><span class="how">one piece, 0.90 × 0.50 × 0.39 m packed</span></div>
+    <div class="constraint"><span class="n">C4 · hard</span><b>Student-built</b><span>Jacobs Hall: FDM, laser, hot-wire foam, hand tools. A bought PNP designs nothing.</span><span class="how">XPS core, CF spar and arms, PETG prints</span></div>
+    <div class="constraint"><span class="n">C5 · hard</span><b>Schedule</b><span>Built and flight-tested by the end of April 2027.</span><span class="how">Order 1 early Dec 2026 · tethered hover by 15 Feb</span></div>
+    <div class="constraint"><span class="n">C6 · hard</span><b>Passes the 3-D physics checks</b><span>Every build step and the assembled aircraft: no part interpenetration, no open wire ends, no exemptions; flight cases in the 3-D sims pass their limits.</span><span class="how">collision 0 · 35 of 35 build steps · SITL pass</span></div>
+    <div class="constraint"><span class="n">C7 · hard · 2026-11-15</span><b>CAD looks exactly like the aircraft</b><span>Every part modelled to its real shape from the vendor drawing or data sheet: real prop blades, motors, servos, connectors, boards, fasteners. No stand-in disks or boxes; unknown dimensions are flagged, never invented.</span><span class="how">props lofted from APC geometry · D-193/D-194</span></div>
+    <div class="constraint"><span class="n">C8 · hard · 2026-11-15</span><b>Limit exposed wiring</b><span>Wires run inside the arm tubes, wing-core channels, fairings or covers. Any wire left outside the skin is listed with its length and why it cannot be enclosed, and kept to the minimum.</span><span class="how">Exposed wire 9.09 to 4.27 strand-m (-53 %): motor leads in the arm tubes, servo leads in foam grooves, board wiring under a 9.6 g cover; the hub-to-ESC phase run (0.26-0.34 m per motor) stays exposed. review/QP-5/HARNESS-ENCLOSED.md</span></div>
   </div>
-  <span class="ds-source"><b>Source</b> config-study/README.md §1 (team lead, 2026-11-09)</span>
+  <span class="ds-source"><b>Source</b> root CLAUDE.md, hard constraints (team lead; C1–C5 2026-11-09/14, C6 2026-11-13, C7 and C8 2026-11-15)</span>
 </section>
 
 <section class="c" id="morph">
-  <header><span class="secno">Morphological chart</span><h2 class="ds-h2">11 functions × 67 options (+ 9 added by three audit rounds). Every concept is one path down the chart.</h2><p class="use">K09-L's path is the solid blue line; K01's is dashed grey. Pick any of the 43 concepts to see its path. Rejected options stay visible: that is the completeness audit.</p></header>
+  <header><span class="secno">Morphological chart</span><h2 class="ds-h2">11 functions × 67 options (+ 9 added by three audit rounds, + 3 by the 2026-11-14 re-study). Every concept is one path down the chart.</h2><p class="use">Concept A's path (the current design, D-182) is the solid blue line; the fallback B's is dashed grey. Pick any of the 43 study concepts or the six re-study candidates (A, B, C, D1, D2, D3) to see its path; K09 is the previous choice. Rejected options stay visible: that is the completeness audit.</p></header>
   <div class="morph-wrap">
     <div class="morph-ctl">
       <div class="ds-row" id="morph-chips" aria-label="Shortlisted concepts"></div>
-      <label>All 43 <select id="morph-select" aria-label="Pick a concept"></select></label>
+      <label>All 49 <select id="morph-select" aria-label="Pick a concept"></select></label>
       <button class="ds-chip" type="button" id="morph-clear"><span class="id">⟲</span>Chosen + runner-up only</button>
     </div>
     <div class="morph-note" id="morph-note"></div>
@@ -517,7 +521,7 @@
       <div class="ds-morph" id="morph-grid"></div>
     </div>
     <div class="ds-legend">
-      <span><i class="box"></i>CHOSEN · on K09-L's path</span><span><i class="box runner"></i>RUNNER-UP · on K01's path</span><span><i class="box rejected"></i>OUT · used by other concepts only</span><span><i class="box empty"></i>— · no concept uses it (audit gap)</span><span><i class="box onpath"></i>On the picked concept's path</span><span><i class="line accent"></i>K09-L</span><span><i class="line dashed"></i>K01</span><span><i class="line dotted"></i>picked concept</span>
+      <span><i class="box"></i>CHOSEN · on concept A's path</span><span><i class="box runner"></i>FALLBACK · on B's path</span><span><i class="box rejected"></i>OUT · used by other concepts only</span><span><i class="box empty"></i>— · no concept uses it (audit gap)</span><span><i class="box onpath"></i>On the picked concept's path</span><span><i class="line accent"></i>A</span><span><i class="line dashed"></i>B</span><span><i class="line dotted"></i>picked concept</span>
     </div>
     <span class="ds-source"><b>Source</b> config-study/concepts/MORPH.md §1 (67 options), AUDIT-LOG.md rounds 1–3 (R9–R13, B6, L8, X7, W8), code strings per concept</span>
   </div>
@@ -537,11 +541,11 @@
       <tbody></tbody>
     </table>
   </div>
-  <span class="ds-source"><b>Source</b> config-study/screening/SCREENING.md §3 (dispositions, one-line reasons) · concepts/MORPH.md §3 · concepts/AUDIT-LOG.md · tiebreak/DECISION.md (K09 → chosen, K01 → runner-up)</span>
+  <span class="ds-source"><b>Source</b> config-study/screening/SCREENING.md §3 (dispositions, one-line reasons) · concepts/MORPH.md §3 · concepts/AUDIT-LOG.md · tiebreak/DECISION.md (v1: K09 → chosen, K01 → runner-up) · MORPH.md re-study and QP-1 tables, review/QP-1/BOARD.md (D-182: A → chosen, B → fallback, D2 → lifeboat; A drawn as built, R7)</span>
 </section>
 
 <section class="c" id="shortlist">
-  <header><span class="secno">The shortlist of seven</span><h2 class="ds-h2">One card each, skeptic-corrected numbers. Every correction went the same way: heavier, more power, less reserve.</h2><p class="use">Card values are struck through where the skeptic changed them. Reserve is what is left of $2 000 after tax and shipping. Hours are team-hours to first hover.</p></header>
+  <header><span class="secno">The v1 shortlist of seven (2026-11-13, kept as the record; the current design is concept A)</span><h2 class="ds-h2">One card each, skeptic-corrected numbers. Every correction went the same way: heavier, more power, less reserve.</h2><p class="use">Card values are struck through where the skeptic changed them. Reserve is what is left of $2 000 after tax and shipping. Hours are team-hours to first hover.</p></header>
   <div class="ds-grid" style="--c:1">
 
     <article class="ds-concept chosen">
@@ -580,7 +584,7 @@
           </g>
           <g font-family="var(--font-mono)"><path d="M45 236h100" stroke-width="1"/><path d="M45 232v8M145 232v8" stroke-width="1"/><text x="150" y="240" fill="var(--fg-3)" stroke="none">500 mm</text></g>
         </svg>
-        <span class="rank ds-badge" data-outcome="CHOSEN">CHOSEN · Σ 6.91</span><span class="fig-id">cards/K09 · 200 px = 1 m</span>
+        <span class="rank ds-badge" data-outcome="CHOSEN">v1 CHOSEN, superseded by A · Σ 6.91</span><span class="fig-id">cards/K09 · 200 px = 1 m</span>
       </figure>
       <div class="body">
         <div class="title"><span class="id">K09-L</span><b>Quad tailsitter, flat flying wing + elevons</b></div>
@@ -630,7 +634,7 @@
           </g>
           <g font-family="var(--font-mono)"><path d="M26 248h90" stroke-width="1"/><path d="M26 244v8M116 244v8" stroke-width="1"/><text x="121" y="252" fill="var(--fg-3)" stroke="none">500 mm</text></g>
         </svg>
-        <span class="rank ds-badge" data-outcome="RUNNER-UP">RUNNER-UP · Σ 4.54</span><span class="fig-id">cards/K01 · 180 px = 1 m</span>
+        <span class="rank ds-badge" data-outcome="RUNNER-UP">v1 RUNNER-UP · Σ 4.54</span><span class="fig-id">cards/K01 · 180 px = 1 m</span>
       </figure>
       <div class="body">
         <div class="title"><span class="id">K01</span><b>Small twin-boom quadplane 4+1</b></div>
@@ -1784,7 +1788,7 @@ python -I redesign/proofs/build_graph.py --strict</pre>
 .bom-bar i{height:10px;border-radius:2px;background:linear-gradient(90deg,var(--accent) var(--v),var(--panel-3) var(--v))}.bom-bar b{font-family:var(--font-mono);font-weight:500;text-align:right}
 #bom-table tr.gated td{color:var(--fg-3)}#bom-table .pid{display:block;font-family:var(--font-mono);font-size:11px;color:var(--fg-3)}#bom-table td.id{font-family:var(--font-mono);font-size:var(--text-xs)}
 </style>
-<script type="module" src="site.js?v=20261115c"></script>
+<script type="module" src="site.js?v=20261115f"></script>
 <script>(function(){var q=document.getElementById('bom-q'),g=document.getElementById('bom-g'),w=document.getElementById('bom-w'),c=document.getElementById('bom-count');if(!q)return;var rows=[].slice.call(document.querySelectorAll('#bom-table tbody tr'));function f(){var s=q.value.trim().toLowerCase(),n=0;rows.forEach(function(r){var ok=(!g.value||r.dataset.group===g.value)&&(!w.value||r.dataset.wave===w.value)&&(!s||r.textContent.toLowerCase().indexOf(s)>=0);r.hidden=!ok;if(ok)n++;});c.textContent=n+' of '+rows.length;}[q,g,w].forEach(function(e){e.addEventListener('input',f);});f();})();</script>
 
 
