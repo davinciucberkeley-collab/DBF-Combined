@@ -85,7 +85,7 @@ function route() {
   document.querySelectorAll('main > .view').forEach(v => { v.hidden = v.id !== name; });
   document.querySelectorAll('#nav a').forEach(a => { if (a.getAttribute('href') === '#' + name) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   document.body.dataset.route = name;
-  document.title = (name === 'build' ? 'K09-L (previous design)' : 'Concept A') + ' · ' + TITLES[name];     // concept A is the current design (D-182); the build guide page is still K09-L's
+  document.title = 'Concept A · ' + TITLES[name];     // concept A is the current design (D-182)
   if (target) target.scrollIntoView({ block: 'start' }); else if (current !== name) window.scrollTo(0, 0);
   current = name;
   if (name === 'proof') enterProof(); else lastOutside = name === 'aircraft' ? '#aircraft' : location.hash;

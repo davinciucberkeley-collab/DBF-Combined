@@ -370,15 +370,15 @@
       <div class="bstages" role="group" aria-label="Build stages">
         <button type="button" class="bstage on" data-src="assets/animation/build/a-build.mp4" data-poster="assets/animation/build/a-build-poster.webp"><b>All</b> whole build</button>
         <button type="button" class="bstage" data-src="assets/animation/build/a-stage-01.mp4" data-poster="assets/animation/build/a-stage-01.webp"><b>1</b> Wing core and spar</button>
-        <button type="button" class="bstage" data-src="assets/animation/build/a-stage-02.mp4" data-poster="assets/animation/build/a-stage-02.webp"><b>2</b> Cage unit: hub, arms, motors, props</button>
-        <button type="button" class="bstage" data-src="assets/animation/build/a-stage-03.mp4" data-poster="assets/animation/build/a-stage-03.webp"><b>3</b> Rib saddles, pack tray, hinge dampers</button>
+        <button type="button" class="bstage" data-src="assets/animation/build/a-stage-02.mp4" data-poster="assets/animation/build/a-stage-02.webp"><b>2</b> Cage unit: motor leads threaded, motors, props</button>
+        <button type="button" class="bstage" data-src="assets/animation/build/a-stage-03.mp4" data-poster="assets/animation/build/a-stage-03.webp"><b>3</b> Rib saddles, phase-lead raceways, pack tray, hinge dampers</button>
         <button type="button" class="bstage" data-src="assets/animation/build/a-stage-04.mp4" data-poster="assets/animation/build/a-stage-04.webp"><b>4</b> Fin ribs and rib fairings</button>
         <button type="button" class="bstage" data-src="assets/animation/build/a-stage-05.mp4" data-poster="assets/animation/build/a-stage-05.webp"><b>5</b> Elevons, balance strips, lens caps</button>
         <button type="button" class="bstage" data-src="assets/animation/build/a-stage-06.mp4" data-poster="assets/animation/build/a-stage-06.webp"><b>6</b> Fins: fairings, root blocks, tubes</button>
         <button type="button" class="bstage" data-src="assets/animation/build/a-stage-07.mp4" data-poster="assets/animation/build/a-stage-07.webp"><b>7</b> Landing feet</button>
-        <button type="button" class="bstage" data-src="assets/animation/build/a-stage-08.mp4" data-poster="assets/animation/build/a-stage-08.webp"><b>8</b> Servos, pushrods, horns</button>
-        <button type="button" class="bstage" data-src="assets/animation/build/a-stage-09.mp4" data-poster="assets/animation/build/a-stage-09.webp"><b>9</b> Avionics: pitot, plate, ESC, FC</button>
-        <button type="button" class="bstage" data-src="assets/animation/build/a-stage-10.mp4" data-poster="assets/animation/build/a-stage-10.webp"><b>10</b> Pack, XT60, strap</button>
+        <button type="button" class="bstage" data-src="assets/animation/build/a-stage-08.mp4" data-poster="assets/animation/build/a-stage-08.webp"><b>8</b> Servos, pushrods, horns, lead threading</button>
+        <button type="button" class="bstage" data-src="assets/animation/build/a-stage-09.mp4" data-poster="assets/animation/build/a-stage-09.webp"><b>9</b> Avionics: pitot, plate, ESC, FC, leads</button>
+        <button type="button" class="bstage" data-src="assets/animation/build/a-stage-10.mp4" data-poster="assets/animation/build/a-stage-10.webp"><b>10</b> Pack, XT60, strap, phase leads, bay cover</button>
       </div>
       <p class="bstage-read"><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/BUILD-GUIDE-A.md" target="_blank" rel="noopener">Read the concept A build guide (BUILD-GUIDE-A.md)</a> · <a id="bstage-read" class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/cad/out/ASSEMBLY.md" target="_blank" rel="noopener">Read the concept A build-sequence check (ASSEMBLY.md)</a> · <a class="ds-link" href="#build">K09-L build guide (previous design)</a></p>
       <figcaption><span class="ds-source">showcase/concept-a/render_build_a.py · Blender EEVEE, 1280×720, 24 fps · motions from qp/A/cad/a_assembly_plan.py, card text from qp/A/cad/a_build_steps.py (the same script writes qp/A/BUILD-GUIDE-A.md); same CAD as the 3-D explorer and the collision check. Approach distances under 70 mm are drawn from 70 mm along the same checked direction (the extra length is not part of the swept check). Make-it beats, callouts and the phase-lead reveal are added to the plan and move no part. Print orientations and times in the cards are EST; the concept A STL files are not exported yet. K09-L build film (previous design): assets/animation/build/k09l-build.mp4</span></figcaption>
@@ -452,7 +452,7 @@
       <tr><td class="first">Cruise to battery-low at 17 m/s</td><td>4.27 min EST at 1.46 kg (need 3.41)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/mission_gate_a.py" target="_blank" rel="noopener">mission_gate_a.py</a></td></tr>
       <tr><td class="first">Wind limit</td><td>4 m/s mean, 6.4 m/s gust; edge-on within ±10°; no motor above 0.85 for more than 0.5 s</td><td>D-184, D-186, D-192</td></tr>
       <tr><td class="first">Elevon flutter</td><td>hinge viscous damper (2.5 g per elevon): no flutter at any linkage stiffness, lowest onset 38.5 m/s hot EST (line 28.8), re-run on the real-shape CAD</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-4/FIXES2.md" target="_blank" rel="noopener">QP-4/FIXES2.md</a> (D-188)</td></tr>
-      <tr><td class="first">3-D physics gates</td><td>collision 0 at neutral, ±20° and the ±21° stops; assembly 35 of 35 steps, 96 parts, no exemptions</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/cad/out/REPORT.md" target="_blank" rel="noopener">cad/out/REPORT.md</a></td></tr>
+      <tr><td class="first">3-D physics gates</td><td>collision 0 at neutral, ±20° and the ±21° stops; assembly 45 of 45 steps, 104 of 104 parts, no exemptions; exposed wire 0.87 strand-m</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/cad/out/REPORT.md" target="_blank" rel="noopener">cad/out/REPORT.md</a></td></tr>
       <tr><td class="first">Arms and motor cups</td><td>lowest margin +0.39 (cup hole bearing, prop strike); fatigue over 10 h lowest +1.17; hub socket wall 2.0 mm awaits a bench coupon</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-5/ARMS.md" target="_blank" rel="noopener">QP-5/ARMS.md</a> (D-196, D-197)</td></tr>
       <tr><td class="first">Cost</td><td>$1,779.47 all new (D-199); +$100 if unverified lines run 30 % over (G7 pass)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/BOM-A.csv" target="_blank" rel="noopener">BOM-A.csv</a></td></tr>
     </tbody>
@@ -1276,125 +1276,781 @@
   <div class="page">
     <section class="c" id="build-guide">
       <header>
-        <span class="secno">The plan · previous design · from redesign/BUILD-GUIDE.md</span>
-        <h1 class="ds-display">Build guide: K09-L (previous design)</h1>
-        <p class="prev-note"><span class="ds-tag">Previous design</span> This guide, its clips and renders describe K09-L. The concept A guide has 45 steps in 10 stages: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/BUILD-GUIDE-A.md" target="_blank" rel="noopener">BUILD-GUIDE-A.md</a> and the <a class="ds-link" href="#how-its-built">concept A build film</a>.</p>
-  <p class="use">Read the step, then press play on the clip right under its heading. This guide and its clips and renders are K09-L, the previous design, rendered from the K09-L CAD (assets/animation/build/stage-NN.mp4, assets/renders/*.png). The concept A build film is <a class="ds-link" href="#how-its-built">on the Aircraft page</a>. · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/BUILD-GUIDE.md" target="_blank" rel="noopener">Markdown source on GitHub</a></p>
+        <span class="secno">The plan · concept A (D-182) · from redesign/qp/A/BUILD-GUIDE-A.md</span>
+        <h1 class="ds-display">Build guide: concept A</h1>
+  <p class="use">45 steps in 10 stages, 37.7 h hands-on (EST; print time and the 24 h cures not counted), written for a team of four at Jacobs Hall. Read the step, then press play on the stage clip right under its heading; the whole film (about 10 min) is <a class="ds-link" href="#how-its-built">on the Aircraft page</a>. Every step lists its parts with CAD id, BOM line and CAD mass, how to make and fit them, a checkpoint and the safety points. Nothing is built yet: status PROPOSED. The K09-L guide (previous design) is kept as the record: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/BUILD-GUIDE.md" target="_blank" rel="noopener">BUILD-GUIDE.md</a>. · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/BUILD-GUIDE-A.md" target="_blank" rel="noopener">Markdown source on GitHub</a></p>
       </header>
-<!-- build-guide:begin (generated by redesign/site/make_build_guide.py from redesign/BUILD-GUIDE.md; do not edit) -->
-<div class="md-wrap"><nav class="md-toc" aria-label="Build guide sections"><a href="#build-before-you-start">Before you start</a><a href="#build-stage-1" data-stage="1">1 · Buy, measure, print and cut parts</a><a href="#build-stage-2" data-stage="2">2 · Wing core and spar</a><a href="#build-stage-3" data-stage="3">3 · Elevon panels</a><a href="#build-stage-4" data-stage="4">4 · Fins on the motor tubes</a><a href="#build-stage-5" data-stage="5">5 · Pod and power stack</a><a href="#build-stage-6" data-stage="6">6 · Harness, then skin</a><a href="#build-stage-7" data-stage="7">7 · Servos, linkage and hinges</a><a href="#build-stage-8" data-stage="8">8 · Motor mounts, motors and props</a><a href="#build-stage-9" data-stage="9">9 · Avionics</a><a href="#build-stage-10" data-stage="10">10 · Feet and corner caps</a><a href="#build-stage-11" data-stage="11">11 · Checks: weight, CG, controls, thrust stand</a><a href="#build-stage-12" data-stage="12">12 · First hover</a><a href="#build-week-by-week-plan">Week-by-week plan</a></nav>
+<!-- build-guide:begin (generated by redesign/site/make_build_guide.py from redesign/qp/A/BUILD-GUIDE-A.md; do not edit) -->
+<div class="md-wrap"><nav class="md-toc" aria-label="Build guide sections"><a href="#build-contents">Contents</a><a href="#build-1-before-you-start">1. Before you start</a><a href="#build-2-cut-list-and-print-list">2. Cut list and print list</a><a href="#build-3-cure-plan">3. Cure plan</a><a href="#build-stage-1" data-stage="1">1 · Wing core and spar</a><a href="#build-stage-2" data-stage="2">2 · Cage unit: motor leads threaded, motors, props</a><a href="#build-stage-3" data-stage="3">3 · Rib saddles, phase-lead raceways, pack tray, hinge dampers</a><a href="#build-stage-4" data-stage="4">4 · Fin ribs and rib fairings</a><a href="#build-stage-5" data-stage="5">5 · Elevons, balance strips, lens caps</a><a href="#build-stage-6" data-stage="6">6 · Fins: fairings, root blocks, tubes</a><a href="#build-stage-7" data-stage="7">7 · Landing feet</a><a href="#build-stage-8" data-stage="8">8 · Servos, pushrods, horns, lead threading</a><a href="#build-stage-9" data-stage="9">9 · Avionics: pitot, plate, ESC, FC, leads</a><a href="#build-stage-10" data-stage="10">10 · Pack, XT60, strap, phase leads, bay cover</a><a href="#build-14-after-the-last-step">14. After the last step</a><a href="#build-15-time-summary-running-mass-open-items">15. Time summary, running mass, open items</a></nav>
 <article class="md">
-<p>A short, ordered guide to building the K09-L quad tailsitter at Jacobs Hall. Each stage points to the detailed <code>subsystems/&lt;x&gt;/BUILD.md</code>, which holds the dimensions, cut tables and checks. This guide gives the order, the time, the parts and the warnings from the <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/BUILDABILITY-REVIEW.md" target="_blank" rel="noopener">buildability review</a>.</p>
-<p>Status: design <code>PROPOSED</code>, frame A1-R6 + CDR fix round (2026-11-13; this guide&#x27;s order follows <code>showcase/animation/assembly_plan.py</code>, which the assembly check passes with 0 swept-path violations). Nothing has been built yet. <strong>The CDR build hold stands: no flight half-fins cut and no flight collars, shoes or mounts printed until CDR-01, -02, -03 and -13 close</strong> (<code>review/CDR-2026-11-13/CDR-SUMMARY.md</code>). <strong>Open Blockers are not solved.</strong> Where a step depends on one, it says &quot;pending fix&quot;. Do not print or cut those parts until the fix lands in CAD.</p>
-<figure class="md-fig"><a class="md-img" href="assets/renders/hero-iso.png" data-lightbox="assets/renders/hero-iso.png" data-caption="K09-L in cruise attitude"><img data-src="assets/renders/hero-iso.png" alt="K09-L in cruise attitude"></a><figcaption>K09-L in cruise attitude</figcaption></figure>
-<p><strong>Build animation:</strong> <a class="ds-link" href="#how-its-built">the whole build, stages 2–11</a> (about 2 min). Each stage below links its own clip and shows its end state. The film follows this guide step by step: each part comes in the way a person fits it (along its bore, pin or screw axis, down onto its face, bench sub-assemblies moved on as one piece, tape laid in strips, wires laid along their route), on a path that is swept against every part already placed in the same CAD that passes the collision check (<code>collision/</code>). Check report: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/showcase/animation/build/ASSEMBLY-CHECK.md" target="_blank" rel="noopener"><code>ASSEMBLY-CHECK.md</code></a>, including the places where the CAD forces a different order than written below and the parts no motion can fit yet. Made by <code>showcase/animation/assembly_check.py</code> and <code>render_build.py</code>.</p>
-<p><strong>Build and program plans (2026-11-13):</strong> <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/G1/PROCESS-PLAN.md" target="_blank" rel="noopener">G1 process plan</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/G2/COMPOSITES-FOAM-PLAN.md" target="_blank" rel="noopener">G2 composites and foam</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/G3/PRINT-LIST.md" target="_blank" rel="noopener">G3 print list</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/G4/BUILD-STEPS.md" target="_blank" rel="noopener">G4 build-step sheets</a> (who, where, tools, hold points for each stage below) · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/I2/SCHEDULE.md" target="_blank" rel="noopener">I2 schedule</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/H2/FLIGHT-TEST-PLAN.md" target="_blank" rel="noopener">H2 flight-test plan</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/H3/FLIGHT-CARD.md" target="_blank" rel="noopener">H3 flight card</a>, <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/H3/COMPLIANCE.md" target="_blank" rel="noopener">compliance</a>, <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/H3/BATTERY-PROCEDURE.md" target="_blank" rel="noopener">battery procedure</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/F5/RANGE-TEST.md" target="_blank" rel="noopener">F5 range test</a>.</p>
-<p>Finding IDs (BR-xx) are in the <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/BUILDABILITY-REVIEW.md#master-table-blockers-and-majors-ranked" target="_blank" rel="noopener">review master table</a>. BOM line IDs (B01, W04…) are in <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/I1/BOM.csv" target="_blank" rel="noopener"><code>team/I1/BOM.csv</code></a>.</p>
-<section class="md-sec" id="build-before-you-start">
-<h2 class="md-h2">Before you start</h2>
-<p><strong>Access.</strong> Every builder needs a Jacobs Hall Maker Pass. The owner pays it for the team <strong>outside the $2 000 budget</strong> (2026-11-13), so it is not a BOM line (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/BUILDABILITY-REVIEW.md#fix-before-ordering-or-cutting" target="_blank" rel="noopener">BR-04</a> closed). The pass is drop-in access to the makerspaces, not equipment loans (https://jacobsinstitute.berkeley.edu/making-at-jacobs/, checked 2026-11-13). Each builder also needs General Workshop Safety and the laser, 3D-printer, woodshop, drill-press and electronics trainings. ⚠ Confirm the Spring 2027 pass covers all four from 19 Jan (<code>T-I1-BORROW</code>). Fall access ends <strong>18 Dec</strong>; spring trainings run only in the first half of term, so take them all in November and December (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/MANUFACTURING.md#4-findings" target="_blank" rel="noopener">BR-31</a>).</p>
-<p><strong>Tools Jacobs has, covered by the pass (labs-and-equipment page, checked 2026-11-13):</strong> Universal laser cutters (use the 48 × 25 in bed for 20 × 30 in board), Prusa printers (PLA free; the page does not say PETG), band saw, drill presses, PCB shear, <strong>soldering stations with solder, multimeters, power supplies, heat guns and fume extractors in the Electronics Lab (studio 110)</strong>, spray booth (for the 3M 77 lamination). These replace the old soldering-kit lines (G07 to G09), so soldering is a lab day, in-lab only. <strong>Tools Jacobs does not list:</strong> a hot-wire foam cutter and an enclosed printer for ASA. The hot-wire gear (G11, H05) <strong>is bought</strong>, in the 20 Nov order, and the team finds an enclosed printer early (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/MANUFACTURING.md#4-findings" target="_blank" rel="noopener">BR-29, BR-30</a>). The contradiction in the old order plan (&quot;hot-wire foam cutting is a stated Jacobs capability&quot;) is withdrawn. <strong>Bring or buy:</strong> 1 m steel rule, calipers, depth gauge, inclinometer, preset torque screwdriver (0.1–1 N·m), 0.1 g and 1 g scales, Z-bend pliers, pin vise, 1.85 / 2.5 / 3.4 / 8 mm drills (1.85: servo-arm hole for the 2-56 Z-bend), 3 mm and 22 mm ball bits, sharpened 8 mm brass tube, luggage scale, servo tester, prop balancer.</p>
-<p><strong>Consumables</strong> (BOM R5, 2026-11-13: epoxy <code>C05</code>, 3M 77 <code>G16</code>, filament tape <code>W09</code>, sand bucket <code>G17</code> and tether <code>G18</code> are bought; fillers <code>C07</code>/<code>C08</code>, TPU <code>K08</code>, blades, sandpaper, cups, IPA and every &quot;bring or buy&quot; tool are on the owned-or-borrowed list X14, walked by the team on 19 Nov; gloves, 100 mm tape and a few tools have no price yet, lines <code>U01</code>–<code>U08</code>): laminating epoxy by the quart, colloidal silica, glass and phenolic microballoons, mixing cups, gloves, IPA, 3M 77, 48 mm and 100 mm clear tape, 12 mm filament tape, Blenderm or filament hinge tape, straws, heat-shrink, PETG in four colours, ASA, TPU 95A.</p>
-<p><strong>Safety.</strong></p>
-<ul><li><strong>LiPo:</strong> charge, store and re-terminate packs in a LiPo bag next to a sand bucket; never solder a pack above 3.8 V per cell; one lead bare at a time. Props off for every powered bench test.</li><li><strong>Hot wire:</strong> XPS fumes; cut with extraction or outdoors, never leave the wire powered unattended, keep the supply current at the lowest setting that cuts cleanly.</li><li><strong>Epoxy and CA:</strong> nitrile gloves, ventilation; no CA or solvent glue on XPS (it melts the foam). Sanding cured epoxy and carbon makes fine dust: mask and vacuum.</li><li><strong>Motors:</strong> after any crash, approach from behind the pod and pull the plug before touching props or fins.</li></ul>
-<p><strong>Stop items before stage 1</strong> (from the review):</p>
-<ul><li>✓ CG back in range in the design (BR-00): lighter feet, landing allocation 60 g, pack datum 4 mm forward (D-75…D-78; predicted CG 50.2 mm in 46.6–51.4). Still modelled only: weigh the first feet and pack.</li><li>✓ Fin tip and foot shoe on one datum (BR-01, D-75): no overlap in CAD.</li><li>✓ Motor-mount slit open (BR-02, D-80); clocking dog and notch added (MM-02, D-81). ⚠ The dog&#x27;s shear strength is not sized yet (C6, before the 18 Dec freeze): print one mount and one collar as test articles first.</li><li>✓ Strap eyes no longer stop the block going into its pocket (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/STRUCTURE-WING.md#findings" target="_blank" rel="noopener">SW-01</a>, BR-17, D-89c): they are four separate PETG eyes <code>FIN-013</code>, bonded round the bosses in stage 6.</li><li>✓ Shop files exist (BR-03): <code>python -B redesign/manufacturing/make_shop_files.py</code> (STLs, DXFs, hot-wire templates, jigs). Re-run after any CAD change.</li><li>✓ No two parts overlap in CAD (<code>python -I redesign/collision/collide.py</code>, static and both elevon limits). Re-run before printing anything that changed.</li></ul>
+<p>Status <code>PROPOSED</code>, nothing built yet. Written for a team of four students at Jacobs Hall. It follows the 45 steps of <code>qp/A/cad/a_assembly_plan.py</code> in the order of the build film (&quot;How it&#x27;s built&quot; in the Explorer), stage by stage. Each step says what you need, how to make the part, how to fit it, what to measure before you go on, the safety points and a time (<code>EST</code>). Every number is taken from a repo file (CAD parameters in <code>qp/A/cad/amodel/*.py</code>, <code>BOM-A.csv</code>, <code>MASS-GATE.md</code>, <code>review/QP-5/ARMS.md</code>, <code>review/QP-5/HARNESS-ENCLOSED.md</code>, <code>review/QP-4/FIXES2.md</code>) or is marked <code>EST</code>; <code>-</code> means the repo does not have it. This file is generated by <code>python -I redesign/qp/A/make_build_guide_a.py</code> from <code>qp/A/cad/a_build_steps.py</code> (the same script drives the cards of the film), so edit the script, not this file.</p>
+<p><strong>Rule of the build: the CAD is the drawing.</strong> Every part is made to the CAD shape and size; weigh it against the CAD mass in this guide (parts weigh within +-10-15 %, <code>EST</code>) and write the number in the build log. A part that does not fit its neighbour at the dry-fit is a CAD question: stop and ask, do not file it to fit.</p>
+<section class="md-sec" id="build-contents">
+<h2 class="md-h2">Contents</h2>
+<ol><li>Before you start: people, tools, consumables, safety</li><li>Cut list and print list (make these first)</li><li>Cure plan: how the 24 h waits are batched</li><li>Stage 1: Wing core and spar (steps A1, A2, A3, A4, A5)</li><li>Stage 2: Cage unit: motor leads threaded, motors, props (steps B0, B1)</li><li>Stage 3: Rib saddles, phase-lead raceways, pack tray, hinge dampers (steps B2, B2a, B2b, B2c, B3, B4)</li><li>Stage 4: Fin ribs and rib fairings (steps C1, C1a)</li><li>Stage 5: Elevons, balance strips, lens caps (steps C2, C2a, C2b)</li><li>Stage 6: Fins: fairings, root blocks, tubes (steps C3, C4, C5, C6)</li><li>Stage 7: Landing feet (steps C7, C8, C9)</li><li>Stage 8: Servos, pushrods, horns, lead threading (steps D1, D0, D2, D2a, D3, D4, D5, D5b)</li><li>Stage 9: Avionics: pitot, plate, ESC, FC, leads (steps E1, E2, E3, E3a, E3b)</li><li>Stage 10: Pack, XT60, strap, phase leads, bay cover (steps E3c, E4, E4a, E4b, E5, E6, E7)</li><li>After the last step: weigh-in, CG, power-up (props off)</li><li>Time summary, mass running total, open items</li></ol>
+</section>
+<section class="md-sec" id="build-1-before-you-start">
+<h2 class="md-h2">1. Before you start</h2>
+<p><strong>People and room.</strong> Four builders. Every builder needs the Jacobs Hall Makers Pass (paid outside the $2,000 budget, project rule) and the trainings for the equipment they use: 3-D printer, laser cutter, soldering (Electronics Lab). Fall access ends 18 Dec 2026; spring trainings run only early in the term (<code>BUILD-GUIDE.md</code> K09-L, &quot;Access&quot;; <code>SCHEDULE-A.md</code>: Jacobs closed 19 Dec - 18 Jan assumed): plan the printing and the soldering inside the open weeks.</p>
+<p><strong>Where each job is done</strong> (from <code>SCHEDULE-A.md</code>, <code>BUILD-GUIDE.md</code> K09-L &quot;Tools Jacobs has&quot;):</p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>Job</th><th>Where</th><th>Note</th></tr></thead><tbody><tr><td>3-D printing (PETG)</td><td>Jacobs Prusa printers</td><td>The K09-L guide says the Jacobs page does not say PETG; SCHEDULE-A PR1 plans PETG at Jacobs. Confirm with the staff before the first print (open item).</td></tr><tr><td>Templates, laser-cut ply</td><td>Jacobs laser cutter</td><td>Template files for the S5010 core are not made yet (<code>-</code>).</td></tr><tr><td>Hot-wire foam cutting</td><td><strong>Not a Jacobs tool.</strong> Team workspace W (<code>SCHEDULE-A.md</code> B1)</td><td>There is <strong>no hot-wire cutter line in BOM-A</strong> (the K09-L BOM bought one): open item.</td></tr><tr><td>Soldering, heat-shrink, multimeter</td><td>Jacobs Electronics Lab (studio 110), in-lab only, with fume extraction</td><td>Steps E3b and E6.</td></tr><tr><td>Epoxy, CA, assembly</td><td>Team workspace W</td><td>Cures take 24 h each (K09-L practice); see section 3.</td></tr></tbody></table></div>
+<p><strong>Tools to have on the bench</strong> (BOM G02 lists 0.1 g scale, caliper, IR thermometer, load cell; the rest is <code>EST</code>, not in BOM-A): 0.1 g scale (G02), caliper (G02), 1 m steel rule, tube cutter or fine saw, sandpaper, hex keys 1.5 / 2 mm, small screwdrivers, pliers, Z-bend pliers, tweezers, servo tester, multimeter (Jacobs EL), heat gun (Jacobs EL), mixing cups, gloves, IPA, masking and packing tape, 48 mm tape.</p>
+<p><strong>Consumables from BOM-A:</strong> foam, tape, glue R01; CF tubes R02 (16x14), R08 (12x10 x 3), R09 (14x12), R10 (6x4.5); PETG R03; epoxy (local) and fasteners, hinge tape R05; thin and gap-filling CA R07; threadlocker W06; wire, XT60 and heat-shrink W05; 20 AWG wire W07; silicone sheet W09; lead sheet R11; silicone fluid R12; silicone cord and O-rings R13.</p>
+<p><strong>Safety, for the whole build:</strong></p>
+<ul><li>LiPo: charge, store and carry the pack in the TBS LiPo bag (BOM W03); keep it in the ammo can (W04) when not in use; never charge unattended.</li><li>Props OFF whenever the pack is plugged in, until the flight card says otherwise. Every bench power-up with props off first.</li><li>Hot wire (XPS): fumes. Cut with extraction or outdoors, never leave the wire powered, lowest current that cuts cleanly (K09-L BUILD-GUIDE Safety).</li><li>Epoxy and CA: nitrile gloves, ventilation. No solvent glue and no ordinary CA on XPS (it melts the foam): epoxy or foam-safe CA only, test a drop on an offcut.</li><li>Carbon dust: sand cut ends wet or with a mask and a vacuum; carbon dust is conductive, keep it off the electronics.</li><li>Soldering only in the Jacobs Electronics Lab (studio 110) with extraction (SCHEDULE-A); heat-shrink with the lab heat gun.</li></ul>
+</section>
+<section class="md-sec" id="build-2-cut-list-and-print-list">
+<h2 class="md-h2">2. Cut list and print list</h2>
+<h3 class="md-h3">Tube cut list (lengths from the CAD)</h3>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>Part</th><th>Tube</th><th>Length (mm)</th><th>Qty</th><th>Step</th><th>CAD mass (g)</th><th>Source</th></tr></thead><tbody><tr><td>Spar <code>WNG-002</code></td><td>12x10 CF (R08, tube 1)</td><td>900</td><td>1</td><td>A2</td><td>49.8</td><td><code>common.py</code> <code>B</code></td></tr><tr><td>Arms <code>CGE-002-*</code></td><td>12x10 CF (R08, tube 2)</td><td>245</td><td>4</td><td>B0</td><td>13.5 each</td><td><code>wing.py</code> <code>R_M - R_IN</code></td></tr><tr><td>Bridge <code>CGE-004</code></td><td>12x10 CF (R08, tube 3)</td><td>154</td><td>1</td><td>B0</td><td>8.5</td><td><code>wing.py</code> <code>BR_X1 - BR_X0</code></td></tr><tr><td>V struts <code>CGE-005-*</code></td><td>6x4.5 CF (R10)</td><td>286.2</td><td>2</td><td>B0</td><td>6.5 each (CAD part value, EST)</td><td><code>wing.py</code> <code>STRUT_S</code>, <code>STRUT_E</code></td></tr><tr><td>Fin ribs <code>FIN-002-*</code></td><td>14x12 CF (R09)</td><td>215.5</td><td>2</td><td>C1</td><td>14.1 each (from the drawn 215.5 mm, D-200)</td><td><code>wing.py</code> <code>RIB_X1 - RIB_X0</code></td></tr><tr><td>Fin tubes <code>FIN-001-*</code></td><td>16x14 CF (R02)</td><td>360</td><td>2</td><td>C6</td><td>27.1 each</td><td><code>common.py</code> <code>FIN_H</code></td></tr></tbody></table></div>
+<p>Cut square: tape round the cut line, cut through the tape, sand the end flat. Wear a mask or cut wet.</p>
+<h3 class="md-h3">Print list (PETG, 0.2 mm layer, 0.4 mm nozzle EST)</h3>
+<p>File names follow <code>&lt;part id&gt;.stl</code>. <strong>The STL files for concept A are not exported yet (<code>-</code>)</strong>: the CAD (<code>a_model.py</code>) is the source, so export each part from the CAD before printing. Orientation and settings below are <code>EST</code> unless a repo file says so; print times are <code>EST</code> at 14-24 g/h (K09-L <code>team/G3/PRINT-LIST.md</code>, rows 8, 13, 18) and are machine time, not hands-on time.</p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>Part</th><th>Qty</th><th>Step</th><th>Mass each (g)</th><th>Print time (EST)</th><th>Note</th></tr></thead><tbody><tr><td><code>AVN-001</code> Avionics plate</td><td>1</td><td>E2</td><td>8.0</td><td>20-34 min</td><td>4 hex pockets 4.2 mm across for M2 thin nuts</td></tr><tr><td><code>AVN-008</code> Bay cover</td><td>1</td><td>E7</td><td>9.6</td><td>24-41 min</td><td>0.6 mm shell (EST)</td></tr><tr><td><code>CGE-001</code> Hub</td><td>1</td><td>B1</td><td>17.5</td><td>44-75 min</td><td>walls: 2.0 mm over the outer 12 mm of each arm socket (D-196), 1.2 mm bridge sleeve, 0.8 mm webs; orientation <code>-</code></td></tr><tr><td><code>CGE-003</code> Motor cup</td><td>4</td><td>B1</td><td>4.3</td><td>11-18 min</td><td>plate flat on the bed, shaft axis up (ARMS.md: layer plane = plate plane, EST); 4.8 mm lead hole, screw-head pockets (D-197)</td></tr><tr><td><code>CGE-006</code> Bridge saddle</td><td>1</td><td>B1</td><td>2.0</td><td>5-9 min</td><td></td></tr><tr><td><code>CGE-007</code> Strut clamp</td><td>2</td><td>B1</td><td>1.5</td><td>4-6 min</td><td></td></tr><tr><td><code>CGE-008</code> Pack tray</td><td>1</td><td>B3</td><td>3.8</td><td>10-16 min</td><td>1.5 mm floor with ribs (EST)</td></tr><tr><td><code>FIN-003</code> Fin root block</td><td>2</td><td>C5</td><td>3.2</td><td>8-14 min</td><td></td></tr><tr><td><code>FIN-005</code> Rib saddle</td><td>2</td><td>B2</td><td>1.0</td><td>3-5 min</td><td></td></tr><tr><td><code>GER-001</code> Foot shoe</td><td>4</td><td>C7, C8</td><td>1.4</td><td>3-6 min</td><td>plate faces aft</td></tr><tr><td><code>HRN-003</code> Phase-lead raceway</td><td>2</td><td>B2a</td><td>1.8</td><td>4-8 min</td><td>0.6 mm walls (EST)</td></tr><tr><td><code>HRN-004</code> Hub conduit</td><td>4</td><td>B2b</td><td>0.8</td><td>3-5 min</td><td>0.6 mm walls (EST)</td></tr><tr><td><code>WNG-003/4/5</code> Spar plug</td><td>5</td><td>A3, A4, A5</td><td>1.2</td><td>3-5 min</td><td></td></tr><tr><td><code>WNG-008</code> Lens cap with stop bosses</td><td>4</td><td>C2a, C2b</td><td>3.8</td><td>10-16 min</td><td>single 0.6 mm wall, vase mode (CAD note, EST)</td></tr><tr><td><code>WNG-009</code> Hinge damper stator</td><td>2</td><td>B4</td><td>2.0</td><td>5-9 min</td><td>plus about 0.6 g silicone fluid each (R12)</td></tr><tr><td><code>WNG-010</code> Hinge damper rotor</td><td>2</td><td>B4</td><td>0.5</td><td>3-5 min</td><td>rotor: slide fit in the 0.30 mm gap: test print</td></tr></tbody></table></div>
+<p>Printed mass 108 g in 38 parts; machine time EST 4.5-7.7 h in total (a bed holds many small parts: print them in batches). The 1 kg PETG spool of BOM R03 holds about seven times this mass: there is room for reprints. (The elevon balance tabs, 0.5 g each pair, are CF-reinforced PETG strips cut by hand, not printed.)</p>
+</section>
+<section class="md-sec" id="build-3-cure-plan">
+<h2 class="md-h2">3. Cure plan</h2>
+<p>Epoxy cures 24 h before a bond takes load (K09-L <code>BUILD-GUIDE.md</code> practice; read the pot label: BOM R05 epoxy is bought locally, the RMRC 15 min epoxy is on backorder). <code>SCHEDULE-A.md</code> plans 6 serial 24 h cures; batch the bonds so that you wait six times, not once per step:</p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>Wait</th><th>After step</th><th>What cures together</th></tr></thead><tbody><tr><td>1</td><td>A5</td><td>spar bond (A2) and the five plugs (A3-A5)</td></tr><tr><td>2</td><td>B0 (before the leads are threaded)</td><td>arms, bridge, struts, cups and saddle bonded into the hub on the bench; the clamp bonds of B1 cure with wait 3</td></tr><tr><td>3</td><td>C1</td><td>tray (B3), damper housings (B4), rib saddles (B2), ribs (C1)</td></tr><tr><td>4</td><td>C2b</td><td>elevon balance (C2), lens caps (C2a, C2b)</td></tr><tr><td>5</td><td>C6</td><td>root blocks (C5), fin tubes (C6), fairings (C3, C4)</td></tr><tr><td>6</td><td>C9</td><td>feet (C7-C9), then servo horns (D3)</td></tr></tbody></table></div>
+<p>Do the wire, servo and avionics steps (stages 8-10) while a wait runs on another sub-assembly if the people allow it; the electrical steps need only the cured structure.</p>
 </section>
 <section class="md-sec" id="build-stage-1">
-<h2 class="md-h2">Stage 1. Buy, measure, print and cut parts</h2>
-<p>Time: November–18 Dec, plus the winter break for home printing and electrical pre-work.<br>Parts: B01, B02, A01, M01, P01, W03/W04, W05, W08, D01–D03, C03; strap eyes <code>FIN-013</code> and horn backplates <code>MEC-013</code> print with the PETG set (G3 print list).<br>Detail: every <code>subsystems/*/BUILD.md</code> step 1.</p>
-<ol><li>Buy one motor, one ESC 4-pack, one CoreWing V2, the two flight servos and both packs <strong>now</strong> (20 Nov order, <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/I1/ORDER-PLAN.md" target="_blank" rel="noopener">ORDER-PLAN</a> R5; the third servo is gated X02, the 4 spare ESCs are <code>B08</code> after <code>T-F2-DSHOT</code>). Weigh and caliper them. Write the numbers into the params files.</li><li>Measure the motor bolt pattern. It must fit y ≤ 17.5 mm. ⚠ Never drill through the motor; use a printed drill guide (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/MOTOR-MOUNTS.md#findings" target="_blank" rel="noopener">MM-04</a>).</li><li>Map the CoreWing boards (S1–S12, Vx, current sense, battery pads) before the pod deck is frozen (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/WIRING-BATTERY.md#findings" target="_blank" rel="noopener">WB-01</a>). Flash Plane 4.7 and Bluejay.</li><li>Laser-cut the S5010 templates, radius templates and ply jigs: block clocking jig, build stand, 45° and pin drill guides (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/MANUFACTURING.md#4-findings" target="_blank" rel="noopener">SW-06, MF-06</a>).</li><li>Print test-fit parts first, then the flight set. Make two of every crash part: 8 mounts, 8 collars, 3 blocks, spare horns, servo frames and pod handle.</li><li>Build one fin-station test article (300 mm wing stub, block, tube, one half-fin, one foot) and break it. It is also your rehearsal for stages 2–5.</li></ol>
-<p>☐ Inspect before moving on: every measured value logged; one mount, one collar and one frame test-fitted; design freeze signed off on 18 Dec.</p>
-<figure class="md-fig"><a class="md-img" href="assets/renders/exploded.png" data-lightbox="assets/renders/exploded.png" data-caption="Exploded view by subsystem"><img data-src="assets/renders/exploded.png" alt="Exploded view by subsystem"></a><figcaption>Exploded view by subsystem</figcaption></figure>
+<h2 class="md-h2">Stage 1: Wing core and spar</h2>
+<figure class="md-clip" id="build-clip-1"><video src="assets/animation/build/a-stage-01.mp4" data-poster="assets/animation/build/a-stage-01.webp" controls muted playsinline preload="none" aria-label="Stage 1 build clip"></video><figcaption><span class="ds-source">Stage 1 clip · assets/animation/build/a-stage-01.mp4 · same CAD as the collision check</span></figcaption></figure>
+<p class="md-meta">Film clip: <code>assets/animation/build/a-stage-01.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 1). Steps A1, A2, A3, A4, A5. Hands-on time EST 12 h 10 min.</p>
+<h3 class="md-h3">A1. Wing core on the bench</h3>
+<p><em>Step 1 of 45. Plan caption: Wing core on the bench</em></p>
+<p><strong>Do this:</strong> Hot-wire the S5010 core (245 x 900 mm), cut every pocket and groove, tape both skins.</p>
+<p><strong>Time (EST):</strong> 10 h 00 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>WNG-001</code> x1</td><td>Wing core, XPS 25 kg/m3 + tape skin + glue + hinge tape</td><td>made</td><td>R01 Local</td><td>100.1</td></tr></tbody></table></div>
+<p>Mass placed by this step 100.1 g; running total of placed parts 100.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>XPS foam block (BOM R01); packing tape for the skin (R01 line, &quot;tape, glue&quot;); template material: 3 mm ply or MDF from the Jacobs laser cutter (EST)</li><li>Hot-wire cutter and power supply: NOT in BOM-A and not a Jacobs tool (SCHEDULE-A B1: workspace W). Flagged, see Open items.</li><li>Calipers, steel rule, 0.1 g scale (BOM G02)</li></ul>
+<p><strong>Tools:</strong> hot-wire cutter, S5010 templates (laser), router/knife, 48 mm tape.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Template: the Selig S5010 coordinates are in <code>redesign/subsystems/wing/s5010.dat</code> (published, unscaled, 9.82 % t/c, D-193); scale to chord 0.245 m. Lower the airfoil datum 5.0 mm (D-194) so the 12 mm spar bore sits at mid-thickness: foam above / below the bore 6.3 / 5.6 mm. Cut two templates (root, tip: one section, so the same template both ends) on the Jacobs laser cutter. The template file is not generated for concept A: <code>-</code>.</li><li>Practice first: hot-wire one scrap core (EST 1 h) to find the wire current and feed speed. Cut the blank 900 mm span x 245 mm chord in one pass per surface; sand the leading edge until no ridge can be felt.</li><li>The core ends at the elevon hinge line: the cove foot is at x 179.25 mm, the hinge at x 183.75 mm (CAD <code>cove_x</code>, <code>XH</code>), so the elevon (stage 5) is the 61.25 mm aft strip, cut from the same blank in the same pass (EST).</li><li>Shop cuts (mark from the CAD; every dimension is in <code>cad/amodel/wing.py</code> <code>build_wing</code>): spar bore 12 mm along y at x 60 mm, z 0 (the 12 mm tube is bonded in this bore); bridge slot open below x 0-56 mm, |y| &lt;= 6.5 mm; pack tray slot x -10 to 22.5 mm, |y| &lt;= 57 mm, open above; saddle slot x 29.5-71 mm, |y| &lt;= 16.5 mm, open below; strut slots (0.5 mm clear); strut clamp slots y 270.5-309.5 mm; rib saddle slots |y| 349.5-410.5 mm; servo pockets x 124.5-165.5 mm, y 177.5-222.5 mm, open to the upper skin; elevon-tip damper notches at the elevon tip; balance-strip windows y 231-339 mm; phase-lead raceway grooves x 0-22.5 mm, |y| 14-24 mm and the open ditch x 22.5-32 mm; servo-lead drop slot at x 83 mm and a 5 x 3.2 mm groove 3 mm under the upper skin (D-198).</li><li>Tape skin: both surfaces, the doublers and a tip-edge layer (CAD part WNG-001 lumps the foam, skin, glue and hinge tape: 100.1 g). Tape hinge and fillets are not drawn.</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Lay the finished core lower surface up on a flat bench, leading edge toward you. Nothing is fitted yet. Never lift a slotted core by its ends: lift with two hands under the root (K09-L SW-07 practice).</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Template gauge at three stations: thickness within 0.3 mm of the S5010 (EST tolerance); log the real trailing-edge thickness.</li><li>☐ Dry-fit the 12 mm spar tube through the bore before taping: it must slide without force. The CAD bore equals the tube OD (12.0 mm); a real foam bore needs a small oversize for the epoxy (EST 0.2 mm): cut a test bore in a scrap first.</li><li>☐ Weigh the taped core: CAD 100.1 g (MASS-GATE wing group 191 g EST, D-185). Write the number down; every later step is compared with the CAD mass.</li></ul>
+<p><strong>Safety:</strong></p>
+<ul><li>Hot wire fumes: extraction on, window open.</li></ul>
+<h3 class="md-h3">A2. Spar into the core</h3>
+<p><em>Step 2 of 45. Plan caption: Spar through the core bore from the right tip</em></p>
+<p><strong>Do this:</strong> Cut the 12x10 carbon spar to 900 mm; push it through the core bore from the right tip; bond it.</p>
+<p><strong>Time (EST):</strong> 1 h 00 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice).</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>WNG-002</code> x1</td><td>Spar, CF tube 12x10 x 0.90 m</td><td>made</td><td>R08 RMRC</td><td>49.8</td></tr></tbody></table></div>
+<p>Mass placed by this step 49.8 g; running total of placed parts 149.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>1 x 12x10 CF tube, 1 m (BOM R08, 3 tubes in all); epoxy (BOM R05, bought locally); mixing cups, gloves, IPA, masking tape</li></ul>
+<p><strong>Tools:</strong> tube cutter or saw, sandpaper, epoxy, mixing cups, gloves.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Cut the spar to 900 mm (CAD <code>B</code>, tube 12x10, part WNG-002, 49.8 g). Cut square (wrap tape round the cut line, cut through the tape, sand the end flat).</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Slide the spar through the bore from the right tip until its ends are flush with both core tips (900 mm spar in a 900 mm span).</li><li>Bond rule from the CAD: epoxy over |y| &lt;= 0.20 m only, so the foam shear stays at 58 kPa (FIXES2, MS +0.48). Mix epoxy, wet the bore over the centre 400 mm only, push the spar through, wipe squeeze-out.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, -1, 0) for 700 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Spar axis parallel to the core leading edge within 1 mm over 900 mm (EST).</li><li>☐ The spar is 900 mm and the core span is 900 mm: the spar ends are flush with the core tips, within 1 mm (EST).</li></ul>
+<p><strong>Safety:</strong></p>
+<ul><li>Epoxy: gloves. Hold the core by the root while the spar goes in.</li></ul>
+<h3 class="md-h3">A3. Centre plug in the spar</h3>
+<p><em>Step 3 of 45. Plan caption: Centre plug up the bore</em></p>
+<p><strong>Do this:</strong> Print the centre plug (PETG) and push it up the bore to y 0; bond it. It sits under the bridge saddle.</p>
+<p><strong>Time (EST):</strong> 20 min hands-on.  <strong>Cure / wait:</strong> epoxy: see A5 (cure all five plugs together).</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>WNG-003-C</code> x1</td><td>Spar plug</td><td>made</td><td>R03 Prusa</td><td>1.2</td></tr></tbody></table></div>
+<p>Mass placed by this step 1.2 g; running total of placed parts 151.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>PETG (BOM R03). Print file: WNG-003-C.stl (export from the CAD; not yet exported for concept A: <code>-</code>)</li></ul>
+<p><strong>Tools:</strong> printer (PETG), caliper, epoxy, a stick or dowel for the depth.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Print WNG-003-C: PETG, 0.2 mm layer (G3 class A, K09-L PRINT-LIST): a tube 20 mm long, outside 9.8 mm (CAD radius 4.9 mm), bore 4 mm (CAD radius 2 mm). Mass 1.2 g is the CAD value (wall basis EST). Orientation: axis up (EST). Print time EST about 5 min each (1.2 g at the K09-L print rates).</li><li>All five spar plugs (WNG-003-C, WNG-004-R/L, WNG-005-R/L) are the same 9.8 x 20 mm shape, 1.2 g each, at y 0, +-300 and +-380 mm.</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Put a drop of epoxy on the plug, push it up the bore on a dowel marked at the depth. The plug sits under the bridge-saddle clamp (stage 2); it stops the tube from crushing when the clamp is bonded.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, -1, 0) for 600 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Mark the dowel so the plug centre is y 0 (the wing centre); check with the rule through the root slot.</li></ul>
+<h3 class="md-h3">A4. Right plugs in the spar</h3>
+<p><em>Step 4 of 45. Plan caption: Right plugs up the bore</em></p>
+<p><strong>Do this:</strong> Push the two right plugs up the bore to y +300 (strut clamp) and y +380 (rib saddle); bond them.</p>
+<p><strong>Time (EST):</strong> 25 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>WNG-004-R</code> x1</td><td>Spar plug</td><td>made</td><td>R03 Prusa</td><td>1.2</td></tr><tr><td><code>WNG-005-R</code> x1</td><td>Spar plug</td><td>made</td><td>R03 Prusa</td><td>1.2</td></tr></tbody></table></div>
+<p>Mass placed by this step 2.4 g; running total of placed parts 153.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>2 more printed plugs: WNG-004-R, WNG-005-R</li></ul>
+<p><strong>Tools:</strong> dowel marked with both depths, epoxy.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Print WNG-004-R and WNG-005-R as A3 (PETG, 0.2 mm, 1.2 g each).</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>From the right tip, push each plug on the dowel to its mark: WNG-004-R at y 300 mm (under the right strut clamp), WNG-005-R at y 380 mm (under the right rib saddle). Epoxy, wipe the bore wall.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, -1, 0) for 600 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Measure each depth from the spar end: the right tip is y 450 mm, so the plugs are 150 mm and 70 mm in.</li></ul>
+<h3 class="md-h3">A5. Left plugs in the spar</h3>
+<p><em>Step 5 of 45. Plan caption: Left plugs up the bore from the left tip</em></p>
+<p><strong>Do this:</strong> Push the two left plugs in from the left tip to y -300 and y -380; bond them. Let the epoxy cure.</p>
+<p><strong>Time (EST):</strong> 25 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice): do not load the spar until cured.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>WNG-004-L</code> x1</td><td>Spar plug</td><td>made</td><td>R03 Prusa</td><td>1.2</td></tr><tr><td><code>WNG-005-L</code> x1</td><td>Spar plug</td><td>made</td><td>R03 Prusa</td><td>1.2</td></tr></tbody></table></div>
+<p>Mass placed by this step 2.4 g; running total of placed parts 155.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>2 more printed plugs: WNG-004-L, WNG-005-L</li></ul>
+<p><strong>Tools:</strong> dowel marked with both depths, epoxy.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Print WNG-004-L and WNG-005-L as A3.</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Same as A4 from the left tip: WNG-004-L at y -300 mm, WNG-005-L at y -380 mm.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 1, 0) for 600 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Wing (core + spar + 5 plugs) CAD sum: 100.1 + 49.8 + 5 x 1.2 = 155.9 g. Weigh it; a difference over 10 g means check the tape or the epoxy amount.</li><li>☐ Lay the wing leading edge on a straight edge: no bow over 900 mm (EST 1 mm).</li></ul>
 </section>
 <section class="md-sec" id="build-stage-2">
-<h2 class="md-h2">Stage 2. Wing core and spar</h2>
-<figure class="md-clip" id="build-clip-2"><video src="assets/animation/build/stage-02.mp4" data-poster="assets/animation/build/stage-02.png" controls muted playsinline preload="none" aria-label="Stage 2 build clip"></video><figcaption><span class="ds-source">Stage 2 clip · assets/animation/build/stage-02.mp4 · same CAD as the collision check</span></figcaption></figure>
-<p class="md-meta">Time: about 2 days hands-on plus 2 × 24 h cures (practice cores extra).<br>Parts: W01 XPS, W03/W04 spar tube, PETG plugs (W05), C05 epoxy, blocks <code>FIN-004</code>.<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/wing/BUILD.md" target="_blank" rel="noopener"><code>subsystems/wing/BUILD.md</code></a> steps 1–8, <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/fins/BUILD.md" target="_blank" rel="noopener"><code>subsystems/fins/BUILD.md</code></a> step 7.</p>
-<ol><li>Hot-wire <strong>two</strong> cores from the S5010 templates in one 1.15 m pass each; keep both foam beds. Sand the LE until no ridge can be felt. ⚠ Stall margin is +0.05 %; accept a core only by template gauge at three stations and log the real TE thickness (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/MANUFACTURING.md#4-findings" target="_blank" rel="noopener">MF-05, SW-16</a>).</li><li>With the core in its lower bed, cut the spar slot from below, the block and anchor pockets, the servo pockets, the pod recess, the grooves and the JR recess. Never lift a slotted core out of its bed (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/STRUCTURE-WING.md#findings" target="_blank" rel="noopener">SW-07</a>).</li><li>Push the PETG plugs into the spar to the dowel marks. Cure 24 h.</li><li>Bond both blocks to the spar in the clocking jig with silica-thickened epoxy, then cure (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/STRUCTURE-WING.md#findings" target="_blank" rel="noopener">SW-08</a>). The blocks have no strap eyes: those go on in stage 6 (D-89c).</li><li>Bond spar and blocks into the core with microballoon epoxy: push them up the slot from below, then re-bond the slot strip as the cap under the spar (<code>WNG-008</code>, sanded flush). Fill the lip-bead chamfers, sleeve the pod ties. Weight it on the relieved bed, LE on a straight edge. Cure 24 h.</li></ol>
-<p>☐ Inspect before moving on: core straight within 1 mm, no twist; blocks at y ±320 ± 1 mm; tube bores parallel and vertical within ±0.5° in the jig; beads continuous.</p>
-<figure class="md-fig"><a class="md-img" href="assets/renders/detail-wing.png" data-lightbox="assets/renders/detail-wing.png" data-caption="Wing detail"><img data-src="assets/renders/detail-wing.png" alt="Wing detail"></a><figcaption>Wing detail</figcaption></figure>
+<h2 class="md-h2">Stage 2: Cage unit: motor leads threaded, motors, props</h2>
+<figure class="md-clip" id="build-clip-2"><video src="assets/animation/build/a-stage-02.mp4" data-poster="assets/animation/build/a-stage-02.webp" controls muted playsinline preload="none" aria-label="Stage 2 build clip"></video><figcaption><span class="ds-source">Stage 2 clip · assets/animation/build/a-stage-02.mp4 · same CAD as the collision check</span></figcaption></figure>
+<p class="md-meta">Film clip: <code>assets/animation/build/a-stage-02.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 2). Steps B0, B1. Hands-on time EST 4 h 00 min.</p>
+<h3 class="md-h3">B0. Cage frame and motor leads (bench)</h3>
+<p><em>Step 6 of 45. Plan caption: THREAD (bench, before the motors go on the cups): feed the three 20 AWG leads of each motor (400 mm stock + extension, EST) from the cup side through the 4.8 mm lead hole, the collar and the arm bore, out of the 4.8 mm hub socket floor hole; free ends hang out of the hub; then screw the motors on (B1)</em></p>
+<p><strong>Do this:</strong> Make and bond the cage frame; once cured, feed each motor&#x27;s 3 leads through cup, arm and hub.</p>
+<p><strong>Time (EST):</strong> 2 h 30 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice) of the frame bonds before the leads are threaded.</p>
+<p><strong>Parts:</strong> none placed (marker step: it lays wires or threads leads). Wires used: see the checks below and <code>review/QP-5/HARNESS-ENCLOSED.md</code>.</p>
+<p><strong>You need:</strong></p>
+<ul><li>4 x 12x10 arm tubes + 1 bridge (3 tubes of BOM R08 cover spar, arms, bridge); 2 x 6x4.5 struts (R10); PETG (R03); 20 AWG silicone wire (W07) for the extensions; heat-shrink (W05); fish wire or a long thread</li></ul>
+<p><strong>Tools:</strong> tube cutter, printer (PETG), fish wire / thread, 20 AWG wire.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Arms: cut 4 x 245 mm from the 12x10 tube (CAD arm 12x10 x 0.245, 13.5 g each, from CAD <code>R_M - R_IN</code>). Bridge: cut 154 mm (CAD, 8.5 g). Cut both bridge and arms square; sand the ends.</li><li>Struts: cut 2 x 286.2 mm from the 6x4.5 tube (CAD length from <code>STRUT_S</code> to <code>STRUT_E</code>; 5.7 g each at that length, the CAD part mass is 6.5 g EST). The BOM R10 text says 0.66 m total: 2 x 286.2 = 572 mm fits.</li><li>Dry-fit first (no glue): arm into the hub socket (25 mm deep) and into the cup sleeve (25 mm); bridge into the hub sleeve and the saddle; struts into hub and clamps. Anything that needs force is wrong: re-sand.</li><li>Epoxy the 4 arms into the hub sockets and the cups (each motor axis is canted 17 deg (D-189): check the cant against the CAD drawing with a protractor on the cup plate); epoxy the bridge into the hub and the bridge saddle CGE-006; epoxy the struts into the hub and the two clamps CGE-007-R/L.</li><li>Print (PETG, 0.2 mm, machine time EST at 14-24 g/h): hub CGE-001 (17.5 g: 2.0 mm walls over the outer 12 mm of each arm socket, 1.2 mm bridge sleeve, 0.8 mm webs, D-196) about 1 h; 4 motor cups CGE-003 (4.3 g each, plate flat on the bed with the shaft axis up, from ARMS.md) about 15 min each; strut clamps CGE-007-R/L (1.5 g), bridge saddle CGE-006 (2.0 g), tray CGE-008 (3.8 g). File names: &lt;part id&gt;.stl (export pending: <code>-</code>). Orientation of the hub: <code>-</code> not in the repo; EST sleeve axis vertical, aft face (tray pad) on the bed, supports under the socket bosses.</li><li>Phase-lead extensions: each MN2212 has 400 mm of 20 AWG lead (T-Motor page) but the route to the ESC pads is 0.456 m (UR, UL) or 0.470 m (LR, LL) (wire_inventory.json), so the stock lead is SHORT: splice an extension of about 0.10-0.12 m onto each of the 12 strands (BOM W07; 30 mm splice overlap, heat-shrink; the CAD lumps the splices in HRN-001). Put the splices outside the arm bore (EST).</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>After the 24 h cure: THREAD, on the bench, before the motors go on the cups: push the three leads of each motor from the cup side through the 4.8 mm lead hole, the collar and the arm bore (264 mm inside the arm), out of the 4.8 mm hole in the hub socket floor. Keep the bend radius at the collar and at the hub exit at 4 mm or more (CAD bundle bend, HARNESS-ENCLOSED D-198). Leave the free ends hanging out of the hub; leave the motor on the leads (unscrewed) until B1.</li><li>Use a fish wire pulled through the arm and hub: tape the three lead ends to its tip. Pull slowly; the bundle fills 9.7 % of the arm bore (HARNESS-ENCLOSED s2).</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Pull test: the bundle slides freely both ways with two fingers. A tight bundle in the 4 mm bend is a stop: re-lay the bundle, do not force it.</li><li>☐ Measure the free length out of the hub: the route minus the 0.264 m inside the arm is 0.19 m (UR, UL) or 0.21 m (LR, LL) still to run to the ESC pads (CALC from wire_inventory.json); each bundle must reach it with the extension.</li><li>☐ Weigh the printed parts against the CAD: hub 17.5 g, cup 4.3 g, clamp 1.5 g, saddle 2.0 g, tray 3.8 g (accept +-15 %, EST).</li></ul>
+<p><strong>Safety:</strong></p>
+<ul><li>Pull wires by the bundle, not by a single strand.</li></ul>
+<h3 class="md-h3">B1. Cage unit: motors, props, dock</h3>
+<p><em>Step 7 of 45. Plan caption: Cage unit</em></p>
+<p><strong>Do this:</strong> Screw the motors on (threadlocker); fit the props; dock the cage unit on the spar from below.</p>
+<p><strong>Time (EST):</strong> 1 h 30 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice) of the clamp bonds on the spar.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-001</code> x1</td><td>Hub</td><td>made</td><td>R03 Prusa</td><td>17.5</td></tr><tr><td><code>CGE-004</code> x1</td><td>Bridge 12x10</td><td>made</td><td>R08 RMRC</td><td>8.5</td></tr><tr><td><code>CGE-006</code> x1</td><td>Bridge saddle on spar</td><td>made</td><td>R03 Prusa</td><td>2.0</td></tr><tr><td><code>CGE-002</code> x4</td><td>Arm 12x10 x 0.245</td><td>made</td><td>R08 RMRC</td><td>54.0</td></tr><tr><td><code>CGE-003</code> x4</td><td>Motor cup</td><td>made</td><td>R03 Prusa</td><td>17.2</td></tr><tr><td><code>CGE-005</code> x2</td><td>V strut 6x4.5</td><td>made</td><td>R10 RMRC</td><td>13.0</td></tr><tr><td><code>CGE-007</code> x2</td><td>Strut clamp on spar</td><td>made</td><td>R03 Prusa</td><td>3.0</td></tr><tr><td><code>PRP-001</code> x4</td><td>Motor MN2212 V2.0 KV780</td><td>bought</td><td>P01 TMotor</td><td>260.0</td></tr><tr><td><code>PRP-004</code> x4</td><td>Prop adapter, T-Motor</td><td>bought</td><td>P01 TMotor</td><td>17.2</td></tr><tr><td><code>PRP-002</code> x4</td><td>Prop APC 9x4.5MRP</td><td>bought</td><td>P02 RMRC</td><td>44.2</td></tr><tr><td><code>PRP-005</code> x4</td><td>Spinner nut, T-Motor</td><td>bought</td><td>P01 TMotor</td><td>11.6</td></tr></tbody></table></div>
+<p>Mass placed by this step 448.2 g; running total of placed parts 604.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>4 x MN2212 V2.0 KV780 (BOM P01); APC 9x4.5MR/MRP 4-pack (P02: 2 x MR + 2 x MRP); T-Motor adapters and spinner nuts (in the motor box, BOM P01 note); 16 x M2.5x8 socket-head screws (ARMS.md: M2.5x8 SHCS; no BOM line, check whether the T-Motor box includes them: <code>-</code>); threadlocker (W06); epoxy (R05) for the two clamps</li></ul>
+<p><strong>Tools:</strong> hex key, threadlocker, caliper, epoxy (clamps), tape to mark prop direction.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Motors: 4 x M2.5x8 per motor into the 19 x 16 mm pattern (T-Motor drawing). Heads sit on the rear face of the cup plate and thread 3.1 mm into the motor base (ARMS.md); use threadlocker and a paint mark (ARMS s4: loosening under 1P is the realistic cup fatigue risk).</li><li>Props: fit the adapter on the shaft, the prop on the adapter, the nut on top. Direction: BOM P02: APC 9x4.5MR (standard) turns counter-clockwise and 9x4.5MRP (reverse) clockwise, seen from the thrust side. CAD: UR and LL are MRP (CW), UL and LR are MR (CCW).</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Dock the cured cage unit on the spar from below (30 mm path, CAD): the bridge saddle and strut clamps snap on the spar (clip slots) and the bridge, saddle and struts go into their core slots. Bond the clamps to the spar with epoxy (CAD edges E-CGE: epoxy).</li><li>The frame was bonded and cured on the bench in B0; only the two clamps are bonded to the spar here.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, 1) for 30 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Prop direction check: motor direction is set in the ESC; with props OFF spin each motor once the ESC is soldered (E6) and swap two phase leads if it is wrong (EST).</li><li>☐ Weigh the cage unit (CAD sums): hub 17.5 + 4 arms 54.0 + 4 cups 17.2 + bridge 8.5 + 2 struts 13.0 + 2 clamps 3.0 + saddle 2.0 = 115.2 g without motors and props; motors 260.0 + props 44.2 + adapters 17.2 + spinner nuts 11.6 add 333.0 g, so 448.2 g complete (the tray is a separate step, B3). Accept +-10 % (EST).</li><li>☐ Spin each prop by hand: no rub on the arm or the wing.</li></ul>
+<p><strong>Safety:</strong></p>
+<ul><li>Never fit a prop with the pack plugged in.</li><li>Mark the prop direction on each arm with tape before the unit is docked.</li></ul>
 </section>
 <section class="md-sec" id="build-stage-3">
-<h2 class="md-h2">Stage 3. Elevon panels</h2>
-<figure class="md-clip" id="build-clip-3"><video src="assets/animation/build/stage-03.mp4" data-poster="assets/animation/build/stage-03.png" controls muted playsinline preload="none" aria-label="Stage 3 build clip"></video><figcaption><span class="ds-source">Stage 3 clip · assets/animation/build/stage-03.mp4 · same CAD as the collision check</span></figcaption></figure>
-<p class="md-meta">Time: 3–4 h plus a 24 h cure.<br>Parts: torque tubes <code>MEC-009</code> (H02), hinge tape.<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/wing/BUILD.md" target="_blank" rel="noopener"><code>subsystems/wing/BUILD.md</code></a> step 9, <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/mechanisms/BUILD.md" target="_blank" rel="noopener"><code>subsystems/mechanisms/BUILD.md</code></a> steps 1–4.</p>
-<ol><li>Route the torque-tube grooves with a depth stop <strong>while the core is still whole</strong>, then cut the panels free (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/STRUCTURE-WING.md#findings" target="_blank" rel="noopener">SW-17</a>). Leave R 3 mm at the fin-tab corners.</li><li>Bevel the panel fronts 30° on the lower side; knife the horn-blade slots.</li><li>Bond the torque tubes flush with microballoon epoxy. Cure 24 h. Tape the bevel face.</li></ol>
-<p>☐ Inspect before moving on: panels 228 and 218 mm long, chord 70.4 mm; ≥ 1 mm foam over each tube; corner radii by gauge.</p>
+<h2 class="md-h2">Stage 3: Rib saddles, phase-lead raceways, pack tray, hinge dampers</h2>
+<figure class="md-clip" id="build-clip-3"><video src="assets/animation/build/a-stage-03.mp4" data-poster="assets/animation/build/a-stage-03.webp" controls muted playsinline preload="none" aria-label="Stage 3 build clip"></video><figcaption><span class="ds-source">Stage 3 clip · assets/animation/build/a-stage-03.mp4 · same CAD as the collision check</span></figcaption></figure>
+<p class="md-meta">Film clip: <code>assets/animation/build/a-stage-03.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 3). Steps B2, B2a, B2b, B2c, B3, B4. Hands-on time EST 3 h 35 min.</p>
+<h3 class="md-h3">B2. Rib saddles on the spar</h3>
+<p><em>Step 8 of 45. Plan caption: Rib saddles snap on the spar from below</em></p>
+<p><strong>Do this:</strong> Print the two rib saddles; snap them on the spar from below at y +-380 mm, over the plugs.</p>
+<p><strong>Time (EST):</strong> 20 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>FIN-005</code> x2</td><td>Rib saddle on spar</td><td>made</td><td>R03 Prusa</td><td>2.0</td></tr></tbody></table></div>
+<p>Mass placed by this step 2.0 g; running total of placed parts 606.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>PETG (R03). Print file: FIN-005.stl (R and L; export pending)</li></ul>
+<p><strong>Tools:</strong> printer (PETG), epoxy, caliper.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Print FIN-005-R/L: PETG, 0.2 mm, 1.0 g each. Ring on the spar 60 mm long, 21 mm outside, with a socket 19 x 19 mm facing aft for the rib and a clip slot.</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Spread the clip slot and snap the ring on the spar from below at y +-380 mm; the socket faces aft. Put a drop of epoxy inside. Check it covers the plug (y +-380 mm).</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, 1) for 30 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Socket axis is along x, parallel to the wing chord (square within 1 degree, EST).</li></ul>
+<h3 class="md-h3">B2a. Phase-lead raceways</h3>
+<p><em>Step 9 of 45. Plan caption: D-199: phase-lead raceways R and L lowered from above into their foam grooves</em></p>
+<p><strong>Do this:</strong> Print both raceways; lower each into its foam groove from above (before the tray).</p>
+<p><strong>Time (EST):</strong> 20 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>HRN-003</code> x2</td><td>Phase-lead raceway</td><td>made</td><td>R03 Prusa</td><td>3.6</td></tr></tbody></table></div>
+<p>Mass placed by this step 3.6 g; running total of placed parts 609.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>PETG (R03; BOM W07 note: the raceway and conduits come from the R03 spool, about 6 g). Print file: HRN-003.stl (R and L; export pending)</li></ul>
+<p><strong>Tools:</strong> printer (PETG), bench dry-fit, no glue yet.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Print HRN-003-R/L: closed channel, 0.6 mm walls, outer 9.6 x 6.6 mm, interior 8.4 x 5.4 mm, x -58.2 to 22.5 mm (HARNESS-ENCLOSED D-199.1; 1.8 g each). Wall basis is EST (as the bay cover); orientation <code>-</code> (EST: flat on its wide side).</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Lower each raceway from above through the slot in the hub pad flange into its foam groove (x 0-22.5 mm, |y| 14-24 mm). Two lanes: y 17 mm (upper-arm bundle) and y 21 mm (lower-arm bundle).</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, -1) for 30 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Dry-fit: the raceway slides into the groove with a 0.2 mm clearance. Do not bond until the leads are threaded (B2c).</li></ul>
+<h3 class="md-h3">B2b. Hub conduits</h3>
+<p><em>Step 10 of 45. Plan caption: D-199: hub conduits</em></p>
+<p><strong>Do this:</strong> Print four conduits; push each in from aft along its hub web, onto the socket floor face.</p>
+<p><strong>Time (EST):</strong> 25 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>HRN-004</code> x4</td><td>Hub conduit</td><td>made</td><td>R03 Prusa</td><td>3.2</td></tr></tbody></table></div>
+<p>Mass placed by this step 3.2 g; running total of placed parts 612.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>PETG (R03). Print file: HRN-004.stl x 4 (UR, UL, LR, LL; export pending)</li></ul>
+<p><strong>Tools:</strong> printer (PETG), caliper.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Print HRN-004 x 4: 0.6 mm wall L-shaped tunnel hugging the hub web, r 20.2-29.2 mm, 0.8 g each (HARNESS-ENCLOSED D-199.1).</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Push each conduit in from aft along its hub web (40 mm travel). Leg A starts on the socket floor face; leg B drops (upper arms) or rises (lower arms) at x -52 mm into a window in the raceway.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (-1, 0, 0) for 40 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Each conduit mouth lines up with the 4.8 mm hole in the socket floor: put the fish wire through it as a test.</li></ul>
+<h3 class="md-h3">B2c. Thread the phase leads to the ditch</h3>
+<p><em>Step 11 of 45. Plan caption: THREAD: feed the free ends of the 12 phase strands (B0) through their hub conduit, the raceway and the foam ditch (fish thread from the ditch end); the free ends stay out at x 29 mm for the ESC pads</em></p>
+<p><strong>Do this:</strong> Fish the 12 strand ends through the conduit, raceway and foam ditch; leave them out at x 29 mm.</p>
+<p><strong>Time (EST):</strong> 1 h 00 min hands-on.</p>
+<p><strong>Parts:</strong> none placed (marker step: it lays wires or threads leads). Wires used: see the checks below and <code>review/QP-5/HARNESS-ENCLOSED.md</code>.</p>
+<p><strong>Tools:</strong> fish wire, tape, 20 AWG wire only if a lead is short.</p>
+<p><strong>Fit it:</strong></p>
+<ul><li>Feed the free ends of the 12 phase strands (from B0) through their hub conduit, the raceway and the foam ditch. Fish-thread from the ditch end. The free ends stay out at x 29 mm for the ESC pads (E6).</li><li>Bundle path in the CAD: arm bore 264 mm, conduits + raceway 111 mm, ditch 10 mm, then 71-85 mm under the bay cover (HARNESS-ENCLOSED D-199).</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Each motor: three strands, same colour order at both ends (mark each lead with tape).</li><li>☐ Minimum bend radius 4 mm (HARNESS-ENCLOSED D-199.1).</li></ul>
+<h3 class="md-h3">B3. Pack tray</h3>
+<p><em>Step 12 of 45. Plan caption: Pack tray lowered from above into the core tray slot, bonded to the hub aft face</em></p>
+<p><strong>Do this:</strong> Lower the printed tray into the core slot; bond it to the hub aft face.</p>
+<p><strong>Time (EST):</strong> 30 min hands-on.  <strong>Cure / wait:</strong> 1 h to hold, 24 h epoxy cure (K09-L practice).</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-008</code> x1</td><td>Pack tray</td><td>made</td><td>R03 Prusa</td><td>3.8</td></tr></tbody></table></div>
+<p>Mass placed by this step 3.8 g; running total of placed parts 616.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>PETG (R03). Print file: CGE-008.stl (export pending)</li></ul>
+<p><strong>Tools:</strong> epoxy, clamps or tape, caliper.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Print CGE-008: one part, 66 x 109 mm plate, 1.5 mm floor with ribs, integral lips at the trim ends: the pack can be placed 6 mm forward to 10 mm aft of nominal (CAD <code>TRIM_FWD</code>, <code>TRIM</code>); floor basis EST (D-194).</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Lower the tray from above into the core tray slot (x -10 to 22.5 mm). Bond it to the pad flange on the hub aft face (59 mm of bond width after the raceway slots, D-199: open item, coupon not run).</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, -1) for 30 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ The raceway must not be pinched: the tray plate underside sits on the raceway top (z 6.0 mm).</li></ul>
+<h3 class="md-h3">B4. Hinge damper units</h3>
+<p><em>Step 13 of 45. Plan caption: Hinge damper units</em></p>
+<p><strong>Do this:</strong> Assemble each damper, fill it with 12,500 cSt silicone, set it in its core notch at the elevon tip.</p>
+<p><strong>Time (EST):</strong> 1 h 00 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>WNG-009</code> x2</td><td>Hinge damper stator</td><td>made</td><td>R03 Prusa, R12 Amazon</td><td>4.0</td></tr><tr><td><code>WNG-010</code> x2</td><td>Hinge damper rotor</td><td>made</td><td>R03 Prusa</td><td>1.0</td></tr></tbody></table></div>
+<p>Mass placed by this step 5.0 g; running total of placed parts 621.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>Silicone damping fluid 12,500 cSt (BOM R12, EST, about 0.6 g per unit), silicone cord and O-rings (R13), PETG (R03), syringe (EST), paper towels</li></ul>
+<p><strong>Tools:</strong> printer, syringe, 12,500 cSt silicone, silicone O-ring / cord, wipes.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Print WNG-009-R/L stator (housing OD 12.7 mm, bore 11.1 mm, pin OD 8.9 mm; 2.0 g with fluid) and WNG-010-R/L rotor (sleeve OD 10.0 mm, wall 0.5 mm, 17 mm long, flange 11.2 mm; 0.5 g): PETG (CAD <code>DMP_*</code>, FIXES2). The gap each side is 0.30 mm; print fit is the risk: sand the sleeve until it slides.</li><li>Fill: put about 0.6 g of silicone fluid (BOM R12) in the housing, push the rotor sleeve in (it displaces the fluid up the gap), seal the end with an O-ring strip.</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Set each damper unit into its core notch at the elevon tip from aft (the notch is open aft; 30 mm travel), before the ribs (C1). Bond the housing in the notch with epoxy; the rotor flange is bonded on the elevon tip face in C2.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (-1, 0, 0) for 30 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Turn the rotor by hand: smooth, with drag, no stick. EST damping c = 1.03e-3 N m s/rad per elevon (D-188), not testable by hand.</li><li>☐ Leave the damper upright 10 min on a tissue: no fluid mark.</li></ul>
+<p><strong>Safety:</strong></p>
+<ul><li>Silicone fluid makes floors slippery and ruins epoxy bonds: keep it off bond surfaces (wipe with IPA).</li></ul>
 </section>
 <section class="md-sec" id="build-stage-4">
-<h2 class="md-h2">Stage 4. Fins on the motor tubes</h2>
-<figure class="md-clip" id="build-clip-4"><video src="assets/animation/build/stage-04.mp4" data-poster="assets/animation/build/stage-04.png" controls muted playsinline preload="none" aria-label="Stage 4 build clip"></video><figcaption><span class="ds-source">Stage 4 clip · assets/animation/build/stage-04.mp4 · same CAD as the collision check</span></figcaption></figure>
-<p class="md-meta">Time: about 2 days hands-on plus 4–5 × 24 h cures.<br>Parts: W02 foam board, G16 3M 77, W04 tubes, D03 plugs, D01 braces, D02 strips, C03 pins, collars <code>FIN-008</code> (22 mm, D-90), anchors <code>FIN-010</code>, ESC pads <code>FIN-007</code>.<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/fins/BUILD.md" target="_blank" rel="noopener"><code>subsystems/fins/BUILD.md</code></a> steps 1–17.</p>
-<ol><li>Laminate the board pairs (3M 77 in the spray booth), measure the laminate, then knife- or laser-cut the four half-fins. Tip outline per D-75 (one datum with the foot shoe).</li><li>Cut the two 344 mm motor tubes, fit the plugs, cure. Slide the tubes through the bosses and blocks, square them in the jig, epoxy. Cure 24 h.</li><li>Bond the half-fin roots and run the cove fillets. ⚠ Weigh a cup from every fillet batch; the CG has no aft margin left (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/MANUFACTURING.md#4-findings" target="_blank" rel="noopener">MF-14</a>, BR-00). ⚠ The lower roots have the rod notch under a fillet that already fails: pending C4 check <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/SERVOS-CONTROLS.md#findings" target="_blank" rel="noopener">SC-04</a>.</li><li><strong>Station collars down the tubes first, each carrying its brace and brace anchor</strong> (assembly check: the edge-strip ends sit in the collar tail slots, so a collar cannot slide on once the strips are on; and both brace ends sit 10 mm deep in blind slots, so the brace cannot be bowed in between a fixed anchor and a fixed ear without straining the CF strip past its limit). On the bench, slide the brace <code>FIN-009</code> into the anchor <code>FIN-010</code> slot and the collar <code>FIN-008</code> ear onto its other end, each along the brace axis, and bond. Then slide the collar down the tube while the anchor drops into its pocket on the spar. Collar height <strong>22 mm</strong> (D-90, ring 22 mm + 40 mm two-face tail). Clock the collar notch with an inclinometer for the keyed mount (D-81). ⚠ Flight collars are under the CDR build hold until the <code>T-C6-LAP-PETG</code> and <code>T-C6-STRIP-ANCHOR</code> coupons read (CDR-02).</li><li>Edge strips on both fin faces, ends into the collar tails; CF pins through strip-board-strip at <strong>12 mm pitch</strong> (D-90). Then the ESC pads <code>FIN-007</code>.</li><li>Post-cure the collars in a heat tent (box, lamp, thermocouple), keeping XPS and tape cool (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/STRUCTURE-WING.md#findings" target="_blank" rel="noopener">SW-14</a>).</li></ol>
-<p>☐ Inspect before moving on: tubes vertical and parallel; each half-fin weighed before and after (+6.3 g expected); no filler in lead holes or elevon gaps.</p>
-<figure class="md-fig"><a class="md-img" href="assets/renders/detail-fin.png" data-lightbox="assets/renders/detail-fin.png" data-caption="Fin detail"><img data-src="assets/renders/detail-fin.png" alt="Fin detail"></a><figcaption>Fin detail</figcaption></figure>
+<h2 class="md-h2">Stage 4: Fin ribs and rib fairings</h2>
+<figure class="md-clip" id="build-clip-4"><video src="assets/animation/build/a-stage-04.mp4" data-poster="assets/animation/build/a-stage-04.webp" controls muted playsinline preload="none" aria-label="Stage 4 build clip"></video><figcaption><span class="ds-source">Stage 4 clip · assets/animation/build/a-stage-04.mp4 · same CAD as the collision check</span></figcaption></figure>
+<p class="md-meta">Film clip: <code>assets/animation/build/a-stage-04.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 4). Steps C1, C1a. Hands-on time EST 1 h 25 min.</p>
+<h3 class="md-h3">C1. Fin ribs</h3>
+<p><em>Step 14 of 45. Plan caption: Ribs in from aft into the saddle sockets</em></p>
+<p><strong>Do this:</strong> Cut two 14x12 carbon ribs to 215.5 mm; push each in from aft into its saddle socket.</p>
+<p><strong>Time (EST):</strong> 45 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice).</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>FIN-002</code> x2</td><td>Fin rib tube 14x12</td><td>made</td><td>R09 RMRC</td><td>28.2</td></tr></tbody></table></div>
+<p>Mass placed by this step 28.2 g; running total of placed parts 649.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>1 x 14x12 CF tube, 1 m (BOM R09: price unverified)</li></ul>
+<p><strong>Tools:</strong> tube cutter, sandpaper, epoxy, calipers.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Cut 2 ribs, each 215.5 mm (CAD <code>RIB_X1 - RIB_X0</code>: x 70.5 to 286.0 mm). Mass 14.1 g each (D-200: CAD mass and BOM R09 now use the drawn 215.5 mm).</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Slide each rib in from aft through the saddle socket (300 mm path); its far end stops at x 286 mm, where the root block (C5) will take it. Epoxy in the saddle socket.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (-1, 0, 0) for 300 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Rib axis along x, within 1 degree (EST); the rib ends at the front face of the fin tube: x 286 mm = tube centre 294 mm minus the 8 mm tube radius (CAD <code>RIB_X1</code>).</li></ul>
+<p><strong>Safety:</strong></p>
+<ul><li>Carbon dust: wet-sand or vacuum.</li></ul>
+<h3 class="md-h3">C1a. Rib fairings</h3>
+<p><em>Step 15 of 45. Plan caption: Rib fairings</em></p>
+<p><strong>Do this:</strong> Cut two XPS blisters (130 to 183.75 mm); bond each over the rib where it leaves the upper skin.</p>
+<p><strong>Time (EST):</strong> 40 min hands-on.  <strong>Cure / wait:</strong> CA: minutes; epoxy: 24 h (K09-L practice).</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>FIN-006</code> x2</td><td>Rib fairing, upper</td><td>made</td><td>R01 Local</td><td>0.6</td></tr></tbody></table></div>
+<p>Mass placed by this step 0.6 g; running total of placed parts 650.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>XPS offcut (R01); tape (R01); thin CA M5T / foam-safe only (R07) or epoxy</li></ul>
+<p><strong>Tools:</strong> hot wire or knife, sandpaper, foam-safe CA or epoxy, tape.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Cut the blister from the foam offcut: 17 mm wide, top 1.5 mm over the tube, x 130 mm to the hinge line (CAD <code>RIBF_X0</code>, <code>RIBF_LOOP</code>); tape it. The CAD trims it by the core and the rib when built: trim by hand to blend.</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Lower each blister onto the upper skin from above, over the rib; bond with foam-safe CA (CAD edge: CA). The lower skin does not expose the rib.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, -1) for 15 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Test a drop of CA on an offcut first: no melting of the foam.</li></ul>
 </section>
 <section class="md-sec" id="build-stage-5">
-<h2 class="md-h2">Stage 5. Pod and power stack</h2>
-<figure class="md-clip" id="build-clip-5"><video src="assets/animation/build/stage-05.mp4" data-poster="assets/animation/build/stage-05.png" controls muted playsinline preload="none" aria-label="Stage 5 build clip"></video><figcaption><span class="ds-source">Stage 5 clip · assets/animation/build/stage-05.mp4 · same CAD as the collision check</span></figcaption></figure>
-<p class="md-meta">Time: about 8.5 h for the pod plus 3 × 24 h cures. The power stack (3 h) is built in the Electronics Lab before 18 Dec (<code>EL1</code>, <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/G4/BUILD-STEPS.md" target="_blank" rel="noopener">G4 sheets</a> section 2, CDR-20) and only fitted here.<br>Parts: pod board and prints <code>POD-*</code> (W02, W05), F01 AS150U, F02 wire, F07 caps, F08 FR4, C02 inserts, C06 nylon screws, D06 straps, H06 XT30U pairs; F04–F06 only if gate X12 (UBEC fallback, D-74).<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/pod/BUILD.md" target="_blank" rel="noopener"><code>subsystems/pod/BUILD.md</code></a>, <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/power/BUILD.md" target="_blank" rel="noopener"><code>subsystems/power/BUILD.md</code></a>.</p>
-<ol><li>Build the pod box on the bench in parallel with stage 4: stop T, tray, <strong>the pitot socket <code>POD-006</code></strong>, then the board pieces glued round them one by one (floor, side walls, nose wall, nose lip, LE filler, aft wall), fillets, <strong>then the carry handle <code>POD-007</code>, then the aft deck</strong>: held just under the grip, slid forward so the handle legs enter its two slots (open to the deck&#x27;s front edge, D-139), lowered along the legs onto the walls; inserts (assembly check: once the pod is in the recess neither the socket nor the handle can reach its seat; the handle brackets wrap the walls and its legs pass through the deck).</li><li>Lay the recess-step fillet on the wing, cure, then bond the pod into the recess. Thread each pack strap down its slot, under the tray in the floor groove and up the other slot, EVA pads on the tray; leave the strap ends open until the pack is in (stage 11: pack in, then close the straps over it). ⚠ Pod BUILD step 11 bonds the handle bridge to a &quot;slot fill&quot; that does not exist on top of the wing (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/STRUCTURE-WING.md#findings" target="_blank" rel="noopener">SW-10</a>); bond to the spar saddles only.</li><li>Tray first, then the power stack (assembly-check order, D-89c): <strong>the four XT30U pairs <code>HRN-113</code>, the airspeed sensor <code>AVN-004</code> and the receiver <code>AVN-003</code> go on the tray before the power frame</strong> (they sit under the frame cradle floor and the deck). Then the power frame <code>PWR-006</code> on its spacers, the power board, the bus board and the AS150U. ⚠ <strong>Board mounting (power BUILD step 5.3) is being redrawn by the integrator (CDR-17: frame to pod on M3 × 18 with the head on the deck, board above the heads on four M2 stand-offs on 30.5 × 26.5 mm, no fastener under the 10 AWG pads). Do not mount the board from the current drawing; follow the redrawn power <code>BUILD.md</code> when it lands.</strong> The power board carries the supplied 470 µF 35 V input cap. ⚠ The power and harness BUILD files disagree on when the ESC leads are soldered (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/WIRING-BATTERY.md#findings" target="_blank" rel="noopener">WB-02</a>); solder the bus board before the frame goes on, or use ESC-pair plugs at the pod exits if the team adopts <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/WIRING-BATTERY.md#findings" target="_blank" rel="noopener">WB-03</a>.</li><li>Put the AS150U on a short flying pigtail if <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/WIRING-BATTERY.md#findings" target="_blank" rel="noopener">WB-04</a> is adopted, so the plug can be pulled fast after a crash.</li><li>Re-terminate both packs to AS150U in the LiPo area. Make one colour-matched spacer and crush-block kit per pack and tether it to that pack (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/WIRING-BATTERY.md#findings" target="_blank" rel="noopener">WB-06</a>). ⚠ The pack station may move forward up to 6 mm under the CG fix (BR-00).</li></ol>
-<p>☐ Inspect before moving on: polarity; &gt; 1 MΩ between rails; loop resistance logged; stack weighed (88 g).</p>
-<div class="scroll fit"><table class="ds-table md-figtable"><tbody><tr><td><a class="md-img" href="assets/renders/detail-pod.png" data-lightbox="assets/renders/detail-pod.png" data-caption="Pod detail"><img data-src="assets/renders/detail-pod.png" alt="Pod detail"></a></td><td><a class="md-img" href="assets/renders/cutaway-xray.png" data-lightbox="assets/renders/cutaway-xray.png" data-caption="X-ray of pod internals"><img data-src="assets/renders/cutaway-xray.png" alt="X-ray of pod internals"></a></td></tr></tbody></table></div>
+<h2 class="md-h2">Stage 5: Elevons, balance strips, lens caps</h2>
+<figure class="md-clip" id="build-clip-5"><video src="assets/animation/build/a-stage-05.mp4" data-poster="assets/animation/build/a-stage-05.webp" controls muted playsinline preload="none" aria-label="Stage 5 build clip"></video><figcaption><span class="ds-source">Stage 5 clip · assets/animation/build/a-stage-05.mp4 · same CAD as the collision check</span></figcaption></figure>
+<p class="md-meta">Film clip: <code>assets/animation/build/a-stage-05.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 5). Steps C2, C2a, C2b. Hands-on time EST 2 h 30 min.</p>
+<h3 class="md-h3">C2. Elevons with balance strips</h3>
+<p><em>Step 16 of 45. Plan caption: Elevons with their balance horns on from aft</em></p>
+<p><strong>Do this:</strong> Cut the elevons; bond a 15.6 g lead strip + 2 tabs on each nose; tape-hinge; push them in.</p>
+<p><strong>Time (EST):</strong> 1 h 30 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice).</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>WNG-006</code> x2</td><td>Elevon right</td><td>made</td><td>R01 Local</td><td>13.4</td></tr><tr><td><code>WNG-007</code> x2</td><td>Elevon balance</td><td>made</td><td>R11 Local</td><td>32.2</td></tr></tbody></table></div>
+<p>Mass placed by this step 45.6 g; running total of placed parts 696.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>Lead sheet 1.3 mm (BOM R11, EST price: fishing / roofing lead); CF/PETG tab strip 6 x 1.2 mm; hinge tape (R05); epoxy (R05)</li></ul>
+<p><strong>Tools:</strong> lead sheet 1.3 mm, snips, knife, epoxy, hinge tape, 0.1 g scale.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Elevon: the 61.25 mm aft strip of the S5010 blank, y 40-350 mm (CAD <code>ELEV_Y0</code>, <code>ELEV_Y1</code>), tape skin; 6.7 g each. A 0.5 mm gap each end (GAP_Y).</li><li>Balance: cut a lead strip 10 mm x 106 mm from 1.3 mm sheet (15.6 g at 11.34 g/cm3, D-187 v2), centre y 285 mm (y 232-338 mm). Two tabs (CF-reinforced PETG strips 6 x 1.2 mm) at y 285 +- 35 mm; bond the tab roots to the elevon nose face with a 0.4 mm epoxy gap; bond the strip to the tab ends 20 mm ahead of the hinge axis, 3.3 mm below it (CAD <code>BAL_REACH</code>, <code>BAL_DZ</code>). Total WNG-007 16.1 g each. Weigh the strip before bonding: 15.6 g +- 0.3 g.</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Push each elevon with its balance horn in from aft (25 mm travel): the horn and strip enter the pocket in the core. Tape-hinge the upper surface after the fit.</li><li>The damper rotor flange (WNG-010, from B4) is bonded on the elevon tip face.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (-1, 0, 0) for 25 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Free swing: deflect the elevon +-21 deg by hand (CAD mechanical stop, ELEV_STOP): nothing touches except the stop bosses (C2a).</li><li>☐ Weigh: elevon 6.7 g, balance 16.1 g (CAD). Both elevons within 0.3 g of each other (EST).</li></ul>
+<p><strong>Safety:</strong></p>
+<ul><li>Lead: wash hands after cutting; do not file or sand it dry; no eating at the bench.</li></ul>
+<h3 class="md-h3">C2a. Upper lens caps</h3>
+<p><em>Step 17 of 45. Plan caption: Upper lens caps</em></p>
+<p><strong>Do this:</strong> Print the two upper caps; lower each over the strip window on the upper skin; bond the flange.</p>
+<p><strong>Time (EST):</strong> 30 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice).</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>WNG-008</code> x2</td><td>Lens cap + stop bosses: wall 0.6 mm, &gt;= 0.5 mm clearance to the lead at the +-21 deg stop</td><td>made</td><td>R03 Prusa</td><td>7.6</td></tr></tbody></table></div>
+<p>Mass placed by this step 7.6 g; running total of placed parts 703.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>PETG (R03). Print files: WNG-008-RU.stl, WNG-008-LU.stl (export pending)</li></ul>
+<p><strong>Tools:</strong> printer (vase mode), epoxy, tape.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Print WNG-008-RU / LU: PETG, single 0.6 mm wall, vase mode (CAD says vase-mode print, EST), 3.8 g each; with the two stop bosses and a 3 mm wide, 0.4 mm thick bonding flange.</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Lower the cap onto the upper skin over the strip window (15 mm travel); bond the flange with epoxy; the stop bosses pass through the window to the tab.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, -1) for 15 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Deflect the elevon to +21 deg: the tab touches the boss (stop), the lead stays 0.5 mm clear of the cap.</li></ul>
+<h3 class="md-h3">C2b. Lower lens caps</h3>
+<p><em>Step 18 of 45. Plan caption: Lower lens caps</em></p>
+<p><strong>Do this:</strong> Print the two lower caps; raise each onto the lower skin; bond; check the stops both ways.</p>
+<p><strong>Time (EST):</strong> 30 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice).</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>WNG-008</code> x2</td><td>Lens cap + stop bosses: wall 0.6 mm, &gt;= 0.5 mm clearance to the lead at the +-21 deg stop</td><td>made</td><td>R03 Prusa</td><td>7.6</td></tr></tbody></table></div>
+<p>Mass placed by this step 7.6 g; running total of placed parts 711.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>PETG (R03). Print files: WNG-008-RL.stl, WNG-008-LL.stl (export pending)</li></ul>
+<p><strong>Tools:</strong> printer (vase mode), epoxy, tape.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>As C2a (lower caps).</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Raise each cap onto the lower skin (15 mm travel); bond the flange.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, 1) for 15 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Deflect each elevon to both stops: +-21 deg; the servo software limit is +-20 deg (ELEV_LIM), so the mechanical stop is 1 deg beyond it.</li></ul>
 </section>
 <section class="md-sec" id="build-stage-6">
-<h2 class="md-h2">Stage 6. Harness, then skin</h2>
-<figure class="md-clip" id="build-clip-6"><video src="assets/animation/build/stage-06.mp4" data-poster="assets/animation/build/stage-06.png" controls muted playsinline preload="none" aria-label="Stage 6 build clip"></video><figcaption><span class="ds-source">Stage 6 clip · assets/animation/build/stage-06.mp4 · same CAD as the collision check</span></figcaption></figure>
-<p class="md-meta">Time: 1–2 days plus skinning 3–4 h for two people.<br>Parts: F03 16 AWG, H01 harness parts, F09 heat-shrink, W06 tape, 100 mm tape.<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/harness/BUILD.md" target="_blank" rel="noopener"><code>subsystems/harness/BUILD.md</code></a>, <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/wing/BUILD.md" target="_blank" rel="noopener"><code>subsystems/wing/BUILD.md</code></a> step 11.</p>
-<ol><li>Weigh each reel, caliper its OD, cut and label every wire, twist the pairs.</li><li>Solder each ESC&#x27;s 16 AWG pair, cap and DShot pair on the bench. Bed the cap can in silicone (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/WIRING-BATTERY.md#findings" target="_blank" rel="noopener">WB-07</a>). Pull-test. On the bus bars (D-86, D-87: bars 35 mm): each pair lands as two conductors, + on the + bar and − on the − bar, 3.5 mm along the bar top, at four stations 8 mm apart from the aft end (LR aft-most, then UR, LL, UL). Each pair rises over the ones aft of it. Form the bends off the pad at 2 × OD on the bench. The 10 AWG main jumper&#x27;s two conductors start on the board&#x27;s output pads, drop through the deck window either side of the pairs and land across the bars&#x27; forward ends. The battery jumper&#x27;s two conductors run side by side from the AS150U cups, through the 10.4 mm cup slot, onto the board&#x27;s two input pads (D-89). At the ESC: the pair and the DShot lead come up the gap between the ESC&#x27;s aft end and the cap and enter the ESC&#x27;s aft end face square onto its power pads (D-87, D-88), the signal lead to the lowest pad. Slide a 1.5–3.5 mm length of adhesive-lined heat-shrink (HRN-107) over each lead before soldering and shrink it over the joint at the face.</li><li>Strap the ESCs on their pads; thread the leads through the fin grommet with a 20–30 mm service loop (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/WIRING-BATTERY.md#findings" target="_blank" rel="noopener">WB-08</a>); lay them in the grooves with tape tabs.</li><li><strong>Bond the servo frames <code>MEC-008</code> in their pockets now</strong> (assembly check: the servo lead runs under the frame rim and the tape doubler goes over its flange, so the frame cannot go in after the leads and the skin). Then the servo leads to the JR recess before the skin. The mated JR pair lies flat on the floor of the 30.5 × 10.8 × 5 mm recess (D-86; the old 18 × 10 mm recess was narrower than the 10.3 mm shroud): female forward, lead dropping in from the groove, servo lead rising out of the aft end into the branch groove. In the pod, the six JR pairs stand on edge on the tie bar in FC-output order (output 1 inboard), two per tie. Lower-station ESC signal leads: out of the P1s lower mouth straight into the jog groove to the signal groove, under the tape (D-86).</li><li>Skin the wing: lower, upper, then the 100 mm LE strip. No seam within 32 mm of the LE. Run a finger along every groove: nothing proud. Where a lead leaves its groove (pod exits, groove ends by the fins), slit the tape round it with a fresh blade: nothing runs on top of the tape (D-86). At each fin root, trim the tape square along the edge of the cove fillet: no tape lies on the fillet (D-88).</li><li>Bond a strap eye <code>FIN-013</code> round the outboard face of each of the four bore bosses (D-89c): sand the boss and the saddle foot 120 grit, silica-thickened 30 min epoxy, foot down on the skin, tab outboard, tie hole along x. Tape it while it cures. These are the ground-run tie points (CR-H1-08, 29.4 N per tie).</li><li><code>T-F2-CONT</code> with the pack out: every net &lt; 0.1 Ω, &gt; 1 MΩ between nets.</li></ol>
-<p>☐ Inspect before moving on: continuity and isolation logged; no tape wrinkles at the LE; LE-strip edges ≥ 32 mm.</p>
-<figure class="md-fig"><a class="md-img" href="assets/renders/detail-harness.png" data-lightbox="assets/renders/detail-harness.png" data-caption="Harness routing"><img data-src="assets/renders/detail-harness.png" alt="Harness routing"></a><figcaption>Harness routing</figcaption></figure>
+<h2 class="md-h2">Stage 6: Fins: fairings, root blocks, tubes</h2>
+<figure class="md-clip" id="build-clip-6"><video src="assets/animation/build/a-stage-06.mp4" data-poster="assets/animation/build/a-stage-06.webp" controls muted playsinline preload="none" aria-label="Stage 6 build clip"></video><figcaption><span class="ds-source">Stage 6 clip · assets/animation/build/a-stage-06.mp4 · same CAD as the collision check</span></figcaption></figure>
+<p class="md-meta">Film clip: <code>assets/animation/build/a-stage-06.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 6). Steps C3, C4, C5, C6. Hands-on time EST 2 h 30 min.</p>
+<h3 class="md-h3">C3. Fin fairing, right</h3>
+<p><em>Step 19 of 45. Plan caption: Fairing, right, from outboard</em></p>
+<p><strong>Do this:</strong> Hot-wire a 3 mm XPS fairing 360 mm long; tape it; slide it on from outboard; bond with foam-safe CA.</p>
+<p><strong>Time (EST):</strong> 35 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>FIN-004-R</code> x1</td><td>Fin fairing 3 mm XPS + tape</td><td>made</td><td>R01 Local</td><td>8.4</td></tr></tbody></table></div>
+<p>Mass placed by this step 8.4 g; running total of placed parts 719.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>XPS (R01), tape (R01), CA (R07, foam-safe only)</li></ul>
+<p><strong>Tools:</strong> hot wire, tape, sandpaper, foam-safe CA.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Cut a 3 mm XPS fairing 360 mm tall (CAD <code>2 x FIN_H</code>): elliptical leading edge 4 mm long x 3 mm thick, straight sides, ending at the tube axis; tape it (8.4 g each). A rib groove runs across it (0.5 mm clearance) for the 14 mm rib.</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Slide the right fairing on from outboard (40 mm); it sits in the tube slot and round the rib. Bond with foam-safe CA.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, -1, 0) for 40 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Fairing is vertical and flush with the tube front (x 294 mm tube centre, tube radius 8 mm).</li></ul>
+<h3 class="md-h3">C4. Fin fairing, left</h3>
+<p><em>Step 20 of 45. Plan caption: Fairing, left, from outboard</em></p>
+<p><strong>Do this:</strong> Same as C3 for the left fin: slide the fairing on from outboard.</p>
+<p><strong>Time (EST):</strong> 25 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>FIN-004-L</code> x1</td><td>Fin fairing 3 mm XPS + tape</td><td>made</td><td>R01 Local</td><td>8.4</td></tr></tbody></table></div>
+<p>Mass placed by this step 8.4 g; running total of placed parts 728.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>Tools:</strong> as C3.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>As C3.</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Slide the left fairing on from outboard (40 mm); bond with foam-safe CA.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 1, 0) for 40 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Compare the two fairings side by side and on the scale (8.4 g CAD).</li></ul>
+<h3 class="md-h3">C5. Fin root blocks</h3>
+<p><em>Step 21 of 45. Plan caption: Root blocks onto the rib ends from aft</em></p>
+<p><strong>Do this:</strong> Print two root blocks; push each on the rib end from aft; it takes the fin tube in C6.</p>
+<p><strong>Time (EST):</strong> 30 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice).</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>FIN-003</code> x2</td><td>Fin root block</td><td>made</td><td>R03 Prusa</td><td>6.4</td></tr></tbody></table></div>
+<p>Mass placed by this step 6.4 g; running total of placed parts 734.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>PETG (R03). Print file: FIN-003.stl x 2 (export pending)</li></ul>
+<p><strong>Tools:</strong> printer (PETG), epoxy, caliper.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Print FIN-003-R/L: tube ring 60 mm long, outside 23 mm, bore 16 mm, plus a 19 x 19 mm rib socket (CAD <code>build_fins</code>), 3.2 g each. Orientation: ring axis up (EST).</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Push each block on the rib end from aft (60 mm path), tube hole vertical; epoxy in the socket.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (-1, 0, 0) for 60 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Tube bore vertical within 1 degree (EST): drop a straight 16 mm rod through it.</li><li>☐ The block sits on the fin plane y 380 mm +-1 mm.</li></ul>
+<h3 class="md-h3">C6. Fin tubes</h3>
+<p><em>Step 22 of 45. Plan caption: Fin tubes down through the blocks</em></p>
+<p><strong>Do this:</strong> Cut two 16x14 fin tubes to 360 mm; drop each through its block; bond; keep them vertical.</p>
+<p><strong>Time (EST):</strong> 1 h 00 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice).</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>FIN-001</code> x2</td><td>Fin tube 16x14 x 0.36 m</td><td>made</td><td>R02 RMRC</td><td>54.2</td></tr></tbody></table></div>
+<p>Mass placed by this step 54.2 g; running total of placed parts 788.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>1 x 16x14 CF tube, 1 m (BOM R02): 2 x 0.36 m = 0.72 m</li></ul>
+<p><strong>Tools:</strong> tube cutter, epoxy, square / plumb, calipers.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Cut 2 tubes, each 360 mm (CAD FIN_H 0.18 m: z -180 to +180 mm; 27.1 g each).</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Drop each tube down through its block (500 mm start, 360 mm tube): centred on z 0, 180 mm each side. Epoxy the block ring.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, -1) for 500 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Plumb: tube vertical in the wing plane (nose view) and in the side view within 1 degree (EST).</li><li>☐ Equal height each side: tube ends at z +-180 mm +-1 mm.</li></ul>
+<p><strong>Safety:</strong></p>
+<ul><li>The tube ends are sharp: cap them with tape until the feet are on.</li></ul>
 </section>
 <section class="md-sec" id="build-stage-7">
-<h2 class="md-h2">Stage 7. Servos, linkage and hinges</h2>
-<figure class="md-clip" id="build-clip-7"><video src="assets/animation/build/stage-07.mp4" data-poster="assets/animation/build/stage-07.png" controls muted playsinline preload="none" aria-label="Stage 7 build clip"></video><figcaption><span class="ds-source">Stage 7 clip · assets/animation/build/stage-07.mp4 · same CAD as the collision check</span></figcaption></figure>
-<p class="md-meta">Time: per side about half a day plus 2 × 24 h cures.<br>Parts: M01 servos, H02 mechanisms hardware, horns and frames <code>MEC-004…008</code>, horn backplates <code>MEC-013</code>.<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/mechanisms/BUILD.md" target="_blank" rel="noopener"><code>subsystems/mechanisms/BUILD.md</code></a> steps 5–12.</p>
-<ol><li>Hinge: use Blenderm or filament tape, top strip at neutral, lower strip with the panel full TE-up (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/SERVOS-CONTROLS.md#findings" target="_blank" rel="noopener">SC-02</a>). Both panels of a side in one setup.</li><li>Push each horn up into its panel slot from below (U-slot over the torque tube), then bond the backplate <code>MEC-013</code> on top (D-89c). Bond the inboard horn with the rod in place. ⚠ Slip-fit the outboard horn in a brass sleeve instead of bonding both ends (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/SERVOS-CONTROLS.md#findings" target="_blank" rel="noopener">SC-03</a>).</li><li>Bench-prep the servo at 1500 µs; drill the arm to 1.85 mm (not 1.6 mm) for the 2-56 Z-bend (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/SERVOS-CONTROLS.md#findings" target="_blank" rel="noopener">SC-07</a>). Crimp pins but leave the JR housing off, so the lead passes the straw (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/SERVOS-CONTROLS.md#findings" target="_blank" rel="noopener">SC-01</a>).</li><li>Install the servo in its frame (bonded in stage 6 step 4), fit the cover, paint-pen the screws.</li><li>Pushrod and clevis at neutral; sweep 900–2100 µs on the tester with no binding.</li></ol>
-<p>☐ Inspect before moving on: free play ≤ 1° at the TE; both panels of a side within 1° at 0 and ±25°; warm peel test passed (3.5 N at the TE, 10 min).</p>
-<figure class="md-fig"><a class="md-img" href="assets/renders/detail-mechanisms.png" data-lightbox="assets/renders/detail-mechanisms.png" data-caption="Mechanisms detail"><img data-src="assets/renders/detail-mechanisms.png" alt="Mechanisms detail"></a><figcaption>Mechanisms detail</figcaption></figure>
+<h2 class="md-h2">Stage 7: Landing feet</h2>
+<figure class="md-clip" id="build-clip-7"><video src="assets/animation/build/a-stage-07.mp4" data-poster="assets/animation/build/a-stage-07.webp" controls muted playsinline preload="none" aria-label="Stage 7 build clip"></video><figcaption><span class="ds-source">Stage 7 clip · assets/animation/build/a-stage-07.mp4 · same CAD as the collision check</span></figcaption></figure>
+<p class="md-meta">Film clip: <code>assets/animation/build/a-stage-07.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 7). Steps C7, C8, C9. Hands-on time EST 1 h 00 min.</p>
+<h3 class="md-h3">C7. Upper shoes</h3>
+<p><em>Step 23 of 45. Plan caption: Upper shoes on the tube ends</em></p>
+<p><strong>Do this:</strong> Print four foot shoes; slide the two upper ones on the top tube ends from above and bond.</p>
+<p><strong>Time (EST):</strong> 20 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice).</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>GER-001</code> x2</td><td>Foot shoe</td><td>made</td><td>R03 Prusa</td><td>2.8</td></tr></tbody></table></div>
+<p>Mass placed by this step 2.8 g; running total of placed parts 791.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>PETG (R03). Print file: GER-001.stl x 4 (export pending)</li></ul>
+<p><strong>Tools:</strong> printer (PETG), epoxy.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Print GER-001 UR/UL/LR/LL: PETG, 1.4 g each; ring 12 mm tall on the tube, plate 5.5 x 21 x 15 mm facing aft for the pad (CAD).</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Slide the upper shoes on the upper tube ends (30 mm, from above), plate aft; epoxy.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, -1) for 30 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ The four shoe plates are in one plane, 337.5 mm aft of the wing leading edge (CAD ground plane).</li></ul>
+<h3 class="md-h3">C8. Lower shoes</h3>
+<p><em>Step 24 of 45. Plan caption: Lower shoes on the tube ends</em></p>
+<p><strong>Do this:</strong> Raise the two lower shoes onto the bottom tube ends from below and bond.</p>
+<p><strong>Time (EST):</strong> 20 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice).</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>GER-001</code> x2</td><td>Foot shoe</td><td>made</td><td>R03 Prusa</td><td>2.8</td></tr></tbody></table></div>
+<p>Mass placed by this step 2.8 g; running total of placed parts 794.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>Tools:</strong> epoxy.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>As C7.</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Raise the lower shoes on the lower tube ends (30 mm, from below); epoxy.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, 1) for 30 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Stand the aircraft on the four shoe plates on a flat bench: no rocking (EST 1 mm).</li></ul>
+<h3 class="md-h3">C9. Foot pads</h3>
+<p><em>Step 25 of 45. Plan caption: Foot pads on the shoe plates</em></p>
+<p><strong>Do this:</strong> Cut four EVA/PE pads 12 x 15 x 30 mm; slide each on from aft onto its shoe plate and press on.</p>
+<p><strong>Time (EST):</strong> 20 min hands-on.  <strong>Cure / wait:</strong> 24 h cure (EST).</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>GER-002</code> x4</td><td>Foot pad EVA/PE 12x15x30</td><td>made</td><td>R03 Prusa</td><td>2.8</td></tr></tbody></table></div>
+<p>Mass placed by this step 2.8 g; running total of placed parts 797.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>EVA/PE foam, 12 x 15 mm section (BOM R03 line text names &quot;foot pads&quot;; no separate foam line: <code>-</code>)</li></ul>
+<p><strong>Tools:</strong> knife, double-sided tape (CAD: pad PSA).</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Cut 4 pads 12 x 15 mm, 30 mm long (CAD <code>GER-002</code>), flat ends.</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Slide each pad on from aft (30 mm travel) onto the shoe plate and press it on: the CAD pad is stuck with its own pressure-sensitive adhesive (edge E-GER: pad PSA on the shoe plate). Use double-sided tape if the foam has no adhesive back (EST).</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (-1, 0, 0) for 30 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Standing check: aircraft stands on 4 pads, upright, wing vertical (this is the take-off pose).</li></ul>
 </section>
 <section class="md-sec" id="build-stage-8">
-<h2 class="md-h2">Stage 8. Motor mounts, motors and props</h2>
-<figure class="md-clip" id="build-clip-8"><video src="assets/animation/build/stage-08.mp4" data-poster="assets/animation/build/stage-08.png" controls muted playsinline preload="none" aria-label="Stage 8 build clip"></video><figcaption><span class="ds-source">Stage 8 clip · assets/animation/build/stage-08.mp4 · same CAD as the collision check</span></figcaption></figure>
-<p class="md-meta">Time: about 1 h per station plus 4 × T-E1-STAND runs.<br>Parts: B01 motors, B03 props, B05 adapter rings, B07 screws, C01 pinch bolts and nylocs, C04 Loctite, mounts <code>FIN-003</code> (W08 ASA).<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/propulsion/BUILD.md" target="_blank" rel="noopener"><code>subsystems/propulsion/BUILD.md</code></a>, <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/fins/BUILD.md" target="_blank" rel="noopener"><code>subsystems/fins/BUILD.md</code></a> steps 18–19.</p>
-<ol><li>Print the D-80/D-81 mount (slit open, clocking dog) and check the 1.5 mm slit with a feeler. The dog drops into the notch at the front of the station collar; ⚠ its shear size is still C6&#x27;s to set (D-81).</li><li>Incoming check on <strong>every</strong> motor: weight, pattern, all hole depths, E-clip seating, phase resistance.</li><li>Drill each plate from a printed guide with no motor on it. Fit a spreader plate under the screw heads if <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/MOTOR-MOUNTS.md#findings" target="_blank" rel="noopener">MM-03</a> is adopted; screws with 243 on the tips; torque driver; witness marks.</li><li>Mount on the tube, set the slip (<code>T-D3-SLIP</code>), check 7 ± 1° cant with the inclinometer. ⚠ Slip number differs between documents (70–80, 74, 85–100 N); use the one D3 and C6 agree. Recheck the 25 mm blade-to-tube gauge (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/MANUFACTURING.md#4-findings" target="_blank" rel="noopener">MF-07</a>).</li><li>Phase splices with sleeves; tie the bundle to fixed structure with a service loop, clear of the pinch bolt (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/MOTOR-MOUNTS.md#findings" target="_blank" rel="noopener">MM-12</a>). Route (D-86): forward off the ESC along the board face, up outboard of the collar tail wall, tie at the collar&#x27;s phase lug, tape up the outboard cheek face over the pinch nut, into the motor&#x27;s lead exit. No span hangs free. Spin test for direction at 5 %, props off.</li><li>Balance every prop. Fit by hand (MRP on UR/LL, MR on UL/LR), washer, nyloc, 1.5 N·m. ⚠ Prop-nut thread engagement is 0.11 mm: pending adapter choice <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/MOTOR-MOUNTS.md#findings" target="_blank" rel="noopener">MM-06</a>.</li></ol>
-<p>☐ Inspect before moving on: each motor turns in its stated direction; witness marks on every screw and nut; slip holds 60 N.</p>
-<div class="scroll fit"><table class="ds-table md-figtable"><tbody><tr><td><a class="md-img" href="assets/renders/detail-propulsion.png" data-lightbox="assets/renders/detail-propulsion.png" data-caption="Propulsion station"><img data-src="assets/renders/detail-propulsion.png" alt="Propulsion station"></a></td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/img/mm01-mount-top-cheek-across-slit.png" target="_blank" rel="noopener">Mount top view, cheek across the slit (figure on GitHub)</a> &lt;br&gt; Before D-80: the cheek (left) bridged the slit (MM-01). Fixed in CAD.</td></tr></tbody></table></div>
+<h2 class="md-h2">Stage 8: Servos, pushrods, horns, lead threading</h2>
+<figure class="md-clip" id="build-clip-8"><video src="assets/animation/build/a-stage-08.mp4" data-poster="assets/animation/build/a-stage-08.webp" controls muted playsinline preload="none" aria-label="Stage 8 build clip"></video><figcaption><span class="ds-source">Stage 8 clip · assets/animation/build/a-stage-08.mp4 · same CAD as the collision check</span></figcaption></figure>
+<p class="md-meta">Film clip: <code>assets/animation/build/a-stage-08.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 8). Steps D1, D0, D2, D2a, D3, D4, D5, D5b. Hands-on time EST 2 h 55 min.</p>
+<h3 class="md-h3">D1. Servos in their pockets</h3>
+<p><em>Step 26 of 45. Plan caption: Servos into their pockets</em></p>
+<p><strong>Do this:</strong> Drop the two EMAX ES3054HV servos into the core pockets from above; fix them.</p>
+<p><strong>Time (EST):</strong> 30 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>MEC-001</code> x2</td><td>Servo EMAX ES3054HV</td><td>bought</td><td>M01 RMRC</td><td>41.0</td></tr></tbody></table></div>
+<p>Mass placed by this step 41.0 g; running total of placed parts 838.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>3 x EMAX ES3054HV (BOM M01: 2 + 1 spare)</li></ul>
+<p><strong>Tools:</strong> servo tester, screwdriver, foam-safe CA or epoxy dab.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Test each servo on the servo tester before it goes in.</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Drop each servo into its pocket (core, x 124.5-165.5 mm, y +-200 mm) 30 mm from above and bond it in the pocket with a little epoxy (CAD edge E-MEC: epoxy, <code>servo in its pocket</code>). Keep epoxy off the case seam and the output shaft.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, -1) for 30 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ The pocket is open to the upper skin, so the arm can sweep +-20 deg (CAD).</li></ul>
+<h3 class="md-h3">D0. Thread the servo leads</h3>
+<p><em>Step 27 of 45. Plan caption: THREAD: each servo 3-wire lead is fed from the servo pocket along its foam groove (3 mm under the skin, aft of the spar) to the slit at x 83 mm / |y| 24 mm with a fish wire; the free end stays out of the slit for the FC pads</em></p>
+<p><strong>Do this:</strong> Fish each servo lead along its foam groove, 3 mm under the skin, to the slit at x 83 mm.</p>
+<p><strong>Time (EST):</strong> 30 min hands-on.</p>
+<p><strong>Parts:</strong> none placed (marker step: it lays wires or threads leads). Wires used: see the checks below and <code>review/QP-5/HARNESS-ENCLOSED.md</code>.</p>
+<p><strong>Tools:</strong> fish wire, tape.</p>
+<p><strong>Fit it:</strong></p>
+<ul><li>Feed each servo 3-wire lead from the pocket along its foam groove (3 mm under the upper skin, aft of the spar) to the slit at x 83 mm, |y| 24 mm. Free end stays out for the FC pads (E3b).</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Lead 250 mm routed (CAD E-HRN-07 / 08); wire inside the groove, nothing under the skin tape.</li></ul>
+<h3 class="md-h3">D2. Servo arms</h3>
+<p><em>Step 28 of 45. Plan caption: Servo arms on the splines</em></p>
+<p><strong>Do this:</strong> Centre each servo with the tester; press the arm on the spline so it sits level.</p>
+<p><strong>Time (EST):</strong> 20 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>MEC-002</code> x2</td><td>Servo arm</td><td>bought</td><td>M01 RMRC</td><td>2.0</td></tr></tbody></table></div>
+<p>Mass placed by this step 2.0 g; running total of placed parts 840.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>Tools:</strong> servo tester.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Centre the servo with the tester at 1500 us (standard servo pulse, EST).</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Press the arm on the 23-tooth output spline 15 mm from above (CAD: EMAX ES3054HV, 23T spline, RMRC page 85975). The arm lies aft at centre (EST).</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, -1) for 15 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Arm hole radius 12 mm (FIXES2 s1.3; D-188): measure from the spline centre. The output boss height is not in the repo (<code>-</code>): measure it so the arm clears the pocket floor.</li></ul>
+<h3 class="md-h3">D2a. Arm screws</h3>
+<p><em>Step 29 of 45. Plan caption: Arm screws M2x6 into the servo output shafts</em></p>
+<p><strong>Do this:</strong> Fit the M2 x 6 arm screw into the servo output shaft; snug, threadlocker.</p>
+<p><strong>Time (EST):</strong> 10 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>HWC-002</code> x2</td><td>Servo arm screw M2 x 6 pan</td><td>bought</td><td>R05 Amazon</td><td>0.5</td></tr></tbody></table></div>
+<p>Mass placed by this step 0.5 g; running total of placed parts 840.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>Tools:</strong> 1.5 mm / small screwdriver, threadlocker.</p>
+<p><strong>Fit it:</strong></p>
+<ul><li>M2 x 6 pan screw (CAD HWC-002) through the arm into the shaft; a little threadlocker (W06).</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, -1) for 10 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Arm cannot be pulled off.</li></ul>
+<h3 class="md-h3">D3. Horns on the elevons</h3>
+<p><em>Step 30 of 45. Plan caption: Horns on the elevons</em></p>
+<p><strong>Do this:</strong> Bond each control horn on the elevon upper skin so its hole is 12.9 mm from the hinge axis.</p>
+<p><strong>Time (EST):</strong> 30 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice).</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>MEC-004</code> x2</td><td>Control horn</td><td>bought</td><td>M02 RMRC</td><td>2.0</td></tr></tbody></table></div>
+<p>Mass placed by this step 2.0 g; running total of placed parts 842.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>M02 linkage set: horns, pushrods, clevises</li></ul>
+<p><strong>Tools:</strong> epoxy, 0.1 g scale.</p>
+<p><strong>Fit it:</strong></p>
+<ul><li>Bond the horn on the elevon upper skin with epoxy (CAD edge E-MEC: horn bonded on the elevon upper skin; it comes in from above, 15 mm travel; base plate 20 x 8 x 1 mm EST, blade 2 mm). Roughen the tape skin first, wipe with IPA.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, -1) for 15 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Hole line is 12.9 mm from the hinge axis (CALC: x 193 mm).</li></ul>
+<h3 class="md-h3">D4. Pushrods</h3>
+<p><em>Step 31 of 45. Plan caption: Pushrods into arm hole</em></p>
+<p><strong>Do this:</strong> Z-bend the 1.2 mm rod into the arm hole; set the clevis cheeks over the horn blade.</p>
+<p><strong>Time (EST):</strong> 30 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>MEC-003</code> x2</td><td>Pushrod 1.2 mm with Z-bend and clevis</td><td>bought</td><td>M02 RMRC</td><td>1.9</td></tr></tbody></table></div>
+<p>Mass placed by this step 1.9 g; running total of placed parts 844.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>Tools:</strong> Z-bend pliers, small pliers, calipers.</p>
+<p><strong>Fit it:</strong></p>
+<ul><li>Z-bend the 1.2 mm rod into the arm tip hole (CAD: vertical pin) and set the clevis over the horn blade, cheeks either side (CAD: clevis on the horn hole, horizontal pin; 10 mm). The pin follows in D5.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, -1) for 10 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Elevon neutral with servo centred: straight edge on the elevon and the core.</li></ul>
+<h3 class="md-h3">D5. Clevis pin, right</h3>
+<p><em>Step 32 of 45. Plan caption: Clevis pin R pressed in along y through the cheeks and the horn hole</em></p>
+<p><strong>Do this:</strong> Press the 1.0 x 4.4 mm clevis pin through the cheeks and the horn hole from outboard.</p>
+<p><strong>Time (EST):</strong> 15 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>MEC-005-R</code> x1</td><td>Clevis pin 1.0 x 4.4 mm</td><td>bought</td><td>M02 RMRC</td><td>0.0</td></tr></tbody></table></div>
+<p>Mass placed by this step 0.0 g; running total of placed parts 844.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>Tools:</strong> tweezers, small pliers.</p>
+<p><strong>Fit it:</strong></p>
+<ul><li>Press the pin in along y from outboard (6 mm).</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, -1, 0) for 6 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Pin cannot fall out; the clevis moves freely.</li></ul>
+<h3 class="md-h3">D5b. Clevis pin, left</h3>
+<p><em>Step 33 of 45. Plan caption: Clevis pin L pressed in along y</em></p>
+<p><strong>Do this:</strong> Press the left clevis pin in along y from outboard; run each elevon through its full travel.</p>
+<p><strong>Time (EST):</strong> 10 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>MEC-005-L</code> x1</td><td>Clevis pin 1.0 x 4.4 mm</td><td>bought</td><td>M02 RMRC</td><td>0.0</td></tr></tbody></table></div>
+<p>Mass placed by this step 0.0 g; running total of placed parts 844.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>Tools:</strong> tweezers, servo tester.</p>
+<p><strong>Fit it:</strong></p>
+<ul><li>Press the pin in along y from outboard (6 mm).</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 1, 0) for 6 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ With the servo tester, each elevon goes +-20 deg without binding; both match within 1 degree (EST).</li></ul>
 </section>
 <section class="md-sec" id="build-stage-9">
-<h2 class="md-h2">Stage 9. Avionics</h2>
-<figure class="md-clip" id="build-clip-9"><video src="assets/animation/build/stage-09.mp4" data-poster="assets/animation/build/stage-09.png" controls muted playsinline preload="none" aria-label="Stage 9 build clip"></video><figcaption><span class="ds-source">Stage 9 clip · assets/animation/build/stage-09.mp4 · same CAD as the collision check</span></figcaption></figure>
-<p class="md-meta">Time: about 4 h on the aircraft; FC flash and bench calibration (4 h) are done in the winter closure (<code>HR1</code>, CDR-20).<br>Parts: A01 FC, A02 GPS, A03 RX, A04 airspeed, A05 microSD, A06 antennas, A07 isolation set.<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/avionics/BUILD.md" target="_blank" rel="noopener"><code>subsystems/avionics/BUILD.md</code></a>.</p>
-<ol><li>FC on four gel cubes with its strap and the microSD in (the airspeed sensor and RX are already on the tray from stage 5 step 3; RX antennas up the tubes).</li><li>GPS on the mast pad; check the compass chip ID at the I²C scan (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/WIRING-BATTERY.md#findings" target="_blank" rel="noopener">WB-12</a>).</li><li>Pitot lines on different coupler sizes or colours so T and S cannot swap (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/WIRING-BATTERY.md#findings" target="_blank" rel="noopener">WB-13</a>).</li><li>Connect, tie within 20 mm of each plug, twist the current-sense wire with its ground. Every lead ends on a real termination (D-89):<ul><li><strong>Outputs 1–6:</strong> solder each conductor into its own hole of the FC&#x27;s S / Vx / G field (aft edge). Bend it up off the board on a 2 × OD lead-off; the forward holes run higher, over the risers aft of them. Then lead it into its contact of the JR pair on the tray.</li><li><strong>GPS (GH-6) and SERIAL6 to the RX (GH-4):</strong> plug into the FC&#x27;s aft-edge and fore-edge sockets. The RX lead runs down in front of the fore end stop and aft under the FC, inboard of the gel cubes.</li><li><strong>Airspeed I²C branch:</strong> solder it to the GPS cable&#x27;s four conductors about 15 mm from the FC plug. Shrink one adhesive sleeve (<code>HRN-107-I2C</code>) over the splice and both cables. Its other end plugs into the sensor&#x27;s GH-4 on the aft face.</li><li><strong>RX end:</strong> strip the 4-core cable under a 2 mm breakout sleeve (<code>HRN-107-RX</code>, adhesive-lined). Lay the four conductors flat onto the RP3&#x27;s 5 V / GND / TX / RX pads and solder them. Check the pad order against the board first; the order in the CAD is an estimate.</li><li><strong>Power-board link ribbon:</strong> plug into the PDB&#x27;s top header and into the FC&#x27;s underside header between the gel cubes. Fit the FC end before the FC goes onto its cubes.</li></ul></li><li>Calibrate accelerometer (cruise attitude), compass, airspeed zero.</li></ol>
-<p>☐ Inspect before moving on: pre-arm checks pass; airspeed rises on a blow at the tip and drops on a suck.</p>
+<h2 class="md-h2">Stage 9: Avionics: pitot, plate, ESC, FC, leads</h2>
+<figure class="md-clip" id="build-clip-9"><video src="assets/animation/build/a-stage-09.mp4" data-poster="assets/animation/build/a-stage-09.webp" controls muted playsinline preload="none" aria-label="Stage 9 build clip"></video><figcaption><span class="ds-source">Stage 9 clip · assets/animation/build/a-stage-09.mp4 · same CAD as the collision check</span></figcaption></figure>
+<p class="md-meta">Film clip: <code>assets/animation/build/a-stage-09.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 9). Steps E1, E2, E3, E3a, E3b. Hands-on time EST 3 h 40 min.</p>
+<h3 class="md-h3">E1. Pitot probe</h3>
+<p><em>Step 34 of 45. Plan caption: Pitot into its groove from the front</em></p>
+<p><strong>Do this:</strong> Slide the brass pitot (175 mm, EST) into its groove in the leading edge from the front; bond it.</p>
+<p><strong>Time (EST):</strong> 20 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>AVN-006</code> x1</td><td>Pitot probe</td><td>bought</td><td>V05 RMRC</td><td>5.0</td></tr></tbody></table></div>
+<p>Mass placed by this step 5.0 g; running total of placed parts 849.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>RMRC MS4525 airspeed + pitot (BOM V05)</li></ul>
+<p><strong>Tools:</strong> caliper.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Measure the pitot from V05 on arrival (CAD uses 175 x 3 mm EST, from x -130 mm).</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Slide it in from the front (250 mm path) into its groove in the leading edge at y +410 mm, 30 mm outboard of the right fin plane (CAD: outside the rotor wash, EST) and bond it with epoxy (CAD edge: epoxy). The silicone tube route to the sensor is NOT designed in the CAD (HARNESS-ENCLOSED D-199.2): open item.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (1, 0, 0) for 250 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Probe points straight ahead (along x), within 2 degrees (EST).</li></ul>
+<h3 class="md-h3">E2. Avionics plate</h3>
+<p><em>Step 35 of 45. Plan caption: Avionics plate on the skin with its four M2 thin nuts already seated in the hex pockets</em></p>
+<p><strong>Do this:</strong> Print the plate; seat four M2 thin nuts in the hex pockets; place it on the skin over the spar.</p>
+<p><strong>Time (EST):</strong> 25 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>AVN-001</code> x1</td><td>Avionics plate</td><td>made</td><td>R03 Prusa</td><td>8.0</td></tr><tr><td><code>HWC-003</code> x1</td><td>FC mounting nuts: 4 x M2 thin nut</td><td>bought</td><td>R05 Amazon</td><td>0.4</td></tr></tbody></table></div>
+<p>Mass placed by this step 8.4 g; running total of placed parts 858.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>PETG (R03). Print file: AVN-001.stl (export pending); 4 x M2 thin nuts DIN 439 1.2 mm (R05 stock hardware)</li></ul>
+<p><strong>Tools:</strong> printer (PETG), M2 thin nuts (DIN 439), tweezers.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Print AVN-001: PETG, lightening windows, 4 hex pockets 4.2 mm across, 2.2 mm clearance holes (CAD).</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Press the nuts into the hex pockets, then set the plate on the skin (20 mm from above) and bond it with foam-safe CA (CAD edge: CA, plate base follows the upper skin). The FC 20 x 20 mm M2 pattern is centred on the spar (x 60 mm): the FC sits on the wing centre, not on the cage hub (SITL follow-up).</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, -1) for 20 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Nuts flush; the plate lies flat on the skin.</li></ul>
+<h3 class="md-h3">E3. ESC, FC, RX, GPS, airspeed</h3>
+<p><em>Step 36 of 45. Plan caption: ESC, foam-tape pads</em></p>
+<p><strong>Do this:</strong> Stick the FC on four 3 mm foam-tape pads; put the ESC, RX, GPS and airspeed boards on the plate.</p>
+<p><strong>Time (EST):</strong> 40 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>PRP-003</code> x1</td><td>ESC SpeedyBee BLS 35A Mini V2 4-in-1 with leads</td><td>bought</td><td>P04 RMRC</td><td>20.0</td></tr><tr><td><code>AVN-007</code> x1</td><td>Foam-tape pads x4</td><td>bought</td><td>R05 Amazon</td><td>1.0</td></tr><tr><td><code>AVN-002</code> x1</td><td>Flight controller Kakute F405 Wing Mini</td><td>bought</td><td>V03 RMRC</td><td>17.0</td></tr><tr><td><code>AVN-003</code> x1</td><td>Receiver RP3 V2 ELRS</td><td>bought</td><td>V02 RMRC</td><td>4.6</td></tr><tr><td><code>AVN-004</code> x1</td><td>GPS TBS M10Q + compass</td><td>bought</td><td>V04 RMRC</td><td>13.5</td></tr><tr><td><code>AVN-005</code> x1</td><td>Airspeed sensor MS4525 board</td><td>bought</td><td>V05 RMRC</td><td>3.0</td></tr></tbody></table></div>
+<p>Mass placed by this step 59.1 g; running total of placed parts 917.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>Kakute F405 Wing Mini (V03), SpeedyBee BLS 35A 4-in-1 ESC (P04), RP3 V2 (V02), TBS M10Q GPS (V04), MS4525 board (V05)</li></ul>
+<p><strong>Tools:</strong> foam tape (VHB-class), tweezers, 0.1 g scale.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Flash and set up in the Electronics Lab first: firmware, parameters (Q_TAILSIT etc.). Parameter file <code>qp/A/A.param</code>. Not covered here: <code>-</code>.</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Press the FC on the four pads; set the ESC, RX, GPS and airspeed boards on the plate in their CAD places (GPS y 27.5-52.5 mm, RX y -52.5 to -39.5 mm).</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, -1) for 30 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Arrow on the FC points aft (AHRS_ORIENTATION 0, CAD note).</li><li>☐ GPS has sky view.</li></ul>
+<h3 class="md-h3">E3a. FC screws</h3>
+<p><em>Step 37 of 45. Plan caption: Four M2 x 25 screws down through the FC stack into the nuts</em></p>
+<p><strong>Do this:</strong> Four M2 x 25 screws down through the FC stack into the plate nuts.</p>
+<p><strong>Time (EST):</strong> 15 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>HWC-001</code> x1</td><td>FC mounting screws: 4 x M2 x 25 pan screw</td><td>bought</td><td>R05 Amazon</td><td>3.0</td></tr></tbody></table></div>
+<p>Mass placed by this step 3.0 g; running total of placed parts 920.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>Tools:</strong> small screwdriver.</p>
+<p><strong>Fit it:</strong></p>
+<ul><li>Four M2 x 25 pan screws through the stack into the nuts (20 mm).</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, -1) for 20 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Snug only; the foam pads still isolate vibration.</li></ul>
+<h3 class="md-h3">E3b. Solder the signal wiring</h3>
+<p><em>Step 38 of 45. Plan caption: LAY: solder the ESC signal ribbon to the FC, the servo leads to the FC pads S5 / S6, the RX CRSF lead, the GPS and airspeed leads (JST plugs on the sensor boards)</em></p>
+<p><strong>Do this:</strong> Solder the ESC signal ribbon, servo leads, RX, GPS and airspeed leads to the FC.</p>
+<p><strong>Time (EST):</strong> 2 h 00 min hands-on.</p>
+<p><strong>Parts:</strong> none placed (marker step: it lays wires or threads leads). Wires used: see the checks below and <code>review/QP-5/HARNESS-ENCLOSED.md</code>.</p>
+<p><strong>You need:</strong></p>
+<ul><li>Jacobs Electronics Lab soldering station + multimeter + extraction</li></ul>
+<p><strong>Tools:</strong> soldering station (Jacobs EL), heat-shrink, multimeter.</p>
+<p><strong>Fit it:</strong></p>
+<ul><li>LAY: ESC signal ribbon to the FC, servo leads to FC pads S5 / S6, RX CRSF lead, GPS and airspeed leads (JST plugs on the sensor boards).</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Continuity each joint; no short between neighbour pads; lead colours as the CAD.</li></ul>
+<p><strong>Safety:</strong></p>
+<ul><li>Soldering only in the Jacobs Electronics Lab.</li></ul>
 </section>
 <section class="md-sec" id="build-stage-10">
-<h2 class="md-h2">Stage 10. Feet and corner caps</h2>
-<figure class="md-clip" id="build-clip-10"><video src="assets/animation/build/stage-10.mp4" data-poster="assets/animation/build/stage-10.png" controls muted playsinline preload="none" aria-label="Stage 10 build clip"></video><figcaption><span class="ds-source">Stage 10 clip · assets/animation/build/stage-10.mp4 · same CAD as the collision check</span></figcaption></figure>
-<p class="md-meta">Time: 4 × 55 min shoe prints, 1 h bench, 24 h cure; cartridges most of a day.<br>Parts: shoes <code>GER-001</code>, pistons <code>GER-002</code>, cartridges (W01 offcuts), D05 neoprene, D07 brass cutter, TPU caps <code>GER-007</code>.<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/landing/BUILD.md" target="_blank" rel="noopener"><code>subsystems/landing/BUILD.md</code></a>.</p>
-<ol><li>Print the D-76 foot (59.1 g <code>EST</code>, landing allocation 60 g, D-78) on the D-75 tip. Weigh the first shoe and report it to A3 before printing the other three.</li><li>Print pistons in orange (upper) and blue (lower); weigh each.</li><li>Cartridge sticks: cut and pre-crush with a fence and crush block. Done at home in the winter closure (<code>FC1</code>, 6 h, CDR-20), so here they are only checked and fitted.</li><li>Dry-fit, then bond the shoes; fit inserts by colour; push on the corner caps.</li></ol>
-<p>☐ Inspect before moving on: four feet and two caps weighed and reported to A3; pads level.</p>
-<figure class="md-fig"><a class="md-img" href="assets/renders/detail-foot.png" data-lightbox="assets/renders/detail-foot.png" data-caption="Landing foot"><img data-src="assets/renders/detail-foot.png" alt="Landing foot"></a><figcaption>Landing foot</figcaption></figure>
+<h2 class="md-h2">Stage 10: Pack, XT60, strap, phase leads, bay cover</h2>
+<figure class="md-clip" id="build-clip-10"><video src="assets/animation/build/a-stage-10.mp4" data-poster="assets/animation/build/a-stage-10.webp" controls muted playsinline preload="none" aria-label="Stage 10 build clip"></video><figcaption><span class="ds-source">Stage 10 clip · assets/animation/build/a-stage-10.mp4 · same CAD as the collision check</span></figcaption></figure>
+<p class="md-meta">Film clip: <code>assets/animation/build/a-stage-10.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 10). Steps E3c, E4, E4a, E4b, E5, E6, E7. Hands-on time EST 3 h 55 min.</p>
+<h3 class="md-h3">E3c. Anti-slip pad</h3>
+<p><em>Step 39 of 45. Plan caption: Anti-slip pad stuck on the tray floor</em></p>
+<p><strong>Do this:</strong> Stick the 100 x 30 x 1 mm silicone pad on the tray floor.</p>
+<p><strong>Time (EST):</strong> 5 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>PWR-003</code> x1</td><td>Anti-slip pad 100 x 30 x 1.0 mm silicone rubber sheet on the tray floor</td><td>bought</td><td>W09 Amazon</td><td>3.5</td></tr></tbody></table></div>
+<p>Mass placed by this step 3.5 g; running total of placed parts 923.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>Silicone rubber sheet 1 mm (BOM W09, EST)</li></ul>
+<p><strong>Tools:</strong> knife, scissors.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Cut 100 x 30 mm from the 1 mm sheet.</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Stick on the tray floor (10 mm from above).</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, -1) for 10 mm.</li></ul>
+<h3 class="md-h3">E4. Flight pack in the tray</h3>
+<p><em>Step 40 of 45. Plan caption: Pack into the tray</em></p>
+<p><strong>Do this:</strong> Lay the Tattu 2300 4S pack in the tray against the lip; the strap goes on next.</p>
+<p><strong>Time (EST):</strong> 10 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>PWR-001</code> x1</td><td>Pack Tattu 2300 mAh 4S 75C</td><td>bought</td><td>W01 RMRC</td><td>270.0</td></tr></tbody></table></div>
+<p>Mass placed by this step 270.0 g; running total of placed parts 1193.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>Tattu 2300 4S (BOM W01)</li></ul>
+<p><strong>Tools:</strong> 0.1 g scale, TBS LiPo bag.</p>
+<p><strong>Fit it:</strong></p>
+<ul><li>Lay the pack on the anti-slip pad, between the tray lips (30 mm from above). The strap (E5) holds it. Fore-aft trim (6 mm forward to 10 mm aft) is set later at the CG check.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, -1) for 30 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Pack not swollen, no damage; storage voltage 3.8 V per cell (EST).</li></ul>
+<p><strong>Safety:</strong></p>
+<ul><li>Pack stays unplugged.</li></ul>
+<h3 class="md-h3">E4a. XT60 female</h3>
+<p><em>Step 41 of 45. Plan caption: XT60 female with its tail mated to the pack lead XT60 male</em></p>
+<p><strong>Do this:</strong> Plug the XT60 female with its tail onto the pack lead XT60 male; tape it on the skin.</p>
+<p><strong>Time (EST):</strong> 20 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>HRN-002</code> x1</td><td>XT60 female + 14 AWG tail to the ESC</td><td>bought</td><td>W05 RMRC</td><td>8.0</td></tr></tbody></table></div>
+<p>Mass placed by this step 8.0 g; running total of placed parts 1201.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>XT60, 14 AWG wire (BOM W05)</li></ul>
+<p><strong>Tools:</strong> soldering (tail to ESC after), heat-shrink.</p>
+<p><strong>Fit it:</strong></p>
+<ul><li>Plug the XT60 female on the pack lead XT60 male from aft (15 mm); the XT60 pair stays outboard of the pack end (y 55.75-71.25 mm) so you can unplug it in the field; foam-tape it to the skin and tie it (CAD edge E-HRN-21). The tail is soldered to the ESC pads in E6.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (-1, 0, 0) for 15 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Check polarity with a multimeter: pack + to ESC BAT +.</li></ul>
+<h3 class="md-h3">E4b. Pack leads and balance lead</h3>
+<p><em>Step 42 of 45. Plan caption: LAY: mate the pack XT60 male to the XT60 female (E4a) (done in E4a); the vendor pack power leads (E-HRN-13) and balance lead (E-HRN-14) come on the pack and are taped to the skin along their route, the balance plug on the pack top</em></p>
+<p><strong>Do this:</strong> Tape the pack power leads and the balance lead along the skin; balance plug on the pack top.</p>
+<p><strong>Time (EST):</strong> 20 min hands-on.</p>
+<p><strong>Parts:</strong> none placed (marker step: it lays wires or threads leads). Wires used: see the checks below and <code>review/QP-5/HARNESS-ENCLOSED.md</code>.</p>
+<p><strong>Tools:</strong> tape.</p>
+<p><strong>Fit it:</strong></p>
+<ul><li>Vendor leads taped to the skin along their route.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ No tension on the connectors.</li></ul>
+<h3 class="md-h3">E5. Pack strap</h3>
+<p><em>Step 43 of 45. Plan caption: Pack strap threaded under the bridge tube and closed over the pack</em></p>
+<p><strong>Do this:</strong> Thread the strap under the bridge tube and close it over the pack.</p>
+<p><strong>Time (EST):</strong> 10 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>PWR-002</code> x1</td><td>Pack strap 20 x 300 mm with buckle</td><td>bought</td><td>W08 RMRC</td><td>5.5</td></tr></tbody></table></div>
+<p>Mass placed by this step 5.5 g; running total of placed parts 1207.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>Tools:</strong> none.</p>
+<p><strong>Fit it:</strong></p>
+<ul><li>Thread the 20 x 300 mm strap by hand: over the pack top, outside the tray end walls, under the tray plate and under the 12 mm bridge tube (CAD edge E-PWR: buckle strap). Buckle it over the pack. The CAD thickness 1.6 mm is EST.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Strap tight: pack does not move.</li></ul>
+<h3 class="md-h3">E6. Solder phase leads and battery tail</h3>
+<p><em>Step 44 of 45. Plan caption: LAY: solder the battery tail to the ESC BAT pads and the 4 x 3 phase leads (free ends from B0 / B2c: out of the foam ditch, up to z 16, over the plate beside the FC, up to z 28 under the cover roof) to the ESC motor pads; heat-shrink</em></p>
+<p><strong>Do this:</strong> Solder the battery tail to the ESC BAT pads and the 12 phase leads to the motor pads; heat-shrink.</p>
+<p><strong>Time (EST):</strong> 2 h 30 min hands-on.</p>
+<p><strong>Parts:</strong> none placed (marker step: it lays wires or threads leads). Wires used: see the checks below and <code>review/QP-5/HARNESS-ENCLOSED.md</code>.</p>
+<p><strong>Tools:</strong> soldering station (Jacobs EL), heat-shrink, multimeter.</p>
+<p><strong>Fit it:</strong></p>
+<ul><li>LAY: battery tail to the ESC BAT pads and the 12 phase leads (free ends from B0 / B2c) to the ESC motor pads; heat-shrink.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Continuity each phase to the winding; no short.</li><li>☐ First power-up: props OFF, pack plugged for the first time.</li></ul>
+<p><strong>Safety:</strong></p>
+<ul><li>Pack stays unplugged until every joint is checked.</li></ul>
+<h3 class="md-h3">E7. Bay cover</h3>
+<p><em>Step 45 of 45. Plan caption: Bay cover lowered over the FC stack and ESC onto the plate</em></p>
+<p><strong>Do this:</strong> Print the bay cover; lower it over the FC stack and ESC; foam tape and two ties.</p>
+<p><strong>Time (EST):</strong> 20 min hands-on.</p>
+<p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>AVN-008</code> x1</td><td>Bay cover</td><td>made</td><td>R03 Prusa</td><td>9.6</td></tr></tbody></table></div>
+<p>Mass placed by this step 9.6 g; running total of placed parts 1216.8 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p><strong>You need:</strong></p>
+<ul><li>PETG (R03). Print file: AVN-008.stl (export pending)</li></ul>
+<p><strong>Tools:</strong> printer, foam tape, ties.</p>
+<p><strong>Make it:</strong></p>
+<ul><li>Print AVN-008: 0.6 mm hood, x 22.5-126.5 mm, |y| &lt;= 26.5 mm.</li></ul>
+<p><strong>Fit it:</strong></p>
+<ul><li>Lower the cover (40 mm) onto the plate; leads drop into the notches; tape and tie.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, -1) for 40 mm.</li></ul>
+<p><strong>Checkpoint (do not go on until it passes):</strong></p>
+<ul><li>☐ Final weigh-in: gate 1.47 kg (D-190); CG 19-26 mm aft of the LE.</li></ul>
 </section>
-<section class="md-sec" id="build-stage-11">
-<h2 class="md-h2">Stage 11. Checks: weight, CG, controls, thrust stand</h2>
-<figure class="md-clip" id="build-clip-11"><video src="assets/animation/build/stage-11.mp4" data-poster="assets/animation/build/stage-11.png" controls muted playsinline preload="none" aria-label="Stage 11 build clip"></video><figcaption><span class="ds-source">Stage 11 clip · assets/animation/build/stage-11.mp4 · same CAD as the collision check</span></figcaption></figure>
-<p class="md-meta">Time: about 2 days (GT-06, 07, 12, 13, 14, 18).<br>Parts: G04 watt meter, G06/G12 thrust stand, CG jig.<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/H1/GROUND-TEST-PLAN.md" target="_blank" rel="noopener"><code>team/H1/GROUND-TEST-PLAN.md</code></a>, <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/flight-software/K09L.param" target="_blank" rel="noopener"><code>subsystems/flight-software/K09L.param</code></a>.</p>
-<ol><li>Weigh the complete aircraft with each pack.</li><li><strong>CG on the jig with each pack and its own spacer kit</strong> (<code>T-A3-CG-BALANCE</code>, marks at 46.6 and 51.4 mm). Mass and CG on paper (D-95…D-98, D-132; <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/MASS-CG.md" target="_blank" rel="noopener"><code>MASS-CG.md</code></a>): predicted CG 50.5 mm with the 551 g pack at its D-98 station, aft margin 0.7–0.9 mm; predicted mass 2 528 g, gate margin 72 g against the 64 g overrun line with the 31 g structures contingency booked; pack pass line ≤ 558 g. If the aircraft balances aft of 51.4 mm, <strong>do not fly it</strong>. First fixed-wing flights fly further forward with ≤ 30 g nose ballast (decision B9) once B3 re-issues the forward limit (CDR-14); until then 46.6 mm is the forward mark. Report the measured CG to A3 and B3.</li><li>Control directions: with props off, check each elevon moves the right way for roll and pitch in FBWA, and what the surfaces do in QHOVER (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/SERVOS-CONTROLS.md#findings" target="_blank" rel="noopener">SC-06</a>). Motor order and direction from <code>MOTOR_TEST</code>.</li><li>Thrust stand on each station (<code>T-E1-STAND</code>): thrust and current in band, ten punch-outs, then re-check every witness mark.</li><li>Stand run-up through the full rpm range; film the elevon TEs in slow motion for buzz (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/SERVOS-CONTROLS.md#findings" target="_blank" rel="noopener">SC-11</a>); compassmot; current-sense calibration with motors running.</li></ol>
-<p>☐ Inspect before moving on: CG inside the marks with every pack; all four stations in band; no witness mark moved.</p>
+<section class="md-sec" id="build-14-after-the-last-step">
+<h2 class="md-h2">14. After the last step</h2>
+<ol><li><strong>Weigh-in.</strong> Weigh the aircraft with the pack. The gate is <strong>1.47 kg</strong> (<code>MASS-GATE.md</code> s8, D-190); the CAD basic mass is 1261.2 g (placed parts 1216.8 g plus the harness lump 18.4 g and the hardware lump 26.1 g) and the design target is 1.46 kg predicted including growth and overrun (<code>params-A.json</code>). If the weight is above the gate the aircraft does not fly until the C3 window check is re-run at the as-weighed mass (<code>MASS-GATE.md</code> s6).</li><li><strong>CG.</strong> Balance the aircraft on a knife edge in the cruise attitude: the band is <strong>19-26 mm aft of the wing leading edge</strong>, hard aft limit 28.5 mm, lateral within 5 mm (<code>params-A.json</code>, A-P4). Move the pack in the tray slots (6 mm forward, 10 mm aft of nominal, about 2.2 mm of CG per 10 mm, <code>common.py</code> <code>TRIM</code>): no ballast first.</li><li><strong>Controls.</strong> Each elevon +-20 deg (servo limit), stops at +-21 deg; both surfaces move the right way for the stick (EST: check with the TX, props off).</li><li><strong>Power-up, props OFF.</strong> First power-up with the props removed. Check each motor direction: UR and LL clockwise, UL and LR counter-clockwise, seen from the thrust side (BOM P02, MR and MRP); if one is wrong swap two phase leads (EST). Then fit the props, props-on tests only on the thrust stand (<code>bench_analysis.py</code>, <code>SCHEDULE-A.md</code> B3).</li><li><strong>Tap test.</strong> Tap each arm: first arm mode 32-50 Hz, four arms within 8 % of each other (<code>ARMS.md</code> s5). Below 32 Hz stop: the socket or the bond is soft.</li><li><strong>Flight card and range check.</strong> Not covered by this guide (<code>team/H3/FLIGHT-CARD.md</code> is the K09-L card: <code>-</code> for concept A).</li></ol>
 </section>
-<section class="md-sec" id="build-stage-12">
-<h2 class="md-h2">Stage 12. First hover</h2>
-<p>Time: half a day per session. Target: build week 5 (week 4 stretch).<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/H1/GROUND-TEST-PLAN.md" target="_blank" rel="noopener"><code>team/H1/GROUND-TEST-PLAN.md</code></a>, <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/pod/BUILD.md" target="_blank" rel="noopener"><code>subsystems/pod/BUILD.md</code></a> field card.</p>
-<ol><li>Wind under 5 m/s, morning. LiPo bag and sand at the field. Aircraft lying flat on the cradle for the pack swap.</li><li>Arming sequence (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/WIRING-BATTERY.md#findings" target="_blank" rel="noopener">WB-04</a>, replaces &quot;plug in after the RC link is up&quot;): transmitter on, model selected, throttle down, then plug in; hatch open until pre-arm passes; close it ≤ 2 min before take-off; arm only from the RC switch; e-stop (<code>RC9_OPTION 31</code>) checked.</li><li>Hanging yaw test, then a tethered hover. Log VIBE, FFT (watch 70–90 Hz), FC temperature and servo current.</li><li>After landing: disarm, pull the plug from behind the pod, check witness marks, feet and hinges.</li><li>After any tip-over: spin each motor by hand (bent shaft = wobble), check cheeks for cracks, replace props.</li></ol>
-<p>☐ Inspect before moving on: VIBE &lt; 30 m/s², no clipping; compassmot ≤ 30 %; no structural damage.</p>
-<figure class="md-fig"><a class="md-img" href="assets/renders/hover-pose.png" data-lightbox="assets/renders/hover-pose.png" data-caption="Hover pose"><img data-src="assets/renders/hover-pose.png" alt="Hover pose"></a><figcaption>Hover pose</figcaption></figure>
-</section>
-<section class="md-sec" id="build-week-by-week-plan">
-<h2 class="md-h2">Week-by-week plan</h2>
-<p>From <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/I2/SCHEDULE.md" target="_blank" rel="noopener">I2 schedule</a> I2-R2 (CDR-20: cores from 10 Jan in the team workspace, 13 h of bench work before first cut). Build week 1 = 19 Jan 2027. <strong>Needs two people in town from 10 Jan, the workspace named by 30 Nov and the <code>FIN-004</code> blocks printed by 9 Jan</strong>; without them the I2-R1 plan (hover 22–24 Feb, week 5) applies.</p>
-<div class="scroll fit"><table class="ds-table"><thead><tr><th>When</th><th>Work</th><th>Gate at the end</th></tr></thead><tbody><tr><td>11 Nov – 18 Dec (shop open)</td><td>All trainings; shop exporter; templates; hot-wire bow; 2 practice cores; jigs and gauges; coupons and fin test article; thrust stand, lever frame, CG jig</td><td>Design freeze 18 Dec (CG fix, fin tip, collar, pins, mount material); traveler issued</td></tr><tr><td>19 Dec – 18 Jan (Jacobs closed)</td><td>Home printing: <strong>blocks first (by 9 Jan)</strong>, collars, pod prints, feet, pistons; foot cartridges cut. Harness cut and labelled; ESCs and FC flashed, bench calibration; SITL hours. <strong>From 10 Jan in the team workspace: cut cores, slot and pockets, spar plugs, spar and blocks in the jig and bonded.</strong> <strong>No soldering: the Electronics Lab is the only iron, so bus board, AS150U and ESC leads are soldered there before 18 Dec or from 19 Jan</strong> (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/I2/SCHEDULE.md" target="_blank" rel="noopener">I2 schedule</a>)</td><td>All prints on the shelf; electrical sub-assemblies cut, labelled and ready to solder</td></tr><tr><td>Week 1 (19–25 Jan)</td><td>Elevons free; motor tubes; fin laminates (spray booth); half-fin roots and fillets; harness soldering in the lab; pod box</td><td>Tubes vertical and parallel</td></tr><tr><td>Week 2 (26 Jan – 1 Feb)</td><td>Collars, then strips, pins, braces, ESC pads; pod into the recess; harness route and <code>T-F2-CONT</code></td><td>Fin stations complete</td></tr><tr><td>Week 3 (2–8 Feb)</td><td>Skin; servos and linkage; mounts and motors; avionics on the aircraft; feet; checks begin (7 Feb)</td><td>Airframe complete; slip and throws checked</td></tr><tr><td><strong>Week 4 (9–15 Feb)</strong></td><td>Weigh, CG, stand run-up, range check (to 11 Feb); <strong>first tethered hover 12–14 Feb</strong></td><td>Hover log, VIBE, compassmot</td></tr><tr><td>Week 5 (16–22 Feb)</td><td>Free hover; transport box</td><td>—</td></tr><tr><td>Weeks 6–7</td><td>Free hover tuning; fixed-wing tune; first transition late week 7 at the earliest</td><td>Transition attempt</td></tr><tr><td>Weeks 8–9</td><td>Transition round trips; crash-repair loop budgeted</td><td>One clean round trip</td></tr><tr><td>Weeks 10–14 (to 30 Apr)</td><td>Mission demonstrations, second repair, documentation</td><td>Complete by 30 Apr</td></tr></tbody></table></div>
+<section class="md-sec" id="build-15-time-summary-running-mass-open-items">
+<h2 class="md-h2">15. Time summary, running mass, open items</h2>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>Stage</th><th>Title</th><th>Steps</th><th>Hands-on EST</th></tr></thead><tbody><tr><td>1</td><td>Wing core and spar</td><td>5</td><td>12 h 10 min</td></tr><tr><td>2</td><td>Cage unit: motor leads threaded, motors, props</td><td>2</td><td>4 h 00 min</td></tr><tr><td>3</td><td>Rib saddles, phase-lead raceways, pack tray, hinge dampers</td><td>6</td><td>3 h 35 min</td></tr><tr><td>4</td><td>Fin ribs and rib fairings</td><td>2</td><td>1 h 25 min</td></tr><tr><td>5</td><td>Elevons, balance strips, lens caps</td><td>3</td><td>2 h 30 min</td></tr><tr><td>6</td><td>Fins: fairings, root blocks, tubes</td><td>4</td><td>2 h 30 min</td></tr><tr><td>7</td><td>Landing feet</td><td>3</td><td>1 h 00 min</td></tr><tr><td>8</td><td>Servos, pushrods, horns, lead threading</td><td>8</td><td>2 h 55 min</td></tr><tr><td>9</td><td>Avionics: pitot, plate, ESC, FC, leads</td><td>5</td><td>3 h 40 min</td></tr><tr><td>10</td><td>Pack, XT60, strap, phase leads, bay cover</td><td>7</td><td>3 h 55 min</td></tr><tr><td></td><td><strong>Total</strong></td><td><strong>45</strong></td><td><strong>37 h 40 min</strong></td></tr></tbody></table></div>
+<p>The steps total <strong>37.7 h</strong> hands-on (<code>EST</code>; machine time for printing and the 24 h cures are not counted). <code>SCHEDULE-A.md</code> plans 53 h of build (range 41-66 h), including 10 h of checks and a 2 h range check (<code>EST</code>, K09-L 82 h x 0.65). This guide steps 37.7 h plus those 12 h is 49.7 h, inside that range.</p>
+<p><strong>Mass check at the end:</strong> the CAD basic mass is 1261.24 g (<code>a_model.py</code>); the pack is 270 g of that.</p>
+<h3 class="md-h3">Open items (not in the repo, or in conflict)</h3>
+<ul><li><strong>Hot-wire cutter and power supply:</strong> no BOM-A line and not a Jacobs tool (SCHEDULE-A B1 says &quot;workspace W&quot;; the K09-L BOM bought the gear). Needed for stage 1 and for C3/C4 fairings.</li><li><strong>STL files, print orientation and slicer settings for every printed part:</strong> not in the repo for concept A (only K09-L G3 PRINT-LIST). The guide gives the CAD wall thicknesses and an <code>EST</code> orientation; export the STLs from <code>a_model.py</code>.</li><li><strong>S5010 hot-wire templates:</strong> not generated for concept A (<code>redesign/manufacturing/hotwire.py</code> is K09-L). The airfoil file is <code>redesign/subsystems/wing/s5010.dat</code>.</li><li><strong>Fin rib length (resolved, D-200):</strong> the CAD draws 215.5 mm (x 70.5-286.0 mm); the part mass (now 14.1 g) and BOM R09 (2 x 0.2155 m) follow the drawing.</li><li><strong>Motor screws M2.5x8:</strong> named in ARMS.md, but no BOM line; check whether the T-Motor box includes them. Prop adapters and spinner nuts: BOM P01 note says confirm they ship in the motor box.</li><li><strong>Motor direction change:</strong> the ESC configuration steps (BLHeli_S, DShot) are not written for concept A; swapping two phase leads reverses a brushless motor (EST).</li><li><strong>Pitot tube route:</strong> the silicone tube from the probe (right) to the sensor board (left, 0.45 m away) is not designed in the CAD (HARNESS-ENCLOSED D-199.2).</li><li><strong>Pad flange bond:</strong> the tray bond width fell from 80 to 59 mm (D-199); no coupon has been run (HARNESS-ENCLOSED D-199.5).</li><li><strong>Hub socket coupon pull test:</strong> still open (ARMS s5, s7): do not fly before it is run.</li><li><strong>Epoxy brand and pot life:</strong> BOM R05 epoxy is <code>EST</code> (bought locally). Cure times are K09-L practice, read the label.</li><li><strong>Servo centre pulse, screw torques, shrink-tube sizes, solder temperature:</strong> not in the repo; <code>EST</code> or &quot;per vendor sheet&quot;.</li><li><strong>EVA/PE foot-pad foam:</strong> no BOM line (R03 text names &quot;foot pads&quot;); the pad size is the CAD 12 x 15 x 30 mm.</li><li><strong>Flight card for concept A:</strong> not written (the K09-L card is <code>team/H3/FLIGHT-CARD.md</code>).</li></ul>
+<p>Source files: <code>cad/a_assembly_plan.py</code> (motions, checked by <code>cad/a_assembly.py</code>, <code>cad/out/ASSEMBLY.md</code>), <code>cad/a_build_steps.py</code> (this text), <code>BOM-A.csv</code>, <code>MASS-GATE.md</code>, <code>SCHEDULE-A.md</code>, <code>params-A.json</code>, <code>review/QP-5/ARMS.md</code>, <code>review/QP-5/HARNESS-ENCLOSED.md</code>, <code>review/QP-4/FIXES2.md</code>, <code>BUILD-GUIDE.md</code> (K09-L, process practice only). GitHub: https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/BUILD-GUIDE-A.md</p>
 </section>
 </article></div>
 <!-- build-guide:end -->
@@ -1635,7 +2291,7 @@ python -I redesign/proofs/build_graph.py --strict</pre>
 .bom-bar i{height:10px;border-radius:2px;background:linear-gradient(90deg,var(--accent) var(--v),var(--panel-3) var(--v))}.bom-bar b{font-family:var(--font-mono);font-weight:500;text-align:right}
 #bom-table tr.gated td{color:var(--fg-3)}#bom-table .pid{display:block;font-family:var(--font-mono);font-size:12px;color:var(--fg-3)}#bom-table td.id{font-family:var(--font-mono);font-size:var(--text-xs)}
 </style>
-<script type="module" src="site.js?v=20261116e"></script>
+<script type="module" src="site.js?v=20261116f"></script>
 <script>(function(){var q=document.getElementById('bom-q'),g=document.getElementById('bom-g'),w=document.getElementById('bom-w'),c=document.getElementById('bom-count');if(!q)return;var rows=[].slice.call(document.querySelectorAll('#bom-table tbody tr'));function f(){var s=q.value.trim().toLowerCase(),n=0;rows.forEach(function(r){var ok=(!g.value||r.dataset.group===g.value)&&(!w.value||r.dataset.wave===w.value)&&(!s||r.textContent.toLowerCase().indexOf(s)>=0);r.hidden=!ok;if(ok)n++;});c.textContent=n+' of '+rows.length;}[q,g,w].forEach(function(e){e.addEventListener('input',f);});f();})();</script>
 
 
