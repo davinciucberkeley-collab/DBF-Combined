@@ -99,6 +99,7 @@ ONE_SIDE = ('D1', 'D2', 'D2a', 'D3', 'D4', 'D5', 'C7', 'C8', 'C9', 'C1', 'C1a', 
 MIN_HALF_STEP = {'D1': 0.10, 'D2': 0.07, 'D2a': 0.05, 'D3': 0.07, 'D4': 0.06, 'D5': 0.05, 'D5b': 0.05, 'C7': 0.12, 'C8': 0.12, 'C9': 0.10, 'E1': 0.15, 'E2': 0.07, 'E3': 0.08,
                  'E3a': 0.06, 'E3b': 0.08, 'E3c': 0.07, 'E4': 0.09, 'E4a': 0.08, 'E4b': 0.09, 'E5': 0.09, 'E6': 0.09, 'E7': 0.08, 'D0': 0.09, 'B2a': 0.10, 'B2b': 0.10, 'B3': 0.10}
 EXTRA_PTS = {'D0': [(0.083, 0.024, 0.012), (0.14, 0.20, 0.0)]}      # marker steps: points the camera must also frame (servo pocket, slit)
+GHOST_VIEW, GHOST_DIST = (50, 34), 0.24   # x-ray steps (step data 'ghost'): close-up camera that follows the plug along the spar (azimuth, elevation; distance m)
 GHOST_B0 = ('CGE-001', 'CGE-002-', 'CGE-003-')
 GHOST_B2C = GHOST_B0 + ('HRN-003-', 'HRN-004-', 'WNG-001', 'CGE-004', 'CGE-005-', 'CGE-006', 'CGE-007-')
 FAB_ONLY = {'B1': ('PRP-',)}          # B1: during its make-it beat only the motors and props are teal (the cage parts are already shown)
@@ -422,7 +423,11 @@ def blender_render(argv):
 
     MATS = {'move': bb._principled('moving part', bb.srgb('#E0661A'), 0.45),
             'fab': bb._principled('fabricated part', bb.srgb('#13897F'), 0.45),
-            'ghost': bb._principled('ghost part', bb.srgb('#8FA6C0'), 0.5, alpha=0.20)}
+            'ghost': bb._principled('ghost part', bb.srgb('#8FA6C0'), 0.5, alpha=0.20),
+            'ghost_spar': bb._principled('ghost spar', bb.srgb('#2E4A6B'), 0.3, metal=0.2, alpha=0.38)}
+    for m_ in (MATS['ghost'], MATS['ghost_spar']):          # see-through parts must not shadow what they hide
+        if hasattr(m_, 'use_transparent_shadow'):
+            m_.use_transparent_shadow = True
     tint_state = {}
 
     def tint(pid, mode):
@@ -519,7 +524,16 @@ def blender_render(argv):
         d0 = by_id['D0']
         if d0['t_mv0'] - 0.3 <= t < d0['t_mv1'] + 0.9:
             s |= {'WNG-001'}                                       # the servo lead runs in a foam groove under the skin
+        for r_ in rows:                                            # step data 'ghost': x-ray parts from the step card to the end of the step
+            if r_['info'].get('ghost') and r_['t_cam0'] <= t < r_['t_end']:
+                s |= {p for p in r_['info']['ghost'] if p in items}
         return s
+
+    def ghost_window(t):
+        for r_ in rows:
+            if r_['info'].get('ghost') and r_['t_cam0'] <= t < r_['t_end']:
+                return r_
+        return None
 
     def world_center(ob):
         cs = [ob.matrix_world @ Vector(c) for c in ob.bound_box]
@@ -546,7 +560,11 @@ def blender_render(argv):
 
     def part_mode(p, r, t, ghosts):
         if p in ghosts:
-            return 'ghost'
+            return 'ghost_spar' if p.startswith('WNG-002') else 'ghost'
+        gw = ghost_window(t)
+        if gw and r['info'].get('ghost'):                   # inside an x-ray window: the plug being fitted is orange, the ones already bonded teal
+            if t >= r['t_mv0']:
+                return 'move' if r is gw else 'fab'
         if t >= r['t_mv0']:
             return 'move' if t < r['t_tint1'] else None
         if p in preshown:                                   # B0 make-it beat: the cage parts are teal, then plain
@@ -614,6 +632,18 @@ def blender_render(argv):
         k = smooth((t - cur['t_cam0']) / cur['cam_dur'])
         cam_c = (p0[0] * (1 - k) + p1[0] * k, p0[1] * (1 - k) + p1[1] * k, p0[2] * (1 - k) + p1[2] * k,
                  p0[3] * (1 - k) + p1[3] * k)
+        if cur['info'].get('ghost'):                               # x-ray step: a close-up that follows the plug(s) along the spar
+            w = smooth((t - cur['t_cam0']) / 1.0) * (1.0 - smooth((t - (cur['t_mv1'] + 1.0)) / 1.5))
+            pl = [world_center(items[p]) for p in cur['parts'] if p in items and not items[p].hide_render]
+            if w > 1e-4 and pl:
+                pc = sum(pl, Vector()) / len(pl)
+                spread = max([(q - pc).length for q in pl] + [0.0])
+                az_f, el_f = GHOST_VIEW
+                _, v_f, _ = cam_view((pc, az_f, el_f, 1.0))
+                up_f = v_f.cross(Vector((0, 0, 1))).cross(v_f).normalized()
+                d_f = GHOST_DIST + 2.0 * spread
+                pc = pc - up_f * (0.045 * 2 * d_f * TAN_V)         # subject in the free band between header and card
+                cam_c = (cam_c[0] * (1 - w) + pc * w, cam_c[1] * (1 - w) + az_f * w, cam_c[2] * (1 - w) + el_f * w, cam_c[3] * (1 - w) + d_f * w)
         if cur['id'] in cams_chk and t >= cur['t_chk0']:
             kk = smooth((t - cur['t_chk0']) / T_CHK_CAM)
             q = cams_chk[cur['id']]

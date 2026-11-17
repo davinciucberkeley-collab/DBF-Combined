@@ -21,6 +21,8 @@ Per step:
   fab                  film make-it beat: dict(kind='tube'|'print'|'core'|'cut'|'lead'|'make'|'fit'|'thread'|'solder', pid, text, dims=[(part id, label)], orient='print orientation')
                        (kind 'thread' / 'solder' is not a separate beat: its text is the banner during the marker step's motion)
   chip                 optional banner dict(kind='thread', text) for the motion phase of a marker step that also has a make-it beat (B0)
+  ghost                part ids the film draws see-through (x-ray) from the step card to the end of the step, so that a part hidden inside them
+                       (a plug inside the spar) is visible; the moving / fitted parts of the step stay opaque. Restored after the step.
   callouts             film labels with leader lines: (target, label) with target = part id, wire edge id or ('pt', (x, y, z) in m, CAD frame)
   hold                 True = the film shows a checkpoint card after the step; cp = the card text (list of short lines)
 """
@@ -51,6 +53,7 @@ def step(**kw):
     kw.setdefault('safety', [])
     kw.setdefault('fab', None)
     kw.setdefault('callouts', [])
+    kw.setdefault('ghost', [])
     kw.setdefault('hold', False)
     kw.setdefault('cp', [])
     S.append(kw)
@@ -110,7 +113,8 @@ step(id='A3', title='Centre plug in the spar',
      fit=['Put a drop of epoxy on the plug, push it up the bore on a dowel marked at the depth. The plug sits under the bridge-saddle clamp (stage 2); it stops the tube from crushing when the clamp is bonded.'],
      checks=['Mark the dowel so the plug centre is y 0 (the wing centre); check with the rule through the root slot.'],
      fab=dict(kind='print', pid='WNG-003-C', orient='tube standing on its end, axis up (EST)', text='PRINT  PETG 0.2 mm  WNG-003-C.stl  (export pending)'),
-     callouts=[('WNG-003-C', 'Plug 9.8 x 20 mm, PETG, 1.2 g, centre y 0')])
+     ghost=['WNG-001', 'WNG-002'],
+     callouts=[('WNG-003-C', 'Plug inside the spar: 9.8 x 20 mm PETG, 1.2 g, centre y 0')])
 
 step(id='A4', title='Right plugs in the spar',
      line='Push the two right plugs up the bore to y +300 (strut clamp) and y +380 (rib saddle); bond them.',
@@ -122,7 +126,8 @@ step(id='A4', title='Right plugs in the spar',
      fit=['From the right tip, push each plug on the dowel to its mark: WNG-004-R at y 300 mm (under the right strut clamp), WNG-005-R at y 380 mm (under the right rib saddle). Epoxy, wipe the bore wall.'],
      checks=['Measure each depth from the spar end: the right tip is y 450 mm, so the plugs are 150 mm and 70 mm in.'],
      fab=dict(kind='print', pid='WNG-004-R', orient='tube standing on its end, axis up (EST)', text='PRINT  PETG  WNG-004-R.stl, WNG-005-R.stl  (export pending)'),
-     callouts=[('WNG-004-R', 'Plug under the strut clamp, y +300'), ('WNG-005-R', 'Plug under the rib saddle, y +380')])
+     ghost=['WNG-001', 'WNG-002'],
+     callouts=[('WNG-004-R', 'Plug inside the spar, under the strut clamp: y +300'), ('WNG-005-R', 'Plug inside the spar, under the rib saddle: y +380')])
 
 step(id='A5', title='Left plugs in the spar',
      line='Push the two left plugs in from the left tip to y -300 and y -380; bond them. Let the epoxy cure.',
@@ -135,7 +140,8 @@ step(id='A5', title='Left plugs in the spar',
      checks=['Wing (core + spar + 5 plugs) CAD sum: 100.1 + 49.8 + 5 x 1.2 = 155.9 g. Weigh it; a difference over 10 g means check the tape or the epoxy amount.',
              'Lay the wing leading edge on a straight edge: no bow over 900 mm (EST 1 mm).'],
      fab=dict(kind='print', pid='WNG-004-L', orient='tube standing on its end, axis up (EST)', text='PRINT  PETG  WNG-004-L.stl, WNG-005-L.stl  (export pending)'),
-     callouts=[('WNG-004-L', 'Plug, y -300'), ('WNG-005-L', 'Plug, y -380')],
+     ghost=['WNG-001', 'WNG-002'],
+     callouts=[('WNG-004-L', 'Plug inside the spar: y -300'), ('WNG-005-L', 'Plug inside the spar: y -380')],
      hold=True, cp=['Wing = core + spar + 5 plugs: CAD 155.9 g.', 'No bow along the 900 mm span.', 'Cure the epoxy 24 h before stage 2.'])
 
 # ============================================================ STAGE 2: cage unit
