@@ -20,7 +20,7 @@ Everything else is derived by the team and written with its basis. Decisions D-1
 ## The aircraft (baseline 2026-11-15)
 
 The airframe:
-- 0.90 m flat flying wing, hot-wired FOAMULAR 150 core, tape skin, carbon spar.
+- 0.90 m flat flying wing, FOAMULAR 150 core machined on the Jacobs ShopBot CNC in two halves (D-203; hot wire as the backup), tape skin, carbon spar.
 - Two fins; four fixed T-Motor MN2212 KV780 motors with APC 9x4.5MR/MRP props in an X, canted 16°.
 - Two elevons at ±20° (ES3054HV servos on a 7.2 V rail), each with a 15.6 g lead balance strip under PETG caps,
   mechanical stops at ±21° and a silicone-fluid hinge damper (D-188).

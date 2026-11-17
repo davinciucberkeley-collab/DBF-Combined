@@ -31,8 +31,9 @@ Status `PROPOSED`, nothing built yet. Written for a team of four students at Jac
 | Job | Where | Note |
 |---|---|---|
 | 3-D printing (PETG) | Jacobs Prusa printers | The K09-L guide says the Jacobs page does not say PETG; SCHEDULE-A PR1 plans PETG at Jacobs. Confirm with the staff before the first print (open item). |
-| Templates, laser-cut ply | Jacobs laser cutter | Template files for the S5010 core are not made yet (`-`). |
-| Hot-wire foam cutting | **Not a Jacobs tool.** Team workspace W (`SCHEDULE-A.md` B1) | There is **no hot-wire cutter line in BOM-A** (the K09-L BOM bought one): open item. |
+| Foam cores and fairings (XPS) | Jacobs ShopBot CNC router (D-203) | **Assumed, not confirmed** (user, 2026-11-16): ask the staff that XPS may go on the ShopBot and book the training. CAM toolpaths not made yet (`-`). |
+| Backup: hot-wire foam cutting | Team workspace W (`SCHEDULE-A.md` B1); hot wire is not a Jacobs tool | Only if the ShopBot is refused for foam. The gear is not in BOM-A: about $62.55 (K09-L lines G11 + H05, priced 2026-11-14). |
+| Gauges and backup templates, laser-cut ply | Jacobs laser cutter | S5010 gauge / template files are not made yet (`-`). |
 | Soldering, heat-shrink, multimeter | Jacobs Electronics Lab (studio 110), in-lab only, with fume extraction | Steps E3b and E6. |
 | Epoxy, CA, assembly | Team workspace W | Cures take 24 h each (K09-L practice); see section 3. |
 
@@ -44,7 +45,8 @@ Status `PROPOSED`, nothing built yet. Written for a team of four students at Jac
 
 - LiPo: charge, store and carry the pack in the TBS LiPo bag (BOM W03); keep it in the ammo can (W04) when not in use; never charge unattended.
 - Props OFF whenever the pack is plugged in, until the flight card says otherwise. Every bench power-up with props off first.
-- Hot wire (XPS): fumes. Cut with extraction or outdoors, never leave the wire powered, lowest current that cuts cleanly (K09-L BUILD-GUIDE Safety).
+- CNC router (ShopBot): only after the Jacobs ShopBot training and with the staff rules; dust collection on, eye and ear protection, never reach in while the spindle turns. XPS dust: vacuum, mask.
+- Hot wire (backup only, D-203): XPS fumes. Cut with extraction or outdoors, never leave the wire powered, lowest current that cuts cleanly (K09-L BUILD-GUIDE Safety).
 - Epoxy and CA: nitrile gloves, ventilation. No solvent glue and no ordinary CA on XPS (it melts the foam): epoxy or foam-safe CA only, test a drop on an offcut.
 - Carbon dust: sand cut ends wet or with a mask and a vacuum; carbon dust is conductive, keep it off the electronics.
 - Soldering only in the Jacobs Electronics Lab (studio 110) with extraction (SCHEDULE-A); heat-shrink with the lab heat gun.
@@ -112,7 +114,7 @@ Film clip: `assets/animation/build/a-stage-01.mp4` (Explorer, "How it's built", 
 
 *Step 1 of 45. Plan caption: Wing core on the bench*
 
-**Do this:** Hot-wire the S5010 core (245 x 900 mm), cut every pocket and groove, tape both skins.
+**Do this:** Machine the S5010 core (245 x 900 mm) on the Jacobs ShopBot CNC router in two halves split at the spar bore, with every pocket and groove; bond the halves; tape both skins.
 
 **Time (EST):** 10 h 00 min hands-on.
 
@@ -126,17 +128,19 @@ Mass placed by this step 100.1 g; running total of placed parts 100.1 g (CAD; th
 
 **You need:**
 
-- XPS foam block (BOM R01); packing tape for the skin (R01 line, "tape, glue"); template material: 3 mm ply or MDF from the Jacobs laser cutter (EST)
-- Hot-wire cutter and power supply: NOT in BOM-A and not a Jacobs tool (SCHEDULE-A B1: workspace W). Flagged, see Open items.
+- XPS foam (BOM R01): two slabs at least 960 x 280 x 15 mm (EST: each half is about 12 mm thick plus a skim cut); packing tape for the skin (R01 line, "tape, glue"); foam-safe epoxy for the split line (R05); gauge material: 3 mm ply from the Jacobs laser cutter (EST)
+- ShopBot time at Jacobs: ASSUMED available for foam (user, 2026-11-16, D-203), not yet confirmed with the staff; book the ShopBot training. CAM toolpaths for concept A are not generated yet: `-` (open item).
+- Backup (D-203): if Jacobs does not allow foam on the ShopBot, hot-wire the core at workspace W from two laser-cut S5010 templates instead; the gear is not in BOM-A (K09-L lines G11 supply + Ni80 wire $46.01 and H05 bow + template stock $16.54, priced 2026-11-14 in `review/CLOSURE-ROUND-2026-11-14/COST-TRADE.md`): buy it only if the ShopBot is refused.
 - Calipers, steel rule, 0.1 g scale (BOM G02)
 
-**Tools:** hot-wire cutter, S5010 templates (laser), router/knife, 48 mm tape.
+**Tools:** Jacobs ShopBot PRSalpha CNC router, 1/2 in ball-nose and 1/4 in flat end mills (EST), 6 mm registration pins, S5010 gauge (laser), knife, 48 mm tape.
 
 **Make it:**
 
-- Template: the Selig S5010 coordinates are in `redesign/subsystems/wing/s5010.dat` (published, unscaled, 9.82 % t/c, D-193); scale to chord 0.245 m. Lower the airfoil datum 5.0 mm (D-194) so the 12 mm spar bore sits at mid-thickness: foam above / below the bore 6.3 / 5.6 mm. Cut two templates (root, tip: one section, so the same template both ends) on the Jacobs laser cutter. The template file is not generated for concept A: `-`.
-- Practice first: hot-wire one scrap core (EST 1 h) to find the wire current and feed speed. Cut the blank 900 mm span x 245 mm chord in one pass per surface; sand the leading edge until no ridge can be felt.
-- The core ends at the elevon hinge line: the cove foot is at x 179.25 mm, the hinge at x 183.75 mm (CAD `cove_x`, `XH`), so the elevon (stage 5) is the 61.25 mm aft strip, cut from the same blank in the same pass (EST).
+- Section: the Selig S5010 coordinates are in `redesign/subsystems/wing/s5010.dat` (published, unscaled, 9.82 % t/c, D-193); scale to chord 0.245 m. Lower the airfoil datum 5.0 mm (D-194) so the 12 mm spar bore sits at mid-thickness: foam above / below the bore 6.3 / 5.6 mm. The split plane is z 0 (the bore axis), so each half is machined from a flat slab. CAM toolpaths are not generated for concept A: `-`.
+- Each half, side 1 (the flat split face): a 12.7 mm (1/2 in) ball-nose groove 6.35 mm deep along y at x 60 mm, which gives the 12 mm spar 0.35 mm of epoxy clearance (EST). Side 2, after flipping the slab about the two registration pins: the airfoil surface (ball-nose finishing, stepover EST 1 mm so the scallops sand out) and the pockets and slots that open to that skin; hold the part on 2-3 mm tabs at the tips (EST). Cut a scrap half first (EST 1 h) to set feed and speed for XPS.
+- Bond the halves: lay a 12 mm alignment rod wrapped in packing tape (release) in the lower groove, foam-safe epoxy thin on the split faces, close the upper half on the rod and weight it flat on the bench; pull the rod once cured. The bore is then the one the spar slides into in A2. Glue on the split line is lumped in WNG-001 (EST).
+- The core ends at the elevon hinge line: the cove foot is at x 179.25 mm, the hinge at x 183.75 mm (CAD `cove_x`, `XH`), so the elevon (stage 5) is the 61.25 mm aft strip, machined in the same job and cut free along the cove line with a knife (EST).
 - Shop cuts (mark from the CAD; every dimension is in `cad/amodel/wing.py` `build_wing`): spar bore 12 mm along y at x 60 mm, z 0 (the 12 mm tube is bonded in this bore); bridge slot open below x 0-56 mm, |y| <= 6.5 mm; pack tray slot x -10 to 22.5 mm, |y| <= 57 mm, open above; saddle slot x 29.5-71 mm, |y| <= 16.5 mm, open below; strut slots (0.5 mm clear); strut clamp slots y 270.5-309.5 mm; rib saddle slots |y| 349.5-410.5 mm; servo pockets x 124.5-165.5 mm, y 177.5-222.5 mm, open to the upper skin; elevon-tip damper notches at the elevon tip; balance-strip windows y 231-339 mm; phase-lead raceway grooves x 0-22.5 mm, |y| 14-24 mm and the open ditch x 22.5-32 mm; servo-lead drop slot at x 83 mm and a 5 x 3.2 mm groove 3 mm under the upper skin (D-198).
 - Tape skin: both surfaces, the doublers and a tip-edge layer (CAD part WNG-001 lumps the foam, skin, glue and hinge tape: 100.1 g). Tape hinge and fillets are not drawn.
 
@@ -146,13 +150,13 @@ Mass placed by this step 100.1 g; running total of placed parts 100.1 g (CAD; th
 
 **Checkpoint (do not go on until it passes):**
 
-- [ ] Template gauge at three stations: thickness within 0.3 mm of the S5010 (EST tolerance); log the real trailing-edge thickness.
+- [ ] Laser-cut S5010 gauge at three stations: thickness within 0.3 mm of the S5010 (EST tolerance); log the real trailing-edge thickness and the split-line step (sand flush).
 - [ ] Dry-fit the 12 mm spar tube through the bore before taping: it must slide without force. The CAD bore equals the tube OD (12.0 mm); a real foam bore needs a small oversize for the epoxy (EST 0.2 mm): cut a test bore in a scrap first.
 - [ ] Weigh the taped core: CAD 100.1 g (MASS-GATE wing group 191 g EST, D-185). Write the number down; every later step is compared with the CAD mass.
 
 **Safety:**
 
-- Hot wire fumes: extraction on, window open.
+- ShopBot: Jacobs training first, dust collection on, eye and ear protection; never reach in while the spindle turns.
 
 ### A2. Spar into the core
 
@@ -673,7 +677,7 @@ Mass placed by this step 0.6 g; running total of placed parts 650.5 g (CAD; the 
 
 - XPS offcut (R01); tape (R01); thin CA M5T / foam-safe only (R07) or epoxy
 
-**Tools:** hot wire or knife, sandpaper, foam-safe CA or epoxy, tape.
+**Tools:** knife and sanding block (or the ShopBot with the core job), sandpaper, foam-safe CA or epoxy, tape.
 
 **Make it:**
 
@@ -813,7 +817,7 @@ Film clip: `assets/animation/build/a-stage-06.mp4` (Explorer, "How it's built", 
 
 *Step 19 of 45. Plan caption: Fairing, right, from outboard*
 
-**Do this:** Hot-wire a 3 mm XPS fairing 360 mm long; tape it; slide it on from outboard; bond with foam-safe CA.
+**Do this:** Machine a 3 mm XPS fairing 360 mm long on the ShopBot (hot wire as the backup); tape it; slide it on from outboard; bond with foam-safe CA.
 
 **Time (EST):** 35 min hands-on.
 
@@ -829,7 +833,7 @@ Mass placed by this step 8.4 g; running total of placed parts 719.7 g (CAD; the 
 
 - XPS (R01), tape (R01), CA (R07, foam-safe only)
 
-**Tools:** hot wire, tape, sandpaper, foam-safe CA.
+**Tools:** ShopBot (face an XPS slab to 3 mm, then profile; backup: hot wire), tape, sandpaper, foam-safe CA.
 
 **Make it:**
 
@@ -1694,9 +1698,9 @@ The steps total **37.7 h** hands-on (`EST`; machine time for printing and the 24
 
 ### Open items (not in the repo, or in conflict)
 
-- **Hot-wire cutter and power supply:** no BOM-A line and not a Jacobs tool (SCHEDULE-A B1 says "workspace W"; the K09-L BOM bought the gear). Needed for stage 1 and for C3/C4 fairings.
+- **Foam on the Jacobs ShopBot (D-203):** assumed, not confirmed. Ask the staff and book the ShopBot training before the first cut (6 Jan). Write the CAM toolpaths (two core halves, fin fairings) from `s5010.dat` and `wing.py`. If foam is refused, the backup is the hot wire at workspace W: buy the K09-L G11 + H05 gear (about $62.55, re-price first), which is not in BOM-A.
 - **STL files, print orientation and slicer settings for every printed part:** not in the repo for concept A (only K09-L G3 PRINT-LIST). The guide gives the CAD wall thicknesses and an `EST` orientation; export the STLs from `a_model.py`.
-- **S5010 hot-wire templates:** not generated for concept A (`redesign/manufacturing/hotwire.py` is K09-L). The airfoil file is `redesign/subsystems/wing/s5010.dat`.
+- **S5010 gauge and backup hot-wire templates:** not generated for concept A (`redesign/manufacturing/hotwire.py` is K09-L). The airfoil file is `redesign/subsystems/wing/s5010.dat`.
 - **Fin rib length (resolved, D-200):** the CAD draws 215.5 mm (x 70.5-286.0 mm); the part mass (now 14.1 g) and BOM R09 (2 x 0.2155 m) follow the drawing.
 - **Motor screws M2.5x8:** named in ARMS.md, but no BOM line; check whether the T-Motor box includes them. Prop adapters and spinner nuts: BOM P01 note says confirm they ship in the motor box.
 - **Motor direction change:** the ESC configuration steps (BLHeli_S, DShot) are not written for concept A; swapping two phase leads reverses a brushless motor (EST).

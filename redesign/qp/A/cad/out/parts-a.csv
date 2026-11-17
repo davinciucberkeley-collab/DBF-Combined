@@ -1,5 +1,5 @@
 part_id,vendor_or_file,url,how_url,process
-WNG-001,"Made (hot-wired XPS, tape skin) from BOM R01 Local; fitted in build step A1 ""Wing core on the bench (lower surface up)"", stage 1 (Wing core and spar)",,assets/animation/build/a-stage-01.mp4,
+WNG-001,"Made (XPS machined on the ShopBot (D-203; hot wire backup), tape skin) from BOM R01 Local; fitted in build step A1 ""Wing core on the bench (lower surface up)"", stage 1 (Wing core and spar)",,assets/animation/build/a-stage-01.mp4,
 WNG-002,"Made (cut from the 12x10 tube) from BOM R08 RMRC; fitted in build step A2 ""Spar through the core bore from the right tip"", stage 1 (Wing core and spar)",https://www.readymaderc.com/products/details/carbon-fiber-tube-12mm-x-10mm-1m-long,assets/animation/build/a-stage-01.mp4,
 WNG-003-C,"Made (printed PETG) from BOM R03 Prusa; fitted in build step A3 ""Centre plug up the bore"", stage 1 (Wing core and spar)",https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/,assets/animation/build/a-stage-01.mp4,
 WNG-004-R,"Made (printed PETG) from BOM R03 Prusa; fitted in build step A4 ""Right plugs up the bore"", stage 1 (Wing core and spar)",https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/,assets/animation/build/a-stage-01.mp4,

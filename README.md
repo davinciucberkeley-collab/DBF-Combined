@@ -99,7 +99,8 @@ As of 2026-11-10 ([`redesign/STATUS.md`](redesign/STATUS.md), [`redesign/HANDOFF
 - **Modelled only:** every mass, thrust, stall, structural and thermal number. The Fusion scripts have run only in a
   stub backend, never in Fusion itself. The flight parameter file has never been loaded on a board or run in SITL.
 - **Open issues that matter most:** the fin-station collar fails on the latest torsion load (do not print collars
-  yet); the budget reserve holds only if Jacobs Hall lends the soldering and hot-wire gear (request due 13 Nov);
+  yet); the budget reserve holds only if Jacobs Hall lends the soldering gear (request due 13 Nov); concept A's wing core is now planned on the
+  Jacobs ShopBot CNC (D-203, assumed until the staff confirm foam is allowed; a hot wire stays the backup);
   the mass reserve has 0 g free; stall and transition margins sit inside model uncertainty.
 - **Before the mid-December order:** build and fly a $40 foam-board twin on the real electronics, at least 10 h of
   SITL, an anemometer check at Richmond Field Station, the early order (~20 Nov), and a carbon-tube bend test by

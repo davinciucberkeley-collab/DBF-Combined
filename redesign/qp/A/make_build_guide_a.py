@@ -113,8 +113,9 @@ def main():
     A('| Job | Where | Note |')
     A('|---|---|---|')
     A('| 3-D printing (PETG) | Jacobs Prusa printers | The K09-L guide says the Jacobs page does not say PETG; SCHEDULE-A PR1 plans PETG at Jacobs. Confirm with the staff before the first print (open item). |')
-    A('| Templates, laser-cut ply | Jacobs laser cutter | Template files for the S5010 core are not made yet (`-`). |')
-    A('| Hot-wire foam cutting | **Not a Jacobs tool.** Team workspace W (`SCHEDULE-A.md` B1) | There is **no hot-wire cutter line in BOM-A** (the K09-L BOM bought one): open item. |')
+    A('| Foam cores and fairings (XPS) | Jacobs ShopBot CNC router (D-203) | **Assumed, not confirmed** (user, 2026-11-16): ask the staff that XPS may go on the ShopBot and book the training. CAM toolpaths not made yet (`-`). |')
+    A('| Backup: hot-wire foam cutting | Team workspace W (`SCHEDULE-A.md` B1); hot wire is not a Jacobs tool | Only if the ShopBot is refused for foam. The gear is not in BOM-A: about $62.55 (K09-L lines G11 + H05, priced 2026-11-14). |')
+    A('| Gauges and backup templates, laser-cut ply | Jacobs laser cutter | S5010 gauge / template files are not made yet (`-`). |')
     A('| Soldering, heat-shrink, multimeter | Jacobs Electronics Lab (studio 110), in-lab only, with fume extraction | Steps E3b and E6. |')
     A('| Epoxy, CA, assembly | Team workspace W | Cures take 24 h each (K09-L practice); see section 3. |')
     A('')
@@ -307,9 +308,9 @@ def main():
 NAME_OVR = {'WNG-008': 'Lens cap with stop bosses', 'WNG-003/4/5': 'Spar plug', 'CGE-006': 'Bridge saddle', 'CGE-007': 'Strut clamp', 'FIN-005': 'Rib saddle', 'WNG-009': 'Hinge damper stator', 'WNG-010': 'Hinge damper rotor'}
 
 OPEN_ITEMS = [
-    '**Hot-wire cutter and power supply:** no BOM-A line and not a Jacobs tool (SCHEDULE-A B1 says "workspace W"; the K09-L BOM bought the gear). Needed for stage 1 and for C3/C4 fairings.',
+    '**Foam on the Jacobs ShopBot (D-203):** assumed, not confirmed. Ask the staff and book the ShopBot training before the first cut (6 Jan). Write the CAM toolpaths (two core halves, fin fairings) from `s5010.dat` and `wing.py`. If foam is refused, the backup is the hot wire at workspace W: buy the K09-L G11 + H05 gear (about $62.55, re-price first), which is not in BOM-A.',
     '**STL files, print orientation and slicer settings for every printed part:** not in the repo for concept A (only K09-L G3 PRINT-LIST). The guide gives the CAD wall thicknesses and an `EST` orientation; export the STLs from `a_model.py`.',
-    '**S5010 hot-wire templates:** not generated for concept A (`redesign/manufacturing/hotwire.py` is K09-L). The airfoil file is `redesign/subsystems/wing/s5010.dat`.',
+    '**S5010 gauge and backup hot-wire templates:** not generated for concept A (`redesign/manufacturing/hotwire.py` is K09-L). The airfoil file is `redesign/subsystems/wing/s5010.dat`.',
     '**Fin rib length (resolved, D-200):** the CAD draws 215.5 mm (x 70.5-286.0 mm); the part mass (now 14.1 g) and BOM R09 (2 x 0.2155 m) follow the drawing.',
     '**Motor screws M2.5x8:** named in ARMS.md, but no BOM line; check whether the T-Motor box includes them. Prop adapters and spinner nuts: BOM P01 note says confirm they ship in the motor box.',
     '**Motor direction change:** the ESC configuration steps (BLHeli_S, DShot) are not written for concept A; swapping two phase leads reverses a brushless motor (EST).',
