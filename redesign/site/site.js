@@ -154,7 +154,7 @@ function watchBuildToc() {
   if (tocWatch) return;
   tocWatch = true;
   const art = document.querySelector('#build article.md');
-  if (art && !document.getElementById('build-pager')) art.insertAdjacentHTML('afterend', '<nav class="md-pager" id="build-pager" aria-label="Guide sections"></nav>');
+  if (art && !document.getElementById('build-pager')) art.insertAdjacentHTML('beforeend', '<nav class="md-pager" id="build-pager" aria-label="Guide sections"></nav>');
   document.getElementById('build').addEventListener('click', e => {
     const t = e.target.closest('.md-toc a, [data-bsec]');
     if (!t) return;
