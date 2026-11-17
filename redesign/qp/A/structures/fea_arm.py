@@ -396,7 +396,7 @@ def solve(Kf, RHS):
         dd = d.replace('\\', '/')
         cmd = ("d='%s'; rd=@(f,t) fread(fopen(fullfile(d,f)),inf,t); i=rd('i.bin','int32'); j=rd('j.bin','int32'); v=rd('v.bin','double'); "
                "K=sparse(double(i),double(j),v,%d,%d); clear i j v; K=K+triu(K,1)'; B=reshape(rd('b.bin','double'),%d,%d); "
-               "tic; [R,flag,P]=chol(K,'lower','vector'); fprintf('chol flag %%d, %%.1f s\\n',flag,toc); "
+               "tic; P=dissect(K); [R,flag]=chol(K(P,P),'lower'); fprintf('chol flag %%d, %%.1f s, nnz(R) %%.0f M\\n',flag,toc,nnz(R)/1e6); "   # nested dissection: less fill than AMD on 3-D meshes
                "x=zeros(size(B)); x(P,:)=R'\\(R\\B(P,:)); "
                "for it=1:3, r=B-K*x; dx=zeros(size(B)); dx(P,:)=R'\\(R\\r(P,:)); x=x+dx; end; "      # iterative refinement (the PETG / CFRP contrast)
                "fprintf('solved %%.1f s, residual %%.1e\\n',toc,max(vecnorm(B-K*x)./vecnorm(B))); "
