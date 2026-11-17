@@ -525,10 +525,8 @@
     "A-P13"
    ],
    "parts": [
-    "CGE-002-UR",
-    "CGE-002-UL",
-    "CGE-002-LR",
-    "CGE-002-LL"
+    "CGE-002-A",
+    "CGE-002-B"
    ],
    "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "value": 1.41
@@ -568,10 +566,8 @@
     "A-P13"
    ],
    "parts": [
-    "CGE-002-UR",
-    "CGE-002-UL",
-    "CGE-002-LR",
-    "CGE-002-LL",
+    "CGE-002-A",
+    "CGE-002-B",
     "CGE-001"
    ],
    "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
@@ -776,10 +772,8 @@
     "CGE-003-UL",
     "CGE-003-LR",
     "CGE-003-LL",
-    "CGE-002-UR",
-    "CGE-002-UL",
-    "CGE-002-LR",
-    "CGE-002-LL"
+    "CGE-002-A",
+    "CGE-002-B"
    ],
    "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "value": 1.88
@@ -816,10 +810,8 @@
     "A-P13"
    ],
    "parts": [
-    "CGE-002-UR",
-    "CGE-002-UL",
-    "CGE-002-LR",
-    "CGE-002-LL"
+    "CGE-002-A",
+    "CGE-002-B"
    ],
    "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "value": 0.82
@@ -893,10 +885,8 @@
     "A-P13"
    ],
    "parts": [
-    "CGE-002-UR",
-    "CGE-002-UL",
-    "CGE-002-LR",
-    "CGE-002-LL"
+    "CGE-002-A",
+    "CGE-002-B"
    ],
    "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "value": 15.32
@@ -1395,10 +1385,8 @@
     "A-P10"
    ],
    "parts": [
-    "CGE-002-UR",
-    "CGE-002-UL",
-    "CGE-002-LR",
-    "CGE-002-LL",
+    "CGE-002-A",
+    "CGE-002-B",
     "CGE-004",
     "WNG-002"
    ],
@@ -1516,7 +1504,7 @@
    "parts": [
     "AVN-002",
     "CGE-004",
-    "CGE-002-UR"
+    "CGE-002-A"
    ],
    "how": "Re-run sitl/fu_cage.py with the built-cage tap-test frequencies; hard-mounted FC.",
    "value": 2.19
@@ -1577,7 +1565,7 @@
    "parts": [
     "AVN-002",
     "CGE-004",
-    "CGE-002-UR"
+    "CGE-002-A"
    ],
    "how": "Tap test of the built cage (T-A-TAP): first pitch mode 9-17 Hz, first roll mode 21-43 Hz (GM >= 2 grid, iter3_run.md); outside that window re-tune the rate loop.",
    "note": "D-191 (CLAIMS-FIX s4): with the QP-3 gains (pitch P 0.15 / D 0.002 / FLTD 40) the minimum was 1.64 (1.56 at cant 17); pitch P 0.12 / D 0.0012 / FLTD 60 and yaw P 0.37 give 2.03 (roll, kd corner, modes -20 %; pitch 2.33).",

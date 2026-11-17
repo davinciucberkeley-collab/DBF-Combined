@@ -216,6 +216,14 @@
       true
      ],
      [
+      "R14",
+      "airframe",
+      "RMRC",
+      1.0,
+      0.0,
+      true
+     ],
+     [
       "R10",
       "airframe",
       "RMRC",
@@ -773,10 +781,10 @@
     "v": "P:cad3d.assy_steps_ok"
    },
    "outputs": {
-    "v": 39
+    "v": 58
    },
    "input_values": {
-    "v": 39
+    "v": 58
    }
   },
   {
@@ -794,7 +802,7 @@
     "A-U4"
    ],
    "how": "python -I qp/A/cad/a_assembly.py: 28 of 28 steps, 0 blocked, 0 unsupported, no wire laid before its ends.",
-   "value": 39
+   "value": 58
   },
   {
    "id": "CALC-A-ASSY-PARTS-READ",
@@ -807,10 +815,10 @@
     "v": "P:cad3d.assy_parts_placed"
    },
    "outputs": {
-    "v": 104
+    "v": 111
    },
    "input_values": {
-    "v": 104
+    "v": 111
    }
   },
   {
@@ -828,7 +836,7 @@
     "A-U4"
    ],
    "how": "a_assembly.py: 78 of 78 parts placed, none missing from the sequence.",
-   "value": 104
+   "value": 111
   }
  ]
 }

@@ -7,9 +7,13 @@ Marker steps (parts = []) carry the wires: a 7th element lists the electrical ed
 end parts of each edge are already on (earlier step) and that every electrical edge is laid exactly once. THREAD steps are marker steps that must come
 before the step named in THREAD_BEFORE (the leads are fed through the tubes and channels while the ends are still free).
 Not in the sequence: tape skin, hinge tape, epoxy fillets (not drawn). Wires are checked in place by collide_a.py.
+D-202 (hub redesign): the cage frame is built on the bench in the sub-steps B0a-B0k (BENCH below): hub, arm tube B, its two pins, arm tube A, its pins and the crossing pin, the four doublers,
+the bridge, the four motor cups, the two struts, then the lead threading. They are swept in their OWN run (a_assembly.py: bench plan, nothing else placed, because on the bench the
+frame is away from the wing: the bridge slides in from aft along x, where the spar would be) and then B1 docks the finished frame (the CAGE group, every frame part, plus the motors and
+props) on the spar as one rigid body, exactly as before. B1 is therefore the PLACEMENT of the CAGE parts in the main run; the bench steps list the same parts for the bench run only.
 D-198/199: enclosed routes (motor leads in the arm bores, hub conduits, raceways and the foam ditch, servo leads in foam grooves) are threaded, then soldered after the boards are on."""
 ST = ('UR', 'UL', 'LR', 'LL')
-CAGE = (['CGE-00%d' % i for i in (1, 4, 6)] + ['CGE-002-' + s for s in ST] + ['CGE-003-' + s for s in ST] +
+CAGE = (['CGE-00%d' % i for i in (1, 4, 6)] + ['CGE-002-A', 'CGE-002-B'] + ['CGE-003-' + s for s in ST] + ['CGE-009-' + s for s in ST] + ['CGE-010-' + s for s in ST] + ['CGE-010-C'] +
         ['CGE-005-R', 'CGE-005-L', 'CGE-007-R', 'CGE-007-L'] + ['PRP-001-' + s for s in ST] + ['PRP-004-' + s for s in ST] + ['PRP-002-' + s for s in ST] + ['PRP-005-' + s for s in ST])
 # (id, caption, parts, dir, travel_mm, step_mm)
 STEPS = [
@@ -18,12 +22,33 @@ STEPS = [
     ('A3', 'Centre plug up the bore', ['WNG-003-C'], (0, -1, 0), 600, 100),
     ('A4', 'Right plugs up the bore', ['WNG-004-R', 'WNG-005-R'], (0, -1, 0), 600, 100),
     ('A5', 'Left plugs up the bore from the left tip', ['WNG-004-L', 'WNG-005-L'], (0, 1, 0), 600, 100),
-    ('B0', 'THREAD (bench, before the motors go on the cups): feed the three 20 AWG leads of each motor (400 mm stock + extension, EST) from the cup side through the 4.8 mm lead hole, the collar and the arm bore, out of the 4.8 mm hub socket floor hole; free ends hang out of the hub; then screw the motors on (B1)', [], None, 0, 0),
+    # ---- D-202 bench build of the cage frame (swept in the bench run, see BENCH; unit vectors from the CAD: u_A = (0, cos 34.38, sin 34.38) along tube A toward UR, u_B = (0, cos 34.38, -sin 34.38) along tube B toward LR)
+    ('B0a', 'Bench: cut the two arm tubes (552.4 mm), the bridge (114 mm) and the two struts (286.2 mm) from the carbon stock; sand the ends square', [], None, 0, 0),
+    ('B0b', 'Bench: the printed hub stands on the bench, aft face down', ['CGE-001'], None, 0, 0),
+    ('B0c', 'Arm tube B slid through its sleeve and the centre block (from the LL side, along its axis)', ['CGE-002-B'], (0, 0.8253073, -0.5646839), 330, 15),
+    ('B0d', 'Two 3 mm pins (LR, UL) pushed in along x from the nose side through the block access holes, the sleeve and tube B', ['CGE-010-LR', 'CGE-010-UL'], (1, 0, 0), 30, 3),
+    ('B0e', 'Arm tube A slid through its sleeve and the centre block (from the LL side, along its axis)', ['CGE-002-A'], (0, 0.8253073, 0.5646839), 330, 15),
+    ('B0f', 'The crossing pin and the two tube A pins (UR, LL) pushed in along x from the nose side', ['CGE-010-C', 'CGE-010-UR', 'CGE-010-LL'], (1, 0, 0), 40, 4),
+    ('B0g1', 'Doubler UR slid over the tube A end (UR side) into the sleeve counterbore', ['CGE-009-UR'], (0, -0.8253073, -0.5646839), 260, 5),
+    ('B0g2', 'Doubler LL slid over the tube A end (LL side) into the sleeve counterbore', ['CGE-009-LL'], (0, 0.8253073, 0.5646839), 260, 5),
+    ('B0g3', 'Doubler LR slid over the tube B end (LR side) into the sleeve counterbore', ['CGE-009-LR'], (0, -0.8253073, 0.5646839), 260, 5),
+    ('B0g4', 'Doubler UL slid over the tube B end (UL side) into the sleeve counterbore', ['CGE-009-UL'], (0, 0.8253073, -0.5646839), 260, 5),
+    ('B0h', 'Bridge tube pushed forward into the hub boss bore from aft, to the conical floor', ['CGE-004'], (-1, 0, 0), 130, 10),
+    ('B0i1', 'Motor cup UR slid onto the tube A end', ['CGE-003-UR'], (0, -0.8253073, -0.5646839), 60, 5),
+    ('B0i2', 'Motor cup LL slid onto the tube A end', ['CGE-003-LL'], (0, 0.8253073, 0.5646839), 60, 5),
+    ('B0i3', 'Motor cup LR slid onto the tube B end', ['CGE-003-LR'], (0, -0.8253073, 0.5646839), 60, 5),
+    ('B0i4', 'Motor cup UL slid onto the tube B end', ['CGE-003-UL'], (0, 0.8253073, -0.5646839), 60, 5),
+    ('B0j1', 'Right strut pushed into its hub socket along its own axis', ['CGE-005-R'], (-0.40179, -0.9157318, 0), 40, 5),
+    ('B0j2', 'Left strut pushed into its hub socket along its own axis', ['CGE-005-L'], (-0.40179, 0.9157318, 0), 40, 5),
+    ('B0k', 'THREAD (bench, before the motors go on the cups): feed the three 20 AWG leads of each motor (400 mm stock + extension, EST) from the cup side through the 4.8 mm lead hole, the collar and the tube bore to the 4.8 mm exit hole at s +-18 mm; the free ends are laid flat along the tube until the hub conduits are on (B2b1-B2b4); then screw the motors on (B1)', [], None, 0, 0),
     ('B1', 'Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked '
            'from below: clips snap on the spar', CAGE, (0, 0, 1), 30, 3),
     ('B2', 'Rib saddles snap on the spar from below', ['FIN-005-R', 'FIN-005-L'], (0, 0, 1), 30, 3),
     ('B2a', 'D-199: phase-lead raceways R and L lowered from above into their foam grooves (through the slots in the hub pad flange), before the tray', ['HRN-003-R', 'HRN-003-L'], (0, 0, -1), 30, 3),
-    ('B2b', 'D-199: hub conduits (4) pushed in from aft along the hub webs, each docking on its socket floor face and on its raceway window', ['HRN-004-UR', 'HRN-004-UL', 'HRN-004-LR', 'HRN-004-LL'], (-1, 0, 0), 40, 4),
+    ('B2b1', 'D-202: hub conduit UR lowered onto its sleeve and the raceway window (along the tube t axis, toward the tube)', ['HRN-004-UR'], (0, 0.5646839, -0.8253073), 40, 4),
+    ('B2b2', 'D-202: hub conduit UL lowered onto its sleeve and the raceway window', ['HRN-004-UL'], (0, -0.5646839, -0.8253073), 40, 4),
+    ('B2b3', 'D-202: hub conduit LR raised onto its sleeve and the raceway window (from below)', ['HRN-004-LR'], (0, 0.5646839, 0.8253073), 40, 4),
+    ('B2b4', 'D-202: hub conduit LL raised onto its sleeve and the raceway window (from below)', ['HRN-004-LL'], (0, -0.5646839, 0.8253073), 40, 4),
     ('B2c', 'THREAD: feed the free ends of the 12 phase strands (B0) through their hub conduit, the raceway and the foam ditch (fish thread from the ditch end); the free ends stay out at x 29 mm for the ESC pads', [], None, 0, 0),
     ('B3', 'Pack tray lowered from above into the core tray slot, bonded to the hub aft face', ['CGE-008'], (0, 0, -1), 30, 3),
     ('B4', 'Hinge damper units (stator with rotor in its annulus, silicone fluid filled) into the core notches at the elevon tips from aft, before the ribs; the notch is open aft', ['WNG-009-R', 'WNG-010-R', 'WNG-009-L', 'WNG-010-L'], (-1, 0, 0), 30, 5),
@@ -60,5 +85,8 @@ STEPS = [
     ('E6', 'LAY: solder the battery tail to the ESC BAT pads and the 4 x 3 phase leads (free ends from B0 / B2c: out of the foam ditch, up to z 16, over the plate beside the FC, up to z 28 under the cover roof) to the ESC motor pads; heat-shrink', [], None, 0, 0, ['E-HRN-12', 'E-HRN-02', 'E-HRN-03', 'E-HRN-04', 'E-HRN-05']),
     ('E7', 'Bay cover lowered over the FC stack and ESC onto the plate (the sensor leads and the battery tail drop into the roof-open notches; the phase bundles are already inside), foam tape + two ties', ['AVN-008'], (0, 0, -1), 40, 4),
 ]
-THREAD_BEFORE = {'B0': 'B1', 'D0': 'E2', 'B2c': 'E2'}
+THREAD_BEFORE = {'B0k': 'B1', 'D0': 'E2', 'B2c': 'E2'}
+# D-202 bench steps: swept in their own run (nothing of the wing placed), their parts are placed in the main run by B1 (the dock of the finished frame)
+BENCH = ('B0b', 'B0c', 'B0d', 'B0e', 'B0f', 'B0g1', 'B0g2', 'B0g3', 'B0g4', 'B0h', 'B0i1', 'B0i2', 'B0i3', 'B0i4', 'B0j1', 'B0j2')
+BENCH_START = 'B0b'                          # the hub is the first part of the frame: it rests on the bench (like the wing core in A1), so it has no earlier part to bond to
 

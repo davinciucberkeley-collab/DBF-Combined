@@ -295,7 +295,7 @@ def yaw_authority(cant_term_ref_nm, arm_factor, cant_deg, cant_ref_deg, q_model_
 
 
 kit.claim("CL-A-YAW-MODEL", "Hover yaw authority (model) at +-0.10 throttle", calc="CALC-A-YAW", output="n_m", unit="N m",
-          limit=(">=", "P:req.yaw_pass_nm"), verifies=["A-P7"], parts=["PRP-001-UR", "PRP-001-UL", "PRP-001-LR", "PRP-001-LL", "CGE-002-UR", "CGE-002-UL", "CGE-002-LR", "CGE-002-LL"],
+          limit=(">=", "P:req.yaw_pass_nm"), verifies=["A-P7"], parts=["PRP-001-UR", "PRP-001-UL", "PRP-001-LR", "PRP-001-LL", "CGE-002-A", "CGE-002-B"],
           how="Hanging yaw test (M3) on the bench: >= 0.35 N m go; 0.30-0.35 go with the 4 m/s card; < 0.30 R2.",
           note="D-189 (CLAIMS-FIX s2): at cant 16 the model gave 0.3465 (marginally under 0.35); cant 17 gives 0.363. The bench (M3) is still the test.")
 kit.claim("CL-A-YAW-R2", "Hover yaw authority (model) against the R2 floor", calc="CALC-A-YAW", output="n_m", unit="N m",

@@ -1,5 +1,5 @@
 {
- "bodies": 472,
+ "bodies": 462,
  "defects": [
   "WNG-008-LL body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
   "WNG-008-LL body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)",
@@ -11,74 +11,87 @@
   "WNG-008-RU body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)"
  ],
  "kinks": [],
- "parts": 104,
+ "parts": 111,
  "poses": [
   {
    "hits": [
     {
-     "a": "E-HRN-04#0",
+     "a": "E-HRN-05#0",
      "at_mm": [
-      -32.54,
-      20.59,
-      2.36
+      -82.41,
+      -58.46,
+      -42.06
      ],
-     "b": "E-HRN-04#1",
+     "b": "E-HRN-05#2",
      "bodies": [
-      "E-HRN-04 \"wire strand 0 (1.8 mm)\" x E-HRN-04 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+      "E-HRN-05 \"wire strand 2 (1.8 mm)\" x E-HRN-05 \"wire strand 0 (1.8 mm)\" 0.01 mm"
+     ],
+     "depth_mm": 0.011
+    },
+    {
+     "a": "E-HRN-02#0",
+     "at_mm": [
+      -7.59,
+      17.12,
+      3.22
+     ],
+     "b": "E-HRN-02#2",
+     "bodies": [
+      "E-HRN-02 \"wire strand 2 (1.8 mm)\" x E-HRN-02 \"wire strand 0 (1.8 mm)\" 0.01 mm"
      ],
      "depth_mm": 0.012
     },
     {
-     "a": "E-HRN-03#0",
+     "a": "E-HRN-02#0",
      "at_mm": [
-      -76.5,
-      -191.61,
-      130.8
+      -81.91,
+      73.26,
+      51.15
      ],
-     "b": "E-HRN-03#2",
+     "b": "E-HRN-02#1",
      "bodies": [
-      "E-HRN-03 \"wire strand 2 (1.8 mm)\" x E-HRN-03 \"wire strand 0 (1.8 mm)\" 0.01 mm"
-     ],
-     "depth_mm": 0.012
-    },
-    {
-     "a": "E-HRN-03#1",
-     "at_mm": [
-      -41.53,
-      -17.12,
-      2.24
-     ],
-     "b": "E-HRN-03#2",
-     "bodies": [
-      "E-HRN-03 \"wire strand 2 (1.8 mm)\" x E-HRN-03 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+      "E-HRN-02 \"wire strand 1 (1.8 mm)\" x E-HRN-02 \"wire strand 0 (1.8 mm)\" 0.01 mm"
      ],
      "depth_mm": 0.01
     },
     {
      "a": "E-HRN-04#0",
      "at_mm": [
-      -76.51,
-      167.13,
-      -113.97
+      -69.67,
+      201.67,
+      -136.99
      ],
-     "b": "E-HRN-04#2",
+     "b": "E-HRN-04#1",
      "bodies": [
-      "E-HRN-04 \"wire strand 0 (1.8 mm)\" x E-HRN-04 \"wire strand 2 (1.8 mm)\" 0.01 mm"
+      "E-HRN-04 \"wire strand 0 (1.8 mm)\" x E-HRN-04 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+     ],
+     "depth_mm": 0.01
+    },
+    {
+     "a": "E-HRN-03#0",
+     "at_mm": [
+      -69.34,
+      -145.55,
+      98.59
+     ],
+     "b": "E-HRN-03#2",
+     "bodies": [
+      "E-HRN-03 \"wire strand 2 (1.8 mm)\" x E-HRN-03 \"wire strand 0 (1.8 mm)\" 0.01 mm"
      ],
      "depth_mm": 0.011
     },
     {
-     "a": "E-HRN-04#1",
+     "a": "E-HRN-04",
      "at_mm": [
-      -2.46,
-      20.79,
-      3.2
+      -49.46,
+      20.97,
+      -0.03
      ],
-     "b": "E-HRN-04#2",
+     "b": "HRN-003-R",
      "bodies": [
-      "E-HRN-04 \"wire strand 1 (1.8 mm)\" x E-HRN-04 \"wire strand 2 (1.8 mm)\" 0.01 mm"
+      "E-HRN-04 \"wire strand 2 (1.8 mm)\" x HRN-003-R \"phase-lead raceway, 0.6 mm walls, closed section (D-199)\" 0.03 mm"
      ],
-     "depth_mm": 0.012
+     "depth_mm": 0.029
     },
     {
      "a": "HWC-001",
@@ -175,7 +188,7 @@
    ]
   }
  ],
- "seconds": 103.1,
+ "seconds": 153.2,
  "skipped": [
   [
    "HRD-001",

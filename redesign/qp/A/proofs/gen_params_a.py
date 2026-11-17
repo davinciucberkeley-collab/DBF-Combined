@@ -30,6 +30,9 @@ def build():
     reps = {k: json.loads((out / f"report{k}.json").read_text(encoding="utf-8")) for k in ("", "_pose20", "_pose21")}
     asm = json.loads((out / "assembly.json").read_text(encoding="utf-8"))
     tol = asm["tol_mm"]
+    # D-202: the cage frame is swept in its own bench run (assembly_bench.json, nothing else placed); its steps count as steps, its parts are placed again by B1 in the main run (not counted twice)
+    bench_f = out / "assembly_bench.json"
+    asm_bench = json.loads(bench_f.read_text(encoding="utf-8"))["steps"] if bench_f.exists() else []
     # reachable poses: neutral and +-20 deg (report_pose20), +-21 deg (report_pose21 = report.json); +-22 is past the stop
     depths, n_over = [], 0
     for key in ("_pose20", "_pose21"):
@@ -97,7 +100,7 @@ def build():
                                 "D-195: CAD part table 2026-11-15: wing 221.7 + fins 108.2 (D-200) + feet 8.4 + hardware HRD-001 26.08 + cage 119.2 (D-196: hub 17.7 g, was 13.1; D-198: cup collars +1.2 g) = 484.9 g with the EST cuts", est=True),
         "pack_g": V(270.0, "g", "SRC-A-BOM", "BOM-A.csv W01: Tattu 2300 4S, listing 270 g"),
         "pack_trim_mm": V(10.0, "mm", "SRC-A-FIXES2", "FIXES2 s7 / MASS-GATE s7: pack trim 10 mm aft in the tray slots"),
-        "pack_trim_fwd_mm": V(cm.get("trim_fwd_m", 0.010) * 1000, "mm", "SRC-A-CADMASS", "D-199: forward pack travel 6 mm (D-196: 8 mm) (tray front lip 2 mm aft); cad_mass.json trim_fwd_m"),
+        "pack_trim_fwd_mm": V(cm.get("trim_fwd_m", 0.010) * 1000, "mm", "SRC-A-CADMASS", "D-202: forward pack travel 1 mm (D-199: 6 mm; D-196: 8 mm) (tray front lip 2 mm aft); cad_mass.json trim_fwd_m"),
         "cg_x_mm": V(cm["cg_x_m"] * 1000, "mm", "SRC-A-CADMASS", "cad_mass.json cg_x_m, aft of the wing leading edge"),
         "cg_y_mm": V(abs(cm["cg_y_m"]) * 1000, "mm", "SRC-A-CADMASS", "cad_mass.json cg_y_m (lateral)"),
     }
@@ -250,8 +253,8 @@ def build():
         "wire_ends_open": V(len(reps[""]["wire_ends"]), "-", "SRC-A-COLL", "report.json wire_ends: wire ends not seated in a part (41 strands)"),
         "wire_kinks": V(len(reps[""]["kinks"]), "-", "SRC-A-COLL", "report.json kinks (wire folds)"),
         "parts": V(reps[""]["parts"], "-", "SRC-A-COLL", "report.json parts checked"),
-        "assy_steps": V(len(asm["steps"]), "-", "SRC-A-ASSY", "assembly.json steps"),
-        "assy_steps_ok": V(sum(1 for s in asm["steps"] if not s["pairs"] and s["worst_mm"] <= tol), "-", "SRC-A-ASSY",
+        "assy_steps": V(len(asm["steps"]) + len(asm_bench), "-", "SRC-A-ASSY", "assembly.json steps + assembly_bench.json steps (D-202 bench run)"),
+        "assy_steps_ok": V(sum(1 for s in asm["steps"] + asm_bench if not s["pairs"] and s["worst_mm"] <= tol), "-", "SRC-A-ASSY",
                            "assembly.json steps with no blocking pair at or above the tolerance (35 of 35 in ASSEMBLY.md)"),
         "assy_parts_placed": V(sum(len(s["parts"]) for s in asm["steps"]), "-", "SRC-A-ASSY", "assembly.json parts placed (96 of 96)"),
     }

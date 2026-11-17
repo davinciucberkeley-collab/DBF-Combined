@@ -78,16 +78,16 @@ stored("CL-A-GUST-N", "Gust load factor at VD 24 (U 4 m/s)", "P:sim.gust_n_vd", 
 for cid, title, param, parts, reqs in [
         ("CL-A-MS-SPAR", "Spar 12x10 root bending, MS at 1.5 x n 3.4", "P:struct.ms_spar", ["WNG-002"], ["A-P13"]),
         ("CL-A-MS-BOND", "Rib saddle on the spar (thinnest bond), MS", "P:struct.ms_bond_thin", ["FIN-005-R", "FIN-005-L", "WNG-002"], ["A-P13"]),
-        ("CL-A-MS-ARM", "Motor arm 12x10 under a 30 N prop strike, MS", "P:struct.ms_arm_strike", ["CGE-002-UR", "CGE-002-UL", "CGE-002-LR", "CGE-002-LL"], ["A-P13"]),
-        ("CL-A-MS-ARM-SOCKET", "Motor arm in its socket, strike couple, MS", "P:struct.ms_arm_socket", ["CGE-002-UR", "CGE-002-UL", "CGE-002-LR", "CGE-002-LL", "CGE-001"], ["A-P13"]),
+        ("CL-A-MS-ARM", "Motor arm 12x10 under a 30 N prop strike, MS", "P:struct.ms_arm_strike", ["CGE-002-A", "CGE-002-B"], ["A-P13"]),
+        ("CL-A-MS-ARM-SOCKET", "Motor arm in its socket, strike couple, MS", "P:struct.ms_arm_socket", ["CGE-002-A", "CGE-002-B", "CGE-001"], ["A-P13"]),
         ("CL-A-MS-CUP-HEADPULL", "Motor cup head pull-through (PETG) at the 0.90 cap thrust + 1P, MS", "P:struct.ms_cup_op_headpull", ["CGE-003-UR", "CGE-003-UL", "CGE-003-LR", "CGE-003-LL"], ["A-P13"]),
         ("CL-A-MS-CUP-STRIKE", "Motor cup head pull-through under the 30 N transverse prop strike, MS", "P:struct.ms_cup_headpull_strike", ["CGE-003-UR", "CGE-003-UL", "CGE-003-LR", "CGE-003-LL"], ["A-P13"]),
         ("CL-A-MS-CUP-PLATE", "Motor cup plate bending past the sleeve end under the strike, MS", "P:struct.ms_cup_plate_strike", ["CGE-003-UR", "CGE-003-UL", "CGE-003-LR", "CGE-003-LL"], ["A-P13"]),
         ("CL-A-MS-CUP-HOLE", "Motor cup screw-hole bearing under a blade-stop torque, MS", "P:struct.ms_cup_screw_hole_s3", ["CGE-003-UR", "CGE-003-UL", "CGE-003-LR", "CGE-003-LL"], ["A-P13"]),
-        ("CL-A-MS-CUP-BOND", "Motor cup to arm bond under strike torsion + torque, MS", "P:struct.ms_cup_bond_strike", ["CGE-003-UR", "CGE-003-UL", "CGE-003-LR", "CGE-003-LL"] + ["CGE-002-UR", "CGE-002-UL", "CGE-002-LR", "CGE-002-LL"], ["A-P13"]),
-        ("CL-A-MS-ARM-BLADE", "Motor arm 12x10 root bending with the blade-offset strike lever, MS", "P:struct.ms_arm_strike_blade", ["CGE-002-UR", "CGE-002-UL", "CGE-002-LR", "CGE-002-LL"], ["A-P13"]),
+        ("CL-A-MS-CUP-BOND", "Motor cup to arm bond under strike torsion + torque, MS", "P:struct.ms_cup_bond_strike", ["CGE-003-UR", "CGE-003-UL", "CGE-003-LR", "CGE-003-LL"] + ["CGE-002-A", "CGE-002-B"], ["A-P13"]),
+        ("CL-A-MS-ARM-BLADE", "Motor arm 12x10 root bending with the blade-offset strike lever, MS", "P:struct.ms_arm_strike_blade", ["CGE-002-A", "CGE-002-B"], ["A-P13"]),
         ("CL-A-MS-FATIGUE-HUBWALL", "Hub arm-socket wall, 2000 cycles to the cap thrust, MS", "P:struct.ms_fatigue_hub_wall", ["CGE-001"], ["A-P13"]),
-        ("CL-A-MS-FATIGUE-ARM", "Arm tube bending amplitude at 4e6 cycles of 1P, MS", "P:struct.ms_fatigue_arm", ["CGE-002-UR", "CGE-002-UL", "CGE-002-LR", "CGE-002-LL"], ["A-P13"]),
+        ("CL-A-MS-FATIGUE-ARM", "Arm tube bending amplitude at 4e6 cycles of 1P, MS", "P:struct.ms_fatigue_arm", ["CGE-002-A", "CGE-002-B"], ["A-P13"]),
         ("CL-A-MS-RIB", "Fin rib 14x12 torsion under one foot load, MS", "P:struct.ms_rib_torsion", ["FIN-002-R", "FIN-002-L"], ["A-P13"]),
         ("CL-A-MS-FIN", "Fin tube 16x14 in-plane bending at the foot load, MS", "P:struct.ms_fin_inplane", ["FIN-001-R", "FIN-001-L"], ["A-P13"]),
         ("CL-A-MS-PACK-CRASH", "Bridge under pack + hub at the 12 g crash, MS (pack retention)", "P:struct.ms_bridge_crash", ["CGE-004", "CGE-008", "PWR-001"], ["A-P5", "A-P13"])]:
@@ -129,7 +129,7 @@ kit.calc("CALC-A-VIB-LOW", inputs={"x": "P:sim.vib_below_hz"}, output="f_hz",
 kit.calc("CALC-A-VIB-HIGH", inputs={"x": "P:sim.vib_above_hz"}, output="f_hz",
          equation="lowest strongly coupled mode above the bands over kd / nom / hi; FE run read from structures/iter3_run.md, not re-run")(lowest)
 kit.claim("CL-A-VIB-LOW", "Highest strongly coupled mode below the rotor bands (hi corner)", calc="CALC-A-VIB-LOW", output="f_hz", unit="Hz",
-          limit=("<=", "CL-A-VIB-LOW-LIMIT"), verifies=["A-P10"], parts=["CGE-002-UR", "CGE-002-UL", "CGE-002-LR", "CGE-002-LL", "CGE-004", "WNG-002"],
+          limit=("<=", "CL-A-VIB-LOW-LIMIT"), verifies=["A-P10"], parts=["CGE-002-A", "CGE-002-B", "CGE-004", "WNG-002"],
           how="Tap test of the built cage (T-A-TAP): modes within +-20 % of FE or re-tune. Margin is about 7 % at the hi corner, 31 % at kd.")
 kit.claim("CL-A-VIB-HIGH", "Lowest strongly coupled mode above the rotor bands (kd corner, fin f1)", calc="CALC-A-VIB-HIGH", output="f_hz", unit="Hz",
           limit=(">=", "CL-A-VIB-HIGH-LIMIT"), verifies=["A-P10"], parts=["FIN-001-R", "FIN-001-L"], how="Fin tap test at build (T-A-TAP): f1 432-525 Hz in FE.")
@@ -140,7 +140,7 @@ kit.claim("CL-A-VIB-FC", "Flight-controller vibration, worst of the forced-respo
           how="IMU VIBE < 30 m/s2 in the first tethered hover (T-A-TETHER-VIBE). The worst point (10,500 rpm) is unreachable; at the 0.90 cap (9,349 rpm) the sweep reads 19.6-20.1.")
 kit.calc("CALC-A-VIB-GM", inputs={"x": "P:sim.gm_nominal"}, output="gm", equation="smallest gain margin over pitch / roll / yaw x kd / nom / hi at the nominal mode frequencies (fu_cage.py); read from iter3_run.md, not re-run")(lowest)
 kit.claim("CL-A-VIB-GM", "Rate-loop gain margin, minimum over axes and corners (nominal modes)", calc="CALC-A-VIB-GM", output="gm", unit="-",
-          limit=(">=", "P:req.gm_min"), verifies=["A-P10"], parts=["AVN-002", "CGE-004", "CGE-002-UR"], how="Re-run sitl/fu_cage.py with the built-cage tap-test frequencies; hard-mounted FC.")
+          limit=(">=", "P:req.gm_min"), verifies=["A-P10"], parts=["AVN-002", "CGE-004", "CGE-002-A"], how="Re-run sitl/fu_cage.py with the built-cage tap-test frequencies; hard-mounted FC.")
 
 
 @kit.calc("CALC-A-VIB-GM-SHIFT", equation="smallest gain margin with all flexible modes shifted -20 % and +20 % (tap-test tolerance)", inputs={"lo": "P:sim.gm_shifted", "hi": "P:sim.gm_shifted_up"}, output="gm")
@@ -149,7 +149,7 @@ def gm_shifted(lo, hi):
 
 
 kit.claim("CL-A-VIB-GM-SHIFT", "Rate-loop gain margin with the cage modes shifted +-20 %", calc="CALC-A-VIB-GM-SHIFT", output="gm", unit="-",
-          limit=(">=", "P:req.gm_min"), verifies=["A-P10"], parts=["AVN-002", "CGE-004", "CGE-002-UR"],
+          limit=(">=", "P:req.gm_min"), verifies=["A-P10"], parts=["AVN-002", "CGE-004", "CGE-002-A"],
           how="Tap test of the built cage (T-A-TAP): first pitch mode 9-17 Hz, first roll mode 21-43 Hz (GM >= 2 grid, iter3_run.md); outside that window re-tune the rate loop.",
           note="D-191 (CLAIMS-FIX s4): with the QP-3 gains (pitch P 0.15 / D 0.002 / FLTD 40) the minimum was 1.64 (1.56 at cant 17); pitch P 0.12 / D 0.0012 / FLTD 60 and yaw P 0.37 give 2.03 (roll, kd corner, modes -20 %; pitch 2.33).")
 

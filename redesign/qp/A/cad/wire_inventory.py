@@ -53,10 +53,10 @@ def classify(eid, pts):
             if NEW:
                 enc = m.enclosure_class(mid) if hasattr(m, 'enclosure_class') else None
                 if phase:
-                    ph = math.radians(m.PHI[PH_ST[eid]])
+                    ph = math.radians(m.PHI[PH_ST[eid]])    # arm-frame distance along the arm of the point
                     ya = mid[1] * math.cos(ph) + mid[2] * math.sin(ph)
-                    if ya > m.HUB_ARM_R0 + 1e-4 and mid[0] < -0.05 and not enc:
-                        cls = 'ARM'                       # in the cup collar / arm bore (carbon tube and printed cup)
+                    if enc == 'ARM' or (ya > m.R_M - 0.030 and mid[0] < -0.05 and not enc):
+                        cls = 'ARM'                       # in the arm tube bore / its 4.8 mm exit hole (D-202), or in the cup collar (carbon tube and printed cup)
                     elif enc:
                         cls = 'RACE' if enc == 'RACE' else 'GROOVE'
                     elif m.COV_X0 < mid[0] < m.COV_X1 and abs(mid[1]) < m.COV_Y and mid[2] < roof(mid[0]):

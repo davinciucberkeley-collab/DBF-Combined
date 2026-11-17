@@ -54,7 +54,7 @@ W, H = 1280, 720
 T_TITLE, T_CAM_STAGE = 6.5, 1.2      # s stage title card (camera moves during its first T_CAM_STAGE)
 T_CAM = 0.7                          # s camera move before a step
 T_FAB = 4.5                          # s make-it beat (cut / print / hot-wire label) before the part moves in
-T_THREAD = {'B0': 8.0, 'B2c': 8.0, 'E6': 8.0, 'D0': 5.0}      # s thread / solder animation of the marker steps with a wire reveal
+T_THREAD = {'B0k': 8.0, 'B2c': 8.0, 'E6': 8.0, 'D0': 5.0}      # s thread / solder animation of the marker steps with a wire reveal
 T_MARK = 3.5                          # s the other marker steps
 T_HOLD_MIN = 1.0                     # s minimum hold after a motion
 T_STAGE_HOLD = 0.8                   # s hold at the end of a stage
@@ -67,8 +67,8 @@ T_MOVE = {'long': 2.2, 'short': 1.7, 'appear': 1.0}
 
 STAGES = [
     ('Wing core and spar', ['A1', 'A2', 'A3', 'A4', 'A5']),
-    ('Cage unit: motor leads threaded, motors, props', ['B0', 'B1']),
-    ('Rib saddles, phase-lead raceways, pack tray, hinge dampers', ['B2', 'B2a', 'B2b', 'B2c', 'B3', 'B4']),
+    ('Cage frame on the bench (D-202), motor leads threaded, motors, props, dock', ['B0a', 'B0b', 'B0c', 'B0d', 'B0e', 'B0f', 'B0g1', 'B0g2', 'B0g3', 'B0g4', 'B0h', 'B0i1', 'B0i2', 'B0i3', 'B0i4', 'B0j1', 'B0j2', 'B0k', 'B1']),
+    ('Rib saddles, phase-lead raceways, pack tray, hinge dampers', ['B2', 'B2a', 'B2b1', 'B2b2', 'B2b3', 'B2b4', 'B2c', 'B3', 'B4']),
     ('Fin ribs and rib fairings', ['C1', 'C1a']),
     ('Elevons, balance strips, lens caps', ['C2', 'C2a', 'C2b']),
     ('Fins: fairings, root blocks, tubes', ['C3', 'C4', 'C5', 'C6']),
@@ -80,15 +80,15 @@ STAGES = [
 # per-step camera direction (azimuth from the nose, 90 = left; elevation) where the default (38, 30) hides the part
 VIEW = {'B1': (-40, -22), 'B2': (35, -28), 'C2b': (35, -30), 'C8': (60, 8), 'C9': (60, 12), 'C7': (60, 12),
         'C6': (50, 14), 'D2a': (30, 40), 'E1': (-20, 25), 'A2': (20, 30), 'A5': (-30, 30), 'A1': (38, 30),
-        'B0': (-40, 22), 'B2c': (38, 30)}
+        'B0a': (-40, 22), 'B0k': (-40, 22), 'B2c': (38, 30)}
 DEFAULT_VIEW = (38, 30)
 
 # D-198 marker steps (threading / laying wires place no part): the camera frames these parts instead
-MARKER_FOCUS = {'B0': [], 'B2c': ['HRN-003-R', 'HRN-003-L', 'CGE-001', 'HRN-004-UR', 'HRN-004-UL', 'HRN-004-LR', 'HRN-004-LL'],
+MARKER_FOCUS = {'B0a': [], 'B0k': ['CGE-001', 'CGE-002-A', 'CGE-002-B'], 'B2c': ['HRN-003-R', 'HRN-003-L', 'CGE-001', 'HRN-004-UR', 'HRN-004-UL', 'HRN-004-LR', 'HRN-004-LL'],
                 'D0': ['MEC-001-R', 'WNG-001'], 'E3b': ['AVN-002', 'PRP-003', 'AVN-001'],
                 'E4b': ['HRN-002', 'PWR-001', 'CGE-008'], 'E6': ['PRP-003', 'AVN-001', 'CGE-001']}
 # B0 shows the cage unit (B1 parts minus the motors and props, which are screwed on in B1) hovering at its B1 start pose
-PRESHOW = {'B0': ('B1', ('PRP-',))}
+PRESHOW = {'B0k': ('B1', ('PRP-',))}   # D-202: B0b-B0j are bench steps (drawn at the B1 start pose, not yet updated for the film)
 # wire reveal (threading): edge -> step id -> (fraction from, fraction to) along the route; fractions from out/wire_inventory.json
 PHASE_EDGES = ('E-HRN-02', 'E-HRN-03', 'E-HRN-04', 'E-HRN-05')
 SERVO_EDGES = ('E-HRN-07', 'E-HRN-08')
@@ -97,13 +97,13 @@ SERVO_START = {'E-HRN-07': 'MEC-001-R', 'E-HRN-08': 'MEC-001-L'}      # the serv
 # camera framing: steps with a right and a left part frame the right one only (the left mirrors it); smaller context for small parts
 ONE_SIDE = ('D1', 'D2', 'D2a', 'D3', 'D4', 'D5', 'C7', 'C8', 'C9', 'C1', 'C1a', 'C3', 'C5', 'C6', 'B2', 'B4', 'C2a', 'C2b')
 MIN_HALF_STEP = {'D1': 0.10, 'D2': 0.07, 'D2a': 0.05, 'D3': 0.07, 'D4': 0.06, 'D5': 0.05, 'D5b': 0.05, 'C7': 0.12, 'C8': 0.12, 'C9': 0.10, 'E1': 0.15, 'E2': 0.07, 'E3': 0.08,
-                 'E3a': 0.06, 'E3b': 0.08, 'E3c': 0.07, 'E4': 0.09, 'E4a': 0.08, 'E4b': 0.09, 'E5': 0.09, 'E6': 0.09, 'E7': 0.08, 'D0': 0.09, 'B2a': 0.10, 'B2b': 0.10, 'B3': 0.10}
+                 'E3a': 0.06, 'E3b': 0.08, 'E3c': 0.07, 'E4': 0.09, 'E4a': 0.08, 'E4b': 0.09, 'E5': 0.09, 'E6': 0.09, 'E7': 0.08, 'D0': 0.09, 'B2a': 0.10, 'B2b1': 0.10, 'B2b2': 0.10, 'B2b3': 0.10, 'B2b4': 0.10, 'B3': 0.10}
 EXTRA_PTS = {'D0': [(0.083, 0.024, 0.012), (0.14, 0.20, 0.0)]}      # marker steps: points the camera must also frame (servo pocket, slit)
 GHOST_VIEW, GHOST_DIST = (50, 34), 0.24   # x-ray steps (step data 'ghost'): close-up camera that follows the plug along the spar (azimuth, elevation; distance m)
-GHOST_B0 = ('CGE-001', 'CGE-002-', 'CGE-003-')
+GHOST_B0 = ('CGE-001', 'CGE-002-', 'CGE-003-', 'CGE-009-', 'CGE-010-')
 GHOST_B2C = GHOST_B0 + ('HRN-003-', 'HRN-004-', 'WNG-001', 'CGE-004', 'CGE-005-', 'CGE-006', 'CGE-007-')
 FAB_ONLY = {'B1': ('PRP-',)}          # B1: during its make-it beat only the motors and props are teal (the cage parts are already shown)
-NO_CONTEXT = ('B0',)                  # the stage's first step frames only its own parts (the cage unit), not everything placed so far
+NO_CONTEXT = ('B0a',)                  # the stage's first step frames only its own parts (the cage unit), not everything placed so far
 T_CHK_CAM = 0.9                      # s camera pull-back to the whole assembly while a checkpoint card is up
 MARKER_BEAT_KINDS = ('thread', 'solder')   # these fab kinds are shown during the marker step's motion, not as a separate beat
 
@@ -490,7 +490,7 @@ def blender_render(argv):
 
     sched = {}
     for e in PHASE_EDGES:
-        sched[e] = [('B0', 0.0, fr[e][0]), ('B2c', fr[e][0], fr[e][1]), ('E6', fr[e][1], 1.0)]
+        sched[e] = [('B0k', 0.0, fr[e][0]), ('B2c', fr[e][0], fr[e][1]), ('E6', fr[e][1], 1.0)]
     for e in SERVO_EDGES:
         sched[e] = [('D0', 0.0, fr[e][0]), ('E3b', fr[e][0], 1.0)]
 
@@ -516,7 +516,7 @@ def blender_render(argv):
 
     def ghost_set(t):
         s = set()
-        b0, b2 = by_id['B0'], by_id['B2c']
+        b0, b2 = by_id['B0k'], by_id['B2c']
         if b0['t_mv0'] - 0.3 <= t < b0['t_mv1'] + 0.9:
             s |= {p for p in items if p.startswith(GHOST_B0)}
         if b2['t_mv0'] - 0.3 <= t < b2['t_mv1'] + 0.9:

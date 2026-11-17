@@ -47,7 +47,7 @@ YFIN, XFIN_T, FIN_H = 0.38, 0.294, 0.18     # DOC: fins at y 380, tube at x 0.29
 FIN_OD, FIN_ID = 0.016, 0.014               # DOC 16x14 tube
 PACK_X = (-0.0275, 0.0075)                  # QP-4 7.2 #2: pack moved 10 mm aft (centre -10 mm; was -20 mm) so the CAD CG lands mid-band (23 mm) WITH the D-187 elevon balance and the ES3054HV servos; trim +-10 mm in the tray slots
 TRIM = 0.010                                # +-10 mm pack trim travel (about +-2.2 mm of CG)
-TRIM_FWD = 0.006                            # D-199: forward travel 6 mm (D-196: 8 mm): the raceways, 20 mm strap and drawn pad moved the CAD CG to 20.68 mm, so the forward-trim CG must stay >= 19.3 mm, the SITL-tested end (19.4 mm at 6 mm)
+TRIM_FWD = 0.001                            # D-202: forward travel 1 mm (D-199: 6 mm). The D-202 hub (two continuous arm tubes, doublers, pins) puts 16.7 g more forward (CAD 1,278.0 g, CG 19.52 mm); the forward trim end must stay >= 19.3 mm (the SITL-tested end, claim CL-A-CG-TRIM-FWD >= 19), so the forward travel is cut to 1 mm (same remedy as D-196 -> D-199). Aft travel TRIM unchanged. CG ends 19.31 / 21.63 mm.
 TRAY_X1 = 0.0215                            # tray plate aft end (pack aft edge at +TRIM is 17.5 mm; core tray slot ends at 0.0225)
 SERVO_Y = 0.200                             # EST (DOC landing_a: servo y 0.30 is in the elevon; moved inboard)
 SV_Z1 = 0.0117 - WING_DZ                              # servo case top (servo case 28.4 x 13.0 x 26.7, see electrical.py); the core servo pocket opens at this z
@@ -72,8 +72,18 @@ def motor_R(st):
     return matmul3(fk.rot_matrix('X', PHI[st]), fk.rot_matrix('Y', CANT))
 
 
+# D-202: opposite arms are ONE continuous 12x10 tube each, crossing at the hub. Tube A (UR-LL) lies at x = HUB_x - 6.5 mm, tube B (UL-LR) at HUB_x + 6.5 mm
+# (offsets symmetric, so the mean motor x is unchanged). Every motor station therefore sits TUBE_DX ahead of / behind the old common plane.
+TUBE_DX = 0.0065                            # D-202 (qp/A/structures/fea_hub.py GEO XA / XB = -6.5 / +6.5 mm)
+TUBE_OF = {'UR': 'A', 'LL': 'A', 'LR': 'B', 'UL': 'B'}              # tube that carries each station (A: UR at +s, LL at -s; B: LR at +s, UL at -s)
+TUBE_X = {'A': HUB[0] - TUBE_DX, 'B': HUB[0] + TUBE_DX}             # x of each tube axis (m)
+TUBE_PHI = {'A': math.degrees(math.atan2(ZM, YM)), 'B': -math.degrees(math.atan2(ZM, YM))}   # +s direction of the tube in the y-z plane (deg from +y); PHI['UR'] / PHI['LR']
+XOFF = {s: TUBE_X[TUBE_OF[s]] - HUB[0] for s in ST}                 # station x offset from HUB_x
+SIG = {'UR': 1, 'UL': 1, 'LR': -1, 'LL': -1}                        # D-202 phase-lead exit side on the tube tangential face: +1 = +t (t = x_hat cross u), -1 = -t (lower arms, see D-202 CAD note: strut socket)
+
+
 def station(st):
-    return (HUB[0], ST[st][0] * YM, ST[st][1] * ZM)
+    return (HUB[0] + XOFF[st], ST[st][0] * YM, ST[st][1] * ZM)
 
 
 def mrot(st):
@@ -97,19 +107,23 @@ PH_DT = 0.0027                              # bundle offset from the arm axis to
 
 
 def arm_up_sign(st):
-    """+1 if the arm-local +z (t) axis points up (cos phi > 0), else -1: the bundle sits on the up side of the bore."""
+    """+1 if the arm-local +z (t) axis of station st points the same way as the tube t axis (right-hand stations UR, LR), else -1 (left: UL, LL)."""
     return 1.0 if ST[st][0] > 0 else -1.0
 
 
 def a2w(st, q):
-    """Arm-local point (x, y along the arm, z = t) -> world."""
+    """Arm-local point (x, y along the arm toward the motor, z = t) -> world. Arm frame: origin on the tube axis at the hub axis plane, x offset XOFF[st]."""
     p = fk.mat_vec(fk.rot_matrix('X', PHI[st]), q)
-    return (HUB[0] + p[0], HUB[1] + p[1], HUB[2] + p[2])
+    return (HUB[0] + XOFF[st] + p[0], HUB[1] + p[1], HUB[2] + p[2])
 
 
-def ph_arm_xz(st, R_IN_):
-    """Arm-local (x, z) of the bundle in the arm bore at the hub end (down the diagonal from the motor end)."""
-    return (PH_XC * math.cos(math.radians(CANT)), PH_DT * arm_up_sign(st))
+def ph_arm_xz(st, R_IN_=None):
+    """Arm-local (x, z) of the phase-lead bundle in the tube bore (D-202): on the side of the tube where the lead exits (SIG), 2.7 mm off the axis, 0.4 mm toward the cup (x-)
+    so that it passes the 4.8 mm exit hole (radius 2.4) with the bundle envelope (radius 1.94) and clears the bore wall (2.7 + 1.94 = 4.64 < 5.0)."""
+    return (PH_XD, PH_DT * SIG[st] * arm_up_sign(st))
+
+
+PH_XD = 0.0                                 # D-202: bundle x offset in the tube bore (arm frame): on the hole axis, so the bundle (radius 1.94) passes the hole (radius 2.4) with 0.46 mm to spare
 
 
 # ------------------------------------------------------------------ D-199 phase-lead raceway (shared: wing.py cuts the hub pad and the foam, electrical.py draws the printed parts and routes the bundles)

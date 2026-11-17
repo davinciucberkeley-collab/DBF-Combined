@@ -56,53 +56,53 @@
    "edge": "E-HRN-02",
    "strands": 3,
    "dia_mm": 1.8,
-   "arm_m": 0.2638,
-   "race_m": 0.1105,
-   "groove_m": 0.0098,
-   "cover_m": 0.0713,
-   "exposed_m": 0.0009,
-   "total_m": 0.4563,
+   "arm_m": 0.2778,
+   "race_m": 0.1285,
+   "groove_m": 0.0102,
+   "cover_m": 0.071,
+   "exposed_m": 0.0002,
+   "total_m": 0.4877,
    "min_bend_mm": 4.0,
-   "total_strand_m": 1.369
+   "total_strand_m": 1.463
   },
   {
    "edge": "E-HRN-03",
    "strands": 3,
    "dia_mm": 1.8,
-   "arm_m": 0.2638,
-   "race_m": 0.1113,
-   "groove_m": 0.0098,
-   "cover_m": 0.0713,
-   "exposed_m": 0.0,
-   "total_m": 0.4563,
+   "arm_m": 0.2778,
+   "race_m": 0.1155,
+   "groove_m": 0.0102,
+   "cover_m": 0.071,
+   "exposed_m": 0.0003,
+   "total_m": 0.4747,
    "min_bend_mm": 4.0,
-   "total_strand_m": 1.369
+   "total_strand_m": 1.424
   },
   {
    "edge": "E-HRN-04",
    "strands": 3,
    "dia_mm": 1.8,
-   "arm_m": 0.2638,
-   "race_m": 0.1117,
-   "groove_m": 0.0102,
-   "cover_m": 0.0843,
+   "arm_m": 0.2778,
+   "race_m": 0.1246,
+   "groove_m": 0.0098,
+   "cover_m": 0.0846,
    "exposed_m": 0.0005,
-   "total_m": 0.4705,
+   "total_m": 0.4974,
    "min_bend_mm": 4.0,
-   "total_strand_m": 1.412
+   "total_strand_m": 1.492
   },
   {
    "edge": "E-HRN-05",
    "strands": 3,
    "dia_mm": 1.8,
-   "arm_m": 0.2638,
-   "race_m": 0.112,
+   "arm_m": 0.2778,
+   "race_m": 0.1379,
    "groove_m": 0.0098,
    "cover_m": 0.0846,
    "exposed_m": 0.0003,
-   "total_m": 0.4705,
+   "total_m": 0.5105,
    "min_bend_mm": 4.0,
-   "total_strand_m": 1.412
+   "total_strand_m": 1.531
   },
   {
    "edge": "E-HRN-06",
@@ -184,10 +184,10 @@
   }
  ],
  "totals_strand_m": {
-  "ARM": 3.1655977058282203,
-  "RACE": 1.3364474313126364,
-  "GROOVE": 1.3682617965933705,
-  "COVER": 2.0641322550437766,
-  "EXPOSED": 0.868915559552794
+  "ARM": 3.333388807424825,
+  "RACE": 1.5196943390668438,
+  "GROOVE": 1.3694169888266172,
+  "COVER": 2.0629837661437413,
+  "EXPOSED": 0.8678466168540873
  }
 }

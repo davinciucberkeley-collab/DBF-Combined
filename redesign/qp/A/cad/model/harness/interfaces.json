@@ -7,7 +7,7 @@
    "name": "Phase-lead raceway (D-199, R): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 1.8,
+   "mass_g": 1.84,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0189,
@@ -22,7 +22,7 @@
    "name": "Phase-lead raceway (D-199, L): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 1.8,
+   "mass_g": 1.84,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0189,
@@ -34,60 +34,60 @@
   },
   {
    "id": "HRN-004-UR",
-   "name": "Hub conduit (D-199, UR): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "name": "Hub conduit (D-199, D-202, UR): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 1.1,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0579,
-    0.0173,
-    0.015
+    -0.0616,
+    0.0119,
+    0.0182
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "HRN-004-UL",
-   "name": "Hub conduit (D-199, UL): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "name": "Hub conduit (D-199, D-202, UL): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 0.82,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0579,
-    -0.0173,
-    0.015
+    -0.0567,
+    -0.0128,
+    0.018
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "HRN-004-LR",
-   "name": "Hub conduit (D-199, LR): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "name": "Hub conduit (D-199, D-202, LR): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 1.01,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0579,
-    0.0214,
-    -0.0091
+    -0.0561,
+    0.0153,
+    -0.0169
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "HRN-004-LL",
-   "name": "Hub conduit (D-199, LL): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "name": "Hub conduit (D-199, D-202, LL): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 1.29,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0579,
-    -0.0214,
-    -0.0091
+    -0.0605,
+    -0.014,
+    -0.0174
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -114,7 +114,7 @@
    "name": "Harness remainder, bottom-up (D-198): phase-lead extensions, splices, ESC ribbon, sensor leads, servo ties, sleeves / ties / tape / solder - lumped",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 18.4,
+   "mass_g": 20.9,
    "material": "copper / silicone",
    "cg_xyz_m": [
     0.03,
@@ -166,7 +166,7 @@
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
    "owner": "harness",
-   "notes": "hub conduit bonded to the hub web face and the arm-socket floor face (D-199)"
+   "notes": "hub conduit floor bonded on the hub sleeve and the tube (D-199, D-202)"
   },
   {
    "id": "E-HRN-50",
@@ -174,7 +174,7 @@
    "part_b": "HRN-003-R",
    "via": "CT-EPOXY",
    "owner": "harness",
-   "notes": "conduit leg B bonded on the raceway window (D-199)"
+   "notes": "conduit drop column bonded on the raceway wall round its window (D-199, D-202)"
   },
   {
    "id": "E-HRN-41",
@@ -182,7 +182,7 @@
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
    "owner": "harness",
-   "notes": "hub conduit bonded to the hub web face and the arm-socket floor face (D-199)"
+   "notes": "hub conduit floor bonded on the hub sleeve and the tube (D-199, D-202)"
   },
   {
    "id": "E-HRN-51",
@@ -190,7 +190,7 @@
    "part_b": "HRN-003-L",
    "via": "CT-EPOXY",
    "owner": "harness",
-   "notes": "conduit leg B bonded on the raceway window (D-199)"
+   "notes": "conduit drop column bonded on the raceway wall round its window (D-199, D-202)"
   },
   {
    "id": "E-HRN-42",
@@ -198,7 +198,7 @@
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
    "owner": "harness",
-   "notes": "hub conduit bonded to the hub web face and the arm-socket floor face (D-199)"
+   "notes": "hub conduit floor bonded on the hub sleeve and the tube (D-199, D-202)"
   },
   {
    "id": "E-HRN-52",
@@ -206,7 +206,7 @@
    "part_b": "HRN-003-R",
    "via": "CT-EPOXY",
    "owner": "harness",
-   "notes": "conduit leg B bonded on the raceway window (D-199)"
+   "notes": "conduit drop column bonded on the raceway wall round its window (D-199, D-202)"
   },
   {
    "id": "E-HRN-43",
@@ -214,7 +214,7 @@
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
    "owner": "harness",
-   "notes": "hub conduit bonded to the hub web face and the arm-socket floor face (D-199)"
+   "notes": "hub conduit floor bonded on the hub sleeve and the tube (D-199, D-202)"
   },
   {
    "id": "E-HRN-53",
@@ -222,7 +222,7 @@
    "part_b": "HRN-003-L",
    "via": "CT-EPOXY",
    "owner": "harness",
-   "notes": "conduit leg B bonded on the raceway window (D-199)"
+   "notes": "conduit drop column bonded on the raceway wall round its window (D-199, D-202)"
   },
   {
    "id": "E-HRN-21",

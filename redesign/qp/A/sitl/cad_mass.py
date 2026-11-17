@@ -30,15 +30,15 @@ for s in "RL":
     mt = mass_of("FIN-001-" + s); L = 2 * m.FIN_H; I[0] += mt * L * L / 12; I[1] += mt * L * L / 12
     mf = mass_of("FIN-004-" + s); h = 2 * m.FIN_H; cw = m.XFIN_T - m.XH
     I[0] += mf * h * h / 12; I[1] += mf * (cw * cw + h * h) / 12; I[2] += mf * cw * cw / 12
-for st in m.ST:
-    ma = mass_of("CGE-002-" + st); L = 0.245; uy, uz = m.ST[st][0] * m.YM / m.R_M, m.ST[st][1] * m.ZM / m.R_M
+for t_, sgn in (("A", 1), ("B", -1)):     # D-202: two continuous arm tubes (A: UR-LL, B: LR-UL), each 2 x R_M long through the hub; direction (0, cos phi, +-sin phi)
+    ma = mass_of("CGE-002-" + t_); L = 2 * m.R_M; uy, uz = m.YM / m.R_M, sgn * m.ZM / m.R_M
     k = ma * L * L / 12; I[0] += k; I[1] += k * (1 - uy * uy); I[2] += k * (1 - uz * uz)
-mb = mass_of("CGE-004"); I[1] += mb * 0.154 ** 2 / 12; I[2] += mb * 0.154 ** 2 / 12
+mb = mass_of("CGE-004"); LB = m.BR_X1 - m.BR_X0; I[1] += mb * LB ** 2 / 12; I[2] += mb * LB ** 2 / 12   # D-202: bridge 114 mm (was 154)
 for s in "RL":
     me = mass_of("WNG-006-" + s); ce = m.C - m.XH; span = m.ELEV_Y1 - m.ELEV_Y0
     I[0] += me * span * span / 12; I[1] += me * ce * ce / 12; I[2] += me * (span * span + ce * ce) / 12
 # prop plane: hub of the prop (motor frame x -0.0475 from the station along the motor axis)
-hub = m.mworld("UR", (-0.0475, 0.0, 0.0))
+hub = tuple(sum(m.mworld(st, (-0.0475, 0.0, 0.0))[k] for st in m.ST) / 4.0 for k in range(3))   # D-202: mean over the four stations (UR / LL at -6.5 mm, LR / UL at +6.5 mm in x)
 # elevon hinge inertia (one elevon, about the hinge axis): foam + tape 8.5 g plate (ce wide), balance horn + lead
 ce = m.C - m.XH
 Ih_elevon = mass_of("WNG-006-R") * ce * ce / 3

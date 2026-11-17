@@ -4,30 +4,45 @@
  "parts": [
   {
    "id": "CGE-001",
-   "name": "Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 2.0 mm arm-socket mouth walls, 1.2 mm sleeve (D-196), 0.8 mm webs, mass = drawn volume x 1.27)",
+   "name": "Hub (printed PETG, D-202: 1.5 mm sleeves over s +-24 mm of both arm tubes, 28 x 20 x 20 mm centre block with 3 mm edge radii, bridge boss r 9.5 mm, 2 strut sockets, tray flange; mass = drawn volume x 1.27)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 17.5,
+   "mass_g": 19.0,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0724,
-    0.0,
-    0.0002
+    -0.0708,
+    -0.0,
+    0.0001
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
-   "id": "CGE-002-UR",
-   "name": "Arm 12x10 x 0.245 (UR)",
+   "id": "CGE-002-A",
+   "name": "Arm tube A 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub (D-202; UR + LL)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 13.5,
+   "mass_g": 30.6,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.075,
-    0.1269,
-    0.0868
+    -0.0815,
+    -0.0,
+    -0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-002-B",
+   "name": "Arm tube B 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub (D-202; LR + UL)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 30.6,
+   "material": "CFRP tube",
+   "cg_xyz_m": [
+    -0.0685,
+    -0.0,
+    0.0
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -40,7 +55,7 @@
    "mass_g": 4.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0796,
+    -0.0861,
     0.2232,
     0.1544
    ],
@@ -48,16 +63,31 @@
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
-   "id": "CGE-002-UL",
-   "name": "Arm 12x10 x 0.245 (UL)",
+   "id": "CGE-009-UR",
+   "name": "Doubler 14x12 x 21 mm (UR), carbon tube sleeve bonded over the arm tube at s 11..32 mm (D-202)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 13.5,
+   "mass_g": 1.4,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.075,
-    -0.1269,
-    0.0868
+    -0.0815,
+    0.0177,
+    0.0121
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-010-UR",
+   "name": "Pin 3 mm carbon rod x 16 mm (UR) through the arm tube and its sleeve at s +8 mm (D-202)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 0.18,
+   "material": "CFRP rod",
+   "cg_xyz_m": [
+    -0.082,
+    0.0066,
+    0.0045
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -70,7 +100,7 @@
    "mass_g": 4.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0796,
+    -0.0731,
     -0.2248,
     0.1521
    ],
@@ -78,16 +108,31 @@
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
-   "id": "CGE-002-LR",
-   "name": "Arm 12x10 x 0.245 (LR)",
+   "id": "CGE-009-UL",
+   "name": "Doubler 14x12 x 21 mm (UL), carbon tube sleeve bonded over the arm tube at s 11..32 mm (D-202)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 13.5,
+   "mass_g": 1.4,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.075,
-    0.1269,
-    -0.0868
+    -0.0685,
+    -0.0177,
+    0.0121
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-010-UL",
+   "name": "Pin 3 mm carbon rod x 15 mm (UL) through the arm tube and its sleeve at s -8 mm (D-202)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 0.17,
+   "material": "CFRP rod",
+   "cg_xyz_m": [
+    -0.0685,
+    -0.0066,
+    0.0045
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -100,7 +145,7 @@
    "mass_g": 4.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0796,
+    -0.0731,
     0.2248,
     -0.1521
    ],
@@ -108,16 +153,31 @@
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
-   "id": "CGE-002-LL",
-   "name": "Arm 12x10 x 0.245 (LL)",
+   "id": "CGE-009-LR",
+   "name": "Doubler 14x12 x 21 mm (LR), carbon tube sleeve bonded over the arm tube at s 11..32 mm (D-202)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 13.5,
+   "mass_g": 1.4,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.075,
-    -0.1269,
-    -0.0868
+    -0.0685,
+    0.0177,
+    -0.0121
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-010-LR",
+   "name": "Pin 3 mm carbon rod x 15 mm (LR) through the arm tube and its sleeve at s +8 mm (D-202)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 0.17,
+   "material": "CFRP rod",
+   "cg_xyz_m": [
+    -0.0685,
+    0.0066,
+    -0.0045
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -130,7 +190,7 @@
    "mass_g": 4.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0796,
+    -0.0861,
     -0.2232,
     -0.1544
    ],
@@ -138,14 +198,59 @@
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
-   "id": "CGE-004",
-   "name": "Bridge 12x10",
+   "id": "CGE-009-LL",
+   "name": "Doubler 14x12 x 21 mm (LL), carbon tube sleeve bonded over the arm tube at s 11..32 mm (D-202)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 8.5,
+   "mass_g": 1.4,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.023,
+    -0.0815,
+    -0.0177,
+    -0.0121
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-010-LL",
+   "name": "Pin 3 mm carbon rod x 16 mm (LL) through the arm tube and its sleeve at s -8 mm (D-202)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 0.18,
+   "material": "CFRP rod",
+   "cg_xyz_m": [
+    -0.082,
+    -0.0066,
+    -0.0045
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-010-C",
+   "name": "Crossing pin 3 mm carbon rod x 29 mm through both arm tubes and the hub block (D-202)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 0.33,
+   "material": "CFRP rod",
+   "cg_xyz_m": [
+    -0.0755,
+    0.0,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-004",
+   "name": "Bridge 12x10 (D-202: starts at x -60 mm, bored into the boss)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 6.3,
+   "material": "CFRP tube",
+   "cg_xyz_m": [
+    -0.0028,
     0.0,
     0.0
    ],
@@ -235,9 +340,9 @@
    "mass_g": 3.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0108,
+    -0.0098,
     0.0,
-    0.0106
+    0.0104
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -246,70 +351,206 @@
  "edges": [
   {
    "id": "E-CGE-01",
-   "part_a": "CGE-002-UR",
+   "part_a": "CGE-002-A",
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
    "owner": "cage",
-   "notes": "arm in hub socket"
+   "notes": "tube through the two sleeves and the centre block, bonded over s +-24 mm (D-202)"
   },
   {
    "id": "E-CGE-02",
-   "part_a": "CGE-002-UR",
-   "part_b": "CGE-003-UR",
+   "part_a": "CGE-002-B",
+   "part_b": "CGE-001",
    "via": "CT-EPOXY",
    "owner": "cage",
-   "notes": "arm end in cup sleeve (25 mm)"
+   "notes": "tube through the two sleeves and the centre block, bonded over s +-24 mm (D-202)"
   },
   {
    "id": "E-CGE-03",
-   "part_a": "CGE-002-UL",
-   "part_b": "CGE-001",
+   "part_a": "CGE-002-A",
+   "part_b": "CGE-003-UR",
    "via": "CT-EPOXY",
    "owner": "cage",
-   "notes": "arm in hub socket"
+   "notes": "tube end in cup sleeve (25 mm)"
   },
   {
    "id": "E-CGE-04",
-   "part_a": "CGE-002-UL",
-   "part_b": "CGE-003-UL",
+   "part_a": "CGE-009-UR",
+   "part_b": "CGE-002-A",
    "via": "CT-EPOXY",
    "owner": "cage",
-   "notes": "arm end in cup sleeve (25 mm)"
+   "notes": "doubler bonded over the tube, s 11..32 mm (D-202)"
   },
   {
    "id": "E-CGE-05",
-   "part_a": "CGE-002-LR",
+   "part_a": "CGE-009-UR",
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
    "owner": "cage",
-   "notes": "arm in hub socket"
+   "notes": "doubler in the sleeve bore (D-202)"
   },
   {
    "id": "E-CGE-06",
-   "part_a": "CGE-002-LR",
-   "part_b": "CGE-003-LR",
+   "part_a": "CGE-010-UR",
+   "part_b": "CGE-002-A",
    "via": "CT-EPOXY",
    "owner": "cage",
-   "notes": "arm end in cup sleeve (25 mm)"
+   "notes": "pin through the tube wall, bonded (D-202)"
   },
   {
    "id": "E-CGE-07",
-   "part_a": "CGE-002-LL",
+   "part_a": "CGE-010-UR",
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
    "owner": "cage",
-   "notes": "arm in hub socket"
+   "notes": "pin ends in the sleeve walls (D-202)"
   },
   {
    "id": "E-CGE-08",
-   "part_a": "CGE-002-LL",
-   "part_b": "CGE-003-LL",
+   "part_a": "CGE-002-B",
+   "part_b": "CGE-003-UL",
    "via": "CT-EPOXY",
    "owner": "cage",
-   "notes": "arm end in cup sleeve (25 mm)"
+   "notes": "tube end in cup sleeve (25 mm)"
   },
   {
    "id": "E-CGE-09",
+   "part_a": "CGE-009-UL",
+   "part_b": "CGE-002-B",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "doubler bonded over the tube, s 11..32 mm (D-202)"
+  },
+  {
+   "id": "E-CGE-10",
+   "part_a": "CGE-009-UL",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "doubler in the sleeve bore (D-202)"
+  },
+  {
+   "id": "E-CGE-11",
+   "part_a": "CGE-010-UL",
+   "part_b": "CGE-002-B",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "pin through the tube wall, bonded (D-202)"
+  },
+  {
+   "id": "E-CGE-12",
+   "part_a": "CGE-010-UL",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "pin ends in the sleeve walls (D-202)"
+  },
+  {
+   "id": "E-CGE-13",
+   "part_a": "CGE-002-B",
+   "part_b": "CGE-003-LR",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "tube end in cup sleeve (25 mm)"
+  },
+  {
+   "id": "E-CGE-14",
+   "part_a": "CGE-009-LR",
+   "part_b": "CGE-002-B",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "doubler bonded over the tube, s 11..32 mm (D-202)"
+  },
+  {
+   "id": "E-CGE-15",
+   "part_a": "CGE-009-LR",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "doubler in the sleeve bore (D-202)"
+  },
+  {
+   "id": "E-CGE-16",
+   "part_a": "CGE-010-LR",
+   "part_b": "CGE-002-B",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "pin through the tube wall, bonded (D-202)"
+  },
+  {
+   "id": "E-CGE-17",
+   "part_a": "CGE-010-LR",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "pin ends in the sleeve walls (D-202)"
+  },
+  {
+   "id": "E-CGE-18",
+   "part_a": "CGE-002-A",
+   "part_b": "CGE-003-LL",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "tube end in cup sleeve (25 mm)"
+  },
+  {
+   "id": "E-CGE-19",
+   "part_a": "CGE-009-LL",
+   "part_b": "CGE-002-A",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "doubler bonded over the tube, s 11..32 mm (D-202)"
+  },
+  {
+   "id": "E-CGE-20",
+   "part_a": "CGE-009-LL",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "doubler in the sleeve bore (D-202)"
+  },
+  {
+   "id": "E-CGE-21",
+   "part_a": "CGE-010-LL",
+   "part_b": "CGE-002-A",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "pin through the tube wall, bonded (D-202)"
+  },
+  {
+   "id": "E-CGE-22",
+   "part_a": "CGE-010-LL",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "pin ends in the sleeve walls (D-202)"
+  },
+  {
+   "id": "E-CGE-23",
+   "part_a": "CGE-010-C",
+   "part_b": "CGE-002-A",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "crossing pin through the tube, bonded (D-202)"
+  },
+  {
+   "id": "E-CGE-24",
+   "part_a": "CGE-010-C",
+   "part_b": "CGE-002-B",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "crossing pin through the tube, bonded (D-202)"
+  },
+  {
+   "id": "E-CGE-25",
+   "part_a": "CGE-010-C",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "crossing pin through the centre block (D-202)"
+  },
+  {
+   "id": "E-CGE-26",
    "part_a": "CGE-004",
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
@@ -317,7 +558,7 @@
    "notes": "bridge in hub"
   },
   {
-   "id": "E-CGE-10",
+   "id": "E-CGE-27",
    "part_a": "CGE-004",
    "part_b": "CGE-006",
    "via": "CT-EPOXY",
@@ -325,7 +566,7 @@
    "notes": "bridge end in saddle boss"
   },
   {
-   "id": "E-CGE-11",
+   "id": "E-CGE-28",
    "part_a": "CGE-006",
    "part_b": "WNG-002",
    "via": "CT-EPOXY",
@@ -333,7 +574,7 @@
    "notes": "saddle wraps the spar (30 mm)"
   },
   {
-   "id": "E-CGE-12",
+   "id": "E-CGE-29",
    "part_a": "CGE-005-R",
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
@@ -341,7 +582,7 @@
    "notes": "strut in hub"
   },
   {
-   "id": "E-CGE-13",
+   "id": "E-CGE-30",
    "part_a": "CGE-005-R",
    "part_b": "CGE-007-R",
    "via": "CT-EPOXY",
@@ -349,7 +590,7 @@
    "notes": "strut end in clamp boss"
   },
   {
-   "id": "E-CGE-14",
+   "id": "E-CGE-31",
    "part_a": "CGE-007-R",
    "part_b": "WNG-002",
    "via": "CT-EPOXY",
@@ -357,7 +598,7 @@
    "notes": "clamp wraps the spar"
   },
   {
-   "id": "E-CGE-15",
+   "id": "E-CGE-32",
    "part_a": "CGE-005-L",
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
@@ -365,7 +606,7 @@
    "notes": "strut in hub"
   },
   {
-   "id": "E-CGE-16",
+   "id": "E-CGE-33",
    "part_a": "CGE-005-L",
    "part_b": "CGE-007-L",
    "via": "CT-EPOXY",
@@ -373,7 +614,7 @@
    "notes": "strut end in clamp boss"
   },
   {
-   "id": "E-CGE-17",
+   "id": "E-CGE-34",
    "part_a": "CGE-007-L",
    "part_b": "WNG-002",
    "via": "CT-EPOXY",
@@ -381,7 +622,7 @@
    "notes": "clamp wraps the spar"
   },
   {
-   "id": "E-CGE-18",
+   "id": "E-CGE-35",
    "part_a": "CGE-008",
    "part_b": "CGE-001",
    "via": "CT-EPOXY",

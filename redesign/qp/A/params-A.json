@@ -286,7 +286,7 @@
  },
  "mass": {
   "basic_cad_kg": {
-   "value": 1.2612400000000001,
+   "value": 1.27797,
    "unit": "kg",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json mass_basic_kg (CAD, no growth)"
@@ -394,19 +394,19 @@
    "note": "FIXES2 s7 / MASS-GATE s7: pack trim 10 mm aft in the tray slots"
   },
   "pack_trim_fwd_mm": {
-   "value": 6.0,
+   "value": 1.0,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
-   "note": "D-199: forward pack travel 6 mm (D-196: 8 mm) (tray front lip 2 mm aft); cad_mass.json trim_fwd_m"
+   "note": "D-202: forward pack travel 1 mm (D-199: 6 mm; D-196: 8 mm) (tray front lip 2 mm aft); cad_mass.json trim_fwd_m"
   },
   "cg_x_mm": {
-   "value": 20.51003615489518,
+   "value": 19.52011471317793,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_x_m, aft of the wing leading edge"
   },
   "cg_y_mm": {
-   "value": 2.3959357457739996,
+   "value": 2.364560200943684,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_y_m (lateral)"
@@ -1387,6 +1387,14 @@
      true
     ],
     [
+     "R14",
+     "airframe",
+     "RMRC",
+     1.0,
+     0.0,
+     true
+    ],
+    [
      "R10",
      "airframe",
      "RMRC",
@@ -1713,25 +1721,25 @@
    "note": "report.json kinks (wire folds)"
   },
   "parts": {
-   "value": 104,
+   "value": 111,
    "unit": "-",
    "source": "SRC-A-COLL",
    "note": "report.json parts checked"
   },
   "assy_steps": {
-   "value": 39,
+   "value": 58,
    "unit": "-",
    "source": "SRC-A-ASSY",
-   "note": "assembly.json steps"
+   "note": "assembly.json steps + assembly_bench.json steps (D-202 bench run)"
   },
   "assy_steps_ok": {
-   "value": 39,
+   "value": 58,
    "unit": "-",
    "source": "SRC-A-ASSY",
    "note": "assembly.json steps with no blocking pair at or above the tolerance (35 of 35 in ASSEMBLY.md)"
   },
   "assy_parts_placed": {
-   "value": 104,
+   "value": 111,
    "unit": "-",
    "source": "SRC-A-ASSY",
    "note": "assembly.json parts placed (96 of 96)"

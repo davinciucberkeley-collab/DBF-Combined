@@ -16,7 +16,7 @@ electrical in that order.
 import math
 
 from .common import *   # noqa: F401,F403
-from .wing import HINGE_Z, R_IN, HUB_ARM_R0, RHO_PETG   # noqa: F401  (read only: hinge axis height for the horn hole radius)
+from .wing import HINGE_Z, RHO_PETG, TUBE_RO, TUBE_RI, TUBE_HL, SLV_L, SLV_R, DBL_S0, DBL_S1, DBL_RO, HOLE_S, HOLE_R, STN_S   # noqa: F401  (read only: hinge axis height for the horn hole radius; D-202 tube / hub geometry)
 from .propulsion import ESC_PADS, ESC_TOP   # noqa: F401  (harness wires land on the ESC pads; lane B owns them)
 
 MM = 0.001
@@ -300,30 +300,112 @@ def servo_zc(x):
     return max(zu(x) - 0.0030, 0.0073)
 
 
-# ------------------------------------------------------------------ D-199 phase-lead raceway parts (constants in common.py)
-HH_YA0, HH_YA1 = 0.0202, HUB_ARM_R0         # hub conduit A leg (arm frame): inner radial wall at r 20.2..20.8, outer radial side = the socket floor face (r 29.17)
-HH_YI0 = 0.0208
-HH_T0, HH_T1, HH_T2 = 0.0004, 0.0050, 0.0056   # tangential: the hub web face (t 0.4) is the conduit side wall; interior t 0.4..5.0; outer wall 5.0..5.6
-HH_X = (-0.0792, -0.0786, -0.0475, -0.0469)    # outer front, interior front, interior aft, outer aft
-HB_X = (-0.0588, -0.0582, -0.0475, -0.0469)    # leg B (vertical drop): outer, interior
-HB = {'UR': dict(yo=(0.0141, 0.0209), yi=(0.0147, 0.0203), zo=(0.0060, 0.0187), zi=(0.0060, 0.0181)),      # upper bundle drops from z 15.6 to the raceway
-      'LR': dict(yo=(0.0181, 0.0240), yi=(0.0187, 0.0234), zo=(-0.0145, -0.0006), zi=(-0.0139, -0.0006))}  # lower bundle rises from z -11.2
+# ------------------------------------------------------------------ D-199 phase-lead raceway parts (constants in common.py); D-202 hub conduits
+# D-202: each phase-lead bundle leaves its arm tube through the 4.8 mm hole at s = +-18 mm (wing.py HOLE_S), enters a printed conduit HRN-004-<station> that hugs the hub sleeve
+# (the sleeve and tube are seat cuts in it), rises 12 mm along the hole axis (t), runs aft along x at (y1, z1) clear of the hub, steps sideways to its raceway lane (y), and drops
+# (upper arms, from above) or rises (lower arms, from below) at x = XV through a window in the raceway wall into HRN-003. The lower-arm holes are on the -t face (see D-202 CAD note):
+# on the +t face the lead would leave at z -3 mm, level with the strut socket boss CGE-001 (x -65.8..-52, |z| <= 3.8, y >= 21 mm), which blocks every aft route at lane height.
+CD_HW = 0.0026                              # conduit interior half width: bundle envelope radius 1.94 mm + 0.66 mm clearance (EST)
+CD_T = RW_T                                 # conduit wall 0.6 mm (EST, as the raceway)
+CD_TT = 0.012                               # bundle height above the tube axis at the top of the chimney (t, m)
+CD_FL = 0.0064                              # conduit outer floor at t = 6.4 mm (inside the sleeve where the sleeve is: seat cut); interior from t = 7.0 mm
+CD_UOFF = 0.0004                            # the bundle leaves the tube 0.4 mm inboard of the hole axis (u), so that its 4 mm bend (which hugs the outboard side) is centred in the 4.8 mm hole
+CD_XCUT = 0.0045                            # the sideways step starts 4.5 mm ahead of the drop column (corner arcs of the bundle, r 4 mm)
+XV = -0.053                                 # x of the drop column (bundle centre line)
+XVH = XV + 0.0035                           # +x limit of the column interior (the 6 mm bend into the raceway swings the bundle 0.6..1.0 mm aft while it crosses the wall; strand radius 0.9)
+CD_WX = (XV - CD_HW, XVH)           # raceway window x range (the 6 mm bend of the bundle moves it 0.6..1.0 mm aft over the wall thickness)
 
 
-def _aw(st, ya, t):
-    p = a2w(st, (0.0, ya, t))
-    return (p[1], p[2])
+def _cd_ut_yz(phi_deg, u, t):
+    a = math.radians(phi_deg)
+    return (u * math.cos(a) - t * math.sin(a), u * math.sin(a) + t * math.cos(a))
+
+
+def cd_spec(st):
+    """Geometry of conduit st (world metres): rotated-rectangle chimney + aft run (prism along x), corner box (sideways step), drop column, as outer and interior pieces."""
+    T = TUBE_OF[st]
+    xt, phi, sg, sig = TUBE_X[T], TUBE_PHI[T], STN_S[st], SIG[st]
+    sy, sz = ST[st]
+    u0 = sg * HOLE_S
+    hw, w = CD_HW, CD_T
+    y1, z1 = _cd_ut_yz(phi, u0, sig * CD_TT)
+    yl = sy * (RW_YU if sz > 0 else RW_YL)
+    t0o, t1o = sig * CD_FL, sig * (CD_TT + hw + w)
+    t0i, t1i = sig * 0.0070, sig * (CD_TT + hw)
+    po = [_cd_ut_yz(phi, u, t) for u, t in ((u0 - hw - w, t0o), (u0 + hw + w, t0o), (u0 + hw + w, t1o), (u0 - hw - w, t1o))]
+    pi_ = [_cd_ut_yz(phi, u, t) for u, t in ((u0 - hw, t0i), (u0 + hw, t0i), (u0 + hw, t1i), (u0 - hw, t1i))]
+    ya, yb = sorted((y1, yl))
+    xr = XV - CD_XCUT
+    up = sz > 0
+    col_o_z = (RW_ZO[1], z1 + hw + w) if up else (z1 - hw - w, RW_ZO[0])
+    col_i_z = (RW_ZO[1] - 0.0001, z1 + hw) if up else (z1 - hw, RW_ZO[0] + 0.0001)
+    return dict(T=T, xt=xt, phi=phi, y1=y1, z1=z1, yl=yl, u0=u0, sig=sig,
+                run_o=(po, xt - hw - w, xr), run_i=(pi_, xt - hw, xr + 0.0010),
+                cor_o=((xr - w, ya - hw - w, z1 - hw - w), (XVH + w, yb + hw + w, z1 + hw + w)), cor_i=((xr, ya - hw, z1 - hw), (XVH, yb + hw, z1 + hw)),
+                col_o=((XV - hw - w, yl - hw - w, col_o_z[0]), (XVH + w, yl + hw + w, col_o_z[1])), col_i=((XV - hw, yl - hw, col_i_z[0]), (XVH, yl + hw, col_i_z[1])))
+
+
+CD = {st: cd_spec(st) for st in ST}
+
+
+def _cd_masks(st, X, Y, Z):
+    """Boolean arrays (outer union, interior union) of conduit st on points X, Y, Z (numpy)."""
+    import numpy as np
+    c = CD[st]
+    out = np.zeros(X.shape, dtype=bool)
+    inn = np.zeros(X.shape, dtype=bool)
+    cp, sp = math.cos(math.radians(c['phi'])), math.sin(math.radians(c['phi']))
+    U, Tt = Y * cp + Z * sp, -Y * sp + Z * cp
+    hw, w, sig = CD_HW, CD_T, c['sig']
+    for key, (a_lo, a_hi, t_lo, t_hi) in (('o', (c['u0'] - hw - w, c['u0'] + hw + w, CD_FL, CD_TT + hw + w)), ('i', (c['u0'] - hw, c['u0'] + hw, 0.0070, CD_TT + hw))):
+        x0, x1 = (c['run_o'][1], c['run_o'][2]) if key == 'o' else (c['run_i'][1], c['run_i'][2])
+        m = (X >= x0) & (X <= x1) & (U >= a_lo) & (U <= a_hi) & (sig * Tt >= t_lo) & (sig * Tt <= t_hi)
+        if key == 'o':
+            out |= m
+        else:
+            inn |= m
+    for kk in ('cor', 'col'):
+        for key in ('o', 'i'):
+            lo, hi = c[kk + '_' + key]
+            m = (X >= lo[0]) & (X <= hi[0]) & (Y >= lo[1]) & (Y <= hi[1]) & (Z >= lo[2]) & (Z <= hi[2])
+            if key == 'o':
+                out |= m
+            else:
+                inn |= m
+    return out, inn
+
+
+def cd_interior(st, p):
+    import numpy as np
+    return bool(_cd_masks(st, np.array([p[0]]), np.array([p[1]]), np.array([p[2]]))[1][0])
+
+
+def cd_mass_g(st, h=0.0002):
+    """Drawn conduit mass: (outer union - interior union - the sleeve, tube and doubler the conduit hugs) x 1.27, integrated on a grid of pitch h."""
+    import numpy as np
+    c = CD[st]
+    lo = [c['run_o'][1]] + [min(c[k][0][i] for k in ('cor_o', 'col_o')) for i in (1, 2)]
+    pts = [q for q in c['run_o'][0]]
+    ys = [q[0] for q in pts] + [c['cor_o'][0][1], c['cor_o'][1][1], c['col_o'][0][1], c['col_o'][1][1]]
+    zs = [q[1] for q in pts] + [c['cor_o'][0][2], c['cor_o'][1][2], c['col_o'][0][2], c['col_o'][1][2]]
+    xs = np.arange(c['run_o'][1] + h / 2, c['col_o'][1][0], h)
+    yy = np.arange(min(ys) + h / 2, max(ys), h)
+    zz = np.arange(min(zs) + h / 2, max(zs), h)
+    Y, Z = np.meshgrid(yy, zz, indexing='ij')
+    cp, sp = math.cos(math.radians(c['phi'])), math.sin(math.radians(c['phi']))
+    U, Tt = Y * cp + Z * sp, -Y * sp + Z * cp
+    tot = 0
+    for x in xs:
+        X = np.full(Y.shape, x)
+        o, i_ = _cd_masks(st, X, Y, Z)
+        d2 = Tt * Tt + (x - c['xt']) ** 2
+        hub = ((np.abs(U) <= SLV_L) & (d2 <= SLV_R ** 2)) | (d2 <= TUBE_RO ** 2) | ((np.abs(U) >= DBL_S0) & (np.abs(U) <= DBL_S1) & (d2 <= DBL_RO ** 2))
+        tot += int(np.count_nonzero(o & ~i_ & ~hub))
+    return tot * h ** 3 * 1e6 * RHO_PETG
 
 
 def _rect_loop(a0, a1, b0, b1):
     return [(a0, b0), (a1, b0), (a1, b1), (a0, b1)]
-
-
-def hubhop_loops(st):
-    """World (y, z) loops of the hub conduit A leg: L-shaped wall section, end-wall rectangle (arm frame -> world; st = UR or LR, right side)."""
-    shell = [_aw(st, ya, t) for ya, t in ((HH_YA0, HH_T0), (HH_YI0, HH_T0), (HH_YI0, HH_T1), (HH_YA1, HH_T1), (HH_YA1, HH_T2), (HH_YA0, HH_T2))]
-    endw = [_aw(st, ya, t) for ya, t in ((HH_YA0, HH_T0), (HH_YA1, HH_T0), (HH_YA1, HH_T2), (HH_YA0, HH_T2))]
-    return shell, endw
 
 
 def _area(l):
@@ -333,64 +415,61 @@ def _area(l):
 def raceway_mass_g():
     wall = (RW_YO[1] - RW_YO[0]) * (RW_ZO[1] - RW_ZO[0]) - (RW_YI[1] - RW_YI[0]) * (RW_ZI[1] - RW_ZI[0])
     v = wall * (RW_X1 - RW_XI0) + (RW_YO[1] - RW_YO[0]) * (RW_ZO[1] - RW_ZO[0]) * (RW_XI0 - RW_XO0)
-    v -= 2 * (HB['UR']['yi'][1] - HB['UR']['yi'][0]) * (HB_X[2] - HB_X[1]) * RW_T       # windows for the two B legs
+    v -= 2 * (CD_WX[1] - CD_WX[0]) * (2 * CD_HW) * RW_T          # windows for the upper and the lower bundle (D-202)
     return round(v * 1e6 * RHO_PETG, 2)
 
 
 def hubhop_mass_g(st):
-    shell, endw = hubhop_loops(st)
-    v = _area(shell) * (HH_X[2] - HH_X[1]) + 2 * _area(endw) * RW_T
-    b = HB[st]
-    wo = (HB_X[3] - HB_X[0]) * (b['yo'][1] - b['yo'][0])
-    wi = (HB_X[2] - HB_X[1]) * (b['yi'][1] - b['yi'][0])
-    v += (wo - wi) * (b['zo'][1] - b['zo'][0]) + wo * RW_T                                    # leg B walls + cap
-    return round(v * 1e6 * RHO_PETG, 2)
+    return round(cd_mass_g(st), 2)
 
 
 def enclosure_class(p):
-    """'RACE' if the point is inside a printed raceway / hub conduit interior, 'GROOVE' in the foam ditch, else None (D-199). Mirror-symmetric in y."""
+    """'ARM' if the point is inside an arm tube bore or its 4.8 mm exit hole, 'RACE' if inside a printed raceway / hub conduit interior, 'GROOVE' in the foam ditch, else None
+    (D-199, D-202). Mirror-symmetric in y for the raceway and ditch."""
     x, y, z = p
-    y = abs(y)
+    ya = abs(y)
     e = 5e-5
-    if RW_XI0 - e <= x <= RW_X1 + e and RW_YI[0] - e <= y <= RW_YI[1] + e and RW_ZI[0] - e <= z <= RW_ZI[1] + e:
+    if RW_XI0 - e <= x <= RW_X1 + e and RW_YI[0] - e <= ya <= RW_YI[1] + e and RW_ZI[0] - e <= z <= RW_ZI[1] + e:
         return 'RACE'
-    for st in ('UR', 'LR'):
-        b = HB[st]
-        if HB_X[1] - e <= x <= HB_X[2] + e and b['yi'][0] - e <= y <= b['yi'][1] + e and b['zi'][0] - e <= z <= b['zi'][1] + e:
+    for st in ST:
+        if cd_interior(st, p):
             return 'RACE'
-        if HH_X[1] - e <= x <= HH_X[2] + e:
-            c, s_ = math.cos(math.radians(PHI[st])), math.sin(math.radians(PHI[st]))
-            ya, t = y * c + z * s_, -y * s_ + z * c
-            if HH_YI0 - e <= ya <= HH_YA1 + e and HH_T0 - e <= t <= HH_T1 + e:
-                return 'RACE'
-    if RW_X1 < x <= DITCH_X1 + e and RW_YI[0] - e <= y <= RW_YI[1] + e and RW_ZI[0] - e <= z < zu(x):
+    for st in ST:                                    # tube bore and exit hole
+        T, sg, sig = TUBE_OF[st], STN_S[st], SIG[st]
+        a = math.radians(TUBE_PHI[T])
+        u, t = y * math.cos(a) + z * math.sin(a), -y * math.sin(a) + z * math.cos(a)
+        dx = x - TUBE_X[T]
+        if dx * dx + t * t <= (TUBE_RI + e) ** 2 and abs(u) <= TUBE_HL:
+            return 'ARM'
+        if dx * dx + (u - sg * HOLE_S) ** 2 <= (HOLE_R + e) ** 2 and 0.0045 <= sig * t <= 0.0100:
+            return 'ARM'
+    if RW_X1 < x <= DITCH_X1 + e and RW_YI[0] - e <= ya <= RW_YI[1] + e and RW_ZI[0] - e <= z < zu(x):
         return 'GROOVE'
     return None
 
 
 def build_raceway(ctx):
-    """HRN-003-R / -L: closed printed channel under the tray plate; HRN-004-UR/LR/UL/LL: hub conduits (D-199)."""
+    """HRN-003-R / -L: closed printed channel under the tray plate; HRN-004-<station>: hub conduits (D-199, D-202)."""
     rw = ctx.part('HRN-003-R', rgb=(0.95, 0.75, 0.2))
     rw.prism('X', RW_XI0, [_rect_loop(RW_YO[0], RW_YO[1], RW_ZO[0], RW_ZO[1]), _rect_loop(RW_YI[0], RW_YI[1], RW_ZI[0], RW_ZI[1])], RW_X1 - RW_XI0, name='phase-lead raceway, 0.6 mm walls, closed section (D-199)')
     rw.box((RW_XO0, RW_YO[0], RW_ZO[0]), (RW_XI0, RW_YO[1], RW_ZO[1]), name='raceway front wall (D-199)')
-    bu, bl = HB['UR'], HB['LR']
-    rw.cut_box((HB_X[1], bu['yi'][0], RW_ZI[1] - 0.0001), (HB_X[2], bu['yi'][1], RW_ZO[1] + 0.0001), name='window for the upper bundle drop (D-199)')
-    rw.cut_box((HB_X[1], bl['yi'][0], RW_ZO[0] - 0.0001), (HB_X[2], bl['yi'][1], RW_ZI[0] + 0.0001), name='window for the lower bundle rise (D-199)')
+    rw.cut_box((CD_WX[0], RW_YI[0], RW_ZI[1] - 0.0001), (CD_WX[1], RW_YU + CD_HW, RW_ZO[1] + 0.0001), name='window for the upper bundle drop (D-202)')
+    rw.cut_box((CD_WX[0], RW_YL - CD_HW, RW_ZO[0] - 0.0001), (CD_WX[1], RW_YI[1], RW_ZI[0] + 0.0001), name='window for the lower bundle rise (D-202)')
     ctx.mirror('HRN-003-R', 'HRN-003-L', plane='XZ')
-    for st in ('UR', 'LR'):
+    for st in ST:
+        c = CD[st]
         h = ctx.part('HRN-004-' + st, rgb=(0.95, 0.75, 0.2))
-        shell, endw = hubhop_loops(st)
-        h.prism('X', HH_X[1], [shell], HH_X[2] - HH_X[1], name='hub conduit leg A along the hub web (D-199)')
-        h.prism('X', HH_X[0], [endw], HH_X[1] - HH_X[0], name='hub conduit front wall (D-199)')
-        h.prism('X', HH_X[2], [endw], HH_X[3] - HH_X[2], name='hub conduit aft wall (D-199)')
-        b = HB[st]
-        up = st == 'UR'
-        h.prism('Z', b['zo'][0], [_rect_loop(HB_X[0], HB_X[3], b['yo'][0], b['yo'][1]), _rect_loop(HB_X[1], HB_X[2], b['yi'][0], b['yi'][1])], b['zo'][1] - b['zo'][0], name='hub conduit leg B, vertical drop (D-199)')
-        cz0, cz1 = (b['zi'][1], b['zo'][1]) if up else (b['zo'][0], b['zi'][0])
-        h.box((HB_X[0], b['yo'][0], cz0), (HB_X[3], b['yo'][1], cz1), name='hub conduit leg B cap (D-199)')
-        h.cut_box((HB_X[1], b['yi'][0], b['zi'][0]), (HB_X[2], b['yi'][1], b['zi'][1]), name='opening of leg A into leg B (D-199)')
-        h.cut_prism('X', HB_X[0] - 0.0001, [[_aw(st, ya, t) for ya, t in ((HH_YI0, HH_T0), (HH_YA1, HH_T0), (HH_YA1, HH_T1), (HH_YI0, HH_T1))]], HB_X[1] - HB_X[0] + 0.0002, name='passage of leg A through the front wall of leg B (D-199)')
-        ctx.mirror('HRN-004-' + st, 'HRN-004-' + ('UL' if up else 'LL'), plane='XZ')
+        po, x0o, x1o = c['run_o']
+        pi_, x0i, x1i = c['run_i']
+        h.prism('X', x0o, [po], x1o - x0o, name='hub conduit chimney and aft run, outer (D-202)')
+        h.box(c['cor_o'][0], c['cor_o'][1], name='hub conduit sideways step, outer (D-202)')
+        h.box(c['col_o'][0], c['col_o'][1], name='hub conduit drop column, outer (D-202)')
+        h.cut_prism('X', x0i, [pi_], x1i - x0i, name='conduit chimney and run interior (D-202)')
+        h.cut_box(c['cor_i'][0], c['cor_i'][1], name='conduit step interior (D-202)')
+        h.cut_box(c['col_i'][0], c['col_i'][1], name='conduit column interior, open to the raceway window (D-202)')
+        ctx.seat('HRN-004-' + st, 'CGE-001', 'conduit floor hugs the hub sleeve (D-202)')
+        ctx.seat('HRN-004-' + st, 'CGE-002-' + c['T'], 'conduit floor over the arm tube (D-202)')
+        ctx.seat('HRN-004-' + st, 'CGE-009-' + st, 'conduit floor over the doubler (D-202)')
 
 
 # ------------------------------------------------------------------ lane C constants (m)
@@ -497,7 +576,7 @@ for s in 'RL':
 for s_ in 'RL':
     P('HRN-003-' + s_, 'Phase-lead raceway (D-199, %s): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side' % s_, 'harness', raceway_mass_g(), 'PETG (printed)')
 for s_ in ST:
-    P('HRN-004-' + s_, 'Hub conduit (D-199, %s): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway' % s_, 'harness', hubhop_mass_g('UR' if s_[0] == 'U' else 'LR'), 'PETG (printed)')
+    P('HRN-004-' + s_, 'Hub conduit (D-199, D-202, %s): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window' % s_, 'harness', hubhop_mass_g(s_), 'PETG (printed)')
 # landing
 for s in ST:
     P('GER-001-' + s, 'Foot shoe (%s)' % s, 'landing', 1.4, 'PETG (printed)')
@@ -575,8 +654,8 @@ E('E-HRN-32', 'HRN-003-R', 'WNG-001', TAPEF, 'harness', 'raceway taped in its fo
 E('E-HRN-33', 'HRN-003-L', 'WNG-001', TAPEF, 'harness', 'raceway taped in its foam groove (D-199)')
 E('E-HRN-31', 'HRN-003-L', 'CGE-008', EPX, 'harness', 'raceway bonded to the tray plate underside (top face z 6.0), lowered from above before the tray, in its foam groove (D-199)')
 for _i, s_ in enumerate(ST):
-    E('E-HRN-4%d' % _i, 'HRN-004-' + s_, 'CGE-001', EPX, 'harness', 'hub conduit bonded to the hub web face and the arm-socket floor face (D-199)')
-    E('E-HRN-5%d' % _i, 'HRN-004-' + s_, 'HRN-003-' + ('R' if ST[s_][0] > 0 else 'L'), EPX, 'harness', 'conduit leg B bonded on the raceway window (D-199)')
+    E('E-HRN-4%d' % _i, 'HRN-004-' + s_, 'CGE-001', EPX, 'harness', 'hub conduit floor bonded on the hub sleeve and the tube (D-199, D-202)')
+    E('E-HRN-5%d' % _i, 'HRN-004-' + s_, 'HRN-003-' + ('R' if ST[s_][0] > 0 else 'L'), EPX, 'harness', 'conduit drop column bonded on the raceway wall round its window (D-199, D-202)')
 E('E-HRN-21', 'HRN-002', 'WNG-001', TAPEF, 'harness', 'XT60 pair and tail taped on the skin (foam tape) and tied', retention=dict(item='VHB-class tape', count=1))
 E('E-HRN-20', 'HRN-001', 'WNG-001', 'CT-TIE', 'harness', 'harness lump: ties and tape on the wing')
 E('E-ASM-01', 'HRD-001', 'WNG-001', 'CT-TIE', 'assembly', 'hardware lump')
@@ -829,33 +908,37 @@ Z_RUN = 0.017                               # height of the bundles over the pla
 
 
 def phase_route(st, px, py, z_pad):
-    """D-199 phase-lead bundle (tri of 1.8 mm strands), motor to ESC pad, ENCLOSED over its whole length. Waypoints and the bend radius at each interior
-    vertex (m). Cup frame: motor base (inside the ring) -> +x through the cup lead hole (y 5.5 mm) -> 4 mm bend in the cup collar -> -y inside the arm bore to
-    y -0.150 -> down the bore (offset PH_DT) -> out of the arm end through the hub socket floor hole -> 4 mm bend aft inside the hub conduit leg A (HRN-004, along
-    the hub web) to x -52 -> 6 mm bend down (upper arms) or up (lower arms) the conduit leg B into the raceway HRN-003 (lane y 17 / 21 mm, z 2.7) -> aft under
-    the tray plate to the tray end (x 22.5) -> open foam ditch under the bay cover to x 29 -> up to z 17 inside the cover, aft over the plate beside the FC
-    (|y| >= 15) -> up to z 28 under the roof over the ESC -> slanting down to the ESC pad. Smoothed by _smooth (>= 4 mm everywhere)."""
+    """D-199 / D-202 phase-lead bundle (tri of 1.8 mm strands), motor to ESC pad, ENCLOSED over its whole length. Waypoints and the bend radius at each interior
+    vertex (m). Cup frame: motor base (inside the ring) -> +x through the cup lead hole (y 5.5 mm) -> 4 mm bend in the cup collar -> -y inside the arm tube bore to
+    y -0.150 -> down the bore (offset PH_DT on the exit side) to s = +-18 mm -> 4 mm bend out through the 4.8 mm tube / doubler / sleeve hole -> 4 mm bend aft inside the hub
+    conduit HRN-004 (12 mm above the tube axis) -> aft along x to the drop column (x -53) -> 4 mm sideways step to the raceway lane (y 17 upper arms / 21 lower arms) -> 4 mm bend
+    into the drop (upper arms) or rise (lower arms) -> 6 mm bend aft into the raceway HRN-003 (z 2.7) -> aft under the tray plate to the tray end (x 22.5) -> open foam ditch under
+    the bay cover to x 29 -> up to z 17 inside the cover, aft over the plate beside the FC (|y| >= 15) -> up to z 28 under the roof over the ESC -> slanting down to the ESC pad.
+    Smoothed by _smooth (>= 4 mm everywhere). Returns (points, radii, index of the vertex whose following leg is the free run over the plate)."""
     sy, sz = ST[st]
-    xa, za = ph_arm_xz(st, R_IN)
+    c = CD[st]
+    xa, za = ph_arm_xz(st)
+    k = arm_up_sign(st)
     pts = [mworld(st, (-0.0135, PH_Y, 0.0)), mworld(st, (PH_XC, PH_Y, 0.0)), mworld(st, (PH_XC, -0.150, 0.0)),
-           a2w(st, (xa, R_IN + 0.020, za)), a2w(st, (xa, R_IN - 0.0075, za))]
-    g = pts[-1]
-    yl = sy * (RW_YU if sz > 0 else RW_YL)
-    pts += [(RW_XD, g[1], g[2]), (RW_XD, yl, RW_ZB), (RW_XR, yl, RW_ZB), (RW_XR, yl, Z_RUN)]
-    rad = [0.004, 0.040, 0.040, 0.004, 0.006, 0.006, 0.006, 0.006]
+           a2w(st, (xa, HOLE_S + 0.020, za)), a2w(st, (xa, HOLE_S - CD_UOFF, za)), a2w(st, (xa, HOLE_S - CD_UOFF, SIG[st] * k * CD_TT))]
+    rad = [0.004, 0.040, 0.040, 0.004, 0.004]
+    yl = c['yl']
+    pts += [(XV, c['y1'], c['z1']), (XV, yl, c['z1']), (XV, yl, RW_ZB), (RW_XR, yl, RW_ZB), (RW_XR, yl, Z_RUN)]
+    rad += [0.004, 0.004, 0.006, 0.006, 0.006]
+    i_sag = len(pts) - 1
     if sz > 0:
         pts += [(0.068, yl, Z_RUN), (0.068, yl, 0.028), (0.078, yl, 0.028)]
     else:
         pts += [(0.074, yl, Z_RUN), (0.074, yl, 0.028), (0.088, yl, 0.028)]
     rad += [0.006, 0.0045, 0.008]
     pts += [(px, py, z_pad)]
-    return pts, rad
+    return pts, rad, i_sag
 
 
 def phase_path(st, px, py, z_pad):
     """Dense smooth centre line of the bundle (with the drape on the free run over the plate) and the effective bend radii."""
-    pts, rad = phase_route(st, px, py, z_pad)
-    return _smooth(pts, rad, sag={8: (0.0008, (0, 0, -1))})
+    pts, rad, i_sag = phase_route(st, px, py, z_pad)
+    return _smooth(pts, rad, sag={i_sag: (0.0008, (0, 0, -1))})
 
 
 # D-198 bottom-up mass of the lumped harness remainder HRN-001 (replaces the 50.9 g "110 g allocation less itemised parts"). The 400 mm stock leads of the

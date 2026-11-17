@@ -53,14 +53,21 @@
     "CGE-001",
     "CGE-004",
     "CGE-006",
-    "CGE-002-UR",
-    "CGE-002-UL",
-    "CGE-002-LR",
-    "CGE-002-LL",
+    "CGE-002-A",
+    "CGE-002-B",
     "CGE-003-UR",
     "CGE-003-UL",
     "CGE-003-LR",
     "CGE-003-LL",
+    "CGE-009-UR",
+    "CGE-009-UL",
+    "CGE-009-LR",
+    "CGE-009-LL",
+    "CGE-010-UR",
+    "CGE-010-UL",
+    "CGE-010-LR",
+    "CGE-010-LL",
+    "CGE-010-C",
     "CGE-005-R",
     "CGE-005-L",
     "CGE-007-R",
@@ -107,11 +114,35 @@
    "pairs": []
   },
   {
-   "id": "B2b",
+   "id": "B2b1",
    "parts": [
-    "HRN-004-UR",
-    "HRN-004-UL",
-    "HRN-004-LR",
+    "HRN-004-UR"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B2b2",
+   "parts": [
+    "HRN-004-UL"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B2b3",
+   "parts": [
+    "HRN-004-LR"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B2b4",
+   "parts": [
     "HRN-004-LL"
    ],
    "worst_mm": 0.0,
@@ -418,5 +449,5 @@
   }
  ],
  "tol_mm": 0.05,
- "flipped": 1596
+ "flipped": 1512
 }
