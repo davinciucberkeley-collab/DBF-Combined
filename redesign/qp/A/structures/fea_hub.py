@@ -287,6 +287,40 @@ def fixed_nodes(X):
     return np.where((r > GEO['TUBE_RI'] - 0.02) & (r < GEO['TUBE_RO'] + 0.02) & (np.abs(X[:, 0] - (GEO['X_HUB1'] + GEO['BR_L'])) < 0.02))[0]
 
 
+RELEASE = False          # --release: glue between the hub sleeves and the arm tubes has let go (pins-only case, D-202)
+K_PEN = 1.0e5            # N/mm per node pair: normal-only tie (bearing kept, no glue shear or torsion; separation not modelled)
+
+
+def release_interface(X, E, M):
+    """Duplicate the hub-side nodes on each arm-tube / hub interface (not at the pins) and return the node pairs with their
+    radial normals; the pairs are later tied in the normal direction only (frictionless, no glue)."""
+    U = axes(); pairs = []
+    pinn = np.unique(E[M == 4]) if (M == 4).any() else np.array([], int)
+    for t, mi in (('A', 1), ('B', 2)):
+        hubn = np.unique(E[M == 0]); tn = np.unique(E[M == mi])
+        itf = np.setdiff1d(np.intersect1d(hubn, tn), pinn)
+        new = np.arange(len(X), len(X) + len(itf))
+        X = np.vstack([X, X[itf]])
+        lut = np.full(len(X), -1); lut[itf] = new
+        Eh = E[M == 0]; m = np.isin(Eh, itf); Eh[m] = lut[Eh[m]]; E[M == 0] = Eh
+        u = U[t]; d = X[itf] - np.array([tube_x(t), 0, 0]); rv = d - np.outer(d @ u, u)
+        pairs.append((itf, new, rv / np.linalg.norm(rv, axis=1)[:, None]))
+        print('released %d interface nodes on tube %s' % (len(itf), t), flush=True)
+    return X, E, pairs
+
+
+def penalty(n_nodes, pairs):
+    from scipy.sparse import coo_matrix
+    R, Cc, V = [], [], []
+    for a, b, nv in pairs:
+        nn = K_PEN * np.einsum('ei,ej->eij', nv, nv)
+        for (p_, q_, sg) in ((a, a, 1), (b, b, 1), (a, b, -1), (b, a, -1)):
+            for i in range(3):
+                for j in range(3):
+                    R.append(3 * p_ + i); Cc.append(3 * q_ + j); V.append(sg * nn[:, i, j])
+    return coo_matrix((np.concatenate(V), (np.concatenate(R), np.concatenate(Cc))), shape=(3 * n_nodes, 3 * n_nodes)).tocsr()
+
+
 def run(level, tag):
     os.makedirs(OUT, exist_ok=True)
     import hashlib                                       # cache key includes the geometry, so --p never reuses a stale mesh
@@ -299,7 +333,11 @@ def run(level, tag):
     Rx = np.array([[0, 1.0, 0], [-1.0, 0, 0], [0, 0, 1.0]])               # y -> x
     D_br = to_voigt(np.einsum('pi,qj,rk,sl,ijkl->pqrs', Rx, Rx, Rx, Rx, to_tensor(FA.D_ti_y())))
     Ds = [FA.D_iso(FA.E_PETG, FA.NU_PETG), D_tube(U['A']), D_tube(U['B']), D_br, FA.D_iso(GEO['E_PIN'], 0.3)]
+    if RELEASE:
+        E = E.copy(); X, E, pairs = release_interface(X, E, M)
     K, Bs, dof, dets = FA.assemble(X, E, M, Ds)
+    if RELEASE:
+        K = (K + penalty(len(X), pairs)).tocsr()
     fix = fixed_nodes(X)
     fd = np.zeros(3 * len(X), bool); fd[(3 * fix[:, None] + np.arange(3)).ravel()] = True
     free = np.where(~fd)[0]
@@ -442,7 +480,9 @@ if __name__ == '__main__':
     ap.add_argument('--level', type=int, default=0)
     ap.add_argument('--tag', default='base')
     ap.add_argument('--p', nargs='*', default=[])
+    ap.add_argument('--release', action='store_true', help='glue released between hub sleeves and arm tubes: pins and bearing only')
     a = ap.parse_args()
+    RELEASE = a.release
     for kv in a.p:
         k, v = kv.split('='); GEO[k] = float(v)
     t0 = time.time()
