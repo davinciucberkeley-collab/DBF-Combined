@@ -4,8 +4,8 @@
 import { DIMS, C } from './data/concepts.js?v=20261115f';
 import { start as startViewer, viewer } from './viewer.js?v=20261116e';
 
-const ROUTES = ['aircraft', 'decision', 'team', 'subsystems', 'build', 'proof', 'status', 'bom', 'docs'];
-const TITLES = { aircraft: 'Aircraft', decision: 'Decision', team: 'Team', subsystems: 'Subsystems', build: 'Build guide', proof: 'Proof chain', status: 'Status', bom: 'BOM', docs: 'Docs' };
+const ROUTES = ['aircraft', 'decision', 'team', 'subsystems', 'build', 'proof', 'structures', 'status', 'bom', 'docs'];
+const TITLES = { aircraft: 'Aircraft', decision: 'Decision', team: 'Team', subsystems: 'Subsystems', build: 'Build guide', proof: 'Proof chain', structures: 'Structures', status: 'Status', bom: 'BOM', docs: 'Docs' };
 const GH_ROOT = 'https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/';
 const store = { get(k) { try { return localStorage.getItem('k09l.' + k); } catch (e) { return null; } },
   set(k, v) { try { localStorage.setItem('k09l.' + k, v); } catch (e) { /* storage blocked: fine */ } } };
@@ -93,6 +93,7 @@ function route() {
   if (name === 'build') { const h = hydrateBuild(); if (target) h.then(() => target.scrollIntoView({ block: 'start', behavior: 'instant' })); }
   if (name === 'aircraft') { viewer.resize(); if (focusPartId) focusPart(focusPartId); focusPartId = null; }
   if (name === 'decision') redrawMorph();
+  if (name === 'structures') import('./fea-view.js?v=20261117c').then(m => m.mountFea());
   closeNav(false); buildRail(name);
 }
 window.addEventListener('hashchange', route);

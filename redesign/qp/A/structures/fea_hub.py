@@ -475,12 +475,102 @@ def evaluate(res, combos):
     return out
 
 
+ALLOW = FA.ALLOW                     # cf_axial 350, cf_hoop 40, cf_shear 30, petg 20 MPa (fea_arm.py, EST)
+
+
+def element_fields(res, combos, fac_petg, fac_cf):
+    """Per element, enveloped over the combos and the 4 Gauss points: utilisation = stress x required factor / allowable
+    (PETG: max principal / 20; CFRP tubes and bridge: max of |axial| / 350, |hoop or transverse| / 40, shear / 30) and the
+    governing stress (MPa). Pins: von Mises only (no allowable in the analysis, utilisation NaN). NaN where the model is not
+    judged: tube stubs within 15 mm of the loaded ends, and the last 10 mm of the bridge at its fixed end."""
+    S, M, xg = res['S'], res['M'], res['xg']
+    ne = len(M); U = np.zeros(ne); SG = np.zeros(ne)
+    Cs = np.array([coeffs(c) for c in combos])
+    xgf = xg.reshape(-1, 3)
+    for ci in range(0, len(Cs), 4):
+        for c in Cs[ci:ci + 4]:
+            sig = np.einsum('k,kegs->egs', c, S)                       # (ne, 4, 6)
+            for m in range(5):
+                sel = M == m
+                if not sel.any():
+                    continue
+                sg = sig[sel]
+                if m == 0:
+                    p1, _ = FA.principal(sg); u = p1 * fac_petg / ALLOW['petg']; s_ = p1
+                elif m in (1, 2):
+                    ax, hp, sh, _ = tube_stress(sg.reshape(-1, 6), xg[sel].reshape(-1, 3), 'A' if m == 1 else 'B')
+                    ax, hp, sh = (v.reshape(-1, 4) for v in (ax, hp, sh))
+                    r = np.stack([np.abs(ax) / ALLOW['cf_axial'], np.abs(hp) / ALLOW['cf_hoop'], sh / ALLOW['cf_shear']])
+                    k = r.argmax(0); u = r.max(0) * fac_cf
+                    s_ = np.choose(k, [np.abs(ax), np.abs(hp), sh])
+                elif m == 3:
+                    ax = np.abs(sg[..., 0]); tr = np.maximum(np.abs(sg[..., 1]), np.abs(sg[..., 2])); sh = np.hypot(sg[..., 4], sg[..., 5])
+                    r = np.stack([ax / ALLOW['cf_axial'], tr / ALLOW['cf_hoop'], sh / ALLOW['cf_shear']])
+                    k = r.argmax(0); u = r.max(0) * fac_cf; s_ = np.choose(k, [ax, tr, sh])
+                else:
+                    _, vm = FA.principal(sg); u = np.full(vm.shape, np.nan); s_ = vm
+                ue = np.nanmax(u, 1) if m != 4 else u[:, 0]
+                U[sel] = np.fmax(U[sel], ue) if m != 4 else np.nan
+                SG[sel] = np.maximum(SG[sel], s_.max(1))
+    xc = xg.mean(1)
+    for m, t in ((1, 'A'), (2, 'B')):
+        sel = M == m; d = xc[sel] - np.array([tube_x(t), 0, 0]); s = d @ axes()[t]
+        far = np.abs(s) > GEO['S_END'] - 15
+        U[np.where(sel)[0][far]] = np.nan; SG[np.where(sel)[0][far]] = np.nan
+    far = (M == 3) & (xc[:, 0] > GEO['X_HUB1'] + GEO['BR_L'] - 10)
+    U[far] = np.nan; SG[far] = np.nan
+    return U, SG
+
+
+def save_fields(res, path):
+    """Surface skin of each material (corner nodes of the tet10 faces not shared with an element of the same material),
+    with per-vertex utilisation and stress (max over the adjacent elements), for F1, F2 (flight, required factors) and
+    S1, S2 (30 N prop strike, damage case at factor 1.0, D-202). Coordinates in mm, hub frame (x aft from the hub axis)."""
+    X, E, M = res['X'], res['E'], res['M']
+    cases = [('F1', flight_combos(FA.T_CAP, FA.Q_CAP), FA.KP, FA.KF), ('F2', flight_combos(FA.T_UNC, FA.Q_UNC), FA.KP, FA.KF)]
+    for k in ('S1', 'S2'):
+        cases.append((k, [c for kk, c in ground_combos() if kk == k], 1.0, 1.0))
+    fields = {}
+    for name, combos, fp, fc in cases:
+        fields[name] = element_fields(res, combos, fp, fc)
+        print('fields %s: max utilisation %.2f' % (name, np.nanmax(fields[name][0])), flush=True)
+    out = {'cases': np.array([c[0] for c in cases])}
+    C4 = E[:, :4]
+    for m in range(5):
+        el = np.where(M == m)[0]
+        if not len(el):
+            continue
+        f = np.concatenate([C4[el][:, [0, 1, 2]], C4[el][:, [0, 1, 3]], C4[el][:, [0, 2, 3]], C4[el][:, [1, 2, 3]]])
+        opp = np.concatenate([C4[el][:, 3], C4[el][:, 2], C4[el][:, 1], C4[el][:, 0]])
+        fe = np.tile(el, 4)
+        key = np.sort(f, 1)
+        _, inv, cnt = np.unique(key, axis=0, return_inverse=True, return_counts=True)
+        b = cnt[inv.ravel()] == 1
+        f, opp, fe = f[b], opp[b], fe[b]
+        a, bb, cc = X[f[:, 0]], X[f[:, 1]], X[f[:, 2]]
+        flip = np.einsum('ij,ij->i', np.cross(bb - a, cc - a), X[opp] - a) > 0
+        f[flip] = f[flip][:, [0, 2, 1]]
+        vid, tri = np.unique(f.ravel(), return_inverse=True)
+        tri = tri.reshape(-1, 3)
+        out['V%d' % m] = X[vid].astype(np.float32); out['T%d' % m] = tri.astype(np.int32)
+        for name in fields:
+            for j, lab in enumerate(('U', 'S')):
+                v = np.full(len(vid), -np.inf)
+                fv = fields[name][j][fe]
+                np.maximum.at(v, tri.ravel(), np.repeat(np.nan_to_num(fv, nan=-np.inf), 3))
+                v[~np.isfinite(v)] = np.nan
+                out['%s_%s_%d' % (lab, name, m)] = v.astype(np.float32)
+        print('skin material %d: %d vertices, %d triangles' % (m, len(vid), len(tri)), flush=True)
+    np.savez_compressed(path, **out)
+
+
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('--level', type=int, default=0)
     ap.add_argument('--tag', default='base')
     ap.add_argument('--p', nargs='*', default=[])
     ap.add_argument('--release', action='store_true', help='glue released between hub sleeves and arm tubes: pins and bearing only')
+    ap.add_argument('--fields', action='store_true', help='also save per-material surface skins with utilisation / stress fields (figures, Explorer 3-D view)')
     a = ap.parse_args()
     RELEASE = a.release
     for kv in a.p:
@@ -498,3 +588,5 @@ if __name__ == '__main__':
         results[case + ' strike on UR (ground)'] = evaluate(res, cs)
         print(case, json.dumps(results[case + ' strike on UR (ground)'])[:600], flush=True)
     json.dump(results, open(os.path.join(OUT, 'hub_result_L%d_%s.json' % (a.level, a.tag)), 'w'), indent=1)
+    if a.fields:
+        save_fields(res, os.path.join(OUT, 'hub_fields_L%d_%s.npz' % (a.level, a.tag)))

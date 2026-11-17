@@ -320,3 +320,27 @@ a.term:hover { color: var(--accent); text-decoration-color: var(--accent); }
   .md-toc a { white-space: nowrap; }
   .md-sec { scroll-margin-top: calc(var(--topbar-h) + 64px); }
 }
+
+/* ---------------- Structures: hub FEA view (fea-view.js) ---------------- */
+.fea-tool { display: grid; gap: 10px; margin: 18px 0 8px; }
+.fea-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+.fea-note { margin: 0; color: var(--fg-3); font-size: 13px; }
+.fea-stage { position: relative; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); overflow: hidden; }
+#fea-canvas { width: 100%; height: min(62vh, 560px); min-height: 320px; touch-action: none; }
+#fea-canvas canvas { display: block; }
+.fea-msg { position: absolute; inset: auto 0 12px; text-align: center; color: var(--fg-3); margin: 0; pointer-events: none; }
+.fea-under { display: grid; gap: 8px; }
+.fea-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 13px; color: var(--fg-2); }
+.fea-scale { display: inline-grid; gap: 2px; }
+.fea-ramp { display: block; width: 180px; height: 12px; border-radius: 3px; background: linear-gradient(90deg, #cde2fb, #9ec5f4, #6da7ec, #3987e5, #256abf, #184f95, #0d366b); }
+.fea-ticks { display: flex; justify-content: space-between; width: 180px; font: 11px var(--font-mono); color: var(--fg-3); }
+.fea-ticks i { font-style: normal; }
+.fea-key { display: inline-flex; align-items: center; gap: 6px; }
+.fea-chip { flex: none; width: 14px; height: 12px; border-radius: 3px; background: var(--c); }
+.fea-read { margin: 0; font: 12px/1.5 var(--font-mono); color: var(--fg-2); min-height: 1.5em; overflow-wrap: anywhere; }
+.fea-parts { border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px 10px; display: flex; flex-wrap: wrap; gap: 4px 16px; color: var(--fg-2); margin: 0; }
+.fea-parts legend { font-size: 12px; color: var(--fg-3); padding: 0 4px; }
+.fea-parts label { display: inline-flex; gap: 6px; align-items: center; }
+.fea-fig { margin: 22px 0 0; }
+.fea-fig img { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; background: #fcfcfb; }
+.fea-fig figcaption { color: var(--fg-2); font-size: 13px; margin-top: 6px; }

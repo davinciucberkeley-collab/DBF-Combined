@@ -7,6 +7,9 @@ propeller". Script `qp/A/structures/fea_arm.py` (geometry read from `cad/amodel/
 
 ## 1. Answer
 
+> **Update 2026-11-17:** the hub found failing here was redesigned (D-202: continuous carbon arms, crossing hub, pins;
+> D-205: mass trim). The new hub passes the same FEA: see [FEA-HUB.md](FEA-HUB.md).
+
 - **The arm tube and the motor cup have good factors of safety in flight.** At the worst flight case (F1: thrust at the
   spin cap, motor torque, the gyroscopic moment of the pitch-over and the 1P imbalance), the 12 x 10 carbon tube carries
   20.9 MPa in its free span against 350 (factor of safety 16.7, required 1.725). The printed motor cup peaks at 7.0 MPa at a
