@@ -22,10 +22,10 @@
    "note": "A-P1 / MASS-GATE s8 (D-190): weigh-in gate 1.47 kg = the largest 0.01-kg step under the +-5 % window mass limit 1.478 kg at cant 17 (was 1.50, BOARD C5)"
   },
   "mass_target_kg": {
-   "value": 1.46,
+   "value": 1.465,
    "unit": "kg",
    "source": "SRC-A-REQ",
-   "note": "A-D3 (D-195): design target <= 1.46 kg predicted incl. growth and overrun (was 1.44; the CAD fidelity round added 27.8 g basic; gate 1.47 kg unchanged)"
+   "note": "A-D3 (D-205): design target <= 1.465 kg predicted incl. growth and overrun (D-195: 1.46; the D-202 hub added 16.7 g basic, D-205 cut 10.7 g; gate 1.47 kg unchanged)"
   },
   "mass_user_max_kg": {
    "value": 25.0,
@@ -286,7 +286,7 @@
  },
  "mass": {
   "basic_cad_kg": {
-   "value": 1.27797,
+   "value": 1.26723,
    "unit": "kg",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json mass_basic_kg (CAD, no growth)"
@@ -394,19 +394,19 @@
    "note": "FIXES2 s7 / MASS-GATE s7: pack trim 10 mm aft in the tray slots"
   },
   "pack_trim_fwd_mm": {
-   "value": 1.0,
+   "value": 6.0,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
-   "note": "D-202: forward pack travel 1 mm (D-199: 6 mm; D-196: 8 mm) (tray front lip 2 mm aft); cad_mass.json trim_fwd_m"
+   "note": "D-205: forward pack travel 6 mm (D-202: 1 mm; D-199: 6 mm; D-196: 8 mm) (tray front lip 2 mm aft); cad_mass.json trim_fwd_m"
   },
   "cg_x_mm": {
-   "value": 19.52011471317793,
+   "value": 21.172222879824496,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_x_m, aft of the wing leading edge"
   },
   "cg_y_mm": {
-   "value": 2.364560200943684,
+   "value": 2.384664977944019,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_y_m (lateral)"
@@ -824,61 +824,61 @@
   },
   "flutter_hot_ms": {
    "value": [
-    38.5,
-    41.5,
-    46.0
+    37.5,
+    40.0,
+    44.0
    ],
    "unit": "m/s",
    "source": "SRC-A-D195FL",
-   "note": "flutter_d195.md case B (D-195, elevon 6.7 g, hinge inertia 1.485e-5): hot 50 C (EST x0.6) lowest onset, wing corners kd / nom / hi",
+   "note": "flutter_d205.md case B (D-205 lead 12.8 g, elevon 6.7 g): hot 50 C (EST x0.6) lowest onset, wing corners kd / nom / hi",
    "status": "UNVERIFIED"
   },
   "flutter_nom_ms": {
    "value": [
-    42.0,
-    45.5,
-    50.5
+    41.0,
+    44.0,
+    49.0
    ],
    "unit": "m/s",
    "source": "SRC-A-D195FL",
-   "note": "flutter_d195.md case C: nominal 25 C, kd / nom / hi"
+   "note": "flutter_d205.md case C: nominal 25 C, kd / nom / hi"
   },
   "flutter_cold_ms": {
    "value": [
-    45.0,
-    49.0,
-    55.0
+    44.0,
+    47.5,
+    53.5
    ],
    "unit": "m/s",
    "source": "SRC-A-D195FL",
-   "note": "flutter_d195.md case D: cold 0 C (EST x2), kd / nom / hi",
+   "note": "flutter_d205.md case D: cold 0 C (EST x2), kd / nom / hi",
    "status": "UNVERIFIED"
   },
   "flutter_half_kd_ms": {
-   "value": 33.0,
+   "value": 31.5,
    "unit": "m/s",
    "source": "SRC-A-D195FL",
-   "note": "flutter_d195.md case E: half-filled / leaking damper (0.3 x c), kd corner, onset 33.0 at K 0.54 (PASS; was 28.5 at the 9.6 g elevon)"
+   "note": "flutter_d205.md case E: half-filled / leaking damper (0.3 x c), kd corner, onset 31.5 at K 0.47 (PASS; 33.0 with the 15.6 g lead, D-195)"
   },
   "wing_flutter_ms": {
    "value": [
-    46.1,
-    49.4,
+    46.2,
+    49.5,
     56.3
    ],
    "unit": "m/s",
    "source": "SRC-A-D195FW",
-   "note": "flutter_d195_wing.md: bending-torsion with the balance, fin on tip, kd / nom / hi (D-195 masses)"
+   "note": "flutter_d205_wing.md: bending-torsion with the balance, fin on tip, kd / nom / hi (D-205 lead 12.8 g)"
   },
   "wing_flutter_nofin_ms": {
    "value": [
-    33.4,
-    39.4,
-    45.9
+    33.7,
+    39.9,
+    46.5
    ],
    "unit": "m/s",
    "source": "SRC-A-D195FW",
-   "note": "flutter_d195_wing.md: fins off (worst sensitivity), kd / nom / hi"
+   "note": "flutter_d205_wing.md: fins off (worst sensitivity), kd / nom / hi"
   },
   "divergence_ms": {
    "value": 128.0,

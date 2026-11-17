@@ -42,7 +42,7 @@ hub = tuple(sum(m.mworld(st, (-0.0475, 0.0, 0.0))[k] for st in m.ST) / 4.0 for k
 # elevon hinge inertia (one elevon, about the hinge axis): foam + tape 8.5 g plate (ce wide), balance horn + lead
 ce = m.C - m.XH
 Ih_elevon = mass_of("WNG-006-R") * ce * ce / 3
-lead_kg = 0.0156                            # QP-4 FIXES D-187 v2: lead strip 15.6 g, 20 mm ahead of the hinge; 2 tabs 0.5 g (11 mm), 2 caps 1.0 g sit on the wing, not the elevon
+lead_kg = (m.PARTS["WNG-007-R"]["mass_g"] - 0.5) / 1000   # D-205: lead from the part table (12.8 g; QP-4 FIXES D-187 v2 was 15.6 g), 20 mm ahead of the hinge; 2 tabs 0.5 g (11 mm), 2 caps 1.0 g sit on the wing, not the elevon
 vx, vz = m.BAL_REACH, m.HINGE_Z - (m.HINGE_Z + m.BAL_DZ)
 Ih_bal = 0.0005 * 0.011 ** 2 + lead_kg * (vx * vx + vz * vz)
 # elevon CG offset from the hinge (+ aft) with and without the balance

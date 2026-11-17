@@ -61,7 +61,7 @@ def core_loop():
 # D-187 (FLUTTER.md): elevon mass balance, 10.7 g lead on a 30 mm horn ahead of the hinge, per elevon (EST)
 BAL_YC, BAL_W = 0.285, 0.106                # QP-4 FIXES D-187 v2: lead STRIP centre y, length (spanwise y 0.232-0.338; clear of the servo pocket edge y 0.2225 and the elevon tip 0.35)
 BAL_ARM_DY = 0.035                          # two horn tabs at BAL_YC +- this
-BAL_REACH, BAL_L, BAL_T = 0.020, 0.010, 0.0013        # lead centre 20 mm ahead of the hinge axis; strip 10 x 1.3 mm section x 106 mm = 15.6 g at 11.34 g/cm3 (FIXES.md: fits the section to 2 mm of skin poke, printed lens caps)
+BAL_REACH, BAL_L, BAL_T = 0.020, 0.010, 0.0013 * 12.8 / 15.6   # D-205: lead fallback 15.6 -> 12.8 g (D-195 fallback, flutter case F); was 1.3 mm. Lead centre 20 mm ahead of the hinge axis; strip 10 x 1.3 mm section x 106 mm = 15.6 g at 11.34 g/cm3 (FIXES.md: fits the section to 2 mm of skin poke, printed lens caps)
 BAL_DZ = -0.0033                            # lead centre z below the hinge axis: D-193 S5010 (8.6 mm deep at the hinge): -3.3 mm balances the +-21 deg sweep so lead pokes ~3.0 mm through BOTH skins (was -6.0 mm in the 16.8 mm placeholder section; at -6.0 on S5010 the lower cap would poke 5.7 mm)
 BAL_ARM_W, BAL_ARM_T = 0.006, 0.0012        # horn arm (CF-reinforced PETG strip) width, thickness
 HINGE_Z = zu(XH)
@@ -320,7 +320,7 @@ SLV_L = 0.024                               # printed sleeve over s = -24..+24 m
 SLV_WALL = 0.0015                           # sleeve wall 1.5 mm (FEA SLV_W of the it3 / pins runs)
 DBL_T = 0.001                               # doubler wall (14 x 12 carbon tube over the 12 mm tube)
 DBL_RO, DBL_RI = TUBE_RO + DBL_T, TUBE_RO + 0.0001   # doubler 14 mm OD; bore 12.2 mm: 0.1 mm epoxy gap round the 12 mm tube (as the cup sleeve, D-198: no coincident cylinder faces)
-DBL_S0, DBL_S1 = 0.011, 0.032               # doubler s range per side (FEA DBL_S0 / DBL_S1)
+DBL_S0, DBL_S1 = 0.011, 0.025               # doubler s range per side (FEA DBL_S0 / DBL_S1)
 SLV_R = TUBE_RO + DBL_T + SLV_WALL          # sleeve outer radius 8.5 mm (FEA: ro + SLV_W + DBL_T); bore = tube OD for |s| < 11, doubler OD for 11..24
 CB, R_CB = 0.010, 0.003                     # centre block half width / height 10 mm; 3 mm radii on its four x-parallel edges
 BLK_X = (-(TUBE_DX + TUBE_RO + SLV_WALL), TUBE_DX + TUBE_RO + SLV_WALL)   # block x range relative to HUB_x: -14.0 .. +14.0 mm
@@ -450,7 +450,7 @@ for pid, nm in (('WNG-003-C', 'centre'), ('WNG-004-R', 'right strut'), ('WNG-004
 P('WNG-006-R', 'Elevon right', 'wing', 6.7, 'XPS foam + tape')   # 8.5 - 0.73 (foam 4.4 g x 5/30) + 0.26 (10 mm more span); D-193 S5010: aft-section area 410 -> 247 mm2 (CALC) x 0.309 m x 25 kg/m3 = -1.26 g per elevon
 P('WNG-006-L', 'Elevon left', 'wing', 6.7, 'XPS foam + tape')
 for s_ in 'RL':
-    P('WNG-007-' + s_, 'Elevon balance (D-187 v2, %s): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)' % s_, 'wing', 16.1, 'lead + PETG/CF')
+    P('WNG-007-' + s_, 'Elevon balance (D-187 v2, D-205 %s): 12.8 g lead strip 20 mm ahead of the hinge (10 x 1.07 mm x 106 mm; D-195 fallback) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)' % s_, 'wing', 13.3, 'lead + PETG/CF')
     for sd in 'UL':      # FIXES2: lens caps with the mechanical stop bosses (mass from the drawn volume, PETG 1.27 g/cm3)
         P('WNG-008-%s%s' % (s_, sd), 'Lens cap + stop bosses (%s, %s skin): wall %.1f mm, >= %.1f mm clearance to the lead at the +-%.0f deg stop' % (s_, 'upper' if sd == 'U' else 'lower', CAP_WALL * 1e3, CAP_CLR * 1e3, ELEV_STOP),
           'wing', round(cap_mass_g(sd), 1), 'PETG (printed)')

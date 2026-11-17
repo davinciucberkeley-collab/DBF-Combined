@@ -139,13 +139,13 @@
   },
   {
    "id": "WNG-007-R",
-   "name": "Elevon balance (D-187 v2, R): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
+   "name": "Elevon balance (D-187 v2, D-205 R): 12.8 g lead strip 20 mm ahead of the hinge (10 x 1.07 mm x 106 mm; D-195 fallback) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 16.1,
+   "mass_g": 13.3,
    "material": "lead + PETG/CF",
    "cg_xyz_m": [
-    0.1654,
+    0.1657,
     0.285,
     -0.003
    ],
@@ -157,12 +157,12 @@
    "name": "Lens cap + stop bosses (R, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 3.7,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1579,
+    0.1582,
     0.285,
-    0.0059
+    0.0058
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -172,12 +172,12 @@
    "name": "Lens cap + stop bosses (R, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 3.7,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1595,
+    0.1599,
     0.285,
-    -0.0113
+    -0.0112
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -214,13 +214,13 @@
   },
   {
    "id": "WNG-007-L",
-   "name": "Elevon balance (D-187 v2, L): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
+   "name": "Elevon balance (D-187 v2, D-205 L): 12.8 g lead strip 20 mm ahead of the hinge (10 x 1.07 mm x 106 mm; D-195 fallback) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 16.1,
+   "mass_g": 13.3,
    "material": "lead + PETG/CF",
    "cg_xyz_m": [
-    0.1654,
+    0.1657,
     -0.285,
     -0.003
    ],
@@ -232,12 +232,12 @@
    "name": "Lens cap + stop bosses (L, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 3.7,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1579,
+    0.1582,
     -0.285,
-    0.0059
+    0.0058
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -247,12 +247,12 @@
    "name": "Lens cap + stop bosses (L, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 3.7,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1595,
+    0.1599,
     -0.285,
-    -0.0113
+    -0.0112
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"

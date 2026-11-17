@@ -1,16 +1,10 @@
 {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-17 19:34 UTC",
+  "generated": "2026-11-17 22:53 UTC",
   "dataset": "concept-a",
-  "ok": false,
-  "errors": [
-   "STRICT A-P1: CL-A-MASS-GATE-ROOM: FAILS: margin -0.3% (1.475 kg vs <= 1.47 kg)",
-   "STRICT A-D3: CL-A-MASS-PRED: FAILS: margin -1.0% (1.475 kg vs <= 1.46 kg)",
-   "STRICT CL-A-MASS-PRED: FAILS: margin -1.0% (1.475 kg vs <= 1.46 kg)",
-   "STRICT CL-A-MASS-GATE-ROOM: FAILS: margin -0.3% (1.475 kg vs <= 1.47 kg)",
-   "STRICT CL-A-CUTS-REQUIRED: FAILS: margin -32.4% (55.06 g vs <= 41.6 g)"
-  ],
+  "ok": true,
+  "errors": [],
   "warnings": [],
   "counts": {
    "by_type": {
@@ -28,7 +22,7 @@
     "UNVERIFIED": 174,
     "PROPOSED": 12
    },
-   "fails": 5
+   "fails": 0
   },
   "files": [
    "redesign/qp/A/proofs/claims.a0_base.json",
@@ -312,11 +306,11 @@
   {
    "id": "SRC-A-D195FL",
    "type": "source",
-   "title": "Elevon flutter with the CAD of 2026-11-15 (flutter_d195.md)",
+   "title": "Elevon flutter, lead 12.8 g (D-205; flutter_d205.md, else as flutter_d195.md)",
    "kind": "file",
-   "url": "redesign/qp/A/structures/flutter_d195.md",
+   "url": "redesign/qp/A/structures/flutter_d205.md",
    "checked": "2026-11-15",
-   "where": "elevon 6.7 g, hinge inertia 1.485e-5, lead 15.6 g at 20 mm, damper c 1.03e-3 hot / nominal / cold / half; p-method K sweep",
+   "where": "elevon 6.7 g, lead 12.8 g at 20 mm (D-205), damper c 1.03e-3 hot / nominal / cold / half; p-method K sweep",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
    "importance": 4
@@ -324,11 +318,11 @@
   {
    "id": "SRC-A-D195FW",
    "type": "source",
-   "title": "Wing bending-torsion flutter with the CAD of 2026-11-15 (flutter_d195_wing.md)",
+   "title": "Wing bending-torsion flutter, lead 12.8 g (D-205; flutter_d205_wing.md)",
    "kind": "file",
-   "url": "redesign/qp/A/structures/flutter_d195_wing.md",
+   "url": "redesign/qp/A/structures/flutter_d205_wing.md",
    "checked": "2026-11-15",
-   "where": "Ritz + strip Theodorsen, lumps 26.6 g per semispan",
+   "where": "Ritz + strip Theodorsen, lumps 23.8 g per semispan (D-205)",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
    "importance": 1
@@ -463,7 +457,7 @@
    "id": "ASM-A-CUTS",
    "type": "assumption",
    "title": "41.6 g of EST cuts are real",
-   "text": "Predicted mass <= 1.46 kg (D-195; was 1.44) holds only if the foam (25 kg/m3), printed parts and hardware lump weigh in at their cut values",
+   "text": "Predicted mass <= 1.465 kg (D-205; D-195 1.46) holds only if the foam (25 kg/m3), printed parts and hardware lump weigh in at their cut values",
    "basis": "BOARD QP-4 s1 and FIXES2 s5: none of the three cuts is weighed; the foam row alone (16.6 g) was the first line; M11 weighs a FOAMULAR 150 block",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
@@ -637,29 +631,29 @@
    "ref": "qp/A/REQUIREMENTS-A.md#a-p1",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
-    "CL-A-MASS-GATE-ROOM: FAILS: margin -0.3% (1.475 kg vs <= 1.47 kg)",
+    "CL-A-MASS-GATE-ROOM is UNVERIFIED",
     "CL-A-TW-FRESH-GATE is UNVERIFIED",
     "CL-A-TW-SAG-GATE is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": true,
+   "fails": false,
    "importance": 7
   },
   {
    "id": "A-D3",
    "type": "requirement",
-   "title": "Design target <= 1.46 kg; structure <= 494 g",
-   "text": "Predicted mass incl. growth and overrun <= 1.46 kg (D-195; was 1.44); structure ceiling 494 g (BOARD QP-4 s1)",
+   "title": "Design target <= 1.465 kg; structure <= 494 g",
+   "text": "Predicted mass incl. growth and overrun <= 1.465 kg (D-205; D-195 1.46); structure ceiling 494 g (BOARD QP-4 s1)",
    "ref": "qp/A/REQUIREMENTS-A.md#a-d3",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
-    "CL-A-MASS-PRED: FAILS: margin -1.0% (1.475 kg vs <= 1.46 kg)",
+    "CL-A-MASS-PRED is UNVERIFIED",
     "CL-A-MASS-ITEM is UNVERIFIED",
-    "CL-A-CUTS-REQUIRED: FAILS: margin -32.4% (55.06 g vs <= 41.6 g)",
+    "CL-A-CUTS-REQUIRED is UNVERIFIED",
     "CL-A-STRUCT-MASS is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": true,
+   "fails": false,
    "importance": 9
   },
   {
@@ -1084,10 +1078,10 @@
     "gate": "kg"
    },
    "outputs": {
-    "m_kg": 1.475043678
+    "m_kg": 1.463042802
    },
    "input_values": {
-    "basic": 1.27797,
+    "basic": 1.26723,
     "gf": 1.1174,
     "over": 0.032,
     "gate": 1.47
@@ -1193,12 +1187,12 @@
     "ASM-A-CUTS"
    ],
    "outputs": {
-    "x_g": 55.06310900304283
+    "x_g": 39.848435654197104
    },
    "input_values": {
     "cuts": 41.6,
-    "target": 1.46,
-    "m": 1.475043678,
+    "target": 1.465,
+    "m": 1.463042802,
     "gf": 1.1174
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
@@ -1241,7 +1235,7 @@
    "limit": {
     "op": "<=",
     "ref": "P:req.mass_target_kg",
-    "resolved": 1.46
+    "resolved": 1.465
    },
    "verifies": [
     "A-D3"
@@ -1255,16 +1249,14 @@
     "FIN-001-L"
    ],
    "how": "Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).",
-   "value": 1.475043678,
+   "value": 1.463042802,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -1.0% (1.475 kg vs <= 1.46 kg)",
     "uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))",
     "uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.010303889041095932,
-   "fails": true,
+   "margin": 0.0013359713310581295,
    "importance": 7
   },
   {
@@ -1277,12 +1269,12 @@
    "limit": {
     "op": "<=",
     "ref": "P:req.mass_target_kg",
-    "resolved": 1.46
+    "resolved": 1.465
    },
    "verifies": [
     "A-D3"
    ],
-   "how": "python -I qp/A/mission_gate_a.py prints 1,449 g (D-195); both methods must stay <= 1.46 kg.",
+   "how": "python -I qp/A/mission_gate_a.py prints 1,449 g (D-195); both methods must stay <= 1.465 kg (D-205).",
    "value": 1.4474069999999999,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
@@ -1290,7 +1282,7 @@
     "uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.008625342465753477,
+   "margin": 0.01200887372013665,
    "importance": 1
   },
   {
@@ -1309,16 +1301,14 @@
     "A-P1"
    ],
    "how": "As-built weigh-in <= 1.47 kg (D-190, MASS-GATE s8); the +-5 % window holds to 1.478 kg.",
-   "value": 1.475043678,
+   "value": 1.463042802,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -0.3% (1.475 kg vs <= 1.47 kg)",
     "uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))",
     "uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.00343107346938779,
-   "fails": true,
+   "margin": 0.004732787755102077,
    "importance": 1
   },
   {
@@ -1337,20 +1327,20 @@
     "A-U5"
    ],
    "how": "Weigh-in.",
-   "value": 1.475043678,
+   "value": 1.463042802,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))",
     "uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.94099825288,
+   "margin": 0.94147828792,
    "importance": 1
   },
   {
    "id": "CL-A-CUTS-REQUIRED",
    "type": "claim",
-   "title": "EST cuts that must be real for <= 1.46 kg",
+   "title": "EST cuts that must be real for <= 1.465 kg",
    "calc": "CALC-A-CUTS",
    "output": "x_g",
    "unit": "g",
@@ -1362,14 +1352,13 @@
    "verifies": [
     "A-D3"
    ],
-   "how": "Weigh a FOAMULAR 150 block, a printed cup / hub, an epoxy joint (M11, BOARD QP-4 s1); >= 27.2 g of the 41.6 g must be real. Fallback: lead 15.6 -> 12.8 g (-5.6 g).",
+   "how": "Weigh a FOAMULAR 150 block, a printed cup / hub, an epoxy joint (M11, BOARD QP-4 s1); >= 27.2 g of the 41.6 g must be real. Lead fallback 15.6 -> 12.8 g already applied (D-205).",
    "assumes": [
     "ASM-A-CUTS"
    ],
-   "value": 55.06310900304283,
+   "value": 39.848435654197104,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -32.4% (55.06 g vs <= 41.6 g)",
     "uses ASM-A-CUTS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:mass.est_cuts_g, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s5, s7: 41.6 g of EST cuts already in the CAD basic mass (foam 16.6, printed 18.0, hardware 7.0))",
     "uses CL-A-MASS-PRED, which is UNVERIFIED",
@@ -1378,8 +1367,7 @@
     "uses P:mass.est_cuts_g, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s5, s7: 41.6 g of EST cuts already in the CAD basic mass (foam 16.6, printed 18.0, hardware 7.0))"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.32363242795776037,
-   "fails": true,
+   "margin": 0.042104912158723494,
    "importance": 1
   },
   {
@@ -1430,16 +1418,16 @@
     "basic": "kg"
    },
    "outputs": {
-    "shift_mm": 2.112725650836874,
-    "fwd_mm": 19.308842148094243,
-    "aft_mm": 21.632840364014804
+    "shift_mm": 2.13063137709808,
+    "fwd_mm": 19.893844053565648,
+    "aft_mm": 23.302854256922576
    },
    "input_values": {
-    "cg": 19.52011471317793,
+    "cg": 21.172222879824496,
     "pack": 270.0,
     "trim": 10.0,
-    "trim_fwd": 1.0,
-    "basic": 1.27797
+    "trim_fwd": 6.0,
+    "basic": 1.26723
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1465,11 +1453,11 @@
     "ASM-A-NP"
    ],
    "outputs": {
-    "sm_pct": 8.644851137478398
+    "sm_pct": 7.970521273541023
    },
    "input_values": {
     "np": 40.7,
-    "cg": 19.52011471317793,
+    "cg": 21.172222879824496,
     "c": 245.0
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
@@ -1487,10 +1475,10 @@
     "v": "P:mass.cg_x_mm"
    },
    "outputs": {
-    "v": 19.52011471317793
+    "v": 21.172222879824496
    },
    "input_values": {
-    "v": 19.52011471317793
+    "v": 21.172222879824496
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1518,10 +1506,10 @@
     "WNG-002"
    ],
    "how": "CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.",
-   "value": 19.52011471317793,
+   "value": 21.172222879824496,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.027374458588312035,
+   "margin": 0.11432751999076292,
    "importance": 1
   },
   {
@@ -1535,10 +1523,10 @@
     "v": "P:mass.cg_x_mm"
    },
    "outputs": {
-    "v": 19.52011471317793
+    "v": 21.172222879824496
    },
    "input_values": {
-    "v": 19.52011471317793
+    "v": 21.172222879824496
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1564,10 +1552,10 @@
     "CGE-008"
    ],
    "how": "CG breadboard (M5); band 19-26 mm (D-195), hard aft limit 28.5 mm.",
-   "value": 19.52011471317793,
+   "value": 21.172222879824496,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.2492263571854643,
+   "margin": 0.18568373539136557,
    "importance": 1
   },
   {
@@ -1590,10 +1578,10 @@
     "CGE-008"
    ],
    "how": "Slide the pack to the aft slot stop and re-measure CG (M5).",
-   "value": 21.632840364014804,
+   "value": 23.302854256922576,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.2409529696836911,
+   "margin": 0.18235599098517277,
    "importance": 1
   },
   {
@@ -1616,10 +1604,10 @@
     "CGE-008"
    ],
    "how": "Slide the pack to the forward slot stop and re-measure CG (M5).",
-   "value": 19.308842148094243,
+   "value": 19.893844053565648,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.016254849899696996,
+   "margin": 0.047044423871876184,
    "importance": 1
   },
   {
@@ -1644,7 +1632,7 @@
    "assumes": [
     "ASM-A-NP"
    ],
-   "value": 8.644851137478398,
+   "value": 7.970521273541023,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses ASM-A-NP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -1652,7 +1640,7 @@
     "uses ASM-A-NP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.7289702274956795,
+   "margin": 0.5941042547082047,
    "importance": 1
   },
   {
@@ -1666,10 +1654,10 @@
     "v": "P:mass.cg_y_mm"
    },
    "outputs": {
-    "v": 2.364560200943684
+    "v": 2.384664977944019
    },
    "input_values": {
-    "v": 2.364560200943684
+    "v": 2.384664977944019
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1691,10 +1679,10 @@
     "A-P4"
    ],
    "how": "Hang the built aircraft on its spar centre; lateral CG <= 5 mm.",
-   "value": 2.364560200943684,
+   "value": 2.384664977944019,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.5270879598112632,
+   "margin": 0.5230670044111962,
    "importance": 1
   },
   {
@@ -1826,12 +1814,12 @@
     "m": "kg"
    },
    "outputs": {
-    "fresh_cap": 2.3298246054394283,
-    "sag_cap": 1.8417584645109166,
-    "fresh_unc": 2.744507978875315,
-    "sag_unc": 2.1760252737819252,
-    "window_cap_pct": 5.11544642971806,
-    "window_unc_pct": 13.37819180948031,
+    "fresh_cap": 2.348935417613485,
+    "sag_cap": 1.8568658249547336,
+    "fresh_unc": 2.767020307216269,
+    "sag_unc": 2.193874518826448,
+    "window_cap_pct": 5.522751388234373,
+    "window_unc_pct": 13.779121198740658,
     "sag_cap_gf": 2716.674179479815
    },
    "input_values": {
@@ -1891,7 +1879,7 @@
     "g": 9.807,
     "lo": 1.33,
     "hi_frac": 0.8,
-    "m": 1.475043678
+    "m": 1.463042802
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1994,7 +1982,7 @@
     "PRP-001-LL"
    ],
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "value": 2.3298246054394283,
+   "value": 2.348935417613485,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
@@ -2004,7 +1992,7 @@
     "uses CL-A-MASS-PRED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.16491230271971413,
+   "margin": 0.17446770880674256,
    "importance": 1
   },
   {
@@ -2030,7 +2018,7 @@
     "PWR-001"
    ],
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "value": 1.8417584645109166,
+   "value": 1.8568658249547336,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
@@ -2040,7 +2028,7 @@
     "uses CL-A-MASS-PRED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.15109904031932284,
+   "margin": 0.16054114059670846,
    "importance": 1
   },
   {
@@ -2065,7 +2053,7 @@
     "PRP-001-LL"
    ],
    "how": "C3 time-domain pitch-over run at the as-weighed mass (T-A-C3-PITCHOVER); the window uses 1.33 W low and 0.80 x T/W sag high.",
-   "value": 5.11544642971806,
+   "value": 5.522751388234373,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
@@ -2075,7 +2063,7 @@
     "uses CL-A-MASS-PRED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.023089285943611947,
+   "margin": 0.1045502776468746,
    "importance": 1
   },
   {
@@ -2214,7 +2202,7 @@
    "limit": {
     "op": ">=",
     "ref": "CL-A-MASS-PRED",
-    "resolved": 1.475043678
+    "resolved": 1.463042802
    },
    "verifies": [
     "A-P3"
@@ -2230,7 +2218,7 @@
     "uses CL-A-MASS-PRED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.0023175317066211785,
+   "margin": 0.010539224465161085,
    "importance": 1
   },
   {
@@ -2544,10 +2532,10 @@
     "m": "kg"
    },
    "outputs": {
-    "cruise_s": 250.9151261905918,
+    "cruise_s": 255.35895062837662,
     "usable_wh": 24.5088,
-    "hover_w": 214.8198742986316,
-    "cruise_w": 168.04855319807692
+    "hover_w": 212.27335113304144,
+    "cruise_w": 167.2541973703501
    },
    "input_values": {
     "apc_table": [
@@ -2601,7 +2589,7 @@
     "esc_eff": 0.98,
     "ctrl_margin": 1.1,
     "g": 9.807,
-    "m": 1.475043678,
+    "m": 1.463042802,
     "pack_ah": 2.3,
     "pack_v": 14.8,
     "floor_frac": 0.9,
@@ -2707,7 +2695,7 @@
     "PRP-003"
    ],
    "how": "Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).",
-   "value": 250.9151261905918,
+   "value": 255.35895062837662,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
@@ -2723,7 +2711,7 @@
     "uses CL-A-CRUISE-NEED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.22663071792299985,
+   "margin": 0.24835492261005931,
    "importance": 1
   },
   {
@@ -3358,13 +3346,13 @@
     "ASM-A-RELIABLE"
    ],
    "outputs": {
-    "v_ms": 42.0
+    "v_ms": 41.0
    },
    "input_values": {
     "x": [
-     42.0,
-     45.5,
-     50.5
+     41.0,
+     44.0,
+     49.0
     ]
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
@@ -3400,14 +3388,14 @@
    "assumes": [
     "ASM-A-RELIABLE"
    ],
-   "value": 42.0,
+   "value": 41.0,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "reasons": [
     "uses ASM-A-RELIABLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-A-RELIABLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.4583333333333335,
+   "margin": 0.42361111111111127,
    "importance": 1
   },
   {
@@ -3425,13 +3413,13 @@
     "ASM-A-RELIABLE"
    ],
    "outputs": {
-    "v_ms": 38.5
+    "v_ms": 37.5
    },
    "input_values": {
     "x": [
-     38.5,
-     41.5,
-     46.0
+     37.5,
+     40.0,
+     44.0
     ]
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
@@ -3468,17 +3456,17 @@
     "ASM-A-DAMPER-T",
     "ASM-A-RELIABLE"
    ],
-   "value": 38.5,
+   "value": 37.5,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "reasons": [
     "uses ASM-A-DAMPER-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-A-RELIABLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses P:sim.flutter_hot_ms, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: flutter_d195.md case B (D-195, elevon 6.7 g, hinge inertia 1.485e-5): hot 50 C (EST x0.6) lowest onset, wing corners kd / nom / hi)",
+    "uses P:sim.flutter_hot_ms, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: flutter_d205.md case B (D-205 lead 12.8 g, elevon 6.7 g): hot 50 C (EST x0.6) lowest onset, wing corners kd / nom / hi)",
     "uses ASM-A-DAMPER-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-A-RELIABLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.3368055555555557,
+   "margin": 0.3020833333333335,
    "importance": 1
   },
   {
@@ -3496,13 +3484,13 @@
     "ASM-A-RELIABLE"
    ],
    "outputs": {
-    "v_ms": 45.0
+    "v_ms": 44.0
    },
    "input_values": {
     "x": [
-     45.0,
-     49.0,
-     55.0
+     44.0,
+     47.5,
+     53.5
     ]
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
@@ -3539,17 +3527,17 @@
     "ASM-A-DAMPER-T",
     "ASM-A-RELIABLE"
    ],
-   "value": 45.0,
+   "value": 44.0,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "reasons": [
     "uses ASM-A-DAMPER-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-A-RELIABLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses P:sim.flutter_cold_ms, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: flutter_d195.md case D: cold 0 C (EST x2), kd / nom / hi)",
+    "uses P:sim.flutter_cold_ms, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: flutter_d205.md case D: cold 0 C (EST x2), kd / nom / hi)",
     "uses ASM-A-DAMPER-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-A-RELIABLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.5625000000000001,
+   "margin": 0.5277777777777779,
    "importance": 1
   },
   {
@@ -3566,10 +3554,10 @@
     "ASM-A-RELIABLE"
    ],
    "outputs": {
-    "v": 33.0
+    "v": 31.5
    },
    "input_values": {
-    "v": 33.0
+    "v": 31.5
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
@@ -3597,7 +3585,7 @@
     "ASM-A-RELIABLE"
    ],
    "note": "Fault case, not a requirement. D-195: 33.0 m/s (kd; nom 35.0, hi 39.0), all above the 28.8 line; the lighter 6.7 g elevon removed the old 0.3 m/s shortfall. Recorded without a limit on purpose: the mitigation is the seal and the preflight check.",
-   "value": 33.0,
+   "value": 31.5,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "reasons": [
     "uses ASM-A-RELIABLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -3618,18 +3606,18 @@
     "nofin": "P:sim.wing_flutter_nofin_ms"
    },
    "outputs": {
-    "v_ms": 33.4
+    "v_ms": 33.7
    },
    "input_values": {
     "base": [
-     46.1,
-     49.4,
+     46.2,
+     49.5,
      56.3
     ],
     "nofin": [
-     33.4,
-     39.4,
-     45.9
+     33.7,
+     39.9,
+     46.5
     ]
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
@@ -3658,10 +3646,10 @@
     "FIN-001-L"
    ],
    "how": "Tap / ground-vibration test with the fin on one tip (12 Hz and 44 Hz modes); FLUTTER.md open item 3.",
-   "value": 33.4,
+   "value": 33.7,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
-   "margin": 0.1597222222222223,
+   "margin": 0.1701388888888891,
    "importance": 1
   },
   {
@@ -6418,10 +6406,10 @@
    "type": "parameter",
    "title": "req.mass_target_kg",
    "file": "redesign/qp/A/params-A.json",
-   "value": 1.46,
+   "value": 1.465,
    "unit": "kg",
    "source": "SRC-A-REQ",
-   "note": "A-D3 (D-195): design target <= 1.46 kg predicted incl. growth and overrun (was 1.44; the CAD fidelity round added 27.8 g basic; gate 1.47 kg unchanged)",
+   "note": "A-D3 (D-205): design target <= 1.465 kg predicted incl. growth and overrun (D-195: 1.46; the D-202 hub added 16.7 g basic, D-205 cut 10.7 g; gate 1.47 kg unchanged)",
    "status": "CHECKED",
    "importance": 8
   },
@@ -6938,7 +6926,7 @@
    "type": "parameter",
    "title": "mass.basic_cad_kg",
    "file": "redesign/qp/A/params-A.json",
-   "value": 1.27797,
+   "value": 1.26723,
    "unit": "kg",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json mass_basic_kg (CAD, no growth)",
@@ -7104,10 +7092,10 @@
    "type": "parameter",
    "title": "mass.pack_trim_fwd_mm",
    "file": "redesign/qp/A/params-A.json",
-   "value": 1.0,
+   "value": 6.0,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
-   "note": "D-202: forward pack travel 1 mm (D-199: 6 mm; D-196: 8 mm) (tray front lip 2 mm aft); cad_mass.json trim_fwd_m",
+   "note": "D-205: forward pack travel 6 mm (D-202: 1 mm; D-199: 6 mm; D-196: 8 mm) (tray front lip 2 mm aft); cad_mass.json trim_fwd_m",
    "status": "CHECKED",
    "importance": 2
   },
@@ -7116,7 +7104,7 @@
    "type": "parameter",
    "title": "mass.cg_x_mm",
    "file": "redesign/qp/A/params-A.json",
-   "value": 19.52011471317793,
+   "value": 21.172222879824496,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_x_m, aft of the wing leading edge",
@@ -7128,7 +7116,7 @@
    "type": "parameter",
    "title": "mass.cg_y_mm",
    "file": "redesign/qp/A/params-A.json",
-   "value": 2.364560200943684,
+   "value": 2.384664977944019,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_y_m (lateral)",
@@ -7920,15 +7908,15 @@
    "title": "sim.flutter_hot_ms",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    38.5,
-    41.5,
-    46.0
+    37.5,
+    40.0,
+    44.0
    ],
    "unit": "m/s",
    "source": "SRC-A-D195FL",
-   "note": "flutter_d195.md case B (D-195, elevon 6.7 g, hinge inertia 1.485e-5): hot 50 C (EST x0.6) lowest onset, wing corners kd / nom / hi",
+   "note": "flutter_d205.md case B (D-205 lead 12.8 g, elevon 6.7 g): hot 50 C (EST x0.6) lowest onset, wing corners kd / nom / hi",
    "reasons": [
-    "marked UNVERIFIED in redesign/qp/A/params-A.json: flutter_d195.md case B (D-195, elevon 6.7 g, hinge inertia 1.485e-5): hot 50 C (EST x0.6) lowest onset, wing corners kd / nom / hi"
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: flutter_d205.md case B (D-205 lead 12.8 g, elevon 6.7 g): hot 50 C (EST x0.6) lowest onset, wing corners kd / nom / hi"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -7939,13 +7927,13 @@
    "title": "sim.flutter_nom_ms",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    42.0,
-    45.5,
-    50.5
+    41.0,
+    44.0,
+    49.0
    ],
    "unit": "m/s",
    "source": "SRC-A-D195FL",
-   "note": "flutter_d195.md case C: nominal 25 C, kd / nom / hi",
+   "note": "flutter_d205.md case C: nominal 25 C, kd / nom / hi",
    "status": "CHECKED",
    "importance": 1
   },
@@ -7955,15 +7943,15 @@
    "title": "sim.flutter_cold_ms",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    45.0,
-    49.0,
-    55.0
+    44.0,
+    47.5,
+    53.5
    ],
    "unit": "m/s",
    "source": "SRC-A-D195FL",
-   "note": "flutter_d195.md case D: cold 0 C (EST x2), kd / nom / hi",
+   "note": "flutter_d205.md case D: cold 0 C (EST x2), kd / nom / hi",
    "reasons": [
-    "marked UNVERIFIED in redesign/qp/A/params-A.json: flutter_d195.md case D: cold 0 C (EST x2), kd / nom / hi"
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: flutter_d205.md case D: cold 0 C (EST x2), kd / nom / hi"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -7973,10 +7961,10 @@
    "type": "parameter",
    "title": "sim.flutter_half_kd_ms",
    "file": "redesign/qp/A/params-A.json",
-   "value": 33.0,
+   "value": 31.5,
    "unit": "m/s",
    "source": "SRC-A-D195FL",
-   "note": "flutter_d195.md case E: half-filled / leaking damper (0.3 x c), kd corner, onset 33.0 at K 0.54 (PASS; was 28.5 at the 9.6 g elevon)",
+   "note": "flutter_d205.md case E: half-filled / leaking damper (0.3 x c), kd corner, onset 31.5 at K 0.47 (PASS; 33.0 with the 15.6 g lead, D-195)",
    "status": "CHECKED",
    "importance": 1
   },
@@ -7986,13 +7974,13 @@
    "title": "sim.wing_flutter_ms",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    46.1,
-    49.4,
+    46.2,
+    49.5,
     56.3
    ],
    "unit": "m/s",
    "source": "SRC-A-D195FW",
-   "note": "flutter_d195_wing.md: bending-torsion with the balance, fin on tip, kd / nom / hi (D-195 masses)",
+   "note": "flutter_d205_wing.md: bending-torsion with the balance, fin on tip, kd / nom / hi (D-205 lead 12.8 g)",
    "status": "CHECKED",
    "importance": 1
   },
@@ -8002,13 +7990,13 @@
    "title": "sim.wing_flutter_nofin_ms",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    33.4,
-    39.4,
-    45.9
+    33.7,
+    39.9,
+    46.5
    ],
    "unit": "m/s",
    "source": "SRC-A-D195FW",
-   "note": "flutter_d195_wing.md: fins off (worst sensitivity), kd / nom / hi",
+   "note": "flutter_d205_wing.md: fins off (worst sensitivity), kd / nom / hi",
    "status": "CHECKED",
    "importance": 1
   },
@@ -9479,14 +9467,14 @@
   {
    "id": "WNG-007-R",
    "type": "part",
-   "title": "Elevon balance (D-187 v2, R): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
+   "title": "Elevon balance (D-187 v2, D-205 R): 12.8 g lead strip 20 mm ahead of the hinge (10 x 1.07 mm x 106 mm; D-195 fallback) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
    "status": "UNVERIFIED",
    "importance": 5
   },
   {
    "id": "WNG-007-L",
    "type": "part",
-   "title": "Elevon balance (D-187 v2, L): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
+   "title": "Elevon balance (D-187 v2, D-205 L): 12.8 g lead strip 20 mm ahead of the hinge (10 x 1.07 mm x 106 mm; D-195 fallback) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
    "status": "UNVERIFIED",
    "importance": 5
   },

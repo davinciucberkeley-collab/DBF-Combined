@@ -311,7 +311,7 @@ CD_TT = 0.012                               # bundle height above the tube axis 
 CD_FL = 0.0064                              # conduit outer floor at t = 6.4 mm (inside the sleeve where the sleeve is: seat cut); interior from t = 7.0 mm
 CD_UOFF = 0.0004                            # the bundle leaves the tube 0.4 mm inboard of the hole axis (u), so that its 4 mm bend (which hugs the outboard side) is centred in the 4.8 mm hole
 CD_XCUT = 0.0045                            # the sideways step starts 4.5 mm ahead of the drop column (corner arcs of the bundle, r 4 mm)
-XV = -0.053                                 # x of the drop column (bundle centre line)
+XV = -0.053 + CD_DX                         # D-205: 3.8 mm aft (common.CD_DX); x of the drop column (bundle centre line)
 XVH = XV + 0.0035                           # +x limit of the column interior (the 6 mm bend into the raceway swings the bundle 0.6..1.0 mm aft while it crosses the wall; strand radius 0.9)
 CD_WX = (XV - CD_HW, XVH)           # raceway window x range (the 6 mm bend of the bundle moves it 0.6..1.0 mm aft over the wall thickness)
 

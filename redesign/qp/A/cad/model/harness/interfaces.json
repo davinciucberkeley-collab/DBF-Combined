@@ -7,10 +7,10 @@
    "name": "Phase-lead raceway (D-199, R): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 1.84,
+   "mass_g": 1.71,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0189,
+    -0.0159,
     0.019,
     0.0027
    ],
@@ -22,10 +22,10 @@
    "name": "Phase-lead raceway (D-199, L): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 1.84,
+   "mass_g": 1.71,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0189,
+    -0.0159,
     -0.019,
     0.0027
    ],
@@ -37,11 +37,11 @@
    "name": "Hub conduit (D-199, D-202, UR): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 1.1,
+   "mass_g": 1.05,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0616,
-    0.0119,
+    -0.0569,
+    0.012,
     0.0182
    ],
    "make_or_buy": "make",
@@ -52,12 +52,12 @@
    "name": "Hub conduit (D-199, D-202, UL): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 0.82,
+   "mass_g": 0.77,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0567,
-    -0.0128,
-    0.018
+    -0.0522,
+    -0.013,
+    0.0179
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -67,12 +67,12 @@
    "name": "Hub conduit (D-199, D-202, LR): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 1.01,
+   "mass_g": 0.97,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0561,
-    0.0153,
-    -0.0169
+    -0.0517,
+    0.0156,
+    -0.0168
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -82,12 +82,12 @@
    "name": "Hub conduit (D-199, D-202, LL): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 1.29,
+   "mass_g": 1.25,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0605,
-    -0.014,
-    -0.0174
+    -0.0559,
+    -0.0142,
+    -0.0173
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -114,7 +114,7 @@
    "name": "Harness remainder, bottom-up (D-198): phase-lead extensions, splices, ESC ribbon, sensor leads, servo ties, sleeves / ties / tape / solder - lumped",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 20.9,
+   "mass_g": 20.4,
    "material": "copper / silicone",
    "cg_xyz_m": [
     0.03,

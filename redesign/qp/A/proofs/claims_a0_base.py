@@ -47,8 +47,8 @@ src("SRC-A-FOAM103", "Foam checks at 103 kPa (foam_103.md)", "qp/A/structures/fo
 src("SRC-A-ARMCUP", "Arm and motor-cup checks (arm_cup_checks.md)", "qp/A/structures/arm_cup_checks.md", "MS table, limit loads x 1.5 x 1.15 (x 1.25 printed/bonded); allowables EST", kind="file")
 src("SRC-A-ITER2M", "Structures iteration 2 margins (iter2_margins.md)", "qp/A/structures/iter2_margins.md", "MS table at 1.5 x limit", kind="file")
 src("SRC-A-ITER3", "Structures iteration 3 (iter3_run.md, D-185 as ruled)", "qp/A/structures/iter3_run.md", "modes vs rotor bands, forced response, control-band GM, C1 loads at VD 24", kind="file")
-src("SRC-A-D195FL", "Elevon flutter with the CAD of 2026-11-15 (flutter_d195.md)", "qp/A/structures/flutter_d195.md", "elevon 6.7 g, hinge inertia 1.485e-5, lead 15.6 g at 20 mm, damper c 1.03e-3 hot / nominal / cold / half; p-method K sweep", kind="file")
-src("SRC-A-D195FW", "Wing bending-torsion flutter with the CAD of 2026-11-15 (flutter_d195_wing.md)", "qp/A/structures/flutter_d195_wing.md", "Ritz + strip Theodorsen, lumps 26.6 g per semispan", kind="file")
+src("SRC-A-D195FL", "Elevon flutter, lead 12.8 g (D-205; flutter_d205.md, else as flutter_d195.md)", "qp/A/structures/flutter_d205.md", "elevon 6.7 g, lead 12.8 g at 20 mm (D-205), damper c 1.03e-3 hot / nominal / cold / half; p-method K sweep", kind="file")
+src("SRC-A-D195FW", "Wing bending-torsion flutter, lead 12.8 g (D-205; flutter_d205_wing.md)", "qp/A/structures/flutter_d205_wing.md", "Ritz + strip Theodorsen, lumps 23.8 g per semispan (D-205)", kind="file")
 src("SRC-A-D195", "QP-5 analyses (ANALYSES.md): S5010 aero, mass decision, flutter, SITL at cant 17, G7", "review/QP-5/ANALYSES.md", "results with sources and open items")
 src("SRC-A-D195SITL", "QP-5 SITL runs R5_* (sitl/results_fwd.jsonl, runs/R5_*)", "qp/A/sitl/jobs_qp5.txt", "cant 17, D-191 gains, CAD mass / CG / inertia 2026-11-15, S5010 aero; batch_qp5.sh", kind="file")
 src("SRC-A-FLUTTER", "QP-4 flutter / divergence (FLUTTER.md)", "review/QP-4/FLUTTER.md", "verdict table: divergence, wing flutter, reversal")
@@ -66,7 +66,7 @@ kit.assumption("ASM-A-CLMAX", "Clean CLmax 0.75", "Wing section CLmax 0.75 sets 
 kit.assumption("ASM-A-NP", "Neutral point 40.7 mm aft of LE", "Static margin uses NP 40.7 mm",
                basis="MASS-GATE s5: SIZING-A 44.0 inviscid minus 3.3 viscous, EST; the CG breadboard on a knife edge (M5, M6) measures it",
                value=40.7, unit="mm", status="UNVERIFIED")
-kit.assumption("ASM-A-CUTS", "41.6 g of EST cuts are real", "Predicted mass <= 1.46 kg (D-195; was 1.44) holds only if the foam (25 kg/m3), printed parts and hardware lump weigh in at their cut values",
+kit.assumption("ASM-A-CUTS", "41.6 g of EST cuts are real", "Predicted mass <= 1.465 kg (D-205; D-195 1.46) holds only if the foam (25 kg/m3), printed parts and hardware lump weigh in at their cut values",
                basis="BOARD QP-4 s1 and FIXES2 s5: none of the three cuts is weighed; the foam row alone (16.6 g) was the first line; M11 weighs a FOAMULAR 150 block",
                status="UNVERIFIED")
 kit.assumption("ASM-A-HUB-WALL", "Printed hub socket walls (2.0 mm, D-196) carry the prop-strike couple", "The 0.48 socket margin is a bond margin; the wall hoop check passes the crude ring model only with a 12 mm bearing patch",
@@ -95,7 +95,7 @@ for rid, title, text in [
     ("A-U5", "Mass under 25 kg", "Take-off mass < 25 kg (55 lb)"),
     ("A-D2", "Mission: 3.0 min hover, 3.41 min cruise at 17 m/s", "3.0 min hover mode incl. 40 s go-around, cruise 3.41 min at 17 m/s (requirement 3.5 min), 20 % reserve; cruise to BATT_LOW lasts longer than the mission needs"),
     ("A-P1", "Mass gate 1.47 kg and T/W at the gate", "As-built mass <= 1.47 kg; at the gate T/W fresh >= 2.0 and sag >= 1.6 with Q_M_SPIN_MAX 0.90"),
-    ("A-D3", "Design target <= 1.46 kg; structure <= 494 g", "Predicted mass incl. growth and overrun <= 1.46 kg (D-195; was 1.44); structure ceiling 494 g (BOARD QP-4 s1)"),
+    ("A-D3", "Design target <= 1.465 kg; structure <= 494 g", "Predicted mass incl. growth and overrun <= 1.465 kg (D-205; D-195 1.46); structure ceiling 494 g (BOARD QP-4 s1)"),
     ("A-P2", "Hover T/W >= 2.0 fresh, >= 1.6 worst pack state", "Hover T/W >= 2.0 fresh, >= 1.6 at the worst pack state (20 % rest, 3.73 V/cell)"),
     ("A-P3", "Transition window >= +-5 %", "Transition entry window >= +-5 % of the weight-ratio entry thrust: entry >= 1.33 W, <= 0.80 x T/W sag"),
     ("A-P4", "CG band, static margin, lateral CG", "CG 19-26 mm aft of LE (D-195; was 20-26; hard aft 28.5 mm), static margin >= 5 % chord, lateral CG <= 5 mm, pack trim +-10 mm"),
