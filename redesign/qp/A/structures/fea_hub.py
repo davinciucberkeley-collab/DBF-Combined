@@ -11,7 +11,7 @@ Model (mm, N, MPa; hub frame: x = hub axis (thrust is -x), y = span, z = up, ori
   - tube A along uA = (0, cos phi, sin phi) at x = XA (UR at +s, LL at -s); tube B along uB = (0, cos phi, -sin phi) at x = XB (LR +s, UL -s);
     phi = PHI['UR'] from common.py (34.4 deg); stubs to s = +-S_END, the outer arm (to the motors) replaced by its exact end loads;
   - hub: a sleeve (wall SLV_W) round each tube over s = +-L_SLV, a centre block (x XA-R..XB+R, |y|, |z| <= CB), the bridge boss
-    (r R_BR) from the block's aft face to HUB_X1 with the bridge bore (12 mm) from X_BR0;
+    (r R_BR) from the block's aft face to HUB_X1 with the bridge bore (BR_RO; D-206: 16 mm, axis z BR_Z -2 mm) from X_BR0;
   - phase-lead exits: a 4.8 mm hole through the tube wall and the sleeve wall at s = +-S_HOLE on each tube, on the tangential face
     (the neutral axis of thrust bending);
   - support: the bridge bore is fixed (the strut sockets, tray and saddle are left out: every net load goes into the bridge: conservative).
@@ -39,7 +39,7 @@ C, W = FA.C, FA.W
 OUT = FA.OUT
 
 PHI_D = C.PHI['UR']
-GEO = dict(XA=-6.5, XB=6.5, S_END=100.0, L_SLV=24.0, SLV_W=2.0, CB=10.0, R_BR=9.5, X_BR0=15.0, X_HUB1=(W.HUB_X1 - C.HUB[0]) * 1e3,
+GEO = dict(XA=-6.5, XB=6.5, S_END=100.0, L_SLV=24.0, SLV_W=2.0, CB=10.0, R_BR=W.R_BR * 1e3, BR_RO=W.BR_RO * 1e3, BR_RI=W.BR_RI * 1e3, BR_Z=W.BR_Z * 1e3, X_BR0=15.0, X_HUB1=(W.HUB_X1 - C.HUB[0]) * 1e3,
            S_HOLE=18.0, HOLE_R=2.4, TUBE_RO=6.0, TUBE_RI=5.0, DBL=1.0, DBL_T=1.0, DBL_S0=11.0, DBL_S1=25.0, BR_L=40.0, R_CB=3.0, PIN_R=1.5, PIN_C=1.0, PIN_S=8.0, E_PIN=70000.0)   # PIN_*: 3 mm pins along x (D-202): one through both tubes at the crossing (PIN_C), one through each tube at s = +-PIN_S (0 = none); E_PIN pultruded CF rod, isotropic EST   # R_CB: edge radius of the centre block   # BR_L: modelled bridge tube aft of HUB_X1, fixed at its end   # DBL: carbon doubler sleeve 14 x 12 over each lead hole
 STATIONS = {'UR': ('A', 1), 'LL': ('A', -1), 'LR': ('B', 1), 'UL': ('B', -1)}
 SPIN = {s: (-1 if s in ('UR', 'LL') else 1) for s in STATIONS}        # propulsion.py MRP: UR, LL clockwise (-1), others CCW (+1)
@@ -76,9 +76,9 @@ def build_mesh(level, path):
               and e in [c[1] for c in gmsh.model.getBoundary(gmsh.model.getBoundary([(3, bx)], combined=False, oriented=False), combined=False, oriented=False) if c[0] == 1]]
         bx = occ.fillet([bx], ed, [g['R_CB']])[0][1]
     hub_parts.append((3, bx))
-    hub_parts.append((3, occ.addCylinder(xb1 - 0.5, 0, 0, g['X_HUB1'] - xb1 + 0.5, 0, 0, g['R_BR'])))
+    hub_parts.append((3, occ.addCylinder(xb1 - 0.5, 0, g['BR_Z'], g['X_HUB1'] - xb1 + 0.5, 0, 0, g['R_BR'])))
     hub, _ = occ.fuse([hub_parts[0]], hub_parts[1:])
-    cuts = [(3, occ.addCylinder(g['X_BR0'], 0, 0, g['X_HUB1'] - g['X_BR0'] + 1, 0, 0, ro))]
+    cuts = [(3, occ.addCylinder(g['X_BR0'], 0, g['BR_Z'], g['X_HUB1'] - g['X_BR0'] + 1, 0, 0, g['BR_RO']))]
     for t in ('A', 'B'):
         u, x0 = U[t], tube_x(t)
         S = g['S_END'] + 1
@@ -106,8 +106,8 @@ def build_mesh(level, path):
         o = occ.addCylinder(x0 - S * u[0], -S * u[1], -S * u[2], 2 * S * u[0], 2 * S * u[1], 2 * S * u[2], ro)
         i = occ.addCylinder(x0 - (S + 1) * u[0], -(S + 1) * u[1], -(S + 1) * u[2], 2 * (S + 1) * u[0], 2 * (S + 1) * u[1], 2 * (S + 1) * u[2], ri)
         tubes[t], _ = occ.cut([(3, o)], [(3, i)])
-    o = occ.addCylinder(g['X_BR0'], 0, 0, g['X_HUB1'] + g['BR_L'] - g['X_BR0'], 0, 0, ro)   # bridge tube 12 x 10, bonded in the bore
-    i = occ.addCylinder(g['X_BR0'] - 1, 0, 0, g['X_HUB1'] + g['BR_L'] - g['X_BR0'] + 2, 0, 0, ri)
+    o = occ.addCylinder(g['X_BR0'], 0, g['BR_Z'], g['X_HUB1'] + g['BR_L'] - g['X_BR0'], 0, 0, g['BR_RO'])   # bridge tube (D-206: 16 x 14 at z -2), bonded in the bore
+    i = occ.addCylinder(g['X_BR0'] - 1, 0, g['BR_Z'], g['X_HUB1'] + g['BR_L'] - g['X_BR0'] + 2, 0, 0, g['BR_RI'])
     tubes['BR'], _ = occ.cut([(3, o)], [(3, i)])
     # pins along x (D-202): cut their volume out of hub and tubes, add them as their own bodies (bonded)
     pins = []
@@ -283,8 +283,8 @@ def end_nodes(X, st):
 
 
 def fixed_nodes(X):
-    r = np.hypot(X[:, 1], X[:, 2])
-    return np.where((r > GEO['TUBE_RI'] - 0.02) & (r < GEO['TUBE_RO'] + 0.02) & (np.abs(X[:, 0] - (GEO['X_HUB1'] + GEO['BR_L'])) < 0.02))[0]
+    r = np.hypot(X[:, 1], X[:, 2] - GEO['BR_Z'])
+    return np.where((r > GEO['BR_RI'] - 0.02) & (r < GEO['BR_RO'] + 0.02) & (np.abs(X[:, 0] - (GEO['X_HUB1'] + GEO['BR_L'])) < 0.02))[0]
 
 
 RELEASE = False          # --release: glue between the hub sleeves and the arm tubes has let go (pins-only case, D-202)

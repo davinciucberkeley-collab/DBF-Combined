@@ -138,7 +138,7 @@ def main():
     A('|---|---|---|---|---|---|---|')
     A('| Spar `WNG-002` | 12x10 CF (R08, tube 1) | 900 | 1 | A2 | %.1f | `common.py` `B` |' % m.PARTS['WNG-002']['mass_g'])
     A('| Arm tubes `CGE-002-A/B` | 12x10 CF (R08, tubes 2 and 3) | %.1f | 2 | B0a | %.1f each | `wing.py` `2 x R_M` (D-202) |' % (2 * m.R_M * 1e3, m.PARTS['CGE-002-A']['mass_g']))
-    A('| Bridge `CGE-004` | 12x10 CF (R08, offcut of an arm tube) | %.0f | 1 | B0a | %.1f | `wing.py` `BR_X1 - BR_X0` |' % ((m.BR_X1 - m.BR_X0) * 1e3, m.PARTS['CGE-004']['mass_g']))
+    A('| Bridge `CGE-004` | 16x14 CF (R02, offcut after the two fin tubes; D-206) | %.0f | 1 | B0a | %.1f | `wing.py` `BR_X1 - BR_X0` |' % ((m.BR_X1 - m.BR_X0) * 1e3, m.PARTS['CGE-004']['mass_g']))
     A('| Doublers `CGE-009-*` | 14x12 CF (R09) | %.0f | 4 | B0a | %.1f each | `wing.py` `DBL_S0`, `DBL_S1` (D-202) |' % ((m.DBL_S1 - m.DBL_S0) * 1e3, m.PARTS['CGE-009-UR']['mass_g']))
     A('| Pins `CGE-010-*` | 3 mm CF rod (R14, price not found) | 15-16 / 29 | 4 + 1 | B0a | %.2f-%.2f | `wing.py` `PIN_L`, `PINC_X0` (D-202) |' % (m.PARTS['CGE-010-LR']['mass_g'], m.PARTS['CGE-010-C']['mass_g']))
     A('| V struts `CGE-005-*` | 6x4.5 CF (R10) | 286.2 | 2 | B0 | %.1f each (CAD part value, EST) | `wing.py` `STRUT_S`, `STRUT_E` |' % m.PARTS['CGE-005-R']['mass_g'])

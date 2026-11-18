@@ -286,7 +286,7 @@
  },
  "mass": {
   "basic_cad_kg": {
-   "value": 1.26723,
+   "value": 1.2689300000000001,
    "unit": "kg",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json mass_basic_kg (CAD, no growth)"
@@ -400,13 +400,13 @@
    "note": "D-205: forward pack travel 6 mm (D-202: 1 mm; D-199: 6 mm; D-196: 8 mm) (tray front lip 2 mm aft); cad_mass.json trim_fwd_m"
   },
   "cg_x_mm": {
-   "value": 21.172222879824496,
+   "value": 21.174920602397293,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_x_m, aft of the wing leading edge"
   },
   "cg_y_mm": {
-   "value": 2.384664977944019,
+   "value": 2.381393772706138,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_y_m (lateral)"
@@ -1077,7 +1077,50 @@
    "value": 2.87,
    "unit": "-",
    "source": "SRC-A-ITER2M",
-   "note": "iter2_margins.md: bridge 12x10, pack + hub at the 12 g crash (pack retention, A-P5)"
+   "note": "iter2_margins.md: bridge 12x10, pack + hub at the 12 g crash (pack retention, A-P5); the D-206 16x14 bridge is stiffer and stronger, so this stands as a lower bound"
+  },
+  "bridge_od_mm": {
+   "value": 16.0,
+   "unit": "mm",
+   "source": "SRC-A-D206BR",
+   "note": "D-206: bridge 16x14 (cad/amodel/wing.py BR_OD)"
+  },
+  "bridge_id_mm": {
+   "value": 14.0,
+   "unit": "mm",
+   "source": "SRC-A-D206BR",
+   "note": "D-206: bridge 16x14 (cad/amodel/wing.py BR_ID)"
+  },
+  "bridge_roll_f2_nm": {
+   "value": 4.37,
+   "unit": "N m",
+   "source": "SRC-A-D206BR",
+   "note": "bridge_torsion_d206.md: worst F2 (uncapped fault) roll moment about the bridge axis, hub FEA load set, bridge alone (no struts, tray pad or inertia relief)"
+  },
+  "bridge_roll_s2_nm": {
+   "value": 7.93,
+   "unit": "N m",
+   "source": "SRC-A-D206BR",
+   "note": "bridge_torsion_d206.md: S2 prop strike 30 N in the disc plane, roll moment about the bridge axis, bridge alone"
+  },
+  "cf_shear_mpa": {
+   "value": 30.0,
+   "unit": "MPa",
+   "source": "SRC-A-D206BR",
+   "note": "fea_arm.py ALLOW cf_shear (EST, no coupon)",
+   "status": "UNVERIFIED"
+  },
+  "k_cf": {
+   "value": 1.725,
+   "unit": "-",
+   "source": "SRC-A-D206BR",
+   "note": "structures_a.py KF = 1.5 x 1.15 (CFRP)"
+  },
+  "k_strike": {
+   "value": 1.0,
+   "unit": "-",
+   "source": "SRC-A-D206BR",
+   "note": "D-202: prop strike is a damage case at factor 1.0"
   },
   "ms_rib_torsion": {
    "value": 0.6,

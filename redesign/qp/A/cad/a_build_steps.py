@@ -146,18 +146,18 @@ step(id='A5', title='Left plugs in the spar',
 
 # ============================================================ STAGE 2: cage unit
 step(id='B0a', title='Cut the cage tubes (bench)',
-     line='Cut two 552.4 mm arm tubes, one 114 mm bridge and two 286.2 mm struts; sand every end square.',
+     line='Cut two 552.4 mm arm tubes, one 108 mm bridge and two 286.2 mm struts; sand every end square.',
      tools='tube cutter or hacksaw, sanding block, caliper, steel rule',
-     check='Arm tubes 552.4 mm +-0.5 (30.6 g each); bridge 114 mm (6.3 g); struts 286.2 mm; ends square',
+     check='Arm tubes 552.4 mm +-0.5 (30.6 g each); bridge 108 mm (6.3 g); struts 286.2 mm; ends square',
      min=30,
-     need=['2 x 12x10 tubes of BOM R08 for the arm tubes (one per 1 m tube; the bridge comes from an arm-tube offcut, 0.447 m left on each); 2 x 6x4.5 struts (R10); 14x12 tube (R09) for the 4 doublers and 3 mm carbon rod (R14, price not found) for the 5 pins'],
-     make=['Arm tubes A and B: cut 2 x 552.4 mm (CAD `2 x R_M`; each runs motor cup to motor cup through the hub; 30.6 g each, CALC). Bridge: cut 114 mm (CAD `BR_X1 - BR_X0`, 6.3 g); put a 0.8 mm x 45 deg chamfer on the end that goes into the hub (the 15 MPa local peak at the bore end, D-202; FEA not re-run on the chamfer).',
+     need=['2 x 12x10 tubes of BOM R08 for the arm tubes (one per 1 m tube; the bridge comes from the 16x14 fin-tube offcut, D-206); 2 x 6x4.5 struts (R10); 14x12 tube (R09) for the 4 doublers and 3 mm carbon rod (R14, price not found) for the 5 pins'],
+     make=['Arm tubes A and B: cut 2 x 552.4 mm (CAD `2 x R_M`; each runs motor cup to motor cup through the hub; 30.6 g each, CALC). Bridge: cut 108 mm (CAD `BR_X1 - BR_X0`, 6.3 g); put a 0.8 mm x 45 deg chamfer on the end that goes into the hub (the 15 MPa local peak at the bore end, D-202; FEA not re-run on the chamfer).',
            'Doublers: cut 4 x 21 mm from the 14x12 tube (1.4 g each). Pins: cut 4 x 15-16 mm and 1 x 29 mm from the 3 mm rod (0.17-0.33 g). Struts: cut 2 x 286.2 mm (CAD).',
            'Sand all cut ends wet or with a vacuum (carbon dust). Check each end with a square.'],
      checks=['Weigh the two arm tubes: 61.2 g (CALC from 1.6 g/cm3, EST).', 'Slide a doubler over a scrap piece of arm tube: it must slide by hand (bore 12.2 mm nominal; measure on arrival, EST).'],
      safety=['Carbon dust: mask, wet sanding.'],
-     fab=dict(kind='tube', pid='CGE-002-A', text='CUT  2 arm tubes 552.4 mm, bridge 114 mm, 4 doublers 21 mm, 5 pins, 2 struts 286 mm', dims=[('CGE-002-A', 'cut 552.4 mm'), ('CGE-004', 'cut 114 mm')]),
-     callouts=[('CGE-002-A', 'Arm tube: one 552.4 mm tube per diagonal, 30.6 g'), ('CGE-004', 'Bridge: 114 mm, chamfered end')])
+     fab=dict(kind='tube', pid='CGE-002-A', text='CUT  2 arm tubes 552.4 mm, bridge 108 mm, 4 doublers 21 mm, 5 pins, 2 struts 286 mm', dims=[('CGE-002-A', 'cut 552.4 mm'), ('CGE-004', 'cut 108 mm')]),
+     callouts=[('CGE-002-A', 'Arm tube: one 552.4 mm tube per diagonal, 30.6 g'), ('CGE-004', 'Bridge: 108 mm, chamfered end')])
 
 step(id='B0b', title='Print the hub',
      line='Print the hub (19.0 g PETG); stand it on the bench, aft face down.',
@@ -222,7 +222,7 @@ for _k, (_st, _tb, _s) in enumerate((('UR', 'A', 'UR'), ('LL', 'A', 'LL'), ('LR'
 
 step(id='B0h', title='Bridge into the boss',
      line='Push the bridge forward into the boss bore from aft until its chamfered end meets the conical floor; bond.',
-     tools='epoxy, wipes', check='Bridge end on the bore floor; 114 mm tube, 6.3 g', min=15, cure='24 h epoxy cure',
+     tools='epoxy, wipes', check='Bridge end on the bore floor; 108 mm tube, 6.3 g', min=15, cure='24 h epoxy cure',
      fit=['Coat the first 15 mm of the bridge, push it in from aft until it stops. The tube end is chamfered 0.8 mm x 45 deg to match the cone in the bore floor.'],
      fab=dict(kind='fit', pid='CGE-004', text='FIT  bridge into the boss bore, epoxy'),
      callouts=[('CGE-004', 'Bridge: bonded 15 mm in the boss')])

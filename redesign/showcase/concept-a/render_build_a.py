@@ -1,4 +1,4 @@
-"""render_build_a.py - the concept A build film: the 45 steps of qp/A/cad/a_assembly_plan.py in 10 stages, one clip + one still per
+"""render_build_a.py - the concept A build film: the 65 steps of qp/A/cad/a_assembly_plan.py in 10 stages, one clip + one still per
 stage and the full film, made to FOLLOW the written guide qp/A/BUILD-GUIDE-A.md (both read qp/A/cad/a_build_steps.py).
 
     python redesign/showcase/concept-a/render_build_a.py               # render + overlay + encode everything (about 2 h, workers in parallel)
@@ -21,7 +21,12 @@ Every part motion is the one of a_assembly_plan.STEPS (direction, travel), which
 line beyond the checked travel is approach in free air and is NOT part of the swept check. Steps with travel 0 (A1 core on the bench, E5
 strap) simply appear. What this film ADDS to the plan, none of it a part motion:
   * make-it beats (the part shown at its start pose in teal with its cut length or print label, before it moves in),
-  * B0: the cage unit (without motors and props, which come on in B1) hovers at its B1 start pose, shown semi-transparent while the
+  * B0 (D-202): the cage frame is BUILT ON THE BENCH, part by part, in the bench steps B0b-B0j2 (a_assembly_plan.BENCH): the hub appears alone, then
+    each step moves its own parts in along the plan's direction and travel, all offset by the B1 start pose (the place where the finished cage unit
+    hovers before it docks) so that they assemble onto the hub there. Parts of later bench steps are not shown yet, nothing of the wing is shown, and
+    one camera frames the whole cage unit for B0a-B0j2. Bench parts get the same make-it beat (teal, print / cut / fit label) as other parts. B1
+    docks the finished frame (with the motors and props, which come on in B1) exactly as in the plan.
+  * B0k: the cage unit (without motors and props) hovers at its B1 start pose, shown semi-transparent while the
     phase leads are threaded along the arm bores (a progressive reveal along the wire route, from out/wire_inventory.json), B2c threads
     them on through the hub conduit, raceway and ditch, E6 solders the last part to the ESC pads. The reveal follows the cage unit.
 Skin tape, hinge tape and epoxy fillets are not drawn (as in the plan). Parts that the plan does not place are not shown.
@@ -88,7 +93,9 @@ MARKER_FOCUS = {'B0a': [], 'B0k': ['CGE-001', 'CGE-002-A', 'CGE-002-B'], 'B2c': 
                 'D0': ['MEC-001-R', 'WNG-001'], 'E3b': ['AVN-002', 'PRP-003', 'AVN-001'],
                 'E4b': ['HRN-002', 'PWR-001', 'CGE-008'], 'E6': ['PRP-003', 'AVN-001', 'CGE-001']}
 # B0 shows the cage unit (B1 parts minus the motors and props, which are screwed on in B1) hovering at its B1 start pose
-PRESHOW = {'B0k': ('B1', ('PRP-',))}   # D-202: B0b-B0j are bench steps (drawn at the B1 start pose, not yet updated for the film)
+# D-202: the parts of the bench steps B0b-B0j2 are shown by their own step (at the B1 start pose); PRESHOW only adds the cage parts no bench step places
+PRESHOW = {'B0k': ('B1', ('PRP-',))}
+BENCH_VIEW = (-40, 22)                 # camera direction of the bench steps B0b-B0j2 (as B0a / B0k)
 # wire reveal (threading): edge -> step id -> (fraction from, fraction to) along the route; fractions from out/wire_inventory.json
 PHASE_EDGES = ('E-HRN-02', 'E-HRN-03', 'E-HRN-04', 'E-HRN-05')
 SERVO_EDGES = ('E-HRN-07', 'E-HRN-08')
@@ -103,7 +110,7 @@ GHOST_VIEW, GHOST_DIST = (50, 34), 0.24   # x-ray steps (step data 'ghost'): clo
 GHOST_B0 = ('CGE-001', 'CGE-002-', 'CGE-003-', 'CGE-009-', 'CGE-010-')
 GHOST_B2C = GHOST_B0 + ('HRN-003-', 'HRN-004-', 'WNG-001', 'CGE-004', 'CGE-005-', 'CGE-006', 'CGE-007-')
 FAB_ONLY = {'B1': ('PRP-',)}          # B1: during its make-it beat only the motors and props are teal (the cage parts are already shown)
-NO_CONTEXT = ('B0a',)                  # the stage's first step frames only its own parts (the cage unit), not everything placed so far
+NO_CONTEXT = ('B0a',)                  # the stage's first step frames only the cage unit on the bench (like the bench steps), not everything placed so far
 T_CHK_CAM = 0.9                      # s camera pull-back to the whole assembly while a checkpoint card is up
 MARKER_BEAT_KINDS = ('thread', 'solder')   # these fab kinds are shown during the marker step's motion, not as a separate beat
 
@@ -120,7 +127,7 @@ def load_plan():
     out = []
     for s in ap.STEPS:
         info = bsd.BY_ID[s[0]]
-        out.append(dict(id=s[0], caption=s[1], parts=list(s[2]), dir=s[3], travel=float(s[4]), edges=list(s[6]) if len(s) > 6 else [], info=info))
+        out.append(dict(id=s[0], caption=s[1], parts=list(s[2]), dir=s[3], travel=float(s[4]), edges=list(s[6]) if len(s) > 6 else [], info=info, bench=s[0] in ap.BENCH))
     return out
 
 
@@ -301,14 +308,20 @@ def blender_render(argv):
     print('WIRES', {e: wire_step[e] for e in wire_step}, flush=True)
 
     # preshow: parts of a later step shown early at their start pose (B0 -> the B1 cage unit without motors and props)
+    # D-202 bench: the parts of the bench steps B0b-B0j2 (in the plan again in B1) are shown from their own bench step, at the B1 start pose
+    b1 = by_id['B1']
+    B1_START = -Vector(b1['dir']) * b1['visual_mm'] / 1000.0        # where the finished cage unit hovers before it docks
+    bench_rows = [r for r in rows if r['bench']]
+    bench_of = {p: r['id'] for r in bench_rows for p in r['parts']}
     show_from = {}
     for r in rows:
         t0 = r['t_fab0']
         for p in r['parts']:
-            show_from[p] = t0
+            if r['bench'] or p not in bench_of:
+                show_from[p] = t0
     for early, (later, excl) in PRESHOW.items():
         for p in by_id[later]['parts']:
-            if not p.startswith(excl):
+            if not p.startswith(excl) and p not in bench_of:
                 show_from[p] = by_id[early]['t_fab0']
 
     # per-step camera. First step of a stage: wide shot of everything placed so far plus the moving parts; the other steps:
@@ -349,13 +362,23 @@ def blender_render(argv):
         tgt = ctr - up * (0.045 * 2 * dist * TAN_V)          # subject sits in the band between the banner and the card
         return tgt, dist
 
+    # bench camera: one frame for B0a-B0j2 = the whole cage unit (as B0k) at the seat and at the B1 start pose, plus every bench part at its own start pose
+    cage = [p for p in b1['parts'] if not p.startswith(PRESHOW['B0k'][1]) and p in items]
+    bench_P = pts_of(cage) + pts_of(cage, B1_START)
+    for r in bench_rows:
+        if r['dir']:
+            bench_P += pts_of([p for p in r['parts'] if p in items], B1_START - Vector(r['dir']) * r['visual_mm'] / 1000.0)
+
     placed_so_far = []
     cams = {}
     cams_chk = {}
     for r in rows:
         d = Vector(r['dir']) if r['dir'] else Vector()
         shift = -d * r['visual_mm'] / 1000.0
-        if r['id'] in PRESHOW:
+        bframe = r['bench'] or r['id'] in NO_CONTEXT
+        if bframe:
+            parts = [p for p in r['parts'] if p in items]
+        elif r['id'] in PRESHOW:
             later = by_id[PRESHOW[r['id']][0]]
             parts = [p for p in later['parts'] if not p.startswith(PRESHOW[r['id']][1]) and p in items]
             shift = -Vector(later['dir']) * later['visual_mm'] / 1000.0
@@ -364,7 +387,7 @@ def blender_render(argv):
         if r['id'] in ONE_SIDE:                                  # frame the right-hand parts only (the left ones mirror them)
             rp = [p for p in parts if sum(q.y for q in pts_of([p])) / max(1, len(pts_of([p]))) >= -0.005]
             parts = rp or parts
-        P = pts_of(parts) + pts_of(parts, shift) + [Vector(q) for q in EXTRA_PTS.get(r['id'], [])]
+        P = (list(bench_P) if bframe else pts_of(parts) + pts_of(parts, shift)) + [Vector(q) for q in EXTRA_PTS.get(r['id'], [])]
         placed_so_far += [p for p in parts if p in r['parts']]
         if r['first_in_stage'] and r['id'] not in NO_CONTEXT:
             P += pts_of(placed_so_far)
@@ -372,11 +395,11 @@ def blender_render(argv):
         c0 = (lo + hi) / 2
         mh = MIN_HALF_STEP.get(r['id'], MIN_HALF)
         P += [c0 + Vector((sx * mh, sy * mh, sz * mh)) for sx in (-1, 1) for sy in (-1, 1) for sz in (-1, 1)]
-        az, el = VIEW.get(r['id'], DEFAULT_VIEW)
+        az, el = VIEW.get(r['id'], BENCH_VIEW if r['bench'] else DEFAULT_VIEW)
         tgt, dist = fit(P, az, el)
         cams[r['id']] = (tgt, az, el, dist)
         if r['t_chk1'] > r['t_chk0']:                       # checkpoint card: pull back to everything placed so far
-            t2, d2 = fit(pts_of(placed_so_far), az, el)
+            t2, d2 = fit(bench_P if bframe else pts_of(placed_so_far), az, el)
             cams_chk[r['id']] = (t2, az, el, d2)
     allp = pts_of(sorted(placed_ids))
     full_lo, full_hi = aabb(allp)
@@ -556,7 +579,7 @@ def blender_render(argv):
             return None
         return (round(co.x, 4), round(1.0 - co.y, 4))
 
-    preshown = {p for p, t_ in show_from.items() if any(p in r['parts'] and t_ < r['t_fab0'] for r in rows)}
+    preshown = {p for p, t_ in show_from.items() if p not in bench_of and any(p in r['parts'] and t_ < r['t_fab0'] for r in rows)}
 
     def part_mode(p, r, t, ghosts):
         if p in ghosts:
@@ -579,22 +602,22 @@ def blender_render(argv):
         # ---- parts
         state = []
         ghosts = ghost_set(t)
-        cage_off = Vector()
+        cage_off = -Vector(b1['dir']) * (b1['visual_mm'] / 1000.0) * (1.0 - smooth((t - b1['t_mv0']) / max(1e-6, b1['t_mv1'] - b1['t_mv0'])))      # the cage unit's offset (the phase leads follow it)
         for r in rows:
             d = Vector(r['dir']) if r['dir'] else Vector()
             u = (t - r['t_mv0']) / max(1e-6, r['t_mv1'] - r['t_mv0'])
             for p in r['parts']:
                 if p not in items:
                     continue
+                if p in bench_of and (r['bench'] == (t >= b1['t_cam0'])):      # bench parts: their bench step poses them until B1 starts, then B1 (same pose)
+                    continue
                 if t < show_from[p]:
                     items[p].hide_render = True
                     continue
                 items[p].hide_render = False
                 k = 1.0 - smooth(u)
-                off = -d * (r['visual_mm'] / 1000.0) * k
+                off = -d * (r['visual_mm'] / 1000.0) * k + (B1_START if r['bench'] else Vector())      # bench steps: assemble onto the hub at the B1 start pose
                 items[p].matrix_world = Matrix.Translation(off) @ rest[p]
-                if r['id'] == 'B1' and p == 'CGE-001':
-                    cage_off = off
                 mode = part_mode(p, r, t, ghosts)
                 tint(p, mode)
                 state.append((p, round(off.x, 4), round(off.y, 4), round(off.z, 4), mode))
@@ -828,7 +851,7 @@ def key_of(pid):
 
 
 SHORT = {'WNG-001': 'Wing core (XPS + tape)', 'WNG-002': 'Spar, CF 12x10, 900 mm', 'WNG-003': 'Spar plug (PETG)', 'WNG-004': 'Spar plug (PETG)', 'WNG-005': 'Spar plug (PETG)',
-         'CGE-001': 'Hub (PETG)', 'CGE-002': 'Arm, CF 12x10, 245 mm', 'CGE-003': 'Motor cup (PETG)', 'CGE-004': 'Bridge, CF 12x10, 154 mm', 'CGE-005': 'V strut, CF 6x4.5',
+         'CGE-001': 'Hub (PETG)', 'CGE-002': 'Arm, CF 12x10, 245 mm', 'CGE-003': 'Motor cup (PETG)', 'CGE-004': 'Bridge, CF 16x14, 108 mm', 'CGE-005': 'V strut, CF 6x4.5',
          'CGE-006': 'Bridge saddle', 'CGE-007': 'Strut clamp', 'CGE-008': 'Pack tray (PETG)', 'PRP-001': 'Motor MN2212 KV780', 'PRP-002': 'Prop APC 9x4.5 (MR / MRP)',
          'PRP-003': 'ESC SpeedyBee 4-in-1', 'PRP-004': 'Prop adapter', 'PRP-005': 'Spinner nut', 'FIN-005': 'Rib saddle (PETG)', 'HRN-003': 'Phase-lead raceway',
          'HRN-004': 'Hub conduit', 'WNG-009': 'Damper stator + silicone', 'WNG-010': 'Damper rotor', 'FIN-002': 'Fin rib, CF 14x12', 'FIN-006': 'Rib fairing (XPS)',
@@ -841,7 +864,7 @@ SHORT = {'WNG-001': 'Wing core (XPS + tape)', 'WNG-002': 'Spar, CF 12x10, 900 mm
 
 
 def stage_parts(si, rows):
-    ids = [p for r in rows if r['stage'] == si for p in r['parts']]
+    ids = list(dict.fromkeys(p for r in rows if r['stage'] == si for p in r['parts']))      # D-202: bench parts are listed again by B1
     groups = {}
     for p in ids:
         groups.setdefault(key_of(p), []).append(p)

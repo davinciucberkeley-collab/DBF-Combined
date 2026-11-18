@@ -16,7 +16,7 @@ electrical in that order.
 import math
 
 from .common import *   # noqa: F401,F403
-from .wing import HINGE_Z, RHO_PETG, TUBE_RO, TUBE_RI, TUBE_HL, SLV_L, SLV_R, DBL_S0, DBL_S1, DBL_RO, HOLE_S, HOLE_R, STN_S   # noqa: F401  (read only: hinge axis height for the horn hole radius; D-202 tube / hub geometry)
+from .wing import BR_Z, BR_RO, HINGE_Z, RHO_PETG, TUBE_RO, TUBE_RI, TUBE_HL, SLV_L, SLV_R, DBL_S0, DBL_S1, DBL_RO, HOLE_S, HOLE_R, STN_S   # noqa: F401  (read only: hinge axis height for the horn hole radius; D-202 tube / hub geometry)
 from .propulsion import ESC_PADS, ESC_TOP   # noqa: F401  (harness wires land on the ESC pads; lane B owns them)
 
 MM = 0.001
@@ -595,7 +595,7 @@ PARTS['HRN-001']['mass_g'] = 0.0            # set after phase_route() exists, se
 
 # ------------------------------------------------------------------ edges
 # power
-E(en('PWR'), 'PWR-002', 'CGE-008', 'CT-STRAP-VELCRO', 'power', 'buckle strap round pack and tray: over the pack top, outside the tray end walls, under the tray plate AND the 12 mm bridge tube CGE-004 (tangent to the plate underside, z -6..6)',
+E(en('PWR'), 'PWR-002', 'CGE-008', 'CT-STRAP-VELCRO', 'power', 'buckle strap round pack and tray: over the pack top, outside the tray end walls, under the tray plate AND the 16 mm bridge tube CGE-004 (D-206) (tangent to the plate underside, z -6..6)',
   retention=dict(item='20 mm strap', count=1, load_n=38.8), field_joint=True)
 E(en('PWR'), 'PWR-001', 'CGE-008', 'CT-STRAP-VELCRO', 'power', 'pack sits on the anti-slip pad PWR-003 on the tray floor, between the integral lips; strap PWR-002 holds it',
   retention=dict(item='anti-slip pad + strap', count=1), field_joint=True)
@@ -738,8 +738,9 @@ def build_power(ctx):
     # strap loop: axis x, ring around tray + pack
     ctx_strap = ctx.part('PWR-002', rgb=(0.1, 0.1, 0.1))
     yi = 0.0545
-    ctx_strap.prism('X', STRAP_X0, [_rrect(-yi - STRAP_T, -0.006 - STRAP_T, yi + STRAP_T, PACK_Z0 + PACK_H + STRAP_T, 0.0012, 3),
-                                    [(-yi, -0.006), (yi, -0.006), (yi, PACK_Z0 + PACK_H), (-yi, PACK_Z0 + PACK_H)]], STRAP_W, name='strap loop')
+    zb_ = BR_Z - BR_RO                            # D-206: under the 16 mm bridge (axis z -2): z -10 (was -6 under the 12 mm bridge)
+    ctx_strap.prism('X', STRAP_X0, [_rrect(-yi - STRAP_T, zb_ - STRAP_T, yi + STRAP_T, PACK_Z0 + PACK_H + STRAP_T, 0.0012, 3),
+                                    [(-yi, zb_), (yi, zb_), (yi, PACK_Z0 + PACK_H), (-yi, PACK_Z0 + PACK_H)]], STRAP_W, name='strap loop')
 
 
 def build_avionics(ctx):

@@ -23,7 +23,7 @@ STEPS = [
     ('A4', 'Right plugs up the bore', ['WNG-004-R', 'WNG-005-R'], (0, -1, 0), 600, 100),
     ('A5', 'Left plugs up the bore from the left tip', ['WNG-004-L', 'WNG-005-L'], (0, 1, 0), 600, 100),
     # ---- D-202 bench build of the cage frame (swept in the bench run, see BENCH; unit vectors from the CAD: u_A = (0, cos 34.38, sin 34.38) along tube A toward UR, u_B = (0, cos 34.38, -sin 34.38) along tube B toward LR)
-    ('B0a', 'Bench: cut the two arm tubes (552.4 mm), the bridge (114 mm) and the two struts (286.2 mm) from the carbon stock; sand the ends square', [], None, 0, 0),
+    ('B0a', 'Bench: cut the two arm tubes (552.4 mm of 12x10), the bridge (108 mm, D-206, from the 16x14 fin-tube offcut) and the two struts (286.2 mm of 6x4.5) from the carbon stock; sand the ends square', [], None, 0, 0),
     ('B0b', 'Bench: the printed hub stands on the bench, aft face down', ['CGE-001'], None, 0, 0),
     ('B0c', 'Arm tube B slid through its sleeve and the centre block (from the LL side, along its axis)', ['CGE-002-B'], (0, 0.8253073, -0.5646839), 330, 15),
     ('B0d', 'Two 3 mm pins (LR, UL) pushed in along x from the nose side through the block access holes, the sleeve and tube B', ['CGE-010-LR', 'CGE-010-UL'], (1, 0, 0), 30, 3),

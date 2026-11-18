@@ -186,6 +186,15 @@
    "where": "MS table, limit loads x 1.5 x 1.15 (x 1.25 printed/bonded); allowables EST"
   },
   {
+   "id": "SRC-A-D206BR",
+   "type": "source",
+   "title": "Bridge tube torsion sizing, D-206 (bridge_torsion_d206.md)",
+   "kind": "file",
+   "url": "redesign/qp/A/structures/bridge_torsion_d206.md",
+   "checked": "2026-11-15",
+   "where": "roll moments from the hub FEA load set; tau = M r / J; strut share bounds"
+  },
+  {
    "id": "SRC-A-ITER2M",
    "type": "source",
    "title": "Structures iteration 2 margins (iter2_margins.md)",

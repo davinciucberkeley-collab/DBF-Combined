@@ -33,7 +33,7 @@ MAP = [
     ('AVN-007', 'buy', ['R05'], 'foam tape from the local fastener / tape line'),
     ('AVN-001', 'make', ['R03'], 'printed PETG'), ('AVN-008', 'make', ['R03'], 'printed PETG'),
     ('CGE-001', 'make', ['R03'], 'printed PETG'), ('CGE-002', 'make', ['R08'], 'cut from the 12x10 tube'),
-    ('CGE-003', 'make', ['R03'], 'printed PETG'), ('CGE-004', 'make', ['R08'], 'cut from the 12x10 tube'),
+    ('CGE-003', 'make', ['R03'], 'printed PETG'), ('CGE-004', 'make', ['R02'], 'cut from the 16x14 fin-tube offcut (D-206)'),
     ('CGE-009', 'make', ['R09'], 'cut from the 14x12 tube'), ('CGE-010', 'make', ['R14'], 'cut from the 3 mm carbon rod (price not found)'),
     ('CGE-005', 'make', ['R10'], 'cut from the 6x4.5 tube'), ('CGE-006', 'make', ['R03'], 'printed PETG'),
     ('CGE-007', 'make', ['R03'], 'printed PETG'), ('CGE-008', 'make', ['R03'], 'printed PETG'),

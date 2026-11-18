@@ -1301,13 +1301,13 @@
 <section class="md-sec" id="build-2-cut-list-and-print-list">
 <h2 class="md-h2">2. Cut list and print list</h2>
 <details class="md-step" id="build-tube-cut-list-lengths-from-the-cad"><summary><h3 class="md-h3">Tube cut list (lengths from the CAD)</h3></summary>
-<div class="scroll fit"><table class="ds-table"><thead><tr><th>Part</th><th>Tube</th><th>Length (mm)</th><th>Qty</th><th>Step</th><th>CAD mass (g)</th><th>Source</th></tr></thead><tbody><tr><td>Spar <code>WNG-002</code></td><td>12x10 CF (R08, tube 1)</td><td>900</td><td>1</td><td>A2</td><td>49.8</td><td><code>common.py</code> <code>B</code></td></tr><tr><td>Arm tubes <code>CGE-002-A/B</code></td><td>12x10 CF (R08, tubes 2 and 3)</td><td>552.5</td><td>2</td><td>B0a</td><td>30.6 each</td><td><code>wing.py</code> <code>2 x R_M</code> (D-202)</td></tr><tr><td>Bridge <code>CGE-004</code></td><td>12x10 CF (R08, offcut of an arm tube)</td><td>114</td><td>1</td><td>B0a</td><td>6.3</td><td><code>wing.py</code> <code>BR_X1 - BR_X0</code></td></tr><tr><td>Doublers <code>CGE-009-*</code></td><td>14x12 CF (R09)</td><td>21</td><td>4</td><td>B0a</td><td>1.4 each</td><td><code>wing.py</code> <code>DBL_S0</code>, <code>DBL_S1</code> (D-202)</td></tr><tr><td>Pins <code>CGE-010-*</code></td><td>3 mm CF rod (R14, price not found)</td><td>15-16 / 29</td><td>4 + 1</td><td>B0a</td><td>0.17-0.33</td><td><code>wing.py</code> <code>PIN_L</code>, <code>PINC_X0</code> (D-202)</td></tr><tr><td>V struts <code>CGE-005-*</code></td><td>6x4.5 CF (R10)</td><td>286.2</td><td>2</td><td>B0</td><td>6.5 each (CAD part value, EST)</td><td><code>wing.py</code> <code>STRUT_S</code>, <code>STRUT_E</code></td></tr><tr><td>Fin ribs <code>FIN-002-*</code></td><td>14x12 CF (R09)</td><td>215.5</td><td>2</td><td>C1</td><td>14.1 each (from the drawn 215.5 mm, D-200)</td><td><code>wing.py</code> <code>RIB_X1 - RIB_X0</code></td></tr><tr><td>Fin tubes <code>FIN-001-*</code></td><td>16x14 CF (R02)</td><td>360</td><td>2</td><td>C6</td><td>27.1 each</td><td><code>common.py</code> <code>FIN_H</code></td></tr></tbody></table></div>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>Part</th><th>Tube</th><th>Length (mm)</th><th>Qty</th><th>Step</th><th>CAD mass (g)</th><th>Source</th></tr></thead><tbody><tr><td>Spar <code>WNG-002</code></td><td>12x10 CF (R08, tube 1)</td><td>900</td><td>1</td><td>A2</td><td>49.8</td><td><code>common.py</code> <code>B</code></td></tr><tr><td>Arm tubes <code>CGE-002-A/B</code></td><td>12x10 CF (R08, tubes 2 and 3)</td><td>552.5</td><td>2</td><td>B0a</td><td>30.6 each</td><td><code>wing.py</code> <code>2 x R_M</code> (D-202)</td></tr><tr><td>Bridge <code>CGE-004</code></td><td>16x14 CF (R02, offcut after the two fin tubes; D-206)</td><td>108</td><td>1</td><td>B0a</td><td>8.1</td><td><code>wing.py</code> <code>BR_X1 - BR_X0</code></td></tr><tr><td>Doublers <code>CGE-009-*</code></td><td>14x12 CF (R09)</td><td>14</td><td>4</td><td>B0a</td><td>0.9 each</td><td><code>wing.py</code> <code>DBL_S0</code>, <code>DBL_S1</code> (D-202)</td></tr><tr><td>Pins <code>CGE-010-*</code></td><td>3 mm CF rod (R14, price not found)</td><td>15-16 / 29</td><td>4 + 1</td><td>B0a</td><td>0.17-0.33</td><td><code>wing.py</code> <code>PIN_L</code>, <code>PINC_X0</code> (D-202)</td></tr><tr><td>V struts <code>CGE-005-*</code></td><td>6x4.5 CF (R10)</td><td>286.2</td><td>2</td><td>B0</td><td>6.5 each (CAD part value, EST)</td><td><code>wing.py</code> <code>STRUT_S</code>, <code>STRUT_E</code></td></tr><tr><td>Fin ribs <code>FIN-002-*</code></td><td>14x12 CF (R09)</td><td>215.5</td><td>2</td><td>C1</td><td>14.1 each (from the drawn 215.5 mm, D-200)</td><td><code>wing.py</code> <code>RIB_X1 - RIB_X0</code></td></tr><tr><td>Fin tubes <code>FIN-001-*</code></td><td>16x14 CF (R02)</td><td>360</td><td>2</td><td>C6</td><td>27.1 each</td><td><code>common.py</code> <code>FIN_H</code></td></tr></tbody></table></div>
 <p>Cut square: tape round the cut line, cut through the tape, sand the end flat. Wear a mask or cut wet.</p>
 </details>
 <details class="md-step" id="build-print-list-petg-0-2-mm-layer-0-4-mm-nozzle-est"><summary><h3 class="md-h3">Print list (PETG, 0.2 mm layer, 0.4 mm nozzle EST)</h3></summary>
 <p>File names follow <code>&lt;part id&gt;.stl</code>. <strong>The STL files for concept A are not exported yet (<code>-</code>)</strong>: the CAD (<code>a_model.py</code>) is the source, so export each part from the CAD before printing. Orientation and settings below are <code>EST</code> unless a repo file says so; print times are <code>EST</code> at 14-24 g/h (K09-L <code>team/G3/PRINT-LIST.md</code>, rows 8, 13, 18) and are machine time, not hands-on time.</p>
-<div class="scroll fit"><table class="ds-table"><thead><tr><th>Part</th><th>Qty</th><th>Step</th><th>Mass each (g)</th><th>Print time (EST)</th><th>Note</th></tr></thead><tbody><tr><td><code>AVN-001</code> Avionics plate</td><td>1</td><td>E2</td><td>8.0</td><td>20-34 min</td><td>4 hex pockets 4.2 mm across for M2 thin nuts</td></tr><tr><td><code>AVN-008</code> Bay cover</td><td>1</td><td>E7</td><td>9.6</td><td>24-41 min</td><td>0.6 mm shell (EST)</td></tr><tr><td><code>CGE-001</code> Hub</td><td>2</td><td>B0b, B1</td><td>19.0</td><td>48-81 min</td><td>walls: 2.0 mm over the outer 12 mm of each arm socket (D-196), 1.2 mm bridge sleeve, 0.8 mm webs; orientation <code>-</code></td></tr><tr><td><code>CGE-003</code> Motor cup</td><td>8</td><td>B0i1, B0i2, B0i3, B0i4, B1</td><td>4.3</td><td>11-18 min</td><td>plate flat on the bed, shaft axis up (ARMS.md: layer plane = plate plane, EST); 4.8 mm lead hole, screw-head pockets (D-197)</td></tr><tr><td><code>CGE-006</code> Bridge saddle</td><td>1</td><td>B1</td><td>2.0</td><td>5-9 min</td><td></td></tr><tr><td><code>CGE-007</code> Strut clamp</td><td>2</td><td>B1</td><td>1.5</td><td>4-6 min</td><td></td></tr><tr><td><code>CGE-008</code> Pack tray</td><td>1</td><td>B3</td><td>3.8</td><td>10-16 min</td><td>1.5 mm floor with ribs (EST)</td></tr><tr><td><code>FIN-003</code> Fin root block</td><td>2</td><td>C5</td><td>3.2</td><td>8-14 min</td><td></td></tr><tr><td><code>FIN-005</code> Rib saddle</td><td>2</td><td>B2</td><td>1.0</td><td>3-5 min</td><td></td></tr><tr><td><code>GER-001</code> Foot shoe</td><td>4</td><td>C7, C8</td><td>1.4</td><td>3-6 min</td><td>plate faces aft</td></tr><tr><td><code>HRN-003</code> Phase-lead raceway</td><td>2</td><td>B2a</td><td>1.8</td><td>5-8 min</td><td>0.6 mm walls (EST)</td></tr><tr><td><code>HRN-004</code> Hub conduit</td><td>4</td><td>B2b1, B2b2, B2b3, B2b4</td><td>1.1</td><td>3-5 min</td><td>0.6 mm walls (EST)</td></tr><tr><td><code>WNG-003/4/5</code> Spar plug</td><td>5</td><td>A3, A4, A5</td><td>1.2</td><td>3-5 min</td><td></td></tr><tr><td><code>WNG-008</code> Lens cap with stop bosses</td><td>4</td><td>C2a, C2b</td><td>3.8</td><td>10-16 min</td><td>single 0.6 mm wall, vase mode (CAD note, EST)</td></tr><tr><td><code>WNG-009</code> Hinge damper stator</td><td>2</td><td>B4</td><td>2.0</td><td>5-9 min</td><td>plus about 0.6 g silicone fluid each (R12)</td></tr><tr><td><code>WNG-010</code> Hinge damper rotor</td><td>2</td><td>B4</td><td>0.5</td><td>3-5 min</td><td>rotor: slide fit in the 0.30 mm gap: test print</td></tr></tbody></table></div>
-<p>Printed mass 147 g in 43 parts; machine time EST 6.1-10.5 h in total (a bed holds many small parts: print them in batches). The 1 kg PETG spool of BOM R03 holds about seven times this mass: there is room for reprints. (The elevon balance tabs, 0.5 g each pair, are CF-reinforced PETG strips cut by hand, not printed.)</p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>Part</th><th>Qty</th><th>Step</th><th>Mass each (g)</th><th>Print time (EST)</th><th>Note</th></tr></thead><tbody><tr><td><code>AVN-001</code> Avionics plate</td><td>1</td><td>E2</td><td>8.0</td><td>20-34 min</td><td>4 hex pockets 4.2 mm across for M2 thin nuts</td></tr><tr><td><code>AVN-008</code> Bay cover</td><td>1</td><td>E7</td><td>9.6</td><td>24-41 min</td><td>0.6 mm shell (EST)</td></tr><tr><td><code>CGE-001</code> Hub</td><td>2</td><td>B0b, B1</td><td>17.1</td><td>43-73 min</td><td>walls: 2.0 mm over the outer 12 mm of each arm socket (D-196), 1.2 mm bridge sleeve, 0.8 mm webs; orientation <code>-</code></td></tr><tr><td><code>CGE-003</code> Motor cup</td><td>8</td><td>B0i1, B0i2, B0i3, B0i4, B1</td><td>4.3</td><td>11-18 min</td><td>plate flat on the bed, shaft axis up (ARMS.md: layer plane = plate plane, EST); 4.8 mm lead hole, screw-head pockets (D-197)</td></tr><tr><td><code>CGE-006</code> Bridge saddle</td><td>1</td><td>B1</td><td>2.0</td><td>5-9 min</td><td></td></tr><tr><td><code>CGE-007</code> Strut clamp</td><td>2</td><td>B1</td><td>1.5</td><td>4-6 min</td><td></td></tr><tr><td><code>CGE-008</code> Pack tray</td><td>1</td><td>B3</td><td>3.8</td><td>10-16 min</td><td>1.5 mm floor with ribs (EST)</td></tr><tr><td><code>FIN-003</code> Fin root block</td><td>2</td><td>C5</td><td>3.2</td><td>8-14 min</td><td></td></tr><tr><td><code>FIN-005</code> Rib saddle</td><td>2</td><td>B2</td><td>1.0</td><td>3-5 min</td><td></td></tr><tr><td><code>GER-001</code> Foot shoe</td><td>4</td><td>C7, C8</td><td>1.4</td><td>3-6 min</td><td>plate faces aft</td></tr><tr><td><code>HRN-003</code> Phase-lead raceway</td><td>2</td><td>B2a</td><td>1.7</td><td>4-7 min</td><td>0.6 mm walls (EST)</td></tr><tr><td><code>HRN-004</code> Hub conduit</td><td>4</td><td>B2b1, B2b2, B2b3, B2b4</td><td>1.1</td><td>3-5 min</td><td>0.6 mm walls (EST)</td></tr><tr><td><code>WNG-003/4/5</code> Spar plug</td><td>5</td><td>A3, A4, A5</td><td>1.2</td><td>3-5 min</td><td></td></tr><tr><td><code>WNG-008</code> Lens cap with stop bosses</td><td>4</td><td>C2a, C2b</td><td>3.7</td><td>9-16 min</td><td>single 0.6 mm wall, vase mode (CAD note, EST)</td></tr><tr><td><code>WNG-009</code> Hinge damper stator</td><td>2</td><td>B4</td><td>2.0</td><td>5-9 min</td><td>plus about 0.6 g silicone fluid each (R12)</td></tr><tr><td><code>WNG-010</code> Hinge damper rotor</td><td>2</td><td>B4</td><td>0.5</td><td>3-5 min</td><td>rotor: slide fit in the 0.30 mm gap: test print</td></tr></tbody></table></div>
+<p>Printed mass 142 g in 43 parts; machine time EST 5.9-10.2 h in total (a bed holds many small parts: print them in batches). The 1 kg PETG spool of BOM R03 holds about seven times this mass: there is room for reprints. (The elevon balance tabs, 0.5 g each pair, are CF-reinforced PETG strips cut by hand, not printed.)</p>
 </details>
 </section>
 <section class="md-sec" id="build-3-cure-plan">
@@ -1416,14 +1416,14 @@
 <p class="md-meta">Film clip: <code>assets/animation/build/a-stage-02.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 2). Steps B0a, B0b, B0c, B0d, B0e, B0f, B0g1, B0g2, B0g3, B0g4, B0h, B0i1, B0i2, B0i3, B0i4, B0j1, B0j2, B0k, B1. Hands-on time EST 7 h 45 min.</p>
 <details class="md-step" id="build-b0a-cut-the-cage-tubes-bench"><summary><h3 class="md-h3">B0a. Cut the cage tubes (bench)</h3></summary>
 <p><em>Step 6 of 65. Plan caption: Bench: cut the two arm tubes</em></p>
-<p><strong>Do this:</strong> Cut two 552.4 mm arm tubes, one 114 mm bridge and two 286.2 mm struts; sand every end square.</p>
+<p><strong>Do this:</strong> Cut two 552.4 mm arm tubes, one 108 mm bridge and two 286.2 mm struts; sand every end square.</p>
 <p><strong>Time (EST):</strong> 30 min hands-on.</p>
 <p><strong>Parts:</strong> none placed (marker step: it lays wires or threads leads). Wires used: see the checks below and <code>review/QP-5/HARNESS-ENCLOSED.md</code>.</p>
 <p><strong>You need:</strong></p>
-<ul><li>2 x 12x10 tubes of BOM R08 for the arm tubes (one per 1 m tube; the bridge comes from an arm-tube offcut, 0.447 m left on each); 2 x 6x4.5 struts (R10); 14x12 tube (R09) for the 4 doublers and 3 mm carbon rod (R14, price not found) for the 5 pins</li></ul>
+<ul><li>2 x 12x10 tubes of BOM R08 for the arm tubes (one per 1 m tube; the bridge comes from the 16x14 fin-tube offcut, D-206); 2 x 6x4.5 struts (R10); 14x12 tube (R09) for the 4 doublers and 3 mm carbon rod (R14, price not found) for the 5 pins</li></ul>
 <p><strong>Tools:</strong> tube cutter or hacksaw, sanding block, caliper, steel rule.</p>
 <p><strong>Make it:</strong></p>
-<ul><li>Arm tubes A and B: cut 2 x 552.4 mm (CAD <code>2 x R_M</code>; each runs motor cup to motor cup through the hub; 30.6 g each, CALC). Bridge: cut 114 mm (CAD <code>BR_X1 - BR_X0</code>, 6.3 g); put a 0.8 mm x 45 deg chamfer on the end that goes into the hub (the 15 MPa local peak at the bore end, D-202; FEA not re-run on the chamfer).</li><li>Doublers: cut 4 x 21 mm from the 14x12 tube (1.4 g each). Pins: cut 4 x 15-16 mm and 1 x 29 mm from the 3 mm rod (0.17-0.33 g). Struts: cut 2 x 286.2 mm (CAD).</li><li>Sand all cut ends wet or with a vacuum (carbon dust). Check each end with a square.</li></ul>
+<ul><li>Arm tubes A and B: cut 2 x 552.4 mm (CAD <code>2 x R_M</code>; each runs motor cup to motor cup through the hub; 30.6 g each, CALC). Bridge: cut 108 mm (CAD <code>BR_X1 - BR_X0</code>, 6.3 g); put a 0.8 mm x 45 deg chamfer on the end that goes into the hub (the 15 MPa local peak at the bore end, D-202; FEA not re-run on the chamfer).</li><li>Doublers: cut 4 x 21 mm from the 14x12 tube (1.4 g each). Pins: cut 4 x 15-16 mm and 1 x 29 mm from the 3 mm rod (0.17-0.33 g). Struts: cut 2 x 286.2 mm (CAD).</li><li>Sand all cut ends wet or with a vacuum (carbon dust). Check each end with a square.</li></ul>
 <p><strong>Checkpoint (do not go on until it passes):</strong></p>
 <ul><li>☐ Weigh the two arm tubes: 61.2 g (CALC from 1.6 g/cm3, EST).</li><li>☐ Slide a doubler over a scrap piece of arm tube: it must slide by hand (bore 12.2 mm nominal; measure on arrival, EST).</li></ul>
 <p><strong>Safety:</strong></p>
@@ -1434,8 +1434,8 @@
 <p><strong>Do this:</strong> Print the hub (19.0 g PETG); stand it on the bench, aft face down.</p>
 <p><strong>Time (EST):</strong> 15 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
-<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-001</code> x1</td><td>Hub</td><td>made</td><td>R03 Prusa</td><td>19.0</td></tr></tbody></table></div>
-<p>Mass placed by this step 19.0 g; running total of placed parts 174.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-001</code> x1</td><td>Hub</td><td>made</td><td>R03 Prusa</td><td>17.1</td></tr></tbody></table></div>
+<p>Mass placed by this step 17.1 g; running total of placed parts 173.0 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>PETG (R03). Print file: CGE-001.stl (export pending); print time EST about 1 h at 14-24 g/h</li></ul>
 <p><strong>Tools:</strong> printer (PETG), caliper.</p>
@@ -1450,7 +1450,7 @@
 <p><strong>Time (EST):</strong> 20 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice) before the pins and the other tube.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-002-B</code> x1</td><td>Arm tube B 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub</td><td>made</td><td>R08 RMRC</td><td>30.6</td></tr></tbody></table></div>
-<p>Mass placed by this step 30.6 g; running total of placed parts 205.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 30.6 g; running total of placed parts 203.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> epoxy, mixing stick, wipes, caliper.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>Dry-fit first. Coat the tube lightly over the middle 60 mm, slide it through its sleeve (it enters from the LL end), centre it 276.2 mm each side. Wipe the squeeze-out from the exit holes.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, 0) for 330 mm.</li></ul>
@@ -1463,7 +1463,7 @@
 <p><strong>Time (EST):</strong> 20 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-010</code> x2</td><td>Pin 3 mm carbon rod x 15 mm</td><td>made</td><td>R14 RMRC</td><td>0.3</td></tr></tbody></table></div>
-<p>Mass placed by this step 0.3 g; running total of placed parts 205.8 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 0.3 g; running total of placed parts 203.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> epoxy, 3 mm drill bit (clean the holes), wipes.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>These two pins lie behind the block, so they go in through 3 mm access holes in the block front face (the CAD note: left open, epoxy-seal them after). Coat each pin, push it in until it stops, wipe.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (1, 0, 0) for 30 mm.</li></ul>
@@ -1476,7 +1476,7 @@
 <p><strong>Time (EST):</strong> 20 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice).</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-002-A</code> x1</td><td>Arm tube A 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub</td><td>made</td><td>R08 RMRC</td><td>30.6</td></tr></tbody></table></div>
-<p>Mass placed by this step 30.6 g; running total of placed parts 236.4 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 30.6 g; running total of placed parts 234.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> epoxy, wipes, caliper.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>Same as B0c for tube A (UR and LL); it lies 13 mm ahead of tube B, 1 mm clear of it where the tubes cross.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, 0) for 330 mm.</li></ul>
@@ -1489,7 +1489,7 @@
 <p><strong>Time (EST):</strong> 25 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-010</code> x3</td><td>Crossing pin 3 mm carbon rod x 29 mm through both arm tubes and the hub block</td><td>made</td><td>R14 RMRC</td><td>0.7</td></tr></tbody></table></div>
-<p>Mass placed by this step 0.7 g; running total of placed parts 237.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 0.7 g; running total of placed parts 235.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> epoxy, wipes.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>The crossing pin (y = z = 0) goes through tube A, the block and tube B; it is flush with the front of the sleeve and ends in the aft sleeve wall. The UR and LL pins are 16 mm, flush with the front of the sleeve. Coat, push in, wipe.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (1, 0, 0) for 40 mm.</li></ul>
@@ -1499,8 +1499,8 @@
 <p><strong>Do this:</strong> Slide doubler UR over the tube A end into the sleeve counterbore (s 11 to 32 mm); bond.</p>
 <p><strong>Time (EST):</strong> 15 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
-<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-009-UR</code> x1</td><td>Doubler 14x12 x 21 mm</td><td>made</td><td>R09 RMRC</td><td>1.4</td></tr></tbody></table></div>
-<p>Mass placed by this step 1.4 g; running total of placed parts 238.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-009-UR</code> x1</td><td>Doubler 14x12 x 14 mm</td><td>made</td><td>R09 RMRC</td><td>0.9</td></tr></tbody></table></div>
+<p>Mass placed by this step 0.9 g; running total of placed parts 236.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> epoxy, wipes.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>Coat the tube from s 11 to 32 mm, slide the 14x12 doubler on from the UR end until it stops in the sleeve counterbore. Line its 4.8 mm hole up with the hole in the tube (fish wire or a 4.5 mm rod through both); wipe.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, 0) for 260 mm.</li></ul>
@@ -1512,8 +1512,8 @@
 <p><strong>Do this:</strong> Slide doubler LL over the tube A end into the sleeve counterbore (s 11 to 32 mm); bond.</p>
 <p><strong>Time (EST):</strong> 15 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
-<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-009-LL</code> x1</td><td>Doubler 14x12 x 21 mm</td><td>made</td><td>R09 RMRC</td><td>1.4</td></tr></tbody></table></div>
-<p>Mass placed by this step 1.4 g; running total of placed parts 239.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-009-LL</code> x1</td><td>Doubler 14x12 x 14 mm</td><td>made</td><td>R09 RMRC</td><td>0.9</td></tr></tbody></table></div>
+<p>Mass placed by this step 0.9 g; running total of placed parts 237.0 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> epoxy, wipes.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>Coat the tube from s 11 to 32 mm, slide the 14x12 doubler on from the LL end until it stops in the sleeve counterbore. Line its 4.8 mm hole up with the hole in the tube (fish wire or a 4.5 mm rod through both); wipe.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, 0) for 260 mm.</li></ul>
@@ -1525,8 +1525,8 @@
 <p><strong>Do this:</strong> Slide doubler LR over the tube B end into the sleeve counterbore (s 11 to 32 mm); bond.</p>
 <p><strong>Time (EST):</strong> 15 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
-<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-009-LR</code> x1</td><td>Doubler 14x12 x 21 mm</td><td>made</td><td>R09 RMRC</td><td>1.4</td></tr></tbody></table></div>
-<p>Mass placed by this step 1.4 g; running total of placed parts 241.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-009-LR</code> x1</td><td>Doubler 14x12 x 14 mm</td><td>made</td><td>R09 RMRC</td><td>0.9</td></tr></tbody></table></div>
+<p>Mass placed by this step 0.9 g; running total of placed parts 237.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> epoxy, wipes.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>Coat the tube from s 11 to 32 mm, slide the 14x12 doubler on from the LR end until it stops in the sleeve counterbore. Line its 4.8 mm hole up with the hole in the tube (fish wire or a 4.5 mm rod through both); wipe.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, 0) for 260 mm.</li></ul>
@@ -1538,8 +1538,8 @@
 <p><strong>Do this:</strong> Slide doubler UL over the tube B end into the sleeve counterbore (s 11 to 32 mm); bond.</p>
 <p><strong>Time (EST):</strong> 15 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure after the last doubler.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
-<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-009-UL</code> x1</td><td>Doubler 14x12 x 21 mm</td><td>made</td><td>R09 RMRC</td><td>1.4</td></tr></tbody></table></div>
-<p>Mass placed by this step 1.4 g; running total of placed parts 242.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-009-UL</code> x1</td><td>Doubler 14x12 x 14 mm</td><td>made</td><td>R09 RMRC</td><td>0.9</td></tr></tbody></table></div>
+<p>Mass placed by this step 0.9 g; running total of placed parts 238.8 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> epoxy, wipes.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>Coat the tube from s 11 to 32 mm, slide the 14x12 doubler on from the UL end until it stops in the sleeve counterbore. Line its 4.8 mm hole up with the hole in the tube (fish wire or a 4.5 mm rod through both); wipe.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, 0) for 260 mm.</li></ul>
@@ -1551,8 +1551,8 @@
 <p><strong>Do this:</strong> Push the bridge forward into the boss bore from aft until its chamfered end meets the conical floor; bond.</p>
 <p><strong>Time (EST):</strong> 15 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
-<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-004</code> x1</td><td>Bridge 12x10</td><td>made</td><td>R08 RMRC</td><td>6.3</td></tr></tbody></table></div>
-<p>Mass placed by this step 6.3 g; running total of placed parts 249.0 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-004</code> x1</td><td>Bridge 16x14</td><td>made</td><td>R02 RMRC</td><td>8.1</td></tr></tbody></table></div>
+<p>Mass placed by this step 8.1 g; running total of placed parts 246.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> epoxy, wipes.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>Coat the first 15 mm of the bridge, push it in from aft until it stops. The tube end is chamfered 0.8 mm x 45 deg to match the cone in the bore floor.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (-1, 0, 0) for 130 mm.</li></ul>
@@ -1563,7 +1563,7 @@
 <p><strong>Time (EST):</strong> 15 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-003-UR</code> x1</td><td>Motor cup</td><td>made</td><td>R03 Prusa</td><td>4.3</td></tr></tbody></table></div>
-<p>Mass placed by this step 4.3 g; running total of placed parts 253.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 4.3 g; running total of placed parts 251.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>PETG (R03). Print file: CGE-003.stl (export pending)</li></ul>
 <p><strong>Tools:</strong> printer (PETG), epoxy, protractor.</p>
@@ -1578,7 +1578,7 @@
 <p><strong>Time (EST):</strong> 15 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-003-LL</code> x1</td><td>Motor cup</td><td>made</td><td>R03 Prusa</td><td>4.3</td></tr></tbody></table></div>
-<p>Mass placed by this step 4.3 g; running total of placed parts 257.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 4.3 g; running total of placed parts 255.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> printer (PETG), epoxy, protractor.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>Slide the cup on until the tube end meets the plate. Check the cant with a protractor against the CAD drawing; epoxy. The motors go on in B1.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, 0) for 60 mm.</li></ul>
@@ -1589,7 +1589,7 @@
 <p><strong>Time (EST):</strong> 15 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-003-LR</code> x1</td><td>Motor cup</td><td>made</td><td>R03 Prusa</td><td>4.3</td></tr></tbody></table></div>
-<p>Mass placed by this step 4.3 g; running total of placed parts 261.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 4.3 g; running total of placed parts 259.8 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> printer (PETG), epoxy, protractor.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>Slide the cup on until the tube end meets the plate. Check the cant with a protractor against the CAD drawing; epoxy. The motors go on in B1.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, 0) for 60 mm.</li></ul>
@@ -1600,7 +1600,7 @@
 <p><strong>Time (EST):</strong> 15 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-003-UL</code> x1</td><td>Motor cup</td><td>made</td><td>R03 Prusa</td><td>4.3</td></tr></tbody></table></div>
-<p>Mass placed by this step 4.3 g; running total of placed parts 266.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 4.3 g; running total of placed parts 264.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> printer (PETG), epoxy, protractor.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>Slide the cup on until the tube end meets the plate. Check the cant with a protractor against the CAD drawing; epoxy. The motors go on in B1.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, 0) for 60 mm.</li></ul>
@@ -1611,7 +1611,7 @@
 <p><strong>Time (EST):</strong> 10 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-005-R</code> x1</td><td>V strut 6x4.5</td><td>made</td><td>R10 RMRC</td><td>6.5</td></tr></tbody></table></div>
-<p>Mass placed by this step 6.5 g; running total of placed parts 272.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 6.5 g; running total of placed parts 270.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> epoxy, wipes.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>Coat the first 30 mm of the strut, push it into the hub strut socket (the socket axis is the strut axis, 66.3 deg to x), wipe. The clamp on the far end goes on in B1.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, 0) for 40 mm.</li></ul>
@@ -1622,7 +1622,7 @@
 <p><strong>Time (EST):</strong> 10 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure after the last strut.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-005-L</code> x1</td><td>V strut 6x4.5</td><td>made</td><td>R10 RMRC</td><td>6.5</td></tr></tbody></table></div>
-<p>Mass placed by this step 6.5 g; running total of placed parts 279.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 6.5 g; running total of placed parts 277.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> epoxy, wipes.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>Coat the first 30 mm of the strut, push it into the hub strut socket (the socket axis is the strut axis, 66.3 deg to x), wipe. The clamp on the far end goes on in B1.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, 0) for 40 mm.</li></ul>
@@ -1649,8 +1649,8 @@
 <p><strong>Do this:</strong> Screw the motors on (threadlocker); fit the props; dock the cage unit on the spar from below.</p>
 <p><strong>Time (EST):</strong> 1 h 30 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice) of the clamp bonds on the spar.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
-<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-001</code> x1</td><td>Hub</td><td>made</td><td>R03 Prusa</td><td>19.0</td></tr><tr><td><code>CGE-004</code> x1</td><td>Bridge 12x10</td><td>made</td><td>R08 RMRC</td><td>6.3</td></tr><tr><td><code>CGE-006</code> x1</td><td>Bridge saddle on spar</td><td>made</td><td>R03 Prusa</td><td>2.0</td></tr><tr><td><code>CGE-002-A</code> x1</td><td>Arm tube A 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub</td><td>made</td><td>R08 RMRC</td><td>30.6</td></tr><tr><td><code>CGE-002-B</code> x1</td><td>Arm tube B 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub</td><td>made</td><td>R08 RMRC</td><td>30.6</td></tr><tr><td><code>CGE-003</code> x4</td><td>Motor cup</td><td>made</td><td>R03 Prusa</td><td>17.2</td></tr><tr><td><code>CGE-009</code> x4</td><td>Doubler 14x12 x 21 mm</td><td>made</td><td>R09 RMRC</td><td>5.6</td></tr><tr><td><code>CGE-010</code> x5</td><td>Pin 3 mm carbon rod x 16 mm</td><td>made</td><td>R14 RMRC</td><td>1.0</td></tr><tr><td><code>CGE-005</code> x2</td><td>V strut 6x4.5</td><td>made</td><td>R10 RMRC</td><td>13.0</td></tr><tr><td><code>CGE-007</code> x2</td><td>Strut clamp on spar</td><td>made</td><td>R03 Prusa</td><td>3.0</td></tr><tr><td><code>PRP-001</code> x4</td><td>Motor MN2212 V2.0 KV780</td><td>bought</td><td>P01 TMotor</td><td>260.0</td></tr><tr><td><code>PRP-004</code> x4</td><td>Prop adapter, T-Motor</td><td>bought</td><td>P01 TMotor</td><td>17.2</td></tr><tr><td><code>PRP-002</code> x4</td><td>Prop APC 9x4.5MRP</td><td>bought</td><td>P02 RMRC</td><td>44.2</td></tr><tr><td><code>PRP-005</code> x4</td><td>Spinner nut, T-Motor</td><td>bought</td><td>P01 TMotor</td><td>11.6</td></tr></tbody></table></div>
-<p>Mass placed by this step 461.4 g; running total of placed parts 740.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-001</code> x1</td><td>Hub</td><td>made</td><td>R03 Prusa</td><td>17.1</td></tr><tr><td><code>CGE-004</code> x1</td><td>Bridge 16x14</td><td>made</td><td>R02 RMRC</td><td>8.1</td></tr><tr><td><code>CGE-006</code> x1</td><td>Bridge saddle on spar</td><td>made</td><td>R03 Prusa</td><td>2.0</td></tr><tr><td><code>CGE-002-A</code> x1</td><td>Arm tube A 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub</td><td>made</td><td>R08 RMRC</td><td>30.6</td></tr><tr><td><code>CGE-002-B</code> x1</td><td>Arm tube B 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub</td><td>made</td><td>R08 RMRC</td><td>30.6</td></tr><tr><td><code>CGE-003</code> x4</td><td>Motor cup</td><td>made</td><td>R03 Prusa</td><td>17.2</td></tr><tr><td><code>CGE-009</code> x4</td><td>Doubler 14x12 x 14 mm</td><td>made</td><td>R09 RMRC</td><td>3.6</td></tr><tr><td><code>CGE-010</code> x5</td><td>Pin 3 mm carbon rod x 16 mm</td><td>made</td><td>R14 RMRC</td><td>1.0</td></tr><tr><td><code>CGE-005</code> x2</td><td>V strut 6x4.5</td><td>made</td><td>R10 RMRC</td><td>13.0</td></tr><tr><td><code>CGE-007</code> x2</td><td>Strut clamp on spar</td><td>made</td><td>R03 Prusa</td><td>3.0</td></tr><tr><td><code>PRP-001</code> x4</td><td>Motor MN2212 V2.0 KV780</td><td>bought</td><td>P01 TMotor</td><td>260.0</td></tr><tr><td><code>PRP-004</code> x4</td><td>Prop adapter, T-Motor</td><td>bought</td><td>P01 TMotor</td><td>17.2</td></tr><tr><td><code>PRP-002</code> x4</td><td>Prop APC 9x4.5MRP</td><td>bought</td><td>P02 RMRC</td><td>44.2</td></tr><tr><td><code>PRP-005</code> x4</td><td>Spinner nut, T-Motor</td><td>bought</td><td>P01 TMotor</td><td>11.6</td></tr></tbody></table></div>
+<p>Mass placed by this step 459.3 g; running total of placed parts 736.4 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>4 x MN2212 V2.0 KV780 (BOM P01); APC 9x4.5MR/MRP 4-pack (P02: 2 x MR + 2 x MRP); T-Motor adapters and spinner nuts (in the motor box, BOM P01 note); 16 x M2.5x8 socket-head screws (ARMS.md: M2.5x8 SHCS; no BOM line, check whether the T-Motor box includes them: <code>-</code>); threadlocker (W06); epoxy (R05) for the two clamps</li></ul>
 <p><strong>Tools:</strong> hex key, threadlocker, caliper, epoxy (clamps), tape to mark prop direction.</p>
@@ -1674,7 +1674,7 @@
 <p><strong>Time (EST):</strong> 20 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>FIN-005</code> x2</td><td>Rib saddle on spar</td><td>made</td><td>R03 Prusa</td><td>2.0</td></tr></tbody></table></div>
-<p>Mass placed by this step 2.0 g; running total of placed parts 742.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 2.0 g; running total of placed parts 738.4 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>PETG (R03). Print file: FIN-005.stl (R and L; export pending)</li></ul>
 <p><strong>Tools:</strong> printer (PETG), epoxy, caliper.</p>
@@ -1690,8 +1690,8 @@
 <p><strong>Do this:</strong> Print both raceways; lower each into its foam groove from above (before the tray).</p>
 <p><strong>Time (EST):</strong> 20 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
-<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>HRN-003</code> x2</td><td>Phase-lead raceway</td><td>made</td><td>R03 Prusa</td><td>3.7</td></tr></tbody></table></div>
-<p>Mass placed by this step 3.7 g; running total of placed parts 746.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>HRN-003</code> x2</td><td>Phase-lead raceway</td><td>made</td><td>R03 Prusa</td><td>3.4</td></tr></tbody></table></div>
+<p>Mass placed by this step 3.4 g; running total of placed parts 741.8 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>PETG (R03; BOM W07 note: the raceway and conduits come from the R03 spool, about 6 g). Print file: HRN-003.stl (R and L; export pending)</li></ul>
 <p><strong>Tools:</strong> printer (PETG), bench dry-fit, no glue yet.</p>
@@ -1708,7 +1708,7 @@
 <p><strong>Time (EST):</strong> 15 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>HRN-004-UR</code> x1</td><td>Hub conduit</td><td>made</td><td>R03 Prusa</td><td>1.1</td></tr></tbody></table></div>
-<p>Mass placed by this step 1.1 g; running total of placed parts 747.4 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 1.1 g; running total of placed parts 742.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>PETG (R03). Print file: HRN-004.stl x 4 (UR, UL, LR, LL; export pending)</li></ul>
 <p><strong>Tools:</strong> printer (PETG), caliper.</p>
@@ -1725,7 +1725,7 @@
 <p><strong>Time (EST):</strong> 15 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>HRN-004-UL</code> x1</td><td>Hub conduit</td><td>made</td><td>R03 Prusa</td><td>0.8</td></tr></tbody></table></div>
-<p>Mass placed by this step 0.8 g; running total of placed parts 748.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 0.8 g; running total of placed parts 743.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> printer (PETG), caliper.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>Move the conduit toward the tube along the exit-hole axis (40 mm): its floor hugs the sleeve and its column lands on the raceway wall round the window (x -53 mm). Keep the lead ends out of the way. Bond.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, 0) for 40 mm.</li></ul>
@@ -1738,7 +1738,7 @@
 <p><strong>Time (EST):</strong> 15 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>HRN-004-LR</code> x1</td><td>Hub conduit</td><td>made</td><td>R03 Prusa</td><td>1.0</td></tr></tbody></table></div>
-<p>Mass placed by this step 1.0 g; running total of placed parts 749.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 1.0 g; running total of placed parts 744.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> printer (PETG), caliper.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>Move the conduit toward the tube along the exit-hole axis (40 mm): its floor hugs the sleeve and its column lands on the raceway wall round the window (x -53 mm). Keep the lead ends out of the way. Bond.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, 0) for 40 mm.</li></ul>
@@ -1750,8 +1750,8 @@
 <p><strong>Do this:</strong> Print conduit LL; raise from below onto its sleeve and its raceway window.</p>
 <p><strong>Time (EST):</strong> 15 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
-<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>HRN-004-LL</code> x1</td><td>Hub conduit</td><td>made</td><td>R03 Prusa</td><td>1.3</td></tr></tbody></table></div>
-<p>Mass placed by this step 1.3 g; running total of placed parts 750.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>HRN-004-LL</code> x1</td><td>Hub conduit</td><td>made</td><td>R03 Prusa</td><td>1.2</td></tr></tbody></table></div>
+<p>Mass placed by this step 1.2 g; running total of placed parts 745.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> printer (PETG), caliper.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>Move the conduit toward the tube along the exit-hole axis (40 mm): its floor hugs the sleeve and its column lands on the raceway wall round the window (x -53 mm). Keep the lead ends out of the way. Bond.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, 0) for 40 mm.</li></ul>
@@ -1775,7 +1775,7 @@
 <p><strong>Time (EST):</strong> 30 min hands-on.  <strong>Cure / wait:</strong> 1 h to hold, 24 h epoxy cure (K09-L practice).</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>CGE-008</code> x1</td><td>Pack tray</td><td>made</td><td>R03 Prusa</td><td>3.8</td></tr></tbody></table></div>
-<p>Mass placed by this step 3.8 g; running total of placed parts 754.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 3.8 g; running total of placed parts 749.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>PETG (R03). Print file: CGE-008.stl (export pending)</li></ul>
 <p><strong>Tools:</strong> epoxy, clamps or tape, caliper.</p>
@@ -1792,7 +1792,7 @@
 <p><strong>Time (EST):</strong> 1 h 00 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>WNG-009</code> x2</td><td>Hinge damper stator</td><td>made</td><td>R03 Prusa, R12 Amazon</td><td>4.0</td></tr><tr><td><code>WNG-010</code> x2</td><td>Hinge damper rotor</td><td>made</td><td>R03 Prusa</td><td>1.0</td></tr></tbody></table></div>
-<p>Mass placed by this step 5.0 g; running total of placed parts 759.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 5.0 g; running total of placed parts 754.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>Silicone damping fluid 12,500 cSt (BOM R12, EST, about 0.6 g per unit), silicone cord and O-rings (R13), PETG (R03), syringe (EST), paper towels</li></ul>
 <p><strong>Tools:</strong> printer, syringe, 12,500 cSt silicone, silicone O-ring / cord, wipes.</p>
@@ -1816,7 +1816,7 @@
 <p><strong>Time (EST):</strong> 45 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice).</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>FIN-002</code> x2</td><td>Fin rib tube 14x12</td><td>made</td><td>R09 RMRC</td><td>28.2</td></tr></tbody></table></div>
-<p>Mass placed by this step 28.2 g; running total of placed parts 787.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 28.2 g; running total of placed parts 782.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>1 x 14x12 CF tube, 1 m (BOM R09: price unverified)</li></ul>
 <p><strong>Tools:</strong> tube cutter, sandpaper, epoxy, calipers.</p>
@@ -1835,7 +1835,7 @@
 <p><strong>Time (EST):</strong> 40 min hands-on.  <strong>Cure / wait:</strong> CA: minutes; epoxy: 24 h (K09-L practice).</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>FIN-006</code> x2</td><td>Rib fairing, upper</td><td>made</td><td>R01 Local</td><td>0.6</td></tr></tbody></table></div>
-<p>Mass placed by this step 0.6 g; running total of placed parts 788.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 0.6 g; running total of placed parts 783.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>XPS offcut (R01); tape (R01); thin CA M5T / foam-safe only (R07) or epoxy</li></ul>
 <p><strong>Tools:</strong> knife and sanding block (or the ShopBot with the core job), sandpaper, foam-safe CA or epoxy, tape.</p>
@@ -1856,8 +1856,8 @@
 <p><strong>Do this:</strong> Cut the elevons; bond a 15.6 g lead strip + 2 tabs on each nose; tape-hinge; push them in.</p>
 <p><strong>Time (EST):</strong> 1 h 30 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice).</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
-<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>WNG-006</code> x2</td><td>Elevon right</td><td>made</td><td>R01 Local</td><td>13.4</td></tr><tr><td><code>WNG-007</code> x2</td><td>Elevon balance</td><td>made</td><td>R11 Local</td><td>32.2</td></tr></tbody></table></div>
-<p>Mass placed by this step 45.6 g; running total of placed parts 833.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>WNG-006</code> x2</td><td>Elevon right</td><td>made</td><td>R01 Local</td><td>13.4</td></tr><tr><td><code>WNG-007</code> x2</td><td>Elevon balance</td><td>made</td><td>R11 Local</td><td>26.6</td></tr></tbody></table></div>
+<p>Mass placed by this step 40.0 g; running total of placed parts 823.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>Lead sheet 1.3 mm (BOM R11, EST price: fishing / roofing lead); CF/PETG tab strip 6 x 1.2 mm; hinge tape (R05); epoxy (R05)</li></ul>
 <p><strong>Tools:</strong> lead sheet 1.3 mm, snips, knife, epoxy, hinge tape, 0.1 g scale.</p>
@@ -1875,8 +1875,8 @@
 <p><strong>Do this:</strong> Print the two upper caps; lower each over the strip window on the upper skin; bond the flange.</p>
 <p><strong>Time (EST):</strong> 30 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice).</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
-<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>WNG-008</code> x2</td><td>Lens cap + stop bosses: wall 0.6 mm, &gt;= 0.5 mm clearance to the lead at the +-21 deg stop</td><td>made</td><td>R03 Prusa</td><td>7.6</td></tr></tbody></table></div>
-<p>Mass placed by this step 7.6 g; running total of placed parts 841.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>WNG-008</code> x2</td><td>Lens cap + stop bosses: wall 0.6 mm, &gt;= 0.5 mm clearance to the lead at the +-21 deg stop</td><td>made</td><td>R03 Prusa</td><td>7.4</td></tr></tbody></table></div>
+<p>Mass placed by this step 7.4 g; running total of placed parts 830.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>PETG (R03). Print files: WNG-008-RU.stl, WNG-008-LU.stl (export pending)</li></ul>
 <p><strong>Tools:</strong> printer (vase mode), epoxy, tape.</p>
@@ -1892,8 +1892,8 @@
 <p><strong>Do this:</strong> Print the two lower caps; raise each onto the lower skin; bond; check the stops both ways.</p>
 <p><strong>Time (EST):</strong> 30 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice).</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
-<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>WNG-008</code> x2</td><td>Lens cap + stop bosses: wall 0.6 mm, &gt;= 0.5 mm clearance to the lead at the +-21 deg stop</td><td>made</td><td>R03 Prusa</td><td>7.6</td></tr></tbody></table></div>
-<p>Mass placed by this step 7.6 g; running total of placed parts 848.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>WNG-008</code> x2</td><td>Lens cap + stop bosses: wall 0.6 mm, &gt;= 0.5 mm clearance to the lead at the +-21 deg stop</td><td>made</td><td>R03 Prusa</td><td>7.4</td></tr></tbody></table></div>
+<p>Mass placed by this step 7.4 g; running total of placed parts 838.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>PETG (R03). Print files: WNG-008-RL.stl, WNG-008-LL.stl (export pending)</li></ul>
 <p><strong>Tools:</strong> printer (vase mode), epoxy, tape.</p>
@@ -1915,7 +1915,7 @@
 <p><strong>Time (EST):</strong> 35 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>FIN-004-R</code> x1</td><td>Fin fairing 3 mm XPS + tape</td><td>made</td><td>R01 Local</td><td>8.4</td></tr></tbody></table></div>
-<p>Mass placed by this step 8.4 g; running total of placed parts 857.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 8.4 g; running total of placed parts 846.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>XPS (R01), tape (R01), CA (R07, foam-safe only)</li></ul>
 <p><strong>Tools:</strong> ShopBot (face an XPS slab to 3 mm, then profile; backup: hot wire), tape, sandpaper, foam-safe CA.</p>
@@ -1932,7 +1932,7 @@
 <p><strong>Time (EST):</strong> 25 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>FIN-004-L</code> x1</td><td>Fin fairing 3 mm XPS + tape</td><td>made</td><td>R01 Local</td><td>8.4</td></tr></tbody></table></div>
-<p>Mass placed by this step 8.4 g; running total of placed parts 865.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 8.4 g; running total of placed parts 855.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> as C3.</p>
 <p><strong>Make it:</strong></p>
 <ul><li>As C3.</li></ul>
@@ -1947,7 +1947,7 @@
 <p><strong>Time (EST):</strong> 30 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice).</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>FIN-003</code> x2</td><td>Fin root block</td><td>made</td><td>R03 Prusa</td><td>6.4</td></tr></tbody></table></div>
-<p>Mass placed by this step 6.4 g; running total of placed parts 872.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 6.4 g; running total of placed parts 861.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>PETG (R03). Print file: FIN-003.stl x 2 (export pending)</li></ul>
 <p><strong>Tools:</strong> printer (PETG), epoxy, caliper.</p>
@@ -1964,7 +1964,7 @@
 <p><strong>Time (EST):</strong> 1 h 00 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice).</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>FIN-001</code> x2</td><td>Fin tube 16x14 x 0.36 m</td><td>made</td><td>R02 RMRC</td><td>54.2</td></tr></tbody></table></div>
-<p>Mass placed by this step 54.2 g; running total of placed parts 926.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 54.2 g; running total of placed parts 915.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>1 x 16x14 CF tube, 1 m (BOM R02): 2 x 0.36 m = 0.72 m</li></ul>
 <p><strong>Tools:</strong> tube cutter, epoxy, square / plumb, calipers.</p>
@@ -1988,7 +1988,7 @@
 <p><strong>Time (EST):</strong> 20 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice).</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>GER-001</code> x2</td><td>Foot shoe</td><td>made</td><td>R03 Prusa</td><td>2.8</td></tr></tbody></table></div>
-<p>Mass placed by this step 2.8 g; running total of placed parts 929.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 2.8 g; running total of placed parts 918.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>PETG (R03). Print file: GER-001.stl x 4 (export pending)</li></ul>
 <p><strong>Tools:</strong> printer (PETG), epoxy.</p>
@@ -2005,7 +2005,7 @@
 <p><strong>Time (EST):</strong> 20 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice).</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>GER-001</code> x2</td><td>Foot shoe</td><td>made</td><td>R03 Prusa</td><td>2.8</td></tr></tbody></table></div>
-<p>Mass placed by this step 2.8 g; running total of placed parts 931.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 2.8 g; running total of placed parts 921.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> epoxy.</p>
 <p><strong>Make it:</strong></p>
 <ul><li>As C7.</li></ul>
@@ -2020,7 +2020,7 @@
 <p><strong>Time (EST):</strong> 20 min hands-on.  <strong>Cure / wait:</strong> 24 h cure (EST).</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>GER-002</code> x4</td><td>Foot pad EVA/PE 12x15x30</td><td>made</td><td>R03 Prusa</td><td>2.8</td></tr></tbody></table></div>
-<p>Mass placed by this step 2.8 g; running total of placed parts 934.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 2.8 g; running total of placed parts 924.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>EVA/PE foam, 12 x 15 mm section (BOM R03 line text names &quot;foot pads&quot;; no separate foam line: <code>-</code>)</li></ul>
 <p><strong>Tools:</strong> knife, double-sided tape (CAD: pad PSA).</p>
@@ -2042,7 +2042,7 @@
 <p><strong>Time (EST):</strong> 30 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>MEC-001</code> x2</td><td>Servo EMAX ES3054HV</td><td>bought</td><td>M01 RMRC</td><td>41.0</td></tr></tbody></table></div>
-<p>Mass placed by this step 41.0 g; running total of placed parts 975.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 41.0 g; running total of placed parts 965.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>3 x EMAX ES3054HV (BOM M01: 2 + 1 spare)</li></ul>
 <p><strong>Tools:</strong> servo tester, screwdriver, foam-safe CA or epoxy dab.</p>
@@ -2070,7 +2070,7 @@
 <p><strong>Time (EST):</strong> 20 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>MEC-002</code> x2</td><td>Servo arm</td><td>bought</td><td>M01 RMRC</td><td>2.0</td></tr></tbody></table></div>
-<p>Mass placed by this step 2.0 g; running total of placed parts 977.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 2.0 g; running total of placed parts 967.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> servo tester.</p>
 <p><strong>Make it:</strong></p>
 <ul><li>Centre the servo with the tester at 1500 us (standard servo pulse, EST).</li></ul>
@@ -2085,7 +2085,7 @@
 <p><strong>Time (EST):</strong> 10 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>HWC-002</code> x2</td><td>Servo arm screw M2 x 6 pan</td><td>bought</td><td>R05 Amazon</td><td>0.5</td></tr></tbody></table></div>
-<p>Mass placed by this step 0.5 g; running total of placed parts 978.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 0.5 g; running total of placed parts 967.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> 1.5 mm / small screwdriver, threadlocker.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>M2 x 6 pan screw (CAD HWC-002) through the arm into the shaft; a little threadlocker (W06).</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, -1) for 10 mm.</li></ul>
@@ -2098,7 +2098,7 @@
 <p><strong>Time (EST):</strong> 30 min hands-on.  <strong>Cure / wait:</strong> 24 h epoxy cure (K09-L practice).</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>MEC-004</code> x2</td><td>Control horn</td><td>bought</td><td>M02 RMRC</td><td>2.0</td></tr></tbody></table></div>
-<p>Mass placed by this step 2.0 g; running total of placed parts 980.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 2.0 g; running total of placed parts 969.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>M02 linkage set: horns, pushrods, clevises</li></ul>
 <p><strong>Tools:</strong> epoxy, 0.1 g scale.</p>
@@ -2113,7 +2113,7 @@
 <p><strong>Time (EST):</strong> 30 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>MEC-003</code> x2</td><td>Pushrod 1.2 mm with Z-bend and clevis</td><td>bought</td><td>M02 RMRC</td><td>1.9</td></tr></tbody></table></div>
-<p>Mass placed by this step 1.9 g; running total of placed parts 982.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 1.9 g; running total of placed parts 971.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> Z-bend pliers, small pliers, calipers.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>Z-bend the 1.2 mm rod into the arm tip hole (CAD: vertical pin) and set the clevis over the horn blade, cheeks either side (CAD: clevis on the horn hole, horizontal pin; 10 mm). The pin follows in D5.</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, -1) for 10 mm.</li></ul>
@@ -2126,7 +2126,7 @@
 <p><strong>Time (EST):</strong> 15 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>MEC-005-R</code> x1</td><td>Clevis pin 1.0 x 4.4 mm</td><td>bought</td><td>M02 RMRC</td><td>0.0</td></tr></tbody></table></div>
-<p>Mass placed by this step 0.0 g; running total of placed parts 982.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 0.0 g; running total of placed parts 971.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> tweezers, small pliers.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>Press the pin in along y from outboard (6 mm).</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, -1, 0) for 6 mm.</li></ul>
@@ -2139,7 +2139,7 @@
 <p><strong>Time (EST):</strong> 10 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>MEC-005-L</code> x1</td><td>Clevis pin 1.0 x 4.4 mm</td><td>bought</td><td>M02 RMRC</td><td>0.0</td></tr></tbody></table></div>
-<p>Mass placed by this step 0.0 g; running total of placed parts 982.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 0.0 g; running total of placed parts 971.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> tweezers, servo tester.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>Press the pin in along y from outboard (6 mm).</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 1, 0) for 6 mm.</li></ul>
@@ -2157,7 +2157,7 @@
 <p><strong>Time (EST):</strong> 20 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>AVN-006</code> x1</td><td>Pitot probe</td><td>bought</td><td>V05 RMRC</td><td>5.0</td></tr></tbody></table></div>
-<p>Mass placed by this step 5.0 g; running total of placed parts 987.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 5.0 g; running total of placed parts 976.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>RMRC MS4525 airspeed + pitot (BOM V05)</li></ul>
 <p><strong>Tools:</strong> caliper.</p>
@@ -2174,7 +2174,7 @@
 <p><strong>Time (EST):</strong> 25 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>AVN-001</code> x1</td><td>Avionics plate</td><td>made</td><td>R03 Prusa</td><td>8.0</td></tr><tr><td><code>HWC-003</code> x1</td><td>FC mounting nuts: 4 x M2 thin nut</td><td>bought</td><td>R05 Amazon</td><td>0.4</td></tr></tbody></table></div>
-<p>Mass placed by this step 8.4 g; running total of placed parts 995.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 8.4 g; running total of placed parts 985.0 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>PETG (R03). Print file: AVN-001.stl (export pending); 4 x M2 thin nuts DIN 439 1.2 mm (R05 stock hardware)</li></ul>
 <p><strong>Tools:</strong> printer (PETG), M2 thin nuts (DIN 439), tweezers.</p>
@@ -2191,7 +2191,7 @@
 <p><strong>Time (EST):</strong> 40 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>PRP-003</code> x1</td><td>ESC SpeedyBee BLS 35A Mini V2 4-in-1 with leads</td><td>bought</td><td>P04 RMRC</td><td>20.0</td></tr><tr><td><code>AVN-007</code> x1</td><td>Foam-tape pads x4</td><td>bought</td><td>R05 Amazon</td><td>1.0</td></tr><tr><td><code>AVN-002</code> x1</td><td>Flight controller Kakute F405 Wing Mini</td><td>bought</td><td>V03 RMRC</td><td>17.0</td></tr><tr><td><code>AVN-003</code> x1</td><td>Receiver RP3 V2 ELRS</td><td>bought</td><td>V02 RMRC</td><td>4.6</td></tr><tr><td><code>AVN-004</code> x1</td><td>GPS TBS M10Q + compass</td><td>bought</td><td>V04 RMRC</td><td>13.5</td></tr><tr><td><code>AVN-005</code> x1</td><td>Airspeed sensor MS4525 board</td><td>bought</td><td>V05 RMRC</td><td>3.0</td></tr></tbody></table></div>
-<p>Mass placed by this step 59.1 g; running total of placed parts 1054.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 59.1 g; running total of placed parts 1044.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>Kakute F405 Wing Mini (V03), SpeedyBee BLS 35A 4-in-1 ESC (P04), RP3 V2 (V02), TBS M10Q GPS (V04), MS4525 board (V05)</li></ul>
 <p><strong>Tools:</strong> foam tape (VHB-class), tweezers, 0.1 g scale.</p>
@@ -2208,7 +2208,7 @@
 <p><strong>Time (EST):</strong> 15 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>HWC-001</code> x1</td><td>FC mounting screws: 4 x M2 x 25 pan screw</td><td>bought</td><td>R05 Amazon</td><td>3.0</td></tr></tbody></table></div>
-<p>Mass placed by this step 3.0 g; running total of placed parts 1057.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 3.0 g; running total of placed parts 1047.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> small screwdriver.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>Four M2 x 25 pan screws through the stack into the nuts (20 mm).</li><li>Motion (CAD, checked by <code>a_assembly.py</code>): along (0, 0, -1) for 20 mm.</li></ul>
@@ -2241,7 +2241,7 @@
 <p><strong>Time (EST):</strong> 5 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>PWR-003</code> x1</td><td>Anti-slip pad 100 x 30 x 1.0 mm silicone rubber sheet on the tray floor</td><td>bought</td><td>W09 Amazon</td><td>3.5</td></tr></tbody></table></div>
-<p>Mass placed by this step 3.5 g; running total of placed parts 1061.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 3.5 g; running total of placed parts 1050.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>Silicone rubber sheet 1 mm (BOM W09, EST)</li></ul>
 <p><strong>Tools:</strong> knife, scissors.</p>
@@ -2256,7 +2256,7 @@
 <p><strong>Time (EST):</strong> 10 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>PWR-001</code> x1</td><td>Pack Tattu 2300 mAh 4S 75C</td><td>bought</td><td>W01 RMRC</td><td>270.0</td></tr></tbody></table></div>
-<p>Mass placed by this step 270.0 g; running total of placed parts 1331.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 270.0 g; running total of placed parts 1320.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>Tattu 2300 4S (BOM W01)</li></ul>
 <p><strong>Tools:</strong> 0.1 g scale, TBS LiPo bag.</p>
@@ -2273,7 +2273,7 @@
 <p><strong>Time (EST):</strong> 20 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>HRN-002</code> x1</td><td>XT60 female + 14 AWG tail to the ESC</td><td>bought</td><td>W05 RMRC</td><td>8.0</td></tr></tbody></table></div>
-<p>Mass placed by this step 8.0 g; running total of placed parts 1339.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 8.0 g; running total of placed parts 1328.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>XT60, 14 AWG wire (BOM W05)</li></ul>
 <p><strong>Tools:</strong> soldering (tail to ESC after), heat-shrink.</p>
@@ -2299,7 +2299,7 @@
 <p><strong>Time (EST):</strong> 10 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>PWR-002</code> x1</td><td>Pack strap 20 x 300 mm with buckle</td><td>bought</td><td>W08 RMRC</td><td>5.5</td></tr></tbody></table></div>
-<p>Mass placed by this step 5.5 g; running total of placed parts 1344.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 5.5 g; running total of placed parts 1334.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>Tools:</strong> none.</p>
 <p><strong>Fit it:</strong></p>
 <ul><li>Thread the 20 x 300 mm strap by hand: over the pack top, outside the tray end walls, under the tray plate and under the 12 mm bridge tube (CAD edge E-PWR: buckle strap). Buckle it over the pack. The CAD thickness 1.6 mm is EST.</li></ul>
@@ -2325,7 +2325,7 @@
 <p><strong>Time (EST):</strong> 20 min hands-on.</p>
 <p><strong>Parts (CAD id, BOM-A line, CAD mass):</strong></p>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>CAD id</th><th>Part</th><th>Made / bought</th><th>BOM line</th><th>CAD mass (g)</th></tr></thead><tbody><tr><td><code>AVN-008</code> x1</td><td>Bay cover</td><td>made</td><td>R03 Prusa</td><td>9.6</td></tr></tbody></table></div>
-<p>Mass placed by this step 9.6 g; running total of placed parts 1354.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
+<p>Mass placed by this step 9.6 g; running total of placed parts 1343.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).</p>
 <p><strong>You need:</strong></p>
 <ul><li>PETG (R03). Print file: AVN-008.stl (export pending)</li></ul>
 <p><strong>Tools:</strong> printer, foam tape, ties.</p>
@@ -2339,13 +2339,13 @@
 </section>
 <section class="md-sec" id="build-14-after-the-last-step">
 <h2 class="md-h2">14. After the last step</h2>
-<ol><li><strong>Weigh-in.</strong> Weigh the aircraft with the pack. The gate is <strong>1.47 kg</strong> (<code>MASS-GATE.md</code> s8, D-190); the CAD basic mass is 1278.0 g (placed parts 1354.3 g plus the harness lump 18.4 g and the hardware lump 26.1 g) and the design target is 1.46 kg predicted including growth and overrun (<code>params-A.json</code>). If the weight is above the gate the aircraft does not fly until the C3 window check is re-run at the as-weighed mass (<code>MASS-GATE.md</code> s6).</li><li><strong>CG.</strong> Balance the aircraft on a knife edge in the cruise attitude: the band is <strong>19-26 mm aft of the wing leading edge</strong>, hard aft limit 28.5 mm, lateral within 5 mm (<code>params-A.json</code>, A-P4). Move the pack in the tray slots (6 mm forward, 10 mm aft of nominal, about 2.2 mm of CG per 10 mm, <code>common.py</code> <code>TRIM</code>): no ballast first.</li><li><strong>Controls.</strong> Each elevon +-20 deg (servo limit), stops at +-21 deg; both surfaces move the right way for the stick (EST: check with the TX, props off).</li><li><strong>Power-up, props OFF.</strong> First power-up with the props removed. Check each motor direction: UR and LL clockwise, UL and LR counter-clockwise, seen from the thrust side (BOM P02, MR and MRP); if one is wrong swap two phase leads (EST). Then fit the props, props-on tests only on the thrust stand (<code>bench_analysis.py</code>, <code>SCHEDULE-A.md</code> B3).</li><li><strong>Tap test.</strong> Tap each arm: first arm mode 32-50 Hz, four arms within 8 % of each other (<code>ARMS.md</code> s5). Below 32 Hz stop: the socket or the bond is soft.</li><li><strong>Flight card and range check.</strong> Not covered by this guide (<code>team/H3/FLIGHT-CARD.md</code> is the K09-L card: <code>-</code> for concept A).</li></ol>
+<ol><li><strong>Weigh-in.</strong> Weigh the aircraft with the pack. The gate is <strong>1.47 kg</strong> (<code>MASS-GATE.md</code> s8, D-190); the CAD basic mass is 1268.9 g (placed parts 1343.7 g plus the harness lump 18.4 g and the hardware lump 26.1 g) and the design target is 1.46 kg predicted including growth and overrun (<code>params-A.json</code>). If the weight is above the gate the aircraft does not fly until the C3 window check is re-run at the as-weighed mass (<code>MASS-GATE.md</code> s6).</li><li><strong>CG.</strong> Balance the aircraft on a knife edge in the cruise attitude: the band is <strong>19-26 mm aft of the wing leading edge</strong>, hard aft limit 28.5 mm, lateral within 5 mm (<code>params-A.json</code>, A-P4). Move the pack in the tray slots (6 mm forward, 10 mm aft of nominal, about 2.2 mm of CG per 10 mm, <code>common.py</code> <code>TRIM</code>): no ballast first.</li><li><strong>Controls.</strong> Each elevon +-20 deg (servo limit), stops at +-21 deg; both surfaces move the right way for the stick (EST: check with the TX, props off).</li><li><strong>Power-up, props OFF.</strong> First power-up with the props removed. Check each motor direction: UR and LL clockwise, UL and LR counter-clockwise, seen from the thrust side (BOM P02, MR and MRP); if one is wrong swap two phase leads (EST). Then fit the props, props-on tests only on the thrust stand (<code>bench_analysis.py</code>, <code>SCHEDULE-A.md</code> B3).</li><li><strong>Tap test.</strong> Tap each arm: first arm mode 32-50 Hz, four arms within 8 % of each other (<code>ARMS.md</code> s5). Below 32 Hz stop: the socket or the bond is soft.</li><li><strong>Flight card and range check.</strong> Not covered by this guide (<code>team/H3/FLIGHT-CARD.md</code> is the K09-L card: <code>-</code> for concept A).</li></ol>
 </section>
 <section class="md-sec" id="build-15-time-summary-running-mass-open-items">
 <h2 class="md-h2">15. Time summary, running mass, open items</h2>
 <div class="scroll fit"><table class="ds-table"><thead><tr><th>Stage</th><th>Title</th><th>Steps</th><th>Hands-on EST</th></tr></thead><tbody><tr><td>1</td><td>Wing core and spar</td><td>5</td><td>12 h 10 min</td></tr><tr><td>2</td><td>Cage frame on the bench (D-202), motor leads threaded, motors, props, dock</td><td>19</td><td>7 h 45 min</td></tr><tr><td>3</td><td>Rib saddles, phase-lead raceways, pack tray, hinge dampers</td><td>9</td><td>4 h 10 min</td></tr><tr><td>4</td><td>Fin ribs and rib fairings</td><td>2</td><td>1 h 25 min</td></tr><tr><td>5</td><td>Elevons, balance strips, lens caps</td><td>3</td><td>2 h 30 min</td></tr><tr><td>6</td><td>Fins: fairings, root blocks, tubes</td><td>4</td><td>2 h 30 min</td></tr><tr><td>7</td><td>Landing feet</td><td>3</td><td>1 h 00 min</td></tr><tr><td>8</td><td>Servos, pushrods, horns, lead threading</td><td>8</td><td>2 h 55 min</td></tr><tr><td>9</td><td>Avionics: pitot, plate, ESC, FC, leads</td><td>5</td><td>3 h 40 min</td></tr><tr><td>10</td><td>Pack, XT60, strap, phase leads, bay cover</td><td>7</td><td>3 h 55 min</td></tr><tr><td></td><td><strong>Total</strong></td><td><strong>65</strong></td><td><strong>42 h 00 min</strong></td></tr></tbody></table></div>
 <p>The steps total <strong>42.0 h</strong> hands-on (<code>EST</code>; machine time for printing and the 24 h cures are not counted). <code>SCHEDULE-A.md</code> plans 53 h of build (range 41-66 h), including 10 h of checks and a 2 h range check (<code>EST</code>, K09-L 82 h x 0.65). This guide steps 42.0 h plus those 12 h is 54.0 h, inside that range.</p>
-<p><strong>Mass check at the end:</strong> the CAD basic mass is 1277.97 g (<code>a_model.py</code>); the pack is 270 g of that.</p>
+<p><strong>Mass check at the end:</strong> the CAD basic mass is 1268.93 g (<code>a_model.py</code>); the pack is 270 g of that.</p>
 <details class="md-step" id="build-open-items-not-in-the-repo-or-in-conflict"><summary><h3 class="md-h3">Open items (not in the repo, or in conflict)</h3></summary>
 <ul><li><strong>Foam on the Jacobs ShopBot (D-203):</strong> assumed, not confirmed. Ask the staff and book the ShopBot training before the first cut (6 Jan). Write the CAM toolpaths (two core halves, fin fairings) from <code>s5010.dat</code> and <code>wing.py</code>. If foam is refused, the backup is the hot wire at workspace W: buy the K09-L G11 + H05 gear (about $62.55, re-price first), which is not in BOM-A.</li><li><strong>STL files, print orientation and slicer settings for every printed part:</strong> not in the repo for concept A (only K09-L G3 PRINT-LIST). The guide gives the CAD wall thicknesses and an <code>EST</code> orientation; export the STLs from <code>a_model.py</code>.</li><li><strong>S5010 gauge and backup hot-wire templates:</strong> not generated for concept A (<code>redesign/manufacturing/hotwire.py</code> is K09-L). The airfoil file is <code>redesign/subsystems/wing/s5010.dat</code>.</li><li><strong>Fin rib length (resolved, D-200):</strong> the CAD draws 215.5 mm (x 70.5-286.0 mm); the part mass (now 14.1 g) and BOM R09 (2 x 0.2155 m) follow the drawing.</li><li><strong>Motor screws M2.5x8:</strong> named in ARMS.md, but no BOM line; check whether the T-Motor box includes them. Prop adapters and spinner nuts: BOM P01 note says confirm they ship in the motor box.</li><li><strong>Motor direction change:</strong> the ESC configuration steps (BLHeli_S, DShot) are not written for concept A; swapping two phase leads reverses a brushless motor (EST).</li><li><strong>Pitot tube route:</strong> the silicone tube from the probe (right) to the sensor board (left, 0.45 m away) is not designed in the CAD (HARNESS-ENCLOSED D-199.2).</li><li><strong>Pad flange bond:</strong> the tray bond width fell from 80 to 59 mm (D-199); no coupon has been run (HARNESS-ENCLOSED D-199.5).</li><li><strong>Hub socket coupon pull test:</strong> still open (ARMS s5, s7): do not fly before it is run.</li><li><strong>Epoxy brand and pot life:</strong> BOM R05 epoxy is <code>EST</code> (bought locally). Cure times are K09-L practice, read the label.</li><li><strong>Servo centre pulse, screw torques, shrink-tube sizes, solder temperature:</strong> not in the repo; <code>EST</code> or &quot;per vendor sheet&quot;.</li><li><strong>EVA/PE foot-pad foam:</strong> no BOM line (R03 text names &quot;foot pads&quot;); the pad size is the CAD 12 x 15 x 30 mm.</li><li><strong>Flight card for concept A:</strong> not written (the K09-L card is <code>team/H3/FLIGHT-CARD.md</code>).</li></ul>
 <p>Source files: <code>cad/a_assembly_plan.py</code> (motions, checked by <code>cad/a_assembly.py</code>, <code>cad/out/ASSEMBLY.md</code>), <code>cad/a_build_steps.py</code> (this text), <code>BOM-A.csv</code>, <code>MASS-GATE.md</code>, <code>SCHEDULE-A.md</code>, <code>params-A.json</code>, <code>review/QP-5/ARMS.md</code>, <code>review/QP-5/HARNESS-ENCLOSED.md</code>, <code>review/QP-4/FIXES2.md</code>, <code>BUILD-GUIDE.md</code> (K09-L, process practice only). GitHub: https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/BUILD-GUIDE-A.md</p>
@@ -2363,10 +2363,10 @@
   <div class="page">
 <section class="c" id="fea-hub">
   <header>
-    <span class="secno">Hub FEA &middot; D-202 / D-205 &middot; 2026-11-17</span>
+    <span class="secno">Hub FEA &middot; D-202 / D-205 / D-206 &middot; 2026-11-17</span>
     <h1 class="ds-display">Structures</h1>
-    <p class="summary">The hub that joins the four arms passes its stress analysis in flight at the full safety factors and holds a 30 N prop strike at limit load. The map also exposed an open item: the bridge tube behind the hub is overloaded in torsion. Analysis only: nothing has been printed or tested.</p>
-    <p class="use">A 3-D finite-element model of the hub, the two continuous carbon arm tubes, the bridge tube and the five 3 mm pins (1.44 million unknowns). The colour is the <b>utilisation</b>: stress &times; required safety factor &divide; allowable. Under 1 passes. Every load pattern in a case is enveloped, so the map shows the worst value each point sees. <span class="ds-badge" data-status="MODELLED">MODELLED</span></p>
+    <p class="summary">The hub that joins the four arms passes its stress analysis in flight at the full safety factors and holds a 30 N prop strike at limit load. The map also exposed an overload in the bridge tube behind the hub (torsion); it is now 16 &times; 14 instead of 12 &times; 10 and passes (D-206). Analysis only: nothing has been printed or tested.</p>
+    <p class="use">A 3-D finite-element model of the hub, the two continuous carbon arm tubes, the 16 &times; 14 bridge tube and the five 3 mm pins (1.45 million unknowns). The colour is the <b>utilisation</b>: stress &times; required safety factor &divide; allowable. Under 1 passes. Every load pattern in a case is enveloped, so the map shows the worst value each point sees. <span class="ds-badge" data-status="MODELLED">MODELLED</span></p>
   </header>
 
   <div class="fea-tool">
@@ -2384,7 +2384,7 @@
     <div class="fea-under">
       <div class="fea-legend" aria-label="Colour key">
         <span class="fea-scale"><span class="fea-ramp"></span><span class="fea-ticks"><i>0</i><i>0.5</i><i>1.0</i></span></span>
-        <span class="fea-key"><span class="fea-chip" style="--c:#d03b3b"></span>over 1: fails (the bridge tube, and small spots where the bridge-tube end bears on the hub)</span>
+        <span class="fea-key"><span class="fea-chip" style="--c:#d03b3b"></span>over 1: fails (only small spots where the bridge-tube end bears on the hub, a sharp edge judged by the 99th percentile)</span>
         <span class="fea-key"><span class="fea-chip" style="--c:#9a9993"></span>not judged (pins have no allowable; the 15 mm at each loaded tube end)</span>
       </div>
       <p class="fea-read" id="fea-read">Point at the model for the value under the cursor.</p>
@@ -2398,19 +2398,19 @@
   <div class="scroll"><table class="ds-table">
     <thead><tr><th>Item</th><th>F2 flight</th><th>Allowed at 2.156 / 1.725</th><th>S2 strike</th><th>Allowed at 1.0</th><th>Result</th></tr></thead>
     <tbody>
-      <tr><td class="first">Printed hub, 99th-percentile principal stress</td><td class="val">7.9</td><td class="val">9.3</td><td class="val">10.9</td><td class="val">20</td><td><span class="ds-badge" data-status="CHECKED">PASS</span></td></tr>
-      <tr><td class="first">Glue, mean shear along the worst arm</td><td class="val">0.89</td><td class="val">0.93</td><td class="val">1.93</td><td class="val">2.0 <span class="ds-tag">EST</span></td><td><span class="ds-badge" data-status="UNVERIFIED">PASS if coupon &ge; 2.0</span></td></tr>
-      <tr><td class="first">Arm tube, shear</td><td class="val">13.5</td><td class="val">17.4</td><td class="val">24.5</td><td class="val">30</td><td><span class="ds-badge" data-status="CHECKED">PASS</span></td></tr>
-      <tr><td class="first">Arm tube, hoop (pin holes)</td><td class="val">18.1</td><td class="val">23.2</td><td class="val">31.8</td><td class="val">40</td><td><span class="ds-badge" data-status="CHECKED">PASS</span></td></tr>
-      <tr><td class="first">Arm tube, axial</td><td class="val">63.8</td><td class="val">203</td><td class="val">193.8</td><td class="val">350</td><td><span class="ds-badge" data-status="CHECKED">PASS</span></td></tr>
-      <tr><td class="first">Bridge tube, shear (torsion). Not a check of this model, which holds the cage only at the bridge end; a hand check says the struts take about 1 %</td><td class="val">28.3</td><td class="val">17.4</td><td class="val">53.0</td><td class="val">30 <span class="ds-tag">EST</span></td><td><span class="ds-badge" data-status="FAIL">OPEN</span> fix to size: 16 &times; 14 bridge or a wrapped tube with a tested allowable</td></tr>
-      <tr><td class="first">Printed hub, peak at the bridge-tube end (a sharp inside edge)</td><td class="val">20.3</td><td class="val">&mdash;</td><td class="val">27.7</td><td class="val">&mdash;</td><td>judged by the 99th percentile (peaks at sharp edges grow with mesh refinement)</td></tr>
+      <tr><td class="first">Printed hub, 99th-percentile principal stress</td><td class="val">8.0</td><td class="val">9.3</td><td class="val">10.8</td><td class="val">20</td><td><span class="ds-badge" data-status="CHECKED">PASS</span></td></tr>
+      <tr><td class="first">Glue, mean shear along the worst arm</td><td class="val">0.77</td><td class="val">0.93</td><td class="val">1.75</td><td class="val">2.0 <span class="ds-tag">EST</span></td><td><span class="ds-badge" data-status="UNVERIFIED">PASS if coupon &ge; 2.0</span></td></tr>
+      <tr><td class="first">Arm tube, shear</td><td class="val">14.0</td><td class="val">17.4</td><td class="val">24.5</td><td class="val">30</td><td><span class="ds-badge" data-status="CHECKED">PASS</span></td></tr>
+      <tr><td class="first">Arm tube, hoop (pin holes)</td><td class="val">18.9</td><td class="val">23.2</td><td class="val">37.9</td><td class="val">40</td><td><span class="ds-badge" data-status="CHECKED">PASS</span></td></tr>
+      <tr><td class="first">Arm tube, axial</td><td class="val">55.9</td><td class="val">203</td><td class="val">193.7</td><td class="val">350</td><td><span class="ds-badge" data-status="CHECKED">PASS</span></td></tr>
+      <tr><td class="first">Bridge tube 16 &times; 14, shear in torsion (it carries the cage&rsquo;s roll moment; sized to carry it alone because the struts&rsquo; share depends on their joints)</td><td class="val">15.1</td><td class="val">17.4</td><td class="val">27.6</td><td class="val">30 <span class="ds-tag">EST</span></td><td><span class="ds-badge" data-status="CHECKED">PASS</span> D-206 (12 &times; 10 was 28.3 / 53.0)</td></tr>
+      <tr><td class="first">Printed hub, peak at the bridge-tube end (a sharp inside edge)</td><td class="val">25.3</td><td class="val">&mdash;</td><td class="val">39.3</td><td class="val">&mdash;</td><td>judged by the 99th percentile (peaks at sharp edges grow with mesh refinement)</td></tr>
     </tbody>
   </table></div>
-  <figure class="fea-fig"><img src="assets/fea/fea-hub-margin.png" alt="Bar chart: margin ratio for each check. New hub in flight 1.05 to 3.18 and in a prop strike 1.04 to 1.85, all at or above 1; the replaced D-193 hub 0.02 to 0.52." loading="lazy"><figcaption><b>Before and after.</b> Margin ratio (factor of safety &divide; required factor; 1 or more passes) for the new hub and the D-193 hub it replaced. The old hub&rsquo;s 0.8 mm web reached 392 MPa in flight (factor of safety 0.05).</figcaption></figure>
-  <figure class="fea-fig"><img src="assets/fea/fea-hub-F2.png" alt="Rendered utilisation map of the motor-fault flight case, outside and with the hub hidden." loading="lazy"><figcaption><b>F2, motor fault in flight.</b> Left: the printed hub. Right: the hub hidden, showing the arm tubes, the bridge and the pins. The red tube running aft is the bridge in torsion (open item).</figcaption></figure>
+  <figure class="fea-fig"><img src="assets/fea/fea-hub-margin.png" alt="Bar chart: margin ratio for each check. New hub in flight 1.16 to 3.63 and in a prop strike 1.06 to 1.86, all at or above 1; the replaced D-193 hub 0.02 to 0.52." loading="lazy"><figcaption><b>Before and after.</b> Margin ratio (factor of safety &divide; required factor; 1 or more passes) for the new hub and the D-193 hub it replaced. The old hub&rsquo;s 0.8 mm web reached 392 MPa in flight (factor of safety 0.05).</figcaption></figure>
+  <figure class="fea-fig"><img src="assets/fea/fea-hub-F2.png" alt="Rendered utilisation map of the motor-fault flight case, outside and with the hub hidden." loading="lazy"><figcaption><b>F2, motor fault in flight.</b> Left: the printed hub. Right: the hub hidden, showing the arm tubes, the bridge and the pins. The dark tube running aft is the 16 &times; 14 bridge (utilisation 0.87).</figcaption></figure>
   <figure class="fea-fig"><img src="assets/fea/fea-hub-S2.png" alt="Rendered utilisation map of the 30 N prop strike, outside and with the hub hidden." loading="lazy"><figcaption><b>S2, 30 N prop strike in the disc plane</b> (damage case, factor 1.0).</figcaption></figure>
-  <span class="ds-source">qp/A/structures/fea_hub.py (run d205), fea_hub_figs.py &middot; <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-5/FEA-HUB.md" target="_blank" rel="noopener">review/QP-5/FEA-HUB.md</a> &middot; <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/structures/COUPON-BOND-D202.md" target="_blank" rel="noopener">glue coupon</a> &middot; params/CHANGE-LOG.md D-202, D-205</span>
+  <span class="ds-source">qp/A/structures/fea_hub.py (run d206), fea_hub_figs.py, bridge_torsion_d206.py &middot; <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-5/FEA-HUB.md" target="_blank" rel="noopener">review/QP-5/FEA-HUB.md</a> &middot; <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/structures/COUPON-BOND-D202.md" target="_blank" rel="noopener">glue coupon</a> &middot; params/CHANGE-LOG.md D-202, D-205, D-206</span>
 </section>
   </div>
 </section>

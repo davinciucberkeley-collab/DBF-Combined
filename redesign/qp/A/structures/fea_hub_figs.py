@@ -64,9 +64,9 @@ def margin_chart(tag):
     plt.rcParams.update({'font.family': 'DejaVu Sans', 'font.size': 10})
     fig = plt.figure(figsize=(10, 6.2), dpi=150); ax = fig.add_axes([0.27, 0.13, 0.66, 0.62])
     fig.patch.set_facecolor('#fcfcfb'); ax.set_facecolor('#fcfcfb')
-    series = [('D-205 hub, flight F2 (worst flight case, full factors)', '#2a78d6', 1),
+    series = [('New hub (D-206), flight F2 (worst flight case, full factors)', '#2a78d6', 1),
               ('D-193 hub as drawn, flight F1 (FEA-ARM.md, the design it replaced)', '#eb6834', 3),
-              ('D-205 hub, prop strike S2 (damage case, factor 1.0)', '#1baf7a', 2)]
+              ('New hub (D-206), prop strike S2 (damage case, factor 1.0)', '#1baf7a', 2)]
     h = 0.26
     for j, (lab, col, k) in enumerate(series):
         for i, row in enumerate(rows):
@@ -90,7 +90,7 @@ def margin_chart(tag):
     ax.grid(axis='x', color='#e6e5e0', lw=0.8); ax.set_axisbelow(True)
     ax.set_ylim(len(rows) - 0.5, -0.75)
     fig.text(0.02, 0.955, 'Hub FEA: each check against its required factor', fontsize=12.5, color='#0b0b0b', weight='bold')
-    fig.text(0.02, 0.92, 'New hub (D-205) in flight and in a prop strike, and the hub it replaced (D-193) in flight', fontsize=9.5, color='#52514e')
+    fig.text(0.02, 0.92, 'New hub (D-202, D-205, D-206 16x14 bridge) in flight and in a prop strike, and the hub it replaced (D-193) in flight', fontsize=9.5, color='#52514e')
     fig.legend(loc='upper left', bbox_to_anchor=(0.02, 0.905), frameon=False, fontsize=8.5, ncol=1)
     fig.text(0.02, 0.025, 'Limit loads: fea_hub.py run %s (structures/out_fea/hub_result_L0_%s.json); D-193 values from FEA-ARM.md s4.\nAllowables EST: PETG 20, CFRP axial 350 / hoop 40 / shear 30, glue 2.0 MPa (coupon COUPON-BOND-D202.md pending).' % (tag, tag),
              fontsize=7.5, color='#52514e')

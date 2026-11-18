@@ -27,8 +27,8 @@
    "material": "nylon webbing + plastic buckle",
    "cg_xyz_m": [
     -0.0175,
-    0.0,
-    0.016
+    -0.0,
+    0.014
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -56,7 +56,7 @@
    "part_b": "CGE-008",
    "via": "CT-STRAP-VELCRO",
    "owner": "power",
-   "notes": "buckle strap round pack and tray: over the pack top, outside the tray end walls, under the tray plate AND the 12 mm bridge tube CGE-004 (tangent to the plate underside, z -6..6)",
+   "notes": "buckle strap round pack and tray: over the pack top, outside the tray end walls, under the tray plate AND the 16 mm bridge tube CGE-004 (D-206) (tangent to the plate underside, z -6..6)",
    "retention": {
     "item": "20 mm strap",
     "count": 1,

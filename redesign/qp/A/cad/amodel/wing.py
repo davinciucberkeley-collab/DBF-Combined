@@ -32,7 +32,9 @@ PACK_XL_, PACK_ZL_ = 0.0025, 0.009 + 0.0145   # lead exit x and z (= electrical.
 CUP_PAT = (0.019, 0.016)                    # MN2212 mounting pattern 19 mm (along the arm, y) x 16 mm (z): retailers list 16x19 and 19x25 (getfpv MN2212 V2.0 page, search 2026-11-15; T-Motor drawing: 4-M2.5 on 19 x 16 (read 2026-11-15); cup holes M2.5 clearance 2.9 mm, D-194)
 CUP_R = 0.006                               # plate corner radius (EST)
 ARM_OD, ARM_ID = 0.012, 0.010               # DOC iteration 2: arms 12x10
-BR_OD, BR_ID, BR_X1 = 0.012, 0.010, 0.054       # DOC bridge 12x10 (ends on the saddle)
+BR_OD, BR_ID, BR_X1 = 0.016, 0.014, 0.054       # D-206: bridge 16x14 (was 12x10): torsion (structures/bridge_torsion_d206.md); cut from the R02 16x14 fin-tube offcut
+BR_RO, BR_RI = BR_OD / 2, BR_ID / 2
+BR_Z = -0.002                               # D-206: bridge axis 2 mm below the hub axis, so the 16 mm tube top stays tangent to the tray plate underside (z 6.0)
 BR_X0 = HUB[0] + 0.015                      # D-202: the bridge starts 15 mm aft of the hub axis (x -0.060), bonded in the 12 mm boss bore; it no longer passes through the hub centre (was -0.100)
 STRUT_OD, STRUT_ID = 0.006, 0.0045          # DOC 6x4.5
 STRUT_S = (-0.065, 0.0229, 0.0)             # EST start inside the hub
@@ -324,7 +326,7 @@ DBL_S0, DBL_S1 = 0.011, 0.025               # doubler s range per side (FEA DBL_
 SLV_R = TUBE_RO + DBL_T + SLV_WALL          # sleeve outer radius 8.5 mm (FEA: ro + SLV_W + DBL_T); bore = tube OD for |s| < 11, doubler OD for 11..24
 CB, R_CB = 0.010, 0.003                     # centre block half width / height 10 mm; 3 mm radii on its four x-parallel edges
 BLK_X = (-(TUBE_DX + TUBE_RO + SLV_WALL), TUBE_DX + TUBE_RO + SLV_WALL)   # block x range relative to HUB_x: -14.0 .. +14.0 mm
-R_BR = 0.0095                               # bridge boss radius, from the block aft face to HUB_X1
+R_BR = 0.0100                               # D-206: bridge boss radius 10.0 mm about the bridge axis (2.0 mm wall round the 16 mm bore, sleeves are 1.5; D-202: 9.5 round 12 mm)
 HOLE_S, HOLE_R = 0.018, 0.0024              # phase-lead exit 4.8 mm at s = +-18 mm (FEA S_HOLE, HOLE_R)
 PIN_D, PIN_S = 0.003, 0.008                 # 3 mm carbon pins along x: at the crossing (y = z = 0) and one per tube at s = +-8 mm
 # Pin insertion (CAD interpretation, D-202): all pins go in along +x from the nose side. A pin of tube A (UR, LL) and the crossing pin are flush with the sleeve front surface (x_A - 8.5 mm),
@@ -372,7 +374,7 @@ def hub_core_volume_m3(h=0.00025):
             inside |= (ay <= CB) & (az <= CB) & (cy * cy + cz * cz <= R_CB * R_CB)
         # bridge boss
         if BLK_X[1] - 0.0005 <= dx_rel <= HUB_X1 - HUB[0]:
-            inside |= (Y * Y + Z * Z <= R_BR * R_BR)
+            inside |= (Y * Y + (Z - BR_Z) ** 2 <= R_BR * R_BR)
         sub = np.zeros(Y.shape, dtype=bool)
         for T in 'AB':
             xt, phi = TUBE_X[T], TUBE_PHI[T]
@@ -392,8 +394,8 @@ def hub_core_volume_m3(h=0.00025):
                 sub |= ((U - sg * PIN_S) ** 2 + Tt * Tt <= (PIN_D / 2) ** 2) & (x >= x_lo) & (x <= x_hi)
         sub |= (Y * Y + Z * Z <= (PIN_D / 2) ** 2) & (x >= PINC_X0) & (x <= HUB[0] + BLK_X[1])
         if dx_rel >= BR_X0 - HUB[0]:
-            rr = TUBE_RO if dx_rel >= BR_X0 - HUB[0] + BR_CHAMFER else (TUBE_RI + 0.0002 + (TUBE_RO - TUBE_RI - 0.0002) * (dx_rel - (BR_X0 - HUB[0])) / BR_CHAMFER)
-            sub |= (Y * Y + Z * Z <= rr * rr)
+            rr = BR_RO if dx_rel >= BR_X0 - HUB[0] + BR_CHAMFER else (BR_RI + 0.0002 + (BR_RO - BR_RI - 0.0002) * (dx_rel - (BR_X0 - HUB[0])) / BR_CHAMFER)
+            sub |= (Y * Y + (Z - BR_Z) ** 2 <= rr * rr)
         tot += float(np.count_nonzero(inside & ~sub)) * h ** 3
     return tot
 
@@ -465,7 +467,7 @@ for s in 'RL':
     P('FIN-005-' + s, 'Rib saddle on spar (%s)' % s, 'fins', 1.0, 'PETG (printed)')
     P('FIN-006-' + s, 'Rib fairing, upper (%s): XPS + tape blister over the 14 mm rib where the S5010 skin is thinner than the tube (D-194); mass EST' % s, 'fins', 0.3, 'XPS foam + tape')
 # cage (allocation 135; STRUCTURES iteration 2: 122 g)
-P('CGE-001', 'Hub (printed PETG, D-202: 1.5 mm sleeves over s +-24 mm of both arm tubes, 28 x 20 x 20 mm centre block with 3 mm edge radii, bridge boss r 9.5 mm, 2 strut sockets, tray flange; mass = drawn volume x 1.27)', 'cage', round(hub_mass_g(), 1), 'PETG (printed)')
+P('CGE-001', 'Hub (printed PETG, D-202: 1.5 mm sleeves over s +-24 mm of both arm tubes, 28 x 20 x 20 mm centre block with 3 mm edge radii, bridge boss r 10.0 mm (D-206), 2 strut sockets, tray flange; mass = drawn volume x 1.27)', 'cage', round(hub_mass_g(), 1), 'PETG (printed)')
 for t_ in 'AB':
     P('CGE-002-' + t_, 'Arm tube %s 12x10 x %.4f m, ONE continuous tube from motor cup to motor cup through the hub (D-202; %s)' % (t_, 2 * TUBE_HL, 'UR + LL' if t_ == 'A' else 'LR + UL'), 'cage', round(tube_g(2 * TUBE_HL, ARM_OD, ARM_ID), 1), 'CFRP tube')
 for s in ST:
@@ -473,7 +475,7 @@ for s in ST:
     P('CGE-009-' + s, 'Doubler 14x12 x %.0f mm (%s), carbon tube sleeve bonded over the arm tube at s %.0f..%.0f mm (D-202)' % ((DBL_S1 - DBL_S0) * 1e3, s, DBL_S0 * 1e3, DBL_S1 * 1e3), 'cage', round(tube_g(DBL_S1 - DBL_S0, 2 * DBL_RO, 2 * TUBE_RO), 1), 'CFRP tube')
     P('CGE-010-' + s, 'Pin 3 mm carbon rod x %.0f mm (%s) through the arm tube and its sleeve at s %+.0f mm (D-202)' % (PIN_L[s] * 1e3, s, STN_S[s] * PIN_S * 1e3), 'cage', round(math.pi / 4 * PIN_D ** 2 * PIN_L[s] * 1600 * 1000, 2), 'CFRP rod')
 P('CGE-010-C', 'Crossing pin 3 mm carbon rod x %.0f mm through both arm tubes and the hub block (D-202)' % ((HUB[0] + BLK_X[1] - PINC_X0) * 1e3), 'cage', round(math.pi / 4 * PIN_D ** 2 * (HUB[0] + BLK_X[1] - PINC_X0) * 1600 * 1000, 2), 'CFRP rod')
-P('CGE-004', 'Bridge 12x10 (D-202: starts at x -60 mm, bored into the boss)', 'cage', round(tube_g(BR_X1 - BR_X0, BR_OD, BR_ID), 1), 'CFRP tube')
+P('CGE-004', 'Bridge 16x14 (D-206, torsion; axis z -2 mm; D-202: starts 15 mm aft of the hub axis, bored into the boss)', 'cage', round(tube_g(BR_X1 - BR_X0, BR_OD, BR_ID), 1), 'CFRP tube')
 for s in 'RL':
     P('CGE-005-' + s, 'V strut 6x4.5 (%s)' % s, 'cage', 6.5, 'CFRP tube')
     P('CGE-007-' + s, 'Strut clamp on spar (%s)' % s, 'cage', 1.5, 'PETG (printed)')
@@ -584,7 +586,7 @@ def build_wing(ctx):
     for sy in (1, -1):                                    # servo pocket open to the upper skin (arm sweep too)
         y0, y1 = sorted((sy * SERVO_Y - 0.0225, sy * SERVO_Y + 0.0225))
         core.cut_box((0.1245, y0, SV_Z1), (0.1655, y1, 0.020), name='servo pocket')
-    core.cut_box((0.0, -0.0065, -0.05), (0.056, 0.0065, 0.0075), name='bridge slot (open below)')
+    core.cut_box((0.0, -(BR_RO + 0.0005), -0.05), (0.056, BR_RO + 0.0005, 0.0075), name='bridge slot (open below; D-206 16 mm bridge)')
     core.cut_box((-0.010, -0.0570, 0.0055), (0.0225, 0.0570, 0.050), name='pack tray slot (open above; y +-57 clears the 25 mm strap, outer face 56.1, over the whole trim travel)')
     core.cut_box((0.0295, -0.0165, -0.05), (0.0710, 0.0165, 0.0115), name='saddle slot (open below)')
     for sy in (1, -1):                                    # D-199: raceway groove under the tray slot, then the open ditch under the bay cover
@@ -675,7 +677,7 @@ def build_cage(ctx):
     hub = ctx.part('CGE-001', rgb=(0.9, 0.9, 0.9))
     x_a0, x_b1 = HUB[0] + BLK_X[0], HUB[0] + BLK_X[1]
     hub.prism('X', x_a0, [_rrect(CB, CB, R_CB, 8)], x_b1 - x_a0, name='hub centre block 28 x 20 x 20 mm, 3 mm radii on the four x-parallel edges (D-202)')
-    hub.cylinder('X', (x_b1 - 0.0005, 0.0, 0.0), HUB_X1 - x_b1 + 0.0005, R_BR, name='hub bridge boss r 9.5 mm (D-202)')
+    hub.cylinder('X', (x_b1 - 0.0005, 0.0, BR_Z), HUB_X1 - x_b1 + 0.0005, R_BR, name='hub bridge boss r 10.0 mm about the bridge axis (D-202, D-206)')
     for T in 'AB':
         hub.loft('X', hub_sleeve_secs(T), name='hub sleeve %s, 1.5 mm wall over the doubler, s +-24 mm (D-202)' % T)
     hub.box(HUB_PAD[0], HUB_PAD[1], name='hub tray pad flange')
@@ -683,8 +685,8 @@ def build_cage(ctx):
         ya_, yb_ = sorted((sy_ * PADN_Y[0], sy_ * PADN_Y[1]))
         hub.cut_box((PADN_X[0], ya_, PADN_Z[0]), (PADN_X[1], yb_, PADN_Z[1]), name='raceway slot in the tray pad flange (D-199)')
     # bridge bore: 12 mm from x = HUB_x + 15 mm to the aft face, 45 deg conical corner at the floor (matches the chamfered bridge end); explicit cut, not a seat (a seat would fill the chamfer)
-    hub.cut(fk.Shape('revolve', 'bridge bore 12 mm with a 0.8 mm x 45 deg conical floor corner (D-202)', axis='X', center=(BR_X0, 0.0, 0.0),
-                     profile=[(0.0, 0.0), (0.0, TUBE_RI + 0.0002), (BR_CHAMFER, TUBE_RO), (HUB_X1 - BR_X0 + 0.001, TUBE_RO), (HUB_X1 - BR_X0 + 0.001, 0.0)]), None, 'bridge bore D-202')
+    hub.cut(fk.Shape('revolve', 'bridge bore 16 mm with a 0.8 mm x 45 deg conical floor corner (D-202, D-206)', axis='X', center=(BR_X0, 0.0, BR_Z),
+                     profile=[(0.0, 0.0), (0.0, BR_RI + 0.0002), (BR_CHAMFER, BR_RO), (HUB_X1 - BR_X0 + 0.001, BR_RO), (HUB_X1 - BR_X0 + 0.001, 0.0)]), None, 'bridge bore D-202')
     tubes = {}
     for T in 'AB':
         tube = ctx.part('CGE-002-' + T, at=(TUBE_X[T], 0.0, 0.0), rotate=('X', TUBE_PHI[T]), rgb=(0.1, 0.1, 0.1))
@@ -735,7 +737,7 @@ def build_cage(ctx):
         ctx.seat('CGE-002-' + T, 'CGE-010-C', 'crossing pin hole 3.0 mm through the tube')
     br = ctx.part('CGE-004', rgb=(0.1, 0.1, 0.1))
     L_br = BR_X1 - BR_X0
-    br.revolve('X', (BR_X0, 0.0, 0.0), [(0.0, TUBE_RI), (L_br, TUBE_RI), (L_br, TUBE_RO), (BR_CHAMFER, TUBE_RO), (0.0, TUBE_RI + 0.0002)], name='bridge tube 12x10, 0.8 mm x 45 deg chamfer on the forward end (D-202)')
+    br.revolve('X', (BR_X0, 0.0, BR_Z), [(0.0, BR_RI), (L_br, BR_RI), (L_br, BR_RO), (BR_CHAMFER, BR_RO), (0.0, BR_RI + 0.0002)], name='bridge tube 16x14, 0.8 mm x 45 deg chamfer on the forward end (D-202, D-206)')
     d = (STRUT_E[0] - STRUT_S[0], STRUT_E[1] - STRUT_S[1])
     L = math.hypot(*d)
     ang = math.degrees(math.atan2(d[1], d[0]))
@@ -755,7 +757,7 @@ def build_cage(ctx):
         ctx.seat('CGE-007-' + s, 'WNG-002', 'clamp bore on the spar')
     sd = ctx.part('CGE-006', rgb=(0.9, 0.9, 0.9))
     sd.tube('Y', (SPAR_X, -0.015, 0.0), 0.030, 0.0105, SPAR_OD / 2, name='saddle ring')
-    sd.box((0.030, -0.0085, -0.0085), (0.0535, 0.0085, 0.0085), name='saddle bridge socket')
+    sd.box((0.030, -(BR_RO + 0.0025), BR_Z - BR_RO - 0.0025), (0.0535, BR_RO + 0.0025, BR_Z + BR_RO + 0.0025), name='saddle bridge socket (D-206: 2.5 mm wall round the 16 mm bridge)')
     sd.cut_box((SPAR_X - 0.0065, -0.016, 0.0), (SPAR_X + 0.0065, 0.016, 0.012), name='clip slot')
     ctx.seat('CGE-006', 'WNG-002', 'saddle bore on the spar')
     ctx.seat('CGE-006', 'CGE-004', 'saddle bridge socket')

@@ -4,6 +4,7 @@ Structural margins, flutter onsets and the modal / forced-response numbers come 
 are read from the stored output files through `read_value`, and the minimum / maximum / ratio that decides a limit is computed
 here. Servo torque is re-computed from the load terms. Run via run_all.py.
 """
+import math
 import sys
 from pathlib import Path
 
@@ -94,6 +95,24 @@ for cid, title, param, parts, reqs in [
     stored(cid, title, param, "-", limit=(">=", "P:req.ms_min"), verifies=reqs, parts=parts, assumes=(["ASM-A-HUB-WALL"] if cid == "CL-A-MS-ARM-SOCKET" else []),
            how="Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
            equation="MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run")
+# ================================================================ bridge torsion (D-206)
+def bridge_tau(od, idd, m, k):
+    j = math.pi / 32 * (od ** 4 - idd ** 4)            # mm4
+    return k * m * 1e3 * (od / 2) / j                    # MPa
+
+
+BR_IN = {"od": "P:struct.bridge_od_mm", "idd": "P:struct.bridge_id_mm"}
+kit.calc("CALC-A-BRIDGE-TAU-F2", equation="tau = k x M x (OD / 2) / J, J = pi / 32 (OD^4 - ID^4)", inputs=dict(BR_IN, m="P:struct.bridge_roll_f2_nm", k="P:struct.k_cf"),
+         units={"od": "mm", "idd": "mm", "m": "N m"}, output="tau_mpa")(bridge_tau)
+kit.calc("CALC-A-BRIDGE-TAU-S2", equation="tau = 1.0 x M x (OD / 2) / J (damage case, D-202)", inputs=dict(BR_IN, m="P:struct.bridge_roll_s2_nm", k="P:struct.k_strike"),
+         units={"od": "mm", "idd": "mm", "m": "N m"}, output="tau_mpa")(bridge_tau)
+kit.claim("CL-A-BRIDGE-TORSION-F2", "Bridge 16x14 torsion shear, F2 motor fault at the CFRP factor (bridge alone)", calc="CALC-A-BRIDGE-TAU-F2", output="tau_mpa", unit="MPa",
+          limit=("<=", "P:struct.cf_shear_mpa"), verifies=["A-P13"], parts=["CGE-004", "CGE-001", "CGE-006"],
+          how="python -I qp/A/structures/bridge_torsion_d206.py; hub FEA run d206 (fea_hub.py) shows the bridge field; a torsion coupon on the 16x14 offcut would replace the 30 MPa EST.")
+kit.claim("CL-A-BRIDGE-TORSION-S2", "Bridge 16x14 torsion shear, 30 N prop strike in the disc plane (factor 1.0, bridge alone)", calc="CALC-A-BRIDGE-TAU-S2", output="tau_mpa", unit="MPa",
+          limit=("<=", "P:struct.cf_shear_mpa"), verifies=["A-P13"], parts=["CGE-004", "CGE-001", "CGE-006"],
+          how="As CL-A-BRIDGE-TORSION-F2.")
+
 stored("CL-A-LANDING-STROKE", "Landing crush stroke at 1.2 m/s on the fin-tip feet", "P:struct.landing_stroke_mm", "mm", limit=("<=", "P:struct.landing_stroke_max_mm"), verifies=["A-P13"],
        parts=["GER-001-UR", "GER-001-UL", "GER-001-LR", "GER-001-LL", "GER-002-UR", "GER-002-UL", "GER-002-LR", "GER-002-LL"],
        how="Drop test of the feet at 1.2 m/s on the built aircraft; 20 mm available.", equation="landing_a.py via STRUCTURES iteration 2 (A-P13 basis); read, not re-run")

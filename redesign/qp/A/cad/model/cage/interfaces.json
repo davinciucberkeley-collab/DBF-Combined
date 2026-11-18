@@ -4,15 +4,15 @@
  "parts": [
   {
    "id": "CGE-001",
-   "name": "Hub (printed PETG, D-202: 1.5 mm sleeves over s +-24 mm of both arm tubes, 28 x 20 x 20 mm centre block with 3 mm edge radii, bridge boss r 9.5 mm, 2 strut sockets, tray flange; mass = drawn volume x 1.27)",
+   "name": "Hub (printed PETG, D-202: 1.5 mm sleeves over s +-24 mm of both arm tubes, 28 x 20 x 20 mm centre block with 3 mm edge radii, bridge boss r 10.0 mm (D-206), 2 strut sockets, tray flange; mass = drawn volume x 1.27)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 17.7,
+   "mass_g": 17.1,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0664,
+    -0.0662,
     -0.0,
-    0.0001
+    -0.0
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -244,15 +244,15 @@
   },
   {
    "id": "CGE-004",
-   "name": "Bridge 12x10 (D-202: starts at x -60 mm, bored into the boss)",
+   "name": "Bridge 16x14 (D-206, torsion; axis z -2 mm; D-202: starts 15 mm aft of the hub axis, bored into the boss)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 6.0,
+   "mass_g": 8.1,
    "material": "CFRP tube",
    "cg_xyz_m": [
     0.0002,
     0.0,
-    0.0
+    -0.002
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -325,9 +325,9 @@
    "mass_g": 2.0,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.051,
+    0.0491,
     0.0,
-    0.0
+    -0.0012
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"

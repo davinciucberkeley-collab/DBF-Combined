@@ -45,6 +45,7 @@ src("SRC-A-FIXES2", "QP-4 fixes 2 (FIXES2.md, supersedes FIXES where they differ
 src("SRC-A-CDAMP", "Elevon flutter with the hinge damper (fixes2_cdamp.md)", "qp/A/structures/fixes2_cdamp.md", "lowest onset over the K grid, hot / nominal / cold, kd / nom / hi", kind="file")
 src("SRC-A-FOAM103", "Foam checks at 103 kPa (foam_103.md)", "qp/A/structures/foam_103.md", "MS at the 103 kPa basis (compressive 103 V data sheet; tension 129, shear 86 EST)", kind="file")
 src("SRC-A-ARMCUP", "Arm and motor-cup checks (arm_cup_checks.md)", "qp/A/structures/arm_cup_checks.md", "MS table, limit loads x 1.5 x 1.15 (x 1.25 printed/bonded); allowables EST", kind="file")
+src("SRC-A-D206BR", "Bridge tube torsion sizing, D-206 (bridge_torsion_d206.md)", "qp/A/structures/bridge_torsion_d206.md", "roll moments from the hub FEA load set; tau = M r / J; strut share bounds", kind="file")
 src("SRC-A-ITER2M", "Structures iteration 2 margins (iter2_margins.md)", "qp/A/structures/iter2_margins.md", "MS table at 1.5 x limit", kind="file")
 src("SRC-A-ITER3", "Structures iteration 3 (iter3_run.md, D-185 as ruled)", "qp/A/structures/iter3_run.md", "modes vs rotor bands, forced response, control-band GM, C1 loads at VD 24", kind="file")
 src("SRC-A-D195FL", "Elevon flutter, lead 12.8 g (D-205; flutter_d205.md, else as flutter_d195.md)", "qp/A/structures/flutter_d205.md", "elevon 6.7 g, lead 12.8 g at 20 mm (D-205), damper c 1.03e-3 hot / nominal / cold / half; p-method K sweep", kind="file")
