@@ -36,6 +36,9 @@ complete on paper, nothing bought, built or flown yet.*
 
 ## Open it
 
+- **In any browser, nothing to download:** <https://davinciucberkeley-collab.github.io/DBF-Combined/redesign/site/>
+  (GitHub Pages, published from the `redesign/v1` branch; it updates a minute or two after each push). Add `#structures`
+  for the hub stress map, `#build` for the build guide.
 - **Windows, with Python installed:** double-click `00 - OPEN THE K09-L EXPLORER (double-click me).bat` in the repo
   folder. It serves `redesign/site/` on `http://localhost:8765/` and opens the Explorer in your browser, now showing concept A: a
   rotatable 3-D model with a vendor link or build clip for every part, the configuration decision and morph chart, the
