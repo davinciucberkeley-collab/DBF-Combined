@@ -102,6 +102,22 @@ def clear_parts():
             bpy.data.meshes.remove(me)
 
 
+def same_local_cuts(a, b, tol=1e-7):
+    """True when parts a and b have the same cut shapes at the same poses relative to their own part frame (cuts are
+    [shape, world matrix] pairs)."""
+    ca, cb = a.get('cuts') or [], b.get('cuts') or []
+    if len(ca) != len(cb):
+        return False
+    Ai, Bi = Matrix(a['matrix']).inverted(), Matrix(b['matrix']).inverted()
+    for (sa, ma), (sb, mb) in zip(ca, cb):
+        if json.dumps(sa, sort_keys=True) != json.dumps(sb, sort_keys=True):
+            return False
+        ra, rb = Ai @ Matrix(ma), Bi @ Matrix(mb)
+        if max(abs(ra[i][j] - rb[i][j]) for i in range(4) for j in range(4)) > tol:
+            return False
+    return True
+
+
 def look(cam, centre, d, right, up, dist):
     """Place the ortho camera at centre - d * dist looking along d with image axes right / up."""
     z = -d.normalized()
@@ -201,7 +217,15 @@ def main():
                 Mm = Matrix(mj['matrix'])
                 Mm.translation = Mm.translation * 1000.0
                 Mmi = Mm.inverted()
-                mesh_ops.write_stl(os.path.join(work, mj['id'] + '.stl'), [[tuple(Mmi @ Vector(p)) for p in t] for t in t_], mj['id'] + ' design frame mm')
+                mloc = [[tuple(Mmi @ Vector(p)) for p in t] for t in t_]
+                if n_ > nm and Matrix(mj['matrix']).to_3x3().determinant() > 0 and \
+                        json.dumps(mj['bodies'], sort_keys=True) == json.dumps(job['bodies'], sort_keys=True) and \
+                        same_local_cuts(job, mj):
+                    # same design-frame geometry as the representative, only placed differently: the exact boolean failed in this
+                    # pose (floating point), so write the representative's design-frame mesh (the shop part is the same file)
+                    print('drw %-12s member %s: union open (%d edges) in its pose; same geometry as %s, its mesh used' % (job['id'], mj['id'], n_, job['members'][0]))
+                    mloc, n_ = loc, nm
+                mesh_ops.write_stl(os.path.join(work, mj['id'] + '.stl'), mloc, mj['id'] + ' design frame mm')
                 meta['stl'][mj['id']] = mj['id'] + '.stl'
                 meta.setdefault('member_non_manifold', {})[mj['id']] = n_
             except Exception as e:

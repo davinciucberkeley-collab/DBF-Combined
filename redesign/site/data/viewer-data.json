@@ -1,10 +1,10 @@
 {
  "schema": "dbf-viewer/1",
  "dataset": "concept-a",
- "generated": "2026-11-18 11:58 UTC",
+ "generated": "2026-11-18 15:43 UTC",
  "sources": {
-  "glb": "redesign/blender/out/aircraft/glb",
-  "interfaces": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/merged/interfaces.json",
+  "glb": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/glb210/glb",
+  "interfaces": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/glb210/mi/interfaces.json",
   "proofs": "redesign/qp/A/proofs/out/graph.json",
   "budget": "redesign/qp/A/cad/model/mass_budget.json",
   "csv": [
@@ -13,9 +13,9 @@
  },
  "glb": {
   "file": "assembly.glb",
-  "bytes": 8964336,
-  "js_parts": 1,
-  "sha256": "70f66b45c89550147cf9c59270c60b116d8429865e808b541c8d75d4b4d75fb2"
+  "bytes": 9273880,
+  "js_parts": 2,
+  "sha256": "f49d960e517eaad61529ab0895123e8a7db3fc43bf961b606a366dc35969e2d0"
  },
  "frame": "aircraft frame: metres, x aft, y right, z up. glTF (x, y, z) = aircraft (x, z, -y).",
  "parts": [

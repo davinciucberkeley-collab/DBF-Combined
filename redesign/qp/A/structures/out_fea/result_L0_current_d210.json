@@ -1,0 +1,367 @@
+{
+ "info": {
+  "level": 0,
+  "nodes": 282735,
+  "elements": 166936,
+  "dof_free": 809529,
+  "rbe3_nodes": 2847,
+  "fixed_nodes": 12892,
+  "t_mesh": 7.0,
+  "t_assemble": 28.9,
+  "t_factor": 0.0,
+  "t_solve": 35.0,
+  "equilibrium_err": [
+   3.16e-11,
+   9.07e-12,
+   9.41e-11,
+   1.79e-12,
+   4.06e-13,
+   4.03e-13
+  ]
+ },
+ "checks": {
+  "tip_defl_1N_mm": 0.12726903642785833,
+  "tip_defl_beam_clamped_at_mouth_mm": 0.11929686132273654,
+  "mid_axial_1N_MPa": 1.4234479814661913,
+  "mid_axial_beam_MPa": 1.436013522641428
+ },
+ "cases": [
+  {
+   "case": "F1 hover/transition at the spin cap, pitch-over, 1P",
+   "flight": true,
+   "regions": {
+    "doubler": {
+     "label": "Carbon doubler 14 x 12 over the lead exit (CFRP) (not judged here: inside s 36 mm, see fea_hub.py)"
+    },
+    "tube_hub": {
+     "label": "Arm tube inside the hub sleeve (CFRP; rigid-hub support: see fea_hub.py for this zone) (not judged here: inside s 36 mm, see fea_hub.py)"
+    },
+    "tube_root": {
+     "label": "Arm tube from s 36 mm (judged start) to 30 mm past the sleeve exit (CFRP)",
+     "axial": 25.680080266007554,
+     "hoop": 0.0345307470643196,
+     "shear": 0.5703465702336978,
+     "at": [
+      -5.65,
+      36.7,
+      1.56
+     ]
+    },
+    "tube_mid": {
+     "label": "Arm tube, free span (CFRP)",
+     "axial": 24.077210420135117,
+     "hoop": 0.03189333260794277,
+     "shear": 0.553200472266487,
+     "at": [
+      -5.43,
+      54.35,
+      2.22
+     ]
+    },
+    "tube_tip": {
+     "label": "Arm tube in and near the cup (CFRP)",
+     "axial": 6.356140264388663,
+     "hoop": 1.0958668167817047,
+     "shear": 0.8943769081715194,
+     "at": [
+      -5.86,
+      236.28,
+      0.19
+     ]
+    },
+    "cup": {
+     "label": "Motor cup (PETG)",
+     "p1": 4.136779878889489,
+     "vm": 2.462014861307031,
+     "p1_p99": 0.9354229923313666,
+     "at": [
+      -8.91,
+      279.73,
+      -5.22
+     ]
+    }
+   }
+  },
+  {
+   "case": "F2 uncapped motor fault + pitch-over + 1P",
+   "flight": true,
+   "regions": {
+    "doubler": {
+     "label": "Carbon doubler 14 x 12 over the lead exit (CFRP) (not judged here: inside s 36 mm, see fea_hub.py)"
+    },
+    "tube_hub": {
+     "label": "Arm tube inside the hub sleeve (CFRP; rigid-hub support: see fea_hub.py for this zone) (not judged here: inside s 36 mm, see fea_hub.py)"
+    },
+    "tube_root": {
+     "label": "Arm tube from s 36 mm (judged start) to 30 mm past the sleeve exit (CFRP)",
+     "axial": 29.85425328963918,
+     "hoop": 0.04013887499094061,
+     "shear": 0.6715510977946932,
+     "at": [
+      -5.65,
+      36.7,
+      1.56
+     ]
+    },
+    "tube_mid": {
+     "label": "Arm tube, free span (CFRP)",
+     "axial": 27.965788867651685,
+     "hoop": 0.035531867098083966,
+     "shear": 0.6516261109973926,
+     "at": [
+      -5.43,
+      54.35,
+      2.22
+     ]
+    },
+    "tube_tip": {
+     "label": "Arm tube in and near the cup (CFRP)",
+     "axial": 7.099434497114023,
+     "hoop": 1.1634980236243533,
+     "shear": 0.9578687563169297,
+     "at": [
+      -5.86,
+      236.28,
+      0.19
+     ]
+    },
+    "cup": {
+     "label": "Motor cup (PETG)",
+     "p1": 4.348746953755031,
+     "vm": 2.586580200669463,
+     "p1_p99": 0.9843725457820545,
+     "at": [
+      -8.91,
+      279.73,
+      -5.22
+     ]
+    }
+   }
+  },
+  {
+   "case": "S2 prop strike 30 N transverse at the prop plane (ground handling, not flight)",
+   "flight": false,
+   "regions": {
+    "doubler": {
+     "label": "Carbon doubler 14 x 12 over the lead exit (CFRP) (not judged here: inside s 36 mm, see fea_hub.py)"
+    },
+    "tube_hub": {
+     "label": "Arm tube inside the hub sleeve (CFRP; rigid-hub support: see fea_hub.py for this zone) (not judged here: inside s 36 mm, see fea_hub.py)"
+    },
+    "tube_root": {
+     "label": "Arm tube from s 36 mm (judged start) to 30 mm past the sleeve exit (CFRP)",
+     "axial": 79.85805968450059,
+     "hoop": 0.18423204514801644,
+     "shear": 9.544744662562211,
+     "at": [
+      -1.85,
+      36.28,
+      -5.56
+     ]
+    },
+    "tube_mid": {
+     "label": "Arm tube, free span (CFRP)",
+     "axial": 74.27160559617944,
+     "hoop": 0.10840890007870164,
+     "shear": 9.495949841648988,
+     "at": [
+      -1.42,
+      54.03,
+      -5.68
+     ]
+    },
+    "tube_tip": {
+     "label": "Arm tube in and near the cup (CFRP)",
+     "axial": 20.94219003451935,
+     "hoop": 4.854681255430527,
+     "shear": 3.4999396662861852,
+     "at": [
+      -5.5,
+      251.07,
+      2.02
+     ]
+    },
+    "cup": {
+     "label": "Motor cup (PETG)",
+     "p1": 18.025337673242923,
+     "vm": 11.086921956882941,
+     "p1_p99": 4.214818415972906,
+     "at": [
+      -8.91,
+      279.73,
+      -5.22
+     ]
+    }
+   }
+  },
+  {
+   "case": "S3 blade stop, torque 30 N x 80 mm about the shaft (ground handling, not flight)",
+   "flight": false,
+   "regions": {
+    "doubler": {
+     "label": "Carbon doubler 14 x 12 over the lead exit (CFRP) (not judged here: inside s 36 mm, see fea_hub.py)"
+    },
+    "tube_hub": {
+     "label": "Arm tube inside the hub sleeve (CFRP; rigid-hub support: see fea_hub.py for this zone) (not judged here: inside s 36 mm, see fea_hub.py)"
+    },
+    "tube_root": {
+     "label": "Arm tube from s 36 mm (judged start) to 30 mm past the sleeve exit (CFRP)",
+     "axial": 26.813971399528672,
+     "hoop": 0.05692647088319541,
+     "shear": 0.07690230175837989,
+     "at": [
+      -1.77,
+      42.19,
+      -5.59
+     ]
+    },
+    "tube_mid": {
+     "label": "Arm tube, free span (CFRP)",
+     "axial": 26.742789676604513,
+     "hoop": 0.39656490918741516,
+     "shear": 0.2130044149190777,
+     "at": [
+      -1.62,
+      56.14,
+      -5.63
+     ]
+    },
+    "tube_tip": {
+     "label": "Arm tube in and near the cup (CFRP)",
+     "axial": 32.999754400657366,
+     "hoop": 6.180731114992264,
+     "shear": 6.5864633439790214,
+     "at": [
+      0.21,
+      251.14,
+      5.86
+     ]
+    },
+    "cup": {
+     "label": "Motor cup (PETG)",
+     "p1": 13.623473596863416,
+     "vm": 10.989002660331794,
+     "p1_p99": 3.5579086848301458,
+     "at": [
+      -8.21,
+      259.85,
+      -5.11
+     ]
+    }
+   }
+  },
+  {
+   "case": "S1 prop strike 30 N along the shaft (ground handling, not flight)",
+   "flight": false,
+   "regions": {
+    "doubler": {
+     "label": "Carbon doubler 14 x 12 over the lead exit (CFRP) (not judged here: inside s 36 mm, see fea_hub.py)"
+    },
+    "tube_hub": {
+     "label": "Arm tube inside the hub sleeve (CFRP; rigid-hub support: see fea_hub.py for this zone) (not judged here: inside s 36 mm, see fea_hub.py)"
+    },
+    "tube_root": {
+     "label": "Arm tube from s 36 mm (judged start) to 30 mm past the sleeve exit (CFRP)",
+     "axial": 79.67057316852946,
+     "hoop": 0.1144374721151828,
+     "shear": 1.9351458373951682,
+     "at": [
+      -5.65,
+      36.7,
+      1.56
+     ]
+    },
+    "tube_mid": {
+     "label": "Arm tube, free span (CFRP)",
+     "axial": 74.14368771577462,
+     "hoop": 0.03946077520635454,
+     "shear": 1.853081460948449,
+     "at": [
+      -5.61,
+      54.07,
+      1.71
+     ]
+    },
+    "tube_tip": {
+     "label": "Arm tube in and near the cup (CFRP)",
+     "axial": 13.323160390165752,
+     "hoop": 1.3003371542212798,
+     "shear": 1.9248765665291159,
+     "at": [
+      -5.41,
+      236.54,
+      2.24
+     ]
+    },
+    "cup": {
+     "label": "Motor cup (PETG)",
+     "p1": 2.817266289877533,
+     "vm": 1.9975431079318526,
+     "p1_p99": 0.7900245889860891,
+     "at": [
+      -8.91,
+      279.73,
+      -5.22
+     ]
+    }
+   }
+  }
+ ],
+ "bonds": {
+  "F1 hover/transition at the spin cap, pitch-over, 1P": {
+   "cup": {
+    "shear": 0.5735449115665447,
+    "peel": 0.4510557901752529,
+    "shear_p99": 0.33115363178471857,
+    "shear_mean": 0.0689831080094306,
+    "n_points": 13297
+   }
+  },
+  "F2 uncapped motor fault + pitch-over + 1P": {
+   "cup": {
+    "shear": 0.6015437434418298,
+    "peel": 0.4824663324660813,
+    "shear_p99": 0.3392423509685135,
+    "shear_mean": 0.07258138380393696,
+    "n_points": 13297
+   }
+  },
+  "S2 prop strike 30 N transverse at the prop plane (ground handling, not flight)": {
+   "cup": {
+    "shear": 3.163461423471184,
+    "peel": 1.8946598054194181,
+    "shear_p99": 2.0373334565985304,
+    "shear_mean": 0.3525556822058049,
+    "n_points": 13297
+   }
+  },
+  "S3 blade stop, torque 30 N x 80 mm about the shaft (ground handling, not flight)": {
+   "cup": {
+    "shear": 4.0718707919076955,
+    "peel": 2.8225194564256877,
+    "shear_p99": 1.4129821509740184,
+    "shear_mean": 0.4495602547621733,
+    "n_points": 13297
+   }
+  },
+  "S1 prop strike 30 N along the shaft (ground handling, not flight)": {
+   "cup": {
+    "shear": 0.5225773791281515,
+    "peel": 0.6220535248690355,
+    "shear_p99": 0.33737172329225534,
+    "shear_mean": 0.07227872893832854,
+    "n_points": 13297
+   }
+  }
+ },
+ "loads": {
+  "T_CAP": 8.81,
+  "Q_CAP": 0.13,
+  "T_UNC": 10.38,
+  "Q_UNC": 0.153,
+  "F_1P": 0.96,
+  "M_GYRO_Nm": 0.15585417928984918,
+  "I_ROT": 5.30644198e-05,
+  "PITCH_RATE": 3.0
+ }
+}

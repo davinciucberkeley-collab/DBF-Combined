@@ -89,8 +89,8 @@ def figure(d, res, tag):
              'Flight at the full factors (1.725 carbon, 2.156 printed); prop strikes at 1.0.' % (tag, res['info']['elements']), fontsize=8.5, color='#52514e')
     yS2, uS2 = peaks['S2']
     pct = np.nanpercentile(d['U_S2_2'].astype(float), 99)
-    ax.annotate('S2 peak: the sharp inside corner where the cup\nsleeve ends on the plate (99th percentile of the\ncup in S2: %.2f; judged like the hub)' % pct,
-                xy=(yS2, uS2), xytext=(150, 1.12), fontsize=7.5, color='#0b0b0b', ha='center', va='center',
+    ax.annotate('S2 peak %.2f: where the 1 mm fillets meet at the end\nof the cup sleeve (D-210). Every point is under 1;\n99th percentile of the cup in S2: %.2f' % (uS2, pct),
+                xy=(yS2, uS2), xytext=(150, 1.15), fontsize=7.5, color='#0b0b0b', ha='center', va='center',
                 arrowprops=dict(arrowstyle='-', color='#52514e', lw=0.7))
     p = os.path.join(FIG, 'fea-arm-along.png')
     fig.savefig(p, facecolor=fig.get_facecolor()); print(p)

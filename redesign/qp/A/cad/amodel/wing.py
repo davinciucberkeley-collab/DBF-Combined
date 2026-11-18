@@ -31,6 +31,49 @@ HUB_STRUT_S = (-0.017, 0.032)               # strut socket: from 17 mm behind th
 PACK_XL_, PACK_ZL_ = 0.0025, 0.009 + 0.0145   # lead exit x and z (= electrical.PACK_XL, PACK_ZL; keep equal)
 CUP_PAT = (0.019, 0.016)                    # MN2212 mounting pattern 19 mm (along the arm, y) x 16 mm (z): retailers list 16x19 and 19x25 (getfpv MN2212 V2.0 page, search 2026-11-15; T-Motor drawing: 4-M2.5 on 19 x 16 (read 2026-11-15); cup holes M2.5 clearance 2.9 mm, D-194)
 CUP_R = 0.006                               # plate corner radius (EST)
+CUP_FIL = 0.001                             # D-210: fillet on the cup's sleeve-to-plate junction (the FEA's S2 / S3 hotspot was the sharp corner)
+
+
+def cup_fillet_loops(xf=-0.007, ro=0.0096, rho=CUP_FIL, ys=0.0035, e=0.00005, n=12):
+    """D-210 fillet prisms for the motor cup (cup frame: plate rear face x = xf, sleeve r ro about y, sleeve end y = ys).
+    Returns (along, chord, zc): two (x, z) loops for the fillets along the arm (z > 0, z < 0) and one (x, y) loop for the fillet
+    where the sleeve end meets the plate (extruded along z over |z| <= zc). Each loop reaches e = 0.05 mm into the plate and the
+    sleeve (D-198: no coincident faces). Same geometry as structures/fea_arm.py _cup (OpenCASCADE fillet)."""
+    cx = xf + rho
+    cz = math.sqrt((ro + rho) ** 2 - cx ** 2)
+    t2 = (cx * ro / (ro + rho), cz * ro / (ro + rho))
+    a0 = math.atan2(t2[1] - cz, t2[0] - cx); a1 = math.pi
+    if a1 - a0 > math.pi:
+        a1 -= 2 * math.pi
+    arc = [(cx + rho * math.cos(a0 + (a1 - a0) * k / n), cz + rho * math.sin(a0 + (a1 - a0) * k / n)) for k in range(n + 1)]
+    zi = math.sqrt((ro - e) ** 2 - (xf - e) ** 2)
+    ti = math.atan2(t2[1], t2[0]); t0 = math.atan2(zi, xf - e)
+    inner = [((ro - e) * math.cos(t0 + (ti - t0) * k / n), (ro - e) * math.sin(t0 + (ti - t0) * k / n)) for k in range(n + 1)]
+    up = [(xf - e, cz)] + [(xf - e, zi)] + inner[1:] + arc
+    down = [(x, -z) for x, z in reversed(up)]
+    return up, down, cup_chord_loop(xf, ys, rho, e, n), math.sqrt(ro ** 2 - xf ** 2)
+
+
+def cup_chord_loop(xf=-0.007, ys=0.0035, rho=CUP_FIL, e=0.00005, n=12):
+    """(x, y) loop of a 1 mm fillet between an end face y = ys (material below, x > xf) and the plate rear face x = xf (extrude along z)."""
+    cx = xf + rho
+    return [(xf - e, ys - e), (cx, ys - e)] + [(cx + rho * math.cos(-math.pi / 2 - (math.pi / 2) * k / n),
+                                               ys + rho + rho * math.sin(-math.pi / 2 - (math.pi / 2) * k / n)) for k in range(n + 1)] + [(xf - e, ys + rho)]
+
+
+def cup_web_loop(xf=-0.007, rc=0.0070, rho=CUP_FIL, e=0.00005, n=12):
+    """D-210: (x, z) loop of the web that joins the lead collar (r rc, tangent to the plate face x = xf) to the plate: the cusp between
+    them filled, with a fillet of radius rho on each side (the bare tangent line was a knife-edge joint; FEA d210 peak). Extrude along y
+    over the collar and its end cap. Returns (loop, z of the web edge at x = xf + rho / 2)."""
+    cx = xf + rho
+    cz = math.sqrt((rc + rho) ** 2 - cx ** 2)
+    a_t2 = math.atan2(-cz, -cx)                                   # from the fillet centre towards the collar axis
+    arc = [(cx + rho * math.cos(math.pi + (a_t2 + 2 * math.pi - math.pi) * k / n), cz + rho * math.sin(math.pi + (a_t2 + 2 * math.pi - math.pi) * k / n)) for k in range(n + 1)]
+    th = math.atan2(arc[-1][1], arc[-1][0])
+    circ = [((rc - e) * math.cos(th + (2 * math.pi - 2 * th) * k / (2 * n)), (rc - e) * math.sin(th + (2 * math.pi - 2 * th) * k / (2 * n))) for k in range(2 * n + 1)]
+    low = [(x, -z) for x, z in reversed(arc)]
+    loop = [(xf - e, cz)] + arc + circ[1:-1] + low + [(xf - e, -cz)]
+    return loop, cz - math.sqrt(rho ** 2 - (rho / 2) ** 2)
 ARM_OD, ARM_ID = 0.012, 0.010               # DOC iteration 2: arms 12x10
 BR_OD, BR_ID, BR_X1 = 0.016, 0.014, 0.054       # D-206: bridge 16x14 (was 12x10): torsion (structures/bridge_torsion_d206.md); cut from the R02 16x14 fin-tube offcut
 BR_RO, BR_RI = BR_OD / 2, BR_ID / 2
@@ -731,6 +774,13 @@ def build_cage(ctx):
         cup = ctx.part('CGE-003-' + st, at=station(st), rotate=mrot(st), rgb=(0.9, 0.9, 0.9))
         cup.prism('X', -0.012, [_rrect(0.0165, 0.0165, CUP_R)], 0.005, name='cup motor plate')
         cup.tube('Y', (0.0, -0.025, 0.0), 0.0285, 0.0096, ARM_OD / 2 + 0.0001, name='cup arm sleeve (bore 12.2 mm: 0.1 mm epoxy gap round the 12 mm arm, D-198: no coincident cylinder faces)')
+        f_up, f_dn, f_ch, f_zc = cup_fillet_loops()
+        cup.prism('Y', -0.0165, [f_up], 0.0200, name='cup fillet 1 mm, sleeve to plate along the arm (+z side, D-210)')
+        cup.prism('Y', -0.0165, [f_dn], 0.0200, name='cup fillet 1 mm, sleeve to plate along the arm (-z side, D-210)')
+        cup.prism('Z', -f_zc, [f_ch], 2 * f_zc, name='cup fillet 1 mm where the sleeve end meets the plate (D-210)')
+        w_loop, w_zc = cup_web_loop()
+        cup.prism('Y', 0.0035 - 0.00005, [w_loop], 0.0053 + 0.00005, name='collar-to-plate web with 1 mm fillets (D-210: the collar only touched the plate along a line)')
+        cup.prism('Z', -w_zc, [cup_chord_loop(ys=0.0088)], 2 * w_zc, name='cup fillet 1 mm where the web and collar cap end on the plate (D-210)')
         for sy_ in (1, -1):
             for sz_ in (1, -1):
                 cup.cut_cylinder('X', (-0.0126, sy_ * CUP_PAT[0] / 2, sz_ * CUP_PAT[1] / 2), 0.0055, 0.00145, name='motor screw hole M2.5 clearance 2.9 mm (ISO 273 medium; pattern V T-Motor drawing)')

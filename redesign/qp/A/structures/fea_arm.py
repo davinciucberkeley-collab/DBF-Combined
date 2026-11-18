@@ -16,7 +16,7 @@ Geometry from cad/amodel/wing.py and common.py (constants read below, not retype
   - motor cup in the motor frame (rotated CANT = 17 deg about the arm axis): plate 33 x 33 x 5 mm (R 6 corners) at 7..12 mm
     from the arm axis, sleeve OD 19.2 / bore 12.0 (the 0.1 mm epoxy gap is not meshed: tied), y -25 .. +3.5 about the station,
     4 holes 2.9 mm on 19 x 16, the two screw-head pockets 5.3 mm in the sleeve wall, the 8 mm rear relief.
-  Not modelled (listed in FEA-ARM.md): phase-lead holes in the socket floor and plate, the lead collar, the hub conduits, fillets.
+  Not modelled (listed in FEA-ARM.md): phase-lead holes in the socket floor and plate, the lead collar, the hub conduits, fillets (variant current models the collar, the plate lead hole and the D-210 cup fillets and web).
 Bonds (tube in socket, tube in cup) are tied: perfect epoxy bond; the interface tractions are reported against the bond allowable.
 Support: the sleeve bore is fixed (the 12 x 10 bridge tube bonded in it is 30x stiffer than the PETG; the hub also has the tray
 and struts, which are left out, so the web carries every arm load: conservative).
@@ -67,6 +67,9 @@ CANT = C.CANT
 PAT_Y, PAT_Z = W.CUP_PAT[0] / 2 * mm, W.CUP_PAT[1] / 2 * mm
 CUP_PL = (-12.0, -7.0)            # plate x range in the motor frame (wing.py: prism X from -0.012, 0.005 thick)
 CUP_HALF, CUP_RC = 16.5, W.CUP_R * mm
+CUP_FIL = W.CUP_FIL * mm            # D-210 sleeve-to-plate fillet radius (wing.py)
+COL_L, COL_RO, COL_CAP = 4.5, 7.0, 0.8   # D-198 lead collar y 3.5..8.0 past the station, OD 14, end cap 0.8 mm (wing.py cup.tube / cylinder)
+PH_X, PH_Y_MM, PH_R = (-12.8, -4.3), C.PH_Y * mm, C.PH_HOLE_R * mm   # phase-lead hole along x through plate and sleeve wall (wing.py)
 CUP_SLV = (-25.0, 3.5, 9.6)       # sleeve y range about the station and outer radius (wing.py cup.tube)
 HOLE_R, HEAD_R = 1.45, 2.25       # M2.5 clearance 2.9 mm; ISO 4762 M2.5 head 4.5 mm
 POCKET_R, POCKET_X = 2.65, (-7.2, -3.8)
@@ -231,6 +234,24 @@ def build_mesh(level, path, variant='asdrawn'):
     return X[used], remap[E], M
 
 
+def _occ_prism(occ, axis, offset, loop, depth):
+    """A fusionkit-style prism (cup frame, metres: loop in the plane normal to axis at offset, extruded by depth) as an OCC solid in
+    the FEA frame (mm, the cup station at y = R_M)."""
+    pts = []
+    for u, v in loop:
+        p = [0.0, 0.0, 0.0]
+        if axis == 'Y':
+            p = [u * 1e3, offset * 1e3 + R_M, v * 1e3]
+        else:                                          # 'Z': (x, y) loop
+            p = [u * 1e3, v * 1e3 + R_M, offset * 1e3]
+        pts.append(occ.addPoint(*p))
+    lines = [occ.addLine(pts[i], pts[(i + 1) % len(pts)]) for i in range(len(pts))]
+    s = occ.addPlaneSurface([occ.addCurveLoop(lines)])
+    d = depth * 1e3
+    ex = occ.extrude([(2, s)], 0, d if axis == 'Y' else 0, d if axis == 'Z' else 0)
+    return [e for e in ex if e[0] == 3][0]
+
+
 def _cup(occ, gmsh):
     """The motor cup (motor frame, plate normal x), rotated by CANT about the arm axis: same geometry as the as-drawn variant."""
     y0, y1, ro = CUP_SLV
@@ -245,13 +266,25 @@ def _cup(occ, gmsh):
             eds.append(e)
     if eds:
         cup = occ.fillet([t for d, t in cup], eds, [CUP_RC], removeVolume=True)
-    cuts = [occ.addCylinder(0, R_M + y0 - 1, 0, 0, y1 - y0 + 2, 0, TUBE_RO)]
+    # D-198 lead collar and end cap (as wing.py)
+    col = occ.addCylinder(0, R_M + y1, 0, 0, COL_L, 0, COL_RO)
+    cap = occ.addCylinder(0, R_M + y1 + COL_L, 0, 0, COL_CAP, 0, COL_RO)
+    extra = [(3, col), (3, cap)]
+    if CUP_FIL > 0:                                   # D-210 fillets and collar web: the SAME loops wing.py draws (cup_fillet_loops etc.)
+        up, dn, ch, zc = W.cup_fillet_loops()
+        web, wzc = W.cup_web_loop()
+        extra += [_occ_prism(occ, 'Y', -0.0165, up, 0.0200), _occ_prism(occ, 'Y', -0.0165, dn, 0.0200),
+                  _occ_prism(occ, 'Z', -zc, ch, 2 * zc), _occ_prism(occ, 'Y', 0.0035 - 0.00005, web, 0.0053 + 0.00005),
+                  _occ_prism(occ, 'Z', -wzc, W.cup_chord_loop(ys=0.0088), 2 * wzc)]
+    cup, _ = occ.fuse(cup, extra)
+    cuts = [occ.addCylinder(0, R_M + y0 - 1, 0, 0, y1 - y0 + 1 + COL_L, 0, TUBE_RO)]
     for sy in (1, -1):
         for sz in (1, -1):
             cuts.append(occ.addCylinder(CUP_PL[0] - 0.6, R_M + sy * PAT_Y, sz * PAT_Z, 5.6, 0, 0, HOLE_R))
     for sz in (1, -1):
         cuts.append(occ.addCylinder(POCKET_X[0], R_M - PAT_Y, sz * PAT_Z, POCKET_X[1] - POCKET_X[0], 0, 0, POCKET_R))
     cuts.append(occ.addCylinder(RELIEF_X[0], R_M, 0, RELIEF_X[1] - RELIEF_X[0], 0, 0, RELIEF_R))
+    cuts.append(occ.addCylinder(PH_X[0], R_M + PH_Y_MM, 0, PH_X[1] - PH_X[0], 0, 0, PH_R))
     cup, _ = occ.cut(cup, [(3, c) for c in cuts])
     occ.rotate(cup, 0, 0, 0, 0, 1, 0, math.radians(CANT))
     return cup
@@ -285,7 +318,9 @@ def build_mesh_current(level, path, occ, gmsh):
     sc = {0: 1.0, 1: 0.78, 2: 0.6}[level]
     boxes = [(0.6, (-dro - 0.5, dro + 0.5, -0.5, s1 + 6, -dro - 0.5, dro + 0.5)),     # crossing, pin, doubler, lead exit, sleeve exit
              (1.2, (-6.5, 6.5, -1, R_M + 1, -6.5, 6.5)),                                 # free tube
-             (1.1, (-21, 21, R_M - 27, R_M + 18, -21, 21))]                              # cup
+             (1.1, (-21, 21, R_M - 27, R_M + 18, -21, 21)),                              # cup
+             (0.45, (-10, -2, R_M + 1, R_M + 7, -10, 10)),                               # D-210: sleeve end / plate fillet (the old hotspot)
+             (0.7, (-11, -2, R_M - 18, R_M + 1, -12, 12))]                               # D-210: sleeve / plate fillets along the arm
     fl = []
     for v0, bx in boxes:
         b = f.add('Box'); f.setNumber(b, 'VIn', v0 * sc); f.setNumber(b, 'VOut', 4.0)

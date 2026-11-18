@@ -1,6 +1,6 @@
 # Concept A engineering drawings
 
-Generated from the CAD by `drawings/make_drawings_a.py` (commit 11562cf0, 2026-11-18). One sheet per distinct made part; mirror pairs and identical parts share a sheet. Every dimension is the CAD value; feature names that say EST are estimates. Re-run after any CAD change. All sheets: [DRAWINGS-A.pdf](DRAWINGS-A.pdf).
+Generated from the CAD by `drawings/make_drawings_a.py` (commit 9222f8aa, 2026-11-18). One sheet per distinct made part; mirror pairs and identical parts share a sheet. Every dimension is the CAD value; feature names that say EST are estimates. Re-run after any CAD change. All sheets: [DRAWINGS-A.pdf](DRAWINGS-A.pdf).
 
 | Drawing | Parts (qty) | Material | Size mm (design frame) | Sheets |
 |---|---|---|---|---|
@@ -9,7 +9,7 @@ Generated from the CAD by `drawings/make_drawings_a.py` (commit 11562cf0, 2026-1
 | [CGE-001](CGE-001.pdf) | CGE-001 (1) | PETG (printed) | 39.0 x 107.5 x 41.1 | 1 sheet(s), 15 features |
 | [CGE-002-A](CGE-002-A.pdf) | CGE-002-A (1) | CFRP tube | 12.0 x 552.5 x 12.0 | 1 sheet(s), 4 features |
 | [CGE-002-B](CGE-002-B.pdf) | CGE-002-B (1) | CFRP tube | 12.0 x 552.5 x 12.0 | 1 sheet(s), 4 features |
-| [CGE-003](CGE-003.pdf) | CGE-003-UR, CGE-003-LL, CGE-003-LR, CGE-003-UL (4) | PETG (printed) | 21.6 x 41.5 x 33.0 | 1 sheet(s), 12 features |
+| [CGE-003](CGE-003.pdf) | CGE-003-UR, CGE-003-LL, CGE-003-LR, CGE-003-UL (4) | PETG (printed) | 21.6 x 41.5 x 33.0 | 2 sheet(s), 17 features |
 | [CGE-004](CGE-004.pdf) | CGE-004 (1) | CFRP tube | 108.0 x 16.0 x 16.0 | 1 sheet(s), 1 features |
 | [CGE-005](CGE-005.pdf) | CGE-005-R, CGE-005-L (2) | CFRP tube | 286.2 x 6.0 x 6.0 | 1 sheet(s), 1 features |
 | [CGE-006](CGE-006.pdf) | CGE-006 (1) | PETG (printed) | 40.5 x 30.0 x 21.0 | 1 sheet(s), 5 features |

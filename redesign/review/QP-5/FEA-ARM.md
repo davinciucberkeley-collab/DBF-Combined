@@ -10,9 +10,9 @@ propeller". Script `qp/A/structures/fea_arm.py` (geometry read from `cad/amodel/
 > **Update 2026-11-17:** the hub found failing here was redesigned (D-202: continuous carbon arms, crossing hub, pins;
 > D-205: mass trim). The new hub passes the same FEA: see [FEA-HUB.md](FEA-HUB.md).
 
-> **Update 2026-11-18 (D-209):** the arm and motor cup were re-run on the current design (section 8): continuous tube,
-> doubler, pin and lead holes, the cup as drawn. The tube and the cup pass in every case; sections 1-7 describe the old
-> D-193 hub and are kept as the record.
+> **Update 2026-11-18 (D-209, D-210):** the arm and motor cup were re-run on the current design (section 8): continuous
+> tube, doubler, pin and lead holes, the cup as drawn. With the cup fillets and collar web of D-210 (section 8.1) every
+> point passes, single highest values included; sections 1-7 describe the old D-193 hub and are kept as the record.
 
 - **The arm tube and the motor cup have good factors of safety in flight.** At the worst flight case (F1: thrust at the
   spin cap, motor torque, the gyroscopic moment of the pitch-over and the 1P imbalance), the 12 x 10 carbon tube carries
@@ -153,10 +153,33 @@ The single highest cup stress sits on one ring: the sharp inside corner where th
 (s 279.8 mm, r 9.6 mm), in the cases that bend or twist the cup (S2 sideways strike, S3 blade stop). It is a sharp
 re-entrant edge (singular: its peak grows with mesh refinement), so the cup is judged like the hub, by the 99th percentile
 (D-207). The bond peak is at the end of the bonded overlap for the same reason (3.3 MPa in S3; 99th percentile 2.4 in S2).
-**Open item:** a printed part cracks first at such a corner; give the cup a 1 mm fillet there at its next revision
-(not modelled; mass about +0.1 g `EST`).
+A printed part cracks first at such a corner: fixed in D-210 (section 8.1).
 
 Compared with section 4 (old D-193 hub): free-span tube stress in F1 20.9 -> 24.1 MPa (the continuous tube is supported
 over the sleeve instead of a 6.8 mm socket, so the free span starts nearer the crossing); cup peak at a hole edge 7.0 ->
 5.7 (F1). Not covered, as section 6: contact and slip in the bonds, print orientation, motor heat, fatigue.
+
+### 8.1 Cup fillets and collar web (D-210, run `current_d210`)
+
+The d208 run left the cup's single highest point at the sharp corner where its sleeve ends on the plate. The cup now has
+1 mm fillets on that edge and on the two sleeve-to-plate lines along the arm (`wing.py cup_fillet_loops`). Modelling the
+fillet with the D-198 lead collar, its end cap and the 4.8 mm phase-lead hole (left out of the d208 model) moved the peak
+to the collar: its 14 mm OD is tangent to the plate's rear face (x = 7 mm), so the two met along a bare line, a
+knife-edge joint (F2 10.8 MPa, utilisation 1.17; S3 46.5). **Fix:** a web fills the cusp between collar and plate, with a
+1 mm fillet each side (`cup_web_loop`), over the collar and its cap, and a 1 mm fillet where it ends
+(`cup_chord_loop`). The FEA builds these five prisms from the same loops as the CAD. Added material about 0.07 g per cup
+`EST` (inside the 4.3 g cup estimate). Mesh refined to 0.45 / 0.7 mm round the fillets: 166,936 elements, 0.81 M
+unknowns, residual 6.5e-9.
+
+| Item (limit stresses, MPa) | F2 | Allowed | S2 | Allowed at 1.0 | d208 (F2 / S2) | Result |
+|---|---|---|---|---|---|---|
+| Arm tube, axial (s >= 36 mm) | 29.9 | 203 | 79.9 | 350 | 29.9 / 79.8 | PASS |
+| Arm tube, shear | 0.96 | 17.4 | 9.5 | 30 | 1.1 / 9.6 | PASS |
+| Arm tube, hoop | 1.2 | 23.2 | 4.9 (S3 6.2) | 40 | 1.6 / 5.2 | PASS |
+| Motor cup, 99th percentile | 0.98 | 9.3 | 4.2 (S3 3.6) | 20 | 0.75 / 3.1 | PASS |
+| Motor cup, single highest point | 4.4 | 9.3 | 18.0 (S3 13.6) | 20 | 6.1 / 23.6 (S3 39.5) | PASS, tightest (ratio 1.11) |
+| Cup bond, mean shear | 0.07 | 0.93 | 0.35 (S3 0.45) | 2.0 `EST` | 0.09 / 0.45 | PASS |
+
+The highest cup point (S2 18.0 MPa, utilisation 0.90) is where the fillets along the arm meet the end fillet at the
+sleeve end; every point of the arm and cup is under 1 in every case. Beam check unchanged (tip 0.127 vs 0.119 mm/N).
 

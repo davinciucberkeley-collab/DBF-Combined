@@ -1,5 +1,5 @@
 {
- "bodies": 464,
+ "bodies": 484,
  "defects": [
   "WNG-008-LL body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
   "WNG-008-LL body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)",
@@ -152,9 +152,53 @@
    "moved": null,
    "name": "static",
    "not_swept_against": null
+  },
+  {
+   "hits": [],
+   "moved": [
+    "MEC-004-L",
+    "MEC-004-R",
+    "MEC-005-L",
+    "MEC-005-R",
+    "WNG-006-L",
+    "WNG-006-R",
+    "WNG-007-L",
+    "WNG-007-R",
+    "WNG-010-L",
+    "WNG-010-R"
+   ],
+   "name": "elevons at lower limit (E-WNG-10 -20, E-WNG-11 -20)",
+   "not_swept_against": [
+    "MEC-003-L",
+    "MEC-003-R",
+    "WNG-009-L",
+    "WNG-009-R"
+   ]
+  },
+  {
+   "hits": [],
+   "moved": [
+    "MEC-004-L",
+    "MEC-004-R",
+    "MEC-005-L",
+    "MEC-005-R",
+    "WNG-006-L",
+    "WNG-006-R",
+    "WNG-007-L",
+    "WNG-007-R",
+    "WNG-010-L",
+    "WNG-010-R"
+   ],
+   "name": "elevons at upper limit (E-WNG-10 +20, E-WNG-11 +20)",
+   "not_swept_against": [
+    "MEC-003-L",
+    "MEC-003-R",
+    "WNG-009-L",
+    "WNG-009-R"
+   ]
   }
  ],
- "seconds": 136.6,
+ "seconds": 139.2,
  "skipped": [
   [
    "HRD-001",

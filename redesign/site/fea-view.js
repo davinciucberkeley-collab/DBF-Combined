@@ -6,7 +6,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 const TOOLS = [
   { sfx: '', src: 'data/fea-hub.js?v=20261118', key: 'FEA_HUB', cam: [-125, 110, 92], target: [8, 0, 0], frame: 'hub frame', start: 'F2' },
-  { sfx: '-arm', src: 'data/fea-arm.js?v=20261118d', key: 'FEA_ARM', cam: [-195, 90, 142], target: [0, 150, 0], frame: 'arm frame: y along the arm from the hub crossing', start: 'F2' },
+  { sfx: '-arm', src: 'data/fea-arm.js?v=20261118f', key: 'FEA_ARM', cam: [-195, 90, 142], target: [0, 150, 0], frame: 'arm frame: y along the arm from the hub crossing', start: 'F2' },
 ];
 const states = {};
 
