@@ -3,16 +3,16 @@
  "mode": "material",
  "frame": "glTF +Y up: glTF (x, y, z) = aircraft (x aft, z up, -y). explode_m in aircraft frame, metres.",
  "files": {
-  "assembly.glb": 8190500,
-  "avionics.glb": 224480,
-  "cage.glb": 1246636,
+  "assembly.glb": 8964336,
+  "avionics.glb": 299596,
+  "cage.glb": 1244644,
   "fins.glb": 241260,
-  "harness.glb": 4716192,
+  "harness.glb": 5403368,
   "landing.glb": 79516,
   "mechanisms.glb": 127376,
   "power.glb": 16768,
   "propulsion.glb": 942908,
-  "wing.glb": 594496
+  "wing.glb": 606908
  },
  "parts": [
   {
@@ -140,7 +140,7 @@
    "id": "WNG-008-RU",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.7,
+   "mass_g": 3.8,
    "explode_m": [
     0.0,
     0.0,
@@ -151,7 +151,7 @@
    "id": "WNG-008-LU",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.7,
+   "mass_g": 3.8,
    "explode_m": [
     0.0,
     0.0,
@@ -162,7 +162,7 @@
    "id": "WNG-008-RL",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.7,
+   "mass_g": 3.8,
    "explode_m": [
     0.0,
     0.0,
@@ -173,7 +173,7 @@
    "id": "WNG-008-LL",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.7,
+   "mass_g": 3.8,
    "explode_m": [
     0.0,
     0.0,
@@ -360,7 +360,7 @@
    "id": "CGE-001",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 18.3,
+   "mass_g": 18.0,
    "explode_m": [
     -0.157,
     0.0,
@@ -914,7 +914,7 @@
    "explode_m": [
     0.0,
     0.0,
-    0.06
+    0.0689
    ]
   },
   {
@@ -937,6 +937,28 @@
     0.0,
     0.0,
     0.0
+   ]
+  },
+  {
+   "id": "AVN-009-T",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0744
+   ]
+  },
+  {
+   "id": "AVN-009-S",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0744
    ]
   },
   {
@@ -1229,7 +1251,7 @@
    "id": "HRN-001",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 20.4,
+   "mass_g": 22.5,
    "explode_m": [
     0.0,
     0.0,
@@ -1278,9 +1300,9 @@
   "E-HRN-14"
  ],
  "joints": [
-  "E-AVN-09",
-  "E-AVN-10",
-  "E-AVN-11",
+  "E-AVN-15",
+  "E-AVN-16",
+  "E-AVN-17",
   "E-MEC-02",
   "E-MEC-03",
   "E-MEC-04",

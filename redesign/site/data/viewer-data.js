@@ -2,7 +2,7 @@
 window.VIEWER_DATA = {
  "schema": "dbf-viewer/1",
  "dataset": "concept-a",
- "generated": "2026-11-18 08:12 UTC",
+ "generated": "2026-11-18 11:58 UTC",
  "sources": {
   "glb": "redesign/blender/out/aircraft/glb",
   "interfaces": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/merged/interfaces.json",
@@ -14,9 +14,9 @@ window.VIEWER_DATA = {
  },
  "glb": {
   "file": "assembly.glb",
-  "bytes": 8190500,
+  "bytes": 8964336,
   "js_parts": 1,
-  "sha256": "8258cdb4da81d9ac52972b36771916cfe7b9ac4c7266c314a4f9ebcdf3763db1"
+  "sha256": "70f66b45c89550147cf9c59270c60b116d8429865e808b541c8d75d4b4d75fb2"
  },
  "frame": "aircraft frame: metres, x aft, y right, z up. glTF (x, y, z) = aircraft (x, z, -y).",
  "parts": [
@@ -42,7 +42,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 76",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/AVN-001.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/AVN-001.stl"
   },
   {
    "id": "AVN-002",
@@ -60,7 +62,7 @@ window.VIEWER_DATA = {
    "electrical": "bus",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM V03 RMRC; fitted in build step E3 \"ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS, airspeed on the plate\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
+   "vendor": "Bought: BOM V03 RMRC; fitted in build step E3 \"ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS on the plate; airspeed board into its pocket in the left wing tip\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
    "vendor_url": "https://www.readymaderc.com/products/details/87184-holybro-kakute-f405-wing-mini-flight-controller",
    "how_url": "assets/animation/build/a-stage-09.mp4",
    "unit_cost_usd": null,
@@ -85,7 +87,7 @@ window.VIEWER_DATA = {
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM V02 RMRC; fitted in build step E3 \"ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS, airspeed on the plate\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
+   "vendor": "Bought: BOM V02 RMRC; fitted in build step E3 \"ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS on the plate; airspeed board into its pocket in the left wing tip\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
    "vendor_url": "https://www.readymaderc.com/products/details/85670-radiomaster-rp3-expresslrs-2-4ghz-nano-receiver-v2",
    "how_url": "assets/animation/build/a-stage-09.mp4",
    "unit_cost_usd": null,
@@ -110,7 +112,7 @@ window.VIEWER_DATA = {
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM V04 RMRC; fitted in build step E3 \"ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS, airspeed on the plate\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
+   "vendor": "Bought: BOM V04 RMRC; fitted in build step E3 \"ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS on the plate; airspeed board into its pocket in the left wing tip\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
    "vendor_url": "https://www.readymaderc.com/products/details/86501-tbs-m10q-gps-receiver-with-glonass",
    "how_url": "assets/animation/build/a-stage-09.mp4",
    "unit_cost_usd": null,
@@ -127,15 +129,15 @@ window.VIEWER_DATA = {
    "mass_g": 3.0,
    "material": "PCB",
    "cg_xyz_m": [
-    0.0528,
-    -0.0446,
-    0.0165
+    0.0763,
+    -0.42,
+    0.0067
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM V05 RMRC; fitted in build step E3 \"ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS, airspeed on the plate\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
+   "vendor": "Bought: BOM V05 RMRC; fitted in build step E3 \"ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS on the plate; airspeed board into its pocket in the left wing tip\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
    "vendor_url": "https://www.readymaderc.com/products/details/rmrc-digital-air-speed-sensor-pixhawk-ii-2",
    "how_url": "assets/animation/build/a-stage-09.mp4",
    "unit_cost_usd": null,
@@ -146,20 +148,20 @@ window.VIEWER_DATA = {
   },
   {
    "id": "AVN-006",
-   "name": "Pitot probe",
+   "name": "Pitot-static probe (RMRC kit; size not published: EST 166 x 3 mm, measure)",
    "subsystem": "avionics",
    "status": "MODELLED",
    "mass_g": 5.0,
    "material": "brass tube",
    "cg_xyz_m": [
-    -0.0425,
-    0.41,
+    -0.0136,
+    -0.42,
     0.0
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM V05 RMRC (pitot probe comes in the V05 airspeed kit); fitted in build step E1 \"Pitot into its groove from the front\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
+   "vendor": "Bought: BOM V05 RMRC (pitot probe comes in the V05 airspeed kit); fitted in build step E1 \"Pitot into its groove from the front (left wing, y -420; its attachment block runs in the nose channel)\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
    "vendor_url": "https://www.readymaderc.com/products/details/rmrc-digital-air-speed-sensor-pixhawk-ii-2",
    "how_url": "assets/animation/build/a-stage-09.mp4",
    "unit_cost_usd": null,
@@ -183,7 +185,7 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM R05 Amazon (foam tape from the local fastener / tape line); fitted in build step E3 \"ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS, airspeed on the plate\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
+   "vendor": "Bought: BOM R05 Amazon (foam tape from the local fastener / tape line); fitted in build step E3 \"ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS on the plate; airspeed board into its pocket in the left wing tip\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
    "vendor_url": null,
    "how_url": "assets/animation/build/a-stage-09.mp4",
    "unit_cost_usd": null,
@@ -213,6 +215,56 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 85",
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/AVN-008.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/AVN-008.stl"
+  },
+  {
+   "id": "AVN-009-S",
+   "name": "Pitot line, static pressure: silicone tubing 2 / 4 mm (V RMRC), 36 mm (CAD route)",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "material": "silicone rubber",
+   "cg_xyz_m": [
+    0.0536,
+    -0.4222,
+    0.0059
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "vendor": "Bought: BOM V05 RMRC (cut from the 2 / 4 mm tubing in the V05 kit (D-208)); fitted in build step E3d \"Pitot lines (FLEXIBLE silicone: no rigid insertion path, so this step checks the fitted position only, travel 0): each 39 mm line pushed on its probe barb, laid in the pocket over the spar and pushed on its board port; pocket taped\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
+   "vendor_url": "https://www.readymaderc.com/products/details/rmrc-digital-air-speed-sensor-pixhawk-ii-2",
+   "how_url": "assets/animation/build/a-stage-09.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 84",
+   "spec": null
+  },
+  {
+   "id": "AVN-009-T",
+   "name": "Pitot line, total pressure: silicone tubing 2 / 4 mm (V RMRC), 36 mm (CAD route)",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "material": "silicone rubber",
+   "cg_xyz_m": [
+    0.0536,
+    -0.4178,
+    0.0059
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "vendor": "Bought: BOM V05 RMRC (cut from the 2 / 4 mm tubing in the V05 kit (D-208)); fitted in build step E3d \"Pitot lines (FLEXIBLE silicone: no rigid insertion path, so this step checks the fitted position only, travel 0): each 39 mm line pushed on its probe barb, laid in the pocket over the spar and pushed on its board port; pocket taped\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
+   "vendor_url": "https://www.readymaderc.com/products/details/rmrc-digital-air-speed-sensor-pixhawk-ii-2",
+   "how_url": "assets/animation/build/a-stage-09.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 83",
    "spec": null
   },
@@ -221,12 +273,12 @@ window.VIEWER_DATA = {
    "name": "Hub (printed PETG, D-202: 1.5 mm sleeves over s +-24 mm of both arm tubes, 38 x 20 x 20 mm centre block on the bridge axis, running aft to the tray face (no separate boss), 3 mm edge radii, junction fillets 2.0 mm (sleeve B / block) and 1.5 mm (sleeve A / block) as in the FEA (D-207; outer body is the OpenCASCADE mesh of hub_body.py), 2 strut sockets, tray flange; mass = drawn volume x 1.27)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 18.3,
+   "mass_g": 18.0,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0652,
+    -0.0655,
     -0.0,
-    -0.0005
+    -0.0006
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -238,7 +290,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 33",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-001.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/CGE-001.stl"
   },
   {
    "id": "CGE-002-A",
@@ -262,7 +316,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 34",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-002-A.pdf"
   },
   {
    "id": "CGE-002-B",
@@ -286,7 +341,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 35",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-002-B.pdf"
   },
   {
    "id": "CGE-003-LL",
@@ -310,7 +366,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 45",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-003.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/CGE-003-LL.stl"
   },
   {
    "id": "CGE-003-LR",
@@ -334,7 +392,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 42",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-003.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/CGE-003-LR.stl"
   },
   {
    "id": "CGE-003-UL",
@@ -358,7 +418,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 39",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-003.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/CGE-003-UL.stl"
   },
   {
    "id": "CGE-003-UR",
@@ -382,7 +444,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 36",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-003.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/CGE-003-UR.stl"
   },
   {
    "id": "CGE-004",
@@ -406,7 +470,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 49",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-004.pdf"
   },
   {
    "id": "CGE-005-L",
@@ -430,7 +495,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 52",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-005.pdf"
   },
   {
    "id": "CGE-005-R",
@@ -454,7 +520,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 50",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-005.pdf"
   },
   {
    "id": "CGE-006",
@@ -478,7 +545,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 54",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-006.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/CGE-006.stl"
   },
   {
    "id": "CGE-007-L",
@@ -502,7 +571,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 53",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-007.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/CGE-007-L.stl"
   },
   {
    "id": "CGE-007-R",
@@ -526,7 +597,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 51",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-007.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/CGE-007-R.stl"
   },
   {
    "id": "CGE-008",
@@ -550,7 +623,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 55",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-008.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/CGE-008.stl"
   },
   {
    "id": "CGE-009-LL",
@@ -574,7 +649,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 46",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-009.pdf"
   },
   {
    "id": "CGE-009-LR",
@@ -598,7 +674,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 43",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-009.pdf"
   },
   {
    "id": "CGE-009-UL",
@@ -622,7 +699,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 40",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-009.pdf"
   },
   {
    "id": "CGE-009-UR",
@@ -646,7 +724,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 37",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-009.pdf"
   },
   {
    "id": "CGE-010-C",
@@ -670,7 +749,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 48",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-010-C.pdf"
   },
   {
    "id": "CGE-010-LL",
@@ -694,7 +774,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 47",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-010-LL.pdf"
   },
   {
    "id": "CGE-010-LR",
@@ -718,7 +799,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 44",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-010-LR.pdf"
   },
   {
    "id": "CGE-010-UL",
@@ -742,7 +824,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 41",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-010-LR.pdf"
   },
   {
    "id": "CGE-010-UR",
@@ -766,7 +849,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 38",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-010-LL.pdf"
   },
   {
    "id": "FIN-001-L",
@@ -790,7 +874,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 27",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-001.pdf"
   },
   {
    "id": "FIN-001-R",
@@ -814,7 +899,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 21",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-001.pdf"
   },
   {
    "id": "FIN-002-L",
@@ -838,7 +924,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 28",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-002.pdf"
   },
   {
    "id": "FIN-002-R",
@@ -862,7 +949,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 22",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-002.pdf"
   },
   {
    "id": "FIN-003-L",
@@ -886,7 +974,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 29",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-003.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/FIN-003-L.stl"
   },
   {
    "id": "FIN-003-R",
@@ -910,7 +1000,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 23",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-003.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/FIN-003-R.stl"
   },
   {
    "id": "FIN-004-L",
@@ -934,7 +1026,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 30",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-004.pdf"
   },
   {
    "id": "FIN-004-R",
@@ -958,7 +1051,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 24",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-004.pdf"
   },
   {
    "id": "FIN-005-L",
@@ -982,7 +1076,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 31",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-005.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/FIN-005-L.stl"
   },
   {
    "id": "FIN-005-R",
@@ -1006,7 +1102,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 25",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-005.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/FIN-005-R.stl"
   },
   {
    "id": "FIN-006-L",
@@ -1030,7 +1128,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 32",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-006.pdf"
   },
   {
    "id": "FIN-006-R",
@@ -1054,7 +1153,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 26",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-006.pdf"
   },
   {
    "id": "GER-001-LL",
@@ -1077,8 +1177,10 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 110",
-   "spec": null
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 112",
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/GER-001.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/GER-001-LL.stl"
   },
   {
    "id": "GER-001-LR",
@@ -1101,8 +1203,10 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 108",
-   "spec": null
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 110",
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/GER-001.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/GER-001-LR.stl"
   },
   {
    "id": "GER-001-UL",
@@ -1125,8 +1229,10 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 106",
-   "spec": null
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 108",
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/GER-001.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/GER-001-UL.stl"
   },
   {
    "id": "GER-001-UR",
@@ -1149,8 +1255,10 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 104",
-   "spec": null
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 106",
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/GER-001.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/GER-001-UR.stl"
   },
   {
    "id": "GER-002-LL",
@@ -1173,8 +1281,9 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 111",
-   "spec": null
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 113",
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/GER-002.pdf"
   },
   {
    "id": "GER-002-LR",
@@ -1197,8 +1306,9 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 109",
-   "spec": null
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 111",
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/GER-002.pdf"
   },
   {
    "id": "GER-002-UL",
@@ -1221,8 +1331,9 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 107",
-   "spec": null
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 109",
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/GER-002.pdf"
   },
   {
    "id": "GER-002-UR",
@@ -1245,8 +1356,9 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 105",
-   "spec": null
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 107",
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/GER-002.pdf"
   },
   {
    "id": "HRD-001",
@@ -1271,7 +1383,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 114",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 116",
    "spec": null
   },
   {
@@ -1279,7 +1391,7 @@ window.VIEWER_DATA = {
    "name": "Harness remainder, bottom-up (D-198): phase-lead extensions, splices, ESC ribbon, sensor leads, servo ties, sleeves / ties / tape / solder - lumped",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 20.4,
+   "mass_g": 22.5,
    "material": "copper / silicone",
    "cg_xyz_m": [
     0.03,
@@ -1297,7 +1409,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 113",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 115",
    "spec": null
   },
   {
@@ -1323,7 +1435,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 112",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 114",
    "spec": null
   },
   {
@@ -1347,8 +1459,10 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 99",
-   "spec": null
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 101",
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/HRN-003.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/HRN-003-L.stl"
   },
   {
    "id": "HRN-003-R",
@@ -1371,8 +1485,10 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 98",
-   "spec": null
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 100",
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/HRN-003.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/HRN-003-R.stl"
   },
   {
    "id": "HRN-004-LL",
@@ -1395,8 +1511,10 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 103",
-   "spec": null
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 105",
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/HRN-004-LL.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/HRN-004-LL.stl"
   },
   {
    "id": "HRN-004-LR",
@@ -1419,8 +1537,10 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 102",
-   "spec": null
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 104",
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/HRN-004-LR.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/HRN-004-LR.stl"
   },
   {
    "id": "HRN-004-UL",
@@ -1443,8 +1563,10 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 101",
-   "spec": null
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 103",
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/HRN-004-UL.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/HRN-004-UL.stl"
   },
   {
    "id": "HRN-004-UR",
@@ -1467,8 +1589,10 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 100",
-   "spec": null
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 102",
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/HRN-004-UR.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/HRN-004-UR.stl"
   },
   {
    "id": "HWC-001",
@@ -1491,7 +1615,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 84",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 86",
    "spec": null
   },
   {
@@ -1515,7 +1639,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 97",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 99",
    "spec": null
   },
   {
@@ -1539,7 +1663,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 91",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 93",
    "spec": null
   },
   {
@@ -1563,7 +1687,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 85",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 87",
    "spec": null
   },
   {
@@ -1588,7 +1712,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 92",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 94",
    "spec": null
   },
   {
@@ -1613,7 +1737,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 86",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 88",
    "spec": null
   },
   {
@@ -1637,7 +1761,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 93",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 95",
    "spec": null
   },
   {
@@ -1661,7 +1785,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 87",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 89",
    "spec": null
   },
   {
@@ -1685,7 +1809,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 94",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 96",
    "spec": null
   },
   {
@@ -1709,7 +1833,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 88",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 90",
    "spec": null
   },
   {
@@ -1733,7 +1857,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 96",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 98",
    "spec": null
   },
   {
@@ -1757,7 +1881,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 90",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 92",
    "spec": null
   },
   {
@@ -1781,7 +1905,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 95",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 97",
    "spec": null
   },
   {
@@ -1805,7 +1929,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 89",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 91",
    "spec": null
   },
   {
@@ -2020,7 +2144,7 @@ window.VIEWER_DATA = {
    "electrical": "bus",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM P04 RMRC; fitted in build step E3 \"ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS, airspeed on the plate\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
+   "vendor": "Bought: BOM P04 RMRC; fitted in build step E3 \"ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS on the plate; airspeed board into its pocket in the left wing tip\", stage 9 (Avionics: pitot, plate, ESC, FC, leads)",
    "vendor_url": "https://www.readymaderc.com/products/details/86873-speedybee-bls-35a-mini-v2-20x20-4-in-1-esc",
    "how_url": "assets/animation/build/a-stage-09.mp4",
    "unit_cost_usd": null,
@@ -2316,7 +2440,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 2",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-001.pdf"
   },
   {
    "id": "WNG-002",
@@ -2340,7 +2465,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 3",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-002.pdf"
   },
   {
    "id": "WNG-003-C",
@@ -2364,7 +2490,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 4",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-003.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/WNG-003-C.stl"
   },
   {
    "id": "WNG-004-L",
@@ -2388,7 +2516,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 6",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-004.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/WNG-004-L.stl"
   },
   {
    "id": "WNG-004-R",
@@ -2412,7 +2542,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 5",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-004.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/WNG-004-R.stl"
   },
   {
    "id": "WNG-005-L",
@@ -2436,7 +2568,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 8",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-005.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/WNG-005-L.stl"
   },
   {
    "id": "WNG-005-R",
@@ -2460,7 +2594,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 7",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-005.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/WNG-005-R.stl"
   },
   {
    "id": "WNG-006-L",
@@ -2484,7 +2620,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 10",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-006.pdf"
   },
   {
    "id": "WNG-006-R",
@@ -2508,7 +2645,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 9",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-006.pdf"
   },
   {
    "id": "WNG-007-L",
@@ -2532,7 +2670,8 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 16",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-007.pdf"
   },
   {
    "id": "WNG-007-R",
@@ -2556,19 +2695,20 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 11",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-007.pdf"
   },
   {
    "id": "WNG-008-LL",
    "name": "Lens cap + stop bosses (L, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.7,
+   "mass_g": 3.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1599,
+    0.1602,
     -0.285,
-    -0.0112
+    -0.0111
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -2580,19 +2720,21 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 18",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-008-LL.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/WNG-008-LL.stl"
   },
   {
    "id": "WNG-008-LU",
    "name": "Lens cap + stop bosses (L, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.7,
+   "mass_g": 3.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1582,
+    0.1584,
     -0.285,
-    0.0058
+    0.0057
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -2604,19 +2746,21 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 17",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-008-LU.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/WNG-008-LU.stl"
   },
   {
    "id": "WNG-008-RL",
    "name": "Lens cap + stop bosses (R, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.7,
+   "mass_g": 3.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1599,
+    0.1602,
     0.285,
-    -0.0112
+    -0.0111
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -2628,19 +2772,21 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 13",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-008-LL.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/WNG-008-RL.stl"
   },
   {
    "id": "WNG-008-RU",
    "name": "Lens cap + stop bosses (R, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.7,
+   "mass_g": 3.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1582,
+    0.1584,
     0.285,
-    0.0058
+    0.0057
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -2652,7 +2798,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 12",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-008-LU.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/WNG-008-RU.stl"
   },
   {
    "id": "WNG-009-L",
@@ -2676,7 +2824,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 19",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-009.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/WNG-009-L.stl"
   },
   {
    "id": "WNG-009-R",
@@ -2700,7 +2850,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 14",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-009.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/WNG-009-R.stl"
   },
   {
    "id": "WNG-010-L",
@@ -2724,7 +2876,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 20",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-010.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/WNG-010-L.stl"
   },
   {
    "id": "WNG-010-R",
@@ -2748,7 +2902,9 @@ window.VIEWER_DATA = {
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 15",
-   "spec": null
+   "spec": null,
+   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-010.pdf",
+   "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/WNG-010-R.stl"
   }
  ],
  "edges": [
@@ -2790,6 +2946,19 @@ window.VIEWER_DATA = {
   },
   {
    "id": "E-AVN-04",
+   "part_a": "AVN-005",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "avionics",
+   "notes": "airspeed board in its pocket in the left wing core next to the pitot, foam tape; pocket taped over (D-208)",
+   "retention": {
+    "item": "VHB-class tape",
+    "count": 1
+   },
+   "declared_in": "avionics"
+  },
+  {
+   "id": "E-AVN-05",
    "part_a": "AVN-003",
    "part_b": "AVN-001",
    "via": "CT-TAPE-FOAM",
@@ -2802,21 +2971,8 @@ window.VIEWER_DATA = {
    "declared_in": "avionics"
   },
   {
-   "id": "E-AVN-05",
-   "part_a": "AVN-004",
-   "part_b": "AVN-001",
-   "via": "CT-TAPE-FOAM",
-   "owner": "avionics",
-   "notes": "foam tape + tie",
-   "retention": {
-    "item": "VHB-class tape",
-    "count": 1
-   },
-   "declared_in": "avionics"
-  },
-  {
    "id": "E-AVN-06",
-   "part_a": "AVN-005",
+   "part_a": "AVN-004",
    "part_b": "AVN-001",
    "via": "CT-TAPE-FOAM",
    "owner": "avionics",
@@ -2833,11 +2989,89 @@ window.VIEWER_DATA = {
    "part_b": "WNG-001",
    "via": "CT-EPOXY",
    "owner": "avionics",
-   "notes": "pitot in a groove in the LE at y = +0.41 (outside the rotor wash, EST)",
+   "notes": "pitot in a groove in the LE at y = -0.42 (D-208: left wing, the sensor board side; 0.11 m outboard of the prop discs, EST)",
    "declared_in": "avionics"
   },
   {
    "id": "E-AVN-08",
+   "part_a": "AVN-009-T",
+   "part_b": "AVN-006",
+   "via": "CT-PITOT-TUBING",
+   "owner": "avionics",
+   "notes": "total line on the probe total outlet barb (D-208)",
+   "retention": {
+    "item": "push-on silicone on the barb",
+    "count": 1,
+    "load_n": "none (pneumatic)",
+    "inspection": "set-up: line on the barb to the shoulder; blow test reads > 0"
+   },
+   "declared_in": "avionics"
+  },
+  {
+   "id": "E-AVN-09",
+   "part_a": "AVN-009-T",
+   "part_b": "AVN-005",
+   "via": "CT-PITOT-TUBING",
+   "owner": "avionics",
+   "notes": "total line on board port P1 (ARSPD_TUBE_ORDR 2: a swap is harmless; D-208)",
+   "retention": {
+    "item": "push-on silicone on the barb",
+    "count": 1,
+    "load_n": "none (pneumatic)",
+    "inspection": "set-up: line on the barb to the shoulder; blow test reads > 0"
+   },
+   "declared_in": "avionics"
+  },
+  {
+   "id": "E-AVN-10",
+   "part_a": "AVN-009-T",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "avionics",
+   "notes": "total line in its foam-core groove, laid in from above through a slit in the skin, slit taped (as the servo grooves; D-208)",
+   "declared_in": "avionics"
+  },
+  {
+   "id": "E-AVN-11",
+   "part_a": "AVN-009-S",
+   "part_b": "AVN-006",
+   "via": "CT-PITOT-TUBING",
+   "owner": "avionics",
+   "notes": "static line on the probe static outlet barb (D-208)",
+   "retention": {
+    "item": "push-on silicone on the barb",
+    "count": 1,
+    "load_n": "none (pneumatic)",
+    "inspection": "set-up: line on the barb to the shoulder; blow test reads > 0"
+   },
+   "declared_in": "avionics"
+  },
+  {
+   "id": "E-AVN-12",
+   "part_a": "AVN-009-S",
+   "part_b": "AVN-005",
+   "via": "CT-PITOT-TUBING",
+   "owner": "avionics",
+   "notes": "static line on board port P2 (ARSPD_TUBE_ORDR 2: a swap is harmless; D-208)",
+   "retention": {
+    "item": "push-on silicone on the barb",
+    "count": 1,
+    "load_n": "none (pneumatic)",
+    "inspection": "set-up: line on the barb to the shoulder; blow test reads > 0"
+   },
+   "declared_in": "avionics"
+  },
+  {
+   "id": "E-AVN-13",
+   "part_a": "AVN-009-S",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "avionics",
+   "notes": "static line in its foam-core groove, laid in from above through a slit in the skin, slit taped (as the servo grooves; D-208)",
+   "declared_in": "avionics"
+  },
+  {
+   "id": "E-AVN-14",
    "part_a": "AVN-008",
    "part_b": "AVN-001",
    "via": "CT-TAPE-FOAM",
@@ -2850,7 +3084,7 @@ window.VIEWER_DATA = {
    "declared_in": "avionics"
   },
   {
-   "id": "E-AVN-09",
+   "id": "E-AVN-15",
    "part_a": "HWC-001",
    "part_b": "AVN-002",
    "via": "CT-HW-SEATED",
@@ -2875,7 +3109,7 @@ window.VIEWER_DATA = {
    "declared_in": "avionics"
   },
   {
-   "id": "E-AVN-10",
+   "id": "E-AVN-16",
    "part_a": "HWC-001",
    "part_b": "HWC-003",
    "via": "CT-HW-SEATED",
@@ -2900,7 +3134,7 @@ window.VIEWER_DATA = {
    "declared_in": "avionics"
   },
   {
-   "id": "E-AVN-11",
+   "id": "E-AVN-17",
    "part_a": "HWC-003",
    "part_b": "AVN-001",
    "via": "CT-HW-SEATED",
@@ -5167,16 +5401,16 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-MASS-PRED",
    "title": "Predicted take-off mass (CAD basic x growth + overrun)",
-   "value": 1.466406176,
+   "value": 1.469758376,
    "unit": "kg",
    "limit": {
     "op": "<=",
     "ref": "P:req.mass_target_kg",
-    "resolved": 1.467
+    "resolved": 1.47
    },
    "status": "UNVERIFIED",
    "how": "Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).",
-   "margin": 0.0004047880027267049,
+   "margin": 0.0001643700680272458,
    "parts": [
     "WNG-001",
     "WNG-002",
@@ -5189,7 +5423,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG",
    "title": "CG aft of the leading edge, CAD as drawn",
-   "value": 21.10066365411261,
+   "value": 21.368686971819926,
    "unit": "mm",
    "limit": {
     "op": ">=",
@@ -5198,7 +5432,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.",
-   "margin": 0.11056124495329518,
+   "margin": 0.12466773535894349,
    "parts": [
     "PWR-001",
     "CGE-008",
@@ -5209,7 +5443,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-HI",
    "title": "CG aft limit of the design band",
-   "value": 21.10066365411261,
+   "value": 21.368686971819926,
    "unit": "mm",
    "limit": {
     "op": "<=",
@@ -5218,7 +5452,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "CG breadboard (M5); band 19-26 mm (D-195), hard aft limit 28.5 mm.",
-   "margin": 0.1884360133033612,
+   "margin": 0.17812742416077207,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -5227,7 +5461,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-TRIM-AFT",
    "title": "CG at the aft end of the pack trim travel",
-   "value": 23.226246221186546,
+   "value": 23.48926125475166,
    "unit": "mm",
    "limit": {
     "op": "<=",
@@ -5236,7 +5470,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "Slide the pack to the aft slot stop and re-measure CG (M5).",
-   "margin": 0.18504399223906856,
+   "margin": 0.17581539457011716,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -5245,7 +5479,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-TRIM-FWD",
    "title": "CG at the forward end of the pack trim travel",
-   "value": 19.825314113868245,
+   "value": 20.096342402060888,
    "unit": "mm",
    "limit": {
     "op": ">=",
@@ -5254,7 +5488,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "Slide the pack to the forward slot stop and re-measure CG (M5).",
-   "margin": 0.043437584940433954,
+   "margin": 0.05770223168741514,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -5263,7 +5497,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-SM",
    "title": "Static margin at the CAD CG",
-   "value": 7.999729120770365,
+   "value": 7.890331848236766,
    "unit": "% chord",
    "limit": {
     "op": ">=",
@@ -5272,7 +5506,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Measure NP on the built aircraft (M5, M6); SM >= 5 % chord.",
-   "margin": 0.5999458241540729,
+   "margin": 0.5780663696473531,
    "parts": [
     "WNG-001"
    ]
@@ -5325,7 +5559,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-TW-FRESH-PRED",
    "title": "Hover T/W fresh at the predicted mass (0.90 cap)",
-   "value": 2.3435478596226758,
+   "value": 2.338202735374153,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -5334,7 +5568,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "margin": 0.17177392981133788,
+   "margin": 0.1691013676870765,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -5345,7 +5579,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-TW-SAG-PRED",
    "title": "Hover T/W sagged pack at the predicted mass (0.90 cap)",
-   "value": 1.8526068861018048,
+   "value": 1.8483814917070525,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -5354,7 +5588,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "margin": 0.15787930381362794,
+   "margin": 0.15523843231690773,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -5366,7 +5600,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-WINDOW-PRED",
    "title": "Transition entry window at the predicted mass (0.90 cap)",
-   "value": 5.408281803704417,
+   "value": 5.294439363621859,
    "unit": "%",
    "limit": {
     "op": ">=",
@@ -5375,7 +5609,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "C3 time-domain pitch-over run at the as-weighed mass (T-A-C3-PITCHOVER); the window uses 1.33 W low and 0.80 x T/W sag high.",
-   "margin": 0.08165636074088348,
+   "margin": 0.05888787272437188,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -5444,7 +5678,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CRUISE-AVAIL",
    "title": "Cruise time to BATT_LOW at the predicted mass",
-   "value": 254.10903450564075,
+   "value": 252.86675757476178,
    "unit": "s",
    "limit": {
     "op": ">=",
@@ -5453,7 +5687,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).",
-   "margin": 0.24224454762289954,
+   "margin": 0.23617151780314374,
    "parts": [
     "PWR-001",
     "PRP-003"
