@@ -40,7 +40,7 @@ OUT = FA.OUT
 
 PHI_D = C.PHI['UR']
 GEO = dict(XA=-6.5, XB=6.5, S_END=100.0, L_SLV=24.0, SLV_W=2.0, CB=10.0, R_BR=W.R_BR * 1e3, BR_RO=W.BR_RO * 1e3, BR_RI=W.BR_RI * 1e3, BR_Z=W.BR_Z * 1e3, X_BR0=15.0, X_HUB1=(W.HUB_X1 - C.HUB[0]) * 1e3,
-           S_HOLE=18.0, HOLE_R=2.4, TUBE_RO=6.0, TUBE_RI=5.0, DBL=1.0, DBL_T=1.0, DBL_S0=11.0, DBL_S1=25.0, BR_L=40.0, R_CB=3.0, PIN_R=1.5, PIN_C=1.0, PIN_S=8.0, E_PIN=70000.0)   # PIN_*: 3 mm pins along x (D-202): one through both tubes at the crossing (PIN_C), one through each tube at s = +-PIN_S (0 = none); E_PIN pultruded CF rod, isotropic EST   # R_CB: edge radius of the centre block   # BR_L: modelled bridge tube aft of HUB_X1, fixed at its end   # DBL: carbon doubler sleeve 14 x 12 over each lead hole
+           S_HOLE=18.0, HOLE_R=2.4, TUBE_RO=6.0, TUBE_RI=5.0, DBL=1.0, DBL_T=1.0, DBL_S0=11.0, DBL_S1=25.0, BR_L=40.0, R_CB=3.0, PIN_R=1.5, PIN_C=1.0, PIN_S=8.0, E_PIN=70000.0, FIL=0.0, FMS=0.0)   # FIL: fillet radius (mm) on the concave junctions sleeve/block, sleeve/sleeve, boss/block (0 = sharp); FMS: element size on the fillet faces (0 = no local refinement)   # PIN_*: 3 mm pins along x (D-202): one through both tubes at the crossing (PIN_C), one through each tube at s = +-PIN_S (0 = none); E_PIN pultruded CF rod, isotropic EST   # R_CB: edge radius of the centre block   # BR_L: modelled bridge tube aft of HUB_X1, fixed at its end   # DBL: carbon doubler sleeve 14 x 12 over each lead hole
 STATIONS = {'UR': ('A', 1), 'LL': ('A', -1), 'LR': ('B', 1), 'UL': ('B', -1)}
 SPIN = {s: (-1 if s in ('UR', 'LL') else 1) for s in STATIONS}        # propulsion.py MRP: UR, LL clockwise (-1), others CCW (+1)
 
@@ -52,6 +52,73 @@ def axes():
 
 def tube_x(t):
     return GEO['XA'] if t == 'A' else GEO['XB']
+
+
+def fillet_junctions(occ, hub, g, U, xa0, xb1):
+    """Fillet radius FIL on every edge of the fused hub that lies on two different primitives (block faces incl. its R_CB
+    corners, sleeve A, sleeve B, bridge boss): the concave junctions that are sharp in the plain model."""
+    import gmsh
+    occ.synchronize()
+    tol, cb, rc = 0.02, g['CB'], g['R_CB']
+    rs = g['TUBE_RO'] + g['SLV_W'] + g['DBL'] * g['DBL_T']
+    def n_prims(p):
+        x, y, z = p
+        inx = xa0 - tol <= x <= xb1 + tol
+        ay, az = abs(y), abs(z)
+        corner = ay > cb - rc and az > cb - rc
+        blk = inx and ((not corner and ((abs(ay - cb) < tol and az <= cb + tol) or (abs(az - cb) < tol and ay <= cb + tol)))
+                       or (corner and abs(math.hypot(ay - (cb - rc), az - (cb - rc)) - rc) < tol)
+                       or ((abs(x - xa0) < tol or abs(x - xb1) < tol) and ay <= cb + tol and az <= cb + tol))
+        k = int(blk)
+        for t in ('A', 'B'):
+            u = U[t]; d = np.array(p) - np.array([tube_x(t), 0.0, 0.0]); sa = d @ u
+            k += int(abs(np.linalg.norm(d - sa * u) - rs) < tol and abs(sa) <= g['L_SLV'] + tol)
+        k += int(abs(math.hypot(y, z - g['BR_Z']) - g['R_BR']) < tol and xb1 - 0.5 - tol <= x <= g['X_HUB1'] + tol)
+        return k
+    ed = []
+    for d_, e in gmsh.model.getBoundary(gmsh.model.getBoundary(hub, combined=False, oriented=False), combined=False, oriented=False):
+        if d_ != 1 or e in ed:
+            continue
+        lo, hi = gmsh.model.getParametrizationBounds(1, e)
+        if all(n_prims(gmsh.model.getValue(1, e, [lo[0] + (hi[0] - lo[0]) * f])) >= 2 for f in (0.2, 0.5, 0.8)):
+            ed.append(e)
+    print('fillet: %d junction edges, r %.2f mm' % (len(ed), g['FIL']), flush=True)
+    return ed
+
+
+def fillet_hub(occ, hub, g, U, xa0, xb1):
+    """Fillet the junction edges; OCC cannot always do them all at once, so fall back to one edge at a time (re-detecting
+    the edges after each success) and report the edges it cannot round."""
+    ed = fillet_junctions(occ, hub, g, U, xa0, xb1)
+    try:
+        out = occ.fillet([hub[0][1]], ed, [g['FIL']], removeVolume=False)
+        occ.remove(hub, recursive=True); return [(3, out[0][1])], len(ed), 0
+    except Exception:
+        pass
+    done, failed = 0, set()
+    while True:
+        ed = fillet_junctions(occ, hub, g, U, xa0, xb1)
+        prog = False
+        for e in ed:
+            occ.synchronize()
+            key = tuple(np.round(gmsh_mid(e), 2))
+            if key in failed:
+                continue
+            try:
+                out = occ.fillet([hub[0][1]], [e], [g['FIL']], removeVolume=False)
+                occ.remove(hub, recursive=True); hub = [(3, out[0][1])]; done += 1; prog = True; break
+            except Exception:
+                failed.add(key)
+        if not prog:
+            break
+    print('fillet: %d edges rounded one by one, %d could not be rounded: %s' % (done, len(failed), sorted(failed)), flush=True)
+    return hub, done, len(failed)
+
+
+def gmsh_mid(e):
+    import gmsh
+    lo, hi = gmsh.model.getParametrizationBounds(1, e)
+    return gmsh.model.getValue(1, e, [0.5 * (lo[0] + hi[0])])
 
 
 def build_mesh(level, path):
@@ -78,6 +145,8 @@ def build_mesh(level, path):
     hub_parts.append((3, bx))
     hub_parts.append((3, occ.addCylinder(xb1 - 0.5, 0, g['BR_Z'], g['X_HUB1'] - xb1 + 0.5, 0, 0, g['R_BR'])))
     hub, _ = occ.fuse([hub_parts[0]], hub_parts[1:])
+    if g.get('FIL', 0) > 0:
+        hub, n_ok, n_bad = fillet_hub(occ, hub, g, U, xa0, xb1)
     cuts = [(3, occ.addCylinder(g['X_BR0'], 0, g['BR_Z'], g['X_HUB1'] - g['X_BR0'] + 1, 0, 0, g['BR_RO']))]
     for t in ('A', 'B'):
         u, x0 = U[t], tube_x(t)
@@ -159,7 +228,15 @@ def build_mesh(level, path):
     b2 = f.add('Box'); f.setNumber(b2, 'VIn', 0.65 * s); f.setNumber(b2, 'VOut', 1.6 * s)
     for k, v in zip(('XMin', 'XMax', 'YMin', 'YMax', 'ZMin', 'ZMax'), (xb1 - 1, g['X_HUB1'] + 1, -9, 9, -9, 9)):
         f.setNumber(b2, k, v)
-    mn = f.add('Min'); f.setNumbers(mn, 'FieldsList', [b1, b2]); f.setAsBackgroundMesh(mn)
+    fl = [b1, b2]
+    if g.get('FIL', 0) > 0 and g.get('FMS', 0) > 0:     # local refinement on the fillet faces (blend surfaces: not plane / cylinder / cone)
+        fs = [tg for tg in set(groups['hub']) for d_, sf in gmsh.model.getBoundary([(3, tg)], combined=False, oriented=False)
+              if gmsh.model.getType(2, sf) not in ('Plane', 'Cylinder', 'Cone') for tg in [sf]]
+        fs = sorted(set(fs)); print('refine: %d fillet faces at %.2f mm' % (len(fs), g['FMS']), flush=True)
+        dd = f.add('Distance'); f.setNumbers(dd, 'SurfacesList', fs)
+        th = f.add('Threshold'); f.setNumber(th, 'InField', dd); f.setNumber(th, 'SizeMin', g['FMS']); f.setNumber(th, 'SizeMax', 0.65 * s)
+        f.setNumber(th, 'DistMin', 0.4); f.setNumber(th, 'DistMax', 2.5); fl.append(th)
+    mn = f.add('Min'); f.setNumbers(mn, 'FieldsList', fl); f.setAsBackgroundMesh(mn)
     for k, v in (('Mesh.MeshSizeExtendFromBoundary', 0), ('Mesh.MeshSizeFromPoints', 0), ('Mesh.MeshSizeFromCurvature', 0),
                  ('Mesh.ElementOrder', 2), ('Mesh.HighOrderOptimize', 1), ('General.NumThreads', 16)):
         gmsh.option.setNumber(k, v)
