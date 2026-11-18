@@ -277,6 +277,20 @@ def main():
             index.append((job, None, 'NOT DRAWN: the Blender stage failed for this part (see the stage 2 log)'))
             continue
         meta = json.load(open(mp))
+        if job['id'] == 'WNG-001':                        # the foam core: hand-cut set (core_hand.py) in place of the generic sheet
+            import core_hand
+            hfigs, _hc, hrows = core_hand.sheets(job, rev, os.path.join(WORK, 'WNG-001.stl'))
+            with PdfPages(os.path.join(OUT, job['id'] + '.pdf')) as pdf:
+                for n, f in enumerate(hfigs):
+                    pdf.savefig(f)
+                    allpdf.savefig(f)
+                    f.savefig(os.path.join(OUT, job['id'] + ('.png' if n == 0 else '-%d.png' % (n + 1))), dpi=110)
+                    plt.close(f)
+            made.append(job['id'])
+            for pid in job['members']:
+                links[pid] = {'drawing_url': GH + job['id'] + '.pdf'}
+            index.append((job, meta, '%d sheet(s), hand-cut set: %d cut lines' % (len(hfigs), len(hrows))))
+            continue
         rows = feature_rows(job)
         pages, i = [], 0
         # first sheet: views left, table right; continuation sheets: table only

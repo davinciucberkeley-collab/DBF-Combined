@@ -14,6 +14,8 @@ node_modules/
 
 # third-party downloads
 *.pdf
+# ...except the concept A drawing sheets, which the Explorer and DRAWINGS-A.md link to (make_drawings_a.py)
+!redesign/qp/A/drawings/out/*.pdf
 # SOLIDWORKS Simulation result databases (regenerate with cad/Sim.exe; studies are saved inside cad/sim/*.SLDPRT)
 cad/sim/*.CWR
 cad/sim/*.gsz
