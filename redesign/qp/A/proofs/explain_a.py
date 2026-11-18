@@ -451,3 +451,29 @@ _MS_TEX = r"\mathrm{MS} = \frac{\sigma_{\mathrm{allow}}}{\sigma_{\mathrm{design}
 for _k, _v in E.items():
     if "ms" in _v:
         TEX.setdefault(_k, _MS_TEX)
+
+# ------------------------------------------------------------------ requirements in plain words (shown in the Requirements and Overview tabs)
+REQ_PLAIN = {
+    "A-U1": "Everything we buy, including tax, shipping, battery, radio and a crash-repair reserve, must stay under $2,000. The team's own gate is stricter: $1,800 total, and still $100 to spare if the prices we have not confirmed turn out 30 % higher.",
+    "A-U2": "The aircraft must be built and flown by 30 April 2027. The schedule is a plan of test gates; this checks the plan leaves spare days.",
+    "A-U3": "The packed aircraft has to fit in a normal car trunk so four students can move it. The trunk has not been measured yet, so a standard box size stands in for it.",
+    "A-U4": "The 3-D model must be physically possible: no two parts overlapping, no loose wire ends, and every assembly step can be carried out.",
+    "A-U5": "A hard cap from the project brief: under 25 kg. The aircraft is about 1.5 kg, so this is a sanity check.",
+    "A-D2": "The battery must power the whole mission: 3 minutes of hover plus about 3.4 minutes of cruise, with a 20 % reserve.",
+    "A-P1": "The finished aircraft may weigh at most 1.47 kg (the mass gate), and with that mass the motors must still lift 2.0 times the weight with a fresh battery.",
+    "A-D3": "The mass we predict from the CAD, with growth and overrun allowances, must be at most 1.467 kg, with the structure itself at most 494 g.",
+    "A-P2": "Hover needs spare thrust: at least 2.0 times the weight with a full battery, and at least 1.6 times with a nearly empty one.",
+    "A-P3": "Switching from hover to forward flight needs the thrust to land inside a window; the window must be at least 5 % wide on each side so timing errors do not cause a drop.",
+    "A-P4": "The centre of gravity must sit in a band 19 to 26 mm behind the wing's front edge, keep at least 5 % of the chord stability margin, and stay within 5 mm of the centreline.",
+    "A-P5": "In a 12 g crash the battery must stay in its tray and not fly into the electronics.",
+    "A-P6": "Cruise speed must be at least 1.3 times the stall speed, so a gust cannot stall the wing.",
+    "A-P7": "In hover the aircraft must be able to twist about its vertical axis with at least 0.35 N m, otherwise it cannot hold its heading.",
+    "A-P8": "The aircraft must handle wind: lean no more than 40 degrees in 5 m/s wind, and no motor may sit near full throttle for more than half a second in 4 m/s turbulence.",
+    "A-P9": "Standing on its fin tips, the aircraft must not tip over until the ground is tilted at least 30 degrees.",
+    "A-P10": "The structure's shaking frequencies must stay 20 % away from the propeller frequencies, the flight computer must feel at most 30 m/s² of vibration, and the control loop needs a gain margin of at least 2.",
+    "A-P11": "In forward flight the aircraft must roll at least 90 degrees per second, use at most 60 % of the elevon travel in transition, and the elevon servos must be 1.5 times stronger than the load.",
+    "A-P13": "The structure must survive 1.5 times the highest expected loads (3.4 g, a 30 N propeller strike, a 12 g crash), and the wing and control surfaces must not flutter below 28.8 m/s.",
+    "A-P16": "Each motor must stay under 13 A, and the speed controllers and connectors must be rated 25 % above the worst current.",
+    "A-P24": "After a low-battery warning in cruise, the aircraft must still be inside the 240 m flying fence wherever it is on the racetrack.",
+    "A-D8": "The first tethered hover must start by 18 February 2027, the latest date that still finishes everything by 30 April.",
+}
