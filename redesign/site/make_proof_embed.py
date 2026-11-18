@@ -66,6 +66,13 @@ def main():
     os.makedirs(os.path.dirname(GRAPH_OUT), exist_ok=True)
     shutil.copyfile(a.graph, GRAPH_OUT)
     print('proof graph: %s -> site/proofs/data/graph.js (%d bytes)' % (os.path.relpath(a.graph, os.path.dirname(HERE)), os.path.getsize(GRAPH_OUT)))
+    rd = os.path.join(os.path.dirname(a.graph), 'readable.js')        # plain-English cards, built by render_readable_a.py (optional)
+    rd_out = os.path.join(HERE, 'proofs', 'data', 'readable.js')
+    if os.path.isfile(rd):
+        shutil.copyfile(rd, rd_out)
+        print('readable cards: %s -> site/proofs/data/readable.js (%d bytes)' % (os.path.relpath(rd, os.path.dirname(HERE)), os.path.getsize(rd_out)))
+    elif os.path.isfile(rd_out):
+        os.remove(rd_out)                                              # another graph (K09-L) has no cards: do not show concept A's
     with open(SRC, encoding='utf-8') as f:
         src = f.read().replace('\r\n', '\n')
     style = re.search(r'<style>(.*?)</style>', src, re.S).group(1)

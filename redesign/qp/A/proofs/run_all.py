@@ -24,4 +24,7 @@ for s in steps:
         sys.exit(r.returncode)
 r = subprocess.run([sys.executable, "-I", str(REDESIGN / "proofs" / "build_graph.py"), "--root", str(REDESIGN / "qp" / "A"),
                     "--out", str(HERE / "out"), "--dataset", "concept-a", "--strict"])
-sys.exit(r.returncode)
+if r.returncode:
+    sys.exit(r.returncode)
+print(">> render_readable_a.py (plain-English cards: out/READABLE.md, out/readable.js; presentation only)")
+sys.exit(subprocess.run([sys.executable, "-I", str(HERE / "render_readable_a.py")]).returncode)

@@ -23,7 +23,7 @@
   const LIBS = { '3d': BASE + 'vendor/3d-force-graph.min.js', '2d': BASE + 'vendor/force-graph.min.js' }, libLoaded = {};
   const T0 = performance.now();
 
-  let model = null, issues = null, pal = {}, route = { view: 'reqs' }, statusOpen = false, rfilter = 'all';
+  let R = null, model = null, issues = null, pal = {}, route = { view: 'reqs' }, statusOpen = false, rfilter = 'all';
   let chainZoom = null, chainCtx = null;              // chainZoom null = auto (fit width, at most 100 %)
   // overview state
   let G = null, ovMode = '2d', ovSel = null, hl = null, hoverId = null, ovBuiltFor = '';
@@ -39,6 +39,15 @@
       s.onload = () => { const g = window.PROOF_GRAPH || null; window.PROOF_GRAPH = undefined; res(g); };
       s.onerror = () => res(null);
       document.head.appendChild(s);
+    });
+  }
+
+  function loadReadable(src) {                         // window.PROOF_READABLE from readable.js; optional
+    return new Promise(res => {
+      window.PROOF_READABLE = undefined;
+      const el = document.createElement('script');
+      el.src = src; el.onload = () => { const r = window.PROOF_READABLE || null; window.PROOF_READABLE = undefined; res(r); }; el.onerror = () => res(null);
+      document.head.appendChild(el);
     });
   }
 
@@ -94,11 +103,17 @@
       if (stateByHash.has(h)) return stateByHash.get(h);
       const id = h.replace(/^proof-?/, '');
       if (id === 'overview') return { view: 'overview' };
+      if (id === 'requirements') return { view: 'reqs' };
+      if (id === 'guide' || (id === '' && R)) return { view: 'guide' };
+      if (/^read-/.test(id) && R && R.claims[id.slice(5)]) return { view: 'guide', claim: id.slice(5) };
       return id && model.byId.has(id) ? { view: 'node', node: id } : { view: 'reqs' };
     }
     const p = new URLSearchParams(location.hash.slice(1));
     if (p.has('node')) return { view: 'node', node: p.get('node') };
     if (p.has('overview')) return { view: 'overview', sel: p.get('sel') };
+    if (p.has('read') && R && R.claims[p.get('read')]) return { view: 'guide', claim: p.get('read') };
+    if (p.has('requirements')) return { view: 'reqs' };
+    if (p.has('guide') || (!location.hash.slice(1) && R)) return { view: 'guide' };
     if (p.has('chain')) {
       const trail = p.get('chain').split('~').filter(id => model.byId.has(id));
       if (trail.length) return { view: 'chain', trail, sel: model.byId.has(p.get('sel')) ? p.get('sel') : null, inputs: p.get('inputs') };
@@ -107,12 +122,14 @@
   }
   function hashOf(r) {
     if (EMBED) {
-      const h = r.view === 'overview' ? 'proof-overview' : r.view === 'chain' ? 'proof-' + encodeURIComponent(r.sel || r.trail[r.trail.length - 1]) : 'proof';
+      const h = r.view === 'overview' ? 'proof-overview' : r.view === 'guide' ? (r.claim ? 'proof-read-' + encodeURIComponent(r.claim) : 'proof-guide') : r.view === 'reqs' ? 'proof-requirements' : r.view === 'chain' ? 'proof-' + encodeURIComponent(r.sel || r.trail[r.trail.length - 1]) : 'proof';
       stateByHash.set(decodeURIComponent(h), r);
       return h;
     }
     const p = new URLSearchParams();
-    if (r.view === 'overview') { p.set('overview', ''); if (r.sel) p.set('sel', r.sel); }
+    if (r.view === 'guide') { if (r.claim) p.set('read', r.claim); else p.set('guide', ''); }
+    else if (r.view === 'reqs') p.set('requirements', '');
+    else if (r.view === 'overview') { p.set('overview', ''); if (r.sel) p.set('sel', r.sel); }
     else if (r.view === 'chain') { p.set('chain', r.trail.join('~')); if (r.sel) p.set('sel', r.sel); if (r.inputs) p.set('inputs', r.inputs); }
     return p.toString().replace(/=$/, '').replace(/=&/, '&');
   }
@@ -159,7 +176,10 @@
     if (route.view === 'node') { const id = route.node; route = { view: 'reqs' }; if (model.byId.has(id)) { openNode(id); return; } }
     const v = route.view;
     $('.app').classList.toggle('wide', v === 'chain');
-    $$('[data-view]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.view === (v === 'overview' ? 'overview' : 'reqs'))));
+    $('.app').classList.toggle('guide', v === 'guide');
+    $$('[data-view]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.view === (v === 'overview' ? 'overview' : v === 'guide' ? 'guide' : 'reqs'))));
+    $('#guidePane').hidden = v !== 'guide';
+    if (v === 'guide') renderGuide();
     $('#homePane').hidden = v !== 'reqs';
     $('#chainPane').hidden = v !== 'chain';
     $('#ovMain').hidden = v !== 'overview';
@@ -474,6 +494,7 @@
     const inChain = route.view === 'chain' && route.trail[route.trail.length - 1] === id;
     let h = `<div class="pills"><span class="tylab">${M.TYPE_LABEL[t]}</span>${badge(n)}</div><h2 class="dtitle">${esc(n.title || n.id)}</h2><div class="did">${esc(n.id)}</div>`;
     const acts = [];
+    if (t === 'claim' && R && R.claims[id]) acts.push(`<button class="btn primary" data-read="${esc(id)}">Read in plain English</button>`);
     if (!inChain && t !== 'source') acts.push(`<button class="btn primary" data-focus="${esc(id)}">Open ${t === 'requirement' ? 'its' : 'this'} chain</button>`);
     if (route.view === 'overview') acts.push(`<button class="btn" data-open="${esc(id)}">Show in requirement chain</button>`);
     if (acts.length) h += `<div class="actions">${acts.join('')}</div>`;
@@ -537,6 +558,118 @@
     if (n.defined_in) h += `<h3 class="sec">Defined in</h3><div>${repoLink(n.defined_in)}</div>`;
     box.innerHTML = h;
     box.scrollTop = 0;
+  }
+
+  // ------------------------------------------------------------------ Guide: the plain-English reading of every claim (data: readable.js from render_readable_a.py)
+  const FUNC = new Set(['cos', 'sin', 'tan', 'max', 'min', 'log', 'ln']);
+  const SYMS = { times: '×', cdot: '·', pi: 'π', tau: 'τ', sigma: 'σ', rho: 'ρ', theta: 'θ', phi: 'φ', gamma: 'γ', delta: 'δ', ell: 'ℓ', Delta: 'Δ', sum: '∑', quad: ' ', qquad: '  ', ',': ' ', ';': ' ', ' ': ' ', '%': '%', le: '≤', ge: '≥', approx: '≈' };
+  function texHtml(src) {                              // tiny LaTeX subset -> HTML (no library; follows the page theme)
+    let i = 0;
+    const peek = () => src[i];
+    function group() { const out = []; while (i < src.length && peek() !== '}') out.push(atom()); return out.join(''); }
+    function arg() { while (peek() === ' ') i++; if (peek() === '{') { i++; const g = group(); i++; return g; } return atom(true); }
+    function raw() { while (peek() === ' ') i++; i++; let d = 1, s = ''; while (i < src.length) { const c = src[i++]; if (c === '{') d++; else if (c === '}') { d--; if (!d) break; } s += c; } return esc(s); }
+    function atom(noScript) {
+      const c = src[i++];
+      let h;
+      if (c === '{') { h = group(); i++; }
+      else if (c === '\\') {
+        let n = '';
+        if (/[A-Za-z]/.test(peek())) { while (/[A-Za-z]/.test(peek())) n += src[i++]; } else n = src[i++];
+        if (n === 'frac') { const a = arg(), b = arg(); h = '<span class="tfr"><span class="tn">' + a + '</span><span class="td">' + b + '</span></span>'; }
+        else if (n === 'sqrt') { h = '<span class="tsq">√<span class="tsi">' + arg() + '</span></span>'; }
+        else if (n === 'mathrm') h = '<span class="trm">' + raw() + '</span>';
+        else if (n === 'text') h = '<span class="ttx">' + raw() + '</span>';
+        else if (n === 'left' || n === 'right') { const d = src[i++]; h = d === '.' ? '' : esc(d); }
+        else if (FUNC.has(n)) h = '<span class="trm">' + n + '</span> ';
+        else h = esc(SYMS[n] !== undefined ? SYMS[n] : n);
+      } else h = /[A-Za-z]/.test(c) ? '<i>' + c + '</i>' : esc(c);
+      if (noScript) return h;
+      let sub = '', sup = '';
+      for (;;) { if (peek() === '_') { i++; sub = arg(); } else if (peek() === '^') { i++; sup = arg(); } else break; }
+      if (sub && sup) h += '<span class="tss"><sup>' + sup + '</sup><sub>' + sub + '</sub></span>'; else if (sub) h += '<sub>' + sub + '</sub>'; else if (sup) h += '<sup>' + sup + '</sup>';
+      return h;
+    }
+    const out = [];
+    while (i < src.length) out.push(atom());
+    return out.join('');
+  }
+  const gbadge = s => `<span class="ds-badge" data-status="${esc(s)}">${esc(s)}</span>`;
+  function claimRow(id) {
+    const k = R.claims[id];
+    const res = k.limit ? `${esc(k.value)} ${esc(k.unit)} <span class="v">${esc(k.limit.op)} ${esc(k.limit.value)}</span>` : `${esc(k.value)} ${esc(k.unit)}`;
+    return `<tr class="click" data-read="${esc(id)}"><td>${esc(k.title)}</td><td class="num">${res}</td><td class="num">${k.margin ? esc(k.margin) : '—'}</td><td>${k.passes === false ? gbadge('FAIL') : gbadge(k.status)}</td></tr>`;
+  }
+  function renderGuide() {
+    const box = $('#guide');
+    if (!R) { box.innerHTML = '<p class="sub">The plain-English data (data/readable.js) is not built yet: run <code>python -I redesign/qp/A/proofs/run_all.py</code>.</p>'; return; }
+    const sig = route.claim || '';
+    if (box.dataset.sig === sig && box.childElementCount) return;
+    box.dataset.sig = sig;
+    box.scrollTop = 0;
+    if (route.claim && R.claims[route.claim]) { box.innerHTML = renderCard(R.claims[route.claim]); return; }
+    const all = Object.values(R.claims), fails = all.filter(k => k.passes === false).length;
+    const byStatus = s => all.filter(k => k.status === s).length;
+    const gl = {};
+    R.glossary.forEach(g => (gl[g.s] = gl[g.s] || []).push(g));
+    box.innerHTML = `<h1>Concept A: the design numbers, checked in plain English</h1>
+      ${R.intro.map(p => `<p class="sub">${esc(p)}</p>`).join('')}
+      <div class="tiles"><div class="tile"><b>${all.length}</b><span>claims</span></div><div class="tile ${fails ? 'fail' : ''}"><b>${fails}</b><span>fail their limit</span></div>
+        <div class="tile"><b>${byStatus('UNVERIFIED')}</b><span>unverified (rest on an estimate)</span></div><div class="tile"><b>${byStatus('CHECKED')}</b><span>checked (traced to a source, no test yet)</span></div></div>
+      <h2>How to read this</h2>
+      <ol class="ghow">${R.howto.map(h => `<li><b>${esc(h.t)}.</b> ${esc(h.d)}</li>`).join('')}</ol>
+      <h3 class="gh3">What the status words mean</h3>
+      <dl class="meta gstat">${R.status_words.map(s => `<dt>${gbadge(s.t)}</dt><dd>${esc(s.d)}</dd>`).join('')}</dl>
+      <h3 class="gh3">About the numbers</h3><ul class="gul">${R.number_rules.map(r => `<li>${esc(r)}</li>`).join('')}</ul>
+      <p class="sub">Jump to: ${R.groups.map(g => `<a href="#" data-gjump="${g.id}">${esc(g.title)}</a>`).join(' · ')} · <a href="#" data-gjump="glossary">Glossary</a></p>
+      ${R.groups.map(g => `<h2 id="g-${g.id}">${esc(g.title)} <span class="v">${g.n} claims</span></h2><p class="sub">${esc(g.blurb)}</p>
+        <div class="scrollx"><table class="list"><thead><tr><th>Claim (click to read)</th><th class="num">Result · limit</th><th class="num">Margin</th><th>Status</th></tr></thead><tbody>${g.claims.map(claimRow).join('')}</tbody></table></div>`).join('')}
+      <h2 id="g-glossary">Glossary</h2>
+      ${Object.entries(gl).map(([sec, items]) => `<h3 class="gh3">${esc(sec)}</h3><dl class="meta gloss">${items.map(g => `<dt>${esc(g.t)}</dt><dd>${esc(g.d)}</dd>`).join('')}</dl>`).join('')}`;
+  }
+  function inputRowHtml(r) {
+    const val = r.is_list ? `table, ${r.n_rows} rows (below)` : esc(r.value);
+    const src = (r.sources || []).map(s => (s.url ? repoLink(s.url, s.title) : esc(s.title)) + (s.where ? ` <span class="v">(${esc(s.where)})</span>` : '')).join('<br>') || esc(r.label || '');
+    const fl = (r.flags || []).map(f => `<span class="gflag${/ESTIMATE|UNVERIFIED|ASSUMPTION/.test(f) ? ' est' : ''}">${esc(f)}</span>`).join(' ');
+    const note = r.note ? `<div class="v">${esc(r.note.length > 200 ? r.note.slice(0, 199) + '…' : r.note)}</div>` : '';
+    return `<tr><td><code>${esc(r.sym)}</code><div class="v">${esc(r.meaning)}</div></td><td class="num">${val}</td><td>${esc(r.unit)}</td><td>${src}${note}</td><td>${fl || '<span class="v">sourced</span>'}</td></tr>`;
+  }
+  function tableHtml(t) {
+    const cols = (t.labels.length ? ['row'] : []).concat(t.columns.length ? t.columns : t.rows[0].map((_, i) => 'c' + (i + 1)));
+    const body = t.rows.map((r, i) => '<tr>' + (t.labels.length ? [t.labels[i]] : []).concat(r).map((c, j) => `<td${j || !t.labels.length ? ' class="num"' : ''}>${esc(c)}</td>`).join('') + '</tr>').join('');
+    return `<details class="gtab"><summary>Table <code>${esc(t.sym)}</code> (${t.rows.length} rows)</summary><div class="scrollx"><table class="kv"><tr>${cols.map(c => `<th>${esc(c)}</th>`).join('')}</tr>${body}</table></div></details>`;
+  }
+  function renderCard(k) {
+    const g = R.groups.find(x => x.id === k.group), idx = g ? g.claims.indexOf(k.id) : -1;
+    const prev = g && idx > 0 ? g.claims[idx - 1] : null, next = g && idx >= 0 && idx < g.claims.length - 1 ? g.claims[idx + 1] : null;
+    const lim = k.limit;
+    let h = `<div class="actions" style="margin-top:0"><button class="btn" data-view="guide">← All claims</button>
+        ${prev ? `<button class="btn" data-read="${esc(prev)}">‹ Previous</button>` : ''}${next ? `<button class="btn" data-read="${esc(next)}">Next ›</button>` : ''}
+        <button class="btn" data-open="${esc(k.id)}">Technical chain</button></div>
+      <div class="pills"><span class="tylab">${esc(g ? g.title : '')}</span>${k.passes === false ? gbadge('FAIL') : gbadge(k.status)}</div>
+      <h1 class="gtitle">${esc(k.title)}</h1><div class="did">${esc(k.id)}${k.calc ? ' · ' + esc(k.calc) : ''}</div>`;
+    h += `<section class="gsec"><h3><i>1</i>What is being checked</h3><p>${esc(k.why)}</p>${k.reqs.map(r => `<p class="v">Verifies requirement ${esc(r.id)}: ${esc(r.title)}</p>`).join('')}</section>`;
+    h += `<section class="gsec"><h3><i>2</i>The formula</h3>${k.tex ? `<div class="geq">${texHtml(k.tex)}</div>` : ''}${k.formula ? `<p class="${k.tex ? 'v' : 'gmono'}">${k.tex ? 'In words: ' : ''}${esc(k.formula)}</p>` : ''}${k.tex && k.symbols.length ? '<p class="v">The table below uses the short names from the calculation (the same names appear in the inputs and the arithmetic).</p>' : ''}
+      ${k.symbols.length ? `<table class="kv"><tr><th>Symbol</th><th>Means</th></tr>${k.symbols.map(s => `<tr><td><code>${esc(s.sym)}</code></td><td>${esc(s.meaning)}</td></tr>`).join('')}</table>` : ''}
+      ${k.via ? `<p class="gnote">This number is a <b>stored result</b>, not recomputed in this chain. It comes from: ${esc(k.via)}.${k.via_note ? ' ' + esc(k.via_note) : ''}</p>` : ''}</section>`;
+    h += `<section class="gsec"><h3><i>3</i>The inputs</h3><div class="scrollx"><table class="kv gin"><tr><th>Input</th><th>Value</th><th>Unit</th><th>Where it came from</th><th>Status</th></tr>${k.inputs.map(inputRowHtml).join('')}</table></div>${k.tables.map(tableHtml).join('')}</section>`;
+    let ar = '';
+    if (k.steps) {
+      ar = '<ol class="gsteps">' + k.steps.map(s => `<li><span class="gl">${esc(s.label)}</span><div class="gs">${esc(s.name)} = ${esc(s.symbolic)}</div>${s.sub ? `<div class="gs">= ${esc(s.sub)}</div>` : ''}<div class="gs gr">= ${esc(s.value)} ${esc(s.unit)}</div></li>`).join('') + '</ol>' +
+        `<p class="v">${k.check.ok ? `Recomputed here from the stored inputs: ${esc(k.check.computed)}, the same as the stored result ${esc(k.check.stored)}.` : `<b class="bad">The hand arithmetic ${esc(k.check.computed)} differs from the stored ${esc(k.check.stored)}.</b>`}</p>`;
+    } else if (k.ms) {
+      ar = `<ol class="gsteps"><li><span class="gl">Design load</span><div class="gs">${esc(k.ms.load)}</div></li><li><span class="gl">Margin of safety</span><div class="gs">MS = allowable / stress − 1</div><div class="gs">= ${esc(k.ms.allow)} / ${esc(k.ms.stress)} − 1</div><div class="gs gr">= ${esc(k.ms.computed)} (stored ${esc(k.ms.stored)})</div></li></ol>` +
+        `<p class="v">Stress and allowable are in ${esc(k.ms.unit)}, copied from the cited structures file; they are not part of the strict chain. ${k.ms.ok ? 'The stress is printed to limited digits, so the margin could be anywhere from ' + esc(k.ms.range) + '; the stored value is inside that range.' : '<b class="bad">They do NOT agree with the stored margin.</b>'}</p>${k.ms.note ? `<p class="gnote">${esc(k.ms.note)}</p>` : ''}`;
+    } else ar = `<p>${k.method.length ? k.method.map(esc).join('<br>') : 'This value is read from the stored report named above; there is nothing to substitute.'}</p>`;
+    h += `<section class="gsec"><h3><i>4</i>The arithmetic</h3>${ar}</section>`;
+    h += `<section class="gsec"><h3><i>5</i>The result against its limit</h3><div class="big"><b>${esc(k.value)}</b><span>${esc(k.unit)}</span>${k.margin ? `<span class="gm ${k.passes === false ? 'bad' : ''}">margin ${esc(k.margin)}</span>` : ''}</div>
+      ${lim ? `<p>Limit: <b>${esc(lim.op)} ${esc(lim.value)} ${esc(lim.unit)}</b>. ${esc(lim.why || '')}</p><p class="v">Taken from: ${esc(lim.from)}</p>` : ''}
+      <p>${esc(k.plain)}</p><p class="v">Status ${esc(k.status)}: ${esc(k.status_words)}</p>
+      ${k.why_status.length ? `<ul class="gul">${k.why_status.slice(0, 8).map(w => `<li>${esc(w)}</li>`).join('')}</ul>` : ''}</section>`;
+    h += `<section class="gsec"><h3><i>6</i>How to check it in real life</h3><p>${esc(k.real || 'No physical test is defined for this claim yet.')}</p>
+      ${k.tests.map(t => `<p class="v"><b>${esc(t.id)}</b> (${esc(t.state)}): ${esc(t.title)}. ${esc(t.procedure)}</p>`).join('')}
+      ${k.how ? `<details class="gtab"><summary>How the team reproduces the number</summary><p class="v">${esc(k.how)}</p></details>` : ''}</section>`;
+    return h;
   }
 
   // ------------------------------------------------------------------ overview (whole graph, light)
@@ -737,6 +870,10 @@
       const fo = t.closest('[data-focus]');
       if (fo) { statusOpen = false; const id = fo.dataset.focus; chainZoom = null;
         if (route.view === 'chain') nav({ view: 'chain', trail: route.trail.concat(id), sel: id }); else openNode(id); return; }
+      const rd = t.closest('[data-read]');
+      if (rd) { statusOpen = false; nav({ view: 'guide', claim: rd.dataset.read }); return; }
+      const gj = t.closest('[data-gjump]');
+      if (gj) { e.preventDefault(); const el = $('#g-' + gj.dataset.gjump); if (el) el.scrollIntoView({ block: 'start' }); return; }
       const op = t.closest('[data-open]');
       if (op) { statusOpen = false; openNode(op.dataset.open); return; }
       const g = t.closest('[data-go]');
@@ -751,7 +888,7 @@
       const rf = t.closest('[data-rfilter]');
       if (rf) { rfilter = rf.dataset.rfilter; $$('[data-rfilter]').forEach(b => b.setAttribute('aria-pressed', String(b === rf))); renderReqList(); return; }
       const vw = t.closest('[data-view]');
-      if (vw) { statusOpen = false; nav({ view: vw.dataset.view === 'overview' ? 'overview' : 'reqs' }); return; }
+      if (vw) { statusOpen = false; nav({ view: vw.dataset.view === 'overview' ? 'overview' : vw.dataset.view === 'guide' ? 'guide' : 'reqs' }); return; }
       const ty = t.closest('[data-type]');
       if (ty) { const v = ty.dataset.type; ovTypes.has(v) ? ovTypes.delete(v) : ovTypes.add(v); if (!ovTypes.size) ovTypes.add('requirement'); renderChips(); rebuildSoon(); return; }
       const sb = t.closest('[data-st]');
@@ -832,6 +969,7 @@
     if (qs.get('mode') === '3d' && webglOK()) { ovMode = '3d'; $$('[data-mode]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === '3d'))); }
     const data = await loadData();
     if (data.error) { $('#statusline').innerHTML = `<span class="sdot"></span><span>${data.error}</span>`; return; }
+    R = await loadReadable(BASE + 'data/readable.js');
     model = M.build(data.g);
     issues = M.buildIssues(model.meta);
     $('#dataset').textContent = data.name === 'examples' ? 'demo aircraft (examples/)' : (data.g && data.g.meta && data.g.meta.dataset === 'concept-a' ? 'concept A, scaled quad tailsitter (D-182)' : data.name);

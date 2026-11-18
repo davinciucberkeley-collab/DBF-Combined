@@ -2443,7 +2443,7 @@
     </div>
     <div class="spacer"></div>
     <div class="ds-seg" role="group" aria-label="View">
-      <button data-view="reqs" aria-pressed="true">Requirements</button><button data-view="overview" aria-pressed="false" title="Whole graph (2-D canvas; 3-D on request)">Overview</button>
+      <button data-view="guide" aria-pressed="false" title="Plain-English reading of every claim, with a glossary">Guide</button><button data-view="reqs" aria-pressed="false">Requirements</button><button data-view="overview" aria-pressed="false" title="Whole graph (2-D canvas; 3-D on request)">Overview</button>
     </div>
     <button class="btn" type="button" data-pclose title="Close the proof chain">Close &times;</button>
   </header>
@@ -2469,6 +2469,7 @@
   </aside>
 
   <div class="pmain">
+    <section class="pane" id="guidePane" hidden><div id="guide" class="home"></div></section>
     <section class="pane" id="homePane"><div class="home" id="home"></div></section>
     <section class="pane" id="chainPane" hidden>
       <div class="chainbar">
