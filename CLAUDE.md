@@ -1,5 +1,27 @@
 # Scaled quad tailsitter VTOL (concept A) — student project
 
+## Master program (mandatory, 2026-11-18)
+- Canonical spec: `docs/MASTER_PROJECT_SPEC.md` (verbatim; never edit, summarise or delete it). Later user
+  instructions go verbatim, append-only, into `docs/spec-amendments.md`.
+- State lives on disk, not in the conversation: `docs/requirements.md` (R-ids), `docs/task-ledger.md` (T-ids,
+  never delete rows), `docs/execution-plan.md` (phases, model routing, task protocol), `docs/session-state.md`
+  (checkpoint + recovery procedure), `docs/engineering-decisions.md`, `docs/verification-report.md`.
+- After compaction, restart or handoff: follow `docs/session-state.md` "Recovery procedure" before any work;
+  a compaction summary is not authoritative. Read the full spec at milestones, after compaction and before
+  final verification. `python -I tools/ledger_audit.py` must pass.
+- Only VERIFIED COMPLETE counts, with independently checked evidence. Before stopping, reconcile the ledger
+  and name every unfinished requirement.
+- Subagents: `.claude/agents/` (haiku `ledger-auditor`/`runner`, sonnet `implementer`, opus `eng-reviewer`).
+
+## Communication (AM-001)
+- Work quietly: no narration of routine actions, no restating the plan or ledger, no long progress summaries,
+  no repeating what files or earlier messages already say. Decide within permissions instead of asking.
+- Message only for: a direct question (answer fully, no length cap), a milestone (1–3 sentences), a critical
+  engineering issue, a decision or authorization only the user can give, a real blocker, a significant
+  failure, or project end. Never pause execution just to report.
+- Subagents return one line: Task ID | Outcome | Verification | Evidence path | Blocker; details go in files.
+- Brevity never reduces the work: tests, docs, warnings and error reports stay complete.
+
 **Configuration changed 2026-11-14 (D-182, J6 board, `redesign/review/QP-1/BOARD.md`):**
 K09-L could not be built new within the $2,000 limit (cheapest workable build
 about $2,577, `redesign/review/CLOSURE-ROUND-2026-11-14/DESIGN-TO-COST.md`).

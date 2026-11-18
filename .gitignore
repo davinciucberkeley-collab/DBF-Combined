@@ -8,7 +8,10 @@
 cad/sim/*BenchMark-Solver.txt
 cad/sim/PerformanceLog.txt
 # local tooling
-.claude/
+.claude/*
+!.claude/settings.json
+!.claude/hooks/
+!.claude/agents/
 __pycache__/
 node_modules/
 
