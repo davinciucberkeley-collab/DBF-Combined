@@ -24,7 +24,10 @@ STATUSES = {"NOT STARTED", "IN PROGRESS", "BLOCKED", "FAILED", "READY FOR REVIEW
             "VERIFIED COMPLETE", "EXPLICITLY DEFERRED"}
 
 
-def sha(b): return hashlib.sha256(b).hexdigest()
+def lf(b): return b.replace(b"\r\n", b"\n")  # hash is line-ending independent (autocrlf clones)
+
+
+def sha(b): return hashlib.sha256(lf(b)).hexdigest()
 
 
 def rows(path, idpat):
@@ -40,7 +43,7 @@ def rows(path, idpat):
 
 def seal():
     SEAL.write_text(f"{sha(SPEC.read_bytes())}  MASTER_PROJECT_SPEC.md\n"
-                    f"{sha(AMEND.read_bytes())}  spec-amendments.md {len(AMEND.read_bytes())}\n",
+                    f"{sha(AMEND.read_bytes())}  spec-amendments.md {len(lf(AMEND.read_bytes()))}\n",
                     encoding="utf-8")
     print("sealed", SEAL)
 
@@ -55,7 +58,7 @@ def audit():
             errs.append("MASTER_PROJECT_SPEC.md changed since it was sealed (restore it from git)")
         parts = lines[1].split()
         if len(parts) >= 3 and AMEND.exists():
-            n = int(parts[2]); data = AMEND.read_bytes()
+            n = int(parts[2]); data = lf(AMEND.read_bytes())
             if len(data) < n or sha(data[:n]) != parts[0]:
                 errs.append("spec-amendments.md: a sealed entry was edited (append-only)")
     else:

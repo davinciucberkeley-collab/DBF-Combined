@@ -30,3 +30,5 @@ redesign/showcase/stl/*.[sS][tT][lL] !filter !diff !merge -text
 
 # Windows launcher keeps CRLF line endings.
 *.bat text eol=crlf
+docs/MASTER_PROJECT_SPEC.md text eol=lf
+docs/spec-amendments.md text eol=lf
