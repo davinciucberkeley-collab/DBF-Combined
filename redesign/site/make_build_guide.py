@@ -142,12 +142,15 @@ def table(rows):
     return ''.join(out)
 
 
+FILM_V = '20261118c'      # cache key of the film clips and posters: bump it when the clips are re-rendered (redesign/showcase/concept-a/render_build_a.py)
+
+
 def stage_video(n):
     nn = '%02d' % n
-    return ('<figure class="md-clip" id="build-clip-%d"><video src="assets/animation/build/a-stage-%s.mp4" data-poster="assets/animation/build/a-stage-%s.webp" '
+    return ('<figure class="md-clip" id="build-clip-%d"><video src="assets/animation/build/a-stage-%s.mp4?v=%s" data-poster="assets/animation/build/a-stage-%s.webp?v=%s" '
             'controls muted playsinline preload="none" aria-label="Stage %d build clip"></video>'
             '<figcaption><span class="ds-source">Stage %d clip · assets/animation/build/a-stage-%s.mp4 · same CAD as the collision check</span></figcaption></figure>'
-            % (n, nn, nn, n, n, nn))
+            % (n, nn, FILM_V, nn, FILM_V, n, n, nn))
 
 
 def render(md):
