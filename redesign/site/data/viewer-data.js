@@ -2,10 +2,10 @@
 window.VIEWER_DATA = {
  "schema": "dbf-viewer/1",
  "dataset": "concept-a",
- "generated": "2026-11-16 15:56 UTC",
+ "generated": "2026-11-18 02:12 UTC",
  "sources": {
-  "glb": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/glb200/glb",
-  "interfaces": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/glb200/mi/interfaces.json",
+  "glb": "redesign/blender/out/aircraft/glb",
+  "interfaces": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/dd3758e5-599a-4c53-9035-b3e3d186f97a/scratchpad/merged/interfaces.json",
   "proofs": "redesign/qp/A/proofs/out/graph.json",
   "budget": "redesign/qp/A/cad/model/mass_budget.json",
   "csv": [
@@ -14,9 +14,9 @@ window.VIEWER_DATA = {
  },
  "glb": {
   "file": "assembly.glb",
-  "bytes": 7392508,
+  "bytes": 8068832,
   "js_parts": 1,
-  "sha256": "b364c940965e89e4c85db2dff51a77a6dd99864e9b149ec584a2b119a22fb124"
+  "sha256": "396f863dbe68c1dc1079f1c500fb30f0cc0d18a659b0d7263788469d2fea8c5a"
  },
  "frame": "aircraft frame: metres, x aft, y right, z up. glTF (x, y, z) = aircraft (x, z, -y).",
  "parts": [
@@ -41,7 +41,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 69",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 76",
    "spec": null
   },
   {
@@ -66,7 +66,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 70",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 77",
    "spec": null
   },
   {
@@ -91,7 +91,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 72",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 79",
    "spec": null
   },
   {
@@ -116,7 +116,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 73",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 80",
    "spec": null
   },
   {
@@ -141,7 +141,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 74",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 81",
    "spec": null
   },
   {
@@ -165,7 +165,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 75",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 82",
    "spec": null
   },
   {
@@ -189,7 +189,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 71",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 78",
    "spec": null
   },
   {
@@ -213,25 +213,25 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 76",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 83",
    "spec": null
   },
   {
    "id": "CGE-001",
-   "name": "Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 2.0 mm arm-socket mouth walls, 1.2 mm sleeve (D-196), 0.8 mm webs, mass = drawn volume x 1.27)",
+   "name": "Hub (printed PETG, D-202: 1.5 mm sleeves over s +-24 mm of both arm tubes, 28 x 20 x 20 mm centre block with 3 mm edge radii, bridge boss r 10.0 mm (D-206), 2 strut sockets, tray flange; mass = drawn volume x 1.27)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 17.5,
+   "mass_g": 17.1,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0724,
-    0.0,
-    0.0002
+    -0.0662,
+    -0.0,
+    -0.0
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B0b \"Bench: the printed hub stands on the bench, aft face down\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
@@ -241,99 +241,51 @@ window.VIEWER_DATA = {
    "spec": null
   },
   {
-   "id": "CGE-002-LL",
-   "name": "Arm 12x10 x 0.245 (LL)",
+   "id": "CGE-002-A",
+   "name": "Arm tube A 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub (D-202; UR + LL)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 13.5,
+   "mass_g": 30.6,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.075,
-    -0.1269,
-    -0.0868
+    -0.0755,
+    -0.0,
+    -0.0
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (cut from the 12x10 tube) from BOM R08 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
-   "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-12mm-x-10mm-1m-long",
-   "how_url": "assets/animation/build/a-stage-02.mp4",
-   "unit_cost_usd": null,
-   "qty": null,
-   "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 40",
-   "spec": null
-  },
-  {
-   "id": "CGE-002-LR",
-   "name": "Arm 12x10 x 0.245 (LR)",
-   "subsystem": "cage",
-   "status": "MODELLED",
-   "mass_g": 13.5,
-   "material": "CFRP tube",
-   "cg_xyz_m": [
-    -0.075,
-    0.1269,
-    -0.0868
-   ],
-   "make_or_buy": "make",
-   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
-   "in_model": true,
-   "vendor": "Made (cut from the 12x10 tube) from BOM R08 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
-   "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-12mm-x-10mm-1m-long",
-   "how_url": "assets/animation/build/a-stage-02.mp4",
-   "unit_cost_usd": null,
-   "qty": null,
-   "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 38",
-   "spec": null
-  },
-  {
-   "id": "CGE-002-UL",
-   "name": "Arm 12x10 x 0.245 (UL)",
-   "subsystem": "cage",
-   "status": "MODELLED",
-   "mass_g": 13.5,
-   "material": "CFRP tube",
-   "cg_xyz_m": [
-    -0.075,
-    -0.1269,
-    0.0868
-   ],
-   "make_or_buy": "make",
-   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
-   "in_model": true,
-   "vendor": "Made (cut from the 12x10 tube) from BOM R08 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
-   "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-12mm-x-10mm-1m-long",
-   "how_url": "assets/animation/build/a-stage-02.mp4",
-   "unit_cost_usd": null,
-   "qty": null,
-   "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 36",
-   "spec": null
-  },
-  {
-   "id": "CGE-002-UR",
-   "name": "Arm 12x10 x 0.245 (UR)",
-   "subsystem": "cage",
-   "status": "MODELLED",
-   "mass_g": 13.5,
-   "material": "CFRP tube",
-   "cg_xyz_m": [
-    -0.075,
-    0.1269,
-    0.0868
-   ],
-   "make_or_buy": "make",
-   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
-   "in_model": true,
-   "vendor": "Made (cut from the 12x10 tube) from BOM R08 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Made (cut from the 12x10 tube) from BOM R08 RMRC; fitted in build step B0e \"Arm tube A slid through its sleeve and the centre block (from the LL side, along its axis)\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-12mm-x-10mm-1m-long",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 34",
+   "spec": null
+  },
+  {
+   "id": "CGE-002-B",
+   "name": "Arm tube B 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub (D-202; LR + UL)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 30.6,
+   "material": "CFRP tube",
+   "cg_xyz_m": [
+    -0.0625,
+    -0.0,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "vendor": "Made (cut from the 12x10 tube) from BOM R08 RMRC; fitted in build step B0c \"Arm tube B slid through its sleeve and the centre block (from the LL side, along its axis)\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
+   "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-12mm-x-10mm-1m-long",
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 35",
    "spec": null
   },
   {
@@ -344,20 +296,20 @@ window.VIEWER_DATA = {
    "mass_g": 4.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0796,
+    -0.0801,
     -0.2232,
     -0.1544
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B0i2 \"Motor cup LL slid onto the tube A end\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 41",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 45",
    "spec": null
   },
   {
@@ -368,20 +320,20 @@ window.VIEWER_DATA = {
    "mass_g": 4.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0796,
+    -0.0671,
     0.2248,
     -0.1521
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B0i3 \"Motor cup LR slid onto the tube B end\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 39",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 42",
    "spec": null
   },
   {
@@ -392,20 +344,20 @@ window.VIEWER_DATA = {
    "mass_g": 4.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0796,
+    -0.0671,
     -0.2248,
     0.1521
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B0i4 \"Motor cup UL slid onto the tube B end\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 37",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 39",
    "spec": null
   },
   {
@@ -416,44 +368,44 @@ window.VIEWER_DATA = {
    "mass_g": 4.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0796,
+    -0.0801,
     0.2232,
     0.1544
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B0i1 \"Motor cup UR slid onto the tube A end\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 35",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 36",
    "spec": null
   },
   {
    "id": "CGE-004",
-   "name": "Bridge 12x10",
+   "name": "Bridge 16x14 (D-206, torsion; axis z -2 mm; D-202: starts 15 mm aft of the hub axis, bored into the boss)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 8.5,
+   "mass_g": 8.1,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.023,
+    0.0002,
     0.0,
-    0.0
+    -0.002
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (cut from the 12x10 tube) from BOM R08 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
-   "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-12mm-x-10mm-1m-long",
+   "vendor": "Made (cut from the 16x14 fin-tube offcut (D-206)) from BOM R02 RMRC; fitted in build step B0h \"Bridge tube pushed forward into the hub boss bore from aft, to the conical floor\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
+   "vendor_url": "https://www.readymaderc.com/products/details/86475-carbon-fiber-tube-16mm-x-14mm-1m-long",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 42",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 49",
    "spec": null
   },
   {
@@ -471,13 +423,13 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (cut from the 6x4.5 tube) from BOM R10 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Made (cut from the 6x4.5 tube) from BOM R10 RMRC; fitted in build step B0j2 \"Left strut pushed into its hub socket along its own axis\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-6mm-x-4-5mm-1m-long",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 45",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 52",
    "spec": null
   },
   {
@@ -495,13 +447,13 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (cut from the 6x4.5 tube) from BOM R10 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Made (cut from the 6x4.5 tube) from BOM R10 RMRC; fitted in build step B0j1 \"Right strut pushed into its hub socket along its own axis\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-6mm-x-4-5mm-1m-long",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 43",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 50",
    "spec": null
   },
   {
@@ -512,20 +464,20 @@ window.VIEWER_DATA = {
    "mass_g": 2.0,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.051,
+    0.0491,
     0.0,
-    0.0
+    -0.0012
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 47",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 54",
    "spec": null
   },
   {
@@ -543,13 +495,13 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 46",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 53",
    "spec": null
   },
   {
@@ -567,13 +519,13 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Made (printed PETG) from BOM R03 Prusa; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 44",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 51",
    "spec": null
   },
   {
@@ -597,7 +549,223 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 55",
+   "spec": null
+  },
+  {
+   "id": "CGE-009-LL",
+   "name": "Doubler 14x12 x 14 mm (LL), carbon tube sleeve bonded over the arm tube at s 11..25 mm (D-202)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 0.9,
+   "material": "CFRP tube",
+   "cg_xyz_m": [
+    -0.0755,
+    -0.0149,
+    -0.0102
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "vendor": "Made (cut from the 14x12 tube) from BOM R09 RMRC; fitted in build step B0g2 \"Doubler LL slid over the tube A end (LL side) into the sleeve counterbore\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
+   "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-14mm-x-12mm-1m-long",
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 46",
+   "spec": null
+  },
+  {
+   "id": "CGE-009-LR",
+   "name": "Doubler 14x12 x 14 mm (LR), carbon tube sleeve bonded over the arm tube at s 11..25 mm (D-202)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 0.9,
+   "material": "CFRP tube",
+   "cg_xyz_m": [
+    -0.0625,
+    0.0149,
+    -0.0102
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "vendor": "Made (cut from the 14x12 tube) from BOM R09 RMRC; fitted in build step B0g3 \"Doubler LR slid over the tube B end (LR side) into the sleeve counterbore\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
+   "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-14mm-x-12mm-1m-long",
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 43",
+   "spec": null
+  },
+  {
+   "id": "CGE-009-UL",
+   "name": "Doubler 14x12 x 14 mm (UL), carbon tube sleeve bonded over the arm tube at s 11..25 mm (D-202)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 0.9,
+   "material": "CFRP tube",
+   "cg_xyz_m": [
+    -0.0625,
+    -0.0149,
+    0.0102
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "vendor": "Made (cut from the 14x12 tube) from BOM R09 RMRC; fitted in build step B0g4 \"Doubler UL slid over the tube B end (UL side) into the sleeve counterbore\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
+   "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-14mm-x-12mm-1m-long",
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 40",
+   "spec": null
+  },
+  {
+   "id": "CGE-009-UR",
+   "name": "Doubler 14x12 x 14 mm (UR), carbon tube sleeve bonded over the arm tube at s 11..25 mm (D-202)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 0.9,
+   "material": "CFRP tube",
+   "cg_xyz_m": [
+    -0.0755,
+    0.0149,
+    0.0102
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "vendor": "Made (cut from the 14x12 tube) from BOM R09 RMRC; fitted in build step B0g1 \"Doubler UR slid over the tube A end (UR side) into the sleeve counterbore\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
+   "vendor_url": "https://www.readymaderc.com/products/details/carbon-fiber-tube-14mm-x-12mm-1m-long",
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 37",
+   "spec": null
+  },
+  {
+   "id": "CGE-010-C",
+   "name": "Crossing pin 3 mm carbon rod x 29 mm through both arm tubes and the hub block (D-202)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 0.33,
+   "material": "CFRP rod",
+   "cg_xyz_m": [
+    -0.0695,
+    0.0,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "vendor": "Made (cut from the 3 mm carbon rod (price not found)) from BOM R14 RMRC; fitted in build step B0f \"The crossing pin and the two tube A pins (UR, LL) pushed in along x from the nose side\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
+   "vendor_url": "https://www.readymaderc.com/collections/hardware/build-hardware/carbon-fiber-strips-tubes-spars/carbon-fiber-tubes",
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
    "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 48",
+   "spec": null
+  },
+  {
+   "id": "CGE-010-LL",
+   "name": "Pin 3 mm carbon rod x 16 mm (LL) through the arm tube and its sleeve at s -8 mm (D-202)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 0.18,
+   "material": "CFRP rod",
+   "cg_xyz_m": [
+    -0.076,
+    -0.0066,
+    -0.0045
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "vendor": "Made (cut from the 3 mm carbon rod (price not found)) from BOM R14 RMRC; fitted in build step B0f \"The crossing pin and the two tube A pins (UR, LL) pushed in along x from the nose side\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
+   "vendor_url": "https://www.readymaderc.com/collections/hardware/build-hardware/carbon-fiber-strips-tubes-spars/carbon-fiber-tubes",
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 47",
+   "spec": null
+  },
+  {
+   "id": "CGE-010-LR",
+   "name": "Pin 3 mm carbon rod x 15 mm (LR) through the arm tube and its sleeve at s +8 mm (D-202)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 0.17,
+   "material": "CFRP rod",
+   "cg_xyz_m": [
+    -0.0625,
+    0.0066,
+    -0.0045
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "vendor": "Made (cut from the 3 mm carbon rod (price not found)) from BOM R14 RMRC; fitted in build step B0d \"Two 3 mm pins (LR, UL) pushed in along x from the nose side through the block access holes, the sleeve and tube B\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
+   "vendor_url": "https://www.readymaderc.com/collections/hardware/build-hardware/carbon-fiber-strips-tubes-spars/carbon-fiber-tubes",
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 44",
+   "spec": null
+  },
+  {
+   "id": "CGE-010-UL",
+   "name": "Pin 3 mm carbon rod x 15 mm (UL) through the arm tube and its sleeve at s -8 mm (D-202)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 0.17,
+   "material": "CFRP rod",
+   "cg_xyz_m": [
+    -0.0625,
+    -0.0066,
+    0.0045
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "vendor": "Made (cut from the 3 mm carbon rod (price not found)) from BOM R14 RMRC; fitted in build step B0d \"Two 3 mm pins (LR, UL) pushed in along x from the nose side through the block access holes, the sleeve and tube B\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
+   "vendor_url": "https://www.readymaderc.com/collections/hardware/build-hardware/carbon-fiber-strips-tubes-spars/carbon-fiber-tubes",
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 41",
+   "spec": null
+  },
+  {
+   "id": "CGE-010-UR",
+   "name": "Pin 3 mm carbon rod x 16 mm (UR) through the arm tube and its sleeve at s +8 mm (D-202)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 0.18,
+   "material": "CFRP rod",
+   "cg_xyz_m": [
+    -0.076,
+    0.0066,
+    0.0045
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
+   "in_model": true,
+   "vendor": "Made (cut from the 3 mm carbon rod (price not found)) from BOM R14 RMRC; fitted in build step B0f \"The crossing pin and the two tube A pins (UR, LL) pushed in along x from the nose side\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
+   "vendor_url": "https://www.readymaderc.com/collections/hardware/build-hardware/carbon-fiber-strips-tubes-spars/carbon-fiber-tubes",
+   "how_url": "assets/animation/build/a-stage-02.mp4",
+   "unit_cost_usd": null,
+   "qty": null,
+   "process": null,
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 38",
    "spec": null
   },
   {
@@ -909,7 +1077,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 103",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 110",
    "spec": null
   },
   {
@@ -933,7 +1101,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 101",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 108",
    "spec": null
   },
   {
@@ -957,7 +1125,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 99",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 106",
    "spec": null
   },
   {
@@ -981,7 +1149,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 97",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 104",
    "spec": null
   },
   {
@@ -1005,7 +1173,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 104",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 111",
    "spec": null
   },
   {
@@ -1029,7 +1197,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 102",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 109",
    "spec": null
   },
   {
@@ -1053,7 +1221,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 100",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 107",
    "spec": null
   },
   {
@@ -1077,7 +1245,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 98",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 105",
    "spec": null
   },
   {
@@ -1103,7 +1271,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 107",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 114",
    "spec": null
   },
   {
@@ -1111,7 +1279,7 @@ window.VIEWER_DATA = {
    "name": "Harness remainder, bottom-up (D-198): phase-lead extensions, splices, ESC ribbon, sensor leads, servo ties, sleeves / ties / tape / solder - lumped",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 18.4,
+   "mass_g": 20.4,
    "material": "copper / silicone",
    "cg_xyz_m": [
     0.03,
@@ -1129,7 +1297,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 106",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 113",
    "spec": null
   },
   {
@@ -1155,7 +1323,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 105",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 112",
    "spec": null
   },
   {
@@ -1163,10 +1331,10 @@ window.VIEWER_DATA = {
    "name": "Phase-lead raceway (D-199, L): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 1.8,
+   "mass_g": 1.71,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0189,
+    -0.0159,
     -0.019,
     0.0027
    ],
@@ -1179,7 +1347,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 92",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 99",
    "spec": null
   },
   {
@@ -1187,10 +1355,10 @@ window.VIEWER_DATA = {
    "name": "Phase-lead raceway (D-199, R): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 1.8,
+   "mass_g": 1.71,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0189,
+    -0.0159,
     0.019,
     0.0027
    ],
@@ -1203,103 +1371,103 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 91",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 98",
    "spec": null
   },
   {
    "id": "HRN-004-LL",
-   "name": "Hub conduit (D-199, LL): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "name": "Hub conduit (D-199, D-202, LL): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 1.25,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0579,
-    -0.0214,
-    -0.0091
+    -0.0559,
+    -0.0142,
+    -0.0173
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG conduit) from BOM R03 Prusa; fitted in build step B2b \"D-199: hub conduits (4) pushed in from aft along the hub webs, each docking on its socket floor face and on its raceway window\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
+   "vendor": "Made (printed PETG conduit) from BOM R03 Prusa; fitted in build step B2b4 \"D-202: hub conduit LL raised onto its sleeve and the raceway window (from below)\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
    "how_url": "assets/animation/build/a-stage-03.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 96",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 103",
    "spec": null
   },
   {
    "id": "HRN-004-LR",
-   "name": "Hub conduit (D-199, LR): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "name": "Hub conduit (D-199, D-202, LR): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 0.97,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0579,
-    0.0214,
-    -0.0091
+    -0.0517,
+    0.0156,
+    -0.0168
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG conduit) from BOM R03 Prusa; fitted in build step B2b \"D-199: hub conduits (4) pushed in from aft along the hub webs, each docking on its socket floor face and on its raceway window\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
+   "vendor": "Made (printed PETG conduit) from BOM R03 Prusa; fitted in build step B2b3 \"D-202: hub conduit LR raised onto its sleeve and the raceway window (from below)\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
    "how_url": "assets/animation/build/a-stage-03.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 95",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 102",
    "spec": null
   },
   {
    "id": "HRN-004-UL",
-   "name": "Hub conduit (D-199, UL): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "name": "Hub conduit (D-199, D-202, UL): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 0.77,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0579,
-    -0.0173,
-    0.015
+    -0.0522,
+    -0.013,
+    0.0179
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG conduit) from BOM R03 Prusa; fitted in build step B2b \"D-199: hub conduits (4) pushed in from aft along the hub webs, each docking on its socket floor face and on its raceway window\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
+   "vendor": "Made (printed PETG conduit) from BOM R03 Prusa; fitted in build step B2b2 \"D-202: hub conduit UL lowered onto its sleeve and the raceway window\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
    "how_url": "assets/animation/build/a-stage-03.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 94",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 101",
    "spec": null
   },
   {
    "id": "HRN-004-UR",
-   "name": "Hub conduit (D-199, UR): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "name": "Hub conduit (D-199, D-202, UR): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 1.05,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0579,
-    0.0173,
-    0.015
+    -0.0569,
+    0.012,
+    0.0182
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (printed PETG conduit) from BOM R03 Prusa; fitted in build step B2b \"D-199: hub conduits (4) pushed in from aft along the hub webs, each docking on its socket floor face and on its raceway window\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
+   "vendor": "Made (printed PETG conduit) from BOM R03 Prusa; fitted in build step B2b1 \"D-202: hub conduit UR lowered onto its sleeve and the raceway window (along the tube t axis, toward the tube)\", stage 3 (Rib saddles, phase-lead raceways, pack tray, hinge dampers)",
    "vendor_url": "https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/",
    "how_url": "assets/animation/build/a-stage-03.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 93",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 100",
    "spec": null
   },
   {
@@ -1323,7 +1491,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 77",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 84",
    "spec": null
   },
   {
@@ -1347,7 +1515,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 90",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 97",
    "spec": null
   },
   {
@@ -1371,7 +1539,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 84",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 91",
    "spec": null
   },
   {
@@ -1395,7 +1563,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 78",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 85",
    "spec": null
   },
   {
@@ -1420,7 +1588,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 85",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 92",
    "spec": null
   },
   {
@@ -1445,7 +1613,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 79",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 86",
    "spec": null
   },
   {
@@ -1469,7 +1637,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 86",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 93",
    "spec": null
   },
   {
@@ -1493,7 +1661,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 80",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 87",
    "spec": null
   },
   {
@@ -1517,7 +1685,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 87",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 94",
    "spec": null
   },
   {
@@ -1541,7 +1709,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 81",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 88",
    "spec": null
   },
   {
@@ -1565,7 +1733,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 89",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 96",
    "spec": null
   },
   {
@@ -1589,7 +1757,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 83",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 90",
    "spec": null
   },
   {
@@ -1613,7 +1781,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 88",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 95",
    "spec": null
   },
   {
@@ -1637,7 +1805,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 82",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 89",
    "spec": null
   },
   {
@@ -1648,7 +1816,7 @@ window.VIEWER_DATA = {
    "mass_g": 65.0,
    "material": "Al / Cu / NdFeB",
    "cg_xyz_m": [
-    -0.0988,
+    -0.0993,
     -0.2239,
     -0.162
    ],
@@ -1656,13 +1824,13 @@ window.VIEWER_DATA = {
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM P01 TMotor; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Bought: BOM P01 TMotor; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 55",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 62",
    "spec": null
   },
   {
@@ -1673,7 +1841,7 @@ window.VIEWER_DATA = {
    "mass_g": 65.0,
    "material": "Al / Cu / NdFeB",
    "cg_xyz_m": [
-    -0.0988,
+    -0.0863,
     0.2321,
     -0.15
    ],
@@ -1681,13 +1849,13 @@ window.VIEWER_DATA = {
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM P01 TMotor; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Bought: BOM P01 TMotor; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 53",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 60",
    "spec": null
   },
   {
@@ -1698,7 +1866,7 @@ window.VIEWER_DATA = {
    "mass_g": 65.0,
    "material": "Al / Cu / NdFeB",
    "cg_xyz_m": [
-    -0.0988,
+    -0.0863,
     -0.2321,
     0.15
    ],
@@ -1706,13 +1874,13 @@ window.VIEWER_DATA = {
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM P01 TMotor; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Bought: BOM P01 TMotor; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 51",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 58",
    "spec": null
   },
   {
@@ -1723,7 +1891,7 @@ window.VIEWER_DATA = {
    "mass_g": 65.0,
    "material": "Al / Cu / NdFeB",
    "cg_xyz_m": [
-    -0.0988,
+    -0.0993,
     0.2239,
     0.162
    ],
@@ -1731,13 +1899,13 @@ window.VIEWER_DATA = {
    "electrical": "sink",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM P01 TMotor; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Bought: BOM P01 TMotor; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 49",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 56",
    "spec": null
   },
   {
@@ -1748,20 +1916,20 @@ window.VIEWER_DATA = {
    "mass_g": 11.06,
    "material": "nylon-glass composite",
    "cg_xyz_m": [
-    -0.1229,
+    -0.1234,
     -0.2197,
     -0.1681
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM P02 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Bought: BOM P02 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://www.readymaderc.com/products/details/86771-apc-multirotor-9x4-5-2-blade-4-pack-with-adapter-rings",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 56",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 63",
    "spec": null
   },
   {
@@ -1772,20 +1940,20 @@ window.VIEWER_DATA = {
    "mass_g": 11.06,
    "material": "nylon-glass composite",
    "cg_xyz_m": [
-    -0.1229,
+    -0.1104,
     0.2363,
     -0.1439
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM P02 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Bought: BOM P02 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://www.readymaderc.com/products/details/86771-apc-multirotor-9x4-5-2-blade-4-pack-with-adapter-rings",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 54",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 61",
    "spec": null
   },
   {
@@ -1796,20 +1964,20 @@ window.VIEWER_DATA = {
    "mass_g": 11.06,
    "material": "nylon-glass composite",
    "cg_xyz_m": [
-    -0.1229,
+    -0.1104,
     -0.2363,
     0.1439
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM P02 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Bought: BOM P02 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://www.readymaderc.com/products/details/86771-apc-multirotor-9x4-5-2-blade-4-pack-with-adapter-rings",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 52",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 59",
    "spec": null
   },
   {
@@ -1820,20 +1988,20 @@ window.VIEWER_DATA = {
    "mass_g": 11.06,
    "material": "nylon-glass composite",
    "cg_xyz_m": [
-    -0.1229,
+    -0.1234,
     0.2197,
     0.1681
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM P02 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Bought: BOM P02 RMRC; fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://www.readymaderc.com/products/details/86771-apc-multirotor-9x4-5-2-blade-4-pack-with-adapter-rings",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 50",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 57",
    "spec": null
   },
   {
@@ -1858,7 +2026,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 57",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 64",
    "spec": null
   },
   {
@@ -1869,20 +2037,20 @@ window.VIEWER_DATA = {
    "mass_g": 4.3,
    "material": "6061 aluminium",
    "cg_xyz_m": [
-    -0.116,
+    -0.1165,
     -0.2209,
     -0.1663
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM P01 TMotor (T-Motor prop adapter: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Bought: BOM P01 TMotor (T-Motor prop adapter: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 64",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 71",
    "spec": null
   },
   {
@@ -1893,20 +2061,20 @@ window.VIEWER_DATA = {
    "mass_g": 4.3,
    "material": "6061 aluminium",
    "cg_xyz_m": [
-    -0.116,
+    -0.1035,
     0.2351,
     -0.1457
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM P01 TMotor (T-Motor prop adapter: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Bought: BOM P01 TMotor (T-Motor prop adapter: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 62",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 69",
    "spec": null
   },
   {
@@ -1917,20 +2085,20 @@ window.VIEWER_DATA = {
    "mass_g": 4.3,
    "material": "6061 aluminium",
    "cg_xyz_m": [
-    -0.116,
+    -0.1035,
     -0.2351,
     0.1457
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM P01 TMotor (T-Motor prop adapter: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Bought: BOM P01 TMotor (T-Motor prop adapter: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 60",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 67",
    "spec": null
   },
   {
@@ -1941,20 +2109,20 @@ window.VIEWER_DATA = {
    "mass_g": 4.3,
    "material": "6061 aluminium",
    "cg_xyz_m": [
-    -0.116,
+    -0.1165,
     0.2209,
     0.1663
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM P01 TMotor (T-Motor prop adapter: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Bought: BOM P01 TMotor (T-Motor prop adapter: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 58",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 65",
    "spec": null
   },
   {
@@ -1965,20 +2133,20 @@ window.VIEWER_DATA = {
    "mass_g": 2.9,
    "material": "6061 aluminium",
    "cg_xyz_m": [
-    -0.1306,
+    -0.1311,
     -0.2184,
     -0.17
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM P01 TMotor (T-Motor spinner nut: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Bought: BOM P01 TMotor (T-Motor spinner nut: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 65",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 72",
    "spec": null
   },
   {
@@ -1989,20 +2157,20 @@ window.VIEWER_DATA = {
    "mass_g": 2.9,
    "material": "6061 aluminium",
    "cg_xyz_m": [
-    -0.1306,
+    -0.1181,
     0.2376,
     -0.142
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM P01 TMotor (T-Motor spinner nut: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Bought: BOM P01 TMotor (T-Motor spinner nut: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 63",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 70",
    "spec": null
   },
   {
@@ -2013,20 +2181,20 @@ window.VIEWER_DATA = {
    "mass_g": 2.9,
    "material": "6061 aluminium",
    "cg_xyz_m": [
-    -0.1306,
+    -0.1181,
     -0.2376,
     0.142
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM P01 TMotor (T-Motor spinner nut: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Bought: BOM P01 TMotor (T-Motor spinner nut: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 61",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 68",
    "spec": null
   },
   {
@@ -2037,20 +2205,20 @@ window.VIEWER_DATA = {
    "mass_g": 2.9,
    "material": "6061 aluminium",
    "cg_xyz_m": [
-    -0.1306,
+    -0.1311,
     0.2184,
     0.17
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Bought: BOM P01 TMotor (T-Motor spinner nut: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage unit: motor leads threaded, motors, props)",
+   "vendor": "Bought: BOM P01 TMotor (T-Motor spinner nut: confirm it ships in the motor hardware pack (no own BOM line)); fitted in build step B1 \"Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked from below: clips snap on the spar\", stage 2 (Cage frame on the bench (D-202), motor leads threaded, motors, props, dock)",
    "vendor_url": "https://store.tmotor.com/goods-388-MN2212-V20.html",
    "how_url": "assets/animation/build/a-stage-02.mp4",
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 59",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 66",
    "spec": null
   },
   {
@@ -2075,7 +2243,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 66",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 73",
    "spec": null
   },
   {
@@ -2087,8 +2255,8 @@ window.VIEWER_DATA = {
    "material": "nylon webbing + plastic buckle",
    "cg_xyz_m": [
     -0.0175,
-    0.0,
-    0.016
+    -0.0,
+    0.014
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -2099,7 +2267,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 67",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 74",
    "spec": null
   },
   {
@@ -2123,7 +2291,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": null,
    "qty": null,
    "process": null,
-   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 68",
+   "csv_ref": "redesign/qp/A/cad/out/parts-a.csv row 75",
    "spec": null
   },
   {
@@ -2141,7 +2309,7 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
    "in_model": true,
-   "vendor": "Made (hot-wired XPS, tape skin) from BOM R01 Local; fitted in build step A1 \"Wing core on the bench (lower surface up)\", stage 1 (Wing core and spar)",
+   "vendor": "Made (XPS machined on the ShopBot (D-203; hot wire backup), tape skin) from BOM R01 Local; fitted in build step A1 \"Wing core on the bench (lower surface up)\", stage 1 (Wing core and spar)",
    "vendor_url": null,
    "how_url": "assets/animation/build/a-stage-01.mp4",
    "unit_cost_usd": null,
@@ -2344,13 +2512,13 @@ window.VIEWER_DATA = {
   },
   {
    "id": "WNG-007-L",
-   "name": "Elevon balance (D-187 v2, L): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
+   "name": "Elevon balance (D-187 v2, D-205 L): 12.8 g lead strip 20 mm ahead of the hinge (10 x 1.07 mm x 106 mm; D-195 fallback) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 16.1,
+   "mass_g": 13.3,
    "material": "lead + PETG/CF",
    "cg_xyz_m": [
-    0.1654,
+    0.1657,
     -0.285,
     -0.003
    ],
@@ -2368,13 +2536,13 @@ window.VIEWER_DATA = {
   },
   {
    "id": "WNG-007-R",
-   "name": "Elevon balance (D-187 v2, R): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
+   "name": "Elevon balance (D-187 v2, D-205 R): 12.8 g lead strip 20 mm ahead of the hinge (10 x 1.07 mm x 106 mm; D-195 fallback) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 16.1,
+   "mass_g": 13.3,
    "material": "lead + PETG/CF",
    "cg_xyz_m": [
-    0.1654,
+    0.1657,
     0.285,
     -0.003
    ],
@@ -2395,12 +2563,12 @@ window.VIEWER_DATA = {
    "name": "Lens cap + stop bosses (L, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 3.7,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1595,
+    0.1599,
     -0.285,
-    -0.0113
+    -0.0112
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -2419,12 +2587,12 @@ window.VIEWER_DATA = {
    "name": "Lens cap + stop bosses (L, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 3.7,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1579,
+    0.1582,
     -0.285,
-    0.0059
+    0.0058
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -2443,12 +2611,12 @@ window.VIEWER_DATA = {
    "name": "Lens cap + stop bosses (R, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 3.7,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1595,
+    0.1599,
     0.285,
-    -0.0113
+    -0.0112
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -2467,12 +2635,12 @@ window.VIEWER_DATA = {
    "name": "Lens cap + stop bosses (R, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 3.7,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1579,
+    0.1582,
     0.285,
-    0.0059
+    0.0058
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)",
@@ -2758,78 +2926,231 @@ window.VIEWER_DATA = {
   },
   {
    "id": "E-CGE-01",
-   "part_a": "CGE-002-UR",
+   "part_a": "CGE-002-A",
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
    "owner": "cage",
-   "notes": "arm in hub socket",
+   "notes": "tube through the two sleeves and the centre block, bonded over s +-24 mm (D-202)",
    "declared_in": "cage"
   },
   {
    "id": "E-CGE-02",
-   "part_a": "CGE-002-UR",
-   "part_b": "CGE-003-UR",
+   "part_a": "CGE-002-B",
+   "part_b": "CGE-001",
    "via": "CT-EPOXY",
    "owner": "cage",
-   "notes": "arm end in cup sleeve (25 mm)",
+   "notes": "tube through the two sleeves and the centre block, bonded over s +-24 mm (D-202)",
    "declared_in": "cage"
   },
   {
    "id": "E-CGE-03",
-   "part_a": "CGE-002-UL",
-   "part_b": "CGE-001",
+   "part_a": "CGE-002-A",
+   "part_b": "CGE-003-UR",
    "via": "CT-EPOXY",
    "owner": "cage",
-   "notes": "arm in hub socket",
+   "notes": "tube end in cup sleeve (25 mm)",
    "declared_in": "cage"
   },
   {
    "id": "E-CGE-04",
-   "part_a": "CGE-002-UL",
-   "part_b": "CGE-003-UL",
+   "part_a": "CGE-009-UR",
+   "part_b": "CGE-002-A",
    "via": "CT-EPOXY",
    "owner": "cage",
-   "notes": "arm end in cup sleeve (25 mm)",
+   "notes": "doubler bonded over the tube, s 11..32 mm (D-202)",
    "declared_in": "cage"
   },
   {
    "id": "E-CGE-05",
-   "part_a": "CGE-002-LR",
+   "part_a": "CGE-009-UR",
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
    "owner": "cage",
-   "notes": "arm in hub socket",
+   "notes": "doubler in the sleeve bore (D-202)",
    "declared_in": "cage"
   },
   {
    "id": "E-CGE-06",
-   "part_a": "CGE-002-LR",
-   "part_b": "CGE-003-LR",
+   "part_a": "CGE-010-UR",
+   "part_b": "CGE-002-A",
    "via": "CT-EPOXY",
    "owner": "cage",
-   "notes": "arm end in cup sleeve (25 mm)",
+   "notes": "pin through the tube wall, bonded (D-202)",
    "declared_in": "cage"
   },
   {
    "id": "E-CGE-07",
-   "part_a": "CGE-002-LL",
+   "part_a": "CGE-010-UR",
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
    "owner": "cage",
-   "notes": "arm in hub socket",
+   "notes": "pin ends in the sleeve walls (D-202)",
    "declared_in": "cage"
   },
   {
    "id": "E-CGE-08",
-   "part_a": "CGE-002-LL",
-   "part_b": "CGE-003-LL",
+   "part_a": "CGE-002-B",
+   "part_b": "CGE-003-UL",
    "via": "CT-EPOXY",
    "owner": "cage",
-   "notes": "arm end in cup sleeve (25 mm)",
+   "notes": "tube end in cup sleeve (25 mm)",
    "declared_in": "cage"
   },
   {
    "id": "E-CGE-09",
+   "part_a": "CGE-009-UL",
+   "part_b": "CGE-002-B",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "doubler bonded over the tube, s 11..32 mm (D-202)",
+   "declared_in": "cage"
+  },
+  {
+   "id": "E-CGE-10",
+   "part_a": "CGE-009-UL",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "doubler in the sleeve bore (D-202)",
+   "declared_in": "cage"
+  },
+  {
+   "id": "E-CGE-11",
+   "part_a": "CGE-010-UL",
+   "part_b": "CGE-002-B",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "pin through the tube wall, bonded (D-202)",
+   "declared_in": "cage"
+  },
+  {
+   "id": "E-CGE-12",
+   "part_a": "CGE-010-UL",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "pin ends in the sleeve walls (D-202)",
+   "declared_in": "cage"
+  },
+  {
+   "id": "E-CGE-13",
+   "part_a": "CGE-002-B",
+   "part_b": "CGE-003-LR",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "tube end in cup sleeve (25 mm)",
+   "declared_in": "cage"
+  },
+  {
+   "id": "E-CGE-14",
+   "part_a": "CGE-009-LR",
+   "part_b": "CGE-002-B",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "doubler bonded over the tube, s 11..32 mm (D-202)",
+   "declared_in": "cage"
+  },
+  {
+   "id": "E-CGE-15",
+   "part_a": "CGE-009-LR",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "doubler in the sleeve bore (D-202)",
+   "declared_in": "cage"
+  },
+  {
+   "id": "E-CGE-16",
+   "part_a": "CGE-010-LR",
+   "part_b": "CGE-002-B",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "pin through the tube wall, bonded (D-202)",
+   "declared_in": "cage"
+  },
+  {
+   "id": "E-CGE-17",
+   "part_a": "CGE-010-LR",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "pin ends in the sleeve walls (D-202)",
+   "declared_in": "cage"
+  },
+  {
+   "id": "E-CGE-18",
+   "part_a": "CGE-002-A",
+   "part_b": "CGE-003-LL",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "tube end in cup sleeve (25 mm)",
+   "declared_in": "cage"
+  },
+  {
+   "id": "E-CGE-19",
+   "part_a": "CGE-009-LL",
+   "part_b": "CGE-002-A",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "doubler bonded over the tube, s 11..32 mm (D-202)",
+   "declared_in": "cage"
+  },
+  {
+   "id": "E-CGE-20",
+   "part_a": "CGE-009-LL",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "doubler in the sleeve bore (D-202)",
+   "declared_in": "cage"
+  },
+  {
+   "id": "E-CGE-21",
+   "part_a": "CGE-010-LL",
+   "part_b": "CGE-002-A",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "pin through the tube wall, bonded (D-202)",
+   "declared_in": "cage"
+  },
+  {
+   "id": "E-CGE-22",
+   "part_a": "CGE-010-LL",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "pin ends in the sleeve walls (D-202)",
+   "declared_in": "cage"
+  },
+  {
+   "id": "E-CGE-23",
+   "part_a": "CGE-010-C",
+   "part_b": "CGE-002-A",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "crossing pin through the tube, bonded (D-202)",
+   "declared_in": "cage"
+  },
+  {
+   "id": "E-CGE-24",
+   "part_a": "CGE-010-C",
+   "part_b": "CGE-002-B",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "crossing pin through the tube, bonded (D-202)",
+   "declared_in": "cage"
+  },
+  {
+   "id": "E-CGE-25",
+   "part_a": "CGE-010-C",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "crossing pin through the centre block (D-202)",
+   "declared_in": "cage"
+  },
+  {
+   "id": "E-CGE-26",
    "part_a": "CGE-004",
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
@@ -2838,7 +3159,7 @@ window.VIEWER_DATA = {
    "declared_in": "cage"
   },
   {
-   "id": "E-CGE-10",
+   "id": "E-CGE-27",
    "part_a": "CGE-004",
    "part_b": "CGE-006",
    "via": "CT-EPOXY",
@@ -2847,7 +3168,7 @@ window.VIEWER_DATA = {
    "declared_in": "cage"
   },
   {
-   "id": "E-CGE-11",
+   "id": "E-CGE-28",
    "part_a": "CGE-006",
    "part_b": "WNG-002",
    "via": "CT-EPOXY",
@@ -2856,7 +3177,7 @@ window.VIEWER_DATA = {
    "declared_in": "cage"
   },
   {
-   "id": "E-CGE-12",
+   "id": "E-CGE-29",
    "part_a": "CGE-005-R",
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
@@ -2865,7 +3186,7 @@ window.VIEWER_DATA = {
    "declared_in": "cage"
   },
   {
-   "id": "E-CGE-13",
+   "id": "E-CGE-30",
    "part_a": "CGE-005-R",
    "part_b": "CGE-007-R",
    "via": "CT-EPOXY",
@@ -2874,7 +3195,7 @@ window.VIEWER_DATA = {
    "declared_in": "cage"
   },
   {
-   "id": "E-CGE-14",
+   "id": "E-CGE-31",
    "part_a": "CGE-007-R",
    "part_b": "WNG-002",
    "via": "CT-EPOXY",
@@ -2883,7 +3204,7 @@ window.VIEWER_DATA = {
    "declared_in": "cage"
   },
   {
-   "id": "E-CGE-15",
+   "id": "E-CGE-32",
    "part_a": "CGE-005-L",
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
@@ -2892,7 +3213,7 @@ window.VIEWER_DATA = {
    "declared_in": "cage"
   },
   {
-   "id": "E-CGE-16",
+   "id": "E-CGE-33",
    "part_a": "CGE-005-L",
    "part_b": "CGE-007-L",
    "via": "CT-EPOXY",
@@ -2901,7 +3222,7 @@ window.VIEWER_DATA = {
    "declared_in": "cage"
   },
   {
-   "id": "E-CGE-17",
+   "id": "E-CGE-34",
    "part_a": "CGE-007-L",
    "part_b": "WNG-002",
    "via": "CT-EPOXY",
@@ -2910,7 +3231,7 @@ window.VIEWER_DATA = {
    "declared_in": "cage"
   },
   {
-   "id": "E-CGE-18",
+   "id": "E-CGE-35",
    "part_a": "CGE-008",
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
@@ -3525,7 +3846,7 @@ window.VIEWER_DATA = {
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
    "owner": "harness",
-   "notes": "hub conduit bonded to the hub web face and the arm-socket floor face (D-199)",
+   "notes": "hub conduit floor bonded on the hub sleeve and the tube (D-199, D-202)",
    "declared_in": "harness"
   },
   {
@@ -3534,7 +3855,7 @@ window.VIEWER_DATA = {
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
    "owner": "harness",
-   "notes": "hub conduit bonded to the hub web face and the arm-socket floor face (D-199)",
+   "notes": "hub conduit floor bonded on the hub sleeve and the tube (D-199, D-202)",
    "declared_in": "harness"
   },
   {
@@ -3543,7 +3864,7 @@ window.VIEWER_DATA = {
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
    "owner": "harness",
-   "notes": "hub conduit bonded to the hub web face and the arm-socket floor face (D-199)",
+   "notes": "hub conduit floor bonded on the hub sleeve and the tube (D-199, D-202)",
    "declared_in": "harness"
   },
   {
@@ -3552,7 +3873,7 @@ window.VIEWER_DATA = {
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
    "owner": "harness",
-   "notes": "hub conduit bonded to the hub web face and the arm-socket floor face (D-199)",
+   "notes": "hub conduit floor bonded on the hub sleeve and the tube (D-199, D-202)",
    "declared_in": "harness"
   },
   {
@@ -3561,7 +3882,7 @@ window.VIEWER_DATA = {
    "part_b": "HRN-003-R",
    "via": "CT-EPOXY",
    "owner": "harness",
-   "notes": "conduit leg B bonded on the raceway window (D-199)",
+   "notes": "conduit drop column bonded on the raceway wall round its window (D-199, D-202)",
    "declared_in": "harness"
   },
   {
@@ -3570,7 +3891,7 @@ window.VIEWER_DATA = {
    "part_b": "HRN-003-L",
    "via": "CT-EPOXY",
    "owner": "harness",
-   "notes": "conduit leg B bonded on the raceway window (D-199)",
+   "notes": "conduit drop column bonded on the raceway wall round its window (D-199, D-202)",
    "declared_in": "harness"
   },
   {
@@ -3579,7 +3900,7 @@ window.VIEWER_DATA = {
    "part_b": "HRN-003-R",
    "via": "CT-EPOXY",
    "owner": "harness",
-   "notes": "conduit leg B bonded on the raceway window (D-199)",
+   "notes": "conduit drop column bonded on the raceway wall round its window (D-199, D-202)",
    "declared_in": "harness"
   },
   {
@@ -3588,7 +3909,7 @@ window.VIEWER_DATA = {
    "part_b": "HRN-003-L",
    "via": "CT-EPOXY",
    "owner": "harness",
-   "notes": "conduit leg B bonded on the raceway window (D-199)",
+   "notes": "conduit drop column bonded on the raceway wall round its window (D-199, D-202)",
    "declared_in": "harness"
   },
   {
@@ -4336,7 +4657,7 @@ window.VIEWER_DATA = {
    "part_b": "CGE-008",
    "via": "CT-STRAP-VELCRO",
    "owner": "power",
-   "notes": "buckle strap round pack and tray: over the pack top, outside the tray end walls, under the tray plate AND the 12 mm bridge tube CGE-004 (tangent to the plate underside, z -6..6)",
+   "notes": "buckle strap round pack and tray: over the pack top, outside the tray end walls, under the tray plate AND the 16 mm bridge tube CGE-004 (D-206) (tangent to the plate underside, z -6..6)",
    "retention": {
     "item": "20 mm strap",
     "count": 1,
@@ -4846,16 +5167,16 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-MASS-PRED",
    "title": "Predicted take-off mass (CAD basic x growth + overrun)",
-   "value": 1.456349576,
+   "value": 1.464942382,
    "unit": "kg",
    "limit": {
     "op": "<=",
     "ref": "P:req.mass_target_kg",
-    "resolved": 1.46
+    "resolved": 1.465
    },
    "status": "UNVERIFIED",
    "how": "Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).",
-   "margin": 0.002500290410958856,
+   "margin": 3.932969283278978e-05,
    "parts": [
     "WNG-001",
     "WNG-002",
@@ -4868,7 +5189,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG",
    "title": "CG aft of the leading edge, CAD as drawn",
-   "value": 20.51003615489518,
+   "value": 21.174920602397293,
    "unit": "mm",
    "limit": {
     "op": ">=",
@@ -4877,7 +5198,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.",
-   "margin": 0.07947558709974625,
+   "margin": 0.11446950538933122,
    "parts": [
     "PWR-001",
     "CGE-008",
@@ -4888,7 +5209,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-HI",
    "title": "CG aft limit of the design band",
-   "value": 20.51003615489518,
+   "value": 21.174920602397293,
    "unit": "mm",
    "limit": {
     "op": "<=",
@@ -4897,7 +5218,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "CG breadboard (M5); band 19-26 mm (D-195), hard aft limit 28.5 mm.",
-   "margin": 0.21115245558095466,
+   "margin": 0.18557997683087335,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -4906,7 +5227,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-TRIM-AFT",
    "title": "CG at the aft end of the pack trim travel",
-   "value": 22.650786527544316,
+   "value": 23.302697548328116,
    "unit": "mm",
    "limit": {
     "op": "<=",
@@ -4915,7 +5236,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "Slide the pack to the aft slot stop and re-measure CG (M5).",
-   "margin": 0.20523556043704155,
+   "margin": 0.18236148953234682,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -4924,7 +5245,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CG-TRIM-FWD",
    "title": "CG at the forward end of the pack trim travel",
-   "value": 19.225585931305694,
+   "value": 19.898254434838798,
    "unit": "mm",
    "limit": {
     "op": ">=",
@@ -4933,7 +5254,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "Slide the pack to the forward slot stop and re-measure CG (M5).",
-   "margin": 0.011872943752931289,
+   "margin": 0.047276549202041974,
    "parts": [
     "PWR-001",
     "CGE-008"
@@ -4942,7 +5263,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-SM",
    "title": "Static margin at the CAD CG",
-   "value": 8.240801569430541,
+   "value": 7.969420162286821,
    "unit": "% chord",
    "limit": {
     "op": ">=",
@@ -4951,7 +5272,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Measure NP on the built aircraft (M5, M6); SM >= 5 % chord.",
-   "margin": 0.6481603138861083,
+   "margin": 0.5938840324573642,
    "parts": [
     "WNG-001"
    ]
@@ -5004,7 +5325,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-TW-FRESH-PRED",
    "title": "Hover T/W fresh at the predicted mass (0.90 cap)",
-   "value": 2.359730872131124,
+   "value": 2.345889570353268,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -5013,7 +5334,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "margin": 0.17986543606556205,
+   "margin": 0.17294478517663392,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -5024,7 +5345,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-TW-SAG-PRED",
    "title": "Hover T/W sagged pack at the predicted mass (0.90 cap)",
-   "value": 1.8653997805536593,
+   "value": 1.8544580407120852,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -5033,7 +5354,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "margin": 0.165874862846037,
+   "margin": 0.1590362754450532,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -5045,7 +5366,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-WINDOW-PRED",
    "title": "Transition entry window at the predicted mass (0.90 cap)",
-   "value": 5.751290942902483,
+   "value": 5.458070255316981,
    "unit": "%",
    "limit": {
     "op": ">=",
@@ -5054,7 +5375,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "C3 time-domain pitch-over run at the as-weighed mass (T-A-C3-PITCHOVER); the window uses 1.33 W low and 0.80 x T/W sag high.",
-   "margin": 0.15025818858049664,
+   "margin": 0.09161405106339622,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -5123,7 +5444,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-CRUISE-AVAIL",
    "title": "Cruise time to BATT_LOW at the predicted mass",
-   "value": 257.8568258115407,
+   "value": 254.6525861628106,
    "unit": "s",
    "limit": {
     "op": ">=",
@@ -5132,7 +5453,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).",
-   "margin": 0.26056610523473406,
+   "margin": 0.2449017694874596,
    "parts": [
     "PWR-001",
     "PRP-003"
@@ -5173,10 +5494,8 @@ window.VIEWER_DATA = {
     "PRP-001-UL",
     "PRP-001-LR",
     "PRP-001-LL",
-    "CGE-002-UR",
-    "CGE-002-UL",
-    "CGE-002-LR",
-    "CGE-002-LL"
+    "CGE-002-A",
+    "CGE-002-B"
    ]
   },
   {
@@ -5315,7 +5634,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-FLUTTER-ELEVON-NOM",
    "title": "Elevon flutter onset with the hinge damper, nominal 25 C (lowest of kd / nom / hi)",
-   "value": 42.0,
+   "value": 41.0,
    "unit": "m/s",
    "limit": {
     "op": ">=",
@@ -5324,7 +5643,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "E1 coupon (FIXES2 s8): ring-down damping c >= 7.1e-4 N m s/rad at 25 C, c(50 C) >= 4.0e-4; the model holds for every K from 0.01 to 20 N m/rad, so free play does not matter while the damper is filled and sealed (O-rings BOM R13, fill checked every preflight).",
-   "margin": 0.4583333333333335,
+   "margin": 0.42361111111111127,
    "parts": [
     "WNG-006-R",
     "WNG-006-L",
@@ -5339,7 +5658,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-FLUTTER-ELEVON-HOT",
    "title": "Elevon flutter onset with the hinge damper, hot 50 C (lowest of kd / nom / hi)",
-   "value": 38.5,
+   "value": 37.5,
    "unit": "m/s",
    "limit": {
     "op": ">=",
@@ -5348,7 +5667,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "E1 coupon (FIXES2 s8): ring-down damping c >= 7.1e-4 N m s/rad at 25 C, c(50 C) >= 4.0e-4; the model holds for every K from 0.01 to 20 N m/rad, so free play does not matter while the damper is filled and sealed (O-rings BOM R13, fill checked every preflight).",
-   "margin": 0.3368055555555557,
+   "margin": 0.3020833333333335,
    "parts": [
     "WNG-006-R",
     "WNG-006-L",
@@ -5363,7 +5682,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-FLUTTER-ELEVON-COLD",
    "title": "Elevon flutter onset with the hinge damper, cold 0 C (lowest of kd / nom / hi)",
-   "value": 45.0,
+   "value": 44.0,
    "unit": "m/s",
    "limit": {
     "op": ">=",
@@ -5372,7 +5691,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "E1 coupon (FIXES2 s8): ring-down damping c >= 7.1e-4 N m s/rad at 25 C, c(50 C) >= 4.0e-4; the model holds for every K from 0.01 to 20 N m/rad, so free play does not matter while the damper is filled and sealed (O-rings BOM R13, fill checked every preflight).",
-   "margin": 0.5625000000000001,
+   "margin": 0.5277777777777779,
    "parts": [
     "WNG-006-R",
     "WNG-006-L",
@@ -5387,7 +5706,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-FLUTTER-HALF",
    "title": "Elevon flutter onset with a half-filled (leaking) damper, kd corner",
-   "value": 33.0,
+   "value": 31.5,
    "unit": "m/s",
    "limit": null,
    "status": "UNVERIFIED",
@@ -5407,7 +5726,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-FLUTTER-WING",
    "title": "Wing bending-torsion flutter speed, lowest case (fins off, kd corner)",
-   "value": 33.4,
+   "value": 33.7,
    "unit": "m/s",
    "limit": {
     "op": ">=",
@@ -5416,7 +5735,7 @@ window.VIEWER_DATA = {
    },
    "status": "CHECKED",
    "how": "Tap / ground-vibration test with the fin on one tip (12 Hz and 44 Hz modes); FLUTTER.md open item 3.",
-   "margin": 0.1597222222222223,
+   "margin": 0.1701388888888891,
    "parts": [
     "WNG-001",
     "WNG-002",
@@ -5527,10 +5846,8 @@ window.VIEWER_DATA = {
    "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "margin": 1.41,
    "parts": [
-    "CGE-002-UR",
-    "CGE-002-UL",
-    "CGE-002-LR",
-    "CGE-002-LL"
+    "CGE-002-A",
+    "CGE-002-B"
    ]
   },
   {
@@ -5547,10 +5864,8 @@ window.VIEWER_DATA = {
    "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "margin": 0.48,
    "parts": [
-    "CGE-002-UR",
-    "CGE-002-UL",
-    "CGE-002-LR",
-    "CGE-002-LL",
+    "CGE-002-A",
+    "CGE-002-B",
     "CGE-001"
    ]
   },
@@ -5652,10 +5967,8 @@ window.VIEWER_DATA = {
     "CGE-003-UL",
     "CGE-003-LR",
     "CGE-003-LL",
-    "CGE-002-UR",
-    "CGE-002-UL",
-    "CGE-002-LR",
-    "CGE-002-LL"
+    "CGE-002-A",
+    "CGE-002-B"
    ]
   },
   {
@@ -5672,10 +5985,8 @@ window.VIEWER_DATA = {
    "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "margin": 0.82,
    "parts": [
-    "CGE-002-UR",
-    "CGE-002-UL",
-    "CGE-002-LR",
-    "CGE-002-LL"
+    "CGE-002-A",
+    "CGE-002-B"
    ]
   },
   {
@@ -5709,10 +6020,8 @@ window.VIEWER_DATA = {
    "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
    "margin": 15.32,
    "parts": [
-    "CGE-002-UR",
-    "CGE-002-UL",
-    "CGE-002-LR",
-    "CGE-002-LL"
+    "CGE-002-A",
+    "CGE-002-B"
    ]
   },
   {
@@ -5768,6 +6077,44 @@ window.VIEWER_DATA = {
     "CGE-004",
     "CGE-008",
     "PWR-001"
+   ]
+  },
+  {
+   "id": "CL-A-BRIDGE-TORSION-F2",
+   "title": "Bridge 16x14 torsion shear, F2 motor fault at the CFRP factor (bridge alone)",
+   "value": 22.650142768377208,
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:struct.cf_shear_mpa",
+    "resolved": 30.0
+   },
+   "status": "UNVERIFIED",
+   "how": "python -I qp/A/structures/bridge_torsion_d206.py; hub FEA run d206 (fea_hub.py) shows the bridge field; a torsion coupon on the 16x14 offcut would replace the 30 MPa EST.",
+   "margin": 0.24499524105409307,
+   "parts": [
+    "CGE-004",
+    "CGE-001",
+    "CGE-006"
+   ]
+  },
+  {
+   "id": "CL-A-BRIDGE-TORSION-S2",
+   "title": "Bridge 16x14 torsion shear, 30 N prop strike in the disc plane (factor 1.0, bridge alone)",
+   "value": 23.827232070206115,
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:struct.cf_shear_mpa",
+    "resolved": 30.0
+   },
+   "status": "UNVERIFIED",
+   "how": "As CL-A-BRIDGE-TORSION-F2.",
+   "margin": 0.2057589309931295,
+   "parts": [
+    "CGE-004",
+    "CGE-001",
+    "CGE-006"
    ]
   },
   {
@@ -5903,10 +6250,8 @@ window.VIEWER_DATA = {
    "how": "Tap test of the built cage (T-A-TAP): modes within +-20 % of FE or re-tune. Margin is about 7 % at the hi corner, 31 % at kd.",
    "margin": 0.07876370887337981,
    "parts": [
-    "CGE-002-UR",
-    "CGE-002-UL",
-    "CGE-002-LR",
-    "CGE-002-LL",
+    "CGE-002-A",
+    "CGE-002-B",
     "CGE-004",
     "WNG-002"
    ]
@@ -5964,7 +6309,7 @@ window.VIEWER_DATA = {
    "parts": [
     "AVN-002",
     "CGE-004",
-    "CGE-002-UR"
+    "CGE-002-A"
    ]
   },
   {
@@ -5983,7 +6328,7 @@ window.VIEWER_DATA = {
    "parts": [
     "AVN-002",
     "CGE-004",
-    "CGE-002-UR"
+    "CGE-002-A"
    ]
   },
   {
