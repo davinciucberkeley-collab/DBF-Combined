@@ -2,7 +2,7 @@
 // the decision page's morphological chart and concept table (logic from redesign/config-study/web/index.html),
 // the render / plot lightbox, and the 3-D explorer (viewer.js). Everything is relative: works on GitHub Pages and as an artifact.
 import { DIMS, C } from './data/concepts.js?v=20261115f';
-import { start as startViewer, viewer } from './viewer.js?v=20261118f';
+import { start as startViewer, viewer } from './viewer.js?v=20261118g';
 
 const ROUTES = ['aircraft', 'decision', 'team', 'subsystems', 'build', 'proof', 'structures', 'status', 'bom', 'docs'];
 const TITLES = { aircraft: 'Aircraft', decision: 'Decision', team: 'Team', subsystems: 'Subsystems', build: 'Build guide', proof: 'Proof chain', structures: 'Structures', status: 'Status', bom: 'BOM', docs: 'Docs' };

@@ -574,7 +574,11 @@ function renderPanel() {
     '<section class="ds-row"><button class="ds-btn primary" data-act="focus"' + (e ? '' : ' disabled') + '>Focus</button>' +
     '<button class="ds-btn" data-act="isolate"' + (e ? '' : ' disabled') + '>' + (S.isolated === id ? 'Show all' : 'Isolate') + '</button>' +
     (spec ? '<a class="ds-btn" href="' + esc(spec) + '" target="_blank" rel="noopener">SPEC.md</a>' : '') + '</section>' +
-    '<section><h3>Numbers</h3>' + kv(nums) + (p.notes ? '<p class="ds-meta" style="margin:6px 0 0">' + esc(p.notes) + '</p>' : '') + '</section>';
+    '<section><h3>Numbers</h3>' + kv(nums) + (p.notes ? '<p class="ds-meta" style="margin:6px 0 0">' + esc(p.notes) + '</p>' : '') + '</section>'
+  const dm = p.drawing_url && /\/([A-Z0-9-]+)\.pdf$/.exec(p.drawing_url);   // its engineering drawing sheet (site/make_drawing_gallery.py)
+  if (dm) h += '<section><h3>Engineering drawing</h3><div class="gallery v-drw"><a href="assets/drawings/' + dm[1] + '.webp" data-lightbox="assets/drawings/' + dm[1] + '.webp" data-caption="' + esc('Drawing ' + dm[1] + ' (' + id + ' ' + (p.name || '') + '), sheet 1') + '">' +
+    '<img src="assets/drawings/thumb/' + dm[1] + '.jpg" alt="Engineering drawing ' + esc(dm[1]) + '" loading="lazy" width="480" height="311"></a></div>' +
+    '<p class="ds-meta" style="margin:6px 0 0">Sheet ' + esc(dm[1]) + ': click to enlarge. <a class="ds-link" href="' + esc(p.drawing_url) + '" target="_blank" rel="noopener">PDF with all sheets &#8599;</a></p></section>';
   h += '<section><h3>Interfaces (' + ifs.length + ')</h3>' + (ifs.length ? '<ul class="ds-iface v-iface">' + ifs.map(f => ifaceHtml(f, id)).join('') + '</ul>' : '<p class="ds-meta" style="margin:0">None declared. A part with no interface floats.</p>') + '</section>';
   h += '<section><h3>Claims about this part (' + claims.length + ')</h3>' + (claims.length ? '<ul class="ds-iface">' + claims.map(claimHtml).join('') + '</ul>' : '<p class="ds-meta" style="margin:0">No proof-chain claim names this part.</p>') + '</section></article>';
   I.innerHTML = h; I.scrollTop = 0;

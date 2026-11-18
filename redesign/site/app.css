@@ -344,3 +344,13 @@ a.term:hover { color: var(--accent); text-decoration-color: var(--accent); }
 .fea-fig { margin: 22px 0 0; }
 .fea-fig img { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; background: #fcfcfb; }
 .fea-fig figcaption { color: var(--fg-2); font-size: 13px; margin-top: 6px; }
+
+/* ---- engineering drawing sheets (make_drawing_gallery.py): white paper, whole sheet shown ---- */
+.drw-gallery { display: flex; overflow-x: auto; gap: var(--space-3); padding-bottom: 6px; scroll-snap-type: x proximity; }
+.drw-gallery .shot { flex: 0 0 230px; scroll-snap-align: start; }
+.shot.drw a, .v-drw a { aspect-ratio: 187 / 121; background: #fff; }
+.shot.drw img, .v-drw img { object-fit: contain; }
+.v-drw { display: block; }
+.shot figcaption a { display: inline; aspect-ratio: auto; background: none; }
+.v-drw a { display: block; border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; }
+.v-drw img { width: 100%; height: 100%; display: block; }
