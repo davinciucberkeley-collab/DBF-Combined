@@ -70,7 +70,7 @@ Cut square: tape round the cut line, cut through the tape, sand the end flat. We
 
 ### Print list (PETG, 0.2 mm layer, 0.4 mm nozzle EST)
 
-File names follow `<part id>.stl`. **The STL files for concept A are not exported yet (`-`)**: the CAD (`a_model.py`) is the source, so export each part from the CAD before printing. Orientation and settings below are `EST` unless a repo file says so; print times are `EST` at 14-24 g/h (K09-L `team/G3/PRINT-LIST.md`, rows 8, 13, 18) and are machine time, not hands-on time.
+File names follow `<part id>.stl`. The STL files are exported from the CAD (`a_model.py`) into `redesign/qp/A/drawings/out/stl/` (38 files, each checked to be one piece; print list with piece counts in `redesign/qp/A/drawings/out/DRAWINGS-A.md`). Orientation and settings below are `EST` unless a repo file says so; print times are `EST` at 14-24 g/h (K09-L `team/G3/PRINT-LIST.md`, rows 8, 13, 18) and are machine time, not hands-on time.
 
 | Part | Qty | Step | Mass each (g) | Print time (EST) | Note |
 |---|---|---|---|---|---|

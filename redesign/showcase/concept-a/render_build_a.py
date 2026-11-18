@@ -1,37 +1,49 @@
-"""render_build_a.py - the concept A build film: the 65 steps of qp/A/cad/a_assembly_plan.py in 10 stages, one clip + one still per
+"""render_build_a.py - the concept A build film: the 66 steps of qp/A/cad/a_assembly_plan.py in 10 stages, one clip + one still per
 stage and the full film, made to FOLLOW the written guide qp/A/BUILD-GUIDE-A.md (both read qp/A/cad/a_build_steps.py).
 
-    python redesign/showcase/concept-a/render_build_a.py               # render + overlay + encode everything (about 2 h, workers in parallel)
+    python redesign/showcase/concept-a/render_build_a.py               # camera plan + render + overlay + encode everything (about 1 h, workers in parallel)
     python redesign/showcase/concept-a/render_build_a.py --preview     # half size, every 4th frame, no encode
     python redesign/showcase/concept-a/render_build_a.py --frames 40,300   # test frames only (render + overlay, no encode)
     python redesign/showcase/concept-a/render_build_a.py --skip-render      # redo overlay + encode from the frames already in --work
+    blender -b --factory-startup -P render_build_a.py -- render --out DIR --audit --every 4   # no pictures: what is visible / where the camera is, then
+    python redesign/showcase/concept-a/audit_film.py DIR                                       # -> FILM-AUDIT.md (per-step audit)
 
 Run with the system Python (needs Pillow). Steps, as render_build.py (K09-L):
+  0. camplan  Blender computes the camera view of every step (cam_plan.json); the schedule reads it so that a camera move takes as long as its zoom
+              change, swing and shift need (cam_duration). The renderer refuses a stale cam_plan.json.
   1. render   Blender (EEVEE) builds the concept A CAD from redesign/qp/A/cad/model through redesign/blender/blender_backend.py and poses
               each part per frame. Several Blender workers render disjoint frame ranges in parallel. Frames identical to the previous
               one are not rendered again (the overlay step reuses the picture). Each worker also writes, per frame, the 2-D screen
               position of every callout anchor (projected through the real camera).
-  2. overlay  Pillow: the stage title card, the step card (step id, one-line instruction, tools, key check), callout labels with
-              leader lines on the parts being fitted, dimension lines on cut tubes, make-it banners for printed / cut parts,
-              checkpoint cards, stage dots and progress.
+  2. overlay  Pillow: the stage title card (fades in and out), the step card (step id, one-line instruction, tools, key check), callout labels with
+              leader lines on the parts being fitted (only parts that are on screen), dimension lines on cut tubes, make-it banners for printed / cut
+              parts, checkpoint cards, stage dots and progress.
   3. encode   Blender's FFmpeg (VSE): a-build.mp4 + stage-NN.mp4 (H.264) and stage-NN.webp (last frame of each stage).
+
+Camera (2026-11-18 audit, FILM-AUDIT.md): one keyframed shot, smoothstep between the views of consecutive steps (distance interpolated geometrically); a stage opens
+wide (everything placed so far) behind the title card and glides to the first step's close view before the card fades; a checkpoint pulls back and the next
+move starts from that view. Servo steps look from the aft side (the cage motors are in front of the pockets from the nose side). The x-ray (ghost) steps A3-A5
+follow the plug along the see-through spar; D1 and D0 see the core through so the servo pocket and the lead in its groove show; the wing is an x-ray (not hidden)
+while the cage frame is built on the bench.
 
 Every part motion is the one of a_assembly_plan.STEPS (direction, travel), which a_assembly.py swept against all parts already placed
 (out/ASSEMBLY.md). For legibility a motion shorter than MIN_TRAVEL_MM is started MIN_TRAVEL_MM away along the same line; the part of that
-line beyond the checked travel is approach in free air and is NOT part of the swept check. Steps with travel 0 (A1 core on the bench, E5
-strap) simply appear. What this film ADDS to the plan, none of it a part motion:
+line beyond the checked travel is approach in free air and is NOT part of the swept check (A3-A5 start just outside the spar tip: VIS_TRAVEL_MM). Steps with
+travel 0 (A1 core on the bench, E5 strap) simply appear. What this film ADDS to the plan, none of it a part motion:
   * make-it beats (the part shown at its start pose in teal with its cut length or print label, before it moves in),
   * B0 (D-202): the cage frame is BUILT ON THE BENCH, part by part, in the bench steps B0b-B0j2 (a_assembly_plan.BENCH): the hub appears alone, then
     each step moves its own parts in along the plan's direction and travel, all offset by the B1 start pose (the place where the finished cage unit
-    hovers before it docks) so that they assemble onto the hub there. Parts of later bench steps are not shown yet, nothing of the wing is shown, and
+    hovers before it docks) so that they assemble onto the hub there. Parts of later bench steps are not shown yet, the wing stays as an x-ray, and
     one camera frames the whole cage unit for B0a-B0j2. Bench parts get the same make-it beat (teal, print / cut / fit label) as other parts. B1
-    docks the finished frame (with the motors and props, which come on in B1) exactly as in the plan.
-  * B0k: the cage unit (without motors and props) hovers at its B1 start pose, shown semi-transparent while the
+    docks the finished frame (with the saddle, clips, motors and props, which come on in B1) exactly as in the plan.
+  * B0k: the cage unit (without saddle, clips, motors and props) hovers at its B1 start pose, shown semi-transparent while the
     phase leads are threaded along the arm bores (a progressive reveal along the wire route, from out/wire_inventory.json), B2c threads
-    them on through the hub conduit, raceway and ditch, E6 solders the last part to the ESC pads. The reveal follows the cage unit.
+    them on through the hub conduit, raceway and ditch, E6 solders the last part to the ESC pads. The reveal follows the cage unit; a bead marks the
+    fish-wire tip. The servo leads: D0 threads them from the pocket along the groove to the slit, E3b solders the last part to the FC pads.
 Skin tape, hinge tape and epoxy fillets are not drawn (as in the plan). Parts that the plan does not place are not shown.
 Outputs: redesign/showcase/concept-a/animation/.
 """
+import bisect
 import concurrent.futures
 import json
 import math
@@ -57,7 +69,10 @@ OUT = os.path.join(HERE, 'animation')
 FPS = 24
 W, H = 1280, 720
 T_TITLE, T_CAM_STAGE = 6.5, 1.2      # s stage title card (camera moves during its first T_CAM_STAGE)
-T_CAM = 0.7                          # s camera move before a step
+T_CAM = 0.7                          # s camera move before a step (fallback when cam_plan.json is missing; see cam_duration)
+T_CAM_MIN, T_CAM_MAX = 0.6, 4.8      # s camera move limits; the move time grows with the zoom change, the swing and the shift (cam_duration)
+GLIDE_END = 0.35                     # s the stage title card is still up after the camera has reached the first step's close view
+CAM_PLAN = os.path.join(HERE, 'cam_plan.json')   # per-step camera (target, azimuth, elevation, distance): written by '--camplan' (Blender), read by timeline()
 T_FAB = 4.5                          # s make-it beat (cut / print / hot-wire label) before the part moves in
 T_THREAD = {'B0k': 8.0, 'B2c': 8.0, 'E6': 8.0, 'D0': 5.0}      # s thread / solder animation of the marker steps with a wire reveal
 T_MARK = 3.5                          # s the other marker steps
@@ -68,6 +83,8 @@ READ_CPS, READ_MIN = 22.0, 6.5       # characters per second a student can read;
 CHECK_CPS, CHECK_MIN = 20.0, 5.0
 MIN_TRAVEL_MM = 70.0                 # visual minimum approach (see the module docstring)
 MAX_TRAVEL_MM = 450.0                # long insertions (spar 700, tubes 500) start 450 mm away
+VIS_TRAVEL_MM = {'A3': 530.0, 'A4': 270.0, 'A5': 270.0}   # plugs go into the spar from the tip: they start a little outside the tip (not 450 mm out in the air), so the see-through spar stays in the picture
+GHOST_STEPS_Y = 0.40                 # m, the x-ray close-up camera follows the plug but not beyond |y| 0.40 (stay over the wing)
 T_MOVE = {'long': 2.2, 'short': 1.7, 'appear': 1.0}
 
 STAGES = [
@@ -83,18 +100,20 @@ STAGES = [
     ('Pack, XT60, strap, phase leads, bay cover', ['E3c', 'E4', 'E4a', 'E4b', 'E5', 'E6', 'E7']),
 ]
 # per-step camera direction (azimuth from the nose, 90 = left; elevation) where the default (38, 30) hides the part
-VIEW = {'B1': (-40, -22), 'B2': (35, -28), 'C2b': (35, -30), 'C8': (60, 8), 'C9': (60, 12), 'C7': (60, 12),
-        'C6': (50, 14), 'D2a': (30, 40), 'E1': (-20, 25), 'A2': (20, 30), 'A5': (-30, 30), 'A1': (38, 30),
+VIEW = {'B1': (-40, -22), 'B2': (-40, -22), 'C2b': (35, -30), 'C8': (60, 8), 'C9': (60, 12), 'C7': (60, 12),
+        'C6': (50, 14), 'E1': (85, 22), 'A2': (20, 30), 'A5': (-30, 30), 'A1': (38, 30),
+        # servo stage: the pockets are aft of the hub (x +0.14 m), the cage arms and motors (x -0.07 m) sit between a camera on the nose side and the servo: look from the aft side
+        'D1': (140, 40), 'D0': (140, 42), 'D2': (140, 38), 'D2a': (140, 44), 'D3': (140, 38), 'D4': (140, 36), 'D5': (140, 36), 'D5b': (200, 36),
         'B0a': (-40, 22), 'B0k': (-40, 22), 'B2c': (38, 30)}
 DEFAULT_VIEW = (38, 30)
 
 # D-198 marker steps (threading / laying wires place no part): the camera frames these parts instead
 MARKER_FOCUS = {'B0a': [], 'B0k': ['CGE-001', 'CGE-002-A', 'CGE-002-B'], 'B2c': ['HRN-003-R', 'HRN-003-L', 'CGE-001', 'HRN-004-UR', 'HRN-004-UL', 'HRN-004-LR', 'HRN-004-LL'],
-                'D0': ['MEC-001-R', 'WNG-001'], 'E3b': ['AVN-002', 'PRP-003', 'AVN-001'],
+                'D0': ['MEC-001-R'], 'E3b': ['AVN-002', 'PRP-003', 'AVN-001'],
                 'E4b': ['HRN-002', 'PWR-001', 'CGE-008'], 'E6': ['PRP-003', 'AVN-001', 'CGE-001']}
 # B0 shows the cage unit (B1 parts minus the motors and props, which are screwed on in B1) hovering at its B1 start pose
 # D-202: the parts of the bench steps B0b-B0j2 are shown by their own step (at the B1 start pose); PRESHOW only adds the cage parts no bench step places
-PRESHOW = {'B0k': ('B1', ('PRP-',))}
+PRESHOW = {'B0k': ('B1', ('PRP-', 'CGE-006', 'CGE-007'))}      # B0k shows the cage unit as built on the bench; the bridge saddle and strut clamps (no bench step) appear with B1
 BENCH_VIEW = (-40, 22)                 # camera direction of the bench steps B0b-B0j2 (as B0a / B0k)
 # wire reveal (threading): edge -> step id -> (fraction from, fraction to) along the route; fractions from out/wire_inventory.json
 PHASE_EDGES = ('E-HRN-02', 'E-HRN-03', 'E-HRN-04', 'E-HRN-05')
@@ -102,16 +121,18 @@ SERVO_EDGES = ('E-HRN-07', 'E-HRN-08')
 REVEAL_EDGES = PHASE_EDGES + SERVO_EDGES
 SERVO_START = {'E-HRN-07': 'MEC-001-R', 'E-HRN-08': 'MEC-001-L'}      # the servo lead is threaded from the servo pocket to the slit
 # camera framing: steps with a right and a left part frame the right one only (the left mirrors it); smaller context for small parts
-ONE_SIDE = ('D1', 'D2', 'D2a', 'D3', 'D4', 'D5', 'C7', 'C8', 'C9', 'C1', 'C1a', 'C3', 'C5', 'C6', 'B2', 'B4', 'C2a', 'C2b')
+ONE_SIDE = ('D1', 'D2', 'D2a', 'D3', 'D4', 'D5', 'C7', 'C8', 'C9', 'C1', 'C1a', 'C3', 'C5', 'C6', 'B4', 'C2a', 'C2b')
 MIN_HALF_STEP = {'D1': 0.10, 'D2': 0.07, 'D2a': 0.05, 'D3': 0.07, 'D4': 0.06, 'D5': 0.05, 'D5b': 0.05, 'C7': 0.12, 'C8': 0.12, 'C9': 0.10, 'E1': 0.15, 'E2': 0.07, 'E3': 0.08,
                  'E3a': 0.06, 'E3d': 0.06, 'E3b': 0.08, 'E3c': 0.07, 'E4': 0.09, 'E4a': 0.08, 'E4b': 0.09, 'E5': 0.09, 'E6': 0.09, 'E7': 0.08, 'D0': 0.09, 'B2a': 0.10, 'B2b1': 0.10, 'B2b2': 0.10, 'B2b3': 0.10, 'B2b4': 0.10, 'B3': 0.10}
+HEAD_R_MM = 4.5                      # bead at the head of a lead being threaded (the lead is 1.2 mm: the bead shows where the fish wire is)
 EXTRA_PTS = {'D0': [(0.083, 0.024, 0.012), (0.14, 0.20, 0.0)]}      # marker steps: points the camera must also frame (servo pocket, slit)
+GHOST_EXTRA = {'D1': ['WNG-001'], 'D0': ['WNG-001']}   # more x-ray steps (not part-inside-part steps with a follow camera): the core is see-through so the pocket, the servo and the lead in the groove are visible
 GHOST_VIEW, GHOST_DIST = (50, 34), 0.24   # x-ray steps (step data 'ghost'): close-up camera that follows the plug along the spar (azimuth, elevation; distance m)
 GHOST_B0 = ('CGE-001', 'CGE-002-', 'CGE-003-', 'CGE-009-', 'CGE-010-')
 GHOST_B2C = GHOST_B0 + ('HRN-003-', 'HRN-004-', 'WNG-001', 'CGE-004', 'CGE-005-', 'CGE-006', 'CGE-007-')
 FAB_ONLY = {'B1': ('PRP-',)}          # B1: during its make-it beat only the motors and props are teal (the cage parts are already shown)
 NO_CONTEXT = ('B0a',)                  # the stage's first step frames only the cage unit on the bench (like the bench steps), not everything placed so far
-T_CHK_CAM = 0.9                      # s camera pull-back to the whole assembly while a checkpoint card is up
+T_CHK_CAM = 1.8                      # s camera pull-back to the whole assembly while a checkpoint card is up
 MARKER_BEAT_KINDS = ('thread', 'solder')   # these fab kinds are shown during the marker step's motion, not as a separate beat
 
 
@@ -145,15 +166,36 @@ def wire_fractions():
     return out
 
 
+def load_cam_plan():
+    """{step id: {'cam': [tx, ty, tz, az, el, dist], 'wide': [..] | None, 'chk': [..] | None}} written by `render_build_a.py --camplan`."""
+    try:
+        return json.load(open(CAM_PLAN))
+    except (OSError, ValueError):
+        return {}
+
+
+def cam_duration(a, b):
+    """Seconds a camera needs to go from view a to view b so that the move reads as one smooth shot: it grows with the zoom change (log2 of the
+    distance ratio), the swing of azimuth / elevation and the shift of the target (in half view widths)."""
+    if a is None or b is None:
+        return T_CAM
+    r = max(a[5] / b[5], b[5] / a[5])
+    dang = max(abs(a[3] - b[3]), 1.5 * abs(a[4] - b[4]))
+    dtg = math.dist(a[:3], b[:3]) / max(0.3, 0.5 * min(a[5], b[5]))
+    return min(T_CAM_MAX, max(T_CAM_MIN, 0.5 + 1.5 * math.log2(r) + dang / 40.0 + 2.5 * dtg))
+
+
 def timeline():
     """Pure schedule: list of step dicts with times, and the total length (s)."""
     plan = {s['id']: s for s in load_plan()}
+    cplan = load_cam_plan()
+    prev_end = None                      # the camera view the previous step left behind (its checkpoint pull-back if it has one)
     t, rows = 0.0, []
     for si, (title, ids) in enumerate(STAGES):
         for k, sid in enumerate(ids):
             s = dict(plan[sid])
             info = s['info']
-            tr = min(MAX_TRAVEL_MM, max(MIN_TRAVEL_MM, s['travel'])) if s['dir'] else 0.0
+            tr = VIS_TRAVEL_MM.get(sid) or (min(MAX_TRAVEL_MM, max(MIN_TRAVEL_MM, s['travel'])) if s['dir'] else 0.0)
             s['visual_mm'] = tr
             s['stage'] = si
             s['first_in_stage'] = (k == 0)
@@ -161,15 +203,23 @@ def timeline():
             s['fab'] = fab if (fab and fab['kind'] not in MARKER_BEAT_KINDS) else None
             s['marker_chip'] = info.get('chip') or (fab if (fab and fab['kind'] in MARKER_BEAT_KINDS) else None)
             s['t_cam0'] = t
+            cp = cplan.get(sid) or {}
+            close = cp.get('cam')
+            wide = cp.get('wide') or close
+            s['glide'] = 0.0
             if k == 0:
-                s['cam_dur'] = T_CAM_STAGE
-                s['t_title0'], s['t_title1'] = t, t + T_TITLE
+                # stage opening: the camera shows everything placed so far (wide) behind the title card, then glides to the step's close view
+                s['cam_dur'] = cam_duration(prev_end, wide) if prev_end else 0.0
+                if close and wide and wide != close:
+                    s['glide'] = cam_duration(wide, close)
+                s['t_title0'] = t
+                s['t_title1'] = t + max(T_TITLE, s['cam_dur'] + 1.5 + s['glide'] + GLIDE_END)
                 t = s['t_title1']
                 s['t_card0'] = t
             else:
-                s['cam_dur'] = T_CAM
+                s['cam_dur'] = cam_duration(prev_end, close) if close else T_CAM
                 s['t_card0'] = t
-                t += T_CAM
+                t += s['cam_dur']
             s['t_fab0'] = t
             if s['fab']:
                 t += T_FAB
@@ -185,13 +235,16 @@ def timeline():
             chars = len(info['line']) + len(info['tools']) + len(info['check']) + 30
             t = max(t + T_HOLD_MIN, s['t_card0'] + max(READ_MIN, chars / READ_CPS))
             s['t_end'] = t
+            s['chk_dur'] = 0.0
             if info.get('hold') and info.get('cp'):
                 c = sum(len(x) for x in info['cp']) + 40
                 s['t_chk0'] = t
-                t += max(CHECK_MIN, c / CHECK_CPS)
+                s['chk_dur'] = cam_duration(cp.get('end') or close, cp.get('chk')) if cp.get('chk') else T_CHK_CAM
+                t += max(CHECK_MIN, c / CHECK_CPS, s['chk_dur'] + 2.5)
                 s['t_chk1'] = t
             else:
                 s['t_chk0'] = s['t_chk1'] = t
+            prev_end = cp.get('chk') if (s['t_chk1'] > s['t_chk0'] and cp.get('chk')) else (cp.get('end') or close)
             rows.append(s)
         t += T_STAGE_HOLD
         rows[-1]['t_stage_end'] = t
@@ -232,8 +285,10 @@ def moving_frames(rows, total):
     cost = [0] * n
     for r in rows:
         spans = [(r['t_cam0'], r['t_cam0'] + r['cam_dur']), (r['t_fab0'], r['t_fab0'] + 0.1), (r['t_mv0'] - 0.1, r['t_tint1'])]
+        if r['glide']:
+            spans.append((r['t_title1'] - GLIDE_END - r['glide'] - 0.1, r['t_title1']))
         if r['t_chk1'] > r['t_chk0']:
-            spans.append((r['t_chk0'], r['t_chk0'] + T_CHK_CAM))
+            spans.append((r['t_chk0'], r['t_chk0'] + r['chk_dur'] + 0.1))
         for a, b in spans:
             for f in range(max(0, int(a * FPS)), min(n, int(b * FPS) + 1)):
                 cost[f] = 1
@@ -253,6 +308,8 @@ def blender_render(argv):
     ap.add_argument('--samples', type=int, default=12)
     ap.add_argument('--scale', type=float, default=1.0)
     ap.add_argument('--no-rt', action='store_true', help='EEVEE ray tracing off (faster)')
+    ap.add_argument('--camplan', action='store_true', help='no rendering: compute the per-step cameras and write cam_plan.json (timeline() needs it for the camera move times)')
+    ap.add_argument('--audit', action='store_true', help='no rendering: dump what is visible and where the camera is, every --every frames')
     a = ap.parse_args(argv)
     sys.path.insert(0, BL)
     sys.path.insert(0, ANIM)
@@ -371,6 +428,7 @@ def blender_render(argv):
 
     placed_so_far = []
     cams = {}
+    cams_wide = {}
     cams_chk = {}
     for r in rows:
         d = Vector(r['dir']) if r['dir'] else Vector()
@@ -389,15 +447,18 @@ def blender_render(argv):
             parts = rp or parts
         P = (list(bench_P) if bframe else pts_of(parts) + pts_of(parts, shift)) + [Vector(q) for q in EXTRA_PTS.get(r['id'], [])]
         placed_so_far += [p for p in parts if p in r['parts']]
-        if r['first_in_stage'] and r['id'] not in NO_CONTEXT:
-            P += pts_of(placed_so_far)
-        lo, hi = aabb(P)
-        c0 = (lo + hi) / 2
-        mh = MIN_HALF_STEP.get(r['id'], MIN_HALF)
-        P += [c0 + Vector((sx * mh, sy * mh, sz * mh)) for sx in (-1, 1) for sy in (-1, 1) for sz in (-1, 1)]
         az, el = VIEW.get(r['id'], BENCH_VIEW if r['bench'] else DEFAULT_VIEW)
-        tgt, dist = fit(P, az, el)
-        cams[r['id']] = (tgt, az, el, dist)
+
+        def framed(P_, rid=r['id'], az=az, el=el):
+            lo, hi = aabb(P_)
+            c0 = (lo + hi) / 2
+            mh = MIN_HALF_STEP.get(rid, MIN_HALF)
+            P_ = P_ + [c0 + Vector((sx * mh, sy * mh, sz * mh)) for sx in (-1, 1) for sy in (-1, 1) for sz in (-1, 1)]
+            tgt_, dist_ = fit(P_, az, el)
+            return (tgt_, az, el, dist_)
+        cams[r['id']] = framed(P)                                # the step's own (close) view
+        if r['first_in_stage'] and r['id'] not in NO_CONTEXT:    # stage opening: first a wide shot of everything placed so far (behind the title card), then the close view
+            cams_wide[r['id']] = framed(P + pts_of(placed_so_far))
         if r['t_chk1'] > r['t_chk0']:                       # checkpoint card: pull back to everything placed so far
             t2, d2 = fit(bench_P if bframe else pts_of(placed_so_far), az, el)
             cams_chk[r['id']] = (t2, az, el, d2)
@@ -407,6 +468,93 @@ def blender_render(argv):
     tgt, dist = fit(allp, 38, 26)
     cams['END'] = (tgt, 38, 26, dist * 1.05)
     zmin_all = full_lo.z
+
+    # x-ray close-up steps (step data 'ghost'): the camera follows the plug(s) over the spar; before the move it waits at the start pose, after it at the seat
+    def cam_view(c):
+        ctr, az, el, dist = c
+        ar, er = math.radians(az), math.radians(el)
+        view = Vector((-math.cos(er) * math.cos(ar), -math.cos(er) * math.sin(ar), math.sin(er)))
+        return ctr, view, dist
+
+    def rest_center(p):
+        ob = items[p]
+        return sum((rest[p] @ Vector(c) for c in ob.bound_box), Vector()) / 8
+
+    def ghost_cam(r_, pc):
+        pl_ = [rest_center(p) for p in r_['parts'] if p in items]
+        c_ = sum(pl_, Vector()) / len(pl_)
+        spread = max([(q - c_).length for q in pl_] + [0.0])
+        az_f, el_f = GHOST_VIEW
+        pc = Vector(pc)
+        pc.y = min(GHOST_STEPS_Y, max(-GHOST_STEPS_Y, pc.y))
+        _, v_f, _ = cam_view((pc, az_f, el_f, 1.0))
+        up_f = v_f.cross(Vector((0, 0, 1))).cross(v_f).normalized()
+        d_f = GHOST_DIST + 2.0 * spread
+        return (pc - up_f * (0.045 * 2 * d_f * TAN_V), az_f, el_f, d_f)           # subject in the free band between header and card
+
+    def ghost_centroid(r_, t):
+        d_ = Vector(r_['dir']) if r_['dir'] else Vector()
+        k_ = 1.0 - smooth((t - r_['t_mv0']) / max(1e-6, r_['t_mv1'] - r_['t_mv0']))
+        pl_ = [rest_center(p) for p in r_['parts'] if p in items]
+        return sum(pl_, Vector()) / len(pl_) - d_ * (r_['visual_mm'] / 1000.0) * k_
+
+    ghost_rows = [r for r in rows if r['info'].get('ghost') and r['parts']]
+    for r in ghost_rows:
+        cams[r['id']] = ghost_cam(r, ghost_centroid(r, r['t_mv0'] - 1.0))
+    cam_end = {r['id']: ghost_cam(r, ghost_centroid(r, r['t_mv1'] + 1.0)) for r in ghost_rows}
+    ghost_by_id = {r['id']: r for r in ghost_rows}
+
+    def plan_of(c):
+        return [round(float(c[0].x), 4), round(float(c[0].y), 4), round(float(c[0].z), 4), round(float(c[1]), 2), round(float(c[2]), 2), round(float(c[3]), 4)]
+    plan_json = {r['id']: dict(cam=plan_of(cams[r['id']]), wide=plan_of(cams_wide[r['id']]) if r['id'] in cams_wide else None,
+                               chk=plan_of(cams_chk[r['id']]) if r['id'] in cams_chk else None, end=plan_of(cam_end[r['id']]) if r['id'] in cam_end else None) for r in rows}
+    if a.camplan:
+        json.dump(plan_json, open(CAM_PLAN, 'w'), indent=0)
+        print('CAMPLAN written', CAM_PLAN, len(plan_json))
+        return
+    old_plan = load_cam_plan()
+    stale = [r['id'] for r in rows if old_plan.get(r['id'], {}).get('cam') != plan_json[r['id']]['cam'] or old_plan.get(r['id'], {}).get('wide') != plan_json[r['id']]['wide']]
+    if stale:
+        raise SystemExit('cam_plan.json is stale for %s: run with --camplan first (the driver does it)' % stale)
+
+    # camera keyframes: one smooth move (smoothstep, distance geometric) between the views of consecutive steps, holds in between
+    kf = []
+    prev_end = None
+    for r in rows:
+        close = cams[r['id']]
+        wide = cams_wide.get(r['id'], close)
+        if r['first_in_stage']:
+            kf.append((r['t_cam0'], prev_end or wide))
+            kf.append((r['t_cam0'] + r['cam_dur'], wide))
+            if r['glide'] > 0:
+                kf.append((r['t_title1'] - GLIDE_END - r['glide'], wide))
+                kf.append((r['t_title1'] - GLIDE_END, close))
+        else:
+            kf.append((r['t_cam0'], prev_end or close))
+            kf.append((r['t_cam0'] + r['cam_dur'], close))
+        end_close = cam_end.get(r['id'], close)
+        if r['id'] in cam_end:
+            kf.append((r['t_mv0'], close))
+            kf.append((r['t_mv0'], end_close))
+        if r['t_chk1'] > r['t_chk0']:
+            kf.append((r['t_chk0'], end_close))
+            kf.append((r['t_chk0'] + r['chk_dur'], cams_chk[r['id']]))
+            prev_end = cams_chk[r['id']]
+        else:
+            prev_end = end_close
+    kf_t = [k_[0] for k_ in kf]
+
+    def lerp_cam(c0, c1, k_):
+        return (c0[0] * (1 - k_) + c1[0] * k_, c0[1] * (1 - k_) + c1[1] * k_, c0[2] * (1 - k_) + c1[2] * k_, c0[3] ** (1 - k_) * c1[3] ** k_)
+
+    def cam_at(t):
+        i = bisect.bisect_right(kf_t, t) - 1
+        if i < 0:
+            return kf[0][1]
+        if i >= len(kf) - 1:
+            return kf[-1][1]
+        (t0_, c0), (t1_, c1) = kf[i], kf[i + 1]
+        return lerp_cam(c0, c1, smooth((t - t0_) / (t1_ - t0_)) if t1_ > t0_ else 1.0)
 
     # scene
     sc.render.engine = 'BLENDER_EEVEE_NEXT'
@@ -501,6 +649,20 @@ def blender_render(argv):
             cum.append(cum[-1] + (q1 - q0).length)
         reveal[e] = dict(ob=ob, cu=cu, pts=polys[0], cum=cum)
     fr = wire_fractions()
+    heads = {}
+    for e in REVEAL_EDGES:                       # the tip of the fish wire that leads the lead: a small orange bead at the head of the revealed length
+        bm = bpy.data.meshes.new(e + ' head')
+        hob = bpy.data.objects.new(e + ' head', bm)
+        sc.collection.objects.link(hob)
+        import bmesh
+        bmx = bmesh.new()
+        bmesh.ops.create_uvsphere(bmx, u_segments=16, v_segments=10, radius=1.0)
+        bmx.to_mesh(bm)
+        bmx.free()
+        bm.materials.append(MATS['move'])
+        hob.scale = (HEAD_R_MM / 1000.0,) * 3
+        hob.hide_render = True
+        heads[e] = hob
 
     def head_pos(e, f):
         rv = reveal[e]
@@ -531,12 +693,6 @@ def blender_render(argv):
     def reveal_moving(e, t):
         return any(by_id[sid]['t_mv0'] <= t < by_id[sid]['t_mv1'] for sid, _, _ in sched[e])
 
-    def cam_view(c):
-        ctr, az, el, dist = c
-        ar, er = math.radians(az), math.radians(el)
-        view = Vector((-math.cos(er) * math.cos(ar), -math.cos(er) * math.sin(ar), math.sin(er)))
-        return ctr, view, dist
-
     def ghost_set(t):
         s = set()
         b0, b2 = by_id['B0k'], by_id['B2c']
@@ -547,9 +703,13 @@ def blender_render(argv):
         d0 = by_id['D0']
         if d0['t_mv0'] - 0.3 <= t < d0['t_mv1'] + 0.9:
             s |= {'WNG-001'}                                       # the servo lead runs in a foam groove under the skin
+        if bench_t0 <= t < b1['t_cam0']:                           # the cage frame is built beside the wing: the wing stays in the picture as an x-ray, it does not vanish and pop back
+            s |= {p for p in items if p.startswith('WNG-00') and p in placed_ids and t >= show_from.get(p, 1e9)}
         for r_ in rows:                                            # step data 'ghost': x-ray parts from the step card to the end of the step
             if r_['info'].get('ghost') and r_['t_cam0'] <= t < r_['t_end']:
                 s |= {p for p in r_['info']['ghost'] if p in items}
+            if r_['id'] in GHOST_EXTRA and r_['t_cam0'] <= t < r_['t_end']:
+                s |= {p for p in GHOST_EXTRA[r_['id']] if p in items}
         return s
 
     def ghost_window(t):
@@ -621,11 +781,6 @@ def blender_render(argv):
                 mode = part_mode(p, r, t, ghosts)
                 tint(p, mode)
                 state.append((p, round(off.x, 4), round(off.y, 4), round(off.z, 4), mode))
-        if bench_t0 <= t < bench_t1:                 # on the bench (B0a-B0j2): only the cage frame parts, the wing and everything else are off the table
-            for p in items:
-                if p not in bench_of and not items[p].hide_render:
-                    items[p].hide_render = True
-                    state.append((p, 'bench-hidden'))
         # ---- wires: reveal curves (phase leads), then the full meshes once laid
         rev_state = []
         for e in REVEAL_EDGES:
@@ -633,14 +788,21 @@ def blender_render(argv):
             full = t >= by_id[wire_step[e]]['t_mv1']
             ob = reveal[e]['ob']
             ob.hide_render = full or f <= 1e-4
+            heads[e].hide_render = True
             if not ob.hide_render:
                 off_e = cage_off if e in PHASE_EDGES else Vector()       # the phase leads follow the cage unit while it hovers / docks
                 reveal[e]['cu'].bevel_factor_end = min(1.0, max(0.0, f))
                 ob.matrix_world = Matrix.Translation(off_e)
                 on_move = reveal_moving(e, t)
+                if on_move:
+                    heads[e].location = Vector(head_pos(e, f)) + off_e
+                    heads[e].hide_render = False
                 ob.material_slots[0].link = 'DATA'
                 reveal[e]['cu'].materials[0] = MATS['move'] if on_move else (items[e].data.materials[0] if items[e].data.materials else MATS['move'])
                 rev_state.append((e, round(f, 4), round(off_e.x, 4), round(off_e.y, 4), round(off_e.z, 4), bool(on_move)))
+        for e in REVEAL_EDGES:
+            if reveal[e]['ob'].hide_render and heads[e].hide_render is False:
+                heads[e].hide_render = True
         for e, ob in be.wires.items():
             lay = by_id[wire_step[e]]
             vis = t >= (lay['t_mv1'] if (e in REVEAL_EDGES or lay['parts']) else lay['t_mv0'])      # wires laid by a marker step show while they are laid
@@ -648,41 +810,22 @@ def blender_render(argv):
             if vis:
                 tint(e, 'move' if t < lay['t_tint1'] else None)
                 state.append((e, 1))
-        # ---- camera: ease from the previous step's camera to this one's
+        # ---- camera: keyframed smooth moves between the views of consecutive steps (cam_at); x-ray steps follow the plug during its move
         ci = 0
         for q, r in enumerate(rows):
             if t >= r['t_cam0']:
                 ci = q
         cur = rows[ci]
-        prev = rows[max(ci - 1, 0)]
-        p0 = cams_chk[prev['id']] if prev['id'] in cams_chk else cams[prev['id']]
-        p1 = cams[cur['id']]
-        k = smooth((t - cur['t_cam0']) / cur['cam_dur'])
-        cam_c = (p0[0] * (1 - k) + p1[0] * k, p0[1] * (1 - k) + p1[1] * k, p0[2] * (1 - k) + p1[2] * k,
-                 p0[3] * (1 - k) + p1[3] * k)
-        if cur['info'].get('ghost'):                               # x-ray step: a close-up that follows the plug(s) along the spar
-            w = smooth((t - cur['t_cam0']) / 1.0) * (1.0 - smooth((t - (cur['t_mv1'] + 1.0)) / 1.5))
-            pl = [world_center(items[p]) for p in cur['parts'] if p in items and not items[p].hide_render]
-            if w > 1e-4 and pl:
-                pc = sum(pl, Vector()) / len(pl)
-                spread = max([(q - pc).length for q in pl] + [0.0])
-                az_f, el_f = GHOST_VIEW
-                _, v_f, _ = cam_view((pc, az_f, el_f, 1.0))
-                up_f = v_f.cross(Vector((0, 0, 1))).cross(v_f).normalized()
-                d_f = GHOST_DIST + 2.0 * spread
-                pc = pc - up_f * (0.045 * 2 * d_f * TAN_V)         # subject in the free band between header and card
-                cam_c = (cam_c[0] * (1 - w) + pc * w, cam_c[1] * (1 - w) + az_f * w, cam_c[2] * (1 - w) + el_f * w, cam_c[3] * (1 - w) + d_f * w)
-        if cur['id'] in cams_chk and t >= cur['t_chk0']:
-            kk = smooth((t - cur['t_chk0']) / T_CHK_CAM)
-            q = cams_chk[cur['id']]
-            cam_c = (cam_c[0] * (1 - kk) + q[0] * kk, cam_c[1] * (1 - kk) + q[1] * kk, cam_c[2] * (1 - kk) + q[2] * kk, cam_c[3] * (1 - kk) + q[3] * kk)
+        cam_c = cam_at(t)
+        if cur['id'] in ghost_by_id and cur['t_mv0'] <= t and not (cur['t_chk1'] > cur['t_chk0'] and t >= cur['t_chk0']):
+            cam_c = ghost_cam(cur, ghost_centroid(cur, t))
         if t >= rows[-1]['t_stage_end']:                           # the whole aircraft: pull back and swing round
             k = smooth((t - rows[-1]['t_stage_end']) / 1.6)
             e_ = cams['END']
-            last = cams[rows[-1]['id']]
+            last = kf[-1][1]
             az_ = e_[1] + 22 * smooth((t - rows[-1]['t_stage_end']) / T_END)
             cam_c = (last[0] * (1 - k) + e_[0] * k, last[1] * (1 - k) + az_ * k, last[2] * (1 - k) + e_[2] * k,
-                     last[3] * (1 - k) + e_[3] * k)
+                     last[3] ** (1 - k) * e_[3] ** k)
             for p in sorted(placed_ids):
                 if p in items:
                     tint(p, None)
@@ -715,7 +858,7 @@ def blender_render(argv):
                 if P is None:
                     continue
                 xy = project(P)
-                if xy and 0.02 < xy[0] < 0.98 and 0.04 < xy[1] < 0.98:
+                if xy and 0.05 < xy[0] < 0.95 and 0.14 < xy[1] < 0.74:          # only labels whose part is on screen, in the free band above the step card
                     lab.append((text, xy))
             anc['labels'] = lab
             fab = cur['fab']
@@ -739,6 +882,16 @@ def blender_render(argv):
     else:
         frames = list(range(0, nframes, a.every))
     os.makedirs(a.out, exist_ok=True)
+    if a.audit:
+        rec = []
+        for f in frames:
+            key, anc = pose(f / FPS)
+            vis = sorted(i for i, ob in items.items() if not ob.hide_render)
+            revs = sorted(e for e in REVEAL_EDGES if not reveal[e]['ob'].hide_render)
+            rec.append(dict(f=f, vis=vis, rev=revs, cam=key[2], labels=[l[0] for l in (anc.get('labels') or [])]))
+        json.dump(rec, open(os.path.join(a.out, 'audit_%s.json' % (a.range.replace(':', '_') or 'all')), 'w'))
+        print('AUDIT done', len(rec))
+        return
     t0, prev_key, prev_name, n_new = time.time(), None, None, 0
     fmap = {}
     for f in frames:
@@ -950,6 +1103,13 @@ def place_labels(d, labs, F, k, sw, sh, avoid):
 _G = {}
 
 
+def title_alpha(row, t):
+    """0..1 opacity of the stage title card: fades in over 0.5 s and out over 0.7 s (the camera glides to the first step's close view behind it)."""
+    if row.get('t_title0') is None:
+        return 1.0
+    return max(0.0, min(1.0, (t - row['t_title0']) / 0.5, (row['t_title1'] - t) / 0.7))
+
+
 def _init(rows, total, k):
     _G['rows'], _G['total'], _G['k'], _G['F'] = rows, total, k, make_fonts(k)
 
@@ -965,8 +1125,11 @@ def overlay(src, dst, f, fm, sw, sh):
     t = f / FPS
     info = row['info']
     nsteps = len(rows)
-    if kind == 'title':
-        d.rectangle((0, 0, sw, sh), fill=(250, 251, 253, 214))
+    tl = None
+    if kind == 'title':                                   # the title card is drawn on its own layer so that it can fade in and out
+        tl = Image.new('RGBA', im.size, (0, 0, 0, 0))
+        dtl = ImageDraw.Draw(tl)
+        dtl.rectangle((0, 0, sw, sh), fill=(250, 251, 253, 214))
     # ---- header
     d.text((28 * k, 20 * k), 'Concept A quad tailsitter  /  BUILD GUIDE', font=F['h2'], fill=INK + (235,))
     d.text((28 * k, 46 * k), 'follows qp/A/BUILD-GUIDE-A.md', font=F['mono'], fill=MUTED + (235,))
@@ -983,6 +1146,7 @@ def overlay(src, dst, f, fm, sw, sh):
     anc = fm.get('anc') or {}
 
     if kind == 'title':
+        d_main, d = d, dtl
         d.text((x0, 84 * k), 'STAGE %d OF %d' % (si + 1, len(STAGES)), font=F['mono'], fill=ORANGE + (255,))
         ttl = wrap(d, STAGES[si][0], F['big'], sw - 2 * x0)
         for i, s in enumerate(ttl):
@@ -1112,6 +1276,11 @@ def overlay(src, dst, f, fm, sw, sh):
             tstr = '%s EST' % fmt_min(info['min']) + (' | ' + info['cure'].split(':')[0].split('(')[0].strip()[:40] if info['cure'] else '')
             tw = d.textlength(tstr, font=F['mono'])
             d.text((x1 - 16 * k - tw, y1_ - 26 * k), tstr, font=F['mono'], fill=MUTED + (255,))
+    if tl is not None:
+        ta = title_alpha(row, t)
+        tl.putalpha(tl.getchannel('A').point(lambda v: int(v * ta)))
+        lay = Image.alpha_composite(lay, tl)
+        d = ImageDraw.Draw(lay)
     # ---- progress (by step, so that the picture stays constant while a card is read)
     prog = (stepno - 1) / float(nsteps) if kind != 'end' else 1.0
     by = sh - 12 * k
@@ -1148,6 +1317,7 @@ def driver():
     ap.add_argument('--preview', action='store_true')
     ap.add_argument('--work', default=os.path.join(tempfile.gettempdir(), 'a_build_film'))        # GBs of PNGs: outside the repo
     ap.add_argument('--skip-render', action='store_true')
+    ap.add_argument('--skip-camplan', action='store_true', help='keep the existing cam_plan.json (otherwise it is recomputed first, about 1.5 min)')
     ap.add_argument('--workers', type=int, default=3)
     ap.add_argument('--crf', default='MEDIUM', help='H.264 quality of the whole film (lowered until under --max-mb)')
     ap.add_argument('--stage-crf', default='MEDIUM')
@@ -1157,6 +1327,8 @@ def driver():
     a.work = os.path.abspath(a.work)
     os.makedirs(a.work, exist_ok=True)
     os.makedirs(OUT, exist_ok=True)
+    if not a.skip_camplan:           # the per-step cameras (cam_plan.json) give the camera move times of the schedule: refresh them first
+        run([a.blender, '-b', '--factory-startup', '-P', os.path.abspath(__file__), '--', 'render', '--out', a.work, '--camplan'], show=('CAMPLAN', 'Traceback', 'Error', '  File'))
     rows, total = timeline()
     nframes = int(total * FPS)
     print('%d steps, %d stages, %.1f s (%.1f min), %d frames' % (len(rows), len(STAGES), total, total / 60, nframes))
@@ -1212,7 +1384,7 @@ def driver():
         row = info[1]
         t = f / FPS
         fab_on = bool(row['fab'] and t < row['t_mv0']) or bool(row['marker_chip'] and row['t_mv0'] - 0.01 <= t < row['t_mv1'] + 1.5)
-        key = (fm['raw'], info[3], row['id'], fab_on, json.dumps(fm['anc'], sort_keys=True))
+        key = (fm['raw'], info[3], row['id'], fab_on, round(title_alpha(row, t) * 12) if info[3] == 'title' else 0, json.dumps(fm['anc'], sort_keys=True))
         if key not in keys:
             nm = 'lab_%05d.png' % len(keys)
             keys[key] = nm
