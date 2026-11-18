@@ -8,7 +8,7 @@ Audit: `python -I tools/ledger_audit.py` (columns must stay in this order).
 
 | ID | Parent | Description | Deps | Owner/model | Deliverable | Acceptance | Evidence | Status |
 |---|---|---|---|---|---|---|---|---|
-| T-001 | R-PRES-01 | Save pasted spec verbatim | — | C | docs/MASTER_PROJECT_SPEC.md | byte-equal to paste, committed | — | IN PROGRESS |
+| T-001 | R-PRES-01 | Save pasted spec verbatim | — | C | docs/MASTER_PROJECT_SPEC.md | byte-equal to paste, committed | committed d60ceb74, hash sealed; equality vs the paste is not machine-checkable (paste is only in the conversation): needs an independent read-through | READY FOR REVIEW |
 | T-002 | R-PRES-02, R-RULE-01 | Seal spec + amendments (SHA-256), audit tool checks it | T-001 | C | tools/ledger_audit.py, docs/spec-integrity.sha256 | tampered copy → audit FAIL | — | IN PROGRESS |
 | T-003 | R-PRES-03 | Append-only amendments file with AM-001 verbatim | T-001 | C | docs/spec-amendments.md | AM-001 text equals paste | — | IN PROGRESS |
 | T-004 | R-PRES-04, R-REPO-06, R-COM-01, R-COM-02, R-COM-04, R-COM-05, R-COM-06 | CLAUDE.md: spec pointer, recovery rule, communication protocol; keep concise | T-001 | C | CLAUDE.md | headless session reports rules + spec path | — | IN PROGRESS |
@@ -16,29 +16,29 @@ Audit: `python -I tools/ledger_audit.py` (columns must stay in this order).
 | T-006 | R-PRES-06, R-PRES-07, R-PRES-08, R-PRES-09 | Hooks: PreCompact, PostCompact, SessionStart(startup/resume/compact/clear) | T-005 | C | .claude/settings.json, .claude/hooks/recovery.py | hook unit run prints brief, logs events | — | IN PROGRESS |
 | T-007 | R-PRES-11 | Controlled manual compaction test (headless resumed session + /compact) | T-006 | C | docs/verification-report.md §Recovery | Pre/PostCompact + SessionStart(compact) logged; agent names active task | — | NOT STARTED |
 | T-008 | R-PRES-12 | New-session recovery test | T-006 | C | docs/verification-report.md §Recovery | agent names spec path + active task | — | NOT STARTED |
-| T-009 | R-TRK-01 | Requirements registry | T-001 | C | docs/requirements.md | covers spec §1–13, rules, AM-001 | — | READY FOR REVIEW |
+| T-009 | R-TRK-01 | Requirements registry | T-001 | C | docs/requirements.md | covers spec §1–13, rules, AM-001 | haiku audit: 21 gaps, 37 lumped rows; fixes applied 2026-11-18; O re-review pending | IN PROGRESS |
 | T-010 | R-TRK-02, R-TRK-03 | Task ledger + automated traceability audit | T-009 | C | this file, tools/ledger_audit.py | audit exits 0; broken copy exits 1 | — | IN PROGRESS |
-| T-011 | R-TRK-05, R-TRK-01 | Independent registry-vs-spec audit (haiku accounting) | T-009 | H | verification-report §Audits | list of missing/merged requirements, fixed | — | NOT STARTED |
+| T-011 | R-TRK-05, R-TRK-01 | Independent registry-vs-spec audit (haiku accounting) | T-009 | H | verification-report §Audits | list of missing/merged requirements, fixed | docs/audits/2026-11-18-ledger.md; conductor applied fixes (Part 13, R-GEN-*, R-PHY-08..11, R-PRES-13, checklists, parents) | VERIFIED COMPLETE |
 | T-012 | R-TRK-04, R-TRK-06, R-ORC-03, R-MON-02, R-MON-03 | Write task protocol, delegation rules, stall/failure rules into execution-plan | T-009 | C | docs/execution-plan.md | rules present | — | IN PROGRESS |
 | T-013 | R-ORC-01, R-ORC-02, R-COM-03 | Agent definitions with model routing + concise return format | — | C | .claude/agents/*.md | one haiku agent run shows model + format | — | IN PROGRESS |
 | T-014 | R-ORC-05, R-RULE-04 | Model-usage log | T-013 | C | docs/model-usage.md | one row per delegation | — | IN PROGRESS |
 | T-015 | R-ORC-04 | Locate James's shared agent definitions | — | D | location or "absent" note | adopted or recorded | repo + ~/.claude/agents searched 2026-11-18: none | BLOCKED |
-| T-016 | R-CAD-01, R-PHY-01 | Capability audit: concept A CAD, mechanisms, wiring, and every analysis traced to the code/solver that computes it | — | S | docs/capability-audit.md | each item has evidence path; O spot-checks 3 | — | NOT STARTED |
-| T-017 | R-PHY-02, R-PHY-06 | Relabel "physics" claims that are static collision/interference only | T-016 | S | doc edits + list | grep finds no mislabel | — | NOT STARTED |
-| T-018 | R-CAD-02, R-PHY-03 | Elevon linkage kinematics from CAD geometry (servo arm → pushrod → horn → hinge), full range | T-016 | S | analysis script + record | residual < 1e-6, range and ratio vs servo limits, no over-centre | — | NOT STARTED |
-| T-019 | R-PHY-04 | Rigid-body dynamics of one important mechanism/event (frictionless first) | T-018 | S | script + record | energy/constraint checks; pass/fail vs limits | — | NOT STARTED |
-| T-020 | R-PHY-05 | Swept collision through the elevon range against CAD meshes | T-018 | S | script + record | min clearance ≥ limit over sweep | — | NOT STARTED |
-| T-021 | R-PHY-07 | Analysis records template + entries | T-018 | S | docs/analysis-records.md | ten fields per record | — | NOT STARTED |
+| T-016 | R-CAD-01, R-PHY-01 | Capability audit: concept A CAD, mechanisms, wiring, and every analysis traced to the code/solver that computes it | — | S | docs/capability-audit.md | each item has evidence path; O spot-checks 3 | docs/capability-audit.md (sonnet); conductor re-read electrical.py:530-560, values match §5 | VERIFIED COMPLETE |
+| T-017 | R-PHY-02 | Relabel "physics" claims that are static collision/interference only | T-016 | S | doc edits + list | grep finds no mislabel | — | NOT STARTED |
+| T-018 | R-CAD-02, R-PHY-03 | Elevon linkage kinematics from CAD geometry (servo arm → pushrod → horn → hinge), full range | T-016 | S | analysis script + record | residual < 1e-6, range and ratio vs servo limits, no over-centre | — | IN PROGRESS |
+| T-019 | R-PHY-04 | Rigid-body dynamics of one important mechanism/event (frictionless first) | T-018 | S | script + record | energy/constraint checks; pass/fail vs limits | — | IN PROGRESS |
+| T-020 | R-PHY-05 | Swept collision through the elevon range against CAD meshes | T-018 | S | script + record | min clearance ≥ limit over sweep | — | IN PROGRESS |
+| T-021 | R-PHY-07, R-PHY-06 | Analysis records template + entries | T-018 | S | docs/analysis-records.md | ten fields per record | — | IN PROGRESS |
 | T-022 | R-CAD-03, R-CAD-04, R-CAD-05 | Close CAD realism gaps found by T-016 (mounts, fasteners, wiring, clearances) | T-016 | S | CAD + gate run | 3-D gates green | — | NOT STARTED |
 | T-023 | R-CAD-06 | Independent CAD consistency review | T-022 | O | review record | no unexplained inconsistency | — | NOT STARTED |
 | T-024 | R-OPT-01, R-RULE-06 | Failure-resolution ladder + trade template in engineering-decisions | — | C | docs/engineering-decisions.md | ladder present | — | IN PROGRESS |
 | T-025 | R-OPT-02, R-OPT-03, R-OPT-04, R-OPT-05 | Retro-review of D-202…D-210 material-adding fixes with ladder + trades | T-024 | O | review in engineering-decisions | findings → new D-entries | — | NOT STARTED |
-| T-026 | R-VID-01 | Video pipeline audit (concept A film, K09-L films, Blender scripts) | — | S | docs/video/PIPELINE-AUDIT.md | all §7.1 items covered | — | NOT STARTED |
-| T-027 | R-VID-02, R-VID-03, R-VID-04, R-VID-06, R-VID-07 | Demo film: six scenes from current concept A CAD, 1080p60, materials/lights, eased cameras; preview first | T-026 | S | render script + preview contact sheet | preview reviewed before full render | — | NOT STARTED |
+| T-026 | R-VID-01 | Video pipeline audit (concept A film, K09-L films, Blender scripts) | — | S | docs/video/PIPELINE-AUDIT.md | all §7.1 items covered | docs/video/PIPELINE-AUDIT.md (sonnet); conductor checked render_build_a.py:66-70 (Blender path, 24 fps, 1280x720) and the Blender exe exists | VERIFIED COMPLETE |
+| T-027 | R-VID-02, R-VID-04 | Demo film: six scenes from current concept A CAD, 1080p60, materials/lights, eased cameras; preview first | T-026 | S | render script + preview contact sheet | preview reviewed before full render | — | IN PROGRESS |
 | T-028 | R-VID-05, R-VID-09, R-RULE-05 | Drive mechanism motion from T-018 output; tag SIMULATED vs ILLUSTRATIVE | T-018, T-027 | S | render script | every motion shot tagged | — | NOT STARTED |
 | T-029 | R-VID-08 | Overlays from analysis records only | T-021, T-027 | S | overlay layer | every number traces to a record | — | NOT STARTED |
-| T-030 | R-VID-10 | Independent frame + film review, iterate | T-027 | O | review log | defects closed | — | NOT STARTED |
-| T-031 | R-VID-11, R-VID-12, R-VID-13 | Export main (60–120 s), highlight (20–30 s), mechanism clips | T-030 | S | mp4 files | ffprobe durations/res/fps in range | — | NOT STARTED |
+| T-030 | R-VID-10, R-VID-03, R-VID-07 | Independent frame + film review, iterate | T-027 | O | review log | defects closed | — | NOT STARTED |
+| T-031 | R-VID-11, R-VID-12, R-VID-13, R-VID-06 | Export main (60–120 s), highlight (20–30 s), mechanism clips | T-030 | S | mp4 files | ffprobe durations/res/fps in range | — | NOT STARTED |
 | T-032 | R-VID-14 | Pipeline doc + improvements summary | T-031 | H | docs/video/PIPELINE.md | reproducible | — | NOT STARTED |
 | T-033 | R-VID-15, R-RULE-10 | Playback verification (full decode) + visual sign-off | T-031 | O | verification-report §Video | 0 decode errors | — | NOT STARTED |
 | T-034 | R-INT-01 | Get shared aircraft schema location/spec from team | — | D | schema path | concept A round-trips | not in repo 2026-11-18 | BLOCKED |
@@ -56,3 +56,15 @@ Audit: `python -I tools/ledger_audit.py` (columns must stay in this order).
 | T-046 | R-PLAN-01 | Execution plan, phases 1–8 with deps | T-009 | C | docs/execution-plan.md | every R-id in a phase | — | IN PROGRESS |
 | T-047 | R-VER-01, R-VER-02, R-VER-03, R-VER-04, R-VER-05, R-VER-06, R-RULE-02, R-RULE-03, R-RULE-09 | Independent final verification | all | O | verification-report §Final | per-requirement table + stats | — | NOT STARTED |
 | T-048 | R-TRK-05 | Milestone audits (phase ends, after recovery) | T-011 | H/O | verification-report §Audits | dated entry per milestone | — | NOT STARTED |
+| T-049 | R-REPO-10 | Final dated repository audit at program end | T-042, T-045 | H | repository-audit §Final | dated audit with before/after numbers | — | NOT STARTED |
+| T-050 | R-OPT-02, R-OPT-04 | Forward rule: new mechanism/structure decisions carry a trade table + benchmark citation; check new D-entries at each milestone | T-024 | O | review notes | all D-entries after 2026-11-18 comply | — | NOT STARTED |
+| T-051 | R-REPO-05 | Agent and software performance metrics (tokens per task from model-usage, Explorer startup, memory) | T-040 | H | repository-audit §Benchmarks | measured numbers | — | NOT STARTED |
+| T-052 | R-PRES-13 | Record CLAUDE.md/AGENTS.md/config inspection and hook-support check | — | C | session-state §Inspection | recorded | — | IN PROGRESS |
+| T-053 | R-GEN-01, R-GEN-03 | Impeccable audit of Explorer pages changed by this program; overlays use design-system tokens | T-029 | S | audit file | issues fixed | — | NOT STARTED |
+| T-054 | R-GEN-02 | Approval gate: list irreversible or costly actions and their approvals | — | C | session-state §Approvals | every such action listed | — | IN PROGRESS |
+| T-055 | R-GEN-04 | Full-spec reconciliation at each milestone audit | T-048 | H/O | audit files | each states the full spec was read | — | NOT STARTED |
+| T-056 | R-PHY-08 | Servo torque/speed margin through the linkage (in T-019) + cite motor-mount evidence (D-209) | T-019 | S | analysis-records | margin computed | — | NOT STARTED |
+| T-057 | R-PHY-09 | Re-run fin-tip touchdown/tip-over (landing_a.py) and record | T-021 | S | analysis-records | pass/fail vs limits recorded | — | NOT STARTED |
+| T-058 | R-PHY-10 | Confirm reproducibility of the D-209 FEA and one SITL transition case; records for film Scene 5 | T-021 | S | analysis-records | rerun output matches committed results | — | NOT STARTED |
+| T-059 | R-DEL-01 | Part 13 deliverables checklist at final verification | T-047 | O | verification-report §Final | every line has an artifact path | — | NOT STARTED |
+| T-060 | R-PHY-11 | Log PD-005 (flap item maps to elevons; concept A has no flaps) | — | C | engineering-decisions PD-005 | logged | — | IN PROGRESS |

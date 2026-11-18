@@ -80,8 +80,8 @@ def audit():
             if p not in rids:
                 errs.append(f"{t[0]}: parent {p} not in requirements.md")
             covered.add(p)
-        if st == "VERIFIED COMPLETE" and t[7] in ("", "—", "-"):
-            errs.append(f"{t[0]}: VERIFIED COMPLETE without evidence")
+        if st in ("VERIFIED COMPLETE", "READY FOR REVIEW") and t[7] in ("", "—", "-"):
+            errs.append(f"{t[0]}: {st} without evidence")
     for r in sorted(rids - covered):
         errs.append(f"{r}: no task")
     open_tasks = [t for t in tasks if len(t) >= 9 and t[8].strip("* ") not in ("VERIFIED COMPLETE",)]
