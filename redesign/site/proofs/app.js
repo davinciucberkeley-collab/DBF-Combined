@@ -259,7 +259,7 @@
     const sortRows = (a, b) => (b.s.fails > 0) - (a.s.fails > 0) || (a.s.worst === null) - (b.s.worst === null) || (a.s.worst || 0) - (b.s.worst || 0) || a.n.id.localeCompare(b.n.id);
     $('#reqList').innerHTML = order.map(area => `<section class="grp"><h3><span>${esc(area)}</span><span>${groups.get(area).length}</span></h3>` +
       groups.get(area).sort(sortRows).map(({ n, s }) => `<button class="req" data-req="${esc(n.id)}" aria-current="${n.id === cur}">
-        <span class="rid">${esc(n.id)}</span>${badge(n)}<span class="rt" title="${esc(n.text || n.title)}">${esc(n.title)}</span>
+        <span class="rid">${esc(n.id)}</span>${badge(n)}<span class="rt" title="${esc((R && R.reqs && R.reqs[n.id] && R.reqs[n.id].plain) || n.text || n.title)}">${esc(n.title)}</span>
         <span class="rm">${s.claims ? `${s.claims} claim${s.claims > 1 ? 's' : ''}` : 'no claims yet'}${s.fails ? ` · <span class="f">${s.fails} fail${s.fails > 1 ? 's' : ''}</span>` : ''}${s.worst !== null ? `<span class="mg${mgClass(s.worst)}" title="worst margin among its claims">${pct(s.worst)}</span>` : ''}</span>
       </button>`).join('') + '</section>').join('') || '<p class="note">No requirement matches.</p>';
   }
@@ -278,6 +278,7 @@
         <td class="num">${marginBadge(n.margin) || '<span class="ds-badge" data-status="FAIL">FAIL</span>'}</td><td><span class="v">${esc(rq.join(', ') || '—')}</span></td></tr>`;
     }).join('');
     $('#home').innerHTML = `<h1>Requirements and their proof chains</h1>
+      ${R ? `<p class="gnote2">New to this? Click any requirement or claim and the right-hand panel explains it in plain English, with the formula, inputs, arithmetic and a real-world test. <button class="btn" data-view="guide">Open the Guide</button> for the glossary and all claims by system.</p>` : ''}
       <p class="sub">Pick a requirement on the left to see the claims that verify it, the calculations behind each claim, and the parameters, assumptions and sources those rest on. Press <kbd>/</kbd> to search any id.</p>
       <div class="tiles">
         <div class="tile"><b>${reqs.length}</b><span>requirements · ${traced} with claims</span></div>
@@ -482,7 +483,7 @@
         <ol><li>Pick a requirement on the left. Its chain opens in the middle.</li>
         <li>Click a box for its equation, inputs and sources here. Double-click a claim or an input to open its own chain.</li>
         <li>A red margin badge means the claim fails its limit today.</li>
-        <li>Press <kbd>/</kbd> to search any id or title. <kbd>Esc</kbd> goes back.</li></ol>
+        <li>Press <kbd>/</kbd> to search any id or title. <kbd>Esc</kbd> goes back.</li></ol>${R ? '<p>Click any <b>claim</b> or <b>requirement</b> and this panel explains it in plain English: what is checked, the formula, the inputs, the arithmetic, the result against its limit and how to test it. The <b>Guide</b> tab has a glossary.</p>' : ''}
         <dl class="meta"><dt>Built</dt><dd>${esc(meta.generated || '—')}</dd>
         <dt>Nodes</dt><dd>${model.nodes.length} (${Object.entries(c.by_type).map(([k, v]) => v + ' ' + k).join(', ')})</dd>
         <dt>Build</dt><dd>${issues.nDrift || issues.nOther ? `${issues.nDrift} drift · ${issues.nOther} other — <button class="lnk" data-status-open>see Status</button>` : 'every stored value re-computes'}</dd>
@@ -499,8 +500,10 @@
     if (route.view === 'overview') acts.push(`<button class="btn" data-open="${esc(id)}">Show in requirement chain</button>`);
     if (acts.length) h += `<div class="actions">${acts.join('')}</div>`;
     if (n.text) h += `<p class="text">${esc(n.text)}</p>`;
-    if (n.reasons && n.reasons.length && t !== 'requirement') h += `<div class="reasons${n.fails ? ' fail' : ''}">${n.reasons.slice(0, 6).map(r => `<div title="${esc(r)}">${esc(short(r, 180))}</div>`).join('')}${n.reasons.length > 6 ? `<div>… ${n.reasons.length - 6} more</div>` : ''}</div>`;
+    if (n.reasons && n.reasons.length && t !== 'requirement' && !(t === 'claim' && R && R.claims[id])) h += `<div class="reasons${n.fails ? ' fail' : ''}">${n.reasons.slice(0, 6).map(r => `<div title="${esc(r)}">${esc(short(r, 180))}</div>`).join('')}${n.reasons.length > 6 ? `<div>… ${n.reasons.length - 6} more</div>` : ''}</div>`;
 
+    const card = t === 'claim' && R && R.claims[id] ? R.claims[id] : null;
+    if (card) h += `<div class="gx">${renderCard(card, true)}</div><details class="gtab gtech"><summary>Technical detail: calculation, ids, what it rests on</summary>`;
     if (t === 'claim') {
       h += n.limit ? marginBlock(n) : valueBlock(n.value, n.unit);
       if (n.how) h += `<h3 class="sec">How to verify</h3><p class="text">${esc(n.how)}</p>`;
@@ -516,7 +519,7 @@
     } else if (t === 'parameter') {
       h += valueBlock(n.value, n.unit);
       h += `<dl class="meta"><dt>File</dt><dd>${repoLink(n.file)}</dd>` +
-        (n.source ? `<dt>Source</dt><dd>${[].concat(n.source).map(s => model.byId.has(s) ? go(s) + (model.byId.get(s).url ? ' · ' + repoLink(model.byId.get(s).url, 'link') : '') : esc(s)).join('<br>')}</dd>` : '') +
+        (n.source ? `<dt>Source</dt><dd>${[].concat(n.source).map(s => model.byId.has(s) ? go(s, model.byId.get(s).title) + (model.byId.get(s).url ? ' · ' + repoLink(model.byId.get(s).url, 'link') : '') : esc(s)).join('<br>')}</dd>` : '') +
         (n.note ? `<dt>Note</dt><dd>${esc(n.note)}</dd>` : '') + '</dl>';
     } else if (t === 'source') {
       h += `<dl class="meta"><dt>Kind</dt><dd>${esc(n.kind)}</dd>` + (n.url ? `<dt>Link</dt><dd>${repoLink(n.url)}</dd>` : '') +
@@ -535,6 +538,10 @@
         (n.procedure ? `<dt>Procedure</dt><dd>${esc(n.procedure)}</dd>` : '') + (n.evidence ? `<dt>Evidence</dt><dd>${repoLink(n.evidence)}</dd>` : '') +
         (n.note ? `<dt>Note</dt><dd>${esc(n.note)}</dd>` : '') + '</dl>';
     } else if (t === 'requirement') {
+      const rq = R && R.reqs && R.reqs[n.id];
+      if (rq) h += `<div class="gx"><section class="gsec"><h3><i>?</i>In plain words</h3><p>${esc(rq.plain || rq.text)}</p></section>
+        <section class="gsec"><h3><i>✓</i>The claims that check it</h3><p class="v">Click a claim for the plain-English card: formula, inputs, arithmetic, result and how to test it.</p>
+        <div class="scrollx"><table class="list gmini"><tbody>${rq.claims.map(cid => { const k = R.claims[cid]; return `<tr class="click" data-open="${esc(cid)}"><td>${esc(k.title)}</td><td class="num">${esc(k.value)} ${esc(k.unit)}${k.limit ? ` <span class="v">${esc(k.limit.op)} ${esc(k.limit.value)}</span>` : ''}</td><td>${k.passes === false ? gbadge('FAIL') : gbadge(k.status)}</td></tr>`; }).join('')}</tbody></table></div></section></div>`;
       const s = M.reqSummary(model, n.id);
       h += `<dl class="meta"><dt>Claims</dt><dd>${s.claims}${s.fails ? ` · <b style="color:var(--st-fail)">${s.fails} fail</b>` : ''}${s.unverified ? ` · ${s.unverified} unverified` : ''}</dd>` +
         (s.worst !== null ? `<dt>Worst margin</dt><dd>${marginBadge(s.worst)}</dd>` : '') +
@@ -556,6 +563,7 @@
       if (tree.children.length) h += `<h3 class="sec">Rests on (3 levels)</h3><ul class="tree">${treeHtml(tree, true)}</ul>`;
     }
     if (n.defined_in) h += `<h3 class="sec">Defined in</h3><div>${repoLink(n.defined_in)}</div>`;
+    if (card) h += '</details>';
     box.innerHTML = h;
     box.scrollTop = 0;
   }
@@ -639,11 +647,11 @@
     const body = t.rows.map((r, i) => '<tr>' + (t.labels.length ? [t.labels[i]] : []).concat(r).map((c, j) => `<td${j || !t.labels.length ? ' class="num"' : ''}>${esc(c)}</td>`).join('') + '</tr>').join('');
     return `<details class="gtab"><summary>Table <code>${esc(t.sym)}</code> (${t.rows.length} rows)</summary><div class="scrollx"><table class="kv"><tr>${cols.map(c => `<th>${esc(c)}</th>`).join('')}</tr>${body}</table></div></details>`;
   }
-  function renderCard(k) {
+  function renderCard(k, inPane) {
     const g = R.groups.find(x => x.id === k.group), idx = g ? g.claims.indexOf(k.id) : -1;
     const prev = g && idx > 0 ? g.claims[idx - 1] : null, next = g && idx >= 0 && idx < g.claims.length - 1 ? g.claims[idx + 1] : null;
     const lim = k.limit;
-    let h = `<div class="actions" style="margin-top:0"><button class="btn" data-view="guide">← All claims</button>
+    let h = inPane ? '' : `<div class="actions" style="margin-top:0"><button class="btn" data-view="guide">← All claims</button>
         ${prev ? `<button class="btn" data-read="${esc(prev)}">‹ Previous</button>` : ''}${next ? `<button class="btn" data-read="${esc(next)}">Next ›</button>` : ''}
         <button class="btn" data-open="${esc(k.id)}">Technical chain</button></div>
       <div class="pills"><span class="tylab">${esc(g ? g.title : '')}</span>${k.passes === false ? gbadge('FAIL') : gbadge(k.status)}</div>
@@ -969,7 +977,7 @@
     if (qs.get('mode') === '3d' && webglOK()) { ovMode = '3d'; $$('[data-mode]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === '3d'))); }
     const data = await loadData();
     if (data.error) { $('#statusline').innerHTML = `<span class="sdot"></span><span>${data.error}</span>`; return; }
-    R = await loadReadable(BASE + 'data/readable.js');
+    R = await loadReadable(BASE + 'data/readable.js?v=20261118h');
     model = M.build(data.g);
     issues = M.buildIssues(model.meta);
     $('#dataset').textContent = data.name === 'examples' ? 'demo aircraft (examples/)' : (data.g && data.g.meta && data.g.meta.dataset === 'concept-a' ? 'concept A, scaled quad tailsitter (D-182)' : data.name);
