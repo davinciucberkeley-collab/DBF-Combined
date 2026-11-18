@@ -33,7 +33,7 @@ STEPS = [
     ('B0g2', 'Doubler LL slid over the tube A end (LL side) into the sleeve counterbore', ['CGE-009-LL'], (0, 0.8253073, 0.5646839), 260, 5),
     ('B0g3', 'Doubler LR slid over the tube B end (LR side) into the sleeve counterbore', ['CGE-009-LR'], (0, -0.8253073, 0.5646839), 260, 5),
     ('B0g4', 'Doubler UL slid over the tube B end (UL side) into the sleeve counterbore', ['CGE-009-UL'], (0, 0.8253073, -0.5646839), 260, 5),
-    ('B0h', 'Bridge tube pushed forward into the hub boss bore from aft, to the conical floor', ['CGE-004'], (-1, 0, 0), 130, 10),
+    ('B0h', 'Bridge tube pushed forward into the hub bore from aft, seated on the conical floor', ['CGE-004'], (-1, 0, 0), 130, 10),
     ('B0i1', 'Motor cup UR slid onto the tube A end', ['CGE-003-UR'], (0, -0.8253073, -0.5646839), 60, 5),
     ('B0i2', 'Motor cup LL slid onto the tube A end', ['CGE-003-LL'], (0, 0.8253073, 0.5646839), 60, 5),
     ('B0i3', 'Motor cup LR slid onto the tube B end', ['CGE-003-LR'], (0, -0.8253073, 0.5646839), 60, 5),

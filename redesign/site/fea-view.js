@@ -9,7 +9,7 @@ function loadData() {
   if (window.FEA_HUB) return Promise.resolve(window.FEA_HUB);
   return new Promise((res, rej) => {
     const s = document.createElement('script');
-    s.src = 'data/fea-hub.js?v=20261117'; s.onload = () => res(window.FEA_HUB); s.onerror = rej;
+    s.src = 'data/fea-hub.js?v=20261118'; s.onload = () => res(window.FEA_HUB); s.onerror = rej;
     document.head.appendChild(s);
   });
 }

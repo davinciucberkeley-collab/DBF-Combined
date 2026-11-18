@@ -151,25 +151,25 @@ step(id='B0a', title='Cut the cage tubes (bench)',
      check='Arm tubes 552.4 mm +-0.5 (30.6 g each); bridge 108 mm (6.3 g); struts 286.2 mm; ends square',
      min=30,
      need=['2 x 12x10 tubes of BOM R08 for the arm tubes (one per 1 m tube; the bridge comes from the 16x14 fin-tube offcut, D-206); 2 x 6x4.5 struts (R10); 14x12 tube (R09) for the 4 doublers and 3 mm carbon rod (R14, price not found) for the 5 pins'],
-     make=['Arm tubes A and B: cut 2 x 552.4 mm (CAD `2 x R_M`; each runs motor cup to motor cup through the hub; 30.6 g each, CALC). Bridge: cut 108 mm (CAD `BR_X1 - BR_X0`, 6.3 g); put a 0.8 mm x 45 deg chamfer on the end that goes into the hub (the 15 MPa local peak at the bore end, D-202; FEA not re-run on the chamfer).',
+     make=['Arm tubes A and B: cut 2 x 552.4 mm (CAD `2 x R_M`; each runs motor cup to motor cup through the hub; 30.6 g each, CALC). Bridge: cut 108 mm (CAD `BR_X1 - BR_X0`, 8.1 g); sand a 0.8 mm x 45 deg chamfer on the outside of the end that goes into the hub, so it seats on the cone in the bore floor (D-207, hub FEA run d209).',
            'Doublers: cut 4 x 21 mm from the 14x12 tube (1.4 g each). Pins: cut 4 x 15-16 mm and 1 x 29 mm from the 3 mm rod (0.17-0.33 g). Struts: cut 2 x 286.2 mm (CAD).',
            'Sand all cut ends wet or with a vacuum (carbon dust). Check each end with a square.'],
      checks=['Weigh the two arm tubes: 61.2 g (CALC from 1.6 g/cm3, EST).', 'Slide a doubler over a scrap piece of arm tube: it must slide by hand (bore 12.2 mm nominal; measure on arrival, EST).'],
      safety=['Carbon dust: mask, wet sanding.'],
      fab=dict(kind='tube', pid='CGE-002-A', text='CUT  2 arm tubes 552.4 mm, bridge 108 mm, 4 doublers 21 mm, 5 pins, 2 struts 286 mm', dims=[('CGE-002-A', 'cut 552.4 mm'), ('CGE-004', 'cut 108 mm')]),
-     callouts=[('CGE-002-A', 'Arm tube: one 552.4 mm tube per diagonal, 30.6 g'), ('CGE-004', 'Bridge: 108 mm, chamfered end')])
+     callouts=[('CGE-002-A', 'Arm tube: one 552.4 mm tube per diagonal, 30.6 g'), ('CGE-004', 'Bridge: 108 mm, 8.1 g, chamfered end')])
 
 step(id='B0b', title='Print the hub',
-     line='Print the hub (17.1 g PETG); stand it on the bench, aft face down.',
+     line='Print the hub (18.3 g PETG); stand it on the bench, aft face down.',
      tools='printer (PETG), caliper',
-     check='Both sleeve bores 12 mm (14 mm over the outer 13 mm), bridge bore 16 mm (D-206); hub 17.1 g +-15 %',
+     check='Both sleeve bores 12 mm (14 mm over the outer 13 mm), bridge bore 16 mm with a 45 deg cone at its floor (D-206, D-207); hub 18.3 g +-15 %',
      min=15,
      need=['PETG (R03). Print file: CGE-001.stl (export pending); print time EST about 1 h at 14-24 g/h'],
-     make=['Print CGE-001 (CAD 17.1 g: two 1.5 mm sleeves over s +-24 mm, 28 x 20 x 20 mm centre block with 3 mm edge radii, bridge boss r 10.0 mm (16 mm bore, D-206), two strut sockets, tray flange). Orientation `-` (EST: aft face on the bed, sleeve axes tilted, supports inside the bores).',
+     make=['Print CGE-001 (CAD 18.3 g: two 1.5 mm sleeves over s +-24 mm, 38 x 20 x 20 mm centre block on the bridge axis to the tray face with 3 mm edge radii, 2.0 / 1.5 mm fillets where the sleeves meet the block (D-207), 16 mm bridge bore with a 0.8 mm x 45 deg cone at its floor, two strut sockets, tray flange). Orientation `-` (EST: aft face on the bed, sleeve axes tilted, supports inside the bores).',
            'Ream or drill the bores to size if needed: tube bores 12.0 mm, doubler counterbore 14.0 mm, bridge bore 16.0 mm with a 45 deg corner (D-206), lead exit holes 4.8 mm, pin holes 3.0 mm, the two pin access holes from the block front (tube B pins).'],
-     checks=['Dry-fit a scrap of tube in each bore; weigh the hub (CAD 17.1 g).', 'The printed hub is the part the glue coupon (COUPON-BOND-D202.md) must clear before the FLIGHT hub is printed.'],
+     checks=['Dry-fit a scrap of tube in each bore; weigh the hub (CAD 18.3 g).', 'The printed hub is the part the glue coupon (COUPON-BOND-D202.md) must clear before the FLIGHT hub is printed.'],
      fab=dict(kind='print', pid='CGE-001', orient='aft face on the bed (EST)', text='PRINT  PETG  CGE-001.stl  (export pending)'),
-     callouts=[('CGE-001', 'Hub: print PETG 17.1 g (CGE-001.stl, export pending)')])
+     callouts=[('CGE-001', 'Hub: print PETG 18.3 g (CGE-001.stl, export pending)')])
 
 step(id='B0c', title='Arm tube B through the hub',
      line='Slide arm tube B through its sleeve and the block; bond it over the 48 mm of sleeve.',
@@ -221,11 +221,11 @@ for _k, (_st, _tb, _s) in enumerate((('UR', 'A', 'UR'), ('LL', 'A', 'LL'), ('LR'
          callouts=[('CGE-009-' + _st, 'Doubler %s: 14x12 carbon, 1.4 g' % _st)])
 
 step(id='B0h', title='Bridge into the boss',
-     line='Push the bridge forward into the boss bore from aft until its chamfered end meets the conical floor; bond.',
-     tools='epoxy, wipes', check='Bridge end on the bore floor; 108 mm tube, 6.3 g', min=15, cure='24 h epoxy cure',
-     fit=['Coat the first 15 mm of the bridge, push it in from aft until it stops. The tube end is chamfered 0.8 mm x 45 deg to match the cone in the bore floor.'],
-     fab=dict(kind='fit', pid='CGE-004', text='FIT  bridge into the boss bore, epoxy'),
-     callouts=[('CGE-004', 'Bridge: bonded 15 mm in the boss')])
+     line='Push the bridge forward into the hub bore from aft until its chamfered end meets the conical floor; bond.',
+     tools='epoxy, wipes', check='Bridge end seated on the bore floor cone; 108 mm tube, 8.1 g', min=15, cure='24 h epoxy cure',
+     fit=['Coat the first 9 mm of the bridge (the bore depth), push it in from aft until it stops. The tube end is chamfered 0.8 mm x 45 deg to match the cone in the bore floor.'],
+     fab=dict(kind='fit', pid='CGE-004', text='FIT  bridge into the hub bore, epoxy'),
+     callouts=[('CGE-004', 'Bridge: bonded 9 mm in the hub, seated on the floor')])
 
 for _k, (_st, _tb) in enumerate((('UR', 'A'), ('LL', 'A'), ('LR', 'B'), ('UL', 'B')), 1):
     step(id='B0i%d' % _k, title='Motor cup %s' % _st,
@@ -255,7 +255,7 @@ step(id='B0k', title='Thread the motor leads (bench)',
      fit=['THREAD, on the bench, before the motors go on the cups: push the three leads of each motor from the cup side through the 4.8 mm lead hole, the collar and the tube bore (about 258 mm), out of the 4.8 mm exit hole at s +-18 mm. The exit is on the +t face for the upper arms and the -t face for the lower arms (D-202 CAD note). Keep the bend radius at the collar and at the exit at 4 mm or more. Lay the free ends flat along the tube; they are fished through the hub conduits in B2c.',
           'Use a fish wire pulled through the tube: tape the three lead ends to its tip. The bundle fills 9.7 % of the tube bore (HARNESS-ENCLOSED s2).'],
      checks=['Pull test: the bundle slides freely both ways with two fingers; a tight bundle in a 4 mm bend is a stop.',
-             'Weigh the printed parts against the CAD: hub 17.1 g, cup 4.3 g, clamp 1.5 g, saddle 2.0 g, tray 3.8 g (+-15 %, EST).'],
+             'Weigh the printed parts against the CAD: hub 18.3 g, cup 4.3 g, clamp 1.5 g, saddle 2.0 g, tray 3.8 g (+-15 %, EST).'],
      safety=['Pull wires by the bundle, not by a single strand.'],
      fab=dict(kind='thread', pid='CGE-002-A', text='THREAD  3 leads per motor through the cup collar, the tube bore and the exit hole'),
      chip=dict(kind='thread', text='THREAD  3 leads per motor through the cup collar, the tube bore (258 mm) and the 4.8 mm exit hole'),

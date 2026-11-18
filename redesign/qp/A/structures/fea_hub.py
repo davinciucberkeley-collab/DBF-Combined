@@ -39,8 +39,8 @@ C, W = FA.C, FA.W
 OUT = FA.OUT
 
 PHI_D = C.PHI['UR']
-GEO = dict(XA=-6.5, XB=6.5, S_END=100.0, L_SLV=24.0, SLV_W=2.0, CB=10.0, R_BR=W.R_BR * 1e3, BR_RO=W.BR_RO * 1e3, BR_RI=W.BR_RI * 1e3, BR_Z=W.BR_Z * 1e3, X_BR0=15.0, X_HUB1=(W.HUB_X1 - C.HUB[0]) * 1e3,
-           S_HOLE=18.0, HOLE_R=2.4, TUBE_RO=6.0, TUBE_RI=5.0, DBL=1.0, DBL_T=1.0, DBL_S0=11.0, DBL_S1=25.0, BR_L=40.0, R_CB=3.0, PIN_R=1.5, PIN_C=1.0, PIN_S=8.0, E_PIN=70000.0, FIL=0.0, FMS=0.0)   # FIL: fillet radius (mm) on the concave junctions sleeve/block, sleeve/sleeve, boss/block (0 = sharp); FMS: element size on the fillet faces (0 = no local refinement)   # PIN_*: 3 mm pins along x (D-202): one through both tubes at the crossing (PIN_C), one through each tube at s = +-PIN_S (0 = none); E_PIN pultruded CF rod, isotropic EST   # R_CB: edge radius of the centre block   # BR_L: modelled bridge tube aft of HUB_X1, fixed at its end   # DBL: carbon doubler sleeve 14 x 12 over each lead hole
+GEO = dict(XA=-6.5, XB=6.5, S_END=100.0, L_SLV=24.0, SLV_W=2.0, CB=10.0, R_BR=W.R_BR * 1e3, BR_RO=W.BR_RO * 1e3, BR_RI=W.BR_RI * 1e3, BR_Z=W.BR_Z * 1e3, BLK_Z=W.BLK_Z * 1e3, BLK_AFT=W.BLK_AFT * 1e3, X_BR0=15.0, X_HUB1=(W.HUB_X1 - C.HUB[0]) * 1e3,
+           S_HOLE=18.0, HOLE_R=2.4, TUBE_RO=6.0, TUBE_RI=5.0, DBL=1.0, DBL_T=1.0, DBL_S0=11.0, DBL_S1=25.0, BR_L=40.0, R_CB=3.0, PIN_R=1.5, PIN_C=1.0, PIN_S=8.0, E_PIN=70000.0, FIL=0.0, FIL_A=1.5, FMS=0.0, BORE_FR=0.0, BR_GAP=0.0, BR_CH=0.0)   # FIL: fillet radius (mm) on the concave junctions sleeve/block, sleeve/sleeve, boss/block (0 = sharp); FMS: element size on the fillet faces (0 = no local refinement)   # PIN_*: 3 mm pins along x (D-202): one through both tubes at the crossing (PIN_C), one through each tube at s = +-PIN_S (0 = none); E_PIN pultruded CF rod, isotropic EST   # R_CB: edge radius of the centre block   # BR_L: modelled bridge tube aft of HUB_X1, fixed at its end   # DBL: carbon doubler sleeve 14 x 12 over each lead hole
 STATIONS = {'UR': ('A', 1), 'LL': ('A', -1), 'LR': ('B', 1), 'UL': ('B', -1)}
 SPIN = {s: (-1 if s in ('UR', 'LL') else 1) for s in STATIONS}        # propulsion.py MRP: UR, LL clockwise (-1), others CCW (+1)
 
@@ -64,7 +64,7 @@ def fillet_junctions(occ, hub, g, U, xa0, xb1):
     def n_prims(p):
         x, y, z = p
         inx = xa0 - tol <= x <= xb1 + tol
-        ay, az = abs(y), abs(z)
+        ay, az = abs(y), abs(z - g.get('BLK_Z', 0.0))   # block frame (D-207: centred on the bridge axis)
         corner = ay > cb - rc and az > cb - rc
         blk = inx and ((not corner and ((abs(ay - cb) < tol and az <= cb + tol) or (abs(az - cb) < tol and ay <= cb + tol)))
                        or (corner and abs(math.hypot(ay - (cb - rc), az - (cb - rc)) - rc) < tol)
@@ -84,6 +84,35 @@ def fillet_junctions(occ, hub, g, U, xa0, xb1):
             ed.append(e)
     print('fillet: %d junction edges, r %.2f mm' % (len(ed), g['FIL']), flush=True)
     return ed
+
+
+def staged_fillet(occ, hub_parts, g, U, xa0, xb1):
+    """D-207 junction fillets that OCC can build: the block first, then sleeve B fused and its block junction filleted at FIL,
+    then sleeve A fused and filleted at FIL_A (1.5 mm: 2 mm fails where A's exits run into B's fillets on the side faces).
+    hub_parts = [sleeve A, sleeve B, block] (+ boss, fused without a fillet if present)."""
+    import gmsh
+    rs = g['TUBE_RO'] + g['SLV_W'] + g['DBL'] * g['DBL_T']; cb, bz = g['CB'], g.get('BLK_Z', 0.0)
+    def on_sleeve(p, t):
+        u = U[t]; d = np.array(p) - np.array([tube_x(t), 0.0, 0.0]); sa = d @ u
+        return abs(np.linalg.norm(d - sa * u) - rs) < 0.02
+    def in_block(p):
+        return xa0 - 0.05 <= p[0] <= xb1 + 0.05 and abs(p[1]) <= cb + 0.05 and abs(p[2] - bz) <= cb + 0.05
+    vol = hub_parts[2][1]
+    for t, part, r in (('B', hub_parts[1], g['FIL']), ('A', hub_parts[0], g.get('FIL_A', 1.5))):
+        v, _ = occ.fuse([(3, vol)], [part]); occ.synchronize(); vol = v[0][1]
+        sel = []
+        for d_, e in gmsh.model.getBoundary(gmsh.model.getBoundary([(3, vol)], combined=False, oriented=False), combined=False, oriented=False):
+            if d_ != 1 or e in sel:
+                continue
+            lo, hi = gmsh.model.getParametrizationBounds(1, e)
+            if all(on_sleeve(p, t) and in_block(p) for p in (gmsh.model.getValue(1, e, [lo[0] + (hi[0] - lo[0]) * f]) for f in (0.2, 0.5, 0.8))):
+                sel.append(e)
+        out = occ.fillet([vol], sel, [r], removeVolume=False)
+        occ.remove([(3, vol)], recursive=True); vol = out[0][1]
+        print('fillet: sleeve %s, %d junction edges at r %.1f mm' % (t, len(sel), r), flush=True)
+    if len(hub_parts) > 3:
+        v, _ = occ.fuse([(3, vol)], hub_parts[3:]); vol = v[0][1]
+    return [(3, vol)]
 
 
 def fillet_hub(occ, hub, g, U, xa0, xb1):
@@ -135,19 +164,30 @@ def build_mesh(level, path):
         L = g['L_SLV']
         hub_parts.append((3, occ.addCylinder(x0 - L * u[0], -L * u[1], -L * u[2], 2 * L * u[0], 2 * L * u[1], 2 * L * u[2], ro + g['SLV_W'] + g['DBL'] * g['DBL_T'])))
     cb = g['CB']
-    xa0, xb1 = g['XA'] - ro - g['SLV_W'], g['XB'] + ro + g['SLV_W']
-    bx = occ.addBox(xa0, -cb, -cb, xb1 - xa0, 2 * cb, 2 * cb)
+    xa0, xb1 = g['XA'] - ro - g['SLV_W'], g['XB'] + ro + g['SLV_W'] + g.get('BLK_AFT', 0.0)
+    bx = occ.addBox(xa0, -cb, -cb + g.get('BLK_Z', 0.0), xb1 - xa0, 2 * cb, 2 * cb)      # D-207: block centred on the bridge axis, 1.5 mm longer aft
     if g['R_CB'] > 0:                                     # round the four block edges that run along x (FEA peak there, D-202)
         occ.synchronize()
         ed = [e for d_, e in occ.getEntities(1) if d_ == 1 and (lambda b: abs(b[3] - b[0]) > 1 and abs(b[4] - b[1]) < 0.1 and abs(b[5] - b[2]) < 0.1)(occ.getBoundingBox(1, e))
               and e in [c[1] for c in gmsh.model.getBoundary(gmsh.model.getBoundary([(3, bx)], combined=False, oriented=False), combined=False, oriented=False) if c[0] == 1]]
         bx = occ.fillet([bx], ed, [g['R_CB']])[0][1]
     hub_parts.append((3, bx))
-    hub_parts.append((3, occ.addCylinder(xb1 - 0.5, 0, g['BR_Z'], g['X_HUB1'] - xb1 + 0.5, 0, 0, g['R_BR'])))
-    hub, _ = occ.fuse([hub_parts[0]], hub_parts[1:])
+    if g['X_HUB1'] - xb1 > 1.0:                           # separate bridge boss only if the block stops short of the tray face (D-207: it does not)
+        hub_parts.append((3, occ.addCylinder(xb1 - 0.5, 0, g['BR_Z'], g['X_HUB1'] - xb1 + 0.5, 0, 0, g['R_BR'])))
     if g.get('FIL', 0) > 0:
-        hub, n_ok, n_bad = fillet_hub(occ, hub, g, U, xa0, xb1)
-    cuts = [(3, occ.addCylinder(g['X_BR0'], 0, g['BR_Z'], g['X_HUB1'] - g['X_BR0'] + 1, 0, 0, g['BR_RO']))]
+        hub = staged_fillet(occ, hub_parts, g, U, xa0, xb1)
+    else:
+        hub, _ = occ.fuse([hub_parts[0]], hub_parts[1:])
+    ch = g.get('BR_CH', 0.0)                              # D-207: 45 deg chamfer: tube end outside edge and a matching conical bore floor corner
+    bc = occ.addCylinder(g['X_BR0'] + ch, 0, g['BR_Z'], g['X_HUB1'] - g['X_BR0'] - ch + 1, 0, 0, g['BR_RO'])   # bridge bore
+    if ch > 0:
+        bc = occ.fuse([(3, bc)], [(3, occ.addCone(g['X_BR0'], 0, g['BR_Z'], ch, 0, 0, g['BR_RO'] - ch, g['BR_RO']))])[0][0][1]
+    if g.get('BORE_FR', 0) > 0:                          # D-207: rounded bore floor corner (fillet the cutter's front circle)
+        occ.synchronize()
+        fe = [e for d_, e in gmsh.model.getBoundary([(3, bc)], combined=False, oriented=False, recursive=False) for e in [c_[1] for c_ in gmsh.model.getBoundary([(d_, e)], combined=False, oriented=False) if c_[0] == 1]
+              if occ.getBoundingBox(1, e)[3] < g['X_BR0'] + 0.01]
+        bc = occ.fillet([bc], sorted(set(fe)), [g['BORE_FR']])[0][1]
+    cuts = [(3, bc)]
     for t in ('A', 'B'):
         u, x0 = U[t], tube_x(t)
         S = g['S_END'] + 1
@@ -175,8 +215,11 @@ def build_mesh(level, path):
         o = occ.addCylinder(x0 - S * u[0], -S * u[1], -S * u[2], 2 * S * u[0], 2 * S * u[1], 2 * S * u[2], ro)
         i = occ.addCylinder(x0 - (S + 1) * u[0], -(S + 1) * u[1], -(S + 1) * u[2], 2 * (S + 1) * u[0], 2 * (S + 1) * u[1], 2 * (S + 1) * u[2], ri)
         tubes[t], _ = occ.cut([(3, o)], [(3, i)])
-    o = occ.addCylinder(g['X_BR0'], 0, g['BR_Z'], g['X_HUB1'] + g['BR_L'] - g['X_BR0'], 0, 0, g['BR_RO'])   # bridge tube (D-206: 16 x 14 at z -2), bonded in the bore
-    i = occ.addCylinder(g['X_BR0'] - 1, 0, g['BR_Z'], g['X_HUB1'] + g['BR_L'] - g['X_BR0'] + 2, 0, 0, g['BR_RI'])
+    x_t0 = g['X_BR0'] + g.get('BR_GAP', 0.0)             # D-207: the tube stops BR_GAP short of the bore floor
+    o = occ.addCylinder(x_t0 + ch, 0, g['BR_Z'], g['X_HUB1'] + g['BR_L'] - x_t0 - ch, 0, 0, g['BR_RO'])   # bridge tube (D-206: 16 x 14 at z -2), bonded in the bore
+    if ch > 0:                                            # chamfered forward end, seated on the conical floor corner (BR_GAP 0)
+        o = occ.fuse([(3, o)], [(3, occ.addCone(x_t0, 0, g['BR_Z'], ch, 0, 0, g['BR_RO'] - ch, g['BR_RO']))])[0][0][1]
+    i = occ.addCylinder(x_t0 - 1, 0, g['BR_Z'], g['X_HUB1'] + g['BR_L'] - x_t0 + 2, 0, 0, g['BR_RI'])
     tubes['BR'], _ = occ.cut([(3, o)], [(3, i)])
     # pins along x (D-202): cut their volume out of hub and tubes, add them as their own bodies (bonded)
     pins = []

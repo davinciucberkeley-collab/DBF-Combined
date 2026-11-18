@@ -9,7 +9,7 @@
 | A3 | Centre plug up the bore | 1 | ok | 0.00 | - | - |
 | A4 | Right plugs up the bore | 2 | ok | 0.00 | - | - |
 | A5 | Left plugs up the bore from the left tip | 2 | ok | 0.00 | - | - |
-| B0a | Bench: cut the two arm tubes (552.4 mm), the bridge (114 mm) and the two struts (286.2 mm) from the carbon stock; sand the ends square | 0 | ok | 0.00 | - | - |
+| B0a | Bench: cut the two arm tubes (552.4 mm of 12x10), the bridge (108 mm, D-206, from the 16x14 fin-tube offcut) and the two struts (286.2 mm of 6x4.5) from the carbon stock; sand the ends square | 0 | ok | 0.00 | - | - |
 | B0b | Bench: the printed hub stands on the bench, aft face down | 1 | ok | 0.00 | - | - |
 | B0c | Arm tube B slid through its sleeve and the centre block (from the LL side, along its axis) | 1 | ok | 0.00 | - | - |
 | B0d | Two 3 mm pins (LR, UL) pushed in along x from the nose side through the block access holes, the sleeve and tube B | 2 | ok | 0.00 | - | - |

@@ -52,7 +52,7 @@ def build():
     R = "SRC-A-REQ"
     P["req"] = {
         "mass_gate_kg": V(1.47, "kg", R, "A-P1 / MASS-GATE s8 (D-190): weigh-in gate 1.47 kg = the largest 0.01-kg step under the +-5 % window mass limit 1.478 kg at cant 17 (was 1.50, BOARD C5)"),
-        "mass_target_kg": V(1.465, "kg", R, "A-D3 (D-205): design target <= 1.465 kg predicted incl. growth and overrun (D-195: 1.46; the D-202 hub added 16.7 g basic, D-205 cut 10.7 g; gate 1.47 kg unchanged)"),
+        "mass_target_kg": V(1.467, "kg", R, "A-D3 (D-207): design target <= 1.467 kg predicted incl. growth and overrun (D-195: 1.46; D-205: 1.465; the D-202 hub added 16.7 g basic, D-205 cut 10.7 g, the D-207 fillets and longer block added 1.3 g; 3 g left under the 1.47 kg gate, which is unchanged)"),
         "mass_user_max_kg": V(25.0, "kg", "SRC-A-USER", "A-U5: hard cap under 25 kg (55 lb)"),
         "structure_ceiling_g": V(494.0, "g", "SRC-A-BOARD4", "BOARD QP-4 s1: structure line becomes a ceiling of 494 g, weighed"),
         "tw_fresh_min": V(2.0, "-", R, "A-P1, A-P2"), "tw_sag_min": V(1.6, "-", R, "A-P1, A-P2 (worst pack state 20 % rest, 3.73 V/cell)"),

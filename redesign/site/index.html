@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap">
 <link rel="stylesheet" href="site.css?v=20261116d">
-<link rel="stylesheet" href="app.css?v=20261117a">
+<link rel="stylesheet" href="app.css?v=20261118a">
 <link rel="stylesheet" href="proofs/embed.css?v=20261116d">
 <link rel="stylesheet" href="explorer.css?v=20261116e">
 <script type="importmap">
@@ -2363,10 +2363,10 @@
   <div class="page">
 <section class="c" id="fea-hub">
   <header>
-    <span class="secno">Hub FEA &middot; D-202 / D-205 / D-206 &middot; 2026-11-17</span>
+    <span class="secno">Hub FEA &middot; D-202 / D-205 / D-206 / D-207 &middot; 2026-11-17</span>
     <h1 class="ds-display">Structures</h1>
-    <p class="summary">The hub that joins the four arms passes its stress analysis in flight at the full safety factors and holds a 30 N prop strike at limit load. The map also exposed an overload in the bridge tube behind the hub (torsion); it is now 16 &times; 14 instead of 12 &times; 10 and passes (D-206). Analysis only: nothing has been printed or tested.</p>
-    <p class="use">A 3-D finite-element model of the hub, the two continuous carbon arm tubes, the 16 &times; 14 bridge tube and the five 3 mm pins (1.45 million unknowns). The colour is the <b>utilisation</b>: stress &times; required safety factor &divide; allowable. Under 1 passes. Every load pattern in a case is enveloped, so the map shows the worst value each point sees. <span class="ds-badge" data-status="MODELLED">MODELLED</span></p>
+    <p class="summary">The hub that joins the four arms passes its stress analysis in flight at the full safety factors and holds a 30 N prop strike at limit load. The map also exposed an overload in the bridge tube behind the hub (torsion); it is now 16 &times; 14 instead of 12 &times; 10 and passes (D-206). The inside corners are now filleted and the bridge seats on a conical floor in the hub (D-207). Analysis only: nothing has been printed or tested.</p>
+    <p class="use">A 3-D finite-element model of the hub, the two continuous carbon arm tubes, the 16 &times; 14 bridge tube and the five 3 mm pins (1.50 million unknowns). The colour is the <b>utilisation</b>: stress &times; required safety factor &divide; allowable. Under 1 passes. Every load pattern in a case is enveloped, so the map shows the worst value each point sees. <span class="ds-badge" data-status="MODELLED">MODELLED</span></p>
   </header>
 
   <h3 class="ds-h2" id="fea-coverage">What was analysed</h3>
@@ -2375,7 +2375,7 @@
   <div class="scroll"><table class="ds-table">
     <thead><tr><th>Analysis</th><th>Parts in the model</th><th>Held at</th><th>Report</th></tr></thead>
     <tbody>
-      <tr><td class="first">Hub (this page), 2026-11-17</td><td>printed hub, 60 mm of each arm tube either side of it, 40 mm of the 16 &times; 14 bridge, five 3 mm pins (1.45 M unknowns)</td><td>the bridge end (struts, tray pad and wing not modelled)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-5/FEA-HUB.md" target="_blank" rel="noopener">FEA-HUB.md</a></td></tr>
+      <tr><td class="first">Hub (this page), 2026-11-17</td><td>printed hub, 60 mm of each arm tube either side of it, 40 mm of the 16 &times; 14 bridge, five 3 mm pins (1.50 M unknowns)</td><td>the bridge end (struts, tray pad and wing not modelled)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-5/FEA-HUB.md" target="_blank" rel="noopener">FEA-HUB.md</a></td></tr>
       <tr><td class="first">Arm and motor cup, 2026-11-16</td><td>one full arm tube, its printed motor cup and the old D-193 hub (which failed and was replaced)</td><td>the hub</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-5/FEA-ARM.md" target="_blank" rel="noopener">FEA-ARM.md</a></td></tr>
       <tr><td class="first">Not in any 3-D stress analysis</td><td>wing core and spar, fins and fin ribs, rib saddles, V struts and their hub sockets, pack tray, landing feet</td><td>&mdash;</td><td>hand calculations: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/structures/iter2_margins.md" target="_blank" rel="noopener">iter2_margins.md</a></td></tr>
     </tbody>
@@ -2397,7 +2397,7 @@
     <div class="fea-under">
       <div class="fea-legend" aria-label="Colour key">
         <span class="fea-scale"><span class="fea-ramp"></span><span class="fea-ticks"><i>0</i><i>0.5</i><i>1.0</i></span></span>
-        <span class="fea-key"><span class="fea-chip" style="--c:#d03b3b"></span>over 1: the sharp inside corners where the sleeves and the bridge boss meet the centre block (no fillet yet: the stress there grows with mesh refinement, so it is judged by the 99th percentile; fillets and a refined run are next)</span>
+        <span class="fea-key"><span class="fea-chip" style="--c:#d03b3b"></span>over 1: only a thin ring at the bridge-bore floor where the tube&rsquo;s chamfered end seats (a sharp edge between two bonded materials: its peak grows with mesh refinement, so the hub is judged by the 99th percentile). The sleeve and block corners now have 2.0 / 1.5 mm fillets, and a refined run (2.4 million unknowns) confirmed their stress has converged.</span>
         <span class="fea-key"><span class="fea-chip" style="--c:#9a9993"></span>not judged (pins have no allowable; the 15 mm at each loaded tube end)</span>
       </div>
       <p class="fea-read" id="fea-read">Point at the model for the value under the cursor.</p>
@@ -2411,19 +2411,19 @@
   <div class="scroll"><table class="ds-table">
     <thead><tr><th>Item</th><th>Motor runaway in flight (F2)</th><th>Allowed at the flight factors 2.156 / 1.725</th><th>Prop strike, blade hit sideways (S2)</th><th>Allowed at factor 1.0</th><th>Result</th></tr></thead>
     <tbody>
-      <tr><td class="first">Printed hub, 99th-percentile principal stress</td><td class="val">8.0</td><td class="val">9.3</td><td class="val">10.8</td><td class="val">20</td><td><span class="ds-badge" data-status="CHECKED">PASS</span></td></tr>
-      <tr><td class="first">Glue, mean shear along the worst arm</td><td class="val">0.77</td><td class="val">0.93</td><td class="val">1.75</td><td class="val">2.0 <span class="ds-tag">EST</span></td><td><span class="ds-badge" data-status="UNVERIFIED">PASS if coupon &ge; 2.0</span></td></tr>
-      <tr><td class="first">Arm tube, shear</td><td class="val">14.0</td><td class="val">17.4</td><td class="val">24.5</td><td class="val">30</td><td><span class="ds-badge" data-status="CHECKED">PASS</span></td></tr>
-      <tr><td class="first">Arm tube, hoop (pin holes)</td><td class="val">18.9</td><td class="val">23.2</td><td class="val">37.9</td><td class="val">40</td><td><span class="ds-badge" data-status="CHECKED">PASS</span></td></tr>
-      <tr><td class="first">Arm tube, axial</td><td class="val">55.9</td><td class="val">203</td><td class="val">193.7</td><td class="val">350</td><td><span class="ds-badge" data-status="CHECKED">PASS</span></td></tr>
+      <tr><td class="first">Printed hub, 99th-percentile principal stress</td><td class="val">5.9</td><td class="val">9.3</td><td class="val">7.7</td><td class="val">20</td><td><span class="ds-badge" data-status="CHECKED">PASS</span></td></tr>
+      <tr><td class="first">Glue, mean shear along the worst arm</td><td class="val">0.73</td><td class="val">0.93</td><td class="val">1.50</td><td class="val">2.0 <span class="ds-tag">EST</span></td><td><span class="ds-badge" data-status="UNVERIFIED">PASS if coupon &ge; 2.0</span></td></tr>
+      <tr><td class="first">Arm tube, shear</td><td class="val">12.3</td><td class="val">17.4</td><td class="val">24.5</td><td class="val">30</td><td><span class="ds-badge" data-status="CHECKED">PASS</span></td></tr>
+      <tr><td class="first">Arm tube, hoop (pin holes)</td><td class="val">17.8</td><td class="val">23.2</td><td class="val">30.0</td><td class="val">40</td><td><span class="ds-badge" data-status="CHECKED">PASS</span></td></tr>
+      <tr><td class="first">Arm tube, axial</td><td class="val">51.7</td><td class="val">203</td><td class="val">194.0</td><td class="val">350</td><td><span class="ds-badge" data-status="CHECKED">PASS</span></td></tr>
       <tr><td class="first">Bridge tube 16 &times; 14, shear in torsion (it carries the cage&rsquo;s roll moment; sized to carry it alone because the struts&rsquo; share depends on their joints)</td><td class="val">15.1</td><td class="val">17.4</td><td class="val">27.6</td><td class="val">30 <span class="ds-tag">EST</span></td><td><span class="ds-badge" data-status="CHECKED">PASS</span> D-206 (12 &times; 10 was 28.3 / 53.0)</td></tr>
-      <tr><td class="first">Printed hub, peak at the bridge-tube end (a sharp inside edge)</td><td class="val">25.3</td><td class="val">&mdash;</td><td class="val">39.3</td><td class="val">&mdash;</td><td>judged by the 99th percentile (peaks at sharp edges grow with mesh refinement)</td></tr>
+      <tr><td class="first">Printed hub, single highest point: the edge of the conical bore floor where the bridge&rsquo;s chamfered end seats (D-207; it was 25.3 / 39.3 at the old sharp corners). Worst case is the strike pushing on the shaft (S1): 31.6</td><td class="val">19.2</td><td class="val">&mdash;</td><td class="val">18.3</td><td class="val">&mdash;</td><td>judged by the 99th percentile (peaks at sharp edges grow with mesh refinement)</td></tr>
     </tbody>
   </table></div>
-  <figure class="fea-fig"><img src="assets/fea/fea-hub-margin.png" alt="Bar chart: margin ratio for each check. New hub in flight 1.16 to 3.63 and in a prop strike 1.06 to 1.86, all at or above 1; the replaced D-193 hub 0.02 to 0.52." loading="lazy"><figcaption><b>Before and after.</b> Margin ratio (factor of safety &divide; required factor; 1 or more passes) for the new hub and the D-193 hub it replaced. The old hub&rsquo;s 0.8 mm web reached 392 MPa in flight (factor of safety 0.05).</figcaption></figure>
-  <figure class="fea-fig"><img src="assets/fea/fea-hub-F2.png" alt="Rendered utilisation map of the motor-fault flight case, outside and with the hub hidden." loading="lazy"><figcaption><b>Motor runaway in flight (F2).</b> Left: the printed hub. Right: the hub hidden, showing the arm tubes, the bridge and the pins. The dark tube running aft is the 16 &times; 14 bridge (utilisation 0.87).</figcaption></figure>
+  <figure class="fea-fig"><img src="assets/fea/fea-hub-margin.png" alt="Bar chart: margin ratio for each check. New hub in flight 1.27 to 3.93 and in a prop strike 1.22 to 2.59, all above 1; the replaced D-193 hub 0.02 to 0.52." loading="lazy"><figcaption><b>Before and after.</b> Margin ratio (factor of safety &divide; required factor; 1 or more passes) for the new hub and the D-193 hub it replaced. The old hub&rsquo;s 0.8 mm web reached 392 MPa in flight (factor of safety 0.05).</figcaption></figure>
+  <figure class="fea-fig"><img src="assets/fea/fea-hub-F2.png" alt="Rendered utilisation map of the motor-fault flight case, outside and with the hub hidden." loading="lazy"><figcaption><b>Motor runaway in flight (F2).</b> Left: the printed hub. Right: the hub hidden, showing the arm tubes, the bridge and the pins. The darker tube running aft is the 16 &times; 14 bridge.</figcaption></figure>
   <figure class="fea-fig"><img src="assets/fea/fea-hub-S2.png" alt="Rendered utilisation map of the 30 N prop strike, outside and with the hub hidden." loading="lazy"><figcaption><b>Prop strike, blade hit sideways (S2):</b> 30 N on the blade in the disc plane (damage case, factor 1.0). The strike is applied to the UR motor.</figcaption></figure>
-  <span class="ds-source">qp/A/structures/fea_hub.py (run d206), fea_hub_figs.py, bridge_torsion_d206.py &middot; <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-5/FEA-HUB.md" target="_blank" rel="noopener">review/QP-5/FEA-HUB.md</a> &middot; <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/structures/COUPON-BOND-D202.md" target="_blank" rel="noopener">glue coupon</a> &middot; params/CHANGE-LOG.md D-202, D-205, D-206</span>
+  <span class="ds-source">qp/A/structures/fea_hub.py (run d209), fea_hub_figs.py, bridge_torsion_d206.py &middot; <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-5/FEA-HUB.md" target="_blank" rel="noopener">review/QP-5/FEA-HUB.md</a> &middot; <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/structures/COUPON-BOND-D202.md" target="_blank" rel="noopener">glue coupon</a> &middot; params/CHANGE-LOG.md D-202, D-205, D-206, D-207</span>
 </section>
   </div>
 </section>
@@ -2661,7 +2661,7 @@ python -I redesign/proofs/build_graph.py --strict</pre>
 .bom-bar i{height:10px;border-radius:2px;background:linear-gradient(90deg,var(--accent) var(--v),var(--panel-3) var(--v))}.bom-bar b{font-family:var(--font-mono);font-weight:500;text-align:right}
 #bom-table tr.gated td{color:var(--fg-3)}#bom-table .pid{display:block;font-family:var(--font-mono);font-size:12px;color:var(--fg-3)}#bom-table td.id{font-family:var(--font-mono);font-size:var(--text-xs)}
 </style>
-<script type="module" src="site.js?v=20261117d"></script>
+<script type="module" src="site.js?v=20261118a"></script>
 <script>(function(){var q=document.getElementById('bom-q'),g=document.getElementById('bom-g'),w=document.getElementById('bom-w'),c=document.getElementById('bom-count');if(!q)return;var rows=[].slice.call(document.querySelectorAll('#bom-table tbody tr'));function f(){var s=q.value.trim().toLowerCase(),n=0;rows.forEach(function(r){var ok=(!g.value||r.dataset.group===g.value)&&(!w.value||r.dataset.wave===w.value)&&(!s||r.textContent.toLowerCase().indexOf(s)>=0);r.hidden=!ok;if(ok)n++;});c.textContent=n+' of '+rows.length;}[q,g,w].forEach(function(e){e.addEventListener('input',f);});f();})();</script>
 
 

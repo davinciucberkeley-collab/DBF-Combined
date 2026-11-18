@@ -2,7 +2,7 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-18 00:29 UTC",
+  "generated": "2026-11-18 08:10 UTC",
   "dataset": "concept-a",
   "ok": true,
   "errors": [],
@@ -470,7 +470,7 @@ window.PROOF_GRAPH = {
    "id": "ASM-A-CUTS",
    "type": "assumption",
    "title": "41.6 g of EST cuts are real",
-   "text": "Predicted mass <= 1.465 kg (D-205; D-195 1.46) holds only if the foam (25 kg/m3), printed parts and hardware lump weigh in at their cut values",
+   "text": "Predicted mass <= 1.467 kg (D-207; D-205 1.465; D-195 1.46) holds only if the foam (25 kg/m3), printed parts and hardware lump weigh in at their cut values",
    "basis": "BOARD QP-4 s1 and FIXES2 s5: none of the three cuts is weighed; the foam row alone (16.6 g) was the first line; M11 weighs a FOAMULAR 150 block",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
@@ -655,8 +655,8 @@ window.PROOF_GRAPH = {
   {
    "id": "A-D3",
    "type": "requirement",
-   "title": "Design target <= 1.465 kg; structure <= 494 g",
-   "text": "Predicted mass incl. growth and overrun <= 1.465 kg (D-205; D-195 1.46); structure ceiling 494 g (BOARD QP-4 s1)",
+   "title": "Design target <= 1.467 kg; structure <= 494 g",
+   "text": "Predicted mass incl. growth and overrun <= 1.467 kg (D-207; D-205 1.465; D-195 1.46); structure ceiling 494 g (BOARD QP-4 s1)",
    "ref": "qp/A/REQUIREMENTS-A.md#a-d3",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
@@ -1093,10 +1093,10 @@ window.PROOF_GRAPH = {
     "gate": "kg"
    },
    "outputs": {
-    "m_kg": 1.464942382
+    "m_kg": 1.466406176
    },
    "input_values": {
-    "basic": 1.2689300000000001,
+    "basic": 1.27024,
     "gf": 1.1174,
     "over": 0.032,
     "gate": 1.47
@@ -1202,12 +1202,12 @@ window.PROOF_GRAPH = {
     "ASM-A-CUTS"
    ],
    "outputs": {
-    "x_g": 41.54843565419721
+    "x_g": 41.068566314658966
    },
    "input_values": {
     "cuts": 41.6,
-    "target": 1.465,
-    "m": 1.464942382,
+    "target": 1.467,
+    "m": 1.466406176,
     "gf": 1.1174
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
@@ -1250,7 +1250,7 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": "<=",
     "ref": "P:req.mass_target_kg",
-    "resolved": 1.465
+    "resolved": 1.467
    },
    "verifies": [
     "A-D3"
@@ -1264,14 +1264,14 @@ window.PROOF_GRAPH = {
     "FIN-001-L"
    ],
    "how": "Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).",
-   "value": 1.464942382,
+   "value": 1.466406176,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))",
     "uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)"
    ],
    "status": "UNVERIFIED",
-   "margin": 3.932969283278978e-05,
+   "margin": 0.0004047880027267049,
    "importance": 7
   },
   {
@@ -1284,12 +1284,12 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": "<=",
     "ref": "P:req.mass_target_kg",
-    "resolved": 1.465
+    "resolved": 1.467
    },
    "verifies": [
     "A-D3"
    ],
-   "how": "python -I qp/A/mission_gate_a.py prints 1,449 g (D-195); both methods must stay <= 1.465 kg (D-205).",
+   "how": "python -I qp/A/mission_gate_a.py prints 1,449 g (D-195); both methods must stay <= 1.467 kg (D-207).",
    "value": 1.4474069999999999,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
@@ -1297,7 +1297,7 @@ window.PROOF_GRAPH = {
     "uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.01200887372013665,
+   "margin": 0.013355828220859027,
    "importance": 1
   },
   {
@@ -1316,14 +1316,14 @@ window.PROOF_GRAPH = {
     "A-P1"
    ],
    "how": "As-built weigh-in <= 1.47 kg (D-190, MASS-GATE s8); the +-5 % window holds to 1.478 kg.",
-   "value": 1.464942382,
+   "value": 1.466406176,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))",
     "uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.003440556462584987,
+   "margin": 0.002444778231292495,
    "importance": 1
   },
   {
@@ -1342,20 +1342,20 @@ window.PROOF_GRAPH = {
     "A-U5"
    ],
    "how": "Weigh-in.",
-   "value": 1.464942382,
+   "value": 1.466406176,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))",
     "uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.94140230472,
+   "margin": 0.9413437529600001,
    "importance": 1
   },
   {
    "id": "CL-A-CUTS-REQUIRED",
    "type": "claim",
-   "title": "EST cuts that must be real for <= 1.465 kg",
+   "title": "EST cuts that must be real for <= 1.467 kg",
    "calc": "CALC-A-CUTS",
    "output": "x_g",
    "unit": "g",
@@ -1371,7 +1371,7 @@ window.PROOF_GRAPH = {
    "assumes": [
     "ASM-A-CUTS"
    ],
-   "value": 41.54843565419721,
+   "value": 41.068566314658966,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses ASM-A-CUTS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -1382,7 +1382,7 @@ window.PROOF_GRAPH = {
     "uses P:mass.est_cuts_g, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s5, s7: 41.6 g of EST cuts already in the CAD basic mass (foam 16.6, printed 18.0, hardware 7.0))"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.001239527543336253,
+   "margin": 0.012774848205313348,
    "importance": 1
   },
   {
@@ -1433,16 +1433,16 @@ window.PROOF_GRAPH = {
     "basic": "kg"
    },
    "outputs": {
-    "shift_mm": 2.1277769459308233,
-    "fwd_mm": 19.898254434838798,
-    "aft_mm": 23.302697548328116
+    "shift_mm": 2.1255825670739386,
+    "fwd_mm": 19.825314113868245,
+    "aft_mm": 23.226246221186546
    },
    "input_values": {
-    "cg": 21.174920602397293,
+    "cg": 21.10066365411261,
     "pack": 270.0,
     "trim": 10.0,
     "trim_fwd": 6.0,
-    "basic": 1.2689300000000001
+    "basic": 1.27024
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1468,11 +1468,11 @@ window.PROOF_GRAPH = {
     "ASM-A-NP"
    ],
    "outputs": {
-    "sm_pct": 7.969420162286821
+    "sm_pct": 7.999729120770365
    },
    "input_values": {
     "np": 40.7,
-    "cg": 21.174920602397293,
+    "cg": 21.10066365411261,
     "c": 245.0
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
@@ -1490,10 +1490,10 @@ window.PROOF_GRAPH = {
     "v": "P:mass.cg_x_mm"
    },
    "outputs": {
-    "v": 21.174920602397293
+    "v": 21.10066365411261
    },
    "input_values": {
-    "v": 21.174920602397293
+    "v": 21.10066365411261
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1521,10 +1521,10 @@ window.PROOF_GRAPH = {
     "WNG-002"
    ],
    "how": "CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.",
-   "value": 21.174920602397293,
+   "value": 21.10066365411261,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.11446950538933122,
+   "margin": 0.11056124495329518,
    "importance": 1
   },
   {
@@ -1538,10 +1538,10 @@ window.PROOF_GRAPH = {
     "v": "P:mass.cg_x_mm"
    },
    "outputs": {
-    "v": 21.174920602397293
+    "v": 21.10066365411261
    },
    "input_values": {
-    "v": 21.174920602397293
+    "v": 21.10066365411261
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1567,10 +1567,10 @@ window.PROOF_GRAPH = {
     "CGE-008"
    ],
    "how": "CG breadboard (M5); band 19-26 mm (D-195), hard aft limit 28.5 mm.",
-   "value": 21.174920602397293,
+   "value": 21.10066365411261,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.18557997683087335,
+   "margin": 0.1884360133033612,
    "importance": 1
   },
   {
@@ -1593,10 +1593,10 @@ window.PROOF_GRAPH = {
     "CGE-008"
    ],
    "how": "Slide the pack to the aft slot stop and re-measure CG (M5).",
-   "value": 23.302697548328116,
+   "value": 23.226246221186546,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.18236148953234682,
+   "margin": 0.18504399223906856,
    "importance": 1
   },
   {
@@ -1619,10 +1619,10 @@ window.PROOF_GRAPH = {
     "CGE-008"
    ],
    "how": "Slide the pack to the forward slot stop and re-measure CG (M5).",
-   "value": 19.898254434838798,
+   "value": 19.825314113868245,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.047276549202041974,
+   "margin": 0.043437584940433954,
    "importance": 1
   },
   {
@@ -1647,7 +1647,7 @@ window.PROOF_GRAPH = {
    "assumes": [
     "ASM-A-NP"
    ],
-   "value": 7.969420162286821,
+   "value": 7.999729120770365,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses ASM-A-NP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -1655,7 +1655,7 @@ window.PROOF_GRAPH = {
     "uses ASM-A-NP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.5938840324573642,
+   "margin": 0.5999458241540729,
    "importance": 1
   },
   {
@@ -1669,10 +1669,10 @@ window.PROOF_GRAPH = {
     "v": "P:mass.cg_y_mm"
    },
    "outputs": {
-    "v": 2.381393772706138
+    "v": 2.3789378385187048
    },
    "input_values": {
-    "v": 2.381393772706138
+    "v": 2.3789378385187048
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1694,10 +1694,10 @@ window.PROOF_GRAPH = {
     "A-P4"
    ],
    "how": "Hang the built aircraft on its spar centre; lateral CG <= 5 mm.",
-   "value": 2.381393772706138,
+   "value": 2.3789378385187048,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.5237212454587724,
+   "margin": 0.524212432296259,
    "importance": 1
   },
   {
@@ -1829,12 +1829,12 @@ window.PROOF_GRAPH = {
     "m": "kg"
    },
    "outputs": {
-    "fresh_cap": 2.345889570353268,
-    "sag_cap": 1.8544580407120852,
-    "fresh_unc": 2.7634323323581684,
-    "sag_unc": 2.191029737891936,
-    "window_cap_pct": 5.458070255316981,
-    "window_unc_pct": 13.715470590375327,
+    "fresh_cap": 2.3435478596226758,
+    "sag_cap": 1.8526068861018048,
+    "fresh_unc": 2.7606738226534793,
+    "sag_unc": 2.1888426111349437,
+    "window_cap_pct": 5.408281803704417,
+    "window_unc_pct": 13.666470742259852,
     "sag_cap_gf": 2716.674179479815
    },
    "input_values": {
@@ -1894,7 +1894,7 @@ window.PROOF_GRAPH = {
     "g": 9.807,
     "lo": 1.33,
     "hi_frac": 0.8,
-    "m": 1.464942382
+    "m": 1.466406176
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1997,7 +1997,7 @@ window.PROOF_GRAPH = {
     "PRP-001-LL"
    ],
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "value": 2.345889570353268,
+   "value": 2.3435478596226758,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
@@ -2007,7 +2007,7 @@ window.PROOF_GRAPH = {
     "uses CL-A-MASS-PRED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.17294478517663392,
+   "margin": 0.17177392981133788,
    "importance": 1
   },
   {
@@ -2033,7 +2033,7 @@ window.PROOF_GRAPH = {
     "PWR-001"
    ],
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "value": 1.8544580407120852,
+   "value": 1.8526068861018048,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
@@ -2043,7 +2043,7 @@ window.PROOF_GRAPH = {
     "uses CL-A-MASS-PRED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.1590362754450532,
+   "margin": 0.15787930381362794,
    "importance": 1
   },
   {
@@ -2068,7 +2068,7 @@ window.PROOF_GRAPH = {
     "PRP-001-LL"
    ],
    "how": "C3 time-domain pitch-over run at the as-weighed mass (T-A-C3-PITCHOVER); the window uses 1.33 W low and 0.80 x T/W sag high.",
-   "value": 5.458070255316981,
+   "value": 5.408281803704417,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
@@ -2078,7 +2078,7 @@ window.PROOF_GRAPH = {
     "uses CL-A-MASS-PRED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.09161405106339622,
+   "margin": 0.08165636074088348,
    "importance": 1
   },
   {
@@ -2217,7 +2217,7 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": ">=",
     "ref": "CL-A-MASS-PRED",
-    "resolved": 1.464942382
+    "resolved": 1.466406176
    },
    "verifies": [
     "A-P3"
@@ -2233,7 +2233,7 @@ window.PROOF_GRAPH = {
     "uses CL-A-MASS-PRED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.00922886569365163,
+   "margin": 0.008221434613226929,
    "importance": 1
   },
   {
@@ -2547,10 +2547,10 @@ window.PROOF_GRAPH = {
     "m": "kg"
    },
    "outputs": {
-    "cruise_s": 254.6525861628106,
+    "cruise_s": 254.10903450564075,
     "usable_wh": 24.5088,
-    "hover_w": 212.67643550604834,
-    "cruise_w": 167.38011519666654
+    "hover_w": 212.98704682486306,
+    "cruise_w": 167.47709921587068
    },
    "input_values": {
     "apc_table": [
@@ -2604,7 +2604,7 @@ window.PROOF_GRAPH = {
     "esc_eff": 0.98,
     "ctrl_margin": 1.1,
     "g": 9.807,
-    "m": 1.464942382,
+    "m": 1.466406176,
     "pack_ah": 2.3,
     "pack_v": 14.8,
     "floor_frac": 0.9,
@@ -2710,7 +2710,7 @@ window.PROOF_GRAPH = {
     "PRP-003"
    ],
    "how": "Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).",
-   "value": 254.6525861628106,
+   "value": 254.10903450564075,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
@@ -2726,7 +2726,7 @@ window.PROOF_GRAPH = {
     "uses CL-A-CRUISE-NEED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.2449017694874596,
+   "margin": 0.24224454762289954,
    "importance": 1
   },
   {
@@ -6543,10 +6543,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "req.mass_target_kg",
    "file": "redesign/qp/A/params-A.json",
-   "value": 1.465,
+   "value": 1.467,
    "unit": "kg",
    "source": "SRC-A-REQ",
-   "note": "A-D3 (D-205): design target <= 1.465 kg predicted incl. growth and overrun (D-195: 1.46; the D-202 hub added 16.7 g basic, D-205 cut 10.7 g; gate 1.47 kg unchanged)",
+   "note": "A-D3 (D-207): design target <= 1.467 kg predicted incl. growth and overrun (D-195: 1.46; D-205: 1.465; the D-202 hub added 16.7 g basic, D-205 cut 10.7 g, the D-207 fillets and longer block added 1.3 g; 3 g left under the 1.47 kg gate, which is unchanged)",
    "status": "CHECKED",
    "importance": 8
   },
@@ -7063,7 +7063,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "mass.basic_cad_kg",
    "file": "redesign/qp/A/params-A.json",
-   "value": 1.2689300000000001,
+   "value": 1.27024,
    "unit": "kg",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json mass_basic_kg (CAD, no growth)",
@@ -7241,7 +7241,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "mass.cg_x_mm",
    "file": "redesign/qp/A/params-A.json",
-   "value": 21.174920602397293,
+   "value": 21.10066365411261,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_x_m, aft of the wing leading edge",
@@ -7253,7 +7253,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "mass.cg_y_mm",
    "file": "redesign/qp/A/params-A.json",
-   "value": 2.381393772706138,
+   "value": 2.3789378385187048,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_y_m (lateral)",
@@ -9544,7 +9544,7 @@ window.PROOF_GRAPH = {
   {
    "id": "CGE-001",
    "type": "part",
-   "title": "Hub (printed PETG, D-202: 1.5 mm sleeves over s +-24 mm of both arm tubes, 28 x 20 x 20 mm centre block with 3 mm edge radii, bridge boss r 10.0 mm (D-206), 2 strut sockets, tray flange; mass = drawn volume x 1.27)",
+   "title": "Hub (printed PETG, D-202: 1.5 mm sleeves over s +-24 mm of both arm tubes, 38 x 20 x 20 mm centre block on the bridge axis, running aft to the tray face (no separate boss), 3 mm edge radii, junction fillets 2.0 mm (sleeve B / block) and 1.5 mm (sleeve A / block) as in the FEA (D-207; outer body is the OpenCASCADE mesh of hub_body.py), 2 strut sockets, tray flange; mass = drawn volume x 1.27)",
    "status": "UNVERIFIED",
    "importance": 5
   },

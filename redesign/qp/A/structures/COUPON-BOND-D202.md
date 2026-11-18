@@ -6,12 +6,12 @@ Structures engineer, 2026-11-17. Status `PLAN` (not run). Required by D-202 befo
 
 Every hub result depends on one estimated number: the epoxy shear allowable between the 12 x 10 carbon arm tube and the
 printed PETG sleeve, 2.0 MPa (`structures_a.py` `BOND_TAU`, `EST`, no test behind it). The hub FEA (`fea_hub.py`, run
-`d206`: glue plus three 3 mm pins, hub 6 mm aft, doublers s 11-25, 16 x 14 bridge; runs `pins` and `d205` before it) needs, as the mean shear along the worst arm's bond:
+`d209`: glue plus three 3 mm pins, hub 6 mm aft, doublers s 11-25, 16 x 14 bridge, D-207 fillets and seated bridge; earlier runs `pins` to `d206`) needs, as the mean shear along the worst arm's bond:
 
 | Case | Mean bond shear at limit (MPa) | Factor | Needed allowable (MPa) |
 |---|---|---|---|
-| F2 uncapped fault (worst flight) | 0.77 | 2.156 (1.5 x 1.15 x 1.25, `structures_a.py`) | 1.66 |
-| S2 prop strike 30 N (damage case, D-202) | 1.75 | 1.0 | 1.75 |
+| F2 uncapped fault (worst flight) | 0.73 | 2.156 (1.5 x 1.15 x 1.25, `structures_a.py`) | 1.57 |
+| S2 prop strike 30 N (damage case, D-202) | 1.50 | 1.0 | 1.50 |
 
 So the coupon must show a **design allowable of at least 2.0 MPa** (the value the analysis already uses). Below that, the
 hub is not cleared to fly.

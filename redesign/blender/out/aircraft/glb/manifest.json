@@ -3,11 +3,11 @@
  "mode": "material",
  "frame": "glTF +Y up: glTF (x, y, z) = aircraft (x aft, z up, -y). explode_m in aircraft frame, metres.",
  "files": {
-  "assembly.glb": 8068832,
+  "assembly.glb": 8190500,
   "avionics.glb": 224480,
-  "cage.glb": 1140368,
+  "cage.glb": 1246636,
   "fins.glb": 241260,
-  "harness.glb": 4700780,
+  "harness.glb": 4716192,
   "landing.glb": 79516,
   "mechanisms.glb": 127376,
   "power.glb": 16768,
@@ -360,7 +360,7 @@
    "id": "CGE-001",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 17.1,
+   "mass_g": 18.3,
    "explode_m": [
     -0.157,
     0.0,
@@ -525,7 +525,7 @@
    "id": "CGE-010-C",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 0.33,
+   "mass_g": 0.44,
    "explode_m": [
     -0.157,
     0.0,

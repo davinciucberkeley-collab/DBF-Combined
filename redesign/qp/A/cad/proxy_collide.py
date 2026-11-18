@@ -40,7 +40,53 @@ def pip(u, v, poly):
     return inside
 
 
+def inside_mesh(sh, P):
+    """Even-odd ray parity along +x for a closed triangle mesh (kind 'mesh'); candidate points per triangle are
+    found by a sorted-y window, so it stays fast for a tens-of-thousands-triangle body."""
+    V = np.array(sh.verts, dtype=float)
+    T = np.array(sh.tris, dtype=int)
+    lo, hi = V.min(axis=0), V.max(axis=0)
+    cand = np.flatnonzero(np.all((P >= lo) & (P <= hi), axis=1))
+    res = np.zeros(len(P), dtype=bool)
+    if not len(cand):
+        return res
+    Q = P[cand]
+    order = np.argsort(Q[:, 1])
+    ys = Q[order, 1]
+    par = np.zeros(len(Q), dtype=np.int32)
+    A, B, C = V[T[:, 0]], V[T[:, 1]], V[T[:, 2]]
+    for a, b, c in zip(A, B, C):
+        y0, y1 = min(a[1], b[1], c[1]), max(a[1], b[1], c[1])
+        i0, i1 = np.searchsorted(ys, y0), np.searchsorted(ys, y1, side='right')
+        if i1 <= i0:
+            continue
+        idx = order[i0:i1]
+        q = Q[idx]
+        z0, z1 = min(a[2], b[2], c[2]), max(a[2], b[2], c[2])
+        m = (q[:, 2] >= z0) & (q[:, 2] <= z1)
+        if not m.any():
+            continue
+        idx, q = idx[m], q[m]
+        # barycentric coordinates of (y, z) in the triangle projected on the yz plane
+        d = (b[1] - a[1]) * (c[2] - a[2]) - (c[1] - a[1]) * (b[2] - a[2])
+        if abs(d) < 1e-18:
+            continue
+        w1 = ((q[:, 1] - a[1]) * (c[2] - a[2]) - (c[1] - a[1]) * (q[:, 2] - a[2])) / d
+        w2 = ((b[1] - a[1]) * (q[:, 2] - a[2]) - (q[:, 1] - a[1]) * (b[2] - a[2])) / d
+        w0 = 1.0 - w1 - w2
+        ok = (w0 >= 0) & (w1 >= 0) & (w2 >= 0)
+        if not ok.any():
+            continue
+        xh = w0[ok] * a[0] + w1[ok] * b[0] + w2[ok] * c[0]
+        hit = xh > q[ok, 0]
+        par[idx[ok][hit]] ^= 1
+    res[cand[np.flatnonzero(par)]] = True
+    return res
+
+
 def inside_shape(sh, P):
+    if sh.kind == 'mesh':
+        return inside_mesh(sh, P)
     ax = AX[sh.axis]
     if sh.kind == 'prism':
         iu, iv = UV[sh.axis]

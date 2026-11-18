@@ -158,6 +158,8 @@ class Shape:
     """kind 'prism' : axis, offset, loops, depth
        kind 'revolve': axis, center, profile [(a, r)] (a along the axis from center, r >= 0)
        kind 'loft'   : axis, sections [(offset, loop)], smooth
+       kind 'mesh'   : verts [(x, y, z)], tris [(i, j, k)] outward-wound, closed (watertight) triangle mesh; used for
+                       a body that has no sketch recipe (the printed hub with its OpenCASCADE fillets, D-207)
     All coordinates are component-local metres."""
 
     def __init__(self, kind, name=None, **kw):
@@ -166,6 +168,8 @@ class Shape:
 
     # --- derived data used by check.py / build_all.py (backends do not need these)
     def points(self):
+        if self.kind == 'mesh':
+            return [tuple(map(float, v)) for v in self.verts]
         if self.kind == 'prism':
             return [to3d(self.axis, o, uv) for o in (self.offset, self.offset + self.depth) for uv in self.loops[0]]
         if self.kind == 'loft':
@@ -207,6 +211,17 @@ class Shape:
         return pts
 
     def volume_centroid(self):
+        if self.kind == 'mesh':               # signed tetrahedra about the first vertex (closed mesh: exact)
+            P = [tuple(map(float, v)) for v in self.verts]
+            o = P[0]
+            V, m = 0.0, [0.0, 0.0, 0.0]
+            for i, j, k in self.tris:
+                a, b, c = [tuple(P[q][t] - o[t] for t in range(3)) for q in (i, j, k)]
+                v = (a[0] * (b[1] * c[2] - b[2] * c[1]) - a[1] * (b[0] * c[2] - b[2] * c[0])
+                     + a[2] * (b[0] * c[1] - b[1] * c[0])) / 6.0
+                V += v
+                m = [m[t] + v * (a[t] + b[t] + c[t]) / 4.0 for t in range(3)]
+            return V, (tuple(o[t] + m[t] / V for t in range(3)) if V else P[0])
         if self.kind == 'prism':
             A, (cu, cv) = loops_area_centroid(self.loops)
             return A * abs(self.depth), to3d(self.axis, self.offset + self.depth / 2.0, (cu, cv))
@@ -238,6 +253,9 @@ class Shape:
             n = AX[self.axis] == k
             return Shape('loft', self.name, axis=self.axis, smooth=self.smooth,
                          sections=[(-o if n else o, m2(self.axis, l)) for o, l in self.sections])
+        if self.kind == 'mesh':               # mirroring flips the winding, so the faces stay outward
+            return Shape('mesh', self.name, verts=[tuple(-v[i] if i == k else v[i] for i in range(3)) for v in self.verts],
+                         tris=[(i, k_, j) for i, j, k_ in self.tris])
         c = list(self.center)
         c[k] = -c[k]
         prof = [(-a, r) for a, r in self.profile] if AX[self.axis] == k else list(self.profile)
@@ -305,6 +323,11 @@ class Component:
         for splines (each loop drawn as a spline from first to last point + a straight closing line)."""
         return self._add(Shape('loft', name, axis=axis, smooth=smooth,
                                sections=[(float(o), [tuple(map(float, p)) for p in l]) for o, l in sections]))
+
+    def mesh(self, verts, tris, name=None):
+        """Closed triangle mesh (component-local metres, outward-wound). Fusion: imported as a mesh body."""
+        return self._add(Shape('mesh', name, verts=[tuple(map(float, v)) for v in verts],
+                               tris=[tuple(map(int, t)) for t in tris]))
 
     # --- convenience
     def box(self, lo, hi, name=None):

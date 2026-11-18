@@ -232,7 +232,27 @@ def add_loft(bm, s):
     bm.faces.new(list(reversed(rings[-1])))
 
 
-BUILDERS = {'prism': add_prism, 'revolve': add_revolve, 'loft': add_loft}
+def add_mesh(bm, s):
+    """Closed outward-wound triangle mesh (fusionkit kind 'mesh'). Duplicate vertices are merged by position so the
+    body is watertight; degenerate and repeated faces are skipped."""
+    key = lambda p: (round(p[0] * 1e8), round(p[1] * 1e8), round(p[2] * 1e8))
+    ids, vs = {}, []
+    for p in s.verts:
+        k = key(p)
+        if k not in ids:
+            ids[k] = bm.verts.new(tuple(p))
+        vs.append(ids[k])
+    seen = set()
+    for i, j, k in s.tris:
+        a, b, c = vs[i], vs[j], vs[k]
+        f = frozenset((id(a), id(b), id(c)))
+        if len(f) < 3 or f in seen:
+            continue
+        seen.add(f)
+        bm.faces.new((a, b, c))
+
+
+BUILDERS = {'prism': add_prism, 'revolve': add_revolve, 'loft': add_loft, 'mesh': add_mesh}
 
 
 def _matrix(comp):

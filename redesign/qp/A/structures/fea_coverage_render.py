@@ -2,7 +2,7 @@
 
     blender -b --factory-startup -P fea_coverage_render.py -- [--glb redesign/blender/out/aircraft/glb/assembly.glb]
     -> fig/fea-coverage.raw.png, then python fea_coverage_render.py --compose -> fig/fea-coverage.png (legend added)
-Colours (dataviz categorical order): blue = hub FEA (fea_hub.py, run d206: hub, both arm tubes near the hub, bridge, pins);
+Colours (dataviz categorical order): blue = hub FEA (fea_hub.py, run d209: hub, both arm tubes near the hub, bridge, pins);
 orange = arm + motor-cup FEA (fea_arm.py, FEA-ARM.md, 2026-11-16: one full arm tube and its cup; the tube and cup are
 unchanged since); grey = hand calculations or not analysed. Part ids come from the glTF node extras (export_glb.py)."""
 import os, sys
@@ -25,7 +25,7 @@ def compose():
     fig.text(0.015, 0.95, 'What the 3-D stress analysis (FEA) covers', fontsize=12.5, weight='bold', color='#0b0b0b')
     fig.text(0.015, 0.915, 'Everything else is checked by hand calculations or beam models (review/QP-5, structures/iter2_margins.md), or not yet at all.', fontsize=9, color='#52514e')
     ax = fig.add_axes([0.0, 0.12, 1.0, 0.78]); ax.imshow(plt.imread(os.path.join(FIG, 'fea-coverage.raw.png'))); ax.axis('off')
-    items = [(COL['hub'], 'Hub FEA (2026-11-17, D-206): printed hub, arm tubes near the hub, bridge tube, pins'),
+    items = [(COL['hub'], 'Hub FEA (2026-11-17, D-207): printed hub, arm tubes near the hub, bridge tube, pins'),
              (COL['arm'], 'Arm FEA (2026-11-16, FEA-ARM.md): arm tube and motor cup (one arm; all four are alike)'),
              (COL['none'], 'No FEA: wing, spar, fins, ribs, struts, tray, feet, avionics (hand calculations)')]
     for k, (c, t) in enumerate(items):
