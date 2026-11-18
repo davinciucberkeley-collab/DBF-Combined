@@ -93,7 +93,7 @@ function route() {
   if (name === 'build') { const h = hydrateBuild(); if (target) h.then(() => target.scrollIntoView({ block: 'start', behavior: 'instant' })); }
   if (name === 'aircraft') { viewer.resize(); if (focusPartId) focusPart(focusPartId); focusPartId = null; }
   if (name === 'decision') redrawMorph();
-  if (name === 'structures') import('./fea-view.js?v=20261118a').then(m => m.mountFea());
+  if (name === 'structures') import('./fea-view.js?v=20261118e').then(m => m.mountFea());
   closeNav(false); buildRail(name);
 }
 window.addEventListener('hashchange', route);

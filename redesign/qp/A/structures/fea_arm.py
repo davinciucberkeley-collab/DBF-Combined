@@ -24,6 +24,14 @@ Loads enter through the motor: RBE3 (weighted average, no added stiffness) from 
 footprint on the plate front face (r <= 13 mm, EST: MN2212 base) and the four screw-head annuli on the rear face.
 Elements: 10-node tetrahedra (gmsh 4.15, order 2), 4-point Gauss; direct solve (scipy SuperLU), one factorisation for all load
 cases; stresses at Gauss points.
+
+Variant `current` (D-208, 2026-11-18): the arm as built since D-202 / D-205 / D-207: ONE continuous 12 x 10 tube from the hub
+crossing (y = 0) to the motor (y = R_M), the 14 x 12 carbon doubler bonded over s = DBL_S0..DBL_S1, the 3 mm pin hole at
+s = PIN_S (along x, through both walls; the pin rod itself is left out: conservative) and the 4.8 mm phase-lead exit at
+s = HOLE_S (one wall and the doubler, +z tangential face). The printed hub is NOT in this model: fea_hub.py covers it (and
+60 mm of each tube). Support: the outer surface of the tube and the doubler inside the hub sleeve (y <= SLV_L) is fixed,
+i.e. a rigid hub: it gives the free span, the doubler end and the cup their stresses; the stresses inside the sleeve
+are those of the hub model, not this one. Group 0 ('hub' in the code) is the doubler (CFRP) in this variant.
 """
 import argparse
 import json
@@ -69,6 +77,14 @@ BOX_DEEP_R = None                    # D-202: deep socket boss radius (None: HUB
 BOX = [11.0, 7.0, 1.6, 10.0]        # box spoke half-depth x, half-width z, wall, core radius (mm); --box overrides
 SPK_RO, SPK_RI = 6.8, 5.2           # fix candidate (FEA-ARM.md): hollow spoke OD 13.6 = the boss OD, 1.6 mm wall (4 perimeters)
 X_PROP = 47.0                     # prop mid-plane from the arm axis (arm_cup_checks.py X_PROP, EST)
+CUR_SLV = W.SLV_L * mm            # current hub sleeve covers s 0..24 mm of each tube (wing.py SLV_L)
+CUR_DBL = (W.DBL_S0 * mm, W.DBL_S1 * mm, W.DBL_RO * mm)   # doubler s range and outer radius (14 x 12)
+CUR_PIN = (W.PIN_S * mm, W.PIN_D / 2 * mm)                # pin hole position and radius
+CUR_HOLE = (W.HOLE_S * mm, W.HOLE_R * mm)                 # phase-lead exit position and radius
+CUR_NJ = CUR_SLV + 2 * TUBE_RO     # tube and doubler judged only from one tube diameter past the clamped sleeve edge (St-Venant;
+                                   # s 0..36 mm): nearer the clamp the stresses are support artefacts. fea_hub.py models that zone
+                                   # (hub, doubler, tubes to s 60 mm, judged to s 45 mm).
+VARIANT = 'asdrawn'
 
 # ---------------- materials (structures_a.py, fe_a.py; all EST until coupons) ----------------
 E_PETG, NU_PETG = 2100.0, 0.35    # fe_a.py nom 2.1 GPa (kd 1.6, hi 2.4); Poisson 0.35 EST
@@ -95,6 +111,8 @@ def build_mesh(level, path, variant='asdrawn'):
     gmsh.option.setNumber('General.Terminal', 0)
     gmsh.model.add('arm')
     occ = gmsh.model.occ
+    if variant == 'current':
+        return build_mesh_current(level, path, occ, gmsh)
     # hub
     slv = occ.addCylinder(SLV_X0, 0, 0, SLV_X1 - SLV_X0, 0, 0, SLV_R)
     extra_hub = []
@@ -213,6 +231,93 @@ def build_mesh(level, path, variant='asdrawn'):
     return X[used], remap[E], M
 
 
+def _cup(occ, gmsh):
+    """The motor cup (motor frame, plate normal x), rotated by CANT about the arm axis: same geometry as the as-drawn variant."""
+    y0, y1, ro = CUP_SLV
+    cs = occ.addCylinder(0, R_M + y0, 0, 0, y1 - y0, 0, ro)
+    pl = occ.addBox(CUP_PL[0], R_M - CUP_HALF, -CUP_HALF, CUP_PL[1] - CUP_PL[0], 2 * CUP_HALF, 2 * CUP_HALF)
+    cup, _ = occ.fuse([(3, cs)], [(3, pl)])
+    occ.synchronize()
+    eds = []
+    for d, e in gmsh.model.getEntities(1):
+        bb = gmsh.model.getBoundingBox(d, e)
+        if abs(bb[3] - bb[0] - (CUP_PL[1] - CUP_PL[0])) < 1e-6 and abs(abs(bb[1] - R_M) - CUP_HALF) < 1e-6 and abs(abs(bb[2]) - CUP_HALF) < 1e-6:
+            eds.append(e)
+    if eds:
+        cup = occ.fillet([t for d, t in cup], eds, [CUP_RC], removeVolume=True)
+    cuts = [occ.addCylinder(0, R_M + y0 - 1, 0, 0, y1 - y0 + 2, 0, TUBE_RO)]
+    for sy in (1, -1):
+        for sz in (1, -1):
+            cuts.append(occ.addCylinder(CUP_PL[0] - 0.6, R_M + sy * PAT_Y, sz * PAT_Z, 5.6, 0, 0, HOLE_R))
+    for sz in (1, -1):
+        cuts.append(occ.addCylinder(POCKET_X[0], R_M - PAT_Y, sz * PAT_Z, POCKET_X[1] - POCKET_X[0], 0, 0, POCKET_R))
+    cuts.append(occ.addCylinder(RELIEF_X[0], R_M, 0, RELIEF_X[1] - RELIEF_X[0], 0, 0, RELIEF_R))
+    cup, _ = occ.cut(cup, [(3, c) for c in cuts])
+    occ.rotate(cup, 0, 0, 0, 0, 1, 0, math.radians(CANT))
+    return cup
+
+
+def build_mesh_current(level, path, occ, gmsh):
+    """Variant 'current' (see the module docstring): doubler (group 0), continuous tube (group 1), cup (group 2)."""
+    s0, s1, dro = CUR_DBL
+    ys, pr = CUR_PIN
+    yh, hr = CUR_HOLE
+    to = occ.addCylinder(0, 0, 0, 0, R_M, 0, TUBE_RO)
+    ti = occ.addCylinder(0, -1, 0, 0, R_M + 2, 0, TUBE_RI)
+    tube, _ = occ.cut([(3, to)], [(3, ti)])
+    do_ = occ.addCylinder(0, s0, 0, 0, s1 - s0, 0, dro)
+    di_ = occ.addCylinder(0, s0 - 1, 0, 0, s1 - s0 + 2, 0, TUBE_RO)
+    dbl, _ = occ.cut([(3, do_)], [(3, di_)])
+    pin = occ.addCylinder(-dro - 1, ys, 0, 2 * dro + 2, 0, 0, pr)                    # pin hole along x, both walls
+    hole = occ.addCylinder(0, yh, 0, 0, 0, dro + 1, hr)                                # lead exit, +z wall and the doubler
+    tube, _ = occ.cut(tube, [(3, pin), (3, hole)], removeTool=False)
+    dbl, _ = occ.cut(dbl, [(3, hole)])
+    cup = _cup(occ, gmsh)
+    allv, mp = occ.fragment(dbl + tube + cup, [])
+    occ.synchronize()
+    groups = {'hub': [], 'tube': [], 'cup': []}
+    for (d, t), kids in zip(dbl + tube + cup, mp[:len(dbl + tube + cup)]):
+        name = 'hub' if (d, t) in dbl else 'tube' if (d, t) in tube else 'cup'
+        groups[name] += [k[1] for k in kids]
+    for i, (k, v) in enumerate(groups.items()):
+        gmsh.model.addPhysicalGroup(3, sorted(set(v)), i + 1, name=k)
+    f = gmsh.model.mesh.field
+    sc = {0: 1.0, 1: 0.78, 2: 0.6}[level]
+    boxes = [(0.6, (-dro - 0.5, dro + 0.5, -0.5, s1 + 6, -dro - 0.5, dro + 0.5)),     # crossing, pin, doubler, lead exit, sleeve exit
+             (1.2, (-6.5, 6.5, -1, R_M + 1, -6.5, 6.5)),                                 # free tube
+             (1.1, (-21, 21, R_M - 27, R_M + 18, -21, 21))]                              # cup
+    fl = []
+    for v0, bx in boxes:
+        b = f.add('Box'); f.setNumber(b, 'VIn', v0 * sc); f.setNumber(b, 'VOut', 4.0)
+        for k, v in zip(('XMin', 'XMax', 'YMin', 'YMax', 'ZMin', 'ZMax'), bx):
+            f.setNumber(b, k, v)
+        f.setNumber(b, 'Thickness', 2.0)
+        fl.append(b)
+    mn = f.add('Min'); f.setNumbers(mn, 'FieldsList', fl)
+    f.setAsBackgroundMesh(mn)
+    for k, v in (('Mesh.MeshSizeExtendFromBoundary', 0), ('Mesh.MeshSizeFromPoints', 0), ('Mesh.MeshSizeFromCurvature', 0),
+                 ('Mesh.ElementOrder', 2), ('Mesh.HighOrderOptimize', 1), ('General.NumThreads', 16)):
+        gmsh.option.setNumber(k, v)
+    gmsh.model.mesh.generate(3)
+    nt, xyz, _ = gmsh.model.mesh.getNodes()
+    X = xyz.reshape(-1, 3)
+    idx = {int(t): i for i, t in enumerate(nt)}
+    els, mat = [], []
+    for i, k in enumerate(groups):
+        for v in sorted(set(groups[k])):
+            et, _, en = gmsh.model.mesh.getElements(3, v)
+            for t, e in zip(et, en):
+                if t == 11:
+                    a = np.array([idx[int(n)] for n in e]).reshape(-1, 10)
+                    els.append(a); mat.append(np.full(len(a), i))
+    E = np.vstack(els); M = np.concatenate(mat)
+    used = np.unique(E)
+    remap = -np.ones(len(X), int); remap[used] = np.arange(len(used))
+    gmsh.finalize()
+    np.savez_compressed(path, X=X[used], E=remap[E], M=M, h=level, hub_vol=0.0)
+    return X[used], remap[E], M
+
+
 # ---------------- tet10 ----------------
 GP = np.array([[0.58541020, 0.13819660, 0.13819660], [0.13819660, 0.58541020, 0.13819660],
                [0.13819660, 0.13819660, 0.58541020], [0.13819660, 0.13819660, 0.13819660]])
@@ -319,6 +424,12 @@ def rbe3_loads(X, nodes, F, Mo, P):
 
 
 def fixed_nodes(X):
+    if VARIANT == 'current':                               # outer surface inside the hub sleeve: tube (y < doubler) and doubler
+        r = np.hypot(X[:, 0], X[:, 2])
+        s0, s1, dro = CUR_DBL
+        tube_o = (np.abs(r - TUBE_RO) < 0.02) & (X[:, 1] <= min(s0, CUR_SLV) + 0.01)
+        dbl_o = (np.abs(r - dro) < 0.02) & (X[:, 1] >= s0 - 0.01) & (X[:, 1] <= CUR_SLV + 0.01)
+        return np.where(tube_o | dbl_o)[0]
     r = np.hypot(X[:, 1], X[:, 2])
     return np.where((np.abs(r - SLV_BORE) < 0.02) & (X[:, 0] > SLV_X0 - 0.01) & (X[:, 0] < SLV_X1 + 0.01))[0]
 
@@ -414,7 +525,9 @@ def solve(Kf, RHS):
 
 
 def run(level, variant='asdrawn'):
-    tag, variant = variant, ('box' if variant.startswith('box') else variant)
+    global VARIANT
+    tag, variant = variant, ('box' if variant.startswith('box') else 'current' if variant.startswith('current') else variant)
+    VARIANT = variant
     os.makedirs(OUT, exist_ok=True)
     mp = os.path.join(OUT, 'mesh_L%d_%s.npz' % (level, tag))
     t0 = time.time()
@@ -423,7 +536,7 @@ def run(level, variant='asdrawn'):
     else:
         X, E, M = build_mesh(level, mp, variant)
     t1_ = time.time()
-    Ds = [D_iso(E_PETG, NU_PETG), D_ti_y(), D_iso(E_PETG, NU_PETG)]   # hub, tube, cup
+    Ds = [D_ti_y() if variant == 'current' else D_iso(E_PETG, NU_PETG), D_ti_y(), D_iso(E_PETG, NU_PETG)]   # hub (current: the CFRP doubler), tube, cup
     K, Bs, dof, dets = assemble(X, E, M, Ds)
     fix = fixed_nodes(X)
     fd = np.zeros(3 * len(X), bool); fd[(3 * fix[:, None] + np.arange(3)).ravel()] = True
@@ -474,6 +587,14 @@ def Nq(p):
     return np.array(N)
 
 
+REGIONS_CURRENT = [
+    ('doubler', 'Carbon doubler 14 x 12 over the lead exit (CFRP)', 0, lambda x: np.ones(len(x), bool)),
+    ('tube_hub', 'Arm tube inside the hub sleeve (CFRP; rigid-hub support: see fea_hub.py for this zone)', 1, lambda x: x[:, 1] < CUR_SLV),
+    ('tube_root', 'Arm tube from s 36 mm (judged start) to 30 mm past the sleeve exit (CFRP)', 1, lambda x: (x[:, 1] >= CUR_SLV) & (x[:, 1] < CUR_SLV + 30)),
+    ('tube_mid', 'Arm tube, free span (CFRP)', 1, lambda x: (x[:, 1] >= CUR_SLV + 30) & (x[:, 1] < R_M - 40)),
+    ('tube_tip', 'Arm tube in and near the cup (CFRP)', 1, lambda x: x[:, 1] >= R_M - 40),
+    ('cup', 'Motor cup (PETG)', 2, lambda x: np.ones(len(x), bool)),
+]
 REGIONS = [  # (key, label, material index, predicate on Gauss-point coordinates)
     ('sleeve', 'Hub bridge sleeve (PETG 1.2 mm)', 0, lambda x: np.hypot(x[:, 1], x[:, 2]) < SLV_R + 0.05),
     ('web', 'Hub radial web (as drawn: PETG 0.8 x 22 mm; spoke variant: tube 13.6 x 10.4)', 0, lambda x: (np.hypot(x[:, 1], x[:, 2]) >= SLV_R + 0.05) & (x[:, 1] < B_R0 + 0.05)),
@@ -494,25 +615,34 @@ def evaluate(res, case_list=None, exclude_r=0.0):
     out = []
     for name, flight, combos in (case_list or load_cases()):
         row = {'case': name, 'flight': flight, 'regions': {}}
-        for key, label, m, pred in REGIONS:
+        for key, label, m, pred in (REGIONS_CURRENT if VARIANT == 'current' else REGIONS):
             emask = M == m
             xr = xg[emask].reshape(-1, 3)
             sel = pred(xr)
+            if VARIANT == 'current' and m != 2:
+                sel = sel & (xr[:, 1] >= CUR_NJ)
+            if not sel.any():
+                row['regions'][key] = dict(label=label + ' (not judged here: inside s %.0f mm, see fea_hub.py)' % CUR_NJ)
+                continue
             best = None
             for F, Mo in combos:
                 c = np.concatenate([basis_dirs @ F, basis_dirs @ Mo])     # weights of the 6 unit cases
                 sig = np.einsum('k,kegs->egs', c, S[:, emask]).reshape(-1, 6)[sel]
-                if m == 1:
+                if m == 1 or (VARIANT == 'current' and m == 0):
                     ax, hp, sh = tube_local(sig, xr[sel])
                     vals = dict(axial=float(np.abs(ax).max()), hoop=float(np.abs(hp).max()), shear=float(sh.max()))
                     at = xr[sel][np.argmax(np.abs(ax))]
                 else:
                     p1, vm = principal(sig)
-                    vals = dict(p1=float(p1.max()), vm=float(vm.max()))
+                    vals = dict(p1=float(p1.max()), vm=float(vm.max()), p1_p99=float(np.percentile(p1, 99)))
                     at = xr[sel][np.argmax(p1)]
                 key_v = vals.get('axial', vals.get('p1'))
                 if best is None or key_v > best[0]:
+                    if best is not None and 'p1_p99' in best[1]:
+                        vals['p1_p99'] = max(vals['p1_p99'], best[1]['p1_p99'])
                     best = (key_v, vals, at.tolist())
+                elif 'p1_p99' in vals:
+                    best[1]['p1_p99'] = max(best[1]['p1_p99'], vals['p1_p99'])
             row['regions'][key] = dict(label=label, **best[1], at=[round(v, 2) for v in best[2]])
         out.append(row)
     return out
@@ -523,12 +653,16 @@ def bond_tractions(res, combos):
     X, E, M, S, xg = res['X'], res['E'], res['M'], res['S'], res['xg']
     basis_dirs = np.vstack([res['n'], res['t1'], res['t2']])
     out = {}
-    for key, m, yr in (('socket', 0, (R_IN, B_R1)), ('cup', 2, (R_M + CUP_SLV[0], R_M))):
+    # 'current': the doubler bond is judged outside the hub sleeve only (inside it this model clamps the tube and doubler, so the
+    # traction at the clamp edge is a support artefact; fea_hub.py gives the sleeve zone). shear_mean: mean shear over the bonded
+    # area (the quantity a lap-shear allowable is for, as fea_hub.py judges the hub bond); shear_p99: 99th percentile.
+    pairs = (() if VARIANT == 'current' else (('socket', 0, (R_IN, B_R1)),)) + (('cup', 2, (R_M + CUP_SLV[0], R_M)),)
+    for key, m, yr in pairs:
         emask = M == m
         xr = xg[emask].reshape(-1, 3)
         r = np.hypot(xr[:, 0], xr[:, 2])
         sel = (r < TUBE_RO + 0.35) & (xr[:, 1] > yr[0]) & (xr[:, 1] < yr[1])
-        best = (0, 0)
+        best = [0, 0, 0, 0]
         nr = np.stack([xr[sel, 0] / r[sel], np.zeros(sel.sum()), xr[sel, 2] / r[sel]], 1)
         for F, Mo in combos:
             c = np.concatenate([basis_dirs @ F, basis_dirs @ Mo])
@@ -538,8 +672,9 @@ def bond_tractions(res, combos):
             t = np.einsum('eij,ej->ei', T, nr)
             tn = np.einsum('ei,ei->e', t, nr)
             ts = np.linalg.norm(t - tn[:, None] * nr, axis=1)
-            best = (max(best[0], float(ts.max())), max(best[1], float(tn.max())))
-        out[key] = dict(shear=best[0], peel=best[1])
+            best = [max(best[0], float(ts.max())), max(best[1], float(tn.max())),
+                    max(best[2], float(np.percentile(ts, 99))), max(best[3], float(ts.mean()))]
+        out[key] = dict(shear=best[0], peel=best[1], shear_p99=best[2], shear_mean=best[3], n_points=int(sel.sum()))
     return out
 
 
@@ -549,7 +684,7 @@ def save_field(res, path):
     S, M, xg = res['S'], res['M'], res['xg']
     bd = np.vstack([res['n'], res['t1'], res['t2']])
     best, bv = None, -1
-    hubm = M == 0
+    hubm = M == (2 if VARIANT == 'current' else 0)
     for F, Mo in combos:
         c = np.concatenate([bd @ F, bd @ Mo])
         p1, _ = principal(np.einsum('k,kegs->egs', c, S[:, hubm]))
@@ -562,16 +697,76 @@ def save_field(res, path):
     np.savez_compressed(path, c=xg.mean(1), val=val, M=M)
 
 
+def save_fields_current(res, path):
+    """Variant 'current': per-material surface skins with per-vertex utilisation and stress (max over adjacent elements),
+    enveloped over every combo of F1, F2 (flight, factors KP / KF) and S1, S2 (30 N prop strike, damage case at 1.0). Same npz
+    layout as fea_hub.save_fields (V<m>, T<m>, U_<case>_<m>, S_<case>_<m>): fea_arm_figs.py writes the Explorer data from it.
+    Utilisation: CFRP max(|axial| / 350, |hoop| / 40, shear / 30) x factor; PETG max principal / 20 x factor. Not judged (NaN):
+    the tube and doubler within s < CUR_NJ (36 mm: the sleeve plus one tube diameter; rigid-hub support; fea_hub.py covers it)."""
+    X, E, M, S, xg = res['X'], res['E'], res['M'], res['S'], res['xg']
+    bd = np.vstack([res['n'], res['t1'], res['t2']])
+    lc = {c[0][:2]: c for c in load_cases()}
+    cases = [('F1', lc['F1'][2], KP, KF), ('F2', lc['F2'][2], KP, KF), ('S1', lc['S1'][2], 1.0, 1.0), ('S2', lc['S2'][2], 1.0, 1.0)]
+    xc = xg.mean(1)
+    nj = (M != 2) & (xc[:, 1] < CUR_NJ)
+    fields = {}
+    for name, combos, fp, fc in cases:
+        U = np.zeros(len(M)); SG = np.zeros(len(M))
+        for F, Mo in combos:
+            c = np.concatenate([bd @ F, bd @ Mo])
+            sig = np.einsum('k,kegs->egs', c, S)
+            for m in range(3):
+                sel = M == m
+                sg = sig[sel]
+                if m == 2:
+                    p1, _ = principal(sg); u = p1 * fp / ALLOW['petg']; s_ = p1
+                else:
+                    ax, hp, sh = tube_local(sg.reshape(-1, 6), xg[sel].reshape(-1, 3))
+                    ax, hp, sh = (v.reshape(-1, 4) for v in (ax, hp, sh))
+                    r = np.stack([np.abs(ax) / ALLOW['cf_axial'], np.abs(hp) / ALLOW['cf_hoop'], sh / ALLOW['cf_shear']])
+                    k = r.argmax(0); u = r.max(0) * fc; s_ = np.choose(k, [np.abs(ax), np.abs(hp), sh])
+                U[sel] = np.maximum(U[sel], u.max(1)); SG[sel] = np.maximum(SG[sel], s_.max(1))
+        U[nj] = np.nan; SG[nj] = np.nan
+        fields[name] = (U, SG)
+        print('fields %s: max utilisation %.2f (outside the sleeve)' % (name, np.nanmax(U)), flush=True)
+    out = {'cases': np.array([c[0] for c in cases])}
+    C4 = E[:, :4]
+    for m in range(3):
+        el = np.where(M == m)[0]
+        f = np.concatenate([C4[el][:, [0, 1, 2]], C4[el][:, [0, 1, 3]], C4[el][:, [0, 2, 3]], C4[el][:, [1, 2, 3]]])
+        opp = np.concatenate([C4[el][:, 3], C4[el][:, 2], C4[el][:, 1], C4[el][:, 0]])
+        fe = np.tile(el, 4)
+        key = np.sort(f, 1)
+        _, inv, cnt = np.unique(key, axis=0, return_inverse=True, return_counts=True)
+        b = cnt[inv.ravel()] == 1
+        f, opp, fe = f[b], opp[b], fe[b]
+        a, bb, cc = X[f[:, 0]], X[f[:, 1]], X[f[:, 2]]
+        flip = np.einsum('ij,ij->i', np.cross(bb - a, cc - a), X[opp] - a) > 0
+        f[flip] = f[flip][:, [0, 2, 1]]
+        vid, tri = np.unique(f.ravel(), return_inverse=True)
+        tri = tri.reshape(-1, 3)
+        out['V%d' % m] = X[vid].astype(np.float32); out['T%d' % m] = tri.astype(np.int32)
+        for name in fields:
+            for j, lab in enumerate(('U', 'S')):
+                v = np.full(len(vid), -np.inf)
+                fv = fields[name][j][fe]
+                np.maximum.at(v, tri.ravel(), np.repeat(np.nan_to_num(fv, nan=-np.inf), 3))
+                v[~np.isfinite(v)] = np.nan
+                out['%s_%s_%d' % (lab, name, m)] = v.astype(np.float32)
+        print('skin material %d: %d vertices, %d triangles' % (m, len(vid), len(tri)), flush=True)
+    np.savez_compressed(path, **out)
+
+
 def checks(res):
     """Beam checks: tip deflection along n for 1 N along n; axial stress at mid-span vs M c / I."""
     X, U, P, n = res['X'], res['U'], res['P'], res['n']
     tip = np.argmin(np.abs(X[:, 1] - (R_M - 30)) + 10 * np.abs(np.hypot(X[:, 0], X[:, 2]) - TUBE_RO))
     d = U[0].reshape(-1, 3)[tip] @ n
-    L = R_M - 30 - B_R1
+    y_cl = CUR_SLV if VARIANT == 'current' else B_R1       # clamp: the sleeve exit (current) or the socket mouth (as drawn)
     I = math.pi / 64 * ((2 * TUBE_RO) ** 4 - (2 * TUBE_RI) ** 4)
-    Lr = R_M - 30 - B_R1           # beyond the mouth
-    d_beam = (1 * (R_M - B_R1) * Lr ** 2 / (2 * CF['EL'] * I) - 1 * Lr ** 3 / (6 * CF['EL'] * I))   # point load at R_M on a clamp at the mouth, deflection at y = R_M - 30
-    ymid = (B_R1 + R_M) / 2
+    Lr = R_M - 30 - y_cl
+    d_beam = (1 * (R_M - y_cl) * Lr ** 2 / (2 * CF['EL'] * I) - 1 * Lr ** 3 / (6 * CF['EL'] * I))   # point load at R_M on a clamp, deflection at y = R_M - 30
+    ymid = (y_cl + R_M) / 2
     xr = res['xg'][res['M'] == 1].reshape(-1, 3)
     near = np.abs(xr[:, 1] - ymid) < 2.0
     sig = res['S'][0, res['M'] == 1].reshape(-1, 6)[near]
@@ -584,7 +779,8 @@ def checks(res):
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('--level', default='1')
-    ap.add_argument('--variant', default='asdrawn', choices=['asdrawn', 'spoke', 'box'])
+    ap.add_argument('--variant', default='asdrawn', choices=['asdrawn', 'spoke', 'box', 'current'])
+    ap.add_argument('--mesh-only', action='store_true', help='build and save the mesh, print its size, stop (no solve)')
     ap.add_argument('--box', default=None, help='hx,hz,wall,core_r in mm')
     ap.add_argument('--tag', default='')
     a = ap.parse_args()
@@ -595,6 +791,11 @@ if __name__ == '__main__':
             BOX[:] = vals[:4]
             globals()['BOX_YEND'] = vals[4] if len(vals) > 4 else None
             globals()['BOX_DEEP_R'] = vals[5] if len(vals) > 5 else None
+        if a.mesh_only:
+            mp_ = os.path.join(OUT, 'mesh_L%d_%s.npz' % (lv, a.variant + a.tag))
+            X_, E_, M_ = build_mesh(lv, mp_, a.variant)
+            print('mesh only: %d nodes, %d elements, about %d unknowns' % (len(X_), len(E_), 3 * len(X_)))
+            raise SystemExit
         res = run(lv, a.variant + a.tag)
         ev = evaluate(res)
         bonds = {name: bond_tractions(res, combos) for name, fl, combos in load_cases()}
@@ -603,6 +804,8 @@ if __name__ == '__main__':
                    loads=dict(T_CAP=T_CAP, Q_CAP=Q_CAP, T_UNC=T_UNC, Q_UNC=Q_UNC, F_1P=F_1P, M_GYRO_Nm=M_GYRO, I_ROT=I_ROT, PITCH_RATE=PITCH_RATE))
         json.dump(out, open(os.path.join(OUT, 'result_L%d_%s.json' % (lv, a.variant + a.tag)), 'w'), indent=1)
         save_field(res, os.path.join(OUT, 'field_L%d_%s.npz' % (lv, a.variant + a.tag)))
+        if VARIANT == 'current':
+            save_fields_current(res, os.path.join(OUT, 'arm_fields_L%d_%s.npz' % (lv, a.variant + a.tag)))
         print(json.dumps(res['info']))
         print(json.dumps(ck))
         for c in ev:

@@ -10,6 +10,10 @@ propeller". Script `qp/A/structures/fea_arm.py` (geometry read from `cad/amodel/
 > **Update 2026-11-17:** the hub found failing here was redesigned (D-202: continuous carbon arms, crossing hub, pins;
 > D-205: mass trim). The new hub passes the same FEA: see [FEA-HUB.md](FEA-HUB.md).
 
+> **Update 2026-11-18 (D-209):** the arm and motor cup were re-run on the current design (section 8): continuous tube,
+> doubler, pin and lead holes, the cup as drawn. The tube and the cup pass in every case; sections 1-7 describe the old
+> D-193 hub and are kept as the record.
+
 - **The arm tube and the motor cup have good factors of safety in flight.** At the worst flight case (F1: thrust at the
   spin cap, motor torque, the gyroscopic moment of the pitch-over and the 1P imbalance), the 12 x 10 carbon tube carries
   20.9 MPa in its free span against 350 (factor of safety 16.7, required 1.725). The printed motor cup peaks at 7.0 MPa at a
@@ -115,3 +119,44 @@ python -I redesign/qp/A/structures/fea_arm.py --level 1            # fine (about
 python -I redesign/qp/A/structures/fea_arm.py --level 0 --variant spoke
 python redesign/qp/A/structures/fea_arm_figs.py
 ```
+
+## 8. Re-run on the current design (D-209, 2026-11-18)
+
+Run `python -I fea_arm.py --level 0 --variant current --tag _d208` (results `out_fea/result_L0_current_d208.json`,
+fields `arm_fields_L0_current_d208.npz`); figures `python fea_arm_figs.py --tag current_d208`
+(`fig/fea-arm-along.png`, Explorer map `site/data/fea-arm.js`).
+
+**Model.** One continuous 12 x 10 arm tube from the hub crossing (s = 0) to the motor station, with its 3 mm pin hole
+(s 8 mm), the phase-lead exit (s 18 mm), the 14 x 12 carbon doubler over s 11-25 mm and the printed motor cup as drawn
+(plate, R corners, four screw holes, head pockets, relief). 116,118 tet10 elements, 578,493 free unknowns (MATLAB
+CHOLMOD, residual 5e-9, equilibrium error per unit case under 2e-10). Support: the outer surfaces of the tube and the
+doubler inside the hub sleeve (s 0-24 mm) are fixed; the hub itself is in `fea_hub.py`. Load cases, factors and
+allowables as sections 2-3.
+
+**Judged zone.** The tube and the doubler are judged from s = 36 mm (the 24 mm sleeve plus one tube diameter): nearer
+the fixed edge the stresses are support artefacts (St-Venant). The hub FEA models that zone (hub, doubler, tubes to
+s 60 mm, judged to s 45 mm), so the whole arm is covered. The doubler lies entirely inside it.
+
+**Checks.** Beam check: tip deflection 0.127 mm per N (beam clamped at the sleeve mouth 0.119); free-span axial stress
+1.424 MPa per N (beam 1.436).
+
+| Item (limit stresses, MPa) | Motor runaway F2 | Allowed at 1.725 / 2.156 | Prop strike S2 (worst strike) | Allowed at 1.0 | Result |
+|---|---|---|---|---|---|
+| Arm tube, axial (s >= 36 mm) | 29.9 | 203 | 79.8 (S1 79.7) | 350 | PASS |
+| Arm tube, shear | 1.1 | 17.4 | 9.6 | 30 | PASS (tightest: ratio 3.1) |
+| Arm tube, hoop (in the cup) | 1.6 | 23.2 | 5.2 (blade stop S3 8.0) | 40 | PASS |
+| Motor cup, 99th-percentile principal | 0.75 | 9.3 | 3.1 (S3 3.2) | 20 | PASS |
+| Cup bond, mean shear | 0.09 | 0.93 | 0.45 (S3 0.47) | 2.0 `EST` | PASS |
+| Motor cup, single highest point | 6.1 | 9.3 | 23.6 (S3 39.5) | 20 | flight PASS even at the peak; strikes judged by the 99th percentile |
+
+The single highest cup stress sits on one ring: the sharp inside corner where the cup sleeve ends on the plate
+(s 279.8 mm, r 9.6 mm), in the cases that bend or twist the cup (S2 sideways strike, S3 blade stop). It is a sharp
+re-entrant edge (singular: its peak grows with mesh refinement), so the cup is judged like the hub, by the 99th percentile
+(D-207). The bond peak is at the end of the bonded overlap for the same reason (3.3 MPa in S3; 99th percentile 2.4 in S2).
+**Open item:** a printed part cracks first at such a corner; give the cup a 1 mm fillet there at its next revision
+(not modelled; mass about +0.1 g `EST`).
+
+Compared with section 4 (old D-193 hub): free-span tube stress in F1 20.9 -> 24.1 MPa (the continuous tube is supported
+over the sleeve instead of a 6.8 mm socket, so the free span starts nearer the crossing); cup peak at a hole edge 7.0 ->
+5.7 (F1). Not covered, as section 6: contact and slip in the bonds, print orientation, motor heat, fatigue.
+

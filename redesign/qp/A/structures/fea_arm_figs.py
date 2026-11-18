@@ -1,103 +1,128 @@
-"""fea_arm_figs.py - figures for FEA-ARM.md from fea_arm.py outputs (out_fea/field_L0_*.npz, result_L1_asdrawn.json, result_L0_spoke.json).
+"""fea_arm_figs.py - the arm and motor-cup FEA (fea_arm.py --variant current) for the Explorer and the report.
 
-    python redesign/qp/A/structures/fea_arm_figs.py      (not -I: matplotlib needs the user site packages)
+    python fea_arm_figs.py [--tag current_d208]      (after: python -I fea_arm.py --level 0 --variant current --tag _d208)
 
-Fig 1: hub stress map, flight case F1 (limit load), as drawn vs the hollow-spoke candidate: element-mean max principal stress
-of the printed PETG hub, viewed along the web's thin direction (z), one blue ramp on a log scale; the allowable at the
-ultimate factor (20 MPa / 2.156 = 9.3 MPa at limit) is marked on the scale.
-Fig 2: factor of safety (allowable / limit stress) per item for F1, as drawn, against the required factor of each material.
-Palette: dataviz skill reference palette (blue ramp 100-700, surface #fcfcfb, ink #0b0b0b / #52514e, critical #d03b3b).
+Writes
+  fig/fea-arm-along.png         utilisation along the arm (worst over each 2 mm slice of tube, doubler and cup), F1 / F2 / S1 / S2
+  ../../../site/data/fea-arm.js window.FEA_ARM: skins with per-vertex utilisation for the Explorer 3-D map (same format as
+                                fea-hub.js; colour scale, cases and 'not judged' rule shared with fea_hub_figs.py)
+Utilisation u = stress x required factor / allowable (fea_arm.save_fields_current). Not judged: the tube and doubler within
+s < 36 mm (the 24 mm hub sleeve, where this model holds them rigidly, plus one tube diameter); the hub model (fea_hub.py) gives that zone.
 """
+import argparse
 import json
 import os
 
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.colors import LinearSegmentedColormap, LogNorm
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, 'out_fea')
-FIG = os.path.join(HERE, 'fig')
-SURF, INK, INK2, GRID, CRIT = '#fcfcfb', '#0b0b0b', '#52514e', '#e4e3df', '#d03b3b'
-BLUE = ['#cde2fb', '#9ec5f4', '#6da7ec', '#3987e5', '#256abf', '#184f95', '#0d366b']
-CMAP = LinearSegmentedColormap.from_list('blue', BLUE)
-KF, KP = 1.725, 2.15625
-plt.rcParams.update({'font.family': 'DejaVu Sans', 'font.size': 10, 'text.color': INK, 'axes.labelcolor': INK2,
-                     'xtick.color': INK2, 'ytick.color': INK2, 'axes.edgecolor': GRID, 'figure.facecolor': SURF, 'axes.facecolor': SURF})
+OUT, FIG = os.path.join(HERE, 'out_fea'), os.path.join(HERE, 'fig')
+SITE = os.path.normpath(os.path.join(HERE, '..', '..', '..', 'site', 'data'))
+import sys                                     # noqa: E402
+sys.path.insert(0, HERE)
+import fea_hub_figs as HF                     # noqa: E402  (colour ramp, case texts, encoders)
+import fea_arm as FA                           # noqa: E402  (geometry constants)
+
+MATS = ['carbon doubler 14 x 12 (inside the hub sleeve: not judged here)', 'arm tube 12 x 10 (CFRP)', 'motor cup (printed PETG)']
+SERIES = {'F1': ('#2a78d6', '-'), 'F2': ('#eb6834', '--'), 'S1': ('#1baf7a', '-.'), 'S2': ('#eda100', ':')}   # dataviz categorical 1-4 (validated); dashes = secondary encoding
+LABEL = {'F1': 'Full-power flight (F1)', 'F2': 'Motor runaway (F2)', 'S1': 'Prop strike, push on the shaft (S1)', 'S2': 'Prop strike, blade hit sideways (S2)'}
 
 
-def fig_map():
-    fig, axs = plt.subplots(1, 2, figsize=(11, 4.6), sharey=True, constrained_layout=True)
-    norm = LogNorm(1, 1000)
-    for ax, (v, title) in zip(axs, (('asdrawn', 'As drawn: 0.8 mm web'), ('spoke', 'Candidate: hollow spoke 13.6 x 10.4'))):
-        d = np.load(os.path.join(OUT, 'field_L0_%s.npz' % v))
-        c, val, M = d['c'], d['val'], d['M']
-        s = (M == 0) & (c[:, 1] < 60) & (np.abs(c[:, 0]) < 14)
-        o = np.argsort(val[s])
-        sc = ax.scatter(c[s, 1][o], c[s, 0][o], c=np.clip(val[s][o], 1, 1000), cmap=CMAP, norm=norm, s=3, linewidths=0)
-        mid = s & (c[:, 1] > 12) & (c[:, 1] < 24)
-        ax.set_title('%s\nmid-span peak %.0f MPa at limit load' % (title, val[mid].max()), loc='left', fontsize=10.5, color=INK)
-        ax.set_xlabel('distance along the arm from the hub axis (mm)')
-        ax.set_aspect('equal'); ax.set_xlim(0, 60); ax.set_ylim(-14, 14)
-        for sp in ax.spines.values():
-            sp.set_visible(False)
-        ax.text(3, -13, 'sleeve', color=INK2, fontsize=8.5); ax.text(14, -13, 'web / spoke', color=INK2, fontsize=8.5); ax.text(36, -13, 'arm socket', color=INK2, fontsize=8.5)
-    axs[0].set_ylabel('x along the hub axis (mm)')
-    cb = fig.colorbar(sc, ax=axs, shrink=0.85, pad=0.01)
-    cb.set_label('max principal stress, PETG, limit load (MPa, log)')
-    cb.ax.axhline(20 / KP, color=INK, lw=1.5)
-    cb.ax.text(-0.15, 20 / KP, 'allowed 9.3 ', va='center', ha='right', fontsize=8, color=INK, transform=cb.ax.get_yaxis_transform())
-    cb.outline.set_visible(False)
-    fig.suptitle('Hub stress, flight case F1 (thrust at the spin cap + motor torque + pitch-over gyro + 1P)', x=0.01, ha='left', fontsize=11.5, color=INK)
-    p = os.path.join(FIG, 'fea-arm-hub-map.png'); fig.savefig(p, dpi=150); plt.close(fig)
-    return p
+def along(d, case, step=2.0):
+    """Max utilisation over every skin vertex in each 2 mm slice of y (all three materials)."""
+    ys, us = [], []
+    for m in range(3):
+        V = d['V%d' % m]; u = d['U_%s_%d' % (case, m)].astype(float)
+        if not np.isfinite(u).any():
+            continue
+        ys.append(V[:, 1]); us.append(u)
+    y = np.concatenate(ys); u = np.concatenate(us)
+    edges = np.arange(0, FA.R_M + 20 + step, step)
+    k = np.digitize(y, edges) - 1
+    out = np.full(len(edges) - 1, np.nan)
+    for i in range(len(out)):
+        s = (k == i) & np.isfinite(u)
+        if s.any():
+            out[i] = u[s].max()
+    return (edges[:-1] + edges[1:]) / 2, out
 
 
-def fig_fos():
-    r = json.load(open(os.path.join(OUT, 'result_L1_asdrawn.json')))
-    F1 = r['cases'][0]['regions']; b = r['bonds'][r['cases'][0]['case']]
-    rows = [  # label, limit stress, allowable, required factor
-        ('Arm tube, free span (bending)', F1['tube_mid']['axial'], 350, KF),
-        ('Arm tube in the motor cup', F1['tube_tip']['axial'], 350, KF),
-        ('Motor cup (peak at a screw hole)', F1['cup']['p1'], 20, KP),
-        ('Cup bond (epoxy shear)', b['cup']['shear'], 2.0, KP),
-        ('Arm socket mouth (2.0 mm wall)', F1['mouth']['p1'], 20, KP),
-        ('Arm tube at the socket floor (shear)', F1['tube_root']['shear'], 30, KF),
-        ('Socket bond (epoxy shear)', b['socket']['shear'], 2.0, KP),
-        ('Hub radial web, mid-span', float(np.load(os.path.join(OUT, 'field_L0_asdrawn.npz'))['val'][
-            lambda_mid()].max()), 20, KP),
-    ]
-    fos = [a / s for _, s, a, _ in rows]
-    fig, ax = plt.subplots(figsize=(9.5, 4.4), constrained_layout=True)
-    y = np.arange(len(rows))[::-1]
-    for yi, (lab, s, a, req), f in zip(y, rows, fos):
-        ok = f >= req
-        ax.barh(yi, f, height=0.55, color=BLUE[3] if ok else CRIT, left=0)
-        ax.plot([req, req], [yi - 0.36, yi + 0.36], color=INK, lw=1.6)
-        ax.text(f * 1.08, yi, '%s  %.2f  (needs %.2f)' % ('PASS' if ok else 'FAIL', f, req), va='center', fontsize=9, color=INK)
-    ax.set_yticks(y); ax.set_yticklabels([r_[0] for r_ in rows])
-    ax.set_xscale('log'); ax.set_xlim(0.03, 200)
-    ax.set_xlabel('factor of safety = allowable / limit stress (log scale)\nblack tick = required factor: 1.725 for CFRP, 2.16 for printed and bonded parts')
-    ax.grid(axis='x', color=GRID, lw=0.8); ax.set_axisbelow(True)
-    for sp in ('top', 'right', 'left'):
+def figure(d, res, tag):
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    fig, ax = plt.subplots(figsize=(11, 5.2), dpi=150)
+    fig.patch.set_facecolor('#fcfcfb'); ax.set_facecolor('#fcfcfb')
+    ax.axvspan(0, FA.CUR_NJ, color='#ecebe7', lw=0)
+    ax.text(FA.CUR_NJ / 2, 1.33, 'hub sleeve + 12 mm:\njudged in the\nhub FEA', ha='center', va='top', fontsize=7.5, color='#52514e')
+    ax.axhline(1.0, color='#0b0b0b', lw=0.9)
+    ax.text(FA.R_M + 18, 1.0, '1.0 = at the allowable\nwith the required factor', fontsize=7.5, va='center', ha='left', color='#0b0b0b')
+    peaks = {}
+    for c, (col, ls) in SERIES.items():
+        y, u = along(d, c)
+        ax.plot(y, u, color=col, ls=ls, lw=2, solid_capstyle='round')
+        i = int(np.nanargmax(u)); peaks[c] = (y[i], u[i])
+    # direct labels at the right end of each line (text in ink, a short swatch carries the colour)
+    ends = sorted(((np.nanmax(along(d, c)[1][-12:]) if np.any(np.isfinite(along(d, c)[1][-12:])) else 0.0, c) for c in SERIES))
+    yl = 0.05
+    for v, c in ends:
+        yl = max(yl, v)
+        col, ls = SERIES[c]
+        ax.plot([FA.R_M + 20, FA.R_M + 32], [yl, yl], color=col, ls=ls, lw=2, clip_on=False)
+        ax.text(FA.R_M + 35, yl, '%s, peak %.2f' % (LABEL[c], peaks[c][1]), fontsize=7.5, va='center', color='#0b0b0b', clip_on=False)
+        yl += 0.11
+    for x_, t in ((FA.CUR_SLV, 'sleeve exit'), (FA.R_M - 25, 'motor cup')):
+        ax.axvline(x_, color='#9a9993', lw=0.6, ls=':')
+        ax.text(x_, -0.07, t, rotation=0, ha='center', va='top', fontsize=7, color='#52514e', transform=ax.get_xaxis_transform())
+    ax.set_xlim(0, FA.R_M + 15); ax.set_ylim(0, 1.35)
+    ax.set_xlabel('distance along the arm from the hub crossing, mm', fontsize=9, color='#52514e', labelpad=18)
+    ax.set_ylabel('utilisation (worst point in each 2 mm slice)', fontsize=9, color='#52514e')
+    for sp in ('top', 'right'):
         ax.spines[sp].set_visible(False)
-    ax.set_title('Concept A arm as drawn, flight case F1: factor of safety by item (FEA, fine mesh)', loc='left', fontsize=11.5, color=INK)
-    p = os.path.join(FIG, 'fea-arm-fos.png'); fig.savefig(p, dpi=150); plt.close(fig)
-    return p, list(zip([r_[0] for r_ in rows], [r_[1] for r_ in rows], [r_[2] for r_ in rows], fos, [r_[3] for r_ in rows]))
+    for sp in ('left', 'bottom'):
+        ax.spines[sp].set_color('#9a9993')
+    ax.tick_params(colors='#52514e', labelsize=8)
+    ax.grid(axis='y', color='#e4e3df', lw=0.6)
+    fig.subplots_adjust(left=0.07, right=0.66, top=0.84, bottom=0.18)
+    fig.text(0.07, 0.95, 'Arm and motor cup FEA: how close each part of the arm is to its limit', fontsize=11.5, weight='bold', color='#0b0b0b')
+    fig.text(0.07, 0.885, 'One 12 x 10 carbon arm with its doubler and printed motor cup (fea_arm.py, run %s, %d elements).\n'
+             'Flight at the full factors (1.725 carbon, 2.156 printed); prop strikes at 1.0.' % (tag, res['info']['elements']), fontsize=8.5, color='#52514e')
+    yS2, uS2 = peaks['S2']
+    pct = np.nanpercentile(d['U_S2_2'].astype(float), 99)
+    ax.annotate('S2 peak: the sharp inside corner where the cup\nsleeve ends on the plate (99th percentile of the\ncup in S2: %.2f; judged like the hub)' % pct,
+                xy=(yS2, uS2), xytext=(150, 1.12), fontsize=7.5, color='#0b0b0b', ha='center', va='center',
+                arrowprops=dict(arrowstyle='-', color='#52514e', lw=0.7))
+    p = os.path.join(FIG, 'fea-arm-along.png')
+    fig.savefig(p, facecolor=fig.get_facecolor()); print(p)
+    return peaks
 
 
-def lambda_mid():
-    d = np.load(os.path.join(OUT, 'field_L0_asdrawn.npz'))
-    c, M = d['c'], d['M']
-    return (M == 0) & (c[:, 1] > 12) & (c[:, 1] < 24)
+def explorer(d, tag, res, peaks):
+    out = dict(source='qp/A/structures/fea_arm.py --variant current (run %s), fea_arm_figs.py' % tag,
+               units='mm, arm frame: y along the arm from the hub crossing, x along the hub axis, z tangential',
+               cases=HF.CASES, scale='u = stress x required factor / allowable; 0..1 blue ramp, > 1 red, NaN grey (not judged: tube and doubler within s 36 mm, see the hub FEA)',
+               ramp=HF.RAMP, crit=HF.CRIT, nj=HF.NJ, mats=[])
+    for m, name in enumerate(MATS):
+        V = d['V%d' % m]; T = d['T%d' % m]
+        q = {}
+        for c in HF.CASES:
+            u = d['U_%s_%d' % (c, m)].astype(float); s = d['S_%s_%d' % (c, m)].astype(float)
+            uq = np.where(np.isnan(u), 65535, np.clip(np.round(u * 10000), 0, 65534)).astype(np.uint16)
+            q[c] = dict(u=HF.b64(uq), umax=None if np.all(np.isnan(u)) else float(np.nanmax(u)), smax=None if np.all(np.isnan(s)) else float(np.nanmax(s)))
+        out['mats'].append(dict(name=name, n=int(len(V)), pos=HF.b64(V.astype(np.float32)), idx=HF.b64(T.astype(np.uint32)), idx32=True, cases=q))
+    out['peaks'] = {c: dict(at_mm=round(float(y), 1), u=round(float(u), 3)) for c, (y, u) in peaks.items()}
+    out['summary'] = res['info']
+    p = os.path.join(SITE, 'fea-arm.js')
+    with open(p, 'w', encoding='utf-8') as f:
+        f.write('/* generated by redesign/qp/A/structures/fea_arm_figs.py - do not edit */\nwindow.FEA_ARM = ')
+        json.dump(out, f, separators=(',', ':')); f.write(';\n')
+    print('%s %.1f MB' % (p, os.path.getsize(p) / 1e6))
 
 
 if __name__ == '__main__':
-    os.makedirs(FIG, exist_ok=True)
-    print(fig_map())
-    p, rows = fig_fos()
-    print(p)
-    for r in rows:
-        print('%-40s %8.2f MPa  allow %5.1f  FOS %6.2f  needs %.3f' % r)
+    ap = argparse.ArgumentParser(); ap.add_argument('--tag', default='current_d208')
+    a = ap.parse_args()
+    d = np.load(os.path.join(OUT, 'arm_fields_L0_%s.npz' % a.tag))
+    res = json.load(open(os.path.join(OUT, 'result_L0_%s.json' % a.tag)))
+    pk = figure(d, res, a.tag)
+    explorer(d, a.tag, res, pk)

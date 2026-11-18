@@ -2394,13 +2394,13 @@
   </header>
 
   <h3 class="ds-h2" id="fea-coverage">What was analysed</h3>
-  <p class="use">Two 3-D stress analyses exist for concept A. The rest of the structure is checked by hand calculations and beam models, which the proof chain carries as margins (lowest: rib saddle bond +0.34, motor-cup screw holes +0.39).</p>
-  <figure class="fea-fig"><img src="assets/fea/fea-coverage.png" alt="Concept A with the parts that have a 3-D FEA coloured: the hub, the arm tubes near it, the bridge and the pins in blue; the arm tubes and motor cups in orange; everything else grey." loading="lazy"><figcaption>Blue: the hub analysis on this page. Orange: the arm and motor-cup analysis (FEA-ARM, 2026-11-16). Grey: no 3-D analysis.</figcaption></figure>
+  <p class="use">Two 3-D stress analyses exist for concept A: the hub and one whole arm with its motor cup. The rest of the structure is checked by hand calculations and beam models, which the proof chain carries as margins (lowest: rib saddle bond +0.34, motor-cup screw holes +0.39).</p>
+  <figure class="fea-fig"><img src="assets/fea/fea-coverage.png" alt="Concept A with the parts that have a 3-D FEA coloured: the hub, the arm tubes near it, the bridge and the pins in blue; the arm tubes and motor cups in orange; everything else grey." loading="lazy"><figcaption>Blue: the hub analysis on this page. Orange: the arm and motor-cup analysis (FEA-ARM, re-run on the current design 2026-11-18, D-209). Grey: no 3-D analysis.</figcaption></figure>
   <div class="scroll"><table class="ds-table">
     <thead><tr><th>Analysis</th><th>Parts in the model</th><th>Held at</th><th>Report</th></tr></thead>
     <tbody>
       <tr><td class="first">Hub (this page), 2026-11-17</td><td>printed hub, 60 mm of each arm tube either side of it, 40 mm of the 16 &times; 14 bridge, five 3 mm pins (1.50 M unknowns)</td><td>the bridge end (struts, tray pad and wing not modelled)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-5/FEA-HUB.md" target="_blank" rel="noopener">FEA-HUB.md</a></td></tr>
-      <tr><td class="first">Arm and motor cup, 2026-11-16</td><td>one full arm tube, its printed motor cup and the old D-193 hub (which failed and was replaced)</td><td>the hub</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-5/FEA-ARM.md" target="_blank" rel="noopener">FEA-ARM.md</a></td></tr>
+      <tr><td class="first">Arm and motor cup, 2026-11-18 (D-209; below)</td><td>one full arm tube with its pin and lead holes, the carbon doubler and the printed motor cup (0.58 M unknowns); judged from 36 mm out from the hub crossing, where the hub analysis hands over</td><td>the tube and doubler inside the hub sleeve</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-5/FEA-ARM.md" target="_blank" rel="noopener">FEA-ARM.md</a></td></tr>
       <tr><td class="first">Not in any 3-D stress analysis</td><td>wing core and spar, fins and fin ribs, rib saddles, V struts and their hub sockets, pack tray, landing feet</td><td>&mdash;</td><td>hand calculations: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/structures/iter2_margins.md" target="_blank" rel="noopener">iter2_margins.md</a></td></tr>
     </tbody>
   </table></div>
@@ -2448,6 +2448,45 @@
   <figure class="fea-fig"><img src="assets/fea/fea-hub-F2.png" alt="Rendered utilisation map of the motor-fault flight case, outside and with the hub hidden." loading="lazy"><figcaption><b>Motor runaway in flight (F2).</b> Left: the printed hub. Right: the hub hidden, showing the arm tubes, the bridge and the pins. The darker tube running aft is the 16 &times; 14 bridge.</figcaption></figure>
   <figure class="fea-fig"><img src="assets/fea/fea-hub-S2.png" alt="Rendered utilisation map of the 30 N prop strike, outside and with the hub hidden." loading="lazy"><figcaption><b>Prop strike, blade hit sideways (S2):</b> 30 N on the blade in the disc plane (damage case, factor 1.0). The strike is applied to the UR motor.</figcaption></figure>
   <span class="ds-source">qp/A/structures/fea_hub.py (run d209), fea_hub_figs.py, bridge_torsion_d206.py &middot; <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-5/FEA-HUB.md" target="_blank" rel="noopener">review/QP-5/FEA-HUB.md</a> &middot; <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/structures/COUPON-BOND-D202.md" target="_blank" rel="noopener">glue coupon</a> &middot; params/CHANGE-LOG.md D-202, D-205, D-206, D-207</span>
+
+  <h3 class="ds-h2" id="fea-arm">Arm and motor cup stress map</h3>
+  <p class="use">The same kind of model for one whole arm: the 12 &times; 10 carbon tube from the hub crossing to the motor, the doubler and the printed motor cup (116,118 elements, 0.58 million unknowns). It is held where the hub sleeve grips it, so the first 36 mm (the sleeve plus one tube diameter) are grey here: the hub map above judges that zone. <b>Everything passes.</b> The highest flight value is 0.66 in the motor cup; the tightest carbon item is tube shear in a sideways prop strike (9.6 of 30 MPa). The one red ring in the sideways-strike case is the sharp inside corner where the cup&rsquo;s sleeve ends on its plate: like the hub, the cup is judged by its 99th percentile (0.52 in that case), and the cup gets a 1 mm fillet there at its next revision (open item). <span class="ds-badge" data-status="MODELLED">MODELLED</span></p>
+  <div class="fea-tool">
+    <div class="fea-bar">
+      <div class="ds-seg" role="group" aria-label="Load case, arm map">
+        <button type="button" data-fea-case-arm="F1" aria-pressed="false">Full-power flight</button>
+        <button type="button" data-fea-case-arm="F2" aria-pressed="true">Motor runaway</button>
+        <button type="button" data-fea-case-arm="S1" aria-pressed="false">Prop strike: push on the shaft</button>
+        <button type="button" data-fea-case-arm="S2" aria-pressed="false">Prop strike: blade hit sideways</button>
+      </div>
+      <button type="button" class="ds-btn" id="fea-reset-arm">Reset view</button>
+    </div>
+    <p class="fea-note" id="fea-case-note-arm"></p>
+    <div class="fea-stage"><div id="fea-canvas-arm" aria-label="3-D utilisation map of one arm and its motor cup; drag to turn, scroll to zoom"></div><p id="fea-msg-arm" class="fea-msg"></p></div>
+    <div class="fea-under">
+      <div class="fea-legend" aria-label="Colour key">
+        <span class="fea-scale"><span class="fea-ramp"></span><span class="fea-ticks"><i>0</i><i>0.5</i><i>1.0</i></span></span>
+        <span class="fea-key"><span class="fea-chip" style="--c:#d03b3b"></span>over 1: only the sharp corner ring where the cup sleeve ends on the plate, in the sideways strike (a sharp edge: its peak grows with mesh refinement, so the cup is judged by the 99th percentile)</span>
+        <span class="fea-key"><span class="fea-chip" style="--c:#9a9993"></span>not judged here (the tube and doubler within 36 mm of the crossing: see the hub map)</span>
+      </div>
+      <p class="fea-read" id="fea-read-arm">Point at the model for the value under the cursor.</p>
+      <p class="fea-read" id="fea-umax-arm"></p>
+      <fieldset class="fea-parts" id="fea-parts-arm"><legend>Show parts (hide the cup to see the tube inside it)</legend></fieldset>
+    </div>
+  </div>
+  <figure class="fea-fig"><img src="assets/fea/fea-arm-along.png" alt="Line chart of utilisation along the arm for four load cases. All lines stay under 0.4 along the tube; in the motor cup flight peaks at 0.61 and 0.66 and the sideways prop strike spikes to 1.18 at the sharp sleeve-to-plate corner." loading="lazy"><figcaption><b>Along the arm.</b> The worst point in each 2 mm slice. The tube is far from its limits; the peaks are in the printed motor cup.</figcaption></figure>
+  <div class="scroll"><table class="ds-table">
+    <thead><tr><th>Item</th><th>Motor runaway in flight (F2)</th><th>Allowed at the flight factors 1.725 / 2.156</th><th>Prop strike, blade hit sideways (S2)</th><th>Allowed at factor 1.0</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td class="first">Arm tube, axial (from 36 mm out)</td><td class="val">29.9</td><td class="val">203</td><td class="val">79.8</td><td class="val">350</td><td><span class="ds-badge" data-status="CHECKED">PASS</span></td></tr>
+      <tr><td class="first">Arm tube, shear</td><td class="val">1.1</td><td class="val">17.4</td><td class="val">9.6</td><td class="val">30</td><td><span class="ds-badge" data-status="CHECKED">PASS</span> tightest (ratio 3.1)</td></tr>
+      <tr><td class="first">Arm tube, hoop (inside the cup)</td><td class="val">1.6</td><td class="val">23.2</td><td class="val">5.2</td><td class="val">40</td><td><span class="ds-badge" data-status="CHECKED">PASS</span></td></tr>
+      <tr><td class="first">Motor cup, 99th-percentile principal stress</td><td class="val">0.75</td><td class="val">9.3</td><td class="val">3.1</td><td class="val">20</td><td><span class="ds-badge" data-status="CHECKED">PASS</span></td></tr>
+      <tr><td class="first">Cup glue, mean shear</td><td class="val">0.09</td><td class="val">0.93</td><td class="val">0.45</td><td class="val">2.0 <span class="ds-tag">EST</span></td><td><span class="ds-badge" data-status="UNVERIFIED">PASS if coupon &ge; 2.0</span></td></tr>
+      <tr><td class="first">Motor cup, single highest point: the sharp corner where the sleeve ends on the plate (a blade stopped by hand, S3, gives 39.5)</td><td class="val">6.1</td><td class="val">9.3</td><td class="val">23.6</td><td class="val">&mdash;</td><td>flight passes even at the peak; strikes judged by the 99th percentile. Open item: 1 mm fillet.</td></tr>
+    </tbody>
+  </table></div>
+  <span class="ds-source">qp/A/structures/fea_arm.py --variant current (run current_d208), fea_arm_figs.py &middot; check against beam theory: tip deflection 0.127 / 0.119 mm per N, free-span stress 1.424 / 1.436 MPa per N &middot; <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-5/FEA-ARM.md#8-re-run-on-the-current-design-d-209-2026-11-18" target="_blank" rel="noopener">review/QP-5/FEA-ARM.md section 8</a> &middot; params/CHANGE-LOG.md D-209</span>
 </section>
   </div>
 </section>
