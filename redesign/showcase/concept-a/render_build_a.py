@@ -362,12 +362,12 @@ def blender_render(argv):
         tgt = ctr - up * (0.045 * 2 * dist * TAN_V)          # subject sits in the band between the banner and the card
         return tgt, dist
 
-    # bench camera: one frame for B0a-B0j2 = the whole cage unit (as B0k) at the seat and at the B1 start pose, plus every bench part at its own start pose
+    # bench camera: one frame for B0a-B0j2 = the finished cage frame at the B1 start pose
     cage = [p for p in b1['parts'] if not p.startswith(PRESHOW['B0k'][1]) and p in items]
-    bench_P = pts_of(cage) + pts_of(cage, B1_START)
-    for r in bench_rows:
-        if r['dir']:
-            bench_P += pts_of([p for p in r['parts'] if p in items], B1_START - Vector(r['dir']) * r['visual_mm'] / 1000.0)
+    bench_P = pts_of(cage, B1_START)                  # the frame on the bench only (the seat on the spar is B1's business)
+    bench_t0 = min(r['t_cam0'] for r in rows if r['bench'] or r['id'] in NO_CONTEXT)
+    bench_t1 = by_id['B0k']['t_cam0']
+    # (the start poses of the long slides are left out on purpose: the arm tubes slide in from the frame edge, so the hub stays readable)
 
     placed_so_far = []
     cams = {}
@@ -621,6 +621,11 @@ def blender_render(argv):
                 mode = part_mode(p, r, t, ghosts)
                 tint(p, mode)
                 state.append((p, round(off.x, 4), round(off.y, 4), round(off.z, 4), mode))
+        if bench_t0 <= t < bench_t1:                 # on the bench (B0a-B0j2): only the cage frame parts, the wing and everything else are off the table
+            for p in items:
+                if p not in bench_of and not items[p].hide_render:
+                    items[p].hide_render = True
+                    state.append((p, 'bench-hidden'))
         # ---- wires: reveal curves (phase leads), then the full meshes once laid
         rev_state = []
         for e in REVEAL_EDGES:

@@ -349,7 +349,7 @@ Film clip: `assets/animation/build/a-stage-02.mp4` (Explorer, "How it's built", 
 
 *Step 7 of 65. Plan caption: Bench: the printed hub stands on the bench, aft face down*
 
-**Do this:** Print the hub (19.0 g PETG); stand it on the bench, aft face down.
+**Do this:** Print the hub (17.1 g PETG); stand it on the bench, aft face down.
 
 **Time (EST):** 15 min hands-on.
 
@@ -369,12 +369,12 @@ Mass placed by this step 17.1 g; running total of placed parts 173.0 g (CAD; the
 
 **Make it:**
 
-- Print CGE-001 (CAD 19.0 g: two 1.5 mm sleeves over s +-24 mm, 28 x 20 x 20 mm centre block with 3 mm edge radii, bridge boss r 9.5 mm, two strut sockets, tray flange). Orientation `-` (EST: aft face on the bed, sleeve axes tilted, supports inside the bores).
-- Ream or drill the bores to size if needed: tube bores 12.0 mm, doubler counterbore 14.0 mm, bridge bore 12.0 mm with a 45 deg corner, lead exit holes 4.8 mm, pin holes 3.0 mm, the two pin access holes from the block front (tube B pins).
+- Print CGE-001 (CAD 17.1 g: two 1.5 mm sleeves over s +-24 mm, 28 x 20 x 20 mm centre block with 3 mm edge radii, bridge boss r 10.0 mm (16 mm bore, D-206), two strut sockets, tray flange). Orientation `-` (EST: aft face on the bed, sleeve axes tilted, supports inside the bores).
+- Ream or drill the bores to size if needed: tube bores 12.0 mm, doubler counterbore 14.0 mm, bridge bore 16.0 mm with a 45 deg corner (D-206), lead exit holes 4.8 mm, pin holes 3.0 mm, the two pin access holes from the block front (tube B pins).
 
 **Checkpoint (do not go on until it passes):**
 
-- [ ] Dry-fit a scrap of tube in each bore; weigh the hub (CAD 19.0 g).
+- [ ] Dry-fit a scrap of tube in each bore; weigh the hub (CAD 17.1 g).
 - [ ] The printed hub is the part the glue coupon (COUPON-BOND-D202.md) must clear before the FLIGHT hub is printed.
 
 ### B0c. Arm tube B through the hub
@@ -786,7 +786,7 @@ Mass placed by this step 6.5 g; running total of placed parts 277.1 g (CAD; the 
 **Checkpoint (do not go on until it passes):**
 
 - [ ] Pull test: the bundle slides freely both ways with two fingers; a tight bundle in a 4 mm bend is a stop.
-- [ ] Weigh the printed parts against the CAD: hub 19.0 g, cup 4.3 g, clamp 1.5 g, saddle 2.0 g, tray 3.8 g (+-15 %, EST).
+- [ ] Weigh the printed parts against the CAD: hub 17.1 g, cup 4.3 g, clamp 1.5 g, saddle 2.0 g, tray 3.8 g (+-15 %, EST).
 
 **Safety:**
 
@@ -2125,7 +2125,7 @@ Mass placed by this step 5.5 g; running total of placed parts 1334.1 g (CAD; the
 
 **Fit it:**
 
-- Thread the 20 x 300 mm strap by hand: over the pack top, outside the tray end walls, under the tray plate and under the 12 mm bridge tube (CAD edge E-PWR: buckle strap). Buckle it over the pack. The CAD thickness 1.6 mm is EST.
+- Thread the 20 x 300 mm strap by hand: over the pack top, outside the tray end walls, under the tray plate and under the 16 mm bridge tube (D-206) (CAD edge E-PWR: buckle strap). Buckle it over the pack. The CAD thickness 1.6 mm is EST.
 
 **Checkpoint (do not go on until it passes):**
 
