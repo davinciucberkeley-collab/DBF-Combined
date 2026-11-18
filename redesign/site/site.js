@@ -191,59 +191,94 @@ document.addEventListener('seeking', e => {                  // a seek made befo
 }, true);
 
 // ---------------- decision page: morphological chart and the 43-concept table ----------------
+// Chart: rows = the 11 functions (MORPH.md §1), columns = three designs (A chosen, B fallback, and a third you pick,
+// K09-L by default). Clicking a row lists every option studied for that function, with its sketch and who uses it.
 const FAM = { K: 'Conventional', B: 'Buy-and-modify', U: 'Unconventional' };
 const SHORT = ['A', 'B', 'D2', 'K09', 'K01', 'K06', 'K19'];
 const byId = {}; C.forEach(c => { byId[c[0]] = c; });
-const CHOSEN = byId.A[2].split(' '), RUNNER = byId.B[2].split(' ');
-const used = {}; C.forEach(c => { c[2].split(' ').forEach(o => { used[o] = (used[o] || 0) + 1; }); });
+const optInfo = {}, dimOf = {}; DIMS.forEach(d => { dimOf[d.id] = d; d.opts.forEach(o => { optInfo[o[0]] = { dim: d, name: o[1], note: o[2] || '' }; }); });
+const usedBy = {}; C.forEach(c => { c[2].split(' ').forEach(o => { (usedBy[o] = usedBy[o] || []).push(c[0]); }); });
 const label = c => c[0] === 'K09' ? 'K09-L' : c[0];
-let overlay, cells = {}, selected = null, grid, note;
-function initMorph() {
-  grid = document.getElementById('morph-grid'); note = document.getElementById('morph-note');
-  let html = '';
+const shortName = c => c[1].split(' (')[0].split(',')[0];
+const pathOf = c => { const m = {}; c[2].split(' ').forEach(o => { if (optInfo[o]) m[optInfo[o].dim.id] = o; }); return m; };
+const PA = pathOf(byId.A), PB = pathOf(byId.B);
+const NOTE_TXT = { r1: 'added by audit round 1', r2: 'added by audit round 2', r3: 'added by audit round 3', '11-14': 'added by the 2026-11-14 re-study' };
+let selected = byId.K09, openDim = null, openOpt = null, colTab = 'a', grid, detail, note, flow;
+const sketch = code => document.getElementById('sk-' + code) ? '<svg viewBox="0 0 120 80" aria-hidden="true"><use href="#sk-' + code + '"/></svg>' : '';
+function pathCell(d, col, path) {
+  const code = path[d.id];
+  if (!code) return '<div class="mc p' + col + '"><div class="t"><span>—</span></div></div>';
+  const diff = col !== 'a' && PA[d.id] !== code, o = optInfo[code];
+  return '<div class="mc p' + col + (diff ? ' diff' : '') + '" data-opt="' + code + '"' + (diff ? ' title="Differs from A (' + (PA[d.id] || '—') + ')"' : '') + '>' + sketch(code) + '<div class="t"><i>' + code + (o.note ? ' · ' + o.note : '') + '</i><span>' + esc(o.name) + '</span></div></div>';
+}
+function renderMorph() {
+  const PC = pathOf(selected), thirdTag = selected[0] === 'K09' ? 'SUPERSEDED' : selected[3];
+  let h = '<div class="mp-tabs" role="group" aria-label="Which design to show">'
+    + ['a:A', 'b:B', 'c:' + label(selected)].map(s => '<button type="button" data-tab="' + s[0] + '" aria-pressed="' + (colTab === s[0]) + '">' + s.slice(2) + '</button>').join('') + '</div>';
+  h += '<div class="mh"><span></span>'
+    + '<div class="col pa"><span class="id">A <span class="tg">CHOSEN</span></span><small>' + esc(shortName(byId.A)) + ' · D-182</small></div>'
+    + '<div class="col pb"><span class="id">B <span class="tg">FALLBACK</span></span><small>' + esc(shortName(byId.B)) + '</small></div>'
+    + '<div class="col pc"><span class="id">' + label(selected) + ' <span class="tg">' + thirdTag + '</span></span><small>' + esc(shortName(selected)) + '</small></div></div>';
   DIMS.forEach(d => {
-    html += '<div class="row" style="--cols:' + d.opts.length + '"><div class="fn"><span class="code">' + d.id + '</span><b>' + d.name + '</b><span>' + d.what + '</span></div>';
-    d.opts.forEach(o => {
-      const code = o[0]; let cls = 'ds-cell', tag = 'OUT';
-      if (CHOSEN.indexOf(code) >= 0) { cls += ' chosen'; tag = 'CHOSEN'; }
-      else if (RUNNER.indexOf(code) >= 0) { cls += ' runner'; tag = 'RUNNER-UP'; }
-      else if (!used[code]) { cls += ' empty'; tag = '—'; }
-      else cls += ' rejected';
-      const pic = (used[code] || CHOSEN.indexOf(code) >= 0) && document.getElementById('sk-' + code) ? '<svg aria-hidden="true"><use href="#sk-' + code + '"/></svg>' : '—';
-      html += '<div class="' + cls + '" data-opt="' + code + '" title="' + code + ' · ' + esc(o[1]) + (used[code] ? ' · ' + used[code] + ' concept' + (used[code] > 1 ? 's' : '') : ' · no concept') + '"><span class="code">' + code + (o[2] ? ' <em>· ' + o[2] + '</em>' : '') + '</span><span class="tag">' + tag + '</span><div class="pic">' + pic + '</div><span class="name">' + esc(o[1]) + '</span></div>';
-    });
-    html += '</div>';
+    const open = openDim === d.id;
+    h += '<div class="mrow' + (open ? ' open' : '') + '" data-dim="' + d.id + '"><button class="mfn" type="button" aria-expanded="' + open + '" title="Open the ' + d.opts.length + ' options for ' + esc(d.name) + '"><b><span class="k">' + d.id + '</span>' + d.name + '</b><span class="w">' + d.what + '</span></button>'
+      + pathCell(d, 'a', PA) + pathCell(d, 'b', PB) + pathCell(d, 'c', PC) + '</div>' + (open ? '<aside class="mo" id="morph-detail" aria-live="polite"></aside>' : '');
   });
-  grid.innerHTML = html;
-  const svgNS = 'http://www.w3.org/2000/svg';
-  overlay = document.createElementNS(svgNS, 'svg'); overlay.setAttribute('class', 'morph-paths'); grid.appendChild(overlay);
-  grid.querySelectorAll('.ds-cell').forEach(el => { cells[el.getAttribute('data-opt')] = el; });
-  const centre = (el, dx) => [el.offsetLeft + el.offsetWidth / 2 + dx, el.offsetTop + el.offsetHeight / 2];
-  function drawPath(codes, cls, dx) {
-    const pts = [];
-    codes.forEach(c => { const el = cells[c]; if (el) pts.push(centre(el, dx)); });
-    if (pts.length < 2) return;
-    const pl = document.createElementNS(svgNS, 'polyline');
-    pl.setAttribute('class', 'p-' + cls); pl.setAttribute('points', pts.map(p => p[0] + ',' + p[1]).join(' '));
-    overlay.appendChild(pl);
-    pts.forEach(p => { const c = document.createElementNS(svgNS, 'circle'); c.setAttribute('class', 'c-' + cls); c.setAttribute('cx', p[0]); c.setAttribute('cy', p[1]); c.setAttribute('r', 3.5); overlay.appendChild(c); });
-  }
-  redrawMorph = function () {
-    if (!grid.offsetWidth) return;   // page hidden: redraw when shown
-    overlay.setAttribute('width', grid.scrollWidth); overlay.setAttribute('height', grid.scrollHeight);
-    while (overlay.firstChild) overlay.removeChild(overlay.firstChild);
-    drawPath(CHOSEN, 'chosen', -7);
-    drawPath(RUNNER, 'runner', 7);
-    if (selected && selected[0] !== 'A' && selected[0] !== 'B') drawPath(selected[2].split(' '), 'sel', 0);
-  };
+  grid.innerHTML = h; grid.setAttribute('data-col', colTab);
+  detail = document.getElementById('morph-detail'); renderDetail();
+  renderNote(PC);
+}
+function renderDetail() {
+  const d = openDim && dimOf[openDim];
+  if (!d || !detail) return;
+  const PC = pathOf(selected), third = selected[0] !== 'A' && selected[0] !== 'B';
+  let h = '<div class="mo-h"><b>' + d.id + ' · ' + d.name + '</b><span>' + d.what + ' · ' + d.opts.length + ' options</span></div><div class="mo-g">';
+  d.opts.forEach(o => {
+    const code = o[0], inA = PA[d.id] === code, inB = PB[d.id] === code, inC = third && PC[d.id] === code, n = (usedBy[code] || []).length;
+    const cls = 'ot' + (inA ? ' a' : inB ? ' b' : n ? ' x' : ' gap') + (inC ? ' pick' : '');
+    h += '<button type="button" class="' + cls + '" data-opt="' + code + '" aria-pressed="' + (openOpt === code) + '">' + sketch(code)
+      + '<span class="pl">' + (inA ? '<span class="tg a">A</span>' : '') + (inB ? '<span class="tg">B</span>' : '') + (inC ? '<span class="tg">' + label(selected) + '</span>' : '') + '</span>'
+      + '<span class="c">' + code + (o[2] ? ' · ' + o[2] : '') + '</span><span class="n">' + esc(o[1]) + '</span><span class="u">' + (n ? 'used by ' + n : 'no concept') + '</span></button>';
+  });
+  h += '</div><div class="mo-use">';
+  if (openOpt && optInfo[openOpt] && optInfo[openOpt].dim === d) {
+    const ids = usedBy[openOpt] || [];
+    h += '<b>' + openOpt + '</b>' + (ids.length ? ' is on the path of ' + ids.length + ' concept' + (ids.length > 1 ? 's' : '') + ':' + ids.map(i => '<button type="button" data-pick="' + i + '" title="Show ' + label(byId[i]) + ' in the third column">' + label(byId[i]) + '</button>').join('') : ' is on no concept’s path: an audit gap.');
+  } else h += 'Click an option to see which concepts use it.';
+  const notes = d.opts.filter(o => o[2]).map(o => o[2]).filter((v, i, a) => a.indexOf(v) === i);
+  if (notes.length) h += '<span style="flex-basis:100%;color:var(--fg-3)">' + notes.map(k => k + ' = ' + NOTE_TXT[k]).join(' · ') + '</span>';
+  detail.innerHTML = h + '</div>';
+}
+function renderNote(PC) {
+  const out = c => '<span class="ds-badge" data-outcome="' + c[3] + '">' + c[3] + (c[4] ? ' → ' + c[4] : '') + '</span>';
+  const diffs = DIMS.filter(d => PA[d.id] !== PC[d.id]);
+  flow.innerHTML = '<span class="ds-badge" data-outcome="CHOSEN">CHOSEN</span><b>A</b><span>' + esc(shortName(byId.A)) + '</span><span class="arrow">→</span><span>decision D-182 (2026-11-14, J6 board)</span><span class="arrow">→</span><span>fallback B, lifeboat D2</span>'
+    + '<a class="ds-link" href="#shortlist">Shortlist and trade matrix</a><a class="ds-link" href="#concepts" style="margin-left:0">All concepts</a>';
+  let b = '<p><span class="ds-mono">A</span> ' + out(byId.A) + ' ' + esc(byId.A[5]) + '. ' + esc(byId.A[6]) + '</p><p><span class="ds-mono">B</span> ' + out(byId.B) + ' ' + esc(byId.B[5]) + '. ' + esc(byId.B[6]) + '</p>';
+  if (selected[0] !== 'A' && selected[0] !== 'B') b += '<p><span class="ds-mono">' + label(selected) + '</span> ' + esc(selected[1]) + ' ' + out(selected) + ' ' + esc(selected[5]) + '. ' + esc(selected[6]) + '</p>';
+  if (selected[0] !== 'A') b += '<p>' + label(selected) + ' differs from A in ' + diffs.length + ' of ' + DIMS.length + ' rows' + (diffs.length ? ': ' + diffs.map(d => d.id + ' ' + d.name + ' (' + (PA[d.id] || '—') + ' ' + esc(PA[d.id] ? optInfo[PA[d.id]].name : '—') + ' vs ' + (PC[d.id] || '—') + ' ' + esc(PC[d.id] ? optInfo[PC[d.id]].name : '—') + ')').join('; ') : '') + '.</p>';
+  if (selected[0] === 'K09') b += '<p>Concept A shares K09-L’s path except R7 (motors in an X on carbon arms, not on the fins) and E7 (two 4S 2300 mAh packs).</p>';
+  note.innerHTML = '<summary><b>Why these paths</b><span>A and B reasons' + (selected[0] !== 'A' && selected[0] !== 'B' ? ', ' + label(selected) : '') + ' · differences from A</span></summary><div class="body">' + b + '</div>';
+}
+function initMorph() {
+  grid = document.getElementById('morph-grid'); note = document.getElementById('morph-note'); flow = document.getElementById('morph-flow');
   const chips = document.getElementById('morph-chips'), sel = document.getElementById('morph-select');
   SHORT.forEach(id => { const c = byId[id]; const b = document.createElement('button'); b.type = 'button'; b.className = 'ds-chip'; b.setAttribute('data-id', id); b.setAttribute('aria-pressed', 'false');
-    b.innerHTML = '<span class="id">' + label(c) + '</span>' + esc(c[1].split(' (')[0].split(',')[0]); b.addEventListener('click', () => selectConcept(selected && selected[0] === id ? null : id)); chips.appendChild(b); });
+    b.title = shortName(c); b.innerHTML = '<span class="id">' + label(c) + '</span>'; b.addEventListener('click', () => selectConcept(id)); chips.appendChild(b); });
   sel.innerHTML = '<option value="">pick…</option>' + C.map(c => '<option value="' + c[0] + '">' + label(c) + ' · ' + esc(c[1].split(' (')[0]) + '</option>').join('');
   sel.addEventListener('change', () => selectConcept(sel.value || null));
   document.getElementById('morph-clear').addEventListener('click', () => selectConcept(null));
-  if (window.ResizeObserver) new ResizeObserver(() => redrawMorph()).observe(grid); else window.addEventListener('resize', () => redrawMorph());
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => redrawMorph());
+  grid.addEventListener('click', e => {
+    const t = e.target.closest('[data-tab]'); if (t) { colTab = t.getAttribute('data-tab'); renderMorph(); return; }
+    const r = e.target.closest('.mfn'); if (r) { const id = r.parentNode.getAttribute('data-dim'); openDim = openDim === id ? null : id; openOpt = null; renderMorph(); const nr = grid.querySelector('.mrow.open'); if (nr && nr.getBoundingClientRect().top < 0) nr.scrollIntoView({ block: 'nearest' }); }
+  });
+  grid.addEventListener('click', e => {
+    const p = e.target.closest('[data-pick]'); if (p) { selectConcept(p.getAttribute('data-pick')); return; }
+    const o = e.target.closest('.ot'); if (o) { openOpt = openOpt === o.getAttribute('data-opt') ? null : o.getAttribute('data-opt'); renderDetail(); }
+  });
+  const wrap = grid.closest('.morph-wrap');
+  const fitMorph = () => { const w = wrap.clientWidth; if (w) wrap.classList.toggle('xs', w < 520); };   // phone width: one design column at a time, chosen by tabs
+  if (window.ResizeObserver) new ResizeObserver(fitMorph).observe(wrap); else window.addEventListener('resize', fitMorph);
   selectConcept(null);
 
   // concept table
@@ -263,20 +298,12 @@ function initMorph() {
   tbody.addEventListener('click', e => { const a = e.target.closest('[data-pick]'); if (a) selectConcept(a.getAttribute('data-pick')); });
   filter();
 }
-let redrawMorph = () => {};
+let redrawMorph = () => {};   // kept: the page router calls it when the decision view is shown (nothing to measure any more)
 function selectConcept(id) {
-  selected = id ? byId[id] : null;
-  Object.keys(cells).forEach(k => cells[k].classList.remove('onpath'));
-  document.querySelectorAll('#morph-chips .ds-chip').forEach(b => b.setAttribute('aria-pressed', selected && b.getAttribute('data-id') === selected[0] ? 'true' : 'false'));
-  document.getElementById('morph-select').value = selected ? selected[0] : '';
-  if (selected) {
-    selected[2].split(' ').forEach(c => { if (cells[c]) cells[c].classList.add('onpath'); });
-    const out = selected[3] + (selected[4] ? ' → ' + selected[4] : '');
-    note.innerHTML = '<span class="ds-mono">' + label(selected) + '</span><span>' + esc(selected[1]) + '</span><span class="ds-badge" data-outcome="' + selected[3] + '">' + out + '</span><span class="ds-mono" style="font-weight:400;color:var(--fg-3)">' + selected[2] + '</span><span style="flex-basis:100%">' + esc(selected[6]) + '</span>';
-  } else {
-    note.innerHTML = '<span class="ds-mono">A</span><span>' + esc(byId.A[2]) + '</span><span style="color:var(--fg-3)">·</span><span class="ds-mono">B</span><span>' + esc(byId.B[2]) + '</span><span style="flex-basis:100%">Concept A (D-182) is the current design; B is the fallback. A shares K09-L’s path except R7 (motors in an X on carbon arms, not on the fins) and E7 (two 4S 2300 mAh packs). Pick K09 to see the previous choice.</span>';
-  }
-  redrawMorph();
+  selected = id ? byId[id] : byId.K09;
+  document.querySelectorAll('#morph-chips .ds-chip').forEach(b => b.setAttribute('aria-pressed', b.getAttribute('data-id') === selected[0] ? 'true' : 'false'));
+  document.getElementById('morph-select').value = id || '';
+  renderMorph();
 }
 
 // ---------------- lightbox for renders and plots ----------------
