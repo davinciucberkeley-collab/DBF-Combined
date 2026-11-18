@@ -15,7 +15,7 @@ const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
 const root = document.documentElement, themeBtn = document.getElementById('theme');
 function isDark() { const t = root.getAttribute('data-theme'); return t ? t === 'dark' : !!(window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches); }
 function paintTheme() { themeBtn.innerHTML = '<svg><use href="#i-' + (isDark() ? 'sun' : 'moon') + '"/></svg>'; }
-{ const t = store.get('theme'); if (t === 'light' || t === 'dark') root.setAttribute('data-theme', t); }
+{ const t = store.get('theme'); root.setAttribute('data-theme', t === 'light' ? 'light' : 'dark'); }   // dark by default (user 2026-11-17); the toggle's choice is remembered
 themeBtn.addEventListener('click', () => { const next = isDark() ? 'light' : 'dark'; root.setAttribute('data-theme', next); store.set('theme', next); paintTheme(); viewer.themeChanged(); if (window.ProofEmbed) window.ProofEmbed.themeChanged(); });
 if (window.matchMedia) matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paintTheme);
 paintTheme();

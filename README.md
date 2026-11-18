@@ -1,5 +1,15 @@
 # DBF-Combined: quad-tailsitter VTOL, concept A (UC Berkeley MEng capstone)
 
+<h2 align="center">
+  <a href="https://davinciucberkeley-collab.github.io/DBF-Combined/redesign/site/">&#9654; Open the Concept A Explorer in your browser</a>
+</h2>
+<p align="center">
+  3-D aircraft, build guide and films, hub stress map, BOM and status. Nothing to download or install.<br>
+  <a href="https://davinciucberkeley-collab.github.io/DBF-Combined/redesign/site/">davinciucberkeley-collab.github.io/DBF-Combined/redesign/site</a>
+  &middot; <a href="https://davinciucberkeley-collab.github.io/DBF-Combined/redesign/site/#structures">Hub stress map</a>
+  &middot; <a href="https://davinciucberkeley-collab.github.io/DBF-Combined/redesign/site/#build">Build guide</a>
+</p>
+
 > **Current design (2026-11-16): concept A, a scaled quad tailsitter (D-182).** K09-L, described below, could not be
 > built new within $2,000 (cheapest workable build about $2,577) and is kept as the record. Concept A: 0.90 m wing,
 > 4 x T-Motor MN2212 KV780 on 4S, about 1.456 kg predicted (`EST`), BOM $1,779 of $2,000 (+$100 margin if unverified prices run 30 % over). Design, reports and status:
@@ -36,9 +46,8 @@ complete on paper, nothing bought, built or flown yet.*
 
 ## Open it
 
-- **In any browser, nothing to download:** <https://davinciucberkeley-collab.github.io/DBF-Combined/redesign/site/>
-  (GitHub Pages, published from the `redesign/v1` branch; it updates a minute or two after each push). Add `#structures`
-  for the hub stress map, `#build` for the build guide.
+- **In any browser, nothing to download:** the link at the top of this page (GitHub Pages, published from the
+  `redesign/v1` branch; it updates a minute or two after each push).
 - **Windows, with Python installed:** double-click `00 - OPEN THE K09-L EXPLORER (double-click me).bat` in the repo
   folder. It serves `redesign/site/` on `http://localhost:8765/` and opens the Explorer in your browser, now showing concept A: a
   rotatable 3-D model with a vendor link or build clip for every part, the configuration decision and morph chart, the
