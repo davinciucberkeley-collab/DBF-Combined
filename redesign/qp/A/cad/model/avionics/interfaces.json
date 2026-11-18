@@ -88,9 +88,9 @@
    "mass_g": 3.0,
    "material": "PCB",
    "cg_xyz_m": [
-    0.0528,
-    -0.0446,
-    0.0165
+    0.0763,
+    -0.42,
+    0.0067
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -98,15 +98,45 @@
   },
   {
    "id": "AVN-006",
-   "name": "Pitot probe",
+   "name": "Pitot-static probe (RMRC kit; size not published: EST 166 x 3 mm, measure)",
    "subsystem": "avionics",
    "status": "MODELLED",
    "mass_g": 5.0,
    "material": "brass tube",
    "cg_xyz_m": [
-    -0.0425,
-    0.41,
+    -0.0136,
+    -0.42,
     0.0
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "AVN-009-T",
+   "name": "Pitot line, total pressure: silicone tubing 2 / 4 mm (V RMRC), 36 mm (CAD route)",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "material": "silicone rubber",
+   "cg_xyz_m": [
+    0.0536,
+    -0.4178,
+    0.0059
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "AVN-009-S",
+   "name": "Pitot line, static pressure: silicone tubing 2 / 4 mm (V RMRC), 36 mm (CAD route)",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "material": "silicone rubber",
+   "cg_xyz_m": [
+    0.0536,
+    -0.4222,
+    0.0059
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -184,6 +214,18 @@
   },
   {
    "id": "E-AVN-04",
+   "part_a": "AVN-005",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "avionics",
+   "notes": "airspeed board in its pocket in the left wing core next to the pitot, foam tape; pocket taped over (D-208)",
+   "retention": {
+    "item": "VHB-class tape",
+    "count": 1
+   }
+  },
+  {
+   "id": "E-AVN-05",
    "part_a": "AVN-003",
    "part_b": "AVN-001",
    "via": "CT-TAPE-FOAM",
@@ -195,20 +237,8 @@
    }
   },
   {
-   "id": "E-AVN-05",
-   "part_a": "AVN-004",
-   "part_b": "AVN-001",
-   "via": "CT-TAPE-FOAM",
-   "owner": "avionics",
-   "notes": "foam tape + tie",
-   "retention": {
-    "item": "VHB-class tape",
-    "count": 1
-   }
-  },
-  {
    "id": "E-AVN-06",
-   "part_a": "AVN-005",
+   "part_a": "AVN-004",
    "part_b": "AVN-001",
    "via": "CT-TAPE-FOAM",
    "owner": "avionics",
@@ -224,10 +254,82 @@
    "part_b": "WNG-001",
    "via": "CT-EPOXY",
    "owner": "avionics",
-   "notes": "pitot in a groove in the LE at y = +0.41 (outside the rotor wash, EST)"
+   "notes": "pitot in a groove in the LE at y = -0.42 (D-208: left wing, the sensor board side; 0.11 m outboard of the prop discs, EST)"
   },
   {
    "id": "E-AVN-08",
+   "part_a": "AVN-009-T",
+   "part_b": "AVN-006",
+   "via": "CT-PITOT-TUBING",
+   "owner": "avionics",
+   "notes": "total line on the probe total outlet barb (D-208)",
+   "retention": {
+    "item": "push-on silicone on the barb",
+    "count": 1,
+    "load_n": "none (pneumatic)",
+    "inspection": "set-up: line on the barb to the shoulder; blow test reads > 0"
+   }
+  },
+  {
+   "id": "E-AVN-09",
+   "part_a": "AVN-009-T",
+   "part_b": "AVN-005",
+   "via": "CT-PITOT-TUBING",
+   "owner": "avionics",
+   "notes": "total line on board port P1 (ARSPD_TUBE_ORDR 2: a swap is harmless; D-208)",
+   "retention": {
+    "item": "push-on silicone on the barb",
+    "count": 1,
+    "load_n": "none (pneumatic)",
+    "inspection": "set-up: line on the barb to the shoulder; blow test reads > 0"
+   }
+  },
+  {
+   "id": "E-AVN-10",
+   "part_a": "AVN-009-T",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "avionics",
+   "notes": "total line in its foam-core groove, laid in from above through a slit in the skin, slit taped (as the servo grooves; D-208)"
+  },
+  {
+   "id": "E-AVN-11",
+   "part_a": "AVN-009-S",
+   "part_b": "AVN-006",
+   "via": "CT-PITOT-TUBING",
+   "owner": "avionics",
+   "notes": "static line on the probe static outlet barb (D-208)",
+   "retention": {
+    "item": "push-on silicone on the barb",
+    "count": 1,
+    "load_n": "none (pneumatic)",
+    "inspection": "set-up: line on the barb to the shoulder; blow test reads > 0"
+   }
+  },
+  {
+   "id": "E-AVN-12",
+   "part_a": "AVN-009-S",
+   "part_b": "AVN-005",
+   "via": "CT-PITOT-TUBING",
+   "owner": "avionics",
+   "notes": "static line on board port P2 (ARSPD_TUBE_ORDR 2: a swap is harmless; D-208)",
+   "retention": {
+    "item": "push-on silicone on the barb",
+    "count": 1,
+    "load_n": "none (pneumatic)",
+    "inspection": "set-up: line on the barb to the shoulder; blow test reads > 0"
+   }
+  },
+  {
+   "id": "E-AVN-13",
+   "part_a": "AVN-009-S",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "avionics",
+   "notes": "static line in its foam-core groove, laid in from above through a slit in the skin, slit taped (as the servo grooves; D-208)"
+  },
+  {
+   "id": "E-AVN-14",
    "part_a": "AVN-008",
    "part_b": "AVN-001",
    "via": "CT-TAPE-FOAM",
@@ -239,7 +341,7 @@
    }
   },
   {
-   "id": "E-AVN-09",
+   "id": "E-AVN-15",
    "part_a": "HWC-001",
    "part_b": "AVN-002",
    "via": "CT-HW-SEATED",
@@ -263,7 +365,7 @@
    }
   },
   {
-   "id": "E-AVN-10",
+   "id": "E-AVN-16",
    "part_a": "HWC-001",
    "part_b": "HWC-003",
    "via": "CT-HW-SEATED",
@@ -287,7 +389,7 @@
    }
   },
   {
-   "id": "E-AVN-11",
+   "id": "E-AVN-17",
    "part_a": "HWC-003",
    "part_b": "AVN-001",
    "via": "CT-HW-SEATED",

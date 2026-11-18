@@ -178,7 +178,7 @@ def cap_profile(side):
     env = cap_env(side)
     need = {b: h + CAP_CLR for b, h in env.items() if h + CAP_CLR > 0.0002}
     xa, xb = min(need), max(need)
-    xb = max(xb, int(round(max(p[0] for p in boss_loop(side)) * 1000)) + 1)       # boss reach on the tab
+    xb = max(xb, int(round(max(p[0] for p in boss_loop(side, buried=False)) * 1000)) + 1)       # boss reach on the tab
     bins = list(range(xa - 1, xb + 2))
     ho = [max(need.get(b, 0.0) + CAP_WALL, need.get(b - 1, 0.0) + CAP_WALL, need.get(b + 1, 0.0) + CAP_WALL) if b in need or (b - 1) in need or (b + 1) in need else CAP_WALL for b in bins]
     dx = 0.001
@@ -217,7 +217,7 @@ def cap_end_loop(side):
     return _ccw(outer + base[::-1])
 
 
-def boss_loop(side):
+def boss_loop(side, buried=True):
     """Stop boss: bottom face coincides with the tab face rotated to the stop angle (+STOP upper / -STOP lower); top buried in the cap wall."""
     a = ELEV_STOP if side == 'U' else -ELEV_STOP
     xr, zr_ = XH - 0.0004, HINGE_Z - 0.0035
@@ -229,7 +229,15 @@ def boss_loop(side):
     Bp = (xe, zc + sg * t)
     p0 = _rot_pt((A[0] + (Bp[0] - A[0]) * BOSS_S[0], A[1] + (Bp[1] - A[1]) * BOSS_S[0]), a)
     p1 = _rot_pt((A[0] + (Bp[0] - A[0]) * BOSS_S[1], A[1] + (Bp[1] - A[1]) * BOSS_S[1]), a)
-    top = lambda p: (p[0], _out(side, p[0], CAP_WALL * 0.5))
+    xs_, ho_ = cap_profile(side) if buried else ([0.0, 1.0], [CAP_WALL, CAP_WALL])   # buried=False: x reach only (cap_profile asks)
+
+    def h_at(x):                                # cap outer height above the skin at x (linear between profile stations)
+        for i in range(len(xs_) - 1):
+            if min(xs_[i], xs_[i + 1]) <= x <= max(xs_[i], xs_[i + 1]):
+                f = (x - xs_[i]) / ((xs_[i + 1] - xs_[i]) or 1.0)
+                return ho_[i] + f * (ho_[i + 1] - ho_[i])
+        return ho_[0] if abs(x - xs_[0]) < abs(x - xs_[-1]) else ho_[-1]
+    top = lambda p: (p[0], _out(side, p[0], max(h_at(p[0]) - CAP_WALL * 0.5, CAP_WALL * 0.5)))   # D-208: up into the cap wall (was 0.3 mm over the skin: the bosses floated)
     return _ccw([p0, p1, top(p1), top(p0)])
 
 
@@ -312,7 +320,7 @@ def hub_strut_web(sg):
     return [hub_strut_pt(sg, HUB_STRUT_S[0], -0.003), hub_strut_pt(sg, -0.0015, -0.003), hub_strut_pt(sg, -0.0015, 0.003), hub_strut_pt(sg, HUB_STRUT_S[0], 0.003)]
 
 
-HUB_PAD = ((HUB_X1 - 0.0012, -0.040, 0.003), (HUB_X1, 0.040, 0.011))
+HUB_PAD = ((HUB_X1 - 0.0012, -(PADN_Y[0] - 0.0002), 0.003), (HUB_X1, PADN_Y[0] - 0.0002, 0.011))   # D-208: the flange stops inboard of the raceway notches (|y| 13.6); its outer tabs (|y| 24.4..40) were cut free by the full-height notches and floated (STL islands)
 
 # ------------------------------------------------------------------ D-202 hub (CGE-001), continuous arm tubes (CGE-002-A/B), doublers (CGE-009), pins (CGE-010)
 # All from qp/A/structures/fea_hub.py GEO (the FEA that decided D-202) unless marked. Tube frame: origin on the tube axis at the hub plane (x = TUBE_X[T]), local Y = u (tube axis, +s
@@ -429,7 +437,6 @@ def hub_mass_g():
     ls = HUB_STRUT_S[1] + 0.002
     v += 2 * (math.pi * Rs ** 2 * ls - math.pi * (STRUT_OD / 2) ** 2 * HUB_STRUT_S[1] + HUB_W * 0.006 * (-HUB_STRUT_S[0] - 0.0015))
     v += (HUB_PAD[1][0] - HUB_PAD[0][0]) * (HUB_PAD[1][1] - HUB_PAD[0][1]) * (HUB_PAD[1][2] - HUB_PAD[0][2])
-    v -= 2 * (HUB_X1 - (HUB_X1 - 0.0012)) * (PADN_Y[1] - PADN_Y[0]) * (HUB_PAD[1][2] - HUB_PAD[0][2])   # D-199: two raceway notches in the tray pad flange
     return v * 1e6 * RHO_PETG
 
 
@@ -695,10 +702,10 @@ def build_cage(ctx):
     # (amodel/hub_body.py, cached in hub_body_cache.npz): the fusionkit prism / loft kinds cannot fillet. Every bore, pin hole, lead exit and the bridge bore are still cut below.
     r_ = hub_outer()
     hub.mesh(r_['verts'], r_['tris'], name='hub outer body: centre block 38 x 20 x 20 mm on the bridge axis to the tray face, 3 mm edge radii, sleeves r 8.5 mm over s +-24 mm, junction fillets 2.0 / 1.5 mm (OpenCASCADE, = FEA geometry; D-202, D-207)')
-    hub.box(HUB_PAD[0], HUB_PAD[1], name='hub tray pad flange')
-    for sy_ in (1, -1):                          # D-199: slots in the pad flange let the phase-lead raceways (HRN-003) pass under the tray plate
+    hub.box(HUB_PAD[0], HUB_PAD[1], name='hub tray pad flange (D-208: inboard of the raceway notches, |y| <= 13.6)')
+    for sy_ in (1, -1):                          # D-199: the raceway notches also clear the hub body beside the flange (the UR / UL conduits pass here)
         ya_, yb_ = sorted((sy_ * PADN_Y[0], sy_ * PADN_Y[1]))
-        hub.cut_box((PADN_X[0], ya_, PADN_Z[0]), (PADN_X[1], yb_, PADN_Z[1]), name='raceway slot in the tray pad flange (D-199)')
+        hub.cut_box((PADN_X[0], ya_, PADN_Z[0]), (PADN_X[1], yb_, PADN_Z[1]), name='raceway notch beside the tray pad flange (D-199)')
     # bridge bore: 12 mm from x = HUB_x + 15 mm to the aft face, 45 deg conical corner at the floor (matches the chamfered bridge end); explicit cut, not a seat (a seat would fill the chamfer)
     hub.cut(fk.Shape('revolve', 'bridge bore 16 mm, floor corner a 0.8 mm x 45 deg cone matching the bridge chamfer (D-207)', axis='X', center=(BORE_X0, 0.0, BR_Z),
                      profile=[(0.0, 0.0), (0.0, BR_RO - BR_CHAMFER), (BR_CHAMFER, BR_RO)]

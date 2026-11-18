@@ -468,6 +468,10 @@ def build_raceway(ctx):
         h.cut_box(c['cor_i'][0], c['cor_i'][1], name='conduit step interior (D-202)')
         h.cut_box(c['col_i'][0], c['col_i'][1], name='conduit column interior, open to the raceway window (D-202)')
         ctx.seat('HRN-004-' + st, 'CGE-001', 'conduit floor hugs the hub sleeve (D-202)')
+        sy_ = 1 if c.get('y1', 1) >= 0 else -1
+        yr = sorted((sy_ * 0.0136, sy_ * 0.0400))
+        h.cut_box((HUB[0] + 0.024 - 0.0012, yr[0], 0.003), (HUB[0] + 0.024, yr[1], 0.011),
+                  name='relief beside the tray pad flange (D-208: keeps the D-202 conduit shape the old 80 mm flange cut, so the conduit still slides past the flange corner)')
         ctx.seat('HRN-004-' + st, 'CGE-002-' + c['T'], 'conduit floor over the arm tube (D-202)')
         ctx.seat('HRN-004-' + st, 'CGE-009-' + st, 'conduit floor over the doubler (D-202)')
 
@@ -510,8 +514,27 @@ RX_B = ((0.102, -0.0525), (0.124, -0.0395))  # V RadioMaster RP3 V2 22 x 13 x 4 
 RX_T = 4.0 * MM
 GPS_B = ((0.045, 0.0275), (0.070, 0.0525))   # V TBS M10Q 25 x 25 x 7.7 mm (readymaderc 86501)
 GPS_T = 7.7 * MM
-AS_B = ((0.045, -0.0525), (0.060, -0.0375))  # EST RMRC MS4525 board 15 x 15 (size not published)
 AS_T = 8.0 * MM                             # EST
+# D-208 pitot (AVN-006), its two short pneumatic lines (AVN-009-T / -S) and the airspeed board (AVN-005), all at the LEFT wing tip.
+# RMRC publishes the kit contents and the tubing only (readymaderc RMRC-PIX-AIR-SEN, 2026-11-18: "Tubing Size: 2mm ID / 4mm OD", "approx. 0.5m";
+# the replacement pitot page: "Pitot Tube (Prandtl Tube) with plastic attachment point"). Probe length, OD, the attachment block, the barbs and the
+# board size are NOT published: every such dimension below is EST and must be measured on arrival (BUILD step E1).
+# The board sits next to the probe (user 2026-11-18, "move the sensor board"): 2 x 39 mm of tubing instead of 2 x 388 mm (saves 7.6 g of silicone);
+# the light 4-wire I2C lead runs inboard in a foam-core groove instead.
+PIT_Y = -0.420                              # probe axis: 10 mm outboard of the fin rib saddle ring (|y| 0.35..0.41), 30 mm in from the tip; prop discs end at |y| 0.309
+PIT_X0, PIT_X1 = -0.130, 0.030              # EST probe 160 mm, tip 130 mm ahead of the LE; rear end in the plastic attachment block
+PIT_R, PIT_RI = 0.0015, 0.0010              # EST 3 mm brass probe
+PIT_B = (0.030, 0.038, 0.0045, 0.0030)      # EST plastic attachment block: x 30..38, half width 4.5 (y), half height 3.0 (z)
+PIT_NR = 0.0010                             # EST barb OD 2.0 mm = the tubing bore (V RMRC 2 mm ID); a real barb is a slight press fit: measure
+PIT_DY = {'T': 0.0022, 'S': -0.0022}        # EST barb positions on the block's rear face (+-2.2 mm in y: two 4 mm tubes side by side)
+PT_D = 0.004                                # V RMRC silicone tubing OD 4 mm (ID 2 mm)
+PT_XR, PT_ZT = 0.049, 0.0090                # tubes rise at x 49 (spar from x 54) and run aft at z 9 over the spar (top z 6; skin z 12.3 at x 60)
+AS_B = ((0.069, PIT_Y - 0.0075), (0.084, PIT_Y + 0.0075))   # EST board 15 x 15 in a pocket aft of the spar (x <= 66), y -427.5..-412.5 (saddle ring to -410)
+AS_ZB = 0.0035                              # board underside z 3.5 (sensor top z 11.5, skin z 12.3 at x 75)
+AS_SX = (0.0715, 0.0785)                    # EST sensor body x range; its barbs point -x (forward) from x 71.5 to 66.5 at z PT_ZT
+I2C_X = 0.095                               # I2C lead groove x: aft of the rib socket (x <= 90.5), ahead of the servo pockets (x >= 127)
+I2C_ZD = zu(I2C_X) - 0.0065                 # deep under the servo-lead groove that crosses at |y| 0.19 (its bottom z ~6.9)
+I2C_ZS = zu(I2C_X) - 0.0025                 # shallow over the fin rib tube at |y| 0.38 (its top z 7.0)
 SV_X0, SV_X1, SV_DY, SV_Z0 = 0.1270, 0.1554, 0.01335, -0.0013 - WING_DZ    # SERVO.md: EMAX ES3054HV 28.4 x 13.0 x 26.7 (servodatabase / getfpv, 2026-11-15); ears, output boss: "-" (no drawing)
 SV_XS = 0.1405                              # spline axis x (kept; spline axis is vertical, arm turns in the x-y plane)
 ARM_R = 12.0 * MM                           # FIXES2 s1.3: servo arm 12 mm to the pushrod hole
@@ -560,7 +583,9 @@ P('AVN-007', 'Foam-tape pads x4 (FC hard mount, 3.0 mm)', 'avionics', 1.0, 'VHB-
 P('AVN-003', 'Receiver RP3 V2 ELRS', 'avionics', 4.6, 'PCB', 'buy', 'sink')       # V 4.6 g with antennas (readymaderc 85670)
 P('AVN-004', 'GPS TBS M10Q + compass', 'avionics', 13.5, 'PCB', 'buy', 'sink')
 P('AVN-005', 'Airspeed sensor MS4525 board', 'avionics', 3.0, 'PCB', 'buy', 'sink')
-P('AVN-006', 'Pitot probe', 'avionics', 5.0, 'brass tube', 'buy')
+P('AVN-006', 'Pitot-static probe (RMRC kit; size not published: EST 166 x 3 mm, measure)', 'avionics', 5.0, 'brass tube', 'buy')
+for _k, _n in (('T', 'total'), ('S', 'static')):    # D-208: mass and length set after pitot_paths() exists (end of file)
+    P('AVN-009-' + _k, 'Pitot line, %s pressure: silicone tubing 2 / 4 mm (V RMRC)' % _n, 'avionics', 0.0, 'silicone rubber', 'buy')
 P('AVN-008', 'Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead runs from the foam ditch to the ESC pads; notches for the sensor leads and the battery tail', 'avionics', cover_mass_g(), 'PETG (printed)')
 P('HWC-001', 'FC mounting screws: 4 x M2 x 25 pan screw (stock)', 'avionics', M_FC_SCREWS, 'A2 stainless', 'buy')
 P('HWC-003', 'FC mounting nuts: 4 x M2 thin nut (DIN 439 1.2 mm) in the plate hex pockets', 'avionics', M_FC_NUTS, 'A2 stainless', 'buy')
@@ -605,9 +630,15 @@ E(en('PWR'), 'PWR-002', 'PWR-001', 'CT-STRAP-VELCRO', 'power', 'strap bears on t
 E(en('AVN'), 'AVN-001', 'WNG-001', CA, 'avionics', 'plate base follows the upper skin (same vertices as the core)')
 E(en('AVN'), 'AVN-007', 'AVN-001', 'CT-GEL-PAD', 'avionics', 'four thin foam-tape pads on the plate (FC on the wing centre, not on the cage hub: SITL-FLIGHT follow-up 2; hard mount, BOARD D-186)')
 E(en('AVN'), 'AVN-002', 'AVN-007', 'CT-GEL-PAD', 'avionics', 'FC on the tape pads, M2 screws (hard mount; gel only if its frequency is measured at 40-70 Hz)')
-for pid in ('AVN-003', 'AVN-004', 'AVN-005'):
+E(en('AVN'), 'AVN-005', 'WNG-001', TAPEF, 'avionics', 'airspeed board in its pocket in the left wing core next to the pitot, foam tape; pocket taped over (D-208)', retention=dict(item='VHB-class tape', count=1))
+for pid in ('AVN-003', 'AVN-004'):
     E(en('AVN'), pid, 'AVN-001', TAPEF, 'avionics', 'foam tape + tie', retention=dict(item='VHB-class tape', count=1))
-E(en('AVN'), 'AVN-006', 'WNG-001', EPX, 'avionics', 'pitot in a groove in the LE at y = +0.41 (outside the rotor wash, EST)')
+E(en('AVN'), 'AVN-006', 'WNG-001', EPX, 'avionics', 'pitot in a groove in the LE at y = -0.42 (D-208: left wing, the sensor board side; 0.11 m outboard of the prop discs, EST)')
+for _k, _n, _p in (('T', 'total', 'P1'), ('S', 'static', 'P2')):
+    _ret = dict(item='push-on silicone on the barb', count=1, load_n='none (pneumatic)', inspection='set-up: line on the barb to the shoulder; blow test reads > 0')
+    E(en('AVN'), 'AVN-009-' + _k, 'AVN-006', 'CT-PITOT-TUBING', 'avionics', _n + ' line on the probe ' + _n + ' outlet barb (D-208)', retention=_ret)
+    E(en('AVN'), 'AVN-009-' + _k, 'AVN-005', 'CT-PITOT-TUBING', 'avionics', _n + ' line on board port ' + _p + ' (ARSPD_TUBE_ORDR 2: a swap is harmless; D-208)', retention=_ret)
+    E(en('AVN'), 'AVN-009-' + _k, 'WNG-001', TAPEF, 'avionics', _n + ' line in its foam-core groove, laid in from above through a slit in the skin, slit taped (as the servo grooves; D-208)')
 E(en('AVN'), 'AVN-008', 'AVN-001', TAPEF, 'avionics', 'cover stands on the plate (and its front ramp on the skin ahead of the plate), foam tape + two ties; removable for FC access (D-198)', retention=dict(item='VHB-class tape + ties', count=1))
 _e_fc = en('AVN')
 EDGES.append(dict(id=_e_fc, part_a='HWC-001', part_b='AVN-002', via='CT-HW-SEATED', owner='avionics', hardware=True,
@@ -795,15 +826,14 @@ def build_avionics(ctx):
     gcx, gcy = (gx0 + gx1) / 2, (gy0 + gy1) / 2
     gp.box((gcx - 9 * MM, gcy - 9 * MM, ZP + T_PCB), (gcx + 9 * MM, gcy + 9 * MM, ZP + GPS_T), name='GNSS patch (EST 18 x 18; total height 7.7 V)')
     gp.box((gcx - 3.9 * MM, gy0, ZP + T_PCB), (gcx + 3.9 * MM, gy0 + 4.2 * MM, ZP + T_PCB + 3.5 * MM), name='JST-SH 6-pin plug (ASSUMED connector, EST size)')
-    # ---- airspeed board MS4525 (EST 15 x 15): PCB, sensor, 2 barbed ports, JST-GH plug
+    # ---- airspeed board MS4525 (EST 15 x 15): PCB, sensor, 2 barbed ports, JST-GH plug; D-208: in a pocket in the left wing next to the pitot
     asd = ctx.part('AVN-005', rgb=(0.3, 0.3, 0.3))
     (ax0, ay0), (ax1, ay1) = AS_B
-    _pcb(asd, ax0, ay0, ax1, ay1, ZP, T_PCB, r=1.0 * MM, name='MS4525 board (EST 15 x 15 x 1.6)')
-    acx, acy = (ax0 + ax1) / 2, (ay0 + ay1) / 2
-    asd.box((acx - 3 * MM, acy - 4.5 * MM, ZP + T_PCB), (acx + 3 * MM, acy + 0.5 * MM, ZP + AS_T), name='MS4525DO sensor body (EST)')
-    for j, ya in enumerate((acy - 3.0 * MM, acy - 0.5 * MM)):
-        asd.cylinder('X', (acx + 3 * MM, ya, ZP + 5.5 * MM), 5 * MM, 1.1 * MM, name='barbed port %d (EST OD 2.2)' % (j + 1))
-    asd.box((acx - 3.2 * MM, ay1 - 4.0 * MM, ZP + T_PCB), (acx + 3.2 * MM, ay1, ZP + T_PCB + 4.2 * MM), name='JST-GH 4-pin plug (EST size)')
+    _pcb(asd, ax0, ay0, ax1, ay1, AS_ZB, T_PCB, r=1.0 * MM, name='MS4525 board (EST 15 x 15 x 1.6)')
+    asd.box((AS_SX[0], PIT_Y - 0.0050, AS_ZB + T_PCB), (AS_SX[1], PIT_Y + 0.0050, AS_ZB + AS_T), name='MS4525DO sensor body (EST)')
+    for j_, k in enumerate(('T', 'S')):          # ports point -x towards the probe (EST layout: RMRC gives no drawing)
+        asd.cylinder('X', (AS_SX[0], PIT_Y + PIT_DY[k], PT_ZT), -0.0050, PIT_NR, name='barbed port P%d (%s), EST OD 2.0' % (j_ + 1, 'total' if k == 'T' else 'static'))
+    asd.box((ax1 - 0.0040, PIT_Y - 0.0032, AS_ZB + T_PCB), (ax1, PIT_Y + 0.0032, AS_ZB + T_PCB + 4.2 * MM), name='JST-GH 4-pin plug (EST size), opening +x')
     # ---- D-198 bay cover: roof band with the ramp / step profile, two 0.6 mm end walls, notches for the bundles that leave at |y| 26.5 mm
     cv = ctx.part('AVN-008', rgb=(0.85, 0.9, 0.95))
     cv.prism('Y', -COV_Y, [cov_loops()], 2 * COV_Y, name='cover roof band (0.6 mm)')
@@ -822,8 +852,82 @@ def build_avionics(ctx):
             cv.cut_box((0.1160 - 0.0041, ya, ZP - 0.001), (0.1160 + 0.0041, yb, 0.0198), name='battery tail slot, open at the bottom, closed roof (D-199)')
     # ---- pitot: brass probe + silicone tube stub on its rear
     pt = ctx.part('AVN-006', rgb=(0.8, 0.7, 0.2))
-    pt.tube('X', (-0.130, YFIN + 0.030, 0.0), 0.175, 0.0015, 0.0010, name='pitot tube (EST 175 x 3 mm; RMRC gives no size)')
-    # silicone tubing 2/4 mm (V RMRC): rear connection and run to the sensor NOT designed (rib saddle FIN-005 and spar are at x >= 0.0485): not drawn
+    pt.tube('X', (PIT_X0, PIT_Y, 0.0), PIT_X1 + 0.0005 - PIT_X0, PIT_R, PIT_RI, name='pitot-static probe (EST 160 x 3 mm: RMRC publishes no size; measure)')
+    bx0, bx1, bhy, bhz = PIT_B
+    pt.box((bx0, PIT_Y - bhy, -bhz), (bx1, PIT_Y + bhy, bhz), name='plastic attachment block (RMRC: "with plastic attachment point"; size EST)')
+    for k in ('T', 'S'):
+        pt.cylinder('X', (bx1 - 0.0005, PIT_Y + PIT_DY[k], 0.0), 0.0065, PIT_NR, name='%s outlet barb on the block rear face (EST position and OD 2.0)' % ('total-pressure' if k == 'T' else 'static'))
+    build_pitot_lines(ctx)
+
+
+def pitot_paths():
+    """D-208: waypoints of the total (T) and static (S) lines: block barb -> aft 11 mm -> up to z 9 -> aft over the spar -> board port (4 mm onto each barb)."""
+    out = {}
+    for k in ('T', 'S'):
+        y = PIT_Y + PIT_DY[k]
+        out[k] = [(PIT_B[1] + 0.0015, y, 0.0), (PT_XR, y, 0.0), (PT_XR, y, PT_ZT), (AS_SX[0] - 0.0020, y, PT_ZT)]
+    return out
+
+
+def i2c_path():
+    """D-208: airspeed I2C lead, FC I2C pad -> up and out through the cover's airspeed notch -> down beside the cover wall to the plate -> aft on
+    the plate (taped) -> down through the left plate window into the core -> outboard in a groove at x 95 (deep under the servo-lead groove,
+    shallow over the fin rib tube) -> forward into the board plug."""
+    x, y, z = FC_PADS['I2C']
+    zpl = ZP + 0.0026                           # bundle on the plate (2 x 2 strands of 1.0 mm)
+    return [(x, y, z + 0.0006), (x, y, _ZF), (0.0512, -0.0300, _ZF), (0.0512, -0.0300, zpl), (I2C_X, -0.0300, zpl), (I2C_X, -0.0300, I2C_ZD),
+            (I2C_X, -0.150, I2C_ZD), (I2C_X, -0.230, I2C_ZD), (I2C_X, -0.280, I2C_ZS), (I2C_X, PIT_Y, I2C_ZS),
+            (AS_B[1][0] - 0.0025, PIT_Y, AS_ZB + T_PCB + 2.1 * MM)]
+
+
+def _tube_mesh(P, ro, ri, n=16):
+    """Closed hollow tube (outer ro, inner ri) swept along the dense centre line P with parallel-transport frames; annular end faces. Outward wound."""
+    T = [_unit(_sub(P[min(i + 1, len(P) - 1)], P[max(i - 1, 0)])) for i in range(len(P))]
+    a = (1.0, 0.0, 0.0) if abs(T[0][0]) < 0.9 else (0.0, 1.0, 0.0)
+    N = _unit(_cross(T[0], a))
+    frames = []
+    for i in range(len(P)):
+        if i:
+            N = _unit(_sub(N, _mul(T[i], _dot(N, T[i]))))
+        frames.append((N, _cross(T[i], N)))
+    V = []
+    for (N_, B_), p in zip(frames, P):
+        for r in (ro, ri):
+            for j in range(n):
+                th = 2 * math.pi * j / n
+                V.append(_add(p, _add(_mul(N_, r * math.cos(th)), _mul(B_, r * math.sin(th)))))
+
+    def idx(i, o, j):                                   # o = 0 outer ring, 1 inner ring
+        return i * 2 * n + o * n + (j % n)
+    F = []
+    for i in range(len(P) - 1):
+        for j in range(n):
+            a0, a1, b0, b1 = idx(i, 0, j), idx(i, 0, j + 1), idx(i + 1, 0, j), idx(i + 1, 0, j + 1)
+            F += [(a0, a1, b1), (a0, b1, b0)]
+            a0, a1, b0, b1 = idx(i, 1, j), idx(i, 1, j + 1), idx(i + 1, 1, j), idx(i + 1, 1, j + 1)
+            F += [(a0, b1, a1), (a0, b0, b1)]
+    for i, sgn in ((0, -1), (len(P) - 1, 1)):
+        for j in range(n):
+            o0, o1, i0, i1 = idx(i, 0, j), idx(i, 0, j + 1), idx(i, 1, j), idx(i, 1, j + 1)
+            F += [(o0, i1, o1), (o0, i0, i1)] if sgn < 0 else [(o0, o1, i1), (o0, i1, i0)]
+    return V, F
+
+
+def build_pitot_lines(ctx):
+    """The two lines as parts (silicone swept along the route, bend radius 4 mm) and their pockets in the foam core (shop cuts, routed from above)."""
+    for k in ('T', 'S'):
+        P_, _r = _smooth(pitot_paths()[k], 0.004)
+        v, t = _tube_mesh(P_, PT_D / 2, 0.0010)          # V RMRC 2 mm ID
+        ctx.part('AVN-009-' + k, rgb=(0.85, 0.85, 0.8)).mesh(v, t, name='silicone tubing 2 / 4 mm along the CAD route (D-208)')
+    core = ctx.components['WNG-001']
+    bx0, bx1, bhy, bhz = PIT_B
+    core.cut_box((-0.003, PIT_Y - bhy - 0.0005, -bhz - 0.0005), (bx0, PIT_Y + bhy + 0.0005, bhz + 0.0005),
+                 name='pitot nose channel: the attachment block slides in from the front, filled with foam and epoxy after (D-208)')
+    yl, yh = PIT_Y - 0.0055, PIT_Y + 0.0055
+    core.cut_box((bx0, yl, -0.0035), (PT_XR + 0.0025, yh, 0.0170), name='pitot line pocket behind the probe, open through the upper skin, taped after (D-208)')
+    core.cut_box((PT_XR + 0.0025, yl, PT_ZT - 0.0023), (AS_B[0][0] + 0.0005, yh, 0.0170), name='pitot line slot over the spar, open through the upper skin (D-208)')
+    (ax0, ay0), (ax1, ay1) = AS_B
+    core.cut_box((ax0 - 0.0005, ay0 - 0.0005, AS_ZB - 0.0005), (ax1 + 0.0005, ay1 + 0.0005, 0.0170), name='airspeed board pocket, open through the upper skin, taped after (D-208)')
 
 
 def _arm_loop(cx, cy, ux, uy):
@@ -959,7 +1063,9 @@ def hrn_items():
     return [('phase-lead extensions: 12 strands of 20 AWG, CAD route beyond the 0.40 m stock lead + 30 mm splice (%.2f m)' % ext, round(ext * WIRE_G_PER_M[20], 1)),
             ('12 splices: solder + 15 mm heat-shrink, 0.15 g each (EST)', 1.8),
             ('ESC signal ribbon 6 x 26 AWG x 73 mm (CAD) at 2.0 g/m (EST)', round(6 * 0.073 * WIRE_G_PER_M[26], 1)),
-            ('RX / GPS / airspeed leads: 14 conductors of 28 AWG x about 70 mm at 1.2 g/m (EST) + 3 JST plugs 0.5 g each (EST)', round(14 * 0.070 * WIRE_G_PER_M[28] + 1.5, 1)),
+            ('RX / GPS leads: 10 conductors of 28 AWG x about 70 mm at 1.2 g/m (EST) + 2 JST plugs 0.5 g each (EST)', round(10 * 0.070 * WIRE_G_PER_M[28] + 1.0, 1)),
+            ('airspeed I2C lead (D-208): 4 conductors of 28 AWG x %.0f mm (CAD route to the left wing tip) at 1.2 g/m (EST) + JST plug 0.5 g (EST)' % (_plen(i2c_path()) * 1e3),
+             round(4 * _plen(i2c_path()) * WIRE_G_PER_M[28] + 0.5, 1)),
             ('servo leads: the 3-wire leads are in the 20.5 g servo mass (EST: stock length reaches the FC pads), plus 2 groove fish-wire ties', 0.2),
             ('heat-shrink sleeves at the cup collar / floor hole, ties, foam tape, solder (EST)', 5.0)]
 
@@ -1073,12 +1179,16 @@ def build_harness(ctx):
     zp_ = ZP + T_PCB + 1.8 * MM
     pts = [(gcx, gy0 + 2.0 * MM, zp_), (gcx, 0.0243, zp_), (gcx, 0.0243, _ZF), (x, y, _ZF), (x, y, z + 0.0006)]    # D-199: leaves the plug inboard (the old route rose through the GNSS patch footprint), crosses the cover wall low through a bottom-open slot
     _wire_s(ctx, 'E-HRN-10', pts, 0.0025, wd, [((j % 3 - 1) * wd, (j // 3 - 0.5) * wd) for j in range(6)], lay=0.100)
-    # airspeed cable: JST-GH plug -> FC I2C pad
-    x, y, z = FC_PADS['I2C']
-    (ax0, ay0), (ax1, ay1) = AS_B
-    acx = (ax0 + ax1) / 2
-    pts = [(acx, ay1, ZP + T_PCB + 2.1 * MM), (acx, ay1 + 4.0 * MM, ZP + T_PCB + 2.1 * MM), (acx, ay1 + 4.0 * MM, _ZF), (x, y, _ZF), (x, y, z + 0.0006)]
-    _wire_s(ctx, 'E-HRN-11', pts, 0.0025, wd, [((j % 2 - 0.5) * wd, (j // 2 - 0.5) * wd) for j in range(4)], lay=0.100)
+    # airspeed cable: FC I2C pad -> JST-GH plug on the board at the left wing tip (D-208)
+    _wire_s(ctx, 'E-HRN-11', i2c_path(), 0.004, wd, [((j % 2 - 0.5) * wd, (j // 2 - 0.5) * wd) for j in range(4)], lay=0.100)
+    hg = 0.0017                                  # groove half width / height round the 2 x 2 bundle (envelope 1.4 mm) + 0.3 mm
+    core = ctx.components['WNG-001']
+    core.cut_box((I2C_X - hg, -0.0345, I2C_ZD - hg), (I2C_X + hg, -0.0280, 0.0150), name='I2C lead drop slot through the skin under the left plate window (D-208)')
+    core.cut_box((I2C_X - hg, -0.2300, I2C_ZD - hg), (I2C_X + hg, -0.0280, I2C_ZD + hg), name='I2C lead groove along y, deep (under the servo-lead groove) (D-208)')
+    core.cut_prism('X', I2C_X - hg, [[(-0.2300, I2C_ZD - hg), (-0.2300, I2C_ZD + hg), (-0.2800, I2C_ZS + hg), (-0.2800, I2C_ZS - hg)]], 2 * hg,
+                   name='I2C lead groove ramp (D-208)')
+    core.cut_box((I2C_X - hg, PIT_Y - hg, I2C_ZS - hg), (I2C_X + hg, -0.2800, I2C_ZS + hg), name='I2C lead groove along y, shallow (over the fin rib tube) (D-208)')
+    core.cut_box((AS_B[1][0], PIT_Y - hg, AS_ZB + T_PCB), (I2C_X + hg, PIT_Y + hg, I2C_ZS + hg), name='I2C lead groove into the board pocket (D-208)')
 
 
 def build_assembly(ctx):
@@ -1108,3 +1218,12 @@ def build_assembly(ctx):
             ctx.rigid(e['id'], e['part_a'], e['part_b'], at)
         else:
             ctx.contact(e['id'], via)
+
+
+# D-208: pitot line lengths and masses from the CAD route (silicone rubber 1.15 g/cm3 EST; 2 / 4 mm V RMRC)
+PITOT_LINE_M = {}
+for _k in ('T', 'S'):
+    _P, _r = _smooth(pitot_paths()[_k], 0.004)
+    PITOT_LINE_M[_k] = sum(math.dist(_P[i], _P[i + 1]) for i in range(len(_P) - 1))
+    PARTS['AVN-009-' + _k]['mass_g'] = round(math.pi / 4 * (PT_D ** 2 - 0.002 ** 2) * PITOT_LINE_M[_k] * 1.15e6, 1)
+    PARTS['AVN-009-' + _k]['name'] += ', %.0f mm (CAD route)' % (PITOT_LINE_M[_k] * 1e3)

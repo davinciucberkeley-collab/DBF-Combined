@@ -420,7 +420,7 @@
    "verifies": [
     "A-U1"
    ],
-   "how": "python -I qp/A/bom_a.py (reads BOM-A.csv): $1,775.09; gate G7 total <= $1,800. 14 of 38 lines are unverified (U / EST).",
+   "how": "python -I qp/A/bom_a.py (reads BOM-A.csv): $1,779.47; gate G7 total <= $1,800. 16 of 42 lines are unverified (U / EST).",
    "value": 1779.4666375000002
   },
   {
@@ -437,7 +437,7 @@
    "verifies": [
     "A-U1"
    ],
-   "how": "python -I qp/A/bom_a.py: +$105.08 at +30 %; gate G7 margin >= $100. Two new EST lines (R12 / R13): if either rises by > $9 the margin falls under $100.",
+   "how": "python -I qp/A/bom_a.py: +$100.05 at +30 %; gate G7 margin >= $100. The margin has 5 cents of slack: any rise in the EST lines beyond their +30 % allowance takes it under $100.",
    "value": 100.04609874999983
   },
   {
@@ -781,10 +781,10 @@
     "v": "P:cad3d.assy_steps_ok"
    },
    "outputs": {
-    "v": 58
+    "v": 59
    },
    "input_values": {
-    "v": 58
+    "v": 59
    }
   },
   {
@@ -802,7 +802,7 @@
     "A-U4"
    ],
    "how": "python -I qp/A/cad/a_assembly.py: 28 of 28 steps, 0 blocked, 0 unsupported, no wire laid before its ends.",
-   "value": 58
+   "value": 59
   },
   {
    "id": "CALC-A-ASSY-PARTS-READ",
@@ -815,10 +815,10 @@
     "v": "P:cad3d.assy_parts_placed"
    },
    "outputs": {
-    "v": 111
+    "v": 113
    },
    "input_values": {
-    "v": 111
+    "v": 113
    }
   },
   {
@@ -836,7 +836,7 @@
     "A-U4"
    ],
    "how": "a_assembly.py: 78 of 78 parts placed, none missing from the sequence.",
-   "value": 111
+   "value": 113
   }
  ]
 }

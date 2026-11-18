@@ -105,12 +105,12 @@ kit.claim("CL-A-MASS-PRED", "Predicted take-off mass (CAD basic x growth + overr
           limit=("<=", "P:req.mass_target_kg"), verifies=["A-D3"], parts=["WNG-001", "WNG-002", "PWR-001", "CGE-001", "FIN-001-R", "FIN-001-L"],
           how="Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).")
 kit.claim("CL-A-MASS-ITEM", "Predicted mass, itemised growth by maturity (cross-check)", calc="CALC-A-MASS-ITEM", output="m_kg", unit="kg",
-          limit=("<=", "P:req.mass_target_kg"), verifies=["A-D3"], how="python -I qp/A/mission_gate_a.py prints 1,449 g (D-195); both methods must stay <= 1.467 kg (D-207).")
+          limit=("<=", "P:req.mass_target_kg"), verifies=["A-D3"], how="python -I qp/A/mission_gate_a.py prints 1,449 g (D-195); both methods must stay <= 1.470 kg (D-208).")
 kit.claim("CL-A-MASS-GATE-ROOM", "Predicted mass against the 1.47 kg gate", calc="CALC-A-MASS-PRED", output="m_kg", unit="kg",
           limit=("<=", "P:req.mass_gate_kg"), verifies=["A-P1"], how="As-built weigh-in <= 1.47 kg (D-190, MASS-GATE s8); the +-5 % window holds to 1.478 kg.")
 kit.claim("CL-A-MASS-USER", "Predicted mass against the 25 kg user cap", calc="CALC-A-MASS-PRED", output="m_kg", unit="kg",
           limit=("<=", "P:req.mass_user_max_kg"), verifies=["A-U5"], how="Weigh-in.")
-kit.claim("CL-A-CUTS-REQUIRED", "EST cuts that must be real for <= 1.467 kg", calc="CALC-A-CUTS", output="x_g", unit="g",
+kit.claim("CL-A-CUTS-REQUIRED", "EST cuts that must be real for <= 1.470 kg", calc="CALC-A-CUTS", output="x_g", unit="g",
           limit=("<=", "P:mass.est_cuts_g"), verifies=["A-D3"], assumes=["ASM-A-CUTS"],
           how="Weigh a FOAMULAR 150 block, a printed cup / hub, an epoxy joint (M11, BOARD QP-4 s1); >= 27.2 g of the 41.6 g must be real. Lead fallback 15.6 -> 12.8 g already applied (D-205).")
 kit.claim("CL-A-STRUCT-MASS", "Structure mass (CAD groups, with the EST cuts)", calc="CALC-A-STRUCT", output="g", unit="g",

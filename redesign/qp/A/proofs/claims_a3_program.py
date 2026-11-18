@@ -1,6 +1,6 @@
 """Concept A proof chain, part 3: cost (G7, budget), schedule, transport, 3-D gates.
 
-Cost re-computes the BOM roll-up (bom_a.py arithmetic) from the 38 BOM-A.csv rows held in params-A.json; the schedule re-runs
+Cost re-computes the BOM roll-up (bom_a.py arithmetic) from the 42 BOM-A.csv rows held in params-A.json; the schedule re-runs
 schedule_a.py's model. The 3-D gate counts are read from the stored collision and assembly outputs (cad/out/*.json): the Blender
 collision run and the sweep are not re-run here. Run via run_all.py.
 """
@@ -38,9 +38,9 @@ def bom_cost(rows, tax, faa, ship, bump, tubes, budget):
 
 
 kit.claim("CL-A-COST-TOTAL", "BOM total incl. tax, shipping, FAA and crash reserve", calc="CALC-A-COST", output="total_usd", unit="USD", limit=("<=", "P:req.g7_total_usd"),
-          verifies=["A-U1"], how="python -I qp/A/bom_a.py (reads BOM-A.csv): $1,775.09; gate G7 total <= $1,800. 14 of 38 lines are unverified (U / EST).")
+          verifies=["A-U1"], how="python -I qp/A/bom_a.py (reads BOM-A.csv): $1,779.47; gate G7 total <= $1,800. 16 of 42 lines are unverified (U / EST).")
 kit.claim("CL-A-COST-MARGIN30", "Margin to $2,000 if the unverified lines run 30 % over", calc="CALC-A-COST", output="margin_30_usd", unit="USD",
-          limit=(">=", "P:req.g7_margin_usd"), verifies=["A-U1"], how="python -I qp/A/bom_a.py: +$105.08 at +30 %; gate G7 margin >= $100. Two new EST lines (R12 / R13): if either rises by > $9 the margin falls under $100.")
+          limit=(">=", "P:req.g7_margin_usd"), verifies=["A-U1"], how="python -I qp/A/bom_a.py: +$100.05 at +30 %; gate G7 margin >= $100. The margin has 5 cents of slack: any rise in the EST lines beyond their +30 % allowance takes it under $100.")
 kit.claim("CL-A-COST-BUDGET", "BOM total with the unverified lines +30 % against the $2,000 budget", calc="CALC-A-COST", output="total_30_usd", unit="USD",
           limit=("<=", "P:req.budget_usd"), verifies=["A-U1"], how="python -I qp/A/bom_a.py; Makers Pass outside the budget (user, memory).")
 

@@ -71,11 +71,11 @@
   {
    "id": "SRC-A-BOM",
    "type": "source",
-   "title": "BOM-A.csv (single BOM, 38 lines)",
+   "title": "BOM-A.csv (single BOM, 42 lines)",
    "kind": "file",
    "url": "redesign/qp/A/BOM-A.csv",
    "checked": "2026-11-15",
-   "where": "vendor price per line; date_checked column 2026-11-14 / 15 for verified lines"
+   "where": "vendor price per line; date_checked column 2026-11-14 / 15 / 18 for verified lines"
   },
   {
    "id": "SRC-A-BOMPY",
@@ -326,7 +326,7 @@
    "id": "ASM-A-CUTS",
    "type": "assumption",
    "title": "41.6 g of EST cuts are real",
-   "text": "Predicted mass <= 1.467 kg (D-207; D-205 1.465; D-195 1.46) holds only if the foam (25 kg/m3), printed parts and hardware lump weigh in at their cut values",
+   "text": "Predicted mass <= 1.470 kg (D-208; D-207 1.467; D-205 1.465; D-195 1.46) holds only if the foam (25 kg/m3), printed parts and hardware lump weigh in at their cut values",
    "basis": "BOARD QP-4 s1 and FIXES2 s5: none of the three cuts is weighed; the foam row alone (16.6 g) was the first line; M11 weighs a FOAMULAR 150 block",
    "status": "UNVERIFIED"
   },
@@ -422,8 +422,8 @@
   {
    "id": "A-D3",
    "type": "requirement",
-   "title": "Design target <= 1.467 kg; structure <= 494 g",
-   "text": "Predicted mass incl. growth and overrun <= 1.467 kg (D-207; D-205 1.465; D-195 1.46); structure ceiling 494 g (BOARD QP-4 s1)",
+   "title": "Design target <= 1.470 kg; structure <= 494 g",
+   "text": "Predicted mass incl. growth and overrun <= 1.470 kg (D-208; D-207 1.467; D-205 1.465; D-195 1.46); structure ceiling 494 g (BOARD QP-4 s1)",
    "ref": "qp/A/REQUIREMENTS-A.md#a-d3"
   },
   {

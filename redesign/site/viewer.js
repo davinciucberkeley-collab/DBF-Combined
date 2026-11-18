@@ -550,6 +550,8 @@ function srcLinks(p) {
   const L = [];
   if (p.vendor_url && ok(p.vendor_url)) L.push('<a class="ds-link" href="' + esc(p.vendor_url) + '" target="_blank" rel="noopener">' + (p.make_or_buy === 'make' ? 'material vendor' : 'vendor page') + ' &#8599;</a>');
   if (p.how_url && ok(p.how_url)) L.push('<a class="ds-link" href="' + esc(p.how_url) + '" target="_blank" rel="noopener">' + 'build clip: where it goes on' + ' &#8599;</a>');
+  if (p.drawing_url && ok(p.drawing_url)) L.push('<a class="ds-link" href="' + esc(p.drawing_url) + '" target="_blank" rel="noopener">engineering drawing (PDF) &#8599;</a>');
+  if (p.stl_url && ok(p.stl_url)) L.push('<a class="ds-link" href="' + esc(p.stl_url) + '" target="_blank" rel="noopener">STL to print &#8599;</a>');
   return L.length ? '<br>' + L.join(' &middot; ') : '';
 }
 function renderPanel() {

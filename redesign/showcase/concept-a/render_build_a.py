@@ -79,7 +79,7 @@ STAGES = [
     ('Fins: fairings, root blocks, tubes', ['C3', 'C4', 'C5', 'C6']),
     ('Landing feet', ['C7', 'C8', 'C9']),
     ('Servos, pushrods, horns, lead threading', ['D1', 'D0', 'D2', 'D2a', 'D3', 'D4', 'D5', 'D5b']),
-    ('Avionics: pitot, plate, ESC, FC, leads', ['E1', 'E2', 'E3', 'E3a', 'E3b']),
+    ('Avionics: pitot, plate, ESC, FC, leads', ['E1', 'E2', 'E3', 'E3a', 'E3d', 'E3b']),
     ('Pack, XT60, strap, phase leads, bay cover', ['E3c', 'E4', 'E4a', 'E4b', 'E5', 'E6', 'E7']),
 ]
 # per-step camera direction (azimuth from the nose, 90 = left; elevation) where the default (38, 30) hides the part
@@ -104,7 +104,7 @@ SERVO_START = {'E-HRN-07': 'MEC-001-R', 'E-HRN-08': 'MEC-001-L'}      # the serv
 # camera framing: steps with a right and a left part frame the right one only (the left mirrors it); smaller context for small parts
 ONE_SIDE = ('D1', 'D2', 'D2a', 'D3', 'D4', 'D5', 'C7', 'C8', 'C9', 'C1', 'C1a', 'C3', 'C5', 'C6', 'B2', 'B4', 'C2a', 'C2b')
 MIN_HALF_STEP = {'D1': 0.10, 'D2': 0.07, 'D2a': 0.05, 'D3': 0.07, 'D4': 0.06, 'D5': 0.05, 'D5b': 0.05, 'C7': 0.12, 'C8': 0.12, 'C9': 0.10, 'E1': 0.15, 'E2': 0.07, 'E3': 0.08,
-                 'E3a': 0.06, 'E3b': 0.08, 'E3c': 0.07, 'E4': 0.09, 'E4a': 0.08, 'E4b': 0.09, 'E5': 0.09, 'E6': 0.09, 'E7': 0.08, 'D0': 0.09, 'B2a': 0.10, 'B2b1': 0.10, 'B2b2': 0.10, 'B2b3': 0.10, 'B2b4': 0.10, 'B3': 0.10}
+                 'E3a': 0.06, 'E3d': 0.06, 'E3b': 0.08, 'E3c': 0.07, 'E4': 0.09, 'E4a': 0.08, 'E4b': 0.09, 'E5': 0.09, 'E6': 0.09, 'E7': 0.08, 'D0': 0.09, 'B2a': 0.10, 'B2b1': 0.10, 'B2b2': 0.10, 'B2b3': 0.10, 'B2b4': 0.10, 'B3': 0.10}
 EXTRA_PTS = {'D0': [(0.083, 0.024, 0.012), (0.14, 0.20, 0.0)]}      # marker steps: points the camera must also frame (servo pocket, slit)
 GHOST_VIEW, GHOST_DIST = (50, 34), 0.24   # x-ray steps (step data 'ghost'): close-up camera that follows the plug along the spar (azimuth, elevation; distance m)
 GHOST_B0 = ('CGE-001', 'CGE-002-', 'CGE-003-', 'CGE-009-', 'CGE-010-')

@@ -403,6 +403,16 @@
    "pairs": []
   },
   {
+   "id": "E3d",
+   "parts": [
+    "AVN-009-T",
+    "AVN-009-S"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
    "id": "E3c",
    "parts": [
     "PWR-003"

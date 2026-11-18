@@ -63,6 +63,8 @@ def classify(eid, pts):
                         cls = 'COVER'
                 elif eid in ('E-HRN-07', 'E-HRN-08') and mid[2] < m.zu(mid[0]) - 0.0003 and mid[0] > m.COV_X0 and mid[0] < 0.1250:
                     cls = 'GROOVE'
+                elif eid == 'E-HRN-11' and mid[2] < m.zu(mid[0]) - 0.0003:
+                    cls = 'GROOVE'                        # D-208: airspeed I2C lead in its core groove and the board pocket
                 elif m.COV_X0 < mid[0] < m.COV_X1 and abs(mid[1]) < m.COV_Y and mid[2] < roof(mid[0]):
                     cls = 'COVER'
             out[cls] += L / n

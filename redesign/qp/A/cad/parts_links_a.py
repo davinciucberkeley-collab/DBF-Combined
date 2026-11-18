@@ -30,6 +30,7 @@ BOM = {r['id']: r for r in csv.DictReader(open(os.path.join(A, 'BOM-A.csv'), enc
 MAP = [
     ('AVN-002', 'buy', ['V03'], ''), ('AVN-003', 'buy', ['V02'], ''), ('AVN-004', 'buy', ['V04'], ''),
     ('AVN-005', 'buy', ['V05'], ''), ('AVN-006', 'buy', ['V05'], 'pitot probe comes in the V05 airspeed kit'),
+    ('AVN-009-T', 'buy', ['V05'], 'cut from the 2 / 4 mm tubing in the V05 kit (D-208)'), ('AVN-009-S', 'buy', ['V05'], 'cut from the 2 / 4 mm tubing in the V05 kit (D-208)'),
     ('AVN-007', 'buy', ['R05'], 'foam tape from the local fastener / tape line'),
     ('AVN-001', 'make', ['R03'], 'printed PETG'), ('AVN-008', 'make', ['R03'], 'printed PETG'),
     ('CGE-001', 'make', ['R03'], 'printed PETG'), ('CGE-002', 'make', ['R08'], 'cut from the 12x10 tube'),
