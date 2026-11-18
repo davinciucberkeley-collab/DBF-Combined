@@ -37,7 +37,7 @@ FEA's stress map showed it overloaded in torsion (D-206). Script `qp/A/structure
 ![Utilisation map, S2 30 N prop strike (damage case, factor 1.0)](../../qp/A/structures/fig/fea-hub-S2.png)
 
 Colour: utilisation = stress x required factor / allowable, enveloped over every load pattern in the case. 0 to 1 runs from
-pale to dark blue; over 1 is red (small spots only: where the bridge-tube end bears on the printed hub, a sharp inside edge judged by the 99th percentile); grey is not judged (the pins, which have no allowable in the
+pale to dark blue; over 1 is red: the sharp inside corners where the sleeves and the bridge boss meet the centre block. They have no fillet in the CAD or the mesh, so the stress there is a singularity that grows with refinement and is judged by the 99th percentile; fillets and a refined run are the next hub step; grey is not judged (the pins, which have no allowable in the
 analysis, and the 15 mm at each loaded tube end where the load is applied). The same map turns in 3-D on the Explorer's
 Structures page (case buttons, part toggles, value under the cursor).
 

@@ -22,10 +22,10 @@ OUT = os.path.join(HERE, 'out_fea')
 FIG = os.path.join(HERE, 'fig')
 SITE = os.path.normpath(os.path.join(HERE, '..', '..', '..', 'site', 'data'))
 MATS = ['hub (printed PETG)', 'arm tube A (UR, LL)', 'arm tube B (LR, UL)', 'bridge tube', 'pins (3 mm carbon rod)']
-CASES = {'F1': 'F1 flight, thrust at the spin cap (any pattern), factors 2.156 PETG / 1.725 CFRP',
-         'F2': 'F2 flight, uncapped motor fault (any pattern), factors 2.156 / 1.725',
-         'S1': 'S1 prop strike 30 N along the motor axis (damage case, factor 1.0)',
-         'S2': 'S2 prop strike 30 N in the disc plane (damage case, factor 1.0)'}
+CASES = {'F1': 'Full-power flight (F1): any mix of motors at full thrust, with motor torque, a fast pitch-over and prop imbalance; safety factors 2.156 printed/glue, 1.725 carbon',
+         'F2': 'Motor runaway (F2): as full-power flight, but one motor stuck above its power limit (10.4 N); safety factors 2.156 / 1.725',
+         'S1': 'Prop strike, push on the shaft (S1): 30 N along the motor axis, e.g. a prop hitting the ground head-on; damage case, factor 1.0',
+         'S2': 'Prop strike, blade hit sideways (S2): 30 N on the blade in the disc plane, e.g. a blade clipping the ground; damage case, factor 1.0'}
 RAMP = ['#cde2fb', '#b7d3f6', '#9ec5f4', '#86b6ef', '#6da7ec', '#5598e7', '#3987e5', '#2a78d6', '#256abf', '#1c5cab',
         '#184f95', '#104281', '#0d366b']                                  # dataviz sequential blue 100..700
 CRIT, NJ = '#d03b3b', '#9a9993'                                          # status critical; not judged (neutral)
@@ -64,9 +64,9 @@ def margin_chart(tag):
     plt.rcParams.update({'font.family': 'DejaVu Sans', 'font.size': 10})
     fig = plt.figure(figsize=(10, 6.2), dpi=150); ax = fig.add_axes([0.27, 0.13, 0.66, 0.62])
     fig.patch.set_facecolor('#fcfcfb'); ax.set_facecolor('#fcfcfb')
-    series = [('New hub (D-206), flight F2 (worst flight case, full factors)', '#2a78d6', 1),
-              ('D-193 hub as drawn, flight F1 (FEA-ARM.md, the design it replaced)', '#eb6834', 3),
-              ('New hub (D-206), prop strike S2 (damage case, factor 1.0)', '#1baf7a', 2)]
+    series = [('New hub (D-206), motor runaway in flight (F2, worst flight case, full factors)', '#2a78d6', 1),
+              ('Old D-193 hub, full-power flight (F1; FEA-ARM.md, the design it replaced)', '#eb6834', 3),
+              ('New hub (D-206), prop strike, blade hit sideways (S2, damage case, factor 1.0)', '#1baf7a', 2)]
     h = 0.26
     for j, (lab, col, k) in enumerate(series):
         for i, row in enumerate(rows):
@@ -181,10 +181,12 @@ def compose():
             print('missing raw renders for', c); continue
         fig = plt.figure(figsize=(11, 5.6), dpi=150); fig.patch.set_facecolor('#fcfcfb')
         for k, (img, (v, t)) in enumerate(zip(imgs, views)):
-            ax = fig.add_axes([0.01 + k * 0.49, 0.16, 0.48, 0.70]); ax.imshow(plt.imread(img)); ax.axis('off')
+            ax = fig.add_axes([0.01 + k * 0.49, 0.16, 0.48, 0.66]); ax.imshow(plt.imread(img)); ax.axis('off')
             ax.set_title(t, fontsize=10, color='#0b0b0b', loc='left')
-        fig.text(0.01, 0.955, 'Hub FEA: %s' % CASES[c], fontsize=11, color='#0b0b0b', weight='bold')
-        fig.text(0.01, 0.925, 'Colour = utilisation (stress x required factor / allowable), worst over every load pattern in the case', fontsize=9, color='#52514e')
+        t_, d_ = CASES[c].split(': ', 1)
+        fig.text(0.01, 0.955, 'Hub FEA: %s' % t_, fontsize=11, color='#0b0b0b', weight='bold')
+        import textwrap
+        fig.text(0.01, 0.935, textwrap.fill(d_[0].upper() + d_[1:] + '. Colour = utilisation (stress x required factor / allowable), worst over every load pattern.', 150), fontsize=8.5, color='#52514e', va='top')
         cax = fig.add_axes([0.06, 0.08, 0.5, 0.035])
         cm = ListedColormap([hx(h) for h in RAMP])
         cb = fig.colorbar(plt.cm.ScalarMappable(cmap=cm, norm=plt.Normalize(0, 1)), cax=cax, orientation='horizontal')

@@ -360,11 +360,11 @@
       <p class="use">A build guide you can follow at the bench, in 10 minutes: 45 steps in 10 stages. Each stage opens with a card listing its parts and tools; each step has a card with the step id, a one-line instruction, the key tools and the key check, labels with leader lines on the parts being fitted, and a make-it banner for the parts you cut or print (cut length, print file and orientation). Twelve checkpoint cards say what to measure, weigh or test before you go on; the phase leads are threaded through the arms, the hub conduits and the raceway shown slowly. Every part moves the way a_assembly_plan.py defines (the swept-path check, a_assembly.py, passed). Pick a stage to play only that part, or play the whole build. Skin tape, hinge tape and epoxy fillets are not drawn. The written guide with every dimension, BOM line, time (EST) and checkpoint is <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/BUILD-GUIDE-A.md" target="_blank" rel="noopener">BUILD-GUIDE-A.md</a>.</p>
     </header>
     <figure class="fig">
-      <video id="build-video" src="assets/animation/build/a-build.mp4" poster="assets/animation/build/a-build-poster.webp" controls muted playsinline preload="metadata" style="display:block;width:100%;height:auto;aspect-ratio:16/9;background:var(--panel-2)"></video>
+      <video id="build-video" src="assets/animation/build/a-stage-01.mp4" poster="assets/animation/build/a-stage-01.webp" controls muted playsinline preload="metadata" style="display:block;width:100%;height:auto;aspect-ratio:16/9;background:var(--panel-2)"></video>
       <div class="bstages" role="group" aria-label="Build stages">
-        <button type="button" class="bstage on" data-src="assets/animation/build/a-build.mp4" data-poster="assets/animation/build/a-build-poster.webp"><b>All</b> whole build</button>
-        <button type="button" class="bstage" data-src="assets/animation/build/a-stage-01.mp4" data-poster="assets/animation/build/a-stage-01.webp"><b>1</b> Wing core and spar</button>
-        <button type="button" class="bstage" data-src="assets/animation/build/a-stage-02.mp4" data-poster="assets/animation/build/a-stage-02.webp"><b>2</b> Cage unit: motor leads threaded, motors, props</button>
+        <a class="bstage" href="https://davinciucberkeley-collab.github.io/DBF-Combined/redesign/site/assets/animation/build/a-build.mp4" target="_blank" rel="noopener"><b>All</b> whole build (opens the full film in a new tab) &#8599;</a>
+        <button type="button" class="bstage on" data-src="assets/animation/build/a-stage-01.mp4" data-poster="assets/animation/build/a-stage-01.webp"><b>1</b> Wing core and spar</button>
+        <button type="button" class="bstage" data-src="assets/animation/build/a-stage-02.mp4" data-poster="assets/animation/build/a-stage-02.webp"><b>2</b> Cage frame built on the bench part by part, motor leads, motors, props</button>
         <button type="button" class="bstage" data-src="assets/animation/build/a-stage-03.mp4" data-poster="assets/animation/build/a-stage-03.webp"><b>3</b> Rib saddles, phase-lead raceways, pack tray, hinge dampers</button>
         <button type="button" class="bstage" data-src="assets/animation/build/a-stage-04.mp4" data-poster="assets/animation/build/a-stage-04.webp"><b>4</b> Fin ribs and rib fairings</button>
         <button type="button" class="bstage" data-src="assets/animation/build/a-stage-05.mp4" data-poster="assets/animation/build/a-stage-05.webp"><b>5</b> Elevons, balance strips, lens caps</button>
@@ -379,16 +379,16 @@
     </figure>
     <style>
       .bstages{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-      .bstage{font:inherit;font-size:12px;padding:5px 10px;border-radius:999px;border:1px solid var(--line, #ccc);background:var(--panel-2, transparent);color:inherit;cursor:pointer}
+      .bstage{font:inherit;font-size:12px;padding:5px 10px;text-decoration:none;display:inline-flex;align-items:center;border-radius:999px;border:1px solid var(--line, #ccc);background:var(--panel-2, transparent);color:inherit;cursor:pointer}
       .bstage b{margin-right:4px}
       .bstage.on{border-color:currentColor;font-weight:600}
     </style>
     <script>
       (function () {
         var v = document.getElementById('build-video');
-        document.querySelectorAll('.bstage').forEach(function (b) {
+        document.querySelectorAll('button.bstage').forEach(function (b) {
           b.addEventListener('click', function () {
-            document.querySelectorAll('.bstage').forEach(function (o) { o.classList.toggle('on', o === b); });
+            document.querySelectorAll('button.bstage').forEach(function (o) { o.classList.toggle('on', o === b); });
             v.poster = b.dataset.poster; v.src = b.dataset.src; v.load();
             var p = v.play(); if (p && p.catch) p.catch(function () {});
           });
@@ -2365,10 +2365,10 @@
   <div class="fea-tool">
     <div class="fea-bar">
       <div class="ds-seg" role="group" aria-label="Load case">
-        <button type="button" data-fea-case="F1" aria-pressed="false">F1 flight</button>
-        <button type="button" data-fea-case="F2" aria-pressed="true">F2 motor fault</button>
-        <button type="button" data-fea-case="S1" aria-pressed="false">S1 strike, axial</button>
-        <button type="button" data-fea-case="S2" aria-pressed="false">S2 strike, in plane</button>
+        <button type="button" data-fea-case="F1" aria-pressed="false">Full-power flight</button>
+        <button type="button" data-fea-case="F2" aria-pressed="true">Motor runaway</button>
+        <button type="button" data-fea-case="S1" aria-pressed="false">Prop strike: push on the shaft</button>
+        <button type="button" data-fea-case="S2" aria-pressed="false">Prop strike: blade hit sideways</button>
       </div>
       <button type="button" class="ds-btn" id="fea-reset">Reset view</button>
     </div>
@@ -2377,7 +2377,7 @@
     <div class="fea-under">
       <div class="fea-legend" aria-label="Colour key">
         <span class="fea-scale"><span class="fea-ramp"></span><span class="fea-ticks"><i>0</i><i>0.5</i><i>1.0</i></span></span>
-        <span class="fea-key"><span class="fea-chip" style="--c:#d03b3b"></span>over 1: fails (only small spots where the bridge-tube end bears on the hub, a sharp edge judged by the 99th percentile)</span>
+        <span class="fea-key"><span class="fea-chip" style="--c:#d03b3b"></span>over 1: the sharp inside corners where the sleeves and the bridge boss meet the centre block (no fillet yet: the stress there grows with mesh refinement, so it is judged by the 99th percentile; fillets and a refined run are next)</span>
         <span class="fea-key"><span class="fea-chip" style="--c:#9a9993"></span>not judged (pins have no allowable; the 15 mm at each loaded tube end)</span>
       </div>
       <p class="fea-read" id="fea-read">Point at the model for the value under the cursor.</p>
@@ -2387,9 +2387,9 @@
   </div>
 
   <h3 class="ds-h2">Every check</h3>
-  <p class="use">Stresses at limit load, MPa. Flight is judged at the full factors (printed PETG and glue 2.156, carbon 1.725). The prop strike is a damage case at factor 1.0 (D-202). Allowables are estimates; the glue value waits for the coupon test.</p>
+  <p class="use">Stresses at limit load, MPa, for the two worst cases: a <b>motor runaway</b> (one motor stuck above its power limit while the others do anything, plus motor torque, a fast pitch-over and prop imbalance) and a <b>prop strike</b> (30 N on a blade, sideways, as when a blade clips the ground). Flight is judged at the full factors (printed PETG and glue 2.156, carbon 1.725); the prop strike is a damage case at factor 1.0 (D-202). Allowables are estimates; the glue value waits for the coupon test.</p>
   <div class="scroll"><table class="ds-table">
-    <thead><tr><th>Item</th><th>F2 flight</th><th>Allowed at 2.156 / 1.725</th><th>S2 strike</th><th>Allowed at 1.0</th><th>Result</th></tr></thead>
+    <thead><tr><th>Item</th><th>Motor runaway in flight (F2)</th><th>Allowed at the flight factors 2.156 / 1.725</th><th>Prop strike, blade hit sideways (S2)</th><th>Allowed at factor 1.0</th><th>Result</th></tr></thead>
     <tbody>
       <tr><td class="first">Printed hub, 99th-percentile principal stress</td><td class="val">8.0</td><td class="val">9.3</td><td class="val">10.8</td><td class="val">20</td><td><span class="ds-badge" data-status="CHECKED">PASS</span></td></tr>
       <tr><td class="first">Glue, mean shear along the worst arm</td><td class="val">0.77</td><td class="val">0.93</td><td class="val">1.75</td><td class="val">2.0 <span class="ds-tag">EST</span></td><td><span class="ds-badge" data-status="UNVERIFIED">PASS if coupon &ge; 2.0</span></td></tr>
@@ -2401,8 +2401,8 @@
     </tbody>
   </table></div>
   <figure class="fea-fig"><img src="assets/fea/fea-hub-margin.png" alt="Bar chart: margin ratio for each check. New hub in flight 1.16 to 3.63 and in a prop strike 1.06 to 1.86, all at or above 1; the replaced D-193 hub 0.02 to 0.52." loading="lazy"><figcaption><b>Before and after.</b> Margin ratio (factor of safety &divide; required factor; 1 or more passes) for the new hub and the D-193 hub it replaced. The old hub&rsquo;s 0.8 mm web reached 392 MPa in flight (factor of safety 0.05).</figcaption></figure>
-  <figure class="fea-fig"><img src="assets/fea/fea-hub-F2.png" alt="Rendered utilisation map of the motor-fault flight case, outside and with the hub hidden." loading="lazy"><figcaption><b>F2, motor fault in flight.</b> Left: the printed hub. Right: the hub hidden, showing the arm tubes, the bridge and the pins. The dark tube running aft is the 16 &times; 14 bridge (utilisation 0.87).</figcaption></figure>
-  <figure class="fea-fig"><img src="assets/fea/fea-hub-S2.png" alt="Rendered utilisation map of the 30 N prop strike, outside and with the hub hidden." loading="lazy"><figcaption><b>S2, 30 N prop strike in the disc plane</b> (damage case, factor 1.0).</figcaption></figure>
+  <figure class="fea-fig"><img src="assets/fea/fea-hub-F2.png" alt="Rendered utilisation map of the motor-fault flight case, outside and with the hub hidden." loading="lazy"><figcaption><b>Motor runaway in flight (F2).</b> Left: the printed hub. Right: the hub hidden, showing the arm tubes, the bridge and the pins. The dark tube running aft is the 16 &times; 14 bridge (utilisation 0.87).</figcaption></figure>
+  <figure class="fea-fig"><img src="assets/fea/fea-hub-S2.png" alt="Rendered utilisation map of the 30 N prop strike, outside and with the hub hidden." loading="lazy"><figcaption><b>Prop strike, blade hit sideways (S2):</b> 30 N on the blade in the disc plane (damage case, factor 1.0). The strike is applied to the UR motor.</figcaption></figure>
   <span class="ds-source">qp/A/structures/fea_hub.py (run d206), fea_hub_figs.py, bridge_torsion_d206.py &middot; <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-5/FEA-HUB.md" target="_blank" rel="noopener">review/QP-5/FEA-HUB.md</a> &middot; <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/structures/COUPON-BOND-D202.md" target="_blank" rel="noopener">glue coupon</a> &middot; params/CHANGE-LOG.md D-202, D-205, D-206</span>
 </section>
   </div>
