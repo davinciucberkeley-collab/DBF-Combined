@@ -90,3 +90,13 @@ Requirement IDs: R-INT-01 … R-INT-06 (as mapped in `requirements.md`), R-GEN-0
 ```text
 For question 3: The agent definitions and aircraft schema have not been completed yet, don't do any DaVinci spend yet
 ```
+
+## AM-004 — 2026-11-19 — Dillon away 8+ hours; decisions go to an opus agent
+Relation: while Dillon is unavailable, any decision that would otherwise go to him (AM-001 "a decision or
+authorization only the user can give") is put to an independent opus agent instead; hard constraints, money,
+purchases, irreversible actions and history rewrites still wait for Dillon (they are not engineering decisions).
+Requirement IDs: R-COM-04, R-GEN-02, R-ORC-01.
+
+```text
+I won't be available for the next 8+ hours, so if there is an issue that you run into that need a decision on, consult an opus agent for the time being
+```
