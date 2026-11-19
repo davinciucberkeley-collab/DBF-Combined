@@ -78,3 +78,37 @@ T-070 hand calc comparison: skin shear RF 1.30 here (KP, S 70 MPa) against T-070
 2. P15 at the gate passes by 1.15 (wrinkling, an EST formula with no coupon). With the skin 30 % softer or the foam 50 % softer it falls to 0.94 / 0.70. A robust skin is 2 plies (about +27 g more). The glass allowable is a dry Vf 50 % fabric sheet scaled by 0.70 EST, not a wet lay-up datum.
 3. The pad move (T-068 D2) is included. Fin inertia relief is not credited in the gate column.
 Neither the ply count nor the strip size fixes the Euler row. Not done and "—": sections inboard of y 0.040 (tray slot, hub), groove and pocket cuts (not subtracted from foam), centre node and bridge (step 2), skin peel, out-of-plane bending, flutter and A-P10 re-run with the skin GJ (step 5), strut end fixity, price of any tube size.
+
+---
+# Addendum (conductor decision): strut 6x4.0, then Phase 1 step 2
+
+## A. Strut 6x4.0 rerun (command `python -I landing_path_a.py --strut40`, exit 0, 32 s; `T071_data/strut40.txt`)
+Code change: `strut_checks(..., id_=)` (default unchanged); new `strut40_main`. Same 23 cases, D2 pad, KF 1.725 / KP 2.156.
+| Row | 6x4.5 (T-071 step 1) | **6x4.0** | governing |
+|---|---|---|---|
+| STRUT Euler pinned, no foam support | 0.93 (Pcr 367 N) | **1.10 (Pcr 431 N)** | hard 10 wide + drift, 227.6 N limit |
+| STRUT bond at clamp (D6 x 14.2 mm, 2.0 MPa EST) | 1.09 | 1.09 | same (bond area unchanged: OD unchanged) |
+| STRUT bond at hub socket (30 mm) | 2.30 | 2.30 | |
+| STRUT tube strength (350 MPa EST) | 11.0 | 14.0 | |
+| Euler bound with foam bedding (not credited) | 11.0 | 14.0 | |
+**Strut Euler is now >= 1.0 with no foam credit and no fixity credit.** Margin is only 10 %, the clamp bond is 9 %. Mass +3.0 g for two struts (CF 1.55 g/cm3 EST). Existence of the tube: a 6 mm OD x 4 mm ID x 1 m pultruded CF tube (1 mm wall) is listed by Easy Composites, https://easycomposites.co.uk/6mm-pultruded-carbon-fibre-tube, shown in a web search result 2026-11-19 (page itself not opened; one search result flags a wall-thickness discrepancy on a different, roll-wrapped listing, so confirm the wall before ordering). BOM R10 is the RMRC 6x4.5; RMRC 6x4.0 product, price and stock: "—" (not looked up). Pultruded UD tube E and crush behaviour in the socket: EST at the 70 GPa project value.
+
+## B. Step 2 (new rows; `T071_data/step2.py`, exit 0, 31 s; `T071_data/step2.txt`). Categories: rigid-body dynamics (histories) + HAND CALCULATION; EST allowables.
+Model: both wing torques arrive at the centre as bending of the 16x14 bridge (T-070 F-4). Limit-load pitch moment into the bridge: **2T bound = 2 x single-fin max = 20.5 N m** (single-fin max 10.24 N m with the D2 pad; T-069 had 9.63); the actual same-instant sum over the 23 cases is 13.1 N m (SITL Ta_h5 narrow). Both columns shown. Skin torque share 0.890 (V0). Hub-side inertia relief (EST 0.37 of Iyy, T-070 s3.1) is shown as a second column only.
+| Row (hand calc) | 2T bound 20.5 N m | same-instant sum 13.1 N m |
+|---|---|---|
+| Bridge tube 16x14 bending (Z 166 mm3, sigma x KF vs 350 MPa EST) | **1.65** (212 MPa) | 2.59 |
+| CGE-006 saddle socket bearing (PETG 20 MPa EST, socket 23.5 mm, 6M/(D L^2) x KP, conservative triangular bearing) | **0.67** | 1.05 |
+| **Hub bridge bore bearing** (PETG 20 MPa EST, **bore depth 9.0 mm** = HUB_X1 -0.045 minus floor -0.054, `wing.py` l.18/81) | **0.10** (204 MPa x KP) | 0.15 |
+| same, with hub-side inertia share 0.37 (EST, not credited) | 0.26 | 0.41 |
+| bore depth needed for RF 1 (no relief) | 28.8 mm | 23.0 mm |
+| Skin shear flow at the centre bulkhead: q = T_skin/(2A) = 9.12 N m / (2 x 3,389 mm2) | 1,345 N/m limit | |
+| Bulkhead plate to skin bond, epoxy 2.0 MPa EST, bond width 0.5 / 1.5 / 3.0 mm | 0.34 / 1.03 / 2.07 | |
+| Plate-to-saddle face bond in torsion (face 23.5 x 21 mm, rectangle torsion beta 0.246) | **0.26** | |
+| CF cross-pin 3 mm, pair at 18 mm arm (layout assumed, not drawn), double shear, 30 MPa EST | **0.39** | |
+| Pin bearing in the 0.5 mm lite-ply plate | "—" (no allowable; stress would be about 730 MPa) | |
+Notes: plate thickness 0.5 mm is inferred from T-070's "2 x lite-ply about 2 g" with 0.6 g/cm3 EST (so a butt edge is 0.5 mm; a flange of >= 1.5 mm is needed for RF 1.0, 3 mm for 2.1). Plate shear strength: "—". The pin lever and the saddle face are my assumption: T-070 did not specify the node.
+
+## C. Step 2 STOP decision
+**STOP: the hub bridge bore is 0.10 (0.26 even with hub-side inertia relief), the CGE-006 socket 0.67, the plate-to-saddle bond 0.26 and the pin 0.39 are all below 1.0.** The bridge tube itself passes (1.65). Nothing past step 2 was started (no step 3 onwards). What this says: the 9 mm deep bridge bore in the hub cannot react the landing pitch torque as a bending couple; it needs about 29 mm (or 17 mm with the EST hub inertia share), or a different reaction path (for example a sleeve or flange spreading the couple over the tray / hub flange, or a longer bore through the hub block, which was cut back to 9 mm by D-207), and the centre node needs a larger bonded face or a drawn pin pattern with a larger arm. These are CAD changes and a design decision (conductor / Phase 2), plus the bearing allowable is EST (PETG 20 MPa, no coupon). The strut rows and the wing P15 / P16 skin rows from step 1 stand. Wing P15 at the gate remains 1.15, with the V3 / V4 sensitivity (0.94 / 0.70) from step 1 unresolved.
+Limits: skin-off default rerun after the `strut_checks` edit (`python -I landing_path_a.py`, exit 0, about 39 s): output identical to T069_data/path_p1.txt. No FEA; hub bore bearing is a hand model (rigid bonded tube, triangular bearing), conservative against a real compliant bond, and the hub FEA runs d208 / d209 used flight loads only.

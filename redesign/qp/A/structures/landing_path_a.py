@@ -301,10 +301,10 @@ def wing_checks_skin(FBt, skin, EF=E_F, GF=G_F, variant='bored'):
                 wr1=wr1, wr2=wr2, J_foam=S[variant]['J'], tau_unit=tau_u, foamA=fo['A'], Ex=lam['Ex'], G=lam['G'], S=lam['S'], X=lam['X'])
     return res, info
 
-def strut_checks(FBt, Lb_clamp=None, Lb_hub=0.030, EF=E_F):
+def strut_checks(FBt, Lb_clamp=None, Lb_hub=0.030, EF=E_F, id_=None):
     """T-070 F-3a: strut axial force N = Fx_fin / ux (strut takes the chordwise shear inboard of the clamp, tension +).  Euler pinned-pinned without foam support (the groove is open below and 0.5 mm clear: not credited),
     an upper bound with the foam bedding it (Winkler k = E_foam D / 5 mm, EST, not credited), strut strength, bond at the clamp (length from wing.py: strut enters the clamp box face y 0.272) and at the hub socket (30 mm, HUB_STRUT_S)."""
-    ux, uy, Ls = _strut_geom(); D, d = W.STRUT_OD, W.STRUT_ID; A_st = math.pi/4*(D*D-d*d); I_st = math.pi/64*(D**4-d**4); EIst = E_S*I_st
+    ux, uy, Ls = _strut_geom(); D, d = W.STRUT_OD, (W.STRUT_ID if id_ is None else id_); A_st = math.pi/4*(D*D-d*d); I_st = math.pi/64*(D**4-d**4); EIst = E_S*I_st
     if Lb_clamp is None: Lb_clamp = (W.STRUT_E[1]-0.272)/uy
     Pe = math.pi**2*EIst/Ls**2; kf = EF*D/0.005; Pf = min(2*math.sqrt(kf*EIst), SIG*A_st); out = {}
     for k in (0, 1):
@@ -402,6 +402,18 @@ def skin_variants():
             ('V6 skin factor KF instead of KP', dict(base, K=KF), 1.0),
             ('V7 2 plies +-45', dict(base, lam=skin_laminate(n=2)), 1.0),
             ('V8 1 ply 0/90 (comparison)', dict(base, lam=skin_laminate(orient='c090')), 1.0)]
+def strut40_main():
+    """T-071 conductor decision: strut 6x4.0 (ID 4.0 mm, same OD): P16 strut rows over the 23 cases with the D2 pad."""
+    t0 = time.time(); set_pad(PAD_D2["x_foot"], PAD_D2["z_foot"]); allr = {}
+    for name, kw in cases(False):
+        FBt = L.simulate(Fp=30.0, dt=2e-4, T=1.5, trace=True, **dict(kw, **PAD_D2))['trace'].reshape(-1, 4, 3)
+        for idn in (4.5e-3, 4.0e-3):
+            for key, (lab, a) in strut_checks(FBt, id_=idn).items():
+                k2 = ('ID %.1f' % (idn*1e3), key); cur = allr.get(k2, (1e9, ''))
+                if float(a.min()) < cur[0]: allr[k2] = (float(a.min()), name)
+    for (v, key), (rf, nm) in sorted(allr.items()): print(f"| {v} | {key} | {rf:.2f} | {nm} |")
+    print(f"wall time {time.time()-t0:.0f} s")
+
 def skin_main():
     """T-071: all 23 landing cases with the D-215 / T-068 D2 pad geometry; skin variants; strut rows; strip scan."""
     t0 = time.time(); set_pad(PAD_D2["x_foot"], PAD_D2["z_foot"]); FBs = []
@@ -460,6 +472,7 @@ def skin_main():
     print(f"\nwall time {time.time()-t0:.0f} s")
 
 if __name__ == "__main__":
+    if "--strut40" in sys.argv: strut40_main(); sys.exit(0)
     if "--skin" in sys.argv: skin_main(); sys.exit(0)
     quick = "--quick" in sys.argv
     print(f"# landing_path_a.py, geometry {'legacy' if L.LEGACY else 'CAD'}: x_ground {XF:.4f} y {YF:.3f} z pad centre {ZF:.4f} m, CG {L.geom()['cg']}, mass {L.M_GATE} kg, plateau 30 N, mu {L.MU}")

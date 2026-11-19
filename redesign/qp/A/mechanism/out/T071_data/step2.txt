@@ -1,0 +1,19 @@
+limit-load pitch moment into the bridge (|My_fin0 + My_fin1| about the span axis): max over 23 cases 13.06 N m (SITL Ta_h5 narrow (z drift)); bound 2 x max single fin 20.48 N m
+| Bridge tube 16x14 bending, 2T (bound, 2 x single-fin max): Z 166 mm3, sigma x KF 212 MPa vs 350 EST | 1.65 |
+| CGE-006 saddle socket bearing, PETG 20 MPa EST, 2T (bound, 2 x single-fin max): L 23.5 mm, 6M/(D L^2) x KP 30.0 MPa | 0.67 |
+| HUB bridge bore bearing, PETG 20 MPa EST, 2T (bound, 2 x single-fin max): L 9.0 mm, 6M/(D L^2) x KP 204.5 MPa | 0.10 |
+|   bore depth needed for RF 1 (2T (bound, 2 x single-fin max)) | 28.78 |
+| HUB bore bearing with hub-side inertia share 0.37 (EST, T-070 s3.1), 2T (bound, 2 x single-fin max): 75.7 MPa | 0.26 |
+| Bridge tube 16x14 bending, sum of both fins at the same instant: Z 166 mm3, sigma x KF 135 MPa vs 350 EST | 2.59 |
+| CGE-006 saddle socket bearing, PETG 20 MPa EST, sum of both fins at the same instant: L 23.5 mm, 6M/(D L^2) x KP 19.1 MPa | 1.05 |
+| HUB bridge bore bearing, PETG 20 MPa EST, sum of both fins at the same instant: L 9.0 mm, 6M/(D L^2) x KP 130.3 MPa | 0.15 |
+|   bore depth needed for RF 1 (sum of both fins at the same instant) | 22.97 |
+| HUB bore bearing with hub-side inertia share 0.37 (EST, T-070 s3.1), sum of both fins at the same instant: 48.2 MPa | 0.41 |
+| Skin shear flow at the centre bulkhead q = T_skin/(2A) = 9.12 N m / (2 x 3389 mm2) = 1345 N/m limit | nan |
+| Bulkhead plate to skin bond, width 0.5 mm (butt edge / flange), epoxy 2.0 MPa EST: tau x KP 5.80 MPa | 0.34 |
+| Bulkhead plate to skin bond, width 1.5 mm (butt edge / flange), epoxy 2.0 MPa EST: tau x KP 1.93 MPa | 1.03 |
+| Bulkhead plate to skin bond, width 3.0 mm (butt edge / flange), epoxy 2.0 MPa EST: tau x KP 0.97 MPa | 2.07 |
+| Plate-to-saddle face bond in torsion (face 23.5 x 21 mm, T_skin 9.12 N m): tau x KP 7.71 MPa vs 2.0 EST | 0.26 |
+| CF cross-pin 3 mm, pair at 18 mm arm (assumed layout, not drawn), double shear: force 507 N x KP vs 30 MPa EST | 0.39 |
+| Pin bearing in a 0.5 mm ply plate: allowable "—" (no source); stress would be 728 MPa | nan |
+wall 29 s
