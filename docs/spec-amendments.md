@@ -149,3 +149,27 @@ Requirement IDs: R-OPT-01, R-OPT-02, R-GEN-02, R-CAD-01.
 ```text
 No, I don't want to do the altus, this must be something that is designed by claude and is built by students
 ```
+
+## AM-009 — 2026-11-19 — Board re-sit (Claude-designed options): O4b, accepting the G7 shortfall
+Relation: answers the re-sit after AM-008. Concept A continues as O4b (`docs/audits/2026-11-19-O4-feasibility.md`
+s6-s7; T-074): 9x4.5 props, voltage-scheduled spin cap via ArduPilot Lua on a Kakute H743-Wing ($141.44 RMRC,
+T-074 check 1), a 4S 2,800 mAh pack (GNB 267 g, EU source, tray change; T-074 check 2), engineering mass recovery,
+glass torsion skin, C6 centre node, T-068 package. Dillon accepts the cost-rule G7 shortfall of about $50 (the
+$2,000 hard limit still holds: scratch total $1,829.59). The 2026-12-15 bench go/no-go stays. Purchases still
+need Dillon's approval (none before early Dec 2026). Requirement IDs: R-OPT-01, R-OPT-02, R-GEN-02.
+
+```text
+O4b, accept $50
+```
+
+## AM-010 — 2026-11-19 — Budget tolerance during initial design
+Relation: qualifies the $2,000 hard constraint (CLAUDE.md) and the derived cost rule G7 for the initial design
+stage only. Interpretation (recorded, not stretched): while the design is being developed, cost estimates may run
+somewhat over the budget or the G7 margin without stopping the design; every estimate is still reported against
+$2,000 and G7, and the purchase plan for the build comes back to Dillon for approval. "A bit" is not quantified by
+Dillon; a design estimate more than a few percent over $2,000 is flagged to him rather than assumed allowed.
+Requirement IDs: R-GEN-02, R-OPT-02.
+
+```text
+It is alright to go a bit over the budget when doing the initial design
+```

@@ -24,7 +24,8 @@
 
 **2026-11-19 (AM-008): the aircraft must be designed by Claude and built by the students; no commercial kit airframe
 (the ZOHD Altus lifeboat named below is withdrawn; D-218 reversed).** Concept A failed its mass gate (T-067/T-070) and
-its O4 resize (D-217); the board re-sit between Claude-designed options is open (`docs/task-ledger.md` T-075).
+its O4 resize (D-217). Re-sit (AM-009, D-219): concept A continues as **O4b** (9x4.5 props, Lua spin cap on a Kakute
+H743-Wing, 4S 2,800 mAh pack, glass wing skin, mass recovery; predicted 1.64 kg; go/no-go 2026-12-15).
 
 **Configuration changed 2026-11-14 (D-182, J6 board, `redesign/review/QP-1/BOARD.md`):**
 K09-L could not be built new within the $2,000 limit (cheapest workable build
