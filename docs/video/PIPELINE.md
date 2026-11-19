@@ -134,7 +134,7 @@ Clip result 2026-11-18: 3.1 1920x1080, 60.0 fps, 720 frames (movieclip and strip
 
 ## 10. Known limits
 
-- No ffmpeg or ffprobe (PD-006): `ffprobe`-based verification is replaced by Blender decode; Blender's decoder is the only one tested; no audio; scene concatenation is done inside the VSE encode (cuts via the PNG list), not with ffmpeg.
+- 2026-11-19: standalone FFmpeg 9.0.2 is now installed (PD-006 superseded); `ffprobe` metadata and a full `ffmpeg -f null` decode of all four films are recorded in `docs/verification-report.md`. Encoding still runs through the Blender VSE. Before that: `ffprobe`-based verification was replaced by Blender decode; Blender's decoder is the only one tested; no audio; scene concatenation is done inside the VSE encode (cuts via the PNG list), not with ffmpeg.
 - Decode is sampled (first, every 60th, last, scene joins), not a full-stream decode: 117 of 6,960 main frames, 26 of 1,452 highlight frames, 13 and 7 clip frames. Frame counts and fps come from container metadata.
 - The mean-absolute-difference join test cannot separate a hard cut from motion on a mostly white stage (PLAYBACK-T033 notes).
 - Prop spin is illustrative (category), 47 deg per frame, on only when the logged thrust of that motor exceeds 0.05 N; the plant RPM is not logged. S4 time scale changes at shot joins (x9.6, x2.8, x2.8, x26, x3.6) are changes of speed, readout shown; the log clock is not blended across joins (m-4, open).

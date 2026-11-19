@@ -10,7 +10,19 @@ Only checks actually run are recorded here, with the command and result. Self-re
 | 2026-11-18 | Tamper detection | appended a byte to a copy of the spec; dropped a requirement's only task in a copy of the ledger | PASS: audit printed `MASTER_PROJECT_SPEC.md changed since it was sealed` and `R-PHY-01: no task`, exit 1 |
 | 2026-11-18 | Line endings | CRLF copy of the spec | PASS: audit 0 errors (hash normalises EOL; `.gitattributes` pins LF) |
 | 2026-11-18 | New CLI session (T-008) | `claude -p --model haiku ...` from the repo root | PARTIAL: Claude Code 2.1.288 loaded `.claude/settings.json` and fired SessionStart(startup) (logged `session=9449ec4f`), but the CLI is not logged in (`Not logged in · Please run /login`), so the model's recall could not be tested headlessly |
-| — | Manual compaction (T-007) | `/compact` in the desktop session, then ask for the active task | NOT RUN: needs the user to type `/compact` (a session cannot compact itself) |
+| 2026-11-19 | Manual compaction (T-007) | Dillon typed `/compact` in desktop session 7cb35b0a; next turn resumed from disk | PASS (self-check; independent check pending): `docs/session-log.md` 00:51:20 PreCompact trigger=manual missing=none, 00:52:08 SessionStart source=compact, 00:52:08 PostCompact; brief named spec path, recovery steps, ledger counts (63 T, 0 audit errors) and in-progress tasks; after compaction `ledger_audit.py` 0 errors with the same status counts (spec seal intact, IDs intact); the session resumed the pending task (cleanup wrap-up, worktree question) and then the ffmpeg approval |
+
+## Independent playback check with standalone FFmpeg (PD-006 closed, 2026-11-19)
+FFmpeg 9.0.2 (gyan.dev full build, `winget install Gyan.FFmpeg`, user scope, approved by Dillon in chat 2026-11-19). Files from commit 0da084ab. Commands: `ffprobe -v error -select_streams v:0 -count_frames -show_entries stream=codec_name,profile,pix_fmt,width,height,r_frame_rate,avg_frame_rate,nb_read_frames,bit_rate:format=duration,size <mp4>`; `ffmpeg -v error -i <mp4> -f null -` (every frame decoded; error lines counted).
+
+| File | Codec / profile / pix_fmt | Size | fps (r / avg) | Frames decoded | Duration | Decode errors |
+|---|---|---|---|---|---|---|
+| `film/film-main-1080p60.mp4` | h264 High yuv420p | 1920x1080 | 60/1 / 60/1 | 7,194 | 119.900 s | 0 |
+| `film/film-highlight-1080p60.mp4` | h264 High yuv420p | 1920x1080 | 60/1 / 60/1 | 1,452 | 24.200 s | 0 |
+| `film/clips/clip-elevon-linkage-3.1-servo-arm-rod-horn-1080p60.mp4` | h264 High yuv420p | 1920x1080 | 60/1 / 60/1 | 708 | 11.800 s | 0 |
+| `film/clips/clip-elevon-linkage-3.2-horn-hinge-1080p60.mp4` | h264 High yuv420p | 1920x1080 | 60/1 / 60/1 | 360 | 6.000 s | 0 |
+
+All four: constant 60 fps, video only (no audio stream), 0 decode errors from a decoder independent of the Blender encoder. 9,714 frames total.
 
 ## Milestone audits (T-011, T-048)
 _not run yet_
