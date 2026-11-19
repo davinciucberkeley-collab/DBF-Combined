@@ -29,4 +29,5 @@ session (Agent tool: "Agent type 'implementer' not found"). Until then the same 
 | 2026-11-18 | T-031 full renders | conductor (no model; Blender background) | routine execution | main 116 s 6960 fr 88 min (24.2 MB), highlight 24.2 s 1452 fr 20 min (5.4 MB); re-encoded to absolute path (driver fix) | — | 0 | — | — |
 | 2026-11-18 | T-033 playback verification | runner / haiku | routine | both films decode, metadata match, 0 errors, joins OK (sampled) | — | 0 | — | — |
 | 2026-11-18 | T-031 clips + T-032 pipeline doc | implementer / sonnet | moderate | 2 elevon clips (12 s, 6 s) from stored S3 frames; PIPELINE.md | — | 0 | — | — |
-| 2026-11-18 | T-030/T-033 final film sign-off | eng-reviewer / opus | high-impact review (rendered films) | running | — | 0 | — | — |
+| 2026-11-18 | T-030/T-033 final film sign-off | eng-reviewer / opus | high-impact review (rendered films) | full decode 0 errors all 4 files; visual: N-1 readout covered, N-2 no exploded view/arrows/dims (R-VID-08), N-3 card -dirty | — | 0 | — | — |
+| 2026-11-18 | Film final-review fixes (N-1, N-2, minors) | implementer / sonnet | moderate | running | — | 0 | — | — |

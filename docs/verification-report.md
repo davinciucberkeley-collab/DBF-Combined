@@ -16,7 +16,17 @@ Only checks actually run are recorded here, with the command and result. Self-re
 _not run yet_
 
 ## Video verification (T-033)
-_not run yet_
+Reviewer: independent opus review agent, 2026-11-18, tree `39eb5b84` (clean). Full findings: `docs/audits/2026-11-18-film-final-review.md`. Decoder: Blender 4.5.14 bundled libavcodec (`--debug-ffmpeg`), VSE strip, every frame rendered to PNG and read back; container read independently with a Python MP4 box parser. No ffmpeg/ffprobe on the machine.
+
+| Date | File | Command | Expected | Result |
+|---|---|---|---|---|
+| 2026-11-18 | `film/film-main-1080p60.mp4` | `blender -b --factory-startup --debug-ffmpeg -P fulldecode.py -- <mp4> <dir>` + `python -I analyse.py main` + `python -I mp4box.py` | 6,960 frames (shots-main.json 116.0 s x 60), 1920x1080, 60 fps | PASS: container avc1 1920x1080, 6,960 samples, 60.000 fps, 116.000 s; 6,960 of 6,960 frames decoded and written, contiguous; 0 libav error/warning lines (83,690 log lines); 0 blank, 0 non-opaque, 0 bad-shape, 0 exact-duplicate frames |
+| 2026-11-18 | `film/film-highlight-1080p60.mp4` | same | 1,452 frames (24.2 s) | PASS: 1,452 of 1,452 decoded; 60.000 fps, 24.200 s, 1920x1080; 0 errors; 0 blank/duplicate |
+| 2026-11-18 | `film/clips/clip-elevon-linkage-3.1-servo-arm-rod-horn-1080p60.mp4` | same | 720 frames (12.0 s) | PASS: 720 of 720; 0 errors; 0 blank/duplicate |
+| 2026-11-18 | `film/clips/clip-elevon-linkage-3.2-horn-hinge-1080p60.mp4` | same | 360 frames (6.0 s) | PASS: 360 of 360; 0 errors; 0 blank/duplicate |
+| 2026-11-18 | Visual review of final encodes (56 full-res frames + decode strips) | `grab.py` frame extraction, viewed at 1080p | T-030 M-1..M-9 closed on screen; no new defects | PASS WITH CONDITIONS: M-1, M-3..M-9 closed. Open: N-1 (Major) S4 shots 4.1/4.2 lower third hides the left end of the readout incl. "Prop rotation illustrative"; N-3 (Major) closing card shows `commit fe02c9d5-dirty` (main and highlight); N-2 (Major, R-VID-08) no exploded view, motion arrows or dimension call-outs; minors m-A..m-E |
+
+Decode total: 9,492 frames across four files, 0 decode errors (R-VID-15 decode part met). R-VID-15 review part not passed until N-1, N-3 (overlay + encode rerun from a clean tree) and N-2 are closed and the decode is re-run on the new encodes.
 
 ## Final verification (T-047)
 _not run yet_
