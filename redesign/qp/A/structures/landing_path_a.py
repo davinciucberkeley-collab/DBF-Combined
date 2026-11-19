@@ -71,7 +71,7 @@ def tube_rf(F_ax, Mt, Mb, A, Z, K=KF):
 def put(out, name, lab, arr): out.setdefault(name, (lab, []))[1].append(arr)
 def putb(out, name, lab, rfs):
     put(out, name+' - shear (axial + torsion)', lab, rfs[0]); put(out, name+' - bearing, compression side', 'EST PETG_BEAR 20 MPa', rfs[1])
-    put(out, name+' - peel, tension side [EST lower bound]', 'EST BOND 2.0 MPa', rfs[2])
+    put(out, name+' - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3)', 'EST BOND 2.0 MPa', rfs[2])
 def chord(Ro, dx): return 2*math.sqrt(max(Ro*Ro-dx*dx, 0.0))
 
 
@@ -85,8 +85,6 @@ def checks(FBt):
             Mz_i = np.abs(f[:, 1])*lever; My_i = np.abs(f[:, 2])*lever             # friction force at the aft face acts PAD_X from the interface
             A = PAD_Y*PAD_Z; tau = n_(ft)/A*KP
             peel = (Mz_i/(PAD_Z*PAD_Y**2/6)+My_i/(PAD_Y*PAD_Z**2/6))*KP            # tension at the edge, no compressive relief (conservative)
-            put(out, 'P1 pad PSA to shoe plate (180 mm2) - shear', 'EST PSA 0.10 MPa', PSA/np.maximum(tau, 1e-9))
-            put(out, 'P1 pad PSA to shoe plate (180 mm2) - peel (30 mm lever, no foam compliance)', 'EST PSA 0.10 MPa', PSA/np.maximum(peel, 1e-9))
         # P2 shoe plate to ring junction (PETG), plane x = PLATE_X; chord 13.6 mm (y) x 12 (z); loads about its centre
         for j in (0, 1):
             Sj = S_(k, PLATE_X, (1 if j == 0 else -1)*(FH-0.006))
@@ -130,12 +128,13 @@ def checks(FBt):
         putb(out, 'P10 saddle socket: rib epoxy bond / bearing (D14 x 20)', 'EST BOND 2.0 MPa', 
             bond_rf(F[:, 0], M[:, 0], np.hypot(M[:, 1], M[:, 2]), np.hypot(F[:, 1], F[:, 2]), ROD, Lb))
         # P11 saddle socket wall (PETG box) bending + torsion at the mouth
-        s = (np.hypot(M[:, 1], M[:, 2])/Zb+np.abs(F[:, 0])/(SAD_W**2-math.pi*ROD**2/4))*KP; t = (np.abs(M[:, 0])/Tb+n_(F[:, 1:])/(4*SAD_W*tw))*KP
+        Ibs = SAD_W**4/12-math.pi*ROD**4/64; Zbs = Ibs/(SAD_W/2); tws = (SAD_W-ROD)/2; Tbs = 2*((SAD_W+ROD)/2)**2*tws      # T-069 F-5: P11 section from SAD_W
+        s = (np.hypot(M[:, 1], M[:, 2])/Zbs+np.abs(F[:, 0])/(SAD_W**2-math.pi*ROD**2/4))*KP; t = (np.abs(M[:, 0])/Tbs+n_(F[:, 1:])/(4*SAD_W*tws))*KP
         out.setdefault('P11 saddle socket wall, PETG box 19x19 / bore 14, bending + torsion', ('EST PETG_ILAY 9.5 MPa', []))[1].append(comb((s, PETG_ILAY), (t, PETG_ILAY)))
         # P12 saddle socket-to-ring junction (PETG): plane x = SAD_X0, chord z x 19 (y); loads about its centre
         Sj = S_(k, SAD_X0, 0.0); F, M = M_about(FBt, k, Sj); a = chord(SAD_RO, SAD_X0-SX)
         out.setdefault('P12 saddle socket-to-ring junction, PETG (%.1f x 19 mm)' % (a*1e3), ('EST PETG_ILAY 9.5 MPa', []))[1].append(
-            rect_rf(F[:, 0], np.hypot(F[:, 1], F[:, 2]), M[:, 0], M[:, 2], M[:, 1], SAD_W, a, PETG_ILAY, PETG_ILAY))
+            rect_rf(F[:, 0], np.hypot(F[:, 1], F[:, 2]), M[:, 0], M[:, 1], M[:, 2], SAD_W, a, PETG_ILAY, PETG_ILAY))   # T-069 F-4: u = y (19 mm), v = z (chord): My (stress over z, Mb1), Mz (stress over y, Mb2)
         # P13 saddle ring epoxy bond on the spar (D12 x 60), axis y; loads about the saddle centre (SX, YF, 0)
         Ss = S_(k, SX, 0.0); F, M = M_about(FBt, k, Ss)
         putb(out, 'P13 saddle ring epoxy bond on spar (D12 x 60)', 'EST BOND 2.0 MPa', 
@@ -146,6 +145,96 @@ def checks(FBt):
         tw_s = (SOD-SID)/2; Rm = (SOD+SID)/4; P = np.hypot(F[:, 0], F[:, 2])
         crush = 6*0.318*P*Rm/(SAD_L*tw_s**2)*KF
         out.setdefault('P14b spar wall diametral crush under the saddle ring (hoop EST 40 MPa)', ('EST 40 MPa', []))[1].append(SPAR_HOOP/np.maximum(crush, 1e-9))
+    return {k: (v[0], np.minimum.reduce(v[1])) for k, v in out.items()}
+
+
+# ======================================================================= T-069 P1: wing torsion (P15), wing in-plane bending (P16), pin and cup rows
+# Section: S5010 (common.COORDS, WING_DZ-shifted, chord C 0.245), spar 12x10 CF at x 0.060 z 0, XPS 25 kg/m3 core (BOM R01 / BUILD-GUIDE l.135).  Tape skin: product and thickness "-" (BUILD-GUIDE l.149) -> skin-less bound.
+# Foam stiffness: E 30 MPa, G 8 MPa = structures_a.py l.254 (Ec 30, Gc 8 MPa, EST, for 30 kg/m3 XPS; 25 kg/m3 is softer: EST, sensitivity x0.5 / x2 given).
+# Foam strengths: comp 103 kPa (Owens Corning FOAMULAR 150 data sheet, 15 psi min ASTM D1621, read 2026-11-19 via search result), tension 129 kPa and shear 86 kPa EST (foam_103.py l.2-5).
+# Spar: G 3.0e9 (fe_a.py l.11 C2 low-corner tube G), E 70e9 (iter2_margins.py l.13 / structures_a.py l.103), allowables SIG 350 / TAU 30 MPa EST, KF.  Foam KP (as foam_103.py).
+E_F, G_F = 30e6, 8e6; E_S, G_S = 70e9, 3e9
+F_COMP, F_TENS, F_SHEAR = 103e3, 129e3, 86e3
+R_BORE = 0.006
+def _poly():
+    return np.array([(x_*C.C, z_*C.C) for x_, z_ in C.COORDS], float)
+def _inside(P, X, Z):
+    ins = np.zeros(X.shape, bool); n = len(P)
+    for i in range(n):
+        x1, y1 = P[i]; x2, y2 = P[(i+1) % n]
+        if y1 == y2: continue
+        c = ((y1 > Z) != (y2 > Z)) & (X < (x2-x1)*(Z-y1)/(y2-y1)+x1); ins ^= c
+    return ins
+def section_props(h=0.4e-3):
+    """foam section area, centroid x, Iz about its centroid (in-plane), x extent; Prandtl torsion constant J on a 0.4 mm grid: 'solid' (no bore: upper bound) and 'bored' (bore disc = phi 0 boundary: lower bound)."""
+    import scipy.sparse as sp, scipy.sparse.linalg as sla
+    Pl = _poly(); xs = np.arange(0, C.C+h, h); zs = np.arange(Pl[:, 1].min()-h, Pl[:, 1].max()+2*h, h)
+    X, Z = np.meshgrid(xs, zs, indexing='ij'); ins = _inside(Pl, X, Z)
+    bore = (X-C.SPAR_X)**2+Z**2 <= R_BORE**2
+    out = {}
+    for tag, dom in (('solid', ins), ('bored', ins & ~bore)):
+        n = int(dom.sum()); idx = -np.ones(dom.shape, int); idx[dom] = np.arange(n)
+        rows, cols, vals = [], [], []
+        ii, jj = np.nonzero(dom)
+        for di, dj in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            ni, nj = ii+di, jj+dj; ok = (ni >= 0) & (ni < dom.shape[0]) & (nj >= 0) & (nj < dom.shape[1])
+            ok[ok] = dom[ni[ok], nj[ok]]
+            rows += list(idx[ii[ok], jj[ok]]); cols += list(idx[ni[ok], nj[ok]]); vals += [-1.0/h**2]*int(ok.sum())
+        rows += list(range(n)); cols += list(range(n)); vals += [4.0/h**2]*n
+        A = sp.csr_matrix((vals, (rows, cols)), shape=(n, n)); phi = np.zeros(dom.shape); phi[dom] = sla.spsolve(A.tocsc(), 2*np.ones(n))
+        J = 2*phi.sum()*h*h; gx, gz = np.gradient(phi, h); g = np.hypot(gx, gz)
+        out[tag] = dict(J=float(J), gmax=float(np.percentile(g[dom], 99.5)), area=float(n*h*h))     # 99.5 percentile of |grad phi|: avoids the staircase-boundary spike
+    dom = ins & ~bore; A = dom.sum()*h*h; xc = X[dom].sum()*h*h/A
+    out['foam'] = dict(A=float(A), xc=float(xc), Iz=float((((X[dom]-xc)**2).sum())*h*h), x0=0.0, x1=C.C, enclosed=float(ins.sum()*h*h))
+    return out
+_SEC = None
+def sec():
+    global _SEC
+    if _SEC is None: _SEC = section_props()
+    return _SEC
+def wing_stations():
+    return (('y 0.38 (fin station)', YF), ('y 0.228 (motor station)', 0.228), ('y 0.060 (outboard of tray slot end 0.057)', 0.060))
+
+def wing_checks(FBt, EF=E_F, GF=G_F, variant='bored', skin=None):
+    """P15 torsion + P16 in-plane bending of the wing at three stations, for one fin's two feet (outboard free body; hub, pack and motor masses are inboard of every station;
+    wing-foam inertia ignored, ~0.08 kg x short arm, EST).  Reference line x0 = spar axis or mid-chord (worse taken).  Torsion: spar and foam share by GJ; bending: by EI."""
+    S = sec(); J_s = 2*I_S; res = {}
+    GJf = GF*S[variant]['J']; GJs = G_S*J_s; sh_s = GJs/(GJs+GJf); sh_f = 1-sh_s
+    tau_f_unit = S[variant]['gmax']/S[variant]['J']
+    fo = S['foam']; EAs, EAf = E_S*A_S, EF*fo['A']; xn = (EAs*SX+EAf*fo['xc'])/(EAs+EAf)
+    EIs = E_S*I_S+EAs*(SX-xn)**2; EIf = EF*fo['Iz']+EAf*(fo['xc']-xn)**2; EI = EIs+EIf
+    for lab, ys in wing_stations():
+        rt, rb = [], []
+        for k in (0, 1):
+            for x0 in (SX, 0.5*C.C):
+                F, M = M_about(FBt, k, S_(k, x0, 0.0)); T = np.abs(M[:, 1])
+                ts = KF*sh_s*T*(SOD/2)/J_s; tf = KP*sh_f*T*tau_f_unit
+                rt.append(np.minimum(TAU/np.maximum(ts, 1e-9), F_SHEAR/np.maximum(tf, 1e-9)))
+                Fs, Ms = M_about(FBt, k, (x0, (1 if k == 0 else -1)*ys, 0.0)); Mz = np.abs(Ms[:, 2])
+                kap = Mz/EI; sg_s = KF*E_S*kap*(abs(SX-xn)+SOD/2); d_f = max(xn-fo['x0'], fo['x1']-xn); sg_f = KP*EF*kap*d_f
+                rb.append(np.minimum(SIG/np.maximum(sg_s, 1e-9), F_COMP/np.maximum(sg_f, 1e-9)))
+        res['P15 wing torsion, spar + foam by GJ share, skin-less, %s' % lab] = ('EST spar 30 MPa / foam 86 kPa', np.minimum.reduce(rt))
+        res['P16 wing in-plane bending, spar + foam by EI share, skin-less, %s' % lab] = ('EST spar 350 MPa / foam 103 kPa', np.minimum.reduce(rb))
+    info = dict(sh_spar=sh_s, sh_foam=sh_f, GJs=GJs, GJf=GJf, J_s=J_s, J_f=S[variant]['J'], tau_unit=tau_f_unit, xn=xn, EIs=EIs, EIf=EIf, Jsolid=S['solid']['J'], Jbored=S['bored']['J'], foam=fo)
+    return res, info
+
+# --- pin and cup rows (D-215 D3 / D4 geometry as PROPOSED, not built): 3 mm CF cross-pin (BOM R14); cup 4 mm deep, 1.5 mm walls on the shoe plate
+PIN_D = 0.003; PIN_A = math.pi/4*PIN_D**2; PIN_TAU = 30e6      # EST: CF rod shear (structures_a.py TAU 30 MPa; Tap Plastics 41.3 MPa is a sensitivity, landing_side_a.py l.66)
+CUP_D, CUP_T, CUP_L = 0.004, 0.0015, 0.030                    # cup depth, wall, free foam length (D-215 s0 / s6)
+EVA_BEAR = 0.17e6                                             # EST: crush plateau of the foot design (30 N / 180 mm2) used as the foam bearing limit; EVA data "-"
+def pin_cup_checks(FBt):
+    out = {}
+    for k in (0, 1):
+        for nm, x in (('root block', BLK_X0), ('saddle', SAD_X1)):
+            F, M = M_about(FBt, k, S_(k, x, 0.0)); V = np.abs(M[:, 0])/ROD                # force per shear plane, couple arm = rib OD
+            out.setdefault('PIN %s: 1 x 3 mm CF cross-pin shear (double shear, rib torsion)' % nm, ('EST CF rod 30 MPa', []))[1].append(PIN_TAU/np.maximum(V/(2*PIN_A)*KP, 1e-9))
+            out.setdefault('PIN %s: bearing in PETG socket wall (3 mm x 2.5 mm)' % nm, ('EST PETG_BEAR 20 MPa', []))[1].append(PETG_BEAR/np.maximum(V/(PIN_D*0.0025)*KP, 1e-9))
+        for j in (0, 1):
+            f = FBt[:, 2*k+j, :]; Fs = n_(f[:, 1:]); R_rim = Fs*(CUP_L+CUP_D)/CUP_D
+            out.setdefault('CUP wall bending (printed, in-layer 20 MPa EST; 4 mm cantilever, 15 x 1.5 mm)', ('EST 20 MPa', []))[1].append(20e6/np.maximum(R_rim*CUP_D*0.5/(0.015*CUP_T**2/6)*KP, 1e-9))
+            out.setdefault('CUP EVA bearing at rim (15 x 2 mm contact) vs crush plateau', ('EST 0.17 MPa', []))[1].append(EVA_BEAR/np.maximum(R_rim/(0.015*0.002)*KP, 1e-9))
+            out.setdefault('CUP pin shear (1 x 3 mm CF, double shear)', ('EST CF rod 30 MPa', []))[1].append(PIN_TAU/np.maximum(Fs/(2*PIN_A)*KP, 1e-9))
+            out.setdefault('CUP EVA bearing at pin hole (3 x 12 mm) vs crush plateau', ('EST 0.17 MPa', []))[1].append(EVA_BEAR/np.maximum(Fs/(PIN_D*0.012)*KP, 1e-9))
     return {k: (v[0], np.minimum.reduce(v[1])) for k, v in out.items()}
 
 
@@ -211,9 +300,10 @@ if __name__ == "__main__":
     for name, kw in cases(quick):
         q = L.simulate(Fp=30.0, dt=2e-4, T=1.5, trace=True, **kw)
         FBt = q['trace'].reshape(-1, 4, 3)
-        rf = checks(FBt)
+        rf = checks(FBt); rf.update(pin_cup_checks(FBt)); wrf, WINFO = wing_checks(FBt); rf.update(wrf)
         for key, (lab, a) in rf.items(): allrf.setdefault(key, []).append((float(a.min()), name, lab))
         print(f"  case {name:34s} side {q['side'].max():5.1f} N Fmax {q['F'].max():5.1f} N  rib RF (landing_a) {q['rib_rf']:.2f}  tilt_end {q['tilt_end']:.1f}  min path RF {min(float(v.min()) for _, (l, v) in rf.items()):.2f}  [{time.time()-t0:.0f} s]", flush=True)
+    print("\n## Wing section / share data (T-069):", {k: (round(v, 6) if isinstance(v, float) else v) for k, v in WINFO.items()})
     print("\n## Minimum RF per check over all cases (criterion RF >= 1.0)")
     print("| Check | Allowable | min RF | governing case | demand stress = allowable / RF |\n|---|---|---|---|---|")
     rows = []
@@ -225,7 +315,7 @@ if __name__ == "__main__":
         return f"{float(m.group(1))/rf:.1f} MPa" if m and rf > 0 else "-"
     for rf, key, lab, nm in sorted(rows): print(f"| {key} | {lab} | {rf:.2f} | {nm} | {_dem(lab, rf)} |")
     print(f"\nMINIMUM over all rows: {min(rows)[1]} RF {min(rows)[0]:.2f} ({min(rows)[3]})")
-    firm = [r for r in rows if "peel" not in r[1] and "P1 " not in r[1]]
+    firm = [r for r in rows if "BOND INTEGRITY" not in r[1] and "P1 " not in r[1]]
     print(f"MINIMUM excluding the peel rows and the PSA rows (allowable with no repo source): {min(firm)[1]} RF {min(firm)[0]:.2f} ({min(firm)[3]})")
     print("Rows below 1.0:", "; ".join(f"{r[1]} {r[0]:.2f}" for r in sorted(rows) if r[0] < 1.0))
     print("\n## F10 volumes (voxel 0.25 mm of the stub-built CAD shapes, minus cuts; solid PETG at RHO_PETG %.2f g/cm3)" % W.RHO_PETG)
