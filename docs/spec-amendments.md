@@ -100,3 +100,14 @@ Requirement IDs: R-COM-04, R-GEN-02, R-ORC-01.
 ```text
 I won't be available for the next 8+ hours, so if there is an issue that you run into that need a decision on, consult an opus agent for the time being
 ```
+
+## AM-005 — 2026-11-19 — Board choice for concept A: O4 resize once
+Relation: answers the board option sheet D-216 (`docs/audits/2026-11-19-T070-decision.md` s6, T-072). Concept A
+continues under BOARD R3 "resize once": engineering mass recovery, wing glass torsion skin, centre-node rework,
+smaller pack and 10x4.5 props, gate re-derived by the C3 pitch-over at +-5 %, hard go/no-go 2026-12-15 (no-go:
+board re-sits at once). Not approved by this answer: purchases (still none before early Dec 2026) and the car-trunk
+measurement. Requirement IDs: R-OPT-01, R-OPT-02, R-GEN-02.
+
+```text
+O4: resize once
+```
