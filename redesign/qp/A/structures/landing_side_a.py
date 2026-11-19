@@ -1,7 +1,10 @@
 """T-064 landing side-load capacity and sensitivity (rigid-body dynamics + hand-calculation part capacities).  python -I landing_side_a.py
 Imports landing_a.py (same folder).  Prints: (1) part capacities against the worst simulated foot loads, (2) pad-friction sweep with the mu at which the
 rib-root RF reaches 1, (3) plateau sweep, (4) touchdown-envelope cases taken from the SITL touchdown records.  Labels: EST allowables (no coupon), CALC.
-Run time about 3 min."""
+Run time about 3 min.
+T-064r (F1, F2): geometry is the CAD ground plane and CG by default (landing_a.py cad_geom(); --legacy restores the 2026-11-19 hand geometry). The three section-1 rows
+on structures_a.py baseline geometry (shoe bond on a fin corner, foam slot bearing, 0.1 mm fin skin) are NOT the A load path (review F1) and are printed only as
+labelled legacy rows; the real load-path checks are in landing_path_a.py."""
 import math, sys, os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import landing_a as L
@@ -17,13 +20,13 @@ print("## 1. Part capacity at the worst simulated foot load (30 N plateau, mu 0.
 r = row("worst", CASES[1][1]); fn, side = r['F'].max(), r['side'].max()
 res = math.hypot(fn, side)
 print(f"worst foot: normal {fn:.1f} N, side {side:.1f} N (resultant {res:.1f} N); both maxima taken as simultaneous (conservative)")
-print(f"- shoe bond on fin corner, 1,500 mm2, allowable 0.1 MPa (C6 paper/foam value EST): {res*KP/1.5e-3/1e3:.1f} kPa -> RF {0.1e6/(res*KP/1.5e-3):.2f}")
-brg = 2*side*KP/(0.065*0.0233); print(f"- foam bearing at the fin slot (65 x 23 mm, both feet {side:.1f} N), allowable 120 kPa EST: {brg/1e3:.1f} kPa -> RF {120e3/brg:.2f}")
+print(f"- [BASELINE GEOMETRY, NOT THE A LOAD PATH, superseded by landing_path_a.py] shoe bond on fin corner, 1,500 mm2, allowable 0.1 MPa (C6 paper/foam value EST): {res*KP/1.5e-3/1e3:.1f} kPa -> RF {0.1e6/(res*KP/1.5e-3):.2f}")
+brg = 2*side*KP/(0.065*0.0233); print(f"- [BASELINE GEOMETRY, NOT THE A LOAD PATH] foam bearing at the fin slot (65 x 23 mm, both feet {side:.1f} N), allowable 120 kPa EST: {brg/1e3:.1f} kPa -> RF {120e3/brg:.2f}")
 Mfin = side*0.18; sig_f = Mfin/(2*0.1e-3*0.12*7.55e-3)*1.5*1.15
-print(f"- fin skin 0.1 mm CFRP bending at the root, M = {side:.1f} x 0.18 = {Mfin:.2f} N m (structures_a.py s6 geometry), allowable 450 MPa EST: {sig_f/1e6:.1f} MPa -> RF {450e6/sig_f:.1f}")
-Tq = 0.18; Fcap_t = L.TAU_RIB*L.RIB_J/((L.RIB_OD/2)*L.KF_RIB)/Tq
-print(f"- rib torsion alone, ONE foot loaded sideways, lever 0.18 m, 30 MPa EST: capacity {Fcap_t:.1f} N per foot (structures_a.py s6 row: 15 N gives RF 1.60); at 41.3 MPa (Tap Plastics pultruded shear sheet, checked 2026-11-18, test method not stated): {41.3e6*L.RIB_J/((L.RIB_OD/2)*L.KF_RIB)/Tq:.1f} N")
-Fcap_b = L.SIG_RIB*L.RIB_Z/L.KF_RIB/(2*(0.30-L.RIB_X0)); print(f"- rib root bending alone, both feet sideways, arm {0.30-L.RIB_X0:.4f} m, 350 MPa EST: capacity {Fcap_b:.1f} N per foot")
+print(f"- [BASELINE GEOMETRY, NOT THE A LOAD PATH] fin skin 0.1 mm CFRP bending at the root, M = {side:.1f} x 0.18 = {Mfin:.2f} N m (structures_a.py s6 geometry), allowable 450 MPa EST: {sig_f/1e6:.1f} MPa -> RF {450e6/sig_f:.1f}")
+Tq = L.geom()['z_foot']; Fcap_t = L.TAU_RIB*L.RIB_J/((L.RIB_OD/2)*L.KF_RIB)/Tq
+print(f"- rib torsion alone, ONE foot loaded sideways, lever {Tq:.3f} m, 30 MPa EST: capacity {Fcap_t:.1f} N per foot (structures_a.py s6 row: 15 N gives RF 1.60); at 41.3 MPa (Tap Plastics pultruded shear sheet, checked 2026-11-18, test method not stated): {41.3e6*L.RIB_J/((L.RIB_OD/2)*L.KF_RIB)/Tq:.1f} N")
+Fcap_b = L.SIG_RIB*L.RIB_Z/L.KF_RIB/(2*(L.geom()['x_foot']-L.RIB_X0)); print(f"- rib root bending alone, both feet sideways, arm {L.geom()['x_foot']-L.RIB_X0:.4f} m, 350 MPa EST: capacity {Fcap_b:.1f} N per foot")
 print("- rib root, combined bending + torsion + axial, all four feet resolved in the body frame each time step (landing_a.py): see the RF column below; minimum is the governing number")
 print("\n## 2. Pad friction sweep (30 N plateau): side load per foot N / rib RF")
 mus = (0.30, 0.40, 0.50, 0.60, 0.70)

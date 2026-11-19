@@ -1,0 +1,10 @@
+variant | static edge toward CG side (deg) | static pad centre | max upright lean at lateral 0.16 / 0.40 / 0.52 / 0.70 m/s (deg, grid 2)
+CAD as drawn                                            | 29.19 | 28.36 | 22 / 14 / 10 / 8
+track +6 mm (pad edge z 0.189)                          | 30.02 | 29.19 | 22 / 14 / 10 / 8
+track +10 mm                                            | 30.56 | 29.74 | 24 / 16 / 12 / 8
+track +13 mm (31 deg)                                   | 30.96 | 30.15 | 24 / 16 / 12 / 10
+CG z centred (0)                                        | 30.07 | 29.24 | 22 / 14 / 12 / 8
+CG z centred and track +3 mm                            | 30.47 | 29.66 | 24 / 16 / 12 / 8
+CG 10 mm aft                                            | 29.98 | 29.13 | 22 / 14 / 10 / 8
+ground plane 6 mm forward (pad 24 mm long, stroke -6 mm) | 29.66 | 28.82 | 22 / 14 / 10 / 8
+track +6 mm and CG 5 mm aft                             | 30.41 | 29.58 | 24 / 16 / 12 / 8
