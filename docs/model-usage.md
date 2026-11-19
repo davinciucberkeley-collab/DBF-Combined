@@ -25,4 +25,6 @@ session (Agent tool: "Agent type 'implementer' not found"). Until then the same 
 | 2026-11-18 | T-028 Scene 3 + film framing fixes | implementer / sonnet | moderate (Blender pipeline) | S3 kinematics-driven; cam check 0/4620 inside; previews only | 216 k tok / 22 min | 0 | — | frame review pending (T-030) |
 | 2026-11-18 | T-029 Scenes 4 (SITL playback) + 5 (FEA) | implementer / sonnet | moderate (Blender pipeline) | S4 SITL Z5_gb0 playback, S5 hub/arm FEA; cam check 0/7320; film 122 s (trim in T-030) | — | 0 | — | frame review T-030 |
 | 2026-11-18 | T-030 film frame review | eng-reviewer / opus | high-impact review (rendered frames) | accept with conditions: 9 majors (on-screen numbers, props, trim, ignored sources) | — | 0 | — | — |
-| 2026-11-18 | T-030 fixes | implementer / sonnet | moderate | running | — | 0 | — | — |
+| 2026-11-18 | T-030 fixes | implementer / sonnet | moderate | M-1..M-9 closed; 116 s; highlight 24.2 s; cam check 0 inside | 291 k tok / 27 min | 0 | — | — |
+| 2026-11-18 | T-031 full renders | conductor (no model; Blender background) | routine execution | main 116 s 6960 fr 88 min (24.2 MB), highlight 24.2 s 1452 fr 20 min (5.4 MB); re-encoded to absolute path (driver fix) | — | 0 | — | — |
+| 2026-11-18 | T-033 playback verification | runner / haiku | routine | both films decode, metadata match, 0 errors, joins OK (sampled) | — | 0 | — | — |

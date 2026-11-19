@@ -2453,7 +2453,7 @@ def film_driver(a):
         lst = os.path.join(work, '_list.txt')
         open(lst, 'w').write('\n'.join(name_of[f] for f in frames))
         os.makedirs(os.path.dirname(os.path.abspath(a.film_out)), exist_ok=True)
-        run([a.blender, '-b', '--factory-startup', '-P', me, '--', 'encode', '--src', work, '--list', lst, '--out', a.film_out, '--crf', a.crf, '--w', str(W), '--h', str(H), '--fps', str(FPS)])
+        run([a.blender, '-b', '--factory-startup', '-P', me, '--', 'encode', '--src', work, '--list', lst, '--out', os.path.abspath(a.film_out), '--crf', a.crf, '--w', str(W), '--h', str(H), '--fps', str(FPS)])
         t_enc = time.time() - t_e
     write_timing(a.timing or os.path.join(FILM_DIR, 'timing.json'),
                  dict(film=os.path.basename(a.shot_list), scenes=[S['id'] for S in film['scenes']], film_seconds=round(film['total'], 2), frames=nfr, frames_mapped=len(frames), every=every,
