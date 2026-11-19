@@ -27,7 +27,7 @@ A_slot = 0.0325*0.111
 row("Pack tray on the LE slot floor, 12 g crash, full slot floor (32.5 x 111 mm)", m_pack*9.81*12*KP/A_slot, "comp", "bearing")
 row("Same, worst case: only a quarter of the floor carries (rim contact)", m_pack*9.81*12*KP/(A_slot/4), "comp", "bearing")
 # servo stall reacted by the epoxy on the pocket walls
-T_stall = 0.397*12.9/12.0        # N m at the elevon through the 12 mm arm and 12.9 mm horn radius (ES3054HV 0.397 N m at 7.2 V, SERVO.md)
+T_stall = 0.397*9.155/8.5        # N m at the elevon through the 8.5 mm arm hole and 9.155 mm horn radius (D-212 rev 2; ES3054HV 0.397 N m at 7.2 V, SERVO.md)
 Fy, Fx = (T_stall/2)/0.0267, (T_stall/2)/0.0284
 A_f = 0.0267*0.013; A_g = 0.0284*0.013
 row("Servo stall (0.427 N m at the elevon, fault: servo driven into the stop), epoxy on all four pocket walls", max(Fy/A_f, Fx/A_g)*KP, "shear", "build rule: epoxy on all four walls, not two")

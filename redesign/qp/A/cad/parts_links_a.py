@@ -47,7 +47,7 @@ MAP = [
     ('HRN-001', 'make', ['W07', 'W05'], 'wire, heat-shrink, ties'), ('HRN-002', 'buy', ['W05'], 'XT60 and 14 AWG from the W05 kit'),
     ('HWC-', 'buy', ['R05'], 'stock screws / nuts, local'),
     ('MEC-001', 'buy', ['M01'], ''), ('MEC-002', 'buy', ['M01'], 'arm supplied with the servo'),
-    ('MEC-003', 'buy', ['M02'], ''), ('MEC-004', 'buy', ['M02'], ''), ('MEC-005', 'buy', ['M02'], 'clevis pin from the M02 linkage set'),
+    ('MEC-003', 'buy', ['M02'], ''), ('MEC-004', 'make', ['R03'], 'printed PETG horn + rib, 2 mm flat profile (D-212 rev 3); M02 horns unused'), ('MEC-008', 'make', ['R03'], 'printed PETG Z-bend keeper (D-212 rev 3)'), ('MEC-005', 'buy', ['M02'], 'clevis pin from the M02 linkage set'),
     ('PRP-001', 'buy', ['P01'], ''), ('PRP-002', 'buy', ['P02'], ''), ('PRP-003', 'buy', ['P04'], ''),
     ('PRP-004', 'buy', ['P01'], 'T-Motor prop adapter: confirm it ships in the motor hardware pack (no own BOM line)'),
     ('PRP-005', 'buy', ['P01'], 'T-Motor spinner nut: confirm it ships in the motor hardware pack (no own BOM line)'),

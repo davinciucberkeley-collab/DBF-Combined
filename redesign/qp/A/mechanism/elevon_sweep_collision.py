@@ -197,8 +197,14 @@ def elevon_slab_poly():
 
 
 def horn_blade_poly():
-    zb = max(c.zu(e.HORN_X0 - 0.002), c.zu(e.HORN_X0), c.zu(e.HORN_X1))
-    return zb, e._rrect(e.HORN_X0, zb + 1.0 * MM, e.HORN_X1, e.HORN_TOP, 1.5 * MM, 3)
+    """D-212 rev 3: the part of the horn profile above the skin (head, neck, blade base on the skin), from the CAD outline (electrical.horn_profile)."""
+    pr = e.horn_profile()
+    return [p for p in pr if p[1] >= c.zu(p[0]) - 1e-9] + [(e.HORN_BX1, c.zu(e.HORN_BX1))]
+
+
+def horn_rib_poly():
+    """D-212 rev 3: the part of the horn profile below the skin (rib in its slot through the elevon)."""
+    return [p for p in e.horn_profile() if p[0] >= e.HORN_PX0 - 1e-9 and p[1] < c.zu(p[0]) - 1e-9] + [(e.HORN_PX0, c.zu(e.HORN_PX0) - e.HORN_RIB_IN)]
 
 
 def moving_set(theta, delta, sy):
@@ -209,23 +215,25 @@ def moving_set(theta, delta, sy):
     ux, uy = -sy * (-math.sin(theta)) * 0 + sy * math.sin(theta), -sy * math.cos(theta)    # Rz(theta) (0, -sy)
     loop = e._arm_loop(k.SV_XS, yc, ux, uy)
     P['arm'] = Hull(prism_z(loop, e.ARM_Z0, e.ARM_Z1))
+    sp_, br_, _h = e.keeper_loops(sy, theta)                  # D-212 rev 3 Z-bend keeper, turns with the arm (screw hole not subtracted)
+    P['keeper spacer'] = Hull(prism_z(sp_, e.ARM_Z1, e.KEEP_Z0))
+    P['keeper bridge'] = Hull(prism_z(br_, e.KEEP_Z0, e.KEEP_Z1))
     pa = k.arm_pt(theta, sy)
     ph = k.horn_pt(delta, sy)
     u = (ph - pa) / np.linalg.norm(ph - pa)
-    P['rod Z-bend pin'] = Hull(cyl((pa[0], pa[1], e.ARM_Z0 + 0.0001), (pa[0], pa[1], k.ROD_Z), k.ROD_D / 2))
-    q = ph - 4 * MM * u                                       # clevis body starts 4 mm before the hole (electrical.py:967)
+    P['rod Z-bend pin'] = Hull(cyl((pa[0], pa[1], e.ARM_Z0 + 0.0001), (pa[0], pa[1], k.ZJ), k.ROD_D / 2))
+    q = ph - 5.5 * MM * u                                     # clevis body starts 5.5 mm before the hole (electrical.py, D-212)
     P['rod'] = Hull(cyl(pa, q, k.ROD_D / 2))
     P['clevis sleeve'] = Hull(cyl(q, q + 2 * MM * u, 1.5 * MM))
     e2 = np.array([0, 1.0, 0]) - u[1] * u
     e2 /= np.linalg.norm(e2)
     e3 = np.cross(u, e2)
     for sg in (-1, 1):
-        P['clevis cheek %+d' % sg] = Hull(box_frame(q, u, e2, e3, (2 * MM, sg * 1.5 * MM - 0.4 * MM, -1.6 * MM), (5.5 * MM, sg * 1.5 * MM + 0.4 * MM, 1.6 * MM)))
+        P['clevis cheek %+d' % sg] = Hull(box_frame(q, u, e2, e3, (2 * MM, sg * 1.5 * MM - 0.4 * MM, -1.6 * MM), (7.0 * MM, sg * 1.5 * MM + 0.4 * MM, 1.6 * MM)))
     # --- elevon side (rotates by delta about the hinge)
     hy = sy * (k.SERVO_Y - k.ARM_R)
-    zb, blade = horn_blade_poly()
-    P['horn plate'] = Hull(rot_xz(aabb((e.HORN_X0 - 0.002, hy - 4 * MM, zb), (e.HORN_X1, hy + 4 * MM, zb + 1.0 * MM)), delta))
-    P['horn blade'] = Hull(rot_xz(prism_y(blade, hy - 1.0 * MM, hy + 1.0 * MM), delta))
+    P['horn blade'] = Hull(rot_xz(prism_y(horn_blade_poly(), hy - e.HORN_T / 2, hy + e.HORN_T / 2), delta))
+    P['horn rib'] = Hull(rot_xz(prism_y(horn_rib_poly(), hy - e.HORN_T / 2, hy + e.HORN_T / 2), delta))
     P['clevis pin'] = Hull(rot_xz(cyl((k.HORN_XH, hy - 2.2 * MM, k.ROD_Z), (k.HORN_XH, hy + 2.2 * MM, k.ROD_Z), 0.5 * MM), delta))
     P['elevon slab'] = Hull(rot_xz(prism_y(elevon_slab_poly(), hy - 0.015, hy + 0.015), delta))
     return P
@@ -236,21 +244,25 @@ EXCLUDED = {
     ('arm', 'rod Z-bend pin'): 'pin seated in the arm hole (ctx.seat / E-MEC rod Z-bend in the arm tip hole; hole not subtracted)',
     ('clevis pin', 'clevis cheek -1'): 'pin through the cheek holes (E-MEC-PIN-*3)', ('clevis pin', 'clevis cheek +1'): 'pin through the cheek holes (E-MEC-PIN-*3)',
     ('clevis pin', 'horn blade'): 'pin through the horn hole (E-MEC-PIN-*4)',
-    ('horn plate', 'horn blade'): 'one part (MEC-004)', ('horn plate', 'elevon slab'): 'horn bonded on the elevon upper skin (E-MEC horn edge)',
-    ('horn blade', 'elevon slab'): 'horn bonded on the elevon upper skin', ('clevis pin', 'horn plate'): 'pin and horn are one rigid group; pin sits 9 mm above the plate',
+    ('horn blade', 'horn rib'): 'one part (MEC-004)', ('horn rib', 'elevon slab'): 'rib bonded in its slot through the elevon (E-MEC horn edge, D-212 rev 3; slot cut in the CAD elevon)',
+    ('horn blade', 'elevon slab'): 'blade base on the elevon skin over the slot', ('clevis pin', 'horn rib'): 'pin and horn are one rigid group; pin sits about 9.5 mm above the skin',
+    ('keeper spacer', 'keeper bridge'): 'one part (MEC-008)', ('keeper spacer', 'arm'): 'keeper clamped on the arm top by the arm screw (E-MEC keeper edge)',
+    ('keeper bridge', 'arm'): 'keeper clamped on the arm top (same rigid group)',
     ('clevis pin', 'elevon slab'): 'pin is part of the elevon-side group (rigid with the slab)',
     ('rod', 'clevis sleeve'): 'one part (MEC-003)', ('rod', 'clevis cheek -1'): 'one part (MEC-003)', ('rod', 'clevis cheek +1'): 'one part (MEC-003)',
     ('clevis sleeve', 'clevis cheek -1'): 'one part (MEC-003)', ('clevis sleeve', 'clevis cheek +1'): 'one part (MEC-003)',
     ('clevis cheek -1', 'clevis cheek +1'): 'one part (MEC-003)', ('rod', 'rod Z-bend pin'): 'one part (MEC-003)',
     ('rod Z-bend pin', 'clevis sleeve'): 'one part (MEC-003)', ('rod Z-bend pin', 'clevis cheek -1'): 'one part (MEC-003)', ('rod Z-bend pin', 'clevis cheek +1'): 'one part (MEC-003)',
 }
-STATIC_EXCL = {('elevon slab', 'core aft block'): 'hull artifact: the convex hull of the elevon section fills the cove that the hull of the core aft block also fills; the elevon-core pair is checked on the non-convex 2-D sections instead'}
+STATIC_EXCL = {('elevon slab', 'core aft block'): 'hull artifact: the convex hull of the elevon section fills the cove that the hull of the core aft block also fills; the elevon-core pair is checked on the non-convex 2-D sections instead',
+               ('horn rib', 'core aft block'): 'hull artifact as for the elevon slab: the rib lies inside the elevon section; checked on the non-convex 2-D section (rib outline vs core) instead'}
 DESIGN_CONTACT = {('arm', 'servo case'): 'arm bottom sits on the case top (ARM_Z0 = SV_Z1, boss height "-")',
-                  ('rod', 'arm'): 'rod bottom tangent to the arm top (ROD_Z = ARM_Z1 + D/2): zero clearance by construction'}
+                  ('rod', 'arm'): 'ELEVON_ZJ=lo: the rod rests on the arm top at the low end of the Z-bend freedom (rod bottom tangent, by design); mid and hi leave a gap',
+                  ('rod', 'keeper bridge'): 'ELEVON_ZJ=hi: the rod top bears on the keeper bridge at the high end of the Z-bend freedom (by design, D-212 rev 3); mid and lo leave a gap'}
 
 
 def main():
-    res = dict(git_head=k.git_head(), engine='analytic convex solids + separating-axis test (numpy, scipy.spatial.ConvexHull); NOT mesh-based',
+    res = dict(git_head=k.git_head(), arm_joint_state=k.STATE, arm_joint_z_mm=k.ZJ * 1e3, engine='analytic convex solids + separating-axis test (numpy, scipy.spatial.ConvexHull); NOT mesh-based',
                versions=dict(python=sys.version.split()[0], numpy=np.__version__, scipy=scipy.__version__), tol_mm=TOL_MM, step_deg=STEP_DEG,
                trimesh_manifold3d='not installed; Blender not available here')
     degs = np.round(np.arange(-k.ELEV_STOP, k.ELEV_STOP + 1e-9, STEP_DEG), 6)
@@ -300,7 +312,7 @@ def main():
     res['design_contacts'] = {' / '.join(kk): v for kk, v in DESIGN_CONTACT.items()}
     # cap / balance pocket distance by y (not swept: far away)
     hy = k.SERVO_Y - k.ARM_R
-    res['y_gap_horn_plate_to_cap_flange_mm'] = (w.CAP_Y0 - (hy + 0.004)) * 1e3
+    res['y_gap_horn_to_cap_flange_mm'] = (w.CAP_Y0 - (hy + e.HORN_T / 2)) * 1e3
     # 2-D elevon panel vs core section at the horn station
     core = np.array(w.core_loop())
     ev0 = np.array(elevon_slab_poly())
@@ -320,17 +332,25 @@ def main():
         dist = np.linalg.norm(pts[:, None, :] - (a_[None] + t[..., None] * v[None]), axis=-1).min()
         nose.append((float(dd), float(dist * 1e3) * (-1 if inside(pts, core).any() else 1)))
     na = np.array(nose)
+    rib0 = np.array(horn_rib_poly())                           # D-212 rev 3: rib outline (non-convex) against the core section, every pose
+    rb = []
+    for dd in degs:
+        d = math.radians(dd)
+        pts = np.array([[k.XH + (x - k.XH) * math.cos(d) + (z - k.HINGE_Z) * math.sin(d), k.HINGE_Z - (x - k.XH) * math.sin(d) + (z - k.HINGE_Z) * math.cos(d)] for x, z in rib0])
+        rb.append((float(dd), poly_sep(pts, core) * 1e3))
+    ra = np.array(rb)
+    res['horn_rib_vs_core_2d'] = dict(min_sep_mm=float(ra[:, 1].min()), at_delta_deg=float(ra[ra[:, 1].argmin(), 0]))
     res['elevon_vs_core_2d'] = dict(min_sep_mm=float(sa[:, 1].min()), at_delta_deg=float(sa[sa[:, 1].argmin(), 0]), neutral_mm=float(sa[len(sa) // 2, 1]),
                                     nose_below_hinge_to_core_min_mm=float(na[:, 1].min()), nose_below_hinge_min_at_delta_deg=float(na[na[:, 1].argmin(), 0]),
                                     note='elevon nose touches the core corner at the hinge at neutral by construction (0 mm); sections only (no balance pocket, caps, tape)')
     # criteria
     crit_pen = [p for p in pairs if p['max_penetration_mm'] > TOL_MM]
-    res['pass_no_penetration_gt_tol'] = bool(len(crit_pen) == 0 and sa[:, 1].min() > -TOL_MM and na[:, 1].min() > -TOL_MM)
+    res['pass_no_penetration_gt_tol'] = bool(len(crit_pen) == 0 and sa[:, 1].min() > -TOL_MM and na[:, 1].min() > -TOL_MM and ra[:, 1].min() > -TOL_MM)
     res['pairs_failing'] = [dict(side=p['side'], pair=p['a'] + ' / ' + p['b'], depth_mm=p['max_penetration_mm'], at_delta_deg=p['at_delta_deg'], first_delta_deg_over_tol=p['first_delta_deg_over_tol']) for p in crit_pen]
     os.makedirs(k.OUT, exist_ok=True)
-    with open(os.path.join(k.OUT, 'linkage_sweep_collision.json'), 'w') as f:
+    with open(os.path.join(k.OUT, 'linkage_sweep_collision' + k.SUF + '.json'), 'w') as f:
         json.dump(res, f, indent=1)
-    with open(os.path.join(k.OUT, 'linkage_sweep_collision.csv'), 'w', newline='') as f:
+    with open(os.path.join(k.OUT, 'linkage_sweep_collision' + k.SUF + '.csv'), 'w', newline='') as f:
         wr = csv.writer(f)
         wr.writerow(['side', 'part_a', 'part_b', 'delta_deg', 'separation_mm (negative = penetration)'])
         for (sy, a_, b_), v in sorted(table.items(), key=lambda kv: (kv[0][0], kv[0][1], kv[0][2])):
@@ -356,9 +376,9 @@ def main():
     ax[1].grid(alpha=.3)
     fig.suptitle('Swept clearance of the linkage and horn (analytic convex solids)')
     fig.tight_layout()
-    fig.savefig(os.path.join(k.OUT, 'linkage_sweep_collision.png'), dpi=110)
+    fig.savefig(os.path.join(k.OUT, 'linkage_sweep_collision' + k.SUF + '.png'), dpi=110)
     print(json.dumps({kk: res[kk] for kk in ('n_pairs_evaluated', 'penetrating_pairs', 'worst_penetration_mm', 'worst_pair', 'min_positive_clearance_mm', 'min_clearance_pair',
-                                             'min_clearance_excl_design_contact_mm', 'elevon_vs_core_2d', 'y_gap_horn_plate_to_cap_flange_mm', 'pass_no_penetration_gt_tol', 'pairs_failing')}, indent=1))
+                                             'min_clearance_excl_design_contact_mm', 'elevon_vs_core_2d', 'horn_rib_vs_core_2d', 'y_gap_horn_to_cap_flange_mm', 'pass_no_penetration_gt_tol', 'pairs_failing')}, indent=1))
     return 0
 
 

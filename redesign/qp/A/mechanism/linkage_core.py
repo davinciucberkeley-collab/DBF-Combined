@@ -23,6 +23,13 @@ XH, HINGE_Z = _c.XH, _w.HINGE_Z
 SERVO_Y, SV_XS = _c.SERVO_Y, _e.SV_XS
 ARM_R, HORN_R, ROD_Z, ROD_D = _e.ARM_R, _e.HORN_R, _e.ROD_Z, _e.ROD_D
 HORN_XH = _e.HORN_XH
+# D-212 rev 2: the arm-side joint is a standard Z-bend leg in the arm hole: free in z between the rod resting on the arm (lo) and a keeper
+# under the arm (hi); NOT a fixed-height point. ELEVON_ZJ = mid | lo | hi selects the joint height used by every function below.
+ROD_KEEP = _e.ROD_KEEP
+ZJ_STATES = {'mid': _e.ROD_Z, 'lo': _e.ROD_Z - ROD_KEEP / 2, 'hi': _e.ROD_Z + ROD_KEEP / 2}
+STATE = os.environ.get('ELEVON_ZJ', 'mid')
+ZJ = ZJ_STATES[STATE]
+SUF = '' if STATE == 'mid' else '_z' + STATE
 ELEV_LIM, ELEV_STOP = _w.ELEV_LIM, _c.ELEV_STOP
 VX0, VZ0 = HORN_XH - XH, ROD_Z - HINGE_Z                   # horn hole relative to the hinge axis at neutral
 L_ROD = HORN_XH - SV_XS                                    # fixed rod length: neutral CAD endpoints (rod parallel to x)
@@ -40,7 +47,7 @@ def dhorn(delta, sy):
 
 
 def arm_pt(theta, sy):
-    return np.array([SV_XS + ARM_R * sy * math.sin(theta), sy * SERVO_Y - sy * ARM_R * math.cos(theta), ROD_Z])
+    return np.array([SV_XS + ARM_R * sy * math.sin(theta), sy * SERVO_Y - sy * ARM_R * math.cos(theta), ZJ])
 
 
 def darm(theta, sy):
@@ -60,7 +67,7 @@ def theta_of_delta(delta, sy):
     """Closed form: |Pa - Ph| = L is a sin(theta) + b cos(theta) = c; the root nearest 0 is returned."""
     ph = horn_pt(delta, sy)
     px = SV_XS - ph[0]
-    dz = ROD_Z - ph[2]
+    dz = ZJ - ph[2]
     a, b = 2 * ARM_R * px * sy, -2 * ARM_R ** 2
     c = L_ROD ** 2 - px ** 2 - dz ** 2 - 2 * ARM_R ** 2
     rho, phi = math.hypot(a, b), math.atan2(b, a)
@@ -94,7 +101,7 @@ def levers(theta, delta, sy):
     """Transmission angles: gamma_h = angle(rod, horn radius), gamma_a = angle(rod, arm); lever ratios l = |r x u|_axis / |r|."""
     u = rod_dir(theta, delta, sy)
     rh = horn_pt(delta, sy) - np.array([XH, horn_pt(delta, sy)[1], HINGE_Z])
-    ra = arm_pt(theta, sy) - np.array([SV_XS, sy * SERVO_Y, ROD_Z])
+    ra = arm_pt(theta, sy) - np.array([SV_XS, sy * SERVO_Y, ZJ])
     gh = math.degrees(math.acos(float(u @ rh) / np.linalg.norm(rh)))
     ga = math.degrees(math.acos(float(u @ ra) / np.linalg.norm(ra)))
     lh = abs(float(np.cross(rh, u)[1])) / np.linalg.norm(rh)

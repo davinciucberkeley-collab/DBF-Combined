@@ -110,19 +110,19 @@ All paths relative to repo root. Frame: x aft from LE, y right, z cruise-up (`AM
 | Servo model | EMAX ES3054HV, 20.5 g, case 28.4 x 13.0 x 26.7 mm, 23T spline (1 per side, R and L) | `AM/electrical.py:538,594`; `AM/electrical.py:660` (23T); `redesign/review/QP-4/SERVO.md:3,32` | V |
 | Servo output shaft (spline) axis position | x = SV_XS 0.1405 m, y = +-SERVO_Y 0.200 m (EST), axis vertical (Z) | `AM/electrical.py:539,946-952`; `AM/common.py:52` | x CALC, y EST |
 | Servo output boss height / arm plane z | arm sits on the case top (ARM_Z0 = SV_Z1, boss height "-") | `AM/electrical.py:541`; `AM/common.py:53` | boss height "-" |
-| Servo arm length (shaft to pushrod hole) | 12.0 mm (ARM_R) | `AM/electrical.py:540`; `A/params-A.json:1042-1047`; `redesign/review/QP-4/SERVO.md:9` | design value, vendor arm hole row "-" |
+| Servo arm length (shaft to pushrod hole) | 8.5 mm (ARM_R, D-212 rev 2; was 12.0) | `AM/electrical.py:540`; `A/params-A.json:1042-1047`; `redesign/review/QP-4/SERVO.md:9` | design value, vendor arm hole row "-" |
 | Servo arm neutral direction | tip points inboard (perpendicular to rod): `ux, uy = 0, -sy` | `AM/electrical.py:951` | modelled, not vendor |
-| Arm thickness and rod plane z | ARM_T 2.0 mm EST; ROD_Z = ARM_Z1 + 0.6 mm | `AM/electrical.py:542-545` | EST |
+| Arm thickness and rod plane z | ARM_T 2.0 mm EST; ROD_Z = ARM_Z1 + 0.6 + KEEP/2 = 9.45 mm (D-212 rev 2: standard Z-bend resting on the arm, vertical freedom KEEP 0.3 mm EST; hole over the hinge at that height) | `AM/electrical.py:542-547` | EST / CALC |
 | Servo travel range (arm rotation angle over the PWM span) | `-` : only speed 0.13 s/60 deg at 6 V (`SERVO.md:32`); PWM limits K09-L values `SERVO5_MIN/MAX 1003/1976`, `SERVO6_MIN/MAX 1024/1997` | `A/A.param:46-51` (set to give +-20 deg "still to be bench-set", `A.param:2`) | not mapped to angle: "-" |
 | Servo stall torque | 0.397 N m at 7.2 V (EST, interpolated) | `A/params-A.json:1002-1007` | EST |
 | Servo free play / deadband | "-" (to be measured, FLUTTER step 5) | `redesign/review/QP-4/SERVO.md:55` | "-" |
 | Pushrod diameter | 1.2 mm (V RMRC linkage set) | `AM/electrical.py:544` | V |
-| Pushrod endpoints (servo end) | Z-bend pin at the arm tip: (SV_XS, SERVO_Y - sy*12 mm..., ROD_Z) | `AM/electrical.py:967-969` (tipx, tipy) | CALC |
-| Pushrod endpoints (horn end) | clevis on the horn hole, hole axis along y at (HORN_XH, ROD_Y(sy), ROD_Z); clevis body starts 4.0 mm before the hole | `AM/electrical.py:547,549,970-977` | CALC / EST |
-| Pushrod length | not stored; derived from the endpoints above (rod cylinder from tipx to xe = HORN_XH - 4 mm, plus clevis) | `AM/electrical.py:970-972` | CALC, no stated value |
-| Horn hole radius from the hinge axis | 12.9 mm (HORN_R) | `AM/electrical.py:546`; `A/params-A.json:1048-1053` | design value |
-| Horn hole position relative to hinge | x = HORN_XH = XH + sqrt(HORN_R^2 - (ROD_Z - HINGE_Z)^2); z = ROD_Z; hole axis along y | `AM/electrical.py:547` | CALC |
-| Horn dimensions (blade, base plate) | blade 15 mm x 2 mm, base plate 20 x 8 x 1.0, top 2.2 mm over hole; vendor horn size "-" ("RMRC lists 20 mm horns") | `AM/electrical.py:548,550,963-965` | EST |
+| Pushrod endpoints (servo end) | Z-bend leg at the arm tip: (SV_XS, SERVO_Y - sy*8.5 mm, z free over ROD_Z +- 0.15 mm) | `AM/electrical.py:967-969` (tipx, tipy) | CALC |
+| Pushrod endpoints (horn end) | clevis on the horn hole, hole axis along y at (HORN_XH, ROD_Y(sy), ROD_Z); clevis body starts 5.5 mm before the hole (D-212) | `AM/electrical.py:549,990-997` | CALC / EST |
+| Pushrod length | not stored; derived from the endpoints above (rod cylinder from tipx to xe = HORN_XH - 5.5 mm, plus clevis; 43.25 mm hole to hole after D-212) | `AM/electrical.py:970-972` | CALC, no stated value |
+| Horn hole radius from the hinge axis | 9.155 mm (HORN_R = ROD_Z - HINGE_Z, D-212 rev 2; was 12.9) | `AM/electrical.py` (`HORN_R`); `A/params-A.json` servo.horn_mm | CALC / EST |
+| Horn hole position relative to hinge | x = HORN_XH = XH (D-212: directly above the hinge axis); z = ROD_Z = HINGE_Z + HORN_R; hole axis along y | `AM/electrical.py:546,549` | CALC |
+| Horn dimensions (blade, base plate) | printed PETG horn: stem 5 mm x 2 mm on a 20 x 30 x 1.0 base plate (elevon only, from 2.5 mm aft of the hinge line), round head r 2.2 mm round the hole reaching over the hinge line (D-212 rev 2, `horn_blade_loop`, mass CALC 0.94 g); the vendor M02 horn is "20 mm height" only (readymaderc, read 2026-11-18), hole row "-" | `AM/electrical.py:550-556,938-950,980-985` | EST |
 | Hinge axis | along Y, at x = XH = C*(1-ELEV_FRAC) = 0.245 * 0.75 = 0.18375 m, z = HINGE_Z = zu(XH) (upper surface at the hinge), y range 0.04-0.35 m per side (joint at the span midpoint) | `AM/common.py:32-35`; `AM/wing.py:113`; `AM/electrical.py:1211-1214` | CALC (ELEV_FRAC, elevon y EST) |
 | Elevon throw limits | control authority +-20 deg (ELEV_LIM, software), mechanical stop +-21 deg (ELEV_STOP), collision pose ELEV_POSE (default 21, env A_ELEV_POSE) | `AM/wing.py:13`; `AM/common.py:36-37`; `A/params-A.json:782-786` | design values, authority EST |
 | Peak elevon deflection used in flight | 11.5 deg (worst transition run, D-195) | `A/params-A.json:776-780` | SITL result |

@@ -55,7 +55,7 @@ def arm_inertia():
 
 I_E_CAD = 1.3698381583333334e-05   # sitl/cad_mass.json elevon.hinge_inertia_total_kgm2 (8.378e-6 elevon + 5.320e-6 balance); read from the file below
 I_A, ARM_AREA = arm_inertia()
-M_HORN = 1.0e-3                    # P('MEC-004') control horn 1.0 g; point mass at the hole radius (EST)
+M_HORN = k._e.PARTS['MEC-004-R']['mass_g'] * 1e-3   # P('MEC-004') printed horn, mass CALC from the drawn volume; point mass at the hole radius
 I_HORN = M_HORN * k.HORN_R ** 2
 
 
@@ -92,7 +92,8 @@ def run_case(tau_stall, load, direction, I_e):
         M = I_e + I_A * tp ** 2
         dd = (tau * tp + q - I_A * tp * tpp * w * w) / M
         return [w, dd, th_dot]
-    sol = solve_ivp(f, (0.0, 0.4), [0.0, 0.0, 0.0], method='DOP853', rtol=1e-9, atol=1e-12, dense_output=False, max_step=5e-4)
+    d00 = k.delta_of_theta_newton(0.0, SY)          # D-212 rev 2: at the lo / hi joint heights theta = 0 is not exactly delta = 0 for the fixed rod length (0 at mid)
+    sol = solve_ivp(f, (0.0, 0.4), [d00, 0.0, 0.0], method='DOP853', rtol=1e-9, atol=1e-12, dense_output=False, max_step=5e-4)
     t, (d, w, th) = sol.t, sol.y
     rows = []
     Nmax_c, Nmax_t, resmax, nmis = 0.0, 0.0, 0.0, 0.0
@@ -203,13 +204,13 @@ def main():
     res['pass_all'] = all(res['pass'].values())
     res['hold_margin_min_by_stall'] = {n: min(c['hold_margin'] for c in cases if c['tau_stall'] == t) for n, t in TAU_STALL.items()}
     os.makedirs(k.OUT, exist_ok=True)
-    with open(os.path.join(k.OUT, 'linkage_dynamics.json'), 'w') as f:
+    with open(os.path.join(k.OUT, 'linkage_dynamics' + k.SUF + '.json'), 'w') as f:
         json.dump(res, f, indent=1)
-    with open(os.path.join(k.OUT, 'linkage_dynamics_steps.csv'), 'w', newline='') as f:
+    with open(os.path.join(k.OUT, 'linkage_dynamics_steps' + k.SUF + '.csv'), 'w', newline='') as f:
         w = csv.writer(f)
         w.writerow(['case', 't_s', 'delta_deg', 'theta_deg', 'residual_m', 'rod_force_arm_side_N', 'rod_force_elevon_side_N', 'servo_torque_Nm'])
         w.writerows(hist)
-    with open(os.path.join(k.OUT, 'linkage_dynamics_freeswing.csv'), 'w', newline='') as f:
+    with open(os.path.join(k.OUT, 'linkage_dynamics_freeswing' + k.SUF + '.csv'), 'w', newline='') as f:
         w = csv.writer(f)
         w.writerow(['t_s', 'delta_deg', 'theta_deg', 'residual_m', 'energy_J'])
         w.writerows(fs_rows[::2])
@@ -236,7 +237,7 @@ def main():
         a.grid(alpha=.3)
     fig.suptitle('Elevon 1-DOF dynamics (frictionless), tau_stall 0.397, constant 0.146 N m load; red = Euler (solid) and Euler/2 (dotted)')
     fig.tight_layout()
-    fig.savefig(os.path.join(k.OUT, 'linkage_dynamics.png'), dpi=110)
+    fig.savefig(os.path.join(k.OUT, 'linkage_dynamics' + k.SUF + '.png'), dpi=110)
     print(json.dumps({'free_swing': fs, 'rod': res['rod'], 'pass': res['pass'], 'hold_margin_min_by_stall': res['hold_margin_min_by_stall'],
                       'steps': [{kk: c[kk] for kk in ('name', 't_reach_s', 'overshoot_deg', 'peak_rod_force_compression_N', 'peak_rod_force_tension_N', 'hold_tau_required_Nm', 'hold_rod_force_N', 'hold_margin', 'max_residual_m', 'max_N_mismatch')} for c in cases]}, indent=1))
     return 0

@@ -1,6 +1,7 @@
 {
- "git_head": "0f2e3ec8517b81807b17e39b109f4a1a4d433228",
+ "git_head": "164c815ab250745e23b5d0a03f5ce754d544c8af",
  "criteria": {
+  "freeplay_deg": 0.25,
   "res_m": 1e-09,
   "sym_rad": 1e-09,
   "travel_deg": 45.0,
@@ -12,112 +13,133 @@
   45.0,
   60.0
  ],
+ "arm_joint": {
+  "state": "mid",
+  "z_mm": 9.45,
+  "keep_mm": 0.3
+ },
  "geometry": {
-  "L_rod_m": 0.05248685541063863,
-  "ARM_R": 0.012,
-  "HORN_R": 0.0129,
+  "L_rod_m": 0.04324999999999998,
+  "ARM_R": 0.0085,
+  "HORN_R": 0.009155026492074041,
   "XH": 0.18375,
   "HINGE_Z": 0.00029497350792595826,
-  "HORN_XH": 0.19298685541063865,
+  "HORN_XH": 0.18375,
   "SV_XS": 0.1405,
   "SERVO_Y": 0.2,
-  "ROD_Z": 0.0093,
+  "ROD_Z": 0.00945,
   "horn_hole_rel_hinge_mm": [
-   9.23685541063865,
-   9.005026492074041
+   0.0,
+   9.155026492074041
   ],
-  "horn_hole_radius_check_mm": 12.899999999999993,
+  "horn_hole_radius_check_mm": 9.155026492074041,
   "ELEV_LIM": 20.0,
   "ELEV_STOP": 21.0,
-  "tilt_allow_Zbend_deg": 8.530765609948137,
-  "tilt_allow_clevis_deg": 14.036243467926479
+  "tilt_allow_Zbend_deg": 2.862405226111755,
+  "tilt_allow_clevis_deg": 2.862405226111749
  },
  "sweep": {
   "step_deg": 0.05,
   "n": 841,
   "max_residual_m": 2.7755575615628914e-17,
-  "max_solver_disagreement": 8.826273045769994e-15,
+  "max_solver_disagreement": 5.218048215738236e-15,
   "max_LR_asymmetry_rad": 1.3322676295501878e-15,
-  "max_gear_formula_diff": 3.774758283725532e-15,
-  "min_sigma": 0.32306862051393037,
-  "min_horn_lever": 0.4623948095051339,
-  "min_horn_gamma_deg": 27.544374698619897,
-  "max_zbend_misalign_deg": 4.270339992772334,
-  "max_clevis_misalign_deg": 0.6621835170947368
+  "max_gear_formula_diff": 1.2212453270876722e-15,
+  "min_sigma": 0.6044631156246281,
+  "min_horn_lever": 0.9283426528097993,
+  "min_horn_gamma_deg": 68.19695934572468,
+  "max_zbend_misalign_deg": 0.8055759967689686,
+  "max_clevis_misalign_deg": 0.8778513967129802
  },
  "servo_angle_for_delta": {
   "-21": {
-   "theta_R_deg": -18.295401828618857,
-   "theta_L_deg": 18.295401828618832,
-   "gear": 0.9999229893740736,
-   "gamma_horn_deg": 62.31181269200601,
-   "sigma_min": 0.5766976844144743,
-   "rod_pitch_deg": 2.9618870215898303
+   "theta_R_deg": -22.63742242970439,
+   "theta_L_deg": 22.63742242970439,
+   "gear": 0.928698815162604,
+   "gamma_horn_deg": 111.80304065427532,
+   "sigma_min": 0.6044631156246281,
+   "rod_pitch_deg": -0.8055759967689686
   },
   "-20": {
-   "theta_R_deg": -17.30200796268476,
-   "theta_L_deg": 17.30200796268481,
-   "gear": 1.0134289650942196,
-   "gamma_horn_deg": 61.41640949790931,
-   "sigma_min": 0.5716576039110672,
-   "rod_pitch_deg": 2.8569977863840683
+   "theta_R_deg": -21.560355526523868,
+   "theta_L_deg": 21.560355526523868,
+   "gear": 0.9282128971785047,
+   "gamma_horn_deg": 110.72945816129868,
+   "sigma_min": 0.6060010954757007,
+   "rod_pitch_deg": -0.7314394462871183
   },
   "+20": {
-   "theta_R_deg": 12.77966953673118,
-   "theta_L_deg": -12.77966953673123,
-   "gear": 1.9052832786203744,
-   "gamma_horn_deg": 28.318485644200948,
-   "sigma_min": 0.330517225268865,
-   "rod_pitch_deg": -4.044825646950249
+   "theta_R_deg": 21.67137388977471,
+   "theta_L_deg": -21.671373889774635,
+   "gear": 0.9089071642665859,
+   "gamma_horn_deg": 70.73344266091648,
+   "sigma_min": 0.6133037867820079,
+   "rod_pitch_deg": -0.7314394462871181
   },
   "+21": {
-   "theta_R_deg": 13.298579518523328,
-   "theta_L_deg": -13.298579518523379,
-   "gear": 1.9495154433514477,
-   "gamma_horn_deg": 27.544374698619897,
-   "sigma_min": 0.3230686205139304,
-   "rod_pitch_deg": -4.270339992772334
+   "theta_R_deg": 22.7732199077591,
+   "theta_L_deg": -22.773219907759124,
+   "gear": 0.9061879996197849,
+   "gamma_horn_deg": 69.80814404279629,
+   "sigma_min": 0.6129649525567208,
+   "rod_pitch_deg": -0.8055759967689682
   }
  },
  "gearing": {
-  "neutral": 1.3325890835037573,
-  "min": 0.9999229893740736,
-  "max": 1.9495154433514477
+  "neutral": 0.9284517098185211,
+  "min": 0.9061879996197849,
+  "max": 0.928698815162604
  },
  "toggle": {
   "plus": {
-   "first_delta_deg_lever_lt_1em3_or_unreachable": 57.471177944862156,
-   "margin_from_stop_deg": 36.471177944862156
+   "first_delta_deg_lever_lt_1em3_or_unreachable": 56.2781954887218,
+   "margin_from_stop_deg": 35.2781954887218
   },
-  "minus": {
-   "first_delta_deg_lever_lt_1em3_or_unreachable": -67.01503759398496,
-   "margin_from_stop_deg": 46.01503759398496
-  }
+  "minus": null
  },
  "servo_travel": {
   "45.0": {
-   "required_deg": 18.295401828618857,
+   "required_deg": 22.7732199077591,
    "covers": true,
-   "margin_deg": 26.704598171381143
+   "margin_deg": 22.2267800922409
   },
   "60.0": {
-   "required_deg": 18.295401828618857,
+   "required_deg": 22.7732199077591,
    "covers": true,
-   "margin_deg": 41.70459817138114
+   "margin_deg": 37.2267800922409
   }
+ },
+ "free_play_zbend_deg": {
+  "arm_joint_state": "mid",
+  "z_lo_mm": 9.299999999999999,
+  "z_hi_mm": 9.600000000000001,
+  "max_deg": 0.028439812453813,
+  "at_delta_deg": -21.0,
+  "note": "delta(theta) range between joint heights lo and hi, evaluated about the state selected by ELEVON_ZJ"
+ },
+ "free_play_budget_deg": {
+  "arm_hole_clearance_mm": 0.10000000000000026,
+  "horn_hole_clearance_mm": 0.10000000000000005,
+  "arm_hole_deg": 0.6258395818153696,
+  "horn_hole_deg": 0.6258395818153681,
+  "zbend_z_freedom_deg": 0.028439812453813,
+  "clevis_cheek_holes_deg": "-",
+  "total_known_deg": 1.2801189760845506,
+  "model": "slop along the rod = sum of the diametral clearances, elevon free play = slop / horn radius (small angle, rod along the horn tangent at neutral); clevis cheek holes are vendor parts with no published size (\"-\"): measured at E1"
  },
  "pass": {
   "K1": true,
   "K2": true,
   "K3": true,
   "K4": true,
-  "K5": false,
-  "K6": true
+  "K5": true,
+  "K6": true,
+  "K7": true
  },
- "pass_all": false,
+ "pass_all": true,
  "info_gamma_horn_vs_40deg_rule": {
-  "min_gamma_horn_deg": 27.544374698619897,
-  "meets": false
+  "min_gamma_horn_deg": 68.19695934572468,
+  "meets": true
  },
  "versions": {
   "python": "3.14.2",

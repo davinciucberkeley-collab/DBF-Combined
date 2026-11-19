@@ -1,0 +1,216 @@
+{
+ "inputs": {
+  "F_hold_N": 17.0532370588428,
+  "F_stall_N": 50.993721868355266,
+  "F_stall_at_delta_deg": 21.0,
+  "min_arm_lever_ratio": 0.9159143643901201,
+  "tau_stall_Nm": 0.397,
+  "dynamic_step_peak_N_not_used": 42.74455079930922,
+  "hinge_vd_Nm": 0.146,
+  "KP": 2.15625,
+  "K_stall_printed": 1.4375,
+  "arm_joint_state": "mid"
+ },
+ "z_bend_leg": {
+  "model": "sigma = K 32 F e / (pi d^3), e = d/2 + t_arm/2",
+  "e_mm": 1.5999999999999999,
+  "K_curved_wire": 1.625,
+  "A228_Sut_MPa_recalled": 2153.3144853188387,
+  "A228_bending_allow_MPa_recalled": 1679.5852985486943,
+  "hold": {
+   "F_N": 17.0532370588428,
+   "sigma_nominal_MPa": 160.83596880786533,
+   "sigma_K_MPa": 261.35844931278115,
+   "required_yield_MPa": {
+    "1.5": 392.03767396917175
+   }
+  },
+  "stall": {
+   "F_N": 50.993721868355266,
+   "sigma_nominal_MPa": 480.9423941927124,
+   "sigma_K_MPa": 781.5313905631576,
+   "required_yield_MPa": {
+    "1.0": 781.5313905631576,
+    "1.5": 1172.2970858447366
+   }
+  },
+  "required_yield_MPa_governing": 1172.2970858447366,
+  "collapse_Fc_N_at_required_yield": 211.01347545205255,
+  "music_wire_ok_recalled": true,
+  "receipt_test": "form the Z-bend on an M02 rod, clamp the arm-hole end in a 2 mm plate with a 1.3 mm hole, load the rod end along its axis with 76 N (1.5 x the 51.0 N stall force) for 10 s: pass = no permanent set over 0.2 mm at the far end; a rod that fails is replaced by ASTM A228 music wire 1.2 mm and the test repeated"
+ },
+ "horn_blade": {
+  "model": "horizontal sections of the drawn outline (slices of electrical.horn_profile, hole not deducted below the hole edge); sigma = 6 F (z_hole - z) / (t w^2); bearing F / (d_pin t); shear-out F / (2 t e)",
+  "governing_z_mm": 0.47877796842399917,
+  "governing_width_mm": 17.265894645948883,
+  "governing_lever_mm": 8.971222031576001,
+  "print": "lying flat (profile plane = layer plane)",
+  "allowable_inlayer_MPa_EST": 20.0,
+  "allowable_bearing_MPa_EST": 20.0,
+  "ligament_mm": 1.65,
+  "hold": {
+   "F_N": 17.0532370588428,
+   "factor": 2.15625,
+   "root_sigma_MPa": 1.539577360383437,
+   "root_factored_MPa": 3.319713683326786,
+   "root_ok": true,
+   "bearing_MPa": 8.5266185294214,
+   "bearing_factored_MPa": 18.385521204064894,
+   "bearing_ok": true,
+   "shearout_MPa": 2.583823796794363,
+   "shearout_factored_MPa": 5.571370061837846,
+   "shearout_ok": true
+  },
+  "stall": {
+   "F_N": 50.993721868355266,
+   "factor": 1.4375,
+   "root_sigma_MPa": 4.603746458183407,
+   "root_factored_MPa": 6.617885533638647,
+   "root_ok": true,
+   "bearing_MPa": 25.496860934177633,
+   "bearing_factored_MPa": 36.651737592880345,
+   "bearing_ok": false,
+   "shearout_MPa": 7.726321495205343,
+   "shearout_factored_MPa": 11.106587149357681,
+   "shearout_ok": true
+  }
+ },
+ "horn_rib_foam": {
+  "model": "The rib is a 2 mm PETG plate in a slot through the elevon, bonded on both faces. MODEL: Euler-Bernoulli beam along x\n   (EI = E t d(x)^3 / 12, d = rib depth) on an elastic foundation of foam shear on its two faces: transverse k_z = 2 G d / l, rotational\n   k_t = 2 G d^3 / (12 l), axial k_x = 2 G d / l (the rib is axially rigid: uniform u); the horn force F (along x, at the hole height) and its moment\n   about the rib mid-depth are applied over the blade base. Face shear tau = (G / l) x local displacement. VALIDITY: linear elastic foam, Winkler\n   (no coupling between springs), small rotations. The rib is NOT rigid (lambda L >> 1, printed below), which is why a rigid-rib / weld-group\n   formula is not used. INPUTS: E_PETG 2.1 GPa (fe_a.py nom, EST); foam G = E / (2 (1 + nu)), E 5-10 MPa (CHAIN.md ASM-D5 \"8-10\", review r2 5-10),\n   nu 0.1 EST; shear penetration l 2-8 mm EST (the foundation is swept over G / l). ALLOWABLE: foam shear 86 kPa (EST, foam_103.py: 100 x 103/120).\n   Skin (tape) paths are ignored: conservative for the foam faces.",
+  "allowable_kPa_EST": 85.83333333333333,
+  "sweep": [
+   {
+    "E_foam_MPa": 5.0,
+    "l_mm": 2.0,
+    "G_over_l_MPa_per_mm": 1.1363636363636362,
+    "hold_peak_kPa": 178.89469822757528,
+    "stall_peak_kPa": 534.9428062016924,
+    "lambda_L_front": 3.780077178101373,
+    "at_x_mm": 2.500000000000002
+   },
+   {
+    "E_foam_MPa": 5.0,
+    "l_mm": 4.0,
+    "G_over_l_MPa_per_mm": 0.5681818181818181,
+    "hold_peak_kPa": 157.7470052154727,
+    "stall_peak_kPa": 471.70556991229677,
+    "lambda_L_front": 3.1786533484478214,
+    "at_x_mm": 2.500000000000002
+   },
+   {
+    "E_foam_MPa": 5.0,
+    "l_mm": 8.0,
+    "G_over_l_MPa_per_mm": 0.28409090909090906,
+    "hold_peak_kPa": 138.0536815013014,
+    "stall_peak_kPa": 412.8172858395259,
+    "lambda_L_front": 2.6729182060439896,
+    "at_x_mm": 2.500000000000002
+   },
+   {
+    "E_foam_MPa": 10.0,
+    "l_mm": 2.0,
+    "G_over_l_MPa_per_mm": 2.2727272727272725,
+    "hold_peak_kPa": 200.27283811080403,
+    "stall_peak_kPa": 598.869139491976,
+    "lambda_L_front": 4.4952946754575605,
+    "at_x_mm": 2.500000000000002
+   },
+   {
+    "E_foam_MPa": 10.0,
+    "l_mm": 4.0,
+    "G_over_l_MPa_per_mm": 1.1363636363636362,
+    "hold_peak_kPa": 178.89469822757528,
+    "stall_peak_kPa": 534.9428062016924,
+    "lambda_L_front": 3.780077178101373,
+    "at_x_mm": 2.500000000000002
+   },
+   {
+    "E_foam_MPa": 10.0,
+    "l_mm": 8.0,
+    "G_over_l_MPa_per_mm": 0.5681818181818181,
+    "hold_peak_kPa": 157.7470052154727,
+    "stall_peak_kPa": 471.70556991229677,
+    "lambda_L_front": 3.1786533484478214,
+    "at_x_mm": 2.500000000000002
+   }
+  ],
+  "hold": {
+   "F_N": 17.0532370588428,
+   "factor": 2.15625,
+   "peak_kPa_range": [
+    138.0536815013014,
+    200.27283811080403
+   ],
+   "factored_kPa_max": 431.8383071764212,
+   "factored_kPa_min": 297.67825073718114,
+   "ok": false
+  },
+  "stall": {
+   "F_N": 50.993721868355266,
+   "factor": 1.4375,
+   "peak_kPa_range": [
+    412.8172858395259,
+    598.869139491976
+   ],
+   "factored_kPa_max": 860.8743880197154,
+   "ok": false
+  }
+ },
+ "elevon_torsion_foam_only": {
+  "model": "Saint-Venant thin open section, foam only: tau = T t_max / J",
+  "J_mm4": 2756.737236411379,
+  "t_max_mm": 8.63661226185769,
+  "section_area_mm2": 246.04983722578766,
+  "outboard_span_fraction": 0.5112903225806451,
+  "allowable_kPa_EST": 85.83333333333333,
+  "thickness_over_chord": 0.14100591447930924,
+  "hold": {
+   "T_Nm": 0.07464838709677418,
+   "factor": 2.15625,
+   "tau_kPa": 233.86674900040833,
+   "factored_kPa": 504.2751775321305,
+   "ok": false,
+   "bredt_q_N_per_m": 151.69363235195536,
+   "bredt_note": "tape skin shear flow if the elevon cell is closed (nose face taped): tape strength \"-\", not credited"
+  },
+  "stall": {
+   "T_Nm": 0.46684887463424785,
+   "factor": 1.4375,
+   "tau_kPa": 1462.5959492422685,
+   "factored_kPa": 2102.481677035761,
+   "ok": false,
+   "bredt_q_N_per_m": 948.687631534265,
+   "bredt_note": "tape skin shear flow if the elevon cell is closed (nose face taped): tape strength \"-\", not credited"
+  }
+ },
+ "horn_rib_vs_elevon_body_hold": 0.8563544794923127,
+ "free_play": {
+  "total_known_deg": 1.2801189760845506,
+  "guide_deg": 1.0,
+  "ok": false,
+  "parts": {
+   "arm_hole_clearance_mm": 0.10000000000000026,
+   "horn_hole_clearance_mm": 0.10000000000000005,
+   "arm_hole_deg": 0.6258395818153696,
+   "horn_hole_deg": 0.6258395818153681,
+   "zbend_z_freedom_deg": 0.028439812453813,
+   "clevis_cheek_holes_deg": "-",
+   "total_known_deg": 1.2801189760845506,
+   "model": "slop along the rod = sum of the diametral clearances, elevon free play = slop / horn radius (small angle, rod along the horn tangent at neutral); clevis cheek holes are vendor parts with no published size (\"-\"): measured at E1"
+  },
+  "mitigation": "hinge viscous damper: flutter has no instability for any K 0.01-20 N m/rad (FIXES2 s1, CL-A-FLUTTER-ELEVON-*), preload strips remove low-amplitude slack; E1 bench measurement"
+ },
+ "pass": {
+  "rod_leg_music_wire_recalled": true,
+  "blade_root_hold": true,
+  "blade_root_stall": true,
+  "hole_bearing_hold": true,
+  "hole_bearing_stall": false,
+  "rib_foam_hold": false,
+  "rib_foam_stall": false,
+  "elevon_torsion_foam_hold": false,
+  "elevon_torsion_foam_stall": false,
+  "free_play_le_1deg": false
+ },
+ "git_head": "164c815ab250745e23b5d0a03f5ce754d544c8af"
+}

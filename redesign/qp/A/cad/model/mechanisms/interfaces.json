@@ -27,7 +27,7 @@
    "material": "nylon",
    "cg_xyz_m": [
     0.1405,
-    0.1959,
+    0.1974,
     0.0077
    ],
    "make_or_buy": "buy",
@@ -41,9 +41,9 @@
    "mass_g": 0.97,
    "material": "steel",
    "cg_xyz_m": [
-    0.1731,
-    0.188,
-    0.0093
+    0.1687,
+    0.1915,
+    0.0094
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -56,39 +56,54 @@
    "mass_g": 0.03,
    "material": "steel",
    "cg_xyz_m": [
-    0.193,
-    0.188,
-    0.0093
+    0.1837,
+    0.1915,
+    0.0095
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "MEC-004-R",
-   "name": "Control horn (R)",
+   "name": "Control horn (R), printed PETG 2 mm flat profile: blade with the 1.1 mm reamed hole over the hinge line + rib through a slot in the elevon, 2.5-55 mm aft of the hinge (D-212 rev 3; mass CALC from the drawn volume)",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 1.0,
-   "material": "nylon",
+   "mass_g": 0.95,
+   "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1987,
-    0.188,
-    0.0042
+    0.1986,
+    0.1915,
+    -0.0007
    ],
-   "make_or_buy": "buy",
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "MEC-008-R",
+   "name": "Z-bend keeper (R), printed PETG: 1.5 mm spacer + 0.8 mm bridge over the Z-bend, clamped under the arm screw (D-212 rev 3; mass CALC)",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.08,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.1405,
+    0.1965,
+    0.01
+   ],
+   "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "HWC-002-R",
-   "name": "Servo arm screw M2 x 6 pan (R)",
+   "name": "Servo arm screw M2 x 8 pan (R)",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 0.27,
+   "mass_g": 0.32,
    "material": "A2 stainless",
    "cg_xyz_m": [
     0.1405,
     0.2,
-    0.0073
+    0.0088
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -118,7 +133,7 @@
    "material": "nylon",
    "cg_xyz_m": [
     0.1405,
-    -0.1959,
+    -0.1974,
     0.0077
    ],
    "make_or_buy": "buy",
@@ -132,9 +147,9 @@
    "mass_g": 0.97,
    "material": "steel",
    "cg_xyz_m": [
-    0.1731,
-    -0.188,
-    0.0093
+    0.1687,
+    -0.1915,
+    0.0094
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -147,39 +162,54 @@
    "mass_g": 0.03,
    "material": "steel",
    "cg_xyz_m": [
-    0.193,
-    -0.188,
-    0.0093
+    0.1837,
+    -0.1915,
+    0.0095
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "MEC-004-L",
-   "name": "Control horn (L)",
+   "name": "Control horn (L), printed PETG 2 mm flat profile: blade with the 1.1 mm reamed hole over the hinge line + rib through a slot in the elevon, 2.5-55 mm aft of the hinge (D-212 rev 3; mass CALC from the drawn volume)",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 1.0,
-   "material": "nylon",
+   "mass_g": 0.95,
+   "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1987,
-    -0.188,
-    0.0042
+    0.1986,
+    -0.1915,
+    -0.0007
    ],
-   "make_or_buy": "buy",
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "MEC-008-L",
+   "name": "Z-bend keeper (L), printed PETG: 1.5 mm spacer + 0.8 mm bridge over the Z-bend, clamped under the arm screw (D-212 rev 3; mass CALC)",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.08,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.1405,
+    -0.1965,
+    0.01
+   ],
+   "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "HWC-002-L",
-   "name": "Servo arm screw M2 x 6 pan (L)",
+   "name": "Servo arm screw M2 x 8 pan (L)",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 0.27,
+   "mass_g": 0.32,
    "material": "A2 stainless",
    "cg_xyz_m": [
     0.1405,
     -0.2,
-    0.0073
+    0.0088
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -202,12 +232,12 @@
    "owner": "mechanisms",
    "notes": "arm on the 23T output spline (V readymaderc 85975; the old 25T was an ES3352 copy)",
    "joint_stack": {
-    "fastener": "M2x6 retaining screw",
+    "fastener": "M2x8 retaining screw (through the keeper)",
     "count": 1,
     "grade": "A2-70",
     "hole": "arm bore on the 23T spline",
     "insert": "none",
-    "engagement_mm": 4.0,
+    "engagement_mm": 3.7,
     "min_engagement_mm": 3.0,
     "washer_nut": "none",
     "torque": "snug + threadlocker",
@@ -253,7 +283,30 @@
    "part_b": "WNG-006-R",
    "via": "CT-EPOXY",
    "owner": "mechanisms",
-   "notes": "horn bonded on the elevon upper skin"
+   "notes": "horn rib bonded in its slot through the elevon (D-212 rev 3); slot taped over top and bottom"
+  },
+  {
+   "id": "E-MEC-06",
+   "part_a": "MEC-008-R",
+   "part_b": "MEC-002-R",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "notes": "Z-bend keeper clamped on the arm top by the arm screw (D-212 rev 3)",
+   "joint_stack": {
+    "fastener": "M2x8 arm screw (shared with the arm-on-spline joint)",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "keeper hole 2.2 mm over the arm hub",
+    "insert": "none",
+    "engagement_mm": 3.7,
+    "min_engagement_mm": 3.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 20,
+    "removal_order": 20
+   }
   },
   {
    "id": "E-MEC-PIN-R4",
@@ -267,7 +320,7 @@
     "fastener": "1.0 mm clevis pin",
     "count": 1,
     "grade": "A2-70",
-    "hole": "horn hole 1.5 mm",
+    "hole": "horn hole 1.1 mm reamed",
     "insert": "none",
     "engagement_mm": 2.0,
     "min_engagement_mm": 2.0,
@@ -343,7 +396,7 @@
    }
   },
   {
-   "id": "E-MEC-06",
+   "id": "E-MEC-07",
    "part_a": "MEC-001-L",
    "part_b": "WNG-001",
    "via": "CT-EPOXY",
@@ -351,19 +404,19 @@
    "notes": "servo in its pocket"
   },
   {
-   "id": "E-MEC-07",
+   "id": "E-MEC-08",
    "part_a": "MEC-002-L",
    "part_b": "MEC-001-L",
    "via": "CT-SERVO-SPLINE",
    "owner": "mechanisms",
    "notes": "arm on the 23T output spline (V readymaderc 85975; the old 25T was an ES3352 copy)",
    "joint_stack": {
-    "fastener": "M2x6 retaining screw",
+    "fastener": "M2x8 retaining screw (through the keeper)",
     "count": 1,
     "grade": "A2-70",
     "hole": "arm bore on the 23T spline",
     "insert": "none",
-    "engagement_mm": 4.0,
+    "engagement_mm": 3.7,
     "min_engagement_mm": 3.0,
     "washer_nut": "none",
     "torque": "snug + threadlocker",
@@ -374,7 +427,7 @@
    }
   },
   {
-   "id": "E-MEC-08",
+   "id": "E-MEC-09",
    "part_a": "MEC-003-L",
    "part_b": "MEC-002-L",
    "via": "CT-CLEVIS",
@@ -389,7 +442,7 @@
    }
   },
   {
-   "id": "E-MEC-09",
+   "id": "E-MEC-10",
    "part_a": "MEC-003-L",
    "part_b": "MEC-004-L",
    "via": "CT-CLEVIS",
@@ -404,12 +457,35 @@
    }
   },
   {
-   "id": "E-MEC-10",
+   "id": "E-MEC-11",
    "part_a": "MEC-004-L",
    "part_b": "WNG-006-L",
    "via": "CT-EPOXY",
    "owner": "mechanisms",
-   "notes": "horn bonded on the elevon upper skin"
+   "notes": "horn rib bonded in its slot through the elevon (D-212 rev 3); slot taped over top and bottom"
+  },
+  {
+   "id": "E-MEC-12",
+   "part_a": "MEC-008-L",
+   "part_b": "MEC-002-L",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "notes": "Z-bend keeper clamped on the arm top by the arm screw (D-212 rev 3)",
+   "joint_stack": {
+    "fastener": "M2x8 arm screw (shared with the arm-on-spline joint)",
+    "count": 1,
+    "grade": "A2-70",
+    "hole": "keeper hole 2.2 mm over the arm hub",
+    "insert": "none",
+    "engagement_mm": 3.7,
+    "min_engagement_mm": 3.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 20,
+    "removal_order": 20
+   }
   },
   {
    "id": "E-MEC-PIN-L4",
@@ -423,7 +499,7 @@
     "fastener": "1.0 mm clevis pin",
     "count": 1,
     "grade": "A2-70",
-    "hole": "horn hole 1.5 mm",
+    "hole": "horn hole 1.1 mm reamed",
     "insert": "none",
     "engagement_mm": 2.0,
     "min_engagement_mm": 2.0,

@@ -177,6 +177,33 @@
    "where": "MS at the 103 kPa basis (compressive 103 V data sheet; tension 129, shear 86 EST)"
   },
   {
+   "id": "SRC-A-LINKLOADS",
+   "type": "source",
+   "title": "Elevon linkage strength checks, D-212 rev 3 (linkage_loads_check.json)",
+   "kind": "file",
+   "url": "redesign/qp/A/mechanism/out/linkage_loads_check.json",
+   "checked": "2026-11-15",
+   "where": "hand calculations + 1-D beam-on-foundation FE of the horn rib; stall force 51.0 N quasi-static; factors KP 2.156 hold, 1.4375 stall (printed / bonded)"
+  },
+  {
+   "id": "SRC-A-LINKKIN",
+   "type": "source",
+   "title": "Elevon linkage kinematics, D-212 rev 3 (linkage_kinematics.json)",
+   "kind": "file",
+   "url": "redesign/qp/A/mechanism/out/linkage_kinematics.json",
+   "checked": "2026-11-15",
+   "where": "free_play_budget_deg: hole clearances / horn radius + Z-bend freedom (K7)"
+  },
+  {
+   "id": "SRC-A-SERVOMD",
+   "type": "source",
+   "title": "QP-4 servo review (SERVO.md)",
+   "kind": "repo",
+   "url": "redesign/review/QP-4/SERVO.md",
+   "checked": "2026-11-15",
+   "where": "s4: free play <= 1 deg (flutter target)"
+  },
+  {
    "id": "SRC-A-ARMCUP",
    "type": "source",
    "title": "Arm and motor-cup checks (arm_cup_checks.md)",
@@ -344,6 +371,22 @@
    "title": "Foam tension 129 kPa and shear 86 kPa",
    "text": "Foam shear and tension allowables are the old 150 / 100 kPa scaled by 103 / 120",
    "basis": "FIXES2 s6: the FOAMULAR 150 data sheet has no tension or shear row (searched 2026-11-15); the 103 kPa compressive value is the data sheet (OC, ASTM D1621)",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-A-ROD-GRADE",
+   "type": "assumption",
+   "title": "The M02 pushrod is music wire (ASTM A228) or as strong",
+   "text": "The 1.2 mm M02 rod has a bending allowable >= the 1172 MPa the Z-bend leg needs at 1.5 x the 51 N stall force",
+   "basis": "D-212 rev 3: RMRC publishes 'steel' only; the A228 constants (S_ut = 2211 / d^0.145 MPa, bending 0.78 S_ut, Shigley Tables 10-4 / 10-6) are RECALLED, not re-read. Receipt test: 77 N along the formed rod, 10 s, no permanent set over 0.2 mm, else A228 wire",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-A-PETG-ALLOW",
+   "type": "assumption",
+   "title": "Printed PETG 20 MPa in-layer and bearing",
+   "text": "Printed PETG (Prusament, R03) carries 20 MPa in the layer plane and in hole bearing",
+   "basis": "structures/fea_arm.py ALLOW['petg'] and arm_cup_checks.py PETG_BEAR: EST, no coupon yet; the horn is printed lying flat so its bending and bearing are in the layer plane",
    "status": "UNVERIFIED"
   },
   {
@@ -569,6 +612,20 @@
    ],
    "state": "planned",
    "procedure": "FIXES2 s8 steps 1-7 on a 300 mm wing section with the real elevon, lead strip, caps, damper and ES3054HV at 7.2 V; c >= 7.1e-4 N m s/rad at 25 C, c(50 C) >= 4.0e-4"
+  },
+  {
+   "id": "T-A-HORN-RIB",
+   "type": "test",
+   "title": "Elevon horn: rib coupon, stall step, elevon-section torsion coupon, bench stall test (D-212 rev 3, review r3 M-1)",
+   "verifies": [
+    "CL-A-HORN-RIB-COUPON",
+    "CL-A-HORN-STALL-STEP",
+    "CL-A-ELEVON-TORSION-COUPON",
+    "CL-A-HORN-STALL-BENCH",
+    "CL-A-HORN-SHEAROUT-STALL"
+   ],
+   "state": "planned",
+   "procedure": "(1) horn-rib coupon 36.8 N / 30 s, no crack, no slip, set < 0.5 deg; (2) then 51 N / 5 s, hole elongation <= 0.1 mm, no crack; (3) elevon-section torsion coupon 0.161 N m / 30 s, twist set < 0.5 deg, no debond; (4) bench stall test 51 N / 5 s into the stop (BUILD D5b). >= 3 coupons, lowest governs. A pass replaces the analysis FAIL claims (CL-A-HORN-RIB-FOAM-*, CL-A-ELEVON-TORSION-FOAM, CL-A-HORN-BEARING-STALL) as the basis of A-P13"
   },
   {
    "id": "T-A-SERVO-RAIL",

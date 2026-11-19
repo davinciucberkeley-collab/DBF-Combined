@@ -1,6 +1,6 @@
 # Concept A engineering drawings
 
-Generated from the CAD by `drawings/make_drawings_a.py` (commit ee7ffc2b, 2026-11-18). One sheet per distinct made part; mirror pairs and identical parts share a sheet. Every dimension is the CAD value; feature names that say EST are estimates. Re-run after any CAD change. All sheets: [DRAWINGS-A.pdf](DRAWINGS-A.pdf).
+Generated from the CAD by `drawings/make_drawings_a.py` (commit 164c815a, 2026-11-18). One sheet per distinct made part; mirror pairs and identical parts share a sheet. Every dimension is the CAD value; feature names that say EST are estimates. Re-run after any CAD change. All sheets: [DRAWINGS-A.pdf](DRAWINGS-A.pdf).
 
 | Drawing | Parts (qty) | Material | Size mm (design frame) | Sheets |
 |---|---|---|---|---|
@@ -32,12 +32,14 @@ Generated from the CAD by `drawings/make_drawings_a.py` (commit ee7ffc2b, 2026-1
 | [HRN-004-LR](HRN-004-LR.pdf) | HRN-004-LR (1) | PETG (printed) | 20.6 x 20.6 x 23.9 | 1 sheet(s), 13 features |
 | [HRN-004-UL](HRN-004-UL.pdf) | HRN-004-UL (1) | PETG (printed) | 20.6 x 16.6 x 18.5 | 1 sheet(s), 13 features |
 | [HRN-004-UR](HRN-004-UR.pdf) | HRN-004-UR (1) | PETG (printed) | 33.6 x 16.6 x 18.5 | 1 sheet(s), 13 features |
+| [MEC-004](MEC-004.pdf) | MEC-004-R, MEC-004-L (2) | PETG (printed) | 57.2 x 2.0 x 19.7 | 1 sheet(s), 1 features |
+| [MEC-008](MEC-008.pdf) | MEC-008-R, MEC-008-L (2) | PETG (printed) | 3.1 x 12.1 x 2.3 | 1 sheet(s), 2 features |
 | [WNG-001](WNG-001.pdf) | WNG-001 (1) | XPS foam 25 kg/m3 + packing tape | 183.8 x 900.0 x 24.0 | 10 sheet(s), hand-cut set: 41 cut lines |
 | [WNG-002](WNG-002.pdf) | WNG-002 (1) | CFRP tube | 12.0 x 900.0 x 12.0 | 1 sheet(s), 1 features |
 | [WNG-003](WNG-003.pdf) | WNG-003-C (1) | PETG (printed) | 9.8 x 20.0 x 9.8 | 1 sheet(s), 1 features |
 | [WNG-004](WNG-004.pdf) | WNG-004-R, WNG-004-L (2) | PETG (printed) | 9.8 x 20.0 x 9.8 | 1 sheet(s), 1 features |
 | [WNG-005](WNG-005.pdf) | WNG-005-R, WNG-005-L (2) | PETG (printed) | 9.8 x 20.0 x 9.8 | 1 sheet(s), 1 features |
-| [WNG-006](WNG-006.pdf) | WNG-006-R, WNG-006-L (2) | XPS foam + tape | 61.5 x 309.0 x 9.8 | 1 sheet(s), 1 features |
+| [WNG-006](WNG-006.pdf) | WNG-006-R, WNG-006-L (2) | XPS foam + tape | 61.5 x 309.0 x 9.8 | 1 sheet(s), 2 features |
 | [WNG-007](WNG-007.pdf) | WNG-007-R, WNG-007-L (2) | lead + PETG/CF | 24.6 x 106.0 x 1.4 | 1 sheet(s), 2 features |
 | [WNG-008-LL](WNG-008-LL.pdf) | WNG-008-LL, WNG-008-RL (2) | PETG (printed) | 42.8 x 116.0 x 6.6 | 1 sheet(s), 5 features |
 | [WNG-008-LU](WNG-008-LU.pdf) | WNG-008-RU, WNG-008-LU (2) | PETG (printed) | 44.8 x 116.0 x 7.2 | 1 sheet(s), 5 features |
@@ -75,6 +77,10 @@ One STL per printed part (mirror images have their own file), in mm, in the part
 | HRN-004-LR | [HRN-004-LR.stl](stl/HRN-004-LR.stl) | [HRN-004-LR](HRN-004-LR.pdf) | PETG (printed) | 0.97 | 20.6 x 20.6 x 23.9 | 1 | 0 |
 | HRN-004-UL | [HRN-004-UL.stl](stl/HRN-004-UL.stl) | [HRN-004-UL](HRN-004-UL.pdf) | PETG (printed) | 0.77 | 20.6 x 16.6 x 18.5 | 1 | 0 |
 | HRN-004-UR | [HRN-004-UR.stl](stl/HRN-004-UR.stl) | [HRN-004-UR](HRN-004-UR.pdf) | PETG (printed) | 1.05 | 33.6 x 16.6 x 18.5 | 1 | 0 |
+| MEC-004-L | [MEC-004-L.stl](stl/MEC-004-L.stl) | [MEC-004](MEC-004.pdf) | PETG (printed) | 0.95 | 57.2 x 2.0 x 19.7 | 1 | 0 |
+| MEC-004-R | [MEC-004-R.stl](stl/MEC-004-R.stl) | [MEC-004](MEC-004.pdf) | PETG (printed) | 0.95 | 57.2 x 2.0 x 19.7 | 1 | 0 |
+| MEC-008-L | [MEC-008-L.stl](stl/MEC-008-L.stl) | [MEC-008](MEC-008.pdf) | PETG (printed) | 0.08 | 3.1 x 12.1 x 2.3 | 1 | 0 |
+| MEC-008-R | [MEC-008-R.stl](stl/MEC-008-R.stl) | [MEC-008](MEC-008.pdf) | PETG (printed) | 0.08 | 3.1 x 12.1 x 2.3 | 1 | 0 |
 | WNG-003-C | [WNG-003-C.stl](stl/WNG-003-C.stl) | [WNG-003](WNG-003.pdf) | PETG (printed) | 1.2 | 9.8 x 20.0 x 9.8 | 1 | 0 |
 | WNG-004-L | [WNG-004-L.stl](stl/WNG-004-L.stl) | [WNG-004](WNG-004.pdf) | PETG (printed) | 1.2 | 9.8 x 20.0 x 9.8 | 1 | 0 |
 | WNG-004-R | [WNG-004-R.stl](stl/WNG-004-R.stl) | [WNG-004](WNG-004.pdf) | PETG (printed) | 1.2 | 9.8 x 20.0 x 9.8 | 1 | 0 |

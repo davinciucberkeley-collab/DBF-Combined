@@ -537,17 +537,94 @@ I2C_ZD = zu(I2C_X) - 0.0065                 # deep under the servo-lead groove t
 I2C_ZS = zu(I2C_X) - 0.0025                 # shallow over the fin rib tube at |y| 0.38 (its top z 7.0)
 SV_X0, SV_X1, SV_DY, SV_Z0 = 0.1270, 0.1554, 0.01335, -0.0013 - WING_DZ    # SERVO.md: EMAX ES3054HV 28.4 x 13.0 x 26.7 (servodatabase / getfpv, 2026-11-15); ears, output boss: "-" (no drawing)
 SV_XS = 0.1405                              # spline axis x (kept; spline axis is vertical, arm turns in the x-y plane)
-ARM_R = 12.0 * MM                           # FIXES2 s1.3: servo arm 12 mm to the pushrod hole
+ARM_R = 8.5 * MM                            # D-212 rev 2: servo arm hole 8.5 mm from the spline axis (was 12; the ES3054HV arm hole row is not published, "-": drill 1.3 mm at 8.5 mm (rev 3) and measure; window 7.8..8.97 mm, review m-4). Horn / arm = 1.077 keeps the proof claim ratio (was 12.9 / 12 = 1.075)
 ARM_Z0 = SV_Z1                              # arm sits on the case top (output boss height "-": measure; a real boss lifts the arm)
 ARM_T = 2.0 * MM                            # EST arm thickness
 ARM_Z1 = ARM_Z0 + ARM_T
 ROD_D = 1.2 * MM                            # V RMRC linkage set 1.2 mm rods
-ROD_Z = ARM_Z1 + ROD_D / 2                  # rod rests on the arm top, Z-bent down through the arm hole
-HORN_R = 12.9 * MM                          # FIXES2 s1.3: rod hole radius from the hinge axis
-HORN_XH = XH + math.sqrt(HORN_R ** 2 - (ROD_Z - HINGE_Z) ** 2)     # CALC hole x on the 12.9 mm radius
-HORN_X0, HORN_X1 = HORN_XH - 0.0015, HORN_XH + 0.0135      # EST blade 15 mm long (horn size "-": RMRC lists "20 mm horns"); D-194: blade starts 1.5 mm ahead of the hole, the clevis sleeve ends 2.0 mm ahead of it
+ROD_KEEP = 0.3 * MM                         # vertical freedom of the Z-bend leg in its hole: from the rod resting on the arm top up to the printed keeper bridge (MEC-008, D-212 rev 3; 0.3 mm is the drawn gap, print tolerance EST). Boss height under the arm "-": if a measured boss lifts the arm, ARM_Z0 and every height above it (rod, horn hole, keeper) follow the measured value before printing
+ROD_Z = ARM_Z1 + ROD_D / 2 + ROD_KEEP / 2   # CALC 9.45 mm: rod axis at the middle of its vertical freedom (9.30 resting on the arm, 9.60 against the keeper); the rod is NOT a fixed-height point, mechanism/linkage_core.py models the arm joint as prismatic in z over [ROD_Z - KEEP/2, ROD_Z + KEEP/2]
+ROD_GAP = ROD_KEEP / 2                      # rod bottom to arm top at the mid position (0 when the rod rests on the arm)
+HORN_R = ROD_Z - HINGE_Z                    # CALC 9.155 mm: hole DIRECTLY ABOVE the hinge axis at the rod height, so the horn is perpendicular to the rod at neutral (D-212 rev 2; was 12.9 on the 44 deg line)
+HORN_XH = XH                                # D-212: hole x = hinge x (was XH + 9.24 mm, 44 deg up-and-aft of the hinge)
+HORN_T = 2.0 * MM                           # D-212 rev 3: the horn is ONE flat printed PETG profile 2 mm thick (blade above the skin + rib through the elevon), printed lying flat so every bending stress is in the layer plane
+HORN_PX0 = XH + 0.0025                      # front edge of the stem and of the rib, 2.5 mm aft of the hinge line (a part from 0.8 mm aft measured 0.41 mm into the coarse 8-sample elevon nose in the mesh gate, D-212)
+HORN_BX1 = XH + 0.0240                      # D-212 rev 3 (review M-3, C-1): blade base aft edge at the skin, 21.5 mm root (was a 5 mm stem on a 1 mm plate); straight aft edge up to the head. 24 rather than 14 mm spreads the horn moment into the rib (foundation peak -25 %, linkage_loads_check.py)
+HORN_RIB_X1 = XH + 0.0550                   # D-212 rev 3 (review C-1): rib aft end 55 mm aft of the hinge line (elevon chord 61.25; depth there 1.1 mm); the rib is let into a slot through the full elevon depth
+HORN_RIB_IN = 0.2 * MM                      # rib top / bottom edges 0.2 mm inside the skin lines zu / zl (epoxy and the re-taped skin cover them)
+HORN_SLOT_W = HORN_T + 0.2 * MM             # slot through the elevon 2.2 mm wide (0.1 mm epoxy each side), cut with a 2 mm saw / hot wire guide
+HORN_SLOT_X = (HORN_PX0 - 0.0001, HORN_RIB_X1 + 0.0001)
+HORN_HOLE_D = 1.1 * MM                      # D-212 rev 3 (review M-4): horn hole printed at 0.9 mm and reamed with a 1.1 mm drill (0.1 mm on the 1.0 mm clevis pin; K5 needs >= 0.06 mm)
+ARM_HOLE_D = 1.3 * MM                       # D-212 rev 3 (review M-4): arm hole drilled 1.3 mm for the 1.2 mm rod (0.1 mm; K5 needs >= 0.07 mm for the 1.0 deg leg tilt); was 1.5 mm
 ROD_Y = lambda sy: sy * (SERVO_Y - ARM_R)   # arm tip (neutral) and horn hole share this y: the rod runs parallel to x
-HORN_TOP = ROD_Z + 0.0022                   # EST blade top 2.2 mm above the hole axis
+HORN_HR = 2.2 * MM                          # EST head radius round the hole: 1.65 mm of PETG round the 1.1 mm hole
+HORN_TOP = ROD_Z + HORN_HR                  # EST blade top
+# Z-bend keeper (D-212 rev 3, review M-5): printed PETG strip clamped under the arm screw (M2 x 8, was x 6). A 1.5 mm spacer on the arm top and a 0.8 mm bridge whose underside is the
+# rod top in the "hi" state of the joint (ROD_Z + ROD_KEEP / 2 + ROD_D / 2 = 10.20 mm): the bridge covers the Z-bend leg and the bend, so the rod cannot lift more than ROD_KEEP.
+# Arm-local frame: a from the spline axis towards the arm hole, b = sy * (-u_y, u_x) (= +x, towards the horn, at neutral).
+KEEP_T = 0.8 * MM
+KEEP_Z0 = ROD_Z + ROD_KEEP / 2 + ROD_D / 2  # CALC 10.20 mm bridge underside
+KEEP_Z1 = KEEP_Z0 + KEEP_T
+KEEP_A0 = -2.0 * MM                         # strip starts 2 mm behind the spline axis (round the screw)
+KEEP_SP1 = ARM_R - 2.0 * MM                 # spacer ends 2 mm short of the hole centre: clear of the rod over the +-23 deg servo travel (>= 0.66 mm)
+KEEP_A1 = ARM_R + 1.6 * MM                  # bridge reaches 1.6 mm past the hole centre
+KEEP_B = (-1.5 * MM, 1.6 * MM)              # bridge across the arm; the spacer is -1.5 .. +1.5 mm
+ARM_SCREW_L = 0.008                         # M2 x 8 pan (stock): clamps keeper (2.3 mm) + arm (2.0 mm), 3.7 mm into the output shaft (M2 x 6 through the bare arm gave 4.0 mm)
+
+
+def horn_zb():
+    """Skin height at the stem front (kept for callers): the blade base starts on the skin, the rib continues below it."""
+    return zu(HORN_PX0)
+
+
+def horn_profile(n=10, ns=24):
+    """D-212 rev 3 horn outline (x, z), one closed polygon: round head whose centre is the hole, directly above the hinge axis and reaching forward over
+    the hinge line; blade from 2.5 to 24 mm aft of the hinge line at the skin with a straight aft edge up to the head; below the skin a rib through the
+    elevon from 2.5 to 55 mm aft of the hinge line, its edges 0.2 mm inside zu / zl."""
+    zlo = ROD_Z - HORN_HR
+    pts = [(HORN_XH + 0.0050, HORN_TOP), (HORN_XH, HORN_TOP)]
+    pts += [(HORN_XH + HORN_HR * math.cos(math.radians(90 + 180 * i / n)), ROD_Z + HORN_HR * math.sin(math.radians(90 + 180 * i / n))) for i in range(1, n)]
+    pts += [(HORN_XH, zlo), (HORN_PX0, zu(HORN_PX0))]                  # sloped neck front edge: head bottom to the stem front on the skin (stays aft of the hinge line at +-21 deg)
+    xs = [HORN_PX0 + (HORN_RIB_X1 - HORN_PX0) * i / ns for i in range(ns + 1)]
+    pts += [(x, zl(x) + HORN_RIB_IN) for x in xs]                       # rib bottom edge, front to aft
+    xt = [x for x in reversed(xs) if x > HORN_BX1] + [HORN_BX1]
+    pts += [(x, zu(x) - HORN_RIB_IN) for x in xt]                       # rib top edge, aft to the blade base
+    return pts
+
+
+def horn_blade_loop(zb=None, n=10):
+    """Kept name: the horn outline (the whole profile, blade and rib)."""
+    return horn_profile(n)
+
+
+def poly_area(pl):
+    return abs(sum(pl[i][0] * pl[(i + 1) % len(pl)][1] - pl[(i + 1) % len(pl)][0] * pl[i][1] for i in range(len(pl)))) / 2
+
+
+def horn_mass_g():
+    """CALC mass of the printed PETG horn from the drawn volume: profile area (shoelace) - hole, x 2 mm."""
+    area = poly_area(horn_profile()) - math.pi * (HORN_HOLE_D / 2) ** 2
+    return area * HORN_T * 1e6 * RHO_PETG
+
+
+def keeper_loops(sy, theta=0.0):
+    """(spacer loop, bridge loop, screw hole loop) in x-y for side sy and servo angle theta (CCW about +z)."""
+    yc = sy * SERVO_Y
+    ux, uy = sy * math.sin(theta), -sy * math.cos(theta)
+    bx, by = sy * -uy, sy * ux
+    def rect(a0, a1, b0, b1):
+        return [(SV_XS + a * ux + b * bx, yc + a * uy + b * by) for a, b in ((a0, b0), (a1, b0), (a1, b1), (a0, b1))]
+    hole = [(SV_XS + 1.1 * MM * math.cos(2 * math.pi * i / 12), yc + 1.1 * MM * math.sin(2 * math.pi * i / 12)) for i in range(12)]
+    return rect(KEEP_A0, KEEP_SP1, -1.5 * MM, 1.5 * MM), rect(KEEP_A0, KEEP_A1, KEEP_B[0], KEEP_B[1]), hole
+
+
+def keeper_mass_g():
+    sp, br, _h = keeper_loops(1)
+    hole = math.pi * (1.1 * MM) ** 2
+    vol = (poly_area(sp) - hole) * (KEEP_Z0 - ARM_Z1) + (poly_area(br) - hole) * KEEP_T
+    return vol * 1e6 * RHO_PETG
+
+
 SPLINE_TEETH = 23                           # V readymaderc 85975 "23T output gear spline" (read 2026-11-15); the old stack said 25T (ES3352 copy): RESOLVED to 23T
 
 # hardware masses CALC (HW_DIMS M2: pan dk 3.8 k 1.6; thin nut af 4.0 m 1.2; nut ISO 4035/DIN 439 EST)
@@ -564,7 +641,7 @@ FCS_L = {h: FCS_STOCK for h in FC_HOLES}      # stock M2 x 25: tips end 0.1 mm s
 M_FC_SCREWS = round(sum(_g_screw(2.0 * MM, L, 3.8 * MM, 1.6 * MM) for L in FCS_L.values()), 2)
 M_FC_NUTS = round(4 * _g_nut(4.0 * MM, _NUT_M, 2.0 * MM), 2)
 M_FC_SET = round(M_FC_SCREWS + M_FC_NUTS, 2)    # HWC-001 screws + HWC-003 nuts (nuts are seated in the plate before the plate goes on the skin: separate build step)
-M_ARM_SCREW = round(_g_screw(2.0 * MM, 6.0 * MM, 3.8 * MM, 1.6 * MM), 2)     # M2 x 6 pan (kept from the old stack)
+M_ARM_SCREW = round(_g_screw(2.0 * MM, ARM_SCREW_L, 3.8 * MM, 1.6 * MM), 2)     # M2 x 8 pan (D-212 rev 3: clamps the Z-bend keeper; was M2 x 6)
 M_STANDOFFS = 4 * RHO_PA66 * math.pi / 4 * (4.0 ** 2 - 2.2 ** 2) * FC_STANDOFF   # g, nylon standoffs (part of AVN-002's 17 g)
 M_XT60_F = 3.0                              # EST g: XT60 female half
 M_TAIL = 5.0   # EST 2 x 0.10 m of 14 AWG at 25 g/m (V: RMRC wire page lists no mass) = 5 g
@@ -595,8 +672,9 @@ for s in 'RL':
     P('MEC-002-' + s, 'Servo arm (%s)' % s, 'mechanisms', 1.0, 'nylon', 'buy')
     P('MEC-003-' + s, 'Pushrod 1.2 mm with Z-bend and clevis (%s)' % s, 'mechanisms', 0.97, 'steel', 'buy')
     P('MEC-005-' + s, 'Clevis pin 1.0 x 4.4 mm (%s); mass CALC steel, carried inside the 1.0 g rod before D-194' % s, 'mechanisms', 0.03, 'steel', 'buy')
-    P('MEC-004-' + s, 'Control horn (%s)' % s, 'mechanisms', 1.0, 'nylon', 'buy')
-    P('HWC-002-' + s, 'Servo arm screw M2 x 6 pan (%s)' % s, 'mechanisms', M_ARM_SCREW, 'A2 stainless', 'buy')
+    P('MEC-004-' + s, 'Control horn (%s), printed PETG 2 mm flat profile: blade with the 1.1 mm reamed hole over the hinge line + rib through a slot in the elevon, 2.5-55 mm aft of the hinge (D-212 rev 3; mass CALC from the drawn volume)' % s, 'mechanisms', round(horn_mass_g(), 2), 'PETG (printed)', 'make')
+    P('MEC-008-' + s, 'Z-bend keeper (%s), printed PETG: 1.5 mm spacer + 0.8 mm bridge over the Z-bend, clamped under the arm screw (D-212 rev 3; mass CALC)' % s, 'mechanisms', round(keeper_mass_g(), 2), 'PETG (printed)', 'make')
+    P('HWC-002-' + s, 'Servo arm screw M2 x 8 pan (%s)' % s, 'mechanisms', M_ARM_SCREW, 'A2 stainless', 'buy')
 # D-199 phase-lead raceway: printed, mass = drawn wall volume x 1.27 (walls 0.6 mm, EST basis as AVN-008)
 for s_ in 'RL':
     P('HRN-003-' + s_, 'Phase-lead raceway (D-199, %s): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side' % s_, 'harness', raceway_mass_g(), 'PETG (printed)')
@@ -658,15 +736,17 @@ EDGES.append(dict(id=_e_fp, part_a='HWC-003', part_b='AVN-001', via='CT-HW-SEATE
 for s in 'RL':
     E(en('MEC'), 'MEC-001-' + s, 'WNG-001', EPX, 'mechanisms', 'servo in its pocket')
     E(en('MEC'), 'MEC-002-' + s, 'MEC-001-' + s, 'CT-SERVO-SPLINE', 'mechanisms', 'arm on the 23T output spline (V readymaderc 85975; the old 25T was an ES3352 copy)',
-      joint_stack=STACK('M2x6 retaining screw', 1, 'arm bore on the 23T spline', 20, eng=4.0, mineng=3.0))
+      joint_stack=STACK('M2x8 retaining screw (through the keeper)', 1, 'arm bore on the 23T spline', 20, eng=3.7, mineng=3.0))
     E(en('MEC'), 'MEC-003-' + s, 'MEC-002-' + s, 'CT-CLEVIS', 'mechanisms', 'rod Z-bend in the arm tip hole (vertical pin)',
       motion=dict(axis='Z', range_deg=[-30, 30]))
     E(en('MEC'), 'MEC-003-' + s, 'MEC-004-' + s, 'CT-CLEVIS', 'mechanisms', 'rod clevis on the horn hole (horizontal pin)',
       motion=dict(axis='Y', range_deg=[-ELEV_POSE, ELEV_POSE]))
-    E(en('MEC'), 'MEC-004-' + s, 'WNG-006-' + s, EPX, 'mechanisms', 'horn bonded on the elevon upper skin')
+    E(en('MEC'), 'MEC-004-' + s, 'WNG-006-' + s, EPX, 'mechanisms', 'horn rib bonded in its slot through the elevon (D-212 rev 3); slot taped over top and bottom')
+    E(en('MEC'), 'MEC-008-' + s, 'MEC-002-' + s, 'CT-HW-SEATED', 'mechanisms', 'Z-bend keeper clamped on the arm top by the arm screw (D-212 rev 3)',
+      joint_stack=STACK('M2x8 arm screw (shared with the arm-on-spline joint)', 1, 'keeper hole 2.2 mm over the arm hub', 20, eng=3.7, mineng=3.0))
     EDGES.append(dict(id='E-MEC-PIN-%s4' % s, part_a='MEC-005-' + s, part_b='MEC-004-' + s, via='CT-HW-SEATED', owner='mechanisms', hardware=True,
                       notes='clevis pin through the horn hole (pressed in along y after the clevis is lowered onto the blade); moves with the horn',
-                      joint_stack=STACK('1.0 mm clevis pin', 1, 'horn hole 1.5 mm', 40, eng=2.0, mineng=2.0)))
+                      joint_stack=STACK('1.0 mm clevis pin', 1, 'horn hole 1.1 mm reamed', 40, eng=2.0, mineng=2.0)))
     EDGES.append(dict(id='E-MEC-PIN-%s3' % s, part_a='MEC-005-' + s, part_b='MEC-003-' + s, via='CT-CLEVIS', owner='mechanisms',
                       notes='clevis pin through the cheek holes of the rod (the rod turns on it); linkage path not modelled in the poses',
                       motion=dict(axis='Y', range_deg=[-ELEV_POSE, ELEV_POSE])))
@@ -950,24 +1030,29 @@ def build_mechanisms(ctx):
         # arm: neutral tip points inboard, perpendicular to the rod (rod parallel to x)
         ux, uy = 0.0, -sy
         ar = ctx.part('MEC-002-' + s, rgb=(0.9, 0.9, 0.9))
-        loops = [_arm_loop(SV_XS, yc, ux, uy), _ring(SV_XS, yc, 1.1 * MM, 12), _ring(SV_XS, yc + uy * ARM_R, 0.75 * MM, 12)]
-        ar.prism('Z', ARM_Z0, loops, ARM_T, name='servo arm (hub bore for the 23T spline; hole row beyond the used hole "-")')
+        loops = [_arm_loop(SV_XS, yc, ux, uy), _ring(SV_XS, yc, 1.1 * MM, 12), _ring(SV_XS, yc + uy * ARM_R, ARM_HOLE_D / 2, 12)]
+        ar.prism('Z', ARM_Z0, loops, ARM_T, name='servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole "-")')
+        # Z-bend keeper (D-212 rev 3): spacer + bridge, clamped by the arm screw
+        kp = ctx.part('MEC-008-' + s, rgb=(0.9, 0.9, 0.9))
+        sp_, br_, hl_ = keeper_loops(sy)
+        kp.prism('Z', ARM_Z1, [sp_, hl_], KEEP_Z0 - ARM_Z1, name='keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)')
+        kp.prism('Z', KEEP_Z0, [br_, hl_], KEEP_T, name='keeper bridge 0.8 mm over the Z-bend (underside = rod top at the hi joint state, 10.20 mm)')
         # screw
         hw = ctx.part('HWC-002-' + s, rgb=(0.7, 0.7, 0.75))
-        k9.hw_screw(hw, 'Z', (SV_XS, yc, ARM_Z1), -1, 'M2', 0.006, 'pan', name='M2x6 pan screw')
+        k9.hw_screw(hw, 'Z', (SV_XS, yc, KEEP_Z1), -1, 'M2', ARM_SCREW_L, 'pan', name='M2x8 pan screw')
         ctx.seat('MEC-001-' + s, 'HWC-002-' + s, 'output-shaft thread for the arm screw', bodies=('shank',))
-        # horn: base plate + blade with the rod hole
-        zb = max(zu(HORN_X0 - 0.002), zu(HORN_X0), zu(HORN_X1))      # D-194: base plate flat on the highest skin point it covers (epoxy fills the rest)
+        # horn: one flat PETG profile, blade above the skin + rib in a slot through the elevon (D-212 rev 3)
         hy = ROD_Y(sy)
         hn = ctx.part('MEC-004-' + s, rgb=(0.9, 0.9, 0.9))
-        hn.box((HORN_X0 - 0.002, hy - 4 * MM, zb), (HORN_X1, hy + 4 * MM, zb + 1.0 * MM), name='horn base plate (EST 20 x 8 x 1.0)')
-        blade = _rrect(HORN_X0, zb + 1.0 * MM, HORN_X1, HORN_TOP, 1.5 * MM, 3)
-        hn.prism('Y', hy - 1.0 * MM, [blade, _ring(HORN_XH, ROD_Z, 0.75 * MM, 12)], 2.0 * MM, name='horn blade 2 mm (hole at R 12.9 from the hinge)')
+        hn.prism('Y', hy - HORN_T / 2, [horn_profile(), _ring(HORN_XH, ROD_Z, HORN_HOLE_D / 2, 12)], HORN_T,
+                 name='horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon')
+        ctx.components['WNG-006-' + s].cut_box((HORN_SLOT_X[0], hy - HORN_SLOT_W / 2, -0.012), (HORN_SLOT_X[1], hy + HORN_SLOT_W / 2, 0.004),
+                                               name='horn rib slot 2.2 mm through the elevon, x 2.4-55.1 mm aft of the hinge line (D-212 rev 3; taped over after bonding)')
         # pushrod: Z-bend pin in the arm hole, rod to the horn, clevis straddling the blade
         tipx, tipy = SV_XS, yc + uy * ARM_R
         rd = ctx.part('MEC-003-' + s, rgb=(0.6, 0.6, 0.6))
-        rd.cylinder('Z', (tipx, tipy, ARM_Z0 + 0.0001), ROD_Z - ARM_Z0 - 0.0001, ROD_D / 2, name='rod Z-bend pin (flush with the arm underside)')
-        xe = HORN_XH - 0.0040                                   # clevis body starts here (4 mm before the hole)
+        rd.cylinder('Z', (tipx, tipy, ARM_Z0 + 0.0001), ROD_Z - ARM_Z0 - 0.0001, ROD_D / 2, name='rod Z-bend leg through the arm hole (L-end flush with the arm underside; held down by the keeper MEC-008)')
+        xe = HORN_XH - 0.0055                                   # clevis body starts here (5.5 mm before the hole: the horn head reaches 2.2 mm ahead of it, the sleeve ends 3.5 mm ahead; D-212)
         rd.cylinder('X', (tipx, tipy, ROD_Z), xe - tipx, ROD_D / 2, name='pushrod')
         rd.tube('X', (xe, tipy, ROD_Z), 0.0020, 1.5 * MM, ROD_D / 2, name='clevis sleeve (EST OD 3.0, 2 mm; fork cheeks follow)')
         for sg in (-1, 1):

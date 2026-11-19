@@ -167,6 +167,50 @@ def gm_shifted(lo, hi):
     return min(min(lo), min(hi))
 
 
+# ================================================================ elevon linkage strength, D-212 rev 3 (review r2 C-1, M-1..M-4). Failing claims stay failing.
+LINK_PARTS = ["MEC-003-R", "MEC-003-L", "MEC-004-R", "MEC-004-L", "WNG-006-R", "WNG-006-L"]
+LINK_EQ = "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header"
+COUPON = ("NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) "
+          "once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm "
+          "either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), "
+          "then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect "
+          "horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).")
+for cid, title, param, lim, extra, how in [
+        ("CL-A-HORN-RIB-FOAM-HOLD", "Horn rib face shear in the elevon foam at 1.5 x VD hold (x 2.156), beam-on-foundation FE, worst foam case", "P:linkage.rib_foam_hold_kpa", "P:linkage.foam_shear_kpa", ["ASM-A-FOAM-ALLOW"], COUPON),
+        ("CL-A-HORN-RIB-FOAM-STALL", "Horn rib face shear in the foam at the 51 N servo stall force (x 1.4375)", "P:linkage.rib_foam_stall_kpa", "P:linkage.foam_shear_kpa", ["ASM-A-FOAM-ALLOW"], COUPON),
+        ("CL-A-ELEVON-TORSION-FOAM", "Elevon torsion beside the horn, foam only (tape skin not credited), 1.5 x VD hold (x 2.156)", "P:linkage.elevon_torsion_hold_kpa", "P:linkage.foam_shear_kpa", ["ASM-A-FOAM-ALLOW"], COUPON),
+        ("CL-A-HORN-BLADE-HOLD", "Printed horn blade bending at 1.5 x VD hold (x 2.156), printed lying flat (in-layer)", "P:linkage.blade_root_hold_mpa", "P:linkage.petg_allow_mpa", ["ASM-A-PETG-ALLOW"], COUPON),
+        ("CL-A-HORN-BLADE-STALL", "Printed horn blade bending at the 51 N stall force (x 1.4375)", "P:linkage.blade_root_stall_mpa", "P:linkage.petg_allow_mpa", ["ASM-A-PETG-ALLOW"], COUPON),
+        ("CL-A-HORN-BEARING-HOLD", "Clevis pin bearing in the 2 mm horn at 1.5 x VD hold (x 2.156)", "P:linkage.bearing_hold_mpa", "P:linkage.petg_allow_mpa", ["ASM-A-PETG-ALLOW"], COUPON),
+        ("CL-A-HORN-BEARING-STALL", "Clevis pin bearing in the 2 mm horn at the 51 N stall force (x 1.4375)", "P:linkage.bearing_stall_mpa", "P:linkage.petg_allow_mpa", ["ASM-A-PETG-ALLOW"], COUPON),
+        ("CL-A-ROD-LEG-STALL", "Z-bend leg: yield needed at 1.5 x the 51 N stall force vs the A228 music-wire allowable", "P:linkage.rod_yield_req_mpa", "P:linkage.a228_allow_mpa", ["ASM-A-ROD-GRADE"],
+         "Receipt test of a formed M02 rod at 77 N (1.5 x 51 N) along the rod, 10 s, no permanent set over 0.2 mm; else A228 1.2 mm wire.")]:
+    stored(cid, title, param, "kPa" if "kpa" in param else "MPa", limit=("<=", lim), verifies=["A-P13"], parts=LINK_PARTS, assumes=extra, how=how, equation=LINK_EQ)
+stored("CL-A-HORN-SHEAROUT-STALL", "Horn hole shear-out (1.65 mm ligament) at the 51 N stall force (x 1.4375); allowable PETG 20 MPa / sqrt(3) EST", "P:linkage.shearout_stall_mpa", "MPa",
+       limit=("<=", "P:linkage.shearout_allow_mpa"), verifies=["A-P13"], parts=LINK_PARTS, assumes=["ASM-A-PETG-ALLOW"],
+       how="Passes by 4 % on an EST allowable (review r3 m-13), so it is no margin: the stall step of the horn-rib coupon (CL-A-HORN-STALL-STEP) and the bench stall test decide it.", equation=LINK_EQ)
+
+# ---- test-form claims (review r3 M-1): value "-" until the test is run, so they stay PROPOSED, never FAIL. Pass criteria are numeric. When a test
+# ---- passes, the analysis FAIL claim it supersedes is re-pointed at the test claim by a logged edit (A-P13 then rests on the test).
+TEST_PARTS = ["MEC-004-R", "MEC-004-L", "WNG-006-R", "WNG-006-L"]
+kit.claim("CL-A-HORN-RIB-COUPON", "Horn-rib coupon: load held 30 s without damage, over the required 36.8 N (2.156 x the 17.05 N hold force)", unit="-", limit=(">=", 1.0), value="-",
+          verifies=["A-P13"], parts=TEST_PARTS, assumes=[],
+          how="E1 coupon: 100 mm tape-skinned elevon span, horn bonded in the slot, clamps 50 mm each side of the rib; 36.8 N along the chord for 30 s. Value = held load / 36.8 N, pass >= 1.0 with no crack, no slip, set < 0.5 deg. Local result only (clamps 50 mm from the rib, ~160 mm of elevon in flight). Supersedes CL-A-HORN-RIB-FOAM-HOLD once run and passed.")
+kit.claim("CL-A-HORN-STALL-STEP", "Horn-rib coupon, stall step: 51 N held 5 s, hole elongation and cracks", unit="mm", limit=("<=", 0.1), value="-",
+          verifies=["A-P13"], parts=TEST_PARTS,
+          how="After the 36.8 N step, 51 N (the servo stall force, 0.397 N m / (8.5 mm x 0.916)) along the chord for 5 s. Value = hole elongation measured with a 1.2 mm pin gauge, pass <= 0.1 mm with no crack and set < 0.5 deg. Record what yields first. Supersedes CL-A-HORN-RIB-FOAM-STALL and CL-A-HORN-BEARING-STALL once run and passed; the 1.4375 scatter factor is not in the coupon (one coupon): run 3 coupons, lowest governs.")
+kit.claim("CL-A-ELEVON-TORSION-COUPON", "Elevon-section torsion coupon: torque held over the required 0.161 N m (2.156 x the 74.65 N mm outboard hinge moment at VD)", unit="-", limit=(">=", 1.0), value="-",
+          verifies=["A-P13"], parts=["WNG-006-R", "WNG-006-L"],
+          how="A tape-skinned elevon section about 160 mm long, root clamped, torque applied through the horn hole path (horn force x 9.155 mm) to 0.161 N m held 30 s. Value = held torque / 0.161 N m, pass >= 1.0 with no tape debond or crack and twist set < 0.5 deg at the trailing edge. Supersedes CL-A-ELEVON-TORSION-FOAM (foam only, tape skin not credited) once run and passed. If it fails: the spanwise CF tube (trade row J).")
+kit.claim("CL-A-HORN-STALL-BENCH", "Bench stall test on the built aircraft: 51 N for 5 s into the 21 deg stop, hole elongation", unit="mm", limit=("<=", 0.1), value="-",
+          verifies=["A-P13"], parts=TEST_PARTS + ["MEC-001-R", "MEC-001-L"],
+          how="BUILD D5b: endpoints temporarily set past the stop, servo at 7.2 V driven into the +21 deg stop (smallest arm lever, 51 N) for 5 s, each elevon. Value = hole elongation (1.2 mm pin gauge), pass <= 0.1 mm with no crack in horn, rib, slot tape or stop, and trailing-edge set < 0.5 deg. Then the endpoints go back to +-20 deg.")
+
+stored("CL-A-LINKAGE-FREEPLAY", "Elevon linkage free play from the hole clearances and the Z-bend freedom (clevis cheek holes '-')", "P:linkage.free_play_deg", "deg",
+       limit=("<=", "P:linkage.free_play_guide_deg"), verifies=["A-P13"], parts=["MEC-002-R", "MEC-002-L", "MEC-003-R", "MEC-003-L", "MEC-004-R", "MEC-004-L", "MEC-008-R", "MEC-008-L"],
+       how="E1: measure the trailing-edge free play with the servo powered at neutral (dial gauge, +-0.05 mm); the hinge damper (FIXES2 s1) makes flutter independent of K, so a FAIL here is a control-precision item, not a flutter item.",
+       equation="read from mechanism/out/linkage_kinematics.json free_play_budget_deg (python -I redesign/qp/A/mechanism/elevon_linkage.py)")
+
 kit.claim("CL-A-VIB-GM-SHIFT", "Rate-loop gain margin with the cage modes shifted +-20 %", calc="CALC-A-VIB-GM-SHIFT", output="gm", unit="-",
           limit=(">=", "P:req.gm_min"), verifies=["A-P10"], parts=["AVN-002", "CGE-004", "CGE-002-A"],
           how="Tap test of the built cage (T-A-TAP): first pitch mode 9-17 Hz, first roll mode 21-43 Hz (GM >= 2 grid, iter3_run.md); outside that window re-tune the rate loop.",
@@ -174,7 +218,7 @@ kit.claim("CL-A-VIB-GM-SHIFT", "Rate-loop gain margin with the cage modes shifte
 
 
 # ================================================================ servo torque at the 7.2 V rail (FIXES2 s2)
-@kit.calc("CALC-A-SERVO", equation="factor = servo torque / (1.5 x (hinge moment at VD + preload + damper at slew)); cold case with the real arm ratio 12.9 / 12; ratio = servo / hinge",
+@kit.calc("CALC-A-SERVO", equation="factor = servo torque / (1.5 x (hinge moment at VD + preload + damper at slew)); cold case with the real arm ratio 9.155 / 8.5 (D-212 rev 2; the gearing of the solved linkage is 0.906 to 0.929, 1 / 1.077 = 0.929); ratio = servo / hinge",
           inputs=pin("servo", "stall_72_nm", "hinge_vd_nm", "preload_nm", "damper_slew_nm", "damper_slew_cold_nm", "load_factor", "arm_mm", "horn_mm"))
 def servo_factors(stall_72_nm, hinge_vd_nm, preload_nm, damper_slew_nm, damper_slew_cold_nm, load_factor, arm_mm, horn_mm):
     req = load_factor * (hinge_vd_nm + preload_nm + damper_slew_nm)
@@ -188,7 +232,7 @@ kit.claim("CL-A-SERVO-FACTOR", "Servo torque factor at 7.2 V, 25 C (ES3054HV)", 
           verifies=["A-P11"], parts=SERVO_PARTS, how="M12: measure the rail under two-servo load (7.2 V jumper set; at 6.0 V the factor is 1.30 and fails); E1 measures the hinge and damper torque.")
 kit.claim("CL-A-SERVO-COLD", "Servo torque factor at 7.2 V, damper at 0 C, real arm ratio", calc="CALC-A-SERVO", output="factor_0c_real_arms", unit="-", limit=(">=", "P:req.servo_factor_min"),
           verifies=["A-P11"], parts=SERVO_PARTS, assumes=["ASM-A-DAMPER-T"], how="E1 step 6: ring-down at 0 C; confirm the slew + VD hinge-moment bounding case on the bench.",
-          note="Equal arms (the SERVO.md convention) give 1.47, 2 % short; FIXES2 s2 reports 1.58 with the drawn 12 mm arm and 12.9 mm horn. Bounding case: VD hinge moment, full slew and 0 C together.")
+          note="Equal arms (the SERVO.md convention) give 1.47, 2 % short; FIXES2 s2 reported 1.58 with a 12 mm arm and 12.9 mm horn; D-212 rev 2 (arm hole 8.5 mm, horn hole 9.155 mm over the hinge) gives 1.58 again, and the solved linkage gearing at +-20 deg (0.906 to 0.929) now matches the 8.5 / 9.155 ratio the claim assumes. Bounding case: VD hinge moment, full slew and 0 C together.")
 kit.claim("CL-A-SERVO-RATIO", "Servo stall torque over the hinge moment at VD (A-P11 wording)", calc="CALC-A-SERVO", output="ratio_to_hinge", unit="-", limit=(">=", "P:req.servo_ratio_min"),
           verifies=["A-P11"], parts=SERVO_PARTS, how="Bench: stall torque of the flight servo at 7.2 V.")
 

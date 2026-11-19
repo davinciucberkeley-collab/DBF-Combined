@@ -1,5 +1,5 @@
 {
- "bodies": 484,
+ "bodies": 486,
  "defects": [
   "WNG-008-LL body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
   "WNG-008-LL body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)",
@@ -11,7 +11,7 @@
   "WNG-008-RU body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)"
  ],
  "kinks": [],
- "parts": 113,
+ "parts": 115,
  "poses": [
   {
    "hits": [
@@ -167,7 +167,7 @@
     "WNG-010-L",
     "WNG-010-R"
    ],
-   "name": "elevons at lower limit (E-WNG-10 -20, E-WNG-11 -20)",
+   "name": "elevons at lower limit (E-WNG-10 -21, E-WNG-11 -21)",
    "not_swept_against": [
     "MEC-003-L",
     "MEC-003-R",
@@ -189,7 +189,7 @@
     "WNG-010-L",
     "WNG-010-R"
    ],
-   "name": "elevons at upper limit (E-WNG-10 +20, E-WNG-11 +20)",
+   "name": "elevons at upper limit (E-WNG-10 +21, E-WNG-11 +21)",
    "not_swept_against": [
     "MEC-003-L",
     "MEC-003-R",
@@ -198,7 +198,7 @@
    ]
   }
  ],
- "seconds": 139.2,
+ "seconds": 138.2,
  "skipped": [
   [
    "HRD-001",

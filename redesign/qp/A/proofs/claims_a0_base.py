@@ -44,6 +44,9 @@ src("SRC-A-FIXES", "QP-4 fixes (FIXES.md)", "review/QP-4/FIXES.md", "s1.3 wing f
 src("SRC-A-FIXES2", "QP-4 fixes 2 (FIXES2.md, supersedes FIXES where they differ)", "review/QP-4/FIXES2.md", "s1 flutter with damper, s2 servo, s3 gates, s6 foam, s7 mass and cost")
 src("SRC-A-CDAMP", "Elevon flutter with the hinge damper (fixes2_cdamp.md)", "qp/A/structures/fixes2_cdamp.md", "lowest onset over the K grid, hot / nominal / cold, kd / nom / hi", kind="file")
 src("SRC-A-FOAM103", "Foam checks at 103 kPa (foam_103.md)", "qp/A/structures/foam_103.md", "MS at the 103 kPa basis (compressive 103 V data sheet; tension 129, shear 86 EST)", kind="file")
+src("SRC-A-LINKLOADS", "Elevon linkage strength checks, D-212 rev 3 (linkage_loads_check.json)", "qp/A/mechanism/out/linkage_loads_check.json", "hand calculations + 1-D beam-on-foundation FE of the horn rib; stall force 51.0 N quasi-static; factors KP 2.156 hold, 1.4375 stall (printed / bonded)", kind="file")
+src("SRC-A-LINKKIN", "Elevon linkage kinematics, D-212 rev 3 (linkage_kinematics.json)", "qp/A/mechanism/out/linkage_kinematics.json", "free_play_budget_deg: hole clearances / horn radius + Z-bend freedom (K7)", kind="file")
+src("SRC-A-SERVOMD", "QP-4 servo review (SERVO.md)", "review/QP-4/SERVO.md", "s4: free play <= 1 deg (flutter target)")
 src("SRC-A-ARMCUP", "Arm and motor-cup checks (arm_cup_checks.md)", "qp/A/structures/arm_cup_checks.md", "MS table, limit loads x 1.5 x 1.15 (x 1.25 printed/bonded); allowables EST", kind="file")
 src("SRC-A-D206BR", "Bridge tube torsion sizing, D-206 (bridge_torsion_d206.md)", "qp/A/structures/bridge_torsion_d206.md", "roll moments from the hub FEA load set; tau = M r / J; strut share bounds", kind="file")
 src("SRC-A-ITER2M", "Structures iteration 2 margins (iter2_margins.md)", "qp/A/structures/iter2_margins.md", "MS table at 1.5 x limit", kind="file")
@@ -75,6 +78,12 @@ kit.assumption("ASM-A-HUB-WALL", "Printed hub socket walls (2.0 mm, D-196) carry
                status="UNVERIFIED")
 kit.assumption("ASM-A-FOAM-ALLOW", "Foam tension 129 kPa and shear 86 kPa", "Foam shear and tension allowables are the old 150 / 100 kPa scaled by 103 / 120",
                basis="FIXES2 s6: the FOAMULAR 150 data sheet has no tension or shear row (searched 2026-11-15); the 103 kPa compressive value is the data sheet (OC, ASTM D1621)",
+               status="UNVERIFIED")
+kit.assumption("ASM-A-ROD-GRADE", "The M02 pushrod is music wire (ASTM A228) or as strong", "The 1.2 mm M02 rod has a bending allowable >= the 1172 MPa the Z-bend leg needs at 1.5 x the 51 N stall force",
+               basis="D-212 rev 3: RMRC publishes 'steel' only; the A228 constants (S_ut = 2211 / d^0.145 MPa, bending 0.78 S_ut, Shigley Tables 10-4 / 10-6) are RECALLED, not re-read. Receipt test: 77 N along the formed rod, 10 s, no permanent set over 0.2 mm, else A228 wire",
+               status="UNVERIFIED")
+kit.assumption("ASM-A-PETG-ALLOW", "Printed PETG 20 MPa in-layer and bearing", "Printed PETG (Prusament, R03) carries 20 MPa in the layer plane and in hole bearing",
+               basis="structures/fea_arm.py ALLOW['petg'] and arm_cup_checks.py PETG_BEAR: EST, no coupon yet; the horn is printed lying flat so its bending and bearing are in the layer plane",
                status="UNVERIFIED")
 kit.assumption("ASM-A-TRUNK", "The packed box fits the team's car trunk", "A one-piece packed box 0.90 x 0.50 x 0.39 m fits one standard trunk",
                basis="A-U3: trunk size is `—` (no car measured); the proxy is the configuration-study box limit 1.2 x 0.5 x 0.4 m (C3a)",
@@ -123,6 +132,10 @@ kit.test("T-A-BENCH-YAW", "Hanging yaw test, arm x1.2, cant 16 deg (M3)", ["CL-A
          procedure="Hanging yaw plate at +-0.10 throttle: authority >= 0.35 N m go; 0.30-0.35 go with the 4 m/s card; < 0.30 R2 (BOARD G3)")
 kit.test("T-A-ELEVON-E1", "Elevon coupon E1: K, free play, ring-down, stop, damper over temperature", ["CL-A-FLUTTER-ELEVON-HOT", "CL-A-FLUTTER-ELEVON-NOM", "CL-A-FLUTTER-ELEVON-COLD", "CL-A-SERVO-COLD"], state="planned",
          procedure="FIXES2 s8 steps 1-7 on a 300 mm wing section with the real elevon, lead strip, caps, damper and ES3054HV at 7.2 V; c >= 7.1e-4 N m s/rad at 25 C, c(50 C) >= 4.0e-4")
+kit.test("T-A-HORN-RIB", "Elevon horn: rib coupon, stall step, elevon-section torsion coupon, bench stall test (D-212 rev 3, review r3 M-1)",
+         ["CL-A-HORN-RIB-COUPON", "CL-A-HORN-STALL-STEP", "CL-A-ELEVON-TORSION-COUPON", "CL-A-HORN-STALL-BENCH", "CL-A-HORN-SHEAROUT-STALL"], state="planned",
+         procedure="(1) horn-rib coupon 36.8 N / 30 s, no crack, no slip, set < 0.5 deg; (2) then 51 N / 5 s, hole elongation <= 0.1 mm, no crack; (3) elevon-section torsion coupon 0.161 N m / 30 s, twist set < 0.5 deg, no debond; "
+                   "(4) bench stall test 51 N / 5 s into the stop (BUILD D5b). >= 3 coupons, lowest governs. A pass replaces the analysis FAIL claims (CL-A-HORN-RIB-FOAM-*, CL-A-ELEVON-TORSION-FOAM, CL-A-HORN-BEARING-STALL) as the basis of A-P13")
 kit.test("T-A-SERVO-RAIL", "Servo rail voltage under two-servo load (M12)", ["CL-A-SERVO-FACTOR"], state="planned",
          procedure="Kakute servo rail set to 7.2 V and measured under load; below 6.0 V the servo fails the 1.5 factor")
 kit.test("T-A-WEIGH", "Weigh-in: foam block, printed parts, epoxy joint, lead strip, one servo, then the aircraft", ["CL-A-MASS-PRED", "CL-A-CUTS-REQUIRED", "CL-A-STRUCT-MASS", "CL-A-MASS-GATE-ROOM"], state="planned",

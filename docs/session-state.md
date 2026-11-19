@@ -13,11 +13,12 @@ the ledger and the spec are.
 ## Checkpoint — 2026-11-18 evening (session 7cb35b0a, conductor Opus)
 **Goal:** master program; Phase 1 done except the manual compaction test (needs the user to type /compact); Phases 2, 4, 5 running.
 **Done (committed):** spec + AM-001, registry (109 R) and ledger (61 T), hooks, audit tool, agents; capability audit (T-016), video audit (T-026), registry audit + fixes (T-011); elevon mechanism analyses AR-001..003 (all FAIL, real defects); film shot-list mode + 1080p60 preview (T-027).
-**Running (background agents):** T-061 D-212 linkage fix + CAD gates (sonnet); T-017 physics relabel (sonnet); T-041a cleanup dry-run facts (haiku).
-**Next after those:** O review of D-212 (eng-reviewer); Scene 3 driven by the post-D-212 kinematics (T-028); records for FEA/SITL/landing reuse (T-057/T-058); film defects (S1.1 camera through arms, S2 framing); cleanup approval request to Dillon.
-**Failed attempts:** `du -sh .` > 120 s (worked in background: 14 GB); subagent Write of docs/analysis-records.md refused (subagent policy) → conductor writes report files from agent outputs; project agents in `.claude/agents` not loadable until a new session → general-purpose + model override.
+**D-212 rev 3 (T-063) VERIFIED and committed 2026-11-18:** rib horn MEC-004 + keeper MEC-008; five analysis FAIL claims (rib-foam hold/stall, elevon torsion foam-only, bearing at stall, free play 1.28 deg) carried in the graph, superseded by test claims under T-A-HORN-RIB (coupon 36.8 N / 30 s, elevon torsion coupon, 51 N stall step + bench stall D5b); fallback trade row J (CF torsion tube). Open: assembly_check + collide --glb at next export.
+**Running:** none.
+**Next:** Scene 3 driven by the post-D-212 kinematics (T-028); records for FEA/SITL/landing reuse (T-057/T-058); film defects (S1.1 camera through arms, S2 framing); cleanup approval request to Dillon.
+**Failed attempts:** D-212 v1 rejected (jogged Z-bend, modelled joint ≠ built joint); D-212 rev 2 rejected (printed horn bonded to foam: invalid peel model, stall strength) → rev 3 escalated to opus with an approach change (through-bolted/hardpoint horn). Earlier: `du -sh .` > 120 s (worked in background: 14 GB); subagent Write of docs/analysis-records.md refused (subagent policy) → conductor writes report files from agent outputs; project agents in `.claude/agents` not loadable until a new session → general-purpose + model override.
 **Inspection (R-PRES-13):** CLAUDE.md kept whole, new sections prepended; no AGENTS.md; no prior `.claude/settings.json`; Claude Code 2.1.288 (PreCompact, PostCompact, SessionStart matchers used).
-**Approvals (R-GEN-02):** none requested yet. Pending asks: /compact test; deletions (after dry run); ffmpeg install (optional, PD-006); DaVinci access + spend; James's agent definitions; shared schema location.
+**Approvals (R-GEN-02):** 2026-11-18 Dillon approved removing the two clean merged worktrees (done, branches kept). Pending asks: /compact test; deletions (after dry run); ffmpeg install (optional, PD-006); DaVinci access + spend; James's agent definitions; shared schema location.
 **Blocked on people:** T-015, T-034, T-037; T-007 needs /compact.
 
 ## Reconciliation

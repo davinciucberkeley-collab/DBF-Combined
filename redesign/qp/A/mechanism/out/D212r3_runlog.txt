@@ -1,0 +1,54 @@
+ELEVON_ZJ=mid python -I mechanism/elevon_linkage.py rc=0 wall=4.2 s
+ELEVON_ZJ=lo python -I mechanism/elevon_linkage.py rc=0 wall=4.2 s
+ELEVON_ZJ=hi python -I mechanism/elevon_linkage.py rc=0 wall=4.3 s
+ELEVON_ZJ=mid python -I mechanism/elevon_dynamics.py rc=0 wall=7.1 s
+ELEVON_ZJ=lo python -I mechanism/elevon_dynamics.py rc=0 wall=7.0 s
+ELEVON_ZJ=hi python -I mechanism/elevon_dynamics.py rc=0 wall=6.9 s
+ELEVON_ZJ=mid python -I mechanism/elevon_sweep_collision.py rc=0 wall=12.8 s
+ELEVON_ZJ=lo python -I mechanism/elevon_sweep_collision.py rc=0 wall=12.7 s
+ELEVON_ZJ=hi python -I mechanism/elevon_sweep_collision.py rc=0 wall=13.0 s
+A_ELEV_POSE=21 python -I redesign/qp/A/cad/collide_a.py rc=0 wall=148 s
+--- superseded above: first pass on the 14 mm blade base; final runs below (24 mm base, sloped neck) ---
+python -I cad/build_a.py rc=0 wall=13.7 s
+check: PASS (10 modules, 0 errors, 0 warnings)
+ELEVON_ZJ=mid python -I mechanism/elevon_linkage.py rc=0 wall=4.2 s
+ELEVON_ZJ=lo python -I mechanism/elevon_linkage.py rc=0 wall=4.1 s
+ELEVON_ZJ=hi python -I mechanism/elevon_linkage.py rc=0 wall=4.2 s
+ELEVON_ZJ=mid python -I mechanism/elevon_dynamics.py rc=0 wall=7.0 s
+ELEVON_ZJ=lo python -I mechanism/elevon_dynamics.py rc=0 wall=7.0 s
+ELEVON_ZJ=hi python -I mechanism/elevon_dynamics.py rc=0 wall=7.0 s
+ELEVON_ZJ=mid python -I mechanism/elevon_sweep_collision.py rc=0 wall=13.1 s
+ELEVON_ZJ=lo python -I mechanism/elevon_sweep_collision.py rc=0 wall=12.8 s
+ELEVON_ZJ=hi python -I mechanism/elevon_sweep_collision.py rc=0 wall=12.9 s
+python -I mechanism/linkage_loads_check.py rc=0 wall=6.2 s
+python -I cad/stop_check.py rc=0 wall=10.2 s
+python -I cad/parts_links_a.py rc=0 wall=3.1 s
+python -I make_build_guide_a.py rc=0 wall=3.2 s
+python -I redesign/site/make_build_guide.py rc=0 wall=0.3 s
+python -I redesign/site/make_index.py rc=0 wall=0.4 s
+A_ELEV_POSE=21 python -I cad/collide_a.py rc=0 wall=145.3 s
+python -I redesign/qp/A/proofs/run_all.py rc=1 wall=1.5 s
+python -I redesign/qp/A/proofs/run_all.py (rerun after a_assembly) rc=1 wall=1.5 s: 539 nodes, fails 6 (5 new FAIL claims + A-P13), strict FAILED as designed
+python -I redesign/qp/A/cad/a_assembly.py rc=0 wall=1622 s
+python -I redesign/qp/A/drawings/make_drawings_a.py rc=1 wall=97 s
+python -B redesign/qp/A/drawings/make_drawings_a.py --compose (stage 1-2 ran under -I above; -I hides compose_drawings) rc=0 wall=87 s
+
+=== T-063-cond (review r3 conditions), 2026-11-18: final runs after claims / params / BUILD / docs edits ===
+$ python -I redesign/qp/A/proofs/run_all.py
+rc=1 (strict FAILED as intended: 5 analysis FAIL claims + A-P13; 548 nodes, 1151 edges, fails 6; CL-A-ASSY-STEPS 59), wall 1.6 s (first run in this block 1.5 s)
+  CL-A-ASSY-STEPS                    59   margin +0%
+  ERROR: STRICT A-P13: CL-A-FLUTTER-ELEVON-NOM is UNVERIFIED
+  ERROR: STRICT CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)
+  ERROR: STRICT CL-A-HORN-RIB-FOAM-STALL: FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)
+  ERROR: STRICT CL-A-ELEVON-TORSION-FOAM: FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)
+  ERROR: STRICT CL-A-HORN-BEARING-STALL: FAILS: margin -83.2% (36.65 MPa vs <= 20 MPa)
+  ERROR: STRICT CL-A-LINKAGE-FREEPLAY: FAILS: margin -28.0% (1.28 deg vs <= 1 deg)
+concept-a: 4 claims files, 548 nodes, 1151 edges -> redesign/qp/A/proofs/out/
+  status: UNVERIFIED 213, PROPOSED 17, CHECKED 318, VERIFIED 0; fails 6
+  warning: CL-A-HORN-RIB-COUPON: has a limit, but its value '-' is not a number, so pass / fail is not judged
+  warning: CL-A-HORN-STALL-STEP: has a limit, but its value '-' is not a number, so pass / fail is not judged
+  warning: CL-A-ELEVON-TORSION-COUPON: has a limit, but its value '-' is not a number, so pass / fail is not judged
+  warning: CL-A-HORN-STALL-BENCH: has a limit, but its value '-' is not a number, so pass / fail is not judged
+$ python -I tools/ledger_audit.py
+109 requirements, 63 tasks, {'READY FOR REVIEW': 5, 'IN PROGRESS': 20, 'NOT STARTED': 29, 'VERIFIED COMPLETE': 4, 'BLOCKED': 4, 'FAILED': 1}; 0 errors
+rc=0 (0 errors), wall 0.3 s

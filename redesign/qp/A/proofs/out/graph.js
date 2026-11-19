@@ -2,28 +2,40 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-19 00:11 UTC",
+  "generated": "2026-11-19 03:14 UTC",
   "dataset": "concept-a",
-  "ok": true,
-  "errors": [],
-  "warnings": [],
+  "ok": false,
+  "errors": [
+   "STRICT A-P13: CL-A-FLUTTER-ELEVON-NOM is UNVERIFIED",
+   "STRICT CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)",
+   "STRICT CL-A-HORN-RIB-FOAM-STALL: FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)",
+   "STRICT CL-A-ELEVON-TORSION-FOAM: FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)",
+   "STRICT CL-A-HORN-BEARING-STALL: FAILS: margin -83.2% (36.65 MPa vs <= 20 MPa)",
+   "STRICT CL-A-LINKAGE-FREEPLAY: FAILS: margin -28.0% (1.28 deg vs <= 1 deg)"
+  ],
+  "warnings": [
+   "CL-A-HORN-RIB-COUPON: has a limit, but its value '-' is not a number, so pass / fail is not judged",
+   "CL-A-HORN-STALL-STEP: has a limit, but its value '-' is not a number, so pass / fail is not judged",
+   "CL-A-ELEVON-TORSION-COUPON: has a limit, but its value '-' is not a number, so pass / fail is not judged",
+   "CL-A-HORN-STALL-BENCH: has a limit, but its value '-' is not a number, so pass / fail is not judged"
+  ],
   "counts": {
    "by_type": {
-    "source": 33,
-    "assumption": 8,
+    "source": 36,
+    "assumption": 10,
     "requirement": 22,
-    "test": 12,
-    "calculation": 76,
-    "claim": 92,
-    "parameter": 193,
-    "part": 61
+    "test": 13,
+    "calculation": 86,
+    "claim": 106,
+    "parameter": 210,
+    "part": 65
    },
    "by_status": {
-    "CHECKED": 306,
-    "UNVERIFIED": 179,
-    "PROPOSED": 12
+    "CHECKED": 318,
+    "UNVERIFIED": 213,
+    "PROPOSED": 17
    },
-   "fails": 0
+   "fails": 6
   },
   "files": [
    "redesign/qp/A/proofs/claims.a0_base.json",
@@ -266,7 +278,43 @@ window.PROOF_GRAPH = {
    "where": "MS at the 103 kPa basis (compressive 103 V data sheet; tension 129, shear 86 EST)",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
-   "importance": 5
+   "importance": 8
+  },
+  {
+   "id": "SRC-A-LINKLOADS",
+   "type": "source",
+   "title": "Elevon linkage strength checks, D-212 rev 3 (linkage_loads_check.json)",
+   "kind": "file",
+   "url": "redesign/qp/A/mechanism/out/linkage_loads_check.json",
+   "checked": "2026-11-15",
+   "where": "hand calculations + 1-D beam-on-foundation FE of the horn rib; stall force 51.0 N quasi-static; factors KP 2.156 hold, 1.4375 stall (printed / bonded)",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "CHECKED",
+   "importance": 9
+  },
+  {
+   "id": "SRC-A-LINKKIN",
+   "type": "source",
+   "title": "Elevon linkage kinematics, D-212 rev 3 (linkage_kinematics.json)",
+   "kind": "file",
+   "url": "redesign/qp/A/mechanism/out/linkage_kinematics.json",
+   "checked": "2026-11-15",
+   "where": "free_play_budget_deg: hole clearances / horn radius + Z-bend freedom (K7)",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "SRC-A-SERVOMD",
+   "type": "source",
+   "title": "QP-4 servo review (SERVO.md)",
+   "kind": "repo",
+   "url": "redesign/review/QP-4/SERVO.md",
+   "checked": "2026-11-15",
+   "where": "s4: free play <= 1 deg (flutter target)",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "CHECKED",
+   "importance": 1
   },
   {
    "id": "SRC-A-ARMCUP",
@@ -278,7 +326,7 @@ window.PROOF_GRAPH = {
    "where": "MS table, limit loads x 1.5 x 1.15 (x 1.25 printed/bonded); allowables EST",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
-   "importance": 8
+   "importance": 13
   },
   {
    "id": "SRC-A-D206BR",
@@ -503,7 +551,33 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 3
+   "importance": 6
+  },
+  {
+   "id": "ASM-A-ROD-GRADE",
+   "type": "assumption",
+   "title": "The M02 pushrod is music wire (ASTM A228) or as strong",
+   "text": "The 1.2 mm M02 rod has a bending allowable >= the 1172 MPa the Z-bend leg needs at 1.5 x the 51 N stall force",
+   "basis": "D-212 rev 3: RMRC publishes 'steel' only; the A228 constants (S_ut = 2211 / d^0.145 MPa, bending 0.78 S_ut, Shigley Tables 10-4 / 10-6) are RECALLED, not re-read. Receipt test: 77 N along the formed rod, 10 s, no permanent set over 0.2 mm, else A228 wire",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "ASM-A-PETG-ALLOW",
+   "type": "assumption",
+   "title": "Printed PETG 20 MPa in-layer and bearing",
+   "text": "Printed PETG (Prusament, R03) carries 20 MPa in the layer plane and in hole bearing",
+   "basis": "structures/fea_arm.py ALLOW['petg'] and arm_cup_checks.py PETG_BEAR: EST, no coupon yet; the horn is printed lying flat so its bending and bearing are in the layer plane",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 5
   },
   {
    "id": "ASM-A-TRUNK",
@@ -852,11 +926,21 @@ window.PROOF_GRAPH = {
     "CL-A-BRIDGE-TORSION-S2 is UNVERIFIED",
     "CL-A-FOAM-SPAR-BOND is UNVERIFIED",
     "CL-A-FOAM-SERVO is UNVERIFIED",
-    "CL-A-FOAM-CAP-PEEL is UNVERIFIED"
+    "CL-A-FOAM-CAP-PEEL is UNVERIFIED",
+    "CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)",
+    "CL-A-HORN-RIB-FOAM-STALL: FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)",
+    "CL-A-ELEVON-TORSION-FOAM: FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)",
+    "CL-A-HORN-BLADE-HOLD is UNVERIFIED",
+    "CL-A-HORN-BLADE-STALL is UNVERIFIED",
+    "CL-A-HORN-BEARING-HOLD is UNVERIFIED",
+    "CL-A-HORN-BEARING-STALL: FAILS: margin -83.2% (36.65 MPa vs <= 20 MPa)",
+    "CL-A-ROD-LEG-STALL is UNVERIFIED",
+    "CL-A-HORN-SHEAROUT-STALL is UNVERIFIED",
+    "CL-A-LINKAGE-FREEPLAY: FAILS: margin -28.0% (1.28 deg vs <= 1 deg)"
    ],
    "status": "UNVERIFIED",
-   "fails": false,
-   "importance": 63
+   "fails": true,
+   "importance": 91
   },
   {
    "id": "A-P16",
@@ -959,6 +1043,23 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "PROPOSED",
    "importance": 4
+  },
+  {
+   "id": "T-A-HORN-RIB",
+   "type": "test",
+   "title": "Elevon horn: rib coupon, stall step, elevon-section torsion coupon, bench stall test (D-212 rev 3, review r3 M-1)",
+   "verifies": [
+    "CL-A-HORN-RIB-COUPON",
+    "CL-A-HORN-STALL-STEP",
+    "CL-A-ELEVON-TORSION-COUPON",
+    "CL-A-HORN-STALL-BENCH",
+    "CL-A-HORN-SHEAROUT-STALL"
+   ],
+   "state": "planned",
+   "procedure": "(1) horn-rib coupon 36.8 N / 30 s, no crack, no slip, set < 0.5 deg; (2) then 51 N / 5 s, hole elongation <= 0.1 mm, no crack; (3) elevon-section torsion coupon 0.161 N m / 30 s, twist set < 0.5 deg, no debond; (4) bench stall test 51 N / 5 s into the stop (BUILD D5b). >= 3 coupons, lowest governs. A pass replaces the analysis FAIL claims (CL-A-HORN-RIB-FOAM-*, CL-A-ELEVON-TORSION-FOAM, CL-A-HORN-BEARING-STALL) as the basis of A-P13",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "PROPOSED",
+   "importance": 5
   },
   {
    "id": "T-A-SERVO-RAIL",
@@ -5346,6 +5447,729 @@ window.PROOF_GRAPH = {
    "importance": 1
   },
   {
+   "id": "CALC-A-HORN-RIB-FOAM-HOLD-READ",
+   "type": "calculation",
+   "title": "Stored result: Horn rib face shear in the elevon foam at 1.5 x VD hold (x 2.156), beam-on-foundation FE, worst foam case",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.rib_foam_hold_kpa"
+   },
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "outputs": {
+    "v": 431.8
+   },
+   "input_values": {
+    "v": 431.8
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-HORN-RIB-FOAM-HOLD",
+   "type": "claim",
+   "title": "Horn rib face shear in the elevon foam at 1.5 x VD hold (x 2.156), beam-on-foundation FE, worst foam case",
+   "calc": "CALC-A-HORN-RIB-FOAM-HOLD-READ",
+   "output": "v",
+   "unit": "kPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.foam_shear_kpa",
+    "resolved": 85.8
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "value": 431.8,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)",
+    "uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.rib_foam_hold_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 138-200 kPa unfactored))",
+    "uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.foam_shear_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: foam shear 100 x 103/120 kPa (EST, foam_103.py))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -4.032634032634033,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-HORN-RIB-FOAM-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Horn rib face shear in the foam at the 51 N servo stall force (x 1.4375)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.rib_foam_stall_kpa"
+   },
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "outputs": {
+    "v": 860.9
+   },
+   "input_values": {
+    "v": 860.9
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-HORN-RIB-FOAM-STALL",
+   "type": "claim",
+   "title": "Horn rib face shear in the foam at the 51 N servo stall force (x 1.4375)",
+   "calc": "CALC-A-HORN-RIB-FOAM-STALL-READ",
+   "output": "v",
+   "unit": "kPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.foam_shear_kpa",
+    "resolved": 85.8
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "value": 860.9,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)",
+    "uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.rib_foam_stall_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: same at the 51 N stall force, x 1.4375)",
+    "uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.foam_shear_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: foam shear 100 x 103/120 kPa (EST, foam_103.py))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -9.033799533799534,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-ELEVON-TORSION-FOAM-READ",
+   "type": "calculation",
+   "title": "Stored result: Elevon torsion beside the horn, foam only (tape skin not credited), 1.5 x VD hold (x 2.156)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.elevon_torsion_hold_kpa"
+   },
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "outputs": {
+    "v": 504.3
+   },
+   "input_values": {
+    "v": 504.3
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-ELEVON-TORSION-FOAM",
+   "type": "claim",
+   "title": "Elevon torsion beside the horn, foam only (tape skin not credited), 1.5 x VD hold (x 2.156)",
+   "calc": "CALC-A-ELEVON-TORSION-FOAM-READ",
+   "output": "v",
+   "unit": "kPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.foam_shear_kpa",
+    "resolved": 85.8
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "value": 504.3,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)",
+    "uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.elevon_torsion_hold_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: elevon beside the horn, foam-only Saint-Venant torsion, outboard share 0.51 of 0.146 N m, x 2.156 (tape skin not credited))",
+    "uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.foam_shear_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: foam shear 100 x 103/120 kPa (EST, foam_103.py))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -4.8776223776223775,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-HORN-BLADE-HOLD-READ",
+   "type": "calculation",
+   "title": "Stored result: Printed horn blade bending at 1.5 x VD hold (x 2.156), printed lying flat (in-layer)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.blade_root_hold_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 3.32
+   },
+   "input_values": {
+    "v": 3.32
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-HORN-BLADE-HOLD",
+   "type": "claim",
+   "title": "Printed horn blade bending at 1.5 x VD hold (x 2.156), printed lying flat (in-layer)",
+   "calc": "CALC-A-HORN-BLADE-HOLD-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.petg_allow_mpa",
+    "resolved": 20.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 3.32,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.blade_root_hold_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: horn blade governing section, in-layer, x 2.156)",
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.petg_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.834,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-HORN-BLADE-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Printed horn blade bending at the 51 N stall force (x 1.4375)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.blade_root_stall_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 6.62
+   },
+   "input_values": {
+    "v": 6.62
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-HORN-BLADE-STALL",
+   "type": "claim",
+   "title": "Printed horn blade bending at the 51 N stall force (x 1.4375)",
+   "calc": "CALC-A-HORN-BLADE-STALL-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.petg_allow_mpa",
+    "resolved": 20.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 6.62,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.blade_root_stall_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: horn blade governing section at 51 N, x 1.4375)",
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.petg_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.6689999999999999,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-HORN-BEARING-HOLD-READ",
+   "type": "calculation",
+   "title": "Stored result: Clevis pin bearing in the 2 mm horn at 1.5 x VD hold (x 2.156)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.bearing_hold_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 18.39
+   },
+   "input_values": {
+    "v": 18.39
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-HORN-BEARING-HOLD",
+   "type": "claim",
+   "title": "Clevis pin bearing in the 2 mm horn at 1.5 x VD hold (x 2.156)",
+   "calc": "CALC-A-HORN-BEARING-HOLD-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.petg_allow_mpa",
+    "resolved": 20.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 18.39,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.bearing_hold_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: 1.0 mm clevis pin bearing in the 2 mm horn, x 2.156)",
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.petg_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.08049999999999997,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-HORN-BEARING-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Clevis pin bearing in the 2 mm horn at the 51 N stall force (x 1.4375)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.bearing_stall_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 36.65
+   },
+   "input_values": {
+    "v": 36.65
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-HORN-BEARING-STALL",
+   "type": "claim",
+   "title": "Clevis pin bearing in the 2 mm horn at the 51 N stall force (x 1.4375)",
+   "calc": "CALC-A-HORN-BEARING-STALL-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.petg_allow_mpa",
+    "resolved": 20.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 36.65,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "FAILS: margin -83.2% (36.65 MPa vs <= 20 MPa)",
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.bearing_stall_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: same at 51 N, x 1.4375)",
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.petg_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.8324999999999999,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-ROD-LEG-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Z-bend leg: yield needed at 1.5 x the 51 N stall force vs the A228 music-wire allowable",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.rod_yield_req_mpa"
+   },
+   "assumes": [
+    "ASM-A-ROD-GRADE"
+   ],
+   "outputs": {
+    "v": 1172.0
+   },
+   "input_values": {
+    "v": 1172.0
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-ROD-LEG-STALL",
+   "type": "claim",
+   "title": "Z-bend leg: yield needed at 1.5 x the 51 N stall force vs the A228 music-wire allowable",
+   "calc": "CALC-A-ROD-LEG-STALL-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.a228_allow_mpa",
+    "resolved": 1680.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "Receipt test of a formed M02 rod at 77 N (1.5 x 51 N) along the rod, 10 s, no permanent set over 0.2 mm; else A228 1.2 mm wire.",
+   "assumes": [
+    "ASM-A-ROD-GRADE"
+   ],
+   "value": 1172.0,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "uses ASM-A-ROD-GRADE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.rod_yield_req_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625)",
+    "uses ASM-A-ROD-GRADE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.a228_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: A228 music wire bending allowable 0.78 S_ut at 1.2 mm (Shigley constants RECALLED, not re-read))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.30238095238095236,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-HORN-SHEAROUT-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Horn hole shear-out (1.65 mm ligament) at the 51 N stall force (x 1.4375); allowable PETG 20 MPa / sqrt(3) EST",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.shearout_stall_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 11.11
+   },
+   "input_values": {
+    "v": 11.11
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-HORN-SHEAROUT-STALL",
+   "type": "claim",
+   "title": "Horn hole shear-out (1.65 mm ligament) at the 51 N stall force (x 1.4375); allowable PETG 20 MPa / sqrt(3) EST",
+   "calc": "CALC-A-HORN-SHEAROUT-STALL-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.shearout_allow_mpa",
+    "resolved": 11.55
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "Passes by 4 % on an EST allowable (review r3 m-13), so it is no margin: the stall step of the horn-rib coupon (CL-A-HORN-STALL-STEP) and the bench stall test decide it.",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 11.11,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.shearout_stall_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: horn hole shear-out F / (2 t e), ligament 1.65 mm, at 51 N, x 1.4375)",
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.shearout_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: PETG in-layer 20 MPa / sqrt(3) (the script's shear-out allowable, linkage_loads_check.py; EST))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.0380952380952382,
+   "importance": 1
+  },
+  {
+   "id": "CL-A-HORN-RIB-COUPON",
+   "type": "claim",
+   "title": "Horn-rib coupon: load held 30 s without damage, over the required 36.8 N (2.156 x the 17.05 N hold force)",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "E1 coupon: 100 mm tape-skinned elevon span, horn bonded in the slot, clamps 50 mm each side of the rib; 36.8 N along the chord for 30 s. Value = held load / 36.8 N, pass >= 1.0 with no crack, no slip, set < 0.5 deg. Local result only (clamps 50 mm from the rib, ~160 mm of elevon in flight). Supersedes CL-A-HORN-RIB-FOAM-HOLD once run and passed.",
+   "value": "-",
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-HORN-STALL-STEP",
+   "type": "claim",
+   "title": "Horn-rib coupon, stall step: 51 N held 5 s, hole elongation and cracks",
+   "unit": "mm",
+   "limit": {
+    "op": "<=",
+    "value": 0.1,
+    "resolved": 0.1
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "After the 36.8 N step, 51 N (the servo stall force, 0.397 N m / (8.5 mm x 0.916)) along the chord for 5 s. Value = hole elongation measured with a 1.2 mm pin gauge, pass <= 0.1 mm with no crack and set < 0.5 deg. Record what yields first. Supersedes CL-A-HORN-RIB-FOAM-STALL and CL-A-HORN-BEARING-STALL once run and passed; the 1.4375 scatter factor is not in the coupon (one coupon): run 3 coupons, lowest governs.",
+   "value": "-",
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-ELEVON-TORSION-COUPON",
+   "type": "claim",
+   "title": "Elevon-section torsion coupon: torque held over the required 0.161 N m (2.156 x the 74.65 N mm outboard hinge moment at VD)",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "A tape-skinned elevon section about 160 mm long, root clamped, torque applied through the horn hole path (horn force x 9.155 mm) to 0.161 N m held 30 s. Value = held torque / 0.161 N m, pass >= 1.0 with no tape debond or crack and twist set < 0.5 deg at the trailing edge. Supersedes CL-A-ELEVON-TORSION-FOAM (foam only, tape skin not credited) once run and passed. If it fails: the spanwise CF tube (trade row J).",
+   "value": "-",
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-HORN-STALL-BENCH",
+   "type": "claim",
+   "title": "Bench stall test on the built aircraft: 51 N for 5 s into the 21 deg stop, hole elongation",
+   "unit": "mm",
+   "limit": {
+    "op": "<=",
+    "value": 0.1,
+    "resolved": 0.1
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L",
+    "MEC-001-R",
+    "MEC-001-L"
+   ],
+   "how": "BUILD D5b: endpoints temporarily set past the stop, servo at 7.2 V driven into the +21 deg stop (smallest arm lever, 51 N) for 5 s, each elevon. Value = hole elongation (1.2 mm pin gauge), pass <= 0.1 mm with no crack in horn, rib, slot tape or stop, and trailing-edge set < 0.5 deg. Then the endpoints go back to +-20 deg.",
+   "value": "-",
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-LINKAGE-FREEPLAY-READ",
+   "type": "calculation",
+   "title": "Stored result: Elevon linkage free play from the hole clearances and the Z-bend freedom (clevis cheek holes '-')",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_kinematics.json free_play_budget_deg (python -I redesign/qp/A/mechanism/elevon_linkage.py)",
+   "inputs": {
+    "v": "P:linkage.free_play_deg"
+   },
+   "outputs": {
+    "v": 1.28
+   },
+   "input_values": {
+    "v": 1.28
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-LINKAGE-FREEPLAY",
+   "type": "claim",
+   "title": "Elevon linkage free play from the hole clearances and the Z-bend freedom (clevis cheek holes '-')",
+   "calc": "CALC-A-LINKAGE-FREEPLAY-READ",
+   "output": "v",
+   "unit": "deg",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.free_play_guide_deg",
+    "resolved": 1.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-002-R",
+    "MEC-002-L",
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "MEC-008-R",
+    "MEC-008-L"
+   ],
+   "how": "E1: measure the trailing-edge free play with the servo powered at neutral (dial gauge, +-0.05 mm); the hinge damper (FIXES2 s1) makes flutter independent of K, so a FAIL here is a control-precision item, not a flutter item.",
+   "value": 1.28,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "FAILS: margin -28.0% (1.28 deg vs <= 1 deg)",
+    "uses P:linkage.free_play_deg, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: arm hole 0.1 + horn hole 0.1 mm over the 9.155 mm horn + Z-bend freedom; clevis cheek holes '-')"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.28,
+   "fails": true,
+   "importance": 1
+  },
+  {
    "id": "CL-A-VIB-GM-SHIFT",
    "type": "claim",
    "title": "Rate-loop gain margin with the cage modes shifted +-20 %",
@@ -5379,7 +6203,7 @@ window.PROOF_GRAPH = {
    "title": "servo factors",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "servo_factors",
-   "equation": "factor = servo torque / (1.5 x (hinge moment at VD + preload + damper at slew)); cold case with the real arm ratio 12.9 / 12; ratio = servo / hinge",
+   "equation": "factor = servo torque / (1.5 x (hinge moment at VD + preload + damper at slew)); cold case with the real arm ratio 9.155 / 8.5 (D-212 rev 2; the gearing of the solved linkage is 0.906 to 0.929, 1 / 1.077 = 0.929); ratio = servo / hinge",
    "inputs": {
     "stall_72_nm": "P:servo.stall_72_nm",
     "hinge_vd_nm": "P:servo.hinge_vd_nm",
@@ -5393,7 +6217,7 @@ window.PROOF_GRAPH = {
    "outputs": {
     "factor_25c": 1.555947481873408,
     "factor_0c_equal_arms": 1.4711876968686306,
-    "factor_0c_real_arms": 1.5815267741337782,
+    "factor_0c_real_arms": 1.5845556899802722,
     "ratio_to_hinge": 2.6291390728476824
    },
    "input_values": {
@@ -5403,8 +6227,8 @@ window.PROOF_GRAPH = {
     "damper_slew_nm": 0.0098,
     "damper_slew_cold_nm": 0.0196,
     "load_factor": 1.5,
-    "arm_mm": 12.0,
-    "horn_mm": 12.9
+    "arm_mm": 8.5,
+    "horn_mm": 9.155
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
@@ -5440,7 +6264,9 @@ window.PROOF_GRAPH = {
     "uses P:servo.stall_72_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: ES3054HV at 7.2 V, interpolated from V 6.0 / 8.4 V figures (EST))",
     "uses P:servo.hinge_vd_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: hinge moment at VD, +-20 deg (0.146 x 0.31 / 0.30))",
     "uses P:servo.preload_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: preload strips, worst T0 + k_s x 21 deg)",
-    "uses P:servo.damper_slew_cold_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: damper at 0 C (EST x 2))"
+    "uses P:servo.damper_slew_cold_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: damper at 0 C (EST x 2))",
+    "uses P:servo.arm_mm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-212 rev 2: servo arm hole 8.5 mm (CAD ARM_R; was 12 mm, FIXES2 s1.3); arm hole row of the ES3054HV arm not published)",
+    "uses P:servo.horn_mm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-212 rev 2: horn hole 9.155 mm directly above the hinge axis (CAD HORN_R = ROD_Z - HINGE_Z; was 12.9 mm on the 44 deg line, FIXES2 s1.3))"
    ],
    "status": "UNVERIFIED",
    "margin": 0.03729832124893869,
@@ -5473,18 +6299,20 @@ window.PROOF_GRAPH = {
    "assumes": [
     "ASM-A-DAMPER-T"
    ],
-   "note": "Equal arms (the SERVO.md convention) give 1.47, 2 % short; FIXES2 s2 reports 1.58 with the drawn 12 mm arm and 12.9 mm horn. Bounding case: VD hinge moment, full slew and 0 C together.",
-   "value": 1.5815267741337782,
+   "note": "Equal arms (the SERVO.md convention) give 1.47, 2 % short; FIXES2 s2 reported 1.58 with a 12 mm arm and 12.9 mm horn; D-212 rev 2 (arm hole 8.5 mm, horn hole 9.155 mm over the hinge) gives 1.58 again, and the solved linkage gearing at +-20 deg (0.906 to 0.929) now matches the 8.5 / 9.155 ratio the claim assumes. Bounding case: VD hinge moment, full slew and 0 C together.",
+   "value": 1.5845556899802722,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "reasons": [
     "uses P:servo.stall_72_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: ES3054HV at 7.2 V, interpolated from V 6.0 / 8.4 V figures (EST))",
     "uses P:servo.hinge_vd_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: hinge moment at VD, +-20 deg (0.146 x 0.31 / 0.30))",
     "uses P:servo.preload_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: preload strips, worst T0 + k_s x 21 deg)",
     "uses P:servo.damper_slew_cold_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: damper at 0 C (EST x 2))",
+    "uses P:servo.arm_mm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-212 rev 2: servo arm hole 8.5 mm (CAD ARM_R; was 12 mm, FIXES2 s1.3); arm hole row of the ES3054HV arm not published)",
+    "uses P:servo.horn_mm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-212 rev 2: horn hole 9.155 mm directly above the hinge axis (CAD HORN_R = ROD_Z - HINGE_Z; was 12.9 mm on the 44 deg line, FIXES2 s1.3))",
     "uses ASM-A-DAMPER-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.05435118275585212,
+   "margin": 0.05637045998684812,
    "importance": 1
   },
   {
@@ -5517,7 +6345,9 @@ window.PROOF_GRAPH = {
     "uses P:servo.stall_72_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: ES3054HV at 7.2 V, interpolated from V 6.0 / 8.4 V figures (EST))",
     "uses P:servo.hinge_vd_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: hinge moment at VD, +-20 deg (0.146 x 0.31 / 0.30))",
     "uses P:servo.preload_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: preload strips, worst T0 + k_s x 21 deg)",
-    "uses P:servo.damper_slew_cold_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: damper at 0 C (EST x 2))"
+    "uses P:servo.damper_slew_cold_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: damper at 0 C (EST x 2))",
+    "uses P:servo.arm_mm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-212 rev 2: servo arm hole 8.5 mm (CAD ARM_R; was 12 mm, FIXES2 s1.3); arm hole row of the ES3054HV arm not published)",
+    "uses P:servo.horn_mm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-212 rev 2: horn hole 9.155 mm directly above the hinge axis (CAD HORN_R = ROD_Z - HINGE_Z; was 12.9 mm on the 44 deg line, FIXES2 s1.3))"
    ],
    "status": "UNVERIFIED",
    "margin": 0.7527593818984549,
@@ -6471,10 +7301,10 @@ window.PROOF_GRAPH = {
     "v": "P:cad3d.assy_parts_placed"
    },
    "outputs": {
-    "v": 113
+    "v": 115
    },
    "input_values": {
-    "v": 113
+    "v": 115
    },
    "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
    "status": "CHECKED",
@@ -6490,13 +7320,13 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": ">=",
     "ref": "P:cad3d.parts",
-    "resolved": 113
+    "resolved": 115
    },
    "verifies": [
     "A-U4"
    ],
    "how": "a_assembly.py: 78 of 78 parts placed, none missing from the sequence.",
-   "value": 113,
+   "value": 115,
    "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
    "status": "CHECKED",
    "margin": 0.0,
@@ -8409,11 +9239,14 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "servo.arm_mm",
    "file": "redesign/qp/A/params-A.json",
-   "value": 12.0,
+   "value": 8.5,
    "unit": "mm",
    "source": "SRC-A-FIXES2",
-   "note": "FIXES2 s1.3: servo arm 12 mm (CAD ARM_X1)",
-   "status": "CHECKED",
+   "note": "D-212 rev 2: servo arm hole 8.5 mm (CAD ARM_R; was 12 mm, FIXES2 s1.3); arm hole row of the ES3054HV arm not published",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: D-212 rev 2: servo arm hole 8.5 mm (CAD ARM_R; was 12 mm, FIXES2 s1.3); arm hole row of the ES3054HV arm not published"
+   ],
+   "status": "UNVERIFIED",
    "importance": 3
   },
   {
@@ -8421,11 +9254,14 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "servo.horn_mm",
    "file": "redesign/qp/A/params-A.json",
-   "value": 12.9,
+   "value": 9.155,
    "unit": "mm",
    "source": "SRC-A-FIXES2",
-   "note": "FIXES2 s1.3: horn pushrod radius 12.9 mm",
-   "status": "CHECKED",
+   "note": "D-212 rev 2: horn hole 9.155 mm directly above the hinge axis (CAD HORN_R = ROD_Z - HINGE_Z; was 12.9 mm on the 44 deg line, FIXES2 s1.3)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: D-212 rev 2: horn hole 9.155 mm directly above the hinge axis (CAD HORN_R = ROD_Z - HINGE_Z; was 12.9 mm on the 44 deg line, FIXES2 s1.3)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 3
   },
   {
@@ -8816,6 +9652,258 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/qp/A/params-A.json: foam_103.md: stop reaction peeling a lens cap, 94 vs 129 kPa (tension EST; tape-skin peel has no allowable)"
    ],
    "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.f_hold_n",
+   "type": "parameter",
+   "title": "linkage.f_hold_n",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 17.05,
+   "unit": "N",
+   "source": "SRC-A-LINKLOADS",
+   "note": "rod force at the VD hinge moment, max over +-20 deg (elevon_dynamics.py)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: rod force at the VD hinge moment, max over +-20 deg (elevon_dynamics.py)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 0
+  },
+  {
+   "id": "P:linkage.f_stall_n",
+   "type": "parameter",
+   "title": "linkage.f_stall_n",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 50.99,
+   "unit": "N",
+   "source": "SRC-A-LINKLOADS",
+   "note": "servo stalled into the stop / jammed elevon: 0.397 N m / (8.5 mm x min arm lever 0.916, +21 deg)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: servo stalled into the stop / jammed elevon: 0.397 N m / (8.5 mm x min arm lever 0.916, +21 deg)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 0
+  },
+  {
+   "id": "P:linkage.rib_foam_hold_kpa",
+   "type": "parameter",
+   "title": "linkage.rib_foam_hold_kpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 431.8,
+   "unit": "kPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 138-200 kPa unfactored)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 138-200 kPa unfactored)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.rib_foam_stall_kpa",
+   "type": "parameter",
+   "title": "linkage.rib_foam_stall_kpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 860.9,
+   "unit": "kPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "same at the 51 N stall force, x 1.4375",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: same at the 51 N stall force, x 1.4375"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.elevon_torsion_hold_kpa",
+   "type": "parameter",
+   "title": "linkage.elevon_torsion_hold_kpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 504.3,
+   "unit": "kPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "elevon beside the horn, foam-only Saint-Venant torsion, outboard share 0.51 of 0.146 N m, x 2.156 (tape skin not credited)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: elevon beside the horn, foam-only Saint-Venant torsion, outboard share 0.51 of 0.146 N m, x 2.156 (tape skin not credited)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.blade_root_hold_mpa",
+   "type": "parameter",
+   "title": "linkage.blade_root_hold_mpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 3.32,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "horn blade governing section, in-layer, x 2.156",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: horn blade governing section, in-layer, x 2.156"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.blade_root_stall_mpa",
+   "type": "parameter",
+   "title": "linkage.blade_root_stall_mpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 6.62,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "horn blade governing section at 51 N, x 1.4375",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: horn blade governing section at 51 N, x 1.4375"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.bearing_hold_mpa",
+   "type": "parameter",
+   "title": "linkage.bearing_hold_mpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 18.39,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "1.0 mm clevis pin bearing in the 2 mm horn, x 2.156",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: 1.0 mm clevis pin bearing in the 2 mm horn, x 2.156"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.bearing_stall_mpa",
+   "type": "parameter",
+   "title": "linkage.bearing_stall_mpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 36.65,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "same at 51 N, x 1.4375",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: same at 51 N, x 1.4375"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.shearout_stall_mpa",
+   "type": "parameter",
+   "title": "linkage.shearout_stall_mpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 11.11,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "horn hole shear-out F / (2 t e), ligament 1.65 mm, at 51 N, x 1.4375",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: horn hole shear-out F / (2 t e), ligament 1.65 mm, at 51 N, x 1.4375"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.shearout_allow_mpa",
+   "type": "parameter",
+   "title": "linkage.shearout_allow_mpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 11.55,
+   "unit": "MPa",
+   "source": "SRC-A-ARMCUP",
+   "note": "PETG in-layer 20 MPa / sqrt(3) (the script's shear-out allowable, linkage_loads_check.py; EST)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: PETG in-layer 20 MPa / sqrt(3) (the script's shear-out allowable, linkage_loads_check.py; EST)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.rod_yield_req_mpa",
+   "type": "parameter",
+   "title": "linkage.rod_yield_req_mpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 1172.0,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.a228_allow_mpa",
+   "type": "parameter",
+   "title": "linkage.a228_allow_mpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 1680.0,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "A228 music wire bending allowable 0.78 S_ut at 1.2 mm (Shigley constants RECALLED, not re-read)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: A228 music wire bending allowable 0.78 S_ut at 1.2 mm (Shigley constants RECALLED, not re-read)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.foam_shear_kpa",
+   "type": "parameter",
+   "title": "linkage.foam_shear_kpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 85.8,
+   "unit": "kPa",
+   "source": "SRC-A-FOAM103",
+   "note": "foam shear 100 x 103/120 kPa (EST, foam_103.py)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: foam shear 100 x 103/120 kPa (EST, foam_103.py)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 3
+  },
+  {
+   "id": "P:linkage.petg_allow_mpa",
+   "type": "parameter",
+   "title": "linkage.petg_allow_mpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 20.0,
+   "unit": "MPa",
+   "source": "SRC-A-ARMCUP",
+   "note": "printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 4
+  },
+  {
+   "id": "P:linkage.free_play_deg",
+   "type": "parameter",
+   "title": "linkage.free_play_deg",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 1.28,
+   "unit": "deg",
+   "source": "SRC-A-LINKKIN",
+   "note": "arm hole 0.1 + horn hole 0.1 mm over the 9.155 mm horn + Z-bend freedom; clevis cheek holes '-'",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: arm hole 0.1 + horn hole 0.1 mm over the 9.155 mm horn + Z-bend freedom; clevis cheek holes '-'"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.free_play_guide_deg",
+   "type": "parameter",
+   "title": "linkage.free_play_guide_deg",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 1.0,
+   "unit": "deg",
+   "source": "SRC-A-SERVOMD",
+   "note": "SERVO.md s4: free play <= 1 deg (flutter target; FIXES2 s1: with the hinge damper flutter does not depend on K)",
+   "status": "CHECKED",
    "importance": 1
   },
   {
@@ -9477,7 +10565,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "cad3d.parts",
    "file": "redesign/qp/A/params-A.json",
-   "value": 113,
+   "value": 115,
    "unit": "-",
    "source": "SRC-A-COLL",
    "note": "report.json parts checked",
@@ -9513,7 +10601,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "cad3d.assy_parts_placed",
    "file": "redesign/qp/A/params-A.json",
-   "value": 113,
+   "value": 115,
    "unit": "-",
    "source": "SRC-A-ASSY",
    "note": "assembly.json parts placed (96 of 96)",
@@ -9679,14 +10767,14 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Elevon right",
    "status": "UNVERIFIED",
-   "importance": 9
+   "importance": 22
   },
   {
    "id": "WNG-006-L",
    "type": "part",
    "title": "Elevon left",
    "status": "UNVERIFIED",
-   "importance": 9
+   "importance": 22
   },
   {
    "id": "WNG-007-R",
@@ -9847,14 +10935,14 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Servo EMAX ES3054HV (R)",
    "status": "UNVERIFIED",
-   "importance": 4
+   "importance": 5
   },
   {
    "id": "MEC-001-L",
    "type": "part",
    "title": "Servo EMAX ES3054HV (L)",
    "status": "UNVERIFIED",
-   "importance": 4
+   "importance": 5
   },
   {
    "id": "WNG-008-RU",
@@ -9906,32 +10994,60 @@ window.PROOF_GRAPH = {
    "importance": 1
   },
   {
+   "id": "MEC-003-R",
+   "type": "part",
+   "title": "Pushrod 1.2 mm with Z-bend and clevis (R)",
+   "status": "UNVERIFIED",
+   "importance": 10
+  },
+  {
+   "id": "MEC-003-L",
+   "type": "part",
+   "title": "Pushrod 1.2 mm with Z-bend and clevis (L)",
+   "status": "UNVERIFIED",
+   "importance": 10
+  },
+  {
+   "id": "MEC-004-R",
+   "type": "part",
+   "title": "Control horn (R), printed PETG 2 mm flat profile: blade with the 1.1 mm reamed hole over the hinge line + rib through a slot in the elevon, 2.5-55 mm aft of the hinge (D-212 rev 3; mass CALC from the drawn volume)",
+   "status": "UNVERIFIED",
+   "importance": 16
+  },
+  {
+   "id": "MEC-004-L",
+   "type": "part",
+   "title": "Control horn (L), printed PETG 2 mm flat profile: blade with the 1.1 mm reamed hole over the hinge line + rib through a slot in the elevon, 2.5-55 mm aft of the hinge (D-212 rev 3; mass CALC from the drawn volume)",
+   "status": "UNVERIFIED",
+   "importance": 16
+  },
+  {
    "id": "MEC-002-R",
    "type": "part",
    "title": "Servo arm (R)",
    "status": "UNVERIFIED",
-   "importance": 3
+   "importance": 4
   },
   {
    "id": "MEC-002-L",
    "type": "part",
    "title": "Servo arm (L)",
    "status": "UNVERIFIED",
-   "importance": 3
+   "importance": 4
   },
   {
-   "id": "MEC-004-R",
+   "id": "MEC-008-R",
    "type": "part",
-   "title": "Control horn (R)",
+   "title": "Z-bend keeper (R), printed PETG: 1.5 mm spacer + 0.8 mm bridge over the Z-bend, clamped under the arm screw (D-212 rev 3; mass CALC)",
    "status": "UNVERIFIED",
-   "importance": 3
+   "importance": 1
   },
   {
-   "id": "MEC-004-L",
+   "id": "MEC-008-L",
    "type": "part",
-   "title": "Control horn (L)",
+   "title": "Z-bend keeper (L), printed PETG: 1.5 mm spacer + 0.8 mm bridge over the Z-bend, clamped under the arm screw (D-212 rev 3; mass CALC)",
    "status": "UNVERIFIED",
-   "importance": 3
+   "importance": 1
   },
   {
    "id": "HWC-001",
@@ -9997,6 +11113,31 @@ window.PROOF_GRAPH = {
   {
    "source": "T-A-ELEVON-E1",
    "target": "CL-A-SERVO-COLD",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-RIB",
+   "target": "CL-A-HORN-RIB-COUPON",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-RIB",
+   "target": "CL-A-HORN-STALL-STEP",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-RIB",
+   "target": "CL-A-ELEVON-TORSION-COUPON",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-RIB",
+   "target": "CL-A-HORN-STALL-BENCH",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-RIB",
+   "target": "CL-A-HORN-SHEAROUT-STALL",
    "type": "verifies"
   },
   {
@@ -13360,6 +14501,706 @@ window.PROOF_GRAPH = {
    "type": "uses"
   },
   {
+   "source": "ASM-A-FOAM-ALLOW",
+   "target": "CALC-A-HORN-RIB-FOAM-HOLD-READ",
+   "type": "assumes"
+  },
+  {
+   "source": "P:linkage.rib_foam_hold_kpa",
+   "target": "CALC-A-HORN-RIB-FOAM-HOLD-READ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-A-FOAM-ALLOW",
+   "target": "CL-A-HORN-RIB-FOAM-HOLD",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-A-HORN-RIB-FOAM-HOLD-READ",
+   "target": "CL-A-HORN-RIB-FOAM-HOLD",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.foam_shear_kpa",
+   "target": "CL-A-HORN-RIB-FOAM-HOLD",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-HOLD",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-HOLD",
+   "target": "MEC-003-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-HOLD",
+   "target": "MEC-003-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-HOLD",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-HOLD",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-HOLD",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-HOLD",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "ASM-A-FOAM-ALLOW",
+   "target": "CALC-A-HORN-RIB-FOAM-STALL-READ",
+   "type": "assumes"
+  },
+  {
+   "source": "P:linkage.rib_foam_stall_kpa",
+   "target": "CALC-A-HORN-RIB-FOAM-STALL-READ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-A-FOAM-ALLOW",
+   "target": "CL-A-HORN-RIB-FOAM-STALL",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-A-HORN-RIB-FOAM-STALL-READ",
+   "target": "CL-A-HORN-RIB-FOAM-STALL",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.foam_shear_kpa",
+   "target": "CL-A-HORN-RIB-FOAM-STALL",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-STALL",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-STALL",
+   "target": "MEC-003-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-STALL",
+   "target": "MEC-003-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-STALL",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-STALL",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-STALL",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-STALL",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "ASM-A-FOAM-ALLOW",
+   "target": "CALC-A-ELEVON-TORSION-FOAM-READ",
+   "type": "assumes"
+  },
+  {
+   "source": "P:linkage.elevon_torsion_hold_kpa",
+   "target": "CALC-A-ELEVON-TORSION-FOAM-READ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-A-FOAM-ALLOW",
+   "target": "CL-A-ELEVON-TORSION-FOAM",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-A-ELEVON-TORSION-FOAM-READ",
+   "target": "CL-A-ELEVON-TORSION-FOAM",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.foam_shear_kpa",
+   "target": "CL-A-ELEVON-TORSION-FOAM",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-ELEVON-TORSION-FOAM",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-ELEVON-TORSION-FOAM",
+   "target": "MEC-003-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ELEVON-TORSION-FOAM",
+   "target": "MEC-003-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ELEVON-TORSION-FOAM",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ELEVON-TORSION-FOAM",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ELEVON-TORSION-FOAM",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ELEVON-TORSION-FOAM",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CALC-A-HORN-BLADE-HOLD-READ",
+   "type": "assumes"
+  },
+  {
+   "source": "P:linkage.blade_root_hold_mpa",
+   "target": "CALC-A-HORN-BLADE-HOLD-READ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CL-A-HORN-BLADE-HOLD",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-A-HORN-BLADE-HOLD-READ",
+   "target": "CL-A-HORN-BLADE-HOLD",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.petg_allow_mpa",
+   "target": "CL-A-HORN-BLADE-HOLD",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-HOLD",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-HOLD",
+   "target": "MEC-003-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-HOLD",
+   "target": "MEC-003-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-HOLD",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-HOLD",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-HOLD",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-HOLD",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CALC-A-HORN-BLADE-STALL-READ",
+   "type": "assumes"
+  },
+  {
+   "source": "P:linkage.blade_root_stall_mpa",
+   "target": "CALC-A-HORN-BLADE-STALL-READ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CL-A-HORN-BLADE-STALL",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-A-HORN-BLADE-STALL-READ",
+   "target": "CL-A-HORN-BLADE-STALL",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.petg_allow_mpa",
+   "target": "CL-A-HORN-BLADE-STALL",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-STALL",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-STALL",
+   "target": "MEC-003-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-STALL",
+   "target": "MEC-003-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-STALL",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-STALL",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-STALL",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-STALL",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CALC-A-HORN-BEARING-HOLD-READ",
+   "type": "assumes"
+  },
+  {
+   "source": "P:linkage.bearing_hold_mpa",
+   "target": "CALC-A-HORN-BEARING-HOLD-READ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CL-A-HORN-BEARING-HOLD",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-A-HORN-BEARING-HOLD-READ",
+   "target": "CL-A-HORN-BEARING-HOLD",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.petg_allow_mpa",
+   "target": "CL-A-HORN-BEARING-HOLD",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-HOLD",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-HOLD",
+   "target": "MEC-003-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-HOLD",
+   "target": "MEC-003-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-HOLD",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-HOLD",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-HOLD",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-HOLD",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CALC-A-HORN-BEARING-STALL-READ",
+   "type": "assumes"
+  },
+  {
+   "source": "P:linkage.bearing_stall_mpa",
+   "target": "CALC-A-HORN-BEARING-STALL-READ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CL-A-HORN-BEARING-STALL",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-A-HORN-BEARING-STALL-READ",
+   "target": "CL-A-HORN-BEARING-STALL",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.petg_allow_mpa",
+   "target": "CL-A-HORN-BEARING-STALL",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-STALL",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-STALL",
+   "target": "MEC-003-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-STALL",
+   "target": "MEC-003-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-STALL",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-STALL",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-STALL",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-STALL",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "ASM-A-ROD-GRADE",
+   "target": "CALC-A-ROD-LEG-STALL-READ",
+   "type": "assumes"
+  },
+  {
+   "source": "P:linkage.rod_yield_req_mpa",
+   "target": "CALC-A-ROD-LEG-STALL-READ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-A-ROD-GRADE",
+   "target": "CL-A-ROD-LEG-STALL",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-A-ROD-LEG-STALL-READ",
+   "target": "CL-A-ROD-LEG-STALL",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.a228_allow_mpa",
+   "target": "CL-A-ROD-LEG-STALL",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-ROD-LEG-STALL",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-ROD-LEG-STALL",
+   "target": "MEC-003-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ROD-LEG-STALL",
+   "target": "MEC-003-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ROD-LEG-STALL",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ROD-LEG-STALL",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ROD-LEG-STALL",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ROD-LEG-STALL",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CALC-A-HORN-SHEAROUT-STALL-READ",
+   "type": "assumes"
+  },
+  {
+   "source": "P:linkage.shearout_stall_mpa",
+   "target": "CALC-A-HORN-SHEAROUT-STALL-READ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CL-A-HORN-SHEAROUT-STALL",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-A-HORN-SHEAROUT-STALL-READ",
+   "target": "CL-A-HORN-SHEAROUT-STALL",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.shearout_allow_mpa",
+   "target": "CL-A-HORN-SHEAROUT-STALL",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-HORN-SHEAROUT-STALL",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-HORN-SHEAROUT-STALL",
+   "target": "MEC-003-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-SHEAROUT-STALL",
+   "target": "MEC-003-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-SHEAROUT-STALL",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-SHEAROUT-STALL",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-SHEAROUT-STALL",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-SHEAROUT-STALL",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-COUPON",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-HORN-RIB-COUPON",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-COUPON",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-COUPON",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-COUPON",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-STALL-STEP",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-HORN-STALL-STEP",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-STALL-STEP",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-STALL-STEP",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-STALL-STEP",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ELEVON-TORSION-COUPON",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-ELEVON-TORSION-COUPON",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ELEVON-TORSION-COUPON",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-STALL-BENCH",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-HORN-STALL-BENCH",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-STALL-BENCH",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-STALL-BENCH",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-STALL-BENCH",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-STALL-BENCH",
+   "target": "MEC-001-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-STALL-BENCH",
+   "target": "MEC-001-L",
+   "type": "about"
+  },
+  {
+   "source": "P:linkage.free_play_deg",
+   "target": "CALC-A-LINKAGE-FREEPLAY-READ",
+   "type": "uses"
+  },
+  {
+   "source": "CALC-A-LINKAGE-FREEPLAY-READ",
+   "target": "CL-A-LINKAGE-FREEPLAY",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.free_play_guide_deg",
+   "target": "CL-A-LINKAGE-FREEPLAY",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-LINKAGE-FREEPLAY",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-LINKAGE-FREEPLAY",
+   "target": "MEC-002-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-LINKAGE-FREEPLAY",
+   "target": "MEC-002-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-LINKAGE-FREEPLAY",
+   "target": "MEC-003-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-LINKAGE-FREEPLAY",
+   "target": "MEC-003-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-LINKAGE-FREEPLAY",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-LINKAGE-FREEPLAY",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-LINKAGE-FREEPLAY",
+   "target": "MEC-008-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-LINKAGE-FREEPLAY",
+   "target": "MEC-008-L",
+   "type": "about"
+  },
+  {
    "source": "CALC-A-VIB-GM-SHIFT",
    "target": "CL-A-VIB-GM-SHIFT",
    "type": "derives-from"
@@ -14767,6 +16608,91 @@ window.PROOF_GRAPH = {
   {
    "source": "SRC-A-FOAM103",
    "target": "P:struct.foam_ms_cap_peel",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.f_hold_n",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.f_stall_n",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.rib_foam_hold_kpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.rib_foam_stall_kpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.elevon_torsion_hold_kpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.blade_root_hold_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.blade_root_stall_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.bearing_hold_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.bearing_stall_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.shearout_stall_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-ARMCUP",
+   "target": "P:linkage.shearout_allow_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.rod_yield_req_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.a228_allow_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-FOAM103",
+   "target": "P:linkage.foam_shear_kpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-ARMCUP",
+   "target": "P:linkage.petg_allow_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKKIN",
+   "target": "P:linkage.free_play_deg",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-SERVOMD",
+   "target": "P:linkage.free_play_guide_deg",
    "type": "cites"
   },
   {

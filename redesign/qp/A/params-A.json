@@ -1040,16 +1040,18 @@
    "note": "required = 1.5 x load (SERVO.md s1)"
   },
   "arm_mm": {
-   "value": 12.0,
+   "value": 8.5,
    "unit": "mm",
    "source": "SRC-A-FIXES2",
-   "note": "FIXES2 s1.3: servo arm 12 mm (CAD ARM_X1)"
+   "note": "D-212 rev 2: servo arm hole 8.5 mm (CAD ARM_R; was 12 mm, FIXES2 s1.3); arm hole row of the ES3054HV arm not published",
+   "status": "UNVERIFIED"
   },
   "horn_mm": {
-   "value": 12.9,
+   "value": 9.155,
    "unit": "mm",
    "source": "SRC-A-FIXES2",
-   "note": "FIXES2 s1.3: horn pushrod radius 12.9 mm"
+   "note": "D-212 rev 2: horn hole 9.155 mm directly above the hinge axis (CAD HORN_R = ROD_Z - HINGE_Z; was 12.9 mm on the 44 deg line, FIXES2 s1.3)",
+   "status": "UNVERIFIED"
   }
  },
  "struct": {
@@ -1240,6 +1242,126 @@
    "source": "SRC-A-FOAM103",
    "note": "foam_103.md: stop reaction peeling a lens cap, 94 vs 129 kPa (tension EST; tape-skin peel has no allowable)",
    "status": "UNVERIFIED"
+  }
+ },
+ "linkage": {
+  "f_hold_n": {
+   "value": 17.05,
+   "unit": "N",
+   "source": "SRC-A-LINKLOADS",
+   "note": "rod force at the VD hinge moment, max over +-20 deg (elevon_dynamics.py)",
+   "status": "UNVERIFIED"
+  },
+  "f_stall_n": {
+   "value": 50.99,
+   "unit": "N",
+   "source": "SRC-A-LINKLOADS",
+   "note": "servo stalled into the stop / jammed elevon: 0.397 N m / (8.5 mm x min arm lever 0.916, +21 deg)",
+   "status": "UNVERIFIED"
+  },
+  "rib_foam_hold_kpa": {
+   "value": 431.8,
+   "unit": "kPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 138-200 kPa unfactored)",
+   "status": "UNVERIFIED"
+  },
+  "rib_foam_stall_kpa": {
+   "value": 860.9,
+   "unit": "kPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "same at the 51 N stall force, x 1.4375",
+   "status": "UNVERIFIED"
+  },
+  "elevon_torsion_hold_kpa": {
+   "value": 504.3,
+   "unit": "kPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "elevon beside the horn, foam-only Saint-Venant torsion, outboard share 0.51 of 0.146 N m, x 2.156 (tape skin not credited)",
+   "status": "UNVERIFIED"
+  },
+  "blade_root_hold_mpa": {
+   "value": 3.32,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "horn blade governing section, in-layer, x 2.156",
+   "status": "UNVERIFIED"
+  },
+  "blade_root_stall_mpa": {
+   "value": 6.62,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "horn blade governing section at 51 N, x 1.4375",
+   "status": "UNVERIFIED"
+  },
+  "bearing_hold_mpa": {
+   "value": 18.39,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "1.0 mm clevis pin bearing in the 2 mm horn, x 2.156",
+   "status": "UNVERIFIED"
+  },
+  "bearing_stall_mpa": {
+   "value": 36.65,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "same at 51 N, x 1.4375",
+   "status": "UNVERIFIED"
+  },
+  "shearout_stall_mpa": {
+   "value": 11.11,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "horn hole shear-out F / (2 t e), ligament 1.65 mm, at 51 N, x 1.4375",
+   "status": "UNVERIFIED"
+  },
+  "shearout_allow_mpa": {
+   "value": 11.55,
+   "unit": "MPa",
+   "source": "SRC-A-ARMCUP",
+   "note": "PETG in-layer 20 MPa / sqrt(3) (the script's shear-out allowable, linkage_loads_check.py; EST)",
+   "status": "UNVERIFIED"
+  },
+  "rod_yield_req_mpa": {
+   "value": 1172.0,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625",
+   "status": "UNVERIFIED"
+  },
+  "a228_allow_mpa": {
+   "value": 1680.0,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "A228 music wire bending allowable 0.78 S_ut at 1.2 mm (Shigley constants RECALLED, not re-read)",
+   "status": "UNVERIFIED"
+  },
+  "foam_shear_kpa": {
+   "value": 85.8,
+   "unit": "kPa",
+   "source": "SRC-A-FOAM103",
+   "note": "foam shear 100 x 103/120 kPa (EST, foam_103.py)",
+   "status": "UNVERIFIED"
+  },
+  "petg_allow_mpa": {
+   "value": 20.0,
+   "unit": "MPa",
+   "source": "SRC-A-ARMCUP",
+   "note": "printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW)",
+   "status": "UNVERIFIED"
+  },
+  "free_play_deg": {
+   "value": 1.28,
+   "unit": "deg",
+   "source": "SRC-A-LINKKIN",
+   "note": "arm hole 0.1 + horn hole 0.1 mm over the 9.155 mm horn + Z-bend freedom; clevis cheek holes '-'",
+   "status": "UNVERIFIED"
+  },
+  "free_play_guide_deg": {
+   "value": 1.0,
+   "unit": "deg",
+   "source": "SRC-A-SERVOMD",
+   "note": "SERVO.md s4: free play <= 1 deg (flutter target; FIXES2 s1: with the hinge damper flutter does not depend on K)"
   }
  },
  "cost": {
@@ -1764,7 +1886,7 @@
    "note": "report.json kinks (wire folds)"
   },
   "parts": {
-   "value": 113,
+   "value": 115,
    "unit": "-",
    "source": "SRC-A-COLL",
    "note": "report.json parts checked"
@@ -1782,7 +1904,7 @@
    "note": "assembly.json steps with no blocking pair at or above the tolerance (35 of 35 in ASSEMBLY.md)"
   },
   "assy_parts_placed": {
-   "value": 113,
+   "value": 115,
    "unit": "-",
    "source": "SRC-A-ASSY",
    "note": "assembly.json parts placed (96 of 96)"

@@ -10,9 +10,15 @@ Append one row per delegated task. Review at each milestone: are opus runs justi
 
 Note 2026-11-18: the project agents in `.claude/agents/` were written mid-session and are not loaded until the next
 session (Agent tool: "Agent type 'implementer' not found"). Until then the same routing is applied with the
-`model` override on `general-purpose`. Next-session check: T-013 acceptance.
+`model` override on `general-purpose`. Next-session check: T-013 acceptance. Update 2026-11-18: the harness loaded them later in this session (eng-reviewer, implementer, ledger-auditor, runner now offered by the Agent tool).
 | 2026-11-18 | T-018..T-021 elevon linkage kinematics, dynamics, swept collision | general-purpose / sonnet | moderate-high (spatial linkage) | done; found 3 real defects; records file refused by subagent Write policy, written by conductor | 223 k tok / 14 min | 0 | — | conductor reran all 3, hand-checked 2 numbers |
 | 2026-11-18 | T-027 film shot-list mode + 1080p60 preview | general-purpose / sonnet | moderate (pipeline extension) | done, preview OK, framing defects | 181 k tok / 15.6 min | 0 | — | conductor viewed contact sheet |
-| 2026-11-18 | T-061 D-212 linkage fix + gates | general-purpose / sonnet | high (CAD change + gates); sonnet first, escalate to opus review after | running | — | 0 | — | — |
+| 2026-11-18 | T-061 D-212 linkage fix + gates | general-purpose / sonnet | high (CAD change + gates) | own checks pass; rejected by opus review (joint modelled ≠ joint built) | 228 k tok / 38 min | 1 (revision) | — | eng-reviewer/opus: reject, 1 critical + 4 major |
+| 2026-11-18 | T-061 review | eng-reviewer / opus | high-impact independent review | reject with required fixes; reproduced all claimed numbers | 115 k tok / 10.6 min | 0 | — | — |
 | 2026-11-18 | T-017 physics relabel | general-purpose / sonnet | moderate (judgment on wording) | running | — | 0 | — | — |
 | 2026-11-18 | T-041a cleanup dry-run facts | general-purpose / haiku | routine (grep/inventory) | running | — | 0 | — | — |
+| 2026-11-18 | T-063 D-212 rev 2 | general-purpose / sonnet (resumed) | high | linkage accepted; printed horn bond rejected by 2nd review | 333 k tok / 37 min | 2 | — | eng-reviewer/opus: reject (C-1 bond model invalid, 5 majors) |
+| 2026-11-18 | T-063 rev 2 review | eng-reviewer / opus | high-impact review | reject with fixes; all numbers reproduced | — | 0 | — | — |
+| 2026-11-18 | T-063 rev 3 horn attachment | implementer / opus | high (after 2 failed rounds) | rib horn + keeper; gates pass; 5 FAIL claims vs EST allowables gated on E1 coupon | 446 k tok / 64 min | 0 | escalated sonnet → opus: two rejected rounds on the same subsystem, approach change needed | — |
+| 2026-11-18 | T-063 rev 3 review | eng-reviewer / opus | high-impact review | accept with conditions (M-1 test route, M-2 coupon 36.8 N, m-1 stale outputs; M-3 torque-tube fallback) | 194 k tok / 14 min | 0 | — | — |
+| 2026-11-18 | T-063 review conditions | implementer / sonnet | moderate (graph + text edits) | conditions closed; strict fails = 5 analysis FAILs + A-P13 | 160 k tok / 5 min | 0 | — | conductor rerun of run_all.py |

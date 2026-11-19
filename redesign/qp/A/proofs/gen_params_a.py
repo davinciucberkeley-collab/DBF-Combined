@@ -10,6 +10,7 @@ Stdlib only.
 """
 import csv
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -192,7 +193,7 @@ def build():
                   "damper_slew_nm": V(0.0098, "N m", "SRC-A-FIXES2", "FIXES2 s2: damper at servo slew, 25 C"),
                   "damper_slew_cold_nm": V(0.0196, "N m", "SRC-A-FIXES2", "FIXES2 s2: damper at 0 C (EST x 2)", est=True),
                   "load_factor": V(1.5, "-", "SRC-A-FIXES2", "required = 1.5 x load (SERVO.md s1)"),
-                  "arm_mm": V(12.0, "mm", "SRC-A-FIXES2", "FIXES2 s1.3: servo arm 12 mm (CAD ARM_X1)"), "horn_mm": V(12.9, "mm", "SRC-A-FIXES2", "FIXES2 s1.3: horn pushrod radius 12.9 mm")}
+                  "arm_mm": V(8.5, "mm", "SRC-A-FIXES2", "D-212 rev 2: servo arm hole 8.5 mm (CAD ARM_R; was 12 mm, FIXES2 s1.3); arm hole row of the ES3054HV arm not published", est=True), "horn_mm": V(9.155, "mm", "SRC-A-FIXES2", "D-212 rev 2: horn hole 9.155 mm directly above the hinge axis (CAD HORN_R = ROD_Z - HINGE_Z; was 12.9 mm on the 44 deg line, FIXES2 s1.3)", est=True)}
 
     # ---------------------------------------------------------------- structures and foam (stored MS, read from the tables)
     P["struct"] = {
@@ -225,6 +226,31 @@ def build():
         "foam_ms_tray_quarter": V(0.36, "-", "SRC-A-FOAM103", "foam_103.md: pack tray, 12 g crash, a quarter of the slot floor carrying, 76 vs 103 kPa"),
         "foam_ms_servo_stall": V(0.73, "-", "SRC-A-FOAM103", "foam_103.md: servo stalled into the stop, epoxy on four walls, 50 vs 86 kPa (shear EST)", est=True),
         "foam_ms_cap_peel": V(0.37, "-", "SRC-A-FOAM103", "foam_103.md: stop reaction peeling a lens cap, 94 vs 129 kPa (tension EST; tape-skin peel has no allowable)", est=True),
+    }
+
+    # ---------------------------------------------------------------- elevon linkage strength (D-212 rev 3), read from the machine-readable check outputs
+    ll = json.loads((A / "mechanism" / "out" / "linkage_loads_check.json").read_text(encoding="utf-8"))
+    kin = json.loads((A / "mechanism" / "out" / "linkage_kinematics.json").read_text(encoding="utf-8"))
+    rib, bl, el, leg = ll["horn_rib_foam"], ll["horn_blade"], ll["elevon_torsion_foam_only"], ll["z_bend_leg"]
+    S = "SRC-A-LINKLOADS"
+    P["linkage"] = {
+        "f_hold_n": V(round(ll["inputs"]["F_hold_N"], 2), "N", S, "rod force at the VD hinge moment, max over +-20 deg (elevon_dynamics.py)", est=True),
+        "f_stall_n": V(round(ll["inputs"]["F_stall_N"], 2), "N", S, "servo stalled into the stop / jammed elevon: 0.397 N m / (8.5 mm x min arm lever 0.916, +21 deg)", est=True),
+        "rib_foam_hold_kpa": V(round(rib["hold"]["factored_kPa_max"], 1), "kPa", S, "horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range %.0f-%.0f kPa unfactored)" % tuple(rib["hold"]["peak_kPa_range"]), est=True),
+        "rib_foam_stall_kpa": V(round(rib["stall"]["factored_kPa_max"], 1), "kPa", S, "same at the 51 N stall force, x 1.4375", est=True),
+        "elevon_torsion_hold_kpa": V(round(el["hold"]["factored_kPa"], 1), "kPa", S, "elevon beside the horn, foam-only Saint-Venant torsion, outboard share %.2f of 0.146 N m, x 2.156 (tape skin not credited)" % el["outboard_span_fraction"], est=True),
+        "blade_root_hold_mpa": V(round(bl["hold"]["root_factored_MPa"], 2), "MPa", S, "horn blade governing section, in-layer, x 2.156", est=True),
+        "blade_root_stall_mpa": V(round(bl["stall"]["root_factored_MPa"], 2), "MPa", S, "horn blade governing section at 51 N, x 1.4375", est=True),
+        "bearing_hold_mpa": V(round(bl["hold"]["bearing_factored_MPa"], 2), "MPa", S, "1.0 mm clevis pin bearing in the 2 mm horn, x 2.156", est=True),
+        "bearing_stall_mpa": V(round(bl["stall"]["bearing_factored_MPa"], 2), "MPa", S, "same at 51 N, x 1.4375", est=True),
+        "shearout_stall_mpa": V(round(bl["stall"]["shearout_factored_MPa"], 2), "MPa", S, "horn hole shear-out F / (2 t e), ligament 1.65 mm, at 51 N, x 1.4375", est=True),
+        "shearout_allow_mpa": V(round(20.0 / math.sqrt(3), 2), "MPa", "SRC-A-ARMCUP", "PETG in-layer 20 MPa / sqrt(3) (the script's shear-out allowable, linkage_loads_check.py; EST)", est=True),
+        "rod_yield_req_mpa": V(round(leg["required_yield_MPa_governing"], 0), "MPa", S, "Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625", est=True),
+        "a228_allow_mpa": V(round(leg["A228_bending_allow_MPa_recalled"], 0), "MPa", S, "A228 music wire bending allowable 0.78 S_ut at 1.2 mm (Shigley constants RECALLED, not re-read)", est=True),
+        "foam_shear_kpa": V(round(rib["allowable_kPa_EST"], 1), "kPa", "SRC-A-FOAM103", "foam shear 100 x 103/120 kPa (EST, foam_103.py)", est=True),
+        "petg_allow_mpa": V(20.0, "MPa", "SRC-A-ARMCUP", "printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW)", est=True),
+        "free_play_deg": V(round(kin["free_play_budget_deg"]["total_known_deg"], 3), "deg", "SRC-A-LINKKIN", "arm hole 0.1 + horn hole 0.1 mm over the 9.155 mm horn + Z-bend freedom; clevis cheek holes '-'", est=True),
+        "free_play_guide_deg": V(1.0, "deg", "SRC-A-SERVOMD", "SERVO.md s4: free play <= 1 deg (flutter target; FIXES2 s1: with the hinge damper flutter does not depend on K)"),
     }
 
     # ---------------------------------------------------------------- cost (BOM-A.csv rows, bom_a.py basis)

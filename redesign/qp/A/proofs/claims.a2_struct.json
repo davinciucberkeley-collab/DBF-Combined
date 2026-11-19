@@ -1649,6 +1649,566 @@
    }
   },
   {
+   "id": "CALC-A-HORN-RIB-FOAM-HOLD-READ",
+   "type": "calculation",
+   "title": "Stored result: Horn rib face shear in the elevon foam at 1.5 x VD hold (x 2.156), beam-on-foundation FE, worst foam case",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.rib_foam_hold_kpa"
+   },
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "outputs": {
+    "v": 431.8
+   },
+   "input_values": {
+    "v": 431.8
+   }
+  },
+  {
+   "id": "CL-A-HORN-RIB-FOAM-HOLD",
+   "type": "claim",
+   "title": "Horn rib face shear in the elevon foam at 1.5 x VD hold (x 2.156), beam-on-foundation FE, worst foam case",
+   "calc": "CALC-A-HORN-RIB-FOAM-HOLD-READ",
+   "output": "v",
+   "unit": "kPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.foam_shear_kpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "value": 431.8
+  },
+  {
+   "id": "CALC-A-HORN-RIB-FOAM-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Horn rib face shear in the foam at the 51 N servo stall force (x 1.4375)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.rib_foam_stall_kpa"
+   },
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "outputs": {
+    "v": 860.9
+   },
+   "input_values": {
+    "v": 860.9
+   }
+  },
+  {
+   "id": "CL-A-HORN-RIB-FOAM-STALL",
+   "type": "claim",
+   "title": "Horn rib face shear in the foam at the 51 N servo stall force (x 1.4375)",
+   "calc": "CALC-A-HORN-RIB-FOAM-STALL-READ",
+   "output": "v",
+   "unit": "kPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.foam_shear_kpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "value": 860.9
+  },
+  {
+   "id": "CALC-A-ELEVON-TORSION-FOAM-READ",
+   "type": "calculation",
+   "title": "Stored result: Elevon torsion beside the horn, foam only (tape skin not credited), 1.5 x VD hold (x 2.156)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.elevon_torsion_hold_kpa"
+   },
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "outputs": {
+    "v": 504.3
+   },
+   "input_values": {
+    "v": 504.3
+   }
+  },
+  {
+   "id": "CL-A-ELEVON-TORSION-FOAM",
+   "type": "claim",
+   "title": "Elevon torsion beside the horn, foam only (tape skin not credited), 1.5 x VD hold (x 2.156)",
+   "calc": "CALC-A-ELEVON-TORSION-FOAM-READ",
+   "output": "v",
+   "unit": "kPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.foam_shear_kpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "value": 504.3
+  },
+  {
+   "id": "CALC-A-HORN-BLADE-HOLD-READ",
+   "type": "calculation",
+   "title": "Stored result: Printed horn blade bending at 1.5 x VD hold (x 2.156), printed lying flat (in-layer)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.blade_root_hold_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 3.32
+   },
+   "input_values": {
+    "v": 3.32
+   }
+  },
+  {
+   "id": "CL-A-HORN-BLADE-HOLD",
+   "type": "claim",
+   "title": "Printed horn blade bending at 1.5 x VD hold (x 2.156), printed lying flat (in-layer)",
+   "calc": "CALC-A-HORN-BLADE-HOLD-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.petg_allow_mpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 3.32
+  },
+  {
+   "id": "CALC-A-HORN-BLADE-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Printed horn blade bending at the 51 N stall force (x 1.4375)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.blade_root_stall_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 6.62
+   },
+   "input_values": {
+    "v": 6.62
+   }
+  },
+  {
+   "id": "CL-A-HORN-BLADE-STALL",
+   "type": "claim",
+   "title": "Printed horn blade bending at the 51 N stall force (x 1.4375)",
+   "calc": "CALC-A-HORN-BLADE-STALL-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.petg_allow_mpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 6.62
+  },
+  {
+   "id": "CALC-A-HORN-BEARING-HOLD-READ",
+   "type": "calculation",
+   "title": "Stored result: Clevis pin bearing in the 2 mm horn at 1.5 x VD hold (x 2.156)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.bearing_hold_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 18.39
+   },
+   "input_values": {
+    "v": 18.39
+   }
+  },
+  {
+   "id": "CL-A-HORN-BEARING-HOLD",
+   "type": "claim",
+   "title": "Clevis pin bearing in the 2 mm horn at 1.5 x VD hold (x 2.156)",
+   "calc": "CALC-A-HORN-BEARING-HOLD-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.petg_allow_mpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 18.39
+  },
+  {
+   "id": "CALC-A-HORN-BEARING-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Clevis pin bearing in the 2 mm horn at the 51 N stall force (x 1.4375)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.bearing_stall_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 36.65
+   },
+   "input_values": {
+    "v": 36.65
+   }
+  },
+  {
+   "id": "CL-A-HORN-BEARING-STALL",
+   "type": "claim",
+   "title": "Clevis pin bearing in the 2 mm horn at the 51 N stall force (x 1.4375)",
+   "calc": "CALC-A-HORN-BEARING-STALL-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.petg_allow_mpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 36.65
+  },
+  {
+   "id": "CALC-A-ROD-LEG-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Z-bend leg: yield needed at 1.5 x the 51 N stall force vs the A228 music-wire allowable",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.rod_yield_req_mpa"
+   },
+   "assumes": [
+    "ASM-A-ROD-GRADE"
+   ],
+   "outputs": {
+    "v": 1172.0
+   },
+   "input_values": {
+    "v": 1172.0
+   }
+  },
+  {
+   "id": "CL-A-ROD-LEG-STALL",
+   "type": "claim",
+   "title": "Z-bend leg: yield needed at 1.5 x the 51 N stall force vs the A228 music-wire allowable",
+   "calc": "CALC-A-ROD-LEG-STALL-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.a228_allow_mpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "Receipt test of a formed M02 rod at 77 N (1.5 x 51 N) along the rod, 10 s, no permanent set over 0.2 mm; else A228 1.2 mm wire.",
+   "assumes": [
+    "ASM-A-ROD-GRADE"
+   ],
+   "value": 1172.0
+  },
+  {
+   "id": "CALC-A-HORN-SHEAROUT-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Horn hole shear-out (1.65 mm ligament) at the 51 N stall force (x 1.4375); allowable PETG 20 MPa / sqrt(3) EST",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.shearout_stall_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 11.11
+   },
+   "input_values": {
+    "v": 11.11
+   }
+  },
+  {
+   "id": "CL-A-HORN-SHEAROUT-STALL",
+   "type": "claim",
+   "title": "Horn hole shear-out (1.65 mm ligament) at the 51 N stall force (x 1.4375); allowable PETG 20 MPa / sqrt(3) EST",
+   "calc": "CALC-A-HORN-SHEAROUT-STALL-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.shearout_allow_mpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "Passes by 4 % on an EST allowable (review r3 m-13), so it is no margin: the stall step of the horn-rib coupon (CL-A-HORN-STALL-STEP) and the bench stall test decide it.",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 11.11
+  },
+  {
+   "id": "CL-A-HORN-RIB-COUPON",
+   "type": "claim",
+   "title": "Horn-rib coupon: load held 30 s without damage, over the required 36.8 N (2.156 x the 17.05 N hold force)",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "E1 coupon: 100 mm tape-skinned elevon span, horn bonded in the slot, clamps 50 mm each side of the rib; 36.8 N along the chord for 30 s. Value = held load / 36.8 N, pass >= 1.0 with no crack, no slip, set < 0.5 deg. Local result only (clamps 50 mm from the rib, ~160 mm of elevon in flight). Supersedes CL-A-HORN-RIB-FOAM-HOLD once run and passed.",
+   "value": "-"
+  },
+  {
+   "id": "CL-A-HORN-STALL-STEP",
+   "type": "claim",
+   "title": "Horn-rib coupon, stall step: 51 N held 5 s, hole elongation and cracks",
+   "unit": "mm",
+   "limit": {
+    "op": "<=",
+    "value": 0.1
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "After the 36.8 N step, 51 N (the servo stall force, 0.397 N m / (8.5 mm x 0.916)) along the chord for 5 s. Value = hole elongation measured with a 1.2 mm pin gauge, pass <= 0.1 mm with no crack and set < 0.5 deg. Record what yields first. Supersedes CL-A-HORN-RIB-FOAM-STALL and CL-A-HORN-BEARING-STALL once run and passed; the 1.4375 scatter factor is not in the coupon (one coupon): run 3 coupons, lowest governs.",
+   "value": "-"
+  },
+  {
+   "id": "CL-A-ELEVON-TORSION-COUPON",
+   "type": "claim",
+   "title": "Elevon-section torsion coupon: torque held over the required 0.161 N m (2.156 x the 74.65 N mm outboard hinge moment at VD)",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "A tape-skinned elevon section about 160 mm long, root clamped, torque applied through the horn hole path (horn force x 9.155 mm) to 0.161 N m held 30 s. Value = held torque / 0.161 N m, pass >= 1.0 with no tape debond or crack and twist set < 0.5 deg at the trailing edge. Supersedes CL-A-ELEVON-TORSION-FOAM (foam only, tape skin not credited) once run and passed. If it fails: the spanwise CF tube (trade row J).",
+   "value": "-"
+  },
+  {
+   "id": "CL-A-HORN-STALL-BENCH",
+   "type": "claim",
+   "title": "Bench stall test on the built aircraft: 51 N for 5 s into the 21 deg stop, hole elongation",
+   "unit": "mm",
+   "limit": {
+    "op": "<=",
+    "value": 0.1
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L",
+    "MEC-001-R",
+    "MEC-001-L"
+   ],
+   "how": "BUILD D5b: endpoints temporarily set past the stop, servo at 7.2 V driven into the +21 deg stop (smallest arm lever, 51 N) for 5 s, each elevon. Value = hole elongation (1.2 mm pin gauge), pass <= 0.1 mm with no crack in horn, rib, slot tape or stop, and trailing-edge set < 0.5 deg. Then the endpoints go back to +-20 deg.",
+   "value": "-"
+  },
+  {
+   "id": "CALC-A-LINKAGE-FREEPLAY-READ",
+   "type": "calculation",
+   "title": "Stored result: Elevon linkage free play from the hole clearances and the Z-bend freedom (clevis cheek holes '-')",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_kinematics.json free_play_budget_deg (python -I redesign/qp/A/mechanism/elevon_linkage.py)",
+   "inputs": {
+    "v": "P:linkage.free_play_deg"
+   },
+   "outputs": {
+    "v": 1.28
+   },
+   "input_values": {
+    "v": 1.28
+   }
+  },
+  {
+   "id": "CL-A-LINKAGE-FREEPLAY",
+   "type": "claim",
+   "title": "Elevon linkage free play from the hole clearances and the Z-bend freedom (clevis cheek holes '-')",
+   "calc": "CALC-A-LINKAGE-FREEPLAY-READ",
+   "output": "v",
+   "unit": "deg",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.free_play_guide_deg"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-002-R",
+    "MEC-002-L",
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "MEC-008-R",
+    "MEC-008-L"
+   ],
+   "how": "E1: measure the trailing-edge free play with the servo powered at neutral (dial gauge, +-0.05 mm); the hinge damper (FIXES2 s1) makes flutter independent of K, so a FAIL here is a control-precision item, not a flutter item.",
+   "value": 1.28
+  },
+  {
    "id": "CL-A-VIB-GM-SHIFT",
    "type": "claim",
    "title": "Rate-loop gain margin with the cage modes shifted +-20 %",
@@ -1677,7 +2237,7 @@
    "title": "servo factors",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "servo_factors",
-   "equation": "factor = servo torque / (1.5 x (hinge moment at VD + preload + damper at slew)); cold case with the real arm ratio 12.9 / 12; ratio = servo / hinge",
+   "equation": "factor = servo torque / (1.5 x (hinge moment at VD + preload + damper at slew)); cold case with the real arm ratio 9.155 / 8.5 (D-212 rev 2; the gearing of the solved linkage is 0.906 to 0.929, 1 / 1.077 = 0.929); ratio = servo / hinge",
    "inputs": {
     "stall_72_nm": "P:servo.stall_72_nm",
     "hinge_vd_nm": "P:servo.hinge_vd_nm",
@@ -1691,7 +2251,7 @@
    "outputs": {
     "factor_25c": 1.555947481873408,
     "factor_0c_equal_arms": 1.4711876968686306,
-    "factor_0c_real_arms": 1.5815267741337782,
+    "factor_0c_real_arms": 1.5845556899802722,
     "ratio_to_hinge": 2.6291390728476824
    },
    "input_values": {
@@ -1701,8 +2261,8 @@
     "damper_slew_nm": 0.0098,
     "damper_slew_cold_nm": 0.0196,
     "load_factor": 1.5,
-    "arm_mm": 12.0,
-    "horn_mm": 12.9
+    "arm_mm": 8.5,
+    "horn_mm": 9.155
    }
   },
   {
@@ -1756,8 +2316,8 @@
    "assumes": [
     "ASM-A-DAMPER-T"
    ],
-   "note": "Equal arms (the SERVO.md convention) give 1.47, 2 % short; FIXES2 s2 reports 1.58 with the drawn 12 mm arm and 12.9 mm horn. Bounding case: VD hinge moment, full slew and 0 C together.",
-   "value": 1.5815267741337782
+   "note": "Equal arms (the SERVO.md convention) give 1.47, 2 % short; FIXES2 s2 reported 1.58 with a 12 mm arm and 12.9 mm horn; D-212 rev 2 (arm hole 8.5 mm, horn hole 9.155 mm over the hinge) gives 1.58 again, and the solved linkage gearing at +-20 deg (0.906 to 0.929) now matches the 8.5 / 9.155 ratio the claim assumes. Bounding case: VD hinge moment, full slew and 0 C together.",
+   "value": 1.5845556899802722
   },
   {
    "id": "CL-A-SERVO-RATIO",

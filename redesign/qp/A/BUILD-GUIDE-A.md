@@ -86,12 +86,14 @@ File names follow `<part id>.stl`. The STL files are exported from the CAD (`a_m
 | `GER-001` Foot shoe | 4 | C7, C8 | 1.4 | 3-6 min | plate faces aft |
 | `HRN-003` Phase-lead raceway | 2 | B2a | 1.7 | 4-7 min | 0.6 mm walls (EST) |
 | `HRN-004` Hub conduit | 4 | B2b1, B2b2, B2b3, B2b4 | 1.1 | 3-5 min | 0.6 mm walls (EST) |
+| `MEC-004` Control horn | 2 | D3 | 0.9 | 3-5 min |  |
+| `MEC-008` Z-bend keeper | 2 | D2a | 0.1 | 3-5 min |  |
 | `WNG-003/4/5` Spar plug | 5 | A3, A4, A5 | 1.2 | 3-5 min |  |
 | `WNG-008` Lens cap with stop bosses | 4 | C2a, C2b | 3.8 | 10-16 min | single 0.6 mm wall, vase mode (CAD note, EST) |
 | `WNG-009` Hinge damper stator | 2 | B4 | 2.0 | 5-9 min | plus about 0.6 g silicone fluid each (R12) |
 | `WNG-010` Hinge damper rotor | 2 | B4 | 0.5 | 3-5 min | rotor: slide fit in the 0.30 mm gap: test print |
 
-Printed mass 145 g in 43 parts; machine time EST 6.0-10.3 h in total (a bed holds many small parts: print them in batches). The 1 kg PETG spool of BOM R03 holds about seven times this mass: there is room for reprints. (The elevon balance tabs, 0.5 g each pair, are CF-reinforced PETG strips cut by hand, not printed.)
+Printed mass 147 g in 47 parts; machine time EST 6.1-10.5 h in total (a bed holds many small parts: print them in batches). The 1 kg PETG spool of BOM R03 holds about seven times this mass: there is room for reprints. (The elevon balance tabs, 0.5 g each pair, are CF-reinforced PETG strips cut by hand, not printed.)
 
 ## 3. Cure plan
 
@@ -1586,7 +1588,7 @@ Mass placed by this step 2.8 g; running total of placed parts 926.5 g (CAD; the 
 
 ## Stage 8: Servos, pushrods, horns, lead threading
 
-Film clip: `assets/animation/build/a-stage-08.mp4` (Explorer, "How it's built", stage 8). Steps D1, D0, D2, D2a, D3, D4, D5, D5b. Hands-on time EST 2 h 55 min.
+Film clip: `assets/animation/build/a-stage-08.mp4` (Explorer, "How it's built", stage 8). Steps D1, D0, D2, D2a, D3, D4, D5, D5b. Hands-on time EST 3 h 20 min.
 
 ### D1. Servos in their pockets
 
@@ -1647,7 +1649,7 @@ Mass placed by this step 41.0 g; running total of placed parts 967.5 g (CAD; the
 
 *Step 48 of 66. Plan caption: Servo arms on the splines*
 
-**Do this:** Centre each servo with the tester; press the arm on the spline so it sits level.
+**Do this:** Drill the arm hole 1.3 mm at 8.5 mm; centre each servo with the tester; press the arm on the spline so it sits level.
 
 **Time (EST):** 20 min hands-on.
 
@@ -1659,86 +1661,104 @@ Mass placed by this step 41.0 g; running total of placed parts 967.5 g (CAD; the
 
 Mass placed by this step 2.0 g; running total of placed parts 969.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
-**Tools:** servo tester.
+**Tools:** servo tester, 1.3 mm drill, calipers.
 
 **Make it:**
 
+- Drill the arm hole with a 1.3 mm drill at 8.5 mm from the spline centre (the ES3054HV arm hole row is not published: if a stock hole lies 7.8-8.97 mm from the centre and is 1.25-1.35 mm, use it and re-solve the linkage with its radius; a 1.3 mm hole on 1.2 mm wire is 0.1 mm clearance, D-212 rev 3).
+- Measure the output boss height: if the arm does not sit on the case top, the arm-top height (CAD 8.70 mm above the datum) changes and the horn hole and keeper heights follow it: update electrical.py ARM_Z0 and re-print the horn and keeper.
 - Centre the servo with the tester at 1500 us (standard servo pulse, EST).
 
 **Fit it:**
 
-- Press the arm on the 23-tooth output spline 15 mm from above (CAD: EMAX ES3054HV, 23T spline, RMRC page 85975). The arm lies aft at centre (EST).
+- Press the arm on the 23-tooth output spline 15 mm from above (CAD: EMAX ES3054HV, 23T spline, RMRC page 85975). The arm points inboard at centre. The screw goes in after the pushrod and keeper (step D2a).
 - Motion (CAD, checked by `a_assembly.py`): along (0, 0, -1) for 15 mm.
 
 **Checkpoint (do not go on until it passes):**
 
-- [ ] Arm hole radius 12 mm (FIXES2 s1.3; D-188): measure from the spline centre. The output boss height is not in the repo (`-`): measure it so the arm clears the pocket floor.
+- [ ] Arm hole radius 8.5 mm (D-212 rev 2), hole 1.3 mm (rev 3).
 
-### D2a. Arm screws
+### D2a. Z-bend keepers and arm screws
 
-*Step 49 of 66. Plan caption: Arm screws M2x6 into the servo output shafts*
+*Step 49 of 66. Plan caption: Z-bend keepers over the Z-bends, then the M2x8 arm screws through keeper and arm into the output shafts*
 
-**Do this:** Fit the M2 x 6 arm screw into the servo output shaft; snug, threadlocker.
+**Do this:** Lay the printed keeper on the arm over the Z-bend; fit the M2 x 8 screw through keeper and arm into the output shaft; snug, threadlocker.
 
-**Time (EST):** 10 min hands-on.
+**Time (EST):** 15 min hands-on.
 
 **Parts (CAD id, BOM-A line, CAD mass):**
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `HWC-002` x2 | Servo arm screw M2 x 6 pan | bought | R05 Amazon | 0.5 |
+| `MEC-008` x2 | Z-bend keeper | made | R03 Prusa | 0.2 |
+| `HWC-002` x2 | Servo arm screw M2 x 8 pan | bought | R05 Amazon | 0.6 |
 
-Mass placed by this step 0.5 g; running total of placed parts 970.0 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 0.8 g; running total of placed parts 970.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
-**Tools:** 1.5 mm / small screwdriver, threadlocker.
+**You need:**
+
+- M2 x 8 pan screws (R05 stock screws, local)
+
+**Tools:** small screwdriver, threadlocker.
+
+**Make it:**
+
+- Print 2 Z-bend keepers (CAD MEC-008, PETG, 0.08 g each, drawing MEC-008): flat, bridge face down.
 
 **Fit it:**
 
-- M2 x 6 pan screw (CAD HWC-002) through the arm into the shaft; a little threadlocker (W06).
+- Keeper spacer on the arm top, its bridge over the Z-bend leg and bend (CAD MEC-008: spacer 1.5 mm, bridge 0.8 mm, bridge underside 0.3 mm above the rod top resting on the arm); M2 x 8 pan screw (CAD HWC-002) through keeper and arm into the shaft; a little threadlocker (W06).
 - Motion (CAD, checked by `a_assembly.py`): along (0, 0, -1) for 10 mm.
 
 **Checkpoint (do not go on until it passes):**
 
+- [ ] Feeler 0.3 mm between rod top and bridge with the rod resting on the arm; the rod swings +-25 deg about the leg without touching the spacer.
 - [ ] Arm cannot be pulled off.
 
 ### D3. Horns on the elevons
 
-*Step 50 of 66. Plan caption: Horns on the elevons*
+*Step 50 of 66. Plan caption: Horns on the elevons: each printed horn rib pushed down into its slot through the elevon, bonded*
 
-**Do this:** Bond each control horn on the elevon upper skin so its hole is 12.9 mm from the hinge axis.
+**Do this:** Cut a 2.2 mm slot through each elevon, push the printed horn rib down into it and bond it; tape over the slot.
 
-**Time (EST):** 30 min hands-on.  **Cure / wait:** 24 h epoxy cure (K09-L practice).
+**Time (EST):** 40 min hands-on.  **Cure / wait:** 24 h epoxy cure (K09-L practice).
 
 **Parts (CAD id, BOM-A line, CAD mass):**
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `MEC-004` x2 | Control horn | bought | M02 RMRC | 2.0 |
+| `MEC-004` x2 | Control horn | made | R03 Prusa | 1.9 |
 
-Mass placed by this step 2.0 g; running total of placed parts 972.0 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 1.9 g; running total of placed parts 972.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
-- M02 linkage set: horns, pushrods, clevises
+- Printed horn MEC-004 x 2 (R03 PETG)
 
-**Tools:** epoxy, 0.1 g scale.
+**Tools:** slot guide, 2 mm saw / hot wire, 1.1 mm drill, epoxy, 0.1 g scale.
+
+**Make it:**
+
+- Print 2 horns (CAD MEC-004, drawing MEC-004): LYING FLAT, 2 mm thick, so the blade and rib bend in the layer plane (D-212 rev 3, review M-3); hole printed 0.9 mm, then reamed with a 1.1 mm drill (0.1 mm on the 1.0 mm clevis pin).
+- Cut the slot through the full elevon depth at the horn station (y = 191.5 mm from the centreline), 2.2 mm wide, from 2.4 to 55.1 mm aft of the hinge line (CAD cut on WNG-006): use a printed or ply slot guide.
 
 **Fit it:**
 
-- Bond the horn on the elevon upper skin with epoxy (CAD edge E-MEC: horn bonded on the elevon upper skin; it comes in from above, 15 mm travel; base plate 20 x 8 x 1 mm EST, blade 2 mm). Roughen the tape skin first, wipe with IPA.
+- Push the horn rib down into the slot from above (15 mm travel) until the blade base sits on the upper skin and the rib bottom is 0.2 mm inside the lower skin; fill the slot with epoxy (both faces wetted, CAD edge E-MEC: rib bonded in its slot). Tape over the slot on both skins with a 60 x 40 mm patch of the skin tape after the cure, the upper patch slit for the blade.
 - Motion (CAD, checked by `a_assembly.py`): along (0, 0, -1) for 15 mm.
 
 **Checkpoint (do not go on until it passes):**
 
-- [ ] Hole line is 12.9 mm from the hinge axis (CALC: x 193 mm).
+- [ ] Hole centre directly above the hinge line and 9.155 mm up from the hinge axis (CALC, D-212 rev 3): lay the pushrod across; it must run level and parallel to the chord at neutral.
+- [ ] The clevis cheeks slide over the blade and pivot freely (fit check of the printed 2 mm blade in the 2.2 mm cheek gap, review m-5).
 
 ### D4. Pushrods
 
 *Step 51 of 66. Plan caption: Pushrods into arm hole*
 
-**Do this:** Z-bend the 1.2 mm rod into the arm hole; set the clevis cheeks over the horn blade.
+**Do this:** Bend-test one rod; Z-bend the 1.2 mm rod into the 1.3 mm arm hole; set the clevis cheeks over the horn blade.
 
-**Time (EST):** 30 min hands-on.
+**Time (EST):** 40 min hands-on.
 
 **Parts (CAD id, BOM-A line, CAD mass):**
 
@@ -1746,13 +1766,21 @@ Mass placed by this step 2.0 g; running total of placed parts 972.0 g (CAD; the 
 |---|---|---|---|---|
 | `MEC-003` x2 | Pushrod 1.2 mm with Z-bend and clevis | bought | M02 RMRC | 1.9 |
 
-Mass placed by this step 1.9 g; running total of placed parts 974.0 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 1.9 g; running total of placed parts 974.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
-**Tools:** Z-bend pliers, small pliers, calipers.
+**You need:**
+
+- M02 linkage set: pushrods, clevises (its horns are not used)
+
+**Tools:** Z-bend pliers, small pliers, calipers, 7.9 kg weight or spring scale.
+
+**Make it:**
+
+- Receipt test (D-212 rev 3, review M-1): form a Z-bend on a spare M02 rod, hold the leg in a 2 mm plate with a 1.3 mm hole and load the rod along its axis with 77 N (1.5 x the 51 N stall force) for 10 s: pass = no permanent set over 0.2 mm at the far end. If it sets, use ASTM A228 music wire 1.2 mm for both rods and repeat.
 
 **Fit it:**
 
-- Z-bend the 1.2 mm rod into the arm tip hole (CAD: vertical pin) and set the clevis over the horn blade, cheeks either side (CAD: clevis on the horn hole, horizontal pin; 10 mm). The pin follows in D5.
+- Z-bend the 1.2 mm rod into the arm tip hole (CAD: L-end leg down through the 1.3 mm arm hole, the rod lying on the arm top; held down by the keeper, step D2a) and set the clevis over the horn blade, cheeks either side (CAD: clevis on the horn hole, horizontal pin; 10 mm). The pin follows in D5.
 - Motion (CAD, checked by `a_assembly.py`): along (0, 0, -1) for 10 mm.
 
 **Checkpoint (do not go on until it passes):**
@@ -1773,7 +1801,7 @@ Mass placed by this step 1.9 g; running total of placed parts 974.0 g (CAD; the 
 |---|---|---|---|---|
 | `MEC-005-R` x1 | Clevis pin 1.0 x 4.4 mm | bought | M02 RMRC | 0.0 |
 
-Mass placed by this step 0.0 g; running total of placed parts 974.0 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 0.0 g; running total of placed parts 974.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **Tools:** tweezers, small pliers.
 
@@ -1800,7 +1828,7 @@ Mass placed by this step 0.0 g; running total of placed parts 974.0 g (CAD; the 
 |---|---|---|---|---|
 | `MEC-005-L` x1 | Clevis pin 1.0 x 4.4 mm | bought | M02 RMRC | 0.0 |
 
-Mass placed by this step 0.0 g; running total of placed parts 974.0 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 0.0 g; running total of placed parts 974.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **Tools:** tweezers, servo tester.
 
@@ -1812,6 +1840,9 @@ Mass placed by this step 0.0 g; running total of placed parts 974.0 g (CAD; the 
 **Checkpoint (do not go on until it passes):**
 
 - [ ] With the servo tester, each elevon goes +-20 deg without binding; both match within 1 degree (EST).
+- [ ] Free play at the trailing edge, servo powered at neutral: record it (CAD budget 1.28 deg from the hole clearances, clevis cheek holes not included; guide 1 deg, SERVO.md s4; D-212 rev 3 open item).
+- [ ] Bench stall test (D-212 rev 3, review r3 M-1; claim CL-A-HORN-STALL-BENCH, test T-A-HORN-RIB; EST criteria): with the servo at 7.2 V, temporarily set the endpoint past the stop and drive each elevon into its +21 deg stop for 5 s (the 51 N stall case). Pass: no crack in horn, rib, slot tape or stop; hole elongation <= 0.1 mm (a 1.2 mm pin gauge must not enter the 1.1 mm hole); trailing-edge set < 0.5 deg. Record what yields first. A failed bench test is a stop: the fallback is the CF torsion tube of the trade table (docs/engineering-decisions.md, D-212 rev 3 row J).
+- [ ] Set the endpoints so neither servo reaches the 21 deg stop (no stall current at full stick); the endpoint is +-20 deg.
 
 ## Stage 9: Avionics: pitot, plate, ESC, FC, leads
 
@@ -1831,7 +1862,7 @@ Film clip: `assets/animation/build/a-stage-09.mp4` (Explorer, "How it's built", 
 |---|---|---|---|---|
 | `AVN-006` x1 | Pitot-static probe | bought | V05 RMRC | 5.0 |
 
-Mass placed by this step 5.0 g; running total of placed parts 979.0 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 5.0 g; running total of placed parts 979.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -1868,7 +1899,7 @@ Mass placed by this step 5.0 g; running total of placed parts 979.0 g (CAD; the 
 | `AVN-001` x1 | Avionics plate | made | R03 Prusa | 8.0 |
 | `HWC-003` x1 | FC mounting nuts: 4 x M2 thin nut | bought | R05 Amazon | 0.4 |
 
-Mass placed by this step 8.4 g; running total of placed parts 987.4 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 8.4 g; running total of placed parts 987.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -1908,7 +1939,7 @@ Mass placed by this step 8.4 g; running total of placed parts 987.4 g (CAD; the 
 | `AVN-004` x1 | GPS TBS M10Q + compass | bought | V04 RMRC | 13.5 |
 | `AVN-005` x1 | Airspeed sensor MS4525 board | bought | V05 RMRC | 3.0 |
 
-Mass placed by this step 59.1 g; running total of placed parts 1046.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 59.1 g; running total of placed parts 1046.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -1944,7 +1975,7 @@ Mass placed by this step 59.1 g; running total of placed parts 1046.5 g (CAD; th
 |---|---|---|---|---|
 | `HWC-001` x1 | FC mounting screws: 4 x M2 x 25 pan screw | bought | R05 Amazon | 3.0 |
 
-Mass placed by this step 3.0 g; running total of placed parts 1049.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 3.0 g; running total of placed parts 1049.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **Tools:** small screwdriver.
 
@@ -1969,10 +2000,10 @@ Mass placed by this step 3.0 g; running total of placed parts 1049.5 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `AVN-009-T` x1 | Pitot line, total pressure: silicone tubing 2 / 4 mm | bought | - | 0.4 |
-| `AVN-009-S` x1 | Pitot line, static pressure: silicone tubing 2 / 4 mm | bought | - | 0.4 |
+| `AVN-009-T` x1 | Pitot line, total pressure: silicone tubing 2 / 4 mm | bought | V05 RMRC | 0.4 |
+| `AVN-009-S` x1 | Pitot line, static pressure: silicone tubing 2 / 4 mm | bought | V05 RMRC | 0.4 |
 
-Mass placed by this step 0.8 g; running total of placed parts 1050.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 0.8 g; running total of placed parts 1050.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -2039,7 +2070,7 @@ Film clip: `assets/animation/build/a-stage-10.mp4` (Explorer, "How it's built", 
 |---|---|---|---|---|
 | `PWR-003` x1 | Anti-slip pad 100 x 30 x 1.0 mm silicone rubber sheet on the tray floor | bought | W09 Amazon | 3.5 |
 
-Mass placed by this step 3.5 g; running total of placed parts 1053.8 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 3.5 g; running total of placed parts 1054.0 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -2070,7 +2101,7 @@ Mass placed by this step 3.5 g; running total of placed parts 1053.8 g (CAD; the
 |---|---|---|---|---|
 | `PWR-001` x1 | Pack Tattu 2300 mAh 4S 75C | bought | W01 RMRC | 270.0 |
 
-Mass placed by this step 270.0 g; running total of placed parts 1323.8 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 270.0 g; running total of placed parts 1324.0 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -2105,7 +2136,7 @@ Mass placed by this step 270.0 g; running total of placed parts 1323.8 g (CAD; t
 |---|---|---|---|---|
 | `HRN-002` x1 | XT60 female + 14 AWG tail to the ESC | bought | W05 RMRC | 8.0 |
 
-Mass placed by this step 8.0 g; running total of placed parts 1331.8 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 8.0 g; running total of placed parts 1332.0 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -2156,7 +2187,7 @@ Mass placed by this step 8.0 g; running total of placed parts 1331.8 g (CAD; the
 |---|---|---|---|---|
 | `PWR-002` x1 | Pack strap 20 x 300 mm with buckle | bought | W08 RMRC | 5.5 |
 
-Mass placed by this step 5.5 g; running total of placed parts 1337.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 5.5 g; running total of placed parts 1337.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **Tools:** none.
 
@@ -2207,7 +2238,7 @@ Mass placed by this step 5.5 g; running total of placed parts 1337.3 g (CAD; the
 |---|---|---|---|---|
 | `AVN-008` x1 | Bay cover | made | R03 Prusa | 9.6 |
 
-Mass placed by this step 9.6 g; running total of placed parts 1346.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 9.6 g; running total of placed parts 1347.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -2230,7 +2261,7 @@ Mass placed by this step 9.6 g; running total of placed parts 1346.9 g (CAD; the
 
 ## 14. After the last step
 
-1. **Weigh-in.** Weigh the aircraft with the pack. The gate is **1.47 kg** (`MASS-GATE.md` s8, D-190); the CAD basic mass is 1273.2 g (placed parts 1346.9 g plus the harness lump 18.4 g and the hardware lump 26.1 g) and the design target is 1.46 kg predicted including growth and overrun (`params-A.json`). If the weight is above the gate the aircraft does not fly until the C3 window check is re-run at the as-weighed mass (`MASS-GATE.md` s6).
+1. **Weigh-in.** Weigh the aircraft with the pack. The gate is **1.47 kg** (`MASS-GATE.md` s8, D-190); the CAD basic mass is 1273.3 g (placed parts 1347.1 g plus the harness lump 18.4 g and the hardware lump 26.1 g) and the design target is 1.46 kg predicted including growth and overrun (`params-A.json`). If the weight is above the gate the aircraft does not fly until the C3 window check is re-run at the as-weighed mass (`MASS-GATE.md` s6).
 2. **CG.** Balance the aircraft on a knife edge in the cruise attitude: the band is **19-26 mm aft of the wing leading edge**, hard aft limit 28.5 mm, lateral within 5 mm (`params-A.json`, A-P4). Move the pack in the tray slots (6 mm forward, 10 mm aft of nominal, about 2.2 mm of CG per 10 mm, `common.py` `TRIM`): no ballast first.
 3. **Controls.** Each elevon +-20 deg (servo limit), stops at +-21 deg; both surfaces move the right way for the stick (EST: check with the TX, props off).
 4. **Power-up, props OFF.** First power-up with the props removed. Check each motor direction: UR and LL clockwise, UL and LR counter-clockwise, seen from the thrust side (BOM P02, MR and MRP); if one is wrong swap two phase leads (EST). Then fit the props, props-on tests only on the thrust stand (`bench_analysis.py`, `SCHEDULE-A.md` B3).
@@ -2248,14 +2279,14 @@ Mass placed by this step 9.6 g; running total of placed parts 1346.9 g (CAD; the
 | 5 | Elevons, balance strips, lens caps | 3 | 2 h 30 min |
 | 6 | Fins: fairings, root blocks, tubes | 4 | 2 h 30 min |
 | 7 | Landing feet | 3 | 1 h 00 min |
-| 8 | Servos, pushrods, horns, lead threading | 8 | 2 h 55 min |
+| 8 | Servos, pushrods, horns, lead threading | 8 | 3 h 20 min |
 | 9 | Avionics: pitot, plate, ESC, FC, leads | 6 | 4 h 05 min |
 | 10 | Pack, XT60, strap, phase leads, bay cover | 7 | 3 h 55 min |
-| | **Total** | **66** | **42 h 25 min** |
+| | **Total** | **66** | **42 h 50 min** |
 
-The steps total **42.4 h** hands-on (`EST`; machine time for printing and the 24 h cures are not counted). `SCHEDULE-A.md` plans 53 h of build (range 41-66 h), including 10 h of checks and a 2 h range check (`EST`, K09-L 82 h x 0.65). This guide steps 42.4 h plus those 12 h is 54.4 h, inside that range.
+The steps total **42.8 h** hands-on (`EST`; machine time for printing and the 24 h cures are not counted). `SCHEDULE-A.md` plans 53 h of build (range 41-66 h), including 10 h of checks and a 2 h range check (`EST`, K09-L 82 h x 0.65). This guide steps 42.8 h plus those 12 h is 54.8 h, inside that range.
 
-**Mass check at the end:** the CAD basic mass is 1273.24 g (`a_model.py`); the pack is 270 g of that.
+**Mass check at the end:** the CAD basic mass is 1273.30 g (`a_model.py`); the pack is 270 g of that.
 
 ### Open items (not in the repo, or in conflict)
 

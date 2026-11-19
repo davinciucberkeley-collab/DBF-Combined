@@ -313,16 +313,6 @@
    "pairs": []
   },
   {
-   "id": "D2a",
-   "parts": [
-    "HWC-002-R",
-    "HWC-002-L"
-   ],
-   "worst_mm": 0.0,
-   "first_hit_t_mm": null,
-   "pairs": []
-  },
-  {
    "id": "D3",
    "parts": [
     "MEC-004-R",
@@ -337,6 +327,18 @@
    "parts": [
     "MEC-003-R",
     "MEC-003-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "D2a",
+   "parts": [
+    "MEC-008-R",
+    "MEC-008-L",
+    "HWC-002-R",
+    "HWC-002-L"
    ],
    "worst_mm": 0.0,
    "first_hit_t_mm": null,
