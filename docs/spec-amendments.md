@@ -197,3 +197,13 @@ reported to him. Requirement IDs: R-GEN-02, R-OPT-02.
 ```text
 We still want enough to have crash reserve though
 ```
+
+## AM-013 — 2026-11-19 — Budget test: total (crash reserve included) under $2,000
+Relation: follows AM-012 after Dillon learned the crash reserve ($327.43) is already inside the BOM total. The budget
+test is the hard limit only: total spend including the crash reserve <= $2,000. The derived cost rule G7 (total
+<= $1,800 and +30 % growth margin >= $100, QP-3 board) is no longer a gate; it stays reported as information
+(growth risk). The crash reserve must stay adequate (AM-012). Requirement IDs: R-GEN-02, R-OPT-02.
+
+```text
+Oh yes, that is fine, as long as we have enough crash reserve, the budget is fine as long as you are under the $2000 limit
+```
