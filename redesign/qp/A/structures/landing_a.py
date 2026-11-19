@@ -7,6 +7,10 @@ import math, sys
 import numpy as np
 G = 9.81
 M_GATE = 1.50
+# rib-root check constants (CAD wing.py RIB_OD/RIB_ID/RIB_X0; factors and allowables as structures_a.py, EST)
+RIB_OD, RIB_ID, RIB_X0 = 0.014, 0.012, 0.0705
+RIB_A = math.pi/4*(RIB_OD**2-RIB_ID**2); RIB_I = math.pi/64*(RIB_OD**4-RIB_ID**4); RIB_Z = RIB_I/(RIB_OD/2); RIB_J = 2*RIB_I
+KF_RIB = 1.5*1.15; SIG_RIB = 350e6; TAU_RIB = 30e6
 MU = 0.40          # pad friction cap (K09-L D-105 pad_mu_max, carried)
 CASES_HARD, CASES_NORM = 1.2, 0.5        # m/s sink: hard landing (K09-L landing_sink_ms 1.2) and normal touchdown (K09-L v_normal 0.5)
 ATT_ERR = 10.0                           # deg attitude error at touchdown (K09-L landing_attitude_err_deg)
@@ -53,12 +57,14 @@ def simulate(m=M_GATE, Fp=45.0, s_y=0.0015, s_max=0.020, v_sink=1.2, th_n=0.0, t
     # start height: lowest foot touches
     zs = [(R@r)[2] for r in feet]; p = np.array([0, 0, -min(zs)+1e-4])
     v = np.array([drift*math.cos(drift_dir), drift*math.sin(drift_dir), -v_sink]); w = np.zeros(3)
-    ke = Fp/s_y; sp = np.zeros(4); dmax = np.zeros(4); fside = np.zeros(4); nmax = 0.0; Fmax = np.zeros(4)
+    ke = Fp/s_y; sp = np.zeros(4); dmax = np.zeros(4); fside = np.zeros(4); nmax = 0.0; Fmax = np.zeros(4); rib_idx = 0.0; tors_max = 0.0
+    feet_b = [np.array([x_foot-RIB_X0, 0.0, sz*z_foot]) for sy in (1, -1) for sz in (1, -1)]      # foot arm from the rib root, body frame
     c_d = 2*zeta*math.sqrt(ke*mm/4)
     W = mm*G; t = 0.0; nst = int(T/dt)
     for _ in range(nst):
         lw = lam if t < 0.3 else max(0.0, lam*(1-(t-0.3)/0.3))
         F = np.array([0, 0, -W+lw*W]); tau = np.zeros(3); wb = R.T@w
+        Mrib = np.zeros((2, 3)); Nrib = np.zeros(2)
         for i, r in enumerate(feet):
             rw = R@r; P = p+rw
             d = -P[2]
@@ -72,7 +78,11 @@ def simulate(m=M_GATE, Fp=45.0, s_y=0.0015, s_max=0.020, v_sink=1.2, th_n=0.0, t
             vt = vp[:2]; sp_ = np.linalg.norm(vt)
             ft = -mu*fn*vt/max(sp_, 0.02)*min(1.0, sp_/0.02) if sp_ > 1e-9 else np.zeros(2)
             f = np.array([ft[0], ft[1], fn]); F += f; tau += np.cross(rw, f)
+            fb = R.T@f; Mrib[i//2] += np.cross(feet_b[i], fb); Nrib[i//2] += abs(fb[0])      # both feet of one rib add (feet 0,1 = +y rib; 2,3 = -y rib)
             dmax[i] = max(dmax[i], d); fside[i] = max(fside[i], np.linalg.norm(ft)); Fmax[i] = max(Fmax[i], fn)
+        for k in range(2):
+            Mb = Mrib[k]; sig = KF_RIB*(math.hypot(Mb[1], Mb[2])/RIB_Z+Nrib[k]/RIB_A); tq = KF_RIB*abs(Mb[0])*(RIB_OD/2)/RIB_J
+            rib_idx = max(rib_idx, math.hypot(sig/SIG_RIB, tq/TAU_RIB)); tors_max = max(tors_max, abs(Mb[0]))
         v = v+F/mm*dt
         tb = R.T@tau
         wb_dot = Ibi@(tb-np.cross(wb, Ib@wb))
@@ -81,7 +91,7 @@ def simulate(m=M_GATE, Fp=45.0, s_y=0.0015, s_max=0.020, v_sink=1.2, th_n=0.0, t
         p = p+v*dt; t += dt
         nmax = max(nmax, (F[2]+W-lw*W)/W)
     tilt = math.degrees(math.acos(max(-1, min(1, -(R[:, 0])[2]))))     # body +x vs down; upright => body x = -Z => 0 deg
-    return dict(dmax_mm=dmax*1e3, sp_mm=sp*1e3, F=Fmax, side=fside, n_peak=nmax, tilt_end=tilt, drift_end=np.linalg.norm(p[:2]),
+    return dict(dmax_mm=dmax*1e3, sp_mm=sp*1e3, F=Fmax, side=fside, n_peak=nmax, tilt_end=tilt, drift_end=np.linalg.norm(p[:2]), rib_rf=1.0/max(rib_idx, 1e-9), rib_T=tors_max,
                 v_end=np.linalg.norm(v))
 
 
@@ -109,4 +119,4 @@ if __name__ == "__main__":
                  ("normal level .5", dict(v_sink=0.5)), ("normal 10 narrow .5", dict(v_sink=0.5, th_n=10)), ("normal 10 wide .5 + drift", dict(v_sink=0.5, th_w=10, drift=0.5, drift_dir=math.pi/2))]
         for name, kw in cases:
             r = simulate(Fp=Fp, **kw)
-            print(f"{name:28s} stroke max {r['dmax_mm'].max():5.1f} mm  n {r['n_peak']:.2f}  Fmax {r['F'].max():5.1f} N  side {r['side'].max():5.1f} N  tilt_end {r['tilt_end']:5.1f}  drift {r['drift_end']*1e3:5.0f} mm  set {r['sp_mm'].max():.1f}")
+            print(f"{name:28s} stroke max {r['dmax_mm'].max():5.1f} mm  n {r['n_peak']:.2f}  Fmax {r['F'].max():5.1f} N  side {r['side'].max():5.1f} N  tilt_end {r['tilt_end']:5.1f}  drift {r['drift_end']*1e3:5.0f} mm  set {r['sp_mm'].max():.1f}  rib RF {r['rib_rf']:.2f}")

@@ -37,7 +37,7 @@ Vs 12.07 m/s (CLmax 0.75 EST), VA = Vs sqrt(3.4) = 22.2, VC 17, VD 22 (1.25 VC r
 | Cage pitch moment, upper pair at the 0.90 cap (8.8 N each) / lower pair 1 N | 2.44 N m on the bridge | A-P8 85 % output limit not exceeded in SITL; this is the bound |
 | Prop strike (blade stops, one motor, 30 N along thrust EST; K09-L P1 fuse idea) | arm root 8.3 N m; bridge 4.7 N m | damage case |
 | Transport drop 0.3 m (v 2.43 m/s), cradle stroke s, efficiency 0.5 (ASM-C1-CRUSH-EFF) | n = v^2/(2 g eta s): s 25 mm: 24.0 g; s 35 mm: 17.1 g; s 50 mm: 12.0 g; s 60 mm: 10.0 g | `-` box cradle not designed; s needs >= 40 mm for n <= 15 |
-| Landing (see s5) | foot plateau 30 N, 4 feet | sim peak foot load factor <= 11.4 g, feet <= 49 N, side <= 20 N |
+| Landing (see s5) | foot plateau 30 N, 4 feet | worst-case values from landing_a.py are tabulated in s5 (n, foot load, side load, rib-root RF) |
 
 ## 3. C2 wing: spar and foam
 | Check | Stress | Allowable | MS | Result |
@@ -181,24 +181,24 @@ Fin out-of-plane EI 59.5 N m2 (kd), mass/length 92 g/m (15 mm XPS core, 0.1 mm C
 | Motor screws: see s6 | | | | |
 
 ## 5. C5 landing on fin-tip feet
-Static (CG 25.2 mm aft of LE, feet at x 0.300, y +-0.38, z +-0.18; CG 0.275 m above feet): tip-over narrow axis **33.2 deg** (limit 30: sizing 33.2), wide axis 54.1 deg. Parked broadside to the wind: tips at 7.4 m/s (gust 8: crew catches or lays it down, as A-P9); restoring / overturning at 5 m/s 2.21. I (kg m2, about the CG): [0.0564, 0.0254, 0.0618] (SITL plant used 0.053-0.064 roll).
+Static (CG 22.9 mm aft of LE, feet at x 0.300, y +-0.38, z +-0.18; CG 0.275 m above feet): tip-over narrow axis **33.0 deg** (limit 30: sizing 33.2), wide axis 53.9 deg. Parked broadside to the wind: tips at 7.4 m/s (gust 8: crew catches or lays it down, as A-P9); restoring / overturning at 5 m/s 2.21. I (kg m2, about the CG): [0.0577, 0.026, 0.0625] (SITL plant used 0.053-0.064 roll).
 Foot design (EST, CAD): PETG shoe bonded over the fin corner, 12 (y) x 15 (z) mm EVA/PE foam pad 30 mm thick, plateau stress 0.17 MPa -> **30 N per foot** (static load W/4 = 3.7 N: x8 below yield), usable stroke 20 mm, rigid stop beyond. Foam plateau and stroke are unmeasured: drop-test a coupon first (5 pads, 1.2 m/s on a scale).
-Sim = `landing_a.py` (K09-L `team/C5/sim` physics rebuilt standalone for A: 6 dof, 4 elasto-plastic feet, friction 0.40, lift 2/3 W to 0.3 s then 0 at 0.6 s, 1.50 kg):
-| Case | max stroke (mm) of 20 | permanent set (mm) | peak foot load (N) | side load (N) | n at CG | end tilt (deg) | drift (mm) |
-|---|---|---|---|---|---|---|---|
-| hard 1.2 m/s level | 8.3 | 6.8 | 40 | 0 | 10.8 | 0.0 | 0 |
-| hard, 10 deg narrow | 13.9 | 12.4 | 40 | 14 | 5.4 | 1.8 | 142 |
-| hard, 10 deg wide | 8.2 | 6.7 | 45 | 18 | 6.1 | 0.1 | 35 |
-| hard, 7+7 deg combined | 9.1 | 7.6 | 45 | 18 | 5.7 | 0.3 | 17 |
-| hard, 10 narrow + 0.5 m/s drift | 15.2 | 13.7 | 40 | 16 | 5.4 | 2.1 | 3 |
-| hard, 10 wide + 0.5 m/s drift (y) | 11.1 | 9.6 | 47 | 19 | 6.4 | 0.4 | 98 |
-| normal 0.5 m/s level | 2.3 | 0.8 | 33 | 0 | 8.9 | 0.0 | 0 |
-| normal, 10 narrow | 3.3 | 1.8 | 34 | 13 | 6.9 | 0.1 | 87 |
-| normal, 10 wide + drift | 5.8 | 4.3 | 40 | 16 | 5.4 | 0.3 | 101 |
-| hard, 1.381 kg, 10 narrow | 12.9 | 11.4 | 40 | 14 | 5.8 | 1.6 | 147 |
-Worst stroke 15.2 mm of 20 (margin 4.8 mm, 32 %): PASS. No tip-over in any case (end tilt <= 3 deg). Peak load factor 10.8 g vs A-P5 12 g: PASS (the 6 mm crush of SIZING-A is replaced: 12 g would need 6 mm only at constant force and a level hit; with 20 mm and 30 N the level hard case is below).
+Sim = `landing_a.py` (K09-L `team/C5/sim` physics rebuilt standalone for A: 6 dof, 4 elasto-plastic feet, friction 0.40 (assumed, see below), lift 2/3 W to 0.3 s then 0 at 0.6 s, 1.50 kg, current mass list of `landing_a.py` ITEMS (motor assemblies 4 x 88.26 g)):
+| Case | max stroke (mm) of 20 | permanent set (mm) | peak foot load (N) | side load (N) | n at CG | end tilt (deg) | drift (mm) | rib-root RF |
+|---|---|---|---|---|---|---|---|---|
+| hard 1.2 m/s level | 8.3 | 6.8 | 40 | 0 | 10.8 | 0.0 | 0 | 104.39 |
+| hard, 10 deg narrow | 13.9 | 12.4 | 40 | 14 | 5.4 | 1.8 | 142 | 4.72 |
+| hard, 10 deg wide | 8.2 | 6.7 | 45 | 18 | 6.1 | 0.1 | 36 | 2.40 |
+| hard, 7+7 deg combined | 9.2 | 7.7 | 45 | 18 | 5.7 | 0.4 | 21 | 1.26 |
+| hard, 10 narrow + 0.5 m/s drift | 15.4 | 13.9 | 40 | 16 | 6.7 | 2.2 | 23 | 6.60 |
+| hard, 10 wide + 0.5 m/s drift (y) | 11.0 | 9.5 | 47 | 19 | 6.3 | 0.4 | 104 | 2.68 |
+| normal 0.5 m/s level | 2.3 | 0.8 | 33 | 0 | 8.9 | 0.0 | 0 | 126.14 |
+| normal, 10 narrow | 3.3 | 1.8 | 34 | 13 | 6.9 | 0.1 | 97 | 5.85 |
+| normal, 10 wide + drift | 5.8 | 4.3 | 40 | 16 | 5.4 | 0.3 | 101 | 3.08 |
+| hard, 1.381 kg, 10 narrow | 12.9 | 11.4 | 40 | 14 | 5.8 | 1.6 | 144 | 4.70 |
+Worst stroke 15.4 mm of 20 (margin 4.6 mm, 30 %): PASS. No tip-over in any case (end tilt <= 3 deg). Peak load factor 10.8 g vs A-P5 12 g: PASS (the 6 mm crush of SIZING-A is replaced: 12 g would need 6 mm only at constant force and a level hit; with 20 mm and 30 N the level hard case is below).
 Pad life: normal landings set 0.8-4 mm; replace the pad at 10 mm cumulative set (a hard landing sets up to 13 mm: replace after any hard landing). Pads are $0 stock (foam); K09-L cartridges not used.
-Side load 15-20 N per foot at mu 0.40 against the K09-L cap (24.5 N at 2.6 kg): scaled by mass the A cap is about 14 N: **side load 20 N is MARGINAL**; a pad face at mu <= 0.3 brings it to 15 N (EST).
+Side load per foot: worst 18.7 N at pad mu 0.40 (T-064: the earlier 'scaled K09-L cap about 14 N' (24.5 N x mass ratio) belonged to no part of A and is withdrawn; K09-L's 24.5 N was its own design value set equal to its own sim result, C5 CLOSURE s2, D-138). The limit is now the computed capacity of the failing part: the rib root (14x12 CF tube, x 0.0705 to the fin block) under combined bending (arm 0.2295 m), torsion (lever 0.18 m) and axial load, all four feet resolved in the body frame at every time step (`landing_a.py` rib RF = 1 / sqrt((KF (M/Z + N/A) / 350 MPa)^2 + (KF T r / J / 30 MPa)^2), KF 1.725; both allowables EST, no coupon). Minimum rib-root RF over these cases **1.26** (PASS at the EST allowables, UNVERIFIED until a twist coupon). The pad friction 0.40 is an assumption carried from K09-L (its pad face was UHMW-PE tape over neoprene, D-105); A's drawn pad is bare EVA/PE foam, friction not measured ('-'): drag-test it; the rib RF reaches 1 at mu about 0.51 in the worst case (`landing_side_a.py`). See AR-012 / D-213 proposals in `mechanism/out/T064_landing_side.md`.
 
 ## 6. C6 joints, fasteners, bonds (design load = limit x 1.5 x 1.15 [x 1.25 printed/bonded])
 | Joint | Load (limit) | Stress / capacity (design) | Allowable | RF | Result |

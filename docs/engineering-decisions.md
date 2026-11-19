@@ -103,3 +103,16 @@ Added from the independent retro-review `docs/audits/2026-11-19-T025-retro.md` (
 | Sharp floor, no fillets (`d206`) | 0 | S1 24.7 rising to 27.7 on refinement | marginal | crack site | — | — | — | — | `d207r` |
 | Rounded floor, bridge stopped 1 mm short | — | S1 56.0, F2 34.0 | NO | worse | — | — | — | — | `d208` |
 | **45 deg cone floor + fillets 2.0 / 1.5 mm (chosen)** | +1.3 hub | p99 F2 5.7 / S2 7.7 MPa; glue 0.73 / 1.50 | YES | single highest point 19.2 / 31.6 is mesh-dependent | OpenCASCADE mesh body; Fusion path UNVERIFIED | — | — | design target then 1.467 kg | `d209` |
+
+## Trade table D-213 landing side load (T-064, 2026-11-19; pending independent review)
+| Option | Δmass g | Margin | Works? | Reliability | Manufacture | Assembly | Aero | Constraints | Source |
+|---|---|---|---|---|---|---|---|---|---|
+| A keep "14 N" cap, cut demand to 14 N with a mu 0.3 pad face | +0.2 EST (tape) | at mu 0.30 side 14.2-14.3 N: still > 14 N; cap has no part behind it | NO: fails its own number and the number is unfounded | n/a | tape on four pads | easy | none | pad mu of A unmeasured | `landing_side_a_out.txt` s2; K09-L C5 l.141 |
+| **B recompute capacity from the failing part (chosen), keep plateau 30 N, mu 0.40 requirement, drift 0.5 m/s card item** | 0 | rib-root RF 1.26 min (EST allowables); shoe bond 1.38; at 41.3 MPa sourced tube sheet 1.67; mu at RF 1 is 0.51 | YES at EST allowables; UNVERIFIED (twist coupon, drag test) | allowable EST; fin rigid assumption conservative | none | none | none | needs a pad-friction drag test <= 0.40 and a tube twist test | `landing_a.py` rib check; `landing_side_a.py`; structures_a.py KF/allowables |
+| C plateau 24 N (smaller pad area 12x15 -> about 9.6 x 15 mm or lower stress foam) | about -0.2 (pad) | RF 1.52; stroke 18.9 of 20 mm (margin 1.1 mm, 5 %); n 8.9 | yes, thin on stroke | stroke margin eaten by an unmeasured foam | pad cut | none | none | foam plateau itself is "-" (coupon pending) | `landing_side_a_out.txt` s3 |
+| D foot z-offset to 0.160 m | 0 | torsion lever -11 %; static tip-over 30.0 deg (limit 30) | no margin | none | CAD change | none | none | tip-over limit | hand calc: atan(0.160/0.277) |
+| E operational limit only: touchdown drift <= 0.3 m/s | 0 | side load at drift 0.3 not computed here ("-"); SITL maximum 0.52 m/s shows the pilot/FC does not hold it; no parameter enforces it | not demonstrated | depends on pilot | flight card | none | none | A.param has no lateral limit | A.param l.116-119; 29 SITL records |
+| F UHMW-PE tape face now (rung 5) | +0.2 EST | mu 0.30: RF 1.54, side 14.2 N | yes | tape wear "-" | tape | easy | none | A has no tape line in the BOM; price $4.91 K09-L, not an A order | K09-L DESIGN-ROUND C5 l.167; held as fallback |
+| G stronger rib (e.g. 16x14 tube) | + about 4 to 5 EST (not computed) | RF about 1.7 EST | yes | none | CAD, saddles, drawings all change | change | none | rung 5; rungs 1-4 suffice | not evaluated |
+
+Benchmark (6.4): foot-pad/crush-foot side load is a friction-limited demand: K09-L's own D-105/D-138 made the same call (cap the pad face friction, size the structure to the resulting load); no external landing-gear source was read for this entry.

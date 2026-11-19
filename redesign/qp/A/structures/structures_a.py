@@ -86,7 +86,7 @@ P(f"| Prop strike (blade stops, one motor, 30 N along thrust EST; K09-L P1 fuse 
 v_drop = math.sqrt(2*G*0.3)
 P("| Transport drop 0.3 m (v %.2f m/s), cradle stroke s, efficiency 0.5 (ASM-C1-CRUSH-EFF) | n = v^2/(2 g eta s): %s | `-` box cradle not designed; s needs >= 40 mm for n <= 15 |" %
   (v_drop, "; ".join(f"s {s_*1e3:.0f} mm: {v_drop**2/(2*G*0.5*s_):.1f} g" for s_ in (0.025, 0.035, 0.050, 0.060))))
-P(f"| Landing (see s5) | foot plateau 30 N, 4 feet | sim peak foot load factor <= 11.4 g, feet <= 49 N, side <= 20 N |")
+P(f"| Landing (see s5) | foot plateau 30 N, 4 feet | worst-case values from landing_a.py are tabulated in s5 (n, foot load, side load, rib-root RF) |")
 
 # ======================================================================= 3. C2 wing
 P("\n## 3. C2 wing: spar and foam")
@@ -203,8 +203,8 @@ P("\n## 5. C5 landing on fin-tip feet")
 st = landing_a.static()
 P(f"Static (CG {st['cg_x']*1e3:.1f} mm aft of LE, feet at x 0.300, y +-0.38, z +-0.18; CG 0.275 m above feet): tip-over narrow axis **{st['tip_narrow']:.1f} deg** (limit 30: sizing 33.2), wide axis {st['tip_wide']:.1f} deg. Parked broadside to the wind: tips at {st['v_tip_parked']:.1f} m/s (gust 8: crew catches or lays it down, as A-P9); restoring / overturning at 5 m/s {st['restore_ratio_5ms']:.2f}. I (kg m2, about the CG): {np.round(st['I'],4).tolist()} (SITL plant used 0.053-0.064 roll).")
 P("Foot design (EST, CAD): PETG shoe bonded over the fin corner, 12 (y) x 15 (z) mm EVA/PE foam pad 30 mm thick, plateau stress 0.17 MPa -> **30 N per foot** (static load W/4 = 3.7 N: x8 below yield), usable stroke 20 mm, rigid stop beyond. Foam plateau and stroke are unmeasured: drop-test a coupon first (5 pads, 1.2 m/s on a scale).")
-P("Sim = `landing_a.py` (K09-L `team/C5/sim` physics rebuilt standalone for A: 6 dof, 4 elasto-plastic feet, friction 0.40, lift 2/3 W to 0.3 s then 0 at 0.6 s, 1.50 kg):")
-P("| Case | max stroke (mm) of 20 | permanent set (mm) | peak foot load (N) | side load (N) | n at CG | end tilt (deg) | drift (mm) |"); P("|---|---|---|---|---|---|---|---|")
+P("Sim = `landing_a.py` (K09-L `team/C5/sim` physics rebuilt standalone for A: 6 dof, 4 elasto-plastic feet, friction 0.40 (assumed, see below), lift 2/3 W to 0.3 s then 0 at 0.6 s, 1.50 kg, current mass list of `landing_a.py` ITEMS (motor assemblies 4 x 88.26 g)):")
+P("| Case | max stroke (mm) of 20 | permanent set (mm) | peak foot load (N) | side load (N) | n at CG | end tilt (deg) | drift (mm) | rib-root RF |"); P("|---|---|---|---|---|---|---|---|---|")
 cases = [("hard 1.2 m/s level", dict(v_sink=1.2)), ("hard, 10 deg narrow", dict(v_sink=1.2, th_n=10)), ("hard, 10 deg wide", dict(v_sink=1.2, th_w=10)),
          ("hard, 7+7 deg combined", dict(v_sink=1.2, th_n=7, th_w=7)), ("hard, 10 narrow + 0.5 m/s drift", dict(v_sink=1.2, th_n=10, drift=0.5)),
          ("hard, 10 wide + 0.5 m/s drift (y)", dict(v_sink=1.2, th_w=10, drift=0.5, drift_dir=math.pi/2)),
@@ -213,11 +213,12 @@ cases = [("hard 1.2 m/s level", dict(v_sink=1.2)), ("hard, 10 deg narrow", dict(
 simres = []
 for name, kw in cases:
     r = landing_a.simulate(Fp=30.0, **kw); simres.append((name, r))
-    P(f"| {name} | {r['dmax_mm'].max():.1f} | {r['sp_mm'].max():.1f} | {r['F'].max():.0f} | {r['side'].max():.0f} | {r['n_peak']:.1f} | {r['tilt_end']:.1f} | {r['drift_end']*1e3:.0f} |")
+    P(f"| {name} | {r['dmax_mm'].max():.1f} | {r['sp_mm'].max():.1f} | {r['F'].max():.0f} | {r['side'].max():.0f} | {r['n_peak']:.1f} | {r['tilt_end']:.1f} | {r['drift_end']*1e3:.0f} | {r['rib_rf']:.2f} |")
 worst_s = max(r['dmax_mm'].max() for _, r in simres); worst_n = max(r['n_peak'] for _, r in simres if True)
 P(f"Worst stroke {worst_s:.1f} mm of 20 (margin {20-worst_s:.1f} mm, {100*(20/worst_s-1):.0f} %): PASS. No tip-over in any case (end tilt <= 3 deg). Peak load factor {worst_n:.1f} g vs A-P5 12 g: {'PASS' if worst_n <= 12 else 'FAIL'} (the 6 mm crush of SIZING-A is replaced: 12 g would need 6 mm only at constant force and a level hit; with 20 mm and 30 N the level hard case is below).")
 P("Pad life: normal landings set 0.8-4 mm; replace the pad at 10 mm cumulative set (a hard landing sets up to 13 mm: replace after any hard landing). Pads are $0 stock (foam); K09-L cartridges not used.")
-P("Side load 15-20 N per foot at mu 0.40 against the K09-L cap (24.5 N at 2.6 kg): scaled by mass the A cap is about 14 N: **side load 20 N is MARGINAL**; a pad face at mu <= 0.3 brings it to 15 N (EST).")
+rib_min = min(r['rib_rf'] for _, r in simres); side_max = max(r['side'].max() for _, r in simres)
+P(f"Side load per foot: worst {side_max:.1f} N at pad mu 0.40 (T-064: the earlier 'scaled K09-L cap about 14 N' (24.5 N x mass ratio) belonged to no part of A and is withdrawn; K09-L's 24.5 N was its own design value set equal to its own sim result, C5 CLOSURE s2, D-138). The limit is now the computed capacity of the failing part: the rib root (14x12 CF tube, x 0.0705 to the fin block) under combined bending (arm 0.2295 m), torsion (lever 0.18 m) and axial load, all four feet resolved in the body frame at every time step (`landing_a.py` rib RF = 1 / sqrt((KF (M/Z + N/A) / 350 MPa)^2 + (KF T r / J / 30 MPa)^2), KF 1.725; both allowables EST, no coupon). Minimum rib-root RF over these cases **{rib_min:.2f}** ({'PASS' if rib_min >= 1.0 else 'FAIL'} at the EST allowables, UNVERIFIED until a twist coupon). The pad friction 0.40 is an assumption carried from K09-L (its pad face was UHMW-PE tape over neoprene, D-105); A's drawn pad is bare EVA/PE foam, friction not measured ('-'): drag-test it; the rib RF reaches 1 at mu about 0.51 in the worst case (`landing_side_a.py`). See AR-012 / D-213 proposals in `mechanism/out/T064_landing_side.md`.")
 
 # ======================================================================= 6. C6 joints
 P("\n## 6. C6 joints, fasteners, bonds (design load = limit x 1.5 x 1.15 [x 1.25 printed/bonded])")
