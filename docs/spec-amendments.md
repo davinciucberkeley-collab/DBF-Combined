@@ -70,3 +70,23 @@ Do not pause execution merely to provide a progress update.
 Continue following the complete master project specification, including persistent task tracking, independent verification, and all previously established requirements.
 Implement this communication protocol now, then resume the existing project work without restarting or changing its scope.
 ```
+
+## AM-002 — 2026-11-19 — Cleanup approval (answer to the dry-run §9 questions)
+Relation: the user's answer to the seven questions in `docs/audits/2026-11-18-cleanup-dryrun.md` §9; it is the
+approval spec 9.3 step 9 requires for removals. Scope as applied (conductor's reading, logged in
+`docs/repository-audit.md` §3): remove items that no current-design file, script, page or claim uses; keep
+everything that is referenced, served, CI-checked or the recorded K09-L film record; no history rewrite.
+Requirement IDs: R-REPO-03, R-REPO-04 (T-041).
+
+```text
+1. For the seven questions, if something is unused let it go, there is not need for them if they do not contribute to our current design
+```
+
+## AM-003 — 2026-11-19 — Team inputs not ready; no DaVinci spend
+Relation: answers the pending asks for James's agent definitions (T-015), the shared aircraft schema (T-034) and
+DaVinci access/spend (T-037); those tasks stay BLOCKED on the team; no money is spent on DaVinci.
+Requirement IDs: R-INT-01 … R-INT-06 (as mapped in `requirements.md`), R-GEN-02.
+
+```text
+For question 3: The agent definitions and aircraft schema have not been completed yet, don't do any DaVinci spend yet
+```

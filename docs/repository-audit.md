@@ -32,7 +32,7 @@ By type: `.BIN` 447 MB, `.mp4` 254, `.png` 215, `.json` 201, `.txt` 105, `.html`
 | History: 1.5 GiB pack | — | Do not touch | Rewriting history needs team authorization (spec 9.3). |
 
 ## 3. Files removed or archived
-None yet. Dry-run facts: `docs/audits/2026-11-18-cleanup-dryrun.md` (T-041a). Measured reclaimable on disk:
+Batches 1 and 2 below. Dry-run facts: `docs/audits/2026-11-18-cleanup-dryrun.md` (T-041a). Measured reclaimable on disk:
 untracked SITL `.BIN` 2 401 MB (all 232 runs keep `case.csv` + `result.json`); 7 merged agent worktrees 4.3–7.9 GB
 (2 fully clean: `agent-a3ad648c…` 1.48 GB, `agent-ab6e7d18…` 0.69 GB); tracked SITL `.BIN` 447 MB (repo size only
 shrinks with a history rewrite, which needs team authorization); 23 K09-L leftovers in `site/assets` 55.5 MB.
@@ -42,6 +42,9 @@ permission classifier on 2026-11-18, so every removal now waits for Dillon's app
 | Date | Batch | Approval | Action | Recovered | Regression |
 |---|---|---|---|---|---|
 | 2026-11-18 | 1 | Dillon in chat: "approved, remove the two clean merged worktrees" | `git worktree remove` `agent-a3ad648c…` (build-film-audit) and `agent-ab6e7d18…`; branches kept (recoverable) | ≈ 2.17 GB disk (untracked; repo size unchanged) | `git worktree list` 8 entries; both branches still listed |
+| 2026-11-19 | 2 | AM-002: "if something is unused let it go" | `git worktree remove` 3 clean merged worktrees (`structures-d9x`, `worktree-agent-a77bd…`, `worktree-agent-a7a16…`; branches kept; their ignored files were K09-L-era FEA/solver `history.csv`); `git rm --cached` 52 tracked SITL `.BIN` (447.2 MB) and deleted all 232 `.BIN` on disk (2,848.4 MB; every run keeps `case.csv` + `result.json`; no script or claim reads a BIN); `git rm` 23 K09-L site copies (55.5 MB; Explorer captions repointed to the kept `showcase/animation` record), `showcase/pages/overview-full.png` (24.7 MB, unreferenced), `Inventory-Overview.html` (5.9 MB, v0.3.1, unlinked), `analysis/cfd3d/out/viz/cfd3d_viz.json` (23.1 MB, old-hybrid CFD panel) and rebuilt `VTOL-Review.html` without the panel (29.1 → 6.0 MB) | ≈ 2.85 GB disk + ≈ 2.3 GB worktrees; tracked tree −≈ 579 MB (history unchanged) | `gather.py` rc 0; `proofs/run_all.py` fails 6 (unchanged); `app.html` / `index.html` 0 missing local links; `git ls-files` 0 `.BIN`; `review/build.mjs` rebuild (build-manual / test-plan SVG drift was pre-existing nondeterminism, committed as rebuilt) |
+| 2026-11-19 | 2 (held) | — | 3 merged worktrees (`worktree-agent-a952e…`, `claude/morph-chart-bc71a6`, `claude/proof-chain-readable-c5026d`) whose only change is a line-ending rewrite of `tools/opencae-studio/launch_opencae.bat` (diff empty with `--ignore-cr-at-eol`): `git worktree remove --force` was blocked by the session permission classifier; waits for Dillon | — | — |
+| 2026-11-19 | kept | AM-002 (used by the current design) | Site animation copies (Explorer serves them), `showcase/animation` K09-L record films, `graph.js`/`graph.json`, CI-checked root pages, unmerged `ui-redesign-survey` worktree; Q7 (CI publish step) is a future change, not a removal | — | — |
 
 ## 4–12. Consolidation, dependencies, space recovered, benchmarks, regression tests, remaining inefficiencies, preserved references, risks
 Pending T-041…T-045. Benchmarks to take before any change (T-043): `collide_a.py` wall time, concept A
