@@ -1987,7 +1987,7 @@
   {
    "id": "CALC-A-ROD-LEG-STALL-READ",
    "type": "calculation",
-   "title": "Stored result: Z-bend leg: yield needed at 1.5 x the 51 N stall force vs the A228 music-wire allowable",
+   "title": "Stored result: Z-bend leg: yield needed at 1.5 x the 51 N stall force, rod lifted against the keeper (e 1.9 mm), vs the A228 music-wire allowable",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "read_value",
    "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
@@ -1998,16 +1998,16 @@
     "ASM-A-ROD-GRADE"
    ],
    "outputs": {
-    "v": 1172.0
+    "v": 1392.0
    },
    "input_values": {
-    "v": 1172.0
+    "v": 1392.0
    }
   },
   {
    "id": "CL-A-ROD-LEG-STALL",
    "type": "claim",
-   "title": "Z-bend leg: yield needed at 1.5 x the 51 N stall force vs the A228 music-wire allowable",
+   "title": "Z-bend leg: yield needed at 1.5 x the 51 N stall force, rod lifted against the keeper (e 1.9 mm), vs the A228 music-wire allowable",
    "calc": "CALC-A-ROD-LEG-STALL-READ",
    "output": "v",
    "unit": "MPa",
@@ -2026,11 +2026,11 @@
     "WNG-006-R",
     "WNG-006-L"
    ],
-   "how": "Receipt test of a formed M02 rod at 77 N (1.5 x 51 N) along the rod, 10 s, no permanent set over 0.2 mm; else A228 1.2 mm wire.",
+   "how": "Receipt test of a formed M02 rod at 91 N (1.5 x 51 N x e_hi / e_lo = 1.9 / 1.6, rod lifted against the keeper, review r3 m-3) along the rod, 10 s, no permanent set over 0.2 mm; else A228 1.2 mm wire.",
    "assumes": [
     "ASM-A-ROD-GRADE"
    ],
-   "value": 1172.0
+   "value": 1392.0
   },
   {
    "id": "CALC-A-HORN-SHEAROUT-STALL-READ",
@@ -2205,7 +2205,7 @@
     "MEC-008-R",
     "MEC-008-L"
    ],
-   "how": "E1: measure the trailing-edge free play with the servo powered at neutral (dial gauge, +-0.05 mm); the hinge damper (FIXES2 s1) makes flutter independent of K, so a FAIL here is a control-precision item, not a flutter item.",
+   "how": "BASIS = FLUTTER (review r3 m-7): the 1 deg limit is the SERVO.md s4 flutter guide, the only sourced number; a control-precision limit has none. BUILD D5b / E1: measure the BUILT trailing-edge free play with the servo powered at neutral (dial gauge, +-0.05 mm); the budget excludes servo gear backlash and the clevis cheek holes (both '-'). The hinge damper (FIXES2 s1) removes the linear flutter dependence on K, but a free-play limit cycle is nonlinear and not covered, so a measured value above 1 deg stays a FAIL; the +-20 deg endpoints (1 deg short of the 21 deg stop) prevent a servo-driven stall only.",
    "value": 1.28
   },
   {

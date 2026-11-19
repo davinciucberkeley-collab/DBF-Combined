@@ -907,18 +907,18 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
       - `SRC-A-LINKLOADS` (see above)
     - `ASM-A-PETG-ALLOW` (see above)
   - `P:linkage.petg_allow_mpa` (see above)
-- claim **CL-A-ROD-LEG-STALL** Z-bend leg: yield needed at 1.5 x the 51 N stall force vs the A228 music-wire allowable = **1172 MPa** (limit <= 1680 MPa, margin +30%) — **UNVERIFIED**
+- claim **CL-A-ROD-LEG-STALL** Z-bend leg: yield needed at 1.5 x the 51 N stall force, rod lifted against the keeper (e 1.9 mm), vs the A228 music-wire allowable = **1392 MPa** (limit <= 1680 MPa, margin +17%) — **UNVERIFIED**
   - ⚠ uses ASM-A-ROD-GRADE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
-  - ⚠ uses P:linkage.rod_yield_req_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625)
+  - ⚠ uses P:linkage.rod_yield_req_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625, rod lifted against the keeper (e 1.9 mm, review r3 m-3; was 1.6 mm, 1172 MPa); stall basis: 0.397 N m at 7.2 V, valid with the Kakute rail jumper at 7.2 V (m-8; 8.4 V is not available from the FC, would give about 59 N))
   - ⚠ uses ASM-A-ROD-GRADE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses P:linkage.a228_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: A228 music wire bending allowable 0.78 S_ut at 1.2 mm (Shigley constants RECALLED, not re-read))
-  - how to verify: Receipt test of a formed M02 rod at 77 N (1.5 x 51 N) along the rod, 10 s, no permanent set over 0.2 mm; else A228 1.2 mm wire.
+  - how to verify: Receipt test of a formed M02 rod at 91 N (1.5 x 51 N x e_hi / e_lo = 1.9 / 1.6, rod lifted against the keeper, review r3 m-3) along the rod, 10 s, no permanent set over 0.2 mm; else A228 1.2 mm wire.
   - parts: MEC-003-R, MEC-003-L, MEC-004-R, MEC-004-L, WNG-006-R, WNG-006-L
   - assumption `ASM-A-ROD-GRADE` The 1.2 mm M02 rod has a bending allowable >= the 1172 MPa the Z-bend leg needs at 1.5 x the 51 N stall force (basis: D-212 rev 3: RMRC publishes 'steel' only; the A228 constants (S_ut = 2211 / d^0.145 MPa, bending 0.78 S_ut, Shigley Tables 10-4 / 10-6) are RECALLED, not re-read. Receipt test: 77 N along the formed rod, 10 s, no permanent set over 0.2 mm, else A228 wire) — **UNVERIFIED**
     - ⚠ assumption marked UNVERIFIED by its author
   - calc `CALC-A-ROD-LEG-STALL-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header` — **CHECKED**
-    - `v` ← param `P:linkage.rod_yield_req_mpa` = 1172 MPa — **UNVERIFIED**
-      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625
+    - `v` ← param `P:linkage.rod_yield_req_mpa` = 1392 MPa — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625, rod lifted against the keeper (e 1.9 mm, review r3 m-3; was 1.6 mm, 1172 MPa); stall basis: 0.397 N m at 7.2 V, valid with the Kakute rail jumper at 7.2 V (m-8; 8.4 V is not available from the FC, would give about 59 N)
       - `SRC-A-LINKLOADS` (see above)
     - `ASM-A-ROD-GRADE` (see above)
   - param `P:linkage.a228_allow_mpa` = 1680 MPa — **UNVERIFIED**
@@ -960,7 +960,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
 - claim **CL-A-LINKAGE-FREEPLAY** Elevon linkage free play from the hole clearances and the Z-bend freedom (clevis cheek holes '-') = **1.28 deg** (limit <= 1 deg, margin -28%) — **UNVERIFIED** **FAILS**
   - ⚠ FAILS: margin -28.0% (1.28 deg vs <= 1 deg)
   - ⚠ uses P:linkage.free_play_deg, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: arm hole 0.1 + horn hole 0.1 mm over the 9.155 mm horn + Z-bend freedom; clevis cheek holes '-')
-  - how to verify: E1: measure the trailing-edge free play with the servo powered at neutral (dial gauge, +-0.05 mm); the hinge damper (FIXES2 s1) makes flutter independent of K, so a FAIL here is a control-precision item, not a flutter item.
+  - how to verify: BASIS = FLUTTER (review r3 m-7): the 1 deg limit is the SERVO.md s4 flutter guide, the only sourced number; a control-precision limit has none. BUILD D5b / E1: measure the BUILT trailing-edge free play with the servo powered at neutral (dial gauge, +-0.05 mm); the budget excludes servo gear backlash and the clevis cheek holes (both '-'). The hinge damper (FIXES2 s1) removes the linear flutter dependence on K, but a free-play limit cycle is nonlinear and not covered, so a measured value above 1 deg stays a FAIL; the +-20 deg endpoints (1 deg short of the 21 deg stop) prevent a servo-driven stall only.
   - parts: MEC-002-R, MEC-002-L, MEC-003-R, MEC-003-L, MEC-004-R, MEC-004-L, MEC-008-R, MEC-008-L
   - calc `CALC-A-LINKAGE-FREEPLAY-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `read from mechanism/out/linkage_kinematics.json free_play_budget_deg (python -I redesign/qp/A/mechanism/elevon_linkage.py)` — **CHECKED**
     - `v` ← param `P:linkage.free_play_deg` = 1.28 deg — **UNVERIFIED**
@@ -1593,11 +1593,11 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-u4
   - calc `CALC-A-COLL-COUNT-READ` `redesign/qp/A/proofs/claims_a3_program.py::read_value()`: `count of hits with depth > tolerance in cad/out/report_pose20.json and report_pose21.json; read, not re-run` — **CHECKED**
     - `v` ← param `P:cad3d.n_over_tol` = 0 — **CHECKED**
       - source `SRC-A-COLL` [Collision gate output (cad/out/report*.json, REPORT.md)](redesign/qp/A/cad/out/REPORT.md), report_pose20 / report_pose21 / report.json: 96 parts, 444 bodies, tolerance 0.05 mm (2026-11-15, D-194), checked 2026-11-15 — **CHECKED**
-- claim **CL-A-COLL-DEPTH** Deepest part overlap at any reachable pose = **0.042 mm** (limit <= 0.05 mm, margin +16%) — **CHECKED**
-  - how to verify: collide_a.py report (D-194): the only hits under the 0.05 mm gate are the two balance horn tabs touching their stop bosses at the +21 deg stop (0.042 mm, WNG-007 on WNG-008, a designed contact) and one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); +-22 deg is past the stop and is not a reachable pose.
+- claim **CL-A-COLL-DEPTH** Deepest part overlap at any reachable pose = **0.034 mm** (limit <= 0.05 mm, margin +32%) — **CHECKED**
+  - how to verify: collide_a.py report after D-212 rev 3 (report_d212r3_pose21.json, review r3 m-9): ten static hits, all under the 0.05 mm gate, the deepest one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); the +-21 deg poses show none (the 0.042 mm balance-tab contact of the pre-D-212 report_pose21.json is gone). The +-20 deg poses are read from the pre-D-212 report_pose20.json (0 hits) and were NOT rerun for rev 3; +-22 deg is past the stop and is not a reachable pose.
   - parts: WNG-007-R, WNG-007-L, WNG-008-RU, WNG-008-LU, HWC-001, HWC-003
-  - calc `CALC-A-COLL-DEPTH-READ` `redesign/qp/A/proofs/claims_a3_program.py::read_value()`: `largest depth_mm over the reachable poses in the stored reports; read, not re-run` — **CHECKED**
-    - `v` ← param `P:cad3d.max_depth_mm` = 0.042 mm — **CHECKED**
+  - calc `CALC-A-COLL-DEPTH-READ` `redesign/qp/A/proofs/claims_a3_program.py::read_value()`: `largest depth_mm over the reachable poses in report_d212r3_pose21.json and report_pose20.json; read, not re-run` — **CHECKED**
+    - `v` ← param `P:cad3d.max_depth_mm` = 0.034 mm — **CHECKED**
       - `SRC-A-COLL` (see above)
   - param `P:req.coll_tol_mm` = 0.05 mm — **CHECKED**
     - `SRC-A-COLL` (see above)

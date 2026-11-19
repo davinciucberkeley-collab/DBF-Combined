@@ -24,8 +24,12 @@ FFmpeg 9.0.2 (gyan.dev full build, `winget install Gyan.FFmpeg`, user scope, app
 
 All four: constant 60 fps, video only (no audio stream), 0 decode errors from a decoder independent of the Blender encoder. 9,714 frames total.
 
+## Agent routing check (T-013)
+2026-11-19: the `ledger-auditor` agent (model per `.claude/agents/ledger-auditor.md` line 4: haiku) was run for the independent setup check (R-ORC-01, R-ORC-02, R-COM-03). Its reply used the required one-line shape from `.claude/agents/ledger-auditor.md` line 10:
+`Task | Outcome | Verification | Evidence | Blocker`, with the details in the evidence file (scratchpad `setup-check.md`, 17 rows: PASS 7, FAIL 6, CANNOT CHECK 4). Other definitions: `eng-reviewer` opus, `implementer` sonnet, `runner` haiku (frontmatter `model:` line 4 of each file). Run row in `docs/model-usage.md`.
+
 ## Milestone audits (T-011, T-048)
-_not run yet_
+T-011: run 2026-11-18, `docs/audits/2026-11-18-ledger.md` (haiku accounting audit, 21 gaps fixed). T-048 milestone audits: not run yet.
 
 ## Video verification (T-033)
 Reviewer: independent opus review agent, 2026-11-18, tree `39eb5b84` (clean). Full findings: `docs/audits/2026-11-18-film-final-review.md`. Decoder: Blender 4.5.14 bundled libavcodec (`--debug-ffmpeg`), VSE strip, every frame rendered to PNG and read back; container read independently with a Python MP4 box parser. No ffmpeg/ffprobe on the machine.
@@ -55,4 +59,4 @@ Decode total of the re-check: 9,714 frames, 0 decode errors. R-VID-15: decode an
 
 
 ## Final verification (T-047)
-_not run yet_
+T-011: run 2026-11-18, `docs/audits/2026-11-18-ledger.md` (haiku accounting audit, 21 gaps fixed). T-048 milestone audits: not run yet.

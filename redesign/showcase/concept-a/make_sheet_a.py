@@ -10,6 +10,7 @@ left untouched. Dimensions come from the CAD itself, not from K09-L's params.jso
 motor stations from the cup origins, APC 9x4.5MR = 9 in, fin tube 0.36 m); CG x from qp/A/params-A.json (mass.cg_x_mm,
 CAD mass). The block `<!-- GA-SHEET:a1 -->` in redesign/site/app.html is replaced with the A sheet.
 """
+import csv
 import json
 import os
 import re
@@ -24,7 +25,7 @@ P = json.load(open(os.path.join(REDESIGN, 'qp', 'A', 'params-A.json'), encoding=
 V = json.load(open(os.path.join(SRC, 'views.json'), encoding='utf-8'))
 
 SHEET_W, GUTTER, SCALE = 1200, 48, 520.0
-DATE = '2026-11-15'
+DATE = '2026-11-19'
 NBSP = ' '
 
 # CAD facts (m), see the module docstring
@@ -204,7 +205,7 @@ def build(prefix, mk, standalone=False):
              'Hover: nose up on the four fin-tip feet; props cant 17°.',
              'Elevon panels at y %s–%s mm each side.' % (mm(elev_in), mm(elev_out)),
              'Dashed: prop disc, hidden spar. Blue: dimension, mm.',
-             'Geometry: qp/A/cad CAD build, 98 parts.']
+             'Geometry: qp/A/cad CAD build, %d parts.' % P['cad3d']['parts']['value']]  # modelled parts (collision report); parts-a.csv also lists the consumable kits HRN-001 / HRD-001
     for i, ln in enumerate(notes):
         o.append(text(nx, ny + i * 15, ln, 'ga-note'))
 

@@ -7,16 +7,12 @@ Append one row per delegated task. Review at each milestone: are opus runs justi
 | 2026-11-18 | T-016 capability audit | general-purpose / sonnet | moderate (read-heavy, cross-file) | done, 132-line audit | 135 k tok / 3.0 min | 0 | — | — |
 | 2026-11-18 | T-026 video pipeline audit | general-purpose / sonnet | moderate | done (stopped its leftover full-disk ffmpeg search) | 118 k tok / 4.6 min | 0 | — | conductor spot-check OK |
 | 2026-11-18 | T-011 registry vs spec | general-purpose / haiku | routine accounting | done, 71 findings, most valid | 145 k tok / 3.2 min | 0 | — | conductor applied fixes |
-
-Note 2026-11-18: the project agents in `.claude/agents/` were written mid-session and are not loaded until the next
-session (Agent tool: "Agent type 'implementer' not found"). Until then the same routing is applied with the
-`model` override on `general-purpose`. Next-session check: T-013 acceptance. Update 2026-11-18: the harness loaded them later in this session (eng-reviewer, implementer, ledger-auditor, runner now offered by the Agent tool).
 | 2026-11-18 | T-018..T-021 elevon linkage kinematics, dynamics, swept collision | general-purpose / sonnet | moderate-high (spatial linkage) | done; found 3 real defects; records file refused by subagent Write policy, written by conductor | 223 k tok / 14 min | 0 | — | conductor reran all 3, hand-checked 2 numbers |
 | 2026-11-18 | T-027 film shot-list mode + 1080p60 preview | general-purpose / sonnet | moderate (pipeline extension) | done, preview OK, framing defects | 181 k tok / 15.6 min | 0 | — | conductor viewed contact sheet |
 | 2026-11-18 | T-061 D-212 linkage fix + gates | general-purpose / sonnet | high (CAD change + gates) | own checks pass; rejected by opus review (joint modelled ≠ joint built) | 228 k tok / 38 min | 1 (revision) | — | eng-reviewer/opus: reject, 1 critical + 4 major |
 | 2026-11-18 | T-061 review | eng-reviewer / opus | high-impact independent review | reject with required fixes; reproduced all claimed numbers | 115 k tok / 10.6 min | 0 | — | — |
-| 2026-11-18 | T-017 physics relabel | general-purpose / sonnet | moderate (judgment on wording) | running | — | 0 | — | — |
-| 2026-11-18 | T-041a cleanup dry-run facts | general-purpose / haiku | routine (grep/inventory) | running | — | 0 | — | — |
+| 2026-11-18 | T-017 physics relabel | general-purpose / sonnet | moderate (judgment on wording) | done; T-017 VERIFIED COMPLETE (commit 164c815a) | — | 0 | — | independent check recorded in the ledger |
+| 2026-11-18 | T-041a cleanup dry-run facts | general-purpose / haiku | routine (grep/inventory) | done; dry-run report `docs/audits/2026-11-18-cleanup-dryrun.md`; parent T-041 READY FOR REVIEW (batches approved and done 2026-11-18/19) | — | 0 | — | conductor used it for the approval request |
 | 2026-11-18 | T-063 D-212 rev 2 | general-purpose / sonnet (resumed) | high | linkage accepted; printed horn bond rejected by 2nd review | 333 k tok / 37 min | 2 | — | eng-reviewer/opus: reject (C-1 bond model invalid, 5 majors) |
 | 2026-11-18 | T-063 rev 2 review | eng-reviewer / opus | high-impact review | reject with fixes; all numbers reproduced | — | 0 | — | — |
 | 2026-11-18 | T-063 rev 3 horn attachment | implementer / opus | high (after 2 failed rounds) | rib horn + keeper; gates pass; 5 FAIL claims vs EST allowables gated on E1 coupon | 446 k tok / 64 min | 0 | escalated sonnet → opus: two rejected rounds on the same subsystem, approach change needed | — |
@@ -32,3 +28,12 @@ session (Agent tool: "Agent type 'implementer' not found"). Until then the same 
 | 2026-11-18 | T-030/T-033 final film sign-off | eng-reviewer / opus | high-impact review (rendered films) | full decode 0 errors all 4 files; visual: N-1 readout covered, N-2 no exploded view/arrows/dims (R-VID-08), N-3 card -dirty | — | 0 | — | — |
 | 2026-11-18 | Film final-review fixes (N-1, N-2, minors) | implementer / sonnet | moderate | exploded view 2.6, span dim, servo arrow; 119.9 s; 801 frames re-rendered | — | 0 | — | — |
 | 2026-11-18 | T-033 re-check | eng-reviewer / opus (resumed) | high-impact review | PASS: full decode 0 errors, N-1..N-3 fixed | — | 0 | — | — |
+| 2026-11-19 | Setup check, 17 ledger rows | ledger-auditor / haiku | routine accounting + scratch tamper tests | PASS 7, FAIL 6, CANNOT CHECK 4; findings drove this doc fix | 149 k tok / 7.4 min | 0 | — | conductor applying fixes |
+| 2026-11-19 | Mechanism review (T-018..T-021, T-041) | eng-reviewer / sonnet | high-impact independent review | T-018 and T-019 verified; T-021 not; T-041 verified with a finding | 57 k tok / 2.0 min | 0 | — | — |
+| 2026-11-19 | T-062 Explorer site numbers | implementer / sonnet | moderate (numbers from generators) | done | 114 k tok / 3.9 min | 0 | — | — |
+| 2026-11-19 | Elevon minors m-3..m-9 + T-056 | implementer / sonnet | moderate | running | — | 0 | — | — |
+| 2026-11-19 | Setup-check fixes (session-state, execution plan, model-usage, audit tool, compact-test record) | implementer / sonnet | moderate (docs + small tool change) | this change | — | 0 | — | independent re-check pending |
+
+Note 2026-11-18: the project agents in `.claude/agents/` were written mid-session and are not loaded until the next
+session (Agent tool: "Agent type 'implementer' not found"). Until then the same routing is applied with the
+`model` override on `general-purpose`. Next-session check: T-013 acceptance. Update 2026-11-18: the harness loaded them later in this session (eng-reviewer, implementer, ledger-auditor, runner now offered by the Agent tool).

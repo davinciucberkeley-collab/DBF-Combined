@@ -1323,10 +1323,10 @@
    "status": "UNVERIFIED"
   },
   "rod_yield_req_mpa": {
-   "value": 1172.0,
+   "value": 1392.0,
    "unit": "MPa",
    "source": "SRC-A-LINKLOADS",
-   "note": "Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625",
+   "note": "Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625, rod lifted against the keeper (e 1.9 mm, review r3 m-3; was 1.6 mm, 1172 MPa); stall basis: 0.397 N m at 7.2 V, valid with the Kakute rail jumper at 7.2 V (m-8; 8.4 V is not available from the FC, would give about 59 N)",
    "status": "UNVERIFIED"
   },
   "a228_allow_mpa": {
@@ -1361,7 +1361,7 @@
    "value": 1.0,
    "unit": "deg",
    "source": "SRC-A-SERVOMD",
-   "note": "SERVO.md s4: free play <= 1 deg (flutter target; FIXES2 s1: with the hinge damper flutter does not depend on K)"
+   "note": "SERVO.md s4: free play <= 1 deg (FLUTTER basis, review r3 m-7; FIXES2 s1: with the hinge damper the linear flutter result does not depend on K; free-play limit cycles not covered)"
   }
  },
  "cost": {
@@ -1865,13 +1865,13 @@
    "value": 0,
    "unit": "-",
    "source": "SRC-A-COLL",
-   "note": "cad/out/report_pose20.json + report_pose21.json (= report.json): overlaps deeper than the tolerance at neutral, +-20 and +-21 deg"
+   "note": "cad/out/report_d212r3_pose21.json (D-212 rev 3, neutral and +-21 deg) + report_pose20.json (pre-D-212, +-20 deg, not rerun for rev 3): overlaps deeper than the tolerance"
   },
   "max_depth_mm": {
-   "value": 0.042,
+   "value": 0.034,
    "unit": "mm",
    "source": "SRC-A-COLL",
-   "note": "deepest overlap at any reachable pose (neutral, +-20, +-21 deg): 0.042 mm, balance tab on its stop boss at +21 deg (D-194)"
+   "note": "deepest overlap at any reachable pose: 0.034 mm static at neutral and +-21 deg (report_d212r3_pose21.json, D-212 rev 3; was 0.042 mm in the pre-D-212 report_pose21.json); the +-20 deg poses come from the pre-D-212 report_pose20.json (0 hits, not rerun for rev 3)"
   },
   "wire_ends_open": {
    "value": 0,

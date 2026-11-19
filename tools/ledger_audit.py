@@ -12,6 +12,9 @@ column is an ID). Checks:
   * spec-amendments.md still starts with its sealed prefix (append-only)
   * every requirement has >= 1 task; every task's parent requirement exists
   * every VERIFIED COMPLETE task names evidence; status words are from the allowed set
+  * a VERIFIED COMPLETE task's evidence may name repo paths; each backticked or path-like token
+    (has a slash and a file extension; URLs, absolute/scratch paths, globs, placeholders ignored)
+    must exist in the repo (relative to the repo root). A bare file name (no slash) is not checked.
 """
 import hashlib, pathlib, re, sys
 
@@ -38,6 +41,25 @@ def rows(path, idpat):
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
         if cells and re.fullmatch(idpat, cells[0].strip("`*")):
             out.append([c.strip("`") for c in cells])
+    return out
+
+
+PATHTOK = re.compile(r"`([^`\s]+/[^`\s]*\.[A-Za-z0-9]{1,5})`|(?<![\w/.:`])((?:[\w.\-]+/)+[\w.\-]+\.[A-Za-z0-9]{1,5})(?![\w/`])")
+
+
+def evidence_paths(cell):
+    """Conservative repo-path candidates in an evidence cell."""
+    cell = re.sub(r"https?://\S+", " ", cell)
+    out = []
+    for a, b in PATHTOK.findall(cell):
+        tok = (a or b).rstrip(".,;:)")
+        if re.match(r"([A-Za-z]:|[\\/~])", tok) or any(c in tok for c in "*<>{}$") or ".." in tok:
+            continue  # absolute, scratch, glob, placeholder
+        if re.fullmatch(r"[0-9a-f]{7,40}", tok.split("/")[0]):
+            continue  # commit hash prefix
+        if not re.search(r"\.[A-Za-z][A-Za-z0-9]{0,4}$", tok):
+            continue  # extension must contain a letter (3.1/3.2 is a section number)
+        out.append(tok)
     return out
 
 
@@ -82,6 +104,10 @@ def audit():
             covered.add(p)
         if st in ("VERIFIED COMPLETE", "READY FOR REVIEW") and t[7] in ("", "—", "-"):
             errs.append(f"{t[0]}: {st} without evidence")
+        if st == "VERIFIED COMPLETE":
+            for tok in evidence_paths(t[7]):
+                if not (ROOT / tok).exists():
+                    errs.append(f"{t[0]}: evidence path not found in repo: {tok}")
     for r in sorted(rids - covered):
         errs.append(f"{r}: no task")
     open_tasks = [t for t in tasks if len(t) >= 9 and t[8].strip("* ") not in ("VERIFIED COMPLETE",)]

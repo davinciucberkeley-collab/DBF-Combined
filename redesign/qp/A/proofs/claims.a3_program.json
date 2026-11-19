@@ -666,15 +666,15 @@
    "title": "Stored result: Deepest part overlap at any reachable pose",
    "script": "redesign/qp/A/proofs/claims_a3_program.py",
    "function": "read_value",
-   "equation": "largest depth_mm over the reachable poses in the stored reports; read, not re-run",
+   "equation": "largest depth_mm over the reachable poses in report_d212r3_pose21.json and report_pose20.json; read, not re-run",
    "inputs": {
     "v": "P:cad3d.max_depth_mm"
    },
    "outputs": {
-    "v": 0.042
+    "v": 0.034
    },
    "input_values": {
-    "v": 0.042
+    "v": 0.034
    }
   },
   {
@@ -699,8 +699,8 @@
     "HWC-001",
     "HWC-003"
    ],
-   "how": "collide_a.py report (D-194): the only hits under the 0.05 mm gate are the two balance horn tabs touching their stop bosses at the +21 deg stop (0.042 mm, WNG-007 on WNG-008, a designed contact) and one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); +-22 deg is past the stop and is not a reachable pose.",
-   "value": 0.042
+   "how": "collide_a.py report after D-212 rev 3 (report_d212r3_pose21.json, review r3 m-9): ten static hits, all under the 0.05 mm gate, the deepest one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); the +-21 deg poses show none (the 0.042 mm balance-tab contact of the pre-D-212 report_pose21.json is gone). The +-20 deg poses are read from the pre-D-212 report_pose20.json (0 hits) and were NOT rerun for rev 3; +-22 deg is past the stop and is not a reachable pose.",
+   "value": 0.034
   },
   {
    "id": "CALC-A-WIRE-ENDS-READ",

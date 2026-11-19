@@ -183,8 +183,8 @@ for cid, title, param, lim, extra, how in [
         ("CL-A-HORN-BLADE-STALL", "Printed horn blade bending at the 51 N stall force (x 1.4375)", "P:linkage.blade_root_stall_mpa", "P:linkage.petg_allow_mpa", ["ASM-A-PETG-ALLOW"], COUPON),
         ("CL-A-HORN-BEARING-HOLD", "Clevis pin bearing in the 2 mm horn at 1.5 x VD hold (x 2.156)", "P:linkage.bearing_hold_mpa", "P:linkage.petg_allow_mpa", ["ASM-A-PETG-ALLOW"], COUPON),
         ("CL-A-HORN-BEARING-STALL", "Clevis pin bearing in the 2 mm horn at the 51 N stall force (x 1.4375)", "P:linkage.bearing_stall_mpa", "P:linkage.petg_allow_mpa", ["ASM-A-PETG-ALLOW"], COUPON),
-        ("CL-A-ROD-LEG-STALL", "Z-bend leg: yield needed at 1.5 x the 51 N stall force vs the A228 music-wire allowable", "P:linkage.rod_yield_req_mpa", "P:linkage.a228_allow_mpa", ["ASM-A-ROD-GRADE"],
-         "Receipt test of a formed M02 rod at 77 N (1.5 x 51 N) along the rod, 10 s, no permanent set over 0.2 mm; else A228 1.2 mm wire.")]:
+        ("CL-A-ROD-LEG-STALL", "Z-bend leg: yield needed at 1.5 x the 51 N stall force, rod lifted against the keeper (e 1.9 mm), vs the A228 music-wire allowable", "P:linkage.rod_yield_req_mpa", "P:linkage.a228_allow_mpa", ["ASM-A-ROD-GRADE"],
+         "Receipt test of a formed M02 rod at 91 N (1.5 x 51 N x e_hi / e_lo = 1.9 / 1.6, rod lifted against the keeper, review r3 m-3) along the rod, 10 s, no permanent set over 0.2 mm; else A228 1.2 mm wire.")]:
     stored(cid, title, param, "kPa" if "kpa" in param else "MPa", limit=("<=", lim), verifies=["A-P13"], parts=LINK_PARTS, assumes=extra, how=how, equation=LINK_EQ)
 stored("CL-A-HORN-SHEAROUT-STALL", "Horn hole shear-out (1.65 mm ligament) at the 51 N stall force (x 1.4375); allowable PETG 20 MPa / sqrt(3) EST", "P:linkage.shearout_stall_mpa", "MPa",
        limit=("<=", "P:linkage.shearout_allow_mpa"), verifies=["A-P13"], parts=LINK_PARTS, assumes=["ASM-A-PETG-ALLOW"],
@@ -208,7 +208,7 @@ kit.claim("CL-A-HORN-STALL-BENCH", "Bench stall test on the built aircraft: 51 N
 
 stored("CL-A-LINKAGE-FREEPLAY", "Elevon linkage free play from the hole clearances and the Z-bend freedom (clevis cheek holes '-')", "P:linkage.free_play_deg", "deg",
        limit=("<=", "P:linkage.free_play_guide_deg"), verifies=["A-P13"], parts=["MEC-002-R", "MEC-002-L", "MEC-003-R", "MEC-003-L", "MEC-004-R", "MEC-004-L", "MEC-008-R", "MEC-008-L"],
-       how="E1: measure the trailing-edge free play with the servo powered at neutral (dial gauge, +-0.05 mm); the hinge damper (FIXES2 s1) makes flutter independent of K, so a FAIL here is a control-precision item, not a flutter item.",
+       how="BASIS = FLUTTER (review r3 m-7): the 1 deg limit is the SERVO.md s4 flutter guide, the only sourced number; a control-precision limit has none. BUILD D5b / E1: measure the BUILT trailing-edge free play with the servo powered at neutral (dial gauge, +-0.05 mm); the budget excludes servo gear backlash and the clevis cheek holes (both '-'). The hinge damper (FIXES2 s1) removes the linear flutter dependence on K, but a free-play limit cycle is nonlinear and not covered, so a measured value above 1 deg stays a FAIL; the +-20 deg endpoints (1 deg short of the 21 deg stop) prevent a servo-driven stall only.",
        equation="read from mechanism/out/linkage_kinematics.json free_play_budget_deg (python -I redesign/qp/A/mechanism/elevon_linkage.py)")
 
 kit.claim("CL-A-VIB-GM-SHIFT", "Rate-loop gain margin with the cage modes shifted +-20 %", calc="CALC-A-VIB-GM-SHIFT", output="gm", unit="-",

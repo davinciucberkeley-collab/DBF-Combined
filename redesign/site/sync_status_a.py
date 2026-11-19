@@ -22,7 +22,7 @@ PHASES = [
     ("DONE", "Pre-order validation", "QP-3: SITL flight, structures, cost and schedule, CAD through the 3-D gates (D-185, D-186)"),
     ("DONE", "Fixes and board re-sit", "QP-4: elevon balance and hinge damper, caps and stops (D-187, D-188); Order 1 YES, main order NOT YET"),
     ("DONE", "Claims and real-shape CAD", "QP-5: claims cleared (D-189 to D-192), CAD to vendor geometry (D-193, D-194), analyses on it (D-195), hub walls (D-196), arms and motor cups (D-197)"),
-    ("PARTIAL", "Enclosed wiring", "C8 (D-199): phase leads enclosed from motor to ESC (arm tubes, hub conduits, raceway under the tray, foam ditch, bay cover), servo leads in foam grooves; exposed wire 9.09 to 0.87 strand-m; pitot tube run not designed"),
+    ("PARTIAL", "Enclosed wiring", "C8 (D-199): phase leads enclosed from motor to ESC (arm tubes, hub conduits, raceway under the tray, foam ditch, bay cover), servo leads in foam grooves; exposed wire 9.09 to 1.02 strand-m (wire_inventory.json 2026-11-18); pitot tube run not designed"),
     ("NOT STARTED", "Order 1 and bench", "bench kit early December: thrust, current, yaw (M1 to M4), elevon coupon E1, weigh-in, hub and cup coupons"),
     ("NOT STARTED", "Main order", "gates G1 to G9 (QP-4 BOARD s4); latest safe date 28 Dec"),
     ("NOT STARTED", "Build and tethered hover", "January to February; lifeboat (ZOHD Altus) if no tethered hover by 15 Feb 2027"),
@@ -30,7 +30,7 @@ PHASES = [
 ]
 
 ISSUES = [
-    ("<b>Exposed wiring</b> (hard constraint C8): after D-199, 0.87 strand-m are still outside the skin (was 9.09; 0.60 without the vendor pack leads). The phase run is enclosed. What is left: vendor pack leads and the battery tail to the cover slot, short RX / airspeed / servo lead stubs, and the pitot silicone tube, which is not designed (0.45 m from the probe to the sensor, needs a foam groove across the spar).",
+    ("<b>Exposed wiring</b> (hard constraint C8): after D-199, 1.02 strand-m are still outside the skin (was 9.09; 0.86 without the vendor pack leads; wire_inventory.json 2026-11-18). The phase run is enclosed. What is left: vendor pack leads and the battery tail to the cover slot, short RX / airspeed / servo lead stubs, and the pitot silicone tube, which is not designed (0.45 m from the probe to the sensor, needs a foam groove across the spar).",
      "harness, CAD", "CLAUDE.md C8; " + L("review/QP-5/HARNESS-ENCLOSED.md", "HARNESS-ENCLOSED.md") + " s5", B("FAIL", "OPEN")),
     ("<b>Hub arm-socket wall</b>, 2.0 mm over the 12 mm mouth: the rough hoop check passes only with a 12 mm bearing patch (MS +0.05; <b>-0.47</b> at 6 mm).",
      "structures, bench", "ASM-A-HUB-WALL, D-196, " + L("qp/A/structures/qp5_checks.md", "qp5_checks.md") + " s2", B("UNVERIFIED")),

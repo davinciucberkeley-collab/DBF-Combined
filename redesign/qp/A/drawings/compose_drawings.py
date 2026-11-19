@@ -33,6 +33,12 @@ PROCESS = {
     'other': 'See the material and the feature table.',
 }
 
+# Part-specific process notes (D-212 rev 3, review r3 m-5): printed here AFTER the generic process line; keyed by drawing id.
+PART_NOTES = {
+    'MEC-004': ' ORIENTATION: PRINT FLAT on the 2.0 mm face (BUILD D3). Hole: STL = finished 1.1 mm; print 0.9 mm, ream 1.1 mm.',
+    'MEC-008': ' ORIENTATION: PRINT FLAT, bridge face down (BUILD D2a). Retorque the M2 screw and inspect at D5b and each preflight.',
+}
+
 
 def pieces(stl):
     """Number of separate solids in an STL (1 = one printable piece; more = a body floating free of the part)."""
@@ -252,7 +258,7 @@ def title_block(fig, job, meta, sheet, nsheets, k, rev):
     ax.text(0.1, 0.95, '\n'.join(lines), fontsize=7, va='top', color=INK, linespacing=1.45)
     ax.plot([0, w], [1.02, 1.02], color=INK, lw=0.6)
     stls = ', '.join('stl/%s.stl' % p for p in sorted((meta.get('stl') or {}).keys()))
-    fig.text(0.6 / W_IN, 0.4 / H_IN, '\n'.join(textwrap.wrap('Process: ' + PROCESS[job['family']].replace('%s', stls or '-'), 150)),
+    fig.text(0.6 / W_IN, 0.4 / H_IN, '\n'.join(textwrap.wrap('Process: ' + PROCESS[job['family']].replace('%s', stls or '-') + PART_NOTES.get(job['id'], ''), 150)),
              fontsize=7.5, color=INK, va='bottom')
 
 

@@ -2,7 +2,7 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-19 03:14 UTC",
+  "generated": "2026-11-19 09:53 UTC",
   "dataset": "concept-a",
   "ok": false,
   "errors": [
@@ -5891,7 +5891,7 @@ window.PROOF_GRAPH = {
   {
    "id": "CALC-A-ROD-LEG-STALL-READ",
    "type": "calculation",
-   "title": "Stored result: Z-bend leg: yield needed at 1.5 x the 51 N stall force vs the A228 music-wire allowable",
+   "title": "Stored result: Z-bend leg: yield needed at 1.5 x the 51 N stall force, rod lifted against the keeper (e 1.9 mm), vs the A228 music-wire allowable",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "read_value",
    "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
@@ -5902,10 +5902,10 @@ window.PROOF_GRAPH = {
     "ASM-A-ROD-GRADE"
    ],
    "outputs": {
-    "v": 1172.0
+    "v": 1392.0
    },
    "input_values": {
-    "v": 1172.0
+    "v": 1392.0
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
@@ -5914,7 +5914,7 @@ window.PROOF_GRAPH = {
   {
    "id": "CL-A-ROD-LEG-STALL",
    "type": "claim",
-   "title": "Z-bend leg: yield needed at 1.5 x the 51 N stall force vs the A228 music-wire allowable",
+   "title": "Z-bend leg: yield needed at 1.5 x the 51 N stall force, rod lifted against the keeper (e 1.9 mm), vs the A228 music-wire allowable",
    "calc": "CALC-A-ROD-LEG-STALL-READ",
    "output": "v",
    "unit": "MPa",
@@ -5934,20 +5934,20 @@ window.PROOF_GRAPH = {
     "WNG-006-R",
     "WNG-006-L"
    ],
-   "how": "Receipt test of a formed M02 rod at 77 N (1.5 x 51 N) along the rod, 10 s, no permanent set over 0.2 mm; else A228 1.2 mm wire.",
+   "how": "Receipt test of a formed M02 rod at 91 N (1.5 x 51 N x e_hi / e_lo = 1.9 / 1.6, rod lifted against the keeper, review r3 m-3) along the rod, 10 s, no permanent set over 0.2 mm; else A228 1.2 mm wire.",
    "assumes": [
     "ASM-A-ROD-GRADE"
    ],
-   "value": 1172.0,
+   "value": 1392.0,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "reasons": [
     "uses ASM-A-ROD-GRADE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses P:linkage.rod_yield_req_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625)",
+    "uses P:linkage.rod_yield_req_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625, rod lifted against the keeper (e 1.9 mm, review r3 m-3; was 1.6 mm, 1172 MPa); stall basis: 0.397 N m at 7.2 V, valid with the Kakute rail jumper at 7.2 V (m-8; 8.4 V is not available from the FC, would give about 59 N))",
     "uses ASM-A-ROD-GRADE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:linkage.a228_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: A228 music wire bending allowable 0.78 S_ut at 1.2 mm (Shigley constants RECALLED, not re-read))"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.30238095238095236,
+   "margin": 0.17142857142857143,
    "importance": 1
   },
   {
@@ -6157,7 +6157,7 @@ window.PROOF_GRAPH = {
     "MEC-008-R",
     "MEC-008-L"
    ],
-   "how": "E1: measure the trailing-edge free play with the servo powered at neutral (dial gauge, +-0.05 mm); the hinge damper (FIXES2 s1) makes flutter independent of K, so a FAIL here is a control-precision item, not a flutter item.",
+   "how": "BASIS = FLUTTER (review r3 m-7): the 1 deg limit is the SERVO.md s4 flutter guide, the only sourced number; a control-precision limit has none. BUILD D5b / E1: measure the BUILT trailing-edge free play with the servo powered at neutral (dial gauge, +-0.05 mm); the budget excludes servo gear backlash and the clevis cheek holes (both '-'). The hinge damper (FIXES2 s1) removes the linear flutter dependence on K, but a free-play limit cycle is nonlinear and not covered, so a measured value above 1 deg stays a FAIL; the +-20 deg endpoints (1 deg short of the 21 deg stop) prevent a servo-driven stall only.",
    "value": 1.28,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "reasons": [
@@ -7118,15 +7118,15 @@ window.PROOF_GRAPH = {
    "title": "Stored result: Deepest part overlap at any reachable pose",
    "script": "redesign/qp/A/proofs/claims_a3_program.py",
    "function": "read_value",
-   "equation": "largest depth_mm over the reachable poses in the stored reports; read, not re-run",
+   "equation": "largest depth_mm over the reachable poses in report_d212r3_pose21.json and report_pose20.json; read, not re-run",
    "inputs": {
     "v": "P:cad3d.max_depth_mm"
    },
    "outputs": {
-    "v": 0.042
+    "v": 0.034
    },
    "input_values": {
-    "v": 0.042
+    "v": 0.034
    },
    "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
    "status": "CHECKED",
@@ -7155,11 +7155,11 @@ window.PROOF_GRAPH = {
     "HWC-001",
     "HWC-003"
    ],
-   "how": "collide_a.py report (D-194): the only hits under the 0.05 mm gate are the two balance horn tabs touching their stop bosses at the +21 deg stop (0.042 mm, WNG-007 on WNG-008, a designed contact) and one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); +-22 deg is past the stop and is not a reachable pose.",
-   "value": 0.042,
+   "how": "collide_a.py report after D-212 rev 3 (report_d212r3_pose21.json, review r3 m-9): ten static hits, all under the 0.05 mm gate, the deepest one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); the +-21 deg poses show none (the 0.042 mm balance-tab contact of the pre-D-212 report_pose21.json is gone). The +-20 deg poses are read from the pre-D-212 report_pose20.json (0 hits) and were NOT rerun for rev 3; +-22 deg is past the stop and is not a reachable pose.",
+   "value": 0.034,
    "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
    "status": "CHECKED",
-   "margin": 0.16,
+   "margin": 0.32,
    "importance": 1
   },
   {
@@ -9824,12 +9824,12 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "linkage.rod_yield_req_mpa",
    "file": "redesign/qp/A/params-A.json",
-   "value": 1172.0,
+   "value": 1392.0,
    "unit": "MPa",
    "source": "SRC-A-LINKLOADS",
-   "note": "Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625",
+   "note": "Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625, rod lifted against the keeper (e 1.9 mm, review r3 m-3; was 1.6 mm, 1172 MPa); stall basis: 0.397 N m at 7.2 V, valid with the Kakute rail jumper at 7.2 V (m-8; 8.4 V is not available from the FC, would give about 59 N)",
    "reasons": [
-    "marked UNVERIFIED in redesign/qp/A/params-A.json: Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625"
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625, rod lifted against the keeper (e 1.9 mm, review r3 m-3; was 1.6 mm, 1172 MPa); stall basis: 0.397 N m at 7.2 V, valid with the Kakute rail jumper at 7.2 V (m-8; 8.4 V is not available from the FC, would give about 59 N)"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -9902,7 +9902,7 @@ window.PROOF_GRAPH = {
    "value": 1.0,
    "unit": "deg",
    "source": "SRC-A-SERVOMD",
-   "note": "SERVO.md s4: free play <= 1 deg (flutter target; FIXES2 s1: with the hinge damper flutter does not depend on K)",
+   "note": "SERVO.md s4: free play <= 1 deg (FLUTTER basis, review r3 m-7; FIXES2 s1: with the hinge damper the linear flutter result does not depend on K; free-play limit cycles not covered)",
    "status": "CHECKED",
    "importance": 1
   },
@@ -10520,7 +10520,7 @@ window.PROOF_GRAPH = {
    "value": 0,
    "unit": "-",
    "source": "SRC-A-COLL",
-   "note": "cad/out/report_pose20.json + report_pose21.json (= report.json): overlaps deeper than the tolerance at neutral, +-20 and +-21 deg",
+   "note": "cad/out/report_d212r3_pose21.json (D-212 rev 3, neutral and +-21 deg) + report_pose20.json (pre-D-212, +-20 deg, not rerun for rev 3): overlaps deeper than the tolerance",
    "status": "CHECKED",
    "importance": 1
   },
@@ -10529,10 +10529,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "cad3d.max_depth_mm",
    "file": "redesign/qp/A/params-A.json",
-   "value": 0.042,
+   "value": 0.034,
    "unit": "mm",
    "source": "SRC-A-COLL",
-   "note": "deepest overlap at any reachable pose (neutral, +-20, +-21 deg): 0.042 mm, balance tab on its stop boss at +21 deg (D-194)",
+   "note": "deepest overlap at any reachable pose: 0.034 mm static at neutral and +-21 deg (report_d212r3_pose21.json, D-212 rev 3; was 0.042 mm in the pre-D-212 report_pose21.json); the +-20 deg poses come from the pre-D-212 report_pose20.json (0 hits, not rerun for rev 3)",
    "status": "CHECKED",
    "importance": 1
   },

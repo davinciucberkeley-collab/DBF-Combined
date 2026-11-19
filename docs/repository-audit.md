@@ -46,6 +46,10 @@ permission classifier on 2026-11-18, so every removal now waits for Dillon's app
 | 2026-11-19 | 2 (held) | — | 3 merged worktrees (`worktree-agent-a952e…`, `claude/morph-chart-bc71a6`, `claude/proof-chain-readable-c5026d`) whose only change is a line-ending rewrite of `tools/opencae-studio/launch_opencae.bat` (diff empty with `--ignore-cr-at-eol`): `git worktree remove --force` was blocked by the session permission classifier; waits for Dillon | — | — |
 | 2026-11-19 | kept | AM-002 (used by the current design) | Site animation copies (Explorer serves them), `showcase/animation` K09-L record films, `graph.js`/`graph.json`, CI-checked root pages, unmerged `ui-redesign-survey` worktree; Q7 (CI publish step) is a future change, not a removal | — | — |
 
+Batch 2 reclassification note (2026-11-19). `analysis/cfd3d/out/viz/cfd3d_viz.json` was listed as "Protected" in the dry run, pending Dillon's call on the old-hybrid CFD panel. AM-002 ("if something is unused let it go ... if they do not contribute to our current design") answered it: the panel is the old hybrid concept, not concept A, so the file was removed in batch 2. It is recoverable from git history (the last commit before 8d15f419).
+
+Dangling references the review found after batch 2, open for T-042 / T-044: `DECISIONS.md`, `PRODUCT.md`, `PROVENANCE.md`, `inventory/build_overview.mjs`, `review/build.mjs`, `analysis/cfd3d/postprocess.py`, `redesign/inputs/decisions/*` (they still name removed files such as the CFD panel data, `Inventory-Overview.html` or the K09-L site copies). Not edited yet.
+
 ## 4–12. Consolidation, dependencies, space recovered, benchmarks, regression tests, remaining inefficiencies, preserved references, risks
 Pending T-041…T-045. Benchmarks to take before any change (T-043): `collide_a.py` wall time, concept A
 Blender build/render time per frame, Explorer first-load bytes and time, `ledger_audit.py` time.

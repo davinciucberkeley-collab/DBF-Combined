@@ -28,15 +28,17 @@ def build():
     bom = list(csv.DictReader(open(A / "BOM-A.csv", encoding="utf-8")))
     cm = json.loads((A / "sitl" / "cad_mass.json").read_text(encoding="utf-8"))
     out = A / "cad" / "out"
-    reps = {k: json.loads((out / f"report{k}.json").read_text(encoding="utf-8")) for k in ("", "_pose20", "_pose21")}
+    reps = {k: json.loads((out / f"report{k}.json").read_text(encoding="utf-8")) for k in ("", "_pose20", "_d212r3_pose21")}
     asm = json.loads((out / "assembly.json").read_text(encoding="utf-8"))
     tol = asm["tol_mm"]
     # D-202: the cage frame is swept in its own bench run (assembly_bench.json, nothing else placed); its steps count as steps, its parts are placed again by B1 in the main run (not counted twice)
     bench_f = out / "assembly_bench.json"
     asm_bench = json.loads(bench_f.read_text(encoding="utf-8"))["steps"] if bench_f.exists() else []
-    # reachable poses: neutral and +-20 deg (report_pose20), +-21 deg (report_pose21 = report.json); +-22 is past the stop
+    # reachable poses: neutral and +-21 deg from report_d212r3_pose21.json (D-212 rev 3 geometry, same poses and depths as report.json; review r3 m-9: the
+    # old report_pose21.json, 0.042 mm, predates D-212); +-20 deg from report_pose20.json, which is PRE-D-212 and was NOT rerun for rev 3 (stored: kept, labelled);
+    # +-22 is past the stop
     depths, n_over = [], 0
-    for key in ("_pose20", "_pose21"):
+    for key in ("_pose20", "_d212r3_pose21"):
         for p in reps[key]["poses"]:
             for h in p["hits"]:
                 depths.append(h["depth_mm"])
@@ -245,12 +247,12 @@ def build():
         "bearing_stall_mpa": V(round(bl["stall"]["bearing_factored_MPa"], 2), "MPa", S, "same at 51 N, x 1.4375", est=True),
         "shearout_stall_mpa": V(round(bl["stall"]["shearout_factored_MPa"], 2), "MPa", S, "horn hole shear-out F / (2 t e), ligament 1.65 mm, at 51 N, x 1.4375", est=True),
         "shearout_allow_mpa": V(round(20.0 / math.sqrt(3), 2), "MPa", "SRC-A-ARMCUP", "PETG in-layer 20 MPa / sqrt(3) (the script's shear-out allowable, linkage_loads_check.py; EST)", est=True),
-        "rod_yield_req_mpa": V(round(leg["required_yield_MPa_governing"], 0), "MPa", S, "Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625", est=True),
+        "rod_yield_req_mpa": V(round(leg["required_yield_MPa_governing"], 0), "MPa", S, "Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625, rod lifted against the keeper (e 1.9 mm, review r3 m-3; was 1.6 mm, 1172 MPa); stall basis: 0.397 N m at 7.2 V, valid with the Kakute rail jumper at 7.2 V (m-8; 8.4 V is not available from the FC, would give about 59 N)", est=True),
         "a228_allow_mpa": V(round(leg["A228_bending_allow_MPa_recalled"], 0), "MPa", S, "A228 music wire bending allowable 0.78 S_ut at 1.2 mm (Shigley constants RECALLED, not re-read)", est=True),
         "foam_shear_kpa": V(round(rib["allowable_kPa_EST"], 1), "kPa", "SRC-A-FOAM103", "foam shear 100 x 103/120 kPa (EST, foam_103.py)", est=True),
         "petg_allow_mpa": V(20.0, "MPa", "SRC-A-ARMCUP", "printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW)", est=True),
         "free_play_deg": V(round(kin["free_play_budget_deg"]["total_known_deg"], 3), "deg", "SRC-A-LINKKIN", "arm hole 0.1 + horn hole 0.1 mm over the 9.155 mm horn + Z-bend freedom; clevis cheek holes '-'", est=True),
-        "free_play_guide_deg": V(1.0, "deg", "SRC-A-SERVOMD", "SERVO.md s4: free play <= 1 deg (flutter target; FIXES2 s1: with the hinge damper flutter does not depend on K)"),
+        "free_play_guide_deg": V(1.0, "deg", "SRC-A-SERVOMD", "SERVO.md s4: free play <= 1 deg (FLUTTER basis, review r3 m-7; FIXES2 s1: with the hinge damper the linear flutter result does not depend on K; free-play limit cycles not covered)"),
     }
 
     # ---------------------------------------------------------------- cost (BOM-A.csv rows, bom_a.py basis)
@@ -281,8 +283,8 @@ def build():
 
     # ---------------------------------------------------------------- 3-D gates (stored output of collide_a.py / a_assembly.py)
     P["cad3d"] = {
-        "n_over_tol": V(n_over, "-", "SRC-A-COLL", "cad/out/report_pose20.json + report_pose21.json (= report.json): overlaps deeper than the tolerance at neutral, +-20 and +-21 deg"),
-        "max_depth_mm": V(max(depths) if depths else 0.0, "mm", "SRC-A-COLL", "deepest overlap at any reachable pose (neutral, +-20, +-21 deg): 0.042 mm, balance tab on its stop boss at +21 deg (D-194)"),
+        "n_over_tol": V(n_over, "-", "SRC-A-COLL", "cad/out/report_d212r3_pose21.json (D-212 rev 3, neutral and +-21 deg) + report_pose20.json (pre-D-212, +-20 deg, not rerun for rev 3): overlaps deeper than the tolerance"),
+        "max_depth_mm": V(max(depths) if depths else 0.0, "mm", "SRC-A-COLL", "deepest overlap at any reachable pose: 0.034 mm static at neutral and +-21 deg (report_d212r3_pose21.json, D-212 rev 3; was 0.042 mm in the pre-D-212 report_pose21.json); the +-20 deg poses come from the pre-D-212 report_pose20.json (0 hits, not rerun for rev 3)"),
         "wire_ends_open": V(len(reps[""]["wire_ends"]), "-", "SRC-A-COLL", "report.json wire_ends: wire ends not seated in a part (41 strands)"),
         "wire_kinks": V(len(reps[""]["kinks"]), "-", "SRC-A-COLL", "report.json kinks (wire folds)"),
         "parts": V(reps[""]["parts"], "-", "SRC-A-COLL", "report.json parts checked"),
