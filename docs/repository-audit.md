@@ -32,7 +32,16 @@ By type: `.BIN` 447 MB, `.mp4` 254, `.png` 215, `.json` 201, `.txt` 105, `.html`
 | History: 1.5 GiB pack | — | Do not touch | Rewriting history needs team authorization (spec 9.3). |
 
 ## 3. Files removed or archived
-None yet.
+None yet. Dry-run facts: `docs/audits/2026-11-18-cleanup-dryrun.md` (T-041a). Measured reclaimable on disk:
+untracked SITL `.BIN` 2 401 MB (all 232 runs keep `case.csv` + `result.json`); 7 merged agent worktrees 4.3–7.9 GB
+(2 fully clean: `agent-a3ad648c…` 1.48 GB, `agent-ab6e7d18…` 0.69 GB); tracked SITL `.BIN` 447 MB (repo size only
+shrinks with a history rewrite, which needs team authorization); 23 K09-L leftovers in `site/assets` 55.5 MB.
+An attempt to `git worktree remove` the two clean merged worktrees (branches kept) was blocked by the session's
+permission classifier on 2026-11-18, so every removal now waits for Dillon's approval (dry-run §9 questions).
+
+| Date | Batch | Approval | Action | Recovered | Regression |
+|---|---|---|---|---|---|
+| 2026-11-18 | 1 | Dillon in chat: "approved, remove the two clean merged worktrees" | `git worktree remove` `agent-a3ad648c…` (build-film-audit) and `agent-ab6e7d18…`; branches kept (recoverable) | ≈ 2.17 GB disk (untracked; repo size unchanged) | `git worktree list` 8 entries; both branches still listed |
 
 ## 4–12. Consolidation, dependencies, space recovered, benchmarks, regression tests, remaining inefficiencies, preserved references, risks
 Pending T-041…T-045. Benchmarks to take before any change (T-043): `collide_a.py` wall time, concept A
