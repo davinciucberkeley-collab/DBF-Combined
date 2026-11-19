@@ -111,3 +111,18 @@ measurement. Requirement IDs: R-OPT-01, R-OPT-02, R-GEN-02.
 ```text
 O4: resize once
 ```
+
+## AM-006 — 2026-11-19 — Board re-sit after the O4 early no-go: O4b, conditional
+Relation: answers D-217 (`docs/audits/2026-11-19-O4-feasibility.md` s6). Supersedes the O4 path of AM-005 (kept as
+the record). Concept A continues as O4b (9x4.5 props kept, voltage-scheduled spin cap so one motor <= 12.1 A, pack
+>= 2,350 mAh, engineering recovery, glass skin, C6 centre node, T-068 package) on condition that three $0 checks
+close by 2026-11-26: (1) ArduPilot Lua on the flight controller, or an H7 wing FC priced with the cost rule G7
+re-run; (2) an in-stock 4S pack >= 2,350 mAh at <= 275 g; (3) the C3 time-domain pitch-over at 1.64 kg >= +-5 %
+and the landing re-runs at 1.64 kg. The C3 and landing runs named in check 3 are approved by this answer. If any
+check fails: the ZOHD Altus (O6) at the 2026-12-15 order, as recommended in D-217. The 2026-12-15 bench go/no-go
+stays. Not approved by this answer: purchases (none before early Dec 2026). Requirement IDs: R-OPT-01, R-OPT-02,
+R-GEN-02.
+
+```text
+O4b, if $0 checks pass
+```
