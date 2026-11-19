@@ -165,11 +165,12 @@ def _inside(P, X, Z):
         if y1 == y2: continue
         c = ((y1 > Z) != (y2 > Z)) & (X < (x2-x1)*(Z-y1)/(y2-y1)+x1); ins ^= c
     return ins
-def section_props(h=0.4e-3):
+def section_props(h=0.4e-3, xmax=None):
     """foam section area, centroid x, Iz about its centroid (in-plane), x extent; Prandtl torsion constant J on a 0.4 mm grid: 'solid' (no bore: upper bound) and 'bored' (bore disc = phi 0 boundary: lower bound)."""
     import scipy.sparse as sp, scipy.sparse.linalg as sla
     Pl = _poly(); xs = np.arange(0, C.C+h, h); zs = np.arange(Pl[:, 1].min()-h, Pl[:, 1].max()+2*h, h)
     X, Z = np.meshgrid(xs, zs, indexing='ij'); ins = _inside(Pl, X, Z)
+    if xmax is not None: ins &= X <= xmax      # T-071: cell ahead of the hinge only
     bore = (X-C.SPAR_X)**2+Z**2 <= R_BORE**2
     out = {}
     for tag, dom in (('solid', ins), ('bored', ins & ~bore)):
@@ -185,7 +186,7 @@ def section_props(h=0.4e-3):
         J = 2*phi.sum()*h*h; gx, gz = np.gradient(phi, h); g = np.hypot(gx, gz)
         out[tag] = dict(J=float(J), gmax=float(np.percentile(g[dom], 99.5)), area=float(n*h*h))     # 99.5 percentile of |grad phi|: avoids the staircase-boundary spike
     dom = ins & ~bore; A = dom.sum()*h*h; xc = X[dom].sum()*h*h/A
-    out['foam'] = dict(A=float(A), xc=float(xc), Iz=float((((X[dom]-xc)**2).sum())*h*h), x0=0.0, x1=C.C, enclosed=float(ins.sum()*h*h))
+    out['foam'] = dict(A=float(A), xc=float(xc), Iz=float((((X[dom]-xc)**2).sum())*h*h), x0=0.0, x1=(C.C if xmax is None else xmax), enclosed=float(ins.sum()*h*h))
     return out
 _SEC = None
 def sec():
@@ -198,6 +199,7 @@ def wing_stations():
 def wing_checks(FBt, EF=E_F, GF=G_F, variant='bored', skin=None):
     """P15 torsion + P16 in-plane bending of the wing at three stations, for one fin's two feet (outboard free body; hub, pack and motor masses are inboard of every station;
     wing-foam inertia ignored, ~0.08 kg x short arm, EST).  Reference line x0 = spar axis or mid-chord (worse taken).  Torsion: spar and foam share by GJ; bending: by EI."""
+    if skin is not None: return wing_checks_skin(FBt, skin, EF=EF, GF=GF, variant=variant)
     S = sec(); J_s = 2*I_S; res = {}
     GJf = GF*S[variant]['J']; GJs = G_S*J_s; sh_s = GJs/(GJs+GJf); sh_f = 1-sh_s
     tau_f_unit = S[variant]['gmax']/S[variant]['J']
@@ -217,6 +219,103 @@ def wing_checks(FBt, EF=E_F, GF=G_F, variant='bored', skin=None):
         res['P16 wing in-plane bending, spar + foam by EI share, skin-less, %s' % lab] = ('EST spar 350 MPa / foam 103 kPa', np.minimum.reduce(rb))
     info = dict(sh_spar=sh_s, sh_foam=sh_f, GJs=GJs, GJf=GJf, J_s=J_s, J_f=S[variant]['J'], tau_unit=tau_f_unit, xn=xn, EIs=EIs, EIf=EIf, Jsolid=S['solid']['J'], Jbored=S['bored']['J'], foam=fo)
     return res, info
+
+# ======================================================================= T-071 Phase 1 step 1: wing GLASS TORSION SKIN option (D-216 / T-070 s3, s7)
+# wing_checks(..., skin=dict) -> wing_checks_skin: torsion cell = skin + foam ahead of the hinge (x <= XH) + spar; the skin-less path above is unchanged (skin=None).
+# Laminate allowables: ACP Composites, "Mechanical Properties of Carbon Fiber Composite Materials, Fiber / Epoxy resin (120 C cure)", PDS Dec 2014,
+#   https://acpcomposites.com/wp-content/uploads/2024/05/Mechanical-Properties-of-Carbon-Fiber-Composite-Materials.pdf, text extracted and read 2026-11-19.  E-glass FABRIC, Vf 50 %, dry, room temperature,
+#   NOT a wet lay-up datasheet: 0/90 loading: E 25 GPa, G12 4 GPa, nu 0.2, Xt 440 / Xc 425 MPa, S 40 MPa;  fibres at +-45 to the loading axis: E 12.3 GPa, G12 11 GPa, Xt = Xc 90 MPa, S 100 MPa.
+#   Our wet ply (48 g/m2 cloth + 40 g/m2 resin, EST from T-070) has Vf = (48/2540)/(48/2540 + 40/1150) = 0.35, so every ACP value is scaled by Vf/0.50 = 0.70 (EST, linear scaling; no wet lay-up coupon exists).
+# Wrinkling: sigma_cr = c (E_f E_c G_c)^(1/3), c = 0.5 (Hoff and Mautner's empirical value; theory 0.91).  Source: web search 2026-11-19 (Cambridge Aeronautical Journal "Theory of wrinkling in sandwich construction",
+#   MDPI Materials 14(17) 5043); neither result printed the formula in one line, so it stays EST (re-read Allen or Zenkert before relying on it).
+ACP_SRC = 'ACP Composites PDS Dec 2014, read 2026-11-19'
+ACP = dict(vf=0.50, pm45=dict(Ex=12.3e9, G=11e9, X=90e6, S=100e6, E1=25e9), c090=dict(Ex=25e9, G=4e9, X=425e6, S=40e6, E1=25e9))
+RHO_GLASS, RHO_EPOXY = 2540.0, 1150.0      # EST (E-glass 2.54-2.60 g/cm3, laminating epoxy 1.1-1.2 g/cm3)
+XH = C.C*(1-C.ELEV_FRAC)                   # hinge station, 0.18375 m (common.py)
+Y_CLAMP = 0.285                            # strut end on the spar (wing.py STRUT_E)
+FIN_M = 0.083                              # fin mass 83 g (T-070 V7, T-067 basis); Iyy from cad_mass.json (relief = I_fin / Iyy)
+def skin_laminate(n=1, orient='pm45', awt=0.048, rwt=0.040, stiff=1.0):
+    t1 = awt/RHO_GLASS+rwt/RHO_EPOXY; vf = (awt/RHO_GLASS)/t1; k = vf/ACP['vf']; a = ACP[orient]
+    return dict(n=n, orient=orient, t=n*t1, vf=vf, k=k, Ex=a['Ex']*k*stiff, G=a['G']*k*stiff, X=a['X']*k, S=a['S']*k, E1=a['E1']*k, mass_m2=n*(awt+rwt), stiff=stiff)
+def _cell_geom():
+    """perimeter integrals of the closed cell ahead of the hinge (airfoil skin LE -> x = XH on both surfaces + the vertical cove face): S0 = perimeter, S1 = int x ds, S2 = int x2 ds, cove height."""
+    Pl = _poly(); S0 = S1 = S2 = 0.0; zs = []
+    for i in range(len(Pl)):
+        a, b = Pl[i], Pl[(i+1) % len(Pl)]; n = max(int(np.hypot(*(b-a))/0.05e-3), 1)
+        u = (np.arange(n)+0.5)/n; xm = a[0]+(b[0]-a[0])*u; ds = np.hypot(*(b-a))/n
+        m = xm <= XH; S0 += ds*m.sum(); S1 += ds*xm[m].sum(); S2 += ds*(xm[m]**2).sum()
+        if (a[0]-XH)*(b[0]-XH) < 0: zs.append(a[1]+(b[1]-a[1])*(XH-a[0])/(b[0]-a[0]))
+    hc = max(zs)-min(zs); return dict(S0=S0+hc, S1=S1+XH*hc, S2=S2+XH*XH*hc, cove_h=hc)
+_SECC = {}
+def sec_cell():
+    if 'v' not in _SECC: _SECC['v'] = section_props(xmax=XH); _SECC['g'] = _cell_geom()
+    return _SECC['v'], _SECC['g']
+def set_pad(x, z):
+    """T-068 D2 pad geometry for the force-point arms (feet_pos): x_foot, z of the pad centre."""
+    global XF, ZF; XF, ZF = x, z
+PAD_D2 = dict(x_foot=0.3415, z_foot=0.189)     # T-068 s4: X_GROUND 0.3375 -> ~0.3415; pad edge z >= 0.195 -> centre 0.189 (pad dz 0.012, electrical.py)
+
+def _strut_geom():
+    d = (W.STRUT_E[0]-W.STRUT_S[0], W.STRUT_E[1]-W.STRUT_S[1]); Ls = math.hypot(*d); return d[0]/Ls, d[1]/Ls, Ls
+def wing_checks_skin(FBt, skin, EF=E_F, GF=G_F, variant='bored'):
+    """P15 torsion / P16 in-plane bending with the glass skin.  skin keys: lam (skin_laminate), K (skin factor, default KP), relief (fraction of My taken by the loaded fin's inertia, EST),
+    strip_A (cove CF strip area m2), E_strip, truss (strut + spar truss inboard of y 0.285, T-070 F-3a).  In-plane moment is taken about the neutral axis of the composite section (axial force acts there)."""
+    lam = skin['lam']; Ks = skin.get('K', KP); rel = skin.get('relief', 0.0); Acap = skin.get('strip_A', 0.0); Ecap = skin.get('E_strip', 120e9); truss = skin.get('truss', True)
+    S, cg = sec_cell(); fo = S['foam']; J_s = 2*I_S; t = lam['t']; A = fo['enclosed']; per = cg['S0']
+    GJs, GJf, GJk = G_S*J_s, GF*S[variant]['J'], 4*A*A*lam['G']*t/per; GJ = GJs+GJf+GJk; sh_s, sh_f, sh_k = GJs/GJ, GJf/GJ, GJk/GJ
+    tau_u = S[variant]['gmax']/S[variant]['J']
+    EAs, EAf, EAk, EAc = E_S*A_S, EF*fo['A'], lam['Ex']*t*cg['S0'], Ecap*Acap; xk = cg['S1']/cg['S0']
+    EA = EAs+EAf+EAk+EAc; xn = (EAs*SX+EAf*fo['xc']+EAk*xk+EAc*XH)/EA
+    EI = E_S*I_S+EAs*(SX-xn)**2+EF*fo['Iz']+EAf*(fo['xc']-xn)**2+lam['Ex']*t*(cg['S2']-2*xn*cg['S1']+xn*xn*cg['S0'])+EAc*(XH-xn)**2
+    d_sp = abs(SX-xn)+SOD/2; d_f = max(xn, XH-xn); d_sk = max(xn, XH-xn); d_c = abs(XH-xn)
+    wr1 = 0.5*(lam['E1']*EF*GF)**(1/3); wr2 = 0.5*(lam['Ex']*EF*GF)**(1/3)
+    ux, uy, Ls = _strut_geom(); res = {}
+    stations = (('y 0.35', 0.35, False), ('y 0.285 (clamp node, outboard side, no truss)', Y_CLAMP, False), ('y 0.228', 0.228, True), ('y 0.060', 0.060, True), ('y 0.040', 0.040, True))
+    for lab, ys, tr in stations:
+        acc = {}
+        for k in (0, 1):
+            sg = 1 if k == 0 else -1
+            T = np.abs(M_about(FBt, k, S_(k, SX, 0.0))[1][:, 1])
+            T = np.maximum(T, np.abs(M_about(FBt, k, S_(k, 0.5*C.C, 0.0))[1][:, 1]))*(1-rel)        # worse of the two reference lines (as T-069)
+            q = sh_k*T/(2*A); tk = Ks*q/t
+            Fs, Ms = M_about(FBt, k, (xn, sg*ys, 0.0)); Mz = Ms[:, 2]; Fx, Fy = Fs[:, 0], Fs[:, 1]; Sax = -Fy
+            if truss and tr:
+                N = Fx/ux; xs = W.STRUT_S[0]+(ys-W.STRUT_S[1])*ux/uy; Lv = xn-xs
+                Mc = -(Mz+Lv*N*sg*uy); Sax = N*sg*uy-Fy
+            else: Mc = -Mz
+            kap = np.abs(Mc)/EI; eps0 = np.abs(Sax)/EA
+            sgk = Ks*lam['Ex']*(kap*d_sk+eps0)
+            rows = {
+             'P15 spar torsion': TAU/np.maximum(KF*sh_s*T*(SOD/2)/J_s, 1e-9),
+             'P15 foam shear (cell)': F_SHEAR/np.maximum(KP*sh_f*T*tau_u, 1e-9),
+             'P15 skin shear': lam['S']/np.maximum(tk, 1e-9),
+             'P15 skin shear+axial interaction': 1/np.maximum(np.sqrt((sgk/lam['X'])**2+(tk/lam['S'])**2), 1e-9),
+             'P15 skin wrinkling, torsion only (E_f fibre)': wr1/np.maximum(tk, 1e-9),
+             'P15 skin wrinkling, torsion + bending (E_f = E_x)': wr2/np.maximum(sgk/2+np.sqrt((sgk/2)**2+tk**2), 1e-9),
+             'P16 spar bending + axial': SIG/np.maximum(KF*E_S*(kap*d_sp+eps0), 1e-9),
+             'P16 foam bending + axial': F_COMP/np.maximum(KP*EF*(kap*d_f+eps0), 1e-9)}
+            if Acap > 0: rows['P16 cove CF strip'] = SIG/np.maximum(KF*Ecap*(kap*d_c+eps0), 1e-9)
+            for nm, v in rows.items(): acc[nm] = np.minimum(acc[nm], v) if nm in acc else v
+        for nm, v in acc.items(): res['%s, %s' % (nm, lab)] = ('see ACP_SRC / EST', v)
+    info = dict(sh_spar=sh_s, sh_foam=sh_f, sh_skin=sh_k, GJs=GJs, GJf=GJf, GJk=GJk, GJ=GJ, A_cell=A, per=per, cove_h=cg['cove_h'], t=t, vf=lam['vf'], xn=xn, EI=EI, d_sk=d_sk,
+                wr1=wr1, wr2=wr2, J_foam=S[variant]['J'], tau_unit=tau_u, foamA=fo['A'], Ex=lam['Ex'], G=lam['G'], S=lam['S'], X=lam['X'])
+    return res, info
+
+def strut_checks(FBt, Lb_clamp=None, Lb_hub=0.030, EF=E_F):
+    """T-070 F-3a: strut axial force N = Fx_fin / ux (strut takes the chordwise shear inboard of the clamp, tension +).  Euler pinned-pinned without foam support (the groove is open below and 0.5 mm clear: not credited),
+    an upper bound with the foam bedding it (Winkler k = E_foam D / 5 mm, EST, not credited), strut strength, bond at the clamp (length from wing.py: strut enters the clamp box face y 0.272) and at the hub socket (30 mm, HUB_STRUT_S)."""
+    ux, uy, Ls = _strut_geom(); D, d = W.STRUT_OD, W.STRUT_ID; A_st = math.pi/4*(D*D-d*d); I_st = math.pi/64*(D**4-d**4); EIst = E_S*I_st
+    if Lb_clamp is None: Lb_clamp = (W.STRUT_E[1]-0.272)/uy
+    Pe = math.pi**2*EIst/Ls**2; kf = EF*D/0.005; Pf = min(2*math.sqrt(kf*EIst), SIG*A_st); out = {}
+    for k in (0, 1):
+        N = np.sum([FBt[:, 2*k+j, 0] for j in (0, 1)], axis=0)/ux; Nc = np.maximum(-N, 0.0); Na = np.abs(N)
+        for nm, v in (('STRUT Euler pinned, no foam support (%.0f N)' % Pe, Pe/np.maximum(KF*Nc, 1e-9)),
+                      ('STRUT Euler bound with foam bedding, not credited (%.0f N)' % Pf, Pf/np.maximum(KF*Nc, 1e-9)),
+                      ('STRUT tube strength, 6x4.5 CF 350 MPa EST', SIG*A_st/np.maximum(KF*Na, 1e-9)),
+                      ('STRUT bond at clamp (D6 x %.1f mm, epoxy 2.0 MPa EST)' % (Lb_clamp*1e3), BOND/np.maximum(KP*Na/(math.pi*D*Lb_clamp), 1e-9)),
+                      ('STRUT bond at hub socket (D6 x %.0f mm)' % (Lb_hub*1e3), BOND/np.maximum(KP*Na/(math.pi*D*Lb_hub), 1e-9))):
+            out[nm] = ('EST', np.minimum(out[nm][1], v) if nm in out else v)
+    return out
 
 # --- pin and cup rows (D-215 D3 / D4 geometry as PROPOSED, not built): 3 mm CF cross-pin (BOM R14); cup 4 mm deep, 1.5 mm walls on the shoe plate
 PIN_D = 0.003; PIN_A = math.pi/4*PIN_D**2; PIN_TAU = 30e6      # EST: CF rod shear (structures_a.py TAU 30 MPa; Tap Plastics 41.3 MPa is a sensitivity, landing_side_a.py l.66)
@@ -292,7 +391,76 @@ def volumes():
     return res_
 
 
+def skin_variants():
+    l1 = skin_laminate(); base = dict(lam=l1, strip_A=3e-6, relief=0.0, truss=True)
+    return [('V0 GATE: 1 ply 48 g/m2 +-45, strip 3 mm2, no relief, truss, K=KP', base, 1.0),
+            ('V1 + fin inertia relief 20 % (EST)', dict(base, relief=0.20), 1.0),
+            ('V2 truss credit OFF', dict(base, truss=False), 1.0),
+            ('V3 skin E,G x0.7 (stiffness robustness)', dict(base, lam=skin_laminate(stiff=0.7)), 1.0),
+            ('V4 foam E,G x0.5', base, 0.5),
+            ('V5 no cap strip', dict(base, strip_A=0.0), 1.0),
+            ('V6 skin factor KF instead of KP', dict(base, K=KF), 1.0),
+            ('V7 2 plies +-45', dict(base, lam=skin_laminate(n=2)), 1.0),
+            ('V8 1 ply 0/90 (comparison)', dict(base, lam=skin_laminate(orient='c090')), 1.0)]
+def skin_main():
+    """T-071: all 23 landing cases with the D-215 / T-068 D2 pad geometry; skin variants; strut rows; strip scan."""
+    t0 = time.time(); set_pad(PAD_D2["x_foot"], PAD_D2["z_foot"]); FBs = []
+    print(f"# T-071 skin run: pad x {XF:.4f} z {ZF:.4f} (T-068 D2), CG {L.geom()['cg']}, mass {L.M_GATE} kg, KF {KF:.3f} KP {KP:.3f}; laminate source {ACP_SRC}")
+    for name, kw in cases(False):
+        q = L.simulate(Fp=30.0, dt=2e-4, T=1.5, trace=True, **dict(kw, **PAD_D2)); FBs.append((name, q['trace'].reshape(-1, 4, 3)))
+        print(f"  case {name:34s} side {q['side'].max():5.1f} N Fmax {q['F'].max():5.1f} N [{time.time()-t0:.0f} s]", flush=True)
+    Sc, cg = sec_cell(); print("\n## cell ahead of the hinge:", {k: (round(float(v), 6)) for k, v in cg.items()}, 'enclosed A', Sc['foam']['enclosed'], 'foam A', Sc['foam']['A'], 'J bored/solid', Sc['bored']['J'], Sc['solid']['J'])
+    ish = FBs[0][1]; res_, inf = wing_checks_skin(ish, skin_variants()[0][1]); print('## V0 info:', {k: (round(float(v), 6) if not isinstance(v, dict) else '') for k, v in inf.items()})
+    allr = {}
+    for vn, sk, fs in skin_variants():
+        for name, FBt in FBs:
+            r, _ = wing_checks_skin(FBt, sk, EF=E_F*fs, GF=G_F*fs)
+            if vn.startswith('V0'): r.update(strut_checks(FBt))
+            for key, (lab, a) in r.items():
+                cur = allr.setdefault((vn, key), (1e9, ''))
+                if float(a.min()) < cur[0]: allr[(vn, key)] = (float(a.min()), name)
+    for name, FBt in FBs:      # skin-less with the D2 pad, for the effect of the pad geometry
+        r, _ = wing_checks(FBt)
+        for key, (lab, a) in r.items():
+            cur = allr.setdefault(('SKIN-LESS (D2 pad)', key), (1e9, ''))
+            if float(a.min()) < cur[0]: allr[('SKIN-LESS (D2 pad)', key)] = (float(a.min()), name)
+    print("\n## Minimum RF over 23 cases per variant (rows listed: the minimum per row family over stations)")
+    for vn in dict.fromkeys(k[0] for k in allr):
+        print(f"\n### {vn}")
+        fam = {}
+        for (v, key), (rf, nm) in allr.items():
+            if v != vn: continue
+            f = key.split(',')[0] if v.startswith('V') and not key.startswith('STRUT') else key
+            if f not in fam or rf < fam[f][0]: fam[f] = (rf, key, nm)
+        for f, (rf, key, nm) in sorted(fam.items(), key=lambda kv: kv[1][0]): print(f"| {f} | {rf:.2f} | {key} | {nm} |")
+        if vn.startswith('V') or vn.startswith('SKIN'):
+            p15 = min(v[0] for (a, k), v in allr.items() if a == vn and k.startswith('P15')); p16 = min(v[0] for (a, k), v in allr.items() if a == vn and k.startswith('P16'))
+            print(f"MIN P15 {p15:.2f}   MIN P16 {p16:.2f}")
+    print("\n## all V0 rows by station")
+    for (v, key), (rf, nm) in sorted(allr.items(), key=lambda kv: kv[1][0]):
+        if v.startswith('V0'): print(f"| {key} | {rf:.2f} | {nm} |")
+    print("\n## cap strip scan (V0 otherwise): min P16 / min P15 vs strip area")
+    for Acap in (0, 1e-6, 2e-6, 3e-6, 4e-6, 6e-6, 8e-6, 12e-6, 16e-6, 24e-6):
+        m16 = m15 = 1e9
+        for name, FBt in FBs:
+            r, _ = wing_checks_skin(FBt, dict(skin_variants()[0][1], strip_A=Acap))
+            for key, (lab, a) in r.items():
+                if key.startswith('P16'): m16 = min(m16, float(a.min()))
+                if key.startswith('P15'): m15 = min(m15, float(a.min()))
+        print(f"strip {Acap*1e6:5.1f} mm2: mass {Acap*0.80*1550*1e3:5.2f} g (0.80 m, 1.55 g/cm3 EST)  min P16 {m16:.2f}  min P15 {m15:.2f}")
+    print("\n## ply scan (V0 otherwise, strip 3 mm2)")
+    for n in (1, 2, 3):
+        m16 = m15 = 1e9
+        for name, FBt in FBs:
+            r, _ = wing_checks_skin(FBt, dict(skin_variants()[0][1], lam=skin_laminate(n=n)))
+            for key, (lab, a) in r.items():
+                if key.startswith('P16'): m16 = min(m16, float(a.min()))
+                if key.startswith('P15'): m15 = min(m15, float(a.min()))
+        print(f"{n} ply: t {n*skin_laminate()['t']*1e3:.3f} mm  skin mass {n*0.088*cg['S0']*0.80*1e3:.1f} g (perimeter {cg['S0']*1e3:.0f} mm x 0.80 m)  min P16 {m16:.2f}  min P15 {m15:.2f}")
+    print(f"\nwall time {time.time()-t0:.0f} s")
+
 if __name__ == "__main__":
+    if "--skin" in sys.argv: skin_main(); sys.exit(0)
     quick = "--quick" in sys.argv
     print(f"# landing_path_a.py, geometry {'legacy' if L.LEGACY else 'CAD'}: x_ground {XF:.4f} y {YF:.3f} z pad centre {ZF:.4f} m, CG {L.geom()['cg']}, mass {L.M_GATE} kg, plateau 30 N, mu {L.MU}")
     print(f"# KF {KF:.3f} KP {KP:.3f}; sections: fin tube {FOD*1e3:.0f}x{FID*1e3:.0f} Z {Z_F*1e9:.0f} mm3; rib {ROD*1e3:.0f}x{RID*1e3:.0f} Z {Z_R*1e9:.0f} mm3; spar {SOD*1e3:.0f}x{SID*1e3:.0f} Z {Z_S*1e9:.0f} mm3")

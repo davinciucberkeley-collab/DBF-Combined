@@ -1,0 +1,210 @@
+# T-071 skin run: pad x 0.3415 z 0.1890 (T-068 D2), CG [ 0.02136869 -0.00203448  0.00636946], mass 1.5 kg, KF 1.725 KP 2.156; laminate source ACP Composites PDS Dec 2014, read 2026-11-19
+  case hard level                         side  11.9 N Fmax  39.8 N [1 s]
+  case hard 10 narrow                     side  15.8 N Fmax  40.0 N [3 s]
+  case hard 10 narrow neg                 side  16.0 N Fmax  40.0 N [4 s]
+  case hard 10 wide                       side  17.8 N Fmax  44.5 N [6 s]
+  case hard 7/7 combo                     side  17.4 N Fmax  43.4 N [7 s]
+  case hard 10 narrow + drift .5          side  16.1 N Fmax  40.1 N [9 s]
+  case hard 10 wide + drift .5 y          side  18.5 N Fmax  46.3 N [10 s]
+  case normal level .5                    side  12.9 N Fmax  33.0 N [11 s]
+  case normal 10 narrow .5                side  12.8 N Fmax  33.5 N [13 s]
+  case normal 10 wide .5 + drift          side  15.9 N Fmax  39.8 N [14 s]
+  case SITL Tb_h5 wide (y drift)          side  16.2 N Fmax  40.5 N [16 s]
+  case SITL Tb_h5 narrow (z drift)        side  14.1 N Fmax  35.3 N [17 s]
+  case SITL Ta_h5 wide (y drift)          side  16.2 N Fmax  40.4 N [18 s]
+  case SITL Ta_h5 narrow (z drift)        side  14.3 N Fmax  35.7 N [19 s]
+  case SITL Z5_b45 wide (y drift)         side  16.3 N Fmax  40.8 N [21 s]
+  case SITL Z5_b45 narrow (z drift)       side  14.5 N Fmax  36.2 N [22 s]
+  case SITL Lb_5e wide (y drift)          side  15.8 N Fmax  39.6 N [23 s]
+  case SITL Lb_5e narrow (z drift)        side  14.9 N Fmax  37.1 N [24 s]
+  case SITL Z5_gb45 wide (y drift)        side  15.7 N Fmax  39.2 N [26 s]
+  case SITL Z5_gb45 narrow (z drift)      side  14.9 N Fmax  37.2 N [27 s]
+  case hard 16 wide + drift .5 y          side  18.2 N Fmax  45.5 N [28 s]
+
+## cell ahead of the hinge: {'S0': 0.383095, 'S1': 0.035507, 'S2': 0.004447, 'cove_h': 0.008637} enclosed A 0.0033891200000000007 foam A 0.0032764800000000005 J bored/solid 3.7309887057058045e-07 4.779408642452716e-07
+## V0 info: {'sh_spar': 0.056457, 'sh_foam': 0.053293, 'sh_skin': 0.89025, 'GJs': 3.162013, 'GJf': 2.984791, 'GJk': 49.860569, 'GJ': 56.007372, 'A_cell': 0.003389, 'per': 0.383095, 'cove_h': 0.008637, 't': 5.4e-05, 'vf': 0.352041, 'xn': 0.077398, 'EI': 5650.748482, 'd_sk': 0.106352, 'wr1': 80827924.317692, 'wr2': 63809174.629552, 'J_foam': 0.0, 'tau_unit': 57255.16158, 'foamA': 0.003276, 'Ex': 8660204081.632652, 'G': 7744897959.183672, 'S': 70408163.265306, 'X': 63367346.938776}
+
+## Minimum RF over 23 cases per variant (rows listed: the minimum per row family over stations)
+
+### V0 GATE: 1 ply 48 g/m2 +-45, strip 3 mm2, no relief, truss, K=KP
+| STRUT Euler pinned, no foam support (367 N) | 0.93 | STRUT Euler pinned, no foam support (367 N) | hard 10 wide + drift .5 y |
+| STRUT bond at clamp (D6 x 14.2 mm, epoxy 2.0 MPa EST) | 1.09 | STRUT bond at clamp (D6 x 14.2 mm, epoxy 2.0 MPa EST) | hard 10 wide + drift .5 y |
+| P15 skin wrinkling | 1.15 | P15 skin wrinkling, torsion + bending (E_f = E_x), y 0.285 (clamp node, outboard side, no truss) | hard 7/7 combo |
+| P15 foam shear (cell) | 1.28 | P15 foam shear (cell), y 0.35 | hard 7/7 combo |
+| P15 skin shear+axial interaction | 1.30 | P15 skin shear+axial interaction, y 0.285 (clamp node, outboard side, no truss) | hard 7/7 combo |
+| P15 skin shear | 1.30 | P15 skin shear, y 0.35 | hard 7/7 combo |
+| STRUT bond at hub socket (D6 x 30 mm) | 2.30 | STRUT bond at hub socket (D6 x 30 mm) | hard 10 wide + drift .5 y |
+| P16 foam bending + axial | 4.64 | P16 foam bending + axial, y 0.285 (clamp node, outboard side, no truss) | hard 10 wide + drift .5 y |
+| P16 cove CF strip | 4.92 | P16 cove CF strip, y 0.285 (clamp node, outboard side, no truss) | hard 10 wide + drift .5 y |
+| P15 spar torsion | 5.28 | P15 spar torsion, y 0.35 | hard 7/7 combo |
+| STRUT Euler bound with foam bedding, not credited (4330 N) | 11.03 | STRUT Euler bound with foam bedding, not credited (4330 N) | hard 10 wide + drift .5 y |
+| STRUT tube strength, 6x4.5 CF 350 MPa EST | 11.03 | STRUT tube strength, 6x4.5 CF 350 MPa EST | hard 10 wide + drift .5 y |
+| P16 spar bending + axial | 22.50 | P16 spar bending + axial, y 0.228 | hard 10 wide + drift .5 y |
+MIN P15 1.15   MIN P16 4.64
+
+### V1 + fin inertia relief 20 % (EST)
+| P15 skin wrinkling | 1.42 | P15 skin wrinkling, torsion + bending (E_f = E_x), y 0.285 (clamp node, outboard side, no truss) | hard 7/7 combo |
+| P15 foam shear (cell) | 1.60 | P15 foam shear (cell), y 0.35 | hard 7/7 combo |
+| P15 skin shear+axial interaction | 1.62 | P15 skin shear+axial interaction, y 0.285 (clamp node, outboard side, no truss) | hard 7/7 combo |
+| P15 skin shear | 1.63 | P15 skin shear, y 0.35 | hard 7/7 combo |
+| P16 foam bending + axial | 4.64 | P16 foam bending + axial, y 0.285 (clamp node, outboard side, no truss) | hard 10 wide + drift .5 y |
+| P16 cove CF strip | 4.92 | P16 cove CF strip, y 0.285 (clamp node, outboard side, no truss) | hard 10 wide + drift .5 y |
+| P15 spar torsion | 6.60 | P15 spar torsion, y 0.35 | hard 7/7 combo |
+| P16 spar bending + axial | 22.50 | P16 spar bending + axial, y 0.228 | hard 10 wide + drift .5 y |
+MIN P15 1.42   MIN P16 4.64
+
+### V2 truss credit OFF
+| P15 skin wrinkling | 1.08 | P15 skin wrinkling, torsion + bending (E_f = E_x), y 0.040 | hard 7/7 combo |
+| P15 skin shear+axial interaction | 1.28 | P15 skin shear+axial interaction, y 0.040 | hard 7/7 combo |
+| P15 foam shear (cell) | 1.28 | P15 foam shear (cell), y 0.35 | hard 7/7 combo |
+| P15 skin shear | 1.30 | P15 skin shear, y 0.35 | hard 7/7 combo |
+| P16 foam bending + axial | 2.08 | P16 foam bending + axial, y 0.040 | hard 10 wide + drift .5 y |
+| P16 cove CF strip | 2.21 | P16 cove CF strip, y 0.040 | hard 10 wide + drift .5 y |
+| P15 spar torsion | 5.28 | P15 spar torsion, y 0.35 | hard 7/7 combo |
+| P16 spar bending + axial | 16.37 | P16 spar bending + axial, y 0.040 | hard 10 wide + drift .5 y |
+MIN P15 1.08   MIN P16 2.08
+
+### V3 skin E,G x0.7 (stiffness robustness)
+| P15 foam shear (cell) | 0.94 | P15 foam shear (cell), y 0.35 | hard 7/7 combo |
+| P15 skin wrinkling | 1.07 | P15 skin wrinkling, torsion + bending (E_f = E_x), y 0.285 (clamp node, outboard side, no truss) | hard 7/7 combo |
+| P15 skin shear+axial interaction | 1.36 | P15 skin shear+axial interaction, y 0.285 (clamp node, outboard side, no truss) | hard 7/7 combo |
+| P15 skin shear | 1.36 | P15 skin shear, y 0.35 | hard 7/7 combo |
+| P15 spar torsion | 3.87 | P15 spar torsion, y 0.35 | hard 7/7 combo |
+| P16 foam bending + axial | 4.48 | P16 foam bending + axial, y 0.285 (clamp node, outboard side, no truss) | hard 10 wide + drift .5 y |
+| P16 cove CF strip | 4.76 | P16 cove CF strip, y 0.285 (clamp node, outboard side, no truss) | hard 10 wide + drift .5 y |
+| P16 spar bending + axial | 22.05 | P16 spar bending + axial, y 0.060 | hard 10 wide + drift .5 y |
+MIN P15 0.94   MIN P16 4.48
+
+### V4 foam E,G x0.5
+| P15 skin wrinkling | 0.70 | P15 skin wrinkling, torsion + bending (E_f = E_x), y 0.285 (clamp node, outboard side, no truss) | hard 7/7 combo |
+| P15 skin shear+axial interaction | 1.27 | P15 skin shear+axial interaction, y 0.285 (clamp node, outboard side, no truss) | hard 7/7 combo |
+| P15 skin shear | 1.27 | P15 skin shear, y 0.35 | hard 7/7 combo |
+| P15 foam shear (cell) | 2.48 | P15 foam shear (cell), y 0.35 | hard 7/7 combo |
+| P16 cove CF strip | 4.81 | P16 cove CF strip, y 0.285 (clamp node, outboard side, no truss) | hard 10 wide + drift .5 y |
+| P15 spar torsion | 5.14 | P15 spar torsion, y 0.35 | hard 7/7 combo |
+| P16 foam bending + axial | 9.07 | P16 foam bending + axial, y 0.285 (clamp node, outboard side, no truss) | hard 10 wide + drift .5 y |
+| P16 spar bending + axial | 22.14 | P16 spar bending + axial, y 0.040 | hard 10 wide + drift .5 y |
+MIN P15 0.70   MIN P16 4.81
+
+### V5 no cap strip
+| P16 foam bending + axial | 0.75 | P16 foam bending + axial, y 0.285 (clamp node, outboard side, no truss) | hard 10 wide + drift .5 y |
+| P15 skin wrinkling | 0.98 | P15 skin wrinkling, torsion + bending (E_f = E_x), y 0.285 (clamp node, outboard side, no truss) | hard 7/7 combo |
+| P15 skin shear+axial interaction | 1.20 | P15 skin shear+axial interaction, y 0.285 (clamp node, outboard side, no truss) | hard 7/7 combo |
+| P15 foam shear (cell) | 1.28 | P15 foam shear (cell), y 0.35 | hard 7/7 combo |
+| P15 skin shear | 1.30 | P15 skin shear, y 0.35 | hard 7/7 combo |
+| P15 spar torsion | 5.28 | P15 spar torsion, y 0.35 | hard 7/7 combo |
+| P16 spar bending + axial | 12.79 | P16 spar bending + axial, y 0.228 | hard 10 wide + drift .5 y |
+MIN P15 0.98   MIN P16 0.75
+
+### V6 skin factor KF instead of KP
+| P15 foam shear (cell) | 1.28 | P15 foam shear (cell), y 0.35 | hard 7/7 combo |
+| P15 skin wrinkling | 1.43 | P15 skin wrinkling, torsion + bending (E_f = E_x), y 0.285 (clamp node, outboard side, no truss) | hard 7/7 combo |
+| P15 skin shear+axial interaction | 1.63 | P15 skin shear+axial interaction, y 0.285 (clamp node, outboard side, no truss) | hard 7/7 combo |
+| P15 skin shear | 1.63 | P15 skin shear, y 0.35 | hard 7/7 combo |
+| P16 foam bending + axial | 4.64 | P16 foam bending + axial, y 0.285 (clamp node, outboard side, no truss) | hard 10 wide + drift .5 y |
+| P16 cove CF strip | 4.92 | P16 cove CF strip, y 0.285 (clamp node, outboard side, no truss) | hard 10 wide + drift .5 y |
+| P15 spar torsion | 5.28 | P15 spar torsion, y 0.35 | hard 7/7 combo |
+| P16 spar bending + axial | 22.50 | P16 spar bending + axial, y 0.228 | hard 10 wide + drift .5 y |
+MIN P15 1.28   MIN P16 4.64
+
+### V7 2 plies +-45
+| P15 skin wrinkling | 2.12 | P15 skin wrinkling, torsion + bending (E_f = E_x), y 0.285 (clamp node, outboard side, no truss) | hard 7/7 combo |
+| P15 foam shear (cell) | 2.41 | P15 foam shear (cell), y 0.35 | hard 7/7 combo |
+| P15 skin shear+axial interaction | 2.45 | P15 skin shear+axial interaction, y 0.285 (clamp node, outboard side, no truss) | hard 7/7 combo |
+| P15 skin shear | 2.46 | P15 skin shear, y 0.35 | hard 7/7 combo |
+| P16 foam bending + axial | 5.15 | P16 foam bending + axial, y 0.285 (clamp node, outboard side, no truss) | hard 10 wide + drift .5 y |
+| P16 cove CF strip | 5.47 | P16 cove CF strip, y 0.285 (clamp node, outboard side, no truss) | hard 10 wide + drift .5 y |
+| P15 spar torsion | 9.99 | P15 spar torsion, y 0.35 | hard 7/7 combo |
+| P16 spar bending + axial | 24.02 | P16 spar bending + axial, y 0.228 | hard 10 wide + drift .5 y |
+MIN P15 2.12   MIN P16 5.15
+
+### V8 1 ply 0/90 (comparison)
+| P15 foam shear (cell) | 0.55 | P15 foam shear (cell), y 0.35 | hard 7/7 combo |
+| P15 skin shear+axial interaction | 0.62 | P15 skin shear+axial interaction, y 0.285 (clamp node, outboard side, no truss) | hard 7/7 combo |
+| P15 skin shear | 0.62 | P15 skin shear, y 0.35 | hard 7/7 combo |
+| P15 skin wrinkling | 1.67 | P15 skin wrinkling, torsion + bending (E_f = E_x), y 0.285 (clamp node, outboard side, no truss) | hard 7/7 combo |
+| P15 spar torsion | 2.29 | P15 spar torsion, y 0.35 | hard 7/7 combo |
+| P16 foam bending + axial | 5.17 | P16 foam bending + axial, y 0.285 (clamp node, outboard side, no truss) | hard 10 wide + drift .5 y |
+| P16 cove CF strip | 5.49 | P16 cove CF strip, y 0.285 (clamp node, outboard side, no truss) | hard 10 wide + drift .5 y |
+| P16 spar bending + axial | 24.07 | P16 spar bending + axial, y 0.228 | hard 10 wide + drift .5 y |
+MIN P15 0.55   MIN P16 5.17
+
+### SKIN-LESS (D2 pad)
+| P16 wing in-plane bending, spar + foam by EI share, skin-less, y 0.060 (outboard of tray slot end 0.057) | 0.11 | P16 wing in-plane bending, spar + foam by EI share, skin-less, y 0.060 (outboard of tray slot end 0.057) | hard 10 wide + drift .5 y |
+| P15 wing torsion, spar + foam by GJ share, skin-less, y 0.38 (fin station) | 0.14 | P15 wing torsion, spar + foam by GJ share, skin-less, y 0.38 (fin station) | hard 7/7 combo |
+| P15 wing torsion, spar + foam by GJ share, skin-less, y 0.228 (motor station) | 0.14 | P15 wing torsion, spar + foam by GJ share, skin-less, y 0.228 (motor station) | hard 7/7 combo |
+| P15 wing torsion, spar + foam by GJ share, skin-less, y 0.060 (outboard of tray slot end 0.057) | 0.14 | P15 wing torsion, spar + foam by GJ share, skin-less, y 0.060 (outboard of tray slot end 0.057) | hard 7/7 combo |
+| P16 wing in-plane bending, spar + foam by EI share, skin-less, y 0.228 (motor station) | 0.17 | P16 wing in-plane bending, spar + foam by EI share, skin-less, y 0.228 (motor station) | hard 10 wide + drift .5 y |
+| P16 wing in-plane bending, spar + foam by EI share, skin-less, y 0.38 (fin station) | 0.30 | P16 wing in-plane bending, spar + foam by EI share, skin-less, y 0.38 (fin station) | hard 16 wide + drift .5 y |
+MIN P15 0.14   MIN P16 0.11
+
+## all V0 rows by station
+| STRUT Euler pinned, no foam support (367 N) | 0.93 | hard 10 wide + drift .5 y |
+| STRUT bond at clamp (D6 x 14.2 mm, epoxy 2.0 MPa EST) | 1.09 | hard 10 wide + drift .5 y |
+| P15 skin wrinkling, torsion + bending (E_f = E_x), y 0.285 (clamp node, outboard side, no truss) | 1.15 | hard 7/7 combo |
+| P15 skin wrinkling, torsion + bending (E_f = E_x), y 0.228 | 1.15 | hard 7/7 combo |
+| P15 skin wrinkling, torsion + bending (E_f = E_x), y 0.060 | 1.15 | hard 7/7 combo |
+| P15 skin wrinkling, torsion + bending (E_f = E_x), y 0.040 | 1.15 | hard 7/7 combo |
+| P15 skin wrinkling, torsion + bending (E_f = E_x), y 0.35 | 1.17 | hard 7/7 combo |
+| P15 foam shear (cell), y 0.35 | 1.28 | hard 7/7 combo |
+| P15 foam shear (cell), y 0.285 (clamp node, outboard side, no truss) | 1.28 | hard 7/7 combo |
+| P15 foam shear (cell), y 0.228 | 1.28 | hard 7/7 combo |
+| P15 foam shear (cell), y 0.060 | 1.28 | hard 7/7 combo |
+| P15 foam shear (cell), y 0.040 | 1.28 | hard 7/7 combo |
+| P15 skin shear+axial interaction, y 0.285 (clamp node, outboard side, no truss) | 1.30 | hard 7/7 combo |
+| P15 skin shear+axial interaction, y 0.228 | 1.30 | hard 7/7 combo |
+| P15 skin shear+axial interaction, y 0.060 | 1.30 | hard 7/7 combo |
+| P15 skin shear+axial interaction, y 0.040 | 1.30 | hard 7/7 combo |
+| P15 skin shear+axial interaction, y 0.35 | 1.30 | hard 7/7 combo |
+| P15 skin shear, y 0.35 | 1.30 | hard 7/7 combo |
+| P15 skin shear, y 0.285 (clamp node, outboard side, no truss) | 1.30 | hard 7/7 combo |
+| P15 skin shear, y 0.228 | 1.30 | hard 7/7 combo |
+| P15 skin shear, y 0.060 | 1.30 | hard 7/7 combo |
+| P15 skin shear, y 0.040 | 1.30 | hard 7/7 combo |
+| P15 skin wrinkling, torsion only (E_f fibre), y 0.35 | 1.50 | hard 7/7 combo |
+| P15 skin wrinkling, torsion only (E_f fibre), y 0.285 (clamp node, outboard side, no truss) | 1.50 | hard 7/7 combo |
+| P15 skin wrinkling, torsion only (E_f fibre), y 0.228 | 1.50 | hard 7/7 combo |
+| P15 skin wrinkling, torsion only (E_f fibre), y 0.060 | 1.50 | hard 7/7 combo |
+| P15 skin wrinkling, torsion only (E_f fibre), y 0.040 | 1.50 | hard 7/7 combo |
+| STRUT bond at hub socket (D6 x 30 mm) | 2.30 | hard 10 wide + drift .5 y |
+| P16 foam bending + axial, y 0.285 (clamp node, outboard side, no truss) | 4.64 | hard 10 wide + drift .5 y |
+| P16 cove CF strip, y 0.285 (clamp node, outboard side, no truss) | 4.92 | hard 10 wide + drift .5 y |
+| P16 foam bending + axial, y 0.228 | 5.23 | hard 10 wide + drift .5 y |
+| P16 foam bending + axial, y 0.060 | 5.23 | hard 10 wide + drift .5 y |
+| P16 foam bending + axial, y 0.040 | 5.23 | hard 10 wide + drift .5 y |
+| P15 spar torsion, y 0.35 | 5.28 | hard 7/7 combo |
+| P15 spar torsion, y 0.285 (clamp node, outboard side, no truss) | 5.28 | hard 7/7 combo |
+| P15 spar torsion, y 0.228 | 5.28 | hard 7/7 combo |
+| P15 spar torsion, y 0.060 | 5.28 | hard 7/7 combo |
+| P15 spar torsion, y 0.040 | 5.28 | hard 7/7 combo |
+| P16 cove CF strip, y 0.228 | 5.56 | hard 10 wide + drift .5 y |
+| P16 cove CF strip, y 0.060 | 5.56 | hard 10 wide + drift .5 y |
+| P16 cove CF strip, y 0.040 | 5.56 | hard 10 wide + drift .5 y |
+| P16 foam bending + axial, y 0.35 | 6.88 | hard 10 wide + drift .5 y |
+| P16 cove CF strip, y 0.35 | 7.30 | hard 10 wide + drift .5 y |
+| STRUT Euler bound with foam bedding, not credited (4330 N) | 11.03 | hard 10 wide + drift .5 y |
+| STRUT tube strength, 6x4.5 CF 350 MPa EST | 11.03 | hard 10 wide + drift .5 y |
+| P16 spar bending + axial, y 0.228 | 22.50 | hard 10 wide + drift .5 y |
+| P16 spar bending + axial, y 0.060 | 22.50 | hard 10 wide + drift .5 y |
+| P16 spar bending + axial, y 0.040 | 22.50 | hard 10 wide + drift .5 y |
+| P16 spar bending + axial, y 0.285 (clamp node, outboard side, no truss) | 34.41 | hard 10 wide + drift .5 y |
+| P16 spar bending + axial, y 0.35 | 47.81 | hard 16 wide + drift .5 y |
+
+## cap strip scan (V0 otherwise): min P16 / min P15 vs strip area
+strip   0.0 mm2: mass  0.00 g (0.80 m, 1.55 g/cm3 EST)  min P16 0.75  min P15 0.98
+strip   1.0 mm2: mass  1.24 g (0.80 m, 1.55 g/cm3 EST)  min P16 2.04  min P15 1.10
+strip   2.0 mm2: mass  2.48 g (0.80 m, 1.55 g/cm3 EST)  min P16 3.34  min P15 1.13
+strip   3.0 mm2: mass  3.72 g (0.80 m, 1.55 g/cm3 EST)  min P16 4.64  min P15 1.15
+strip   4.0 mm2: mass  4.96 g (0.80 m, 1.55 g/cm3 EST)  min P16 5.93  min P15 1.15
+strip   6.0 mm2: mass  7.44 g (0.80 m, 1.55 g/cm3 EST)  min P16 8.52  min P15 1.16
+strip   8.0 mm2: mass  9.92 g (0.80 m, 1.55 g/cm3 EST)  min P16 10.46  min P15 1.17
+strip  12.0 mm2: mass 14.88 g (0.80 m, 1.55 g/cm3 EST)  min P16 12.44  min P15 1.17
+strip  16.0 mm2: mass 19.84 g (0.80 m, 1.55 g/cm3 EST)  min P16 13.65  min P15 1.17
+strip  24.0 mm2: mass 29.76 g (0.80 m, 1.55 g/cm3 EST)  min P16 13.99  min P15 1.17
+
+## ply scan (V0 otherwise, strip 3 mm2)
+1 ply: t 0.054 mm  skin mass 27.0 g (perimeter 383 mm x 0.80 m)  min P16 4.64  min P15 1.15
+2 ply: t 0.107 mm  skin mass 53.9 g (perimeter 383 mm x 0.80 m)  min P16 5.15  min P15 2.12
+3 ply: t 0.161 mm  skin mass 80.9 g (perimeter 383 mm x 0.80 m)  min P16 5.66  min P15 3.06
+
+wall time 34 s
