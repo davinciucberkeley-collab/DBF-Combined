@@ -173,3 +173,16 @@ Requirement IDs: R-GEN-02, R-OPT-02.
 ```text
 It is alright to go a bit over the budget when doing the initial design
 ```
+
+## AM-011 — 2026-11-19 — Correction to AM-010: weight, not budget
+Relation: corrects AM-010 the same day. AM-010's budget tolerance is WITHDRAWN: the $2,000 budget stays a hard limit
+as before (AM-009's accepted G7 growth-margin shortfall of about $50 stands; the $2,000 total itself is not to be
+exceeded). What may go over during the initial design is the WEIGHT target: a design estimate above the mass gate
+(1,470 g, MASS-GATE.md) does not by itself stop the initial design. Interpretation (recorded, not stretched): the
+physics checks that depend on mass (T/W, transition window A-P3, landing loads, cruise time) still apply at the
+predicted mass and are reported against their limits; every mass estimate is still reported against the gate.
+Requirement IDs: R-OPT-02, R-OPT-05, R-GEN-02.
+
+```text
+Scratch that, I meant weight is something that we can go over in the initial design, not budget
+```
