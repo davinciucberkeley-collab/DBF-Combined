@@ -10,7 +10,7 @@ User constraints (root `CLAUDE.md`):
   crash reserve).
 - Flight-tested by 30 April 2027.
 - The packed aircraft fits one car trunk (two at most).
-- Passes the 3-D physics checks.
+- Passes the 3-D gates (interference check, static, at neutral and at the elevon stops; swept insertion check, straight-line build-step paths).
 - The CAD looks exactly like the physical aircraft: real shapes from vendor drawings, no stand-in disks or boxes (2026-11-15).
 - Limit exposed wiring: wires inside tubes, core channels or covers; every exposed length listed with its reason (2026-11-15).
 

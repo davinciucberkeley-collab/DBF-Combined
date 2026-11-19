@@ -25,7 +25,7 @@ def src(id, title, url, where, kind="repo", checked=D, note=None):
 
 
 # ---------------------------------------------------------------- sources (concept A files; url given relative to redesign/)
-src("SRC-A-USER", "Project constraints (root CLAUDE.md)", GH + "CLAUDE.md", "Hard constraints: $2,000, 2027-04-30, one car trunk, < 25 kg, 3-D physics pass", kind="file")
+src("SRC-A-USER", "Project constraints (root CLAUDE.md)", GH + "CLAUDE.md", "Hard constraints: $2,000, 2027-04-30, one car trunk, < 25 kg, 3-D physics simulation (user wording; computed as interference + swept insertion checks)", kind="file")
 src("SRC-A-REQ", "Concept A requirements (REQUIREMENTS-A.md)", "qp/A/REQUIREMENTS-A.md", "limits of A-U1 ... A-D12; status PROPOSED, owner A2")
 src("SRC-A-MASSGATE", "Mass gate, concept A (MASS-GATE.md)", "qp/A/MASS-GATE.md", "s1 verdict, s4 overrun, s5 CG, s7 QP-4 FIXES2 update")
 src("SRC-A-MISSION", "Mission definition, concept A", "qp/A/MISSION.md", "s1 speeds, s2 racetrack")
@@ -92,7 +92,7 @@ for rid, title, text in [
     ("A-U1", "Total spend and the G7 gate", "Total physical spend <= $2,000 incl. tax, shipping, packs, charger, radio, test gear, tools, crash reserve; gate G7: total <= $1,800 and +30 % margin on the unverified lines >= $100"),
     ("A-U2", "Built and flight-tested by 2027-04-30", "Built and flight-tested by 2027-04-30 on the baseline schedule (4 booked mornings a week, p 0.72, one crash loop)"),
     ("A-U3", "Packed aircraft fits one car trunk", "Multi-piece allowed; the packed aircraft fits one standard car trunk (two pieces at most)"),
-    ("A-U4", "3-D physics pass", "No part interpenetration (collision gate at neutral and at the elevon stops), no open wire ends, every build step passes the assembly sweep"),
+    ("A-U4", "3-D gates pass (interference + swept insertion checks)", "No part interpenetration (interference check, static, at neutral and at the elevon stops), no open wire ends, every build step passes the swept insertion check (straight-line build-step paths)"),
     ("A-U5", "Mass under 25 kg", "Take-off mass < 25 kg (55 lb)"),
     ("A-D2", "Mission: 3.0 min hover, 3.41 min cruise at 17 m/s", "3.0 min hover mode incl. 40 s go-around, cruise 3.41 min at 17 m/s (requirement 3.5 min), 20 % reserve; cruise to BATT_LOW lasts longer than the mission needs"),
     ("A-P1", "Mass gate 1.47 kg and T/W at the gate", "As-built mass <= 1.47 kg; at the gate T/W fresh >= 2.0 and sag >= 1.6 with Q_M_SPIN_MAX 0.90"),

@@ -26,7 +26,7 @@ Parameter files: `redesign/qp/A/params-A.json`
 | [A-U1](#a-u1) Total spend and the G7 gate | **UNVERIFIED** | 3 | +0% |
 | [A-U2](#a-u2) Built and flight-tested by 2027-04-30 | **UNVERIFIED** | 1 | — |
 | [A-U3](#a-u3) Packed aircraft fits one car trunk | **UNVERIFIED** | 1 | +0% |
-| [A-U4](#a-u4) 3-D physics pass | **CHECKED** | 6 | +0% |
+| [A-U4](#a-u4) 3-D gates pass (interference + swept insertion checks) | **CHECKED** | 6 | +0% |
 | [A-U5](#a-u5) Mass under 25 kg | **UNVERIFIED** | 1 | +94% |
 
 ## A-D2
@@ -211,7 +211,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-d8
     - `start` ← param `P:sched.start` = 2027-02-08 date — **CHECKED**
       - `SRC-A-SCHEDPY` (see above)
     - `deadline` ← param `P:sched.deadline` = 2027-04-30 date — **CHECKED**
-      - source `SRC-A-USER` [Project constraints (root CLAUDE.md)](https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/CLAUDE.md), Hard constraints: $2,000, 2027-04-30, one car trunk, < 25 kg, 3-D physics pass, checked 2026-11-15 — **CHECKED**
+      - source `SRC-A-USER` [Project constraints (root CLAUDE.md)](https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/CLAUDE.md), Hard constraints: $2,000, 2027-04-30, one car trunk, < 25 kg, 3-D physics simulation (user wording; computed as interference + swept insertion checks), checked 2026-11-15 — **CHECKED**
     - `repair` ← param `P:sched.repair_days` = 11 d — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: crash repair loop after F04 (K09-L CR1 10.5 d rounded up)
       - `SRC-A-SCHEDPY` (see above)
@@ -1323,7 +1323,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-u1
     - `tubes` ← param `P:cost.reserve_tube_ids` = table (4 rows) — **CHECKED**
       - `SRC-A-BOMPY` (see above)
     - `budget` ← param `P:req.budget_usd` = 2000 USD — **CHECKED**
-      - source `SRC-A-USER` [Project constraints (root CLAUDE.md)](https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/CLAUDE.md), Hard constraints: $2,000, 2027-04-30, one car trunk, < 25 kg, 3-D physics pass, checked 2026-11-15 — **CHECKED**
+      - source `SRC-A-USER` [Project constraints (root CLAUDE.md)](https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/CLAUDE.md), Hard constraints: $2,000, 2027-04-30, one car trunk, < 25 kg, 3-D physics simulation (user wording; computed as interference + swept insertion checks), checked 2026-11-15 — **CHECKED**
   - param `P:req.g7_total_usd` = 1800 USD — **CHECKED**
     - source `SRC-A-REQ` [Concept A requirements (REQUIREMENTS-A.md)](redesign/qp/A/REQUIREMENTS-A.md), limits of A-U1 ... A-D12; status PROPOSED, owner A2, checked 2026-11-15 — **CHECKED**
 - claim **CL-A-COST-MARGIN30** Margin to $2,000 if the unverified lines run 30 % over = **100 USD** (limit >= 100 USD, margin +0%) — **UNVERIFIED**
@@ -1358,7 +1358,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-u2
     - `start` ← param `P:sched.start` = 2027-02-08 date — **CHECKED**
       - `SRC-A-SCHEDPY` (see above)
     - `deadline` ← param `P:sched.deadline` = 2027-04-30 date — **CHECKED**
-      - source `SRC-A-USER` [Project constraints (root CLAUDE.md)](https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/CLAUDE.md), Hard constraints: $2,000, 2027-04-30, one car trunk, < 25 kg, 3-D physics pass, checked 2026-11-15 — **CHECKED**
+      - source `SRC-A-USER` [Project constraints (root CLAUDE.md)](https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/CLAUDE.md), Hard constraints: $2,000, 2027-04-30, one car trunk, < 25 kg, 3-D physics simulation (user wording; computed as interference + swept insertion checks), checked 2026-11-15 — **CHECKED**
     - `repair` ← param `P:sched.repair_days` = 11 d — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: crash repair loop after F04 (K09-L CR1 10.5 d rounded up)
       - `SRC-A-SCHEDPY` (see above)
@@ -1399,7 +1399,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-u3
 
 ## A-U4
 
-**3-D physics pass** — No part interpenetration (collision gate at neutral and at the elevon stops), no open wire ends, every build step passes the assembly sweep — **CHECKED**  
+**3-D gates pass (interference + swept insertion checks)** — No part interpenetration (interference check, static, at neutral and at the elevon stops), no open wire ends, every build step passes the swept insertion check (straight-line build-step paths) — **CHECKED**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-u4
 
 - claim **CL-A-COLL-COUNT** Part overlaps deeper than the tolerance (neutral, +-20, +-21 deg) = **0** (limit <= 0, margin +0 abs) — **CHECKED**
@@ -1462,7 +1462,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-u5
     - `gate` ← param `P:req.mass_gate_kg` = 1.47 kg — **CHECKED**
       - source `SRC-A-REQ` [Concept A requirements (REQUIREMENTS-A.md)](redesign/qp/A/REQUIREMENTS-A.md), limits of A-U1 ... A-D12; status PROPOSED, owner A2, checked 2026-11-15 — **CHECKED**
   - param `P:req.mass_user_max_kg` = 25 kg — **CHECKED**
-    - source `SRC-A-USER` [Project constraints (root CLAUDE.md)](https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/CLAUDE.md), Hard constraints: $2,000, 2027-04-30, one car trunk, < 25 kg, 3-D physics pass, checked 2026-11-15 — **CHECKED**
+    - source `SRC-A-USER` [Project constraints (root CLAUDE.md)](https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/CLAUDE.md), Hard constraints: $2,000, 2027-04-30, one car trunk, < 25 kg, 3-D physics simulation (user wording; computed as interference + swept insertion checks), checked 2026-11-15 — **CHECKED**
 
 ## Claims not tied to a requirement
 
@@ -1493,7 +1493,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-u5
     - `start` ← param `P:sched.start` = 2027-02-08 date — **CHECKED**
       - `SRC-A-SCHEDPY` (see above)
     - `deadline` ← param `P:sched.deadline` = 2027-04-30 date — **CHECKED**
-      - source `SRC-A-USER` [Project constraints (root CLAUDE.md)](https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/CLAUDE.md), Hard constraints: $2,000, 2027-04-30, one car trunk, < 25 kg, 3-D physics pass, checked 2026-11-15 — **CHECKED**
+      - source `SRC-A-USER` [Project constraints (root CLAUDE.md)](https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/CLAUDE.md), Hard constraints: $2,000, 2027-04-30, one car trunk, < 25 kg, 3-D physics simulation (user wording; computed as interference + swept insertion checks), checked 2026-11-15 — **CHECKED**
     - `repair` ← param `P:sched.repair_days` = 11 d — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: crash repair loop after F04 (K09-L CR1 10.5 d rounded up)
       - `SRC-A-SCHEDPY` (see above)

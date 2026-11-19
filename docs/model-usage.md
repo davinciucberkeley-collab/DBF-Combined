@@ -13,3 +13,6 @@ session (Agent tool: "Agent type 'implementer' not found"). Until then the same 
 `model` override on `general-purpose`. Next-session check: T-013 acceptance.
 | 2026-11-18 | T-018..T-021 elevon linkage kinematics, dynamics, swept collision | general-purpose / sonnet | moderate-high (spatial linkage) | done; found 3 real defects; records file refused by subagent Write policy, written by conductor | 223 k tok / 14 min | 0 | — | conductor reran all 3, hand-checked 2 numbers |
 | 2026-11-18 | T-027 film shot-list mode + 1080p60 preview | general-purpose / sonnet | moderate (pipeline extension) | done, preview OK, framing defects | 181 k tok / 15.6 min | 0 | — | conductor viewed contact sheet |
+| 2026-11-18 | T-061 D-212 linkage fix + gates | general-purpose / sonnet | high (CAD change + gates); sonnet first, escalate to opus review after | running | — | 0 | — | — |
+| 2026-11-18 | T-017 physics relabel | general-purpose / sonnet | moderate (judgment on wording) | running | — | 0 | — | — |
+| 2026-11-18 | T-041a cleanup dry-run facts | general-purpose / haiku | routine (grep/inventory) | running | — | 0 | — | — |

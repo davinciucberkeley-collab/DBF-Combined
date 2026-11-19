@@ -19,7 +19,7 @@
 1. $2,000 total, all bought new (tax, shipping, packs, charger, radio, test gear, spares); the Jacobs Hall Makers Pass is outside it.
 2. Built and flight-tested by 2027-04-30.
 3. The packed aircraft fits one car trunk (two at most); a team of 4 moves it; under 25 kg.
-4. Passes the 3-D physics checks: every build step and the assembled aircraft, no part interpenetration, no open wire ends, no exemptions; flight cases in the 3-D sims pass.
+4. Passes the 3-D gates: an interference check (static, at neutral and at the elevon stops) of every build step and the assembled aircraft, no part interpenetration, no open wire ends, no exemptions, plus a swept insertion check (straight-line build-step paths); flight cases in the 3-D sims pass. These are interference checks, not physics simulations; mechanism physics is in docs/analysis-records.md (kinematics AR-001, rigid-body dynamics AR-002, swept interference AR-003).
 5. **The CAD looks exactly like the physical aircraft** (2026-11-15): every part at its real shape and size from the vendor drawing or data sheet, real prop blades, no stand-in disks or boxes; unknown dimensions flagged, never invented.
 6. **Limit exposed wiring** (2026-11-15): wires inside the arm tubes, wing-core channels, fairings or covers; any wire left outside the skin is listed with its length and reason, and kept to the minimum.
 

@@ -2,7 +2,7 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-18 11:51 UTC",
+  "generated": "2026-11-19 00:11 UTC",
   "dataset": "concept-a",
   "ok": true,
   "errors": [],
@@ -47,7 +47,7 @@ window.PROOF_GRAPH = {
    "kind": "file",
    "url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/CLAUDE.md",
    "checked": "2026-11-15",
-   "where": "Hard constraints: $2,000, 2027-04-30, one car trunk, < 25 kg, 3-D physics pass",
+   "where": "Hard constraints: $2,000, 2027-04-30, one car trunk, < 25 kg, 3-D physics simulation (user wording; computed as interference + swept insertion checks)",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
    "importance": 8
@@ -591,8 +591,8 @@ window.PROOF_GRAPH = {
   {
    "id": "A-U4",
    "type": "requirement",
-   "title": "3-D physics pass",
-   "text": "No part interpenetration (collision gate at neutral and at the elevon stops), no open wire ends, every build step passes the assembly sweep",
+   "title": "3-D gates pass (interference + swept insertion checks)",
+   "text": "No part interpenetration (interference check, static, at neutral and at the elevon stops), no open wire ends, every build step passes the swept insertion check (straight-line build-step paths)",
    "ref": "qp/A/REQUIREMENTS-A.md#a-u4",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [

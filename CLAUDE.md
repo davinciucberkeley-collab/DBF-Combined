@@ -71,6 +71,7 @@ each one with its reasoning in `redesign/params/CHANGE-LOG.md`.
 
 ## Where things are
 - README.md is the front door: directory map, status, how to view the pages.
+- The 3-D gates (`collide.py`, `assembly_check.py`) are interference checks (static, plus straight-line swept insertion); mechanism physics is in docs/analysis-records.md (AR-001 kinematics, AR-002 rigid-body dynamics, AR-003 swept interference).
 - DECISIONS.md lists the open design-parameter conflicts. Do not pick a side
   silently; the root `analysis/` + `cad/` are the 11-02 resize, while
   `inventory/`, `fusion/`, `concepts/variants/` are still on v0.3.1.

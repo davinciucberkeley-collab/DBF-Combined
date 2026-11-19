@@ -1,6 +1,6 @@
 """render_build.py - the K09-L build sequence as animation, one clip per BUILD-GUIDE stage plus the full film.
 
-    python -I redesign/showcase/animation/assembly_check.py      # 1. plan + physics-check the motions (~25 min)
+    python -I redesign/showcase/animation/assembly_check.py      # 1. plan + swept insertion check of the motions (straight-line paths) (~25 min)
     python redesign/showcase/animation/render_build.py           # 2. render the checked plan (~19 min)
     python redesign/showcase/animation/render_build.py --preview # quick look: half size, every 3rd frame, to --work
 

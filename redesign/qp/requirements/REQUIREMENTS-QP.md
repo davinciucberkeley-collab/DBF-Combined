@@ -14,7 +14,7 @@ Paths are relative to `redesign/`. Airframe basis: candidate B of `config-study/
 | QP-U1 | Total physical spend <= $2,000 incl. tax, shipping, packs, charger, radio, test gear, crash reserve. Jacobs Makers Pass outside the budget | USER | R-BUDGET | carry | root `CLAUDE.md`; `qp/README.md`. Restudy B: $1,625 `EST` |
 | QP-U2 | Built and flight-tested by 2027-04-30 | USER | R-SCHEDULE | carry | `CLAUDE.md`. Interior milestones are DERIVED (QP-D8) |
 | QP-U3 | Portable: team of 4, < 25 kg, one piece in a car box | USER | R-TRANSPORT, R-CAR-FIT, R-ENVELOPE | adapt | `CLAUDE.md`. K09-L's 1.25 m box came from a 1.15 m span; **QP-B span 1.40 m does not fit it. Open: D-QP-1, not decided here** |
-| QP-U4 | 3-D physics pass: no floating parts, no phasing, assembly motions swept | USER | R-NO-FLOATING | carry | `CLAUDE.md`; tools in `CARRY-OVER.md` |
+| QP-U4 | 3-D gates (CLAUDE.md wording "3-D physics simulation"; computed: interference check, static; swept insertion check, straight-line paths): no floating parts, no phasing, assembly motions swept | USER | R-NO-FLOATING | carry | `CLAUDE.md`; tools in `CARRY-OVER.md` |
 | QP-U5 | Mass < 25 kg (55 lb) | USER/LEGAL | R-LEGAL, `mass_max_legal_kg` | carry | `CLAUDE.md`. QP-B 1.88 kg `EST` |
 
 ## 2. K09-L requirements: carry / adapt / drop
