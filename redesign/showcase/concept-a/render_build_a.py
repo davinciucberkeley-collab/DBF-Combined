@@ -66,8 +66,10 @@ MODEL_A = os.path.join(CAD_A, 'model')
 BLENDER_DEFAULT = r'C:/Users/dillo/tools/blender/blender-4.5.14-windows-x64/blender.exe'
 OUT = os.path.join(HERE, 'animation')
 
-FPS = 24
+FPS = 24                             # T-027: defaults of the build film; --fps / --width / --height override them (apply_res), all workers and the encode get the same values
 W, H = 1280, 720
+BASE_W = 1280.0                      # the overlay is laid out for a 1280-px-wide frame; k = picture width / BASE_W scales it to any resolution
+FILM_DIR = os.path.join(HERE, 'film')
 T_TITLE, T_CAM_STAGE = 6.5, 1.2      # s stage title card (camera moves during its first T_CAM_STAGE)
 T_CAM = 0.7                          # s camera move before a step (fallback when cam_plan.json is missing; see cam_duration)
 T_CAM_MIN, T_CAM_MAX = 0.6, 4.8      # s camera move limits; the move time grows with the zoom change, the swing and the shift (cam_duration)
@@ -134,6 +136,18 @@ FAB_ONLY = {'B1': ('PRP-',)}          # B1: during its make-it beat only the mot
 NO_CONTEXT = ('B0a',)                  # the stage's first step frames only the cage unit on the bench (like the bench steps), not everything placed so far
 T_CHK_CAM = 1.8                      # s camera pull-back to the whole assembly while a checkpoint card is up
 MARKER_BEAT_KINDS = ('thread', 'solder')   # these fab kinds are shown during the marker step's motion, not as a separate beat
+
+
+def apply_res(width=None, height=None, fps=None):
+    """T-027: set the module-level frame size and rate (defaults 1280x720 @ 24 reproduce the build film)."""
+    global W, H, FPS
+    W, H, FPS = int(width or W), int(height or H), int(fps or FPS)
+
+
+def add_res_args(ap):
+    ap.add_argument('--width', type=int, default=W, help='frame width in px (default %d)' % W)
+    ap.add_argument('--height', type=int, default=H, help='frame height in px (default %d)' % H)
+    ap.add_argument('--fps', type=int, default=FPS, help='frames per second (default %d)' % FPS)
 
 
 def smooth(x):
@@ -296,6 +310,102 @@ def moving_frames(rows, total):
 
 
 # =====================================================================================================================
+# short film (T-027): shot list -> scenes of shots; pure functions shared by the Blender worker and the driver
+# =====================================================================================================================
+PARAMS_A = os.path.join(REDESIGN, 'qp', 'A', 'params-A.json')
+FILM_MODES = ('normal', 'ghost', 'fab', 'move', 'hidden')
+
+
+def param_value(path):
+    """params-A.json value by key path, e.g. 'box/packed_m/0' (a dict node with a 'value' is unwrapped; digits index lists)."""
+    o = json.load(open(PARAMS_A))
+    for k in path.split('/'):
+        if isinstance(o, dict) and k not in o and 'value' in o:
+            o = o['value']
+        o = o[int(k)] if isinstance(o, list) else o[k]
+    return o['value'] if isinstance(o, dict) and 'value' in o else o
+
+
+def _cam_vec(c):
+    return (float(c['target'][0]), float(c['target'][1]), float(c['target'][2]), float(c['az']), float(c['el']), float(c['dist']))
+
+
+def load_film(path, scene_ids=None):
+    """Shot-list JSON -> {'scenes': [...], 'total': s}. Camera keys are given per shot as {t (s from shot start), target, az, el, dist}; the
+    keys of all shots of a scene form ONE path (hermite_cam, C1: no velocity jump at a shot join). A shot's start camera is the previous shot's
+    last key, so only the first shot of a scene needs a key at t = 0; cuts are allowed only between scenes."""
+    d = json.load(open(path, encoding='utf-8'))
+    scenes, t = [], 0.0
+    for sc in d['scenes']:
+        if scene_ids and sc['id'] not in scene_ids:
+            continue
+        S = dict(id=sc['id'], title=sc.get('title', ''), t0=t, shots=[], keys=[])
+        st = 0.0
+        for n, sh in enumerate(sc['shots']):
+            sh = dict(sh)
+            sh['scene'] = sc['id']
+            sh['t0'], sh['t1'] = st, st + float(sh['dur'])
+            last = S['keys'][-1][1] if S['keys'] else None
+            for kf in sh.get('cam', []):
+                tk, c = st + float(kf['t']), _cam_vec(kf)
+                if S['keys'] and tk <= S['keys'][-1][0] + 1e-9:
+                    if tk == st and last is not None and max(abs(a - b) for a, b in zip(c, last)) < 1e-9:
+                        continue              # the shot restates the camera it starts from: same key
+                    raise ValueError('%s shot %s: camera key at %.2f s is not after the previous key (%s) - a cut inside a scene is not allowed' % (sc['id'], sh['id'], tk, last))
+                S['keys'].append((tk, c))
+            if n == 0 and (not S['keys'] or S['keys'][0][0] != 0.0):
+                raise ValueError('%s: the first shot needs a camera key at t = 0' % sc['id'])
+            st = sh['t1']
+            S['shots'].append(sh)
+        S['dur'] = st
+        t += st
+        scenes.append(S)
+    return dict(scenes=scenes, total=t, raw=d)
+
+
+def hermite_cam(keys, tl):
+    """Camera (tx, ty, tz, az, el, dist) at scene time tl: cubic Hermite through the keys with Catmull-Rom tangents (distance interpolated
+    geometrically, as lerp_cam does), zero velocity only at the first and last key, so shot joins inside a scene have no velocity jump."""
+    ts = [k[0] for k in keys]
+    ps = [list(k[1][:5]) + [math.log(k[1][5])] for k in keys]
+    n = len(ts)
+    if n == 1:
+        q = ps[0]
+    else:
+        if tl <= ts[0]:
+            i, u = 0, 0.0
+        elif tl >= ts[-1]:
+            i, u = n - 2, 1.0
+        else:
+            i = bisect.bisect_right(ts, tl) - 1
+            u = (tl - ts[i]) / (ts[i + 1] - ts[i])
+        h = ts[i + 1] - ts[i]
+
+        def tan(j):
+            if j <= 0 or j >= n - 1:
+                return [0.0] * 6
+            return [(ps[j + 1][m] - ps[j - 1][m]) / (ts[j + 1] - ts[j - 1]) for m in range(6)]
+        m0, m1 = tan(i), tan(i + 1)
+        h00, h10, h01, h11 = 2 * u ** 3 - 3 * u ** 2 + 1, u ** 3 - 2 * u ** 2 + u, -2 * u ** 3 + 3 * u ** 2, u ** 3 - u ** 2
+        q = [h00 * ps[i][m] + h10 * h * m0[m] + h01 * ps[i + 1][m] + h11 * h * m1[m] for m in range(6)]
+    return (q[0], q[1], q[2], q[3], q[4], math.exp(q[5]))
+
+
+def film_at(film, t):
+    """(scene, shot, scene-local time) for film time t (clamped to the last frame)."""
+    sc = film['scenes'][-1]
+    for S in film['scenes']:
+        if t >= S['t0']:
+            sc = S
+    tl = min(max(0.0, t - sc['t0']), sc['dur'] - 1e-6)
+    sh = sc['shots'][-1]
+    for x in sc['shots']:
+        if tl >= x['t0']:
+            sh = x
+    return sc, sh, tl
+
+
+# =====================================================================================================================
 # Blender worker
 # =====================================================================================================================
 def blender_render(argv):
@@ -310,7 +420,13 @@ def blender_render(argv):
     ap.add_argument('--no-rt', action='store_true', help='EEVEE ray tracing off (faster)')
     ap.add_argument('--camplan', action='store_true', help='no rendering: compute the per-step cameras and write cam_plan.json (timeline() needs it for the camera move times)')
     ap.add_argument('--audit', action='store_true', help='no rendering: dump what is visible and where the camera is, every --every frames')
+    ap.add_argument('--shot-list', default='', help='short-film mode: render the scenes of this shot-list JSON instead of the build film')
+    ap.add_argument('--scenes', default='', help='short-film mode: comma list of scene ids to render (default all)')
+    ap.add_argument('--dof', action='store_true', help='depth of field focused on the camera target (off by default)')
+    ap.add_argument('--motion-blur', action='store_true', help='EEVEE motion blur on (off by default)')
+    add_res_args(ap)
     a = ap.parse_args(argv)
+    apply_res(a.width, a.height, a.fps)
     sys.path.insert(0, BL)
     sys.path.insert(0, ANIM)
     import bpy
@@ -514,7 +630,7 @@ def blender_render(argv):
         return
     old_plan = load_cam_plan()
     stale = [r['id'] for r in rows if old_plan.get(r['id'], {}).get('cam') != plan_json[r['id']]['cam'] or old_plan.get(r['id'], {}).get('wide') != plan_json[r['id']]['wide']]
-    if stale:
+    if stale and not a.shot_list:
         raise SystemExit('cam_plan.json is stale for %s: run with --camplan first (the driver does it)' % stale)
 
     # camera keyframes: one smooth move (smoothstep, distance geometric) between the views of consecutive steps, holds in between
@@ -571,6 +687,16 @@ def blender_render(argv):
     cd.lens = 50
     cd.sensor_width = 36
     cd.clip_start, cd.clip_end = 0.02, 100
+    if a.dof:
+        cd.dof.use_dof = True
+        cd.dof.aperture_fstop = 5.6
+    if a.motion_blur:
+        sc.render.use_motion_blur = True
+        sc.render.motion_blur_shutter = 0.5
+
+    def set_focus(dist_):
+        if a.dof:
+            cd.dof.focus_distance = float(dist_)
 
     def look(ob, loc, target, up=Vector((0, 0, 1))):
         f = (Vector(target) - Vector(loc)).normalized()
@@ -611,6 +737,85 @@ def blender_render(argv):
                 sl.material = MATS[mode]
             else:
                 sl.link = 'DATA'
+
+    if a.shot_list:
+        # ---- short-film mode (T-027): the concept A CAD at rest, parts shown / x-rayed per shot, one camera path per scene (hermite_cam)
+        film = load_film(a.shot_list, a.scenes.split(',') if a.scenes else None)
+        nfr = int(round(film['total'] * FPS))
+        sc.render.resolution_percentage = 100
+
+        def shot_modes(sh):
+            parts, modes, out = sh.get('parts', 'all'), sh.get('modes', {}), {}
+            for pid in be.objects:
+                if pid not in placed_ids or (parts != 'all' and not any(pid.startswith(x) for x in parts)):
+                    continue
+                m = 'normal'
+                for pref, mm in modes.items():
+                    if pid.startswith(pref):
+                        m = mm
+                if m != 'hidden':
+                    out[pid] = m
+            return out
+
+        def film_pose(t):
+            S, sh, tl = film_at(film, t)
+            vis = shot_modes(sh)
+            for pid, ob in items.items():
+                if pid in be.wires:
+                    ends = [ob.get(k_) for k_ in ('part_a', 'part_b') if ob.get(k_) in placed_ids]
+                    on = bool(ends) and all(e_ in vis for e_ in ends)
+                    ob.hide_render = not on
+                    if on:
+                        tint(pid, None)
+                elif pid in vis:
+                    ob.hide_render = False
+                    ob.matrix_world = rest[pid]
+                    m = vis[pid]
+                    tint(pid, ('ghost_spar' if pid.startswith('WNG-002') else 'ghost') if m == 'ghost' else (None if m == 'normal' else m))
+                else:
+                    ob.hide_render = True
+            cam_c = hermite_cam(S['keys'], tl)
+            ctr, view, dist = cam_view((Vector(cam_c[:3]), cam_c[3], cam_c[4], cam_c[5]))
+            look(cam, ctr + view * dist, ctr)
+            set_focus(dist)
+            below = (ctr + view * dist).z < floor.location.z + 0.06
+            floor.hide_render = below
+            caz = math.atan2(view.y, view.x)
+            for lo_, daz, lel, dd in lights:
+                aa, ee = caz + math.radians(daz), math.radians(lel)
+                loc = ctr + Vector((math.cos(ee) * math.cos(aa), math.cos(ee) * math.sin(aa), math.sin(ee))) * dd
+                look(lo_, loc, ctr, Vector((0, 0, 1)) if lel < 85 else Vector((1, 0, 0)))
+            blob_s.default_value = (0.55, 0.9, 1.0)
+            blob_c.default_value = (full_c.x, 0.0, 0.0)
+            blob_op.default_value = 0.0 if below else 0.35
+            bpy.context.view_layer.update()
+            return (tuple(sorted(vis.items())), tuple(round(v, 4) for v in cam_c))
+
+        if a.frames:
+            frames = [int(f) for f in a.frames.split(',') if f.strip()]
+        elif a.range:
+            f0, f1 = [int(v) for v in a.range.split(':')]
+            frames = list(range(f0, min(f1, nfr), a.every))
+        else:
+            frames = list(range(0, nfr, a.every))
+        os.makedirs(a.out, exist_ok=True)
+        t0, prev_key, prev_name, n_new, fmap = time.time(), None, None, 0, {}
+        for f in frames:
+            key = film_pose(f / FPS)
+            name = 'raw_%05d.png' % f
+            if key == prev_key and prev_name:
+                name = prev_name
+            else:
+                sc.render.filepath = os.path.join(a.out, name)
+                bpy.ops.render.render(write_still=True)
+                n_new += 1
+            prev_key, prev_name = key, name
+            fmap[f] = dict(raw=name, anc={})
+            print('FRAME %d / %d rendered %d  %.0f s' % (f, nfr, n_new, time.time() - t0), flush=True)
+        tag = a.range.replace(':', '_') if a.range else ('frames' if a.frames else 'all')
+        json.dump(fmap, open(os.path.join(a.out, 'map_%s.json' % tag), 'w'))
+        print('RENDER_TOTAL %.1f s for %d frames (%d rendered)' % (time.time() - t0, len(frames), n_new))
+        return
 
     # ---- wire reveal curves (phase leads): the same strands as the wire meshes, drawn with a curve bevel so that a fraction can be shown
     wires = {wv.edge: wv for wv in ctx.wires}
@@ -831,6 +1036,7 @@ def blender_render(argv):
                     tint(p, None)
         ctr, view, dist = cam_view(cam_c)
         look(cam, ctr + view * dist, ctr)
+        set_focus(dist)
         below = (ctr + view * dist).z < floor.location.z + 0.06     # D-199: camera under the stage floor (views from below): hide the floor and its shadow blob so the frame is not blank
         floor.hide_render = below
         caz = math.atan2(view.y, view.x)
@@ -923,7 +1129,9 @@ def blender_encode(argv):
     ap.add_argument('--crf', default='MEDIUM')
     ap.add_argument('--w', type=int, default=W)
     ap.add_argument('--h', type=int, default=H)
+    ap.add_argument('--fps', type=int, default=FPS)
     a = ap.parse_args(argv)
+    apply_res(None, None, a.fps)
     names = [n.strip() for n in open(a.list) if n.strip()]
     sc = bpy.context.scene
     sc.sequence_editor_create()
@@ -1110,7 +1318,9 @@ def title_alpha(row, t):
     return max(0.0, min(1.0, (t - row['t_title0']) / 0.5, (row['t_title1'] - t) / 0.7))
 
 
-def _init(rows, total, k):
+def _init(rows, total, k, fps=None):
+    if fps:
+        apply_res(None, None, fps)          # spawned overlay processes re-import the module: give them the run's frame rate
     _G['rows'], _G['total'], _G['k'], _G['F'] = rows, total, k, make_fonts(k)
 
 
@@ -1289,6 +1499,80 @@ def overlay(src, dst, f, fm, sw, sh):
     Image.alpha_composite(im, lay).convert('RGB').save(dst, optimize=False, compress_level=1)
 
 
+def _init_film(film, k, fps):
+    apply_res(None, None, fps)
+    _G['film'], _G['k'], _G['F'] = film, k, make_fonts(k)
+
+
+def film_overlay(src, dst, f, sw, sh):
+    """T-027: Pillow pass of the short film: header, ILLUSTRATIVE (or other) tag, lower-third title (fades 0.4 s in / out), TODO placeholder
+    card, closing card (values read from params-A.json at draw time)."""
+    from PIL import Image, ImageDraw
+    film, k, F = _G['film'], _G['k'], _G['F']
+    t = f / FPS
+    S, shot, tl = film_at(film, t)
+    im = Image.open(src).convert('RGBA')
+    lay = Image.new('RGBA', im.size, (0, 0, 0, 0))
+    d = ImageDraw.Draw(lay)
+    x0, x1 = 40 * k, sw - 40 * k
+    d.text((x0, 26 * k), 'Concept A quad tailsitter', font=F['h2'], fill=INK + (235,))
+    d.text((x0, 52 * k), 'SCENE %s  /  SHOT %s' % (S['id'], shot['id']), font=F['mono'], fill=MUTED + (235,))
+    tag = shot.get('tag')
+    if tag:
+        tw = d.textlength(tag, font=F['mono'])
+        d.rounded_rectangle((x1 - tw - 28 * k, 24 * k, x1, 24 * k + 36 * k), radius=int(6 * k), fill=(255, 255, 255, 235), outline=ORANGE + (255,), width=max(2, int(2 * k)))
+        d.text((x1 - tw - 14 * k, 24 * k + 8 * k), tag, font=F['mono'], fill=ORANGE + (255,))
+    if shot.get('todo'):
+        lines = wrap(d, shot['todo'], F['h1'], sw * 0.62)
+        bh = (60 + 36 * len(lines)) * k
+        y0 = sh * 0.38 - bh / 2
+        d.rounded_rectangle((sw * 0.19, y0, sw * 0.81, y0 + bh), radius=int(10 * k), fill=(255, 255, 255, 240), outline=ORANGE + (255,), width=max(2, int(3 * k)))
+        d.text((sw * 0.19 + 24 * k, y0 + 14 * k), 'TODO  PLACEHOLDER SHOT %s' % shot['id'], font=F['mono'], fill=ORANGE + (255,))
+        for i, ln in enumerate(lines):
+            d.text((sw * 0.19 + 24 * k, y0 + 46 * k + i * 36 * k), ln, font=F['h1'], fill=INK + (255,))
+    ll = Image.new('RGBA', im.size, (0, 0, 0, 0))
+    dl = ImageDraw.Draw(ll)
+    card = shot.get('card')
+    if card:
+        lines = card.get('lines', [])
+        bh = (96 + 38 * len(lines) + 34) * k
+        y1_ = sh - 40 * k
+        y0_ = y1_ - bh
+        dl.rounded_rectangle((x0, y0_, x1, y1_), radius=int(12 * k), fill=(255, 255, 255, 246), outline=(203, 210, 219, 255))
+        dl.rectangle((x0, y0_ + 12 * k, x0 + 6 * k, y1_ - 12 * k), fill=ORANGE + (255,))
+        dl.text((x0 + 30 * k, y0_ + 16 * k), card.get('kicker', ''), font=F['mono'], fill=ORANGE + (255,))
+        dl.text((x0 + 30 * k, y0_ + 40 * k), card['name'], font=F['big'], fill=INK + (255,))
+        y = y0_ + 100 * k
+        cites = []
+        for ln in lines:
+            v = param_value(ln['key'])
+            dl.text((x0 + 30 * k, y), ln['label'], font=F['h2'], fill=SUB + (255,))
+            dl.text((x0 + 330 * k, y), ln['fmt'] % v, font=F['h1'], fill=INK + (255,))
+            cites.append(ln['key'])
+            y += 38 * k
+        dl.text((x0 + 30 * k, y + 4 * k), 'qp/A/params-A.json: ' + ', '.join(cites), font=F['mono'], fill=MUTED + (255,))
+    elif shot.get('title'):
+        sub = wrap(dl, shot.get('sub', ''), F['body'], sw * 0.55)[:2]
+        bh = (40 + 32 + 26 * len(sub)) * k
+        y1_ = sh - 44 * k
+        y0_ = y1_ - bh
+        wmax = max([dl.textlength(shot['title'], font=F['h1'])] + [dl.textlength(q, font=F['body']) for q in sub]) + 52 * k
+        dl.rounded_rectangle((x0, y0_, x0 + wmax, y1_), radius=int(8 * k), fill=(255, 255, 255, 240), outline=(203, 210, 219, 255))
+        dl.rectangle((x0, y0_ + 8 * k, x0 + 5 * k, y1_ - 8 * k), fill=ORANGE + (255,))
+        dl.text((x0 + 24 * k, y0_ + 12 * k), shot['title'], font=F['h1'], fill=INK + (255,))
+        for i, q in enumerate(sub):
+            dl.text((x0 + 24 * k, y0_ + 50 * k + i * 26 * k), q, font=F['body'], fill=SUB + (255,))
+    a_ = max(0.0, min(1.0, (tl - shot['t0']) / 0.4, (shot['t1'] - tl) / 0.4)) if shot.get('title') and not card else 1.0
+    if a_ < 1.0:
+        ll.putalpha(ll.getchannel('A').point(lambda v: int(v * a_)))
+    lay = Image.alpha_composite(lay, ll)
+    Image.alpha_composite(im, lay).convert('RGB').save(dst, optimize=False, compress_level=1)
+
+
+def _film_job(args):
+    return film_overlay(*args)
+
+
 def _overlay_job(args):
     return overlay(*args)
 
@@ -1307,6 +1591,117 @@ def run(cmd, show=('FRAME', 'RENDER_TOTAL', 'ENCODED', 'PARTS', 'WIRES', 'Traceb
         raise SystemExit('blender failed')
 
 
+def RES_FLAGS(a):
+    return ['--width', str(W), '--height', str(H), '--fps', str(FPS)] + (['--dof'] if getattr(a, 'dof', False) else []) + (['--motion-blur'] if getattr(a, 'motion_blur', False) else [])
+
+
+def write_timing(path, d):
+    os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
+    json.dump(d, open(path, 'w'), indent=1)
+    print('TIMING', path, json.dumps(d))
+
+
+def contact_sheet(frames, name_of, work, fps, film, out, cols=8, tw=240):
+    """Grid of the given film frames (after overlay) with time stamps and scene / shot ids."""
+    from PIL import Image, ImageDraw
+    th = int(tw * H / W)
+    rows_n = (len(frames) + cols - 1) // cols
+    gap, lab = 4, 18
+    sheet = Image.new('RGB', (cols * (tw + gap) + gap, rows_n * (th + lab + gap) + gap), (24, 28, 34))
+    d = ImageDraw.Draw(sheet)
+    fnt = _font(['consola.ttf', 'cour.ttf'], 12)
+    for i, f in enumerate(frames):
+        x, y = gap + (i % cols) * (tw + gap), gap + (i // cols) * (th + lab + gap)
+        sheet.paste(Image.open(os.path.join(work, name_of[f])).convert('RGB').resize((tw, th), Image.LANCZOS), (x, y))
+        S, shot, _ = film_at(film, f / fps)
+        d.text((x + 2, y + th + 2), 'f%05d  %6.2fs  %s/%s' % (f, f / fps, S['id'], shot['id']), font=fnt, fill=(220, 226, 235))
+    sheet.save(out)
+
+
+def film_driver(a):
+    """T-027 short-film mode: shot list -> Blender workers (render) -> Pillow overlay -> contact sheet (preview) or MP4 (full)."""
+    from PIL import Image
+    t0 = time.time()
+    scene_ids = [x for x in a.scenes.split(',') if x] or None
+    film = load_film(a.shot_list, scene_ids)
+    nfr = int(round(film['total'] * FPS))
+    every = max(1, a.every)
+    work = os.path.abspath(a.work if a.work != os.path.join(tempfile.gettempdir(), 'a_build_film') else os.path.join(tempfile.gettempdir(), 'a_film'))
+    os.makedirs(work, exist_ok=True)
+    for fn in os.listdir(work):
+        if fn.startswith('map_') and fn.endswith('.json') and not a.skip_render:
+            os.remove(os.path.join(work, fn))
+    print('film: %d scenes, %.1f s, %d frames at %dx%d @ %d fps, every %d' % (len(film['scenes']), film['total'], nfr, W, H, FPS, every), flush=True)
+    me = os.path.abspath(__file__)
+    base = [a.blender, '-b', '--factory-startup', '-P', me, '--', 'render', '--out', work, '--samples', str(a.samples), '--shot-list', os.path.abspath(a.shot_list),
+            '--scenes', ','.join(scene_ids or [])] + RES_FLAGS(a)
+    if a.no_rt if hasattr(a, 'no_rt') else False:
+        base.append('--no-rt')
+    nw = max(1, a.workers)
+    per = (nfr + every - 1) // every
+    cuts = [min(nfr, (per * i // nw) * every) for i in range(nw)] + [nfr]       # cut points are multiples of --every so the workers' frame sets are disjoint
+    t_r = time.time()
+    procs = []
+    for i in range(nw):
+        if cuts[i] >= cuts[i + 1] or a.skip_render:
+            continue
+        print('> worker %d: frames %d-%d' % (i, cuts[i], cuts[i + 1] - 1), flush=True)
+        lg = open(os.path.join(work, 'worker_%d.log' % i), 'w')
+        procs.append((subprocess.Popen(base + ['--range', '%d:%d' % (cuts[i], cuts[i + 1]), '--every', str(every)], stdout=lg, stderr=subprocess.STDOUT), lg))
+    for p, lg in procs:
+        p.wait()
+        lg.close()
+        if p.returncode != 0:
+            raise SystemExit('blender worker failed, see worker_*.log in ' + work)
+    t_render = time.time() - t_r
+    frame_s = []                          # per worker: seconds Blender spent in the frame loop (RENDER_TOTAL), without its start-up (CAD build, about a minute)
+    for i in range(nw):
+        try:
+            frame_s += [float(m_) for m_ in re.findall(r'RENDER_TOTAL ([0-9.]+) s', open(os.path.join(work, 'worker_%d.log' % i)).read())]
+        except OSError:
+            pass
+    fmap = {}
+    for fn in sorted(os.listdir(work)):
+        if fn.startswith('map_') and fn.endswith('.json') and fn != 'map_frames.json':
+            for kk, v in json.load(open(os.path.join(work, fn))).items():
+                fmap[int(kk)] = v
+    frames = sorted(fmap)
+    sw, sh = Image.open(os.path.join(work, fmap[frames[0]]['raw'])).size
+    k = sw / BASE_W
+    keys, jobs, name_of = {}, [], {}
+    for f in frames:
+        S, shot, tl = film_at(film, f / FPS)
+        fade = round(max(0.0, min(1.0, (tl - shot['t0']) / 0.4, (shot['t1'] - tl) / 0.4)) * 12) if shot.get('title') else 0
+        key = (fmap[f]['raw'], S['id'], shot['id'], fade)
+        if key not in keys:
+            keys[key] = 'lab_%05d.png' % len(keys)
+            jobs.append((os.path.join(work, fmap[f]['raw']), os.path.join(work, keys[key]), f, sw, sh))
+        name_of[f] = keys[key]
+    t_o = time.time()
+    with concurrent.futures.ProcessPoolExecutor(max_workers=8, initializer=_init_film, initargs=(film, k, FPS)) as ex:
+        list(ex.map(_film_job, jobs, chunksize=4))
+    t_overlay = time.time() - t_o
+    rendered = len({fmap[f]['raw'] for f in frames})
+    print('mapped %d frames, %d rendered, %d overlay pictures' % (len(frames), rendered, len(jobs)), flush=True)
+    if a.contact:
+        os.makedirs(os.path.dirname(os.path.abspath(a.contact)), exist_ok=True)
+        contact_sheet(frames, name_of, work, FPS, film, a.contact)
+        print('CONTACT', a.contact)
+    t_enc = 0.0
+    if not a.preview and every == 1:
+        t_e = time.time()
+        lst = os.path.join(work, '_list.txt')
+        open(lst, 'w').write('\n'.join(name_of[f] for f in frames))
+        os.makedirs(os.path.dirname(os.path.abspath(a.film_out)), exist_ok=True)
+        run([a.blender, '-b', '--factory-startup', '-P', me, '--', 'encode', '--src', work, '--list', lst, '--out', a.film_out, '--crf', a.crf, '--w', str(W), '--h', str(H), '--fps', str(FPS)])
+        t_enc = time.time() - t_e
+    write_timing(a.timing or os.path.join(FILM_DIR, 'timing.json'),
+                 dict(film=os.path.basename(a.shot_list), scenes=[S['id'] for S in film['scenes']], film_seconds=round(film['total'], 2), frames=nfr, frames_mapped=len(frames), every=every,
+                      rendered=rendered, overlay_pictures=len(jobs), seconds=round(time.time() - t0, 1), seconds_render=round(t_render, 1), seconds_overlay=round(t_overlay, 1),
+                      seconds_encode=round(t_enc, 1), seconds_blender_start_and_frames=round(t_render, 1), seconds_frame_loop_per_worker=[round(x, 1) for x in frame_s], seconds_per_rendered_frame=round(sum(frame_s) / max(1, rendered), 2), workers=nw, samples=a.samples,
+                      resolution=[W, H], fps=FPS, dof=a.dof, motion_blur=a.motion_blur, ray_tracing=not getattr(a, 'no_rt', False), preview=bool(a.preview)))
+
+
 def driver():
     import argparse
     from PIL import Image
@@ -1322,13 +1717,26 @@ def driver():
     ap.add_argument('--crf', default='MEDIUM', help='H.264 quality of the whole film (lowered until under --max-mb)')
     ap.add_argument('--stage-crf', default='MEDIUM')
     ap.add_argument('--max-mb', type=float, default=13.0)
+    add_res_args(ap)
+    ap.add_argument('--shot-list', default='', help='short-film mode (T-027): shot-list JSON (see film/shots-main.json)')
+    ap.add_argument('--scenes', default='', help='short-film mode: comma list of scene ids (default all)')
+    ap.add_argument('--every', type=int, default=0, help='short-film preview: render every Nth frame (0 = all; with --preview no encode, writes a contact sheet)')
+    ap.add_argument('--contact', default='', help='short-film preview: contact-sheet PNG path')
+    ap.add_argument('--film-out', default=os.path.join(FILM_DIR, 'film.mp4'), help='short-film mode: MP4 written when not a preview')
+    ap.add_argument('--timing', default='', help='timing.json path (short film default film/timing.json; build film: animation/timing.json on a full run)')
+    ap.add_argument('--dof', action='store_true', help='depth of field on the camera target (off by default)')
+    ap.add_argument('--motion-blur', action='store_true', help='EEVEE motion blur (off by default)')
+    ap.add_argument('--no-rt', action='store_true', help='short film: EEVEE ray tracing off')
     a = ap.parse_args()
+    apply_res(a.width, a.height, a.fps)
     t0 = time.time()
+    if a.shot_list:
+        return film_driver(a)
     a.work = os.path.abspath(a.work)
     os.makedirs(a.work, exist_ok=True)
     os.makedirs(OUT, exist_ok=True)
     if not a.skip_camplan:           # the per-step cameras (cam_plan.json) give the camera move times of the schedule: refresh them first
-        run([a.blender, '-b', '--factory-startup', '-P', os.path.abspath(__file__), '--', 'render', '--out', a.work, '--camplan'], show=('CAMPLAN', 'Traceback', 'Error', '  File'))
+        run([a.blender, '-b', '--factory-startup', '-P', os.path.abspath(__file__), '--', 'render', '--out', a.work, '--camplan'] + RES_FLAGS(a), show=('CAMPLAN', 'Traceback', 'Error', '  File'))
     rows, total = timeline()
     nframes = int(total * FPS)
     print('%d steps, %d stages, %.1f s (%.1f min), %d frames' % (len(rows), len(STAGES), total, total / 60, nframes))
@@ -1336,7 +1744,7 @@ def driver():
     every, scale = (4, 0.5) if a.preview else (1, 1.0)
     chunk_maps = []
     if not a.skip_render:
-        base = [a.blender, '-b', '--factory-startup', '-P', me, '--', 'render', '--out', a.work, '--samples', str(a.samples), '--scale', str(scale)]
+        base = [a.blender, '-b', '--factory-startup', '-P', me, '--', 'render', '--out', a.work, '--samples', str(a.samples), '--scale', str(scale)] + RES_FLAGS(a)
         if a.frames:
             run(base + ['--frames', a.frames])
         else:
@@ -1375,7 +1783,7 @@ def driver():
         frames = [int(x) for x in a.frames.split(',')]
     print('mapped %d frames, %d distinct pictures' % (len(frames), len({fmap[f]['raw'] for f in frames})))
     # ---- overlays: one per distinct (picture, card state)
-    k = Image.open(os.path.join(a.work, fmap[frames[0]]['raw'])).size[0] / float(W)
+    k = Image.open(os.path.join(a.work, fmap[frames[0]]['raw'])).size[0] / BASE_W
     sw, sh = Image.open(os.path.join(a.work, fmap[frames[0]]['raw'])).size
     keys, jobs, name_of = {}, [], {}
     for f in frames:
@@ -1392,7 +1800,7 @@ def driver():
         name_of[f] = keys[key]
     print('%d overlay pictures' % len(jobs), flush=True)
     done = 0
-    with concurrent.futures.ProcessPoolExecutor(max_workers=8, initializer=_init, initargs=(rows, total, k)) as ex:
+    with concurrent.futures.ProcessPoolExecutor(max_workers=8, initializer=_init, initargs=(rows, total, k, FPS)) as ex:
         for _ in ex.map(_overlay_job, jobs, chunksize=8):
             done += 1
             if done % 300 == 0:
@@ -1400,12 +1808,15 @@ def driver():
     if a.frames or a.preview:
         print('test frames in', a.work)
         json.dump({str(f): name_of[f] for f in frames}, open(os.path.join(a.work, 'lab_index.json'), 'w'))
+        if a.timing:
+            write_timing(a.timing, dict(film='a-build (test frames)', frames=nframes, rendered=len({fmap[f]['raw'] for f in frames}), overlay_pictures=len(jobs),
+                         seconds=round(time.time() - t0, 1), workers=1, samples=a.samples, resolution=[sw, sh], fps=FPS))
         return
 
     def encode(names, out, crf):
         lst = os.path.join(a.work, '_list.txt')
         open(lst, 'w').write('\n'.join(names))
-        run([a.blender, '-b', '--factory-startup', '-P', me, '--', 'encode', '--src', a.work, '--list', lst, '--out', out, '--crf', crf])
+        run([a.blender, '-b', '--factory-startup', '-P', me, '--', 'encode', '--src', a.work, '--list', lst, '--out', out, '--crf', crf, '--w', str(W), '--h', str(H), '--fps', str(FPS)])
 
     # whole film: the CRF is lowered until the file is under the artifact limit
     allnames = [name_of[f] for f in frames]
@@ -1434,6 +1845,8 @@ def driver():
     for fn in sorted(os.listdir(OUT)):
         print('%-24s %7.2f MB' % (fn, os.path.getsize(os.path.join(OUT, fn)) / 1e6))
     print('total %.1f min' % ((time.time() - t0) / 60))
+    write_timing(a.timing or os.path.join(OUT, 'timing.json'), dict(film='a-build', frames=nframes, rendered=len({fmap[f]['raw'] for f in frames}), overlay_pictures=len(jobs),
+                 seconds=round(time.time() - t0, 1), workers=1 if a.preview else a.workers, samples=a.samples, resolution=[W, H], fps=FPS))
 
 
 if __name__ == '__main__':

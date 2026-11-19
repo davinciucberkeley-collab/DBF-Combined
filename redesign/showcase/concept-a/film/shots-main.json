@@ -1,0 +1,83 @@
+{
+  "_note": "T-027 draft shot list of the main film (docs/video/FILM-PROGRESS.md). Camera keys: t = seconds from the shot start, target = [x, y, z] m in the CAD frame (nose -x, wing +x, z up), az = azimuth deg from the nose (90 = left), el = elevation deg, dist = m. All keys of a scene form one smooth path (cuts only between scenes); the first shot of a scene needs a key at t = 0. parts: 'all' or a list of part-id prefixes; modes: {prefix: normal|ghost|fab|move|hidden}. tag: on-screen tag text (ILLUSTRATIVE = authored motion). todo: placeholder card text. card: closing card, values read from qp/A/params-A.json at draw time (key paths).",
+  "scenes": [
+    {
+      "id": "S1",
+      "title": "Overview orbit",
+      "shots": [
+        {"id": "1.1", "dur": 5.0, "title": "Concept A", "sub": "Quad tailsitter VTOL: a flying wing with two fins and four fixed motors in an X.",
+         "cam": [{"t": 0, "target": [0.10, 0, 0], "az": 20, "el": 26, "dist": 1.8}, {"t": 5, "target": [0.10, 0, 0], "az": 140, "el": 18, "dist": 1.8}]},
+        {"id": "1.2", "dur": 5.0, "title": "One piece, 0.90 m wing", "sub": "Packed 0.90 x 0.50 x 0.39 m with props on (params-A.json box/packed_m).",
+         "cam": [{"t": 5, "target": [0.10, 0, 0], "az": 260, "el": 32, "dist": 1.8}]},
+        {"id": "1.3", "dur": 5.0, "title": "The live CAD", "sub": "113 modelled parts, no stand-in geometry (params-A.json cad3d/parts).",
+         "cam": [{"t": 5, "target": [0.10, 0, 0], "az": 380, "el": 24, "dist": 1.8}]}
+      ]
+    },
+    {
+      "id": "S2",
+      "title": "Close-ups",
+      "shots": [
+        {"id": "2.1", "dur": 5.0, "title": "Wing", "sub": "Foam core (XPS + tape) over a carbon spar, 12 x 10 mm, 900 mm (WNG-001, WNG-002).",
+         "cam": [{"t": 0, "target": [0.10, 0, 0], "az": -30, "el": 24, "dist": 1.8},
+                 {"t": 2.0, "target": [0.12, 0.22, 0], "az": 35, "el": 30, "dist": 0.7},
+                 {"t": 5.0, "target": [0.12, 0.22, 0], "az": 70, "el": 26, "dist": 0.65}]},
+        {"id": "2.2", "dur": 5.0, "title": "Propulsion", "sub": "Motor MN2212 KV780 with APC 9x4.5 prop, four on the hub arms (PRP-001, PRP-002).",
+         "cam": [{"t": 2.0, "target": [-0.12, 0.22, 0.165], "az": -35, "el": 12, "dist": 0.55},
+                 {"t": 5.0, "target": [-0.12, 0.22, 0.165], "az": -60, "el": 18, "dist": 0.5}]},
+        {"id": "2.3", "dur": 5.0, "title": "Hub and arm interfaces", "sub": "PETG hub, carbon arms 12 x 10, motor cups (CGE-001, CGE-002, CGE-003).",
+         "cam": [{"t": 2.0, "target": [-0.07, 0, 0], "az": -20, "el": 30, "dist": 0.42},
+                 {"t": 5.0, "target": [-0.07, 0, 0], "az": 15, "el": 34, "dist": 0.40}]},
+        {"id": "2.4", "dur": 5.0, "title": "Structure", "sub": "Wing core shown as an x-ray: the carbon spar and its PETG plugs (WNG-002 to WNG-005).",
+         "modes": {"WNG-001": "ghost"},
+         "cam": [{"t": 2.0, "target": [0.06, 0.15, 0], "az": 20, "el": 40, "dist": 0.6},
+                 {"t": 5.0, "target": [0.06, 0.30, 0], "az": 45, "el": 35, "dist": 0.5}]},
+        {"id": "2.5", "dur": 5.0, "title": "Control surface", "sub": "Servo EMAX ES3054HV, arm, pushrod, horn and elevon (MEC-001 to MEC-005, WNG-006).",
+         "modes": {"WNG-001": "ghost"},
+         "cam": [{"t": 2.0, "target": [0.17, 0.195, 0.004], "az": 140, "el": 40, "dist": 0.30},
+                 {"t": 5.0, "target": [0.17, 0.195, 0.004], "az": 165, "el": 35, "dist": 0.26}]}
+      ]
+    },
+    {
+      "id": "S3",
+      "title": "Mechanism (TODO)",
+      "shots": [
+        {"id": "3.TODO", "dur": 3.0, "tag": "ILLUSTRATIVE", "modes": {"": "ghost"},
+         "todo": "TODO Scene 3, mechanism: servo arm, pushrod, horn, elevon driven by the solved kinematics in redesign/qp/A/mechanism/out/ (not yet available).",
+         "cam": [{"t": 0, "target": [0.17, 0.195, 0.004], "az": 140, "el": 40, "dist": 0.5}]}
+      ]
+    },
+    {
+      "id": "S4",
+      "title": "Simulation playback (TODO)",
+      "shots": [
+        {"id": "4.TODO", "dur": 3.0, "tag": "ILLUSTRATIVE", "modes": {"": "ghost"},
+         "todo": "TODO Scene 4, simulation playback of an executed run (qp/A/sitl/runs/*/case.csv). Needs Dillon's go-ahead; no new simulation round before he finalizes.",
+         "cam": [{"t": 0, "target": [0.10, 0, 0], "az": 20, "el": 25, "dist": 1.8}]}
+      ]
+    },
+    {
+      "id": "S5",
+      "title": "FEA (TODO)",
+      "shots": [
+        {"id": "5.TODO", "dur": 3.0, "tag": "ILLUSTRATIVE", "modes": {"": "ghost"},
+         "todo": "TODO Scene 5, FEA results from redesign/qp/A/structures/fig and out_fea (hub_F1/F2/S1/S2.glb, fea-*.png).",
+         "cam": [{"t": 0, "target": [-0.065, 0, 0], "az": -25, "el": 30, "dist": 0.6}]}
+      ]
+    },
+    {
+      "id": "S6",
+      "title": "Final overview and closing card",
+      "shots": [
+        {"id": "6.1", "dur": 7.0,
+         "cam": [{"t": 0, "target": [0.10, 0, 0], "az": 200, "el": 24, "dist": 1.8},
+                 {"t": 7, "target": [0.10, 0, -0.17], "az": 290, "el": 20, "dist": 2.0}]},
+        {"id": "6.2", "dur": 6.0,
+         "card": {"kicker": "CONCEPT A  /  QUAD TAILSITTER VTOL", "name": "Concept A",
+                  "lines": [{"label": "Mass, CAD basic", "key": "mass/basic_cad_kg", "fmt": "%.2f kg"},
+                            {"label": "Mass, weigh-in gate", "key": "req/mass_gate_kg", "fmt": "%.2f kg"},
+                            {"label": "Span (packed, one piece)", "key": "box/packed_m/0", "fmt": "%.2f m"}]},
+         "cam": [{"t": 6, "target": [0.10, 0, -0.17], "az": 330, "el": 18, "dist": 2.0}]}
+      ]
+    }
+  ]
+}
