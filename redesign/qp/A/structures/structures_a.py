@@ -22,6 +22,7 @@ def tube(od, id_):
     A = math.pi/4*(od**2-id_**2); I = math.pi/64*(od**4-id_**4); return A, I, I/(od/2)
 OUT = []
 def P(s=""): print(s); OUT.append(s)
+P("> **Scope (T-065, 2026-11-19): this is the QP-3 ITERATION-1 BASELINE geometry, not the current CAD.** Tubes baked in here: spar 16x14, arms 14x12, bridge 8x6 single, no struts. Current design (D-185 iteration 2/3, D-202, D-206): spar 12x10, arms 12x10 continuous, bridge 16x14 + two 6x4.5 struts. Sections 1, 2 (spar), 3 and 4 and the mount-strength table are therefore baseline numbers; the current-geometry records are `iter2_margins.md`, `iter3_run.md`, `bridge_torsion_d206.md`, `foam_103.md`, MASS-GATE and `cad_mass.json`. Updated here to the current record: VD 24 (D-186), cruise rpm 7,450 (QP-3 BOARD s1 item 2), motor mass (fe_a.py), s5 (landing_a.py), s6 pack-tray bond (D-208). See `redesign/qp/A/mechanism/out/T065_structures_run.md`.")
 
 # ======================================================================= 1. mass
 A16, I16, Z16 = tube(16e-3, 14e-3); A14, I14, Z14 = tube(14e-3, 12e-3); A8, I8, Z8 = tube(8e-3, 6e-3)
@@ -167,6 +168,7 @@ for kind in ("kd", "nom", "hi"):
         o = forced(kind, rpm, th)
         worst = max(o["1P"][0], o["2P"][0])
         P(f"| {kind} | {nm} | {o['1P'][0]:.1f} | {o['2P'][0]:.1f} | {o['1P'][1]:.1f} / {o['2P'][1]:.1f} | 30 m/s2 | {30/worst-1:+.1f} |")
+P("Note on the separation FAIL rows above (D-185 as ruled): the 20 % separation screen is binding only for strongly coupled modes (coupling >= 0.5). Modes with cx, cy < 0.5 are weakly driven by the motors; they are judged by forced response (table below and `iter3_run.md` full rpm sweep), not by separation alone.")
 # fin stress at resonance
 F, info = fe_a.build("kd")
 EIo = info["EI_out"]
@@ -253,4 +255,4 @@ row("Fin skin wrinkling on XPS core (0.5 (Ef Ec Gc)^(1/3), Ec 30, Gc 8 MPa EST)"
 row("Foot shoe bond on fin corner (12 x 15 mm pad footprint, shoe wraps 25 x 30 mm both faces = 1,500 mm2), 49 N + 20 N side", "52 N", 52*KP/1.5e-3, BOND_TAU*0.05)
 P("(shoe-bond allowable 0.1 MPa = C6 paper/foam value, `CL-C6-FOOT-SHOE-RF` basis: bond to foam core, not CF.)")
 P("Pack tray to hub (PETG flange 27.2 x 8 = 218 mm2 bond, D-208: the outer flange tabs were never attached to the hub) at 12 g: 32 N x 2.16 / 218 mm2 = 0.32 MPa vs 2.0: RF 6.3 PASS; strap: 2 x 20 mm Velcro, 32 N each side, `-` not tested.")
-open("structures_run.md", "w").write("\n".join(OUT))
+open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "structures_run.md"), "w").write("\n".join(OUT))

@@ -353,3 +353,17 @@ Build tolerance (conductor, 2026-11-19): the leg is cut 2.3-2.5 mm from the rod 
 - **Acceptance criteria:** side load per foot <= the computed capacity of the limiting part (rib-root combined RF >= 1.0 at KF 1.725; project 0.15 margin rule would want RF >= 1.15) at pad mu <= 0.40; the other four AR-008 criteria unchanged.
 - **Result:** side 18.7 N at mu 0.40 (worst). Rib-root RF minimum 1.26 (hard 7/7 combo), shoe bond 1.38, foam bearing 2.26, fin skin 14: PASS at EST allowables. The scaled "14 N cap" is withdrawn (it was K09-L's design demand scaled by mass, not a capacity). RF = 1 at mu about 0.51; 21-23 N side at mu 0.50. Dynamic tip-over appears at narrow-axis lean >= 28 deg with 0.16 m/s lateral speed (SITL Z5_b0, belly-on 5 m/s, card-prohibited).
 - **Limits / validity:** both CF allowables are EST until a tube twist coupon (the same test closes the bridge 30 MPa EST); pad mu unmeasured; foam plateau unmeasured; rigid-body with no rib twist (7 deg, foot moves 24 mm at 18.7 N one-foot) or fin flexibility; no controller or thrust during touch; sim and SITL disagree at 29 deg lean.
+
+### AR-013 structures_a.py regeneration and reconciliation (T-065, R-PHY-09; 2026-11-19)
+- **Category:** rigid-body modal analysis, analytic beam FE (3-D Euler-Bernoulli frame, free-free) plus hand calculations; illustrative for the forced-response amplitudes (EST inputs).
+- **Solver / engine:** `redesign/qp/A/structures/structures_a.py` (imports `fe_a.py`, `landing_a.py`), Python 3.14, numpy/scipy, `python -I`, about 28 s.
+- **Model version:** git `5561c0bb` tree plus the T-065 script edits; fe_a.py as of `e29526c3` (motor 88.26 g).
+- **Inputs:** hard-coded in the script: VD 24 (D-186), cruise rpm 7,450 (QP-3 BOARD s1 item 2), hover 6,272 / 6,018 / 7,151 rpm, U 1.0 g mm, 2P ripple 5 %, zeta 1 %, E_CF 61 / 70 / 90 GPa, PETG 1.6 / 2.1 / 2.4 GPa; tubes: spar 16x14, arms/ribs 14x12, bridge 8x6 (QP-3 baseline).
+- **Assumptions:** iteration-1 geometry (NOT the current CAD); hub a node; FC hard-mounted; weak modes judged by forced response.
+- **Boundary conditions / loads:** free-free frame; unbalance and 2P axial ripple at the four motors; static mount loads as listed in the run.
+- **Numerical settings:** 90 modes per corner (kd, nom, hi); worst-phase modal sum.
+- **Outputs:** `structures_run.md` (regenerated, equals stdout), `redesign/qp/A/mechanism/out/T065_data/`.
+- **Acceptance criteria:** every changed value traced to an input commit; every FAIL row explained; no limit changed.
+- **Result:** changed values traced to `11d8da6a` (VD 22 -> 24, cruise 9,700 -> 7,450), `e29526c3` (motor mass +7.2 g), `85118feb` (pack-tray bond 218 mm2); the committed s4 was not reproducible from the committed code (iteration-1 fe_a before the QP-3 commit). 9 FAIL rows, all weak-coupling spar/rib modes judged by a separation screen that D-185 applies only to strongly coupled modes; forced response passes (baseline MS +0.6 to +1.3; current-geometry scratch run +2.1 to +3.5). Not a design failure; no limit changed.
+- **Limits / validity:** s1, s2 spar, s3, s4 and mount strength are baseline-geometry numbers; current-geometry modes are `iter3_run.md` (spar 12x10, bridge 12x10 single+V) and the scratch run here (bridge 16x14, D-206); neither models the D-202 continuous crossing arms or the hub compliance. Cruise rpm and unbalance are EST.
+- **Evidence:** `redesign/qp/A/mechanism/out/T065_structures_run.md`; pending independent review.

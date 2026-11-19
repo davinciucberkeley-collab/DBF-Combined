@@ -1,3 +1,4 @@
+> **Scope (T-065, 2026-11-19): this is the QP-3 ITERATION-1 BASELINE geometry, not the current CAD.** Tubes baked in here: spar 16x14, arms 14x12, bridge 8x6 single, no struts. Current design (D-185 iteration 2/3, D-202, D-206): spar 12x10, arms 12x10 continuous, bridge 16x14 + two 6x4.5 struts. Sections 1, 2 (spar), 3 and 4 and the mount-strength table are therefore baseline numbers; the current-geometry records are `iter2_margins.md`, `iter3_run.md`, `bridge_torsion_d206.md`, `foam_103.md`, MASS-GATE and `cad_mass.json`. Updated here to the current record: VD 24 (D-186), cruise rpm 7,450 (QP-3 BOARD s1 item 2), motor mass (fe_a.py), s5 (landing_a.py), s6 pack-tray bond (D-208). See `redesign/qp/A/mechanism/out/T065_structures_run.md`.
 ## 1. Structural mass per part vs MASS-GATE allocation (g)
 | Part | CALC bottom-up g | MASS-GATE g | delta |
 |---|---|---|---|
@@ -165,6 +166,7 @@ Forced response (C2 method): worst-phase modal sum, 4 rotors, unbalance U = 1.0 
 | nom | cruise 7450 | 17.1 | 0.3 | 24.0 / 0.6 | 30 m/s2 | +0.8 |
 | hi | hover 6272 | 18.3 | 2.6 | 31.2 / 5.6 | 30 m/s2 | +0.6 |
 | hi | cruise 7450 | 18.7 | 0.3 | 29.8 / 0.7 | 30 m/s2 | +0.6 |
+Note on the separation FAIL rows above (D-185 as ruled): the 20 % separation screen is binding only for strongly coupled modes (coupling >= 0.5). Modes with cx, cy < 0.5 are weakly driven by the motors; they are judged by forced response (table below and `iter3_run.md` full rpm sweep), not by separation alone.
 
 Fin out-of-plane EI 59.5 N m2 (kd), mass/length 92 g/m (15 mm XPS core, 0.1 mm CFRP skins); foot 3 g; f1 cantilever ideal at kd: see table (fin rows).
 

@@ -10,3 +10,6 @@
 - 2026-11-19T00:52:08-08:00 SessionStart source=compact session=7cb35b0a
 - 2026-11-19T00:52:08-08:00 PostCompact trigger=manual session=7cb35b0a
 - 2026-11-19T01:46:32-08:00 SessionStart source=startup session=?
+- 2026-11-19T03:22:58-08:00 PreCompact trigger=manual session=7cb35b0a missing=none
+- 2026-11-19T03:24:25-08:00 SessionStart source=compact session=7cb35b0a
+- 2026-11-19T03:24:25-08:00 PostCompact trigger=manual session=7cb35b0a
