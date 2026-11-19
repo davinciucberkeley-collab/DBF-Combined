@@ -142,8 +142,8 @@
    "worst_block_f": null,
    "worst_block_ratio": 1.0
   },
-  "S4/4.TODO": {
-   "frames": 180,
+  "S4/4.1": {
+   "frames": 420,
    "inside_frames": 0,
    "inside_parts": {},
    "min_clear_m": null,
@@ -156,8 +156,92 @@
    "worst_block_f": null,
    "worst_block_ratio": 1.0
   },
-  "S5/5.TODO": {
-   "frames": 180,
+  "S4/4.2": {
+   "frames": 720,
+   "inside_frames": 0,
+   "inside_parts": {},
+   "min_clear_m": null,
+   "min_clear_f": null,
+   "min_clear_part": null,
+   "blocked_frames": 0,
+   "blockers": {},
+   "first_inside": null,
+   "last_inside": null,
+   "worst_block_f": null,
+   "worst_block_ratio": 1.0
+  },
+  "S4/4.3": {
+   "frames": 300,
+   "inside_frames": 0,
+   "inside_parts": {},
+   "min_clear_m": null,
+   "min_clear_f": null,
+   "min_clear_part": null,
+   "blocked_frames": 0,
+   "blockers": {},
+   "first_inside": null,
+   "last_inside": null,
+   "worst_block_f": null,
+   "worst_block_ratio": 1.0
+  },
+  "S4/4.4": {
+   "frames": 210,
+   "inside_frames": 0,
+   "inside_parts": {},
+   "min_clear_m": null,
+   "min_clear_f": null,
+   "min_clear_part": null,
+   "blocked_frames": 0,
+   "blockers": {},
+   "first_inside": null,
+   "last_inside": null,
+   "worst_block_f": null,
+   "worst_block_ratio": 1.0
+  },
+  "S4/4.5": {
+   "frames": 330,
+   "inside_frames": 0,
+   "inside_parts": {},
+   "min_clear_m": null,
+   "min_clear_f": null,
+   "min_clear_part": null,
+   "blocked_frames": 0,
+   "blockers": {},
+   "first_inside": null,
+   "last_inside": null,
+   "worst_block_f": null,
+   "worst_block_ratio": 1.0
+  },
+  "S5/5.1": {
+   "frames": 360,
+   "inside_frames": 0,
+   "inside_parts": {},
+   "min_clear_m": null,
+   "min_clear_f": null,
+   "min_clear_part": null,
+   "blocked_frames": 0,
+   "blockers": {},
+   "first_inside": null,
+   "last_inside": null,
+   "worst_block_f": null,
+   "worst_block_ratio": 1.0
+  },
+  "S5/5.2": {
+   "frames": 360,
+   "inside_frames": 0,
+   "inside_parts": {},
+   "min_clear_m": null,
+   "min_clear_f": null,
+   "min_clear_part": null,
+   "blocked_frames": 0,
+   "blockers": {},
+   "first_inside": null,
+   "last_inside": null,
+   "worst_block_f": null,
+   "worst_block_ratio": 1.0
+  },
+  "S5/5.3": {
+   "frames": 360,
    "inside_frames": 0,
    "inside_parts": {},
    "min_clear_m": null,
@@ -199,14 +283,14 @@
    "worst_block_ratio": 1.0
   }
  },
- "frames_checked": 4620,
+ "frames_checked": 7320,
  "near_m": 0.05,
  "frames_inside_any_part": 0,
- "seconds": 1.2,
+ "seconds": 1.8,
  "mech": {
-  "gap_max": 1.4916796416410831e-05,
+  "gap_max": 1.4918267221554095e-05,
   "len_err_max": 3.5690116251263504e-08,
-  "n": 1080
+  "n": 3060
  },
  "selftest": {
   "WNG-006-R": {

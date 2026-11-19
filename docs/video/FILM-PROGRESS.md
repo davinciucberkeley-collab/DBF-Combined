@@ -10,7 +10,7 @@ Date 2026-11-18. Implements PIPELINE-AUDIT.md improvements 1, 2, 8 (flags only) 
 | 2. Short-film mode | pure: `param_value`, `load_film`, `hermite_cam`, `film_at` (319-405); worker branch `if a.shot_list:` inside `blender_render` with `shot_modes`, `film_pose` (741-818); Pillow `_init_film`, `film_overlay`, `_film_job` (1502-1590); driver `film_driver`, `contact_sheet` (1604-1700), `driver()` branches on `--shot-list` (1733) | as listed |
 | 8. Polish flags | `--dof` (camera DOF, focus on the target each frame via `set_focus`, f/5.6) and `--motion-blur` (`render.use_motion_blur`), worker and driver options, off by default | 697, 780, 1039 |
 | 9. timing.json | `write_timing`; short film writes `film/timing.json`; the build film writes `animation/timing.json` after a full run (or `--timing PATH` for test frames) | 1598 |
-| Shot list | `redesign/showcase/concept-a/film/shots-main.json` (scenes S1, S2, S6 drafted; S3, S4, S5 placeholders tagged TODO) | new file |
+| Shot list | `redesign/showcase/concept-a/film/shots-main.json` (scenes S1-S6 drafted; S3 kinematics T-028, S4 SITL playback and S5 FEA T-029) | new file |
 
 Reuse and deviations from the audit text: the film mode reuses `cam_view`, `look`, the four-light rig, `tint` with the film materials (`MATS`: ghost, ghost_spar, fab, move), `smooth` is not used. Camera interpolation is a cubic Hermite with Catmull-Rom tangents through all keys of a scene (`hermite_cam`, distance geometric like `lerp_cam`), because `smoothstep` between keys stops the camera at every key; the C1 path has no velocity jump at shot joins. `cam_at`, `lerp_cam` and `part_mode` belong to the build-film timeline (they need its step rows) and are not called; the shot's `modes` map plays the part_mode role. Geometry is the live concept A CAD (`bb.build(False, MODEL_A)`, parts in the assembly plan, at rest pose), no stand-ins.
 
@@ -88,4 +88,45 @@ Preview contact sheets (1080p, 12 samples, ray tracing on): `film/preview-contac
 ```
 python redesign/showcase/concept-a/render_build_a.py --shot-list redesign/showcase/concept-a/film/shots-main.json --cam-check --width 1920 --height 1080 --fps 60
 python redesign/showcase/concept-a/render_build_a.py --shot-list redesign/showcase/concept-a/film/shots-main.json --width 1920 --height 1080 --fps 60 --every 40 --samples 12 --workers 3 --preview --contact redesign/showcase/concept-a/film/preview-contact-T028.png
+```
+
+# T-029 update (2026-11-18): scene 4 playback of an executed SITL run, scene 5 FEA results, overlays from records
+
+Nothing committed. Defaults of `render_build_a.py` unchanged (build film path untouched; all new code is film mode: `--shot-list`). No new simulation and no new FEA run (PD-007). No full render; 1080p preview only (T-031 does the exports). Analysis categories: S4 = flight dynamics (ArduPilot SITL plus the project's rigid-body plant model, run already executed; the elevons are posed from AR-001 kinematics with the logged angles), S5 = FEA (existing runs d209 hub, current_d210 arm and cup). The aircraft motion in S4 is a replay of logged states, not a new computation.
+
+## Scene 4: what plays and from which record
+
+Run `redesign/qp/A/sitl/runs/Z5_gb0/` (`case.fwd.csv`, 5,111 rows at 0.05 s; `result.json`, `sum.json`): QP-4 FIXES re-run as drawn, 1.50 kg, no wind, full chain (take-off, climb to about 50 m, transition, 15 s cruise, back-transition, hover descent, landing). Pass evidence (not in `result.json`, which has no verdict field): `sum.json` shows no touch in flight, elevon saturation 0 s, elevon peak 9.4 deg, motor u max 0.78, peak altitude 86.6 m (fence 110 m), V at handover 13.7 m/s, landing sink 0.02 m/s, lean 0.0 deg at touch, tipped_over false; `redesign/review/QP-4/FIXES.md` 5.1 and 5.2 rate the 1.50 kg calm cases "pass". Marks from `result.json`: armed 33.0 s, climb done 65.1, QSTAB 100.2, FBWA 101.2, forward done 107.6, cruise end and back-transition 125.7, QLAND 153.8, touch 247.3 s.
+
+Column meanings (read from `sitl/a_plant.py`: header line 304, `euler_rpy` line 234, `step` ground contact; not guessed): `t` s; `pn`, `pe` m north and east of the take-off point; `alt` m of the CG above ground (up positive, 0.314 m at rest on the fin pads); `pitch` deg with +90 = nose up (hover) and 0 = level (`asin(-x_b,z)`); `roll`, `hdg_nose` deg = ZYX Euler of the body FRD frame (x nose, y right wing, z belly); `V` m/s airspeed; `dl`, `dr` deg left and right elevon, trailing edge down +.
+
+Pose chain (`render_build_a.py`, `load_sitl`, `sitl_pose`, worker): rotation R_ned = Rz(hdg_nose) Ry(pitch) Rx(roll), quaternion per row, slerp between rows; NED to film world (x north, y west, z up) by diag(1,-1,-1); body to CAD frame by diag(-1,1,-1) (CAD: x aft, y right, z up; body: x nose, y right, z belly) with the CG at `cad_mass.json` (cg 21.4, -2.0, 6.4 mm); world position = (pn, -pe, alt). Elevons: logged dr, dl through the AR-001 table (`mech_state_log`), per side, same connection check as scene 3. Checks done offline: reconstructed belly heading vs logged `hdg_belly`: max 0.92 deg (only within 0.1 deg of vertical, where the logged angles are rounded to 0.01 deg and ill-conditioned); reconstructed pitch vs logged: 2e-11 deg; largest rotation between adjacent rows 3.6 deg (no flips; the logged roll flips sign at the vertical, the matrix does not). CAD foot pads (x 337.5 mm aft of the LE) reach 0.316 m below the CG against the plant `alt` 0.314 m at rest (2 mm contact compression), so the model stands on the ground plane z = 0 at t = 0.
+
+Shots (time scale = log window / shot duration, shown in the readout): 4.1 take-off and climb, log 31-98 s in 7 s (x9.6); 4.2 transition and cruise, 98-126 s in 12 s (x2.3); 4.3 back-transition, 126-140 s in 5 s (x2.8); 4.4 hover descent, 140-232 s in 3.5 s (x26.3); 4.5 landing, 232-252 s in 5.5 s (x3.6). Total 33 s. Tag `SIMULATED: ArduPilot SITL run Z5_gb0`. Live readout (bottom right, from the same rows, linear interpolation): pitch, altitude, airspeed, log time, time scale, run path. Camera: keys are offsets from the aircraft position (shot key `follow`), the target is the log position averaged over +-0.4 s and held within 0.5 m of the true position (a 1.5 s average first tried lagged 1-2 m in the transition and left the aircraft off frame); side or quartering views, elevation 15-32 deg. Ground: the stage floor at z = 0 with its grid rescaled to 5 m cells (floor scale 1000 x 300 at (200, 0)), far clip 900 m in S4 shots only; orange trail of the flown CG path with a 12 s tail. Props are static meshes (no blur), so the hover shows the motors as stopped; stated, not hidden.
+
+## Scene 5: FEA results shown
+
+| Shot | Content | Tag (numbers read from the result file at draw time) |
+|---|---|---|
+| 5.1 (6 s) | `out_fea/hub_F2.glb` stress-coloured skins (utilisation ramp of `fea_hub_figs.py`, red over 1, grey not judged), unlit colour, orbit | SIMULATED: FEA hub F2 motor runaway (run d209), max judged 12.7 MPa vs allowable 20 MPa |
+| 5.2 (6 s) | `out_fea/hub_S2.glb`, same | SIMULATED: FEA hub S2 prop strike 30 N (run d209), max 18.3 MPa vs allowable 20 MPa |
+| 5.3 (6 s) | image plate `structures/fig/fea-arm-along.png` (run current_d210) | SIMULATED: FEA arm and motor cup (run current_d210), cup S2 max 18.0 MPa vs allowable 20 MPa |
+
+Numbers and their sources (`src_val` in `render_build_a.py`; allowables parsed from `structures/fea_arm.py`: ALLOW petg 20, cf_axial 350 MPa, KP 2.156, KF 1.725, all EST): hub F2 judged = max over zones of the envelope 99th percentile (5.87 MPa, `hub_result_L0_d209.json`, "F2 uncapped fault, any pattern" / `hub_zones_envelope`) x KP = 12.7 MPa; the single-point peak is 19.2 MPa (raw, at the bridge boss) and is shown as "not judged": the hub is judged on the 99th percentile (D-207), so 19.2 MPa x 2.156 would exceed 20 and is not the pass value. S2 at factor 1.0: peak 18.3 MPa (single point) and p99 7.7 MPa (worst-combo zone), both under 20. Arm: cup S2 p1 18.0 MPa, cup F2 4.35 x 2.156 = 9.4 MPa, tube root axial F2 29.9 x 1.725 = 51 MPa and S2 79.9 MPa against 350 (`result_L0_current_d210.json`, cases picked by name). These match the D-209/D-210 CHANGE-LOG numbers. Meshes are shifted left of the panels by camera `shift_x` 0.17; GLB units m, hub frame x aft, y right, z up, recentred on the bbox (centre 24.5, 0, 0 mm).
+
+## Verification
+
+- Camera clearance (`--cam-check`, all six scenes, 1080p60, 7,320 frames, 75 s): 0 frames with the camera inside any part; S1, S2, S3 results identical to T-028 (S2.2 10 frames blocked by its own prop blade; nearest 0.068 m in 3.2); S4 and S5: 0 inside, no part within 0.3 m of the camera (S4 camera 2.6-4.2 m from the aircraft; S5 shots show no CAD part), line of sight off (`los: false`; a follow shot has no fixed subject point). Mechanism connection check over 3,060 posed frames (S3 plus S4): max gap 1.49e-5 m (limit 5e-5), rod length error 3.6e-8 m. Log `film/evidence-T029/cam-check.log`, data `film/cam-clearance.json`.
+- Preview: 1080p60, every 60th frame (1 s), 12 samples, 3 workers, scenes S4 and S5, 51 frames: `film/preview-contact-T029-S4S5.png` (viewed: aircraft in frame in all S4 samples, readouts legible, plate and hub panels do not overlap). Wall 104.5 s (`film/timing-T029.json`, 0.51 s per rendered frame). Log `film/evidence-T029/preview-run.log`.
+- Not verified: motion smoothness frame to frame (previews sample 1 per second); the rate jumps at S4 shot joins (x9.6, x2.3, x2.8, x26, x3.6) are changes of speed with a continuous camera; ground contact of the pads is geometric (z = 0), not rendered deformation; the elevon sign convention (dl, dr trailing edge down +) is taken from the `a_aero` use (trim elevon "TE up if negative"), not checked against a render; no film export.
+
+## Remaining defects (for T-030)
+
+1. The hover descent (4.4) runs at x26 and the landing at x3.6; the touch-down itself is brief. 2. Ground cues at altitude are the trail and the faint grid only; in cruise the background is the stage gradient. 3. Static props. 4. Hub stress shots are unlit flat colour with a silhouette darkening, no cavity shading. 5. The S4 and S5 lower-third titles and the readouts share the bottom band, so S5 titles wrap to three lines. 6. Total film now 122 s (S4 33 s, S5 18 s), above the 60-120 s target; T-030 should trim. 7. S4/S5 camera and shot values in `film/shots-main.json` are first-pass.
+
+## Reproduce
+
+```
+python redesign/showcase/concept-a/render_build_a.py --shot-list redesign/showcase/concept-a/film/shots-main.json --cam-check --width 1920 --height 1080 --fps 60
+python redesign/showcase/concept-a/render_build_a.py --shot-list redesign/showcase/concept-a/film/shots-main.json --scenes S4,S5 --width 1920 --height 1080 --fps 60 --every 60 --samples 12 --workers 3 --preview --timing redesign/showcase/concept-a/film/timing-T029.json --contact redesign/showcase/concept-a/film/preview-contact-T029-S4S5.png
 ```

@@ -461,6 +461,129 @@ def mech_geom(sy, theta_deg, delta_deg):
     return A, H
 
 
+def mech_state_log(sh, tl):
+    """Servo-arm and elevon angles of both sides from the logged elevon angles of a SITL run (dr right, dl left, trailing edge down +), through the AR-001 table (T-029)."""
+    K = load_kin()
+    a = sitl_at(sh['sitl']['run'], sitl_clock(sh, tl))
+    lo, hi = K['delta'][0], K['delta'][-1]
+    dR, dL = min(max(a['dr'], lo), hi), min(max(a['dl'], lo), hi)
+    return dict(theta_R=_interp(K['delta'], K['theta'], dR), theta_L=-_interp(K['delta'], K['theta'], dL), delta=dR, delta_L=dL)
+
+
+# ---- scene 4 (T-029): playback of an ALREADY EXECUTED ArduPilot SITL run (PD-007): the aircraft pose is read from the run's case.fwd.csv, no new simulation
+SITL_DIR = os.path.join(REDESIGN, 'qp', 'A', 'sitl')
+CAD_MASS_JSON = os.path.join(SITL_DIR, 'cad_mass.json')
+# Column meanings (a_plant.py line 304 header, euler_rpy line 234): t s; pn, pe m north / east of the take-off point; alt m of the CG above ground (up); pitch deg (+90 = nose up,
+# 0 = level cruise); roll, hdg_nose deg (ZYX Euler of the body FRD frame: x nose, y right wing, z belly); V m/s airspeed; dl, dr deg left / right elevon (trailing edge down +).
+_SITL = {}
+
+
+def load_sitl(run):
+    if run not in _SITL:
+        import csv
+        rows = list(csv.DictReader(open(os.path.join(SITL_DIR, 'runs', run, 'case.fwd.csv'), encoding='utf-8')))
+        cols = {k: [float(r[k]) for r in rows] for k in rows[0]}
+        n = len(rows)
+        pre = {}
+        for k in ('pn', 'pe', 'alt'):                                   # prefix sums for the box-filtered camera target
+            acc = [0.0]
+            for v in cols[k]:
+                acc.append(acc[-1] + v)
+            pre[k] = acc
+        _SITL[run] = dict(cols=cols, n=n, t=cols['t'], pre=pre, cg=json.load(open(CAD_MASS_JSON, encoding='utf-8')))
+    return _SITL[run]
+
+
+def sitl_index(L, tlog):
+    """(i, u): row index and fraction for log time tlog (clamped to the log)."""
+    T = L['t']
+    if tlog <= T[0]:
+        return 0, 0.0
+    if tlog >= T[-1]:
+        return L['n'] - 2, 1.0
+    i = bisect.bisect_right(T, tlog) - 1
+    return i, (tlog - T[i]) / (T[i + 1] - T[i])
+
+
+def sitl_at(run, tlog):
+    """Scalar columns linearly interpolated at log time tlog (angles are not wrapped here: only pitch, alt, V, dl, dr, pn, pe are read through this)."""
+    L = load_sitl(run)
+    i, u = sitl_index(L, tlog)
+    return {k: v[i] * (1 - u) + v[i + 1] * u for k, v in L['cols'].items()}
+
+
+def sitl_clock(sh, tl):
+    """Log time at scene time tl for a shot with sitl = {run, t0, t1}: the log window t0..t1 plays over the shot's duration (time scale = (t1 - t0) / duration, shown on screen)."""
+    q = sh['sitl']
+    k = min(max((tl - sh['t0']) / (sh['t1'] - sh['t0']), 0.0), 1.0)
+    return q['t0'] + (q['t1'] - q['t0']) * k
+
+
+def sitl_scale(sh):
+    q = sh['sitl']
+    return (q['t1'] - q['t0']) / (sh['t1'] - sh['t0'])
+
+
+def sitl_smooth_pos(run, tlog, half=0.4, max_off=0.5):
+    """Camera target: position (north, east, up) averaged over +-half s of log time (the camera does not copy the hover wobble), kept within max_off m of the true position
+    (a wider average lags behind the aircraft while it accelerates: 1.5 s put it up to 2 m off-centre in the transition)."""
+    L = load_sitl(run)
+    T = L['t']
+    a = bisect.bisect_left(T, tlog - half)
+    b = bisect.bisect_right(T, tlog + half)
+    b = max(b, a + 1)
+    sm = [(L['pre'][k][b] - L['pre'][k][a]) / (b - a) for k in ('pn', 'pe', 'alt')]
+    raw = sitl_at(run, tlog)
+    d = [sm[0] - raw['pn'], sm[1] - raw['pe'], sm[2] - raw['alt']]
+    n = math.sqrt(sum(x * x for x in d))
+    if n > max_off:
+        d = [x * max_off / n for x in d]
+    return (raw['pn'] + d[0], raw['pe'] + d[1], raw['alt'] + d[2])
+
+
+# ---- scene 5 (T-029): FEA numbers read from the result files at draw time
+STRUCT_DIR = os.path.join(REDESIGN, 'qp', 'A', 'structures')
+FEA_OUT = os.path.join(STRUCT_DIR, 'out_fea')
+
+
+def fea_const(name):
+    """Allowables and required factors parsed from fea_arm.py (ALLOW = dict(...), KF, KP = ...): ALLOW.petg, ALLOW.cf_axial, KF, KP."""
+    src = open(os.path.join(STRUCT_DIR, 'fea_arm.py'), encoding='utf-8').read()
+    if name.startswith('ALLOW.'):
+        m = re.search(r'^ALLOW\s*=\s*dict\((.*?)\)', src, re.M)
+        return float(re.search(name[6:] + r'\s*=\s*([0-9.]+)', m.group(1)).group(1))
+    m = re.search(r'^KF, KP\s*=\s*([0-9.* ]+),\s*([0-9.* ]+)', src, re.M)
+    expr = m.group(1 if name == 'KF' else 2)
+    return float(np_prod(expr))
+
+
+def np_prod(expr):
+    r = 1.0
+    for f in expr.split('*'):
+        r *= float(f.strip())
+    return r
+
+
+def src_val(spec):
+    """Number from a result file: {file (relative to out_fea), path [keys; '@X' picks the list item whose 'case' starts with X], maxkey (max over the children of a dict of that key),
+    times (const name), div (const name)} or {const: name}."""
+    if 'const' in spec:
+        v = fea_const(spec['const'])
+    else:
+        o = json.load(open(os.path.join(FEA_OUT, spec['file']), encoding='utf-8'))
+        for k in spec['path']:
+            if k.startswith('@'):
+                o = next(c for c in o if c['case'].startswith(k[1:]))
+            else:
+                o = o[k]
+        v = max(c[spec['maxkey']] for c in o.values()) if 'maxkey' in spec else o
+    if spec.get('times'):
+        v *= fea_const(spec['times'])
+    if spec.get('div'):
+        v /= fea_const(spec['div'])
+    return v
+
+
 # =====================================================================================================================
 # Blender worker
 # =====================================================================================================================
@@ -803,6 +926,8 @@ def blender_render(argv):
 
         def shot_modes(sh):
             parts, modes, out = sh.get('parts', 'all'), sh.get('modes', {}), {}
+            if sh.get('fea') or sh.get('plate'):          # T-029: stress mesh / image plate shots show no CAD part
+                return out
             for pid in be.objects:
                 if pid not in placed_ids or (parts != 'all' and not any(pid.startswith(x) for x in parts)):
                     continue
@@ -823,12 +948,12 @@ def blender_render(argv):
             """{part: world motion matrix} for the elevon group, servo arm group and pushrod of both sides, from the AR-001 solution at scene time tl."""
             if not sh.get('mech'):
                 return {}, None
-            st = mech_state(sh, tl)
+            st = mech_state(sh, tl) if 'sweep' in sh['mech'] else mech_state_log(sh, tl)
             G = load_kin()['geom']
             mats = {}
             for sy, s_ in ((1, 'R'), (-1, 'L')):
                 th = st['theta_R'] if sy == 1 else st['theta_L']
-                dl = st['delta']
+                dl = st['delta'] if sy == 1 else st.get('delta_L', st['delta'])
                 M_el = rax('Y', (G['XH'], 0.0, G['HINGE_Z']), math.radians(dl))                 # elevon group: right-handed about +y through the hinge (CAD sense, linkage_core)
                 M_arm = rax('Z', (G['SV_XS'], sy * G['SERVO_Y'], 0.0), math.radians(th))        # servo arm group: counter-clockwise about +z through the spline axis
                 A0, H0 = (Vector(v) for v in mech_geom(sy, 0.0, 0.0))
@@ -851,10 +976,141 @@ def blender_render(argv):
             MECH_LOG['n'] += 1
             return mats, st
 
+        # ---- T-029: SITL playback pose (body -> CAD -> world) and FEA stress meshes
+        TW4 = Matrix(((1, 0, 0), (0, -1, 0), (0, 0, -1))).to_4x4()          # NED -> world (x north, y west, z up)
+        D4 = Matrix(((-1, 0, 0), (0, 1, 0), (0, 0, -1))).to_4x4()           # body FRD (x nose, y right, z belly) -> CAD (x aft, y right, z up), CG at the origin
+        floor_default = (floor.location.copy(), floor.scale.copy())
+
+        def row_quats(L):
+            if 'quats' not in L:
+                c = L['cols']
+                qs = []
+                for i in range(L['n']):
+                    ps, th, ph = (math.radians(c[k][i]) for k in ('hdg_nose', 'pitch', 'roll'))
+                    R = Matrix.Rotation(ps, 3, 'Z') @ Matrix.Rotation(th, 3, 'Y') @ Matrix.Rotation(ph, 3, 'X')      # body -> NED, ZYX Euler as a_plant.euler_rpy
+                    qs.append(R.to_quaternion())
+                L['quats'] = qs
+            return L['quats']
+
+        def sitl_pose(sh, tl):
+            q = sh['sitl']
+            L = load_sitl(q['run'])
+            tlog = sitl_clock(sh, tl)
+            i, u = sitl_index(L, tlog)
+            qs = row_quats(L)
+            qq = qs[i].slerp(qs[i + 1], u)
+            c = L['cols']
+            P = Vector((c['pn'][i] * (1 - u) + c['pn'][i + 1] * u, -(c['pe'][i] * (1 - u) + c['pe'][i + 1] * u), c['alt'][i] * (1 - u) + c['alt'][i + 1] * u))
+            cg = L['cg']
+            M = Matrix.Translation(P) @ TW4 @ qq.to_matrix().to_4x4() @ D4 @ Matrix.Translation(-Vector((cg['cg_x_m'], cg['cg_y_m'], cg['cg_z_m'])))
+            sp = sitl_smooth_pos(q['run'], tlog)
+            return dict(M=M, P=P, Psm=Vector((sp[0], -sp[1], sp[2])), tlog=tlog)
+
+        FEA_OBJS = {}
+
+        def fea_objs(name):
+            if name not in FEA_OBJS:
+                before = set(bpy.data.objects)
+                bpy.ops.import_scene.gltf(filepath=os.path.join(FEA_OUT, name))
+                new = [o for o in bpy.data.objects if o not in before and o.type == 'MESH']
+                pts = [o.matrix_world @ Vector(c_) for o in new for c_ in o.bound_box]
+                ctr_ = Vector([(min(p_[k_] for p_ in pts) + max(p_[k_] for p_ in pts)) / 2 for k_ in range(3)])
+                for o in new:
+                    for pl in o.data.polygons:
+                        pl.use_smooth = False
+                    mt = bpy.data.materials.new('fea utilisation')
+                    mt.use_nodes = True
+                    nt = mt.node_tree
+                    nt.nodes.clear()
+                    vc = nt.nodes.new('ShaderNodeVertexColor')
+                    vc.layer_name = o.data.color_attributes[0].name
+                    lw = nt.nodes.new('ShaderNodeLayerWeight')              # unlit: the data colour is shown as is, only darkened a little towards the silhouette so the form reads
+                    lw.inputs['Blend'].default_value = 0.5
+                    sh_ = nt.nodes.new('ShaderNodeMath')
+                    sh_.operation = 'MULTIPLY_ADD'
+                    sh_.inputs[1].default_value = -0.4
+                    sh_.inputs[2].default_value = 1.0
+                    nt.links.new(lw.outputs['Facing'], sh_.inputs[0])
+                    mx = nt.nodes.new('ShaderNodeMix')
+                    mx.data_type = 'RGBA'
+                    mx.blend_type = 'MULTIPLY'
+                    mx.inputs['Factor'].default_value = 1.0
+                    nt.links.new(vc.outputs['Color'], mx.inputs['A'])
+                    nt.links.new(sh_.outputs['Value'], mx.inputs['B'])
+                    em = nt.nodes.new('ShaderNodeEmission')
+                    nt.links.new(mx.outputs['Result'], em.inputs['Color'])
+                    ot = nt.nodes.new('ShaderNodeOutputMaterial')
+                    nt.links.new(em.outputs['Emission'], ot.inputs['Surface'])
+                    o.data.materials.clear()
+                    o.data.materials.append(mt)
+                    o.location = -ctr_
+                    o.hide_render = o.hide_viewport = True
+                FEA_OBJS[name] = new
+                print('FEAMESH', name, len(new), 'objects, centre (m)', tuple(round(x, 4) for x in ctr_), flush=True)
+            return FEA_OBJS[name]
+
+        trail = {}
+
+        def trail_obj(run, t_from):
+            """Flown path (CG) from log time t_from, drawn as a poly curve; bevel_factor_end reveals it up to the current log time (by arc length)."""
+            if 'ob' not in trail:
+                L = load_sitl(run)
+                c = L['cols']
+                idx_ = [i for i in range(0, L['n'], 5) if c['t'][i] >= t_from]
+                pts = [Vector((c['pn'][i], -c['pe'][i], c['alt'][i])) for i in idx_]
+                cum = [0.0]
+                for a_, b_ in zip(pts, pts[1:]):
+                    cum.append(cum[-1] + (b_ - a_).length)
+                cu = bpy.data.curves.new('sitl trail', 'CURVE')
+                cu.dimensions = '3D'
+                cu.bevel_depth = 0.006
+                cu.bevel_resolution = 2
+                cu.use_fill_caps = True
+                cu.bevel_factor_mapping_end = 'SPLINE'
+                cu.bevel_factor_mapping_start = 'SPLINE'
+                spl = cu.splines.new('POLY')
+                spl.points.add(len(pts) - 1)
+                for q_, p_ in zip(spl.points, pts):
+                    q_.co = (p_.x, p_.y, p_.z, 1.0)
+                ob = bpy.data.objects.new('sitl trail', cu)
+                sc.collection.objects.link(ob)
+                cu.materials.append(MATS['move'])
+                ob.hide_render = True
+                trail.update(ob=ob, cu=cu, ts=[c['t'][i] for i in idx_], cum=cum)
+            return trail
+
+        def trail_set(tlog, show):
+            tr = trail
+            tr['ob'].hide_render = not show
+            if show:
+                ts, cum = tr['ts'], tr['cum']
+
+                def arc(tt):
+                    j = min(max(bisect.bisect_right(ts, tt) - 1, 0), len(ts) - 2)
+                    u = min(max((tt - ts[j]) / (ts[j + 1] - ts[j]), 0.0), 1.0)
+                    return min(1.0, max(0.0, (cum[j] + (cum[j + 1] - cum[j]) * u) / cum[-1]))
+                tr['cu'].bevel_factor_start = arc(tlog - 12.0)                  # a 12 s tail of log time behind the aircraft
+                tr['cu'].bevel_factor_end = arc(tlog)
+
+        def shot_pose(sh, tl):
+            """(mm, mst, air): world motion matrix per CAD part (mechanism poses, and for a SITL shot the aircraft pose on top), mechanism state, aircraft pose."""
+            mm, mst = mech_mats(sh, tl)
+            air = sitl_pose(sh, tl) if sh.get('sitl') else None
+            if air:
+                mm = {pid: air['M'] @ mm.get(pid, Matrix.Identity(4)) for pid in items}
+            return mm, mst, air
+
+        def shot_cam(S, sh, tl, air):
+            cam_c = hermite_cam(S['keys'], tl)
+            tgt = Vector(cam_c[:3])
+            if air and sh.get('follow'):
+                tgt = tgt + air['Psm']                       # keys of a follow shot are offsets from the (filtered) aircraft position
+            return cam_c, (tgt, cam_c[3], cam_c[4], cam_c[5])
+
         def film_pose(t):
             S, sh, tl = film_at(film, t)
             vis = shot_modes(sh)
-            mm, mst = mech_mats(sh, tl)
+            mm, mst, air = shot_pose(sh, tl)
             for pid, ob in items.items():
                 if pid in be.wires:
                     ends = [ob.get(k_) for k_ in ('part_a', 'part_b') if ob.get(k_) in placed_ids]
@@ -862,6 +1118,7 @@ def blender_render(argv):
                     ob.hide_render = not on
                     if on:
                         tint(pid, None)
+                        ob.matrix_world = (mm[pid] @ rest[pid]) if pid in mm else rest[pid]
                 elif pid in vis:
                     ob.hide_render = False
                     ob.matrix_world = (mm[pid] @ rest[pid]) if pid in mm else rest[pid]
@@ -869,22 +1126,43 @@ def blender_render(argv):
                     tint(pid, ('ghost_spar' if pid.startswith('WNG-002') else 'ghost') if m == 'ghost' else (None if m == 'normal' else m))
                 else:
                     ob.hide_render = True
-            cam_c = hermite_cam(S['keys'], tl)
-            ctr, view, dist = cam_view((Vector(cam_c[:3]), cam_c[3], cam_c[4], cam_c[5]))
+            if sh.get('fea') and sh['fea']['glb'] not in FEA_OBJS:
+                fea_objs(sh['fea']['glb'])
+            for nm_, objs_ in FEA_OBJS.items():
+                for o_ in objs_:
+                    o_.hide_render = (sh.get('fea', {}).get('glb') != nm_)
+            if air and not trail:
+                trail_obj(sh['sitl']['run'], sh['sitl'].get('trail_from', 33.5))
+            if trail:
+                trail_set(air['tlog'] if air else 0.0, bool(air))
+            cam_c, cv_ = shot_cam(S, sh, tl, air)
+            ctr, view, dist = cam_view(cv_)
+            cd.clip_end = 900.0 if air else 100.0
+            cd.shift_x = float((sh.get('fea') or {}).get('shift_x', 0.0))      # moves a stress mesh left of the panels
+            if air:                                                         # ground at z = 0 under the flown path; the stage grid is scaled to 5 m cells
+                floor.location, floor.scale = Vector((200.0, 0.0, 0.0)), Vector((1000.0, 300.0, 1.0))
+            else:
+                floor.location, floor.scale = floor_default[0].copy(), floor_default[1].copy()
             look(cam, ctr + view * dist, ctr)
             set_focus(dist)
             below = (ctr + view * dist).z < floor.location.z + 0.06
-            floor.hide_render = below
+            floor.hide_render = below or bool(sh.get('fea') or sh.get('plate'))
             caz = math.atan2(view.y, view.x)
             for lo_, daz, lel, dd in lights:
                 aa, ee = caz + math.radians(daz), math.radians(lel)
                 loc = ctr + Vector((math.cos(ee) * math.cos(aa), math.cos(ee) * math.sin(aa), math.sin(ee))) * dd
                 look(lo_, loc, ctr, Vector((0, 0, 1)) if lel < 85 else Vector((1, 0, 0)))
-            blob_s.default_value = (0.55, 0.9, 1.0)
-            blob_c.default_value = (full_c.x, 0.0, 0.0)
-            blob_op.default_value = 0.0 if below else 0.35
+            if air:
+                blob_s.default_value = (0.55, 0.9, 1.0)
+                blob_c.default_value = (air['P'].x, air['P'].y, 0.0)
+                blob_op.default_value = 0.35 * max(0.0, 1.0 - air['P'].z / 6.0)
+            else:
+                blob_s.default_value = (0.55, 0.9, 1.0)
+                blob_c.default_value = (full_c.x, 0.0, 0.0)
+                blob_op.default_value = 0.0 if below else 0.35
             bpy.context.view_layer.update()
-            return (tuple(sorted(vis.items())), tuple(round(v, 4) for v in cam_c), None if mst is None else (round(mst['theta_R'], 3), round(mst['delta'], 3)))
+            return (tuple(sorted(vis.items())), tuple(round(v, 4) for v in cam_c), None if mst is None else (round(mst['theta_R'], 3), round(mst['delta'], 3), round(mst.get('delta_L', mst['delta']), 3)),
+                    None if air is None else tuple(round(x, 5) for r_ in air['M'] for x in r_), sh['id'] if (sh.get('fea') or sh.get('plate')) else None)
 
         if a.cam_check:
             # ---- T-028: camera against the mesh, EVERY frame: (1) camera inside any visible part (closed-mesh ray parity), (2) distance to the nearest surface,
@@ -941,15 +1219,15 @@ def blender_render(argv):
                 t = f / FPS
                 S, sh, tl = film_at(film, t)
                 vis = shot_modes(sh)
-                mm, _mst = mech_mats(sh, tl)
+                mm, _mst, air = shot_pose(sh, tl)
                 ids = [pid for pid in vis]
                 if sh.get('wires', True):
                     for pid, ob in be.wires.items():
                         ends = [ob.get(k_) for k_ in ('part_a', 'part_b') if ob.get(k_) in placed_ids]
                         if ends and all(e_ in vis for e_ in ends):
                             ids.append(pid)
-                cam_c = hermite_cam(S['keys'], tl)
-                ctr, view, dist = cam_view((Vector(cam_c[:3]), cam_c[3], cam_c[4], cam_c[5]))
+                cam_c, cv_ = shot_cam(S, sh, tl, air)
+                ctr, view, dist = cam_view(cv_)
                 P = ctr + view * dist
                 los = sh.get('los', True)                                          # false: the target is only a framing offset (nothing to keep in sight); [x, y, z]: the subject point
                 tgt_ = ctr if los is True else (Vector(los) if los else None)
@@ -1728,6 +2006,18 @@ def _init_film(film, k, fps):
     _G['film'], _G['k'], _G['F'] = film, k, make_fonts(k)
 
 
+def fea_ramp():
+    """Utilisation colour ramp and the two status colours, parsed from fea_hub_figs.py (the same colours as the figures and the GLB skins)."""
+    src = open(os.path.join(STRUCT_DIR, 'fea_hub_figs.py'), encoding='utf-8').read()
+    ramp = re.findall(r"'(#[0-9a-fA-F]{6})'", re.search(r'^RAMP = \[(.*?)\]', src, re.M | re.S).group(1))
+    crit, nj = re.findall(r"'(#[0-9a-fA-F]{6})'", re.search(r'^CRIT, NJ = (.*)$', src, re.M).group(1))
+    return ramp, crit, nj
+
+
+def _hex(h):
+    return tuple(int(h[i:i + 2], 16) for i in (1, 3, 5))
+
+
 def film_overlay(src, dst, f, sw, sh):
     """T-027: Pillow pass of the short film: header, ILLUSTRATIVE (or other) tag, lower-third title (fades 0.4 s in / out), TODO placeholder
     card, closing card (values read from params-A.json at draw time)."""
@@ -1736,17 +2026,70 @@ def film_overlay(src, dst, f, sw, sh):
     t = f / FPS
     S, shot, tl = film_at(film, t)
     im = Image.open(src).convert('RGBA')
+    vals = {kk: src_val(v) for kk, v in shot.get('vals', {}).items()}           # T-029: numbers of the FEA shots, read from the result files at draw time
+    if shot.get('plate'):                                                        # image plate of an existing FEA figure (T-029), fitted between the header and the lower third
+        pl = Image.open(os.path.join(REDESIGN, shot['plate']['image'])).convert('RGBA')
+        bw_, bh_ = sw - 80 * k, sh - 96 * k - 150 * k
+        sc_ = min(bw_ / pl.size[0], bh_ / pl.size[1])
+        pl = pl.resize((int(pl.size[0] * sc_), int(pl.size[1] * sc_)), Image.LANCZOS)
+        im.alpha_composite(pl, (int((sw - pl.size[0]) / 2), int(92 * k)))
     lay = Image.new('RGBA', im.size, (0, 0, 0, 0))
     d = ImageDraw.Draw(lay)
     x0, x1 = 40 * k, sw - 40 * k
     d.text((x0, 26 * k), 'Concept A quad tailsitter', font=F['h2'], fill=INK + (235,))
     d.text((x0, 52 * k), 'SCENE %s  /  SHOT %s' % (S['id'], shot['id']), font=F['mono'], fill=MUTED + (235,))
     tag = shot.get('tag')
+    if tag and vals:
+        tag = tag.format(**vals)
     if tag:
         tw = d.textlength(tag, font=F['mono'])
         d.rounded_rectangle((x1 - tw - 28 * k, 24 * k, x1, 24 * k + 36 * k), radius=int(6 * k), fill=(255, 255, 255, 235), outline=ORANGE + (255,), width=max(2, int(2 * k)))
         d.text((x1 - tw - 14 * k, 24 * k + 8 * k), tag, font=F['mono'], fill=ORANGE + (255,))
-    if shot.get('mech'):                 # readout of the solved linkage state (numbers from linkage_kinematics.csv through mech_state, AR-001)
+    if shot.get('sitl'):                 # T-029: live readout from the executed SITL run (same data as the aircraft pose)
+        run = shot['sitl']['run']
+        tlog = sitl_clock(shot, tl)
+        a_ = sitl_at(run, tlog)
+        rows_ = [('Pitch (nose up +)', '%+6.1f deg' % a_['pitch']), ('Altitude (CG)', '%6.1f m' % a_['alt']), ('Airspeed', '%6.1f m/s' % a_['V'])]
+        bw, bh_ = 420 * k, 232 * k
+        bx1, by1 = x1, sh - 44 * k
+        d.rounded_rectangle((bx1 - bw, by1 - bh_, bx1, by1), radius=int(8 * k), fill=(255, 255, 255, 240), outline=(203, 210, 219, 255))
+        for i_, (lab_, val_) in enumerate(rows_):
+            d.text((bx1 - bw + 18 * k, by1 - bh_ + 12 * k + i_ * 34 * k), lab_, font=F['h2'], fill=SUB + (255,))
+            d.text((bx1 - 18 * k - d.textlength(val_, font=F['h1']), by1 - bh_ + 10 * k + i_ * 34 * k), val_, font=F['h1'], fill=INK + (255,))
+        yb_ = by1 - bh_ + 12 * k + 3 * 34 * k + 6 * k
+        d.text((bx1 - bw + 18 * k, yb_), 'Log time %6.1f s   time scale x%.1f' % (tlog, sitl_scale(shot)), font=F['mono'], fill=INK + (255,))
+        d.text((bx1 - bw + 18 * k, yb_ + 26 * k), 'Run %s, case.fwd.csv (executed run)' % run, font=F['mono'], fill=MUTED + (255,))
+        d.text((bx1 - bw + 18 * k, yb_ + 48 * k), 'qp/A/sitl/runs/%s/' % run, font=F['mono'], fill=MUTED + (255,))
+    if shot.get('readout'):              # T-029: FEA numbers read from the result files (rows: label, value format, name in shot vals)
+        ro = shot['readout']
+        n_ = len(ro['rows'])
+        bw, bh_ = 500 * k, (46 + 32 * n_ + 58) * k
+        bx1, by1 = x1, sh - 44 * k
+        d.rounded_rectangle((bx1 - bw, by1 - bh_, bx1, by1), radius=int(8 * k), fill=(255, 255, 255, 240), outline=(203, 210, 219, 255))
+        d.text((bx1 - bw + 18 * k, by1 - bh_ + 10 * k), ro['title'], font=F['mono'], fill=ORANGE + (255,))
+        for i_, r_ in enumerate(ro['rows']):
+            y_ = by1 - bh_ + 40 * k + i_ * 32 * k
+            d.text((bx1 - bw + 18 * k, y_ + 2 * k), r_['label'], font=F['body'], fill=SUB + (255,))
+            v_ = r_['fmt'] % tuple(vals[n] for n in r_['vals'])
+            d.text((bx1 - 18 * k - d.textlength(v_, font=F['h2']), y_), v_, font=F['h2'], fill=INK + (255,))
+        for j_, ln_ in enumerate(wrap(d, ro['src'], F['mono'], bw - 36 * k)[:2]):
+            d.text((bx1 - bw + 18 * k, by1 - 52 * k + j_ * 22 * k), ln_, font=F['mono'], fill=MUTED + (255,))
+        if ro.get('legend'):             # utilisation ramp, as in the figures
+            ramp, crit, nj = fea_ramp()
+            lw = 480 * k
+            ly = by1 - bh_ - 92 * k
+            d.rounded_rectangle((bx1 - lw - 12 * k, ly - 10 * k, bx1, ly + 78 * k), radius=int(8 * k), fill=(255, 255, 255, 240), outline=(203, 210, 219, 255))
+            sw_ = (lw - 20 * k) / len(ramp)
+            for i_, hx_ in enumerate(ramp):
+                d.rectangle((bx1 - lw - 2 * k + i_ * sw_, ly, bx1 - lw - 2 * k + (i_ + 1) * sw_, ly + 18 * k), fill=_hex(hx_) + (255,))
+            d.text((bx1 - lw - 2 * k, ly + 22 * k), '0', font=F['mono'], fill=MUTED + (255,))
+            d.text((bx1 - 22 * k, ly + 22 * k), '1', font=F['mono'], fill=MUTED + (255,))
+            d.text((bx1 - lw + 120 * k, ly + 22 * k), 'utilisation (1 = allowable)', font=F['mono'], fill=MUTED + (255,))
+            d.rectangle((bx1 - lw - 2 * k, ly + 50 * k, bx1 - lw + 14 * k, ly + 66 * k), fill=_hex(crit) + (255,))
+            d.text((bx1 - lw + 22 * k, ly + 48 * k), 'over 1', font=F['mono'], fill=INK + (255,))
+            d.rectangle((bx1 - lw + 130 * k, ly + 50 * k, bx1 - lw + 146 * k, ly + 66 * k), fill=_hex(nj) + (255,))
+            d.text((bx1 - lw + 154 * k, ly + 48 * k), 'not judged (pins, load ends)', font=F['mono'], fill=INK + (255,))
+    if shot.get('mech') and 'sweep' in shot['mech']:                 # readout of the solved linkage state (numbers from linkage_kinematics.csv through mech_state, AR-001)
         st = mech_state(shot, tl)
         rows_ = [('Servo arm', '%+5.1f deg' % st['theta_R']), ('Elevon', '%+5.1f deg' % st['delta'])]
         bw, bh_ = 330 * k, 112 * k
@@ -1786,7 +2129,7 @@ def film_overlay(src, dst, f, sw, sh):
             y += 38 * k
         dl.text((x0 + 30 * k, y + 4 * k), 'qp/A/params-A.json: ' + ', '.join(cites), font=F['mono'], fill=MUTED + (255,))
     elif shot.get('title'):
-        sub = wrap(dl, shot.get('sub', ''), F['body'], sw * 0.55)[:2]
+        sub = wrap(dl, shot.get('sub', '').format(**vals) if vals else shot.get('sub', ''), F['body'], sw * (0.86 if shot.get('plate') else 0.40 if shot.get('readout') else 0.55))[:3]
         bh = (40 + 32 + 26 * len(sub)) * k
         y1_ = sh - 44 * k
         y0_ = y1_ - bh
@@ -1912,7 +2255,7 @@ def film_driver(a):
     for f in frames:
         S, shot, tl = film_at(film, f / FPS)
         fade = round(max(0.0, min(1.0, (tl - shot['t0']) / 0.4, (shot['t1'] - tl) / 0.4)) * 12) if shot.get('title') else 0
-        key = (fmap[f]['raw'], S['id'], shot['id'], fade)
+        key = (fmap[f]['raw'], S['id'], shot['id'], fade, f if shot.get('sitl') else 0)
         if key not in keys:
             keys[key] = 'lab_%05d.png' % len(keys)
             jobs.append((os.path.join(work, fmap[f]['raw']), os.path.join(work, keys[key]), f, sw, sh))

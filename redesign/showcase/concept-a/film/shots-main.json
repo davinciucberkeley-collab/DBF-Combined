@@ -1,5 +1,5 @@
 {
- "_note": "T-027 draft shot list of the main film (docs/video/FILM-PROGRESS.md). Camera keys: t = seconds from the shot start, target = [x, y, z] m in the CAD frame (nose -x, wing +x, z up), az = azimuth deg from the nose (90 = left), el = elevation deg, dist = m. All keys of a scene form one smooth path (cuts only between scenes); the first shot of a scene needs a key at t = 0. parts: 'all' or a list of part-id prefixes; modes: {prefix: normal|ghost|fab|move|hidden}. tag: on-screen tag text (ILLUSTRATIVE = authored motion). todo: placeholder card text. card: closing card, values read from qp/A/params-A.json at draw time (key paths).",
+ "_note": "T-027 draft shot list of the main film (docs/video/FILM-PROGRESS.md). Camera keys: t = seconds from the shot start, target = [x, y, z] m in the CAD frame (nose -x, wing +x, z up), az = azimuth deg from the nose (90 = left), el = elevation deg, dist = m. All keys of a scene form one smooth path (cuts only between scenes); the first shot of a scene needs a key at t = 0. parts: 'all' or a list of part-id prefixes; modes: {prefix: normal|ghost|fab|move|hidden}. tag: on-screen tag text (ILLUSTRATIVE = authored motion). todo: placeholder card text. card: closing card, values read from qp/A/params-A.json at draw time (key paths). T-029: S4 shots carry sitl = {run, t0, t1, trail_from} (log seconds of an executed SITL run played over the shot duration, qp/A/sitl/runs/<run>/case.fwd.csv), follow = true (camera keys are offsets from the filtered aircraft position, world frame x north, y west, z up), mech.from_log (elevons from the logged dl, dr). S5 shots carry fea.glb (stress-coloured mesh from qp/A/structures/out_fea) or plate.image (existing FEA figure), vals (numbers read from the result files at draw time: file relative to out_fea, path, maxkey, times/div const, or const), readout (panel rows of vals), and tag / sub as format strings over vals.",
  "scenes": [
   {
    "id": "S1",
@@ -435,27 +435,182 @@
   },
   {
    "id": "S4",
-   "title": "Simulation playback (TODO)",
+   "title": "Simulation playback: executed ArduPilot SITL run Z5_gb0",
    "shots": [
     {
-     "id": "4.TODO",
-     "dur": 3.0,
-     "tag": "ILLUSTRATIVE",
-     "modes": {
-      "": "ghost"
+     "id": "4.1",
+     "dur": 7.0,
+     "tag": "SIMULATED: ArduPilot SITL run Z5_gb0",
+     "los": false,
+     "follow": true,
+     "sitl": {
+      "run": "Z5_gb0",
+      "t0": 31.0,
+      "t1": 98.0,
+      "trail_from": 33.5
      },
-     "todo": "TODO Scene 4, simulation playback of an executed run (qp/A/sitl/runs/*/case.csv). Needs Dillon's go-ahead; no new simulation round before he finalizes.",
+     "mech": {
+      "from_log": true
+     },
+     "title": "Take-off and climb",
+     "sub": "Four motors lift the aircraft off its fin pads and climb to a hover at about 50 m (time sped up).",
      "cam": [
       {
        "t": 0,
        "target": [
-        0.1,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0
        ],
-       "az": 20,
-       "el": 25,
-       "dist": 1.8
+       "az": 75,
+       "el": 16,
+       "dist": 2.6
+      },
+      {
+       "t": 7.0,
+       "target": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "az": 95,
+       "el": 22,
+       "dist": 3.6
+      }
+     ]
+    },
+    {
+     "id": "4.2",
+     "dur": 12.0,
+     "tag": "SIMULATED: ArduPilot SITL run Z5_gb0",
+     "los": false,
+     "follow": true,
+     "sitl": {
+      "run": "Z5_gb0",
+      "t0": 98.0,
+      "t1": 126.0,
+      "trail_from": 33.5
+     },
+     "mech": {
+      "from_log": true
+     },
+     "title": "Transition to cruise",
+     "sub": "The aircraft pitches from nose-up hover to level flight on the same motors; elevons move as logged.",
+     "cam": [
+      {
+       "t": 4.0,
+       "target": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "az": 95,
+       "el": 26,
+       "dist": 3.4
+      },
+      {
+       "t": 12.0,
+       "target": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "az": 100,
+       "el": 26,
+       "dist": 4.2
+      }
+     ]
+    },
+    {
+     "id": "4.3",
+     "dur": 5.0,
+     "tag": "SIMULATED: ArduPilot SITL run Z5_gb0",
+     "los": false,
+     "follow": true,
+     "sitl": {
+      "run": "Z5_gb0",
+      "t0": 126.0,
+      "t1": 140.0,
+      "trail_from": 33.5
+     },
+     "mech": {
+      "from_log": true
+     },
+     "title": "Back-transition",
+     "sub": "Cruise ends: the aircraft pitches back up to a nose-up hover.",
+     "cam": [
+      {
+       "t": 5.0,
+       "target": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "az": 92,
+       "el": 26,
+       "dist": 3.6
+      }
+     ]
+    },
+    {
+     "id": "4.4",
+     "dur": 3.5,
+     "tag": "SIMULATED: ArduPilot SITL run Z5_gb0",
+     "los": false,
+     "follow": true,
+     "sitl": {
+      "run": "Z5_gb0",
+      "t0": 140.0,
+      "t1": 232.0,
+      "trail_from": 33.5
+     },
+     "mech": {
+      "from_log": true
+     },
+     "title": "Hover descent (sped up)",
+     "sub": "Descent in hover from about 89 m, shown at a high time scale.",
+     "cam": [
+      {
+       "t": 3.5,
+       "target": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "az": 85,
+       "el": 26,
+       "dist": 3.6
+      }
+     ]
+    },
+    {
+     "id": "4.5",
+     "dur": 5.5,
+     "tag": "SIMULATED: ArduPilot SITL run Z5_gb0",
+     "los": false,
+     "follow": true,
+     "sitl": {
+      "run": "Z5_gb0",
+      "t0": 232.0,
+      "t1": 252.0,
+      "trail_from": 33.5
+     },
+     "mech": {
+      "from_log": true
+     },
+     "title": "Landing",
+     "sub": "Touch-down on the fin pads at the end of the run.",
+     "cam": [
+      {
+       "t": 5.5,
+       "target": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "az": 70,
+       "el": 17,
+       "dist": 2.6
       }
      ]
     }
@@ -463,29 +618,251 @@
   },
   {
    "id": "S5",
-   "title": "FEA (TODO)",
+   "title": "FEA results (hub, arm and motor cup)",
    "shots": [
     {
-     "id": "5.TODO",
-     "dur": 3.0,
-     "tag": "ILLUSTRATIVE",
-     "modes": {
-      "": "ghost"
+     "id": "5.1",
+     "dur": 6.0,
+     "tag": "SIMULATED: FEA hub F2 motor runaway (run d209), max judged {j:.1f} MPa vs allowable {a:.0f} MPa",
+     "los": false,
+     "fea": {
+      "glb": "hub_F2.glb",
+      "shift_x": 0.17
      },
-     "todo": "TODO Scene 5, FEA results from redesign/qp/A/structures/fig and out_fea (hub_F1/F2/S1/S2.glb, fea-*.png).",
+     "vals": {
+      "j": {
+       "file": "hub_result_L0_d209.json",
+       "path": [
+        "F2 uncapped fault, any pattern",
+        "hub_zones_envelope"
+       ],
+       "maxkey": "p99",
+       "times": "KP"
+      },
+      "p99": {
+       "file": "hub_result_L0_d209.json",
+       "path": [
+        "F2 uncapped fault, any pattern",
+        "hub_zones_envelope"
+       ],
+       "maxkey": "p99"
+      },
+      "kp": {
+       "const": "KP"
+      },
+      "a": {
+       "const": "ALLOW.petg"
+      },
+      "pk": {
+       "file": "hub_result_L0_d209.json",
+       "path": [
+        "F2 uncapped fault, any pattern",
+        "hub_peak"
+       ]
+      }
+     },
+     "title": "Hub, motor runaway (F2)",
+     "sub": "Colour is utilisation of the printed and carbon parts: stress x required factor / allowable.",
+     "readout": {
+      "title": "HUB FEA F2, RUN d209 (PETG principal)",
+      "legend": true,
+      "src": "qp/A/structures/out_fea/hub_result_L0_d209.json (run d209); allowables fea_arm.py ALLOW (EST)",
+      "rows": [
+       {
+        "label": "99th percentile, worst zone",
+        "fmt": "%.1f MPa",
+        "vals": [
+         "p99"
+        ]
+       },
+       {
+        "label": "x required factor (printed)",
+        "fmt": "%.3f",
+        "vals": [
+         "kp"
+        ]
+       },
+       {
+        "label": "Judged value",
+        "fmt": "%.1f MPa",
+        "vals": [
+         "j"
+        ]
+       },
+       {
+        "label": "Allowable (PETG)",
+        "fmt": "%.0f MPa",
+        "vals": [
+         "a"
+        ]
+       },
+       {
+        "label": "Single-point peak, not judged",
+        "fmt": "%.1f MPa",
+        "vals": [
+         "pk"
+        ]
+       }
+      ]
+     },
      "cam": [
       {
        "t": 0,
        "target": [
-        -0.065,
+        0,
         0,
         0
        ],
-       "az": -25,
-       "el": 30,
-       "dist": 0.6
+       "az": -38,
+       "el": 26,
+       "dist": 0.42
+      },
+      {
+       "t": 6.0,
+       "target": [
+        0,
+        0,
+        0
+       ],
+       "az": 12,
+       "el": 24,
+       "dist": 0.38
       }
      ]
+    },
+    {
+     "id": "5.2",
+     "dur": 6.0,
+     "tag": "SIMULATED: FEA hub S2 prop strike 30 N (run d209), max {pk:.1f} MPa vs allowable {a:.0f} MPa",
+     "los": false,
+     "fea": {
+      "glb": "hub_S2.glb",
+      "shift_x": 0.17
+     },
+     "vals": {
+      "pk": {
+       "file": "hub_result_L0_d209.json",
+       "path": [
+        "S2 strike on UR (ground)",
+        "hub_peak"
+       ]
+      },
+      "a": {
+       "const": "ALLOW.petg"
+      },
+      "p99": {
+       "file": "hub_result_L0_d209.json",
+       "path": [
+        "S2 strike on UR (ground)",
+        "hub_zones_worst_combo"
+       ],
+       "maxkey": "p99"
+      }
+     },
+     "title": "Hub, prop strike (S2)",
+     "sub": "A 30 N blade hit in the disc plane (damage case, required factor 1.0).",
+     "readout": {
+      "title": "HUB FEA S2, RUN d209 (PETG principal)",
+      "legend": true,
+      "src": "qp/A/structures/out_fea/hub_result_L0_d209.json (run d209); allowables fea_arm.py ALLOW (EST)",
+      "rows": [
+       {
+        "label": "Single-point peak",
+        "fmt": "%.1f MPa",
+        "vals": [
+         "pk"
+        ]
+       },
+       {
+        "label": "99th percentile, worst zone",
+        "fmt": "%.1f MPa",
+        "vals": [
+         "p99"
+        ]
+       },
+       {
+        "label": "Allowable (PETG, factor 1.0)",
+        "fmt": "%.0f MPa",
+        "vals": [
+         "a"
+        ]
+       }
+      ]
+     },
+     "cam": [
+      {
+       "t": 6.0,
+       "target": [
+        0,
+        0,
+        0
+       ],
+       "az": -40,
+       "el": 24,
+       "dist": 0.38
+      }
+     ]
+    },
+    {
+     "id": "5.3",
+     "dur": 6.0,
+     "tag": "SIMULATED: FEA arm and motor cup (run current_d210), cup S2 max {cup_s2:.1f} MPa vs allowable {a:.0f} MPa",
+     "los": false,
+     "plate": {
+      "image": "qp/A/structures/fig/fea-arm-along.png"
+     },
+     "vals": {
+      "cup_s2": {
+       "file": "result_L0_current_d210.json",
+       "path": [
+        "cases",
+        "@S2",
+        "regions",
+        "cup",
+        "p1"
+       ]
+      },
+      "a": {
+       "const": "ALLOW.petg"
+      },
+      "cup_f2": {
+       "file": "result_L0_current_d210.json",
+       "path": [
+        "cases",
+        "@F2",
+        "regions",
+        "cup",
+        "p1"
+       ],
+       "times": "KP"
+      },
+      "tube_f2": {
+       "file": "result_L0_current_d210.json",
+       "path": [
+        "cases",
+        "@F2",
+        "regions",
+        "tube_root",
+        "axial"
+       ],
+       "times": "KF"
+      },
+      "tube_s2": {
+       "file": "result_L0_current_d210.json",
+       "path": [
+        "cases",
+        "@S2",
+        "regions",
+        "tube_root",
+        "axial"
+       ]
+      },
+      "cf": {
+       "const": "ALLOW.cf_axial"
+      }
+     },
+     "title": "Arm and motor cup (figure fea-arm-along.png, run current_d210)",
+     "sub": "Flight F2 at the full factors: cup {cup_f2:.1f} of {a:.0f} MPa, tube axial {tube_f2:.0f} of {cf:.0f} MPa. Prop strike S2 (factor 1.0): tube axial {tube_s2:.0f} of {cf:.0f} MPa."
     }
    ]
   },

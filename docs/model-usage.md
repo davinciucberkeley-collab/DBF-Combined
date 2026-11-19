@@ -23,3 +23,5 @@ session (Agent tool: "Agent type 'implementer' not found"). Until then the same 
 | 2026-11-18 | T-063 rev 3 review | eng-reviewer / opus | high-impact review | accept with conditions (M-1 test route, M-2 coupon 36.8 N, m-1 stale outputs; M-3 torque-tube fallback) | 194 k tok / 14 min | 0 | — | — |
 | 2026-11-18 | T-063 review conditions | implementer / sonnet | moderate (graph + text edits) | conditions closed; strict fails = 5 analysis FAILs + A-P13 | 160 k tok / 5 min | 0 | — | conductor rerun of run_all.py |
 | 2026-11-18 | T-028 Scene 3 + film framing fixes | implementer / sonnet | moderate (Blender pipeline) | S3 kinematics-driven; cam check 0/4620 inside; previews only | 216 k tok / 22 min | 0 | — | frame review pending (T-030) |
+| 2026-11-18 | T-029 Scenes 4 (SITL playback) + 5 (FEA) | implementer / sonnet | moderate (Blender pipeline) | S4 SITL Z5_gb0 playback, S5 hub/arm FEA; cam check 0/7320; film 122 s (trim in T-030) | — | 0 | — | frame review T-030 |
+| 2026-11-18 | T-030 film frame review | eng-reviewer / opus | high-impact review (rendered frames) | running | — | 0 | — | — |
