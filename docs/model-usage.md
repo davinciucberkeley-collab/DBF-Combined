@@ -44,6 +44,12 @@ Append one row per delegated task. Review at each milestone: are opus runs justi
 | 2026-11-19 | T-020 Z-bend leg fix | implementer / sonnet | moderate (CAD + gates) | done: leg 2.5 mm, sweeps PASS; conductor set 2.3-2.5 mm cut tolerance | 131 k tok / 14.5 min | 0 | — | — |
 | 2026-11-19 | Review T-020/T-025/T-057/T-058 | eng-reviewer / sonnet | high-impact independent review | all VERIFIED; AR-008 corrected (side load FAIL -> T-064) | — | 0 | — | — |
 | 2026-11-19 | Re-check T-014/T-054 | ledger-auditor / haiku | routine accounting | FAIL (narrow): row 35, routing note, gate items; fixed | — | 0 | — | — |
+| 2026-11-19 | T-064 landing side load (D-213) | implementer / sonnet | moderate analysis | done: rib-root RF 1.26 EST; 14 N cap withdrawn (pending review) | — | 0 | — | opus review running |
+| 2026-11-19 | D-213 independent review | eng-reviewer / opus | high-impact engineering decision (AM-004) | running | — | 0 | — | — |
+| 2026-11-19 | T-065 structures_run regeneration | implementer / sonnet | moderate analysis | done: values traced, 9 weak-mode FAIL rows explained (AR-013, D-214) | 165 k tok / 8.1 min | 0 | — | recheck-batch4 PASS |
+| 2026-11-19 | T-022 CAD realism gaps | implementer / sonnet | moderate (CAD + gates) | done: no CAD change, gates PASS, Q1-Q4 open | 129 k tok / 7.2 min | 0 | — | — |
+| 2026-11-19 | Re-check T-007/T-014/T-054/T-065 (batch 4) | ledger-auditor / sonnet | routine accounting + one script run | T-007, T-054, T-065 PASS; T-014 FAIL (these rows missing; added) | 48 k tok / 2.0 min | 0 | — | — |
+| 2026-11-19 | T-022 Q1-Q4 decisions | eng-reviewer / opus | engineering decision (AM-004) | running | — | 0 | — | — |
 
 Note 2026-11-18: the project agents in `.claude/agents/` were written mid-session and are not loaded until the next
 session (Agent tool: "Agent type 'implementer' not found"). Until then the same routing is applied with the
