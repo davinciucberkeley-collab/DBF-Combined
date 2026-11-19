@@ -113,10 +113,10 @@ kit.claim("CL-A-BOX-FIT", "Packed box against the 1.2 x 0.5 x 0.4 m car-trunk bo
 CAD_PARTS = ["WNG-006-R", "WNG-006-L", "WNG-008-RU", "WNG-008-RL", "WNG-008-LU", "WNG-008-LL"]
 stored("CL-A-COLL-COUNT", "Part overlaps deeper than the tolerance (neutral, +-20, +-21 deg)", "P:cad3d.n_over_tol", "-", limit=("<=", 0), verifies=["A-U4"], parts=CAD_PARTS,
        how="python -I qp/A/cad/collide_a.py (Blender, 78 parts, 175 bodies, 0.05 mm); A_ELEV_POSE=20|22 for the other poses.",
-       equation="count of hits with depth > tolerance in cad/out/report_pose20.json and report_pose21.json; read, not re-run")
+       equation="count of hits with depth > tolerance in cad/out/report_d212r3_pose20.json and report_d212r3_pose21.json; read, not re-run")
 stored("CL-A-COLL-DEPTH", "Deepest part overlap at any reachable pose", "P:cad3d.max_depth_mm", "mm", limit=("<=", "P:req.coll_tol_mm"), verifies=["A-U4"], parts=["WNG-007-R", "WNG-007-L", "WNG-008-RU", "WNG-008-LU", "HWC-001", "HWC-003"],
-       how="collide_a.py report after D-212 rev 3 (report_d212r3_pose21.json, review r3 m-9): ten static hits, all under the 0.05 mm gate, the deepest one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); the +-21 deg poses show none (the 0.042 mm balance-tab contact of the pre-D-212 report_pose21.json is gone). The +-20 deg poses are read from the pre-D-212 report_pose20.json (0 hits) and were NOT rerun for rev 3; +-22 deg is past the stop and is not a reachable pose.",
-       equation="largest depth_mm over the reachable poses in report_d212r3_pose21.json and report_pose20.json; read, not re-run")
+       how="collide_a.py report after D-212 rev 3 (report_d212r3_pose21.json, review r3 m-9): ten static hits, all under the 0.05 mm gate, the deepest one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); the +-21 deg poses show none (the 0.042 mm balance-tab contact of the pre-D-212 report_pose21.json is gone). The +-20 deg poses (the commanded endpoints, BUILD D5b) are read from report_d212r3_pose20.json (rev 3, rerun 2026-11-19, 0 hits, static identical); +-22 deg is past the stop and is not a reachable pose.",
+       equation="largest depth_mm over the reachable poses in report_d212r3_pose21.json and report_d212r3_pose20.json; read, not re-run")
 stored("CL-A-WIRE-ENDS", "Wire ends not seated in a part", "P:cad3d.wire_ends_open", "-", limit=("<=", 0), verifies=["A-U4"], how="collide_a.py wire_ends check (41 strands).",
        equation="len(wire_ends) in cad/out/report.json; read, not re-run")
 stored("CL-A-WIRE-FOLDS", "Wire folds (kinks)", "P:cad3d.wire_kinks", "-", limit=("<=", 0), verifies=["A-U4"], how="collide_a.py kinks check.", equation="len(kinks) in cad/out/report.json; read, not re-run")

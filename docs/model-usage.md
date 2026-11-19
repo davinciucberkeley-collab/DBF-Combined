@@ -31,8 +31,12 @@ Append one row per delegated task. Review at each milestone: are opus runs justi
 | 2026-11-19 | Setup check, 17 ledger rows | ledger-auditor / haiku | routine accounting + scratch tamper tests | PASS 7, FAIL 6, CANNOT CHECK 4; findings drove this doc fix | 149 k tok / 7.4 min | 0 | — | conductor applying fixes |
 | 2026-11-19 | Mechanism review (T-018..T-021, T-041) | eng-reviewer / sonnet | high-impact independent review | T-018 and T-019 verified; T-021 not; T-041 verified with a finding | 57 k tok / 2.0 min | 0 | — | — |
 | 2026-11-19 | T-062 Explorer site numbers | implementer / sonnet | moderate (numbers from generators) | done | 114 k tok / 3.9 min | 0 | — | — |
-| 2026-11-19 | Elevon minors m-3..m-9 + T-056 | implementer / sonnet | moderate | running | — | 0 | — | — |
+| 2026-11-19 | Elevon minors m-3..m-9 + T-056 | implementer / sonnet | moderate | done: minors closed in code, servo speed check; re-check VERIFIED | 207 k tok / 8.4 min | 0 | — | — |
 | 2026-11-19 | Setup-check fixes (session-state, execution plan, model-usage, audit tool, compact-test record) | implementer / sonnet | moderate (docs + small tool change) | this change | — | 0 | — | independent re-check pending |
+| 2026-11-19 | Records: T-021 ten-field blocks, AR-005, minors text | implementer / sonnet | moderate (docs) | done | 123 k tok / 2.2 min | 0 | — | eng re-check VERIFIED |
+| 2026-11-19 | Re-check T-001/003/005/007/012/013/014/046/054 | ledger-auditor / haiku | routine accounting + paste comparison | PASS 6, FAIL 3 (T-007, T-014, T-054) | 143 k tok / 6.3 min | 0 | — | — |
+| 2026-11-19 | Re-check T-021, T-056, minors, T-062 | eng-reviewer / sonnet | high-impact independent review | all VERIFIED, LOW notes only | 68 k tok / 1.4 min | 0 | — | — |
+| 2026-11-19 | Proof claims CL-A-SERVO-SPEED / KEEPER-BRIDGE + T-020 pose-20 gate | implementer / sonnet | moderate | running | — | 0 | — | — |
 
 Note 2026-11-18: the project agents in `.claude/agents/` were written mid-session and are not loaded until the next
 session (Agent tool: "Agent type 'implementer' not found"). Until then the same routing is applied with the

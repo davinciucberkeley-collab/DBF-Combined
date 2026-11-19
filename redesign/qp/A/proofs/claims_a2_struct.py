@@ -189,6 +189,13 @@ for cid, title, param, lim, extra, how in [
 stored("CL-A-HORN-SHEAROUT-STALL", "Horn hole shear-out (1.65 mm ligament) at the 51 N stall force (x 1.4375); allowable PETG 20 MPa / sqrt(3) EST", "P:linkage.shearout_stall_mpa", "MPa",
        limit=("<=", "P:linkage.shearout_allow_mpa"), verifies=["A-P13"], parts=LINK_PARTS, assumes=["ASM-A-PETG-ALLOW"],
        how="Passes by 4 % on an EST allowable (review r3 m-13), so it is no margin: the stall step of the horn-rib coupon (CL-A-HORN-STALL-STEP) and the bench stall test decide it.", equation=LINK_EQ)
+stored("CL-A-KEEPER-BRIDGE-STALL", "Keeper bridge (MEC-008) bending at the 51 N stall force (x 1.4375), rod lifted against the keeper; allowable PETG 20 MPa EST", "P:linkage.keeper_bridge_stall_mpa", "MPa",
+       limit=("<=", "P:linkage.petg_allow_mpa"), verifies=["A-P13"], parts=["MEC-008-R", "MEC-008-L", "MEC-004-R", "MEC-004-L"], assumes=["ASM-A-PETG-ALLOW"],
+       how="Passes by 3 % on an EST allowable (19.5 vs 20 MPa; 9.8 MPa at hold), so it is no margin. Creep and preload loss are '-' (not analysed): retorque and inspect the keeper screw at BUILD D2a, D5b and every preflight; the bench stall test (CL-A-HORN-STALL-BENCH) loads it too, inspect the keeper for a crack afterwards (review r3 m-4).", equation=LINK_EQ)
+stored("CL-A-SERVO-SPEED", "Elevon servo speed margin: loaded rate over the 152 deg/s of the +-11 deg, 2.2 Hz roll sinusoid (AR-005, 6.0 V pair)", "P:linkage.servo_speed_margin_r2", "-",
+       limit=(">=", "P:linkage.servo_speed_margin_min"), verifies=["A-P11"], parts=["MEC-001-R", "MEC-001-L", "MEC-002-R", "MEC-002-L", "MEC-004-R", "MEC-004-L"],
+       how="Hand calculation (AR-005): linear torque-speed line, gearing 0.909-0.928 from the solved linkage, end-point load. Required rates are EST; 7.2 V speed is not published so the 6 V no-load speed is used. Bench ramp of the built rail at BUILD D5b closes it. The full-throw sinusoid R3 (0.84) is not a required case.",
+       equation="read from mechanism/out/linkage_loads_check.json servo_speed_torque_T056 (python -I redesign/qp/A/mechanism/linkage_loads_check.py)")
 
 # ---- test-form claims (review r3 M-1): value "-" until the test is run, so they stay PROPOSED, never FAIL. Pass criteria are numeric. When a test
 # ---- passes, the analysis FAIL claim it supersedes is re-pointed at the test claim by a logged edit (A-P13 then rests on the test).

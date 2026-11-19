@@ -41,5 +41,7 @@ Irreversible or costly actions: date, approval wording, sub-actions. Nothing has
 | Pending | DaVinci access and spend | AM-003: no spend | T-037 BLOCKED |
 | Pending | Purchases | none before early Dec 2026 (ordering timeline) | none made |
 
+**Approval-gate notes (re-check 2026-11-19, `docs/audits/2026-11-19-recheck-docs.md`):** the reflog entries `reset: moving to HEAD` (2026-11-09, -15, -17, -18 at 164c815a) are no-op resets written by `git stash` / `git reset` without a target: HEAD did not move and no commit was lost (each entry's hash equals the commit before it). Uncommitted tracked edits seen during the check were the in-flight agent edits of this program, committed in c62c1ea1 and 94a3a48a; none is irreversible. Held worktrees (pending Dillon): `.claude/worktrees/agent-a952e3335f2d57495`, `.claude/worktrees/morph-chart-bc71a6`, `.claude/worktrees/proof-chain-readable-c5026d` (only change: line endings of `tools/opencae-studio/launch_opencae.bat`).
+
 ## Reconciliation
 - 2026-11-18: registry built from the full spec + AM-001; independent haiku check pending (T-011).

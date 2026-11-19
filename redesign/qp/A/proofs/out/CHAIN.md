@@ -20,8 +20,8 @@ Parameter files: `redesign/qp/A/params-A.json`
 | [A-D8](#a-d8) First tethered hover by 2027-02-18 | **UNVERIFIED** | 2 | — |
 | [A-P1](#a-p1) Mass gate 1.47 kg and T/W at the gate | **UNVERIFIED** | 3 | +0% |
 | [A-P10](#a-p10) Vibration rule D-185 | **CHECKED** | 7 | +8% |
-| [A-P11](#a-p11) Cruise control authority | **UNVERIFIED** | 6 | +4% |
-| [A-P13](#a-p13) Loads and flutter (G8) | **UNVERIFIED** **FAILS** | 45 | -903% |
+| [A-P11](#a-p11) Cruise control authority | **UNVERIFIED** | 7 | +4% |
+| [A-P13](#a-p13) Loads and flutter (G8) | **UNVERIFIED** **FAILS** | 46 | -903% |
 | [A-P16](#a-p16) Motor and ESC current | **UNVERIFIED** | 2 | +7% |
 | [A-P2](#a-p2) Hover T/W >= 2.0 fresh, >= 1.6 worst pack state | **UNVERIFIED** | 4 | +16% |
 | [A-P24](#a-p24) Fence and run-out | **UNVERIFIED** | 1 | +8% |
@@ -423,6 +423,16 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p11
       - source `SRC-A-FIXES2` [QP-4 fixes 2 (FIXES2.md, supersedes FIXES where they differ)](redesign/review/QP-4/FIXES2.md), s1 flutter with damper, s2 servo, s3 gates, s6 foam, s7 mass and cost, checked 2026-11-15 — **CHECKED**
   - param `P:req.pitch_use_max` = 0.6 — **CHECKED**
     - source `SRC-A-BOARD4` [QP-4 board re-sit (BOARD.md)](redesign/review/QP-4/BOARD.md), s1 structure ceiling 494 g, s3 pitch-use basis, G1-G10, checked 2026-11-15 — **CHECKED**
+- claim **CL-A-SERVO-SPEED** Elevon servo speed margin: loaded rate over the 152 deg/s of the +-11 deg, 2.2 Hz roll sinusoid (AR-005, 6.0 V pair) = **1.521** (limit >= 1, margin +52%) — **UNVERIFIED**
+  - ⚠ uses P:linkage.servo_speed_margin_r2, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: AR-005: loaded elevon rate (231 deg/s, 6.0 V pair, stall 0.333 N m, 0.13 s / 60 deg, linear torque-speed line, end-point load 0.146 N m + preload + damper) over the 152 deg/s needed for +-11 deg at the 2.2 Hz crossover (EST); the 7.2 V case (1.73) is not used (7.2 V speed unpublished))
+  - how to verify: Hand calculation (AR-005): linear torque-speed line, gearing 0.909-0.928 from the solved linkage, end-point load. Required rates are EST; 7.2 V speed is not published so the 6 V no-load speed is used. Bench ramp of the built rail at BUILD D5b closes it. The full-throw sinusoid R3 (0.84) is not a required case.
+  - parts: MEC-001-R, MEC-001-L, MEC-002-R, MEC-002-L, MEC-004-R, MEC-004-L
+  - calc `CALC-A-SERVO-SPEED-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `read from mechanism/out/linkage_loads_check.json servo_speed_torque_T056 (python -I redesign/qp/A/mechanism/linkage_loads_check.py)` — **CHECKED**
+    - `v` ← param `P:linkage.servo_speed_margin_r2` = 1.521 — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: AR-005: loaded elevon rate (231 deg/s, 6.0 V pair, stall 0.333 N m, 0.13 s / 60 deg, linear torque-speed line, end-point load 0.146 N m + preload + damper) over the 152 deg/s needed for +-11 deg at the 2.2 Hz crossover (EST); the 7.2 V case (1.73) is not used (7.2 V speed unpublished)
+      - source `SRC-A-LINKLOADS` [Elevon linkage strength checks, D-212 rev 3 (linkage_loads_check.json)](redesign/qp/A/mechanism/out/linkage_loads_check.json), hand calculations + 1-D beam-on-foundation FE of the horn rib; stall force 51.0 N quasi-static; factors KP 2.156 hold, 1.4375 stall (printed / bonded), checked 2026-11-15 — **CHECKED**
+  - param `P:linkage.servo_speed_margin_min` = 1 — **CHECKED**
+    - `SRC-A-LINKLOADS` (see above)
 - claim **CL-A-SERVO-FACTOR** Servo torque factor at 7.2 V, 25 C (ES3054HV) = **1.556** (limit >= 1.5, margin +4%) — **UNVERIFIED**
   - ⚠ uses P:servo.stall_72_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: ES3054HV at 7.2 V, interpolated from V 6.0 / 8.4 V figures (EST))
   - ⚠ uses P:servo.hinge_vd_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: hinge moment at VD, +-20 deg (0.146 x 0.31 / 0.30))
@@ -941,6 +951,20 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
   - param `P:linkage.shearout_allow_mpa` = 11.55 MPa — **UNVERIFIED**
     - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: PETG in-layer 20 MPa / sqrt(3) (the script's shear-out allowable, linkage_loads_check.py; EST)
     - `SRC-A-ARMCUP` (see above)
+- claim **CL-A-KEEPER-BRIDGE-STALL** Keeper bridge (MEC-008) bending at the 51 N stall force (x 1.4375), rod lifted against the keeper; allowable PETG 20 MPa EST = **19.48 MPa** (limit <= 20 MPa, margin +3%) — **UNVERIFIED**
+  - ⚠ uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
+  - ⚠ uses P:linkage.keeper_bridge_stall_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: keeper bridge (MEC-008, 0.8 x 3.1 mm section, 2.0 mm cantilever) bending at the 51 N stall force, rod lifted (e 1.9 mm), V = F e / L (L 43.25 mm), x 1.4375; allowable is the printed PETG 20 MPa EST; creep and preload loss '-')
+  - ⚠ uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
+  - ⚠ uses P:linkage.petg_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW))
+  - how to verify: Passes by 3 % on an EST allowable (19.5 vs 20 MPa; 9.8 MPa at hold), so it is no margin. Creep and preload loss are '-' (not analysed): retorque and inspect the keeper screw at BUILD D2a, D5b and every preflight; the bench stall test (CL-A-HORN-STALL-BENCH) loads it too, inspect the keeper for a crack afterwards (review r3 m-4).
+  - parts: MEC-008-R, MEC-008-L, MEC-004-R, MEC-004-L
+  - `ASM-A-PETG-ALLOW` (see above)
+  - calc `CALC-A-KEEPER-BRIDGE-STALL-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header` — **CHECKED**
+    - `v` ← param `P:linkage.keeper_bridge_stall_mpa` = 19.48 MPa — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: keeper bridge (MEC-008, 0.8 x 3.1 mm section, 2.0 mm cantilever) bending at the 51 N stall force, rod lifted (e 1.9 mm), V = F e / L (L 43.25 mm), x 1.4375; allowable is the printed PETG 20 MPa EST; creep and preload loss '-'
+      - `SRC-A-LINKLOADS` (see above)
+    - `ASM-A-PETG-ALLOW` (see above)
+  - `P:linkage.petg_allow_mpa` (see above)
 - claim **CL-A-HORN-RIB-COUPON** Horn-rib coupon: load held 30 s without damage, over the required 36.8 N (2.156 x the 17.05 N hold force) = **-** — **PROPOSED**
   - how to verify: E1 coupon: 100 mm tape-skinned elevon span, horn bonded in the slot, clamps 50 mm each side of the rib; 36.8 N along the chord for 30 s. Value = held load / 36.8 N, pass >= 1.0 with no crack, no slip, set < 0.5 deg. Local result only (clamps 50 mm from the rib, ~160 mm of elevon in flight). Supersedes CL-A-HORN-RIB-FOAM-HOLD once run and passed.
   - parts: MEC-004-R, MEC-004-L, WNG-006-R, WNG-006-L
@@ -1590,13 +1614,13 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-u4
 - claim **CL-A-COLL-COUNT** Part overlaps deeper than the tolerance (neutral, +-20, +-21 deg) = **0** (limit <= 0, margin +0 abs) — **CHECKED**
   - how to verify: python -I qp/A/cad/collide_a.py (Blender, 78 parts, 175 bodies, 0.05 mm); A_ELEV_POSE=20|22 for the other poses.
   - parts: WNG-006-R, WNG-006-L, WNG-008-RU, WNG-008-RL, WNG-008-LU, WNG-008-LL
-  - calc `CALC-A-COLL-COUNT-READ` `redesign/qp/A/proofs/claims_a3_program.py::read_value()`: `count of hits with depth > tolerance in cad/out/report_pose20.json and report_pose21.json; read, not re-run` — **CHECKED**
+  - calc `CALC-A-COLL-COUNT-READ` `redesign/qp/A/proofs/claims_a3_program.py::read_value()`: `count of hits with depth > tolerance in cad/out/report_d212r3_pose20.json and report_d212r3_pose21.json; read, not re-run` — **CHECKED**
     - `v` ← param `P:cad3d.n_over_tol` = 0 — **CHECKED**
-      - source `SRC-A-COLL` [Collision gate output (cad/out/report*.json, REPORT.md)](redesign/qp/A/cad/out/REPORT.md), report_pose20 / report_pose21 / report.json: 96 parts, 444 bodies, tolerance 0.05 mm (2026-11-15, D-194), checked 2026-11-15 — **CHECKED**
+      - source `SRC-A-COLL` [Collision gate output (cad/out/report*.json, REPORT.md)](redesign/qp/A/cad/out/REPORT.md), report_d212r3_pose20 / report_d212r3_pose21 / report.json: 96 parts, 444 bodies, tolerance 0.05 mm (2026-11-15, D-194), checked 2026-11-15 — **CHECKED**
 - claim **CL-A-COLL-DEPTH** Deepest part overlap at any reachable pose = **0.034 mm** (limit <= 0.05 mm, margin +32%) — **CHECKED**
-  - how to verify: collide_a.py report after D-212 rev 3 (report_d212r3_pose21.json, review r3 m-9): ten static hits, all under the 0.05 mm gate, the deepest one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); the +-21 deg poses show none (the 0.042 mm balance-tab contact of the pre-D-212 report_pose21.json is gone). The +-20 deg poses are read from the pre-D-212 report_pose20.json (0 hits) and were NOT rerun for rev 3; +-22 deg is past the stop and is not a reachable pose.
+  - how to verify: collide_a.py report after D-212 rev 3 (report_d212r3_pose21.json, review r3 m-9): ten static hits, all under the 0.05 mm gate, the deepest one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); the +-21 deg poses show none (the 0.042 mm balance-tab contact of the pre-D-212 report_pose21.json is gone). The +-20 deg poses (the commanded endpoints, BUILD D5b) are read from report_d212r3_pose20.json (rev 3, rerun 2026-11-19, 0 hits, static identical); +-22 deg is past the stop and is not a reachable pose.
   - parts: WNG-007-R, WNG-007-L, WNG-008-RU, WNG-008-LU, HWC-001, HWC-003
-  - calc `CALC-A-COLL-DEPTH-READ` `redesign/qp/A/proofs/claims_a3_program.py::read_value()`: `largest depth_mm over the reachable poses in report_d212r3_pose21.json and report_pose20.json; read, not re-run` — **CHECKED**
+  - calc `CALC-A-COLL-DEPTH-READ` `redesign/qp/A/proofs/claims_a3_program.py::read_value()`: `largest depth_mm over the reachable poses in report_d212r3_pose21.json and report_d212r3_pose20.json; read, not re-run` — **CHECKED**
     - `v` ← param `P:cad3d.max_depth_mm` = 0.034 mm — **CHECKED**
       - `SRC-A-COLL` (see above)
   - param `P:req.coll_tol_mm` = 0.05 mm — **CHECKED**

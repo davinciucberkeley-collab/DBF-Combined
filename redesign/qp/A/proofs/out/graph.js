@@ -2,7 +2,7 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-19 09:53 UTC",
+  "generated": "2026-11-19 10:07 UTC",
   "dataset": "concept-a",
   "ok": false,
   "errors": [
@@ -25,14 +25,14 @@ window.PROOF_GRAPH = {
     "assumption": 10,
     "requirement": 22,
     "test": 13,
-    "calculation": 86,
-    "claim": 106,
-    "parameter": 210,
+    "calculation": 88,
+    "claim": 108,
+    "parameter": 213,
     "part": 65
    },
    "by_status": {
-    "CHECKED": 318,
-    "UNVERIFIED": 213,
+    "CHECKED": 321,
+    "UNVERIFIED": 217,
     "PROPOSED": 17
    },
    "fails": 6
@@ -191,7 +191,7 @@ window.PROOF_GRAPH = {
    "kind": "file",
    "url": "redesign/qp/A/cad/out/REPORT.md",
    "checked": "2026-11-15",
-   "where": "report_pose20 / report_pose21 / report.json: 96 parts, 444 bodies, tolerance 0.05 mm (2026-11-15, D-194)",
+   "where": "report_d212r3_pose20 / report_d212r3_pose21 / report.json: 96 parts, 444 bodies, tolerance 0.05 mm (2026-11-15, D-194)",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
    "importance": 5
@@ -290,7 +290,7 @@ window.PROOF_GRAPH = {
    "where": "hand calculations + 1-D beam-on-foundation FE of the horn rib; stall force 51.0 N quasi-static; factors KP 2.156 hold, 1.4375 stall (printed / bonded)",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
-   "importance": 9
+   "importance": 11
   },
   {
    "id": "SRC-A-LINKKIN",
@@ -326,7 +326,7 @@ window.PROOF_GRAPH = {
    "where": "MS table, limit loads x 1.5 x 1.15 (x 1.25 printed/bonded); allowables EST",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
-   "importance": 13
+   "importance": 14
   },
   {
    "id": "SRC-A-D206BR",
@@ -577,7 +577,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 5
+   "importance": 6
   },
   {
    "id": "ASM-A-TRUNK",
@@ -892,13 +892,14 @@ window.PROOF_GRAPH = {
    "ref": "qp/A/REQUIREMENTS-A.md#a-p11",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
+    "CL-A-SERVO-SPEED is UNVERIFIED",
     "CL-A-SERVO-FACTOR is UNVERIFIED",
     "CL-A-SERVO-COLD is UNVERIFIED",
     "CL-A-SERVO-RATIO is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 13
+   "importance": 15
   },
   {
    "id": "A-P13",
@@ -936,11 +937,12 @@ window.PROOF_GRAPH = {
     "CL-A-HORN-BEARING-STALL: FAILS: margin -83.2% (36.65 MPa vs <= 20 MPa)",
     "CL-A-ROD-LEG-STALL is UNVERIFIED",
     "CL-A-HORN-SHEAROUT-STALL is UNVERIFIED",
+    "CL-A-KEEPER-BRIDGE-STALL is UNVERIFIED",
     "CL-A-LINKAGE-FREEPLAY: FAILS: margin -28.0% (1.28 deg vs <= 1 deg)"
    ],
    "status": "UNVERIFIED",
    "fails": true,
-   "importance": 91
+   "importance": 93
   },
   {
    "id": "A-P16",
@@ -6013,6 +6015,119 @@ window.PROOF_GRAPH = {
    "importance": 1
   },
   {
+   "id": "CALC-A-KEEPER-BRIDGE-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Keeper bridge (MEC-008) bending at the 51 N stall force (x 1.4375), rod lifted against the keeper; allowable PETG 20 MPa EST",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.keeper_bridge_stall_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 19.48
+   },
+   "input_values": {
+    "v": 19.48
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-KEEPER-BRIDGE-STALL",
+   "type": "claim",
+   "title": "Keeper bridge (MEC-008) bending at the 51 N stall force (x 1.4375), rod lifted against the keeper; allowable PETG 20 MPa EST",
+   "calc": "CALC-A-KEEPER-BRIDGE-STALL-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.petg_allow_mpa",
+    "resolved": 20.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-008-R",
+    "MEC-008-L",
+    "MEC-004-R",
+    "MEC-004-L"
+   ],
+   "how": "Passes by 3 % on an EST allowable (19.5 vs 20 MPa; 9.8 MPa at hold), so it is no margin. Creep and preload loss are '-' (not analysed): retorque and inspect the keeper screw at BUILD D2a, D5b and every preflight; the bench stall test (CL-A-HORN-STALL-BENCH) loads it too, inspect the keeper for a crack afterwards (review r3 m-4).",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 19.48,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.keeper_bridge_stall_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: keeper bridge (MEC-008, 0.8 x 3.1 mm section, 2.0 mm cantilever) bending at the 51 N stall force, rod lifted (e 1.9 mm), V = F e / L (L 43.25 mm), x 1.4375; allowable is the printed PETG 20 MPa EST; creep and preload loss '-')",
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.petg_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.025999999999999978,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-SERVO-SPEED-READ",
+   "type": "calculation",
+   "title": "Stored result: Elevon servo speed margin: loaded rate over the 152 deg/s of the +-11 deg, 2.2 Hz roll sinusoid (AR-005, 6.0 V pair)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json servo_speed_torque_T056 (python -I redesign/qp/A/mechanism/linkage_loads_check.py)",
+   "inputs": {
+    "v": "P:linkage.servo_speed_margin_r2"
+   },
+   "outputs": {
+    "v": 1.521
+   },
+   "input_values": {
+    "v": 1.521
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-SERVO-SPEED",
+   "type": "claim",
+   "title": "Elevon servo speed margin: loaded rate over the 152 deg/s of the +-11 deg, 2.2 Hz roll sinusoid (AR-005, 6.0 V pair)",
+   "calc": "CALC-A-SERVO-SPEED-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:linkage.servo_speed_margin_min",
+    "resolved": 1.0
+   },
+   "verifies": [
+    "A-P11"
+   ],
+   "parts": [
+    "MEC-001-R",
+    "MEC-001-L",
+    "MEC-002-R",
+    "MEC-002-L",
+    "MEC-004-R",
+    "MEC-004-L"
+   ],
+   "how": "Hand calculation (AR-005): linear torque-speed line, gearing 0.909-0.928 from the solved linkage, end-point load. Required rates are EST; 7.2 V speed is not published so the 6 V no-load speed is used. Bench ramp of the built rail at BUILD D5b closes it. The full-throw sinusoid R3 (0.84) is not a required case.",
+   "value": 1.521,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "uses P:linkage.servo_speed_margin_r2, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: AR-005: loaded elevon rate (231 deg/s, 6.0 V pair, stall 0.333 N m, 0.13 s / 60 deg, linear torque-speed line, end-point load 0.146 N m + preload + damper) over the 152 deg/s needed for +-11 deg at the 2.2 Hz crossover (EST); the 7.2 V case (1.73) is not used (7.2 V speed unpublished))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.5209999999999999,
+   "importance": 1
+  },
+  {
    "id": "CL-A-HORN-RIB-COUPON",
    "type": "claim",
    "title": "Horn-rib coupon: load held 30 s without damage, over the required 36.8 N (2.156 x the 17.05 N hold force)",
@@ -7067,7 +7182,7 @@ window.PROOF_GRAPH = {
    "title": "Stored result: Part overlaps deeper than the tolerance (neutral, +-20, +-21 deg)",
    "script": "redesign/qp/A/proofs/claims_a3_program.py",
    "function": "read_value",
-   "equation": "count of hits with depth > tolerance in cad/out/report_pose20.json and report_pose21.json; read, not re-run",
+   "equation": "count of hits with depth > tolerance in cad/out/report_d212r3_pose20.json and report_d212r3_pose21.json; read, not re-run",
    "inputs": {
     "v": "P:cad3d.n_over_tol"
    },
@@ -7118,7 +7233,7 @@ window.PROOF_GRAPH = {
    "title": "Stored result: Deepest part overlap at any reachable pose",
    "script": "redesign/qp/A/proofs/claims_a3_program.py",
    "function": "read_value",
-   "equation": "largest depth_mm over the reachable poses in report_d212r3_pose21.json and report_pose20.json; read, not re-run",
+   "equation": "largest depth_mm over the reachable poses in report_d212r3_pose21.json and report_d212r3_pose20.json; read, not re-run",
    "inputs": {
     "v": "P:cad3d.max_depth_mm"
    },
@@ -7155,7 +7270,7 @@ window.PROOF_GRAPH = {
     "HWC-001",
     "HWC-003"
    ],
-   "how": "collide_a.py report after D-212 rev 3 (report_d212r3_pose21.json, review r3 m-9): ten static hits, all under the 0.05 mm gate, the deepest one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); the +-21 deg poses show none (the 0.042 mm balance-tab contact of the pre-D-212 report_pose21.json is gone). The +-20 deg poses are read from the pre-D-212 report_pose20.json (0 hits) and were NOT rerun for rev 3; +-22 deg is past the stop and is not a reachable pose.",
+   "how": "collide_a.py report after D-212 rev 3 (report_d212r3_pose21.json, review r3 m-9): ten static hits, all under the 0.05 mm gate, the deepest one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); the +-21 deg poses show none (the 0.042 mm balance-tab contact of the pre-D-212 report_pose21.json is gone). The +-20 deg poses (the commanded endpoints, BUILD D5b) are read from report_d212r3_pose20.json (rev 3, rerun 2026-11-19, 0 hits, static identical); +-22 deg is past the stop and is not a reachable pose.",
    "value": 0.034,
    "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
    "status": "CHECKED",
@@ -9850,6 +9965,48 @@ window.PROOF_GRAPH = {
    "importance": 1
   },
   {
+   "id": "P:linkage.keeper_bridge_stall_mpa",
+   "type": "parameter",
+   "title": "linkage.keeper_bridge_stall_mpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 19.48,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "keeper bridge (MEC-008, 0.8 x 3.1 mm section, 2.0 mm cantilever) bending at the 51 N stall force, rod lifted (e 1.9 mm), V = F e / L (L 43.25 mm), x 1.4375; allowable is the printed PETG 20 MPa EST; creep and preload loss '-'",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: keeper bridge (MEC-008, 0.8 x 3.1 mm section, 2.0 mm cantilever) bending at the 51 N stall force, rod lifted (e 1.9 mm), V = F e / L (L 43.25 mm), x 1.4375; allowable is the printed PETG 20 MPa EST; creep and preload loss '-'"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.servo_speed_margin_r2",
+   "type": "parameter",
+   "title": "linkage.servo_speed_margin_r2",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 1.521,
+   "unit": "-",
+   "source": "SRC-A-LINKLOADS",
+   "note": "AR-005: loaded elevon rate (231 deg/s, 6.0 V pair, stall 0.333 N m, 0.13 s / 60 deg, linear torque-speed line, end-point load 0.146 N m + preload + damper) over the 152 deg/s needed for +-11 deg at the 2.2 Hz crossover (EST); the 7.2 V case (1.73) is not used (7.2 V speed unpublished)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: AR-005: loaded elevon rate (231 deg/s, 6.0 V pair, stall 0.333 N m, 0.13 s / 60 deg, linear torque-speed line, end-point load 0.146 N m + preload + damper) over the 152 deg/s needed for +-11 deg at the 2.2 Hz crossover (EST); the 7.2 V case (1.73) is not used (7.2 V speed unpublished)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.servo_speed_margin_min",
+   "type": "parameter",
+   "title": "linkage.servo_speed_margin_min",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 1.0,
+   "unit": "-",
+   "source": "SRC-A-LINKLOADS",
+   "note": "AR-005 acceptance criterion: speed margin >= 1.0 for the R2 sinusoid (set before the run)",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
    "id": "P:linkage.foam_shear_kpa",
    "type": "parameter",
    "title": "linkage.foam_shear_kpa",
@@ -9877,7 +10034,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/qp/A/params-A.json: printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW)"
    ],
    "status": "UNVERIFIED",
-   "importance": 4
+   "importance": 5
   },
   {
    "id": "P:linkage.free_play_deg",
@@ -10520,7 +10677,7 @@ window.PROOF_GRAPH = {
    "value": 0,
    "unit": "-",
    "source": "SRC-A-COLL",
-   "note": "cad/out/report_d212r3_pose21.json (D-212 rev 3, neutral and +-21 deg) + report_pose20.json (pre-D-212, +-20 deg, not rerun for rev 3): overlaps deeper than the tolerance",
+   "note": "cad/out/report_d212r3_pose21.json (neutral and +-21 deg) + report_d212r3_pose20.json (+-20 deg), both D-212 rev 3: overlaps deeper than the tolerance",
    "status": "CHECKED",
    "importance": 1
   },
@@ -10532,7 +10689,7 @@ window.PROOF_GRAPH = {
    "value": 0.034,
    "unit": "mm",
    "source": "SRC-A-COLL",
-   "note": "deepest overlap at any reachable pose: 0.034 mm static at neutral and +-21 deg (report_d212r3_pose21.json, D-212 rev 3; was 0.042 mm in the pre-D-212 report_pose21.json); the +-20 deg poses come from the pre-D-212 report_pose20.json (0 hits, not rerun for rev 3)",
+   "note": "deepest overlap at any reachable pose: 0.034 mm static at neutral and +-21 deg (report_d212r3_pose21.json, D-212 rev 3; was 0.042 mm in the pre-D-212 report_pose21.json); the +-20 deg poses (report_d212r3_pose20.json, rev 3) show 0 hits over tolerance, static identical",
    "status": "CHECKED",
    "importance": 1
   },
@@ -10935,14 +11092,14 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Servo EMAX ES3054HV (R)",
    "status": "UNVERIFIED",
-   "importance": 5
+   "importance": 6
   },
   {
    "id": "MEC-001-L",
    "type": "part",
    "title": "Servo EMAX ES3054HV (L)",
    "status": "UNVERIFIED",
-   "importance": 5
+   "importance": 6
   },
   {
    "id": "WNG-008-RU",
@@ -11012,42 +11169,42 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Control horn (R), printed PETG 2 mm flat profile: blade with the 1.1 mm reamed hole over the hinge line + rib through a slot in the elevon, 2.5-55 mm aft of the hinge (D-212 rev 3; mass CALC from the drawn volume)",
    "status": "UNVERIFIED",
-   "importance": 16
+   "importance": 18
   },
   {
    "id": "MEC-004-L",
    "type": "part",
    "title": "Control horn (L), printed PETG 2 mm flat profile: blade with the 1.1 mm reamed hole over the hinge line + rib through a slot in the elevon, 2.5-55 mm aft of the hinge (D-212 rev 3; mass CALC from the drawn volume)",
    "status": "UNVERIFIED",
-   "importance": 16
-  },
-  {
-   "id": "MEC-002-R",
-   "type": "part",
-   "title": "Servo arm (R)",
-   "status": "UNVERIFIED",
-   "importance": 4
-  },
-  {
-   "id": "MEC-002-L",
-   "type": "part",
-   "title": "Servo arm (L)",
-   "status": "UNVERIFIED",
-   "importance": 4
+   "importance": 18
   },
   {
    "id": "MEC-008-R",
    "type": "part",
    "title": "Z-bend keeper (R), printed PETG: 1.5 mm spacer + 0.8 mm bridge over the Z-bend, clamped under the arm screw (D-212 rev 3; mass CALC)",
    "status": "UNVERIFIED",
-   "importance": 1
+   "importance": 2
   },
   {
    "id": "MEC-008-L",
    "type": "part",
    "title": "Z-bend keeper (L), printed PETG: 1.5 mm spacer + 0.8 mm bridge over the Z-bend, clamped under the arm screw (D-212 rev 3; mass CALC)",
    "status": "UNVERIFIED",
-   "importance": 1
+   "importance": 2
+  },
+  {
+   "id": "MEC-002-R",
+   "type": "part",
+   "title": "Servo arm (R)",
+   "status": "UNVERIFIED",
+   "importance": 5
+  },
+  {
+   "id": "MEC-002-L",
+   "type": "part",
+   "title": "Servo arm (L)",
+   "status": "UNVERIFIED",
+   "importance": 5
   },
   {
    "id": "HWC-001",
@@ -15041,6 +15198,106 @@ window.PROOF_GRAPH = {
    "type": "about"
   },
   {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CALC-A-KEEPER-BRIDGE-STALL-READ",
+   "type": "assumes"
+  },
+  {
+   "source": "P:linkage.keeper_bridge_stall_mpa",
+   "target": "CALC-A-KEEPER-BRIDGE-STALL-READ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CL-A-KEEPER-BRIDGE-STALL",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-A-KEEPER-BRIDGE-STALL-READ",
+   "target": "CL-A-KEEPER-BRIDGE-STALL",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.petg_allow_mpa",
+   "target": "CL-A-KEEPER-BRIDGE-STALL",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-KEEPER-BRIDGE-STALL",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-KEEPER-BRIDGE-STALL",
+   "target": "MEC-008-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-KEEPER-BRIDGE-STALL",
+   "target": "MEC-008-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-KEEPER-BRIDGE-STALL",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-KEEPER-BRIDGE-STALL",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "P:linkage.servo_speed_margin_r2",
+   "target": "CALC-A-SERVO-SPEED-READ",
+   "type": "uses"
+  },
+  {
+   "source": "CALC-A-SERVO-SPEED-READ",
+   "target": "CL-A-SERVO-SPEED",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.servo_speed_margin_min",
+   "target": "CL-A-SERVO-SPEED",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-SERVO-SPEED",
+   "target": "A-P11",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-SERVO-SPEED",
+   "target": "MEC-001-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-SERVO-SPEED",
+   "target": "MEC-001-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-SERVO-SPEED",
+   "target": "MEC-002-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-SERVO-SPEED",
+   "target": "MEC-002-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-SERVO-SPEED",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-SERVO-SPEED",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
    "source": "CL-A-HORN-RIB-COUPON",
    "target": "A-P13",
    "type": "verifies"
@@ -16673,6 +16930,21 @@ window.PROOF_GRAPH = {
   {
    "source": "SRC-A-LINKLOADS",
    "target": "P:linkage.a228_allow_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.keeper_bridge_stall_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.servo_speed_margin_r2",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.servo_speed_margin_min",
    "type": "cites"
   },
   {

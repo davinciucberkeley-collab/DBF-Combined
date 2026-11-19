@@ -139,7 +139,7 @@ A 300 mm wing-section coupon with the **real** elevon, 15.6 g lead strip and tab
 | 4 | **Lead bond pull** | pull each tab root and the strip to 1.84 N x 1.5 = 2.8 N (15.6 g at the 12 g crash, `EST`) | >= **3.0 N** per tab, no creep after 10 min |
 | 5 | **Mechanical stop and cap bond** | with the lead fitted, drive the servo to full PWM both ways on a current-limited supply; protractor | elevon stops at **21.0 +- 0.5 deg**, no jam, caps unmoved; cap pull test 45 N (30 N stall reaction x 1.5) on the tape skin: no peel |
 | 6 | **Damper over temperature, life** | repeat step 3 at 0 C (freezer) and 50 C (heat gun, thermocouple); 1 h at 45 Hz on a shaker or vibrating plate; leak check | **c(50 C) >= 4.0e-4** and c(0 C) servo factor still >= 1.5; no weeping; fill within 10 % after the shake |
-| 7 | Free-play flutter probe | strips off, free play deliberately 1 deg, tap and fan at a wind speed near 20 m/s if a fan allows | no sustained oscillation; the model predicts margin at every K |
+| 7 | Free-play flutter probe | probe the **built** free play (step 2 value, strips off, not a deliberately set 1 deg): tap and fan at a wind speed near 20 m/s if a fan allows. Pass basis: measured free play <= 1 deg (SERVO.md s4 flutter guide, CL-A-LINKAGE-FREEPLAY); if above 1 deg set the endpoints to +-19 deg and record | no sustained oscillation; the model predicts margin at every K |
 
 **Fail actions:** step 3 or 6 low: raise c by narrowing the gap (0.30 -> 0.25 mm gives x 1.2), lengthening the sleeve (limit 17 mm), or a higher-viscosity fluid; step 2 high: fit a stiffer horn clevis, replace the servo arm bearing; step 5 peel: enlarge the flange or add a second boss row.
 

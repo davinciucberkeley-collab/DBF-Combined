@@ -111,7 +111,7 @@
    "kind": "file",
    "url": "redesign/qp/A/cad/out/REPORT.md",
    "checked": "2026-11-15",
-   "where": "report_pose20 / report_pose21 / report.json: 96 parts, 444 bodies, tolerance 0.05 mm (2026-11-15, D-194)"
+   "where": "report_d212r3_pose20 / report_d212r3_pose21 / report.json: 96 parts, 444 bodies, tolerance 0.05 mm (2026-11-15, D-194)"
   },
   {
    "id": "SRC-A-ASSY",

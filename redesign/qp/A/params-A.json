@@ -1336,6 +1336,26 @@
    "note": "A228 music wire bending allowable 0.78 S_ut at 1.2 mm (Shigley constants RECALLED, not re-read)",
    "status": "UNVERIFIED"
   },
+  "keeper_bridge_stall_mpa": {
+   "value": 19.48,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "keeper bridge (MEC-008, 0.8 x 3.1 mm section, 2.0 mm cantilever) bending at the 51 N stall force, rod lifted (e 1.9 mm), V = F e / L (L 43.25 mm), x 1.4375; allowable is the printed PETG 20 MPa EST; creep and preload loss '-'",
+   "status": "UNVERIFIED"
+  },
+  "servo_speed_margin_r2": {
+   "value": 1.521,
+   "unit": "-",
+   "source": "SRC-A-LINKLOADS",
+   "note": "AR-005: loaded elevon rate (231 deg/s, 6.0 V pair, stall 0.333 N m, 0.13 s / 60 deg, linear torque-speed line, end-point load 0.146 N m + preload + damper) over the 152 deg/s needed for +-11 deg at the 2.2 Hz crossover (EST); the 7.2 V case (1.73) is not used (7.2 V speed unpublished)",
+   "status": "UNVERIFIED"
+  },
+  "servo_speed_margin_min": {
+   "value": 1.0,
+   "unit": "-",
+   "source": "SRC-A-LINKLOADS",
+   "note": "AR-005 acceptance criterion: speed margin >= 1.0 for the R2 sinusoid (set before the run)"
+  },
   "foam_shear_kpa": {
    "value": 85.8,
    "unit": "kPa",
@@ -1865,13 +1885,13 @@
    "value": 0,
    "unit": "-",
    "source": "SRC-A-COLL",
-   "note": "cad/out/report_d212r3_pose21.json (D-212 rev 3, neutral and +-21 deg) + report_pose20.json (pre-D-212, +-20 deg, not rerun for rev 3): overlaps deeper than the tolerance"
+   "note": "cad/out/report_d212r3_pose21.json (neutral and +-21 deg) + report_d212r3_pose20.json (+-20 deg), both D-212 rev 3: overlaps deeper than the tolerance"
   },
   "max_depth_mm": {
    "value": 0.034,
    "unit": "mm",
    "source": "SRC-A-COLL",
-   "note": "deepest overlap at any reachable pose: 0.034 mm static at neutral and +-21 deg (report_d212r3_pose21.json, D-212 rev 3; was 0.042 mm in the pre-D-212 report_pose21.json); the +-20 deg poses come from the pre-D-212 report_pose20.json (0 hits, not rerun for rev 3)"
+   "note": "deepest overlap at any reachable pose: 0.034 mm static at neutral and +-21 deg (report_d212r3_pose21.json, D-212 rev 3; was 0.042 mm in the pre-D-212 report_pose21.json); the +-20 deg poses (report_d212r3_pose20.json, rev 3) show 0 hits over tolerance, static identical"
   },
   "wire_ends_open": {
    "value": 0,
