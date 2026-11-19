@@ -1,0 +1,28 @@
+| Scenario | basic g | itemised pred. g (basic + growth + 48 g overrun) | flat rule g (basic x 1.1174 + 47.04) | vs 1,470 g (itemised) | vs 1,580 g O4 target (itemised) | window +- % (0.90 cap, sag, at pred.) | mass for +-5 % window (g) | cruise to BATT_LOW min at pred. (need 3.41) |
+|---|---|---|---|---|---|---|---|---|
+| S0_listed_now | 1273.3 | 1466 | 1470 | -4 | -114 | 5.4 | 1478 | 4.24 |
+| S1_T067_basis | 1411.4 | 1632 | 1624 | +162 | +52 | 0.1 | 1478 | 3.28 |
+| S2_spec_R1R4 | 1362.2 | 1573 | 1569 | +103 | -7 | 1.9 | 1478 | 3.60 |
+| S3_pass_R1R4 | 1367.4 | 1579 | 1575 | +109 | -1 | 1.7 | 1478 | 3.57 |
+| S4_pass_R1R8 | 1362.0 | 1573 | 1569 | +103 | -7 | 1.9 | 1478 | 3.60 |
+| S5_O4eng_9in_270g | 1412.7 | 1634 | 1626 | +164 | +54 | 0.0 | 1478 | 3.27 |
+| S6_O4eng_9in_232g | 1374.7 | 1596 | 1583 | +126 | +16 | 1.2 | 1478 | 2.38 |
+| S7_O4eng_9in_211g | 1353.7 | 1575 | 1560 | +105 | -5 | 1.8 | 1478 | 3.23 |
+| S8_O4_10in_232g | 1386.7 | 1608 | 1597 | +138 | +28 | 11.1 | 1820 | 2.67 |
+| S9_O4_10in_211g | 1365.7 | 1587 | 1573 | +117 | +7 | 11.8 | 1820 | 3.51 |
+| S10_O4_10in_232g_cover | 1382.2 | 1603 | 1592 | +133 | +23 | 11.3 | 1820 | 2.70 |
+| S11_O4_10in_211g_cover | 1361.2 | 1582 | 1568 | +112 | +2 | 11.9 | 1820 | 3.53 |
+| S12_O4_10in_232g_specR | 1381.5 | 1602 | 1591 | +132 | +22 | 11.3 | 1820 | 2.70 |
+
+Notes: the windows come from mission_gate_a.py's own T/W arithmetic (thrust table x 0.93 derate, 4 motors, cant 17 deg, sag 3.73 V/cell, 0.90 spin cap), not from the C3 time-domain run; for the 10 in rows the prop table is the APC 10x4.5MR static file (to 10,000 rpm).
+Listed deltas per scenario are in the script (D067, R_SPEC, R_PASS, R5_8, WING, O2A/O2B, PROP10, COVER).
+
+## Equal-current check (APC tables, repo motor model: Kv 780, Rm 0.173, I0 0.5 EST)
+- 9x4.5 duty cap 0.90: fresh 9349 rpm 11.15 A 9.47 N (table); sag 8447 rpm 9.25 A 7.72 N.
+- 10x4.5, duty cap 0.755 (equal to 9x4.5 at 0.90 fresh (11.15 A)): fresh 7600 rpm 11.15 A 8.86 N; sag 6886 rpm 9.24 A, thrust 7.24 N = -6.2 % vs the 9x4.5 capped sag thrust (ideal-momentum guess in T-070 s6: +7.3 %).
+- 10x4.5, duty cap 0.843 (A-P16 13 A rating, fresh): fresh 8262 rpm 13.00 A 10.48 N; sag 7485 rpm 10.85 A, thrust 8.59 N = +11.3 % vs the 9x4.5 capped sag thrust (ideal-momentum guess in T-070 s6: +7.3 %).
+- 10x4.5 at duty cap 0.90 (the S8-S12 rows above): fresh 14.25 A (+28 % current vs the 9x4.5), sag thrust 9.50 N (+23.1 %).
+- m 1.55 kg: 9x4.5 cap 0.90 T/W 1.75, window +2.6 %; 10x4.5 equal to 9x4.5 at 0.90 fresh T/W 1.64, window -0.6 %; 10x4.5 A-P16 13 A rating T/W 1.95, window +8.0 %; 10x4.5 duty 0.90 T/W 2.16, window +13.0 %
+- m 1.58 kg: 9x4.5 cap 0.90 T/W 1.72, window +1.7 %; 10x4.5 equal to 9x4.5 at 0.90 fresh T/W 1.61, window -1.5 %; 10x4.5 A-P16 13 A rating T/W 1.91, window +7.0 %; 10x4.5 duty 0.90 T/W 2.12, window +12.0 %
+- m 1.60 kg: 9x4.5 cap 0.90 T/W 1.70, window +1.1 %; 10x4.5 equal to 9x4.5 at 0.90 fresh T/W 1.59, window -2.1 %; 10x4.5 A-P16 13 A rating T/W 1.89, window +6.4 %; 10x4.5 duty 0.90 T/W 2.09, window +11.4 %
+- m 1.62 kg: 9x4.5 cap 0.90 T/W 1.68, window +0.4 %; 10x4.5 equal to 9x4.5 at 0.90 fresh T/W 1.57, window -2.8 %; 10x4.5 A-P16 13 A rating T/W 1.87, window +5.8 %; 10x4.5 duty 0.90 T/W 2.06, window +10.8 %

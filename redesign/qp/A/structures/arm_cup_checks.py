@@ -4,7 +4,7 @@ Covers: motor cup CGE-003 (screws, head pull-through, plate, sleeve, bond) at ma
 arm tip hard-landing / tip-over; fatigue of arm tube, hub-socket bond, cup bond, cup screws; arm tip deflection and thrust-line tilt;
 tap-test thresholds.  Geometry is READ from cad/amodel/wing.py and propulsion.py (constants copied below with the line they come from).
 Labels: V vendor/repo file, CALC computed here, EST estimate (flagged), '-' unknown.  Factors as structures_a.py: KF 1.5x1.15, KP KF x1.25."""
-import math, os
+import math, os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 G = 9.81
@@ -39,8 +39,19 @@ def mrow(item, load, stress_mpa, allow_mpa, note=""):
 
 # ---------------------------------------------------------------- geometry (m)  [wing.py L31-32, L575-584; propulsion.py L28-43]
 ARM_OD, ARM_ID, L_ARM = 0.012, 0.010, 0.246            # wing.py ARM_OD/ID; 12 x 10 tube, thrust lever 0.246 m (task / iter2_margins)
+# T-073 R3 (D-216 s4 R3, lightened cup) flags.  DEFAULT = the CAD of 2026-11-19 (output identical to the committed arm_cup_checks.md).
+#   --r3      T-070 spec as written: boss plate 5 mm only at the 4 screw bosses, 3 mm web elsewhere (incl. the two +y cantilever tabs), sleeve wall 3.5 -> 2.5 mm (OD 17.2) except at the screw-head pockets.
+#   --r3fix   same, but the +y cantilever region (y 3.5 .. 16.5) keeps the full 5 mm plate (what S2 needs); web 3 mm only outboard of the screw pattern / -y side.
+# Tab geometry of the 3 mm web is a T-073 ASSUMPTION (not drawn): two cantilever tabs 9 mm wide each at |z| 3.5 .. 12.5 reaching the +y bosses.
+R3 = "--r3" in sys.argv or "--r3fix" in sys.argv; R3FIX = "--r3fix" in sys.argv
 PLATE_T, PLATE_W = 0.005, 0.033                        # wing.py L575: prism x -0.012 .. -0.007, _rrect(0.0165, 0.0165, 0.006)
-SLV_RO, SLV_RI, SLV_Y0, SLV_Y1 = 0.0095, 0.006, -0.025, 0.0035   # wing.py L576: tube Y from -0.025 length 0.0285, ro 0.0095, ri 6.0 mm
+SLV_RO, SLV_RI, SLV_Y0, SLV_Y1 = 0.0095, 0.006, -0.025, 0.0035
+SLV_RO_POCKET = SLV_RO                                    # screw-head pocket region keeps the full wall in R3
+WEB_T, TAB_W_TOT = PLATE_T, None                          # web thickness (junction / S2 shear) and cantilever tab width (None = full net section)
+if R3:
+    SLV_RO = SLV_RI + 0.0025                               # wall 3.5 -> 2.5 mm
+    WEB_T = 0.003
+    if not R3FIX: TAB_W_TOT = 0.018                        # 2 tabs x 9 mm, 3 mm thick   # wing.py L576: tube Y from -0.025 length 0.0285, ro 0.0095, ri 6.0 mm
 PAT_Y, PAT_Z = 0.019, 0.016                            # CUP_PAT
 HOLE_D = 0.0029                                        # 2.9 mm clearance (ISO 273 medium M2.5), wing.py L579
 HEAD_D, HEAD_K = 0.0045, 0.0025                        # propulsion.py _m25_screw ISO 4762 M2.5 dk 4.5, k 2.5
@@ -108,7 +119,7 @@ mrow("Plate punching shear round the head (pi x 4.5 x 5 mm), cross-layer allowab
 # plate cantilever beyond the sleeve end (y +3.5 .. +9.5): two +y screws, 6 mm lever; section 33 x 5
 M_pl = 2 * P_op * (PAT_Y / 2 - SLV_Y1)
 LEAD_CHORD = 2 * (0.0024 ** 2 - (0.0055 - 0.0035) ** 2) ** 0.5       # D-198: 4.8 mm lead hole at y 5.5 mm; its chord at the sleeve end plane y 3.5 mm = 2.66 mm (wing.py PH_HOLE_R, PH_Y)
-Z_pl = (PLATE_W - LEAD_CHORD) * PLATE_T ** 2 / 6                       # net section at the sleeve end plane (the governing section of the 6 mm cantilever)
+Z_pl = ((PLATE_W - LEAD_CHORD) * PLATE_T ** 2 / 6) if TAB_W_TOT is None else (TAB_W_TOT * WEB_T ** 2 / 6)                       # net section at the sleeve end plane (the governing section of the 6 mm cantilever)
 mrow("Plate bending, cantilever 6 mm past the sleeve end (2 screws, net section 30.3 x 5 mm after the D-198 lead hole)", f"{M_pl*1e3:.0f} N mm", M_pl * KP / Z_pl / 1e6, PETG_ILAY / 1e6, "plate in bending uses the interlayer allowable (worst)")
 # motor torque on the screws: shear/bearing on 2 screws (friction ignored), 3x worst-case sharing
 V_Q = Q / (4 * R_PAT) * 2.0
@@ -119,7 +130,7 @@ pair_Q = (Q / 0.025)                                   # shaft torque is a bendi
 tau_Q = pair_Q * KP / (0.5 * math.pi * ARM_OD * EMBED)
 mrow("Cup-to-arm bond (25 mm embed, 12 mm tube), thrust shear + torque couple", f"{T:.1f} N, {Q*1e3:.0f} N mm", math.hypot(tau_T, tau_Q) / 1e6, BOND_TAU / 1e6, "end-loaded sleeve: no thrust couple (thrust line passes through the arm axis); allowable E-FIN-13 EST")
 # sleeve wall at the mouth under the torque couple (6 mm patch)
-mrow("Sleeve wall hoop at the mouth, torque couple (3.5 mm wall, 6 mm bearing patch)", f"{pair_Q:.0f} N", 2 * pair_Q * KP / (math.pi * 0.006) / (SLV_RO - SLV_RI) / 1e6, PETG_BEAR / 1e6, "same ring model as qp5_checks s2")
+mrow("Sleeve wall hoop at the mouth, torque couple (%.1f mm wall, 6 mm bearing patch)" % ((SLV_RO - SLV_RI) * 1e3), f"{pair_Q:.0f} N", 2 * pair_Q * KP / (math.pi * 0.006) / (SLV_RO - SLV_RI) / 1e6, PETG_BEAR / 1e6, "same ring model as qp5_checks s2")
 # junction plate-sleeve crest
 A_JUN = 0.0128 * 0.020
 mrow("Plate-to-sleeve crest junction (12.8 x 20 mm strip), tension from thrust", f"{T:.1f} N", T * KP / A_JUN / 1e6, PETG_ILAY / 1e6, "")
@@ -150,7 +161,7 @@ tau_tors = F_STRIKE * X_PROP * KP / (2 * math.pi * (ARM_OD / 2) ** 2 * EMBED)
 tau_pair = (Q_s / 0.025) * KP / (0.5 * math.pi * ARM_OD * EMBED)
 mrow("Strike S2/S3: cup-to-arm bond, torsion 30 N x 47 mm + torque couple 2.4 N m / 25 mm", f"{F_STRIKE*X_PROP:.2f} N m + {Q_s:.1f} N m", math.hypot(tau_tors, tau_pair) / 1e6, BOND_TAU / 1e6, "vector sum of the two shear flows (EST convention of iter2_margins s1)")
 mrow("Strike S3: sleeve wall hoop at the mouth (couple 96 N, 6 mm patch)", f"{Q_s/0.025:.0f} N", 2 * (Q_s / 0.025) * KP / (math.pi * 0.006) / (SLV_RO - SLV_RI) / 1e6, PETG_BEAR / 1e6, "")
-mrow("Strike S2: plate-to-sleeve junction, in-plane shear into the crest (20 x 5 mm)", "30 N", F_STRIKE * KP / (0.020 * PLATE_T) / 1e6, PETG_ILAY / 1e6, "")
+mrow("Strike S2: plate-to-sleeve junction, in-plane shear into the crest (20 x %.0f mm)" % (WEB_T * 1e3), "30 N", F_STRIKE * KP / (0.020 * WEB_T) / 1e6, PETG_ILAY / 1e6, "")
 # arm root with blade offset
 M_arm_S3 = F_STRIKE * (L_ARM + R_B)
 mrow("Arm 12x10 root bending, strike force at the blade (lever 0.246 + 0.080 m)", f"{M_arm_S3:.1f} N m", M_arm_S3 * KF / Z_ARM / 1e6, CF_SIG / 1e6, "iter2_margins.md uses 7.4 N m (no blade offset): +1.41; this is the worse case")
@@ -249,7 +260,7 @@ def head_overlap():
                         y, z = cy + dy, cz + dz
                         n_tot += 1
                         r = math.hypot(x, z)
-                        if SLV_Y0 <= y <= SLV_Y1 and SLV_RI <= r <= SLV_RO:
+                        if SLV_Y0 <= y <= SLV_Y1 and SLV_RI <= r <= SLV_RO_POCKET:
                             n_in += 1
     return n_in / n_tot
 ov = head_overlap()
@@ -292,7 +303,7 @@ P("Searches found no single design value; the knock-downs above are EST, set at 
 P("- CFRP: notched or impact-damaged carbon/epoxy fatigue limit about 55 % of UTS at 1e6 cycles (https://www.degruyterbrill.com/document/doi/10.1515/secm-2020-0037/html and the TU Delft AS4/8552 thesis, https://repository.tudelft.nl/file/File_b5b35b1d-36fb-408f-b792-879c810979b5); 0.40 used on the already-knocked 350 MPa allowable.")
 P("- Printed polymers: fatigue limits 7-25 % of static strength for ASA, PC, Nylon 12 (https://api.crossref.org/works/10.3390/polym18020302, snippet; PETG value not read; MDPI PETG S-N paper https://www.mdpi.com/2504-477X/5/3/76 not read in full); 0.20 used on the 20 MPa bearing allowable, 0.20 on the 9.5 MPa interlayer allowable.")
 P("- Epoxy bond: lap-joint fatigue strength about 50 % of static at 1e6 cycles (SMC adherend study, https://www.scinapse.io/papers/3012459098 and related); 0.30 used at 1e7 on the 2.0 MPa allowable.")
-open(os.path.join(HERE, "arm_cup_checks.md"), "w").write("\n".join(OUT) + "\n")
+open(os.path.join(HERE, "..", "mechanism", "out", "T073_data", "arm_cup_checks_r3fix.md" if R3FIX else "arm_cup_checks_r3.md") if R3 else os.path.join(HERE, "arm_cup_checks.md"), "w").write("\n".join(OUT) + "\n")
 
 # one number set for claims (printed last, read by gen_params_a.py as stored values)
 if __name__ == "__main__":

@@ -1,0 +1,68 @@
+
+### skin 1.0 ply, open<0.057 skx1.0; O4 masses True; prop 10 in
+prop 10 in; hover rpm 5056/5268/6017, cruise 7300-7600; bands (Hz): hover 1P 84.3-100.3; hover 2P 168.5-200.6; cruise 1P 121.7-126.7; cruise 2P 243.3-253.3; exclusion (strongly coupled) 70.2-304.0 Hz; cap rpm 8167 (1P 136 Hz), uncapped 8709
+- corner kd (skin GJ 34.9 N m2 (EI_out 11.4, EI_in 509, +27.0 g)): 100 modes solved
+  | f (Hz) | dominant part | cx | cy | coupling | in exclusion? | within 20 % of a 1P band? | verdict |
+  |---|---|---|---|---|---|---|---|
+  | 9.7 | bridge 77% | 0.00 | 2.33 | 2.33 | no | no | outside: pass |
+  | 18.6 | spar 55% | 2.21 | 0.20 | 2.21 | no | no | outside: pass |
+  | 28.6 | arm 49% | 2.71 | 0.61 | 2.71 | no | no | outside: pass |
+  | 34.9 | arm 100% | 2.06 | 2.50 | 2.50 | no | no | outside: pass |
+  | 34.9 | arm 100% | 2.50 | 2.06 | 2.50 | no | no | outside: pass |
+  | 36.1 | arm 44% | 0.76 | 1.93 | 1.93 | no | no | outside: pass |
+  | 37.4 | arm 99% | 0.30 | 3.07 | 3.07 | no | no | outside: pass |
+  | 42.4 | arm 99% | 2.68 | 0.00 | 2.68 | no | no | outside: pass |
+  | 44.4 | arm 50% | 0.25 | 1.95 | 1.95 | no | no | outside: pass |
+  | 67.5 | arm 53% | 1.08 | 1.25 | 1.25 | no | no | outside: pass |
+  | 68.9 | rib 76% | 0.06 | 0.00 | 0.06 | no | no | outside: pass |
+  | 84.5 | rib 82% | 0.09 | 0.24 | 0.24 | yes | yes | weak in band (forced response) |
+  | 129.2 | rib 47% | 0.11 | 0.23 | 0.23 | yes | yes | weak in band (forced response) |
+  | 197.4 | spar 51% | 0.05 | 0.07 | 0.07 | yes | no | weak in band (forced response) |
+  | 227.1 | bridge 51% | 0.07 | 0.00 | 0.07 | yes | no | weak in band (forced response) |
+  highest strongly coupled mode below the exclusion zone 67 Hz (limit 70.2); lowest above 400 Hz (limit 304)
+  forced response zeta 1.0 %: worst sum-of-axes 20.6 m/s2 at 7750 rpm (sweep 4800-9000); all four <= cap 20.6 at 7750 rpm; cruise 7,300-7,600 12.4 at 7600; one motor at cap 17.7; limit 30 -> MS +0.46 (physical envelope)
+  forced response zeta 0.5 %: worst sum-of-axes 26.0 m/s2 at 7750 rpm (sweep 4800-9000); all four <= cap 26.0 at 7750 rpm; cruise 7,300-7,600 12.6 at 7600; one motor at cap 17.7; limit 30 -> MS +0.15 (physical envelope)
+- corner nom (skin GJ 49.9 N m2 (EI_out 16.3, EI_in 728, +27.0 g)): 100 modes solved
+  | f (Hz) | dominant part | cx | cy | coupling | in exclusion? | within 20 % of a 1P band? | verdict |
+  |---|---|---|---|---|---|---|---|
+  | 10.2 | bridge 77% | 0.00 | 2.33 | 2.33 | no | no | outside: pass |
+  | 19.8 | spar 55% | 2.20 | 0.18 | 2.20 | no | no | outside: pass |
+  | 30.7 | arm 49% | 2.71 | 0.61 | 2.71 | no | no | outside: pass |
+  | 37.4 | arm 100% | 2.66 | 1.86 | 2.66 | no | no | outside: pass |
+  | 37.4 | arm 100% | 1.86 | 2.66 | 2.66 | no | no | outside: pass |
+  | 38.0 | arm 41% | 0.77 | 1.88 | 1.88 | no | no | outside: pass |
+  | 40.1 | arm 99% | 0.30 | 3.07 | 3.07 | no | no | outside: pass |
+  | 45.5 | arm 99% | 2.68 | 0.00 | 2.68 | no | no | outside: pass |
+  | 47.3 | arm 53% | 0.27 | 2.02 | 2.02 | no | no | outside: pass |
+  | 72.5 | arm 53% | 1.09 | 1.25 | 1.25 | yes | yes | STRONG in band: FAIL |
+  | 75.1 | rib 79% | 0.06 | 0.00 | 0.06 | yes | yes | weak in band (forced response) |
+  | 91.7 | rib 85% | 0.09 | 0.24 | 0.24 | yes | yes | weak in band (forced response) |
+  | 139.9 | rib 54% | 0.09 | 0.19 | 0.19 | yes | yes | weak in band (forced response) |
+  | 217.3 | spar 57% | 0.04 | 0.07 | 0.07 | yes | no | weak in band (forced response) |
+  | 246.1 | bridge 53% | 0.07 | 0.00 | 0.07 | yes | no | weak in band (forced response) |
+  highest strongly coupled mode below the exclusion zone 47 Hz (limit 70.2); lowest above 435 Hz (limit 304)
+  forced response zeta 1.0 %: worst sum-of-axes 22.2 m/s2 at 8400 rpm (sweep 4800-9000); all four <= cap 18.2 at 8150 rpm; cruise 7,300-7,600 10.7 at 7600; one motor at cap 18.3; limit 30 -> MS +0.65 (physical envelope)
+  forced response zeta 0.5 %: worst sum-of-axes 26.8 m/s2 at 8400 rpm (sweep 4800-9000); all four <= cap 20.1 at 5500 rpm; cruise 7,300-7,600 10.7 at 7600; one motor at cap 18.4; limit 30 -> MS +0.49 (physical envelope)
+- corner hi (skin GJ 64.8 N m2 (EI_out 21.2, EI_in 946, +27.0 g)): 100 modes solved
+  | f (Hz) | dominant part | cx | cy | coupling | in exclusion? | within 20 % of a 1P band? | verdict |
+  |---|---|---|---|---|---|---|---|
+  | 11.9 | bridge 78% | 0.00 | 2.34 | 2.34 | no | no | outside: pass |
+  | 23.1 | spar 54% | 2.22 | 0.21 | 2.22 | no | no | outside: pass |
+  | 34.8 | arm 49% | 2.71 | 0.61 | 2.71 | no | no | outside: pass |
+  | 42.4 | arm 100% | 3.18 | 0.65 | 3.18 | no | no | outside: pass |
+  | 42.4 | arm 100% | 0.65 | 3.18 | 3.18 | no | no | outside: pass |
+  | 44.2 | arm 46% | 0.75 | 1.99 | 1.99 | no | no | outside: pass |
+  | 45.4 | arm 99% | 0.30 | 3.07 | 3.07 | no | no | outside: pass |
+  | 51.6 | arm 99% | 2.68 | 0.00 | 2.68 | no | no | outside: pass |
+  | 54.3 | arm 47% | 0.22 | 1.90 | 1.90 | no | no | outside: pass |
+  | 82.9 | arm 52% | 1.07 | 1.24 | 1.24 | yes | yes | STRONG in band: FAIL |
+  | 85.2 | rib 79% | 0.06 | 0.00 | 0.06 | yes | yes | weak in band (forced response) |
+  | 104.0 | rib 85% | 0.09 | 0.24 | 0.24 | yes | yes | weak in band (forced response) |
+  | 161.0 | rib 54% | 0.10 | 0.21 | 0.21 | yes | no | weak in band (forced response) |
+  | 249.5 | spar 55% | 0.05 | 0.07 | 0.07 | yes | no | weak in band (forced response) |
+  | 279.2 | bridge 53% | 0.07 | 0.00 | 0.07 | yes | no | weak in band (forced response) |
+  highest strongly coupled mode below the exclusion zone 54 Hz (limit 70.2); lowest above 494 Hz (limit 304)
+  forced response zeta 1.0 %: worst sum-of-axes 52.5 m/s2 at 4975 rpm (sweep 4800-9000); all four <= cap 52.5 at 4975 rpm; cruise 7,300-7,600 11.6 at 7600; one motor at cap 18.7; limit 30 -> MS -0.43 (physical envelope)
+  forced response zeta 0.5 %: worst sum-of-axes 98.2 m/s2 at 4975 rpm (sweep 4800-9000); all four <= cap 98.2 at 4975 rpm; cruise 7,300-7,600 11.6 at 7600; one motor at cap 18.8; limit 30 -> MS -0.69 (physical envelope)
+
+STOP-RULE hits (strong coupling >= 0.5 in the exclusion zone): [('nom', np.float64(72.49068224632444), 1.248027037926579, True), ('hi', np.float64(82.86008407131716), 1.2368218274644147, True)]

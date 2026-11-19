@@ -1,0 +1,17 @@
+| case | corner | wing f_h / f_a (Hz) | no instability <= 28.8 m/s at any K (0.01-20 N m/rad) | unstable K band | worst damping ratio needed | lowest onset over the grid (m/s) |
+|---|---|---|---|---|---|---|
+| A no damper, lead 12.8 g, elevon 6.7 g | kd | 18.3 / 56.0 | FAIL (21 of 600 K points) | 1.24-1.60 | 1.2e-03 at K 1.43 | 23.0 at K 1.52 |
+| A no damper, lead 12.8 g, elevon 6.7 g | nom | 20.8 / 64.4 | FAIL (10 of 600 K points) | 1.89-2.12 | 3.3e-04 at K 2.01 | 26.5 at K 2.06 |
+| A no damper, lead 12.8 g, elevon 6.7 g | hi | 23.8 / 74.0 | **PASS** | - | <= 0 | 30.5 at K 2.69 |
+| B damper hot 50 C (EST x0.6), lead 12.8 g | kd | 18.3 / 56.0 | **PASS** | - | <= 0 | 49.0 at K 0.63 |
+| B damper hot 50 C (EST x0.6), lead 12.8 g | nom | 20.8 / 64.4 | **PASS** | - | <= 0 | 54.5 at K 0.93 |
+| B damper hot 50 C (EST x0.6), lead 12.8 g | hi | 23.8 / 74.0 | **PASS** | - | <= 0 | >60 |
+| C damper nominal 25 C, lead 12.8 g | kd | 18.3 / 56.0 | **PASS** | - | <= 0 | 55.0 at K 0.27 |
+| C damper nominal 25 C, lead 12.8 g | nom | 20.8 / 64.4 | **PASS** | - | <= 0 | >60 |
+| C damper nominal 25 C, lead 12.8 g | hi | 23.8 / 74.0 | **PASS** | - | <= 0 | >60 |
+| D damper cold 0 C (EST x2), lead 12.8 g | kd | 18.3 / 56.0 | **PASS** | - | <= 0 | >60 |
+| D damper cold 0 C (EST x2), lead 12.8 g | nom | 20.8 / 64.4 | **PASS** | - | <= 0 | >60 |
+| D damper cold 0 C (EST x2), lead 12.8 g | hi | 23.8 / 74.0 | **PASS** | - | <= 0 | >60 |
+| E damper half-hot (leak / half fill), lead 12.8 g | kd | 18.3 / 56.0 | **PASS** | - | <= 0 | 41.5 at K 0.89 |
+| E damper half-hot (leak / half fill), lead 12.8 g | nom | 20.8 / 64.4 | **PASS** | - | <= 0 | 46.0 at K 1.31 |
+| E damper half-hot (leak / half fill), lead 12.8 g | hi | 23.8 / 74.0 | **PASS** | - | <= 0 | 51.0 at K 1.84 |
