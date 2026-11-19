@@ -10,7 +10,7 @@ deletions wait for Dillon's approval (spec 9.3 step 9, T-041). Final audit: T-04
 | Packed history | 1.51 GiB in 4 packs, 22 407 objects; 524 MiB loose (2 451 objects) | `git count-objects -vH` |
 | Tracked tree at HEAD | 1 489 MB in 13 798 files | `git ls-tree -r -l HEAD` summed |
 | Identical content tracked twice or more | 94.7 MB | same listing, grouped by blob hash |
-| Working-tree `du` | did not finish in 120 s (9 agent worktrees under `.claude/worktrees`) | — |
+| Working tree on disk incl. `.git` and the 9 agent worktrees under `.claude/worktrees` | 14 GB (≈ 11.7 GB outside `.git`, mostly worktree checkouts) | `du -sh .` (≈ 3 min) |
 
 Tracked size by top folder: `redesign` 1 355 MB (`qp` 472, `showcase` 315, `team` 212, `site` 175, `config-study` 64,
 `review` 48, `blender` 33, `proofs` 28), `analysis` 55, root `VTOL-Review.html` 29, `docs` 8.4, others < 7 each.

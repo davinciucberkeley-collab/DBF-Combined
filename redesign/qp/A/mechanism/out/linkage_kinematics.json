@@ -1,0 +1,127 @@
+{
+ "git_head": "0f2e3ec8517b81807b17e39b109f4a1a4d433228",
+ "criteria": {
+  "res_m": 1e-09,
+  "sym_rad": 1e-09,
+  "travel_deg": 45.0,
+  "sigma_min": 0.25,
+  "tilt_fraction": 0.5,
+  "gear_tol": 1e-09
+ },
+ "assumed_servo_travel_deg": [
+  45.0,
+  60.0
+ ],
+ "geometry": {
+  "L_rod_m": 0.05248685541063863,
+  "ARM_R": 0.012,
+  "HORN_R": 0.0129,
+  "XH": 0.18375,
+  "HINGE_Z": 0.00029497350792595826,
+  "HORN_XH": 0.19298685541063865,
+  "SV_XS": 0.1405,
+  "SERVO_Y": 0.2,
+  "ROD_Z": 0.0093,
+  "horn_hole_rel_hinge_mm": [
+   9.23685541063865,
+   9.005026492074041
+  ],
+  "horn_hole_radius_check_mm": 12.899999999999993,
+  "ELEV_LIM": 20.0,
+  "ELEV_STOP": 21.0,
+  "tilt_allow_Zbend_deg": 8.530765609948137,
+  "tilt_allow_clevis_deg": 14.036243467926479
+ },
+ "sweep": {
+  "step_deg": 0.05,
+  "n": 841,
+  "max_residual_m": 2.7755575615628914e-17,
+  "max_solver_disagreement": 8.826273045769994e-15,
+  "max_LR_asymmetry_rad": 1.3322676295501878e-15,
+  "max_gear_formula_diff": 3.774758283725532e-15,
+  "min_sigma": 0.32306862051393037,
+  "min_horn_lever": 0.4623948095051339,
+  "min_horn_gamma_deg": 27.544374698619897,
+  "max_zbend_misalign_deg": 4.270339992772334,
+  "max_clevis_misalign_deg": 0.6621835170947368
+ },
+ "servo_angle_for_delta": {
+  "-21": {
+   "theta_R_deg": -18.295401828618857,
+   "theta_L_deg": 18.295401828618832,
+   "gear": 0.9999229893740736,
+   "gamma_horn_deg": 62.31181269200601,
+   "sigma_min": 0.5766976844144743,
+   "rod_pitch_deg": 2.9618870215898303
+  },
+  "-20": {
+   "theta_R_deg": -17.30200796268476,
+   "theta_L_deg": 17.30200796268481,
+   "gear": 1.0134289650942196,
+   "gamma_horn_deg": 61.41640949790931,
+   "sigma_min": 0.5716576039110672,
+   "rod_pitch_deg": 2.8569977863840683
+  },
+  "+20": {
+   "theta_R_deg": 12.77966953673118,
+   "theta_L_deg": -12.77966953673123,
+   "gear": 1.9052832786203744,
+   "gamma_horn_deg": 28.318485644200948,
+   "sigma_min": 0.330517225268865,
+   "rod_pitch_deg": -4.044825646950249
+  },
+  "+21": {
+   "theta_R_deg": 13.298579518523328,
+   "theta_L_deg": -13.298579518523379,
+   "gear": 1.9495154433514477,
+   "gamma_horn_deg": 27.544374698619897,
+   "sigma_min": 0.3230686205139304,
+   "rod_pitch_deg": -4.270339992772334
+  }
+ },
+ "gearing": {
+  "neutral": 1.3325890835037573,
+  "min": 0.9999229893740736,
+  "max": 1.9495154433514477
+ },
+ "toggle": {
+  "plus": {
+   "first_delta_deg_lever_lt_1em3_or_unreachable": 57.471177944862156,
+   "margin_from_stop_deg": 36.471177944862156
+  },
+  "minus": {
+   "first_delta_deg_lever_lt_1em3_or_unreachable": -67.01503759398496,
+   "margin_from_stop_deg": 46.01503759398496
+  }
+ },
+ "servo_travel": {
+  "45.0": {
+   "required_deg": 18.295401828618857,
+   "covers": true,
+   "margin_deg": 26.704598171381143
+  },
+  "60.0": {
+   "required_deg": 18.295401828618857,
+   "covers": true,
+   "margin_deg": 41.70459817138114
+  }
+ },
+ "pass": {
+  "K1": true,
+  "K2": true,
+  "K3": true,
+  "K4": true,
+  "K5": false,
+  "K6": true
+ },
+ "pass_all": false,
+ "info_gamma_horn_vs_40deg_rule": {
+  "min_gamma_horn_deg": 27.544374698619897,
+  "meets": false
+ },
+ "versions": {
+  "python": "3.14.2",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1"
+ }
+}
