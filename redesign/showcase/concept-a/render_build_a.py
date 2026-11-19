@@ -405,6 +405,62 @@ def film_at(film, t):
     return sc, sh, tl
 
 
+# ---- scene 3 (T-028): servo arm / pushrod / horn / elevon posed from the SOLVED kinematics (AR-001), not hand keyframes
+KIN_CSV = os.path.join(REDESIGN, 'qp', 'A', 'mechanism', 'out', 'linkage_kinematics.csv')
+KIN_JSON = os.path.join(REDESIGN, 'qp', 'A', 'mechanism', 'out', 'linkage_kinematics.json')
+_KIN = {}
+
+
+def load_kin():
+    """AR-001 output: the elevon angle -> servo angle table (linkage_kinematics.csv, 0.05 deg steps, +-21 deg) and the CAD geometry constants it was solved with."""
+    if not _KIN:
+        import csv
+        rows = list(csv.DictReader(open(KIN_CSV, encoding='utf-8')))
+        d = [float(r['delta_deg']) for r in rows]
+        th = [float(r['theta_R_deg']) for r in rows]
+        if any(b <= a for a, b in zip(th, th[1:])) or any(b <= a for a, b in zip(d, d[1:])):
+            raise ValueError('linkage_kinematics.csv: delta and theta_R must both increase (the servo angle is inverted by interpolation)')
+        _KIN.update(delta=d, theta=th, geom=json.load(open(KIN_JSON, encoding='utf-8'))['geometry'])
+    return _KIN
+
+
+def _interp(xs, ys, x):
+    if x < xs[0] - 1e-9 or x > xs[-1] + 1e-9:
+        raise ValueError('kinematics table covers %.2f..%.2f, asked %.4f' % (xs[0], xs[-1], x))
+    i = min(max(bisect.bisect_right(xs, x) - 1, 0), len(xs) - 2)
+    u = (x - xs[i]) / (xs[i + 1] - xs[i])
+    return ys[i] * (1 - u) + ys[i + 1] * u
+
+
+def mech_state(shot, tl):
+    """Servo-arm angle (right side, deg) and elevon angle (deg) at scene time tl. The shot's 'mech' = {'sweep': [[t, elevon_deg], ...]} (t in s from
+    the shot start) names the commanded elevon end points; each is converted to a servo angle through the AR-001 table, the SERVO angle is eased
+    (smoothstep) between them, and the elevon angle is read back from the table at that servo angle (linear interpolation)."""
+    K = load_kin()
+    wp = shot['mech']['sweep']
+    t = tl - shot['t0']
+    th = [_interp(K['delta'], K['theta'], w[1]) for w in wp]
+    if t <= wp[0][0]:
+        q = th[0]
+    elif t >= wp[-1][0]:
+        q = th[-1]
+    else:
+        i = bisect.bisect_right([w[0] for w in wp], t) - 1
+        q = th[i] + (th[i + 1] - th[i]) * smooth((t - wp[i][0]) / (wp[i + 1][0] - wp[i][0]))
+    return dict(theta_R=q, theta_L=-q, delta=_interp(K['theta'], K['delta'], q))
+
+
+def mech_geom(sy, theta_deg, delta_deg):
+    """Arm-tip (Z-bend) point A and horn-hole point H in the CAD frame, m: the formulas of linkage_core.arm_pt / horn_pt on the AR-001 constants."""
+    G = load_kin()['geom']
+    th, d = math.radians(theta_deg), math.radians(delta_deg)
+    xh, hz, sv, sx, ar, zj = G['XH'], G['HINGE_Z'], G['SERVO_Y'], G['SV_XS'], G['ARM_R'], G['ROD_Z']
+    vx0, vz0 = G['HORN_XH'] - xh, zj - hz
+    A = (sx + ar * sy * math.sin(th), sy * sv - sy * ar * math.cos(th), zj)
+    H = (xh + vx0 * math.cos(d) + vz0 * math.sin(d), sy * (sv - ar), hz - vx0 * math.sin(d) + vz0 * math.cos(d))
+    return A, H
+
+
 # =====================================================================================================================
 # Blender worker
 # =====================================================================================================================
@@ -424,6 +480,7 @@ def blender_render(argv):
     ap.add_argument('--scenes', default='', help='short-film mode: comma list of scene ids to render (default all)')
     ap.add_argument('--dof', action='store_true', help='depth of field focused on the camera target (off by default)')
     ap.add_argument('--motion-blur', action='store_true', help='EEVEE motion blur on (off by default)')
+    ap.add_argument('--cam-check', action='store_true', help='short-film mode, no rendering: camera-vs-mesh clearance and line of sight for EVERY frame (writes cam_clearance.json)')
     add_res_args(ap)
     a = ap.parse_args(argv)
     apply_res(a.width, a.height, a.fps)
@@ -757,19 +814,57 @@ def blender_render(argv):
                     out[pid] = m
             return out
 
+        def rax(axis, pt, ang):
+            return Matrix.Translation(Vector(pt)) @ Matrix.Rotation(ang, 4, axis) @ Matrix.Translation(-Vector(pt))
+
+        MECH_LOG = dict(gap_max=0.0, len_err_max=0.0, n=0)
+
+        def mech_mats(sh, tl):
+            """{part: world motion matrix} for the elevon group, servo arm group and pushrod of both sides, from the AR-001 solution at scene time tl."""
+            if not sh.get('mech'):
+                return {}, None
+            st = mech_state(sh, tl)
+            G = load_kin()['geom']
+            mats = {}
+            for sy, s_ in ((1, 'R'), (-1, 'L')):
+                th = st['theta_R'] if sy == 1 else st['theta_L']
+                dl = st['delta']
+                M_el = rax('Y', (G['XH'], 0.0, G['HINGE_Z']), math.radians(dl))                 # elevon group: right-handed about +y through the hinge (CAD sense, linkage_core)
+                M_arm = rax('Z', (G['SV_XS'], sy * G['SERVO_Y'], 0.0), math.radians(th))        # servo arm group: counter-clockwise about +z through the spline axis
+                A0, H0 = (Vector(v) for v in mech_geom(sy, 0.0, 0.0))
+                A, H = (Vector(v) for v in mech_geom(sy, th, dl))
+                u = (H - A).normalized()
+                ex = Vector((1.0, 0.0, 0.0))                                                  # rod is parallel to x at neutral (L_ROD = HORN_XH - SV_XS)
+                ax_ = ex.cross(u)
+                R_ = Matrix.Rotation(math.acos(max(-1.0, min(1.0, ex.dot(u)))), 4, ax_) if ax_.length > 1e-12 else Matrix.Identity(4)
+                M_rod = Matrix.Translation(A) @ R_ @ Matrix.Translation(-A0)
+                for pid in ('WNG-006-', 'WNG-007-', 'WNG-010-', 'MEC-004-', 'MEC-005-'):
+                    mats[pid + s_] = M_el
+                for pid in ('MEC-002-', 'MEC-008-', 'HWC-002-'):
+                    mats[pid + s_] = M_arm
+                mats['MEC-003-' + s_] = M_rod
+                # connection check: arm-tip end of the rod on the arm tip (arm group), horn end of the rod on the horn hole (elevon group), rod length
+                g1 = (M_arm @ A0 - M_rod @ A0).length
+                g2 = (M_el @ H0 - M_rod @ H0).length
+                MECH_LOG['gap_max'] = max(MECH_LOG['gap_max'], g1, g2)
+                MECH_LOG['len_err_max'] = max(MECH_LOG['len_err_max'], abs((H - A).length - (H0 - A0).length))
+            MECH_LOG['n'] += 1
+            return mats, st
+
         def film_pose(t):
             S, sh, tl = film_at(film, t)
             vis = shot_modes(sh)
+            mm, mst = mech_mats(sh, tl)
             for pid, ob in items.items():
                 if pid in be.wires:
                     ends = [ob.get(k_) for k_ in ('part_a', 'part_b') if ob.get(k_) in placed_ids]
-                    on = bool(ends) and all(e_ in vis for e_ in ends)
+                    on = bool(ends) and all(e_ in vis for e_ in ends) and sh.get('wires', True)
                     ob.hide_render = not on
                     if on:
                         tint(pid, None)
                 elif pid in vis:
                     ob.hide_render = False
-                    ob.matrix_world = rest[pid]
+                    ob.matrix_world = (mm[pid] @ rest[pid]) if pid in mm else rest[pid]
                     m = vis[pid]
                     tint(pid, ('ghost_spar' if pid.startswith('WNG-002') else 'ghost') if m == 'ghost' else (None if m == 'normal' else m))
                 else:
@@ -789,7 +884,134 @@ def blender_render(argv):
             blob_c.default_value = (full_c.x, 0.0, 0.0)
             blob_op.default_value = 0.0 if below else 0.35
             bpy.context.view_layer.update()
-            return (tuple(sorted(vis.items())), tuple(round(v, 4) for v in cam_c))
+            return (tuple(sorted(vis.items())), tuple(round(v, 4) for v in cam_c), None if mst is None else (round(mst['theta_R'], 3), round(mst['delta'], 3)))
+
+        if a.cam_check:
+            # ---- T-028: camera against the mesh, EVERY frame: (1) camera inside any visible part (closed-mesh ray parity), (2) distance to the nearest surface,
+            # (3) line of sight to the target: first non-x-ray surface hit between camera and target. BVHs are built once in part-local space; the query is
+            # moved into each part's local frame, so posed (mechanism) parts cost nothing extra.
+            from mathutils.bvhtree import BVHTree
+            loc_bvh = {}
+
+            def local_bvh(pid):
+                if pid not in loc_bvh:
+                    ob = items[pid]
+                    hv = ob.hide_viewport
+                    ob.hide_viewport = False
+                    bpy.context.view_layer.update()
+                    eo = ob.evaluated_get(bpy.context.evaluated_depsgraph_get())
+                    me = eo.to_mesh()
+                    verts = [v.co.copy() for v in me.vertices]
+                    polys = [tuple(pl.vertices) for pl in me.polygons]
+                    eo.to_mesh_clear()
+                    ob.hide_viewport = hv
+                    if polys:
+                        xs = [v.x for v in verts]
+                        ys = [v.y for v in verts]
+                        zs = [v.z for v in verts]
+                        loc_bvh[pid] = (BVHTree.FromPolygons(verts, polys), (min(xs), min(ys), min(zs)), (max(xs), max(ys), max(zs)))
+                    else:
+                        loc_bvh[pid] = None
+                return loc_bvh[pid]
+
+            def inside_test(bvh, pl):
+                par = []
+                for axv in (Vector((0, 0, 1)), Vector((1, 0, 0))):
+                    o_, n_ = pl.copy(), 0
+                    while n_ < 60:
+                        h_ = bvh.ray_cast(o_, axv)
+                        if h_[0] is None:
+                            break
+                        n_ += 1
+                        o_ = h_[0] + axv * 1e-6
+                    par.append(n_ % 2)
+                return all(par)
+
+            selftest = {}                                               # self-test of the inside test on solid parts: the middle of the part is inside, a point 0.2 m above is not
+            for _pid, _off in (('WNG-006-R', (0.0, 0.07, 0.0)), ('WNG-007-R', (0.0, 0.0, 0.0)), ('WNG-001', (0.0, 0.3, 0.0))):
+                _b = local_bvh(_pid)
+                _c = Vector(((_b[1][0] + _b[2][0]) / 2, (_b[1][1] + _b[2][1]) / 2, (_b[1][2] + _b[2][2]) / 2)) + Vector(_off)
+                selftest[_pid] = dict(centre_inside=bool(inside_test(_b[0], _c)), point_0p2_above_inside=bool(inside_test(_b[0], _c + Vector((0, 0, 0.2)))))
+            print('CAMCHECK selftest', selftest, flush=True)
+            inv_rest = {}
+            report = dict(shots={}, frames_checked=0, near_m=0.05)
+            per_shot = {}
+            t_cc = time.time()
+            for f in range(nfr):
+                t = f / FPS
+                S, sh, tl = film_at(film, t)
+                vis = shot_modes(sh)
+                mm, _mst = mech_mats(sh, tl)
+                ids = [pid for pid in vis]
+                if sh.get('wires', True):
+                    for pid, ob in be.wires.items():
+                        ends = [ob.get(k_) for k_ in ('part_a', 'part_b') if ob.get(k_) in placed_ids]
+                        if ends and all(e_ in vis for e_ in ends):
+                            ids.append(pid)
+                cam_c = hermite_cam(S['keys'], tl)
+                ctr, view, dist = cam_view((Vector(cam_c[:3]), cam_c[3], cam_c[4], cam_c[5]))
+                P = ctr + view * dist
+                los = sh.get('los', True)                                          # false: the target is only a framing offset (nothing to keep in sight); [x, y, z]: the subject point
+                tgt_ = ctr if los is True else (Vector(los) if los else None)
+                dirn = (tgt_ - P).normalized() if tgt_ is not None else None
+                dist_t = (tgt_ - P).length if tgt_ is not None else 0.0
+                inside, mind, mind_pid, hit_d, hit_pid = [], 1e9, None, 1e9, None
+                for pid in ids:
+                    B = local_bvh(pid)
+                    if B is None:
+                        continue
+                    bvh, lo, hi = B
+                    if pid in mm:
+                        Mi = (mm[pid] @ rest[pid]).inverted()
+                    else:
+                        if pid not in inv_rest:
+                            inv_rest[pid] = rest[pid].inverted()
+                        Mi = inv_rest[pid]
+                    pl = Mi @ P
+                    bd = math.sqrt(max(lo[0] - pl.x, 0, pl.x - hi[0]) ** 2 + max(lo[1] - pl.y, 0, pl.y - hi[1]) ** 2 + max(lo[2] - pl.z, 0, pl.z - hi[2]) ** 2)
+                    if bd < 0.3:
+                        nr = bvh.find_nearest(pl)
+                        if nr[0] is not None and nr[3] < mind:
+                            mind, mind_pid = nr[3], pid
+                        if bd == 0.0 and inside_test(bvh, pl):
+                            inside.append(pid)
+                    if tgt_ is not None and vis.get(pid) != 'ghost':
+                        dl_ = Mi.to_3x3() @ dirn
+                        h_ = bvh.ray_cast(pl, dl_, dist_t)
+                        if h_[0] is not None and h_[3] < hit_d:
+                            hit_d, hit_pid = h_[3], pid
+                st = per_shot.setdefault('%s/%s' % (S['id'], sh['id']), dict(frames=0, inside_frames=0, inside_parts={}, min_clear_m=1e9, min_clear_f=None, min_clear_part=None,
+                                                                             blocked_frames=0, blockers={}, first_inside=None, last_inside=None, worst_block_f=None, worst_block_ratio=1.0))
+                st['frames'] += 1
+                if inside:
+                    st['inside_frames'] += 1
+                    st['first_inside'] = f if st['first_inside'] is None else st['first_inside']
+                    st['last_inside'] = f
+                    for pid in inside:
+                        st['inside_parts'][pid] = st['inside_parts'].get(pid, 0) + 1
+                if mind < st['min_clear_m']:
+                    st['min_clear_m'], st['min_clear_f'], st['min_clear_part'] = mind, f, mind_pid
+                if hit_pid is not None and hit_d < dist_t - 0.08:                    # something other than the target's own surface is in front of it
+                    st['blocked_frames'] += 1
+                    st['blockers'][hit_pid] = st['blockers'].get(hit_pid, 0) + 1
+                    if hit_d / dist_t < st['worst_block_ratio']:
+                        st['worst_block_ratio'], st['worst_block_f'] = hit_d / dist_t, f
+                report['frames_checked'] += 1
+            for k_, v in per_shot.items():
+                v['min_clear_m'] = None if v['min_clear_m'] > 1e8 else round(v['min_clear_m'], 4)
+                v['worst_block_ratio'] = round(v['worst_block_ratio'], 3)
+            report['shots'] = per_shot
+            report['frames_inside_any_part'] = sum(v['inside_frames'] for v in per_shot.values())
+            report['seconds'] = round(time.time() - t_cc, 1)
+            report['mech'] = dict(MECH_LOG)
+            report['selftest'] = selftest
+            report['part_boxes_m'] = {pid: [[round(c_, 4) for c_ in (rest[pid] @ Vector(b_))] for b_ in (ob_.bound_box[0], ob_.bound_box[6])] for pid, ob_ in be.objects.items()}   # rest-pose world box corners, for placing cameras
+            os.makedirs(a.out, exist_ok=True)
+            json.dump(report, open(os.path.join(a.out, 'cam_clearance.json'), 'w'), indent=1)
+            print('CAMCHECK frames %d inside %d  %.0f s' % (report['frames_checked'], report['frames_inside_any_part'], report['seconds']), flush=True)
+            for k_, v in per_shot.items():
+                print('CAMCHECK %s frames %d inside %d (%s) min_clear %s m @f%s (%s) blocked %d %s' % (k_, v['frames'], v['inside_frames'], v['inside_parts'], v['min_clear_m'], v['min_clear_f'], v['min_clear_part'], v['blocked_frames'], dict(sorted(v['blockers'].items(), key=lambda kv: -kv[1])[:3])), flush=True)
+            return
 
         if a.frames:
             frames = [int(f) for f in a.frames.split(',') if f.strip()]
@@ -815,6 +1037,8 @@ def blender_render(argv):
         tag = a.range.replace(':', '_') if a.range else ('frames' if a.frames else 'all')
         json.dump(fmap, open(os.path.join(a.out, 'map_%s.json' % tag), 'w'))
         print('RENDER_TOTAL %.1f s for %d frames (%d rendered)' % (time.time() - t0, len(frames), n_new))
+        if MECH_LOG['n']:
+            print('MECHCHECK poses %d  max connection gap %.3e m  max rod length error %.3e m' % (MECH_LOG['n'], MECH_LOG['gap_max'], MECH_LOG['len_err_max']))
         return
 
     # ---- wire reveal curves (phase leads): the same strands as the wire meshes, drawn with a curve bevel so that a fraction can be shown
@@ -1522,6 +1746,16 @@ def film_overlay(src, dst, f, sw, sh):
         tw = d.textlength(tag, font=F['mono'])
         d.rounded_rectangle((x1 - tw - 28 * k, 24 * k, x1, 24 * k + 36 * k), radius=int(6 * k), fill=(255, 255, 255, 235), outline=ORANGE + (255,), width=max(2, int(2 * k)))
         d.text((x1 - tw - 14 * k, 24 * k + 8 * k), tag, font=F['mono'], fill=ORANGE + (255,))
+    if shot.get('mech'):                 # readout of the solved linkage state (numbers from linkage_kinematics.csv through mech_state, AR-001)
+        st = mech_state(shot, tl)
+        rows_ = [('Servo arm', '%+5.1f deg' % st['theta_R']), ('Elevon', '%+5.1f deg' % st['delta'])]
+        bw, bh_ = 330 * k, 112 * k
+        bx1, by1 = x1, sh - 44 * k
+        d.rounded_rectangle((bx1 - bw, by1 - bh_, bx1, by1), radius=int(8 * k), fill=(255, 255, 255, 240), outline=(203, 210, 219, 255))
+        for i_, (lab_, val_) in enumerate(rows_):
+            d.text((bx1 - bw + 18 * k, by1 - bh_ + 12 * k + i_ * 32 * k), lab_, font=F['h2'], fill=SUB + (255,))
+            d.text((bx1 - 18 * k - d.textlength(val_, font=F['h1']), by1 - bh_ + 10 * k + i_ * 32 * k), val_, font=F['h1'], fill=INK + (255,))
+        d.text((bx1 - bw + 18 * k, by1 - 30 * k), 'AR-001 table; + = trailing edge down', font=F['mono'], fill=MUTED + (255,))
     if shot.get('todo'):
         lines = wrap(d, shot['todo'], F['h1'], sw * 0.62)
         bh = (60 + 36 * len(lines)) * k
@@ -1633,6 +1867,12 @@ def film_driver(a):
             os.remove(os.path.join(work, fn))
     print('film: %d scenes, %.1f s, %d frames at %dx%d @ %d fps, every %d' % (len(film['scenes']), film['total'], nfr, W, H, FPS, every), flush=True)
     me = os.path.abspath(__file__)
+    if getattr(a, 'cam_check', False):
+        run([a.blender, '-b', '--factory-startup', '-P', me, '--', 'render', '--out', work, '--shot-list', os.path.abspath(a.shot_list), '--scenes', ','.join(scene_ids or []),
+             '--cam-check'] + RES_FLAGS(a), show=('CAMCHECK', 'Traceback', 'Error', '  File'))
+        shutil.copy(os.path.join(work, 'cam_clearance.json'), os.path.join(FILM_DIR, 'cam-clearance.json'))
+        print('CAMCHECK written', os.path.join(FILM_DIR, 'cam-clearance.json'), '%.0f s' % (time.time() - t0))
+        return
     base = [a.blender, '-b', '--factory-startup', '-P', me, '--', 'render', '--out', work, '--samples', str(a.samples), '--shot-list', os.path.abspath(a.shot_list),
             '--scenes', ','.join(scene_ids or [])] + RES_FLAGS(a)
     if a.no_rt if hasattr(a, 'no_rt') else False:
@@ -1727,6 +1967,7 @@ def driver():
     ap.add_argument('--dof', action='store_true', help='depth of field on the camera target (off by default)')
     ap.add_argument('--motion-blur', action='store_true', help='EEVEE motion blur (off by default)')
     ap.add_argument('--no-rt', action='store_true', help='short film: EEVEE ray tracing off')
+    ap.add_argument('--cam-check', action='store_true', help='short film: no render, camera-vs-mesh clearance of every frame (film/cam-clearance.json)')
     a = ap.parse_args()
     apply_res(a.width, a.height, a.fps)
     t0 = time.time()

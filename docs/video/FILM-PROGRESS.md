@@ -53,3 +53,39 @@ Build-film dry check: `--camplan` ran in 77 s, wrote 66 steps and the script loa
 ## Not done
 
 Scenes 3, 4, 5 (placeholders only), audio, ffmpeg-free concatenation of scenes (the full-film path encodes all scenes as one MP4 through the Blender VSE, scenes cut together), `--dof` / `--motion-blur` verification, a full render of any film.
+
+---
+
+# T-028 update (2026-11-18): scene 3 from the solved kinematics, camera clearance check, framing fixes
+
+Nothing committed. Defaults of `render_build_a.py` unchanged (build film untouched; film mode only). No full render; preview stills only (T-031 does the 1080p60 exports).
+
+## What changed
+
+| Item | Where |
+|---|---|
+| Mechanism posing from AR-001 (category: kinematics). `load_kin`, `mech_state`, `mech_geom` read `qp/A/mechanism/out/linkage_kinematics.csv` (elevon -> servo angle, 0.05 deg steps) and `.json` (CAD constants). A shot's `mech.sweep` lists commanded elevon end points; each is converted to a servo angle through the table, the SERVO angle is eased (smoothstep) between them, and the elevon angle is read back from the table at that servo angle (linear interpolation). No hand keyframes. | `render_build_a.py` before "Blender worker" |
+| Worker `mech_mats`: elevon group (WNG-006/007/010, MEC-004/005) rotates about the hinge (+y, through XH, HINGE_Z); servo arm group (MEC-002, MEC-008 keeper, HWC-002 screw) about the spline axis (+z); pushrod MEC-003 is rigid: its arm end goes to the arm tip, its horn end to the horn hole (minimal rotation from +x to the rod direction). Group membership copied from `collide.moving_groups` (printed by a probe: E-WNG-10/11 groups). Right side from the table, left side theta = -theta_R (AR-001 check K2), same elevon angle on both sides. | worker, `film_pose` |
+| Connection check per rendered pose (R-VID-05 item 3): arm-tip end of the rod vs the arm-group tip, horn end vs the elevon-group horn hole, rod length error | `MECHCHECK` line in the worker log |
+| Overlay: tag "SIMULATED: kinematics AR-001 (D-212 rev 3)" (shot `tag`), readout box (servo arm deg, elevon deg from `mech_state`, "+ = trailing edge down", source AR-001 table) | `film_overlay` |
+| `--cam-check` (driver and worker): no render; for EVERY frame of every shot, in part-local BVHs: camera inside any visible part (closed-mesh ray parity on two axes), nearest-surface distance, first non-x-ray hit on the line camera -> subject (flag if more than 0.08 m before the subject). Shot keys `los: false` (target is only a framing offset) or `los: [x,y,z]`. Writes `film/cam-clearance.json` (per shot, plus rest-pose part boxes). Self-test of the inside test on solid parts is stored in the JSON (centre inside True, 0.2 m above False). | worker, `film_driver` |
+| Shot list (`film/shots-main.json`, now indent 1): S3 = shots 3.1 (12 s) and 3.2 (6 s) replace the TODO; S1 elevation raised to 36-38 deg and target z 0.04; S2.1 props and arms hidden, aft quartering views; S2.2 farther and higher; S2.3 uncluttered (props, pack, avionics, wires hidden); S2.4 only WNG parts, spar teal and plugs orange; S2.5 only wing and mechanism parts, wires off, closer; S6 `los:false`. | shots-main.json |
+
+## Results
+
+Camera check (`film/cam-clearance.json`, run 1 s of Blender time plus about 74 s start-up, 4,620 frames, all six scenes): 0 frames with the camera inside any part; nearest approach 0.068 m (3.2, ghost wing core), all other close shots 0.14 m or more; line of sight blocked in 10 of 4,620 frames (shot 2.2, the target motor's own prop blade, 0.70 m camera, accepted). Before the fixes: S1.1 had 58 blocked frames (fin FIN-004-L 26, prop 14, arm 9), S1.3 26, S2.2 14, S2.4 84. The camera was never inside a part: the S1.1 "passes through the arms" at frames 160-240 was the left fin and prop discs crossing the line of sight at 18-26 deg elevation at azimuth about 70-110; now elevation 36-38.
+
+Mechanism (preview poses, 27 rendered in S3): max connection gap 9.6e-6 m (0.0096 mm, float32 matrices; limit 0.05 mm, R-VID-05), max rod length error 3.6e-8 m. Penetration along the path (R-VID-05 item 4): NOT re-checked on meshes here; the analytic swept check AR-003 (`linkage_sweep_collision.json`, 228 pairs, 85 poses per side, worst penetration 0.0 mm, min clearance 0.066 mm, tolerance 0.05 mm, convex hulls, not mesh based) is the evidence. Servo arm at +-21 deg elevon reads -22.6 / +22.8 deg in the overlay (AR-001 K3 table).
+
+Preview contact sheets (1080p, 12 samples, ray tracing on): `film/preview-contact-T028.png` (all six scenes, every 40th frame, 116 frames; S2.4 in this sheet is the version before its last fix) and `film/preview-contact-T028-S2-rev.png` (scene 2 after the S2.4 fix, every 25th frame, 60 frames). Wall times: full preview 145.2 s (frame loop 42-46 s per worker, 1.21 s per rendered frame, 3 workers); scene 2 re-run 119.4 s (1.14 s per frame); camera check 74 s. `film/timing.json` holds the 145.2 s run (scenes S1-S6).
+
+## Remaining defects (for T-030)
+
+1. S2.1 wing shot crops the hub and pack at the left edge in the first second; the wing is wide and flat so the target could sit further outboard. 2. S2.2 own prop blade crosses the motor for 10 frames. 3. Shot 3.1 elevon (teal) is correct but the rib horn is long and mostly hidden under the elevon; rotation of the elevon reads better in 3.2 (side view, elevon x-ray). 4. 3.2 hides the balance strip, lens caps and damper for a clear profile (cut-away, tagged by the sub text only). 5. Scenes S4, S5 are still placeholders (ILLUSTRATIVE cards). 6. Material pop at shot joins where `modes` change (no cross-fade); card start abrupt in 6.2. 7. Props are hidden in S2.1, S2.3, so they pop in at the scene-2 internal joins. 8. Contact sheets are 12-sample previews; edge quality not judged. 9. The camera check is a geometric test (mesh, not lens): it does not detect parts clipped by the lens near plane (0.02 m) other than through the 0.068 m minimum. 10. Elevon motion is symmetric (both sides same angle); no differential case shown.
+
+## Reproduce
+
+```
+python redesign/showcase/concept-a/render_build_a.py --shot-list redesign/showcase/concept-a/film/shots-main.json --cam-check --width 1920 --height 1080 --fps 60
+python redesign/showcase/concept-a/render_build_a.py --shot-list redesign/showcase/concept-a/film/shots-main.json --width 1920 --height 1080 --fps 60 --every 40 --samples 12 --workers 3 --preview --contact redesign/showcase/concept-a/film/preview-contact-T028.png
+```
