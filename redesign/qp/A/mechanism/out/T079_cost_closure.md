@@ -48,3 +48,14 @@ Because the USD price is unread, the gate was computed as a function of unit pri
 ## Open for the board
 1. The O4b pack has no confirmed US source, and the only read in-stock source (Rotorama) does not deliver to the US. Needs someone with a browser to read the Race Day Quads / GetFPV / rcdrone.top GNB pages (price, stock, dimensions) or a forwarder/EU purchase by a person in the EU (outside this research).
 2. If the RDQ 46 mm side is the width, the pack does not fit the 35 mm slot.
+
+## Addendum (conductor, 2026-11-19): US pack page read in the built-in browser
+`https://www.racedayquads.com/products/rdq-series-11-1v-4s-2800mah-100c-lipo-battery-xt60`, read 2026-11-19:
+"RDQ Series 14.8V 4S 2800mAh 100C LiPo Battery - XT60", **$54.99, In stock**; capacity 2800 mAh; 100C; dimensions
+**107 x 33 x 46 mm**; balance JST-XH 35 mm; XT60 lead 80 mm; **weight 270 g (+/- 1 %)**; "All batteries must be
+shipped by a ground shipping method"; the product image is labelled "GNB Battery RDQ Series". Meets check 2 on
+capacity (>= 2,350 mAh), mass (<= 275 g), connector and C rating (needed 17.3 C), and is a US in-stock source.
+Budget: at $54.99 per pack (between the $48.99 and $84 rows above) the O4b total stays under $2,000 with the crash
+reserve unchanged (EST from the s2 table: about $1,890-1,905 incl. a possible new ship group; exact figure at the
+T-077 BOM update). Open: fit. The 46 mm side exceeds the 37 mm raised tray (T-074) and the 35 mm slot in one
+orientation; the 33 x 46 section must be checked against the tray and bay in CAD (T-077).
