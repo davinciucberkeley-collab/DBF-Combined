@@ -138,3 +138,14 @@ build. Requirement IDs: R-OPT-01, R-OPT-02, R-GEN-02, R-CAD-01.
 ```text
 Altus (O6)
 ```
+
+## AM-008 — 2026-11-19 — Altus rejected; the aircraft must be Claude-designed and student-built
+Relation: withdraws AM-007 (O6, ZOHD Altus kit) after Dillon asked what the Altus is; D-218 is reversed. Adds a
+standing constraint: the aircraft is designed by Claude (the engineering agents) and built by the students; a
+commercial kit airframe is not acceptable. This removes O6 (Altus) from every board sheet, including the lifeboat
+role named in CLAUDE.md (D-182). The board re-sit after T-074 is open again between Claude-designed options.
+Requirement IDs: R-OPT-01, R-OPT-02, R-GEN-02, R-CAD-01.
+
+```text
+No, I don't want to do the altus, this must be something that is designed by claude and is built by students
+```

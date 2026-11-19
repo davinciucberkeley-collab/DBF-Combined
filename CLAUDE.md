@@ -22,10 +22,9 @@
 - Subagents return one line: Task ID | Outcome | Verification | Evidence path | Blocker; details go in files.
 - Brevity never reduces the work: tests, docs, warnings and error reports stay complete.
 
-**Configuration changed 2026-11-19 (D-218, AM-007): the ZOHD Altus VTOL kit (board option O6) replaces concept A.**
-Concept A could not credibly make its mass gate (predicted 1.56-1.64 kg vs 1.470 kg, T-067/T-070) and its last
-resize path (O4b) failed the cost rule (T-074). Concept A and K09-L below are the record. The hard constraints
-apply to the Altus build; re-plan in `docs/task-ledger.md` T-075.
+**2026-11-19 (AM-008): the aircraft must be designed by Claude and built by the students; no commercial kit airframe
+(the ZOHD Altus lifeboat named below is withdrawn; D-218 reversed).** Concept A failed its mass gate (T-067/T-070) and
+its O4 resize (D-217); the board re-sit between Claude-designed options is open (`docs/task-ledger.md` T-075).
 
 **Configuration changed 2026-11-14 (D-182, J6 board, `redesign/review/QP-1/BOARD.md`):**
 K09-L could not be built new within the $2,000 limit (cheapest workable build
