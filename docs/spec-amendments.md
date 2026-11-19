@@ -186,3 +186,14 @@ Requirement IDs: R-OPT-02, R-OPT-05, R-GEN-02.
 ```text
 Scratch that, I meant weight is something that we can go over in the initial design, not budget
 ```
+
+## AM-012 — 2026-11-19 — Keep the crash reserve
+Relation: qualifies AM-009 (G7 shortfall of about $50 accepted). The crash reserve (BOM line, about $327.43) is not
+to be cut to close the G7 gap or to pay for O4b changes (H743-Wing FC, EU pack). Interpretation (recorded, not
+stretched): "enough" crash reserve is not quantified by Dillon; the current reserve stays as listed unless he says
+otherwise, and any O4b cost growth (pack in USD with shipping and import, FC) is closed by other BOM changes or
+reported to him. Requirement IDs: R-GEN-02, R-OPT-02.
+
+```text
+We still want enough to have crash reserve though
+```
