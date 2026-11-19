@@ -60,17 +60,20 @@
    "frames": 300,
    "inside_frames": 0,
    "inside_parts": {},
-   "min_clear_m": 0.1408,
-   "min_clear_f": 1076,
-   "min_clear_part": "PRP-002-UL",
-   "blocked_frames": 10,
+   "min_clear_m": 0.2704,
+   "min_clear_f": 1072,
+   "min_clear_part": "GER-002-UR",
+   "blocked_frames": 17,
    "blockers": {
-    "PRP-002-UR": 10
+    "GER-002-UR": 3,
+    "FIN-001-R": 2,
+    "GER-001-UR": 1,
+    "FIN-004-R": 11
    },
    "first_inside": null,
    "last_inside": null,
-   "worst_block_f": 1095,
-   "worst_block_ratio": 0.844
+   "worst_block_f": 1071,
+   "worst_block_ratio": 0.445
   },
   "S2/2.3": {
    "frames": 300,
@@ -114,12 +117,26 @@
    "worst_block_f": null,
    "worst_block_ratio": 1.0
   },
+  "S2/2.6": {
+   "frames": 234,
+   "inside_frames": 0,
+   "inside_parts": {},
+   "min_clear_m": 0.166,
+   "min_clear_f": 2220,
+   "min_clear_part": "WNG-006-R",
+   "blocked_frames": 0,
+   "blockers": {},
+   "first_inside": null,
+   "last_inside": null,
+   "worst_block_f": null,
+   "worst_block_ratio": 1.0
+  },
   "S3/3.1": {
    "frames": 720,
    "inside_frames": 0,
    "inside_parts": {},
    "min_clear_m": 0.2614,
-   "min_clear_f": 2495,
+   "min_clear_f": 2729,
    "min_clear_part": "WNG-006-L",
    "blocked_frames": 0,
    "blockers": {},
@@ -133,7 +150,7 @@
    "inside_frames": 0,
    "inside_parts": {},
    "min_clear_m": 0.0679,
-   "min_clear_f": 3030,
+   "min_clear_f": 3264,
    "min_clear_part": "WNG-001",
    "blocked_frames": 0,
    "blockers": {},
@@ -283,10 +300,222 @@
    "worst_block_ratio": 1.0
   }
  },
- "frames_checked": 6960,
+ "frames_checked": 7194,
  "near_m": 0.05,
+ "cam_motion": {
+  "peak": {
+   "view_speed": {
+    "value": 96.74178694000003,
+    "unit": "deg/s",
+    "frame": 3219,
+    "shot": "S3/3.2"
+   },
+   "view_accel": {
+    "value": 251.5293105526138,
+    "unit": "deg/s^2",
+    "frame": 3264,
+    "shot": "S3/3.2"
+   },
+   "zoom_rate": {
+    "value": 1.1799921378417364,
+    "unit": "1/s",
+    "frame": 2316,
+    "shot": "S2/2.6"
+   },
+   "zoom_accel": {
+    "value": 1.9642224396635055,
+    "unit": "1/s^2",
+    "frame": 2384,
+    "shot": "S2/2.6"
+   },
+   "pan_speed": {
+    "value": 0.35231143350524496,
+    "unit": "dist/s",
+    "frame": 1672,
+    "shot": "S2/2.4"
+   },
+   "pan_accel": {
+    "value": 0.5910608332907543,
+    "unit": "dist/s^2",
+    "frame": 2222,
+    "shot": "S2/2.6"
+   }
+  },
+  "per_shot": {
+   "S1/1.1": {
+    "view_speed": 30.712,
+    "zoom_rate": 0.0,
+    "pan_speed": 0.0,
+    "view_accel": 22.276,
+    "zoom_accel": 0.0,
+    "pan_accel": 0.0
+   },
+   "S1/1.2": {
+    "view_speed": 24.976,
+    "zoom_rate": 0.0,
+    "pan_speed": 0.0,
+    "view_accel": 16.454,
+    "zoom_accel": 0.0,
+    "pan_accel": 0.0
+   },
+   "S1/1.3": {
+    "view_speed": 32.968,
+    "zoom_rate": 0.0,
+    "pan_speed": 0.0,
+    "view_accel": 23.979,
+    "zoom_accel": 0.0,
+    "pan_accel": 0.0
+   },
+   "S2/2.1": {
+    "view_speed": 7.474,
+    "zoom_rate": 0.237,
+    "pan_speed": 0.092,
+    "view_accel": 9.044,
+    "zoom_accel": 0.328,
+    "pan_accel": 0.122
+   },
+   "S2/2.2": {
+    "view_speed": 63.202,
+    "zoom_rate": 0.086,
+    "pan_speed": 0.206,
+    "view_accel": 84.339,
+    "zoom_accel": 0.102,
+    "pan_accel": 0.292
+   },
+   "S2/2.3": {
+    "view_speed": 29.531,
+    "zoom_rate": 0.129,
+    "pan_speed": 0.319,
+    "view_accel": 34.677,
+    "zoom_accel": 0.134,
+    "pan_accel": 0.454
+   },
+   "S2/2.4": {
+    "view_speed": 70.632,
+    "zoom_rate": 0.166,
+    "pan_speed": 0.352,
+    "view_accel": 105.903,
+    "zoom_accel": 0.294,
+    "pan_accel": 0.549
+   },
+   "S2/2.5": {
+    "view_speed": 14.133,
+    "zoom_rate": 0.69,
+    "pan_speed": 0.209,
+    "view_accel": 25.958,
+    "zoom_accel": 0.98,
+    "pan_accel": 0.413
+   },
+   "S2/2.6": {
+    "view_speed": 23.982,
+    "zoom_rate": 1.18,
+    "pan_speed": 0.239,
+    "view_accel": 73.689,
+    "zoom_accel": 1.964,
+    "pan_accel": 0.591
+   },
+   "S3/3.1": {
+    "view_speed": 9.145,
+    "zoom_rate": 0.041,
+    "pan_speed": 0.002,
+    "view_accel": 2.566,
+    "zoom_accel": 0.005,
+    "pan_accel": 0.001
+   },
+   "S3/3.2": {
+    "view_speed": 96.742,
+    "zoom_rate": 0.338,
+    "pan_speed": 0.029,
+    "view_accel": 251.529,
+    "zoom_accel": 0.855,
+    "pan_accel": 0.085
+   },
+   "S4/4.1": {
+    "view_speed": 3.845,
+    "zoom_rate": 0.064,
+    "pan_speed": 0.0,
+    "view_accel": 1.881,
+    "zoom_accel": 0.032,
+    "pan_accel": 0.0
+   },
+   "S4/4.2": {
+    "view_speed": 2.017,
+    "zoom_rate": 0.044,
+    "pan_speed": 0.0,
+    "view_accel": 2.381,
+    "zoom_accel": 0.065,
+    "pan_accel": 0.0
+   },
+   "S4/4.3": {
+    "view_speed": 1.846,
+    "zoom_rate": 0.044,
+    "pan_speed": 0.0,
+    "view_accel": 0.899,
+    "zoom_accel": 0.034,
+    "pan_accel": 0.0
+   },
+   "S4/4.4": {
+    "view_speed": 2.394,
+    "zoom_rate": 0.035,
+    "pan_speed": 0.0,
+    "view_accel": 1.151,
+    "zoom_accel": 0.051,
+    "pan_accel": 0.0
+   },
+   "S4/4.5": {
+    "view_speed": 4.043,
+    "zoom_rate": 0.081,
+    "pan_speed": 0.0,
+    "view_accel": 2.426,
+    "zoom_accel": 0.051,
+    "pan_accel": 0.0
+   },
+   "S5/5.1": {
+    "view_speed": 11.364,
+    "zoom_rate": 0.023,
+    "pan_speed": 0.0,
+    "view_accel": 7.631,
+    "zoom_accel": 0.014,
+    "pan_accel": 0.0
+   },
+   "S5/5.2": {
+    "view_speed": 11.85,
+    "zoom_rate": 0.008,
+    "pan_speed": 0.0,
+    "view_accel": 7.78,
+    "zoom_accel": 0.011,
+    "pan_accel": 0.0
+   },
+   "S5/5.3": {
+    "view_speed": 0.065,
+    "zoom_rate": 0.0,
+    "pan_speed": 0.0,
+    "view_accel": 7.823,
+    "zoom_accel": 0.003,
+    "pan_accel": 0.0
+   },
+   "S6/6.1": {
+    "view_speed": 22.344,
+    "zoom_rate": 0.088,
+    "pan_speed": 0.014,
+    "view_accel": 13.586,
+    "zoom_accel": 0.057,
+    "pan_accel": 0.011
+   },
+   "S6/6.2": {
+    "view_speed": 15.748,
+    "zoom_rate": 0.055,
+    "pan_speed": 0.124,
+    "view_accel": 18.777,
+    "zoom_accel": 0.214,
+    "pan_accel": 0.425
+   }
+  },
+  "fps": 60,
+  "note": "view = camera direction as a unit vector; speeds from the per-frame difference (no smoothing); a scene join is not a pair"
+ },
  "frames_inside_any_part": 0,
- "seconds": 1.8,
+ "seconds": 2.1,
  "mech": {
   "gap_max": 1.4918267221554095e-05,
   "len_err_max": 3.5690116251263504e-08,

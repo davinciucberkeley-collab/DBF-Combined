@@ -179,3 +179,68 @@ Tracked already: `hub_result_L0_d209.json`, `result_L0_current_d210.json`, `fea-
 - `--cam-check` main (6,960 frames): 0 frames inside a part; only block: S2.2 10 frames (own prop, as before); nearest 0.0679 m (3.2). Highlight (1,452 frames): 0 inside, 0 blocked. Files `film/cam-clearance.json`, `film/cam-clearance-highlight.json`.
 - 1080p preview, every 60th frame, 12 samples, 3 workers, all six scenes: `film/preview-contact-T030.png` (116 frames, taken before the final 6.2 camera tweak), `film/preview-contact-T030-S6.png` (S6 after it), `film/preview-contact-T030-highlight.png` (highlight, 24 frames); wall 133 s, 0.87 s per rendered frame. `film/timing-T030.json`.
 - Not verified: full-rate smoothness of the S4 joins and of the new 3.2 camera hold (previews sample 1 per second); the 60-frame consecutive run 4.3 -> 4.5 asked for in review section 5 is left to the reviewer step. 3.1 now shows the rotation as a change of the elevon silhouette and tilt (view from aft, el 24-30), not along the hinge.
+
+---
+
+# T-030-N fix pass (2026-11-18): final-review defects N-1, N-2, m-A..m-D (`docs/audits/2026-11-18-film-final-review.md`)
+
+Nothing committed. Edited only `film/shots-main.json`, `film/shots-highlight.json` (card line, H2 arrow, source times), the film-mode code of `render_build_a.py` (defaults and build-film path unchanged), this file and `docs/video/PIPELINE.md`. Generated files: `film/cam-clearance.json`, `film/cam-clearance-highlight.json`, `film/timing-T030N-incremental.json`, `film/preview-contact-T030N.png`, `film/clips/list-3.1.txt`, `list-3.2.txt`. `redesign/params/CHANGE-LOG.md` NOT edited (outside the allowed file list; these are film decisions, no aircraft design change). Main film now 119.9 s (7,194 frames, was 116.0 s); highlight unchanged at 24.2 s.
+
+Decisions (ladder rungs 2 and 3, film layout only; nothing added to the aircraft): R-VID-08 is implemented, not descoped (team decision). The exploded view is shot 2.6 at the end of S2 (assembled, then pulled apart), not a seventh scene (R-VID-07 says six scenes).
+
+## What changed
+
+| ID | Change | Where |
+|---|---|---|
+| N-1 | Layout guard in `film_overlay`: the lower third wrap width is cut to (readout panel left edge - 24 px - own margins); a lower third that still overlaps raises an error, a sub-title needing more than 3 lines raises. 4.1 and 4.2 subs now take 2 lines and end at x = 1027 / 956 px, the readout starts at x = 1080 (viewed, frames 3744 and 4254: all five small lines and "Prop rotation illustrative" fully visible). Not fixed: the readout still covers part of the aircraft in 4.1 (camera framing, would need an S4 re-render). | `film_overlay` |
+| N-2 exploded | Shot 2.6 (3.9 s, tag "ILLUSTRATIVE: exploded view, offsets for clarity (not to scale of travel)"). Camera pulls back 0-2.7 s, parts move out 2.1-3.7 s. Each part moves along the reverse of its assembly direction: directions are `a_assembly_plan.STEPS` (identical to `cad/out/_plan.json`; checked: all 43 steps of `cad/out/assembly.json` have the same parts, 0 direction mismatches). 55 steps with a direction (15 bench steps B0c-B0j2 for the cage sub-parts, 40 main steps), 129 part entries. Distance = max(40 mm + 12 mm x rank among steps of the same axis in build order, a quarter of the travel), at most 300 mm (spar 175, plugs 150, fin tubes 125, bay cover 232, cage unit 40 mm down); NOT the travel. Last-built parts start first. Wires hidden; strap PWR-002 and pitot lines AVN-009 hidden (no assembly axis); the sub says so. | worker `explode_entries`, `explode_mats`, shot field `explode` |
+| N-2 dimension | Shot 1.2: dimension "Wing span 0.90 m" with extension lines from the tips, arrowheads, leader to a label; value read from `params-A.json box/packed_m/0` at draw time (CAD wing y extent -0.45 to +0.45 m, WNG-001 part box in `cam-clearance.json`). Window 0.1-3.4 s. Projection is done in the overlay (`cam_projector`), checked against Blender `world_to_camera_view`: worst difference 0.002 px over 5 posed frames (`ANNOTCHECK`). The highlight does not contain 1.2. | `annot_layer`, shot field `annot` |
+| N-2 motion arrow | Shot 3.1 (and highlight H2): an arc arrow around the right servo spindle ahead of the arm tip, in the direction it is turning now, faded in with the turning speed; label "Servo arm turns + (counter-clockwise seen from above): elevon trailing edge DOWN" or "- (clockwise ...) UP". Sense from the AR-001 solution (`mech_state`; + = counter-clockwise about +z = trailing edge down). Category kinematics, same SIMULATED tag. | `annot_layer` |
+| m-A | Card line and 5.2 tag/panel now say: bridge tube bond end u 1.002, "over 1 by 0.2 %, OPEN (D-207)" (the 0.2 % computed from the npz at draw time); F2 u 0.958 "PASS". Status from CHANGE-LOG D-207 (local edge peak at the bond end, structures). Card rows wrap to a second line when too long. Highlight card has the same line. | shots-main / highlight |
+| m-B | 2.1 end key and 2.2 first key are `hold` (rest), the 2.2 first key moved from 2.0 s to 3.0 s, the 2.1 keys shifted by -360 deg so the swing is 140 deg (-180 to -40), not 220 deg the long way. `--cam-check` now reports per-frame view-direction speed and acceleration, zoom rate and its change, pan speed and its change (peak and per shot; `cam_motion` in the json, `CAMCHECK motion peak` lines). | `camera_motion`, shots |
+| m-C | Header has a 66 % stage-colour backing plate. | `film_overlay` |
+| m-D | Clip 3.1 starts 0.2 s in (12 frames: the S2 to S3 dip). The list files are written by the film driver from the new top-level `clips` field of the shot list (`write_clip_lists`), in the picture names of the run, so they always match the film. Written now with `--skip-render --lists-only`: 3.1 frames 2466..3173 (708 = 11.8 s), 3.2 frames 3174..3533 (360 = 6.0 s). Clip 3.2 still ends on the dip (not asked). | driver |
+
+## Camera check (interference for clearance; camera path check for motion), both lists
+
+- Main (`film/cam-clearance.json`, 7,194 frames, 80 s): 0 frames inside any part; nearest 0.0679 m (3.2); line of sight blocked in 17 frames of 2.2 (was 10: FIN-004-R 11, GER-002-UR 3, FIN-001-R 2, passing between the camera and the target motor during the new 140 deg swing; camera never nearer than 0.27 m; accepted, transient). 2.6: 0 inside, nearest 0.166 m.
+- Highlight (`film/cam-clearance-highlight.json`, 1,452 frames): 0 inside, 0 blocked.
+- Camera motion peaks (the metric did not exist before; baseline = the HEAD shot list through the same code): view-direction speed 128.1 deg/s (2.2) before, 96.7 deg/s (3.2, unchanged shot) now; view acceleration 317 deg/s^2 (2.2) before, 251.5 (3.2) now; 2.1 / 2.2 alone: 39.7 / 128.1 deg/s and 80 / 317 deg/s^2 before, 7.5 / 63.2 deg/s and 9.0 / 84.3 deg/s^2 now. NEW worst: zoom rate 1.18 1/s and zoom acceleration 1.96 1/s^2 in 2.6 (the pull-back from the 0.22 m servo close-up to a 2.3 m exploded view; the old worst was 0.69 / 0.98 in 2.5), pan acceleration 0.59 dist/s^2. Not removed: it follows from 2.5 ending on a close-up; a cut would need a seventh scene. Highlight: H1.1 peak view acceleration 392 deg/s^2 at its end (the cut stops the sampled path from 29 deg/s within 0.25 s, hidden by the dip; shot unchanged, not re-rendered). R-VID-04 has no numeric limit; these are the values for the reviewer.
+
+## Frames rendered (existing work folder `%TEMP%\a_film`, raw frames, 1080p60, 24 samples, 3 workers, ray tracing on, DOF and motion blur off, as `timing-T031-main.json`)
+
+`--changed-from` compares the old shot list (HEAD, saved copy) with the new one frame by frame (same shot fields, scene-local time and camera, azimuth mod 360) and renders only what differs: 801 of 7,194 frames (ranges 871-1019, 1021-1319, 1321-1439 and 2220-2453: end of 2.1, all of 2.2, start of 2.3, all of 2.6); 6,393 frames re-use an earlier raw picture (S3 to S6 moved 234 frames later). Wall 773 s (2.46 s per picture per worker; 801 new pictures `n_<frame>.png`; earlier raw frames not overwritten). Result: one consolidated map `%TEMP%\a_film\map_T030N.json` (7,194 entries, all raw files present); the old maps are in `%TEMP%\a_film\old_maps\`. Record: `film/timing-T030N-incremental.json`. Highlight: no frame changed (its raw frames in `%TEMP%\a_film_hl` and its maps are untouched; only its overlay changes).
+
+Preview: `film/preview-contact-T030N.png` (29 frames of the changed shots with the current overlay, viewed; the commit line on the card still reads "-dirty" there). Seen in it: dimension (1.2), 2.1 to 2.2 move, 2.6 explode, 3.1 arrow in both directions, 4.1 and 4.2 lower thirds, 5.2 tag and panel, closing card (one line taller, aircraft still visible above it).
+
+## Not verified / limits
+
+- The exploded view has no clearance rule between exploded parts (illustrative; offsets chosen for readability); the hub area is tight.
+- Arrow and dimension are 2-D marks over the picture (no depth test): the dimension line is in front of the wing by construction (z = 0.20 m), the arc can cross the servo.
+- The full films, clips and decode were NOT redone (conductor step below); the full-decode check of the review must be repeated on the new encodes.
+- N-3 (the "-dirty" revision line) closes only by rendering from a clean committed tree, below.
+
+## FINAL STEP for the conductor (NOT run here): overlay and encode from a clean committed tree
+
+1. Commit these changes and confirm `git status --porcelain --untracked-files=no` is empty (the card reads the hash from `git rev-parse` at draw time).
+2. Run in this order (absolute paths; `--skip-render` reads `%TEMP%\a_film\map_T030N.json`; main about 142 s overlay + 287 s encode):
+
+```
+python C:/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined/redesign/showcase/concept-a/render_build_a.py --shot-list C:/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined/redesign/showcase/concept-a/film/shots-main.json --skip-render --width 1920 --height 1080 --fps 60 --samples 24 --workers 3 --film-out C:/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined/redesign/showcase/concept-a/film/film-main-1080p60.mp4 --timing C:/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined/redesign/showcase/concept-a/film/timing-T030N-main.json
+
+python C:/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined/redesign/showcase/concept-a/render_build_a.py --shot-list C:/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined/redesign/showcase/concept-a/film/shots-highlight.json --skip-render --work C:/Users/dillo/AppData/Local/Temp/a_film_hl --width 1920 --height 1080 --fps 60 --samples 24 --workers 3 --film-out C:/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined/redesign/showcase/concept-a/film/film-highlight-1080p60.mp4 --timing C:/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined/redesign/showcase/concept-a/film/timing-T030N-highlight.json
+```
+
+3. Clips (the main run has just rewritten `film/clips/list-3.1.txt` and `list-3.2.txt` in its own picture names; encode from `%TEMP%\a_film`):
+
+```
+C:/Users/dillo/tools/blender/blender-4.5.14-windows-x64/blender.exe -b --factory-startup -P C:/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined/redesign/showcase/concept-a/render_build_a.py -- encode --src C:/Users/dillo/AppData/Local/Temp/a_film --list C:/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined/redesign/showcase/concept-a/film/clips/list-3.1.txt --out C:/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined/redesign/showcase/concept-a/film/clips/clip-elevon-linkage-3.1-servo-arm-rod-horn-1080p60.mp4 --crf MEDIUM --w 1920 --h 1080 --fps 60
+
+C:/Users/dillo/tools/blender/blender-4.5.14-windows-x64/blender.exe -b --factory-startup -P C:/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined/redesign/showcase/concept-a/render_build_a.py -- encode --src C:/Users/dillo/AppData/Local/Temp/a_film --list C:/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined/redesign/showcase/concept-a/film/clips/list-3.2.txt --out C:/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined/redesign/showcase/concept-a/film/clips/clip-elevon-linkage-3.2-horn-hinge-1080p60.mp4 --crf MEDIUM --w 1920 --h 1080 --fps 60
+```
+
+Expected: main 7,194 frames = 119.9 s; highlight 1,452 = 24.2 s; clip 3.1 708 frames = 11.8 s; clip 3.2 360 frames = 6.0 s. The final main run rewrites the two clip lists (same content as now unless the map changed). Commit the render products after the run, not before, so the card shows the code commit. Then repeat the full decode (`fulldecode.py` / `analyse.py` of the review) and view f3600, f4100, the closing card, one 2.6 frame and one 3.1 frame.
+Dry check done here: `--skip-render --lists-only` ran (names, clip lists, 6,738 overlay pictures planned, nothing drawn or encoded).
+
+Reproduce the partial render (needs the OLD shot list, `git show <commit before this pass>:redesign/showcase/concept-a/film/shots-main.json > old.json`, and the old maps in `%TEMP%\a_film` or `old_maps\`):
+`python render_build_a.py --shot-list film/shots-main.json --changed-from old.json --width 1920 --height 1080 --fps 60 --samples 24 --workers 3 --timing film/timing-T030N-incremental.json`

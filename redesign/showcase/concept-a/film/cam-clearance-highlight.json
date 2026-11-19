@@ -101,8 +101,108 @@
  },
  "frames_checked": 1452,
  "near_m": 0.05,
+ "cam_motion": {
+  "peak": {
+   "view_speed": {
+    "value": 40.65300973409618,
+    "unit": "deg/s",
+    "frame": 171,
+    "shot": "H1/H1.1"
+   },
+   "view_accel": {
+    "value": 391.7339248627965,
+    "unit": "deg/s^2",
+    "frame": 179,
+    "shot": "H1/H1.1"
+   },
+   "zoom_rate": {
+    "value": 0.10683882107360652,
+    "unit": "1/s",
+    "frame": 862,
+    "shot": "H5/H5.1"
+   },
+   "zoom_accel": {
+    "value": 1.1623979229399801,
+    "unit": "1/s^2",
+    "frame": 854,
+    "shot": "H5/H5.1"
+   },
+   "pan_speed": {
+    "value": 0.01766798222222099,
+    "unit": "dist/s",
+    "frame": 1222,
+    "shot": "H7/H7.1"
+   },
+   "pan_accel": {
+    "value": 0.19919360000005604,
+    "unit": "dist/s^2",
+    "frame": 1214,
+    "shot": "H7/H7.1"
+   }
+  },
+  "per_shot": {
+   "H1/H1.1": {
+    "view_speed": 40.653,
+    "zoom_rate": 0.0,
+    "pan_speed": 0.0,
+    "view_accel": 391.734,
+    "zoom_accel": 0.0,
+    "pan_accel": 0.0
+   },
+   "H2/H2.1": {
+    "view_speed": 3.859,
+    "zoom_rate": 0.031,
+    "pan_speed": 0.001,
+    "view_accel": 38.051,
+    "zoom_accel": 0.3,
+    "pan_accel": 0.01
+   },
+   "H3/H3.1": {
+    "view_speed": 4.229,
+    "zoom_rate": 0.072,
+    "pan_speed": 0.0,
+    "view_accel": 41.159,
+    "zoom_accel": 0.699,
+    "pan_accel": 0.0
+   },
+   "H4/H4.1": {
+    "view_speed": 1.847,
+    "zoom_rate": 0.057,
+    "pan_speed": 0.0,
+    "view_accel": 19.896,
+    "zoom_accel": 0.549,
+    "pan_accel": 0.0
+   },
+   "H5/H5.1": {
+    "view_speed": 5.283,
+    "zoom_rate": 0.107,
+    "pan_speed": 0.0,
+    "view_accel": 57.492,
+    "zoom_accel": 1.162,
+    "pan_accel": 0.0
+   },
+   "H6/H6.1": {
+    "view_speed": 13.833,
+    "zoom_rate": 0.03,
+    "pan_speed": 0.0,
+    "view_accel": 131.974,
+    "zoom_accel": 0.287,
+    "pan_accel": 0.0
+   },
+   "H7/H7.1": {
+    "view_speed": 8.68,
+    "zoom_rate": 0.0,
+    "pan_speed": 0.018,
+    "view_accel": 92.722,
+    "zoom_accel": 0.0,
+    "pan_accel": 0.199
+   }
+  },
+  "fps": 60,
+  "note": "view = camera direction as a unit vector; speeds from the per-frame difference (no smoothing); a scene join is not a pair"
+ },
  "frames_inside_any_part": 0,
- "seconds": 0.7,
+ "seconds": 0.8,
  "mech": {
   "gap_max": 1.4918267221554095e-05,
   "len_err_max": 3.4776020972626664e-08,
