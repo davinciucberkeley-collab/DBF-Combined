@@ -313,7 +313,7 @@ def moving_frames(rows, total):
 # short film (T-027): shot list -> scenes of shots; pure functions shared by the Blender worker and the driver
 # =====================================================================================================================
 PARAMS_A = os.path.join(REDESIGN, 'qp', 'A', 'params-A.json')
-FILM_MODES = ('normal', 'ghost', 'fab', 'move', 'hidden')
+FILM_MODES = ('normal', 'ghost', 'fab', 'fab50', 'move', 'hidden')      # fab50 (T-030 M-8): fabricated-part teal at 50 % opacity, for a part whose inside must stay visible
 
 
 def param_value(path):
@@ -352,7 +352,7 @@ def load_film(path, scene_ids=None):
                     if tk == st and last is not None and max(abs(a - b) for a, b in zip(c, last)) < 1e-9:
                         continue              # the shot restates the camera it starts from: same key
                     raise ValueError('%s shot %s: camera key at %.2f s is not after the previous key (%s) - a cut inside a scene is not allowed' % (sc['id'], sh['id'], tk, last))
-                S['keys'].append((tk, c))
+                S['keys'].append((tk, c, True) if kf.get('hold') else (tk, c))      # hold: zero camera velocity at this key (T-030: the camera stops at the end view of 3.2 instead of overshooting it)
             if n == 0 and (not S['keys'] or S['keys'][0][0] != 0.0):
                 raise ValueError('%s: the first shot needs a camera key at t = 0' % sc['id'])
             st = sh['t1']
@@ -367,6 +367,7 @@ def hermite_cam(keys, tl):
     """Camera (tx, ty, tz, az, el, dist) at scene time tl: cubic Hermite through the keys with Catmull-Rom tangents (distance interpolated
     geometrically, as lerp_cam does), zero velocity only at the first and last key, so shot joins inside a scene have no velocity jump."""
     ts = [k[0] for k in keys]
+    hold = [len(k) > 2 and bool(k[2]) for k in keys]
     ps = [list(k[1][:5]) + [math.log(k[1][5])] for k in keys]
     n = len(ts)
     if n == 1:
@@ -382,7 +383,7 @@ def hermite_cam(keys, tl):
         h = ts[i + 1] - ts[i]
 
         def tan(j):
-            if j <= 0 or j >= n - 1:
+            if j <= 0 or j >= n - 1 or hold[j]:
                 return [0.0] * 6
             return [(ps[j + 1][m] - ps[j - 1][m]) / (ts[j + 1] - ts[j - 1]) for m in range(6)]
         m0, m1 = tan(i), tan(i + 1)
@@ -564,11 +565,48 @@ def np_prod(expr):
     return r
 
 
+def sitl_sum(run):
+    """sum.json of an executed SITL run (read at draw time)."""
+    return json.load(open(os.path.join(SITL_DIR, 'runs', run, 'sum.json'), encoding='utf-8'))
+
+
+_GIT = {}
+
+
+def git_rev():
+    """Short hash of HEAD, '-dirty' if the working tree has uncommitted changes ('—' if git is not available): printed on the closing card (R-VID-08 revision tag)."""
+    if 'rev' not in _GIT:
+        try:
+            rev = subprocess.run(['git', '-C', REDESIGN, 'rev-parse', '--short', 'HEAD'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, check=True).stdout.strip()
+            dirty = subprocess.run(['git', '-C', REDESIGN, 'status', '--porcelain', '--untracked-files=no'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, check=True).stdout.strip()
+            _GIT['rev'] = rev + ('-dirty' if dirty else '')
+        except Exception:
+            _GIT['rev'] = '—'
+    return _GIT['rev']
+
+
 def src_val(spec):
-    """Number from a result file: {file (relative to out_fea), path [keys; '@X' picks the list item whose 'case' starts with X], maxkey (max over the children of a dict of that key),
-    times (const name), div (const name)} or {const: name}."""
-    if 'const' in spec:
+    """Number (or text) from a record, read at draw time. Kinds: {file (relative to out_fea), path [keys; '@X' picks the list item whose 'case' starts with X], maxkey (max over the
+    children of a dict of that key)}; {const: name} (fea_arm.py); {param: 'a/b'} (params-A.json); {npz: file, key, reduce: nanmax | pct_over1} (arrays of out_fea; pct_over1 = % of the finite
+    entries above 1); {sum: run, path} (sitl/runs/<run>/sum.json); {calc: 'a*b+c', of: {a: spec, ...}}; {git: 'rev'}. Optional: times / div (const names, fea_arm.py)."""
+    if 'git' in spec:
+        return git_rev()
+    if 'calc' in spec:
+        v = eval(spec['calc'], {'__builtins__': {}}, {k_: src_val(q_) for k_, q_ in spec['of'].items()})
+    elif 'const' in spec:
         v = fea_const(spec['const'])
+    elif 'param' in spec:
+        v = param_value(spec['param'])
+    elif 'npz' in spec:
+        import numpy as np
+        z = np.load(os.path.join(FEA_OUT, spec['npz']), allow_pickle=False)
+        arr = z[spec['key']]
+        fin = arr[np.isfinite(arr)]
+        v = float(fin.max()) if spec.get('reduce', 'nanmax') == 'nanmax' else 100.0 * float((fin > 1.0).sum()) / float(fin.size)
+    elif 'sum' in spec:
+        v = sitl_sum(spec['sum'])
+        for k in spec['path']:
+            v = v[k]
     else:
         o = json.load(open(os.path.join(FEA_OUT, spec['file']), encoding='utf-8'))
         for k in spec['path']:
@@ -582,6 +620,34 @@ def src_val(spec):
     if spec.get('div'):
         v /= fea_const(spec['div'])
     return v
+
+
+def source_hashes(film):
+    """SHA-256 (and size) of every record file the film reads from the git-ignored folders (sitl/runs, out_fea): printed into timing.json so a render can be traced to its sources (T-030 M-5)."""
+    import hashlib
+    paths = set()
+    for S in film['scenes']:
+        for sh in S['shots']:
+            if sh.get('sitl'):
+                for fn in ('case.fwd.csv', 'sum.json', 'result.json'):
+                    paths.add(os.path.join(SITL_DIR, 'runs', sh['sitl']['run'], fn))
+            if sh.get('fea'):
+                paths.add(os.path.join(FEA_OUT, sh['fea']['glb']))
+            for v in list(sh.get('vals', {}).values()) + list(sh.get('card', {}).get('vals', {}).values()):
+                for q in ([v] + list(v.get('of', {}).values())):
+                    if 'file' in q:
+                        paths.add(os.path.join(FEA_OUT, q['file']))
+                    if 'npz' in q:
+                        paths.add(os.path.join(FEA_OUT, q['npz']))
+    out = {}
+    for pth in sorted(paths):
+        if os.path.exists(pth):
+            h = hashlib.sha256()
+            with open(pth, 'rb') as f_:
+                for chunk in iter(lambda: f_.read(1 << 20), b''):
+                    h.update(chunk)
+            out[os.path.relpath(pth, REDESIGN).replace(os.sep, '/')] = dict(sha256=h.hexdigest(), bytes=os.path.getsize(pth))
+    return out
 
 
 # =====================================================================================================================
@@ -901,8 +967,9 @@ def blender_render(argv):
     MATS = {'move': bb._principled('moving part', bb.srgb('#E0661A'), 0.45),
             'fab': bb._principled('fabricated part', bb.srgb('#13897F'), 0.45),
             'ghost': bb._principled('ghost part', bb.srgb('#8FA6C0'), 0.5, alpha=0.20),
-            'ghost_spar': bb._principled('ghost spar', bb.srgb('#2E4A6B'), 0.3, metal=0.2, alpha=0.38)}
-    for m_ in (MATS['ghost'], MATS['ghost_spar']):          # see-through parts must not shadow what they hide
+            'ghost_spar': bb._principled('ghost spar', bb.srgb('#2E4A6B'), 0.3, metal=0.2, alpha=0.38),
+            'fab50': bb._principled('fabricated part, half see-through', bb.srgb('#13897F'), 0.45, alpha=0.5)}
+    for m_ in (MATS['ghost'], MATS['ghost_spar'], MATS['fab50']):          # see-through parts must not shadow what they hide
         if hasattr(m_, 'use_transparent_shadow'):
             m_.use_transparent_shadow = True
     tint_state = {}
@@ -1092,9 +1159,63 @@ def blender_render(argv):
                 tr['cu'].bevel_factor_start = arc(tlog - 12.0)                  # a 12 s tail of log time behind the aircraft
                 tr['cu'].bevel_factor_end = arc(tlog)
 
+        # ---- T-030 M-6: props turn in the SIMULATED flight. ILLUSTRATIVE rate (not the plant's RPM, which the run does not log): a fixed step per frame, not a divisor of the 180 deg blade
+        # symmetry, so a 60 fps film does not strobe; a prop turns only while the LOGGED thrust of its motor (th1..th4 of case.fwd.csv) is above 0.05 N. The real blade, adapter and spinner
+        # meshes (PRP-002, PRP-004, PRP-005) turn about the motor axis (amodel.common.motor_R / station); the motor body (PRP-001) is a body of revolution and stays.
+        SPIN_DEG_S = 47.0 * 60.0                                         # 47 deg per frame at 60 fps
+        SPIN_MOTOR = {'LR': 'th1', 'UL': 'th2', 'LL': 'th3', 'UR': 'th4'}       # a_plant.py mot order: 1 FR (CAD lower right), 2 RL (upper left), 3 FL (lower left), 4 RR (upper right)
+        SPIN_MIN_N = 0.05
+        CM = next((m_ for m_ in list(sys.modules.values()) if m_ is not None and all(callable(getattr(m_, n_, None)) for n_ in ('motor_R', 'station', 'mrot'))), None)
+        if CM is None:
+            sys.path.insert(0, CAD_A)
+            from amodel import common as CM
+
+        def spin_mats(sh, tl):
+            q = sh['sitl']
+            tlog = sitl_clock(sh, tl)
+            a_ = sitl_at(q['run'], tlog)
+            out = {}
+            for st_, col in SPIN_MOTOR.items():
+                if a_[col] <= SPIN_MIN_N:
+                    continue
+                R_ = CM.motor_R(st_)
+                ax_ = Vector((R_[0][0], R_[1][0], R_[2][0]))                      # motor axis (local +x in the station frame; the prop sits on the -x side, thrust along -x)
+                sense = -1.0 if st_ in ('UR', 'LL') else 1.0                      # APC MRP (UR, LL) turns clockwise seen from the thrust side, MR counter-clockwise (propulsion.py MRP)
+                ang = -sense * math.radians(SPIN_DEG_S * tl)                 # phase from the scene time (continuous over the S4 shots); + about the thrust axis (-x) is counter-clockwise seen from its tip
+                M_ = rax(ax_, CM.station(st_), ang)
+                for pre in ('PRP-002-', 'PRP-004-', 'PRP-005-'):
+                    out[pre + st_] = M_
+            return out
+
+        HINGE = {}
+
+        def hinge_objs():
+            """3.2: the hinge axes (right and left) as thin orange rods along the elevon span, through (XH, HINGE_Z), so that 'the horn hole sits over the hinge line' can be seen (T-030 M-8)."""
+            if not HINGE:
+                import bmesh
+                G = load_kin()['geom']
+                ys = [(rest['WNG-006-R'] @ Vector(c_)).y for c_ in items['WNG-006-R'].bound_box]
+                y0, y1 = min(ys), max(ys)
+                for sy_ in (1, -1):
+                    me = bpy.data.meshes.new('hinge axis')
+                    bm = bmesh.new()
+                    bmesh.ops.create_cone(bm, cap_ends=True, segments=12, radius1=0.0009, radius2=0.0009, depth=y1 - y0, matrix=Matrix.Rotation(math.pi / 2, 4, 'X'))
+                    bm.to_mesh(me)
+                    bm.free()
+                    me.materials.append(MATS['move'])
+                    ob = bpy.data.objects.new('hinge axis', me)
+                    sc.collection.objects.link(ob)
+                    ob.location = Vector((G['XH'], sy_ * (y0 + y1) / 2, G['HINGE_Z']))
+                    ob.hide_render = True
+                    HINGE[sy_] = ob
+            return HINGE
+
         def shot_pose(sh, tl):
             """(mm, mst, air): world motion matrix per CAD part (mechanism poses, and for a SITL shot the aircraft pose on top), mechanism state, aircraft pose."""
             mm, mst = mech_mats(sh, tl)
+            if sh.get('props_spin') and sh.get('sitl'):
+                mm = dict(mm)
+                mm.update(spin_mats(sh, tl))
             air = sitl_pose(sh, tl) if sh.get('sitl') else None
             if air:
                 mm = {pid: air['M'] @ mm.get(pid, Matrix.Identity(4)) for pid in items}
@@ -1131,6 +1252,10 @@ def blender_render(argv):
             for nm_, objs_ in FEA_OBJS.items():
                 for o_ in objs_:
                     o_.hide_render = (sh.get('fea', {}).get('glb') != nm_)
+            if sh.get('hinge_line'):
+                hinge_objs()
+            for ob_ in HINGE.values():
+                ob_.hide_render = not sh.get('hinge_line')
             if air and not trail:
                 trail_obj(sh['sitl']['run'], sh['sitl'].get('trail_from', 33.5))
             if trail:
@@ -1162,7 +1287,8 @@ def blender_render(argv):
                 blob_op.default_value = 0.0 if below else 0.35
             bpy.context.view_layer.update()
             return (tuple(sorted(vis.items())), tuple(round(v, 4) for v in cam_c), None if mst is None else (round(mst['theta_R'], 3), round(mst['delta'], 3), round(mst.get('delta_L', mst['delta']), 3)),
-                    None if air is None else tuple(round(x, 5) for r_ in air['M'] for x in r_), sh['id'] if (sh.get('fea') or sh.get('plate')) else None)
+                    None if air is None else tuple(round(x, 5) for r_ in air['M'] for x in r_), sh['id'] if (sh.get('fea') or sh.get('plate')) else None,
+                    tuple(round(x, 4) for r_ in mm['PRP-002-UR'] for x in r_) if (sh.get('props_spin') and 'PRP-002-UR' in mm) else None, bool(sh.get('hinge_line')))
 
         if a.cam_check:
             # ---- T-028: camera against the mesh, EVERY frame: (1) camera inside any visible part (closed-mesh ray parity), (2) distance to the nearest surface,
@@ -2049,17 +2175,30 @@ def film_overlay(src, dst, f, sw, sh):
         run = shot['sitl']['run']
         tlog = sitl_clock(shot, tl)
         a_ = sitl_at(run, tlog)
-        rows_ = [('Pitch (nose up +)', '%+6.1f deg' % a_['pitch']), ('Altitude (CG)', '%6.1f m' % a_['alt']), ('Airspeed', '%6.1f m/s' % a_['V'])]
-        bw, bh_ = 420 * k, 232 * k
+        sm_ = sitl_sum(run)
+        rows_ = [('Pitch (nose up +)', '%+6.1f deg' % a_['pitch']), ('Altitude (CG)', '%6.1f m' % a_['alt']), ('Airspeed', '%6.1f m/s' % a_['V']),
+                 ('Elevon left / right', '%+5.1f / %+5.1f deg' % (a_['dl'], a_['dr']))]
+        notes_ = [('Log time %6.1f s   time scale x%.1f' % (tlog, sitl_scale(shot)), INK),
+                  ('Run %s: %.2f kg, wind %.0f m/s (sum.json)' % (run, sm_['mass'], sm_['wind']), MUTED),
+                  (shot['sitl'].get('note', ''), MUTED),
+                  ('Prop rotation illustrative, not to rate' if shot.get('props_spin') else '', MUTED)]
+        ld_ = sm_.get('landing')
+        if shot['sitl'].get('landing_note') and ld_ and tlog >= ld_['t_touch']:
+            notes_.append(('Touch-down at %.1f s: sink %.2f m/s, lean %.1f deg, tipped over: %s (sum.json)' % (ld_['t_touch'], ld_['sink_ms'], ld_['lean_deg_at_touch'], 'yes' if ld_['tipped_over'] else 'no'), INK))
+        bw = 520 * k
+        wl_ = []
+        for tx_, col_ in notes_:
+            if tx_:
+                wl_ += [(ln_, col_) for ln_ in wrap(d, tx_, F['mono'], bw - 36 * k)]
+        bh_ = (12 + len(rows_) * 34 + 10 + 22 * len(wl_) + 12) * k
         bx1, by1 = x1, sh - 44 * k
         d.rounded_rectangle((bx1 - bw, by1 - bh_, bx1, by1), radius=int(8 * k), fill=(255, 255, 255, 240), outline=(203, 210, 219, 255))
         for i_, (lab_, val_) in enumerate(rows_):
             d.text((bx1 - bw + 18 * k, by1 - bh_ + 12 * k + i_ * 34 * k), lab_, font=F['h2'], fill=SUB + (255,))
             d.text((bx1 - 18 * k - d.textlength(val_, font=F['h1']), by1 - bh_ + 10 * k + i_ * 34 * k), val_, font=F['h1'], fill=INK + (255,))
-        yb_ = by1 - bh_ + 12 * k + 3 * 34 * k + 6 * k
-        d.text((bx1 - bw + 18 * k, yb_), 'Log time %6.1f s   time scale x%.1f' % (tlog, sitl_scale(shot)), font=F['mono'], fill=INK + (255,))
-        d.text((bx1 - bw + 18 * k, yb_ + 26 * k), 'Run %s, case.fwd.csv (executed run)' % run, font=F['mono'], fill=MUTED + (255,))
-        d.text((bx1 - bw + 18 * k, yb_ + 48 * k), 'qp/A/sitl/runs/%s/' % run, font=F['mono'], fill=MUTED + (255,))
+        yb_ = by1 - bh_ + 12 * k + len(rows_) * 34 * k + 6 * k
+        for j_, (ln_, col_) in enumerate(wl_):
+            d.text((bx1 - bw + 18 * k, yb_ + j_ * 22 * k), ln_, font=F['mono'], fill=col_ + (255,))
     if shot.get('readout'):              # T-029: FEA numbers read from the result files (rows: label, value format, name in shot vals)
         ro = shot['readout']
         n_ = len(ro['rows'])
@@ -2112,7 +2251,18 @@ def film_overlay(src, dst, f, sw, sh):
     card = shot.get('card')
     if card:
         lines = card.get('lines', [])
-        bh = (96 + 38 * len(lines) + 34) * k
+        rows_c, cites = [], []
+        for ln in lines:                          # value lines: a params-A.json key, or a text over values read from records at draw time (T-030 M-2: every line cites its record)
+            if 'key' in ln:
+                rows_c.append((ln['label'], ln['fmt'] % param_value(ln['key'])))
+                cites.append('params-A.json ' + ln['key'])
+            else:
+                lv = {n_: src_val(sp_) for n_, sp_ in ln.get('vals', {}).items()}
+                rows_c.append((ln['label'], ln['text'].format(**lv)))
+                if ln.get('cite'):
+                    cites.append(ln['cite'])
+        foot = wrap(dl, 'Sources: ' + '; '.join(cites), F['mono'], x1 - x0 - 60 * k)[:4]
+        bh = (96 + 36 * len(rows_c) + 12 + 22 * len(foot) + 18) * k
         y1_ = sh - 40 * k
         y0_ = y1_ - bh
         dl.rounded_rectangle((x0, y0_, x1, y1_), radius=int(12 * k), fill=(255, 255, 255, 246), outline=(203, 210, 219, 255))
@@ -2120,14 +2270,12 @@ def film_overlay(src, dst, f, sw, sh):
         dl.text((x0 + 30 * k, y0_ + 16 * k), card.get('kicker', ''), font=F['mono'], fill=ORANGE + (255,))
         dl.text((x0 + 30 * k, y0_ + 40 * k), card['name'], font=F['big'], fill=INK + (255,))
         y = y0_ + 100 * k
-        cites = []
-        for ln in lines:
-            v = param_value(ln['key'])
-            dl.text((x0 + 30 * k, y), ln['label'], font=F['h2'], fill=SUB + (255,))
-            dl.text((x0 + 330 * k, y), ln['fmt'] % v, font=F['h1'], fill=INK + (255,))
-            cites.append(ln['key'])
-            y += 38 * k
-        dl.text((x0 + 30 * k, y + 4 * k), 'qp/A/params-A.json: ' + ', '.join(cites), font=F['mono'], fill=MUTED + (255,))
+        for lab_, txt_ in rows_c:
+            dl.text((x0 + 30 * k, y + 2 * k), lab_, font=F['h2'], fill=SUB + (255,))
+            dl.text((x0 + 400 * k, y), txt_, font=F['h2'], fill=INK + (255,))
+            y += 36 * k
+        for j_, ln_ in enumerate(foot):
+            dl.text((x0 + 30 * k, y + 8 * k + j_ * 22 * k), ln_, font=F['mono'], fill=MUTED + (255,))
     elif shot.get('title'):
         sub = wrap(dl, shot.get('sub', '').format(**vals) if vals else shot.get('sub', ''), F['body'], sw * (0.86 if shot.get('plate') else 0.40 if shot.get('readout') else 0.55))[:3]
         bh = (40 + 32 + 26 * len(sub)) * k
@@ -2139,11 +2287,40 @@ def film_overlay(src, dst, f, sw, sh):
         dl.text((x0 + 24 * k, y0_ + 12 * k), shot['title'], font=F['h1'], fill=INK + (255,))
         for i, q in enumerate(sub):
             dl.text((x0 + 24 * k, y0_ + 50 * k + i * 26 * k), q, font=F['body'], fill=SUB + (255,))
-    a_ = max(0.0, min(1.0, (tl - shot['t0']) / 0.4, (shot['t1'] - tl) / 0.4)) if shot.get('title') and not card else 1.0
+    a_ = shot_fade(shot, tl) / 12.0
     if a_ < 1.0:
         ll.putalpha(ll.getchannel('A').point(lambda v: int(v * a_)))
     lay = Image.alpha_composite(lay, ll)
-    Image.alpha_composite(im, lay).convert('RGB').save(dst, optimize=False, compress_level=1)
+    out = Image.alpha_composite(im, lay).convert('RGB')
+    dp = dip_level(film, t)
+    if dp > 0:                                    # T-030 m-1: a 0.4 s dip to the stage colour around each scene join (0.2 s either side), done here so it costs no Blender time
+        out = Image.blend(out, Image.new('RGB', out.size, DIP_RGB), min(1.0, dp / 12.0))
+    out.save(dst, optimize=False, compress_level=1)
+
+
+DIP_RGB = (240, 243, 247)
+DIP_S = 0.2
+
+
+def shot_fade(shot, tl):
+    """Opacity of a shot's lower third / card in twelfths: 0.4 s fade in and out for a title, 0.4 s fade in for the closing card (T-030 m-1)."""
+    if shot.get('card'):
+        return round(max(0.0, min(1.0, (tl - shot['t0'] + shot.get('fade_src_a', 0.0)) / 0.4)) * 12)       # fade_src_a: the highlight cut starts inside the source shot, whose card has already faded in
+    if shot.get('title'):
+        return round(max(0.0, min(1.0, (tl - shot['t0']) / 0.4, (shot['t1'] - tl) / 0.4)) * 12)
+    return 12
+
+
+def dip_level(film, t):
+    """Dip to the stage colour in twelfths at film time t: 12 at a scene join, 0 DIP_S s away on either side (not at the very start and end of the film)."""
+    lv = 0.0
+    for i, S in enumerate(film['scenes']):
+        if i > 0:
+            lv = max(lv, 1.0 - (t - S['t0']) / DIP_S) if 0 <= t - S['t0'] < DIP_S else lv
+        if i < len(film['scenes']) - 1:
+            e = S['t0'] + S['dur']
+            lv = max(lv, 1.0 - (e - t) / DIP_S) if 0 < e - t <= DIP_S else lv
+    return round(lv * 12)
 
 
 def _film_job(args):
@@ -2254,8 +2431,8 @@ def film_driver(a):
     keys, jobs, name_of = {}, [], {}
     for f in frames:
         S, shot, tl = film_at(film, f / FPS)
-        fade = round(max(0.0, min(1.0, (tl - shot['t0']) / 0.4, (shot['t1'] - tl) / 0.4)) * 12) if shot.get('title') else 0
-        key = (fmap[f]['raw'], S['id'], shot['id'], fade, f if shot.get('sitl') else 0)
+        fade = shot_fade(shot, tl)
+        key = (fmap[f]['raw'], S['id'], shot['id'], fade, dip_level(film, f / FPS), f if shot.get('sitl') else 0)
         if key not in keys:
             keys[key] = 'lab_%05d.png' % len(keys)
             jobs.append((os.path.join(work, fmap[f]['raw']), os.path.join(work, keys[key]), f, sw, sh))
@@ -2282,7 +2459,7 @@ def film_driver(a):
                  dict(film=os.path.basename(a.shot_list), scenes=[S['id'] for S in film['scenes']], film_seconds=round(film['total'], 2), frames=nfr, frames_mapped=len(frames), every=every,
                       rendered=rendered, overlay_pictures=len(jobs), seconds=round(time.time() - t0, 1), seconds_render=round(t_render, 1), seconds_overlay=round(t_overlay, 1),
                       seconds_encode=round(t_enc, 1), seconds_blender_start_and_frames=round(t_render, 1), seconds_frame_loop_per_worker=[round(x, 1) for x in frame_s], seconds_per_rendered_frame=round(sum(frame_s) / max(1, rendered), 2), workers=nw, samples=a.samples,
-                      resolution=[W, H], fps=FPS, dof=a.dof, motion_blur=a.motion_blur, ray_tracing=not getattr(a, 'no_rt', False), preview=bool(a.preview)))
+                      resolution=[W, H], fps=FPS, dof=a.dof, motion_blur=a.motion_blur, ray_tracing=not getattr(a, 'no_rt', False), preview=bool(a.preview), sources=source_hashes(film)))
 
 
 def driver():

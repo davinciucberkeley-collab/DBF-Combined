@@ -1,7 +1,7 @@
 {
  "shots": {
   "S1/1.1": {
-   "frames": 300,
+   "frames": 240,
    "inside_frames": 0,
    "inside_parts": {},
    "min_clear_m": null,
@@ -15,7 +15,7 @@
    "worst_block_ratio": 1.0
   },
   "S1/1.2": {
-   "frames": 300,
+   "frames": 240,
    "inside_frames": 0,
    "inside_parts": {},
    "min_clear_m": null,
@@ -29,7 +29,7 @@
    "worst_block_ratio": 1.0
   },
   "S1/1.3": {
-   "frames": 300,
+   "frames": 240,
    "inside_frames": 0,
    "inside_parts": {},
    "min_clear_m": null,
@@ -61,7 +61,7 @@
    "inside_frames": 0,
    "inside_parts": {},
    "min_clear_m": 0.1408,
-   "min_clear_f": 1256,
+   "min_clear_f": 1076,
    "min_clear_part": "PRP-002-UL",
    "blocked_frames": 10,
    "blockers": {
@@ -69,7 +69,7 @@
    },
    "first_inside": null,
    "last_inside": null,
-   "worst_block_f": 1275,
+   "worst_block_f": 1095,
    "worst_block_ratio": 0.844
   },
   "S2/2.3": {
@@ -105,7 +105,7 @@
    "inside_frames": 0,
    "inside_parts": {},
    "min_clear_m": 0.1653,
-   "min_clear_f": 2342,
+   "min_clear_f": 2162,
    "min_clear_part": "WNG-006-R",
    "blocked_frames": 0,
    "blockers": {},
@@ -118,9 +118,9 @@
    "frames": 720,
    "inside_frames": 0,
    "inside_parts": {},
-   "min_clear_m": 0.2981,
-   "min_clear_f": 3119,
-   "min_clear_part": "WNG-006-R",
+   "min_clear_m": 0.2614,
+   "min_clear_f": 2495,
+   "min_clear_part": "WNG-006-L",
    "blocked_frames": 0,
    "blockers": {},
    "first_inside": null,
@@ -133,7 +133,7 @@
    "inside_frames": 0,
    "inside_parts": {},
    "min_clear_m": 0.0679,
-   "min_clear_f": 3479,
+   "min_clear_f": 3030,
    "min_clear_part": "WNG-001",
    "blocked_frames": 0,
    "blockers": {},
@@ -157,7 +157,7 @@
    "worst_block_ratio": 1.0
   },
   "S4/4.2": {
-   "frames": 720,
+   "frames": 600,
    "inside_frames": 0,
    "inside_parts": {},
    "min_clear_m": null,
@@ -241,7 +241,7 @@
    "worst_block_ratio": 1.0
   },
   "S5/5.3": {
-   "frames": 360,
+   "frames": 420,
    "inside_frames": 0,
    "inside_parts": {},
    "min_clear_m": null,
@@ -255,7 +255,7 @@
    "worst_block_ratio": 1.0
   },
   "S6/6.1": {
-   "frames": 420,
+   "frames": 300,
    "inside_frames": 0,
    "inside_parts": {},
    "min_clear_m": null,
@@ -283,14 +283,14 @@
    "worst_block_ratio": 1.0
   }
  },
- "frames_checked": 7320,
+ "frames_checked": 6960,
  "near_m": 0.05,
  "frames_inside_any_part": 0,
  "seconds": 1.8,
  "mech": {
   "gap_max": 1.4918267221554095e-05,
   "len_err_max": 3.5690116251263504e-08,
-  "n": 3060
+  "n": 2940
  },
  "selftest": {
   "WNG-006-R": {

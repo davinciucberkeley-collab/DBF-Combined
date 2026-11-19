@@ -7,7 +7,7 @@
    "shots": [
     {
      "id": "1.1",
-     "dur": 5.0,
+     "dur": 4.0,
      "title": "Concept A",
      "sub": "Quad tailsitter VTOL: a flying wing with two fins and four fixed motors in an X.",
      "cam": [
@@ -23,7 +23,7 @@
        "dist": 1.8
       },
       {
-       "t": 5,
+       "t": 4,
        "target": [
         0.1,
         0,
@@ -37,12 +37,12 @@
     },
     {
      "id": "1.2",
-     "dur": 5.0,
+     "dur": 4.0,
      "title": "One piece, 0.90 m wing",
      "sub": "Packed 0.90 x 0.50 x 0.39 m with props on (params-A.json box/packed_m).",
      "cam": [
       {
-       "t": 5,
+       "t": 4,
        "target": [
         0.1,
         0,
@@ -56,12 +56,12 @@
     },
     {
      "id": "1.3",
-     "dur": 5.0,
+     "dur": 4.0,
      "title": "The live CAD",
-     "sub": "113 modelled parts, no stand-in geometry (params-A.json cad3d/parts).",
+     "sub": "{n:.0f} modelled parts: every part is modelled, unknown vendor dimensions are marked EST (params-A.json cad3d/parts).",
      "cam": [
       {
-       "t": 5,
+       "t": 4,
        "target": [
         0.1,
         0,
@@ -71,7 +71,12 @@
        "el": 36,
        "dist": 1.8
       }
-     ]
+     ],
+     "vals": {
+      "n": {
+       "param": "cad3d/parts"
+      }
+     }
     }
    ]
   },
@@ -158,7 +163,7 @@
      "id": "2.3",
      "dur": 5.0,
      "title": "Hub and arm interfaces",
-     "sub": "PETG hub, carbon arms 12 x 10, motor cups (CGE-001, CGE-002, CGE-003).",
+     "sub": "PETG hub, carbon arms 12 x 10, motor cups (CGE-001, CGE-002, CGE-003). Cut-away: props, pack, avionics and leads hidden.",
      "cam": [
       {
        "t": 2.0,
@@ -235,7 +240,7 @@
      "id": "2.5",
      "dur": 5.0,
      "title": "Control surface",
-     "sub": "Servo EMAX ES3054HV, arm, pushrod, horn and elevon (MEC-001 to MEC-005, WNG-006).",
+     "sub": "Servo EMAX ES3054HV, arm, pushrod, horn and elevon (MEC-001 to MEC-005, MEC-008, WNG-006). Cut-away: other parts and leads hidden.",
      "modes": {
       "WNG-001": "ghost"
      },
@@ -295,7 +300,7 @@
       "MEC-005": "move"
      },
      "title": "Servo arm, rod and horn",
-     "sub": "The servo arm pushes the rod, the rod turns the horn, the horn turns the elevon: -21 to +21 deg.",
+     "sub": "The servo arm pushes the rod, the rod turns the horn, the horn turns the elevon, to the 21 deg mechanical stops (flight limit 20 deg, wing.py ELEV_LIM).",
      "mech": {
       "sweep": [
        [
@@ -340,8 +345,8 @@
         0.2,
         0.0
        ],
-       "az": 150,
-       "el": 50,
+       "az": 135,
+       "el": 30,
        "dist": 0.42
       },
       {
@@ -351,8 +356,8 @@
         0.2,
         0.0
        ],
-       "az": 175,
-       "el": 42,
+       "az": 165,
+       "el": 24,
        "dist": 0.34
       }
      ]
@@ -369,7 +374,7 @@
      ],
      "modes": {
       "WNG-001": "ghost",
-      "WNG-006": "ghost",
+      "WNG-006": "fab50",
       "WNG-007": "hidden",
       "WNG-008": "hidden",
       "WNG-009": "hidden",
@@ -380,7 +385,7 @@
       "MEC-005": "move"
      },
      "title": "Horn and hinge",
-     "sub": "Seen from the wing tip side (balance strip and damper hidden): the horn hole sits over the hinge line.",
+     "sub": "Seen from the wing tip side (balance strip and damper hidden; elevon half see-through): the horn hole sits over the hinge axis, drawn in orange.",
      "mech": {
       "sweep": [
        [
@@ -388,27 +393,27 @@
         0
        ],
        [
-        0.5,
+        1.5,
         0
-       ],
-       [
-        2.0,
-        -21
        ],
        [
         2.5,
         -21
        ],
        [
-        4.0,
-        21
+        3.0,
+        -21
        ],
        [
         4.5,
         21
        ],
        [
-        5.5,
+        5.0,
+        21
+       ],
+       [
+        5.8,
         0
        ],
        [
@@ -418,6 +423,18 @@
       ]
      },
      "cam": [
+      {
+       "t": 1.5,
+       "hold": true,
+       "target": [
+        0.175,
+        0.195,
+        0.004
+       ],
+       "az": 270,
+       "el": 16,
+       "dist": 0.24
+      },
       {
        "t": 6,
        "target": [
@@ -429,7 +446,8 @@
        "el": 16,
        "dist": 0.24
       }
-     ]
+     ],
+     "hinge_line": true
     }
    ]
   },
@@ -440,14 +458,15 @@
     {
      "id": "4.1",
      "dur": 7.0,
-     "tag": "SIMULATED: ArduPilot SITL run Z5_gb0",
+     "tag": "SIMULATED: ArduPilot SITL run Z5_gb0, a_plant.py plant model (EST aero)",
      "los": false,
      "follow": true,
      "sitl": {
       "run": "Z5_gb0",
       "t0": 31.0,
       "t1": 98.0,
-      "trail_from": 33.5
+      "trail_from": 33.5,
+      "note": "Run file 2026-11-15, geometry before D-207; SITL with the a_plant.py plant (EST aero)."
      },
      "mech": {
       "from_log": true
@@ -477,19 +496,21 @@
        "el": 22,
        "dist": 3.6
       }
-     ]
+     ],
+     "props_spin": true
     },
     {
      "id": "4.2",
-     "dur": 12.0,
-     "tag": "SIMULATED: ArduPilot SITL run Z5_gb0",
+     "dur": 10.0,
+     "tag": "SIMULATED: ArduPilot SITL run Z5_gb0, a_plant.py plant model (EST aero)",
      "los": false,
      "follow": true,
      "sitl": {
       "run": "Z5_gb0",
       "t0": 98.0,
       "t1": 126.0,
-      "trail_from": 33.5
+      "trail_from": 33.5,
+      "note": "Run file 2026-11-15, geometry before D-207; SITL with the a_plant.py plant (EST aero)."
      },
      "mech": {
       "from_log": true
@@ -498,7 +519,7 @@
      "sub": "The aircraft pitches from nose-up hover to level flight on the same motors; elevons move as logged.",
      "cam": [
       {
-       "t": 4.0,
+       "t": 3.5,
        "target": [
         0.0,
         0.0,
@@ -509,7 +530,7 @@
        "dist": 3.4
       },
       {
-       "t": 12.0,
+       "t": 10.0,
        "target": [
         0.0,
         0.0,
@@ -519,19 +540,21 @@
        "el": 26,
        "dist": 4.2
       }
-     ]
+     ],
+     "props_spin": true
     },
     {
      "id": "4.3",
      "dur": 5.0,
-     "tag": "SIMULATED: ArduPilot SITL run Z5_gb0",
+     "tag": "SIMULATED: ArduPilot SITL run Z5_gb0, a_plant.py plant model (EST aero)",
      "los": false,
      "follow": true,
      "sitl": {
       "run": "Z5_gb0",
       "t0": 126.0,
       "t1": 140.0,
-      "trail_from": 33.5
+      "trail_from": 33.5,
+      "note": "Run file 2026-11-15, geometry before D-207; SITL with the a_plant.py plant (EST aero)."
      },
      "mech": {
       "from_log": true
@@ -550,19 +573,21 @@
        "el": 26,
        "dist": 3.6
       }
-     ]
+     ],
+     "props_spin": true
     },
     {
      "id": "4.4",
      "dur": 3.5,
-     "tag": "SIMULATED: ArduPilot SITL run Z5_gb0",
+     "tag": "SIMULATED: ArduPilot SITL run Z5_gb0, a_plant.py plant model (EST aero)",
      "los": false,
      "follow": true,
      "sitl": {
       "run": "Z5_gb0",
       "t0": 140.0,
       "t1": 232.0,
-      "trail_from": 33.5
+      "trail_from": 33.5,
+      "note": "Run file 2026-11-15, geometry before D-207; SITL with the a_plant.py plant (EST aero)."
      },
      "mech": {
       "from_log": true
@@ -581,19 +606,22 @@
        "el": 26,
        "dist": 3.6
       }
-     ]
+     ],
+     "props_spin": true
     },
     {
      "id": "4.5",
      "dur": 5.5,
-     "tag": "SIMULATED: ArduPilot SITL run Z5_gb0",
+     "tag": "SIMULATED: ArduPilot SITL run Z5_gb0, a_plant.py plant model (EST aero)",
      "los": false,
      "follow": true,
      "sitl": {
       "run": "Z5_gb0",
       "t0": 232.0,
       "t1": 252.0,
-      "trail_from": 33.5
+      "trail_from": 33.5,
+      "note": "Run file 2026-11-15, geometry before D-207; SITL with the a_plant.py plant (EST aero).",
+      "landing_note": true
      },
      "mech": {
       "from_log": true
@@ -612,7 +640,8 @@
        "el": 17,
        "dist": 2.6
       }
-     ]
+     ],
+     "props_spin": true
     }
    ]
   },
@@ -623,7 +652,7 @@
     {
      "id": "5.1",
      "dur": 6.0,
-     "tag": "SIMULATED: FEA hub F2 motor runaway (run d209), max judged {j:.1f} MPa vs allowable {a:.0f} MPa",
+     "tag": "SIMULATED: FEA hub F2 motor runaway (run d209), PETG hub p99 judged {j:.1f} vs {a:.0f} MPa (D-207 rule)",
      "los": false,
      "fea": {
       "glb": "hub_F2.glb",
@@ -659,14 +688,32 @@
         "F2 uncapped fault, any pattern",
         "hub_peak"
        ]
+      },
+      "pkf": {
+       "file": "hub_result_L0_d209.json",
+       "path": [
+        "F2 uncapped fault, any pattern",
+        "hub_peak"
+       ],
+       "times": "KP"
+      },
+      "br": {
+       "npz": "hub_fields_L0_d209.npz",
+       "key": "U_F2_3",
+       "reduce": "nanmax"
+      },
+      "red": {
+       "npz": "hub_fields_L0_d209.npz",
+       "key": "U_F2_0",
+       "reduce": "pct_over1"
       }
      },
      "title": "Hub, motor runaway (F2)",
-     "sub": "Colour is utilisation of the printed and carbon parts: stress x required factor / allowable.",
+     "sub": "Colour is utilisation (stress x required factor / allowable). Red = over 1, here at singular points of the mesh; the panel lists the highest value on screen.",
      "readout": {
       "title": "HUB FEA F2, RUN d209 (PETG principal)",
       "legend": true,
-      "src": "qp/A/structures/out_fea/hub_result_L0_d209.json (run d209); allowables fea_arm.py ALLOW (EST)",
+      "src": "qp/A/structures/out_fea/hub_result_L0_d209.json, hub_fields_L0_d209.npz; allowables fea_arm.py ALLOW (EST)",
       "rows": [
        {
         "label": "99th percentile, worst zone",
@@ -683,7 +730,7 @@
         ]
        },
        {
-        "label": "Judged value",
+        "label": "PETG hub judged (p99 x factor)",
         "fmt": "%.1f MPa",
         "vals": [
          "j"
@@ -697,10 +744,24 @@
         ]
        },
        {
-        "label": "Single-point peak, not judged",
+        "label": "Peak point x factor, not judged (D-207)",
         "fmt": "%.1f MPa",
         "vals": [
-         "pk"
+         "pkf"
+        ]
+       },
+       {
+        "label": "Hub skin vertices over 1",
+        "fmt": "%.2f %%",
+        "vals": [
+         "red"
+        ]
+       },
+       {
+        "label": "Highest on screen: bridge tube",
+        "fmt": "u %.3f",
+        "vals": [
+         "br"
         ]
        }
       ]
@@ -733,7 +794,7 @@
     {
      "id": "5.2",
      "dur": 6.0,
-     "tag": "SIMULATED: FEA hub S2 prop strike 30 N (run d209), max {pk:.1f} MPa vs allowable {a:.0f} MPa",
+     "tag": "SIMULATED: FEA hub S2 prop strike 30 N (run d209), PETG hub peak {pk:.1f} vs {a:.0f} MPa; bridge tube u {br:.3f}",
      "los": false,
      "fea": {
       "glb": "hub_S2.glb",
@@ -757,17 +818,27 @@
         "hub_zones_worst_combo"
        ],
        "maxkey": "p99"
+      },
+      "br": {
+       "npz": "hub_fields_L0_d209.npz",
+       "key": "U_S2_3",
+       "reduce": "nanmax"
+      },
+      "red": {
+       "npz": "hub_fields_L0_d209.npz",
+       "key": "U_S2_0",
+       "reduce": "pct_over1"
       }
      },
      "title": "Hub, prop strike (S2)",
-     "sub": "A 30 N blade hit in the disc plane (damage case, required factor 1.0).",
+     "sub": "A 30 N blade hit in the disc plane (damage case, required factor 1.0). Colour is utilisation; the highest value on screen is the bridge tube (panel).",
      "readout": {
       "title": "HUB FEA S2, RUN d209 (PETG principal)",
       "legend": true,
-      "src": "qp/A/structures/out_fea/hub_result_L0_d209.json (run d209); allowables fea_arm.py ALLOW (EST)",
+      "src": "qp/A/structures/out_fea/hub_result_L0_d209.json, hub_fields_L0_d209.npz; allowables fea_arm.py ALLOW (EST)",
       "rows": [
        {
-        "label": "Single-point peak",
+        "label": "PETG hub single-point peak",
         "fmt": "%.1f MPa",
         "vals": [
          "pk"
@@ -785,6 +856,20 @@
         "fmt": "%.0f MPa",
         "vals": [
          "a"
+        ]
+       },
+       {
+        "label": "Hub skin vertices over 1",
+        "fmt": "%.2f %%",
+        "vals": [
+         "red"
+        ]
+       },
+       {
+        "label": "Highest on screen: bridge tube",
+        "fmt": "u %.3f",
+        "vals": [
+         "br"
         ]
        }
       ]
@@ -805,7 +890,7 @@
     },
     {
      "id": "5.3",
-     "dur": 6.0,
+     "dur": 7.0,
      "tag": "SIMULATED: FEA arm and motor cup (run current_d210), cup S2 max {cup_s2:.1f} MPa vs allowable {a:.0f} MPa",
      "los": false,
      "plate": {
@@ -872,7 +957,7 @@
    "shots": [
     {
      "id": "6.1",
-     "dur": 7.0,
+     "dur": 5.0,
      "cam": [
       {
        "t": 0,
@@ -886,15 +971,15 @@
        "dist": 1.8
       },
       {
-       "t": 7,
+       "t": 5,
        "target": [
         0.1,
         0,
-        -0.17
+        0
        ],
        "az": 290,
        "el": 20,
-       "dist": 2.0
+       "dist": 2.5
       }
      ],
      "los": false
@@ -907,33 +992,200 @@
       "name": "Concept A",
       "lines": [
        {
-        "label": "Mass, CAD basic",
-        "key": "mass/basic_cad_kg",
-        "fmt": "%.2f kg"
+        "label": "Revision",
+        "vals": {
+         "g": {
+          "git": "rev"
+         }
+        },
+        "text": "D-212 rev 3, commit {g}",
+        "cite": "git rev-parse HEAD; CHANGE-LOG.md D-212 rev 3"
        },
        {
-        "label": "Mass, weigh-in gate",
-        "key": "req/mass_gate_kg",
-        "fmt": "%.2f kg"
+        "label": "Mass, predicted vs gate",
+        "vals": {
+         "bk": {
+          "param": "mass/basic_cad_kg"
+         },
+         "p": {
+          "calc": "b*g+o*m",
+          "of": {
+           "b": {
+            "param": "mass/basic_cad_kg"
+           },
+           "g": {
+            "param": "mass/growth_factor"
+           },
+           "o": {
+            "param": "mass/overrun_frac"
+           },
+           "m": {
+            "param": "req/mass_gate_kg"
+           }
+          }
+         },
+         "m": {
+          "param": "req/mass_gate_kg"
+         },
+         "left": {
+          "calc": "(m-(b*g+o*m))*1000",
+          "of": {
+           "b": {
+            "param": "mass/basic_cad_kg"
+           },
+           "g": {
+            "param": "mass/growth_factor"
+           },
+           "o": {
+            "param": "mass/overrun_frac"
+           },
+           "m": {
+            "param": "req/mass_gate_kg"
+           }
+          }
+         }
+        },
+        "text": "CAD basic {bk:.3f} kg; predicted {p:.4f} kg vs gate {m:.2f} kg ({left:.1f} g left)",
+        "cite": "params-A.json mass/*, req/mass_gate_kg (predicted = basic x growth + overrun x gate, D-208)"
        },
        {
-        "label": "Span (packed, one piece)",
-        "key": "box/packed_m/0",
-        "fmt": "%.2f m"
+        "label": "Packed, one piece",
+        "vals": {
+         "a": {
+          "param": "box/packed_m/0"
+         },
+         "b": {
+          "param": "box/packed_m/1"
+         },
+         "c": {
+          "param": "box/packed_m/2"
+         }
+        },
+        "text": "{a:.2f} x {b:.2f} x {c:.2f} m, props on",
+        "cite": "params-A.json box/packed_m"
+       },
+       {
+        "label": "Interference gate (CAD)",
+        "vals": {
+         "n": {
+          "param": "cad3d/n_over_tol"
+         },
+         "tol": {
+          "param": "req/coll_tol_mm"
+         },
+         "dm": {
+          "param": "cad3d/max_depth_mm"
+         },
+         "w": {
+          "param": "cad3d/wire_ends_open"
+         },
+         "np": {
+          "param": "cad3d/parts"
+         },
+         "ok": {
+          "calc": "'PASS' if n == 0 else 'FAIL'",
+          "of": {
+           "n": {
+            "param": "cad3d/n_over_tol"
+           }
+          }
+         }
+        },
+        "text": "{ok}: {n:.0f} of {np:.0f} parts over {tol:.2f} mm, deepest {dm:.3f} mm, {w:.0f} open wire ends",
+        "cite": "params-A.json cad3d/*, req/coll_tol_mm"
+       },
+       {
+        "label": "Landing (SITL, Z5_gb0)",
+        "vals": {
+         "s": {
+          "sum": "Z5_gb0",
+          "path": [
+           "landing",
+           "sink_ms"
+          ]
+         },
+         "l": {
+          "sum": "Z5_gb0",
+          "path": [
+           "landing",
+           "lean_deg_at_touch"
+          ]
+         },
+         "ms": {
+          "sum": "Z5_gb0",
+          "path": [
+           "mass"
+          ]
+         },
+         "tip": {
+          "calc": "'yes' if t else 'no'",
+          "of": {
+           "t": {
+            "sum": "Z5_gb0",
+            "path": [
+             "landing",
+             "tipped_over"
+            ]
+           }
+          }
+         }
+        },
+        "text": "sink {s:.2f} m/s, lean {l:.1f} deg, tipped over: {tip} ({ms:.2f} kg, run of 2026-11-15)",
+        "cite": "qp/A/sitl/runs/Z5_gb0/sum.json"
+       },
+       {
+        "label": "Hub FEA (run d209)",
+        "vals": {
+         "j": {
+          "file": "hub_result_L0_d209.json",
+          "path": [
+           "F2 uncapped fault, any pattern",
+           "hub_zones_envelope"
+          ],
+          "maxkey": "p99",
+          "times": "KP"
+         },
+         "a": {
+          "const": "ALLOW.petg"
+         },
+         "b1": {
+          "npz": "hub_fields_L0_d209.npz",
+          "key": "U_F2_3",
+          "reduce": "nanmax"
+         },
+         "b2": {
+          "npz": "hub_fields_L0_d209.npz",
+          "key": "U_S2_3",
+          "reduce": "nanmax"
+         }
+        },
+        "text": "PETG hub F2 p99 {j:.1f} of {a:.0f} MPa; bridge tube u {b1:.3f} (F2), {b2:.3f} (S2)",
+        "cite": "out_fea/hub_result_L0_d209.json, hub_fields_L0_d209.npz"
        }
       ]
      },
      "cam": [
       {
+       "t": 1.0,
+       "target": [
+        0.1,
+        0,
+        -0.22
+       ],
+       "az": 300,
+       "el": 19,
+       "dist": 2.5
+      },
+      {
        "t": 6,
        "target": [
         0.1,
         0,
-        -0.17
+        -0.22
        ],
        "az": 330,
        "el": 18,
-       "dist": 2.0
+       "dist": 2.5
       }
      ],
      "los": false

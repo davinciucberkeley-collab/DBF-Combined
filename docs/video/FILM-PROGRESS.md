@@ -130,3 +130,52 @@ Numbers and their sources (`src_val` in `render_build_a.py`; allowables parsed f
 python redesign/showcase/concept-a/render_build_a.py --shot-list redesign/showcase/concept-a/film/shots-main.json --cam-check --width 1920 --height 1080 --fps 60
 python redesign/showcase/concept-a/render_build_a.py --shot-list redesign/showcase/concept-a/film/shots-main.json --scenes S4,S5 --width 1920 --height 1080 --fps 60 --every 60 --samples 12 --workers 3 --preview --timing redesign/showcase/concept-a/film/timing-T029.json --contact redesign/showcase/concept-a/film/preview-contact-T029-S4S5.png
 ```
+
+---
+
+# T-030 fix pass (2026-11-18): closes review M-1..M-9 and the cheap minors
+
+Nothing committed. Edited only `film/shots-main.json`, the film-mode code of `render_build_a.py` (defaults and the build-film path untouched) and this file; new `film/shots-highlight.json`. Review: `docs/audits/2026-11-18-film-T030-review.md`. Film is now 116.0 s (6,960 frames at 60 fps), under the 120 s limit of R-VID-11.
+
+## Findings closed
+
+| ID | Fix | Where |
+|---|---|---|
+| M-1 | 1.3 sub reads the part count at draw time (`params-A.json cad3d/parts`, now 115) and says "every part is modelled, unknown vendor dimensions are marked EST" (no "no stand-in geometry") | `shots-main.json` 1.3 (`vals.n` = `{param}`), `src_val` kind `param` |
+| M-2 | Closing card rebuilt: revision line (D-212 rev 3, commit from `git rev-parse` at draw time, "-dirty" if the tree is uncommitted: it will read the commit hash once T-031 renders from a clean tree); predicted mass 1.4698 kg computed on screen from `basic x growth + overrun x gate` (params keys, formula cited, D-208) against the 1.47 kg gate with the 0.2 g left; packed box; interference gate PASS line (`cad3d/*`); SITL landing line (`sum.json`); hub FEA line. Every line cites its record; card fades in over 0.4 s. | `film_overlay` card block, `src_val` kinds `calc`, `sum`, `git`, `npz` |
+| M-3 | 5.1 / 5.2 tags say "PETG hub p99 judged ... (D-207 rule)" / "PETG hub peak ... ; bridge tube u 1.002". Panels add "Highest on screen: bridge tube" (max of `U_F2_3` 0.958, `U_S2_3` 1.002 from `hub_fields_L0_d209.npz`, read at draw time), "Hub skin vertices over 1" (0.79 % F2, 0.00 % S2) and the single-point peak factored (19.2 x 2.156 = 41.4 MPa, not judged, D-207). Sub says red = over 1 at singular points. | `shots-main.json` 5.1, 5.2 |
+| M-4 | S4 readout adds the run context (live from `sum.json`: 1.50 kg, wind 0), the note "run file 2026-11-15, geometry before D-207; SITL with the a_plant.py plant (EST aero)", the left / right elevon angles from the log, and at 4.5 the touch-down line (sink 0.02 m/s, lean 0.0 deg, tipped over: no). Tag names the plant model. | `film_overlay` sitl block, `shots-main.json` S4 |
+| M-5 | `timing.json` now carries SHA-256 and size of every record file read from git-ignored folders (`source_hashes`). Table below; force-add list in the T-030 return message. | `film_driver` |
+| M-6 | Props turn in S4 (rigid-body-free, category: illustrative). Real blade, adapter and spinner meshes (PRP-002/004/005) rotate about each motor axis (`amodel.common.motor_R`, `station`), 47 deg per frame at 60 fps (2,820 deg/s, not a divisor of the 180 deg blade symmetry), direction by MR / MRP, on only while the LOGGED thrust `th1..th4` of that motor is above 0.05 N. The plant's RPM is not logged, so the rate is **ILLUSTRATIVE** and the readout says "Prop rotation illustrative, not to rate". Checked on 4 consecutive frames (blades at different phases each frame). | worker `spin_mats`, `shots-main.json` `props_spin` |
+| M-7 | Trim list applied: 1.1, 1.2, 1.3 to 4 s; 4.2 to 10 s (log window 98-126 kept, x2.8); 6.1 to 5 s. 5.3 extended 6 to 7 s (m-7, plate density). 122 -> 116.0 s | `shots-main.json` |
+| M-8 | 3.2: camera key at 1.5 s with zero velocity (`hold` key flag, new in `load_film` / `hermite_cam`), sweep starts at 1.5 s, elevon WNG-006 at 50 % teal (`fab50` mode), hinge axis drawn as thin orange rods (worker `hinge_objs`) | worker, `shots-main.json` 3.2 |
+| M-9 | 3.1 camera now az 135 el 30 to az 165 el 24 (was el 50 to 42) | `shots-main.json` 3.1 |
+| m-1 | 0.2 s dip to the stage colour either side of each scene join (done in the Pillow pass, `dip_level`); card fade-in; 6.1 target-z drop moved into 6.2 (6.1 end target z 0, 6.2 key at 1 s with z -0.22, dist 2.5 so the taller card does not hide the aircraft) | `film_overlay`, shots |
+| m-2, m-3 | 3.1 sub "21 deg mechanical stops (flight limit 20 deg, wing.py ELEV_LIM)"; 2.3 sub cut-away note; 2.5 sub "MEC-001 to MEC-005, MEC-008" plus cut-away note | shots |
+| m-4 (part) | dl / dr added to the S4 readout. NOT done: blending the log clock over the time-scale steps at the S4 joins (x2.8 -> x26 -> x3.6); needs cross-shot state in `sitl_clock`. | |
+| m-6 | Wording correction: "elevon peak 9.4 deg, peak altitude 86.6 m" of `sum.json` (also quoted in PD-007 / earlier text above) are TRANSITION-window values; the whole run reaches elevon 13.0 deg (back-transition) and 89.4 m. | this note |
+| m-7 (part) | 5.3 plate unchanged except 7 s; its "99th percentile of the cup in S2: 0.47" is a skin-vertex percentile, D-210 quotes the element p99 (4.2 MPa = 0.21): regenerate or crop by the structures owner. | |
+| m-5, m-8 | not done (optional / n/a) | |
+
+## Source files read from git-ignored folders (M-5)
+
+| File | Size | SHA-256 |
+|---|---|---|
+| `qp/A/sitl/runs/Z5_gb0/case.fwd.csv` | 1,098,835 B | `07729f67e48468591d023699e1e381b4a10a004a3cf04a2c702a57ed2cfa7bc8` |
+| `qp/A/sitl/runs/Z5_gb0/sum.json` | 1,487 B | `9fecf1a1a27449f28febc20a5bedd5837dcf80f957c99c77d7bf297875abd933` |
+| `qp/A/sitl/runs/Z5_gb0/result.json` | 3,124 B | `4cf658e3dce43c8f71f5184fafbb8e48654668882e17a5e71fff409ae0f8633c` |
+| `qp/A/structures/out_fea/hub_fields_L0_d209.npz` | 3,163,448 B | `ef8e0173b747d911e3b876b81e383d07646e302d6a5810fd6818fcde7e70169c` |
+| `qp/A/structures/out_fea/hub_F2.glb` | 3,257,212 B | `12e1aea35baaca86efa53519676732bd4cc9dd2dea63d0010474707a3779475d` |
+| `qp/A/structures/out_fea/hub_S2.glb` | 3,257,212 B | `a73cb30fd625c67eb98a58f425cb122b49479e42e525c4163ac8623e648673fc` |
+
+Tracked already: `hub_result_L0_d209.json`, `result_L0_current_d210.json`, `fea-arm-along.png`, `sitl/cad_mass.json`. The GLBs are regenerated by `python -I qp/A/structures/fea_hub_figs.py --tag d209` (after `fea_hub.py --level 0 --tag d209 --fields`). Not `.gitignore` changed.
+
+## Highlight cut (R-VID-12), `film/shots-highlight.json`
+
+24.2 s, seven items H1..H7 (the review's table): each item is a window [a, b] of a main-film shot (`src` field gives shot and main-film times), camera = the main path sampled every 0.25 s, log windows and the mechanism sweep cut at the same instants (H2 cut on the sweep waypoints 3.8 and 8.0 s), one short title per shot, tags and S4 / S5 readouts kept, card fade state carried (`fade_src_a`). It re-uses the main render's raw frames (overlay only); main-film times assume the 116.0 s film (S6 starts at 105 s, so H7 is 6.2 local 1-5 s = 111-115 s; the review's 108-112 s assumed 115 s).
+
+## Verification (category: interference for the camera checks; no new simulation or FEA)
+
+- `--cam-check` main (6,960 frames): 0 frames inside a part; only block: S2.2 10 frames (own prop, as before); nearest 0.0679 m (3.2). Highlight (1,452 frames): 0 inside, 0 blocked. Files `film/cam-clearance.json`, `film/cam-clearance-highlight.json`.
+- 1080p preview, every 60th frame, 12 samples, 3 workers, all six scenes: `film/preview-contact-T030.png` (116 frames, taken before the final 6.2 camera tweak), `film/preview-contact-T030-S6.png` (S6 after it), `film/preview-contact-T030-highlight.png` (highlight, 24 frames); wall 133 s, 0.87 s per rendered frame. `film/timing-T030.json`.
+- Not verified: full-rate smoothness of the S4 joins and of the new 3.2 camera hold (previews sample 1 per second); the 60-frame consecutive run 4.3 -> 4.5 asked for in review section 5 is left to the reviewer step. 3.1 now shows the rotation as a change of the elevon silhouette and tilt (view from aft, el 24-30), not along the hinge.
