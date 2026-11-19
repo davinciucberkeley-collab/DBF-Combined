@@ -11,7 +11,7 @@ the ledger and the spec are.
 10. Note any lost/changed instruction under "Reconciliation" below. 11. Resume "Next action".
 
 ## Checkpoint — 2026-11-19 03:30 (session 7cb35b0a, conductor Opus, after the second manual /compact); sections follow spec 10.4
-**Goal:** master program (spec of 2026-11-18 + AM-001..AM-004): Phases 1, 2, 4, 5 largely done; independent verification of ledger rows in progress. AM-004 (2026-11-19): Dillon away 8+ h, decisions go to an opus agent; hard constraints, money, irreversible actions, push/history still wait for Dillon. Concept A is the target (CLAUDE.md).
+**Goal:** master program (spec + AM-001..AM-007). AM-007 (2026-11-19): Dillon chose the ZOHD Altus VTOL kit (O6, D-218); concept A is the record. Re-plan under T-075.
 
 **Requirements:** registry `docs/requirements.md` (109 R-ids), tasks `docs/task-ledger.md` (66 T), phase map `docs/execution-plan.md` (`tools/plan_rid_check.py` 0 missing); audit `python -I tools/ledger_audit.py` 0 errors. Key now: R-PRES-11 (T-007, second manual /compact 7/7 PASS, needs independent check), R-PHY-09 (T-064 D-213, T-065 D-214, T-066 re-baseline), R-CAD-* (T-022/T-023), R-REPO-* (T-042..T-045).
 
@@ -23,9 +23,9 @@ the ledger and the spec are.
 
 **Decisions:** aircraft decisions in `redesign/params/CHANGE-LOG.md` (D-212 rev 3 is the latest, trade rows A..J); program decisions in `docs/engineering-decisions.md`: PD-002 (sims vs "no sims until final"), PD-005 (flap item maps to elevons), PD-006 (video verification via Blender FFmpeg libraries, SUPERSEDED 2026-11-19 when Dillon approved the FFmpeg install), PD-007 (film Scene 4 plays back an executed SITL run, Z5_gb0). AM-002 (2026-11-19): unused items that do not contribute to the current design may be removed; cleanup batch 2 done under it. AM-003 (2026-11-19): team inputs (schema, James's agents, DaVinci) not ready, no DaVinci spend; blocked rows stay blocked.
 
-**Running now:** implementer T-071 (D-216 Phase 1 steps 1-2, wing skin + node rows, $0 analysis).
+**Running now:** opus re-plan for the Altus (T-075).
 
-**Next action:** WAIT FOR DILLON on T-072: board choice O1-O6 (recommended O4, go/no-go 2026-12-15), purchases, trunk measurement (`docs/audits/2026-11-19-T070-decision.md` s6, s8). Meanwhile $0 work only: T-071, re-checks of T-014/T-022/T-067/T-068, T-023, cleanup T-042..T-045. No CAD change for D-215/D-216 before the board choice.
+**Next action:** apply the T-075 re-plan; $0 pre-order checks for the Altus; ask Dillon for purchase approval (kit order 2026-12-15) and the trunk measurement.
 
 **Inspection (R-PRES-13):** CLAUDE.md kept whole, new sections prepended; no AGENTS.md; no prior `.claude/settings.json`; Claude Code 2.1.288 (PreCompact, PostCompact, SessionStart matchers used).
 

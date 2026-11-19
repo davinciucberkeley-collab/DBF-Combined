@@ -126,3 +126,15 @@ R-GEN-02.
 ```text
 O4b, if $0 checks pass
 ```
+
+## AM-007 — 2026-11-19 — Board decision: ZOHD Altus VTOL kit (O6)
+Relation: answers the O4b check result (T-074: check 1 failed the cost rule G7 by about $50, check 2 passed only
+with an EU-only pack and a tray change, check 3 passed). Under AM-006 a failed check means O6. Concept A stops as
+the build target and is kept as the record (as K09-L was); the aircraft to build is the ZOHD Altus VTOL kit, order
+planned for 2026-12-15 (purchases still need Dillon's approval; none before early Dec 2026). Hard constraints
+(CLAUDE.md: $2,000, April 2027 flight test, trunk, 3-D gates, CAD fidelity, enclosed wiring) apply to the Altus
+build. Requirement IDs: R-OPT-01, R-OPT-02, R-GEN-02, R-CAD-01.
+
+```text
+Altus (O6)
+```
