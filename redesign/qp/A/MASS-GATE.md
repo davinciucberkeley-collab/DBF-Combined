@@ -157,3 +157,27 @@ Raceways HRN-003 (2 x 1.8 g) and hub conduits HRN-004 (4 x 0.8 g) are added (+6.
 | Predicted, flat rule `EST` | 1,455.6 g | 1,458.1 g | <= 1,460 (target), 1,470 (gate) | CL-A-MASS-PRED |
 
 The target has 1.9 g of room (flat rule). The strap mass is a vendor listing; the pad (size, thickness 1.0 mm, density 1.15 g/cm3) is `EST`: weigh both on arrival. The raceway and conduit walls are the drawn volume x 1.27 (0.6 mm walls, `EST` basis as the cover).
+
+## 13 Roll-up re-run after D-202 to D-212 rev 3 (2026-11-19, T-025 follow-up, review flag M2)
+
+Category: mass roll-up (arithmetic on the CAD part table; not a simulation). Sections 1-12 above stay as the record; the last one (section 12) stopped at D-199. Method: `sitl/cad_mass.py` logic run on `cad/a_model.py` PARTS (output to a scratch file, so `sitl/cad_mass.json` and the running SITL jobs were not touched), then `mission_gate_a.py` items and CAD constants updated to the CAD part table (they still carried D-202 values: CAD basic 1,277.97 g, CG 19.52 mm; its own printout said "headroom -2 g", which was stale, not real). Evidence and commands: `mechanism/out/T025_followup.md`.
+
+| Quantity | D-199 (section 12) | 2026-11-19 | Limit | Source |
+|---|---|---|---|---|
+| CAD basic mass | 1,262.6 g | **1,273.30 g** | — | CAD part table, 117 parts (D-208 value was 1,273.24 g in `cad_mass.json`) |
+| CG (CAD, pack centred) | 20.68 mm | 21.37 mm | band 19-26 | same |
+| CG at the pack trim ends (6 mm fwd, 10 mm aft) | 19.4 / 22.8 mm | 20.09 / 23.49 mm (SM 8.4 / 7.0 % at NP 40.7 EST) | >= 19 / <= 28.5 | CL-A-CG-TRIM-FWD / AFT rule: CG -+ 270 g x travel / basic |
+| Predicted, flat rule (basic x 1.1174 + 0.032 x 1,470 g) `EST` | 1,458.1 g | **1,469.8 g** | 1,470 (target = gate) | CL-A-MASS-PRED |
+| Predicted, itemised `EST` (growth by maturity 145.0 g + overrun 48 g) | 1,454 g | **1,466.3 g** | 1,470 | `mission_gate_a.py` |
+| Margin to the 1.470 kg gate and target, flat rule | 1.9 g to 1,460 | **+0.18 g** | >= 0 | arithmetic |
+| Margin, itemised | — | +3.7 g | >= 0 | arithmetic |
+| EST cuts that must be real | 36.8 g | 41.44 g | <= 41.6 g | CALC-A-CUTS: 41.6 - (1,470 - 1,469.83) / 1.1174 |
+| Structure (wing 216.1 + fins 108.2 + feet 8.4 + hardware 25.98 + cage CGE 131.04) | 485 g | 489.72 g | <= 494 g | CAD part table |
+
+**Margin is positive but 0.18 g (flat rule): not a critical issue, no recovery needed now, and it is no buffer.** At 1.470 kg (table in `mission_gate_a.py`): capped transition window +-5.3 % (limit 5 %), hover T/W fresh 2.34 / sag 1.85 capped (limits 2.0 / 1.6), cruise to BATT_LOW 4.21 min against 3.41 needed (1.3 spare laps). The prediction still holds 145 g of EST growth and 48 g of overrun: the real buffer.
+
+Added since the section 12 roll-up (CHANGE-LOG): D-202 hub +16.7 g; D-205 hub 6 mm aft, doublers s 11-25 -1.8 g, lead 15.6 -> 12.8 g per elevon -5.6 g; D-206 bridge 16x14 +2.1 g; D-207 fillets +1.3 g; D-208 pitot lines, I2C lead +3.3 g; D-210 cup fillets about +0.07 g per cup EST (inside the 4.3 g cup part mass; not separately in the table); D-211 core; D-212 rev 3 horn MEC-004 0.95 g and keeper MEC-008 0.08 g per side (CAD part table). From the D-208 value (1,273.24 g) to now (+0.06 g): horns -0.10 g (1.0 g vendor horn to 0.95 g printed, two sides), keepers +0.16 g (two sides), M2 x 8 arm screws +0.10 g (0.27 -> 0.32 g, two sides, D-212 rev 3 log), other D-211/D-212 changes -0.10 g by difference (not itemised).
+
+**Target series (review flag M1):** design target 1.44 kg (QP-4) -> 1.46 (D-195) -> 1.465 (D-205) -> 1.467 (D-207) -> 1.470 kg (D-208, user accepted), now equal to the 1.470 kg gate: the target no longer controls anything, the margin is held in the growth and overrun allowances above. Recorded as a series, not changed.
+
+Stale downstream values found (not edited, they feed the proof chain): `params-A.json` `mass.basic_cad_kg` 1.27324 (now 1.27330), `mass.itemised_g_growth` (D-199 era items), `mass.structure_groups_g` (cage 119.2 g: sum 484.9 g against 489.72 g from the CAD table, still <= 494 g), `sitl/cad_mass.json` 1.27324 kg (0.06 g low). Regenerate with `proofs/gen_params_a.py` and `sitl/cad_mass.py` after the SITL batch that reads them finishes.

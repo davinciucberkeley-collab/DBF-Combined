@@ -1,0 +1,452 @@
+[
+ {
+  "state": "lo",
+  "a": "arm",
+  "b": "rod",
+  "min_sep_mm": -0.0284,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0034,
+  "worst_case_between_samples_mm": 0.0052
+ },
+ {
+  "state": "hi",
+  "a": "keeper bridge",
+  "b": "rod",
+  "min_sep_mm": -0.0029,
+  "at_delta_deg": -7.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0,
+  "worst_case_between_samples_mm": 0.0
+ },
+ {
+  "state": "mid",
+  "a": "arm",
+  "b": "servo case",
+  "min_sep_mm": 0.0,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0,
+  "worst_case_between_samples_mm": 0.0
+ },
+ {
+  "state": "lo",
+  "a": "arm",
+  "b": "servo case",
+  "min_sep_mm": 0.0,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0,
+  "worst_case_between_samples_mm": 0.0
+ },
+ {
+  "state": "hi",
+  "a": "arm",
+  "b": "servo case",
+  "min_sep_mm": 0.0,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0,
+  "worst_case_between_samples_mm": 0.0
+ },
+ {
+  "state": "hi",
+  "a": "clevis cheek -1",
+  "b": "horn blade",
+  "min_sep_mm": 0.06638,
+  "at_delta_deg": 21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0032,
+  "worst_case_between_samples_mm": 0.0047
+ },
+ {
+  "state": "mid",
+  "a": "clevis cheek -1",
+  "b": "horn blade",
+  "min_sep_mm": 0.06644,
+  "at_delta_deg": 21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0031,
+  "worst_case_between_samples_mm": 0.0047
+ },
+ {
+  "state": "lo",
+  "a": "clevis cheek -1",
+  "b": "horn blade",
+  "min_sep_mm": 0.06648,
+  "at_delta_deg": 21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0031,
+  "worst_case_between_samples_mm": 0.0047
+ },
+ {
+  "state": "hi",
+  "a": "clevis cheek +1",
+  "b": "horn blade",
+  "min_sep_mm": 0.07685,
+  "at_delta_deg": 21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0022,
+  "worst_case_between_samples_mm": 0.0033
+ },
+ {
+  "state": "mid",
+  "a": "clevis cheek +1",
+  "b": "horn blade",
+  "min_sep_mm": 0.07689,
+  "at_delta_deg": 21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0022,
+  "worst_case_between_samples_mm": 0.0033
+ },
+ {
+  "state": "lo",
+  "a": "clevis cheek +1",
+  "b": "horn blade",
+  "min_sep_mm": 0.07692,
+  "at_delta_deg": 21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0022,
+  "worst_case_between_samples_mm": 0.0033
+ },
+ {
+  "state": "mid",
+  "a": "rod Z-bend pin",
+  "b": "servo case",
+  "min_sep_mm": 0.1,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0,
+  "worst_case_between_samples_mm": 0.0
+ },
+ {
+  "state": "lo",
+  "a": "rod Z-bend pin",
+  "b": "servo case",
+  "min_sep_mm": 0.1,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0,
+  "worst_case_between_samples_mm": 0.0
+ },
+ {
+  "state": "hi",
+  "a": "rod Z-bend pin",
+  "b": "servo case",
+  "min_sep_mm": 0.1,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0,
+  "worst_case_between_samples_mm": 0.0
+ },
+ {
+  "state": "mid",
+  "a": "arm",
+  "b": "rod",
+  "min_sep_mm": 0.11322,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0035,
+  "worst_case_between_samples_mm": 0.0053
+ },
+ {
+  "state": "mid",
+  "a": "keeper bridge",
+  "b": "rod",
+  "min_sep_mm": 0.1471,
+  "at_delta_deg": -12.5,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0,
+  "worst_case_between_samples_mm": 0.0
+ },
+ {
+  "state": "hi",
+  "a": "arm",
+  "b": "rod",
+  "min_sep_mm": 0.25481,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0037,
+  "worst_case_between_samples_mm": 0.0055
+ },
+ {
+  "state": "lo",
+  "a": "keeper bridge",
+  "b": "rod",
+  "min_sep_mm": 0.29154,
+  "at_delta_deg": 0.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.001,
+  "worst_case_between_samples_mm": 0.0015
+ },
+ {
+  "state": "hi",
+  "a": "keeper bridge",
+  "b": "rod Z-bend pin",
+  "min_sep_mm": 0.6,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0,
+  "worst_case_between_samples_mm": 0.0
+ },
+ {
+  "state": "lo",
+  "a": "keeper spacer",
+  "b": "rod",
+  "min_sep_mm": 0.69768,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0371,
+  "worst_case_between_samples_mm": 0.0556
+ },
+ {
+  "state": "mid",
+  "a": "keeper spacer",
+  "b": "rod",
+  "min_sep_mm": 0.69814,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.037,
+  "worst_case_between_samples_mm": 0.0555
+ },
+ {
+  "state": "hi",
+  "a": "keeper spacer",
+  "b": "rod",
+  "min_sep_mm": 0.69874,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.037,
+  "worst_case_between_samples_mm": 0.0554
+ },
+ {
+  "state": "mid",
+  "a": "keeper bridge",
+  "b": "rod Z-bend pin",
+  "min_sep_mm": 0.75,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0,
+  "worst_case_between_samples_mm": 0.0
+ },
+ {
+  "state": "lo",
+  "a": "keeper bridge",
+  "b": "rod Z-bend pin",
+  "min_sep_mm": 0.9,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0,
+  "worst_case_between_samples_mm": 0.0
+ },
+ {
+  "state": "hi",
+  "a": "clevis sleeve",
+  "b": "horn blade",
+  "min_sep_mm": 1.28625,
+  "at_delta_deg": 21.0,
+  "undersampling_loss_mm": 0.0003,
+  "max_slope_mm_per_deg": 0.0064,
+  "worst_case_between_samples_mm": 0.0097
+ },
+ {
+  "state": "mid",
+  "a": "clevis sleeve",
+  "b": "horn blade",
+  "min_sep_mm": 1.28655,
+  "at_delta_deg": 21.0,
+  "undersampling_loss_mm": 0.0003,
+  "max_slope_mm_per_deg": 0.0066,
+  "worst_case_between_samples_mm": 0.0099
+ },
+ {
+  "state": "lo",
+  "a": "clevis sleeve",
+  "b": "horn blade",
+  "min_sep_mm": 1.28687,
+  "at_delta_deg": 21.0,
+  "undersampling_loss_mm": 0.0002,
+  "max_slope_mm_per_deg": 0.0064,
+  "worst_case_between_samples_mm": 0.0096
+ },
+ {
+  "state": "mid",
+  "a": "keeper spacer",
+  "b": "rod Z-bend pin",
+  "min_sep_mm": 1.3971,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0002,
+  "max_slope_mm_per_deg": 0.001,
+  "worst_case_between_samples_mm": 0.0016
+ },
+ {
+  "state": "lo",
+  "a": "keeper spacer",
+  "b": "rod Z-bend pin",
+  "min_sep_mm": 1.3971,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0002,
+  "max_slope_mm_per_deg": 0.001,
+  "worst_case_between_samples_mm": 0.0016
+ },
+ {
+  "state": "hi",
+  "a": "keeper spacer",
+  "b": "rod Z-bend pin",
+  "min_sep_mm": 1.3971,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0002,
+  "max_slope_mm_per_deg": 0.001,
+  "worst_case_between_samples_mm": 0.0016
+ },
+ {
+  "state": "lo",
+  "a": "rod",
+  "b": "servo case",
+  "min_sep_mm": 1.80445,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0253,
+  "worst_case_between_samples_mm": 0.0379
+ },
+ {
+  "state": "mid",
+  "a": "rod",
+  "b": "servo case",
+  "min_sep_mm": 1.89131,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0258,
+  "worst_case_between_samples_mm": 0.0387
+ },
+ {
+  "state": "hi",
+  "a": "rod",
+  "b": "servo case",
+  "min_sep_mm": 1.97815,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0263,
+  "worst_case_between_samples_mm": 0.0395
+ },
+ {
+  "state": "mid",
+  "a": "keeper spacer",
+  "b": "servo case",
+  "min_sep_mm": 2.0,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0,
+  "worst_case_between_samples_mm": 0.0
+ },
+ {
+  "state": "lo",
+  "a": "keeper spacer",
+  "b": "servo case",
+  "min_sep_mm": 2.0,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0,
+  "worst_case_between_samples_mm": 0.0
+ },
+ {
+  "state": "hi",
+  "a": "keeper spacer",
+  "b": "servo case",
+  "min_sep_mm": 2.0,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0,
+  "worst_case_between_samples_mm": 0.0
+ },
+ {
+  "state": "mid",
+  "a": "horn blade",
+  "b": "core aft block",
+  "min_sep_mm": 2.0527,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0,
+  "worst_case_between_samples_mm": 0.0
+ },
+ {
+  "state": "lo",
+  "a": "horn blade",
+  "b": "core aft block",
+  "min_sep_mm": 2.0527,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0,
+  "worst_case_between_samples_mm": 0.0
+ },
+ {
+  "state": "hi",
+  "a": "horn blade",
+  "b": "core aft block",
+  "min_sep_mm": 2.0527,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0,
+  "worst_case_between_samples_mm": 0.0
+ },
+ {
+  "state": "lo",
+  "a": "arm",
+  "b": "servo boot",
+  "min_sep_mm": 2.95124,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0324,
+  "worst_case_between_samples_mm": 0.0485
+ },
+ {
+  "state": "mid",
+  "a": "arm",
+  "b": "servo boot",
+  "min_sep_mm": 2.95165,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0323,
+  "worst_case_between_samples_mm": 0.0484
+ },
+ {
+  "state": "hi",
+  "a": "arm",
+  "b": "servo boot",
+  "min_sep_mm": 2.95217,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0322,
+  "worst_case_between_samples_mm": 0.0483
+ },
+ {
+  "state": "mid",
+  "a": "clevis sleeve",
+  "b": "clevis pin",
+  "min_sep_mm": 2.9744,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0027,
+  "worst_case_between_samples_mm": 0.004
+ },
+ {
+  "state": "lo",
+  "a": "clevis sleeve",
+  "b": "clevis pin",
+  "min_sep_mm": 2.9744,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0026,
+  "worst_case_between_samples_mm": 0.004
+ },
+ {
+  "state": "hi",
+  "a": "clevis sleeve",
+  "b": "clevis pin",
+  "min_sep_mm": 2.97442,
+  "at_delta_deg": -21.0,
+  "undersampling_loss_mm": 0.0,
+  "max_slope_mm_per_deg": 0.0027,
+  "worst_case_between_samples_mm": 0.004
+ }
+]

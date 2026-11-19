@@ -1,5 +1,5 @@
 {
- "git_head": "164c815ab250745e23b5d0a03f5ce754d544c8af",
+ "git_head": "73d9596689ee35afa630383f6454860f592efbd7",
  "arm_joint_state": "mid",
  "arm_joint_z_mm": 9.45,
  "engine": "analytic convex solids + separating-axis test (numpy, scipy.spatial.ConvexHull); NOT mesh-based",
@@ -1906,36 +1906,36 @@
    "side": "L",
    "a": "rod Z-bend pin",
    "b": "core aft block",
-   "min_sep_mm": 21.256772173654237,
+   "min_sep_mm": 21.27147724594983,
    "at_delta_deg": 21.0,
-   "neutral_sep_mm": 24.543755672966544,
+   "neutral_sep_mm": 24.558061419879873,
    "max_penetration_mm": 0.0,
    "design_contact": false,
    "penetrating_deltas_deg": [],
    "first_delta_deg_over_tol": null,
    "sep_mm_at_pm20_pm21": {
-    "-21": 27.812172761257887,
-    "-20": 27.66427299916921,
-    "20": 21.40794175747873,
-    "21": 21.256772173654237
+    "-21": 27.826081438364348,
+    "-20": 27.678199644156855,
+    "20": 21.422628464652675,
+    "21": 21.27147724594983
    }
   },
   {
    "side": "L",
    "a": "rod Z-bend pin",
    "b": "elevon slab",
-   "min_sep_mm": 39.07400321481788,
+   "min_sep_mm": 39.127758407249665,
    "at_delta_deg": 21.0,
-   "neutral_sep_mm": 42.89359300437706,
+   "neutral_sep_mm": 42.912735873289584,
    "max_penetration_mm": 0.0,
    "design_contact": false,
    "penetrating_deltas_deg": [],
    "first_delta_deg_over_tol": null,
    "sep_mm_at_pm20_pm21": {
-    "-21": 46.1620100926684,
-    "-20": 46.014110330579726,
-    "20": 39.350409980832914,
-    "21": 39.07400321481788
+    "-21": 46.18075589177406,
+    "-20": 46.03287409756657,
+    "20": 39.40171300233175,
+    "21": 39.127758407249665
    }
   },
   {
@@ -1960,18 +1960,18 @@
    "side": "L",
    "a": "rod Z-bend pin",
    "b": "horn rib",
-   "min_sep_mm": 41.574003214817886,
+   "min_sep_mm": 41.627758407249665,
    "at_delta_deg": 21.0,
-   "neutral_sep_mm": 45.4158087325148,
+   "neutral_sep_mm": 45.4361254840932,
    "max_penetration_mm": 0.0,
    "design_contact": false,
    "penetrating_deltas_deg": [],
    "first_delta_deg_over_tol": null,
    "sep_mm_at_pm20_pm21": {
-    "-21": 48.676199390068845,
-    "-20": 48.53644001715362,
-    "20": 41.85040998083292,
-    "21": 41.574003214817886
+    "-21": 48.69363843175262,
+    "-20": 48.554013805282516,
+    "20": 41.90171300233178,
+    "21": 41.627758407249665
    }
   },
   {
@@ -2050,18 +2050,18 @@
    "side": "L",
    "a": "rod Z-bend pin",
    "b": "servo case",
-   "min_sep_mm": 0.10000000000000026,
+   "min_sep_mm": 0.2500000000000002,
    "at_delta_deg": -21.0,
-   "neutral_sep_mm": 0.10000000000000026,
+   "neutral_sep_mm": 0.2500000000000002,
    "max_penetration_mm": 0.0,
    "design_contact": false,
    "penetrating_deltas_deg": [],
    "first_delta_deg_over_tol": null,
    "sep_mm_at_pm20_pm21": {
-    "-21": 0.10000000000000026,
-    "-20": 0.10000000000000026,
-    "20": 0.10000000000000026,
-    "21": 0.10000000000000026
+    "-21": 0.2500000000000002,
+    "-20": 0.2500000000000002,
+    "20": 0.2500000000000002,
+    "21": 0.2500000000000002
    }
   },
   {
@@ -3958,36 +3958,36 @@
    "side": "R",
    "a": "rod Z-bend pin",
    "b": "core aft block",
-   "min_sep_mm": 21.256772173654266,
+   "min_sep_mm": 21.271477245949853,
    "at_delta_deg": 21.0,
-   "neutral_sep_mm": 24.543755672966544,
+   "neutral_sep_mm": 24.558061419879873,
    "max_penetration_mm": 0.0,
    "design_contact": false,
    "penetrating_deltas_deg": [],
    "first_delta_deg_over_tol": null,
    "sep_mm_at_pm20_pm21": {
-    "-21": 27.812172761257887,
-    "-20": 27.66427299916921,
-    "20": 21.40794175747873,
-    "21": 21.256772173654266
+    "-21": 27.826081438364348,
+    "-20": 27.678199644156855,
+    "20": 21.422628464652675,
+    "21": 21.271477245949853
    }
   },
   {
    "side": "R",
    "a": "rod Z-bend pin",
    "b": "elevon slab",
-   "min_sep_mm": 39.07400321481791,
+   "min_sep_mm": 39.127758407249694,
    "at_delta_deg": 21.0,
-   "neutral_sep_mm": 42.89359300437706,
+   "neutral_sep_mm": 42.912735873289584,
    "max_penetration_mm": 0.0,
    "design_contact": false,
    "penetrating_deltas_deg": [],
    "first_delta_deg_over_tol": null,
    "sep_mm_at_pm20_pm21": {
-    "-21": 46.1620100926684,
-    "-20": 46.014110330579726,
-    "20": 39.350409980832914,
-    "21": 39.07400321481791
+    "-21": 46.18075589177406,
+    "-20": 46.03287409756657,
+    "20": 39.40171300233175,
+    "21": 39.127758407249694
    }
   },
   {
@@ -4012,18 +4012,18 @@
    "side": "R",
    "a": "rod Z-bend pin",
    "b": "horn rib",
-   "min_sep_mm": 41.574003214817886,
+   "min_sep_mm": 41.627758407249694,
    "at_delta_deg": 21.0,
-   "neutral_sep_mm": 45.4158087325148,
+   "neutral_sep_mm": 45.4361254840932,
    "max_penetration_mm": 0.0,
    "design_contact": false,
    "penetrating_deltas_deg": [],
    "first_delta_deg_over_tol": null,
    "sep_mm_at_pm20_pm21": {
-    "-21": 48.676199390068845,
-    "-20": 48.53644001715362,
-    "20": 41.85040998083292,
-    "21": 41.574003214817886
+    "-21": 48.69363843175262,
+    "-20": 48.554013805282516,
+    "20": 41.90171300233178,
+    "21": 41.627758407249694
    }
   },
   {
@@ -4102,18 +4102,18 @@
    "side": "R",
    "a": "rod Z-bend pin",
    "b": "servo case",
-   "min_sep_mm": 0.10000000000000026,
+   "min_sep_mm": 0.2500000000000002,
    "at_delta_deg": -21.0,
-   "neutral_sep_mm": 0.10000000000000026,
+   "neutral_sep_mm": 0.2500000000000002,
    "max_penetration_mm": 0.0,
    "design_contact": false,
    "penetrating_deltas_deg": [],
    "first_delta_deg_over_tol": null,
    "sep_mm_at_pm20_pm21": {
-    "-21": 0.10000000000000026,
-    "-20": 0.10000000000000026,
-    "20": 0.10000000000000026,
-    "21": 0.10000000000000026
+    "-21": 0.2500000000000002,
+    "-20": 0.2500000000000002,
+    "20": 0.2500000000000002,
+    "21": 0.2500000000000002
    }
   }
  ],

@@ -1781,7 +1781,7 @@ Mass placed by this step 1.9 g; running total of placed parts 974.1 g (CAD; the 
 
 **Fit it:**
 
-- Z-bend the 1.2 mm rod into the arm tip hole (CAD: L-end leg down through the 1.3 mm arm hole, the rod lying on the arm top; held down by the keeper, step D2a) and set the clevis over the horn blade, cheeks either side (CAD: clevis on the horn hole, horizontal pin; 10 mm). The pin follows in D5.
+- Z-bend the 1.2 mm rod into the arm tip hole (CAD: leg down through the 1.3 mm arm hole, the rod lying on the arm top; cut the leg 2.3-2.5 mm from the rod axis to its end (file to a 2.5 mm gauge: never longer, since 2.5 mm leaves 0.10 mm over the servo case with the rod at its lowest; 2.3 mm still engages 1.4 mm of the 2.0 mm arm at its highest), so the end stops 0.25-0.45 mm inside the arm underside at mid height and never touches the servo case, which the arm sits on; no tail below the arm; held down by the keeper, step D2a) and set the clevis over the horn blade, cheeks either side (CAD: clevis on the horn hole, horizontal pin; 10 mm). The pin follows in D5.
 - Motion (CAD, checked by `a_assembly.py`): along (0, 0, -1) for 10 mm.
 
 **Checkpoint (do not go on until it passes):**

@@ -1,0 +1,57 @@
+[/c/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined] python -I redesign/qp/A/mechanism/elevon_linkage.py rc=0 wall=9 s
+  "meets": true
+ }
+}
+[/c/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined] python -I redesign/qp/A/mechanism/elevon_dynamics.py rc=0 wall=8 s
+  }
+ ]
+}
+[/c/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined] python -I redesign/qp/A/mechanism/elevon_sweep_collision.py rc=0 wall=15 s
+ "pass_no_penetration_gt_tol": true,
+ "pairs_failing": []
+}
+[/c/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined] python -I redesign/qp/A/mechanism/elevon_linkage.py rc=0 wall=5 s
+  "meets": true
+ }
+}
+[/c/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined] python -I redesign/qp/A/mechanism/elevon_dynamics.py rc=0 wall=7 s
+  }
+ ]
+}
+[/c/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined] python -I redesign/qp/A/mechanism/elevon_sweep_collision.py rc=0 wall=14 s
+ "pass_no_penetration_gt_tol": true,
+ "pairs_failing": []
+}
+[/c/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined] python -I redesign/qp/A/mechanism/elevon_linkage.py rc=0 wall=4 s
+  "meets": true
+ }
+}
+[/c/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined] python -I redesign/qp/A/mechanism/elevon_dynamics.py rc=0 wall=7 s
+  }
+ ]
+}
+[/c/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined] python -I redesign/qp/A/mechanism/elevon_sweep_collision.py rc=0 wall=14 s
+ "pass_no_penetration_gt_tol": true,
+ "pairs_failing": []
+}
+[/c/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined] python -I redesign/qp/A/mechanism/linkage_loads_check.py rc=0 wall=6 s
+  "ok": true
+ }
+}
+[/c/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined] python -I redesign/qp/A/cad/build_a.py rc=0 wall=15 s
+TOTAL 1273 g, CG 0.021, -0.002, 0.007 m (declared mass; CG declared or CAD centroid); 0 datums, 5 keep-outs
+note: 4 body boxes enter a keep-out but their convex hulls do not (box artefacts, not issues): CGE-002-A/KO-PROP-UL (arm tube (one continuous tube, motor cup to motor cup)); CGE-002-B/KO-PROP-UL (arm tube (one continuous tube, motor cup to motor cup)); CGE-002-A/KO-PROP-LR (arm tube (one continuous tube, motor cup to motor cup)); CGE-002-B/KO-PROP-LR (arm tube (one continuous tube, motor cup to motor cup))
+check: PASS (10 modules, 0 errors, 0 warnings)
+[/c/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined/redesign/qp/A/cad] python -I collide_a.py --linkage-poses --zj mid,lo,hi --tag linkage_poses rc=0 wall=474 s
+  linkage zj=hi delta +21 deg                         0 part pairs penetrate > 0.05 mm
+  wire ends not on a termination: 0; wire folds: 0
+collide_a --linkage-poses: PASS (486 bodies in 115 parts, 52 poses, 466 s)
+[/c/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined] python -I redesign/qp/A/cad/collide_a.py rc=0 wall=143 s
+  elevons at upper limit (E-WNG-10 +21, E-WNG-11 +    0 part pairs penetrate > 0.05 mm
+  wire ends not on a termination: 0; wire folds: 0
+collide_a: PASS (486 bodies in 115 parts, 3 poses, 136 s)
+[/c/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined] python -I redesign/qp/A/proofs/run_all.py rc=1 wall=3 s
+>> claims_a1_flight.py
+>> claims_a2_struct.py
+>> claims_a3_program.py
+DONE

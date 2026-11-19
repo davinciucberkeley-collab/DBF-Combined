@@ -544,6 +544,8 @@ ARM_Z1 = ARM_Z0 + ARM_T
 ROD_D = 1.2 * MM                            # V RMRC linkage set 1.2 mm rods
 ROD_KEEP = 0.3 * MM                         # vertical freedom of the Z-bend leg in its hole: from the rod resting on the arm top up to the printed keeper bridge (MEC-008, D-212 rev 3; 0.3 mm is the drawn gap, print tolerance EST). Boss height under the arm "-": if a measured boss lifts the arm, ARM_Z0 and every height above it (rod, horn hole, keeper) follow the measured value before printing
 ROD_Z = ARM_Z1 + ROD_D / 2 + ROD_KEEP / 2   # CALC 9.45 mm: rod axis at the middle of its vertical freedom (9.30 resting on the arm, 9.60 against the keeper); the rod is NOT a fixed-height point, mechanism/linkage_core.py models the arm joint as prismatic in z over [ROD_Z - KEEP/2, ROD_Z + KEEP/2]
+ROD_LEG_GAP = 0.25 * MM                     # T-020 rung 2: the wire's leg end stops 0.25 mm inside the arm hole at the mid joint height (leg length from the rod axis ROD_LEG_L = 2.50 mm, a cut dimension, tolerance EST +-0.2 mm). The leg is rigid with the rod, so at the lo state (rod resting on the arm, 0.15 mm lower) its end is still 0.10 mm above the servo case top (the arm sits on the case, no tail below it); at hi it is 1.60 mm inside the 2 mm arm. Was 0.1 mm: the lo state then put the end 0.05 mm into the case (mesh sweep T-020)
+ROD_LEG_L = ROD_Z - ARM_Z0 - ROD_LEG_GAP    # CALC 2.50 mm, rod axis to leg end
 ROD_GAP = ROD_KEEP / 2                      # rod bottom to arm top at the mid position (0 when the rod rests on the arm)
 HORN_R = ROD_Z - HINGE_Z                    # CALC 9.155 mm: hole DIRECTLY ABOVE the hinge axis at the rod height, so the horn is perpendicular to the rod at neutral (D-212 rev 2; was 12.9 on the 44 deg line)
 HORN_XH = XH                                # D-212: hole x = hinge x (was XH + 9.24 mm, 44 deg up-and-aft of the hinge)
@@ -1051,7 +1053,7 @@ def build_mechanisms(ctx):
         # pushrod: Z-bend pin in the arm hole, rod to the horn, clevis straddling the blade
         tipx, tipy = SV_XS, yc + uy * ARM_R
         rd = ctx.part('MEC-003-' + s, rgb=(0.6, 0.6, 0.6))
-        rd.cylinder('Z', (tipx, tipy, ARM_Z0 + 0.0001), ROD_Z - ARM_Z0 - 0.0001, ROD_D / 2, name='rod Z-bend leg through the arm hole (L-end flush with the arm underside; held down by the keeper MEC-008)')
+        rd.cylinder('Z', (tipx, tipy, ROD_Z - ROD_LEG_L), ROD_LEG_L, ROD_D / 2, name='rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)')
         xe = HORN_XH - 0.0055                                   # clevis body starts here (5.5 mm before the hole: the horn head reaches 2.2 mm ahead of it, the sleeve ends 3.5 mm ahead; D-212)
         rd.cylinder('X', (tipx, tipy, ROD_Z), xe - tipx, ROD_D / 2, name='pushrod')
         rd.tube('X', (xe, tipy, ROD_Z), 0.0020, 1.5 * MM, ROD_D / 2, name='clevis sleeve (EST OD 3.0, 2 mm; fork cheeks follow)')

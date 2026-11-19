@@ -221,7 +221,7 @@ def moving_set(theta, delta, sy):
     pa = k.arm_pt(theta, sy)
     ph = k.horn_pt(delta, sy)
     u = (ph - pa) / np.linalg.norm(ph - pa)
-    P['rod Z-bend pin'] = Hull(cyl((pa[0], pa[1], e.ARM_Z0 + 0.0001), (pa[0], pa[1], k.ZJ), k.ROD_D / 2))
+    P['rod Z-bend pin'] = Hull(cyl((pa[0], pa[1], k.ZJ - e.ROD_LEG_L), (pa[0], pa[1], k.ZJ), k.ROD_D / 2))
     q = ph - 5.5 * MM * u                                     # clevis body starts 5.5 mm before the hole (electrical.py, D-212)
     P['rod'] = Hull(cyl(pa, q, k.ROD_D / 2))
     P['clevis sleeve'] = Hull(cyl(q, q + 2 * MM * u, 1.5 * MM))

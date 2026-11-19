@@ -1,0 +1,12 @@
+fillet: sleeve B, 10 junction edges at r 2.0 mm
+fillet: sleeve A, 13 junction edges at r 1.5 mm
+hub block volume 12675 mm3 = 16.10 g PETG
+chol flag 0, 118.4 s, nnz(R) 1645 M
+solved 233.2 s, residual 2.8e-10 
+relative residual per load case: 1.8e-10 2.8e-10 3.1e-10 2.2e-11 1.2e-11 1.3e-11 1.8e-10 2.3e-10 3.1e-10 2.1e-11 1.1e-11 1.3e-11 1.5e-10 2.0e-10 2.8e-10 2.0e-11 1.1e-11 1.3e-11 1.5e-10 2.5e-10 2.9e-10 2.0e-11 1.1e-11 1.3e-11
+equilibrium max error 2.1e-10
+mesh 318836 elements, 1503642 free dof, hub block 16.10 g, 359 s
+F1 spin cap, any thrust pattern {
+"hub_peak": 16.423017723454688,
+"hub_zones_worst_combo": {
+"bridge boss (aft of the block)": {

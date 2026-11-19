@@ -236,7 +236,7 @@ Independent hand checks: stall force 0.397 / (0.0085 x 0.9159) = 51.0 N (reprodu
 - Outputs: `redesign/qp/A/cad/out/report_d212r3_pose20.json`, `REPORT_d212r3_pose20.md`, log `collide_d212r3_pose20.log`.
 - Acceptance criteria (set before the run): 0 part pairs deeper than 0.05 mm, 0 open wire ends, 0 wire folds.
 - Result: PASS: 0 / 0 / 0; 115 parts, 486 bodies; static hits 10 all <= 0.034 mm; wall 152 s. Limits: three poses only (not a sweep); rod, arm, keeper and damper path covered only by the analytic sweep (AR-003), which does not cover the damper or wires.
-- Open: a mesh sweep with the linkage parts (rod, arm, keeper) in the moving poses needs a linkage-poses mode in `collide_a.py` (not built); until then they rest on the AR-003 analytic sweep.
+- Closed 2026-11-19: the linkage-poses mesh sweep is AR-007 below.
 
 ### Open items after D-212 rev 3
 1. **Horn rib and elevon in the foam (CL-A-HORN-RIB-FOAM-*, CL-A-ELEVON-TORSION-FOAM):** NOT SHOWN BY ANALYSIS at the EST foam shear allowable; the same basis fails the elevon itself. These five FAIL claims stay as that record. **They are superseded by the test claims once the tests have run (review r3 M-1):** test node T-A-HORN-RIB verifies CL-A-HORN-RIB-COUPON (coupon held 30 s at 2.156 x 17.05 = **36.8 N**, held / required >= 1, no crack, no slip, set < 0.5 deg; review r3 M-2, was 1.5 x 17.1 = 25.6 N), CL-A-HORN-STALL-STEP (then 51 N for 5 s, hole elongation <= 0.1 mm, no crack), CL-A-ELEVON-TORSION-COUPON (a tape-skinned elevon section about 160 mm long, 0.161 N m = 2.156 x 74.65 N mm for 30 s, twist set < 0.5 deg, no debond) and CL-A-HORN-STALL-BENCH (item 2). When they pass, the analysis claims are re-pointed away from A-P13 by a logged CHANGE-LOG edit (build_graph keeps a negative-margin claim FAILING whatever a test does, so closure is by that edit, not by a graph rule), and A-P13 rests on the test claims. The coupon result is **local only**: its clamps sit 50 mm from the rib, where in flight the elevon continues about 160 mm. >= 3 coupons, lowest governs; a measured foam shear value (M11 block) is also taken. **Fallbacks if the tests fail:** rib introduction: 0.4 mm ply or CF doubler over the rib on both skins (rung 5); elevon torsion and rib: the spanwise CF torsion tube, trade row J in `docs/engineering-decisions.md` (not adopted).
@@ -263,3 +263,75 @@ Independent hand checks: stall force 0.397 / (0.0085 x 0.9159) = 51.0 N (reprodu
 
 ### T-063 follow-up (2026-11-19): minors m-3..m-9 and T-056
 Evidence: `redesign/qp/A/mechanism/out/T063_minors_T056.md`. Git base `251702a2`, nothing committed. Final runs: `python -I redesign/qp/A/mechanism/linkage_loads_check.py` rc 0 (7.1 s); `python -I redesign/qp/A/proofs/run_all.py` rc 1, strict FAILED as expected (548 nodes, 1151 edges, fails 6, unchanged: the same five FAIL claims plus A-P13; CL-A-ASSY-STEPS 59; stdout `redesign/qp/A/mechanism/out/T063_minors_run_all_stdout.txt`). Values that changed legitimately: CL-A-ROD-LEG-STALL 1172 -> 1392 MPa (<= 1680, UNVERIFIED through ASM-A-ROD-GRADE), CL-A-COLL-DEPTH 0.042 -> 0.034 mm. Drawings MEC-004 / MEC-008 recomposed with the print notes (`python -B redesign/qp/A/drawings/make_drawings_a.py --compose`, 105 s, 41 sheets); `BUILD-GUIDE-A.md` regenerated (`python -I redesign/qp/A/make_build_guide_a.py`: 66 steps, 42.8 h EST, 147 g). The new servo torque and speed record is AR-005 above. Categories: hand calculation (m-3, m-4, m-8, T-056), kinematics (gearing input), interference (m-9, stored reports only), FEA (D-209 / D-210 cited, not rerun).
+
+## Reproducibility reruns and structures follow-up (T-057, T-058, T-025; 2026-11-19)
+Approved by Dillon in chat 2026-11-19 ("Yes, rerun them"). Evidence: `redesign/qp/A/mechanism/out/T057_T058_repro.md` (raw data in `T057_T058_repro_data/`), `redesign/qp/A/mechanism/out/T025_followup.md`.
+
+### AR-008 Fin-tip touchdown and tip-over rerun (T-057, R-PHY-09; 2026-11-19)
+- **Category:** rigid-body dynamics (explicit 6-DOF, 4 elasto-plastic foot springs, Coulomb friction) plus a hand-calculation static tip-over.
+- **Solver / engine:** `redesign/qp/A/structures/landing_a.py` (`python -I landing_a.py 30`), Python 3.14, numpy; explicit integration dt 1e-4 s, T 1.5 s.
+- **Model version:** git `73d95966` plus the uncommitted tree of 2026-11-19; script last changed in e29526c3 (mass list).
+- **Inputs:** mass list scaled to the 1.50 kg gate (`ITEMS`, from structures_a roll-up, MASS-GATE s2); feet at x 0.30, y +-0.38, z +-0.18 m; foam plateau 30 N per foot, stroke 20 mm, elastic ramp 0.0015 m (EST, unmeasured, coupon pending); mu 0.40 (K09-L D-105, carried); sink 1.2 / 0.5 m/s, attitude error 10 deg, drift 0.5 m/s; rotor lift 2/3 W to 0.3 s, ramp to 0 at 0.6 s (EST).
+- **Assumptions:** rigid body; foam crush plateau elasto-plastic with rigid stop at 20 mm; damping ratio 0.05; no aerodynamic loads in the static check except the parked broadside formula; no foot compliance in the fin.
+- **Boundary conditions / loads:** ground plane z = 0; 10 cases as in `structures_run.md` s5 plus the 1.381 kg case.
+- **Numerical settings:** dt 1e-4 s, 15,000 steps per case, 22 s for the full table; plateau argument 30 (the no-argument default is 45 N, which is not the design plateau).
+- **Outputs:** `redesign/qp/A/mechanism/out/T057_T058_repro_data/landing_30.txt` (and `landing_45.txt`, `landing_30_oldmass.txt`); comparison table in `redesign/qp/A/mechanism/out/T057_T058_repro.md` s2.
+- **Acceptance criteria:** stroke <= 20 mm; n <= 12 g (A-P5); end tilt <= 3 deg; static tip-over >= 30 deg; side load vs about 14 N scaled cap (marginal flag).
+- **Result:** PASS on stroke (worst 15.4 mm), load factor (10.79 g), tilt (2.2 deg), static tip-over (33.0 deg); side load 18.7 N MARGINAL (unchanged). Committed record reproduced exactly with the pre-e29526c3 mass list; current list changes CG 25.2 -> 22.9 mm and results by <= 0.2 mm.
+- **Limits / validity:** foam plateau and stroke unmeasured (at 45 N the level hard case gives 15.4 g, above 12 g); rigid-body only, no fin or rib flexibility (rib twist 5.9 deg in s6 is not coupled); structures_run.md s5 table should be refreshed with the current mass list.
+
+### AR-009 Motor-mount / hub FEA reproducibility (T-058a, R-PHY-10; 2026-11-19)
+- **Category:** FEA (linear elastic, tet10, direct solve).
+- **Solver / engine:** `fea_arm.py --level 0 --variant current --tag _d208rr` and `fea_hub.py --level 0 --tag d209rr --p S_END=60 SLV_W=1.5 MS=1.1 FIL=2.0 BR_CH=0.8`; gmsh 4.15.2, MATLAB R2025a `dissect` + `chol`, scipy, numpy; Python 3.14.
+- **Model version:** git `73d95966` plus uncommitted tree; hub geometry hash 25b07829 (equal to the committed D-209 run); arm model = D-210 geometry (fea_arm.py moved past D-208).
+- **Inputs:** as FEA-ARM.md s2-3 and FEA-HUB.md (materials, load cases F1, F2, S1-S3 and their factors; sources there).
+- **Assumptions:** tied bonds (perfect bond), pins tied, no contact, no fatigue, support at the hub sleeve (arm) / far end of the bridge (hub), as in the committed records.
+- **Boundary conditions / loads:** unchanged from the committed runs.
+- **Numerical settings:** arm 166,730 tet10, 808,377 unknowns, residual max 9.3e-8 (per-case), equilibrium 9e-10 N max; hub 318,836 tet10, 1,503,642 unknowns, residual 3.1e-10, equilibrium 2.1e-10; solve 102 s (arm), 233 s (hub); wall 3 min 39 s and 28 min 25 s.
+- **Outputs:** `redesign/qp/A/mechanism/out/T057_T058_repro_data/{result_L0_current_d208rr.json,hub_result_L0_d209rr.json}` and the logs in the same folder.
+- **Acceptance criteria:** headline stresses within 1 % (tube, percentile, mean) and 5 % (single-element maxima) of the committed run, and no verdict change.
+- **Result:** hub: tube / percentile quantities within 1.8 %, hub peaks within 0.7 %, worst single-element maximum +4.2 %; arm: tube axial F2 29.88 (29.87 committed), S2 79.89 (79.82), tube shear S2 9.55 (9.55); cup values equal the committed `current_d210` within 0.2 % except cup von Mises S2 -3.0 %; no margin changes. The committed `_d208` arm file is not regenerable from the current code (the cup geometry in the script is D-210); it was reproduced via `current_d210`.
+- **Limits / validity:** gmsh remeshing is not bitwise repeatable (element counts differ by 35 and 206); singular corners stay mesh-sensitive (judged by percentile, D-207); no mesh-convergence study in this rerun; coupon-measured bond allowable still open.
+
+### AR-010 SITL transition Z5_gb0 reproducibility (T-058b, R-PHY-10; 2026-11-19)
+- **Category:** flight dynamics (ArduPlane SITL closed loop on the 6-DOF plant `a_plant.py`).
+- **Solver / engine:** `sitl/run_fwd.py` + `sitl/fwd_sum.py`; ArduPlane.elf (Cygwin SITL build from a previous session's scratchpad, build hash "-"), pymavlink 2.4.50, Python venv of that session; JSON backend, speedup 8.
+- **Model version:** git `73d95966` plus uncommitted tree; parameters `redesign/qp/A/A.param` as in the tree.
+- **Inputs:** `case=trans mass=1.50 wind=0 from=0 chain=1 hold=30 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0`, cant 17, arm 1.2, seed 1, inst 0 (committed instance not recorded).
+- **Assumptions:** plant limitations as SITL-FLIGHT.md s1 (prop cross-flow thrust, prop wash, battery drift, servo linkage not modelled); pass lines are the team's EST lines.
+- **Boundary conditions / loads:** no wind, no gust, no turbulence; start 50 m, hover, forward transition, 15 s cruise, back-transition, descent, QLAND.
+- **Numerical settings:** wall-clock coupled; 4 min 31 s; plant log `case.fwd.csv`.
+- **Outputs:** `redesign/qp/A/mechanism/out/T057_T058_repro_data/Z5_gb0_rerun.sum.json` and `.result.json`; BIN dataflash in `sitl/runs/Z5_gb0_rerun/logs/` (git-ignored).
+- **Acceptance criteria:** SITL-FLIGHT.md s1 pass lines (peak alt < 110 m, climb < 60 m, 1.3 Vs < 15 s, no cap run > 1 s, elevon pitch use <= 0.60, sink <= 1.2 m/s, no tip-over); reproducibility = same categorical outcomes, key metrics near the committed ones.
+- **Result:** categorical outcomes and transition times reproduce; elevon pitch use 0.77 of 15 deg (0.61 committed; fails the 15 deg line in both; 0.57 / 0.46 of 20 / 25 deg pass), elevon peak 11.7 vs 9.4 deg, back-transition lean 6.0 vs 3.8 deg and u_max 0.889 vs 0.808.
+- **Limits / validity:** one sample; run-to-run scatter not characterised; binary equality with the 2026-11-15 run unverified; the toolchain sits in an old session scratchpad outside the repo.
+
+### AR-011 D-206 strut-socket bending
+Question: do the printed 0.8 mm-wall strut sockets survive the strut share of hub roll? Model: strut cantilever on the spar clamp, share f = k_rigid / (k_rigid + k_bridge16x14) = 0.37, end loads V, Mb, T; thin-ring hoop and bond-shear checks. Inputs: bridge_torsion_d206.py loads and stiffnesses, CAD socket geometry. Result: max utilisation 0.34 in-layer / 0.72 across layers at f = 0.37. Validity: EST allowables, no mouth concentration, no FEA. Open: socket FEA or coupon.
+
+### Open items from the reruns
+1. structures_run.md s5 table predates the mass-list change (e29526c3); refresh or state the list it used.
+2. State the plateau in the usage line of `landing_a.py` (default 45 N differs from the 30 N record).
+3. Cite `current_d210` (regenerable) alongside `_d208` for the D-209 arm numbers.
+4. CLOSED 2026-11-19: toolchain copied to a durable folder, binary hashed, venv recreated; `redesign/qp/A/sitl/TOOLCHAIN.md`.
+5. Z5 elevon pitch use: decide the governing basis (15 / 20 / 25 deg); consider a 3-5 run repeat for the spread.
+
+## Mesh linkage sweep and Z-bend leg length (T-020, 2026-11-19)
+### AR-003 addenda
+**AR-003 addendum (replaces the open action "a mesh sweep with the linkage parts needs a linkage-poses mode (not built)")**: "Mesh sweep with the linkage parts built 2026-11-19: `python -I redesign/qp/A/cad/collide_a.py --linkage-poses --zj mid,lo,hi` (Blender 4.5.14 BVH, 0.05 mm). zj = mid and hi: 0 pairs over 0.05 mm at 17 angles (-21..+21 every 3 deg plus +-20); zj = lo FAILS: rod Z-bend leg end 0.051-0.056 mm into the servo case (leg bottom 0.1 mm above the arm underside, lo lowers the rod 0.15 mm), not seen by the analytic sweep. Mesh and analytic clearances agree to 0.016 mm. Evidence `redesign/qp/A/mechanism/out/T020_linkage_sweep.md`."
+
+**AR-003 addendum (mesh sweep and Z-bend leg length).** After the T-020 mesh linkage sweep found the rigid rod leg 0.051-0.056 mm into the servo case at the lo joint state, the leg end was moved from 0.10 mm to 0.25 mm inside the arm underside at mid (cut length 2.50 mm from the rod axis; `ROD_LEG_L` in `electrical.py`); the analytic sweep's leg is now rigid with the rod instead of fixed at a base. Mesh sweep (`collide_a.py --linkage-poses`, 17 angles x 3 states + static, 474 s): 0 pairs over 0.05 mm; leg in the arm hole at most 0.024 mm (lo, -21 deg). Analytic pin / case separation 0.250 / 0.100 / 0.400 mm (mid / lo / hi). Limits: the 0.10 mm margin at lo is below the hand-cut tolerance of the leg (EST +-0.2 mm); arm underside to case top gap and output boss height are "-" (SERVO.md), so the model puts the arm on the case.
+
+### AR-007 Mesh linkage sweep, all linkage parts in the moving poses (T-020, R-PHY-05)
+1. Question: do the arm, keeper, rod, clevis and elevon group interfere anywhere in the full elevon range, with the Z-bend joint at any height in its 0.3 mm freedom?
+2. Category: interference during motion (mesh, Blender BVH).
+3. Model: CAD meshes, 115 parts, 486 bodies; rigid motions from `mechanism/linkage_core.py` (T-018 solution), pin and rod as one rigid frame, 3 joint states mid / lo / hi.
+4. Assumptions: rigid parts; 0.05 mm gate tolerance; elevon angles -21..+21 every 3 deg plus +-20 (step justified from AR-003 slopes at most 0.0035 mm/deg); both elevons at the same angle; leg 2.50 mm from the rod axis; arm on the case (boss "-"); leg cut tolerance "-" / EST +-0.2 mm.
+5. Inputs: git 73d95966 plus the working tree; `electrical.py` (`ROD_LEG_L`), `linkage_core.py`.
+6. Method: `python -I collide_a.py --linkage-poses --zj mid,lo,hi --tag linkage_poses` in `redesign/qp/A/cad`.
+7. Outputs: `cad/out/report_linkage_poses.json`, `REPORT_linkage_poses.md`.
+8. Result: PASS, 0 pairs over 0.05 mm, 52 poses (the first run FAILED at zj=lo before the leg change).
+9. Limitations: facet error on the 12-gon arm hole (real hole has more clearance); clearances are upper bounds within about 0.01 mm; the clevis pin rides with the rod; rod grade, boss height, cut tolerance not published.
+10. Reproduce: command above (474 s); also `mechanism/out/T020_zbend_runlog.txt`.
+
+Build tolerance (conductor, 2026-11-19): the leg is cut 2.3-2.5 mm from the rod axis, filed to a 2.5 mm gauge and never longer (BUILD D3). 2.5 mm is the swept upper limit (0.10 mm over the case at lo); 2.3 mm leaves 1.4 mm engaged at hi, inside the K5 tilt allowance. Evidence `redesign/qp/A/mechanism/out/T020_zbend_fix.md`, run log `T020_zbend_runlog.txt`.

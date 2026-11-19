@@ -1,5 +1,5 @@
 {
- "git_head": "164c815ab250745e23b5d0a03f5ce754d544c8af",
+ "git_head": "73d9596689ee35afa630383f6454860f592efbd7",
  "arm_joint_state": "lo",
  "arm_joint_z_mm": 9.299999999999999,
  "engine": "analytic convex solids + separating-axis test (numpy, scipy.spatial.ConvexHull); NOT mesh-based",
@@ -2136,18 +2136,18 @@
    "side": "L",
    "a": "rod Z-bend pin",
    "b": "servo case",
-   "min_sep_mm": 0.10000000000000026,
+   "min_sep_mm": 0.0999999999999994,
    "at_delta_deg": -21.0,
-   "neutral_sep_mm": 0.10000000000000026,
+   "neutral_sep_mm": 0.0999999999999994,
    "max_penetration_mm": 0.0,
    "design_contact": false,
    "penetrating_deltas_deg": [],
    "first_delta_deg_over_tol": null,
    "sep_mm_at_pm20_pm21": {
-    "-21": 0.10000000000000026,
-    "-20": 0.10000000000000026,
-    "20": 0.10000000000000026,
-    "21": 0.10000000000000026
+    "-21": 0.0999999999999994,
+    "-20": 0.0999999999999994,
+    "20": 0.0999999999999994,
+    "21": 0.0999999999999994
    }
   },
   {
@@ -4274,18 +4274,18 @@
    "side": "R",
    "a": "rod Z-bend pin",
    "b": "servo case",
-   "min_sep_mm": 0.10000000000000026,
+   "min_sep_mm": 0.0999999999999994,
    "at_delta_deg": -21.0,
-   "neutral_sep_mm": 0.10000000000000026,
+   "neutral_sep_mm": 0.0999999999999994,
    "max_penetration_mm": 0.0,
    "design_contact": false,
    "penetrating_deltas_deg": [],
    "first_delta_deg_over_tol": null,
    "sep_mm_at_pm20_pm21": {
-    "-21": 0.10000000000000026,
-    "-20": 0.10000000000000026,
-    "20": 0.10000000000000026,
-    "21": 0.10000000000000026
+    "-21": 0.0999999999999994,
+    "-20": 0.0999999999999994,
+    "20": 0.0999999999999994,
+    "21": 0.0999999999999994
    }
   }
  ],

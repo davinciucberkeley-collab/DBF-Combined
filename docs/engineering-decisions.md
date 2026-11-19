@@ -69,3 +69,37 @@ Common inputs: hold F 17.05 N (`elevon_dynamics.py`), stall F 51.0 N quasi-stati
 | K brass tube bushing in the horn hole (2.0 mm OD x 1.0 mm ID; availability "-", not looked up) | about +0.01 g EST (recalled brass 8.5 g/cm3 x 2 mm x pi (1.0^2 - 0.5^2) mm^2) | stall bearing on the PETG 51 / (2.0 x 2.0) = 12.7 MPa, x 1.4375 = **18.3** vs 20 EST (hand calc, review r3 m-6, reproduced); shear-out needs HORN_HR about 2.8 mm (ligament 1.8 mm: 7.1 x 1.4375 = 10.2 vs 11.5) | would remove the CL-A-HORN-BEARING-STALL FAIL, but only against an EST allowable | adds a part and a press or bond step in a 2 mm printed lug | a 2.0 mm hole to ream; HORN_HR 2.2 -> 2.8 mm moves the blade top +0.6 mm | none | CAD horn profile, clevis fit, swept collision and drawing sheets all change; brass tube availability "-" | **not adopted now (ladder rung 5, held as the named fallback)**; review r3 m-6; `linkage_loads_check.py` |
 
 **Row K decision (T-063 follow-up, 2026-11-19), rejected for now:** the stall case that fails (36.65 vs 20 MPa) is a fault case (servo stalled or jammed) that the +-20 deg endpoints already exclude as a commanded condition (BUILD D5b), and the bench stall test (CL-A-HORN-STALL-BENCH, 51 N for 5 s, hole elongation <= 0.1 mm) measures whether the PETG lug survives it at no cost. Adopting the bushing now would change the CAD horn, the swept-collision result, the drawings and the sourcing before the test says it is needed. **Trigger to adopt:** the bench stall test or the horn-rib coupon stall step fails on hole elongation or a cracked lug; then the bushing is applied with HORN_HR 2.8 mm and the sweep, drawings and build text are redone.
+
+
+## Retroactive trade tables (T-025, 2026-11-19)
+
+Added from the independent retro-review `docs/audits/2026-11-19-T025-retro.md` (proposed rows TR-1, TR-2, TR-3). D-202, D-206 and D-207 predate the trade-table rule (T-024) and recorded their options as prose; these rows tabulate that prose. Every figure is the CHANGE-LOG's own (`redesign/params/CHANGE-LOG.md` D-201, D-202, D-204, D-206, D-207) as cited by the review; "—" means not in the log and is not invented. None of this changes a decision. **Benchmark (R-OPT-04) for the hub joint (printed-lug / bonded-sleeve motor mounts, bonded-joint practice) is still missing: the review did not supply a source and none is cited here.** Ladder rungs: 1 subtract, 2 modify geometry, 3 rearrange, 4 change approach, 5 add material; D-202 is rung 4 plus 5, D-206 rung 2, D-207 rungs 2 and 3, as recorded by the review.
+
+### TR-1 (D-202, hub redesign)
+
+| Option | Δmass g | Margin | Works? | Reliability | Manufacture | Assembly | Aero | Constraints | Source |
+|---|---|---|---|---|---|---|---|---|---|
+| D-193 hub, 0.8 mm webs (replaced) | 0 (baseline) | failed (D-201) | NO | — | printed | — | — | — | D-201 |
+| **Chosen:** continuous 12x10 arms + PETG crossing hub + 14x12 doublers + 3 pins; strike treated as a damage case at factor 1.0 | +16.7 hub (+ doublers, pins; their mass is not itemised in the log entry) | flight cases pass at full factors (bond 0.86 vs 0.93, hoop 15.7 vs 23.2); strike passes only at factor 1.0 (bond 1.91 vs 2.0) | YES (as a damage case) | bond allowable 2.0 MPa is EST: coupon first (`COUPON-BOND-D202.md`) | printed hub, 3 mm pins, glue | pins inserted along x (D-204) | none | 1,470 g gate | `fea_hub.py` runs `it3`, `pins`, `pinsrel` |
+| Bigger sleeves + 16x12 doublers | about +9 | would pass at full factors | YES, but breaks the gate | — | — | — | — | over 1,470 g | D-202 |
+| Thicker arm tube | about +25 EST | — | YES | — | — | — | — | over the gate | D-202 |
+| Pins only (glue released) | 0 | hoop 59.6 vs 40 | NO | — | — | — | — | — | run `pinsrel` |
+| Not assessed: carbon-plate or metal cross hub; prop guard; shorter arm | — | — | — | — | — | — | — | — | to be benchmarked |
+
+### TR-2 (D-206, bridge tube)
+
+| Option | Δmass g | Margin | Works? | Reliability | Manufacture | Assembly | Aero | Constraints | Source |
+|---|---|---|---|---|---|---|---|---|---|
+| 12x10 (existing) | 0 | tau F2 28.3 and S2 53.0 vs 30 (EST) | NO (torsion) | — | stock | — | — | — | hub FEA `d205` |
+| 14x12 | — | 30.4 / 32.0 vs 30 | NO | — | stock | — | — | — | `bridge_torsion_d206.md` |
+| 12x8 | +4.9 | passes | YES | — | not stocked, purchase | — | — | cost | same |
+| **16x14 (chosen)** | +2.1 | 22.6 / 23.8 vs 30 | YES | allowable EST | cut from an R02 offcut, $0 | bore and saddle widened | — | CG 21.17 mm | same |
+| Rely on the V-strut load share | 0 | unknown (about 1 to 60 % share) | NOT SHOWN | strut hub sockets see about 1.5 N m each at the upper bound, checked by no analysis at the time of D-206 (hand check added later, see `redesign/qp/A/mechanism/out/T025_followup.md`) | — | — | — | — | D-206 open item (5) |
+
+### TR-3 (D-207, hub fillets and bore floor)
+
+| Option | Δmass g | Margin | Works? | Reliability | Manufacture | Assembly | Aero | Constraints | Source |
+|---|---|---|---|---|---|---|---|---|---|
+| Sharp floor, no fillets (`d206`) | 0 | S1 24.7 rising to 27.7 on refinement | marginal | crack site | — | — | — | — | `d207r` |
+| Rounded floor, bridge stopped 1 mm short | — | S1 56.0, F2 34.0 | NO | worse | — | — | — | — | `d208` |
+| **45 deg cone floor + fillets 2.0 / 1.5 mm (chosen)** | +1.3 hub | p99 F2 5.7 / S2 7.7 MPa; glue 0.73 / 1.50 | YES | single highest point 19.2 / 31.6 is mesh-dependent | OpenCASCADE mesh body; Fusion path UNVERIFIED | — | — | design target then 1.467 kg | `d209` |

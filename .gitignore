@@ -130,3 +130,4 @@ redesign/qp/A/structures/out_fea/*.npz
 redesign/qp/A/structures/out_fea/sys/
 redesign/qp/A/structures/out_fea/hub_*.glb
 redesign/qp/A/structures/fig/*.raw.png
+redesign/qp/A/cad/out/_job_linkage_poses*.json
