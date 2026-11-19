@@ -1,0 +1,1010 @@
+{
+ "WNG-003-C": {
+  "bbox_mm": [
+   9.8,
+   20.0,
+   9.8
+  ],
+  "shapes": [
+   [
+    "revolve",
+    "plug"
+   ]
+  ],
+  "ncuts": 0
+ },
+ "WNG-004-R": {
+  "bbox_mm": [
+   9.8,
+   20.0,
+   9.8
+  ],
+  "shapes": [
+   [
+    "revolve",
+    "plug"
+   ]
+  ],
+  "ncuts": 0
+ },
+ "WNG-004-L": {
+  "bbox_mm": [
+   9.8,
+   20.0,
+   9.8
+  ],
+  "shapes": [
+   [
+    "revolve",
+    "plug"
+   ]
+  ],
+  "ncuts": 0
+ },
+ "WNG-005-R": {
+  "bbox_mm": [
+   9.8,
+   20.0,
+   9.8
+  ],
+  "shapes": [
+   [
+    "revolve",
+    "plug"
+   ]
+  ],
+  "ncuts": 0
+ },
+ "WNG-005-L": {
+  "bbox_mm": [
+   9.8,
+   20.0,
+   9.8
+  ],
+  "shapes": [
+   [
+    "revolve",
+    "plug"
+   ]
+  ],
+  "ncuts": 0
+ },
+ "WNG-008-RU": {
+  "bbox_mm": [
+   44.7,
+   116.0,
+   7.1
+  ],
+  "shapes": [
+   [
+    "prism",
+    "lens cap arch"
+   ],
+   [
+    "prism",
+    "lens cap end wall"
+   ],
+   [
+    "prism",
+    "lens cap end wall"
+   ],
+   [
+    "prism",
+    "mechanical stop boss"
+   ],
+   [
+    "prism",
+    "mechanical stop boss"
+   ],
+   [
+    "prism",
+    "cap bonding flange"
+   ],
+   [
+    "prism",
+    "cap bonding flange"
+   ],
+   [
+    "prism",
+    "cap bonding flange (fore)"
+   ]
+  ],
+  "ncuts": 0
+ },
+ "WNG-008-RL": {
+  "bbox_mm": [
+   42.7,
+   116.0,
+   6.6
+  ],
+  "shapes": [
+   [
+    "prism",
+    "lens cap arch"
+   ],
+   [
+    "prism",
+    "lens cap end wall"
+   ],
+   [
+    "prism",
+    "lens cap end wall"
+   ],
+   [
+    "prism",
+    "mechanical stop boss"
+   ],
+   [
+    "prism",
+    "mechanical stop boss"
+   ],
+   [
+    "prism",
+    "cap bonding flange"
+   ],
+   [
+    "prism",
+    "cap bonding flange"
+   ],
+   [
+    "prism",
+    "cap bonding flange (fore)"
+   ]
+  ],
+  "ncuts": 0
+ },
+ "WNG-009-R": {
+  "bbox_mm": [
+   12.7,
+   18.3,
+   12.7
+  ],
+  "shapes": [
+   [
+    "revolve",
+    "damper housing"
+   ],
+   [
+    "revolve",
+    "damper end disc"
+   ],
+   [
+    "revolve",
+    "damper stator pin"
+   ]
+  ],
+  "ncuts": 0
+ },
+ "WNG-010-R": {
+  "bbox_mm": [
+   11.2,
+   18.0,
+   11.2
+  ],
+  "shapes": [
+   [
+    "revolve",
+    "damper rotor sleeve"
+   ],
+   [
+    "revolve",
+    "damper rotor flange"
+   ]
+  ],
+  "ncuts": 0
+ },
+ "WNG-008-LU": {
+  "bbox_mm": [
+   44.7,
+   116.0,
+   7.1
+  ],
+  "shapes": [
+   [
+    "prism",
+    "lens cap arch"
+   ],
+   [
+    "prism",
+    "lens cap end wall"
+   ],
+   [
+    "prism",
+    "lens cap end wall"
+   ],
+   [
+    "prism",
+    "mechanical stop boss"
+   ],
+   [
+    "prism",
+    "mechanical stop boss"
+   ],
+   [
+    "prism",
+    "cap bonding flange"
+   ],
+   [
+    "prism",
+    "cap bonding flange"
+   ],
+   [
+    "prism",
+    "cap bonding flange (fore)"
+   ]
+  ],
+  "ncuts": 0
+ },
+ "WNG-008-LL": {
+  "bbox_mm": [
+   42.7,
+   116.0,
+   6.6
+  ],
+  "shapes": [
+   [
+    "prism",
+    "lens cap arch"
+   ],
+   [
+    "prism",
+    "lens cap end wall"
+   ],
+   [
+    "prism",
+    "lens cap end wall"
+   ],
+   [
+    "prism",
+    "mechanical stop boss"
+   ],
+   [
+    "prism",
+    "mechanical stop boss"
+   ],
+   [
+    "prism",
+    "cap bonding flange"
+   ],
+   [
+    "prism",
+    "cap bonding flange"
+   ],
+   [
+    "prism",
+    "cap bonding flange (fore)"
+   ]
+  ],
+  "ncuts": 0
+ },
+ "WNG-009-L": {
+  "bbox_mm": [
+   12.7,
+   18.3,
+   12.7
+  ],
+  "shapes": [
+   [
+    "revolve",
+    "damper housing"
+   ],
+   [
+    "revolve",
+    "damper end disc"
+   ],
+   [
+    "revolve",
+    "damper stator pin"
+   ]
+  ],
+  "ncuts": 0
+ },
+ "WNG-010-L": {
+  "bbox_mm": [
+   11.2,
+   18.0,
+   11.2
+  ],
+  "shapes": [
+   [
+    "revolve",
+    "damper rotor sleeve"
+   ],
+   [
+    "revolve",
+    "damper rotor flange"
+   ]
+  ],
+  "ncuts": 0
+ },
+ "FIN-003-R": {
+  "bbox_mm": [
+   50.5,
+   23.0,
+   60.0
+  ],
+  "shapes": [
+   [
+    "revolve",
+    "root block ring"
+   ],
+   [
+    "prism",
+    "root block rib socket"
+   ]
+  ],
+  "ncuts": 2
+ },
+ "FIN-005-R": {
+  "bbox_mm": [
+   41.0,
+   60.0,
+   21.0
+  ],
+  "shapes": [
+   [
+    "revolve",
+    "rib saddle ring"
+   ],
+   [
+    "prism",
+    "rib saddle socket"
+   ]
+  ],
+  "ncuts": 3
+ },
+ "FIN-003-L": {
+  "bbox_mm": [
+   50.5,
+   23.0,
+   60.0
+  ],
+  "shapes": [
+   [
+    "revolve",
+    "root block ring"
+   ],
+   [
+    "prism",
+    "root block rib socket"
+   ]
+  ],
+  "ncuts": 2
+ },
+ "FIN-005-L": {
+  "bbox_mm": [
+   41.0,
+   60.0,
+   21.0
+  ],
+  "shapes": [
+   [
+    "revolve",
+    "rib saddle ring"
+   ],
+   [
+    "prism",
+    "rib saddle socket"
+   ]
+  ],
+  "ncuts": 3
+ },
+ "CGE-001": {
+  "bbox_mm": [
+   39.0,
+   107.5,
+   41.1
+  ],
+  "shapes": [
+   [
+    "mesh",
+    "hub outer body: centre block 38 x 20 x 20 mm on the bridge a"
+   ],
+   [
+    "prism",
+    "hub tray pad flange (D-208: inboard of the raceway notches, "
+   ],
+   [
+    "loft",
+    "hub strut socket boss"
+   ],
+   [
+    "prism",
+    "hub strut web"
+   ],
+   [
+    "loft",
+    "hub strut socket boss"
+   ],
+   [
+    "prism",
+    "hub strut web"
+   ]
+  ],
+  "ncuts": 24
+ },
+ "CGE-003-UR": {
+  "bbox_mm": [
+   21.6,
+   41.5,
+   33.0
+  ],
+  "shapes": [
+   [
+    "prism",
+    "cup motor plate"
+   ],
+   [
+    "revolve",
+    "cup arm sleeve (bore 12.2 mm: 0.1 mm epoxy gap round the 12 "
+   ],
+   [
+    "prism",
+    "cup fillet 1 mm, sleeve to plate along the arm (+z side, D-2"
+   ],
+   [
+    "prism",
+    "cup fillet 1 mm, sleeve to plate along the arm (-z side, D-2"
+   ],
+   [
+    "prism",
+    "cup fillet 1 mm where the sleeve end meets the plate (D-210)"
+   ],
+   [
+    "prism",
+    "collar-to-plate web with 1 mm fillets (D-210: the collar onl"
+   ],
+   [
+    "prism",
+    "cup fillet 1 mm where the web and collar cap end on the plat"
+   ],
+   [
+    "revolve",
+    "lead collar (D-198, 1.0 mm wall)"
+   ]
+  ],
+  "ncuts": 18
+ },
+ "CGE-003-UL": {
+  "bbox_mm": [
+   21.6,
+   41.5,
+   33.0
+  ],
+  "shapes": [
+   [
+    "prism",
+    "cup motor plate"
+   ],
+   [
+    "revolve",
+    "cup arm sleeve (bore 12.2 mm: 0.1 mm epoxy gap round the 12 "
+   ],
+   [
+    "prism",
+    "cup fillet 1 mm, sleeve to plate along the arm (+z side, D-2"
+   ],
+   [
+    "prism",
+    "cup fillet 1 mm, sleeve to plate along the arm (-z side, D-2"
+   ],
+   [
+    "prism",
+    "cup fillet 1 mm where the sleeve end meets the plate (D-210)"
+   ],
+   [
+    "prism",
+    "collar-to-plate web with 1 mm fillets (D-210: the collar onl"
+   ],
+   [
+    "prism",
+    "cup fillet 1 mm where the web and collar cap end on the plat"
+   ],
+   [
+    "revolve",
+    "lead collar (D-198, 1.0 mm wall)"
+   ]
+  ],
+  "ncuts": 18
+ },
+ "CGE-003-LR": {
+  "bbox_mm": [
+   21.6,
+   41.5,
+   33.0
+  ],
+  "shapes": [
+   [
+    "prism",
+    "cup motor plate"
+   ],
+   [
+    "revolve",
+    "cup arm sleeve (bore 12.2 mm: 0.1 mm epoxy gap round the 12 "
+   ],
+   [
+    "prism",
+    "cup fillet 1 mm, sleeve to plate along the arm (+z side, D-2"
+   ],
+   [
+    "prism",
+    "cup fillet 1 mm, sleeve to plate along the arm (-z side, D-2"
+   ],
+   [
+    "prism",
+    "cup fillet 1 mm where the sleeve end meets the plate (D-210)"
+   ],
+   [
+    "prism",
+    "collar-to-plate web with 1 mm fillets (D-210: the collar onl"
+   ],
+   [
+    "prism",
+    "cup fillet 1 mm where the web and collar cap end on the plat"
+   ],
+   [
+    "revolve",
+    "lead collar (D-198, 1.0 mm wall)"
+   ]
+  ],
+  "ncuts": 18
+ },
+ "CGE-003-LL": {
+  "bbox_mm": [
+   21.6,
+   41.5,
+   33.0
+  ],
+  "shapes": [
+   [
+    "prism",
+    "cup motor plate"
+   ],
+   [
+    "revolve",
+    "cup arm sleeve (bore 12.2 mm: 0.1 mm epoxy gap round the 12 "
+   ],
+   [
+    "prism",
+    "cup fillet 1 mm, sleeve to plate along the arm (+z side, D-2"
+   ],
+   [
+    "prism",
+    "cup fillet 1 mm, sleeve to plate along the arm (-z side, D-2"
+   ],
+   [
+    "prism",
+    "cup fillet 1 mm where the sleeve end meets the plate (D-210)"
+   ],
+   [
+    "prism",
+    "collar-to-plate web with 1 mm fillets (D-210: the collar onl"
+   ],
+   [
+    "prism",
+    "cup fillet 1 mm where the web and collar cap end on the plat"
+   ],
+   [
+    "revolve",
+    "lead collar (D-198, 1.0 mm wall)"
+   ]
+  ],
+  "ncuts": 18
+ },
+ "CGE-007-R": {
+  "bbox_mm": [
+   35.5,
+   36.0,
+   19.0
+  ],
+  "shapes": [
+   [
+    "revolve",
+    "clamp ring"
+   ],
+   [
+    "prism",
+    "clamp strut socket"
+   ]
+  ],
+  "ncuts": 3
+ },
+ "CGE-007-L": {
+  "bbox_mm": [
+   35.5,
+   36.0,
+   19.0
+  ],
+  "shapes": [
+   [
+    "revolve",
+    "clamp ring"
+   ],
+   [
+    "prism",
+    "clamp strut socket"
+   ]
+  ],
+  "ncuts": 3
+ },
+ "CGE-006": {
+  "bbox_mm": [
+   40.5,
+   30.0,
+   23.0
+  ],
+  "shapes": [
+   [
+    "revolve",
+    "saddle ring"
+   ],
+   [
+    "prism",
+    "saddle bridge socket (D-206: 2.5 mm wall round the 16 mm bri"
+   ]
+  ],
+  "ncuts": 3
+ },
+ "CGE-008": {
+  "bbox_mm": [
+   66.5,
+   109.0,
+   24.0
+  ],
+  "shapes": [
+   [
+    "prism",
+    "tray plate"
+   ],
+   [
+    "prism",
+    "tray end wall R"
+   ],
+   [
+    "prism",
+    "tray end wall L"
+   ],
+   [
+    "prism",
+    "tray front lip"
+   ],
+   [
+    "prism",
+    "tray rear lip"
+   ]
+  ],
+  "ncuts": 1
+ },
+ "AVN-001": {
+  "bbox_mm": [
+   86.2,
+   110.0,
+   5.5
+  ],
+  "shapes": [
+   [
+    "prism",
+    "plate"
+   ]
+  ],
+  "ncuts": 12
+ },
+ "AVN-008": {
+  "bbox_mm": [
+   104.0,
+   80.8,
+   37.1
+  ],
+  "shapes": [
+   [
+    "prism",
+    "cover roof band (0.6 mm)"
+   ],
+   [
+    "prism",
+    "cover end wall (0.6 mm)"
+   ],
+   [
+    "prism",
+    "cover end wall, -y side (0.6 mm; open under the RX hood, T-0"
+   ],
+   [
+    "prism",
+    "cover end wall strip, -y side, over / behind the RX hood (0."
+   ],
+   [
+    "prism",
+    "cover end wall strip, -y side, over / behind the RX hood (0."
+   ],
+   [
+    "prism",
+    "RX hood roof (0.6 mm, EST design value)"
+   ],
+   [
+    "prism",
+    "RX hood outer wall (0.6 mm)"
+   ],
+   [
+    "prism",
+    "RX hood fore wall (0.6 mm)"
+   ]
+  ],
+  "ncuts": 4
+ },
+ "MEC-004-R": {
+  "bbox_mm": [
+   57.2,
+   2.0,
+   19.7
+  ],
+  "shapes": [
+   [
+    "prism",
+    "horn 2 mm profile: blade (hole 9.155 mm directly above the h"
+   ]
+  ],
+  "ncuts": 0
+ },
+ "MEC-008-R": {
+  "bbox_mm": [
+   3.1,
+   12.1,
+   2.3
+  ],
+  "shapes": [
+   [
+    "prism",
+    "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm "
+   ],
+   [
+    "prism",
+    "keeper bridge 0.8 mm over the Z-bend (underside = rod top at"
+   ]
+  ],
+  "ncuts": 0
+ },
+ "MEC-004-L": {
+  "bbox_mm": [
+   57.2,
+   2.0,
+   19.7
+  ],
+  "shapes": [
+   [
+    "prism",
+    "horn 2 mm profile: blade (hole 9.155 mm directly above the h"
+   ]
+  ],
+  "ncuts": 0
+ },
+ "MEC-008-L": {
+  "bbox_mm": [
+   3.1,
+   12.1,
+   2.3
+  ],
+  "shapes": [
+   [
+    "prism",
+    "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm "
+   ],
+   [
+    "prism",
+    "keeper bridge 0.8 mm over the Z-bend (underside = rod top at"
+   ]
+  ],
+  "ncuts": 0
+ },
+ "HRN-003-R": {
+  "bbox_mm": [
+   75.3,
+   9.6,
+   6.6
+  ],
+  "shapes": [
+   [
+    "prism",
+    "phase-lead raceway, 0.6 mm walls, closed section (D-199)"
+   ],
+   [
+    "prism",
+    "raceway front wall (D-199)"
+   ]
+  ],
+  "ncuts": 2
+ },
+ "HRN-003-L": {
+  "bbox_mm": [
+   75.3,
+   9.6,
+   6.6
+  ],
+  "shapes": [
+   [
+    "prism",
+    "phase-lead raceway, 0.6 mm walls, closed section (D-199)"
+   ],
+   [
+    "prism",
+    "raceway front wall (D-199)"
+   ]
+  ],
+  "ncuts": 2
+ },
+ "HRN-004-UR": {
+  "bbox_mm": [
+   33.6,
+   16.6,
+   18.5
+  ],
+  "shapes": [
+   [
+    "prism",
+    "hub conduit chimney and aft run, outer (D-202)"
+   ],
+   [
+    "prism",
+    "hub conduit sideways step, outer (D-202)"
+   ],
+   [
+    "prism",
+    "hub conduit drop column, outer (D-202)"
+   ]
+  ],
+  "ncuts": 12
+ },
+ "HRN-004-UL": {
+  "bbox_mm": [
+   20.6,
+   16.6,
+   18.5
+  ],
+  "shapes": [
+   [
+    "prism",
+    "hub conduit chimney and aft run, outer (D-202)"
+   ],
+   [
+    "prism",
+    "hub conduit sideways step, outer (D-202)"
+   ],
+   [
+    "prism",
+    "hub conduit drop column, outer (D-202)"
+   ]
+  ],
+  "ncuts": 12
+ },
+ "HRN-004-LR": {
+  "bbox_mm": [
+   20.6,
+   20.6,
+   23.9
+  ],
+  "shapes": [
+   [
+    "prism",
+    "hub conduit chimney and aft run, outer (D-202)"
+   ],
+   [
+    "prism",
+    "hub conduit sideways step, outer (D-202)"
+   ],
+   [
+    "prism",
+    "hub conduit drop column, outer (D-202)"
+   ]
+  ],
+  "ncuts": 12
+ },
+ "HRN-004-LL": {
+  "bbox_mm": [
+   33.6,
+   20.6,
+   23.9
+  ],
+  "shapes": [
+   [
+    "prism",
+    "hub conduit chimney and aft run, outer (D-202)"
+   ],
+   [
+    "prism",
+    "hub conduit sideways step, outer (D-202)"
+   ],
+   [
+    "prism",
+    "hub conduit drop column, outer (D-202)"
+   ]
+  ],
+  "ncuts": 12
+ },
+ "GER-001-UR": {
+  "bbox_mm": [
+   24.0,
+   21.0,
+   15.0
+  ],
+  "shapes": [
+   [
+    "revolve",
+    "shoe ring"
+   ],
+   [
+    "revolve",
+    "shoe cap"
+   ],
+   [
+    "prism",
+    "shoe plate"
+   ]
+  ],
+  "ncuts": 1
+ },
+ "GER-001-UL": {
+  "bbox_mm": [
+   24.0,
+   21.0,
+   15.0
+  ],
+  "shapes": [
+   [
+    "revolve",
+    "shoe ring"
+   ],
+   [
+    "revolve",
+    "shoe cap"
+   ],
+   [
+    "prism",
+    "shoe plate"
+   ]
+  ],
+  "ncuts": 1
+ },
+ "GER-001-LR": {
+  "bbox_mm": [
+   24.0,
+   21.0,
+   15.0
+  ],
+  "shapes": [
+   [
+    "revolve",
+    "shoe ring"
+   ],
+   [
+    "revolve",
+    "shoe cap"
+   ],
+   [
+    "prism",
+    "shoe plate"
+   ]
+  ],
+  "ncuts": 1
+ },
+ "GER-001-LL": {
+  "bbox_mm": [
+   24.0,
+   21.0,
+   15.0
+  ],
+  "shapes": [
+   [
+    "revolve",
+    "shoe ring"
+   ],
+   [
+    "revolve",
+    "shoe cap"
+   ],
+   [
+    "prism",
+    "shoe plate"
+   ]
+  ],
+  "ncuts": 1
+ }
+}
