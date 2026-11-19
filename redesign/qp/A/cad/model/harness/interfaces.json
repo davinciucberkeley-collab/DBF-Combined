@@ -114,7 +114,7 @@
    "name": "Harness remainder, bottom-up (D-198): phase-lead extensions, splices, ESC ribbon, sensor leads, servo ties, sleeves / ties / tape / solder - lumped",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 22.5,
+   "mass_g": 22.7,
    "material": "copper / silicone",
    "cg_xyz_m": [
     0.03,
@@ -506,7 +506,7 @@
    "part_b": "AVN-003",
    "via": "CT-JST-GH-4",
    "owner": "harness",
-   "notes": "RX UART (CRSF wire soldered at the RX pads) lead",
+   "notes": "RX UART (CRSF wire soldered at the RX pads), enclosed under the bay cover and the RX hood (T-022 Q4) lead",
    "wire": {
     "gauge_awg": 28,
     "connector": "CT-JST-GH-4",
@@ -544,7 +544,7 @@
    "part_b": "AVN-005",
    "via": "CT-JST-GH-4",
    "owner": "harness",
-   "notes": "airspeed I2C (plug on the MS4525 board, other end soldered to the FC) lead",
+   "notes": "airspeed I2C (plug on the MS4525 board, other end soldered to the FC), enclosed under the bay cover, through the window drop and in the core groove (T-022 Q4) lead",
    "wire": {
     "gauge_awg": 28,
     "connector": "CT-JST-GH-4",

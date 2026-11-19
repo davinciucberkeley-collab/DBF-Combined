@@ -62,11 +62,11 @@
 | E3 | ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS on the plate; airspeed board into its pocket in the left wing tip | 6 | ok | 0.00 | - | - |
 | E3a | Four M2 x 25 screws down through the FC stack into the nuts | 1 | ok | 0.00 | - | - |
 | E3d | Pitot lines (FLEXIBLE silicone: no rigid insertion path, so this step checks the fitted position only, travel 0): each 39 mm line pushed on its probe barb, laid in the pocket over the spar and pushed on its board port; pocket taped | 2 | ok | 0.00 | - | - |
-| E3b | LAY: solder the ESC signal ribbon to the FC, the servo leads to the FC pads S5 / S6, the RX CRSF lead, the GPS and airspeed leads (JST plugs on the sensor boards) | 0 | ok | 0.00 | - | - |
+| E3b | LAY: solder the ESC signal ribbon to the FC, the servo leads to the FC pads S5 / S6, the RX CRSF lead, the GPS and airspeed leads (JST plugs on the sensor boards); the I2C and RX leads run inside the cover lane, then the RX antennas are taped in a 90 deg V on the plate and skin (T-022 Q1, Q4) | 0 | ok | 0.00 | - | - |
 | E3c | Anti-slip pad stuck on the tray floor | 1 | ok | 0.00 | - | - |
 | E4 | Pack into the tray | 1 | ok | 0.00 | - | - |
 | E4a | XT60 female with its tail mated to the pack lead XT60 male (plugs on from aft, taped on the skin; tail soldered to the ESC pads after) | 1 | ok | 0.00 | - | - |
 | E4b | LAY: mate the pack XT60 male to the XT60 female (E4a) (done in E4a); the vendor pack power leads (E-HRN-13) and balance lead (E-HRN-14) come on the pack and are taped to the skin along their route, the balance plug on the pack top | 0 | ok | 0.00 | - | - |
 | E5 | Pack strap threaded under the bridge tube and closed over the pack (FLEXIBLE: no rigid insertion path exists, so this step checks the fitted position only, travel 0; the threading is by hand) | 1 | ok | 0.00 | - | - |
 | E6 | LAY: solder the battery tail to the ESC BAT pads and the 4 x 3 phase leads (free ends from B0 / B2c: out of the foam ditch, up to z 16, over the plate beside the FC, up to z 28 under the cover roof) to the ESC motor pads; heat-shrink | 0 | ok | 0.00 | - | - |
-| E7 | Bay cover lowered over the FC stack and ESC onto the plate (the sensor leads and the battery tail drop into the roof-open notches; the phase bundles are already inside), foam tape + two ties | 1 | ok | 0.00 | - | - |
+| E7 | Bay cover lowered over the FC stack and ESC onto the plate (the GPS lead and the battery tail drop into the bottom-open slots, the two antennas into the slots of the RX hood aft wall; the RX UART and I2C leads and the phase bundles are already inside), foam tape + two ties | 1 | ok | 0.00 | - | - |

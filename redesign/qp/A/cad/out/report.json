@@ -1,5 +1,5 @@
 {
- "bodies": 486,
+ "bodies": 492,
  "defects": [
   "WNG-008-LL body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
   "WNG-008-LL body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)",
@@ -198,7 +198,7 @@
    ]
   }
  ],
- "seconds": 158.0,
+ "seconds": 144.3,
  "skipped": [
   [
    "HRD-001",

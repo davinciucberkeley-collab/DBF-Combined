@@ -150,11 +150,11 @@
    "arm_m": 0.0,
    "race_m": 0.0,
    "groove_m": 0.0,
-   "cover_m": 0.0289,
-   "exposed_m": 0.0726,
-   "total_m": 0.1015,
+   "cover_m": 0.0972,
+   "exposed_m": 0.0,
+   "total_m": 0.0972,
    "min_bend_mm": 2.5,
-   "total_strand_m": 0.406
+   "total_strand_m": 0.389
   },
   {
    "edge": "E-HRN-10",
@@ -175,19 +175,19 @@
    "dia_mm": 1.0,
    "arm_m": 0.0,
    "race_m": 0.0,
-   "groove_m": 0.4069,
-   "cover_m": 0.0237,
-   "exposed_m": 0.0715,
-   "total_m": 0.5021,
+   "groove_m": 0.4126,
+   "cover_m": 0.0896,
+   "exposed_m": 0.0,
+   "total_m": 0.5022,
    "min_bend_mm": 2.72,
-   "total_strand_m": 2.008
+   "total_strand_m": 2.009
   }
  ],
  "totals_strand_m": {
   "ARM": 3.3382046459052472,
   "RACE": 1.4483718213748382,
-  "GROOVE": 2.995956436211087,
-  "COVER": 2.0653311565135737,
-  "EXPOSED": 1.0246142514947754
+  "GROOVE": 3.0185607354641224,
+  "COVER": 2.601988880084697,
+  "EXPOSED": 0.44842557243250547
  }
 }

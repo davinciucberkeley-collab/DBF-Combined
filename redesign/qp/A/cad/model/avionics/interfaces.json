@@ -56,9 +56,9 @@
    "mass_g": 4.6,
    "material": "PCB",
    "cg_xyz_m": [
-    0.1178,
+    0.1184,
     -0.046,
-    0.0152
+    0.0139
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -143,15 +143,15 @@
   },
   {
    "id": "AVN-008",
-   "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead runs from the foam ditch to the ESC pads; notches for the sensor leads and the battery tail",
+   "name": "Bay cover (D-198, T-022 Q4): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead runs from the foam ditch to the ESC pads, with a low annex (RX hood) over the receiver enclosing the RX UART lead; bottom-open slots for the GPS lead, the battery tail and the two antennas",
    "subsystem": "avionics",
    "status": "MODELLED",
-   "mass_g": 9.6,
+   "mass_g": 10.4,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0732,
-    0.0,
-    0.0298
+    0.0765,
+    -0.0037,
+    0.029
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"

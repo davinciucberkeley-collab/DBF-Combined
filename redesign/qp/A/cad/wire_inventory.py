@@ -59,13 +59,13 @@ def classify(eid, pts):
                         cls = 'ARM'                       # in the arm tube bore / its 4.8 mm exit hole (D-202), or in the cup collar (carbon tube and printed cup)
                     elif enc:
                         cls = 'RACE' if enc == 'RACE' else 'GROOVE'
-                    elif m.COV_X0 < mid[0] < m.COV_X1 and abs(mid[1]) < m.COV_Y and mid[2] < roof(mid[0]):
+                    elif m.cov_interior(mid):                # T-022 Q4: bay cover or RX hood (was the box test COV_X0 < x < COV_X1, |y| < COV_Y, z < roof)
                         cls = 'COVER'
                 elif eid in ('E-HRN-07', 'E-HRN-08') and mid[2] < m.zu(mid[0]) - 0.0003 and mid[0] > m.COV_X0 and mid[0] < 0.1250:
                     cls = 'GROOVE'
                 elif eid == 'E-HRN-11' and mid[2] < m.zu(mid[0]) - 0.0003:
                     cls = 'GROOVE'                        # D-208: airspeed I2C lead in its core groove and the board pocket
-                elif m.COV_X0 < mid[0] < m.COV_X1 and abs(mid[1]) < m.COV_Y and mid[2] < roof(mid[0]):
+                elif m.cov_interior(mid):                # T-022 Q4: bay cover or RX hood (was the box test COV_X0 < x < COV_X1, |y| < COV_Y, z < roof)
                     cls = 'COVER'
             out[cls] += L / n
     return out

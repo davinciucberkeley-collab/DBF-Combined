@@ -77,14 +77,14 @@ STEPS = [
     ('E3', 'ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS on the plate; airspeed board into its pocket in the left wing tip', ['PRP-003', 'AVN-007', 'AVN-002', 'AVN-003', 'AVN-004', 'AVN-005'], (0, 0, -1), 30, 5),
     ('E3a', 'Four M2 x 25 screws down through the FC stack into the nuts', ['HWC-001'], (0, 0, -1), 20, 5),
     ('E3d', 'Pitot lines (FLEXIBLE silicone: no rigid insertion path, so this step checks the fitted position only, travel 0): each 39 mm line pushed on its probe barb, laid in the pocket over the spar and pushed on its board port; pocket taped', ['AVN-009-T', 'AVN-009-S'], None, 0, 0),
-    ('E3b', 'LAY: solder the ESC signal ribbon to the FC, the servo leads to the FC pads S5 / S6, the RX CRSF lead, the GPS and airspeed leads (JST plugs on the sensor boards)', [], None, 0, 0, ['E-HRN-06', 'E-HRN-07', 'E-HRN-08', 'E-HRN-09', 'E-HRN-10', 'E-HRN-11']),
+    ('E3b', 'LAY: solder the ESC signal ribbon to the FC, the servo leads to the FC pads S5 / S6, the RX CRSF lead, the GPS and airspeed leads (JST plugs on the sensor boards); the I2C and RX leads run inside the cover lane, then the RX antennas are taped in a 90 deg V on the plate and skin (T-022 Q1, Q4)', [], None, 0, 0, ['E-HRN-06', 'E-HRN-07', 'E-HRN-08', 'E-HRN-09', 'E-HRN-10', 'E-HRN-11']),
     ('E3c', 'Anti-slip pad stuck on the tray floor', ['PWR-003'], (0, 0, -1), 10, 2),
     ('E4', 'Pack into the tray', ['PWR-001'], (0, 0, -1), 30, 5),
     ('E4a', 'XT60 female with its tail mated to the pack lead XT60 male (plugs on from aft, taped on the skin; tail soldered to the ESC pads after)', ['HRN-002'], (-1, 0, 0), 15, 3),
     ('E4b', 'LAY: mate the pack XT60 male to the XT60 female (E4a) (done in E4a); the vendor pack power leads (E-HRN-13) and balance lead (E-HRN-14) come on the pack and are taped to the skin along their route, the balance plug on the pack top', [], None, 0, 0, ['E-HRN-01', 'E-HRN-13', 'E-HRN-14']),
     ('E5', 'Pack strap threaded under the bridge tube and closed over the pack (FLEXIBLE: no rigid insertion path exists, so this step checks the fitted position only, travel 0; the threading is by hand)', ['PWR-002'], None, 0, 0),
     ('E6', 'LAY: solder the battery tail to the ESC BAT pads and the 4 x 3 phase leads (free ends from B0 / B2c: out of the foam ditch, up to z 16, over the plate beside the FC, up to z 28 under the cover roof) to the ESC motor pads; heat-shrink', [], None, 0, 0, ['E-HRN-12', 'E-HRN-02', 'E-HRN-03', 'E-HRN-04', 'E-HRN-05']),
-    ('E7', 'Bay cover lowered over the FC stack and ESC onto the plate (the sensor leads and the battery tail drop into the roof-open notches; the phase bundles are already inside), foam tape + two ties', ['AVN-008'], (0, 0, -1), 40, 4),
+    ('E7', 'Bay cover lowered over the FC stack and ESC onto the plate (the GPS lead and the battery tail drop into the bottom-open slots, the two antennas into the slots of the RX hood aft wall; the RX UART and I2C leads and the phase bundles are already inside), foam tape + two ties', ['AVN-008'], (0, 0, -1), 40, 4),
 ]
 THREAD_BEFORE = {'B0k': 'B1', 'D0': 'E2', 'B2c': 'E2'}
 # D-202 bench steps: swept in their own run (nothing of the wing placed), their parts are placed in the main run by B1 (the dock of the finished frame)

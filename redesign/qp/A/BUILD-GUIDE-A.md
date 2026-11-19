@@ -75,7 +75,7 @@ File names follow `<part id>.stl`. The STL files are exported from the CAD (`a_m
 | Part | Qty | Step | Mass each (g) | Print time (EST) | Note |
 |---|---|---|---|---|---|
 | `AVN-001` Avionics plate | 1 | E2 | 8.0 | 20-34 min | 4 hex pockets 4.2 mm across for M2 thin nuts |
-| `AVN-008` Bay cover | 1 | E7 | 9.6 | 24-41 min | 0.6 mm shell (EST) |
+| `AVN-008` Bay cover | 1 | E7 | 10.4 | 26-45 min | 0.6 mm shell (EST) |
 | `CGE-001` Hub | 2 | B0b, B1 | 18.0 | 45-77 min | walls: 2.0 mm over the outer 12 mm of each arm socket (D-196), 1.2 mm bridge sleeve, 0.8 mm webs; orientation `-` |
 | `CGE-003` Motor cup | 8 | B0i1, B0i2, B0i3, B0i4, B1 | 4.3 | 11-18 min | plate flat on the bed, shaft axis up (ARMS.md: layer plane = plate plane, EST); 4.8 mm lead hole, screw-head pockets (D-197) |
 | `CGE-006` Bridge saddle | 1 | B1 | 2.0 | 5-9 min |  |
@@ -146,7 +146,7 @@ Mass placed by this step 100.1 g; running total of placed parts 100.1 g (CAD; th
 - Bond the halves: lay a 12 mm alignment rod wrapped in packing tape (release) in the lower groove, foam-safe epoxy thin on the split faces, close the upper half on the rod and weight it flat on the bench; pull the rod once cured. The bore is then the one the spar slides into in A2. Glue on the split line is lumped in WNG-001 (EST).
 - The core ends at the elevon hinge line: the cove foot is at x 179.25 mm, the hinge at x 183.75 mm (CAD `cove_x`, `XH`), so the elevon (stage 5) is the 61.25 mm aft strip, machined in the same job and cut free along the cove line with a knife (EST).
 - Shop cuts (mark from the CAD; every dimension is in `cad/amodel/wing.py` `build_wing`): spar bore 12 mm along y at x 60 mm, z 0 (the 12 mm tube is bonded in this bore); bridge slot open below x 0-56 mm, |y| <= 6.5 mm; pack tray slot x -10 to 22.5 mm, |y| <= 57 mm, open above; saddle slot x 29.5-71 mm, |y| <= 16.5 mm, open below; strut slots (0.5 mm clear); strut clamp slots y 270.5-309.5 mm; rib saddle slots |y| 349.5-410.5 mm; servo pockets x 124.5-165.5 mm, y 177.5-222.5 mm, open to the upper skin; elevon-tip damper notches at the elevon tip; balance-strip windows y 231-339 mm; phase-lead raceway grooves x 0-22.5 mm, |y| 14-24 mm and the open ditch x 22.5-32 mm; servo-lead drop slot at x 83 mm and a 5 x 3.2 mm groove 3 mm under the upper skin (D-198).
-- Tape skin: both surfaces, the doublers and a tip-edge layer (CAD part WNG-001 lumps the foam, skin, glue and hinge tape: 100.1 g). Tape hinge and fillets are not drawn.
+- Tape skin: both surfaces, the doublers and a tip-edge layer (CAD part WNG-001 lumps the foam, skin, glue and hinge tape: 100.1 g). Tape films (skin and hinge: product and thickness "—", BOM R05) and fillets are not drawn (T-022 Q2).
 
 **Fit it:**
 
@@ -1618,7 +1618,7 @@ Mass placed by this step 41.0 g; running total of placed parts 967.5 g (CAD; the
 
 **Fit it:**
 
-- Drop each servo into its pocket (core, x 124.5-165.5 mm, y +-200 mm) 30 mm from above and bond it in the pocket with a little epoxy (CAD edge E-MEC: epoxy, `servo in its pocket`). Keep epoxy off the case seam and the output shaft.
+- Drop each servo into its pocket (core, x 124.5-165.5 mm, y +-200 mm) 30 mm from above and bond it in the pocket with a little epoxy (CAD edge E-MEC: epoxy, `servo in its pocket`). Keep epoxy off the case seam and the output shaft. Measure-on-arrival (T-022 Q3): measure the ear span of the received servo; if the ear span plus 1 mm clearance is more than the 41 mm pocket length (x 124.5-165.5 mm), the pocket must be lengthened (a geometry change: rerun the CAD gates).
 - Motion (CAD, checked by `a_assembly.py`): along (0, 0, -1) for 30 mm.
 
 **Checkpoint (do not go on until it passes):**
@@ -2028,7 +2028,7 @@ Mass placed by this step 0.8 g; running total of placed parts 1050.5 g (CAD; the
 
 ### E3b. Solder the signal wiring
 
-*Step 59 of 66. Plan caption: LAY: solder the ESC signal ribbon to the FC, the servo leads to the FC pads S5 / S6, the RX CRSF lead, the GPS and airspeed leads (JST plugs on the sensor boards)*
+*Step 59 of 66. Plan caption: LAY: solder the ESC signal ribbon to the FC, the servo leads to the FC pads S5 / S6, the RX CRSF lead, the GPS and airspeed leads (JST plugs on the sensor boards); the I2C and RX leads run inside the cover lane, then the RX antennas are taped in a 90 deg V on the plate and skin (T-022 Q1, Q4)*
 
 **Do this:** Solder the ESC signal ribbon, servo leads, RX, GPS and airspeed leads to the FC.
 
@@ -2044,7 +2044,7 @@ Mass placed by this step 0.8 g; running total of placed parts 1050.5 g (CAD; the
 
 **Fit it:**
 
-- LAY: ESC signal ribbon to the FC, servo leads to FC pads S5 / S6, RX CRSF lead, GPS and airspeed leads (JST plugs on the sensor boards). D-208: the airspeed I2C lead (about 0.5 m) is threaded first: from the board pocket along its groove at x 95 mm to the slot under the left plate window, up through the window, along the plate (taped, about 70 mm in the open) to the cover notch and the FC I2C pad.
+- LAY: ESC signal ribbon to the FC, servo leads to FC pads S5 / S6, RX CRSF lead, GPS and airspeed leads (JST plugs on the sensor boards). D-208 / T-022 Q4: the airspeed I2C lead (about 0.5 m) is threaded first: from the board pocket along its groove at x 95 mm to the drop slot under the left plate window (at y -24.4 mm, inside the cover footprint), up through the window and the slit, then forward at 22 mm height in the cover lane (between the -y phase bundle and the cover wall) and up to the FC I2C pad: no part of it is in the open. RX CRSF lead: from the FC RX pad up to 40.5 mm, outboard into the same lane, aft at 25 mm height (over the I2C lead), down at x 98 mm to 19.5 mm, aft into the RX hood zone, outboard over the RX to the CRSF pad row and down onto the pad. Then tape the two RX antennas flat on the plate and the skin in a 90 degree V (T-022 Q1): each leaves the RX aft edge along +x for 1.5 mm, turns 45 degrees (plan radius 4 mm) and runs straight, outboard antenna to the left and inboard antenna to the right, over the 5.7 mm step at the plate end, tips about 14 mm ahead of the hinge line. Antenna length 65 mm is retailer-sourced, UNVERIFIED (the T element is not drawn): measure it on arrival; if the reach (including the T) exceeds 77 mm, or the T half-span 12.4 mm, the RX moves 15 mm forward (fallback in the T-022 decision).
 
 **Checkpoint (do not go on until it passes):**
 
@@ -2238,9 +2238,9 @@ Mass placed by this step 5.5 g; running total of placed parts 1337.5 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `AVN-008` x1 | Bay cover | made | R03 Prusa | 9.6 |
+| `AVN-008` x1 | Bay cover | made | R03 Prusa | 10.4 |
 
-Mass placed by this step 9.6 g; running total of placed parts 1347.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 10.4 g; running total of placed parts 1347.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -2250,11 +2250,11 @@ Mass placed by this step 9.6 g; running total of placed parts 1347.1 g (CAD; the
 
 **Make it:**
 
-- Print AVN-008: 0.6 mm hood, x 22.5-126.5 mm, |y| <= 26.5 mm.
+- Print AVN-008: 0.6 mm hood, x 22.5-126.5 mm, |y| <= 26.5 mm, plus the RX hood annex on the -y side (x 99.5-126.5 mm, y -26.5 to -53.7 mm, roof 8 mm over the plate; T-022 Q4).
 
 **Fit it:**
 
-- Lower the cover (40 mm) onto the plate; leads drop into the notches; tape and tie.
+- Lower the cover (40 mm) onto the plate, with the RX hood over the receiver; the GPS lead, the battery tail and the two taped antennas drop into the bottom-open slots in the walls (the RX and I2C leads are already inside); tape and tie.
 - Motion (CAD, checked by `a_assembly.py`): along (0, 0, -1) for 40 mm.
 
 **Checkpoint (do not go on until it passes):**
@@ -2263,7 +2263,7 @@ Mass placed by this step 9.6 g; running total of placed parts 1347.1 g (CAD; the
 
 ## 14. After the last step
 
-1. **Weigh-in.** Weigh the aircraft with the pack. The gate is **1.47 kg** (`MASS-GATE.md` s8, D-190); the CAD basic mass is 1273.3 g (placed parts 1347.1 g plus the harness lump 18.4 g and the hardware lump 26.1 g) and the design target is 1.46 kg predicted including growth and overrun (`params-A.json`). If the weight is above the gate the aircraft does not fly until the C3 window check is re-run at the as-weighed mass (`MASS-GATE.md` s6).
+1. **Weigh-in.** Weigh the aircraft with the pack. The gate is **1.47 kg** (`MASS-GATE.md` s8, D-190); the CAD basic mass is 1274.3 g (placed parts 1347.9 g plus the harness lump 18.4 g and the hardware lump 26.1 g) and the design target is 1.46 kg predicted including growth and overrun (`params-A.json`). If the weight is above the gate the aircraft does not fly until the C3 window check is re-run at the as-weighed mass (`MASS-GATE.md` s6).
 2. **CG.** Balance the aircraft on a knife edge in the cruise attitude: the band is **19-26 mm aft of the wing leading edge**, hard aft limit 28.5 mm, lateral within 5 mm (`params-A.json`, A-P4). Move the pack in the tray slots (6 mm forward, 10 mm aft of nominal, about 2.2 mm of CG per 10 mm, `common.py` `TRIM`): no ballast first.
 3. **Controls.** Each elevon +-20 deg (servo limit), stops at +-21 deg; both surfaces move the right way for the stick (EST: check with the TX, props off).
 4. **Power-up, props OFF.** First power-up with the props removed. Check each motor direction: UR and LL clockwise, UL and LR counter-clockwise, seen from the thrust side (BOM P02, MR and MRP); if one is wrong swap two phase leads (EST). Then fit the props, props-on tests only on the thrust stand (`bench_analysis.py`, `SCHEDULE-A.md` B3).
@@ -2288,7 +2288,7 @@ Mass placed by this step 9.6 g; running total of placed parts 1347.1 g (CAD; the
 
 The steps total **42.8 h** hands-on (`EST`; machine time for printing and the 24 h cures are not counted). `SCHEDULE-A.md` plans 53 h of build (range 41-66 h), including 10 h of checks and a 2 h range check (`EST`, K09-L 82 h x 0.65). This guide steps 42.8 h plus those 12 h is 54.8 h, inside that range.
 
-**Mass check at the end:** the CAD basic mass is 1273.30 g (`a_model.py`); the pack is 270 g of that.
+**Mass check at the end:** the CAD basic mass is 1274.30 g (`a_model.py`); the pack is 270 g of that.
 
 ### Open items (not in the repo, or in conflict)
 

@@ -266,6 +266,22 @@ SRV_YD = 0.024                              # servo leads drop through the plate
 SRV_XD = 0.083
 SRV_YG = 0.190                              # groove end: 10 mm inboard of the servo centre line
 RHO_PETG_ = 1.27
+# T-022 Q4 (opus decision 2026-11-19, docs/audits/2026-11-19-T022-decisions.md): RX hood = low annex of the cover AVN-008 over the receiver on the -y side, so that
+# the RX UART lead E-HRN-09 is enclosed. Design values of a printed part (EST, not vendor dimensions): wall = COV_T; x HOOD_X0 .. the cover aft wall; y from the cover
+# wall out to the RX outer edge (-0.0525) + 0.6 mm clearance + wall; roof 8 mm over the plate top (RX top is 4.0 mm; the UART runs at z 19.5 inside, roof inner face 21.3 mm).
+HOOD_X0, HOOD_X1 = 0.0995, COV_X1
+HOOD_Y1 = 0.0537
+HOOD_ZR = ZP + 0.008
+HOOD_SLOT_W, HOOD_SLOT_H = 0.004, 0.0035    # antenna exit slots in the hood aft wall: open at the bottom (the cover is lowered over the laid antennas), 4 mm wide, 3.5 mm high
+UART_Y = 0.02442                            # lane |y| of the RX UART and I2C leads inside the cover: between the -y phase bundle (outer strand edge 22.94 mm) and the cover wall inner face (25.9 mm), centred
+# T-022 Q1: RX antennas. RadioMaster RP3 V2: 2 x 65 mm T antennas (readymaderc 85670, read 2026-11-15: redesign/review/QP-5/CAD-FIDELITY-AUDIT.md:94; three retailer listings agree,
+# redesign/team/F5/RC-LINK.md:15, claims.json:50; maker page HTTP 429): UNVERIFIED. What the 65 mm measures and the T element size are not published in the repo: T element NOT drawn.
+RX_ANT_L = 0.065
+RX_ANT_ANG = 45.0                           # lay angle to +x (installation choice, T-022 Q1: 90 deg V, taped to the skin)
+RX_ANT_STUB = 0.0015                        # straight exit along +x before the turn
+RX_ANT_R = 0.004                            # plan-view bend radius (project wire rule >= 4 mm; coax-specific minimum is not published: "-")
+RX_ANT_OD = 1.1 * 1e-3                      # EST (not published)
+RX_ANT_LS = 0.0085                          # x-length of the smooth step from the plate top down to the skin; it starts where the plan turn ends (x 128.3 mm, 1.3 mm past the plate end), so the 3-D bend radius stays >= 4 mm
 
 
 def cov_outer():
@@ -290,10 +306,48 @@ def _poly_area_(l):
     return sum(l[i][0] * l[(i + 1) % len(l)][1] - l[(i + 1) % len(l)][0] * l[i][1] for i in range(len(l))) / 2
 
 
+def cov_side_loops_neg():
+    """-y end wall (T-022 Q4): the original end wall without the part that the RX hood replaces (x HOOD_X0 + T .. HOOD_X1 - T, below the hood roof underside).
+    Three polygons (x, z): front part, the strip above the hood roof, the aft strip."""
+    o = cov_outer()
+    tail = cov_side_loop()[len(o):]
+    xc, xd = HOOD_X0 + COV_T, HOOD_X1 - COV_T
+    zi = HOOD_ZR - COV_T
+    a = o[:4] + [(xc, COV_ZH2), (xc, ZP)] + tail
+    b = [(xc, COV_ZH2), (xd, COV_ZH2), (xd, zi), (xc, zi)]
+    c = [(xd, COV_ZH2), (COV_X1, COV_ZH2), (COV_X1, ZP), (xd, ZP)]
+    return [a, b, c]
+
+
+def cov_interior(p):
+    """True if the point is inside the bay cover or the RX hood (T-022 Q4; used by wire_inventory.py to class a wire as enclosed)."""
+    x, y, z = p
+    if COV_X0 < x < COV_X1 and abs(y) < COV_Y:
+        o = cov_outer()
+        for (x0, z0), (x1, z1) in zip(o, o[1:]):
+            if x0 <= x <= x1 and x1 > x0:
+                return z < z0 + (z1 - z0) * (x - x0) / (x1 - x0)
+        return False
+    return HOOD_X0 < x < HOOD_X1 and -HOOD_Y1 < y <= -COV_Y and ZP - 0.0003 < z < HOOD_ZR
+
+
+def hood_volume_m3():
+    """Drawn volume of the RX hood walls (box sum; the 0.6 mm corner overlaps and the slot cuts are inside the EST)."""
+    wy = HOOD_Y1 - COV_Y
+    hz = HOOD_ZR - ZP
+    L = HOOD_X1 - HOOD_X0
+    roof = L * wy * COV_T
+    outer = L * COV_T * (hz - COV_T)
+    fore = COV_T * wy * (hz - COV_T)
+    aft = COV_T * wy * (hz - COV_T) - 2 * HOOD_SLOT_W * HOOD_SLOT_H * COV_T
+    return roof + outer + fore + aft
+
+
 def cover_mass_g():
     arch = abs(_poly_area_(cov_loops())) * (2 * COV_Y)
-    wall = abs(_poly_area_(cov_side_loop())) * COV_T * 2
-    return round((arch + wall) * 1e6 * RHO_PETG_, 1)
+    wall = abs(_poly_area_(cov_side_loop())) * COV_T                       # +y end wall
+    wall += sum(abs(_poly_area_(l)) for l in cov_side_loops_neg()) * COV_T  # -y end wall without the hood opening
+    return round((arch + wall + hood_volume_m3()) * 1e6 * RHO_PETG_, 1)
 
 
 def servo_zc(x):
@@ -535,6 +589,8 @@ AS_SX = (0.0715, 0.0785)                    # EST sensor body x range; its barbs
 I2C_X = 0.095                               # I2C lead groove x: aft of the rib socket (x <= 90.5), ahead of the servo pockets (x >= 127)
 I2C_ZD = zu(I2C_X) - 0.0065                 # deep under the servo-lead groove that crosses at |y| 0.19 (its bottom z ~6.9)
 I2C_ZS = zu(I2C_X) - 0.0025                 # shallow over the fin rib tube at |y| 0.38 (its top z 7.0)
+I2C_ZH = 0.0220                             # T-022 Q4: height of the I2C lead in the cover lane (above the servo-lead drop column at x 83, below the UART)
+UART_ZH, UART_ZL = 0.0250, 0.0195           # T-022 Q4: UART lane height under the roof step (aft of x 83), and inside the RX hood (roof inner face 21.3 mm)
 SV_X0, SV_X1, SV_DY, SV_Z0 = 0.1270, 0.1554, 0.01335, -0.0013 - WING_DZ    # SERVO.md: EMAX ES3054HV 28.4 x 13.0 x 26.7 (servodatabase / getfpv, 2026-11-15); ears, output boss: "-" (no drawing)
 SV_XS = 0.1405                              # spline axis x (kept; spline axis is vertical, arm turns in the x-y plane)
 ARM_R = 8.5 * MM                            # D-212 rev 2: servo arm hole 8.5 mm from the spline axis (was 12; the ES3054HV arm hole row is not published, "-": drill 1.3 mm at 8.5 mm (rev 3) and measure; window 7.8..8.97 mm, review m-4). Horn / arm = 1.077 keeps the proof claim ratio (was 12.9 / 12 = 1.075)
@@ -665,7 +721,7 @@ P('AVN-005', 'Airspeed sensor MS4525 board', 'avionics', 3.0, 'PCB', 'buy', 'sin
 P('AVN-006', 'Pitot-static probe (RMRC kit; size not published: EST 166 x 3 mm, measure)', 'avionics', 5.0, 'brass tube', 'buy')
 for _k, _n in (('T', 'total'), ('S', 'static')):    # D-208: mass and length set after pitot_paths() exists (end of file)
     P('AVN-009-' + _k, 'Pitot line, %s pressure: silicone tubing 2 / 4 mm (V RMRC)' % _n, 'avionics', 0.0, 'silicone rubber', 'buy')
-P('AVN-008', 'Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead runs from the foam ditch to the ESC pads; notches for the sensor leads and the battery tail', 'avionics', cover_mass_g(), 'PETG (printed)')
+P('AVN-008', 'Bay cover (D-198, T-022 Q4): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead runs from the foam ditch to the ESC pads, with a low annex (RX hood) over the receiver enclosing the RX UART lead; bottom-open slots for the GPS lead, the battery tail and the two antennas', 'avionics', cover_mass_g(), 'PETG (printed)')
 P('HWC-001', 'FC mounting screws: 4 x M2 x 25 pan screw (stock)', 'avionics', M_FC_SCREWS, 'A2 stainless', 'buy')
 P('HWC-003', 'FC mounting nuts: 4 x M2 thin nut (DIN 439 1.2 mm) in the plate hex pockets', 'avionics', M_FC_NUTS, 'A2 stainless', 'buy')
 # mechanisms (30 g with linkage)
@@ -812,9 +868,9 @@ for i, s in enumerate('RL'):
                       wire=WIRE(26, 'JR 3-pin', 'R-A-%02d' % (7 + i), ['tie at the plate edge', 'tape on the skin'], 3,
                                 'strain loop')))
     ELEC[eid] = 0.0036
-for eid, a, b, ct, nm, nc in (('E-HRN-09', 'AVN-002', 'AVN-003', 'CT-JST-GH-4', 'RX UART (CRSF wire soldered at the RX pads)', 4),
+for eid, a, b, ct, nm, nc in (('E-HRN-09', 'AVN-002', 'AVN-003', 'CT-JST-GH-4', 'RX UART (CRSF wire soldered at the RX pads), enclosed under the bay cover and the RX hood (T-022 Q4)', 4),
                               ('E-HRN-10', 'AVN-002', 'AVN-004', 'CT-JST-GH-6', 'GPS (plug on the GPS board, other end soldered to the FC)', 6),
-                              ('E-HRN-11', 'AVN-002', 'AVN-005', 'CT-JST-GH-4', 'airspeed I2C (plug on the MS4525 board, other end soldered to the FC)', 4)):
+                              ('E-HRN-11', 'AVN-002', 'AVN-005', 'CT-JST-GH-4', 'airspeed I2C (plug on the MS4525 board, other end soldered to the FC), enclosed under the bay cover, through the window drop and in the core groove (T-022 Q4)', 4)):
     EDGES.append(dict(id=eid, part_a=a, part_b=b, via=ct, owner='harness', notes=nm + ' lead',
                       wire=WIRE(28, ct, 'R-' + eid[2:], ['tie on the plate'], 3, 'strain loop')))
     ELEC[eid] = 1.0 * MM * nc               # ribbon width (flat ribbon of nc x 1.0 mm)
@@ -856,6 +912,79 @@ def build_power(ctx):
                                     [(-yi, zb_), (yi, zb_), (yi, PACK_Z0 + PACK_H), (-yi, PACK_Z0 + PACK_H)]], STRAP_W, name='strap loop')
 
 
+def rx_antenna_paths():
+    """T-022 Q1: dense centre lines (x, y, z) of the two RX antennas, each 65 mm long (RX_ANT_L). Leave the RX aft edge along +x for RX_ANT_STUB, turn smoothly
+    (plan radius RX_ANT_R) to +-RX_ANT_ANG, then run straight. z: on the plate top to its end (PLATE_X1), then (from the end of the plan turn, x_s0 >= PLATE_X1) a cosine step of x-length RX_ANT_LS down to the skin,
+    then along the skin zu(x); 0.05 mm of clearance to the surface (as the 0.6 mm lift of the old straight legs). Antenna 1 (outboard exit) goes aft and outboard,
+    antenna 2 (inboard exit) aft and inboard."""
+    (rx0, ry0), (rx1, ry1) = RX_B
+    th = math.radians(RX_ANT_ANG)
+    rw = RX_ANT_OD / 2
+    zc_pl = ZP + rw + 0.00005
+    x_s0 = rx1 + RX_ANT_STUB + RX_ANT_R * math.sin(th)       # end of the plan turn
+    xe = x_s0 + RX_ANT_LS
+    zs_end = zu(xe) + rw + 0.00005
+
+    def zc(x):
+        if x <= x_s0:
+            return zc_pl
+        if x >= xe:
+            return zu(x) + rw + 0.00005
+        u = (x - x_s0) / RX_ANT_LS
+        return zc_pl + (zs_end - zc_pl) * (1 - math.cos(math.pi * u)) / 2
+    out = []
+    for ya, sg in ((ry0 + 2.5 * MM, -1.0), (ry1 - 2.5 * MM, 1.0)):
+        s_arc = RX_ANT_R * th
+        xs = rx1 + RX_ANT_STUB
+        s_str = RX_ANT_L - RX_ANT_STUB - s_arc
+        for _it in range(6):                       # solve the straight length so that the 3-D length (with the z step) is RX_ANT_L
+            pl = [(rx1, ya)]
+            n = max(2, int(round(RX_ANT_STUB / 0.0005)))
+            pl += [(rx1 + RX_ANT_STUB * k / n, ya) for k in range(1, n + 1)]
+            na = 12
+            pl += [(xs + RX_ANT_R * math.sin(th * k / na), ya + sg * RX_ANT_R * (1 - math.cos(th * k / na))) for k in range(1, na + 1)]
+            xa, yb = pl[-1]
+            ns = int(round(s_str / 0.001))
+            pl += [(xa + s_str * k / ns * math.cos(th), yb + sg * s_str * k / ns * math.sin(th)) for k in range(1, ns + 1)]
+            P = [(x, y, zc(x)) for x, y in pl]
+            L3 = sum(math.dist(P[i], P[i + 1]) for i in range(len(P) - 1))
+            s_str -= (L3 - RX_ANT_L)
+        out.append(P)
+    return out
+
+
+def _rod_mesh(P, r, n=12):
+    """Closed solid round rod (radius r) swept along the dense centre line P (parallel-transport frames), flat end caps, outward wound (same winding as _tube_mesh)."""
+    T = [_unit(_sub(P[min(i + 1, len(P) - 1)], P[max(i - 1, 0)])) for i in range(len(P))]
+    a = (1.0, 0.0, 0.0) if abs(T[0][0]) < 0.9 else (0.0, 1.0, 0.0)
+    N = _unit(_cross(T[0], a))
+    V = []
+    for i, p in enumerate(P):
+        if i:
+            N = _unit(_sub(N, _mul(T[i], _dot(N, T[i]))))
+        B = _cross(T[i], N)
+        for j in range(n):
+            th = 2 * math.pi * j / n
+            V.append(_add(p, _add(_mul(N, r * math.cos(th)), _mul(B, r * math.sin(th)))))
+    c0, c1 = len(V), len(V) + 1
+    V += [P[0], P[-1]]
+    F = []
+    for i in range(len(P) - 1):
+        for j in range(n):
+            a0, a1, b0, b1 = i * n + j, i * n + (j + 1) % n, (i + 1) * n + j, (i + 1) * n + (j + 1) % n
+            F += [(a0, a1, b1), (a0, b1, b0)]
+    for j in range(n):
+        o0, o1 = j, (j + 1) % n
+        F.append((c0, o1, o0))
+        q0, q1 = (len(P) - 1) * n + j, (len(P) - 1) * n + (j + 1) % n
+        F.append((q0, q1, c1))
+    return V, F
+
+
+def _rx_antenna_meshes():
+    return [_rod_mesh(P, RX_ANT_OD / 2) for P in rx_antenna_paths()]
+
+
 def build_avionics(ctx):
     # ---- plate with the four lightening windows (QP-4 FIXES: the 8 g assumes them)
     pl = ctx.part('AVN-001', rgb=(0.9, 0.9, 0.9))
@@ -891,16 +1020,16 @@ def build_avionics(ctx):
         nb = _nut_bottom(hx)
         hex_ = _hex(hx, hy, 4.0 * MM)
         hn.prism('Z', nb, [hex_, _ring(hx, hy, 1.0 * MM, 12)], _NUT_M, name='M2 thin nut')
-    # ---- receiver RP3 V2: PCB, RF shield, solder pads, 2 antennas (65 mm class, drawn 50 mm: hinge at x 183.75)
+    # ---- receiver RP3 V2: PCB, RF shield, solder pads, 2 antennas (65 mm, T-022 Q1: laid in a 90 deg V on the skin, tips 12.7 mm ahead of the hinge at x 183.75)
     rx = ctx.part('AVN-003', rgb=(0.2, 0.2, 0.2))
     (rx0, ry0), (rx1, ry1) = RX_B
     _pcb(rx, rx0, ry0, rx1, ry1, ZP, 1.2 * MM, r=1.0 * MM, name='RP3 V2 PCB (EST 1.2 mm)')
     rx.box((rx0 + 6 * MM, ry0 + 2.5 * MM, ZP + 1.2 * MM), (rx0 + 16 * MM, ry1 - 2.5 * MM, ZP + RX_T), name='RF shield / SoC (EST: total height 4 mm V)')
     for j in range(4):
         _pad(rx, rx0 + 1.2 * MM, ry0 + 2.2 * MM + j * 2.8 * MM, ZP + 1.2 * MM, 'CRSF pad %d' % j)
-    for j, ya in enumerate((ry0 + 2.5 * MM, ry1 - 2.5 * MM)):
-        ant = [(rx1, ya, ZP + 0.6 * MM), (rx1 + 0.050, ya, ZP + 0.6 * MM)]
-        _legs(rx, ant, 1.1 * MM, 'antenna %d (EST OD 1.1 mm, 65 mm V, drawn 50 mm)' % (j + 1))
+    for j, (v_, t_) in enumerate(_rx_antenna_meshes()):
+        rx.mesh(v_, t_, name='antenna %d: 65 mm lead (V readymaderc 85670 + 3 retailers, UNVERIFIED: maker page not read), EST OD 1.1, T element span "-" not drawn (measure on arrival); '
+                'laid in a 90 deg V (%+d deg to +x), taped to the plate and the skin (T-022 Q1)' % (j + 1, (-1, 1)[j] * int(RX_ANT_ANG)))
     # ---- GPS TBS M10Q: PCB, patch, JST-SH plug, cable stub
     gp = ctx.part('AVN-004', rgb=(0.3, 0.3, 0.3))
     (gx0, gy0), (gx1, gy1) = GPS_B
@@ -919,19 +1048,26 @@ def build_avionics(ctx):
     # ---- D-198 bay cover: roof band with the ramp / step profile, two 0.6 mm end walls, notches for the bundles that leave at |y| 26.5 mm
     cv = ctx.part('AVN-008', rgb=(0.85, 0.9, 0.95))
     cv.prism('Y', -COV_Y, [cov_loops()], 2 * COV_Y, name='cover roof band (0.6 mm)')
-    for sy in (1, -1):
-        y0 = COV_Y if sy > 0 else -COV_Y - COV_T
-        cv.prism('Y', y0, [cov_side_loop()], COV_T, name='cover end wall (0.6 mm)')
+    cv.prism('Y', COV_Y, [cov_side_loop()], COV_T, name='cover end wall (0.6 mm)')
+    for k_, lp_ in enumerate(cov_side_loops_neg()):
+        cv.prism('Y', -COV_Y - COV_T, [lp_], COV_T, name='cover end wall, -y side (0.6 mm; open under the RX hood, T-022 Q4)' if k_ == 0 else 'cover end wall strip, -y side, over / behind the RX hood (0.6 mm)')
+    # T-022 Q4: RX hood (annex of the cover over the receiver, -y side): roof, outer wall, fore wall, aft wall with two bottom-open antenna exit slots (the cover is lowered over the RX and the laid antennas)
+    hz = HOOD_ZR - ZP
+    cv.box((HOOD_X0, -HOOD_Y1, HOOD_ZR - COV_T), (HOOD_X1, -COV_Y, HOOD_ZR), name='RX hood roof (0.6 mm, EST design value)')
+    cv.box((HOOD_X0, -HOOD_Y1, ZP), (HOOD_X1, -HOOD_Y1 + COV_T, HOOD_ZR - COV_T), name='RX hood outer wall (0.6 mm)')
+    cv.box((HOOD_X0, -HOOD_Y1 + COV_T, ZP), (HOOD_X0 + COV_T, -COV_Y, HOOD_ZR - COV_T), name='RX hood fore wall (0.6 mm)')
+    cv.box((HOOD_X1 - COV_T, -HOOD_Y1 + COV_T, ZP), (HOOD_X1, -COV_Y, HOOD_ZR - COV_T), name='RX hood aft wall (0.6 mm)')
+    (rxa0, rya0), (rxa1, rya1) = RX_B
+    for ya_ in (rya0 + 2.5 * MM, rya1 - 2.5 * MM):
+        cv.cut_box((HOOD_X1 - COV_T - 0.0001, ya_ - HOOD_SLOT_W / 2, ZP - 0.001), (HOOD_X1 + 0.0001, ya_ + HOOD_SLOT_W / 2, ZP + HOOD_SLOT_H),
+                   name='antenna exit slot in the RX hood aft wall, open at the bottom (T-022 Q4)')
     for sy in (1, -1):
         ya, yb = sorted((sy * (COV_Y - 0.001), sy * (COV_Y + COV_T + 0.001)))
-        zf_ = 0.044 - WING_DZ + 0.0015           # = _ZF, height of the FC-top sensor leads
-        for xn, wn, sgn in ((0.0725, 0.0040, -1), (0.0512, 0.0043, -1)):
-            if sgn == sy:
-                cv.cut_box((xn - wn, ya, zf_ - 0.0028), (xn + wn, yb, 0.050), name='sensor lead notch (GPS / RX / airspeed), open to the roof (D-198)')
         if sy > 0:      # D-199: GPS lead slot, open at the bottom
             cv.cut_box((0.0575 - 0.0038, ya, ZP - 0.001), (0.0575 + 0.0038, yb, 0.0198), name='GPS lead slot, open at the bottom, closed roof (D-199)')
             # D-199: slot open at the bottom (the cover is lowered over the tail lying on the plate), closed at the top
             cv.cut_box((0.1160 - 0.0041, ya, ZP - 0.001), (0.1160 + 0.0041, yb, 0.0198), name='battery tail slot, open at the bottom, closed roof (D-199)')
+    # T-022 Q4 (rung 1, subtract): the two roof-open -y sensor lead notches (x 0.0725 UART, 0.0512 I2C) are gone: both leads now stay inside the cover
     # ---- pitot: brass probe + silicone tube stub on its rear
     pt = ctx.part('AVN-006', rgb=(0.8, 0.7, 0.2))
     pt.tube('X', (PIT_X0, PIT_Y, 0.0), PIT_X1 + 0.0005 - PIT_X0, PIT_R, PIT_RI, name='pitot-static probe (EST 160 x 3 mm: RMRC publishes no size; measure)')
@@ -952,14 +1088,24 @@ def pitot_paths():
 
 
 def i2c_path():
-    """D-208: airspeed I2C lead, FC I2C pad -> up and out through the cover's airspeed notch -> down beside the cover wall to the plate -> aft on
-    the plate (taped) -> down through the left plate window into the core -> outboard in a groove at x 95 (deep under the servo-lead groove,
-    shallow over the fin rib tube) -> forward into the board plug."""
+    """D-208 / T-022 Q4: airspeed I2C lead, FC I2C pad -> up to the sensor-lead height -> outboard INSIDE the bay cover to the lane at |y| UART_Y (between the -y phase bundle and the cover
+    wall) -> down to z 22 (above the servo-lead drop column at x 83) -> aft at z 22 -> down at x 95 through the part of the left plate window that lies inside the cover and the skin
+    slit into the core -> outboard in a groove at x 95 (deep under the servo-lead groove, shallow over the fin rib tube) -> forward into the board plug. The lead never leaves the cover
+    and the groove."""
     x, y, z = FC_PADS['I2C']
-    zpl = ZP + 0.0026                           # bundle on the plate (2 x 2 strands of 1.0 mm)
-    return [(x, y, z + 0.0006), (x, y, _ZF), (0.0512, -0.0300, _ZF), (0.0512, -0.0300, zpl), (I2C_X, -0.0300, zpl), (I2C_X, -0.0300, I2C_ZD),
+    return [(x, y, z + 0.0006), (x, y, _ZF), (0.0512, -UART_Y, _ZF), (0.0512, -UART_Y, I2C_ZH), (I2C_X, -UART_Y, I2C_ZH), (I2C_X, -UART_Y, I2C_ZD),
             (I2C_X, -0.150, I2C_ZD), (I2C_X, -0.230, I2C_ZD), (I2C_X, -0.280, I2C_ZS), (I2C_X, PIT_Y, I2C_ZS),
             (AS_B[1][0] - 0.0025, PIT_Y, AS_ZB + T_PCB + 2.1 * MM)]
+
+
+def uart_path():
+    """T-022 Q4: RX UART lead (CRSF), FC RX pad -> up to z 40.5 -> outboard inside the cover to the lane at |y| UART_Y -> down at x 72.5 (before the roof step) to z 25 ->
+    aft at z 25 over the servo-lead drop column and the I2C drop (x 95) -> down at x 98 to z 19.5 -> aft into the RX hood -> outboard over the RX to the CRSF pad row -> down onto the pad."""
+    x, y, z = FC_PADS['RX']
+    (rx0, ry0), _ = RX_B
+    rpx, rpy = rx0 + 1.2 * MM, ry0 + 2.2 * MM + 1.5 * 2.8 * MM
+    return [(x, y, z + 0.0006), (x, y, _ZF), (x, -UART_Y, _ZF), (x, -UART_Y, UART_ZH), (0.0980, -UART_Y, UART_ZH), (0.0980, -UART_Y, UART_ZL),
+            (rpx, -UART_Y, UART_ZL), (rpx, rpy, UART_ZL), (rpx, rpy, ZP + 1.2 * MM + 0.0006)]
 
 
 def _tube_mesh(P, ro, ri, n=16):
@@ -1150,7 +1296,8 @@ def hrn_items():
     return [('phase-lead extensions: 12 strands of 20 AWG, CAD route beyond the 0.40 m stock lead + 30 mm splice (%.2f m)' % ext, round(ext * WIRE_G_PER_M[20], 1)),
             ('12 splices: solder + 15 mm heat-shrink, 0.15 g each (EST)', 1.8),
             ('ESC signal ribbon 6 x 26 AWG x 73 mm (CAD) at 2.0 g/m (EST)', round(6 * 0.073 * WIRE_G_PER_M[26], 1)),
-            ('RX / GPS leads: 10 conductors of 28 AWG x about 70 mm at 1.2 g/m (EST) + 2 JST plugs 0.5 g each (EST)', round(10 * 0.070 * WIRE_G_PER_M[28] + 1.0, 1)),
+            ('RX / GPS leads: 4 conductors of 28 AWG x %.0f mm (CAD route, T-022 Q4) + 6 x about 70 mm at 1.2 g/m (EST) + 2 JST plugs 0.5 g each (EST)' % (_plen(uart_path()) * 1e3),
+             round(4 * _plen(uart_path()) * WIRE_G_PER_M[28] + 6 * 0.070 * WIRE_G_PER_M[28] + 1.0, 1)),
             ('airspeed I2C lead (D-208): 4 conductors of 28 AWG x %.0f mm (CAD route to the left wing tip) at 1.2 g/m (EST) + JST plug 0.5 g (EST)' % (_plen(i2c_path()) * 1e3),
              round(4 * _plen(i2c_path()) * WIRE_G_PER_M[28] + 0.5, 1)),
             ('servo leads: the 3-wire leads are in the 20.5 g servo mass (EST: stock length reaches the FC pads), plus 2 groove fish-wire ties', 0.2),
@@ -1252,13 +1399,9 @@ def build_harness(ctx):
         loop = [(xx, servo_zc(xx) - 0.0016) for xx in [0.0800, 0.083, 0.097, 0.110, 0.1215, 0.1250]] + [(xx, servo_zc(xx) + 0.0016) for xx in [0.1250, 0.1215, 0.110, 0.097, 0.083, 0.0800]]
         ya, yb = sorted((sg * (SRV_YG - 0.0030), sg * (SRV_YG + 0.0030)))
         core.cut_prism('Y', ya, [loop], yb - ya, name='servo lead groove along x, following the skin (D-198)')
-    # RX CRSF wire: FC top board RX pad -> RX pads
-    x, y, z = FC_PADS['RX']
-    (rx0, ry0), _ = RX_B
-    rpx, rpy = rx0 + 1.2 * MM, ry0 + 2.2 * MM + 1.5 * 2.8 * MM
-    pts = [(x, y, z + 0.0006), (x, y, _ZF), (x, rpy, _ZF), (rpx, rpy, _ZF), (rpx, rpy, ZP + 1.2 * MM + 0.0006)]
+    # RX CRSF wire: FC top board RX pad -> RX pads, enclosed in the cover and the RX hood (T-022 Q4)
     wd = 1.0 * MM
-    _wire_s(ctx, 'E-HRN-09', pts, 0.0025, wd, [((j % 2 - 0.5) * wd, (j // 2 - 0.5) * wd) for j in range(4)], lay=0.100)
+    _wire_s(ctx, 'E-HRN-09', uart_path(), 0.0025, wd, [((j % 2 - 0.5) * wd, (j // 2 - 0.5) * wd) for j in range(4)], lay=0.100)
     # GPS cable: GPS plug (inner edge) -> FC GPS pad
     x, y, z = FC_PADS['GPS']
     (gx0, gy0), (gx1, gy1) = GPS_B
@@ -1270,8 +1413,8 @@ def build_harness(ctx):
     _wire_s(ctx, 'E-HRN-11', i2c_path(), 0.004, wd, [((j % 2 - 0.5) * wd, (j // 2 - 0.5) * wd) for j in range(4)], lay=0.100)
     hg = 0.0017                                  # groove half width / height round the 2 x 2 bundle (envelope 1.4 mm) + 0.3 mm
     core = ctx.components['WNG-001']
-    core.cut_box((I2C_X - hg, -0.0345, I2C_ZD - hg), (I2C_X + hg, -0.0280, 0.0150), name='I2C lead drop slot through the skin under the left plate window (D-208)')
-    core.cut_box((I2C_X - hg, -0.2300, I2C_ZD - hg), (I2C_X + hg, -0.0280, I2C_ZD + hg), name='I2C lead groove along y, deep (under the servo-lead groove) (D-208)')
+    core.cut_box((I2C_X - hg, -UART_Y - hg, I2C_ZD - hg), (I2C_X + hg, -UART_Y + hg, 0.0150), name='I2C lead drop slot through the skin under the left plate window, inside the cover (D-208, moved by T-022 Q4)')
+    core.cut_box((I2C_X - hg, -0.2300, I2C_ZD - hg), (I2C_X + hg, -UART_Y + hg, I2C_ZD + hg), name='I2C lead groove along y, deep (under the servo-lead groove) (D-208, extended inboard to the drop slot by T-022 Q4)')
     core.cut_prism('X', I2C_X - hg, [[(-0.2300, I2C_ZD - hg), (-0.2300, I2C_ZD + hg), (-0.2800, I2C_ZS + hg), (-0.2800, I2C_ZS - hg)]], 2 * hg,
                    name='I2C lead groove ramp (D-208)')
     core.cut_box((I2C_X - hg, PIT_Y - hg, I2C_ZS - hg), (I2C_X + hg, -0.2800, I2C_ZS + hg), name='I2C lead groove along y, shallow (over the fin rib tube) (D-208)')

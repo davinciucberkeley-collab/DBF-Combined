@@ -343,7 +343,7 @@
    "part_b": "WNG-001",
    "via": "CT-TAPE-HINGE",
    "owner": "wing",
-   "notes": "tape hinge, upper surface",
+   "notes": "tape hinge, upper surface; tape film not drawn (product and thickness \"\u2014\", BOM R05; T-022 Q2)",
    "motion": {
     "axis": "Y",
     "range_deg": [
@@ -358,7 +358,7 @@
    "part_b": "WNG-001",
    "via": "CT-TAPE-HINGE",
    "owner": "wing",
-   "notes": "tape hinge, upper surface",
+   "notes": "tape hinge, upper surface; tape film not drawn (product and thickness \"\u2014\", BOM R05; T-022 Q2)",
    "motion": {
     "axis": "Y",
     "range_deg": [
