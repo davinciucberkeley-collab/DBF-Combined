@@ -28,5 +28,19 @@ Reviewer: independent opus review agent, 2026-11-18, tree `39eb5b84` (clean). Fu
 
 Decode total: 9,492 frames across four files, 0 decode errors (R-VID-15 decode part met). R-VID-15 review part not passed until N-1, N-3 (overlay + encode rerun from a clean tree) and N-2 are closed and the decode is re-run on the new encodes.
 
+### Re-check after T-030-N fixes (2026-11-18, encodes from clean commit `ebb89693`, committed in `0da084ab`)
+Same method (container parse + Blender `--debug-ffmpeg` full decode + per-frame analysis). Details: `docs/audits/2026-11-18-film-final-review.md`, "Re-check".
+
+| Date | File | Expected | Result |
+|---|---|---|---|
+| 2026-11-18 | `film/film-main-1080p60.mp4` | 7,194 frames (shots-main.json 119.9 s), 1920x1080, 60 fps | PASS: 7,194 of 7,194 decoded, contiguous; 60.000 fps; 119.900 s; 0 libav error/warning lines (86,498); 0 blank/non-opaque/bad-shape; 0 exact duplicates |
+| 2026-11-18 | `film/film-highlight-1080p60.mp4` | 1,452 frames (24.2 s) | PASS: 1,452 of 1,452; 0 errors; 0 blank/duplicate |
+| 2026-11-18 | `film/clips/clip-elevon-linkage-3.1-servo-arm-rod-horn-1080p60.mp4` | 708 frames (11.8 s, 3.1 from 0.2 s) | PASS: 708 of 708; 0 errors |
+| 2026-11-18 | `film/clips/clip-elevon-linkage-3.2-horn-hinge-1080p60.mp4` | 360 frames (6.0 s) | PASS: 360 of 360; 0 errors |
+| 2026-11-18 | Visual re-check of final encodes (about 45 full-res frames + decode strips) | N-1, N-2, N-3, m-A..m-D fixed; no regression | PASS: all closed on screen (card "commit ebb89693", no -dirty; S4 readout uncovered; exploded view 2.6, span dimension 1.2, servo-arm arrow 3.1/H2 with sign matching the sweep); no regression; 4 new cosmetic minors m-F..m-I recorded as optional |
+
+Decode total of the re-check: 9,714 frames, 0 decode errors. R-VID-15: decode and visual review both passed (reviewer view; ledger status is set by the conductor).
+
+
 ## Final verification (T-047)
 _not run yet_

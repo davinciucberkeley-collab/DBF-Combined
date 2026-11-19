@@ -203,3 +203,91 @@ The scratchpad is not durable; the core of each script follows so it can be rebu
 - `mp4box.py`: walks `moov/trak/mdia/{mdhd,hdlr,minf/stbl/{stsd,stsz,stts,stss}}` and prints codec, w, h, sample count,
   timescale, duration and fps.
 - `grab.py` (Blender): writes a single full-resolution PNG per frame of the list (VSE, `frame_set(k+1)`, render still).
+
+
+---
+
+# Re-check after the T-030-N fixes (2026-11-18, same reviewer)
+
+Scope: HEAD `0da084ab`, a clean tree. The films are rendered from `ebb89693`, which `git cat-file -t` confirms is a
+commit; `0da084ab` adds only the mp4 and timing files.
+
+I checked the new encodes only:
+- `film-main-1080p60.mp4`: 25,897,191 B
+- `film-highlight-1080p60.mp4`: 5,522,274 B
+- `clip-elevon-linkage-3.1-...mp4`: 2,625,336 B
+- `clip-elevon-linkage-3.2-...mp4`: 1,457,447 B
+
+The scripts and method are the same as section 1 (`mp4box.py`, then `fulldecode.py` with `--debug-ffmpeg`, then
+`analyse.py`). Before the run I deleted the old scratch decode folders.
+
+## Verdict: PASS (T-033 / R-VID-15)
+
+- **Playback:** all four files decode in full with 0 errors.
+- **Fixes:** N-1, N-2, N-3 and m-A to m-D are all closed on the final encodes.
+- **Regressions:** none of Major rank.
+- **New Minors:** four (m-F to m-I below). They are cosmetic, and they are recommendations, not conditions.
+
+## R1. Full-stream decode, re-run
+
+| File | Container (independent parse) | Expected | Blender clip / strip | Decoded and written | libav error / warn lines | Blank, transparent or bad-shape | Exact duplicates | Result |
+|---|---|---|---|---|---|---|---|---|
+| main | avc1 1920x1080, 7,194 samples, stts 7194 x 256 at 15360 = 60.000 fps, 119.900 s, 62 sync | 7,194 (shots-main.json: 21 shots, sum 119.9 s) | 7,194 / 7,194 | 7,194 of 7,194, contiguous | 0 / 0 (86,498 lines) | 0 / 0 / 0 | 0 | **PASS** |
+| highlight | 1,452 samples, 60.000 fps, 24.200 s | 1,452 | 1,452 / 1,452 | 1,452 of 1,452 | 0 / 0 | 0 / 0 / 0 | 0 | **PASS** |
+| clip 3.1 | 708 samples, 60.000 fps, 11.800 s | 708 (shot 3.1 from 0.2 s, `clips[0].from_s`) | 708 / 708 | 708 of 708 | 0 / 0 | 0 / 0 / 0 | 0 | **PASS** |
+| clip 3.2 | 360 samples, 60.000 fps, 6.000 s | 360 | 360 / 360 | 360 of 360 | 0 / 0 | 0 / 0 / 0 | 0 | **PASS** |
+
+The total is 9,714 frames with 0 decode errors.
+
+- **R-VID-11:** 119.9 s is inside 60–120 s, with 0.1 s to spare. Any future addition must take time out elsewhere.
+- **R-VID-06 and R-VID-12:** unchanged, PASS.
+- **Largest jumps in the main film** (median 0.97). Every one was inspected and is intended:
+  - f1620: cut from 2.3 to 2.4
+  - f6114: cut from 5.2 to 5.3
+  - f2220: cut from 2.5 to 2.6 (see m-H)
+  - f3174: cut from 3.1 to 3.2
+- **Shot 2.2:** the whip-pan is gone. The highest diff in the 1060–1080 window is now 6.8 (it was 9.3).
+
+## R2. Fixes, checked on the final encodes (full-resolution frames)
+
+| ID | Frames | Finding | Status |
+|---|---|---|---|
+| N-1 | main 3700, 3800 (4.1), 4100, 4300 (4.2) | The lower third ends at about x 1027 / 956, and the readout starts at x 1080. All five small lines are fully visible, including "Prop rotation illustrative, not to rate". The readout still covers the lower part of the aircraft in 4.1 (stated in FILM-PROGRESS, accepted) | **Closed** |
+| N-2 exploded | main 2220, 2300, 2400, 2440 (2.6, 3.9 s) | Tag "ILLUSTRATIVE: exploded view, offsets for clarity (not to scale of travel)". The camera pulls back from the servo, then the parts move out along their assembly axes. The sub names the source (`cad/out/assembly.json`) and the hidden items | **Closed** (m-G) |
+| N-2 dimension | main 300, 360, 420 (1.2) | "Wing span 0.90 m", with arrowheads, extension lines and the source "params-A.json box/packed_m/0 (CAD y -0.45 to +0.45 m)". It is clean at 0.5–2 s and harder to read late in the window (m-F) | **Closed** (m-F) |
+| N-2 arrow | main 2530–2570, 2550, 2700, 2880–2920, 3100 (3.1); highlight 250, 330 (H2) | An arc arrow, with a label giving the sense and the effect. The sign agrees with the sweep at every sample: f2550 servo -5.8 deg going down, label "-, TE UP"; f2700 -22.5 deg turning, label "+" fading in; f2900 +21.9 deg, label "+, TE DOWN"; f3100 +1.0 deg going back, label "-". The H2 frames read -16.5 / +8.0 deg with the "+" label during the up-sweep | **Closed** (m-I) |
+| N-3 | main 7100, 7193; highlight 1451 | The card reads "D-212 rev 3, commit ebb89693", with no "-dirty". `ebb89693` is a commit and is HEAD~1 of the encode commit | **Closed** |
+| m-A | main 5900 (5.2); card | Tag: "bridge tube u 1.002, over 1 (OPEN)". Panel: "Highest: bridge tube bond end (OPEN) u 1.002, over 1". Card: "F2: ... bridge tube u 0.958 PASS. S2: bridge tube bond end u 1.002, over 1 by 0.2 %, OPEN (D-207)". The card's source line adds CHANGE-LOG D-207 | **Closed** |
+| m-B | main 1000, 1060, 1100; `cam-clearance.json cam_motion` | The 2.1→2.2 move is now smooth. Per-frame camera speed and acceleration are now recorded, with peaks of 96.7 deg/s and 251.5 deg/s^2 (3.2), and zoom 1.18 1/s and 1.96 1/s^2 (2.6). R-VID-04 has no numeric limit; the reviewer judges these values acceptable on screen | **Closed** |
+| m-C | every sampled frame | The header now has a stage-colour backing plate. It is readable over the arm (2.2/2.3) and over the horn (3.2) | **Closed** |
+| m-D | clip 3.1 f0 | The clip opens with the scene visible and the lower third fading in, not on a blank frame. Clip 3.2 still ends on the S3/S4 dip, which is acceptable | **Closed** |
+
+**No regressions.** These are unchanged or still correct:
+- S1/S2 captions, the M-1 part count, and S3 readouts and stops
+- the S4 tag and context lines, and the touch-down line
+- the S5.1 panel and the S5.3 plate
+- the card's mass, interference and landing values: the same numbers as the first round, verified against
+  `params-A.json` and `sum.json`
+- the highlight H1–H7 content and tags
+
+## R3. New minor observations (optional, not conditions)
+
+| ID | Severity | Evidence | Suggested fix |
+|---|---|---|---|
+| m-F | Minor | 1.2: as the camera orbits (f420, t = 3.0 s), the dimension's extension lines run almost parallel to the dimension line. The right arrowhead and its extension go under the lower third, so the span reads less clearly than at t <= 2 s (f300, f360) | End the dimension window at about 2.4 s, or put the dimension offset in the view plane |
+| m-G | Minor | 2.6: the parts move out at 2.1–3.7 s and the shot ends at 3.9 s inside the 0.2 s dip, so the fully exploded state is never held | Hold the exploded state for at least 1 s. The film is at 119.9 s, so take the time from 2.6's pull-back or from another S2 shot |
+| m-H | Minor | Cut from 2.5 to 2.6 (f2219→2220, diff 14.4): the camera pose is the same, but the wing switches from ghosted to opaque in one frame, which reads as a pop | Crossfade the material over about 0.3 s, or start 2.6 with the 2.5 ghost and fade it to opaque |
+| m-I | Minor | 3.1 "-" sense (f2530–2570, f3100): the arc sits about 60 px left of the servo body and does not touch the arm. The "+" arc (f2900) sits over the arm | Anchor both senses at the same radius around the spindle |
+
+## R4. Requirement status after the re-check (reviewer's view; the conductor sets the ledger)
+
+- **R-VID-04:** camera motion is now evidenced (`cam_motion`). There is no numeric limit, and on-screen motion is
+  acceptable.
+- **R-VID-08:** now met. There are:
+  - an exploded view (2.6) and transparent views (2.4, 2.5, 3.x)
+  - a motion arrow (3.1, H2) and a dimension (1.2)
+  - captions as labels
+  - a revision tag (a clean hash) and pass/fail and OPEN lines on the card and in S5
+- **R-VID-11, -12, -13, -06:** met (R1).
+- **R-VID-15:** met. The full decode shows 0 errors in 9,714 frames, and the visual review passes.
+- **R-VID-14:** still not checked by this review ("follow doc once").
