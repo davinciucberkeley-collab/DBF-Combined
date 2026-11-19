@@ -117,15 +117,63 @@ Acceptance test (from the brief, restated before the work): the rev 2 linkage st
 - **Free-play budget (new output `free_play_budget_deg`, review M-4):** arm hole 0.10 mm -> 0.63 deg, horn hole 0.10 mm -> 0.63 deg, Z-bend freedom 0.03 deg: **1.28 deg known, against the 1 deg guide (SERVO.md s4): FAIL** (CL-A-LINKAGE-FREEPLAY). Clevis cheek holes "-" (vendor), measured at E1. Holes of 0.05 mm clearance would give 0.66 deg but bind: K5 limit 0.72 deg < 1.00 deg. Mitigation, not a pass: the hinge damper makes flutter independent of K (FIXES2 s1); the preload strips take up low-amplitude slack.
 - Model: slop along the rod = sum of the diametral clearances; free play = slop / horn radius. Validity: small angles, rod tangent to the horn circle at neutral (true by D-212 rev 2).
 
+- **Ten-field block (T-021).**
+  - Category: kinematics.
+  - Solver / tool + version: `redesign/qp/A/mechanism/elevon_linkage.py` on `linkage_core.py` (AR-001 above); Python 3.14.2, numpy 2.5.4, scipy 1.18.1.
+  - Model version (git commit): git `164c815a` plus the uncommitted D-212 rev 3 edits (as stated in the section intro).
+  - Inputs: CAD constants imported live (`ARM_HOLE_D` 1.3 mm, `HORN_HOLE_D` 1.1 mm, arm hole radius 8.5 mm, horn hole 9.155 mm over the hinge, ARM_Z0 / ROD_Z from `electrical.py`); joint heights `ELEVON_ZJ` mid / lo / hi = 9.45 / 9.30 / 9.60 mm (EST, `ROD_KEEP`); limits +-20 deg (authority), +-21 deg (stop).
+  - Assumptions: rigid parts; ideal ball-type ends; servo travel +-45 deg (ES3054HV travel not published, "-"); hole clearances 0.10 mm diametral each (CAD); free-play model = sum of diametral clearances / horn radius, small angles, rod tangent to the horn circle at neutral.
+  - Boundary conditions / loads: servo case and hinge line fixed to the wing; delta swept -21...+21 deg, both sides, in the three joint states; no loads.
+  - Settings: residual tolerance 1e-9 m, 0.05 deg steps (as AR-001 above); 4.2 s per state.
+  - Outputs (file paths): `redesign/qp/A/mechanism/out/linkage_kinematics.{json,csv,png}` (`_zlo`, `_zhi` suffixes for the other states); `redesign/qp/A/mechanism/out/D212r3_runlog.txt`.
+  - Acceptance criteria: K1-K7 as in `elevon_linkage.py` (K5 limit 1.43 deg; K7 <= 0.25 deg); free-play guide 1 deg (SERVO.md s4).
+  - Result: PASS K1-K7 in all three states; free-play budget 1.28 deg vs 1 deg: FAIL (claim CL-A-LINKAGE-FREEPLAY).
+  - Limits / validity: allowances and servo travel are EST; clevis cheek holes and servo backlash "-"; no compliance.
 ### AR-002 after D-212 rev 3 (rigid-body dynamics)
 - **PASS, D1-D6, mid / lo / hi** (7.0 s each), identical to rev 2: hold margin 2.93 (7.2 V EST) / 2.46 (6.0 V); hold rod force 17.05 N; dynamic step peak 42.74 N (Euler 111 N). The 42.74 N is no longer used as the stall force. **D3 (Euler / 2 = 55.6 N) was judged at the 42.74 N step; against the 51.0 N stall force the margin is 9 %** (review r3 m-2, recorded, not re-run). Rod body at 51 N with the one-end eccentric moment: kL = 43.25 x sqrt(51 / (200e3 x 0.1018)) = 2.16 rad, amplification 1 / sin(kL) about 1.20, mid-span stress about 45 + 1.2 x 481 = 622 MPa nominal, below the 782 MPa needed at the leg: the leg still governs (review r3 hand check, EST).
 
+- **Ten-field block (T-021).**
+  - Category: rigid-body dynamics (1-DOF, frictionless, constrained).
+  - Solver / tool + version: `redesign/qp/A/mechanism/elevon_dynamics.py`, scipy 1.18.1 `solve_ivp` DOP853; Python 3.14.2, numpy 2.5.4.
+  - Model version (git commit): git `164c815a` plus the uncommitted D-212 rev 3 edits (as stated in the section intro).
+  - Inputs: as AR-002 above (elevon + balance inertia 1.370e-5 kg m^2 CAD, servo stall 0.397 N m at 7.2 V EST / 0.333 N m at 6.0 V, no-load 0.13 s / 60 deg, hinge moment 0.146 N m at VD EST) with the rev 3 linkage from AR-001 after rev 3.
+  - Assumptions: as AR-002 above (massless rod, no friction, no tape-hinge stiffness, servo rotor inertia "-", preload and damper not included).
+  - Boundary conditions / loads: free swing and 0 -> +-20 deg steps under hinge load at 7.2 V and 6.0 V, mid / lo / hi joint states.
+  - Settings: rtol 1e-9, atol 1e-12 (as AR-002 above); 7.0 s per state.
+  - Outputs (file paths): `redesign/qp/A/mechanism/out/linkage_dynamics.{json,png}`, `_freeswing.csv`, `_steps.csv` (`_zlo`, `_zhi`); `redesign/qp/A/mechanism/out/D212r3_runlog.txt`.
+  - Acceptance criteria: D1-D6 as in AR-002 above (D4 hold margin >= 1.5; D3 peak compression <= Euler / 2).
+  - Result: PASS D1-D6 in all three states; hold margin 2.93 (7.2 V EST) / 2.46 (6.0 V); hold rod force 17.05 N; step peak 42.74 N, Euler 111 N. D3 at the 51.0 N stall force: margin 9 % (recorded, not re-run; open item 10).
+  - Limits / validity: frictionless first model; stall torque at 7.2 V interpolated (EST); servo rotor inertia, preload, damper not modelled; supports only frictionless-first claims.
 ### AR-003 after D-212 rev 3 (interference during motion)
 - **Analytic sweep PASS, mid / lo / hi** (13 s each). New solids: horn blade (above the skin) and horn rib (below, excluded against the elevon slab: bonded in its slot), keeper spacer and bridge (turn with the arm). Worst: design contacts arm / rod 0.028 mm (lo) and keeper bridge / rod 0.003 mm (hi, the keeper is the top stop of the Z-bend freedom). Smallest positive clearance 0.066 mm (clevis cheek / horn blade at +21 deg, gap 0.1 mm EST; fit check added to BUILD D3, review m-5). Keeper spacer / rod 0.70 mm at -21 deg; keeper bridge / rod 0.147 mm (mid). Rib outline vs core section (new 2-D check) 2.54 mm; elevon nose vs core 0.90 mm.
 - **Mesh gate, `A_ELEV_POSE=21 python -I redesign/qp/A/cad/collide_a.py`** (145 s): static, -21 and +21 deg: 0 part pairs over 0.05 mm, wire ends 0, folds 0, 486 bodies in 115 parts. Report kept as `cad/out/report_d212r3_pose21.json` / `REPORT_d212r3_pose21.md`. The elevon carries the slot cut; the horn rib sits in it. Scope as before: rod and arm held out of the moving poses (covered by the analytic sweep).
 - `python -I redesign/qp/A/cad/stop_check.py` PASS (10.2 s); output `STOP_CHECK.md` left at HEAD (its drift is older, review F-9).
 - CAD stub build `python -I redesign/qp/A/cad/build_a.py`: check PASS, 10 modules, 0 errors (interfaces regenerated).
 
+- **Ten-field block (T-021), analytic sweep.**
+  - Category: interference during motion (analytic sweep).
+  - Solver / tool + version: `redesign/qp/A/mechanism/elevon_sweep_collision.py`, analytic hulls from CAD constants; Python 3.14.2, numpy 2.5.4, scipy 1.18.1 (versions are written into its JSON).
+  - Model version (git commit): git `164c815a` plus the uncommitted D-212 rev 3 edits (as stated in the section intro).
+  - Inputs: poses from AR-001 after rev 3; moving: servo arm, rod, clevis, horn blade and rib, keeper spacer and bridge, elevon; static: servo case, wing skin, caps, core section (CAD constants in `electrical.py`, `wing.py`); clevis gap 0.1 mm EST.
+  - Assumptions: analytic shapes match the CAD solids; rod straight between joint centres; the rib is bonded in its slot and excluded against the elevon slab.
+  - Boundary conditions / loads: delta -21...+21 deg every 0.5 deg (`STEP_DEG`), both sides, three joint states; no loads.
+  - Settings: gate tolerance 0.05 mm; 13 s per state.
+  - Outputs (file paths): `redesign/qp/A/mechanism/out/linkage_sweep_collision.{json,csv,png}` (state suffixes as AR-001).
+  - Acceptance criteria: no penetration over 0.05 mm along the path.
+  - Result: PASS in all three states; worst design contacts arm / rod 0.028 mm (lo) and keeper bridge / rod 0.003 mm (hi); smallest positive clearance 0.066 mm.
+  - Limits / validity: analytic, not mesh; the horn gap and heights are EST; straight-line sweep only.
+- **Ten-field block (T-021), mesh gate.**
+  - Category: interference (static, mesh gate at fixed poses).
+  - Solver / tool + version: `redesign/qp/A/cad/collide_a.py` (Blender BVH path; the Blender version is not recorded in the run log, 4.5.14 is recorded for `a_assembly.py`: "-" for this run).
+  - Model version (git commit): git `164c815a` plus the uncommitted D-212 rev 3 edits (as stated in the section intro).
+  - Inputs: the concept A CAD meshes (486 bodies in 115 parts) with `A_ELEV_POSE=21`.
+  - Assumptions: the rod and arm are held out of the moving poses (covered by the analytic sweep above).
+  - Boundary conditions / loads: static, -21 and +21 deg elevon poses; no loads.
+  - Settings: tolerance 0.05 mm; 145 s wall.
+  - Outputs (file paths): `redesign/qp/A/cad/out/report_d212r3_pose21.json`, `redesign/qp/A/cad/out/REPORT_d212r3_pose21.md`.
+  - Acceptance criteria: 0 part pairs over 0.05 mm, 0 wire ends, 0 folds.
+  - Result: PASS (0 pairs over 0.05 mm, wire ends 0, folds 0); ten static hits, deepest 0.034 mm (T-063 follow-up).
+  - Limits / validity: poses are discrete; +-20 deg was run only before D-212 (report_pose20.json); not an assembly-sequence or dynamic check.
 ### AR-004 strength checks of the linkage (D-212 rev 3; `redesign/qp/A/mechanism/linkage_loads_check.py`, 6.2 s, output `mechanism/out/linkage_loads_check.json`)
 Loads: hold 17.05 N (AR-002). **Stall 51.0 N**: F = 0.397 N m / (8.5 mm x 0.916), the smallest arm lever over +-21 deg, at +21 deg (review r2 M-1; 46.7 N at neutral). Factors: printed / bonded 2.156 at hold (1.5 x 1.15 x 1.25, `structures/fea_arm.py`), 1.4375 at stall (1.15 x 1.25; the stall force is the actuator's ceiling, so the 1.5 load factor is not applied), steel leg 1.5 at hold and both 1.0 and 1.5 at stall.
 
@@ -139,6 +187,33 @@ Loads: hold 17.05 N (AR-002). **Stall 51.0 N**: F = 0.397 N m / (8.5 mm x 0.916)
 | Rib vs elevon body | ratio of the two factored peaks at hold | same basis | 0.86 | - | the attachment is not the weakest part of the elevon on this basis |
 
 Independent hand checks: stall force 0.397 / (0.0085 x 0.9159) = 51.0 N (reproduces review r2); blade 6 x 17.05 x 8.97e-3 / (2e-3 x 17.27e-3^2) = 1.54 MPa x 2.156 = 3.3 MPa; bearing 17.05 / (1.0 x 2.0) = 8.5 MPa x 2.156 = 18.4 MPa; leg 51.0 x 1.6e-3 / 1.696e-10 = 481 MPa x 1.625 = 782 MPa; rigid-limit check (review r3, FE and an independent hand rigid-plate solve, both 126.2 kPa peak at the rib aft end, E_PETG x 1e5): **126.2 kPa unfactored is the lower bound of the whole Winkler family, 1.5 x the 86 kPa allowable even before the 2.156 factor, so the rib FAIL holds for any shear-penetration length l** (m-10; l 16 mm gives 138 kPa, 32 mm 121 kPa; referring the moment to the hinge axis instead of the rib mid-depth lowers the peak by about 30 %, still FAIL by 2.5-3.5 x; Euler-Bernoulli ignores shear deformation, about 10 %, unconservative); the FE peak lies at the loaded front edge, where a Winkler model is least accurate (no shear coupling): read the range as an estimate.
+
+- **Ten-field block (T-021).**
+  - Category: hand calculation (closed forms; the rib-in-foam row is a 1-D beam-on-elastic-foundation solve inside the same script and supports only a hand-calculation-class claim).
+  - Solver / tool + version: `redesign/qp/A/mechanism/linkage_loads_check.py`; Python 3.14.2, numpy 2.5.4.
+  - Model version (git commit): git `164c815a` plus the uncommitted D-212 rev 3 edits (as stated in the section intro); the follow-up of 2026-11-19 ran at git `251702a2` plus the working tree (JSON key `git_head`).
+  - Inputs: hold 17.05 N, stall 51.0 N, factors 2.156 / 1.4375 / 1.5 / 1.0 (see the paragraph above); CAD profile and dimensions imported from `electrical.py`; allowables PETG 20 MPa EST, foam shear 86 kPa EST, A228 1680 MPa RECALLED.
+  - Assumptions: per the "Validity" column of the table; rod grade "-"; foam and tape strengths EST.
+  - Boundary conditions / loads: hold and stall rod forces applied at the horn hole; the stall also as 1.0 / 1.5 on the steel leg.
+  - Settings: closed form plus a 1-D Hermite-beam FE (Winkler foam), foam modulus 5-10 MPa and shear length 2-8 mm swept; 6.2 s (7.1 s in the follow-up).
+  - Outputs (file paths): `redesign/qp/A/mechanism/out/linkage_loads_check.json` (stdout `redesign/qp/A/mechanism/out/linkage_loads_check_stdout.txt`).
+  - Acceptance criteria: factored stress / shear <= allowable of the table; claims CL-A-HORN-*, CL-A-ELEVON-TORSION-FOAM, CL-A-ROD-LEG-STALL, CL-A-LINKAGE-FREEPLAY.
+  - Result: PASS blade, hold bearing; FAIL rib in foam (hold, stall), elevon torsion, stall bearing; leg pass if A228 (UNVERIFIED); five FAIL claims plus A-P13 kept as the record. Follow-up additions: keeper bridge (m-4) 19.5 vs 20 MPa EST at stall; 8.4 V stall 59.2 N informational (m-8).
+  - Limits / validity: allowables are EST or RECALLED; Winkler foam model least accurate at the loaded edge; closure by tests (open item 1).
+
+### AR-005 Elevon servo torque and speed through the linkage (T-056, R-PHY-08; T-063 follow-up 2026-11-19)
+- **Category:** hand calculation (gearing taken from the solved linkage of AR-001, then a DC-motor torque-speed line; no integration, the dynamic step is AR-002).
+- **Solver / engine:** `redesign/qp/A/mechanism/linkage_loads_check.py` `servo_speed()`; Python 3.14.2, numpy 2.5.4; reads `linkage_core.py` (AR-001).
+- **Model version:** git `251702a2` plus the uncommitted working tree of 2026-11-19.
+- **Inputs:** gearing 0.909-0.928 (0.9282 at +-20 deg); hinge moment 0.146 N m VD (FIXES2 s2, EST); preload 0.0093 and damper 0.0098 N m (FIXES2 s2, EST); stall 0.333 N m at 6.0 V (SERVO.md s2), 0.397 N m at 7.2 V (EST); no-load 0.13 s / 60 deg at 6.0 V (SERVO.md s2); required rates 80 / 152 / 276 deg/s (EST: `elevon_dynamics.py` D5, A-P11 +-11 deg, 2.2 Hz crossover CLAIMS-FIX.md).
+- **Assumptions:** linear torque-speed line; steady loaded speed at the end-point load (conservative); servo speed at 7.2 V "-" so the 6 V speed is used; rotor / gear inertia, rail sag and stall current not modelled ("-").
+- **Boundary conditions / loads:** servo at 6.0 V (published pair) and at 7.2 V (EST torque); elevon at +-20 deg under the full VD hinge moment plus preload and damper.
+- **Numerical settings:** closed form; gearing sampled every 0.5 deg over +-20 deg both sides; 7.1 s for the whole script.
+- **Outputs:** `redesign/qp/A/mechanism/out/linkage_loads_check.json` key `servo_speed_torque_T056` (loaded rate 231 / 263 deg/s; torque margins 2.46 / 2.93 hold, 2.17 / 2.59 loaded; speed margins 2.89 / 3.29 (R1), 1.52 / 1.73 (R2), 0.84 / 0.95 (R3)); stdout `redesign/qp/A/mechanism/out/linkage_loads_check_stdout.txt`; working notes `redesign/qp/A/mechanism/out/T063_minors_T056.md`.
+- **Acceptance criteria (set before the run):** speed margin >= 1.0 for R1 and R2; torque margin >= 1.5 (project factor, AR-002 D4).
+- **Result:** PASS on R1, R2 and torque in both cases; R3 (full-throw sinusoid at the crossover) not met, not a required case. Independent hand check: 0.9282 x 0.1653 = 0.1534 N m; 8.055 x (1 - 0.1534 / 0.397) = 4.94 rad/s x 0.9282 = 4.59 rad/s = 263 deg/s.
+- **Limits / validity:** EST required rates and 7.2 V torque; 7.2 V speed unpublished; no servo dynamics; bench ramp at the built rail (BUILD D5b) closes it.
+- **Motor mount (second half of R-PHY-08), cited, not rerun (category of that record: FEA):** the D-209 and D-210 motor-mount FEA record: `redesign/params/CHANGE-LOG.md` D-209 and D-210; `redesign/review/QP-5/FEA-ARM.md` section 8 (D-209, run `current`) and 8.1 (D-210, run `current_d210`, 167 k elements); script `redesign/qp/A/structures/fea_arm.py`. D-209: arm tube axial F2 29.9 / 203 MPa allowed, S2 79.8 / 350; tube shear S2 9.6 / 30 (tightest, ratio 3.1); cup 99th percentile F2 0.75 / 9.3, S2 3.1 / 20; cup bond mean F2 0.09 / 0.93, S2 0.45 / 2.0, all PASS. D-210: every point under 1 in every case; cup peak F2 4.4 / 9.3, S2 18.0 / 20, S3 13.6; cup 99th percentile F2 0.98, S2 4.2. Reproduction is T-058, not done here.
 
 ### Proof graph (`python -I redesign/qp/A/proofs/run_all.py`, 1.5 s)
 - New params group `linkage` (read from `linkage_loads_check.json`, `linkage_kinematics.json`; all EST), sources SRC-A-LINKLOADS, SRC-A-LINKKIN, SRC-A-SERVOMD, assumptions ASM-A-ROD-GRADE and ASM-A-PETG-ALLOW (UNVERIFIED).
@@ -160,13 +235,18 @@ Independent hand checks: stall force 0.397 / (0.0085 x 0.9159) = 51.0 N (reprodu
 7. **Gates kept open for the next export (CLAUDE.md):** `redesign/showcase/animation/assembly_check.py` and `collide.py --glb` were not run (no GLB export in this task).
 8. Mass roll-up (`sitl/cad_mass.json`, MASS-GATE) not regenerated: +0.28 g for the pair against rev 2, below the reported precision.
 9. **Review r3 minors, logged open (each must close before E1; m-2, m-10, m-13 are recorded above):**
-   - m-3 receipt test eccentricity: 1.6 mm (rod on the arm) under-tests the hi state (keeper, 1.9 mm) by about 16 %: test at about 91 N or shim the rod 0.3 mm.
-   - m-4 keeper MEC-008: no load or creep check (about 18 MPa factored vs 20 EST at the bridge, scratch); add a check line and a retorque / inspection item at E1 and preflight.
-   - m-5 drawings: MEC-004 / MEC-008 omit the print orientation (flat); hole drawn 1.1 mm but the guide says printed 0.9 mm, reamed 1.1 mm.
-   - m-6 bearing stall FAIL: a brass tube bushing (2.0 mm OD x 1.0 mm ID, availability "-") would pass (18.3 MPa factored; HORN_HR about 2.8 mm for shear-out); add a trade row or say why not.
-   - m-7 free play: FIXES2 E1 step 7 probes 1 deg, the built budget is 1.28 deg plus cheek holes and servo backlash; pick one basis for CL-A-LINKAGE-FREEPLAY (flutter vs control precision); +-20 deg endpoints leave 1 deg, less than the free play.
-   - m-8 stall load factor: 0.397 N m is an EST at 7.2 V; at 8.4 V (SERVO.md 4.7 kgf cm) the stall force is about 59 N; state the 7.2 V jumper (M12) as the basis or keep a factor.
-   - m-9 collision claims read pre-D-212 reports (`gen_params_a.py` report_pose20 / report_pose21, 2026-11-15, 0.042 mm): point them at `report_d212r3_pose21.json` (0.034 mm); +-20 deg not rerun for rev 3.
+   - m-3 receipt test eccentricity: 1.6 mm (rod on the arm) under-tests the hi state (keeper, 1.9 mm) by about 16 %: test at about 91 N or shim the rod 0.3 mm. **CLOSED 2026-11-19 (T-063 follow-up): receipt test raised to 91 N (1.5 x 50.99 N x 1.9/1.6), BUILD D4; leg requirement 1392 MPa at e 1.9 mm (CL-A-ROD-LEG-STALL 1392 vs 1680 MPa RECALLED, UNVERIFIED).**
+   - m-4 keeper MEC-008: no load or creep check (about 18 MPa factored vs 20 EST at the bridge, scratch); add a check line and a retorque / inspection item at E1 and preflight. **CLOSED 2026-11-19 as a check line: `linkage_loads_check.py` `keeper_bridge_MEC008`: bridge 13.5 MPa x 1.4375 = 19.5 vs 20 EST at stall (0.97, thin), 9.8 at hold; creep / preload loss "-". Retorque and inspection in BUILD D2a, D5b and the preflight. No claim added (CL-A-KEEPER-BRIDGE-STALL proposed).**
+   - m-5 drawings: MEC-004 / MEC-008 omit the print orientation (flat); hole drawn 1.1 mm but the guide says printed 0.9 mm, reamed 1.1 mm. **CLOSED 2026-11-19: `compose_drawings.py` PART_NOTES; MEC-004 / MEC-008 sheets recomposed with the print notes (`python -B redesign/qp/A/drawings/make_drawings_a.py --compose`, 105 s, 41 sheets).**
+   - m-6 bearing stall FAIL: a brass tube bushing (2.0 mm OD x 1.0 mm ID, availability "-") would pass (18.3 MPa factored; HORN_HR about 2.8 mm for shear-out); add a trade row or say why not. **CLOSED 2026-11-19 as a trade row: brass bushing rejected for now, named rung-5 fallback (row K, `docs/engineering-decisions.md`, trigger: bench stall test or coupon fails on hole elongation or a cracked lug).**
+   - m-7 free play: FIXES2 E1 step 7 probes 1 deg, the built budget is 1.28 deg plus cheek holes and servo backlash; pick one basis for CL-A-LINKAGE-FREEPLAY (flutter vs control precision); +-20 deg endpoints leave 1 deg, less than the free play. **CLOSED 2026-11-19 as a decision: flutter basis kept, limit 1 deg unchanged, CL-A-LINKAGE-FREEPLAY stays FAIL; built value measured at BUILD D5b / E1; endpoints +-19 deg if the built free play exceeds 1 deg.**
+   - m-8 stall load factor: 0.397 N m is an EST at 7.2 V; at 8.4 V (SERVO.md 4.7 kgf cm) the stall force is about 59 N; state the 7.2 V jumper (M12) as the basis or keep a factor. **CLOSED 2026-11-19: 7.2 V jumper basis stated (M12); 8.4 V case 59.2 N reported (`stall_8p4V_informational`), not a claim.**
+   - m-9 collision claims read pre-D-212 reports (`gen_params_a.py` report_pose20 / report_pose21, 2026-11-15, 0.042 mm): point them at `report_d212r3_pose21.json` (0.034 mm); +-20 deg not rerun for rev 3. **CLOSED 2026-11-19 for neutral and +-21 deg: claims read `report_d212r3_pose21.json` (CL-A-COLL-DEPTH 0.042 -> 0.034 mm); +-20 deg is still the pre-D-212 `report_pose20.json`, not rerun (needs Blender `collide_a.py`), labelled so in the claim text.**
    - m-11 trade row C: the "about 80 kPa" figure has no stored script, and balsa is tabulated in the USDA Wood Handbook (not looked up); the rejection rests on build effort.
    - m-12 elevon torsion J: int t^3/3 overestimates J at t/c 0.14 (beta about 0.307 vs 0.333, recalled); the stress is a few percent low, immaterial to a FAIL.
    - m-14 rib tail is 0.67 mm deep at 55 mm aft (fragile): consider ending the rib where the depth is >= 1.5 mm and re-run the rib check (peak is at the aft end in the rigid limit).
+10. **D3 margin at the 51.0 N stall force (independent review of 2026-11-19, medium finding):** AR-002 D3 (peak compression <= Euler / 2 = 55.6 N) was judged at the 42.74 N step peak; against the 51.0 N stall force the margin is 9 %. Recorded, not re-run; the model is frictionless 1-DOF without servo rotor inertia, preload or damper. OPEN: rerun or extend D3 at 51 N, or restate the criterion.
+11. **Still open from the follow-up (2026-11-19):** `redesign/review/QP-4/FIXES2.md` E1 step 7 replacement text (probe the built free play, not a deliberate 1 deg) not applied; claims CL-A-KEEPER-BRIDGE-STALL (19.5 <= 20 MPa) and CL-A-SERVO-SPEED (margin 1.52 >= 1.0) proposed, not added (graph counts unchanged on purpose); `assembly_check.py`, `collide.py --glb` and `collide_a.py` +-20 deg not run.
+
+### T-063 follow-up (2026-11-19): minors m-3..m-9 and T-056
+Evidence: `redesign/qp/A/mechanism/out/T063_minors_T056.md`. Git base `251702a2`, nothing committed. Final runs: `python -I redesign/qp/A/mechanism/linkage_loads_check.py` rc 0 (7.1 s); `python -I redesign/qp/A/proofs/run_all.py` rc 1, strict FAILED as expected (548 nodes, 1151 edges, fails 6, unchanged: the same five FAIL claims plus A-P13; CL-A-ASSY-STEPS 59; stdout `redesign/qp/A/mechanism/out/T063_minors_run_all_stdout.txt`). Values that changed legitimately: CL-A-ROD-LEG-STALL 1172 -> 1392 MPa (<= 1680, UNVERIFIED through ASM-A-ROD-GRADE), CL-A-COLL-DEPTH 0.042 -> 0.034 mm. Drawings MEC-004 / MEC-008 recomposed with the print notes (`python -B redesign/qp/A/drawings/make_drawings_a.py --compose`, 105 s, 41 sheets); `BUILD-GUIDE-A.md` regenerated (`python -I redesign/qp/A/make_build_guide_a.py`: 66 steps, 42.8 h EST, 147 g). The new servo torque and speed record is AR-005 above. Categories: hand calculation (m-3, m-4, m-8, T-056), kinematics (gearing input), interference (m-9, stored reports only), FEA (D-209 / D-210 cited, not rerun).
