@@ -32,12 +32,23 @@ Append one row per delegated task. Review at each milestone: are opus runs justi
 | 2026-11-19 | Mechanism review (T-018..T-021, T-041) | eng-reviewer / sonnet | high-impact independent review | T-018 and T-019 verified; T-021 not; T-041 verified with a finding | 57 k tok / 2.0 min | 0 | — | — |
 | 2026-11-19 | T-062 Explorer site numbers | implementer / sonnet | moderate (numbers from generators) | done | 114 k tok / 3.9 min | 0 | — | — |
 | 2026-11-19 | Elevon minors m-3..m-9 + T-056 | implementer / sonnet | moderate | done: minors closed in code, servo speed check; re-check VERIFIED | 207 k tok / 8.4 min | 0 | — | — |
-| 2026-11-19 | Setup-check fixes (session-state, execution plan, model-usage, audit tool, compact-test record) | implementer / sonnet | moderate (docs + small tool change) | this change | — | 0 | — | independent re-check pending |
+| 2026-11-19 | Setup-check fixes (session-state, execution plan, model-usage, audit tool, compact-test record) | implementer / sonnet | moderate (docs + small tool change) | done: 9 fixes; re-check PASS T-005/012/013/046, FAIL T-007/014/054 (then fixed) | 135 k tok / 3.6 min | 0 | — | haiku re-checks 2026-11-19 |
 | 2026-11-19 | Records: T-021 ten-field blocks, AR-005, minors text | implementer / sonnet | moderate (docs) | done | 123 k tok / 2.2 min | 0 | — | eng re-check VERIFIED |
 | 2026-11-19 | Re-check T-001/003/005/007/012/013/014/046/054 | ledger-auditor / haiku | routine accounting + paste comparison | PASS 6, FAIL 3 (T-007, T-014, T-054) | 143 k tok / 6.3 min | 0 | — | — |
 | 2026-11-19 | Re-check T-021, T-056, minors, T-062 | eng-reviewer / sonnet | high-impact independent review | all VERIFIED, LOW notes only | 68 k tok / 1.4 min | 0 | — | — |
-| 2026-11-19 | Proof claims CL-A-SERVO-SPEED / KEEPER-BRIDGE + T-020 pose-20 gate | implementer / sonnet | moderate | running | — | 0 | — | — |
+| 2026-11-19 | Proof claims CL-A-SERVO-SPEED / KEEPER-BRIDGE + T-020 pose-20 gate | implementer / sonnet | moderate | done: claims in graph, pose 20 gate PASS | 121 k tok / 5.0 min | 0 | — | — |
+| 2026-11-19 | T-020 linkage-poses mesh mode | implementer / sonnet | moderate (Blender collision mode) | done: found rod leg 0.05 mm into servo case at lo | 272 k tok / 36.5 min | 0 | — | — |
+| 2026-11-19 | T-025 retro-review D-202..D-210 | eng-reviewer / sonnet | high-impact review | done: no trade tables, mass gate stale, strut socket unchecked | 38 k tok / 1.1 min | 0 | — | — |
+| 2026-11-19 | T-057/T-058 reproducibility reruns (landing, FEA, SITL) | implementer / sonnet | moderate (long runs) | done: landing pass, FEA within 1 %, SITL categorical reproduce | 182 k tok / 41.4 min | 0 | — | — |
+| 2026-11-19 | Mass roll-up, strut-socket check, retro trade rows | implementer / sonnet | moderate | done: 1.4698 kg vs 1.470 gate, socket util 0.72 max | 168 k tok / 5.8 min | 0 | — | — |
+| 2026-11-19 | T-020 Z-bend leg fix | implementer / sonnet | moderate (CAD + gates) | done: leg 2.5 mm, sweeps PASS; conductor set 2.3-2.5 mm cut tolerance | 131 k tok / 14.5 min | 0 | — | — |
+| 2026-11-19 | Review T-020/T-025/T-057/T-058 | eng-reviewer / sonnet | high-impact independent review | all VERIFIED; AR-008 corrected (side load FAIL -> T-064) | — | 0 | — | — |
+| 2026-11-19 | Re-check T-014/T-054 | ledger-auditor / haiku | routine accounting | FAIL (narrow): row 35, routing note, gate items; fixed | — | 0 | — | — |
 
 Note 2026-11-18: the project agents in `.claude/agents/` were written mid-session and are not loaded until the next
 session (Agent tool: "Agent type 'implementer' not found"). Until then the same routing is applied with the
 `model` override on `general-purpose`. Next-session check: T-013 acceptance. Update 2026-11-18: the harness loaded them later in this session (eng-reviewer, implementer, ledger-auditor, runner now offered by the Agent tool).
+
+Routing deviation (2026-11-19): `eng-reviewer` is defined on opus, but the 2026-11-19 independent reviews ran it with a `model: sonnet` override (rows: mechanism review, re-check eng, T-025 retro, review T-020/T-025/T-057/T-058). Reason: Dillon's standing instruction to minimise compute (2026-11-14: "use cheaper agents when possible ... for more critical decisions use whatever you see fit"); opus stays for design-review judgement on new decisions (e.g. D-212 rev 3, film sign-off). No sonnet review was found wrong on re-check so far.
+
+Scope (2026-11-18): this log starts with T-016. Delegations earlier on 2026-11-18 (program set-up done by the conductor itself; T-011 registry audit, haiku, `docs/audits/2026-11-18-ledger.md`) were not logged row by row; their outputs are the files named in the ledger.

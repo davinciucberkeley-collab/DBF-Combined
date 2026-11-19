@@ -277,7 +277,7 @@ Approved by Dillon in chat 2026-11-19 ("Yes, rerun them"). Evidence: `redesign/q
 - **Numerical settings:** dt 1e-4 s, 15,000 steps per case, 22 s for the full table; plateau argument 30 (the no-argument default is 45 N, which is not the design plateau).
 - **Outputs:** `redesign/qp/A/mechanism/out/T057_T058_repro_data/landing_30.txt` (and `landing_45.txt`, `landing_30_oldmass.txt`); comparison table in `redesign/qp/A/mechanism/out/T057_T058_repro.md` s2.
 - **Acceptance criteria:** stroke <= 20 mm; n <= 12 g (A-P5); end tilt <= 3 deg; static tip-over >= 30 deg; side load vs about 14 N scaled cap (marginal flag).
-- **Result:** PASS on stroke (worst 15.4 mm), load factor (10.79 g), tilt (2.2 deg), static tip-over (33.0 deg); side load 18.7 N MARGINAL (unchanged). Committed record reproduced exactly with the pre-e29526c3 mass list; current list changes CG 25.2 -> 22.9 mm and results by <= 0.2 mm.
+- **Result:** PASS on stroke (worst 15.4 mm), load factor (10.79 g), tilt (2.2 deg), static tip-over (33.0 deg); **side load 18.7 N EXCEEDS the scaled 14 N cap by 33 % (FAIL on this criterion; corrected 2026-11-19 by the independent review `docs/audits/2026-11-19-review-batch3.md`: the inherited 'MARGINAL' label was K09-L's 20 N vs 24.5 N; mitigation mu <= 0.3 pad is EST, not a pass).** Committed record reproduced exactly with the pre-e29526c3 mass list; the current list moves CG 25.2 -> 22.9 mm and changes the narrow+drift case by n 5.44 -> 6.68 g (+24 %), drift 3 -> 23 mm, stroke +0.2 mm (corrected: earlier text said <= 0.2 mm). OPEN: landing side load (open item 6 below).
 - **Limits / validity:** foam plateau and stroke unmeasured (at 45 N the level hard case gives 15.4 g, above 12 g); rigid-body only, no fin or rib flexibility (rib twist 5.9 deg in s6 is not coupled); structures_run.md s5 table should be refreshed with the current mass list.
 
 ### AR-009 Motor-mount / hub FEA reproducibility (T-058a, R-PHY-10; 2026-11-19)
@@ -335,3 +335,5 @@ Question: do the printed 0.8 mm-wall strut sockets survive the strut share of hu
 10. Reproduce: command above (474 s); also `mechanism/out/T020_zbend_runlog.txt`.
 
 Build tolerance (conductor, 2026-11-19): the leg is cut 2.3-2.5 mm from the rod axis, filed to a 2.5 mm gauge and never longer (BUILD D3). 2.5 mm is the swept upper limit (0.10 mm over the case at lo); 2.3 mm leaves 1.4 mm engaged at hi, inside the K5 tilt allowance. Evidence `redesign/qp/A/mechanism/out/T020_zbend_fix.md`, run log `T020_zbend_runlog.txt`.
+6. **Landing side load (T-057, 2026-11-19): 18.7 N against the scaled 14 N cap, FAIL.** Resolve by the ladder (touchdown drift limit / landing mode, pad friction, fin-tip foot geometry, before adding material); refresh `structures_run.md` s5 with the current mass list.
+7. **SITL controller metrics (T-058):** one sample each; committed Z5 values are one sample, not a reproduced number. 3-5 run repeat recommended; pitch-use basis (15 / 20 / 25 deg) to be decided.
