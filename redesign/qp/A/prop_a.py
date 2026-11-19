@@ -3,7 +3,7 @@ Prop: APC 9x4.5MR, static rows of https://www.apcprop.com/files/PER3_9x45MR.dat 
 Motor: T-Motor MN2212 V2.0 KV780: Kv 780 rpm/V and Rm 0.173 ohm (store.tmotor.com page, SIZING-A s3); I0 0.5 A is an ESTIMATE
 (no page value; bench step 1 measures it).  Pack: sag = 3.73 V/cell rest (20 % left), pack R 30 mohm EST (SIZING-A).
 Hover: m g / (4 cos(CANT) x 0.97 download); input power = V_m I / 0.98 (ESC) x 1.10 control margin (MISSION s4)."""
-import math
+import math, sys
 RHO, D, KV, RM, I0 = 1.225, 9*0.0254, 780.0, 0.173, 0.5
 CANT = 17.0   # deg; D-189 (was 16 in D-184, 14 in D-183): yaw authority
 KT = 60/(2*math.pi*KV)
@@ -46,6 +46,42 @@ def one_motor(duty=0.9, m=1.50, vrest=16.8, rp=0.030):
         n, i, th, pw = run(vb*duty); ipack = i*duty + 3*ih*(hover(m)[3]/hover(m)[2]/vb)/1.0
         vb = vrest - rp*ipack
     return i, vb
+
+# ---- T-074 check 3 (O4b, AM-006): voltage-scheduled spin cap.  Added 2026-11-19; the default run above is unchanged. ----
+I_MOTOR_MAX = 12.1   # A, A-P16 one-motor phase current at the fixed 0.90 cap, fresh (REQUIREMENTS-A A-P16; prop_a.one_motor(0.9) at 1.50 kg)
+def cap_sched(vrest, m=1.64, imax=I_MOTOR_MAX):
+    """cap(V_rest): largest duty (<= 1.0) with one saturated motor + three hovering at mass m <= imax (one_motor model, derate 1.0 on the hover thrust as committed)."""
+    if one_motor(1.0, m, vrest)[0] <= imax: return 1.0
+    lo, hi = 0.3, 1.0
+    for _ in range(40):
+        mid = (lo+hi)/2
+        lo, hi = (mid, hi) if one_motor(mid, m, vrest)[0] <= imax else (lo, mid)
+    return lo
+def tw_state(vrest, duty, m, der=DER):
+    """vertical T/W with all four motors at duty (mission_gate_a.py arithmetic: sag state hot 0.97, derate, cos cant; no download factor)"""
+    n, i, th, pw, vb = full(vrest, duty); hot = 0.97 if vrest < 15.5 else 1.0
+    return 4*th*hot*der*math.cos(math.radians(CANT))/(m*9.807), i, vb
+def window_pct(tw_sag, lo=1.33): hi = 0.80*tw_sag; return 100*(hi-lo)/(hi+lo)
+def sched_report(m=1.64, ders=(1.0, 0.93, 0.90, 0.88, 0.873, 0.85, 0.80)):
+    out = []
+    P = out.append
+    P(f"## Scheduled cap cap(V_rest) at m = {m} kg, one-motor limit {I_MOTOR_MAX} A (EST model; APC PER3 static rows, I0 0.5 A EST, pack R 30 mohm EST)")
+    P("| V_rest V | cap(V) | one-motor A at cap | one-motor A uncapped | all-four A at cap | bus V |"); P("|---|---|---|---|---|---|")
+    for vr in (16.8, 16.4, 16.0, 15.6, 15.2, 14.92, 14.4):
+        c = cap_sched(vr, m); im = one_motor(c, m, vr)[0]; iu = one_motor(1.0, m, vr)[0]; n, i, th, pw, vb = full(vr, c)
+        P(f"| {vr} | {c:.3f} | {im:.2f} | {iu:.2f} | {i:.2f} | {vb:.2f} |")
+    cf, cs = cap_sched(16.8, m), cap_sched(3.73*4, m)
+    P(f"\nfresh cap {cf:.3f}; sag cap {cs:.3f} (1.000 = not binding)")
+    P("| derate | T/W fresh (sched cap) | T/W sag (sched cap) | window +-% | +-5 % mass g | | fixed-0.90 T/W sag | fixed-0.90 window +-% | fixed-0.90 +-5 % mass g |"); P("|---|---|---|---|---|---|---|---|---|")
+    hi5 = 1.33*1.05/0.95
+    for d in ders:
+        twf = tw_state(16.8, cf, m, d)[0]; tws = tw_state(3.73*4, cs, m, d)[0]; tw9 = tw_state(3.73*4, 0.9, m, d)[0]
+        m5 = tws*m*0.80/hi5*1000; m59 = tw9*m*0.80/hi5*1000
+        P(f"| {d} | {twf:.3f} | {tws:.3f} | {window_pct(tws):+.1f} | {m5:.0f} | | {tw9:.3f} | {window_pct(tw9):+.1f} | {m59:.0f} |")
+    return "\n".join(out)
+if "--sched" in sys.argv:
+    mm = float(sys.argv[sys.argv.index("--mass")+1]) if "--mass" in sys.argv else 1.64
+    print(sched_report(mm)); sys.exit(0)
 if __name__ == "__main__":
     for tag, vr in (("fresh 16.8 V", 16.8), ("sag 14.92 V rest", 3.73*4)):
         for duty in (1.0, 0.90):

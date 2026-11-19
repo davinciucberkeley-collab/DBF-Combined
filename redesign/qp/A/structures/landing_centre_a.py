@@ -10,7 +10,7 @@ sys.path.insert(0, HERE)
 import landing_path_a as P
 L, W, C, E = P.L, P.W, P.C, P.E
 KF, KP = P.KF, P.KP
-OUT = os.path.join(HERE, '..', 'mechanism', 'out', 'T071b_data')
+OUT = os.environ.get('LAND_OUT_DIR') or os.path.join(HERE, '..', 'mechanism', 'out', 'T071b_data')   # T-074: LAND_OUT_DIR keeps new runs out of the committed cache (default unchanged)
 CACHE = os.path.join(OUT, 'demand.json')
 
 # ---------------------------------------------------------------- 1. demand: wrench transmitted to the hub side and to each wing half (rigid-body, sim point-mass model)

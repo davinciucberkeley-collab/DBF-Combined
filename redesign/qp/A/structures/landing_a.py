@@ -6,7 +6,7 @@ Frames: body x aft (down in stance), y right, z cruise-up (world +X in stance). 
 import math, sys, os, json
 import numpy as np
 G = 9.81
-M_GATE = 1.50
+M_GATE = float(os.environ.get("LAND_MASS_KG", 1.50))   # T-074: env override for the F-5 re-runs at the predicted mass; default 1.50 kg unchanged
 # rib-root check constants (CAD wing.py RIB_OD/RIB_ID/RIB_X0; factors and allowables as structures_a.py, EST)
 RIB_OD, RIB_ID, RIB_X0 = 0.014, 0.012, 0.0705
 RIB_A = math.pi/4*(RIB_OD**2-RIB_ID**2); RIB_I = math.pi/64*(RIB_OD**4-RIB_ID**4); RIB_Z = RIB_I/(RIB_OD/2); RIB_J = 2*RIB_I
@@ -39,7 +39,7 @@ def cad_geom():
         assert abs(cm["x_ground_m"]-E.X_GROUND) < 1e-9 and abs(cm["fin_y_m"]-C.YFIN) < 1e-9
         zlo, zhi = C.FIN_H-0.009, C.FIN_H+0.003
         _CADG = dict(x_foot=E.X_GROUND, y_foot=C.YFIN, z_foot=0.5*(zlo+zhi), z_edge=zhi, pad_x0=C.XFIN_T+0.0135, pad_dy=0.015, pad_dz=zhi-zlo,
-                     cg=np.array([cm["cg_x_m"], cm["cg_y_m"], cm["cg_z_m"]]), mass_basic=cm["mass_basic_kg"], I_cad=cm["I_cad_axes_kgm2"],
+                     cg=np.array([float(os.environ["LAND_CG_X_MM"])*1e-3 if "LAND_CG_X_MM" in os.environ else cm["cg_x_m"], cm["cg_y_m"], cm["cg_z_m"]]), mass_basic=cm["mass_basic_kg"], I_cad=cm["I_cad_axes_kgm2"],
                      rib=(W.RIB_OD, W.RIB_ID, W.RIB_X0), fin_h=C.FIN_H)
     return _CADG
 LEG_GEOM = dict(x_foot=0.30, y_foot=0.38, z_foot=0.18, z_edge=0.18, cg=None)

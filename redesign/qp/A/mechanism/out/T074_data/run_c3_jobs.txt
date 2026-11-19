@@ -1,0 +1,12 @@
+T074_s_r120 case=trans mass=1.64 wind=0 hold=25 cruise_s=8 r=1.20 P:Q_M_SPIN_MAX=1.0
+T074_s_r125 case=trans mass=1.64 wind=0 hold=25 cruise_s=8 r=1.25 P:Q_M_SPIN_MAX=1.0
+T074_s_r133 case=trans mass=1.64 wind=0 hold=25 cruise_s=8 r=1.33 P:Q_M_SPIN_MAX=1.0
+T074_s_r142 case=trans mass=1.64 wind=0 hold=25 cruise_s=8 r=1.42 P:Q_M_SPIN_MAX=1.0
+T074_s_r151 case=trans mass=1.64 wind=0 hold=25 cruise_s=8 r=1.51 P:Q_M_SPIN_MAX=1.0
+T074_s_r160 case=trans mass=1.64 wind=0 hold=25 cruise_s=8 r=1.60 P:Q_M_SPIN_MAX=1.0
+T074_f_r120 case=trans mass=1.64 wind=0 hold=25 cruise_s=8 r=1.20
+T074_f_r133 case=trans mass=1.64 wind=0 hold=25 cruise_s=8 r=1.33
+T074_f_r160 case=trans mass=1.64 wind=0 hold=25 cruise_s=8 r=1.60
+T074_s_r133_cg193 case=trans mass=1.64 wind=0 hold=25 cruise_s=8 r=1.33 cg=19.3 P:Q_M_SPIN_MAX=1.0
+T074_s_r151_cg260 case=trans mass=1.64 wind=0 hold=25 cruise_s=8 r=1.51 cg=26.0 P:Q_M_SPIN_MAX=1.0
+T074_s_r133_cg260 case=trans mass=1.64 wind=0 hold=25 cruise_s=8 r=1.33 cg=26.0 P:Q_M_SPIN_MAX=1.0

@@ -77,3 +77,8 @@ for px in (-20.0, -3.0, +7.0):
     print(f"CAD CG with the pack centre at x {px:+.0f} mm: {CAD_CG + 270*(px-PACK_X)/CAD_BASIC:.1f} mm aft of LE, SM {(NP-(CAD_CG + 270*(px-PACK_X)/CAD_BASIC))/CHORD*100:.1f} %")
 print(f"CG {cg:.1f} mm aft of LE, SM {(NP-cg)/CHORD*100:.1f} %; pack 10 mm aft -> CG {cg+270*10/PRED:.1f}")
 print("CG aft limit SM 5 %:", NP-0.05*CHORD, " fwd limit SM 15 %:", NP-0.15*CHORD)
+# ---- T-074 check 3 (O4b, AM-006), added 2026-11-19: scheduled spin cap.  Off by default; python -I mission_gate_a.py --sched [--mass 1.64] ----
+if "--sched" in sys.argv:
+    _m = float(sys.argv[sys.argv.index("--mass")+1]) if "--mass" in sys.argv else 1.64
+    print("\n# O4b scheduled cap (EST), window = 1.33 W low, 0.80 x T/W sag high, as above")
+    print(pa.sched_report(_m))

@@ -1,0 +1,6 @@
+centre: python -I landing_centre_a.py --recompute exit 0 wall 42 s
+centre_cached: python -I landing_centre_a.py exit 0 wall 8 s
+side: python -I landing_side_a.py exit 0 wall 134 s
+tip: python -I landing_tip_b.py exit 0 wall 91 s
+nodes: python -I landing_nodes_b.py exit 0 wall 37 s
+DONE

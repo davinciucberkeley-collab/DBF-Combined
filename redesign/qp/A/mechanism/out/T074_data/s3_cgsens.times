@@ -1,0 +1,2 @@
+centre cg 19.3 mass 1.64: python -I landing_centre_a.py --recompute exit 0 wall 44 s
+centre cg 26.0 mass 1.64: python -I landing_centre_a.py --recompute exit 0 wall 44 s
