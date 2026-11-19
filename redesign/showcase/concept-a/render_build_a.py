@@ -612,6 +612,8 @@ _GIT = {}
 
 def git_rev():
     """Short hash of HEAD, '-dirty' if the working tree has uncommitted changes ('—' if git is not available): printed on the closing card (R-VID-08 revision tag)."""
+    if 'rev' not in _GIT and os.environ.get('A_FILM_REV'):     # set once by the film driver before it writes any file, so its own outputs cannot mark the card dirty
+        _GIT['rev'] = os.environ['A_FILM_REV']
     if 'rev' not in _GIT:
         try:
             rev = subprocess.run(['git', '-C', REDESIGN, 'rev-parse', '--short', 'HEAD'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, check=True).stdout.strip()
@@ -2787,6 +2789,7 @@ def film_driver(a):
             frame_s += [float(m_) for m_ in re.findall(r'RENDER_TOTAL ([0-9.]+) s', open(os.path.join(work, 'worker_%d.log' % i)).read())]
         except OSError:
             pass
+    os.environ.setdefault('A_FILM_REV', git_rev())     # revision tag read before this run writes clip lists, timing or films
     fmap = {}
     for fn in sorted(os.listdir(work)):
         if fn.startswith('map_') and fn.endswith('.json') and fn != 'map_frames.json':
