@@ -207,3 +207,13 @@ test is the hard limit only: total spend including the crash reserve <= $2,000. 
 ```text
 Oh yes, that is fine, as long as we have enough crash reserve, the budget is fine as long as you are under the $2000 limit
 ```
+
+## AM-014 — 2026-11-20 — No supplied materials; stay under the $2,000 budget
+Relation: answers the T-081 budget result (full test and build purchase list $2,243-2,330 against $2,000 with the
+crash reserve held). Dillon does not believe Jacobs or the team can supply the listed materials or rigs (epoxy,
+glass cloth, aluminium, foam, reamers, a kN pull rig), so the program must find a way to stay under $2,000 (crash
+reserve kept, AM-012/AM-013), using any model to troubleshoot. Requirement IDs: R-GEN-02, R-OPT-02, R-ORC-01.
+
+```text
+I do not believe that we have any of those available, so you must find a way to stay under budget, use whatever model to troubleshoot this
+```
