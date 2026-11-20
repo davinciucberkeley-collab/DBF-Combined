@@ -1,0 +1,14 @@
+generalised wrench split vs landing_centre_a.wrench_split (old ITEMS, hard 10 wide + drift .5 y): max abs diff 0.00e+00
+2160 sims, 12 workers
+  0 / 2160  [35 s]
+  200 / 2160  [93 s]
+  400 / 2160  [152 s]
+  600 / 2160  [215 s]
+  800 / 2160  [275 s]
+  1000 / 2160  [334 s]
+  1200 / 2160  [400 s]
+  1400 / 2160  [456 s]
+  1600 / 2160  [525 s]
+  1800 / 2160  [593 s]
+  2000 / 2160  [660 s]
+sims done 701 s

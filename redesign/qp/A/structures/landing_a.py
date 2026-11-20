@@ -46,7 +46,13 @@ LEG_GEOM = dict(x_foot=0.30, y_foot=0.38, z_foot=0.18, z_edge=0.18, cg=None)
 def geom(): return LEG_GEOM if LEGACY else cad_geom()
 
 
+MASS_MODEL = os.environ.get("LAND_MASS_MODEL", "items")      # T-076d (D-222 LR-3): "cad" = landing_mass_cad.py (CAD part table, vendor items unscaled, wing / fins distributed); default "items" = the roll-up above, unchanged
+
+
 def mass_props(scale_to=M_GATE, items=ITEMS):
+    if MASS_MODEL == "cad" and items is ITEMS:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import landing_mass_cad as _LM
+        return _LM.mass_props(scale_to)
     pts = []
     for g, x, y, z in items:
         ys = (y, -y) if y else (0,); zs = (z, -z) if z else (0,)

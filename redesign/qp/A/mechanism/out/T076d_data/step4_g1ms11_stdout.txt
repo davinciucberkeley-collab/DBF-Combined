@@ -1,0 +1,30 @@
+# T-076d step 4: tag g1ms11 geometry G1 GEO {"L_SLV": 32.0, "DBL_S0": 11.0, "DBL_S1": 40.0, "SLV_W": 1.5, "MS": 1.1, "S_END": 60.0, "DBL_TAP": 5.0, "DBL_TIP": 0.4, "SLV_CH": 1.5}
+fillet: sleeve B, 10 junction edges at r 2.0 mm
+fillet: sleeve A, 13 junction edges at r 1.5 mm
+hub block volume 22674 mm3 = 28.80 g PETG
+hub aft-face nodes for the hub-group load: 3611
+chol flag 0, 160.1 s, nnz(R) 2791 M
+solved 405.5 s, residual 1.2e-09 
+relative residual per load case: 5.8e-10 1.1e-09 1.3e-09 7.4e-11 4.5e-11 4.2e-11 5.6e-10 1.0e-09 1.3e-09 7.4e-11 4.5e-11 4.2e-11 5.6e-10 9.4e-10 1.2e-09 7.4e-11 4.5e-11 4.2e-11 5.8e-10 9.9e-10 1.2e-09 7.4e-11 4.5e-11 4.2e-11 2.3e-11 1.0e-09 9.8e-10 1.2e-09 3.8e-10 4.1e-10
+equilibrium max error 3.5e-10
+mesh 506478 elements, 2323929 free dof, hub volume 22674 mm3 = 61.2 g Al, equilibrium error 3.5e-10, wall 601 s
+demand sets: {'RB z0.02': 295, 'D1 z0.02': 1036, 'RB z0.05': 291, 'D1 z0.05': 1029, 'RB z0.10': 282, 'D1 z0.10': 1031}
+RB z0.02  tube A judged(scale 1.0): axial 60.7 MPa (RF 3.34) hoop 4.2 (RF 5.47) tau_s,theta 1.81 (RF 9.62) tau_s,r 8.24 MPa (allowable -, needs >= 14.2 for RF 1) | raw: axial 60.7 hoop 5.6 tau_st 1.81 tau_sr 13.87 old-shear 13.87 (RF 1.25) | at s -39.7 mm  excl-frac 0.032
+RB z0.02  tube B judged(scale 1.0): axial 80.3 MPa (RF 2.53) hoop 6.1 (RF 3.81) tau_s,theta 1.92 (RF 9.05) tau_s,r 11.54 MPa (allowable -, needs >= 19.9 for RF 1) | raw: axial 80.3 hoop 7.9 tau_st 2.35 tau_sr 19.13 old-shear 19.13 (RF 0.91) | at s 39.6 mm  excl-frac 0.032
+RB z0.02  bond mean shear (worst arm): T-076c definition 0.481 MPa (RF 1.93 at scale 1.0) | full bonded length 0.746 MPa (RF 1.24) | hub von Mises max excl 40.4 MPa (RF 3.45) at [44.65, 8.06, -2.54] [RB z0.02 hard 10 wide + drift .5 y@392]  [687 s]
+D1 z0.02  tube A judged(scale 1.0): axial 133.8 MPa (RF 1.52) hoop 9.4 (RF 2.47) tau_s,theta 3.38 (RF 5.14) tau_s,r 18.89 MPa (allowable -, needs >= 32.6 for RF 1) | raw: axial 133.8 hoop 13.0 tau_st 3.38 tau_sr 31.74 old-shear 31.75 (RF 0.55) | at s 39.7 mm  excl-frac 0.032
+D1 z0.02  tube B judged(scale 1.0): axial 126.3 MPa (RF 1.61) hoop 9.1 (RF 2.54) tau_s,theta 3.59 (RF 4.84) tau_s,r 17.64 MPa (allowable -, needs >= 30.4 for RF 1) | raw: axial 126.3 hoop 11.9 tau_st 4.16 tau_sr 29.27 old-shear 29.28 (RF 0.59) | at s 39.6 mm  excl-frac 0.032
+D1 z0.02  bond mean shear (worst arm): T-076c definition 0.855 MPa (RF 1.09 at scale 1.0) | full bonded length 1.198 MPa (RF 0.77) | hub von Mises max excl 65.1 MPa (RF 2.14) at [44.65, 8.06, -2.54] [D1 z0.02 nom|SITL Z5_gb45 wide (y drift)@1968]  [965 s]
+RB z0.05  tube A judged(scale 1.0): axial 66.5 MPa (RF 3.05) hoop 4.7 (RF 4.97) tau_s,theta 1.66 (RF 10.51) tau_s,r 9.29 MPa (allowable -, needs >= 16.0 for RF 1) | raw: axial 66.5 hoop 6.4 tau_st 1.66 tau_sr 15.74 old-shear 15.74 (RF 1.10) | at s 39.7 mm  excl-frac 0.032
+RB z0.05  tube B judged(scale 1.0): axial 85.5 MPa (RF 2.37) hoop 6.1 (RF 3.78) tau_s,theta 2.23 (RF 7.79) tau_s,r 12.10 MPa (allowable -, needs >= 20.9 for RF 1) | raw: axial 85.5 hoop 8.1 tau_st 2.34 tau_sr 20.06 old-shear 20.07 (RF 0.87) | at s 39.6 mm  excl-frac 0.032
+RB z0.05  bond mean shear (worst arm): T-076c definition 0.591 MPa (RF 1.57 at scale 1.0) | full bonded length 0.818 MPa (RF 1.13) | hub von Mises max excl 49.7 MPa (RF 2.80) at [44.65, 8.06, -2.54] [RB z0.05 hard 10 wide + drift .5 y@392]  [1047 s]
+D1 z0.05  tube A judged(scale 1.0): axial 130.0 MPa (RF 1.56) hoop 8.9 (RF 2.60) tau_s,theta 3.25 (RF 5.35) tau_s,r 17.80 MPa (allowable -, needs >= 30.7 for RF 1) | raw: axial 130.0 hoop 12.2 tau_st 3.28 tau_sr 30.04 old-shear 30.05 (RF 0.58) | at s 39.7 mm  excl-frac 0.032
+D1 z0.05  tube B judged(scale 1.0): axial 131.7 MPa (RF 1.54) hoop 9.3 (RF 2.50) tau_s,theta 3.78 (RF 4.60) tau_s,r 17.46 MPa (allowable -, needs >= 30.1 for RF 1) | raw: axial 131.7 hoop 11.9 tau_st 4.19 tau_sr 28.93 old-shear 28.95 (RF 0.60) | at s 39.6 mm  excl-frac 0.032
+D1 z0.05  bond mean shear (worst arm): T-076c definition 0.865 MPa (RF 1.07 at scale 1.0) | full bonded length 1.133 MPa (RF 0.82) | hub von Mises max excl 69.1 MPa (RF 2.01) at [44.65, 8.06, -2.54] [D1 z0.05 kd|hard 10 wide + drift .5 y@441]  [1325 s]
+RB z0.10  tube A judged(scale 1.0): axial 85.0 MPa (RF 2.39) hoop 6.0 (RF 3.89) tau_s,theta 2.03 (RF 8.56) tau_s,r 11.89 MPa (allowable -, needs >= 20.5 for RF 1) | raw: axial 85.0 hoop 8.2 tau_st 2.03 tau_sr 20.14 old-shear 20.14 (RF 0.86) | at s 39.7 mm  excl-frac 0.032
+RB z0.10  tube B judged(scale 1.0): axial 109.8 MPa (RF 1.85) hoop 7.9 (RF 2.93) tau_s,theta 2.85 (RF 6.10) tau_s,r 15.57 MPa (allowable -, needs >= 26.9 for RF 1) | raw: axial 109.8 hoop 10.4 tau_st 2.99 tau_sr 25.80 old-shear 25.81 (RF 0.67) | at s 39.6 mm  excl-frac 0.032
+RB z0.10  bond mean shear (worst arm): T-076c definition 0.766 MPa (RF 1.21 at scale 1.0) | full bonded length 1.049 MPa (RF 0.88) | hub von Mises max excl 64.5 MPa (RF 2.16) at [44.65, 8.06, -2.54] [RB z0.10 hard 10 wide + drift .5 y@391]  [1403 s]
+D1 z0.10  tube A judged(scale 1.0): axial 123.2 MPa (RF 1.65) hoop 8.6 (RF 2.68) tau_s,theta 3.28 (RF 5.31) tau_s,r 16.78 MPa (allowable -, needs >= 28.9 for RF 1) | raw: axial 123.2 hoop 11.6 tau_st 3.28 tau_sr 28.66 old-shear 28.66 (RF 0.61) | at s 39.7 mm  excl-frac 0.032
+D1 z0.10  tube B judged(scale 1.0): axial 130.6 MPa (RF 1.55) hoop 9.5 (RF 2.44) tau_s,theta 3.42 (RF 5.09) tau_s,r 17.56 MPa (allowable -, needs >= 30.3 for RF 1) | raw: axial 130.6 hoop 11.8 tau_st 3.57 tau_sr 29.18 old-shear 29.20 (RF 0.60) | at s 39.6 mm  excl-frac 0.032
+D1 z0.10  bond mean shear (worst arm): T-076c definition 0.915 MPa (RF 1.01 at scale 1.0) | full bonded length 1.182 MPa (RF 0.78) | hub von Mises max excl 83.3 MPa (RF 1.67) at [44.65, 8.06, -2.54] [D1 z0.10 kd|hard 10 wide + drift .5 y@427]  [1679 s]
+done 1679 s

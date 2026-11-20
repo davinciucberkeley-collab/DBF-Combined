@@ -1,0 +1,46 @@
+# mesh pair g1ms14 (267650 elements, 1259682 dof) vs g1ms11 (506478 elements, 2323929 dof)
+| set | quantity | coarse | fine | coarse / fine |
+|---|---|---|---|---|
+| RB z0.05 | tube A axial (judged) | 64.897 | 66.478 | 0.976 |
+| RB z0.05 | tube A hoop (judged) | 4.706 | 4.661 | 1.010 |
+| RB z0.05 | tube A tau_st (judged) | 1.830 | 1.655 | 1.106 |
+| RB z0.05 | tube A tau_sr (judged) | 7.273 | 9.293 | 0.783 |
+| RB z0.05 | tube A tau_s,r raw max (incl. rings) | 11.141 | 15.739 | 0.708 |
+| RB z0.05 | tube B axial (judged) | 82.782 | 85.456 | 0.969 |
+| RB z0.05 | tube B hoop (judged) | 5.972 | 6.129 | 0.974 |
+| RB z0.05 | tube B tau_st (judged) | 2.294 | 2.232 | 1.027 |
+| RB z0.05 | tube B tau_sr (judged) | 9.371 | 12.101 | 0.774 |
+| RB z0.05 | tube B tau_s,r raw max (incl. rings) | 14.011 | 20.058 | 0.699 |
+| RB z0.05 | bond mean shear full | 0.837 | 0.818 | 1.023 |
+| RB z0.05 | bond mean shear T-076c def. | 0.627 | 0.591 | 1.061 |
+| RB z0.05 | hub von Mises max excl | 43.930 | 49.681 | 0.884 |
+| D1 z0.05 | tube A axial (judged) | 127.052 | 129.987 | 0.977 |
+| D1 z0.05 | tube A hoop (judged) | 9.376 | 8.934 | 1.050 |
+| D1 z0.05 | tube A tau_st (judged) | 3.463 | 3.252 | 1.065 |
+| D1 z0.05 | tube A tau_sr (judged) | 14.761 | 17.803 | 0.829 |
+| D1 z0.05 | tube A tau_s,r raw max (incl. rings) | 22.685 | 30.045 | 0.755 |
+| D1 z0.05 | tube B axial (judged) | 130.232 | 131.715 | 0.989 |
+| D1 z0.05 | tube B hoop (judged) | 9.155 | 9.265 | 0.988 |
+| D1 z0.05 | tube B tau_st (judged) | 4.175 | 3.780 | 1.104 |
+| D1 z0.05 | tube B tau_sr (judged) | 15.468 | 17.461 | 0.886 |
+| D1 z0.05 | tube B tau_s,r raw max (incl. rings) | 22.948 | 28.933 | 0.793 |
+| D1 z0.05 | bond mean shear full | 1.161 | 1.133 | 1.025 |
+| D1 z0.05 | bond mean shear T-076c def. | 0.910 | 0.865 | 1.052 |
+| D1 z0.05 | hub von Mises max excl | 62.512 | 69.145 | 0.904 |
+
+max |coarse / fine - 1| over all 6 sets, per quantity:
+  tube B tau_s,r raw max (incl. rings)        30.5 %
+  tube A tau_s,r raw max (incl. rings)        29.4 %
+  tube B tau_sr (judged)                      24.5 %
+  tube A tau_sr (judged)                      22.3 %
+  hub von Mises max excl                      11.7 %
+  tube A tau_st (judged)                      11.2 %
+  tube B tau_st (judged)                      10.4 %
+  bond mean shear T-076c def.                  8.4 %
+  tube B hoop (judged)                         7.8 %
+  bond mean shear full                         5.3 %
+  tube A hoop (judged)                         5.0 %
+  tube B axial (judged)                        3.2 %
+  tube A axial (judged)                        3.1 %
+
+quantities within 5 %: 3 of 13: tube A axial (judged), tube A hoop (judged), tube B axial (judged)

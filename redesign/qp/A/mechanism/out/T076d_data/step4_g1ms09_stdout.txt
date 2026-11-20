@@ -1,0 +1,5 @@
+# T-076d step 4: tag g1ms09 geometry G1 GEO {"L_SLV": 32.0, "DBL_S0": 11.0, "DBL_S1": 40.0, "SLV_W": 1.5, "MS": 0.9, "S_END": 60.0, "DBL_TAP": 5.0, "DBL_TIP": 0.4, "SLV_CH": 1.5}
+fillet: sleeve B, 10 junction edges at r 2.0 mm
+fillet: sleeve A, 13 junction edges at r 1.5 mm
+hub block volume 22674 mm3 = 28.80 g PETG
+hub aft-face nodes for the hub-group load: 5366
