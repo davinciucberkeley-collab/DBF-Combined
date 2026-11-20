@@ -1,0 +1,72 @@
+(cached traces)
+# T-076c step 1: hub-side wrench, all six components, mass 1.64 kg (LAND_MASS_KG), D2 pad, 21 cases.  Category: rigid-body dynamics (+ hand calc).  Limit load, rigid-body demand RB.
+# wrench = force of the centre on the hub side (motors, arms, hub, pack: ITEMS 2, 3, 4, 6), moments about the original bore mouth P0 (hub-frame x 24.0 mm, z -2.0 mm) unless stated.
+
+## 1. Peak |component| per case (limit load) at P0 and at the H-A1 bore mid-length (hub-frame x 30.0 mm)
+| case | Fx | Fy | Fz | Mx | My | Mz  (N, N m) at P0 | Mx | My | Mz at H-A1 mid-length | governing |
+|---|---|---|---|---|---|---|---|---|---|---|
+| hard level | 92.8 | 22.4 | 11.9 | 2.60 | 2.67 | 7.75 | 2.60 | 2.72 | 7.83 | Mz |
+| hard 10 narrow | 43.9 | 9.2 | 28.3 | 1.81 | 3.07 | 2.21 | 1.81 | 3.15 | 2.25 | My |
+| hard 10 narrow neg | 43.2 | 14.1 | 28.9 | 2.94 | 3.82 | 2.89 | 2.94 | 3.94 | 2.98 | My |
+| hard 10 wide | 51.1 | 40.0 | 14.0 | 1.85 | 2.67 | 16.68 | 1.85 | 2.76 | 16.84 | Mz |
+| hard 7/7 combo | 53.8 | 36.1 | 25.8 | 6.22 | 4.93 | 12.34 | 6.22 | 5.00 | 12.52 | Mz |
+| hard 10 narrow + drift .5 | 42.9 | 10.0 | 24.5 | 2.66 | 4.97 | 4.22 | 2.66 | 5.11 | 4.25 | My |
+| hard 10 wide + drift .5 y | 53.7 | 43.3 | 14.8 | 2.09 | 3.58 | 17.51 | 2.09 | 3.67 | 17.68 | Mz |
+| normal level .5 | 76.5 | 15.1 | 16.0 | 1.88 | 3.67 | 5.81 | 1.88 | 3.76 | 5.87 | Mz |
+| normal 10 narrow .5 | 36.3 | 14.4 | 24.7 | 2.36 | 3.01 | 3.67 | 2.36 | 3.09 | 3.72 | Mz |
+| normal 10 wide .5 + drift | 45.4 | 39.8 | 14.4 | 2.61 | 3.64 | 11.86 | 2.61 | 3.73 | 11.97 | Mz |
+| SITL Tb_h5 wide (y drift) | 44.9 | 37.1 | 20.0 | 2.77 | 3.28 | 14.45 | 2.77 | 3.40 | 14.60 | Mz |
+| SITL Tb_h5 narrow (z drift) | 47.8 | 8.9 | 26.2 | 4.05 | 6.71 | 3.27 | 4.05 | 6.87 | 3.29 | My |
+| SITL Ta_h5 wide (y drift) | 44.0 | 38.0 | 19.8 | 4.00 | 3.12 | 12.81 | 4.00 | 3.24 | 12.93 | Mz |
+| SITL Ta_h5 narrow (z drift) | 42.9 | 9.2 | 27.1 | 3.96 | 5.93 | 2.24 | 3.96 | 6.07 | 2.25 | My |
+| SITL Z5_b45 wide (y drift) | 44.9 | 38.4 | 19.3 | 3.55 | 3.07 | 13.40 | 3.55 | 3.19 | 13.54 | Mz |
+| SITL Z5_b45 narrow (z drift) | 59.4 | 9.7 | 26.7 | 2.78 | 4.74 | 2.53 | 2.78 | 4.83 | 2.58 | My |
+| SITL Lb_5e wide (y drift) | 64.9 | 33.9 | 10.8 | 2.48 | 1.41 | 6.48 | 2.48 | 1.47 | 6.56 | Mz |
+| SITL Lb_5e narrow (z drift) | 45.0 | 9.5 | 28.2 | 2.69 | 5.04 | 2.56 | 2.69 | 5.16 | 2.58 | My |
+| SITL Z5_gb45 wide (y drift) | 45.1 | 39.0 | 14.1 | 2.07 | 2.86 | 12.11 | 2.07 | 2.92 | 12.21 | Mz |
+| SITL Z5_gb45 narrow (z drift) | 48.4 | 10.5 | 27.4 | 2.91 | 4.14 | 3.00 | 2.91 | 4.23 | 3.02 | My |
+| hard 16 wide + drift .5 y | 52.6 | 43.7 | 16.8 | 2.22 | 3.50 | 16.94 | 2.22 | 3.58 | 17.12 | Mz |
+GLOBAL peak at P0: Fx 92.82 (hard level), Fy 43.66 (hard 16 wide + drift .5 y), Fz 28.89 (hard 10 narrow neg), Mx 6.22 (hard 7/7 combo), My 6.71 (SITL Tb_h5 narrow (z drift)), Mz 17.51 (hard 10 wide + drift .5 y)
+Governing Mz sample: hard 10 wide + drift .5 y step 342: F = (-53.7, -28.9, 2.1) N, M = (-0.07, 0.12, 17.51) N m at P0 (audit V1: combo "hard 10 wide + drift .5 y"@342: F (-53.7, -28.9, 2.1), M (-0.07, 0.12, 17.51))
+Cases with |Mz| > 6.05 N m (T-071b design moment): 11 of 21
+
+## 2. Bending rows: p = KP (6 M_b/(D L^2) + V/(D L)), M_b = |(My, Mz)| about the bore mid-length, V = |(Fy, Fz)|, D 16 mm, PETG bearing 20 MPa EST, KP 2.156 (min over 21 cases and all time steps)
+| variant | L mm | RF at RB | RF at RBx1.5 | RF at RBx2 | governing case | My-only control (T-071b method: |My| at the mouth, V = Fz) RB |
+|---|---|---|---|---|---|---|
+| as drawn (L 9) | 9.0 | 0.11 | 0.08 | 0.06 | hard 10 wide + drift .5 y | 0.30 |
+| V1 (L 21) | 21.0 | 0.62 | 0.41 | 0.31 | hard 10 wide + drift .5 y | 1.53 |
+| C6 (L 22.5) | 22.5 | 0.71 | 0.47 | 0.35 | hard 10 wide + drift .5 y | 1.76 |
+| V2 (L 28.5) | 28.5 | 1.13 | 0.75 | 0.57 | hard 10 wide + drift .5 y | 2.75 |
+| H-A1 / H-A2 (L 30) | 30.0 | 1.25 | 0.83 | 0.62 | hard 10 wide + drift .5 y | 3.01 |
+Bore length for bearing RF 1.0 (mouth fixed at hub x 24, floor moved): RB 26.4 mm, RBx1.5 32.3 mm, RBx2 37.2 mm (audit V3: 26.6 RB, 32.6 x1.5)
+
+## 3. Block net-section row (audit V4): the full Mz crosses the printed block between the bore floor and the arm sleeves; mean bending stress, no holes or fillets (upper bound on capacity)
+Block 20 (y) x 20 (z), Z = 20 x 20^2/6 = 1333 mm3; PETG in-layer allowable 20 MPa EST / KP 2.156 = 9.275 MPa; capacity 12.37 N m (audit V4: 12.4)
+Mz max at P0 17.51 N m (RB): hand RF 0.71 at RB, 0.47 at x1.5, 0.35 at x2   (audit V4: 0.71)
+Block width (y) needed for RF 1.0 at 20 mm depth: RB 23.8 mm, x1.5 29.1 mm, x2 33.7 mm, x3 41.2 mm   (audit V4: 23.8 RB, 29.1 x1.5, 33.6 x2)
+Widest PETG block the raceway notches allow (27 mm, solid): capacity 22.54 N m, RF 1.29 RB / 0.86 x1.5 (audit s2.2: 1.29 / 0.86)
+
+## 4. Bridge tube 16x14 bending at the mouth: |(My, Mz)| max 17.51 N m; Z = 166.4 mm3; sigma 105 MPa; RF = 350 / (KF 1.725 x sigma) = 1.93 RB, 1.29 x1.5, 0.96 x2 (audit V5: 1.93 / 1.29 / 0.97)
+
+## 5. Reproduction of audit numbers (tolerance 2 %)
+| quantity | here | audit | difference | within 2 % (or one unit of the audit last digit) |
+|---|---|---|---|---|
+| as drawn (L 9) RF RB | 0.115 | 0.11 | +4.5 % | yes |
+| as drawn (L 9) RF x1.5 | 0.077 | 0.08 | -4.2 % | yes |
+| V1 (L 21) RF RB | 0.618 | 0.62 | -0.4 % | yes |
+| V1 (L 21) RF x1.5 | 0.412 | 0.41 | +0.5 % | yes |
+| C6 (L 22.5) RF RB | 0.710 | 0.71 | -0.0 % | yes |
+| C6 (L 22.5) RF x1.5 | 0.473 | 0.47 | +0.7 % | yes |
+| V2 (L 28.5) RF RB | 1.131 | 1.13 | +0.1 % | yes |
+| V2 (L 28.5) RF x1.5 | 0.754 | 0.75 | +0.6 % | yes |
+| L for RF 1.0, RB (mm) | 26.415 | 26.6 | -0.7 % | yes |
+| L for RF 1.0, x1.5 (mm) | 32.298 | 32.6 | -0.9 % | yes |
+| block capacity N m | 12.367 | 12.4 | -0.3 % | yes |
+| block hand RF RB | 0.706 | 0.71 | -0.5 % | yes |
+| block width RB (mm) | 23.799 | 23.8 | -0.0 % | yes |
+| block width x1.5 (mm) | 29.148 | 29.1 | +0.2 % | yes |
+| block width x2 (mm) | 33.657 | 33.6 | +0.2 % | yes |
+| Mz max (N m) | 17.512 | 17.51 | +0.0 % | yes |
+| bridge RF RB | 1.928 | 1.93 | -0.1 % | yes |
+
+wall 1 s

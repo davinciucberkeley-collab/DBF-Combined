@@ -1,0 +1,22 @@
+fillet: sleeve B, 10 junction edges at r 2.0 mm
+fillet: sleeve A, 13 junction edges at r 1.5 mm
+hub block volume 20548 mm3 = 26.10 g PETG
+hub aft-face nodes for the hub-group load: 3611
+chol flag 0, 449.7 s, nnz(R) 2391 M
+solved 720.1 s, residual 1.1e-09 
+relative residual per load case: 5.4e-10 9.5e-10 1.1e-09 6.1e-11 4.2e-11 3.9e-11 5.2e-10 9.4e-10 1.1e-09 6.1e-11 4.2e-11 3.9e-11 5.2e-10 8.5e-10 1.0e-09 6.1e-11 4.2e-11 3.9e-11 5.4e-10 8.6e-10 1.0e-09 6.1e-11 4.2e-11 3.9e-11 2.3e-11 9.6e-10 9.2e-10 9.7e-10 3.6e-10 3.8e-10
+equilibrium max error 1.9e-10
+mesh 427333 elements, 1967196 free dof, hub volume 20548 mm3 = 55.5 g aluminium (2.70 g/cm3), 1166 s; equilibrium err 1.9e-10
+landing combos from cache 301
+combos: landing 301 (A 24 / B 30 coeffs), dynamic D-1 1024
+judge: 1113332 hub Gauss points, hub volume 20550 mm3 (sum of weights), 478 tied-edge nodes, exclusion 0.50 mm removes 0.29 % of the hub volume
+  judge combos 24 / 301
+  judge combos 264 / 301
+A_RB whole hub: old p99 18.7 | vol-weighted p99 21.0 p99.9 34.4 | max excl 81.7 (RF at scale 1: 4.04 / 1.70 / 1.24)  [1914 s]
+   whole hub                                                    old p99   18.7  w p99   21.0  w p99.9   34.4  max excl   81.7  max  112.4  RF(p99.9, max excl) 4.04 / 1.70  (excluded vol 0.29 %)
+   collar (x > 24)                                              old p99   21.6  w p99   23.4  w p99.9   40.1  max excl   81.7  max  112.4  RF(p99.9, max excl) 3.47 / 1.70  (excluded vol 0.09 %)
+   aft block / bore wall (x > floor+2, <= 24)                   old p99   20.1  w p99   19.4  w p99.9   26.0  max excl   33.4  max   33.4  RF(p99.9, max excl) 5.35 / 4.16  (excluded vol 0.00 %)
+   floor band (tube-B surface to floor+2 mm, r < bore+2)        old p99   20.1  w p99   18.2  w p99.9   22.9  max excl   33.2  max   33.2  RF(p99.9, max excl) 6.06 / 4.19  (excluded vol 1.42 %)
+   sleeves outside the block box                                old p99   16.5  w p99   20.9  w p99.9   32.6  max excl   50.6  max   50.6  RF(p99.9, max excl) 4.27 / 2.75  (excluded vol 0.79 %)
+   block forward of the floor band                              old p99   16.3  w p99   18.3  w p99.9   25.8  max excl   48.5  max   48.5  RF(p99.9, max excl) 5.40 / 2.87  (excluded vol 0.00 %)
+judge: 1113332 hub Gauss points, hub volume 20550 mm3 (sum of weights), 478 tied-edge nodes, exclusion 0.50 mm removes 0.29 % of the hub volume
