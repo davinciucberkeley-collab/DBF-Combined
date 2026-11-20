@@ -1,0 +1,30 @@
+{
+ "h_mm": 0.25,
+ "rho": 1.27,
+ "rows": [
+  {
+   "id": "AVN-008",
+   "listed_g": 9.59,
+   "vol_cm3": 6.941562500000001,
+   "solid_g": 8.815784375000002,
+   "cls": "C",
+   "build_axis": "z",
+   "core_frac": 0.0,
+   "computed_g": 8.815784375000002,
+   "name": "Bay cover (D-198, T-022 Q4): 0.6 mm printed PETG hood over the FC stac",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "CGE-008",
+   "listed_g": 14.07,
+   "vol_cm3": 11.498125000000002,
+   "solid_g": 14.602618750000003,
+   "cls": "M",
+   "build_axis": "z",
+   "core_frac": 0.0487307713214111,
+   "computed_g": 14.068921093750003,
+   "name": "Pack tray R1 (T-077: 1.2 mm windowed plate on a 2.0 mm root pad + ribs",
+   "material": "PETG (printed)"
+  }
+ ]
+}

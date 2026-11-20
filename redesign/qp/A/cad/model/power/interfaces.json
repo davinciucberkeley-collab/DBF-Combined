@@ -4,15 +4,15 @@
  "parts": [
   {
    "id": "PWR-001",
-   "name": "Pack Tattu 2300 mAh 4S 75C",
+   "name": "Pack RDQ Series 2800 mAh 4S 100C XT60 (107 x 33 x 46 mm, 270 g, T-077)",
    "subsystem": "power",
    "status": "MODELLED",
    "mass_g": 270.0,
    "material": "LiPo",
    "cg_xyz_m": [
-    -0.0084,
-    0.001,
-    0.0235
+    -0.009,
+    0.0007,
+    0.032
    ],
    "make_or_buy": "buy",
    "electrical": "source",
@@ -20,15 +20,15 @@
   },
   {
    "id": "PWR-002",
-   "name": "Pack strap 20 x 300 mm with buckle (STRIX, BOM W08; round pack and tray)",
+   "name": "Pack strap 20 mm x about 384 mm with buckle (STRIX family, BOM W08 is 300 mm: TOO SHORT for the 354 mm drawn loop, longer strap needed, price \"-\"; mass scaled 5.5 g x length / 300 mm, EST)",
    "subsystem": "power",
    "status": "MODELLED",
-   "mass_g": 5.5,
+   "mass_g": 7.0,
    "material": "nylon webbing + plastic buckle",
    "cg_xyz_m": [
-    -0.0175,
+    -0.0165,
     -0.0,
-    0.014
+    0.0225
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -41,7 +41,7 @@
    "mass_g": 3.5,
    "material": "silicone rubber",
    "cg_xyz_m": [
-    -0.01,
+    -0.009,
     0.0,
     0.0085
    ],

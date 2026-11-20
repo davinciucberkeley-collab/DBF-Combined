@@ -7,7 +7,7 @@
    "name": "Foot shoe (UR)",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 1.4,
+   "mass_g": 4.55,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.2981,
@@ -37,7 +37,7 @@
    "name": "Foot shoe (UL)",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 1.4,
+   "mass_g": 4.55,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.2981,
@@ -67,7 +67,7 @@
    "name": "Foot shoe (LR)",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 1.4,
+   "mass_g": 4.55,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.2981,
@@ -97,7 +97,7 @@
    "name": "Foot shoe (LL)",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 1.4,
+   "mass_g": 4.55,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.2981,

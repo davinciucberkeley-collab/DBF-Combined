@@ -7,7 +7,7 @@
    "name": "Phase-lead raceway (D-199, R): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 1.71,
+   "mass_g": 1.43,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0159,
@@ -22,7 +22,7 @@
    "name": "Phase-lead raceway (D-199, L): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 1.71,
+   "mass_g": 1.43,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0159,
@@ -37,7 +37,7 @@
    "name": "Hub conduit (D-199, D-202, UR): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 1.05,
+   "mass_g": 0.98,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0569,
@@ -52,7 +52,7 @@
    "name": "Hub conduit (D-199, D-202, UL): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 0.77,
+   "mass_g": 0.72,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0522,
@@ -67,7 +67,7 @@
    "name": "Hub conduit (D-199, D-202, LR): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 0.97,
+   "mass_g": 0.9,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0517,
@@ -82,7 +82,7 @@
    "name": "Hub conduit (D-199, D-202, LL): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 1.25,
+   "mass_g": 1.22,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0559,

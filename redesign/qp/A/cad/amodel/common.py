@@ -45,9 +45,11 @@ R_M = math.hypot(YM, ZM)                    # 0.2762 (DOC radius 0.276)
 CANT = 17.0                                 # D-189 (was 16, D-184): yaw authority 0.3465 -> 0.363 N m
 YFIN, XFIN_T, FIN_H = 0.38, 0.294, 0.18     # DOC: fins at y 380, tube at x 0.294, z +-0.18
 FIN_OD, FIN_ID = 0.016, 0.014               # DOC 16x14 tube
-PACK_X = (-0.0275, 0.0075)                  # QP-4 7.2 #2: pack moved 10 mm aft (centre -10 mm; was -20 mm) so the CAD CG lands mid-band (23 mm) WITH the D-187 elevon balance and the ES3054HV servos; trim +-10 mm in the tray slots
+PACK_X = (-0.0265, 0.0065)  # T-077 RDQ 2800 pack 33 mm wide (was 35: -27.5..7.5), same centre -10 mm.                 # QP-4 7.2 #2: pack moved 10 mm aft (centre -10 mm; was -20 mm) so the CAD CG lands mid-band (23 mm) WITH the D-187 elevon balance and the ES3054HV servos; trim +-10 mm in the tray slots
 TRIM = 0.010                                # +-10 mm pack trim travel (about +-2.2 mm of CG)
 TRIM_FWD = 0.006                            # D-205: forward travel back to 6 mm (D-199 value; D-202 had cut it to 1 mm). The hub moved 6 mm aft (HUB -75 -> -69 mm), doublers s 11-25, lead 12.8 g: CAD CG 21.17 mm, forward trim end must stay >= 19.3 mm (claim CL-A-CG-TRIM-FWD >= 19). Aft travel TRIM unchanged.
+TRAY_YI, TRAY_YO = 0.0540, 0.0560          # T-077: tray end wall inner / outer face |y| (RDQ pack 107 long = |y| 53.5 + 0.5 mm clearance; 2.0 mm wall; was 52.5 / 54.5)
+TRAY_WALL_TOP = 0.0295                      # T-077: end wall top z (leads leave the end face at z 32, 1.5 mm radius: 1.0 mm over the wall)
 TRAY_X1 = 0.0215                            # tray plate aft end (pack aft edge at +TRIM is 17.5 mm; core tray slot ends at 0.0225)
 SERVO_Y = 0.200                             # EST (DOC landing_a: servo y 0.30 is in the elevon; moved inboard)
 SV_Z1 = 0.0117 - WING_DZ                              # servo case top (servo case 28.4 x 13.0 x 26.7, see electrical.py); the core servo pocket opens at this z
@@ -171,7 +173,17 @@ ZP = PLATE_ZTOP
 PARTS = {}
 
 
+def _load_printed_mass():
+    import json
+    p = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'printed_mass.json')   # {pid: grams}, written by mechanism/out/T077_data/t077_write_printed_mass.py
+    return json.load(open(p)) if os.path.exists(p) else {}
+
+
+PRINTED_MASS = _load_printed_mass()
+
+
 def P(pid, name, sub, mass_g, material, mob='make', elec=None, cg=None, **flags):
+    mass_g = PRINTED_MASS.get(pid, mass_g)      # T-077 (T-067 s7 option A): printed parts = CAD volume x print basis from printed_mass.json, else the number given
     PARTS[pid] = dict(id=pid, name=name, subsystem=sub, mass_g=mass_g, material=material, make_or_buy=mob,
                       electrical=elec, cg=cg, **flags)
 

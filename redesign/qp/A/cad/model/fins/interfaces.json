@@ -37,7 +37,7 @@
    "name": "Fin root block (R)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.2,
+   "mass_g": 18.9,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.2831,
@@ -67,7 +67,7 @@
    "name": "Rib saddle on spar (R)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 1.0,
+   "mass_g": 14.39,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.0671,
@@ -127,7 +127,7 @@
    "name": "Fin root block (L)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.2,
+   "mass_g": 18.9,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.2831,
@@ -157,7 +157,7 @@
    "name": "Rib saddle on spar (L)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 1.0,
+   "mass_g": 14.39,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.0671,

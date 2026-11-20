@@ -23,10 +23,10 @@
     "gate": "kg"
    },
    "outputs": {
-    "m_kg": 1.469758376
+    "m_kg": 1.6145622419999999
    },
    "input_values": {
-    "basic": 1.27324,
+    "basic": 1.40283,
     "gf": 1.1174,
     "over": 0.032,
     "gate": 1.47
@@ -126,12 +126,12 @@
     "ASM-A-CUTS"
    ],
    "outputs": {
-    "x_g": 41.38376230535167
+    "x_g": 170.9737623053516
    },
    "input_values": {
     "cuts": 41.6,
     "target": 1.47,
-    "m": 1.469758376,
+    "m": 1.6145622419999999,
     "gf": 1.1174
    }
   },
@@ -181,7 +181,7 @@
     "FIN-001-L"
    ],
    "how": "Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).",
-   "value": 1.469758376
+   "value": 1.6145622419999999
   },
   {
    "id": "CL-A-MASS-ITEM",
@@ -215,7 +215,7 @@
     "A-P1"
    ],
    "how": "As-built weigh-in <= 1.47 kg (D-190, MASS-GATE s8); the +-5 % window holds to 1.478 kg.",
-   "value": 1.469758376
+   "value": 1.6145622419999999
   },
   {
    "id": "CL-A-MASS-USER",
@@ -232,7 +232,7 @@
     "A-U5"
    ],
    "how": "Weigh-in.",
-   "value": 1.469758376
+   "value": 1.6145622419999999
   },
   {
    "id": "CL-A-CUTS-REQUIRED",
@@ -252,7 +252,7 @@
    "assumes": [
     "ASM-A-CUTS"
    ],
-   "value": 41.38376230535167
+   "value": 170.9737623053516
   },
   {
    "id": "CL-A-STRUCT-MASS",
@@ -293,16 +293,16 @@
     "basic": "kg"
    },
    "outputs": {
-    "shift_mm": 2.120574282931733,
-    "fwd_mm": 20.096342402060888,
-    "aft_mm": 23.48926125475166
+    "shift_mm": 1.9246808237633928,
+    "fwd_mm": 28.566688764853904,
+    "aft_mm": 31.64617808287533
    },
    "input_values": {
-    "cg": 21.368686971819926,
+    "cg": 29.72149725911194,
     "pack": 270.0,
     "trim": 10.0,
     "trim_fwd": 6.0,
-    "basic": 1.27324
+    "basic": 1.40283
    }
   },
   {
@@ -325,11 +325,11 @@
     "ASM-A-NP"
    ],
    "outputs": {
-    "sm_pct": 7.890331848236766
+    "sm_pct": 4.4810215268930875
    },
    "input_values": {
     "np": 40.7,
-    "cg": 21.368686971819926,
+    "cg": 29.72149725911194,
     "c": 245.0
    }
   },
@@ -344,10 +344,10 @@
     "v": "P:mass.cg_x_mm"
    },
    "outputs": {
-    "v": 21.368686971819926
+    "v": 29.72149725911194
    },
    "input_values": {
-    "v": 21.368686971819926
+    "v": 29.72149725911194
    }
   },
   {
@@ -371,7 +371,7 @@
     "WNG-002"
    ],
    "how": "CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.",
-   "value": 21.368686971819926
+   "value": 29.72149725911194
   },
   {
    "id": "CALC-A-CG-HI-READ",
@@ -384,10 +384,10 @@
     "v": "P:mass.cg_x_mm"
    },
    "outputs": {
-    "v": 21.368686971819926
+    "v": 29.72149725911194
    },
    "input_values": {
-    "v": 21.368686971819926
+    "v": 29.72149725911194
    }
   },
   {
@@ -409,7 +409,7 @@
     "CGE-008"
    ],
    "how": "CG breadboard (M5); band 19-26 mm (D-195), hard aft limit 28.5 mm.",
-   "value": 21.368686971819926
+   "value": 29.72149725911194
   },
   {
    "id": "CL-A-CG-TRIM-AFT",
@@ -430,7 +430,7 @@
     "CGE-008"
    ],
    "how": "Slide the pack to the aft slot stop and re-measure CG (M5).",
-   "value": 23.48926125475166
+   "value": 31.64617808287533
   },
   {
    "id": "CL-A-CG-TRIM-FWD",
@@ -451,7 +451,7 @@
     "CGE-008"
    ],
    "how": "Slide the pack to the forward slot stop and re-measure CG (M5).",
-   "value": 20.096342402060888
+   "value": 28.566688764853904
   },
   {
    "id": "CL-A-SM",
@@ -474,7 +474,7 @@
    "assumes": [
     "ASM-A-NP"
    ],
-   "value": 7.890331848236766
+   "value": 4.4810215268930875
   },
   {
    "id": "CALC-A-CG-LATERAL-READ",
@@ -487,10 +487,10 @@
     "v": "P:mass.cg_y_mm"
    },
    "outputs": {
-    "v": 2.0344773962489398
+    "v": 1.9275222229350668
    },
    "input_values": {
-    "v": 2.0344773962489398
+    "v": 1.9275222229350668
    }
   },
   {
@@ -508,7 +508,7 @@
     "A-P4"
    ],
    "how": "Hang the built aircraft on its spar centre; lateral CG <= 5 mm.",
-   "value": 2.0344773962489398
+   "value": 1.9275222229350668
   },
   {
    "id": "CALC-A-TW-GATE",
@@ -636,12 +636,12 @@
     "m": "kg"
    },
    "outputs": {
-    "fresh_cap": 2.338202735374153,
-    "sag_cap": 1.8483814917070525,
-    "fresh_unc": 2.75437732457637,
-    "sag_unc": 2.1838503359958046,
-    "window_cap_pct": 5.294439363621859,
-    "window_unc_pct": 13.554416276561794,
+    "fresh_cap": 2.1284983419687036,
+    "sag_cap": 1.6826072781899077,
+    "fresh_unc": 2.5073478359347083,
+    "sag_unc": 1.9879892145156755,
+    "window_cap_pct": 0.6010951672912622,
+    "window_unc_pct": 8.916317660148446,
     "sag_cap_gf": 2716.674179479815
    },
    "input_values": {
@@ -701,7 +701,7 @@
     "g": 9.807,
     "lo": 1.33,
     "hi_frac": 0.8,
-    "m": 1.469758376
+    "m": 1.6145622419999999
    }
   },
   {
@@ -778,7 +778,7 @@
     "PRP-001-LL"
    ],
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "value": 2.338202735374153
+   "value": 2.1284983419687036
   },
   {
    "id": "CL-A-TW-SAG-PRED",
@@ -802,7 +802,7 @@
     "PWR-001"
    ],
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "value": 1.8483814917070525
+   "value": 1.6826072781899077
   },
   {
    "id": "CL-A-WINDOW-PRED",
@@ -825,7 +825,7 @@
     "PRP-001-LL"
    ],
    "how": "C3 time-domain pitch-over run at the as-weighed mass (T-A-C3-PITCHOVER); the window uses 1.33 W low and 0.80 x T/W sag high.",
-   "value": 5.294439363621859
+   "value": 0.6010951672912622
   },
   {
    "id": "CL-A-WINDOW-GATE",
@@ -1238,10 +1238,10 @@
     "m": "kg"
    },
    "outputs": {
-    "cruise_s": 252.86675757476178,
+    "cruise_s": 202.27840341047366,
     "usable_wh": 24.5088,
-    "hover_w": 213.69836766196184,
-    "cruise_w": 167.69904696885024
+    "hover_w": 244.41296487982783,
+    "cruise_w": 177.092319560844
    },
    "input_values": {
     "apc_table": [
@@ -1295,7 +1295,7 @@
     "esc_eff": 0.98,
     "ctrl_margin": 1.1,
     "g": 9.807,
-    "m": 1.469758376,
+    "m": 1.6145622419999999,
     "pack_ah": 2.3,
     "pack_v": 14.8,
     "floor_frac": 0.9,
@@ -1380,7 +1380,7 @@
     "PRP-003"
    ],
    "how": "Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).",
-   "value": 252.86675757476178
+   "value": 202.27840341047366
   },
   {
    "id": "CL-A-FENCE",

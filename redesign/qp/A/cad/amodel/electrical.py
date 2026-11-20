@@ -260,7 +260,7 @@ def _g_nut(af, m, d, rho=RHO_STEEL):
 # ------------------------------------------------------------------ D-198 bay cover (AVN-008) and servo-lead grooves
 COV_X0, COV_X1 = 0.0225, 0.1265             # cover roof from the tray end to just ahead of the plate end (plate x 40.8..127.0)
 COV_Y = 0.0265                              # half width: clear of the GPS board (y >= 27.5) with a 0.6 mm wall
-COV_T = 0.0006                              # printed single wall 0.6 mm (same basis as the lens caps WNG-008, EST)
+COV_T = 0.0005                              # T-077 (D-221, T-080): vacuum-formed 0.5 mm PETG sheet over a printed PLA buck (was printed single wall 0.6 mm); wall thickness is the sheet thickness, thinning at the draw is not modelled (EST)
 COV_ZH1, COV_ZH2 = 0.0450, 0.0325           # roof heights: over the FC stack (screw heads to 38.5, sensor leads at 40.5 +- 0.5) and over the ESC with the phase bundles (z 29)
 SRV_YD = 0.024                              # servo leads drop through the plate window (x 80..122, y 21..40) at |y| 24 mm
 SRV_XD = 0.083
@@ -531,18 +531,18 @@ def build_raceway(ctx):
 
 
 # ------------------------------------------------------------------ lane C constants (m)
-PACK_L, PACK_W, PACK_H = 0.105, 0.035, 0.029                    # V RMRC Tattu 2300 4S 105 x 35 x 29 (readymaderc.com/products/details/tattu-2300-75c-4s1p-xt60, 2026-11-15; EU retailers list 105 x 33 x 28)
+PACK_L, PACK_W, PACK_H = 0.107, 0.033, 0.046                    # V T-077: RDQ Series 14.8 V 4S 2800 mAh 100C XT60, 107 x 33 x 46 mm, 270 g +-1 %, XT60 lead 80 mm, JST-XH balance 35 mm (racedayquads.com/products/rdq-series-11-1v-4s-2800mah-100c-lipo-battery-xt60, read 2026-11-19, T079_cost_closure.md addendum). Orientation: 107 along y, 33 along x, 46 up (z): the 46 mm side cannot lie along x (T077_cad.md s1)
 PAD_T = 1.0 * MM                            # D-199: anti-slip pad on the tray floor, 1.0 mm EST (silicone rubber sheet cut to 100 x 30 mm: thickness and density are EST, measure on arrival)
 PACK_Z0 = 0.008 + PAD_T                     # the pack now stands on the drawn pad (tray plate top z 8.0)
 PACK_R = 3.0 * MM                           # EST pouch corner radius under the shrink (not published): measure
 LEAD_D = 3.0 * MM                           # EST 14 AWG silicone insulation OD (V: Tattu page lists "14 AWG", no OD): measure
-LEAD_LEN = 0.100                            # V nextfpv / gravesrc "about 100 mm" (audit; one retailer says 35/60 mm): measure on arrival
+LEAD_LEN = 0.080                            # V RDQ page 2026-11-19: XT60 lead 80 mm (T-077; the Tattu 'about 100 mm' no longer applies). The drawn route is longer: see T077_cad.md exposed-wire table (extension splice)
 LEAD_PITCH = 7.2 * MM                       # EST XT60 pin pitch (Amass XT60: two 3.5 mm pins; not fetched): measure
 XT60_W, XT60_H = 15.5 * MM, 8.1 * MM        # V Pololu 2174/2175 listing "15.5 x 8.1 x 20.5" (pololu.com/product/2174, 2026-11-15); Amass drawing not readable (components101 PDF is an image)
 XT60_L = 12.0 * MM                          # EST: each half 12 mm so a mated pair is 24 mm (V Fingertech listing, robotshop.com, "mated length 24 mm"); Pololu 20.5 mm probably includes solder cups
 XT60_CH = 2.0 * MM                          # EST keying chamfer on the lower corners
 BAL_X = PACK_X[1] - 0.0009                  # D-199: balance lead leaves the end face at x 6.6 mm (2.5 mm aft of the nearer power lead, wires 3.0 / 1.2 mm)
-PACK_XL = 0.0025                            # EST: power leads leave the pack end face in its aft 10 mm (x -2.5..7.5), clear of the 25 mm strap (x -27.5..-2.5)
+PACK_XL = 0.0015                            # EST: power leads leave the pack end face in its aft 10 mm (x -2.5..7.5), clear of the 25 mm strap (x -27.5..-2.5)   # T-077: 1.0 mm forward of 2.5 so the 3.0 mm power strand clears the balance lead (pack end now x 6.5, was 7.5)
 PACK_ZL = PACK_Z0 + PACK_H / 2              # lead exit height: mid thickness (EST)
 LEAD_Y1 = 0.0635                            # EST: leads leave the end face (y +52.5 mm) 11 mm, then run aft on the skin outboard of the plate (half width 55)
 _xt0 = 0.085                                # male housing starts here (EST), female to _xt0 + 2 XT60_L
@@ -708,8 +708,10 @@ M_STRAP = 5.5                               # V 5.5 g each: readymaderc STRIX No
 
 # ------------------------------------------------------------------ parts
 # power / avionics
-P('PWR-001', 'Pack Tattu 2300 mAh 4S 75C', 'power', 270.0, 'LiPo', 'buy', 'source')
-P('PWR-002', 'Pack strap 20 x 300 mm with buckle (STRIX, BOM W08; round pack and tray)', 'power', M_STRAP, 'nylon webbing + plastic buckle', 'buy')
+P('PWR-001', 'Pack RDQ Series 2800 mAh 4S 100C XT60 (107 x 33 x 46 mm, 270 g, T-077)', 'power', 270.0, 'LiPo', 'buy', 'source')
+STRAP_LOOP = 2 * (2 * TRAY_YO + (PACK_Z0 + PACK_H) - (BR_Z - BR_RO))    # CALC: inner perimeter of the drawn loop (corner radii ignored): 354 mm for the RDQ pack (was 327 mm for the Tattu: already > the 300 mm W08 strap)
+STRAP_NEED = STRAP_LOOP + 0.030                                          # + 30 mm buckle overlap (EST)
+P('PWR-002', 'Pack strap 20 mm x about %.0f mm with buckle (STRIX family, BOM W08 is 300 mm: TOO SHORT for the %.0f mm drawn loop, longer strap needed, price "-"; mass scaled 5.5 g x length / 300 mm, EST)' % (STRAP_NEED * 1e3, STRAP_LOOP * 1e3), 'power', round(M_STRAP * STRAP_NEED / 0.300, 1), 'nylon webbing + plastic buckle', 'buy')
 PAD_M = round(0.100 * 0.030 * PAD_T * 1.15 * 1e6, 1)     # g: 100 x 30 x 1 mm, silicone rubber 1.15 g/cm3 (EST)
 P('PWR-003', 'Anti-slip pad 100 x 30 x 1.0 mm silicone rubber sheet on the tray floor (BOM W09; thickness, size and density EST)', 'power', PAD_M, 'silicone rubber', 'buy')
 P('AVN-001', 'Avionics plate', 'avionics', 8.0, 'PETG (printed)')   # QP-4 FIXES 12 -> 8 g: 4 lightening windows (now drawn)
@@ -906,7 +908,7 @@ def build_power(ctx):
     pd.box((PACK_X[0] + 0.0025, -0.050, 0.008), (PACK_X[0] + 0.0325, 0.050, 0.008 + PAD_T), name='anti-slip pad 100 x 30 x 1.0 mm (EST)')
     # strap loop: axis x, ring around tray + pack
     ctx_strap = ctx.part('PWR-002', rgb=(0.1, 0.1, 0.1))
-    yi = 0.0545
+    yi = TRAY_YO                                  # T-077: strap inner face on the tray end wall outer face
     zb_ = BR_Z - BR_RO                            # D-206: under the 16 mm bridge (axis z -2): z -10 (was -6 under the 12 mm bridge)
     ctx_strap.prism('X', STRAP_X0, [_rrect(-yi - STRAP_T, zb_ - STRAP_T, yi + STRAP_T, PACK_Z0 + PACK_H + STRAP_T, 0.0012, 3),
                                     [(-yi, zb_), (yi, zb_), (yi, PACK_Z0 + PACK_H), (-yi, PACK_Z0 + PACK_H)]], STRAP_W, name='strap loop')

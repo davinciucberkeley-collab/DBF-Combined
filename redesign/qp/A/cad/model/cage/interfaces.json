@@ -7,7 +7,7 @@
    "name": "Hub (printed PETG, D-202: 1.5 mm sleeves over s +-24 mm of both arm tubes, 38 x 20 x 20 mm centre block on the bridge axis, running aft to the tray face (no separate boss), 3 mm edge radii, junction fillets 2.0 mm (sleeve B / block) and 1.5 mm (sleeve A / block) as in the FEA (D-207; outer body is the OpenCASCADE mesh of hub_body.py), 2 strut sockets, tray flange; mass = drawn volume x 1.27)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 18.0,
+   "mass_g": 15.82,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0655,
@@ -52,7 +52,7 @@
    "name": "Motor cup (UR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 4.3,
+   "mass_g": 9.51,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0801,
@@ -97,7 +97,7 @@
    "name": "Motor cup (UL; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 4.3,
+   "mass_g": 9.51,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0671,
@@ -142,7 +142,7 @@
    "name": "Motor cup (LR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 4.3,
+   "mass_g": 9.51,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0671,
@@ -187,7 +187,7 @@
    "name": "Motor cup (LL; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 4.3,
+   "mass_g": 9.51,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0801,
@@ -259,10 +259,10 @@
   },
   {
    "id": "CGE-005-R",
-   "name": "V strut 6x4.5 (R)",
+   "name": "V strut 6x4.0 (R), T-077 (D-219)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 6.5,
+   "mass_g": 7.2,
    "material": "CFRP tube",
    "cg_xyz_m": [
     -0.0075,
@@ -277,7 +277,7 @@
    "name": "Strut clamp on spar (R)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 1.5,
+   "mass_g": 6.58,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.0488,
@@ -289,10 +289,10 @@
   },
   {
    "id": "CGE-005-L",
-   "name": "V strut 6x4.5 (L)",
+   "name": "V strut 6x4.0 (L), T-077 (D-219)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 6.5,
+   "mass_g": 7.2,
    "material": "CFRP tube",
    "cg_xyz_m": [
     -0.0075,
@@ -307,7 +307,7 @@
    "name": "Strut clamp on spar (L)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 1.5,
+   "mass_g": 6.58,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.0488,
@@ -322,7 +322,7 @@
    "name": "Bridge saddle on spar",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 2.0,
+   "mass_g": 9.67,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.0491,
@@ -334,15 +334,15 @@
   },
   {
    "id": "CGE-008",
-   "name": "Pack tray (66 x 109 mm plate, integral lips at the trim ends, lead notch; 4.0 g at 44 mm scaled by plate area + longer walls, EST)",
+   "name": "Pack tray R1 (T-077: 1.2 mm windowed plate on a 2.0 mm root pad + ribs, 2.0 mm end walls with windows, two 40 x 2.0 mm tabs per lip; mass = drawn solid volume x 1.27, T-067 basis M applied by printed_mass.json when present)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 14.07,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0108,
+    -0.012,
     0.0,
-    0.0106
+    0.0113
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"

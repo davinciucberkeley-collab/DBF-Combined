@@ -83,7 +83,7 @@
    "name": "Z-bend keeper (R), printed PETG: 1.5 mm spacer + 0.8 mm bridge over the Z-bend, clamped under the arm screw (D-212 rev 3; mass CALC)",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 0.08,
+   "mass_g": 0.07,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.1405,
@@ -189,7 +189,7 @@
    "name": "Z-bend keeper (L), printed PETG: 1.5 mm spacer + 0.8 mm bridge over the Z-bend, clamped under the arm screw (D-212 rev 3; mass CALC)",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 0.08,
+   "mass_g": 0.07,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.1405,

@@ -37,7 +37,7 @@
    "name": "Spar plug (centre clamp)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 1.2,
+   "mass_g": 1.42,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.06,
@@ -52,7 +52,7 @@
    "name": "Spar plug (right strut clamp)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 1.2,
+   "mass_g": 1.42,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.06,
@@ -67,7 +67,7 @@
    "name": "Spar plug (left strut clamp)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 1.2,
+   "mass_g": 1.42,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.06,
@@ -82,7 +82,7 @@
    "name": "Spar plug (right rib clamp)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 1.2,
+   "mass_g": 1.42,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.06,
@@ -97,7 +97,7 @@
    "name": "Spar plug (left rib clamp)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 1.2,
+   "mass_g": 1.42,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.06,
@@ -157,7 +157,7 @@
    "name": "Lens cap + stop bosses (R, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 3.67,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.1584,
@@ -172,7 +172,7 @@
    "name": "Lens cap + stop bosses (R, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 3.69,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.1602,
@@ -202,7 +202,7 @@
    "name": "Hinge damper rotor (R): sleeve + flange bonded on the elevon tip",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 0.5,
+   "mass_g": 0.47,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.1837,
@@ -232,7 +232,7 @@
    "name": "Lens cap + stop bosses (L, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 3.67,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.1584,
@@ -247,7 +247,7 @@
    "name": "Lens cap + stop bosses (L, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 3.69,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.1602,
@@ -277,7 +277,7 @@
    "name": "Hinge damper rotor (L): sleeve + flange bonded on the elevon tip",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 0.5,
+   "mass_g": 0.47,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.1837,

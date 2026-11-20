@@ -28,7 +28,7 @@ HUB_ARM_R0 = R_IN - 0.002                   # arm socket floor (2 mm)
 HUB_ARM_R1 = R_IN + HUB_SOCK                # open mouth of the arm socket (r 56.2 mm)
 HUB_SPOKE_D = 0.022                         # radial web depth along x (sleeve to socket), one wall (HUB_W) thick
 HUB_STRUT_S = (-0.017, 0.032)               # strut socket: from 17 mm behind the strut end (web to the bridge sleeve) to 32 mm ahead (30 mm socket)
-PACK_XL_, PACK_ZL_ = 0.0025, 0.009 + 0.0145   # lead exit x and z (= electrical.PACK_XL, PACK_ZL; keep equal)
+PACK_XL_, PACK_ZL_ = 0.0015, 0.009 + 0.0230   # lead exit x and z (= electrical.PACK_XL, PACK_ZL; keep equal)
 CUP_PAT = (0.019, 0.016)                    # MN2212 mounting pattern 19 mm (along the arm, y) x 16 mm (z): retailers list 16x19 and 19x25 (getfpv MN2212 V2.0 page, search 2026-11-15; T-Motor drawing: 4-M2.5 on 19 x 16 (read 2026-11-15); cup holes M2.5 clearance 2.9 mm, D-194)
 CUP_R = 0.006                               # plate corner radius (EST)
 CUP_FIL = 0.001                             # D-210: fillet on the cup's sleeve-to-plate junction (the FEA's S2 / S3 hotspot was the sharp corner)
@@ -80,7 +80,7 @@ BR_RO, BR_RI = BR_OD / 2, BR_ID / 2
 BR_Z = -0.002                               # D-206: bridge axis 2 mm below the hub axis, so the 16 mm tube top stays tangent to the tray plate underside (z 6.0)
 BORE_X0 = HUB[0] + 0.015                    # bridge bore floor 15 mm aft of the hub axis; floor corner a 45 deg cone matching the tube's BR_CHAMFER (D-207, FEA run d209)
 BR_X0 = BORE_X0                             # D-207: the bridge seats on the bore floor, its chamfer on the conical corner (a 1 mm gap, FEA d208, doubled the peak at the tube end edge). D-202 note: D-202: the bridge starts 15 mm aft of the hub axis (x -0.060), bonded in the 12 mm boss bore; it no longer passes through the hub centre (was -0.100)
-STRUT_OD, STRUT_ID = 0.006, 0.0045          # DOC 6x4.5
+STRUT_OD, STRUT_ID = 0.006, 0.0040          # T-071 / T-073 / T-076 / D-219: strut 6x4.0 (was DOC 6x4.5; Euler pinned RF 0.93 -> 1.10, T071_wing_skin.md l.72); availability and price "-"
 STRUT_S = (-0.065, 0.0229, 0.0)             # EST start inside the hub
 STRUT_E = (0.0500, 0.2850, 0.0)               # EST end in the clamp boss on the spar (DOC: to the spar at y 0.30)
 RIB_OD, RIB_ID, RIB_X0 = 0.014, 0.012, 0.0705
@@ -508,6 +508,82 @@ def fin_fairing_loop():
     return [(XFIN_T, b), (x0 + a, b)] + el + [(x0 + a, -b), (XFIN_T, -b)]
 
 
+
+# ------------------------------------------------------------------ T-077 R1'' pack tray CGE-008 (T-073 / T-076 passing variant, RDQ 2,800 mAh pack 107 x 33 x 46 mm)
+# One source for the drawn solids (TRAY_ADD, disjoint boxes) and the window cuts (TRAY_CUT, each fully inside one added box), so build and mass use the same numbers.
+# R1'': plate 1.2 mm with windows + ribs + 2.0 mm root pad at the hub, end walls 2.0 mm with 3 windows (T-076 t076_step4.py: "30 % windows"; here the drawn fraction is
+# printed by tray_stats()), 2 lip tabs 40 x 2.0 mm per lip (y 7..47 and -47..-7). Rib width 2.0 mm (T-073 used 1.2 mm ribs at 50 % windows; the drawn windows are 54 %, wider ribs
+# keep the area: EST, not re-checked by the T-073 hand calc). Orientation: plate flat on the bed (z up in the CAD), tabs and walls rise in z (interlayer allowable, T-073).
+TRAY_PLATE_T = 0.0012                       # R1'' thin plate: top z 8.0 (pad / pack floor unchanged), bottom z 6.8
+TRAY_RIB = 0.002                            # rib / rim width (EST)
+TRAY_ROOT_X1 = -0.035                       # solid 2.0 mm root pad x -45..-35 (R1'' "2.0 mm root pad" over the hub flange end)
+TRAY_YB = (0.0142, 0.0238)                  # solid band over the phase-lead raceway footprint (the raceway is bonded to the plate underside, common.RW_YO)
+TRAY_YL = 0.0394                            # longitudinal rib in the outboard zone
+TRAY_NB = 3                                 # window bays along x
+TRAY_WN_X = (-0.024, -0.008, 0.008)         # end wall window centres x (EST)
+TRAY_WN_W, TRAY_WN_Z = 0.010, (0.0110, 0.0240)
+
+
+def _tray_solids():
+    x0, x1 = -0.045, TRAY_X1
+    zb, zt = 0.008 - TRAY_PLATE_T, 0.008
+    yo = TRAY_YO
+    add, cut = [], []
+    add.append(((x0, -yo, zb), (x1, yo, zt), 'tray plate 1.2 mm (R1'')'))
+    add.append(((x0, -yo, 0.006), (TRAY_ROOT_X1, yo, zb), 'root pad under the plate (2.0 mm total)'))
+    add.append(((TRAY_ROOT_X1, -TRAY_RIB / 2, 0.006), (x1, TRAY_RIB / 2, zb), 'centre rib under the plate, tangent to the bridge tube (z 6.0)'))
+    xs = [TRAY_ROOT_X1 + TRAY_RIB]
+    bw = ((x1 - TRAY_RIB) - xs[0] - (TRAY_NB - 1) * TRAY_RIB) / TRAY_NB
+    xl = xs[0]
+    bays = []
+    for k in range(TRAY_NB):
+        bays.append((xl, xl + bw))
+        xl += bw + TRAY_RIB
+    yz = [(TRAY_RIB / 2 + TRAY_RIB / 2, TRAY_YB[0]),                                  # inner zone |y| 2.0 .. 14.2
+          (TRAY_YB[1], TRAY_YL - TRAY_RIB / 2), (TRAY_YL + TRAY_RIB / 2, TRAY_YO - TRAY_RIB)]  # outer zones 23.8 .. 38.4 and 40.4 .. 54.0
+    for sy in (1, -1):
+        for (xa, xb) in bays:
+            for (ya, yb) in yz:
+                lo, hi = sorted((sy * ya, sy * yb))
+                cut.append(((xa, lo, zb - 0.0001), (xb, hi, zt + 0.0001), 'plate window'))
+    # end walls (2.0 mm, z 8..wall top) with three windows each
+    wx0, wx1 = PACK_X[0] - TRIM_FWD, PACK_X[1] + TRIM
+    for sy in (1, -1):
+        lo, hi = sorted((sy * TRAY_YI, sy * TRAY_YO))
+        add.append(((wx0, lo, zt), (wx1, hi, TRAY_WALL_TOP), 'tray end wall %s' % ('R' if sy > 0 else 'L')))
+        for xc in TRAY_WN_X:
+            cut.append(((xc - TRAY_WN_W / 2, lo - 0.0001, TRAY_WN_Z[0]), (xc + TRAY_WN_W / 2, hi + 0.0001, TRAY_WN_Z[1]), 'end wall window'))
+    # lips: two tabs 40 x 2.0 mm per lip
+    for (xa, xb, zh, nm) in ((wx0 - 0.002, wx0, 0.020, 'front'), (wx1, wx1 + 0.002, 0.018, 'rear')):
+        for sy in (1, -1):
+            lo, hi = sorted((sy * 0.007, sy * 0.047))
+            add.append(((xa, lo, zt), (xb, hi, zh), 'tray %s lip tab' % nm))
+    return add, cut
+
+
+TRAY_ADD, TRAY_CUT = _tray_solids()
+
+
+def _bv(lo, hi):
+    return (hi[0] - lo[0]) * (hi[1] - lo[1]) * (hi[2] - lo[2])
+
+
+def tray_volume_m3():
+    """Solid volume of the drawn tray: added boxes minus the through-windows (windows lie inside one added box; the clip of the 0.1 mm overcut is removed)."""
+    v = sum(_bv(lo, hi) for lo, hi, _ in TRAY_ADD)
+    for lo, hi, nm in TRAY_CUT:
+        lo2 = (lo[0], lo[1], lo[2] + 0.0001) if nm == 'plate window' else (lo[0], lo[1] + 0.0001, lo[2])
+        hi2 = (hi[0], hi[1], hi[2] - 0.0001) if nm == 'plate window' else (hi[0], hi[1] - 0.0001, hi[2])
+        v -= _bv(lo2, hi2)
+    return v
+
+
+def tray_stats():
+    pl = [a for a in TRAY_ADD if a[2].startswith('tray plate')][0]
+    pa = (pl[1][0] - pl[0][0]) * (pl[1][1] - pl[0][1])
+    wa = sum((hi[0] - lo[0]) * (hi[1] - lo[1]) for lo, hi, nm in TRAY_CUT if nm == 'plate window')
+    return dict(plate_area_mm2=pa * 1e6, window_area_mm2=wa * 1e6, window_frac=wa / pa, solid_cm3=tray_volume_m3() * 1e6)
+
 # ------------------------------------------------------------------ wing / fins / cage parts
 # wing (MASS-GATE 220 allocation; STRUCTURES iteration 2: 191 g)
 P('WNG-001', 'Wing core, XPS 25 kg/m3 + tape skin + glue + hinge tape (lumped)', 'wing', 100.1, 'XPS foam 25 kg/m3 + packing tape')   # QP-4 FIXES item 3: 116 - 13.7 (foam 82 g x 5/30) - 0.3 (elevon span moved 10 mm); D-193 S5010: core section area 3457 -> 3372 mm2 (CALC from core_loop, hinge-forward part) = -85 mm2 x 0.90 m x 25 kg/m3 = -1.9 g
@@ -543,10 +619,10 @@ for s in ST:
 P('CGE-010-C', 'Crossing pin 3 mm carbon rod x %.0f mm through both arm tubes and the hub block (D-202)' % ((HUB[0] + BLK_X[1] - PINC_X0) * 1e3), 'cage', round(math.pi / 4 * PIN_D ** 2 * (HUB[0] + BLK_X[1] - PINC_X0) * 1600 * 1000, 2), 'CFRP rod')
 P('CGE-004', 'Bridge 16x14 (D-206, torsion; axis z -2 mm; D-202: starts 15 mm aft of the hub axis, bored into the boss)', 'cage', round(tube_g(BR_X1 - BR_X0, BR_OD, BR_ID), 1), 'CFRP tube')
 for s in 'RL':
-    P('CGE-005-' + s, 'V strut 6x4.5 (%s)' % s, 'cage', 6.5, 'CFRP tube')
+    P('CGE-005-' + s, 'V strut 6x4.0 (%s), T-077 (D-219)' % s, 'cage', round(tube_g(math.hypot(STRUT_E[0] - STRUT_S[0], STRUT_E[1] - STRUT_S[1]), STRUT_OD, STRUT_ID), 1), 'CFRP tube')   # T-077: from the drawn length x section x 1600 kg/m3 (STRUCTURES); was 6.5 g listed for 6x4.5
     P('CGE-007-' + s, 'Strut clamp on spar (%s)' % s, 'cage', 1.5, 'PETG (printed)')
 P('CGE-006', 'Bridge saddle on spar', 'cage', 2.0, 'PETG (printed)')
-P('CGE-008', 'Pack tray (66 x 109 mm plate, integral lips at the trim ends, lead notch; 4.0 g at 44 mm scaled by plate area + longer walls, EST)', 'cage', 3.8, 'PETG (printed)')   # QP-4 FIXES 5.3 -> 3.8 g: 1.5 mm floor with ribs, EST
+P('CGE-008', 'Pack tray R1'' (T-077: 1.2 mm windowed plate on a 2.0 mm root pad + ribs, 2.0 mm end walls with windows, two 40 x 2.0 mm tabs per lip; mass = drawn solid volume x 1.27, T-067 basis M applied by printed_mass.json when present)', 'cage', round(tray_volume_m3() * 1e6 * RHO_PETG, 1), 'PETG (printed)')   # T-077: from the drawn volume (solid); was 3.8 g EST
 
 # ------------------------------------------------------------------ wing / fins / cage edges
 # wing
@@ -653,7 +729,7 @@ def build_wing(ctx):
         y0, y1 = sorted((sy * SERVO_Y - 0.0225, sy * SERVO_Y + 0.0225))
         core.cut_box((0.1245, y0, SV_Z1), (0.1655, y1, 0.020), name='servo pocket')
     core.cut_box((0.0, -(BR_RO + 0.0005), -0.05), (0.056, BR_RO + 0.0005, 0.0075), name='bridge slot (open below; D-206 16 mm bridge)')
-    core.cut_box((-0.010, -0.0570, 0.0055), (0.0225, 0.0570, 0.050), name='pack tray slot (open above; y +-57 clears the 25 mm strap, outer face 56.1, over the whole trim travel)')
+    core.cut_box((-0.010, -0.0585, 0.0055), (0.0225, 0.0585, 0.060), name='pack tray slot (open above; T-077 y +-58.5 clears the 20 mm strap, outer face 57.6, over the whole trim travel)')
     core.cut_box((0.0295, -0.0165, -0.05), (0.0710, 0.0165, 0.0115), name='saddle slot (open below)')
     for sy in (1, -1):                                    # D-199: raceway groove under the tray slot, then the open ditch under the bay cover
         ya, yb = sorted((sy * (RW_YO[0] - 0.0002), sy * (RW_YO[1] + 0.0002)))
@@ -840,13 +916,7 @@ def build_cage(ctx):
     cl.cut_box((SPAR_X - 0.0065, 0.291, 0.0), (SPAR_X + 0.0065, 0.309, 0.012), name='clip slot')
     ctx.mirror('CGE-007-R', 'CGE-007-L', plane='XZ')
     tr = ctx.part('CGE-008', rgb=(0.9, 0.9, 0.9))
-    tr.box((-0.045, -0.0545, 0.006), (TRAY_X1, 0.0545, 0.008), name='tray plate')
-    tr.box((PACK_X[0] - TRIM_FWD, 0.0525, 0.008), (PACK_X[1] + TRIM, 0.0545, 0.030), name='tray end wall R')
-    tr.box((PACK_X[0] - TRIM_FWD, -0.0545, 0.008), (PACK_X[1] + TRIM, -0.0525, 0.030), name='tray end wall L')
-    # D-194: the tray is ONE printed part (bonded to the hub pad, no bolts). The lips are integral and sit at the ends of the +-TRIM travel; the
-    # pack is placed against a lip (trim -10 / +10) or on foam shims between (not drawn, EST) and held by the strap PWR-002. The old slotted
-    # M3 lip bolts (ASDRAWN s5 item 5, 'not drawn') are dropped: lips were drawn as part of the tray, so bolts had nothing to move.
-    tr.box((PACK_X[0] - TRIM_FWD - 0.002, -0.0545, 0.008), (PACK_X[0] - TRIM_FWD, 0.0545, 0.020), name='tray front lip')
-    tr.box((PACK_X[1] + TRIM, -0.0545, 0.008), (PACK_X[1] + TRIM + 0.002, 0.0545, 0.018), name='tray rear lip')
-    # lead notch in end wall R for the 14 AWG pack leads, the XT60 and the balance lead over the whole trim travel (leads at pack z mid-thickness)
-    tr.cut_box((PACK_XL_ - TRIM - 0.0081, 0.0520, PACK_ZL_ - 0.0030), (PACK_XL_ + TRIM + 0.0081, 0.0550, 0.0310), name='lead notch in end wall R, open to the wall top so the pack drops in with its leads (D-194)')
+    for lo_, hi_, nm_ in TRAY_ADD:
+        tr.box(lo_, hi_, name=nm_)
+    for lo_, hi_, nm_ in TRAY_CUT:
+        tr.cut_box(lo_, hi_, name=nm_)
