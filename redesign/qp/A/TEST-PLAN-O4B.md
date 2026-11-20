@@ -171,3 +171,42 @@ The T1 to T8 lines add about $375 with tax, plus about $75 for seven new shippin
 
 ## 7. Limits
 All allowables except cited vendor figures are EST. The model gf and A values are the repo's motor model, not a measurement. Push-out loads are hand arithmetic on the nominal diameter. Prices marked snippet or prior are not page reads today. Shipping is the BOM's EST per group, not read from any vendor. Lead times, X7 and Tormach access and charges, the 5 kN rig and the drop-rig logger are "—". The TP-5 and TP-8 pass lines depend on item 1 of s5. The test order after TP-2 is as the brief gave it, not scheduled against real arrival dates.
+
+## Budget-closed purchase list (T-082)
+
+Added 2026-11-21 by T-082. Decision record: `docs/audits/2026-11-20-T082-budget.md`, which has every price, URL and lever. Rules: AM-013 to AM-015; the DAF ruling D-223 is folded in. **Plan, not VERIFIED COMPLETE; nothing bought.** Where this section differs from s1 to s4 above, this section supersedes them for purchasing and rigs. Pass lines follow D-223.
+
+**Total (scratch copy of `bom_a.py`, 2026-11-21): $1,957.51 including the crash reserve by its definition ($313.54); $1,971.40 with the reserve held at $327.43. Both are under $2,000 provided the RMRC, Amazon and T-Motor free-shipping terms hold ($36.42; recheck at checkout).**
+
+| ID | Purchase (beyond `BOM-A.csv`, or replacing a line) | Vendor | Qty | Unit $ | Used by |
+|---|---|---|---|---|---|
+| V03 | Kakute H743-Wing (replaces the F405) | RMRC | 1 | 141.44 | TP-2, TP-3 logger |
+| W01 | RDQ 4S 2800 (replaces the Tattu). **Order only after the CAD tray fit** | RDQ | 2 | 54.99 | TP-1, TP-2 |
+| T1 | 6061-T6511 bar 1.75 x 2.5 x 12 in | Alcobra | 1 | 49.41 | hub, spare blank, TP-4 / TP-5 sleeves, rig cheek plates |
+| T2 | CF sheet 0.5 mm 200 x 300 | Amazon | 1 | 15.98 | FIN-005, N2, C-4 |
+| T3 | Glass 1080 1.45 oz 50 in | Wicks | 3 yd | 6.46 | skin (2-ply), TP-8, bond scrim |
+| T4 | US Composites 635 + 556 epoxy 16 + 8 oz | US Composites | 1 | 20.20 | skin, all bonds, all coupons |
+| T5 | CF strip 3 x 1 mm 1 m | RMRC | 2 | 2.02 | cove strip |
+| T6 | APT UHMW tape 1 in x 5 yd 10 mil | Amazon | 1 | 14.99 | pad face, TP-9 |
+| T7 / T8 | EVA 1/2 in sheet; closed-cell PE 1/2 in roll | Amazon | 1 + 1 | 23.79 / 24.69 | TP-3 (third candidate: packing PE, $0) |
+| T9 | Nano clone (HX711 logger to the laptop) | Amazon | 1 | 13.99 | TP-1, TP-9, rig |
+| T10 | Lever-rig hardware (M8 rod, bolts, nuts), EST | Local | 1 | 8.00 | TP-4 to TP-7 fallback rig |
+| R14 | 3 mm CF rod (price found) | RMRC | 1 | 2.30 | pins |
+| R03 | ELEGOO PETG 1 kg (replaces Prusament) | Amazon | 1 | 12.99 | all PETG parts, C-1 |
+| G02 / G05 | re-priced: 2 generic 10 kg cell + HX711 sets, caliper, 0.01 g scale, IR thermometer ($45.15); anemometer ($12.99) | Amazon | 1 / 1 | — | TP-1, TP-9, wind |
+
+Removed: B01 / B02 (R1 bench), B05 (SparkFun group), ADXL375, reamers, PETG cover sheet (cover printed as drawn), the T-081 5 kN frame, and the 2 oz cloth / West kit / 2.5 in bar / Rockwest plate / US Plastic UHMW / Zoro EVA lines. $0 under AM-015: phones, laptop, Jacobs drills (31/64, 9/16, 41/64 in for the bond bores), clamps, drill press, bandsaw.
+
+Test changes:
+
+| Test | Change |
+|---|---|
+| TP-3 (run first, D-223) | Logger: the H743-Wing IMU (ICM42688 or LSM6DSV, ±16 g) fixed rigidly to the drop mass, ArduPilot raw IMU batch log. **Confirm the rate is >= 1 kHz before the test**; fallback is a ±16 g I2C accelerometer on the Nano (about $5-10 EST). Phone slow-motion gives stroke and rebound. Foams: T7, T8, packing PE. A reading at 16 g saturation is a fail (above A-P5 12 g). |
+| TP-1 | Flight MN2212 spare + APC. rpm from the blade-pass frequency, phone audio FFT (2 blades: 306 Hz at 9,180 rpm), cross-checked by ESC telemetry if available. Logging: laptop. |
+| TP-4 | D-223 interface (doubler s 11-32, tube abs(s) < 11, 45 deg chamfer, build prep), L 32 only, n = 5 push-out + 3 torsion. Sleeves are milled from the T1 offcut and drilled oversize. Rig: ask a Berkeley ME lab for a test-frame loan first. Fallback: plywood lever about 70:1 (20 mm / 1.4 m) on M8 pivots in Al cheek plates, effort read by the 10 kg cell (capacity about 6.9 kN). Calibrate the ratio with known masses and measure the uncertainty u. **Pass: min of 5 >= 4.47 MPa x (1 + u), that is 5.40 kN x (1 + u)**, by break or proof load (3.5 MPa if TP-3 shows zeta <= 0.05, per D-223 s2). Named fallback: credit the 3 mm cross-pins with their own hand and FE rows (analysis, $0). That still needs a CF-wall bearing coupon on the same rig. |
+| TP-5 | Same-detail load-ratio test (tube + tapered doubler + chamfered sleeve), n = 5, D-223 s2 line x (1 + u). Plain short-beam set dropped. Pieces come from the R08 / R09 offcuts (about 0.88 of 0.995 m and 0.38 of 0.45 m: little spare). |
+| TP-6 / TP-7 | Same rig; PETG coupons from the ELEGOO spool; each line x (1 + u). |
+| TP-8 | 1080 cloth + 635 epoxy, 1-ply and 2-ply beams; pass r >= 2.26 (2.56 interim). The 2-ply skin (+27 g) needs no extra purchase; re-run A-P3 and the landing rows at the new mass. |
+| TP-9 | APT 10 mil face, 10 kg cell. |
+
+Open for Dillon: the reserve by definition is $313.54 versus the old $327.43; X7 material is $0 EST; purchase approval; the ME-lab loan request. Budget risk: margin $42.49 (definition) / $28.60 (reserve held); +30 % growth on the unverified lines gives $2,053.09 (G7, information only).
