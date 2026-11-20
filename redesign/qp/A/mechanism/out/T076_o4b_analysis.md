@@ -163,3 +163,78 @@ Proposed CHANGE-LOG text (for the conductor, not written): "D-2xx T-076: C6 hub 
 
 ## Files
 `redesign/qp/A/mechanism/out/T076_o4b_analysis.md` (this), `redesign/qp/A/mechanism/out/T076_data/` (scripts `make_fea_hub_c6.py`, `fea_hub_c6.py`, `t076_main.py`, `t076_traces.py`, `t076_step4.py`, `t076_pin_rows.py`, `t076_modal.py`, `arm_cup_checks_t076.py`, run scripts, all `s1_`-`s4_` outputs, `t076_hub_result_*.json`, `fea/`), `redesign/qp/A/sitl/lua/spin_cap.lua`.
+
+## T-076b (2026-11-19): hot-spot location, one combined hub variant (V1), SITL pitch-use isolation
+
+Status: analysis only, NOT VERIFIED COMPLETE. Nothing committed; no CAD, docs/, CHANGE-LOG, ledger, MASS-GATE or BOM edited. Categories: hub = **FEA** (linear elastic tet10, direct solve; same `fea_hub_c6.py` copy of `structures/fea_hub.py`, mesh settings `S_END=60 SLV_W=1.5 MS=1.1 FIL=2.0 BR_CH=0.8`, loads, PETG 20 MPa EST allowable, KP 2.156, p99 convention as the T-076 C6 run) fed by **rigid-body dynamics** (301 landing combos at 1.64 kg); SITL = **flight dynamics**. All allowables EST as in the sections above. RF limits not relaxed.
+
+### b.0 Answers
+| Item | Result |
+|---|---|
+| Hot-spot location (C6) | The 167-170 MPa spike is in the 1.0 mm web / floor corner (all 14 top cells at x 13.3-14.2, y -5.2 to -6.9). But the **whole-hub p99 (0.94-0.97) is not set by the spike**: 46 % of the 10,584 Gauss points above the 9.28 MPa allowable are in the floor band, 38 % in the block forward of it, so thickening the web alone cannot close it. |
+| V1 (floor 15.0, web 2.5 mm, collar kept) | **Worse than C6: whole-hub p99 RF 0.91 (A) / 0.88 (B)** at the rigid-body demand, 1.64 kg; x1.5 0.61 / 0.59. Spike falls 169 to 55 MPa, p99 rises 9.60 to 10.19 MPa. **STOP rule: < 1.0; not looped.** Mass 21.81 g (+5.71 g on the D-209 hub 16.10 g; +0.37 g on C6). |
+| SITL pitch use 0.61-0.63 | **Not the Lua cap, not mass/CG, not run noise.** Caused by having the battery monitor on in the SITL parameter set (`BATT_MONITOR 4`): with it off the same case gives 0.47 (repeat of T-074, 0.44); with it on 0.62-0.63 whatever `Q_M_BAT_CURR_MAX` (0, 41, 45) or voltage compensation is set. No change to `spin_cap.lua` is indicated. Mechanism inside ArduPilot not identified. |
+
+### b.1 Hot-spot cause (C6, re-solved, `fea_t076b_c6diag_stdout.txt`, `t076b_hub_result_t076c6b.json`)
+The re-solve reproduces the T-076 numbers exactly (whole-hub p99 9.60 / 9.90 MPa, RF 0.966 / 0.937 (A / B); aft zone 1.085 / 1.028; collar 2.21 / 2.19). Governing combo "hard 10 wide + drift .5 y@342". Gauss-point first principal stress attributed to regions (hub frame, mm; floor band = x from the tube-B surface 12.5 to floor + 2 mm, r < bore + 2 mm):
+
+| Region (partition A, MPa) | GP | p99 | max | GP > 9.28 | whole-hub p99 if region removed |
+|---|---|---|---|---|---|
+| collar x > 24 | 233,940 | 3.34 | 16.5 | 74 | 10.29 |
+| aft block / bore wall (floor + 2 to 24) | 87,466 | 9.53 | 17.0 | 1,022 | 9.61 |
+| **floor band (web, floor corner, tube end)** | 36,265 | **24.03** | **169.5** | **4,847** | **8.61** |
+| sleeves outside the block box | 282,977 | 6.39 | 16.0 | 654 | 10.36 |
+| block forward of the floor band | 283,220 | 9.81 | 19.8 | 3,987 | 9.36 |
+
+Partition B has the same ordering (floor band p99 24.20, 5,039 GP over; hub p99 8.87 without it). The 14 highest cells (1.5 mm de-duplicated) are all at x 13.26-14.22 mm, |y| 5.2-6.9, z -6.6 to +3.9: the 1.0 mm web (x 12.5 to 13.5) and the 0.8 mm floor chamfer, under the tube-end annulus (bore r 8). **Answer to (1):** yes, the spike is the thin web at the floor corner (169.5, 98, 59, 52 MPa at x 14.03, 14.02, 13.39, 13.40). It is singular (tied tube end face, sharp re-entrant corners, no mesh-convergence study), but the whole-hub p99 also has a broad floor-band part (p99 24 MPa) and a block part (p99 9.8 MPa) that the web does not set. Even with the floor band removed completely the whole-hub p99 is 8.61 / 8.87 MPa (RF 1.08 / 1.05): little room.
+
+### b.2 Variant V1 and justification
+V1 = C6 collar (12 mm, 24 x 24 box, mouth x 36) with **bore floor kept at X_BR0 15.0** (web over tube B 15.0 - 12.5 = 2.5 mm against C6's 1.0 mm; bore engagement 21.0 mm), bridge-tube forward-end chamfer and matching floor chamfer 0.8 mm kept (D-207). A larger floor-corner radius was **not** added: the carbon bridge tube is 16 x 14 (1.0 mm wall), so the tube-end chamfer / radius cannot exceed about 1.0 mm, and a larger hub radius would leave an unmodelled gap; `BORE_FR` together with the chamfer pair is not a seated geometry in `fea_hub.py`. Tube position equals D-209 (no CG change); CAD, BOM and mass gate not touched.
+
+| V1 (floor 15.0), 1.64 kg | Partition A | Partition B | C6 for reference (A / B) |
+|---|---|---|---|
+| whole-hub p99 MPa (RF) at RB | 10.19 (**0.91**) | 10.52 (**0.88**) | 9.60 (0.97) / 9.90 (0.94) |
+| aft-of-block-face zone p99 (RF) | 11.69 (**0.79**) | 12.15 (**0.76**) | 8.55 (1.09) / 9.02 (1.03) |
+| last 12 mm before mouth / collar p99 (RF) | 4.43 (2.10) | 4.47 (2.08) | 4.20 (2.21) / 4.24 (2.19) |
+| single-element max MPa (singular, info) | 55.1 | 56.1 | 169.5 / 167.2 |
+| whole-hub p99, x1.5 EST factor (RF) | 15.28 (0.61) | 15.78 (0.59) | 14.40 (0.64) / 14.85 (0.62) |
+| aft zone p99, x1.5 (RF) | 17.53 (0.53) | 18.22 (0.51) | 12.82 (0.72) / 13.53 (0.69) |
+
+x1.5 rows are the RB rows times 1.5 (linear model, principal stress scales exactly; check: C6 9.598 x 1.5 = 14.397 matches T-076). V1 attribution (A): floor band p99 21.05, 8,341 of 13,938 GP over; block forward p99 9.68, 3,967 over; hub p99 without the floor band 8.68. Top cells at x 14.86-14.91, |y| 4.9-6.9, just ahead of the floor under the tube-end annulus. Mesh 379,039 tet10, 1,758,939 unknowns, equilibrium 2.2e-10 N. Mass 17,174 mm3 x 1.27e-3 = **21.81 g**.
+
+**Reading:** moving the floor back to 15.0 removes the singular spike (169 to 55 MPa) but costs 1.5 mm of bore engagement; the floor band keeps 8,341 points over the allowable and the whole-hub p99 goes up by 6 %. So the dominant mechanism is the bridge-tube end bearing on the floor and the engagement length (bearing ~ 1/L^2, hand estimate), not the web thickness. **Result < 1.0: stop (not looped).** The x1.5 factor stays far below 1.0 for every variant.
+
+### b.3 Next candidate (not run; for the conductor)
+Both variants say the same: the floor band carries the tube-end transfer, and the tied end face is tension-capable (the epoxy end bond is not, 2.0 MPa EST). Candidate V2, one run: keep **C6 depth** (floor 13.5, engagement 22.5) but lengthen the collar (COL_E 12 to 18, mouth x 42, engagement 28.5 mm; hand bearing ratio (22.5/28.5)^2 = 0.62 of C6) **and** open the tube end off the floor (`BR_GAP` 0.5-1.0 mm, bond on the bore wall only) so the 1.0 mm web is no longer loaded in end bearing / tension. Cost about +2.5 g (EST: 6 mm x 24 x 24 box minus bore at 1.27e-3 g/mm3). Even if the floor band vanished the whole-hub p99 is 8.6-8.9 MPa (RF 1.05-1.08), so a successful V2 needs the block-forward region (p99 9.8 MPa, 3,987 GP over) not to rise; if it does, the block (not the bore) needs a change, or the demand (23-case rigid-body envelope with drift cases) needs a transient run instead of the x1.5 factor.
+
+### b.4 SITL pitch use (row 4, `s4b_*`, runs in `sitl/runs/T076b_*`, git-ignored)
+Case as T-074 S 1.33: `run_fwd.py case=trans mass=1.64 wind=0 hold=25 cruise_s=8 r=1.33 P:Q_M_SPIN_MAX=1.0`, default CG (same as T-074 and T-076), 1.64 kg, 126 s each, three parallel instances. Pitch use = max mean elevon after handover / 20 deg (`fwd_sum.py` l.45); line 0.60.
+
+| Run | Parameters vs T-074 | pitch use 20 | elevon max deg | nz max | handover V m/s | alt gain m | u max | V end |
+|---|---|---|---|---|---|---|---|---|
+| T-074 S 1.33 (recorded) | monitor off, CURR_MAX 41, V comp 16.8 / 13.2 inactive | 0.44 | 9.1 | 1.22 | 13.8 | 30.7 | 0.814 | 16.4 |
+| r1 repeat of T-074 | same | **0.47** | 9.7 | 1.25 | 13.7 | 30.7 | 0.814 | 16.4 |
+| r2 | monitor on (14.92 V), CURR_MAX 41, V comp 16.8 / 13.2 live | 0.59 | 12.0 | 1.55 | 14.6 | 43.9 | 0.887 | 17.2 |
+| r3 | monitor on, CURR_MAX 41, V comp 0 | **0.62** | 12.6 | 1.55 | 13.7 | 31.6 | 0.815 | 17.3 |
+| r4 | monitor on, CURR_MAX 0, V comp 0 | **0.63** | 12.7 | 1.55 | 13.7 | 31.4 | 0.815 | 17.3 |
+| r5 repeat of r3 | monitor on, CURR_MAX 41, V comp 0 | 0.63 | 12.7 | 1.55 | 13.7 | 31.4 | 0.815 | 17.3 |
+| r6 | as r3, monitor reads 16.2 V | 0.58 | 11.7 | 1.43 | 13.8 | 31.5 | 0.814 | 17.0 |
+| T-076 no script, CURR_MAX 45 | monitor on, V comp 0 | 0.61 | 12.3 | 1.54 | 13.8 | 31.6 | 0.814 | 17.3 |
+| T-076 Lua x3 (0.90 to 1.00 ramp) | monitor on, V comp 0 | 0.61-0.63 | 12.4-12.7 | 1.55 | 13.7-13.8 | 30.7-31.7 | 0.814 | 17.3 |
+
+Findings:
+1. **Not the cap.** The Lua runs equal the no-script run at the same parameters (0.61-0.63 each); the cap is 1.000 by the transition at 14.7-14.9 V and the cap run time is 0 s in all runs.
+2. **Not mass or CG.** All runs are 1.64 kg at the default CG; the T-074 repeat (r1) returns 0.47, so the case itself is under the line. Run noise on the T-074 case is 0.03 (0.44 and 0.47); identical-parameter repeats r3 / r5 differ by 0.01 and r4 = r5, so SITL is nearly deterministic at fixed parameters.
+3. **Cause = battery monitor on.** Every run with `BATT_MONITOR 4` is 0.58-0.63 and every run without it 0.44-0.47. `Q_M_BAT_CURR_MAX` 0 / 41 / 45 makes no difference (r3 / r4 / r5), nor does voltage compensation (r2 0.59), but a lower reported voltage lowers it (16.2 V: 0.58). The transition itself (handover 13.7 m/s, alpha 10.5-10.7 deg, u max 0.814, 25.9 A pack) is unchanged; the difference appears after handover, in the cruise pull-out (throttle 0.73 against 0.68, V 18.5 against 17.5 m/s, nz 1.55 against 1.25, elevon -12 against -8 deg). The ArduPilot code path was not read, so the mechanism is unidentified: parameter / plant behaviour, labelled so.
+4. Observation: with the A.param voltage compensation live (r2) the transition differs (handover 14.6 m/s, alt gain 43.9 m, u max **0.887** against a Q_M_SPIN_MAX 1.0, pack 32.8 A) because the plant has no compensation (T-074 check 3 used it off). If the real controller compensates, the cap schedule and entry window need that case; not run further.
+5. **Fix in `spin_cap.lua`: none indicated** (rate limit and schedule do not enter). Judge 0.61-0.63 as the 0.60 line plus 0.02-0.03 within the 0.03 noise, with the battery monitor on; a pass on the 0.60 line is not shown, so F-4 stays open. The T-074 value 0.44-0.47 was measured with the monitor off, which the flight controller will not be.
+6. Process note: the first batch of three runs was invalid (machine slept 17:54-23:00, plant socket timeout; kept in `s4b_failed_sleep/`), and the first C6 re-solve was killed by the 7200 s MATLAB timeout over the same sleep (`fea_t076b_c6diag_sleep_timeout.err`); both were repeated after keep-awake.
+
+### b.5 Commands, exit codes, wall times
+| # | Command (cwd T076_data) | Exit | Wall |
+|---|---|---|---|
+| 1 | `run_t076b_c6diag.sh`: `LAND_MASS_KG=1.64 python -I t076b_run.py --tag t076c6b --p S_END=60 SLV_W=1.5 MS=1.1 FIL=2.0 BR_CH=0.8 COL_E=12 X_BR0=13.5 X_HUB1=36` (cached mesh; caches the 301 combos in `fea/land164_combos.npz`) | 0 | 821 s (first try killed by sleep) |
+| 2 | `run_t076b_v1.sh`: same with `X_BR0=15.0` (`--tag t076bv1`, new mesh) | 0 | 809 s (stated expectation 30 min; machine uncontended) |
+| 3 | `run_t076b_sitl1.sh` (r1-r3), `run_t076b_sitl2.sh` (r4-r6), each `run_fwd.py ... inst=0..2` | 0 | 126-127 s each |
+
+Outputs: `t076b_run.py`, `fea_t076b_c6diag_stdout.txt`, `t076b_hub_result_t076c6b.json` (= `..._c6_rerun.json`), `fea_t076b_v1_stdout.txt`, `t076b_hub_result_t076bv1.json`, `fea/hub_mesh_L0_t076bv1_*.npz` (git-ignored, regenerable), `s4b_sum_*.json`, `s4b_parm_*.parm`, `s4b_batch*.log`. Limits: tied bore bond (tension-capable end face), straight collar, isotropic EST PETG, no mesh convergence (singular edges), partition B hub-group path assumed, x1.5 an EST factor, p99 over all hub Gauss points (adding low-stress collar volume lowers it, so zone values are shown too).
