@@ -3,7 +3,7 @@
 Source: https://jacobsinstitute.berkeley.edu/our-spaces-at-a-glance/labs-and-equipment/ (read 2026-11-20 in the
 built-in browser; all sections expanded). Access: Maker Pass (paid outside the $2,000 budget), semesterly safety
 training. Plus Dillon 2026-11-20: the team's own lab has a manual knee mill (Kent USA, Bridgeport-style, photo).
-Material costs, per-machine training and booking rules: "—" (not on the page).
+Material costs, per-machine training and booking rules: not on the page. Dillon 2026-11-20: Tormach training is needed and is included in the Maker Pass; he believes Jacobs machine materials (e.g. X7 filament) are not charged: budget them at $0 EST, to be confirmed before the build.
 
 | Machine | Where | Use for concept A (proposal, not decided) |
 |---|---|---|
