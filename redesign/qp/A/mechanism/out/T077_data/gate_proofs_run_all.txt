@@ -8,11 +8,11 @@ redesign/qp/A/proofs/claims.a1_flight.json: 36 claims
   CL-A-MASS-USER               1.615 kg   margin +94%
   CL-A-CUTS-REQUIRED              171 g   margin -311%   FAILS
   CL-A-STRUCT-MASS              483.6 g   margin +2%
-  CL-A-CG                      29.72 mm   margin +56%
-  CL-A-CG-HI                   29.72 mm   margin -14%   FAILS
-  CL-A-CG-TRIM-AFT             31.65 mm   margin -11%   FAILS
-  CL-A-CG-TRIM-FWD             28.57 mm   margin +50%
-  CL-A-SM                 4.481 % chord   margin -10%   FAILS
+  CL-A-CG                       27.7 mm   margin +46%
+  CL-A-CG-HI                    27.7 mm   margin -7%   FAILS
+  CL-A-CG-TRIM-AFT             29.62 mm   margin -4%   FAILS
+  CL-A-CG-TRIM-FWD             26.54 mm   margin +40%
+  CL-A-SM                 5.307 % chord   margin +6%
   CL-A-CG-LATERAL              1.928 mm   margin +61%
   CL-A-TW-FRESH-GATE              2.338   margin +17%
   CL-A-TW-SAG-GATE                1.848   margin +16%
@@ -116,14 +116,13 @@ redesign/qp/A/proofs/claims.a3_program.json: 14 claims
   ERROR: STRICT A-P1: CL-A-MASS-GATE-ROOM: FAILS: margin -9.8% (1.615 kg vs <= 1.47 kg)
   ERROR: STRICT A-D3: CL-A-MASS-PRED: FAILS: margin -9.8% (1.615 kg vs <= 1.47 kg)
   ERROR: STRICT A-P3: CL-A-WINDOW-PRED: FAILS: margin -88.0% (0.6011 % vs >= 5 %)
-  ERROR: STRICT A-P4: CL-A-CG-HI: FAILS: margin -14.3% (29.72 mm vs <= 26 mm)
+  ERROR: STRICT A-P4: CL-A-CG-HI: FAILS: margin -6.5% (27.7 mm vs <= 26 mm)
   ERROR: STRICT A-P13: CL-A-FLUTTER-ELEVON-NOM is UNVERIFIED
   ERROR: STRICT CL-A-MASS-PRED: FAILS: margin -9.8% (1.615 kg vs <= 1.47 kg)
   ERROR: STRICT CL-A-MASS-GATE-ROOM: FAILS: margin -9.8% (1.615 kg vs <= 1.47 kg)
   ERROR: STRICT CL-A-CUTS-REQUIRED: FAILS: margin -311.0% (171 g vs <= 41.6 g)
-  ERROR: STRICT CL-A-CG-HI: FAILS: margin -14.3% (29.72 mm vs <= 26 mm)
-  ERROR: STRICT CL-A-CG-TRIM-AFT: FAILS: margin -11.0% (31.65 mm vs <= 28.5 mm)
-  ERROR: STRICT CL-A-SM: FAILS: margin -10.4% (4.481 % chord vs >= 5 % chord)
+  ERROR: STRICT CL-A-CG-HI: FAILS: margin -6.5% (27.7 mm vs <= 26 mm)
+  ERROR: STRICT CL-A-CG-TRIM-AFT: FAILS: margin -3.9% (29.62 mm vs <= 28.5 mm)
   ERROR: STRICT CL-A-WINDOW-PRED: FAILS: margin -88.0% (0.6011 % vs >= 5 %)
   ERROR: STRICT CL-A-WINDOW-MASS: FAILS: margin -8.4% (1.478 kg vs >= 1.615 kg)
   ERROR: STRICT CL-A-CRUISE-AVAIL: FAILS: margin -1.1% (202.3 s vs >= 204.6 s)
@@ -133,7 +132,7 @@ redesign/qp/A/proofs/claims.a3_program.json: 14 claims
   ERROR: STRICT CL-A-HORN-BEARING-STALL: FAILS: margin -83.2% (36.65 MPa vs <= 20 MPa)
   ERROR: STRICT CL-A-LINKAGE-FREEPLAY: FAILS: margin -28.0% (1.28 deg vs <= 1 deg)
 concept-a: 4 claims files, 555 nodes, 1174 edges -> redesign/qp/A/proofs/out/
-  status: UNVERIFIED 220, PROPOSED 17, CHECKED 318, VERIFIED 0; fails 20
+  status: UNVERIFIED 220, PROPOSED 17, CHECKED 318, VERIFIED 0; fails 19
   warning: CL-A-HORN-RIB-COUPON: has a limit, but its value '-' is not a number, so pass / fail is not judged
   warning: CL-A-HORN-STALL-STEP: has a limit, but its value '-' is not a number, so pass / fail is not judged
   warning: CL-A-ELEVON-TORSION-COUPON: has a limit, but its value '-' is not a number, so pass / fail is not judged

@@ -67,3 +67,43 @@ D-223 (T-077 partial, 2026-11-20): RDQ 2,800 mAh pack (107 x 33 x 46 mm, 270 g) 
 
 ## 8. Limits
 Tray strength not re-checked on the drawn windows (T-073 numbers were 50 % / 1.2 mm ribs); orientation and print-basis values are EST (T-067); 6061, Onyx, glass values not used (those parts not drawn); lead exit height at mid thickness is EST (RDQ page does not give it); strap and lead extensions have no price ("-").
+
+---
+# Part 2 (2026-11-20, after conductor commit 77f3a8dd). PARTIAL again. Not VERIFIED COMPLETE. Nothing committed.
+
+## P2.0 What was and was not done
+Done: (a) ladder rung 1 for the CG: pack moved 10 mm forward (centre -20 mm, the QP-4 position) in the bay/tray; (b) `mission_gate_a.py --o4b` switch; (c) strap and lead-extension BOM text (proposed below); (d) all gates re-run.
+**NOT drawn (unchanged from part 1 s3):** Al hub (D-220) and sleeves L 32, D-222 arm-tube exit (staggered tapered doubler, sleeve-mouth chamfer, conduits), glass skin shell, X7 centre node, waterjet CF saddle clamshell, R2 bosses (avionics plate AVN-001 still drawn), R3fix cups, R4 clamps, Kakute H743-Wing part.
+Reasons, stated plainly: (1) the hub body is an OpenCASCADE mesh (`hub_body.py`, cached `hub_body_cache.npz`); **pythonocc / cadquery are not installed here (`No module named 'OCC'`)**, so a hub with sleeve L 32 or octagonal sleeves cannot be regenerated, and an Al hub from primitives would also change pins, doublers, cups, conduits, `fea_hub.py` constants and the lead-exit holes together; (2) R2 and the H743 move the FC / ESC pad coordinates that every wire (E-HRN-02..11) and the cover (roof 45 mm over a 30 x 25 board, now 45 x 30) depend on; (3) skin, node, clamshell need new parts with edges, assembly steps and drawings. Doing them half-way would break the 3-D gates, so I stopped before editing instead of leaving a failing tree. Each is a separate implementer task; suggested order: install OCC (or write the hub from prisms), then hub + D-222 together, then R2 + H743, then skin / node / clamshell.
+Kakute H743-Wing part name to use when drawn (CAD rule): "Flight controller Holybro Kakute H743-Wing, 45 x 30 x 13.5 mm (V docs.holybro.com, 2026-11-20), M2 25 x 25 mm, 28 g with USB extender; hole diameter -, PCB thickness -, connector and header heights -".
+
+## P2.1 CG and SM (CAD as drawn now, A-P4 band 19.3..26.0 mm, SM limit 5 %)
+| State | Basic g | CG x mm | SM % chord | Verdict |
+|---|---|---|---|---|
+| part 1 (pack centre -10) | 1,402.8 | 29.72 | 4.48 | fail CG band and SM |
+| **part 2 rung 1 (pack centre -20)** | 1,402.8 | **27.70** | **5.31** | SM passes; **CG-HI 27.7 vs 26 fails (-6.5 %)**; CL-A-CG-TRIM-AFT 29.62 vs 28.5 fails |
+(`sitl/cad_mass.json`, `mission_gate_a.py --o4b`; NP 40.7 mm from the script.) `build_a.py` check now PASSES (CG inside its 4..29 mm band).
+Rung 1 is exhausted: the front lip is at x -44.5..-42.5 on the root pad, the hub face is at x -45 (no further room); the +10 / -6 mm trim travel is unchanged, so the aft trim end is +10 mm of pack = +1.9 mm CG.
+**Rung 2 (avionics / ESC forward), estimate only, not drawn:** the plate may start at about x 31 (pack aft edge at +10 trim is now 6.5 mm; cover starts 22.5). FC + ESC + GPS + RX + plate + cover are about 100 g; moving them 10-20 mm forward is 1,000-2,000 g mm = -0.7 to -1.4 mm of CG.
+**Undrawn items, EST (g mm about the 27.7 mm CG, 1,403 g):** Al hub +11 g at x -65 = -1,040 (-0.7 mm); R2 (plate 17.9 g -> bosses about 3 g at x 92) = -960 (-0.7 mm); R3fix cups -11.2 g at x -73 = +1,130 (+0.8 mm); glass skin plus cove strip about 30 g at x 70 = +1,270 (+0.9 mm); H743 vs F405 +11 g at x 60 = +360 (+0.3 mm); net about +0.6 mm. All EST: skin mass is 48 g/m2 x about 0.32 m2 x 2 (resin) from the wing area, not from drawn volume.
+**Projection:** 27.7 + 0.6 - (0.7..1.4 rung 2) = 26.9..27.6 mm. **Rearranging cannot close it to 26.0 mm.** The residual 0.9-1.6 mm is 1,300-2,300 g mm. Ladder rung 3 (geometry), numbers: each fin root block FIN-003 is 18.9 g at x 283 mm (lever 255 mm): -4 g per block = -2,040 g mm = -1.5 mm CG (T-080's X7 Onyx variant gives -4 to -8 g for the pair: -0.7 to -1.4 mm); each foot shoe 4.55 g at x 298 (lever 270): -1 g on all four = -1,080 g mm = -0.8 mm; the saddles FIN-005 14.4 g each at x 67 are forward of the CG and do not help. No ballast, A-P4 band unchanged, as instructed. I stop here per the rule and report the options; the choice (X7 fin blocks and a lighter shoe, or a pack-length / hub geometry change) is the conductor's.
+
+## P2.2 Gates (re-run after the last edit; `gates_summary.txt`; part-1 outputs kept in `part1_gates/`)
+| Gate | Exit | Time | Result |
+|---|---|---|---|
+| build_a.py | **0** | 14 s | check PASS, 10 modules, 0 warnings, 1,403 g, CG 27.7 mm |
+| collide_a (A_ELEV_POSE=21) | 0 | 153 s | PASS, 0 pairs > 0.05 mm static / -21 / +21 |
+| collide_a --linkage-poses | 0 | 254 s | PASS, 18 poses |
+| a_assembly.py | 0 | 1745 s | 66 steps, 115/115 placed, 0 blocked or unsupported |
+| wire_inventory | 0 | 9 s | exposed 0.504 strand-m (HEAD 0.448); E-HRN-13 131 mm per strand, E-HRN-14 63.5 mm |
+| cad_mass | 0 | 6 s | 1.40283 kg, CG 27.70 mm |
+| mission_gate_a.py (default) | 0 | 1 s | output unchanged from before |
+| mission_gate_a.py --o4b | 0 | 1 s | RDQ 2800 (41.4 Wh, 784 mAh left at BATT_LOW); CAD basic 1,402.8 g, CG 27.70 mm, SM 5.31 %. Its mass roll-up table (the 1.466 kg rows) is still the old item list, so the energy rows use that mass, not 1.40 / 1.64 kg: not edited |
+| proofs/run_all.py | 1 (strict) | 1 s | fails 19 (was 20). Known: 5 FAILS + A-P13 unverified. New or still failing from the mass adoption: MASS-PRED and MASS-GATE-ROOM 1.615 vs 1.47 kg, CUTS-REQUIRED 171 g, CG-HI 27.7 vs 26, CG-TRIM-AFT 29.62 vs 28.5, WINDOW-PRED, WINDOW-MASS, CRUISE-AVAIL 202.3 vs 204.6 s. CL-A-SM now passes |
+Collision of the redrawn conduits: not applicable (conduits not redrawn).
+
+## P2.3 Strap and lead extension as real items (proposed BOM text; BOM-A.csv NOT edited)
+Exposed run now 131 mm per strand (pack 10 mm further forward) against the 80 mm vendor lead: extension 51 mm of 14 AWG per strand, or move the XT60 pair 51 mm forward (then the battery tail E-HRN-12 grows by the same and is exposed on the skin: rejected, more exposed wire).
+- W01 (change): "RDQ Series 14.8 V 4S 2800 mAh 100C XT60, 107 x 33 x 46 mm, 270 g +-1 %, XT60 lead 80 mm, JST-XH balance 35 mm; Race Day Quads $54.99, in stock, ground shipping only; page read 2026-11-19 (T079 addendum)". Qty and spares as the board set them.
+- W08 (change): "Pack strap 20 mm webbing, buckle, length >= 385 mm (drawn loop 354 mm inner + 30 mm overlap, EST; the STRIX 20 x 300 mm listing is 85 mm too short). Source and price: - (not looked up; suggestion: any 20 mm battery strap sold in 400 mm or longer)". CAD mass 7.0 g (EST, 5.5 g x 385/300).
+- New W10 (add): "Pack lead extension: 2 x 55 mm 14 AWG silicone (red + black; from W05 stock, 0.11 m), 2 solder splices with 3 mm heat-shrink (W05 kit), 0 extra purchase; about 1 g". Not drawn as a part (the CAD draws the full 131 mm run as the wires E-HRN-13); splice location on the exposed run, 3 mm.

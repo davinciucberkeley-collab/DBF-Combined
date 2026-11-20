@@ -1,7 +1,7 @@
 {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-20 22:33 UTC",
+  "generated": "2026-11-20 23:16 UTC",
   "dataset": "concept-a",
   "ok": false,
   "errors": [
@@ -9,14 +9,13 @@
    "STRICT A-P1: CL-A-MASS-GATE-ROOM: FAILS: margin -9.8% (1.615 kg vs <= 1.47 kg)",
    "STRICT A-D3: CL-A-MASS-PRED: FAILS: margin -9.8% (1.615 kg vs <= 1.47 kg)",
    "STRICT A-P3: CL-A-WINDOW-PRED: FAILS: margin -88.0% (0.6011 % vs >= 5 %)",
-   "STRICT A-P4: CL-A-CG-HI: FAILS: margin -14.3% (29.72 mm vs <= 26 mm)",
+   "STRICT A-P4: CL-A-CG-HI: FAILS: margin -6.5% (27.7 mm vs <= 26 mm)",
    "STRICT A-P13: CL-A-FLUTTER-ELEVON-NOM is UNVERIFIED",
    "STRICT CL-A-MASS-PRED: FAILS: margin -9.8% (1.615 kg vs <= 1.47 kg)",
    "STRICT CL-A-MASS-GATE-ROOM: FAILS: margin -9.8% (1.615 kg vs <= 1.47 kg)",
    "STRICT CL-A-CUTS-REQUIRED: FAILS: margin -311.0% (171 g vs <= 41.6 g)",
-   "STRICT CL-A-CG-HI: FAILS: margin -14.3% (29.72 mm vs <= 26 mm)",
-   "STRICT CL-A-CG-TRIM-AFT: FAILS: margin -11.0% (31.65 mm vs <= 28.5 mm)",
-   "STRICT CL-A-SM: FAILS: margin -10.4% (4.481 % chord vs >= 5 % chord)",
+   "STRICT CL-A-CG-HI: FAILS: margin -6.5% (27.7 mm vs <= 26 mm)",
+   "STRICT CL-A-CG-TRIM-AFT: FAILS: margin -3.9% (29.62 mm vs <= 28.5 mm)",
    "STRICT CL-A-WINDOW-PRED: FAILS: margin -88.0% (0.6011 % vs >= 5 %)",
    "STRICT CL-A-WINDOW-MASS: FAILS: margin -8.4% (1.478 kg vs >= 1.615 kg)",
    "STRICT CL-A-CRUISE-AVAIL: FAILS: margin -1.1% (202.3 s vs >= 204.6 s)",
@@ -48,7 +47,7 @@
     "UNVERIFIED": 220,
     "PROPOSED": 17
    },
-   "fails": 20
+   "fails": 19
   },
   "files": [
    "redesign/qp/A/proofs/claims.a0_base.json",
@@ -797,9 +796,9 @@
    "ref": "qp/A/REQUIREMENTS-A.md#a-p4",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
-    "CL-A-CG-HI: FAILS: margin -14.3% (29.72 mm vs <= 26 mm)",
-    "CL-A-CG-TRIM-AFT: FAILS: margin -11.0% (31.65 mm vs <= 28.5 mm)",
-    "CL-A-SM: FAILS: margin -10.4% (4.481 % chord vs >= 5 % chord)"
+    "CL-A-CG-HI: FAILS: margin -6.5% (27.7 mm vs <= 26 mm)",
+    "CL-A-CG-TRIM-AFT: FAILS: margin -3.9% (29.62 mm vs <= 28.5 mm)",
+    "CL-A-SM is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "fails": true,
@@ -1558,11 +1557,11 @@
    },
    "outputs": {
     "shift_mm": 1.9246808237633928,
-    "fwd_mm": 28.566688764853904,
-    "aft_mm": 31.64617808287533
+    "fwd_mm": 26.542275257871587,
+    "aft_mm": 29.621764575893014
    },
    "input_values": {
-    "cg": 29.72149725911194,
+    "cg": 27.697083752129622,
     "pack": 270.0,
     "trim": 10.0,
     "trim_fwd": 6.0,
@@ -1592,11 +1591,11 @@
     "ASM-A-NP"
    ],
    "outputs": {
-    "sm_pct": 4.4810215268930875
+    "sm_pct": 5.307312754232808
    },
    "input_values": {
     "np": 40.7,
-    "cg": 29.72149725911194,
+    "cg": 27.697083752129622,
     "c": 245.0
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
@@ -1614,10 +1613,10 @@
     "v": "P:mass.cg_x_mm"
    },
    "outputs": {
-    "v": 29.72149725911194
+    "v": 27.697083752129622
    },
    "input_values": {
-    "v": 29.72149725911194
+    "v": 27.697083752129622
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1645,10 +1644,10 @@
     "WNG-002"
    ],
    "how": "CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.",
-   "value": 29.72149725911194,
+   "value": 27.697083752129622,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.5642893294269441,
+   "margin": 0.4577412501120854,
    "importance": 1
   },
   {
@@ -1662,10 +1661,10 @@
     "v": "P:mass.cg_x_mm"
    },
    "outputs": {
-    "v": 29.72149725911194
+    "v": 27.697083752129622
    },
    "input_values": {
-    "v": 29.72149725911194
+    "v": 27.697083752129622
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1691,13 +1690,13 @@
     "CGE-008"
    ],
    "how": "CG breadboard (M5); band 19-26 mm (D-195), hard aft limit 28.5 mm.",
-   "value": 29.72149725911194,
+   "value": 27.697083752129622,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -14.3% (29.72 mm vs <= 26 mm)"
+    "FAILS: margin -6.5% (27.7 mm vs <= 26 mm)"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.1431345099658438,
+   "margin": -0.06527245200498545,
    "fails": true,
    "importance": 1
   },
@@ -1721,13 +1720,13 @@
     "CGE-008"
    ],
    "how": "Slide the pack to the aft slot stop and re-measure CG (M5).",
-   "value": 31.64617808287533,
+   "value": 29.621764575893014,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -11.0% (31.65 mm vs <= 28.5 mm)"
+    "FAILS: margin -3.9% (29.62 mm vs <= 28.5 mm)"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.11039221343422212,
+   "margin": -0.03936016055764961,
    "fails": true,
    "importance": 1
   },
@@ -1751,10 +1750,10 @@
     "CGE-008"
    ],
    "how": "Slide the pack to the forward slot stop and re-measure CG (M5).",
-   "value": 28.566688764853904,
+   "value": 26.542275257871587,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.5035099349923108,
+   "margin": 0.39696185567745196,
    "importance": 1
   },
   {
@@ -1779,17 +1778,15 @@
    "assumes": [
     "ASM-A-NP"
    ],
-   "value": 4.4810215268930875,
+   "value": 5.307312754232808,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -10.4% (4.481 % chord vs >= 5 % chord)",
     "uses ASM-A-NP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-A-NP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-A-NP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.1037956946213825,
-   "fails": true,
+   "margin": 0.061462550846561645,
    "importance": 1
   },
   {
@@ -8223,7 +8220,7 @@
    "type": "parameter",
    "title": "mass.cg_x_mm",
    "file": "redesign/qp/A/params-A.json",
-   "value": 29.72149725911194,
+   "value": 27.697083752129622,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_x_m, aft of the wing leading edge",

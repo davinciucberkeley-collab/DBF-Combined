@@ -18,4 +18,4 @@
   linkage zj=mid delta +20 deg                        0 part pairs penetrate > 0.05 mm
   linkage zj=mid delta +21 deg                        0 part pairs penetrate > 0.05 mm
   wire ends not on a termination: 0; wire folds: 0
-collide_a --linkage-poses: PASS (496 bodies in 115 parts, 18 poses, 246 s)
+collide_a --linkage-poses: PASS (496 bodies in 115 parts, 18 poses, 248 s)

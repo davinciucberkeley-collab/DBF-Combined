@@ -32,7 +32,7 @@ max mass T/W sag 1.6: 2.006 kg
 max mass T/W sag 1.6 capped: 1.698 kg
 mass for +-5 % window uncapped: 1.747 kg
 mass for +-5 % window capped: 1.478 kg
-Pack 34.0 Wh, usable after 0.90 floor and 20 % reserve 24.5 Wh; BATT_LOW remaining = 644 mAh of 2300
+Tattu 2300 pack 34.0 Wh, usable after 0.90 floor and 20 % reserve 24.5 Wh; BATT_LOW remaining = 644 mAh of 2300
 m 1.466: hover 213 W 10.65 Wh (180 s incl 40 s go-around); trans 1.73; climb 0.31; cruise 167 W 9.51 Wh; total 22.20 Wh; pack margin 1.10x; hover pack 14.4 A; max cruise to BATT_LOW 254 s = 4.24 min (need 3.41); spare laps (150 m leg) 1.4
 m 1.44: hover 207 W 10.37 Wh (180 s incl 40 s go-around); trans 1.68; climb 0.30; cruise 166 W 9.42 Wh; total 21.77 Wh; pack margin 1.13x; hover pack 14.0 A; max cruise to BATT_LOW 264 s = 4.40 min (need 3.41); spare laps (150 m leg) 1.6
 m 1.455: hover 211 W 10.53 Wh (180 s incl 40 s go-around); trans 1.71; climb 0.31; cruise 167 W 9.47 Wh; total 22.02 Wh; pack margin 1.11x; hover pack 14.2 A; max cruise to BATT_LOW 258 s = 4.31 min (need 3.41); spare laps (150 m leg) 1.5

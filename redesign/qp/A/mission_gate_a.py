@@ -56,8 +56,10 @@ hi5 = 1.33*1.05/0.95
 for tag, k in (("uncapped", ("sag",1.0)), ("capped", ("sag",0.9))):
     print(f"mass for +-5 % window {tag}: {th[k]*0.80/hi5/1000:.3f} kg")
 # ---- energy: Tattu 2300 4S ----
-PACK_WH = 2.3*14.8; USABLE = PACK_WH*0.90*0.80
-print(f"Pack {PACK_WH:.1f} Wh, usable after 0.90 floor and 20 % reserve {USABLE:.1f} Wh; BATT_LOW remaining = {2300-USABLE/PACK_WH*2300:.0f} mAh of 2300")
+O4B = '--o4b' in sys.argv      # T-077 part 2: O4b pack (RDQ Series 2800 mAh 4S 100C, 270 g, racedayquads.com read 2026-11-19) and the CURRENT CAD basic mass / CG from sitl/cad_mass.json; default (no flag) unchanged
+PACK_MAH = 2800 if O4B else 2300
+PACK_WH = PACK_MAH/1000*14.8; USABLE = PACK_WH*0.90*0.80
+print(f"{'O4b RDQ 2800' if O4B else 'Tattu 2300'} pack {PACK_WH:.1f} Wh, usable after 0.90 floor and 20 % reserve {USABLE:.1f} Wh; BATT_LOW remaining = {PACK_MAH-USABLE/PACK_WH*PACK_MAH:.0f} mAh of {PACK_MAH}")
 for m in (round(M,3), 1.44, 1.455, 1.46, 1.47, 1.50):
     Ph = pa.hover(m, pa.DER)[4]; Eh = Ph*180/3600; Etr = 1.56*(m/1.37)**1.5; Ecl = 0.29*(m/1.37)
     Pc = 161*(m/1.37)**0.58; Ecr = Pc*cruise_s/3600; E_ = Eh+Etr+Ecl+Ecr
@@ -72,8 +74,14 @@ print("hard landing 1.2 m/s on 6 mm crush: decel g =", round(1.2**2/(2*0.006)/G,
 # CG (QP-4): anchored on the CAD (QP-3 CAD s4): basic 1,204.6 g, CG 16.2 mm aft of LE with the pack centred at x -20 mm. The old 'rest of aircraft 35.7 mm' estimate is withdrawn.
 NP, CHORD = 40.7, 245.0
 CAD_BASIC, CAD_CG, PACK_X = 1273.30, 21.37, -10.0   # 2026-11-19 re-roll (T-025 follow-up): CAD part table 1,273.30 g, CG 21.366 mm (sitl/cad_mass.py run to a scratch file; D-205 hub 6 mm aft and lead -5.6 g, D-206 bridge, D-207 fillets, D-208 pitot, D-212 rev 3 horn/keeper; was 1277.97 / 19.52 at D-202); D-202 hub (continuous arm tubes, doublers, pins, new conduits, bridge 114 mm: +16.7 g, CG -1.0 mm; was 1261.24 / 20.51 at D-200); D-200 fin ribs at the drawn 215.5 mm (-1.4 g); D-199 (raceways + hub conduits +6.8 g, phase extensions -9.7 g, buckle strap +2.5 g, drawn pad +3.5 g, hub slots -0.2 g; was 1259.74 / 21.32 at D-198); D-198 (bay cover +9.6 g, bottom-up harness -22.8 g, cup collars +1.2 g; was 1263.74 / 21.13 at D-196); older: D-196 (hub walls; was 1259.14 / 21.47 at D-195): as-drawn CAD 2026-11-15, cad_mass.json (was 1215.9 / 22.5 at QP-4 FIXES)
+if O4B:
+    import json as _j, os as _o
+    _cm = _j.load(open(_o.path.join(_o.path.dirname(_o.path.abspath(__file__)), 'sitl', 'cad_mass.json')))
+    CAD_BASIC, CAD_CG = _cm['mass_basic_kg']*1000, _cm['cg_x_m']*1000
+    PACK_X = (_cm['pack_x_m'][0] + _cm['pack_x_m'][1])/2*1000
+    print(f"O4b: CAD basic {CAD_BASIC:.1f} g, CG {CAD_CG:.2f} mm from sitl/cad_mass.json (pack centre x {PACK_X:+.1f} mm); fixed NP {NP} mm; SM at the CAD CG {(NP-CAD_CG)/CHORD*100:.2f} % (limits 5..15 %); A-P4 band 19.3..26.0 mm")
 cg = CAD_CG
-for px in (-20.0, -3.0, +7.0):
+for px in (PACK_X-10, PACK_X+7, PACK_X+17) if O4B else (-20.0, -3.0, +7.0):
     print(f"CAD CG with the pack centre at x {px:+.0f} mm: {CAD_CG + 270*(px-PACK_X)/CAD_BASIC:.1f} mm aft of LE, SM {(NP-(CAD_CG + 270*(px-PACK_X)/CAD_BASIC))/CHORD*100:.1f} %")
 print(f"CG {cg:.1f} mm aft of LE, SM {(NP-cg)/CHORD*100:.1f} %; pack 10 mm aft -> CG {cg+270*10/PRED:.1f}")
 print("CG aft limit SM 5 %:", NP-0.05*CHORD, " fwd limit SM 15 %:", NP-0.15*CHORD)

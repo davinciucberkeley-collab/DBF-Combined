@@ -940,7 +940,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -20 deg",
-   "seconds": 6.2,
+   "seconds": 6.1,
    "state": "mid",
    "theta_deg": {
     "L": 21.560355526523868,
@@ -1325,7 +1325,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -18 deg",
-   "seconds": 6.2,
+   "seconds": 6.1,
    "state": "mid",
    "theta_deg": {
     "L": 19.40480618852609,
@@ -1708,7 +1708,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -15 deg",
-   "seconds": 5.4,
+   "seconds": 5.3,
    "state": "mid",
    "theta_deg": {
     "L": 16.169388949464764,
@@ -2474,7 +2474,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -9 deg",
-   "seconds": 6.1,
+   "seconds": 6.7,
    "state": "mid",
    "theta_deg": {
     "L": 9.697842512536054,
@@ -2857,7 +2857,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -6 deg",
-   "seconds": 5.8,
+   "seconds": 5.9,
    "state": "mid",
    "theta_deg": {
     "L": 6.463845794048801,
@@ -3240,7 +3240,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -3 deg",
-   "seconds": 5.1,
+   "seconds": 5.0,
    "state": "mid",
    "theta_deg": {
     "L": 3.231395902628032,
@@ -5536,7 +5536,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +15 deg",
-   "seconds": 6.0,
+   "seconds": 6.1,
    "state": "mid",
    "theta_deg": {
     "L": -16.203607404214964,
@@ -5919,7 +5919,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +18 deg",
-   "seconds": 4.9,
+   "seconds": 5.0,
    "state": "mid",
    "theta_deg": {
     "L": -19.476811045379947,
@@ -6302,7 +6302,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +20 deg",
-   "seconds": 6.9,
+   "seconds": 6.8,
    "state": "mid",
    "theta_deg": {
     "L": -21.671373889774635,
@@ -6685,7 +6685,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +21 deg",
-   "seconds": 11.4,
+   "seconds": 11.3,
    "state": "mid",
    "theta_deg": {
     "L": -22.773219907759124,
@@ -6694,7 +6694,7 @@
   }
  ],
  "report_mm": 0.01,
- "seconds": 246.2,
+ "seconds": 247.5,
  "states": [
   "mid"
  ],

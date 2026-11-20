@@ -28,7 +28,7 @@ HUB_ARM_R0 = R_IN - 0.002                   # arm socket floor (2 mm)
 HUB_ARM_R1 = R_IN + HUB_SOCK                # open mouth of the arm socket (r 56.2 mm)
 HUB_SPOKE_D = 0.022                         # radial web depth along x (sleeve to socket), one wall (HUB_W) thick
 HUB_STRUT_S = (-0.017, 0.032)               # strut socket: from 17 mm behind the strut end (web to the bridge sleeve) to 32 mm ahead (30 mm socket)
-PACK_XL_, PACK_ZL_ = 0.0015, 0.009 + 0.0230   # lead exit x and z (= electrical.PACK_XL, PACK_ZL; keep equal)
+PACK_XL_, PACK_ZL_ = PACK_X[1] - 0.0050, 0.009 + 0.0230   # lead exit x and z (= electrical.PACK_XL, PACK_ZL; keep equal)
 CUP_PAT = (0.019, 0.016)                    # MN2212 mounting pattern 19 mm (along the arm, y) x 16 mm (z): retailers list 16x19 and 19x25 (getfpv MN2212 V2.0 page, search 2026-11-15; T-Motor drawing: 4-M2.5 on 19 x 16 (read 2026-11-15); cup holes M2.5 clearance 2.9 mm, D-194)
 CUP_R = 0.006                               # plate corner radius (EST)
 CUP_FIL = 0.001                             # D-210: fillet on the cup's sleeve-to-plate junction (the FEA's S2 / S3 hotspot was the sharp corner)
