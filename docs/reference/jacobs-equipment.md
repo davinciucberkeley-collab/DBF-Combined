@@ -19,6 +19,7 @@ Material costs, per-machine training and booking rules: "—" (not on the page).
 | 4 x 8 ft ShopBot PRSalpha CNC router | makerspace | foam cores, ply / plate parts, templates |
 | Universal laser cutters (3 x 32 x 18 in, 1 x 48 x 25 in) | makerspace | ply, acrylic, templates, jigs |
 | Prusa printers (PLA, free), LulzBot TAZ 6 (1.2 mm nozzle) | makerspace | non-structural printed parts, jigs |
+| Team printer with PETG (Dillon 2026-11-20) | team | all PETG parts |
 | Vacu-former (to 1/4 in) | makerspace | thermoformed bay cover (T-070 R-list) |
 | DIWire wire bender | makerspace | pushrods, Z-bends |
 | Clausing drill press, bandsaws, belt sanders, 20 t press, TIG welding | Metal shop | general |
