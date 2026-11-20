@@ -217,3 +217,13 @@ reserve kept, AM-012/AM-013), using any model to troubleshoot. Requirement IDs: 
 ```text
 I do not believe that we have any of those available, so you must find a way to stay under budget, use whatever model to troubleshoot this
 ```
+
+## AM-015 — 2026-11-20 — Resume; team phones/laptop and shop tools are free
+Relation: resumes the program after the 2026-11-20 pause and answers the T-082 question. The team's own phones and
+laptop may be used for testing (e.g. slow-motion video, data logging) at $0, and Jacobs shop tools (drill bits,
+clamps, drill press and similar) are free to use; they are not budget lines. Materials still are (AM-014).
+Requirement IDs: R-GEN-02, R-OPT-02.
+
+```text
+Resume. The team can use its own phones and laptop for testing and the shop tools are free
+```
