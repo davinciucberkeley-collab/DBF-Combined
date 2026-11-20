@@ -131,3 +131,7 @@ redesign/qp/A/structures/out_fea/sys/
 redesign/qp/A/structures/out_fea/hub_*.glb
 redesign/qp/A/structures/fig/*.raw.png
 redesign/qp/A/cad/out/_job_linkage_poses*.json
+
+# T-076 regenerable FEA meshes and SITL traces (re-run the commands in T076_o4b_analysis.md)
+redesign/qp/A/mechanism/out/T076_data/fea/*.npz
+redesign/qp/A/mechanism/out/T076_data/*.pkl
