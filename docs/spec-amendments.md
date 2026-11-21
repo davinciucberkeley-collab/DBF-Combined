@@ -239,3 +239,14 @@ Requirement IDs: R-OPT-05, R-CAD-03.
 ```text
 Stronger wing, bench test decides
 ```
+
+## AM-017 — 2026-11-21 — Configuration study after T-077 part 8
+Relation: answers the question after T-077 part 8 (D-226 drawn: mass, CG and budget fail; AM-016 failure branch).
+Dillon approved a configuration study comparing concept A with bigger props/motors, A landing on legs or a skid,
+A with a re-derived touchdown case gated by a drop test, and a re-priced concept B, each with mass, cost and the main
+physics checks. Hard constraints unchanged.
+Requirement IDs: R-OPT-05, R-GEN-02.
+
+```text
+Yes, run study
+```
