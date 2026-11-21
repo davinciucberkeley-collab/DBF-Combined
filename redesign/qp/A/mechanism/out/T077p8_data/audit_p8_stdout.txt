@@ -1,0 +1,10 @@
+WNG-008-RU   listed   3.67  solid   3.71  basis C  computed   3.69  core 0.01
+WNG-008-RL   listed   3.69  solid   3.77  basis C  computed   3.72  core 0.01
+WNG-008-LU   listed   3.67  solid   3.71  basis C  computed   3.69  core 0.01
+WNG-008-LL   listed   3.69  solid   3.77  basis C  computed   3.72  core 0.01
+FIN-003-R    listed  18.90  solid  28.67  basis S  computed  22.86  core 0.34
+FIN-003-L    listed  18.90  solid  28.67  basis S  computed  22.86  core 0.34
+GER-001-UR   listed   4.55  solid   4.99  basis S  computed   4.30  core 0.23
+GER-001-UL   listed   4.55  solid   4.99  basis S  computed   4.30  core 0.23
+GER-001-LR   listed   4.55  solid   4.99  basis S  computed   4.30  core 0.23
+GER-001-LL   listed   4.55  solid   4.99  basis S  computed   4.30  core 0.23

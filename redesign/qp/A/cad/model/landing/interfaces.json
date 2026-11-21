@@ -4,11 +4,11 @@
  "parts": [
   {
    "id": "GER-001-UR",
-   "name": "Foot shoe (UR)",
+   "name": "Foot shoe (UR; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closure s2 recovery, -1 g; mass from printed_mass.json at Onyx 1.20 g/cm3)",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 4.55,
-   "material": "PETG (printed)",
+   "mass_g": 4.3,
+   "material": "Onyx (Markforged X7, printed)",
    "cg_xyz_m": [
     0.2981,
     0.38,
@@ -34,11 +34,11 @@
   },
   {
    "id": "GER-001-UL",
-   "name": "Foot shoe (UL)",
+   "name": "Foot shoe (UL; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closure s2 recovery, -1 g; mass from printed_mass.json at Onyx 1.20 g/cm3)",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 4.55,
-   "material": "PETG (printed)",
+   "mass_g": 4.3,
+   "material": "Onyx (Markforged X7, printed)",
    "cg_xyz_m": [
     0.2981,
     -0.38,
@@ -64,11 +64,11 @@
   },
   {
    "id": "GER-001-LR",
-   "name": "Foot shoe (LR)",
+   "name": "Foot shoe (LR; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closure s2 recovery, -1 g; mass from printed_mass.json at Onyx 1.20 g/cm3)",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 4.55,
-   "material": "PETG (printed)",
+   "mass_g": 4.3,
+   "material": "Onyx (Markforged X7, printed)",
    "cg_xyz_m": [
     0.2981,
     0.38,
@@ -94,11 +94,11 @@
   },
   {
    "id": "GER-001-LL",
-   "name": "Foot shoe (LL)",
+   "name": "Foot shoe (LL; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closure s2 recovery, -1 g; mass from printed_mass.json at Onyx 1.20 g/cm3)",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 4.55,
-   "material": "PETG (printed)",
+   "mass_g": 4.3,
+   "material": "Onyx (Markforged X7, printed)",
    "cg_xyz_m": [
     0.2981,
     -0.38,

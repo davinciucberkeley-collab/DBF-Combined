@@ -18,7 +18,7 @@
   20,
   21
  ],
- "bodies": 517,
+ "bodies": 529,
  "defects": [
   "AVN-008 body \"cover end wall, -y side (0.6 mm; open under the RX hood, T-022 Q4)\": zero-width spike / repeated point in a loop (removed in the export)",
   "WNG-008-LL body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
@@ -32,7 +32,7 @@
  ],
  "flipped_inside_out": 124,
  "kinks": [],
- "parts": 117,
+ "parts": 125,
  "poses": [
   {
    "clear": {},
@@ -213,7 +213,7 @@
    ],
    "moved": null,
    "name": "static",
-   "seconds": 573.6,
+   "seconds": 784.7,
    "state": null,
    "theta_deg": null
   },
@@ -268,6 +268,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "HWC-002-L|WNG-014-L": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "HWC-002-R|MEC-001-R": {
      "a": "M2x8 pan screw shank",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -313,6 +322,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "M2x8 pan screw shank || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "HWC-002-R|WNG-014-R": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -364,6 +382,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "MEC-002-L|WNG-014-L": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "MEC-002-R|MEC-001-R": {
      "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -407,6 +434,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "MEC-002-R|WNG-014-R": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -473,6 +509,16 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "MEC-003-L|WNG-014-L": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.8636,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "MEC-003-R|MEC-001-R": {
      "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -535,6 +581,16 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "MEC-003-R|WNG-014-R": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.8636,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "MEC-004-L|MEC-005-L": {
      "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
      "b": "clevis pin 1.0 mm (EST)",
@@ -569,6 +625,15 @@
       "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 2.2502
      },
      "d_mm": 2.2502,
+     "same_group": false
+    },
+    "MEC-004-L|WNG-014-L": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3409
+     },
+     "d_mm": 2.3409,
      "same_group": false
     },
     "MEC-004-R|MEC-005-R": {
@@ -607,6 +672,15 @@
      "d_mm": 2.2502,
      "same_group": false
     },
+    "MEC-004-R|WNG-014-R": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3409
+     },
+     "d_mm": 2.3409,
+     "same_group": false
+    },
     "MEC-008-L|MEC-001-L": {
      "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -634,6 +708,16 @@
       "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 1.5787
      },
      "d_mm": 1.5787,
+     "same_group": false
+    },
+    "MEC-008-L|WNG-014-L": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper bridge 0.8 mm over the Z-bend (underside = rod top at the hi joint state, 10.20 mm) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.9334,
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.6327
+     },
+     "d_mm": 1.6327,
      "same_group": false
     },
     "MEC-008-R|MEC-001-R": {
@@ -664,6 +748,16 @@
      },
      "d_mm": 1.5787,
      "same_group": false
+    },
+    "MEC-008-R|WNG-014-R": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper bridge 0.8 mm over the Z-bend (underside = rod top at the hi joint state, 10.20 mm) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.9334,
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.6327
+     },
+     "d_mm": 1.6327,
+     "same_group": false
     }
    },
    "delta": -21.0,
@@ -689,7 +783,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -21 deg",
-   "seconds": 14.0,
+   "seconds": 16.6,
    "state": "mid",
    "theta_deg": {
     "L": 22.63742242970439,
@@ -747,6 +841,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "HWC-002-L|WNG-014-L": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "HWC-002-R|MEC-001-R": {
      "a": "M2x8 pan screw shank",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -792,6 +895,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "M2x8 pan screw shank || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "HWC-002-R|WNG-014-R": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -843,6 +955,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "MEC-002-L|WNG-014-L": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0001
+     },
+     "d_mm": 0.0001,
+     "same_group": false
+    },
     "MEC-002-R|MEC-001-R": {
      "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -888,6 +1009,15 @@
       "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
      },
      "d_mm": 0.0,
+     "same_group": false
+    },
+    "MEC-002-R|WNG-014-R": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0002
+     },
+     "d_mm": 0.0002,
      "same_group": false
     },
     "MEC-003-L|MEC-001-L": {
@@ -948,6 +1078,16 @@
      "bodies": {
       "pushrod || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 1.8297,
       "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "MEC-003-L|WNG-014-L": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.8837,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -1014,6 +1154,16 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "MEC-003-R|WNG-014-R": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.8837,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "MEC-004-L|MEC-005-L": {
      "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
      "b": "clevis pin 1.0 mm (EST)",
@@ -1048,6 +1198,15 @@
       "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 2.2502
      },
      "d_mm": 2.2502,
+     "same_group": false
+    },
+    "MEC-004-L|WNG-014-L": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3412
+     },
+     "d_mm": 2.3412,
      "same_group": false
     },
     "MEC-004-R|MEC-005-R": {
@@ -1086,6 +1245,15 @@
      "d_mm": 2.2502,
      "same_group": false
     },
+    "MEC-004-R|WNG-014-R": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3412
+     },
+     "d_mm": 2.3412,
+     "same_group": false
+    },
     "MEC-008-L|MEC-001-L": {
      "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -1113,6 +1281,16 @@
       "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 1.5926
      },
      "d_mm": 1.5926,
+     "same_group": false
+    },
+    "MEC-008-L|WNG-014-L": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper bridge 0.8 mm over the Z-bend (underside = rod top at the hi joint state, 10.20 mm) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.9546,
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.6466
+     },
+     "d_mm": 1.6466,
      "same_group": false
     },
     "MEC-008-R|MEC-001-R": {
@@ -1143,6 +1321,16 @@
      },
      "d_mm": 1.5926,
      "same_group": false
+    },
+    "MEC-008-R|WNG-014-R": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper bridge 0.8 mm over the Z-bend (underside = rod top at the hi joint state, 10.20 mm) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.9546,
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.6466
+     },
+     "d_mm": 1.6466,
+     "same_group": false
     }
    },
    "delta": -20.0,
@@ -1168,7 +1356,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -20 deg",
-   "seconds": 7.6,
+   "seconds": 8.9,
    "state": "mid",
    "theta_deg": {
     "L": 21.560355526523868,
@@ -1226,6 +1414,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "HWC-002-L|WNG-014-L": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "HWC-002-R|MEC-001-R": {
      "a": "M2x8 pan screw shank",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -1271,6 +1468,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "M2x8 pan screw shank || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "HWC-002-R|WNG-014-R": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -1322,6 +1528,15 @@
      "d_mm": 0.0008,
      "same_group": false
     },
+    "MEC-002-L|WNG-014-L": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0001
+     },
+     "d_mm": 0.0001,
+     "same_group": false
+    },
     "MEC-002-R|MEC-001-R": {
      "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -1367,6 +1582,15 @@
       "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0006
      },
      "d_mm": 0.0006,
+     "same_group": false
+    },
+    "MEC-002-R|WNG-014-R": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0002
+     },
+     "d_mm": 0.0002,
      "same_group": false
     },
     "MEC-003-L|MEC-001-L": {
@@ -1427,6 +1651,16 @@
      "bodies": {
       "pushrod || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 1.8705,
       "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0001
+     },
+     "d_mm": 0.0001,
+     "same_group": false
+    },
+    "MEC-003-L|WNG-014-L": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.9245,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0001
      },
      "d_mm": 0.0001,
      "same_group": false
@@ -1493,6 +1727,16 @@
      "d_mm": 0.0001,
      "same_group": false
     },
+    "MEC-003-R|WNG-014-R": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.9245,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0001
+     },
+     "d_mm": 0.0001,
+     "same_group": false
+    },
     "MEC-004-L|MEC-005-L": {
      "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
      "b": "clevis pin 1.0 mm (EST)",
@@ -1527,6 +1771,15 @@
       "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 2.2502
      },
      "d_mm": 2.2502,
+     "same_group": false
+    },
+    "MEC-004-L|WNG-014-L": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3418
+     },
+     "d_mm": 2.3418,
      "same_group": false
     },
     "MEC-004-R|MEC-005-R": {
@@ -1565,6 +1818,15 @@
      "d_mm": 2.2502,
      "same_group": false
     },
+    "MEC-004-R|WNG-014-R": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3418
+     },
+     "d_mm": 2.3418,
+     "same_group": false
+    },
     "MEC-008-L|MEC-001-L": {
      "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -1592,6 +1854,16 @@
       "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 1.621
      },
      "d_mm": 1.621,
+     "same_group": false
+    },
+    "MEC-008-L|WNG-014-L": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper bridge 0.8 mm over the Z-bend (underside = rod top at the hi joint state, 10.20 mm) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.9989,
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.675
+     },
+     "d_mm": 1.675,
      "same_group": false
     },
     "MEC-008-R|MEC-001-R": {
@@ -1622,6 +1894,16 @@
      },
      "d_mm": 1.621,
      "same_group": false
+    },
+    "MEC-008-R|WNG-014-R": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper bridge 0.8 mm over the Z-bend (underside = rod top at the hi joint state, 10.20 mm) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.9989,
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.675
+     },
+     "d_mm": 1.675,
+     "same_group": false
     }
    },
    "delta": -18.0,
@@ -1647,7 +1929,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -18 deg",
-   "seconds": 7.6,
+   "seconds": 8.8,
    "state": "mid",
    "theta_deg": {
     "L": 19.40480618852609,
@@ -1705,6 +1987,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "HWC-002-L|WNG-014-L": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "HWC-002-R|MEC-001-R": {
      "a": "M2x8 pan screw shank",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -1750,6 +2041,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "M2x8 pan screw shank || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "HWC-002-R|WNG-014-R": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -1801,6 +2101,15 @@
      "d_mm": 0.0002,
      "same_group": false
     },
+    "MEC-002-L|WNG-014-L": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "MEC-002-R|MEC-001-R": {
      "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -1846,6 +2155,15 @@
       "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0004
      },
      "d_mm": 0.0004,
+     "same_group": false
+    },
+    "MEC-002-R|WNG-014-R": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
      "same_group": false
     },
     "MEC-003-L|MEC-001-L": {
@@ -1910,6 +2228,16 @@
      "d_mm": 0.0011,
      "same_group": false
     },
+    "MEC-003-L|WNG-014-L": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.9868,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0254
+     },
+     "d_mm": 0.0254,
+     "same_group": false
+    },
     "MEC-003-R|MEC-001-R": {
      "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -1972,6 +2300,16 @@
      "d_mm": 0.0011,
      "same_group": false
     },
+    "MEC-003-R|WNG-014-R": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.9868,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0254
+     },
+     "d_mm": 0.0254,
+     "same_group": false
+    },
     "MEC-004-L|MEC-005-L": {
      "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
      "b": "clevis pin 1.0 mm (EST)",
@@ -2006,6 +2344,15 @@
       "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 2.2502
      },
      "d_mm": 2.2502,
+     "same_group": false
+    },
+    "MEC-004-L|WNG-014-L": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3425
+     },
+     "d_mm": 2.3425,
      "same_group": false
     },
     "MEC-004-R|MEC-005-R": {
@@ -2044,6 +2391,15 @@
      "d_mm": 2.2502,
      "same_group": false
     },
+    "MEC-004-R|WNG-014-R": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3425
+     },
+     "d_mm": 2.3425,
+     "same_group": false
+    },
     "MEC-008-L|MEC-001-L": {
      "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -2069,6 +2425,15 @@
       "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 1.6649
      },
      "d_mm": 1.6649,
+     "same_group": false
+    },
+    "MEC-008-L|WNG-014-L": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.7189
+     },
+     "d_mm": 1.7189,
      "same_group": false
     },
     "MEC-008-R|MEC-001-R": {
@@ -2097,6 +2462,15 @@
      },
      "d_mm": 1.6649,
      "same_group": false
+    },
+    "MEC-008-R|WNG-014-R": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.7189
+     },
+     "d_mm": 1.7189,
+     "same_group": false
     }
    },
    "delta": -15.0,
@@ -2122,7 +2496,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -15 deg",
-   "seconds": 6.6,
+   "seconds": 7.9,
    "state": "mid",
    "theta_deg": {
     "L": 16.169388949464764,
@@ -2180,6 +2554,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "HWC-002-L|WNG-014-L": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "HWC-002-R|MEC-001-R": {
      "a": "M2x8 pan screw shank",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -2225,6 +2608,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "M2x8 pan screw shank || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "HWC-002-R|WNG-014-R": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -2276,6 +2668,15 @@
      "d_mm": 0.0002,
      "same_group": false
     },
+    "MEC-002-L|WNG-014-L": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0002
+     },
+     "d_mm": 0.0002,
+     "same_group": false
+    },
     "MEC-002-R|MEC-001-R": {
      "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -2321,6 +2722,15 @@
       "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0001
      },
      "d_mm": 0.0001,
+     "same_group": false
+    },
+    "MEC-002-R|WNG-014-R": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
      "same_group": false
     },
     "MEC-003-L|MEC-001-L": {
@@ -2385,6 +2795,16 @@
      "d_mm": 0.0337,
      "same_group": false
     },
+    "MEC-003-L|WNG-014-L": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.05,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0877
+     },
+     "d_mm": 0.0877,
+     "same_group": false
+    },
     "MEC-003-R|MEC-001-R": {
      "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -2447,6 +2867,16 @@
      "d_mm": 0.0337,
      "same_group": false
     },
+    "MEC-003-R|WNG-014-R": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.05,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0877
+     },
+     "d_mm": 0.0877,
+     "same_group": false
+    },
     "MEC-004-L|MEC-005-L": {
      "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
      "b": "clevis pin 1.0 mm (EST)",
@@ -2481,6 +2911,15 @@
       "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 2.2502
      },
      "d_mm": 2.2502,
+     "same_group": false
+    },
+    "MEC-004-L|WNG-014-L": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3429
+     },
+     "d_mm": 2.3429,
      "same_group": false
     },
     "MEC-004-R|MEC-005-R": {
@@ -2519,6 +2958,15 @@
      "d_mm": 2.2502,
      "same_group": false
     },
+    "MEC-004-R|WNG-014-R": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3429
+     },
+     "d_mm": 2.3429,
+     "same_group": false
+    },
     "MEC-008-L|MEC-001-L": {
      "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -2546,6 +2994,15 @@
      "d_mm": 1.7102,
      "same_group": false
     },
+    "MEC-008-L|WNG-014-L": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.7642
+     },
+     "d_mm": 1.7642,
+     "same_group": false
+    },
     "MEC-008-R|MEC-001-R": {
      "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -2571,6 +3028,15 @@
       "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 1.7102
      },
      "d_mm": 1.7102,
+     "same_group": false
+    },
+    "MEC-008-R|WNG-014-R": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.7642
+     },
+     "d_mm": 1.7642,
      "same_group": false
     }
    },
@@ -2655,6 +3121,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "HWC-002-L|WNG-014-L": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "HWC-002-R|MEC-001-R": {
      "a": "M2x8 pan screw shank",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -2700,6 +3175,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "M2x8 pan screw shank || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "HWC-002-R|WNG-014-R": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -2751,6 +3235,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "MEC-002-L|WNG-014-L": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0005
+     },
+     "d_mm": 0.0005,
+     "same_group": false
+    },
     "MEC-002-R|MEC-001-R": {
      "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -2796,6 +3289,15 @@
       "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0002
      },
      "d_mm": 0.0002,
+     "same_group": false
+    },
+    "MEC-002-R|WNG-014-R": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
      "same_group": false
     },
     "MEC-003-L|MEC-001-L": {
@@ -2860,6 +3362,16 @@
      "d_mm": 0.097,
      "same_group": false
     },
+    "MEC-003-L|WNG-014-L": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.114,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.151
+     },
+     "d_mm": 0.151,
+     "same_group": false
+    },
     "MEC-003-R|MEC-001-R": {
      "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -2922,6 +3434,16 @@
      "d_mm": 0.097,
      "same_group": false
     },
+    "MEC-003-R|WNG-014-R": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.114,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.151
+     },
+     "d_mm": 0.151,
+     "same_group": false
+    },
     "MEC-004-L|MEC-005-L": {
      "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
      "b": "clevis pin 1.0 mm (EST)",
@@ -2956,6 +3478,15 @@
       "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 2.2502
      },
      "d_mm": 2.2502,
+     "same_group": false
+    },
+    "MEC-004-L|WNG-014-L": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3431
+     },
+     "d_mm": 2.3431,
      "same_group": false
     },
     "MEC-004-R|MEC-005-R": {
@@ -2994,6 +3525,15 @@
      "d_mm": 2.2502,
      "same_group": false
     },
+    "MEC-004-R|WNG-014-R": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3431
+     },
+     "d_mm": 2.3431,
+     "same_group": false
+    },
     "MEC-008-L|MEC-001-L": {
      "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -3019,6 +3559,15 @@
       "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 1.7567
      },
      "d_mm": 1.7567,
+     "same_group": false
+    },
+    "MEC-008-L|WNG-014-L": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.8107
+     },
+     "d_mm": 1.8107,
      "same_group": false
     },
     "MEC-008-R|MEC-001-R": {
@@ -3047,6 +3596,15 @@
      },
      "d_mm": 1.7567,
      "same_group": false
+    },
+    "MEC-008-R|WNG-014-R": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.8107
+     },
+     "d_mm": 1.8107,
+     "same_group": false
     }
    },
    "delta": -9.0,
@@ -3072,7 +3630,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -9 deg",
-   "seconds": 7.4,
+   "seconds": 8.6,
    "state": "mid",
    "theta_deg": {
     "L": 9.697842512536054,
@@ -3130,6 +3688,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "HWC-002-L|WNG-014-L": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "HWC-002-R|MEC-001-R": {
      "a": "M2x8 pan screw shank",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -3175,6 +3742,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "M2x8 pan screw shank || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "HWC-002-R|WNG-014-R": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -3226,6 +3802,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "MEC-002-L|WNG-014-L": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0001
+     },
+     "d_mm": 0.0001,
+     "same_group": false
+    },
     "MEC-002-R|MEC-001-R": {
      "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -3271,6 +3856,15 @@
       "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
      },
      "d_mm": 0.0,
+     "same_group": false
+    },
+    "MEC-002-R|WNG-014-R": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0001
+     },
+     "d_mm": 0.0001,
      "same_group": false
     },
     "MEC-003-L|MEC-001-L": {
@@ -3335,6 +3929,16 @@
      "d_mm": 0.1611,
      "same_group": false
     },
+    "MEC-003-L|WNG-014-L": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.1785,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.2151
+     },
+     "d_mm": 0.2151,
+     "same_group": false
+    },
     "MEC-003-R|MEC-001-R": {
      "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -3397,6 +4001,16 @@
      "d_mm": 0.1611,
      "same_group": false
     },
+    "MEC-003-R|WNG-014-R": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.1785,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.2151
+     },
+     "d_mm": 0.2151,
+     "same_group": false
+    },
     "MEC-004-L|MEC-005-L": {
      "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
      "b": "clevis pin 1.0 mm (EST)",
@@ -3431,6 +4045,15 @@
       "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 2.2502
      },
      "d_mm": 2.2502,
+     "same_group": false
+    },
+    "MEC-004-L|WNG-014-L": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.343
+     },
+     "d_mm": 2.343,
      "same_group": false
     },
     "MEC-004-R|MEC-005-R": {
@@ -3469,6 +4092,15 @@
      "d_mm": 2.2502,
      "same_group": false
     },
+    "MEC-004-R|WNG-014-R": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.343
+     },
+     "d_mm": 2.343,
+     "same_group": false
+    },
     "MEC-008-L|MEC-001-L": {
      "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -3494,6 +4126,15 @@
       "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 1.8044
      },
      "d_mm": 1.8044,
+     "same_group": false
+    },
+    "MEC-008-L|WNG-014-L": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.8584
+     },
+     "d_mm": 1.8584,
      "same_group": false
     },
     "MEC-008-R|MEC-001-R": {
@@ -3522,6 +4163,15 @@
      },
      "d_mm": 1.8044,
      "same_group": false
+    },
+    "MEC-008-R|WNG-014-R": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.8584
+     },
+     "d_mm": 1.8584,
+     "same_group": false
     }
    },
    "delta": -6.0,
@@ -3547,7 +4197,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -6 deg",
-   "seconds": 6.9,
+   "seconds": 8.1,
    "state": "mid",
    "theta_deg": {
     "L": 6.463845794048801,
@@ -3605,6 +4255,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "HWC-002-L|WNG-014-L": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "HWC-002-R|MEC-001-R": {
      "a": "M2x8 pan screw shank",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -3650,6 +4309,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "M2x8 pan screw shank || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "HWC-002-R|WNG-014-R": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -3701,6 +4369,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "MEC-002-L|WNG-014-L": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "MEC-002-R|MEC-001-R": {
      "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -3746,6 +4423,15 @@
       "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
      },
      "d_mm": 0.0,
+     "same_group": false
+    },
+    "MEC-002-R|WNG-014-R": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0002
+     },
+     "d_mm": 0.0002,
      "same_group": false
     },
     "MEC-003-L|MEC-001-L": {
@@ -3810,6 +4496,16 @@
      "d_mm": 0.2257,
      "same_group": false
     },
+    "MEC-003-L|WNG-014-L": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.2434,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.2797
+     },
+     "d_mm": 0.2797,
+     "same_group": false
+    },
     "MEC-003-R|MEC-001-R": {
      "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -3872,6 +4568,16 @@
      "d_mm": 0.2257,
      "same_group": false
     },
+    "MEC-003-R|WNG-014-R": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.2434,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.2797
+     },
+     "d_mm": 0.2797,
+     "same_group": false
+    },
     "MEC-004-L|MEC-005-L": {
      "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
      "b": "clevis pin 1.0 mm (EST)",
@@ -3906,6 +4612,15 @@
       "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 2.2502
      },
      "d_mm": 2.2502,
+     "same_group": false
+    },
+    "MEC-004-L|WNG-014-L": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3426
+     },
+     "d_mm": 2.3426,
      "same_group": false
     },
     "MEC-004-R|MEC-005-R": {
@@ -3944,6 +4659,15 @@
      "d_mm": 2.2502,
      "same_group": false
     },
+    "MEC-004-R|WNG-014-R": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3426
+     },
+     "d_mm": 2.3426,
+     "same_group": false
+    },
     "MEC-008-L|MEC-001-L": {
      "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -3969,6 +4693,15 @@
       "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 1.853
      },
      "d_mm": 1.853,
+     "same_group": false
+    },
+    "MEC-008-L|WNG-014-L": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.907
+     },
+     "d_mm": 1.907,
      "same_group": false
     },
     "MEC-008-R|MEC-001-R": {
@@ -3997,6 +4730,15 @@
      },
      "d_mm": 1.853,
      "same_group": false
+    },
+    "MEC-008-R|WNG-014-R": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.907
+     },
+     "d_mm": 1.907,
+     "same_group": false
     }
    },
    "delta": -3.0,
@@ -4022,7 +4764,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -3 deg",
-   "seconds": 6.2,
+   "seconds": 7.1,
    "state": "mid",
    "theta_deg": {
     "L": 3.231395902628032,
@@ -4080,6 +4822,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "HWC-002-L|WNG-014-L": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "HWC-002-R|MEC-001-R": {
      "a": "M2x8 pan screw shank",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -4125,6 +4876,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "M2x8 pan screw shank || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "HWC-002-R|WNG-014-R": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -4176,6 +4936,15 @@
      "d_mm": 0.0005,
      "same_group": false
     },
+    "MEC-002-L|WNG-014-L": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0005
+     },
+     "d_mm": 0.0005,
+     "same_group": false
+    },
     "MEC-002-R|MEC-001-R": {
      "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -4221,6 +4990,15 @@
       "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0001
      },
      "d_mm": 0.0001,
+     "same_group": false
+    },
+    "MEC-002-R|WNG-014-R": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0003
+     },
+     "d_mm": 0.0003,
      "same_group": false
     },
     "MEC-003-L|MEC-001-L": {
@@ -4284,6 +5062,16 @@
      "d_mm": 0.2906,
      "same_group": false
     },
+    "MEC-003-L|WNG-014-L": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3084,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.3446
+     },
+     "d_mm": 0.3446,
+     "same_group": false
+    },
     "MEC-003-R|MEC-001-R": {
      "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -4345,6 +5133,16 @@
      "d_mm": 0.2906,
      "same_group": false
     },
+    "MEC-003-R|WNG-014-R": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3084,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.3446
+     },
+     "d_mm": 0.3446,
+     "same_group": false
+    },
     "MEC-004-L|MEC-005-L": {
      "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
      "b": "clevis pin 1.0 mm (EST)",
@@ -4379,6 +5177,15 @@
       "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 2.2502
      },
      "d_mm": 2.2502,
+     "same_group": false
+    },
+    "MEC-004-L|WNG-014-L": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.342
+     },
+     "d_mm": 2.342,
      "same_group": false
     },
     "MEC-004-R|MEC-005-R": {
@@ -4417,6 +5224,15 @@
      "d_mm": 2.2502,
      "same_group": false
     },
+    "MEC-004-R|WNG-014-R": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.342
+     },
+     "d_mm": 2.342,
+     "same_group": false
+    },
     "MEC-008-L|MEC-001-L": {
      "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -4442,6 +5258,15 @@
       "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 1.9023
      },
      "d_mm": 1.9023,
+     "same_group": false
+    },
+    "MEC-008-L|WNG-014-L": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.9563
+     },
+     "d_mm": 1.9563,
      "same_group": false
     },
     "MEC-008-R|MEC-001-R": {
@@ -4470,6 +5295,15 @@
      },
      "d_mm": 1.9023,
      "same_group": false
+    },
+    "MEC-008-R|WNG-014-R": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.9563
+     },
+     "d_mm": 1.9563,
+     "same_group": false
     }
    },
    "delta": 0.0,
@@ -4495,7 +5329,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +0 deg",
-   "seconds": 4.9,
+   "seconds": 5.7,
    "state": "mid",
    "theta_deg": {
     "L": 0.0,
@@ -4553,6 +5387,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "HWC-002-L|WNG-014-L": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "HWC-002-R|MEC-001-R": {
      "a": "M2x8 pan screw shank",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -4598,6 +5441,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "M2x8 pan screw shank || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "HWC-002-R|WNG-014-R": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -4649,6 +5501,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "MEC-002-L|WNG-014-L": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0004
+     },
+     "d_mm": 0.0004,
+     "same_group": false
+    },
     "MEC-002-R|MEC-001-R": {
      "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -4692,6 +5553,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "MEC-002-R|WNG-014-R": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -4758,6 +5628,16 @@
      "d_mm": 0.3556,
      "same_group": false
     },
+    "MEC-003-L|WNG-014-L": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3734,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.4096
+     },
+     "d_mm": 0.4096,
+     "same_group": false
+    },
     "MEC-003-R|MEC-001-R": {
      "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -4820,6 +5700,16 @@
      "d_mm": 0.3557,
      "same_group": false
     },
+    "MEC-003-R|WNG-014-R": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3734,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.4097
+     },
+     "d_mm": 0.4097,
+     "same_group": false
+    },
     "MEC-004-L|MEC-005-L": {
      "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
      "b": "clevis pin 1.0 mm (EST)",
@@ -4854,6 +5744,15 @@
       "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 2.2502
      },
      "d_mm": 2.2502,
+     "same_group": false
+    },
+    "MEC-004-L|WNG-014-L": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3412
+     },
+     "d_mm": 2.3412,
      "same_group": false
     },
     "MEC-004-R|MEC-005-R": {
@@ -4892,6 +5791,15 @@
      "d_mm": 2.2502,
      "same_group": false
     },
+    "MEC-004-R|WNG-014-R": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3412
+     },
+     "d_mm": 2.3412,
+     "same_group": false
+    },
     "MEC-008-L|MEC-001-L": {
      "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -4917,6 +5825,15 @@
       "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 1.8874
      },
      "d_mm": 1.8874,
+     "same_group": false
+    },
+    "MEC-008-L|WNG-014-L": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.9414
+     },
+     "d_mm": 1.9414,
      "same_group": false
     },
     "MEC-008-R|MEC-001-R": {
@@ -4945,6 +5862,15 @@
      },
      "d_mm": 1.8874,
      "same_group": false
+    },
+    "MEC-008-R|WNG-014-R": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.9414
+     },
+     "d_mm": 1.9414,
+     "same_group": false
     }
    },
    "delta": 3.0,
@@ -4970,7 +5896,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +3 deg",
-   "seconds": 8.5,
+   "seconds": 9.9,
    "state": "mid",
    "theta_deg": {
     "L": -3.23144898881135,
@@ -5028,6 +5954,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "HWC-002-L|WNG-014-L": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "HWC-002-R|MEC-001-R": {
      "a": "M2x8 pan screw shank",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -5073,6 +6008,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "M2x8 pan screw shank || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "HWC-002-R|WNG-014-R": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -5124,6 +6068,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "MEC-002-L|WNG-014-L": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0004
+     },
+     "d_mm": 0.0004,
+     "same_group": false
+    },
     "MEC-002-R|MEC-001-R": {
      "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -5169,6 +6122,15 @@
       "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
      },
      "d_mm": 0.0,
+     "same_group": false
+    },
+    "MEC-002-R|WNG-014-R": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0003
+     },
+     "d_mm": 0.0003,
      "same_group": false
     },
     "MEC-003-L|MEC-001-L": {
@@ -5233,6 +6195,16 @@
      "d_mm": 0.4207,
      "same_group": false
     },
+    "MEC-003-L|WNG-014-L": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.4381,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.4747
+     },
+     "d_mm": 0.4747,
+     "same_group": false
+    },
     "MEC-003-R|MEC-001-R": {
      "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -5295,6 +6267,16 @@
      "d_mm": 0.4207,
      "same_group": false
     },
+    "MEC-003-R|WNG-014-R": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.4381,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.4747
+     },
+     "d_mm": 0.4747,
+     "same_group": false
+    },
     "MEC-004-L|MEC-005-L": {
      "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
      "b": "clevis pin 1.0 mm (EST)",
@@ -5329,6 +6311,15 @@
       "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 2.2502
      },
      "d_mm": 2.2502,
+     "same_group": false
+    },
+    "MEC-004-L|WNG-014-L": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3401
+     },
+     "d_mm": 2.3401,
      "same_group": false
     },
     "MEC-004-R|MEC-005-R": {
@@ -5367,6 +6358,15 @@
      "d_mm": 2.2502,
      "same_group": false
     },
+    "MEC-004-R|WNG-014-R": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3401
+     },
+     "d_mm": 2.3401,
+     "same_group": false
+    },
     "MEC-008-L|MEC-001-L": {
      "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -5392,6 +6392,15 @@
       "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 1.8731
      },
      "d_mm": 1.8731,
+     "same_group": false
+    },
+    "MEC-008-L|WNG-014-L": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.9271
+     },
+     "d_mm": 1.9271,
      "same_group": false
     },
     "MEC-008-R|MEC-001-R": {
@@ -5420,6 +6429,15 @@
      },
      "d_mm": 1.8731,
      "same_group": false
+    },
+    "MEC-008-R|WNG-014-R": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.9271
+     },
+     "d_mm": 1.9271,
+     "same_group": false
     }
    },
    "delta": 6.0,
@@ -5445,7 +6463,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +6 deg",
-   "seconds": 7.2,
+   "seconds": 8.4,
    "state": "mid",
    "theta_deg": {
     "L": -6.4646983832943,
@@ -5503,6 +6521,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "HWC-002-L|WNG-014-L": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "HWC-002-R|MEC-001-R": {
      "a": "M2x8 pan screw shank",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -5548,6 +6575,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "M2x8 pan screw shank || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "HWC-002-R|WNG-014-R": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -5599,6 +6635,15 @@
      "d_mm": 0.0001,
      "same_group": false
     },
+    "MEC-002-L|WNG-014-L": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0004
+     },
+     "d_mm": 0.0004,
+     "same_group": false
+    },
     "MEC-002-R|MEC-001-R": {
      "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -5644,6 +6689,15 @@
       "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.001
      },
      "d_mm": 0.001,
+     "same_group": false
+    },
+    "MEC-002-R|WNG-014-R": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0007
+     },
+     "d_mm": 0.0007,
      "same_group": false
     },
     "MEC-003-L|MEC-001-L": {
@@ -5708,6 +6762,16 @@
      "d_mm": 0.4856,
      "same_group": false
     },
+    "MEC-003-L|WNG-014-L": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.5025,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.5396
+     },
+     "d_mm": 0.5396,
+     "same_group": false
+    },
     "MEC-003-R|MEC-001-R": {
      "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -5770,6 +6834,16 @@
      "d_mm": 0.4856,
      "same_group": false
     },
+    "MEC-003-R|WNG-014-R": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.5025,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.5396
+     },
+     "d_mm": 0.5396,
+     "same_group": false
+    },
     "MEC-004-L|MEC-005-L": {
      "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
      "b": "clevis pin 1.0 mm (EST)",
@@ -5804,6 +6878,15 @@
       "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 2.2502
      },
      "d_mm": 2.2502,
+     "same_group": false
+    },
+    "MEC-004-L|WNG-014-L": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3387
+     },
+     "d_mm": 2.3387,
      "same_group": false
     },
     "MEC-004-R|MEC-005-R": {
@@ -5842,6 +6925,15 @@
      "d_mm": 2.2502,
      "same_group": false
     },
+    "MEC-004-R|WNG-014-R": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3387
+     },
+     "d_mm": 2.3387,
+     "same_group": false
+    },
     "MEC-008-L|MEC-001-L": {
      "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -5867,6 +6959,15 @@
       "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 1.8595
      },
      "d_mm": 1.8595,
+     "same_group": false
+    },
+    "MEC-008-L|WNG-014-L": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.9135
+     },
+     "d_mm": 1.9135,
      "same_group": false
     },
     "MEC-008-R|MEC-001-R": {
@@ -5895,6 +6996,15 @@
      },
      "d_mm": 1.8595,
      "same_group": false
+    },
+    "MEC-008-R|WNG-014-R": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.9135
+     },
+     "d_mm": 1.9135,
+     "same_group": false
     }
    },
    "delta": 9.0,
@@ -5920,7 +7030,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +9 deg",
-   "seconds": 3.7,
+   "seconds": 5.6,
    "state": "mid",
    "theta_deg": {
     "L": -9.702186194942481,
@@ -5978,6 +7088,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "HWC-002-L|WNG-014-L": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "HWC-002-R|MEC-001-R": {
      "a": "M2x8 pan screw shank",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -6023,6 +7142,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "M2x8 pan screw shank || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "HWC-002-R|WNG-014-R": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -6074,6 +7202,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "MEC-002-L|WNG-014-L": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "MEC-002-R|MEC-001-R": {
      "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -6119,6 +7256,15 @@
       "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0006
      },
      "d_mm": 0.0006,
+     "same_group": false
+    },
+    "MEC-002-R|WNG-014-R": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
      "same_group": false
     },
     "MEC-003-L|MEC-001-L": {
@@ -6183,6 +7329,16 @@
      "d_mm": 0.5501,
      "same_group": false
     },
+    "MEC-003-L|WNG-014-L": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.5664,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.6041
+     },
+     "d_mm": 0.6041,
+     "same_group": false
+    },
     "MEC-003-R|MEC-001-R": {
      "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -6245,6 +7401,16 @@
      "d_mm": 0.5501,
      "same_group": false
     },
+    "MEC-003-R|WNG-014-R": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.5664,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.6041
+     },
+     "d_mm": 0.6041,
+     "same_group": false
+    },
     "MEC-004-L|MEC-005-L": {
      "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
      "b": "clevis pin 1.0 mm (EST)",
@@ -6279,6 +7445,15 @@
       "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 2.2502
      },
      "d_mm": 2.2502,
+     "same_group": false
+    },
+    "MEC-004-L|WNG-014-L": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3372
+     },
+     "d_mm": 2.3372,
      "same_group": false
     },
     "MEC-004-R|MEC-005-R": {
@@ -6317,6 +7492,15 @@
      "d_mm": 2.2502,
      "same_group": false
     },
+    "MEC-004-R|WNG-014-R": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3372
+     },
+     "d_mm": 2.3372,
+     "same_group": false
+    },
     "MEC-008-L|MEC-001-L": {
      "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -6342,6 +7526,15 @@
       "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 1.8467
      },
      "d_mm": 1.8467,
+     "same_group": false
+    },
+    "MEC-008-L|WNG-014-L": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.9007
+     },
+     "d_mm": 1.9007,
      "same_group": false
     },
     "MEC-008-R|MEC-001-R": {
@@ -6370,6 +7563,15 @@
      },
      "d_mm": 1.8467,
      "same_group": false
+    },
+    "MEC-008-R|WNG-014-R": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.9007
+     },
+     "d_mm": 1.9007,
+     "same_group": false
     }
    },
    "delta": 12.0,
@@ -6395,7 +7597,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +12 deg",
-   "seconds": 3.8,
+   "seconds": 4.3,
    "state": "mid",
    "theta_deg": {
     "L": -12.947121976636565,
@@ -6453,6 +7655,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "HWC-002-L|WNG-014-L": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "HWC-002-R|MEC-001-R": {
      "a": "M2x8 pan screw shank",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -6498,6 +7709,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "M2x8 pan screw shank || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "HWC-002-R|WNG-014-R": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -6549,6 +7769,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "MEC-002-L|WNG-014-L": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "MEC-002-R|MEC-001-R": {
      "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -6592,6 +7821,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "MEC-002-R|WNG-014-R": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -6658,6 +7896,16 @@
      "d_mm": 0.6142,
      "same_group": false
     },
+    "MEC-003-L|WNG-014-L": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.6296,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.6682
+     },
+     "d_mm": 0.6682,
+     "same_group": false
+    },
     "MEC-003-R|MEC-001-R": {
      "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -6720,6 +7968,16 @@
      "d_mm": 0.6142,
      "same_group": false
     },
+    "MEC-003-R|WNG-014-R": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.6296,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.6682
+     },
+     "d_mm": 0.6682,
+     "same_group": false
+    },
     "MEC-004-L|MEC-005-L": {
      "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
      "b": "clevis pin 1.0 mm (EST)",
@@ -6763,6 +8021,15 @@
       "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || cove CF strip 6 x 0.5 mm (3 mm2; width / thickness EST)": 2.9595
      },
      "d_mm": 2.9595,
+     "same_group": false
+    },
+    "MEC-004-L|WNG-014-L": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3353
+     },
+     "d_mm": 2.3353,
      "same_group": false
     },
     "MEC-004-R|MEC-005-R": {
@@ -6810,6 +8077,15 @@
      "d_mm": 2.9595,
      "same_group": false
     },
+    "MEC-004-R|WNG-014-R": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3353
+     },
+     "d_mm": 2.3353,
+     "same_group": false
+    },
     "MEC-008-L|MEC-001-L": {
      "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -6835,6 +8111,15 @@
       "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 1.8347
      },
      "d_mm": 1.8347,
+     "same_group": false
+    },
+    "MEC-008-L|WNG-014-L": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.8887
+     },
+     "d_mm": 1.8887,
      "same_group": false
     },
     "MEC-008-R|MEC-001-R": {
@@ -6863,6 +8148,15 @@
      },
      "d_mm": 1.8347,
      "same_group": false
+    },
+    "MEC-008-R|WNG-014-R": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.8887
+     },
+     "d_mm": 1.8887,
+     "same_group": false
     }
    },
    "delta": 15.0,
@@ -6888,7 +8182,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +15 deg",
-   "seconds": 7.6,
+   "seconds": 9.0,
    "state": "mid",
    "theta_deg": {
     "L": -16.203607404214964,
@@ -6946,6 +8240,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "HWC-002-L|WNG-014-L": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "HWC-002-R|MEC-001-R": {
      "a": "M2x8 pan screw shank",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -6991,6 +8294,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "M2x8 pan screw shank || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "HWC-002-R|WNG-014-R": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -7042,6 +8354,15 @@
      "d_mm": 0.0003,
      "same_group": false
     },
+    "MEC-002-L|WNG-014-L": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0003
+     },
+     "d_mm": 0.0003,
+     "same_group": false
+    },
     "MEC-002-R|MEC-001-R": {
      "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -7085,6 +8406,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0006
+     },
+     "d_mm": 0.0006,
+     "same_group": false
+    },
+    "MEC-002-R|WNG-014-R": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0006
      },
      "d_mm": 0.0006,
      "same_group": false
@@ -7151,6 +8481,16 @@
      "d_mm": 0.6778,
      "same_group": false
     },
+    "MEC-003-L|WNG-014-L": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.6922,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.7318
+     },
+     "d_mm": 0.7318,
+     "same_group": false
+    },
     "MEC-003-R|MEC-001-R": {
      "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -7213,6 +8553,16 @@
      "d_mm": 0.6778,
      "same_group": false
     },
+    "MEC-003-R|WNG-014-R": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.6922,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.7318
+     },
+     "d_mm": 0.7318,
+     "same_group": false
+    },
     "MEC-004-L|MEC-005-L": {
      "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
      "b": "clevis pin 1.0 mm (EST)",
@@ -7256,6 +8606,15 @@
       "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || cove CF strip 6 x 0.5 mm (3 mm2; width / thickness EST)": 2.8593
      },
      "d_mm": 2.8593,
+     "same_group": false
+    },
+    "MEC-004-L|WNG-014-L": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3333
+     },
+     "d_mm": 2.3333,
      "same_group": false
     },
     "MEC-004-R|MEC-005-R": {
@@ -7303,6 +8662,15 @@
      "d_mm": 2.8593,
      "same_group": false
     },
+    "MEC-004-R|WNG-014-R": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3333
+     },
+     "d_mm": 2.3333,
+     "same_group": false
+    },
     "MEC-008-L|MEC-001-L": {
      "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -7328,6 +8696,15 @@
       "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 1.8235
      },
      "d_mm": 1.8235,
+     "same_group": false
+    },
+    "MEC-008-L|WNG-014-L": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.8775
+     },
+     "d_mm": 1.8775,
      "same_group": false
     },
     "MEC-008-R|MEC-001-R": {
@@ -7356,6 +8733,15 @@
      },
      "d_mm": 1.8235,
      "same_group": false
+    },
+    "MEC-008-R|WNG-014-R": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.8775
+     },
+     "d_mm": 1.8775,
+     "same_group": false
     }
    },
    "delta": 18.0,
@@ -7381,7 +8767,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +18 deg",
-   "seconds": 5.2,
+   "seconds": 6.1,
    "state": "mid",
    "theta_deg": {
     "L": -19.476811045379947,
@@ -7439,6 +8825,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "HWC-002-L|WNG-014-L": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "HWC-002-R|MEC-001-R": {
      "a": "M2x8 pan screw shank",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -7484,6 +8879,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "M2x8 pan screw shank || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "HWC-002-R|WNG-014-R": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -7535,6 +8939,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "MEC-002-L|WNG-014-L": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0004
+     },
+     "d_mm": 0.0004,
+     "same_group": false
+    },
     "MEC-002-R|MEC-001-R": {
      "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -7580,6 +8993,15 @@
       "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
      },
      "d_mm": 0.0,
+     "same_group": false
+    },
+    "MEC-002-R|WNG-014-R": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.001
+     },
+     "d_mm": 0.001,
      "same_group": false
     },
     "MEC-003-L|MEC-001-L": {
@@ -7644,6 +9066,16 @@
      "d_mm": 0.7198,
      "same_group": false
     },
+    "MEC-003-L|WNG-014-L": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.7346,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.7738
+     },
+     "d_mm": 0.7738,
+     "same_group": false
+    },
     "MEC-003-R|MEC-001-R": {
      "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -7706,6 +9138,16 @@
      "d_mm": 0.7198,
      "same_group": false
     },
+    "MEC-003-R|WNG-014-R": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.7346,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.7738
+     },
+     "d_mm": 0.7738,
+     "same_group": false
+    },
     "MEC-004-L|MEC-005-L": {
      "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
      "b": "clevis pin 1.0 mm (EST)",
@@ -7749,6 +9191,15 @@
       "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || cove CF strip 6 x 0.5 mm (3 mm2; width / thickness EST)": 2.7919
      },
      "d_mm": 2.7919,
+     "same_group": false
+    },
+    "MEC-004-L|WNG-014-L": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3318
+     },
+     "d_mm": 2.3318,
      "same_group": false
     },
     "MEC-004-R|MEC-005-R": {
@@ -7796,6 +9247,15 @@
      "d_mm": 2.7919,
      "same_group": false
     },
+    "MEC-004-R|WNG-014-R": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.3318
+     },
+     "d_mm": 2.3318,
+     "same_group": false
+    },
     "MEC-008-L|MEC-001-L": {
      "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -7821,6 +9281,15 @@
       "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 1.8165
      },
      "d_mm": 1.8165,
+     "same_group": false
+    },
+    "MEC-008-L|WNG-014-L": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.8705
+     },
+     "d_mm": 1.8705,
      "same_group": false
     },
     "MEC-008-R|MEC-001-R": {
@@ -7849,6 +9318,15 @@
      },
      "d_mm": 1.8165,
      "same_group": false
+    },
+    "MEC-008-R|WNG-014-R": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.8705
+     },
+     "d_mm": 1.8705,
+     "same_group": false
     }
    },
    "delta": 20.0,
@@ -7874,7 +9352,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +20 deg",
-   "seconds": 8.5,
+   "seconds": 10.2,
    "state": "mid",
    "theta_deg": {
     "L": -21.671373889774635,
@@ -7932,6 +9410,15 @@
      "d_mm": 0.0,
      "same_group": false
     },
+    "HWC-002-L|WNG-014-L": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
     "HWC-002-R|MEC-001-R": {
      "a": "M2x8 pan screw shank",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -7977,6 +9464,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "M2x8 pan screw shank || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "HWC-002-R|WNG-014-R": {
+     "a": "M2x8 pan screw shank",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "M2x8 pan screw shank || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -8028,6 +9524,15 @@
      "d_mm": 0.0001,
      "same_group": false
     },
+    "MEC-002-L|WNG-014-L": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0002
+     },
+     "d_mm": 0.0002,
+     "same_group": false
+    },
     "MEC-002-R|MEC-001-R": {
      "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -8071,6 +9576,15 @@
      "b": "glass skin shell 1 ply +-45 deg, 0.054 mm (EST)",
      "bodies": {
       "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 0.0
+     },
+     "d_mm": 0.0,
+     "same_group": false
+    },
+    "MEC-002-R|WNG-014-R": {
+     "a": "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\")",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "servo arm (hub bore for the 23T spline; hole 1.3 mm drilled at 8.5 mm, D-212 rev 3; hole row beyond the used hole \"-\") || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.0
      },
      "d_mm": 0.0,
      "same_group": false
@@ -8137,6 +9651,16 @@
      "d_mm": 0.7413,
      "same_group": false
     },
+    "MEC-003-L|WNG-014-L": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.7557,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.7953
+     },
+     "d_mm": 0.7953,
+     "same_group": false
+    },
     "MEC-003-R|MEC-001-R": {
      "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -8199,6 +9723,16 @@
      "d_mm": 0.7413,
      "same_group": false
     },
+    "MEC-003-R|WNG-014-R": {
+     "a": "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "pushrod || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.7557,
+      "rod Z-bend leg through the arm hole (leg 2.50 mm below the rod axis, end 0.25 mm inside the arm underside at the mid joint height; held down by the keeper MEC-008) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 0.7953
+     },
+     "d_mm": 0.7953,
+     "same_group": false
+    },
     "MEC-004-L|MEC-005-L": {
      "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
      "b": "clevis pin 1.0 mm (EST)",
@@ -8242,6 +9776,15 @@
       "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || cove CF strip 6 x 0.5 mm (3 mm2; width / thickness EST)": 2.7581
      },
      "d_mm": 2.7581,
+     "same_group": false
+    },
+    "MEC-004-L|WNG-014-L": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.331
+     },
+     "d_mm": 2.331,
      "same_group": false
     },
     "MEC-004-R|MEC-005-R": {
@@ -8289,6 +9832,15 @@
      "d_mm": 2.7581,
      "same_group": false
     },
+    "MEC-004-R|WNG-014-R": {
+     "a": "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "horn 2 mm profile: blade (hole 9.155 mm directly above the hinge axis, reamed 1.1 mm) + rib 2.5-55 mm aft of the hinge line through the elevon || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 2.331
+     },
+     "d_mm": 2.331,
+     "same_group": false
+    },
     "MEC-008-L|MEC-001-L": {
      "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
      "b": "servo case (overall 28.4 x 26.7 x 13.0; ears and output boss \"-\")",
@@ -8314,6 +9866,15 @@
       "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin shell 1 ply +-45 deg, 0.054 mm (EST)": 1.8132
      },
      "d_mm": 1.8132,
+     "same_group": false
+    },
+    "MEC-008-L|WNG-014-L": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.8672
+     },
+     "d_mm": 1.8672,
      "same_group": false
     },
     "MEC-008-R|MEC-001-R": {
@@ -8342,6 +9903,15 @@
      },
      "d_mm": 1.8132,
      "same_group": false
+    },
+    "MEC-008-R|WNG-014-R": {
+     "a": "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole)",
+     "b": "glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)",
+     "bodies": {
+      "keeper spacer 1.5 mm (on the arm top, 2 mm short of the arm hole) || glass skin plies 2-3 +-45 deg, 0.108 mm (EST), |y| 52..400 mm (D-226)": 1.8672
+     },
+     "d_mm": 1.8672,
+     "same_group": false
     }
    },
    "delta": 21.0,
@@ -8367,7 +9937,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +21 deg",
-   "seconds": 13.9,
+   "seconds": 16.6,
    "state": "mid",
    "theta_deg": {
     "L": -22.773219907759124,
@@ -8376,7 +9946,7 @@
   }
  ],
  "report_mm": 0.01,
- "seconds": 843.2,
+ "seconds": 1118.0,
  "states": [
   "mid"
  ],

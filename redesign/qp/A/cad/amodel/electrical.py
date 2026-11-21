@@ -16,7 +16,7 @@ electrical in that order.
 import math
 
 from .common import *   # noqa: F401,F403
-from .wing import BR_Z, BR_RO, HINGE_Z, RHO_PETG, TUBE_RO, TUBE_RI, TUBE_HL, SLV_L, SLV_R, DBL_S0, DBL_S1, DBL_RO, HOLE_S, HOLE_R, STN_S   # noqa: F401  (read only: hinge axis height for the horn hole radius; D-202 tube / hub geometry)
+from .wing import CN_Y, CN_I2C, CN_I2C_D, FNB_T, FNB_GAP, RIB_Y, RIB_OD, BR_Z, BR_RO, HINGE_Z, RHO_PETG, TUBE_RO, TUBE_RI, TUBE_HL, SLV_L, SLV_R, DBL_S0, DBL_S1, DBL_RO, HOLE_S, HOLE_R, STN_S   # noqa: F401  (read only: hinge axis height for the horn hole radius; D-202 tube / hub geometry)
 from .propulsion import ESC_PADS, ESC_TOP, ESC_B, ESC_HOLE_PITCH   # noqa: F401  (harness wires land on the ESC pads; lane B owns them)
 
 MM = 0.001
@@ -602,6 +602,10 @@ AS_SX = (0.0715, 0.0785)                    # EST sensor body x range; its barbs
 I2C_X = 0.1095                              # I2C lead groove x: T-077 p5: aft of the 40 mm rib socket of the CF clamshell cradle (x <= 106.5, D-221), inside the bay cover (x <= 111.5), ahead of the servo pockets (x >= 127); was 0.095
 I2C_ZD = zu(I2C_X) - 0.0065                 # deep under the servo-lead groove that crosses at |y| 0.19 (its bottom z ~6.9)
 I2C_ZS = zu(I2C_X) - 0.0019                 # shallow over the fin rib tube at |y| 0.38 (its top z 7.0): T-077 p5: the skin is lower at x 109.5, so the 2 x 2 bundle (bottom z 7.4) sits 0.4 mm over the rib and the groove top (ZS + 1.7 = 10.15) stays under the skin (10.35)
+I2C_XF, I2C_YF, I2C_YO, I2C_XB = 0.064, -0.335, -0.4085, 0.0875   # T-077 p8 (D-226): the 25 mm rib (|y| 370.5..395.5, z +-12.5, from x 70.5) fills the section, so the lead
+                                            # crosses the fin node AHEAD of the rib nose: along x at |y| 335 to x 64 (over the spar, top z 6), along y through two 3 mm holes in the fin
+                                            # bulkheads to |y| 408.5 (outboard of the plates, inboard of the board pocket |y| 412.5), aft to x 87.5 (behind the board), then to the plug
+assert abs(I2C_X - CN_I2C[0]) < 1e-9 and abs(I2C_ZD - CN_I2C[1]) < 1e-9, 'wing.CN_I2C must equal the I2C groove crossing at |y| 60'
 I2C_XD = 0.078                              # T-077 p5: the lead leaves the cover lane z 22 and drops into the core at x 78, 5 mm ahead of the RX UART drop (x 83), then runs aft in a deep groove along x at |y| UART_Y to I2C_X
 I2C_ZH = 0.0220                             # T-022 Q4: height of the I2C lead in the cover lane (above the servo-lead drop column at x 83, below the UART)
 UART_ZH, UART_ZL = 0.0250, 0.0195           # T-022 Q4: UART lane height under the roof step (aft of x 83), and inside the RX hood (roof inner face 21.3 mm)
@@ -755,7 +759,7 @@ for s_ in ST:
     P('HRN-004-' + s_, 'Hub conduit (D-199, D-202, %s): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window' % s_, 'harness', hubhop_mass_g(s_), 'PETG (printed)')
 # landing
 for s in ST:
-    P('GER-001-' + s, 'Foot shoe (%s)' % s, 'landing', 1.4, 'PETG (printed)')
+    P('GER-001-' + s, 'Foot shoe (%s; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closure s2 recovery, -1 g; mass from printed_mass.json at Onyx 1.20 g/cm3)' % s, 'landing', 1.4, 'Onyx (Markforged X7, printed)')
     P('GER-002-' + s, 'Foot pad EVA/PE 12x15x30 (%s)' % s, 'landing', 0.7, 'EVA / PE foam')
 # harness: XT60 female + tail (modelled), remaining lump
 P('HRN-002', 'XT60 female + 14 AWG tail to the ESC (modelled)', 'harness', M_XT60_F + M_TAIL, 'copper / silicone / nylon', 'buy', 'bus', carried=True)
@@ -1118,8 +1122,8 @@ def i2c_path():
     and the groove."""
     x, y, z = FC_PADS['I2C']
     return [(x, y, z + 0.0006), (x, y, _ZF), (0.0512 + AV_DX, -UART_Y, _ZF), (0.0512 + AV_DX, -UART_Y, I2C_ZH), (I2C_XD, -UART_Y, I2C_ZH), (I2C_XD, -UART_Y, I2C_ZD), (I2C_X, -UART_Y, I2C_ZD),
-            (I2C_X, -0.150, I2C_ZD), (I2C_X, -0.230, I2C_ZD), (I2C_X, -0.280, I2C_ZS), (I2C_X, PIT_Y, I2C_ZS),
-            (AS_B[1][0] - 0.0025, PIT_Y, AS_ZB + T_PCB + 2.1 * MM)]
+            (I2C_X, -0.150, I2C_ZD), (I2C_X, -0.230, I2C_ZD), (I2C_X, -0.280, I2C_ZS), (I2C_X, I2C_YF, I2C_ZS), (I2C_XF, I2C_YF, I2C_ZS), (I2C_XF, I2C_YO, I2C_ZS),
+            (I2C_XB, I2C_YO, I2C_ZS), (I2C_XB, PIT_Y, I2C_ZS), (AS_B[1][0] - 0.0025, PIT_Y, AS_ZB + T_PCB + 2.1 * MM)]
 
 
 def uart_path():
@@ -1422,6 +1426,8 @@ def build_harness(ctx):
         loop = [(xx, servo_zc(xx) - 0.0016) for xx in [SRV_XD - 0.003, SRV_XD, 0.083, 0.097, 0.110, 0.1215, 0.1250]] + [(xx, servo_zc(xx) + 0.0016) for xx in [0.1250, 0.1215, 0.110, 0.097, 0.083, SRV_XD, SRV_XD - 0.003]]
         ya, yb = sorted((sg * (SRV_YG - 0.0030), sg * (SRV_YG + 0.0030)))
         core.cut_prism('Y', ya, [loop], yb - ya, name='servo lead groove along x, following the skin (D-198)')
+        ya, yb = sorted((sg * (CN_Y - 0.0001), sg * (CN_Y + FNB_T + 0.0001)))
+        ctx.components['WNG-013-' + ('R' if sg > 0 else 'L')].cut_box((SRV_XD - 0.0030, ya, zg1 - 0.0016), (SRV_XD + 0.0030, yb, zg1 + 0.0016), name='servo-lead slot 6 x 3.2 mm in the centre bulkhead (= the groove, T-077 p8)')
     # RX CRSF wire: FC top board RX pad -> RX pads, enclosed in the cover and the RX hood (T-022 Q4)
     wd = 1.0 * MM
     _wire_s(ctx, 'E-HRN-09', uart_path(), 0.0025, wd, [((j % 2 - 0.5) * wd, (j // 2 - 0.5) * wd) for j in range(4)], lay=0.100)
@@ -1441,15 +1447,23 @@ def build_harness(ctx):
     core.cut_box((I2C_X - hg, -0.2300, I2C_ZD - hg), (I2C_X + hg, -UART_Y + hg, I2C_ZD + hg), name='I2C lead groove along y, deep (under the servo-lead groove) (D-208, extended inboard to the drop slot by T-022 Q4)')
     core.cut_prism('X', I2C_X - hg, [[(-0.2300, I2C_ZD - hg), (-0.2300, I2C_ZD + hg), (-0.2800, I2C_ZS + hg), (-0.2800, I2C_ZS - hg)]], 2 * hg,
                    name='I2C lead groove ramp (D-208)')
-    core.cut_box((I2C_X - hg, PIT_Y - hg, I2C_ZS - hg), (I2C_X + hg, -0.2800, I2C_ZS + hg), name='I2C lead groove along y, shallow (over the fin rib tube) (D-208)')
-    core.cut_box((AS_B[1][0], PIT_Y - hg, AS_ZB + T_PCB), (I2C_X + hg, PIT_Y + hg, I2C_ZS + hg), name='I2C lead groove into the board pocket (D-208)')
+    core.cut_box((I2C_X - hg, I2C_YF - hg, I2C_ZS - hg), (I2C_X + hg, -0.2800, I2C_ZS + hg), name='I2C lead groove along y, shallow, to the fin-node lane at |y| 335 (T-077 p8)')
+    core.cut_box((I2C_XF - hg, I2C_YF - hg, I2C_ZS - hg), (I2C_X + hg, I2C_YF + hg, I2C_ZS + hg), name='I2C lead groove along x at |y| 335 (T-077 p8)')
+    core.cut_box((I2C_XF - hg, I2C_YO - hg, I2C_ZS - hg), (I2C_XF + hg, I2C_YF + hg, I2C_ZS + hg), name='I2C lead groove along y at x 64 over the spar, through the fin-node bulkheads, ahead of the rib nose (T-077 p8)')
+    core.cut_box((I2C_XF - hg, I2C_YO - hg, I2C_ZS - hg), (I2C_XB + hg, I2C_YO + hg, I2C_ZS + hg), name='I2C lead groove along x at |y| 408.5 (T-077 p8)')
+    core.cut_box((I2C_XB - hg, PIT_Y - hg, I2C_ZS - hg), (I2C_XB + hg, I2C_YO + hg, I2C_ZS + hg), name='I2C lead groove along y behind the board pocket (T-077 p8)')
+    core.cut_box((AS_B[1][0], PIT_Y - hg, AS_ZB + T_PCB), (I2C_XB + hg, PIT_Y + hg, I2C_ZS + hg), name='I2C lead groove into the board pocket (D-208)')
+    # T-077 p8 (D-226): holes for the lead in the left fin-node bulkheads (3 mm round the 2 x 2 bundle, envelope r 1.21 mm), the left centre bulkhead and the left flange of the centre node
+    ctx.components['FIN-005-L'].cut_cylinder('Y', (I2C_XF, -(RIB_Y + RIB_OD / 2 + FNB_GAP + FNB_T + 0.001), I2C_ZS), 2 * (RIB_OD / 2 + FNB_GAP + FNB_T + 0.001), 0.0015, name='I2C lead hole 3 mm (T-077 p8)')
+    for pid_ in ('WNG-013-L', 'CGE-006'):
+        ctx.components[pid_].cut_cylinder('Y', (I2C_X, -(CN_Y + FNB_T + 0.001), I2C_ZD), FNB_T + 0.002 + 0.0015, CN_I2C_D / 2, name='I2C lead hole 4 mm at |y| 60 (T-077 p8)')
 
 
 def build_assembly(ctx):
     """Joints and contacts for every mechanical edge, after all parts exist (wires are registered by the harness)."""
     hw = ctx.part('HRD-001', proxy=True)
     core_ = ctx.components['WNG-001']        # T-077 p3: the skin and the cove strip carry every explicit cut of the core (slots, pockets, windows, wire slits cut by the later modules); seats are realised later
-    for pid_ in ('WNG-011', 'WNG-012'):
+    for pid_ in ('WNG-011', 'WNG-012', 'WNG-014-R', 'WNG-014-L'):     # T-077 p8: the skin plies 2-3 carry the same openings
         ctx.components[pid_].cuts = list(core_.cuts)
     hw.cylinder('X', (0.100, 0.0, 0.0), 0.002, 0.001, name='hardware lump')
     comps = ctx.components

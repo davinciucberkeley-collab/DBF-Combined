@@ -48,6 +48,66 @@
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
+   "id": "WNG-014-R",
+   "name": "Wing torsion skin plies 2-3 (R, T-077 p8, D-226 / AM-016): 2 more plies of 48 g/m2 glass at +-45 deg wet-laid over ply 1, |y| 0.052..0.400 (the torsion bay between the centre and fin bulkheads plus laps), closed over the LE and the cove face; drawn inside ply 1 (core machined smaller by the total); mass = shell volume x 1.63 g/cm3",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 23.2,
+   "material": "glass cloth 48 g/m2 + epoxy",
+   "cg_xyz_m": [
+    0.0919,
+    0.226,
+    -0.0012
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-013-R",
+   "name": "Centre bulkhead (R, T-077 p8, D-226 s3): 0.5 mm CF sheet (waterjet, BOM T2) cut to the cell inside the 3 skin plies (LE to the cove), y 60.0..60.5 mm, spar hole 12 mm (flox), servo-lead slot and (left) I2C hole; 2-ply 1080 tape lap 8 mm on the skin round the edge; CGE-006 flange bonded on its inboard face. Mass = plate 2.55 g (area x 0.5 mm x 1.6 g/cm3) + tape lap 1.07 g + flange bond line 0.37 g (EST)",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 4.0,
+   "material": "CF fabric laminate (cut sheet) + glass tape",
+   "cg_xyz_m": [
+    0.0868,
+    0.0602,
+    -0.0008
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-014-L",
+   "name": "Wing torsion skin plies 2-3 (L, T-077 p8, D-226 / AM-016): 2 more plies of 48 g/m2 glass at +-45 deg wet-laid over ply 1, |y| 0.052..0.400 (the torsion bay between the centre and fin bulkheads plus laps), closed over the LE and the cove face; drawn inside ply 1 (core machined smaller by the total); mass = shell volume x 1.63 g/cm3",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 23.2,
+   "material": "glass cloth 48 g/m2 + epoxy",
+   "cg_xyz_m": [
+    0.0919,
+    -0.226,
+    -0.0012
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-013-L",
+   "name": "Centre bulkhead (L, T-077 p8, D-226 s3): 0.5 mm CF sheet (waterjet, BOM T2) cut to the cell inside the 3 skin plies (LE to the cove), y -60.0..60.5 mm, spar hole 12 mm (flox), servo-lead slot and (left) I2C hole; 2-ply 1080 tape lap 8 mm on the skin round the edge; CGE-006 flange bonded on its inboard face. Mass = plate 2.55 g (area x 0.5 mm x 1.6 g/cm3) + tape lap 1.07 g + flange bond line 0.37 g (EST)",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 4.0,
+   "material": "CF fabric laminate (cut sheet) + glass tape",
+   "cg_xyz_m": [
+    0.0868,
+    -0.0602,
+    -0.0008
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
    "id": "WNG-002",
    "name": "Spar, CF tube 12x10 x 0.90 m",
    "subsystem": "wing",
@@ -169,13 +229,13 @@
   },
   {
    "id": "WNG-007-R",
-   "name": "Elevon balance (D-187 v2, D-205 R): 12.8 g lead strip 20 mm ahead of the hinge (10 x 1.07 mm x 106 mm; D-195 fallback) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
+   "name": "Elevon balance (D-187 v2, D-205, T-077 p8 R): 10.0 g lead strip 20 mm ahead of the hinge (10 x 0.83 mm x 106 mm; T-077 p8 flutter re-run) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 13.3,
+   "mass_g": 10.5,
    "material": "lead + PETG/CF",
    "cg_xyz_m": [
-    0.1657,
+    0.1661,
     0.285,
     -0.003
    ],
@@ -187,10 +247,10 @@
    "name": "Lens cap + stop bosses (R, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.67,
+   "mass_g": 3.69,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1584,
+    0.1581,
     0.285,
     0.0057
    ],
@@ -202,7 +262,7 @@
    "name": "Lens cap + stop bosses (R, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.69,
+   "mass_g": 3.72,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.1602,
@@ -244,13 +304,13 @@
   },
   {
    "id": "WNG-007-L",
-   "name": "Elevon balance (D-187 v2, D-205 L): 12.8 g lead strip 20 mm ahead of the hinge (10 x 1.07 mm x 106 mm; D-195 fallback) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
+   "name": "Elevon balance (D-187 v2, D-205, T-077 p8 L): 10.0 g lead strip 20 mm ahead of the hinge (10 x 0.83 mm x 106 mm; T-077 p8 flutter re-run) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 13.3,
+   "mass_g": 10.5,
    "material": "lead + PETG/CF",
    "cg_xyz_m": [
-    0.1657,
+    0.1661,
     -0.285,
     -0.003
    ],
@@ -262,10 +322,10 @@
    "name": "Lens cap + stop bosses (L, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.67,
+   "mass_g": 3.69,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1584,
+    0.1581,
     -0.285,
     0.0057
    ],
@@ -277,7 +337,7 @@
    "name": "Lens cap + stop bosses (L, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.69,
+   "mass_g": 3.72,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.1602,
@@ -342,6 +402,70 @@
    "via": "CT-EPOXY",
    "owner": "wing",
    "notes": "cove CF strip wetted into the skin laminate"
+  },
+  {
+   "id": "E-WNG-81R",
+   "part_a": "WNG-014-R",
+   "part_b": "WNG-011",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "skin plies 2-3 wet-laid on ply 1 (D-226)"
+  },
+  {
+   "id": "E-WNG-82R",
+   "part_a": "WNG-014-R",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "skin plies over the core (D-226)"
+  },
+  {
+   "id": "E-WNG-83R",
+   "part_a": "WNG-013-R",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "centre bulkhead in its core slot (core segments bonded on both faces, D-226)"
+  },
+  {
+   "id": "E-WNG-84R",
+   "part_a": "WNG-013-R",
+   "part_b": "WNG-011",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "centre bulkhead 2-ply 1080 tape lap 8 mm on the skin (D-226)"
+  },
+  {
+   "id": "E-WNG-81L",
+   "part_a": "WNG-014-L",
+   "part_b": "WNG-011",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "skin plies 2-3 wet-laid on ply 1 (D-226)"
+  },
+  {
+   "id": "E-WNG-82L",
+   "part_a": "WNG-014-L",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "skin plies over the core (D-226)"
+  },
+  {
+   "id": "E-WNG-83L",
+   "part_a": "WNG-013-L",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "centre bulkhead in its core slot (core segments bonded on both faces, D-226)"
+  },
+  {
+   "id": "E-WNG-84L",
+   "part_a": "WNG-013-L",
+   "part_b": "WNG-011",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "centre bulkhead 2-ply 1080 tape lap 8 mm on the skin (D-226)"
   },
   {
    "id": "E-WNG-01",
@@ -527,12 +651,21 @@
   "E-AVN-13",
   "E-AVN-14",
   "E-CGE-28",
-  "E-CGE-31",
-  "E-CGE-34",
+  "E-CGE-29",
+  "E-CGE-32",
+  "E-CGE-35",
   "E-FIN-04",
-  "E-FIN-08",
-  "E-FIN-12",
-  "E-FIN-16",
+  "E-FIN-05",
+  "E-FIN-06",
+  "E-FIN-07",
+  "E-FIN-11",
+  "E-FIN-15",
+  "E-FIN-19",
+  "E-FIN-20",
+  "E-FIN-21",
+  "E-FIN-22",
+  "E-FIN-26",
+  "E-FIN-30",
   "E-HRN-20",
   "E-HRN-21",
   "E-HRN-32",

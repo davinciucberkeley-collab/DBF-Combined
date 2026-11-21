@@ -79,7 +79,7 @@ def cup_web_loop(xf=-0.007, rc=0.0070, rho=CUP_FIL, e=0.00005, n=12):
     loop = [(xf - e, cz)] + arc + circ[1:-1] + low + [(xf - e, -cz)]
     return loop, cz - math.sqrt(rho ** 2 - (rho / 2) ** 2)
 ARM_OD, ARM_ID = 0.012, 0.010               # DOC iteration 2: arms 12x10
-BR_OD, BR_ID, BR_X1 = 0.016, 0.014, 0.054       # D-206: bridge 16x14 (was 12x10): torsion (structures/bridge_torsion_d206.md); cut from the R02 16x14 fin-tube offcut
+BR_OD, BR_ID, BR_X1 = 0.016, 0.014, 0.0515      # D-206: bridge 16x14 (was 12x10): torsion (structures/bridge_torsion_d206.md); cut from the R02 16x14 fin-tube offcut. T-077 p8 (D-226): aft end 54.0 -> 51.5 mm, 0.6 mm ahead of the centre node sleeve bore wall (sleeve flat at x 52.1)
 BR_RO, BR_RI = BR_OD / 2, BR_ID / 2
 BR_Z = -0.002                               # D-206: bridge axis 2 mm below the hub axis, so the 16 mm tube top stays tangent to the tray plate underside (z 6.0)
 BORE_X0 = HUB[0] + 0.015                    # bridge bore floor 15 mm aft of the hub axis; floor corner a 45 deg cone matching the tube's BR_CHAMFER (D-207, FEA run d209)
@@ -89,8 +89,24 @@ STRUT_S = (-0.065 + CAGE_DX, 0.0229, 0.0)             # EST start inside the hub
 STRUT_E = (0.0500, 0.2850, 0.0)               # EST end in the clamp boss on the spar (DOC: to the spar at y 0.30)
 import os as _os
 _V5 = _os.environ.get('P5_VARIANT', '')            # analysis switch only (t077p5_variants.py): 'noclam', 'nonode' or 'none'; unset in every gate run
-P5_CLAMSHELL, P5_NODE = _V5 in ('clam', 'both'), _V5 in ('node', 'both')           # T-077 p5 feature flags (D-221: waterjet CF clamshell FIN-005 / X7 node CGE-006 with CF plate N2); False = the part-4 drawing. D-225 (T-077 p7): both False by default (node and clamshell withdrawn, part-4 printed saddles back); P5_VARIANT 'clam' / 'node' / 'both' re-draws the withdrawn items for analysis only
-RIB_OD, RIB_ID, RIB_X0 = 0.014, 0.012, (0.068 if P5_CLAMSHELL else 0.0705)   # T-077 p5: the slim 2 mm cradle ring (r 8.0, was 10.5) lets the rib start 2.5 mm further forward, so the 40 mm socket gives the D-221 engagement of 40 mm
+P5_CLAMSHELL, P5_NODE = False, False   # T-077 p8 (D-226): the D-221 variants cannot be re-drawn on the torsion-cell tree (FIN-005 / CGE-006 are new parts); P5_VARIANT is ignored. Was: _V5 in ('clam', 'both'), _V5 in ('node', 'both')           # T-077 p5 feature flags (D-221: waterjet CF clamshell FIN-005 / X7 node CGE-006 with CF plate N2); False = the part-4 drawing. D-225 (T-077 p7): both False by default (node and clamshell withdrawn, part-4 printed saddles back); P5_VARIANT 'clam' / 'node' / 'both' re-draws the withdrawn items for analysis only
+RIB_OD, RIB_ID, RIB_X0 = 0.025, 0.023, 0.0705   # T-077 p8 (D-226 s3, AM-016): rib 14x12 -> 25x23 (rib torsion at the node exit RF 0.34 -> 1.20 at x2.23, D-226 audit row); the TP rib torsion coupon may restore 14x12 if it shows >= 79 MPa. Was 0.014, 0.012
+# ---- T-077 p8 (D-226): torsion-cell landing path. Every value below is a design choice of this part (EST) unless a record is named; strength rows: mechanism/out/T077p8_data/t077p8_path.py
+RIB_Y = YFIN + 0.003          # rib axis |y| 383 mm: 3 mm outboard of the fin tube axis so the 25 mm rib (inner flank |y| 370.5) clears the hinge-damper end disc (|y| <= 369.0) by 1.5 mm
+SKIN_N = 3                    # D-226 s3: 3 plies of 48 g/m2 glass over the torsion bay (2 plies need the fin-inertia relief credit, which SL-6 forbids until DR-6 closes)
+SKN2_Y = (0.052, 0.400)       # plies 2-3 span |y|: the centre bulkhead (|y| 60) less its 8 mm lap, to the end of ply 1 (|y| 400) past the outer fin bulkhead (|y| 396.5)
+FNB_T, FNB_GAP = 0.0005, 0.0005   # CF bulkhead / plate thickness (0.5 mm sheet, BOM T2); rib flank to fin bulkhead face 0.5 mm (flox)
+FNB_X1 = 0.176                # fin bulkheads cut to the cell profile from the LE to x 176 (1 mm ahead of the hinge-damper notch at x 177.0; the audit's x 184 would cut the damper)
+FNB_FIL_W = 0.012             # flox fillet width per rib flank: the rib-to-bulkhead cusp filled to |dz| <= 6 mm (EST; T077p8 row N3)
+FNP_X, FNP_HY = (0.058, 0.168), 0.020   # fin-node in-plane plates (z-normal, under the skin plies): x 58..168 (110 mm), |y - RIB_Y| <= 20 mm, notched by the rib (D-226 s3: 110 x 40 mm)
+CN_Y = 0.0600                 # centre bulkhead inboard face |y| (D-226 s3: y +-60, outboard of the pack-tray slot |y| <= 58.5)
+CN_SLV_A = 0.0073             # centre node sleeve: octagon apothem 7.3 mm (flats at +-x, +-z; wall 1.15 mm at the flats round the 12.3 bore): smallest 0.05 mm step that passes T077p8 row C1 (RF 1.04 at x2.23; 7.25 gives 1.00 rounded down, 7.15 0.90)
+CN_BORE = 0.0123              # sleeve bore 12.3 mm on the 12 mm spar: 0.15 mm radial slip fit, NOT bonded (the sleeve takes no spar bending; the spar takes no centre torque)
+CN_FL_T = 0.0010              # end flanges 1.0 mm (D-226 s3 said 1.5; T077p8 row C2 sleeve-to-flange junction 2.48 at 1.5 -> 1.65 at 1.0, the bond row C3 does not depend on it: lightened, -4.3 g), bonded on the inboard faces of the centre bulkheads, 0.2 mm bond line
+CN_FL_X, CN_FL_Z = (0.020, 0.120), 0.008   # flange outline: x 20..120, |z| <= 8 mm (under the servo-lead groove bottom z 7.8 at x 64) and inside the skin plies + 0.3 mm
+CN_SK_X0, CN_SK_RO = 0.0275, 0.01005       # bridge socket mouth x 27.5 (24 mm engagement to the bridge end x 51.5), boss OD 20.1 (2.0 mm wall round the 16.1 bore)
+CN_I2C, CN_I2C_D = (0.1095, zu(0.1095) - 0.0065), 0.004   # airspeed I2C groove crossing |y| 60 (= electrical.py I2C_X, I2C_ZD): 4 mm hole in the left flange and bulkhead
+BLK_X0, BLK_SH = 0.2550, RIB_OD / 2 + 0.002                 # root block rib socket x 255..286, half width 14.5 mm (2.0 mm PETG wall round the 25 mm rib; was 19 x 19 round the 14 mm rib)   # T-077 p5: the slim 2 mm cradle ring (r 8.0, was 10.5) lets the rib start 2.5 mm further forward, so the 40 mm socket gives the D-221 engagement of 40 mm
 # ---- T-077 p5 FIN-005 clamshell (D-215 / D-221 / T-080 s3: two 0.5 mm waterjet-cut CF plates about 50 x 75 mm at z +-7.5..9 inside the core, slim 2 mm printed cradle, rib engagement >= 40 mm, 3 CF pins in a 4 mm boss; T-071b B.2: pin bearing 0.37 -> 1.12 with 3 x 3 mm pins in a 4 mm wall)
 CLAM_WALL, CLAM_H = 0.002, 0.009             # cradle wall 2.0 mm round the 14 mm rib: socket 18 x 18 mm (half 9.0)
 CLAM_X0 = 0.0665                             # cradle socket front (unchanged)
@@ -188,10 +204,135 @@ def strip_mass_g():
     return abs(_poly_area(strip_loop())) * 2 * SKIN_Y * 1e6 * STRIP_RHO
 
 
+# ------------------------------------------------------------------ T-077 p8 (D-226, AM-016) torsion-cell landing path: geometry and masses
+# Densities: CF sheet 1.6 g/cm3 (ACP PDS Dec 2014, as the T-077 p5 clamshell plates); 6061-T6 2.70 (RHO_AL); laminating epoxy / flox 1.15 g/cm3 (landing_path_a RHO_EPOXY, EST; cotton-flock fill taken
+# at the neat resin density, an upper bound); glass tape 88 g/m2 per ply wet (48 g/m2 cloth + 40 g/m2 resin, SKIN_AREAL).
+RHO_CF_SHEET, RHO_FLOX = 1.6, 1.15
+FNB_LAP_W, FNB_LAP_PLY = 0.016, 2           # bulkhead tape lap: 2 plies of 1080, 8 mm on the skin + 8 mm on the bulkhead face (D-226 s3), round the whole bulkhead edge, one face
+STRAP_PLY, STRAP_W = 4, 0.055               # rib straps: 4 plies 0/90 1080 over the rib top and bottom, developed width 55 mm (half the 25.4 mm rib circumference 39.9 mm + two 8 mm laps, upper bound)
+
+
+def ply_loops():
+    """WNG-014 skin plies 2..SKIN_N, drawn inside ply 1 (the core is machined smaller by the total, as for ply 1): (outer, inner) loops."""
+    o = core_loop()
+    return _offset_loop(o, SKIN_T), _offset_loop(o, SKIN_N * SKIN_T)
+
+
+def ply_mass_g():
+    """one side (R or L): plies 2..SKIN_N over |y| SKN2_Y."""
+    o, i_ = ply_loops()
+    return (abs(_poly_area(o)) - abs(_poly_area(i_))) * (SKN2_Y[1] - SKN2_Y[0]) * 1e6 * SKIN_RHO
+
+
+def _clip_x(loop, x1):
+    """Sutherland-Hodgman clip of a closed (x, z) loop to x <= x1."""
+    out = []
+    for i in range(len(loop)):
+        a, b = loop[i - 1], loop[i]
+        ia, ib = a[0] <= x1, b[0] <= x1
+        if ib:
+            if not ia:
+                t = (x1 - a[0]) / (b[0] - a[0]); out.append((x1, a[1] + t * (b[1] - a[1])))
+            out.append(b)
+        elif ia:
+            t = (x1 - a[0]) / (b[0] - a[0]); out.append((x1, a[1] + t * (b[1] - a[1])))
+    return out
+
+
+def bulkhead_loop(x1=None):
+    """CF bulkhead outline: the cell inside the SKIN_N plies (+ 0.02 mm), clipped to x <= x1 (fin bulkheads) or the whole section to the cove (centre bulkheads)."""
+    l_ = _offset_loop(core_loop(), SKIN_N * SKIN_T + 0.00002)
+    return _ccw(_clip_x(l_, x1) if x1 else l_)
+
+
+def _perim(l_):
+    return sum(math.hypot(l_[i][0] - l_[i - 1][0], l_[i][1] - l_[i - 1][1]) for i in range(len(l_)))
+
+
+def plate_loop(side, n=23):
+    """FIN-009 in-plane plate section (x, z): 0.5 mm band under the skin plies over x FNP_X, upper (U) or lower (L) surface."""
+    xs = [FNP_X[0] + (FNP_X[1] - FNP_X[0]) * k / (n - 1) for k in range(n)]
+    t3 = SKIN_N * SKIN_T + 0.00002
+    if side == 'U':
+        return _ccw([(x, zu(x) - t3) for x in xs] + [(x, zu(x) - t3 - FNB_T) for x in reversed(xs)])
+    return _ccw([(x, zl(x) + t3 + FNB_T) for x in xs] + [(x, zl(x) + t3) for x in reversed(xs)])
+
+
+def octagon_loop(a, cx, cz):
+    """regular octagon, apothem a, flats normal to +-x, +-z and the diagonals, centre (cx, cz)."""
+    rc = a / math.cos(math.pi / 8)
+    return [(cx + rc * math.cos(math.pi / 8 + k * math.pi / 4), cz + rc * math.sin(math.pi / 8 + k * math.pi / 4)) for k in range(8)]
+
+
+def flange_loop(n=41):
+    """CGE-006 end flange (x, z): x CN_FL_X, |z| <= CN_FL_Z, 0.3 mm inside the skin plies."""
+    t3 = SKIN_N * SKIN_T + 0.0003
+    xs = [CN_FL_X[0] + (CN_FL_X[1] - CN_FL_X[0]) * k / (n - 1) for k in range(n)]
+    return _ccw([(x, min(CN_FL_Z, zu(x) - t3)) for x in xs] + [(x, max(-CN_FL_Z, zl(x) + t3)) for x in reversed(xs)])
+
+
+def _in_poly(X, Z, l_):
+    import numpy as np
+    ins = np.zeros(X.shape, bool)
+    for i in range(len(l_)):
+        (x0, z0), (x1, z1) = l_[i - 1], l_[i]
+        c = ((z0 > Z) != (z1 > Z)) & (X < (x1 - x0) * (Z - z0) / ((z1 - z0) or 1e-30) + x0)
+        ins ^= c
+    return ins
+
+
+def cn_volume_m3(h=0.0002):
+    """Drawn volume of the centre node CGE-006 by a voxel sum (pitch 0.2 mm): octagonal sleeve |y| <= CN_Y - 0.2 mm, two end flanges, bridge socket boss (x CN_SK_X0..SPAR_X),
+    minus the 12.3 mm spar bore and the bridge socket (16 mm to x BR_X1)."""
+    import numpy as np
+    xs = np.arange(CN_FL_X[0] - 0.001 + h / 2, CN_FL_X[1] + 0.001, h); zs = np.arange(-0.013 + h / 2, 0.013, h)
+    X, Zg = np.meshgrid(xs, zs, indexing='ij')
+    oc = np.maximum(np.maximum(np.abs(X - SPAR_X), np.abs(Zg)), (np.abs(X - SPAR_X) + np.abs(Zg)) / math.sqrt(2.0)) <= CN_SLV_A
+    bore = (X - SPAR_X) ** 2 + Zg ** 2 < (CN_BORE / 2) ** 2
+    fl = _in_poly(X, Zg, flange_loop())
+    ye = CN_Y - 0.0002
+    tot = 0.0
+    for y in np.arange(-ye + h / 2, ye, h):
+        m = oc.copy()
+        if abs(y) >= ye - CN_FL_T:
+            m |= fl
+        rb = y * y + (Zg - BR_Z) ** 2
+        m |= (rb <= CN_SK_RO ** 2) & (X >= CN_SK_X0) & (X <= SPAR_X)
+        m &= ~bore
+        m &= ~((rb < BR_RO ** 2) & (X >= CN_SK_X0 - 0.001) & (X <= BR_X1))
+        tot += float(np.count_nonzero(m)) * h ** 3
+    return tot
+
+
+def cusp_area_m2(ro, gap, dz):
+    """flox in the cusp between a round tube (radius ro) and a flat face gap away from its flank, over |z| <= dz (one flank)."""
+    n = 400
+    return sum(((ro + gap) - math.sqrt(ro * ro - (dz * (2 * (k + 0.5) / n - 1)) ** 2)) * (2 * dz / n) for k in range(n))
+
+
+def fin_node_masses():
+    """(bulkheads g, laps g, flox g, plates g, straps g) for ONE fin node."""
+    bl = bulkhead_loop(FNB_X1)
+    a_b = abs(_poly_area(bl)) - math.pi * (SPAR_OD / 2) ** 2
+    bk = 2 * a_b * FNB_T * 1e6 * RHO_CF_SHEET
+    lap = 2 * FNB_LAP_PLY * FNB_LAP_W * _perim(bl) * SKIN_AREAL * 1e3
+    flox = 2 * cusp_area_m2(RIB_OD / 2, FNB_GAP, FNB_FIL_W / 2) * (FNB_X1 - RIB_X0) * 1e6 * RHO_FLOX
+    pl = sum(abs(_poly_area(plate_loop(sd))) for sd in 'UL') * 2 * FNP_HY * 1e6 * RHO_CF_SHEET * (1 - (FNP_X[1] - RIB_X0) * RIB_OD / ((FNP_X[1] - FNP_X[0]) * 2 * FNP_HY) * 0.5)
+    st = 2 * STRAP_PLY * STRAP_W * (FNB_X1 - RIB_X0) * SKIN_AREAL * 1e3
+    return bk, lap, flox, pl, st
+
+
+def centre_bulkhead_masses():
+    """(bulkhead g, lap g, flange bond g) for ONE centre bulkhead WNG-013."""
+    bl = bulkhead_loop()
+    a_b = abs(_poly_area(bl)) - math.pi * (SPAR_OD / 2) ** 2
+    return a_b * FNB_T * 1e6 * RHO_CF_SHEET, FNB_LAP_PLY * FNB_LAP_W * _perim(bl) * SKIN_AREAL * 1e3, abs(_poly_area(flange_loop())) * 0.0002 * 1e6 * RHO_FLOX
+
+
 # D-187 (FLUTTER.md): elevon mass balance, 10.7 g lead on a 30 mm horn ahead of the hinge, per elevon (EST)
 BAL_YC, BAL_W = 0.285, 0.106                # QP-4 FIXES D-187 v2: lead STRIP centre y, length (spanwise y 0.232-0.338; clear of the servo pocket edge y 0.2225 and the elevon tip 0.35)
 BAL_ARM_DY = 0.035                          # two horn tabs at BAL_YC +- this
-BAL_REACH, BAL_L, BAL_T = 0.020, 0.010, 0.0013 * 12.8 / 15.6   # D-205: lead fallback 15.6 -> 12.8 g (D-195 fallback, flutter case F); was 1.3 mm. Lead centre 20 mm ahead of the hinge axis; strip 10 x 1.3 mm section x 106 mm = 15.6 g at 11.34 g/cm3 (FIXES.md: fits the section to 2 mm of skin poke, printed lens caps)
+BAL_REACH, BAL_L, BAL_T = 0.020, 0.010, 0.0013 * 10.0 / 15.6   # T-077 p8: lead 12.8 -> 10.0 g (CG-closure s2 row 1; flutter re-run mechanism/out/T077p8_data/flutter_p8.md: damped cases B-E pass, worst E kd onset 29.5 >= 28.8 m/s; undamped A fails as it did at 12.8 g). D-205: lead fallback 15.6 -> 12.8 g (D-195 fallback, flutter case F); was 1.3 mm. Lead centre 20 mm ahead of the hinge axis; strip 10 x 1.3 mm section x 106 mm = 15.6 g at 11.34 g/cm3 (FIXES.md: fits the section to 2 mm of skin poke, printed lens caps)
 BAL_DZ = -0.0033                            # lead centre z below the hinge axis: D-193 S5010 (8.6 mm deep at the hinge): -3.3 mm balances the +-21 deg sweep so lead pokes ~3.0 mm through BOTH skins (was -6.0 mm in the 16.8 mm placeholder section; at -6.0 on S5010 the lower cap would poke 5.7 mm)
 BAL_ARM_W, BAL_ARM_T = 0.006, 0.0012        # horn arm (CF-reinforced PETG strip) width, thickness
 HINGE_Z = zu(XH)
@@ -657,8 +798,10 @@ def _rrect(hy, hz, r, n=6):
 # D-194 rib fairing: with the datum 5 mm lower the 14 mm rib (axis z 0) stays inside both skins to x 0.135 and then rises out of the upper skin (zu < 7 mm,
 # 6.2 mm proud at the hinge x 0.184); the lower skin never exposes it. Blister 17 mm wide, top 1.5 mm over the tube, from x 0.130 to the hinge,
 # trimmed by the core and the rib when built. Outboard of the elevon (y 0.35) so no clearance issue. Basis: structures keep the 14x12 rib (STRUCTURES-R), so it is faired not shrunk.
-RIBF_X0 = 0.130
-RIBF_LOOP = [(YFIN + dy, z) for dy, z in ((-0.0085, 0.0005), (0.0085, 0.0005), (0.0085, 0.0030), (0.0065, 0.0065), (0.0035, 0.0084),
+RIBF_X0 = 0.130                             # D-194 blister start (kept for the record; T-077 p8 fairings start at RIB_X0)
+RIBF_R = RIB_OD / 2 + 0.0002 + 0.0012       # T-077 p8: fairing outer radius 13.9 mm = rib 12.5 + strap 0.2 (4 plies, undrawn) + 1.2 mm XPS / tape wall (EST)
+RIBF_X1 = XH - 0.0075                       # fairings stop 7.5 mm ahead of the hinge: the damper notch starts at x 177.0
+RIBF_LOOP_P7 = [(YFIN + dy, z) for dy, z in ((-0.0085, 0.0005), (0.0085, 0.0005), (0.0085, 0.0030), (0.0065, 0.0065), (0.0035, 0.0084),
                                           (-0.0035, 0.0084), (-0.0065, 0.0065), (-0.0085, 0.0030))]
 
 
@@ -750,6 +893,10 @@ def tray_stats():
 P('WNG-001', 'Wing core, XPS 25 kg/m3 + tape skin + glue + hinge tape (lumped)', 'wing', 100.1, 'XPS foam 25 kg/m3 + packing tape')   # QP-4 FIXES item 3: 116 - 13.7 (foam 82 g x 5/30) - 0.3 (elevon span moved 10 mm); D-193 S5010: core section area 3457 -> 3372 mm2 (CALC from core_loop, hinge-forward part) = -85 mm2 x 0.90 m x 25 kg/m3 = -1.9 g
 P('WNG-011', 'Wing torsion skin: 1 ply 48 g/m2 glass at +-45 deg wet-laid on the core, closed over the leading edge and the cove face, y -0.40..+0.40, wet ply 0.054 mm (EST) drawn as a shell inside the core outline; openings as the core (slots, pockets, windows); mass = shell volume x %.2f g/cm3 (88 g/m2 / 0.054 mm, T-071 l.24)' % SKIN_RHO, 'wing', round(skin_mass_g(), 1), 'glass cloth 48 g/m2 + epoxy')
 P('WNG-012', 'Cove CF strip, section %.0f x %.1f mm = 3 mm2 (only the area is given, T-071 l.32; width, thickness and product -), y -0.40..+0.40, under the skin on the cove face; mass = volume x 1.55 g/cm3' % (STRIP_W * 1e3, STRIP_TH * 1e3), 'wing', round(strip_mass_g(), 1), 'CFRP strip')
+for s_ in 'RL':
+    P('WNG-014-' + s_, 'Wing torsion skin plies 2-%d (%s, T-077 p8, D-226 / AM-016): %d more plies of 48 g/m2 glass at +-45 deg wet-laid over ply 1, |y| %.3f..%.3f (the torsion bay between the centre and fin bulkheads plus laps), closed over the LE and the cove face; drawn inside ply 1 (core machined smaller by the total); mass = shell volume x %.2f g/cm3' % (SKIN_N, s_, SKIN_N - 1, SKN2_Y[0], SKN2_Y[1], SKIN_RHO), 'wing', round(ply_mass_g(), 1), 'glass cloth 48 g/m2 + epoxy')
+    _cb = centre_bulkhead_masses()
+    P('WNG-013-' + s_, 'Centre bulkhead (%s, T-077 p8, D-226 s3): 0.5 mm CF sheet (waterjet, BOM T2) cut to the cell inside the %d skin plies (LE to the cove), y %s%.1f..%.1f mm, spar hole 12 mm (flox), servo-lead slot and (left) I2C hole; 2-ply 1080 tape lap 8 mm on the skin round the edge; CGE-006 flange bonded on its inboard face. Mass = plate %.2f g (area x 0.5 mm x 1.6 g/cm3) + tape lap %.2f g + flange bond line %.2f g (EST)' % (s_, SKIN_N, '' if s_ == 'R' else '-', CN_Y * 1e3, (CN_Y + FNB_T) * 1e3, _cb[0], _cb[1], _cb[2]), 'wing', round(sum(_cb), 1), 'CF fabric laminate (cut sheet) + glass tape')
 P('WNG-002', 'Spar, CF tube 12x10 x 0.90 m', 'wing', round(tube_g(0.90, SPAR_OD, SPAR_ID), 1), 'CFRP tube')
 for pid, nm in (('WNG-003-C', 'centre'), ('WNG-004-R', 'right strut'), ('WNG-004-L', 'left strut'),
                 ('WNG-005-R', 'right rib'), ('WNG-005-L', 'left rib')):
@@ -757,7 +904,7 @@ for pid, nm in (('WNG-003-C', 'centre'), ('WNG-004-R', 'right strut'), ('WNG-004
 P('WNG-006-R', 'Elevon right', 'wing', 6.7, 'XPS foam + tape')   # 8.5 - 0.73 (foam 4.4 g x 5/30) + 0.26 (10 mm more span); D-193 S5010: aft-section area 410 -> 247 mm2 (CALC) x 0.309 m x 25 kg/m3 = -1.26 g per elevon
 P('WNG-006-L', 'Elevon left', 'wing', 6.7, 'XPS foam + tape')
 for s_ in 'RL':
-    P('WNG-007-' + s_, 'Elevon balance (D-187 v2, D-205 %s): 12.8 g lead strip 20 mm ahead of the hinge (10 x 1.07 mm x 106 mm; D-195 fallback) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)' % s_, 'wing', 13.3, 'lead + PETG/CF')
+    P('WNG-007-' + s_, 'Elevon balance (D-187 v2, D-205, T-077 p8 %s): 10.0 g lead strip 20 mm ahead of the hinge (10 x %.2f mm x 106 mm; T-077 p8 flutter re-run) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)' % (s_, BAL_T * 1e3), 'wing', 10.5, 'lead + PETG/CF')
     for sd in 'UL':      # FIXES2: lens caps with the mechanical stop bosses (mass from the drawn volume, PETG 1.27 g/cm3)
         P('WNG-008-%s%s' % (s_, sd), 'Lens cap + stop bosses (%s, %s skin): wall %.1f mm, >= %.1f mm clearance to the lead at the +-%.0f deg stop' % (s_, 'upper' if sd == 'U' else 'lower', CAP_WALL * 1e3, CAP_CLR * 1e3, ELEV_STOP),
           'wing', round(cap_mass_g(sd), 1), 'PETG (printed)')
@@ -774,8 +921,14 @@ for s in 'RL':
         P('FIN-007-' + s, 'Clamshell CF plates (%s): 2 plates 0.5 mm x 41.5 x 24 mm (T-077 p6 trim of the p5 50 x 64; the record says about 50 x 75; corner radii -), waterjet-cut from 0.5 mm CF sheet (ACP PDS Dec 2014, 1.6 g/cm3), bonded on the cradle top and bottom faces; mass = drawn volume x 1.6' % s, 'fins', 6.0, 'CF fabric laminate (cut sheet)')
         P('FIN-008-' + s, 'Clamshell pins (%s): 3 x 3 mm carbon rod x 21.8 mm, vertical through the cradle bosses, the rib walls and the plates (T-071b B.2)' % s, 'fins', round(3 * math.pi / 4 * CLAM_PD ** 2 * CLAM_PIN_L * 1.6e6, 2), 'CF rod')
     else:
-        P('FIN-005-' + s, 'Rib saddle on spar (%s)' % s, 'fins', 1.0, 'PETG (printed)')
-    P('FIN-006-' + s, 'Rib fairing, upper (%s): XPS + tape blister over the 14 mm rib where the S5010 skin is thinner than the tube (D-194); mass EST' % s, 'fins', 0.3, 'XPS foam + tape')
+        _fn = fin_node_masses()
+        P('FIN-005-' + s, 'Fin node bulkheads (%s, T-077 p8, D-226 s3; replaces the printed rib saddle): two 0.5 mm CF sheet bulkheads (waterjet, BOM T2) at |y| %.1f..%.1f and %.1f..%.1f mm (0.5 mm from the 25 mm rib flanks), cut to the cell inside the %d skin plies from the LE to x %.0f, spar holes 12 mm (flox), slotted into the core; rib bonded between them by flox fillets (%.0f mm wide per flank, EST) over x %.1f..%.0f; 2-ply 1080 tape laps 8 mm on both skins. Mass = plates %.2f + tape laps %.2f + flox %.2f g (EST)'
+          % (s, (RIB_Y - RIB_OD / 2 - FNB_GAP - FNB_T) * 1e3, (RIB_Y - RIB_OD / 2 - FNB_GAP) * 1e3, (RIB_Y + RIB_OD / 2 + FNB_GAP) * 1e3, (RIB_Y + RIB_OD / 2 + FNB_GAP + FNB_T) * 1e3, SKIN_N, FNB_X1 * 1e3, FNB_FIL_W * 1e3, RIB_X0 * 1e3, FNB_X1 * 1e3, _fn[0], _fn[1], _fn[2]),
+          'fins', round(_fn[0] + _fn[1] + _fn[2], 1), 'CF fabric laminate (cut sheet) + glass tape + flox')
+        P('FIN-009-' + s, 'Fin node in-plane plates (%s, T-077 p8, D-226 s3): two 0.5 mm CF sheet plates (waterjet, BOM T2) under the upper and lower skin plies, x %.0f..%.0f, |y - %.0f| <= %.0f mm, bent to the airfoil, notched round the rib; plus the two rib straps (undrawn laminate: 4 plies 0/90 1080 over the rib top and bottom, 8 mm laps on the skin, x %.1f..%.0f). Mass = plates %.2f (notch EST) + straps %.2f g (EST)'
+          % (s, FNP_X[0] * 1e3, FNP_X[1] * 1e3, RIB_Y * 1e3, FNP_HY * 1e3, RIB_X0 * 1e3, FNB_X1 * 1e3, _fn[3], _fn[4]), 'fins', round(_fn[3] + _fn[4], 1), 'CF fabric laminate (cut sheet) + glass tape')
+    P('FIN-006-' + s, 'Rib fairing, upper (%s, T-077 p8): XPS + tape blister over the 25 mm rib and its strap, half-round R %.1f mm about the rib axis, x %.1f..%.1f (stops 7.5 mm ahead of the hinge, clear of the damper notch), trimmed to the skin; mass EST' % (s, RIBF_R * 1e3, RIB_X0 * 1e3, RIBF_X1 * 1e3), 'fins', 0.6, 'XPS foam + tape')
+    P('FIN-010-' + s, 'Rib fairing, lower (%s, T-077 p8): XPS + tape blister under the 25 mm rib (it stands 0.9..4 mm proud of the lower skin), half-round R %.1f mm, x %.1f..%.1f, trimmed to the skin; mass EST' % (s, RIBF_R * 1e3, RIB_X0 * 1e3, RIBF_X1 * 1e3), 'fins', 0.4, 'XPS foam + tape')
 # cage (allocation 135; STRUCTURES iteration 2: 122 g)
 P('CGE-001', 'Hub (machined 6061-T6, D-220 / D-221 / D-222: two OCTAGONAL sleeves 16 mm across flats, 1.0 mm wall at the flats, over s +-32 mm of both arm tubes, 38.5 x 20 x 20 mm centre block on the bridge axis to the tray face, 3 mm edge radii, internal radii %.1f / %.1f mm at the junctions (OCC mesh, hub_body.py), 0.5 mm sleeve-mouth and lead-exit chamfers, 2 strut sockets, tray flange; hub pockets T-077 p4: block aft of x +15.5 and the 30 mm bond collar (D-220) turned to a cylinder R %.2f mm about the bridge axis (wall %.2f mm round the 16 mm bore); mass = drawn volume x 2.70 g/cm3)' % (HUB_FIL, HUB_FIL_A, POCKET_R * 1e3, POCKET_R * 1e3 - BR_RO * 1e3), 'cage', round(hub_mass_g(), 1), 'Al 6061-T6 (machined)')
 for t_ in 'AB':
@@ -795,7 +948,8 @@ if P5_NODE:
     P('CGE-013', 'Node outer clevis ears: 2 x (41.5 x 19 x 1.5 mm, spar hole 12 mm), Onyx printed z-up, y +-(17.0..18.5), bonded on the plates (T-071b N2: ears on both faces of the plate; thickness EST); mass = drawn volume x T-067 basis x 0.945', 'cage', 1.5, 'Onyx + CF (Markforged X7)')
     P('CGE-012', 'Node pins: 8 x 3 mm carbon rod x 5.2 mm along y through the inner ear, the plate and the outer ear (4 per side, double shear, T-071b N2; positions EST)', 'cage', round(8 * math.pi / 4 * NODE_PIN_D ** 2 * (NODE_EAR_OUT[1] - NODE_EAR_IN[0] + 0.0002) * 1.6e6, 2), 'CF rod')
 else:
-    P('CGE-006', 'Bridge saddle on spar', 'cage', 2.0, 'PETG (printed)')
+    P('CGE-006', 'Centre node (T-077 p8, D-226 s3; replaces the printed bridge saddle and the audit T-fitting + 6061 tube + flanges with ONE machined 6061-T6 part, Tormach): octagonal sleeve apothem %.1f mm (wall %.2f at the flats) over |y| <= %.1f mm on the spar, bore %.1f mm (0.15 mm slip fit, not bonded), end flanges %.1f mm thick (x %.0f..%.0f, |z| <= %.0f, inside the skin) bonded on the centre bulkheads, bridge socket boss OD %.1f, socket 16 mm from x %.1f to %.1f (bridge bonded); mass = drawn volume (voxel 0.2 mm) x 2.70 g/cm3'
+      % (CN_SLV_A * 1e3, (CN_SLV_A - CN_BORE / 2) * 1e3, (CN_Y - 0.0002) * 1e3, CN_BORE * 1e3, CN_FL_T * 1e3, CN_FL_X[0] * 1e3, CN_FL_X[1] * 1e3, CN_FL_Z * 1e3, 2 * CN_SK_RO * 1e3, CN_SK_X0 * 1e3, BR_X1 * 1e3), 'cage', round(cn_volume_m3() * 1e6 * RHO_AL, 1), 'Al 6061-T6 (machined)')
 P('CGE-008', 'Pack tray R1'' (T-077: 1.2 mm windowed plate on a 2.0 mm root pad + ribs, 2.0 mm end walls with windows, two 40 x 2.0 mm tabs per lip; mass = drawn solid volume x 1.27, T-067 basis M applied by printed_mass.json when present)', 'cage', round(tray_volume_m3() * 1e6 * RHO_PETG, 1), 'PETG (printed)')   # T-077: from the drawn volume (solid); was 3.8 g EST
 
 # ------------------------------------------------------------------ wing / fins / cage edges
@@ -803,6 +957,11 @@ P('CGE-008', 'Pack tray R1'' (T-077: 1.2 mm windowed plate on a 2.0 mm root pad 
 E('E-WNG-90', 'WNG-011', 'WNG-001', EPX, 'wing', 'glass skin wet-laid on the foam core (T-070): 1 ply +-45 deg, resin is the bond; vacuum bag or hand roll, practice "-"')
 E('E-WNG-91', 'WNG-012', 'WNG-001', EPX, 'wing', 'cove CF strip bonded on the cove face under the skin (T-070)')
 E('E-WNG-92', 'WNG-012', 'WNG-011', EPX, 'wing', 'cove CF strip wetted into the skin laminate')
+for s_ in 'RL':     # T-077 p8 (D-226); explicit ids E-WNG-81..84R/L (en('WNG') would shift the plug edges onto the fixed hinge ids E-WNG-10 / 11)
+    E('E-WNG-81' + s_, 'WNG-014-' + s_, 'WNG-011', EPX, 'wing', 'skin plies 2-3 wet-laid on ply 1 (D-226)')
+    E('E-WNG-82' + s_, 'WNG-014-' + s_, 'WNG-001', EPX, 'wing', 'skin plies over the core (D-226)')
+    E('E-WNG-83' + s_, 'WNG-013-' + s_, 'WNG-001', EPX, 'wing', 'centre bulkhead in its core slot (core segments bonded on both faces, D-226)')
+    E('E-WNG-84' + s_, 'WNG-013-' + s_, 'WNG-011', EPX, 'wing', 'centre bulkhead 2-ply 1080 tape lap 8 mm on the skin (D-226)')
 E('E-WNG-01', 'WNG-002', 'WNG-001', EPX, 'wing', 'spar bonded in its bore; build rule: bond over |y| <= 0.20 m (FIXES2: 0.15 m gave foam shear 78 kPa, MS +0.11 at the board allowable 103 kPa scale; 0.20 m gives 58 kPa, MS +0.48)')
 for pid in ('WNG-003-C', 'WNG-004-R', 'WNG-004-L', 'WNG-005-R', 'WNG-005-L'):
     E(en('WNG'), pid, 'WNG-002', EPX, 'wing', 'plug in the spar bore under a clamp (C2 rule)')
@@ -820,8 +979,15 @@ for s in 'RL':
 for s in 'RL':
     E(en('FIN'), 'FIN-003-' + s, 'FIN-001-' + s, EPX, 'fins', 'root block wraps the tube')
     E(en('FIN'), 'FIN-003-' + s, 'FIN-002-' + s, EPX, 'fins', 'rib end in the block socket')
-    E(en('FIN'), 'FIN-002-' + s, 'FIN-005-' + s, EPX, 'fins', 'rib start in the saddle socket')
-    E(en('FIN'), 'FIN-005-' + s, 'WNG-002', EPX, 'fins', 'saddle wraps the spar (60 mm)')
+    E(en('FIN'), 'FIN-002-' + s, 'FIN-005-' + s, EPX, 'fins', 'rib bonded between the two fin bulkheads: flox fillets on both flanks, x 70.5..176 (T-077 p8, D-226)')
+    E(en('FIN'), 'FIN-005-' + s, 'WNG-002', EPX, 'fins', 'spar through the 12 mm holes of both bulkheads, flox (D-226)')
+    E(en('FIN'), 'FIN-005-' + s, 'WNG-001', EPX, 'fins', 'bulkheads in their core slots (core segments bonded on both faces, D-226)')
+    E(en('FIN'), 'FIN-005-' + s, 'WNG-011', EPX, 'fins', 'bulkhead 2-ply 1080 tape laps 8 mm on both skins (D-226)')
+    E(en('FIN'), 'FIN-009-' + s, 'WNG-014-' + s, EPX, 'fins', 'in-plane plates under the skin plies, wet-laid (D-226)')
+    E(en('FIN'), 'FIN-009-' + s, 'FIN-005-' + s, EPX, 'fins', 'plates bonded on the bulkhead edges (D-226)')
+    E(en('FIN'), 'FIN-002-' + s, 'FIN-009-' + s, EPX, 'fins', 'rib straps (4-ply 0/90 1080) over the rib onto the skin over the plates; flox in the plate notch (D-226)')
+    E(en('FIN'), 'FIN-010-' + s, 'FIN-002-' + s, CA, 'fins', 'lower rib fairing under the rib (foam-safe CA)')
+    E(en('FIN'), 'FIN-010-' + s, 'WNG-001', CA, 'fins', 'lower rib fairing bonded on the lower skin')
     if P5_CLAMSHELL:
         E(en('FIN'), 'FIN-005-' + s, 'WNG-001', EPX, 'fins', 'clamshell bonded in its foam pocket (placed before the spar: the upper plate cannot pass the spar from below)')
         E(en('FIN'), 'FIN-007-' + s, 'FIN-005-' + s, EPX, 'fins', 'CF plates bonded on the cradle top and bottom faces (frame fraction 0.5 EST, T-071b B.2)')
@@ -845,8 +1011,9 @@ for t_ in 'AB':
     E(en('CGE'), 'CGE-010-C', 'CGE-002-' + t_, EPX, 'cage', 'crossing pin through the tube, bonded (D-202)')
 E(en('CGE'), 'CGE-010-C', 'CGE-001', EPX, 'cage', 'crossing pin through the centre block (D-202)')
 E(en('CGE'), 'CGE-004', 'CGE-001', EPX, 'cage', 'bridge in hub')
-E(en('CGE'), 'CGE-004', 'CGE-006', EPX, 'cage', 'bridge end in saddle boss')
-E(en('CGE'), 'CGE-006', 'WNG-002', EPX, 'cage', 'saddle wraps the spar (30 mm)')
+E(en('CGE'), 'CGE-004', 'CGE-006', EPX, 'cage', 'bridge bonded in the 24 mm socket of the centre node (T-077 p8, D-226)')
+for s_ in 'RL':
+    E(en('CGE'), 'CGE-006', 'WNG-013-' + s_, EPX, 'cage', 'centre node end flange bonded on the inboard face of the centre bulkhead, 0.2 mm bond line, epoxy injected after docking (D-226; practice EST)')
 if P5_NODE:
     E(en('CGE'), 'CGE-011', 'CGE-006', EPX, 'cage', 'N2 plates bonded on the inner ears (2 x 41.5 x 19 mm faces)')
     E(en('CGE'), 'CGE-013', 'CGE-011', EPX, 'cage', 'outer clevis ears bonded on the plates')
@@ -920,7 +1087,13 @@ def build_wing(ctx):
         core.cut_box((0.1245, y0, SV_Z1), (0.1655, y1, 0.020), name='servo pocket')
     core.cut_box((0.0, -(BR_RO + 0.0005), -0.05), (0.056, BR_RO + 0.0005, 0.0075), name='bridge slot (open below; D-206 16 mm bridge)')
     core.cut_box((-0.010, -0.0585, 0.0055), (0.0225, 0.0585, 0.060), name='pack tray slot (open above; T-077 y +-58.5 clears the 20 mm strap, outer face 57.6, over the whole trim travel)')
-    core.cut_box((0.0295, -0.0165, -0.05), (0.0710, 0.0165, 0.0115), name='saddle slot (open below)')
+    # T-077 p8 (D-226): the centre node CGE-006 docks from below with the cage: sleeve channel, socket-boss channel and two flange slits, all open below (the lower skin openings are
+    # taped over after docking: tape not drawn); the printed bridge saddle slot (x 29.5..71, |y| <= 16.5) is gone
+    core.cut_box((SPAR_X - CN_SLV_A - 0.0006, -CN_Y, -0.05), (SPAR_X + CN_SLV_A + 0.0006, CN_Y, CN_SLV_A + 0.0006), name='centre node sleeve channel (open below, T-077 p8)')
+    core.cut_box((CN_SK_X0 - 0.0006, -(CN_SK_RO + 0.0005), -0.05), (SPAR_X, CN_SK_RO + 0.0005, BR_Z + CN_SK_RO + 0.0006), name='centre node socket-boss channel (open below, T-077 p8)')
+    for sy_ in (1, -1):
+        ya_, yb_ = sorted((sy_ * (CN_Y - 0.0002 - CN_FL_T - 0.0002), sy_ * CN_Y))
+        core.cut_box((CN_FL_X[0] - 0.0005, ya_, -0.05), (CN_FL_X[1] + 0.0005, yb_, CN_FL_Z + 0.0005), name='centre node flange slit (open below, T-077 p8)')
     if P5_NODE:
         for sy_ in (1, -1):
             ya_, yb_ = sorted((sy_ * 0.0165, sy_ * (NODE_EAR_OUT[1] + 0.0003)))
@@ -937,8 +1110,7 @@ def build_wing(ctx):
         if P5_CLAMSHELL:
             y0, y1 = sorted((sg * (YFIN - CLAM_POCKET_HY - 0.0003), sg * (YFIN + CLAM_POCKET_HY + 0.0003)))
             core.cut_box((SPAR_X - CLAM_RING_R - 0.0003, y0, -0.05), (CLAM_PL_X[1] + 0.0003, y1, CLAM_PL_Z + CLAM_PL_T + 0.0003), name='clamshell pocket (open below, top 9.8 mm): plates, cradle; the pin bosses (z to 11) are cut by their own seats (T-077 p5)')
-        else:
-            core.cut_box((0.0485, y0, -0.05), (0.0910, y1, 0.0115), name='rib saddle slot (open below)')
+        # T-077 p8: the printed rib saddle slot is gone (the fin-node bulkheads and plates are seats in the core; the 25 mm rib bore is the rib's own seat)
         d = (STRUT_E[0] - STRUT_S[0], STRUT_E[1] - STRUT_S[1])
         L_ = math.hypot(*d)
         ux, uy = d[0] / L_, d[1] / L_
@@ -961,8 +1133,22 @@ def build_wing(ctx):
     stp.prism('Y', -SKIN_Y, [strip_loop()], 2 * SKIN_Y, name='cove CF strip 6 x 0.5 mm (3 mm2; width / thickness EST)')
     ctx.seat('WNG-001', 'WNG-011', 'core outline machined inside by the 0.054 mm skin (the skin is wet-laid on the foam)')
     ctx.seat('WNG-001', 'WNG-012', 'cove strip pocket under the skin')
+    # T-077 p8 (D-226): skin plies 2..SKIN_N over the torsion bay (WNG-014-R/L) and the centre bulkheads (WNG-013-R/L)
+    po_, pi_ = ply_loops()
+    for s_, sg__ in (('R', 1), ('L', -1)):
+        pl_ = ctx.part('WNG-014-' + s_, rgb=(0.70, 0.82, 0.76))
+        y0_ = SKN2_Y[0] if sg__ > 0 else -SKN2_Y[1]
+        pl_.prism('Y', y0_, [po_, pi_], SKN2_Y[1] - SKN2_Y[0], name='glass skin plies 2-%d +-45 deg, %.3f mm (EST), |y| %.0f..%.0f mm (D-226)' % (SKIN_N, (SKIN_N - 1) * SKIN_T * 1e3, SKN2_Y[0] * 1e3, SKN2_Y[1] * 1e3))
+        ctx.seat('WNG-001', 'WNG-014-' + s_, 'core outline machined inside by the plies 2-%d' % SKIN_N)
+        ctx.seat('WNG-012', 'WNG-014-' + s_, 'cove strip under the plies')
+    bh_ = ctx.part('WNG-013-R', rgb=(0.15, 0.15, 0.15))
+    bh_.prism('Y', CN_Y, [bulkhead_loop()], FNB_T, name='centre bulkhead 0.5 mm CF sheet, cell inside the plies, LE to the cove (D-226)')
+    ctx.mirror('WNG-013-R', 'WNG-013-L', plane='XZ')
+    for s_ in 'RL':
+        ctx.seat('WNG-013-' + s_, 'WNG-002', 'spar hole 12 mm (flox)')
     guests = ['HWC-001', 'HWC-003', 'WNG-002', 'CGE-004', 'CGE-005-R', 'CGE-005-L', 'CGE-006', 'CGE-007-R', 'CGE-007-L', 'FIN-002-R', 'FIN-002-L',
-              'FIN-005-R', 'FIN-005-L', 'AVN-006', 'MEC-001-R', 'MEC-001-L', 'CGE-008', 'HRN-003-R', 'HRN-003-L']
+              'FIN-005-R', 'FIN-005-L', 'AVN-006', 'MEC-001-R', 'MEC-001-L', 'CGE-008', 'HRN-003-R', 'HRN-003-L',
+              'FIN-009-R', 'FIN-009-L', 'WNG-013-R', 'WNG-013-L']             # T-077 p8: fin-node plates, centre bulkheads
     if P5_CLAMSHELL:
         guests += ['FIN-007-R', 'FIN-007-L', 'FIN-008-R', 'FIN-008-L']
     if P5_NODE:
@@ -971,6 +1157,8 @@ def build_wing(ctx):
         ctx.seat('WNG-001', g, 'groove / bore / pocket cut in the core for ' + g, shop=True)
         ctx.seat('WNG-011', g, 'opening in the skin for ' + g, shop=True)
         ctx.seat('WNG-012', g, 'cove strip interrupted for ' + g, shop=True)
+        for s_ in 'RL':
+            ctx.seat('WNG-014-' + s_, g, 'opening in the skin plies for ' + g, shop=True)
 
 
 def sg_(s):
@@ -982,30 +1170,41 @@ def build_fins(ctx):
     t.tube('Z', (XFIN_T, YFIN, -FIN_H), 2 * FIN_H, FIN_OD / 2, FIN_ID / 2, name='fin tube')
     ctx.mirror('FIN-001-R', 'FIN-001-L', plane='XZ')
     r = ctx.part('FIN-002-R', rgb=(0.1, 0.1, 0.1))
-    r.tube('X', (RIB_X0, YFIN, 0.0), RIB_X1 - RIB_X0, RIB_OD / 2, RIB_ID / 2, name='rib tube')
+    r.tube('X', (RIB_X0, RIB_Y, 0.0), RIB_X1 - RIB_X0, RIB_OD / 2, RIB_ID / 2, name='rib tube %.0fx%.0f CF (T-077 p8, D-226), axis |y| %.0f mm' % (RIB_OD * 1e3, RIB_ID * 1e3, RIB_Y * 1e3))
     ctx.mirror('FIN-002-R', 'FIN-002-L', plane='XZ')
     b = ctx.part('FIN-003-R', rgb=(0.9, 0.9, 0.9))
     b.tube('Z', (XFIN_T, YFIN, -0.03), 0.06, 0.0115, FIN_OD / 2, name='root block ring')
-    b.box((0.2550, YFIN - 0.0095, -0.0095), (RIB_X1, YFIN + 0.0095, 0.0095), name='root block rib socket')
+    b.box((BLK_X0, RIB_Y - BLK_SH, -BLK_SH), (RIB_X1, RIB_Y + BLK_SH, BLK_SH), name='root block rib socket %.0f x %.0f mm round the 25 mm rib (T-077 p8)' % (2 * BLK_SH * 1e3, 2 * BLK_SH * 1e3))
     ctx.mirror('FIN-003-R', 'FIN-003-L', plane='XZ')
     f = ctx.part('FIN-004-R', rgb=(0.95, 0.95, 0.8))
     f.prism('Z', -FIN_H, [[(x_, YFIN + y_) for x_, y_ in fin_fairing_loop()]], 2 * FIN_H, name='fairing')
     ctx.mirror('FIN-004-R', 'FIN-004-L', plane='XZ')
     rf = ctx.part('FIN-006-R', rgb=(0.95, 0.95, 0.8))
-    rf.prism('X', RIBF_X0, [RIBF_LOOP], XH - RIBF_X0, name='rib fairing blister')
+    th0_ = math.asin(0.0005 / RIBF_R)
+    up_ = [(RIB_Y + RIBF_R * math.cos(th0_ + (math.pi - 2 * th0_) * k / 24), RIBF_R * math.sin(th0_ + (math.pi - 2 * th0_) * k / 24)) for k in range(25)]
+    rf.prism('X', RIB_X0, [_ccw(up_)], RIBF_X1 - RIB_X0, name='upper rib fairing blister, half-round R %.1f mm (T-077 p8)' % (RIBF_R * 1e3))
+    rf.cut_cylinder('X', (RIB_X0 - 0.001, RIB_Y, 0.0), RIBF_X1 - RIB_X0 + 0.002, RIB_OD / 2 + 0.0002, name='rib + strap groove 12.7 mm radius (strap 4 plies, undrawn)')
     ctx.mirror('FIN-006-R', 'FIN-006-L', plane='XZ')
-    sdl = ctx.part('FIN-005-R', rgb=(0.9, 0.9, 0.9))
-    if P5_CLAMSHELL:
+    lf_ = ctx.part('FIN-010-R', rgb=(0.95, 0.95, 0.8))
+    lf_.prism('X', RIB_X0, [_ccw([(y_, -z_) for y_, z_ in up_])], RIBF_X1 - RIB_X0, name='lower rib fairing blister, half-round R %.1f mm (T-077 p8)' % (RIBF_R * 1e3))
+    lf_.cut_cylinder('X', (RIB_X0 - 0.001, RIB_Y, 0.0), RIBF_X1 - RIB_X0 + 0.002, RIB_OD / 2 + 0.0002, name='rib + strap groove 12.7 mm radius (strap undrawn)')
+    ctx.mirror('FIN-010-R', 'FIN-010-L', plane='XZ')
+    # T-077 p8 (D-226 s3): fin node = two CF bulkheads either side of the rib + two in-plane plates under the skin plies
+    fp_ = ctx.part('FIN-009-R', rgb=(0.12, 0.12, 0.12))
+    for sd_ in 'UL':
+        fp_.prism('Y', RIB_Y - FNP_HY, [plate_loop(sd_)], 2 * FNP_HY, name='fin-node in-plane plate %s, 0.5 mm CF, x %.0f..%.0f, 40 mm wide, bent to the airfoil, notched by the rib (D-226)' % ('upper' if sd_ == 'U' else 'lower', FNP_X[0] * 1e3, FNP_X[1] * 1e3))
+    ctx.mirror('FIN-009-R', 'FIN-009-L', plane='XZ')
+    sdl = ctx.part('FIN-005-R', rgb=(0.15, 0.15, 0.15))
+    if False:                                  # T-077 p8: the D-221 clamshell and the part-4 saddle are withdrawn (D-226)
         sdl.tube('Y', (SPAR_X, YFIN - 0.030, 0.0), 0.060, SPAR_OD / 2 + CLAM_WALL, SPAR_OD / 2, name='cradle spar ring, wall 2.0 mm (T-077 p5, D-221)')
         sdl.box((CLAM_X0, YFIN - CLAM_H, -CLAM_H), (CLAM_X1, YFIN + CLAM_H, CLAM_H), name='cradle rib socket 18 x 18 mm, 40 mm engagement of the rib (D-221)')
         for xp_ in CLAM_PX:
             for sz_ in (1, -1):
                 z0_, z1_ = sorted((sz_ * (CLAM_H - 0.001), sz_ * CLAM_BZ))
                 sdl.cylinder('Z', (xp_, YFIN, z0_), z1_ - z0_, CLAM_BR, name='pin boss, 4 mm wall at the pin (T-071b B.2 fix)')
-    else:
-        sdl.tube('Y', (SPAR_X, YFIN - 0.030, 0.0), 0.060, 0.0105, SPAR_OD / 2, name='rib saddle ring')
-        sdl.box((0.0665, YFIN - 0.0095, -0.0095), (0.0905, YFIN + 0.0095, 0.0095), name='rib saddle socket')
-    sdl.cut_box((SPAR_X - 0.0065, YFIN - 0.031, 0.0), (SPAR_X + 0.0065, YFIN + 0.031, 0.012), name='clip slot')
+    blf_ = bulkhead_loop(FNB_X1)
+    for y0_, nm_ in ((RIB_Y - RIB_OD / 2 - FNB_GAP - FNB_T, 'inner'), (RIB_Y + RIB_OD / 2 + FNB_GAP, 'outer')):
+        sdl.prism('Y', y0_, [blf_], FNB_T, name='fin-node bulkhead %s, 0.5 mm CF sheet, cell inside the plies from the LE to x %.0f (D-226)' % (nm_, FNB_X1 * 1e3))
     ctx.mirror('FIN-005-R', 'FIN-005-L', plane='XZ')
     if P5_CLAMSHELL:
         pp = ctx.part('FIN-007-R', rgb=(0.1, 0.1, 0.1))
@@ -1020,17 +1219,18 @@ def build_fins(ctx):
     for s in 'RL':
         for g, note in (('FIN-001-' + s, 'tube slot'), ('FIN-003-' + s, 'block notch')):
             ctx.seat('FIN-004-' + s, g, 'fairing ' + note)
-        ctx.components['FIN-004-' + s].cut_cylinder('X', (XH, sg_(s) * YFIN, 0.0), XFIN_T - XH, 0.0075, name='rib groove (0.5 mm clearance)')
+        ctx.components['FIN-004-' + s].cut_cylinder('X', (XH, sg_(s) * RIB_Y, 0.0), XFIN_T - XH, RIB_OD / 2 + 0.0015, name='rib groove (1.5 mm clearance round the 25 mm rib: the fairing slides in 40 mm from outboard across the rib axis, 0.5 mm swept 0.65 mm into the rib, assembly gate T-077 p8 run 1; it splits the 3 mm fairing into an upper and a lower piece)')
         ctx.seat('FIN-003-' + s, 'FIN-001-' + s, 'block bore on the tube')
         ctx.seat('FIN-003-' + s, 'FIN-002-' + s, 'block rib socket')
-        ctx.seat('FIN-005-' + s, 'WNG-002', 'saddle bore on the spar')
-        ctx.seat('FIN-005-' + s, 'FIN-002-' + s, 'saddle rib socket')
+        ctx.seat('FIN-005-' + s, 'WNG-002', 'spar holes 12 mm in both bulkheads (flox)')
+        ctx.seat('FIN-005-' + s, 'FIN-009-' + s, 'bulkhead tops / bottoms trimmed under the in-plane plates')
+        ctx.seat('FIN-009-' + s, 'FIN-002-' + s, 'plate notch round the rib (flox)')
+        ctx.seat('FIN-010-' + s, 'WNG-001', 'lower blister trimmed to the skin (sits on it)')
         if P5_CLAMSHELL:
             ctx.seat('FIN-005-' + s, 'FIN-008-' + s, 'pin holes in the cradle bosses and walls')
             ctx.seat('FIN-002-' + s, 'FIN-008-' + s, 'pin cross holes in the rib walls')
             ctx.seat('FIN-007-' + s, 'FIN-005-' + s, 'plates cut round the cradle bosses')
             ctx.seat('FIN-007-' + s, 'FIN-008-' + s, 'pin holes in the plates')
-        ctx.seat('FIN-006-' + s, 'FIN-002-' + s, 'rib groove')
         ctx.seat('FIN-006-' + s, 'WNG-001', 'blister trimmed to the skin (sits on it)')
     for st in ST:
         ctx.seat('FIN-004-' + ('R' if ST[st][0] > 0 else 'L'), 'GER-001-' + st, 'fairing notch for the shoe')
@@ -1162,33 +1362,17 @@ def build_cage(ctx):
                                                         (0.0, STRUT_OD / 2 + 0.0005)]), st_.matrix(), 'strut groove, bonded slip fit clearance EST')
         ctx.seat('CGE-007-' + s, 'CGE-005-' + s, 'strut socket in the clamp')
         ctx.seat('CGE-007-' + s, 'WNG-002', 'clamp bore on the spar')
-    sd = ctx.part('CGE-006', rgb=(0.9, 0.9, 0.9))
-    sd.tube('Y', (SPAR_X, -0.015, 0.0), 0.030, 0.0105, SPAR_OD / 2, name='saddle ring')
-    if P5_NODE:
-        for sy_ in (1, -1):
-            ya_, yb_ = sorted((sy_ * NODE_EAR_IN[0], sy_ * NODE_EAR_IN[1]))
-            sd.box((NODE_X[0], ya_, -NODE_Z), (NODE_X[1], yb_, NODE_Z), name='node inner ear 41.5 x 19 x 3 mm (T-071b N2: ears on both faces of the plate; thickness EST)')
-    sd.box((0.030, -(BR_RO + 0.0025), BR_Z - BR_RO - 0.0025), (0.0535, BR_RO + 0.0025, BR_Z + BR_RO + 0.0025), name='saddle bridge socket (D-206: 2.5 mm wall round the 16 mm bridge)')
-    sd.cut_box((SPAR_X - 0.0065, -NODE_EAR_OUT[1] - 0.0003, 0.0), (SPAR_X + 0.0065, NODE_EAR_OUT[1] + 0.0003, 0.012), name='clip slot (T-077 p5: through the ears)')
-    ctx.seat('CGE-006', 'WNG-002', 'saddle bore on the spar')
-    ctx.seat('CGE-006', 'CGE-004', 'saddle bridge socket')
-    if P5_NODE:
-        pl_ = ctx.part('CGE-011', rgb=(0.1, 0.1, 0.1))
-        ea_ = ctx.part('CGE-013', rgb=(0.9, 0.9, 0.9))
-        pi_ = ctx.part('CGE-012', rgb=(0.1, 0.1, 0.1))
-        for sy_ in (1, -1):
-            ya_, yb_ = sorted((sy_ * 0.0165, sy_ * (0.0165 + NODE_PL_T)))
-            pl_.prism('Y', ya_, [[(NODE_X[0], -NODE_Z), (NODE_X[1], -NODE_Z), (NODE_X[1], NODE_Z), (NODE_X[0], NODE_Z)]], yb_ - ya_, name='node plate N2 0.5 mm, 41.5 x 19 mm (waterjet CF; corner radii -)')
-            ya_, yb_ = sorted((sy_ * NODE_EAR_OUT[0], sy_ * NODE_EAR_OUT[1]))
-            ea_.prism('Y', ya_, [[(NODE_X[0], -NODE_Z), (NODE_X[1], -NODE_Z), (NODE_X[1], NODE_Z), (NODE_X[0], NODE_Z)]], yb_ - ya_, name='node outer clevis ear 41.5 x 19 x 1.5 mm (Onyx, z-up)')
-            for px_, pz_ in NODE_PINS:
-                ya_, yb_ = sorted((sy_ * (NODE_EAR_IN[0] - 0.0001), sy_ * (NODE_EAR_OUT[1] + 0.0001)))
-                pi_.cylinder('Y', (px_, ya_, pz_), yb_ - ya_, NODE_PIN_D / 2, name='node pin 3 mm carbon rod')
-        for g_, p__ in (('CGE-011', pl_), ('CGE-013', ea_)):
-            p__.cut_box((SPAR_X - 0.0065, -NODE_EAR_OUT[1] - 0.0003, 0.0), (SPAR_X + 0.0065, NODE_EAR_OUT[1] + 0.0003, 0.012), name='spar notch, open upward (the node docks from below, T-077 p5)')
-            ctx.seat(g_, 'WNG-002', 'spar hole in the node ' + ('plate' if g_ == 'CGE-011' else 'outer ear'))
-            ctx.seat(g_, 'CGE-012', 'pin holes in the node ' + ('plate' if g_ == 'CGE-011' else 'outer ear'))
-        ctx.seat('CGE-006', 'CGE-012', 'pin holes in the inner ears')
+    # T-077 p8 (D-226 s3): centre node, ONE machined 6061-T6 part (replaces the printed bridge saddle; the audit's T-fitting, 6061 tube and flanges would have needed bonded
+    # metal-to-metal torque joints of 78 mm / 53 mm length on the 5/8 in tube, which do not fit: T077_cad.md P8.3)
+    sd = ctx.part('CGE-006', rgb=(0.80, 0.80, 0.82))
+    ye_ = CN_Y - 0.0002
+    sd.prism('Y', -ye_, [octagon_loop(CN_SLV_A, SPAR_X, 0.0)], 2 * ye_, name='octagonal sleeve, apothem %.1f mm, |y| <= %.1f mm (6061-T6, D-226)' % (CN_SLV_A * 1e3, ye_ * 1e3))
+    for sy_ in (1, -1):
+        y0_ = ye_ - CN_FL_T if sy_ > 0 else -ye_
+        sd.prism('Y', y0_, [flange_loop()], CN_FL_T, name='end flange %.1f mm, x %.0f..%.0f, |z| <= %.0f, inside the skin (bonded on the centre bulkhead)' % (CN_FL_T * 1e3, CN_FL_X[0] * 1e3, CN_FL_X[1] * 1e3, CN_FL_Z * 1e3))
+    sd.cylinder('X', (CN_SK_X0, 0.0, BR_Z), SPAR_X - CN_SK_X0, CN_SK_RO, name='bridge socket boss OD %.1f, mouth x %.1f' % (2 * CN_SK_RO * 1e3, CN_SK_X0 * 1e3))
+    sd.cut_cylinder('Y', (SPAR_X, -CN_Y, 0.0), 2 * CN_Y, CN_BORE / 2, name='spar bore %.1f mm (0.15 mm slip fit, not bonded)' % (CN_BORE * 1e3))
+    ctx.seat('CGE-006', 'CGE-004', 'bridge socket 16 mm, x %.1f..%.1f (bonded)' % (CN_SK_X0 * 1e3, BR_X1 * 1e3))
     cl = ctx.part('CGE-007-R', rgb=(0.9, 0.9, 0.9))
     from . import occ_bodies
     cb_ = occ_bodies.body_mesh('strut_clamp_R', clamp_params())

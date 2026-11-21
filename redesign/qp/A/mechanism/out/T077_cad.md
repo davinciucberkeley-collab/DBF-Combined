@@ -677,3 +677,143 @@ Total 0.502 strand-m, as p5 / p6: no route changed in this part.
 
 ## P7.9 Limits and open items
 All strength rows are hand bounds with EST allowables on the p6 demand (not re-run; slightly conservative). The R4 junction row keeps the p6 interlayer choice and Kt 2.0 (EST). The hub FEA (P5.1, RF 1.47) was not re-run for the 8 mm strut socket (boss radius 4.8 mm; the governing point is the shoulder fillet, away from the socket): open. Stale texts not touched: the B0k / B1 weigh lines in `a_build_steps.py` (hub 18.3 / 19.0 g, struts 13.0 g, clamps 3.0 g, saddle 2.0 g) predate parts 3-7. `t077p5_variants.py` uses the old `P5_VARIANT` meanings (now `clam` / `node` / `both`). `mission_gate_a.py` roll-up rows are still the old item list (F-5).
+
+# Part 8 (2026-11-21, T-077-p8: D-226 implementation, AM-016: torsion-cell landing path drawn). Not VERIFIED COMPLETE. Nothing committed. No docs/, CHANGE-LOG, ledger, TEST-PLAN, MASS-GATE or BOM-A edit (text proposed in P8.9).
+
+Acceptance test (restated from the brief): (1) CAD: bonded CF bulkheads at the fin stations and at y +-0.060, the 6061 centre torque member, the skin ply count the audit chose (3, or 2 with fin relief if it passes; the lighter passing one), the rib per the audit (25x23 unless the coupon case applies; coupon carried as a TP item), the rib-to-bulkhead bond at RF >= 1.0, the printed saddles FIN-005 / CGE-006 out of the primary path; printed_mass.json, a_build_steps.py, drawings follow. (2) Strength table of every new and changed part at max(DAF, 1.5) = 2.23 on the p6 demand, with a sourced 6061 bearing allowable for the bridge socket. (3) Mass / CG / SM / window / T-W with the named recoveries (elevon lead after a flutter re-run, Onyx shoes, X7 root blocks only if they pass); the bench derate line the mass requires; no ballast; window failing accepted (AM-016). (4) New material priced from vendor pages (URL, date) in a BOM copy; total with the crash reserve <= $2,000, else the excess stated. (5) Gates once at the end (driver `T077p8_data/run_gates_p8.sh`), drawings and build guide regenerated. (6) This section.
+Categories: rigid-body dynamics (the p6 demand, NOT re-run; the spanwise d'Alembert cut torque `t077p8_span_torque.py`), hand calculation (every strength row, `t077p8_path.py`; no FEA), flight dynamics (aeroelastic 3-DOF section flutter, `t077p8_flutter.py` = flutter_d205.py with the 10.0 g lead), interference (collide, linkage, assembly), geometry arithmetic (masses, CG, voxel audit, per-part CG deltas), illustrative (prop_a EST thrust model). No CFD or FEA.
+Data and scripts: `T077p8_data/` (t077p8_path.py -> strength_adopted.txt / .json, t077p8_table.py -> strength_table_p8.md; t077p8_span_torque.py -> span_torque.json; t077p8_flutter.py -> flutter_p8.md; t077p8_mass_audit.py (= p7 audit) -> t077_rows_h0.25_only.json; t077p8_write_printed_mass.py; t077p8_partmass.py -> cg_delta_p8.md; t077p8_metrics.py -> metrics_p8.txt; BOM-P8.csv + bom_p8.py -> bom_p8_out.txt; run_gates_p8.sh -> gates/). No large arrays written (the demand arrays are the git-ignored p6 npz).
+
+## P8.0 Outcome in one table
+| Item | Result |
+|---|---|
+| (1) CAD | **Done.** Fin node FIN-005-R/L = two 0.5 mm CF bulkheads per side (|y| 369.5..370.0 and 396.0..396.5, LE to x 176) + FIN-009 in-plane plates (110 x 40 mm under the skin plies) + rib straps (undrawn laminate). Centre: WNG-013-R/L bulkheads at |y| 60.0..60.5 and **CGE-006 = one machined 6061 part** (octagonal sleeve apothem 7.3 on the spar, 1.0 mm end flanges bonded on the bulkheads, bridge socket boss), replacing the audit's T-fitting + 5/8 in tube + flanges (P8.3: their bonded metal joints cannot carry the torque). Skin **3 plies** over |y| 52..400 (WNG-014). Rib **25x23** (FIN-002), axis 3 mm outboard of the fin tube (damper clearance). Rib-to-bulkhead bond 1.35 at x2.23 (12 mm flox fillets over x 70.5..176). Printed saddles gone (not kept as locators: the bulkheads locate the rib and the centre node). Root block socket 29 x 29, upper + new lower rib fairings, I2C lead rerouted ahead of the rib nose |
+| (2) strength | **All new / changed primary-path rows pass at x2.23:** fin node min 1.12, centre node min 1.04, rib 1.32, skin 1.16, bridge 1.03, wing section 1.23. 6061 socket bearing 10.37 with the ASM data-sheet bearing yield 386 MPa. **Fail:** the DRAWN root block (P6 0.37, P8 0.49; the enlarged block is the undrawn +12.2 g tally, SL-3). Integrity class below 1: flange peel 0.50, bridge-in-socket bond 0.83 |
+| (3) mass / CG / window | Drawn basic **1,579.2 g**, tallied **1,598.4 g**, predicted **1.833 kg**; window **+1.07 %** with the 3 % download (limit +5.0; accepted per AM-016); **bench derate line A-P3 1.006** (tallied; 0.994 drawn) replacing 0.928 / 0.934; A-P2 fresh 0.982 / 1.012. **NEW FAILURE: CG tallied 30.17 mm, SM 4.30 % (< 5 %, A-P4 band <= 26.0): D-226 moves the CG 7.1 mm aft** (P8.4). No ballast |
+| (4) BOM | **Does not fit: total $2,150.75, margin -$150.75** (T-082 $1,957.51 / +$42.49) |
+| (5) gates | collide pose 21 PASS (529 bodies, 125 parts), 18 linkage poses PASS, assembly PASS (66 steps, 125 / 125 placed, 0 blocked, after one fix), wire inventory exposed 0.502 strand-m (unchanged), drawings 49 / 49, BUILD-GUIDE-A 66 steps; **build_a FAILS only on graph:mass (1,579 g > the 1,500 g MASS-GATE limit, not relaxed)**; proofs 15 strict claim fails (4 new: CG-HI, CG-TRIM-AFT, TW-FRESH-PRED, TW-SAG-PRED) |
+| Recoveries | elevon lead 12.8 -> 10.0 g applied (flutter damped cases pass, worst 29.5 >= 28.8 m/s); Onyx shoes applied (-1.0 g); X7 root blocks NOT credited (drawn root-block rows fail) |
+
+## P8.1 CAD changes (file, constant, value)
+| Part | Change | Where | Mass |
+|---|---|---|---|
+| Constants | `RIB_OD/ID` 25/23, `RIB_Y` 383 mm, `SKIN_N` 3, `SKN2_Y` (52, 400), `FNB_*`, `FNP_*`, `CN_*`, `BLK_*`, `BR_X1` 54.0 -> 51.5; `P5_CLAMSHELL / P5_NODE` forced False (the D-221 variants cannot be re-drawn on this tree) | `wing.py` constants block | - |
+| WNG-014-R/L skin plies 2-3 (new) | 2 x 0.054 mm +-45 glass inside ply 1, |y| 52..400, every core cut copied (`electrical.build_assembly`) | `wing.py` `ply_loops`, `build_wing` | 23.2 g each |
+| WNG-013-R/L centre bulkheads (new) | 0.5 mm CF, |y| 60.0..60.5, the cell inside the plies to the cove; spar hole (seat), servo-lead slot 6 x 3.2, left I2C hole 4 mm | `wing.py`, `electrical.py` | 4.0 g each (plate 2.55 + tape lap 1.07 + flange bond 0.37, EST) |
+| FIN-005-R/L (was the printed rib saddle, 14.39 g) | two 0.5 mm CF bulkheads at |y| 369.5..370.0 and 396.0..396.5, LE to x 176 (the audit's x 184 would cut the hinge-damper notch at x 177.0), spar holes, left I2C holes 3 mm | `wing.py` `build_fins` | 10.0 g (plates 5.02 + laps 2.07 + flox 2.91, EST) |
+| FIN-009-R/L in-plane plates (new) | 0.5 mm CF under the skin plies, x 58..168, |y - 383| <= 20, bent to the airfoil, notched by the rib (seat) + rib straps (4-ply 0/90 1080, undrawn laminate) | `wing.py` `plate_loop` | 9.2 g (plates 5.09, notch EST + straps 4.08 EST) |
+| FIN-002-R/L rib | 14x12 -> 25x23, axis |y| 383 (3 mm outboard: the inner flank at 370.5 clears the damper end disc at 369.0) | `wing.py` | 14.1 -> 26.0 g each |
+| FIN-003-R/L root block | socket 19 x 19 -> 29 x 29 round the rib, centred on `RIB_Y` | `wing.py` | 18.9 -> 22.86 g each (voxel audit) |
+| FIN-006 / FIN-010 rib fairings | upper: half-round R 13.9 mm (was the 17 mm D-194 blister from x 130); new lower half-round (the 25 mm rib stands 0.9-4 mm proud of the lower skin); x 70.5..176.25; groove r 12.7 for rib + strap | `wing.py` | 0.6 / 0.4 g EST |
+| FIN-004 fin fairing | rib groove r 14.0 at `RIB_Y` (r 13.0 swept 0.65 mm into the rib in assembly run 1); it splits the 3 mm fairing into two pieces | `wing.py` | unchanged |
+| CGE-006 (was the printed bridge saddle, 9.67 g) | ONE machined 6061-T6 part: octagonal sleeve apothem 7.3 (wall 1.15 at the flats) over |y| <= 59.8 on the spar, bore 12.3 slip fit (not bonded), 1.0 mm end flanges x 20..120, |z| <= 8 inside the plies, bonded to WNG-013, socket boss OD 20.1, bridge socket x 27.5..51.5; left I2C hole | `wing.py` `cn_volume_m3` | 36.3 g (voxel 0.2 mm x 2.70) |
+| CGE-004 bridge | aft end 54.0 -> 51.5 (0.6 mm ahead of the sleeve flat) | `wing.py` | 9.0 -> 8.9 g |
+| WNG-007 elevon lead | 12.8 -> 10.0 g (`BAL_T` x 10 / 12.8) after the flutter re-run (P8.5) | `wing.py` | 13.3 -> 10.5 g each |
+| GER-001 shoes | PETG -> Markforged X7 Onyx (1.20 g/cm3) | `electrical.py`, `printed_mass.json` | 4.55 -> 4.30 g each |
+| WNG-001 core cuts | printed-saddle slots removed; centre-node sleeve channel, socket-boss channel and two flange slits, all open below (the lower-skin openings are taped after the dock: tape not drawn) | `wing.py` `build_wing` | lumped 100.1 g unchanged |
+| E-HRN-11 airspeed I2C lead | rerouted: the 25 mm rib fills the section at the fin, so the lead crosses the fin node ahead of the rib nose (x 64, z 8.4, over the spar) through 3 mm bulkhead holes, then along |y| 408.5 and behind the board pocket; 0.604 m, all GROOVE (enclosed) | `electrical.py` `i2c_path`, grooves | HRN-001 +0.2 g |
+| Edges / plan / steps | new edges (explicit ids E-WNG-81..84: `en('WNG')` would have shifted the plug edges onto the fixed hinge ids E-WNG-10 / 11); assembly plan: A1 carries the bulkheads, plates and plies, **B1 (cage dock, with CGE-006) before A2 (spar)**, B2 removed, C1b added; build steps and the film STAGES (`showcase/concept-a/render_build_a.py`) follow; parts_links for CGE-006, FIN-002, FIN-005, FIN-009, FIN-010, WNG-013, WNG-014, GER-001 | `a_assembly_plan.py`, `a_build_steps.py`, `parts_links_a.py` | - |
+| printed_mass.json | FIN-005 and CGE-006 removed; FIN-003 22.86, GER-001 4.30, WNG-008 3.69 / 3.72 (`t077p8_write_printed_mass.py`; backup `printed_mass_p7_backup.json`) | | |
+
+## P8.2 Strength table (hand calculation on the p6 rigid-body demand; full table `strength_table_p8.md`, `strength_adopted.txt`)
+Demand records (they match D-226 s1.1): fin |My| into the cell 13.29 N m RB, half-wing |My| at the spar axis 8.76, hub |My| 12.83, rib at the node exit Mx 5.14 / My 10.01 / Mz 10.00. Every row combines the components concurrently at each time step, then takes the minimum over 23 cases x 3 zeta x 2 mu x both fins. Verdict at x2.23 (D-223), KF 1.725 for metal / CF, KP 2.156 for bonds.
+
+| Part | Row (governing) | RB | x2.23 | Verdict |
+|---|---|---|---|---|
+| Fin node (FIN-005 + FIN-009 + straps) | N4a rib strap laps on the skin (Mz, Fy) | 2.50 | **1.12** | PASS |
+| | N3 rib-to-bulkhead flox fillet, 12 mm per flank, L 105.5 (My, Fz, and rib torsion as a z-couple; the audit row had 0.90-1.16 without Mx) | 3.00 | 1.35 | PASS |
+| | N5 plates polar bond on the skin 2.52; N1 bulkhead tape lap 3.26; N4b strap tension 4.48; N6 skin + plate shear 6.49; N2 bulkhead shear 7.14 (CF plate shear lower bound = glass +-45 at 70 MPa, EST) | | >= 2.52 | PASS |
+| Rib FIN-002 25x23 | R1 tube at the node exit x 176 (torsion governs) | 2.94 | **1.32** | PASS |
+| Skin, 3 plies | K1 shear at the fin node (all torque in the skin, no relief) | 2.58 | **1.16** | PASS |
+| | K2 wrinkling 1.33; K3 shear at the centre 1.78 | | | PASS |
+| Centre node CGE-006 + WNG-013 | C1 sleeve torsion + bending (half the hub Mx, Mz), von Mises x KF <= 240 | 2.33 | **1.04** | PASS (apothem 7.25 gives 1.00 rounded down, 7.15 gives 0.90) |
+| | C3 flange-to-bulkhead bond, polar | 2.61 | 1.17 | PASS |
+| | C2 sleeve-to-flange junction 1.38; C6 boss annulus 1.87; C4 bulkhead lap 2.51; C5 bulkhead shear 5.50 | | | PASS |
+| | **C7 6061 socket wall bearing; allowable 386 MPa bearing yield** (Aerospace Specification Metals 6061-T6 / T651 data sheet, MatWeb data, typical, e/D 2.0, https://www.aerospacemetals.com/wp-content/uploads/2023/06/Aluminum-6061-T6-6061-T651.pdf read 2026-11-21; asm.matweb.com refused the connection) | 23.13 | 10.37 | PASS (a pin-bearing value applied to a socket wall: applicability EST) |
+| | C3p flange bond peel from the out-of-plane Mz, Mx share | 1.12 | 0.50 | integrity class (outside the RF minimum) |
+| Bridge CGE-004 | B1 bending at the socket mouth x 27.5 | 2.29 | **1.03** | PASS |
+| | B3 bridge-in-socket bond | 1.85 | 0.83 | integrity class |
+| | B2 CF wall bearing in the socket: 37.2 MPa at x2.23 x KF; CF bearing allowable "-" | | - | TP-4 coupon |
+| Wing section (landing_path_a P15 / P16, 3-ply skin) | P15 foam shear 1.23, skin interaction 1.23, spar torsion 5.08, P16 >= 1.98 | | **1.23** | PASS |
+| Root block FIN-003 (drawn, 29 x 29 socket) | **P6 ring-to-socket junction** | 0.82 | **0.37** | **FAIL** |
+| | **P8 socket wall** | 1.10 | **0.49** | **FAIL** (P5 and P7 pass; the +12.2 g enlarged block of T-068 is still undrawn and not judged, SL-3) |
+
+The struts and R4 clamps are unchanged (P7.2 rows stand: minimum 1.01).
+
+## P8.3 Design decisions forced by drawing (mine, each with the reason; for the CHANGE-LOG, ladder rung: redesign of the element, no limit change)
+1. **The centre node is one machined part, not T-fitting + tube + flanges.** Bonding the audit's T-fitting to the 5/8 in tube needs tau = 12.83 x 2.23 x KP / (2 pi r^2 L) <= 2.0 MPa, so L >= 78 mm; each flange-to-tube joint needs L >= 53 mm for 8.76 N m. The 120 mm tube has room for neither, and pins would have to cross the spar. One 6061 part (octagonal sleeve + integral flanges + boss) has no metal-to-metal bond. It is +26.6 g against the saddle (audit +31.3 g including bulkheads; mine +34.6 g including bulkheads).
+2. **The cage docks before the spar.** The closed sleeve cannot clip on. The cage docks from below with the node on the bridge, then the spar slides through bulkheads, clamps and sleeve (assembly gate PASS).
+3. **The sleeve is not bonded to the spar** (0.15 mm slip fit): it carries no root bending, and the spar carries no centre torque.
+4. **3 plies, not 2.** 2 plies pass only with the fin-inertia relief (span cut torque <= 9.72 N m everywhere, `span_torque.json`), which SL-6 forbids until DR-6 closes. Removing the 3rd ply (-23.2 g, -1.06 mm CG) is the first recovery after DR-6.
+5. **Rib 25x23 at |y| 383** (3 mm offset for the hinge damper). The bulkheads sit 0.5 mm from the rib flanks, not +-7.5 mm about the fin plane (a 25 mm rib does not fit between those).
+6. **Rib-to-bulkhead bond:** the fillets are widened to 12 mm (cusp filled to |dz| <= 6), and 4-ply 0/90 straps over the rib top and bottom (the audit's "wrap") carry Mz / Fy into the skin over the plates. Fillet row 1.35, strap row 1.12.
+7. **The plates are notched by the rib**: the rib stands proud of both skins, so the plates cannot pass over it.
+8. **Flanges 1.0 mm** (audit 1.5): C2 still passes at 1.38; -4.3 g.
+9. **Printed saddles removed, not kept as locators**: the bulkheads locate the rib; the flanges and bulkheads locate the node.
+
+## P8.4 Mass, CG, SM, window, T/W (geometry arithmetic + prop_a EST; `metrics_p8.txt`, `cg_delta_p8.md`, `gates/gate_prop_sched.txt`)
+| State | Basic g | CG mm | SM % | Predicted kg | Window % (download) | T/W fresh (no dl / dl) | T/W sag (dl) | Derate line A-P3 | A-P2 fresh line (no dl / dl) |
+|---|---|---|---|---|---|---|---|---|---|
+| p7 tallied | 1,481.1 | 23.39 | 7.07 | 1.702 | +4.78 | 2.033 / 1.972 | 1.829 | 0.934 | 0.915 / 0.943 |
+| **p8 as drawn** (`cad_mass.json`) | **1,579.2** | **27.03** | **5.58** | 1.8117 | +1.66 | 1.915 / 1.858 | 1.719 | **0.994** | 0.971 / 1.001 |
+| **p8 tallied** (+12.2 g root blocks at 283.1, +7.0 g shoe cups at 298.1, EST, undrawn) | **1,598.4** | **30.17** | **4.30** | **1.8331** | **+1.07 FAILS** (2.59 without download) | 1.894 / 1.837 | 1.698 | **1.006** | 0.982 / 1.012 |
+
+Predicted = basic x 1.1174 + 0.032 x 1.47. Ceiling for +5 % at derate 0.93 with the download: basic 1,474.3 g (1.6944 kg). The tallied tree is **124.1 g basic over**. Recoveries applied: lead -5.6 g, Onyx shoes -1.0 g; X7 root blocks not credited (P8.2). Mass change against p7 tallied: +117.3 g basic.
+
+**CG (a new finding, not covered by AM-016):** D-226 moves the CG **7.1 mm aft** (`cg_delta_p8.md`: ribs +2.38 mm, plies +2.12, root blocks +1.18, plates + straps +1.08, centre node +0.65, bulkheads +0.30, lead -0.52). Tallied CG 30.17 mm is aft of the SM 5 % line (28.45 mm) and the A-P4 band (26.0). The drawn CG 27.03 is also above 26.0 (proof CL-A-CG-HI fails; CG-TRIM-AFT 28.74 > 28.5). No ballast was added. Numbers for the conductor:
+- rib coupon -> 14x12: -23.8 g, -2.4 mm;
+- 2 plies after DR-6: -23.2 g, -1.06 mm;
+- cage forward to the 500 mm box limit: about 8.6 mm at -0.56 mm CG per mm = -4.8 mm. Struts, bridge and assembly would need a re-run; not drawn.
+
+## P8.5 Recoveries (named in D-226 s4)
+- **Elevon lead 10.0 g: applied.** Flight dynamics (aeroelastic 3-DOF section, `t077p8_flutter.py` = flutter_d205.py with the 10.0 g lead): damped cases B-E PASS at every corner; worst is E (half fill) kd, onset 29.5 m/s >= 28.8 (D-205 at 12.8 g: 31.5). The undamped case A fails as it did at 12.8 g (onset 3.0-4.5 m/s, was 15-18.5). The damper is now the only flutter barrier, with 0.7 m/s margin in case E: flagged for a TP damper fill check.
+- **Onyx shoes: applied** (-1.0 g; the repo allowables are the same for PETG and Onyx, EST).
+- **X7 root blocks: not applied** (the drawn root-block rows P6 0.37 / P8 0.49 fail; coupons C-1..C-3 are open).
+
+## P8.6 BOM (`BOM-P8.csv`, `bom_p8.py` -> `bom_p8_out.txt`; the T082 files are untouched)
+| Line | Item | $ | Source, date |
+|---|---|---|---|
+| R15 (new) | CF tube 25x23 x 1 m (ribs 0.431 m) | 50.09 + shipping EST 25.00 | carbonwebshop.com High Performance Tube 25x23x1000mm, EUR 45.58 incl. VAT, read 2026-11-21, x 1.0990 USD/EUR (ECB reference rate 2026-11-20, read 2026-11-21). Stock and US shipping not stated. No readable US page (RMRC stops at 16x14; Rock West, HobbyKing, eBay and Walmart refused or returned 404) |
+| T11 (new) | 6061-T6511 bar 1 x 4 x 12 in (CGE-006 blank + second attempt) | 47.52 (U) | alcobrametals.com/product/1-x-4-6061t6511/, read 2026-11-21: range $47.52-$380.16 over 12-96 in lengths, length mapping not shown (12 in taken as $47.52, EST) |
+| T12 (new) | Cotton flock, 1 quart | 4.90 | uscomposites.com/prices.html, read 2026-11-21 |
+| T2 | CF sheet 0.5 mm 200 x 300 (6 bulkheads of about 176 x 24 + 4 plates of 110 x 40 nest in one sheet, leaving a 50 x 300 strip for C-4) | unchanged 15.98 | T-082 (2026-11-20) |
+| T3 | 1080 glass 3 yd x 50 in = 3.48 m2 against about 0.94 m2 needed (ply 1 0.31 + plies 2-3 0.53 + laps / straps about 0.1) | unchanged | |
+| R09 | 14x12 kept for the 4 hub doublers | unchanged | |
+
+Crash reserve: R15 is added to the carbon-tube set (the reserve's definition is the full airframe tube set). **Total $2,150.75, margin -$150.75: over by $150.75** (R15 with reserve and shipping $135.4, T11 $52.4, T12 $5.4). If the rib coupon restores 14x12, R15 drops out (-$135.4) and the BOM is still $15.3 over. The price of the 8x6 strut stock (p7) is still "-".
+
+## P8.7 Gates (final tree; driver `T077p8_data/run_gates_p8.sh`, outputs in `gates/`; run 1 kept in `gates_run1/`)
+| Gate | Exit | Time | Result |
+|---|---|---|---|
+| build_a | 1 | 17 s | 10 modules, **1 error: graph:mass 1,579 g > 1,500 g limit** (MASS-GATE s1 via gen_interfaces; not relaxed); otherwise clean |
+| `A_ELEV_POSE=21 collide_a.py` | 0 | 981 s | **PASS**, 529 bodies, 125 parts; static / -21 / +21: 0 pairs > 0.05 mm; wire ends 0, folds 0 |
+| `collide_a.py --linkage-poses` | 0 | 1,127 s | **PASS**, 18 poses |
+| `a_assembly.py` | 0 | 2,246 s | **PASS**, 66 steps, 125 / 125 parts, 0 blocked. Run 1: the C3 / C4 fin fairings swept 0.65 mm into the 25 mm rib; groove r 13.0 -> 14.0, re-run |
+| wire_inventory | 0 | 9 s | exposed 0.502 strand-m (unchanged), total 11.611 |
+| cad_mass / mission_gate | 0 | 8 / 0 s | 1,579.2 g, CG 27.03 mm, SM 5.58 % |
+| `prop_a.py --sched --mass 1.833` | 0 | 70 s | derate 0.93: T/W fresh 1.894, window +2.6 % (no download) |
+| proofs (re-run after the assembly) | 1 | 3 s | 15 strict claim fails: the 5 known (horn / elevon foam / free-play), the 6 mass-chain claims (MASS-PRED, MASS-GATE-ROOM, CUTS-REQUIRED 347 g, WINDOW-PRED, WINDOW-MASS, CRUISE-AVAIL 141.6 s) and **4 new: CG-HI 27.03 > 26, CG-TRIM-AFT 28.74 > 28.5, TW-FRESH-PRED 1.897 < 2, TW-SAG-PRED 1.50 < 1.6**. CG-TRIM-FWD now passes |
+| drawings | 0 (re-run) | 226 s | 49 / 49 (new: FIN-005-R/L, FIN-009, FIN-010, WNG-013-R/L, WNG-014). Run 2 hit an OSError writing DRAWINGS-A.pdf (file lock) |
+| build guide | 0 | 4 s | 2,316 lines, 66 steps, 46.8 h EST |
+
+## P8.8 Exposed wires (`wire_inventory.json`)
+Unchanged from P7.7: pack leads 2 x 130 mm, balance lead 64 mm, battery tail 42 mm, servo lead ends 2 x 12 mm, GPS 3 mm; total 0.502 strand-m. The rerouted I2C lead (0.604 m) is enclosed for its whole length (groove / cover). New holes: 3 mm in the left fin bulkheads, 4 mm in the left centre bulkhead and flange, and servo-lead slots in both centre bulkheads.
+
+## P8.9 Proposed text (for the conductor; not applied)
+- **CHANGE-LOG (T-077 p8, D-226 implementation):** "Torsion-cell landing path drawn: fin nodes (two 0.5 mm CF bulkheads per side 0.5 mm off the 25x23 rib, in-plane plates, rib straps, 12 mm flox fillets), centre bulkheads at |y| 60, the centre node as ONE machined 6061 part (the audit's T-fitting / tube / flanges need 78 mm and 53 mm bonds that do not fit), a 3-ply skin (2 plies need the relief credit SL-6 withholds), rib 25x23 at |y| 383 (damper clearance); printed saddles removed; the cage docks before the spar. All new rows pass at x2.23 (minimum 1.04 sleeve, 1.12 fin node); the drawn root block fails P6 0.37 / P8 0.49. Lead 10.0 g after a flutter re-run; Onyx shoes. Tallied 1,598.4 g, 1.833 kg, window +1.07 %, bench derate line 1.006; CG 30.17 mm, SM 4.30 % (A-P4 fails, new); BOM $2,150.75 (-$150.75)."
+- **TEST-PLAN:**
+  - TP-1 bench go/no-go: derate >= 1.006 (tallied 1.833 kg; 0.994 at the drawn 1.812 kg), replacing 0.928 / 0.934. A line above 1.0 means the motors must beat catalogue thrust. **Failure branch: reopen the configuration per AM-016 (bigger props or motors, or fallback concept B), not O6 / Altus (withdrawn by AM-008).**
+  - Rib torsion coupon on a 14x12 offcut: >= 79 MPa restores 14x12 (-23.8 g, -2.4 mm CG, -$135).
+  - Add the CF-in-6061 socket bearing and the CF plate shear to TP-4.
+  - Flox-fillet coupon (12 mm fillet, 2.0 MPa assumed).
+  - Damper fill check (flutter margin 0.7 m/s with the 10 g lead).
+- **MASS-GATE basis:** FIN-002 26.0 x 2, FIN-003 22.86 x 2, FIN-005 10.0 x 2, FIN-009 9.2 x 2, FIN-006 0.6 x 2, FIN-010 0.4 x 2, WNG-013 4.0 x 2, WNG-014 23.2 x 2, CGE-006 36.3, CGE-004 8.9, WNG-007 10.5 x 2, GER-001 4.30 x 4.
+- **BOM:** R15, T11, T12 as P8.6.
+
+## P8.10 Limits and open items
+- All rows are hand bounds with EST allowables; no FEA of the node, sleeve or bulkheads. The sleeve row C1 (1.04) has little margin, and its bending share ("half the hub Mx, Mz") is my bound; the struts take part of it.
+- Bonding-material masses (flox, laps, straps) are EST and lumped in FIN-005 / FIN-009 / WNG-013; the straps and tape laps are not drawn (adhesive / tape class). The plate notch mass is EST.
+- The p6 demand was not re-run at 1.833 kg. It was computed at 1.705 kg; the pad-capped foot force bounds it (D-226 s1.1), but the heavier wing changes the d'Alembert split: open.
+- The drag of the 25 mm rib blisters is not assessed.
+- The rib torsion coupon, DR-6, TP-3 and TP-4 decide whether 23-48 g and 2.4-3.5 mm of CG come back.
+- Stale texts not touched: the B0k / B1 weigh lines in `a_build_steps.py` predate parts 3-8.

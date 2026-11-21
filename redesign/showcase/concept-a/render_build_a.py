@@ -90,10 +90,10 @@ GHOST_STEPS_Y = 0.40                 # m, the x-ray close-up camera follows the 
 T_MOVE = {'long': 2.2, 'short': 1.7, 'appear': 1.0}
 
 STAGES = [
-    ('Wing core and spar', ['A1', 'A2', 'A3', 'A4', 'A5']),
-    ('Cage frame on the bench (D-202), motor leads threaded, motors, props, dock', ['B0a', 'B0b', 'B0c', 'B0d', 'B0e', 'B0f', 'B0g1', 'B0g2', 'B0g3', 'B0g4', 'B0h', 'B0i1', 'B0i2', 'B0i3', 'B0i4', 'B0j1', 'B0j2', 'B0k', 'B1']),
-    ('Rib saddles, phase-lead raceways, pack tray, hinge dampers', ['B2', 'B2a', 'B2b1', 'B2b2', 'B2b3', 'B2b4', 'B2c', 'B3', 'B4']),
-    ('Fin ribs and rib fairings', ['C1', 'C1a']),
+    ('Wing core with bulkheads, plates and skin plies (T-077 p8)', ['A1']),
+    ('Cage frame on the bench (D-202), centre node, motor leads threaded, motors, props, dock; then the spar and plugs', ['B0a', 'B0b', 'B0c', 'B0d', 'B0e', 'B0f', 'B0g1', 'B0g2', 'B0g3', 'B0g4', 'B0h', 'B0i1', 'B0i2', 'B0i3', 'B0i4', 'B0j1', 'B0j2', 'B0k', 'B1', 'A2', 'A3', 'A4', 'A5']),
+    ('Phase-lead raceways, pack tray, hinge dampers', ['B2a', 'B2b1', 'B2b2', 'B2b3', 'B2b4', 'B2c', 'B3', 'B4']),
+    ('Fin ribs (25x23) and rib fairings', ['C1', 'C1a', 'C1b']),
     ('Elevons, balance strips, lens caps', ['C2', 'C2a', 'C2b']),
     ('Fins: fairings, root blocks, tubes', ['C3', 'C4', 'C5', 'C6']),
     ('Landing feet', ['C7', 'C8', 'C9']),
@@ -123,7 +123,7 @@ SERVO_EDGES = ('E-HRN-07', 'E-HRN-08')
 REVEAL_EDGES = PHASE_EDGES + SERVO_EDGES
 SERVO_START = {'E-HRN-07': 'MEC-001-R', 'E-HRN-08': 'MEC-001-L'}      # the servo lead is threaded from the servo pocket to the slit
 # camera framing: steps with a right and a left part frame the right one only (the left mirrors it); smaller context for small parts
-ONE_SIDE = ('D1', 'D2', 'D2a', 'D3', 'D4', 'D5', 'C7', 'C8', 'C9', 'C1', 'C1a', 'C3', 'C5', 'C6', 'B4', 'C2a', 'C2b')
+ONE_SIDE = ('D1', 'D2', 'D2a', 'D3', 'D4', 'D5', 'C7', 'C8', 'C9', 'C1', 'C1a', 'C1b', 'C3', 'C5', 'C6', 'B4', 'C2a', 'C2b')
 MIN_HALF_STEP = {'D1': 0.10, 'D2': 0.07, 'D2a': 0.05, 'D3': 0.07, 'D4': 0.06, 'D5': 0.05, 'D5b': 0.05, 'C7': 0.12, 'C8': 0.12, 'C9': 0.10, 'E1': 0.15, 'E2': 0.07, 'E3': 0.08,
                  'E3a': 0.06, 'E3d': 0.06, 'E3b': 0.08, 'E3c': 0.07, 'E4': 0.09, 'E4a': 0.08, 'E4b': 0.09, 'E5': 0.09, 'E6': 0.09, 'E7': 0.08, 'D0': 0.09, 'B2a': 0.10, 'B2b1': 0.10, 'B2b2': 0.10, 'B2b3': 0.10, 'B2b4': 0.10, 'B3': 0.10}
 HEAD_R_MM = 4.5                      # bead at the head of a lead being threaded (the lead is 1.2 mm: the bead shows where the fish wire is)

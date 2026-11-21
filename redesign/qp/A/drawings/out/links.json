@@ -42,8 +42,7 @@
   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-005.pdf"
  },
  "CGE-006": {
-  "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-006.pdf",
-  "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/CGE-006.stl"
+  "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-006.pdf"
  },
  "CGE-007-L": {
   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/CGE-007.pdf",
@@ -111,18 +110,28 @@
   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-004.pdf"
  },
  "FIN-005-L": {
-  "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-005.pdf",
-  "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/FIN-005-L.stl"
+  "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-005-L.pdf"
  },
  "FIN-005-R": {
-  "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-005.pdf",
-  "stl_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/stl/FIN-005-R.stl"
+  "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-005-R.pdf"
  },
  "FIN-006-L": {
   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-006.pdf"
  },
  "FIN-006-R": {
   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-006.pdf"
+ },
+ "FIN-009-L": {
+  "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-009.pdf"
+ },
+ "FIN-009-R": {
+  "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-009.pdf"
+ },
+ "FIN-010-L": {
+  "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-010.pdf"
+ },
+ "FIN-010-R": {
+  "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/FIN-010.pdf"
  },
  "GER-001-LL": {
   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/GER-001.pdf",
@@ -267,5 +276,17 @@
  },
  "WNG-012": {
   "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-012.pdf"
+ },
+ "WNG-013-L": {
+  "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-013-L.pdf"
+ },
+ "WNG-013-R": {
+  "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-013-R.pdf"
+ },
+ "WNG-014-L": {
+  "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-014.pdf"
+ },
+ "WNG-014-R": {
+  "drawing_url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/WNG-014.pdf"
  }
 }

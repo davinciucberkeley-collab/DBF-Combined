@@ -286,7 +286,7 @@
  },
  "mass": {
   "basic_cad_kg": {
-   "value": 1.46185,
+   "value": 1.57922,
    "unit": "kg",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json mass_basic_kg (CAD, no growth)"
@@ -400,13 +400,13 @@
    "note": "D-205: forward pack travel 6 mm (D-202: 1 mm; D-199: 6 mm; D-196: 8 mm) (tray front lip 2 mm aft); cad_mass.json trim_fwd_m"
   },
   "cg_x_mm": {
-   "value": 19.906562916851932,
+   "value": 27.02885221818366,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_x_m, aft of the wing leading edge"
   },
   "cg_y_mm": {
-   "value": 1.8506864589390155,
+   "value": 1.7131406643786171,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_y_m (lateral)"
@@ -1906,25 +1906,25 @@
    "note": "report.json kinks (wire folds)"
   },
   "parts": {
-   "value": 117,
+   "value": 125,
    "unit": "-",
    "source": "SRC-A-COLL",
    "note": "report.json parts checked"
   },
   "assy_steps": {
-   "value": 60,
+   "value": 59,
    "unit": "-",
    "source": "SRC-A-ASSY",
    "note": "assembly.json steps + assembly_bench.json steps (D-202 bench run)"
   },
   "assy_steps_ok": {
-   "value": 60,
+   "value": 59,
    "unit": "-",
    "source": "SRC-A-ASSY",
    "note": "assembly.json steps with no blocking pair at or above the tolerance (35 of 35 in ASSEMBLY.md)"
   },
   "assy_parts_placed": {
-   "value": 124,
+   "value": 125,
    "unit": "-",
    "source": "SRC-A-ASSY",
    "note": "assembly.json parts placed (96 of 96)"

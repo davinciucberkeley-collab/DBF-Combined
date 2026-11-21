@@ -5,45 +5,15 @@
    "parts": [
     "WNG-001",
     "WNG-011",
-    "WNG-012"
-   ],
-   "worst_mm": 0.0,
-   "first_hit_t_mm": null,
-   "pairs": []
-  },
-  {
-   "id": "A2",
-   "parts": [
-    "WNG-002"
-   ],
-   "worst_mm": 0.0,
-   "first_hit_t_mm": null,
-   "pairs": []
-  },
-  {
-   "id": "A3",
-   "parts": [
-    "WNG-003-C"
-   ],
-   "worst_mm": 0.0,
-   "first_hit_t_mm": null,
-   "pairs": []
-  },
-  {
-   "id": "A4",
-   "parts": [
-    "WNG-004-R",
-    "WNG-005-R"
-   ],
-   "worst_mm": 0.0,
-   "first_hit_t_mm": null,
-   "pairs": []
-  },
-  {
-   "id": "A5",
-   "parts": [
-    "WNG-004-L",
-    "WNG-005-L"
+    "WNG-012",
+    "WNG-014-R",
+    "WNG-014-L",
+    "WNG-013-R",
+    "WNG-013-L",
+    "FIN-005-R",
+    "FIN-005-L",
+    "FIN-009-R",
+    "FIN-009-L"
    ],
    "worst_mm": 0.0,
    "first_hit_t_mm": null,
@@ -96,10 +66,38 @@
    "pairs": []
   },
   {
-   "id": "B2",
+   "id": "A2",
    "parts": [
-    "FIN-005-R",
-    "FIN-005-L"
+    "WNG-002"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "A3",
+   "parts": [
+    "WNG-003-C"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "A4",
+   "parts": [
+    "WNG-004-R",
+    "WNG-005-R"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "A5",
+   "parts": [
+    "WNG-004-L",
+    "WNG-005-L"
    ],
    "worst_mm": 0.0,
    "first_hit_t_mm": null,
@@ -187,6 +185,16 @@
    "parts": [
     "FIN-006-R",
     "FIN-006-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "C1b",
+   "parts": [
+    "FIN-010-R",
+    "FIN-010-L"
    ],
    "worst_mm": 0.0,
    "first_hit_t_mm": null,

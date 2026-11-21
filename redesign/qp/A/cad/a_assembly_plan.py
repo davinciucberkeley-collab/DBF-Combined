@@ -13,18 +13,16 @@ frame is away from the wing: the bridge slides in from aft along x, where the sp
 props) on the spar as one rigid body, exactly as before. B1 is therefore the PLACEMENT of the CAGE parts in the main run; the bench steps list the same parts for the bench run only.
 D-198/199: enclosed routes (motor leads in the arm bores, hub conduits, raceways and the foam ditch, servo leads in foam grooves) are threaded, then soldered after the boards are on."""
 ST = ('UR', 'UL', 'LR', 'LL')
+# T-077 p8 (D-226): torsion-cell path. B2 (printed rib saddles) removed, C1b (lower rib fairings) added, A2..A5 (spar and plugs) moved after the cage dock B1.
 # T-077 p7 (D-225): written for wing.py P5_CLAMSHELL = P5_NODE = False (part-4 saddles). If a P5_VARIANT re-draws the clamshell or node, the p5 steps A1b / C1p and the CGE-011..013 CAGE entries (git 428d8368) must be restored.
 CAGE = (['CGE-00%d' % i for i in (1, 4, 6)] + ['CGE-002-A', 'CGE-002-B'] + ['CGE-003-' + s for s in ST] + ['CGE-009-' + s for s in ST] + ['CGE-010-' + s for s in ST] + ['CGE-010-C'] +
         ['CGE-005-R', 'CGE-005-L', 'CGE-007-R', 'CGE-007-L'] + ['PRP-001-' + s for s in ST] + ['PRP-004-' + s for s in ST] + ['PRP-002-' + s for s in ST] + ['PRP-005-' + s for s in ST])
 # (id, caption, parts, dir, travel_mm, step_mm)
 STEPS = [
-    ('A1', 'Wing core on the bench (lower surface up) with the cove CF strip and the glass skin wet-laid on it (T-070; the packing-tape skin and hinge tape are not drawn)', ['WNG-001', 'WNG-011', 'WNG-012'], None, 0, 0),
-    ('A2', 'Spar through the core bore from the right tip', ['WNG-002'], (0, -1, 0), 700, 100),
-    ('A3', 'Centre plug up the bore', ['WNG-003-C'], (0, -1, 0), 600, 100),
-    ('A4', 'Right plugs up the bore', ['WNG-004-R', 'WNG-005-R'], (0, -1, 0), 600, 100),
-    ('A5', 'Left plugs up the bore from the left tip', ['WNG-004-L', 'WNG-005-L'], (0, 1, 0), 600, 100),
+    ('A1', 'Wing core on the bench (lower surface up), built in segments round the four CF bulkheads (centre WNG-013-R/L at |y| 60, fin node FIN-005-R/L) with the fin-node in-plane plates FIN-009 under the skin, the cove CF strip and the glass skin (ply 1 + plies 2-3 over |y| 52..400) wet-laid on it (T-070, T-077 p8 / D-226; the packing-tape skin, hinge tape and bulkhead tape laps are not drawn)',
+     ['WNG-001', 'WNG-011', 'WNG-012', 'WNG-014-R', 'WNG-014-L', 'WNG-013-R', 'WNG-013-L', 'FIN-005-R', 'FIN-005-L', 'FIN-009-R', 'FIN-009-L'], None, 0, 0),
     # ---- D-202 bench build of the cage frame (swept in the bench run, see BENCH; unit vectors from the CAD: u_A = (0, cos 34.38, sin 34.38) along tube A toward UR, u_B = (0, cos 34.38, -sin 34.38) along tube B toward LR)
-    ('B0a', 'Bench: cut the two arm tubes (552.4 mm of 12x10), the bridge (120 mm, D-206, from the 16x14 fin-tube offcut) and the two struts (291.2 mm of 6x4.0) from the carbon stock; sand the ends square', [], None, 0, 0),
+    ('B0a', 'Bench: cut the two arm tubes (552.4 mm of 12x10), the bridge (117.5 mm, D-206 / T-077 p8, from the 16x14 fin-tube offcut) and the two struts (291.2 mm of 8x6) from the carbon stock; sand the ends square', [], None, 0, 0),
     ('B0b', 'Bench: the printed hub stands on the bench, aft face down', ['CGE-001'], None, 0, 0),
     ('B0c', 'Arm tube B slid through its sleeve and the centre block (from the LL side, along its axis)', ['CGE-002-B'], (0, 0.8253073, -0.5646839), 330, 15),
     ('B0d', 'Two 3 mm pins (LR, UL) pushed in along x from the nose side through the block access holes, the sleeve and tube B', ['CGE-010-LR', 'CGE-010-UL'], (1, 0, 0), 30, 3),
@@ -42,9 +40,12 @@ STEPS = [
     ('B0j1', 'Right strut pushed into its hub socket along its own axis', ['CGE-005-R'], (-0.43605, -0.89992, 0), 40, 5),  # D-224 p4: strut axis direction after the 12 mm cage shift (STRUT_S x -77 mm: atan2(262.1, 127) = 64.15 deg; was 66.3 deg, (-0.40179, -0.91573))
     ('B0j2', 'Left strut pushed into its hub socket along its own axis', ['CGE-005-L'], (-0.43605, 0.89992, 0), 40, 5),
     ('B0k', 'THREAD (bench, before the motors go on the cups): feed the three 20 AWG leads of each motor (400 mm stock + extension, EST) from the cup side through the 4.8 mm lead hole, the collar and the tube bore to the 4.8 mm exit hole at s +-18 mm; the free ends are laid flat along the tube until the hub conduits are on (B2b1-B2b4); then screw the motors on (B1)', [], None, 0, 0),
-    ('B1', 'Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked '
-           'from below: clips snap on the spar', CAGE, (0, 0, 1), 30, 3),
-    ('B2', 'Rib saddles snap on the spar from below (T-077 p7, D-225: the part-4 printed saddles; the D-221 clamshell steps A1b / C1p are withdrawn)', ['FIN-005-R', 'FIN-005-L'], (0, 0, 1), 30, 3),
+    ('B1', 'Cage unit (hub, arms, cups, bridge with the machined centre node CGE-006 bonded on it, struts, strut clamps, motors, props) built on the bench, docked '
+           'from below BEFORE the spar (T-077 p8, D-226: the centre node sleeve is a closed bore): sleeve, socket boss and end flanges rise into their open-below core channels, the flanges beside the centre bulkheads', CAGE, (0, 0, 1), 30, 3),
+    ('A2', 'Spar through the core bore from the right tip (T-077 p8: after the cage dock, through the fin-node and centre bulkhead holes, the strut clamps and the centre node sleeve)', ['WNG-002'], (0, -1, 0), 700, 100),
+    ('A3', 'Centre plug up the bore', ['WNG-003-C'], (0, -1, 0), 600, 100),
+    ('A4', 'Right plugs up the bore', ['WNG-004-R', 'WNG-005-R'], (0, -1, 0), 600, 100),
+    ('A5', 'Left plugs up the bore from the left tip', ['WNG-004-L', 'WNG-005-L'], (0, 1, 0), 600, 100),
     ('B2a', 'D-199: phase-lead raceways R and L lowered from above into their foam grooves (through the slots in the hub pad flange), before the tray', ['HRN-003-R', 'HRN-003-L'], (0, 0, -1), 30, 3),
     ('B2b1', 'D-202: hub conduit UR lowered onto its sleeve and the raceway window (along the tube t axis, toward the tube)', ['HRN-004-UR'], (0, 0.5646839, -0.8253073), 40, 4),
     ('B2b2', 'D-202: hub conduit UL lowered onto its sleeve and the raceway window', ['HRN-004-UL'], (0, -0.5646839, -0.8253073), 40, 4),
@@ -53,8 +54,9 @@ STEPS = [
     ('B2c', 'THREAD: feed the free ends of the 12 phase strands (B0) through their hub conduit, the raceway and the foam ditch (fish thread from the ditch end); the free ends stay out at x 29 mm for the ESC pads', [], None, 0, 0),
     ('B3', 'Pack tray lowered from above into the core tray slot, bonded to the hub aft face', ['CGE-008'], (0, 0, -1), 30, 3),
     ('B4', 'Hinge damper units (stator with rotor in its annulus, silicone fluid filled) into the core notches at the elevon tips from aft, before the ribs; the notch is open aft', ['WNG-009-R', 'WNG-010-R', 'WNG-009-L', 'WNG-010-L'], (-1, 0, 0), 30, 5),
-    ('C1', 'Ribs in from aft into the saddle sockets', ['FIN-002-R', 'FIN-002-L'], (-1, 0, 0), 300, 60),
-    ('C1a', 'Rib fairings (upper blisters over the rib where it leaves the skin) lowered onto the skin from above, bonded', ['FIN-006-R', 'FIN-006-L'], (0, 0, -1), 15, 3),
+    ('C1', 'Ribs (25x23, T-077 p8) in from aft between the fin-node bulkheads, through the plate notches; flox fillets, then the 4-ply rib straps over the rib top and bottom (straps not drawn)', ['FIN-002-R', 'FIN-002-L'], (-1, 0, 0), 300, 60),
+    ('C1a', 'Upper rib fairings (half-round blisters over the rib and strap) lowered onto the skin from above, bonded', ['FIN-006-R', 'FIN-006-L'], (0, 0, -1), 15, 3),
+    ('C1b', 'Lower rib fairings (half-round blisters under the rib, T-077 p8) raised onto the lower skin from below, bonded', ['FIN-010-R', 'FIN-010-L'], (0, 0, 1), 15, 3),
     ('C2', 'Elevons with their balance horns on from aft (horn and lead enter the core pocket; tape hinge after)', ['WNG-006-R', 'WNG-006-L', 'WNG-007-R', 'WNG-007-L'], (-1, 0, 0), 25, 5),
     ('C2a', 'Upper lens caps (with stop bosses) lowered onto the skin over the strip windows, bonded', ['WNG-008-RU', 'WNG-008-LU'], (0, 0, -1), 15, 3),
     ('C2b', 'Lower lens caps (with stop bosses) raised onto the skin, bonded', ['WNG-008-RL', 'WNG-008-LL'], (0, 0, 1), 15, 3),
