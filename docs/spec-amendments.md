@@ -254,8 +254,9 @@ Yes, run study
 ## AM-018 — 2026-11-21 — Motor swap to SunnySky X2216 880KV; crash reserve by definition
 Relation: answers the two money decisions in `docs/audits/2026-11-21-config-study.md`. Dillon approves option 1-ii:
 SunnySky X2216 880KV motors replace the T-Motor MN2212 KV780 in Order 1 (still no purchase before early December
-2026), on the same APC 9x4.5MR props. The crash reserve follows its definition (it falls with the cheaper motor)
-instead of the held AM-012 dollar value. Total including the reserve must stay <= $2,000.
+2026), on the same APC 9x4.5MR props. The crash reserve follows its definition (one bad crash beyond the BOM spares: 1 pack + 1 motor + 1 servo + 1 airframe
+set incl. all carbon tubes and half the PETG, x tax, + 3 shipments; `T082_data/bom_t082.py`) instead of the held AM-012
+dollar value; study values $342.53 with the 25x23 rib, $287.31 with 14x12 (config study s7). Total including the reserve must stay <= $2,000.
 Requirement IDs: R-GEN-02, R-OPT-02, R-OPT-05.
 
 ```text
