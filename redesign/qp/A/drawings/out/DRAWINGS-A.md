@@ -1,6 +1,6 @@
 # Concept A engineering drawings
 
-Generated from the CAD by `drawings/make_drawings_a.py` (commit d923413d, 2026-11-20). One sheet per distinct made part; mirror pairs and identical parts share a sheet. Every dimension is the CAD value; feature names that say EST are estimates. Re-run after any CAD change. All sheets: [DRAWINGS-A.pdf](DRAWINGS-A.pdf).
+Generated from the CAD by `drawings/make_drawings_a.py` (commit 428d8368, 2026-11-21). One sheet per distinct made part; mirror pairs and identical parts share a sheet. Every dimension is the CAD value; feature names that say EST are estimates. Re-run after any CAD change. All sheets: [DRAWINGS-A.pdf](DRAWINGS-A.pdf).
 
 | Drawing | Parts (qty) | Material | Size mm (design frame) | Sheets |
 |---|---|---|---|---|
@@ -9,7 +9,7 @@ Generated from the CAD by `drawings/make_drawings_a.py` (commit d923413d, 2026-1
 | [CGE-001](CGE-001.pdf) | CGE-001 (1) | Al 6061-T6 (machined) | 59.5 x 106.7 x 49.3 | 1 sheet(s), 17 features |
 | [CGE-002-A](CGE-002-A.pdf) | CGE-002-A (1) | CFRP tube | 12.0 x 552.5 x 12.0 | 1 sheet(s), 4 features |
 | [CGE-002-B](CGE-002-B.pdf) | CGE-002-B (1) | CFRP tube | 12.0 x 552.5 x 12.0 | 1 sheet(s), 4 features |
-| [CGE-003](CGE-003.pdf) | CGE-003-UR, CGE-003-LL, CGE-003-LR, CGE-003-UL (4) | PETG (printed) | 20.6 x 41.5 x 33.0 | 2 sheet(s), 19 features |
+| [CGE-003](CGE-003.pdf) | CGE-003-UR, CGE-003-LL, CGE-003-LR, CGE-003-UL (4) | PETG (printed) | 19.9 x 41.5 x 33.0 | 2 sheet(s), 19 features |
 | [CGE-004](CGE-004.pdf) | CGE-004 (1) | CFRP tube | 120.0 x 16.0 x 16.0 | 1 sheet(s), 1 features |
 | [CGE-005](CGE-005.pdf) | CGE-005-R, CGE-005-L (2) | CFRP tube | 291.2 x 6.0 x 6.0 | 1 sheet(s), 1 features |
 | [CGE-006](CGE-006.pdf) | CGE-006 (1) | Onyx + CF (Markforged X7) | 41.0 x 33.0 x 22.0 | 1 sheet(s), 7 features |
@@ -28,7 +28,7 @@ Generated from the CAD by `drawings/make_drawings_a.py` (commit d923413d, 2026-1
 | [FIN-004](FIN-004.pdf) | FIN-004-R, FIN-004-L (2) | XPS foam + tape | 110.0 x 3.0 x 360.0 | 1 sheet(s), 8 features |
 | [FIN-005](FIN-005.pdf) | FIN-005-R, FIN-005-L (2) | PETG (printed) | 56.0 x 60.0 x 22.0 | 1 sheet(s), 7 features |
 | [FIN-006](FIN-006.pdf) | FIN-006-R, FIN-006-L (2) | XPS foam + tape | 53.8 x 17.0 x 7.9 | 1 sheet(s), 3 features |
-| [FIN-007](FIN-007.pdf) | FIN-007-R, FIN-007-L (2) | CF fabric laminate (cut sheet) | 50.0 x 64.0 x 19.0 | 1 sheet(s), 6 features |
+| [FIN-007](FIN-007.pdf) | FIN-007-R, FIN-007-L (2) | CF fabric laminate (cut sheet) | 41.5 x 24.0 x 19.0 | 1 sheet(s), 6 features |
 | [FIN-008](FIN-008.pdf) | FIN-008-R, FIN-008-L (2) | CF rod | 25.0 x 3.0 x 21.8 | 1 sheet(s), 1 features |
 | [GER-001](GER-001.pdf) | GER-001-UR, GER-001-LL, GER-001-LR, GER-001-UL (4) | PETG (printed) | 24.0 x 21.0 x 15.0 | 1 sheet(s), 4 features |
 | [GER-002](GER-002.pdf) | GER-002-UR, GER-002-LL, GER-002-LR, GER-002-UL (4) | EVA / PE foam | 30.0 x 15.0 x 12.0 | 1 sheet(s), 1 features |
@@ -61,10 +61,10 @@ One STL per printed part (mirror images have their own file), in mm, in the part
 |---|---|---|---|---|---|---|---|
 | AVN-008 | [AVN-008.stl](stl/AVN-008.stl) | [AVN-008](AVN-008.pdf) | PETG (printed) | 9.01 | 92.0 x 80.7 x 37.1 | 1 | 0 |
 | AVN-010 | [AVN-010.stl](stl/AVN-010.stl) | [AVN-010](AVN-010.pdf) | PETG (printed) | 1.63 | 76.5 x 102.5 x 4.2 | **14: CHECK (a body is not attached)** | 0 |
-| CGE-003-LL | [CGE-003-LL.stl](stl/CGE-003-LL.stl) | [CGE-003](CGE-003.pdf) | PETG (printed) | 8.38 | 20.6 x 41.5 x 33.0 | 1 | 57 |
-| CGE-003-LR | [CGE-003-LR.stl](stl/CGE-003-LR.stl) | [CGE-003](CGE-003.pdf) | PETG (printed) | 8.38 | 20.6 x 41.5 x 33.0 | 1 | 3 |
-| CGE-003-UL | [CGE-003-UL.stl](stl/CGE-003-UL.stl) | [CGE-003](CGE-003.pdf) | PETG (printed) | 8.38 | 20.6 x 41.5 x 33.0 | 1 | 9 |
-| CGE-003-UR | [CGE-003-UR.stl](stl/CGE-003-UR.stl) | [CGE-003](CGE-003.pdf) | PETG (printed) | 8.38 | 20.6 x 41.5 x 33.0 | 1 | 57 |
+| CGE-003-LL | [CGE-003-LL.stl](stl/CGE-003-LL.stl) | [CGE-003](CGE-003.pdf) | PETG (printed) | 7.68 | 19.9 x 41.5 x 33.0 | 1 | 79 |
+| CGE-003-LR | [CGE-003-LR.stl](stl/CGE-003-LR.stl) | [CGE-003](CGE-003.pdf) | PETG (printed) | 7.68 | 19.9 x 41.5 x 33.0 | 1 | 3 |
+| CGE-003-UL | [CGE-003-UL.stl](stl/CGE-003-UL.stl) | [CGE-003](CGE-003.pdf) | PETG (printed) | 7.68 | 19.9 x 41.5 x 33.0 | 1 | 3 |
+| CGE-003-UR | [CGE-003-UR.stl](stl/CGE-003-UR.stl) | [CGE-003](CGE-003.pdf) | PETG (printed) | 7.68 | 19.9 x 41.5 x 33.0 | 1 | 79 |
 | CGE-006 | [CGE-006.stl](stl/CGE-006.stl) | [CGE-006](CGE-006.pdf) | Onyx + CF (Markforged X7) | 12.33 | 41.0 x 33.0 x 22.0 | 1 | 8 |
 | CGE-007-L | [CGE-007-L.stl](stl/CGE-007-L.stl) | [CGE-007](CGE-007.pdf) | PETG (printed) | 2.94 | 33.5 x 47.5 x 14.0 | 1 | 3 |
 | CGE-007-R | [CGE-007-R.stl](stl/CGE-007-R.stl) | [CGE-007](CGE-007.pdf) | PETG (printed) | 2.94 | 33.5 x 47.5 x 14.0 | 1 | 3 |

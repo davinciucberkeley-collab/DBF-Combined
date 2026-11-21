@@ -79,13 +79,13 @@
   },
   {
    "id": "FIN-007-R",
-   "name": "Clamshell CF plates (R): 2 plates 0.5 mm x 50 x 64 mm (the record says about 50 x 75: reduced in y -; corner radii -), waterjet-cut from 0.5 mm CF sheet (ACP PDS Dec 2014, 1.6 g/cm3), bonded on the cradle top and bottom faces; mass = drawn volume x 1.6",
+   "name": "Clamshell CF plates (R): 2 plates 0.5 mm x 41.5 x 24 mm (T-077 p6 trim of the p5 50 x 64; the record says about 50 x 75; corner radii -), waterjet-cut from 0.5 mm CF sheet (ACP PDS Dec 2014, 1.6 g/cm3), bonded on the cradle top and bottom faces; mass = drawn volume x 1.6",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 4.88,
+   "mass_g": 1.35,
    "material": "CF fabric laminate (cut sheet)",
    "cg_xyz_m": [
-    0.083,
+    0.0873,
     0.38,
     0.0
    ],
@@ -199,13 +199,13 @@
   },
   {
    "id": "FIN-007-L",
-   "name": "Clamshell CF plates (L): 2 plates 0.5 mm x 50 x 64 mm (the record says about 50 x 75: reduced in y -; corner radii -), waterjet-cut from 0.5 mm CF sheet (ACP PDS Dec 2014, 1.6 g/cm3), bonded on the cradle top and bottom faces; mass = drawn volume x 1.6",
+   "name": "Clamshell CF plates (L): 2 plates 0.5 mm x 41.5 x 24 mm (T-077 p6 trim of the p5 50 x 64; the record says about 50 x 75; corner radii -), waterjet-cut from 0.5 mm CF sheet (ACP PDS Dec 2014, 1.6 g/cm3), bonded on the cradle top and bottom faces; mass = drawn volume x 1.6",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 4.88,
+   "mass_g": 1.35,
    "material": "CF fabric laminate (cut sheet)",
    "cg_xyz_m": [
-    0.083,
+    0.0873,
     -0.38,
     0.0
    ],

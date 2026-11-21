@@ -13,3 +13,6 @@
 - 2026-11-19T03:22:58-08:00 PreCompact trigger=manual session=7cb35b0a missing=none
 - 2026-11-19T03:24:25-08:00 SessionStart source=compact session=7cb35b0a
 - 2026-11-19T03:24:25-08:00 PostCompact trigger=manual session=7cb35b0a
+- 2026-11-21T00:18:01-08:00 PreCompact trigger=auto session=7cb35b0a missing=none
+- 2026-11-21T00:26:11-08:00 SessionStart source=compact session=7cb35b0a
+- 2026-11-21T00:26:12-08:00 PostCompact trigger=auto session=7cb35b0a

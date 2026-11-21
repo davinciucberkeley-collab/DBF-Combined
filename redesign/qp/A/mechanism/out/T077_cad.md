@@ -417,3 +417,135 @@ Kakute H743-Wing: PCB thickness, corner radius, hole diameter, connector and hea
 - FEA: one mesh pair, direct solve; shoulder / mouth modelling choices stated; D-1 bridge row, strut Euler, A-P10, landing path at the new CG and Iyy, A-P9, tray windows and strap loop strength not re-run (not in this task). **The node, clamshell, R3fix cups, R4 clamps and bosses were NOT strength-checked** (T-071b / T-073 rows are for different geometry: ear bond 0.89-0.93 at x 1.5 stays below 1.0; clamshell pin bearing 0.37 -> 1.12 on paper for the 3 x 3 mm / 4 mm boss, not recomputed for the 11 mm pitch).
 - Mass and CG values for the new parts use the T-067 print basis (EST), Onyx 1.20 g/cm3 and CF 1.6 g/cm3 (secondary sources); the audit voxel is 0.25 mm (the 0.5 mm plates were computed analytically).
 - `mission_gate_a.py` roll-up rows are still the old item list (F-5). The stale proofs (MASS-PRED, MASS-GATE-ROOM, CUTS-REQUIRED, WINDOW-PRED, WINDOW-MASS, CRUISE-AVAIL) fail as in part 4.
+
+
+# Part 6 (2026-11-21, T-077-p6: strength check of the drawn node / clamshell / cradle / cups / clamps / bosses on the D-223 demand, lightening where the rows allow). Not VERIFIED COMPLETE. Nothing committed. No docs/, CHANGE-LOG, ledger, MASS-GATE or BOM edit (text proposed in P6.8).
+
+Acceptance test (restated from the brief): (1) every part of node, clamshell, R3fix cups, R4 clamps, R2 bosses strength-checked on its DRAWN geometry against the D-223 landing demand (RF >= 1.0 at max(DAF, 1.5)) and the flight loads it carries; table part / row / RF. (2) Lighten where the RF allows, subtract first; redraw, mass from volume. (3) Re-run CG / SM / window / T-W; window >= +5.0 % with the 3 % download, no ballast, no limit change; else STOP and report the gap. (4) If CAD changed: drawings + BUILD-GUIDE-A regenerated; gates once at the end, none failing.
+Categories: rigid-body dynamics (demand, `t077p6_demand.py`), hand calculation (all strength rows; no FEA), geometry arithmetic (masses, CG, tally), illustrative (prop_a EST thrust model). No CFD, flight-dynamics or kinematics run.
+Data and scripts: `T077p6_data/` (`t077p6_demand.py`, `t077p6_strength.py --variant`, `t077p6_cups.py` = copy of arm_cup_checks.py with the drawn cup, `t077p6_bosses.py`, `t077p6_table.py`, `geo_probe.py`, `t077p6_mass_audit.py`, `t077p6_write_printed_mass.py`, `t077p6_metrics.py`, `run_gates_p6.sh`, `gates/`). Demand arrays in git-ignored `T077p6_data/fea/` (`.gitignore` +2 patterns).
+
+## P6.0 Outcome in one table
+| Item | Result |
+|---|---|
+| (1) strength check | **Done. Most rows of the drawn node, clamshell / cradle and R4 clamps FAIL the D-223 basis, many already at the rigid-body demand (RF_RB < 1).** Cups (R3fix) and R2 bosses PASS. Table P6.2. These shortfalls exist in the p5 drawing (p5 said "not strength-checked"); the lightening does not cause them. |
+| (2) lightening | **-9.86 g basic** from the two items whose rows have margin: clamshell plates trimmed to the socket face (-7.06 g), cup sleeve wall 2.6 -> 1.8 mm (-2.80 g). The two items named in the brief are **rejected by the rows**: round-with-flats socket (CS3 bond 0.53 -> 0.17, wall 0.51 -> 0.21 at RB) and node ring wall 2.0 mm (N9 junction 0.51 -> 0.22). |
+| (3) window | CG 23.83 mm tallied (<= 25.0), SM 6.88 %, predicted 1.6936 kg, **window +5.02 % with the 3 % download (passes by 0.02 point, about 0.4 g of mass)**, +6.54 % without. No ballast, no limit changed. EST masses: the margin is inside the mass tolerance. |
+| (4) CAD / gates | wing.py, a_build_steps.py (text), printed_mass.json; build_a, `A_ELEV_POSE=21 collide_a.py`, `collide_a.py --linkage-poses`, a_assembly (67 steps, 124/124), wire_inventory, cad_mass, mission gate, prop_a, proofs (the 11 known and stale claims only) as P6.6; drawings and BUILD-GUIDE regenerated (P6.7). |
+**Reading for the conductor: the window now closes on paper, but the strength table says the D-221 parts do not meet D-223; closing those rows is a load-path redesign, not a mass trim, and will cost mass the window does not have.**
+
+## P6.1 Demand (rigid-body dynamics; `t077p6_demand.py`, 193 s)
+Chosen pad (D-222: Fp 30 N, usable stroke 24 mm, x_foot 0.3475, z_foot 0.1918), CAD mass model at the predicted 1.705 kg, CG x 23.91 mm (p5 tallied), 23 cases, pad zeta 0.02 / 0.05 / 0.10, face mu 0.40 (T-076d basis) and 0.30 (T-071b printed-part practice); hub / R / L wrench by d'Alembert on the point-mass model (sum to zero 3e-13). Stats reproduce T-076d step 2 (zeta 0.10 n 12.41 g; zeta 0.02 tilt 2.98 deg, stroke 21.5 mm). Peak hub-side |M| at the saddle forward end 14.8 N m (RB; T-080 V2 gives 15.3-19.7 with D-1). RF_RB = minimum over all cases / zeta / mu (landing_path_a formulas, KF 1.725, KP 2.156); columns x1.5 (floor) and x2.23 (DAF ruling s1.3: D-1 has no wing / saddle / clamshell output, so the largest moment DAF is used; 1.97 is the arm / tube / bond value). Bond rows on Onyx are integrity class (T-080 F-3: no allowable, outside the RF minimum).
+
+## P6.2 Strength table (adopted geometry; `strength_table_p6.md`; EST allowables as the repo: PETG / Onyx 20 in-layer / 9.5 interlayer, epoxy 2.0, CF pin 30, CF plate ACP x 0.70, CF 350; build axis z-up for cradle and node)
+| Part | Row | RB | x1.5 | x2.23 (D-223 interim wing / saddle DAF) | Verdict at max(DAF, 1.5) |
+|---|---|---|---|---|---|
+| Bridge tube 16x14 (CF, not a changed part) | B1 bridge bending at the ring face x 50 (350 MPa EST, KF) | 2.20 | 1.47 | 0.99 | **FAIL** |
+| Bridge tube 16x14 (CF, not a changed part) | B1 bridge bending at the forward end x 30 (350 MPa EST, KF) | 2.28 | 1.52 | 1.02 | PASS |
+| Clamshell pins FIN-008 (3 x 3 mm CF) | CS5 pin shear, double shear, rib torque Mx (3 pins) | 1.62 | 1.08 | 0.73 | **FAIL** |
+| Clamshell plates FIN-007 (CF 0.5) | CS3 plate-to-cradle bond shear (contact 596 mm2 per plate; T-071b used 1,875) | 0.53 | 0.35 | 0.24 | **FAIL** |
+| Clamshell plates FIN-007 (CF 0.5) | CS1 plate x-direction stress (My couple, Fx/2, Mz in-plane) | 2.96 | 1.97 | 1.33 | PASS |
+| Clamshell plates FIN-007 (CF 0.5) | CS2 plate y-direction stress (Mx couple, Fy/2, Mz in-plane) | 4.16 | 2.77 | 1.87 | PASS |
+| Clamshell plates FIN-007 (CF 0.5) | CS3p plate-to-cradle PEEL by Fz (integrity class, outside the minimum) | 28.89 | 19.26 | 12.96 | integrity class (outside the RF minimum): >= 1 |
+| Cradle FIN-005 (PETG) | P12 socket-to-ring junction (9.3 x 18 mm), in-layer 20 | 0.15 | 0.10 | 0.07 | **FAIL** |
+| Cradle FIN-005 (PETG) | P10 saddle socket: rib epoxy bond / bearing (D14 x 20) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) [in-layer] | 0.25 | 0.16 | 0.11 | integrity class (outside the RF minimum): **< 1, open** |
+| Cradle FIN-005 (PETG) | P13 saddle ring epoxy bond on spar (D12 x 60) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) [in-layer] | 0.39 | 0.26 | 0.17 | integrity class (outside the RF minimum): **< 1, open** |
+| Cradle FIN-005 (PETG) | P11 socket wall at the mouth (wall 2.00 mm, Z 765 mm3), in-layer 20 | 0.51 | 0.34 | 0.23 | **FAIL** |
+| Cradle FIN-005 (PETG) | CS5b pin bearing in the 4 mm boss wall (3 pins) | 0.92 | 0.61 | 0.41 | **FAIL** |
+| Cradle FIN-005 (PETG) | P13 saddle ring epoxy bond on spar (D12 x 60) - shear (axial + torsion) [in-layer] | 0.95 | 0.63 | 0.42 | **FAIL** |
+| Cradle FIN-005 (PETG) | P14a spar 12x10 under the cradle ring with the skin torque share 0.056 (bending in full), KF | 1.08 | 0.72 | 0.48 | **FAIL** |
+| Cradle FIN-005 (PETG) | P14b spar wall diametral crush under the saddle ring (hoop EST 40 MPa) [in-layer] | 1.11 | 0.74 | 0.50 | **FAIL** |
+| Cradle FIN-005 (PETG) | P10 saddle socket: rib epoxy bond / bearing (D14 x 20) - shear (axial + torsion) [in-layer] | 2.23 | 1.49 | 1.00 | PASS |
+| Cradle FIN-005 (PETG) | P10 saddle socket: rib epoxy bond / bearing (D14 x 20) - bearing, compression side [in-layer] | 2.47 | 1.64 | 1.11 | PASS |
+| Cradle FIN-005 (PETG) | P13 saddle ring epoxy bond on spar (D12 x 60) - bearing, compression side [in-layer] | 3.88 | 2.59 | 1.74 | PASS |
+| Node CGE-006/011/013 (X7 + CF plate) | N1 skin-to-plate lap bond (lap 5 mm EST; integrity class) | 3.92 | 2.61 | 1.76 | integrity class (outside the RF minimum): >= 1 |
+| Node bridge socket CGE-006 (Onyx) | N7 socket net section under M at the ring face x 50 (box 21 x 21 less bore 16, Z 1237 mm3; ears not effective), in-layer 20, no fibre | 0.75 | 0.50 | 0.34 | **FAIL** |
+| Node bridge socket CGE-006 (Onyx) | N7 socket net section under M at the forward end x 30 (box 21 x 21 less bore 16, Z 1237 mm3; ears not effective), in-layer 20, no fibre | 0.77 | 0.52 | 0.35 | **FAIL** |
+| Node bridge socket CGE-006 (Onyx) | N6 bridge bearing in the 23.5 mm socket (6M/(D L^2)+V/(D L), M at the mouth, Onyx 20) | 0.92 | 0.61 | 0.41 | **FAIL** |
+| Node bridge socket CGE-006 (Onyx) | N6b bridge-in-socket bond, axial + torque (epoxy on Onyx "-", integrity class) | 1.81 | 1.21 | 0.81 | integrity class (outside the RF minimum): **< 1, open** |
+| Node ears CGE-006 inner / CGE-013 outer (Onyx) | N5 inner ear in-plane bending at the ring front x 49.5 (pins carry the couple; section 3 x 19 mm; the ear forward of the ring is joined only through the ring), in-layer 20 | 0.21 | 0.14 | 0.09 | **FAIL** |
+| Node ears CGE-006 inner / CGE-013 outer (Onyx) | N4 pin bearing in the 1.5 mm outer clevis ear (F/2 per ear, Onyx 20) | 0.31 | 0.21 | 0.14 | **FAIL** |
+| Node ears CGE-006 inner / CGE-013 outer (Onyx) | N4b pin bearing in the 3.0 mm inner ear | 0.62 | 0.41 | 0.28 | **FAIL** |
+| Node pins CGE-012 (4 x 3 mm CF per side) | N3 pin shear, double shear, skin torque couple (r 7.43 mm) | 0.73 | 0.49 | 0.33 | **FAIL** |
+| Node plate CGE-011 (CF 0.5) / ear bond | N2 plate-to-ear bond, 2 faces (39.5 x 19 mm), polar moment (epoxy on Onyx "-": integrity class) | 1.27 | 0.85 | 0.57 | integrity class (outside the RF minimum): **< 1, open** |
+| Node ring CGE-006 (Onyx) on the spar | N8 ring bond on spar D12 x 30: BOND INTEGRITY / peel (epoxy on Onyx "-"; integrity class) | 0.10 | 0.07 | 0.05 | integrity class (outside the RF minimum): **< 1, open** |
+| Node ring CGE-006 (Onyx) on the spar | N8 ring epoxy bond on spar D12 x 30: shear (axial + torsion) | 0.49 | 0.33 | 0.22 | **FAIL** |
+| Node ring CGE-006 (Onyx) on the spar | N9 socket-to-ring junction at x 53.5 (16.5 x 21 mm: ring chord x socket width), in-layer 20 | 0.51 | 0.34 | 0.23 | **FAIL** |
+| Node ring CGE-006 (Onyx) on the spar | N8c spar wall diametral crush under the 30 mm ring (hoop 40 MPa EST) | 0.70 | 0.46 | 0.31 | **FAIL** |
+| Node ring CGE-006 (Onyx) on the spar | N8 ring bond on spar D12 x 30: bearing, compression side (Onyx 20) | 1.05 | 0.70 | 0.47 | **FAIL** |
+| Rib FIN-002 (not a changed part, shown) | P9a rib tube 14x12 at the socket mouth x 108 | 0.84 | 0.56 | 0.38 | **FAIL** |
+| Strut clamp CGE-007 R4 (PETG) + strut | R4 socket-to-ring junction at the R 2.0 fillet base (annulus OD 13 / bore 6, Kt 2.0 EST), interlayer 9.5 | 0.84 | 0.56 | 0.38 | **FAIL** |
+| Strut clamp CGE-007 R4 (PETG) + strut | STRUT Euler pinned, no foam support (416 N) | 0.88 | 0.58 | 0.39 | **FAIL** |
+| Strut clamp CGE-007 R4 (PETG) + strut | R4 socket wall axial (A 35.3 mm2: OD 9 / bore 6), in-layer 20 (axis in the print plane) | 1.19 | 0.79 | 0.53 | **FAIL** |
+| Strut clamp CGE-007 R4 (PETG) + strut | STRUT bond at clamp (D6 x 25.0 mm, epoxy 2.0 MPa EST) | 1.59 | 1.06 | 0.71 | **FAIL** |
+| Strut clamp CGE-007 R4 (PETG) + strut | R4 ring bond on the spar (D12 x 16, Ny + torque Nx x 10 mm lever EST) | 1.76 | 1.17 | 0.79 | **FAIL** |
+| Strut clamp CGE-007 R4 (PETG) + strut | STRUT tube strength, 6x4.5 CF 350 MPa EST | 11.60 | 7.73 | 5.20 | PASS |
+| Motor cup CGE-003 R3fix (PETG), as drawn: OD 15.8, wall 1.8, web 4.2 | Plate bending, cantilever 6 mm past the sleeve end (2 screws, net section 30.3 x 5 mm after the D-198 lead hol | 8.51 (strike envelope, KP) | - | - | PASS |
+| Motor cup CGE-003 R3fix (PETG), as drawn: OD 15.8, wall 1.8, web 4.2 | Strike S1 axial 30 N: head pull-through | 5.75 (strike envelope, KP) | - | - | PASS |
+| Motor cup CGE-003 R3fix (PETG), as drawn: OD 15.8, wall 1.8, web 4.2 | Strike S2 transverse 30 N (35 mm above base face): worst screw tension, + hover thrust share | 2.55 (strike envelope, KP) | - | - | PASS |
+| Motor cup CGE-003 R3fix (PETG), as drawn: OD 15.8, wall 1.8, web 4.2 | Strike S2: plate cantilever bending beyond the sleeve end | 1.37 (strike envelope, KP) | - | - | PASS |
+| Motor cup CGE-003 R3fix (PETG), as drawn: OD 15.8, wall 1.8, web 4.2 | Strike S3 blade stop: hole bearing, torque 2.4 N m on 2 of 4 screws | 1.39 (strike envelope, KP) | - | - | PASS |
+| Motor cup CGE-003 R3fix (PETG), as drawn: OD 15.8, wall 1.8, web 4.2 | Strike S2/S3: cup-to-arm bond, torsion 30 N x 47 mm + torque couple 2.4 N m / 25 mm | 2.88 (strike envelope, KP) | - | - | PASS |
+| Motor cup CGE-003 R3fix (PETG), as drawn: OD 15.8, wall 1.8, web 4.2 | Strike S3: sleeve wall hoop at the mouth (couple 96 N, 6 mm patch) | 2.37 (strike envelope, KP) | - | - | PASS |
+| Motor cup CGE-003 R3fix (PETG), as drawn: OD 15.8, wall 1.8, web 4.2 | FATIGUE cup plate cantilever bending, amplitude | 7.25 (strike envelope, KP) | - | - | PASS |
+| R2 bosses AVN-010 (PETG) | FC Kakute H743-Wing 28: mount f_z 872 Hz / f_horizontal 659 Hz vs 304 Hz (A-P10(a) 1.2 x top 2P band) | - | - | 2.17 | PASS |
+| R2 bosses AVN-010 (PETG) | FC Kakute H743-Wing 28: landing x2.23 (n 26.6 g, F 7.3 N along x, lever 7.5 mm): foam bearing under one boss (dN 1.10 N, 6 x 6 mm punch, no skin spreading) | - | - | 1.56 | PASS |
+| R2 bosses AVN-010 (PETG) | FC Kakute H743-Wing 28: landing x2.23: boss base bond peel / tension (epoxy 2.0 MPa) | - | - | 30.37 | PASS |
+| R2 bosses AVN-010 (PETG) | FC Kakute H743-Wing 28: landing x2.23: M2 screw shear (FC: 4 screws; ESC held by tape + tie: not a screw row) | - | - | 290.16 | PASS |
+| R2 bosses AVN-010 (PETG) | ESC SpeedyBee 4-in-1 2: mount f_z 1031 Hz / f_horizontal 780 Hz vs 304 Hz (A-P10(a) 1.2 x top 2P band) | - | - | 2.56 | PASS |
+| R2 bosses AVN-010 (PETG) | ESC SpeedyBee 4-in-1 2: landing x2.23 (n 26.6 g, F 5.2 N along x, lever 7.4 mm): foam bearing under one boss (dN 0.97 N, 6 x 6 mm punch, no skin spreading) | - | - | 1.77 | PASS |
+| R2 bosses AVN-010 (PETG) | ESC SpeedyBee 4-in-1 2: landing x2.23: boss base bond peel / tension (epoxy 2.0 MPa) | - | - | 34.35 | PASS |
+
+
+Notes on the rows. N1 reproduces T-071b N1 (3.92). N3-N9 and the CS3 / P12 drawn-geometry rows are my formulations (stated in the row text). N7: the voxel slices of CGE-006 show the inner ear (y 13.5-16.5) separated from the socket box (|y| <= 10.5) by a 3 mm gap for x 31.5-49.5, joined only through the ring at x >= 49.5, so the ears are not in the net section. CS3: the plate touches the cradle only on the socket face (x 66.5-108 by 18 mm less three boss holes = 596 mm2 per plate); the 1 mm gap over the ring and the plate area outside the socket have no bond partner; T-071b / T-080 used 1,875 mm2 per plate (50 x 75, frame fraction 0.5): the drawing gives 32 % of it. P12: the p5 slim ring (R 8.0) leaves a socket-to-ring neck of 9.3 x 18 mm (T-071b ring R 10.5: 16.5 mm). Rib P9a and bridge B1 are context rows, not changed parts. Fibre layout in Onyx is not drawn: for N7 at x2.23 the fibre needed is 9.6 mm2 per side in tension at 400 MPa EST (18.3 mm2 in compression at 210), consistent with T-080 V5; N rows are judged without fibre. Plate bearing at the node pins: allowable "-", not judged.
+Flight loads (hand estimates, illustrative): hover wing weight on the saddle about 0.21 kg x 9.81 x 1.5 x 0.19 m = 0.6 N m per side, cancelling in the bridge; 2.5 g pull-up lift 42 N reacts as shear through the continuous spar and ring (bond shear 0.04 MPa); aero pitching moment about 1 N m. All are an order below the 14.8 N m landing moment: landing governs. Cups: motor-station inertial force in landing 22.6 N RB (peak), x2.23 = 50 N, x5.22 (arm flapping Fz ratio of the DAF ruling) = 118 N, acting along the shaft = the S1 axial strike case (30 N, head pull-through RF 5.75): RF 3.45 at 50 N, 1.46 at 118 N; the S2 / S3 transverse strike rows are the envelope and govern (min RF 1.37).
+
+## P6.3 Lightening decisions (subtract; each judged by the rows it touches)
+| Candidate | Rows touched | Verdict | Mass |
+|---|---|---|---|
+| L1 clamshell plates x 66.5-108, y +-12 (socket face; p5 50 x 64) | CS1 / CS2 only (CS3 contact is the socket face, unchanged 0.53) | CS1 2.96 RB -> 1.33 at x2.23, CS2 4.16 -> 1.87: **allowed** (y +-10 gives 1.15; +-12 taken). Core pocket stays 64 mm (cradle ring is 60 mm long) | -3.53 g per side, **-7.06 g** (FIN-007 4.88 -> 1.35 g) |
+| L2 cup sleeve wall 1.8 mm (OD 15.8, p5 17.2), web 3.5 -> 4.2 mm to still meet the crest | S3 sleeve hoop 2.37 x 1.8 / 2.6 = 1.64; S2 plate cantilever (5 mm region) unchanged 1.37; screws and pockets unchanged (head seat x -7.2) | **allowed** (hand strike rows; no FEA of the S2 / S3 junction hot spot after the D-210 fillet) | -0.70 g per cup, **-2.80 g** (8.38 -> 7.68) |
+| L3 cradle socket round OD 18 with flats at z +-8.0 (brief, EST -3.7 g per side) | CS3 contact 596 -> 191 mm2 per plate, P11 wall 2.0 -> 1.0 mm | **rejected**: CS3 0.53 -> 0.17, P11 0.51 -> 0.21 (RB), already < 1 | not taken |
+| L4 node saddle ring wall 2.0 mm (OD 16, brief EST -1.5 g) | N9 junction chord 16.5 -> 9.3 mm | **rejected**: 0.51 -> 0.22 (RB), already < 1 | not taken |
+| R2 bosses, other cup features, R4 clamps, node pins / ears | rows < 1.4 or < 1; bosses total 1.63 g | no margin | - |
+Net -9.86 g basic (CAD 1,464.2 -> 1,454.3 g; tallied 1,483.4 -> 1,473.5 g). Masses: `t077p6_mass_audit.py` h 0.25 mm on CGE-003 (basis S, as p5) and the analytic CF plate (41.5 x 24 - 3 pi 4^2) x 0.5 x 2 x 1.6 g/cm3.
+
+## P6.4 CG, SM, window, T-W (geometry arithmetic + prop_a EST; `t077p6_metrics.py`, `gates/gate_prop_sched.txt`)
+| State | Basic g | CG mm | SM % | Predicted kg | Window % (download) | T/W fresh (no dl / dl) | T/W sag (dl) |
+|---|---|---|---|---|---|---|---|
+| p5 as drawn | 1,464.2 | 20.44 | 8.26 | 1.6831 | 5.33 | 2.055 / 1.993 | 1.850 |
+| p5 tallied | 1,483.4 | 23.91 | 6.85 | 1.7046 | 4.70 FAILS | 2.030 / 1.969 | 1.827 |
+| **p6 as drawn** (`cad_mass.json`) | **1,454.3** | **20.34** | **8.31** | 1.6721 | 5.66 | 2.068 / 2.006 | 1.862 |
+| **p6 tallied** (+12.2 g root blocks at 283.1 mm, +7.0 g shoe cups at 298.1 mm, EST, undrawn) | **1,473.5** | **23.83** | **6.88** | **1.6936** | **5.02 passes (6.54 without download)** | 2.043 / 1.982 | 1.838 |
+Predicted = basic x 1.1174 + 0.032 x 1.47. Ceiling at derate 0.93 with the download 1.694 kg: margin 0.4 g. CG limit 25.0 holds (margin 1.17 mm). Bench derate line A-P3 (window 5 %, download) 0.930 (p5 0.936); A-P2 fresh 0.910 without / 0.939 with the download.
+
+## P6.5 What the strength table means (decisions for the conductor, not mine)
+1. The D-221 parts as drawn: node (N3 pins 0.73, N4 outer-ear bearing 0.31, N5 ear bending 0.21, N7 net section 0.75-0.77, N8 ring bond on spar 0.49, N9 junction 0.51 at RB), cradle (P12 0.15, P11 0.51, CS3 0.53, CS5b 0.92, P13 shear 0.95) and R4 clamps / strut (strut Euler 0.88, junction 0.84) are below 1.0 **at the rigid-body demand itself**; all are below 1.0 at x2.23. CS5 pins pass at RB only (1.62 -> 0.73). p5 had said these were not checked; T-071b / T-076 passed them on different geometry (ring R 10.5, plates on a 50 x 75 frame, ears on a one-piece box to y +-16.5, pins at r 17 mm).
+2. Closing them is a load-path redesign (a bond partner or frame for the plates, the ring neck, an ear web across the 3 mm gap, pin pattern and boss height, ring length 30 -> 60 mm at the node), each needing FEA or a coupon; no credible gram figure exists and the window has 0.4 g. Options (numbers, not my call): (a) carry them as open rows with coupons C-2 / C-3 and TP-4 / TP-5 deciding (hand bounds, EST allowables); (b) re-open the DAF (2.23 is the interim wing value borrowed from the bridge; a wing output in D-1 replaces it: at the 1.5 floor the pins pass (1.08) but CS5b 0.61, CS3 0.35, P12 0.10 still fail); (c) revert one D-221 item to the p4 saddle (window 4.94 / 4.90 with one item, 5.14 with none, p5 P5.5) and re-judge; (d) a redesign pass for the cradle and node with the mass accepted against a real bench derate.
+3. Not done: FEA of cradle / node; the D-1 direct / r_m term for wing rows; strut Euler is not a changed part (0.88 RB, T-071 had 1.10 at the old demand): flagged.
+
+## P6.6 Gates (final tree; driver `T077p6_data/run_gates_p6.sh`, outputs `gates/`)
+| Gate | Command | Exit | Time | Result |
+|---|---|---|---|---|
+| build | `python -I build_a.py` | 0 | 16 s | PASS, 10 modules, 0 errors, 0 warnings |
+| collide pose 21 | `A_ELEV_POSE=21 python -I collide_a.py` | 0 | 721 s | PASS, 553 bodies, 124 parts, 0 pairs > 0.05 mm static / -21 / +21, wire ends 0, folds 0 |
+| linkage | `python -I collide_a.py --linkage-poses` | 0 | 850 s | PASS, 18 poses |
+| assembly (Blender) | `python -I a_assembly.py` | 0 | 2,022 s | PASS, 67 steps, 124 / 124 parts, blocked or unsupported 0 |
+| wire inventory | `python -I wire_inventory.py` | 0 | 10 s | exposed 0.502 strand-m (unchanged) |
+| cad_mass | `python -I sitl/cad_mass.py` | 0 | 8 s | 1.4543 kg, CG x 20.34 mm |
+| mission gate | `python -I mission_gate_a.py --o4b` | 0 | 0 s | CAD basic 1,454.3 g, CG 20.34 mm, SM 8.31 % |
+| prop_a --sched | `python -I prop_a.py --sched --mass 1.694` | 0 | 69 s | derate 0.93: T/W fresh 2.043, sag 1.895, window +6.5 % (no download) |
+| proofs | `python -I proofs/run_all.py` | 1 (strict) | 2 s | the same 11 claims as p5 (5 known + 6 stale mass / window / cruise); no new failure |
+Hard-coded insertion data (`a_assembly_plan.py`): unchanged (plates smaller, cups thinner only); the assembly gate passes.
+
+## P6.7 CAD changes, drawings, guide
+wing.py: `CUP_RO` 0.0086 -> 0.0079, `CUP_WEB_X` -0.0085 -> -0.0078 (old kept as `_CUP_WEB_X_P5`), `CLAM_PL_X` (0.058, 0.108) -> (0.0665, 0.108), `CLAM_PL_HY` 0.032 -> 0.012, new `CLAM_POCKET_HY` 0.032 (pocket unchanged), part names; a_build_steps.py: FIN-007 size text; printed_mass.json: CGE-003 x4 8.38 -> 7.68, FIN-007 x2 4.88 -> 1.35 g. Drawings (`make_drawings_a.py`) and `BUILD-GUIDE-A.md` regenerated by the driver (exit codes in `gates/gates_summary.txt`).
+
+## P6.8 Proposed text (for the conductor; not applied)
+- **CHANGE-LOG (T-077 p6):** "Strength check of the drawn D-221 parts on the D-223 demand (chosen pad, 1.705 kg, 23 cases x zeta x mu; DAF 2.23 interim wing value): motor cups R3fix and R2 bosses pass (min RF 1.37 and 1.56); node, clamshell / cradle and R4 clamps fail, many already at RB (CS3 plate bond 0.53 on 596 mm2 per plate against 1,875 assumed, P12 neck 0.15, N7 0.75, N5 0.21, pins 0.73). Lightened -9.86 g: clamshell plates trimmed to the socket face (-7.06 g, CS1 / CS2 1.33 / 1.87 at DAF), cup sleeve wall 1.8 mm (-2.80 g, hoop RF 1.64). Round-socket and node-ring-wall options rejected by the rows. Window +5.02 % (tallied 1,473.5 g, 1.6936 kg, CG 23.83 mm, SM 6.88 %), 0.4 g margin; the node / cradle shortfall is open."
+- **MASS-GATE basis:** FIN-007 1.35 g per side, CGE-003 7.68 g x 4.
+- **BOM:** 0.5 mm CF sheet for 4 clamshell plates now 41.5 x 24 mm.
+- **TEST-PLAN:** TP-1 bench pass line 0.930 at 1.6936 kg; add a coupon for the CF plate to PETG cradle bond on the socket face (CS3).
+
+## P6.9 Limits and open items
+All strength rows are hand bounds with EST allowables (no FEA, no coupons); N3-N9, CS3 and P12 on drawn geometry are my formulations. The window margin (+0.02 point) is smaller than the mass tolerance (EST print basis; undrawn root blocks and shoe cups 19.2 g EST). Cup wall 1.8 mm is judged on hand strike rows only (the D-210 fillet hot spot was an FEA finding). DAF 2.23 on cradle / node rows is the D-223 interim rule.

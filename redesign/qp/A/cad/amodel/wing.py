@@ -31,8 +31,9 @@ HUB_STRUT_S = (-0.017, 0.032)               # strut socket: from 17 mm behind th
 PACK_XL_, PACK_ZL_ = PACK_X[1] - 0.0050, 0.009 + 0.0230   # lead exit x and z (= electrical.PACK_XL, PACK_ZL; keep equal)
 CUP_PAT = (0.019, 0.016)                    # MN2212 mounting pattern 19 mm (along the arm, y) x 16 mm (z): retailers list 16x19 and 19x25 (getfpv MN2212 V2.0 page, search 2026-11-15; T-Motor drawing: 4-M2.5 on 19 x 16 (read 2026-11-15); cup holes M2.5 clearance 2.9 mm, D-194)
 CUP_R = 0.006                               # plate corner radius (EST)
-CUP_RO = 0.0086                             # T-077 p5 (T-073 R3fix): arm sleeve OD 17.2 mm (was 19.2: wall 3.5 -> 2.5 mm), except the screw-head pocket bosses below
-CUP_WEB_X = -0.0085                         # T-077 p5 (R3fix): the plate is a 3.5 mm web (x -12..-8.5; T-073 says 3.0 and notes 3.4 mm is needed to reach the sleeve crest at -8.6: 3.5 gives 0.1 mm overlap) over the sleeve side y < +3.5 mm, and keeps the full 5.0 mm (x -12..-7) over the +y 13 mm cantilever (the S2 strike row, T-073 s R3)
+CUP_RO = 0.0079                             # T-077 p6 (strength check, strike S3 sleeve-hoop row RF 2.37 at 2.6 mm): arm sleeve OD 15.8 mm, wall 1.8 mm (p5: OD 17.2, wall 2.6; T-073 R3fix 2.5), except the screw-head pocket bosses below
+CUP_WEB_X = -0.0078 # T-077 p6: web 4.2 mm (x -12..-7.8) so that it still meets the sleeve crest at -7.9 (0.1 mm overlap); p5: 3.5 mm to -8.5 with the crest at -8.6
+_CUP_WEB_X_P5 = -0.0085                         # T-077 p5 (R3fix): the plate is a 3.5 mm web (x -12..-8.5; T-073 says 3.0 and notes 3.4 mm is needed to reach the sleeve crest at -8.6: 3.5 gives 0.1 mm overlap) over the sleeve side y < +3.5 mm, and keeps the full 5.0 mm (x -12..-7) over the +y 13 mm cantilever (the S2 strike row, T-073 s R3)
 CUP_BOSS_R, CUP_BOSS_X1 = 0.0039, -0.0034   # T-077 p5: local boss round each screw-head pocket (pocket r 2.65 mm + 1.25 mm wall; EST, T-073 'local pocket bosses'), from the web to the pocket floor
 CUP_FIL = 0.001                             # D-210: fillet on the cup's sleeve-to-plate junction (the FEA's S2 / S3 hotspot was the sharp corner)
 
@@ -97,7 +98,9 @@ CLAM_X1 = RIB_X0 + 0.040                     # 40 mm engagement of the rib in th
 CLAM_RING_R = SPAR_OD / 2 + CLAM_WALL        # cradle ring outer radius 8.0 mm (the pocket in front of the plates covers it)
 CLAM_PX = (0.0720, 0.0830, 0.0940)           # three vertical 3 mm CF pins, 11 mm pitch (spacing EST: T-071b gives the count and the diameter only); the bosses stay forward of x 98 where the skin is 11.4 mm or more over the 11 mm boss top
 CLAM_PD, CLAM_BR, CLAM_BZ = 0.003, 0.004, 0.011      # pin diameter, boss radius 4 mm (a 4 mm wall at the pin: boss from the rib wall z 7 up to z 11 top and bottom)
-CLAM_PL_X, CLAM_PL_HY, CLAM_PL_Z, CLAM_PL_T = (0.058, 0.108), 0.032, 0.0090, 0.0005   # plates x 50 mm, y +-32 mm about YFIN (64 mm; the record says about 75 mm, which would hit the airspeed board pocket at y -412.5, x 69..84: EST), on the cradle faces z +-9.0..9.5 (the record gives z +-7.5..9, not reconcilable with a 2 mm wall on a 14 mm rib: unsourced), 0.5 mm
+CLAM_PL_X, CLAM_PL_HY, CLAM_PL_Z, CLAM_PL_T = (0.0665, 0.108), 0.012, 0.0090, 0.0005
+CLAM_POCKET_HY = 0.032                       # T-077 p6: the core pocket stays 64 mm in y (the cradle ring is 60 mm long); only the plates are trimmed (x 66.5..108 = the socket face, y +-12 mm; p5: x 58..108, y +-32)
+_CLAM_PL_P5 = (0.058, 0.108), 0.032   # plates x 50 mm, y +-32 mm about YFIN (64 mm; the record says about 75 mm, which would hit the airspeed board pocket at y -412.5, x 69..84: EST), on the cradle faces z +-9.0..9.5 (the record gives z +-7.5..9, not reconcilable with a 2 mm wall on a 14 mm rib: unsourced), 0.5 mm
 CLAM_PIN_L = 2 * CLAM_BZ - 0.0002            # pin length 21.8 mm, z -11.0 .. +10.8: flush with the lower boss face (the hole is open there, the pin is pushed in from below), 0.2 mm inside the upper boss top
 # ---- T-077 p5 node CGE-006 (T-071b N2, T-080 s3.2): one-piece saddle with ears to y +-16.5, CF plate 0.5 mm, ears on both faces of the plate, 4 pins in double shear
 NODE_X = (0.0315, 0.0710)                    # ear bond area 39.5 x 19 mm: T-071b gives 41.5 mm (slot x 0.0295..0.071), but the phase bundles rise at x 29 (envelope to x 30.94) so the ears start at x 31.5 (-4.8 % bond length)
@@ -768,7 +771,7 @@ for s in 'RL':
     P('FIN-004-' + s, 'Fin fairing 3 mm XPS + tape (%s)' % s, 'fins', 8.4, 'XPS foam + tape')
     if P5_CLAMSHELL:
         P('FIN-005-' + s, 'Clamshell cradle on spar (%s, T-077 p5, D-221): ring wall 2.0 mm on the spar (60 mm), socket 18 x 18 mm x 40 mm round the 14 mm rib, 4 mm pin bosses, printed PETG; mass = drawn volume x T-067 basis' % s, 'fins', 1.0, 'PETG (printed)')
-        P('FIN-007-' + s, 'Clamshell CF plates (%s): 2 plates 0.5 mm x 50 x 64 mm (the record says about 50 x 75: reduced in y -; corner radii -), waterjet-cut from 0.5 mm CF sheet (ACP PDS Dec 2014, 1.6 g/cm3), bonded on the cradle top and bottom faces; mass = drawn volume x 1.6' % s, 'fins', 6.0, 'CF fabric laminate (cut sheet)')
+        P('FIN-007-' + s, 'Clamshell CF plates (%s): 2 plates 0.5 mm x 41.5 x 24 mm (T-077 p6 trim of the p5 50 x 64; the record says about 50 x 75; corner radii -), waterjet-cut from 0.5 mm CF sheet (ACP PDS Dec 2014, 1.6 g/cm3), bonded on the cradle top and bottom faces; mass = drawn volume x 1.6' % s, 'fins', 6.0, 'CF fabric laminate (cut sheet)')
         P('FIN-008-' + s, 'Clamshell pins (%s): 3 x 3 mm carbon rod x 21.8 mm, vertical through the cradle bosses, the rib walls and the plates (T-071b B.2)' % s, 'fins', round(3 * math.pi / 4 * CLAM_PD ** 2 * CLAM_PIN_L * 1.6e6, 2), 'CF rod')
     else:
         P('FIN-005-' + s, 'Rib saddle on spar (%s)' % s, 'fins', 1.0, 'PETG (printed)')
@@ -932,7 +935,7 @@ def build_wing(ctx):
     for sg in (1, -1):
         y0, y1 = sorted((sg * (YFIN - 0.0305), sg * (YFIN + 0.0305)))
         if P5_CLAMSHELL:
-            y0, y1 = sorted((sg * (YFIN - CLAM_PL_HY - 0.0003), sg * (YFIN + CLAM_PL_HY + 0.0003)))
+            y0, y1 = sorted((sg * (YFIN - CLAM_POCKET_HY - 0.0003), sg * (YFIN + CLAM_POCKET_HY + 0.0003)))
             core.cut_box((SPAR_X - CLAM_RING_R - 0.0003, y0, -0.05), (CLAM_PL_X[1] + 0.0003, y1, CLAM_PL_Z + CLAM_PL_T + 0.0003), name='clamshell pocket (open below, top 9.8 mm): plates, cradle; the pin bosses (z to 11) are cut by their own seats (T-077 p5)')
         else:
             core.cut_box((0.0485, y0, -0.05), (0.0910, y1, 0.0115), name='rib saddle slot (open below)')
@@ -1003,7 +1006,7 @@ def build_fins(ctx):
         pp = ctx.part('FIN-007-R', rgb=(0.1, 0.1, 0.1))
         for z0_, nm_ in ((CLAM_PL_Z, 'upper'), (-CLAM_PL_Z - CLAM_PL_T, 'lower')):
             pp.prism('Z', z0_, [[(CLAM_PL_X[0], YFIN - CLAM_PL_HY), (CLAM_PL_X[1], YFIN - CLAM_PL_HY), (CLAM_PL_X[1], YFIN + CLAM_PL_HY), (CLAM_PL_X[0], YFIN + CLAM_PL_HY)]], CLAM_PL_T,
-                     name='clamshell CF plate %s, 0.5 mm, 50 x 64 mm (waterjet; outline record 50 x 75, reduced; corner radii -)' % nm_)
+                     name='clamshell CF plate %s, 0.5 mm, 41.5 x 24 mm (T-077 p6: the socket face x 66.5..108, y +-12; p5 50 x 64, record 50 x 75; waterjet; corner radii -)' % nm_)
         ctx.mirror('FIN-007-R', 'FIN-007-L', plane='XZ')
         pn = ctx.part('FIN-008-R', rgb=(0.1, 0.1, 0.1))
         for xp_ in CLAM_PX:
@@ -1089,9 +1092,9 @@ def build_cage(ctx):
                  [(0.0, 0.0), (0.0, DBL_RO + MOUTH_CH), (0.001, DBL_RO + MOUTH_CH), (0.001 + MOUTH_CH, DBL_RO), (0.001 + MOUTH_CH, 0.0)])
         ctx.components['CGE-001'].cut(fk.Shape('revolve', 'sleeve mouth internal chamfer 0.5 x 45 deg (D-222 P1)', axis='Y', center=(0.0, mz0, 0.0), profile=mprof), tube.matrix(), 'mouth chamfer')
         cup = ctx.part('CGE-003-' + st, at=station(st), rotate=mrot(st), rgb=(0.9, 0.9, 0.9))
-        cup.prism('X', -0.012, [_rrect_part(-0.0165, 0.00355, 0.0165, CUP_R, True, False)], 0.012 + CUP_WEB_X, name='cup plate web 3.5 mm over the sleeve side y -16.5..+3.5 (T-073 R3fix; thickness EST 3.4 + 0.1 mm overlap with the sleeve crest)')
+        cup.prism('X', -0.012, [_rrect_part(-0.0165, 0.00355, 0.0165, CUP_R, True, False)], 0.012 + CUP_WEB_X, name='cup plate web 4.2 mm over the sleeve side y -16.5..+3.5 (T-077 p6: reaches the sleeve crest at -7.9 with 0.1 mm overlap; p5 3.5 mm)')
         cup.prism('X', -0.012, [_rrect_part(0.0035, 0.0165, 0.0165, CUP_R, False, True)], 0.005, name='cup plate cantilever 5.0 mm over the +y 13 mm (T-073 R3fix: the strike S2 row)')
-        cup.tube('Y', (0.0, -0.025, 0.0), 0.0285, CUP_RO, ARM_OD / 2 + 0.0001, name='cup arm sleeve OD 17.2 mm, wall 2.5 mm (T-073 R3fix; bore 12.2 mm: 0.1 mm epoxy gap round the 12 mm arm, D-198: no coincident cylinder faces)')
+        cup.tube('Y', (0.0, -0.025, 0.0), 0.0285, CUP_RO, ARM_OD / 2 + 0.0001, name='cup arm sleeve OD 15.8 mm, wall 1.8 mm (T-077 p6; p5 OD 17.2, T-073 R3fix 2.5; bore 12.2 mm: 0.1 mm epoxy gap round the 12 mm arm, D-198: no coincident cylinder faces)')
         for sz_ in (1, -1):
             cup.cylinder('X', (CUP_WEB_X - 0.0001, -CUP_PAT[0] / 2, sz_ * CUP_PAT[1] / 2), CUP_BOSS_X1 - CUP_WEB_X + 0.0001, CUP_BOSS_R, name='screw-head pocket boss r 3.9 mm (T-073 R3fix local bosses; size EST)')
         f_up, f_dn, f_ch, f_zc = cup_fillet_loops(xf=CUP_WEB_X, ro=CUP_RO)
