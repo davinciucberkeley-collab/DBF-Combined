@@ -6,7 +6,7 @@ earlier (cuts, bores and pockets count as empty), and (3) every electrical edge 
 Marker steps (parts = []) carry the wires: a 7th element lists the electrical edges LAID (soldered / mated) in that step; a_assembly.py checks that both
 end parts of each edge are already on (earlier step) and that every electrical edge is laid exactly once. THREAD steps are marker steps that must come
 before the step named in THREAD_BEFORE (the leads are fed through the tubes and channels while the ends are still free).
-Not in the sequence: tape skin, hinge tape, epoxy fillets (not drawn). Wires are checked in place by collide_a.py.
+Not in the sequence: tape skin (the glass skin WNG-011 and cove strip WNG-012 are laid in A1), hinge tape, epoxy fillets (not drawn). Wires are checked in place by collide_a.py.
 D-202 (hub redesign): the cage frame is built on the bench in the sub-steps B0a-B0k (BENCH below): hub, arm tube B, its two pins, arm tube A, its pins and the crossing pin, the four doublers,
 the bridge, the four motor cups, the two struts, then the lead threading. They are swept in their OWN run (a_assembly.py: bench plan, nothing else placed, because on the bench the
 frame is away from the wing: the bridge slides in from aft along x, where the spar would be) and then B1 docks the finished frame (the CAGE group, every frame part, plus the motors and
@@ -17,7 +17,7 @@ CAGE = (['CGE-00%d' % i for i in (1, 4, 6)] + ['CGE-002-A', 'CGE-002-B'] + ['CGE
         ['CGE-005-R', 'CGE-005-L', 'CGE-007-R', 'CGE-007-L'] + ['PRP-001-' + s for s in ST] + ['PRP-004-' + s for s in ST] + ['PRP-002-' + s for s in ST] + ['PRP-005-' + s for s in ST])
 # (id, caption, parts, dir, travel_mm, step_mm)
 STEPS = [
-    ('A1', 'Wing core on the bench (lower surface up)', ['WNG-001'], None, 0, 0),
+    ('A1', 'Wing core on the bench (lower surface up) with the cove CF strip and the glass skin wet-laid on it (T-070; the packing-tape skin and hinge tape are not drawn)', ['WNG-001', 'WNG-011', 'WNG-012'], None, 0, 0),
     ('A2', 'Spar through the core bore from the right tip', ['WNG-002'], (0, -1, 0), 700, 100),
     ('A3', 'Centre plug up the bore', ['WNG-003-C'], (0, -1, 0), 600, 100),
     ('A4', 'Right plugs up the bore', ['WNG-004-R', 'WNG-005-R'], (0, -1, 0), 600, 100),

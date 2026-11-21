@@ -104,6 +104,63 @@ def core_loop():
     lo = [(x, zl(x)) for x in XS if x < XL - 1e-6] + [(XL, zl(XL))]
     return list(reversed(up)) + lo[1:]                 # hinge-top -> LE (aft to fore) then lower LE -> cove foot
 
+# ------------------------------------------------------------------ T-070 wing torsion skin (T-077 p3): 1 ply 48 g/m2 glass at +-45 deg wet-laid on the core, over the leading edge and the cove face, y -0.40..+0.40,
+# plus one CF strip on the cove face. The skin is drawn INSIDE the original core outline (the core is machined 0.054 mm smaller by a seat cut), so every part that sits on the surface still sits on it.
+SKIN_Y = 0.40                               # m, skin spans y -0.40..+0.40 (T-070 decision s3 "y -0.40..+0.40"; docs/audits/2026-11-19-T070-decision.md)
+SKIN_AREAL = 0.088                          # kg/m2: 48 g/m2 cloth + 40 g/m2 resin (T-071_wing_skin.md l.24, l.67)
+SKIN_T = 0.000054                           # m, wet ply thickness 0.054 mm (EST, T-071 l.24; no wet lay-up coupon)
+SKIN_RHO = SKIN_AREAL / SKIN_T / 1000.0     # g/cm3 = 1.63 (areal density / thickness)
+STRIP_W, STRIP_TH = 0.006, 0.0005           # cove CF strip: only the 3 mm2 section is given (T-071 l.32, l.69); width 6 mm x 0.5 mm is MY split of it (width, thickness and product "-")
+STRIP_RHO = 1.55                            # g/cm3 (T-071 l.69)
+
+
+def _offset_loop(loop, d):
+    """Inward offset by d of a counter-clockwise closed polygon (mitred; d far below the segment lengths)."""
+    n = len(loop)
+    out = []
+    for i in range(n):
+        p0, p1, p2 = loop[i - 1], loop[i], loop[(i + 1) % n]
+        a = (p1[0] - p0[0], p1[1] - p0[1])
+        b = (p2[0] - p1[0], p2[1] - p1[1])
+        la, lb = math.hypot(*a), math.hypot(*b)
+        if la < 1e-12 or lb < 1e-12:
+            out.append(p1)
+            continue
+        n1 = (-a[1] / la, a[0] / la)
+        n2 = (-b[1] / lb, b[0] / lb)
+        k = 1.0 + n1[0] * n2[0] + n1[1] * n2[1]
+        out.append((p1[0] + d * (n1[0] + n2[0]) / k, p1[1] + d * (n1[1] + n2[1]) / k))
+    return out
+
+
+def skin_loops():
+    o = core_loop()
+    return o, _offset_loop(o, SKIN_T)
+
+
+def skin_mass_g():
+    o, i_ = skin_loops()
+    return (abs(_poly_area(o)) - abs(_poly_area(i_))) * 2 * SKIN_Y * 1e6 * SKIN_RHO
+
+
+def strip_loop():
+    """Cove-face strip section in the x-z plane: STRIP_W along the slanted cove face (centred), STRIP_TH inward from the skin's inner face."""
+    p0, p1 = (XL, zl(XL)), (XH, zu(XH))
+    d = (p1[0] - p0[0], p1[1] - p0[1])
+    L_ = math.hypot(*d)
+    u = (d[0] / L_, d[1] / L_)
+    nn = (-u[1], u[0])                         # inward (the core_loop runs counter-clockwise: the inside is on the left)
+    m = ((p0[0] + p1[0]) / 2, (p0[1] + p1[1]) / 2)
+    a, b = SKIN_T, SKIN_T + STRIP_TH
+    pts = [(m[0] - u[0] * STRIP_W / 2 + nn[0] * a, m[1] - u[1] * STRIP_W / 2 + nn[1] * a), (m[0] + u[0] * STRIP_W / 2 + nn[0] * a, m[1] + u[1] * STRIP_W / 2 + nn[1] * a),
+           (m[0] + u[0] * STRIP_W / 2 + nn[0] * b, m[1] + u[1] * STRIP_W / 2 + nn[1] * b), (m[0] - u[0] * STRIP_W / 2 + nn[0] * b, m[1] - u[1] * STRIP_W / 2 + nn[1] * b)]
+    return pts if _poly_area(pts) > 0 else pts[::-1]
+
+
+def strip_mass_g():
+    return abs(_poly_area(strip_loop())) * 2 * SKIN_Y * 1e6 * STRIP_RHO
+
+
 # D-187 (FLUTTER.md): elevon mass balance, 10.7 g lead on a 30 mm horn ahead of the hinge, per elevon (EST)
 BAL_YC, BAL_W = 0.285, 0.106                # QP-4 FIXES D-187 v2: lead STRIP centre y, length (spanwise y 0.232-0.338; clear of the servo pocket edge y 0.2225 and the elevon tip 0.35)
 BAL_ARM_DY = 0.035                          # two horn tabs at BAL_YC +- this
@@ -370,29 +427,52 @@ HUB_PAD = ((HUB_X1 - 0.0012, -(PADN_Y[0] - 0.0002), 0.003), (HUB_X1, PADN_Y[0] -
 # toward UR for tube A, toward LR for tube B), local Z = t = x_hat cross u (tangential face), local X = world x.
 TUBE_RO, TUBE_RI = ARM_OD / 2, ARM_ID / 2   # 12 x 10 carbon tube
 TUBE_HL = R_M                               # tube half length: from the hub axis to the motor cup end (DOC radius 0.2762): each tube is 2 x R_M = 0.5524 m (CALC)
-SLV_L = 0.024                               # printed sleeve over s = -24..+24 mm (FEA L_SLV)
+SLV_L = 0.032                               # D-222 P2 (T-077 p3): sleeve length L 24 -> 32 mm, s = -32..+32 mm (landing-demand root-cause audit, sleeve bond; was FEA L_SLV 24)
 SLV_WALL = 0.0015                           # sleeve wall 1.5 mm (FEA SLV_W of the it3 / pins runs)
 DBL_T = 0.001                               # doubler wall (14 x 12 carbon tube over the 12 mm tube)
 DBL_RO, DBL_RI = TUBE_RO + DBL_T, TUBE_RO + 0.0001   # doubler 14 mm OD; bore 12.2 mm: 0.1 mm epoxy gap round the 12 mm tube (as the cup sleeve, D-198: no coincident cylinder faces)
-DBL_S0, DBL_S1 = 0.011, 0.025               # doubler s range per side (FEA DBL_S0 / DBL_S1)
-SLV_R = TUBE_RO + DBL_T + SLV_WALL          # sleeve outer radius 8.5 mm (FEA: ro + SLV_W + DBL_T); bore = tube OD for |s| < 11, doubler OD for 11..24
+DBL_S0, DBL_S1 = 0.011, 0.032 + 0.015       # doubler s range per side: from 11 mm to 15 mm (DBL_STAG) past the sleeve end (D-222 P1; was FEA 11..25)
+SLV_R = TUBE_RO + DBL_T + 0.001               # D-220 / D-221 s7.1.1 (T-077 p3): machined 6061 octagonal sleeve, APOTHEM 8.0 mm (16 mm across flats = 14 mm doubler OD + 2 x 1.0 mm minimum wall at the flats; circumradius 8.66 mm); flats face +-x and +-t; bore = tube OD for |s| < 11, doubler OD for 11..32
+HUB_FIL, HUB_FIL_A = 1.0, 0.9               # mm: internal corner radius at the sleeve B / sleeve A to block junction. T-080 s7.1.2 asks R >= the end-mill radius (R 3.0 for a 6 mm cutter, EST): the OpenCASCADE fillet of the octagonal prisms fails above 1.0 mm (B) / 0.9 mm (A) (probe in T077_cad.md Part 3), so the drawn corners need a 2 mm end mill (cutter list "-")
+RHO_AL = 2.70                               # g/cm3, 6061-T6 (T-080 s1, en.wikipedia.org/wiki/6061_aluminium_alloy read 2026-11-20; D-220 / D-221)
+MOUTH_CH = 0.0005                           # D-222 P1: sleeve-mouth internal chamfer 0.5 mm x 45 deg (size EST: D-222 gives none; = T-080 s7.1.5 exit chamfer)
+HOLE_CH = 0.0005                            # T-080 s7.1.5: 0.5 mm chamfer at the phase-lead exits
+DBL_STAG = 0.015                            # D-222 P1: doubler runs 15 mm past the sleeve end (audit: 4 x 15 mm of 14x12 CF, +3.8 g EST); was 1 mm
+DBL_TAPER = 0.005                           # D-222 P1: outer end tapered over about 5 mm (audit); tip wall 0.2 mm (EST, ply drop-off)
 CB, R_CB = 0.010, 0.003                     # centre block half width / height 10 mm; 3 mm radii on its four x-parallel edges
-BLK_AFT = HUB_X1 - HUB[0] - (TUBE_DX + TUBE_RO + SLV_WALL)   # D-207: the centre block runs aft to the tray face (no separate bridge boss): the bridge bore goes into the block; this removes the boss/block junction that could not be filleted (the boss r 9.5 left 0.5 mm of block face) and puts sleeve B well inside the block (10 mm)
-BLK_X = (-(TUBE_DX + TUBE_RO + SLV_WALL), TUBE_DX + TUBE_RO + SLV_WALL + BLK_AFT)   # block x range relative to HUB_x: -14.0 .. +24.0 mm (to the tray face)
+BLK_AFT = HUB_X1 - HUB[0] - (TUBE_DX + SLV_R)   # D-207: the centre block runs aft to the tray face (no separate bridge boss): the bridge bore goes into the block; this removes the boss/block junction that could not be filleted (the boss r 9.5 left 0.5 mm of block face) and puts sleeve B well inside the block (10 mm)
+BLK_X = (-(TUBE_DX + SLV_R), TUBE_DX + SLV_R + BLK_AFT)   # block x range relative to HUB_x: -14.0 .. +24.0 mm (to the tray face)
 BLK_Z = BR_Z                                # D-207: block centred on the bridge axis (z -2 mm) so the bridge boss sits 0.5 mm inside it all round
 R_BR = 0.0095                               # D-207: bridge boss radius 9.5 mm about the bridge axis (1.5 mm wall round the 16 mm bore, as the sleeves; D-206: 10.0, tangent to the block sides)
+COL_X1 = 0.045                              # D-220: bonded bridge bore >= 30 mm: the collar runs aft to a mouth 45 mm aft of the hub axis (floor at +15: 30 mm engagement; escalation s3.2 'mouth about x 45, COL_E about 21')
+COL_HY, COL_Z = 0.012, (-0.016, 0.008)      # T-071b C6 / D-220 collar section 24 x 24 mm (y +-12, z -16..+8: top flush with the tray plate top z 8, T-071b test box); 3 mm radii on the four x-parallel edges (as the block)
 HOLE_S, HOLE_R = 0.018, 0.0024              # phase-lead exit 4.8 mm at s = +-18 mm (FEA S_HOLE, HOLE_R)
 PIN_D, PIN_S = 0.003, 0.008                 # 3 mm carbon pins along x: at the crossing (y = z = 0) and one per tube at s = +-8 mm
 # Pin insertion (CAD interpretation, D-202): all pins go in along +x from the nose side. A pin of tube A (UR, LL) and the crossing pin are flush with the sleeve front surface (x_A - 8.5 mm),
 # so their holes are open there (pin 16 mm; crossing pin 29 mm = the 28 mm block span + 1 mm, ends buried in the aft sleeve wall). The tube B pins (LR, UL) lie behind the block, so the hub
 # carries a 3 mm access hole from the block front face to the pin (open, epoxy-sealed after bonding, not drawn); the pin itself is the specified 15 mm. FEA (fea_hub.py) did not model these holes.
 PIN_X0 = {st: TUBE_X[TUBE_OF[st]] - (SLV_R if TUBE_OF[st] == 'A' else TUBE_RO + SLV_WALL) for st in ST}
-PIN_L = {st: TUBE_X[TUBE_OF[st]] + TUBE_RO + SLV_WALL - PIN_X0[st] for st in ST}
+PIN_L = {st: TUBE_X[TUBE_OF[st]] + SLV_R - 0.0010 - PIN_X0[st] for st in ST}   # blind end 1.0 mm short of the aft flat
 PINC_X0 = TUBE_X['A'] - SLV_R               # crossing pin front end (m)
 BR_CHAMFER = 0.0008                         # bridge tube end: 0.8 mm x 45 deg outside chamfer (wall 1.0 mm: 0.2 mm flat left); the bridge seats on the bore floor in a matching 45 deg conical corner (D-207, hub FEA run d209)
-SLV_N = 31                                  # loft sections of a sleeve (6 deg steps)
 # station -> (tube, s sign) and the tube-frame placement
 STN_S = {'UR': 1, 'LL': -1, 'LR': 1, 'UL': -1}
+DBL_RT = DBL_RI + 0.0002                    # tapered tip: outer radius = bore + 0.2 mm wall (EST ply drop-off)
+
+
+def dbl_profile(sg):
+    """(axial offset from the doubler's inboard end along +Y of the tube frame, radius) of the tapered doubler: sg > 0 starts at s = +DBL_S0, sg < 0 starts at s = -DBL_S1 (taper at the start)."""
+    L_, T_ = DBL_S1 - DBL_S0, DBL_TAPER
+    if sg > 0:
+        return [(0.0, DBL_RI), (0.0, DBL_RO), (L_ - T_, DBL_RO), (L_, DBL_RT), (L_, DBL_RI)]
+    return [(0.0, DBL_RI), (0.0, DBL_RT), (T_, DBL_RO), (L_, DBL_RO), (L_, DBL_RI)]
+
+
+def dbl_volume_m3():
+    L_, T_ = DBL_S1 - DBL_S0, DBL_TAPER
+    return math.pi * ((DBL_RO ** 2 - DBL_RI ** 2) * (L_ - T_) + T_ / 3.0 * (DBL_RO ** 2 + DBL_RO * DBL_RT + DBL_RT ** 2) - DBL_RI ** 2 * T_)
+
+
       # tray pad flange on the aft face (tray plate z 6..8 mm lands on it)
 
 
@@ -412,8 +492,8 @@ def hub_core_volume_m3(h=0.00025):
     45 deg conical corner, the five 3 mm pins and the four 4.8 mm lead exits. Integrated on a regular grid of pitch h (0.25 mm; error well under 0.1 g); the strut sockets, webs and the
     tray pad are added analytically in hub_mass_g."""
     import numpy as np
-    x0, x1 = HUB[0] + BLK_X[0] - 0.001, HUB_X1 + 0.001
-    ext = 0.026                                # |y|, |z| of the sleeves reach 24.6 / 20.6 mm
+    x0, x1 = HUB[0] + BLK_X[0] - 0.001, HUB[0] + COL_X1 + 0.001
+    ext = 0.034                                # |y|, |z| of the L 32 octagonal sleeves reach about 31.3 / 26.4 mm
     xs = np.arange(x0 + h / 2, x1, h)
     ys = np.arange(-ext + h / 2, ext, h)
     Y, Z = np.meshgrid(ys, ys, indexing='ij')
@@ -426,6 +506,12 @@ def hub_core_volume_m3(h=0.00025):
             ay, az = np.abs(Y), np.abs(Z - BLK_Z)
             cy, cz = np.maximum(ay - (CB - R_CB), 0.0), np.maximum(az - (CB - R_CB), 0.0)
             inside |= (ay <= CB) & (az <= CB) & (cy * cy + cz * cz <= R_CB * R_CB)
+        # D-220 collar (24 x 24 mm, x +24..+45 rel.)
+        if BLK_X[1] <= dx_rel <= COL_X1:
+            ay, az = np.abs(Y), np.maximum(np.abs(Z - 0.5 * (COL_Z[0] + COL_Z[1])) - 0.0, 0.0)
+            hz = 0.5 * (COL_Z[1] - COL_Z[0])
+            cy2, cz2 = np.maximum(ay - (COL_HY - R_CB), 0.0), np.maximum(np.abs(Z - 0.5 * (COL_Z[0] + COL_Z[1])) - (hz - R_CB), 0.0)
+            inside |= (ay <= COL_HY) & (np.abs(Z - 0.5 * (COL_Z[0] + COL_Z[1])) <= hz) & (cy2 * cy2 + cz2 * cz2 <= R_CB * R_CB)
         # bridge boss
         if BLK_X[1] - 0.0005 <= dx_rel <= HUB_X1 - HUB[0]:
             inside |= (Y * Y + (Z - BR_Z) ** 2 <= R_BR * R_BR)
@@ -434,7 +520,7 @@ def hub_core_volume_m3(h=0.00025):
             xt, phi = TUBE_X[T], TUBE_PHI[T]
             U, Tt = _yz_ut(phi, Y, Z)
             d2 = Tt * Tt + (x - xt) ** 2
-            inside |= (np.abs(U) <= SLV_L) & (d2 <= SLV_R ** 2)
+            inside |= (np.abs(U) <= SLV_L) & (np.maximum(np.maximum(np.abs(x - xt), np.abs(Tt)), (np.abs(x - xt) + np.abs(Tt)) / math.sqrt(2.0)) <= SLV_R)   # octagon, apothem SLV_R
             sub |= d2 <= TUBE_RO ** 2
             sub |= (np.abs(U) >= DBL_S0) & (np.abs(U) <= DBL_S1) & (d2 <= DBL_RO ** 2)
             for st in ST:
@@ -469,9 +555,10 @@ def hub_outer():
 _HUB_VOL = []
 
 
-def hub_mass_g():
-    """Mass of the drawn D-202 hub: core volume by hub_core_volume_m3 (block + sleeves + boss minus bores, pins, lead exits) plus the junction fillet material (D-207, OCC: filleted minus sharp body, hub_body.py) plus the strut sockets, strut webs and tray pad flange as drawn
-    (analytic, overlaps with the core ignored, < 0.2 g), PETG 1.27 g/cm3 solid wall. Drawn-volume mass; the FEA solid (fea_hub.py, no strut sockets or pad) is 16.70 g."""
+def hub_vol_m3():
+    """Drawn volume (m3) of the machined hub CGE-001: core volume by hub_core_volume_m3 (block + two octagonal L 32 sleeves minus bores, pins, lead exits) plus the junction fillet material (OCC: filleted minus
+    sharp body, hub_body.py) plus the strut sockets, strut webs and tray pad (analytic, overlaps with the core ignored, < 0.2 g) minus the sleeve-mouth and lead-exit chamfers (analytic). No lightening pockets (T-080 s3.1:
+    the knee-mill shape is the upper-mass-end hub while Tormach access is unconfirmed; pockets: size "-")."""
     if not _HUB_VOL:
         _HUB_VOL.append(hub_core_volume_m3())
     r_ = hub_outer()
@@ -480,7 +567,13 @@ def hub_mass_g():
     ls = HUB_STRUT_S[1] + 0.002
     v += 2 * (math.pi * Rs ** 2 * ls - math.pi * (STRUT_OD / 2) ** 2 * HUB_STRUT_S[1] + HUB_W * 0.006 * (-HUB_STRUT_S[0] - 0.0015))
     v += (HUB_PAD[1][0] - HUB_PAD[0][0]) * (HUB_PAD[1][1] - HUB_PAD[0][1]) * (HUB_PAD[1][2] - HUB_PAD[0][2])
-    return v * 1e6 * RHO_PETG
+    v -= 4 * 2 * math.pi * (DBL_RO + MOUTH_CH / 3) * MOUTH_CH * MOUTH_CH / 2          # 4 sleeve mouths: triangle MOUTH_CH x MOUTH_CH / 2 swept round the bore
+    v -= 4 * 2 * math.pi * (HOLE_R + HOLE_CH / 3) * HOLE_CH * HOLE_CH / 2             # 4 lead exits: same on the hole
+    return v
+
+
+def hub_mass_g():
+    return hub_vol_m3() * 1e6 * RHO_AL
 
 
 def _rrect(hy, hz, r, n=6):
@@ -587,6 +680,8 @@ def tray_stats():
 # ------------------------------------------------------------------ wing / fins / cage parts
 # wing (MASS-GATE 220 allocation; STRUCTURES iteration 2: 191 g)
 P('WNG-001', 'Wing core, XPS 25 kg/m3 + tape skin + glue + hinge tape (lumped)', 'wing', 100.1, 'XPS foam 25 kg/m3 + packing tape')   # QP-4 FIXES item 3: 116 - 13.7 (foam 82 g x 5/30) - 0.3 (elevon span moved 10 mm); D-193 S5010: core section area 3457 -> 3372 mm2 (CALC from core_loop, hinge-forward part) = -85 mm2 x 0.90 m x 25 kg/m3 = -1.9 g
+P('WNG-011', 'Wing torsion skin: 1 ply 48 g/m2 glass at +-45 deg wet-laid on the core, closed over the leading edge and the cove face, y -0.40..+0.40, wet ply 0.054 mm (EST) drawn as a shell inside the core outline; openings as the core (slots, pockets, windows); mass = shell volume x %.2f g/cm3 (88 g/m2 / 0.054 mm, T-071 l.24)' % SKIN_RHO, 'wing', round(skin_mass_g(), 1), 'glass cloth 48 g/m2 + epoxy')
+P('WNG-012', 'Cove CF strip, section %.0f x %.1f mm = 3 mm2 (only the area is given, T-071 l.32; width, thickness and product -), y -0.40..+0.40, under the skin on the cove face; mass = volume x 1.55 g/cm3' % (STRIP_W * 1e3, STRIP_TH * 1e3), 'wing', round(strip_mass_g(), 1), 'CFRP strip')
 P('WNG-002', 'Spar, CF tube 12x10 x 0.90 m', 'wing', round(tube_g(0.90, SPAR_OD, SPAR_ID), 1), 'CFRP tube')
 for pid, nm in (('WNG-003-C', 'centre'), ('WNG-004-R', 'right strut'), ('WNG-004-L', 'left strut'),
                 ('WNG-005-R', 'right rib'), ('WNG-005-L', 'left rib')):
@@ -609,12 +704,12 @@ for s in 'RL':
     P('FIN-005-' + s, 'Rib saddle on spar (%s)' % s, 'fins', 1.0, 'PETG (printed)')
     P('FIN-006-' + s, 'Rib fairing, upper (%s): XPS + tape blister over the 14 mm rib where the S5010 skin is thinner than the tube (D-194); mass EST' % s, 'fins', 0.3, 'XPS foam + tape')
 # cage (allocation 135; STRUCTURES iteration 2: 122 g)
-P('CGE-001', 'Hub (printed PETG, D-202: 1.5 mm sleeves over s +-24 mm of both arm tubes, 38 x 20 x 20 mm centre block on the bridge axis, running aft to the tray face (no separate boss), 3 mm edge radii, junction fillets 2.0 mm (sleeve B / block) and 1.5 mm (sleeve A / block) as in the FEA (D-207; outer body is the OpenCASCADE mesh of hub_body.py), 2 strut sockets, tray flange; mass = drawn volume x 1.27)', 'cage', round(hub_mass_g(), 1), 'PETG (printed)')
+P('CGE-001', 'Hub (machined 6061-T6, D-220 / D-221 / D-222: two OCTAGONAL sleeves 16 mm across flats, 1.0 mm wall at the flats, over s +-32 mm of both arm tubes, 38.5 x 20 x 20 mm centre block on the bridge axis to the tray face, 3 mm edge radii, internal radii %.1f / %.1f mm at the junctions (OCC mesh, hub_body.py), 0.5 mm sleeve-mouth and lead-exit chamfers, 2 strut sockets, tray flange; NO lightening pockets drawn (size -); bridge bore 9 mm long (floor x +15 mm), the 30 mm bond collar of D-220 is NOT drawn; mass = drawn volume x 2.70 g/cm3)' % (HUB_FIL, HUB_FIL_A), 'cage', round(hub_mass_g(), 1), 'Al 6061-T6 (machined)')
 for t_ in 'AB':
     P('CGE-002-' + t_, 'Arm tube %s 12x10 x %.4f m, ONE continuous tube from motor cup to motor cup through the hub (D-202; %s)' % (t_, 2 * TUBE_HL, 'UR + LL' if t_ == 'A' else 'LR + UL'), 'cage', round(tube_g(2 * TUBE_HL, ARM_OD, ARM_ID), 1), 'CFRP tube')
 for s in ST:
     P('CGE-003-' + s, 'Motor cup (%s; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)' % s, 'cage', 4.3, 'PETG (printed)')
-    P('CGE-009-' + s, 'Doubler 14x12 x %.0f mm (%s), carbon tube sleeve bonded over the arm tube at s %.0f..%.0f mm (D-202)' % ((DBL_S1 - DBL_S0) * 1e3, s, DBL_S0 * 1e3, DBL_S1 * 1e3), 'cage', round(tube_g(DBL_S1 - DBL_S0, 2 * DBL_RO, 2 * TUBE_RO), 1), 'CFRP tube')
+    P('CGE-009-' + s, 'Doubler 14x12 x %.0f mm (%s), carbon tube sleeve bonded over the arm tube at s %.0f..%.0f mm 15 mm past the sleeve end, outer 5 mm tapered (D-202, D-222 P1); mass = revolved volume x 1.6 g/cm3 (STRUCTURES CF basis)' % ((DBL_S1 - DBL_S0) * 1e3, s, DBL_S0 * 1e3, DBL_S1 * 1e3), 'cage', round(dbl_volume_m3() * 1e6 * 1.6, 2), 'CFRP tube')
     P('CGE-010-' + s, 'Pin 3 mm carbon rod x %.0f mm (%s) through the arm tube and its sleeve at s %+.0f mm (D-202)' % (PIN_L[s] * 1e3, s, STN_S[s] * PIN_S * 1e3), 'cage', round(math.pi / 4 * PIN_D ** 2 * PIN_L[s] * 1600 * 1000, 2), 'CFRP rod')
 P('CGE-010-C', 'Crossing pin 3 mm carbon rod x %.0f mm through both arm tubes and the hub block (D-202)' % ((HUB[0] + BLK_X[1] - PINC_X0) * 1e3), 'cage', round(math.pi / 4 * PIN_D ** 2 * (HUB[0] + BLK_X[1] - PINC_X0) * 1600 * 1000, 2), 'CFRP rod')
 P('CGE-004', 'Bridge 16x14 (D-206, torsion; axis z -2 mm; D-202: starts 15 mm aft of the hub axis, bored into the boss)', 'cage', round(tube_g(BR_X1 - BR_X0, BR_OD, BR_ID), 1), 'CFRP tube')
@@ -626,6 +721,9 @@ P('CGE-008', 'Pack tray R1'' (T-077: 1.2 mm windowed plate on a 2.0 mm root pad 
 
 # ------------------------------------------------------------------ wing / fins / cage edges
 # wing
+E('E-WNG-90', 'WNG-011', 'WNG-001', EPX, 'wing', 'glass skin wet-laid on the foam core (T-070): 1 ply +-45 deg, resin is the bond; vacuum bag or hand roll, practice "-"')
+E('E-WNG-91', 'WNG-012', 'WNG-001', EPX, 'wing', 'cove CF strip bonded on the cove face under the skin (T-070)')
+E('E-WNG-92', 'WNG-012', 'WNG-011', EPX, 'wing', 'cove CF strip wetted into the skin laminate')
 E('E-WNG-01', 'WNG-002', 'WNG-001', EPX, 'wing', 'spar bonded in its bore; build rule: bond over |y| <= 0.20 m (FIXES2: 0.15 m gave foam shear 78 kPa, MS +0.11 at the board allowable 103 kPa scale; 0.20 m gives 58 kPa, MS +0.48)')
 for pid in ('WNG-003-C', 'WNG-004-R', 'WNG-004-L', 'WNG-005-R', 'WNG-005-L'):
     E(en('WNG'), pid, 'WNG-002', EPX, 'wing', 'plug in the spar bore under a clamp (C2 rule)')
@@ -750,10 +848,20 @@ def build_wing(ctx):
         loop = [(p0[0] + nx, sg * (p0[1] + ny)), (p1[0] + nx, sg * (p1[1] + ny)), (p1[0] - nx, sg * (p1[1] - ny)),
                 (p0[0] - nx, sg * (p0[1] - ny))]
         core.cut_prism('Z', -0.05, [loop], 0.055, name='strut slot (open below, 0.5 mm clear)')
+    # T-070 glass skin (WNG-011) and cove strip (WNG-012), drawn inside the core outline: same openings as the core (every cut above), core and strip pockets from the skin / strip bodies
+    o_, i_ = skin_loops()
+    sk = ctx.part('WNG-011', rgb=(0.75, 0.85, 0.80))
+    sk.prism('Y', -SKIN_Y, [o_, i_], 2 * SKIN_Y, name='glass skin shell 1 ply +-45 deg, 0.054 mm (EST)')
+    stp = ctx.part('WNG-012', rgb=(0.1, 0.1, 0.1))
+    stp.prism('Y', -SKIN_Y, [strip_loop()], 2 * SKIN_Y, name='cove CF strip 6 x 0.5 mm (3 mm2; width / thickness EST)')
+    ctx.seat('WNG-001', 'WNG-011', 'core outline machined inside by the 0.054 mm skin (the skin is wet-laid on the foam)')
+    ctx.seat('WNG-001', 'WNG-012', 'cove strip pocket under the skin')
     guests = ['HWC-001', 'HWC-003', 'WNG-002', 'CGE-004', 'CGE-005-R', 'CGE-005-L', 'CGE-006', 'CGE-007-R', 'CGE-007-L', 'FIN-002-R', 'FIN-002-L',
               'FIN-005-R', 'FIN-005-L', 'AVN-006', 'MEC-001-R', 'MEC-001-L', 'CGE-008', 'HRN-003-R', 'HRN-003-L']
     for g in guests:
         ctx.seat('WNG-001', g, 'groove / bore / pocket cut in the core for ' + g, shop=True)
+        ctx.seat('WNG-011', g, 'opening in the skin for ' + g, shop=True)
+        ctx.seat('WNG-012', g, 'cove strip interrupted for ' + g, shop=True)
 
 
 def sg_(s):
@@ -804,31 +912,20 @@ def _tube_cyl(axis, c, a0, a1, r):
     return fk.Shape('revolve', None, axis=axis, center=tuple(cc), profile=[(0.0, 0.0), (a1 - a0, 0.0), (a1 - a0, r), (0.0, r)])
 
 
-def hub_sleeve_secs(T):
-    """Loft sections (along x) of the printed sleeve round tube T: a cylinder of radius SLV_R and length 2 x SLV_L about the tube axis, as rectangles in the tube (u, t) plane."""
-    xt, phi = TUBE_X[T], TUBE_PHI[T]
-    secs = []
-    for k in range(SLV_N + 1):
-        th = math.radians(-90 + 180.0 * k / SLV_N)
-        w = max(SLV_R * math.cos(th), 0.0003)
-        secs.append((xt + SLV_R * math.sin(th), [_ut_yz(phi, -SLV_L, -w), _ut_yz(phi, SLV_L, -w), _ut_yz(phi, SLV_L, w), _ut_yz(phi, -SLV_L, w)]))
-    return secs
-
-
 def build_cage(ctx):
     hub = ctx.part('CGE-001', rgb=(0.9, 0.9, 0.9))
     # D-207: the outer body (centre block with its 3 mm edge radii + both sleeves + the 2.0 / 1.5 mm junction fillets) is ONE mesh body from the OpenCASCADE geometry of fea_hub.staged_fillet
     # (amodel/hub_body.py, cached in hub_body_cache.npz): the fusionkit prism / loft kinds cannot fillet. Every bore, pin hole, lead exit and the bridge bore are still cut below.
     r_ = hub_outer()
-    hub.mesh(r_['verts'], r_['tris'], name='hub outer body: centre block 38 x 20 x 20 mm on the bridge axis to the tray face, 3 mm edge radii, sleeves r 8.5 mm over s +-24 mm, junction fillets 2.0 / 1.5 mm (OpenCASCADE, = FEA geometry; D-202, D-207)')
+    hub.mesh(r_['verts'], r_['tris'], name='hub outer body, machined 6061: centre block 38.5 x 20 x 20 mm on the bridge axis to the tray face, 3 mm edge radii, two octagonal sleeves (16 mm across flats) over s +-32 mm, junction radii %.1f / %.1f mm (OpenCASCADE; D-220, D-221 s7.1, D-222 P2)' % (HUB_FIL, HUB_FIL_A))
     hub.box(HUB_PAD[0], HUB_PAD[1], name='hub tray pad flange (D-208: inboard of the raceway notches, |y| <= 13.6)')
     for sy_ in (1, -1):                          # D-199: the raceway notches also clear the hub body beside the flange (the UR / UL conduits pass here)
         ya_, yb_ = sorted((sy_ * PADN_Y[0], sy_ * PADN_Y[1]))
         hub.cut_box((PADN_X[0], ya_, PADN_Z[0]), (PADN_X[1], yb_, PADN_Z[1]), name='raceway notch beside the tray pad flange (D-199)')
     # bridge bore: 12 mm from x = HUB_x + 15 mm to the aft face, 45 deg conical corner at the floor (matches the chamfered bridge end); explicit cut, not a seat (a seat would fill the chamfer)
-    hub.cut(fk.Shape('revolve', 'bridge bore 16 mm, floor corner a 0.8 mm x 45 deg cone matching the bridge chamfer (D-207)', axis='X', center=(BORE_X0, 0.0, BR_Z),
+    hub.cut(fk.Shape('revolve', 'bridge bore 16 mm, 30 mm long to the collar mouth (D-220), floor corner a 0.8 mm x 45 deg cone matching the bridge chamfer (D-207)', axis='X', center=(BORE_X0, 0.0, BR_Z),
                      profile=[(0.0, 0.0), (0.0, BR_RO - BR_CHAMFER), (BR_CHAMFER, BR_RO)]
-                     + [(HUB_X1 - BORE_X0 + 0.001, BR_RO), (HUB_X1 - BORE_X0 + 0.001, 0.0)]), None, 'bridge bore D-202')
+                     + [(HUB[0] + COL_X1 - BORE_X0 + 0.001, BR_RO), (HUB[0] + COL_X1 - BORE_X0 + 0.001, 0.0)]), None, 'bridge bore D-202')
     tubes = {}
     for T in 'AB':
         tube = ctx.part('CGE-002-' + T, at=(TUBE_X[T], 0.0, 0.0), rotate=('X', TUBE_PHI[T]), rgb=(0.1, 0.1, 0.1))
@@ -842,11 +939,19 @@ def build_cage(ctx):
         tube.cut(_tube_cyl('Z', (0.0, hs, 0.0), z0, z1, HOLE_R), None, 'phase-lead exit hole 4.8 mm through the tube wall (D-202)')
         db = ctx.part('CGE-009-' + st, at=(TUBE_X[T], 0.0, 0.0), rotate=('X', TUBE_PHI[T]), rgb=(0.15, 0.15, 0.15))
         ys0 = DBL_S0 if sg > 0 else -DBL_S1
-        db.tube('Y', (0.0, ys0, 0.0), DBL_S1 - DBL_S0, DBL_RO, DBL_RI, name='doubler 14x12')
+        db.revolve('Y', (0.0, ys0, 0.0), dbl_profile(sg), name='doubler 14x12 CF tube, s %.0f..%.0f mm, outer end tapered over %.0f mm (D-222 P1: staggered %.0f mm past the sleeve end)' % (DBL_S0 * 1e3, DBL_S1 * 1e3, DBL_TAPER * 1e3, DBL_STAG * 1e3))
         z0, z1 = sorted((sig * 0.0050, sig * 0.0075))
         db.cut(_tube_cyl('Z', (0.0, hs, 0.0), z0, z1, HOLE_R), None, 'phase-lead exit hole 4.8 mm through the doubler (D-202)')
         z0, z1 = sorted((sig * 0.0069, sig * 0.0095))
         ctx.components['CGE-001'].cut(_tube_cyl('Z', (0.0, hs, 0.0), z0, z1, HOLE_R), tube.matrix(), 'phase-lead exit hole 4.8 mm through the sleeve (D-202)')
+        hz0 = sig * (SLV_R - HOLE_CH) if sig > 0 else -(SLV_R + 0.001)       # D-221 s7.1.5: 0.5 mm x 45 deg chamfer on the exit where it meets the flat
+        hprof = ([(0.0, 0.0), (0.0, HOLE_R), (HOLE_CH, HOLE_R + HOLE_CH), (HOLE_CH + 0.001, HOLE_R + HOLE_CH), (HOLE_CH + 0.001, 0.0)] if sig > 0 else
+                 [(0.0, 0.0), (0.0, HOLE_R + HOLE_CH), (0.001, HOLE_R + HOLE_CH), (0.001 + HOLE_CH, HOLE_R), (0.001 + HOLE_CH, 0.0)])
+        ctx.components['CGE-001'].cut(fk.Shape('revolve', 'phase-lead exit chamfer 0.5 x 45 deg (T-080 s7.1.5; grommet not drawn: bundle 3.9 mm in a 4.8 mm hole leaves no room)', axis='Z', center=(0.0, hs, hz0), profile=hprof), tube.matrix(), 'exit chamfer')
+        mz0 = (SLV_L - MOUTH_CH) if sg > 0 else -(SLV_L + 0.001)             # D-222 P1: internal chamfer at the sleeve mouth (the epoxy fillet that goes with it is an adhesive bead, not drawn)
+        mprof = ([(0.0, 0.0), (0.0, DBL_RO), (MOUTH_CH, DBL_RO + MOUTH_CH), (MOUTH_CH + 0.001, DBL_RO + MOUTH_CH), (MOUTH_CH + 0.001, 0.0)] if sg > 0 else
+                 [(0.0, 0.0), (0.0, DBL_RO + MOUTH_CH), (0.001, DBL_RO + MOUTH_CH), (0.001 + MOUTH_CH, DBL_RO), (0.001 + MOUTH_CH, 0.0)])
+        ctx.components['CGE-001'].cut(fk.Shape('revolve', 'sleeve mouth internal chamfer 0.5 x 45 deg (D-222 P1)', axis='Y', center=(0.0, mz0, 0.0), profile=mprof), tube.matrix(), 'mouth chamfer')
         cup = ctx.part('CGE-003-' + st, at=station(st), rotate=mrot(st), rgb=(0.9, 0.9, 0.9))
         cup.prism('X', -0.012, [_rrect(0.0165, 0.0165, CUP_R)], 0.005, name='cup motor plate')
         cup.tube('Y', (0.0, -0.025, 0.0), 0.0285, 0.0096, ARM_OD / 2 + 0.0001, name='cup arm sleeve (bore 12.2 mm: 0.1 mm epoxy gap round the 12 mm arm, D-198: no coincident cylinder faces)')
@@ -882,6 +987,7 @@ def build_cage(ctx):
     pc = ctx.part('CGE-010-C', at=(PINC_X0, 0.0, 0.0), rgb=(0.1, 0.1, 0.1))
     pc.cylinder('X', (0.0, 0.0, 0.0), HUB[0] + BLK_X[1] - PINC_X0, PIN_D / 2, name='crossing pin 3 mm carbon rod')
     ctx.seat('CGE-001', 'CGE-010-C', 'crossing pin hole 3.0 mm through the block')
+    ctx.seat('CGE-008', 'CGE-001', 'tray plate and root pad notched for the hub collar (T-071b C6: 24 mm notch, collar top flush with the plate top)')
     for T in 'AB':
         ctx.seat('CGE-002-' + T, 'CGE-010-C', 'crossing pin hole 3.0 mm through the tube')
     br = ctx.part('CGE-004', rgb=(0.1, 0.1, 0.1))

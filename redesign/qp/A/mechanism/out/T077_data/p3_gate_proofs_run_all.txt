@@ -1,0 +1,147 @@
+wrote C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\qp\A\params-A.json
+redesign/qp/A/proofs/claims.a0_base.json: 0 claims
+
+redesign/qp/A/proofs/claims.a1_flight.json: 36 claims
+  CL-A-MASS-PRED               1.704 kg   margin -16%   FAILS
+  CL-A-MASS-ITEM               1.447 kg   margin +2%
+  CL-A-MASS-GATE-ROOM          1.704 kg   margin -16%   FAILS
+  CL-A-MASS-USER               1.704 kg   margin +93%
+  CL-A-CUTS-REQUIRED            251.5 g   margin -504%   FAILS
+  CL-A-STRUCT-MASS              483.6 g   margin +2%
+  CL-A-CG                       28.3 mm   margin +49%
+  CL-A-CG-HI                    28.3 mm   margin -9%   FAILS
+  CL-A-CG-TRIM-AFT             30.12 mm   margin -6%   FAILS
+  CL-A-CG-TRIM-FWD             27.21 mm   margin +43%
+  CL-A-SM                  5.06 % chord   margin +1%
+  CL-A-CG-LATERAL              1.823 mm   margin +64%
+  CL-A-TW-FRESH-GATE              2.338   margin +17%
+  CL-A-TW-SAG-GATE                1.848   margin +16%
+  CL-A-TW-FRESH-PRED              2.016   margin +1%
+  CL-A-TW-SAG-PRED                1.594   margin -0%   FAILS
+  CL-A-WINDOW-PRED             -2.109 %   margin -142%   FAILS
+  CL-A-WINDOW-GATE              5.286 %   margin +6%
+  CL-A-WINDOW-MASS             1.478 kg   margin -13%   FAILS
+  CL-A-MOTOR-I                  12.08 A   margin +7%
+  CL-A-ESC-I                    17.83 A   margin +49%
+  CL-A-CRUISE-NEED              204.6 s   margin +3%
+  CL-A-CRUISE-RADIUS            51.04 m
+  CL-A-CRUISE-AVAIL             173.5 s   margin -15%   FAILS
+  CL-A-FENCE                      220 m   margin +8%
+  CL-A-STALL                  15.69 m/s   margin +8%
+  CL-A-YAW-MODEL             0.3631 N m   margin +4%
+  CL-A-YAW-R2                0.3631 N m   margin +21%
+  CL-A-YAW-Q                  59.7 N mm   margin +9%
+  CL-A-WIND-LEAN               31.5 deg   margin +21%
+  CL-A-WIND-OUTPUT                0.2 s   margin +60%
+  CL-A-WIND-CAP                     0 s   margin +0 s abs
+  CL-A-TIPOVER                 33.2 deg   margin +11%
+  CL-A-ROLL-141             106.9 deg/s   margin +19%
+  CL-A-ROLL-GATE            106.4 deg/s   margin +18%
+  CL-A-PITCH-USE                  0.575   margin +4%
+redesign/qp/A/proofs/claims.a2_struct.json: 58 claims
+  CL-A-FLUTTER-LINE            28.8 m/s
+  CL-A-FLUTTER-ELEVON-NOM         41 m/s   margin +42%
+  CL-A-FLUTTER-ELEVON-HOT       37.5 m/s   margin +30%
+  CL-A-FLUTTER-ELEVON-COLD         44 m/s   margin +53%
+  CL-A-FLUTTER-HALF            31.5 m/s
+  CL-A-FLUTTER-WING            33.7 m/s   margin +17%
+  CL-A-DIVERGENCE               128 m/s   margin +344%
+  CL-A-REVERSAL                  37 m/s   margin +28%
+  CL-A-GUST-N                    3.01 g   margin +11%
+  CL-A-MS-SPAR                     2.73   margin +2.73 abs
+  CL-A-MS-BOND                     0.34   margin +0.34 abs
+  CL-A-MS-ARM                      1.41   margin +1.41 abs
+  CL-A-MS-ARM-SOCKET               0.48   margin +0.48 abs
+  CL-A-MS-CUP-HEADPULL            14.82   margin +14.8 abs
+  CL-A-MS-CUP-STRIKE               1.55   margin +1.55 abs
+  CL-A-MS-CUP-PLATE                0.49   margin +0.49 abs
+  CL-A-MS-CUP-HOLE                 0.39   margin +0.39 abs
+  CL-A-MS-CUP-BOND                 1.88   margin +1.88 abs
+  CL-A-MS-ARM-BLADE                0.82   margin +0.82 abs
+  CL-A-MS-FATIGUE-HUBWALL           1.17   margin +1.17 abs
+  CL-A-MS-FATIGUE-ARM             15.32   margin +15.3 abs
+  CL-A-MS-RIB                       0.6   margin +0.6 abs
+  CL-A-MS-FIN                      3.44   margin +3.44 abs
+  CL-A-MS-PACK-CRASH               2.87   margin +2.87 abs
+  CL-A-BRIDGE-TORSION-F2      22.65 MPa   margin +24%
+  CL-A-BRIDGE-TORSION-S2      23.83 MPa   margin +21%
+  CL-A-LANDING-STROKE           15.2 mm   margin +24%
+  CL-A-FOAM-SPAR-BOND              0.48   margin +0.48 abs
+  CL-A-FOAM-FIN-SLOT               0.81   margin +0.81 abs
+  CL-A-FOAM-TRAY                   0.36   margin +0.36 abs
+  CL-A-FOAM-SERVO                  0.73   margin +0.73 abs
+  CL-A-FOAM-CAP-PEEL               0.37   margin +0.37 abs
+  CL-A-VIB-LOW-LIMIT           83.58 Hz
+  CL-A-VIB-HIGH-LIMIT          303.6 Hz
+  CL-A-VIB-LOW                    77 Hz   margin +8%
+  CL-A-VIB-HIGH                  432 Hz   margin +42%
+  CL-A-VIB-FC                 27.1 m/s2   margin +10%
+  CL-A-VIB-GM                      2.19   margin +9%
+  CL-A-HORN-RIB-FOAM-HOLD      431.8 kPa   margin -403%   FAILS
+  CL-A-HORN-RIB-FOAM-STALL      860.9 kPa   margin -903%   FAILS
+  CL-A-ELEVON-TORSION-FOAM      504.3 kPa   margin -488%   FAILS
+  CL-A-HORN-BLADE-HOLD         3.32 MPa   margin +83%
+  CL-A-HORN-BLADE-STALL        6.62 MPa   margin +67%
+  CL-A-HORN-BEARING-HOLD      18.39 MPa   margin +8%
+  CL-A-HORN-BEARING-STALL      36.65 MPa   margin -83%   FAILS
+  CL-A-ROD-LEG-STALL           1392 MPa   margin +17%
+  CL-A-HORN-SHEAROUT-STALL      11.11 MPa   margin +4%
+  CL-A-KEEPER-BRIDGE-STALL      19.48 MPa   margin +3%
+  CL-A-SERVO-SPEED                1.521   margin +52%
+  CL-A-HORN-RIB-COUPON                -
+  CL-A-HORN-STALL-STEP             - mm
+  CL-A-ELEVON-TORSION-COUPON              -
+  CL-A-HORN-STALL-BENCH            - mm
+  CL-A-LINKAGE-FREEPLAY        1.28 deg   margin -28%   FAILS
+  CL-A-VIB-GM-SHIFT                2.16   margin +8%
+  CL-A-SERVO-FACTOR               1.556   margin +4%
+  CL-A-SERVO-COLD                 1.585   margin +6%
+  CL-A-SERVO-RATIO                2.629   margin +75%
+redesign/qp/A/proofs/claims.a3_program.json: 14 claims
+  CL-A-COST-TOTAL              1779 USD   margin +1%
+  CL-A-COST-MARGIN30            100 USD   margin +0%
+  CL-A-COST-BUDGET             1900 USD   margin +5%
+  CL-A-SCHED-SLACK                 11 d   margin +11 d abs
+  CL-A-SCHED-F01                   10 d   margin +10 d abs
+  CL-A-SCHED-F01-DATE              10 d   margin +10 d abs
+  CL-A-SCHED-SENS                  -5 d
+  CL-A-BOX-FIT                        1   margin +0%
+  CL-A-COLL-COUNT                     0   margin +0 abs
+  CL-A-COLL-DEPTH              0.034 mm   margin +32%
+  CL-A-WIRE-ENDS                      0   margin +0 abs
+  CL-A-WIRE-FOLDS                     0   margin +0 abs
+  CL-A-ASSY-STEPS                    59   margin +0%
+  CL-A-ASSY-PARTS                   117   margin +0%
+  ERROR: STRICT A-D2: CL-A-CRUISE-NEED is UNVERIFIED
+  ERROR: STRICT A-P1: CL-A-MASS-GATE-ROOM: FAILS: margin -16.0% (1.704 kg vs <= 1.47 kg)
+  ERROR: STRICT A-D3: CL-A-MASS-PRED: FAILS: margin -16.0% (1.704 kg vs <= 1.47 kg)
+  ERROR: STRICT A-P2: CL-A-TW-FRESH-GATE is UNVERIFIED
+  ERROR: STRICT A-P3: CL-A-WINDOW-PRED: FAILS: margin -142.2% (-2.109 % vs >= 5 %)
+  ERROR: STRICT A-P4: CL-A-CG-HI: FAILS: margin -8.9% (28.3 mm vs <= 26 mm)
+  ERROR: STRICT A-P13: CL-A-FLUTTER-ELEVON-NOM is UNVERIFIED
+  ERROR: STRICT CL-A-MASS-PRED: FAILS: margin -16.0% (1.704 kg vs <= 1.47 kg)
+  ERROR: STRICT CL-A-MASS-GATE-ROOM: FAILS: margin -16.0% (1.704 kg vs <= 1.47 kg)
+  ERROR: STRICT CL-A-CUTS-REQUIRED: FAILS: margin -504.5% (251.5 g vs <= 41.6 g)
+  ERROR: STRICT CL-A-CG-HI: FAILS: margin -8.9% (28.3 mm vs <= 26 mm)
+  ERROR: STRICT CL-A-CG-TRIM-AFT: FAILS: margin -5.7% (30.12 mm vs <= 28.5 mm)
+  ERROR: STRICT CL-A-TW-SAG-PRED: FAILS: margin -0.4% (1.594 vs >= 1.6)
+  ERROR: STRICT CL-A-WINDOW-PRED: FAILS: margin -142.2% (-2.109 % vs >= 5 %)
+  ERROR: STRICT CL-A-WINDOW-MASS: FAILS: margin -13.3% (1.478 kg vs >= 1.704 kg)
+  ERROR: STRICT CL-A-CRUISE-AVAIL: FAILS: margin -15.2% (173.5 s vs >= 204.6 s)
+  ERROR: STRICT CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)
+  ERROR: STRICT CL-A-HORN-RIB-FOAM-STALL: FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)
+  ERROR: STRICT CL-A-ELEVON-TORSION-FOAM: FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)
+  ERROR: STRICT CL-A-HORN-BEARING-STALL: FAILS: margin -83.2% (36.65 MPa vs <= 20 MPa)
+  ERROR: STRICT CL-A-LINKAGE-FREEPLAY: FAILS: margin -28.0% (1.28 deg vs <= 1 deg)
+concept-a: 4 claims files, 555 nodes, 1174 edges -> redesign/qp/A/proofs/out/
+  status: UNVERIFIED 220, PROPOSED 17, CHECKED 318, VERIFIED 0; fails 21
+  warning: CL-A-HORN-RIB-COUPON: has a limit, but its value '-' is not a number, so pass / fail is not judged
+  warning: CL-A-HORN-STALL-STEP: has a limit, but its value '-' is not a number, so pass / fail is not judged
+  warning: CL-A-ELEVON-TORSION-COUPON: has a limit, but its value '-' is not a number, so pass / fail is not judged
+  warning: CL-A-HORN-STALL-BENCH: has a limit, but its value '-' is not a number, so pass / fail is not judged
+FAILED
+>> gen_params_a.py
+>> claims_a0_base.py
+>> claims_a1_flight.py
+>> claims_a2_struct.py
+>> claims_a3_program.py

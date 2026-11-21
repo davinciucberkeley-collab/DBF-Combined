@@ -34,10 +34,10 @@
    "race_m": 0.0,
    "groove_m": 0.0,
    "cover_m": 0.0,
-   "exposed_m": 0.1308,
-   "total_m": 0.1308,
+   "exposed_m": 0.1175,
+   "total_m": 0.1175,
    "min_bend_mm": 4.0,
-   "total_strand_m": 0.262
+   "total_strand_m": 0.235
   },
   {
    "edge": "E-HRN-14",
@@ -188,6 +188,6 @@
   "RACE": 1.4483718213748382,
   "GROOVE": 3.0185607354641224,
   "COVER": 2.601988864083842,
-  "EXPOSED": 0.5044608438535056
+  "EXPOSED": 0.4778954232336997
  }
 }

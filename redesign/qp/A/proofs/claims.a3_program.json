@@ -815,10 +815,10 @@
     "v": "P:cad3d.assy_parts_placed"
    },
    "outputs": {
-    "v": 115
+    "v": 117
    },
    "input_values": {
-    "v": 115
+    "v": 117
    }
   },
   {
@@ -836,7 +836,7 @@
     "A-U4"
    ],
    "how": "a_assembly.py: 78 of 78 parts placed, none missing from the sequence.",
-   "value": 115
+   "value": 117
   }
  ]
 }

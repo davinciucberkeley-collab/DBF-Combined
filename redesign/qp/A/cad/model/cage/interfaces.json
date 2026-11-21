@@ -4,15 +4,15 @@
  "parts": [
   {
    "id": "CGE-001",
-   "name": "Hub (printed PETG, D-202: 1.5 mm sleeves over s +-24 mm of both arm tubes, 38 x 20 x 20 mm centre block on the bridge axis, running aft to the tray face (no separate boss), 3 mm edge radii, junction fillets 2.0 mm (sleeve B / block) and 1.5 mm (sleeve A / block) as in the FEA (D-207; outer body is the OpenCASCADE mesh of hub_body.py), 2 strut sockets, tray flange; mass = drawn volume x 1.27)",
+   "name": "Hub (machined 6061-T6, D-220 / D-221 / D-222: two OCTAGONAL sleeves 16 mm across flats, 1.0 mm wall at the flats, over s +-32 mm of both arm tubes, 38.5 x 20 x 20 mm centre block on the bridge axis to the tray face, 3 mm edge radii, internal radii 1.0 / 0.9 mm at the junctions (OCC mesh, hub_body.py), 0.5 mm sleeve-mouth and lead-exit chamfers, 2 strut sockets, tray flange; NO lightening pockets drawn (size -); bridge bore 9 mm long (floor x +15 mm), the 30 mm bond collar of D-220 is NOT drawn; mass = drawn volume x 2.70 g/cm3)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 15.82,
-   "material": "PETG (printed)",
+   "mass_g": 61.5,
+   "material": "Al 6061-T6 (machined)",
    "cg_xyz_m": [
-    -0.0655,
-    -0.0,
-    -0.0006
+    -0.0584,
+    0.0,
+    -0.0014
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -64,25 +64,25 @@
   },
   {
    "id": "CGE-009-UR",
-   "name": "Doubler 14x12 x 14 mm (UR), carbon tube sleeve bonded over the arm tube at s 11..25 mm (D-202)",
+   "name": "Doubler 14x12 x 36 mm (UR), carbon tube sleeve bonded over the arm tube at s 11..47 mm 15 mm past the sleeve end, outer 5 mm tapered (D-202, D-222 P1); mass = revolved volume x 1.6 g/cm3 (STRUCTURES CF basis)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 0.9,
+   "mass_g": 2.01,
    "material": "CFRP tube",
    "cg_xyz_m": [
     -0.0755,
-    0.0149,
-    0.0102
+    0.0231,
+    0.0158
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "CGE-010-UR",
-   "name": "Pin 3 mm carbon rod x 16 mm (UR) through the arm tube and its sleeve at s +8 mm (D-202)",
+   "name": "Pin 3 mm carbon rod x 15 mm (UR) through the arm tube and its sleeve at s +8 mm (D-202)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 0.18,
+   "mass_g": 0.17,
    "material": "CFRP rod",
    "cg_xyz_m": [
     -0.076,
@@ -109,15 +109,15 @@
   },
   {
    "id": "CGE-009-UL",
-   "name": "Doubler 14x12 x 14 mm (UL), carbon tube sleeve bonded over the arm tube at s 11..25 mm (D-202)",
+   "name": "Doubler 14x12 x 36 mm (UL), carbon tube sleeve bonded over the arm tube at s 11..47 mm 15 mm past the sleeve end, outer 5 mm tapered (D-202, D-222 P1); mass = revolved volume x 1.6 g/cm3 (STRUCTURES CF basis)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 0.9,
+   "mass_g": 2.01,
    "material": "CFRP tube",
    "cg_xyz_m": [
     -0.0625,
-    -0.0149,
-    0.0102
+    -0.0231,
+    0.0158
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -127,10 +127,10 @@
    "name": "Pin 3 mm carbon rod x 15 mm (UL) through the arm tube and its sleeve at s -8 mm (D-202)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 0.17,
+   "mass_g": 0.16,
    "material": "CFRP rod",
    "cg_xyz_m": [
-    -0.0625,
+    -0.0628,
     -0.0066,
     0.0045
    ],
@@ -154,15 +154,15 @@
   },
   {
    "id": "CGE-009-LR",
-   "name": "Doubler 14x12 x 14 mm (LR), carbon tube sleeve bonded over the arm tube at s 11..25 mm (D-202)",
+   "name": "Doubler 14x12 x 36 mm (LR), carbon tube sleeve bonded over the arm tube at s 11..47 mm 15 mm past the sleeve end, outer 5 mm tapered (D-202, D-222 P1); mass = revolved volume x 1.6 g/cm3 (STRUCTURES CF basis)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 0.9,
+   "mass_g": 2.01,
    "material": "CFRP tube",
    "cg_xyz_m": [
     -0.0625,
-    0.0149,
-    -0.0102
+    0.0231,
+    -0.0158
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -172,10 +172,10 @@
    "name": "Pin 3 mm carbon rod x 15 mm (LR) through the arm tube and its sleeve at s +8 mm (D-202)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 0.17,
+   "mass_g": 0.16,
    "material": "CFRP rod",
    "cg_xyz_m": [
-    -0.0625,
+    -0.0628,
     0.0066,
     -0.0045
    ],
@@ -199,25 +199,25 @@
   },
   {
    "id": "CGE-009-LL",
-   "name": "Doubler 14x12 x 14 mm (LL), carbon tube sleeve bonded over the arm tube at s 11..25 mm (D-202)",
+   "name": "Doubler 14x12 x 36 mm (LL), carbon tube sleeve bonded over the arm tube at s 11..47 mm 15 mm past the sleeve end, outer 5 mm tapered (D-202, D-222 P1); mass = revolved volume x 1.6 g/cm3 (STRUCTURES CF basis)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 0.9,
+   "mass_g": 2.01,
    "material": "CFRP tube",
    "cg_xyz_m": [
     -0.0755,
-    -0.0149,
-    -0.0102
+    -0.0231,
+    -0.0158
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "CGE-010-LL",
-   "name": "Pin 3 mm carbon rod x 16 mm (LL) through the arm tube and its sleeve at s -8 mm (D-202)",
+   "name": "Pin 3 mm carbon rod x 15 mm (LL) through the arm tube and its sleeve at s -8 mm (D-202)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 0.18,
+   "mass_g": 0.17,
    "material": "CFRP rod",
    "cg_xyz_m": [
     -0.076,
@@ -235,7 +235,7 @@
    "mass_g": 0.44,
    "material": "CFRP rod",
    "cg_xyz_m": [
-    -0.0645,
+    -0.0643,
     0.0,
     0.0
    ],
@@ -340,7 +340,7 @@
    "mass_g": 14.07,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0164,
+    -0.012,
     0.0,
     0.0113
    ],

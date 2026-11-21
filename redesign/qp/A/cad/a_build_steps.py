@@ -159,17 +159,17 @@ step(id='B0a', title='Cut the cage tubes (bench)',
      fab=dict(kind='tube', pid='CGE-002-A', text='CUT  2 arm tubes 552.4 mm, bridge 108 mm, 4 doublers 21 mm, 5 pins, 2 struts 286 mm', dims=[('CGE-002-A', 'cut 552.4 mm'), ('CGE-004', 'cut 108 mm')]),
      callouts=[('CGE-002-A', 'Arm tube: one 552.4 mm tube per diagonal, 30.6 g'), ('CGE-004', 'Bridge: 108 mm, 8.1 g, chamfered end')])
 
-step(id='B0b', title='Print the hub',
-     line='Print the hub (18.3 g PETG); stand it on the bench, aft face down.',
-     tools='printer (PETG), caliper',
-     check='Both sleeve bores 12 mm (14 mm over the outer 13 mm), bridge bore 16 mm with a 45 deg cone at its floor (D-206, D-207); hub 18.3 g +-15 %',
-     min=15,
-     need=['PETG (R03). Print file: CGE-001.stl (qp/A/drawings/out/stl/); print time EST about 1 h at 14-24 g/h'],
-     make=['Print CGE-001 (CAD 18.3 g: two 1.5 mm sleeves over s +-24 mm, 38 x 20 x 20 mm centre block on the bridge axis to the tray face with 3 mm edge radii, 2.0 / 1.5 mm fillets where the sleeves meet the block (D-207), 16 mm bridge bore with a 0.8 mm x 45 deg cone at its floor, two strut sockets, tray flange). Orientation `-` (EST: aft face on the bed, sleeve axes tilted, supports inside the bores).',
-           'Ream or drill the bores to size if needed: tube bores 12.0 mm, doubler counterbore 14.0 mm, bridge bore 16.0 mm with a 45 deg corner (D-206), lead exit holes 4.8 mm, pin holes 3.0 mm, the two pin access holes from the block front (tube B pins).'],
-     checks=['Dry-fit a scrap of tube in each bore; weigh the hub (CAD 18.3 g).', 'The printed hub is the part the glue coupon (COUPON-BOND-D202.md) must clear before the FLIGHT hub is printed.'],
-     fab=dict(kind='print', pid='CGE-001', orient='aft face on the bed (EST)', text='PRINT  PETG  CGE-001.stl (qp/A/drawings/out/stl/)'),
-     callouts=[('CGE-001', 'Hub: print PETG 18.3 g (CGE-001.stl)')])
+step(id='B0b', title='Machine the hub',
+     line='Machine the hub from 6061-T6 bar (D-220 / D-221, mass from the CAD in PARTS: drawn solid, no pockets); stand it on the bench, aft face down. A PLA print of CGE-001.stl is the fit check first (T-080).',
+     tools='knee mill (bores, pins), Tormach 440 (contour), caliper',
+     check='Both sleeve bores 12 mm (14 mm over s 11..32), bridge bore 16 mm, 30 mm long to the collar mouth, with a 45 deg cone at its floor (D-206, D-207, D-220); octagonal sleeves 16 mm across flats; weigh against the CAD mass in PARTS (about 61.5 g drawn solid)',
+     min=240,
+     need=['6061-T6 bar, about 63.5 x 63.5 x 50.8 mm per hub (T-080 V7, price "-"); PLA for the fit-check print (Jacobs Prusa). Print file: CGE-001.stl (qp/A/drawings/out/stl/)'],
+     make=['Machine CGE-001 (CAD: two octagonal sleeves 16 mm across flats over s +-32 mm, 38.5 x 20 x 20 mm centre block on the bridge axis to the tray face with 3 mm edge radii, 24 x 24 mm collar to x -24 (bridge bore 30 mm), junction radii 1.0 / 0.9 mm, 0.5 mm chamfers at the sleeve mouths and lead exits, 16 mm bridge bore with a 0.8 mm x 45 deg cone at its floor, two strut sockets, tray flange). Lightening pockets, cross-pin holes, scrim barrier: not drawn, sizes "-". Cutter list "-" (a 2 mm end mill for the 1 mm radii).',
+           'Ream the bores to size: tube bores 12.0 mm, doubler counterbore 14.0 mm, bridge bore 16.0 mm with a 45 deg corner (D-206), lead exit holes 4.8 mm, pin holes 3.0 mm, the two pin access holes from the block front (tube B pins). Bond-fit diameters "-" until coupon C-5.'],
+     checks=['Dry-fit a scrap of tube in each bore; weigh the hub against the CAD mass in PARTS.', 'Fit-check the PLA print on the tubes, bridge and struts before cutting metal.'],
+     fab=dict(kind='print', pid='CGE-001', orient='fit-check print only (flight part machined)', text='MACHINE  6061-T6  CGE-001 (fit-check print CGE-001.stl, qp/A/drawings/out/stl/)'),
+     callouts=[('CGE-001', 'Hub: machined 6061, mass from the CAD (CGE-001.stl is the fit-check print)')])
 
 step(id='B0c', title='Arm tube B through the hub',
      line='Slide arm tube B through its sleeve and the block; bond it over the 48 mm of sleeve.',

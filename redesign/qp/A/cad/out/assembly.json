@@ -3,7 +3,9 @@
   {
    "id": "A1",
    "parts": [
-    "WNG-001"
+    "WNG-001",
+    "WNG-011",
+    "WNG-012"
    ],
    "worst_mm": 0.0,
    "first_hit_t_mm": null,

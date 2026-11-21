@@ -453,7 +453,8 @@ def cd_mass_g(st, h=0.0002):
         X = np.full(Y.shape, x)
         o, i_ = _cd_masks(st, X, Y, Z)
         d2 = Tt * Tt + (x - c['xt']) ** 2
-        hub = ((np.abs(U) <= SLV_L) & (d2 <= SLV_R ** 2)) | (d2 <= TUBE_RO ** 2) | ((np.abs(U) >= DBL_S0) & (np.abs(U) <= DBL_S1) & (d2 <= DBL_RO ** 2))
+        dxx = np.abs(x - c['xt'])
+        hub = ((np.abs(U) <= SLV_L) & (np.maximum(np.maximum(dxx, np.abs(Tt)), (dxx + np.abs(Tt)) / math.sqrt(2.0)) <= SLV_R)) | (d2 <= TUBE_RO ** 2) | ((np.abs(U) >= DBL_S0) & (np.abs(U) <= DBL_S1) & (d2 <= DBL_RO ** 2))
         tot += int(np.count_nonzero(o & ~i_ & ~hub))
     return tot * h ** 3 * 1e6 * RHO_PETG
 
@@ -548,7 +549,7 @@ LEAD_Y1 = 0.0635                            # EST: leads leave the end face (y +
 _xt0 = 0.085                                # male housing starts here (EST), female to _xt0 + 2 XT60_L
 XT_Z = max(zu(x) for x in (_xt0, _xt0 + 2 * XT60_L)) + XT60_H / 2 + 0.0002          # CALC: connector centre height, sits on the skin
 STRAP_W, STRAP_T = 20 * MM, 1.6 * MM        # D-199: BOM W08 = STRIX Non-Slip Battery Strap 20 x 300 mm (V readymaderc, 2026-11-15; was 25 mm hook-and-loop EST); thickness EST
-STRAP_X0 = PACK_X[0]                        # strap fore edge (nominal pack position): strap x -27.5..-2.5 (pack at trim 0)
+STRAP_X0 = -0.0235                           # T-077 p3: strap fore edge 0.5 mm aft of the hub collar mouth (x -24), strap x -23.5..-3.5 = the pack's aft 20 mm (was PACK_X[0]: -36.5..-16.5, through the D-220 collar)
 X_GROUND = 0.3375                           # EST: pad aft face (pad 30 mm DOC)
 FC_X0 = 0.045                                                          # QP-4: FC hard-mounted ON the spar centre (spar axis x 0.060 = FC centre); ESC moved aft of it
 GEL = 0.0030                                                           # EST foam tape 3.0 mm (was 1.5; D-194 stock-screw stack height): FC HARD-MOUNTED (BOARD s3 D-186, s1 item 5)
@@ -1426,6 +1427,9 @@ def build_harness(ctx):
 def build_assembly(ctx):
     """Joints and contacts for every mechanical edge, after all parts exist (wires are registered by the harness)."""
     hw = ctx.part('HRD-001', proxy=True)
+    core_ = ctx.components['WNG-001']        # T-077 p3: the skin and the cove strip carry every explicit cut of the core (slots, pockets, windows, wire slits cut by the later modules); seats are realised later
+    for pid_ in ('WNG-011', 'WNG-012'):
+        ctx.components[pid_].cuts = list(core_.cuts)
     hw.cylinder('X', (0.100, 0.0, 0.0), 0.002, 0.001, name='hardware lump')
     comps = ctx.components
     for e in EDGES:

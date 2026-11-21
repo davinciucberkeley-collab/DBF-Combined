@@ -18,6 +18,36 @@
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
+   "id": "WNG-011",
+   "name": "Wing torsion skin: 1 ply 48 g/m2 glass at +-45 deg wet-laid on the core, closed over the leading edge and the cove face, y -0.40..+0.40, wet ply 0.054 mm (EST) drawn as a shell inside the core outline; openings as the core (slots, pockets, windows); mass = shell volume x 1.63 g/cm3 (88 g/m2 / 0.054 mm, T-071 l.24)",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 26.7,
+   "material": "glass cloth 48 g/m2 + epoxy",
+   "cg_xyz_m": [
+    0.0919,
+    0.0,
+    -0.0012
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "WNG-012",
+   "name": "Cove CF strip, section 6 x 0.5 mm = 3 mm2 (only the area is given, T-071 l.32; width, thickness and product -), y -0.40..+0.40, under the skin on the cove face; mass = volume x 1.55 g/cm3",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 3.7,
+   "material": "CFRP strip",
+   "cg_xyz_m": [
+    0.1812,
+    0.0,
+    -0.004
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
    "id": "WNG-002",
    "name": "Spar, CF tube 12x10 x 0.90 m",
    "subsystem": "wing",
@@ -289,6 +319,30 @@
   }
  ],
  "edges": [
+  {
+   "id": "E-WNG-90",
+   "part_a": "WNG-011",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "glass skin wet-laid on the foam core (T-070): 1 ply +-45 deg, resin is the bond; vacuum bag or hand roll, practice \"-\""
+  },
+  {
+   "id": "E-WNG-91",
+   "part_a": "WNG-012",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "cove CF strip bonded on the cove face under the skin (T-070)"
+  },
+  {
+   "id": "E-WNG-92",
+   "part_a": "WNG-012",
+   "part_b": "WNG-011",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "cove CF strip wetted into the skin laminate"
+  },
   {
    "id": "E-WNG-01",
    "part_a": "WNG-002",
