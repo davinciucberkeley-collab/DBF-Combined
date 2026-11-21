@@ -34,10 +34,10 @@
    "race_m": 0.0,
    "groove_m": 0.0,
    "cover_m": 0.0,
-   "exposed_m": 0.1175,
-   "total_m": 0.1175,
+   "exposed_m": 0.1433,
+   "total_m": 0.1433,
    "min_bend_mm": 4.0,
-   "total_strand_m": 0.235
+   "total_strand_m": 0.287
   },
   {
    "edge": "E-HRN-14",
@@ -57,52 +57,52 @@
    "strands": 3,
    "dia_mm": 1.8,
    "arm_m": 0.2782,
-   "race_m": 0.1225,
-   "groove_m": 0.0098,
-   "cover_m": 0.0713,
+   "race_m": 0.1346,
+   "groove_m": 0.0102,
+   "cover_m": 0.071,
    "exposed_m": 0.0003,
-   "total_m": 0.4821,
+   "total_m": 0.4942,
    "min_bend_mm": 4.0,
-   "total_strand_m": 1.446
+   "total_strand_m": 1.483
   },
   {
    "edge": "E-HRN-03",
    "strands": 3,
    "dia_mm": 1.8,
    "arm_m": 0.2782,
-   "race_m": 0.1096,
-   "groove_m": 0.0098,
-   "cover_m": 0.0713,
+   "race_m": 0.1216,
+   "groove_m": 0.0102,
+   "cover_m": 0.071,
    "exposed_m": 0.0003,
-   "total_m": 0.4692,
+   "total_m": 0.4812,
    "min_bend_mm": 4.0,
-   "total_strand_m": 1.408
+   "total_strand_m": 1.444
   },
   {
    "edge": "E-HRN-04",
    "strands": 3,
    "dia_mm": 1.8,
    "arm_m": 0.2782,
-   "race_m": 0.1187,
-   "groove_m": 0.0098,
-   "cover_m": 0.0846,
+   "race_m": 0.1308,
+   "groove_m": 0.0102,
+   "cover_m": 0.0843,
    "exposed_m": 0.0005,
-   "total_m": 0.4919,
+   "total_m": 0.504,
    "min_bend_mm": 4.0,
-   "total_strand_m": 1.476
+   "total_strand_m": 1.512
   },
   {
    "edge": "E-HRN-05",
    "strands": 3,
    "dia_mm": 1.8,
    "arm_m": 0.2782,
-   "race_m": 0.132,
-   "groove_m": 0.0102,
-   "cover_m": 0.0843,
+   "race_m": 0.144,
+   "groove_m": 0.0098,
+   "cover_m": 0.0846,
    "exposed_m": 0.0003,
-   "total_m": 0.5049,
+   "total_m": 0.5169,
    "min_bend_mm": 4.0,
-   "total_strand_m": 1.515
+   "total_strand_m": 1.551
   },
   {
    "edge": "E-HRN-06",
@@ -184,10 +184,10 @@
   }
  ],
  "totals_strand_m": {
-  "ARM": 3.3382046459052472,
-  "RACE": 1.4483718213748382,
-  "GROOVE": 3.0185607354641224,
-  "COVER": 2.601988864083842,
-  "EXPOSED": 0.4778954232336997
+  "ARM": 3.338204645905247,
+  "RACE": 1.5928484914340078,
+  "GROOVE": 3.02086775955304,
+  "COVER": 2.5996809594076615,
+  "EXPOSED": 0.52940376604454
  }
 }

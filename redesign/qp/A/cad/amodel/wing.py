@@ -15,7 +15,7 @@ GAP_Y = 0.0005
 PLUG_R = 0.0049
 # LEGACY D-193 hub constants (R_IN .. HUB_SPOKE_D): superseded by the D-202 hub below; kept only so structures/fea_arm.py (the D-201 FEA of the old hub) still imports. Not used by the CAD.
 R_IN = R_M - 0.245                          # DOC: arm tube 0.245 long (D-193 four separate arms)
-HUB_X0, HUB_X1 = -0.102, -0.045             # D-193 hub x range; HUB_X1 (aft face = tray face, x -0.045) is still the aft face of the D-202 hub
+HUB_X0, HUB_X1 = -0.102 + CAGE_DX, -0.045 + CAGE_DX             # D-193 hub x range; HUB_X1 (aft face = tray face, x -0.045) is still the aft face of the D-202 hub
 HUB_W = 0.0008                              # EST printed wall = 2 perimeters at 0.4 mm (the QP-4 FIXES basis of the 13 g hub); at 1.2 mm (3 perimeters) the drawn hub is 19.1 g
 HUB_SOCK_W = 0.002                          # D-196: arm-socket boss wall 2.0 mm (5 perimeters); 0.8 mm failed the hoop check (structures/qp5_checks.md s2, MS -0.58)
 HUB_RB = 0.006 + HUB_SOCK_W                 # arm-socket boss outer radius over the mouth zone (8.0 mm)
@@ -81,7 +81,7 @@ BR_Z = -0.002                               # D-206: bridge axis 2 mm below the 
 BORE_X0 = HUB[0] + 0.015                    # bridge bore floor 15 mm aft of the hub axis; floor corner a 45 deg cone matching the tube's BR_CHAMFER (D-207, FEA run d209)
 BR_X0 = BORE_X0                             # D-207: the bridge seats on the bore floor, its chamfer on the conical corner (a 1 mm gap, FEA d208, doubled the peak at the tube end edge). D-202 note: D-202: the bridge starts 15 mm aft of the hub axis (x -0.060), bonded in the 12 mm boss bore; it no longer passes through the hub centre (was -0.100)
 STRUT_OD, STRUT_ID = 0.006, 0.0040          # T-071 / T-073 / T-076 / D-219: strut 6x4.0 (was DOC 6x4.5; Euler pinned RF 0.93 -> 1.10, T071_wing_skin.md l.72); availability and price "-"
-STRUT_S = (-0.065, 0.0229, 0.0)             # EST start inside the hub
+STRUT_S = (-0.065 + CAGE_DX, 0.0229, 0.0)             # EST start inside the hub
 STRUT_E = (0.0500, 0.2850, 0.0)               # EST end in the clamp boss on the spar (DOC: to the spar at y 0.30)
 RIB_OD, RIB_ID, RIB_X0 = 0.014, 0.012, 0.0705
 RIB_X1 = XFIN_T - FIN_OD / 2                # rib ends on the tube front
@@ -446,6 +446,7 @@ BLK_Z = BR_Z                                # D-207: block centred on the bridge
 R_BR = 0.0095                               # D-207: bridge boss radius 9.5 mm about the bridge axis (1.5 mm wall round the 16 mm bore, as the sleeves; D-206: 10.0, tangent to the block sides)
 COL_X1 = 0.045                              # D-220: bonded bridge bore >= 30 mm: the collar runs aft to a mouth 45 mm aft of the hub axis (floor at +15: 30 mm engagement; escalation s3.2 'mouth about x 45, COL_E about 21')
 COL_HY, COL_Z = 0.012, (-0.016, 0.008)      # T-071b C6 / D-220 collar section 24 x 24 mm (y +-12, z -16..+8: top flush with the tray plate top z 8, T-071b test box); 3 mm radii on the four x-parallel edges (as the block)
+POCKET_R, POCKET_X0 = 0.00925, 0.0155        # T-077 p4 (D-224 hub pockets): from x +15.5 mm (1.0 mm aft of sleeve B's aft flat) to the collar mouth the hub is turned to a cylinder R 9.25 mm about the bridge axis: 1.25 mm wall round the 16 mm bore; removes the lightly loaded block corners and collar corners (FEA T077p4_data: p925). 0 = off
 HOLE_S, HOLE_R = 0.018, 0.0024              # phase-lead exit 4.8 mm at s = +-18 mm (FEA S_HOLE, HOLE_R)
 PIN_D, PIN_S = 0.003, 0.008                 # 3 mm carbon pins along x: at the crossing (y = z = 0) and one per tube at s = +-8 mm
 # Pin insertion (CAD interpretation, D-202): all pins go in along +x from the nose side. A pin of tube A (UR, LL) and the crossing pin are flush with the sleeve front surface (x_A - 8.5 mm),
@@ -506,6 +507,7 @@ def hub_core_volume_m3(h=0.00025):
             ay, az = np.abs(Y), np.abs(Z - BLK_Z)
             cy, cz = np.maximum(ay - (CB - R_CB), 0.0), np.maximum(az - (CB - R_CB), 0.0)
             inside |= (ay <= CB) & (az <= CB) & (cy * cy + cz * cz <= R_CB * R_CB)
+        # (T-077 p4 pocket cut applied after the union below)
         # D-220 collar (24 x 24 mm, x +24..+45 rel.)
         if BLK_X[1] <= dx_rel <= COL_X1:
             ay, az = np.abs(Y), np.maximum(np.abs(Z - 0.5 * (COL_Z[0] + COL_Z[1])) - 0.0, 0.0)
@@ -515,6 +517,8 @@ def hub_core_volume_m3(h=0.00025):
         # bridge boss
         if BLK_X[1] - 0.0005 <= dx_rel <= HUB_X1 - HUB[0]:
             inside |= (Y * Y + (Z - BR_Z) ** 2 <= R_BR * R_BR)
+        if POCKET_R > 0 and dx_rel >= POCKET_X0:                  # T-077 p4: lightening cut, cylinder R about the bridge axis
+            inside &= (Y * Y + (Z - BR_Z) ** 2 <= POCKET_R * POCKET_R)
         sub = np.zeros(Y.shape, dtype=bool)
         for T in 'AB':
             xt, phi = TUBE_X[T], TUBE_PHI[T]
@@ -609,16 +613,16 @@ def fin_fairing_loop():
 # keep the area: EST, not re-checked by the T-073 hand calc). Orientation: plate flat on the bed (z up in the CAD), tabs and walls rise in z (interlayer allowable, T-073).
 TRAY_PLATE_T = 0.0012                       # R1'' thin plate: top z 8.0 (pad / pack floor unchanged), bottom z 6.8
 TRAY_RIB = 0.002                            # rib / rim width (EST)
-TRAY_ROOT_X1 = -0.035                       # solid 2.0 mm root pad x -45..-35 (R1'' "2.0 mm root pad" over the hub flange end)
+TRAY_ROOT_X1 = -0.035 + CAGE_DX                       # solid 2.0 mm root pad x -45..-35 (R1'' "2.0 mm root pad" over the hub flange end)
 TRAY_YB = (0.0142, 0.0238)                  # solid band over the phase-lead raceway footprint (the raceway is bonded to the plate underside, common.RW_YO)
 TRAY_YL = 0.0394                            # longitudinal rib in the outboard zone
 TRAY_NB = 3                                 # window bays along x
-TRAY_WN_X = (-0.024, -0.008, 0.008)         # end wall window centres x (EST)
+TRAY_WN_X = (-0.024 - 0.022, -0.008 - 0.022, 0.008 - 0.022)         # end wall window centres x (EST)
 TRAY_WN_W, TRAY_WN_Z = 0.010, (0.0110, 0.0240)
 
 
 def _tray_solids():
-    x0, x1 = -0.045, TRAY_X1
+    x0, x1 = TRAY_X0, TRAY_X1
     zb, zt = 0.008 - TRAY_PLATE_T, 0.008
     yo = TRAY_YO
     add, cut = [], []
@@ -704,7 +708,7 @@ for s in 'RL':
     P('FIN-005-' + s, 'Rib saddle on spar (%s)' % s, 'fins', 1.0, 'PETG (printed)')
     P('FIN-006-' + s, 'Rib fairing, upper (%s): XPS + tape blister over the 14 mm rib where the S5010 skin is thinner than the tube (D-194); mass EST' % s, 'fins', 0.3, 'XPS foam + tape')
 # cage (allocation 135; STRUCTURES iteration 2: 122 g)
-P('CGE-001', 'Hub (machined 6061-T6, D-220 / D-221 / D-222: two OCTAGONAL sleeves 16 mm across flats, 1.0 mm wall at the flats, over s +-32 mm of both arm tubes, 38.5 x 20 x 20 mm centre block on the bridge axis to the tray face, 3 mm edge radii, internal radii %.1f / %.1f mm at the junctions (OCC mesh, hub_body.py), 0.5 mm sleeve-mouth and lead-exit chamfers, 2 strut sockets, tray flange; NO lightening pockets drawn (size -); bridge bore 9 mm long (floor x +15 mm), the 30 mm bond collar of D-220 is NOT drawn; mass = drawn volume x 2.70 g/cm3)' % (HUB_FIL, HUB_FIL_A), 'cage', round(hub_mass_g(), 1), 'Al 6061-T6 (machined)')
+P('CGE-001', 'Hub (machined 6061-T6, D-220 / D-221 / D-222: two OCTAGONAL sleeves 16 mm across flats, 1.0 mm wall at the flats, over s +-32 mm of both arm tubes, 38.5 x 20 x 20 mm centre block on the bridge axis to the tray face, 3 mm edge radii, internal radii %.1f / %.1f mm at the junctions (OCC mesh, hub_body.py), 0.5 mm sleeve-mouth and lead-exit chamfers, 2 strut sockets, tray flange; hub pockets T-077 p4: block aft of x +15.5 and the 30 mm bond collar (D-220) turned to a cylinder R %.2f mm about the bridge axis (wall %.2f mm round the 16 mm bore); mass = drawn volume x 2.70 g/cm3)' % (HUB_FIL, HUB_FIL_A, POCKET_R * 1e3, POCKET_R * 1e3 - BR_RO * 1e3), 'cage', round(hub_mass_g(), 1), 'Al 6061-T6 (machined)')
 for t_ in 'AB':
     P('CGE-002-' + t_, 'Arm tube %s 12x10 x %.4f m, ONE continuous tube from motor cup to motor cup through the hub (D-202; %s)' % (t_, 2 * TUBE_HL, 'UR + LL' if t_ == 'A' else 'LR + UL'), 'cage', round(tube_g(2 * TUBE_HL, ARM_OD, ARM_ID), 1), 'CFRP tube')
 for s in ST:

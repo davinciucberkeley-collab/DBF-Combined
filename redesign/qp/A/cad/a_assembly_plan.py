@@ -23,7 +23,7 @@ STEPS = [
     ('A4', 'Right plugs up the bore', ['WNG-004-R', 'WNG-005-R'], (0, -1, 0), 600, 100),
     ('A5', 'Left plugs up the bore from the left tip', ['WNG-004-L', 'WNG-005-L'], (0, 1, 0), 600, 100),
     # ---- D-202 bench build of the cage frame (swept in the bench run, see BENCH; unit vectors from the CAD: u_A = (0, cos 34.38, sin 34.38) along tube A toward UR, u_B = (0, cos 34.38, -sin 34.38) along tube B toward LR)
-    ('B0a', 'Bench: cut the two arm tubes (552.4 mm of 12x10), the bridge (108 mm, D-206, from the 16x14 fin-tube offcut) and the two struts (286.2 mm of 6x4.5) from the carbon stock; sand the ends square', [], None, 0, 0),
+    ('B0a', 'Bench: cut the two arm tubes (552.4 mm of 12x10), the bridge (120 mm, D-206, from the 16x14 fin-tube offcut) and the two struts (291.2 mm of 6x4.0) from the carbon stock; sand the ends square', [], None, 0, 0),
     ('B0b', 'Bench: the printed hub stands on the bench, aft face down', ['CGE-001'], None, 0, 0),
     ('B0c', 'Arm tube B slid through its sleeve and the centre block (from the LL side, along its axis)', ['CGE-002-B'], (0, 0.8253073, -0.5646839), 330, 15),
     ('B0d', 'Two 3 mm pins (LR, UL) pushed in along x from the nose side through the block access holes, the sleeve and tube B', ['CGE-010-LR', 'CGE-010-UL'], (1, 0, 0), 30, 3),
@@ -38,8 +38,8 @@ STEPS = [
     ('B0i2', 'Motor cup LL slid onto the tube A end', ['CGE-003-LL'], (0, 0.8253073, 0.5646839), 60, 5),
     ('B0i3', 'Motor cup LR slid onto the tube B end', ['CGE-003-LR'], (0, -0.8253073, 0.5646839), 60, 5),
     ('B0i4', 'Motor cup UL slid onto the tube B end', ['CGE-003-UL'], (0, 0.8253073, -0.5646839), 60, 5),
-    ('B0j1', 'Right strut pushed into its hub socket along its own axis', ['CGE-005-R'], (-0.40179, -0.9157318, 0), 40, 5),
-    ('B0j2', 'Left strut pushed into its hub socket along its own axis', ['CGE-005-L'], (-0.40179, 0.9157318, 0), 40, 5),
+    ('B0j1', 'Right strut pushed into its hub socket along its own axis', ['CGE-005-R'], (-0.43605, -0.89992, 0), 40, 5),  # D-224 p4: strut axis direction after the 12 mm cage shift (STRUT_S x -77 mm: atan2(262.1, 127) = 64.15 deg; was 66.3 deg, (-0.40179, -0.91573))
+    ('B0j2', 'Left strut pushed into its hub socket along its own axis', ['CGE-005-L'], (-0.43605, 0.89992, 0), 40, 5),
     ('B0k', 'THREAD (bench, before the motors go on the cups): feed the three 20 AWG leads of each motor (400 mm stock + extension, EST) from the cup side through the 4.8 mm lead hole, the collar and the tube bore to the 4.8 mm exit hole at s +-18 mm; the free ends are laid flat along the tube until the hub conduits are on (B2b1-B2b4); then screw the motors on (B1)', [], None, 0, 0),
     ('B1', 'Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked '
            'from below: clips snap on the spar', CAGE, (0, 0, 1), 30, 3),
@@ -82,7 +82,7 @@ STEPS = [
     ('E4', 'Pack into the tray', ['PWR-001'], (0, 0, -1), 30, 5),
     ('E4a', 'XT60 female with its tail mated to the pack lead XT60 male (plugs on from aft, taped on the skin; tail soldered to the ESC pads after)', ['HRN-002'], (-1, 0, 0), 15, 3),
     ('E4b', 'LAY: mate the pack XT60 male to the XT60 female (E4a) (done in E4a); the vendor pack power leads (E-HRN-13) and balance lead (E-HRN-14) come on the pack and are taped to the skin along their route, the balance plug on the pack top', [], None, 0, 0, ['E-HRN-01', 'E-HRN-13', 'E-HRN-14']),
-    ('E5', 'Pack strap threaded under the bridge tube and closed over the pack (FLEXIBLE: no rigid insertion path exists, so this step checks the fitted position only, travel 0; the threading is by hand)', ['PWR-002'], None, 0, 0),
+    ('E5', 'Two pack straps (y +-35 mm), each passed round the tray plate front edge and aft end and closed over the pack (FLEXIBLE: no rigid insertion path exists, so this step checks the fitted position only, travel 0; the threading is by hand; D-224 rung 3a: the bridge tube and the hub collar are not enclosed)', ['PWR-002'], None, 0, 0),
     ('E6', 'LAY: solder the battery tail to the ESC BAT pads and the 4 x 3 phase leads (free ends from B0 / B2c: out of the foam ditch, up to z 16, over the plate beside the FC, up to z 28 under the cover roof) to the ESC motor pads; heat-shrink', [], None, 0, 0, ['E-HRN-12', 'E-HRN-02', 'E-HRN-03', 'E-HRN-04', 'E-HRN-05']),
     ('E7', 'Bay cover lowered over the FC stack and ESC onto the plate (the GPS lead and the battery tail drop into the bottom-open slots, the two antennas into the slots of the RX hood aft wall; the RX UART and I2C leads and the phase bundles are already inside), foam tape + two ties', ['AVN-008'], (0, 0, -1), 40, 4),
 ]

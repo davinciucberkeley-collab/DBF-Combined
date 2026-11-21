@@ -39,19 +39,21 @@ SPAR_X, SPAR_OD, SPAR_ID = 0.060, 0.012, 0.010     # DOC iteration 2: CF 12x10 a
 WING_DZ = float(os.environ.get('A_WING_DZ', '0.005'))                            # D-194 (integrator): airfoil datum lowered 5.0 mm so the 12 mm spar bore (z 0) sits at mid-thickness of the S5010: foam above/below the bore 6.3 / 5.6 mm (was 11.3 / 0.6 mm at x 54-66, S5010 chord line z 0 -> lower skin -6.6 mm). CALC from s5010.dat
 COORDS = k9.read_dat(os.path.join(REDESIGN, 'subsystems', 'wing', 's5010.dat'))   # D-193 (A1): Selig S5010, published coordinates, unscaled, 9.82 % t/c (UIUC s5010.dat, checked 2026-11-09; K09-L D-02); replaces reflex_placeholder(0.095, camber 0.012)
 COORDS = [(x_, z_ - WING_DZ / C) for x_, z_ in COORDS]   # re-datum (normalised coordinates), see WING_DZ
-HUB = (-0.069, 0.0, 0.0)                    # D-205: hub 6 mm aft (DOC: -75) to win back forward trim after the D-202 hub; HUB_X1 (tray face) unchanged
+CAGE_DX = -0.012                            # T-077 p4 (D-224 rung 3c): the whole cage (hub, arms, motors, props, doublers, pins, cups, conduits, raceway front, tray, collar, struts) 12 mm forward of the wing; bridge BR_X1 and strut ends stay at the wing, so bridge and struts get longer
+HUB = (-0.069 + CAGE_DX, 0.0, 0.0)                    # D-205: hub 6 mm aft (DOC: -75) to win back forward trim after the D-202 hub; HUB_X1 (tray face) unchanged
 YM, ZM = 0.228, 0.156                       # DOC: motors at y 0.228 / z 0.156
 R_M = math.hypot(YM, ZM)                    # 0.2762 (DOC radius 0.276)
 CANT = 17.0                                 # D-189 (was 16, D-184): yaw authority 0.3465 -> 0.363 N m
 YFIN, XFIN_T, FIN_H = 0.38, 0.294, 0.18     # DOC: fins at y 380, tube at x 0.294, z +-0.18
 FIN_OD, FIN_ID = 0.016, 0.014               # DOC 16x14 tube
-PACK_X = (-0.0265, 0.0065)  # T-077 p3: back to centre -10 mm (rung 1 of part 2 reverted: the D-220 hub collar ends at x -24, so the 20 mm strap must lie aft of x -24 and clear the pack leads and balance plug at the aft end); part 2 had (-0.0365, -0.0035)
+PACK_X = (-0.0485, -0.0155)  # T-077 p4 (D-224 rung 3a + 3c): pack centre -32 mm absolute = -20 mm in the tray (tray front -57), 12 mm cage shift + 10 mm pack shift; held by two outboard straps (|y| 35), clear of the hub collar (|y| <= 12). Part 3 had (-0.0265, 0.0065)
 PACK_X_P2 = (-0.0365, -0.0035)  # T-077 part 2 ladder rung 1: pack 10 mm forward (centre -20 mm, the QP-4 position; front lip -44.5..-42.5 on the root pad, hub face -45). T-077 RDQ 2800 pack 33 mm wide (was 35: -27.5..7.5), same centre -10 mm.                 # QP-4 7.2 #2: pack moved 10 mm aft (centre -10 mm; was -20 mm) so the CAD CG lands mid-band (23 mm) WITH the D-187 elevon balance and the ES3054HV servos; trim +-10 mm in the tray slots
 TRIM = 0.010                                # +-10 mm pack trim travel (about +-2.2 mm of CG)
 TRIM_FWD = 0.006                            # D-205: forward travel back to 6 mm (D-199 value; D-202 had cut it to 1 mm). The hub moved 6 mm aft (HUB -75 -> -69 mm), doublers s 11-25, lead 12.8 g: CAD CG 21.17 mm, forward trim end must stay >= 19.3 mm (claim CL-A-CG-TRIM-FWD >= 19). Aft travel TRIM unchanged.
 TRAY_YI, TRAY_YO = 0.0540, 0.0560          # T-077: tray end wall inner / outer face |y| (RDQ pack 107 long = |y| 53.5 + 0.5 mm clearance; 2.0 mm wall; was 52.5 / 54.5)
 TRAY_WALL_TOP = 0.0295                      # T-077: end wall top z (leads leave the end face at z 32, 1.5 mm radius: 1.0 mm over the wall)
-TRAY_X1 = 0.0215                            # tray plate aft end (pack aft edge at +TRIM is 17.5 mm; core tray slot ends at 0.0225)
+TRAY_X0 = -0.045 + CAGE_DX                  # T-077 p4: tray plate front = the hub aft face (HUB_X1), x -57 mm
+TRAY_X1 = -0.0028                           # T-077 p4: tray plate aft end -2.8 mm (was +21.5; first draft of part 4 kept +9.5): 2.8 mm aft of the pack's aft edge at +10 trim (-5.5) and the rear lip (-3.5); the two outboard straps (PWR-002) wrap the plate front and aft EDGES, so no slots are cut in the plate. The core tray slot (to 22.5) stays and is open aft of the tray
 SERVO_Y = 0.200                             # EST (DOC landing_a: servo y 0.30 is in the elevon; moved inboard)
 SV_Z1 = 0.0117 - WING_DZ                              # servo case top (servo case 28.4 x 13.0 x 26.7, see electrical.py); the core servo pocket opens at this z
 
@@ -140,11 +142,11 @@ RW_ZO, RW_ZI = (-0.0006, 0.0060), (0.0, 0.0054)       # outer z -0.6..6.0 (the t
 RW_DX = HUB[0] + 0.075                      # D-205: raceway front and the conduit drop follow the hub (drawn for HUB x -75 mm; hub now 6 mm aft)
 RW_XO0, RW_XI0, RW_X1 = -0.0588 + RW_DX, -0.0582 + RW_DX, 0.0225      # outer front, interior front, aft end (open) = end of the core tray slot
 RW_YU, RW_YL, RW_ZB = 0.0170, 0.0210, 0.0027          # bundle lanes (upper-arm, lower-arm bundle) and bundle centre height in the raceway
-CD_DX = 0.0038                              # D-205: conduit drop shift aft (hub moved 6 mm; the drop column is held 3.8 mm so its aft wall stays ahead of the tray plate front x -45)
+CD_DX = 0.0038 + CAGE_DX                              # D-205: conduit drop shift aft (hub moved 6 mm; the drop column is held 3.8 mm so its aft wall stays ahead of the tray plate front x -45)
 RW_XD = -0.052 + CD_DX                              # x of the vertical drop (hub conduit leg B) behind the hub; the arc of the 4 mm bend starts 4 mm ahead of it, inside leg B; strut socket boss clear by >= 1.4 mm
 DITCH_X1 = 0.0320                           # foam ditch (open top, under the bay cover) x 22.5..32; the bundles rise at x 29
 RW_XR = 0.029
-PADN_X = (-0.0467, -0.0440)                 # hub tray-pad notch, x (pad x -46.2..-45)
+PADN_X = (-0.0467 + CAGE_DX, -0.0440 + CAGE_DX)                 # hub tray-pad notch, x (pad x -46.2..-45)
 PADN_Y, PADN_Z = (0.0138, 0.0244), (0.0029, 0.0111)   # y and z of the notch (full pad height so the raceway can be lowered from above)
 
 

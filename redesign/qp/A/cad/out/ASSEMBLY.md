@@ -9,7 +9,7 @@
 | A3 | Centre plug up the bore | 1 | ok | 0.00 | - | - |
 | A4 | Right plugs up the bore | 2 | ok | 0.00 | - | - |
 | A5 | Left plugs up the bore from the left tip | 2 | ok | 0.00 | - | - |
-| B0a | Bench: cut the two arm tubes (552.4 mm of 12x10), the bridge (108 mm, D-206, from the 16x14 fin-tube offcut) and the two struts (286.2 mm of 6x4.5) from the carbon stock; sand the ends square | 0 | ok | 0.00 | - | - |
+| B0a | Bench: cut the two arm tubes (552.4 mm of 12x10), the bridge (120 mm, D-206, from the 16x14 fin-tube offcut) and the two struts (291.2 mm of 6x4.0) from the carbon stock; sand the ends square | 0 | ok | 0.00 | - | - |
 | B0b | Bench: the printed hub stands on the bench, aft face down | 1 | ok | 0.00 | - | - |
 | B0c | Arm tube B slid through its sleeve and the centre block (from the LL side, along its axis) | 1 | ok | 0.00 | - | - |
 | B0d | Two 3 mm pins (LR, UL) pushed in along x from the nose side through the block access holes, the sleeve and tube B | 2 | ok | 0.00 | - | - |
@@ -67,6 +67,6 @@
 | E4 | Pack into the tray | 1 | ok | 0.00 | - | - |
 | E4a | XT60 female with its tail mated to the pack lead XT60 male (plugs on from aft, taped on the skin; tail soldered to the ESC pads after) | 1 | ok | 0.00 | - | - |
 | E4b | LAY: mate the pack XT60 male to the XT60 female (E4a) (done in E4a); the vendor pack power leads (E-HRN-13) and balance lead (E-HRN-14) come on the pack and are taped to the skin along their route, the balance plug on the pack top | 0 | ok | 0.00 | - | - |
-| E5 | Pack strap threaded under the bridge tube and closed over the pack (FLEXIBLE: no rigid insertion path exists, so this step checks the fitted position only, travel 0; the threading is by hand) | 1 | ok | 0.00 | - | - |
+| E5 | Two pack straps (y +-35 mm), each passed round the tray plate front edge and aft end and closed over the pack (FLEXIBLE: no rigid insertion path exists, so this step checks the fitted position only, travel 0; the threading is by hand; D-224 rung 3a: the bridge tube and the hub collar are not enclosed) | 1 | ok | 0.00 | - | - |
 | E6 | LAY: solder the battery tail to the ESC BAT pads and the 4 x 3 phase leads (free ends from B0 / B2c: out of the foam ditch, up to z 16, over the plate beside the FC, up to z 28 under the cover roof) to the ESC motor pads; heat-shrink | 0 | ok | 0.00 | - | - |
 | E7 | Bay cover lowered over the FC stack and ESC onto the plate (the GPS lead and the battery tail drop into the bottom-open slots, the two antennas into the slots of the RX hood aft wall; the RX UART and I2C leads and the phase bundles are already inside), foam tape + two ties | 1 | ok | 0.00 | - | - |

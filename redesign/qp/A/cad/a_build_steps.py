@@ -146,18 +146,18 @@ step(id='A5', title='Left plugs in the spar',
 
 # ============================================================ STAGE 2: cage unit
 step(id='B0a', title='Cut the cage tubes (bench)',
-     line='Cut two 552.4 mm arm tubes, one 108 mm bridge and two 286.2 mm struts; sand every end square.',
+     line='Cut two 552.4 mm arm tubes, one 120 mm bridge and two 291.2 mm struts; sand every end square.',
      tools='tube cutter or hacksaw, sanding block, caliper, steel rule',
-     check='Arm tubes 552.4 mm +-0.5 (30.6 g each); bridge 108 mm (6.3 g); struts 286.2 mm; ends square',
+     check='Arm tubes 552.4 mm +-0.5 (30.6 g each); bridge 120 mm (9.0 g); struts 291.2 mm; ends square',
      min=30,
      need=['2 x 12x10 tubes of BOM R08 for the arm tubes (one per 1 m tube; the bridge comes from the 16x14 fin-tube offcut, D-206); 2 x 6x4.5 struts (R10); 14x12 tube (R09) for the 4 doublers and 3 mm carbon rod (R14, price not found) for the 5 pins'],
-     make=['Arm tubes A and B: cut 2 x 552.4 mm (CAD `2 x R_M`; each runs motor cup to motor cup through the hub; 30.6 g each, CALC). Bridge: cut 108 mm (CAD `BR_X1 - BR_X0`, 8.1 g); sand a 0.8 mm x 45 deg chamfer on the outside of the end that goes into the hub, so it seats on the cone in the bore floor (D-207, hub FEA run d209).',
-           'Doublers: cut 4 x 21 mm from the 14x12 tube (1.4 g each). Pins: cut 4 x 15-16 mm and 1 x 29 mm from the 3 mm rod (0.17-0.33 g). Struts: cut 2 x 286.2 mm (CAD).',
+     make=['Arm tubes A and B: cut 2 x 552.4 mm (CAD `2 x R_M`; each runs motor cup to motor cup through the hub; 30.6 g each, CALC). Bridge: cut 120 mm (CAD `BR_X1 - BR_X0`, 9.0 g); sand a 0.8 mm x 45 deg chamfer on the outside of the end that goes into the hub, so it seats on the cone in the bore floor (D-207, hub FEA run d209).',
+           'Doublers: cut 4 x 21 mm from the 14x12 tube (1.4 g each). Pins: cut 4 x 15-16 mm and 1 x 29 mm from the 3 mm rod (0.17-0.33 g). Struts: cut 2 x 291.2 mm (CAD).',
            'Sand all cut ends wet or with a vacuum (carbon dust). Check each end with a square.'],
      checks=['Weigh the two arm tubes: 61.2 g (CALC from 1.6 g/cm3, EST).', 'Slide a doubler over a scrap piece of arm tube: it must slide by hand (bore 12.2 mm nominal; measure on arrival, EST).'],
      safety=['Carbon dust: mask, wet sanding.'],
-     fab=dict(kind='tube', pid='CGE-002-A', text='CUT  2 arm tubes 552.4 mm, bridge 108 mm, 4 doublers 21 mm, 5 pins, 2 struts 286 mm', dims=[('CGE-002-A', 'cut 552.4 mm'), ('CGE-004', 'cut 108 mm')]),
-     callouts=[('CGE-002-A', 'Arm tube: one 552.4 mm tube per diagonal, 30.6 g'), ('CGE-004', 'Bridge: 108 mm, 8.1 g, chamfered end')])
+     fab=dict(kind='tube', pid='CGE-002-A', text='CUT  2 arm tubes 552.4 mm, bridge 120 mm, 4 doublers 21 mm, 5 pins, 2 struts 291 mm', dims=[('CGE-002-A', 'cut 552.4 mm'), ('CGE-004', 'cut 108 mm')]),
+     callouts=[('CGE-002-A', 'Arm tube: one 552.4 mm tube per diagonal, 30.6 g'), ('CGE-004', 'Bridge: 120 mm, 9.0 g, chamfered end')])
 
 step(id='B0b', title='Machine the hub',
      line='Machine the hub from 6061-T6 bar (D-220 / D-221, mass from the CAD in PARTS: drawn solid, no pockets); stand it on the bench, aft face down. A PLA print of CGE-001.stl is the fit check first (T-080).',
@@ -222,7 +222,7 @@ for _k, (_st, _tb, _s) in enumerate((('UR', 'A', 'UR'), ('LL', 'A', 'LL'), ('LR'
 
 step(id='B0h', title='Bridge into the boss',
      line='Push the bridge forward into the hub bore from aft until its chamfered end meets the conical floor; bond.',
-     tools='epoxy, wipes', check='Bridge end seated on the bore floor cone; 108 mm tube, 8.1 g', min=15, cure='24 h epoxy cure',
+     tools='epoxy, wipes', check='Bridge end seated on the bore floor cone; 120 mm tube, 9.0 g', min=15, cure='24 h epoxy cure',
      fit=['Coat the first 9 mm of the bridge (the bore depth), push it in from aft until it stops. The tube end is chamfered 0.8 mm x 45 deg to match the cone in the bore floor.'],
      fab=dict(kind='fit', pid='CGE-004', text='FIT  bridge into the hub bore, epoxy'),
      callouts=[('CGE-004', 'Bridge: bonded 9 mm in the hub, seated on the floor')])
@@ -697,12 +697,12 @@ step(id='E4b', title='Pack leads and balance lead',
      checks=['No tension on the connectors.'],
      callouts=[('E-HRN-13', 'Pack power leads'), ('E-HRN-14', 'Balance lead')])
 
-step(id='E5', title='Pack strap',
-     line='Thread the strap under the bridge tube and close it over the pack.',
+step(id='E5', title='Pack straps',
+     line='Pass each of the two straps round the tray plate and over the pack and close the buckle.',
      tools='none', check='Pack does not move when you shake the aircraft', min=10,
-     fit=['Thread the 20 x 300 mm strap by hand: over the pack top, outside the tray end walls, under the tray plate and under the 16 mm bridge tube (D-206) (CAD edge E-PWR: buckle strap). Buckle it over the pack. The CAD thickness 1.6 mm is EST.'],
-     checks=['Strap tight: pack does not move.'],
-     callouts=[('PWR-002', 'Pack strap 20 x 300 mm')])
+     fit=['Two 20 x 300 mm straps (BOM W08, qty 2; each loop is about 244 mm, EST) at y +-35 mm, i.e. outboard of the hub collar (y +-12): over the pack top (over the balance lead), round the tray plate front edge at the hub aft face, under the tray plate, round the plate aft end and back up behind the pack. Buckle each over the pack. The CAD thickness 1.6 mm is EST. The bridge tube is NOT enclosed any more (D-224 rung 3a).'],
+     checks=['Both straps tight: pack does not move.'],
+     callouts=[('PWR-002', 'Pack straps 20 x 300 mm (2)')])
 
 step(id='E6', title='Solder phase leads and battery tail',
      line='Solder the battery tail to the ESC BAT pads and the 12 phase leads to the motor pads; heat-shrink.',

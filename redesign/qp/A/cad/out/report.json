@@ -1,5 +1,5 @@
 {
- "bodies": 498,
+ "bodies": 499,
  "defects": [
   "WNG-008-LL body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
   "WNG-008-LL body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)",
@@ -18,7 +18,7 @@
     {
      "a": "E-HRN-05#0",
      "at_mm": [
-      -76.41,
+      -88.41,
       -58.46,
       -42.06
      ],
@@ -31,7 +31,20 @@
     {
      "a": "E-HRN-02#0",
      "at_mm": [
-      -75.91,
+      -53.74,
+      16.88,
+      2.17
+     ],
+     "b": "E-HRN-02#2",
+     "bodies": [
+      "E-HRN-02 \"wire strand 2 (1.8 mm)\" x E-HRN-02 \"wire strand 0 (1.8 mm)\" 0.01 mm"
+     ],
+     "depth_mm": 0.01
+    },
+    {
+     "a": "E-HRN-02#0",
+     "at_mm": [
+      -87.91,
       73.26,
       51.15
      ],
@@ -44,7 +57,7 @@
     {
      "a": "E-HRN-04#0",
      "at_mm": [
-      -63.67,
+      -75.67,
       201.67,
       -136.99
      ],
@@ -57,7 +70,7 @@
     {
      "a": "E-HRN-03#0",
      "at_mm": [
-      -71.44,
+      -83.44,
       -234.07,
       157.38
      ],
@@ -70,15 +83,15 @@
     {
      "a": "E-HRN-03#1",
      "at_mm": [
-      -13.02,
-      -17.09,
-      2.18
+      7.03,
+      -16.63,
+      3.06
      ],
      "b": "E-HRN-03#2",
      "bodies": [
       "E-HRN-03 \"wire strand 2 (1.8 mm)\" x E-HRN-03 \"wire strand 1 (1.8 mm)\" 0.01 mm"
      ],
-     "depth_mm": 0.01
+     "depth_mm": 0.012
     },
     {
      "a": "AVN-006",
@@ -198,7 +211,7 @@
    ]
   }
  ],
- "seconds": 666.8,
+ "seconds": 742.2,
  "skipped": [
   [
    "HRD-001",

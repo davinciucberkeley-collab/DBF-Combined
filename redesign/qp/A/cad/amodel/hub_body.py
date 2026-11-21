@@ -23,7 +23,7 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CACHE = os.path.join(HERE, 'hub_body_cache.npz')
-VERSION = 'hub_body v3 (octagonal sleeves, collar, T-077 p3)'
+VERSION = 'hub_body v4 (octagonal sleeves, collar, T-077 p3; RC lightening cut, T-077 p4)'
 
 
 def _params_key(p):
@@ -86,10 +86,23 @@ def _build(p):
                 cb_ = occ.fillet([cb_], ed, [rc])[0][1]
             return [(3, cb_)]
 
+        def rc_cut(v):                                  # T-077 p4 (D-224 hub pockets): turn the block aft of RC x0 and the collar to a cylinder of radius RC r about the bridge axis (everything outside it is removed)
+            if not p.get('RC'):
+                return v
+            rcr, rcx0, rcz = p['RC']
+            xe_ = p['COLLAR'][1] + 3.0 if p.get('COLLAR') else rcx0 + 40.0
+            bx_ = occ.addBox(rcx0, -40.0, rcz - 40.0, xe_ - rcx0, 80.0, 80.0)
+            cy_ = occ.addCylinder(rcx0 - 1.0, 0, rcz, xe_ - rcx0 + 2.0, 0, 0, rcr)
+            cut_, _ = occ.cut([(3, bx_)], [(3, cy_)])
+            out_, _ = occ.cut(v, cut_, removeTool=True)
+            occ.synchronize()
+            return out_
+
         # --- sharp reference body (same pieces, plain fuse) -> volume
         parts = [sleeve('A'), sleeve('B'), block()] + boss() + collar()
         v, _ = occ.fuse([parts[0]], parts[1:])
         occ.synchronize()
+        v = rc_cut(v)
         vol_sharp = sum(occ.getMass(3, t) for _, t in v)
         occ.remove(v, recursive=True)
         occ.synchronize()
@@ -135,6 +148,7 @@ def _build(p):
             v, _ = occ.fuse([(3, vol)], [cq])
             vol = v[0][1]
         occ.synchronize()
+        vol = rc_cut([(3, vol)])[0][1]
         vol_fil = occ.getMass(3, vol)
 
         # --- surface mesh: fine on the blend faces (not plane / cylinder / cone), coarse elsewhere
@@ -242,7 +256,8 @@ def cad_params():
                 L_SLV=W.SLV_L * mm, R_SLV=W.SLV_R * mm, CB=W.CB * mm, R_CB=W.R_CB * mm, BLK_Z=W.BLK_Z * mm,
                 BLK_X0=W.BLK_X[0] * mm, BLK_X1=W.BLK_X[1] * mm,
                 BOSS=None if (W.HUB_X1 - C.HUB[0] - W.BLK_X[1]) <= 0.001 else ((W.BLK_X[1] - 0.0005) * mm, (W.HUB_X1 - C.HUB[0]) * mm, W.BR_Z * mm, W.R_BR * mm),
-                FIL=W.HUB_FIL, FIL_A=W.HUB_FIL_A, MS=1.5, MS_FIL=0.4, HUB_X=C.HUB[0], OCT=True, COLLAR=(W.BLK_X[1] * mm - 0.0005 * 0, W.COL_X1 * mm, W.COL_HY * mm, W.COL_Z[0] * mm, W.COL_Z[1] * mm))
+                FIL=W.HUB_FIL, FIL_A=W.HUB_FIL_A, MS=1.5, MS_FIL=0.4, HUB_X=C.HUB[0], OCT=True, COLLAR=(W.BLK_X[1] * mm - 0.0005 * 0, W.COL_X1 * mm, W.COL_HY * mm, W.COL_Z[0] * mm, W.COL_Z[1] * mm),
+                RC=(W.POCKET_R * mm, W.POCKET_X0 * mm, W.BR_Z * mm) if W.POCKET_R > 0 else None)
 
 
 if __name__ == '__main__':

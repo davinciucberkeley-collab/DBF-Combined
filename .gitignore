@@ -141,3 +141,8 @@ redesign/qp/A/mechanism/out/T076d_data/fea/*.npz
 redesign/qp/A/mechanism/out/T076d_data/fea/*.pkl
 redesign/qp/A/mechanism/out/T076d_data/fea/sys/
 redesign/qp/A/mechanism/out/T076d_data/*.pkl
+
+# T-077 part 4 regenerable FEA meshes, stress maps and solver scratch (re-run the commands in T077_cad.md Part 4)
+redesign/qp/A/mechanism/out/T077p4_data/fea/*.npz
+redesign/qp/A/mechanism/out/T077p4_data/fea/*.pkl
+redesign/qp/A/mechanism/out/T077p4_data/fea/sys/

@@ -1,0 +1,7 @@
+  static                                              1 part pairs penetrate > 0.05 mm
+  wire ends not on a termination: 0; wire folds: 0
+collide_a: FAIL, 1 (499 bodies in 117 parts, 1 poses, 832 s)
+
+real	14m1.027s
+user	0m0.030s
+sys	0m0.062s

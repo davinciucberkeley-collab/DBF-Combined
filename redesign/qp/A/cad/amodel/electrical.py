@@ -549,7 +549,10 @@ LEAD_Y1 = 0.0635                            # EST: leads leave the end face (y +
 _xt0 = 0.085                                # male housing starts here (EST), female to _xt0 + 2 XT60_L
 XT_Z = max(zu(x) for x in (_xt0, _xt0 + 2 * XT60_L)) + XT60_H / 2 + 0.0002          # CALC: connector centre height, sits on the skin
 STRAP_W, STRAP_T = 20 * MM, 1.6 * MM        # D-199: BOM W08 = STRIX Non-Slip Battery Strap 20 x 300 mm (V readymaderc, 2026-11-15; was 25 mm hook-and-loop EST); thickness EST
-STRAP_X0 = -0.0235                           # T-077 p3: strap fore edge 0.5 mm aft of the hub collar mouth (x -24), strap x -23.5..-3.5 = the pack's aft 20 mm (was PACK_X[0]: -36.5..-16.5, through the D-220 collar)
+STRAP_YC = 0.035                            # T-077 p4 (D-224 rung 3a): two straps at y +-35 mm (20 mm wide: y 25..45), outboard of the hub collar (|y| <= 12) and of the raceway / conduits (|y| <= 24.2), inboard of the end walls (|y| 54)
+STRAP_XI = (TRAY_X0 - 0.0003, TRAY_X1 + 0.0003)      # inner faces of the fore and aft legs: 0.3 mm outside the tray plate front (hub aft face, x -57) and aft end (x -2.8): each strap is a closed loop round the whole plate + pack, in the x-z plane
+STRAP_ZB = 0.0059                           # inner face of the bottom run: 0.1 mm under the root pad underside (z 6.0), 0.9 mm under the plate (6.8)
+STRAP_ZT = 0.0580                           # inner face of the top run: pack top (z 55.0) + 3.0 mm so the balance lead (drawn up to z 56.8 at the pack top edge) passes under it (first try 56.5 gave 0.27 mm overlap)
 X_GROUND = 0.3375                           # EST: pad aft face (pad 30 mm DOC)
 FC_X0 = 0.045                                                          # QP-4: FC hard-mounted ON the spar centre (spar axis x 0.060 = FC centre); ESC moved aft of it
 GEL = 0.0030                                                           # EST foam tape 3.0 mm (was 1.5; D-194 stock-screw stack height): FC HARD-MOUNTED (BOARD s3 D-186, s1 item 5)
@@ -710,9 +713,9 @@ M_STRAP = 5.5                               # V 5.5 g each: readymaderc STRIX No
 # ------------------------------------------------------------------ parts
 # power / avionics
 P('PWR-001', 'Pack RDQ Series 2800 mAh 4S 100C XT60 (107 x 33 x 46 mm, 270 g, T-077)', 'power', 270.0, 'LiPo', 'buy', 'source')
-STRAP_LOOP = 2 * (2 * TRAY_YO + (PACK_Z0 + PACK_H) - (BR_Z - BR_RO))    # CALC: inner perimeter of the drawn loop (corner radii ignored): 354 mm for the RDQ pack (was 327 mm for the Tattu: already > the 300 mm W08 strap)
+STRAP_LOOP = 2 * ((STRAP_XI[1] - STRAP_XI[0]) + (STRAP_ZT - STRAP_ZB))    # CALC: inner perimeter of one drawn loop (corner radii ignored), 2 straps
 STRAP_NEED = STRAP_LOOP + 0.030                                          # + 30 mm buckle overlap (EST)
-P('PWR-002', 'Pack strap 20 mm x about %.0f mm with buckle (STRIX family, BOM W08 is 300 mm: TOO SHORT for the %.0f mm drawn loop, longer strap needed, price "-"; mass scaled 5.5 g x length / 300 mm, EST)' % (STRAP_NEED * 1e3, STRAP_LOOP * 1e3), 'power', round(M_STRAP * STRAP_NEED / 0.300, 1), 'nylon webbing + plastic buckle', 'buy')
+P('PWR-002', 'Pack straps x2: 20 mm webbing with buckle, each about %.0f mm (inner loop %.0f mm + 30 mm overlap, EST), at y +-35 mm, each a closed loop round the tray plate (front and aft edges) and the pack; BOM W08 STRIX 20 x 300 mm covers each loop (second strap price "-"); mass scaled 5.5 g x length / 300 mm per strap, EST (11 g if both are used uncut)' % (STRAP_NEED * 1e3, STRAP_LOOP * 1e3), 'power', round(2 * M_STRAP * STRAP_NEED / 0.300, 1), 'nylon webbing + plastic buckle', 'buy')
 PAD_M = round(0.100 * 0.030 * PAD_T * 1.15 * 1e6, 1)     # g: 100 x 30 x 1 mm, silicone rubber 1.15 g/cm3 (EST)
 P('PWR-003', 'Anti-slip pad 100 x 30 x 1.0 mm silicone rubber sheet on the tray floor (BOM W09; thickness, size and density EST)', 'power', PAD_M, 'silicone rubber', 'buy')
 P('AVN-001', 'Avionics plate', 'avionics', 8.0, 'PETG (printed)')   # QP-4 FIXES 12 -> 8 g: 4 lightening windows (now drawn)
@@ -759,8 +762,8 @@ PARTS['HRN-001']['mass_g'] = 0.0            # set after phase_route() exists, se
 
 # ------------------------------------------------------------------ edges
 # power
-E(en('PWR'), 'PWR-002', 'CGE-008', 'CT-STRAP-VELCRO', 'power', 'buckle strap round pack and tray: over the pack top, outside the tray end walls, under the tray plate AND the 16 mm bridge tube CGE-004 (D-206) (tangent to the plate underside, z -6..6)',
-  retention=dict(item='20 mm strap', count=1, load_n=38.8), field_joint=True)
+E(en('PWR'), 'PWR-002', 'CGE-008', 'CT-STRAP-VELCRO', 'power', 'two buckle straps at y +-35 mm, each a closed loop round the whole tray plate and the pack: over the pack top, round the plate front edge (hub aft face) and aft end, under the plate (D-224 rung 3a; the bridge tube and the hub collar are not enclosed)',
+  retention=dict(item='20 mm strap', count=2, load_n=38.8), field_joint=True)
 E(en('PWR'), 'PWR-001', 'CGE-008', 'CT-STRAP-VELCRO', 'power', 'pack sits on the anti-slip pad PWR-003 on the tray floor, between the integral lips; strap PWR-002 holds it',
   retention=dict(item='anti-slip pad + strap', count=1), field_joint=True)
 E(en('PWR'), 'PWR-003', 'CGE-008', 'CT-TAPE-FOAM', 'power', 'pad stuck on the tray plate (adhesive-backed sheet, EST)')
@@ -909,10 +912,10 @@ def build_power(ctx):
     pd.box((PACK_X[0] + 0.0025, -0.050, 0.008), (PACK_X[0] + 0.0325, 0.050, 0.008 + PAD_T), name='anti-slip pad 100 x 30 x 1.0 mm (EST)')
     # strap loop: axis x, ring around tray + pack
     ctx_strap = ctx.part('PWR-002', rgb=(0.1, 0.1, 0.1))
-    yi = TRAY_YO                                  # T-077: strap inner face on the tray end wall outer face
-    zb_ = BR_Z - BR_RO                            # D-206: under the 16 mm bridge (axis z -2): z -10 (was -6 under the 12 mm bridge)
-    ctx_strap.prism('X', STRAP_X0, [_rrect(-yi - STRAP_T, zb_ - STRAP_T, yi + STRAP_T, PACK_Z0 + PACK_H + STRAP_T, 0.0012, 3),
-                                    [(-yi, zb_), (yi, zb_), (yi, PACK_Z0 + PACK_H), (-yi, PACK_Z0 + PACK_H)]], STRAP_W, name='strap loop')
+    xf_, xa_ = STRAP_XI
+    for sy_ in (1, -1):                           # D-224 rung 3a: two straps, each a rounded ring in the x-z plane round the plate (front / aft edges) and the pack, y +-35 +- 10
+        ctx_strap.prism('Y', sy_ * STRAP_YC - STRAP_W / 2, [_rrect(xf_ - STRAP_T, STRAP_ZB - STRAP_T, xa_ + STRAP_T, STRAP_ZT + STRAP_T, 0.0012, 3),
+                                                              [(xf_, STRAP_ZB), (xa_, STRAP_ZB), (xa_, STRAP_ZT), (xf_, STRAP_ZT)]], STRAP_W, name='strap loop %s' % ('+y' if sy_ > 0 else '-y'))
 
 
 def rx_antenna_paths():
