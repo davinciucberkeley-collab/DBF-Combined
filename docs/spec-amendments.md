@@ -250,3 +250,14 @@ Requirement IDs: R-OPT-05, R-GEN-02.
 ```text
 Yes, run study
 ```
+
+## AM-018 — 2026-11-21 — Motor swap to SunnySky X2216 880KV; crash reserve by definition
+Relation: answers the two money decisions in `docs/audits/2026-11-21-config-study.md`. Dillon approves option 1-ii:
+SunnySky X2216 880KV motors replace the T-Motor MN2212 KV780 in Order 1 (still no purchase before early December
+2026), on the same APC 9x4.5MR props. The crash reserve follows its definition (it falls with the cheaper motor)
+instead of the held AM-012 dollar value. Total including the reserve must stay <= $2,000.
+Requirement IDs: R-GEN-02, R-OPT-02, R-OPT-05.
+
+```text
+I approve the swap and follow the definition of the reserve
+```
