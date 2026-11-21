@@ -7,10 +7,10 @@
    "name": "Hub (machined 6061-T6, D-220 / D-221 / D-222: two OCTAGONAL sleeves 16 mm across flats, 1.0 mm wall at the flats, over s +-32 mm of both arm tubes, 38.5 x 20 x 20 mm centre block on the bridge axis to the tray face, 3 mm edge radii, internal radii 1.0 / 0.9 mm at the junctions (OCC mesh, hub_body.py), 0.5 mm sleeve-mouth and lead-exit chamfers, 2 strut sockets, tray flange; hub pockets T-077 p4: block aft of x +15.5 and the 30 mm bond collar (D-220) turned to a cylinder R 9.25 mm about the bridge axis (wall 1.25 mm round the 16 mm bore); mass = drawn volume x 2.70 g/cm3)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 41.7,
+   "mass_g": 42.2,
    "material": "Al 6061-T6 (machined)",
    "cg_xyz_m": [
-    -0.0742,
+    -0.0741,
     0.0,
     -0.0007
    ],
@@ -52,12 +52,12 @@
    "name": "Motor cup (UR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 9.51,
+   "mass_g": 8.38,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0921,
-    0.2232,
-    0.1544
+    -0.0927,
+    0.224,
+    0.1552
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -97,12 +97,12 @@
    "name": "Motor cup (UL; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 9.51,
+   "mass_g": 8.38,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0791,
-    -0.2248,
-    0.1521
+    -0.0797,
+    -0.2258,
+    0.1525
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -142,12 +142,12 @@
    "name": "Motor cup (LR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 9.51,
+   "mass_g": 8.38,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0791,
-    0.2248,
-    -0.1521
+    -0.0797,
+    0.2258,
+    -0.1525
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -187,12 +187,12 @@
    "name": "Motor cup (LL; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 9.51,
+   "mass_g": 8.38,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0921,
-    -0.2232,
-    -0.1544
+    -0.0927,
+    -0.224,
+    -0.1552
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -277,11 +277,11 @@
    "name": "Strut clamp on spar (R)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 6.58,
+   "mass_g": 2.94,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0488,
-    0.2904,
+    0.055,
+    0.2918,
     0.0
    ],
    "make_or_buy": "make",
@@ -307,11 +307,11 @@
    "name": "Strut clamp on spar (L)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 6.58,
+   "mass_g": 2.94,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0488,
-    -0.2904,
+    0.055,
+    -0.2918,
     0.0
    ],
    "make_or_buy": "make",
@@ -319,15 +319,60 @@
   },
   {
    "id": "CGE-006",
-   "name": "Bridge saddle on spar",
+   "name": "Centre node saddle (T-077 p5, D-221 s3.2, T-071b N2): ring wall 2.0 mm over 30 mm of the spar, 2.5 mm bridge socket, ears to y +-16.5 (x 29.5..71, 19 mm high, 3 mm thick); X7 Onyx + continuous CF rings (the fibre layout is a manufacturing note, not modelled: layout -), printed z-up; mass = drawn volume x T-067 basis x 0.945 (Onyx 1.20 / PETG 1.27 g/cm3)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 9.67,
-   "material": "PETG (printed)",
+   "mass_g": 12.33,
+   "material": "Onyx + CF (Markforged X7)",
    "cg_xyz_m": [
-    0.0491,
+    0.0495,
     0.0,
-    -0.0012
+    -0.0009
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-011",
+   "name": "Node plates N2: 2 CF plates 0.5 mm x 41.5 x 19 mm (outline = ear footprint; spar hole 12 mm; corner radii -), waterjet from 0.5 mm CF sheet, y +-(16.5..17.0), bonded between the ears (T-071b N2); mass = drawn volume x 1.6",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 0.87,
+   "material": "CF fabric laminate (cut sheet)",
+   "cg_xyz_m": [
+    0.0513,
+    0.0,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-013",
+   "name": "Node outer clevis ears: 2 x (41.5 x 19 x 1.5 mm, spar hole 12 mm), Onyx printed z-up, y +-(17.0..18.5), bonded on the plates (T-071b N2: ears on both faces of the plate; thickness EST); mass = drawn volume x T-067 basis x 0.945",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 1.95,
+   "material": "Onyx + CF (Markforged X7)",
+   "cg_xyz_m": [
+    0.0513,
+    0.0,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "CGE-012",
+   "name": "Node pins: 8 x 3 mm carbon rod x 5.2 mm along y through the inner ear, the plate and the outer ear (4 per side, double shear, T-071b N2; positions EST)",
+   "subsystem": "cage",
+   "status": "MODELLED",
+   "mass_g": 0.47,
+   "material": "CF rod",
+   "cg_xyz_m": [
+    0.0415,
+    -0.0,
+    0.0
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -337,7 +382,7 @@
    "name": "Pack tray R1 (T-077: 1.2 mm windowed plate on a 2.0 mm root pad + ribs, 2.0 mm end walls with windows, two 40 x 2.0 mm tabs per lip; mass = drawn solid volume x 1.27, T-067 basis M applied by printed_mass.json when present)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 14.07,
+   "mass_g": 13.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     -0.0317,
@@ -575,6 +620,54 @@
   },
   {
    "id": "E-CGE-29",
+   "part_a": "CGE-011",
+   "part_b": "CGE-006",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "N2 plates bonded on the inner ears (2 x 41.5 x 19 mm faces)"
+  },
+  {
+   "id": "E-CGE-30",
+   "part_a": "CGE-013",
+   "part_b": "CGE-011",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "outer clevis ears bonded on the plates"
+  },
+  {
+   "id": "E-CGE-31",
+   "part_a": "CGE-012",
+   "part_b": "CGE-006",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "four pins per side through the ears and the plate (double shear)"
+  },
+  {
+   "id": "E-CGE-32",
+   "part_a": "CGE-012",
+   "part_b": "CGE-011",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "pins through the plate"
+  },
+  {
+   "id": "E-CGE-33",
+   "part_a": "CGE-012",
+   "part_b": "CGE-013",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "pins through the outer ear"
+  },
+  {
+   "id": "E-CGE-34",
+   "part_a": "CGE-011",
+   "part_b": "WNG-002",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "plate spar hole 12 mm round the spar (bonded)"
+  },
+  {
+   "id": "E-CGE-35",
    "part_a": "CGE-005-R",
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
@@ -582,7 +675,7 @@
    "notes": "strut in hub"
   },
   {
-   "id": "E-CGE-30",
+   "id": "E-CGE-36",
    "part_a": "CGE-005-R",
    "part_b": "CGE-007-R",
    "via": "CT-EPOXY",
@@ -590,7 +683,7 @@
    "notes": "strut end in clamp boss"
   },
   {
-   "id": "E-CGE-31",
+   "id": "E-CGE-37",
    "part_a": "CGE-007-R",
    "part_b": "WNG-002",
    "via": "CT-EPOXY",
@@ -598,7 +691,7 @@
    "notes": "clamp wraps the spar"
   },
   {
-   "id": "E-CGE-32",
+   "id": "E-CGE-38",
    "part_a": "CGE-005-L",
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
@@ -606,7 +699,7 @@
    "notes": "strut in hub"
   },
   {
-   "id": "E-CGE-33",
+   "id": "E-CGE-39",
    "part_a": "CGE-005-L",
    "part_b": "CGE-007-L",
    "via": "CT-EPOXY",
@@ -614,7 +707,7 @@
    "notes": "strut end in clamp boss"
   },
   {
-   "id": "E-CGE-34",
+   "id": "E-CGE-40",
    "part_a": "CGE-007-L",
    "part_b": "WNG-002",
    "via": "CT-EPOXY",
@@ -622,7 +715,7 @@
    "notes": "clamp wraps the spar"
   },
   {
-   "id": "E-CGE-35",
+   "id": "E-CGE-41",
    "part_a": "CGE-008",
    "part_b": "CGE-001",
    "via": "CT-EPOXY",

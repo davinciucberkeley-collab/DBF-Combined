@@ -155,7 +155,7 @@ kit.claim("CL-A-VIB-HIGH", "Lowest strongly coupled mode above the rotor bands (
 kit.calc("CALC-A-VIB-FC", inputs={"x": "P:sim.vib_fc_ms2"}, output="a_ms2",
          equation="worst FC acceleration over 6,000-10,500 rpm, U 1.0 g mm per rotor, zeta 1 % and 0.5 %, kd / nom / hi; read from structures/iter3_run.md, not re-run")(highest)
 kit.claim("CL-A-VIB-FC", "Flight-controller vibration, worst of the forced-response sweep", calc="CALC-A-VIB-FC", output="a_ms2", unit="m/s2",
-          limit=("<=", "P:req.vibe_max_ms2"), verifies=["A-P10"], parts=["AVN-002", "AVN-001", "AVN-007"],
+          limit=("<=", "P:req.vibe_max_ms2"), verifies=["A-P10"], parts=["AVN-002", "AVN-010", "AVN-007"],
           how="IMU VIBE < 30 m/s2 in the first tethered hover (T-A-TETHER-VIBE). The worst point (10,500 rpm) is unreachable; at the 0.90 cap (9,349 rpm) the sweep reads 19.6-20.1.")
 kit.calc("CALC-A-VIB-GM", inputs={"x": "P:sim.gm_nominal"}, output="gm", equation="smallest gain margin over pitch / roll / yaw x kd / nom / hi at the nominal mode frequencies (fu_cage.py); read from iter3_run.md, not re-run")(lowest)
 kit.claim("CL-A-VIB-GM", "Rate-loop gain margin, minimum over axes and corners (nominal modes)", calc="CALC-A-VIB-GM", output="gm", unit="-",

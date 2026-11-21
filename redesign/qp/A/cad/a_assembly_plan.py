@@ -13,12 +13,13 @@ frame is away from the wing: the bridge slides in from aft along x, where the sp
 props) on the spar as one rigid body, exactly as before. B1 is therefore the PLACEMENT of the CAGE parts in the main run; the bench steps list the same parts for the bench run only.
 D-198/199: enclosed routes (motor leads in the arm bores, hub conduits, raceways and the foam ditch, servo leads in foam grooves) are threaded, then soldered after the boards are on."""
 ST = ('UR', 'UL', 'LR', 'LL')
-CAGE = (['CGE-00%d' % i for i in (1, 4, 6)] + ['CGE-002-A', 'CGE-002-B'] + ['CGE-003-' + s for s in ST] + ['CGE-009-' + s for s in ST] + ['CGE-010-' + s for s in ST] + ['CGE-010-C'] +
+CAGE = (['CGE-00%d' % i for i in (1, 4, 6)] + ['CGE-011', 'CGE-012', 'CGE-013'] + ['CGE-002-A', 'CGE-002-B'] + ['CGE-003-' + s for s in ST] + ['CGE-009-' + s for s in ST] + ['CGE-010-' + s for s in ST] + ['CGE-010-C'] +
         ['CGE-005-R', 'CGE-005-L', 'CGE-007-R', 'CGE-007-L'] + ['PRP-001-' + s for s in ST] + ['PRP-004-' + s for s in ST] + ['PRP-002-' + s for s in ST] + ['PRP-005-' + s for s in ST])
 # (id, caption, parts, dir, travel_mm, step_mm)
 STEPS = [
     ('A1', 'Wing core on the bench (lower surface up) with the cove CF strip and the glass skin wet-laid on it (T-070; the packing-tape skin and hinge tape are not drawn)', ['WNG-001', 'WNG-011', 'WNG-012'], None, 0, 0),
-    ('A2', 'Spar through the core bore from the right tip', ['WNG-002'], (0, -1, 0), 700, 100),
+    ('A1b', 'Clamshells (cradle with its two CF plates, bonded on the bench) up into their foam pockets from below, BEFORE the spar: the upper plate sits above the spar and cannot pass it from below (T-077 p5, D-221)', ['FIN-005-R', 'FIN-005-L', 'FIN-007-R', 'FIN-007-L'], (0, 0, 1), 30, 3),
+    ('A2', 'Spar through the core bore (and both cradle rings) from the right tip', ['WNG-002'], (0, -1, 0), 700, 100),
     ('A3', 'Centre plug up the bore', ['WNG-003-C'], (0, -1, 0), 600, 100),
     ('A4', 'Right plugs up the bore', ['WNG-004-R', 'WNG-005-R'], (0, -1, 0), 600, 100),
     ('A5', 'Left plugs up the bore from the left tip', ['WNG-004-L', 'WNG-005-L'], (0, 1, 0), 600, 100),
@@ -43,7 +44,6 @@ STEPS = [
     ('B0k', 'THREAD (bench, before the motors go on the cups): feed the three 20 AWG leads of each motor (400 mm stock + extension, EST) from the cup side through the 4.8 mm lead hole, the collar and the tube bore to the 4.8 mm exit hole at s +-18 mm; the free ends are laid flat along the tube until the hub conduits are on (B2b1-B2b4); then screw the motors on (B1)', [], None, 0, 0),
     ('B1', 'Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked '
            'from below: clips snap on the spar', CAGE, (0, 0, 1), 30, 3),
-    ('B2', 'Rib saddles snap on the spar from below', ['FIN-005-R', 'FIN-005-L'], (0, 0, 1), 30, 3),
     ('B2a', 'D-199: phase-lead raceways R and L lowered from above into their foam grooves (through the slots in the hub pad flange), before the tray', ['HRN-003-R', 'HRN-003-L'], (0, 0, -1), 30, 3),
     ('B2b1', 'D-202: hub conduit UR lowered onto its sleeve and the raceway window (along the tube t axis, toward the tube)', ['HRN-004-UR'], (0, 0.5646839, -0.8253073), 40, 4),
     ('B2b2', 'D-202: hub conduit UL lowered onto its sleeve and the raceway window', ['HRN-004-UL'], (0, -0.5646839, -0.8253073), 40, 4),
@@ -53,6 +53,7 @@ STEPS = [
     ('B3', 'Pack tray lowered from above into the core tray slot, bonded to the hub aft face', ['CGE-008'], (0, 0, -1), 30, 3),
     ('B4', 'Hinge damper units (stator with rotor in its annulus, silicone fluid filled) into the core notches at the elevon tips from aft, before the ribs; the notch is open aft', ['WNG-009-R', 'WNG-010-R', 'WNG-009-L', 'WNG-010-L'], (-1, 0, 0), 30, 5),
     ('C1', 'Ribs in from aft into the saddle sockets', ['FIN-002-R', 'FIN-002-L'], (-1, 0, 0), 300, 60),
+    ('C1p', 'Clamshell pins pushed up from below through the lower boss, the two rib walls, the plates and the upper boss; the pocket is taped after (T-077 p5)', ['FIN-008-R', 'FIN-008-L'], (0, 0, 1), 25, 5),
     ('C1a', 'Rib fairings (upper blisters over the rib where it leaves the skin) lowered onto the skin from above, bonded', ['FIN-006-R', 'FIN-006-L'], (0, 0, -1), 15, 3),
     ('C2', 'Elevons with their balance horns on from aft (horn and lead enter the core pocket; tape hinge after)', ['WNG-006-R', 'WNG-006-L', 'WNG-007-R', 'WNG-007-L'], (-1, 0, 0), 25, 5),
     ('C2a', 'Upper lens caps (with stop bosses) lowered onto the skin over the strip windows, bonded', ['WNG-008-RU', 'WNG-008-LU'], (0, 0, -1), 15, 3),
@@ -72,9 +73,9 @@ STEPS = [
     ('D5', 'Clevis pin R pressed in along y through the cheeks and the horn hole (from outboard)', ['MEC-005-R'], (0, -1, 0), 6, 1),
     ('D5b', 'Clevis pin L pressed in along y (from outboard)', ['MEC-005-L'], (0, 1, 0), 6, 1),
     ('E1', 'Pitot into its groove from the front (left wing, y -420; its attachment block runs in the nose channel)', ['AVN-006'], (1, 0, 0), 250, 50),
-    ('D0', 'THREAD: each servo 3-wire lead is fed from the servo pocket along its foam groove (3 mm under the skin, aft of the spar) to the slit at x 83 mm / |y| 24 mm with a fish wire; the free end stays out of the slit for the FC pads', [], None, 0, 0),
-    ('E2', 'Avionics plate on the skin with its four M2 thin nuts already seated in the hex pockets', ['AVN-001', 'HWC-003'], (0, 0, -1), 20, 5),
-    ('E3', 'ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS on the plate; airspeed board into its pocket in the left wing tip', ['PRP-003', 'AVN-007', 'AVN-002', 'AVN-003', 'AVN-004', 'AVN-005'], (0, 0, -1), 30, 5),
+    ('D0', 'THREAD: each servo 3-wire lead is fed from the servo pocket along its foam groove (3 mm under the skin, aft of the spar) to the slit at x 64 mm / |y| 24 mm with a fish wire; the free end stays out of the slit for the FC pads', [], None, 0, 0),
+    ('E2', 'R2 bosses and pads on the skin with the four M2 thin nuts already seated in the FC boss hex pockets (no plate, T-073 R2)', ['AVN-010', 'HWC-003'], (0, 0, -1), 20, 5),
+    ('E3', 'ESC, foam-tape pads (hard mount), FC on the pads, RX, GPS on their pads; airspeed board into its pocket in the left wing tip', ['PRP-003', 'AVN-007', 'AVN-002', 'AVN-003', 'AVN-004', 'AVN-005'], (0, 0, -1), 30, 5),
     ('E3a', 'Four M2 x 25 screws down through the FC stack into the nuts', ['HWC-001'], (0, 0, -1), 20, 5),
     ('E3d', 'Pitot lines (FLEXIBLE silicone: no rigid insertion path, so this step checks the fitted position only, travel 0): each 39 mm line pushed on its probe barb, laid in the pocket over the spar and pushed on its board port; pocket taped', ['AVN-009-T', 'AVN-009-S'], None, 0, 0),
     ('E3b', 'LAY: solder the ESC signal ribbon to the FC, the servo leads to the FC pads S5 / S6, the RX CRSF lead, the GPS and airspeed leads (JST plugs on the sensor boards); the I2C and RX leads run inside the cover lane, then the RX antennas are taped in a 90 deg V on the plate and skin (T-022 Q1, Q4)', [], None, 0, 0, ['E-HRN-06', 'E-HRN-07', 'E-HRN-08', 'E-HRN-09', 'E-HRN-10', 'E-HRN-11']),
@@ -83,8 +84,8 @@ STEPS = [
     ('E4a', 'XT60 female with its tail mated to the pack lead XT60 male (plugs on from aft, taped on the skin; tail soldered to the ESC pads after)', ['HRN-002'], (-1, 0, 0), 15, 3),
     ('E4b', 'LAY: mate the pack XT60 male to the XT60 female (E4a) (done in E4a); the vendor pack power leads (E-HRN-13) and balance lead (E-HRN-14) come on the pack and are taped to the skin along their route, the balance plug on the pack top', [], None, 0, 0, ['E-HRN-01', 'E-HRN-13', 'E-HRN-14']),
     ('E5', 'Two pack straps (y +-35 mm), each passed round the tray plate front edge and aft end and closed over the pack (FLEXIBLE: no rigid insertion path exists, so this step checks the fitted position only, travel 0; the threading is by hand; D-224 rung 3a: the bridge tube and the hub collar are not enclosed)', ['PWR-002'], None, 0, 0),
-    ('E6', 'LAY: solder the battery tail to the ESC BAT pads and the 4 x 3 phase leads (free ends from B0 / B2c: out of the foam ditch, up to z 16, over the plate beside the FC, up to z 28 under the cover roof) to the ESC motor pads; heat-shrink', [], None, 0, 0, ['E-HRN-12', 'E-HRN-02', 'E-HRN-03', 'E-HRN-04', 'E-HRN-05']),
-    ('E7', 'Bay cover lowered over the FC stack and ESC onto the plate (the GPS lead and the battery tail drop into the bottom-open slots, the two antennas into the slots of the RX hood aft wall; the RX UART and I2C leads and the phase bundles are already inside), foam tape + two ties', ['AVN-008'], (0, 0, -1), 40, 4),
+    ('E6', 'LAY: solder the battery tail to the ESC BAT pads and the 4 x 3 phase leads (free ends from B0 / B2c: out of the foam ditch at x 29, straight up to z 36, aft over the FC, down to z 28 behind it under the cover roof) to the ESC motor pads; heat-shrink', [], None, 0, 0, ['E-HRN-12', 'E-HRN-02', 'E-HRN-03', 'E-HRN-04', 'E-HRN-05']),
+    ('E7', 'Bay cover lowered over the FC and ESC onto the skin (the GPS lead and the battery tail drop into the bottom-open slots, the two antennas into the slots of the RX hood aft wall; the RX UART and I2C leads and the phase bundles are already inside), foam tape + two ties', ['AVN-008'], (0, 0, -1), 40, 4),
 ]
 THREAD_BEFORE = {'B0k': 'B1', 'D0': 'E2', 'B2c': 'E2'}
 # D-202 bench steps: swept in their own run (nothing of the wing placed), their parts are placed in the main run by B1 (the dock of the finished frame)

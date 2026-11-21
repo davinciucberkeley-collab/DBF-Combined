@@ -45,7 +45,7 @@ def family(mat):
     if mat in FAMILY:
         return FAMILY[mat]
     m = (mat or '').lower()
-    if 'petg' in m or 'print' in m:
+    if 'petg' in m or 'print' in m or 'onyx' in m:
         return 'print'
     if 'foam' in m or 'xps' in m or 'eva' in m:
         return 'foam'

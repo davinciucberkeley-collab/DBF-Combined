@@ -18,8 +18,9 @@
   20,
   21
  ],
- "bodies": 499,
+ "bodies": 553,
  "defects": [
+  "AVN-008 body \"cover end wall, -y side (0.6 mm; open under the RX hood, T-022 Q4)\": zero-width spike / repeated point in a loop (removed in the export)",
   "WNG-008-LL body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
   "WNG-008-LL body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)",
   "WNG-008-LU body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
@@ -29,14 +30,27 @@
   "WNG-008-RU body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
   "WNG-008-RU body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)"
  ],
- "flipped_inside_out": 118,
+ "flipped_inside_out": 124,
  "kinks": [],
- "parts": 117,
+ "parts": 124,
  "poses": [
   {
    "clear": {},
    "delta": null,
    "hits": [
+    {
+     "a": "E-HRN-02#1",
+     "at_mm": [
+      48.41,
+      17.49,
+      35.36
+     ],
+     "b": "E-HRN-02#2",
+     "bodies": [
+      "E-HRN-02 \"wire strand 2 (1.8 mm)\" x E-HRN-02 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+     ],
+     "depth_mm": 0.012
+    },
     {
      "a": "E-HRN-05#0",
      "at_mm": [
@@ -49,6 +63,19 @@
       "E-HRN-05 \"wire strand 2 (1.8 mm)\" x E-HRN-05 \"wire strand 0 (1.8 mm)\" 0.01 mm"
      ],
      "depth_mm": 0.011
+    },
+    {
+     "a": "E-HRN-05#1",
+     "at_mm": [
+      65.88,
+      -21.16,
+      32.45
+     ],
+     "b": "E-HRN-05#2",
+     "bodies": [
+      "E-HRN-05 \"wire strand 2 (1.8 mm)\" x E-HRN-05 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+     ],
+     "depth_mm": 0.01
     },
     {
      "a": "E-HRN-02#0",
@@ -79,15 +106,15 @@
     {
      "a": "E-HRN-04#0",
      "at_mm": [
-      -75.67,
-      201.67,
-      -136.99
+      71.39,
+      21.19,
+      31.21
      ],
      "b": "E-HRN-04#1",
      "bodies": [
       "E-HRN-04 \"wire strand 0 (1.8 mm)\" x E-HRN-04 \"wire strand 1 (1.8 mm)\" 0.01 mm"
      ],
-     "depth_mm": 0.01
+     "depth_mm": 0.011
     },
     {
      "a": "E-HRN-03#0",
@@ -116,6 +143,22 @@
      "depth_mm": 0.012
     },
     {
+     "a": "HWC-001",
+     "at_mm": [
+      58.53,
+      12.76,
+      13.23
+     ],
+     "b": "HWC-003",
+     "bodies": [
+      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm",
+      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm",
+      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm",
+      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm"
+     ],
+     "depth_mm": 0.034
+    },
+    {
      "a": "AVN-006",
      "at_mm": [
       42.38,
@@ -140,22 +183,6 @@
       "AVN-006 \"total-pressure outlet barb on the block rear face (EST position and OD 2.0)\" x AVN-009-T \"silicone tubing 2 / 4 mm along the CAD route (D-208)\" 0.02 mm"
      ],
      "depth_mm": 0.017
-    },
-    {
-     "a": "HWC-001",
-     "at_mm": [
-      70.26,
-      9.03,
-      12.66
-     ],
-     "b": "HWC-003",
-     "bodies": [
-      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm",
-      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm",
-      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm",
-      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm"
-     ],
-     "depth_mm": 0.034
     },
     {
      "a": "AVN-005",
@@ -186,7 +213,7 @@
    ],
    "moved": null,
    "name": "static",
-   "seconds": 522.7,
+   "seconds": 581.0,
    "state": null,
    "theta_deg": null
   },
@@ -662,7 +689,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -21 deg",
-   "seconds": 14.1,
+   "seconds": 15.3,
    "state": "mid",
    "theta_deg": {
     "L": 22.63742242970439,
@@ -1141,7 +1168,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -20 deg",
-   "seconds": 8.7,
+   "seconds": 7.6,
    "state": "mid",
    "theta_deg": {
     "L": 21.560355526523868,
@@ -1620,7 +1647,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -18 deg",
-   "seconds": 7.4,
+   "seconds": 7.5,
    "state": "mid",
    "theta_deg": {
     "L": 19.40480618852609,
@@ -2570,7 +2597,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -12 deg",
-   "seconds": 8.6,
+   "seconds": 8.7,
    "state": "mid",
    "theta_deg": {
     "L": 12.933269863912221,
@@ -3045,7 +3072,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -9 deg",
-   "seconds": 7.5,
+   "seconds": 7.3,
    "state": "mid",
    "theta_deg": {
     "L": 9.697842512536054,
@@ -3520,7 +3547,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -6 deg",
-   "seconds": 6.9,
+   "seconds": 7.0,
    "state": "mid",
    "theta_deg": {
     "L": 6.463845794048801,
@@ -4943,7 +4970,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +3 deg",
-   "seconds": 8.2,
+   "seconds": 8.3,
    "state": "mid",
    "theta_deg": {
     "L": -3.23144898881135,
@@ -5418,7 +5445,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +6 deg",
-   "seconds": 7.0,
+   "seconds": 7.2,
    "state": "mid",
    "theta_deg": {
     "L": -6.4646983832943,
@@ -5893,7 +5920,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +9 deg",
-   "seconds": 3.7,
+   "seconds": 3.8,
    "state": "mid",
    "theta_deg": {
     "L": -9.702186194942481,
@@ -6368,7 +6395,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +12 deg",
-   "seconds": 3.7,
+   "seconds": 3.8,
    "state": "mid",
    "theta_deg": {
     "L": -12.947121976636565,
@@ -6861,7 +6888,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +15 deg",
-   "seconds": 8.6,
+   "seconds": 7.6,
    "state": "mid",
    "theta_deg": {
     "L": -16.203607404214964,
@@ -8340,7 +8367,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +21 deg",
-   "seconds": 14.0,
+   "seconds": 14.2,
    "state": "mid",
    "theta_deg": {
     "L": -22.773219907759124,
@@ -8349,7 +8376,7 @@
   }
  ],
  "report_mm": 0.01,
- "seconds": 774.5,
+ "seconds": 847.9,
  "states": [
   "mid"
  ],

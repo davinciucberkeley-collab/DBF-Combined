@@ -166,7 +166,7 @@ def main():
         'WNG-008': 'single 0.6 mm wall, vase mode (CAD note, EST)', 'AVN-008': '0.6 mm shell (EST)', 'HRN-003': '0.6 mm walls (EST)', 'HRN-004': '0.6 mm walls (EST)',
         'WNG-003': 'tube 9.8 mm outside, 4 mm bore, 20 mm long', 'WNG-004': 'as WNG-003', 'WNG-005': 'as WNG-003',
         'WNG-009': 'plus about 0.6 g silicone fluid each (R12)', 'WNG-010': 'rotor: slide fit in the 0.30 mm gap: test print',
-        'AVN-001': '4 hex pockets 4.2 mm across for M2 thin nuts', 'CGE-008': '1.5 mm floor with ribs (EST)', 'GER-001': 'plate faces aft'}
+        'AVN-010': '4 hex pockets 4.2 mm across for M2 thin nuts in the FC bosses; bosses 6 x 6 mm to the pad plane', 'CGE-008': '1.5 mm floor with ribs (EST)', 'GER-001': 'plate faces aft'}
     tp = 0.0
     tm_lo = tm_hi = 0.0
     for k, lst in sorted(pr.items()):

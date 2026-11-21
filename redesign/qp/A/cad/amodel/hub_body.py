@@ -23,7 +23,7 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CACHE = os.path.join(HERE, 'hub_body_cache.npz')
-VERSION = 'hub_body v4 (octagonal sleeves, collar, T-077 p3; RC lightening cut, T-077 p4)'
+VERSION = 'hub_body v5 (octagonal sleeves, collar, T-077 p3; RC lightening cut, T-077 p4; shoulder fillet RC[3], T-077 p5)'
 
 
 def _params_key(p):
@@ -87,13 +87,21 @@ def _build(p):
             return [(3, cb_)]
 
         def rc_cut(v):                                  # T-077 p4 (D-224 hub pockets): turn the block aft of RC x0 and the collar to a cylinder of radius RC r about the bridge axis (everything outside it is removed)
-            if not p.get('RC'):
+            if not p.get('RC'):                         # T-077 p5: RC[3] (optional) = concave fillet radius at the shoulder, a revolved profile (the OCC edge fillet fails above the 0.75 mm step)
                 return v
-            rcr, rcx0, rcz = p['RC']
+            rcr, rcx0, rcz = p['RC'][:3]
+            shr = p['RC'][3] if len(p['RC']) > 3 else 0.0
             xe_ = p['COLLAR'][1] + 3.0 if p.get('COLLAR') else rcx0 + 40.0
             bx_ = occ.addBox(rcx0, -40.0, rcz - 40.0, xe_ - rcx0, 80.0, 80.0)
             cy_ = occ.addCylinder(rcx0 - 1.0, 0, rcz, xe_ - rcx0 + 2.0, 0, 0, rcr)
-            cut_, _ = occ.cut([(3, bx_)], [(3, cy_)])
+            keep = [(3, cy_)]
+            if shr > 0:
+                a_ = occ.addPoint(rcx0, rcr - 0.2, rcz); b_ = occ.addPoint(rcx0, rcr + shr, rcz); c_ = occ.addPoint(rcx0 + shr, rcr + shr, rcz)
+                d_ = occ.addPoint(rcx0 + shr, rcr, rcz); e_ = occ.addPoint(rcx0 + shr, rcr - 0.2, rcz)
+                cv = [occ.addLine(a_, b_), occ.addCircleArc(b_, c_, d_), occ.addLine(d_, e_), occ.addLine(e_, a_)]
+                sf_ = occ.addPlaneSurface([occ.addCurveLoop(cv)])
+                keep += [t_ for t_ in occ.revolve([(2, sf_)], 0, 0, rcz, 1, 0, 0, 2 * math.pi) if t_[0] == 3]
+            cut_, _ = occ.cut([(3, bx_)], keep)
             out_, _ = occ.cut(v, cut_, removeTool=True)
             occ.synchronize()
             return out_
@@ -257,7 +265,7 @@ def cad_params():
                 BLK_X0=W.BLK_X[0] * mm, BLK_X1=W.BLK_X[1] * mm,
                 BOSS=None if (W.HUB_X1 - C.HUB[0] - W.BLK_X[1]) <= 0.001 else ((W.BLK_X[1] - 0.0005) * mm, (W.HUB_X1 - C.HUB[0]) * mm, W.BR_Z * mm, W.R_BR * mm),
                 FIL=W.HUB_FIL, FIL_A=W.HUB_FIL_A, MS=1.5, MS_FIL=0.4, HUB_X=C.HUB[0], OCT=True, COLLAR=(W.BLK_X[1] * mm - 0.0005 * 0, W.COL_X1 * mm, W.COL_HY * mm, W.COL_Z[0] * mm, W.COL_Z[1] * mm),
-                RC=(W.POCKET_R * mm, W.POCKET_X0 * mm, W.BR_Z * mm) if W.POCKET_R > 0 else None)
+                RC=(W.POCKET_R * mm, W.POCKET_X0 * mm, W.BR_Z * mm, W.POCKET_SH_R * mm) if W.POCKET_R > 0 else None)
 
 
 if __name__ == '__main__':

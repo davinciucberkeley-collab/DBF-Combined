@@ -134,7 +134,7 @@
    "mass_g": 20.0,
    "material": "PCB",
    "cg_xyz_m": [
-    0.0994,
+    0.0844,
     0.0003,
     0.0169
    ],
@@ -455,10 +455,10 @@
   {
    "id": "E-PRP-09",
    "part_a": "PRP-003",
-   "part_b": "AVN-001",
+   "part_b": "AVN-010",
    "via": "CT-TAPE-FOAM",
    "owner": "propulsion",
-   "notes": "ESC on the plate, foam tape + tie",
+   "notes": "ESC on the four R2 bosses, foam tape + tie",
    "retention": {
     "item": "VHB-class tape",
     "count": 1

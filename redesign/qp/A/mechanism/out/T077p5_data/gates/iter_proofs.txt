@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\qp\A\proofs\gen_params_a.py", line 304, in <module>
+    OUT.write_text(json.dumps(build(), indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+                              ~~~~~^^
+  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\qp\A\proofs\gen_params_a.py", line 31, in build
+    reps = {k: json.loads((out / f"report{k}.json").read_text(encoding="utf-8")) for k in ("", "_d212r3_pose20", "_d212r3_pose21")}
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dillo\AppData\Local\Python\pythoncore-3.14-64\Lib\pathlib\__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dillo\AppData\Local\Python\pythoncore-3.14-64\Lib\pathlib\__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\redesign\\qp\\A\\cad\\out\\report.json'
+>> gen_params_a.py

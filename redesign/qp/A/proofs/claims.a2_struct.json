@@ -1554,7 +1554,7 @@
    ],
    "parts": [
     "AVN-002",
-    "AVN-001",
+    "AVN-010",
     "AVN-007"
    ],
    "how": "IMU VIBE < 30 m/s2 in the first tethered hover (T-A-TETHER-VIBE). The worst point (10,500 rpm) is unreachable; at the 0.90 cap (9,349 rpm) the sweep reads 19.6-20.1.",

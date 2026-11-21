@@ -45,13 +45,13 @@ MRP = {'UR', 'LL'}                                     # reverse (pusher-type) b
 # basis: sitl/a_plant.py lines 69-76: CCW (+1) = LR, UL; CW (-1) = LL, UR. APC MR = standard = CCW, MRP = reverse = CW
 # (promodels AP-09045MR / aerobertics AP-09045MRP, 2026-11-15). BOM-A.csv P02 / ORDER-LIST O2 relabelled 2026-11-15: RMRC calls MR "Standard (CW)" seen from behind the prop; seen from the thrust side (the view used here) MR is CCW.
 
-# ESC layout on the avionics plate (the plate itself, PLATE_* and ZP, is shared in common.py)
-ESC_X0 = 0.082
+# ESC layout on four R2 bosses (T-077 p5: the avionics plate is gone; ZP, the pad plane, is shared in common.py)
+ESC_X0 = 0.082 + AV_DX                                                  # T-077 p5: 3b, 15 mm forward
 ESC_B = ((ESC_X0, -0.0175, ZP), (ESC_X0 + 0.035, 0.0175, ZP + 0.0055))  # V SpeedyBee 35 x 35 x 5.5 (readymaderc 86873, 2026-11-15)
 PAD = 0.003                                                             # half size of an ESC pad body
 _e = ESC_X0 - 0.031
 ESC_PADS = {'UR': (0.034 + _e, 0.013), 'LR': (0.046 + _e, 0.013), 'UL': (0.034 + _e, -0.013), 'LL': (0.046 + _e, -0.013),
-            'BAT': (0.1045, 0.012), 'SIG': (0.0635 + _e, 0.0)}
+            'BAT': (0.1045 + AV_DX, 0.012), 'SIG': (0.0635 + _e, 0.0)}
 ESC_TOP = ZP + 0.0055
 ESC_PCB_T = 0.0016                                                      # EST: PCB thickness (not published)
 ESC_HOLE_D, ESC_HOLE_PITCH = 0.0035, 0.020                              # V: 20 x 20 pattern, 3.5 mm holes (M2 and M3 compatible)
@@ -175,7 +175,7 @@ for i, s in enumerate(ST):
       'APC hub on the T-Motor adapter stud (APC adapter ring), clamped by the spinner nut',
       joint_stack=STACK('M5 spinner nut (T-Motor)', 1, 'APC adapter ring (ID 5, EST) on the M5 stud', 10 + i, eng=9.0, mineng=5.0),
       field_joint=True)
-E(en('PRP'), 'PRP-003', 'AVN-001', TAPEF, 'propulsion', 'ESC on the plate, foam tape + tie',
+E(en('PRP'), 'PRP-003', 'AVN-010', TAPEF, 'propulsion', 'ESC on the four R2 bosses, foam tape + tie',
   retention=dict(item='VHB-class tape', count=1))
 for i, s in enumerate(ST):
     E(en('PRP'), 'PRP-004-' + s, 'PRP-001-' + s, 'CT-A-PROP-ADAPTER', 'propulsion',

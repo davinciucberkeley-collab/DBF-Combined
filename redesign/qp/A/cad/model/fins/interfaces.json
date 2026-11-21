@@ -22,10 +22,10 @@
    "name": "Fin rib tube 14x12 (R)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 14.1,
+   "mass_g": 14.2,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    0.1782,
+    0.177,
     0.38,
     0.0
    ],
@@ -64,15 +64,45 @@
   },
   {
    "id": "FIN-005-R",
-   "name": "Rib saddle on spar (R)",
+   "name": "Clamshell cradle on spar (R, T-077 p5, D-221): ring wall 2.0 mm on the spar (60 mm), socket 18 x 18 mm x 40 mm round the 14 mm rib, 4 mm pin bosses, printed PETG; mass = drawn volume x T-067 basis",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 14.39,
+   "mass_g": 12.32,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0671,
+    0.0797,
     0.38,
     0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "FIN-007-R",
+   "name": "Clamshell CF plates (R): 2 plates 0.5 mm x 50 x 64 mm (the record says about 50 x 75: reduced in y -; corner radii -), waterjet-cut from 0.5 mm CF sheet (ACP PDS Dec 2014, 1.6 g/cm3), bonded on the cradle top and bottom faces; mass = drawn volume x 1.6",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 4.88,
+   "material": "CF fabric laminate (cut sheet)",
+   "cg_xyz_m": [
+    0.083,
+    0.38,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "FIN-008-R",
+   "name": "Clamshell pins (R): 3 x 3 mm carbon rod x 21.8 mm, vertical through the cradle bosses, the rib walls and the plates (T-071b B.2)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.74,
+   "material": "CF rod",
+   "cg_xyz_m": [
+    0.083,
+    0.38,
+    -0.0001
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -112,10 +142,10 @@
    "name": "Fin rib tube 14x12 (L)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 14.1,
+   "mass_g": 14.2,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    0.1782,
+    0.177,
     -0.38,
     0.0
    ],
@@ -154,15 +184,45 @@
   },
   {
    "id": "FIN-005-L",
-   "name": "Rib saddle on spar (L)",
+   "name": "Clamshell cradle on spar (L, T-077 p5, D-221): ring wall 2.0 mm on the spar (60 mm), socket 18 x 18 mm x 40 mm round the 14 mm rib, 4 mm pin bosses, printed PETG; mass = drawn volume x T-067 basis",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 14.39,
+   "mass_g": 12.32,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0671,
+    0.0797,
     -0.38,
     0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "FIN-007-L",
+   "name": "Clamshell CF plates (L): 2 plates 0.5 mm x 50 x 64 mm (the record says about 50 x 75: reduced in y -; corner radii -), waterjet-cut from 0.5 mm CF sheet (ACP PDS Dec 2014, 1.6 g/cm3), bonded on the cradle top and bottom faces; mass = drawn volume x 1.6",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 4.88,
+   "material": "CF fabric laminate (cut sheet)",
+   "cg_xyz_m": [
+    0.083,
+    -0.38,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "FIN-008-L",
+   "name": "Clamshell pins (L): 3 x 3 mm carbon rod x 21.8 mm, vertical through the cradle bosses, the rib walls and the plates (T-071b B.2)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.74,
+   "material": "CF rod",
+   "cg_xyz_m": [
+    0.083,
+    -0.38,
+    -0.0001
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -218,6 +278,46 @@
   },
   {
    "id": "E-FIN-05",
+   "part_a": "FIN-005-R",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "clamshell bonded in its foam pocket (placed before the spar: the upper plate cannot pass the spar from below)"
+  },
+  {
+   "id": "E-FIN-06",
+   "part_a": "FIN-007-R",
+   "part_b": "FIN-005-R",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "CF plates bonded on the cradle top and bottom faces (frame fraction 0.5 EST, T-071b B.2)"
+  },
+  {
+   "id": "E-FIN-07",
+   "part_a": "FIN-008-R",
+   "part_b": "FIN-005-R",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "three CF pins through the cradle bosses (4 mm wall)"
+  },
+  {
+   "id": "E-FIN-08",
+   "part_a": "FIN-008-R",
+   "part_b": "FIN-002-R",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "pins through the two rib walls (double shear)"
+  },
+  {
+   "id": "E-FIN-09",
+   "part_a": "FIN-008-R",
+   "part_b": "FIN-007-R",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "pins through the plates"
+  },
+  {
+   "id": "E-FIN-10",
    "part_a": "FIN-004-R",
    "part_b": "FIN-001-R",
    "via": "CT-CA",
@@ -225,7 +325,7 @@
    "notes": "fairing in the tube slot (foam-safe CA)"
   },
   {
-   "id": "E-FIN-06",
+   "id": "E-FIN-11",
    "part_a": "FIN-004-R",
    "part_b": "FIN-002-R",
    "via": "CT-CA",
@@ -233,7 +333,7 @@
    "notes": "fairing round the rib"
   },
   {
-   "id": "E-FIN-07",
+   "id": "E-FIN-12",
    "part_a": "FIN-006-R",
    "part_b": "FIN-002-R",
    "via": "CT-CA",
@@ -241,7 +341,7 @@
    "notes": "rib fairing over the rib top (foam-safe CA), sits on the core skin"
   },
   {
-   "id": "E-FIN-08",
+   "id": "E-FIN-13",
    "part_a": "FIN-006-R",
    "part_b": "WNG-001",
    "via": "CT-CA",
@@ -249,7 +349,7 @@
    "notes": "rib fairing bonded on the upper skin"
   },
   {
-   "id": "E-FIN-09",
+   "id": "E-FIN-14",
    "part_a": "FIN-003-L",
    "part_b": "FIN-001-L",
    "via": "CT-EPOXY",
@@ -257,7 +357,7 @@
    "notes": "root block wraps the tube"
   },
   {
-   "id": "E-FIN-10",
+   "id": "E-FIN-15",
    "part_a": "FIN-003-L",
    "part_b": "FIN-002-L",
    "via": "CT-EPOXY",
@@ -265,7 +365,7 @@
    "notes": "rib end in the block socket"
   },
   {
-   "id": "E-FIN-11",
+   "id": "E-FIN-16",
    "part_a": "FIN-002-L",
    "part_b": "FIN-005-L",
    "via": "CT-EPOXY",
@@ -273,7 +373,7 @@
    "notes": "rib start in the saddle socket"
   },
   {
-   "id": "E-FIN-12",
+   "id": "E-FIN-17",
    "part_a": "FIN-005-L",
    "part_b": "WNG-002",
    "via": "CT-EPOXY",
@@ -281,7 +381,47 @@
    "notes": "saddle wraps the spar (60 mm)"
   },
   {
-   "id": "E-FIN-13",
+   "id": "E-FIN-18",
+   "part_a": "FIN-005-L",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "clamshell bonded in its foam pocket (placed before the spar: the upper plate cannot pass the spar from below)"
+  },
+  {
+   "id": "E-FIN-19",
+   "part_a": "FIN-007-L",
+   "part_b": "FIN-005-L",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "CF plates bonded on the cradle top and bottom faces (frame fraction 0.5 EST, T-071b B.2)"
+  },
+  {
+   "id": "E-FIN-20",
+   "part_a": "FIN-008-L",
+   "part_b": "FIN-005-L",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "three CF pins through the cradle bosses (4 mm wall)"
+  },
+  {
+   "id": "E-FIN-21",
+   "part_a": "FIN-008-L",
+   "part_b": "FIN-002-L",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "pins through the two rib walls (double shear)"
+  },
+  {
+   "id": "E-FIN-22",
+   "part_a": "FIN-008-L",
+   "part_b": "FIN-007-L",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "pins through the plates"
+  },
+  {
+   "id": "E-FIN-23",
    "part_a": "FIN-004-L",
    "part_b": "FIN-001-L",
    "via": "CT-CA",
@@ -289,7 +429,7 @@
    "notes": "fairing in the tube slot (foam-safe CA)"
   },
   {
-   "id": "E-FIN-14",
+   "id": "E-FIN-24",
    "part_a": "FIN-004-L",
    "part_b": "FIN-002-L",
    "via": "CT-CA",
@@ -297,7 +437,7 @@
    "notes": "fairing round the rib"
   },
   {
-   "id": "E-FIN-15",
+   "id": "E-FIN-25",
    "part_a": "FIN-006-L",
    "part_b": "FIN-002-L",
    "via": "CT-CA",
@@ -305,7 +445,7 @@
    "notes": "rib fairing over the rib top (foam-safe CA), sits on the core skin"
   },
   {
-   "id": "E-FIN-16",
+   "id": "E-FIN-26",
    "part_a": "FIN-006-L",
    "part_b": "WNG-001",
    "via": "CT-CA",

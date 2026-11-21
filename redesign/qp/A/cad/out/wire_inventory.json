@@ -20,9 +20,9 @@
    "arm_m": 0.0,
    "race_m": 0.0,
    "groove_m": 0.0,
-   "cover_m": 0.024,
-   "exposed_m": 0.0425,
-   "total_m": 0.0665,
+   "cover_m": 0.0239,
+   "exposed_m": 0.0424,
+   "total_m": 0.0663,
    "min_bend_mm": 6.0,
    "total_strand_m": 0.133
   },
@@ -34,10 +34,10 @@
    "race_m": 0.0,
    "groove_m": 0.0,
    "cover_m": 0.0,
-   "exposed_m": 0.1433,
-   "total_m": 0.1433,
+   "exposed_m": 0.1297,
+   "total_m": 0.1297,
    "min_bend_mm": 4.0,
-   "total_strand_m": 0.287
+   "total_strand_m": 0.259
   },
   {
    "edge": "E-HRN-14",
@@ -58,12 +58,12 @@
    "dia_mm": 1.8,
    "arm_m": 0.2782,
    "race_m": 0.1346,
-   "groove_m": 0.0102,
-   "cover_m": 0.071,
+   "groove_m": 0.01,
+   "cover_m": 0.0732,
    "exposed_m": 0.0003,
-   "total_m": 0.4942,
+   "total_m": 0.4963,
    "min_bend_mm": 4.0,
-   "total_strand_m": 1.483
+   "total_strand_m": 1.489
   },
   {
    "edge": "E-HRN-03",
@@ -71,12 +71,12 @@
    "dia_mm": 1.8,
    "arm_m": 0.2782,
    "race_m": 0.1216,
-   "groove_m": 0.0102,
-   "cover_m": 0.071,
+   "groove_m": 0.01,
+   "cover_m": 0.0732,
    "exposed_m": 0.0003,
-   "total_m": 0.4812,
+   "total_m": 0.4833,
    "min_bend_mm": 4.0,
-   "total_strand_m": 1.444
+   "total_strand_m": 1.45
   },
   {
    "edge": "E-HRN-04",
@@ -84,12 +84,12 @@
    "dia_mm": 1.8,
    "arm_m": 0.2782,
    "race_m": 0.1308,
-   "groove_m": 0.0102,
-   "cover_m": 0.0843,
+   "groove_m": 0.01,
+   "cover_m": 0.0856,
    "exposed_m": 0.0005,
-   "total_m": 0.504,
+   "total_m": 0.5051,
    "min_bend_mm": 4.0,
-   "total_strand_m": 1.512
+   "total_strand_m": 1.515
   },
   {
    "edge": "E-HRN-05",
@@ -97,12 +97,12 @@
    "dia_mm": 1.8,
    "arm_m": 0.2782,
    "race_m": 0.144,
-   "groove_m": 0.0098,
-   "cover_m": 0.0846,
+   "groove_m": 0.0103,
+   "cover_m": 0.0853,
    "exposed_m": 0.0003,
-   "total_m": 0.5169,
+   "total_m": 0.5181,
    "min_bend_mm": 4.0,
-   "total_strand_m": 1.551
+   "total_strand_m": 1.554
   },
   {
    "edge": "E-HRN-06",
@@ -111,11 +111,11 @@
    "arm_m": 0.0,
    "race_m": 0.0,
    "groove_m": 0.0,
-   "cover_m": 0.0681,
+   "cover_m": 0.0412,
    "exposed_m": 0.0,
-   "total_m": 0.0681,
+   "total_m": 0.0412,
    "min_bend_mm": 4.0,
-   "total_strand_m": 0.409
+   "total_strand_m": 0.247
   },
   {
    "edge": "E-HRN-07",
@@ -123,12 +123,12 @@
    "dia_mm": 1.2,
    "arm_m": 0.0,
    "race_m": 0.0,
-   "groove_m": 0.2082,
-   "cover_m": 0.0302,
+   "groove_m": 0.2272,
+   "cover_m": 0.0281,
    "exposed_m": 0.0119,
-   "total_m": 0.2503,
+   "total_m": 0.2671,
    "min_bend_mm": 3.0,
-   "total_strand_m": 0.751
+   "total_strand_m": 0.801
   },
   {
    "edge": "E-HRN-08",
@@ -136,12 +136,12 @@
    "dia_mm": 1.2,
    "arm_m": 0.0,
    "race_m": 0.0,
-   "groove_m": 0.2082,
-   "cover_m": 0.0302,
+   "groove_m": 0.2272,
+   "cover_m": 0.0281,
    "exposed_m": 0.0119,
-   "total_m": 0.2503,
+   "total_m": 0.2671,
    "min_bend_mm": 3.0,
-   "total_strand_m": 0.751
+   "total_strand_m": 0.801
   },
   {
    "edge": "E-HRN-09",
@@ -150,11 +150,11 @@
    "arm_m": 0.0,
    "race_m": 0.0,
    "groove_m": 0.0,
-   "cover_m": 0.0972,
+   "cover_m": 0.1191,
    "exposed_m": 0.0,
-   "total_m": 0.0972,
+   "total_m": 0.1191,
    "min_bend_mm": 2.5,
-   "total_strand_m": 0.389
+   "total_strand_m": 0.476
   },
   {
    "edge": "E-HRN-10",
@@ -163,11 +163,11 @@
    "arm_m": 0.0,
    "race_m": 0.0,
    "groove_m": 0.0,
-   "cover_m": 0.047,
+   "cover_m": 0.0645,
    "exposed_m": 0.0031,
-   "total_m": 0.05,
+   "total_m": 0.0676,
    "min_bend_mm": 2.5,
-   "total_strand_m": 0.3
+   "total_strand_m": 0.406
   },
   {
    "edge": "E-HRN-11",
@@ -175,19 +175,19 @@
    "dia_mm": 1.0,
    "arm_m": 0.0,
    "race_m": 0.0,
-   "groove_m": 0.4126,
-   "cover_m": 0.0896,
+   "groove_m": 0.4589,
+   "cover_m": 0.1044,
    "exposed_m": 0.0,
-   "total_m": 0.5022,
-   "min_bend_mm": 2.72,
-   "total_strand_m": 2.009
+   "total_m": 0.5632,
+   "min_bend_mm": 4.0,
+   "total_strand_m": 2.253
   }
  ],
  "totals_strand_m": {
   "ARM": 3.338204645905247,
   "RACE": 1.5928484914340078,
-  "GROOVE": 3.02086775955304,
-  "COVER": 2.5996809594076615,
-  "EXPOSED": 0.52940376604454
+  "GROOVE": 3.31996039305451,
+  "COVER": 2.69679252806397,
+  "EXPOSED": 0.5020585842474015
  }
 }

@@ -781,10 +781,10 @@
     "v": "P:cad3d.assy_steps_ok"
    },
    "outputs": {
-    "v": 59
+    "v": 60
    },
    "input_values": {
-    "v": 59
+    "v": 60
    }
   },
   {
@@ -802,7 +802,7 @@
     "A-U4"
    ],
    "how": "python -I qp/A/cad/a_assembly.py: 28 of 28 steps, 0 blocked, 0 unsupported, no wire laid before its ends.",
-   "value": 59
+   "value": 60
   },
   {
    "id": "CALC-A-ASSY-PARTS-READ",
@@ -815,10 +815,10 @@
     "v": "P:cad3d.assy_parts_placed"
    },
    "outputs": {
-    "v": 117
+    "v": 124
    },
    "input_values": {
-    "v": 117
+    "v": 124
    }
   },
   {
@@ -836,7 +836,7 @@
     "A-U4"
    ],
    "how": "a_assembly.py: 78 of 78 parts placed, none missing from the sequence.",
-   "value": 117
+   "value": 124
   }
  ]
 }

@@ -282,17 +282,17 @@ step(id='B1', title='Cage unit: motors, props, dock',
                     'Motor screws: threadlocker and a paint mark.', 'Cage bonds cured 24 h before it takes load.'])
 
 # ============================================================ STAGE 3: saddles, raceways, tray, dampers
-step(id='B2', title='Rib saddles on the spar',
-     line='Print the two rib saddles; snap them on the spar from below at y +-380 mm, over the plugs.',
-     tools='printer (PETG), epoxy, caliper',
-     check='Saddle centre at y 380 mm +-1 mm; weigh: CAD 1.0 g each',
-     min=20,
-     need=['PETG (R03). Print file: FIN-005-R/L.stl (qp/A/drawings/out/stl/)'],
-     make=['Print FIN-005-R/L: PETG, 0.2 mm, 1.0 g each. Ring on the spar 60 mm long, 21 mm outside, with a socket 19 x 19 mm facing aft for the rib and a clip slot.'],
-     fit=['Spread the clip slot and snap the ring on the spar from below at y +-380 mm; the socket faces aft. Put a drop of epoxy inside. Check it covers the plug (y +-380 mm).'],
-     checks=['Socket axis is along x, parallel to the wing chord (square within 1 degree, EST).'],
-     fab=dict(kind='print', pid='FIN-005-R', orient='ring axis up, socket side up (EST)', text='PRINT  PETG  FIN-005-R/L.stl x 2 (qp/A/drawings/out/stl/)'),
-     callouts=[('FIN-005-R', 'Rib saddle: print PETG 1.0 g'), (('pt', (0.070, 0.38, -0.012), 'top'), 'over plug y 380')])
+step(id='A1b', title='Clamshells in the core (cradle and two CF plates)',
+     line='Print the two cradles, bond two 0.5 mm CF plates on each (top and bottom faces); push each clamshell up into its foam pocket at y +-380 mm, before the spar goes in.',
+     tools='printer (PETG), OMAX waterjet (CF plates), epoxy, caliper',
+     check='Clamshell centre at y 380 mm +-1 mm; weigh: CAD cradle (printed_mass.json) + plates 4.9 g + pins 0.5 g per side',
+     min=40,
+     need=['PETG (R03). Print file: FIN-005-R/L.stl; 0.5 mm CF sheet (T-080 s7: price -) cut on the waterjet to FIN-007 (50 x 64 mm, dimensions in the CAD part name); 3 x 3 mm carbon rod (pins, FIN-008) from the R09 offcuts or a rod stock (price -)'],
+     make=['Print FIN-005-R/L: PETG, 0.2 mm, ring wall 2.0 mm on the spar (60 mm), socket 18 x 18 mm x 40 mm facing aft for the rib, 4 mm pin bosses (T-077 p5). Waterjet FIN-007 plates (two per side): 0.5 mm CF, lead-in outside the part, backing sheet (practice -); the boss holes are cut by the shop from the cradle (the CAD plate is cut round the bosses). Bond the plates on the cradle top and bottom faces.'],
+     fit=['Push each clamshell up into its pocket from below (30 mm), centred at y +-380 mm, the socket facing aft; the ring bore must line up with the spar bore of the core (the spar slides through both rings in A2). Epoxy the plates into the pocket walls (CAD edge: epoxy).'],
+     checks=['Socket axis is along x, parallel to the wing chord (square within 1 degree, EST); ring bore coaxial with the spar bore. The pins (C1p) come after the ribs.'],
+     fab=dict(kind='print', pid='FIN-005-R', orient='ring axis up, socket side up (EST)', text='PRINT  PETG  FIN-005-R/L.stl x 2 (qp/A/drawings/out/stl/); CUT  CF plate 0.5 mm  FIN-007 x 4 (waterjet)'),
+     callouts=[('FIN-005-R', 'Cradle: print PETG'), ('FIN-007-R', 'CF plates 0.5 mm'), (('pt', (0.070, 0.38, -0.012), 'top'), 'over plug y 380')])
 
 step(id='B2a', title='Phase-lead raceways',
      line='Print both raceways; lower each into its foam groove from above (before the tray).',
@@ -368,7 +368,18 @@ step(id='C1', title='Fin ribs',
      checks=['Rib axis along x, within 1 degree (EST); the rib ends at the front face of the fin tube: x 286 mm = tube centre 294 mm minus the 8 mm tube radius (CAD `RIB_X1`).'],
      safety=['Carbon dust: wet-sand or vacuum.'],
      fab=dict(kind='tube', pid='FIN-002-R', text='CUT  14x12 carbon tube to 215.5 mm  (BOM R09)', dims=[('FIN-002-R', 'cut 215.5 mm')]),
-     callouts=[('FIN-002-R', 'Rib: CF 14x12, cut 215.5 mm'), ('FIN-005-R', 'Rib sits in the saddle socket')])
+     callouts=[('FIN-002-R', 'Rib: CF 14x12, cut 215.5 mm'), ('FIN-005-R', 'Rib sits in the cradle socket (40 mm engagement)')])
+
+step(id='C1p', title='Clamshell pins',
+     line='Push three 3 mm carbon pins up from below through each clamshell and its rib; epoxy; tape the pocket.',
+     tools='epoxy, 3 mm drill', check='Three pins per side flush inside the bosses; CAD 0.5 g per side',
+     min=20, cure='24 h epoxy cure',
+     need=['3 x 3 mm carbon rod x 21.8 mm per pin (6 pins; price -)'],
+     make=['Cut six pins 21.8 mm from 3 mm carbon rod (CAD FIN-008).'],
+     fit=['With the rib in the cradle, drill the three 3 mm holes through boss, rib walls and plates if not already drilled (the CAD shows them as seat cuts), push the pins up from below (25 mm), epoxy, then tape the pocket opening in the lower skin.'],
+     checks=['Pins 0.2 mm inside the boss tops (the skin is 0.2-0.5 mm above them).'],
+     fab=dict(kind='tube', pid='FIN-008-R', text='CUT  3 mm carbon rod to 21.8 mm  x 6', dims=[('FIN-008-R', 'cut 21.8 mm')]),
+     callouts=[('FIN-008-R', 'Pins 3 mm x 21.8 mm')])
 
 step(id='C1a', title='Rib fairings',
      line='Cut two XPS blisters (130 to 183.75 mm); bond each over the rib where it leaves the upper skin.',
@@ -608,36 +619,36 @@ step(id='E1', title='Pitot probe',
      checks=['Probe points straight ahead (along x), within 2 degrees (EST).'],
      callouts=[('AVN-006', 'Pitot probe, brass, 5.0 g')])
 
-step(id='E2', title='Avionics plate',
-     line='Print the plate; seat four M2 thin nuts in the hex pockets; place it on the skin over the spar.',
+step(id='E2', title='FC / ESC / GPS / RX bosses (R2)',
+     line='Print the bosses and pads; seat four M2 thin nuts in the FC boss hex pockets; bond them on the skin (no plate).',
      tools='printer (PETG), M2 thin nuts (DIN 439), tweezers',
-     check='Plate 110 mm wide, nuts seated flush; CAD 8.0 g + 0.41 g',
+     check='FC bosses on the 25 x 25 mm pattern, ESC bosses on 20 x 20, nuts seated flush; CAD mass in printed_mass.json',
      min=25,
-     need=['PETG (R03). Print file: AVN-001.stl (qp/A/drawings/out/stl/); 4 x M2 thin nuts DIN 439 1.2 mm (R05 stock hardware)'],
-     make=['Print AVN-001: PETG, lightening windows, 4 hex pockets 4.2 mm across, 2.2 mm clearance holes (CAD).'],
-     fit=['Press the nuts into the hex pockets, then set the plate on the skin (20 mm from above) and bond it with foam-safe CA (CAD edge: CA, plate base follows the upper skin). The FC 20 x 20 mm M2 pattern is centred on the spar (x 60 mm): the FC sits on the wing centre, not on the cage hub (SITL follow-up).'],
-     checks=['Nuts flush; the plate lies flat on the skin.'],
-     fab=dict(kind='print', pid='AVN-001', orient='plate flat on the bed (EST)', text='PRINT  PETG  AVN-001.stl (qp/A/drawings/out/stl/)'),
-     callouts=[('AVN-001', 'Plate: print PETG 8.0 g'), ('HWC-003', 'M2 thin nuts in hex pockets')])
+     need=['PETG (R03). Print file: AVN-010.stl (qp/A/drawings/out/stl/); 4 x M2 thin nuts DIN 439 1.2 mm (R05 stock hardware)'],
+     make=['Print AVN-010: PETG, 14 bosses / pads (4 FC 6 x 6, 4 ESC 6 x 6, 4 GPS corner 6 x 6, 2 RX strips 5 x 11), each with its base on the skin and its top on the pad plane (T-073 R2 and Phase 2); 4 hex pockets 4.2 mm across, 2.2 mm clearance holes in the FC bosses (CAD).'],
+     fit=['Press the nuts into the hex pockets, then set the bosses on the skin (20 mm from above) at their CAD places and bond them with foam-safe CA (CAD edge: CA, boss bases follow the upper skin). The FC 25 x 25 mm M2 pattern is centred at x 47 mm (the avionics group is 13-15 mm further forward than in part 4, D-224 3b); the FC (45 mm along y, orientation chosen in the CAD) sits ahead of the spar axis.'],
+     checks=['Nuts flush; each boss lies flat on the skin.'],
+     fab=dict(kind='print', pid='AVN-010', orient='flat on the bed (EST)', text='PRINT  PETG  AVN-010.stl (qp/A/drawings/out/stl/)'),
+     callouts=[('AVN-010', 'Bosses and pads: print PETG'), ('HWC-003', 'M2 thin nuts in hex pockets')])
 
 step(id='E3', title='ESC, FC, RX, GPS, airspeed',
-     line='Stick the FC on four 3 mm foam-tape pads; put the ESC, RX and GPS on the plate and the airspeed board in its left-wing-tip pocket.',
+     line='Stick the FC on four 3 mm foam-tape pads on its bosses; put the ESC, RX and GPS on their bosses and pads and the airspeed board in its left-wing-tip pocket.',
      tools='foam tape (VHB-class), tweezers, 0.1 g scale',
-     check='FC on 4 pads (hard mount, 20 x 20 mm); weigh: FC 17.0 g, ESC 20.0 g, RX 4.6 g, GPS 13.5 g',
+     check='FC on 4 pads (hard mount, 25 x 25 mm); weigh: FC 28 g (vendor, with USB extender), ESC 20.0 g, RX 4.6 g, GPS 13.5 g',
      min=40,
-     need=['Kakute F405 Wing Mini (V03), SpeedyBee BLS 35A 4-in-1 ESC (P04), RP3 V2 (V02), TBS M10Q GPS (V04), MS4525 board (V05)'],
+     need=['Kakute H743-Wing (V03, T-077 p5; price -), SpeedyBee BLS 35A 4-in-1 ESC (P04), RP3 V2 (V02), TBS M10Q GPS (V04), MS4525 board (V05)'],
      make=['Flash and set up in the Electronics Lab first: firmware, parameters (Q_TAILSIT etc.). Parameter file `qp/A/A.param`. Not covered here: `-`.'],
-     fit=['Press the FC on the four pads; set the ESC, RX and GPS on the plate in their CAD places (GPS y 27.5-52.5 mm, RX y -52.5 to -39.5 mm); foam-tape the airspeed board in its pocket at x 69-84 mm, y -427.5 to -412.5 mm, ports facing forward (D-208).'],
+     fit=['Press the FC on the four pads; set the ESC, RX and GPS on their bosses in their CAD places (GPS y 27.5-52.5 mm, RX y -52.5 to -39.5 mm); foam-tape the airspeed board in its pocket at x 69-84 mm, y -427.5 to -412.5 mm, ports facing forward (D-208).'],
      checks=['Arrow on the FC points aft (AHRS_ORIENTATION 0, CAD note).', 'GPS has sky view.'],
-     callouts=[('AVN-002', 'FC Kakute F405 Wing Mini'), ('PRP-003', 'ESC 4-in-1'), ('AVN-004', 'GPS + compass'), ('AVN-003', 'RX RP3')])
+     callouts=[('AVN-002', 'FC Kakute H743-Wing'), ('PRP-003', 'ESC 4-in-1'), ('AVN-004', 'GPS + compass'), ('AVN-003', 'RX RP3')])
 
 step(id='E3a', title='FC screws',
-     line='Four M2 x 25 screws down through the FC stack into the plate nuts.',
+     line='Four M2 screws (stock 8 or 10 mm, per hole) down through the FC board into the boss nuts.',
      tools='small screwdriver', check='Screws snug; FC does not rock',
      min=15,
-     fit=['Four M2 x 25 pan screws through the stack into the nuts (20 mm).'],
+     fit=['Four M2 pan screws (8 or 10 mm, CAD FCS_L) through the board, the tape pad and the boss into the nuts (20 mm).'],
      checks=['Snug only; the foam pads still isolate vibration.'],
-     callouts=[('HWC-001', 'M2 x 25 screws')])
+     callouts=[('HWC-001', 'M2 screws 8-10 mm')])
 
 step(id='E3d', title='Pitot lines',
      line='Push the two short silicone lines on the pitot barbs and on the airspeed board ports; tape the pockets closed.',
@@ -719,8 +730,8 @@ step(id='E7', title='Bay cover',
      line='Print the bay cover; lower it over the FC stack and ESC; foam tape and two ties.',
      tools='printer, foam tape, ties', check='Cover and RX hood fit; leads and antennas drop into the bottom-open slots; CAD 10.4 g', min=20,
      need=['PETG (R03). Print file: AVN-008.stl (qp/A/drawings/out/stl/)'],
-     make=['Print AVN-008: 0.6 mm hood, x 22.5-126.5 mm, |y| <= 26.5 mm, plus the RX hood annex on the -y side (x 99.5-126.5 mm, y -26.5 to -53.7 mm, roof 8 mm over the plate; T-022 Q4).'],
-     fit=['Lower the cover (40 mm) onto the plate, with the RX hood over the receiver; the GPS lead, the battery tail and the two taped antennas drop into the bottom-open slots in the walls (the RX and I2C leads are already inside); tape and tie.'],
+     make=['AVN-008: 0.5 mm hood (D-221: vacuum-formed over a printed buck; part-4 text said 0.6 mm printed), x 22.5-114.5 mm, |y| <= 26.5 mm, roof 45 mm over the FC up to x 72 and 32.5 mm over the ESC, plus the RX hood annex on the -y side (x 84.5-111.5 mm, y -26.5 to -53.7 mm, roof 8 mm over the RX pad plane; T-022 Q4); the walls stand on the skin (no plate, T-077 p5).'],
+     fit=['Lower the cover (40 mm) onto the skin, with the RX hood over the receiver; the GPS lead, the battery tail and the two taped antennas drop into the bottom-open slots in the walls (the RX and I2C leads are already inside); tape and tie.'],
      checks=['Final weigh-in: gate 1.47 kg (D-190); CG 19-26 mm aft of the LE.'],
      fab=dict(kind='print', pid='AVN-008', orient='roof up, open side down (EST)', text='PRINT  PETG  AVN-008.stl (qp/A/drawings/out/stl/)'),
      callouts=[('AVN-008', 'Bay cover with RX hood: 0.6 mm PETG, 10.4 g')],

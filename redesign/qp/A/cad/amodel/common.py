@@ -169,6 +169,7 @@ PLATE_X0, PLATE_X1 = XS[PLATE_I0], XS[PLATE_I1]
 PLATE_ZTOP = max(zu(x) for x in XS[PLATE_I0:PLATE_I1 + 1]) + 0.0015
 PLATE_Y = 0.055
 ZP = PLATE_ZTOP
+AV_DX = -0.015                                # T-077 p5 (D-224 3b): the avionics group (FC, ESC, GPS, RX, XT60, bay cover) sits 15 mm further forward than in part 4; the plate is gone (R2): PLATE_I0/I1/X0/X1 now only fix the pad plane height ZP
 
 
 
