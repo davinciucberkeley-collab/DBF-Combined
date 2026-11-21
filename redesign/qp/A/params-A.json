@@ -286,7 +286,7 @@
  },
  "mass": {
   "basic_cad_kg": {
-   "value": 1.45434,
+   "value": 1.46185,
    "unit": "kg",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json mass_basic_kg (CAD, no growth)"
@@ -400,13 +400,13 @@
    "note": "D-205: forward pack travel 6 mm (D-202: 1 mm; D-199: 6 mm; D-196: 8 mm) (tray front lip 2 mm aft); cad_mass.json trim_fwd_m"
   },
   "cg_x_mm": {
-   "value": 20.337000976387916,
+   "value": 19.906562916851932,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_x_m, aft of the wing leading edge"
   },
   "cg_y_mm": {
-   "value": 1.860243134342726,
+   "value": 1.8506864589390155,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_y_m (lateral)"
@@ -1906,7 +1906,7 @@
    "note": "report.json kinks (wire folds)"
   },
   "parts": {
-   "value": 124,
+   "value": 117,
    "unit": "-",
    "source": "SRC-A-COLL",
    "note": "report.json parts checked"

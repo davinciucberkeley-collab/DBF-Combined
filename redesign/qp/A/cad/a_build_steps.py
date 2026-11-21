@@ -150,7 +150,7 @@ step(id='B0a', title='Cut the cage tubes (bench)',
      tools='tube cutter or hacksaw, sanding block, caliper, steel rule',
      check='Arm tubes 552.4 mm +-0.5 (30.6 g each); bridge 120 mm (9.0 g); struts 291.2 mm; ends square',
      min=30,
-     need=['2 x 12x10 tubes of BOM R08 for the arm tubes (one per 1 m tube; the bridge comes from the 16x14 fin-tube offcut, D-206); 2 x 6x4.5 struts (R10); 14x12 tube (R09) for the 4 doublers and 3 mm carbon rod (R14, price not found) for the 5 pins'],
+     need=['2 x 12x10 tubes of BOM R08 for the arm tubes (one per 1 m tube; the bridge comes from the 16x14 fin-tube offcut, D-206); 2 x 8x6 struts (CF tube 8x6, T-077 p7 / D-225 resize; BOM line, availability and price -: R10 6x4.5 no longer fits); 14x12 tube (R09) for the 4 doublers and 3 mm carbon rod (R14, price not found) for the 5 pins'],
      make=['Arm tubes A and B: cut 2 x 552.4 mm (CAD `2 x R_M`; each runs motor cup to motor cup through the hub; 30.6 g each, CALC). Bridge: cut 120 mm (CAD `BR_X1 - BR_X0`, 9.0 g); sand a 0.8 mm x 45 deg chamfer on the outside of the end that goes into the hub, so it seats on the cone in the bore floor (D-207, hub FEA run d209).',
            'Doublers: cut 4 x 21 mm from the 14x12 tube (1.4 g each). Pins: cut 4 x 15-16 mm and 1 x 29 mm from the 3 mm rod (0.17-0.33 g). Struts: cut 2 x 291.2 mm (CAD).',
            'Sand all cut ends wet or with a vacuum (carbon dust). Check each end with a square.'],
@@ -240,8 +240,8 @@ for _k, (_st, _tb) in enumerate((('UR', 'A'), ('LL', 'A'), ('LR', 'B'), ('UL', '
 for _k, (_s, _n) in enumerate((('R', 'right'), ('L', 'left')), 1):
     step(id='B0j%d' % _k, title='Strut %s' % _n,
          line='Push the %s strut into its hub socket along its own axis; bond.' % _n,
-         tools='epoxy, wipes', check='Strut 32 mm deep in the socket; CAD 6.5 g EST', min=10, cure='24 h epoxy cure after the last strut' if _k == 2 else '',
-         fit=['Coat the first 30 mm of the strut, push it into the hub strut socket (the socket axis is the strut axis, 66.3 deg to x), wipe. The clamp on the far end goes on in B1.'],
+         tools='epoxy, wipes', check='Strut 32 mm deep in the socket; CAD 10.2 g (8x6 x 291.2 mm x 1.6 g/cm3)', min=10, cure='24 h epoxy cure after the last strut' if _k == 2 else '',
+         fit=['Coat the first 30 mm of the strut, push it into the hub strut socket (the socket axis is the strut axis, 64.2 deg to x; 8 mm bore, T-077 p7), wipe. The clamp on the far end goes on in B1.'],
          fab=dict(kind='fit', pid='CGE-005-' + _s, text='FIT  %s strut into the hub socket, epoxy' % _n),
          callouts=[('CGE-005-' + _s, 'Strut %s' % _s)])
 
@@ -282,17 +282,17 @@ step(id='B1', title='Cage unit: motors, props, dock',
                     'Motor screws: threadlocker and a paint mark.', 'Cage bonds cured 24 h before it takes load.'])
 
 # ============================================================ STAGE 3: saddles, raceways, tray, dampers
-step(id='A1b', title='Clamshells in the core (cradle and two CF plates)',
-     line='Print the two cradles, bond two 0.5 mm CF plates on each (top and bottom faces); push each clamshell up into its foam pocket at y +-380 mm, before the spar goes in.',
-     tools='printer (PETG), OMAX waterjet (CF plates), epoxy, caliper',
-     check='Clamshell centre at y 380 mm +-1 mm; weigh: CAD cradle (printed_mass.json) + plates 4.9 g + pins 0.5 g per side',
-     min=40,
-     need=['PETG (R03). Print file: FIN-005-R/L.stl; 0.5 mm CF sheet (T-080 s7: price -) cut on the waterjet to FIN-007 (41.5 x 24 mm, T-077 p6 trim; dimensions in the CAD part name); 3 x 3 mm carbon rod (pins, FIN-008) from the R09 offcuts or a rod stock (price -)'],
-     make=['Print FIN-005-R/L: PETG, 0.2 mm, ring wall 2.0 mm on the spar (60 mm), socket 18 x 18 mm x 40 mm facing aft for the rib, 4 mm pin bosses (T-077 p5). Waterjet FIN-007 plates (two per side): 0.5 mm CF, lead-in outside the part, backing sheet (practice -); the boss holes are cut by the shop from the cradle (the CAD plate is cut round the bosses). Bond the plates on the cradle top and bottom faces.'],
-     fit=['Push each clamshell up into its pocket from below (30 mm), centred at y +-380 mm, the socket facing aft; the ring bore must line up with the spar bore of the core (the spar slides through both rings in A2). Epoxy the plates into the pocket walls (CAD edge: epoxy).'],
-     checks=['Socket axis is along x, parallel to the wing chord (square within 1 degree, EST); ring bore coaxial with the spar bore. The pins (C1p) come after the ribs.'],
-     fab=dict(kind='print', pid='FIN-005-R', orient='ring axis up, socket side up (EST)', text='PRINT  PETG  FIN-005-R/L.stl x 2 (qp/A/drawings/out/stl/); CUT  CF plate 0.5 mm  FIN-007 x 4 (waterjet)'),
-     callouts=[('FIN-005-R', 'Cradle: print PETG'), ('FIN-007-R', 'CF plates 0.5 mm'), (('pt', (0.070, 0.38, -0.012), 'top'), 'over plug y 380')])
+step(id='B2', title='Rib saddles on the spar',
+     line='Print the two rib saddles; snap them on the spar from below at y +-380 mm, over the plugs.',
+     tools='printer (PETG), epoxy, caliper',
+     check='Saddle centre at y 380 mm +-1 mm; weigh: CAD 14.4 g each (printed_mass.json, T-067 print basis S)',
+     min=20,
+     need=['PETG (R03). Print file: FIN-005-R/L.stl (qp/A/drawings/out/stl/)'],
+     make=['Print FIN-005-R/L: PETG, 0.2 mm, 14.4 g each (T-077 p7, D-225: the part-4 printed saddle; the D-221 CF clamshell is withdrawn). Ring on the spar 60 mm long, 21 mm outside, with a socket 19 x 19 mm facing aft for the rib (20 mm engagement) and a clip slot.'],
+     fit=['Spread the clip slot and snap the ring on the spar from below at y +-380 mm; the socket faces aft. Put a drop of epoxy inside. Check it covers the plug (y +-380 mm).'],
+     checks=['Socket axis is along x, parallel to the wing chord (square within 1 degree, EST).'],
+     fab=dict(kind='print', pid='FIN-005-R', orient='ring axis up, socket side up (EST)', text='PRINT  PETG  FIN-005-R/L.stl x 2 (qp/A/drawings/out/stl/)'),
+     callouts=[('FIN-005-R', 'Rib saddle: print PETG 14.4 g'), (('pt', (0.070, 0.38, -0.012), 'top'), 'over plug y 380')])
 
 step(id='B2a', title='Phase-lead raceways',
      line='Print both raceways; lower each into its foam groove from above (before the tray).',
@@ -368,18 +368,7 @@ step(id='C1', title='Fin ribs',
      checks=['Rib axis along x, within 1 degree (EST); the rib ends at the front face of the fin tube: x 286 mm = tube centre 294 mm minus the 8 mm tube radius (CAD `RIB_X1`).'],
      safety=['Carbon dust: wet-sand or vacuum.'],
      fab=dict(kind='tube', pid='FIN-002-R', text='CUT  14x12 carbon tube to 215.5 mm  (BOM R09)', dims=[('FIN-002-R', 'cut 215.5 mm')]),
-     callouts=[('FIN-002-R', 'Rib: CF 14x12, cut 215.5 mm'), ('FIN-005-R', 'Rib sits in the cradle socket (40 mm engagement)')])
-
-step(id='C1p', title='Clamshell pins',
-     line='Push three 3 mm carbon pins up from below through each clamshell and its rib; epoxy; tape the pocket.',
-     tools='epoxy, 3 mm drill', check='Three pins per side flush inside the bosses; CAD 0.5 g per side',
-     min=20, cure='24 h epoxy cure',
-     need=['3 x 3 mm carbon rod x 21.8 mm per pin (6 pins; price -)'],
-     make=['Cut six pins 21.8 mm from 3 mm carbon rod (CAD FIN-008).'],
-     fit=['With the rib in the cradle, drill the three 3 mm holes through boss, rib walls and plates if not already drilled (the CAD shows them as seat cuts), push the pins up from below (25 mm), epoxy, then tape the pocket opening in the lower skin.'],
-     checks=['Pins 0.2 mm inside the boss tops (the skin is 0.2-0.5 mm above them).'],
-     fab=dict(kind='tube', pid='FIN-008-R', text='CUT  3 mm carbon rod to 21.8 mm  x 6', dims=[('FIN-008-R', 'cut 21.8 mm')]),
-     callouts=[('FIN-008-R', 'Pins 3 mm x 21.8 mm')])
+     callouts=[('FIN-002-R', 'Rib: CF 14x12, cut 215.5 mm'), ('FIN-005-R', 'Rib sits in the saddle socket (20 mm engagement)')])
 
 step(id='C1a', title='Rib fairings',
      line='Cut two XPS blisters (130 to 183.75 mm); bond each over the rib where it leaves the upper skin.',

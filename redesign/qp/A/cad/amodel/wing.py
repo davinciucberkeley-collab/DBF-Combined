@@ -84,12 +84,12 @@ BR_RO, BR_RI = BR_OD / 2, BR_ID / 2
 BR_Z = -0.002                               # D-206: bridge axis 2 mm below the hub axis, so the 16 mm tube top stays tangent to the tray plate underside (z 6.0)
 BORE_X0 = HUB[0] + 0.015                    # bridge bore floor 15 mm aft of the hub axis; floor corner a 45 deg cone matching the tube's BR_CHAMFER (D-207, FEA run d209)
 BR_X0 = BORE_X0                             # D-207: the bridge seats on the bore floor, its chamfer on the conical corner (a 1 mm gap, FEA d208, doubled the peak at the tube end edge). D-202 note: D-202: the bridge starts 15 mm aft of the hub axis (x -0.060), bonded in the 12 mm boss bore; it no longer passes through the hub centre (was -0.100)
-STRUT_OD, STRUT_ID = 0.006, 0.0040          # T-071 / T-073 / T-076 / D-219: strut 6x4.0 (was DOC 6x4.5; Euler pinned RF 0.93 -> 1.10, T071_wing_skin.md l.72); availability and price "-"
+STRUT_OD, STRUT_ID = 0.008, 0.0060          # T-077 p7 (D-225 condition): strut 8x6 (p6 judgement of 6x4.0: Euler pinned RF 0.88 at the rigid-body demand, 0.39 at x2.23; 8x6: 2.36 RB, 1.06 at x2.23, T077p7_data/strength_R4S.txt); was T-071 / D-219 6x4.0 (DOC 6x4.5); availability and price "-"
 STRUT_S = (-0.065 + CAGE_DX, 0.0229, 0.0)             # EST start inside the hub
 STRUT_E = (0.0500, 0.2850, 0.0)               # EST end in the clamp boss on the spar (DOC: to the spar at y 0.30)
 import os as _os
 _V5 = _os.environ.get('P5_VARIANT', '')            # analysis switch only (t077p5_variants.py): 'noclam', 'nonode' or 'none'; unset in every gate run
-P5_CLAMSHELL, P5_NODE = _V5 not in ('noclam', 'none'), _V5 not in ('nonode', 'none')           # T-077 p5 feature flags (D-221: waterjet CF clamshell FIN-005 / X7 node CGE-006 with CF plate N2); False = the part-4 drawing
+P5_CLAMSHELL, P5_NODE = _V5 in ('clam', 'both'), _V5 in ('node', 'both')           # T-077 p5 feature flags (D-221: waterjet CF clamshell FIN-005 / X7 node CGE-006 with CF plate N2); False = the part-4 drawing. D-225 (T-077 p7): both False by default (node and clamshell withdrawn, part-4 printed saddles back); P5_VARIANT 'clam' / 'node' / 'both' re-draws the withdrawn items for analysis only
 RIB_OD, RIB_ID, RIB_X0 = 0.014, 0.012, (0.068 if P5_CLAMSHELL else 0.0705)   # T-077 p5: the slim 2 mm cradle ring (r 8.0, was 10.5) lets the rib start 2.5 mm further forward, so the 40 mm socket gives the D-221 engagement of 40 mm
 # ---- T-077 p5 FIN-005 clamshell (D-215 / D-221 / T-080 s3: two 0.5 mm waterjet-cut CF plates about 50 x 75 mm at z +-7.5..9 inside the core, slim 2 mm printed cradle, rib engagement >= 40 mm, 3 CF pins in a 4 mm boss; T-071b B.2: pin bearing 0.37 -> 1.12 with 3 x 3 mm pins in a 4 mm wall)
 CLAM_WALL, CLAM_H = 0.002, 0.009             # cradle wall 2.0 mm round the 14 mm rib: socket 18 x 18 mm (half 9.0)
@@ -787,8 +787,8 @@ for s in ST:
 P('CGE-010-C', 'Crossing pin 3 mm carbon rod x %.0f mm through both arm tubes and the hub block (D-202)' % ((HUB[0] + BLK_X[1] - PINC_X0) * 1e3), 'cage', round(math.pi / 4 * PIN_D ** 2 * (HUB[0] + BLK_X[1] - PINC_X0) * 1600 * 1000, 2), 'CFRP rod')
 P('CGE-004', 'Bridge 16x14 (D-206, torsion; axis z -2 mm; D-202: starts 15 mm aft of the hub axis, bored into the boss)', 'cage', round(tube_g(BR_X1 - BR_X0, BR_OD, BR_ID), 1), 'CFRP tube')
 for s in 'RL':
-    P('CGE-005-' + s, 'V strut 6x4.0 (%s), T-077 (D-219)' % s, 'cage', round(tube_g(math.hypot(STRUT_E[0] - STRUT_S[0], STRUT_E[1] - STRUT_S[1]), STRUT_OD, STRUT_ID), 1), 'CFRP tube')   # T-077: from the drawn length x section x 1600 kg/m3 (STRUCTURES); was 6.5 g listed for 6x4.5
-    P('CGE-007-' + s, 'Strut clamp on spar (%s)' % s, 'cage', 1.5, 'PETG (printed)')
+    P('CGE-005-' + s, 'V strut %.0fx%.0f (%s), T-077 p7 (D-225 resize; was 6x4.0, D-219)' % (STRUT_OD * 1e3, STRUT_ID * 1e3, s), 'cage', round(tube_g(math.hypot(STRUT_E[0] - STRUT_S[0], STRUT_E[1] - STRUT_S[1]), STRUT_OD, STRUT_ID), 1), 'CFRP tube')   # T-077: from the drawn length x section x 1600 kg/m3 (STRUCTURES); was 6.5 g listed for 6x4.5
+    P('CGE-007-' + s, 'Strut clamp on spar (%s), R4 resized T-077 p7: ring OD 21 x 21, socket OD 12.5 / bore 8 x 27, fillet R 4.0 (mass from printed_mass.json)' % s, 'cage', 1.5, 'PETG (printed)')
 if P5_NODE:
     P('CGE-006', 'Centre node saddle (T-077 p5, D-221 s3.2, T-071b N2): ring wall 2.0 mm over 30 mm of the spar, 2.5 mm bridge socket, ears to y +-16.5 (x 29.5..71, 19 mm high, 3 mm thick); X7 Onyx + continuous CF rings (the fibre layout is a manufacturing note, not modelled: layout -), printed z-up; mass = drawn volume x T-067 basis x 0.945 (Onyx 1.20 / PETG 1.27 g/cm3)', 'cage', 2.0, 'Onyx + CF (Markforged X7)')
     P('CGE-011', 'Node plates N2: 2 CF plates 0.5 mm x 41.5 x 19 mm (outline = ear footprint; spar hole 12 mm; corner radii -), waterjet from 0.5 mm CF sheet, y +-(16.5..17.0), bonded between the ears (T-071b N2); mass = drawn volume x 1.6', 'cage', 1.2, 'CF fabric laminate (cut sheet)')
@@ -930,8 +930,8 @@ def build_wing(ctx):
         core.cut_box((0.0, ya, RW_ZO[0] - 0.0002), (RW_X1 + 0.0001, yb, RW_ZO[1] + 0.0002), name='phase-lead raceway groove (D-199)')
         ya, yb = sorted((sy * RW_YI[0], sy * RW_YI[1]))
         core.cut_box((RW_X1, ya, RW_ZI[0]), (DITCH_X1, yb, 0.0140), name='phase-lead ditch, open top under the bay cover (D-199)')
-    core.cut_box((0.0335, 0.2705, -0.05), (0.0710, 0.3095, 0.0075), name='clamp slot R (open below)')
-    core.cut_box((0.0335, -0.3095, -0.05), (0.0710, -0.2705, 0.0075), name='clamp slot L (open below)')
+    core.cut_box((0.0335, 0.2705, -0.05), (0.0710, 0.3110, 0.0075), name='clamp slot R (open below; T-077 p7 to y 311 for the 21 mm ring)')
+    core.cut_box((0.0335, -0.3110, -0.05), (0.0710, -0.2705, 0.0075), name='clamp slot L (open below; T-077 p7)')
     for sg in (1, -1):
         y0, y1 = sorted((sg * (YFIN - 0.0305), sg * (YFIN + 0.0305)))
         if P5_CLAMSHELL:
@@ -948,6 +948,11 @@ def build_wing(ctx):
         loop = [(p0[0] + nx, sg * (p0[1] + ny)), (p1[0] + nx, sg * (p1[1] + ny)), (p1[0] - nx, sg * (p1[1] - ny)),
                 (p0[0] - nx, sg * (p0[1] - ny))]
         core.cut_prism('Z', -0.05, [loop], 0.055, name='strut slot (open below, 0.5 mm clear)')
+        hw_ = CLAMP_RS * 1e-3 + 0.0005                           # T-077 p7: the OD 12.5 clamp socket is wider than the 10 mm strut slot: socket slot 0.5 mm clear, s -28..+2 mm about the strut end, open below
+        qa_, qb_ = (STRUT_E[0] - (CLAMP_SL * 1e-3 + 0.001) * ux, STRUT_E[1] - (CLAMP_SL * 1e-3 + 0.001) * uy), (STRUT_E[0] + 0.002 * ux, STRUT_E[1] + 0.002 * uy)
+        nx2, ny2 = -uy * hw_, ux * hw_
+        sl_ = [(qa_[0] + nx2, sg * (qa_[1] + ny2)), (qb_[0] + nx2, sg * (qb_[1] + ny2)), (qb_[0] - nx2, sg * (qb_[1] - ny2)), (qa_[0] - nx2, sg * (qa_[1] - ny2))]
+        core.cut_prism('Z', -0.05, [_ccw(sl_)], 0.05 + CLAMP_RS * 1e-3 + 0.0005, name='clamp socket slot (open below, 0.5 mm clear, T-077 p7)')
     # T-070 glass skin (WNG-011) and cove strip (WNG-012), drawn inside the core outline: same openings as the core (every cut above), core and strip pockets from the skin / strip bodies
     o_, i_ = skin_loops()
     sk = ctx.part('WNG-011', rgb=(0.75, 0.85, 0.80))
@@ -1039,14 +1044,17 @@ def _tube_cyl(axis, c, a0, a1, r):
     return fk.Shape('revolve', None, axis=axis, center=tuple(cc), profile=[(0.0, 0.0), (a1 - a0, 0.0), (a1 - a0, r), (0.0, r)])
 
 
-CLAMP_FIL = 2.0                             # T-077 p5 (R4): junction fillet radius mm (the brief asks for >= 1.5; OCC makes 2.0 on the socket-to-ring edges once the socket end is buried in the ring wall; at 1.5 / 1.0 it also works, the probe is in T077_cad.md part 5)
+CLAMP_FIL = 4.0                             # T-077 p7 (D-225): R 4.0 so that the junction annulus (socket OD 12.5 + 2 x 4.0 = 20.5 mm, bore 8) passes x2.23 (RF 1.01, interlayer 9.5, Kt 2.0 EST; R 2.0 on the OD 9 socket: 0.84 RB). Was T-077 p5 (R4) 2.0: junction fillet radius mm (the brief asks for >= 1.5; OCC makes 2.0 on the socket-to-ring edges once the socket end is buried in the ring wall; at 1.5 / 1.0 it also works, the probe is in T077_cad.md part 5)
+CLAMP_Y = (289.5, 310.5)                    # T-077 p7: ring 21 mm on the spar (R4 ring bond D12 x 21: RF 2.31 RB, 1.04 at x2.23; p5 292..308 = 16 mm: 0.79), centred on the plug WNG-004 at y 300
+CLAMP_RR = 10.5                             # T-077 p7: ring OD 21 (wall 4.5; p5 OD 17) so the R 4.0 fillet base (OD 20.5) lands on the ring; the part-4 saddle rings at the same x are R 10.5 (inside the airfoil)
+CLAMP_RS, CLAMP_SL = 6.25, 27.0            # T-077 p7: socket OD 12.5 / bore 8 (wall axial RF 2.45 RB, 1.10 at x2.23), strut bond 27 mm (D8 x 27: 2.29 RB, 1.03); p5 OD 9 / bore 6, 25 mm
 
 
 def clamp_params():
     """R4 strut clamp (right) as occ_bodies params, mm: ring OD 17 x 16 mm (y 292..308) on the spar, socket cylinder OD 9 along the strut axis from 25 mm behind the strut end to 14 mm past it (the end disc is buried in the ring wall)."""
     d = (STRUT_E[0] - STRUT_S[0], STRUT_E[1] - STRUT_S[1])
     L = math.hypot(*d)
-    return dict(kind='strut_clamp', sx=SPAR_X * 1e3, y0=292.0, y1=308.0, RR=8.5, ex=STRUT_E[0] * 1e3, ey=STRUT_E[1] * 1e3, ux=d[0] / L, uy=d[1] / L, RS=4.5, SL=25.0, SE=14.0, FIL=CLAMP_FIL)
+    return dict(kind='strut_clamp', sx=SPAR_X * 1e3, y0=CLAMP_Y[0], y1=CLAMP_Y[1], RR=CLAMP_RR, ex=STRUT_E[0] * 1e3, ey=STRUT_E[1] * 1e3, ux=d[0] / L, uy=d[1] / L, RS=CLAMP_RS, SL=CLAMP_SL, SE=14.0, FIL=CLAMP_FIL)
 
 
 def build_cage(ctx):
@@ -1184,8 +1192,8 @@ def build_cage(ctx):
     cl = ctx.part('CGE-007-R', rgb=(0.9, 0.9, 0.9))
     from . import occ_bodies
     cb_ = occ_bodies.body_mesh('strut_clamp_R', clamp_params())
-    cl.mesh(cb_['verts'], cb_['tris'], name='strut clamp R4 (T-073, T-077 p5): ring OD 17 mm (wall 2.5) x 16 mm on the spar, tubular socket OD 9 mm x 25 mm bond length along the strut axis (wall 1.5), the socket runs into the ring wall, junction fillet R %.1f mm (OpenCASCADE mesh body); the T-073 two 2 x 2.5 x 9 mm junction strips are replaced by the fused socket-to-ring section (my geometry: the strip footprint is an EST)' % CLAMP_FIL)
-    cl.cut_box((SPAR_X - 0.0065, 0.2800, 0.0), (SPAR_X + 0.0065, 0.309, 0.012), name='clip slot (T-077 p5: from y 280 so that it also opens the socket where it passes the spar footprint, x 54..56.6)')
+    cl.mesh(cb_['verts'], cb_['tris'], name='strut clamp R4 (T-073, T-077 p5, p7 resize): ring OD %.0f mm (wall %.1f) x %.0f mm on the spar, tubular socket OD %.1f mm x %.0f mm bond length along the strut axis (wall %.2f round the 8 mm strut), the socket runs into the ring wall, junction fillet R %.1f mm (OpenCASCADE mesh body); the T-073 two 2 x 2.5 x 9 mm junction strips are replaced by the fused socket-to-ring section (my geometry: the strip footprint is an EST)' % (2 * CLAMP_RR, CLAMP_RR - 6.0, CLAMP_Y[1] - CLAMP_Y[0], 2 * CLAMP_RS, CLAMP_SL, CLAMP_RS - STRUT_OD * 500, CLAMP_FIL))
+    cl.cut_box((SPAR_X - 0.0065, 0.2780, 0.0), (SPAR_X + 0.0065, CLAMP_Y[1] * 1e-3 + 0.0005, 0.012), name='clip slot (T-077 p7: from y 278 so that it also opens the OD 12.5 socket where it passes the spar footprint, to the 21 mm ring end; p5 280..309)')
     ctx.mirror('CGE-007-R', 'CGE-007-L', plane='XZ')
     tr = ctx.part('CGE-008', rgb=(0.9, 0.9, 0.9))
     for lo_, hi_, nm_ in TRAY_ADD:

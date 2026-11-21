@@ -13,13 +13,13 @@ frame is away from the wing: the bridge slides in from aft along x, where the sp
 props) on the spar as one rigid body, exactly as before. B1 is therefore the PLACEMENT of the CAGE parts in the main run; the bench steps list the same parts for the bench run only.
 D-198/199: enclosed routes (motor leads in the arm bores, hub conduits, raceways and the foam ditch, servo leads in foam grooves) are threaded, then soldered after the boards are on."""
 ST = ('UR', 'UL', 'LR', 'LL')
-CAGE = (['CGE-00%d' % i for i in (1, 4, 6)] + ['CGE-011', 'CGE-012', 'CGE-013'] + ['CGE-002-A', 'CGE-002-B'] + ['CGE-003-' + s for s in ST] + ['CGE-009-' + s for s in ST] + ['CGE-010-' + s for s in ST] + ['CGE-010-C'] +
+# T-077 p7 (D-225): written for wing.py P5_CLAMSHELL = P5_NODE = False (part-4 saddles). If a P5_VARIANT re-draws the clamshell or node, the p5 steps A1b / C1p and the CGE-011..013 CAGE entries (git 428d8368) must be restored.
+CAGE = (['CGE-00%d' % i for i in (1, 4, 6)] + ['CGE-002-A', 'CGE-002-B'] + ['CGE-003-' + s for s in ST] + ['CGE-009-' + s for s in ST] + ['CGE-010-' + s for s in ST] + ['CGE-010-C'] +
         ['CGE-005-R', 'CGE-005-L', 'CGE-007-R', 'CGE-007-L'] + ['PRP-001-' + s for s in ST] + ['PRP-004-' + s for s in ST] + ['PRP-002-' + s for s in ST] + ['PRP-005-' + s for s in ST])
 # (id, caption, parts, dir, travel_mm, step_mm)
 STEPS = [
     ('A1', 'Wing core on the bench (lower surface up) with the cove CF strip and the glass skin wet-laid on it (T-070; the packing-tape skin and hinge tape are not drawn)', ['WNG-001', 'WNG-011', 'WNG-012'], None, 0, 0),
-    ('A1b', 'Clamshells (cradle with its two CF plates, bonded on the bench) up into their foam pockets from below, BEFORE the spar: the upper plate sits above the spar and cannot pass it from below (T-077 p5, D-221)', ['FIN-005-R', 'FIN-005-L', 'FIN-007-R', 'FIN-007-L'], (0, 0, 1), 30, 3),
-    ('A2', 'Spar through the core bore (and both cradle rings) from the right tip', ['WNG-002'], (0, -1, 0), 700, 100),
+    ('A2', 'Spar through the core bore from the right tip', ['WNG-002'], (0, -1, 0), 700, 100),
     ('A3', 'Centre plug up the bore', ['WNG-003-C'], (0, -1, 0), 600, 100),
     ('A4', 'Right plugs up the bore', ['WNG-004-R', 'WNG-005-R'], (0, -1, 0), 600, 100),
     ('A5', 'Left plugs up the bore from the left tip', ['WNG-004-L', 'WNG-005-L'], (0, 1, 0), 600, 100),
@@ -44,6 +44,7 @@ STEPS = [
     ('B0k', 'THREAD (bench, before the motors go on the cups): feed the three 20 AWG leads of each motor (400 mm stock + extension, EST) from the cup side through the 4.8 mm lead hole, the collar and the tube bore to the 4.8 mm exit hole at s +-18 mm; the free ends are laid flat along the tube until the hub conduits are on (B2b1-B2b4); then screw the motors on (B1)', [], None, 0, 0),
     ('B1', 'Cage unit (hub, arms, cups, bridge, struts, saddle, clips, motors, props) built on the bench, docked '
            'from below: clips snap on the spar', CAGE, (0, 0, 1), 30, 3),
+    ('B2', 'Rib saddles snap on the spar from below (T-077 p7, D-225: the part-4 printed saddles; the D-221 clamshell steps A1b / C1p are withdrawn)', ['FIN-005-R', 'FIN-005-L'], (0, 0, 1), 30, 3),
     ('B2a', 'D-199: phase-lead raceways R and L lowered from above into their foam grooves (through the slots in the hub pad flange), before the tray', ['HRN-003-R', 'HRN-003-L'], (0, 0, -1), 30, 3),
     ('B2b1', 'D-202: hub conduit UR lowered onto its sleeve and the raceway window (along the tube t axis, toward the tube)', ['HRN-004-UR'], (0, 0.5646839, -0.8253073), 40, 4),
     ('B2b2', 'D-202: hub conduit UL lowered onto its sleeve and the raceway window', ['HRN-004-UL'], (0, -0.5646839, -0.8253073), 40, 4),
@@ -53,7 +54,6 @@ STEPS = [
     ('B3', 'Pack tray lowered from above into the core tray slot, bonded to the hub aft face', ['CGE-008'], (0, 0, -1), 30, 3),
     ('B4', 'Hinge damper units (stator with rotor in its annulus, silicone fluid filled) into the core notches at the elevon tips from aft, before the ribs; the notch is open aft', ['WNG-009-R', 'WNG-010-R', 'WNG-009-L', 'WNG-010-L'], (-1, 0, 0), 30, 5),
     ('C1', 'Ribs in from aft into the saddle sockets', ['FIN-002-R', 'FIN-002-L'], (-1, 0, 0), 300, 60),
-    ('C1p', 'Clamshell pins pushed up from below through the lower boss, the two rib walls, the plates and the upper boss; the pocket is taped after (T-077 p5)', ['FIN-008-R', 'FIN-008-L'], (0, 0, 1), 25, 5),
     ('C1a', 'Rib fairings (upper blisters over the rib where it leaves the skin) lowered onto the skin from above, bonded', ['FIN-006-R', 'FIN-006-L'], (0, 0, -1), 15, 3),
     ('C2', 'Elevons with their balance horns on from aft (horn and lead enter the core pocket; tape hinge after)', ['WNG-006-R', 'WNG-006-L', 'WNG-007-R', 'WNG-007-L'], (-1, 0, 0), 25, 5),
     ('C2a', 'Upper lens caps (with stop bosses) lowered onto the skin over the strip windows, bonded', ['WNG-008-RU', 'WNG-008-LU'], (0, 0, -1), 15, 3),

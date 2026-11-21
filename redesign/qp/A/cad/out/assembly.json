@@ -12,18 +12,6 @@
    "pairs": []
   },
   {
-   "id": "A1b",
-   "parts": [
-    "FIN-005-R",
-    "FIN-005-L",
-    "FIN-007-R",
-    "FIN-007-L"
-   ],
-   "worst_mm": 0.0,
-   "first_hit_t_mm": null,
-   "pairs": []
-  },
-  {
    "id": "A2",
    "parts": [
     "WNG-002"
@@ -67,9 +55,6 @@
     "CGE-001",
     "CGE-004",
     "CGE-006",
-    "CGE-011",
-    "CGE-012",
-    "CGE-013",
     "CGE-002-A",
     "CGE-002-B",
     "CGE-003-UR",
@@ -105,6 +90,16 @@
     "PRP-005-UL",
     "PRP-005-LR",
     "PRP-005-LL"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B2",
+   "parts": [
+    "FIN-005-R",
+    "FIN-005-L"
    ],
    "worst_mm": 0.0,
    "first_hit_t_mm": null,
@@ -182,16 +177,6 @@
    "parts": [
     "FIN-002-R",
     "FIN-002-L"
-   ],
-   "worst_mm": 0.0,
-   "first_hit_t_mm": null,
-   "pairs": []
-  },
-  {
-   "id": "C1p",
-   "parts": [
-    "FIN-008-R",
-    "FIN-008-L"
    ],
    "worst_mm": 0.0,
    "first_hit_t_mm": null,

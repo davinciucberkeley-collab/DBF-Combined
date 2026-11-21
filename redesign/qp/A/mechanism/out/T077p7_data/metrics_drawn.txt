@@ -1,0 +1,8 @@
+drawn basic 1448.2 g, CG 19.95 mm, SM 8.47 %
+undrawn tally +19.20 g -> basic 1467.4 g, CG 23.46 mm, SM 7.04 %  (EST)
+[drawn] predicted mass 1.6652 kg; derate 0.93: T/W fresh 2.076 (with 3 % download 2.014), sag 1.928 (with download 1.870); window 7.38 % (no download), 5.87 % (with download)
+   bench derate line: A-P3 (window 5 %, with download) 0.914 ; A-P2 fresh 2.0 without download 0.896, with download 0.924
+   mass ceiling for window 5 % at derate 0.93 with download: see prop_a --sched; sag T/W (sched, with download) 1.870 vs 1.6
+[tally] predicted mass 1.6867 kg; derate 0.93: T/W fresh 2.051 (with 3 % download 1.989), sag 1.903 (with download 1.846); window 6.75 % (no download), 5.23 % (with download)
+   bench derate line: A-P3 (window 5 %, with download) 0.926 ; A-P2 fresh 2.0 without download 0.907, with download 0.935
+   mass ceiling for window 5 % at derate 0.93 with download: see prop_a --sched; sag T/W (sched, with download) 1.846 vs 1.6
