@@ -227,3 +227,15 @@ Requirement IDs: R-GEN-02, R-OPT-02.
 ```text
 Resume. The team can use its own phones and laptop for testing and the shop tools are free
 ```
+
+## AM-016 — 2026-11-21 — D-226: build the stronger wing; the bench test decides
+Relation: answers the D-226 question (`docs/audits/2026-11-21-saddle-loadpath.md`). The landing path through the
+wing torsion cell (CF bulkheads, 6061 centre torque tube, extra skin plies) is adopted although it puts A-P3 and the
+fresh T/W check below their limits on the predicted mass. The limits are not relaxed: the 2026-12-15 bench test
+decides, with the derate line raised to the value the as-drawn mass requires (about 0.950 EST). A failed bench test
+reopens the configuration (bigger props or motors, or fallback concept B).
+Requirement IDs: R-OPT-05, R-CAD-03.
+
+```text
+Stronger wing, bench test decides
+```
