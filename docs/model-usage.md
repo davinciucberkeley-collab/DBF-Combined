@@ -92,6 +92,14 @@ Append one row per delegated task. Review at each milestone: are opus runs justi
 | 2026-11-22 | T-066 structures_a re-baseline | implementer / sonnet | moderate-high | done: re-baselined; 2 FAILs found (spar mode, tip-over) to T-084 | not recorded (notification gave none) | 0 | — | conductor check OK (D-232) |
 | 2026-11-22 | T-023 / T-081 fixes | implementer / sonnet | moderate | done: parts list, hub stock, E-HRN-13, TP-12..14 | not recorded (notification gave none) | 0 | — | committed 174529b8 |
 | 2026-11-22 | T-084 tip-over + spar mode | implementer / opus | high (structures + CAD + gates) | A-P9 closed (31.00 deg); D-185 not closed (model artifact found, cage mode 96.2 Hz at hi) | 459 k tok / 107 min | 0 | opus chosen: coupled structures/CAD trade | conductor re-ran tip-over and BOM, read gates: OK |
+| 2026-11-22 | T-086 cost-trim study | implementer / sonnet | moderate (sourcing) | done: servo spare dropped, margin +$16.31 | 135 k tok / 4.7 min | 0 | — | VERIFIED (round 2) |
+| 2026-11-22 | T-087 rib tube + hub bars | implementer / sonnet | moderate (sourcing + rib trial) | done: hub bars to Zoro, margin +$60.83; R15 kept | 189 k tok / 14.4 min | 0 | — | VERIFIED (round 2) |
+| 2026-11-22 | review round 2 (7 READY rows + T-023) | eng-reviewer / sonnet (override, minimise compute) | review | done: 3 VERIFIED, 4 keep READY, T-023 open | 140 k tok / 5.8 min | 0 | — | conductor applied verdicts |
+| 2026-11-22 | T-085 D-185 FE upgrade | implementer / sonnet | moderate-high (FEA-lite) | stopped by the conductor at Dillon's pause (AM-023); partial work saved, unreviewed | not recorded | 0 | — | — |
+| 2026-11-22 | T-085 resume (D-185 FE upgrade) | implementer / sonnet | moderate-high (FEA-lite) | done: FAIL holds in credible bounds, pad re-bounded, levers screened | 206 k tok / 12.8 min | 0 | — | conductor read report, structures exit 0 |
+| 2026-11-22 | T-066 M-1 vib claims + T-023 F-10 drawings | implementer / sonnet | moderate | done: claims re-pointed, CL-A-VIB-IN-BAND FAIL added, GM UNVERIFIED; drawings 49/49 | 143 k tok / 6.7 min | 0 | — | conductor re-ran run_all |
+| 2026-11-22 | review round 3 (T-085, T-066, T-081, T-014, T-023) | eng-reviewer / sonnet (override, minimise compute) | review | done: 2 VERIFIED, 3 open with small gaps | 95 k tok / 4.1 min | 0 | — | conductor applied verdicts |
+| 2026-11-22 | round-3 doc fixes (A-docs, test plan, param rename) | implementer / sonnet | routine docs | running | — | — | — | — |
 
 Backfilled 2026-11-22 from the session transcripts (task notifications); T-014 review F-1, `docs/audits/2026-11-22-ready-rows-review.md`.
 
@@ -102,9 +110,3 @@ session (Agent tool: "Agent type 'implementer' not found"). Until then the same 
 Routing deviation (2026-11-19): `eng-reviewer` is defined on opus, but the 2026-11-19 independent reviews ran it with a `model: sonnet` override (rows: mechanism review, re-check eng, T-025 retro, review T-020/T-025/T-057/T-058). Reason: Dillon's standing instruction to minimise compute (2026-11-14: "use cheaper agents when possible ... for more critical decisions use whatever you see fit"); opus stays for design-review judgement on new decisions (e.g. D-212 rev 3, film sign-off). No sonnet review was found wrong on re-check so far.
 
 Scope (2026-11-18): this log starts with T-016. Delegations earlier on 2026-11-18 (program set-up done by the conductor itself; T-011 registry audit, haiku, `docs/audits/2026-11-18-ledger.md`) were not logged row by row; their outputs are the files named in the ledger.
-| 2026-11-22 | T-086 cost-trim study | implementer / sonnet | moderate (sourcing) | done: servo spare dropped, margin +$16.31 | 135 k tok / 4.7 min | 0 | — | VERIFIED (round 2) |
-| 2026-11-22 | T-087 rib tube + hub bars | implementer / sonnet | moderate (sourcing + rib trial) | done: hub bars to Zoro, margin +$60.83; R15 kept | 189 k tok / 14.4 min | 0 | — | VERIFIED (round 2) |
-| 2026-11-22 | review round 2 (7 READY rows + T-023) | eng-reviewer / sonnet (override, minimise compute) | review | done: 3 VERIFIED, 4 keep READY, T-023 open | 140 k tok / 5.8 min | 0 | — | conductor applied verdicts |
-| 2026-11-22 | T-085 D-185 FE upgrade | implementer / sonnet | moderate-high (FEA-lite) | stopped by the conductor at Dillon's pause (AM-023); partial work saved, unreviewed | not recorded | 0 | — | — |
-| 2026-11-22 | T-085 resume (D-185 FE upgrade) | implementer / sonnet | moderate-high (FEA-lite) | done: FAIL holds in credible bounds, pad re-bounded, levers screened | 206 k tok / 12.8 min | 0 | — | conductor read report, structures exit 0 |
-| 2026-11-22 | T-066 M-1 vib claims + T-023 F-10 drawings | implementer / sonnet | moderate | done: claims re-pointed, CL-A-VIB-IN-BAND FAIL added, GM UNVERIFIED; drawings 49/49 | 143 k tok / 6.7 min | 0 | — | conductor re-ran run_all |
