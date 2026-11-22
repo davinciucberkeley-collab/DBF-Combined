@@ -2,7 +2,7 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-22 17:58 UTC",
+  "generated": "2026-11-22 19:36 UTC",
   "dataset": "concept-a",
   "ok": false,
   "errors": [
@@ -6517,12 +6517,12 @@ window.PROOF_GRAPH = {
     "budget": "P:req.budget_usd"
    },
    "outputs": {
-    "total_usd": 1983.6919125,
-    "total_30_usd": 2089.9139287499997,
-    "margin_usd": 16.308087500000056,
-    "margin_30_usd": -89.91392874999974,
+    "total_usd": 1939.1716625000001,
+    "total_30_usd": 2029.67643875,
+    "margin_usd": 60.82833749999986,
+    "margin_30_usd": -29.67643874999999,
     "reserve_usd": 346.9446375,
-    "shipping_usd": 67.84
+    "shipping_usd": 63.120000000000005
    },
    "input_values": {
     "rows": [
@@ -6841,9 +6841,9 @@ window.PROOF_GRAPH = {
      [
       "T1",
       "airframe",
-      "Alcobra",
+      "Zoro",
       1.0,
-      65.56,
+      43.29,
       false
      ],
      [
@@ -6929,10 +6929,10 @@ window.PROOF_GRAPH = {
      [
       "T11",
       "airframe",
-      "Alcobra",
+      "Zoro",
       1.0,
-      47.52,
-      true
+      33.69,
+      false
      ],
      [
       "T12",
@@ -6997,6 +6997,10 @@ window.PROOF_GRAPH = {
      [
       "Wicks",
       10.71
+     ],
+     [
+      "Zoro",
+      5.99
      ]
     ],
     "bump": 0.3,
@@ -7034,14 +7038,14 @@ window.PROOF_GRAPH = {
     "A-U1"
    ],
    "how": "python -I qp/A/bom_a.py (reads BOM-A.csv): $1,999.12, margin +$0.88 (2026-11-22). AM-013: the only budget gate is the total incl. crash reserve <= $2,000.",
-   "value": 1983.6919125,
+   "value": 1939.1716625000001,
    "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
    "reasons": [
     "uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST)",
     "uses P:cost.reserve_ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py reserve(): 3 shipments at the original EST (definition unchanged, AM-018))"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.008154043750000029,
+   "margin": 0.030414168749999932,
    "importance": 1
   },
   {
@@ -7055,7 +7059,7 @@ window.PROOF_GRAPH = {
     "A-U1"
    ],
    "how": "python -I qp/A/bom_a.py; the board G7 rule (margin >= $100 at +30 %) is information only since AM-013.",
-   "value": -89.91392874999974,
+   "value": -29.67643874999999,
    "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
    "reasons": [
     "uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST)",
@@ -7075,7 +7079,7 @@ window.PROOF_GRAPH = {
     "A-U1"
    ],
    "how": "python -I qp/A/bom_a.py; information only since AM-013; Makers Pass outside the budget (user, memory).",
-   "value": 2089.9139287499997,
+   "value": 2029.67643875,
    "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
    "reasons": [
     "uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST)",
@@ -10524,9 +10528,9 @@ window.PROOF_GRAPH = {
     [
      "T1",
      "airframe",
-     "Alcobra",
+     "Zoro",
      1.0,
-     65.56,
+     43.29,
      false
     ],
     [
@@ -10612,10 +10616,10 @@ window.PROOF_GRAPH = {
     [
      "T11",
      "airframe",
-     "Alcobra",
+     "Zoro",
      1.0,
-     47.52,
-     true
+     33.69,
+     false
     ],
     [
      "T12",
@@ -10725,6 +10729,10 @@ window.PROOF_GRAPH = {
     [
      "Wicks",
      10.71
+    ],
+    [
+     "Zoro",
+     5.99
     ]
    ],
    "unit": "USD",

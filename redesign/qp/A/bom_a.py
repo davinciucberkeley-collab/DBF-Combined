@@ -12,7 +12,7 @@ Crash reserve = one bad crash BEYOND the spares in the BOM: 1 flight pack + 1 mo
 it (a bad crash that also kills them is not covered); stated in MASS-GATE / BASELINE."""
 import csv, os, math
 TAX, FAA, BUDGET, BUMP = 0.1025, 5.0, 2000.0, 0.30
-SHIP = {"RMRC": 0.0, "TMotor": 0.0, "Amazon": 0.0, "Prusa": 10.71, "SparkFun": 8.00, "Local": 0.0, "RDQ": 10.71, "Alcobra": 10.71, "Wicks": 10.71, "USComposites": 10.71, "Carbonwebshop": 25.00}
+SHIP = {"RMRC": 0.0, "TMotor": 0.0, "Amazon": 0.0, "Prusa": 10.71, "SparkFun": 8.00, "Local": 0.0, "RDQ": 10.71, "Alcobra": 10.71, "Zoro": 5.99, "Wicks": 10.71, "USComposites": 10.71, "Carbonwebshop": 25.00}
 rows = list(csv.DictReader(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "BOM-A.csv"), encoding="utf-8")))
 for r in rows:
     r["qty"] = float(r["qty"]); r["u"] = float(r["unit_usd"]); r["spares"] = float(r["spares"])
