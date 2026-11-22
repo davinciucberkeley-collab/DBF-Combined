@@ -294,3 +294,12 @@ Requirement IDs: R-GEN-02, R-OPT-02.
 ```text
 Yes, run T-087
 ```
+
+## AM-022 — 2026-11-22 — Continue with T-085 and the review queue
+Relation: answers the question after T-087 (D-235; margin +$60.83). Dillon approves continuing with T-085 (D-185 FE
+upgrade, D-233 option B) and the review queue (READY rows, T-023 / T-081 re-review).
+Requirement IDs: R-GEN-02, R-PHY-09.
+
+```text
+Yes, continue
+```
