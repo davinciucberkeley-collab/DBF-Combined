@@ -212,5 +212,5 @@ Change T-083 tally -> T-083b tally: -35.3 g (root fittings -33.8 g = 2 x (22.86 
 > 2026-11-22 note (T-023 F-9): the elevon hinge-damper stators WNG-009-L/R (2.0 g each, PETG + silicone,
 > DRAWINGS-A.md) are not in `printed_mass.json` (T-067 voxel basis). Their mass enters the CAD part table as
 > `DMP_STATOR_G` (`cad/amodel/wing.py` l.571: drawn PETG volume x RHO_PETG). The silicone fluid and preload strips
-> are not in that number: their mass is "—" (EST under 1 g for both, not sourced). AVN-010 "14: CHECK (a body is
+> are not in that number: their mass is "—" (not computed). AVN-010 "14: CHECK (a body is
 > not attached)" is a drawing-tool note, not a mass item.
