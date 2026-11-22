@@ -1,23 +1,23 @@
 | Item | $ |
 |---|---|
-| Goods | 1,439.34 |
-| Tax 10.25 % | 147.53 |
+| Goods | 1,416.35 |
+| Tax 10.25 % | 145.18 |
 | Shipping (EST) | 67.84 |
 | FAA | 5.00 |
-| Spend | 1,659.71 |
+| Spend | 1,634.37 |
 | Crash reserve | 346.94 |
-| **Total** | 2,006.66 |
-| **Margin** | -6.66 |
+| **Total** | 1,981.31 |
+| **Margin** | 18.69 |
 
 Unverified goods (U + EST): 269.66 (19 % of goods); lines 16 of 53
-+30 % on unverified lines: total 2,112.88, margin -112.88
-Growth absorbed: margin / (goods x 1.1025) = -0 %
++30 % on unverified lines: total 2,087.53, margin -87.53
+Growth absorbed: margin / (goods x 1.1025) = 1 %
 Margin >= $100 at +30 %: FAIL; R5 total <= $1,750 (replaced by G7): FAIL
-G7 (+30 % margin >= $100 AND total <= $1,800): FAIL (total 2,006.66, +30 % margin -112.88)
+G7 (+30 % margin >= $100 AND total <= $1,800): FAIL (total 1,981.31, +30 % margin -87.53)
 
 | Subsystem | Nominal $ (incl tax) | +30 % unverified | Cap $ | Unverified share |
 |---|---|---|---|---|
-| propulsion | 187.44 | 187.44 | 190 | 0 % |
+| propulsion | 162.09 | 162.09 | 165 | 0 % |
 | power | 279.75 | 282.39 | 280 | 3 % |
 | avionics | 340.49 | 340.49 | 345 | 0 % |
 | mechanisms | 56.18 | 56.18 | 60 | 0 % |
@@ -26,8 +26,7 @@ G7 (+30 % margin >= $100 AND total <= $1,800): FAIL (total 2,006.66, +30 % margi
 | shipping + FAA | 72.84 | | 75 | EST |
 | crash reserve | 346.94 | 363.98 | 350 | |
 
-Caps sum 2030; room left to $2,000: -30
+Caps sum 2005; room left to $2,000: -5
 Over cap: none
 Spares:
-- P01 SunnySky X2216 V3 880KV SHORT shaft (4 + 1 spare; each with X-mount + screws and prop adapter): 1 of 5
 - M01 EMAX ES3054HV servo (2 elevons + 1 spare; 20.5 g; replaces ES3352HV which fails the 1.5x torque at the 7.2 V rail): 1 of 3

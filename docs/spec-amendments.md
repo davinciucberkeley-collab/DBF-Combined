@@ -262,3 +262,15 @@ Requirement IDs: R-GEN-02, R-OPT-02, R-OPT-05.
 ```text
 I approve the swap and follow the definition of the reserve
 ```
+
+## AM-019 — 2026-11-21 — Drop the spare fifth motor
+Relation: answers the T-083 budget question (`redesign/qp/A/mechanism/out/T083_report.md` s7; BOM $2,006.66,
+-$6.66). Dillon approves buying 4 X2216 V3 short-shaft motors with no BOM spare; the crash reserve (by definition,
+AM-018) still covers one replacement motor. BOM total $1,981.31 incl. reserve $346.94, margin +$18.69
+(`T083_data/bom_t083.py`). A spare may be re-added if the 14x12 rib passes its coupon. Check RMRC stock (backorder)
+before the December order; fallback long-shaft 85810 needs a CAD check first.
+Requirement IDs: R-GEN-02, R-OPT-02.
+
+```text
+Go ahead with that
+```
