@@ -20,7 +20,7 @@ Status `PROPOSED`. Nothing ordered. Dates are computed or `EST`. Flight-programm
 
 | ID | Task | Dates | Critical | Notes |
 |---|---|---|---|---|
-| O1 | Order 1 (`ORDER-1.csv`, $967.90 with 2 motors; $1,123.02 if all 5): bench parts, concept-neutral avionics / power, stock-risk lines (props, GPS, PETG, ESC, FC). No CFRP (R04 removed), no tubes, servos, foam or anemometer. T-Motor asked for stock and lead time; no answer by 4 Dec = buy all 5 motors | 1-4 Dec | no (14 d slack) | BOARD QP-3 s7.1; FOLDIN.md s4 |
+| O1 | Order 1 (`ORDER-1.csv`, $967.90 with 2 motors; $1,123.02 if all 5): bench parts, concept-neutral avionics / power, stock-risk lines (props, GPS, PETG, ESC, FC). No CFRP (R04 removed), no tubes, servos, foam or anemometer. T-Motor asked for stock and lead time; no answer by 4 Dec = buy all 5 motors **[T-083c: superseded. Motor is the SunnySky X2216 V3 short-shaft 880KV, RMRC 84776, $22.99, BACKORDER, 4 motors with no spare (AM-018, AM-019, D-227, D-228; BOM-T083b.csv P01). Check RMRC stock before the December order; the long-shaft 85810 does not fit the CAD (T083_report s0 row 1). The $967.90 / $1,123.02 figures above are the MN2212 plan and are not recomputed here: "—".]** | 1-4 Dec | no (14 d slack) | BOARD QP-3 s7.1; FOLDIN.md s4 |
 | O2 | Order 1 arrives | 7-15 Dec | no | T-Motor the latest |
 | M1 | Compliance (TRUST, UC drone program, FAA, AMA) | 16-30 Nov | no | before any RFS request |
 | S1 | >= 10 h SITL on A with the Pocket TX (A-D9) | 9 Dec - 15 Jan | no (slack 30 d) | break is the pilot-training window |

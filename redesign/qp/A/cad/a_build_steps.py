@@ -678,15 +678,15 @@ step(id='E3c', title='Anti-slip pad',
      callouts=[('PWR-003', 'Anti-slip pad, 1 mm')])
 
 step(id='E4', title='Flight pack in the tray',
-     line='Lay the Tattu 2300 4S pack in the tray against the lip; the strap goes on next.',
+     line='Lay the RDQ 2800 mAh 4S pack in the tray against the lip; the strap goes on next.',
      tools='0.1 g scale, TBS LiPo bag',
      check='Pack 105 x 35 x 29 mm, 270 g; no swelling or dents; resting near 15.2 V (4 x 3.8 V, EST)',
      min=10,
-     need=['Tattu 2300 4S (BOM W01)'],
+     need=['RDQ 2800 mAh 4S (BOM W01)'],
      fit=['Lay the pack on the anti-slip pad, between the tray lips (30 mm from above). The strap (E5) holds it. Fore-aft trim (6 mm forward to 10 mm aft) is set later at the CG check.'],
      checks=['Pack not swollen, no damage; storage voltage 3.8 V per cell (EST).'],
      safety=['Pack stays unplugged.'],
-     callouts=[('PWR-001', 'Pack Tattu 2300 4S, 270 g')])
+     callouts=[('PWR-001', 'Pack RDQ 2800 mAh 4S, 270 g')])
 
 step(id='E4a', title='XT60 female',
      line='Plug the XT60 female with its tail onto the pack lead XT60 male; tape it on the skin.',

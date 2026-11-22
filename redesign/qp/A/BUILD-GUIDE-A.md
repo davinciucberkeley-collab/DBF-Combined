@@ -212,7 +212,7 @@ Film clip: `assets/animation/build/a-stage-02.mp4` (Explorer, "How it's built", 
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `CGE-001` x1 | Hub | made | R03 Prusa | 43.3 |
+| `CGE-001` x1 | Hub | made | R03 Amazon | 43.3 |
 
 Mass placed by this step 43.3 g; running total of placed parts 266.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -479,7 +479,7 @@ Mass placed by this step 8.6 g; running total of placed parts 345.5 g (CAD; the 
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `CGE-003-UR` x1 | Motor cup | made | R03 Prusa | 9.0 |
+| `CGE-003-UR` x1 | Motor cup | made | R03 Amazon | 9.0 |
 
 Mass placed by this step 9.0 g; running total of placed parts 354.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -510,7 +510,7 @@ Mass placed by this step 9.0 g; running total of placed parts 354.5 g (CAD; the 
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `CGE-003-LL` x1 | Motor cup | made | R03 Prusa | 9.0 |
+| `CGE-003-LL` x1 | Motor cup | made | R03 Amazon | 9.0 |
 
 Mass placed by this step 9.0 g; running total of placed parts 363.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -533,7 +533,7 @@ Mass placed by this step 9.0 g; running total of placed parts 363.5 g (CAD; the 
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `CGE-003-LR` x1 | Motor cup | made | R03 Prusa | 9.0 |
+| `CGE-003-LR` x1 | Motor cup | made | R03 Amazon | 9.0 |
 
 Mass placed by this step 9.0 g; running total of placed parts 372.4 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -556,7 +556,7 @@ Mass placed by this step 9.0 g; running total of placed parts 372.4 g (CAD; the 
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `CGE-003-UL` x1 | Motor cup | made | R03 Prusa | 9.0 |
+| `CGE-003-UL` x1 | Motor cup | made | R03 Amazon | 9.0 |
 
 Mass placed by this step 9.0 g; running total of placed parts 381.4 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -659,19 +659,19 @@ Mass placed by this step 10.2 g; running total of placed parts 401.8 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `CGE-001` x1 | Hub | made | R03 Prusa | 43.3 |
+| `CGE-001` x1 | Hub | made | R03 Amazon | 43.3 |
 | `CGE-004` x1 | Bridge 16x14 | made | R02 RMRC | 8.6 |
 | `CGE-006` x1 | Centre node | made |  | 36.3 |
 | `CGE-002-A` x1 | Arm tube A 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub | made | R08 RMRC | 30.6 |
 | `CGE-002-B` x1 | Arm tube B 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub | made | R08 RMRC | 30.6 |
-| `CGE-003` x4 | Motor cup | made | R03 Prusa | 35.8 |
+| `CGE-003` x4 | Motor cup | made | R03 Amazon | 35.8 |
 | `CGE-009` x4 | Doubler 14x12 x 36 mm | made | R09 RMRC | 8.0 |
 | `CGE-010` x5 | Pin 3 mm carbon rod x 15 mm | made | R14 RMRC | 1.1 |
 | `CGE-005` x2 | V strut 8x6 | made |  | 20.4 |
-| `CGE-007` x2 | Strut clamp on spar | made | R03 Prusa | 12.7 |
-| `PRP-006` x4 | X-mount, SunnySky, supplied with the motor | bought | P01 TMotor, R05 Amazon | 36.8 |
-| `PRP-001` x4 | Motor SunnySky X2216 V3 880KV short shaft | bought | P01 TMotor | 270.0 |
-| `PRP-004` x4 | Prop adapter, SunnySky | bought | P01 TMotor | 14.4 |
+| `CGE-007` x2 | Strut clamp on spar | made | R03 Amazon | 12.7 |
+| `PRP-006` x4 | X-mount, SunnySky, supplied with the motor | bought | P01 RMRC, R05 Amazon | 36.8 |
+| `PRP-001` x4 | Motor SunnySky X2216 V3 880KV short shaft | bought | P01 RMRC | 270.0 |
+| `PRP-004` x4 | Prop adapter, SunnySky | bought | P01 RMRC | 14.4 |
 | `PRP-002` x4 | Prop APC 9x4.5MRP | bought | P02 RMRC | 44.2 |
 | `PRP-005` x4 | M5 nyloc nut ISO 10511 | bought | R05 Amazon | 5.6 |
 
@@ -759,7 +759,7 @@ Mass placed by this step 49.8 g; running total of placed parts 1050.1 g (CAD; th
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `WNG-003-C` x1 | Spar plug | made | R03 Prusa | 1.4 |
+| `WNG-003-C` x1 | Spar plug | made | R03 Amazon | 1.4 |
 
 Mass placed by this step 1.4 g; running total of placed parts 1051.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -795,8 +795,8 @@ Mass placed by this step 1.4 g; running total of placed parts 1051.5 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `WNG-004-R` x1 | Spar plug | made | R03 Prusa | 1.4 |
-| `WNG-005-R` x1 | Spar plug | made | R03 Prusa | 1.4 |
+| `WNG-004-R` x1 | Spar plug | made | R03 Amazon | 1.4 |
+| `WNG-005-R` x1 | Spar plug | made | R03 Amazon | 1.4 |
 
 Mass placed by this step 2.8 g; running total of placed parts 1054.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -831,8 +831,8 @@ Mass placed by this step 2.8 g; running total of placed parts 1054.3 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `WNG-004-L` x1 | Spar plug | made | R03 Prusa | 1.4 |
-| `WNG-005-L` x1 | Spar plug | made | R03 Prusa | 1.4 |
+| `WNG-004-L` x1 | Spar plug | made | R03 Amazon | 1.4 |
+| `WNG-005-L` x1 | Spar plug | made | R03 Amazon | 1.4 |
 
 Mass placed by this step 2.8 g; running total of placed parts 1057.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -872,7 +872,7 @@ Film clip: `assets/animation/build/a-stage-03.mp4` (Explorer, "How it's built", 
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `HRN-003` x2 | Phase-lead raceway | made | R03 Prusa | 2.9 |
+| `HRN-003` x2 | Phase-lead raceway | made | R03 Amazon | 2.9 |
 
 Mass placed by this step 2.9 g; running total of placed parts 1060.0 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -907,7 +907,7 @@ Mass placed by this step 2.9 g; running total of placed parts 1060.0 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `HRN-004-UR` x1 | Hub conduit | made | R03 Prusa | 1.0 |
+| `HRN-004-UR` x1 | Hub conduit | made | R03 Amazon | 1.0 |
 
 Mass placed by this step 1.0 g; running total of placed parts 1061.0 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -942,7 +942,7 @@ Mass placed by this step 1.0 g; running total of placed parts 1061.0 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `HRN-004-UL` x1 | Hub conduit | made | R03 Prusa | 0.7 |
+| `HRN-004-UL` x1 | Hub conduit | made | R03 Amazon | 0.7 |
 
 Mass placed by this step 0.7 g; running total of placed parts 1061.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -969,7 +969,7 @@ Mass placed by this step 0.7 g; running total of placed parts 1061.7 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `HRN-004-LR` x1 | Hub conduit | made | R03 Prusa | 0.9 |
+| `HRN-004-LR` x1 | Hub conduit | made | R03 Amazon | 0.9 |
 
 Mass placed by this step 0.9 g; running total of placed parts 1062.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -996,7 +996,7 @@ Mass placed by this step 0.9 g; running total of placed parts 1062.6 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `HRN-004-LL` x1 | Hub conduit | made | R03 Prusa | 1.2 |
+| `HRN-004-LL` x1 | Hub conduit | made | R03 Amazon | 1.2 |
 
 Mass placed by this step 1.2 g; running total of placed parts 1063.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -1045,7 +1045,7 @@ Mass placed by this step 1.2 g; running total of placed parts 1063.9 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `CGE-008` x1 | Pack tray R1 | made | R03 Prusa | 13.3 |
+| `CGE-008` x1 | Pack tray R1 | made | R03 Amazon | 13.3 |
 
 Mass placed by this step 13.3 g; running total of placed parts 1077.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -1080,8 +1080,8 @@ Mass placed by this step 13.3 g; running total of placed parts 1077.2 g (CAD; th
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `WNG-009` x2 | Hinge damper stator | made | R03 Prusa, R12 Amazon | 4.0 |
-| `WNG-010` x2 | Hinge damper rotor | made | R03 Prusa | 0.9 |
+| `WNG-009` x2 | Hinge damper stator | made | R03 Amazon, R12 Amazon | 4.0 |
+| `WNG-010` x2 | Hinge damper rotor | made | R03 Amazon | 0.9 |
 
 Mass placed by this step 4.9 g; running total of placed parts 1082.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -1283,7 +1283,7 @@ Mass placed by this step 34.4 g; running total of placed parts 1170.5 g (CAD; th
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `WNG-008` x2 | Lens cap + stop bosses: wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop | made | R03 Prusa | 7.4 |
+| `WNG-008` x2 | Lens cap + stop bosses: wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop | made | R03 Amazon | 7.4 |
 
 Mass placed by this step 7.4 g; running total of placed parts 1177.9 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -1318,7 +1318,7 @@ Mass placed by this step 7.4 g; running total of placed parts 1177.9 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `WNG-008` x2 | Lens cap + stop bosses: wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop | made | R03 Prusa | 7.4 |
+| `WNG-008` x2 | Lens cap + stop bosses: wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop | made | R03 Amazon | 7.4 |
 
 Mass placed by this step 7.4 g; running total of placed parts 1185.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -1570,7 +1570,7 @@ Mass placed by this step 8.6 g; running total of placed parts 1297.6 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `GER-002` x4 | Foot pad EVA/PE 12x15x30 | made | R03 Prusa | 2.8 |
+| `GER-002` x4 | Foot pad EVA/PE 12x15x30 | made | R03 Amazon | 2.8 |
 
 Mass placed by this step 2.8 g; running total of placed parts 1300.4 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -1697,7 +1697,7 @@ Mass placed by this step 2.0 g; running total of placed parts 1343.4 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `MEC-008` x2 | Z-bend keeper | made | R03 Prusa | 0.1 |
+| `MEC-008` x2 | Z-bend keeper | made | R03 Amazon | 0.1 |
 | `HWC-002` x2 | Servo arm screw M2 x 8 pan | bought | R05 Amazon | 0.6 |
 
 Mass placed by this step 0.8 g; running total of placed parts 1344.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
@@ -1735,7 +1735,7 @@ Mass placed by this step 0.8 g; running total of placed parts 1344.2 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `MEC-004` x2 | Control horn | made | R03 Prusa | 1.9 |
+| `MEC-004` x2 | Control horn | made | R03 Amazon | 1.9 |
 
 Mass placed by this step 1.9 g; running total of placed parts 1346.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -1905,7 +1905,7 @@ Mass placed by this step 5.0 g; running total of placed parts 1353.1 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `AVN-010` x1 | R2 mounting bosses | made | R03 Prusa | 1.6 |
+| `AVN-010` x1 | R2 mounting bosses | made | R03 Amazon | 1.6 |
 | `HWC-003` x1 | FC mounting nuts: 4 x M2 thin nut | bought | R05 Amazon | 0.4 |
 
 Mass placed by this step 2.0 g; running total of placed parts 1355.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
@@ -2100,7 +2100,7 @@ Mass placed by this step 3.5 g; running total of placed parts 1430.7 g (CAD; the
 
 *Step 61 of 66. Plan caption: Pack into the tray*
 
-**Do this:** Lay the Tattu 2300 4S pack in the tray against the lip; the strap goes on next.
+**Do this:** Lay the RDQ 2800 mAh 4S pack in the tray against the lip; the strap goes on next.
 
 **Time (EST):** 10 min hands-on.
 
@@ -2108,13 +2108,13 @@ Mass placed by this step 3.5 g; running total of placed parts 1430.7 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `PWR-001` x1 | Pack RDQ Series 2800 mAh 4S 100C XT60 | bought | W01 RMRC | 270.0 |
+| `PWR-001` x1 | Pack RDQ Series 2800 mAh 4S 100C XT60 | bought | W01 RDQ | 270.0 |
 
 Mass placed by this step 270.0 g; running total of placed parts 1700.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
-- Tattu 2300 4S (BOM W01)
+- RDQ 2800 mAh 4S (BOM W01)
 
 **Tools:** 0.1 g scale, TBS LiPo bag.
 
@@ -2245,7 +2245,7 @@ Mass placed by this step 8.9 g; running total of placed parts 1717.6 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `AVN-008` x1 | Bay cover | made | R03 Prusa | 9.0 |
+| `AVN-008` x1 | Bay cover | made | R03 Amazon | 9.0 |
 
 Mass placed by this step 9.0 g; running total of placed parts 1726.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 

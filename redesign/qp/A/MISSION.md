@@ -2,6 +2,9 @@
 
 One definition for every A report (BOARD C6). Reproduce: `python -I mission_gate_a.py`. Labels: `EST` estimate, `V` vendor page, `—` unknown. Updated for D-183 (APC 9x4.5MR props x0.93 derate, Tattu 2300 pack kept, 0.90 spin cap) and D-184 (arm x1.2, cant 16 deg, wind rule; `review/QP-2/D183.md`, `D184.md`, `WIND.md`). Basis: method of `review/CLOSURE-ROUND-2026-11-14/A2.md` s2.1 (flight-test programme: H2 gate 1i, flight card 4b), re-done with A's stall and power. The 3.5 min / 17 m/s mission of K09-L, B's 15 m/s / 3.6 min and the 16 m/s of the first A draft are replaced by this one.
 
+> **T-083c status note (2026-11-22, D-227, D-228, D-229).** This file is the 2026-11-14/15 record at 1.396 kg, MN2212 and a Tattu 2300 pack; its numbers are NOT current. Current concept A O4b state (EST, `T083b_report.md` s0, s4.1): X2216 V3 short-shaft 880KV on APC 9x4.5MR, 2,800 mAh 4S pack, `Q_M_SPIN_MAX` 1.0, `Q_M_BAT_CURR_MAX` 72 A (T083_report s2.4); tallied 1,634.5 g basic, predicted 1.873 kg, CG 22.26 mm, SM 7.52 %, window +12.05 %, T/W 2.641 fresh / 2.118 sag, cruise 236 s (limit 204.6 s), 1.3 Vs 17.53 m/s against the 17.0 m/s cruise (A-P6, gated by a measured stall CLmax >= 0.81, D-228). The s1 speeds (CLmax 0.75 EST) and the s4 energy budget below were not re-derived by T-083c; re-run `mission_gate_a.py --o4b` for current values.
+
+
 ## 1. Speeds re-derived
 
 SIZING-A's stall (Vs 11.0 m/s, 1.3 Vs 14.3) was computed at 1.226 kg, before the board's re-roll. Vs = sqrt(2 m g / (rho S CLmax)), S 0.22 m^2, CLmax 0.75 `EST`, rho 1.20:
@@ -43,7 +46,7 @@ Bank 30 deg: R = V^2 / (g tan 30) = 289 / (9.807 x 0.5774) = **51.0 m**. **Leg 1
 
 The go-around is inside the energy budget of s4, not the reserve. Wind (D-184, WIND.md): <= 5 m/s mean, gust <= 8 m/s; hover with the wing edge into the wind within +-10 deg by pilot yaw (+-20 deg for steady and gust only), belly-on only to 3 m/s, `Q_WVANE_ENABLE` 3 / `Q_WVANE_GAIN` 1 / `Q_WVANE_SPD_MAX` 2 (side into the wind = the wing edge; D-186 accepted **conditionally**: works in calm SITL only, so before the first free hover run SITL with WIND.md's 1 m/s turbulence model, heading excursion <= 15 deg, and fly the card QLOITER -> QSTABILIZE -> FBWA within 2 s so the vane never acts before the pitch-over; tether check M9); lean about 29 deg at 5 m/s belly-on (SIZING-A s4). Yaw authority >= 0.35 N m must be confirmed on the bench; if the hanging test gives < 0.30 N m the 5 m/s card is reopened.
 
-## 4. Reserve and energy (Tattu 2300 mAh 4S, 34.0 Wh nameplate, V; D-183b: the pack stays, the CNHL 3000 is dropped)
+## 4. Reserve and energy (record at the Tattu 2300 mAh 4S, 34.0 Wh nameplate, V; superseded by the 2,800 mAh pack, T-083, see the status note at the top; D-183b: the pack stays, the CNHL 3000 is dropped)
 
 Reserve 20 % of nameplate and worn-pack floor 0.90 (A2). Usable = 34.0 x 0.90 x 0.80 = **24.5 Wh**. Hover power from `prop_a.py` (APC 9x4.5MR PER3 static data x0.93 derate, cant 16 deg, 3 % download, ESC 0.98, x1.10 control margin); transitions and climb scaled from SIZING-A (1.56 and 0.29 Wh at 1.37 kg, as m^1.5 and m `EST`); cruise 161 W x (m/1.37)^0.58 `EST`. Reproduce: `python -I mission_gate_a.py`.
 

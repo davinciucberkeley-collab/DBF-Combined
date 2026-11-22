@@ -10,24 +10,38 @@ the ledger and the spec are.
 7. This file. 8. Active task + unfinished deps. 9. Compare plan vs requirements (`python -I tools/ledger_audit.py`).
 10. Note any lost/changed instruction under "Reconciliation" below. 11. Resume "Next action".
 
-## Checkpoint — 2026-11-20 PAUSE (session 7cb35b0a, conductor Opus); sections follow spec 10.4
-**Goal:** master program (spec + AM-001..AM-014). Concept A continues as **O4b** (AM-009, D-219): 9x4.5 props, Lua spin cap on a Kakute H743-Wing, RDQ 4S 2800 mAh packs, glass torsion skin, machined 6061 hub, mass recovery; predicted 1.64 kg (weight may exceed the gate in initial design, AM-011); budget = total incl. crash reserve <= $2,000 (AM-013), crash reserve kept (AM-012), nothing supplied by Jacobs/team (AM-014); aircraft must be Claude-designed and student-built (AM-008).
+## Checkpoint — 2026-11-22 (session 7cb35b0a, conductor Opus); sections follow spec 10.4
+**Goal:** master program (spec + AM-001..AM-019). Concept A, Claude-designed and student-built (AM-008). Current
+configuration: D-226 saddle load path (CF bulkheads, 6061 centre node, 3-ply skin, 25x23 rib; AM-016 "stronger wing,
+bench test decides"), SunnySky X2216 V3 short-shaft 880KV on APC 9x4.5MR (D-227/D-228, AM-018), no spare motor
+(AM-019), FIN-003 machined 6061 root fitting (D-229). Budget = total incl. crash reserve by its definition <= $2,000
+(AM-013, AM-018); weight may exceed the mass gate (AM-011) but mass-dependent physics must pass.
 
-**Requirements:** 109 R-ids; ledger 82 tasks; `python -I tools/ledger_audit.py` 0 errors; `tools/plan_rid_check.py` 0 missing.
+**Requirements:** 109 R-ids; ledger 83 tasks; `python -I tools/ledger_audit.py` 0 errors.
 
-**Done (committed):** see git log 2026-11-19..20 and CHANGE-LOG D-213..D-222. Key results: T-067 printed-part mass audit; D-216/D-217 board path (O4 no-go, Altus withdrawn AM-008, O4b AM-009); T-074 O4b checks (sims PASS at 1.64 kg); T-076/T-076b/c/d hub and landing path (Al hub passes; landing demand root cause D-222, CAD mass model cuts arm Mz 41 %); T-080 manufacturing processes (D-221, `docs/reference/jacobs-equipment.md`); T-081 December test plan `redesign/qp/A/TEST-PLAN-O4B.md` (10 tests) whose purchase list is $2,243-2,330 vs $2,000.
+**Done (committed, last ac983050):** D-223..D-229. T-083 (motor integration) and T-083b (root fitting): predicted
+1.873 kg EST, CG 22.26 mm, SM 7.52 %, window +12.05 %, T/W 2.64/2.12, cruise 236 s, 3-D gates PASS, BOM $1,981.31
+(margin +$18.69). Evidence: `redesign/qp/A/mechanism/out/T083_report.md`, `T083b_report.md`.
 
-**Pending:** T-082 budget closure (opus; partial record `docs/audits/2026-11-20-T082-budget.md`): bring build + tests under $2,000 with the reserve intact. Then: reviewer ruling on the DAF floor (1.61 envelope vs 3.08 case-max) and the 8 T-081 reviewer items; CAD T-077 (decided parts) and drawings; purchases T-078 (Dillon approval, not before early Dec); December tests (2026-12-15 go/no-go on bench derate >= 0.905); trunk height and lid opening measurement (2018 Altima SL); re-checks of READY rows (T-014, T-022, T-067, T-068, T-070, T-071, T-073, T-079, T-080, T-081); T-023 CAD review; cleanup T-042..T-045; final verification T-047.
+**Open engineering items:** A-P6 1.3 Vs 17.53 > 17.0 m/s, gated by a measured stall (CLmax >= 0.81, D-228); landing rows
+need TP-3 pad zeta <= 0.05 (0.10 gives 0.66 cell / 0.89 fitting); TP-4 bond coupon (fitting peel integrity rows
+0.15-0.16); bench derate >= 0.889 (SunnySky table 0.80-0.88 of APC: bench risk); X2216 short-shaft backorder (long
+shaft 85810 needs a CAD change); T11 offcut length for the second fitting blank; 14x12 rib if the torsion coupon allows.
 
-**Failures:** D-212 v1 rejected (jogged Z-bend, modelled joint differs from built joint); D-212 rev 2 rejected (printed horn bonded to foam: invalid peel model, stall strength) so rev 3 escalated to opus with an approach change (through-bolted hardpoint horn). Earlier: `du -sh .` > 120 s (worked in background: 14 GB); subagent Write of `docs/analysis-records.md` refused (subagent policy), so the conductor writes report files from agent outputs; project agents in `.claude/agents` loaded later in the 11-18 session; `git worktree remove --force` of three line-ending-only worktrees blocked by the permission classifier (waits for Dillon); CLI not logged in for the headless test (T-008).
+**Running now (2026-11-22):** T-083c doc update (TEST-PLAN-O4B, MASS-GATE, A-docs to D-227..D-229; sonnet);
+READY-row review (eng-reviewer, `docs/audits/2026-11-22-ready-rows-review.md`).
 
-**Decisions:** aircraft decisions in `redesign/params/CHANGE-LOG.md` (D-212 rev 3 is the latest, trade rows A..J); program decisions in `docs/engineering-decisions.md`: PD-002 (sims vs "no sims until final"), PD-005 (flap item maps to elevons), PD-006 (video verification via Blender FFmpeg libraries, SUPERSEDED 2026-11-19 when Dillon approved the FFmpeg install), PD-007 (film Scene 4 plays back an executed SITL run, Z5_gb0). AM-002 (2026-11-19): unused items that do not contribute to the current design may be removed; cleanup batch 2 done under it. AM-003 (2026-11-19): team inputs (schema, James's agents, DaVinci) not ready, no DaVinci spend; blocked rows stay blocked.
+**Next action:** apply the review verdicts to the ledger; commit T-083c; then T-066 (structures_a re-baseline), T-023
+CAD review, cleanup T-042..T-045, T-008, final verification T-047. Ask Dillon only for: December purchase approval
+(not before early Dec; check RMRC stock first), trunk height and lid opening (2018 Altima SL), Jacobs material and
+test-frame confirmations, anything over $2,000.
 
-**Running now:** nothing after T-082 returns (stopped at the pause).
+**Failures (history):** see git log and CHANGE-LOG; O4b with MN2212 infeasible (AM-017 study); MN3110, legs/skid,
+0.8 m/s touchdown and concept B rejected (`docs/audits/2026-11-21-config-study.md`); PETG FIN-003 failed (D-229).
 
-**Next action:** on resume: follow the recovery procedure above; read `docs/audits/2026-11-20-T082-budget.md` and finish T-082 (budget under $2,000); then the DAF ruling, then CAD T-077. Ask Dillon only for: purchase approval (December list), trunk height/opening measurement, and anything over $2,000.
+**Decisions:** aircraft in `redesign/params/CHANGE-LOG.md`; program in `docs/engineering-decisions.md` (PD-002..PD-007).
 
-**Inspection (R-PRES-13):** CLAUDE.md kept whole, new sections prepended; no AGENTS.md; no prior `.claude/settings.json`; Claude Code 2.1.288 (PreCompact, PostCompact, SessionStart matchers used).
+**Inspection (R-PRES-13):** CLAUDE.md kept whole; no AGENTS.md.
 
 ## Approval gate (T-054, R-GEN-02)
 Irreversible or costly actions: date, approval wording, sub-actions. Nothing has been pushed, no history rewritten, no purchase made, no DaVinci spend.
