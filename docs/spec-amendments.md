@@ -311,3 +311,11 @@ Requirement IDs: R-COM-01.
 ```text
 Reach a good place to pause for later resumption
 ```
+
+## AM-024 — 2026-11-22 — Resume after the AM-023 pause
+Relation: process instruction; resumes the `docs/session-state.md` "Next action" list (T-085 first).
+Requirement IDs: R-COM-01.
+
+```text
+resume
+```
