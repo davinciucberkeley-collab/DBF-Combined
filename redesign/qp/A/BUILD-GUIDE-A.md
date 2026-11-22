@@ -212,13 +212,13 @@ Film clip: `assets/animation/build/a-stage-02.mp4` (Explorer, "How it's built", 
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `CGE-001` x1 | Hub | made | T1 Alcobra | 43.3 |
+| `CGE-001` x1 | Hub | made | T1 Zoro | 43.3 |
 
 Mass placed by this step 43.3 g; running total of placed parts 266.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
-- 6061-T6511 bar, 2.00 x 2.50 in (50.8 x 63.5 mm) section, blank at least 63.5 x 50.8 x 110 mm for the drawn 59.5 x 107.8 x 49.3 mm hub (DRAWINGS-A.md CGE-001). BOM line T1 lists a 1.75 x 2.5 in bar (44.45 mm thick): too thin for the 49.3 mm hub, so T1 must change to 2.00 x 2.50 in before ordering (price not read for the 12 in length; alcobrametals.com shows $65.56 minimum over all lengths, read 2026-11-22, vs $49.41 listed; T-023 F-2). PLA for the fit-check print (Jacobs Prusa). Print file: CGE-001.stl (qp/A/drawings/out/stl/)
+- 6061-T6511 bar, 2.00 x 2.50 in (50.8 x 63.5 mm) section, blank at least 63.5 x 50.8 x 110 mm for the drawn 59.5 x 107.8 x 49.3 mm hub (DRAWINGS-A.md CGE-001). BOM line T1: Zoro Select 61F2X2.5-12, 6061-T6511, $43.29 (page read 2026-11-22, T-087 / D-235); thickness 50.8 -0.61 = 50.19 mm min, 0.89 mm over the hub. PLA for the fit-check print (Jacobs Prusa). Print file: CGE-001.stl (qp/A/drawings/out/stl/)
 
 **Tools:** knee mill (bores, pins), Tormach 440 (contour), caliper.
 
@@ -659,9 +659,9 @@ Mass placed by this step 10.2 g; running total of placed parts 401.8 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `CGE-001` x1 | Hub | made | T1 Alcobra | 43.3 |
+| `CGE-001` x1 | Hub | made | T1 Zoro | 43.3 |
 | `CGE-004` x1 | Bridge 16x14 | made | R02 RMRC | 8.6 |
-| `CGE-006` x1 | Centre node | made | T11 Alcobra | 36.3 |
+| `CGE-006` x1 | Centre node | made | T11 Zoro | 36.3 |
 | `CGE-002-A` x1 | Arm tube A 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub | made | R08 RMRC | 30.6 |
 | `CGE-002-B` x1 | Arm tube B 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub | made | R08 RMRC | 30.6 |
 | `CGE-003` x4 | Motor cup | made | R03 Amazon | 35.8 |
@@ -1423,7 +1423,7 @@ Mass placed by this step 9.0 g; running total of placed parts 1203.4 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `FIN-003` x2 | Fin root fitting: machined 6061-T6, ring OD 18.2 / bore 16.2 x 38 mm on the fin tube, plug OD 22.8 / ID 20.8 x 31 mm bonded inside the 25x23 rib end, end plate 2.0 mm x 24.6 mm diameter notched by the fin tube | made | T11 Alcobra | 24.1 |
+| `FIN-003` x2 | Fin root fitting: machined 6061-T6, ring OD 18.2 / bore 16.2 x 38 mm on the fin tube, plug OD 22.8 / ID 20.8 x 31 mm bonded inside the 25x23 rib end, end plate 2.0 mm x 24.6 mm diameter notched by the fin tube | made | T11 Zoro | 24.1 |
 
 Mass placed by this step 24.1 g; running total of placed parts 1227.5 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 

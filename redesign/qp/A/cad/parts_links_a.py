@@ -33,7 +33,7 @@ MAP = [
     ('AVN-009-T', 'buy', ['V05'], 'cut from the 2 / 4 mm tubing in the V05 kit (D-208)'), ('AVN-009-S', 'buy', ['V05'], 'cut from the 2 / 4 mm tubing in the V05 kit (D-208)'),
     ('AVN-007', 'buy', ['R05'], 'foam tape from the local fastener / tape line'),
     ('AVN-010', 'make', ['R03'], 'printed PETG bosses and pads (T-073 R2, T-077 p5)'), ('AVN-008', 'make', ['R03'], 'printed PETG'),
-    ('CGE-001', 'make', ['T1'], 'machined 6061-T6 on the knee mill + Tormach (D-220..D-222; PLA print CGE-001.stl is the fit check only). Drawing bbox 59.5 x 107.8 x 49.3 mm does NOT fit the T1 bar as listed (1.75 x 2.5 in = 44.45 x 63.5 mm section): needs a 2.00 x 2.50 in bar, BOM T1 not yet changed (T-023 F-2)'), ('CGE-002', 'make', ['R08'], 'cut from the 12x10 tube'),
+    ('CGE-001', 'make', ['T1'], 'machined 6061-T6 on the knee mill + Tormach (D-220..D-222; PLA print CGE-001.stl is the fit check only). Drawing bbox 59.5 x 107.8 x 49.3 mm from the T1 bar 2.00 x 2.50 in (50.8 x 63.5 mm; 0.89 mm over the hub thickness at minimum tolerance, T-087)'), ('CGE-002', 'make', ['R08'], 'cut from the 12x10 tube'),
     ('CGE-003', 'make', ['R03'], 'printed PETG'), ('CGE-004', 'make', ['R02'], 'cut from the 16x14 fin-tube offcut (D-206)'),
     ('CGE-009', 'make', ['R09'], 'cut from the 14x12 tube'), ('CGE-010', 'make', ['R14'], 'cut from the 3 mm carbon rod (price not found)'),
     ('CGE-005', 'make', ['R10'], 'cut from the R10 8x6 CF tube (T-077 p7, D-225 resize)'), ('CGE-006', 'make', ['T11'], 'machined 6061-T6 on the Tormach (T-077 p8, D-226 centre node; bar 1 x 4 x 12 in)'),
