@@ -140,7 +140,7 @@ def vib_low_limit(rpm, sep):
     return rpm / 60 / sep
 
 
-@kit.calc("CALC-A-VIB-HIGH-LIMIT", equation="limit = highest 2P edge x 1.2 = (8,028 rpm hover lean / 60 x 2 = 267.6 Hz) x 1.2", inputs={"f": "P:sim.cruise_2p_hz_hi", "sep": "P:req.band_sep"}, output="f_hz")
+@kit.calc("CALC-A-VIB-HIGH-LIMIT", equation="limit = highest 2P edge x 1.2 = (8,028 rpm hover lean / 60 x 2 = 267.6 Hz) x 1.2", inputs={"f": "P:sim.hover_lean_2p_hz", "sep": "P:req.band_sep"}, output="f_hz")
 def vib_high_limit(f, sep):
     return f * sep
 

@@ -938,11 +938,11 @@
    "source": "SRC-A-STRUCT-RUN",
    "note": "structures_run.md s4: lowest of the five operating rpm, hover derate 1.0 at 1.8796 kg with the SunnySky X2216 prop schedule (prop_a.py), 1P 113 Hz; was 6,018 (A-P10(a), MN2212 era); gives the band edge 94.3 Hz (structures_run.md: 94 Hz)"
   },
-  "cruise_2p_hz_hi": {
+  "hover_lean_2p_hz": {
    "value": 267.6,
    "unit": "Hz",
    "source": "SRC-A-STRUCT-RUN",
-   "note": "structures_run.md s4: highest 2P of the five operating rpm = hover lean 1.3 W, 8,028 rpm / 60 x 2 (the cruise 2P is 248 Hz; the name is kept); gives the band edge 321 Hz (structures_run.md: 94-321 Hz); was 253 Hz (A-P10(a), MN2212 era)"
+   "note": "structures_run.md s4: highest 2P of the five operating rpm = hover lean 1.3 W, 8,028 rpm / 60 x 2 (the cruise 2P is 248 Hz; renamed from cruise_2p_hz_hi in review round 3 m-E); gives the band edge 321 Hz (structures_run.md: 94-321 Hz); was 253 Hz (A-P10(a), MN2212 era)"
   },
   "vib_fc_ms2": {
    "value": [

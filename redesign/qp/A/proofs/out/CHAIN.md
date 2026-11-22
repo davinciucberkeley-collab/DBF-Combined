@@ -358,7 +358,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p10
 - claim **CL-A-VIB-HIGH-LIMIT** Lower edge allowed for strongly coupled modes above the rotor bands = **321.1 Hz** — **CHECKED**
   - how to verify: Highest 2P 268 Hz (hover lean, 8,028 rpm; cruise 2P 248 Hz; structures_run.md s4), 20 % separation rule (A-P10(a)); band 94-321 Hz.
   - calc `CALC-A-VIB-HIGH-LIMIT` `redesign/qp/A/proofs/claims_a2_struct.py::vib_high_limit()`: `limit = highest 2P edge x 1.2 = (8,028 rpm hover lean / 60 x 2 = 267.6 Hz) x 1.2` — **CHECKED**
-    - `f` ← param `P:sim.cruise_2p_hz_hi` = 267.6 Hz — **CHECKED**
+    - `f` ← param `P:sim.hover_lean_2p_hz` = 267.6 Hz — **CHECKED**
       - `SRC-A-STRUCT-RUN` (see above)
     - `sep` ← `P:req.band_sep` (see above)
 - claim **CL-A-VIB-LOW** Highest strongly coupled mode below the rotor bands (hi corner) = **81 Hz** (limit <= 94.29 Hz, margin +14%) — **CHECKED**

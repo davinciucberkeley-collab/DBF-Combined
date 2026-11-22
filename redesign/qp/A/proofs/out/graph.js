@@ -2,7 +2,7 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-22 21:39 UTC",
+  "generated": "2026-11-22 21:51 UTC",
   "dataset": "concept-a",
   "ok": false,
   "errors": [
@@ -5201,7 +5201,7 @@ window.PROOF_GRAPH = {
    "function": "vib_high_limit",
    "equation": "limit = highest 2P edge x 1.2 = (8,028 rpm hover lean / 60 x 2 = 267.6 Hz) x 1.2",
    "inputs": {
-    "f": "P:sim.cruise_2p_hz_hi",
+    "f": "P:sim.hover_lean_2p_hz",
     "sep": "P:req.band_sep"
    },
    "outputs": {
@@ -9412,14 +9412,14 @@ window.PROOF_GRAPH = {
    "importance": 2
   },
   {
-   "id": "P:sim.cruise_2p_hz_hi",
+   "id": "P:sim.hover_lean_2p_hz",
    "type": "parameter",
-   "title": "sim.cruise_2p_hz_hi",
+   "title": "sim.hover_lean_2p_hz",
    "file": "redesign/qp/A/params-A.json",
    "value": 267.6,
    "unit": "Hz",
    "source": "SRC-A-STRUCT-RUN",
-   "note": "structures_run.md s4: highest 2P of the five operating rpm = hover lean 1.3 W, 8,028 rpm / 60 x 2 (the cruise 2P is 248 Hz; the name is kept); gives the band edge 321 Hz (structures_run.md: 94-321 Hz); was 253 Hz (A-P10(a), MN2212 era)",
+   "note": "structures_run.md s4: highest 2P of the five operating rpm = hover lean 1.3 W, 8,028 rpm / 60 x 2 (the cruise 2P is 248 Hz; renamed from cruise_2p_hz_hi in review round 3 m-E); gives the band edge 321 Hz (structures_run.md: 94-321 Hz); was 253 Hz (A-P10(a), MN2212 era)",
    "status": "CHECKED",
    "importance": 2
   },
@@ -14867,7 +14867,7 @@ window.PROOF_GRAPH = {
    "type": "uses"
   },
   {
-   "source": "P:sim.cruise_2p_hz_hi",
+   "source": "P:sim.hover_lean_2p_hz",
    "target": "CALC-A-VIB-HIGH-LIMIT",
    "type": "uses"
   },
@@ -17083,7 +17083,7 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "SRC-A-STRUCT-RUN",
-   "target": "P:sim.cruise_2p_hz_hi",
+   "target": "P:sim.hover_lean_2p_hz",
    "type": "cites"
   },
   {
