@@ -274,3 +274,13 @@ Requirement IDs: R-GEN-02, R-OPT-02.
 ```text
 Go ahead with that
 ```
+
+## AM-020 — 2026-11-22 — Cost-trim study to rebuild the budget margin
+Relation: answers the question after T-084 (D-233): BOM total $1,999.12 incl. crash reserve by definition, margin
++$0.88 after the hub bar T1 moved to 2.00 x 2.50 in ($65.56). Dillon approves a cost-trim study; the $2,000 total
+(AM-013) stays the hard gate; no purchase before early December; no limit relaxed.
+Requirement IDs: R-GEN-02, R-OPT-02.
+
+```text
+Yes, run cost-trim
+```
