@@ -1,7 +1,7 @@
 {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-22 11:34 UTC",
+  "generated": "2026-11-22 17:58 UTC",
   "dataset": "concept-a",
   "ok": false,
   "errors": [
@@ -6516,10 +6516,10 @@
     "budget": "P:req.budget_usd"
    },
    "outputs": {
-    "total_usd": 1999.1158874999999,
-    "total_30_usd": 2105.33790375,
-    "margin_usd": 0.8841125000001284,
-    "margin_30_usd": -105.3379037499999,
+    "total_usd": 1983.6919125,
+    "total_30_usd": 2089.9139287499997,
+    "margin_usd": 16.308087500000056,
+    "margin_30_usd": -89.91392874999974,
     "reserve_usd": 346.9446375,
     "shipping_usd": 67.84
    },
@@ -6665,7 +6665,7 @@
       "M01",
       "mechanisms",
       "RMRC",
-      3.0,
+      2.0,
       13.99,
       false
      ],
@@ -7033,14 +7033,14 @@
     "A-U1"
    ],
    "how": "python -I qp/A/bom_a.py (reads BOM-A.csv): $1,999.12, margin +$0.88 (2026-11-22). AM-013: the only budget gate is the total incl. crash reserve <= $2,000.",
-   "value": 1999.1158874999999,
+   "value": 1983.6919125,
    "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
    "reasons": [
     "uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST)",
     "uses P:cost.reserve_ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py reserve(): 3 shipments at the original EST (definition unchanged, AM-018))"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.0004420562500000642,
+   "margin": 0.008154043750000029,
    "importance": 1
   },
   {
@@ -7054,7 +7054,7 @@
     "A-U1"
    ],
    "how": "python -I qp/A/bom_a.py; the board G7 rule (margin >= $100 at +30 %) is information only since AM-013.",
-   "value": -105.3379037499999,
+   "value": -89.91392874999974,
    "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
    "reasons": [
     "uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST)",
@@ -7074,7 +7074,7 @@
     "A-U1"
    ],
    "how": "python -I qp/A/bom_a.py; information only since AM-013; Makers Pass outside the budget (user, memory).",
-   "value": 2105.33790375,
+   "value": 2089.9139287499997,
    "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
    "reasons": [
     "uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST)",
@@ -10348,7 +10348,7 @@
      "M01",
      "mechanisms",
      "RMRC",
-     3.0,
+     2.0,
      13.99,
      false
     ],
