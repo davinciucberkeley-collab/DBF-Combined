@@ -100,6 +100,7 @@ Append one row per delegated task. Review at each milestone: are opus runs justi
 | 2026-11-22 | T-066 M-1 vib claims + T-023 F-10 drawings | implementer / sonnet | moderate | done: claims re-pointed, CL-A-VIB-IN-BAND FAIL added, GM UNVERIFIED; drawings 49/49 | 143 k tok / 6.7 min | 0 | — | conductor re-ran run_all |
 | 2026-11-22 | review round 3 (T-085, T-066, T-081, T-014, T-023) | eng-reviewer / sonnet (override, minimise compute) | review | done: 2 VERIFIED, 3 open with small gaps | 95 k tok / 4.1 min | 0 | — | conductor applied verdicts |
 | 2026-11-22 | round-3 doc fixes (A-docs, test plan, param rename) | implementer / sonnet | routine docs | done: M-D, m-G, m-C, m-A, m-E | 142 k tok / 2.7 min | 0 | — | conductor re-ran run_all (9 STRICT fails) |
+| 2026-11-22 | round-3 re-check (T-014, T-023, T-081) | eng-reviewer / sonnet (override, minimise compute) | narrow review | done: 3 VERIFIED | — | 0 | — | conductor applied |
 
 Backfilled 2026-11-22 from the session transcripts (task notifications); T-014 review F-1, `docs/audits/2026-11-22-ready-rows-review.md`.
 

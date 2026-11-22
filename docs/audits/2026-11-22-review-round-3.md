@@ -117,3 +117,24 @@ No Critical finding. No limit was relaxed by T-085, T-066 M-1 or the test plan (
 - Web sources (Dow durometer grades, Wikipedia Gent formula, Orfeo / Kelly / Van Engelen, Zoro) not re-fetched; the Gent formula was reproduced numerically from the stated expression.
 - 3-D gates not run; none needed (no CAD file changed since T-084).
 - `BUILD-GUIDE-A.md` grep-checked for stale vendor and FIN_H text, not read in full.
+
+## Round 3 re-check (2026-11-22, HEAD 2c111274, narrow)
+
+Ran: `python -I tools/ledger_audit.py` (109 requirements, 89 tasks, 0 errors); `cd redesign/qp/A; python -I bom_a.py` (total $1,939.17 per the R3_docfixes record; caps sum 1965, room 35, no subsystem over cap). Compared the edited text with `T084_report.md` s0, s1.3, s3 (lines 18, 23, 24, 149, 150), D-236 in CHANGE-LOG, and `grep` of the files.
+
+| Row | Gap | Check | Verdict |
+|---|---|---|---|
+| T-014 | M-B | `docs/model-usage.md`: one table (lines 5-102, header line 5), the two round-3 rows (101, 102) are inside it; only notes follow after a blank line (103 on). No row outside the table | **VERIFIED** |
+| T-023 | M-D | `MASS-GATE.md` s15 has "T-084 as drawn" and "T-084 tallied" rows: 1,640.0 g, 1.8796 kg, CG 23.13, SM 7.17, trim 22.14 / 24.78, +11.88 %, T/W 2.632 / 2.111, 234 s, 17.56 all match `T084_report.md` l.150 (drawn row l.149: 1.8717 / 21.95 / 7.65). Old $1,981.31 / +$18.69 marked superseded. `MISSION.md` note, `REQUIREMENTS-A.md` A-U1 / A-P1 / A-P6 / A-P9 (31.00 deg, matches l.18), `SCHEDULE-A.md` update (slack "—", not re-run) carry the same state | fixed |
+| T-023 | m-G | `REQUIREMENTS-A.md` A-P10(a): band 94-321 Hz (113 Hz / 1.2; 267.6 Hz x 1.2), old MN2212 bands kept as marked record, (a) recorded as carried FAIL (CL-A-VIB-IN-BAND, D-236), decided by TP-10b | fixed |
+| T-023 | m-E | `cruise_2p_hz_hi` no longer in any `.py` / `params-A.json` / `proofs/out/graph.json`; `hover_lean_2p_hz` = 267.6 Hz in `gen_params_a.py` l.193 and `claims_a2_struct.py` l.143 (only the history in `mechanism/out/` keeps the old name) | fixed |
+| T-023 | verdict | M-D, m-G, m-E all fixed; no new inconsistency found in the checked numbers. m-H (`cost.total_usd` absent) was a note, not an inconsistency | **VERIFIED** |
+| T-081 | G-9 | T-081 ledger row (l.91) states TP-12, TP-13, TP-14 "registered here under R-PHY-08 / R-PHY-09"; they exist in `TEST-PLAN-O4B.md` (l.262, 272, 281) | **VERIFIED** (see note) |
+| T-081 | m-C | s0 item 1 (l.12) now says the tap test (TP-10 / TP-10b) is not among the 12-15 deciders; s5 item 6 (l.167) "Closed (D-236)"; TP-10b "When / who" (l.304) and TP-10 row say after the build, not gating 12-15. Consistent | fixed |
+| T-081 | m-A | TP-10b step 3 requires a bandwidth check on both the reference mass and the motor cup (3 dB, team EST, to 321 Hz); `T085_report.md` l.87 route A now uses the max(cx,cy) x (1+u) rule matching TP-10b step 6 (l.300) | fixed |
+
+Note: the ids are registered in the ledger row, not as separate R-ids in `docs/requirements.md` (no TP-12..14 there); the G-9 gap was "not in requirements / ledger", and the ledger registration is accepted.
+
+Remaining open items, none belonging to these three rows: M-A (D-236 forced-response sentence), m-B (TP-10b contingency row), m-D (VIB-HIGH annotation), m-F, m-H. Not re-checked: `run_all.py` (the conductor ran it: 9 STRICT fails, as recorded), 3-D gates (no CAD change).
+
+Recommendation to the conductor: T-014, T-023, T-081 may be set to VERIFIED COMPLETE (the reviewer does not set it).

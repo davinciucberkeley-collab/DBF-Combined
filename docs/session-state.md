@@ -34,8 +34,7 @@ no robust lever; decided by TP-10b (T-A-TAP tap test of the built airframe, $0) 
 confirmed, reopen the C-route (arms 10x8 + bridge soft in z first). Proof chain carries CL-A-VIB-IN-BAND FAIL; gain
 margin claims UNVERIFIED (T-089).
 
-**Next action (2026-11-22, after AM-024 resume):** (1) review round 3 of READY rows T-066, T-081, T-085, T-014 and the
-T-023 final re-diff (eng-reviewer, sonnet); (2) T-032 video pipeline hashes + follow-once; (3) T-089 gain-margin plant
+**Next action (2026-11-22, after AM-024 resume):** (1) done 2026-11-22: review round 3 + re-check, T-066, T-085, T-014, T-023, T-081 VERIFIED; (2) T-032 video pipeline hashes + follow-once; (3) T-089 gain-margin plant
 rebuild; (4) T-088 R15 stock check before the December order; then cleanup T-042..T-045, T-008, final verification
 T-047. Ask Dillon only for: December purchase approval (not before early Dec; check RMRC, Zoro and Carbonwebshop
 stock first), trunk height and lid opening (2018 Altima SL), Jacobs material and test-frame confirmations, anything
