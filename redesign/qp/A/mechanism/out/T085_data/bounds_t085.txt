@@ -1,0 +1,75 @@
+S = 11.54; zmult 30A 205 50A 161 70A 108 (K 1 GPa)
+| cell | hub | pad / tray case | corner | strong modes 60-400 Hz (f Hz, * = in band 94-321; cx / cy) | D-185 (a) |
+|---|---|---|---|---|---|
+| nominal | al6061 | pad soft (30A, E 1.142, Ec=E), tray 24 | kd | 98.0* (0.73/1.18); 206.0* (0.18/1.53); 272.8* (0.10/0.63) | FAIL |
+| nominal | al6061 | pad soft (30A, E 1.142, Ec=E), tray 24 | nom | 100.5* (0.74/1.17); 208.1* (0.19/1.55); 286.1* (0.10/0.64) | FAIL |
+| nominal | al6061 | pad soft (30A, E 1.142, Ec=E), tray 24 | hi | 105.9* (0.73/1.12); 211.0* (0.21/1.58); 294.3* (0.11/0.66) | FAIL |
+| nominal | al6061 | pad nom (50A, E 2.456, zm 161), tray 24 | kd | 100.1* (0.74/1.35); 324.7 (0.08/0.64) | FAIL |
+| nominal | al6061 | pad nom (50A, E 2.456, zm 161), tray 24 | nom | 102.9* (0.75/1.35); 346.4 (0.07/0.59) | FAIL |
+| nominal | al6061 | pad nom (50A, E 2.456, zm 161), tray 24 | hi | 108.7* (0.75/1.33); 347.7 (0.11/0.62) | FAIL |
+| nominal | al6061 | pad stiff (70A, E 5.52, zm 108), tray 112 | kd | 100.1* (0.74/1.35) | FAIL |
+| nominal | al6061 | pad stiff (70A, E 5.52, zm 108), tray 112 | nom | 102.9* (0.75/1.35) | FAIL |
+| nominal | al6061 | pad stiff (70A, E 5.52, zm 108), tray 112 | hi | 108.7* (0.75/1.33) | FAIL |
+| nominal | al6061 | pad stiff (70A, E 5.52, zm 108), tray 24 | kd | 100.1* (0.74/1.35); 359.1 (0.13/0.71) | FAIL |
+| nominal | al6061 | pad stiff (70A, E 5.52, zm 108), tray 24 | nom | 102.9* (0.75/1.35); 379.5 (0.13/0.73) | FAIL |
+| nominal | al6061 | pad stiff (70A, E 5.52, zm 108), tray 24 | hi | 108.7* (0.75/1.33); 399.4 (0.12/0.76) | FAIL |
+| nominal | al6061 | pad nom, K 0.25 GPa (zm 74), tray 24 | kd | 100.1* (0.74/1.35); 324.7 (0.08/0.65) | FAIL |
+| nominal | al6061 | pad nom, K 0.25 GPa (zm 74), tray 24 | nom | 102.9* (0.75/1.35); 346.4 (0.07/0.59) | FAIL |
+| nominal | al6061 | pad nom, K 0.25 GPa (zm 74), tray 24 | hi | 108.6* (0.75/1.33); 347.7 (0.11/0.62) | FAIL |
+| nominal | al6061 | pack rigid on hub (limit, no pad) | kd | 99.1* (0.77/1.38); 249.6* (0.12/0.76); 333.0 (0.17/0.58) | FAIL |
+| nominal | al6061 | pack rigid on hub (limit, no pad) | nom | 102.0* (0.78/1.38); 260.3* (0.13/0.76); 340.9 (0.12/0.55) | FAIL |
+| nominal | al6061 | pack rigid on hub (limit, no pad) | hi | 107.8* (0.78/1.36); 280.9* (0.14/0.77); 364.8 (0.16/0.59) | FAIL |
+| nominal | petg | pad soft (30A, E 1.142, Ec=E), tray 24 | kd | 91.5 (0.59/1.18); 200.3* (0.20/1.55); 263.6* (0.14/0.64) | FAIL |
+| nominal | petg | pad soft (30A, E 1.142, Ec=E), tray 24 | nom | 93.4 (0.59/1.17); 202.2* (0.20/1.56); 276.0* (0.14/0.65) | FAIL |
+| nominal | petg | pad soft (30A, E 1.142, Ec=E), tray 24 | hi | 97.8* (0.57/1.12); 205.0* (0.21/1.59); 284.3* (0.14/0.67) | FAIL |
+| nominal | petg | pad nom (50A, E 2.456, zm 161), tray 24 | kd | 93.2 (0.61/1.33); 300.1* (0.14/0.62); 393.3 (0.21/1.15) | FAIL |
+| nominal | petg | pad nom (50A, E 2.456, zm 161), tray 24 | nom | 95.3* (0.60/1.33); 316.6* (0.15/0.66); 398.7 (0.14/0.75) | FAIL |
+| nominal | petg | pad nom (50A, E 2.456, zm 161), tray 24 | hi | 100.0* (0.59/1.30); 328.6 (0.14/0.75) | FAIL |
+| nominal | petg | pad stiff (70A, E 5.52, zm 108), tray 112 | kd | 93.3 (0.60/1.33); 247.6* (0.23/0.52); 398.2 (0.24/1.22) | FAIL |
+| nominal | petg | pad stiff (70A, E 5.52, zm 108), tray 112 | nom | 95.4* (0.60/1.33); 255.3* (0.24/0.53) | FAIL |
+| nominal | petg | pad stiff (70A, E 5.52, zm 108), tray 112 | hi | 100.0* (0.59/1.30); 263.6* (0.24/0.52) | FAIL |
+| nominal | petg | pad stiff (70A, E 5.52, zm 108), tray 24 | kd | 93.3 (0.61/1.33); 334.8 (0.17/0.86); 400.0 (0.23/1.13) | PASS |
+| nominal | petg | pad stiff (70A, E 5.52, zm 108), tray 24 | nom | 95.4* (0.60/1.33); 352.6 (0.17/0.90) | FAIL |
+| nominal | petg | pad stiff (70A, E 5.52, zm 108), tray 24 | hi | 100.0* (0.59/1.30); 364.7 (0.17/0.76); 389.1 (0.06/0.55) | FAIL |
+| nominal | petg | pad nom, K 0.25 GPa (zm 74), tray 24 | kd | 93.2 (0.61/1.32); 300.1* (0.14/0.62); 392.1 (0.21/1.15) | FAIL |
+| nominal | petg | pad nom, K 0.25 GPa (zm 74), tray 24 | nom | 95.3* (0.60/1.33); 316.6* (0.15/0.66); 398.1 (0.15/0.84) | FAIL |
+| nominal | petg | pad nom, K 0.25 GPa (zm 74), tray 24 | hi | 100.0* (0.59/1.30); 328.6 (0.14/0.75) | FAIL |
+| nominal | petg | pack rigid on hub (limit, no pad) | kd | 92.6 (0.63/1.36); 225.1* (0.18/0.81); 242.3* (0.23/0.53) | FAIL |
+| nominal | petg | pack rigid on hub (limit, no pad) | nom | 94.8* (0.63/1.36); 232.6* (0.19/0.83); 248.8* (0.24/0.56) | FAIL |
+| nominal | petg | pack rigid on hub (limit, no pad) | hi | 99.4* (0.62/1.34); 247.3* (0.20/0.86); 261.2* (0.26/0.58) | FAIL |
+| lower | al6061 | pad soft (30A, E 1.142, Ec=E), tray 24 | kd | 92.8 (0.81/1.20); 205.0* (0.18/1.50); 271.3* (0.10/0.59) | FAIL |
+| lower | al6061 | pad soft (30A, E 1.142, Ec=E), tray 24 | nom | 95.3* (0.82/1.20); 207.2* (0.19/1.53); 284.4* (0.10/0.59) | FAIL |
+| lower | al6061 | pad soft (30A, E 1.142, Ec=E), tray 24 | hi | 100.7* (0.80/1.14); 210.4* (0.21/1.57); 292.4* (0.11/0.62) | FAIL |
+| lower | al6061 | pad nom (50A, E 2.456, zm 161), tray 24 | kd | 94.6* (0.82/1.35); 324.3 (0.09/0.67) | FAIL |
+| lower | al6061 | pad nom (50A, E 2.456, zm 161), tray 24 | nom | 97.3* (0.83/1.35); 345.6 (0.08/0.65) | FAIL |
+| lower | al6061 | pad nom (50A, E 2.456, zm 161), tray 24 | hi | 78.0 (0.12/0.51); 103.1* (0.82/1.32); 344.8 (0.11/0.56) | FAIL |
+| lower | al6061 | pad stiff (70A, E 5.52, zm 108), tray 112 | kd | 94.7* (0.82/1.35) | FAIL |
+| lower | al6061 | pad stiff (70A, E 5.52, zm 108), tray 112 | nom | 97.3* (0.83/1.36) | FAIL |
+| lower | al6061 | pad stiff (70A, E 5.52, zm 108), tray 112 | hi | 78.0 (0.12/0.51); 103.1* (0.82/1.33) | FAIL |
+| lower | al6061 | pad stiff (70A, E 5.52, zm 108), tray 24 | kd | 94.6* (0.82/1.35); 358.3 (0.12/0.60) | FAIL |
+| lower | al6061 | pad stiff (70A, E 5.52, zm 108), tray 24 | nom | 97.3* (0.83/1.35); 377.9 (0.13/0.70) | FAIL |
+| lower | al6061 | pad stiff (70A, E 5.52, zm 108), tray 24 | hi | 78.0 (0.12/0.51); 103.1* (0.82/1.32); 398.7 (0.12/0.76) | FAIL |
+| lower | al6061 | pad nom, K 0.25 GPa (zm 74), tray 24 | kd | 94.6* (0.82/1.35); 324.3 (0.09/0.68) | FAIL |
+| lower | al6061 | pad nom, K 0.25 GPa (zm 74), tray 24 | nom | 97.3* (0.83/1.35); 345.6 (0.08/0.65) | FAIL |
+| lower | al6061 | pad nom, K 0.25 GPa (zm 74), tray 24 | hi | 78.0 (0.12/0.51); 103.0* (0.82/1.32); 344.8 (0.11/0.56) | FAIL |
+| lower | al6061 | pack rigid on hub (limit, no pad) | kd | 93.8 (0.84/1.38); 248.6* (0.13/0.73); 328.8 (0.18/0.60) | FAIL |
+| lower | al6061 | pack rigid on hub (limit, no pad) | nom | 96.5* (0.85/1.38); 259.2* (0.14/0.73); 336.8 (0.15/0.66) | FAIL |
+| lower | al6061 | pack rigid on hub (limit, no pad) | hi | 102.3* (0.85/1.36); 279.7* (0.15/0.66); 357.1 (0.18/0.68) | FAIL |
+| lower | petg | pad soft (30A, E 1.142, Ec=E), tray 24 | kd | 85.9 (0.67/1.21); 199.5* (0.19/1.53); 262.4* (0.14/0.60) | FAIL |
+| lower | petg | pad soft (30A, E 1.142, Ec=E), tray 24 | nom | 87.6 (0.67/1.20); 201.5* (0.20/1.55); 274.7* (0.14/0.56) | FAIL |
+| lower | petg | pad soft (30A, E 1.142, Ec=E), tray 24 | hi | 77.4 (0.18/0.57); 92.2 (0.63/1.12); 204.4* (0.21/1.57); 282.6* (0.13/0.60) | FAIL |
+| lower | petg | pad nom (50A, E 2.456, zm 161), tray 24 | kd | 87.3 (0.68/1.33); 297.9* (0.14/0.57); 320.1* (0.06/0.55); 387.4 (0.14/0.79) | FAIL |
+| lower | petg | pad nom (50A, E 2.456, zm 161), tray 24 | nom | 89.2 (0.68/1.34); 314.3* (0.15/0.61); 342.0 (0.06/0.55) | FAIL |
+| lower | petg | pad nom (50A, E 2.456, zm 161), tray 24 | hi | 77.8 (0.15/0.57); 93.9 (0.65/1.28); 327.0 (0.15/0.67); 385.2 (0.05/0.54) | PASS |
+| lower | petg | pad stiff (70A, E 5.52, zm 108), tray 112 | kd | 87.4 (0.68/1.34); 246.6* (0.23/0.50); 392.6 (0.16/0.88) | FAIL |
+| lower | petg | pad stiff (70A, E 5.52, zm 108), tray 112 | nom | 89.2 (0.68/1.34) | PASS |
+| lower | petg | pad stiff (70A, E 5.52, zm 108), tray 112 | hi | 77.8 (0.15/0.57); 93.9 (0.65/1.28); 262.0* (0.24/0.50) | FAIL |
+| lower | petg | pad stiff (70A, E 5.52, zm 108), tray 24 | kd | 87.3 (0.68/1.34); 334.0 (0.17/0.86); 391.9 (0.13/0.68) | PASS |
+| lower | petg | pad stiff (70A, E 5.52, zm 108), tray 24 | nom | 89.2 (0.68/1.34); 352.0 (0.17/0.90) | PASS |
+| lower | petg | pad stiff (70A, E 5.52, zm 108), tray 24 | hi | 77.8 (0.15/0.57); 93.9 (0.65/1.28); 361.4 (0.16/0.67); 386.3 (0.07/0.68) | PASS |
+| lower | petg | pad nom, K 0.25 GPa (zm 74), tray 24 | kd | 87.3 (0.68/1.33); 297.9* (0.14/0.57); 320.1* (0.06/0.55); 386.9 (0.15/0.83) | FAIL |
+| lower | petg | pad nom, K 0.25 GPa (zm 74), tray 24 | nom | 89.2 (0.68/1.34); 314.2* (0.15/0.61); 341.9 (0.06/0.55) | FAIL |
+| lower | petg | pad nom, K 0.25 GPa (zm 74), tray 24 | hi | 77.8 (0.15/0.57); 93.9 (0.65/1.28); 327.0 (0.15/0.67); 385.1 (0.05/0.55) | PASS |
+| lower | petg | pack rigid on hub (limit, no pad) | kd | 86.8 (0.70/1.37); 222.9* (0.19/0.80); 271.7* (0.16/0.59) | FAIL |
+| lower | petg | pack rigid on hub (limit, no pad) | nom | 88.8 (0.70/1.37); 230.3* (0.19/0.82); 285.4* (0.16/0.58) | FAIL |
+| lower | petg | pack rigid on hub (limit, no pad) | hi | 77.7 (0.13/0.54); 93.5 (0.68/1.32); 244.5* (0.21/0.84); 256.6* (0.24/0.52); 313.8* (0.12/0.51) | FAIL |

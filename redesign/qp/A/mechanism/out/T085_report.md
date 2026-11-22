@@ -1,0 +1,97 @@
+# T-085: D-185 FE upgrade (D-233 option B), audit and re-judgement. 2026-11-22. Not VERIFIED COMPLETE. Nothing committed.
+
+No edit to docs/, the CHANGE-LOG, the ledger or the spec files (proposed D-236 text in s8). Labels: EST = estimate; "—" = unknown.
+Analysis categories: **FEA-lite** (3-D Euler-Bernoulli beam frame `structures/fe_a.py`, free-free eigen-analysis, strain-energy split; no shell / solid model of the airframe), **FEA** (solid tet10 hub stiffness re-solved from the existing D-209 mesh, `t085_hubflex.py`), **hand calculation** (pad shape factor, isolator frequency, tube mass), **illustrative** (the lever sketches s6: modelled, not drawn, no strength re-run). No CFD, flight dynamics, rigid-body dynamics or interference work.
+Data and scripts: `T085_data/` (index s9).
+
+## Acceptance test (restated from the brief)
+1. Restore the previous implementer's `fe_a.py` / `TEST-PLAN-O4B.md` edits (checked against HEAD). Audit them: what the "pad" element is, where its stiffness came from; bound every EST spring (pad, tray, hub joint) with a physical basis; no invented numbers.
+2. Re-judge D-185 (a) at kd / nom / hi for each credible bound (band 94-321 Hz, coupling >= 0.5 rule, never redefined); every strong mode in and near the band with shape and strain-energy split.
+3. Defaults of `fe_a.py` still reproduce T-066 / T-084.
+4. TEST-PLAN-O4B.md: T-A-TAP method, equipment, pass rule; replace the stale TP-10 row.
+5. If the FAIL holds: D-233 option C sketches (C1, C2, a tuned pack mount, any other low-mass, low-cost lever) with EST effect, mass and cost; no design change applied.
+6. `python -I structures/structures_a.py` exit 0 if an s4c row is added.
+
+## 0. Outcome
+| # | Item | Result | Verdict |
+|---|---|---|---|
+| 1 | Restore | `fe_a.py` and `TEST-PLAN-O4B.md` equal `*_pre_t085.*`, and the pre files equal HEAD (`git show HEAD:` diff empty; the working-tree TEST-PLAN differs only by CRLF); post files copied over | done |
+| 2 | "pad" | The **PWR-003 anti-slip pad under the pack**: silicone rubber sheet 100 x 30 x 1.0 mm, BOM W09 (`cad/amodel/electrical.py` l.733, 925; thickness, size, hardness "—", all EST). Its stiffness in the paused model was **E 4 / 2 / 0.5 MPa with no source**, applied as E A / t in compression (no shape factor) and E/3 A / t in shear | unsourced; replaced (s3) |
+| 3 | Why "pad 62-65 %" | An artefact of that spring: a 1 mm sheet 100 x 30 mm has shape factor S = 11.5 (loaded area 3,000 mm2 over bulge area 260 mm2), so its compression modulus is 10^2 x E (finite-bulk-limited), not E. With E A / t the pad was 100-200x too soft in z and the pack bounced on it at 150-260 Hz, putting 60-70 % of the strain energy in the pad. With the compression stiffness bounded (s3.1) the pad is not among the top four energy groups of the governing mode (spar, arm, hub joint, bridge) | audit finding |
+| 4 | Credible-bound verdict | **D-185 (a) FAILs.** 23 of 24 (wing cell x hub joint x pad / tray) bound groups fail at one or more of kd / nom / hi; the governing mode is a structural wing-flap / cage-bounce at **94.6-108.7 Hz, cx 0.74-0.83, cy 1.31-1.35**, not set by the pad (pad not in the top four energy groups: spar 34 %, arm 24-29 %, hub joint 23-29 %, bridge 6-7 %). The one group that passes at all three corners needs every EST at its soft extreme at once (lower-bound cell, PETG hub block, 70 A pad, 24 mm tray) and passes by **0.1 Hz at hi (93.9 Hz)** | **FAIL holds** |
+| 5 | Defaults | spar-only 201.0 / 215.3 / 244.2 Hz (0.02 / 0.52); cell nominal 84.6 / 88.0 / 96.2 Hz; `structures_a.py` re-run exit 0 and its D-185 tables unchanged | PASS |
+| 6 | Levers (s6) | no low-mass, low-cost lever found that clears all six (cell x corner) cases; best (arms 10x8 + bridge z-bending x0.25) clears 4 of 6 and puts a 0.52 mode at 309 Hz inside the band at kd | none robust |
+| 7 | TEST-PLAN | TP-10 row replaced; TP-10b T-A-TAP kept (method, equipment $0 / BOM, pass rule) | done |
+
+**Blocker:** none for the task; the design decision (s7) is the design owner's.
+
+## 1. Restoration and audit of the previous work
+- `fe_a.py`: the previous edits (rotary lumps, diagonal springs, hub superelement, `add_pack` rigid / tray modes, `bridge_f`) are kept; all options default to None / 1, and the defaults reproduce T-066 / T-084 (s5). T-085 additions here: `z_mult` (pad compression multiplier, default 1) and `motor_mount` (sketch C4, default None).
+- Checked and kept: the superelement stiffness `K` of the hub (Fl symmetry error 2e-11, rigid-body null space 7e-17, `modes_t085.txt` s0); the validation rows reproduce T-084 (84.6 / 88.0 / 96.2; pack rigid 94.0 / 97.9 / 106.6; spar-only 215.3).
+- Not trusted and re-done: every pad stiffness; the tray width choices (re-based in s3.2); the "C3 pad E 0.25 ... 0.05 MPa" sketch (`sketch3_t085.txt`): its remaining 110-120 Hz strong mode is the cage mode, which stays when the pack mass is removed from the cage (13.3 g tray left: 107-116 Hz, cy 1.75), so a softer pad cannot clear it (s6).
+- Coupling definition: `fe_a.py` l.125 sums the "+y" motors' brace interior nodes into cy through an `a or b and c` precedence. Checked: with motor-mass nodes only (metric B, `t085_levers.py`) cx and cy are identical to two decimals in every row; no effect, not changed (not redefined).
+
+## 2. EST inputs and their bounds (every number cited; "—" = unknown)
+| Input | Basis | Soft | Nominal | Stiff | Source |
+|---|---|---|---|---|---|
+| Pad hardness | commercial silicone sheet / rubber grades 30-70 A (Dow Silastic RBL 9200 grades list 30, 50, 60, 65, 70 A, dow.com product pages, checked 2026-11-22); BOM W09 hardness "—" | 30 A | 50 A | 70 A | BOM-A.csv W09; Dow |
+| Pad Young's modulus E | Gent's relation E = 0.0981 (56 + 7.62336 S) / (0.137505 (254 - 2.54 S)) MPa, S Shore A (en.wikipedia.org/wiki/Shore_durometer, checked 2026-11-22; the page notes it departs from data below 40 A) | 1.142 MPa | 2.456 | 5.520 | same |
+| Pad area, thickness | CAD PWR-003 100 (y) x 30 (x) x 1.0 mm (EST in the CAD) | 3,000 mm2, 1.0 mm | same | same | `electrical.py` l.733 / 925 |
+| Pad compression modulus | thin pad, unbonded faces slip: Ec = E (lower limit; strap preload keeps contact). Restrained faces: Ec_inc = E (1 + 2 S2), S = 3,000 / 260 = 11.5, limited by the bulk modulus K: Ec = Ec_inc K / (Ec_inc + K); bulk-limit correction matters above S about 10 (Orfeo et al., IJSS 2023, strathprints.strath.ac.uk/85238; Kelly and Lai 2011, msp.org/siaps/2011/2-1; Van Engelen and Kelly 2015: the incompressible formula with a simple bulk correction is unconservative). K for silicone "—"; 1 GPa used, 0.25 GPa swept | Ec = E (multiplier 1) | multiplier 161 (K 1 GPa), 74 (K 0.25) | multiplier 108 | hand calculation, `t085_bounds.py` |
+| Pad shear | G = E / 3 (incompressible); not enhanced by the shape factor | 0.38 MPa | 0.82 | 1.84 | as above |
+| Pack compliance | pouch cell, straps (two loops round tray and pack), contact patch: not modelled (rigid lump 282 g on the pad / 13.3 g tray) | — | — | — | straps add z stiffness (credits nothing: conservative on the stiff side) |
+| Tray CGE-008 section | 1.2 mm PETG plate, solid fraction 0.518 (CAD `tray_stats()`), E PETG per corner (`fe_a.E_PETG`); cantilevered from the hub aft face, width **112 mm** = the full plate (2 x TRAY_YO, `common.py`), or **24 mm** = the collar notch and hub flange neck (COL_HY 12 mm, `wing.py` l.642; HUB_PAD flange |y| < 13.6, D-208). Support by the core tray slot is not credited | w 24 mm | w 24 mm | w 112 mm | CAD |
+| Hub joint (stub-end flexibility, solid tet10) | `t085_hubflex.py`: D-209 hub mesh re-solved for 5 masters; tie-bonded tube / sleeve / pins; **geometry is D-209, not the drawn D-220 octagonal sleeve** (difference "—"). 6061-T6 block (the drawn material, CGE-001) = credible; PETG block (UR stub-end translation 2.1 / 1.3 / 1.3x the 6061 values in x / y / z) = soft bound, standing in for unmodelled bond-line and pin slack ("—") | PETG | 6061 | 6061 | `hubflex_*.log` |
+| Wing cell | T-084 `cell_props.txt`: nominal / lower bound (foam E, G x 0.5, skin x 0.7, no strip) | lower | nominal | nominal | T-084 s2.3 |
+
+## 3. Results (FEA-lite; band 94-321 Hz, strong = cx or cy >= 0.5, unchanged)
+`bounds_t085.txt` (full 72-row table, every strong mode 60-400 Hz), `detail_t085.txt` (shape, strain energy).
+### 3.1 Governing mode, credible hub (6061), by pad / tray bound, hi corner worst
+| pad / tray | cell nominal kd / nom / hi (Hz) | cell lower kd / nom / hi (Hz) | other strong modes 60-400 Hz | verdict |
+|---|---|---|---|---|
+| soft (30 A, Ec = E), tray 24 | 98.0 / 100.5 / 105.9 (cy 1.12-1.18) | 92.8 / 95.3 / 100.7 | **pad bounce 206-211 Hz (0.18-0.21 / 1.53-1.58, pad energy dominant)** and 273-294 Hz (cy 0.63-0.66) | FAIL at every corner |
+| nominal (50 A, x161), tray 24 | 100.1 / 102.9 / 108.7 (0.74-0.75 / 1.33-1.35) | 94.6 / 97.3 / 103.1 | 325-348 Hz (cy 0.59-0.64, just above the band) | FAIL |
+| stiff (70 A, x108), tray 112 | 100.1 / 102.9 / 108.7 | 94.7 / 97.3 / 103.1 | none | FAIL |
+| nominal, K 0.25 GPa (x74) | 100.1 / 102.9 / 108.6 | 94.6 / 97.3 / 103.0 | as nominal | FAIL |
+| pack rigid on the hub (infinite pad) | 99.1 / 102.0 / 107.8 (0.77-0.78 / 1.36-1.38) | 93.8 / 96.5 / 102.3 | 250-281 Hz (cy 0.73-0.77, in band) | FAIL |
+The pad bound moves nothing between the nominal and stiff cases because the mode carries no pad energy (spar 34 %, arm 24-29 %, hub joint 23-29 %, bridge 6-7 %, `detail_t085.txt`). Shape (nominal cell, 6061, nom): the wing flaps symmetrically (spar rms uz 0.65), the hub bounces (uz 1.14, rms mass-normalised units) with the pack riding it (uz 0.56), and the motors move (x 0.37, y 0.64, z 0.22 at the four stations): a **wing-flap / cage-bounce mode with the arms flexing**, the T-084 governing mode with the pack at its drawn x.
+### 3.2 Soft hub bound (PETG block as proxy for bond / pin slack), all bounds
+23 of the 24 (cell x hub x pad-case) groups have a strong mode in band at at least one corner. The only group that passes at kd / nom / hi is: lower-bound cell, PETG hub block, 70 A pad, tray 24 (87.3 / 89.2 / 93.9 Hz; the hi corner is 0.1 Hz under the edge, with a 77.8 Hz mode at cy 0.57 below it). Its neighbours (same, tray 112: 87.4 / 89.2 / 93.9 with a strong 246.6 and 262.0 Hz mode at kd and hi) fail. Passing needs the wing cell at its lower bound (no cure strip, skin x 0.7, foam halved), the hub joint soft, the pad stiff and a narrow tray together: by the 0.1 Hz margin and the stated model limits (beam FE, D-209 hub geometry) this is a coincidence, not a pass.
+### 3.3 Strong modes in and near the band, summary
+- 94.6-108.7 Hz (all cells, hubs, pad bounds): the mode of s3.1, 0.74-0.85 / 1.12-1.35. In band at every corner for the nominal cell and 6061 hub; at kd for the lower cell it sits at 92.8-94.7 Hz (edge).
+- 78.0 Hz (lower cell, hi; 77.3-80 Hz in softer hub cases): cx 0.12-0.15, cy 0.51-0.57, below the band, asymmetric fin / wing mode.
+- 200-211 Hz: pad bounce, only when the pad is unenhanced (soft bound). 246-262 Hz: pack on the hub 6061 joint (pack rigid case, cy 0.73-0.77).
+- 297-348 Hz: antisymmetric fin or pack-y modes, cy 0.51-0.67; in band only for the PETG hub with the nominal pad (297-317 Hz) and the soft pad.
+- 0.3-0.5 coupling (not strong): 67-68 Hz, 313 Hz, 333 Hz, 390 Hz.
+
+## 4. D-185 (a) re-judged
+At kd / nom / hi for the credible bounds (cell nominal and lower, hub 6061, pad soft / nominal / stiff, tray 24 / 112): **FAIL at every corner** (both cells), always on the 95-109 Hz mode; with the soft pad also on the 206-211 Hz pad mode. The rule, band and 0.5 threshold are unchanged. The result is **not sensitive to the pad** (EST spring bounded; not among the top four energy groups of the governing mode), is sensitive to the hub joint, wing cell and pack position only at the 0.1-14 Hz level, and the model cannot settle the 0.1 Hz pass case. The FAIL is therefore a property of the drawn structure, not of the unsourced pad; the TP-10b test measures it.
+
+## 5. Defaults check
+`t085_detail.py` (`detail_t085.txt`): spar-only kd / nom / hi in band 201.0 / 215.3 / 244.2 Hz (0.02 / 0.52) = T-084 s2.4; cell nominal governing 84.6 / 88.0 / 96.2 Hz (hi in band 0.81 / 0.93) = T-084 s2.4. `python -I structures/structures_a.py` from `redesign/qp/A`: exit 0 (`structures_a_exit.txt`, 3 min 10 s; no s4c row was added, so it was run as a regression: the D-185 tables equal T-084).
+
+## 6. D-233 option C levers (illustrative sketches on the credible model: cell nominal / lower, hub 6061, pad nominal / tray 24; `levers_t085.txt`, `levers2_t085.txt`; nothing applied; EST masses and costs; strength rows not re-run)
+| Option | Effect on the model (kd / nom / hi nominal cell; lower cell) | Mass EST | Cost EST | Verdict |
+|---|---|---|---|---|
+| C1 bridge soft in z (z-bending EI x0.5 / x0.25, torsion unchanged) | governing mode 98.0 / 101.0 / 107.2 (x0.5) and 95.1 / 98.3 / 104.8 (x0.25); only 3-5 % (the bridge holds 6-7 % of the mode's energy); lower cell kd passes at x0.5 and x0.25, nothing else | 0 to -2 g (thinner / slotted section; no CAD) | $0 (same R02 stock); D-206 torsion sizing re-run needed | does not clear |
+| C2 pack and tray carried by the wing centre node | 102.5 / 104.8 / 109.9 (+ a 161-180 Hz pack mode, cy 1.5, in band); the cage mode with the pack removed is 107-116 Hz (`sketch3_t085.txt`), so moving the pack mass does not help | +8 to +15 g (carrier bracket, EST, no CAD) | $0 | does not clear |
+| C3 pack on a tuned soft mount (bounce 60 / 40 Hz; pad E 0.013 / 0.006 MPa at 1 mm, or a thicker foam of the same stiffness "—") | the pack-bounce mode leaves the band (to 40-60 Hz, below), but the cage mode rises to 108.5-118.5 Hz (nominal) and 103-113 Hz (lower), cy 1.82-1.87: FAIL everywhere. The isolator removes the pack from the cage, so the cage mode goes up, into the band | +1 to +3 g | $2-5 | does not clear; pack mount modes appear at 60-80 Hz (cx or cy 0.5-0.6, below the band, not a D-185 case) |
+| C4 motor + prop on a soft mount (85 % of 101.7 g on a 60 / 45 / 30 Hz spring; `fe_a.motor_mount`) | motor-on-mount modes 60-75 Hz; the structure keeps 102-117 Hz modes (cx 0.5-0.96 or cy 0.5-1.4) in band at every corner; 130-170 Hz mount-coupled modes (cx up to 1.1) added | +10 to +20 g (grommets, plates) | $10-20 | worse; also a thrust-line compliance risk, not assessed |
+| C5 arms 10x8 (was 12x10) | 92.1 / 94.9 / 101.1 (nominal), 86.2 / 88.9 / 95.2 (lower): clears 3 of 6 cases, leaves a 309 Hz 0.51 mode in band at nominal kd | -11.1 g (4 arms 61.1 -> 50.0 g, CF 1600 kg/m3 as `fe_a.RHO_CF`) | tube not in BOM (R08 is 12x10); price "—" | does not clear; arm strength rows ("—") would need a re-run |
+| C5 + C1 (arms 10x8 + bridge z x0.25) | 86.3 / 89.6 / 96.8 (nominal), 82.8 / 85.8 / 92.9 (lower): clears 4 of 6 (nominal kd fails on a 309 Hz mode at 0.52, nominal hi at 96.8 Hz) | about -11 g | tube price "—" | closest, not robust (squeezed between 94 and 309 Hz) |
+| C5b arms 9x7 (+ C1) | 87.8 / 90.6 / 96.7 (nominal), 81.6 / 84.2 / 90.7 (lower); modes of 302-320 Hz at 0.50-0.58 appear in band for the lower cell | -16.7 g | "—" | does not clear |
+A strong mode between 94 and 321 Hz is always present because the cage mode is at 95-109 Hz and needs a 14 % drop (kd to hi spread) while arm and bridge softening pulls the 300-320 Hz fin / tray modes into the band from above; the window is narrower than the corner spread. Moving the mode above 321 Hz needs about 10x the stiffness (T-084 s2.5); ballast is not allowed. No lever changes the rule.
+
+## 7. Verdict and routes
+**D-185 (a) remains FAIL on the model for every credible bound; the unsourced pad was not the cause.** The model cannot rule out a pass (0.1 Hz at one extreme), nor prove a fail: wing cell, hub bond, strap, pouch and core-slot support are "—". Routes for the design owner (no money, no mass for A):
+1. **A. Measure** (TP-10b T-A-TAP): the rule applied to measured modes with the pack and motors installed; the FE predicts one strong mode at 95-109 Hz (cx 0.75, cy 1.35) and none above 321 Hz up to 400 Hz except fin modes at 0.5-0.6; if the measured mode is below 94 Hz / (1 + u) decoupled the airframe passes, otherwise fall back to B / C.
+2. **C. Design change only if A fails**: none found here is both cheap and robust (s6). The least bad is arms 10x8 with a z-soft bridge (about -11 g, 4 of 6 cases), needing a re-run of arm, hub-socket and D-206 bridge rows, a purchase of 10x8 tube (price "—") and TP-1 / TP-4 checks; it does not satisfy D-185 at all corners.
+3. **D. Ruling** on D-185 applicability (a 100 Hz mode against the band's lower edge, 94 Hz = hover 1P / 1.2 per D-185, with cx 0.75): design-owner ruling only; not proposed here.
+
+## 8. Proposed CHANGE-LOG text, D-236 (for the owner to paste; not written to the CHANGE-LOG)
+| **D-236** | **T-085: D-185 FE upgrade (D-233 B) done; FAIL holds in the credible bounds; pad stiffness sourced and bounded; options C screened** | D-185, D-233, D-234 | `structures/fe_a.py` (options `z_mult`, `motor_mount`, hub superelement, pack-on-tray, `bridge_f`; defaults unchanged, T-066 / T-084 numbers reproduced), `TEST-PLAN-O4B.md` (TP-10 row, TP-10b T-A-TAP), `T085_report.md` | The paused FE credited the pack on a PWR-003 silicone pad with E 4 / 2 / 0.5 MPa (unsourced, unenhanced compression); that put 60-70 % of the in-band strain energy in the pad. Re-based: Gent E 1.14 / 2.46 / 5.52 MPa for 30 / 50 / 70 A (hardness "—"), thin-pad compression multiplier 1 / 161 / 108 (shape factor 11.5, bulk limit K 1 GPa "—", 0.25 swept), tray width 24 / 112 mm, hub block 6061 / PETG, wing cell nominal / lower. Result: governing strong mode 94.6-108.7 Hz (cx 0.74-0.85, cy 1.12-1.35) at kd / nom / hi, no pad energy, FAIL in 23 of 24 bound groups; one group passes by 0.1 Hz. No limit relaxed; band and 0.5 rule unchanged. Levers (C1 bridge soft in z, C2 pack on the centre node, C3 pack isolator, C4 motor isolator, C5 arms 10x8 / 9x7) do not clear all corners (best 4 of 6, about -11 g, tube price "—"); a pack isolator pushes the cage mode up (103-118 Hz). Decision: D-185 stays FAIL on the model, TP-10b decides on the built airframe; no design change applied. Ladder: rung 4 (change approach: measure) before rung 2 / 5 (geometry, material) |
+
+## 9. Files (`redesign/qp/A/mechanism/out/T085_data/`)
+`t085_hubflex.py` + `hubflex_al6061|petg.npz|log` (solid hub flexibility), `t085_modes.py` -> `modes_t085.txt|json` (matrix, preliminary run), `t085_sketch3.py` -> `sketch3_t085.txt`, `t085_bounds.py` -> `bounds_t085.txt` (s3 table), `t085_detail.py` -> `detail_t085.txt` (defaults check, shapes, energies), `t085_levers.py` -> `levers_t085.txt`, `t085_levers2.py` -> `levers2_t085.txt`, `structures_a_stdout.txt|stderr|exit|time`, pre / post copies, `t085_partial.patch`.
+Edited in the tree: `redesign/qp/A/structures/fe_a.py`, `redesign/qp/A/TEST-PLAN-O4B.md`.
+Limits of this work: beam FE (no shell / solid airframe model); hub stiffness from the D-209 mesh (not the drawn D-220 sleeve); pad hardness, bulk modulus K, pouch and strap stiffness, tray support by the core slot, and bond slack are "—"; the lever sketches change no CAD, mass, CG or BOM; PETG hub block is a proxy, not a drawn material.
