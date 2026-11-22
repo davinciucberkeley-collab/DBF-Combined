@@ -284,3 +284,13 @@ Requirement IDs: R-GEN-02, R-OPT-02.
 ```text
 Yes, run cost-trim
 ```
+
+## AM-021 — 2026-11-22 — Run T-087 (rib tube and hub-bar sourcing)
+Relation: answers the question after T-086 (D-234; margin +$16.31). Dillon approves T-087: replace the R15 25x23 rib
+tube with a US stock tube or built-up section, and verify hub-bar sourcing, with the design re-checks. No purchase
+before early December; $2,000 total stays hard; no limit relaxed.
+Requirement IDs: R-GEN-02, R-OPT-02.
+
+```text
+Yes, run T-087
+```
