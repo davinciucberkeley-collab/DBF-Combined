@@ -1,0 +1,2 @@
+TFULL 14.168 N per motor, KQ_SHAFT 0.0145 m, yaw arm 0.0953 m, config t089
+done 24 groups in 261 s (8 procs)

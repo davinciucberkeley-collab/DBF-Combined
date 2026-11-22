@@ -328,3 +328,13 @@ Requirement IDs: R-PHY-09, R-GEN-02.
 ```text
 Yes, continue
 ```
+
+## AM-026 — 2026-11-22 — Pause for later resumption
+Relation: process instruction. T-089 and T-032 implementers stopped; partial T-089 work saved
+(`redesign/qp/A/mechanism/out/T089_data/README-PAUSED.md`); T-032 left no file changes. Checkpoint in
+`docs/session-state.md`.
+Requirement IDs: R-COM-01.
+
+```text
+Reach a good place to pause for later resumption
+```

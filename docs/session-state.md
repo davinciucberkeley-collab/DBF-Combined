@@ -13,7 +13,7 @@ the ledger and the spec are.
 ## Checkpoint — 2026-11-22 (resumed AM-024; session 7cb35b0a, conductor Opus); sections follow spec 10.4
 Nothing pushed (branch redesign/v1).
 
-**Goal:** master program (spec + AM-001..AM-024). Concept A O4b, Claude-designed and student-built (AM-008). Current
+**Goal:** master program (spec + AM-001..AM-026). Concept A O4b, Claude-designed and student-built (AM-008). Current
 configuration: D-226 saddle load path (CF bulkheads, 6061 centre node, 3-ply skin, 25x23 rib), SunnySky X2216 V3
 short-shaft 880KV on APC 9x4.5MR (D-227/D-228), no spare motor (AM-019), FIN-003 machined 6061 root fitting (D-229),
 fin tubes 387.4 mm / FIN_H 0.1937 (D-233), no BOM spare servo (D-234), hub bars T1/T11 from Zoro (D-235). Budget =
@@ -34,11 +34,18 @@ no robust lever; decided by TP-10b (T-A-TAP tap test of the built airframe, $0) 
 confirmed, reopen the C-route (arms 10x8 + bridge soft in z first). Proof chain carries CL-A-VIB-IN-BAND FAIL; gain
 margin claims UNVERIFIED (T-089).
 
-**Next action (2026-11-22, after AM-024 resume):** (1) done 2026-11-22: review round 3 + re-check, T-066, T-085, T-014, T-023, T-081 VERIFIED; (2) T-032 video pipeline hashes + follow-once; (3) T-089 gain-margin plant
-rebuild; (4) T-088 R15 stock check before the December order; then cleanup T-042..T-045, T-008, final verification
-T-047. Ask Dillon only for: December purchase approval (not before early Dec; check RMRC, Zoro and Carbonwebshop
-stock first), trunk height and lid opening (2018 Altima SL), Jacobs material and test-frame confirmations, anything
-over $2,000. A Zoro guest cart in the browser pane holds the two hub bars (nothing bought).
+**PAUSED 2026-11-22 (AM-026).** Nothing running; working tree clean; nothing pushed.
+**Next action on resume:** (1) T-089: read `redesign/qp/A/mechanism/out/T089_data/README-PAUSED.md`; finish the
+fu_cage X2216 plant (partial patch saved, incomplete), gain margins at the corners (D-191 method), forced response of
+the 94.6-108.7 Hz mode at FC and motors on the T-085 model, re-point params, run_all, T089_report.md + D-237;
+(2) T-032: update docs/video/PIPELINE.md s2 hashes on a stated basis (git blob or LF) with a commit pin, fix stale
+numbers (119.9 s / 7,194 frames), follow the doc once (steps under ~60 min; full main render only if feasible, else a
+frame range, stated), record in docs/video/PIPELINE-FOLLOW-<date>.md; (3) T-088 R15 stock check before the
+December order; then cleanup T-042..T-045, T-008, final verification T-047. Review rounds 2 and 3 are done
+(`docs/audits/2026-11-22-review-round-2.md`, `-round-3.md`). Ask Dillon only for: December purchase approval (not
+before early Dec; check RMRC, Zoro and Carbonwebshop stock first), trunk height and lid opening (2018 Altima SL),
+Jacobs material and test-frame confirmations, anything over $2,000. A Zoro guest cart in the browser pane holds the
+two hub bars (nothing bought).
 
 **Failures (history):** see git log and CHANGE-LOG; O4b with MN2212 infeasible (AM-017 study); MN3110, legs/skid,
 0.8 m/s touchdown and concept B rejected (`docs/audits/2026-11-21-config-study.md`); PETG FIN-003 failed (D-229).
