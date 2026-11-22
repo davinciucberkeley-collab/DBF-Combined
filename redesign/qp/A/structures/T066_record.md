@@ -100,3 +100,5 @@ Hub stiffness:
 2. Confirm that the iteration-1 foam-shear-from-bridge-moment row is retired as "not a load path" (D-226).
 3. `gen_params_a.py` ship_usd vs BOM-A.csv groups (blocks `run_all.py`).
 4. Cruise rpm for the X2216 at 1.873 kg (carried EST) and the control-band GM clause need `sitl/` re-runs.
+
+> 2026-11-22 note: this record is the snapshot at ac983050 (FIN_H 0.18, tip-over 29.2 deg FAIL, 1.873 kg). The committed `structures_a.py` / `structures_run.md` are the T-084 rerun (FIN_H 0.1937, tip-over 31.1 deg PASS, 1.8796 kg): see `redesign/qp/A/mechanism/out/T084_report.md` s4.

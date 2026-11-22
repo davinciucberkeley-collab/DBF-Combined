@@ -89,8 +89,8 @@ Append one row per delegated task. Review at each milestone: are opus runs justi
 | 2026-11-22 | READY-rows review (12 rows) | eng-reviewer / opus | review | done: 6 VERIFIED, 1 FAILED, 4 keep READY, 1 deferred | 140 k tok / 5.8 min | 0 | — | conductor applied verdicts |
 | 2026-11-22 | T-014 model-usage backfill | general-purpose / haiku | routine accounting | done: 35 rows added, 3 stale cells fixed | 213 k tok / 5.8 min | 0 | — | conductor spot-check OK |
 | 2026-11-22 | T-023 CAD consistency review + T-081 re-check | eng-reviewer / sonnet (override, minimise compute) | review | done: T-023 FAIL (4 Major), T-081 keep READY (5 gaps) | 131 k tok / 4.8 min | 0 | — | fixes delegated |
-| 2026-11-22 | T-066 structures_a re-baseline | implementer / sonnet | moderate-high | done: re-baselined; 2 FAILs found (spar mode, tip-over) to T-084 | — | 0 | — | conductor check OK (D-232) |
-| 2026-11-22 | T-023 / T-081 fixes | implementer / sonnet | moderate | done: parts list, hub stock, E-HRN-13, TP-12..14 | — | 0 | — | committed 174529b8 |
+| 2026-11-22 | T-066 structures_a re-baseline | implementer / sonnet | moderate-high | done: re-baselined; 2 FAILs found (spar mode, tip-over) to T-084 | not recorded (notification gave none) | 0 | — | conductor check OK (D-232) |
+| 2026-11-22 | T-023 / T-081 fixes | implementer / sonnet | moderate | done: parts list, hub stock, E-HRN-13, TP-12..14 | not recorded (notification gave none) | 0 | — | committed 174529b8 |
 | 2026-11-22 | T-084 tip-over + spar mode | implementer / opus | high (structures + CAD + gates) | A-P9 closed (31.00 deg); D-185 not closed (model artifact found, cage mode 96.2 Hz at hi) | 459 k tok / 107 min | 0 | opus chosen: coupled structures/CAD trade | conductor re-ran tip-over and BOM, read gates: OK |
 
 Backfilled 2026-11-22 from the session transcripts (task notifications); T-014 review F-1, `docs/audits/2026-11-22-ready-rows-review.md`.
