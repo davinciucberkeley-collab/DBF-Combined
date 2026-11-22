@@ -6,7 +6,7 @@
 |---|---|---|---|---|---|---|
 | A1 | Wing core on the bench (lower surface up), built in segments round the four CF bulkheads (centre WNG-013-R/L at |y| 60, fin node FIN-005-R/L) with the fin-node in-plane plates FIN-009 under the skin, the cove CF strip and the glass skin (ply 1 + plies 2-3 over |y| 52..400) wet-laid on it (T-070, T-077 p8 / D-226; the packing-tape skin, hinge tape and bulkhead tape laps are not drawn) | 11 | ok | 0.00 | - | - |
 | B0a | Bench: cut the two arm tubes (552.4 mm of 12x10), the bridge (117.5 mm, D-206 / T-077 p8, from the 16x14 fin-tube offcut) and the two struts (291.2 mm of 8x6) from the carbon stock; sand the ends square | 0 | ok | 0.00 | - | - |
-| B0b | Bench: the printed hub stands on the bench, aft face down | 1 | ok | 0.00 | - | - |
+| B0b | Bench: the machined hub stands on the bench, aft face down | 1 | ok | 0.00 | - | - |
 | B0c | Arm tube B slid through its sleeve and the centre block (from the LL side, along its axis) | 1 | ok | 0.00 | - | - |
 | B0d | Two 3 mm pins (LR, UL) pushed in along x from the nose side through the block access holes, the sleeve and tube B | 2 | ok | 0.00 | - | - |
 | B0e | Arm tube A slid through its sleeve and the centre block (from the LL side, along its axis) | 1 | ok | 0.00 | - | - |

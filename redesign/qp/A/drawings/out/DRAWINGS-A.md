@@ -1,6 +1,6 @@
 # Concept A engineering drawings
 
-Generated from the CAD by `drawings/make_drawings_a.py` (commit b21947ed, 2026-11-21). One sheet per distinct made part; mirror pairs and identical parts share a sheet. Every dimension is the CAD value; feature names that say EST are estimates. Re-run after any CAD change. All sheets: [DRAWINGS-A.pdf](DRAWINGS-A.pdf).
+Generated from the CAD by `drawings/make_drawings_a.py` (commit de638ea8, 2026-11-22). One sheet per distinct made part; mirror pairs and identical parts share a sheet. Every dimension is the CAD value; feature names that say EST are estimates. Re-run after any CAD change. All sheets: [DRAWINGS-A.pdf](DRAWINGS-A.pdf).
 
 | Drawing | Parts (qty) | Material | Size mm (design frame) | Sheets |
 |---|---|---|---|---|
@@ -19,10 +19,10 @@ Generated from the CAD by `drawings/make_drawings_a.py` (commit b21947ed, 2026-1
 | [CGE-010-C](CGE-010-C.pdf) | CGE-010-C (1) | CFRP rod | 38.5 x 3.0 x 3.0 | 1 sheet(s), 1 features |
 | [CGE-010-LR](CGE-010-LR.pdf) | CGE-010-LR, CGE-010-UL (2) | CFRP rod | 14.5 x 3.0 x 3.0 | 1 sheet(s), 1 features |
 | [CGE-010-LL](CGE-010-LL.pdf) | CGE-010-UR, CGE-010-LL (2) | CFRP rod | 15.0 x 3.0 x 3.0 | 1 sheet(s), 1 features |
-| [FIN-001](FIN-001.pdf) | FIN-001-R, FIN-001-L (2) | CFRP tube | 16.0 x 16.0 x 360.0 | 1 sheet(s), 1 features |
+| [FIN-001](FIN-001.pdf) | FIN-001-R, FIN-001-L (2) | CFRP tube | 16.0 x 16.0 x 387.4 | 1 sheet(s), 1 features |
 | [FIN-002](FIN-002.pdf) | FIN-002-R, FIN-002-L (2) | CFRP tube | 215.5 x 25.0 x 25.0 | 1 sheet(s), 1 features |
 | [FIN-003](FIN-003.pdf) | FIN-003-R, FIN-003-L (2) | Al 6061-T6 (machined) | 48.1 x 24.6 x 38.0 | 1 sheet(s), 8 features |
-| [FIN-004](FIN-004.pdf) | FIN-004-R, FIN-004-L (2) | XPS foam + tape | 110.0 x 3.0 x 360.0 | 1 sheet(s), 9 features |
+| [FIN-004](FIN-004.pdf) | FIN-004-R, FIN-004-L (2) | XPS foam + tape | 110.0 x 3.0 x 387.4 | 1 sheet(s), 9 features |
 | [FIN-005-L](FIN-005-L.pdf) | FIN-005-L (1) | CF fabric laminate (cut sheet) + glass tape + flox | 175.8 x 27.0 x 23.7 | 1 sheet(s), 6 features |
 | [FIN-005-R](FIN-005-R.pdf) | FIN-005-R (1) | CF fabric laminate (cut sheet) + glass tape + flox | 175.8 x 27.0 x 23.7 | 1 sheet(s), 5 features |
 | [FIN-006](FIN-006.pdf) | FIN-006-R, FIN-006-L (2) | XPS foam + tape | 105.8 x 27.8 x 13.4 | 1 sheet(s), 3 features |

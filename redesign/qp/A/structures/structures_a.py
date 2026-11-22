@@ -5,12 +5,13 @@ Categories (one per section): s1 geometry arithmetic (CAD declared masses); s2 a
 eigen-analysis + modal forced response (beam FE, NOT shell / solid FEA); s5 rigid-body dynamics (landing_a.simulate) + hand calculation (rib root); s6 carried-forward
 rows of other records (not recomputed here).  Labels: EST estimate, V vendor page, CALC computed here, '-' unknown.
 Basis: the committed CAD at commit ac983050 (D-226 saddle load path, D-227 / D-228 X2216 V3 880KV on APC 9x4.5MR, D-229 machined 6061 FIN-003 root fitting).
+T-084 (2026-11-22): fin tube ends at FIN_H 0.1937 (A-P9, mechanism/out/T084_report.md s1); s4b adds the same FE with the D-226 wing cell credited (fe_a wing_cell keyword).
 Method scaled from team/C1, C2, C4, C5, C6 (K09-L); K09-L files untouched."""
 import math, sys, os, json, contextlib, io
 HERE = os.path.dirname(os.path.abspath(__file__)); QPA = os.path.abspath(os.path.join(HERE, ".."))
 sys.path.insert(0, HERE)
 # ---- landing_a reads these at import: predicted mass (T-083b tallied 1.873 kg), CAD part-table mass model, 25x23 rib (wing.py RIB_OD / RIB_ID) ----
-M_PRED = 1.873                                  # kg, T-083b tallied predicted mass (redesign/qp/A/mechanism/out/T083b_report.md s0 row 6; basic 1.6275 kg x 1.1174 + 0.032 x 1.47 + 7.0 g undrawn shoe cups)
+M_PRED = 1.8796                                 # kg, T-084 tallied predicted mass (mechanism/out/T084_data/metrics_t084.txt: basic 1.6330 kg + 7.0 g undrawn shoe cups, x 1.1174 + 0.032 x 1.47); T-083b was 1.873
 os.environ["LAND_MASS_KG"] = str(M_PRED); os.environ["LAND_MASS_MODEL"] = "cad"; os.environ["LAND_RIB_OD"] = "0.025"; os.environ["LAND_RIB_ID"] = "0.023"
 import numpy as np
 import fe_a, landing_a, landing_mass_cad as LM
@@ -50,7 +51,7 @@ FINT = (m.FIN_OD, m.FIN_ID)                      # fin tube 16x14: common.py FIN
 Y_M, Z_M = m.YM, m.ZM                            # motor station 0.228 / 0.156: common.py YM, ZM
 X_HUB = m.HUB[0]                                 # hub x -0.078: common.py HUB = -0.069 + CAGE_DX (-0.012 + T083_DX +0.003)
 X_FIN = m.XFIN_T                                 # fin tube x 0.294: common.py XFIN_T
-Y_FIN = m.YFIN; H_FIN = m.FIN_H                  # 0.38, 0.18: common.py
+Y_FIN = m.YFIN; H_FIN = m.FIN_H                  # 0.38, 0.1937 (T-084, was 0.18): common.py
 A_S, I_S, Z_S = tube(*SP); A_A, I_A, Z_A = tube(*ARM); A_B, I_B, Z_B = tube(*BR); A_V, I_V, Z_V = tube(*STR); A_R, I_R, Z_R = tube(*RIB); A_F, I_F, Z_F = tube(*FINT)
 E_CF = 70e9                                      # nominal CF tube E (fe_a.E_CF['nom'], ASM-C2 low-corner value)
 def mg(*pre, ex=()):
@@ -89,7 +90,7 @@ FEIN = dict(
     root_g=(mg("FIN-003-R")+mg("FIN-005-R")+mg("FIN-009-R")+mg("FIN-006-R")+mg("FIN-010-R")),   # root fitting + node bulkheads + plates + rib fairings per fin side
 )
 FEKW = dict(spar_tube=SP, arm_tube=ARM, rib_tube=RIB, bridge_cfg="single+V", bridge_tube=BR, vtube=STR, bridge_yv=m.STRUT_E[1], fin_strip=None,
-            fin_tube=(FINT[0], FINT[1], 3e-3, 0.055), x_fin=X_FIN, x_hub=X_HUB,
+            fin_tube=(FINT[0], FINT[1], 3e-3, 0.055), x_fin=X_FIN, x_hub=X_HUB, h_fin=H_FIN,   # T-084: fin tip at the CAD FIN_H (0.1937; fe_a default 0.180)
             wing_g=FEIN["wing_g"], avionics_g=FEIN["avionics_g"], centre_extra_g=FEIN["centre_extra_g"], pack_g=FEIN["pack_g"], hub_extra_g=FEIN["hub_extra_g"],
             motor_g=FEIN["motor_g"], foot_pad_m=FEIN["foot_pad_m"], root_g=FEIN["root_g"])
 P("\nFE model inputs (all from the CAD part table, g): " + ", ".join(f"{k} {(v*1000 if k == 'foot_pad_m' else v):.2f}" for k, v in FEIN.items()) + f"; bridge_yv {m.STRUT_E[1]} (STRUT_E y), x_hub {X_HUB*1e3:.1f} mm, x_fin {X_FIN*1e3:.0f} mm, fin tube foam 3 mm + tape 55 g/m2 carried from the iteration-3 setup (EST).")
@@ -219,7 +220,7 @@ for kind in ("kd", "nom", "hi"):
             P(f"| {kind} | {f:.0f} | {cl.split(',')[0]} | {cx:.2f} / {cy:.2f} | {s2*100:.0f} % | {'YES' if inb else 'no'} | {fr} | {'**FAIL** (strong by the 0.5 rule, in band; limit not relaxed)' if inb else 'PASS (strong, outside the band)'} |")
 P(f"\nStrongly coupled modes inside the excluded band: {'none' if not strong_in_band else ', '.join(f'{k} {f:.0f} Hz' for k, f in strong_in_band)}.")
 if strong_in_band:
-    P("Reading of the FAIL rows: this is the spar mode that iter3_run.md listed as weak (coupling 0.45, 199-242 Hz). With the D-226 masses (centre node, bulkheads, 6061 hub) its coupling rose past the threshold (cy 0.52, table above) and the D-185 rule 'strongly coupled (>= 0.5) mode inside the excluded band' fails by definition; the rule is not relaxed here. Its single-mode forced response (column above) is far below 30 m/s2 and the full rpm sweep below passes, so the open question is the rule, not the vibration level: for the design owner (D-185 threshold ruling), not changed in this task.")
+    P("Reading of the FAIL rows (T-084 root cause, `mechanism/out/T084_report.md` s2, `T084_data/modes_final.txt`): the mode is the wing's antisymmetric IN-PLANE (chordwise) bending with the cage swaying sideways on the bridge and struts. In this model the wing's in-plane stiffness is the 12x10 spar alone (EI 37 N m2); the drawn D-226 wing (foam core + 3-ply glass skin + cove CF strip) has 330-6,800 N m2 nominal and 185-1,650 N m2 at the lower bound (`T084_data/cell_props.txt`), so this mode is an artifact of the beam model: with the cell credited it leaves the band at every corner (s4b). Its coupling grew 0.45 -> 0.52 mainly because the strut end moved inboard 0.300 -> 0.285 m (0.42 -> 0.55) and the fin-root lumps grew 6 -> 32 g (0.48 -> 0.53). The rule is not relaxed here; s4b shows what the cell-credited model fails instead.")
 for kind in ("kd", "nom", "hi"):
     lo = max([f for (f, e, v, cx, cy) in results[kind] if (cx >= 0.5 or cy >= 0.5) and f < BAND_LO] or [0]); hi = min([f for (f, e, v, cx, cy) in results[kind] if (cx >= 0.5 or cy >= 0.5) and f > BAND_HI] or [float('nan')])
     P(f"- {kind}: highest strongly coupled mode below the band {lo:.0f} Hz (limit {BAND_LO:.0f}, margin {100*(BAND_LO/lo-1) if lo else float('nan'):.0f} %); lowest above the band {hi:.0f} Hz (limit {BAND_HI:.0f}, margin {100*(hi/BAND_HI-1):.0f} %)")
@@ -251,6 +252,20 @@ for kind in ("kd", "nom", "hi"):
         P(f"| {kind} | {zt*100:.1f} % | {tot_[k]:.1f} at {rr[k]:,.0f} | {pa:.1f} | {30/tot_[k]-1:+.2f} | {w1:.1f} at {rr[k1]:,.0f} | {w2:.1f} | {cr:.1f} |")
 worst_sweep = max(v[0] for v in sweep.values()); worst_pa = max(v[2] for v in sweep.values())
 P(f"Sweep verdict: worst sum-of-axes {worst_sweep:.1f} m/s2 (MS {30/worst_sweep-1:+.2f} vs 30 as a bound), worst per-axis rms-like {worst_pa:.1f} m/s2 (MS {30/worst_pa-1:+.2f}): {'PASS' if worst_sweep < 30 else ('PASS on the per-axis (VIBE-like) figure only; the sum-of-axes bound FAILS' if worst_pa < 30 else 'FAIL')}. Closes the T-083 open item 'extend the A-P10(b) sweep to 11,400 rpm' for the beam-FE model.")
+# ---- T-084 s4b: the same FE with the D-226 wing torsion cell credited in the spar beam (fe_a wing_cell; properties from the landing-row section model)
+sys.path.insert(0, os.path.join(QPA, "mechanism", "out", "T084_data")); import t084_cell_props as CPC
+P("\n### 4b. T-084: same beam FE with the D-226 wing cell credited (FEA-lite sensitivity of the wing model; band and coupling rule unchanged)")
+P("Wing beam = spar + XPS core + glass +-45 skin plies (1 ply |y| <= 0.075, 3 plies to 0.40) + cove CF strip, spar + foam outboard of 0.40 (`T084_data/t084_cell_props.py`: the section model of landing_path_a P15 / P16; foam E 30 / G 8 MPa EST, ACP glass x Vf 0.70, strip 120 GPa EST). Lower bound: foam x0.5, skin x0.7, no strip. Corners scale the CF parts only. Pack, hub and lumps as above.")
+P("| wing model | corner | strong modes IN the band (f Hz, cx / cy) | highest strong below (margin to %.0f) | lowest strong above (margin to %.0f) | D-185 (a) |" % (BAND_LO, BAND_HI)); P("|---|---|---|---|---|---|")
+cell_fail = []
+for lab_, low_ in (("cell nominal", False), ("cell lower bound", True)):
+    for kind in ("kd", "nom", "hi"):
+        Fc, _ = fe_a.build(kind, **dict(FEKW, wing_cell=CPC.cell_for(kind, lower=low_))); rc = Fc.solve(130)
+        stc = [(f, cx, cy) for (f, e, v, cx, cy) in rc if (cx >= 0.5 or cy >= 0.5) and f < 800]; inb_c = [q for q in stc if BAND_LO <= q[0] <= BAND_HI]
+        lo_c = max([q[0] for q in stc if q[0] < BAND_LO] or [0]); hi_c = min([q[0] for q in stc if q[0] > BAND_HI] or [float('nan')])
+        if inb_c: cell_fail.append((lab_, kind, inb_c[0][0]))
+        P(f"| {lab_} | {kind} | {'; '.join(f'{f:.1f} ({cx:.2f} / {cy:.2f})' for f, cx, cy in inb_c) or 'none'} | {lo_c:.1f} ({100*(BAND_LO/lo_c-1):+.0f} %) | {hi_c:.0f} ({100*(hi_c/BAND_HI-1):+.0f} %) | {'**FAIL**' if inb_c else 'PASS'} |")
+P(f"Reading (T-084): with the cell credited the in-plane spar mode leaves the band (largest in-band coupling 0.21-0.27), but the symmetric wing-flap / cage-bounce mode (hub and pack bouncing on the bridge, arms flexing; 79-96 Hz) rises to the band's lower edge {BAND_LO:.0f} Hz: in band at {', '.join(f'{a} {k} {f:.1f} Hz' for a, k, f in cell_fail) or 'no corner'}. With the pack placed at its drawn x (rigid on the hub) instead of at the hub node it moves up further (94-107 Hz, `T084_report.md` s2.4). No lever within the BOM moves it robustly below {BAND_LO:.0f} Hz (bridge 12x10 fails D-206 torsion). D-185 (a) is therefore NOT shown to pass by the beam FE in either wing model; the rule is not relaxed: open, T-084 report s2 options (tap test T-A-TAP on the built structure).")
 P("\nNot re-run here (listed in T066_record.md): the control-band gain-margin clause of iter3_run.md (`sitl/fu_cage.py`) with the X2216 masses / inertias, and a tap test of the built cage.")
 F, info = fe_a.build("kd", **FEKW)
 P(f"\nFin out-of-plane EI {info['EI_out']:.1f} N m2 (kd, 16x14 tube), mass/length {info['mu']*1e3:.0f} g/m (tube + 3 mm foam fairing + tape); rib EI (25x23) {E_CF*I_R:.0f} N m2 (was 14x12: {E_CF*math.pi/64*(0.014**4-0.012**4):.0f}). D-202 arm crossing: arms modelled as four 12x10 beams meeting at one hub node (see limits in T066_record.md).")
@@ -283,7 +298,7 @@ P("| Motor screws / X-mount / cup rows | carried from `mechanism/out/T083_data/t
 
 # ======================================================================= 5. C5
 P("\n## 5. C5 landing on fin-tip feet (rigid-body dynamics + hand calculation)")
-TABLE_T066 = os.path.join(HERE, "T066_data", "cad_part_table_T066.json")
+TABLE_T066 = os.path.join(QPA, "mechanism", "out", "T084_data", "cad_part_table_T084.json")   # T-084: rebuilt from the T-084 CAD (fins 13.7 mm longer); T-066 table kept in T066_data
 if not os.path.exists(TABLE_T066):
     os.makedirs(os.path.dirname(TABLE_T066), exist_ok=True); LM.build_table(TABLE_T066)
 LM.TABLE = TABLE_T066; LM._P = None
@@ -292,7 +307,7 @@ FP, SMAX = 36.0, 0.024                           # N plateau, m usable stroke (T
 cgx, cgz = landing_a.geom()["cg"][0], landing_a.geom()["cg"][2]
 XF = 0.3415+1.5*(SMAX-0.020)                      # pad x: PAD_D2 x_foot 0.3415 (landing_path_a.PAD_D2) + 1.5 x (stroke - 20 mm) (t076d_step2_table.pad_geometry, D-222 s4.1)
 ZF = math.tan(math.radians(30.5))*(XF-cgx)+cgz-0.006      # pad centre z: edge holds A-P9 30.5 deg, pad dz 12 mm
-P(f"Static (drawn pads, CG {st['cg_x']*1e3:.2f} mm aft of LE from cad_mass.json, ground plane x {landing_a.geom()['x_foot']:.4f}): tip-over narrow axis **{st['tip_narrow']:.1f} deg: {'PASS' if st['tip_narrow'] >= 30 else 'FAIL'} vs A-P9 30 deg** (pre-existing: the drawn pads have not met A-P9 since T-083, T083_report.md s5.2 gives 29.48 at CG 24.41 mm; the analysis pad of D-222 s4.1 is designed for 30.5 and is not drawn), wide axis {st['tip_wide']:.1f} deg. Parked broadside to the wind: tips at {st['v_tip_parked']:.1f} m/s; restoring / overturning at 5 m/s {st['restore_ratio_5ms']:.2f}. I (kg m2, CAD part-table model scaled to {M_PRED} kg): {np.round(st['I'],4).tolist()}.")
+P(f"Static (drawn pads, CG {st['cg_x']*1e3:.2f} mm aft of LE from cad_mass.json, ground plane x {landing_a.geom()['x_foot']:.4f}): tip-over narrow axis **{st['tip_narrow']:.1f} deg: {'PASS' if st['tip_narrow'] >= 30 else 'FAIL'} vs A-P9 30 deg** (T-084: fin tube ends at FIN_H {m.FIN_H:.4f} m, option T3 of the T-068 decision s4; was 29.2 deg at FIN_H 0.180. Pad centre, CG z ignored, as T-066; the D-215 A-P9 pivot, the outer pad edge on the CG z side, gives {math.degrees(math.atan2(m.FIN_H+0.003-st['cg_z'], st['h'])):.2f} deg here and >= 31.00 deg over both trim ends, drawn and tallied CG: `mechanism/out/T084_data/tipover_t084.txt`), wide axis {st['tip_wide']:.1f} deg. Parked broadside to the wind: tips at {st['v_tip_parked']:.1f} m/s; restoring / overturning at 5 m/s {st['restore_ratio_5ms']:.2f}. I (kg m2, CAD part-table model scaled to {M_PRED} kg): {np.round(st['I'],4).tolist()}.")
 P(f"Demand basis (T-083, reused): pad plateau {FP:.0f} N, usable stroke {SMAX*1e3:.0f} mm, pad x {XF:.4f} m, z {ZF:.4f} m (analysis pad of D-222 s4.1, not the drawn pad), mass {M_PRED} kg, CG from cad_mass.json ({cgx*1e3:.2f} mm), CAD part-table mass model rebuilt from the current CAD (`T066_data/cad_part_table_T066.json`, {len(LM.parts())} parts, basic {LM.basic_mass_kg():.4f} kg), friction mu 0.40 / 0.30, pad zeta 0.02 / 0.05 / 0.10 (EST, TP-3 measures it), dt 0.2 ms.")
 S_ = math.pi/2
 CASES = [("hard level", dict(v_sink=1.2)), ("hard 10 narrow", dict(v_sink=1.2, th_n=10)), ("hard 10 narrow neg", dict(v_sink=1.2, th_n=-10)),

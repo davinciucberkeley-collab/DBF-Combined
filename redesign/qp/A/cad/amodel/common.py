@@ -45,7 +45,7 @@ HUB = (-0.069 + CAGE_DX, 0.0, 0.0)                    # D-205: hub 6 mm aft (DOC
 YM, ZM = 0.228, 0.156                       # DOC: motors at y 0.228 / z 0.156
 R_M = math.hypot(YM, ZM)                    # 0.2762 (DOC radius 0.276)
 CANT = 17.0                                 # D-189 (was 16, D-184): yaw authority 0.3465 -> 0.363 N m
-YFIN, XFIN_T, FIN_H = 0.38, 0.294, 0.18     # DOC: fins at y 380, tube at x 0.294, z +-0.18
+YFIN, XFIN_T, FIN_H = 0.38, 0.294, 0.1937   # DOC: fins at y 380, tube at x 0.294, z +-0.18. T-084 (A-P9, option T3 of docs/audits/2026-11-19-T068-decision.md s4, chosen over T2'): fin tube ends +13.7 mm (z +-0.1937), so the pad centre FIN_H - 3 mm = 0.1907 m equals the T-083 demand pad z (demand_t083.json zf 0.19073) and the pad outer edge FIN_H + 3 mm = 0.1967 m gives static tip-over 31.00 deg (edge toward the CG) at the drawn forward trim CG (mechanism/out/T084_report.md s1)
 FIN_OD, FIN_ID = 0.016, 0.014               # DOC 16x14 tube
 PACK_X = (-0.0485 + T083_DX, -0.0155 + T083_DX)  # T-083: +3 mm forward with the cage. T-077 p4 (D-224 rung 3a + 3c): pack centre -32 mm absolute = -20 mm in the tray (tray front -57), 12 mm cage shift + 10 mm pack shift; held by two outboard straps (|y| 35), clear of the hub collar (|y| <= 12). Part 3 had (-0.0265, 0.0065)
 PACK_X_P2 = (-0.0365, -0.0035)  # T-077 part 2 ladder rung 1: pack 10 mm forward (centre -20 mm, the QP-4 position; front lip -44.5..-42.5 on the root pad, hub face -45). T-077 RDQ 2800 pack 33 mm wide (was 35: -27.5..7.5), same centre -10 mm.                 # QP-4 7.2 #2: pack moved 10 mm aft (centre -10 mm; was -20 mm) so the CAD CG lands mid-band (23 mm) WITH the D-187 elevon balance and the ES3054HV servos; trim +-10 mm in the tray slots

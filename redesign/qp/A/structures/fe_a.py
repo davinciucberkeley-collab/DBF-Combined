@@ -107,7 +107,7 @@ class Frame:
 
 def build(kind="nom", y_fin=Y_FIN, rib_wall=0.8e-3, rib_wh=(30e-3, 14e-3), arm_len_scale=1.0, hub_bridge=(24e-3, 30e-3, 1.5e-3),
           foot_pad_m=0.003, wing_g=212.0, pack_g=270.0, motor_g=65.0+11.06+5.0+4.3+2.9, avionics_g=110.0, fin_skin_t=0.1e-3, fin_core=15e-3,
-          fin_E_skin=50e9, root_fix=None, verbose=False, arm_tube=(14e-3, 12e-3), bridge_cf=True, bridge_tube=(8e-3, 6e-3), spar_tube=(16e-3, 14e-3), rib_tube=None, bridge_cfg='single', bridge_yv=0.12, vtube=(8e-3, 6e-3), fin_strip=None, arm_E_scale=1.0, fin_tube=None, x_fin=None, root_g=6.0, centre_extra_g=65.0, x_hub=None, hub_extra_g=20.0):
+          fin_E_skin=50e9, root_fix=None, verbose=False, arm_tube=(14e-3, 12e-3), bridge_cf=True, bridge_tube=(8e-3, 6e-3), spar_tube=(16e-3, 14e-3), rib_tube=None, bridge_cfg='single', bridge_yv=0.12, vtube=(8e-3, 6e-3), fin_strip=None, arm_E_scale=1.0, fin_tube=None, x_fin=None, root_g=6.0, centre_extra_g=65.0, x_hub=None, hub_extra_g=20.0, wing_cell=None, h_fin=None):
     E = E_CF[kind]; G = G_CF[kind]; Ep = E_PETG[kind]; Gp = G_PETG[kind]
     F = Frame()
     A_a = math.pi/4*(arm_tube[0]**2-arm_tube[1]**2); I_a = math.pi/64*(arm_tube[0]**4-arm_tube[1]**4)
@@ -118,7 +118,11 @@ def build(kind="nom", y_fin=Y_FIN, rib_wall=0.8e-3, rib_wh=(30e-3, 14e-3), arm_l
     for y in ys: F.node(f"s{y:+.3f}", (X_SPAR, y, 0.0))
     rho_spar = RHO_CF*A_s
     for a, b in zip(ys, ys[1:]):
-        F.beam(f"s{a:+.3f}", f"s{b:+.3f}", E*A_s, E*I_s, E*I_s, G*2*I_s, rho_spar, (0, 0, 1), "spar", nseg=3)
+        if wing_cell is None:
+            F.beam(f"s{a:+.3f}", f"s{b:+.3f}", E*A_s, E*I_s, E*I_s, G*2*I_s, rho_spar, (0, 0, 1), "spar", nseg=3)
+        else:   # T-084: wing torsion cell credited (spar + foam + skin + cove strip, structures/../T084_data/t084_cell_props.py); zone by the segment mid |y|; corner factor E/70 GPa on all of it
+            ym = abs(0.5*(a+b)); z_ = next(z for z in wing_cell["zones"] if ym <= z[0]); s_ = wing_cell.get("scale", {"hi": 90/70, "nom": 1.0, "kd": 61/70}[kind])
+            F.beam(f"s{a:+.3f}", f"s{b:+.3f}", s_*z_[1], s_*z_[2], s_*z_[3], s_*z_[4], rho_spar, (0, 0, 1), "spar", nseg=3)
     # wing (foam, tape, elevons, plugs) mass as lumps on the spar nodes, uniform in y, with 0.25 chord-ish offsets ignored
     wing_extra = wing_g*1e-3-RHO_CF*A_s*0.90
     for a, b in zip(ys, ys[1:]):
@@ -179,7 +183,7 @@ def build(kind="nom", y_fin=Y_FIN, rib_wall=0.8e-3, rib_wh=(30e-3, 14e-3), arm_l
         # rib: ex = +x ; vref = z -> ey = cross(z,x) = +y, ez = +z.  EIz = y-bending (Izr), EIy = z-bending (Iyr)
         F.beam(f"s{yf:+.3f}", root, E*A_r, E*I_r, E*I_r, G*2*I_r, RHO_CF*A_r, (0, 0, 1), "rib", nseg=3)   # rib = CF 14x12 tube (was PETG box)
         for sz in (1, -1):
-            tip = f"f{sy:+d}{sz:+d}"; F.node(tip, (xf, yf, sz*H_FIN))
+            tip = f"f{sy:+d}{sz:+d}"; F.node(tip, (xf, yf, sz*(H_FIN if h_fin is None else h_fin)))   # T-084: h_fin override (default H_FIN 0.180 unchanged)
             # fin beam along z from root: ex = sz*z ; vref = y -> ey = cross(y, ex)
             ex = np.array([0, 0, sz]); vref = np.array([0, 1.0, 0]); ey = np.cross(vref, ex); ey /= np.linalg.norm(ey)
             # ey = +/-x (in-plane), ez = cross(ex, ey) = +/- y (out-of-plane): local z bending (EIy) = out-of-plane

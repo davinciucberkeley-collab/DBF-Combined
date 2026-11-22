@@ -938,12 +938,12 @@ for s_ in 'RL':
     P('WNG-010-' + s_, 'Hinge damper rotor (%s): sleeve + flange bonded on the elevon tip' % s_, 'wing', DMP_ROTOR_G, 'PETG (printed)')
 # fins (allocation 70 g; STRUCTURES iteration 2: 119 g)
 for s in 'RL':
-    P('FIN-001-' + s, 'Fin tube 16x14 x 0.36 m (%s)' % s, 'fins', round(tube_g(0.36, FIN_OD, FIN_ID), 1), 'CFRP tube')
+    P('FIN-001-' + s, 'Fin tube 16x14 x %.4f m (%s; T-084: 2 x FIN_H, was 0.36 m)' % (2 * FIN_H, s), 'fins', round(tube_g(2 * FIN_H, FIN_OD, FIN_ID), 1), 'CFRP tube')
     P('FIN-002-' + s, 'Fin rib tube 14x12 (%s)' % s, 'fins', round(tube_g(RIB_X1 - RIB_X0, RIB_OD, RIB_ID), 1), 'CFRP tube')      # D-200: mass from the drawn length (215.5 mm; was 14.8 g for the DOC 0.227 m)
     P('FIN-003-' + s, 'Fin root fitting (%s; T-083b, replaces the PETG root block): machined 6061-T6, ring OD %.1f / bore %.1f x %.0f mm on the fin tube, plug OD %.1f / ID %.1f x %.0f mm bonded inside the 25x23 rib end, end plate %.1f mm x %.1f mm diameter notched by the fin tube; mass = drawn volume (voxel 0.2 mm) x 2.70 g/cm3'
       % (s, 2 * (FIN_OD / 2 + FB_GAP + FB_TR) * 1e3, (FIN_OD + 2 * FB_GAP) * 1e3, FB_HR * 1e3, (RIB_ID - 2 * FB_GAP) * 1e3, (RIB_ID - 2 * FB_GAP - 2 * FB_TP) * 1e3, (RIB_X1 - BLK_X0) * 1e3, FB_TE * 1e3, 2 * FB_RD * 1e3),
       'fins', round(fin_block_volume_m3() * 1e6 * RHO_AL, 2), 'Al 6061-T6 (machined)')
-    P('FIN-004-' + s, 'Fin fairing 3 mm XPS + tape (%s)' % s, 'fins', 8.4, 'XPS foam + tape')
+    P('FIN-004-' + s, 'Fin fairing 3 mm XPS + tape (%s; T-084: 2 x FIN_H tall, mass scaled from the listed 8.4 g at 0.36 m by height, EST)' % s, 'fins', round(8.4 * FIN_H / 0.18, 2), 'XPS foam + tape')
     if P5_CLAMSHELL:
         P('FIN-005-' + s, 'Clamshell cradle on spar (%s, T-077 p5, D-221): ring wall 2.0 mm on the spar (60 mm), socket 18 x 18 mm x 40 mm round the 14 mm rib, 4 mm pin bosses, printed PETG; mass = drawn volume x T-067 basis' % s, 'fins', 1.0, 'PETG (printed)')
         P('FIN-007-' + s, 'Clamshell CF plates (%s): 2 plates 0.5 mm x 41.5 x 24 mm (T-077 p6 trim of the p5 50 x 64; the record says about 50 x 75; corner radii -), waterjet-cut from 0.5 mm CF sheet (ACP PDS Dec 2014, 1.6 g/cm3), bonded on the cradle top and bottom faces; mass = drawn volume x 1.6' % s, 'fins', 6.0, 'CF fabric laminate (cut sheet)')

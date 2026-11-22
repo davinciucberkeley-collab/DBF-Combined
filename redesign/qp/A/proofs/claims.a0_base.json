@@ -240,6 +240,15 @@
    "where": "modes vs rotor bands, forced response, control-band GM, C1 loads at VD 24"
   },
   {
+   "id": "SRC-A-T084",
+   "type": "source",
+   "title": "T-084 static tip-over on the drawn pads (fin ends at FIN_H 0.1937, option T3)",
+   "kind": "file",
+   "url": "redesign/qp/A/mechanism/out/T084_data/tipover_t084.txt",
+   "checked": "2026-11-15",
+   "where": "minimum over the drawn and tallied CG and both pack-trim ends; pivot = outer pad edge on the CG z side (D-215 s4)"
+  },
+  {
    "id": "SRC-A-D195FL",
    "type": "source",
    "title": "Elevon flutter, lead 12.8 g (D-205; flutter_d205.md, else as flutter_d195.md)",

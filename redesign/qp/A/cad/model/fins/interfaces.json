@@ -4,15 +4,15 @@
  "parts": [
   {
    "id": "FIN-001-R",
-   "name": "Fin tube 16x14 x 0.36 m (R)",
+   "name": "Fin tube 16x14 x 0.3874 m (R; T-084: 2 x FIN_H, was 0.36 m)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 27.1,
+   "mass_g": 29.2,
    "material": "CFRP tube",
    "cg_xyz_m": [
     0.294,
     0.38,
-    -0.0
+    0.0
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -49,10 +49,10 @@
   },
   {
    "id": "FIN-004-R",
-   "name": "Fin fairing 3 mm XPS + tape (R)",
+   "name": "Fin fairing 3 mm XPS + tape (R; T-084: 2 x FIN_H tall, mass scaled from the listed 8.4 g at 0.36 m by height, EST)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 8.4,
+   "mass_g": 9.04,
    "material": "XPS foam + tape",
    "cg_xyz_m": [
     0.2395,
@@ -124,15 +124,15 @@
   },
   {
    "id": "FIN-001-L",
-   "name": "Fin tube 16x14 x 0.36 m (L)",
+   "name": "Fin tube 16x14 x 0.3874 m (L; T-084: 2 x FIN_H, was 0.36 m)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 27.1,
+   "mass_g": 29.2,
    "material": "CFRP tube",
    "cg_xyz_m": [
     0.294,
     -0.38,
-    -0.0
+    0.0
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -169,10 +169,10 @@
   },
   {
    "id": "FIN-004-L",
-   "name": "Fin fairing 3 mm XPS + tape (L)",
+   "name": "Fin fairing 3 mm XPS + tape (L; T-084: 2 x FIN_H tall, mass scaled from the listed 8.4 g at 0.36 m by height, EST)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 8.4,
+   "mass_g": 9.04,
    "material": "XPS foam + tape",
    "cg_xyz_m": [
     0.2395,

@@ -434,16 +434,16 @@ step(id='C2b', title='Lower lens caps',
 
 # ============================================================ STAGE 6: fins
 step(id='C3', title='Fin fairing, right',
-     line='Machine a 3 mm XPS fairing 360 mm long on the ShopBot (hot wire as the backup); tape it; slide it on from outboard; bond with foam-safe CA.',
+     line='Machine a 3 mm XPS fairing 387 mm long on the ShopBot (hot wire as the backup); tape it; slide it on from outboard; bond with foam-safe CA.',
      tools='ShopBot (face an XPS slab to 3 mm, then profile; backup: hot wire), tape, sandpaper, foam-safe CA',
-     check='Fairing 3 mm thick, 360 mm tall, 4 mm elliptical leading edge; CAD 8.4 g',
+     check='Fairing 3 mm thick, 387 mm tall (T-084), 4 mm elliptical leading edge; CAD 9.0 g',
      min=35, cure='',
      need=['XPS (R01), tape (R01), CA (R07, foam-safe only)'],
-     make=['Cut a 3 mm XPS fairing 360 mm tall (CAD `2 x FIN_H`): elliptical leading edge 4 mm long x 3 mm thick, straight sides, ending at the tube axis; tape it (8.4 g each). A rib groove runs across it (0.5 mm clearance) for the 14 mm rib.'],
+     make=['Cut a 3 mm XPS fairing 387 mm tall (CAD `2 x FIN_H` = 2 x 193.7 mm, T-084): elliptical leading edge 4 mm long x 3 mm thick, straight sides, ending at the tube axis; tape it (9.0 g each, EST scaled from 8.4 g at 360 mm). A rib groove runs across it (0.5 mm clearance) for the 14 mm rib.'],
      fit=['Slide the right fairing on from outboard (40 mm); it sits in the tube slot and round the rib. Bond with foam-safe CA.'],
      checks=['Fairing is vertical and flush with the tube front (x 294 mm tube centre, tube radius 8 mm).'],
-     fab=dict(kind='cut', pid='FIN-004-R', text='CUT  XPS 3 mm thick, 360 mm tall, elliptical nose; tape both faces', dims=[('FIN-004-R', 'cut 360 mm')]),
-     callouts=[('FIN-004-R', 'Fairing R: XPS 3 mm + tape, 8.4 g')])
+     fab=dict(kind='cut', pid='FIN-004-R', text='CUT  XPS 3 mm thick, 387 mm tall, elliptical nose; tape both faces', dims=[('FIN-004-R', 'cut 387 mm')]),
+     callouts=[('FIN-004-R', 'Fairing R: XPS 3 mm + tape, 9.0 g')])
 
 step(id='C4', title='Fin fairing, left',
      line='Same as C3 for the left fin: slide the fairing on from outboard.',
@@ -468,32 +468,32 @@ step(id='C5', title='Fin root fittings',
      callouts=[('FIN-003-R', 'Root fitting: machined 6061, plug in the rib end, ring on the fin tube'), ('FIN-002-R', 'Rib end')])
 
 step(id='C6', title='Fin tubes',
-     line='Cut two 16x14 fin tubes to 360 mm; drop each through its block; bond; keep them vertical.',
+     line='Cut two 16x14 fin tubes to 387.4 mm; drop each through its block; bond; keep them vertical.',
      tools='tube cutter, epoxy, square / plumb, calipers',
-     check='Tube 360 mm, centre at x 294 mm, y +-380 mm; vertical within 1 degree; CAD 27.1 g each',
+     check='Tube 387.4 mm (T-084), centre at x 294 mm, y +-380 mm; vertical within 1 degree; CAD 29.2 g each',
      min=60, cure='24 h epoxy cure (K09-L practice)',
-     need=['1 x 16x14 CF tube, 1 m (BOM R02): 2 x 0.36 m = 0.72 m'],
-     make=['Cut 2 tubes, each 360 mm (CAD FIN_H 0.18 m: z -180 to +180 mm; 27.1 g each).'],
-     fit=['Drop each tube down through its block (500 mm start, 360 mm tube): centred on z 0, 180 mm each side. Epoxy the block ring.'],
+     need=['1 x 16x14 CF tube, 1 m (BOM R02): 2 x 0.3874 m = 0.775 m, then the 114.5 mm bridge (B0a) from the rest (0.892 m with two 1.5 mm kerfs, EST)'],
+     make=['Cut 2 tubes, each 387.4 mm (CAD FIN_H 0.1937 m: z -193.7 to +193.7 mm; 29.2 g each). T-084: 13.7 mm longer each end than the 360 mm tube, so the pad edge sits at z +-196.7 mm for the 30 deg tip-over (A-P9).'],
+     fit=['Drop each tube down through its block (500 mm start, 387.4 mm tube): centred on z 0, 193.7 mm each side. Epoxy the block ring.'],
      checks=['Plumb: tube vertical in the wing plane (nose view) and in the side view within 1 degree (EST).',
-             'Equal height each side: tube ends at z +-180 mm +-1 mm.'],
+             'Equal height each side: tube ends at z +-193.7 mm +-1 mm (A-P9 depends on it: 1 mm short costs about 0.13 deg of tip-over, T084_data/tipover_t084.txt).'],
      safety=['The tube ends are sharp: cap them with tape until the feet are on.'],
-     fab=dict(kind='tube', pid='FIN-001-R', text='CUT  16x14 carbon tube to 360 mm  (BOM R02)', dims=[('FIN-001-R', 'cut 360 mm')]),
-     callouts=[('FIN-001-R', 'Fin tube R: CF 16x14, 360 mm, 27.1 g'), ('FIN-001-L', 'Fin tube L')],
-     hold=True, cp=['Fin tubes 360 mm, centred, vertical within 1 degree.', 'Weigh the half-built wing: about 790 g (CAD running total).'])
+     fab=dict(kind='tube', pid='FIN-001-R', text='CUT  16x14 carbon tube to 387.4 mm  (BOM R02)', dims=[('FIN-001-R', 'cut 387.4 mm')]),
+     callouts=[('FIN-001-R', 'Fin tube R: CF 16x14, 387.4 mm, 29.2 g'), ('FIN-001-L', 'Fin tube L')],
+     hold=True, cp=['Fin tubes 387.4 mm, centred, vertical within 1 degree.', 'Weigh the half-built wing: about 790 g (CAD running total).'])
 
 # ============================================================ STAGE 7: landing feet
 step(id='C7', title='Upper shoes',
      line='Print four foot shoes; slide the two upper ones on the top tube ends from above and bond.',
      tools='printer (PETG), epoxy',
-     check='Shoe plate faces aft; ring on the tube; CAD 1.4 g',
+     check='Shoe plate faces aft; ring on the tube; CAD 4.3 g (Onyx, printed_mass.json)',
      min=20, cure='24 h epoxy cure (K09-L practice)',
-     need=['PETG (R03). Print file: GER-001-UR/UL/LR/LL.stl x 4 (qp/A/drawings/out/stl/)'],
-     make=['Print GER-001 UR/UL/LR/LL: PETG, 1.4 g each; ring 12 mm tall on the tube, plate 5.5 x 21 x 15 mm facing aft for the pad (CAD).'],
+     need=['Onyx on the Jacobs Markforged X7 (T-077 p8). Print file: GER-001-UR/UL/LR/LL.stl x 4 (qp/A/drawings/out/stl/)'],
+     make=['Print GER-001 UR/UL/LR/LL: Onyx, 4.3 g each (CAD voxel x print basis); ring 12 mm tall on the tube, plate 5.5 x 21 x 15 mm facing aft for the pad (CAD).'],
      fit=['Slide the upper shoes on the upper tube ends (30 mm, from above), plate aft; epoxy.'],
      checks=['The four shoe plates are in one plane, 337.5 mm aft of the wing leading edge (CAD ground plane).'],
      fab=dict(kind='print', pid='GER-001-UR', orient='shoe ring axis up (EST)', text='PRINT  Onyx (Markforged X7, Jacobs)  GER-001-UR/UL/LR/LL.stl x 4 (qp/A/drawings/out/stl/; T-077 p8 recovery)'),
-     callouts=[('GER-001-UR', 'Shoe: PETG 1.4 g')])
+     callouts=[('GER-001-UR', 'Shoe: Onyx 4.3 g')])
 
 step(id='C8', title='Lower shoes',
      line='Raise the two lower shoes onto the bottom tube ends from below and bond.',

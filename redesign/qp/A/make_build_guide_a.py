@@ -143,7 +143,7 @@ def main():
     A('| Pins `CGE-010-*` | 3 mm CF rod (R14, price not found) | 15-16 / 29 | 4 + 1 | B0a | %.2f-%.2f | `wing.py` `PIN_L`, `PINC_X0` (D-202) |' % (m.PARTS['CGE-010-LR']['mass_g'], m.PARTS['CGE-010-C']['mass_g']))
     A('| V struts `CGE-005-*` | 6x4.5 CF (R10) | 286.2 | 2 | B0 | %.1f each (CAD part value, EST) | `wing.py` `STRUT_S`, `STRUT_E` |' % m.PARTS['CGE-005-R']['mass_g'])
     A('| Fin ribs `FIN-002-*` | 14x12 CF (R09) | 215.5 | 2 | C1 | %.1f each (from the drawn 215.5 mm, D-200) | `wing.py` `RIB_X1 - RIB_X0` |' % m.PARTS['FIN-002-R']['mass_g'])
-    A('| Fin tubes `FIN-001-*` | 16x14 CF (R02) | 360 | 2 | C6 | %.1f each | `common.py` `FIN_H` |' % m.PARTS['FIN-001-R']['mass_g'])
+    A('| Fin tubes `FIN-001-*` | 16x14 CF (R02) | %.1f | 2 | C6 | %.1f each | `common.py` `2 x FIN_H` (T-084) |' % (2 * m.FIN_H * 1e3, m.PARTS['FIN-001-R']['mass_g']))
     A('')
     A('Cut square: tape round the cut line, cut through the tape, sand the end flat. Wear a mask or cut wet.')
     A('')

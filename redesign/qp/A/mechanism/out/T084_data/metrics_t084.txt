@@ -1,0 +1,8 @@
+| State | basic g | pred kg | CG mm | SM % | fwd / aft trim CG mm | window % (dl) | T/W fresh dl | T/W sag dl | cruise s | 1.3 Vs m/s |
+|---|---|---|---|---|---|---|---|---|---|---|
+| T-084 as drawn (cad_mass.json) | 1633.0 | 1.8717 | 21.95 | 7.65 | 20.96 / 23.61 | +12.09 | 2.643 | 2.120 | 237 | 17.52 |
+| T-084 tallied (+ shoe cups; EST) | 1640.0 | 1.8796 | 23.13 | 7.17 | 22.14 / 24.78 | +11.88 | 2.632 | 2.111 | 234 | 17.56 |
+| T-084 tallied, rib 14x12 (coupon >= line) | 1616.2 | 1.8530 | 20.76 | 8.14 | 19.75 / 22.43 | +12.59 | 2.670 | 2.141 | 243 | 17.43 |
+
+Limits: A-P4 CG 19.3..26.0 mm, hard aft 28.5 (trim end), SM >= 5 % (CG <= 28.45 mm); A-P3 window >= +5 %; A-P2 T/W fresh >= 2.0, sag >= 1.6 (with the 3 % download); A-P6 1.3 Vs <= 17.0 m/s; cruise >= 204.6 s.
+T/W and window with Q_M_BAT_CURR_MAX 72 A (t083_packcap.state); cruise and 1.3 Vs from t083_prop.metrics (pack 2.8 Ah).

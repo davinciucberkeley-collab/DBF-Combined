@@ -1,10 +1,10 @@
-> **Scope (T-066, 2026-11-22): re-baselined to the CURRENT concept A geometry** (CAD at commit ac983050; supersedes the T-065 note that this file held the QP-3 iteration-1 baseline). Tubes: spar 12x10, arms 12x10 continuous (D-202), bridge 16x14 + two 8x6 struts, rib 25x23 (D-226), fin tube 16x14; D-226 bulkheads / centre node / 3-ply skin, D-227 / D-228 X2216 V3 880KV on APC 9x4.5MR, D-229 6061 FIN-003 fitting. Mass 1.873 kg predicted (T-083b), CAD basic 1.6275 kg (cad_mass.json 1.6275). Demand and DAF of T-083 / T-083b reused (pad 36 N / 24 mm, 21 cases (landing_path_a.cases(False); the T-083 text says 23, the function returns 21) x zeta 0.02 / 0.05 / 0.10 x mu 0.40 / 0.30; DAF 2.23 wing, 1.97 tubes). The ledger row's geometry list (arms 12x10, rib 14x12, bridge 16x14 + struts 6x4.5) is stale: the CAD has rib 25x23 and struts 8x6.
+> **Scope (T-066, 2026-11-22): re-baselined to the CURRENT concept A geometry** (CAD at commit ac983050; supersedes the T-065 note that this file held the QP-3 iteration-1 baseline). Tubes: spar 12x10, arms 12x10 continuous (D-202), bridge 16x14 + two 8x6 struts, rib 25x23 (D-226), fin tube 16x14; D-226 bulkheads / centre node / 3-ply skin, D-227 / D-228 X2216 V3 880KV on APC 9x4.5MR, D-229 6061 FIN-003 fitting. Mass 1.8796 kg predicted (T-083b), CAD basic 1.6330 kg (cad_mass.json 1.63298). Demand and DAF of T-083 / T-083b reused (pad 36 N / 24 mm, 21 cases (landing_path_a.cases(False); the T-083 text says 23, the function returns 21) x zeta 0.02 / 0.05 / 0.10 x mu 0.40 / 0.30; DAF 2.23 wing, 1.97 tubes). The ledger row's geometry list (arms 12x10, rib 14x12, bridge 16x14 + struts 6x4.5) is stale: the CAD has rib 25x23 and struts 8x6.
 
 ## 1. Structural mass: CAD declared masses (geometry arithmetic; `a_model.PARTS`, 131 parts)
 | Group | CAD declared g | note |
 |---|---|---|
 | Wing (WNG: core, skins, bulkheads, spar, plugs, elevons, balance, caps, dampers) | 296.0 | |
-| Fins (FIN: tube, rib, 6061 root fitting, node, fairings) + feet (GER) | 207.5 | |
+| Fins (FIN: tube, rib, 6061 root fitting, node, fairings) + feet (GER) | 213.0 | |
 | Cage (CGE: hub, arm tubes, cups, doublers, pins, bridge, struts, clamps, centre node, tray) | 240.8 | |
 | Propulsion (PRP: motors, props, adapters, nuts, X-mounts, ESC) | 391.0 | |
 | Power (PWR: pack, straps, pad) | 282.4 | |
@@ -12,22 +12,22 @@
 | Mechanisms (MEC, HWC-002) | 47.7 | |
 | Harness (HRN) | 66.3 | |
 | Hardware lump (HRD) | 27.8 | |
-| **Total basic (CAD)** | **1627.5** | cad_mass.json mass_basic_kg 1627.5 g: match |
+| **Total basic (CAD)** | **1633.0** | cad_mass.json mass_basic_kg 1633.0 g: match |
 
-Predicted = basic x 1.1174 + 0.032 x 1.47 (CALC-A-MASS-PRED, T083b_report.md s4.1): drawn 1.8656 kg; tallied (+7.0 g undrawn shoe cups EST, T-083b) 1.873 kg (used for all loads below). MASS-GATE limit 1.5 kg: the predicted mass exceeds it by 373 g (gate not relaxed; build_a reports it, T-083b s6). The old bottom-up roll-up (iteration-1 tubes, 'MASS-GATE allocation' column) is replaced by the CAD part table above; the structure-only groups (Wing + Fins + Cage + Hardware) are 772 g against the frozen 473 g of iter3_run.md (+ D-187 balance lead 21 g = 494 g).
+Predicted = basic x 1.1174 + 0.032 x 1.47 (CALC-A-MASS-PRED, T083b_report.md s4.1): drawn 1.8717 kg; tallied (+7.0 g undrawn shoe cups EST, T-083b) 1.8796 kg (used for all loads below). MASS-GATE limit 1.5 kg: the predicted mass exceeds it by 380 g (gate not relaxed; build_a reports it, T-083b s6). The old bottom-up roll-up (iteration-1 tubes, 'MASS-GATE allocation' column) is replaced by the CAD part table above; the structure-only groups (Wing + Fins + Cage + Hardware) are 777 g against the frozen 473 g of iter3_run.md (+ D-187 balance lead 21 g = 494 g).
 
 FE model inputs (all from the CAD part table, g): wing_g 308.64, avionics_g 175.50, centre_extra_g 83.98, pack_g 295.70, hub_extra_g 59.12, motor_g 101.72, foot_pad_m 5.00, root_g 32.24; bridge_yv 0.285 (STRUT_E y), x_hub -78.0 mm, x_fin 294 mm, fin tube foam 3 mm + tape 55 g/m2 carried from the iteration-3 setup (EST).
 
-## 2. C1 loads (hand calculation; limit unless marked; ult = 1.5 x limit; mass 1.873 kg)
-Vs 13.48 m/s (CLmax 0.75 EST), VA = Vs sqrt(3.4) = 24.9, VC 17, VD 24 (D-186). a = 3.74/rad, mu_g 15.2, Kg 0.652.
+## 2. C1 loads (hand calculation; limit unless marked; ult = 1.5 x limit; mass 1.8796 kg)
+Vs 13.51 m/s (CLmax 0.75 EST), VA = Vs sqrt(3.4) = 24.9, VC 17, VD 24 (D-186). a = 3.74/rad, mu_g 15.2, Kg 0.653.
 | Case | n | Note |
 |---|---|---|
-| Gust U 8 m/s at VC | 3.43 -> stall-limited 1.59 | wing cannot make the gust n at 17 m/s |
-| Gust U 4 m/s at VD (half, ASM-C1-UDE-D-FRAC) | 2.72 (stall line 3.17) | |
+| Gust U 8 m/s at VC | 3.42 -> stall-limited 1.58 | wing cannot make the gust n at 17 m/s |
+| Gust U 4 m/s at VD (half, ASM-C1-UDE-D-FRAC) | 2.71 (stall line 3.16) | |
 | Manoeuvre limit | +3.4 / -1.5 | A-P13 floor governs; ult +5.1 / -2.25; VA = 24.9 ~ VD |
-| Spar root bending, flight n 3.4 (elliptical lift, inertia relief) | 1.83 N m (5.97 unrelieved) | design uses unrelieved 5.97 limit; relief lumps: wing half 154 g at 0.225, 2 motor assemblies 203 g at 0.228, arm half 31 g at 0.114, fin / rib / feet half 104 g at 0.38 |
+| Spar root bending, flight n 3.4 (elliptical lift, inertia relief) | 1.82 N m (5.99 unrelieved) | design uses unrelieved 5.99 limit; relief lumps: wing half 154 g at 0.225, 2 motor assemblies 203 g at 0.228, arm half 31 g at 0.114, fin / rib / feet half 106 g at 0.38 |
 | Hover 8 m/s gust broadside (plate Cd 2.0): wing force 17.2 N, spar root | 1.94 N m | below flight case |
-| Cage pitch moment, upper pair at the cap (13.08 N each, T-083 s4) / lower pair 1.0 N | 3.77 N m on the bridge | the cap is the bound (A-P8 limit); hover thrust per motor 4.59 N |
+| Cage pitch moment, upper pair at the cap (13.08 N each, T-083 s4) / lower pair 1.0 N | 3.77 N m on the bridge | the cap is the bound (A-P8 limit); hover thrust per motor 4.61 N |
 | Prop strike (blade stops, one motor, 30 N along thrust EST; K09-L P1 fuse idea) | arm root 8.3 N m; bridge 4.7 N m | damage case |
 | Transport drop 0.3 m (v 2.43 m/s), cradle stroke s, efficiency 0.5 (ASM-C1-CRUSH-EFF) | n = v^2/(2 g eta s): s 25 mm: 24.0 g; s 35 mm: 17.1 g; s 50 mm: 12.0 g; s 60 mm: 10.0 g | `-` box cradle not designed; s needs >= 40 mm for n <= 15 |
 | Landing (see s5) | foot plateau 36 N, 24 mm, 4 feet | worst-case values from landing_a.py are tabulated in s5 |
@@ -35,169 +35,169 @@ Vs 13.48 m/s (CLmax 0.75 EST), VA = Vs sqrt(3.4) = 24.9, VC 17, VD 24 (D-186). a
 ## 3. C2 wing: spar and foam (spar 12x10, tube alone: the D-226 skin, bulkheads and foam stiffen it, none credited here)
 | Check | Stress | Allowable | MS | Result |
 |---|---|---|---|---|
-| Spar root bending, ult x fitting, unrelieved 10.3 N m | 117 MPa | 350 | +1.99 | PASS |
+| Spar root bending, ult x fitting, unrelieved 10.3 N m | 118 MPa | 350 | +1.98 | PASS |
 | Spar shear at root (V / (A/2), KF) | 3.1 MPa | 30 | +8.6 | PASS |
 | Spar tip deflection at n 3.4, elliptical load (CALC, E 70 GPa, EI 36.9 N m2, tube alone) | 7.5 mm of 450 mm semispan (1.7 %) | 5 % (EST) | | PASS |
-| Same, tip-load bound (all lift at the tip, not physical) | 25.7 mm (5.7 %) | 5 % (EST) | | info (bound) |
+| Same, tip-load bound (all lift at the tip, not physical) | 25.8 mm (5.7 %) | 5 % (EST) | | info (bound) |
 | Spar wall under the clamp / plug zones (hoop) | PETG plugs WNG-003..005 (1.42 g each, parts table) at y = 0, +-0.285 (strut clamp), +-0.38 (rib clamp): C2 rule (unplugged ring failed by 20x) | - | - | plugs in the mass table |
 | Foam shear around the spar from the bridge moment 3.77 N m (zone |y| <= 0.1, r 6 mm, x KP): the iteration-1 row | 180 kPa | 86 | -0.52 | **NOT A LOAD PATH since D-226**: the centre node (CGE-006, sleeve slip-fit on the spar, not bonded) and the bulkheads take the centre torque; judged by the C1-C7 rows of T083b s6 (min 1.09 at zeta 0.05); value shown for the record, not counted |
 | Foam bearing at the fin slot (2 x 20 N side load, 65 x 23 mm, x KP): iteration-1 row | 57 kPa | 103 | +0.81 | PASS; the fin node is now the D-226 bulkhead + plates (rows N1-N6, T083b) so this is secondary |
-| Foam shear, lift into spar slot (n 3.4, 1.873 kg, 32 mm of bond, x1.5) | 3.3 kPa | 86 | +25 | PASS |
+| Foam shear, lift into spar slot (n 3.4, 1.8796 kg, 32 mm of bond, x1.5) | 3.3 kPa | 86 | +25 | PASS |
 | Arm / motor attachments | none in foam: the cage hangs from the spar through the 6061 centre node (D-226) and the strut clamps; foam sees only the node pocket (R >= 3 mm corners, C6 rule) | - | - | - |
 Fin elevon note: elevon span y 0.04-0.35 (common.py ELEV_Y0 / ELEV_Y1); the fin tube plane is y 0.38 (inner flank of the rib 0.3705).
 
 ## 4. C4 modes vs rotor orders (FEA-lite: 3-D Euler-Bernoulli beam frame, free-free, fe_a.py; no shell or solid model)
-- hover derate 1.0 (1.873 kg, prop_a.py hover): 6777 rpm: 1P 113 Hz, 2P 226 Hz
-- hover derate 0.93 (1.873 kg): 7036 rpm: 1P 117 Hz, 2P 235 Hz
-- hover lean 1.3 W (8 m/s gust, derate 0.93): 8015 rpm: 1P 134 Hz, 2P 267 Hz
+- hover derate 1.0 (1.8796 kg, prop_a.py hover): 6789 rpm: 1P 113 Hz, 2P 226 Hz
+- hover derate 0.93 (1.8796 kg): 7048 rpm: 1P 117 Hz, 2P 235 Hz
+- hover lean 1.3 W (8 m/s gust, derate 0.93): 8028 rpm: 1P 134 Hz, 2P 268 Hz
 - cruise 17 m/s (QP-3, EST carried, mid): 7450 rpm: 1P 124 Hz, 2P 248 Hz
 - all four at the 72 A limit, fresh: 11358 rpm: 1P 189 Hz, 2P 379 Hz
 - all four duty 1.0, sag 14.92 V: 10343 rpm: 1P 172 Hz, 2P 345 Hz
 Excluded band for strongly coupled modes (iter3 rule: f <= band_low / 1.2 or f >= 1.2 band_high over the hover and cruise rpm above): **94-321 Hz** (iter3_run.md MN2212: 84-304 Hz). The capped / full-duty states (10343-11358 rpm, 1P 172-189 Hz, 2P 345-379 Hz) are transients judged by the forced-response sweep, as iter3 did for 9,349 / 10,142 rpm.
-FE model mass 1636 g vs CAD basic 1628 g (the model carries the declared masses; tubes by A x rho, lumps as above). Modes solved: 130 per corner, highest 4532 Hz (nom).
+FE model mass 1642 g vs CAD basic 1633 g (the model carries the declared masses; tubes by A x rho, lumps as above). Modes solved: 130 per corner, highest 4532 Hz (nom).
 
 Modes with strong coupling to the motors (|phi| at motors in plane cy or thrust cx >= 0.5, mass-normalised), kd = E_CF 61 GPa, nom 70, hi 90 (fe_a corners; the PETG moduli are unused because the FE has no printed beam any more):
 | Corner | f (Hz) | group | cx / cy (2 decimals) | worst separation to 1P / 2P at the five operating rpm | inside excluded band? | single-mode FC accel on resonance if a rotor order reaches it (m/s2, zeta 0.5 %, info) | Result |
 |---|---|---|---|---|---|---|---|
-| kd | 8 | spar 53% | 0.00 / 1.75 | 93 % | no | - | PASS (strong, outside the band) |
-| kd | 12 | spar 65% | 1.86 / 0.15 | 89 % | no | - | PASS (strong, outside the band) |
-| kd | 19 | bridge 60% | 0.00 / 1.66 | 83 % | no | - | PASS (strong, outside the band) |
-| kd | 25 | spar 76% | 0.73 / 0.79 | 77 % | no | - | PASS (strong, outside the band) |
+| kd | 8 | spar 54% | 0.00 / 1.72 | 93 % | no | - | PASS (strong, outside the band) |
+| kd | 12 | spar 65% | 1.87 / 0.17 | 89 % | no | - | PASS (strong, outside the band) |
+| kd | 19 | bridge 61% | 0.00 / 1.69 | 83 % | no | - | PASS (strong, outside the band) |
+| kd | 25 | spar 77% | 0.71 / 0.74 | 78 % | no | - | PASS (strong, outside the band) |
 | kd | 29 | arm 53% | 2.54 / 0.59 | 75 % | no | - | PASS (strong, outside the band) |
-| kd | 30 | spar 85% | 0.57 / 0.00 | 73 % | no | - | PASS (strong, outside the band) |
-| kd | 33 | arm 100% | 2.92 / 0.96 | 71 % | no | - | PASS (strong, outside the band) |
-| kd | 33 | arm 100% | 0.96 / 2.92 | 71 % | no | - | PASS (strong, outside the band) |
+| kd | 30 | spar 85% | 0.55 / 0.00 | 74 % | no | - | PASS (strong, outside the band) |
+| kd | 33 | arm 100% | 2.54 / 1.74 | 71 % | no | - | PASS (strong, outside the band) |
+| kd | 33 | arm 100% | 1.74 / 2.54 | 71 % | no | - | PASS (strong, outside the band) |
 | kd | 35 | arm 99% | 0.31 / 2.92 | 69 % | no | - | PASS (strong, outside the band) |
-| kd | 37 | arm 89% | 0.87 / 2.47 | 67 % | no | - | PASS (strong, outside the band) |
-| kd | 39 | arm 97% | 2.59 / 0.00 | 65 % | no | - | PASS (strong, outside the band) |
-| kd | 47 | spar 63% | 0.86 / 0.03 | 58 % | no | - | PASS (strong, outside the band) |
-| kd | 56 | arm 58% | 1.18 / 1.19 | 50 % | no | - | PASS (strong, outside the band) |
-| kd | 69 | rib 45% | 0.67 / 0.46 | 39 % | no | - | PASS (strong, outside the band) |
-| kd | 203 | spar 66% | 0.01 / 0.52 | 10 % | YES | 0.11 (0.004 of 30) | **FAIL** (strong by the 0.5 rule, in band; limit not relaxed) |
-| kd | 442 | spar 37% | 0.12 / 0.58 | 66 % | no | - | PASS (strong, outside the band) |
-| kd | 525 | bridge 76% | 0.06 / 0.59 | 96 % | no | - | PASS (strong, outside the band) |
-| nom | 9 | spar 53% | 0.00 / 1.72 | 92 % | no | - | PASS (strong, outside the band) |
-| nom | 12 | spar 65% | 1.85 / 0.17 | 89 % | no | - | PASS (strong, outside the band) |
-| nom | 20 | bridge 62% | 0.00 / 1.68 | 82 % | no | - | PASS (strong, outside the band) |
-| nom | 27 | spar 76% | 0.76 / 0.78 | 76 % | no | - | PASS (strong, outside the band) |
+| kd | 37 | arm 89% | 0.91 / 2.47 | 67 % | no | - | PASS (strong, outside the band) |
+| kd | 39 | arm 97% | 2.60 / 0.00 | 66 % | no | - | PASS (strong, outside the band) |
+| kd | 47 | spar 63% | 0.88 / 0.02 | 58 % | no | - | PASS (strong, outside the band) |
+| kd | 55 | arm 46% | 1.04 / 1.15 | 52 % | no | - | PASS (strong, outside the band) |
+| kd | 66 | arm 34% | 0.87 / 0.63 | 42 % | no | - | PASS (strong, outside the band) |
+| kd | 201 | spar 64% | 0.02 / 0.52 | 11 % | YES | 0.12 (0.004 of 30) | **FAIL** (strong by the 0.5 rule, in band; limit not relaxed) |
+| kd | 438 | spar 47% | 0.13 / 0.66 | 64 % | no | - | PASS (strong, outside the band) |
+| kd | 524 | bridge 77% | 0.06 / 0.59 | 96 % | no | - | PASS (strong, outside the band) |
+| nom | 8 | spar 54% | 0.00 / 1.70 | 93 % | no | - | PASS (strong, outside the band) |
+| nom | 12 | spar 65% | 1.86 / 0.18 | 89 % | no | - | PASS (strong, outside the band) |
+| nom | 20 | bridge 62% | 0.00 / 1.72 | 83 % | no | - | PASS (strong, outside the band) |
+| nom | 26 | spar 76% | 0.73 / 0.73 | 77 % | no | - | PASS (strong, outside the band) |
 | nom | 31 | arm 53% | 2.54 / 0.59 | 73 % | no | - | PASS (strong, outside the band) |
-| nom | 32 | spar 85% | 0.57 / 0.00 | 72 % | no | - | PASS (strong, outside the band) |
-| nom | 35 | arm 100% | 1.21 / 2.83 | 69 % | no | - | PASS (strong, outside the band) |
-| nom | 35 | arm 100% | 2.83 / 1.21 | 69 % | no | - | PASS (strong, outside the band) |
+| nom | 32 | spar 85% | 0.55 / 0.00 | 72 % | no | - | PASS (strong, outside the band) |
+| nom | 35 | arm 100% | 1.90 / 2.42 | 69 % | no | - | PASS (strong, outside the band) |
+| nom | 35 | arm 100% | 2.42 / 1.90 | 69 % | no | - | PASS (strong, outside the band) |
 | nom | 38 | arm 99% | 0.31 / 2.92 | 67 % | no | - | PASS (strong, outside the band) |
-| nom | 40 | arm 89% | 0.88 / 2.47 | 65 % | no | - | PASS (strong, outside the band) |
-| nom | 42 | arm 97% | 2.59 / 0.00 | 63 % | no | - | PASS (strong, outside the band) |
-| nom | 51 | spar 63% | 0.86 / 0.03 | 55 % | no | - | PASS (strong, outside the band) |
-| nom | 59 | arm 51% | 1.10 / 1.16 | 47 % | no | - | PASS (strong, outside the band) |
-| nom | 72 | rib 41% | 0.80 / 0.56 | 37 % | no | - | PASS (strong, outside the band) |
-| nom | 218 | spar 66% | 0.01 / 0.52 | 4 % | YES | 0.12 (0.004 of 30) | **FAIL** (strong by the 0.5 rule, in band; limit not relaxed) |
-| nom | 478 | spar 38% | 0.10 / 0.60 | 79 % | no | - | PASS (strong, outside the band) |
-| nom | 562 | bridge 76% | 0.06 / 0.59 | 110 % | no | - | PASS (strong, outside the band) |
-| hi | 10 | spar 53% | 0.00 / 1.75 | 91 % | no | - | PASS (strong, outside the band) |
-| hi | 15 | spar 65% | 1.86 / 0.15 | 87 % | no | - | PASS (strong, outside the band) |
-| hi | 23 | bridge 60% | 0.00 / 1.65 | 79 % | no | - | PASS (strong, outside the band) |
-| hi | 31 | spar 76% | 0.73 / 0.79 | 73 % | no | - | PASS (strong, outside the band) |
+| nom | 40 | arm 88% | 0.92 / 2.46 | 65 % | no | - | PASS (strong, outside the band) |
+| nom | 42 | arm 97% | 2.60 / 0.00 | 63 % | no | - | PASS (strong, outside the band) |
+| nom | 50 | spar 63% | 0.88 / 0.02 | 56 % | no | - | PASS (strong, outside the band) |
+| nom | 57 | arm 39% | 0.93 / 1.11 | 49 % | no | - | PASS (strong, outside the band) |
+| nom | 69 | arm 42% | 0.98 / 0.73 | 39 % | no | - | PASS (strong, outside the band) |
+| nom | 215 | spar 64% | 0.02 / 0.52 | 5 % | YES | 0.14 (0.005 of 30) | **FAIL** (strong by the 0.5 rule, in band; limit not relaxed) |
+| nom | 474 | spar 41% | 0.10 / 0.62 | 77 % | no | - | PASS (strong, outside the band) |
+| nom | 561 | bridge 77% | 0.06 / 0.59 | 110 % | no | - | PASS (strong, outside the band) |
+| hi | 10 | spar 54% | 0.00 / 1.73 | 91 % | no | - | PASS (strong, outside the band) |
+| hi | 15 | spar 65% | 1.87 / 0.17 | 87 % | no | - | PASS (strong, outside the band) |
+| hi | 23 | bridge 61% | 0.00 / 1.69 | 80 % | no | - | PASS (strong, outside the band) |
+| hi | 30 | spar 77% | 0.71 / 0.74 | 73 % | no | - | PASS (strong, outside the band) |
 | hi | 35 | arm 53% | 2.54 / 0.59 | 69 % | no | - | PASS (strong, outside the band) |
-| hi | 36 | spar 85% | 0.57 / 0.00 | 68 % | no | - | PASS (strong, outside the band) |
-| hi | 40 | arm 100% | 2.50 / 1.79 | 64 % | no | - | PASS (strong, outside the band) |
-| hi | 40 | arm 100% | 1.79 / 2.50 | 64 % | no | - | PASS (strong, outside the band) |
+| hi | 36 | spar 85% | 0.55 / 0.00 | 68 % | no | - | PASS (strong, outside the band) |
+| hi | 40 | arm 100% | 0.60 / 3.02 | 64 % | no | - | PASS (strong, outside the band) |
+| hi | 40 | arm 100% | 3.02 / 0.60 | 64 % | no | - | PASS (strong, outside the band) |
 | hi | 43 | arm 99% | 0.31 / 2.92 | 62 % | no | - | PASS (strong, outside the band) |
-| hi | 45 | arm 89% | 0.87 / 2.47 | 60 % | no | - | PASS (strong, outside the band) |
-| hi | 47 | arm 97% | 2.59 / 0.00 | 58 % | no | - | PASS (strong, outside the band) |
-| hi | 58 | spar 63% | 0.86 / 0.03 | 49 % | no | - | PASS (strong, outside the band) |
-| hi | 69 | arm 58% | 1.19 / 1.19 | 39 % | no | - | PASS (strong, outside the band) |
-| hi | 84 | rib 45% | 0.66 / 0.44 | 26 % | no | - | PASS (strong, outside the band) |
-| hi | 247 | spar 66% | 0.01 / 0.52 | 2 % | YES | 0.16 (0.005 of 30) | **FAIL** (strong by the 0.5 rule, in band; limit not relaxed) |
-| hi | 538 | spar 38% | 0.12 / 0.59 | 101 % | no | - | PASS (strong, outside the band) |
-| hi | 638 | bridge 76% | 0.06 / 0.59 | 139 % | no | - | PASS (strong, outside the band) |
+| hi | 45 | arm 89% | 0.91 / 2.47 | 60 % | no | - | PASS (strong, outside the band) |
+| hi | 47 | arm 97% | 2.60 / 0.00 | 58 % | no | - | PASS (strong, outside the band) |
+| hi | 57 | spar 63% | 0.88 / 0.02 | 50 % | no | - | PASS (strong, outside the band) |
+| hi | 67 | arm 47% | 1.05 / 1.15 | 41 % | no | - | PASS (strong, outside the band) |
+| hi | 81 | rib 35% | 0.86 / 0.61 | 29 % | no | - | PASS (strong, outside the band) |
+| hi | 244 | spar 64% | 0.02 / 0.52 | 0 % | YES | 0.18 (0.006 of 30) | **FAIL** (strong by the 0.5 rule, in band; limit not relaxed) |
+| hi | 532 | spar 48% | 0.13 / 0.67 | 99 % | no | - | PASS (strong, outside the band) |
+| hi | 637 | bridge 77% | 0.06 / 0.58 | 138 % | no | - | PASS (strong, outside the band) |
 
-Strongly coupled modes inside the excluded band: kd 203 Hz, nom 218 Hz, hi 247 Hz.
-Reading of the FAIL rows: this is the spar mode that iter3_run.md listed as weak (coupling 0.45, 199-242 Hz). With the D-226 masses (centre node, bulkheads, 6061 hub) its coupling rose past the threshold (cy 0.52, table above) and the D-185 rule 'strongly coupled (>= 0.5) mode inside the excluded band' fails by definition; the rule is not relaxed here. Its single-mode forced response (column above) is far below 30 m/s2 and the full rpm sweep below passes, so the open question is the rule, not the vibration level: for the design owner (D-185 threshold ruling), not changed in this task.
-- kd: highest strongly coupled mode below the band 69 Hz (limit 94, margin 37 %); lowest above the band 442 Hz (limit 321, margin 38 %)
-- nom: highest strongly coupled mode below the band 72 Hz (limit 94, margin 32 %); lowest above the band 478 Hz (limit 321, margin 49 %)
-- hi: highest strongly coupled mode below the band 84 Hz (limit 94, margin 12 %); lowest above the band 538 Hz (limit 321, margin 68 %)
+Strongly coupled modes inside the excluded band: kd 201 Hz, nom 215 Hz, hi 244 Hz.
+Reading of the FAIL rows (T-084 root cause, `mechanism/out/T084_report.md` s2, `T084_data/modes_final.txt`): the mode is the wing's antisymmetric IN-PLANE (chordwise) bending with the cage swaying sideways on the bridge and struts. In this model the wing's in-plane stiffness is the 12x10 spar alone (EI 37 N m2); the drawn D-226 wing (foam core + 3-ply glass skin + cove CF strip) has 330-6,800 N m2 nominal and 185-1,650 N m2 at the lower bound (`T084_data/cell_props.txt`), so this mode is an artifact of the beam model: with the cell credited it leaves the band at every corner (s4b). Its coupling grew 0.45 -> 0.52 mainly because the strut end moved inboard 0.300 -> 0.285 m (0.42 -> 0.55) and the fin-root lumps grew 6 -> 32 g (0.48 -> 0.53). The rule is not relaxed here; s4b shows what the cell-credited model fails instead.
+- kd: highest strongly coupled mode below the band 66 Hz (limit 94, margin 43 %); lowest above the band 438 Hz (limit 321, margin 36 %)
+- nom: highest strongly coupled mode below the band 69 Hz (limit 94, margin 36 %); lowest above the band 474 Hz (limit 321, margin 48 %)
+- hi: highest strongly coupled mode below the band 81 Hz (limit 94, margin 17 %); lowest above the band 532 Hz (limit 321, margin 66 %)
 
 Weakly coupled modes (cx, cy < 0.5: fin out-of-plane, rib, spar, centre) 20-800 Hz. Each row carries its coupling and the FORCED-RESPONSE verdict (the 20 % separation screen is not the test for these, D-185 as ruled): single mode on resonance, zeta 0.5 % (EST), 4 rotors in the worst phase, U 1.0 g mm per rotor for 1P, 2P ripple 5 % of the static thrust at that rpm (EST); FC acceleration summed over the three axes (a bound on the per-axis VIBE, limit 30 m/s2, ardupilot.org/copter/docs/common-measuring-vibration.html, 2026-11-15):
 | Corner | f (Hz) | group | coupling max(cx, cy) (cx / cy) | rotor order reaches it in 6,000-11,415 rpm? | single-mode FC accel on resonance (m/s2) | fraction of 30 | separation to the five operating rpm | Verdict |
 |---|---|---|---|---|---|---|---|---|
-| kd | 141 | spar 60%, rib 28% | 0.08 (0.00 / 0.08) | 1P at 8,462 rpm | 0.00 | 0.000 | 6 % | PASS by forced response |
-| kd | 168 | spar 62%, bridge 18% | 0.05 (0.05 / 0.00) | 1P at 10,081 rpm | 0.00 | 0.000 | 26 % | PASS by forced response |
-| kd | 197 | spar 72%, rib 19% | 0.03 (0.03 / 0.01) | no (unreachable) | - | - | 13 % | PASS (no rotor order reaches it) |
-| kd | 293 | fin 54%, rib 43% | 0.01 (0.00 / 0.01) | 2P at 8,799 rpm | 0.00 | 0.000 | 10 % | PASS by forced response |
-| kd | 294 | fin 54%, rib 42% | 0.01 (0.00 / 0.01) | 2P at 8,807 rpm | 0.01 | 0.000 | 10 % | PASS by forced response |
-| kd | 360 | spar 57%, fin 27% | 0.03 (0.03 / 0.00) | 2P at 10,803 rpm | 1.98 | 0.066 | 35 % | PASS by forced response |
-| kd | 367 | spar 83%, bridge 8% | 0.06 (0.00 / 0.06) | 2P at 11,015 rpm | 0.00 | 0.000 | 37 % | PASS by forced response |
-| kd | 369 | fin 88%, spar 9% | 0.24 (0.03 / 0.24) | 2P at 11,072 rpm | 0.69 | 0.023 | 38 % | PASS by forced response |
-| kd | 383 | fin 69%, spar 20% | 0.02 (0.02 / 0.00) | no (unreachable) | - | - | 44 % | PASS (no rotor order reaches it) |
-| kd | 408 | fin 85%, spar 10% | 0.25 (0.04 / 0.25) | no (unreachable) | - | - | 53 % | PASS (no rotor order reaches it) |
-| kd | 415 | fin 95%, spar 3% | 0.01 (0.01 / 0.00) | no (unreachable) | - | - | 55 % | PASS (no rotor order reaches it) |
-| kd | 418 | bridge 48%, arm 26% | 0.25 (0.00 / 0.25) | no (unreachable) | - | - | 56 % | PASS (no rotor order reaches it) |
-| kd | 440 | bridge 66%, spar 29% | 0.10 (0.04 / 0.10) | no (unreachable) | - | - | 65 % | PASS (no rotor order reaches it) |
+| kd | 140 | spar 61%, rib 26% | 0.08 (0.00 / 0.08) | 1P at 8,373 rpm | 0.00 | 0.000 | 4 % | PASS by forced response |
+| kd | 165 | spar 60%, bridge 17% | 0.05 (0.05 / 0.00) | 1P at 9,906 rpm | 0.00 | 0.000 | 23 % | PASS by forced response |
+| kd | 196 | spar 72%, rib 19% | 0.03 (0.03 / 0.01) | no (unreachable) | - | - | 13 % | PASS (no rotor order reaches it) |
+| kd | 269 | fin 56%, rib 41% | 0.00 (0.00 / 0.00) | 2P at 8,084 rpm | 0.00 | 0.000 | 1 % | PASS by forced response |
+| kd | 270 | fin 55%, rib 41% | 0.00 (0.00 / 0.00) | 2P at 8,104 rpm | 0.01 | 0.000 | 1 % | PASS by forced response |
+| kd | 330 | fin 91%, spar 6% | 0.13 (0.02 / 0.13) | 2P at 9,906 rpm | 0.22 | 0.007 | 23 % | PASS by forced response |
+| kd | 333 | fin 86%, spar 12% | 0.01 (0.01 / 0.00) | 2P at 9,985 rpm | 0.13 | 0.004 | 24 % | PASS by forced response |
+| kd | 364 | fin 61%, spar 32% | 0.02 (0.02 / 0.00) | 2P at 10,923 rpm | 0.96 | 0.032 | 36 % | PASS by forced response |
+| kd | 365 | fin 94%, spar 5% | 0.10 (0.02 / 0.10) | 2P at 10,945 rpm | 0.22 | 0.007 | 36 % | PASS by forced response |
+| kd | 367 | spar 83%, bridge 8% | 0.06 (0.00 / 0.06) | 2P at 11,010 rpm | 0.00 | 0.000 | 37 % | PASS by forced response |
+| kd | 374 | fin 42%, spar 38% | 0.03 (0.03 / 0.00) | 2P at 11,226 rpm | 2.00 | 0.067 | 40 % | PASS by forced response |
+| kd | 417 | bridge 48%, arm 26% | 0.25 (0.00 / 0.25) | no (unreachable) | - | - | 56 % | PASS (no rotor order reaches it) |
+| kd | 440 | bridge 66%, spar 29% | 0.10 (0.04 / 0.10) | no (unreachable) | - | - | 64 % | PASS (no rotor order reaches it) |
 | kd | 459 | arm 92%, bridge 7% | 0.05 (0.04 / 0.05) | no (unreachable) | - | - | 72 % | PASS (no rotor order reaches it) |
-| kd | 464 | arm 100%, spar 0% | 0.00 (0.00 / 0.00) | no (unreachable) | - | - | 74 % | PASS (no rotor order reaches it) |
-| kd | 464 | arm 100%, bridge 0% | 0.00 (0.00 / 0.00) | no (unreachable) | - | - | 74 % | PASS (no rotor order reaches it) |
-| kd | 464 | arm 90%, spar 5% | 0.24 (0.01 / 0.24) | no (unreachable) | - | - | 74 % | PASS (no rotor order reaches it) |
-| kd | 474 | spar 82%, bridge 12% | 0.02 (0.01 / 0.02) | no (unreachable) | - | - | 78 % | PASS (no rotor order reaches it) |
+| kd | 464 | arm 100%, bridge 0% | 0.00 (0.00 / 0.00) | no (unreachable) | - | - | 73 % | PASS (no rotor order reaches it) |
+| kd | 464 | arm 100%, spar 0% | 0.00 (0.00 / 0.00) | no (unreachable) | - | - | 73 % | PASS (no rotor order reaches it) |
+| kd | 464 | arm 93%, spar 5% | 0.22 (0.00 / 0.22) | no (unreachable) | - | - | 73 % | PASS (no rotor order reaches it) |
+| kd | 474 | spar 82%, bridge 12% | 0.02 (0.01 / 0.02) | no (unreachable) | - | - | 77 % | PASS (no rotor order reaches it) |
 | kd | 486 | bridge 89%, arm 9% | 0.15 (0.00 / 0.15) | no (unreachable) | - | - | 82 % | PASS (no rotor order reaches it) |
-| kd | 495 | bridge 91%, spar 5% | 0.06 (0.04 / 0.06) | no (unreachable) | - | - | 85 % | PASS (no rotor order reaches it) |
-| kd | 520 | bridge 86%, spar 14% | 0.00 (0.00 / 0.00) | no (unreachable) | - | - | 95 % | PASS (no rotor order reaches it) |
-| kd | 553 | arm 59%, bridge 35% | 0.38 (0.00 / 0.38) | no (unreachable) | - | - | 107 % | PASS (no rotor order reaches it) |
-| kd | 660 | arm 74%, bridge 23% | 0.38 (0.38 / 0.06) | no (unreachable) | - | - | 147 % | PASS (no rotor order reaches it) |
-| kd | 683 | arm 81%, bridge 19% | 0.39 (0.39 / 0.07) | no (unreachable) | - | - | 156 % | PASS (no rotor order reaches it) |
-| kd | 700 | spar 65%, bridge 17% | 0.00 (0.00 / 0.00) | no (unreachable) | - | - | 162 % | PASS (no rotor order reaches it) |
-| kd | 749 | spar 93%, bridge 4% | 0.01 (0.00 / 0.01) | no (unreachable) | - | - | 180 % | PASS (no rotor order reaches it) |
-| kd | 763 | arm 46%, spar 39% | 0.34 (0.01 / 0.34) | no (unreachable) | - | - | 185 % | PASS (no rotor order reaches it) |
-| kd | 766 | arm 100%, bridge 0% | 0.29 (0.29 / 0.23) | no (unreachable) | - | - | 187 % | PASS (no rotor order reaches it) |
-| kd | 766 | arm 100%, bridge 0% | 0.29 (0.23 / 0.29) | no (unreachable) | - | - | 187 % | PASS (no rotor order reaches it) |
-| kd | 771 | arm 53%, spar 37% | 0.42 (0.01 / 0.42) | no (unreachable) | - | - | 189 % | PASS (no rotor order reaches it) |
+| kd | 495 | bridge 92%, spar 5% | 0.06 (0.04 / 0.06) | no (unreachable) | - | - | 85 % | PASS (no rotor order reaches it) |
+| kd | 520 | bridge 86%, spar 14% | 0.00 (0.00 / 0.00) | no (unreachable) | - | - | 94 % | PASS (no rotor order reaches it) |
+| kd | 553 | arm 59%, bridge 35% | 0.38 (0.00 / 0.38) | no (unreachable) | - | - | 106 % | PASS (no rotor order reaches it) |
+| kd | 660 | arm 73%, bridge 23% | 0.38 (0.38 / 0.06) | no (unreachable) | - | - | 147 % | PASS (no rotor order reaches it) |
+| kd | 683 | arm 81%, bridge 19% | 0.39 (0.39 / 0.07) | no (unreachable) | - | - | 155 % | PASS (no rotor order reaches it) |
+| kd | 699 | spar 66%, bridge 17% | 0.00 (0.00 / 0.00) | no (unreachable) | - | - | 161 % | PASS (no rotor order reaches it) |
+| kd | 748 | spar 93%, bridge 4% | 0.02 (0.00 / 0.02) | no (unreachable) | - | - | 180 % | PASS (no rotor order reaches it) |
+| kd | 761 | spar 48%, arm 34% | 0.34 (0.01 / 0.34) | no (unreachable) | - | - | 184 % | PASS (no rotor order reaches it) |
+| kd | 766 | arm 100%, spar 0% | 0.38 (0.00 / 0.38) | no (unreachable) | - | - | 186 % | PASS (no rotor order reaches it) |
+| kd | 766 | arm 100%, bridge 0% | 0.38 (0.38 / 0.00) | no (unreachable) | - | - | 186 % | PASS (no rotor order reaches it) |
+| kd | 770 | arm 65%, spar 28% | 0.42 (0.01 / 0.42) | no (unreachable) | - | - | 188 % | PASS (no rotor order reaches it) |
 | kd | 773 | arm 100%, bridge 0% | 0.47 (0.01 / 0.47) | no (unreachable) | - | - | 189 % | PASS (no rotor order reaches it) |
-| kd | 773 | arm 98%, spar 1% | 0.37 (0.37 / 0.00) | no (unreachable) | - | - | 189 % | PASS (no rotor order reaches it) |
-| nom | 148 | spar 63%, rib 26% | 0.07 (0.00 / 0.07) | 1P at 8,873 rpm | 0.00 | 0.000 | 11 % | PASS by forced response |
-| nom | 180 | spar 62%, bridge 18% | 0.05 (0.05 / 0.00) | 1P at 10,799 rpm | 0.00 | 0.000 | 20 % | PASS by forced response |
-| nom | 208 | spar 74%, rib 18% | 0.03 (0.03 / 0.01) | 2P at 6,253 rpm | 0.84 | 0.028 | 8 % | PASS by forced response |
-| nom | 314 | fin 54%, rib 42% | 0.01 (0.00 / 0.01) | 2P at 9,418 rpm | 0.00 | 0.000 | 17 % | PASS by forced response |
-| nom | 314 | fin 54%, rib 42% | 0.01 (0.00 / 0.01) | 2P at 9,424 rpm | 0.00 | 0.000 | 18 % | PASS by forced response |
-| nom | 386 | spar 57%, fin 27% | 0.03 (0.03 / 0.00) | no (unreachable) | - | - | 44 % | PASS (no rotor order reaches it) |
-| nom | 391 | spar 83%, bridge 9% | 0.06 (0.00 / 0.06) | no (unreachable) | - | - | 46 % | PASS (no rotor order reaches it) |
-| nom | 395 | fin 88%, spar 9% | 0.24 (0.03 / 0.24) | no (unreachable) | - | - | 48 % | PASS (no rotor order reaches it) |
-| nom | 411 | fin 69%, spar 20% | 0.02 (0.02 / 0.00) | no (unreachable) | - | - | 54 % | PASS (no rotor order reaches it) |
-| nom | 437 | fin 84%, spar 10% | 0.25 (0.04 / 0.25) | no (unreachable) | - | - | 63 % | PASS (no rotor order reaches it) |
+| kd | 773 | arm 97%, spar 1% | 0.37 (0.37 / 0.00) | no (unreachable) | - | - | 189 % | PASS (no rotor order reaches it) |
+| nom | 146 | spar 64%, rib 24% | 0.08 (0.00 / 0.08) | 1P at 8,790 rpm | 0.00 | 0.000 | 9 % | PASS by forced response |
+| nom | 177 | spar 60%, bridge 17% | 0.05 (0.05 / 0.00) | 1P at 10,612 rpm | 0.00 | 0.000 | 22 % | PASS by forced response |
+| nom | 207 | spar 74%, rib 17% | 0.03 (0.03 / 0.01) | 2P at 6,217 rpm | 0.84 | 0.028 | 8 % | PASS by forced response |
+| nom | 288 | fin 56%, rib 41% | 0.00 (0.00 / 0.00) | 2P at 8,651 rpm | 0.00 | 0.000 | 8 % | PASS by forced response |
+| nom | 289 | fin 55%, rib 41% | 0.00 (0.00 / 0.00) | 2P at 8,668 rpm | 0.01 | 0.000 | 8 % | PASS by forced response |
+| nom | 354 | fin 91%, spar 6% | 0.13 (0.02 / 0.13) | 2P at 10,612 rpm | 0.26 | 0.009 | 32 % | PASS by forced response |
+| nom | 357 | fin 86%, spar 12% | 0.01 (0.01 / 0.00) | 2P at 10,696 rpm | 0.15 | 0.005 | 33 % | PASS by forced response |
+| nom | 390 | fin 61%, spar 32% | 0.02 (0.02 / 0.00) | no (unreachable) | - | - | 46 % | PASS (no rotor order reaches it) |
+| nom | 390 | spar 83%, bridge 9% | 0.06 (0.00 / 0.06) | no (unreachable) | - | - | 46 % | PASS (no rotor order reaches it) |
+| nom | 391 | fin 94%, spar 5% | 0.10 (0.02 / 0.10) | no (unreachable) | - | - | 46 % | PASS (no rotor order reaches it) |
+| nom | 401 | fin 42%, spar 38% | 0.03 (0.03 / 0.00) | no (unreachable) | - | - | 50 % | PASS (no rotor order reaches it) |
 | nom | 438 | bridge 53%, spar 25% | 0.22 (0.00 / 0.22) | no (unreachable) | - | - | 64 % | PASS (no rotor order reaches it) |
-| nom | 444 | fin 95%, spar 3% | 0.01 (0.01 / 0.00) | no (unreachable) | - | - | 66 % | PASS (no rotor order reaches it) |
-| nom | 454 | bridge 64%, spar 18% | 0.07 (0.03 / 0.07) | no (unreachable) | - | - | 70 % | PASS (no rotor order reaches it) |
-| nom | 460 | arm 86%, fin 5% | 0.18 (0.06 / 0.18) | no (unreachable) | - | - | 72 % | PASS (no rotor order reaches it) |
+| nom | 454 | bridge 65%, spar 18% | 0.07 (0.03 / 0.07) | no (unreachable) | - | - | 70 % | PASS (no rotor order reaches it) |
+| nom | 459 | arm 78%, spar 11% | 0.31 (0.08 / 0.31) | no (unreachable) | - | - | 71 % | PASS (no rotor order reaches it) |
 | nom | 460 | arm 80%, bridge 17% | 0.06 (0.03 / 0.06) | no (unreachable) | - | - | 72 % | PASS (no rotor order reaches it) |
-| nom | 464 | arm 100%, fin 0% | 0.00 (0.00 / 0.00) | no (unreachable) | - | - | 74 % | PASS (no rotor order reaches it) |
-| nom | 464 | arm 100%, bridge 0% | 0.00 (0.00 / 0.00) | no (unreachable) | - | - | 74 % | PASS (no rotor order reaches it) |
-| nom | 493 | bridge 86%, arm 12% | 0.17 (0.00 / 0.17) | no (unreachable) | - | - | 85 % | PASS (no rotor order reaches it) |
-| nom | 501 | spar 57%, bridge 39% | 0.04 (0.03 / 0.04) | no (unreachable) | - | - | 87 % | PASS (no rotor order reaches it) |
-| nom | 513 | bridge 56%, spar 40% | 0.07 (0.03 / 0.07) | no (unreachable) | - | - | 92 % | PASS (no rotor order reaches it) |
+| nom | 464 | arm 100%, spar 0% | 0.00 (0.00 / 0.00) | no (unreachable) | - | - | 73 % | PASS (no rotor order reaches it) |
+| nom | 464 | arm 100%, bridge 0% | 0.00 (0.00 / 0.00) | no (unreachable) | - | - | 73 % | PASS (no rotor order reaches it) |
+| nom | 493 | bridge 86%, arm 12% | 0.17 (0.00 / 0.17) | no (unreachable) | - | - | 84 % | PASS (no rotor order reaches it) |
+| nom | 500 | spar 59%, bridge 38% | 0.04 (0.03 / 0.04) | no (unreachable) | - | - | 87 % | PASS (no rotor order reaches it) |
+| nom | 513 | bridge 57%, spar 39% | 0.08 (0.03 / 0.08) | no (unreachable) | - | - | 92 % | PASS (no rotor order reaches it) |
 | nom | 557 | bridge 86%, spar 14% | 0.00 (0.00 / 0.00) | no (unreachable) | - | - | 108 % | PASS (no rotor order reaches it) |
-| nom | 589 | arm 61%, bridge 33% | 0.39 (0.00 / 0.39) | no (unreachable) | - | - | 120 % | PASS (no rotor order reaches it) |
-| nom | 707 | arm 73%, bridge 23% | 0.38 (0.38 / 0.06) | no (unreachable) | - | - | 165 % | PASS (no rotor order reaches it) |
+| nom | 589 | arm 62%, bridge 33% | 0.39 (0.00 / 0.39) | no (unreachable) | - | - | 120 % | PASS (no rotor order reaches it) |
+| nom | 707 | arm 73%, bridge 23% | 0.38 (0.38 / 0.06) | no (unreachable) | - | - | 164 % | PASS (no rotor order reaches it) |
 | nom | 730 | arm 81%, bridge 19% | 0.39 (0.39 / 0.07) | no (unreachable) | - | - | 173 % | PASS (no rotor order reaches it) |
-| nom | 750 | spar 65%, bridge 17% | 0.00 (0.00 / 0.00) | no (unreachable) | - | - | 181 % | PASS (no rotor order reaches it) |
-| nom | 799 | spar 89%, bridge 7% | 0.01 (0.00 / 0.01) | no (unreachable) | - | - | 199 % | PASS (no rotor order reaches it) |
-| hi | 68 | rib 53%, spar 38% | 0.16 (0.00 / 0.16) | no (unreachable) | - | - | 40 % | PASS (no rotor order reaches it) |
-| hi | 172 | spar 60%, rib 28% | 0.08 (0.00 / 0.08) | 1P at 10,305 rpm | 0.00 | 0.000 | 24 % | PASS by forced response |
-| hi | 204 | spar 62%, bridge 18% | 0.05 (0.05 / 0.00) | 2P at 6,123 rpm | 0.89 | 0.030 | 10 % | PASS by forced response |
-| hi | 240 | spar 72%, rib 19% | 0.03 (0.03 / 0.01) | 2P at 7,194 rpm | 1.04 | 0.035 | 1 % | PASS by forced response |
-| hi | 356 | fin 54%, rib 43% | 0.01 (0.00 / 0.01) | 2P at 10,689 rpm | 0.00 | 0.000 | 33 % | PASS by forced response |
-| hi | 357 | fin 54%, rib 42% | 0.00 (0.00 / 0.00) | 2P at 10,699 rpm | 0.01 | 0.000 | 33 % | PASS by forced response |
-| hi | 437 | spar 57%, fin 27% | 0.03 (0.03 / 0.00) | no (unreachable) | - | - | 64 % | PASS (no rotor order reaches it) |
+| nom | 749 | spar 66%, bridge 17% | 0.00 (0.00 / 0.00) | no (unreachable) | - | - | 180 % | PASS (no rotor order reaches it) |
+| nom | 798 | spar 90%, bridge 7% | 0.01 (0.00 / 0.01) | no (unreachable) | - | - | 198 % | PASS (no rotor order reaches it) |
+| hi | 63 | rib 55%, spar 36% | 0.17 (0.00 / 0.17) | no (unreachable) | - | - | 45 % | PASS (no rotor order reaches it) |
+| hi | 170 | spar 61%, rib 26% | 0.08 (0.00 / 0.08) | 1P at 10,196 rpm | 0.00 | 0.000 | 25 % | PASS by forced response |
+| hi | 201 | spar 60%, bridge 17% | 0.05 (0.05 / 0.00) | 2P at 6,016 rpm | 0.89 | 0.030 | 11 % | PASS by forced response |
+| hi | 238 | spar 72%, rib 19% | 0.03 (0.03 / 0.01) | 2P at 7,145 rpm | 1.04 | 0.035 | 1 % | PASS by forced response |
+| hi | 327 | fin 56%, rib 41% | 0.00 (0.00 / 0.00) | 2P at 9,820 rpm | 0.00 | 0.000 | 22 % | PASS by forced response |
+| hi | 328 | fin 55%, rib 41% | 0.00 (0.00 / 0.00) | 2P at 9,846 rpm | 0.02 | 0.001 | 23 % | PASS by forced response |
+| hi | 401 | fin 91%, spar 6% | 0.13 (0.02 / 0.13) | no (unreachable) | - | - | 50 % | PASS (no rotor order reaches it) |
+| hi | 404 | fin 86%, spar 12% | 0.01 (0.01 / 0.00) | no (unreachable) | - | - | 51 % | PASS (no rotor order reaches it) |
+| hi | 442 | fin 61%, spar 32% | 0.02 (0.02 / 0.00) | no (unreachable) | - | - | 65 % | PASS (no rotor order reaches it) |
+| hi | 443 | fin 94%, spar 5% | 0.10 (0.02 / 0.10) | no (unreachable) | - | - | 66 % | PASS (no rotor order reaches it) |
 | hi | 446 | spar 83%, bridge 8% | 0.06 (0.00 / 0.06) | no (unreachable) | - | - | 67 % | PASS (no rotor order reaches it) |
-| hi | 448 | fin 88%, spar 9% | 0.24 (0.03 / 0.24) | no (unreachable) | - | - | 68 % | PASS (no rotor order reaches it) |
-| hi | 466 | fin 69%, spar 20% | 0.02 (0.02 / 0.00) | no (unreachable) | - | - | 74 % | PASS (no rotor order reaches it) |
-| hi | 495 | fin 85%, spar 10% | 0.25 (0.04 / 0.25) | no (unreachable) | - | - | 85 % | PASS (no rotor order reaches it) |
-| hi | 504 | fin 95%, spar 3% | 0.01 (0.01 / 0.00) | no (unreachable) | - | - | 89 % | PASS (no rotor order reaches it) |
+| hi | 455 | fin 42%, spar 38% | 0.03 (0.03 / 0.00) | no (unreachable) | - | - | 70 % | PASS (no rotor order reaches it) |
 | hi | 508 | bridge 48%, arm 27% | 0.26 (0.00 / 0.26) | no (unreachable) | - | - | 90 % | PASS (no rotor order reaches it) |
-| hi | 536 | bridge 66%, spar 30% | 0.10 (0.04 / 0.10) | no (unreachable) | - | - | 101 % | PASS (no rotor order reaches it) |
+| hi | 536 | bridge 66%, spar 30% | 0.10 (0.04 / 0.10) | no (unreachable) | - | - | 100 % | PASS (no rotor order reaches it) |
 | hi | 562 | arm 93%, bridge 7% | 0.05 (0.04 / 0.05) | no (unreachable) | - | - | 110 % | PASS (no rotor order reaches it) |
-| hi | 568 | arm 100%, spar 0% | 0.00 (0.00 / 0.00) | no (unreachable) | - | - | 113 % | PASS (no rotor order reaches it) |
-| hi | 568 | arm 100%, spar 0% | 0.00 (0.00 / 0.00) | no (unreachable) | - | - | 113 % | PASS (no rotor order reaches it) |
-| hi | 568 | arm 92%, spar 4% | 0.22 (0.00 / 0.22) | no (unreachable) | - | - | 113 % | PASS (no rotor order reaches it) |
-| hi | 577 | spar 82%, bridge 12% | 0.03 (0.00 / 0.03) | no (unreachable) | - | - | 116 % | PASS (no rotor order reaches it) |
-| hi | 594 | bridge 89%, arm 9% | 0.15 (0.00 / 0.15) | no (unreachable) | - | - | 123 % | PASS (no rotor order reaches it) |
+| hi | 568 | arm 94%, spar 4% | 0.20 (0.00 / 0.20) | no (unreachable) | - | - | 112 % | PASS (no rotor order reaches it) |
+| hi | 568 | arm 100%, spar 0% | 0.00 (0.00 / 0.00) | no (unreachable) | - | - | 112 % | PASS (no rotor order reaches it) |
+| hi | 568 | arm 100%, bridge 0% | 0.00 (0.00 / 0.00) | no (unreachable) | - | - | 112 % | PASS (no rotor order reaches it) |
+| hi | 577 | spar 82%, bridge 12% | 0.03 (0.00 / 0.03) | no (unreachable) | - | - | 115 % | PASS (no rotor order reaches it) |
+| hi | 594 | bridge 89%, arm 9% | 0.15 (0.00 / 0.15) | no (unreachable) | - | - | 122 % | PASS (no rotor order reaches it) |
 | hi | 604 | bridge 93%, spar 4% | 0.06 (0.04 / 0.06) | no (unreachable) | - | - | 126 % | PASS (no rotor order reaches it) |
 | hi | 631 | bridge 86%, spar 14% | 0.00 (0.00 / 0.00) | no (unreachable) | - | - | 136 % | PASS (no rotor order reaches it) |
 | hi | 672 | arm 58%, bridge 36% | 0.38 (0.00 / 0.38) | no (unreachable) | - | - | 151 % | PASS (no rotor order reaches it) |
@@ -205,13 +205,25 @@ Weakly coupled modes (cx, cy < 0.5: fin out-of-plane, rib, spar, centre) 20-800 
 Forced response, full rpm sweep (all four rotors at the same rpm, 1P + 2P of all rotors added, worst-phase modal sum, all modes solved above; static thrust law for the 2P term at every rpm = conservative in cruise). Hard-mounted FC (D-186): foam tape taken rigid (mount frequency not measured, EST):
 | Corner | zeta | worst FC accel 6,000-11,415 rpm, sum of axes (m/s2) at rpm | per-axis max / sqrt2 (VIBE-like) | MS vs 30 (sum of axes bound) | worst up to 10,343 rpm (all four duty 1.0, sag) | worst up to 9,349 rpm | cruise 7,300-7,600 (T 0.5 N EST) |
 |---|---|---|---|---|---|---|---|
-| kd | 1.0 % | 25.9 at 11,400 | 11.3 | +0.16 | 19.3 at 10,325 | 15.3 | 7.4 |
-| kd | 0.5 % | 26.1 at 11,400 | 11.3 | +0.15 | 19.3 at 10,325 | 15.3 | 7.4 |
-| nom | 1.0 % | 24.2 at 11,400 | 11.1 | +0.24 | 18.8 at 10,325 | 15.2 | 7.4 |
-| nom | 0.5 % | 24.3 at 11,400 | 11.1 | +0.24 | 18.8 at 10,325 | 15.2 | 7.4 |
-| hi | 1.0 % | 22.9 at 11,400 | 11.3 | +0.31 | 18.7 at 10,325 | 15.4 | 7.9 |
-| hi | 0.5 % | 22.9 at 11,400 | 11.3 | +0.31 | 18.7 at 10,325 | 15.4 | 7.9 |
-Sweep verdict: worst sum-of-axes 26.1 m/s2 (MS +0.15 vs 30 as a bound), worst per-axis rms-like 11.3 m/s2 (MS +1.66): PASS. Closes the T-083 open item 'extend the A-P10(b) sweep to 11,400 rpm' for the beam-FE model.
+| kd | 1.0 % | 26.5 at 11,400 | 11.1 | +0.13 | 19.1 at 10,325 | 15.1 | 7.2 |
+| kd | 0.5 % | 26.6 at 11,400 | 11.1 | +0.13 | 19.1 at 10,325 | 15.1 | 7.2 |
+| nom | 1.0 % | 23.7 at 11,400 | 10.8 | +0.27 | 18.5 at 10,325 | 15.0 | 7.2 |
+| nom | 0.5 % | 23.7 at 11,400 | 10.8 | +0.27 | 18.6 at 10,325 | 15.0 | 7.2 |
+| hi | 1.0 % | 22.7 at 11,400 | 11.0 | +0.32 | 18.5 at 10,325 | 15.2 | 7.7 |
+| hi | 0.5 % | 22.7 at 11,400 | 11.0 | +0.32 | 18.5 at 10,325 | 15.2 | 7.7 |
+Sweep verdict: worst sum-of-axes 26.6 m/s2 (MS +0.13 vs 30 as a bound), worst per-axis rms-like 11.1 m/s2 (MS +1.70): PASS. Closes the T-083 open item 'extend the A-P10(b) sweep to 11,400 rpm' for the beam-FE model.
+
+### 4b. T-084: same beam FE with the D-226 wing cell credited (FEA-lite sensitivity of the wing model; band and coupling rule unchanged)
+Wing beam = spar + XPS core + glass +-45 skin plies (1 ply |y| <= 0.075, 3 plies to 0.40) + cove CF strip, spar + foam outboard of 0.40 (`T084_data/t084_cell_props.py`: the section model of landing_path_a P15 / P16; foam E 30 / G 8 MPa EST, ACP glass x Vf 0.70, strip 120 GPa EST). Lower bound: foam x0.5, skin x0.7, no strip. Corners scale the CF parts only. Pack, hub and lumps as above.
+| wing model | corner | strong modes IN the band (f Hz, cx / cy) | highest strong below (margin to 94) | lowest strong above (margin to 321) | D-185 (a) |
+|---|---|---|---|---|---|
+| cell nominal | kd | none | 84.6 (+12 %) | 655 (+104 %) | PASS |
+| cell nominal | nom | none | 88.0 (+7 %) | 701 (+118 %) | PASS |
+| cell nominal | hi | 96.2 (0.81 / 0.93) | 47.0 (+101 %) | 793 (+147 %) | **FAIL** |
+| cell lower bound | kd | none | 79.4 (+19 %) | 630 (+96 %) | PASS |
+| cell lower bound | nom | none | 82.7 (+14 %) | 664 (+107 %) | PASS |
+| cell lower bound | hi | none | 91.4 (+3 %) | 724 (+126 %) | PASS |
+Reading (T-084): with the cell credited the in-plane spar mode leaves the band (largest in-band coupling 0.21-0.27), but the symmetric wing-flap / cage-bounce mode (hub and pack bouncing on the bridge, arms flexing; 79-96 Hz) rises to the band's lower edge 94 Hz: in band at cell nominal hi 96.2 Hz. With the pack placed at its drawn x (rigid on the hub) instead of at the hub node it moves up further (94-107 Hz, `T084_report.md` s2.4). No lever within the BOM moves it robustly below 94 Hz (bridge 12x10 fails D-206 torsion). D-185 (a) is therefore NOT shown to pass by the beam FE in either wing model; the rule is not relaxed: open, T-084 report s2 options (tap test T-A-TAP on the built structure).
 
 Not re-run here (listed in T066_record.md): the control-band gain-margin clause of iter3_run.md (`sitl/fu_cage.py`) with the X2216 masses / inertias, and a tap test of the built cage.
 
@@ -231,47 +243,47 @@ Fin out-of-plane EI 81.2 N m2 (kd, 16x14 tube), mass/length 99 g/m (tube + 3 mm 
 | Motor screws / X-mount / cup rows | carried from `mechanism/out/T083_data/t083_cup_checks.md` (X2216 on the X-mount, 4 x M3): min MS +0.46 (plate strip at the nut, -y bolts), all PASS | | +0.46 | PASS (carried, s6) |
 
 ## 5. C5 landing on fin-tip feet (rigid-body dynamics + hand calculation)
-Static (drawn pads, CG 21.08 mm aft of LE from cad_mass.json, ground plane x 0.3375): tip-over narrow axis **29.2 deg: FAIL vs A-P9 30 deg** (pre-existing: the drawn pads have not met A-P9 since T-083, T083_report.md s5.2 gives 29.48 at CG 24.41 mm; the analysis pad of D-222 s4.1 is designed for 30.5 and is not drawn), wide axis 50.2 deg. Parked broadside to the wind: tips at 7.6 m/s; restoring / overturning at 5 m/s 2.28. I (kg m2, CAD part-table model scaled to 1.873 kg): [0.1017, 0.0391, 0.1146].
-Demand basis (T-083, reused): pad plateau 36 N, usable stroke 24 mm, pad x 0.3475 m, z 0.1928 m (analysis pad of D-222 s4.1, not the drawn pad), mass 1.873 kg, CG from cad_mass.json (21.08 mm), CAD part-table mass model rebuilt from the current CAD (`T066_data/cad_part_table_T066.json`, 131 parts, basic 1.6275 kg), friction mu 0.40 / 0.30, pad zeta 0.02 / 0.05 / 0.10 (EST, TP-3 measures it), dt 0.2 ms.
+Static (drawn pads, CG 21.95 mm aft of LE from cad_mass.json, ground plane x 0.3375): tip-over narrow axis **31.1 deg: PASS vs A-P9 30 deg** (T-084: fin tube ends at FIN_H 0.1937 m, option T3 of the T-068 decision s4; was 29.2 deg at FIN_H 0.180. Pad centre, CG z ignored, as T-066; the D-215 A-P9 pivot, the outer pad edge on the CG z side, gives 31.08 deg here and >= 31.00 deg over both trim ends, drawn and tallied CG: `mechanism/out/T084_data/tipover_t084.txt`), wide axis 50.3 deg. Parked broadside to the wind: tips at 7.6 m/s; restoring / overturning at 5 m/s 2.29. I (kg m2, CAD part-table model scaled to 1.8796 kg): [0.103, 0.0398, 0.1159].
+Demand basis (T-083, reused): pad plateau 36 N, usable stroke 24 mm, pad x 0.3475 m, z 0.1922 m (analysis pad of D-222 s4.1, not the drawn pad), mass 1.8796 kg, CG from cad_mass.json (21.95 mm), CAD part-table mass model rebuilt from the current CAD (`T066_data/cad_part_table_T066.json`, 131 parts, basic 1.6330 kg), friction mu 0.40 / 0.30, pad zeta 0.02 / 0.05 / 0.10 (EST, TP-3 measures it), dt 0.2 ms.
 Sim = `landing_a.py` (6 dof, 4 elasto-plastic feet, Coulomb friction, rotor lift 2/3 W to 0.3 s then 0 at 0.6 s), 21 cases x 3 zeta x 2 mu = 126 runs. Rib-root check: the 25x23 CF rib (OD 25 / ID 23 mm, root x 70.5 mm) under bending, torsion and axial load, all four feet resolved in the body frame at every step, RF = 1 / sqrt((KF (M/Z + N/A) / 350 MPa)^2 + (KF T r / J / 30 MPa)^2), KF 1.725, both allowables EST (no coupon); the RB value is then divided by the DAF 2.23 (D-223 wing / rib; x1.5 floor stays).
 
 Table at pad zeta 0.05, mu 0.40 (the iteration-1 basis):
 | Case | max stroke (mm) of 24 | permanent set (mm) | peak foot load (N) | side load (N) | n at CG | end tilt (deg) | drift (mm) | rib-root RF, rigid-body | rib-root RF x2.23 |
 |---|---|---|---|---|---|---|---|---|---|
-| hard level | 8.7 | 7.2 | 48 | 15 | 10.4 | 0.1 | 12 | 8.30 | 3.72 |
-| hard 10 narrow | 15.1 | 13.6 | 48 | 19 | 5.3 | 1.8 | 122 | 11.81 | 5.30 |
-| hard 10 narrow neg | 14.8 | 13.3 | 48 | 19 | 6.8 | 1.7 | 115 | 13.04 | 5.85 |
-| hard 10 wide | 9.4 | 7.9 | 51 | 20 | 5.5 | 0.1 | 60 | 3.56 | 1.60 |
-| hard 7/7 combo | 12.9 | 11.4 | 54 | 22 | 6.8 | 1.2 | 14 | 3.44 | 1.54 |
-| hard 10 narrow + drift .5 | 17.9 | 16.4 | 48 | 19 | 5.3 | 2.4 | 72 | 10.07 | 4.52 |
-| hard 10 wide + drift .5 y | 11.8 | 10.3 | 53 | 21 | 5.7 | 0.4 | 133 | 4.13 | 1.85 |
-| normal level .5 | 2.3 | 0.8 | 40 | 12 | 8.6 | 0.0 | 6 | 6.12 | 2.75 |
-| normal 10 narrow .5 | 3.5 | 2.0 | 40 | 15 | 8.0 | 0.2 | 104 | 9.04 | 4.05 |
-| normal 10 wide .5 + drift | 7.0 | 5.5 | 48 | 19 | 5.1 | 0.4 | 115 | 4.56 | 2.04 |
-| SITL Tb_h5 wide (y drift) | 6.4 | 4.9 | 48 | 19 | 4.9 | 0.3 | 90 | 2.47 | 1.11 |
-| SITL Tb_h5 narrow (z drift) | 5.6 | 4.1 | 44 | 17 | 6.4 | 0.4 | 112 | 5.57 | 2.50 |
-| SITL Ta_h5 wide (y drift) | 7.4 | 5.9 | 48 | 19 | 4.9 | 0.3 | 107 | 4.15 | 1.86 |
-| SITL Ta_h5 narrow (z drift) | 5.3 | 3.8 | 43 | 17 | 4.7 | 0.5 | 118 | 5.98 | 2.68 |
-| SITL Z5_b45 wide (y drift) | 6.9 | 5.4 | 48 | 19 | 5.3 | 0.4 | 114 | 2.83 | 1.27 |
-| SITL Z5_b45 narrow (z drift) | 6.3 | 4.8 | 44 | 17 | 6.1 | 0.6 | 118 | 6.04 | 2.71 |
-| SITL Lb_5e wide (y drift) | 7.8 | 6.3 | 47 | 17 | 7.3 | 0.5 | 100 | 8.71 | 3.91 |
-| SITL Lb_5e narrow (z drift) | 7.3 | 5.8 | 45 | 18 | 6.0 | 0.7 | 98 | 5.71 | 2.56 |
-| SITL Z5_gb45 wide (y drift) | 6.3 | 4.8 | 47 | 19 | 5.1 | 0.3 | 104 | 5.52 | 2.47 |
-| SITL Z5_gb45 narrow (z drift) | 7.3 | 5.8 | 45 | 17 | 5.8 | 0.7 | 89 | 5.83 | 2.61 |
-| hard 16 wide + drift .5 y | 11.9 | 10.4 | 53 | 21 | 5.6 | 0.3 | 184 | 4.44 | 1.99 |
+| hard level | 8.8 | 7.3 | 48 | 15 | 10.4 | 0.1 | 12 | 5.52 | 2.47 |
+| hard 10 narrow | 15.2 | 13.7 | 48 | 19 | 5.2 | 1.8 | 116 | 13.85 | 6.21 |
+| hard 10 narrow neg | 14.8 | 13.3 | 48 | 19 | 6.8 | 1.6 | 110 | 17.14 | 7.69 |
+| hard 10 wide | 9.4 | 7.9 | 51 | 20 | 5.4 | 0.1 | 60 | 3.60 | 1.61 |
+| hard 7/7 combo | 13.0 | 11.5 | 54 | 22 | 6.7 | 1.2 | 14 | 3.45 | 1.55 |
+| hard 10 narrow + drift .5 | 17.9 | 16.4 | 48 | 19 | 5.3 | 2.4 | 75 | 10.07 | 4.52 |
+| hard 10 wide + drift .5 y | 11.9 | 10.4 | 53 | 21 | 5.7 | 0.4 | 133 | 5.02 | 2.25 |
+| normal level .5 | 2.3 | 0.8 | 40 | 12 | 8.6 | 0.0 | 7 | 6.03 | 2.70 |
+| normal 10 narrow .5 | 3.5 | 2.0 | 40 | 15 | 7.4 | 0.1 | 96 | 7.61 | 3.41 |
+| normal 10 wide .5 + drift | 7.0 | 5.5 | 47 | 19 | 5.1 | 0.4 | 114 | 4.56 | 2.05 |
+| SITL Tb_h5 wide (y drift) | 6.5 | 5.0 | 47 | 19 | 4.9 | 0.3 | 90 | 2.54 | 1.14 |
+| SITL Tb_h5 narrow (z drift) | 5.5 | 4.0 | 44 | 17 | 6.5 | 0.3 | 115 | 5.79 | 2.60 |
+| SITL Ta_h5 wide (y drift) | 7.5 | 6.0 | 48 | 19 | 4.9 | 0.3 | 105 | 4.17 | 1.87 |
+| SITL Ta_h5 narrow (z drift) | 5.4 | 3.9 | 44 | 17 | 4.6 | 0.5 | 120 | 6.50 | 2.92 |
+| SITL Z5_b45 wide (y drift) | 7.0 | 5.5 | 48 | 19 | 5.0 | 0.4 | 114 | 3.15 | 1.41 |
+| SITL Z5_b45 narrow (z drift) | 7.3 | 5.8 | 44 | 18 | 6.2 | 0.7 | 114 | 6.02 | 2.70 |
+| SITL Lb_5e wide (y drift) | 7.8 | 6.3 | 47 | 17 | 7.3 | 0.5 | 99 | 8.74 | 3.92 |
+| SITL Lb_5e narrow (z drift) | 7.3 | 5.8 | 45 | 17 | 5.9 | 0.7 | 98 | 5.88 | 2.64 |
+| SITL Z5_gb45 wide (y drift) | 6.4 | 4.9 | 47 | 19 | 5.1 | 0.4 | 105 | 6.26 | 2.81 |
+| SITL Z5_gb45 narrow (z drift) | 7.3 | 5.8 | 45 | 17 | 5.8 | 0.7 | 90 | 5.91 | 2.65 |
+| hard 16 wide + drift .5 y | 12.0 | 10.5 | 53 | 21 | 5.6 | 0.3 | 183 | 4.74 | 2.13 |
 
 Envelope over all 21 cases, by pad zeta and friction:
 | zeta | mu | worst stroke (mm) of 24 | worst end tilt (deg, limit 3.0) | peak n (g, A-P5 limit 12) | peak foot load (N) | worst side load (N) | min rib-root RF (RB) | min rib-root RF x2.23 | verdict |
 |---|---|---|---|---|---|---|---|---|---|
-| 0.02 | 0.4 | 20.4 | 2.80 | 8.9 | 43 | 17 | 2.51 | 1.13 | PASS |
-| 0.02 | 0.3 | 17.0 | 2.26 | 8.9 | 45 | 13 | 3.89 | 1.74 | PASS |
-| 0.05 | 0.4 | 17.9 | 2.43 | 10.4 | 54 | 22 | 2.47 | 1.11 | PASS |
-| 0.05 | 0.3 | 15.0 | 1.96 | 10.4 | 57 | 17 | 3.14 | 1.41 | PASS |
-| 0.1 | 0.4 | 14.9 | 1.97 | 12.9 | 70 | 28 | 2.40 | 1.08 | FAIL: n > 12 g (A-P5) |
-| 0.1 | 0.3 | 12.5 | 1.62 | 12.9 | 77 | 23 | 2.61 | 1.17 | FAIL: n > 12 g (A-P5) |
+| 0.02 | 0.4 | 20.5 | 2.80 | 8.9 | 43 | 17 | 2.54 | 1.14 | PASS |
+| 0.02 | 0.3 | 17.1 | 2.28 | 8.9 | 45 | 13 | 3.89 | 1.75 | PASS |
+| 0.05 | 0.4 | 17.9 | 2.45 | 10.4 | 54 | 22 | 2.54 | 1.14 | PASS |
+| 0.05 | 0.3 | 15.1 | 1.98 | 10.4 | 57 | 17 | 4.09 | 1.83 | PASS |
+| 0.1 | 0.4 | 15.0 | 1.98 | 12.9 | 70 | 28 | 2.58 | 1.15 | FAIL: n > 12 g (A-P5) |
+| 0.1 | 0.3 | 12.6 | 1.63 | 12.9 | 78 | 23 | 3.30 | 1.48 | FAIL: n > 12 g (A-P5) |
 
 Rib-root RF at x2.23 (this file, rib 25x23 hand row) vs T-083 R1 / R2 rows: T-083 min 1.16 at zeta 0.05 and 1.06 over all zeta (rib at the node exit x 176 and at the root-fitting mouth); T-083b sensitivity at 1.873 kg: 1.12-1.13. This row is the rib at x 70.5 mm with feet resolved about the rib root, a different station, so the numbers are compared, not equated. Pad life: normal landings set the permanent set shown above; replace the pad at 10 mm cumulative set (EST carried from iteration 1; the pad is specified by its dynamic force, D-222).
-Side load per foot: worst 28.2 N at mu 0.40 / 0.30 (pad friction is an assumption, not measured: drag-test the EVA/PE pad, TP-3). Limits: pad plateau, stroke, zeta and friction are specification values pending the bench drop test; the drawn pad is not the analysis pad (T083_report.md s5.2).
+Side load per foot: worst 28.1 N at mu 0.40 / 0.30 (pad friction is an assumption, not measured: drag-test the EVA/PE pad, TP-3). Limits: pad plateau, stroke, zeta and friction are specification values pending the bench drop test; the drawn pad is not the analysis pad (T083_report.md s5.2).
 
 ## 6. C6 joints, fasteners, bonds: CARRIED FORWARD from the records that replaced the iteration-1 hand rows (not recomputed here)
 The iteration-1 rows of this section judged the PETG hub, PETG saddles, PETG root block, 0.1 mm CFRP fin skins, M3 motor screws and the PETG pack-tray flange. None of those parts exists in the current CAD (CGE-001 is a machined 6061 hub, D-220 / D-221; the D-226 centre node CGE-006 and bulkheads replace the saddles; FIN-003 is a 6061 fitting, D-229; the fin is a 16x14 tube + foam fairing; the motors sit on the SunnySky X-mount, T-083; the tray CGE-008 is a 1.2 mm windowed plate, T-077). Re-running the old formulas on parts that are not drawn would give no information, so each row is replaced by the judging record's value (all at KF 1.725 / KP 2.156, x2.23 on the T-083 demand unless stated; EST allowables except where marked V):

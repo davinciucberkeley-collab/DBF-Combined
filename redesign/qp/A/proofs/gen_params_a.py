@@ -175,7 +175,7 @@ def build():
         "wind_ge85_s": V(0.20, "s", "SRC-A-D195SITL", "D-195: 4 m/s mean, turbulence 1.0 m/s, 1.455 kg, worst pack (thrust scale 0.767), arm 1.2, cant 17, A.param D-191, CAD inertia / CG: longest time at or above 0.85 over the seven runs (0 / 0 / 0 / 0.20 / 0 / 0 / 0), runs R5_h60, h60s2, h60s3, h70, h70s2, h80, h90 (sitl/results.jsonl; same as CLAIMS-FIX N4 at 1.47 kg)"),
         "wind_cap_s": V(0.0, "s", "SRC-A-D195SITL", "same seven R5_h* runs: time at the 0.90 cap, all 0"),
         "wind_peak": V(0.884, "-", "SRC-A-D195SITL", "same seven R5_h* runs: highest instantaneous output (seed 3, from 60 deg; 0.873 at the CLAIMS-FIX 1.47 kg runs); reported, not a limit"),
-        "tipover_deg": V(33.2, "deg", "SRC-A-SIZING", "SIZING-A s4 line 15: static tip angle 33.2 deg at CG 25 mm (EST)", est=True),
+        "tipover_deg": V(31.00, "deg", "SRC-A-T084", "T-084 tipover_t084.txt: minimum 31.00 deg (drawn CG, forward trim end 20.96 mm; pivot the outer pad edge z 196.7 mm on the CG z side, D-215); pad-centre value 31.07 (landing_a.static); was SIZING-A 33.2 EST, and the drawn pads gave 29.2 (T-066)"),
         "gust_n_vd": V(3.01, "g", "SRC-A-ITER3", "iter3_run.md C1: gust U 4 m/s at VD 24, n 3.01 (stall line 3.96)"),
         "flutter_hot_ms": V([37.5, 40.0, 44.0], "m/s", "SRC-A-D195FL", "flutter_d205.md case B (D-205 lead 12.8 g, elevon 6.7 g): hot 50 C (EST x0.6) lowest onset, wing corners kd / nom / hi", est=True),
         "flutter_nom_ms": V([41.0, 44.0, 49.0], "m/s", "SRC-A-D195FL", "flutter_d205.md case C: nominal 25 C, kd / nom / hi"),
@@ -293,7 +293,7 @@ def build():
     }
 
     # ---------------------------------------------------------------- transport
-    P["box"] = {"packed_m": V([0.90, 0.50, 0.39], "m", "SRC-A-REQ", "A-U3: A is one piece, 0.90 x 0.50 x 0.39 m, props on; the trunk size is `—` (no car measured)")}
+    P["box"] = {"packed_m": V([0.90, 0.50, 0.394], "m", "SRC-A-REQ", "A-U3: A is one piece, 0.90 x 0.50 x 0.394 m, props on (T-084: fin pads reach z +-196.7 mm = FIN_H 0.1937 + 3 mm, 393.4 mm, was 0.39 m; t083_bbox.py on the T-084 CAD: x 490.9 mm); the trunk size is `—` (no car measured)")}
 
     # ---------------------------------------------------------------- 3-D gates (stored output of collide_a.py / a_assembly.py)
     P["cad3d"] = {

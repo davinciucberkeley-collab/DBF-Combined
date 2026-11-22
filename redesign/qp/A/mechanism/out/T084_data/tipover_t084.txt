@@ -1,0 +1,18 @@
+# A-P9 static tip-over, narrow axis (FIN_H 193.7 mm, pad centre z 190.7, outer edge z 196.7, CG z 6.48 mm; basic 1633.0 g drawn, 1640.0 g tallied)
+| ground plane | CG basis | pack position | CG x mm | **edge, toward CG (D-215 A-P9)** | centre (landing_a.static) | centre, toward CG (bound) | edge, away from CG | A-P9 30 deg / target 30.5 |
+|---|---|---|---|---|---|---|---|---|
+| drawn pad, X_GROUND 337.5 | drawn | fwd trim end | 20.96 | **31.00** | 31.07 | 30.20 | 32.69 | PASS (>= 30.5) |
+| drawn pad, X_GROUND 337.5 | drawn | nominal | 21.95 | **31.08** | 31.15 | 30.28 | 32.78 | PASS (>= 30.5) |
+| drawn pad, X_GROUND 337.5 | drawn | aft trim end | 23.61 | **31.22** | 31.28 | 30.41 | 32.91 | PASS (>= 30.5) |
+| drawn pad, X_GROUND 337.5 | tallied | fwd trim end | 22.14 | **31.10** | 31.16 | 30.29 | 32.79 | PASS (>= 30.5) |
+| drawn pad, X_GROUND 337.5 | tallied | nominal | 23.13 | **31.18** | 31.24 | 30.37 | 32.87 | PASS (>= 30.5) |
+| drawn pad, X_GROUND 337.5 | tallied | aft trim end | 24.78 | **31.31** | 31.38 | 30.50 | 33.01 | PASS (>= 30.5) |
+| D-222 future pad, X_GROUND 347.5 (sensitivity) | drawn | fwd trim end | 20.96 | **30.22** | 30.28 | 29.43 | 31.89 | PASS 30, below the 30.5 target |
+| D-222 future pad, X_GROUND 347.5 (sensitivity) | drawn | nominal | 21.95 | **30.30** | 30.36 | 29.51 | 31.97 | PASS 30, below the 30.5 target |
+| D-222 future pad, X_GROUND 347.5 (sensitivity) | drawn | aft trim end | 23.61 | **30.43** | 30.49 | 29.63 | 32.10 | PASS 30, below the 30.5 target |
+| D-222 future pad, X_GROUND 347.5 (sensitivity) | tallied | fwd trim end | 22.14 | **30.31** | 30.38 | 29.52 | 31.98 | PASS 30, below the 30.5 target |
+| D-222 future pad, X_GROUND 347.5 (sensitivity) | tallied | nominal | 23.13 | **30.39** | 30.45 | 29.59 | 32.06 | PASS 30, below the 30.5 target |
+| D-222 future pad, X_GROUND 347.5 (sensitivity) | tallied | aft trim end | 24.78 | **30.52** | 30.58 | 29.72 | 32.19 | PASS (>= 30.5) |
+
+Minimum on the drawn pads (edge, toward CG): 31.00 deg (margin +1.00 over A-P9 30, +0.50 over the D-215 target 30.5).
+Before T-084 (FIN_H 180, T066 structures_run.md): centre 29.2 deg at CG 21.08; edge toward CG 29.15 deg.

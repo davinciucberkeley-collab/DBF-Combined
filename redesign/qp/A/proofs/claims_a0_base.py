@@ -51,6 +51,7 @@ src("SRC-A-ARMCUP", "Arm and motor-cup checks (arm_cup_checks.md)", "qp/A/struct
 src("SRC-A-D206BR", "Bridge tube torsion sizing, D-206 (bridge_torsion_d206.md)", "qp/A/structures/bridge_torsion_d206.md", "roll moments from the hub FEA load set; tau = M r / J; strut share bounds", kind="file")
 src("SRC-A-ITER2M", "Structures iteration 2 margins (iter2_margins.md)", "qp/A/structures/iter2_margins.md", "MS table at 1.5 x limit", kind="file")
 src("SRC-A-ITER3", "Structures iteration 3 (iter3_run.md, D-185 as ruled)", "qp/A/structures/iter3_run.md", "modes vs rotor bands, forced response, control-band GM, C1 loads at VD 24", kind="file")
+src("SRC-A-T084", "T-084 static tip-over on the drawn pads (fin ends at FIN_H 0.1937, option T3)", "qp/A/mechanism/out/T084_data/tipover_t084.txt", "minimum over the drawn and tallied CG and both pack-trim ends; pivot = outer pad edge on the CG z side (D-215 s4)", kind="file")
 src("SRC-A-D195FL", "Elevon flutter, lead 12.8 g (D-205; flutter_d205.md, else as flutter_d195.md)", "qp/A/structures/flutter_d205.md", "elevon 6.7 g, lead 12.8 g at 20 mm (D-205), damper c 1.03e-3 hot / nominal / cold / half; p-method K sweep", kind="file")
 src("SRC-A-D195FW", "Wing bending-torsion flutter, lead 12.8 g (D-205; flutter_d205_wing.md)", "qp/A/structures/flutter_d205_wing.md", "Ritz + strip Theodorsen, lumps 23.8 g per semispan (D-205)", kind="file")
 src("SRC-A-D195", "QP-5 analyses (ANALYSES.md): S5010 aero, mass decision, flutter, SITL at cant 17, G7", "review/QP-5/ANALYSES.md", "results with sources and open items")

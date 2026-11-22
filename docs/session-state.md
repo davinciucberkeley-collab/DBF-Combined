@@ -31,8 +31,8 @@ shaft 85810 needs a CAD change); T11 offcut length for the second fitting blank;
 **Running now (2026-11-22):** T-083c doc update (TEST-PLAN-O4B, MASS-GATE, A-docs to D-227..D-229; sonnet);
 READY-row review (eng-reviewer, `docs/audits/2026-11-22-ready-rows-review.md`).
 
-**Next action:** apply the review verdicts to the ledger; commit T-083c; then T-066 (structures_a re-baseline), T-023
-CAD review, cleanup T-042..T-045, T-008, final verification T-047. Ask Dillon only for: December purchase approval
+**Next action (updated 2026-11-22 after T-084 / D-233):** review T-084 and T-066 (READY); T-085 D-185 FE upgrade (sonnet);
+re-review T-023 / T-081; budget margin only +$0.88 (cost-trim study offered to Dillon); then cleanup T-042..T-045, T-008, final verification T-047. Ask Dillon only for: December purchase approval
 (not before early Dec; check RMRC stock first), trunk height and lid opening (2018 Altima SL), Jacobs material and
 test-frame confirmations, anything over $2,000.
 

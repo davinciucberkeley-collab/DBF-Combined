@@ -174,7 +174,7 @@
    ],
    "moved": null,
    "name": "static",
-   "seconds": 790.1,
+   "seconds": 783.8,
    "state": null,
    "theta_deg": null
   },
@@ -744,7 +744,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -21 deg",
-   "seconds": 16.9,
+   "seconds": 16.6,
    "state": "mid",
    "theta_deg": {
     "L": 22.63742242970439,
@@ -1317,7 +1317,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -20 deg",
-   "seconds": 9.0,
+   "seconds": 8.9,
    "state": "mid",
    "theta_deg": {
     "L": 21.560355526523868,
@@ -1890,7 +1890,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -18 deg",
-   "seconds": 8.9,
+   "seconds": 8.8,
    "state": "mid",
    "theta_deg": {
     "L": 19.40480618852609,
@@ -2457,7 +2457,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -15 deg",
-   "seconds": 7.9,
+   "seconds": 7.8,
    "state": "mid",
    "theta_deg": {
     "L": 16.169388949464764,
@@ -4158,7 +4158,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -6 deg",
-   "seconds": 8.2,
+   "seconds": 8.1,
    "state": "mid",
    "theta_deg": {
     "L": 6.463845794048801,
@@ -5857,7 +5857,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +3 deg",
-   "seconds": 9.9,
+   "seconds": 9.8,
    "state": "mid",
    "theta_deg": {
     "L": -3.23144898881135,
@@ -6424,7 +6424,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +6 deg",
-   "seconds": 8.4,
+   "seconds": 8.3,
    "state": "mid",
    "theta_deg": {
     "L": -6.4646983832943,
@@ -6991,7 +6991,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +9 deg",
-   "seconds": 4.4,
+   "seconds": 4.3,
    "state": "mid",
    "theta_deg": {
     "L": -9.702186194942481,
@@ -7558,7 +7558,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +12 deg",
-   "seconds": 4.3,
+   "seconds": 4.2,
    "state": "mid",
    "theta_deg": {
     "L": -12.947121976636565,
@@ -8143,7 +8143,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +15 deg",
-   "seconds": 9.3,
+   "seconds": 9.0,
    "state": "mid",
    "theta_deg": {
     "L": -16.203607404214964,
@@ -8728,7 +8728,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +18 deg",
-   "seconds": 6.3,
+   "seconds": 6.2,
    "state": "mid",
    "theta_deg": {
     "L": -19.476811045379947,
@@ -9313,7 +9313,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +20 deg",
-   "seconds": 10.4,
+   "seconds": 10.1,
    "state": "mid",
    "theta_deg": {
     "L": -21.671373889774635,
@@ -9898,7 +9898,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +21 deg",
-   "seconds": 17.0,
+   "seconds": 16.4,
    "state": "mid",
    "theta_deg": {
     "L": -22.773219907759124,
@@ -9907,7 +9907,7 @@
   }
  ],
  "report_mm": 0.01,
- "seconds": 1126.5,
+ "seconds": 1118.2,
  "states": [
   "mid"
  ],

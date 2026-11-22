@@ -287,7 +287,7 @@
  },
  "mass": {
   "basic_cad_kg": {
-   "value": 1.6275,
+   "value": 1.63298,
    "unit": "kg",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json mass_basic_kg (CAD, no growth)"
@@ -401,13 +401,13 @@
    "note": "D-205: forward pack travel 6 mm (D-202: 1 mm; D-199: 6 mm; D-196: 8 mm) (tray front lip 2 mm aft); cad_mass.json trim_fwd_m"
   },
   "cg_x_mm": {
-   "value": 21.078549923195084,
+   "value": 21.951707920488918,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_x_m, aft of the wing leading edge"
   },
   "cg_y_mm": {
-   "value": 1.662320122887865,
+   "value": 1.6567416624820879,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_y_m (lateral)"
@@ -812,11 +812,10 @@
    "note": "same seven R5_h* runs: highest instantaneous output (seed 3, from 60 deg; 0.873 at the CLAIMS-FIX 1.47 kg runs); reported, not a limit"
   },
   "tipover_deg": {
-   "value": 33.2,
+   "value": 31.0,
    "unit": "deg",
-   "source": "SRC-A-SIZING",
-   "note": "SIZING-A s4 line 15: static tip angle 33.2 deg at CG 25 mm (EST)",
-   "status": "UNVERIFIED"
+   "source": "SRC-A-T084",
+   "note": "T-084 tipover_t084.txt: minimum 31.00 deg (drawn CG, forward trim end 20.96 mm; pivot the outer pad edge z 196.7 mm on the CG z side, D-215); pad-centre value 31.07 (landing_a.static); was SIZING-A 33.2 EST, and the drawn pads gave 29.2 (T-066)"
   },
   "gust_n_vd": {
    "value": 3.01,
@@ -1995,11 +1994,11 @@
    "value": [
     0.9,
     0.5,
-    0.39
+    0.394
    ],
    "unit": "m",
    "source": "SRC-A-REQ",
-   "note": "A-U3: A is one piece, 0.90 x 0.50 x 0.39 m, props on; the trunk size is `—` (no car measured)"
+   "note": "A-U3: A is one piece, 0.90 x 0.50 x 0.394 m, props on (T-084: fin pads reach z +-196.7 mm = FIN_H 0.1937 + 3 mm, 393.4 mm, was 0.39 m; t083_bbox.py on the T-084 CAD: x 490.9 mm); the trunk size is `—` (no car measured)"
   }
  },
  "cad3d": {
