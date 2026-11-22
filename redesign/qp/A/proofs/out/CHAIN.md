@@ -8,10 +8,12 @@ Parameter files: `redesign/qp/A/params-A.json`
 
 > - STRICT A-P1: CL-A-MASS-GATE-ROOM: FAILS: margin -27.3% (1.872 kg vs <= 1.47 kg)
 > - STRICT A-D3: CL-A-MASS-PRED: FAILS: margin -27.3% (1.872 kg vs <= 1.47 kg)
+> - STRICT A-P10: CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)
 > - STRICT A-P13: CL-A-FLUTTER-ELEVON-NOM is UNVERIFIED
 > - STRICT CL-A-MASS-PRED: FAILS: margin -27.3% (1.872 kg vs <= 1.47 kg)
 > - STRICT CL-A-MASS-GATE-ROOM: FAILS: margin -27.3% (1.872 kg vs <= 1.47 kg)
 > - STRICT CL-A-CUTS-REQUIRED: FAILS: margin -864.2% (401.1 g vs <= 41.6 g)
+> - STRICT CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)
 > - STRICT CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)
 > - STRICT CL-A-HORN-RIB-FOAM-STALL: FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)
 > - STRICT CL-A-ELEVON-TORSION-FOAM: FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)
@@ -24,7 +26,7 @@ Parameter files: `redesign/qp/A/params-A.json`
 | [A-D3](#a-d3) Design target <= 1.470 kg; structure <= 494 g | **UNVERIFIED** **FAILS** | 4 | -864% |
 | [A-D8](#a-d8) First tethered hover by 2027-02-18 | **UNVERIFIED** | 2 | — |
 | [A-P1](#a-p1) Mass gate 1.47 kg and T/W at the gate | **UNVERIFIED** **FAILS** | 3 | -27% |
-| [A-P10](#a-p10) Vibration rule D-185 | **CHECKED** | 7 | +8% |
+| [A-P10](#a-p10) Vibration rule D-185 | **UNVERIFIED** **FAILS** | 8 | +8%; 1 below a limit of 0 |
 | [A-P11](#a-p11) Cruise control authority | **UNVERIFIED** | 7 | +4% |
 | [A-P13](#a-p13) Loads and flutter (G8) | **UNVERIFIED** **FAILS** | 46 | -903% |
 | [A-P16](#a-p16) Motor and ESC current | **UNVERIFIED** | 2 | +25% |
@@ -343,63 +345,79 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p1
 
 ## A-P10
 
-**Vibration rule D-185** — (a) strongly coupled modes >= 20 % from every rotor band; (b) forced response FC <= 30 m/s2 over 6,000-10,500 rpm; (c) rate-loop gain margin >= 2 with the cage modes at +-20 % — **CHECKED**  
+**Vibration rule D-185** — (a) strongly coupled modes >= 20 % from every rotor band; (b) forced response FC <= 30 m/s2 over 6,000-10,500 rpm; (c) rate-loop gain margin >= 2 with the cage modes at +-20 % — **UNVERIFIED** **FAILS**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-p10
 
-- claim **CL-A-VIB-LOW-LIMIT** Upper edge allowed for strongly coupled modes below the rotor bands = **83.58 Hz** — **CHECKED**
-  - how to verify: Hover 1P 100-119 Hz (6,018-7,151 rpm), 20 % separation rule (A-P10(a)).
-  - calc `CALC-A-VIB-LOW-LIMIT` `redesign/qp/A/proofs/claims_a2_struct.py::vib_low_limit()`: `limit = hover 1P low edge / 1.2 = (6,018 rpm / 60) / 1.2` — **CHECKED**
-    - `rpm` ← param `P:sim.hover_1p_rpm_lo` = 6018 rpm — **CHECKED**
-      - source `SRC-A-REQ` [Concept A requirements (REQUIREMENTS-A.md)](redesign/qp/A/REQUIREMENTS-A.md), limits of A-U1 ... A-D12; status PROPOSED, owner A2, checked 2026-11-15 — **CHECKED**
+- claim **CL-A-VIB-LOW-LIMIT** Upper edge allowed for strongly coupled modes below the rotor bands = **94.29 Hz** — **CHECKED**
+  - how to verify: Lowest hover 1P 113 Hz (6,789 rpm, X2216, 1.8796 kg; structures_run.md s4), 20 % separation rule (A-P10(a)); band 94-321 Hz.
+  - calc `CALC-A-VIB-LOW-LIMIT` `redesign/qp/A/proofs/claims_a2_struct.py::vib_low_limit()`: `limit = hover 1P low edge / 1.2 = (6,789 rpm / 60) / 1.2` — **CHECKED**
+    - `rpm` ← param `P:sim.hover_1p_rpm_lo` = 6789 rpm — **CHECKED**
+      - source `SRC-A-STRUCT-RUN` [Structures run, T-084 rerun with the X2216 / 1.8796 kg model (structures_run.md)](redesign/qp/A/structures/structures_run.md), s2 C1 loads, s4 modes vs rotor orders, band 94-321 Hz, forced-response sweep; beam FE fe_a.py, checked 2026-11-15 — **CHECKED**
     - `sep` ← param `P:req.band_sep` = 1.2 — **CHECKED**
-      - `SRC-A-REQ` (see above)
-- claim **CL-A-VIB-HIGH-LIMIT** Lower edge allowed for strongly coupled modes above the rotor bands = **303.6 Hz** — **CHECKED**
-  - how to verify: Cruise 2P 243-253 Hz, 20 % separation rule (A-P10(a)).
-  - calc `CALC-A-VIB-HIGH-LIMIT` `redesign/qp/A/proofs/claims_a2_struct.py::vib_high_limit()`: `limit = cruise 2P high edge x 1.2 = 253 Hz x 1.2` — **CHECKED**
-    - `f` ← param `P:sim.cruise_2p_hz_hi` = 253 Hz — **CHECKED**
-      - `SRC-A-REQ` (see above)
+      - source `SRC-A-REQ` [Concept A requirements (REQUIREMENTS-A.md)](redesign/qp/A/REQUIREMENTS-A.md), limits of A-U1 ... A-D12; status PROPOSED, owner A2, checked 2026-11-15 — **CHECKED**
+- claim **CL-A-VIB-HIGH-LIMIT** Lower edge allowed for strongly coupled modes above the rotor bands = **321.1 Hz** — **CHECKED**
+  - how to verify: Highest 2P 268 Hz (hover lean, 8,028 rpm; cruise 2P 248 Hz; structures_run.md s4), 20 % separation rule (A-P10(a)); band 94-321 Hz.
+  - calc `CALC-A-VIB-HIGH-LIMIT` `redesign/qp/A/proofs/claims_a2_struct.py::vib_high_limit()`: `limit = highest 2P edge x 1.2 = (8,028 rpm hover lean / 60 x 2 = 267.6 Hz) x 1.2` — **CHECKED**
+    - `f` ← param `P:sim.cruise_2p_hz_hi` = 267.6 Hz — **CHECKED**
+      - `SRC-A-STRUCT-RUN` (see above)
     - `sep` ← `P:req.band_sep` (see above)
-- claim **CL-A-VIB-LOW** Highest strongly coupled mode below the rotor bands (hi corner) = **77 Hz** (limit <= 83.58 Hz, margin +8%) — **CHECKED**
-  - how to verify: Tap test of the built cage (T-A-TAP): modes within +-20 % of FE or re-tune. Margin is about 7 % at the hi corner, 31 % at kd.
+- claim **CL-A-VIB-LOW** Highest strongly coupled mode below the rotor bands (hi corner) = **81 Hz** (limit <= 94.29 Hz, margin +14%) — **CHECKED**
+  - how to verify: Tap test of the built cage (T-A-TAP): modes within +-20 % of FE or re-tune. Margin is 17 % at the hi corner (81 vs 94 Hz), 43 % at kd (structures_run.md s4). This claim alone does NOT show D-185 (a) met: see CL-A-VIB-IN-BAND.
   - parts: CGE-002-A, CGE-002-B, CGE-004, WNG-002
   - test `T-A-TAP` Tap test: built cage and fin against the FE modes (planned) — **PROPOSED**
-  - calc `CALC-A-VIB-LOW` `redesign/qp/A/proofs/claims_a2_struct.py::highest()`: `highest strongly coupled (coupling >= 0.5) mode below the bands over kd / nom / hi; FE run read from structures/iter3_run.md, not re-run` — **CHECKED**
+  - calc `CALC-A-VIB-LOW` `redesign/qp/A/proofs/claims_a2_struct.py::highest()`: `highest strongly coupled (coupling >= 0.5) mode below the bands over kd / nom / hi; FE run read from structures/structures_run.md s4 (T-084 rerun, spar-only beam FE), not re-run; excludes the in-band strong mode (CL-A-VIB-IN-BAND)` — **CHECKED**
     - `x` ← param `P:sim.vib_below_hz` = table (3 rows) Hz — **CHECKED**
-      - source `SRC-A-ITER3` [Structures iteration 3 (iter3_run.md, D-185 as ruled)](redesign/qp/A/structures/iter3_run.md), modes vs rotor bands, forced response, control-band GM, C1 loads at VD 24, checked 2026-11-15 — **CHECKED**
+      - `SRC-A-STRUCT-RUN` (see above)
   - `CL-A-VIB-LOW-LIMIT` (see above)
-- claim **CL-A-VIB-HIGH** Lowest strongly coupled mode above the rotor bands (kd corner, fin f1) = **432 Hz** (limit >= 303.6 Hz, margin +42%) — **CHECKED**
-  - how to verify: Fin tap test at build (T-A-TAP): f1 432-525 Hz in FE.
+- claim **CL-A-VIB-HIGH** Lowest strongly coupled mode above the rotor bands (kd corner, fin f1) = **438 Hz** (limit >= 321.1 Hz, margin +36%) — **CHECKED**
+  - how to verify: Fin tap test at build (T-A-TAP): lowest strong mode above the band 438-532 Hz in FE (structures_run.md s4).
   - parts: FIN-001-R, FIN-001-L
   - `T-A-TAP` (see above)
-  - calc `CALC-A-VIB-HIGH` `redesign/qp/A/proofs/claims_a2_struct.py::lowest()`: `lowest strongly coupled mode above the bands over kd / nom / hi; FE run read from structures/iter3_run.md, not re-run` — **CHECKED**
+  - calc `CALC-A-VIB-HIGH` `redesign/qp/A/proofs/claims_a2_struct.py::lowest()`: `lowest strongly coupled mode above the bands over kd / nom / hi; FE run read from structures/structures_run.md s4 (T-084 rerun, spar-only beam FE), not re-run` — **CHECKED**
     - `x` ← param `P:sim.vib_above_hz` = table (3 rows) Hz — **CHECKED**
-      - `SRC-A-ITER3` (see above)
+      - `SRC-A-STRUCT-RUN` (see above)
   - `CL-A-VIB-HIGH-LIMIT` (see above)
-- claim **CL-A-VIB-FC** Flight-controller vibration, worst of the forced-response sweep = **27.1 m/s2** (limit <= 30 m/s2, margin +10%) — **CHECKED**
-  - how to verify: IMU VIBE < 30 m/s2 in the first tethered hover (T-A-TETHER-VIBE). The worst point (10,500 rpm) is unreachable; at the 0.90 cap (9,349 rpm) the sweep reads 19.6-20.1.
+- claim **CL-A-VIB-IN-BAND** Corners (kd / nom / hi) with a strongly coupled mode INSIDE the excluded rotor band (D-185 (a) needs none) = **3** (limit <= 0, margin -3 abs) — **UNVERIFIED** **FAILS**
+  - ⚠ FAILS: margin -3 abs (3 vs <= 0)
+  - ⚠ uses P:sim.vib_inband_corners, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: structures_run.md s4: spar-only model has a strong mode (cy 0.52) IN the 94-321 Hz band at kd 201 / nom 215 / hi 244 Hz (FAIL at all 3 corners); T085_report.md s3.1 and D-236: the upgraded model (pad / tray / hub bounds) has the governing strong mode at 94.6-108.7 Hz (cx 0.74-0.85, cy 1.12-1.35), D-185 (a) FAIL in 23 of 24 bound groups, the one passing group by 0.1 Hz. Count of corners (kd / nom / hi) with a strong mode in the band, credible bound (cell nominal, 6061 hub, nominal pad))
+  - how to verify: CARRIED FAIL (T-066 M-1, T-085, D-236): structures_run.md s4 spar-only model has a strong mode (cy 0.52) at 201 / 215 / 244 Hz inside the 94-321 Hz band; the upgraded model (T085_report.md s3.1) has the governing strong mode at 94.6-108.7 Hz (cx 0.74-0.85, cy 1.12-1.35) at kd / nom / hi, 23 of 24 pad / tray / hub / cell bound groups fail, the one passing group by 0.1 Hz. No limit relaxed, band and 0.5 coupling rule unchanged. TP-10b (T-A-TAP) on the built airframe decides; routes in T085_report.md s7.
+  - parts: CGE-002-A, CGE-002-B, CGE-004, WNG-002
+  - `T-A-TAP` (see above)
+  - calc `CALC-A-VIB-IN-BAND-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `count of corners with a strong mode in the band, read from structures_run.md s4 and T085_report.md s3.1 (not re-run)` — **CHECKED**
+    - `v` ← param `P:sim.vib_inband_corners` = 3 — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: structures_run.md s4: spar-only model has a strong mode (cy 0.52) IN the 94-321 Hz band at kd 201 / nom 215 / hi 244 Hz (FAIL at all 3 corners); T085_report.md s3.1 and D-236: the upgraded model (pad / tray / hub bounds) has the governing strong mode at 94.6-108.7 Hz (cx 0.74-0.85, cy 1.12-1.35), D-185 (a) FAIL in 23 of 24 bound groups, the one passing group by 0.1 Hz. Count of corners (kd / nom / hi) with a strong mode in the band, credible bound (cell nominal, 6061 hub, nominal pad)
+      - source `SRC-A-T085` [T-085 D-185 FE upgrade, D-236 (T085_report.md)](redesign/qp/A/mechanism/out/T085_report.md), s3 strong modes in the band under credible pad / tray / hub / cell bounds; FEA-lite beam FE, EST springs bounded, checked 2026-11-15 — **CHECKED**
+- claim **CL-A-VIB-FC** Flight-controller vibration, worst of the forced-response sweep = **26.6 m/s2** (limit <= 30 m/s2, margin +11%) — **CHECKED**
+  - how to verify: IMU VIBE < 30 m/s2 in the first tethered hover (T-A-TETHER-VIBE). The worst point (11,400 rpm) is beyond the all-four duty 1.0 state (10,343 rpm), where the sweep reads 18.5-19.1; up to 9,349 rpm it reads 15.0-15.2 (structures_run.md s4).
   - parts: AVN-002, AVN-010, AVN-007
   - test `T-A-TETHER-VIBE` First tethered hover, IMU VIBE (planned) — **PROPOSED**
-  - calc `CALC-A-VIB-FC` `redesign/qp/A/proofs/claims_a2_struct.py::highest()`: `worst FC acceleration over 6,000-10,500 rpm, U 1.0 g mm per rotor, zeta 1 % and 0.5 %, kd / nom / hi; read from structures/iter3_run.md, not re-run` — **CHECKED**
+  - calc `CALC-A-VIB-FC` `redesign/qp/A/proofs/claims_a2_struct.py::highest()`: `worst FC acceleration over 6,000-11,415 rpm, U 1.0 g mm per rotor, zeta 1 % and 0.5 %, kd / nom / hi; read from structures/structures_run.md s4, not re-run` — **CHECKED**
     - `x` ← param `P:sim.vib_fc_ms2` = table (6 rows) m/s2 — **CHECKED**
-      - `SRC-A-ITER3` (see above)
+      - `SRC-A-STRUCT-RUN` (see above)
   - param `P:req.vibe_max_ms2` = 30 m/s2 — **CHECKED**
     - `SRC-A-REQ` (see above)
-- claim **CL-A-VIB-GM** Rate-loop gain margin, minimum over axes and corners (nominal modes) = **2.19** (limit >= 2, margin +9%) — **CHECKED**
-  - how to verify: Re-run sitl/fu_cage.py with the built-cage tap-test frequencies; hard-mounted FC.
+- claim **CL-A-VIB-GM** Rate-loop gain margin, minimum over axes and corners (nominal modes) = **2.19** (limit >= 2, margin +9%) — **UNVERIFIED**
+  - ⚠ uses P:sim.gm_nominal, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md control-band table (rerun D-195 with fe_a.py motor lump +7.2 g for the adapter and spinner nut, A.param D-191, cant 17), min GM at nominal mode frequencies: pit / rll / yaw x kd, nom, hi)
+  - how to verify: UNVERIFIED: inputs are the MN2212-era iter3_run.md values; sitl/fu_cage.py (iteration-2 cage, MN2212 aero) needs rebuilding for the X2216 / 1.8796 kg cage before it can be re-run. Then re-run with the built-cage tap-test frequencies; hard-mounted FC.
   - parts: AVN-002, CGE-004, CGE-002-A
-  - calc `CALC-A-VIB-GM` `redesign/qp/A/proofs/claims_a2_struct.py::lowest()`: `smallest gain margin over pitch / roll / yaw x kd / nom / hi at the nominal mode frequencies (fu_cage.py); read from iter3_run.md, not re-run` — **CHECKED**
-    - `x` ← param `P:sim.gm_nominal` = table (9 rows) — **CHECKED**
-      - `SRC-A-ITER3` (see above)
+  - calc `CALC-A-VIB-GM` `redesign/qp/A/proofs/claims_a2_struct.py::lowest()`: `smallest gain margin over pitch / roll / yaw x kd / nom / hi at the nominal mode frequencies (fu_cage.py); STALE: iter3_run.md values (MN2212 / iteration-2 cage); re-run with X2216 inertias pending, not re-run (T-066 M-1)` — **CHECKED**
+    - `x` ← param `P:sim.gm_nominal` = table (9 rows) — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md control-band table (rerun D-195 with fe_a.py motor lump +7.2 g for the adapter and spinner nut, A.param D-191, cant 17), min GM at nominal mode frequencies: pit / rll / yaw x kd, nom, hi
+      - source `SRC-A-ITER3` [Structures iteration 3 (iter3_run.md, D-185 as ruled)](redesign/qp/A/structures/iter3_run.md), modes vs rotor bands, forced response, control-band GM, C1 loads at VD 24, checked 2026-11-15 — **CHECKED**
   - param `P:req.gm_min` = 2 — **CHECKED**
     - `SRC-A-REQ` (see above)
-- claim **CL-A-VIB-GM-SHIFT** Rate-loop gain margin with the cage modes shifted +-20 % = **2.16** (limit >= 2, margin +8%) — **CHECKED**
+- claim **CL-A-VIB-GM-SHIFT** Rate-loop gain margin with the cage modes shifted +-20 % = **2.16** (limit >= 2, margin +8%) — **UNVERIFIED**
+  - ⚠ uses P:sim.gm_shifted, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md: min GM with all flexible modes shifted -20 %)
+  - ⚠ uses P:sim.gm_shifted_up, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md: min GM with modes shifted +20 %)
   - how to verify: Tap test of the built cage (T-A-TAP): first pitch mode 9-17 Hz, first roll mode 21-43 Hz (GM >= 2 grid, iter3_run.md); outside that window re-tune the rate loop.
   - parts: AVN-002, CGE-004, CGE-002-A
   - `T-A-TAP` (see above)
   - calc `CALC-A-VIB-GM-SHIFT` `redesign/qp/A/proofs/claims_a2_struct.py::gm_shifted()`: `smallest gain margin with all flexible modes shifted -20 % and +20 % (tap-test tolerance)` — **CHECKED**
-    - `lo` ← param `P:sim.gm_shifted` = table (9 rows) — **CHECKED**
+    - `lo` ← param `P:sim.gm_shifted` = table (9 rows) — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md: min GM with all flexible modes shifted -20 %
       - `SRC-A-ITER3` (see above)
-    - `hi` ← param `P:sim.gm_shifted_up` = table (9 rows) — **CHECKED**
+    - `hi` ← param `P:sim.gm_shifted_up` = table (9 rows) — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md: min GM with modes shifted +20 %
       - `SRC-A-ITER3` (see above)
   - `P:req.gm_min` (see above)
 
@@ -592,12 +610,12 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
     - `x` ← param `P:sim.reversal_3d_ms` = table (2 rows) m/s — **CHECKED**
       - source `SRC-A-FIXES` [QP-4 fixes (FIXES.md)](redesign/review/QP-4/FIXES.md), s1.3 wing flutter, s2 roll rate, s5 SITL re-run, checked 2026-11-15 — **CHECKED**
   - `CL-A-FLUTTER-LINE` (see above)
-- claim **CL-A-GUST-N** Gust load factor at VD 24 (U 4 m/s) = **3.01 g** (limit <= 3.4 g, margin +11%) — **CHECKED**
-  - how to verify: Airspeed limit VD 24 m/s on the flight card; the wing stalls before n 5.03 (stall line 3.96).
+- claim **CL-A-GUST-N** Gust load factor at VD 24 (U 4 m/s) = **2.71 g** (limit <= 3.4 g, margin +20%) — **CHECKED**
+  - how to verify: Airspeed limit VD 24 m/s on the flight card; the wing stalls before n 5.03 (stall line 3.16, structures_run.md s2).
   - parts: WNG-002
-  - calc `CALC-A-GUST-N-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `iter3_run.md C1 table (ASM-C1-UDE-D-FRAC half rule); read, not recomputed` — **CHECKED**
-    - `v` ← param `P:sim.gust_n_vd` = 3.01 g — **CHECKED**
-      - source `SRC-A-ITER3` [Structures iteration 3 (iter3_run.md, D-185 as ruled)](redesign/qp/A/structures/iter3_run.md), modes vs rotor bands, forced response, control-band GM, C1 loads at VD 24, checked 2026-11-15 — **CHECKED**
+  - calc `CALC-A-GUST-N-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `structures_run.md s2 C1 table, T-084 rerun (ASM-C1-UDE-D-FRAC half rule); read, not recomputed` — **CHECKED**
+    - `v` ← param `P:sim.gust_n_vd` = 2.71 g — **CHECKED**
+      - source `SRC-A-STRUCT-RUN` [Structures run, T-084 rerun with the X2216 / 1.8796 kg model (structures_run.md)](redesign/qp/A/structures/structures_run.md), s2 C1 loads, s4 modes vs rotor orders, band 94-321 Hz, forced-response sweep; beam FE fe_a.py, checked 2026-11-15 — **CHECKED**
   - param `P:req.n_limit` = 3.4 g — **CHECKED**
     - `SRC-A-REQ` (see above)
 - claim **CL-A-MS-SPAR** Spar 12x10 root bending, MS at 1.5 x n 3.4 = **2.73** (limit >= 0, margin +2.73 abs) — **CHECKED**

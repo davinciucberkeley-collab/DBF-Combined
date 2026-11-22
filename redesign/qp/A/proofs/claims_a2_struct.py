@@ -73,7 +73,7 @@ kit.claim("CL-A-REVERSAL", "Control reversal speed, 3-D lift basis (kd corner)",
           how="Measure elevon effectiveness vs airspeed on the first cruise sorties.",
           note="The board ruled the 3-D basis (BOARD QP-4 s3). On the 2-D strip bound the same speeds are 28 / 32 m/s (kd / nom), 28 below the 28.8 line: 'marginal on the 2-D bound' (FLUTTER.md, FIXES s1.3).")
 stored("CL-A-GUST-N", "Gust load factor at VD 24 (U 4 m/s)", "P:sim.gust_n_vd", "g", limit=("<=", "P:req.n_limit"), verifies=["A-P13"], parts=["WNG-002"],
-       how="Airspeed limit VD 24 m/s on the flight card; the wing stalls before n 5.03 (stall line 3.96).", equation="iter3_run.md C1 table (ASM-C1-UDE-D-FRAC half rule); read, not recomputed")
+       how="Airspeed limit VD 24 m/s on the flight card; the wing stalls before n 5.03 (stall line 3.16, structures_run.md s2).", equation="structures_run.md s2 C1 table, T-084 rerun (ASM-C1-UDE-D-FRAC half rule); read, not recomputed")
 
 # ================================================================ structural margins at 1.5 x limit (stored tables)
 for cid, title, param, parts, reqs in [
@@ -129,37 +129,46 @@ for cid, title, param, parts, extra in [
            equation="MS from structures/foam_103.md (compressive 103 kPa data sheet; tension 129 / shear 86 EST); read, not re-run")
 
 # ================================================================ vibration, D-185
-@kit.calc("CALC-A-VIB-LOW-LIMIT", equation="limit = hover 1P low edge / 1.2 = (6,018 rpm / 60) / 1.2", inputs={"rpm": "P:sim.hover_1p_rpm_lo", "sep": "P:req.band_sep"}, output="f_hz")
+def stored_calc_in_band():
+    kit.calc("CALC-A-VIB-IN-BAND-READ", inputs={"v": "P:sim.vib_inband_corners"}, equation="count of corners with a strong mode in the band, read from structures_run.md s4 and T085_report.md s3.1 (not re-run)",
+             title="Stored result: strong modes in the band", output="v")(read_value)
+    return "CALC-A-VIB-IN-BAND-READ"
+
+
+@kit.calc("CALC-A-VIB-LOW-LIMIT", equation="limit = hover 1P low edge / 1.2 = (6,789 rpm / 60) / 1.2", inputs={"rpm": "P:sim.hover_1p_rpm_lo", "sep": "P:req.band_sep"}, output="f_hz")
 def vib_low_limit(rpm, sep):
     return rpm / 60 / sep
 
 
-@kit.calc("CALC-A-VIB-HIGH-LIMIT", equation="limit = cruise 2P high edge x 1.2 = 253 Hz x 1.2", inputs={"f": "P:sim.cruise_2p_hz_hi", "sep": "P:req.band_sep"}, output="f_hz")
+@kit.calc("CALC-A-VIB-HIGH-LIMIT", equation="limit = highest 2P edge x 1.2 = (8,028 rpm hover lean / 60 x 2 = 267.6 Hz) x 1.2", inputs={"f": "P:sim.cruise_2p_hz_hi", "sep": "P:req.band_sep"}, output="f_hz")
 def vib_high_limit(f, sep):
     return f * sep
 
 
 kit.claim("CL-A-VIB-LOW-LIMIT", "Upper edge allowed for strongly coupled modes below the rotor bands", calc="CALC-A-VIB-LOW-LIMIT", output="f_hz", unit="Hz", verifies=["A-P10"],
-          how="Hover 1P 100-119 Hz (6,018-7,151 rpm), 20 % separation rule (A-P10(a)).")
+          how="Lowest hover 1P 113 Hz (6,789 rpm, X2216, 1.8796 kg; structures_run.md s4), 20 % separation rule (A-P10(a)); band 94-321 Hz.")
 kit.claim("CL-A-VIB-HIGH-LIMIT", "Lower edge allowed for strongly coupled modes above the rotor bands", calc="CALC-A-VIB-HIGH-LIMIT", output="f_hz", unit="Hz", verifies=["A-P10"],
-          how="Cruise 2P 243-253 Hz, 20 % separation rule (A-P10(a)).")
+          how="Highest 2P 268 Hz (hover lean, 8,028 rpm; cruise 2P 248 Hz; structures_run.md s4), 20 % separation rule (A-P10(a)); band 94-321 Hz.")
 kit.calc("CALC-A-VIB-LOW", inputs={"x": "P:sim.vib_below_hz"}, output="f_hz",
-         equation="highest strongly coupled (coupling >= 0.5) mode below the bands over kd / nom / hi; FE run read from structures/iter3_run.md, not re-run")(highest)
+         equation="highest strongly coupled (coupling >= 0.5) mode below the bands over kd / nom / hi; FE run read from structures/structures_run.md s4 (T-084 rerun, spar-only beam FE), not re-run; excludes the in-band strong mode (CL-A-VIB-IN-BAND)")(highest)
 kit.calc("CALC-A-VIB-HIGH", inputs={"x": "P:sim.vib_above_hz"}, output="f_hz",
-         equation="lowest strongly coupled mode above the bands over kd / nom / hi; FE run read from structures/iter3_run.md, not re-run")(lowest)
+         equation="lowest strongly coupled mode above the bands over kd / nom / hi; FE run read from structures/structures_run.md s4 (T-084 rerun, spar-only beam FE), not re-run")(lowest)
 kit.claim("CL-A-VIB-LOW", "Highest strongly coupled mode below the rotor bands (hi corner)", calc="CALC-A-VIB-LOW", output="f_hz", unit="Hz",
           limit=("<=", "CL-A-VIB-LOW-LIMIT"), verifies=["A-P10"], parts=["CGE-002-A", "CGE-002-B", "CGE-004", "WNG-002"],
-          how="Tap test of the built cage (T-A-TAP): modes within +-20 % of FE or re-tune. Margin is about 7 % at the hi corner, 31 % at kd.")
+          how="Tap test of the built cage (T-A-TAP): modes within +-20 % of FE or re-tune. Margin is 17 % at the hi corner (81 vs 94 Hz), 43 % at kd (structures_run.md s4). This claim alone does NOT show D-185 (a) met: see CL-A-VIB-IN-BAND.")
 kit.claim("CL-A-VIB-HIGH", "Lowest strongly coupled mode above the rotor bands (kd corner, fin f1)", calc="CALC-A-VIB-HIGH", output="f_hz", unit="Hz",
-          limit=(">=", "CL-A-VIB-HIGH-LIMIT"), verifies=["A-P10"], parts=["FIN-001-R", "FIN-001-L"], how="Fin tap test at build (T-A-TAP): f1 432-525 Hz in FE.")
+          limit=(">=", "CL-A-VIB-HIGH-LIMIT"), verifies=["A-P10"], parts=["FIN-001-R", "FIN-001-L"], how="Fin tap test at build (T-A-TAP): lowest strong mode above the band 438-532 Hz in FE (structures_run.md s4).")
+kit.claim("CL-A-VIB-IN-BAND", "Corners (kd / nom / hi) with a strongly coupled mode INSIDE the excluded rotor band (D-185 (a) needs none)",
+          calc=stored_calc_in_band(), output="v", unit="-", limit=("<=", 0), verifies=["A-P10"], parts=["CGE-002-A", "CGE-002-B", "CGE-004", "WNG-002"],
+          how="CARRIED FAIL (T-066 M-1, T-085, D-236): structures_run.md s4 spar-only model has a strong mode (cy 0.52) at 201 / 215 / 244 Hz inside the 94-321 Hz band; the upgraded model (T085_report.md s3.1) has the governing strong mode at 94.6-108.7 Hz (cx 0.74-0.85, cy 1.12-1.35) at kd / nom / hi, 23 of 24 pad / tray / hub / cell bound groups fail, the one passing group by 0.1 Hz. No limit relaxed, band and 0.5 coupling rule unchanged. TP-10b (T-A-TAP) on the built airframe decides; routes in T085_report.md s7.")
 kit.calc("CALC-A-VIB-FC", inputs={"x": "P:sim.vib_fc_ms2"}, output="a_ms2",
-         equation="worst FC acceleration over 6,000-10,500 rpm, U 1.0 g mm per rotor, zeta 1 % and 0.5 %, kd / nom / hi; read from structures/iter3_run.md, not re-run")(highest)
+         equation="worst FC acceleration over 6,000-11,415 rpm, U 1.0 g mm per rotor, zeta 1 % and 0.5 %, kd / nom / hi; read from structures/structures_run.md s4, not re-run")(highest)
 kit.claim("CL-A-VIB-FC", "Flight-controller vibration, worst of the forced-response sweep", calc="CALC-A-VIB-FC", output="a_ms2", unit="m/s2",
           limit=("<=", "P:req.vibe_max_ms2"), verifies=["A-P10"], parts=["AVN-002", "AVN-010", "AVN-007"],
-          how="IMU VIBE < 30 m/s2 in the first tethered hover (T-A-TETHER-VIBE). The worst point (10,500 rpm) is unreachable; at the 0.90 cap (9,349 rpm) the sweep reads 19.6-20.1.")
-kit.calc("CALC-A-VIB-GM", inputs={"x": "P:sim.gm_nominal"}, output="gm", equation="smallest gain margin over pitch / roll / yaw x kd / nom / hi at the nominal mode frequencies (fu_cage.py); read from iter3_run.md, not re-run")(lowest)
+          how="IMU VIBE < 30 m/s2 in the first tethered hover (T-A-TETHER-VIBE). The worst point (11,400 rpm) is beyond the all-four duty 1.0 state (10,343 rpm), where the sweep reads 18.5-19.1; up to 9,349 rpm it reads 15.0-15.2 (structures_run.md s4).")
+kit.calc("CALC-A-VIB-GM", inputs={"x": "P:sim.gm_nominal"}, output="gm", equation="smallest gain margin over pitch / roll / yaw x kd / nom / hi at the nominal mode frequencies (fu_cage.py); STALE: iter3_run.md values (MN2212 / iteration-2 cage); re-run with X2216 inertias pending, not re-run (T-066 M-1)")(lowest)
 kit.claim("CL-A-VIB-GM", "Rate-loop gain margin, minimum over axes and corners (nominal modes)", calc="CALC-A-VIB-GM", output="gm", unit="-",
-          limit=(">=", "P:req.gm_min"), verifies=["A-P10"], parts=["AVN-002", "CGE-004", "CGE-002-A"], how="Re-run sitl/fu_cage.py with the built-cage tap-test frequencies; hard-mounted FC.")
+          limit=(">=", "P:req.gm_min"), verifies=["A-P10"], parts=["AVN-002", "CGE-004", "CGE-002-A"], how="UNVERIFIED: inputs are the MN2212-era iter3_run.md values; sitl/fu_cage.py (iteration-2 cage, MN2212 aero) needs rebuilding for the X2216 / 1.8796 kg cage before it can be re-run. Then re-run with the built-cage tap-test frequencies; hard-mounted FC.")
 
 
 @kit.calc("CALC-A-VIB-GM-SHIFT", equation="smallest gain margin with all flexible modes shifted -20 % and +20 % (tap-test tolerance)", inputs={"lo": "P:sim.gm_shifted", "hi": "P:sim.gm_shifted_up"}, output="gm")

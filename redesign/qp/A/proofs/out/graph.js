@@ -2,16 +2,18 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-22 19:36 UTC",
+  "generated": "2026-11-22 21:39 UTC",
   "dataset": "concept-a",
   "ok": false,
   "errors": [
    "STRICT A-P1: CL-A-MASS-GATE-ROOM: FAILS: margin -27.3% (1.872 kg vs <= 1.47 kg)",
    "STRICT A-D3: CL-A-MASS-PRED: FAILS: margin -27.3% (1.872 kg vs <= 1.47 kg)",
+   "STRICT A-P10: CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)",
    "STRICT A-P13: CL-A-FLUTTER-ELEVON-NOM is UNVERIFIED",
    "STRICT CL-A-MASS-PRED: FAILS: margin -27.3% (1.872 kg vs <= 1.47 kg)",
    "STRICT CL-A-MASS-GATE-ROOM: FAILS: margin -27.3% (1.872 kg vs <= 1.47 kg)",
    "STRICT CL-A-CUTS-REQUIRED: FAILS: margin -864.2% (401.1 g vs <= 41.6 g)",
+   "STRICT CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)",
    "STRICT CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)",
    "STRICT CL-A-HORN-RIB-FOAM-STALL: FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)",
    "STRICT CL-A-ELEVON-TORSION-FOAM: FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)",
@@ -26,21 +28,21 @@ window.PROOF_GRAPH = {
   ],
   "counts": {
    "by_type": {
-    "source": 37,
+    "source": 39,
     "assumption": 10,
     "requirement": 22,
     "test": 13,
-    "calculation": 88,
-    "claim": 108,
-    "parameter": 214,
+    "calculation": 89,
+    "claim": 109,
+    "parameter": 215,
     "part": 65
    },
    "by_status": {
-    "CHECKED": 327,
-    "UNVERIFIED": 213,
+    "CHECKED": 323,
+    "UNVERIFIED": 222,
     "PROPOSED": 17
    },
-   "fails": 11
+   "fails": 13
   },
   "files": [
    "redesign/qp/A/proofs/claims.a0_base.json",
@@ -367,7 +369,31 @@ window.PROOF_GRAPH = {
    "where": "modes vs rotor bands, forced response, control-band GM, C1 loads at VD 24",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
+   "importance": 2
+  },
+  {
+   "id": "SRC-A-STRUCT-RUN",
+   "type": "source",
+   "title": "Structures run, T-084 rerun with the X2216 / 1.8796 kg model (structures_run.md)",
+   "kind": "file",
+   "url": "redesign/qp/A/structures/structures_run.md",
+   "checked": "2026-11-15",
+   "where": "s2 C1 loads, s4 modes vs rotor orders, band 94-321 Hz, forced-response sweep; beam FE fe_a.py",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "CHECKED",
    "importance": 6
+  },
+  {
+   "id": "SRC-A-T085",
+   "type": "source",
+   "title": "T-085 D-185 FE upgrade, D-236 (T085_report.md)",
+   "kind": "file",
+   "url": "redesign/qp/A/mechanism/out/T085_report.md",
+   "checked": "2026-11-15",
+   "where": "s3 strong modes in the band under credible pad / tray / hub / cell bounds; FEA-lite beam FE, EST springs bounded",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "CHECKED",
+   "importance": 1
   },
   {
    "id": "SRC-A-T084",
@@ -889,17 +915,13 @@ window.PROOF_GRAPH = {
    "ref": "qp/A/REQUIREMENTS-A.md#a-p10",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
-    "CL-A-VIB-LOW-LIMIT is CHECKED",
-    "CL-A-VIB-HIGH-LIMIT is CHECKED",
-    "CL-A-VIB-LOW is CHECKED",
-    "CL-A-VIB-HIGH is CHECKED",
-    "CL-A-VIB-FC is CHECKED",
-    "CL-A-VIB-GM is CHECKED",
-    "CL-A-VIB-GM-SHIFT is CHECKED"
+    "CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)",
+    "CL-A-VIB-GM is UNVERIFIED",
+    "CL-A-VIB-GM-SHIFT is UNVERIFIED"
    ],
-   "status": "CHECKED",
-   "fails": false,
-   "importance": 15
+   "status": "UNVERIFIED",
+   "fails": true,
+   "importance": 17
   },
   {
    "id": "A-P11",
@@ -1132,13 +1154,14 @@ window.PROOF_GRAPH = {
    "verifies": [
     "CL-A-VIB-LOW",
     "CL-A-VIB-HIGH",
+    "CL-A-VIB-IN-BAND",
     "CL-A-VIB-GM-SHIFT"
    ],
    "state": "planned",
-   "procedure": "Cage pitch mode 12-16 Hz, roll 21-43 Hz and fin f1 within +-20 % of FE, else re-tune (BOARD QP-4, STRUCTURES-R)",
+   "procedure": "TP-10b (TEST-PLAN-O4B.md): rule applied to the measured modes with pack and motors installed (T-085, D-236). Cage pitch mode 12-16 Hz, roll 21-43 Hz and fin f1 within +-20 % of FE, else re-tune (BOARD QP-4, STRUCTURES-R)",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "PROPOSED",
-   "importance": 3
+   "importance": 4
   },
   {
    "id": "T-A-TETHER-VIBE",
@@ -3903,15 +3926,15 @@ window.PROOF_GRAPH = {
    "title": "Stored result: Gust load factor at VD 24 (U 4 m/s)",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "read_value",
-   "equation": "iter3_run.md C1 table (ASM-C1-UDE-D-FRAC half rule); read, not recomputed",
+   "equation": "structures_run.md s2 C1 table, T-084 rerun (ASM-C1-UDE-D-FRAC half rule); read, not recomputed",
    "inputs": {
     "v": "P:sim.gust_n_vd"
    },
    "outputs": {
-    "v": 3.01
+    "v": 2.71
    },
    "input_values": {
-    "v": 3.01
+    "v": 2.71
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
@@ -3935,11 +3958,11 @@ window.PROOF_GRAPH = {
    "parts": [
     "WNG-002"
    ],
-   "how": "Airspeed limit VD 24 m/s on the flight card; the wing stalls before n 5.03 (stall line 3.96).",
-   "value": 3.01,
+   "how": "Airspeed limit VD 24 m/s on the flight card; the wing stalls before n 5.03 (stall line 3.16, structures_run.md s2).",
+   "value": 2.71,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
-   "margin": 0.11470588235294121,
+   "margin": 0.20294117647058824,
    "importance": 1
   },
   {
@@ -5154,16 +5177,16 @@ window.PROOF_GRAPH = {
    "title": "vib low limit",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "vib_low_limit",
-   "equation": "limit = hover 1P low edge / 1.2 = (6,018 rpm / 60) / 1.2",
+   "equation": "limit = hover 1P low edge / 1.2 = (6,789 rpm / 60) / 1.2",
    "inputs": {
     "rpm": "P:sim.hover_1p_rpm_lo",
     "sep": "P:req.band_sep"
    },
    "outputs": {
-    "f_hz": 83.58333333333333
+    "f_hz": 94.29166666666667
    },
    "input_values": {
-    "rpm": 6018.0,
+    "rpm": 6789.0,
     "sep": 1.2
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
@@ -5176,16 +5199,16 @@ window.PROOF_GRAPH = {
    "title": "vib high limit",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "vib_high_limit",
-   "equation": "limit = cruise 2P high edge x 1.2 = 253 Hz x 1.2",
+   "equation": "limit = highest 2P edge x 1.2 = (8,028 rpm hover lean / 60 x 2 = 267.6 Hz) x 1.2",
    "inputs": {
     "f": "P:sim.cruise_2p_hz_hi",
     "sep": "P:req.band_sep"
    },
    "outputs": {
-    "f_hz": 303.59999999999997
+    "f_hz": 321.12
    },
    "input_values": {
-    "f": 253.0,
+    "f": 267.6,
     "sep": 1.2
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
@@ -5202,8 +5225,8 @@ window.PROOF_GRAPH = {
    "verifies": [
     "A-P10"
    ],
-   "how": "Hover 1P 100-119 Hz (6,018-7,151 rpm), 20 % separation rule (A-P10(a)).",
-   "value": 83.58333333333333,
+   "how": "Lowest hover 1P 113 Hz (6,789 rpm, X2216, 1.8796 kg; structures_run.md s4), 20 % separation rule (A-P10(a)); band 94-321 Hz.",
+   "value": 94.29166666666667,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
    "importance": 2
@@ -5218,8 +5241,8 @@ window.PROOF_GRAPH = {
    "verifies": [
     "A-P10"
    ],
-   "how": "Cruise 2P 243-253 Hz, 20 % separation rule (A-P10(a)).",
-   "value": 303.59999999999997,
+   "how": "Highest 2P 268 Hz (hover lean, 8,028 rpm; cruise 2P 248 Hz; structures_run.md s4), 20 % separation rule (A-P10(a)); band 94-321 Hz.",
+   "value": 321.12,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
    "importance": 2
@@ -5230,18 +5253,18 @@ window.PROOF_GRAPH = {
    "title": "highest",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "highest",
-   "equation": "highest strongly coupled (coupling >= 0.5) mode below the bands over kd / nom / hi; FE run read from structures/iter3_run.md, not re-run",
+   "equation": "highest strongly coupled (coupling >= 0.5) mode below the bands over kd / nom / hi; FE run read from structures/structures_run.md s4 (T-084 rerun, spar-only beam FE), not re-run; excludes the in-band strong mode (CL-A-VIB-IN-BAND)",
    "inputs": {
     "x": "P:sim.vib_below_hz"
    },
    "outputs": {
-    "f_hz": 77.0
+    "f_hz": 81.0
    },
    "input_values": {
     "x": [
-     63.0,
-     67.0,
-     77.0
+     66.0,
+     69.0,
+     81.0
     ]
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
@@ -5254,18 +5277,18 @@ window.PROOF_GRAPH = {
    "title": "lowest",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "lowest",
-   "equation": "lowest strongly coupled mode above the bands over kd / nom / hi; FE run read from structures/iter3_run.md, not re-run",
+   "equation": "lowest strongly coupled mode above the bands over kd / nom / hi; FE run read from structures/structures_run.md s4 (T-084 rerun, spar-only beam FE), not re-run",
    "inputs": {
     "x": "P:sim.vib_above_hz"
    },
    "outputs": {
-    "f_hz": 432.0
+    "f_hz": 438.0
    },
    "input_values": {
     "x": [
-     432.0,
-     462.0,
-     524.0
+     438.0,
+     474.0,
+     532.0
     ]
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
@@ -5282,7 +5305,7 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": "<=",
     "ref": "CL-A-VIB-LOW-LIMIT",
-    "resolved": 83.58333333333333
+    "resolved": 94.29166666666667
    },
    "verifies": [
     "A-P10"
@@ -5293,11 +5316,11 @@ window.PROOF_GRAPH = {
     "CGE-004",
     "WNG-002"
    ],
-   "how": "Tap test of the built cage (T-A-TAP): modes within +-20 % of FE or re-tune. Margin is about 7 % at the hi corner, 31 % at kd.",
-   "value": 77.0,
+   "how": "Tap test of the built cage (T-A-TAP): modes within +-20 % of FE or re-tune. Margin is 17 % at the hi corner (81 vs 94 Hz), 43 % at kd (structures_run.md s4). This claim alone does NOT show D-185 (a) met: see CL-A-VIB-IN-BAND.",
+   "value": 81.0,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
-   "margin": 0.07876370887337981,
+   "margin": 0.1409633230225365,
    "importance": 1
   },
   {
@@ -5310,7 +5333,7 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": ">=",
     "ref": "CL-A-VIB-HIGH-LIMIT",
-    "resolved": 303.59999999999997
+    "resolved": 321.12
    },
    "verifies": [
     "A-P10"
@@ -5319,11 +5342,65 @@ window.PROOF_GRAPH = {
     "FIN-001-R",
     "FIN-001-L"
    ],
-   "how": "Fin tap test at build (T-A-TAP): f1 432-525 Hz in FE.",
-   "value": 432.0,
+   "how": "Fin tap test at build (T-A-TAP): lowest strong mode above the band 438-532 Hz in FE (structures_run.md s4).",
+   "value": 438.0,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
-   "margin": 0.4229249011857709,
+   "margin": 0.3639760837070254,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-VIB-IN-BAND-READ",
+   "type": "calculation",
+   "title": "Stored result: strong modes in the band",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "count of corners with a strong mode in the band, read from structures_run.md s4 and T085_report.md s3.1 (not re-run)",
+   "inputs": {
+    "v": "P:sim.vib_inband_corners"
+   },
+   "outputs": {
+    "v": 3
+   },
+   "input_values": {
+    "v": 3
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-VIB-IN-BAND",
+   "type": "claim",
+   "title": "Corners (kd / nom / hi) with a strongly coupled mode INSIDE the excluded rotor band (D-185 (a) needs none)",
+   "calc": "CALC-A-VIB-IN-BAND-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0,
+    "resolved": 0
+   },
+   "verifies": [
+    "A-P10"
+   ],
+   "parts": [
+    "CGE-002-A",
+    "CGE-002-B",
+    "CGE-004",
+    "WNG-002"
+   ],
+   "how": "CARRIED FAIL (T-066 M-1, T-085, D-236): structures_run.md s4 spar-only model has a strong mode (cy 0.52) at 201 / 215 / 244 Hz inside the 94-321 Hz band; the upgraded model (T085_report.md s3.1) has the governing strong mode at 94.6-108.7 Hz (cx 0.74-0.85, cy 1.12-1.35) at kd / nom / hi, 23 of 24 pad / tray / hub / cell bound groups fail, the one passing group by 0.1 Hz. No limit relaxed, band and 0.5 coupling rule unchanged. TP-10b (T-A-TAP) on the built airframe decides; routes in T085_report.md s7.",
+   "value": 3,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "FAILS: margin -3 abs (3 vs <= 0)",
+    "uses P:sim.vib_inband_corners, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: structures_run.md s4: spar-only model has a strong mode (cy 0.52) IN the 94-321 Hz band at kd 201 / nom 215 / hi 244 Hz (FAIL at all 3 corners); T085_report.md s3.1 and D-236: the upgraded model (pad / tray / hub bounds) has the governing strong mode at 94.6-108.7 Hz (cx 0.74-0.85, cy 1.12-1.35), D-185 (a) FAIL in 23 of 24 bound groups, the one passing group by 0.1 Hz. Count of corners (kd / nom / hi) with a strong mode in the band, credible bound (cell nominal, 6061 hub, nominal pad))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -3.0,
+   "margin_abs": true,
+   "fails": true,
    "importance": 1
   },
   {
@@ -5332,21 +5409,21 @@ window.PROOF_GRAPH = {
    "title": "highest",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "highest",
-   "equation": "worst FC acceleration over 6,000-10,500 rpm, U 1.0 g mm per rotor, zeta 1 % and 0.5 %, kd / nom / hi; read from structures/iter3_run.md, not re-run",
+   "equation": "worst FC acceleration over 6,000-11,415 rpm, U 1.0 g mm per rotor, zeta 1 % and 0.5 %, kd / nom / hi; read from structures/structures_run.md s4, not re-run",
    "inputs": {
     "x": "P:sim.vib_fc_ms2"
    },
    "outputs": {
-    "a_ms2": 27.1
+    "a_ms2": 26.6
    },
    "input_values": {
     "x": [
-     25.8,
-     27.1,
-     23.9,
-     23.9,
+     26.5,
+     26.6,
      23.7,
-     23.7
+     23.7,
+     22.7,
+     22.7
     ]
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
@@ -5373,11 +5450,11 @@ window.PROOF_GRAPH = {
     "AVN-010",
     "AVN-007"
    ],
-   "how": "IMU VIBE < 30 m/s2 in the first tethered hover (T-A-TETHER-VIBE). The worst point (10,500 rpm) is unreachable; at the 0.90 cap (9,349 rpm) the sweep reads 19.6-20.1.",
-   "value": 27.1,
+   "how": "IMU VIBE < 30 m/s2 in the first tethered hover (T-A-TETHER-VIBE). The worst point (11,400 rpm) is beyond the all-four duty 1.0 state (10,343 rpm), where the sweep reads 18.5-19.1; up to 9,349 rpm it reads 15.0-15.2 (structures_run.md s4).",
+   "value": 26.6,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
-   "margin": 0.09666666666666662,
+   "margin": 0.11333333333333329,
    "importance": 1
   },
   {
@@ -5386,7 +5463,7 @@ window.PROOF_GRAPH = {
    "title": "lowest",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "lowest",
-   "equation": "smallest gain margin over pitch / roll / yaw x kd / nom / hi at the nominal mode frequencies (fu_cage.py); read from iter3_run.md, not re-run",
+   "equation": "smallest gain margin over pitch / roll / yaw x kd / nom / hi at the nominal mode frequencies (fu_cage.py); STALE: iter3_run.md values (MN2212 / iteration-2 cage); re-run with X2216 inertias pending, not re-run (T-066 M-1)",
    "inputs": {
     "x": "P:sim.gm_nominal"
    },
@@ -5430,10 +5507,13 @@ window.PROOF_GRAPH = {
     "CGE-004",
     "CGE-002-A"
    ],
-   "how": "Re-run sitl/fu_cage.py with the built-cage tap-test frequencies; hard-mounted FC.",
+   "how": "UNVERIFIED: inputs are the MN2212-era iter3_run.md values; sitl/fu_cage.py (iteration-2 cage, MN2212 aero) needs rebuilding for the X2216 / 1.8796 kg cage before it can be re-run. Then re-run with the built-cage tap-test frequencies; hard-mounted FC.",
    "value": 2.19,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
-   "status": "CHECKED",
+   "reasons": [
+    "uses P:sim.gm_nominal, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md control-band table (rerun D-195 with fe_a.py motor lump +7.2 g for the adapter and spinner nut, A.param D-191, cant 17), min GM at nominal mode frequencies: pit / rll / yaw x kd, nom, hi)"
+   ],
+   "status": "UNVERIFIED",
    "margin": 0.09499999999999997,
    "importance": 1
   },
@@ -6339,7 +6419,11 @@ window.PROOF_GRAPH = {
    "note": "D-191 (CLAIMS-FIX s4): with the QP-3 gains (pitch P 0.15 / D 0.002 / FLTD 40) the minimum was 1.64 (1.56 at cant 17); pitch P 0.12 / D 0.0012 / FLTD 60 and yaw P 0.37 give 2.03 (roll, kd corner, modes -20 %; pitch 2.33).",
    "value": 2.16,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
-   "status": "CHECKED",
+   "reasons": [
+    "uses P:sim.gm_shifted, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md: min GM with all flexible modes shifted -20 %)",
+    "uses P:sim.gm_shifted_up, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md: min GM with modes shifted +20 %)"
+   ],
+   "status": "UNVERIFIED",
    "margin": 0.08000000000000007,
    "importance": 1
   },
@@ -9121,10 +9205,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "sim.gust_n_vd",
    "file": "redesign/qp/A/params-A.json",
-   "value": 3.01,
+   "value": 2.71,
    "unit": "g",
-   "source": "SRC-A-ITER3",
-   "note": "iter3_run.md C1: gust U 4 m/s at VD 24, n 3.01 (stall line 3.96)",
+   "source": "SRC-A-STRUCT-RUN",
+   "note": "structures_run.md s2 (T-084 rerun, 1.8796 kg): gust U 4 m/s at VD 24, n 2.71 (stall line 3.16); was 3.01 / 3.96 in iter3_run.md (MN2212 era)",
    "status": "CHECKED",
    "importance": 1
   },
@@ -9274,13 +9358,13 @@ window.PROOF_GRAPH = {
    "title": "sim.vib_below_hz",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    63.0,
-    67.0,
-    77.0
+    66.0,
+    69.0,
+    81.0
    ],
    "unit": "Hz",
-   "source": "SRC-A-ITER3",
-   "note": "iter3_run.md: highest strongly coupled mode below the bands, kd / nom / hi",
+   "source": "SRC-A-STRUCT-RUN",
+   "note": "structures_run.md s4 (T-084 rerun, X2216, spar-only beam FE): highest strongly coupled mode below the band, kd / nom / hi; was 63 / 67 / 77 (iter3_run.md). Does not include the in-band strong mode: see vib_inband_corners",
    "status": "CHECKED",
    "importance": 1
   },
@@ -9290,14 +9374,29 @@ window.PROOF_GRAPH = {
    "title": "sim.vib_above_hz",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    432.0,
-    462.0,
-    524.0
+    438.0,
+    474.0,
+    532.0
    ],
    "unit": "Hz",
-   "source": "SRC-A-ITER3",
-   "note": "iter3_run.md: lowest strongly coupled mode above the bands, kd / nom / hi",
+   "source": "SRC-A-STRUCT-RUN",
+   "note": "structures_run.md s4 (T-084 rerun, X2216, spar-only beam FE): lowest strongly coupled mode above the band, kd / nom / hi; was 432 / 462 / 524 (iter3_run.md)",
    "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "P:sim.vib_inband_corners",
+   "type": "parameter",
+   "title": "sim.vib_inband_corners",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 3,
+   "unit": "-",
+   "source": "SRC-A-T085",
+   "note": "structures_run.md s4: spar-only model has a strong mode (cy 0.52) IN the 94-321 Hz band at kd 201 / nom 215 / hi 244 Hz (FAIL at all 3 corners); T085_report.md s3.1 and D-236: the upgraded model (pad / tray / hub bounds) has the governing strong mode at 94.6-108.7 Hz (cx 0.74-0.85, cy 1.12-1.35), D-185 (a) FAIL in 23 of 24 bound groups, the one passing group by 0.1 Hz. Count of corners (kd / nom / hi) with a strong mode in the band, credible bound (cell nominal, 6061 hub, nominal pad)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: structures_run.md s4: spar-only model has a strong mode (cy 0.52) IN the 94-321 Hz band at kd 201 / nom 215 / hi 244 Hz (FAIL at all 3 corners); T085_report.md s3.1 and D-236: the upgraded model (pad / tray / hub bounds) has the governing strong mode at 94.6-108.7 Hz (cx 0.74-0.85, cy 1.12-1.35), D-185 (a) FAIL in 23 of 24 bound groups, the one passing group by 0.1 Hz. Count of corners (kd / nom / hi) with a strong mode in the band, credible bound (cell nominal, 6061 hub, nominal pad)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -9305,10 +9404,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "sim.hover_1p_rpm_lo",
    "file": "redesign/qp/A/params-A.json",
-   "value": 6018.0,
+   "value": 6789.0,
    "unit": "rpm",
-   "source": "SRC-A-REQ",
-   "note": "A-P10(a): hover 1P 100-119 Hz = 6,018-7,151 rpm",
+   "source": "SRC-A-STRUCT-RUN",
+   "note": "structures_run.md s4: lowest of the five operating rpm, hover derate 1.0 at 1.8796 kg with the SunnySky X2216 prop schedule (prop_a.py), 1P 113 Hz; was 6,018 (A-P10(a), MN2212 era); gives the band edge 94.3 Hz (structures_run.md: 94 Hz)",
    "status": "CHECKED",
    "importance": 2
   },
@@ -9317,10 +9416,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "sim.cruise_2p_hz_hi",
    "file": "redesign/qp/A/params-A.json",
-   "value": 253.0,
+   "value": 267.6,
    "unit": "Hz",
-   "source": "SRC-A-REQ",
-   "note": "A-P10(a): cruise 2P 243-253 Hz (7,300-7,600 rpm)",
+   "source": "SRC-A-STRUCT-RUN",
+   "note": "structures_run.md s4: highest 2P of the five operating rpm = hover lean 1.3 W, 8,028 rpm / 60 x 2 (the cruise 2P is 248 Hz; the name is kept); gives the band edge 321 Hz (structures_run.md: 94-321 Hz); was 253 Hz (A-P10(a), MN2212 era)",
    "status": "CHECKED",
    "importance": 2
   },
@@ -9330,16 +9429,16 @@ window.PROOF_GRAPH = {
    "title": "sim.vib_fc_ms2",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    25.8,
-    27.1,
-    23.9,
-    23.9,
+    26.5,
+    26.6,
     23.7,
-    23.7
+    23.7,
+    22.7,
+    22.7
    ],
    "unit": "m/s2",
-   "source": "SRC-A-ITER3",
-   "note": "iter3_run.md forced response 6,000-10,500 rpm, U 1.0 g mm: kd 1 % / kd 0.5 % / nom 1 % / nom 0.5 % / hi 1 % / hi 0.5 %",
+   "source": "SRC-A-STRUCT-RUN",
+   "note": "structures_run.md s4 forced-response sweep (T-084 rerun, sum of axes, 6,000-11,415 rpm, worst at 11,400 rpm, U 1.0 g mm): kd 1 % / kd 0.5 % / nom 1 % / nom 0.5 % / hi 1 % / hi 0.5 %; was 25.8..23.7 over 6,000-10,500 rpm (iter3_run.md). Spar-only model: the in-band mode (vib_inband_corners) is a FORCED-RESPONSE case here, 0.12-0.18 m/s2 on resonance",
    "status": "CHECKED",
    "importance": 1
   },
@@ -9361,8 +9460,11 @@ window.PROOF_GRAPH = {
    ],
    "unit": "-",
    "source": "SRC-A-ITER3",
-   "note": "iter3_run.md control-band table (rerun D-195 with fe_a.py motor lump +7.2 g for the adapter and spinner nut, A.param D-191, cant 17), min GM at nominal mode frequencies: pit / rll / yaw x kd, nom, hi",
-   "status": "CHECKED",
+   "note": "STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md control-band table (rerun D-195 with fe_a.py motor lump +7.2 g for the adapter and spinner nut, A.param D-191, cant 17), min GM at nominal mode frequencies: pit / rll / yaw x kd, nom, hi",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md control-band table (rerun D-195 with fe_a.py motor lump +7.2 g for the adapter and spinner nut, A.param D-191, cant 17), min GM at nominal mode frequencies: pit / rll / yaw x kd, nom, hi"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -9383,8 +9485,11 @@ window.PROOF_GRAPH = {
    ],
    "unit": "-",
    "source": "SRC-A-ITER3",
-   "note": "iter3_run.md: min GM with all flexible modes shifted -20 %",
-   "status": "CHECKED",
+   "note": "STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md: min GM with all flexible modes shifted -20 %",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md: min GM with all flexible modes shifted -20 %"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -9405,8 +9510,11 @@ window.PROOF_GRAPH = {
    ],
    "unit": "-",
    "source": "SRC-A-ITER3",
-   "note": "iter3_run.md: min GM with modes shifted +20 %",
-   "status": "CHECKED",
+   "note": "STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md: min GM with modes shifted +20 %",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md: min GM with modes shifted +20 %"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -11053,7 +11161,7 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Spar, CF tube 12x10 x 0.90 m",
    "status": "UNVERIFIED",
-   "importance": 9
+   "importance": 10
   },
   {
    "id": "PWR-001",
@@ -11158,14 +11266,14 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Arm tube A 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub (D-202; UR + LL)",
    "status": "UNVERIFIED",
-   "importance": 9
+   "importance": 10
   },
   {
    "id": "CGE-002-B",
    "type": "part",
    "title": "Arm tube B 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub (D-202; LR + UL)",
    "status": "UNVERIFIED",
-   "importance": 7
+   "importance": 8
   },
   {
    "id": "GER-001-UR",
@@ -11312,7 +11420,7 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Bridge 16x14 (D-206, torsion; axis z -2 mm; D-202: starts 15 mm aft of the hub axis, bored into the boss)",
    "status": "UNVERIFIED",
-   "importance": 6
+   "importance": 7
   },
   {
    "id": "CGE-006",
@@ -11409,7 +11517,7 @@ window.PROOF_GRAPH = {
    "id": "AVN-002",
    "type": "part",
    "title": "Flight controller Holybro Kakute H743-Wing, 45 x 30 x 13.5 mm (V docs.holybro.com kakute-h743-wing, read 2026-11-20), M2 25 x 25 mm, 28 g with USB extender; drawn: PCB 45 x 30 x 1.6 mm (PCB thickness EST, vendor -), corner radius -, hole diameter - (2.2 mm drawn), connector and header outlines and heights - (not drawn; the 13.5 mm overall height is a wiring keep-out), orientation 45 mm along y is my choice",
-   "status": "CHECKED",
+   "status": "UNVERIFIED",
    "importance": 3
   },
   {
@@ -11626,6 +11734,11 @@ window.PROOF_GRAPH = {
   {
    "source": "T-A-TAP",
    "target": "CL-A-VIB-HIGH",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-TAP",
+   "target": "CL-A-VIB-IN-BAND",
    "type": "verifies"
   },
   {
@@ -14854,6 +14967,41 @@ window.PROOF_GRAPH = {
    "type": "about"
   },
   {
+   "source": "P:sim.vib_inband_corners",
+   "target": "CALC-A-VIB-IN-BAND-READ",
+   "type": "uses"
+  },
+  {
+   "source": "CALC-A-VIB-IN-BAND-READ",
+   "target": "CL-A-VIB-IN-BAND",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-A-VIB-IN-BAND",
+   "target": "A-P10",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-VIB-IN-BAND",
+   "target": "CGE-002-A",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-VIB-IN-BAND",
+   "target": "CGE-002-B",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-VIB-IN-BAND",
+   "target": "CGE-004",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-VIB-IN-BAND",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
    "source": "P:sim.vib_fc_ms2",
    "target": "CALC-A-VIB-FC",
    "type": "uses"
@@ -16864,7 +17012,7 @@ window.PROOF_GRAPH = {
    "type": "cites"
   },
   {
-   "source": "SRC-A-ITER3",
+   "source": "SRC-A-STRUCT-RUN",
    "target": "P:sim.gust_n_vd",
    "type": "cites"
   },
@@ -16914,27 +17062,32 @@ window.PROOF_GRAPH = {
    "type": "cites"
   },
   {
-   "source": "SRC-A-ITER3",
+   "source": "SRC-A-STRUCT-RUN",
    "target": "P:sim.vib_below_hz",
    "type": "cites"
   },
   {
-   "source": "SRC-A-ITER3",
+   "source": "SRC-A-STRUCT-RUN",
    "target": "P:sim.vib_above_hz",
    "type": "cites"
   },
   {
-   "source": "SRC-A-REQ",
+   "source": "SRC-A-T085",
+   "target": "P:sim.vib_inband_corners",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-STRUCT-RUN",
    "target": "P:sim.hover_1p_rpm_lo",
    "type": "cites"
   },
   {
-   "source": "SRC-A-REQ",
+   "source": "SRC-A-STRUCT-RUN",
    "target": "P:sim.cruise_2p_hz_hi",
    "type": "cites"
   },
   {
-   "source": "SRC-A-ITER3",
+   "source": "SRC-A-STRUCT-RUN",
    "target": "P:sim.vib_fc_ms2",
    "type": "cites"
   },

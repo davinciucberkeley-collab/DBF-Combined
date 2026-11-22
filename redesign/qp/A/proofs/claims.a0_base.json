@@ -240,6 +240,24 @@
    "where": "modes vs rotor bands, forced response, control-band GM, C1 loads at VD 24"
   },
   {
+   "id": "SRC-A-STRUCT-RUN",
+   "type": "source",
+   "title": "Structures run, T-084 rerun with the X2216 / 1.8796 kg model (structures_run.md)",
+   "kind": "file",
+   "url": "redesign/qp/A/structures/structures_run.md",
+   "checked": "2026-11-15",
+   "where": "s2 C1 loads, s4 modes vs rotor orders, band 94-321 Hz, forced-response sweep; beam FE fe_a.py"
+  },
+  {
+   "id": "SRC-A-T085",
+   "type": "source",
+   "title": "T-085 D-185 FE upgrade, D-236 (T085_report.md)",
+   "kind": "file",
+   "url": "redesign/qp/A/mechanism/out/T085_report.md",
+   "checked": "2026-11-15",
+   "where": "s3 strong modes in the band under credible pad / tray / hub / cell bounds; FEA-lite beam FE, EST springs bounded"
+  },
+  {
    "id": "SRC-A-T084",
    "type": "source",
    "title": "T-084 static tip-over on the drawn pads (fin ends at FIN_H 0.1937, option T3)",
@@ -679,10 +697,11 @@
    "verifies": [
     "CL-A-VIB-LOW",
     "CL-A-VIB-HIGH",
+    "CL-A-VIB-IN-BAND",
     "CL-A-VIB-GM-SHIFT"
    ],
    "state": "planned",
-   "procedure": "Cage pitch mode 12-16 Hz, roll 21-43 Hz and fin f1 within +-20 % of FE, else re-tune (BOARD QP-4, STRUCTURES-R)"
+   "procedure": "TP-10b (TEST-PLAN-O4B.md): rule applied to the measured modes with pack and motors installed (T-085, D-236). Cage pitch mode 12-16 Hz, roll 21-43 Hz and fin f1 within +-20 % of FE, else re-tune (BOARD QP-4, STRUCTURES-R)"
   },
   {
    "id": "T-A-TETHER-VIBE",

@@ -51,6 +51,8 @@ src("SRC-A-ARMCUP", "Arm and motor-cup checks (arm_cup_checks.md)", "qp/A/struct
 src("SRC-A-D206BR", "Bridge tube torsion sizing, D-206 (bridge_torsion_d206.md)", "qp/A/structures/bridge_torsion_d206.md", "roll moments from the hub FEA load set; tau = M r / J; strut share bounds", kind="file")
 src("SRC-A-ITER2M", "Structures iteration 2 margins (iter2_margins.md)", "qp/A/structures/iter2_margins.md", "MS table at 1.5 x limit", kind="file")
 src("SRC-A-ITER3", "Structures iteration 3 (iter3_run.md, D-185 as ruled)", "qp/A/structures/iter3_run.md", "modes vs rotor bands, forced response, control-band GM, C1 loads at VD 24", kind="file")
+src("SRC-A-STRUCT-RUN", "Structures run, T-084 rerun with the X2216 / 1.8796 kg model (structures_run.md)", "qp/A/structures/structures_run.md", "s2 C1 loads, s4 modes vs rotor orders, band 94-321 Hz, forced-response sweep; beam FE fe_a.py", kind="file")
+src("SRC-A-T085", "T-085 D-185 FE upgrade, D-236 (T085_report.md)", "qp/A/mechanism/out/T085_report.md", "s3 strong modes in the band under credible pad / tray / hub / cell bounds; FEA-lite beam FE, EST springs bounded", kind="file")
 src("SRC-A-T084", "T-084 static tip-over on the drawn pads (fin ends at FIN_H 0.1937, option T3)", "qp/A/mechanism/out/T084_data/tipover_t084.txt", "minimum over the drawn and tallied CG and both pack-trim ends; pivot = outer pad edge on the CG z side (D-215 s4)", kind="file")
 src("SRC-A-D195FL", "Elevon flutter, lead 12.8 g (D-205; flutter_d205.md, else as flutter_d195.md)", "qp/A/structures/flutter_d205.md", "elevon 6.7 g, lead 12.8 g at 20 mm (D-205), damper c 1.03e-3 hot / nominal / cold / half; p-method K sweep", kind="file")
 src("SRC-A-D195FW", "Wing bending-torsion flutter, lead 12.8 g (D-205; flutter_d205_wing.md)", "qp/A/structures/flutter_d205_wing.md", "Ritz + strip Theodorsen, lumps 23.8 g per semispan (D-205)", kind="file")
@@ -143,8 +145,8 @@ kit.test("T-A-WEIGH", "Weigh-in: foam block, printed parts, epoxy joint, lead st
          procedure="BOARD QP-4 s1 and FIXES2 s9: >= 27.2 g of the 41.6 g EST cuts must be real; as-built <= 1.47 kg (D-190; the +-5 % window holds to 1.478 kg)")
 kit.test("T-A-CG-BREADBOARD", "CG breadboard on a knife edge (M5, M6)", ["CL-A-CG", "CL-A-CG-HI", "CL-A-SM", "CL-A-CG-LATERAL"], state="planned",
          procedure="Measure CG and NP on the built aircraft; trim the pack +-10 mm in the tray slots; CG 20-26 mm, SM >= 5 %")
-kit.test("T-A-TAP", "Tap test: built cage and fin against the FE modes", ["CL-A-VIB-LOW", "CL-A-VIB-HIGH", "CL-A-VIB-GM-SHIFT"], state="planned",
-         procedure="Cage pitch mode 12-16 Hz, roll 21-43 Hz and fin f1 within +-20 % of FE, else re-tune (BOARD QP-4, STRUCTURES-R)")
+kit.test("T-A-TAP", "Tap test: built cage and fin against the FE modes", ["CL-A-VIB-LOW", "CL-A-VIB-HIGH", "CL-A-VIB-IN-BAND", "CL-A-VIB-GM-SHIFT"], state="planned",
+         procedure="TP-10b (TEST-PLAN-O4B.md): rule applied to the measured modes with pack and motors installed (T-085, D-236). Cage pitch mode 12-16 Hz, roll 21-43 Hz and fin f1 within +-20 % of FE, else re-tune (BOARD QP-4, STRUCTURES-R)")
 kit.test("T-A-TETHER-VIBE", "First tethered hover, IMU VIBE", ["CL-A-VIB-FC"], state="planned", procedure="IMU VIBE < 30 m/s2 in the first tethered hover (A-P10(d))")
 kit.test("T-A-FIRST-CRUISE", "First cruise: roll rate and measured stall (M8 extended)", ["CL-A-ROLL-GATE", "CL-A-STALL"], state="planned",
          procedure="Measure the peak roll rate (>= 90 deg/s) and the clean stall; the measured CLmax replaces 0.75")

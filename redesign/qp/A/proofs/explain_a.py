@@ -364,7 +364,7 @@ C("CL-A-DIVERGENCE", "aeroelastic", "Torsional divergence: above this speed the 
   sym={"v": "divergence speed"}, limit_why="At least 28.8 m/s.", real="Measure wing torsion stiffness on the built wing (twist under a known torque).")
 C("CL-A-REVERSAL", "aeroelastic", "Control reversal: above this speed the elevon flexes the wing the wrong way and works backwards.", via="FIXES s1.3, 3-D lift basis", formula="reversal speed from wing torsion stiffness and elevon effectiveness",
   sym={"x": "speed per case"}, steps=[("v_ms", "min(x)", "m/s", "lowest reversal speed")], limit_why="At least 28.8 m/s.", real="First flight envelope expansion: step up speed with elevon pulses.")
-C("CL-A-GUST-N", "aeroelastic", "A 4 m/s gust at the dive speed multiplies the load on the wing. This checks the multiplier stays under the 3.4 g limit.", via="iter3_run.md C1 load table", formula="n = 1 + (gust lift change) / weight", sym={"v": "gust load factor"},
+C("CL-A-GUST-N", "aeroelastic", "A 4 m/s gust at the dive speed multiplies the load on the wing. This checks the multiplier stays under the 3.4 g limit.", via="structures_run.md s2 C1 load table", formula="n = 1 + (gust lift change) / weight", sym={"v": "gust load factor"},
   limit_why="At most 3.4 g.", real="Accelerometer log in the first fast passes.")
 
 # ---- vibration
@@ -372,15 +372,17 @@ C("CL-A-VIB-LOW-LIMIT", "vib", "Structure modes below the rotor bands must be be
   steps=[("f_hz", "rpm/60/sep", "Hz", "upper edge of the allowed low zone")], real="Tap test on the built cage (T-A-TAP).")
 C("CL-A-VIB-HIGH-LIMIT", "vib", "Modes above the rotor bands must be above this frequency.", formula="limit = high 2P edge x 1.2", sym={"f": "highest cruise 2P frequency", "sep": "required 20 % separation"},
   steps=[("f_hz", "f*sep", "Hz", "lower edge of the allowed high zone")], real="Tap test (T-A-TAP).")
-C("CL-A-VIB-LOW", "vib", "The highest strongly coupled mode below the rotor bands must be under the allowed low limit.", via="the finite-element run in iter3_run.md (three stiffness corners)", formula="highest mode over the corners",
+C("CL-A-VIB-LOW", "vib", "The highest strongly coupled mode below the rotor bands must be under the allowed low limit.", via="the finite-element run in structures_run.md s4 (three stiffness corners)", formula="highest mode over the corners",
   sym={"x": "mode frequency per corner"}, steps=[("f_hz", "max(x)", "Hz", "highest mode")], limit_why="At most the low limit (previous card).", real="Tap test: strike the built cage and read the frequency from a phone app (T-A-TAP).")
-C("CL-A-VIB-HIGH", "vib", "The lowest strongly coupled mode above the rotor bands must be over the allowed high limit.", via="iter3_run.md", formula="lowest mode over the corners", sym={"x": "mode frequency per corner"},
+C("CL-A-VIB-HIGH", "vib", "The lowest strongly coupled mode above the rotor bands must be over the allowed high limit.", via="structures_run.md s4", formula="lowest mode over the corners", sym={"x": "mode frequency per corner"},
   steps=[("f_hz", "min(x)", "Hz", "lowest mode")], limit_why="At least the high limit.", real="Tap test (T-A-TAP).")
-C("CL-A-VIB-FC", "vib", "The flight computer must not feel more than 30 m/s2 of vibration or its sensors degrade.", via="forced-response sweep in iter3_run.md", formula="worst acceleration over the sweep cases", sym={"x": "acceleration per case"},
+C("CL-A-VIB-IN-BAND", "vib", "No strongly coupled structure mode may sit inside the rotor bands (D-185 (a)). This counts the stiffness corners that have one.", via="structures_run.md s4 and T085_report.md s3.1", formula="count of corners with a strong mode in the band", sym={"v": "corners with a mode in the band"},
+  limit_why="None allowed (D-185 (a)); not relaxed.", real="Tap test with pack and motors installed (T-A-TAP, TP-10b).")
+C("CL-A-VIB-FC", "vib", "The flight computer must not feel more than 30 m/s2 of vibration or its sensors degrade.", via="forced-response sweep in structures_run.md s4", formula="worst acceleration over the sweep cases", sym={"x": "acceleration per case"},
   steps=[("a_ms2", "max(x)", "m/s^2", "worst vibration")], limit_why="At most 30 m/s2 (requirement A-P10 (d)).", real="Read IMU VIBE in the first tethered hover (T-A-TETHER-VIBE).")
-C("CL-A-VIB-GM", "vib", "The control loop needs at least a factor of 2 of gain margin before the structure's flex modes could make it unstable.", via="iter3_run.md (fu_cage.py)", formula="smallest gain margin over axes and corners", sym={"x": "gain margin per axis and corner"},
+C("CL-A-VIB-GM", "vib", "The control loop needs at least a factor of 2 of gain margin before the structure's flex modes could make it unstable.", via="iter3_run.md (fu_cage.py), STALE: MN2212-era, re-run pending", formula="smallest gain margin over axes and corners", sym={"x": "gain margin per axis and corner"},
   steps=[("gm", "min(x)", "-", "smallest gain margin")], limit_why="At least 2.", real="Increase the rate gain in tethered hover until oscillation starts and compare.")
-C("CL-A-VIB-GM-SHIFT", "vib", "The same gain margin if the real flex modes are 20 % off the model, which is the expected tolerance.", via="iter3_run.md", formula="smallest gain margin with modes shifted -20 % and +20 %", sym={"lo": "margins with modes -20 %", "hi": "margins with modes +20 %"},
+C("CL-A-VIB-GM-SHIFT", "vib", "The same gain margin if the real flex modes are 20 % off the model, which is the expected tolerance.", via="iter3_run.md (STALE: MN2212-era, re-run pending)", formula="smallest gain margin with modes shifted -20 % and +20 %", sym={"lo": "margins with modes -20 %", "hi": "margins with modes +20 %"},
   steps=[("gm", "min(min(lo), min(hi))", "-", "smallest gain margin")], limit_why="At least 2.", real="Tap test then repeat the margin calculation with measured frequencies.")
 
 # ---- packaging
