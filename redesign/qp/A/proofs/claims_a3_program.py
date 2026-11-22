@@ -20,8 +20,8 @@ stored = make_stored(kit)
 # ================================================================ cost
 @kit.calc("CALC-A-COST", equation="total = goods x (1 + tax) + shipping + FAA + crash reserve; +30 % on the unverified lines for the margin (bom_a.py)",
           inputs={"rows": "P:cost.bom_rows", "tax": "P:cost.tax", "faa": "P:cost.faa_usd", "ship": "P:cost.ship_usd", "bump": "P:cost.bump",
-                  "tubes": "P:cost.reserve_tube_ids", "budget": "P:req.budget_usd"})
-def bom_cost(rows, tax, faa, ship, bump, tubes, budget):
+                  "tubes": "P:cost.reserve_tube_ids", "rship": "P:cost.reserve_ship_usd", "budget": "P:req.budget_usd"})
+def bom_cost(rows, tax, faa, ship, bump, tubes, rship, budget):
     sh = dict(ship)
     shipping = sum(sh[g] for g in {r[2] for r in rows})
     line = lambda i: next(r[4] for r in rows if r[0] == i)
@@ -30,19 +30,19 @@ def bom_cost(rows, tax, faa, ship, bump, tubes, budget):
         goods = sum(q * u * (1 + (b if unv else 0)) for _, _, _, q, u, unv in rows)
         f = 1 + b
         air = line("R01") * f + sum(r[3] * r[4] for r in rows if r[0] in tubes) + 0.5 * line("R03") * f
-        reserve = (line("W01") + line("P01") + line("M01") + air) * (1 + tax) + sh["TMotor"] + sh["RMRC"] + sh["Amazon"]
+        reserve = (line("W01") + line("P01") + line("M01") + air) * (1 + tax) + sum(rship)
         return goods * (1 + tax) + shipping + faa + reserve, reserve
     t0, r0 = total(0.0)
     t30, r30 = total(bump)
     return {"total_usd": t0, "total_30_usd": t30, "margin_usd": budget - t0, "margin_30_usd": budget - t30, "reserve_usd": r0, "shipping_usd": shipping}
 
 
-kit.claim("CL-A-COST-TOTAL", "BOM total incl. tax, shipping, FAA and crash reserve", calc="CALC-A-COST", output="total_usd", unit="USD", limit=("<=", "P:req.g7_total_usd"),
-          verifies=["A-U1"], how="python -I qp/A/bom_a.py (reads BOM-A.csv): $1,779.47; gate G7 total <= $1,800. 16 of 42 lines are unverified (U / EST).")
-kit.claim("CL-A-COST-MARGIN30", "Margin to $2,000 if the unverified lines run 30 % over", calc="CALC-A-COST", output="margin_30_usd", unit="USD",
-          limit=(">=", "P:req.g7_margin_usd"), verifies=["A-U1"], how="python -I qp/A/bom_a.py: +$100.05 at +30 %; gate G7 margin >= $100. The margin has 5 cents of slack: any rise in the EST lines beyond their +30 % allowance takes it under $100.")
-kit.claim("CL-A-COST-BUDGET", "BOM total with the unverified lines +30 % against the $2,000 budget", calc="CALC-A-COST", output="total_30_usd", unit="USD",
-          limit=("<=", "P:req.budget_usd"), verifies=["A-U1"], how="python -I qp/A/bom_a.py; Makers Pass outside the budget (user, memory).")
+kit.claim("CL-A-COST-TOTAL", "BOM total incl. tax, shipping, FAA and crash reserve (by its definition, AM-018)", calc="CALC-A-COST", output="total_usd", unit="USD", limit=("<=", "P:req.budget_usd"),
+          verifies=["A-U1"], how="python -I qp/A/bom_a.py (reads BOM-A.csv): $1,999.12, margin +$0.88 (2026-11-22). AM-013: the only budget gate is the total incl. crash reserve <= $2,000.")
+kit.claim("CL-A-COST-MARGIN30", "Margin to $2,000 if the unverified lines run 30 % over (information only, AM-013)", calc="CALC-A-COST", output="margin_30_usd", unit="USD",
+          verifies=["A-U1"], how="python -I qp/A/bom_a.py; the board G7 rule (margin >= $100 at +30 %) is information only since AM-013.")
+kit.claim("CL-A-COST-BUDGET", "BOM total with the unverified lines +30 % (information only, AM-013)", calc="CALC-A-COST", output="total_30_usd", unit="USD",
+          verifies=["A-U1"], how="python -I qp/A/bom_a.py; information only since AM-013; Makers Pass outside the budget (user, memory).")
 
 
 # ================================================================ schedule

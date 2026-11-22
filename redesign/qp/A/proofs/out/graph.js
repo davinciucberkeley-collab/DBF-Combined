@@ -2,7 +2,7 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-22 07:19 UTC",
+  "generated": "2026-11-22 09:50 UTC",
   "dataset": "concept-a",
   "ok": false,
   "errors": [
@@ -32,12 +32,12 @@ window.PROOF_GRAPH = {
     "test": 13,
     "calculation": 88,
     "claim": 108,
-    "parameter": 213,
+    "parameter": 214,
     "part": 65
    },
    "by_status": {
     "CHECKED": 319,
-    "UNVERIFIED": 219,
+    "UNVERIFIED": 220,
     "PROPOSED": 17
    },
    "fails": 11
@@ -79,7 +79,7 @@ window.PROOF_GRAPH = {
    "where": "limits of A-U1 ... A-D12; status PROPOSED, owner A2",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
-   "importance": 75
+   "importance": 73
   },
   {
    "id": "SRC-A-MASSGATE",
@@ -6504,24 +6504,25 @@ window.PROOF_GRAPH = {
     "ship": "P:cost.ship_usd",
     "bump": "P:cost.bump",
     "tubes": "P:cost.reserve_tube_ids",
+    "rship": "P:cost.reserve_ship_usd",
     "budget": "P:req.budget_usd"
    },
    "outputs": {
-    "total_usd": 1779.4666375000002,
-    "total_30_usd": 1899.9539012500002,
-    "margin_usd": 220.53336249999984,
-    "margin_30_usd": 100.04609874999983,
-    "reserve_usd": 327.4303875,
-    "shipping_usd": 55.13
+    "total_usd": 1999.1158874999999,
+    "total_30_usd": 2105.33790375,
+    "margin_usd": 0.8841125000001284,
+    "margin_30_usd": -105.3379037499999,
+    "reserve_usd": 346.9446375,
+    "shipping_usd": 67.84
    },
    "input_values": {
     "rows": [
      [
       "P01",
       "propulsion",
-      "TMotor",
-      5.0,
-      46.9,
+      "RMRC",
+      4.0,
+      22.99,
       false
      ],
      [
@@ -6543,9 +6544,9 @@ window.PROOF_GRAPH = {
      [
       "W01",
       "power",
-      "RMRC",
+      "RDQ",
       2.0,
-      37.09,
+      54.99,
       false
      ],
      [
@@ -6592,7 +6593,7 @@ window.PROOF_GRAPH = {
       "W07",
       "power",
       "RMRC",
-      1.0,
+      2.0,
       3.96,
       false
      ],
@@ -6633,7 +6634,7 @@ window.PROOF_GRAPH = {
       "avionics",
       "RMRC",
       1.0,
-      95.98,
+      129.01,
       false
      ],
      [
@@ -6673,7 +6674,7 @@ window.PROOF_GRAPH = {
       "airframe",
       "Local",
       1.0,
-      70.0,
+      45.0,
       true
      ],
      [
@@ -6697,31 +6698,31 @@ window.PROOF_GRAPH = {
       "airframe",
       "RMRC",
       1.0,
-      15.34,
-      true
+      15.36,
+      false
      ],
      [
       "R14",
       "airframe",
       "RMRC",
       1.0,
-      0.0,
-      true
+      2.3,
+      false
      ],
      [
       "R10",
       "airframe",
       "RMRC",
       1.0,
-      4.4,
+      8.5,
       false
      ],
      [
       "R03",
       "airframe",
-      "Prusa",
+      "Amazon",
       1.0,
-      23.99,
+      12.99,
       false
      ],
      [
@@ -6729,7 +6730,7 @@ window.PROOF_GRAPH = {
       "airframe",
       "Amazon",
       1.0,
-      20.0,
+      10.0,
       true
      ],
      [
@@ -6761,7 +6762,7 @@ window.PROOF_GRAPH = {
       "ground_test",
       "Amazon",
       1.0,
-      50.95,
+      45.15,
       true
      ],
      [
@@ -6785,24 +6786,8 @@ window.PROOF_GRAPH = {
       "ground_test",
       "Amazon",
       1.0,
-      25.0,
-      true
-     ],
-     [
-      "B01",
-      "ground_test",
-      "RMRC",
-      1.0,
-      15.99,
-      false
-     ],
-     [
-      "B02",
-      "ground_test",
-      "RMRC",
-      1.0,
       12.99,
-      false
+      true
      ],
      [
       "B03",
@@ -6819,14 +6804,6 @@ window.PROOF_GRAPH = {
       1.0,
       15.0,
       true
-     ],
-     [
-      "B05",
-      "ground_test",
-      "SparkFun",
-      1.0,
-      0.0,
-      false
      ],
      [
       "R11",
@@ -6851,34 +6828,166 @@ window.PROOF_GRAPH = {
       1.0,
       6.0,
       true
+     ],
+     [
+      "T1",
+      "airframe",
+      "Alcobra",
+      1.0,
+      65.56,
+      false
+     ],
+     [
+      "T2",
+      "airframe",
+      "Amazon",
+      1.0,
+      15.98,
+      false
+     ],
+     [
+      "T3",
+      "airframe",
+      "Wicks",
+      3.0,
+      6.46,
+      false
+     ],
+     [
+      "T4",
+      "airframe",
+      "USComposites",
+      1.0,
+      20.2,
+      false
+     ],
+     [
+      "T5",
+      "airframe",
+      "RMRC",
+      2.0,
+      2.02,
+      false
+     ],
+     [
+      "T6",
+      "ground_test",
+      "Amazon",
+      1.0,
+      14.99,
+      false
+     ],
+     [
+      "T7",
+      "ground_test",
+      "Amazon",
+      1.0,
+      23.79,
+      false
+     ],
+     [
+      "T8",
+      "ground_test",
+      "Amazon",
+      1.0,
+      24.69,
+      false
+     ],
+     [
+      "T9",
+      "ground_test",
+      "Amazon",
+      1.0,
+      13.99,
+      false
+     ],
+     [
+      "T10",
+      "ground_test",
+      "Local",
+      1.0,
+      8.0,
+      true
+     ],
+     [
+      "R15",
+      "airframe",
+      "Carbonwebshop",
+      1.0,
+      50.09,
+      false
+     ],
+     [
+      "T11",
+      "airframe",
+      "Alcobra",
+      1.0,
+      47.52,
+      true
+     ],
+     [
+      "T12",
+      "airframe",
+      "USComposites",
+      1.0,
+      4.9,
+      false
+     ],
+     [
+      "W10",
+      "power",
+      "RMRC",
+      1.0,
+      12.99,
+      false
      ]
     ],
     "tax": 0.1025,
     "faa": 5.0,
     "ship": [
      [
-      "RMRC",
-      15.0
-     ],
-     [
-      "TMotor",
+      "Alcobra",
       10.71
      ],
      [
       "Amazon",
-      10.71
+      0.0
+     ],
+     [
+      "Carbonwebshop",
+      25.0
+     ],
+     [
+      "Local",
+      0.0
      ],
      [
       "Prusa",
       10.71
      ],
      [
+      "RDQ",
+      10.71
+     ],
+     [
+      "RMRC",
+      0.0
+     ],
+     [
       "SparkFun",
       8.0
      ],
      [
-      "Local",
+      "TMotor",
       0.0
+     ],
+     [
+      "USComposites",
+      10.71
+     ],
+     [
+      "Wicks",
+      10.71
      ]
     ],
     "bump": 0.3,
@@ -6886,7 +6995,13 @@ window.PROOF_GRAPH = {
      "R02",
      "R08",
      "R09",
-     "R10"
+     "R10",
+     "R15"
+    ],
+    "rship": [
+     10.71,
+     15.0,
+     10.71
     ],
     "budget": 2000.0
    },
@@ -6897,59 +7012,9 @@ window.PROOF_GRAPH = {
   {
    "id": "CL-A-COST-TOTAL",
    "type": "claim",
-   "title": "BOM total incl. tax, shipping, FAA and crash reserve",
+   "title": "BOM total incl. tax, shipping, FAA and crash reserve (by its definition, AM-018)",
    "calc": "CALC-A-COST",
    "output": "total_usd",
-   "unit": "USD",
-   "limit": {
-    "op": "<=",
-    "ref": "P:req.g7_total_usd",
-    "resolved": 1800.0
-   },
-   "verifies": [
-    "A-U1"
-   ],
-   "how": "python -I qp/A/bom_a.py (reads BOM-A.csv): $1,779.47; gate G7 total <= $1,800. 16 of 42 lines are unverified (U / EST).",
-   "value": 1779.4666375000002,
-   "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
-   "reasons": [
-    "uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, EST (RMRC rates not readable, QP-1/COST.md))"
-   ],
-   "status": "UNVERIFIED",
-   "margin": 0.011407423611111021,
-   "importance": 1
-  },
-  {
-   "id": "CL-A-COST-MARGIN30",
-   "type": "claim",
-   "title": "Margin to $2,000 if the unverified lines run 30 % over",
-   "calc": "CALC-A-COST",
-   "output": "margin_30_usd",
-   "unit": "USD",
-   "limit": {
-    "op": ">=",
-    "ref": "P:req.g7_margin_usd",
-    "resolved": 100.0
-   },
-   "verifies": [
-    "A-U1"
-   ],
-   "how": "python -I qp/A/bom_a.py: +$100.05 at +30 %; gate G7 margin >= $100. The margin has 5 cents of slack: any rise in the EST lines beyond their +30 % allowance takes it under $100.",
-   "value": 100.04609874999983,
-   "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
-   "reasons": [
-    "uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, EST (RMRC rates not readable, QP-1/COST.md))"
-   ],
-   "status": "UNVERIFIED",
-   "margin": 0.00046098749999828214,
-   "importance": 1
-  },
-  {
-   "id": "CL-A-COST-BUDGET",
-   "type": "claim",
-   "title": "BOM total with the unverified lines +30 % against the $2,000 budget",
-   "calc": "CALC-A-COST",
-   "output": "total_30_usd",
    "unit": "USD",
    "limit": {
     "op": "<=",
@@ -6959,14 +7024,55 @@ window.PROOF_GRAPH = {
    "verifies": [
     "A-U1"
    ],
-   "how": "python -I qp/A/bom_a.py; Makers Pass outside the budget (user, memory).",
-   "value": 1899.9539012500002,
+   "how": "python -I qp/A/bom_a.py (reads BOM-A.csv): $1,999.12, margin +$0.88 (2026-11-22). AM-013: the only budget gate is the total incl. crash reserve <= $2,000.",
+   "value": 1999.1158874999999,
    "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
    "reasons": [
-    "uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, EST (RMRC rates not readable, QP-1/COST.md))"
+    "uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST)",
+    "uses P:cost.reserve_ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py reserve(): 3 shipments at the original EST (definition unchanged, AM-018))"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.05002304937499991,
+   "margin": 0.0004420562500000642,
+   "importance": 1
+  },
+  {
+   "id": "CL-A-COST-MARGIN30",
+   "type": "claim",
+   "title": "Margin to $2,000 if the unverified lines run 30 % over (information only, AM-013)",
+   "calc": "CALC-A-COST",
+   "output": "margin_30_usd",
+   "unit": "USD",
+   "verifies": [
+    "A-U1"
+   ],
+   "how": "python -I qp/A/bom_a.py; the board G7 rule (margin >= $100 at +30 %) is information only since AM-013.",
+   "value": -105.3379037499999,
+   "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
+   "reasons": [
+    "uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST)",
+    "uses P:cost.reserve_ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py reserve(): 3 shipments at the original EST (definition unchanged, AM-018))"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-COST-BUDGET",
+   "type": "claim",
+   "title": "BOM total with the unverified lines +30 % (information only, AM-013)",
+   "calc": "CALC-A-COST",
+   "output": "total_30_usd",
+   "unit": "USD",
+   "verifies": [
+    "A-U1"
+   ],
+   "how": "python -I qp/A/bom_a.py; information only since AM-013; Makers Pass outside the budget (user, memory).",
+   "value": 2105.33790375,
+   "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
+   "reasons": [
+    "uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST)",
+    "uses P:cost.reserve_ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py reserve(): 3 shipments at the original EST (definition unchanged, AM-018))"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -7974,7 +8080,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-A-REQ",
    "note": "A-U1 / gate G7: total <= $1,800",
    "status": "CHECKED",
-   "importance": 1
+   "importance": 0
   },
   {
    "id": "P:req.g7_margin_usd",
@@ -7986,7 +8092,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-A-REQ",
    "note": "A-U1 / gate G7: +30 % margin >= $100",
    "status": "CHECKED",
-   "importance": 1
+   "importance": 0
   },
   {
    "id": "P:req.budget_usd",
@@ -8178,7 +8284,7 @@ window.PROOF_GRAPH = {
    "value": 270.0,
    "unit": "g",
    "source": "SRC-A-BOM",
-   "note": "BOM-A.csv W01: Tattu 2300 4S, listing 270 g",
+   "note": "BOM-A.csv W01: RDQ 2800 mAh 4S 100C, listing 270 g (D-230)",
    "status": "CHECKED",
    "importance": 2
   },
@@ -10100,9 +10206,9 @@ window.PROOF_GRAPH = {
     [
      "P01",
      "propulsion",
-     "TMotor",
-     5.0,
-     46.9,
+     "RMRC",
+     4.0,
+     22.99,
      false
     ],
     [
@@ -10124,9 +10230,9 @@ window.PROOF_GRAPH = {
     [
      "W01",
      "power",
-     "RMRC",
+     "RDQ",
      2.0,
-     37.09,
+     54.99,
      false
     ],
     [
@@ -10173,7 +10279,7 @@ window.PROOF_GRAPH = {
      "W07",
      "power",
      "RMRC",
-     1.0,
+     2.0,
      3.96,
      false
     ],
@@ -10214,7 +10320,7 @@ window.PROOF_GRAPH = {
      "avionics",
      "RMRC",
      1.0,
-     95.98,
+     129.01,
      false
     ],
     [
@@ -10254,7 +10360,7 @@ window.PROOF_GRAPH = {
      "airframe",
      "Local",
      1.0,
-     70.0,
+     45.0,
      true
     ],
     [
@@ -10278,31 +10384,31 @@ window.PROOF_GRAPH = {
      "airframe",
      "RMRC",
      1.0,
-     15.34,
-     true
+     15.36,
+     false
     ],
     [
      "R14",
      "airframe",
      "RMRC",
      1.0,
-     0.0,
-     true
+     2.3,
+     false
     ],
     [
      "R10",
      "airframe",
      "RMRC",
      1.0,
-     4.4,
+     8.5,
      false
     ],
     [
      "R03",
      "airframe",
-     "Prusa",
+     "Amazon",
      1.0,
-     23.99,
+     12.99,
      false
     ],
     [
@@ -10310,7 +10416,7 @@ window.PROOF_GRAPH = {
      "airframe",
      "Amazon",
      1.0,
-     20.0,
+     10.0,
      true
     ],
     [
@@ -10342,7 +10448,7 @@ window.PROOF_GRAPH = {
      "ground_test",
      "Amazon",
      1.0,
-     50.95,
+     45.15,
      true
     ],
     [
@@ -10366,24 +10472,8 @@ window.PROOF_GRAPH = {
      "ground_test",
      "Amazon",
      1.0,
-     25.0,
-     true
-    ],
-    [
-     "B01",
-     "ground_test",
-     "RMRC",
-     1.0,
-     15.99,
-     false
-    ],
-    [
-     "B02",
-     "ground_test",
-     "RMRC",
-     1.0,
      12.99,
-     false
+     true
     ],
     [
      "B03",
@@ -10400,14 +10490,6 @@ window.PROOF_GRAPH = {
      1.0,
      15.0,
      true
-    ],
-    [
-     "B05",
-     "ground_test",
-     "SparkFun",
-     1.0,
-     0.0,
-     false
     ],
     [
      "R11",
@@ -10432,11 +10514,123 @@ window.PROOF_GRAPH = {
      1.0,
      6.0,
      true
+    ],
+    [
+     "T1",
+     "airframe",
+     "Alcobra",
+     1.0,
+     65.56,
+     false
+    ],
+    [
+     "T2",
+     "airframe",
+     "Amazon",
+     1.0,
+     15.98,
+     false
+    ],
+    [
+     "T3",
+     "airframe",
+     "Wicks",
+     3.0,
+     6.46,
+     false
+    ],
+    [
+     "T4",
+     "airframe",
+     "USComposites",
+     1.0,
+     20.2,
+     false
+    ],
+    [
+     "T5",
+     "airframe",
+     "RMRC",
+     2.0,
+     2.02,
+     false
+    ],
+    [
+     "T6",
+     "ground_test",
+     "Amazon",
+     1.0,
+     14.99,
+     false
+    ],
+    [
+     "T7",
+     "ground_test",
+     "Amazon",
+     1.0,
+     23.79,
+     false
+    ],
+    [
+     "T8",
+     "ground_test",
+     "Amazon",
+     1.0,
+     24.69,
+     false
+    ],
+    [
+     "T9",
+     "ground_test",
+     "Amazon",
+     1.0,
+     13.99,
+     false
+    ],
+    [
+     "T10",
+     "ground_test",
+     "Local",
+     1.0,
+     8.0,
+     true
+    ],
+    [
+     "R15",
+     "airframe",
+     "Carbonwebshop",
+     1.0,
+     50.09,
+     false
+    ],
+    [
+     "T11",
+     "airframe",
+     "Alcobra",
+     1.0,
+     47.52,
+     true
+    ],
+    [
+     "T12",
+     "airframe",
+     "USComposites",
+     1.0,
+     4.9,
+     false
+    ],
+    [
+     "W10",
+     "power",
+     "RMRC",
+     1.0,
+     12.99,
+     false
     ]
    ],
    "unit": "id, subsystem, ship group, qty, USD each, unverified",
    "source": "SRC-A-BOM",
-   "note": "all 38 rows of BOM-A.csv (status U / EST = unverified)",
+   "note": "all rows of BOM-A.csv (status U / EST = unverified)",
    "status": "CHECKED",
    "importance": 3
   },
@@ -10483,35 +10677,74 @@ window.PROOF_GRAPH = {
    "file": "redesign/qp/A/params-A.json",
    "value": [
     [
-     "RMRC",
-     15.0
-    ],
-    [
-     "TMotor",
+     "Alcobra",
      10.71
     ],
     [
      "Amazon",
-     10.71
+     0.0
+    ],
+    [
+     "Carbonwebshop",
+     25.0
+    ],
+    [
+     "Local",
+     0.0
     ],
     [
      "Prusa",
      10.71
     ],
     [
+     "RDQ",
+     10.71
+    ],
+    [
+     "RMRC",
+     0.0
+    ],
+    [
      "SparkFun",
      8.0
     ],
     [
-     "Local",
+     "TMotor",
      0.0
+    ],
+    [
+     "USComposites",
+     10.71
+    ],
+    [
+     "Wicks",
+     10.71
     ]
    ],
    "unit": "USD",
    "source": "SRC-A-BOMPY",
-   "note": "bom_a.py SHIP per distinct ship group, EST (RMRC rates not readable, QP-1/COST.md)",
+   "note": "bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST",
    "reasons": [
-    "marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, EST (RMRC rates not readable, QP-1/COST.md)"
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 3
+  },
+  {
+   "id": "P:cost.reserve_ship_usd",
+   "type": "parameter",
+   "title": "cost.reserve_ship_usd",
+   "file": "redesign/qp/A/params-A.json",
+   "value": [
+    10.71,
+    15.0,
+    10.71
+   ],
+   "unit": "USD",
+   "source": "SRC-A-BOMPY",
+   "note": "bom_a.py reserve(): 3 shipments at the original EST (definition unchanged, AM-018)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py reserve(): 3 shipments at the original EST (definition unchanged, AM-018)"
    ],
    "status": "UNVERIFIED",
    "importance": 3
@@ -10525,11 +10758,12 @@ window.PROOF_GRAPH = {
     "R02",
     "R08",
     "R09",
-    "R10"
+    "R10",
+    "R15"
    ],
    "unit": "-",
    "source": "SRC-A-BOMPY",
-   "note": "bom_a.py reserve(): full carbon-tube set",
+   "note": "bom_a.py reserve(): full carbon-tube set incl. R15 25x23 rib",
    "status": "CHECKED",
    "importance": 3
   },
@@ -15726,6 +15960,11 @@ window.PROOF_GRAPH = {
    "type": "uses"
   },
   {
+   "source": "P:cost.reserve_ship_usd",
+   "target": "CALC-A-COST",
+   "type": "uses"
+  },
+  {
    "source": "P:req.budget_usd",
    "target": "CALC-A-COST",
    "type": "uses"
@@ -15736,7 +15975,7 @@ window.PROOF_GRAPH = {
    "type": "derives-from"
   },
   {
-   "source": "P:req.g7_total_usd",
+   "source": "P:req.budget_usd",
    "target": "CL-A-COST-TOTAL",
    "type": "uses"
   },
@@ -15751,11 +15990,6 @@ window.PROOF_GRAPH = {
    "type": "derives-from"
   },
   {
-   "source": "P:req.g7_margin_usd",
-   "target": "CL-A-COST-MARGIN30",
-   "type": "uses"
-  },
-  {
    "source": "CL-A-COST-MARGIN30",
    "target": "A-U1",
    "type": "verifies"
@@ -15764,11 +15998,6 @@ window.PROOF_GRAPH = {
    "source": "CALC-A-COST",
    "target": "CL-A-COST-BUDGET",
    "type": "derives-from"
-  },
-  {
-   "source": "P:req.budget_usd",
-   "target": "CL-A-COST-BUDGET",
-   "type": "uses"
   },
   {
    "source": "CL-A-COST-BUDGET",
@@ -17018,6 +17247,11 @@ window.PROOF_GRAPH = {
   {
    "source": "SRC-A-BOMPY",
    "target": "P:cost.ship_usd",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-BOMPY",
+   "target": "P:cost.reserve_ship_usd",
    "type": "cites"
   },
   {

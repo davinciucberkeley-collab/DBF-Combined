@@ -8,7 +8,7 @@ import numpy as np
 G = 9.81
 M_GATE = float(os.environ.get("LAND_MASS_KG", 1.50))   # T-074: env override for the F-5 re-runs at the predicted mass; default 1.50 kg unchanged
 # rib-root check constants (CAD wing.py RIB_OD/RIB_ID/RIB_X0; factors and allowables as structures_a.py, EST)
-RIB_OD, RIB_ID, RIB_X0 = 0.014, 0.012, 0.0705
+RIB_OD, RIB_ID, RIB_X0 = float(os.environ.get('LAND_RIB_OD', 0.014)), float(os.environ.get('LAND_RIB_ID', 0.012)), 0.0705     # T-066: env override LAND_RIB_OD / LAND_RIB_ID (the CAD rib is 25x23 since T-077 p8 / D-226); defaults unchanged so the T-064 / AR-008 numbers reproduce
 RIB_A = math.pi/4*(RIB_OD**2-RIB_ID**2); RIB_I = math.pi/64*(RIB_OD**4-RIB_ID**4); RIB_Z = RIB_I/(RIB_OD/2); RIB_J = 2*RIB_I
 KF_RIB = 1.5*1.15; SIG_RIB = 350e6; TAU_RIB = 30e6
 MU = 0.40          # pad friction cap (K09-L D-105 pad_mu_max, carried)

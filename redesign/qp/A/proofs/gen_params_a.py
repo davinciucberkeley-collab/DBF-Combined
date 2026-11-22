@@ -17,6 +17,15 @@ from pathlib import Path
 sys.dont_write_bytecode = True
 HERE = Path(__file__).resolve().parent
 A = HERE.parent                                   # redesign/qp/A
+
+
+def _bom_ship():
+    """SHIP table of bom_a.py (parsed, not executed; single source, D-230)."""
+    import ast
+    src = (A / "bom_a.py").read_text(encoding="utf-8")
+    m = next(n for n in ast.parse(src).body if isinstance(n, ast.Assign) and any(getattr(t, "id", "") == "SHIP" for t in n.targets))
+    return [list(kv) for kv in sorted(ast.literal_eval(m.value).items())]
+
 OUT = A / "params-A.json"
 
 V = lambda value, unit, source, note=None, est=False: {k: v for k, v in (
@@ -101,7 +110,7 @@ def build():
                                "mission_gate_a.py `items` (D-195, cage +3.6 g D-196 hub walls; D-198: bay cover, bottom-up harness, cup collars; D-199: raceways, hub conduits, shorter phase extensions, 20 mm strap, drawn pad; CAD 2026-11-15): [basic g, growth fraction by maturity]: wing, fins + feet, motors, props, adapters + spinner nuts (CALC 10 %), ESC, pack, strap, avionics + harness, servos, cage, hardware", est=True),
         "structure_groups_g": V([221.7, 108.2, 8.4, 26.1, 119.2], "g", "SRC-A-CADMASS",
                                 "D-195: CAD part table 2026-11-15: wing 221.7 + fins 108.2 (D-200) + feet 8.4 + hardware HRD-001 26.08 + cage 119.2 (D-196: hub 17.7 g, was 13.1; D-198: cup collars +1.2 g) = 484.9 g with the EST cuts", est=True),
-        "pack_g": V(270.0, "g", "SRC-A-BOM", "BOM-A.csv W01: Tattu 2300 4S, listing 270 g"),
+        "pack_g": V(270.0, "g", "SRC-A-BOM", "BOM-A.csv W01: RDQ 2800 mAh 4S 100C, listing 270 g (D-230)"),
         "pack_trim_mm": V(10.0, "mm", "SRC-A-FIXES2", "FIXES2 s7 / MASS-GATE s7: pack trim 10 mm aft in the tray slots"),
         "pack_trim_fwd_mm": V(cm.get("trim_fwd_m", 0.010) * 1000, "mm", "SRC-A-CADMASS", "D-205: forward pack travel 6 mm (D-202: 1 mm; D-199: 6 mm; D-196: 8 mm) (tray front lip 2 mm aft); cad_mass.json trim_fwd_m"),
         "cg_x_mm": V(cm["cg_x_m"] * 1000, "mm", "SRC-A-CADMASS", "cad_mass.json cg_x_m, aft of the wing leading edge"),
@@ -262,12 +271,13 @@ def build():
     # ---------------------------------------------------------------- cost (BOM-A.csv rows, bom_a.py basis)
     P["cost"] = {
         "bom_rows": V([[r["id"], r["subsystem"], r["ship_group"], float(r["qty"]), float(r["unit_usd"]), r["status"] == "unverified"] for r in bom],
-                      "id, subsystem, ship group, qty, USD each, unverified", "SRC-A-BOM", "all 38 rows of BOM-A.csv (status U / EST = unverified)"),
+                      "id, subsystem, ship group, qty, USD each, unverified", "SRC-A-BOM", "all rows of BOM-A.csv (status U / EST = unverified)"),
         "tax": V(0.1025, "-", "SRC-A-BOMPY", "bom_a.py TAX 10.25 % on goods"), "faa_usd": V(5.0, "USD", "SRC-A-BOMPY", "bom_a.py FAA"),
         "bump": V(0.30, "-", "SRC-A-BOMPY", "bom_a.py BUMP: +30 % on the unverified lines (gate G7)"),
-        "ship_usd": V([["RMRC", 15.0], ["TMotor", 10.71], ["Amazon", 10.71], ["Prusa", 10.71], ["SparkFun", 8.0], ["Local", 0.0]], "USD", "SRC-A-BOMPY",
-                      "bom_a.py SHIP per distinct ship group, EST (RMRC rates not readable, QP-1/COST.md)", est=True),
-        "reserve_tube_ids": V(["R02", "R08", "R09", "R10"], "-", "SRC-A-BOMPY", "bom_a.py reserve(): full carbon-tube set"),
+        "ship_usd": V(_bom_ship(), "USD", "SRC-A-BOMPY",
+                      "bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST", est=True),
+        "reserve_ship_usd": V([10.71, 15.0, 10.71], "USD", "SRC-A-BOMPY", "bom_a.py reserve(): 3 shipments at the original EST (definition unchanged, AM-018)", est=True),
+        "reserve_tube_ids": V(["R02", "R08", "R09", "R10", "R15"], "-", "SRC-A-BOMPY", "bom_a.py reserve(): full carbon-tube set incl. R15 25x23 rib"),
     }
 
     # ---------------------------------------------------------------- schedule (schedule_a.py)

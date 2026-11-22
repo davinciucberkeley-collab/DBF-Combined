@@ -107,7 +107,7 @@ class Frame:
 
 def build(kind="nom", y_fin=Y_FIN, rib_wall=0.8e-3, rib_wh=(30e-3, 14e-3), arm_len_scale=1.0, hub_bridge=(24e-3, 30e-3, 1.5e-3),
           foot_pad_m=0.003, wing_g=212.0, pack_g=270.0, motor_g=65.0+11.06+5.0+4.3+2.9, avionics_g=110.0, fin_skin_t=0.1e-3, fin_core=15e-3,
-          fin_E_skin=50e9, root_fix=None, verbose=False, arm_tube=(14e-3, 12e-3), bridge_cf=True, bridge_tube=(8e-3, 6e-3), spar_tube=(16e-3, 14e-3), rib_tube=None, bridge_cfg='single', bridge_yv=0.12, vtube=(8e-3, 6e-3), fin_strip=None, arm_E_scale=1.0, fin_tube=None, x_fin=None):
+          fin_E_skin=50e9, root_fix=None, verbose=False, arm_tube=(14e-3, 12e-3), bridge_cf=True, bridge_tube=(8e-3, 6e-3), spar_tube=(16e-3, 14e-3), rib_tube=None, bridge_cfg='single', bridge_yv=0.12, vtube=(8e-3, 6e-3), fin_strip=None, arm_E_scale=1.0, fin_tube=None, x_fin=None, root_g=6.0, centre_extra_g=65.0, x_hub=None, hub_extra_g=20.0):
     E = E_CF[kind]; G = G_CF[kind]; Ep = E_PETG[kind]; Gp = G_PETG[kind]
     F = Frame()
     A_a = math.pi/4*(arm_tube[0]**2-arm_tube[1]**2); I_a = math.pi/64*(arm_tube[0]**4-arm_tube[1]**4)
@@ -124,9 +124,10 @@ def build(kind="nom", y_fin=Y_FIN, rib_wall=0.8e-3, rib_wh=(30e-3, 14e-3), arm_l
     for a, b in zip(ys, ys[1:]):
         for y in (a, b): F.lump(f"s{y:+.3f}", wing_extra*(b-a)/0.90/2)
     # avionics + servos + misc at centre
-    F.lump("s+0.000", avionics_g*1e-3+0.030+0.035)
+    F.lump("s+0.000", avionics_g*1e-3+centre_extra_g*1e-3)   # T-066: centre_extra_g default 65 g = the old 30 + 35 g servo / misc lump (unchanged default)
     # --- hub, bridge, arms, motors
-    F.node("hub", (X_HUB, 0, 0))
+    XH_ = X_HUB if x_hub is None else x_hub          # T-066: x_hub / x_motor override (default unchanged)
+    F.node("hub", (XH_, 0, 0))
     bw, bh, bt = hub_bridge
     A, Iy, Iz, J = prop_box(bw, bh, bt)           # displacement across h = z -> Iy; across w = y -> Iz
     A_b = math.pi/4*(bridge_tube[0]**2-bridge_tube[1]**2); I_b = math.pi/64*(bridge_tube[0]**4-bridge_tube[1]**4)
@@ -144,11 +145,11 @@ def build(kind="nom", y_fin=Y_FIN, rib_wall=0.8e-3, rib_wh=(30e-3, 14e-3), arm_l
     else:   # V: two struts hub -> spar at y = +-bridge_yv
         for sy in (1, -1):
             F.beam("hub", f"s{sy*bridge_yv:+.3f}", E*A_b, E*I_b, E*I_b, G*2*I_b, RHO_CF*A_b, (0, 0, 1), "bridge", nseg=3)
-    F.lump("hub", pack_g*1e-3+0.020)              # pack + hub print 20 g
+    F.lump("hub", pack_g*1e-3+hub_extra_g*1e-3)              # pack + hub print 20 g
     arm_mass_extra = 0
     for sy in (1, -1):
         for sz in (1, -1):
-            nm = f"m{sy:+d}{sz:+d}"; F.node(nm, (X_M, sy*Y_M*arm_len_scale, sz*Z_M*arm_len_scale))
+            nm = f"m{sy:+d}{sz:+d}"; F.node(nm, (XH_ if x_hub is not None else X_M, sy*Y_M*arm_len_scale, sz*Z_M*arm_len_scale))
             F.beam("hub", nm, E*A_a, E*I_a, E*I_a, G*2*I_a, RHO_CF*A_a, (1, 0, 0), "arm", nseg=5)
             F.lump(nm, motor_g*1e-3)
             if hasattr(F, "_pending_braces"):
@@ -184,7 +185,7 @@ def build(kind="nom", y_fin=Y_FIN, rib_wall=0.8e-3, rib_wh=(30e-3, 14e-3), arm_l
             # ey = +/-x (in-plane), ez = cross(ex, ey) = +/- y (out-of-plane): local z bending (EIy) = out-of-plane
             F.beam(root, tip, 1e8, EI_out, EI_in, 20.0, mu, vref, "fin", nseg=5)
             F.lump(tip, foot_pad_m)
-        F.lump(root, 0.006)                           # root block / bond
+        F.lump(root, root_g*1e-3)                           # root block / bond
     return F, dict(EI_out=EI_out, EI_in=EI_in, mu=mu, Jr=Jr, GJ_rib=G*2*I_a, EIy_rib=E*I_a, EIz_rib=E*I_a, A_rib=Ar, A_s=A_s, I_s=I_s, A_r=A_r, I_r=I_r, A_b=A_b, I_b=I_b,
                    m_rib=RHO_CF*A_a*(X_FIN-X_SPAR), m_arm=RHO_CF*A_a*math.hypot(Y_M, Z_M), A_a=A_a, I_a=I_a)
 

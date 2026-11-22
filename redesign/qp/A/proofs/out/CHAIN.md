@@ -1540,38 +1540,40 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p9
 **Total spend and the G7 gate** — Total physical spend <= $2,000 incl. tax, shipping, packs, charger, radio, test gear, tools, crash reserve; gate G7: total <= $1,800 and +30 % margin on the unverified lines >= $100 — **UNVERIFIED**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-u1
 
-- claim **CL-A-COST-TOTAL** BOM total incl. tax, shipping, FAA and crash reserve = **1779 USD** (limit <= 1800 USD, margin +1%) — **UNVERIFIED**
-  - ⚠ uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, EST (RMRC rates not readable, QP-1/COST.md))
-  - how to verify: python -I qp/A/bom_a.py (reads BOM-A.csv): $1,779.47; gate G7 total <= $1,800. 16 of 42 lines are unverified (U / EST).
+- claim **CL-A-COST-TOTAL** BOM total incl. tax, shipping, FAA and crash reserve (by its definition, AM-018) = **1999 USD** (limit <= 2000 USD, margin +0%) — **UNVERIFIED**
+  - ⚠ uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST)
+  - ⚠ uses P:cost.reserve_ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py reserve(): 3 shipments at the original EST (definition unchanged, AM-018))
+  - how to verify: python -I qp/A/bom_a.py (reads BOM-A.csv): $1,999.12, margin +$0.88 (2026-11-22). AM-013: the only budget gate is the total incl. crash reserve <= $2,000.
   - calc `CALC-A-COST` `redesign/qp/A/proofs/claims_a3_program.py::bom_cost()`: `total = goods x (1 + tax) + shipping + FAA + crash reserve; +30 % on the unverified lines for the margin (bom_a.py)` — **CHECKED**
-    - `rows` ← param `P:cost.bom_rows` = table (42 rows) id, subsystem, ship group, qty, USD each, unverified — **CHECKED**
+    - `rows` ← param `P:cost.bom_rows` = table (53 rows) id, subsystem, ship group, qty, USD each, unverified — **CHECKED**
       - source `SRC-A-BOM` [BOM-A.csv (single BOM, 42 lines)](redesign/qp/A/BOM-A.csv), vendor price per line; date_checked column 2026-11-14 / 15 / 18 for verified lines, checked 2026-11-15 — **CHECKED**
     - `tax` ← param `P:cost.tax` = 0.1025 — **CHECKED**
       - source `SRC-A-BOMPY` [bom_a.py (cost basis and G7)](redesign/qp/A/bom_a.py), tax 10.25 %, FAA $5, shipping by group (EST), +30 % on unverified lines, reserve rule, checked 2026-11-15 — **CHECKED**
     - `faa` ← param `P:cost.faa_usd` = 5 USD — **CHECKED**
       - `SRC-A-BOMPY` (see above)
-    - `ship` ← param `P:cost.ship_usd` = table (6 rows) USD — **UNVERIFIED**
-      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, EST (RMRC rates not readable, QP-1/COST.md)
+    - `ship` ← param `P:cost.ship_usd` = table (11 rows) USD — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST
       - `SRC-A-BOMPY` (see above)
     - `bump` ← param `P:cost.bump` = 0.3 — **CHECKED**
       - `SRC-A-BOMPY` (see above)
-    - `tubes` ← param `P:cost.reserve_tube_ids` = table (4 rows) — **CHECKED**
+    - `tubes` ← param `P:cost.reserve_tube_ids` = table (5 rows) — **CHECKED**
+      - `SRC-A-BOMPY` (see above)
+    - `rship` ← param `P:cost.reserve_ship_usd` = table (3 rows) USD — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py reserve(): 3 shipments at the original EST (definition unchanged, AM-018)
       - `SRC-A-BOMPY` (see above)
     - `budget` ← param `P:req.budget_usd` = 2000 USD — **CHECKED**
       - source `SRC-A-USER` [Project constraints (root CLAUDE.md)](https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/CLAUDE.md), Hard constraints: $2,000, 2027-04-30, one car trunk, < 25 kg, 3-D physics simulation (user wording; computed as interference + swept insertion checks), checked 2026-11-15 — **CHECKED**
-  - param `P:req.g7_total_usd` = 1800 USD — **CHECKED**
-    - source `SRC-A-REQ` [Concept A requirements (REQUIREMENTS-A.md)](redesign/qp/A/REQUIREMENTS-A.md), limits of A-U1 ... A-D12; status PROPOSED, owner A2, checked 2026-11-15 — **CHECKED**
-- claim **CL-A-COST-MARGIN30** Margin to $2,000 if the unverified lines run 30 % over = **100 USD** (limit >= 100 USD, margin +0%) — **UNVERIFIED**
-  - ⚠ uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, EST (RMRC rates not readable, QP-1/COST.md))
-  - how to verify: python -I qp/A/bom_a.py: +$100.05 at +30 %; gate G7 margin >= $100. The margin has 5 cents of slack: any rise in the EST lines beyond their +30 % allowance takes it under $100.
-  - `CALC-A-COST` (see above)
-  - param `P:req.g7_margin_usd` = 100 USD — **CHECKED**
-    - `SRC-A-REQ` (see above)
-- claim **CL-A-COST-BUDGET** BOM total with the unverified lines +30 % against the $2,000 budget = **1900 USD** (limit <= 2000 USD, margin +5%) — **UNVERIFIED**
-  - ⚠ uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, EST (RMRC rates not readable, QP-1/COST.md))
-  - how to verify: python -I qp/A/bom_a.py; Makers Pass outside the budget (user, memory).
-  - `CALC-A-COST` (see above)
   - `P:req.budget_usd` (see above)
+- claim **CL-A-COST-MARGIN30** Margin to $2,000 if the unverified lines run 30 % over (information only, AM-013) = **-105.3 USD** — **UNVERIFIED**
+  - ⚠ uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST)
+  - ⚠ uses P:cost.reserve_ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py reserve(): 3 shipments at the original EST (definition unchanged, AM-018))
+  - how to verify: python -I qp/A/bom_a.py; the board G7 rule (margin >= $100 at +30 %) is information only since AM-013.
+  - `CALC-A-COST` (see above)
+- claim **CL-A-COST-BUDGET** BOM total with the unverified lines +30 % (information only, AM-013) = **2105 USD** — **UNVERIFIED**
+  - ⚠ uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST)
+  - ⚠ uses P:cost.reserve_ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py reserve(): 3 shipments at the original EST (definition unchanged, AM-018))
+  - how to verify: python -I qp/A/bom_a.py; information only since AM-013; Makers Pass outside the budget (user, memory).
+  - `CALC-A-COST` (see above)
 
 ## A-U2
 
