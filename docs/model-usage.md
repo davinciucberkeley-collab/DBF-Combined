@@ -105,3 +105,4 @@ Scope (2026-11-18): this log starts with T-016. Delegations earlier on 2026-11-1
 | 2026-11-22 | T-086 cost-trim study | implementer / sonnet | moderate (sourcing) | done: servo spare dropped, margin +$16.31 | 135 k tok / 4.7 min | 0 | — | VERIFIED (round 2) |
 | 2026-11-22 | T-087 rib tube + hub bars | implementer / sonnet | moderate (sourcing + rib trial) | done: hub bars to Zoro, margin +$60.83; R15 kept | 189 k tok / 14.4 min | 0 | — | VERIFIED (round 2) |
 | 2026-11-22 | review round 2 (7 READY rows + T-023) | eng-reviewer / sonnet (override, minimise compute) | review | done: 3 VERIFIED, 4 keep READY, T-023 open | 140 k tok / 5.8 min | 0 | — | conductor applied verdicts |
+| 2026-11-22 | T-085 D-185 FE upgrade | implementer / sonnet | moderate-high (FEA-lite) | stopped by the conductor at Dillon's pause (AM-023); partial work saved, unreviewed | not recorded | 0 | — | — |

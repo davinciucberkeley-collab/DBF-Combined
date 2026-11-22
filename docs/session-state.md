@@ -10,31 +10,41 @@ the ledger and the spec are.
 7. This file. 8. Active task + unfinished deps. 9. Compare plan vs requirements (`python -I tools/ledger_audit.py`).
 10. Note any lost/changed instruction under "Reconciliation" below. 11. Resume "Next action".
 
-## Checkpoint — 2026-11-22 (session 7cb35b0a, conductor Opus); sections follow spec 10.4
-**Goal:** master program (spec + AM-001..AM-019). Concept A, Claude-designed and student-built (AM-008). Current
-configuration: D-226 saddle load path (CF bulkheads, 6061 centre node, 3-ply skin, 25x23 rib; AM-016 "stronger wing,
-bench test decides"), SunnySky X2216 V3 short-shaft 880KV on APC 9x4.5MR (D-227/D-228, AM-018), no spare motor
-(AM-019), FIN-003 machined 6061 root fitting (D-229). Budget = total incl. crash reserve by its definition <= $2,000
-(AM-013, AM-018); weight may exceed the mass gate (AM-011) but mass-dependent physics must pass.
+## Checkpoint — 2026-11-22 PAUSE (session 7cb35b0a, conductor Opus); sections follow spec 10.4
+Paused at Dillon's request (AM-023, "Reach a good place to pause for later resumption"). Working tree clean; nothing
+running; nothing pushed (branch redesign/v1, last commit after 59c707e2).
 
-**Requirements:** 109 R-ids; ledger 83 tasks; `python -I tools/ledger_audit.py` 0 errors.
+**Goal:** master program (spec + AM-001..AM-023). Concept A O4b, Claude-designed and student-built (AM-008). Current
+configuration: D-226 saddle load path (CF bulkheads, 6061 centre node, 3-ply skin, 25x23 rib), SunnySky X2216 V3
+short-shaft 880KV on APC 9x4.5MR (D-227/D-228), no spare motor (AM-019), FIN-003 machined 6061 root fitting (D-229),
+fin tubes 387.4 mm / FIN_H 0.1937 (D-233), no BOM spare servo (D-234), hub bars T1/T11 from Zoro (D-235). Budget =
+total incl. crash reserve by its definition <= $2,000 (AM-013, AM-018); weight may exceed the mass gate (AM-011).
 
-**Done (committed, last ac983050):** D-223..D-229. T-083 (motor integration) and T-083b (root fitting): predicted
-1.873 kg EST, CG 22.26 mm, SM 7.52 %, window +12.05 %, T/W 2.64/2.12, cruise 236 s, 3-D gates PASS, BOM $1,981.31
-(margin +$18.69). Evidence: `redesign/qp/A/mechanism/out/T083_report.md`, `T083b_report.md`.
+**Requirements:** 109 R-ids; ledger 88 tasks; `python -I tools/ledger_audit.py` 0 errors.
 
-**Open engineering items:** A-P6 1.3 Vs 17.53 > 17.0 m/s, gated by a measured stall (CLmax >= 0.81, D-228); landing rows
-need TP-3 pad zeta <= 0.05 (0.10 gives 0.66 cell / 0.89 fitting); TP-4 bond coupon (fitting peel integrity rows
-0.15-0.16); bench derate >= 0.889 (SunnySky table 0.80-0.88 of APC: bench risk); X2216 short-shaft backorder (long
-shaft 85810 needs a CAD change); T11 offcut length for the second fitting blank; 14x12 rib if the torsion coupon allows.
+**State (EST):** 1.8796 kg tallied, CG 23.13 mm, SM 7.17 %, window +11.88 %, T/W 2.632/2.111, cruise 234 s, A-P9
+tip-over 31.00 deg; BOM $1,939.17, margin +$60.83 (reserve $346.94). 3-D gates PASS at T-084 (no geometry change since).
 
-**Running now (2026-11-22):** T-083c doc update (TEST-PLAN-O4B, MASS-GATE, A-docs to D-227..D-229; sonnet);
-READY-row review (eng-reviewer, `docs/audits/2026-11-22-ready-rows-review.md`).
+**Open engineering items:** D-185 rotor-band vibration rule (T-085, see below); A-P6 1.3 Vs 17.56 > 17.0 m/s (TP-11
+stall test); landing pad zeta <= 0.05 (TP-3) and pad retention PSA 0.13; TP-4 bond coupon; bench derate >= 0.889;
+X2216 short-shaft backorder; R15 rib tube supply (T-088, Carbonwebshop EU); if TP-3 lengthens the pad, re-check A-P9
+(30.22 deg); mass gate 1.5 kg missed (carried).
 
-**Next action (updated 2026-11-22 after T-084 / D-233):** review T-084 and T-066 (READY); T-085 D-185 FE upgrade (sonnet);
-re-review T-023 / T-081; budget margin only +$0.88 (cost-trim study offered to Dillon); then cleanup T-042..T-045, T-008, final verification T-047. Ask Dillon only for: December purchase approval
-(not before early Dec; check RMRC stock first), trunk height and lid opening (2018 Altima SL), Jacobs material and
-test-frame confirmations, anything over $2,000.
+**Paused task T-085 (D-185 FE upgrade):** implementer stopped before its report. Partial, unreviewed work is in
+`redesign/qp/A/mechanism/out/T085_data/` (read `README-PAUSED.md` first; fe_a.py / TEST-PLAN edits saved as
+`t085_partial.patch` and as `*_post_t085.*` whole files, NOT applied). Preliminary: D-185 FAILs at all corners with
+tray + hub-joint compliance (about 99-107 Hz cage bounce, 249-272 Hz); C1/C2 sketches do not clear it. Check the
+"pad" strain-energy element source first. This may become a critical engineering issue for Dillon if it holds.
+
+**Next action:** (1) resume T-085 from README-PAUSED.md (sonnet implementer; restore the post files, verify the pad
+element, write T085_report.md + D-236); (2) then fix T-081 G-6..G-8 (TP-10 limit, A-P9 re-check line, budget lines
+$1,939.17 / Zoro) and T-066 M-1 (re-point vibration claims in proofs/gen_params_a.py to the T-085 modes), re-review
+T-066, T-081, T-014 (add the T-085 usage row); (3) T-023 F-9 (WNG-009 printed-mass note) and F-10 (regenerate
+drawings after commit); (4) T-032 video pipeline hashes + follow-once; (5) T-088 before the December order; then
+cleanup T-042..T-045, T-008, final verification T-047. Review findings: `docs/audits/2026-11-22-review-round-2.md`.
+Ask Dillon only for: December purchase approval (not before early Dec; check RMRC and Carbonwebshop stock first),
+trunk height and lid opening (2018 Altima SL), Jacobs material and test-frame confirmations, anything over $2,000.
+Note: a Zoro guest cart in the browser pane holds the two hub bars (nothing bought).
 
 **Failures (history):** see git log and CHANGE-LOG; O4b with MN2212 infeasible (AM-017 study); MN3110, legs/skid,
 0.8 m/s touchdown and concept B rejected (`docs/audits/2026-11-21-config-study.md`); PETG FIN-003 failed (D-229).

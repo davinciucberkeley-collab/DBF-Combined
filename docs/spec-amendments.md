@@ -303,3 +303,11 @@ Requirement IDs: R-GEN-02, R-PHY-09.
 ```text
 Yes, continue
 ```
+
+## AM-023 — 2026-11-22 — Pause for later resumption
+Relation: process instruction. Running work (T-085) stopped and saved; checkpoint in `docs/session-state.md`.
+Requirement IDs: R-COM-01.
+
+```text
+Reach a good place to pause for later resumption
+```
