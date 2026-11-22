@@ -122,12 +122,12 @@ Film clip: `assets/animation/build/a-stage-01.mp4` (Explorer, "How it's built", 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
 | `WNG-001` x1 | Wing core, XPS 25 kg/m3 + tape skin + glue + hinge tape | made | R01 Local | 100.1 |
-| `WNG-011` x1 | Wing torsion skin: 1 ply 48 g/m2 glass at +-45 deg wet-laid on the core, closed over the leading edge and the cove face, y -0.40..+0.40, wet ply 0.054 mm | made | - | 26.7 |
-| `WNG-012` x1 | Cove CF strip, section 6 x 0.5 mm = 3 mm2 | made | - | 3.7 |
-| `WNG-014` x2 | Wing torsion skin plies 2-3: 2 more plies of 48 g/m2 glass at +-45 deg wet-laid over ply 1, |y| 0.052..0.400 | made |  | 46.4 |
-| `WNG-013` x2 | Centre bulkhead: 0.5 mm CF sheet | made |  | 8.0 |
-| `FIN-005` x2 | Fin node bulkheads: two 0.5 mm CF sheet bulkheads | made |  | 20.0 |
-| `FIN-009` x2 | Fin node in-plane plates: two 0.5 mm CF sheet plates | made |  | 18.4 |
+| `WNG-011` x1 | Wing torsion skin: 1 ply 48 g/m2 glass at +-45 deg wet-laid on the core, closed over the leading edge and the cove face, y -0.40..+0.40, wet ply 0.054 mm | made | T3 Wicks, T4 USComposites | 26.7 |
+| `WNG-012` x1 | Cove CF strip, section 6 x 0.5 mm = 3 mm2 | made | T5 RMRC, T4 USComposites | 3.7 |
+| `WNG-014` x2 | Wing torsion skin plies 2-3: 2 more plies of 48 g/m2 glass at +-45 deg wet-laid over ply 1, |y| 0.052..0.400 | made | T3 Wicks, T4 USComposites | 46.4 |
+| `WNG-013` x2 | Centre bulkhead: 0.5 mm CF sheet | made | T2 Amazon, T3 Wicks | 8.0 |
+| `FIN-005` x2 | Fin node bulkheads: two 0.5 mm CF sheet bulkheads | made | T2 Amazon, T3 Wicks, T12 USComposites | 20.0 |
+| `FIN-009` x2 | Fin node in-plane plates: two 0.5 mm CF sheet plates | made | T2 Amazon, T3 Wicks | 18.4 |
 
 Mass placed by this step 223.3 g; running total of placed parts 223.3 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -202,7 +202,7 @@ Film clip: `assets/animation/build/a-stage-02.mp4` (Explorer, "How it's built", 
 
 ### B0b. Machine the hub
 
-*Step 3 of 66. Plan caption: Bench: the printed hub stands on the bench, aft face down*
+*Step 3 of 66. Plan caption: Bench: the machined hub stands on the bench, aft face down*
 
 **Do this:** Machine the hub from 6061-T6 bar (D-220 / D-221, mass from the CAD in PARTS: drawn solid, no pockets); stand it on the bench, aft face down. A PLA print of CGE-001.stl is the fit check first (T-080).
 
@@ -212,13 +212,13 @@ Film clip: `assets/animation/build/a-stage-02.mp4` (Explorer, "How it's built", 
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `CGE-001` x1 | Hub | made | R03 Amazon | 43.3 |
+| `CGE-001` x1 | Hub | made | T1 Alcobra | 43.3 |
 
 Mass placed by this step 43.3 g; running total of placed parts 266.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
-- 6061-T6 bar, about 63.5 x 63.5 x 50.8 mm per hub (T-080 V7, price "-"); PLA for the fit-check print (Jacobs Prusa). Print file: CGE-001.stl (qp/A/drawings/out/stl/)
+- 6061-T6511 bar, 2.00 x 2.50 in (50.8 x 63.5 mm) section, blank at least 63.5 x 50.8 x 110 mm for the drawn 59.5 x 107.8 x 49.3 mm hub (DRAWINGS-A.md CGE-001). BOM line T1 lists a 1.75 x 2.5 in bar (44.45 mm thick): too thin for the 49.3 mm hub, so T1 must change to 2.00 x 2.50 in before ordering (price not read for the 12 in length; alcobrametals.com shows $65.56 minimum over all lengths, read 2026-11-22, vs $49.41 listed; T-023 F-2). PLA for the fit-check print (Jacobs Prusa). Print file: CGE-001.stl (qp/A/drawings/out/stl/)
 
 **Tools:** knee mill (bores, pins), Tormach 440 (contour), caliper.
 
@@ -579,7 +579,7 @@ Mass placed by this step 9.0 g; running total of placed parts 381.4 g (CAD; the 
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `CGE-005-R` x1 | V strut 8x6 | made |  | 10.2 |
+| `CGE-005-R` x1 | V strut 8x6 | made | R10 RMRC | 10.2 |
 
 Mass placed by this step 10.2 g; running total of placed parts 391.6 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -602,7 +602,7 @@ Mass placed by this step 10.2 g; running total of placed parts 391.6 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `CGE-005-L` x1 | V strut 8x6 | made |  | 10.2 |
+| `CGE-005-L` x1 | V strut 8x6 | made | R10 RMRC | 10.2 |
 
 Mass placed by this step 10.2 g; running total of placed parts 401.8 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -659,15 +659,15 @@ Mass placed by this step 10.2 g; running total of placed parts 401.8 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `CGE-001` x1 | Hub | made | R03 Amazon | 43.3 |
+| `CGE-001` x1 | Hub | made | T1 Alcobra | 43.3 |
 | `CGE-004` x1 | Bridge 16x14 | made | R02 RMRC | 8.6 |
-| `CGE-006` x1 | Centre node | made |  | 36.3 |
+| `CGE-006` x1 | Centre node | made | T11 Alcobra | 36.3 |
 | `CGE-002-A` x1 | Arm tube A 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub | made | R08 RMRC | 30.6 |
 | `CGE-002-B` x1 | Arm tube B 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub | made | R08 RMRC | 30.6 |
 | `CGE-003` x4 | Motor cup | made | R03 Amazon | 35.8 |
 | `CGE-009` x4 | Doubler 14x12 x 36 mm | made | R09 RMRC | 8.0 |
 | `CGE-010` x5 | Pin 3 mm carbon rod x 15 mm | made | R14 RMRC | 1.1 |
-| `CGE-005` x2 | V strut 8x6 | made |  | 20.4 |
+| `CGE-005` x2 | V strut 8x6 | made | R10 RMRC | 20.4 |
 | `CGE-007` x2 | Strut clamp on spar | made | R03 Amazon | 12.7 |
 | `PRP-006` x4 | X-mount, SunnySky, supplied with the motor | bought | P01 RMRC, R05 Amazon | 36.8 |
 | `PRP-001` x4 | Motor SunnySky X2216 V3 880KV short shaft | bought | P01 RMRC | 270.0 |
@@ -1126,7 +1126,7 @@ Film clip: `assets/animation/build/a-stage-04.mp4` (Explorer, "How it's built", 
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `FIN-002` x2 | Fin rib tube 14x12 | made |  | 52.0 |
+| `FIN-002` x2 | Fin rib tube 14x12 | made | R15 Carbonwebshop | 52.0 |
 
 Mass placed by this step 52.0 g; running total of placed parts 1134.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -1423,7 +1423,7 @@ Mass placed by this step 8.4 g; running total of placed parts 1202.1 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `FIN-003` x2 | Fin root fitting: machined 6061-T6, ring OD 18.2 / bore 16.2 x 38 mm on the fin tube, plug OD 22.8 / ID 20.8 x 31 mm bonded inside the 25x23 rib end, end plate 2.0 mm x 24.6 mm diameter notched by the fin tube | made |  | 24.1 |
+| `FIN-003` x2 | Fin root fitting: machined 6061-T6, ring OD 18.2 / bore 16.2 x 38 mm on the fin tube, plug OD 22.8 / ID 20.8 x 31 mm bonded inside the 25x23 rib end, end plate 2.0 mm x 24.6 mm diameter notched by the fin tube | made | T11 Alcobra | 24.1 |
 
 Mass placed by this step 24.1 g; running total of placed parts 1226.2 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -1570,7 +1570,7 @@ Mass placed by this step 8.6 g; running total of placed parts 1297.6 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `GER-002` x4 | Foot pad EVA/PE 12x15x30 | made | R03 Amazon | 2.8 |
+| `GER-002` x4 | Foot pad EVA/PE 12x15x30 | made | T7 Amazon, T8 Amazon | 2.8 |
 
 Mass placed by this step 2.8 g; running total of placed parts 1300.4 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
@@ -1952,7 +1952,7 @@ Mass placed by this step 70.1 g; running total of placed parts 1425.2 g (CAD; th
 
 **You need:**
 
-- Kakute H743-Wing (V03, T-077 p5; price -), SpeedyBee BLS 35A 4-in-1 ESC (P04), RP3 V2 (V02), TBS M10Q GPS (V04), MS4525 board (V05)
+- Kakute H743-Wing (V03, $129.01), SpeedyBee BLS 35A 4-in-1 ESC (P04), RP3 V2 (V02), TBS M10Q GPS (V04), MS4525 board (V05)
 
 **Tools:** foam tape (VHB-class), tweezers, 0.1 g scale.
 
@@ -2149,7 +2149,7 @@ Mass placed by this step 8.0 g; running total of placed parts 1708.7 g (CAD; the
 
 **You need:**
 
-- XT60, 14 AWG wire (BOM W05)
+- XT60, 14 AWG wire (BOM W05); pack lead extension: 2 x about 50 mm of 14 AWG silicone (red + black, from W05, no extra purchase) with 2 solder splices and 3 mm heat-shrink (W05 kit). The drawn exposed run E-HRN-13 is 126.6 mm per strand (wire_inventory.json) and the RDQ pack lead is 80 mm, so 46.6 mm per strand is added (EST 50 mm to allow for the splice overlap); the XT90 pigtails W10 are a different item
 
 **Tools:** soldering (tail to ESC after), heat-shrink.
 
@@ -2176,7 +2176,7 @@ Mass placed by this step 8.0 g; running total of placed parts 1708.7 g (CAD; the
 
 **Fit it:**
 
-- Vendor leads taped to the skin along their route.
+- Vendor leads taped to the skin along their route; splice the 14 AWG extension (E4a) into each power lead on the exposed run, 3 mm heat-shrink over each splice (the extension is not drawn: CAD draws the full 126.6 mm run as E-HRN-13).
 
 **Checkpoint (do not go on until it passes):**
 
@@ -2303,7 +2303,7 @@ The steps total **50.2 h** hands-on (`EST`; machine time for printing and the 24
 - **STL files, print orientation and slicer settings for every printed part:** not in the repo for concept A (only K09-L G3 PRINT-LIST). The guide gives the CAD wall thicknesses and an `EST` orientation; export the STLs from `a_model.py`.
 - **S5010 gauge and backup hot-wire templates:** not generated for concept A (`redesign/manufacturing/hotwire.py` is K09-L). The airfoil file is `redesign/subsystems/wing/s5010.dat`.
 - **Fin rib length (resolved, D-200):** the CAD draws 215.5 mm (x 70.5-286.0 mm); the part mass (now 14.1 g) and BOM R09 (2 x 0.2155 m) follow the drawing.
-- **Motor screws M2.5x8:** named in ARMS.md, but no BOM line; check whether the T-Motor box includes them. Prop adapters and spinner nuts: BOM P01 note says confirm they ship in the motor box.
+- **Motor screws (resolved, T-023 F-8):** the X2216 V3 uses the supplied SunnySky X-mount with 4 countersunk M3 screws; the cup screws are 4 x M3x14 SHCS + 4 x M3 nyloc per motor from BOM R05 (propulsion.py PRP-006). Prop adapters ship with the motor (SunnySky page, BOM P01); the X-mount and adapter contents are to be confirmed on receipt.
 - **Motor direction change:** the ESC configuration steps (BLHeli_S, DShot) are not written for concept A; swapping two phase leads reverses a brushless motor (EST).
 - **Pitot tube route:** the silicone tube from the probe (right) to the sensor board (left, 0.45 m away) is not designed in the CAD (HARNESS-ENCLOSED D-199.2).
 - **Pad flange bond:** the tray bond width fell from 80 to 59 mm (D-199); no coupon has been run (HARNESS-ENCLOSED D-199.5).

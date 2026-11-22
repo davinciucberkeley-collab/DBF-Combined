@@ -12,7 +12,7 @@ Limits not relaxed: RF >= 1.0, KF 1.725, KP 2.156, A-P3 window >= +-5 %, A-P16 (
 | 1 | What decides 2026-12-15? | **[T-083c] Only bench items: derate >= 0.889 (X2216 V3 880KV + APC 9x4.5MR; the 204.6 s cruise need, at 1.913 kg, T-083), current and rpm within the TP-1 lines, the Lua cap (1.0, `Q_M_BAT_CURR_MAX` 72) and the 72 A limiter on the H743-Wing, and the A-P10 tap test.** (Record, MN2212: derate >= 0.905 / 0.873, one motor <= 12.1 A; `O4-feasibility.md` s6.) Tests TP-1 and TP-2 are those. **The tap test (TP-10) needs a built cage and cannot be done by 15 Dec** (s5, item 6). |
 | 2 | What gates the build, not the go/no-go? | TP-3 to TP-9. Each closes a row that is below 1.0 or has an unknown allowable. They need parts that only arrive after Order 1. |
 | 3 | Is there a rig for kN loads? | **No.** The only load cell in the BOM is a 10 kg cell (about 98 N, G02/B05). The bond and tube coupons need about 1 to 4 kN. A frame or press with a force readout is missing (s3). |
-| 4 | Total with every purchase in s4? | **$2,330.25 (full list) and $2,243.34 (trimmed list), against $2,000, crash reserve held at $327.43.** The O4b parts alone (H743-Wing + RDQ packs) are $1,879.77 (reserve held) to $1,899.50 (reserve rebuilt from the pack price). The test and material purchases do not fit. Over by about $243 to $330 before the "—" lines. |
+| 4 | Total with every purchase in s4? | **[SUPERSEDED (T-023 fix): the adopted total is $1,981.31 incl. reserve $346.94, margin +$18.69, `BOM-A.csv` / `bom_a.py` (D-230, AM-019); see the Budget-closed section. The figures that follow are the 2026-11-20 record.]** **$2,330.25 (full list) and $2,243.34 (trimmed list), against $2,000, crash reserve held at $327.43.** The O4b parts alone (H743-Wing + RDQ packs) are $1,879.77 (reserve held) to $1,899.50 (reserve rebuilt from the pack price). The test and material purchases do not fit. Over by about $243 to $330 before the "—" lines. |
 | 5 | Calendar | Order 1-4 Dec, go/no-go 15 Dec, Jacobs access ends 18 Dec and is assumed closed 19 Dec to 18 Jan (`SCHEDULE-A.md`, third-party calendar). TP-3 to TP-9 do not all fit before 18 Dec. See s5 item 3. |
 
 ## 1. Test table (in the order of the 2026-12-15 go/no-go, then by build gate)
@@ -25,7 +25,7 @@ Limits not relaxed: RF >= 1.0, KF 1.725, KP 2.156, A-P3 window >= +-5 %, A-P16 (
 | TP-4 | CF-in-Al bond. `bond mean shear` RF 0.77 (D-1) / 0.55 to 0.77 (floor); needs >= 2.6 to 2.9 MPa vs 2.0 EST; C-5 | CF 12x10 tube in 6061 sleeve, L 32 mm (n = 5) and L 24 mm (n = 5) push-out, plus 3 torsion | **Force frame >= 5 kN: missing**, calipers | Min of 5 >= 2.9 MPa (3.5 kN at L 32; 2.6 kN at L 24). **[T-083c: also the 6061 root-fitting bond coupon, re-spec TP-4]** | Add a rung: longer sleeve, second bond line, or credit the cross-pins (T-076d s4.3) | 1 day (cure 24 h) | Metal shop, frame "—" |
 | TP-5 | Tube interlaminar shear. Judged tau_s,r 16.8 to 18.9 MPa (D-1), allowable "—"; needs >= 30 to 33 MPa (D-1) or 43 MPa (RB x 1.61) | 12x10 tube with the P1 tapered doubler, 3-point bend, n = 5; plain 12x10 short-beam n = 5 | Frame as TP-4 | See s2.5 | No named fallback; stop rule says add nothing beyond P1/P2 (s5 item 5) | 1 day | Metal shop, frame "—" |
 | TP-6 | **WITHDRAWN (D-225, 2026-11-21: the X7 centre node is withdrawn; D-226 uses a machined 6061 centre node, covered by the rib torsion coupon and TP-4 bonds). Kept as record.** X7 node CGE-006. C-2 (CF knockdown >= 400 MPa EST), C-3 (CF tube to Onyx bond), Mz row (PETG net section 0.81 at x2) | Onyx beam with CF rings, 3-point bend n = 5; pin-bearing coupon n = 5; CF-to-Onyx and CF-to-PETG push-out n = 5 + 5 | X7 job, frame as TP-4 | Fibre stress >= 400 MPa; bond mean >= 2.0 MPa | Machined 6061 node on the Tormach (+10 to +15 g, T-080) | 1 day + print | Room 332, Metal shop |
-| TP-7 | Printed joints. C-1 (PETG 20 / 9.5 MPa EST), `ASM-A-PETG-JOINT-ILAY`, root block P6 / P8 (0.50 / 0.51 pre-package; **[T-083c, D-229: the PETG root block is replaced by the machined 6061 root fitting FIN-003, so the PETG root-block rows no longer apply; the "Onyx for the root block" fallback below is obsolete]**), tray, clamps; C-4 clamshell node (FIN-005; saddle 0.28) | C-1: 5 + 5 per orientation, PETG (team printer) and Onyx; C-4: 2 nodes | Frame as TP-4 | mean - 3 sigma >= 20 / 9.5 MPa; C-4: no failure at 2.156 x limit | Onyx for the root block; resize the clamshell (T-080 s3.3) | 1.5 days | Team lab, room 332 |
+| TP-7 | Printed joints. C-1 (PETG 20 / 9.5 MPa EST), `ASM-A-PETG-JOINT-ILAY`, root block P6 / P8 (0.50 / 0.51 pre-package; **[T-083c, D-229: the PETG root block is replaced by the machined 6061 root fitting FIN-003, so the PETG root-block rows no longer apply; the "Onyx for the root block" fallback below is obsolete]**), tray, clamps; C-4 clamshell node [WITHDRAWN D-225 / D-226] (FIN-005; saddle 0.28) | C-1: 5 + 5 per orientation, PETG (team printer) and Onyx; C-4: 2 nodes [WITHDRAWN, D-225] | Frame as TP-4 | mean - 3 sigma >= 20 / 9.5 MPa; C-4: no failure at 2.156 x limit | Onyx for the root block; resize the clamshell (T-080 s3.3) | 1.5 days | Team lab, room 332 |
 | TP-8 | Glass skin. P15 wrinkling RF 1.13 baseline, 0.87 at zeta 0.10, 0.54 at the 1.61 floor; allowable is dry Vf 50 % x 0.70 EST (T-071) | Foam sandwich beams, 1 ply +-45 glass, n = 3 flexure + n = 3 torsion | Frame (low load), caliper, scale | Measured/EST wrinkling stress ratio r >= 1.15 (zeta 0.10) | 2 plies, +27 g (T-071) | 1.5 days (cure 24 h) | Team lab |
 | TP-9 | Pad friction drag. T-068 hold point; P9a rib 0.86, 1.23 at mu 0.30 | Actual pad + UHMW face, n = 5 per surface | G02 cell (98 N is enough: breakaway about 9 N), 30 N dead load | Max of 5 <= 0.30 per surface | Face not approved: drag test at design mu 0.40 and RMRC rib twist coupon (T-068 F3b) | 0.5 day | Team lab, RFS |
 | TP-10 | Tap test A-P10, hi-corner mode vs the re-based limit 88.0 Hz (84 Hz as modelled, margin 4.5 %) | Built cage and fin | Hammer, FC accelerometer | Mode <= limit | Reviewer, `T-A-TAP` | after the build | Team lab |
@@ -141,7 +141,7 @@ Source column: read = vendor page read 2026-11-20; snippet = search result only,
 
 Already in the BOM and used by the tests: G01 watt meter, G02 load cell + HX711 + scale + caliper, G03 stand parts, B01/B02 bench motor and props, B03 bar cell and K-type probes, B04 fixture, B05 TAL220, W02 charger, R03 PETG, R08 tubes (offcuts for coupons), R14 3 mm CF rod (price "not found").
 
-### 4.1 Budget run (illustrative; scratch copy of `bom_a.py`, `BOM-A.csv` and `bom_a.py` not edited; files in `redesign/qp/A/mechanism/out/T081_data/`)
+### 4.1 Budget run [SUPERSEDED by the adopted BOM-A.csv total $1,981.31, D-230; record only] (illustrative; scratch copy of `bom_a.py`, `BOM-A.csv` and `bom_a.py` not edited; files in `redesign/qp/A/mechanism/out/T081_data/`)
 
 | Scenario | Goods | Shipping | Spend | Crash reserve | Total | vs $2,000 |
 |---|---|---|---|---|---|---|
@@ -175,6 +175,8 @@ All allowables except cited vendor figures are EST. The model gf and A values ar
 
 ## Budget-closed purchase list (T-082)
 
+**Adopted total (T-023 fix 2026-11-22): $1,981.31 including the crash reserve ($346.94), margin +$18.69 against $2,000, from `BOM-A.csv` as adopted in D-230 and AM-019 (`python -I redesign/qp/A/bom_a.py`).** It supersedes the $1,957.51 / $1,971.40 of T-082 below. Lines that moved it since T-082: R15 (25x23 rib tube, $50.09 with an EST shipping line), T11 (1 x 4 in 6061 bar) and T12 (cotton flock $4.90) added (D-226); W10 (XT90 pigtails $12.99); the X2216 V3 short-shaft swap (P01, 4 x $22.99, D-227 / D-228); no spare motor (AM-019); W01 RDQ 2,800 mAh and V03 Kakute H743-Wing $129.01. Open: the hub needs a 2.00 x 2.50 in bar, not the T1 1.75 x 2.5 in listed ($49.41), because the hub is 49.3 mm thick (T-023 F-2). Alcobra shows $65.56 as the minimum over all lengths of that size and the 12 in price is not read, so the margin may fall by up to about $16 (EST) of the +$18.69.
+
 Added 2026-11-21 by T-082. Decision record: `docs/audits/2026-11-20-T082-budget.md`, which has every price, URL and lever. Rules: AM-013 to AM-015; the DAF ruling D-223 is folded in. **Plan, not VERIFIED COMPLETE; nothing bought.** Where this section differs from s1 to s4 above, this section supersedes them for purchasing and rigs. Pass lines follow D-223.
 
 **Total (scratch copy of `bom_a.py`, 2026-11-21): $1,957.51 including the crash reserve by its definition ($313.54); $1,971.40 with the reserve held at $327.43. Both are under $2,000 provided the RMRC, Amazon and T-Motor free-shipping terms hold ($36.42; recheck at checkout).**
@@ -184,7 +186,7 @@ Added 2026-11-21 by T-082. Decision record: `docs/audits/2026-11-20-T082-budget.
 | V03 | Kakute H743-Wing (replaces the F405) | RMRC | 1 | 141.44 | TP-2, TP-3 logger |
 | W01 | RDQ 4S 2800 (replaces the Tattu). **Order only after the CAD tray fit** | RDQ | 2 | 54.99 | TP-1, TP-2 |
 | T1 | 6061-T6511 bar 1.75 x 2.5 x 12 in | Alcobra | 1 | 49.41 | hub, spare blank, TP-4 / TP-5 sleeves, rig cheek plates |
-| T2 | CF sheet 0.5 mm 200 x 300 | Amazon | 1 | 15.98 | FIN-005, N2, C-4 |
+| T2 | CF sheet 0.5 mm 200 x 300 | Amazon | 1 | 15.98 | FIN-005 (now the D-226 waterjet fin-node bulkheads and plates), FIN-009, WNG-013; N2 and C-4 [WITHDRAWN, D-225] |
 | T3 | Glass 1080 1.45 oz 50 in | Wicks | 3 yd | 6.46 | skin (2-ply), TP-8, bond scrim |
 | T4 | US Composites 635 + 556 epoxy 16 + 8 oz | US Composites | 1 | 20.20 | skin, all bonds, all coupons |
 | T5 | CF strip 3 x 1 mm 1 m | RMRC | 2 | 2.02 | cove strip |
@@ -203,10 +205,10 @@ Test changes:
 | Test | Change |
 |---|---|
 | TP-3 (run first, D-223) | Logger: the H743-Wing IMU (ICM42688 or LSM6DSV, ±16 g) fixed rigidly to the drop mass, ArduPilot raw IMU batch log. **Confirm the rate is >= 1 kHz before the test**; fallback is a ±16 g I2C accelerometer on the Nano (about $5-10 EST). Phone slow-motion gives stroke and rebound. Foams: T7, T8, packing PE. A reading at 16 g saturation is a fail (above A-P5 12 g). |
-| TP-1 | Flight MN2212 spare + APC. rpm from the blade-pass frequency, phone audio FFT (2 blades: 306 Hz at 9,180 rpm), cross-checked by ESC telemetry if available. Logging: laptop. |
+| TP-1 | **[SUPERSEDED T-083c / AM-019: the motor is the X2216 V3 880KV and there is no spare motor; the flight MN2212 spare is withdrawn]** Flight MN2212 spare + APC. rpm from the blade-pass frequency, phone audio FFT (2 blades: 306 Hz at 9,180 rpm), cross-checked by ESC telemetry if available. Logging: laptop. |
 | TP-4 | D-223 interface (doubler s 11-32, tube abs(s) < 11, 45 deg chamfer, build prep), L 32 only, n = 5 push-out + 3 torsion. Sleeves are milled from the T1 offcut and drilled oversize. Rig: ask a Berkeley ME lab for a test-frame loan first. Fallback: plywood lever about 70:1 (20 mm / 1.4 m) on M8 pivots in Al cheek plates, effort read by the 10 kg cell (capacity about 6.9 kN). Calibrate the ratio with known masses and measure the uncertainty u. **Pass: min of 5 >= 4.47 MPa x (1 + u), that is 5.40 kN x (1 + u)**, by break or proof load (3.5 MPa if TP-3 shows zeta <= 0.05, per D-223 s2). Named fallback: credit the 3 mm cross-pins with their own hand and FE rows (analysis, $0). That still needs a CF-wall bearing coupon on the same rig. |
 | TP-5 | Same-detail load-ratio test (tube + tapered doubler + chamfered sleeve), n = 5, D-223 s2 line x (1 + u). Plain short-beam set dropped. Pieces come from the R08 / R09 offcuts (about 0.88 of 0.995 m and 0.38 of 0.45 m: little spare). |
-| TP-6 / TP-7 | Same rig; PETG coupons from the ELEGOO spool; each line x (1 + u). |
+| TP-6 [WITHDRAWN, D-225] / TP-7 | Same rig; PETG coupons from the ELEGOO spool; each line x (1 + u). |
 | TP-8 | 1080 cloth + 635 epoxy, 1-ply and 2-ply beams; pass r >= 2.26 (2.56 interim). The 2-ply skin (+27 g) needs no extra purchase; re-run A-P3 and the landing rows at the new mass. |
 | TP-9 | APT 10 mil face, 10 kg cell. |
 
@@ -254,7 +256,35 @@ Existing TP-4 (CF-in-Al push-out, s2.4 and the T-082 section) is unchanged. Adde
 | Ring and plug **peel** (Q1c / Q7c, integrity class, outside the RF minimum by T-069 F-3) | peel coupons of the same prep | assumed peel allowable not stated in T083b: "—" | 0.16 / 0.15 | T083b_report s3 |
 | CF wall bearing | CF tube wall bearing on the ring (fin tube) and on the plug (rib wall) | allowable "—"; the rows put **12.4 MPa** (fin tube in the ring) and **13.2 MPa** (rib wall on the plug) at x2.23, zeta 0.05 | record only | T083b_report s3 |
 Prep as the build: abraded 6061 + acetone (T083b_report s2). **Pass (proposal):** mean shear min of 5 >= 2.0 MPa on both shear coupons; CF wall bearing >= 13.2 MPa (rib) and >= 12.4 MPa (fin tube) on the x2.23 basis, without failure; peel: the measured peel strength raises Q1c / Q7c to >= 1.0 or a 60 mm ring (+3.2 g each, T083b_report s3 note b) is adopted. Fail: lengthen the ring (60 mm) or add a bond line; reviewer rules. Same frame as the s2.4 coupon (force frame loan or the lever rig, T-082).
-Rib torsion coupon (T083_report s10): the line rises from 79 to about 92 MPa at zeta 0.02 (99 MPa all zeta, EST) on the T-083 demand. The 14x12 rib case: T-083's root-block socket bond D14 x 31 needed about 47 mm (EST) and was the PETG block, which D-229 replaced; the 14x12 rib with the 6061 fitting is not computed ("—"), and the 14x12 variant would need another cage move (T083b_report s4.1).
+Rib torsion coupon (T083_report s10): the line rises from 79 to about 92 MPa at zeta 0.02 (99 MPa all zeta, EST) on the T-083 demand. The 14x12 rib case: T-083's root-block socket bond D14 x 31 needed about 47 mm (EST) and was the PETG block, which D-229 replaced; the 14x12 rib with the 6061 fitting is not computed ("—"), and the 14x12 variant would need another cage move (T083b_report s4.1). Test rows TP-12 to TP-14 follow (T-081 re-check G-1 to G-3, added 2026-11-22). Their specimen count n = 5 is a proposal copied from the coupons above; no report gives an n.
+
+#### TP-12 (new): rib torsion coupon (D-226, saddle-loadpath SL-4; closes G-1)
+| Item | Value |
+|---|---|
+| What it closes | Whether the rib may be the lighter 14x12 tube (about -23.8 g against 25x23, saddle-loadpath s2) instead of the drawn 25x23. D-226: "rib 25x23 unless a torsion coupon shows >= 79 MPa"; T083_report s10 re-states the line for the T-083 demand. |
+| Specimen | Offcuts of the BOM R09 14x12 tube, n = 5 (proposal), length per the lever rig |
+| Rig and instrument | Plywood lever rig of the T-082 section (about 70:1 on M8 pivots in Al cheek plates), effort read by the 10 kg cell (G02) and the HX711 / Nano (T9); torque = effort x lever arm; in-plane shear stress by the thin-wall tube formula tau = T / (2 pi r_m^2 t) (r_m and t from caliper readings) |
+| **Pass** | **Measured in-plane shear allowable (min of 5) >= about 92 MPa** (T083_report s10: 79 -> about 92 MPa at pad zeta 0.02 on the T-083 demand, EST; 99 MPa at all zeta). Basis: zeta 0.02 (the TP-3 target). The line at zeta 0.05, the TP-3 gate, is not stated in the reports: "—". The old 79 MPa line is superseded. |
+| On fail | Keep the drawn 25x23 rib (R15). |
+| If it passes | 14x12 is still not adopted automatically: its root-block socket bond (D14 x 31 mm, RF 0.67, about 47 mm needed, EST, T083_report s3b) was for the PETG block replaced by D-229, and the 14x12 rib with the 6061 fitting is not computed ("—"); a reviewer must re-run it first. |
+
+#### TP-13 (new): rib-to-CF-bulkhead bond (D-226; closes G-2)
+| Item | Value |
+|---|---|
+| What it closes | `docs/audits/2026-11-21-saddle-loadpath.md` s3 row "Rib to bulkhead": RF 0.90 at L 99.5 mm (2.21 MPa), 1.16 at L 113 mm (1.73 MPa), "needs a 4-ply 0/90 wrap, or the plates extended to the rib top (EST)". The row was computed for the 14x12 rib; for the drawn 25x23 rib it is not recomputed ("—"). |
+| Specimen | A rib end bonded to a 0.5 mm CF bulkhead (T2) with two 7 mm epoxy fillets (T4, T12 flox): n = 5 as drawn and n = 5 with the 4-ply 0/90 glass wrap (T3) |
+| Rig and instrument | Lever rig as TP-12 or the borrowed force frame; effort from the 10 kg cell; load applied as the moment and shear taken out over the bond length L |
+| **Pass** | **Fillet shear stress at failure, min of 5, >= 2.21 MPa for L 99.5 mm (the s3 demand at x2.23, RF 1.0) or >= 1.73 MPa for L 113 mm.** The 2.0 MPa epoxy value behind RF 0.90 is an EST allowable (s3), so the test replaces it. No margin beyond the x2.23 already in the demand is stated in the source: "—". |
+| On fail / adoption | As drawn (no wrap) is expected to fail (RF 0.90); the wrap is then the adopted fix and the wrapped specimen must pass the same line. If it still fails: extend the plates to the rib top under the FIN-006 fairing (EST, mass "—") or use L 113 mm; reviewer rules. |
+
+#### TP-14 (new): CF wall bearing in the 6061 socket (D-226 "socket bearing '—'"; closes G-3)
+| Item | Value |
+|---|---|
+| What it closes | Saddle-loadpath s3 row "Bridge CF wall bearing in the 6061 socket": demand 48.5 MPa on the CF wall (6M/(D L^2) + V/(D L), P7.2 N6 equivalent); allowable "—". SL-5: add it to the TP-4 coupon. CF plate shear and bearing allowables are also "—" there; no number is given for them in the sources. |
+| Specimen | 16x14 CF bridge tube (R02 offcut) in a 6061 socket piece (T1 / T11 offcut), same prep as the TP-4 push-out (abraded, acetone), n = 5 (proposal), tested with the TP-4 coupon sets |
+| Rig and instrument | As TP-4: force frame >= 5 kN (missing) or the lever rig of T-082; cell for effort |
+| **Pass** | **Bearing stress on the CF wall at failure (min of 5) >= 48.5 MPa** (the s3 demand, RF 1.0), no wall crushing at that load. The CF wall bearing allowable has no source value ("—"); the test sets it. |
+| On fail | Longer socket than drawn or a bonded wall doubler; the reviewer rules and the saddle-loadpath row is re-run. |
 
 ### TP-11 (new): A-P6 stall, CLmax measurement (gates A-P6, not the 15 Dec go/no-go)
 A-P6 (DERIVED): clean stall Vs <= cruise / 1.3. Vs = sqrt(2 m g / (rho S CLmax)), S 0.22 m^2, rho 1.225, CLmax 0.75 EST gives 1.3 Vs = 17.71 m/s at 1.913 kg (T083_report s2.3) and **17.53 m/s at 1.873 kg** (T083b_report s0), both > 17.0. D-228: A-P6 is gated by a measured stall; **pass line CLmax >= 0.81**. (T083_report s2.3 needs 0.81 at 1.913 kg by 2 m g / (rho S (17/1.3)^2); the same formula at 1.873 kg gives about 0.80, arithmetic by T-083c; the line stays at 0.81, not relaxed, per D-228.) A cruise-speed re-derivation alone has zero margin (196 s available against 196 s needed, T083_report s2.3) and is not used.

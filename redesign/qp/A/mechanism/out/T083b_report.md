@@ -117,7 +117,7 @@ Run history: run 1 (`gates/run1/`) found one static collision, PWR-002 strap loo
 | `tools/ledger_audit.py` | - | 0 | - | 0 errors (`ledger_audit.txt`) |
 
 ## 7. Exposed wires (`gates/gate_wire_inventory.txt`)
-Total 0.597 strand-m (T-083 0.609). Changed: pack leads E-HRN-13 0.133 -> 0.127 strand-m (2 x about 64 mm; the pack sits 6 mm further aft, nearer the wing; reason unchanged: the pack must come out of the tray). Unchanged: X2216 phase strands 12 x about 8.4-8.9 mm between the can and the cup lead hole (E-HRN-02..05, 0.008-0.009 each edge), balance lead 64 mm, battery tail 42 mm, servo lead ends 2 x 12 mm, GPS 3 mm. The root fitting carries no wire.
+Total 0.597 strand-m (T-083 0.609). Changed: pack leads E-HRN-13 0.253 strand-m in `wire_inventory.json` (2 strands x 126.6 mm; the earlier text said 0.133 -> 0.127, a transcription error, corrected T-023 F-5; the listed items sum to 0.5975 only with 0.253; the pack sits 6 mm further aft, nearer the wing; reason unchanged: the pack must come out of the tray). Unchanged: X2216 phase strands 12 x about 8.4-8.9 mm between the can and the cup lead hole (E-HRN-02..05, 0.008-0.009 each edge), balance lead 64 mm, battery tail 42 mm, servo lead ends 2 x 12 mm, GPS 3 mm. The root fitting carries no wire.
 
 ## 8. Ladder (docs/engineering-decisions.md failure-resolution ladder) and decisions taken here
 - FIN-003 rows: rung "redesign the element" (material and form), no limit change: PETG block -> 6061 root fitting with an internal plug.

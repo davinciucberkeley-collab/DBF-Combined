@@ -1392,9 +1392,9 @@
     [
      "P01",
      "propulsion",
-     "TMotor",
-     5.0,
-     46.9,
+     "RMRC",
+     4.0,
+     22.99,
      false
     ],
     [
@@ -1416,9 +1416,9 @@
     [
      "W01",
      "power",
-     "RMRC",
+     "RDQ",
      2.0,
-     37.09,
+     54.99,
      false
     ],
     [
@@ -1465,7 +1465,7 @@
      "W07",
      "power",
      "RMRC",
-     1.0,
+     2.0,
      3.96,
      false
     ],
@@ -1506,7 +1506,7 @@
      "avionics",
      "RMRC",
      1.0,
-     95.98,
+     129.01,
      false
     ],
     [
@@ -1546,7 +1546,7 @@
      "airframe",
      "Local",
      1.0,
-     70.0,
+     45.0,
      true
     ],
     [
@@ -1570,31 +1570,31 @@
      "airframe",
      "RMRC",
      1.0,
-     15.34,
-     true
+     15.36,
+     false
     ],
     [
      "R14",
      "airframe",
      "RMRC",
      1.0,
-     0.0,
-     true
+     2.3,
+     false
     ],
     [
      "R10",
      "airframe",
      "RMRC",
      1.0,
-     4.4,
+     8.5,
      false
     ],
     [
      "R03",
      "airframe",
-     "Prusa",
+     "Amazon",
      1.0,
-     23.99,
+     12.99,
      false
     ],
     [
@@ -1602,7 +1602,7 @@
      "airframe",
      "Amazon",
      1.0,
-     20.0,
+     10.0,
      true
     ],
     [
@@ -1634,7 +1634,7 @@
      "ground_test",
      "Amazon",
      1.0,
-     50.95,
+     45.15,
      true
     ],
     [
@@ -1658,24 +1658,8 @@
      "ground_test",
      "Amazon",
      1.0,
-     25.0,
-     true
-    ],
-    [
-     "B01",
-     "ground_test",
-     "RMRC",
-     1.0,
-     15.99,
-     false
-    ],
-    [
-     "B02",
-     "ground_test",
-     "RMRC",
-     1.0,
      12.99,
-     false
+     true
     ],
     [
      "B03",
@@ -1692,14 +1676,6 @@
      1.0,
      15.0,
      true
-    ],
-    [
-     "B05",
-     "ground_test",
-     "SparkFun",
-     1.0,
-     0.0,
-     false
     ],
     [
      "R11",
@@ -1724,6 +1700,118 @@
      1.0,
      6.0,
      true
+    ],
+    [
+     "T1",
+     "airframe",
+     "Alcobra",
+     1.0,
+     49.41,
+     false
+    ],
+    [
+     "T2",
+     "airframe",
+     "Amazon",
+     1.0,
+     15.98,
+     false
+    ],
+    [
+     "T3",
+     "airframe",
+     "Wicks",
+     3.0,
+     6.46,
+     false
+    ],
+    [
+     "T4",
+     "airframe",
+     "USComposites",
+     1.0,
+     20.2,
+     false
+    ],
+    [
+     "T5",
+     "airframe",
+     "RMRC",
+     2.0,
+     2.02,
+     false
+    ],
+    [
+     "T6",
+     "ground_test",
+     "Amazon",
+     1.0,
+     14.99,
+     false
+    ],
+    [
+     "T7",
+     "ground_test",
+     "Amazon",
+     1.0,
+     23.79,
+     false
+    ],
+    [
+     "T8",
+     "ground_test",
+     "Amazon",
+     1.0,
+     24.69,
+     false
+    ],
+    [
+     "T9",
+     "ground_test",
+     "Amazon",
+     1.0,
+     13.99,
+     false
+    ],
+    [
+     "T10",
+     "ground_test",
+     "Local",
+     1.0,
+     8.0,
+     true
+    ],
+    [
+     "R15",
+     "airframe",
+     "Carbonwebshop",
+     1.0,
+     50.09,
+     false
+    ],
+    [
+     "T11",
+     "airframe",
+     "Alcobra",
+     1.0,
+     47.52,
+     true
+    ],
+    [
+     "T12",
+     "airframe",
+     "USComposites",
+     1.0,
+     4.9,
+     false
+    ],
+    [
+     "W10",
+     "power",
+     "RMRC",
+     1.0,
+     12.99,
+     false
     ]
    ],
    "unit": "id, subsystem, ship group, qty, USD each, unverified",

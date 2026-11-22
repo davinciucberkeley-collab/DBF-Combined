@@ -74,3 +74,19 @@ and the test plan was being edited, uncommitted, during this review (F-3).
 
 Sources: `docs/task-ledger.md` l.24-92; the evidence files named per row; `redesign/params/CHANGE-LOG.md` l.923-937;
 `docs/spec-amendments.md` AM-008 to AM-019; scratch reruns V2, V9, V10.
+
+## T-081 re-check 2026-11-22
+
+Reviewer: independent agent. File checked: `redesign/qp/A/TEST-PLAN-O4B.md` at HEAD f4781329 (committed in 5161a11a and f4781329; the F-3 "uncommitted" objection is cleared). Commands: `python -I redesign/qp/A/bom_a.py` (total $1,981.31, reserve $346.94, margin +$18.69, under $2,000); grep of the plan for each gated row.
+
+**Verdict: keep READY (not VERIFIED COMPLETE).** Present and numeric: TP-1 bench derate >= 0.889 (s1 row, T-083c re-spec); TP-3 pad zeta <= 0.05 (target 0.02), plateau 36 N, stroke >= 24 mm; TP-4 FIN-003 bond coupons (shear >= 2.0 MPa min of 5, bearing >= 13.2 / 12.4 MPa); TP-11 A-P6 stall CLmax >= 0.81 with method; TP-6 and the C-4 sheet row marked WITHDRAWN (D-225). Gaps that block closing:
+
+| # | Gap | Evidence | Required fix |
+|---|---|---|---|
+| G-1 | **D-226 rib torsion coupon has no test row.** It is one paragraph (l.257): no specimen, n, rig, instrument, fail action. The number is a demand ("the line rises from 79 to about 92 MPa at zeta 0.02, 99 MPa all zeta, EST"), not a stated pass line, and it concerns the 14x12 rib while the drawn rib is 25x23 (the 14x12 case is "not computed") | `TEST-PLAN-O4B.md` l.33, 257; D-226 ("rib 25x23 unless a torsion coupon shows >= 79 MPa"); saddle-loadpath SL-4 | Add a TP row: 14x12 offcut torsion coupon (n, lever rig, 10 kg cell), pass = measured in-plane shear allowable >= 92 MPa at the T-083 demand (state the zeta basis), fail = keep 25x23 |
+| G-2 | **D-226 rib-to-bulkhead bond (RF 0.90 at L 99.5 mm, 1.16 at L 113 mm, "unless wrapped") has no test or criterion.** "bulkhead" does not appear in any test row | grep of the plan; `2026-11-21-saddle-loadpath.md` l.98 | Add a coupon (rib-to-CF-bulkhead fillet or wrap, n = 5) with a numeric pass line (the 2.21 MPa demand x the margin), or record the wrap as the adopted fix with its own check |
+| G-3 | **Socket / CF bulkhead bearing (D-226 "socket bearing '—'") has no test.** Only the FIN-003 ring and plug bearing is covered | l.255-256 | Add a bearing coupon with a number, or state the allowable source |
+| G-4 | **Budget total in the plan is not the BOM total.** The budget-closed section states $1,957.51 / $1,971.40 (T-082); s0 row 4 still reads $2,330.25 / $2,243.34 with no superseded mark; the adopted BOM-A.csv is $1,981.31 (D-230, AM-019). The plan never states $1,981.31 or the lines that moved it (R15, T11, T12, W10, X2216 swap, no spare motor). The sum is under $2,000 and consistent with `bom_a.py`, but the file does not say so | l.15, 180; `bom_a.py` output | Add one line to the budget-closed section: total $1,981.31 incl. reserve $346.94, margin +$18.69 (BOM-A.csv, `bom_a.py`), and mark s0 row 4 and s4.1 "superseded" |
+| G-5 | **Stale MN2212 / withdrawn items left unmarked in the T-082 section.** T-082 TP-1 row "Flight MN2212 spare + APC" (l.206; AM-019 removed the spare motor, X2216 now); the s1 TP-7 row (l.28) still lists "C-4 clamshell node ... C-4: 2 nodes" without a WITHDRAWN tag (only the s2.6 sheet row l.101 has it); l.209 "TP-6 / TP-7 Same rig" and the T2 purchase line "FIN-005, N2, C-4" (l.187) still cite the withdrawn items | l.28, 187, 206, 209 | Tag each as withdrawn / superseded by the T-083c section |
+
+Close T-081 after G-1 to G-5 are fixed and the plan is rechecked. T-081 acceptance on the non-gated rows (TP-1 to TP-5, TP-8 to TP-10 numeric lines, equipment, purchase list) is met.

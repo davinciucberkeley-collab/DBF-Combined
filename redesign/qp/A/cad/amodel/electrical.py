@@ -599,7 +599,7 @@ PT_XR, PT_ZT = 0.049, 0.0090                # tubes rise at x 49 (spar from x 54
 AS_B = ((0.069, PIT_Y - 0.0075), (0.084, PIT_Y + 0.0075))   # EST board 15 x 15 in a pocket aft of the spar (x <= 66), y -427.5..-412.5 (saddle ring to -410)
 AS_ZB = 0.0035                              # board underside z 3.5 (sensor top z 11.5, skin z 12.3 at x 75)
 AS_SX = (0.0715, 0.0785)                    # EST sensor body x range; its barbs point -x (forward) from x 71.5 to 66.5 at z PT_ZT
-I2C_X = 0.1095                              # I2C lead groove x: T-077 p5: aft of the 40 mm rib socket of the CF clamshell cradle (x <= 106.5, D-221), inside the bay cover (x <= 111.5), ahead of the servo pockets (x >= 127); was 0.095
+I2C_X = 0.1095                              # I2C lead groove x: T-077 p5: aft of the 40 mm rib socket (x <= 106.5; the CF clamshell cradle of D-221 is withdrawn, D-225/D-226), inside the bay cover (x <= 111.5), ahead of the servo pockets (x >= 127); was 0.095
 I2C_ZD = zu(I2C_X) - 0.0065                 # deep under the servo-lead groove that crosses at |y| 0.19 (its bottom z ~6.9)
 I2C_ZS = zu(I2C_X) - 0.0019                 # shallow over the fin rib tube at |y| 0.38 (its top z 7.0): T-077 p5: the skin is lower at x 109.5, so the 2 x 2 bundle (bottom z 7.4) sits 0.4 mm over the rib and the groove top (ZS + 1.7 = 10.15) stays under the skin (10.35)
 I2C_XF, I2C_YF, I2C_YO, I2C_XB = 0.064, -0.335, -0.4085, 0.0875   # T-077 p8 (D-226): the 25 mm rib (|y| 370.5..395.5, z +-12.5, from x 70.5) fills the section, so the lead

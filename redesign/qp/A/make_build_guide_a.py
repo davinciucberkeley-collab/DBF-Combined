@@ -314,7 +314,7 @@ OPEN_ITEMS = [
     '**STL files, print orientation and slicer settings for every printed part:** not in the repo for concept A (only K09-L G3 PRINT-LIST). The guide gives the CAD wall thicknesses and an `EST` orientation; export the STLs from `a_model.py`.',
     '**S5010 gauge and backup hot-wire templates:** not generated for concept A (`redesign/manufacturing/hotwire.py` is K09-L). The airfoil file is `redesign/subsystems/wing/s5010.dat`.',
     '**Fin rib length (resolved, D-200):** the CAD draws 215.5 mm (x 70.5-286.0 mm); the part mass (now 14.1 g) and BOM R09 (2 x 0.2155 m) follow the drawing.',
-    '**Motor screws M2.5x8:** named in ARMS.md, but no BOM line; check whether the T-Motor box includes them. Prop adapters and spinner nuts: BOM P01 note says confirm they ship in the motor box.',
+    '**Motor screws (resolved, T-023 F-8):** the X2216 V3 uses the supplied SunnySky X-mount with 4 countersunk M3 screws; the cup screws are 4 x M3x14 SHCS + 4 x M3 nyloc per motor from BOM R05 (propulsion.py PRP-006). Prop adapters ship with the motor (SunnySky page, BOM P01); the X-mount and adapter contents are to be confirmed on receipt.',
     '**Motor direction change:** the ESC configuration steps (BLHeli_S, DShot) are not written for concept A; swapping two phase leads reverses a brushless motor (EST).',
     '**Pitot tube route:** the silicone tube from the probe (right) to the sensor board (left, 0.45 m away) is not designed in the CAD (HARNESS-ENCLOSED D-199.2).',
     '**Pad flange bond:** the tray bond width fell from 80 to 59 mm (D-199); no coupon has been run (HARNESS-ENCLOSED D-199.5).',
