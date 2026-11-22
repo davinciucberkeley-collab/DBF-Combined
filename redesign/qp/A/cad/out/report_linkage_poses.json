@@ -18,7 +18,7 @@
   20,
   21
  ],
- "bodies": 529,
+ "bodies": 581,
  "defects": [
   "AVN-008 body \"cover end wall, -y side (0.6 mm; open under the RX hood, T-022 Q4)\": zero-width spike / repeated point in a loop (removed in the export)",
   "WNG-008-LL body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
@@ -30,117 +30,78 @@
   "WNG-008-RU body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
   "WNG-008-RU body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)"
  ],
- "flipped_inside_out": 124,
+ "flipped_inside_out": 126,
  "kinks": [],
- "parts": 125,
+ "parts": 129,
  "poses": [
   {
    "clear": {},
    "delta": null,
    "hits": [
     {
-     "a": "E-HRN-02#1",
-     "at_mm": [
-      48.41,
-      17.49,
-      35.36
-     ],
-     "b": "E-HRN-02#2",
-     "bodies": [
-      "E-HRN-02 \"wire strand 2 (1.8 mm)\" x E-HRN-02 \"wire strand 1 (1.8 mm)\" 0.01 mm"
-     ],
-     "depth_mm": 0.012
-    },
-    {
      "a": "E-HRN-05#0",
      "at_mm": [
-      -88.41,
-      -58.46,
-      -42.06
+      29.52,
+      -20.92,
+      23.31
      ],
      "b": "E-HRN-05#2",
      "bodies": [
-      "E-HRN-05 \"wire strand 2 (1.8 mm)\" x E-HRN-05 \"wire strand 0 (1.8 mm)\" 0.01 mm"
-     ],
-     "depth_mm": 0.011
-    },
-    {
-     "a": "E-HRN-05#1",
-     "at_mm": [
-      65.88,
-      -21.16,
-      32.45
-     ],
-     "b": "E-HRN-05#2",
-     "bodies": [
-      "E-HRN-05 \"wire strand 2 (1.8 mm)\" x E-HRN-05 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+      "E-HRN-05 \"wire strand 0 (1.8 mm)\" x E-HRN-05 \"wire strand 2 (1.8 mm)\" 0.01 mm"
      ],
      "depth_mm": 0.01
     },
     {
      "a": "E-HRN-02#0",
      "at_mm": [
-      -53.74,
-      16.88,
-      2.17
-     ],
-     "b": "E-HRN-02#2",
-     "bodies": [
-      "E-HRN-02 \"wire strand 2 (1.8 mm)\" x E-HRN-02 \"wire strand 0 (1.8 mm)\" 0.01 mm"
-     ],
-     "depth_mm": 0.01
-    },
-    {
-     "a": "E-HRN-02#0",
-     "at_mm": [
-      -87.91,
-      73.26,
-      51.15
+      -90.02,
+      11.32,
+      14.99
      ],
      "b": "E-HRN-02#1",
      "bodies": [
-      "E-HRN-02 \"wire strand 1 (1.8 mm)\" x E-HRN-02 \"wire strand 0 (1.8 mm)\" 0.01 mm"
+      "E-HRN-02 \"wire strand 0 (1.8 mm)\" x E-HRN-02 \"wire strand 1 (1.8 mm)\" 0.01 mm"
      ],
      "depth_mm": 0.01
     },
     {
-     "a": "E-HRN-04#0",
+     "a": "E-HRN-04#1",
      "at_mm": [
-      71.39,
-      21.19,
-      31.21
+      -78.78,
+      226.42,
+      -154.12
      ],
-     "b": "E-HRN-04#1",
+     "b": "E-HRN-04#2",
      "bodies": [
-      "E-HRN-04 \"wire strand 0 (1.8 mm)\" x E-HRN-04 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+      "E-HRN-04 \"wire strand 2 (1.8 mm)\" x E-HRN-04 \"wire strand 1 (1.8 mm)\" 0.01 mm"
      ],
-     "depth_mm": 0.011
+     "depth_mm": 0.012
     },
     {
      "a": "E-HRN-03#0",
      "at_mm": [
-      -83.44,
-      -234.07,
-      157.38
+      36.73,
+      -17.26,
+      36.28
      ],
      "b": "E-HRN-03#2",
      "bodies": [
-      "E-HRN-03 \"wire strand 2 (1.8 mm)\" x E-HRN-03 \"wire strand 0 (1.8 mm)\" 0.01 mm"
+      "E-HRN-03 \"wire strand 0 (1.8 mm)\" x E-HRN-03 \"wire strand 2 (1.8 mm)\" 0.01 mm"
      ],
      "depth_mm": 0.011
     },
     {
-     "a": "E-HRN-03#1",
+     "a": "CGE-002-B",
      "at_mm": [
-      7.03,
-      -16.63,
-      3.06
+      -77.9,
+      14.02,
+      -15.63
      ],
-     "b": "E-HRN-03#2",
+     "b": "E-HRN-04",
      "bodies": [
-      "E-HRN-03 \"wire strand 2 (1.8 mm)\" x E-HRN-03 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+      "E-HRN-04 \"wire strand 2 (1.8 mm)\" x CGE-002-B \"arm tube (one continuous tube, motor cup to motor cup)\" 0.01 mm"
      ],
-     "depth_mm": 0.012
+     "depth_mm": 0.013
     },
     {
      "a": "HWC-001",
@@ -213,7 +174,7 @@
    ],
    "moved": null,
    "name": "static",
-   "seconds": 784.7,
+   "seconds": 786.5,
    "state": null,
    "theta_deg": null
   },
@@ -783,7 +744,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -21 deg",
-   "seconds": 16.6,
+   "seconds": 16.7,
    "state": "mid",
    "theta_deg": {
     "L": 22.63742242970439,
@@ -1356,7 +1317,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -20 deg",
-   "seconds": 8.9,
+   "seconds": 9.0,
    "state": "mid",
    "theta_deg": {
     "L": 21.560355526523868,
@@ -2496,7 +2457,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -15 deg",
-   "seconds": 7.9,
+   "seconds": 7.7,
    "state": "mid",
    "theta_deg": {
     "L": 16.169388949464764,
@@ -3630,7 +3591,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -9 deg",
-   "seconds": 8.6,
+   "seconds": 8.7,
    "state": "mid",
    "theta_deg": {
     "L": 9.697842512536054,
@@ -4764,7 +4725,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -3 deg",
-   "seconds": 7.1,
+   "seconds": 7.2,
    "state": "mid",
    "theta_deg": {
     "L": 3.231395902628032,
@@ -5329,7 +5290,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +0 deg",
-   "seconds": 5.7,
+   "seconds": 5.6,
    "state": "mid",
    "theta_deg": {
     "L": 0.0,
@@ -5896,7 +5857,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +3 deg",
-   "seconds": 9.9,
+   "seconds": 11.0,
    "state": "mid",
    "theta_deg": {
     "L": -3.23144898881135,
@@ -6463,7 +6424,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +6 deg",
-   "seconds": 8.4,
+   "seconds": 8.2,
    "state": "mid",
    "theta_deg": {
     "L": -6.4646983832943,
@@ -7030,7 +6991,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +9 deg",
-   "seconds": 5.6,
+   "seconds": 4.3,
    "state": "mid",
    "theta_deg": {
     "L": -9.702186194942481,
@@ -8182,7 +8143,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +15 deg",
-   "seconds": 9.0,
+   "seconds": 8.9,
    "state": "mid",
    "theta_deg": {
     "L": -16.203607404214964,
@@ -9352,7 +9313,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +20 deg",
-   "seconds": 10.2,
+   "seconds": 10.3,
    "state": "mid",
    "theta_deg": {
     "L": -21.671373889774635,
@@ -9946,7 +9907,7 @@
   }
  ],
  "report_mm": 0.01,
- "seconds": 1118.0,
+ "seconds": 1121.3,
  "states": [
   "mid"
  ],

@@ -1,0 +1,1 @@
+BUILD-GUIDE-A.md: 2317 lines, 66 steps, 46.8 h hands-on EST, printed mass 190 g

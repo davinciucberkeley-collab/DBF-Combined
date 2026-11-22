@@ -16,7 +16,7 @@ ST = ('UR', 'UL', 'LR', 'LL')
 # T-077 p8 (D-226): torsion-cell path. B2 (printed rib saddles) removed, C1b (lower rib fairings) added, A2..A5 (spar and plugs) moved after the cage dock B1.
 # T-077 p7 (D-225): written for wing.py P5_CLAMSHELL = P5_NODE = False (part-4 saddles). If a P5_VARIANT re-draws the clamshell or node, the p5 steps A1b / C1p and the CGE-011..013 CAGE entries (git 428d8368) must be restored.
 CAGE = (['CGE-00%d' % i for i in (1, 4, 6)] + ['CGE-002-A', 'CGE-002-B'] + ['CGE-003-' + s for s in ST] + ['CGE-009-' + s for s in ST] + ['CGE-010-' + s for s in ST] + ['CGE-010-C'] +
-        ['CGE-005-R', 'CGE-005-L', 'CGE-007-R', 'CGE-007-L'] + ['PRP-001-' + s for s in ST] + ['PRP-004-' + s for s in ST] + ['PRP-002-' + s for s in ST] + ['PRP-005-' + s for s in ST])
+        ['CGE-005-R', 'CGE-005-L', 'CGE-007-R', 'CGE-007-L'] + ['PRP-006-' + s for s in ST] + ['PRP-001-' + s for s in ST] + ['PRP-004-' + s for s in ST] + ['PRP-002-' + s for s in ST] + ['PRP-005-' + s for s in ST])
 # (id, caption, parts, dir, travel_mm, step_mm)
 STEPS = [
     ('A1', 'Wing core on the bench (lower surface up), built in segments round the four CF bulkheads (centre WNG-013-R/L at |y| 60, fin node FIN-005-R/L) with the fin-node in-plane plates FIN-009 under the skin, the cove CF strip and the glass skin (ply 1 + plies 2-3 over |y| 52..400) wet-laid on it (T-070, T-077 p8 / D-226; the packing-tape skin, hinge tape and bulkhead tape laps are not drawn)',
@@ -37,9 +37,9 @@ STEPS = [
     ('B0i2', 'Motor cup LL slid onto the tube A end', ['CGE-003-LL'], (0, 0.8253073, 0.5646839), 60, 5),
     ('B0i3', 'Motor cup LR slid onto the tube B end', ['CGE-003-LR'], (0, -0.8253073, 0.5646839), 60, 5),
     ('B0i4', 'Motor cup UL slid onto the tube B end', ['CGE-003-UL'], (0, 0.8253073, -0.5646839), 60, 5),
-    ('B0j1', 'Right strut pushed into its hub socket along its own axis', ['CGE-005-R'], (-0.43605, -0.89992, 0), 40, 5),  # D-224 p4: strut axis direction after the 12 mm cage shift (STRUT_S x -77 mm: atan2(262.1, 127) = 64.15 deg; was 66.3 deg, (-0.40179, -0.91573))
-    ('B0j2', 'Left strut pushed into its hub socket along its own axis', ['CGE-005-L'], (-0.43605, 0.89992, 0), 40, 5),
-    ('B0k', 'THREAD (bench, before the motors go on the cups): feed the three 20 AWG leads of each motor (400 mm stock + extension, EST) from the cup side through the 4.8 mm lead hole, the collar and the tube bore to the 4.8 mm exit hole at s +-18 mm; the free ends are laid flat along the tube until the hub conduits are on (B2b1-B2b4); then screw the motors on (B1)', [], None, 0, 0),
+    ('B0j1', 'Right strut pushed into its hub socket along its own axis', ['CGE-005-R'], (-0.44434, -0.89586, 0), 40, 5),  # T-083: axis after the 15 mm cage shift (STRUT_S x -80 mm); was (-0.43605, -0.89992) for 12 mm  # D-224 p4: strut axis direction after the 12 mm cage shift (STRUT_S x -77 mm: atan2(262.1, 127) = 64.15 deg; was 66.3 deg, (-0.40179, -0.91573))
+    ('B0j2', 'Left strut pushed into its hub socket along its own axis', ['CGE-005-L'], (-0.44434, 0.89586, 0), 40, 5),
+    ('B0k', 'THREAD (bench, before the motors go on the cups): feed the three 20 AWG leads of each motor (100 mm X2216 stock + extension, EST) from the cup side through the 4.8 mm lead hole, the collar and the tube bore to the 4.8 mm exit hole at s +-18 mm; the free ends are laid flat along the tube until the hub conduits are on (B2b1-B2b4); then screw the motors on (B1)', [], None, 0, 0),
     ('B1', 'Cage unit (hub, arms, cups, bridge with the machined centre node CGE-006 bonded on it, struts, strut clamps, motors, props) built on the bench, docked '
            'from below BEFORE the spar (T-077 p8, D-226: the centre node sleeve is a closed bore): sleeve, socket boss and end flanges rise into their open-below core channels, the flanges beside the centre bulkheads', CAGE, (0, 0, 1), 30, 3),
     ('A2', 'Spar through the core bore from the right tip (T-077 p8: after the cage dock, through the fin-node and centre bulkhead holes, the strut clamps and the centre node sleeve)', ['WNG-002'], (0, -1, 0), 700, 100),

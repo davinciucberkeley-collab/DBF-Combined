@@ -17,7 +17,7 @@ import math
 
 from .common import *   # noqa: F401,F403
 from .wing import CN_Y, CN_I2C, CN_I2C_D, FNB_T, FNB_GAP, RIB_Y, RIB_OD, BR_Z, BR_RO, HINGE_Z, RHO_PETG, TUBE_RO, TUBE_RI, TUBE_HL, SLV_L, SLV_R, DBL_S0, DBL_S1, DBL_RO, HOLE_S, HOLE_R, STN_S   # noqa: F401  (read only: hinge axis height for the horn hole radius; D-202 tube / hub geometry)
-from .propulsion import ESC_PADS, ESC_TOP, ESC_B, ESC_HOLE_PITCH   # noqa: F401  (harness wires land on the ESC pads; lane B owns them)
+from .propulsion import ESC_PADS, ESC_TOP, ESC_B, ESC_HOLE_PITCH, X_MB, LEAD_DX, LEAD_L   # noqa: F401  (harness wires land on the ESC pads; lane B owns them; T-083: motor lead exit)
 
 MM = 0.001
 
@@ -375,7 +375,7 @@ CD_UOFF = 0.0004                            # the bundle leaves the tube 0.4 mm 
 CD_XCUT = 0.0045                            # the sideways step starts 4.5 mm ahead of the drop column (corner arcs of the bundle, r 4 mm)
 XV = -0.053 + CD_DX                         # D-205: 3.8 mm aft (common.CD_DX); x of the drop column (bundle centre line)
 XVH = XV + 0.0035                           # +x limit of the column interior (the 6 mm bend into the raceway swings the bundle 0.6..1.0 mm aft while it crosses the wall; strand radius 0.9)
-CD_WX = (XV - CD_HW, XVH)           # raceway window x range (the 6 mm bend of the bundle moves it 0.6..1.0 mm aft over the wall thickness)
+CD_WX = (XV - CD_HW, XVH + 0.0004)  # T-083: window 0.4 mm longer aft (the longer X2216 lead route shifts the strand twist; strand 1 of E-HRN-03 touched the aft edge by 0.065 mm in collide run 1). Raceway window x range (the 6 mm bend of the bundle moves it 0.6..1.0 mm aft over the wall thickness)
 
 
 def _cd_ut_yz(phi_deg, u, t):
@@ -1286,9 +1286,11 @@ def phase_route(st, px, py, z_pad):
     c = CD[st]
     xa, za = ph_arm_xz(st)
     k = arm_up_sign(st)
-    pts = [mworld(st, (-0.0135, PH_Y, 0.0)), mworld(st, (PH_XC, PH_Y, 0.0)), mworld(st, (PH_XC, -0.150, 0.0)),
+    # T-083: the X2216 leads leave the can radially (+y, cup frame) LEAD_DX above the base face (start inside the can wall, r 11.5), 4 mm bend into the plate hole at PH_Y
+    xl = X_MB - LEAD_DX
+    pts = [mworld(st, (xl, 0.0115, 0.0)), mworld(st, (xl, PH_Y, 0.0)), mworld(st, (PH_XC, PH_Y, 0.0)), mworld(st, (PH_XC, -0.150, 0.0)),
            a2w(st, (xa, HOLE_S + 0.020, za)), a2w(st, (xa, HOLE_S - CD_UOFF, za)), a2w(st, (xa, HOLE_S - CD_UOFF, SIG[st] * k * CD_TT))]
-    rad = [0.004, 0.040, 0.040, 0.004, 0.004]
+    rad = [0.004, 0.004, 0.040, 0.040, 0.004, 0.004]
     yl = c['yl']
     pts += [(XV, c['y1'], c['z1']), (XV, yl, c['z1']), (XV, yl, RW_ZB), (RW_XR, yl, RW_ZB), (RW_XR, yl, Z_HI)]
     rad += [0.004, 0.004, 0.006, 0.006, 0.006]
@@ -1306,8 +1308,8 @@ def phase_path(st, px, py, z_pad):
     return _smooth(pts, rad, sag={i_sag: (0.0008, (0, 0, -1))})
 
 
-# D-198 bottom-up mass of the lumped harness remainder HRN-001 (replaces the 50.9 g "110 g allocation less itemised parts"). The 400 mm stock leads of the
-# motors are inside the 65 g motor mass (T-Motor page: 55 g without cables, 65 g with), so only the length beyond 0.40 m (+ 30 mm splice overlap) is added.
+# D-198 bottom-up mass of the lumped harness remainder HRN-001 (replaces the 50.9 g "110 g allocation less itemised parts"). T-083: the X2216 has 100 mm stock
+# leads (SunnySky drawing), taken to be inside the 67.5 g page mass (EST, not stated), so the length beyond 0.10 m (+ 30 mm splice overlap) is added (was 0.40 m, MN2212).
 WIRE_G_PER_M = {20: 7.1, 26: 2.0, 28: 1.2}   # V 20 AWG: Pimoroni dual silicone 14.2 g per metre for 2 conductors (shop.pimoroni.com/en-us/products/dual-silicone-wire-per-metre, 2026-11-15); 26 / 28 AWG: EST (copper 1.15 / 0.72 g/m + insulation)
 
 
@@ -1319,8 +1321,8 @@ def hrn_items():
     ext = 0.0
     for st in ST:
         px, py = ESC_PADS[st]
-        ext += 3 * max(0.0, _plen(phase_path(st, px, py, ESC_TOP + 0.002)[0]) - 0.40 + 0.030)
-    return [('phase-lead extensions: 12 strands of 20 AWG, CAD route beyond the 0.40 m stock lead + 30 mm splice (%.2f m)' % ext, round(ext * WIRE_G_PER_M[20], 1)),
+        ext += 3 * max(0.0, _plen(phase_path(st, px, py, ESC_TOP + 0.002)[0]) - LEAD_L + 0.030)
+    return [('phase-lead extensions: 12 strands of 20 AWG, CAD route beyond the 0.10 m X2216 stock lead + 30 mm splice (%.2f m)' % ext, round(ext * WIRE_G_PER_M[20], 1)),
             ('12 splices: solder + 15 mm heat-shrink, 0.15 g each (EST)', 1.8),
             ('ESC signal ribbon 6 x 26 AWG x 73 mm (CAD) at 2.0 g/m (EST)', round(6 * 0.073 * WIRE_G_PER_M[26], 1)),
             ('RX / GPS leads: 4 conductors of 28 AWG x %.0f mm (CAD route, T-022 Q4) + 6 x about 70 mm at 1.2 g/m (EST) + 2 JST plugs 0.5 g each (EST)' % (_plen(uart_path()) * 1e3),
@@ -1485,7 +1487,7 @@ def build_assembly(ctx):
                          limits=(-ELEV_POSE, ELEV_POSE))
         elif via == 'CT-CLEVIS':
             ctx.revolute(e['id'], e['part_a'], e['part_b'], at, e['motion']['axis'])
-        elif via in ('CT-A-M25-SHCS-MOTOR', 'CT-A-PROP-NUT', 'CT-A-PROP-ADAPTER', 'CT-SERVO-SPLINE') or e.get('hardware'):
+        elif via in ('CT-A-M25-SHCS-MOTOR', 'CT-A-M3-CSK-MOTOR', 'CT-A-M3-BOLT-MOUNT', 'CT-A-PROP-NUT', 'CT-A-PROP-ADAPTER', 'CT-SERVO-SPLINE') or e.get('hardware'):
             ctx.rigid(e['id'], e['part_a'], e['part_b'], at)
         else:
             ctx.contact(e['id'], via)

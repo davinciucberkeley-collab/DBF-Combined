@@ -2,27 +2,16 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-21 13:53 UTC",
+  "generated": "2026-11-21 22:14 UTC",
   "dataset": "concept-a",
   "ok": false,
   "errors": [
-   "STRICT A-D2: CL-A-CRUISE-NEED is UNVERIFIED",
-   "STRICT A-P1: CL-A-MASS-GATE-ROOM: FAILS: margin -23.2% (1.812 kg vs <= 1.47 kg)",
-   "STRICT A-D3: CL-A-MASS-PRED: FAILS: margin -23.2% (1.812 kg vs <= 1.47 kg)",
-   "STRICT A-P2: CL-A-TW-FRESH-GATE is UNVERIFIED",
-   "STRICT A-P3: CL-A-WINDOW-PRED: FAILS: margin -203.1% (-5.153 % vs >= 5 %)",
-   "STRICT A-P4: CL-A-CG-HI: FAILS: margin -4.0% (27.03 mm vs <= 26 mm)",
+   "STRICT A-P1: CL-A-MASS-GATE-ROOM: FAILS: margin -28.7% (1.891 kg vs <= 1.47 kg)",
+   "STRICT A-D3: CL-A-MASS-PRED: FAILS: margin -28.7% (1.891 kg vs <= 1.47 kg)",
    "STRICT A-P13: CL-A-FLUTTER-ELEVON-NOM is UNVERIFIED",
-   "STRICT CL-A-MASS-PRED: FAILS: margin -23.2% (1.812 kg vs <= 1.47 kg)",
-   "STRICT CL-A-MASS-GATE-ROOM: FAILS: margin -23.2% (1.812 kg vs <= 1.47 kg)",
-   "STRICT CL-A-CUTS-REQUIRED: FAILS: margin -735.0% (347.4 g vs <= 41.6 g)",
-   "STRICT CL-A-CG-HI: FAILS: margin -4.0% (27.03 mm vs <= 26 mm)",
-   "STRICT CL-A-CG-TRIM-AFT: FAILS: margin -0.8% (28.74 mm vs <= 28.5 mm)",
-   "STRICT CL-A-TW-FRESH-PRED: FAILS: margin -5.2% (1.897 vs >= 2)",
-   "STRICT CL-A-TW-SAG-PRED: FAILS: margin -6.3% (1.5 vs >= 1.6)",
-   "STRICT CL-A-WINDOW-PRED: FAILS: margin -203.1% (-5.153 % vs >= 5 %)",
-   "STRICT CL-A-WINDOW-MASS: FAILS: margin -18.4% (1.478 kg vs >= 1.812 kg)",
-   "STRICT CL-A-CRUISE-AVAIL: FAILS: margin -30.8% (141.6 s vs >= 204.6 s)",
+   "STRICT CL-A-MASS-PRED: FAILS: margin -28.7% (1.891 kg vs <= 1.47 kg)",
+   "STRICT CL-A-MASS-GATE-ROOM: FAILS: margin -28.7% (1.891 kg vs <= 1.47 kg)",
+   "STRICT CL-A-CUTS-REQUIRED: FAILS: margin -906.7% (418.8 g vs <= 41.6 g)",
    "STRICT CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)",
    "STRICT CL-A-HORN-RIB-FOAM-STALL: FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)",
    "STRICT CL-A-ELEVON-TORSION-FOAM: FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)",
@@ -47,11 +36,11 @@ window.PROOF_GRAPH = {
     "part": 65
    },
    "by_status": {
-    "CHECKED": 318,
-    "UNVERIFIED": 220,
+    "CHECKED": 319,
+    "UNVERIFIED": 219,
     "PROPOSED": 17
    },
-   "fails": 22
+   "fails": 11
   },
   "files": [
    "redesign/qp/A/proofs/claims.a0_base.json",
@@ -720,10 +709,10 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
     "CL-A-CRUISE-NEED is UNVERIFIED",
-    "CL-A-CRUISE-AVAIL: FAILS: margin -30.8% (141.6 s vs >= 204.6 s)"
+    "CL-A-CRUISE-AVAIL is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": true,
+   "fails": false,
    "importance": 7
   },
   {
@@ -734,7 +723,7 @@ window.PROOF_GRAPH = {
    "ref": "qp/A/REQUIREMENTS-A.md#a-p1",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
-    "CL-A-MASS-GATE-ROOM: FAILS: margin -23.2% (1.812 kg vs <= 1.47 kg)",
+    "CL-A-MASS-GATE-ROOM: FAILS: margin -28.7% (1.891 kg vs <= 1.47 kg)",
     "CL-A-TW-FRESH-GATE is UNVERIFIED",
     "CL-A-TW-SAG-GATE is UNVERIFIED"
    ],
@@ -750,9 +739,9 @@ window.PROOF_GRAPH = {
    "ref": "qp/A/REQUIREMENTS-A.md#a-d3",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
-    "CL-A-MASS-PRED: FAILS: margin -23.2% (1.812 kg vs <= 1.47 kg)",
+    "CL-A-MASS-PRED: FAILS: margin -28.7% (1.891 kg vs <= 1.47 kg)",
     "CL-A-MASS-ITEM is UNVERIFIED",
-    "CL-A-CUTS-REQUIRED: FAILS: margin -735.0% (347.4 g vs <= 41.6 g)",
+    "CL-A-CUTS-REQUIRED: FAILS: margin -906.7% (418.8 g vs <= 41.6 g)",
     "CL-A-STRUCT-MASS is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
@@ -769,11 +758,11 @@ window.PROOF_GRAPH = {
    "reasons": [
     "CL-A-TW-FRESH-GATE is UNVERIFIED",
     "CL-A-TW-SAG-GATE is UNVERIFIED",
-    "CL-A-TW-FRESH-PRED: FAILS: margin -5.2% (1.897 vs >= 2)",
-    "CL-A-TW-SAG-PRED: FAILS: margin -6.3% (1.5 vs >= 1.6)"
+    "CL-A-TW-FRESH-PRED is UNVERIFIED",
+    "CL-A-TW-SAG-PRED is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": true,
+   "fails": false,
    "importance": 11
   },
   {
@@ -784,12 +773,12 @@ window.PROOF_GRAPH = {
    "ref": "qp/A/REQUIREMENTS-A.md#a-p3",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
-    "CL-A-WINDOW-PRED: FAILS: margin -203.1% (-5.153 % vs >= 5 %)",
+    "CL-A-WINDOW-PRED is UNVERIFIED",
     "CL-A-WINDOW-GATE is UNVERIFIED",
-    "CL-A-WINDOW-MASS: FAILS: margin -18.4% (1.478 kg vs >= 1.812 kg)"
+    "CL-A-WINDOW-MASS is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": true,
+   "fails": false,
    "importance": 9
   },
   {
@@ -800,12 +789,10 @@ window.PROOF_GRAPH = {
    "ref": "qp/A/REQUIREMENTS-A.md#a-p4",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
-    "CL-A-CG-HI: FAILS: margin -4.0% (27.03 mm vs <= 26 mm)",
-    "CL-A-CG-TRIM-AFT: FAILS: margin -0.8% (28.74 mm vs <= 28.5 mm)",
     "CL-A-SM is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": true,
+   "fails": false,
    "importance": 13
   },
   {
@@ -1214,10 +1201,10 @@ window.PROOF_GRAPH = {
     "gate": "kg"
    },
    "outputs": {
-    "m_kg": 1.811660428
+    "m_kg": 1.891465136
    },
    "input_values": {
-    "basic": 1.57922,
+    "basic": 1.65064,
     "gf": 1.1174,
     "over": 0.032,
     "gate": 1.47
@@ -1323,12 +1310,12 @@ window.PROOF_GRAPH = {
     "ASM-A-CUTS"
    ],
    "outputs": {
-    "x_g": 347.3637623053517
+    "x_g": 418.7837623053519
    },
    "input_values": {
     "cuts": 41.6,
     "target": 1.47,
-    "m": 1.811660428,
+    "m": 1.891465136,
     "gf": 1.1174
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
@@ -1385,15 +1372,15 @@ window.PROOF_GRAPH = {
     "FIN-001-L"
    ],
    "how": "Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).",
-   "value": 1.811660428,
+   "value": 1.891465136,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -23.2% (1.812 kg vs <= 1.47 kg)",
+    "FAILS: margin -28.7% (1.891 kg vs <= 1.47 kg)",
     "uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))",
     "uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.23242205986394557,
+   "margin": -0.28671097687074837,
    "fails": true,
    "importance": 7
   },
@@ -1439,15 +1426,15 @@ window.PROOF_GRAPH = {
     "A-P1"
    ],
    "how": "As-built weigh-in <= 1.47 kg (D-190, MASS-GATE s8); the +-5 % window holds to 1.478 kg.",
-   "value": 1.811660428,
+   "value": 1.891465136,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -23.2% (1.812 kg vs <= 1.47 kg)",
+    "FAILS: margin -28.7% (1.891 kg vs <= 1.47 kg)",
     "uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))",
     "uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.23242205986394557,
+   "margin": -0.28671097687074837,
    "fails": true,
    "importance": 1
   },
@@ -1467,14 +1454,14 @@ window.PROOF_GRAPH = {
     "A-U5"
    ],
    "how": "Weigh-in.",
-   "value": 1.811660428,
+   "value": 1.891465136,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))",
     "uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.92753358288,
+   "margin": 0.92434139456,
    "importance": 1
   },
   {
@@ -1496,10 +1483,10 @@ window.PROOF_GRAPH = {
    "assumes": [
     "ASM-A-CUTS"
    ],
-   "value": 347.3637623053517,
+   "value": 418.7837623053519,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -735.0% (347.4 g vs <= 41.6 g)",
+    "FAILS: margin -906.7% (418.8 g vs <= 41.6 g)",
     "uses ASM-A-CUTS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:mass.est_cuts_g, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s5, s7: 41.6 g of EST cuts already in the CAD basic mass (foam 16.6, printed 18.0, hardware 7.0))",
     "uses CL-A-MASS-PRED, which is UNVERIFIED",
@@ -1508,7 +1495,7 @@ window.PROOF_GRAPH = {
     "uses P:mass.est_cuts_g, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s5, s7: 41.6 g of EST cuts already in the CAD basic mass (foam 16.6, printed 18.0, hardware 7.0))"
    ],
    "status": "UNVERIFIED",
-   "margin": -7.350090440032492,
+   "margin": -9.06691736310942,
    "fails": true,
    "importance": 1
   },
@@ -1560,16 +1547,16 @@ window.PROOF_GRAPH = {
     "basic": "kg"
    },
    "outputs": {
-    "shift_mm": 1.7097047909727587,
-    "fwd_mm": 26.0030293436,
-    "aft_mm": 28.738557009156416
+    "shift_mm": 1.6357291717152134,
+    "fwd_mm": 20.356684679881738,
+    "aft_mm": 22.973851354626078
    },
    "input_values": {
-    "cg": 27.02885221818366,
+    "cg": 21.338122182910865,
     "pack": 270.0,
     "trim": 10.0,
     "trim_fwd": 6.0,
-    "basic": 1.57922
+    "basic": 1.65064
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1595,11 +1582,11 @@ window.PROOF_GRAPH = {
     "ASM-A-NP"
    ],
    "outputs": {
-    "sm_pct": 5.580060319108712
+    "sm_pct": 7.90280727228128
    },
    "input_values": {
     "np": 40.7,
-    "cg": 27.02885221818366,
+    "cg": 21.338122182910865,
     "c": 245.0
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
@@ -1617,10 +1604,10 @@ window.PROOF_GRAPH = {
     "v": "P:mass.cg_x_mm"
    },
    "outputs": {
-    "v": 27.02885221818366
+    "v": 21.338122182910865
    },
    "input_values": {
-    "v": 27.02885221818366
+    "v": 21.338122182910865
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1648,10 +1635,10 @@ window.PROOF_GRAPH = {
     "WNG-002"
    ],
    "how": "CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.",
-   "value": 27.02885221818366,
+   "value": 21.338122182910865,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.4225711693780873,
+   "margin": 0.12305906225846659,
    "importance": 1
   },
   {
@@ -1665,10 +1652,10 @@ window.PROOF_GRAPH = {
     "v": "P:mass.cg_x_mm"
    },
    "outputs": {
-    "v": 27.02885221818366
+    "v": 21.338122182910865
    },
    "input_values": {
-    "v": 27.02885221818366
+    "v": 21.338122182910865
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1694,14 +1681,10 @@ window.PROOF_GRAPH = {
     "CGE-008"
    ],
    "how": "CG breadboard (M5); band 19-26 mm (D-195), hard aft limit 28.5 mm.",
-   "value": 27.02885221818366,
+   "value": 21.338122182910865,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
-   "reasons": [
-    "FAILS: margin -4.0% (27.03 mm vs <= 26 mm)"
-   ],
-   "status": "UNVERIFIED",
-   "margin": -0.03957123916090994,
-   "fails": true,
+   "status": "CHECKED",
+   "margin": 0.1793029929649667,
    "importance": 1
   },
   {
@@ -1724,14 +1707,10 @@ window.PROOF_GRAPH = {
     "CGE-008"
    ],
    "how": "Slide the pack to the aft slot stop and re-measure CG (M5).",
-   "value": 28.738557009156416,
+   "value": 22.973851354626078,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
-   "reasons": [
-    "FAILS: margin -0.8% (28.74 mm vs <= 28.5 mm)"
-   ],
-   "status": "UNVERIFIED",
-   "margin": -0.00837042137390934,
-   "fails": true,
+   "status": "CHECKED",
+   "margin": 0.19389995246926042,
    "importance": 1
   },
   {
@@ -1754,10 +1733,10 @@ window.PROOF_GRAPH = {
     "CGE-008"
    ],
    "how": "Slide the pack to the forward slot stop and re-measure CG (M5).",
-   "value": 26.0030293436,
+   "value": 20.356684679881738,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.3685804917684211,
+   "margin": 0.07140445683588095,
    "importance": 1
   },
   {
@@ -1782,7 +1761,7 @@ window.PROOF_GRAPH = {
    "assumes": [
     "ASM-A-NP"
    ],
-   "value": 5.580060319108712,
+   "value": 7.90280727228128,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses ASM-A-NP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -1790,7 +1769,7 @@ window.PROOF_GRAPH = {
     "uses ASM-A-NP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.11601206382174248,
+   "margin": 0.5805614544562561,
    "importance": 1
   },
   {
@@ -1804,10 +1783,10 @@ window.PROOF_GRAPH = {
     "v": "P:mass.cg_y_mm"
    },
    "outputs": {
-    "v": 1.7131406643786171
+    "v": 1.6390163815247418
    },
    "input_values": {
-    "v": 1.7131406643786171
+    "v": 1.6390163815247418
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1829,10 +1808,10 @@ window.PROOF_GRAPH = {
     "A-P4"
    ],
    "how": "Hang the built aircraft on its spar centre; lateral CG <= 5 mm.",
-   "value": 1.7131406643786171,
+   "value": 1.6390163815247418,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.6573718671242765,
+   "margin": 0.6721967236950517,
    "importance": 1
   },
   {
@@ -1864,13 +1843,13 @@ window.PROOF_GRAPH = {
     "m": "kg"
    },
    "outputs": {
-    "fresh_cap": 2.337818404831478,
-    "sag_cap": 1.8480776731155204,
-    "fresh_unc": 2.753924587388157,
-    "sag_unc": 2.1834913763675154,
-    "window_cap_pct": 5.286243188313403,
-    "window_unc_pct": 13.546348012344856,
-    "sag_cap_gf": 2716.674179479815
+    "fresh_cap": 3.4707516142866486,
+    "sag_cap": 2.753416768359602,
+    "fresh_unc": 3.5066125907403425,
+    "sag_unc": 2.7825661573679796,
+    "window_cap_pct": 24.70419678595638,
+    "window_unc_pct": 25.19796371334989,
+    "sag_cap_gf": 4047.5226494886147
    },
    "input_values": {
     "apc_table": [
@@ -1915,15 +1894,15 @@ window.PROOF_GRAPH = {
       266.981
      ]
     ],
-    "kv": 780.0,
-    "rm_ohm": 0.173,
+    "kv": 880.0,
+    "rm_ohm": 0.089,
     "i0_a": 0.5,
     "rp_ohm": 0.03,
     "derate": 0.93,
     "cant_deg": 17.0,
     "download": 0.97,
     "hot_sag": 0.97,
-    "spin_cap": 0.9,
+    "spin_cap": 0.993,
     "v_fresh": 16.8,
     "v_sag_rest": 14.92,
     "g": 9.807,
@@ -1964,13 +1943,13 @@ window.PROOF_GRAPH = {
     "m": "kg"
    },
    "outputs": {
-    "fresh_cap": 1.8969300217569653,
-    "sag_cap": 1.4995493291636963,
-    "fresh_unc": 2.234562879937559,
-    "sag_unc": 1.7717074754476274,
-    "window_cap_pct": -5.153324754721686,
-    "window_unc_pct": 3.1799906158375864,
-    "sag_cap_gf": 2716.674179479815
+    "fresh_cap": 2.6973824554815233,
+    "sag_cap": 2.1398875255232905,
+    "fresh_unc": 2.72525272090889,
+    "sag_unc": 2.1625417109094047,
+    "window_cap_pct": 12.554941397184177,
+    "window_unc_pct": 13.07284334921722,
+    "sag_cap_gf": 4047.5226494886147
    },
    "input_values": {
     "apc_table": [
@@ -2015,21 +1994,21 @@ window.PROOF_GRAPH = {
       266.981
      ]
     ],
-    "kv": 780.0,
-    "rm_ohm": 0.173,
+    "kv": 880.0,
+    "rm_ohm": 0.089,
     "i0_a": 0.5,
     "rp_ohm": 0.03,
     "derate": 0.93,
     "cant_deg": 17.0,
     "download": 0.97,
     "hot_sag": 0.97,
-    "spin_cap": 0.9,
+    "spin_cap": 0.993,
     "v_fresh": 16.8,
     "v_sag_rest": 14.92,
     "g": 9.807,
     "lo": 1.33,
     "hi_frac": 0.8,
-    "m": 1.811660428
+    "m": 1.891465136
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -2062,16 +2041,17 @@ window.PROOF_GRAPH = {
     "PRP-002-LL"
    ],
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "value": 2.337818404831478,
+   "value": 3.4707516142866486,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
+    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
     "uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))",
     "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
-    "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)"
+    "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)",
+    "uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.16890920241573903,
+   "margin": 0.7353758071433243,
    "importance": 1
   },
   {
@@ -2098,16 +2078,17 @@ window.PROOF_GRAPH = {
     "PWR-001"
    ],
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "value": 1.8480776731155204,
+   "value": 2.753416768359602,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
+    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
     "uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))",
     "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
-    "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)"
+    "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)",
+    "uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.1550485456972002,
+   "margin": 0.7208854802247511,
    "importance": 1
   },
   {
@@ -2132,19 +2113,18 @@ window.PROOF_GRAPH = {
     "PRP-001-LL"
    ],
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "value": 1.8969300217569653,
+   "value": 2.6973824554815233,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -5.2% (1.897 vs >= 2)",
-    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
+    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
     "uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))",
     "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
     "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)",
+    "uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)",
     "uses CL-A-MASS-PRED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.05153498912151733,
-   "fails": true,
+   "margin": 0.34869122774076167,
    "importance": 1
   },
   {
@@ -2170,19 +2150,18 @@ window.PROOF_GRAPH = {
     "PWR-001"
    ],
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "value": 1.4995493291636963,
+   "value": 2.1398875255232905,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -6.3% (1.5 vs >= 1.6)",
-    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
+    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
     "uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))",
     "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
     "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)",
+    "uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)",
     "uses CL-A-MASS-PRED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.06278166927268986,
-   "fails": true,
+   "margin": 0.33742970345205653,
    "importance": 1
   },
   {
@@ -2207,19 +2186,18 @@ window.PROOF_GRAPH = {
     "PRP-001-LL"
    ],
    "how": "C3 time-domain pitch-over run at the as-weighed mass (T-A-C3-PITCHOVER); the window uses 1.33 W low and 0.80 x T/W sag high.",
-   "value": -5.153324754721686,
+   "value": 12.554941397184177,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -203.1% (-5.153 % vs >= 5 %)",
-    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
+    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
     "uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))",
     "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
     "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)",
+    "uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)",
     "uses CL-A-MASS-PRED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": -2.0306649509443373,
-   "fails": true,
+   "margin": 1.5109882794368352,
    "importance": 1
   },
   {
@@ -2245,16 +2223,17 @@ window.PROOF_GRAPH = {
    ],
    "how": "C3 run at the as-weighed mass; MASS-GATE s8: +-5 % holds to 1.478 kg at cant 17, gate 1.47 kg.",
    "note": "D-190 (CLAIMS-FIX s1): the gate was 1.50 kg (window +-4.3 % at cant 17); lowered to 1.47 kg so the window floor holds at the gate. Heavier analyses at 1.50 kg stay conservative.",
-   "value": 5.286243188313403,
+   "value": 24.70419678595638,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
+    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
     "uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))",
     "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
-    "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)"
+    "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)",
+    "uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.05724863766268058,
+   "margin": 3.940839357191276,
    "importance": 1
   },
   {
@@ -2283,7 +2262,7 @@ window.PROOF_GRAPH = {
     "w": "P:req.window_min_pct"
    },
    "outputs": {
-    "m_kg": 1.4784621384924161
+    "m_kg": 2.202733414687681
    },
    "input_values": {
     "apc_table": [
@@ -2328,15 +2307,15 @@ window.PROOF_GRAPH = {
       266.981
      ]
     ],
-    "kv": 780.0,
-    "rm_ohm": 0.173,
+    "kv": 880.0,
+    "rm_ohm": 0.089,
     "i0_a": 0.5,
     "rp_ohm": 0.03,
     "derate": 0.93,
     "cant_deg": 17.0,
     "download": 0.97,
     "hot_sag": 0.97,
-    "spin_cap": 0.9,
+    "spin_cap": 0.993,
     "v_fresh": 16.8,
     "v_sag_rest": 14.92,
     "g": 9.807,
@@ -2358,25 +2337,24 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": ">=",
     "ref": "CL-A-MASS-PRED",
-    "resolved": 1.811660428
+    "resolved": 1.891465136
    },
    "verifies": [
     "A-P3"
    ],
    "how": "MASS-GATE s8: 1.478 kg capped at cant 17; bench M1 thrust replaces the 0.93 derate.",
-   "value": 1.4784621384924161,
+   "value": 2.202733414687681,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -18.4% (1.478 kg vs >= 1.812 kg)",
-    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
+    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
     "uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))",
     "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
     "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)",
+    "uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)",
     "uses CL-A-MASS-PRED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.18391873242792042,
-   "fails": true,
+   "margin": 0.16456463974056607,
    "importance": 1
   },
   {
@@ -2405,7 +2383,7 @@ window.PROOF_GRAPH = {
     "m": "kg"
    },
    "outputs": {
-    "i_a": 12.077257782615476
+    "i_a": 20.07860666666667
    },
    "input_values": {
     "apc_table": [
@@ -2450,18 +2428,18 @@ window.PROOF_GRAPH = {
       266.981
      ]
     ],
-    "kv": 780.0,
-    "rm_ohm": 0.173,
+    "kv": 880.0,
+    "rm_ohm": 0.089,
     "i0_a": 0.5,
     "rp_ohm": 0.03,
     "derate": 0.93,
     "cant_deg": 17.0,
     "download": 0.97,
-    "spin_cap": 0.9,
+    "spin_cap": 0.993,
     "v_fresh": 16.8,
     "g": 9.807,
     "m": 1.5,
-    "duty": 0.9
+    "duty": 0.993
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -2493,7 +2471,7 @@ window.PROOF_GRAPH = {
     "m": "kg"
    },
    "outputs": {
-    "i_a": 17.83305726953393
+    "i_a": 25.098258333333337
    },
    "input_values": {
     "apc_table": [
@@ -2538,14 +2516,14 @@ window.PROOF_GRAPH = {
       266.981
      ]
     ],
-    "kv": 780.0,
-    "rm_ohm": 0.173,
+    "kv": 880.0,
+    "rm_ohm": 0.089,
     "i0_a": 0.5,
     "rp_ohm": 0.03,
     "derate": 0.93,
     "cant_deg": 17.0,
     "download": 0.97,
-    "spin_cap": 0.9,
+    "spin_cap": 0.993,
     "v_fresh": 16.8,
     "g": 9.807,
     "m": 1.5,
@@ -2565,7 +2543,7 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": "<=",
     "ref": "P:req.motor_rating_a",
-    "resolved": 13.0
+    "resolved": 26.8
    },
    "verifies": [
     "A-P16"
@@ -2578,15 +2556,18 @@ window.PROOF_GRAPH = {
     "PRP-003"
    ],
    "how": "Bench M2: one motor at duty 0.90 for 180 s, phase A <= 13 A, can <= 80 C. Without Q_M_SPIN_MAX 0.90 the same case is 14.3 A (prop_a.py).",
-   "value": 12.077257782615476,
+   "value": 20.07860666666667,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
+    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
     "uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))",
-    "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)"
+    "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
+    "uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)",
+    "uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)",
+    "uses P:req.motor_rating_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: SunnySky X2216 V3 880KV 450 W max continuous / 16.8 V = 26.8 A (32 A / 30 s); sunnyskyusa.com read 2026-11-21. The page gives power, not a continuous current: EST)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.07098017056804032,
+   "margin": 0.2507982587064676,
    "importance": 1
   },
   {
@@ -2608,15 +2589,16 @@ window.PROOF_GRAPH = {
     "PRP-003"
    ],
    "how": "Compare the SpeedyBee BLS 35A Mini V2 page (35 A continuous per channel) with 1.25 x 14.3 A.",
-   "value": 17.83305726953393,
+   "value": 25.098258333333337,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
+    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
     "uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))",
-    "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)"
+    "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
+    "uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.4904840780133162,
+   "margin": 0.28290690476190467,
    "importance": 1
   },
   {
@@ -2690,10 +2672,10 @@ window.PROOF_GRAPH = {
     "m": "kg"
    },
    "outputs": {
-    "cruise_s": 141.5914258691629,
-    "usable_wh": 24.5088,
-    "hover_w": 286.13316185121244,
-    "cruise_w": 189.3269724146385
+    "cruise_s": 230.25402231708563,
+    "usable_wh": 29.8368,
+    "hover_w": 289.79769563192104,
+    "cruise_w": 194.12031379012862
    },
    "input_values": {
     "apc_table": [
@@ -2738,8 +2720,8 @@ window.PROOF_GRAPH = {
       266.981
      ]
     ],
-    "kv": 780.0,
-    "rm_ohm": 0.173,
+    "kv": 880.0,
+    "rm_ohm": 0.089,
     "i0_a": 0.5,
     "derate": 0.93,
     "cant_deg": 17.0,
@@ -2747,8 +2729,8 @@ window.PROOF_GRAPH = {
     "esc_eff": 0.98,
     "ctrl_margin": 1.1,
     "g": 9.807,
-    "m": 1.811660428,
-    "pack_ah": 2.3,
+    "m": 1.891465136,
+    "pack_ah": 2.8,
     "pack_v": 14.8,
     "floor_frac": 0.9,
     "reserve_frac": 0.8,
@@ -2853,11 +2835,10 @@ window.PROOF_GRAPH = {
     "PRP-003"
    ],
    "how": "Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).",
-   "value": 141.5914258691629,
+   "value": 230.25402231708563,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -30.8% (141.6 s vs >= 204.6 s)",
-    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
+    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
     "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
     "uses P:prop.esc_eff, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py hover: input power = V I / 0.98)",
     "uses P:prop.ctrl_margin, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py hover: x 1.10 control margin (MISSION s4))",
@@ -2870,8 +2851,7 @@ window.PROOF_GRAPH = {
     "uses CL-A-CRUISE-NEED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.30781218732222954,
-   "fails": true,
+   "margin": 0.12562626648873312,
    "importance": 1
   },
   {
@@ -7710,11 +7690,14 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "req.motor_rating_a",
    "file": "redesign/qp/A/params-A.json",
-   "value": 13.0,
+   "value": 26.8,
    "unit": "A",
    "source": "SRC-A-REQ",
-   "note": "A-P16: motor 13 A / 180 s (maker)",
-   "status": "CHECKED",
+   "note": "T-083: SunnySky X2216 V3 880KV 450 W max continuous / 16.8 V = 26.8 A (32 A / 30 s); sunnyskyusa.com read 2026-11-21. The page gives power, not a continuous current: EST",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: SunnySky X2216 V3 880KV 450 W max continuous / 16.8 V = 26.8 A (32 A / 30 s); sunnyskyusa.com read 2026-11-21. The page gives power, not a continuous current: EST"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -8050,7 +8033,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "mass.basic_cad_kg",
    "file": "redesign/qp/A/params-A.json",
-   "value": 1.57922,
+   "value": 1.65064,
    "unit": "kg",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json mass_basic_kg (CAD, no growth)",
@@ -8228,7 +8211,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "mass.cg_x_mm",
    "file": "redesign/qp/A/params-A.json",
-   "value": 27.02885221818366,
+   "value": 21.338122182910865,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_x_m, aft of the wing leading edge",
@@ -8240,7 +8223,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "mass.cg_y_mm",
    "file": "redesign/qp/A/params-A.json",
-   "value": 1.7131406643786171,
+   "value": 1.6390163815247418,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_y_m (lateral)",
@@ -8332,10 +8315,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "prop.kv",
    "file": "redesign/qp/A/params-A.json",
-   "value": 780.0,
+   "value": 880.0,
    "unit": "rpm/V",
    "source": "SRC-A-PROPA",
-   "note": "prop_a.py KV: T-Motor MN2212 V2.0 KV780 page",
+   "note": "prop_a.py KV (T-083): SunnySky X2216 V3 880KV page (sunnyskyusa.com, read 2026-11-21)",
    "status": "CHECKED",
    "importance": 10
   },
@@ -8344,10 +8327,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "prop.rm_ohm",
    "file": "redesign/qp/A/params-A.json",
-   "value": 0.173,
+   "value": 0.089,
    "unit": "ohm",
    "source": "SRC-A-PROPA",
-   "note": "prop_a.py RM: T-Motor page via SIZING-A s3",
+   "note": "prop_a.py RM (T-083): SunnySky X2216 V3 880KV page, 89 mohm (read 2026-11-21)",
    "status": "CHECKED",
    "importance": 10
   },
@@ -8359,9 +8342,9 @@ window.PROOF_GRAPH = {
    "value": 0.5,
    "unit": "A",
    "source": "SRC-A-PROPA",
-   "note": "prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it",
+   "note": "prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it",
    "reasons": [
-    "marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it"
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it"
    ],
    "status": "UNVERIFIED",
    "importance": 10
@@ -8440,11 +8423,14 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "prop.spin_cap",
    "file": "redesign/qp/A/params-A.json",
-   "value": 0.9,
+   "value": 0.993,
    "unit": "-",
    "source": "SRC-A-PROPA",
-   "note": "A.param Q_M_SPIN_MAX 0.90 (prop_a.py `duty`)",
-   "status": "CHECKED",
+   "note": "T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90"
+   ],
+   "status": "UNVERIFIED",
    "importance": 9
   },
   {
@@ -8644,10 +8630,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "mission.pack_ah",
    "file": "redesign/qp/A/params-A.json",
-   "value": 2.3,
+   "value": 2.8,
    "unit": "Ah",
    "source": "SRC-A-MGATE",
-   "note": "Tattu 2300",
+   "note": "T-083: O4b pack RDQ 2800 mAh 4S 100C (racedayquads.com, read 2026-11-19, BOM W01); was Tattu 2300 (stale, config study CS-5)",
    "status": "CHECKED",
    "importance": 1
   },
@@ -10853,34 +10839,34 @@ window.PROOF_GRAPH = {
    "id": "CGE-008",
    "type": "part",
    "title": "Pack tray R1 (T-077: 1.2 mm windowed plate on a 2.0 mm root pad + ribs, 2.0 mm end walls with windows, two 40 x 2.0 mm tabs per lip; mass = drawn solid volume x 1.27, T-067 basis M applied by printed_mass.json when present)",
-   "status": "UNVERIFIED",
+   "status": "CHECKED",
    "importance": 6
   },
   {
    "id": "PRP-001-UR",
    "type": "part",
-   "title": "Motor MN2212 V2.0 KV780 (UR)",
+   "title": "Motor SunnySky X2216 V3 880KV short shaft (UR), 67.5 g with 100 mm leads (EST that the page mass includes them)",
    "status": "UNVERIFIED",
    "importance": 10
   },
   {
    "id": "PRP-001-UL",
    "type": "part",
-   "title": "Motor MN2212 V2.0 KV780 (UL)",
+   "title": "Motor SunnySky X2216 V3 880KV short shaft (UL), 67.5 g with 100 mm leads (EST that the page mass includes them)",
    "status": "UNVERIFIED",
    "importance": 10
   },
   {
    "id": "PRP-001-LR",
    "type": "part",
-   "title": "Motor MN2212 V2.0 KV780 (LR)",
+   "title": "Motor SunnySky X2216 V3 880KV short shaft (LR), 67.5 g with 100 mm leads (EST that the page mass includes them)",
    "status": "UNVERIFIED",
    "importance": 10
   },
   {
    "id": "PRP-001-LL",
    "type": "part",
-   "title": "Motor MN2212 V2.0 KV780 (LL)",
+   "title": "Motor SunnySky X2216 V3 880KV short shaft (LL), 67.5 g with 100 mm leads (EST that the page mass includes them)",
    "status": "UNVERIFIED",
    "importance": 10
   },

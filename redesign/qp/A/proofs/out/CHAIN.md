@@ -6,23 +6,12 @@ Parameter files: `redesign/qp/A/params-A.json`
 
 > **BUILD FAILED** — the numbers below may be stale:
 
-> - STRICT A-D2: CL-A-CRUISE-NEED is UNVERIFIED
-> - STRICT A-P1: CL-A-MASS-GATE-ROOM: FAILS: margin -23.2% (1.812 kg vs <= 1.47 kg)
-> - STRICT A-D3: CL-A-MASS-PRED: FAILS: margin -23.2% (1.812 kg vs <= 1.47 kg)
-> - STRICT A-P2: CL-A-TW-FRESH-GATE is UNVERIFIED
-> - STRICT A-P3: CL-A-WINDOW-PRED: FAILS: margin -203.1% (-5.153 % vs >= 5 %)
-> - STRICT A-P4: CL-A-CG-HI: FAILS: margin -4.0% (27.03 mm vs <= 26 mm)
+> - STRICT A-P1: CL-A-MASS-GATE-ROOM: FAILS: margin -28.7% (1.891 kg vs <= 1.47 kg)
+> - STRICT A-D3: CL-A-MASS-PRED: FAILS: margin -28.7% (1.891 kg vs <= 1.47 kg)
 > - STRICT A-P13: CL-A-FLUTTER-ELEVON-NOM is UNVERIFIED
-> - STRICT CL-A-MASS-PRED: FAILS: margin -23.2% (1.812 kg vs <= 1.47 kg)
-> - STRICT CL-A-MASS-GATE-ROOM: FAILS: margin -23.2% (1.812 kg vs <= 1.47 kg)
-> - STRICT CL-A-CUTS-REQUIRED: FAILS: margin -735.0% (347.4 g vs <= 41.6 g)
-> - STRICT CL-A-CG-HI: FAILS: margin -4.0% (27.03 mm vs <= 26 mm)
-> - STRICT CL-A-CG-TRIM-AFT: FAILS: margin -0.8% (28.74 mm vs <= 28.5 mm)
-> - STRICT CL-A-TW-FRESH-PRED: FAILS: margin -5.2% (1.897 vs >= 2)
-> - STRICT CL-A-TW-SAG-PRED: FAILS: margin -6.3% (1.5 vs >= 1.6)
-> - STRICT CL-A-WINDOW-PRED: FAILS: margin -203.1% (-5.153 % vs >= 5 %)
-> - STRICT CL-A-WINDOW-MASS: FAILS: margin -18.4% (1.478 kg vs >= 1.812 kg)
-> - STRICT CL-A-CRUISE-AVAIL: FAILS: margin -30.8% (141.6 s vs >= 204.6 s)
+> - STRICT CL-A-MASS-PRED: FAILS: margin -28.7% (1.891 kg vs <= 1.47 kg)
+> - STRICT CL-A-MASS-GATE-ROOM: FAILS: margin -28.7% (1.891 kg vs <= 1.47 kg)
+> - STRICT CL-A-CUTS-REQUIRED: FAILS: margin -906.7% (418.8 g vs <= 41.6 g)
 > - STRICT CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)
 > - STRICT CL-A-HORN-RIB-FOAM-STALL: FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)
 > - STRICT CL-A-ELEVON-TORSION-FOAM: FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)
@@ -31,18 +20,18 @@ Parameter files: `redesign/qp/A/params-A.json`
 
 | Requirement | Status | Claims | Smallest margin |
 |---|---|---|---|
-| [A-D2](#a-d2) Mission: 3.0 min hover, 3.41 min cruise at 17 m/s | **UNVERIFIED** **FAILS** | 2 | -31% |
-| [A-D3](#a-d3) Design target <= 1.470 kg; structure <= 494 g | **UNVERIFIED** **FAILS** | 4 | -735% |
+| [A-D2](#a-d2) Mission: 3.0 min hover, 3.41 min cruise at 17 m/s | **UNVERIFIED** | 2 | +3% |
+| [A-D3](#a-d3) Design target <= 1.470 kg; structure <= 494 g | **UNVERIFIED** **FAILS** | 4 | -907% |
 | [A-D8](#a-d8) First tethered hover by 2027-02-18 | **UNVERIFIED** | 2 | — |
-| [A-P1](#a-p1) Mass gate 1.47 kg and T/W at the gate | **UNVERIFIED** **FAILS** | 3 | -23% |
+| [A-P1](#a-p1) Mass gate 1.47 kg and T/W at the gate | **UNVERIFIED** **FAILS** | 3 | -29% |
 | [A-P10](#a-p10) Vibration rule D-185 | **CHECKED** | 7 | +8% |
 | [A-P11](#a-p11) Cruise control authority | **UNVERIFIED** | 7 | +4% |
 | [A-P13](#a-p13) Loads and flutter (G8) | **UNVERIFIED** **FAILS** | 46 | -903% |
-| [A-P16](#a-p16) Motor and ESC current | **UNVERIFIED** | 2 | +7% |
-| [A-P2](#a-p2) Hover T/W >= 2.0 fresh, >= 1.6 worst pack state | **UNVERIFIED** **FAILS** | 4 | -6% |
+| [A-P16](#a-p16) Motor and ESC current | **UNVERIFIED** | 2 | +25% |
+| [A-P2](#a-p2) Hover T/W >= 2.0 fresh, >= 1.6 worst pack state | **UNVERIFIED** | 4 | +34% |
 | [A-P24](#a-p24) Fence and run-out | **UNVERIFIED** | 1 | +8% |
-| [A-P3](#a-p3) Transition window >= +-5 % | **UNVERIFIED** **FAILS** | 3 | -203% |
-| [A-P4](#a-p4) CG band, static margin, lateral CG | **UNVERIFIED** **FAILS** | 6 | -4% |
+| [A-P3](#a-p3) Transition window >= +-5 % | **UNVERIFIED** | 3 | +16% |
+| [A-P4](#a-p4) CG band, static margin, lateral CG | **UNVERIFIED** | 6 | +7% |
 | [A-P5](#a-p5) Pack retained at 12 g crash | **CHECKED** | 1 | — |
 | [A-P6](#a-p6) Stall: 1.3 Vs below cruise | **UNVERIFIED** | 1 | +8% |
 | [A-P7](#a-p7) Hover yaw authority >= 0.35 N m | **UNVERIFIED** | 3 | +4% |
@@ -52,11 +41,11 @@ Parameter files: `redesign/qp/A/params-A.json`
 | [A-U2](#a-u2) Built and flight-tested by 2027-04-30 | **UNVERIFIED** | 1 | — |
 | [A-U3](#a-u3) Packed aircraft fits one car trunk | **UNVERIFIED** | 1 | +0% |
 | [A-U4](#a-u4) 3-D gates pass (interference + swept insertion checks) | **CHECKED** | 6 | +0% |
-| [A-U5](#a-u5) Mass under 25 kg | **UNVERIFIED** | 1 | +93% |
+| [A-U5](#a-u5) Mass under 25 kg | **UNVERIFIED** | 1 | +92% |
 
 ## A-D2
 
-**Mission: 3.0 min hover, 3.41 min cruise at 17 m/s** — 3.0 min hover mode incl. 40 s go-around, cruise 3.41 min at 17 m/s (requirement 3.5 min), 20 % reserve; cruise to BATT_LOW lasts longer than the mission needs — **UNVERIFIED** **FAILS**  
+**Mission: 3.0 min hover, 3.41 min cruise at 17 m/s** — 3.0 min hover mode incl. 40 s go-around, cruise 3.41 min at 17 m/s (requirement 3.5 min), 20 % reserve; cruise to BATT_LOW lasts longer than the mission needs — **UNVERIFIED**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-d2
 
 - claim **CL-A-CRUISE-NEED** Cruise time the mission needs (300 m reference lap) = **204.6 s** (limit <= 210 s, margin +3%) — **UNVERIFIED**
@@ -80,9 +69,8 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-d2
       - `SRC-A-MISSION` (see above)
     - `runin` ← param `P:mission.runin_laps` = 0.5 — **CHECKED**
       - `SRC-A-MISSION` (see above)
-- claim **CL-A-CRUISE-AVAIL** Cruise time to BATT_LOW at the predicted mass = **141.6 s** (limit >= 204.6 s, margin -31%) — **UNVERIFIED** **FAILS**
-  - ⚠ FAILS: margin -30.8% (141.6 s vs >= 204.6 s)
-  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)
+- claim **CL-A-CRUISE-AVAIL** Cruise time to BATT_LOW at the predicted mass = **230.3 s** (limit >= 204.6 s, margin +13%) — **UNVERIFIED**
+  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)
   - ⚠ uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)
   - ⚠ uses P:prop.esc_eff, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py hover: input power = V I / 0.98)
   - ⚠ uses P:prop.ctrl_margin, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py hover: x 1.10 control margin (MISSION s4))
@@ -98,12 +86,12 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-d2
   - calc `CALC-A-ENDURANCE` `redesign/qp/A/proofs/claims_a1_flight.py::endurance()`: `t = (E_usable - E_hover - E_trans - E_climb) / P_cruise; E_usable = Ah x V x 0.90 x 0.80; hover and cruise power from the prop model and the (m / 1.37) scalings` — **CHECKED**
     - `apc_table` ← param `P:prop.apc_table` = table (8 rows) rpm, N, W — **CHECKED**
       - source `SRC-A-PROPA` [prop_a.py (APC 9x4.5MR + MN2212 model)](redesign/qp/A/prop_a.py), static rows of apcprop.com PER3_9x45MR.dat (read 2026-11-14 by the file's author), T-Motor MN2212 page Kv / Rm; I0, pack R and the 0.93 derate are estimates, checked 2026-11-15 — **CHECKED**
-    - `kv` ← param `P:prop.kv` = 780 rpm/V — **CHECKED**
+    - `kv` ← param `P:prop.kv` = 880 rpm/V — **CHECKED**
       - `SRC-A-PROPA` (see above)
-    - `rm_ohm` ← param `P:prop.rm_ohm` = 0.173 ohm — **CHECKED**
+    - `rm_ohm` ← param `P:prop.rm_ohm` = 0.089 ohm — **CHECKED**
       - `SRC-A-PROPA` (see above)
     - `i0_a` ← param `P:prop.i0_a` = 0.5 A — **UNVERIFIED**
-      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it
       - `SRC-A-PROPA` (see above)
     - `derate` ← param `P:prop.derate` = 0.93 — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1
@@ -119,8 +107,8 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-d2
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py hover: x 1.10 control margin (MISSION s4)
       - `SRC-A-PROPA` (see above)
     - `g` ← `P:env.g_ms2` (see above)
-    - `m` ← claim **CL-A-MASS-PRED** Predicted take-off mass (CAD basic x growth + overrun) = **1.812 kg** (limit <= 1.47 kg, margin -23%) — **UNVERIFIED** **FAILS** — chain under [A-D3](#a-d3)
-    - `pack_ah` ← param `P:mission.pack_ah` = 2.3 Ah — **CHECKED**
+    - `m` ← claim **CL-A-MASS-PRED** Predicted take-off mass (CAD basic x growth + overrun) = **1.891 kg** (limit <= 1.47 kg, margin -29%) — **UNVERIFIED** **FAILS** — chain under [A-D3](#a-d3)
+    - `pack_ah` ← param `P:mission.pack_ah` = 2.8 Ah — **CHECKED**
       - `SRC-A-MGATE` (see above)
     - `pack_v` ← param `P:mission.pack_v` = 14.8 V — **CHECKED**
       - `SRC-A-MGATE` (see above)
@@ -154,15 +142,15 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-d2
 **Design target <= 1.470 kg; structure <= 494 g** — Predicted mass incl. growth and overrun <= 1.470 kg (D-208; D-207 1.467; D-205 1.465; D-195 1.46); structure ceiling 494 g (BOARD QP-4 s1) — **UNVERIFIED** **FAILS**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-d3
 
-- claim **CL-A-MASS-PRED** Predicted take-off mass (CAD basic x growth + overrun) = **1.812 kg** (limit <= 1.47 kg, margin -23%) — **UNVERIFIED** **FAILS**
-  - ⚠ FAILS: margin -23.2% (1.812 kg vs <= 1.47 kg)
+- claim **CL-A-MASS-PRED** Predicted take-off mass (CAD basic x growth + overrun) = **1.891 kg** (limit <= 1.47 kg, margin -29%) — **UNVERIFIED** **FAILS**
+  - ⚠ FAILS: margin -28.7% (1.891 kg vs <= 1.47 kg)
   - ⚠ uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))
   - ⚠ uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)
   - how to verify: Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).
   - parts: WNG-001, WNG-002, PWR-001, CGE-001, FIN-001-R, FIN-001-L
   - test `T-A-WEIGH` Weigh-in: foam block, printed parts, epoxy joint, lead strip, one servo, then the aircraft (planned) — **PROPOSED**
   - calc `CALC-A-MASS-PRED` `redesign/qp/A/proofs/claims_a1_flight.py::mass_pred()`: `m = basic_CAD x growth_factor + overrun_frac x gate   (MASS-GATE s7)` — **CHECKED**
-    - `basic` ← param `P:mass.basic_cad_kg` = 1.579 kg — **CHECKED**
+    - `basic` ← param `P:mass.basic_cad_kg` = 1.651 kg — **CHECKED**
       - source `SRC-A-CADMASS` [CAD mass and CG (sitl/cad_mass.json)](redesign/qp/A/sitl/cad_mass.json), mass_basic_kg, cg_x_m, cg_y_m (regenerated by FIXES2, 2026-11-15), checked 2026-11-15 — **CHECKED**
     - `gf` ← param `P:mass.growth_factor` = 1.117 — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA)
@@ -185,8 +173,8 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-d3
     - `over` ← `P:mass.overrun_frac` (see above)
     - `gate` ← `P:req.mass_gate_kg` (see above)
   - `P:req.mass_target_kg` (see above)
-- claim **CL-A-CUTS-REQUIRED** EST cuts that must be real for <= 1.470 kg = **347.4 g** (limit <= 41.6 g, margin -735%) — **UNVERIFIED** **FAILS**
-  - ⚠ FAILS: margin -735.0% (347.4 g vs <= 41.6 g)
+- claim **CL-A-CUTS-REQUIRED** EST cuts that must be real for <= 1.470 kg = **418.8 g** (limit <= 41.6 g, margin -907%) — **UNVERIFIED** **FAILS**
+  - ⚠ FAILS: margin -906.7% (418.8 g vs <= 41.6 g)
   - ⚠ uses ASM-A-CUTS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses P:mass.est_cuts_g, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s5, s7: 41.6 g of EST cuts already in the CAD basic mass (foam 16.6, printed 18.0, hardware 7.0))
   - ⚠ uses CL-A-MASS-PRED, which is UNVERIFIED
@@ -274,14 +262,14 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-d8
 **Mass gate 1.47 kg and T/W at the gate** — As-built mass <= 1.47 kg; at the gate T/W fresh >= 2.0 and sag >= 1.6 with Q_M_SPIN_MAX 0.90 — **UNVERIFIED** **FAILS**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-p1
 
-- claim **CL-A-MASS-GATE-ROOM** Predicted mass against the 1.47 kg gate = **1.812 kg** (limit <= 1.47 kg, margin -23%) — **UNVERIFIED** **FAILS**
-  - ⚠ FAILS: margin -23.2% (1.812 kg vs <= 1.47 kg)
+- claim **CL-A-MASS-GATE-ROOM** Predicted mass against the 1.47 kg gate = **1.891 kg** (limit <= 1.47 kg, margin -29%) — **UNVERIFIED** **FAILS**
+  - ⚠ FAILS: margin -28.7% (1.891 kg vs <= 1.47 kg)
   - ⚠ uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))
   - ⚠ uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)
   - how to verify: As-built weigh-in <= 1.47 kg (D-190, MASS-GATE s8); the +-5 % window holds to 1.478 kg.
   - test `T-A-WEIGH` Weigh-in: foam block, printed parts, epoxy joint, lead strip, one servo, then the aircraft (planned) — **PROPOSED**
   - calc `CALC-A-MASS-PRED` `redesign/qp/A/proofs/claims_a1_flight.py::mass_pred()`: `m = basic_CAD x growth_factor + overrun_frac x gate   (MASS-GATE s7)` — **CHECKED**
-    - `basic` ← param `P:mass.basic_cad_kg` = 1.579 kg — **CHECKED**
+    - `basic` ← param `P:mass.basic_cad_kg` = 1.651 kg — **CHECKED**
       - source `SRC-A-CADMASS` [CAD mass and CG (sitl/cad_mass.json)](redesign/qp/A/sitl/cad_mass.json), mass_basic_kg, cg_x_m, cg_y_m (regenerated by FIXES2, 2026-11-15), checked 2026-11-15 — **CHECKED**
     - `gf` ← param `P:mass.growth_factor` = 1.117 — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA)
@@ -292,23 +280,24 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p1
     - `gate` ← param `P:req.mass_gate_kg` = 1.47 kg — **CHECKED**
       - source `SRC-A-REQ` [Concept A requirements (REQUIREMENTS-A.md)](redesign/qp/A/REQUIREMENTS-A.md), limits of A-U1 ... A-D12; status PROPOSED, owner A2, checked 2026-11-15 — **CHECKED**
   - `P:req.mass_gate_kg` (see above)
-- claim **CL-A-TW-FRESH-GATE** Hover T/W fresh at the 1.47 kg gate (0.90 cap) = **2.338** (limit >= 2, margin +17%) — **UNVERIFIED**
-  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)
+- claim **CL-A-TW-FRESH-GATE** Hover T/W fresh at the 1.47 kg gate (0.90 cap) = **3.471** (limit >= 2, margin +74%) — **UNVERIFIED**
+  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)
   - ⚠ uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))
   - ⚠ uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)
   - ⚠ uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)
+  - ⚠ uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)
   - how to verify: Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).
   - parts: PRP-001-UR, PRP-001-UL, PRP-001-LR, PRP-001-LL, PRP-002-UR, PRP-002-UL, PRP-002-LR, PRP-002-LL
   - test `T-A-BENCH-THRUST` Bench thrust stand, one MN2212 + APC 9x4.5MR (M1) (planned) — **PROPOSED**
   - calc `CALC-A-TW-GATE` `redesign/qp/A/proofs/claims_a1_flight.py::tw_at()`: `T/W = 4 T(duty) cos(cant) x derate x hot / (m g), prop_a.py model; window = (0.80 TWsag - 1.33)/(0.80 TWsag + 1.33)` — **CHECKED**
     - `apc_table` ← param `P:prop.apc_table` = table (8 rows) rpm, N, W — **CHECKED**
       - source `SRC-A-PROPA` [prop_a.py (APC 9x4.5MR + MN2212 model)](redesign/qp/A/prop_a.py), static rows of apcprop.com PER3_9x45MR.dat (read 2026-11-14 by the file's author), T-Motor MN2212 page Kv / Rm; I0, pack R and the 0.93 derate are estimates, checked 2026-11-15 — **CHECKED**
-    - `kv` ← param `P:prop.kv` = 780 rpm/V — **CHECKED**
+    - `kv` ← param `P:prop.kv` = 880 rpm/V — **CHECKED**
       - `SRC-A-PROPA` (see above)
-    - `rm_ohm` ← param `P:prop.rm_ohm` = 0.173 ohm — **CHECKED**
+    - `rm_ohm` ← param `P:prop.rm_ohm` = 0.089 ohm — **CHECKED**
       - `SRC-A-PROPA` (see above)
     - `i0_a` ← param `P:prop.i0_a` = 0.5 A — **UNVERIFIED**
-      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it
       - `SRC-A-PROPA` (see above)
     - `rp_ohm` ← param `P:prop.rp_ohm` = 0.03 ohm — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A)
@@ -323,7 +312,8 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p1
     - `hot_sag` ← param `P:prop.hot_sag` = 0.97 — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case
       - source `SRC-A-MGATE` [mission_gate_a.py (mission and mass-gate arithmetic)](redesign/qp/A/mission_gate_a.py), items list, stall, T/W, energy and cruise-to-BATT_LOW lines, checked 2026-11-15 — **CHECKED**
-    - `spin_cap` ← param `P:prop.spin_cap` = 0.9 — **CHECKED**
+    - `spin_cap` ← param `P:prop.spin_cap` = 0.993 — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90
       - `SRC-A-PROPA` (see above)
     - `v_fresh` ← param `P:prop.v_fresh` = 16.8 V — **CHECKED**
       - `SRC-A-PROPA` (see above)
@@ -338,11 +328,12 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p1
     - `m` ← `P:req.mass_gate_kg` (see above)
   - param `P:req.tw_fresh_min` = 2 — **CHECKED**
     - `SRC-A-REQ` (see above)
-- claim **CL-A-TW-SAG-GATE** Hover T/W sagged pack at the 1.47 kg gate (0.90 cap) = **1.848** (limit >= 1.6, margin +16%) — **UNVERIFIED**
-  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)
+- claim **CL-A-TW-SAG-GATE** Hover T/W sagged pack at the 1.47 kg gate (0.90 cap) = **2.753** (limit >= 1.6, margin +72%) — **UNVERIFIED**
+  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)
   - ⚠ uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))
   - ⚠ uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)
   - ⚠ uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)
+  - ⚠ uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)
   - how to verify: Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).
   - parts: PRP-001-UR, PRP-001-UL, PRP-001-LR, PRP-001-LL, PWR-001
   - `T-A-BENCH-THRUST` (see above)
@@ -1018,22 +1009,25 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
 **Motor and ESC current** — Winding current <= 13 A with Q_M_SPIN_MAX 0.90; ESC and connectors >= 1.25 x peak — **UNVERIFIED**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-p16
 
-- claim **CL-A-MOTOR-I** One motor at the 0.90 spin cap, winding current = **12.08 A** (limit <= 13 A, margin +7%) — **UNVERIFIED**
-  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)
+- claim **CL-A-MOTOR-I** One motor at the 0.90 spin cap, winding current = **20.08 A** (limit <= 26.8 A, margin +25%) — **UNVERIFIED**
+  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)
   - ⚠ uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))
   - ⚠ uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)
+  - ⚠ uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)
+  - ⚠ uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)
+  - ⚠ uses P:req.motor_rating_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: SunnySky X2216 V3 880KV 450 W max continuous / 16.8 V = 26.8 A (32 A / 30 s); sunnyskyusa.com read 2026-11-21. The page gives power, not a continuous current: EST)
   - how to verify: Bench M2: one motor at duty 0.90 for 180 s, phase A <= 13 A, can <= 80 C. Without Q_M_SPIN_MAX 0.90 the same case is 14.3 A (prop_a.py).
   - parts: PRP-001-UR, PRP-001-UL, PRP-001-LR, PRP-001-LL, PRP-003
   - test `T-A-BENCH-MOTOR` One motor at the 0.90 cap, current and can temperature (M2) (planned) — **PROPOSED**
   - calc `CALC-A-MOTOR-I` `redesign/qp/A/proofs/claims_a1_flight.py::motor_current_capped()`: `phase current of one motor at the duty cap with the other three at hover, 1.50 kg, fresh pack (prop_a.py one_motor)` — **CHECKED**
     - `apc_table` ← param `P:prop.apc_table` = table (8 rows) rpm, N, W — **CHECKED**
       - source `SRC-A-PROPA` [prop_a.py (APC 9x4.5MR + MN2212 model)](redesign/qp/A/prop_a.py), static rows of apcprop.com PER3_9x45MR.dat (read 2026-11-14 by the file's author), T-Motor MN2212 page Kv / Rm; I0, pack R and the 0.93 derate are estimates, checked 2026-11-15 — **CHECKED**
-    - `kv` ← param `P:prop.kv` = 780 rpm/V — **CHECKED**
+    - `kv` ← param `P:prop.kv` = 880 rpm/V — **CHECKED**
       - `SRC-A-PROPA` (see above)
-    - `rm_ohm` ← param `P:prop.rm_ohm` = 0.173 ohm — **CHECKED**
+    - `rm_ohm` ← param `P:prop.rm_ohm` = 0.089 ohm — **CHECKED**
       - `SRC-A-PROPA` (see above)
     - `i0_a` ← param `P:prop.i0_a` = 0.5 A — **UNVERIFIED**
-      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it
       - `SRC-A-PROPA` (see above)
     - `rp_ohm` ← param `P:prop.rp_ohm` = 0.03 ohm — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A)
@@ -1045,7 +1039,8 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p16
       - `SRC-A-PROPA` (see above)
     - `download` ← param `P:prop.download` = 0.97 — **CHECKED**
       - `SRC-A-PROPA` (see above)
-    - `spin_cap` ← param `P:prop.spin_cap` = 0.9 — **CHECKED**
+    - `spin_cap` ← param `P:prop.spin_cap` = 0.993 — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90
       - `SRC-A-PROPA` (see above)
     - `v_fresh` ← param `P:prop.v_fresh` = 16.8 V — **CHECKED**
       - `SRC-A-PROPA` (see above)
@@ -1054,12 +1049,14 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p16
     - `m` ← param `P:prop.hover_mass_ref_kg` = 1.5 kg — **CHECKED**
       - `SRC-A-PROPA` (see above)
     - `duty` ← `P:prop.spin_cap` (see above)
-  - param `P:req.motor_rating_a` = 13 A — **CHECKED**
+  - param `P:req.motor_rating_a` = 26.8 A — **UNVERIFIED**
+    - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: SunnySky X2216 V3 880KV 450 W max continuous / 16.8 V = 26.8 A (32 A / 30 s); sunnyskyusa.com read 2026-11-21. The page gives power, not a continuous current: EST
     - source `SRC-A-REQ` [Concept A requirements (REQUIREMENTS-A.md)](redesign/qp/A/REQUIREMENTS-A.md), limits of A-U1 ... A-D12; status PROPOSED, owner A2, checked 2026-11-15 — **CHECKED**
-- claim **CL-A-ESC-I** ESC channel and connector current required (1.25 x uncapped peak) = **17.83 A** (limit <= 35 A, margin +49%) — **UNVERIFIED**
-  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)
+- claim **CL-A-ESC-I** ESC channel and connector current required (1.25 x uncapped peak) = **25.1 A** (limit <= 35 A, margin +28%) — **UNVERIFIED**
+  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)
   - ⚠ uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))
   - ⚠ uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)
+  - ⚠ uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)
   - how to verify: Compare the SpeedyBee BLS 35A Mini V2 page (35 A continuous per channel) with 1.25 x 14.3 A.
   - parts: PRP-003
   - calc `CALC-A-ESC-REQ` `redesign/qp/A/proofs/claims_a1_flight.py::esc_required()`: `I_req = 1.25 x peak one-motor current with no cap (full duty, three at hover, 1.50 kg, fresh)` — **CHECKED**
@@ -1082,26 +1079,27 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p16
 
 ## A-P2
 
-**Hover T/W >= 2.0 fresh, >= 1.6 worst pack state** — Hover T/W >= 2.0 fresh, >= 1.6 at the worst pack state (20 % rest, 3.73 V/cell) — **UNVERIFIED** **FAILS**  
+**Hover T/W >= 2.0 fresh, >= 1.6 worst pack state** — Hover T/W >= 2.0 fresh, >= 1.6 at the worst pack state (20 % rest, 3.73 V/cell) — **UNVERIFIED**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-p2
 
-- claim **CL-A-TW-FRESH-GATE** Hover T/W fresh at the 1.47 kg gate (0.90 cap) = **2.338** (limit >= 2, margin +17%) — **UNVERIFIED**
-  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)
+- claim **CL-A-TW-FRESH-GATE** Hover T/W fresh at the 1.47 kg gate (0.90 cap) = **3.471** (limit >= 2, margin +74%) — **UNVERIFIED**
+  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)
   - ⚠ uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))
   - ⚠ uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)
   - ⚠ uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)
+  - ⚠ uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)
   - how to verify: Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).
   - parts: PRP-001-UR, PRP-001-UL, PRP-001-LR, PRP-001-LL, PRP-002-UR, PRP-002-UL, PRP-002-LR, PRP-002-LL
   - test `T-A-BENCH-THRUST` Bench thrust stand, one MN2212 + APC 9x4.5MR (M1) (planned) — **PROPOSED**
   - calc `CALC-A-TW-GATE` `redesign/qp/A/proofs/claims_a1_flight.py::tw_at()`: `T/W = 4 T(duty) cos(cant) x derate x hot / (m g), prop_a.py model; window = (0.80 TWsag - 1.33)/(0.80 TWsag + 1.33)` — **CHECKED**
     - `apc_table` ← param `P:prop.apc_table` = table (8 rows) rpm, N, W — **CHECKED**
       - source `SRC-A-PROPA` [prop_a.py (APC 9x4.5MR + MN2212 model)](redesign/qp/A/prop_a.py), static rows of apcprop.com PER3_9x45MR.dat (read 2026-11-14 by the file's author), T-Motor MN2212 page Kv / Rm; I0, pack R and the 0.93 derate are estimates, checked 2026-11-15 — **CHECKED**
-    - `kv` ← param `P:prop.kv` = 780 rpm/V — **CHECKED**
+    - `kv` ← param `P:prop.kv` = 880 rpm/V — **CHECKED**
       - `SRC-A-PROPA` (see above)
-    - `rm_ohm` ← param `P:prop.rm_ohm` = 0.173 ohm — **CHECKED**
+    - `rm_ohm` ← param `P:prop.rm_ohm` = 0.089 ohm — **CHECKED**
       - `SRC-A-PROPA` (see above)
     - `i0_a` ← param `P:prop.i0_a` = 0.5 A — **UNVERIFIED**
-      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it
       - `SRC-A-PROPA` (see above)
     - `rp_ohm` ← param `P:prop.rp_ohm` = 0.03 ohm — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A)
@@ -1116,7 +1114,8 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p2
     - `hot_sag` ← param `P:prop.hot_sag` = 0.97 — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case
       - source `SRC-A-MGATE` [mission_gate_a.py (mission and mass-gate arithmetic)](redesign/qp/A/mission_gate_a.py), items list, stall, T/W, energy and cruise-to-BATT_LOW lines, checked 2026-11-15 — **CHECKED**
-    - `spin_cap` ← param `P:prop.spin_cap` = 0.9 — **CHECKED**
+    - `spin_cap` ← param `P:prop.spin_cap` = 0.993 — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90
       - `SRC-A-PROPA` (see above)
     - `v_fresh` ← param `P:prop.v_fresh` = 16.8 V — **CHECKED**
       - `SRC-A-PROPA` (see above)
@@ -1132,23 +1131,24 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p2
       - `SRC-A-REQ` (see above)
   - param `P:req.tw_fresh_min` = 2 — **CHECKED**
     - `SRC-A-REQ` (see above)
-- claim **CL-A-TW-SAG-GATE** Hover T/W sagged pack at the 1.47 kg gate (0.90 cap) = **1.848** (limit >= 1.6, margin +16%) — **UNVERIFIED**
-  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)
+- claim **CL-A-TW-SAG-GATE** Hover T/W sagged pack at the 1.47 kg gate (0.90 cap) = **2.753** (limit >= 1.6, margin +72%) — **UNVERIFIED**
+  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)
   - ⚠ uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))
   - ⚠ uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)
   - ⚠ uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)
+  - ⚠ uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)
   - how to verify: Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).
   - parts: PRP-001-UR, PRP-001-UL, PRP-001-LR, PRP-001-LL, PWR-001
   - `T-A-BENCH-THRUST` (see above)
   - `CALC-A-TW-GATE` (see above)
   - param `P:req.tw_sag_min` = 1.6 — **CHECKED**
     - `SRC-A-REQ` (see above)
-- claim **CL-A-TW-FRESH-PRED** Hover T/W fresh at the predicted mass (0.90 cap) = **1.897** (limit >= 2, margin -5%) — **UNVERIFIED** **FAILS**
-  - ⚠ FAILS: margin -5.2% (1.897 vs >= 2)
-  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)
+- claim **CL-A-TW-FRESH-PRED** Hover T/W fresh at the predicted mass (0.90 cap) = **2.697** (limit >= 2, margin +35%) — **UNVERIFIED**
+  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)
   - ⚠ uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))
   - ⚠ uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)
   - ⚠ uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)
+  - ⚠ uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)
   - ⚠ uses CL-A-MASS-PRED, which is UNVERIFIED
   - how to verify: Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).
   - parts: PRP-001-UR, PRP-001-UL, PRP-001-LR, PRP-001-LL
@@ -1168,14 +1168,14 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p2
     - `g` ← `P:env.g_ms2` (see above)
     - `lo` ← `P:req.entry_low_w` (see above)
     - `hi_frac` ← `P:req.entry_high_frac` (see above)
-    - `m` ← claim **CL-A-MASS-PRED** Predicted take-off mass (CAD basic x growth + overrun) = **1.812 kg** (limit <= 1.47 kg, margin -23%) — **UNVERIFIED** **FAILS** — chain under [A-D3](#a-d3)
+    - `m` ← claim **CL-A-MASS-PRED** Predicted take-off mass (CAD basic x growth + overrun) = **1.891 kg** (limit <= 1.47 kg, margin -29%) — **UNVERIFIED** **FAILS** — chain under [A-D3](#a-d3)
   - `P:req.tw_fresh_min` (see above)
-- claim **CL-A-TW-SAG-PRED** Hover T/W sagged pack at the predicted mass (0.90 cap) = **1.5** (limit >= 1.6, margin -6%) — **UNVERIFIED** **FAILS**
-  - ⚠ FAILS: margin -6.3% (1.5 vs >= 1.6)
-  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)
+- claim **CL-A-TW-SAG-PRED** Hover T/W sagged pack at the predicted mass (0.90 cap) = **2.14** (limit >= 1.6, margin +34%) — **UNVERIFIED**
+  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)
   - ⚠ uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))
   - ⚠ uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)
   - ⚠ uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)
+  - ⚠ uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)
   - ⚠ uses CL-A-MASS-PRED, which is UNVERIFIED
   - how to verify: Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).
   - parts: PRP-001-UR, PRP-001-UL, PRP-001-LR, PRP-001-LL, PWR-001
@@ -1223,15 +1223,15 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p24
 
 ## A-P3
 
-**Transition window >= +-5 %** — Transition entry window >= +-5 % of the weight-ratio entry thrust: entry >= 1.33 W, <= 0.80 x T/W sag — **UNVERIFIED** **FAILS**  
+**Transition window >= +-5 %** — Transition entry window >= +-5 % of the weight-ratio entry thrust: entry >= 1.33 W, <= 0.80 x T/W sag — **UNVERIFIED**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-p3
 
-- claim **CL-A-WINDOW-PRED** Transition entry window at the predicted mass (0.90 cap) = **-5.153 %** (limit >= 5 %, margin -203%) — **UNVERIFIED** **FAILS**
-  - ⚠ FAILS: margin -203.1% (-5.153 % vs >= 5 %)
-  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)
+- claim **CL-A-WINDOW-PRED** Transition entry window at the predicted mass (0.90 cap) = **12.55 %** (limit >= 5 %, margin +151%) — **UNVERIFIED**
+  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)
   - ⚠ uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))
   - ⚠ uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)
   - ⚠ uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)
+  - ⚠ uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)
   - ⚠ uses CL-A-MASS-PRED, which is UNVERIFIED
   - how to verify: C3 time-domain pitch-over run at the as-weighed mass (T-A-C3-PITCHOVER); the window uses 1.33 W low and 0.80 x T/W sag high.
   - parts: PRP-001-UR, PRP-001-UL, PRP-001-LR, PRP-001-LL
@@ -1240,12 +1240,12 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p3
   - calc `CALC-A-TW-PRED` `redesign/qp/A/proofs/claims_a1_flight.py::tw_at()`: `same, at the predicted mass` — **CHECKED**
     - `apc_table` ← param `P:prop.apc_table` = table (8 rows) rpm, N, W — **CHECKED**
       - source `SRC-A-PROPA` [prop_a.py (APC 9x4.5MR + MN2212 model)](redesign/qp/A/prop_a.py), static rows of apcprop.com PER3_9x45MR.dat (read 2026-11-14 by the file's author), T-Motor MN2212 page Kv / Rm; I0, pack R and the 0.93 derate are estimates, checked 2026-11-15 — **CHECKED**
-    - `kv` ← param `P:prop.kv` = 780 rpm/V — **CHECKED**
+    - `kv` ← param `P:prop.kv` = 880 rpm/V — **CHECKED**
       - `SRC-A-PROPA` (see above)
-    - `rm_ohm` ← param `P:prop.rm_ohm` = 0.173 ohm — **CHECKED**
+    - `rm_ohm` ← param `P:prop.rm_ohm` = 0.089 ohm — **CHECKED**
       - `SRC-A-PROPA` (see above)
     - `i0_a` ← param `P:prop.i0_a` = 0.5 A — **UNVERIFIED**
-      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it
       - `SRC-A-PROPA` (see above)
     - `rp_ohm` ← param `P:prop.rp_ohm` = 0.03 ohm — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A)
@@ -1260,7 +1260,8 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p3
     - `hot_sag` ← param `P:prop.hot_sag` = 0.97 — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case
       - source `SRC-A-MGATE` [mission_gate_a.py (mission and mass-gate arithmetic)](redesign/qp/A/mission_gate_a.py), items list, stall, T/W, energy and cruise-to-BATT_LOW lines, checked 2026-11-15 — **CHECKED**
-    - `spin_cap` ← param `P:prop.spin_cap` = 0.9 — **CHECKED**
+    - `spin_cap` ← param `P:prop.spin_cap` = 0.993 — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90
       - `SRC-A-PROPA` (see above)
     - `v_fresh` ← param `P:prop.v_fresh` = 16.8 V — **CHECKED**
       - `SRC-A-PROPA` (see above)
@@ -1272,14 +1273,15 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p3
       - source `SRC-A-REQ` [Concept A requirements (REQUIREMENTS-A.md)](redesign/qp/A/REQUIREMENTS-A.md), limits of A-U1 ... A-D12; status PROPOSED, owner A2, checked 2026-11-15 — **CHECKED**
     - `hi_frac` ← param `P:req.entry_high_frac` = 0.8 — **CHECKED**
       - `SRC-A-REQ` (see above)
-    - `m` ← claim **CL-A-MASS-PRED** Predicted take-off mass (CAD basic x growth + overrun) = **1.812 kg** (limit <= 1.47 kg, margin -23%) — **UNVERIFIED** **FAILS** — chain under [A-D3](#a-d3)
+    - `m` ← claim **CL-A-MASS-PRED** Predicted take-off mass (CAD basic x growth + overrun) = **1.891 kg** (limit <= 1.47 kg, margin -29%) — **UNVERIFIED** **FAILS** — chain under [A-D3](#a-d3)
   - param `P:req.window_min_pct` = 5 % — **CHECKED**
     - `SRC-A-REQ` (see above)
-- claim **CL-A-WINDOW-GATE** Transition entry window at the 1.47 kg gate (0.90 cap) = **5.286 %** (limit >= 5 %, margin +6%) — **UNVERIFIED**
-  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)
+- claim **CL-A-WINDOW-GATE** Transition entry window at the 1.47 kg gate (0.90 cap) = **24.7 %** (limit >= 5 %, margin +394%) — **UNVERIFIED**
+  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)
   - ⚠ uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))
   - ⚠ uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)
   - ⚠ uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)
+  - ⚠ uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)
   - how to verify: C3 run at the as-weighed mass; MASS-GATE s8: +-5 % holds to 1.478 kg at cant 17, gate 1.47 kg.
   - parts: PRP-001-UR, PRP-001-UL, PRP-001-LR, PRP-001-LL
   - `T-A-C3-PITCHOVER` (see above)
@@ -1302,12 +1304,12 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p3
     - `m` ← param `P:req.mass_gate_kg` = 1.47 kg — **CHECKED**
       - `SRC-A-REQ` (see above)
   - `P:req.window_min_pct` (see above)
-- claim **CL-A-WINDOW-MASS** Largest mass with a +-5 % window (0.90 cap) = **1.478 kg** (limit >= 1.812 kg, margin -18%) — **UNVERIFIED** **FAILS**
-  - ⚠ FAILS: margin -18.4% (1.478 kg vs >= 1.812 kg)
-  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)
+- claim **CL-A-WINDOW-MASS** Largest mass with a +-5 % window (0.90 cap) = **2.203 kg** (limit >= 1.891 kg, margin +16%) — **UNVERIFIED**
+  - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)
   - ⚠ uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))
   - ⚠ uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)
   - ⚠ uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)
+  - ⚠ uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)
   - ⚠ uses CL-A-MASS-PRED, which is UNVERIFIED
   - how to verify: MASS-GATE s8: 1.478 kg capped at cant 17; bench M1 thrust replaces the 0.93 derate.
   - calc `CALC-A-WINDOW-MASS` `redesign/qp/A/proofs/claims_a1_flight.py::window_mass()`: `m_max = 0.93-derated sag thrust (0.90 cap) x 0.80 / (1.33 (1+w)/(1-w)), w = 5 %` — **CHECKED**
@@ -1331,20 +1333,19 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p3
 
 ## A-P4
 
-**CG band, static margin, lateral CG** — CG 19-26 mm aft of LE (D-195; was 20-26; hard aft 28.5 mm), static margin >= 5 % chord, lateral CG <= 5 mm, pack trim +-10 mm — **UNVERIFIED** **FAILS**  
+**CG band, static margin, lateral CG** — CG 19-26 mm aft of LE (D-195; was 20-26; hard aft 28.5 mm), static margin >= 5 % chord, lateral CG <= 5 mm, pack trim +-10 mm — **UNVERIFIED**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-p4
 
-- claim **CL-A-CG** CG aft of the leading edge, CAD as drawn = **27.03 mm** (limit >= 19 mm, margin +42%) — **CHECKED**
+- claim **CL-A-CG** CG aft of the leading edge, CAD as drawn = **21.34 mm** (limit >= 19 mm, margin +12%) — **CHECKED**
   - how to verify: CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.
   - parts: PWR-001, CGE-008, WNG-001, WNG-002
   - test `T-A-CG-BREADBOARD` CG breadboard on a knife edge (M5, M6) (planned) — **PROPOSED**
   - calc `CALC-A-CG-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `CG from sitl/cad_mass.json (CAD centroids of every part); read, not recomputed` — **CHECKED**
-    - `v` ← param `P:mass.cg_x_mm` = 27.03 mm — **CHECKED**
+    - `v` ← param `P:mass.cg_x_mm` = 21.34 mm — **CHECKED**
       - source `SRC-A-CADMASS` [CAD mass and CG (sitl/cad_mass.json)](redesign/qp/A/sitl/cad_mass.json), mass_basic_kg, cg_x_m, cg_y_m (regenerated by FIXES2, 2026-11-15), checked 2026-11-15 — **CHECKED**
   - param `P:req.cg_lo_mm` = 19 mm — **CHECKED**
     - source `SRC-A-REQ` [Concept A requirements (REQUIREMENTS-A.md)](redesign/qp/A/REQUIREMENTS-A.md), limits of A-U1 ... A-D12; status PROPOSED, owner A2, checked 2026-11-15 — **CHECKED**
-- claim **CL-A-CG-HI** CG aft limit of the design band = **27.03 mm** (limit <= 26 mm, margin -4%) — **UNVERIFIED** **FAILS**
-  - ⚠ FAILS: margin -4.0% (27.03 mm vs <= 26 mm)
+- claim **CL-A-CG-HI** CG aft limit of the design band = **21.34 mm** (limit <= 26 mm, margin +18%) — **CHECKED**
   - how to verify: CG breadboard (M5); band 19-26 mm (D-195), hard aft limit 28.5 mm.
   - parts: PWR-001, CGE-008
   - `T-A-CG-BREADBOARD` (see above)
@@ -1352,8 +1353,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p4
     - `v` ← `P:mass.cg_x_mm` (see above)
   - param `P:req.cg_hi_mm` = 26 mm — **CHECKED**
     - `SRC-A-REQ` (see above)
-- claim **CL-A-CG-TRIM-AFT** CG at the aft end of the pack trim travel = **28.74 mm** (limit <= 28.5 mm, margin -1%) — **UNVERIFIED** **FAILS**
-  - ⚠ FAILS: margin -0.8% (28.74 mm vs <= 28.5 mm)
+- claim **CL-A-CG-TRIM-AFT** CG at the aft end of the pack trim travel = **22.97 mm** (limit <= 28.5 mm, margin +19%) — **CHECKED**
   - how to verify: Slide the pack to the aft slot stop and re-measure CG (M5).
   - parts: PWR-001, CGE-008
   - calc `CALC-A-CG-TRIM` `redesign/qp/A/proofs/claims_a1_flight.py::cg_trim()`: `ends = CG - m_pack x trim_fwd / m_basic, CG + m_pack x trim / m_basic` — **CHECKED**
@@ -1364,16 +1364,16 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p4
       - source `SRC-A-FIXES2` [QP-4 fixes 2 (FIXES2.md, supersedes FIXES where they differ)](redesign/review/QP-4/FIXES2.md), s1 flutter with damper, s2 servo, s3 gates, s6 foam, s7 mass and cost, checked 2026-11-15 — **CHECKED**
     - `trim_fwd` ← param `P:mass.pack_trim_fwd_mm` = 6 mm — **CHECKED**
       - `SRC-A-CADMASS` (see above)
-    - `basic` ← param `P:mass.basic_cad_kg` = 1.579 kg — **CHECKED**
+    - `basic` ← param `P:mass.basic_cad_kg` = 1.651 kg — **CHECKED**
       - `SRC-A-CADMASS` (see above)
   - param `P:req.cg_hard_aft_mm` = 28.5 mm — **CHECKED**
     - `SRC-A-REQ` (see above)
-- claim **CL-A-CG-TRIM-FWD** CG at the forward end of the pack trim travel = **26 mm** (limit >= 19 mm, margin +37%) — **CHECKED**
+- claim **CL-A-CG-TRIM-FWD** CG at the forward end of the pack trim travel = **20.36 mm** (limit >= 19 mm, margin +7%) — **CHECKED**
   - how to verify: Slide the pack to the forward slot stop and re-measure CG (M5).
   - parts: PWR-001, CGE-008
   - `CALC-A-CG-TRIM` (see above)
   - `P:req.cg_lo_mm` (see above)
-- claim **CL-A-SM** Static margin at the CAD CG = **5.58 % chord** (limit >= 5 % chord, margin +12%) — **UNVERIFIED**
+- claim **CL-A-SM** Static margin at the CAD CG = **7.903 % chord** (limit >= 5 % chord, margin +58%) — **UNVERIFIED**
   - ⚠ uses ASM-A-NP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-A-NP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-A-NP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -1390,11 +1390,11 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p4
     - `ASM-A-NP` (see above)
   - param `P:req.sm_min_pct` = 5 % chord — **CHECKED**
     - `SRC-A-REQ` (see above)
-- claim **CL-A-CG-LATERAL** Lateral CG offset (CAD) = **1.713 mm** (limit <= 5 mm, margin +66%) — **CHECKED**
+- claim **CL-A-CG-LATERAL** Lateral CG offset (CAD) = **1.639 mm** (limit <= 5 mm, margin +67%) — **CHECKED**
   - how to verify: Hang the built aircraft on its spar centre; lateral CG <= 5 mm.
   - `T-A-CG-BREADBOARD` (see above)
   - calc `CALC-A-CG-LATERAL-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `cg_y from sitl/cad_mass.json; read, not recomputed` — **CHECKED**
-    - `v` ← param `P:mass.cg_y_mm` = 1.713 mm — **CHECKED**
+    - `v` ← param `P:mass.cg_y_mm` = 1.639 mm — **CHECKED**
       - `SRC-A-CADMASS` (see above)
   - param `P:req.cg_lateral_max_mm` = 5 mm — **CHECKED**
     - `SRC-A-REQ` (see above)
@@ -1681,12 +1681,12 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-u4
 **Mass under 25 kg** — Take-off mass < 25 kg (55 lb) — **UNVERIFIED**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-u5
 
-- claim **CL-A-MASS-USER** Predicted mass against the 25 kg user cap = **1.812 kg** (limit <= 25 kg, margin +93%) — **UNVERIFIED**
+- claim **CL-A-MASS-USER** Predicted mass against the 25 kg user cap = **1.891 kg** (limit <= 25 kg, margin +92%) — **UNVERIFIED**
   - ⚠ uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))
   - ⚠ uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)
   - how to verify: Weigh-in.
   - calc `CALC-A-MASS-PRED` `redesign/qp/A/proofs/claims_a1_flight.py::mass_pred()`: `m = basic_CAD x growth_factor + overrun_frac x gate   (MASS-GATE s7)` — **CHECKED**
-    - `basic` ← param `P:mass.basic_cad_kg` = 1.579 kg — **CHECKED**
+    - `basic` ← param `P:mass.basic_cad_kg` = 1.651 kg — **CHECKED**
       - source `SRC-A-CADMASS` [CAD mass and CG (sitl/cad_mass.json)](redesign/qp/A/sitl/cad_mass.json), mass_basic_kg, cg_x_m, cg_y_m (regenerated by FIXES2, 2026-11-15), checked 2026-11-15 — **CHECKED**
     - `gf` ← param `P:mass.growth_factor` = 1.117 — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA)

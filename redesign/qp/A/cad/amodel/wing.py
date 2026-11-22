@@ -29,8 +29,10 @@ HUB_ARM_R1 = R_IN + HUB_SOCK                # open mouth of the arm socket (r 56
 HUB_SPOKE_D = 0.022                         # radial web depth along x (sleeve to socket), one wall (HUB_W) thick
 HUB_STRUT_S = (-0.017, 0.032)               # strut socket: from 17 mm behind the strut end (web to the bridge sleeve) to 32 mm ahead (30 mm socket)
 PACK_XL_, PACK_ZL_ = PACK_X[1] - 0.0050, 0.009 + 0.0230   # lead exit x and z (= electrical.PACK_XL, PACK_ZL; keep equal)
-CUP_PAT = (0.019, 0.016)                    # MN2212 mounting pattern 19 mm (along the arm, y) x 16 mm (z): retailers list 16x19 and 19x25 (getfpv MN2212 V2.0 page, search 2026-11-15; T-Motor drawing: 4-M2.5 on 19 x 16 (read 2026-11-15); cup holes M2.5 clearance 2.9 mm, D-194)
+CUP_PAT = (0.019, 0.016)                    # T-083: no longer drilled (the X2216 sits on its X-mount PRP-006, bolted at r 17 on the diagonals; see propulsion.py). Was: MN2212 mounting pattern 19 mm (along the arm, y) x 16 mm (z): retailers list 16x19 and 19x25 (getfpv MN2212 V2.0 page, search 2026-11-15; T-Motor drawing: 4-M2.5 on 19 x 16 (read 2026-11-15); cup holes M2.5 clearance 2.9 mm, D-194)
 CUP_R = 0.006                               # plate corner radius (EST)
+CUP_Y1 = 0.0225                             # T-083: plate +y edge (was 16.5): lead hole PH_Y 18.0 + 2.4 + 2.1 mm ligament
+CUP_COL_Y1 = PH_Y + 0.0025                  # T-083: lead collar end (was 8.0 = 5.5 + 2.5)
 CUP_RO = 0.0079                             # T-077 p6 (strength check, strike S3 sleeve-hoop row RF 2.37 at 2.6 mm): arm sleeve OD 15.8 mm, wall 1.8 mm (p5: OD 17.2, wall 2.6; T-073 R3fix 2.5), except the screw-head pocket bosses below
 CUP_WEB_X = -0.0078 # T-077 p6: web 4.2 mm (x -12..-7.8) so that it still meets the sleeve crest at -7.9 (0.1 mm overlap); p5: 3.5 mm to -8.5 with the crest at -8.6
 _CUP_WEB_X_P5 = -0.0085                         # T-077 p5 (R3fix): the plate is a 3.5 mm web (x -12..-8.5; T-073 says 3.0 and notes 3.4 mm is needed to reach the sleeve crest at -8.6: 3.5 gives 0.1 mm overlap) over the sleeve side y < +3.5 mm, and keeps the full 5.0 mm (x -12..-7) over the +y 13 mm cantilever (the S2 strike row, T-073 s R3)
@@ -824,7 +826,7 @@ TRAY_ROOT_X1 = -0.035 + CAGE_DX                       # solid 2.0 mm root pad x 
 TRAY_YB = (0.0142, 0.0238)                  # solid band over the phase-lead raceway footprint (the raceway is bonded to the plate underside, common.RW_YO)
 TRAY_YL = 0.0394                            # longitudinal rib in the outboard zone
 TRAY_NB = 3                                 # window bays along x
-TRAY_WN_X = (-0.024 - 0.022, -0.008 - 0.022, 0.008 - 0.022)         # end wall window centres x (EST)
+TRAY_WN_X = tuple(v + T083_DX for v in (-0.024 - 0.022, -0.008 - 0.022, 0.008 - 0.022))         # end wall window centres x (EST); T-083: follow the pack 3 mm forward
 TRAY_WN_W, TRAY_WN_Z = 0.010, (0.0110, 0.0240)
 
 
@@ -1120,11 +1122,11 @@ def build_wing(ctx):
         loop = [(p0[0] + nx, sg * (p0[1] + ny)), (p1[0] + nx, sg * (p1[1] + ny)), (p1[0] - nx, sg * (p1[1] - ny)),
                 (p0[0] - nx, sg * (p0[1] - ny))]
         core.cut_prism('Z', -0.05, [loop], 0.055, name='strut slot (open below, 0.5 mm clear)')
-        hw_ = CLAMP_RS * 1e-3 + 0.0005                           # T-077 p7: the OD 12.5 clamp socket is wider than the 10 mm strut slot: socket slot 0.5 mm clear, s -28..+2 mm about the strut end, open below
+        hw_ = CLAMP_RS * 1e-3 + 0.0015                           # T-083: 1.5 mm clear (assembly run 1 at 0.5 mm: 0.30 mm, run 2 at 1.0 mm: 0.095 mm: the clamp socket touched the skin opening at 12 mm of the B1 rise after the 3 mm cage shift turned the strut 0.55 deg). T-077 p7: the OD 12.5 clamp socket is wider than the 10 mm strut slot: socket slot 0.5 mm clear, s -28..+2 mm about the strut end, open below
         qa_, qb_ = (STRUT_E[0] - (CLAMP_SL * 1e-3 + 0.001) * ux, STRUT_E[1] - (CLAMP_SL * 1e-3 + 0.001) * uy), (STRUT_E[0] + 0.002 * ux, STRUT_E[1] + 0.002 * uy)
         nx2, ny2 = -uy * hw_, ux * hw_
         sl_ = [(qa_[0] + nx2, sg * (qa_[1] + ny2)), (qb_[0] + nx2, sg * (qb_[1] + ny2)), (qb_[0] - nx2, sg * (qb_[1] - ny2)), (qa_[0] - nx2, sg * (qa_[1] - ny2))]
-        core.cut_prism('Z', -0.05, [_ccw(sl_)], 0.05 + CLAMP_RS * 1e-3 + 0.0005, name='clamp socket slot (open below, 0.5 mm clear, T-077 p7)')
+        core.cut_prism('Z', -0.05, [_ccw(sl_)], 0.05 + CLAMP_RS * 1e-3 + 0.0015, name="clamp socket slot (open below, 1.5 mm clear, T-083; 0.5 mm in T-077 p7)")
     # T-070 glass skin (WNG-011) and cove strip (WNG-012), drawn inside the core outline: same openings as the core (every cut above), core and strip pockets from the skin / strip bodies
     o_, i_ = skin_loops()
     sk = ctx.part('WNG-011', rgb=(0.75, 0.85, 0.80))
@@ -1301,10 +1303,9 @@ def build_cage(ctx):
         ctx.components['CGE-001'].cut(fk.Shape('revolve', 'sleeve mouth internal chamfer 0.5 x 45 deg (D-222 P1)', axis='Y', center=(0.0, mz0, 0.0), profile=mprof), tube.matrix(), 'mouth chamfer')
         cup = ctx.part('CGE-003-' + st, at=station(st), rotate=mrot(st), rgb=(0.9, 0.9, 0.9))
         cup.prism('X', -0.012, [_rrect_part(-0.0165, 0.00355, 0.0165, CUP_R, True, False)], 0.012 + CUP_WEB_X, name='cup plate web 4.2 mm over the sleeve side y -16.5..+3.5 (T-077 p6: reaches the sleeve crest at -7.9 with 0.1 mm overlap; p5 3.5 mm)')
-        cup.prism('X', -0.012, [_rrect_part(0.0035, 0.0165, 0.0165, CUP_R, False, True)], 0.005, name='cup plate cantilever 5.0 mm over the +y 13 mm (T-073 R3fix: the strike S2 row)')
+        cup.prism('X', -0.012, [_rrect_part(0.0035, CUP_Y1, 0.0165, CUP_R, False, True)], 0.005, name='cup plate cantilever 5.0 mm over +y 3.5..22.5 (T-073 R3fix: the strike S2 row; T-083: +6 mm for the X2216 lead hole at y 18)')
         cup.tube('Y', (0.0, -0.025, 0.0), 0.0285, CUP_RO, ARM_OD / 2 + 0.0001, name='cup arm sleeve OD 15.8 mm, wall 1.8 mm (T-077 p6; p5 OD 17.2, T-073 R3fix 2.5; bore 12.2 mm: 0.1 mm epoxy gap round the 12 mm arm, D-198: no coincident cylinder faces)')
-        for sz_ in (1, -1):
-            cup.cylinder('X', (CUP_WEB_X - 0.0001, -CUP_PAT[0] / 2, sz_ * CUP_PAT[1] / 2), CUP_BOSS_X1 - CUP_WEB_X + 0.0001, CUP_BOSS_R, name='screw-head pocket boss r 3.9 mm (T-073 R3fix local bosses; size EST)')
+        # T-083: the MN2212 screw-head pocket bosses are gone (no motor screws behind the plate)
         f_up, f_dn, f_ch, f_zc = cup_fillet_loops(xf=CUP_WEB_X, ro=CUP_RO)
         f_ch = cup_chord_loop(xf=-0.007)
         f_zc = math.sqrt(CUP_RO ** 2 - 0.007 ** 2)
@@ -1312,18 +1313,15 @@ def build_cage(ctx):
         cup.prism('Y', -0.0165, [f_dn], 0.0200, name='cup fillet 1 mm, sleeve to plate along the arm (-z side, D-210)')
         cup.prism('Z', -f_zc, [f_ch], 2 * f_zc, name='cup fillet 1 mm where the sleeve end meets the plate (D-210)')
         w_loop, w_zc = cup_web_loop()
-        cup.prism('Y', 0.0035 - 0.00005, [w_loop], 0.0053 + 0.00005, name='collar-to-plate web with 1 mm fillets (D-210: the collar only touched the plate along a line)')
-        cup.prism('Z', -w_zc, [cup_chord_loop(ys=0.0088)], 2 * w_zc, name='cup fillet 1 mm where the web and collar cap end on the plate (D-210)')
-        for sy_ in (1, -1):
-            for sz_ in (1, -1):
-                cup.cut_cylinder('X', (-0.0126, sy_ * CUP_PAT[0] / 2, sz_ * CUP_PAT[1] / 2), 0.0055, 0.00145, name='motor screw hole M2.5 clearance 2.9 mm (ISO 273 medium; pattern V T-Motor drawing)')
-        for sz_ in (1, -1):                          # D-197: the y = -9.5 mm screw heads sit in the sleeve wall; print the pocket (was only implied by the seat cut)
-            cup.cut_cylinder('X', (-0.0072, -CUP_PAT[0] / 2, sz_ * CUP_PAT[1] / 2), 0.0034, 0.00265, name='screw head pocket 5.0 mm in the sleeve wall (D-197, structures/arm_cup_checks.md)')
-        cup.cut_cylinder('X', (-0.0127, 0.0, 0.0), 0.0063, 0.004, name='motor rear relief 8 mm (EST)')
+        cup.prism('Y', 0.0035 - 0.00005, [w_loop], CUP_COL_Y1 + 0.0008 - 0.0035 + 0.00005, name='collar-to-plate web with 1 mm fillets (D-210: the collar only touched the plate along a line; T-083: to the longer collar)')
+        cup.prism('Z', -w_zc, [cup_chord_loop(ys=CUP_COL_Y1 + 0.0008)], 2 * w_zc, name='cup fillet 1 mm where the web and collar cap end on the plate (D-210)')
+        for k_ in range(4):                          # T-083: X-mount bolt holes, r 17 on the diagonals (M3 clearance 3.4 mm, ISO 273 medium)
+            a_ = math.radians(45.0 + 90 * k_)
+            cup.cut_cylinder('X', (-0.0126, 0.017 * math.cos(a_), 0.017 * math.sin(a_)), 0.0060, 0.0017, name='X-mount bolt hole M3 clearance 3.4 mm (T-083)')
         # D-198: phase-lead conduit. Lead hole through the plate and sleeve wall into a collar bore (the 4 mm bend stays inside), the lead
         # then runs inside the arm bore. The old open slot at z 10.5..17.5 (leads outside the arm) is dropped.
-        cup.tube('Y', (0.0, 0.0035, 0.0), 0.0045, 0.0070, ARM_OD / 2 + 0.0001, name='lead collar (D-198, 1.0 mm wall)')
-        cup.cylinder('Y', (0.0, 0.0080, 0.0), 0.0008, 0.0070, name='lead collar end cap (D-198, 0.8 mm)')
+        cup.tube('Y', (0.0, 0.0035, 0.0), CUP_COL_Y1 - 0.0035, 0.0070, ARM_OD / 2 + 0.0001, name='lead collar (D-198, 1.0 mm wall; T-083: to y 20.5 for the lead hole at y 18)')
+        cup.cylinder('Y', (0.0, CUP_COL_Y1, 0.0), 0.0008, 0.0070, name='lead collar end cap (D-198, 0.8 mm)')
         cup.cut_cylinder('X', (-0.0128, PH_Y, 0.0), 0.0085, PH_HOLE_R, name='phase-lead hole 4.8 mm (D-198)')
         ctx.seat('CGE-003-' + st, 'CGE-002-' + T, 'arm tube end in the cup sleeve')
         ctx.seat('CGE-001', 'CGE-009-' + st, 'doubler bore in the sleeve (14 mm over s 11..24)')

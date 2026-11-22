@@ -44,6 +44,10 @@
     "CGE-005-L",
     "CGE-007-R",
     "CGE-007-L",
+    "PRP-006-UR",
+    "PRP-006-UL",
+    "PRP-006-LR",
+    "PRP-006-LL",
     "PRP-001-UR",
     "PRP-001-UL",
     "PRP-001-LR",
@@ -471,5 +475,5 @@
   }
  ],
  "tol_mm": 0.05,
- "flipped": 1736
+ "flipped": 1778
 }

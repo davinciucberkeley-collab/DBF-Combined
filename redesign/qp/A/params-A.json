@@ -112,10 +112,11 @@
    "note": "A-D2: requirement 3.5 min (MISSION s2)"
   },
   "motor_rating_a": {
-   "value": 13.0,
+   "value": 26.8,
    "unit": "A",
    "source": "SRC-A-REQ",
-   "note": "A-P16: motor 13 A / 180 s (maker)"
+   "note": "T-083: SunnySky X2216 V3 880KV 450 W max continuous / 16.8 V = 26.8 A (32 A / 30 s); sunnyskyusa.com read 2026-11-21. The page gives power, not a continuous current: EST",
+   "status": "UNVERIFIED"
   },
   "esc_rating_a": {
    "value": 35.0,
@@ -286,7 +287,7 @@
  },
  "mass": {
   "basic_cad_kg": {
-   "value": 1.57922,
+   "value": 1.65064,
    "unit": "kg",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json mass_basic_kg (CAD, no growth)"
@@ -400,13 +401,13 @@
    "note": "D-205: forward pack travel 6 mm (D-202: 1 mm; D-199: 6 mm; D-196: 8 mm) (tray front lip 2 mm aft); cad_mass.json trim_fwd_m"
   },
   "cg_x_mm": {
-   "value": 27.02885221818366,
+   "value": 21.338122182910865,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_x_m, aft of the wing leading edge"
   },
   "cg_y_mm": {
-   "value": 1.7131406643786171,
+   "value": 1.6390163815247418,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_y_m (lateral)"
@@ -476,22 +477,22 @@
    "note": "prop_a.py T: APC 9x4.5MR static rows (apcprop.com PER3_9x45MR.dat, read 2026-11-14 per prop_a.py), rho 1.225, V = 0"
   },
   "kv": {
-   "value": 780.0,
+   "value": 880.0,
    "unit": "rpm/V",
    "source": "SRC-A-PROPA",
-   "note": "prop_a.py KV: T-Motor MN2212 V2.0 KV780 page"
+   "note": "prop_a.py KV (T-083): SunnySky X2216 V3 880KV page (sunnyskyusa.com, read 2026-11-21)"
   },
   "rm_ohm": {
-   "value": 0.173,
+   "value": 0.089,
    "unit": "ohm",
    "source": "SRC-A-PROPA",
-   "note": "prop_a.py RM: T-Motor page via SIZING-A s3"
+   "note": "prop_a.py RM (T-083): SunnySky X2216 V3 880KV page, 89 mohm (read 2026-11-21)"
   },
   "i0_a": {
    "value": 0.5,
    "unit": "A",
    "source": "SRC-A-PROPA",
-   "note": "prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it",
+   "note": "prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it",
    "status": "UNVERIFIED"
   },
   "rp_ohm": {
@@ -528,10 +529,11 @@
    "status": "UNVERIFIED"
   },
   "spin_cap": {
-   "value": 0.9,
+   "value": 0.993,
    "unit": "-",
    "source": "SRC-A-PROPA",
-   "note": "A.param Q_M_SPIN_MAX 0.90 (prop_a.py `duty`)"
+   "note": "T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90",
+   "status": "UNVERIFIED"
   },
   "v_fresh": {
    "value": 16.8,
@@ -630,10 +632,10 @@
    "note": "MISSION s2: run-in <= 1/2 lap"
   },
   "pack_ah": {
-   "value": 2.3,
+   "value": 2.8,
    "unit": "Ah",
    "source": "SRC-A-MGATE",
-   "note": "Tattu 2300"
+   "note": "T-083: O4b pack RDQ 2800 mAh 4S 100C (racedayquads.com, read 2026-11-19, BOM W01); was Tattu 2300 (stale, config study CS-5)"
   },
   "pack_v": {
    "value": 14.8,

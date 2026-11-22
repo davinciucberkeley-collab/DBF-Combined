@@ -54,9 +54,10 @@ MIXING_GAIN,0.65
 # ---------------------------------------------------------------- 2 Motors and thrust
 # A: spin cap 0.90, REQUIRED (D-183): APC 9x4.5MR uncapped full duty is 13.0 A (14.3 A one motor at 1.50 kg) vs the 13 A / 180 s rating; at 0.90 one motor is 12.1 A phase / 10.9 A bus (prop_a.py).
 #   SITL: with this cap the hover cases in wind never need more than the numbers in SITL-A.md; K09-L lesson: the motor has no burst rating
-Q_M_SPIN_MAX,0.90
+# T-083: Q_M_SPIN_MAX 1.0: the X2216 needs no motor-current cap (one motor 20.1 A fresh vs the 24.9 A EST line); a 0.90 cap would cut the sag window to +4.6 % (no download, prop_a --sched at 1.912 kg). Was 0.90 (MN2212, A-P16).
+Q_M_SPIN_MAX,1.0
 # A: pack limit. sizing_a.py peak pack current 41 A (4 x 10.3 A table at 100 %); no limiter needed below that - EST
-Q_M_BAT_CURR_MAX,41
+Q_M_BAT_CURR_MAX,72
 Q_M_BAT_IDX,0
 Q_M_BAT_CURR_TC,1
 # 4S LiPo full / empty (3.3 V/cell). Thrust compensation by voltage is ON (K09-L R10 practice); SITL has no battery model so it is inert there
@@ -202,11 +203,13 @@ BATT_MONITOR,4
 BATT_VOLT_MULT,11.05
 BATT_AMP_PERVLT,64
 # A: one Tattu 2300 mAh 4S 75C pack in flight (D-183b: the 2300, not the CNHL 3000; mission_gate_a.py: 24.5 Wh usable of 34.0 Wh). Two packs are bought, flown one at a time
-BATT_CAPACITY,2300
-# remaining-capacity triggers: usable = 0.90 worn-pack floor x 0.80 (20 % reserve) = 72 % of 2300 = 1656 mAh, so BATT_LOW fires at 2300 - 1656 = 644, set 650 mAh left (28 %).
+BATT_CAPACITY,2800
+# T-083: Q_M_BAT_CURR_MAX 72 A = XT90 90 A / 1.25 (A-P16); four X2216 V3 on the APC 9x4.5MR draw 73 A at full duty on a fresh pack (prop_a.py EST), so it binds only there (duty 0.993).
+# T-083: BATT_CAPACITY 2800 (O4b RDQ 2800 pack; was 2300 stale). BATT_LOW_MAH 790 = 2800 - 0.72 x 2800 (784, rounded up); BATT_CRT_MAH 420 = 345 x 2800 / 2300.
+# remaining-capacity triggers (was, 2300 pack): usable = 0.90 worn-pack floor x 0.80 (20 % reserve) = 72 % of 2300 = 1656 mAh, so BATT_LOW fires at 2300 - 1656 = 644, set 650 mAh left (28 %).
 #   That budget covers hover 180 s incl the 40 s go-around, two transitions, climb and 4.71 min of cruise at 1.396 kg (MISSION.md s4) (3.41 min needed). Critical at 15 % = 345 mAh
-BATT_LOW_MAH,650
-BATT_CRT_MAH,345
+BATT_LOW_MAH,790
+BATT_CRT_MAH,420
 BATT_LOW_VOLT,14.4
 BATT_CRT_VOLT,14.0
 BATT_FS_VOLTSRC,1

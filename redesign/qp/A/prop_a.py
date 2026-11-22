@@ -1,10 +1,14 @@
 """Concept A prop + pack check (D-183).  Reproduce: python -I prop_a.py  (stdlib; prints markdown; writes nothing).
 Prop: APC 9x4.5MR, static rows of https://www.apcprop.com/files/PER3_9x45MR.dat (read 2026-11-14), rho 1.225 SL, V=0.
-Motor: T-Motor MN2212 V2.0 KV780: Kv 780 rpm/V and Rm 0.173 ohm (store.tmotor.com page, SIZING-A s3); I0 0.5 A is an ESTIMATE
-(no page value; bench step 1 measures it).  Pack: sag = 3.73 V/cell rest (20 % left), pack R 30 mohm EST (SIZING-A).
+Motor (T-083, D-227, 2026-11-21): SunnySky X2216 V3 880KV SHORT shaft (RMRC 84776, SS-XV3-X2216-S-880-V3): Kv 880 rpm/V, Rm 89 mohm,
+I0 0.5 A at 10 V, 450 W max continuous, 32 A / 30 s, 67.5 g (https://sunnyskyusa.com/products/sunnysky-x2216 and
+https://www.readymaderc.com/products/details/sunny-sky-x2216-brushless-motor-short-shaft-880kv, both read 2026-11-21). The long-shaft
+X2216 880KV (RMRC 85810: Rm 117 mohm, 320 W, 72 g) named by the config study cannot be used: its shaft leaves the BASE 16 mm (SunnySky
+drawing X2216.jpg, "long shaft" view) and would run into the arm tube behind the cup plate (T083_report.md s3). Was: T-Motor MN2212 V2.0
+KV780, Kv 780, Rm 0.173 (backup T083_data/prop_a_p8_backup.py).  Pack: sag = 3.73 V/cell rest (20 % left), pack R 30 mohm EST (SIZING-A).
 Hover: m g / (4 cos(CANT) x 0.97 download); input power = V_m I / 0.98 (ESC) x 1.10 control margin (MISSION s4)."""
 import math, sys
-RHO, D, KV, RM, I0 = 1.225, 9*0.0254, 780.0, 0.173, 0.5
+RHO, D, KV, RM, I0 = 1.225, 9*0.0254, 880.0, 0.089, 0.5    # T-083: X2216 V3 880KV (SunnySky page 2026-11-21); was MN2212 780 / 0.173 / 0.5 EST
 CANT = 17.0   # deg; D-189 (was 16 in D-184, 14 in D-183): yaw authority
 KT = 60/(2*math.pi*KV)
 # rpm: (thrust N, shaft W) from the APC file, V = 0
@@ -48,7 +52,7 @@ def one_motor(duty=0.9, m=1.50, vrest=16.8, rp=0.030):
     return i, vb
 
 # ---- T-074 check 3 (O4b, AM-006): voltage-scheduled spin cap.  Added 2026-11-19; the default run above is unchanged. ----
-I_MOTOR_MAX = 12.1   # A, A-P16 one-motor phase current at the fixed 0.90 cap, fresh (REQUIREMENTS-A A-P16; prop_a.one_motor(0.9) at 1.50 kg)
+I_MOTOR_MAX = round(min(450/16.8, 32.0)*12.1/13, 2)   # T-083: 24.94 A EST = the X2216 V3 rating (450 W max continuous at 16.8 V = 26.8 A; 32 A / 30 s) x the A-P16 margin 12.1/13 carried from the MN2212 line (was 12.1 A: MN2212 13 A / 180 s). EST: the maker gives power, not a continuous current
 def cap_sched(vrest, m=1.64, imax=I_MOTOR_MAX):
     """cap(V_rest): largest duty (<= 1.0) with one saturated motor + three hovering at mass m <= imax (one_motor model, derate 1.0 on the hover thrust as committed)."""
     if one_motor(1.0, m, vrest)[0] <= imax: return 1.0

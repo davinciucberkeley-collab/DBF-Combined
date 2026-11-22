@@ -10,7 +10,7 @@
    "mass_g": 270.0,
    "material": "LiPo",
    "cg_xyz_m": [
-    -0.0309,
+    -0.0339,
     0.0007,
     0.032
    ],
@@ -20,13 +20,13 @@
   },
   {
    "id": "PWR-002",
-   "name": "Pack straps x2: 20 mm webbing with buckle, each about 244 mm (inner loop 214 mm + 30 mm overlap, EST), at y +-35 mm, each a closed loop round the tray plate (front and aft edges) and the pack; BOM W08 STRIX 20 x 300 mm covers each loop (second strap price \"-\"); mass scaled 5.5 g x length / 300 mm per strap, EST (11 g if both are used uncut)",
+   "name": "Pack straps x2: 20 mm webbing with buckle, each about 250 mm (inner loop 220 mm + 30 mm overlap, EST), at y +-35 mm, each a closed loop round the tray plate (front and aft edges) and the pack; BOM W08 STRIX 20 x 300 mm covers each loop (second strap price \"-\"); mass scaled 5.5 g x length / 300 mm per strap, EST (11 g if both are used uncut)",
    "subsystem": "power",
    "status": "MODELLED",
-   "mass_g": 8.9,
+   "mass_g": 9.2,
    "material": "nylon webbing + plastic buckle",
    "cg_xyz_m": [
-    -0.0299,
+    -0.0314,
     0.0,
     0.032
    ],
@@ -41,7 +41,7 @@
    "mass_g": 3.5,
    "material": "silicone rubber",
    "cg_xyz_m": [
-    -0.031,
+    -0.034,
     0.0,
     0.0085
    ],

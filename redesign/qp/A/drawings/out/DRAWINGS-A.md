@@ -1,20 +1,20 @@
 # Concept A engineering drawings
 
-Generated from the CAD by `drawings/make_drawings_a.py` (commit fb55e382, 2026-11-21). One sheet per distinct made part; mirror pairs and identical parts share a sheet. Every dimension is the CAD value; feature names that say EST are estimates. Re-run after any CAD change. All sheets: [DRAWINGS-A.pdf](DRAWINGS-A.pdf).
+Generated from the CAD by `drawings/make_drawings_a.py` (commit 6e690c7b, 2026-11-21). One sheet per distinct made part; mirror pairs and identical parts share a sheet. Every dimension is the CAD value; feature names that say EST are estimates. Re-run after any CAD change. All sheets: [DRAWINGS-A.pdf](DRAWINGS-A.pdf).
 
 | Drawing | Parts (qty) | Material | Size mm (design frame) | Sheets |
 |---|---|---|---|---|
 | [AVN-008](AVN-008.pdf) | AVN-008 (1) | PETG (printed) | 92.0 x 80.7 x 37.1 | 1 sheet(s), 12 features |
 | [AVN-010](AVN-010.pdf) | AVN-010 (1) | PETG (printed) | 76.5 x 102.5 x 4.2 | 1 sheet(s), 10 features |
-| [CGE-001](CGE-001.pdf) | CGE-001 (1) | Al 6061-T6 (machined) | 59.5 x 107.6 x 49.3 | 1 sheet(s), 17 features |
+| [CGE-001](CGE-001.pdf) | CGE-001 (1) | Al 6061-T6 (machined) | 59.5 x 107.4 x 49.3 | 1 sheet(s), 17 features |
 | [CGE-002-A](CGE-002-A.pdf) | CGE-002-A (1) | CFRP tube | 12.0 x 552.5 x 12.0 | 1 sheet(s), 4 features |
 | [CGE-002-B](CGE-002-B.pdf) | CGE-002-B (1) | CFRP tube | 12.0 x 552.5 x 12.0 | 1 sheet(s), 4 features |
-| [CGE-003](CGE-003.pdf) | CGE-003-UR, CGE-003-LL, CGE-003-LR, CGE-003-UL (4) | PETG (printed) | 19.9 x 41.5 x 33.0 | 2 sheet(s), 19 features |
-| [CGE-004](CGE-004.pdf) | CGE-004 (1) | CFRP tube | 117.5 x 16.0 x 16.0 | 1 sheet(s), 1 features |
-| [CGE-005](CGE-005.pdf) | CGE-005-R, CGE-005-L (2) | CFRP tube | 291.2 x 8.0 x 8.0 | 1 sheet(s), 1 features |
+| [CGE-003](CGE-003.pdf) | CGE-003-UR, CGE-003-LL, CGE-003-LR, CGE-003-UL (4) | PETG (printed) | 19.9 x 47.5 x 33.0 | 1 sheet(s), 13 features |
+| [CGE-004](CGE-004.pdf) | CGE-004 (1) | CFRP tube | 120.5 x 16.0 x 16.0 | 1 sheet(s), 1 features |
+| [CGE-005](CGE-005.pdf) | CGE-005-R, CGE-005-L (2) | CFRP tube | 292.6 x 8.0 x 8.0 | 1 sheet(s), 1 features |
 | [CGE-006](CGE-006.pdf) | CGE-006 (1) | Al 6061-T6 (machined) | 100.0 x 119.6 x 20.1 | 1 sheet(s), 6 features |
-| [CGE-007](CGE-007.pdf) | CGE-007-R, CGE-007-L (2) | PETG (printed) | 37.9 x 52.5 x 18.7 | 1 sheet(s), 4 features |
-| [CGE-008](CGE-008.pdf) | CGE-008 (1) | PETG (printed) | 54.2 x 112.0 x 23.5 | 2 sheet(s), 15 features |
+| [CGE-007](CGE-007.pdf) | CGE-007-R, CGE-007-L (2) | PETG (printed) | 38.1 x 52.5 x 18.7 | 1 sheet(s), 4 features |
+| [CGE-008](CGE-008.pdf) | CGE-008 (1) | PETG (printed) | 57.2 x 112.0 x 23.5 | 2 sheet(s), 15 features |
 | [CGE-009](CGE-009.pdf) | CGE-009-UR, CGE-009-LL, CGE-009-LR, CGE-009-UL (4) | CFRP tube | 14.0 x 36.0 x 14.0 | 1 sheet(s), 2 features |
 | [CGE-010-C](CGE-010-C.pdf) | CGE-010-C (1) | CFRP rod | 38.5 x 3.0 x 3.0 | 1 sheet(s), 1 features |
 | [CGE-010-LR](CGE-010-LR.pdf) | CGE-010-LR, CGE-010-UL (2) | CFRP rod | 14.5 x 3.0 x 3.0 | 1 sheet(s), 1 features |
@@ -30,7 +30,7 @@ Generated from the CAD by `drawings/make_drawings_a.py` (commit fb55e382, 2026-1
 | [FIN-010](FIN-010.pdf) | FIN-010-R, FIN-010-L (2) | XPS foam + tape | 105.8 x 27.8 x 13.4 | 1 sheet(s), 3 features |
 | [GER-001](GER-001.pdf) | GER-001-UR, GER-001-LL, GER-001-LR, GER-001-UL (4) | Onyx (Markforged X7, printed) | 24.0 x 21.0 x 15.0 | 1 sheet(s), 4 features |
 | [GER-002](GER-002.pdf) | GER-002-UR, GER-002-LL, GER-002-LR, GER-002-UL (4) | EVA / PE foam | 30.0 x 15.0 x 12.0 | 1 sheet(s), 1 features |
-| [HRN-003](HRN-003.pdf) | HRN-003-R, HRN-003-L (2) | PETG (printed) | 87.3 x 9.6 x 6.6 | 1 sheet(s), 4 features |
+| [HRN-003](HRN-003.pdf) | HRN-003-R, HRN-003-L (2) | PETG (printed) | 90.3 x 9.6 x 6.6 | 1 sheet(s), 4 features |
 | [HRN-004-LL](HRN-004-LL.pdf) | HRN-004-LL (1) | PETG (printed) | 33.6 x 20.6 x 23.9 | 1 sheet(s), 13 features |
 | [HRN-004-LR](HRN-004-LR.pdf) | HRN-004-LR (1) | PETG (printed) | 20.6 x 20.6 x 23.9 | 1 sheet(s), 13 features |
 | [HRN-004-UL](HRN-004-UL.pdf) | HRN-004-UL (1) | PETG (printed) | 20.6 x 16.6 x 18.5 | 1 sheet(s), 13 features |
@@ -62,21 +62,21 @@ One STL per printed part (mirror images have their own file), in mm, in the part
 |---|---|---|---|---|---|---|---|
 | AVN-008 | [AVN-008.stl](stl/AVN-008.stl) | [AVN-008](AVN-008.pdf) | PETG (printed) | 9.01 | 92.0 x 80.7 x 37.1 | 1 | 0 |
 | AVN-010 | [AVN-010.stl](stl/AVN-010.stl) | [AVN-010](AVN-010.pdf) | PETG (printed) | 1.63 | 76.5 x 102.5 x 4.2 | **14: CHECK (a body is not attached)** | 0 |
-| CGE-003-LL | [CGE-003-LL.stl](stl/CGE-003-LL.stl) | [CGE-003](CGE-003.pdf) | PETG (printed) | 7.68 | 19.9 x 41.5 x 33.0 | 1 | 79 |
-| CGE-003-LR | [CGE-003-LR.stl](stl/CGE-003-LR.stl) | [CGE-003](CGE-003.pdf) | PETG (printed) | 7.68 | 19.9 x 41.5 x 33.0 | 1 | 3 |
-| CGE-003-UL | [CGE-003-UL.stl](stl/CGE-003-UL.stl) | [CGE-003](CGE-003.pdf) | PETG (printed) | 7.68 | 19.9 x 41.5 x 33.0 | 1 | 3 |
-| CGE-003-UR | [CGE-003-UR.stl](stl/CGE-003-UR.stl) | [CGE-003](CGE-003.pdf) | PETG (printed) | 7.68 | 19.9 x 41.5 x 33.0 | 1 | 79 |
-| CGE-007-L | [CGE-007-L.stl](stl/CGE-007-L.stl) | [CGE-007](CGE-007.pdf) | PETG (printed) | 6.34 | 37.9 x 52.5 x 18.7 | 1 | 3 |
-| CGE-007-R | [CGE-007-R.stl](stl/CGE-007-R.stl) | [CGE-007](CGE-007.pdf) | PETG (printed) | 6.34 | 37.9 x 52.5 x 18.7 | 1 | 11 |
-| CGE-008 | [CGE-008.stl](stl/CGE-008.stl) | [CGE-008](CGE-008.pdf) | PETG (printed) | 13.3 | 54.2 x 112.0 x 23.5 | 1 | 0 |
+| CGE-003-LL | [CGE-003-LL.stl](stl/CGE-003-LL.stl) | [CGE-003](CGE-003.pdf) | PETG (printed) | 8.96 | 19.9 x 47.5 x 33.0 | 1 | 76 |
+| CGE-003-LR | [CGE-003-LR.stl](stl/CGE-003-LR.stl) | [CGE-003](CGE-003.pdf) | PETG (printed) | 8.96 | 19.9 x 47.5 x 33.0 | 1 | 3 |
+| CGE-003-UL | [CGE-003-UL.stl](stl/CGE-003-UL.stl) | [CGE-003](CGE-003.pdf) | PETG (printed) | 8.96 | 19.9 x 47.5 x 33.0 | 1 | 0 |
+| CGE-003-UR | [CGE-003-UR.stl](stl/CGE-003-UR.stl) | [CGE-003](CGE-003.pdf) | PETG (printed) | 8.96 | 19.9 x 47.5 x 33.0 | 1 | 76 |
+| CGE-007-L | [CGE-007-L.stl](stl/CGE-007-L.stl) | [CGE-007](CGE-007.pdf) | PETG (printed) | 6.34 | 38.1 x 52.5 x 18.7 | 1 | 9 |
+| CGE-007-R | [CGE-007-R.stl](stl/CGE-007-R.stl) | [CGE-007](CGE-007.pdf) | PETG (printed) | 6.34 | 38.1 x 52.5 x 18.7 | 1 | 9 |
+| CGE-008 | [CGE-008.stl](stl/CGE-008.stl) | [CGE-008](CGE-008.pdf) | PETG (printed) | 13.3 | 57.2 x 112.0 x 23.5 | 1 | 0 |
 | FIN-003-L | [FIN-003-L.stl](stl/FIN-003-L.stl) | [FIN-003](FIN-003.pdf) | PETG (printed) | 22.86 | 50.5 x 29.0 x 60.0 | 1 | 0 |
 | FIN-003-R | [FIN-003-R.stl](stl/FIN-003-R.stl) | [FIN-003](FIN-003.pdf) | PETG (printed) | 22.86 | 50.5 x 29.0 x 60.0 | 1 | 0 |
 | GER-001-LL | [GER-001-LL.stl](stl/GER-001-LL.stl) | [GER-001](GER-001.pdf) | Onyx (Markforged X7, printed) | 4.3 | 24.0 x 21.0 x 15.0 | 1 | 0 |
 | GER-001-LR | [GER-001-LR.stl](stl/GER-001-LR.stl) | [GER-001](GER-001.pdf) | Onyx (Markforged X7, printed) | 4.3 | 24.0 x 21.0 x 15.0 | 1 | 0 |
 | GER-001-UL | [GER-001-UL.stl](stl/GER-001-UL.stl) | [GER-001](GER-001.pdf) | Onyx (Markforged X7, printed) | 4.3 | 24.0 x 21.0 x 15.0 | 1 | 0 |
 | GER-001-UR | [GER-001-UR.stl](stl/GER-001-UR.stl) | [GER-001](GER-001.pdf) | Onyx (Markforged X7, printed) | 4.3 | 24.0 x 21.0 x 15.0 | 1 | 0 |
-| HRN-003-L | [HRN-003-L.stl](stl/HRN-003-L.stl) | [HRN-003](HRN-003.pdf) | PETG (printed) | 1.43 | 87.3 x 9.6 x 6.6 | 1 | 0 |
-| HRN-003-R | [HRN-003-R.stl](stl/HRN-003-R.stl) | [HRN-003](HRN-003.pdf) | PETG (printed) | 1.43 | 87.3 x 9.6 x 6.6 | 1 | 0 |
+| HRN-003-L | [HRN-003-L.stl](stl/HRN-003-L.stl) | [HRN-003](HRN-003.pdf) | PETG (printed) | 1.43 | 90.3 x 9.6 x 6.6 | 1 | 0 |
+| HRN-003-R | [HRN-003-R.stl](stl/HRN-003-R.stl) | [HRN-003](HRN-003.pdf) | PETG (printed) | 1.43 | 90.3 x 9.6 x 6.6 | 1 | 0 |
 | HRN-004-LL | [HRN-004-LL.stl](stl/HRN-004-LL.stl) | [HRN-004-LL](HRN-004-LL.pdf) | PETG (printed) | 1.22 | 33.6 x 20.6 x 23.9 | 1 | 0 |
 | HRN-004-LR | [HRN-004-LR.stl](stl/HRN-004-LR.stl) | [HRN-004-LR](HRN-004-LR.pdf) | PETG (printed) | 0.9 | 20.6 x 20.6 x 23.9 | 1 | 0 |
 | HRN-004-UL | [HRN-004-UL.stl](stl/HRN-004-UL.stl) | [HRN-004-UL](HRN-004-UL.pdf) | PETG (printed) | 0.72 | 20.6 x 16.6 x 18.5 | 1 | 0 |

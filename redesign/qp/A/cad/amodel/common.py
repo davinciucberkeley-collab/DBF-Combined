@@ -39,14 +39,15 @@ SPAR_X, SPAR_OD, SPAR_ID = 0.060, 0.012, 0.010     # DOC iteration 2: CF 12x10 a
 WING_DZ = float(os.environ.get('A_WING_DZ', '0.005'))                            # D-194 (integrator): airfoil datum lowered 5.0 mm so the 12 mm spar bore (z 0) sits at mid-thickness of the S5010: foam above/below the bore 6.3 / 5.6 mm (was 11.3 / 0.6 mm at x 54-66, S5010 chord line z 0 -> lower skin -6.6 mm). CALC from s5010.dat
 COORDS = k9.read_dat(os.path.join(REDESIGN, 'subsystems', 'wing', 's5010.dat'))   # D-193 (A1): Selig S5010, published coordinates, unscaled, 9.82 % t/c (UIUC s5010.dat, checked 2026-11-09; K09-L D-02); replaces reflex_placeholder(0.095, camber 0.012)
 COORDS = [(x_, z_ - WING_DZ / C) for x_, z_ in COORDS]   # re-datum (normalised coordinates), see WING_DZ
-CAGE_DX = -0.012                            # T-077 p4 (D-224 rung 3c): the whole cage (hub, arms, motors, props, doublers, pins, cups, conduits, raceway front, tray, collar, struts) 12 mm forward of the wing; bridge BR_X1 and strut ends stay at the wing, so bridge and struts get longer
+T083_DX = -0.003                            # T-083 (D-227, A-P4 margin): cage, pack and tray-wall windows a further 3 mm forward (box x 493.9 -> about 496.9 mm of 500)
+CAGE_DX = -0.012 + T083_DX                  # T-077 p4 (D-224 rung 3c): the whole cage (hub, arms, motors, props, doublers, pins, cups, conduits, raceway front, tray, collar, struts) 12 mm forward of the wing; bridge BR_X1 and strut ends stay at the wing, so bridge and struts get longer
 HUB = (-0.069 + CAGE_DX, 0.0, 0.0)                    # D-205: hub 6 mm aft (DOC: -75) to win back forward trim after the D-202 hub; HUB_X1 (tray face) unchanged
 YM, ZM = 0.228, 0.156                       # DOC: motors at y 0.228 / z 0.156
 R_M = math.hypot(YM, ZM)                    # 0.2762 (DOC radius 0.276)
 CANT = 17.0                                 # D-189 (was 16, D-184): yaw authority 0.3465 -> 0.363 N m
 YFIN, XFIN_T, FIN_H = 0.38, 0.294, 0.18     # DOC: fins at y 380, tube at x 0.294, z +-0.18
 FIN_OD, FIN_ID = 0.016, 0.014               # DOC 16x14 tube
-PACK_X = (-0.0485, -0.0155)  # T-077 p4 (D-224 rung 3a + 3c): pack centre -32 mm absolute = -20 mm in the tray (tray front -57), 12 mm cage shift + 10 mm pack shift; held by two outboard straps (|y| 35), clear of the hub collar (|y| <= 12). Part 3 had (-0.0265, 0.0065)
+PACK_X = (-0.0485 + T083_DX, -0.0155 + T083_DX)  # T-083: +3 mm forward with the cage. T-077 p4 (D-224 rung 3a + 3c): pack centre -32 mm absolute = -20 mm in the tray (tray front -57), 12 mm cage shift + 10 mm pack shift; held by two outboard straps (|y| 35), clear of the hub collar (|y| <= 12). Part 3 had (-0.0265, 0.0065)
 PACK_X_P2 = (-0.0365, -0.0035)  # T-077 part 2 ladder rung 1: pack 10 mm forward (centre -20 mm, the QP-4 position; front lip -44.5..-42.5 on the root pad, hub face -45). T-077 RDQ 2800 pack 33 mm wide (was 35: -27.5..7.5), same centre -10 mm.                 # QP-4 7.2 #2: pack moved 10 mm aft (centre -10 mm; was -20 mm) so the CAD CG lands mid-band (23 mm) WITH the D-187 elevon balance and the ES3054HV servos; trim +-10 mm in the tray slots
 TRIM = 0.010                                # +-10 mm pack trim travel (about +-2.2 mm of CG)
 TRIM_FWD = 0.006                            # D-205: forward travel back to 6 mm (D-199 value; D-202 had cut it to 1 mm). The hub moved 6 mm aft (HUB -75 -> -69 mm), doublers s 11-25, lead 12.8 g: CAD CG 21.17 mm, forward trim end must stay >= 19.3 mm (claim CL-A-CG-TRIM-FWD >= 19). Aft travel TRIM unchanged.
@@ -106,7 +107,8 @@ PH_D = 0.0018                               # V phase-lead strand OD 1.8 mm: Pim
 PH_RHO = PH_D / math.sqrt(3.0)              # tri-bundle: strand centres on a circle of this radius
 PH_ENV = PH_RHO + PH_D / 2                  # bundle envelope radius (1.94 mm)
 PH_HOLE_R = 0.0024                          # printed lead hole radius (envelope + 0.46 mm)
-PH_Y = 0.0055                               # cup lead hole y (cup frame): collar bore y 3.5..8.0 holds the bend
+PH_Y = 0.0180                               # T-083: cup lead hole y (cup frame). The X2216 leads leave the can radially at the base end (SunnySky drawing), so the hole sits
+                                            # outside the can (r 13.85) after a 4 mm bend: 13.85 + 4 = 17.85 -> 18.0; collar bore y 3.5..20.5 holds the second bend (was 5.5 / 3.5..8.0, MN2212)
 PH_XC = -0.0010                             # arm-run bundle x in the cup frame
 PH_DT = 0.0027                              # bundle offset from the arm axis toward the up side (arm bore ID 10: 1.0 + 2.7 -> 2.9 + 1.94 = 4.83 < 5.0)
 

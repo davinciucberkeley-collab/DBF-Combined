@@ -1,0 +1,47 @@
+module         ok       ms parts bodies joints wires   mass g  err warn
+wing           ok   6281.2    25     63      0     0      296    0    0
+fins           ok      6.3    16     22      0     0      209    0    0
+cage           ok     53.2    23     75      0     0      236    0    0
+propulsion     ok      7.5    21    188      0     0      391    8    8
+power          ok      2.6     3     12      0     0      282    0    0
+avionics       ok     26.8    12    108      0     0       68    0    0
+mechanisms     ok      4.2    14     34      0     0       48    0    0
+landing        ok      3.9     8     16      0     0       20    0    0
+harness        ok    143.8     8     20      0    14       67    0    0
+assembly       ok    674.1     1      1     31     0       28    0    0
+TOTAL 1645 g, CG 0.023, -0.002, 0.007 m (declared mass; CG declared or CAD centroid); 0 datums, 5 keep-outs
+note: 2 body boxes enter a keep-out but their convex hulls do not (box artefacts, not issues): CGE-002-A/KO-PROP-UL (arm tube (one continuous tube, motor cup to motor cup)); CGE-002-A/KO-PROP-LR (arm tube (one continuous tube, motor cup to motor cup))
+  ERROR floating         PRP-001-LL, PRP-002-LL, PRP-004-LL, PRP-005-LL modelled parts not connected to the main structure
+  ERROR floating         PRP-001-LR, PRP-002-LR, PRP-004-LR, PRP-005-LR modelled parts not connected to the main structure
+  ERROR floating         PRP-001-UL, PRP-002-UL, PRP-004-UL, PRP-005-UL modelled parts not connected to the main structure
+  ERROR floating         PRP-001-UR, PRP-002-UR, PRP-004-UR, PRP-005-UR modelled parts not connected to the main structure
+  ERROR floating         PRP-006-LL       modelled parts not connected to the main structure
+  ERROR floating         PRP-006-LR       modelled parts not connected to the main structure
+  ERROR floating         PRP-006-UL       modelled parts not connected to the main structure
+  ERROR floating         PRP-006-UR       modelled parts not connected to the main structure
+  ERROR graph:dangling   E-PRP-01         via "CT-A-M3-CSK-MOTOR" is not a known connection type
+  ERROR graph:dangling   E-PRP-02         via "CT-A-M3-BOLT-MOUNT" is not a known connection type
+  ERROR graph:dangling   E-PRP-04         via "CT-A-M3-CSK-MOTOR" is not a known connection type
+  ERROR graph:dangling   E-PRP-05         via "CT-A-M3-BOLT-MOUNT" is not a known connection type
+  ERROR graph:dangling   E-PRP-07         via "CT-A-M3-CSK-MOTOR" is not a known connection type
+  ERROR graph:dangling   E-PRP-08         via "CT-A-M3-BOLT-MOUNT" is not a known connection type
+  ERROR graph:dangling   E-PRP-10         via "CT-A-M3-CSK-MOTOR" is not a known connection type
+  ERROR graph:dangling   E-PRP-11         via "CT-A-M3-BOLT-MOUNT" is not a known connection type
+  ERROR graph:mass       TOTAL            aircraft 1645 g > limit 1500 g
+  ERROR register         E-PRP-01         None edge registered as contact (allowed: )
+  ERROR register         E-PRP-02         None edge registered as contact (allowed: )
+  ERROR register         E-PRP-04         None edge registered as contact (allowed: )
+  ERROR register         E-PRP-05         None edge registered as contact (allowed: )
+  ERROR register         E-PRP-07         None edge registered as contact (allowed: )
+  ERROR register         E-PRP-08         None edge registered as contact (allowed: )
+  ERROR register         E-PRP-10         None edge registered as contact (allowed: )
+  ERROR register         E-PRP-11         None edge registered as contact (allowed: )
+  WARN  graph:floating   PRP-001-LL, PRP-002-LL, PRP-004-LL, PRP-005-LL group not structurally connected to the main aircraft
+  WARN  graph:floating   PRP-001-LR, PRP-002-LR, PRP-004-LR, PRP-005-LR group not structurally connected to the main aircraft
+  WARN  graph:floating   PRP-001-UL, PRP-002-UL, PRP-004-UL, PRP-005-UL group not structurally connected to the main aircraft
+  WARN  graph:floating   PRP-001-UR, PRP-002-UR, PRP-004-UR, PRP-005-UR group not structurally connected to the main aircraft
+  WARN  graph:floating   PRP-006-LL       no structural (mechanical/kinematic) edge to the aircraft
+  WARN  graph:floating   PRP-006-LR       no structural (mechanical/kinematic) edge to the aircraft
+  WARN  graph:floating   PRP-006-UL       no structural (mechanical/kinematic) edge to the aircraft
+  WARN  graph:floating   PRP-006-UR       no structural (mechanical/kinematic) edge to the aircraft
+check: FAIL (10 modules, 25 errors, 8 warnings)
