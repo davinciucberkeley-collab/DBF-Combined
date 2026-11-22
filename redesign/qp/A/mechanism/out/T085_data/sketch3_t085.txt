@@ -1,0 +1,17 @@
+| case | corner | strong modes IN the band (f, cx / cy) | highest strong below | lowest strong above | D-185 (a) |
+|---|---|---|---|---|---|
+| C3 pad E 0.25 MPa (EST; 2 MPa drawn-nominal) | kd | 123.6 (0.51 / 1.95); 174.3 (0.06 / 0.71) | 84.6 | 679.9 | FAIL |
+| C3 pad E 0.25 MPa (EST; 2 MPa drawn-nominal) | nom | 126.4 (0.53 / 1.96); 181.3 (0.04 / 0.67) | 85.8 | 716.9 | FAIL |
+| C3 pad E 0.25 MPa (EST; 2 MPa drawn-nominal) | hi | 131.5 (0.56 / 1.98); 170.4 (0.11 / 0.52); 198.2 (0.02 / 0.51) | 50.1 | 787.0 | FAIL |
+| C3 pad E 0.15 MPa (EST; 2 MPa drawn-nominal) | kd | 115.2 (0.62 / 1.96); 135.0 (0.12 / 0.56) | 44.8 | 677.6 | FAIL |
+| C3 pad E 0.15 MPa (EST; 2 MPa drawn-nominal) | nom | 118.5 (0.63 / 1.96); 137.3 (0.12 / 0.59) | 46.7 | 713.9 | FAIL |
+| C3 pad E 0.15 MPa (EST; 2 MPa drawn-nominal) | hi | 124.4 (0.65 / 1.96); 138.9 (0.14 / 0.63) | 50.0 | 782.6 | FAIL |
+| C3 pad E 0.10 MPa (EST; 2 MPa drawn-nominal) | kd | 111.9 (0.60 / 1.79); 114.4 (0.31 / 0.94) | 70.3 | 674.9 | FAIL |
+| C3 pad E 0.10 MPa (EST; 2 MPa drawn-nominal) | nom | 114.5 (0.44 / 1.39); 116.5 (0.52 / 1.48) | 71.4 | 708.3 | FAIL |
+| C3 pad E 0.10 MPa (EST; 2 MPa drawn-nominal) | hi | 116.1 (0.16 / 0.74); 122.0 (0.68 / 1.89) | 62.7 | 777.5 | FAIL |
+| C3 pad E 0.05 MPa (EST; 2 MPa drawn-nominal) | kd | 110.1 (0.69 / 1.87) | 83.8 | 664.5 | FAIL |
+| C3 pad E 0.05 MPa (EST; 2 MPa drawn-nominal) | nom | 113.4 (0.70 / 1.88) | 84.5 | 699.3 | FAIL |
+| C3 pad E 0.05 MPa (EST; 2 MPa drawn-nominal) | hi | 119.7 (0.66 / 1.75); 120.5 (0.27 / 0.68) | 84.9 | nan | FAIL |
+| reference: pack mass removed from the cage (13.3 g tray on the hub) | kd | 106.7 (0.73 / 1.75) | 45.5 | 677.8 | FAIL |
+| reference: pack mass removed from the cage (13.3 g tray on the hub) | nom | 109.9 (0.73 / 1.76) | 47.5 | 715.3 | FAIL |
+| reference: pack mass removed from the cage (13.3 g tray on the hub) | hi | 116.2 (0.74 / 1.76) | 50.9 | 786.7 | FAIL |
