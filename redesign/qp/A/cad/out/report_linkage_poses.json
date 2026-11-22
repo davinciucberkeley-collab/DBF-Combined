@@ -18,7 +18,7 @@
   20,
   21
  ],
- "bodies": 581,
+ "bodies": 583,
  "defects": [
   "AVN-008 body \"cover end wall, -y side (0.6 mm; open under the RX hood, T-022 Q4)\": zero-width spike / repeated point in a loop (removed in the export)",
   "WNG-008-LL body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
@@ -39,22 +39,22 @@
    "delta": null,
    "hits": [
     {
-     "a": "E-HRN-05#0",
+     "a": "E-HRN-02#0",
      "at_mm": [
-      29.52,
-      -20.92,
-      23.31
+      -4.44,
+      16.59,
+      2.4
      ],
-     "b": "E-HRN-05#2",
+     "b": "E-HRN-02#2",
      "bodies": [
-      "E-HRN-05 \"wire strand 0 (1.8 mm)\" x E-HRN-05 \"wire strand 2 (1.8 mm)\" 0.01 mm"
+      "E-HRN-02 \"wire strand 2 (1.8 mm)\" x E-HRN-02 \"wire strand 0 (1.8 mm)\" 0.01 mm"
      ],
-     "depth_mm": 0.01
+     "depth_mm": 0.011
     },
     {
      "a": "E-HRN-02#0",
      "at_mm": [
-      -90.02,
+      -84.02,
       11.32,
       14.99
      ],
@@ -67,7 +67,7 @@
     {
      "a": "E-HRN-04#1",
      "at_mm": [
-      -78.78,
+      -72.78,
       226.42,
       -154.12
      ],
@@ -78,22 +78,22 @@
      "depth_mm": 0.012
     },
     {
-     "a": "E-HRN-03#0",
+     "a": "E-HRN-04#0",
      "at_mm": [
-      36.73,
-      -17.26,
-      36.28
+      9.95,
+      21.12,
+      2.19
      ],
-     "b": "E-HRN-03#2",
+     "b": "E-HRN-04#2",
      "bodies": [
-      "E-HRN-03 \"wire strand 0 (1.8 mm)\" x E-HRN-03 \"wire strand 2 (1.8 mm)\" 0.01 mm"
+      "E-HRN-04 \"wire strand 2 (1.8 mm)\" x E-HRN-04 \"wire strand 0 (1.8 mm)\" 0.01 mm"
      ],
-     "depth_mm": 0.011
+     "depth_mm": 0.012
     },
     {
      "a": "CGE-002-B",
      "at_mm": [
-      -77.9,
+      -71.9,
       14.02,
       -15.63
      ],
@@ -174,7 +174,7 @@
    ],
    "moved": null,
    "name": "static",
-   "seconds": 786.5,
+   "seconds": 790.1,
    "state": null,
    "theta_deg": null
   },
@@ -744,7 +744,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -21 deg",
-   "seconds": 16.7,
+   "seconds": 16.9,
    "state": "mid",
    "theta_deg": {
     "L": 22.63742242970439,
@@ -1890,7 +1890,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -18 deg",
-   "seconds": 8.8,
+   "seconds": 8.9,
    "state": "mid",
    "theta_deg": {
     "L": 19.40480618852609,
@@ -2457,7 +2457,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -15 deg",
-   "seconds": 7.7,
+   "seconds": 7.9,
    "state": "mid",
    "theta_deg": {
     "L": 16.169388949464764,
@@ -3024,7 +3024,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -12 deg",
-   "seconds": 10.1,
+   "seconds": 10.3,
    "state": "mid",
    "theta_deg": {
     "L": 12.933269863912221,
@@ -4158,7 +4158,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta -6 deg",
-   "seconds": 8.1,
+   "seconds": 8.2,
    "state": "mid",
    "theta_deg": {
     "L": 6.463845794048801,
@@ -5290,7 +5290,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +0 deg",
-   "seconds": 5.6,
+   "seconds": 6.9,
    "state": "mid",
    "theta_deg": {
     "L": 0.0,
@@ -5857,7 +5857,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +3 deg",
-   "seconds": 11.0,
+   "seconds": 9.9,
    "state": "mid",
    "theta_deg": {
     "L": -3.23144898881135,
@@ -6424,7 +6424,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +6 deg",
-   "seconds": 8.2,
+   "seconds": 8.4,
    "state": "mid",
    "theta_deg": {
     "L": -6.4646983832943,
@@ -6991,7 +6991,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +9 deg",
-   "seconds": 4.3,
+   "seconds": 4.4,
    "state": "mid",
    "theta_deg": {
     "L": -9.702186194942481,
@@ -8143,7 +8143,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +15 deg",
-   "seconds": 8.9,
+   "seconds": 9.3,
    "state": "mid",
    "theta_deg": {
     "L": -16.203607404214964,
@@ -8728,7 +8728,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +18 deg",
-   "seconds": 6.1,
+   "seconds": 6.3,
    "state": "mid",
    "theta_deg": {
     "L": -19.476811045379947,
@@ -9313,7 +9313,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +20 deg",
-   "seconds": 10.3,
+   "seconds": 10.4,
    "state": "mid",
    "theta_deg": {
     "L": -21.671373889774635,
@@ -9898,7 +9898,7 @@
     "WNG-010-R"
    ],
    "name": "linkage zj=mid delta +21 deg",
-   "seconds": 16.6,
+   "seconds": 17.0,
    "state": "mid",
    "theta_deg": {
     "L": -22.773219907759124,
@@ -9907,7 +9907,7 @@
   }
  ],
  "report_mm": 0.01,
- "seconds": 1121.3,
+ "seconds": 1126.5,
  "states": [
   "mid"
  ],

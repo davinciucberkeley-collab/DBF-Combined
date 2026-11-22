@@ -1,0 +1,75 @@
+{
+ "tag": "petg_z005",
+ "petg": true,
+ "zetas": [
+  0.05
+ ],
+ "geom": {
+  "TR": 1.0,
+  "HR": 38.0,
+  "TP": 1.0,
+  "TE": 2.0,
+  "RD": 12.3
+ },
+ "min_x223": 0.3852190015934439,
+ "rows": [
+  {
+   "row": "P6 ring-to-socket junction PETG 16.5 x 29, interlayer 9.5",
+   "rb": 0.8590383735533799,
+   "x223": 0.3852190015934439,
+   "cls": "RF",
+   "verdict": "FAIL",
+   "case": "hard 7/7 combo z0.05 mu0.40"
+  },
+  {
+   "row": "P8 socket wall PETG box 29 / bore 25, interlayer 9.5",
+   "rb": 1.176863804205976,
+   "x223": 0.5277416162358637,
+   "cls": "RF",
+   "verdict": "FAIL",
+   "case": "SITL Ta_h5 narrow (z drift) z0.05 mu0.40"
+  },
+  {
+   "row": "P6 stress part Fx (sigma) at RB [MPa]",
+   "value": 0.4898750183299291,
+   "cls": "record",
+   "case": "hard 10 wide + drift .5 y z0.05 mu0.30"
+  },
+  {
+   "row": "P6 stress part Mx + V (tau) at RB [MPa]",
+   "value": 7.631938322257598,
+   "cls": "record",
+   "case": "SITL Tb_h5 wide (y drift) z0.05 mu0.40"
+  },
+  {
+   "row": "P6 stress part My (sigma) at RB [MPa]",
+   "value": 8.80139592027856,
+   "cls": "record",
+   "case": "SITL Z5_b45 narrow (z drift) z0.05 mu0.30"
+  },
+  {
+   "row": "P6 stress part Mz (sigma) at RB [MPa]",
+   "value": 6.178426014943407,
+   "cls": "record",
+   "case": "hard 16 wide + drift .5 y z0.05 mu0.40"
+  },
+  {
+   "row": "P8 sigma at RB [MPa]",
+   "value": 8.05603330893738,
+   "cls": "record",
+   "case": "SITL Ta_h5 narrow (z drift) z0.05 mu0.40"
+  },
+  {
+   "row": "P8 tau at RB [MPa]",
+   "value": 4.435720091419515,
+   "cls": "record",
+   "case": "SITL Tb_h5 wide (y drift) z0.05 mu0.40"
+  },
+  {
+   "row": "max |My| at the junction x 286 [N m, RB]",
+   "value": 9.453192770594994,
+   "cls": "record",
+   "case": "SITL Z5_b45 narrow (z drift) z0.05 mu0.30"
+  }
+ ]
+}

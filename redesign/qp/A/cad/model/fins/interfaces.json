@@ -34,15 +34,15 @@
   },
   {
    "id": "FIN-003-R",
-   "name": "Fin root block (R)",
+   "name": "Fin root fitting (R; T-083b, replaces the PETG root block): machined 6061-T6, ring OD 18.2 / bore 16.2 x 38 mm on the fin tube, plug OD 22.8 / ID 20.8 x 31 mm bonded inside the 25x23 rib end, end plate 2.0 mm x 24.6 mm diameter notched by the fin tube; mass = drawn volume (voxel 0.2 mm) x 2.70 g/cm3",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 22.86,
-   "material": "PETG (printed)",
+   "mass_g": 12.04,
+   "material": "Al 6061-T6 (machined)",
    "cg_xyz_m": [
-    0.2783,
-    0.382,
-    0.0
+    0.283,
+    0.3818,
+    -0.0
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -154,15 +154,15 @@
   },
   {
    "id": "FIN-003-L",
-   "name": "Fin root block (L)",
+   "name": "Fin root fitting (L; T-083b, replaces the PETG root block): machined 6061-T6, ring OD 18.2 / bore 16.2 x 38 mm on the fin tube, plug OD 22.8 / ID 20.8 x 31 mm bonded inside the 25x23 rib end, end plate 2.0 mm x 24.6 mm diameter notched by the fin tube; mass = drawn volume (voxel 0.2 mm) x 2.70 g/cm3",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 22.86,
-   "material": "PETG (printed)",
+   "mass_g": 12.04,
+   "material": "Al 6061-T6 (machined)",
    "cg_xyz_m": [
-    0.2783,
-    -0.382,
-    0.0
+    0.283,
+    -0.3818,
+    -0.0
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"

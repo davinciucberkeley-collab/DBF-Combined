@@ -1,0 +1,8 @@
+build_a exit 1 17 s
+wire_inventory exit 0 10 s
+cad_mass exit 0 7 s
+mission_gate exit 0 0 s
+prop_sched exit 0 7 s
+proofs exit 1 2 s
+bbox exit 0 8 s
+collide_pose21 exit 1 972 s

@@ -1,0 +1,140 @@
+{
+ "tag": "drawn_zle005",
+ "petg": false,
+ "zetas": [
+  0.02,
+  0.05
+ ],
+ "geom": {
+  "TR": 1.0,
+  "HR": 38.0,
+  "TP": 1.0,
+  "TE": 2.0,
+  "RD": 12.3
+ },
+ "min_x223": 1.2103194500668784,
+ "rows": [
+  {
+   "row": "Q7c plug bond peel vs epoxy 2.0 (integrity class)",
+   "rb": 0.338926709517565,
+   "x223": 0.15198507153254034,
+   "cls": "integrity",
+   "verdict": "integrity class: < 1",
+   "case": "SITL Ta_h5 narrow (z drift) z0.05 mu0.40"
+  },
+  {
+   "row": "Q1c ring bond peel, same stress vs epoxy 2.0 (integrity class, outside the RF minimum as T-069 F-3)",
+   "rb": 0.3608116631985258,
+   "x223": 0.16179895210696224,
+   "cls": "integrity",
+   "verdict": "integrity class: < 1",
+   "case": "SITL Ta_h5 wide (y drift) z0.05 mu0.30"
+  },
+  {
+   "row": "Q3 ring 18.2/16 alone at the collar root z +-12.3 (one foot; fin tube share ignored), 6061 von Mises x KF",
+   "rb": 2.6990123736491385,
+   "x223": 1.2103194500668784,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 7/7 combo z0.05 mu0.30"
+  },
+  {
+   "row": "Q2 fin tube 16x14 at the ring edge z +-19 mm (P4 formula), CF 350 / 30, KF",
+   "rb": 2.7381161311612194,
+   "x223": 1.2278547673368696,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 10 wide z0.05 mu0.40"
+  },
+  {
+   "row": "Q7a plug epoxy bond inside the rib (D23 x 31): shear, epoxy 2.0",
+   "rb": 3.9108020452482757,
+   "x223": 1.7537228902458635,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Tb_h5 wide (y drift) z0.02 mu0.40"
+  },
+  {
+   "row": "Q1a ring epoxy bond on the fin tube (D16 x 38): shear (axial + torsion), epoxy 2.0",
+   "rb": 4.5816897276703346,
+   "x223": 2.0545693846055313,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 16 wide + drift .5 y z0.05 mu0.40"
+  },
+  {
+   "row": "Q6b plug at the mouth x 255 (OD 22.8 / ID 20.8), 6061 von Mises x KF",
+   "rb": 4.8983155500213185,
+   "x223": 2.196554058305524,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Ta_h5 narrow (z drift) z0.05 mu0.40"
+  },
+  {
+   "row": "Q6a plug at its root x 286 (OD 22.8 / ID 20.8), 6061 von Mises x KF",
+   "rb": 5.076241782128385,
+   "x223": 2.2763416063355986,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Ta_h5 wide (y drift) z0.05 mu0.30"
+  },
+  {
+   "row": "Q5 plate aft face x 288.00 (ring side strips + plate): bending + axial, torsion by the Prandtl stress function, 6061 von Mises x KF",
+   "rb": 5.238391988311867,
+   "x223": 2.3490547032788642,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Tb_h5 wide (y drift) z0.02 mu0.40"
+  },
+  {
+   "row": "Q4 plate mid-plane x 287.00: bending + axial, torsion by the Prandtl stress function, 6061 von Mises x KF",
+   "rb": 7.2678055657614715,
+   "x223": 3.259105634870615,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Tb_h5 wide (y drift) z0.02 mu0.40"
+  },
+  {
+   "row": "Q8 rib end bearing on the plate face (Fx + bending of the rib-end annulus, KF), bearing yield 386",
+   "rb": 10.019121335504973,
+   "x223": 4.4928795226479705,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Z5_b45 narrow (z drift) z0.05 mu0.30"
+  },
+  {
+   "row": "Q7b plug bearing on the 6061 (KP), bearing yield 386",
+   "rb": 65.41285493689004,
+   "x223": 29.333118805780288,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Ta_h5 narrow (z drift) z0.05 mu0.40"
+  },
+  {
+   "row": "Q1b ring bearing on the 6061 bore (6M/(D L^2) + V/(D L), KP), bearing yield 386",
+   "rb": 69.63665099731548,
+   "x223": 31.227197756643715,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Ta_h5 wide (y drift) z0.05 mu0.30"
+  },
+  {
+   "row": "Q1d CF fin-tube wall bearing in the ring at x2.23 [MPa]; CF bearing allowable \"-\" (TP-4 coupon)",
+   "value": 12.361019487183313,
+   "cls": "record",
+   "case": "SITL Ta_h5 wide (y drift) z0.05 mu0.30"
+  },
+  {
+   "row": "Q7d CF rib-wall bearing on the plug at x2.23 [MPa]; allowable \"-\" (TP-4 coupon); the PETG block put the same stress into the rib wall",
+   "value": 13.159187148007463,
+   "cls": "record",
+   "case": "SITL Ta_h5 narrow (z drift) z0.05 mu0.40"
+  },
+  {
+   "row": "max |My| at the junction x 286 [N m, RB]",
+   "value": 9.453192770594994,
+   "cls": "record",
+   "case": "SITL Z5_b45 narrow (z drift) z0.05 mu0.30"
+  }
+ ]
+}

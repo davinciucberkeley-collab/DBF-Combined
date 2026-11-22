@@ -37,8 +37,8 @@ STEPS = [
     ('B0i2', 'Motor cup LL slid onto the tube A end', ['CGE-003-LL'], (0, 0.8253073, 0.5646839), 60, 5),
     ('B0i3', 'Motor cup LR slid onto the tube B end', ['CGE-003-LR'], (0, -0.8253073, 0.5646839), 60, 5),
     ('B0i4', 'Motor cup UL slid onto the tube B end', ['CGE-003-UL'], (0, 0.8253073, -0.5646839), 60, 5),
-    ('B0j1', 'Right strut pushed into its hub socket along its own axis', ['CGE-005-R'], (-0.44434, -0.89586, 0), 40, 5),  # T-083: axis after the 15 mm cage shift (STRUT_S x -80 mm); was (-0.43605, -0.89992) for 12 mm  # D-224 p4: strut axis direction after the 12 mm cage shift (STRUT_S x -77 mm: atan2(262.1, 127) = 64.15 deg; was 66.3 deg, (-0.40179, -0.91573))
-    ('B0j2', 'Left strut pushed into its hub socket along its own axis', ['CGE-005-L'], (-0.44434, 0.89586, 0), 40, 5),
+    ('B0j1', 'Right strut pushed into its hub socket along its own axis', ['CGE-005-R'], (-0.42766, -0.90394, 0), 40, 5),  # T-083b: axis for the 9 mm cage shift (T083_DX +3, STRUT_S x -74 mm). T-083: axis after the 15 mm cage shift (STRUT_S x -80 mm); was (-0.43605, -0.89992) for 12 mm  # D-224 p4: strut axis direction after the 12 mm cage shift (STRUT_S x -77 mm: atan2(262.1, 127) = 64.15 deg; was 66.3 deg, (-0.40179, -0.91573))
+    ('B0j2', 'Left strut pushed into its hub socket along its own axis', ['CGE-005-L'], (-0.42766, 0.90394, 0), 40, 5),
     ('B0k', 'THREAD (bench, before the motors go on the cups): feed the three 20 AWG leads of each motor (100 mm X2216 stock + extension, EST) from the cup side through the 4.8 mm lead hole, the collar and the tube bore to the 4.8 mm exit hole at s +-18 mm; the free ends are laid flat along the tube until the hub conduits are on (B2b1-B2b4); then screw the motors on (B1)', [], None, 0, 0),
     ('B1', 'Cage unit (hub, arms, cups, bridge with the machined centre node CGE-006 bonded on it, struts, strut clamps, motors, props) built on the bench, docked '
            'from below BEFORE the spar (T-077 p8, D-226: the centre node sleeve is a closed bore): sleeve, socket boss and end flanges rise into their open-below core channels, the flanges beside the centre bulkheads', CAGE, (0, 0, 1), 30, 3),

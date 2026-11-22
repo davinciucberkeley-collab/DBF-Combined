@@ -1,0 +1,139 @@
+{
+ "tag": "drawn_z002",
+ "petg": false,
+ "zetas": [
+  0.02
+ ],
+ "geom": {
+  "TR": 1.0,
+  "HR": 38.0,
+  "TP": 1.0,
+  "TE": 2.0,
+  "RD": 12.3
+ },
+ "min_x223": 1.3981024156839905,
+ "rows": [
+  {
+   "row": "Q7c plug bond peel vs epoxy 2.0 (integrity class)",
+   "rb": 0.3872987133663514,
+   "x223": 0.17367655307908136,
+   "cls": "integrity",
+   "verdict": "integrity class: < 1",
+   "case": "hard 7/7 combo z0.02 mu0.40"
+  },
+  {
+   "row": "Q1c ring bond peel, same stress vs epoxy 2.0 (integrity class, outside the RF minimum as T-069 F-3)",
+   "rb": 0.4152145235549991,
+   "x223": 0.18619485361210722,
+   "cls": "integrity",
+   "verdict": "integrity class: < 1",
+   "case": "SITL Tb_h5 wide (y drift) z0.02 mu0.40"
+  },
+  {
+   "row": "Q2 fin tube 16x14 at the ring edge z +-19 mm (P4 formula), CF 350 / 30, KF",
+   "rb": 3.117768386975299,
+   "x223": 1.3981024156839905,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 16 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "row": "Q3 ring 18.2/16 alone at the collar root z +-12.3 (one foot; fin tube share ignored), 6061 von Mises x KF",
+   "rb": 3.466269817482763,
+   "x223": 1.554381084072988,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 7/7 combo z0.02 mu0.40"
+  },
+  {
+   "row": "Q7a plug epoxy bond inside the rib (D23 x 31): shear, epoxy 2.0",
+   "rb": 3.9108020452482757,
+   "x223": 1.7537228902458635,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Tb_h5 wide (y drift) z0.02 mu0.40"
+  },
+  {
+   "row": "Q1a ring epoxy bond on the fin tube (D16 x 38): shear (axial + torsion), epoxy 2.0",
+   "rb": 5.144488668768427,
+   "x223": 2.3069455913759764,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 16 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "row": "Q5 plate aft face x 288.00 (ring side strips + plate): bending + axial, torsion by the Prandtl stress function, 6061 von Mises x KF",
+   "rb": 5.238391988311867,
+   "x223": 2.3490547032788642,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Tb_h5 wide (y drift) z0.02 mu0.40"
+  },
+  {
+   "row": "Q6b plug at the mouth x 255 (OD 22.8 / ID 20.8), 6061 von Mises x KF",
+   "rb": 5.59138554941984,
+   "x223": 2.507347780008897,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 7/7 combo z0.02 mu0.40"
+  },
+  {
+   "row": "Q6a plug at its root x 286 (OD 22.8 / ID 20.8), 6061 von Mises x KF",
+   "rb": 5.8430713716110185,
+   "x223": 2.6202113774040443,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Tb_h5 wide (y drift) z0.02 mu0.40"
+  },
+  {
+   "row": "Q4 plate mid-plane x 287.00: bending + axial, torsion by the Prandtl stress function, 6061 von Mises x KF",
+   "rb": 7.2678055657614715,
+   "x223": 3.259105634870615,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Tb_h5 wide (y drift) z0.02 mu0.40"
+  },
+  {
+   "row": "Q8 rib end bearing on the plate face (Fx + bending of the rib-end annulus, KF), bearing yield 386",
+   "rb": 11.561427922247889,
+   "x223": 5.18449682612013,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 7/7 combo z0.02 mu0.40"
+  },
+  {
+   "row": "Q7b plug bearing on the 6061 (KP), bearing yield 386",
+   "rb": 74.74865167970582,
+   "x223": 33.5195747442627,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 7/7 combo z0.02 mu0.40"
+  },
+  {
+   "row": "Q1b ring bearing on the 6061 bore (6M/(D L^2) + V/(D L), KP), bearing yield 386",
+   "rb": 80.13640304611484,
+   "x223": 35.935606747136696,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Tb_h5 wide (y drift) z0.02 mu0.40"
+  },
+  {
+   "row": "Q1d CF fin-tube wall bearing in the ring at x2.23 [MPa]; CF bearing allowable \"-\" (TP-4 coupon)",
+   "value": 10.741435443573133,
+   "cls": "record",
+   "case": "SITL Tb_h5 wide (y drift) z0.02 mu0.40"
+  },
+  {
+   "row": "Q7d CF rib-wall bearing on the plug at x2.23 [MPa]; allowable \"-\" (TP-4 coupon); the PETG block put the same stress into the rib wall",
+   "value": 11.515659221364936,
+   "cls": "record",
+   "case": "hard 7/7 combo z0.02 mu0.40"
+  },
+  {
+   "row": "max |My| at the junction x 286 [N m, RB]",
+   "value": 8.19419894097881,
+   "cls": "record",
+   "case": "hard 7/7 combo z0.02 mu0.40"
+  }
+ ]
+}

@@ -287,7 +287,7 @@
  },
  "mass": {
   "basic_cad_kg": {
-   "value": 1.65064,
+   "value": 1.6275,
    "unit": "kg",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json mass_basic_kg (CAD, no growth)"
@@ -401,13 +401,13 @@
    "note": "D-205: forward pack travel 6 mm (D-202: 1 mm; D-199: 6 mm; D-196: 8 mm) (tray front lip 2 mm aft); cad_mass.json trim_fwd_m"
   },
   "cg_x_mm": {
-   "value": 21.338122182910865,
+   "value": 21.078549923195084,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_x_m, aft of the wing leading edge"
   },
   "cg_y_mm": {
-   "value": 1.6390163815247418,
+   "value": 1.662320122887865,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_y_m (lateral)"
@@ -1908,7 +1908,7 @@
    "note": "report.json kinks (wire folds)"
   },
   "parts": {
-   "value": 125,
+   "value": 129,
    "unit": "-",
    "source": "SRC-A-COLL",
    "note": "report.json parts checked"
@@ -1926,7 +1926,7 @@
    "note": "assembly.json steps with no blocking pair at or above the tolerance (35 of 35 in ASSEMBLY.md)"
   },
   "assy_parts_placed": {
-   "value": 125,
+   "value": 129,
    "unit": "-",
    "source": "SRC-A-ASSY",
    "note": "assembly.json parts placed (96 of 96)"

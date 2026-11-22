@@ -10,7 +10,7 @@
    "mass_g": 1.43,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0234,
+    -0.0204,
     0.019,
     0.0027
    ],
@@ -25,7 +25,7 @@
    "mass_g": 1.43,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0234,
+    -0.0204,
     -0.019,
     0.0027
    ],
@@ -40,7 +40,7 @@
    "mass_g": 0.98,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0719,
+    -0.0659,
     0.012,
     0.0182
    ],
@@ -55,7 +55,7 @@
    "mass_g": 0.72,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0672,
+    -0.0612,
     -0.013,
     0.0179
    ],
@@ -70,7 +70,7 @@
    "mass_g": 0.9,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0667,
+    -0.0607,
     0.0156,
     -0.0168
    ],
@@ -85,7 +85,7 @@
    "mass_g": 1.22,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0709,
+    -0.0649,
     -0.0142,
     -0.0173
    ],
@@ -114,7 +114,7 @@
    "name": "Harness remainder, bottom-up (D-198): phase-lead extensions, splices, ESC ribbon, sensor leads, servo ties, sleeves / ties / tape / solder - lumped",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 52.1,
+   "mass_g": 51.6,
    "material": "copper / silicone",
    "cg_xyz_m": [
     0.03,

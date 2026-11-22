@@ -39,7 +39,7 @@ SPAR_X, SPAR_OD, SPAR_ID = 0.060, 0.012, 0.010     # DOC iteration 2: CF 12x10 a
 WING_DZ = float(os.environ.get('A_WING_DZ', '0.005'))                            # D-194 (integrator): airfoil datum lowered 5.0 mm so the 12 mm spar bore (z 0) sits at mid-thickness of the S5010: foam above/below the bore 6.3 / 5.6 mm (was 11.3 / 0.6 mm at x 54-66, S5010 chord line z 0 -> lower skin -6.6 mm). CALC from s5010.dat
 COORDS = k9.read_dat(os.path.join(REDESIGN, 'subsystems', 'wing', 's5010.dat'))   # D-193 (A1): Selig S5010, published coordinates, unscaled, 9.82 % t/c (UIUC s5010.dat, checked 2026-11-09; K09-L D-02); replaces reflex_placeholder(0.095, camber 0.012)
 COORDS = [(x_, z_ - WING_DZ / C) for x_, z_ in COORDS]   # re-datum (normalised coordinates), see WING_DZ
-T083_DX = -0.003                            # T-083 (D-227, A-P4 margin): cage, pack and tray-wall windows a further 3 mm forward (box x 493.9 -> about 496.9 mm of 500)
+T083_DX = 0.003                             # T-083b: +3 mm (T-083 had -0.003 = cage, pack and tray-wall windows 3 mm forward for A-P4 aft margin). The 6061 root fittings move the CG 3.4 mm (drawn) / 5.2 mm (tallied) forward; at 0 the drawn forward trim end is 18.54 < 19.0 (CL-A-CG-TRIM-FWD), so the cage, pack and windows go 3 mm AFT of the T-077 p8 position (net 6 mm aft of T-083)
 CAGE_DX = -0.012 + T083_DX                  # T-077 p4 (D-224 rung 3c): the whole cage (hub, arms, motors, props, doublers, pins, cups, conduits, raceway front, tray, collar, struts) 12 mm forward of the wing; bridge BR_X1 and strut ends stay at the wing, so bridge and struts get longer
 HUB = (-0.069 + CAGE_DX, 0.0, 0.0)                    # D-205: hub 6 mm aft (DOC: -75) to win back forward trim after the D-202 hub; HUB_X1 (tray face) unchanged
 YM, ZM = 0.228, 0.156                       # DOC: motors at y 0.228 / z 0.156
@@ -54,7 +54,7 @@ TRIM_FWD = 0.006                            # D-205: forward travel back to 6 mm
 TRAY_YI, TRAY_YO = 0.0540, 0.0560          # T-077: tray end wall inner / outer face |y| (RDQ pack 107 long = |y| 53.5 + 0.5 mm clearance; 2.0 mm wall; was 52.5 / 54.5)
 TRAY_WALL_TOP = 0.0295                      # T-077: end wall top z (leads leave the end face at z 32, 1.5 mm radius: 1.0 mm over the wall)
 TRAY_X0 = -0.045 + CAGE_DX                  # T-077 p4: tray plate front = the hub aft face (HUB_X1), x -57 mm
-TRAY_X1 = -0.0028                           # T-077 p4: tray plate aft end -2.8 mm (was +21.5; first draft of part 4 kept +9.5): 2.8 mm aft of the pack's aft edge at +10 trim (-5.5) and the rear lip (-3.5); the two outboard straps (PWR-002) wrap the plate front and aft EDGES, so no slots are cut in the plate. The core tray slot (to 22.5) stays and is open aft of the tray
+TRAY_X1 = -0.0028 + T083_DX                 # T-083b: follows the pack (+3 mm): at -2.8 the aft strap legs crossed the rear lip tab by 1.0 mm (collide run 1). T-077 p4: tray plate aft end -2.8 mm (was +21.5; first draft of part 4 kept +9.5): 2.8 mm aft of the pack's aft edge at +10 trim (-5.5) and the rear lip (-3.5); the two outboard straps (PWR-002) wrap the plate front and aft EDGES, so no slots are cut in the plate. The core tray slot (to 22.5) stays and is open aft of the tray
 SERVO_Y = 0.200                             # EST (DOC landing_a: servo y 0.30 is in the elevon; moved inboard)
 SV_Z1 = 0.0117 - WING_DZ                              # servo case top (servo case 28.4 x 13.0 x 26.7, see electrical.py); the core servo pocket opens at this z
 

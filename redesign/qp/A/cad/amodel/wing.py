@@ -109,6 +109,10 @@ CN_FL_X, CN_FL_Z = (0.020, 0.120), 0.008   # flange outline: x 20..120, |z| <= 8
 CN_SK_X0, CN_SK_RO = 0.0275, 0.01005       # bridge socket mouth x 27.5 (24 mm engagement to the bridge end x 51.5), boss OD 20.1 (2.0 mm wall round the 16.1 bore)
 CN_I2C, CN_I2C_D = (0.1095, zu(0.1095) - 0.0065), 0.004   # airspeed I2C groove crossing |y| 60 (= electrical.py I2C_X, I2C_ZD): 4 mm hole in the left flange and bulkhead
 BLK_X0, BLK_SH = 0.2550, RIB_OD / 2 + 0.002                 # root block rib socket x 255..286, half width 14.5 mm (2.0 mm PETG wall round the 25 mm rib; was 19 x 19 round the 14 mm rib)   # T-077 p5: the slim 2 mm cradle ring (r 8.0, was 10.5) lets the rib start 2.5 mm further forward, so the 40 mm socket gives the D-221 engagement of 40 mm
+# ---- T-083b (D-215 / T-076d "enlarged root block" never drawn; T-083 s0 3c P6 0.25-0.44 / P8 0.31-0.60): FIN-003 becomes ONE machined 6061-T6 root fitting
+# (Tormach, two setups; T11 bar offcut): ring on the fin tube, plug bonded INSIDE the 25x23 rib end (31 mm, unchanged engagement), end plate the rib bears on, notched by the fin tube.
+# Strength rows mechanism/out/T083b_data/t083b_rootblock.py (min RF 1.18 at x2.23, pad zeta <= 0.05); BLK_SH is no longer drawn (kept for the record / landing_path_a history).
+FB_TR, FB_HR, FB_TP, FB_TE, FB_RD, FB_GAP = 0.0010, 0.038, 0.0010, 0.0020, 0.0123, 0.0001   # ring wall, ring height (z +-19), plug wall, plate thickness, plate radius (0.2 mm under the rib OD), bond gap per side (EST)
 # ---- T-077 p5 FIN-005 clamshell (D-215 / D-221 / T-080 s3: two 0.5 mm waterjet-cut CF plates about 50 x 75 mm at z +-7.5..9 inside the core, slim 2 mm printed cradle, rib engagement >= 40 mm, 3 CF pins in a 4 mm boss; T-071b B.2: pin bearing 0.37 -> 1.12 with 3 x 3 mm pins in a 4 mm wall)
 CLAM_WALL, CLAM_H = 0.002, 0.009             # cradle wall 2.0 mm round the 14 mm rib: socket 18 x 18 mm (half 9.0)
 CLAM_X0 = 0.0665                             # cradle socket front (unchanged)
@@ -302,6 +306,26 @@ def cn_volume_m3(h=0.0002):
         m |= (rb <= CN_SK_RO ** 2) & (X >= CN_SK_X0) & (X <= SPAR_X)
         m &= ~bore
         m &= ~((rb < BR_RO ** 2) & (X >= CN_SK_X0 - 0.001) & (X <= BR_X1))
+        tot += float(np.count_nonzero(m)) * h ** 3
+    return tot
+
+
+def fin_block_volume_m3(h=0.0002):
+    """T-083b: drawn volume of the root fitting FIN-003-R by a voxel sum (pitch 0.2 mm): ring (z +-FB_HR/2) on the fin tube, plug inside the rib end, end plate,
+    minus the fin bore, the rib-wall annulus ahead of RIB_X1 and the plug bore (= the solids and cuts drawn in build_fins)."""
+    import numpy as np
+    fr = FIN_OD / 2 + FB_GAP; rp = RIB_ID / 2 - FB_GAP
+    xs = np.arange(BLK_X0 - 0.001 + h / 2, XFIN_T + fr + FB_TR + 0.001, h); ys = np.arange(RIB_Y - 0.016 + h / 2, RIB_Y + 0.016, h); zs = np.arange(-FB_HR / 2 - 0.001 + h / 2, FB_HR / 2 + 0.001, h)
+    Y, Zg = np.meshgrid(ys, zs, indexing='ij'); r2r = (Y - RIB_Y) ** 2 + Zg ** 2; tot = 0.0
+    for x in xs:
+        d2f = (x - XFIN_T) ** 2 + (Y - YFIN) ** 2
+        m = (d2f <= (fr + FB_TR) ** 2) & (np.abs(Zg) <= FB_HR / 2)
+        if BLK_X0 <= x <= RIB_X1:
+            m |= (r2r <= rp ** 2) & (r2r >= (rp - FB_TP) ** 2)
+            m &= ~((r2r > rp ** 2) & (r2r <= (RIB_OD / 2 + 0.00005) ** 2)) & ~(r2r < (rp - FB_TP) ** 2)
+        if RIB_X1 <= x <= RIB_X1 + FB_TE:
+            m |= r2r <= FB_RD ** 2
+        m &= d2f >= fr ** 2
         tot += float(np.count_nonzero(m)) * h ** 3
     return tot
 
@@ -916,7 +940,9 @@ for s_ in 'RL':
 for s in 'RL':
     P('FIN-001-' + s, 'Fin tube 16x14 x 0.36 m (%s)' % s, 'fins', round(tube_g(0.36, FIN_OD, FIN_ID), 1), 'CFRP tube')
     P('FIN-002-' + s, 'Fin rib tube 14x12 (%s)' % s, 'fins', round(tube_g(RIB_X1 - RIB_X0, RIB_OD, RIB_ID), 1), 'CFRP tube')      # D-200: mass from the drawn length (215.5 mm; was 14.8 g for the DOC 0.227 m)
-    P('FIN-003-' + s, 'Fin root block (%s)' % s, 'fins', 3.2, 'PETG (printed)')
+    P('FIN-003-' + s, 'Fin root fitting (%s; T-083b, replaces the PETG root block): machined 6061-T6, ring OD %.1f / bore %.1f x %.0f mm on the fin tube, plug OD %.1f / ID %.1f x %.0f mm bonded inside the 25x23 rib end, end plate %.1f mm x %.1f mm diameter notched by the fin tube; mass = drawn volume (voxel 0.2 mm) x 2.70 g/cm3'
+      % (s, 2 * (FIN_OD / 2 + FB_GAP + FB_TR) * 1e3, (FIN_OD + 2 * FB_GAP) * 1e3, FB_HR * 1e3, (RIB_ID - 2 * FB_GAP) * 1e3, (RIB_ID - 2 * FB_GAP - 2 * FB_TP) * 1e3, (RIB_X1 - BLK_X0) * 1e3, FB_TE * 1e3, 2 * FB_RD * 1e3),
+      'fins', round(fin_block_volume_m3() * 1e6 * RHO_AL, 2), 'Al 6061-T6 (machined)')
     P('FIN-004-' + s, 'Fin fairing 3 mm XPS + tape (%s)' % s, 'fins', 8.4, 'XPS foam + tape')
     if P5_CLAMSHELL:
         P('FIN-005-' + s, 'Clamshell cradle on spar (%s, T-077 p5, D-221): ring wall 2.0 mm on the spar (60 mm), socket 18 x 18 mm x 40 mm round the 14 mm rib, 4 mm pin bosses, printed PETG; mass = drawn volume x T-067 basis' % s, 'fins', 1.0, 'PETG (printed)')
@@ -1174,9 +1200,15 @@ def build_fins(ctx):
     r = ctx.part('FIN-002-R', rgb=(0.1, 0.1, 0.1))
     r.tube('X', (RIB_X0, RIB_Y, 0.0), RIB_X1 - RIB_X0, RIB_OD / 2, RIB_ID / 2, name='rib tube %.0fx%.0f CF (T-077 p8, D-226), axis |y| %.0f mm' % (RIB_OD * 1e3, RIB_ID * 1e3, RIB_Y * 1e3))
     ctx.mirror('FIN-002-R', 'FIN-002-L', plane='XZ')
-    b = ctx.part('FIN-003-R', rgb=(0.9, 0.9, 0.9))
-    b.tube('Z', (XFIN_T, YFIN, -0.03), 0.06, 0.0115, FIN_OD / 2, name='root block ring')
-    b.box((BLK_X0, RIB_Y - BLK_SH, -BLK_SH), (RIB_X1, RIB_Y + BLK_SH, BLK_SH), name='root block rib socket %.0f x %.0f mm round the 25 mm rib (T-077 p8)' % (2 * BLK_SH * 1e3, 2 * BLK_SH * 1e3))
+    b = ctx.part('FIN-003-R', rgb=(0.80, 0.80, 0.82))
+    fr_, rp_ = FIN_OD / 2 + FB_GAP, RIB_ID / 2 - FB_GAP
+    b.tube('Z', (XFIN_T, YFIN, -FB_HR / 2), FB_HR, fr_ + FB_TR, fr_, name='root fitting ring OD %.1f / bore %.1f x %.0f mm on the fin tube (6061, T-083b)' % (2 * (fr_ + FB_TR) * 1e3, 2 * fr_ * 1e3, FB_HR * 1e3))
+    b.tube('X', (BLK_X0, RIB_Y, 0.0), RIB_X1 - BLK_X0, rp_, rp_ - FB_TP, name='root fitting plug OD %.1f / ID %.1f x %.0f mm, bonded inside the 25x23 rib end (T-083b)' % (2 * rp_ * 1e3, 2 * (rp_ - FB_TP) * 1e3, (RIB_X1 - BLK_X0) * 1e3))
+    b.cylinder('X', (RIB_X1, RIB_Y, 0.0), FB_TE, FB_RD, name='root fitting end plate %.1f mm, diameter %.1f, the rib end bears on it (T-083b)' % (FB_TE * 1e3, 2 * FB_RD * 1e3))
+    b.cut_cylinder('Z', (XFIN_T, YFIN, -FB_HR / 2 - 0.001), FB_HR + 0.002, fr_, name='fin tube bore %.1f mm through the ring and the plate notch' % (2 * fr_ * 1e3))
+    b.cut(fk.Shape('revolve', 'rib-wall clearance annulus ahead of the rib end (the ring front clears the rib wall)', axis='X', center=(BLK_X0 - 0.001, RIB_Y, 0.0),
+                   profile=[(0.0, rp_), (RIB_X1 - BLK_X0 + 0.001, rp_), (RIB_X1 - BLK_X0 + 0.001, RIB_OD / 2 + 0.00005), (0.0, RIB_OD / 2 + 0.00005)]))
+    b.cut_cylinder('X', (BLK_X0 - 0.001, RIB_Y, 0.0), RIB_X1 - BLK_X0 + 0.001, rp_ - FB_TP, name='plug bore %.1f mm' % (2 * (rp_ - FB_TP) * 1e3))
     ctx.mirror('FIN-003-R', 'FIN-003-L', plane='XZ')
     f = ctx.part('FIN-004-R', rgb=(0.95, 0.95, 0.8))
     f.prism('Z', -FIN_H, [[(x_, YFIN + y_) for x_, y_ in fin_fairing_loop()]], 2 * FIN_H, name='fairing')

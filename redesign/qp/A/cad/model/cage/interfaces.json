@@ -10,7 +10,7 @@
    "mass_g": 43.3,
    "material": "Al 6061-T6 (machined)",
    "cg_xyz_m": [
-    -0.077,
+    -0.071,
     0.0,
     -0.0007
    ],
@@ -25,7 +25,7 @@
    "mass_g": 30.6,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.0905,
+    -0.0845,
     -0.0,
     -0.0
    ],
@@ -40,7 +40,7 @@
    "mass_g": 30.6,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.0775,
+    -0.0715,
     -0.0,
     0.0
    ],
@@ -55,7 +55,7 @@
    "mass_g": 8.96,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0966,
+    -0.0906,
     0.2277,
     0.1581
    ],
@@ -70,7 +70,7 @@
    "mass_g": 2.01,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.0905,
+    -0.0845,
     0.0231,
     0.0158
    ],
@@ -85,7 +85,7 @@
    "mass_g": 0.17,
    "material": "CFRP rod",
    "cg_xyz_m": [
-    -0.091,
+    -0.085,
     0.0066,
     0.0045
    ],
@@ -100,7 +100,7 @@
    "mass_g": 8.96,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0836,
+    -0.0776,
     -0.2298,
     0.155
    ],
@@ -115,7 +115,7 @@
    "mass_g": 2.01,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.0775,
+    -0.0715,
     -0.0231,
     0.0158
    ],
@@ -124,13 +124,13 @@
   },
   {
    "id": "CGE-010-UL",
-   "name": "Pin 3 mm carbon rod x 14 mm (UL) through the arm tube and its sleeve at s -8 mm (D-202)",
+   "name": "Pin 3 mm carbon rod x 15 mm (UL) through the arm tube and its sleeve at s -8 mm (D-202)",
    "subsystem": "cage",
    "status": "MODELLED",
    "mass_g": 0.16,
    "material": "CFRP rod",
    "cg_xyz_m": [
-    -0.0777,
+    -0.0718,
     -0.0066,
     0.0045
    ],
@@ -145,7 +145,7 @@
    "mass_g": 8.96,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0836,
+    -0.0776,
     0.2298,
     -0.155
    ],
@@ -160,7 +160,7 @@
    "mass_g": 2.01,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.0775,
+    -0.0715,
     0.0231,
     -0.0158
    ],
@@ -169,13 +169,13 @@
   },
   {
    "id": "CGE-010-LR",
-   "name": "Pin 3 mm carbon rod x 14 mm (LR) through the arm tube and its sleeve at s +8 mm (D-202)",
+   "name": "Pin 3 mm carbon rod x 15 mm (LR) through the arm tube and its sleeve at s +8 mm (D-202)",
    "subsystem": "cage",
    "status": "MODELLED",
    "mass_g": 0.16,
    "material": "CFRP rod",
    "cg_xyz_m": [
-    -0.0777,
+    -0.0718,
     0.0066,
     -0.0045
    ],
@@ -190,7 +190,7 @@
    "mass_g": 8.96,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0966,
+    -0.0906,
     -0.2277,
     -0.1581
    ],
@@ -205,7 +205,7 @@
    "mass_g": 2.01,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.0905,
+    -0.0845,
     -0.0231,
     -0.0158
    ],
@@ -220,7 +220,7 @@
    "mass_g": 0.17,
    "material": "CFRP rod",
    "cg_xyz_m": [
-    -0.091,
+    -0.085,
     -0.0066,
     -0.0045
    ],
@@ -235,7 +235,7 @@
    "mass_g": 0.44,
    "material": "CFRP rod",
    "cg_xyz_m": [
-    -0.0793,
+    -0.0733,
     0.0,
     0.0
    ],
@@ -247,10 +247,10 @@
    "name": "Bridge 16x14 (D-206, torsion; axis z -2 mm; D-202: starts 15 mm aft of the hub axis, bored into the boss)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 9.1,
+   "mass_g": 8.6,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.0086,
+    -0.0056,
     0.0,
     -0.002
    ],
@@ -262,10 +262,10 @@
    "name": "V strut 8x6 (R), T-077 p7 (D-225 resize; was 6x4.0, D-219)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 10.3,
+   "mass_g": 10.2,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.015,
+    -0.012,
     0.154,
     0.0
    ],
@@ -292,10 +292,10 @@
    "name": "V strut 8x6 (L), T-077 p7 (D-225 resize; was 6x4.0, D-219)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 10.3,
+   "mass_g": 10.2,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.015,
+    -0.012,
     -0.154,
     0.0
    ],
@@ -340,9 +340,9 @@
    "mass_g": 13.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0339,
-    0.0,
-    0.0116
+    -0.0287,
+    -0.0,
+    0.0117
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
