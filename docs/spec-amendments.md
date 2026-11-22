@@ -319,3 +319,12 @@ Requirement IDs: R-COM-01.
 ```text
 resume
 ```
+
+## AM-025 — 2026-11-22 — Continue with T-089 and the rest of the queue
+Relation: answers the question after review round 3 (T-014, T-023, T-081 VERIFIED). Dillon approves continuing:
+T-089 (gain margin, FC vibration of the 94.6-108.7 Hz mode), T-032, T-088, cleanup, final verification.
+Requirement IDs: R-PHY-09, R-GEN-02.
+
+```text
+Yes, continue
+```
