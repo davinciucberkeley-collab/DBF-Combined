@@ -29,7 +29,7 @@ All four: constant 60 fps, video only (no audio stream), 0 decode errors from a 
 a labelled line `Task: … | Outcome: … | Verification: … | Evidence: … | Blocker: …` (run transcript: session subagent record of 2026-11-19), with the details in the evidence file (scratchpad `setup-check.md`, 17 rows: PASS 7, FAIL 6, CANNOT CHECK 4). Other definitions: `eng-reviewer` opus, `implementer` sonnet, `runner` haiku (frontmatter `model:` line 4 of each file). Run row in `docs/model-usage.md`.
 
 ## Milestone audits (T-011, T-048)
-T-011: run 2026-11-18, `docs/audits/2026-11-18-ledger.md` (haiku accounting audit, 21 gaps fixed). T-048 milestone audits: not run yet.
+T-011: run 2026-11-18, `docs/audits/2026-11-18-ledger.md` (haiku accounting audit, 21 gaps fixed). T-048: 2026-11-23 `docs/audits/2026-11-23-milestone-audit.md` (this audit); earlier phase-end reviews: 2026-11-19 setup / recheck files, 2026-11-22 rounds 2-3, 2026-11-23 rounds 4-5.
 
 ## Video verification (T-033)
 Reviewer: independent opus review agent, 2026-11-18, tree `39eb5b84` (clean). Full findings: `docs/audits/2026-11-18-film-final-review.md`. Decoder: Blender 4.5.14 bundled libavcodec (`--debug-ffmpeg`), VSE strip, every frame rendered to PNG and read back; container read independently with a Python MP4 box parser. No ffmpeg/ffprobe on the machine.
@@ -66,4 +66,4 @@ Decode total of the re-check: 9,714 frames, 0 decode errors. R-VID-15: decode an
 A fresh haiku agent with no conversation context followed CLAUDE.md and the session-state recovery procedure and named the spec path (`docs/MASTER_PROJECT_SPEC.md`), the next action (T-093 order-week re-check, then cleanup T-042..T-045, T-047 last) and the active tasks; `ledger_audit.py` 0 errors, `plan_rid_check.py` 109 R-ids, 0 missing. It listed 8 procedure gaps (stale counts and pause state, Reconciliation, step 3 / 5 wording, dependency gaps); the conductor checked each against the files and fixed them in `docs/session-state.md`. Evidence `docs/audits/2026-11-23-recovery-test.md`.
 
 ## Final verification (T-047)
-T-011: run 2026-11-18, `docs/audits/2026-11-18-ledger.md` (haiku accounting audit, 21 gaps fixed). T-048 milestone audits: not run yet.
+T-011: run 2026-11-18, `docs/audits/2026-11-18-ledger.md` (haiku accounting audit, 21 gaps fixed). T-048: 2026-11-23 `docs/audits/2026-11-23-milestone-audit.md` (this audit); earlier phase-end reviews: 2026-11-19 setup / recheck files, 2026-11-22 rounds 2-3, 2026-11-23 rounds 4-5.

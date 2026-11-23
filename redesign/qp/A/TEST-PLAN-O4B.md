@@ -284,7 +284,7 @@ Rib torsion coupon (T083_report s10): the line rises from 79 to about 92 MPa at 
 |---|---|
 | What it closes | Saddle-loadpath s3 row "Bridge CF wall bearing in the 6061 socket": demand 48.5 MPa on the CF wall (6M/(D L^2) + V/(D L), P7.2 N6 equivalent); allowable "—". SL-5: add it to the TP-4 coupon. CF plate shear and bearing allowables are also "—" there; no number is given for them in the sources. |
 | Specimen | 16x14 CF bridge tube (R02 offcut) in a 6061 socket piece (T1 / T11 offcut), same prep as the TP-4 push-out (abraded, acetone), n = 5 (proposal), tested with the TP-4 coupon sets |
-| Rig and instrument | As TP-4: force frame >= 5 kN (missing) or the lever rig of T-082; cell for effort |
+| Rig and instrument | As TP-4: force frame >= 5 kN (missing) (AM-030: not bought) or the lever rig of T-082; cell for effort |
 | **Pass** | **Bearing stress on the CF wall at failure (min of 5) >= 48.5 MPa** (the s3 demand, RF 1.0), no wall crushing at that load. The CF wall bearing allowable has no source value ("—"); the test sets it. |
 | On fail | Longer socket than drawn or a bonded wall doubler; the reviewer rules and the saddle-loadpath row is re-run. |
 

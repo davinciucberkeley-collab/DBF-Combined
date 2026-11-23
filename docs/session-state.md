@@ -12,10 +12,10 @@ the ledger and the spec are.
 7. This file. 8. Active task + unfinished deps. 9. Compare plan vs requirements (`python -I tools/ledger_audit.py`).
 10. Note any lost/changed instruction under "Reconciliation" below. 11. Resume "Next action".
 
-## Checkpoint — 2026-11-23 (resumed AM-027, running under AM-028; session 7cb35b0a, conductor Opus); sections follow spec 10.4
+## Checkpoint — 2026-11-23 (resumed AM-027, running under AM-028; AM-001..AM-030 in force; session 7cb35b0a, conductor Opus); sections follow spec 10.4
 Nothing pushed (branch redesign/v1).
 
-**Goal:** master program (spec + AM-001..AM-028). Concept A O4b, Claude-designed and student-built (AM-008). Current
+**Goal:** master program (spec + AM-001..AM-030). Concept A O4b, Claude-designed and student-built (AM-008). Current
 configuration: D-226 saddle load path (CF bulkheads, 6061 centre node, 3-ply skin, 25x23 rib), SunnySky X2216 V3
 short-shaft 880KV on APC 9x4.5MR (D-227/D-228), no spare motor (AM-019), FIN-003 machined 6061 root fitting (D-229),
 fin tubes 387.4 mm / FIN_H 0.1937 (D-233), no BOM spare servo (D-234), hub bars T1/T11 from Zoro (D-235). Budget =
@@ -38,7 +38,7 @@ margin claims UNVERIFIED (T-089).
 
 **Resumed 2026-11-22 (AM-027) after the AM-026 pause; running.** Nothing pushed. `docs/session-log.md` shows as modified between commits: hook logging, committed with the next checkpoint.
 
-**Known dependency gaps (not blockers for the next action):** T-045 (IN PROGRESS, audit report draft) waits on T-044; T-083 (IN PROGRESS) waits on BLOCKED T-077; phase 1 gate in execution-plan.md stays open until T-008 is VERIFIED COMPLETE.
+**Known dependency gaps (2026-11-23 milestone audit s3.3; none blocks the next action):** T-077 is READY FOR REVIEW (part-8 blocker superseded by AM-017, AM-018, D-226..D-240) and T-083 waits on it (Deps "T-077 (READY FOR REVIEW)"); T-083 itself is BLOCKED on TP-3 (zeta <= 0.05), TP-11 (A-P6) and the X2216 backorder (T-093); T-088 is BLOCKED until order week (T-093); T-094 (free-play bench entry in TEST-PLAN-O4B, closes the T-061 residual FAIL) is NOT STARTED. T-045 and T-008 are VERIFIED COMPLETE.
 **Next action on resume:** (2026-11-23) Cleanup T-042..T-045 and T-008 VERIFIED COMPLETE (review round 5). Next: T-093 on 1-4 Dec 2026 (re-read every ORDER-1 price and stock, R15 vendor with Dillon entering the cart address, present Order 1 to Dillon; T-088 closes with it). Program-end items wait for the build: T-049 final repository audit (incl. spec 9.8 re-execution), T-047 final verification last.
 
 **Failures (history):** see git log and CHANGE-LOG; O4b with MN2212 infeasible (AM-017 study); MN3110, legs/skid,
@@ -57,10 +57,13 @@ Irreversible or costly actions: date, approval wording, sub-actions. Nothing has
 | 2026-11-19 | FFmpeg install (standalone executable) | Dillon: "Okay go ahead with that", after the ffmpeg explanation | `winget install Gyan.FFmpeg` (user scope), FFmpeg 9.0.2; used for the full decode of the four films (251702a2) |
 | 2026-11-19 | Reproducibility reruns (landing_a.py, D-209 FEA, one SITL transition case Z5_gb0), an exception to the "no new sims until final" rule | Dillon: "Yes, rerun them", answering "Rerun the landing, FEA and one SITL case to confirm reproducibility?" | T-057, T-058; outputs to new names, committed results not overwritten |
 | 2026-11-19 | Manual `/compact` (00:51 and 03:23) | typed by Dillon (his own action) | T-007 tests 1 and 2 |
-| Pending | Force-remove 3 worktrees (line-ending-only change in `launch_opencae.bat`) | not yet asked or answered | blocked by the permission classifier; waits for Dillon |
+| 2026-11-23 | Cleanup batch 3 | AM-029: "Yes, remove them" | 3 line-ending-only worktrees removed with --force, branches kept, about 3.55 GB (`docs/repository-audit.md` s3 batch 3) |
 | Pending | DaVinci access and spend | AM-003: no spend | T-037 BLOCKED |
 | Pending | Purchases | none before early Dec 2026 (ordering timeline) | none made |
-| Pending | Board choice O1-O6 for concept A mass/wing (D-216, T-072) | not yet answered | Phase 2 CAD waits |
+| 2026-11-19..21 | Board choice O1-O6 for concept A mass/wing (D-216, T-072) | AM-005, AM-006, AM-009 | O4 then O4b |
+| 2026-11-21 | Motor swap to SunnySky X2216 880KV (T-083) | AM-018: "I approve the swap and follow the definition of the reserve" | no purchase before early December; reserve by definition (`T082_data/bom_t082.py`) |
+| 2026-11-21 | Drop the spare fifth motor | AM-019: "Go ahead with that" | 4 X2216 V3 short-shaft motors in Order 1, no BOM spare; reserve covers one replacement |
+| 2026-11-23 | Test equipment | AM-030: "Keep what we have now, ..." | no press rig / testing machine bought; TP-4 / TP-12..14 use a borrowed force frame, else the T-082 lever rig |
 
 **Approval-gate notes (re-check 2026-11-19, `docs/audits/2026-11-19-recheck-docs.md`):** the reflog entries `reset: moving to HEAD` (2026-11-09, -15, -17, -18 at 164c815a) are no-op resets written by `git stash` / `git reset` without a target, at 338e214a (11-09), 55815dba (11-15), 0a574ec1 (11-17) and 164c815a (11-18): HEAD did not move and no commit was lost (each entry's hash equals the entry before it; checked 2026-11-19). Other tracked edits in batch 2 (8d15f419), besides the deletions: rebuilt `build-manual.html`, `test-plan.html`, `VTOL-Review.html`; `redesign/site/app.html`, `redesign/site/index.html` (captions repointed); `docs/task-ledger.md`, `docs/repository-audit.md`; `docs/spec-amendments.md` (append only, AM-002/AM-003) and `docs/spec-integrity.sha256` (seal line for spec-amendments.md rewritten af2e3817… -> cebeca6b…; the spec's own line unchanged). 2026-11-19 01:58 local: `git checkout --` on 39 regenerated PDFs in `redesign/qp/A/drawings/out` (all except MEC-004.pdf, MEC-008.pdf, DRAWINGS-A.*): the discarded changes were the conductor's own `make_drawings_a.py --compose` output of minutes earlier, whose content should equal HEAD (the only composer change was the MEC-004/MEC-008 notes; the diff was not inspected before the checkout, so this is inferred, not shown); no one else's work; regenerable by the same command. Uncommitted tracked edits seen during the check were the in-flight agent edits of this program, committed in c62c1ea1 and 94a3a48a; none is irreversible. Held worktrees (pending Dillon): `.claude/worktrees/agent-a952e3335f2d57495`, `.claude/worktrees/morph-chart-bc71a6`, `.claude/worktrees/proof-chain-readable-c5026d` (only change: line endings of `tools/opencae-studio/launch_opencae.bat`). Kept, not held: `.claude/worktrees/agent-a738e3f4799ad7786` (branch `ui-redesign-survey`, unmerged; listed "kept" in `docs/repository-audit.md`).
 
@@ -68,3 +71,7 @@ Irreversible or costly actions: date, approval wording, sub-actions. Nothing has
 - 2026-11-18: registry built from the full spec + AM-001; independent haiku check pending (T-011).
 - 2026-11-22..23: AM-023 and AM-026 pauses (pause = stop agents, save partial work, checkpoint, commit); AM-024, AM-025, AM-027 resume / continue; AM-028 standing rule: do not ask "continue?" between steps, move to the next queue item, prompt Dillon only for a team decision or a problem. None lost; all in spec-amendments.md.
 - 2026-11-23: T-008 recovery test (`docs/audits/2026-11-23-recovery-test.md`) found 8 procedure gaps; fixed in this file (steps 3 and 5, counts, header, pause state, this section, dependency gaps).
+- 2026-11-23: AM-029 (batch 3 approved and executed, T-042) and AM-030 (keep current equipment; continue every doable task per AM-028) recorded; none lost.
+- 2026-11-23: AM-004 (Opus consults replace Dillon while away 8+ h) lapsed; not a standing rule, no R-id needed.
+- 2026-11-23: spec-amendments.md header names `tools/spec_guard.py`; the file does not exist, the seal check is `tools/ledger_audit.py` (0 errors). The header is inside the append-only region and was not edited (milestone audit F-12).
+- 2026-11-23: milestone audit `docs/audits/2026-11-23-milestone-audit.md` (T-048 / T-055, full spec read) fixes applied: requirements roll-up, new rows R-GEN-05..R-GEN-08, T-094, status corrections, execution-plan T-064..T-094, change list `docs/audits/2026-11-23-milestone-fixes.md`.

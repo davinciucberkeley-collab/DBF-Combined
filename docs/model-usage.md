@@ -114,6 +114,7 @@ Append one row per delegated task. Review at each milestone: are opus runs justi
 | 2026-11-23 | T-043 / T-044 benchmarks + regression | runner / haiku | low | done | 67 k tok / 5.3 min | 0 | — | conductor notes in file |
 | 2026-11-23 | T-045 audit report s4-s12 | implementer / sonnet | low | done | 101 k tok / 3.6 min | 0 | — | review round 5 |
 | 2026-11-23 | review round 5 (T-042..T-045) | eng-reviewer / sonnet (override) | review | 1 PASS, 3 PASS WITH FIXES | 44 k tok / 1.0 min | 0 | — | conductor re-check section |
+| 2026-11-23 | T-039 weekly status page | conductor (Opus) | low | done | — | 0 | — | review pending |
 
 Backfilled 2026-11-22 from the session transcripts (task notifications); T-014 review F-1, `docs/audits/2026-11-22-ready-rows-review.md`.
 
