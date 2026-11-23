@@ -1,5 +1,6 @@
 // Assembles Inventory-Overview.html (standalone) and inventory/inventory-overview.html (fragment, for publishing)
 // from inventory/inventory.json (built by inventory/build_inventory.mjs) + inventory/src/* + the CAD mesh (review/mesh.mjs).
+// NOTE: the committed Inventory-Overview.html was removed 2026-11-19 (batch 2; recoverable from git 8d15f419^); this script regenerates it.
 // Run: node inventory/build_overview.mjs     Every number on the page is read or computed here; none is typed into body.html.
 import { readFileSync, writeFileSync } from 'fs';
 import { packMesh } from './v031/review/mesh.mjs';

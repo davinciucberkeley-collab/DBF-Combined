@@ -3,8 +3,9 @@
 // Every number is read from those files (field names differ per variant, see normalise()); nothing is typed in here except labels.
 // Re-runnable: variants are discovered by folder, and a variant's 3D appears as soon as its fusion/variant_manifest.json + stl/ exist.
 import { readFileSync, existsSync, readdirSync } from 'fs';
+import { fileURLToPath } from 'url';
 
-const VROOT = () => process.env.VARIANTS_DIR ? process.env.VARIANTS_DIR.replace(/\/?$/, '/') : new URL('../concepts/variants/', import.meta.url).pathname;
+const VROOT = () => process.env.VARIANTS_DIR ? process.env.VARIANTS_DIR.replace(/\/?$/, '/') : fileURLToPath(new URL('../concepts/variants/', import.meta.url));
 const rj = p => JSON.parse(readFileSync(p, 'utf8'));
 
 // ---------- tiny markdown to HTML (headings, lists, tables, code, bold, italic, links); output is escaped, braces are entity-encoded ----------
@@ -93,7 +94,7 @@ export function buildVariants(ctx){
   const root = VROOT();
   let ids = []; try { ids = readdirSync(root, { withFileTypes: true }).filter(d => d.isDirectory() && existsSync(root + d.name + '/metrics.json') && existsSync(root + d.name + '/inventory.json')).map(d => d.name).sort(); } catch (e) {}
   if (!ids.length) return null;
-  const CON = rj(new URL('../concepts/concepts.json', import.meta.url).pathname), conOf = id => CON.concepts.find(c => c.id === id) || {};
+  const CON = rj(fileURLToPath(new URL('../concepts/concepts.json', import.meta.url))), conOf = id => CON.concepts.find(c => c.id === id) || {};
   nameOf = id => conOf(id).name || id;
   const V = ids.map(id => normalise(id, root + id + '/'));
   const grpA = CON.groups.find(g => g.id === 'A');
