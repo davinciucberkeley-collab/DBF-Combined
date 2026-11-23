@@ -376,3 +376,11 @@ Requirement IDs: R-GEN-02, R-COM-01.
 ```text
 Keep what we have now, there are still over 20 tasks left so if there anything more you can do?
 ```
+
+## AM-031 — 2026-11-23 — Reminder: no unnecessary text output
+Relation: communication rule (re-affirms AM-001: work quietly; message only for questions, milestones, critical issues, decisions, blockers, failures, project end; 1-3 sentence milestones).
+Requirement IDs: R-COM-01, R-COM-02.
+
+```text
+Also, remember what I said earlier about unnecessary text output
+```
