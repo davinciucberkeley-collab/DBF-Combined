@@ -5,24 +5,26 @@ the ledger and the spec are.
 
 ## Recovery procedure (spec 1.5)
 1. Project-root `CLAUDE.md` (auto-loaded). 2. Spec at `docs/MASTER_PROJECT_SPEC.md` (+ `spec-amendments.md`).
-3. Read the spec sections for the active tasks' parent requirements (full spec at milestones/after compaction/final).
-4. `docs/requirements.md`. 5. `docs/task-ledger.md` (IN PROGRESS / BLOCKED / FAILED rows first). 6. `docs/execution-plan.md`.
+3. Read the spec sections for the active tasks' parent requirements; read the full spec (and all amendments) in a new
+   session, after compaction, at milestones and before final verification. Rows without a section number (e.g. R-GEN-02)
+   trace to the amendment named in their requirements.md row: read that amendment.
+4. `docs/requirements.md`. 5. `docs/task-ledger.md` (rows are in ID order: `grep -E "IN PROGRESS|BLOCKED|FAILED"` first). 6. `docs/execution-plan.md`.
 7. This file. 8. Active task + unfinished deps. 9. Compare plan vs requirements (`python -I tools/ledger_audit.py`).
 10. Note any lost/changed instruction under "Reconciliation" below. 11. Resume "Next action".
 
-## Checkpoint — 2026-11-22 (resumed AM-024; session 7cb35b0a, conductor Opus); sections follow spec 10.4
+## Checkpoint — 2026-11-23 (resumed AM-027, running under AM-028; session 7cb35b0a, conductor Opus); sections follow spec 10.4
 Nothing pushed (branch redesign/v1).
 
-**Goal:** master program (spec + AM-001..AM-026). Concept A O4b, Claude-designed and student-built (AM-008). Current
+**Goal:** master program (spec + AM-001..AM-028). Concept A O4b, Claude-designed and student-built (AM-008). Current
 configuration: D-226 saddle load path (CF bulkheads, 6061 centre node, 3-ply skin, 25x23 rib), SunnySky X2216 V3
 short-shaft 880KV on APC 9x4.5MR (D-227/D-228), no spare motor (AM-019), FIN-003 machined 6061 root fitting (D-229),
 fin tubes 387.4 mm / FIN_H 0.1937 (D-233), no BOM spare servo (D-234), hub bars T1/T11 from Zoro (D-235). Budget =
 total incl. crash reserve by its definition <= $2,000 (AM-013, AM-018); weight may exceed the mass gate (AM-011).
 
-**Requirements:** 109 R-ids; ledger 88 tasks; `python -I tools/ledger_audit.py` 0 errors.
+**Requirements:** 109 R-ids; ledger 93 tasks (61 VERIFIED COMPLETE); `python -I tools/ledger_audit.py` 0 errors.
 
-**State (EST):** 1.8796 kg tallied, CG 23.13 mm, SM 7.17 %, window +11.88 %, T/W 2.632/2.111, cruise 234 s, A-P9
-tip-over 31.00 deg; BOM $1,939.17, margin +$60.83 (reserve $346.94). 3-D gates PASS at T-084 (no geometry change since).
+**State (EST):** CAD 1,641.0 g, predicted 1.881 kg (CL-A-MASS-PRED), CG 22.05 mm CAD (tallied about 23.22), SM 7.61 % CAD, lateral CG -3.32 mm (FC 75 mm left, D-240), window +11.88 %, T/W 2.632/2.111, cruise 234 s, A-P9
+tip-over 31.00 deg; BOM $1,939.17, margin +$60.83 (reserve $346.94). 3-D gates PASS at T-092 (2026-11-23; no geometry change since).
 
 **Open engineering items:** D-185 rotor-band vibration rule (D-236, TP-10b decides); A-P6 1.3 Vs 17.56 > 17.0 m/s (TP-11
 stall test); landing pad zeta <= 0.05 (TP-3) and pad retention PSA 0.13; TP-4 bond coupon; bench derate >= 0.889;
@@ -34,7 +36,9 @@ no robust lever; decided by TP-10b (T-A-TAP tap test of the built airframe, $0) 
 confirmed, reopen the C-route (arms 10x8 + bridge soft in z first). Proof chain carries CL-A-VIB-IN-BAND FAIL; gain
 margin claims UNVERIFIED (T-089).
 
-**PAUSED 2026-11-22 (AM-026).** Nothing running; working tree clean; nothing pushed.
+**Resumed 2026-11-22 (AM-027) after the AM-026 pause; running.** Nothing pushed. `docs/session-log.md` shows as modified between commits: hook logging, committed with the next checkpoint.
+
+**Known dependency gaps (not blockers for the next action):** T-045 (IN PROGRESS, audit report draft) waits on T-044; T-083 (IN PROGRESS) waits on BLOCKED T-077; phase 1 gate in execution-plan.md stays open until T-008 is VERIFIED COMPLETE.
 **Next action on resume:** (2026-11-23) Review round 4 done: T-032, T-089, T-090, T-091, T-092 VERIFIED COMPLETE; order-week re-check and the R15 shipping read split to T-093. (1) T-093 on 1-4 Dec 2026: re-read every ORDER-1 price and stock (X2216 backorder), R15 vendor (Carbonwebshop quote or Easy Composites cart, Dillon enters the address), then present Order 1 to Dillon; T-088 closes with it. (2) Meanwhile: cleanup T-042..T-045, T-008; final verification T-047 last.
 
 **Failures (history):** see git log and CHANGE-LOG; O4b with MN2212 infeasible (AM-017 study); MN3110, legs/skid,
@@ -62,3 +66,5 @@ Irreversible or costly actions: date, approval wording, sub-actions. Nothing has
 
 ## Reconciliation
 - 2026-11-18: registry built from the full spec + AM-001; independent haiku check pending (T-011).
+- 2026-11-22..23: AM-023 and AM-026 pauses (pause = stop agents, save partial work, checkpoint, commit); AM-024, AM-025, AM-027 resume / continue; AM-028 standing rule: do not ask "continue?" between steps, move to the next queue item, prompt Dillon only for a team decision or a problem. None lost; all in spec-amendments.md.
+- 2026-11-23: T-008 recovery test (`docs/audits/2026-11-23-recovery-test.md`) found 8 procedure gaps; fixed in this file (steps 3 and 5, counts, header, pause state, this section, dependency gaps).
