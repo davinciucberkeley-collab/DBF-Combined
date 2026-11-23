@@ -4,11 +4,11 @@ Date 2026-11-23. Acceptance test (from the brief): new TP rows with a numeric pa
 
 ## Added
 - `redesign/qp/A/TEST-PLAN-O4B.md` l.312 onward, section "TP-15 to TP-18":
-  - TP-15 free play: decides CL-A-LINKAGE-FREEPLAY; bench coupon n = 3 first, then each built elevon; dial gauge or laser pointer at the TE (gauge not in BOM, "-", borrow); pass <= 1.0 deg (SERVO.md s4), 0.225 mm at r = 12.9 mm.
+  - TP-15 free play: decides CL-A-LINKAGE-FREEPLAY; bench coupon n = 3 first, then each built elevon; dial gauge or laser pointer at the TE (gauge not in BOM, "-", borrow); pass <= 1.0 deg (SERVO.md s4), 0.160 mm (= r x tan 1 deg; at the trailing edge use the measured hinge-to-reading radius r, which is preferred: a +-0.05 mm gauge is 31 % of the limit at the horn hole) at r = 9.155 mm.
   - TP-16 horn-rib coupon: decides CL-A-HORN-RIB-FOAM-HOLD (36.8 N / 30 s), CL-A-HORN-RIB-FOAM-STALL and CL-A-HORN-BEARING-STALL (51 N / 5 s, elongation <= 0.1 mm); n = 3, lowest governs; lever rig + G02 10 kg cell.
   - TP-17 elevon torsion: decides CL-A-ELEVON-TORSION-FOAM; 0.161 N m / 30 s (17.6 N at 9.155 mm), n = 3.
   - TP-18 bench stall of the built elevons (BUILD D5b), 51 N / 5 s into the stop.
-  - Timing: TP-15(a), 16, 17 before the main order (foam / printed coupons); TP-15(b), 18 after the build. No purchase (AM-030). Unknowns "-": dial gauge, 1.2 mm pin gauge, lever u.
+  - Timing: TP-15(a), 16, 17 after the main order arrives, before the wing build (foam / printed coupons) (needs main-order lines R01 foam, R05 / T4 epoxy, M02 linkage, M01 servo and T10 lever hardware; Order 1 holds only G02, G03, R03; review round 7); TP-15(b), 18 after the build. No extra purchase beyond BOM lines (AM-030). Unknowns "-": dial gauge, 1.2 mm pin gauge, lever u.
   - Demand values are the claims' own (claims_a2_struct.py l.188-194, 213-221; linkage_loads_check.json). Stated in the section: foam stress is not measurable, so the test decides by held load with no damage, as the claims' `how` text says; re-pointing the claims is a separate logged edit, not done.
 - `redesign/qp/A/proofs/claims_a0_base.py` l.142-147: kit.test T-A-FREEPLAY, T-A-HORN-FOAM-COUPON, T-A-HORN-BENCH-STALL, state="planned", same style as the neighbours. (The claims' own `how` fields were not edited: no TP reference field beyond kit.test.)
 
