@@ -1,7 +1,7 @@
 {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-23 10:21 UTC",
+  "generated": "2026-11-23 17:43 UTC",
   "dataset": "concept-a",
   "ok": false,
   "errors": [
@@ -33,7 +33,7 @@
     "source": 39,
     "assumption": 10,
     "requirement": 22,
-    "test": 13,
+    "test": 16,
     "calculation": 89,
     "claim": 109,
     "parameter": 215,
@@ -42,7 +42,7 @@
    "by_status": {
     "CHECKED": 319,
     "UNVERIFIED": 226,
-    "PROPOSED": 17
+    "PROPOSED": 20
    },
    "fails": 16
   },
@@ -1104,6 +1104,49 @@
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "PROPOSED",
    "importance": 5
+  },
+  {
+   "id": "T-A-FREEPLAY",
+   "type": "test",
+   "title": "TP-15 (TEST-PLAN-O4B.md, T-094): elevon linkage free play, dial gauge or laser pointer at the trailing edge, bench coupon then built elevon",
+   "verifies": [
+    "CL-A-LINKAGE-FREEPLAY"
+   ],
+   "state": "planned",
+   "procedure": "Servo locked at neutral, push the TE to both ends of the play, free play = atan(travel / radius); pass <= 1.0 deg (SERVO.md s4) on each of 3 coupons and each built elevon",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "T-A-HORN-FOAM-COUPON",
+   "type": "test",
+   "title": "TP-16 / TP-17 (T-094): horn-rib and elevon-torsion foam coupons, n = 3 each, 10 kg cell on the lever rig",
+   "verifies": [
+    "CL-A-HORN-RIB-FOAM-HOLD",
+    "CL-A-HORN-RIB-FOAM-STALL",
+    "CL-A-ELEVON-TORSION-FOAM",
+    "CL-A-HORN-BEARING-STALL"
+   ],
+   "state": "planned",
+   "procedure": "TP-16: 36.8 N / 30 s then 51 N / 5 s along the chord, no crack, no slip, set < 0.5 deg, hole elongation <= 0.1 mm; TP-17: 0.161 N m / 30 s, no debond, twist set < 0.5 deg; lowest of 3 governs",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "PROPOSED",
+   "importance": 4
+  },
+  {
+   "id": "T-A-HORN-BENCH-STALL",
+   "type": "test",
+   "title": "TP-18 (T-094): bench stall of each built elevon, 51 N / 5 s into the +21 deg stop (BUILD D5b)",
+   "verifies": [
+    "CL-A-HORN-RIB-FOAM-STALL",
+    "CL-A-HORN-BEARING-STALL"
+   ],
+   "state": "planned",
+   "procedure": "Servo 7.2 V into the stop for 5 s: hole elongation <= 0.1 mm, no crack in horn, rib, slot tape, stop or keeper, TE set < 0.5 deg",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "PROPOSED",
+   "importance": 2
   },
   {
    "id": "T-A-SERVO-RAIL",
@@ -11694,6 +11737,41 @@
   {
    "source": "T-A-HORN-RIB",
    "target": "CL-A-HORN-SHEAROUT-STALL",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-FREEPLAY",
+   "target": "CL-A-LINKAGE-FREEPLAY",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-FOAM-COUPON",
+   "target": "CL-A-HORN-RIB-FOAM-HOLD",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-FOAM-COUPON",
+   "target": "CL-A-HORN-RIB-FOAM-STALL",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-FOAM-COUPON",
+   "target": "CL-A-ELEVON-TORSION-FOAM",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-FOAM-COUPON",
+   "target": "CL-A-HORN-BEARING-STALL",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-BENCH-STALL",
+   "target": "CL-A-HORN-RIB-FOAM-STALL",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-BENCH-STALL",
+   "target": "CL-A-HORN-BEARING-STALL",
    "type": "verifies"
   },
   {

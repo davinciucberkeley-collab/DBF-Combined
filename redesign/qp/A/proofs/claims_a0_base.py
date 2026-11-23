@@ -139,6 +139,12 @@ kit.test("T-A-HORN-RIB", "Elevon horn: rib coupon, stall step, elevon-section to
          ["CL-A-HORN-RIB-COUPON", "CL-A-HORN-STALL-STEP", "CL-A-ELEVON-TORSION-COUPON", "CL-A-HORN-STALL-BENCH", "CL-A-HORN-SHEAROUT-STALL"], state="planned",
          procedure="(1) horn-rib coupon 36.8 N / 30 s, no crack, no slip, set < 0.5 deg; (2) then 51 N / 5 s, hole elongation <= 0.1 mm, no crack; (3) elevon-section torsion coupon 0.161 N m / 30 s, twist set < 0.5 deg, no debond; "
                    "(4) bench stall test 51 N / 5 s into the stop (BUILD D5b). >= 3 coupons, lowest governs. A pass replaces the analysis FAIL claims (CL-A-HORN-RIB-FOAM-*, CL-A-ELEVON-TORSION-FOAM, CL-A-HORN-BEARING-STALL) as the basis of A-P13")
+kit.test("T-A-FREEPLAY", "TP-15 (TEST-PLAN-O4B.md, T-094): elevon linkage free play, dial gauge or laser pointer at the trailing edge, bench coupon then built elevon", ["CL-A-LINKAGE-FREEPLAY"], state="planned",
+         procedure="Servo locked at neutral, push the TE to both ends of the play, free play = atan(travel / radius); pass <= 1.0 deg (SERVO.md s4) on each of 3 coupons and each built elevon")
+kit.test("T-A-HORN-FOAM-COUPON", "TP-16 / TP-17 (T-094): horn-rib and elevon-torsion foam coupons, n = 3 each, 10 kg cell on the lever rig", ["CL-A-HORN-RIB-FOAM-HOLD", "CL-A-HORN-RIB-FOAM-STALL", "CL-A-ELEVON-TORSION-FOAM", "CL-A-HORN-BEARING-STALL"], state="planned",
+         procedure="TP-16: 36.8 N / 30 s then 51 N / 5 s along the chord, no crack, no slip, set < 0.5 deg, hole elongation <= 0.1 mm; TP-17: 0.161 N m / 30 s, no debond, twist set < 0.5 deg; lowest of 3 governs")
+kit.test("T-A-HORN-BENCH-STALL", "TP-18 (T-094): bench stall of each built elevon, 51 N / 5 s into the +21 deg stop (BUILD D5b)", ["CL-A-HORN-RIB-FOAM-STALL", "CL-A-HORN-BEARING-STALL"], state="planned",
+         procedure="Servo 7.2 V into the stop for 5 s: hole elongation <= 0.1 mm, no crack in horn, rib, slot tape, stop or keeper, TE set < 0.5 deg")
 kit.test("T-A-SERVO-RAIL", "Servo rail voltage under two-servo load (M12)", ["CL-A-SERVO-FACTOR"], state="planned",
          procedure="Kakute servo rail set to 7.2 V and measured under load; below 6.0 V the servo fails the 1.5 factor")
 kit.test("T-A-WEIGH", "Weigh-in: foam block, printed parts, epoxy joint, lead strip, one servo, then the aircraft", ["CL-A-MASS-PRED", "CL-A-CUTS-REQUIRED", "CL-A-STRUCT-MASS", "CL-A-MASS-GATE-ROOM"], state="planned",
