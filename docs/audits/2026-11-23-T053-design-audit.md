@@ -86,3 +86,7 @@ contrast failures 0 on 11 pages x 2 themes. Light-theme proof-page buttons read 
 
 ## Conductor decision (2026-11-23)
 Light-theme `--highlight` changed #C2540A -> #A84808 (`redesign/site/site.css` l.72 and l.174). WCAG contrast as text: 5.17 on #F4F1E8, 5.59 on #FBFAF6, 4.81 on #EDE9DD (worst panel-2), 4.95 on the wash #FBE9DC, 5.84 white text on it; all >= 4.5. Dark theme unchanged. The open item above is closed.
+
+## Review round 9 notes (2026-11-23)
+- `--radius-xs` is 0 in explorer.css (drawing-sheet style, square corners), so the BOM bars render square there: intended by the 11-16 blend (square corners), recorded.
+- The BOM `<style>` block is hand-authored in app.html, not emitted by sync_bom_a.py: the audit text above that says "generator" for it should read "app.html (hand-authored)".
