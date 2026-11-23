@@ -2,7 +2,7 @@
 window.VIEWER_DATA = {
  "schema": "dbf-viewer/1",
  "dataset": "concept-a",
- "generated": "2026-11-23 18:00 UTC",
+ "generated": "2026-11-23 18:06 UTC",
  "sources": {
   "glb": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/7cb35b0a-c71b-43ed-9be1-fbe0a7ff151f/scratchpad/glb",
   "interfaces": "../../../../../AppData/Local/Temp/claude/1dc032cbc6faa005/7cb35b0a-c71b-43ed-9be1-fbe0a7ff151f/scratchpad/mi/interfaces.json",
@@ -5906,7 +5906,7 @@ window.VIEWER_DATA = {
    "id": "CT-A-M25-SHCS-MOTOR",
    "kind": "mechanical",
    "method": "fastened",
-   "spec": "concept A: 4 x M2.5 SHCS through 2.9 mm clearance holes in the printed motor cup into the T-Motor MN2212 base (4-M2.5 on a 19 x 16 mm rectangle, T-Motor drawing)"
+   "spec": "earlier design (record; superseded by CT-A-M3-CSK-MOTOR and CT-A-M3-BOLT-MOUNT, T-083): concept A: 4 x M2.5 SHCS through 2.9 mm clearance holes in the printed motor cup into the T-Motor MN2212 base (4-M2.5 on a 19 x 16 mm rectangle, T-Motor drawing)"
   },
   "CT-A-M3-BOLT-MOUNT": {
    "id": "CT-A-M3-BOLT-MOUNT",
@@ -7828,7 +7828,7 @@ window.VIEWER_DATA = {
  ],
  "proofs_viewer": "../proofs/viewer/index.html?data=redesign#node={id}",
  "budget": {
-  "_note": "concept A: gate 1.50 kg (MASS-GATE s1); CG band 4.0..28.5 mm aft of the LE (forward limit / aft hard limit, MASS-GATE s5)",
+  "_note": "concept A: CAD mass gate 1.50 kg (MASS-GATE s1, build_a; weigh-in limit 1.47 kg A-P1; predicted 1.881 kg EST misses both, allowed by AM-011, physics checks govern); CG band 4.0..28.5 mm aft of the LE (forward limit / aft hard limit, MASS-GATE s5)",
   "limit_g": 1500,
   "allocations_g": {},
   "cg_x_m": [

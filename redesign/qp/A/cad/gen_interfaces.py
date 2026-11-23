@@ -57,7 +57,7 @@ def write(cgs=None):
     with open(os.path.join(MODEL, 'modules.txt'), 'w', encoding='utf-8', newline='\n') as f:
         f.write('\n'.join(m.SUBS) + '\n')
     with open(os.path.join(MODEL, 'mass_budget.json'), 'w', encoding='utf-8', newline='\n') as f:
-        json.dump({'_note': 'concept A: gate 1.50 kg (MASS-GATE s1); CG band 4.0..28.5 mm aft of the LE (forward limit / aft hard limit, MASS-GATE s5)',
+        json.dump({'_note': 'concept A: CAD mass gate 1.50 kg (MASS-GATE s1, build_a; weigh-in limit 1.47 kg A-P1; predicted 1.881 kg EST misses both, allowed by AM-011, physics checks govern); CG band 4.0..28.5 mm aft of the LE (forward limit / aft hard limit, MASS-GATE s5)',
                    'limit_g': 1500, 'allocations_g': {}, 'cg_x_m': [0.004, 0.0285]}, f, indent=1)
 
 

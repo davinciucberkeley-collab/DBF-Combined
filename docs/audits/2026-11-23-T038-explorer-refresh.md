@@ -1,3 +1,5 @@
+> **Read first:** the first-pass result tables below (FAIL / PARTLY MET) are superseded by the second pass and the conductor notes at the end (review round 8 F3).
+
 # T-038 Explorer refresh, 2026-11-23
 
 Category: illustrative / site generation (no engineering analysis). Acceptance test (brief): after regenerating only stale outputs, the
@@ -99,3 +101,8 @@ Status tab: new phase "O4b re-sit and X2216 redesign" (D-217..D-241); mass issue
 
 ## Conductor note (2026-11-23)
 merge_check's 1 ERROR / 1 WARN come from its default budget `redesign/params/mass_budget.json`, the K09-L record (limit 2,700 g, CG x 0.043-0.0501 m, avionics 36 g). Concept A is judged by its own gates: `cad_mass.py` / `mission_gate_a.py --o4b` (CG 22.05 mm in the A-P4 band, CL-A-CG / -SM / -CG-LATERAL PASS in run_all). Not a model defect; no concept-A budget file is passed to merge_check (open note, not a blocker).
+
+## Round 8 fixes (conductor, 2026-11-23)
+- F1: viewer budget note (`cad/gen_interfaces.py`, regenerated `cad/model/mass_budget.json` and `site/data/viewer-data.json`) now says: CAD mass gate 1.50 kg (MASS-GATE s1, build_a), weigh-in limit 1.47 kg (A-P1), predicted 1.881 kg EST misses both, allowed by AM-011. The CG band 4.0..28.5 mm is sourced (MASS-GATE s5) and unchanged. Note: gen_interfaces.py rewrites every subsystem interfaces.json with null CGs (a later step fills them); those files were restored from git and only mass_budget.json kept.
+- F2: `redesign/interfaces/connection_types.json` CT-A-M25-SHCS-MOTOR spec now starts "earlier design (record; superseded by CT-A-M3-CSK-MOTOR and CT-A-M3-BOLT-MOUNT, T-083)"; no part uses it. The "was the T-Motor MN2212 adapter" phrase in CT-A-PROP-ADAPTER is history in context and stays.
+- merge_check with concept A's budget (`--budget redesign/qp/A/cad/model/mass_budget.json`): FAIL with 1 error only, `aircraft 1641 g > limit 1500 g` (the allowed mass-gate miss); CG and allocations pass. Viewer data regenerated: 131 parts, 0 null CGs.
