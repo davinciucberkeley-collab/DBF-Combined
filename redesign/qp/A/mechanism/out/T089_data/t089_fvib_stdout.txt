@@ -5,3 +5,4 @@ REGRESSION spar-only, 130 modes (structures_run.md s4: kd 26.5/26.6 at 11,400, n
   nom zeta 0.005 worst 23.7 at 11400 per-axis 10.8 <=10343 18.6 <=9349 15.0
   hi zeta 0.010 worst 22.7 at 11400 per-axis 11.0 <=10343 18.5 <=9349 15.2
   hi zeta 0.005 worst 22.7 at 11400 per-axis 11.0 <=10343 18.5 <=9349 15.2
+done 24 groups in 188 s

@@ -1,0 +1,20 @@
+  ERROR: STRICT A-P1: CL-A-MASS-GATE-ROOM: FAILS: margin -27.3% (1.872 kg vs <= 1.47 kg)
+  ERROR: STRICT A-D3: CL-A-MASS-PRED: FAILS: margin -27.3% (1.872 kg vs <= 1.47 kg)
+  ERROR: STRICT A-P10: CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)
+  ERROR: STRICT A-P13: CL-A-FLUTTER-ELEVON-NOM is UNVERIFIED
+  ERROR: STRICT CL-A-MASS-PRED: FAILS: margin -27.3% (1.872 kg vs <= 1.47 kg)
+  ERROR: STRICT CL-A-MASS-GATE-ROOM: FAILS: margin -27.3% (1.872 kg vs <= 1.47 kg)
+  ERROR: STRICT CL-A-CUTS-REQUIRED: FAILS: margin -864.2% (401.1 g vs <= 41.6 g)
+  ERROR: STRICT CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)
+  ERROR: STRICT CL-A-VIB-FC: FAILS: margin -524.0% (187.2 m/s2 vs <= 30 m/s2)
+  ERROR: STRICT CL-A-VIB-GM: FAILS: margin -43.5% (1.13 vs >= 2)
+  ERROR: STRICT CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)
+  ERROR: STRICT CL-A-HORN-RIB-FOAM-STALL: FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)
+  ERROR: STRICT CL-A-ELEVON-TORSION-FOAM: FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)
+  ERROR: STRICT CL-A-HORN-BEARING-STALL: FAILS: margin -83.2% (36.65 MPa vs <= 20 MPa)
+  ERROR: STRICT CL-A-LINKAGE-FREEPLAY: FAILS: margin -28.0% (1.28 deg vs <= 1 deg)
+  ERROR: STRICT CL-A-VIB-GM-SHIFT: FAILS: margin -47.5% (1.05 vs >= 2)
+
+real	0m4.888s
+user	0m0.000s
+sys	0m0.047s

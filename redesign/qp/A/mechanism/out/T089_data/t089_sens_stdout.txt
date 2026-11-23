@@ -2,3 +2,50 @@ VALIDATION (legacy plant + iteration-2 FE, current fe_a.py): now vs stored
   gm_nominal [4.19, 4.25, 5.88, 2.37, 2.56, 3.32, 2.19, 2.23, 2.23] stored [4.19, 4.25, 5.88, 2.37, 2.56, 3.32, 2.19, 2.23, 2.23]
   gm_shifted [2.81, 2.68, 4.06, 2.16, 2.16, 2.3, 2.16, 2.16, 2.19] stored [2.81, 2.68, 4.06, 2.16, 2.16, 2.3, 2.16, 2.16, 2.19]
   gm_shifted_up [6.06, 5.7, 2.89, 3.22, 3.88, 6.06, 2.23, 2.26, 2.26] stored [6.06, 5.7, 2.89, 3.22, 3.88, 6.06, 2.23, 2.26, 2.26]
+DECOMPOSITION base group (min GM over zeta, thrust scale; modes x1.0 / x0.8 / x1.2; FE inertia)
+  ('iter2', 'iter2 FE', 'pit', 'kd') [4.19, 2.81, 6.06]
+  ('iter2', 'iter2 FE', 'yaw', 'kd') [2.19, 2.16, 2.23]
+  ('iter2', 'iter2 FE', 'pit', 'nom') [4.25, 2.68, 5.7]
+  ('iter2', 'iter2 FE', 'yaw', 'nom') [2.23, 2.16, 2.26]
+  ('iter2', 'iter2 FE', 'pit', 'hi') [5.88, 4.06, 2.89]
+  ('iter2', 'iter2 FE', 'yaw', 'hi') [2.23, 2.19, 2.26]
+  ('iter2', 'T-085 FE', 'pit', 'kd') [1.91, 2.85, 1.71]
+  ('iter2', 'T-085 FE', 'yaw', 'kd') [3.22, 2.76, 3.22]
+  ('iter2', 'T-085 FE', 'pit', 'nom') [1.77, 2.48, 1.64]
+  ('iter2', 'T-085 FE', 'yaw', 'nom') [3.22, 3.03, 3.22]
+  ('iter2', 'T-085 FE', 'pit', 'hi') [1.64, 2.09, 1.59]
+  ('iter2', 'T-085 FE', 'yaw', 'hi') [3.22, 3.22, 3.22]
+  ('t089', 'iter2 FE', 'pit', 'kd') [3.13, 2.03, 3.88]
+  ('t089', 'iter2 FE', 'yaw', 'kd') [1.49, 1.47, 1.52]
+  ('t089', 'iter2 FE', 'pit', 'nom') [3.17, 1.94, 3.65]
+  ('t089', 'iter2 FE', 'yaw', 'nom') [1.52, 1.47, 1.52]
+  ('t089', 'iter2 FE', 'pit', 'hi') [3.76, 2.98, 1.85]
+  ('t089', 'iter2 FE', 'yaw', 'hi') [1.52, 1.49, 1.54]
+  ('t089', 'T-085 FE', 'pit', 'kd') [1.22, 1.82, 1.1]
+  ('t089', 'T-085 FE', 'yaw', 'kd') [2.19, 1.88, 2.19]
+  ('t089', 'T-085 FE', 'pit', 'nom') [1.13, 1.59, 1.05]
+  ('t089', 'T-085 FE', 'yaw', 'nom') [2.16, 2.06, 2.19]
+  ('t089', 'T-085 FE', 'pit', 'hi') [1.03, 1.34, 1.02]
+  ('t089', 'T-085 FE', 'yaw', 'hi') [2.19, 2.19, 2.19]
+LIMITING POLE (gain factor, Hz) base group, zeta 0.3 %, thrust x1.25:
+  {'pit|kd|1.0': (1.22, 26.8), 'pit|kd|0.8': (1.82, 21.6), 'pit|kd|1.2': (1.1, 32.1), 'yaw|kd|1.0': (2.19, 2.7), 'yaw|kd|0.8': (1.88, 2.9), 'yaw|kd|1.2': (2.19, 2.7), 'pit|nom|1.0': (1.13, 27.8), 'pit|nom|0.8': (1.59, 22.4), 'pit|nom|1.2': (1.05, 33.2), 'yaw|nom|1.0': (2.16, 2.7), 'yaw|nom|0.8': (2.06, 3.2), 'yaw|nom|1.2': (2.19, 2.7), 'pit|hi|1.0': (1.03, 29.7), 'pit|hi|0.8': (1.34, 23.9), 'pit|hi|1.2': (1.02, 35.6), 'yaw|hi|1.0': (2.19, 2.7), 'yaw|hi|0.8': (2.19, 2.7), 'yaw|hi|1.2': (2.19, 2.7)}
+SENSITIVITY (min over 24 groups x kd/nom/hi x modes 0.8/1.0/1.2 x zeta x thrust scale; CAD-target inertia, i.e. ks x I_FE / I_target):
+  pit|ks0.4|none 2.6
+  pit|ks0.5|none 2.09
+  pit|ks0.7|none 1.49
+  pit|ks1.0|none 1.05
+  pit|ks1.0|notch 113 Hz Q 2.8 att 20 dB 1.0
+  pit|ks1.0|notch 113 Hz Q 2.8 att 40 dB 1.0
+  rll|ks0.4|none 6.16
+  rll|ks0.5|none 4.89
+  rll|ks0.7|none 3.54
+  rll|ks1.0|none 2.44
+  rll|ks1.0|notch 113 Hz Q 2.8 att 20 dB 2.26
+  rll|ks1.0|notch 113 Hz Q 2.8 att 40 dB 2.26
+  yaw|ks0.4|none 5.36
+  yaw|ks0.5|none 4.25
+  yaw|ks0.7|none 3.08
+  yaw|ks1.0|none 2.13
+  yaw|ks1.0|notch 113 Hz Q 2.8 att 20 dB 2.13
+  yaw|ks1.0|notch 113 Hz Q 2.8 att 40 dB 2.09
+RIGID crossover Hz / PM deg (zeta 1 %, thrust x1.0, nominal corner): {'pit|ks1.0': (np.float64(1.9), 56.0), 'pit|ks0.7': (np.float64(1.4), 58.0), 'pit|ks0.5': (np.float64(1.05), 58.0), 'pit|ks0.4': (np.float64(0.86), 57.0), 'pit|ks1.0|notch40': (np.float64(1.9), 56.0), 'rll|ks1.0': (np.float64(1.69), 65.0), 'rll|ks0.7': (np.float64(1.22), 67.0), 'rll|ks0.5': (np.float64(0.9), 67.0), 'rll|ks0.4': (np.float64(0.73), 66.0), 'rll|ks1.0|notch40': (np.float64(1.69), 64.0), 'yaw|ks1.0': (np.float64(1.32), 39.0), 'yaw|ks0.7': (np.float64(0.99), 51.0), 'yaw|ks0.5': (np.float64(0.74), 60.0), 'yaw|ks0.4': (np.float64(0.6), 64.0), 'yaw|ks1.0|notch40': (np.float64(1.32), 39.0)}

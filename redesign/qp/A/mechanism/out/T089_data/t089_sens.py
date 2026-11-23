@@ -11,6 +11,7 @@ import t089_gm as G
 import fu_cage as FC
 
 STORED = {'gm_nominal': [4.19, 4.25, 5.88, 2.37, 2.56, 3.32, 2.19, 2.23, 2.23], 'gm_shifted': [2.81, 2.68, 4.06, 2.16, 2.16, 2.30, 2.16, 2.16, 2.19], 'gm_shifted_up': [6.06, 5.70, 2.89, 3.22, 3.88, 6.06, 2.23, 2.26, 2.26]}
+I_CAD = json.load(open(os.path.join(QPA, 'sitl', 'cad_mass.json')))['I_cad_axes_kgm2']
 KEYS = [(ax, k) for ax in ('pit', 'rll', 'yaw') for k in G.KINDS]      # the stored order is "pit / rll / yaw x kd, nom, hi" (gen_params_a.py)
 
 
@@ -51,11 +52,12 @@ def sens_group(g):
         F, res = T.solve(kind, cell, hub, nm)
         for c in FC.cases_frame(F, kind):
             if c['node'] != 'spar centre': continue
-            ax = c['ax']
-            for ks in (1.0, 0.7, 0.5, 0.4):
-                for nn, nt in (NOTCHES.items() if ks == 1.0 else [('none', None)]):
+            ax = c['ax']; kc = (1.0 / c['inv_I']) / (I_CAD[G.AX_IAXIS[ax]] * G.M_PRED / G.M_BASIC)      # loop-gain correction to the current mass / inertia (cad_mass.json), as t089_gm.py 'CAD'
+            for ks0 in (1.0, 0.7, 0.5, 0.4):
+                ks = ks0 * kc
+                for nn, nt in (NOTCHES.items() if ks0 == 1.0 else [('none', None)]):
                     for sc in (1.0, 0.8, 1.2):
-                        key = f'{ax}|ks{ks}|{nn}'; part[key] = min(part.get(key, 99.0), gm_min(c, ax, sc, ks=ks, notch=nt))
+                        key = f'{ax}|ks{ks0}|{nn}'; part[key] = min(part.get(key, 99.0), gm_min(c, ax, sc, ks=ks, notch=nt))
     return part
 
 
@@ -111,15 +113,16 @@ if __name__ == '__main__':
         for part in ex.map(sens_group, GR):
             for k, v in part.items(): sens[k] = min(sens.get(k, 99.0), v)
     out['sens_FE'] = sens
-    print('SENSITIVITY (min over 24 groups x kd/nom/hi x modes 0.8/1.0/1.2 x zeta x thrust scale; FE inertia):')
+    print('SENSITIVITY (min over 24 groups x kd/nom/hi x modes 0.8/1.0/1.2 x zeta x thrust scale; CAD-target inertia, i.e. ks x I_FE / I_target):')
     for k, v in sorted(sens.items()): print(' ', k, round(v, 2))
     # rigid crossover and PM, base group nominal corner, per axis, for the gain scales
     pm = {}
     for c in FC.cases_frame(framesN['nom'], 'nom'):
         if c['node'] != 'spar centre': continue
+        kc = (1.0 / c['inv_I']) / (I_CAD[G.AX_IAXIS[c['ax']]] * G.M_PRED / G.M_BASIC)
         for ks in (1.0, 0.7, 0.5, 0.4):
-            pm[f'{c["ax"]}|ks{ks}'] = rigid_pm(c, c['ax'], ks)
-        pm[f'{c["ax"]}|ks1.0|notch40'] = rigid_pm(c, c['ax'], 1.0, notches['notch 113 Hz Q 2.8 att 40 dB'])
+            pm[f'{c["ax"]}|ks{ks}'] = rigid_pm(c, c['ax'], ks * kc)
+        pm[f'{c["ax"]}|ks1.0|notch40'] = rigid_pm(c, c['ax'], kc, notches['notch 113 Hz Q 2.8 att 40 dB'])
     out['rigid_pm'] = pm
     print('RIGID crossover Hz / PM deg (zeta 1 %, thrust x1.0, nominal corner):', {k: (round(v[0], 2), round(v[1], 0)) for k, v in pm.items()})
     json.dump(out, open(os.path.join(HERE, 't089_sens.json'), 'w'), indent=1, default=str)

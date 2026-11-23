@@ -1560,21 +1560,21 @@
    "title": "highest",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "highest",
-   "equation": "worst FC acceleration over 6,000-11,415 rpm, U 1.0 g mm per rotor, zeta 1 % and 0.5 %, kd / nom / hi; read from structures/structures_run.md s4, not re-run",
+   "equation": "worst FC acceleration (sum of axes) over 6,000-11,415 rpm, U 1.0 g mm per rotor, zeta 1 % and 0.5 %, kd / nom / hi; T-089: T-085 upgraded model (wing cell, tray, hub joint, 24 bound groups), mechanism/out/T089_data/t089_fvib.py; the spar-only values of structures_run.md s4 were 22.7-26.6",
    "inputs": {
     "x": "P:sim.vib_fc_ms2"
    },
    "outputs": {
-    "a_ms2": 26.6
+    "a_ms2": 187.2
    },
    "input_values": {
     "x": [
-     26.5,
-     26.6,
-     23.7,
-     23.7,
-     22.7,
-     22.7
+     82.7,
+     157.2,
+     87.6,
+     167.9,
+     97.9,
+     187.2
     ]
    }
   },
@@ -1597,8 +1597,8 @@
     "AVN-010",
     "AVN-007"
    ],
-   "how": "IMU VIBE < 30 m/s2 in the first tethered hover (T-A-TETHER-VIBE). The worst point (11,400 rpm) is beyond the all-four duty 1.0 state (10,343 rpm), where the sweep reads 18.5-19.1; up to 9,349 rpm it reads 15.0-15.2 (structures_run.md s4).",
-   "value": 26.6
+   "how": "T-089 (D-237 proposed): FAILS on the upgraded model. The governing 94.6-108.7 Hz wing-flap / cage-bounce mode (T-085) is excited at its 1P resonance 5,676-6,521 rpm, below the lowest operating rpm 6,789, so the sweep (6,000-11,415 rpm) catches its flank: 82.7-97.9 m/s2 at zeta 1 %, 157-187 at 0.5 %; inside the operating window 6,789-8,028 rpm the same runs read 19.3-32.9 m/s2 (T089_report.md s3). Spar-only model (structures_run.md s4, no mode there): 22.7-26.6. IMU VIBE < 30 m/s2 in the first tethered hover (T-A-TETHER-VIBE) and the tap test (T-A-TAP) decide. Conservative method (modes summed in absolute value, sum of axes, four rotors in worst phase, zeta a guess); limit unchanged.",
+   "value": 187.2
   },
   {
    "id": "CALC-A-VIB-GM",
@@ -1606,24 +1606,24 @@
    "title": "lowest",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "lowest",
-   "equation": "smallest gain margin over pitch / roll / yaw x kd / nom / hi at the nominal mode frequencies (fu_cage.py); STALE: iter3_run.md values (MN2212 / iteration-2 cage); re-run with X2216 inertias pending, not re-run (T-066 M-1)",
+   "equation": "smallest gain margin over pitch / roll / yaw x kd / nom / hi at the nominal mode frequencies (fu_cage.py, T-089 rebuild: X2216 / APC 9x4.5MR plant, T-085 FE, 1.8796 kg inertia, 24 bound groups); the iter3_run.md MN2212 values (2.19 min) are superseded",
    "inputs": {
     "x": "P:sim.gm_nominal"
    },
    "outputs": {
-    "gm": 2.19
+    "gm": 1.13
    },
    "input_values": {
     "x": [
-     4.19,
-     4.25,
-     5.88,
-     2.37,
-     2.56,
-     3.32,
-     2.19,
-     2.23,
-     2.23
+     1.36,
+     1.26,
+     1.13,
+     2.68,
+     2.72,
+     2.81,
+     2.44,
+     2.48,
+     2.48
     ]
    }
   },
@@ -1646,8 +1646,8 @@
     "CGE-004",
     "CGE-002-A"
    ],
-   "how": "UNVERIFIED: inputs are the MN2212-era iter3_run.md values; sitl/fu_cage.py (iteration-2 cage, MN2212 aero) needs rebuilding for the X2216 / 1.8796 kg cage before it can be re-run. Then re-run with the built-cage tap-test frequencies; hard-mounted FC.",
-   "value": 2.19
+   "how": "T-089 (D-237 proposed): FAILS on the rebuilt model (pitch 1.13-1.36, roll 2.68-2.81, yaw 2.44-2.48; limit 2.0, D-191 method unchanged). The pitch loop at P 0.12 / D 0.0012 / FLTD 60 has too little margin against the first symmetric wing-flap / cage mode (26.7-29.6 Hz at kd / nom / hi, pitch gain 0.23-0.25 of the rigid gain; the limiting closed-loop pole is at 27-33 Hz, T089_report.md s2) with the X2216 thrust (TFULL 14.17 N per motor) and the heavier 1.88 kg airframe; the 94-109 Hz mode is not the limit. Re-run with the built-cage tap-test frequencies (T-A-TAP) and, if the built mode is as modelled, re-tune the pitch rate gains or add a notch before flight (T089_report.md s2, illustrative sensitivities only); hard-mounted FC.",
+   "value": 1.13
   },
   {
    "id": "CALC-A-VIB-GM-SHIFT",
@@ -1661,30 +1661,30 @@
     "hi": "P:sim.gm_shifted_up"
    },
    "outputs": {
-    "gm": 2.16
+    "gm": 1.05
    },
    "input_values": {
     "lo": [
-     2.81,
+     2.37,
+     2.03,
+     1.61,
+     2.76,
      2.68,
-     4.06,
-     2.16,
-     2.16,
-     2.3,
-     2.16,
-     2.16,
-     2.19
+     2.44,
+     2.13,
+     2.19,
+     2.33
     ],
     "hi": [
-     6.06,
-     5.7,
-     2.89,
-     3.22,
-     3.88,
-     6.06,
-     2.23,
-     2.26,
-     2.26
+     1.13,
+     1.08,
+     1.05,
+     3.38,
+     3.65,
+     4.12,
+     2.48,
+     2.48,
+     2.48
     ]
    }
   },
@@ -2355,9 +2355,9 @@
     "CGE-004",
     "CGE-002-A"
    ],
-   "how": "Tap test of the built cage (T-A-TAP): first pitch mode 9-17 Hz, first roll mode 21-43 Hz (GM >= 2 grid, iter3_run.md); outside that window re-tune the rate loop.",
-   "note": "D-191 (CLAIMS-FIX s4): with the QP-3 gains (pitch P 0.15 / D 0.002 / FLTD 40) the minimum was 1.64 (1.56 at cant 17); pitch P 0.12 / D 0.0012 / FLTD 60 and yaw P 0.37 give 2.03 (roll, kd corner, modes -20 %; pitch 2.33).",
-   "value": 2.16
+   "how": "T-089 (D-237 proposed): FAILS on the rebuilt model with the modes shifted -20 % and +20 % (min 1.05, pitch +20 %); the 9-17 Hz / 21-43 Hz window of iter3_run.md belonged to the iteration-2 cage and is superseded. Tap test of the built cage (T-A-TAP) gives the real frequencies; re-tune the rate loop if the built mode is in the modelled range (T089_report.md s2).",
+   "note": "History: D-191 (CLAIMS-FIX s4, iteration-2 cage / MN2212, superseded by T-089 above): with the QP-3 gains (pitch P 0.15 / D 0.002 / FLTD 40) the minimum was 1.64 (1.56 at cant 17); pitch P 0.12 / D 0.0012 / FLTD 60 and yaw P 0.37 give 2.03 (roll, kd corner, modes -20 %; pitch 2.33).",
+   "value": 1.05
   },
   {
    "id": "CALC-A-SERVO",

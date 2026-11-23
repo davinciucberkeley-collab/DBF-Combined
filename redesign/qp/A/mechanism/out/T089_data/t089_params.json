@@ -1,0 +1,586 @@
+{
+ "CAD|gm_nominal": {
+  "values": [
+   1.36,
+   1.26,
+   1.13,
+   2.68,
+   2.72,
+   2.81,
+   2.44,
+   2.48,
+   2.48
+  ],
+  "worst_group": [
+   [
+    "lower",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "petg",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "petg",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "petg",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "petg",
+    "rigid+rot",
+    [
+     0.01,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ]
+  ]
+ },
+ "CAD|gm_shifted": {
+  "values": [
+   2.37,
+   2.03,
+   1.61,
+   2.76,
+   2.68,
+   2.44,
+   2.13,
+   2.19,
+   2.33
+  ],
+  "worst_group": [
+   [
+    "lower",
+    "al6061",
+    "pad stiff (70A, E 5.52, zm 108), tray 112",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "petg",
+    "rigid+rot",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "petg",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "petg",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "petg",
+    "pad nom (50A, E 2.456, zm 161), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ]
+  ]
+ },
+ "CAD|gm_shifted_up": {
+  "values": [
+   1.13,
+   1.08,
+   1.05,
+   3.38,
+   3.65,
+   4.12,
+   2.48,
+   2.48,
+   2.48
+  ],
+  "worst_group": [
+   [
+    "lower",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "petg",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "petg",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "petg",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "al6061",
+    "pad stiff (70A, E 5.52, zm 108), tray 112",
+    [
+     0.003,
+     1.25
+    ]
+   ]
+  ]
+ },
+ "FE|gm_nominal": {
+  "values": [
+   1.0,
+   1.0,
+   1.0,
+   2.48,
+   2.52,
+   2.6,
+   2.13,
+   2.16,
+   2.16
+  ],
+  "worst_group": [
+   [
+    "lower",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.0
+    ]
+   ],
+   [
+    "nominal",
+    "petg",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "petg",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "petg",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "al6061",
+    "pad nom (50A, E 2.456, zm 161), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "al6061",
+    "rigid+rot",
+    [
+     0.003,
+     1.25
+    ]
+   ]
+  ]
+ },
+ "FE|gm_shifted": {
+  "values": [
+   1.66,
+   1.43,
+   1.13,
+   2.52,
+   2.44,
+   2.26,
+   1.88,
+   1.91,
+   2.03
+  ],
+  "worst_group": [
+   [
+    "lower",
+    "al6061",
+    "pad stiff (70A, E 5.52, zm 108), tray 112",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "petg",
+    "rigid+rot",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "petg",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "petg",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "al6061",
+    "pad nom (50A, E 2.456, zm 161), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "petg",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "petg",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ]
+  ]
+ },
+ "FE|gm_shifted_up": {
+  "values": [
+   1.0,
+   1.0,
+   1.0,
+   3.13,
+   3.32,
+   3.76,
+   2.16,
+   2.16,
+   2.19
+  ],
+  "worst_group": [
+   [
+    "lower",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.0
+    ]
+   ],
+   [
+    "lower",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.0
+    ]
+   ],
+   [
+    "lower",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.0
+    ]
+   ],
+   [
+    "nominal",
+    "petg",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "petg",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "lower",
+    "petg",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "al6061",
+    "pad stiff (70A, E 5.52, zm 108), tray 112",
+    [
+     0.01,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "petg",
+    "pad stiff (70A, E 5.52, zm 108), tray 112",
+    [
+     0.003,
+     1.25
+    ]
+   ],
+   [
+    "nominal",
+    "al6061",
+    "pad soft (30A, E 1.142, Ec=E), tray 24",
+    [
+     0.003,
+     1.25
+    ]
+   ]
+  ]
+ },
+ "vib_fc_ms2": [
+  82.7,
+  157.2,
+  87.6,
+  167.9,
+  97.9,
+  187.2
+ ]
+}

@@ -2,7 +2,7 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-22 21:51 UTC",
+  "generated": "2026-11-23 06:24 UTC",
   "dataset": "concept-a",
   "ok": false,
   "errors": [
@@ -14,11 +14,14 @@ window.PROOF_GRAPH = {
    "STRICT CL-A-MASS-GATE-ROOM: FAILS: margin -27.3% (1.872 kg vs <= 1.47 kg)",
    "STRICT CL-A-CUTS-REQUIRED: FAILS: margin -864.2% (401.1 g vs <= 41.6 g)",
    "STRICT CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)",
+   "STRICT CL-A-VIB-FC: FAILS: margin -524.0% (187.2 m/s2 vs <= 30 m/s2)",
+   "STRICT CL-A-VIB-GM: FAILS: margin -43.5% (1.13 vs >= 2)",
    "STRICT CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)",
    "STRICT CL-A-HORN-RIB-FOAM-STALL: FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)",
    "STRICT CL-A-ELEVON-TORSION-FOAM: FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)",
    "STRICT CL-A-HORN-BEARING-STALL: FAILS: margin -83.2% (36.65 MPa vs <= 20 MPa)",
-   "STRICT CL-A-LINKAGE-FREEPLAY: FAILS: margin -28.0% (1.28 deg vs <= 1 deg)"
+   "STRICT CL-A-LINKAGE-FREEPLAY: FAILS: margin -28.0% (1.28 deg vs <= 1 deg)",
+   "STRICT CL-A-VIB-GM-SHIFT: FAILS: margin -47.5% (1.05 vs >= 2)"
   ],
   "warnings": [
    "CL-A-HORN-RIB-COUPON: has a limit, but its value '-' is not a number, so pass / fail is not judged",
@@ -38,11 +41,11 @@ window.PROOF_GRAPH = {
     "part": 65
    },
    "by_status": {
-    "CHECKED": 323,
-    "UNVERIFIED": 222,
+    "CHECKED": 319,
+    "UNVERIFIED": 226,
     "PROPOSED": 17
    },
-   "fails": 13
+   "fails": 16
   },
   "files": [
    "redesign/qp/A/proofs/claims.a0_base.json",
@@ -369,7 +372,7 @@ window.PROOF_GRAPH = {
    "where": "modes vs rotor bands, forced response, control-band GM, C1 loads at VD 24",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
-   "importance": 2
+   "importance": 0
   },
   {
    "id": "SRC-A-STRUCT-RUN",
@@ -381,7 +384,7 @@ window.PROOF_GRAPH = {
    "where": "s2 C1 loads, s4 modes vs rotor orders, band 94-321 Hz, forced-response sweep; beam FE fe_a.py",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
-   "importance": 6
+   "importance": 5
   },
   {
    "id": "SRC-A-T085",
@@ -916,8 +919,9 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
     "CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)",
-    "CL-A-VIB-GM is UNVERIFIED",
-    "CL-A-VIB-GM-SHIFT is UNVERIFIED"
+    "CL-A-VIB-FC: FAILS: margin -524.0% (187.2 m/s2 vs <= 30 m/s2)",
+    "CL-A-VIB-GM: FAILS: margin -43.5% (1.13 vs >= 2)",
+    "CL-A-VIB-GM-SHIFT: FAILS: margin -47.5% (1.05 vs >= 2)"
    ],
    "status": "UNVERIFIED",
    "fails": true,
@@ -5409,21 +5413,21 @@ window.PROOF_GRAPH = {
    "title": "highest",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "highest",
-   "equation": "worst FC acceleration over 6,000-11,415 rpm, U 1.0 g mm per rotor, zeta 1 % and 0.5 %, kd / nom / hi; read from structures/structures_run.md s4, not re-run",
+   "equation": "worst FC acceleration (sum of axes) over 6,000-11,415 rpm, U 1.0 g mm per rotor, zeta 1 % and 0.5 %, kd / nom / hi; T-089: T-085 upgraded model (wing cell, tray, hub joint, 24 bound groups), mechanism/out/T089_data/t089_fvib.py; the spar-only values of structures_run.md s4 were 22.7-26.6",
    "inputs": {
     "x": "P:sim.vib_fc_ms2"
    },
    "outputs": {
-    "a_ms2": 26.6
+    "a_ms2": 187.2
    },
    "input_values": {
     "x": [
-     26.5,
-     26.6,
-     23.7,
-     23.7,
-     22.7,
-     22.7
+     82.7,
+     157.2,
+     87.6,
+     167.9,
+     97.9,
+     187.2
     ]
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
@@ -5450,11 +5454,16 @@ window.PROOF_GRAPH = {
     "AVN-010",
     "AVN-007"
    ],
-   "how": "IMU VIBE < 30 m/s2 in the first tethered hover (T-A-TETHER-VIBE). The worst point (11,400 rpm) is beyond the all-four duty 1.0 state (10,343 rpm), where the sweep reads 18.5-19.1; up to 9,349 rpm it reads 15.0-15.2 (structures_run.md s4).",
-   "value": 26.6,
+   "how": "T-089 (D-237 proposed): FAILS on the upgraded model. The governing 94.6-108.7 Hz wing-flap / cage-bounce mode (T-085) is excited at its 1P resonance 5,676-6,521 rpm, below the lowest operating rpm 6,789, so the sweep (6,000-11,415 rpm) catches its flank: 82.7-97.9 m/s2 at zeta 1 %, 157-187 at 0.5 %; inside the operating window 6,789-8,028 rpm the same runs read 19.3-32.9 m/s2 (T089_report.md s3). Spar-only model (structures_run.md s4, no mode there): 22.7-26.6. IMU VIBE < 30 m/s2 in the first tethered hover (T-A-TETHER-VIBE) and the tap test (T-A-TAP) decide. Conservative method (modes summed in absolute value, sum of axes, four rotors in worst phase, zeta a guess); limit unchanged.",
+   "value": 187.2,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
-   "status": "CHECKED",
-   "margin": 0.11333333333333329,
+   "reasons": [
+    "FAILS: margin -524.0% (187.2 m/s2 vs <= 30 m/s2)",
+    "uses P:sim.vib_fc_ms2, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-089 (D-237 proposed): forced response at the FC of the T-085 upgraded model (structures_a.py s4 forcing: 1P U 1.0 g mm per rotor, 2P 5 % of static thrust, four rotors worst phase, modes summed in absolute value, sum of the three axes, 6,000-11,415 rpm, 400 modes), worst over the 24 T-085 bound groups: kd 1 % / kd 0.5 % / nom 1 % / nom 0.5 % / hi 1 % / hi 0.5 %; the worst point is the 94.6-108.7 Hz wing-flap / cage-bounce mode at its 1P resonance (5,676-6,521 rpm, below the lowest operating rpm 6,789); inside the operating window 6,789-8,028 rpm the same runs read 19.3-32.9 m/s2 (T089_report.md s3). Was 26.5..22.7 (spar-only model, structures_run.md s4, which has no mode there). EST: zeta 1 / 0.5 % is a guess, steady-state response (the transient spool-up pass is not credited))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -5.239999999999999,
+   "fails": true,
    "importance": 1
   },
   {
@@ -5463,24 +5472,24 @@ window.PROOF_GRAPH = {
    "title": "lowest",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "lowest",
-   "equation": "smallest gain margin over pitch / roll / yaw x kd / nom / hi at the nominal mode frequencies (fu_cage.py); STALE: iter3_run.md values (MN2212 / iteration-2 cage); re-run with X2216 inertias pending, not re-run (T-066 M-1)",
+   "equation": "smallest gain margin over pitch / roll / yaw x kd / nom / hi at the nominal mode frequencies (fu_cage.py, T-089 rebuild: X2216 / APC 9x4.5MR plant, T-085 FE, 1.8796 kg inertia, 24 bound groups); the iter3_run.md MN2212 values (2.19 min) are superseded",
    "inputs": {
     "x": "P:sim.gm_nominal"
    },
    "outputs": {
-    "gm": 2.19
+    "gm": 1.13
    },
    "input_values": {
     "x": [
-     4.19,
-     4.25,
-     5.88,
-     2.37,
-     2.56,
-     3.32,
-     2.19,
-     2.23,
-     2.23
+     1.36,
+     1.26,
+     1.13,
+     2.68,
+     2.72,
+     2.81,
+     2.44,
+     2.48,
+     2.48
     ]
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
@@ -5507,14 +5516,16 @@ window.PROOF_GRAPH = {
     "CGE-004",
     "CGE-002-A"
    ],
-   "how": "UNVERIFIED: inputs are the MN2212-era iter3_run.md values; sitl/fu_cage.py (iteration-2 cage, MN2212 aero) needs rebuilding for the X2216 / 1.8796 kg cage before it can be re-run. Then re-run with the built-cage tap-test frequencies; hard-mounted FC.",
-   "value": 2.19,
+   "how": "T-089 (D-237 proposed): FAILS on the rebuilt model (pitch 1.13-1.36, roll 2.68-2.81, yaw 2.44-2.48; limit 2.0, D-191 method unchanged). The pitch loop at P 0.12 / D 0.0012 / FLTD 60 has too little margin against the first symmetric wing-flap / cage mode (26.7-29.6 Hz at kd / nom / hi, pitch gain 0.23-0.25 of the rigid gain; the limiting closed-loop pole is at 27-33 Hz, T089_report.md s2) with the X2216 thrust (TFULL 14.17 N per motor) and the heavier 1.88 kg airframe; the 94-109 Hz mode is not the limit. Re-run with the built-cage tap-test frequencies (T-A-TAP) and, if the built mode is as modelled, re-tune the pitch rate gains or add a notch before flight (T089_report.md s2, illustrative sensitivities only); hard-mounted FC.",
+   "value": 1.13,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "reasons": [
-    "uses P:sim.gm_nominal, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md control-band table (rerun D-195 with fe_a.py motor lump +7.2 g for the adapter and spinner nut, A.param D-191, cant 17), min GM at nominal mode frequencies: pit / rll / yaw x kd, nom, hi)"
+    "FAILS: margin -43.5% (1.13 vs >= 2)",
+    "uses P:sim.gm_nominal, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; flexible modes at the FE frequencies (x 1.0). With the FE own (lighter, 1.64 kg) inertia the pitch rows are 1.0 (unstable at some thrust scale); T089_report.md s2)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.09499999999999997,
+   "margin": -0.43500000000000005,
+   "fails": true,
    "importance": 1
   },
   {
@@ -5529,30 +5540,30 @@ window.PROOF_GRAPH = {
     "hi": "P:sim.gm_shifted_up"
    },
    "outputs": {
-    "gm": 2.16
+    "gm": 1.05
    },
    "input_values": {
     "lo": [
-     2.81,
+     2.37,
+     2.03,
+     1.61,
+     2.76,
      2.68,
-     4.06,
-     2.16,
-     2.16,
-     2.3,
-     2.16,
-     2.16,
-     2.19
+     2.44,
+     2.13,
+     2.19,
+     2.33
     ],
     "hi": [
-     6.06,
-     5.7,
-     2.89,
-     3.22,
-     3.88,
-     6.06,
-     2.23,
-     2.26,
-     2.26
+     1.13,
+     1.08,
+     1.05,
+     3.38,
+     3.65,
+     4.12,
+     2.48,
+     2.48,
+     2.48
     ]
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
@@ -6415,16 +6426,18 @@ window.PROOF_GRAPH = {
     "CGE-004",
     "CGE-002-A"
    ],
-   "how": "Tap test of the built cage (T-A-TAP): first pitch mode 9-17 Hz, first roll mode 21-43 Hz (GM >= 2 grid, iter3_run.md); outside that window re-tune the rate loop.",
-   "note": "D-191 (CLAIMS-FIX s4): with the QP-3 gains (pitch P 0.15 / D 0.002 / FLTD 40) the minimum was 1.64 (1.56 at cant 17); pitch P 0.12 / D 0.0012 / FLTD 60 and yaw P 0.37 give 2.03 (roll, kd corner, modes -20 %; pitch 2.33).",
-   "value": 2.16,
+   "how": "T-089 (D-237 proposed): FAILS on the rebuilt model with the modes shifted -20 % and +20 % (min 1.05, pitch +20 %); the 9-17 Hz / 21-43 Hz window of iter3_run.md belonged to the iteration-2 cage and is superseded. Tap test of the built cage (T-A-TAP) gives the real frequencies; re-tune the rate loop if the built mode is in the modelled range (T089_report.md s2).",
+   "note": "History: D-191 (CLAIMS-FIX s4, iteration-2 cage / MN2212, superseded by T-089 above): with the QP-3 gains (pitch P 0.15 / D 0.002 / FLTD 40) the minimum was 1.64 (1.56 at cant 17); pitch P 0.12 / D 0.0012 / FLTD 60 and yaw P 0.37 give 2.03 (roll, kd corner, modes -20 %; pitch 2.33).",
+   "value": 1.05,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "reasons": [
-    "uses P:sim.gm_shifted, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md: min GM with all flexible modes shifted -20 %)",
-    "uses P:sim.gm_shifted_up, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md: min GM with modes shifted +20 %)"
+    "FAILS: margin -47.5% (1.05 vs >= 2)",
+    "uses P:sim.gm_shifted, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; all flexible modes shifted -20 %)",
+    "uses P:sim.gm_shifted_up, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; all flexible modes shifted +20 %)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.08000000000000007,
+   "margin": -0.475,
+   "fails": true,
    "importance": 1
   },
   {
@@ -9429,17 +9442,20 @@ window.PROOF_GRAPH = {
    "title": "sim.vib_fc_ms2",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    26.5,
-    26.6,
-    23.7,
-    23.7,
-    22.7,
-    22.7
+    82.7,
+    157.2,
+    87.6,
+    167.9,
+    97.9,
+    187.2
    ],
    "unit": "m/s2",
-   "source": "SRC-A-STRUCT-RUN",
-   "note": "structures_run.md s4 forced-response sweep (T-084 rerun, sum of axes, 6,000-11,415 rpm, worst at 11,400 rpm, U 1.0 g mm): kd 1 % / kd 0.5 % / nom 1 % / nom 0.5 % / hi 1 % / hi 0.5 %; was 25.8..23.7 over 6,000-10,500 rpm (iter3_run.md). Spar-only model: the in-band mode (vib_inband_corners) is a FORCED-RESPONSE case here, 0.12-0.18 m/s2 on resonance",
-   "status": "CHECKED",
+   "source": "SRC-A-T089",
+   "note": "T-089 (D-237 proposed): forced response at the FC of the T-085 upgraded model (structures_a.py s4 forcing: 1P U 1.0 g mm per rotor, 2P 5 % of static thrust, four rotors worst phase, modes summed in absolute value, sum of the three axes, 6,000-11,415 rpm, 400 modes), worst over the 24 T-085 bound groups: kd 1 % / kd 0.5 % / nom 1 % / nom 0.5 % / hi 1 % / hi 0.5 %; the worst point is the 94.6-108.7 Hz wing-flap / cage-bounce mode at its 1P resonance (5,676-6,521 rpm, below the lowest operating rpm 6,789); inside the operating window 6,789-8,028 rpm the same runs read 19.3-32.9 m/s2 (T089_report.md s3). Was 26.5..22.7 (spar-only model, structures_run.md s4, which has no mode there). EST: zeta 1 / 0.5 % is a guess, steady-state response (the transient spool-up pass is not credited)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: T-089 (D-237 proposed): forced response at the FC of the T-085 upgraded model (structures_a.py s4 forcing: 1P U 1.0 g mm per rotor, 2P 5 % of static thrust, four rotors worst phase, modes summed in absolute value, sum of the three axes, 6,000-11,415 rpm, 400 modes), worst over the 24 T-085 bound groups: kd 1 % / kd 0.5 % / nom 1 % / nom 0.5 % / hi 1 % / hi 0.5 %; the worst point is the 94.6-108.7 Hz wing-flap / cage-bounce mode at its 1P resonance (5,676-6,521 rpm, below the lowest operating rpm 6,789); inside the operating window 6,789-8,028 rpm the same runs read 19.3-32.9 m/s2 (T089_report.md s3). Was 26.5..22.7 (spar-only model, structures_run.md s4, which has no mode there). EST: zeta 1 / 0.5 % is a guess, steady-state response (the transient spool-up pass is not credited)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -9448,21 +9464,21 @@ window.PROOF_GRAPH = {
    "title": "sim.gm_nominal",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    4.19,
-    4.25,
-    5.88,
-    2.37,
-    2.56,
-    3.32,
-    2.19,
-    2.23,
-    2.23
+    1.36,
+    1.26,
+    1.13,
+    2.68,
+    2.72,
+    2.81,
+    2.44,
+    2.48,
+    2.48
    ],
    "unit": "-",
-   "source": "SRC-A-ITER3",
-   "note": "STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md control-band table (rerun D-195 with fe_a.py motor lump +7.2 g for the adapter and spinner nut, A.param D-191, cant 17), min GM at nominal mode frequencies: pit / rll / yaw x kd, nom, hi",
+   "source": "SRC-A-T089",
+   "note": "T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; flexible modes at the FE frequencies (x 1.0). With the FE own (lighter, 1.64 kg) inertia the pitch rows are 1.0 (unstable at some thrust scale); T089_report.md s2",
    "reasons": [
-    "marked UNVERIFIED in redesign/qp/A/params-A.json: STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md control-band table (rerun D-195 with fe_a.py motor lump +7.2 g for the adapter and spinner nut, A.param D-191, cant 17), min GM at nominal mode frequencies: pit / rll / yaw x kd, nom, hi"
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; flexible modes at the FE frequencies (x 1.0). With the FE own (lighter, 1.64 kg) inertia the pitch rows are 1.0 (unstable at some thrust scale); T089_report.md s2"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -9473,21 +9489,21 @@ window.PROOF_GRAPH = {
    "title": "sim.gm_shifted",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    2.81,
+    2.37,
+    2.03,
+    1.61,
+    2.76,
     2.68,
-    4.06,
-    2.16,
-    2.16,
-    2.3,
-    2.16,
-    2.16,
-    2.19
+    2.44,
+    2.13,
+    2.19,
+    2.33
    ],
    "unit": "-",
-   "source": "SRC-A-ITER3",
-   "note": "STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md: min GM with all flexible modes shifted -20 %",
+   "source": "SRC-A-T089",
+   "note": "T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; all flexible modes shifted -20 %",
    "reasons": [
-    "marked UNVERIFIED in redesign/qp/A/params-A.json: STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md: min GM with all flexible modes shifted -20 %"
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; all flexible modes shifted -20 %"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -9498,21 +9514,21 @@ window.PROOF_GRAPH = {
    "title": "sim.gm_shifted_up",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    6.06,
-    5.7,
-    2.89,
-    3.22,
-    3.88,
-    6.06,
-    2.23,
-    2.26,
-    2.26
+    1.13,
+    1.08,
+    1.05,
+    3.38,
+    3.65,
+    4.12,
+    2.48,
+    2.48,
+    2.48
    ],
    "unit": "-",
-   "source": "SRC-A-ITER3",
-   "note": "STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md: min GM with modes shifted +20 %",
+   "source": "SRC-A-T089",
+   "note": "T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; all flexible modes shifted +20 %",
    "reasons": [
-    "marked UNVERIFIED in redesign/qp/A/params-A.json: STALE, MN2212 / iteration-2 cage; re-run with X2216 inertias pending (sitl/fu_cage.py not re-run, T-066 M-1; structures_run.md s4: not re-run): iter3_run.md: min GM with modes shifted +20 %"
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; all flexible modes shifted +20 %"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -11524,14 +11540,14 @@ window.PROOF_GRAPH = {
    "id": "AVN-010",
    "type": "part",
    "title": "R2 mounting bosses (T-073 R2, T-077 p5): 4 FC bosses 6 x 6 mm on the 25 x 25 pattern with M2 hex-nut pockets, 4 ESC bosses 6 x 6 on the 20 x 20 pattern, 4 GPS corner pads 6 x 6 and 2 RX strip pads 5 x 11 mm (T-073 s.R2 Phase 2: GPS / RX pads), each up to the pad plane ZP (heights from the skin), bonded to the skin, printed PETG 6 x 6 x h (T-070); mass = drawn volume x T-067 basis",
-   "status": "CHECKED",
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
    "id": "AVN-007",
    "type": "part",
    "title": "Foam-tape pads x4 (FC hard mount, 3.0 mm)",
-   "status": "CHECKED",
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -17084,26 +17100,6 @@ window.PROOF_GRAPH = {
   {
    "source": "SRC-A-STRUCT-RUN",
    "target": "P:sim.hover_lean_2p_hz",
-   "type": "cites"
-  },
-  {
-   "source": "SRC-A-STRUCT-RUN",
-   "target": "P:sim.vib_fc_ms2",
-   "type": "cites"
-  },
-  {
-   "source": "SRC-A-ITER3",
-   "target": "P:sim.gm_nominal",
-   "type": "cites"
-  },
-  {
-   "source": "SRC-A-ITER3",
-   "target": "P:sim.gm_shifted",
-   "type": "cites"
-  },
-  {
-   "source": "SRC-A-ITER3",
-   "target": "P:sim.gm_shifted_up",
    "type": "cites"
   },
   {
