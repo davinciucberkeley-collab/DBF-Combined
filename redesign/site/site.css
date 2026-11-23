@@ -69,7 +69,7 @@
 
   /* ---------- figure highlight (renders, callouts, diagrams) ----------
      Orange means "the part you act on" in every figure. It is never a UI accent. */
-  --highlight: #C2540A;
+  --highlight: #A84808;
   --highlight-strong: #E0661A;
   --highlight-wash: #FBE9DC;
 
@@ -171,7 +171,7 @@
     --line: #D5D9DE; --line-2: #B9BFC7; --line-3: #8A929C;
     --fg: #111417; --fg-2: #3D444D; --fg-3: #5C646E;
     --accent: #1F5FC7; --accent-wash: #FFFFFF; --accent-line: #1F5FC7;
-    --highlight: #C2540A; --highlight-wash: #FFFFFF;
+    --highlight: #A84808; --highlight-wash: #FFFFFF;
     --shadow-pop: none;
   }
 }

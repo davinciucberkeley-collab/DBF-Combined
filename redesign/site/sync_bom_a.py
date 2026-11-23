@@ -26,6 +26,7 @@ subs = ["propulsion", "power", "avionics", "mechanisms", "airframe", "ground_tes
 sub_cost = {s: bom.sub_cost(s) for s in subs}
 top = max(sub_cost.values())
 
+FLAGTITLE = {"V": "V: unit price verified against the vendor page", "U": "U: unit price not verified", "EST": "EST: estimated unit price"}
 trs = []
 for r in rows:
     q, u = float(r["qty"]), float(r["unit_usd"])
@@ -40,7 +41,7 @@ for r in rows:
     spare = f'<small class="pid">{int(float(r["spares"]))} spare</small>' if float(r["spares"]) else ""
     trs.append(f'<tr data-group="{r["subsystem"]}" data-wave="{wave}"><td class="id">{r["id"]}</td><td>{item}{spare}</td>'
                f'<td class="fam">{r["subsystem"].replace("_", " ")}</td><td>{vend}</td><td class="num">{q:g}</td><td class="num">${u:,.2f}</td>'
-               f'<td class="num">${q*u:,.2f}</td><td><span class="ds-badge" data-status="{st}">{lab}</span></td>'
+               f'<td class="num">${q*u:,.2f}</td><td><span class="ds-badge" data-status="{st}" title="{FLAGTITLE.get(lab, lab)}">{lab}</span></td>'
                f'<td class="fam">{"Order 1" if wave == "ORDER1" else "main"}</td><td class="num">{esc(r["date_checked"])}</td></tr>')
 
 bars = "".join(f'<div class="bom-bar"><span>{s.replace("_", " ")}</span><i style="--v:{100*sub_cost[s]/top:.0f}%"></i><b>${sub_cost[s]:,.2f}</b></div>' for s in sorted(subs, key=lambda s: -sub_cost[s]))

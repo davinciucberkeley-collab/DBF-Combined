@@ -348,7 +348,7 @@ a.term:hover { color: var(--accent); text-decoration-color: var(--accent); }
 /* ---- engineering drawing sheets (make_drawing_gallery.py): white paper, whole sheet shown ---- */
 .drw-gallery { display: flex; overflow-x: auto; gap: var(--space-3); padding-bottom: 6px; scroll-snap-type: x proximity; }
 .drw-gallery .shot { flex: 0 0 230px; scroll-snap-align: start; }
-.shot.drw a, .v-drw a { aspect-ratio: 187 / 121; background: #fff; }
+.shot.drw > a, .v-drw a { aspect-ratio: 187 / 121; background: #fff; } /* white paper behind the sheet only; caption links (PDF) keep the theme background (T-053) */
 .shot.drw img, .v-drw img { object-fit: contain; }
 .v-drw { display: block; }
 .shot figcaption a { display: inline; aspect-ratio: auto; background: none; }
