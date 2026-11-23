@@ -21,7 +21,7 @@ short-shaft 880KV on APC 9x4.5MR (D-227/D-228), no spare motor (AM-019), FIN-003
 fin tubes 387.4 mm / FIN_H 0.1937 (D-233), no BOM spare servo (D-234), hub bars T1/T11 from Zoro (D-235). Budget =
 total incl. crash reserve by its definition <= $2,000 (AM-013, AM-018); weight may exceed the mass gate (AM-011).
 
-**Requirements:** 109 R-ids; ledger 93 tasks (61 VERIFIED COMPLETE); `python -I tools/ledger_audit.py` 0 errors.
+**Requirements:** 109 R-ids; ledger 93 tasks (66 VERIFIED COMPLETE); `python -I tools/ledger_audit.py` 0 errors.
 
 **State (EST):** CAD 1,641.0 g, predicted 1.881 kg (CL-A-MASS-PRED), CG 22.05 mm CAD (tallied about 23.22), SM 7.61 % CAD, lateral CG -3.32 mm (FC 75 mm left, D-240), window +11.88 %, T/W 2.632/2.111, cruise 234 s, A-P9
 tip-over 31.00 deg; BOM $1,939.17, margin +$60.83 (reserve $346.94). 3-D gates PASS at T-092 (2026-11-23; no geometry change since).
@@ -39,7 +39,7 @@ margin claims UNVERIFIED (T-089).
 **Resumed 2026-11-22 (AM-027) after the AM-026 pause; running.** Nothing pushed. `docs/session-log.md` shows as modified between commits: hook logging, committed with the next checkpoint.
 
 **Known dependency gaps (not blockers for the next action):** T-045 (IN PROGRESS, audit report draft) waits on T-044; T-083 (IN PROGRESS) waits on BLOCKED T-077; phase 1 gate in execution-plan.md stays open until T-008 is VERIFIED COMPLETE.
-**Next action on resume:** (2026-11-23) Review round 4 done: T-032, T-089, T-090, T-091, T-092 VERIFIED COMPLETE; order-week re-check and the R15 shipping read split to T-093. (1) T-093 on 1-4 Dec 2026: re-read every ORDER-1 price and stock (X2216 backorder), R15 vendor (Carbonwebshop quote or Easy Composites cart, Dillon enters the address), then present Order 1 to Dillon; T-088 closes with it. (2) Meanwhile: cleanup T-042..T-045, T-008; final verification T-047 last.
+**Next action on resume:** (2026-11-23) Cleanup T-042..T-045 and T-008 VERIFIED COMPLETE (review round 5). Next: T-093 on 1-4 Dec 2026 (re-read every ORDER-1 price and stock, R15 vendor with Dillon entering the cart address, present Order 1 to Dillon; T-088 closes with it). Program-end items wait for the build: T-049 final repository audit (incl. spec 9.8 re-execution), T-047 final verification last.
 
 **Failures (history):** see git log and CHANGE-LOG; O4b with MN2212 infeasible (AM-017 study); MN3110, legs/skid,
 0.8 m/s touchdown and concept B rejected (`docs/audits/2026-11-21-config-study.md`); PETG FIN-003 failed (D-229).

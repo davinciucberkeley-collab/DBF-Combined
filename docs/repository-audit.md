@@ -32,12 +32,12 @@ By type: `.BIN` 447 MB, `.mp4` 254, `.png` 215, `.json` 201, `.txt` 105, `.html`
 | History: 1.5 GiB pack | — | Do not touch | Rewriting history needs team authorization (spec 9.3). |
 
 ## 3. Files removed or archived
-Batches 1 and 2 below. Dry-run facts: `docs/audits/2026-11-18-cleanup-dryrun.md` (T-041a). Measured reclaimable on disk:
+Batches 1 to 3 below. Dry-run facts: `docs/audits/2026-11-18-cleanup-dryrun.md` (T-041a). Measured reclaimable on disk:
 untracked SITL `.BIN` 2 401 MB (all 232 runs keep `case.csv` + `result.json`); 7 merged agent worktrees 4.3–7.9 GB
 (2 fully clean: `agent-a3ad648c…` 1.48 GB, `agent-ab6e7d18…` 0.69 GB); tracked SITL `.BIN` 447 MB (repo size only
 shrinks with a history rewrite, which needs team authorization); 23 K09-L leftovers in `site/assets` 55.5 MB.
 An attempt to `git worktree remove` the two clean merged worktrees (branches kept) was blocked by the session's
-permission classifier on 2026-11-18, so every removal now waits for Dillon's approval (dry-run §9 questions).
+permission classifier on 2026-11-18, so every removal now waits for Dillon's approval (dry-run §9 questions); since cleared by batch 1 chat approval, AM-002 and AM-029.
 
 | Date | Batch | Approval | Action | Recovered | Regression |
 |---|---|---|---|---|---|
@@ -49,7 +49,7 @@ permission classifier on 2026-11-18, so every removal now waits for Dillon's app
 
 Batch 2 reclassification note (2026-11-19). `analysis/cfd3d/out/viz/cfd3d_viz.json` was listed as "Protected" in the dry run, pending Dillon's call on the old-hybrid CFD panel. AM-002 ("if something is unused let it go ... if they do not contribute to our current design") answered it: the panel is the old hybrid concept, not concept A, so the file was removed in batch 2. It is recoverable from git history (the last commit before 8d15f419).
 
-Dangling references the review found after batch 2, open for T-042 / T-044: `DECISIONS.md`, `PRODUCT.md`, `PROVENANCE.md`, `inventory/build_overview.mjs`, `review/build.mjs`, `analysis/cfd3d/postprocess.py`, `redesign/inputs/decisions/*` (they still name removed files such as the CFD panel data, `Inventory-Overview.html` or the K09-L site copies). Not edited yet.
+Dangling references the review found after batch 2, open for T-042 / T-044: `DECISIONS.md`, `PRODUCT.md`, `PROVENANCE.md`, `inventory/build_overview.mjs`, `review/build.mjs`, `analysis/cfd3d/postprocess.py`, `redesign/inputs/decisions/*` (they still name removed files such as the CFD panel data, `Inventory-Overview.html` or the K09-L site copies). Fixed in T-042 (85ae8c0f), see `docs/audits/2026-11-23-T042-refs.md`.
 
 ## 4–12. Remaining report sections (spec 9.9)
 Written 2026-11-23 (T-045) from `docs/audits/2026-11-18-cleanup-dryrun.md`, `docs/audits/2026-11-23-T042-refs.md` and
@@ -68,7 +68,7 @@ Measured 2026-11-23 on HEAD 76894339 (`git ls-tree -r -l HEAD` summed; `git ls-f
 | `.claude/worktrees` | 9 checkouts | 1 (`ui-redesign-survey`, 768 MB, unmerged) | `git worktree list`; `du -sm`. |
 | `.git` | 2.3 GB | 2.7 GB | Grew because new work was committed; history was not rewritten (s10). |
 
-### 5. Functionality consolidated
+### 5. Functionality consolidated (spec item 5)
 Little was merged; the dry run found most "duplicates" were load-bearing (`docs/audits/2026-11-18-cleanup-dryrun.md` s2, s5, s6).
 - Kept, not consolidated: the Explorer film copies (`site/assets/animation/a-*`, 24 files, 70.0 MB). GitHub Pages serves them and `publish_assets.py` is the only thing that makes them. Dropping them needs a CI publish step (future change, Q7; not done).
 - Kept: `proofs/out/graph.js` and `graph.json`. The viewer loads the `.js` from `file://`; tests and `check_viewer.js` read the `.json`.
@@ -77,10 +77,10 @@ Little was merged; the dry run found most "duplicates" were load-bearing (`docs/
 - Done: `inventory/build_variants.mjs` now builds paths with `fileURLToPath`. It had a Windows path bug (`C:\C:\...`) that made `build_overview.mjs` exit 1 (`2026-11-23-T042-refs.md`, conductor follow-up).
 - Not done: duplicate CAD pipelines, simulation wrappers, rendering systems and agent instructions (spec 9.4) were not audited beyond the files above (—).
 
-### 6. Dependencies eliminated
+### 6. Dependencies eliminated (spec item 6)
 None removed. Python and Node packages were not inventoried in this audit (—). Batch 2 removed files, not packages. Dependencies still in use and fetched from the network: the Explorer's three.js (importmap, cdn.jsdelivr.net) and Google Fonts (see s10).
 
-### 7. Space recovered
+### 7. Space recovered (spec item 7)
 Logged figures. They mix untracked disk, worktree checkouts and the tracked tree, so the total is approximate and was not re-measured (`2026-11-23-T043-T044.md` s1 and s3 note 7).
 | Batch | What | Recovered |
 |---|---|---|
@@ -93,7 +93,7 @@ Logged figures. They mix untracked disk, worktree checkouts and the tracked tree
 
 `.git` was **not** reduced: 2.7G now (`du -sh .git`; `git count-objects -vH`: 22,407 packed objects, 1.51 GiB in 4 packs, 6,609 loose objects, 744.61 MiB). The recovered space is disk space, not clone size.
 
-### 8. Performance benchmarks
+### 8. Performance benchmarks (spec item 8)
 Full table: `docs/audits/2026-11-23-T043-T044.md` s1 (command logs: `docs/audits/2026-11-23-T043-logs/`). Selected values:
 | Metric | Value | Source |
 |---|---|---|
@@ -108,7 +108,7 @@ Full table: `docs/audits/2026-11-23-T043-T044.md` s1 (command logs: `docs/audits
 
 **Before and after:** no speed benchmark was taken before cleanup (T-040 took sizes only), so no speed change is measured. Deleting files is not claimed to have sped up any gate, render or page (spec 9.5). The only measured effects are sizes (s4, s7).
 
-### 9. Regression tests
+### 9. Regression tests (spec item 9)
 Run 2026-11-23 on HEAD 85ae8c0f (`2026-11-23-T043-T044.md` s2; the batch 2 checks are in s3 of this file). All PASS:
 - `ledger_audit.py` rc 0 (109 requirements, 93 tasks, 0 errors); `plan_rid_check.py` rc 0 (109 R-ids).
 - `proofs/run_all.py` rc 1, as expected: 12 distinct FAIL claims plus 1 UNVERIFIED (A-P13), printed as 16 STRICT lines (duplicates at program and claim level).
@@ -117,7 +117,7 @@ Run 2026-11-23 on HEAD 85ae8c0f (`2026-11-23-T043-T044.md` s2; the batch 2 check
 
 Not re-run: `collide_a`, `assembly_check`, drawings and Blender render (recorded results only; the later change to `redesign/qp/A/cad` is 4 text-string lines, no coordinates, T-043 s3 note 3). Spec 9.8 items not tested in this pass (—): CAD loading in a viewer, the Explorer in a browser, hooks and compaction recovery (those tests are `docs/audits/2026-11-19-compact-test*.md` and `2026-11-23-recovery-test.md`). The 12 failing claims are design findings, not cleanup regressions; the same count is reported in every run since T-089.
 
-### 10. Remaining inefficiencies
+### 10. Remaining inefficiencies (spec item 10)
 1. `.git` is 2.7G because history was not rewritten. Removed `.BIN` and film blobs (447 MB of SITL logs alone) stay in the packs. A rewrite and force-push need team authorization (spec 9.3); not requested.
 2. Three tracked SITL `.BIN` (19.3 MB) were added after batch 2 under `mechanism/out/T076_data/s4b_failed_sleep/`. Not yet classified; the batch 2 treatment would be `git rm --cached` (needs approval).
 3. The unmerged `ui-redesign-survey` worktree (768 MB, commit 4281a19b) is kept; nobody has decided to merge or drop it.
@@ -130,7 +130,7 @@ Not re-run: `collide_a`, `assembly_check`, drawings and Blender render (recorded
 10. No agent or software performance metrics yet (T-051) and no browser measurement (s8).
 K09-L leftovers in `site/assets`: none remain (s4). K09-L record films under `showcase/` remain on purpose (s11).
 
-### 11. Preserved reference materials
+### 11. Preserved reference materials (spec item 11)
 Kept on purpose (`docs/audits/2026-11-18-cleanup-dryrun.md` s0, s3, s5, s6; AM-002: remove only what does not serve the current design):
 - the Protected list below;
 - `redesign/showcase/animation/**` K09-L record films (about 43.3 MB; referenced by `SHOWCASE.md`, `README.md`, `BUILD-GUIDE.md`);
@@ -139,7 +139,7 @@ Kept on purpose (`docs/audits/2026-11-18-cleanup-dryrun.md` s0, s3, s5, s6; AM-0
 - `redesign/config-study/tiebreak/wind/data/*.txt` (about 61 MB of source wind records) and the K09-L STL files in `redesign/showcase/stl/` (regenerable, kept).
 Every path removed in batch 2 is recoverable from git (`8d15f419^`, commit 5020967a). Branches of all removed worktrees are kept. Every SITL run keeps `case.csv` and `result.json`.
 
-### 12. Unresolved risks
+### 12. Unresolved risks (spec item 12)
 1. **History rewrite not authorized.** Clone size stays at the full pack until the team decides.
 2. **232 SITL `.BIN` were deleted on disk.** The 52 that were tracked are recoverable from `8d15f419^`; the 180 untracked ones were never in git and can only be regenerated by rerunning SITL. Nothing in the repo reads them (dry run s1).
 3. **Ignored files of removed worktrees are gone** (K09-L-era FEA and solver `history.csv`); only content tracked in the kept branches survives.

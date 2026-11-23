@@ -109,6 +109,11 @@ Append one row per delegated task. Review at each milestone: are opus runs justi
 | 2026-11-23 | T-091 pre-order structural trade | implementer / sonnet | moderate-high (FEA-lite + control) | done: no structural purchase; FC 75 mm off centre fixes pitch GM (2.52-4.00) | 277 k tok / 64.3 min | 0 | — | conductor read report |
 | 2026-11-23 | T-092 FC off-centre into CAD + R15 | implementer / sonnet | moderate (CAD + wiring + gates) | done: FC y -75 mm, gates PASS, exposed 0.597 m unchanged, mass 1,641.0 g | 360 k tok / 120.5 min | 1 (gates rerun after a fake wire fold) | — | conductor checked gate outputs, BOM, A.param |
 | 2026-11-23 | review round 4 (T-032, T-089..T-092) | eng-reviewer / sonnet (override, see routing deviation) | review | done: 1 PASS, 4 PASS WITH FIXES, 0 FAIL; fixes applied by the conductor | 128 k tok / 4.4 min | 0 | — | conductor re-check section in the audit file |
+| 2026-11-23 | T-008 recovery test | ledger-auditor / haiku | low | done: recovered state, 8 gaps (fixed) | 44 k tok / 1.0 min | 0 | — | conductor checked gaps |
+| 2026-11-23 | T-042 dangling references | implementer / sonnet | low | done; conductor fixed build_variants path bug | 87 k tok / 1.7 min | 0 | — | conductor read diff, reran build_overview |
+| 2026-11-23 | T-043 / T-044 benchmarks + regression | runner / haiku | low | done | 67 k tok / 5.3 min | 0 | — | conductor notes in file |
+| 2026-11-23 | T-045 audit report s4-s12 | implementer / sonnet | low | done | 101 k tok / 3.6 min | 0 | — | review round 5 |
+| 2026-11-23 | review round 5 (T-042..T-045) | eng-reviewer / sonnet (override) | review | 1 PASS, 3 PASS WITH FIXES | 44 k tok / 1.0 min | 0 | — | conductor re-check section |
 
 Backfilled 2026-11-22 from the session transcripts (task notifications); T-014 review F-1, `docs/audits/2026-11-22-ready-rows-review.md`.
 
