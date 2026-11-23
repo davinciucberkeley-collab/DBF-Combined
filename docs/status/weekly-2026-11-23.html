@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>VTOL Design Status</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#f3f5f7; --panel:#ffffff; --ink:#15202b; --mute:#5b6875; --line:#d9e0e6;
+  --accent:#1f5fa8; --ok:#1e7a46; --warn:#a66300; --bad:#b3261e; --run:#6a4fb3;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f151b; --panel:#17202a; --ink:#e4ebf1; --mute:#93a1ae; --line:#2a3642;
+  --accent:#6fa8ea; --ok:#5cc489; --warn:#e2a646; --bad:#ef7d74; --run:#a991f0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f151b; --panel:#17202a; --ink:#e4ebf1; --mute:#93a1ae; --line:#2a3642;
+  --accent:#6fa8ea; --ok:#5cc489; --warn:#e2a646; --bad:#ef7d74; --run:#a991f0; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--sans);margin:0}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px 40px;display:flex;flex-direction:column;gap:18px}
+h1{font-size:1.35rem;margin:0;text-wrap:balance;font-weight:600}
+h2{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:0 0 8px;font-weight:600}
+.sub{color:var(--mute);font-size:.85rem;margin:2px 0 0}
+.strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media(min-width:560px){.strip{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0}
+.tile .k{font-size:.72rem;color:var(--mute);text-transform:uppercase;letter-spacing:.06em}
+.tile .v{font-family:var(--mono);font-size:1.15rem;font-variant-numeric:tabular-nums;margin-top:2px}
+.tile .n{font-size:.78rem;color:var(--mute)}
+.v.ok{color:var(--ok)} .v.warn{color:var(--warn)} .v.bad{color:var(--bad)}
+section{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px}
+ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start}
+.pill{font:500 .7rem/1 var(--mono);padding:4px 7px;border-radius:999px;border:1px solid currentColor;white-space:nowrap;margin-top:2px}
+.p-ok{color:var(--ok)} .p-run{color:var(--run)} .p-warn{color:var(--warn)} .p-bad{color:var(--bad)} .p-todo{color:var(--mute)}
+li b{font-weight:600}
+.foot{color:var(--mute);font-size:.8rem}
+</style></head><body>
+<div class="wrap">
+  <header>
+    <h1>VTOL design status</h1>
+    <p class="sub">Concept A quad tailsitter (O4b, SunnySky X2216 motors). Weekly report 2026-11-17 to 11-23, from docs/task-ledger.md. Committed on branch redesign/v1, not pushed.</p>
+  </header>
+
+  <div class="strip">
+    <div class="tile"><div class="k">Flying mass</div><div class="v warn">1.881 kg</div><div class="n">predicted (EST); 1.47 kg gate missed, physics checks govern</div></div>
+    <div class="tile"><div class="k">Cost</div><div class="v ok">$1,939</div><div class="n">of $2,000; margin $60.83 (EST shipping)</div></div>
+    <div class="tile"><div class="k">3-D checks</div><div class="v ok">pass</div><div class="n">129 parts, 66 build steps, 0 clashes</div></div>
+    <div class="tile"><div class="k">Claims failing</div><div class="v bad">12</div><div class="n">mass, vibration, elevon foam; decided by bench tests</div></div>
+  </div>
+
+  <section>
+    <h2>Tasks</h2>
+    <ul>
+      <li><span class="pill p-ok">66 / 93</span><div><b>Verified complete.</b> 5 in progress, 6 blocked, 12 not started, 1 failed (D-212 horn, superseded), 3 deferred. Ledger audit: 0 errors.</div></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>This week</h2>
+    <ul>
+      <li><span class="pill p-ok">D-240</span><div><b>Flight controller moved 75 mm left of the wing centre.</b> At the centre its gyro picks up the 27-30 Hz wing flap; 75 mm out, the model's pitch gain margin is 2.5-4.0 against 2.0 needed. $0 and no added weight beyond a 5.6 g cover annex. All wiring still enclosed (exposed 0.597 m, unchanged). Counts only after the tap test and tethered hover confirm it.</div></li>
+      <li><span class="pill p-warn">D-237</span><div><b>Vibration model fails on the X2216 design:</b> pitch gain margin 1.13 at the centre, and FC vibration 187 m/s² over the full rpm sweep (limit 30). The tap test on the built airframe (TP-10b) decides; fallback is starting with half pitch gains.</div></li>
+      <li><span class="pill p-ok">D-239</span><div><b>No structural part to buy:</b> 41 stiffening options tried; none fixes the 95-109 Hz mode, so nothing structural goes in the order.</div></li>
+      <li><span class="pill p-ok">D-238</span><div><b>Order 1 rebuilt for the X2216:</b> 21 lines, $887.25 (motors on backorder at RMRC). Main order $1,051.92 later.</div></li>
+      <li><span class="pill p-ok">cleanup</span><div><b>Repository cleanup done:</b> about 3.55 GB of old worktrees removed this week (branches kept), stale references fixed, 12-section audit report written and reviewed.</div></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Needs you</h2>
+    <ul>
+      <li><span class="pill p-todo">1-4 Dec</span><div><b>Approve Order 1 ($887.25)</b> after I re-check every price and stock (T-093). For the rib tube, Easy Composites' shipping only shows after a delivery address is entered in their cart, which you enter yourself.</div></li>
+      <li><span class="pill p-todo">yours</span><div>Book Tormach training; ask Jacobs about material charges and X7 / Tormach booking; ask an ME lab to lend a test frame; measure the Altima trunk height and lid opening.</div></li>
+    </ul>
+  </section>
+
+  <p class="foot">Records: redesign/params/CHANGE-LOG.md (D-233 to D-240), docs/audits/2026-11-23-review-round-4.md and -5.md, docs/session-state.md.</p>
+</div>
+</body></html>
