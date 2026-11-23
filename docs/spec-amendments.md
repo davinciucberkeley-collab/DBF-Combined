@@ -368,3 +368,11 @@ Requirement IDs: R-REPO-04.
 ```text
 Yes, remove them
 ```
+
+## AM-030 — 2026-11-23 — Keep the current test equipment; continue the remaining tasks
+Relation: test equipment decision (no press rig or testing machine bought; borrow a frame, else the TEST-PLAN lever rig); work rule (continue every task that can be done now, per AM-028).
+Requirement IDs: R-GEN-02, R-COM-01.
+
+```text
+Keep what we have now, there are still over 20 tasks left so if there anything more you can do?
+```

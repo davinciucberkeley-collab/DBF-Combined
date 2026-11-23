@@ -25,8 +25,9 @@
 **2026-11-19 (AM-008): the aircraft must be designed by Claude and built by the students; no commercial kit airframe
 (the ZOHD Altus lifeboat named below is withdrawn; D-218 reversed).** Concept A failed its mass gate (T-067/T-070) and
 its O4 resize (D-217). Re-sit (AM-009, D-219): concept A continues as **O4b** (9x4.5 props, Lua spin cap on a Kakute
-H743-Wing, 4S 2,800 mAh pack, glass wing skin, mass recovery; predicted 1.64 kg at D-219, now 1.88 kg EST after D-226..D-233 with SunnySky X2216
-880KV motors (D-227); mass gate missed, physics checks govern; BOM $1,939.17 of $2,000 (D-235); go/no-go 2026-12-15).
+H743-Wing, 4S 2,800 mAh pack, glass wing skin, mass recovery; predicted 1.64 kg at D-219, now 1.881 kg EST (CAD 1,641 g) with SunnySky X2216
+880KV motors (D-227) and the FC 75 mm left of centre (D-239/D-240); mass gate missed, physics checks govern; 12 proof claims
+FAIL pending bench / tap tests (D-237); BOM $1,939.17 of $2,000 (D-235); Order 1 $887.25 for approval 1-4 Dec (T-093); go/no-go 2026-12-15).
 
 **Configuration changed 2026-11-14 (D-182, J6 board, `redesign/review/QP-1/BOARD.md`):**
 K09-L could not be built new within the $2,000 limit (cheapest workable build
