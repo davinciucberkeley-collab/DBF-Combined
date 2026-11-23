@@ -1,13 +1,16 @@
 """Recompute the requirements.md Status roll-up from task-ledger.md (2026-11-23 milestone fixes).
 
 Rule: an R-id is VERIFIED COMPLETE only if every task whose Parent column carries it is VERIFIED COMPLETE or
-EXPLICITLY DEFERRED; standing rules (bind every task until T-047) stay IN PROGRESS. Otherwise IN PROGRESS if any
+EXPLICITLY DEFERRED; standing rules (bind every task until T-047; R-RULE-01..04/06/08/09, R-MON-02/03, R-GEN-01) stay IN PROGRESS; JUDGEMENT rows are printed with their reason and do not fail the run. Otherwise IN PROGRESS if any
 carrying task has started (any status but NOT STARTED), else NOT STARTED; all carrying tasks BLOCKED -> BLOCKED.
 Run: python -I docs/audits/2026-11-23-rollup_check.py   (exit 1 if any row mismatches)
 """
 import pathlib, re, sys
 D = pathlib.Path(__file__).resolve().parents[1]
-STANDING = {"R-RULE-01", "R-RULE-04", "R-RULE-06", "R-RULE-08", "R-MON-02", "R-MON-03"}
+STANDING = {"R-RULE-01", "R-RULE-02", "R-RULE-03", "R-RULE-04", "R-RULE-06", "R-RULE-08", "R-RULE-09",
+            "R-MON-02", "R-MON-03", "R-GEN-01"}
+# Judgement rows: the roll-up differs from requirements.md on purpose (explained; printed, not counted as failures).
+JUDGEMENT = {"R-GEN-08": "IN PROGRESS although its only task T-083 is BLOCKED: physics at the predicted mass is ongoing (AM-011)"}
 DONE = {"VERIFIED COMPLETE", "EXPLICITLY DEFERRED"}
 
 
@@ -43,7 +46,10 @@ def expected():
 
 if __name__ == "__main__":
     ex = expected()
-    bad = {k: v for k, v in ex.items() if v[0] != v[1]}
+    diff = {k: v for k, v in ex.items() if v[0] != v[1]}
+    bad = {k: v for k, v in diff.items() if k not in JUDGEMENT}
+    for k in diff.keys() & JUDGEMENT.keys():
+        print(f"  explained judgement row {k}: requirements.md says {diff[k][1]!r}, roll-up says {diff[k][0]!r}; {JUDGEMENT[k]}")
     print(f"{len(ex)} requirement rows; {len(bad)} mismatch(es)")
     for k, (e, a, c) in bad.items():
         print(f"  {k}: requirements.md says {a!r}, roll-up says {e!r}; tasks {c}")

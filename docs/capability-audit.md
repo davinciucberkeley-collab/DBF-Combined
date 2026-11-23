@@ -1,6 +1,6 @@
 # Capability audit, concept A (T-016, parents R-CAD-01, R-PHY-01)
 
-Audit date 2026-11-18, branch redesign/v1. Read-only inspection of the repo; nothing was re-run except directory and file-date listings and two JSON reads (`wire_inventory.json`, `assembly.json`). "Last output" dates are file modification dates. All paths are relative to the repo root; `A/` = `redesign/qp/A/`, `AM/` = `redesign/qp/A/cad/amodel/`.
+Audit date 2026-11-18, branch redesign/v1. (Note 2026-11-23, review round 6a: line numbers and counts below are as of 2026-11-18 and drift; current: 129 parts, 66 steps, exposed 0.597 strand-m, `redesign/qp/A/mechanism/out/T092_report.md` s2.) Read-only inspection of the repo; nothing was re-run except directory and file-date listings and two JSON reads (`wire_inventory.json`, `assembly.json`). "Last output" dates are file modification dates. All paths are relative to the repo root; `A/` = `redesign/qp/A/`, `AM/` = `redesign/qp/A/cad/amodel/`.
 
 Headline: the project's "3-D physics" gate for concept A is a static interference check (collision at neutral and at the two elevon limits) plus a straight-line swept insertion check of build steps. The elevon servo, arm, pushrod and horn are modelled as rigid parts at neutral only; no script computes servo/pushrod/horn kinematics, moves the linkage through its travel, or integrates the dynamics of any mechanism (section 3). Real FEA, flutter and hover rigid-body flight simulations do exist (section 2), but none involves the elevon linkage.
 

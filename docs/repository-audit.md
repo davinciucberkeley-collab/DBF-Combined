@@ -4,7 +4,7 @@ Initial audit 2026-11-18 (T-040), commit a93f14da, branch `redesign/v1`. The fir
 deletions needed Dillon's approval (spec 9.3 step 9); batches 1 to 3 are logged in s3. Report completed by T-045 on 2026-11-23; the final dated audit is T-049 at the end of the program.
 
 ## 1. Baseline size (commands shown)
-| Metric | Value | Command |
+| Metric (as of a93f14da, 2026-11-18; the loose-object and `du -sh .` rows are no longer reproducible: worktrees removed, see s3 and s4) | Value | Command |
 |---|---|---|
 | `.git` on disk | 2.3 GB | `du -sh .git` |
 | Packed history | 1.51 GiB in 4 packs, 22 407 objects; 524 MiB loose (2 451 objects) | `git count-objects -vH` |

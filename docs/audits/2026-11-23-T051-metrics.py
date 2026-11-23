@@ -1,8 +1,9 @@
-"""T-051 model-usage statistics. Run: python -I -X utf8 docs/audits/2026-11-23-T051-metrics.py
+"""T-051 model-usage statistics. Run: python -I docs/audits/2026-11-23-T051-metrics.py
 Parses the table rows of docs/model-usage.md (columns: Date | Task | Agent / model | Complexity | Outcome |
 Usage | Retries | Escalation | Review). A row is a delegated task or task batch; one row can cover several T-ids.
 Rows whose Usage cell has no 'N k tok / N min' numbers are counted separately (never imputed)."""
 import re, sys, statistics as st, collections, pathlib
+sys.stdout.reconfigure(encoding="utf-8")
 root = pathlib.Path(__file__).resolve().parents[2]
 rows = []
 for l in (root / 'docs/model-usage.md').read_text(encoding='utf8').splitlines():

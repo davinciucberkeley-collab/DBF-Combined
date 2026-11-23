@@ -175,5 +175,5 @@ Remaining mismatches, kept deliberately:
 Deviations from the audit's 3.1 flip list: R-CAD-01, R-PHY-01, R-PHY-02 left IN PROGRESS because T-016 / T-017 are now READY FOR REVIEW (3.2); R-VID-01 VERIFIED -> IN PROGRESS because T-026 is now READY FOR REVIEW; R-TRK-05, R-INT-06, R-REPO-05, R-REPO-10 NOT STARTED -> IN PROGRESS (their tasks T-048, T-039, T-051, T-040 are now READY FOR REVIEW); R-MON-02 NOT STARTED -> IN PROGRESS (standing rule). R-PHY-03 IN PROGRESS also because T-094 is NOT STARTED.
 
 ## Gates
-- `python -I tools/ledger_audit.py` (exit 0): 113 requirements, 94 tasks, {'VERIFIED COMPLETE': 62, 'READY FOR REVIEW': 11, 'BLOCKED': 7, 'NOT STARTED': 8, 'IN PROGRESS': 2, 'EXPLICITLY DEFERRED': 4}; 0 errors
+- (counts at time of writing, 2026-11-23, before review rounds 6a/6b; later counts: see `docs/audits/2026-11-23-review-round-6b.md` Fixes applied) `python -I tools/ledger_audit.py` (exit 0): 113 requirements, 94 tasks, {'VERIFIED COMPLETE': 62, 'READY FOR REVIEW': 11, 'BLOCKED': 7, 'NOT STARTED': 8, 'IN PROGRESS': 2, 'EXPLICITLY DEFERRED': 4}; 0 errors
 - `python -I tools/plan_rid_check.py` (exit 0): 113 R-ids, 0 missing from execution-plan.md

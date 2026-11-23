@@ -21,9 +21,10 @@
   failure, or project end. Never pause execution just to report.
 - Subagents return one line: Task ID | Outcome | Verification | Evidence path | Blocker; details go in files.
 - Brevity never reduces the work: tests, docs, warnings and error reports stay complete.
+- Standing rules: AM-028 (no 'continue?' prompts), AM-030 (no new test equipment) — see docs/spec-amendments.md.
 
 **2026-11-19 (AM-008): the aircraft must be designed by Claude and built by the students; no commercial kit airframe
-(the ZOHD Altus lifeboat named below is withdrawn; D-218 reversed).** Concept A failed its mass gate (T-067/T-070) and
+(the ZOHD Altus lifeboat is withdrawn; D-218 reversed).** Concept A failed its mass gate (T-067/T-070) and
 its O4 resize (D-217). Re-sit (AM-009, D-219): concept A continues as **O4b** (9x4.5 props, Lua spin cap on a Kakute
 H743-Wing, 4S 2,800 mAh pack, glass wing skin, mass recovery; predicted 1.64 kg at D-219, now 1.881 kg EST (CAD 1,641 g) with SunnySky X2216
 880KV motors (D-227) and the FC 75 mm left of centre (D-239/D-240); mass gate missed, physics checks govern; 12 proof claims
@@ -36,18 +37,9 @@ After sizing four concepts to the same depth (`redesign/review/QP-1/`), the boar
 chose **concept A, a scaled-down quad tailsitter**: about 1.23 kg, 0.90 m wing,
 T-Motor MN2212 KV780 on 4S, 4S 2000 mAh packs, one-piece in the car box,
 about $1,499 (margin about +$501, estimate). Fallback: B, the small quadplane,
-after re-pricing; lifeboat: the ZOHD Altus VTOL kit if there is no tethered hover
-by 2027-02-15. D-181 (quadplane, provisional) is reversed. The K09-L description
-below is the previous design, kept as the record; its lessons apply to concept A.
+after re-pricing; lifeboat withdrawn (AM-008). D-181 (quadplane, provisional) is reversed.
 
-The previous design (team decision 2026-11-13, see `redesign/CONFIGURATION.md`)
-was **K09-L**: a quad tailsitter. A flat flying wing about 1.15 × 0.30 m with
-two fins, four fixed motors in an X; it takes off standing on its fin tips as
-a quadcopter, pitches 90° to cruise on the same motors with two elevons, and
-pitches back to land. No pusher, no tilt, no separate lift rotors. Mass gate
-2.6 kg. The project began as a hybrid lift + cruise concept (8–15 kg, pusher);
-the configuration study replaced it, and the older root folders still describe
-that concept.
+Previous design K09-L (quad tailsitter flying wing, mass gate 2.6 kg, kept as record): see `redesign/CONFIGURATION.md`.
 
 ## Hard constraints
 - $2,000 total physical budget (hardware, spares, batteries, test gear,
