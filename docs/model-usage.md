@@ -104,6 +104,7 @@ Append one row per delegated task. Review at each milestone: are opus runs justi
 | 2026-11-22 | T-089 gain margin + FC vibration | implementer / sonnet | moderate-high | stopped at Dillon's pause (AM-026); partial work saved | not recorded | 0 | — | — |
 | 2026-11-22 | T-032 video pipeline doc | implementer / sonnet | moderate | stopped at Dillon's pause (AM-026); no file changes | not recorded | 0 | — | — |
 | 2026-11-22 | T-089 resume (gain margin + FC vibration) | implementer / sonnet | moderate-high | done: VIB-GM 1.13, GM-SHIFT 1.05, VIB-FC 187.2 FAIL | 207 k tok / 38.7 min | 0 | — | conductor re-ran run_all (12 STRICT fails) |
+| 2026-11-22 | T-032 resume (video pipeline doc + follow once) | implementer / sonnet | moderate (renders) | done: doc revised, followed once (S3 render, clips); full renders not run | 212 k tok / 110.6 min | 0 | — | conductor checked tree clean of film changes |
 
 Backfilled 2026-11-22 from the session transcripts (task notifications); T-014 review F-1, `docs/audits/2026-11-22-ready-rows-review.md`.
 
