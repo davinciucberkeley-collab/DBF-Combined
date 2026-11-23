@@ -528,12 +528,12 @@ step(id='D1', title='Servos in their pockets',
      callouts=[('MEC-001-R', 'Servo ES3054HV, 20.5 g')])
 
 step(id='D0', title='Thread the servo leads',
-     line='Fish each servo lead along its foam groove, 3 mm under the skin, to the slit at x 83 mm.',
+     line='Fish each servo lead along its foam groove, 3 mm under the skin, to its slit at x 64 mm (D-239: right lead |y| 24 mm, left lead y -80 mm under the FC).',
      tools='fish wire, tape',
-     check='Free end out of the slit at x 83 mm, |y| 24 mm (CAD)',
+     check='Free end out of the slit at x 64 mm: right lead at y +24 mm, left lead at y -80 mm (CAD, T-092)',
      min=30,
-     fit=['Feed each servo 3-wire lead from the pocket along its foam groove (3 mm under the upper skin, aft of the spar) to the slit at x 83 mm, |y| 24 mm. Free end stays out for the FC pads (E3b).'],
-     checks=['Lead 250 mm routed (CAD E-HRN-07 / 08); wire inside the groove, nothing under the skin tape.'],
+     fit=['Feed each servo 3-wire lead from the pocket along its foam groove (3 mm under the upper skin, aft of the spar) to its slit at x 64 mm (right lead y +24 mm; left lead y -80 mm, between the FC bosses, T-092 / D-239). Free end stays out for the FC pads (E3b); the right lead is about 75 mm longer than before (route 347 mm to the pad, CAD): if the stock lead is shorter, add the 3-wire extension in E3b.'],
+     checks=['Lead routed to the CAD lengths (E-HRN-07 about 347 mm, E-HRN-08 about 198 mm from the pad to the boot, T-092); wire inside the groove, nothing under the skin tape.'],
      fab=dict(kind='thread', pid='MEC-001-R', text='THREAD  servo lead in the foam groove'),
      callouts=[('E-HRN-07', 'Servo lead R in its groove'), ('E-HRN-08', 'Servo lead L')])
 
@@ -622,7 +622,7 @@ step(id='E2', title='FC / ESC / GPS / RX bosses (R2)',
      min=25,
      need=['PETG (R03). Print file: AVN-010.stl (qp/A/drawings/out/stl/); 4 x M2 thin nuts DIN 439 1.2 mm (R05 stock hardware)'],
      make=['Print AVN-010: PETG, 14 bosses / pads (4 FC 6 x 6, 4 ESC 6 x 6, 4 GPS corner 6 x 6, 2 RX strips 5 x 11), each with its base on the skin and its top on the pad plane (T-073 R2 and Phase 2); 4 hex pockets 4.2 mm across, 2.2 mm clearance holes in the FC bosses (CAD).'],
-     fit=['Press the nuts into the hex pockets, then set the bosses on the skin (20 mm from above) at their CAD places and bond them with foam-safe CA (CAD edge: CA, boss bases follow the upper skin). The FC 25 x 25 mm M2 pattern is centred at x 47 mm (the avionics group is 13-15 mm further forward than in part 4, D-224 3b); the FC (45 mm along y, orientation chosen in the CAD) sits ahead of the spar axis.'],
+     fit=['Press the nuts into the hex pockets, then set the bosses on the skin (20 mm from above) at their CAD places and bond them with foam-safe CA (CAD edge: CA, boss bases follow the upper skin). The FC 25 x 25 mm M2 pattern is centred at x 47 mm and y -75 mm (T-092, D-239: the FC is hard-mounted 75 mm off the wing centre along the spar, on the left, for the pitch-rate gain margin; the avionics group is 13-15 mm further forward than in part 4, D-224 3b); the FC (45 mm along y, y -52.5 to -97.5 mm, orientation chosen in the CAD) sits ahead of the spar axis; its bosses stand on the skin outboard of the left centre bulkhead face at y -60 mm (the bulkhead is under the skin).'],
      checks=['Nuts flush; each boss lies flat on the skin.'],
      fab=dict(kind='print', pid='AVN-010', orient='flat on the bed (EST)', text='PRINT  PETG  AVN-010.stl (qp/A/drawings/out/stl/)'),
      callouts=[('AVN-010', 'Bosses and pads: print PETG'), ('HWC-003', 'M2 thin nuts in hex pockets')])
@@ -634,7 +634,7 @@ step(id='E3', title='ESC, FC, RX, GPS, airspeed',
      min=40,
      need=['Kakute H743-Wing (V03, $129.01), SpeedyBee BLS 35A 4-in-1 ESC (P04), RP3 V2 (V02), TBS M10Q GPS (V04), MS4525 board (V05)'],
      make=['Flash and set up in the Electronics Lab first: firmware, parameters (Q_TAILSIT etc.). Parameter file `qp/A/A.param`. Not covered here: `-`.'],
-     fit=['Press the FC on the four pads; set the ESC, RX and GPS on their bosses in their CAD places (GPS y 27.5-52.5 mm, RX y -52.5 to -39.5 mm); foam-tape the airspeed board in its pocket at x 69-84 mm, y -427.5 to -412.5 mm, ports facing forward (D-208).'],
+     fit=['Press the FC on the four pads; set the ESC, RX and GPS on their bosses in their CAD places (GPS y +27.5 to +52.5 mm, RX y -52.5 to -39.5 mm, FC y -97.5 to -52.5 mm, D-239); foam-tape the airspeed board in its pocket at x 69-84 mm, y -427.5 to -412.5 mm, ports facing forward (D-208).'],
      checks=['Arrow on the FC points aft (AHRS_ORIENTATION 0, CAD note).', 'GPS has sky view.'],
      callouts=[('AVN-002', 'FC Kakute H743-Wing'), ('PRP-003', 'ESC 4-in-1'), ('AVN-004', 'GPS + compass'), ('AVN-003', 'RX RP3')])
 
@@ -662,7 +662,7 @@ step(id='E3b', title='Solder the signal wiring',
      check='Continuity on every joint; no short to neighbour pads',
      min=120, cure='',
      need=['Jacobs Electronics Lab soldering station + multimeter + extraction'],
-     fit=['LAY: ESC signal ribbon to the FC, servo leads to FC pads S5 / S6, RX CRSF lead, GPS and airspeed leads (JST plugs on the sensor boards). D-208 / T-022 Q4: the airspeed I2C lead (about 0.5 m) is threaded first: from the board pocket along its groove at x 95 mm to the drop slot under the left plate window (at y -24.4 mm, inside the cover footprint), up through the window and the slit, then forward at 22 mm height in the cover lane (between the -y phase bundle and the cover wall) and up to the FC I2C pad: no part of it is in the open. RX CRSF lead: from the FC RX pad up to 40.5 mm, outboard into the same lane, aft at 25 mm height (over the I2C lead), down at x 98 mm to 19.5 mm, aft into the RX hood zone, outboard over the RX to the CRSF pad row and down onto the pad. Then tape the two RX antennas flat on the plate and the skin in a 90 degree V (T-022 Q1): each leaves the RX aft edge along +x for 1.5 mm, turns 45 degrees (plan radius 4 mm) and runs straight, outboard antenna to the left and inboard antenna to the right, over the 5.7 mm step at the plate end, tips about 14 mm ahead of the hinge line. Antenna length 65 mm is retailer-sourced, UNVERIFIED (the T element is not drawn): measure it on arrival; if the reach (including the T) exceeds 77 mm, or the T half-span 12.4 mm, the RX moves 15 mm forward (fallback in the T-022 decision).'],
+     fit=['LAY (T-092, D-239: the FC is at y -75 mm; every lead stays under the cover or in a groove): ESC signal ribbon from the ESC pad forward over the ESC, up to 41.5 mm height at x 68.5 mm, along y to the FC row (y -75 mm), aft edge, down onto the ESC pad; servo lead R (S5 pad, y -70 mm): aft to x 64 mm at pad height, along y across the bay under the phase bundles to its slit at y +24 mm; servo lead L (S6 pad, y -80 mm): aft to x 64 mm and straight down its slit at y -80 mm; GPS lead: from the plug up the cover slot at y +24.75 mm, across the bay at 40.5 mm height (x 42.5 mm) to the GPS pad at y -80 mm; RX CRSF lead and the I2C lead likewise at 40.5 mm height (x 54 mm and x 34.5 mm) from the FC to the lane at y -24.4 mm (JST plugs on the sensor boards). D-208 / T-022 Q4: the airspeed I2C lead (about 0.5 m) is threaded first: from the board pocket along its groove at x 95 mm to the drop slot under the left plate window (at y -24.4 mm, inside the cover footprint), up through the window and the slit, then forward at 22 mm height in the cover lane (between the -y phase bundle and the cover wall) and up to the FC I2C pad: no part of it is in the open. RX CRSF lead: from the FC RX pad up to 40.5 mm, outboard into the same lane, aft at 25 mm height (over the I2C lead), down at x 98 mm to 19.5 mm, aft into the RX hood zone, outboard over the RX to the CRSF pad row and down onto the pad. Then tape the two RX antennas flat on the plate and the skin in a 90 degree V (T-022 Q1): each leaves the RX aft edge along +x for 1.5 mm, turns 45 degrees (plan radius 4 mm) and runs straight, outboard antenna to the left and inboard antenna to the right, over the 5.7 mm step at the plate end, tips about 14 mm ahead of the hinge line. Antenna length 65 mm is retailer-sourced, UNVERIFIED (the T element is not drawn): measure it on arrival; if the reach (including the T) exceeds 77 mm, or the T half-span 12.4 mm, the RX moves 15 mm forward (fallback in the T-022 decision).'],
      checks=['Continuity each joint; no short between neighbour pads; lead colours as the CAD.'],
      safety=['Soldering only in the Jacobs Electronics Lab.'],
      fab=dict(kind='solder', pid='AVN-002', text='SOLDER  ESC ribbon, servo leads S5/S6, RX, GPS, airspeed'),
@@ -723,14 +723,14 @@ step(id='E6', title='Solder phase leads and battery tail',
      hold=True, cp=['Continuity each phase; no short between phases.', 'Props OFF for every power-up.'])
 
 step(id='E7', title='Bay cover',
-     line='Print the bay cover; lower it over the FC stack and ESC; foam tape and two ties.',
-     tools='printer, foam tape, ties', check='Cover and RX hood fit; leads and antennas drop into the bottom-open slots; CAD 10.4 g', min=20,
+     line='Print the bay cover; lower it over the FC (annex on the left) and the ESC; foam tape and two ties.',
+     tools='printer, foam tape, ties', check='Cover, FC annex and RX hood fit; leads and antennas drop into the bottom-open slots; CAD AVN-008 mass in printed_mass.json (14.6 g with the T-092 annex)', min=20,
      need=['PETG (R03). Print file: AVN-008.stl (qp/A/drawings/out/stl/)'],
-     make=['AVN-008: 0.5 mm hood (D-221: vacuum-formed over a printed buck; part-4 text said 0.6 mm printed), x 22.5-114.5 mm, |y| <= 26.5 mm, roof 45 mm over the FC up to x 72 and 32.5 mm over the ESC, plus the RX hood annex on the -y side (x 84.5-111.5 mm, y -26.5 to -53.7 mm, roof 8 mm over the RX pad plane; T-022 Q4); the walls stand on the skin (no plate, T-077 p5).'],
+     make=['AVN-008: 0.5 mm hood (D-221: vacuum-formed over a printed buck; part-4 text said 0.6 mm printed), x 22.5-114.5 mm, |y| <= 26.5 mm, roof 45 mm over the FC up to x 72 and 32.5 mm over the ESC, plus the FC annex on the -y side (T-092, D-239: x 22.5-72.2 mm, y -26.5 to -99.0 mm, roof 45 mm like the cover, over the FC at y -75 mm and the leads that cross to the main cover) and the RX hood annex on the -y side (x 84.5-111.5 mm, y -26.5 to -53.7 mm, roof 8 mm over the RX pad plane; T-022 Q4); the walls stand on the skin (no plate, T-077 p5).'],
      fit=['Lower the cover (40 mm) onto the skin, with the RX hood over the receiver; the GPS lead, the battery tail and the two taped antennas drop into the bottom-open slots in the walls (the RX and I2C leads are already inside); tape and tie.'],
      checks=['Final weigh-in: gate 1.47 kg (D-190); CG 19-26 mm aft of the LE.'],
      fab=dict(kind='print', pid='AVN-008', orient='roof up, open side down (EST)', text='PRINT  PETG  AVN-008.stl (qp/A/drawings/out/stl/)'),
-     callouts=[('AVN-008', 'Bay cover with RX hood: 0.6 mm PETG, 10.4 g')],
+     callouts=[('AVN-008', 'Bay cover with FC annex and RX hood: PETG, 14.6 g (T-092)')],
      hold=True, cp=['Weigh-in: gate 1.47 kg.', 'CG 19-26 mm aft of the leading edge.'])
 
 BY_ID = {s['id']: s for s in S}

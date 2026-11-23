@@ -74,7 +74,7 @@ File names follow `<part id>.stl`. The STL files are exported from the CAD (`a_m
 
 | Part | Qty | Step | Mass each (g) | Print time (EST) | Note |
 |---|---|---|---|---|---|
-| `AVN-008` Bay cover | 1 | E7 | 9.0 | 23-39 min | 0.6 mm shell (EST) |
+| `AVN-008` Bay cover | 1 | E7 | 14.6 | 37-63 min | 0.6 mm shell (EST) |
 | `AVN-010` R2 mounting bosses | 1 | E2 | 1.6 | 4-7 min | 4 hex pockets 4.2 mm across for M2 thin nuts in the FC bosses; bosses 6 x 6 mm to the pad plane |
 | `CGE-003` Motor cup | 8 | B0i1, B0i2, B0i3, B0i4, B1 | 9.0 | 22-38 min | plate flat on the bed, shaft axis up (ARMS.md: layer plane = plate plane, EST); 4.8 mm lead hole, screw-head pockets (D-197) |
 | `CGE-007` Strut clamp | 2 | B1 | 6.3 | 16-27 min |  |
@@ -88,7 +88,7 @@ File names follow `<part id>.stl`. The STL files are exported from the CAD (`a_m
 | `WNG-009` Hinge damper stator | 2 | B4 | 2.0 | 5-9 min | plus about 0.6 g silicone fluid each (R12) |
 | `WNG-010` Hinge damper rotor | 2 | B4 | 0.5 | 3-5 min | rotor: slide fit in the 0.30 mm gap: test print |
 
-Printed mass 144 g in 36 parts; machine time EST 6.0-10.3 h in total (a bed holds many small parts: print them in batches). The 1 kg PETG spool of BOM R03 holds about seven times this mass: there is room for reprints. (The elevon balance tabs, 0.5 g each pair, are CF-reinforced PETG strips cut by hand, not printed.)
+Printed mass 150 g in 36 parts; machine time EST 6.2-10.7 h in total (a bed holds many small parts: print them in batches). The 1 kg PETG spool of BOM R03 holds about seven times this mass: there is room for reprints. (The elevon balance tabs, 0.5 g each pair, are CF-reinforced PETG strips cut by hand, not printed.)
 
 ## 3. Cure plan
 
@@ -1634,9 +1634,9 @@ Mass placed by this step 41.0 g; running total of placed parts 1346.9 g (CAD; th
 
 ### D0. Thread the servo leads
 
-*Step 47 of 66. Plan caption: THREAD: each servo 3-wire lead is fed from the servo pocket along its foam groove (3 mm under the skin, aft of the spar) to the slit at x 64 mm / |y| 24 mm with a fish wire; the free end stays out of the slit for the FC pads*
+*Step 47 of 66. Plan caption: THREAD: each servo 3-wire lead is fed from the servo pocket along its foam groove (3 mm under the skin, aft of the spar) to the slit at x 64 mm (right lead |y| 24 mm, left lead y -80 mm, T-092 / D-239) with a fish wire; the free end stays out of the slit for the FC pads*
 
-**Do this:** Fish each servo lead along its foam groove, 3 mm under the skin, to the slit at x 83 mm.
+**Do this:** Fish each servo lead along its foam groove, 3 mm under the skin, to its slit at x 64 mm (D-239: right lead |y| 24 mm, left lead y -80 mm under the FC).
 
 **Time (EST):** 30 min hands-on.
 
@@ -1646,11 +1646,11 @@ Mass placed by this step 41.0 g; running total of placed parts 1346.9 g (CAD; th
 
 **Fit it:**
 
-- Feed each servo 3-wire lead from the pocket along its foam groove (3 mm under the upper skin, aft of the spar) to the slit at x 83 mm, |y| 24 mm. Free end stays out for the FC pads (E3b).
+- Feed each servo 3-wire lead from the pocket along its foam groove (3 mm under the upper skin, aft of the spar) to its slit at x 64 mm (right lead y +24 mm; left lead y -80 mm, between the FC bosses, T-092 / D-239). Free end stays out for the FC pads (E3b); the right lead is about 75 mm longer than before (route 347 mm to the pad, CAD): if the stock lead is shorter, add the 3-wire extension in E3b.
 
 **Checkpoint (do not go on until it passes):**
 
-- [ ] Lead 250 mm routed (CAD E-HRN-07 / 08); wire inside the groove, nothing under the skin tape.
+- [ ] Lead routed to the CAD lengths (E-HRN-07 about 347 mm, E-HRN-08 about 198 mm from the pad to the boot, T-092); wire inside the groove, nothing under the skin tape.
 
 ### D2. Servo arms
 
@@ -1922,7 +1922,7 @@ Mass placed by this step 2.0 g; running total of placed parts 1360.6 g (CAD; the
 
 **Fit it:**
 
-- Press the nuts into the hex pockets, then set the bosses on the skin (20 mm from above) at their CAD places and bond them with foam-safe CA (CAD edge: CA, boss bases follow the upper skin). The FC 25 x 25 mm M2 pattern is centred at x 47 mm (the avionics group is 13-15 mm further forward than in part 4, D-224 3b); the FC (45 mm along y, orientation chosen in the CAD) sits ahead of the spar axis.
+- Press the nuts into the hex pockets, then set the bosses on the skin (20 mm from above) at their CAD places and bond them with foam-safe CA (CAD edge: CA, boss bases follow the upper skin). The FC 25 x 25 mm M2 pattern is centred at x 47 mm and y -75 mm (T-092, D-239: the FC is hard-mounted 75 mm off the wing centre along the spar, on the left, for the pitch-rate gain margin; the avionics group is 13-15 mm further forward than in part 4, D-224 3b); the FC (45 mm along y, y -52.5 to -97.5 mm, orientation chosen in the CAD) sits ahead of the spar axis; its bosses stand on the skin outboard of the left centre bulkhead face at y -60 mm (the bulkhead is under the skin).
 - Motion (CAD, checked by `a_assembly.py`): along (0, 0, -1) for 20 mm.
 
 **Checkpoint (do not go on until it passes):**
@@ -1962,7 +1962,7 @@ Mass placed by this step 70.1 g; running total of placed parts 1430.7 g (CAD; th
 
 **Fit it:**
 
-- Press the FC on the four pads; set the ESC, RX and GPS on their bosses in their CAD places (GPS y 27.5-52.5 mm, RX y -52.5 to -39.5 mm); foam-tape the airspeed board in its pocket at x 69-84 mm, y -427.5 to -412.5 mm, ports facing forward (D-208).
+- Press the FC on the four pads; set the ESC, RX and GPS on their bosses in their CAD places (GPS y +27.5 to +52.5 mm, RX y -52.5 to -39.5 mm, FC y -97.5 to -52.5 mm, D-239); foam-tape the airspeed board in its pocket at x 69-84 mm, y -427.5 to -412.5 mm, ports facing forward (D-208).
 - Motion (CAD, checked by `a_assembly.py`): along (0, 0, -1) for 30 mm.
 
 **Checkpoint (do not go on until it passes):**
@@ -2035,7 +2035,7 @@ Mass placed by this step 0.8 g; running total of placed parts 1432.7 g (CAD; the
 
 ### E3b. Solder the signal wiring
 
-*Step 59 of 66. Plan caption: LAY: solder the ESC signal ribbon to the FC, the servo leads to the FC pads S5 / S6, the RX CRSF lead, the GPS and airspeed leads (JST plugs on the sensor boards); the I2C and RX leads run inside the cover lane, then the RX antennas are taped in a 90 deg V on the plate and skin (T-022 Q1, Q4)*
+*Step 59 of 66. Plan caption: LAY: solder the ESC signal ribbon to the FC (at y -75 mm, T-092 / D-239; every lead stays under the cover or in a groove), the servo leads to the FC pads S5 / S6, the RX CRSF lead, the GPS and airspeed leads (JST plugs on the sensor boards); the I2C and RX leads run inside the cover lane, then the RX antennas are taped in a 90 deg V on the plate and skin (T-022 Q1, Q4)*
 
 **Do this:** Solder the ESC signal ribbon, servo leads, RX, GPS and airspeed leads to the FC.
 
@@ -2051,7 +2051,7 @@ Mass placed by this step 0.8 g; running total of placed parts 1432.7 g (CAD; the
 
 **Fit it:**
 
-- LAY: ESC signal ribbon to the FC, servo leads to FC pads S5 / S6, RX CRSF lead, GPS and airspeed leads (JST plugs on the sensor boards). D-208 / T-022 Q4: the airspeed I2C lead (about 0.5 m) is threaded first: from the board pocket along its groove at x 95 mm to the drop slot under the left plate window (at y -24.4 mm, inside the cover footprint), up through the window and the slit, then forward at 22 mm height in the cover lane (between the -y phase bundle and the cover wall) and up to the FC I2C pad: no part of it is in the open. RX CRSF lead: from the FC RX pad up to 40.5 mm, outboard into the same lane, aft at 25 mm height (over the I2C lead), down at x 98 mm to 19.5 mm, aft into the RX hood zone, outboard over the RX to the CRSF pad row and down onto the pad. Then tape the two RX antennas flat on the plate and the skin in a 90 degree V (T-022 Q1): each leaves the RX aft edge along +x for 1.5 mm, turns 45 degrees (plan radius 4 mm) and runs straight, outboard antenna to the left and inboard antenna to the right, over the 5.7 mm step at the plate end, tips about 14 mm ahead of the hinge line. Antenna length 65 mm is retailer-sourced, UNVERIFIED (the T element is not drawn): measure it on arrival; if the reach (including the T) exceeds 77 mm, or the T half-span 12.4 mm, the RX moves 15 mm forward (fallback in the T-022 decision).
+- LAY (T-092, D-239: the FC is at y -75 mm; every lead stays under the cover or in a groove): ESC signal ribbon from the ESC pad forward over the ESC, up to 41.5 mm height at x 68.5 mm, along y to the FC row (y -75 mm), aft edge, down onto the ESC pad; servo lead R (S5 pad, y -70 mm): aft to x 64 mm at pad height, along y across the bay under the phase bundles to its slit at y +24 mm; servo lead L (S6 pad, y -80 mm): aft to x 64 mm and straight down its slit at y -80 mm; GPS lead: from the plug up the cover slot at y +24.75 mm, across the bay at 40.5 mm height (x 42.5 mm) to the GPS pad at y -80 mm; RX CRSF lead and the I2C lead likewise at 40.5 mm height (x 54 mm and x 34.5 mm) from the FC to the lane at y -24.4 mm (JST plugs on the sensor boards). D-208 / T-022 Q4: the airspeed I2C lead (about 0.5 m) is threaded first: from the board pocket along its groove at x 95 mm to the drop slot under the left plate window (at y -24.4 mm, inside the cover footprint), up through the window and the slit, then forward at 22 mm height in the cover lane (between the -y phase bundle and the cover wall) and up to the FC I2C pad: no part of it is in the open. RX CRSF lead: from the FC RX pad up to 40.5 mm, outboard into the same lane, aft at 25 mm height (over the I2C lead), down at x 98 mm to 19.5 mm, aft into the RX hood zone, outboard over the RX to the CRSF pad row and down onto the pad. Then tape the two RX antennas flat on the plate and the skin in a 90 degree V (T-022 Q1): each leaves the RX aft edge along +x for 1.5 mm, turns 45 degrees (plan radius 4 mm) and runs straight, outboard antenna to the left and inboard antenna to the right, over the 5.7 mm step at the plate end, tips about 14 mm ahead of the hinge line. Antenna length 65 mm is retailer-sourced, UNVERIFIED (the T element is not drawn): measure it on arrival; if the reach (including the T) exceeds 77 mm, or the T half-span 12.4 mm, the RX moves 15 mm forward (fallback in the T-022 decision).
 
 **Checkpoint (do not go on until it passes):**
 
@@ -2235,9 +2235,9 @@ Mass placed by this step 8.9 g; running total of placed parts 1723.1 g (CAD; the
 
 ### E7. Bay cover
 
-*Step 66 of 66. Plan caption: Bay cover lowered over the FC and ESC onto the skin*
+*Step 66 of 66. Plan caption: Bay cover*
 
-**Do this:** Print the bay cover; lower it over the FC stack and ESC; foam tape and two ties.
+**Do this:** Print the bay cover; lower it over the FC (annex on the left) and the ESC; foam tape and two ties.
 
 **Time (EST):** 20 min hands-on.
 
@@ -2245,9 +2245,9 @@ Mass placed by this step 8.9 g; running total of placed parts 1723.1 g (CAD; the
 
 | CAD id | Part | Made / bought | BOM line | CAD mass (g) |
 |---|---|---|---|---|
-| `AVN-008` x1 | Bay cover | made | R03 Amazon | 9.0 |
+| `AVN-008` x1 | Bay cover | made | R03 Amazon | 14.6 |
 
-Mass placed by this step 9.0 g; running total of placed parts 1732.1 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
+Mass placed by this step 14.6 g; running total of placed parts 1737.7 g (CAD; the harness lump HRN-001 and the hardware lump HRD-001 are not placed parts).
 
 **You need:**
 
@@ -2257,7 +2257,7 @@ Mass placed by this step 9.0 g; running total of placed parts 1732.1 g (CAD; the
 
 **Make it:**
 
-- AVN-008: 0.5 mm hood (D-221: vacuum-formed over a printed buck; part-4 text said 0.6 mm printed), x 22.5-114.5 mm, |y| <= 26.5 mm, roof 45 mm over the FC up to x 72 and 32.5 mm over the ESC, plus the RX hood annex on the -y side (x 84.5-111.5 mm, y -26.5 to -53.7 mm, roof 8 mm over the RX pad plane; T-022 Q4); the walls stand on the skin (no plate, T-077 p5).
+- AVN-008: 0.5 mm hood (D-221: vacuum-formed over a printed buck; part-4 text said 0.6 mm printed), x 22.5-114.5 mm, |y| <= 26.5 mm, roof 45 mm over the FC up to x 72 and 32.5 mm over the ESC, plus the FC annex on the -y side (T-092, D-239: x 22.5-72.2 mm, y -26.5 to -99.0 mm, roof 45 mm like the cover, over the FC at y -75 mm and the leads that cross to the main cover) and the RX hood annex on the -y side (x 84.5-111.5 mm, y -26.5 to -53.7 mm, roof 8 mm over the RX pad plane; T-022 Q4); the walls stand on the skin (no plate, T-077 p5).
 
 **Fit it:**
 
@@ -2270,7 +2270,7 @@ Mass placed by this step 9.0 g; running total of placed parts 1732.1 g (CAD; the
 
 ## 14. After the last step
 
-1. **Weigh-in.** Weigh the aircraft with the pack. The gate is **1.47 kg** (`MASS-GATE.md` s8, D-190); the CAD basic mass is 1633.0 g (placed parts 1732.1 g plus the harness lump 18.4 g and the hardware lump 26.1 g) and the design target is 1.46 kg predicted including growth and overrun (`params-A.json`). If the weight is above the gate the aircraft does not fly until the C3 window check is re-run at the as-weighed mass (`MASS-GATE.md` s6).
+1. **Weigh-in.** Weigh the aircraft with the pack. The gate is **1.47 kg** (`MASS-GATE.md` s8, D-190); the CAD basic mass is 1641.0 g (placed parts 1737.7 g plus the harness lump 18.4 g and the hardware lump 26.1 g) and the design target is 1.46 kg predicted including growth and overrun (`params-A.json`). If the weight is above the gate the aircraft does not fly until the C3 window check is re-run at the as-weighed mass (`MASS-GATE.md` s6).
 2. **CG.** Balance the aircraft on a knife edge in the cruise attitude: the band is **19-26 mm aft of the wing leading edge**, hard aft limit 28.5 mm, lateral within 5 mm (`params-A.json`, A-P4). Move the pack in the tray slots (6 mm forward, 10 mm aft of nominal, about 2.2 mm of CG per 10 mm, `common.py` `TRIM`): no ballast first.
 3. **Controls.** Each elevon +-20 deg (servo limit), stops at +-21 deg; both surfaces move the right way for the stick (EST: check with the TX, props off).
 4. **Power-up, props OFF.** First power-up with the props removed. Check each motor direction: UR and LL clockwise, UL and LR counter-clockwise, seen from the thrust side (BOM P02, MR and MRP); if one is wrong swap two phase leads (EST). Then fit the props, props-on tests only on the thrust stand (`bench_analysis.py`, `SCHEDULE-A.md` B3).
@@ -2295,7 +2295,7 @@ Mass placed by this step 9.0 g; running total of placed parts 1732.1 g (CAD; the
 
 The steps total **50.2 h** hands-on (`EST`; machine time for printing and the 24 h cures are not counted). `SCHEDULE-A.md` plans 53 h of build (range 41-66 h), including 10 h of checks and a 2 h range check (`EST`, K09-L 82 h x 0.65). This guide steps 50.2 h plus those 12 h is 62.2 h, inside that range.
 
-**Mass check at the end:** the CAD basic mass is 1632.98 g (`a_model.py`); the pack is 270 g of that.
+**Mass check at the end:** the CAD basic mass is 1640.98 g (`a_model.py`); the pack is 270 g of that.
 
 ### Open items (not in the repo, or in conflict)
 

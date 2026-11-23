@@ -1,7 +1,6 @@
 {
- "bodies": 583,
+ "bodies": 585,
  "defects": [
-  "AVN-008 body \"cover end wall, -y side (0.6 mm; open under the RX hood, T-022 Q4)\": zero-width spike / repeated point in a loop (removed in the export)",
   "WNG-008-LL body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
   "WNG-008-LL body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)",
   "WNG-008-LU body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
@@ -84,8 +83,8 @@
     {
      "a": "HWC-001",
      "at_mm": [
-      58.53,
-      12.76,
+      59.76,
+      -61.53,
       13.23
      ],
      "b": "HWC-003",
@@ -199,7 +198,7 @@
    ]
   }
  ],
- "seconds": 986.9,
+ "seconds": 997.9,
  "skipped": [
   [
    "HRD-001",

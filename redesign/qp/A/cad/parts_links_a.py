@@ -28,11 +28,11 @@ BOM = {r['id']: r for r in csv.DictReader(open(os.path.join(A, 'BOM-A.csv'), enc
 
 # (prefix, kind, BOM lines, note). First matching prefix wins.
 MAP = [
-    ('AVN-002', 'buy', ['V03'], ''), ('AVN-003', 'buy', ['V02'], ''), ('AVN-004', 'buy', ['V04'], ''),
+    ('AVN-002', 'buy', ['V03'], 'hard-mounted 75 mm off the wing centre, left side (y -75 mm, T-092 / D-239)'), ('AVN-003', 'buy', ['V02'], ''), ('AVN-004', 'buy', ['V04'], ''),
     ('AVN-005', 'buy', ['V05'], ''), ('AVN-006', 'buy', ['V05'], 'pitot probe comes in the V05 airspeed kit'),
     ('AVN-009-T', 'buy', ['V05'], 'cut from the 2 / 4 mm tubing in the V05 kit (D-208)'), ('AVN-009-S', 'buy', ['V05'], 'cut from the 2 / 4 mm tubing in the V05 kit (D-208)'),
     ('AVN-007', 'buy', ['R05'], 'foam tape from the local fastener / tape line'),
-    ('AVN-010', 'make', ['R03'], 'printed PETG bosses and pads (T-073 R2, T-077 p5)'), ('AVN-008', 'make', ['R03'], 'printed PETG'),
+    ('AVN-010', 'make', ['R03'], 'printed PETG bosses and pads (T-073 R2, T-077 p5)'), ('AVN-008', 'make', ['R03'], 'printed PETG; includes the FC annex over y -26.5 to -99 mm (T-092 / D-239)'),
     ('CGE-001', 'make', ['T1'], 'machined 6061-T6 on the knee mill + Tormach (D-220..D-222; PLA print CGE-001.stl is the fit check only). Drawing bbox 59.5 x 107.8 x 49.3 mm from the T1 bar 2.00 x 2.50 in (50.8 x 63.5 mm; 0.89 mm over the hub thickness at minimum tolerance, T-087)'), ('CGE-002', 'make', ['R08'], 'cut from the 12x10 tube'),
     ('CGE-003', 'make', ['R03'], 'printed PETG'), ('CGE-004', 'make', ['R02'], 'cut from the 16x14 fin-tube offcut (D-206)'),
     ('CGE-009', 'make', ['R09'], 'cut from the 14x12 tube'), ('CGE-010', 'make', ['R14'], 'cut from the 3 mm carbon rod (price not found)'),

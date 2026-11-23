@@ -288,6 +288,26 @@ RX_ANT_LS = 0.0085                          # x-length of the smooth step from t
 COV_RAMP_X, COV_STEP_X = 0.0280, 0.0722              # T-077 p5: the cover front stays at x 22.5 (the pack tray slot is open ahead of it: x -10..22.5, so a front at 7.5 mm per D-224 3b has nothing to stand on: 3b moves the boards, not the cover front); the ramp is steep (22.5 -> 28 mm) so the 45 mm roof is over the FC front edge (x 32); the high roof (45 mm) ends at x 72.2 mm (was 80): the phase bundles pass over the 45 mm wide FC at z 36 and come down to z 28 only after its aft edge (x 62), under the roof step
 
 
+AN_X1 = COV_STEP_X                          # T-092 (D-239): FC annex of the cover (-y side, over the FC at y -52.5..-97.5): aft wall at the main roof step x 72.2; flat roof 45 mm (same ramp as the cover)
+AN_YI = 0.0990                              # annex inner half width (outer end wall face 99.6 mm): 1.5 mm clear of the FC edge (y -97.5), EST design value
+
+
+def an_outer():
+    """Annex roof outer profile (x, z): front on the skin, ramp, flat roof, aft wall down to the skin."""
+    return [(COV_X0, zu(COV_X0)), (COV_RAMP_X, COV_ZH1), (AN_X1, COV_ZH1), (AN_X1, zu(AN_X1))]
+
+
+def an_loops():
+    o = an_outer()
+    i = [(o[0][0] + 0.0012, zu(COV_X0 + 0.0012))] + [(x, z - COV_T) for x, z in o[1:-2]] + [(o[-2][0] - COV_T, o[-2][1] - COV_T), (AN_X1 - COV_T, zu(AN_X1 - COV_T))]
+    return o + i[::-1]
+
+
+def an_side_loop():
+    o = an_outer()
+    return o + skin_pts(COV_X0, AN_X1)[-2:0:-1]
+
+
 def cov_outer():
     """Roof outer profile (x, z) from the skin at the front, ramp, flat over the FC, step, flat over the ESC, aft wall down to the skin (T-077 p5: no plate, the walls stand on the skin)."""
     return [(COV_X0, zu(COV_X0)), (COV_RAMP_X, COV_ZH1), (COV_STEP_X, COV_ZH1), (COV_STEP_X + 0.0033, COV_ZH2), (COV_X1, COV_ZH2), (COV_X1, zu(COV_X1))]
@@ -321,7 +341,8 @@ def cov_side_loops_neg():
     xc, xd = HOOD_X0 + COV_T, HOOD_X1 - COV_T
     zi = HOOD_ZR - COV_T
     sk = skin_pts(COV_X0, COV_X1)
-    a = o[:4] + [(xc, COV_ZH2), (xc, zu(xc))] + [p_ for p_ in sk[1:-1] if p_[0] < xc][::-1] + [sk[0]]
+    # T-092: the -y wall is open over the FC annex (x < AN_X1): the wall piece starts at the annex aft wall
+    a = o[2:4] + [(xc, COV_ZH2), (xc, zu(xc))] + [p_ for p_ in sk[1:-1] if AN_X1 < p_[0] < xc][::-1] + [(AN_X1, zu(AN_X1))]
     b = [(xc, COV_ZH2), (xd, COV_ZH2), (xd, zi), (xc, zi)]
     c = [(xd, COV_ZH2), (COV_X1, COV_ZH2), (COV_X1, zu(COV_X1)), (xd, zu(xd))]
     return [a, b, c]
@@ -332,6 +353,12 @@ def cov_interior(p):
     x, y, z = p
     if COV_X0 < x < COV_X1 and abs(y) < COV_Y:
         o = cov_outer()
+        for (x0, z0), (x1, z1) in zip(o, o[1:]):
+            if x0 <= x <= x1 and x1 > x0:
+                return z < z0 + (z1 - z0) * (x - x0) / (x1 - x0)
+        return False
+    if COV_X0 < x < AN_X1 and -AN_YI < y <= -COV_Y:      # T-092 FC annex
+        o = an_outer()
         for (x0, z0), (x1, z1) in zip(o, o[1:]):
             if x0 <= x <= x1 and x1 > x0:
                 return z < z0 + (z1 - z0) * (x - x0) / (x1 - x0)
@@ -355,6 +382,8 @@ def cover_mass_g():
     arch = abs(_poly_area_(cov_loops())) * (2 * COV_Y)
     wall = abs(_poly_area_(cov_side_loop())) * COV_T                       # +y end wall
     wall += sum(abs(_poly_area_(l)) for l in cov_side_loops_neg()) * COV_T  # -y end wall without the hood opening
+    arch += abs(_poly_area_(an_loops())) * (AN_YI - COV_Y)                 # T-092 FC annex roof band + aft wall
+    wall += abs(_poly_area_(an_side_loop())) * COV_T                       # annex outer end wall
     return round((arch + wall + hood_volume_m3()) * 1e6 * RHO_PETG_, 1)
 
 
@@ -567,16 +596,18 @@ GEL = 0.0030                                                           # EST foa
 T_PCB = 1.6 * MM                                                       # EST PCB thickness (not published): measure
 FC_LX, FC_LY = 0.030, 0.045                                            # V docs.holybro.com kakute-h743-wing 2026-11-20: 45 x 30 mm board (orientation mine)
 FC_CX = FC_X0 + FC_LX / 2
-FC_HOLES = [(FC_CX + sx * 0.0125, sy * 0.0125) for sx in (-1, 1) for sy in (-1, 1)]   # V 25 x 25 mm M2 pattern (docs.holybro.com kakute-h743-wing 2026-11-20); hole diameter -, drawn 2.2 mm clearance
+FC_YC = -0.075                                                         # T-092 (D-239): board centre 75 mm off the wing centre along the spar, on the LEFT (-y) side (CAD +y = right wing, servo R). Reasons (T092_report.md s1): the pitch-gain benefit is the T-091 node s+-0.075 (beam FE symmetric in y); one enclosed annex of the bay cover instead of a tunnel past the GPS (GPS board y +27.5..52.5 is on +y); the RX UART and airspeed I2C leads go to -y anyway; cost: CG y moves from -1.66 mm by 28 g x 75 mm / total (about -1.3 mm, limit 5 mm, A-P4); FC hard mount unchanged (D-186)
+FC_HOLES = [(FC_CX + sx * 0.0125, FC_YC + sy * 0.0125) for sx in (-1, 1) for sy in (-1, 1)]   # V 25 x 25 mm M2 pattern (docs.holybro.com kakute-h743-wing 2026-11-20); hole diameter -, drawn 2.2 mm clearance
 GEL_XY = FC_HOLES                           # tape pads sit under the four M2 holes
 FC_ZB = ZP + GEL                            # board underside
 FC_ZB_TOP = FC_ZB + T_PCB                   # board top: ALL solder pads are on this one board
 FC_TOP = FC_ZB_TOP
-FC_B = ((FC_X0, -FC_LY / 2, FC_ZB), (FC_X0 + FC_LX, FC_LY / 2, FC_ZB_TOP))   # PCB only; the 13.5 mm overall height (connector and header envelope) is NOT drawn: shape -
+FC_B = ((FC_X0, FC_YC - FC_LY / 2, FC_ZB), (FC_X0 + FC_LX, FC_YC + FC_LY / 2, FC_ZB_TOP))   # PCB only; the 13.5 mm overall height (connector and header envelope) is NOT drawn: shape -
 FC_ENV_TOP = FC_ZB + 0.0135                 # V overall height 13.5 mm (measured from the board underside: ASSUMED, the page does not say): keep-out for the wiring, not a drawn solid
 # solder pad layout (EST: the Holybro pinout page gives pad names only): all on the board top; ESC / servo / RX pads on the aft edge, GPS and I2C on the front edge
-FC_PADS = {'ESC': (FC_X0 + FC_LX - 0.0025, 0.0, FC_ZB_TOP), 'S5': (FC_X0 + FC_LX - 0.0025, 0.005, FC_ZB_TOP), 'S6': (FC_X0 + FC_LX - 0.0025, -0.005, FC_ZB_TOP),
-           'GPS': (FC_X0 + 0.0025, 0.005, FC_ZB_TOP), 'I2C': (FC_X0 + 0.0025, -0.005, FC_ZB_TOP), 'RX': (FC_X0 + FC_LX - 0.0080, 0.0, FC_ZB_TOP)}
+# T-092: the whole layout moves with the board (y + FC_YC); GPS and I2C pads swap sides (EST layout, the Holybro page gives names only) so that the GPS lead, which arrives from +y, ends on the outer (-y) pad and the I2C lead, which leaves towards +y then -y, does not cross it
+FC_PADS = {'ESC': (FC_X0 + FC_LX - 0.0025, FC_YC, FC_ZB_TOP), 'S5': (FC_X0 + FC_LX - 0.0025, FC_YC + 0.005, FC_ZB_TOP), 'S6': (FC_X0 + FC_LX - 0.0025, FC_YC - 0.005, FC_ZB_TOP),
+           'GPS': (FC_X0 + 0.0025, FC_YC - 0.005, FC_ZB_TOP), 'I2C': (FC_X0 + 0.0025, FC_YC + 0.005, FC_ZB_TOP), 'RX': (FC_X0 + FC_LX - 0.0080, FC_YC, FC_ZB_TOP)}
 RX_B = ((0.102 + AV_DX, -0.0525), (0.124 + AV_DX, -0.0395))  # V RadioMaster RP3 V2 22 x 13 x 4 mm (readymaderc 85670, 2026-11-15): 22 along x, 13 along y
 RX_T = 4.0 * MM
 GPS_B = ((0.045 + AV_DX, 0.0275), (0.070 + AV_DX, 0.0525))   # V TBS M10Q 25 x 25 x 7.7 mm (readymaderc 86501)
@@ -732,7 +763,7 @@ P('PWR-002', 'Pack straps x2: 20 mm webbing with buckle, each about %.0f mm (inn
 PAD_M = round(0.100 * 0.030 * PAD_T * 1.15 * 1e6, 1)     # g: 100 x 30 x 1 mm, silicone rubber 1.15 g/cm3 (EST)
 P('PWR-003', 'Anti-slip pad 100 x 30 x 1.0 mm silicone rubber sheet on the tray floor (BOM W09; thickness, size and density EST)', 'power', PAD_M, 'silicone rubber', 'buy')
 P('AVN-010', 'R2 mounting bosses (T-073 R2, T-077 p5): 4 FC bosses 6 x 6 mm on the 25 x 25 pattern with M2 hex-nut pockets, 4 ESC bosses 6 x 6 on the 20 x 20 pattern, 4 GPS corner pads 6 x 6 and 2 RX strip pads 5 x 11 mm (T-073 s.R2 Phase 2: GPS / RX pads), each up to the pad plane ZP (heights from the skin), bonded to the skin, printed PETG 6 x 6 x h (T-070); mass = drawn volume x T-067 basis', 'avionics', 4.0, 'PETG (printed)')   # replaces AVN-001 (plate 17.91 g)
-P('AVN-002', 'Flight controller Holybro Kakute H743-Wing, 45 x 30 x 13.5 mm (V docs.holybro.com kakute-h743-wing, read 2026-11-20), M2 25 x 25 mm, 28 g with USB extender; drawn: PCB 45 x 30 x 1.6 mm (PCB thickness EST, vendor -), corner radius -, hole diameter - (2.2 mm drawn), connector and header outlines and heights - (not drawn; the 13.5 mm overall height is a wiring keep-out), orientation 45 mm along y is my choice', 'avionics', 28.0, 'PCB', 'buy', 'bus')
+P('AVN-002', 'Flight controller Holybro Kakute H743-Wing, 45 x 30 x 13.5 mm (V docs.holybro.com kakute-h743-wing, read 2026-11-20), M2 25 x 25 mm, 28 g with USB extender; drawn: PCB 45 x 30 x 1.6 mm (PCB thickness EST, vendor -), corner radius -, hole diameter - (2.2 mm drawn), connector and header outlines and heights - (not drawn; the 13.5 mm overall height is a wiring keep-out), orientation 45 mm along y is my choice; position (T-092, D-239): board centre x 47 mm, y -75 mm (75 mm off the wing centre, left side, hard-mounted); IMU chip position on the board "-" (not published)', 'avionics', 28.0, 'PCB', 'buy', 'bus')
 P('AVN-007', 'Foam-tape pads x4 (FC hard mount, 3.0 mm)', 'avionics', 1.0, 'VHB-class foam tape', 'buy')
 P('AVN-003', 'Receiver RP3 V2 ELRS', 'avionics', 4.6, 'PCB', 'buy', 'sink')       # V 4.6 g with antennas (readymaderc 85670)
 P('AVN-004', 'GPS TBS M10Q + compass', 'avionics', 13.5, 'PCB', 'buy', 'sink')
@@ -740,7 +771,7 @@ P('AVN-005', 'Airspeed sensor MS4525 board', 'avionics', 3.0, 'PCB', 'buy', 'sin
 P('AVN-006', 'Pitot-static probe (RMRC kit; size not published: EST 166 x 3 mm, measure)', 'avionics', 5.0, 'brass tube', 'buy')
 for _k, _n in (('T', 'total'), ('S', 'static')):    # D-208: mass and length set after pitot_paths() exists (end of file)
     P('AVN-009-' + _k, 'Pitot line, %s pressure: silicone tubing 2 / 4 mm (V RMRC)' % _n, 'avionics', 0.0, 'silicone rubber', 'buy')
-P('AVN-008', 'Bay cover (D-198, T-022 Q4): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead runs from the foam ditch to the ESC pads, with a low annex (RX hood) over the receiver enclosing the RX UART lead; bottom-open slots for the GPS lead, the battery tail and the two antennas', 'avionics', cover_mass_g(), 'PETG (printed)')
+P('AVN-008', 'Bay cover (D-198, T-022 Q4): 0.6 mm printed PETG hood over the FC (T-092: now at y -75 under the FC annex, x 22.5-72.2, y -99 to -26.5), ESC and the phase-lead runs from the foam ditch to the ESC pads, with a low annex (RX hood) over the receiver enclosing the RX UART lead; bottom-open slots for the GPS lead, the battery tail and the two antennas', 'avionics', cover_mass_g(), 'PETG (printed)')
 P('HWC-001', 'FC mounting screws: 4 x M2 pan screw (stock, length per hole 8-10 mm, T-077 p5)', 'avionics', M_FC_SCREWS, 'A2 stainless', 'buy')
 P('HWC-003', 'FC mounting nuts: 4 x M2 thin nut (DIN 439 1.2 mm) in the boss hex pockets', 'avionics', M_FC_NUTS, 'A2 stainless', 'buy')
 # mechanisms (30 g with linkage)
@@ -1035,7 +1066,7 @@ def build_avionics(ctx):
                            _ring(gx, gy, 1.1 * MM, 12)], GEL, name='foam tape pad')
     # ---- FC: Kakute H743-Wing, ONE board (T-077 p5); connector / header envelope not drawn (shape -); solder pads on the board top
     fc = ctx.part('AVN-002', rgb=(0.1, 0.1, 0.5))
-    _pcb(fc, FC_X0, -FC_LY / 2, FC_X0 + FC_LX, FC_LY / 2, FC_ZB, T_PCB, FC_HOLES, r=1.5 * MM, name='Kakute H743-Wing PCB 45 x 30 mm (thickness EST 1.6 mm, corner radius EST 1.5 mm, M2 holes 25 x 25 drawn 2.2 mm)')
+    _pcb(fc, FC_X0, FC_YC - FC_LY / 2, FC_X0 + FC_LX, FC_YC + FC_LY / 2, FC_ZB, T_PCB, FC_HOLES, r=1.5 * MM, name='Kakute H743-Wing PCB 45 x 30 mm (thickness EST 1.6 mm, corner radius EST 1.5 mm, M2 holes 25 x 25 drawn 2.2 mm)')
     for k, (x, y, z) in FC_PADS.items():
         _pad(fc, x, y, z, {'S5': 'servo pad S5', 'S6': 'servo pad S6', 'ESC': 'ESC signal pad', 'GPS': 'GPS pad', 'I2C': 'I2C pad', 'RX': 'RX pad'}[k] + ' (EST position)')
     # ---- FC mounting hardware set (screws from the top board down to a thin nut under the plate)
@@ -1077,6 +1108,8 @@ def build_avionics(ctx):
     cv = ctx.part('AVN-008', rgb=(0.85, 0.9, 0.95))
     cv.prism('Y', -COV_Y, [cov_loops()], 2 * COV_Y, name='cover roof band (0.6 mm)')
     cv.prism('Y', COV_Y, [cov_side_loop()], COV_T, name='cover end wall (0.6 mm)')
+    cv.prism('Y', -AN_YI, [an_loops()], AN_YI - COV_Y, name='FC annex roof band and aft wall (T-092, D-239; 0.5 mm vacuum-formed, EST design value)')
+    cv.prism('Y', -AN_YI - COV_T, [an_side_loop()], COV_T, name='FC annex outer end wall (T-092)')
     for k_, lp_ in enumerate(cov_side_loops_neg()):
         cv.prism('Y', -COV_Y - COV_T, [lp_], COV_T, name='cover end wall, -y side (0.6 mm; open under the RX hood, T-022 Q4)' if k_ == 0 else 'cover end wall strip, -y side, over / behind the RX hood (0.6 mm)')
     # T-022 Q4: RX hood (annex of the cover over the receiver, -y side): roof, outer wall, fore wall, aft wall with two bottom-open antenna exit slots (the cover is lowered over the RX and the laid antennas)
@@ -1317,6 +1350,57 @@ def _plen(pts):
     return sum(math.dist(pts[i], pts[i + 1]) for i in range(len(pts) - 1))
 
 
+SRV_TH0 = {1: 0.0, -1: math.pi / 2}       # T-092: ribbon pattern rotation of the -y lead (pad -> straight down at its own pad -> groove): the frame transport through the +x / -z / -y turns leaves the 3 strands lying the other way in the end run than the other lead's; +90 deg restores the pattern (flat ribbon, 3.6 x 1.2 mm) as T-084 had it (exposed strand length equal to T-084)
+SRV_DROP = {1: SRV_YD, -1: FC_YC - 0.005}   # y of the skin slit where each servo lead goes down into its groove: +y lead at |y| 24 as before; -y lead at its own FC pad S6 (y -80), between the FC bosses (y -84.5 and -65.5 edges), slit 8 mm wide
+SRV_HW = {1: 0.0045, -1: 0.0040}            # slit half width in y
+ESC_XH, ESC_ZH = 0.0685, 0.0415             # T-092: lane of the ESC signal bundle along y (x 68.5, z 41.5: under the 44.5 mm roof inner face, over the phase bundles z <= 37.9, 1.9 mm aft of the RX / GPS lanes)
+
+
+def servo_lead_pts(sg):
+    """Waypoints of servo lead sg (+1 R / -1 L): FC pad S5 / S6 -> to the skin slit (+y lead crosses the bay at pad height z0 under the cover, -y lead drops at its own pad) -> groove along y 3 mm under the skin -> along the skin to the servo."""
+    x, y, z = FC_PADS['S5' if sg > 0 else 'S6']
+    z0 = z + 0.0006
+    yd = SRV_DROP[sg]
+    zg1 = servo_zc(SRV_XD)
+    xs_ = [SRV_XD, 0.083, 0.097, 0.110, 0.1215]
+    if sg > 0:
+        pts = [(x, y, z0), (SRV_XD, y, z0), (SRV_XD, yd, z0), (SRV_XD, yd, zg1), (SRV_XD, sg * SRV_YG, zg1)]
+    else:
+        pts = [(x, y, z0), (SRV_XD, y, z0), (SRV_XD, yd, zg1), (SRV_XD, sg * SRV_YG, zg1)]
+    pts += [(xx, sg * SRV_YG, servo_zc(xx)) for xx in xs_[1:]]
+    pts += [(0.1265, sg * SRV_YG, 0.0083), (0.1305, sg * SERVO_Y, SV_Z1 + 0.003)]
+    return pts
+
+
+def servo_lead_pts_old(sg):
+    """Route with the FC on the wing centre (T-084 and before), for the mass delta only: pad at y = sg * 5 mm, drop at |y| 24."""
+    x, y, z = FC_PADS['S5' if sg > 0 else 'S6']
+    y = sg * 0.005
+    z0 = z + 0.0006
+    zg1 = servo_zc(SRV_XD)
+    xs_ = [SRV_XD, 0.083, 0.097, 0.110, 0.1215]
+    pts = [(x, y, z0), (SRV_XD, y, z0), (SRV_XD, sg * SRV_YD, z0), (SRV_XD, sg * SRV_YD, zg1), (SRV_XD, sg * SRV_YG, zg1)]
+    pts += [(xx, sg * SRV_YG, servo_zc(xx)) for xx in xs_[1:]]
+    pts += [(0.1265, sg * SRV_YG, 0.0083), (0.1305, sg * SERVO_Y, SV_Z1 + 0.003)]
+    return pts
+
+
+def esc_path():
+    """ESC signal bundle: ESC SIG pad -> forward over the ESC -> up to the high lane (x 68.5, z 41.5) -> along y under the cover roof to the FC ESC pad row -> aft edge -> down onto the pad."""
+    sx, sy_ = ESC_PADS['SIG']
+    fx, fy, fz = FC_PADS['ESC']
+    _zr = ESC_TOP + 0.0046
+    return [(sx, sy_, ESC_TOP + 0.002), (sx - 0.007, sy_, _zr), (0.0905 + AV_DX, sy_, _zr), (ESC_XH, sy_, ESC_ZH), (ESC_XH, fy, ESC_ZH), (fx, fy, ESC_ZH), (fx, fy, fz + 0.0016)]
+
+
+def gps_path():
+    (gx0, gy0), (gx1, gy1) = GPS_B
+    gcx = (gx0 + gx1) / 2
+    zp_ = ZP + T_PCB + 1.8 * MM
+    x, y, z = FC_PADS['GPS']
+    return [(gcx, gy0 + 2.0 * MM, zp_), (gcx, 0.02475, zp_), (gcx, 0.02475, _ZF), (gcx, y, _ZF), (x, y, _ZF), (x, y, z + 0.0006)]
+
+
 def hrn_items():
     ext = 0.0
     for st in ST:
@@ -1324,12 +1408,15 @@ def hrn_items():
         ext += 3 * max(0.0, _plen(phase_path(st, px, py, ESC_TOP + 0.002)[0]) - LEAD_L + 0.030)
     return [('phase-lead extensions: 12 strands of 20 AWG, CAD route beyond the 0.10 m X2216 stock lead + 30 mm splice (%.2f m)' % ext, round(ext * WIRE_G_PER_M[20], 1)),
             ('12 splices: solder + 15 mm heat-shrink, 0.15 g each (EST)', 1.8),
-            ('ESC signal ribbon 6 x 26 AWG x 73 mm (CAD) at 2.0 g/m (EST)', round(6 * 0.073 * WIRE_G_PER_M[26], 1)),
-            ('RX / GPS leads: 4 conductors of 28 AWG x %.0f mm (CAD route, T-022 Q4) + 6 x about 70 mm at 1.2 g/m (EST) + 2 JST plugs 0.5 g each (EST)' % (_plen(uart_path()) * 1e3),
-             round(4 * _plen(uart_path()) * WIRE_G_PER_M[28] + 6 * 0.070 * WIRE_G_PER_M[28] + 1.0, 1)),
+            ('ESC signal ribbon 6 x 26 AWG x %.0f mm (CAD route to the FC at y -75, T-092) at 2.0 g/m (EST)' % (_plen(esc_path()) * 1e3), round(6 * _plen(esc_path()) * WIRE_G_PER_M[26], 1)),
+            ('RX / GPS leads: RX 4 conductors of 28 AWG x %.0f mm and GPS 6 x %.0f mm (CAD routes, T-022 Q4, T-092) at 1.2 g/m (EST) + 2 JST plugs 0.5 g each (EST)' % (_plen(uart_path()) * 1e3, _plen(gps_path()) * 1e3),
+             round(4 * _plen(uart_path()) * WIRE_G_PER_M[28] + 6 * _plen(gps_path()) * WIRE_G_PER_M[28] + 1.0, 1)),
             ('airspeed I2C lead (D-208): 4 conductors of 28 AWG x %.0f mm (CAD route to the left wing tip) at 1.2 g/m (EST) + JST plug 0.5 g (EST)' % (_plen(i2c_path()) * 1e3),
              round(4 * _plen(i2c_path()) * WIRE_G_PER_M[28] + 0.5, 1)),
-            ('servo leads: the 3-wire leads are in the 20.5 g servo mass (EST: stock length reaches the FC pads), plus 2 groove fish-wire ties', 0.2),
+            ('servo leads: the 3-wire leads are in the 20.5 g servo mass (EST: stock length reached the old FC pads at the wing centre), plus 2 groove fish-wire ties', 0.2),
+            ('servo lead extension (T-092, D-239): the +y lead (S5) now runs %+.0f mm longer than the centre-FC route (stock lead length "-": assumed to end at the old pad), 3 x 26 AWG at 2.0 g/m + 1 splice 0.15 g (EST); the -y lead is %.0f mm shorter and is cut to length (its stock lead is already in the servo mass: conservative, not subtracted)'
+             % ((_plen(servo_lead_pts(1)) - _plen(servo_lead_pts_old(1))) * 1e3, (_plen(servo_lead_pts_old(-1)) - _plen(servo_lead_pts(-1))) * 1e3),
+             round(3 * max(0.0, _plen(servo_lead_pts(1)) - _plen(servo_lead_pts_old(1))) * WIRE_G_PER_M[26] + 0.15, 1)),
             ('heat-shrink sleeves at the cup collar / floor hole, ties, foam tape, solder (EST)', 5.0)]
 
 
@@ -1397,49 +1484,35 @@ def build_harness(ctx):
         sts = _strands_s(P, PH_D, _tri(PH_D), PH_LAY, 0.7 * i)
         ctx.wire(eid, P, dia=ELEC[eid], strands=sts)
         _terms(ctx, eid)
-    sx, sy_ = ESC_PADS['SIG']
-    fx, fy, fz = FC_PADS['ESC']
-    # D-194: ESC signal ribbon straight inboard along y = 0 over the ESC at 24 mm, down at x 78 (4 mm ahead of the ESC), into the FC stack between the
-    # boards at 19.1 mm to the ESC pad on the bottom board. 6 x 26 AWG as a 3 x 2 bundle (not a flat ribbon: no in-plane inner strand shortening). D-199: smooth, drape 1 mm
-    _zr = ESC_TOP + 0.0046
-    pts = [(sx, sy_, z_pad), (sx - 0.007, sy_, _zr), (0.0905 + AV_DX, sy_, _zr), (0.0800 + AV_DX, sy_, fz + 0.0020), (fx, fy, fz + 0.0016)]
+    # D-194 / T-092 (D-239): ESC signal bundle from the ESC SIG pad forward over the ESC at 24 mm, up to the high lane (x 68.5, z 41.5), along y under the cover roof (main cover, then the FC annex) to the FC row y -75, aft edge, down onto the ESC pad. 6 x 26 AWG as a 3 x 2 bundle, smooth, drape 1 mm
     wd = 1.3 * MM                                              # EST 26 AWG silicone OD
     rib = [((j % 3 - 1) * wd, (j // 3 - 0.5) * wd) for j in range(6)]
-    _wire_s(ctx, 'E-HRN-06', pts, [0.004, 0.008, 0.008], wd, rib, sag={1: (0.0010, (0, 0, -1))})
+    _wire_s(ctx, 'E-HRN-06', esc_path(), [0.004, 0.006, 0.006, 0.004, 0.004], wd, rib, sag={1: (0.0010, (0, 0, -1))})
     core = ctx.components['WNG-001']
     for i, (key, sg) in enumerate((('S5', 1), ('S6', -1))):
-        x, y, z = FC_PADS[key]
         yc = sg * SERVO_Y
-        z0 = z + 0.0006
-        # D-198: out of the FC aft between the boards, over the plate to the window at |y| 24 mm, down through the plate window and a slit in the skin into a
-        # groove in the foam core 3 mm under the upper skin (ribbon 3 x 1.2 mm), outboard along y at x 83 mm, then aft along the skin to the servo pocket wall.
-        # Only the last 6 mm (pocket wall to the lead boot) is exposed.
+        # D-198 / T-092: out of the FC aft edge (+y lead: over the board edge at x 64, along y at the pad height across the bay and the FC annex, under the cover; -y lead: straight down at its own pad), down through a slit in the skin into a
+        # groove in the foam core 3 mm under the upper skin (ribbon 3 x 1.2 mm), outboard along y at x 64, then aft along the skin to the servo pocket wall. Only the last 6 mm (pocket wall to the lead boot) is exposed.
+        yd, hw = SRV_DROP[sg], SRV_HW[sg]
         zg1 = servo_zc(SRV_XD)
         xs_ = [SRV_XD, 0.083, 0.097, 0.110, 0.1215]
-        pts = [(x, y, z0), (SRV_XD, y, z0), (SRV_XD, sg * SRV_YD, z0), (SRV_XD, sg * SRV_YD, zg1), (SRV_XD, sg * SRV_YG, zg1)]     # T-077 p5: out through the 5 mm gap between the FC aft edge (x 62) and the ESC front (x 67), then outboard to the drop at |y| 24
-        pts += [(xx, sg * SRV_YG, servo_zc(xx)) for xx in xs_[1:]]
-        pts += [(0.1265, sg * SRV_YG, 0.0083), (0.1305, yc, SV_Z1 + 0.003)]
-        _wire_s(ctx, 'E-HRN-%02d' % (7 + i), pts, 0.003, 1.2 * MM, [(-1.2 * MM, 0.0), (0.0, 0.0), (1.2 * MM, 0.0)])
+        _wire_s(ctx, 'E-HRN-%02d' % (7 + i), servo_lead_pts(sg), 0.003, 1.2 * MM, [(-1.2 * MM, 0.0), (0.0, 0.0), (1.2 * MM, 0.0)], th0=SRV_TH0[sg])
         # grooves in the core (routed, shop cuts): drop slot, y run, x run following the skin
-        ya, yb = sorted((sg * (SRV_YD - 0.0045), sg * (SRV_YD + 0.0045)))
-        core.cut_box((SRV_XD - 0.0035, ya, zg1 - 0.0020), (SRV_XD + 0.0035, yb, 0.0150), name='servo lead drop slot through the skin (D-198)')
-        ya, yb = sorted((sg * (SRV_YD - 0.0045), sg * (SRV_YG + 0.0030)))
+        ya, yb = sorted((yd - hw, yd + hw))
+        core.cut_box((SRV_XD - 0.0035, ya, zg1 - 0.0020), (SRV_XD + 0.0035, yb, 0.0150), name='servo lead drop slot through the skin (D-198, T-092: %s lead at y %.0f mm)' % ('+y' if sg > 0 else '-y', yd * 1e3))
+        ya, yb = sorted((yd - sg * hw, sg * (SRV_YG + 0.0030)))
         core.cut_box((SRV_XD - 0.0030, ya, zg1 - 0.0016), (SRV_XD + 0.0030, yb, zg1 + 0.0016), name='servo lead groove along y, 3 mm under the skin (D-198)')
         loop = [(xx, servo_zc(xx) - 0.0016) for xx in [SRV_XD - 0.003, SRV_XD, 0.083, 0.097, 0.110, 0.1215, 0.1250]] + [(xx, servo_zc(xx) + 0.0016) for xx in [0.1250, 0.1215, 0.110, 0.097, 0.083, SRV_XD, SRV_XD - 0.003]]
         ya, yb = sorted((sg * (SRV_YG - 0.0030), sg * (SRV_YG + 0.0030)))
         core.cut_prism('Y', ya, [loop], yb - ya, name='servo lead groove along x, following the skin (D-198)')
-        ya, yb = sorted((sg * (CN_Y - 0.0001), sg * (CN_Y + FNB_T + 0.0001)))
-        ctx.components['WNG-013-' + ('R' if sg > 0 else 'L')].cut_box((SRV_XD - 0.0030, ya, zg1 - 0.0016), (SRV_XD + 0.0030, yb, zg1 + 0.0016), name='servo-lead slot 6 x 3.2 mm in the centre bulkhead (= the groove, T-077 p8)')
+        if sg > 0:       # T-092: the -y groove no longer crosses the left centre bulkhead (it starts at y -76, outboard of |y| 60)
+            ya, yb = sorted((sg * (CN_Y - 0.0001), sg * (CN_Y + FNB_T + 0.0001)))
+            ctx.components['WNG-013-R'].cut_box((SRV_XD - 0.0030, ya, zg1 - 0.0016), (SRV_XD + 0.0030, yb, zg1 + 0.0016), name='servo-lead slot 6 x 3.2 mm in the centre bulkhead (= the groove, T-077 p8)')
     # RX CRSF wire: FC top board RX pad -> RX pads, enclosed in the cover and the RX hood (T-022 Q4)
     wd = 1.0 * MM
     _wire_s(ctx, 'E-HRN-09', uart_path(), 0.0025, wd, [((j % 2 - 0.5) * wd, (j // 2 - 0.5) * wd) for j in range(4)], lay=0.100)
-    # GPS cable: GPS plug (inner edge) -> FC GPS pad
-    x, y, z = FC_PADS['GPS']
-    (gx0, gy0), (gx1, gy1) = GPS_B
-    gcx = (gx0 + gx1) / 2
-    zp_ = ZP + T_PCB + 1.8 * MM
-    pts = [(gcx, gy0 + 2.0 * MM, zp_), (gcx, 0.02475, zp_), (gcx, 0.02475, _ZF), (x, y, _ZF), (x, y, z + 0.0006)]    # D-199: leaves the plug inboard (the old route rose through the GNSS patch footprint), crosses the cover wall low through a bottom-open slot
-    _wire_s(ctx, 'E-HRN-10', pts, 0.0025, wd, [((j % 3 - 1) * wd, (j // 3 - 0.5) * wd) for j in range(6)], lay=0.100)
+    # GPS cable: GPS plug (inner edge) -> up inside the cover wall slot -> across the bay and the FC annex at z 40.5 (x 42.5) -> FC GPS pad (T-092: pad at y -80)
+    _wire_s(ctx, 'E-HRN-10', gps_path(), 0.0025, wd, [((j % 3 - 1) * wd, (j // 3 - 0.5) * wd) for j in range(6)], lay=0.100)
     # airspeed cable: FC I2C pad -> JST-GH plug on the board at the left wing tip (D-208)
     _wire_s(ctx, 'E-HRN-11', i2c_path(), 0.004, wd, [((j % 2 - 0.5) * wd, (j // 2 - 0.5) * wd) for j in range(4)], lay=0.100)
     hg = 0.0017                                  # groove half width / height round the 2 x 2 bundle (envelope 1.4 mm) + 0.3 mm

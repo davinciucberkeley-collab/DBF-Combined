@@ -35,17 +35,7 @@ confirmed, reopen the C-route (arms 10x8 + bridge soft in z first). Proof chain 
 margin claims UNVERIFIED (T-089).
 
 **PAUSED 2026-11-22 (AM-026).** Nothing running; working tree clean; nothing pushed.
-**Next action on resume:** (1) T-089: read `redesign/qp/A/mechanism/out/T089_data/README-PAUSED.md`; finish the
-fu_cage X2216 plant (partial patch saved, incomplete), gain margins at the corners (D-191 method), forced response of
-the 94.6-108.7 Hz mode at FC and motors on the T-085 model, re-point params, run_all, T089_report.md + D-237;
-(2) T-032: update docs/video/PIPELINE.md s2 hashes on a stated basis (git blob or LF) with a commit pin, fix stale
-numbers (119.9 s / 7,194 frames), follow the doc once (steps under ~60 min; full main render only if feasible, else a
-frame range, stated), record in docs/video/PIPELINE-FOLLOW-<date>.md; (3) T-088 R15 stock check before the
-December order; then cleanup T-042..T-045, T-008, final verification T-047. Review rounds 2 and 3 are done
-(`docs/audits/2026-11-22-review-round-2.md`, `-round-3.md`). Ask Dillon only for: December purchase approval (not
-before early Dec; check RMRC, Zoro and Carbonwebshop stock first), trunk height and lid opening (2018 Altima SL),
-Jacobs material and test-frame confirmations, anything over $2,000. A Zoro guest cart in the browser pane holds the
-two hub bars (nothing bought).
+**Next action on resume:** (2026-11-23) T-089, T-090, T-091 (D-239) and T-092 (D-240: FC 75 mm left of centre in CAD) are done and READY FOR REVIEW with T-032. (1) Independent review round 4 of T-032, T-089, T-090, T-091, T-092 (eng-reviewer, sonnet override); fix findings, verify rows. (2) T-088 closes with the R15 decision at the December stock re-check (Easy Composites shipping "—"; Carbonwebshop kept). (3) Before the 1-4 Dec order: re-check motor stock and every price, present Order 1 ($887.25) to Dillon. (4) Cleanup T-042..T-045, T-008; final verification T-047.
 
 **Failures (history):** see git log and CHANGE-LOG; O4b with MN2212 infeasible (AM-017 study); MN3110, legs/skid,
 0.8 m/s touchdown and concept B rejected (`docs/audits/2026-11-21-config-study.md`); PETG FIN-003 failed (D-229).

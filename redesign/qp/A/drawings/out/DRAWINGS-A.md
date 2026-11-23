@@ -1,11 +1,11 @@
 # Concept A engineering drawings
 
-Generated from the CAD by `drawings/make_drawings_a.py` (commit 604443a7, 2026-11-22). One sheet per distinct made part; mirror pairs and identical parts share a sheet. Every dimension is the CAD value; feature names that say EST are estimates. Re-run after any CAD change. All sheets: [DRAWINGS-A.pdf](DRAWINGS-A.pdf).
+Generated from the CAD by `drawings/make_drawings_a.py` (commit defe9338, 2026-11-23). One sheet per distinct made part; mirror pairs and identical parts share a sheet. Every dimension is the CAD value; feature names that say EST are estimates. Re-run after any CAD change. All sheets: [DRAWINGS-A.pdf](DRAWINGS-A.pdf).
 
 | Drawing | Parts (qty) | Material | Size mm (design frame) | Sheets |
 |---|---|---|---|---|
-| [AVN-008](AVN-008.pdf) | AVN-008 (1) | PETG (printed) | 92.0 x 80.7 x 37.1 | 1 sheet(s), 12 features |
-| [AVN-010](AVN-010.pdf) | AVN-010 (1) | PETG (printed) | 76.5 x 102.5 x 4.2 | 1 sheet(s), 10 features |
+| [AVN-008](AVN-008.pdf) | AVN-008 (1) | PETG (printed) | 92.0 x 126.5 x 37.1 | 1 sheet(s), 14 features |
+| [AVN-010](AVN-010.pdf) | AVN-010 (1) | PETG (printed) | 76.5 x 141.5 x 4.2 | 1 sheet(s), 10 features |
 | [CGE-001](CGE-001.pdf) | CGE-001 (1) | Al 6061-T6 (machined) | 59.5 x 107.8 x 49.3 | 1 sheet(s), 17 features |
 | [CGE-002-A](CGE-002-A.pdf) | CGE-002-A (1) | CFRP tube | 12.0 x 552.5 x 12.0 | 1 sheet(s), 4 features |
 | [CGE-002-B](CGE-002-B.pdf) | CGE-002-B (1) | CFRP tube | 12.0 x 552.5 x 12.0 | 1 sheet(s), 4 features |
@@ -48,11 +48,11 @@ Generated from the CAD by `drawings/make_drawings_a.py` (commit 604443a7, 2026-1
 | [WNG-008-LU](WNG-008-LU.pdf) | WNG-008-RU, WNG-008-LU (2) | PETG (printed) | 44.8 x 116.0 x 7.0 | 1 sheet(s), 5 features |
 | [WNG-009](WNG-009.pdf) | WNG-009-R, WNG-009-L (2) | PETG + silicone | 12.7 x 18.3 x 12.7 | 1 sheet(s), 3 features |
 | [WNG-010](WNG-010.pdf) | WNG-010-R, WNG-010-L (2) | PETG (printed) | 11.2 x 18.0 x 11.2 | 1 sheet(s), 2 features |
-| [WNG-011](WNG-011.pdf) | WNG-011 (1) | glass cloth 48 g/m2 + epoxy | 183.8 x 800.0 x 24.0 | 3 sheet(s), 77 features |
-| [WNG-012](WNG-012.pdf) | WNG-012 (1) | CFRP strip | 3.2 x 800.0 x 5.6 | 3 sheet(s), 78 features |
-| [WNG-013-L](WNG-013-L.pdf) | WNG-013-L (1) | CF fabric laminate (cut sheet) + glass tape | 183.3 x 0.5 x 23.7 | 1 sheet(s), 4 features |
+| [WNG-011](WNG-011.pdf) | WNG-011 (1) | glass cloth 48 g/m2 + epoxy | 183.8 x 800.0 x 24.0 | 3 sheet(s), 79 features |
+| [WNG-012](WNG-012.pdf) | WNG-012 (1) | CFRP strip | 3.2 x 800.0 x 5.6 | 3 sheet(s), 80 features |
+| [WNG-013-L](WNG-013-L.pdf) | WNG-013-L (1) | CF fabric laminate (cut sheet) + glass tape | 183.3 x 0.5 x 23.7 | 1 sheet(s), 3 features |
 | [WNG-013-R](WNG-013-R.pdf) | WNG-013-R (1) | CF fabric laminate (cut sheet) + glass tape | 183.3 x 0.5 x 23.7 | 1 sheet(s), 3 features |
-| [WNG-014](WNG-014.pdf) | WNG-014-R, WNG-014-L (2) | glass cloth 48 g/m2 + epoxy | 183.6 x 348.0 x 23.9 | 3 sheet(s), 77 features |
+| [WNG-014](WNG-014.pdf) | WNG-014-R, WNG-014-L (2) | glass cloth 48 g/m2 + epoxy | 183.6 x 348.0 x 23.9 | 3 sheet(s), 79 features |
 
 ## Print list: every 3-D printed part
 
@@ -60,8 +60,8 @@ One STL per printed part (mirror images have their own file), in mm, in the part
 
 | Part | STL | Drawing | Material | CAD mass g | Size mm | Pieces | Open edges |
 |---|---|---|---|---|---|---|---|
-| AVN-008 | [AVN-008.stl](stl/AVN-008.stl) | [AVN-008](AVN-008.pdf) | PETG (printed) | 9.01 | 92.0 x 80.7 x 37.1 | 1 | 0 |
-| AVN-010 | [AVN-010.stl](stl/AVN-010.stl) | [AVN-010](AVN-010.pdf) | PETG (printed) | 1.63 | 76.5 x 102.5 x 4.2 | **14: CHECK (a body is not attached)** | 0 |
+| AVN-008 | [AVN-008.stl](stl/AVN-008.stl) | [AVN-008](AVN-008.pdf) | PETG (printed) | 14.61 | 92.0 x 126.5 x 37.1 | 1 | 0 |
+| AVN-010 | [AVN-010.stl](stl/AVN-010.stl) | [AVN-010](AVN-010.pdf) | PETG (printed) | 1.63 | 76.5 x 141.5 x 4.2 | **14: CHECK (a body is not attached)** | 0 |
 | CGE-003-LL | [CGE-003-LL.stl](stl/CGE-003-LL.stl) | [CGE-003](CGE-003.pdf) | PETG (printed) | 8.96 | 19.9 x 47.5 x 33.0 | 1 | 9 |
 | CGE-003-LR | [CGE-003-LR.stl](stl/CGE-003-LR.stl) | [CGE-003](CGE-003.pdf) | PETG (printed) | 8.96 | 19.9 x 47.5 x 33.0 | 1 | 0 |
 | CGE-003-UL | [CGE-003-UL.stl](stl/CGE-003-UL.stl) | [CGE-003](CGE-003.pdf) | PETG (printed) | 8.96 | 19.9 x 47.5 x 33.0 | 1 | 3 |

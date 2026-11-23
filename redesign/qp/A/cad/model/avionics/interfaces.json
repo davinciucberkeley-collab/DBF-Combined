@@ -11,7 +11,7 @@
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.0629,
-    0.0023,
+    -0.0187,
     0.0125
    ],
    "make_or_buy": "make",
@@ -19,14 +19,14 @@
   },
   {
    "id": "AVN-002",
-   "name": "Flight controller Holybro Kakute H743-Wing, 45 x 30 x 13.5 mm (V docs.holybro.com kakute-h743-wing, read 2026-11-20), M2 25 x 25 mm, 28 g with USB extender; drawn: PCB 45 x 30 x 1.6 mm (PCB thickness EST, vendor -), corner radius -, hole diameter - (2.2 mm drawn), connector and header outlines and heights - (not drawn; the 13.5 mm overall height is a wiring keep-out), orientation 45 mm along y is my choice",
+   "name": "Flight controller Holybro Kakute H743-Wing, 45 x 30 x 13.5 mm (V docs.holybro.com kakute-h743-wing, read 2026-11-20), M2 25 x 25 mm, 28 g with USB extender; drawn: PCB 45 x 30 x 1.6 mm (PCB thickness EST, vendor -), corner radius -, hole diameter - (2.2 mm drawn), connector and header outlines and heights - (not drawn; the 13.5 mm overall height is a wiring keep-out), orientation 45 mm along y is my choice; position (T-092, D-239): board centre x 47 mm, y -75 mm (75 mm off the wing centre, left side, hard-mounted); IMU chip position on the board \"-\" (not published)",
    "subsystem": "avionics",
    "status": "MODELLED",
    "mass_g": 28.0,
    "material": "PCB",
    "cg_xyz_m": [
     0.0472,
-    0.0,
+    -0.075,
     0.0178
    ],
    "make_or_buy": "buy",
@@ -42,7 +42,7 @@
    "material": "VHB-class foam tape",
    "cg_xyz_m": [
     0.047,
-    -0.0,
+    -0.075,
     0.0154
    ],
    "make_or_buy": "buy",
@@ -143,15 +143,15 @@
   },
   {
    "id": "AVN-008",
-   "name": "Bay cover (D-198, T-022 Q4): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead runs from the foam ditch to the ESC pads, with a low annex (RX hood) over the receiver enclosing the RX UART lead; bottom-open slots for the GPS lead, the battery tail and the two antennas",
+   "name": "Bay cover (D-198, T-022 Q4): 0.6 mm printed PETG hood over the FC (T-092: now at y -75 under the FC annex, x 22.5-72.2, y -99 to -26.5), ESC and the phase-lead runs from the foam ditch to the ESC pads, with a low annex (RX hood) over the receiver enclosing the RX UART lead; bottom-open slots for the GPS lead, the battery tail and the two antennas",
    "subsystem": "avionics",
    "status": "MODELLED",
-   "mass_g": 9.01,
+   "mass_g": 14.61,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0673,
-    -0.0041,
-    0.0281
+    0.0594,
+    -0.0312,
+    0.0295
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -165,7 +165,7 @@
    "material": "A2 stainless",
    "cg_xyz_m": [
     0.0459,
-    -0.0,
+    -0.075,
     0.0167
    ],
    "make_or_buy": "buy",
@@ -180,7 +180,7 @@
    "material": "A2 stainless",
    "cg_xyz_m": [
     0.047,
-    -0.0,
+    -0.075,
     0.0121
    ],
    "make_or_buy": "buy",

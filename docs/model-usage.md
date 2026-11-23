@@ -107,6 +107,7 @@ Append one row per delegated task. Review at each milestone: are opus runs justi
 | 2026-11-22 | T-032 resume (video pipeline doc + follow once) | implementer / sonnet | moderate (renders) | done: doc revised, followed once (S3 render, clips); full renders not run | 212 k tok / 110.6 min | 0 | — | conductor checked tree clean of film changes |
 | 2026-11-22 | T-090 Order 1 rebuild + T-088 stock | implementer / sonnet | moderate (sourcing) | done: Order 1 $887.25, reconcile PASS; R15 stock unknown, motor backorder | 108 k tok / 6.1 min | 0 | — | conductor re-ran build_order1 and bom_a |
 | 2026-11-23 | T-091 pre-order structural trade | implementer / sonnet | moderate-high (FEA-lite + control) | done: no structural purchase; FC 75 mm off centre fixes pitch GM (2.52-4.00) | 277 k tok / 64.3 min | 0 | — | conductor read report |
+| 2026-11-23 | T-092 FC off-centre into CAD + R15 | implementer / sonnet | moderate (CAD + wiring + gates) | done: FC y -75 mm, gates PASS, exposed 0.597 m unchanged, mass 1,641.0 g | 360 k tok / 120.5 min | 1 (gates rerun after a fake wire fold) | — | conductor checked gate outputs, BOM, A.param |
 
 Backfilled 2026-11-22 from the session transcripts (task notifications); T-014 review F-1, `docs/audits/2026-11-22-ready-rows-review.md`.
 

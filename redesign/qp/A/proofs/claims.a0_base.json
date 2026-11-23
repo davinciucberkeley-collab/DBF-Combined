@@ -701,7 +701,7 @@
     "CL-A-VIB-GM-SHIFT"
    ],
    "state": "planned",
-   "procedure": "TP-10b (TEST-PLAN-O4B.md): rule applied to the measured modes with pack and motors installed (T-085, D-236). Cage pitch mode 12-16 Hz, roll 21-43 Hz and fin f1 within +-20 % of FE, else re-tune (BOARD QP-4, STRUCTURES-R)"
+   "procedure": "TP-10b (TEST-PLAN-O4B.md): rule applied to the measured modes with pack and motors installed (T-085, D-236). Measured modes against the FE (T-089 / T-091): rate-loop band 16-18 / 26.8-29.7 / 42-47 Hz (the 26.8-29.7 Hz symmetric wing-flap / cage mode limits the pitch gain margin) and the 94.6-108.7 Hz wing-flap / cage-bounce mode (D-185, VIB-FC); fin f1 within +-20 % of FE, else re-tune (BOARD QP-4, STRUCTURES-R). With the FC 75 mm off centre (D-239) the pitch-rate mode shape at the FC site is measured here; the FC benefit is credited only after this test / the tether hover"
   },
   {
    "id": "T-A-TETHER-VIBE",
