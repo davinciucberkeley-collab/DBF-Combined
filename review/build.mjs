@@ -156,7 +156,7 @@ for (const [src, out, docNo, kicker] of pages) {
   const md = r(src), rev = (md.match(/\|\s*Revision\s*\|\s*([A-Z])\b/) || [])[1];
   const no = docNo + (rev ? ' · Rev ' + rev : '');
   // figures embedded as data URIs (the companion pages stay self-contained); paths are relative to the Markdown file
-  const img = p => { const f = new URL(p, new URL(src, import.meta.url)); if (!existsSync(f)) return null; const ext = p.split('.').pop().toLowerCase(); return `data:image/${ext === 'jpg' ? 'jpeg' : ext === 'svg' ? 'svg+xml' : ext};base64,` + readFileSync(f).toString('base64'); };
+  const img = p => { const f = new URL(p, new URL(src, import.meta.url)); if (!existsSync(f)) return null; const ext = p.split('.').pop().toLowerCase(); const buf = ext === 'svg' ? Buffer.from(readFileSync(f, 'utf8').replace(/\r\n/g, '\n')) : readFileSync(f); /* SVG read with LF so a Windows (CRLF) checkout embeds the same bytes as CI */ return `data:image/${ext === 'jpg' ? 'jpeg' : ext === 'svg' ? 'svg+xml' : ext};base64,` + buf.toString('base64'); };
   writeSafe(new URL('./' + out, import.meta.url), docPage({ md, css: r('./src/style.css'), fontLink, docNo: no, kicker, back: './', chapters: CHAPTERS, img }));
   writeSafe(new URL('../' + out, import.meta.url), docPage({ md, css: r('./src/style.css'), fontLink, docNo: no, kicker, back: 'VTOL-Review.html', chapters: CHAPTERS, img }));
   console.log('wrote', out);
