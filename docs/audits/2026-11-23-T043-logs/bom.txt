@@ -1,0 +1,36 @@
+| Item | $ |
+|---|---|
+| Goods | 1,382.41 |
+| Tax 10.25 % | 141.70 |
+| Shipping (EST) | 63.12 |
+| FAA | 5.00 |
+| Spend | 1,592.23 |
+| Crash reserve | 346.94 |
+| **Total** | 1,939.17 |
+| **Margin** | 60.83 |
+
+Unverified goods (U + EST): 222.14 (16 % of goods); lines 15 of 53
++30 % on unverified lines: total 2,029.68, margin -29.68
+Growth absorbed: margin / (goods x 1.1025) = 4 %
+Margin >= $100 at +30 %: FAIL; R5 total <= $1,750 (replaced by G7): FAIL
+G7 (+30 % margin >= $100 AND total <= $1,800): FAIL (total 1,939.17, +30 % margin -29.68)
+
+| Subsystem | Nominal $ (incl tax) | +30 % unverified | Cap $ | Unverified share |
+|---|---|---|---|---|
+| propulsion | 162.09 | 162.09 | 165 | 0 % |
+| power | 279.75 | 282.39 | 280 | 3 % |
+| avionics | 340.49 | 340.49 | 345 | 0 % |
+| mechanisms | 40.76 | 40.76 | 45 | 0 % |
+| airframe | 440.93 | 471.03 | 445 | 23 % |
+| ground_test | 260.09 | 300.82 | 265 | 52 % |
+| shipping + FAA | 68.12 | | 70 | EST |
+| crash reserve | 346.94 | 363.98 | 350 | |
+
+Caps sum 1965; room left to $2,000: 35
+Over cap: none
+Spares:
+
+real	0m0.235s
+user	0m0.000s
+sys	0m0.031s
+rc=0
