@@ -2,28 +2,50 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-18 11:51 UTC",
+  "generated": "2026-11-23 17:43 UTC",
   "dataset": "concept-a",
-  "ok": true,
-  "errors": [],
-  "warnings": [],
+  "ok": false,
+  "errors": [
+   "STRICT A-P1: CL-A-MASS-GATE-ROOM: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)",
+   "STRICT A-D3: CL-A-MASS-PRED: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)",
+   "STRICT A-P10: CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)",
+   "STRICT A-P13: CL-A-FLUTTER-ELEVON-NOM is UNVERIFIED",
+   "STRICT CL-A-MASS-PRED: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)",
+   "STRICT CL-A-MASS-GATE-ROOM: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)",
+   "STRICT CL-A-CUTS-REQUIRED: FAILS: margin -883.5% (409.1 g vs <= 41.6 g)",
+   "STRICT CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)",
+   "STRICT CL-A-VIB-FC: FAILS: margin -524.0% (187.2 m/s2 vs <= 30 m/s2)",
+   "STRICT CL-A-VIB-GM: FAILS: margin -43.5% (1.13 vs >= 2)",
+   "STRICT CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)",
+   "STRICT CL-A-HORN-RIB-FOAM-STALL: FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)",
+   "STRICT CL-A-ELEVON-TORSION-FOAM: FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)",
+   "STRICT CL-A-HORN-BEARING-STALL: FAILS: margin -83.2% (36.65 MPa vs <= 20 MPa)",
+   "STRICT CL-A-LINKAGE-FREEPLAY: FAILS: margin -28.0% (1.28 deg vs <= 1 deg)",
+   "STRICT CL-A-VIB-GM-SHIFT: FAILS: margin -47.5% (1.05 vs >= 2)"
+  ],
+  "warnings": [
+   "CL-A-HORN-RIB-COUPON: has a limit, but its value '-' is not a number, so pass / fail is not judged",
+   "CL-A-HORN-STALL-STEP: has a limit, but its value '-' is not a number, so pass / fail is not judged",
+   "CL-A-ELEVON-TORSION-COUPON: has a limit, but its value '-' is not a number, so pass / fail is not judged",
+   "CL-A-HORN-STALL-BENCH: has a limit, but its value '-' is not a number, so pass / fail is not judged"
+  ],
   "counts": {
    "by_type": {
-    "source": 33,
-    "assumption": 8,
+    "source": 39,
+    "assumption": 10,
     "requirement": 22,
-    "test": 12,
-    "calculation": 76,
-    "claim": 92,
-    "parameter": 193,
-    "part": 61
+    "test": 16,
+    "calculation": 89,
+    "claim": 109,
+    "parameter": 215,
+    "part": 65
    },
    "by_status": {
-    "CHECKED": 306,
-    "UNVERIFIED": 179,
-    "PROPOSED": 12
+    "CHECKED": 319,
+    "UNVERIFIED": 226,
+    "PROPOSED": 20
    },
-   "fails": 0
+   "fails": 16
   },
   "files": [
    "redesign/qp/A/proofs/claims.a0_base.json",
@@ -47,7 +69,7 @@ window.PROOF_GRAPH = {
    "kind": "file",
    "url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/CLAUDE.md",
    "checked": "2026-11-15",
-   "where": "Hard constraints: $2,000, 2027-04-30, one car trunk, < 25 kg, 3-D physics pass",
+   "where": "Hard constraints: $2,000, 2027-04-30, one car trunk, < 25 kg, 3-D physics simulation (user wording; computed as interference + swept insertion checks)",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
    "importance": 8
@@ -62,7 +84,7 @@ window.PROOF_GRAPH = {
    "where": "limits of A-U1 ... A-D12; status PROPOSED, owner A2",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
-   "importance": 75
+   "importance": 73
   },
   {
    "id": "SRC-A-MASSGATE",
@@ -179,7 +201,7 @@ window.PROOF_GRAPH = {
    "kind": "file",
    "url": "redesign/qp/A/cad/out/REPORT.md",
    "checked": "2026-11-15",
-   "where": "report_pose20 / report_pose21 / report.json: 96 parts, 444 bodies, tolerance 0.05 mm (2026-11-15, D-194)",
+   "where": "report_d212r3_pose20 / report_d212r3_pose21 / report.json: 96 parts, 444 bodies, tolerance 0.05 mm (2026-11-15, D-194)",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
    "importance": 5
@@ -206,7 +228,7 @@ window.PROOF_GRAPH = {
    "where": "s4 fin-tip landing: 33.2 deg static tip angle",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
-   "importance": 1
+   "importance": 0
   },
   {
    "id": "SRC-A-BOARD4",
@@ -266,7 +288,43 @@ window.PROOF_GRAPH = {
    "where": "MS at the 103 kPa basis (compressive 103 V data sheet; tension 129, shear 86 EST)",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
-   "importance": 5
+   "importance": 8
+  },
+  {
+   "id": "SRC-A-LINKLOADS",
+   "type": "source",
+   "title": "Elevon linkage strength checks, D-212 rev 3 (linkage_loads_check.json)",
+   "kind": "file",
+   "url": "redesign/qp/A/mechanism/out/linkage_loads_check.json",
+   "checked": "2026-11-15",
+   "where": "hand calculations + 1-D beam-on-foundation FE of the horn rib; stall force 51.0 N quasi-static; factors KP 2.156 hold, 1.4375 stall (printed / bonded)",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "CHECKED",
+   "importance": 11
+  },
+  {
+   "id": "SRC-A-LINKKIN",
+   "type": "source",
+   "title": "Elevon linkage kinematics, D-212 rev 3 (linkage_kinematics.json)",
+   "kind": "file",
+   "url": "redesign/qp/A/mechanism/out/linkage_kinematics.json",
+   "checked": "2026-11-15",
+   "where": "free_play_budget_deg: hole clearances / horn radius + Z-bend freedom (K7)",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "SRC-A-SERVOMD",
+   "type": "source",
+   "title": "QP-4 servo review (SERVO.md)",
+   "kind": "repo",
+   "url": "redesign/review/QP-4/SERVO.md",
+   "checked": "2026-11-15",
+   "where": "s4: free play <= 1 deg (flutter target)",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "CHECKED",
+   "importance": 1
   },
   {
    "id": "SRC-A-ARMCUP",
@@ -278,7 +336,7 @@ window.PROOF_GRAPH = {
    "where": "MS table, limit loads x 1.5 x 1.15 (x 1.25 printed/bonded); allowables EST",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
-   "importance": 8
+   "importance": 14
   },
   {
    "id": "SRC-A-D206BR",
@@ -314,7 +372,43 @@ window.PROOF_GRAPH = {
    "where": "modes vs rotor bands, forced response, control-band GM, C1 loads at VD 24",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
-   "importance": 6
+   "importance": 0
+  },
+  {
+   "id": "SRC-A-STRUCT-RUN",
+   "type": "source",
+   "title": "Structures run, T-084 rerun with the X2216 / 1.8796 kg model (structures_run.md)",
+   "kind": "file",
+   "url": "redesign/qp/A/structures/structures_run.md",
+   "checked": "2026-11-15",
+   "where": "s2 C1 loads, s4 modes vs rotor orders, band 94-321 Hz, forced-response sweep; beam FE fe_a.py",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "CHECKED",
+   "importance": 5
+  },
+  {
+   "id": "SRC-A-T085",
+   "type": "source",
+   "title": "T-085 D-185 FE upgrade, D-236 (T085_report.md)",
+   "kind": "file",
+   "url": "redesign/qp/A/mechanism/out/T085_report.md",
+   "checked": "2026-11-15",
+   "where": "s3 strong modes in the band under credible pad / tray / hub / cell bounds; FEA-lite beam FE, EST springs bounded",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "SRC-A-T084",
+   "type": "source",
+   "title": "T-084 static tip-over on the drawn pads (fin ends at FIN_H 0.1937, option T3)",
+   "kind": "file",
+   "url": "redesign/qp/A/mechanism/out/T084_data/tipover_t084.txt",
+   "checked": "2026-11-15",
+   "where": "minimum over the drawn and tallied CG and both pack-trim ends; pivot = outer pad edge on the CG z side (D-215 s4)",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "CHECKED",
+   "importance": 1
   },
   {
    "id": "SRC-A-D195FL",
@@ -503,7 +597,33 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 3
+   "importance": 6
+  },
+  {
+   "id": "ASM-A-ROD-GRADE",
+   "type": "assumption",
+   "title": "The M02 pushrod is music wire (ASTM A228) or as strong",
+   "text": "The 1.2 mm M02 rod has a bending allowable >= the 1172 MPa the Z-bend leg needs at 1.5 x the 51 N stall force",
+   "basis": "D-212 rev 3: RMRC publishes 'steel' only; the A228 constants (S_ut = 2211 / d^0.145 MPa, bending 0.78 S_ut, Shigley Tables 10-4 / 10-6) are RECALLED, not re-read. Receipt test: 77 N along the formed rod, 10 s, no permanent set over 0.2 mm, else A228 wire",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "ASM-A-PETG-ALLOW",
+   "type": "assumption",
+   "title": "Printed PETG 20 MPa in-layer and bearing",
+   "text": "Printed PETG (Prusament, R03) carries 20 MPa in the layer plane and in hole bearing",
+   "basis": "structures/fea_arm.py ALLOW['petg'] and arm_cup_checks.py PETG_BEAR: EST, no coupon yet; the horn is printed lying flat so its bending and bearing are in the layer plane",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 6
   },
   {
    "id": "ASM-A-TRUNK",
@@ -591,8 +711,8 @@ window.PROOF_GRAPH = {
   {
    "id": "A-U4",
    "type": "requirement",
-   "title": "3-D physics pass",
-   "text": "No part interpenetration (collision gate at neutral and at the elevon stops), no open wire ends, every build step passes the assembly sweep",
+   "title": "3-D gates pass (interference + swept insertion checks)",
+   "text": "No part interpenetration (interference check, static, at neutral and at the elevon stops), no open wire ends, every build step passes the swept insertion check (straight-line build-step paths)",
    "ref": "qp/A/REQUIREMENTS-A.md#a-u4",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
@@ -644,12 +764,12 @@ window.PROOF_GRAPH = {
    "ref": "qp/A/REQUIREMENTS-A.md#a-p1",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
-    "CL-A-MASS-GATE-ROOM is UNVERIFIED",
+    "CL-A-MASS-GATE-ROOM: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)",
     "CL-A-TW-FRESH-GATE is UNVERIFIED",
     "CL-A-TW-SAG-GATE is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": false,
+   "fails": true,
    "importance": 7
   },
   {
@@ -660,13 +780,13 @@ window.PROOF_GRAPH = {
    "ref": "qp/A/REQUIREMENTS-A.md#a-d3",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
-    "CL-A-MASS-PRED is UNVERIFIED",
+    "CL-A-MASS-PRED: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)",
     "CL-A-MASS-ITEM is UNVERIFIED",
-    "CL-A-CUTS-REQUIRED is UNVERIFIED",
+    "CL-A-CUTS-REQUIRED: FAILS: margin -883.5% (409.1 g vs <= 41.6 g)",
     "CL-A-STRUCT-MASS is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": false,
+   "fails": true,
    "importance": 9
   },
   {
@@ -784,9 +904,9 @@ window.PROOF_GRAPH = {
    "ref": "qp/A/REQUIREMENTS-A.md#a-p9",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
-    "CL-A-TIPOVER is UNVERIFIED"
+    "CL-A-TIPOVER is CHECKED"
    ],
-   "status": "UNVERIFIED",
+   "status": "CHECKED",
    "fails": false,
    "importance": 3
   },
@@ -798,17 +918,14 @@ window.PROOF_GRAPH = {
    "ref": "qp/A/REQUIREMENTS-A.md#a-p10",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
-    "CL-A-VIB-LOW-LIMIT is CHECKED",
-    "CL-A-VIB-HIGH-LIMIT is CHECKED",
-    "CL-A-VIB-LOW is CHECKED",
-    "CL-A-VIB-HIGH is CHECKED",
-    "CL-A-VIB-FC is CHECKED",
-    "CL-A-VIB-GM is CHECKED",
-    "CL-A-VIB-GM-SHIFT is CHECKED"
+    "CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)",
+    "CL-A-VIB-FC: FAILS: margin -524.0% (187.2 m/s2 vs <= 30 m/s2)",
+    "CL-A-VIB-GM: FAILS: margin -43.5% (1.13 vs >= 2)",
+    "CL-A-VIB-GM-SHIFT: FAILS: margin -47.5% (1.05 vs >= 2)"
    ],
-   "status": "CHECKED",
-   "fails": false,
-   "importance": 15
+   "status": "UNVERIFIED",
+   "fails": true,
+   "importance": 17
   },
   {
    "id": "A-P11",
@@ -818,13 +935,14 @@ window.PROOF_GRAPH = {
    "ref": "qp/A/REQUIREMENTS-A.md#a-p11",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
+    "CL-A-SERVO-SPEED is UNVERIFIED",
     "CL-A-SERVO-FACTOR is UNVERIFIED",
     "CL-A-SERVO-COLD is UNVERIFIED",
     "CL-A-SERVO-RATIO is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 13
+   "importance": 15
   },
   {
    "id": "A-P13",
@@ -852,11 +970,22 @@ window.PROOF_GRAPH = {
     "CL-A-BRIDGE-TORSION-S2 is UNVERIFIED",
     "CL-A-FOAM-SPAR-BOND is UNVERIFIED",
     "CL-A-FOAM-SERVO is UNVERIFIED",
-    "CL-A-FOAM-CAP-PEEL is UNVERIFIED"
+    "CL-A-FOAM-CAP-PEEL is UNVERIFIED",
+    "CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)",
+    "CL-A-HORN-RIB-FOAM-STALL: FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)",
+    "CL-A-ELEVON-TORSION-FOAM: FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)",
+    "CL-A-HORN-BLADE-HOLD is UNVERIFIED",
+    "CL-A-HORN-BLADE-STALL is UNVERIFIED",
+    "CL-A-HORN-BEARING-HOLD is UNVERIFIED",
+    "CL-A-HORN-BEARING-STALL: FAILS: margin -83.2% (36.65 MPa vs <= 20 MPa)",
+    "CL-A-ROD-LEG-STALL is UNVERIFIED",
+    "CL-A-HORN-SHEAROUT-STALL is UNVERIFIED",
+    "CL-A-KEEPER-BRIDGE-STALL is UNVERIFIED",
+    "CL-A-LINKAGE-FREEPLAY: FAILS: margin -28.0% (1.28 deg vs <= 1 deg)"
    ],
    "status": "UNVERIFIED",
-   "fails": false,
-   "importance": 63
+   "fails": true,
+   "importance": 93
   },
   {
    "id": "A-P16",
@@ -961,6 +1090,66 @@ window.PROOF_GRAPH = {
    "importance": 4
   },
   {
+   "id": "T-A-HORN-RIB",
+   "type": "test",
+   "title": "Elevon horn: rib coupon, stall step, elevon-section torsion coupon, bench stall test (D-212 rev 3, review r3 M-1)",
+   "verifies": [
+    "CL-A-HORN-RIB-COUPON",
+    "CL-A-HORN-STALL-STEP",
+    "CL-A-ELEVON-TORSION-COUPON",
+    "CL-A-HORN-STALL-BENCH",
+    "CL-A-HORN-SHEAROUT-STALL"
+   ],
+   "state": "planned",
+   "procedure": "(1) horn-rib coupon 36.8 N / 30 s, no crack, no slip, set < 0.5 deg; (2) then 51 N / 5 s, hole elongation <= 0.1 mm, no crack; (3) elevon-section torsion coupon 0.161 N m / 30 s, twist set < 0.5 deg, no debond; (4) bench stall test 51 N / 5 s into the stop (BUILD D5b). >= 3 coupons, lowest governs. A pass replaces the analysis FAIL claims (CL-A-HORN-RIB-FOAM-*, CL-A-ELEVON-TORSION-FOAM, CL-A-HORN-BEARING-STALL) as the basis of A-P13",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "PROPOSED",
+   "importance": 5
+  },
+  {
+   "id": "T-A-FREEPLAY",
+   "type": "test",
+   "title": "TP-15 (TEST-PLAN-O4B.md, T-094): elevon linkage free play, dial gauge or laser pointer at the trailing edge, bench coupon then built elevon",
+   "verifies": [
+    "CL-A-LINKAGE-FREEPLAY"
+   ],
+   "state": "planned",
+   "procedure": "Servo locked at neutral, push the TE to both ends of the play, free play = atan(travel / radius); pass <= 1.0 deg (SERVO.md s4) on each of 3 coupons and each built elevon",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "T-A-HORN-FOAM-COUPON",
+   "type": "test",
+   "title": "TP-16 / TP-17 (T-094): horn-rib and elevon-torsion foam coupons, n = 3 each, 10 kg cell on the lever rig",
+   "verifies": [
+    "CL-A-HORN-RIB-FOAM-HOLD",
+    "CL-A-HORN-RIB-FOAM-STALL",
+    "CL-A-ELEVON-TORSION-FOAM",
+    "CL-A-HORN-BEARING-STALL"
+   ],
+   "state": "planned",
+   "procedure": "TP-16: 36.8 N / 30 s then 51 N / 5 s along the chord, no crack, no slip, set < 0.5 deg, hole elongation <= 0.1 mm; TP-17: 0.161 N m / 30 s, no debond, twist set < 0.5 deg; lowest of 3 governs",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "PROPOSED",
+   "importance": 4
+  },
+  {
+   "id": "T-A-HORN-BENCH-STALL",
+   "type": "test",
+   "title": "TP-18 (T-094): bench stall of each built elevon, 51 N / 5 s into the +21 deg stop (BUILD D5b)",
+   "verifies": [
+    "CL-A-HORN-RIB-FOAM-STALL",
+    "CL-A-HORN-BEARING-STALL"
+   ],
+   "state": "planned",
+   "procedure": "Servo 7.2 V into the stop for 5 s: hole elongation <= 0.1 mm, no crack in horn, rib, slot tape, stop or keeper, TE set < 0.5 deg",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "PROPOSED",
+   "importance": 2
+  },
+  {
    "id": "T-A-SERVO-RAIL",
    "type": "test",
    "title": "Servo rail voltage under two-servo load (M12)",
@@ -1012,13 +1201,14 @@ window.PROOF_GRAPH = {
    "verifies": [
     "CL-A-VIB-LOW",
     "CL-A-VIB-HIGH",
+    "CL-A-VIB-IN-BAND",
     "CL-A-VIB-GM-SHIFT"
    ],
    "state": "planned",
-   "procedure": "Cage pitch mode 12-16 Hz, roll 21-43 Hz and fin f1 within +-20 % of FE, else re-tune (BOARD QP-4, STRUCTURES-R)",
+   "procedure": "TP-10b (TEST-PLAN-O4B.md): rule applied to the measured modes with pack and motors installed (T-085, D-236). Measured modes against the FE (T-089 / T-091): rate-loop band 16-18 / 26.8-29.7 / 42-47 Hz (the 26.8-29.7 Hz symmetric wing-flap / cage mode limits the pitch gain margin) and the 94.6-108.7 Hz wing-flap / cage-bounce mode (D-185, VIB-FC); fin f1 within +-20 % of FE, else re-tune (BOARD QP-4, STRUCTURES-R). With the FC 75 mm off centre (D-239) the pitch-rate mode shape at the FC site is measured here; the FC benefit is credited only after this test / the tether hover",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "PROPOSED",
-   "importance": 3
+   "importance": 4
   },
   {
    "id": "T-A-TETHER-VIBE",
@@ -1093,10 +1283,10 @@ window.PROOF_GRAPH = {
     "gate": "kg"
    },
    "outputs": {
-    "m_kg": 1.469758376
+    "m_kg": 1.880671052
    },
    "input_values": {
-    "basic": 1.27324,
+    "basic": 1.64098,
     "gf": 1.1174,
     "over": 0.032,
     "gate": 1.47
@@ -1202,12 +1392,12 @@ window.PROOF_GRAPH = {
     "ASM-A-CUTS"
    ],
    "outputs": {
-    "x_g": 41.38376230535167
+    "x_g": 409.1237623053518
    },
    "input_values": {
     "cuts": 41.6,
     "target": 1.47,
-    "m": 1.469758376,
+    "m": 1.880671052,
     "gf": 1.1174
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
@@ -1264,14 +1454,16 @@ window.PROOF_GRAPH = {
     "FIN-001-L"
    ],
    "how": "Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).",
-   "value": 1.469758376,
+   "value": 1.880671052,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
+    "FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)",
     "uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))",
     "uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.0001643700680272458,
+   "margin": -0.2793680625850341,
+   "fails": true,
    "importance": 7
   },
   {
@@ -1316,14 +1508,16 @@ window.PROOF_GRAPH = {
     "A-P1"
    ],
    "how": "As-built weigh-in <= 1.47 kg (D-190, MASS-GATE s8); the +-5 % window holds to 1.478 kg.",
-   "value": 1.469758376,
+   "value": 1.880671052,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
+    "FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)",
     "uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))",
     "uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.0001643700680272458,
+   "margin": -0.2793680625850341,
+   "fails": true,
    "importance": 1
   },
   {
@@ -1342,14 +1536,14 @@ window.PROOF_GRAPH = {
     "A-U5"
    ],
    "how": "Weigh-in.",
-   "value": 1.469758376,
+   "value": 1.880671052,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))",
     "uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.9412096649599999,
+   "margin": 0.92477315792,
    "importance": 1
   },
   {
@@ -1371,9 +1565,10 @@ window.PROOF_GRAPH = {
    "assumes": [
     "ASM-A-CUTS"
    ],
-   "value": 41.38376230535167,
+   "value": 409.1237623053518,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
+    "FAILS: margin -883.5% (409.1 g vs <= 41.6 g)",
     "uses ASM-A-CUTS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:mass.est_cuts_g, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s5, s7: 41.6 g of EST cuts already in the CAD basic mass (foam 16.6, printed 18.0, hardware 7.0))",
     "uses CL-A-MASS-PRED, which is UNVERIFIED",
@@ -1382,7 +1577,8 @@ window.PROOF_GRAPH = {
     "uses P:mass.est_cuts_g, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s5, s7: 41.6 g of EST cuts already in the CAD basic mass (foam 16.6, printed 18.0, hardware 7.0))"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.005198021505969588,
+   "margin": -8.83470582464788,
+   "fails": true,
    "importance": 1
   },
   {
@@ -1433,16 +1629,16 @@ window.PROOF_GRAPH = {
     "basic": "kg"
    },
    "outputs": {
-    "shift_mm": 2.120574282931733,
-    "fwd_mm": 20.096342402060888,
-    "aft_mm": 23.48926125475166
+    "shift_mm": 1.6453582615266487,
+    "fwd_mm": 21.062146400321755,
+    "aft_mm": 23.694719618764392
    },
    "input_values": {
-    "cg": 21.368686971819926,
+    "cg": 22.049361357237743,
     "pack": 270.0,
     "trim": 10.0,
     "trim_fwd": 6.0,
-    "basic": 1.27324
+    "basic": 1.64098
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1468,11 +1664,11 @@ window.PROOF_GRAPH = {
     "ASM-A-NP"
    ],
    "outputs": {
-    "sm_pct": 7.890331848236766
+    "sm_pct": 7.6125055684743925
    },
    "input_values": {
     "np": 40.7,
-    "cg": 21.368686971819926,
+    "cg": 22.049361357237743,
     "c": 245.0
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
@@ -1490,10 +1686,10 @@ window.PROOF_GRAPH = {
     "v": "P:mass.cg_x_mm"
    },
    "outputs": {
-    "v": 21.368686971819926
+    "v": 22.049361357237743
    },
    "input_values": {
-    "v": 21.368686971819926
+    "v": 22.049361357237743
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1521,10 +1717,10 @@ window.PROOF_GRAPH = {
     "WNG-002"
    ],
    "how": "CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.",
-   "value": 21.368686971819926,
+   "value": 22.049361357237743,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.12466773535894349,
+   "margin": 0.16049270301251278,
    "importance": 1
   },
   {
@@ -1538,10 +1734,10 @@ window.PROOF_GRAPH = {
     "v": "P:mass.cg_x_mm"
    },
    "outputs": {
-    "v": 21.368686971819926
+    "v": 22.049361357237743
    },
    "input_values": {
-    "v": 21.368686971819926
+    "v": 22.049361357237743
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1567,10 +1763,10 @@ window.PROOF_GRAPH = {
     "CGE-008"
    ],
    "how": "CG breadboard (M5); band 19-26 mm (D-195), hard aft limit 28.5 mm.",
-   "value": 21.368686971819926,
+   "value": 22.049361357237743,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.17812742416077207,
+   "margin": 0.15194764010624068,
    "importance": 1
   },
   {
@@ -1593,10 +1789,10 @@ window.PROOF_GRAPH = {
     "CGE-008"
    ],
    "how": "Slide the pack to the aft slot stop and re-measure CG (M5).",
-   "value": 23.48926125475166,
+   "value": 23.694719618764392,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.17581539457011716,
+   "margin": 0.1686063291661617,
    "importance": 1
   },
   {
@@ -1619,10 +1815,10 @@ window.PROOF_GRAPH = {
     "CGE-008"
    ],
    "how": "Slide the pack to the forward slot stop and re-measure CG (M5).",
-   "value": 20.096342402060888,
+   "value": 21.062146400321755,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.05770223168741514,
+   "margin": 0.10853402106956604,
    "importance": 1
   },
   {
@@ -1647,7 +1843,7 @@ window.PROOF_GRAPH = {
    "assumes": [
     "ASM-A-NP"
    ],
-   "value": 7.890331848236766,
+   "value": 7.6125055684743925,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses ASM-A-NP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -1655,7 +1851,7 @@ window.PROOF_GRAPH = {
     "uses ASM-A-NP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.5780663696473531,
+   "margin": 0.5225011136948785,
    "importance": 1
   },
   {
@@ -1669,10 +1865,10 @@ window.PROOF_GRAPH = {
     "v": "P:mass.cg_y_mm"
    },
    "outputs": {
-    "v": 2.0344773962489398
+    "v": 3.3228905897695276
    },
    "input_values": {
-    "v": 2.0344773962489398
+    "v": 3.3228905897695276
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1694,10 +1890,10 @@ window.PROOF_GRAPH = {
     "A-P4"
    ],
    "how": "Hang the built aircraft on its spar centre; lateral CG <= 5 mm.",
-   "value": 2.0344773962489398,
+   "value": 3.3228905897695276,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.593104520750212,
+   "margin": 0.33542188204609447,
    "importance": 1
   },
   {
@@ -1729,13 +1925,13 @@ window.PROOF_GRAPH = {
     "m": "kg"
    },
    "outputs": {
-    "fresh_cap": 2.337818404831478,
-    "sag_cap": 1.8480776731155204,
-    "fresh_unc": 2.753924587388157,
-    "sag_unc": 2.1834913763675154,
-    "window_cap_pct": 5.286243188313403,
-    "window_unc_pct": 13.546348012344856,
-    "sag_cap_gf": 2716.674179479815
+    "fresh_cap": 3.4707516142866486,
+    "sag_cap": 2.753416768359602,
+    "fresh_unc": 3.5066125907403425,
+    "sag_unc": 2.7825661573679796,
+    "window_cap_pct": 24.70419678595638,
+    "window_unc_pct": 25.19796371334989,
+    "sag_cap_gf": 4047.5226494886147
    },
    "input_values": {
     "apc_table": [
@@ -1780,15 +1976,15 @@ window.PROOF_GRAPH = {
       266.981
      ]
     ],
-    "kv": 780.0,
-    "rm_ohm": 0.173,
+    "kv": 880.0,
+    "rm_ohm": 0.089,
     "i0_a": 0.5,
     "rp_ohm": 0.03,
     "derate": 0.93,
     "cant_deg": 17.0,
     "download": 0.97,
     "hot_sag": 0.97,
-    "spin_cap": 0.9,
+    "spin_cap": 0.993,
     "v_fresh": 16.8,
     "v_sag_rest": 14.92,
     "g": 9.807,
@@ -1829,13 +2025,13 @@ window.PROOF_GRAPH = {
     "m": "kg"
    },
    "outputs": {
-    "fresh_cap": 2.338202735374153,
-    "sag_cap": 1.8483814917070525,
-    "fresh_unc": 2.75437732457637,
-    "sag_unc": 2.1838503359958046,
-    "window_cap_pct": 5.294439363621859,
-    "window_unc_pct": 13.554416276561794,
-    "sag_cap_gf": 2716.674179479815
+    "fresh_cap": 2.7128640426382087,
+    "sag_cap": 2.152169378682293,
+    "fresh_unc": 2.7408942690464206,
+    "sag_unc": 2.174953587434136,
+    "window_cap_pct": 12.836482800285044,
+    "window_unc_pct": 13.354000921657569,
+    "sag_cap_gf": 4047.5226494886147
    },
    "input_values": {
     "apc_table": [
@@ -1880,21 +2076,21 @@ window.PROOF_GRAPH = {
       266.981
      ]
     ],
-    "kv": 780.0,
-    "rm_ohm": 0.173,
+    "kv": 880.0,
+    "rm_ohm": 0.089,
     "i0_a": 0.5,
     "rp_ohm": 0.03,
     "derate": 0.93,
     "cant_deg": 17.0,
     "download": 0.97,
     "hot_sag": 0.97,
-    "spin_cap": 0.9,
+    "spin_cap": 0.993,
     "v_fresh": 16.8,
     "v_sag_rest": 14.92,
     "g": 9.807,
     "lo": 1.33,
     "hi_frac": 0.8,
-    "m": 1.469758376
+    "m": 1.880671052
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -1927,16 +2123,17 @@ window.PROOF_GRAPH = {
     "PRP-002-LL"
    ],
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "value": 2.337818404831478,
+   "value": 3.4707516142866486,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
+    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
     "uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))",
     "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
-    "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)"
+    "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)",
+    "uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.16890920241573903,
+   "margin": 0.7353758071433243,
    "importance": 1
   },
   {
@@ -1963,16 +2160,17 @@ window.PROOF_GRAPH = {
     "PWR-001"
    ],
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "value": 1.8480776731155204,
+   "value": 2.753416768359602,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
+    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
     "uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))",
     "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
-    "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)"
+    "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)",
+    "uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.1550485456972002,
+   "margin": 0.7208854802247511,
    "importance": 1
   },
   {
@@ -1997,17 +2195,18 @@ window.PROOF_GRAPH = {
     "PRP-001-LL"
    ],
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "value": 2.338202735374153,
+   "value": 2.7128640426382087,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
+    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
     "uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))",
     "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
     "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)",
+    "uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)",
     "uses CL-A-MASS-PRED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.1691013676870765,
+   "margin": 0.35643202131910434,
    "importance": 1
   },
   {
@@ -2033,17 +2232,18 @@ window.PROOF_GRAPH = {
     "PWR-001"
    ],
    "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
-   "value": 1.8483814917070525,
+   "value": 2.152169378682293,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
+    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
     "uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))",
     "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
     "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)",
+    "uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)",
     "uses CL-A-MASS-PRED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.15523843231690773,
+   "margin": 0.345105861676433,
    "importance": 1
   },
   {
@@ -2068,17 +2268,18 @@ window.PROOF_GRAPH = {
     "PRP-001-LL"
    ],
    "how": "C3 time-domain pitch-over run at the as-weighed mass (T-A-C3-PITCHOVER); the window uses 1.33 W low and 0.80 x T/W sag high.",
-   "value": 5.294439363621859,
+   "value": 12.836482800285044,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
+    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
     "uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))",
     "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
     "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)",
+    "uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)",
     "uses CL-A-MASS-PRED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.05888787272437188,
+   "margin": 1.5672965600570088,
    "importance": 1
   },
   {
@@ -2104,16 +2305,17 @@ window.PROOF_GRAPH = {
    ],
    "how": "C3 run at the as-weighed mass; MASS-GATE s8: +-5 % holds to 1.478 kg at cant 17, gate 1.47 kg.",
    "note": "D-190 (CLAIMS-FIX s1): the gate was 1.50 kg (window +-4.3 % at cant 17); lowered to 1.47 kg so the window floor holds at the gate. Heavier analyses at 1.50 kg stay conservative.",
-   "value": 5.286243188313403,
+   "value": 24.70419678595638,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
+    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
     "uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))",
     "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
-    "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)"
+    "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)",
+    "uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.05724863766268058,
+   "margin": 3.940839357191276,
    "importance": 1
   },
   {
@@ -2142,7 +2344,7 @@ window.PROOF_GRAPH = {
     "w": "P:req.window_min_pct"
    },
    "outputs": {
-    "m_kg": 1.4784621384924161
+    "m_kg": 2.202733414687681
    },
    "input_values": {
     "apc_table": [
@@ -2187,15 +2389,15 @@ window.PROOF_GRAPH = {
       266.981
      ]
     ],
-    "kv": 780.0,
-    "rm_ohm": 0.173,
+    "kv": 880.0,
+    "rm_ohm": 0.089,
     "i0_a": 0.5,
     "rp_ohm": 0.03,
     "derate": 0.93,
     "cant_deg": 17.0,
     "download": 0.97,
     "hot_sag": 0.97,
-    "spin_cap": 0.9,
+    "spin_cap": 0.993,
     "v_fresh": 16.8,
     "v_sag_rest": 14.92,
     "g": 9.807,
@@ -2217,23 +2419,24 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": ">=",
     "ref": "CL-A-MASS-PRED",
-    "resolved": 1.469758376
+    "resolved": 1.880671052
    },
    "verifies": [
     "A-P3"
    ],
    "how": "MASS-GATE s8: 1.478 kg capped at cant 17; bench M1 thrust replaces the 0.93 derate.",
-   "value": 1.4784621384924161,
+   "value": 2.202733414687681,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
+    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
     "uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))",
     "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
     "uses P:prop.hot_sag, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py: hot x0.97 on the sag case)",
+    "uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)",
     "uses CL-A-MASS-PRED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.005921900248736002,
+   "margin": 0.17124864145975105,
    "importance": 1
   },
   {
@@ -2262,7 +2465,7 @@ window.PROOF_GRAPH = {
     "m": "kg"
    },
    "outputs": {
-    "i_a": 12.077257782615476
+    "i_a": 20.07860666666667
    },
    "input_values": {
     "apc_table": [
@@ -2307,18 +2510,18 @@ window.PROOF_GRAPH = {
       266.981
      ]
     ],
-    "kv": 780.0,
-    "rm_ohm": 0.173,
+    "kv": 880.0,
+    "rm_ohm": 0.089,
     "i0_a": 0.5,
     "rp_ohm": 0.03,
     "derate": 0.93,
     "cant_deg": 17.0,
     "download": 0.97,
-    "spin_cap": 0.9,
+    "spin_cap": 0.993,
     "v_fresh": 16.8,
     "g": 9.807,
     "m": 1.5,
-    "duty": 0.9
+    "duty": 0.993
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -2350,7 +2553,7 @@ window.PROOF_GRAPH = {
     "m": "kg"
    },
    "outputs": {
-    "i_a": 17.83305726953393
+    "i_a": 25.098258333333337
    },
    "input_values": {
     "apc_table": [
@@ -2395,14 +2598,14 @@ window.PROOF_GRAPH = {
       266.981
      ]
     ],
-    "kv": 780.0,
-    "rm_ohm": 0.173,
+    "kv": 880.0,
+    "rm_ohm": 0.089,
     "i0_a": 0.5,
     "rp_ohm": 0.03,
     "derate": 0.93,
     "cant_deg": 17.0,
     "download": 0.97,
-    "spin_cap": 0.9,
+    "spin_cap": 0.993,
     "v_fresh": 16.8,
     "g": 9.807,
     "m": 1.5,
@@ -2422,7 +2625,7 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": "<=",
     "ref": "P:req.motor_rating_a",
-    "resolved": 13.0
+    "resolved": 26.8
    },
    "verifies": [
     "A-P16"
@@ -2435,15 +2638,18 @@ window.PROOF_GRAPH = {
     "PRP-003"
    ],
    "how": "Bench M2: one motor at duty 0.90 for 180 s, phase A <= 13 A, can <= 80 C. Without Q_M_SPIN_MAX 0.90 the same case is 14.3 A (prop_a.py).",
-   "value": 12.077257782615476,
+   "value": 20.07860666666667,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
+    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
     "uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))",
-    "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)"
+    "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
+    "uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)",
+    "uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)",
+    "uses P:req.motor_rating_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: SunnySky X2216 V3 880KV 450 W max continuous / 16.8 V = 26.8 A (32 A / 30 s); sunnyskyusa.com read 2026-11-21. The page gives power, not a continuous current: EST)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.07098017056804032,
+   "margin": 0.2507982587064676,
    "importance": 1
   },
   {
@@ -2465,15 +2671,16 @@ window.PROOF_GRAPH = {
     "PRP-003"
    ],
    "how": "Compare the SpeedyBee BLS 35A Mini V2 page (35 A continuous per channel) with 1.25 x 14.3 A.",
-   "value": 17.83305726953393,
+   "value": 25.098258333333337,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
+    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
     "uses P:prop.rp_ohm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py rp: pack resistance 30 mohm EST (SIZING-A))",
-    "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)"
+    "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
+    "uses P:prop.spin_cap, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.4904840780133162,
+   "margin": 0.28290690476190467,
    "importance": 1
   },
   {
@@ -2547,10 +2754,10 @@ window.PROOF_GRAPH = {
     "m": "kg"
    },
    "outputs": {
-    "cruise_s": 252.86675757476178,
-    "usable_wh": 24.5088,
-    "hover_w": 213.69836766196184,
-    "cruise_w": 167.69904696885024
+    "cruise_s": 233.78998459499445,
+    "usable_wh": 29.8368,
+    "hover_w": 287.2982195612765,
+    "cruise_w": 193.4770220236579
    },
    "input_values": {
     "apc_table": [
@@ -2595,8 +2802,8 @@ window.PROOF_GRAPH = {
       266.981
      ]
     ],
-    "kv": 780.0,
-    "rm_ohm": 0.173,
+    "kv": 880.0,
+    "rm_ohm": 0.089,
     "i0_a": 0.5,
     "derate": 0.93,
     "cant_deg": 17.0,
@@ -2604,8 +2811,8 @@ window.PROOF_GRAPH = {
     "esc_eff": 0.98,
     "ctrl_margin": 1.1,
     "g": 9.807,
-    "m": 1.469758376,
-    "pack_ah": 2.3,
+    "m": 1.880671052,
+    "pack_ah": 2.8,
     "pack_v": 14.8,
     "floor_frac": 0.9,
     "reserve_frac": 0.8,
@@ -2710,10 +2917,10 @@ window.PROOF_GRAPH = {
     "PRP-003"
    ],
    "how": "Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).",
-   "value": 252.86675757476178,
+   "value": 233.78998459499445,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it)",
+    "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
     "uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)",
     "uses P:prop.esc_eff, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py hover: input power = V I / 0.98)",
     "uses P:prop.ctrl_margin, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py hover: x 1.10 control margin (MISSION s4))",
@@ -2726,7 +2933,7 @@ window.PROOF_GRAPH = {
     "uses CL-A-CRUISE-NEED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.23617151780314374,
+   "margin": 0.1429122707777108,
    "importance": 1
   },
   {
@@ -3120,10 +3327,10 @@ window.PROOF_GRAPH = {
     "v": "P:sim.tipover_deg"
    },
    "outputs": {
-    "v": 33.2
+    "v": 31.0
    },
    "input_values": {
-    "v": 33.2
+    "v": 31.0
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -3153,13 +3360,10 @@ window.PROOF_GRAPH = {
     "FIN-001-L"
    ],
    "how": "Tilt test of the built aircraft on its feet (CG 20-26 mm): tips over at >= 30 deg.",
-   "value": 33.2,
+   "value": 31.0,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
-   "reasons": [
-    "uses P:sim.tipover_deg, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: SIZING-A s4 line 15: static tip angle 33.2 deg at CG 25 mm (EST))"
-   ],
-   "status": "UNVERIFIED",
-   "margin": 0.10666666666666676,
+   "status": "CHECKED",
+   "margin": 0.03333333333333333,
    "importance": 1
   },
   {
@@ -3769,15 +3973,15 @@ window.PROOF_GRAPH = {
    "title": "Stored result: Gust load factor at VD 24 (U 4 m/s)",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "read_value",
-   "equation": "iter3_run.md C1 table (ASM-C1-UDE-D-FRAC half rule); read, not recomputed",
+   "equation": "structures_run.md s2 C1 table, T-084 rerun (ASM-C1-UDE-D-FRAC half rule); read, not recomputed",
    "inputs": {
     "v": "P:sim.gust_n_vd"
    },
    "outputs": {
-    "v": 3.01
+    "v": 2.71
    },
    "input_values": {
-    "v": 3.01
+    "v": 2.71
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
@@ -3801,11 +4005,11 @@ window.PROOF_GRAPH = {
    "parts": [
     "WNG-002"
    ],
-   "how": "Airspeed limit VD 24 m/s on the flight card; the wing stalls before n 5.03 (stall line 3.96).",
-   "value": 3.01,
+   "how": "Airspeed limit VD 24 m/s on the flight card; the wing stalls before n 5.03 (stall line 3.16, structures_run.md s2).",
+   "value": 2.71,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
-   "margin": 0.11470588235294121,
+   "margin": 0.20294117647058824,
    "importance": 1
   },
   {
@@ -5020,16 +5224,16 @@ window.PROOF_GRAPH = {
    "title": "vib low limit",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "vib_low_limit",
-   "equation": "limit = hover 1P low edge / 1.2 = (6,018 rpm / 60) / 1.2",
+   "equation": "limit = hover 1P low edge / 1.2 = (6,789 rpm / 60) / 1.2",
    "inputs": {
     "rpm": "P:sim.hover_1p_rpm_lo",
     "sep": "P:req.band_sep"
    },
    "outputs": {
-    "f_hz": 83.58333333333333
+    "f_hz": 94.29166666666667
    },
    "input_values": {
-    "rpm": 6018.0,
+    "rpm": 6789.0,
     "sep": 1.2
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
@@ -5042,16 +5246,16 @@ window.PROOF_GRAPH = {
    "title": "vib high limit",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "vib_high_limit",
-   "equation": "limit = cruise 2P high edge x 1.2 = 253 Hz x 1.2",
+   "equation": "limit = highest 2P edge x 1.2 = (8,028 rpm hover lean / 60 x 2 = 267.6 Hz) x 1.2",
    "inputs": {
-    "f": "P:sim.cruise_2p_hz_hi",
+    "f": "P:sim.hover_lean_2p_hz",
     "sep": "P:req.band_sep"
    },
    "outputs": {
-    "f_hz": 303.59999999999997
+    "f_hz": 321.12
    },
    "input_values": {
-    "f": 253.0,
+    "f": 267.6,
     "sep": 1.2
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
@@ -5068,8 +5272,8 @@ window.PROOF_GRAPH = {
    "verifies": [
     "A-P10"
    ],
-   "how": "Hover 1P 100-119 Hz (6,018-7,151 rpm), 20 % separation rule (A-P10(a)).",
-   "value": 83.58333333333333,
+   "how": "Lowest hover 1P 113 Hz (6,789 rpm, X2216, 1.8796 kg; structures_run.md s4), 20 % separation rule (A-P10(a)); band 94-321 Hz.",
+   "value": 94.29166666666667,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
    "importance": 2
@@ -5084,8 +5288,8 @@ window.PROOF_GRAPH = {
    "verifies": [
     "A-P10"
    ],
-   "how": "Cruise 2P 243-253 Hz, 20 % separation rule (A-P10(a)).",
-   "value": 303.59999999999997,
+   "how": "Highest 2P 268 Hz (hover lean, 8,028 rpm; cruise 2P 248 Hz; structures_run.md s4), 20 % separation rule (A-P10(a)); band 94-321 Hz.",
+   "value": 321.12,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
    "importance": 2
@@ -5096,18 +5300,18 @@ window.PROOF_GRAPH = {
    "title": "highest",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "highest",
-   "equation": "highest strongly coupled (coupling >= 0.5) mode below the bands over kd / nom / hi; FE run read from structures/iter3_run.md, not re-run",
+   "equation": "highest strongly coupled (coupling >= 0.5) mode below the bands over kd / nom / hi; FE run read from structures/structures_run.md s4 (T-084 rerun, spar-only beam FE), not re-run; excludes the in-band strong mode (CL-A-VIB-IN-BAND)",
    "inputs": {
     "x": "P:sim.vib_below_hz"
    },
    "outputs": {
-    "f_hz": 77.0
+    "f_hz": 81.0
    },
    "input_values": {
     "x": [
-     63.0,
-     67.0,
-     77.0
+     66.0,
+     69.0,
+     81.0
     ]
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
@@ -5120,18 +5324,18 @@ window.PROOF_GRAPH = {
    "title": "lowest",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "lowest",
-   "equation": "lowest strongly coupled mode above the bands over kd / nom / hi; FE run read from structures/iter3_run.md, not re-run",
+   "equation": "lowest strongly coupled mode above the bands over kd / nom / hi; FE run read from structures/structures_run.md s4 (T-084 rerun, spar-only beam FE), not re-run",
    "inputs": {
     "x": "P:sim.vib_above_hz"
    },
    "outputs": {
-    "f_hz": 432.0
+    "f_hz": 438.0
    },
    "input_values": {
     "x": [
-     432.0,
-     462.0,
-     524.0
+     438.0,
+     474.0,
+     532.0
     ]
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
@@ -5148,7 +5352,7 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": "<=",
     "ref": "CL-A-VIB-LOW-LIMIT",
-    "resolved": 83.58333333333333
+    "resolved": 94.29166666666667
    },
    "verifies": [
     "A-P10"
@@ -5159,11 +5363,11 @@ window.PROOF_GRAPH = {
     "CGE-004",
     "WNG-002"
    ],
-   "how": "Tap test of the built cage (T-A-TAP): modes within +-20 % of FE or re-tune. Margin is about 7 % at the hi corner, 31 % at kd.",
-   "value": 77.0,
+   "how": "Tap test of the built cage (T-A-TAP): modes within +-20 % of FE or re-tune. Margin is 17 % at the hi corner (81 vs 94 Hz), 43 % at kd (structures_run.md s4). This claim alone does NOT show D-185 (a) met: see CL-A-VIB-IN-BAND.",
+   "value": 81.0,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
-   "margin": 0.07876370887337981,
+   "margin": 0.1409633230225365,
    "importance": 1
   },
   {
@@ -5176,7 +5380,7 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": ">=",
     "ref": "CL-A-VIB-HIGH-LIMIT",
-    "resolved": 303.59999999999997
+    "resolved": 321.12
    },
    "verifies": [
     "A-P10"
@@ -5185,11 +5389,65 @@ window.PROOF_GRAPH = {
     "FIN-001-R",
     "FIN-001-L"
    ],
-   "how": "Fin tap test at build (T-A-TAP): f1 432-525 Hz in FE.",
-   "value": 432.0,
+   "how": "Fin tap test at build (T-A-TAP): lowest strong mode above the band 438-532 Hz in FE (structures_run.md s4).",
+   "value": 438.0,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
-   "margin": 0.4229249011857709,
+   "margin": 0.3639760837070254,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-VIB-IN-BAND-READ",
+   "type": "calculation",
+   "title": "Stored result: strong modes in the band",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "count of corners with a strong mode in the band, read from structures_run.md s4 and T085_report.md s3.1 (not re-run)",
+   "inputs": {
+    "v": "P:sim.vib_inband_corners"
+   },
+   "outputs": {
+    "v": 3
+   },
+   "input_values": {
+    "v": 3
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-VIB-IN-BAND",
+   "type": "claim",
+   "title": "Corners (kd / nom / hi) with a strongly coupled mode INSIDE the excluded rotor band (D-185 (a) needs none)",
+   "calc": "CALC-A-VIB-IN-BAND-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0,
+    "resolved": 0
+   },
+   "verifies": [
+    "A-P10"
+   ],
+   "parts": [
+    "CGE-002-A",
+    "CGE-002-B",
+    "CGE-004",
+    "WNG-002"
+   ],
+   "how": "CARRIED FAIL (T-066 M-1, T-085, D-236): structures_run.md s4 spar-only model has a strong mode (cy 0.52) at 201 / 215 / 244 Hz inside the 94-321 Hz band; the upgraded model (T085_report.md s3.1) has the governing strong mode at 94.6-108.7 Hz (cx 0.74-0.85, cy 1.12-1.35) at kd / nom / hi, 23 of 24 pad / tray / hub / cell bound groups fail, the one passing group by 0.1 Hz. No limit relaxed, band and 0.5 coupling rule unchanged. TP-10b (T-A-TAP) on the built airframe decides; routes in T085_report.md s7.",
+   "value": 3,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "FAILS: margin -3 abs (3 vs <= 0)",
+    "uses P:sim.vib_inband_corners, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: structures_run.md s4: spar-only model has a strong mode (cy 0.52) IN the 94-321 Hz band at kd 201 / nom 215 / hi 244 Hz (FAIL at all 3 corners); T085_report.md s3.1 and D-236: the upgraded model (pad / tray / hub bounds) has the governing strong mode at 94.6-108.7 Hz (cx 0.74-0.85, cy 1.12-1.35), D-185 (a) FAIL in 23 of 24 bound groups, the one passing group by 0.1 Hz. Count of corners (kd / nom / hi) with a strong mode in the band, credible bound (cell nominal, 6061 hub, nominal pad))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -3.0,
+   "margin_abs": true,
+   "fails": true,
    "importance": 1
   },
   {
@@ -5198,21 +5456,21 @@ window.PROOF_GRAPH = {
    "title": "highest",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "highest",
-   "equation": "worst FC acceleration over 6,000-10,500 rpm, U 1.0 g mm per rotor, zeta 1 % and 0.5 %, kd / nom / hi; read from structures/iter3_run.md, not re-run",
+   "equation": "worst FC acceleration (sum of axes) over 6,000-11,415 rpm, U 1.0 g mm per rotor, zeta 1 % and 0.5 %, kd / nom / hi; T-089: T-085 upgraded model (wing cell, tray, hub joint, 24 bound groups), mechanism/out/T089_data/t089_fvib.py; the spar-only values of structures_run.md s4 were 22.7-26.6",
    "inputs": {
     "x": "P:sim.vib_fc_ms2"
    },
    "outputs": {
-    "a_ms2": 27.1
+    "a_ms2": 187.2
    },
    "input_values": {
     "x": [
-     25.8,
-     27.1,
-     23.9,
-     23.9,
-     23.7,
-     23.7
+     82.7,
+     157.2,
+     87.6,
+     167.9,
+     97.9,
+     187.2
     ]
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
@@ -5236,14 +5494,19 @@ window.PROOF_GRAPH = {
    ],
    "parts": [
     "AVN-002",
-    "AVN-001",
+    "AVN-010",
     "AVN-007"
    ],
-   "how": "IMU VIBE < 30 m/s2 in the first tethered hover (T-A-TETHER-VIBE). The worst point (10,500 rpm) is unreachable; at the 0.90 cap (9,349 rpm) the sweep reads 19.6-20.1.",
-   "value": 27.1,
+   "how": "T-089 (D-237 proposed): FAILS on the upgraded model. The governing 94.6-108.7 Hz wing-flap / cage-bounce mode (T-085) is excited at its 1P resonance 5,676-6,521 rpm, below the lowest operating rpm 6,789, so the sweep (6,000-11,415 rpm) catches its flank: 82.7-97.9 m/s2 at zeta 1 %, 157-187 at 0.5 %; inside the operating window 6,789-8,028 rpm the same runs read 19.3-32.9 m/s2 (T089_report.md s3). Spar-only model (structures_run.md s4, no mode there): 22.7-26.6. IMU VIBE < 30 m/s2 in the first tethered hover (T-A-TETHER-VIBE) and the tap test (T-A-TAP) decide. Conservative method (modes summed in absolute value, sum of axes, four rotors in worst phase, zeta a guess); limit unchanged.",
+   "value": 187.2,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
-   "status": "CHECKED",
-   "margin": 0.09666666666666662,
+   "reasons": [
+    "FAILS: margin -524.0% (187.2 m/s2 vs <= 30 m/s2)",
+    "uses P:sim.vib_fc_ms2, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-089 (D-237 proposed): forced response at the FC of the T-085 upgraded model (structures_a.py s4 forcing: 1P U 1.0 g mm per rotor, 2P 5 % of static thrust, four rotors worst phase, modes summed in absolute value, sum of the three axes, 6,000-11,415 rpm, 400 modes), worst over the 24 T-085 bound groups: kd 1 % / kd 0.5 % / nom 1 % / nom 0.5 % / hi 1 % / hi 0.5 %; the worst point is the 94.6-108.7 Hz wing-flap / cage-bounce mode at its 1P resonance (5,676-6,521 rpm, below the lowest operating rpm 6,789); inside the operating window 6,789-8,028 rpm the same runs read 19.3-32.9 m/s2 (T089_report.md s3). Was 26.5..22.7 (spar-only model, structures_run.md s4, which has no mode there). EST: zeta 1 / 0.5 % is a guess, steady-state response (the transient spool-up pass is not credited))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -5.239999999999999,
+   "fails": true,
    "importance": 1
   },
   {
@@ -5252,24 +5515,24 @@ window.PROOF_GRAPH = {
    "title": "lowest",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "lowest",
-   "equation": "smallest gain margin over pitch / roll / yaw x kd / nom / hi at the nominal mode frequencies (fu_cage.py); read from iter3_run.md, not re-run",
+   "equation": "smallest gain margin over pitch / roll / yaw x kd / nom / hi at the nominal mode frequencies (fu_cage.py, T-089 rebuild: X2216 / APC 9x4.5MR plant, T-085 FE, 1.8796 kg inertia, 24 bound groups); the iter3_run.md MN2212 values (2.19 min) are superseded",
    "inputs": {
     "x": "P:sim.gm_nominal"
    },
    "outputs": {
-    "gm": 2.19
+    "gm": 1.13
    },
    "input_values": {
     "x": [
-     4.19,
-     4.25,
-     5.88,
-     2.37,
-     2.56,
-     3.32,
-     2.19,
-     2.23,
-     2.23
+     1.36,
+     1.26,
+     1.13,
+     2.68,
+     2.72,
+     2.81,
+     2.44,
+     2.48,
+     2.48
     ]
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
@@ -5296,11 +5559,16 @@ window.PROOF_GRAPH = {
     "CGE-004",
     "CGE-002-A"
    ],
-   "how": "Re-run sitl/fu_cage.py with the built-cage tap-test frequencies; hard-mounted FC.",
-   "value": 2.19,
+   "how": "T-092 (D-239 proposed): the design now has the FC hard-mounted 75 mm off the wing centre along the spar (-y side); the beam-FE model with the IMU there gives pitch GM 2.52-4.00 (modes x1.0 / 0.8 / 1.2, all 24 bound groups x kd / nom / hi, T091_report.md s0, s2), but this claim still evaluates the FC-at-centre model (P:sim.gm_nominal) and stays FAIL: the FC benefit is credited only after T-A-TAP / the tether hover confirm the 27-30 Hz mode shape (D-239). T-089 (D-237 proposed): FAILS on the rebuilt model (pitch 1.13-1.36, roll 2.68-2.81, yaw 2.44-2.48; limit 2.0, D-191 method unchanged). The pitch loop at P 0.12 / D 0.0012 / FLTD 60 has too little margin against the first symmetric wing-flap / cage mode (26.7-29.6 Hz at kd / nom / hi, pitch gain 0.23-0.25 of the rigid gain; the limiting closed-loop pole is at 27-33 Hz, T089_report.md s2) with the X2216 thrust (TFULL 14.17 N per motor) and the heavier 1.88 kg airframe; the 94-109 Hz mode is not the limit. Re-run with the built-cage tap-test frequencies (T-A-TAP) and, if the built mode is as modelled, re-tune the pitch rate gains or add a notch before flight (T089_report.md s2, illustrative sensitivities only); hard-mounted FC.",
+   "value": 1.13,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
-   "status": "CHECKED",
-   "margin": 0.09499999999999997,
+   "reasons": [
+    "FAILS: margin -43.5% (1.13 vs >= 2)",
+    "uses P:sim.gm_nominal, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; flexible modes at the FE frequencies (x 1.0). With the FE own (lighter, 1.64 kg) inertia the pitch rows are 1.0 (unstable at some thrust scale); T089_report.md s2)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.43500000000000005,
+   "fails": true,
    "importance": 1
   },
   {
@@ -5315,34 +5583,870 @@ window.PROOF_GRAPH = {
     "hi": "P:sim.gm_shifted_up"
    },
    "outputs": {
-    "gm": 2.16
+    "gm": 1.05
    },
    "input_values": {
     "lo": [
-     2.81,
+     2.37,
+     2.03,
+     1.61,
+     2.76,
      2.68,
-     4.06,
-     2.16,
-     2.16,
-     2.3,
-     2.16,
-     2.16,
-     2.19
+     2.44,
+     2.13,
+     2.19,
+     2.33
     ],
     "hi": [
-     6.06,
-     5.7,
-     2.89,
-     3.22,
-     3.88,
-     6.06,
-     2.23,
-     2.26,
-     2.26
+     1.13,
+     1.08,
+     1.05,
+     3.38,
+     3.65,
+     4.12,
+     2.48,
+     2.48,
+     2.48
     ]
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-HORN-RIB-FOAM-HOLD-READ",
+   "type": "calculation",
+   "title": "Stored result: Horn rib face shear in the elevon foam at 1.5 x VD hold (x 2.156), beam-on-foundation FE, worst foam case",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.rib_foam_hold_kpa"
+   },
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "outputs": {
+    "v": 431.8
+   },
+   "input_values": {
+    "v": 431.8
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-HORN-RIB-FOAM-HOLD",
+   "type": "claim",
+   "title": "Horn rib face shear in the elevon foam at 1.5 x VD hold (x 2.156), beam-on-foundation FE, worst foam case",
+   "calc": "CALC-A-HORN-RIB-FOAM-HOLD-READ",
+   "output": "v",
+   "unit": "kPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.foam_shear_kpa",
+    "resolved": 85.8
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "value": 431.8,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)",
+    "uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.rib_foam_hold_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 138-200 kPa unfactored))",
+    "uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.foam_shear_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: foam shear 100 x 103/120 kPa (EST, foam_103.py))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -4.032634032634033,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-HORN-RIB-FOAM-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Horn rib face shear in the foam at the 51 N servo stall force (x 1.4375)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.rib_foam_stall_kpa"
+   },
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "outputs": {
+    "v": 860.9
+   },
+   "input_values": {
+    "v": 860.9
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-HORN-RIB-FOAM-STALL",
+   "type": "claim",
+   "title": "Horn rib face shear in the foam at the 51 N servo stall force (x 1.4375)",
+   "calc": "CALC-A-HORN-RIB-FOAM-STALL-READ",
+   "output": "v",
+   "unit": "kPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.foam_shear_kpa",
+    "resolved": 85.8
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "value": 860.9,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)",
+    "uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.rib_foam_stall_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: same at the 51 N stall force, x 1.4375)",
+    "uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.foam_shear_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: foam shear 100 x 103/120 kPa (EST, foam_103.py))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -9.033799533799534,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-ELEVON-TORSION-FOAM-READ",
+   "type": "calculation",
+   "title": "Stored result: Elevon torsion beside the horn, foam only (tape skin not credited), 1.5 x VD hold (x 2.156)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.elevon_torsion_hold_kpa"
+   },
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "outputs": {
+    "v": 504.3
+   },
+   "input_values": {
+    "v": 504.3
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-ELEVON-TORSION-FOAM",
+   "type": "claim",
+   "title": "Elevon torsion beside the horn, foam only (tape skin not credited), 1.5 x VD hold (x 2.156)",
+   "calc": "CALC-A-ELEVON-TORSION-FOAM-READ",
+   "output": "v",
+   "unit": "kPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.foam_shear_kpa",
+    "resolved": 85.8
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "value": 504.3,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)",
+    "uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.elevon_torsion_hold_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: elevon beside the horn, foam-only Saint-Venant torsion, outboard share 0.51 of 0.146 N m, x 2.156 (tape skin not credited))",
+    "uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.foam_shear_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: foam shear 100 x 103/120 kPa (EST, foam_103.py))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -4.8776223776223775,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-HORN-BLADE-HOLD-READ",
+   "type": "calculation",
+   "title": "Stored result: Printed horn blade bending at 1.5 x VD hold (x 2.156), printed lying flat (in-layer)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.blade_root_hold_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 3.32
+   },
+   "input_values": {
+    "v": 3.32
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-HORN-BLADE-HOLD",
+   "type": "claim",
+   "title": "Printed horn blade bending at 1.5 x VD hold (x 2.156), printed lying flat (in-layer)",
+   "calc": "CALC-A-HORN-BLADE-HOLD-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.petg_allow_mpa",
+    "resolved": 20.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 3.32,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.blade_root_hold_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: horn blade governing section, in-layer, x 2.156)",
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.petg_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.834,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-HORN-BLADE-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Printed horn blade bending at the 51 N stall force (x 1.4375)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.blade_root_stall_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 6.62
+   },
+   "input_values": {
+    "v": 6.62
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-HORN-BLADE-STALL",
+   "type": "claim",
+   "title": "Printed horn blade bending at the 51 N stall force (x 1.4375)",
+   "calc": "CALC-A-HORN-BLADE-STALL-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.petg_allow_mpa",
+    "resolved": 20.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 6.62,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.blade_root_stall_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: horn blade governing section at 51 N, x 1.4375)",
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.petg_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.6689999999999999,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-HORN-BEARING-HOLD-READ",
+   "type": "calculation",
+   "title": "Stored result: Clevis pin bearing in the 2 mm horn at 1.5 x VD hold (x 2.156)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.bearing_hold_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 18.39
+   },
+   "input_values": {
+    "v": 18.39
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-HORN-BEARING-HOLD",
+   "type": "claim",
+   "title": "Clevis pin bearing in the 2 mm horn at 1.5 x VD hold (x 2.156)",
+   "calc": "CALC-A-HORN-BEARING-HOLD-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.petg_allow_mpa",
+    "resolved": 20.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 18.39,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.bearing_hold_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: 1.0 mm clevis pin bearing in the 2 mm horn, x 2.156)",
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.petg_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.08049999999999997,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-HORN-BEARING-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Clevis pin bearing in the 2 mm horn at the 51 N stall force (x 1.4375)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.bearing_stall_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 36.65
+   },
+   "input_values": {
+    "v": 36.65
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-HORN-BEARING-STALL",
+   "type": "claim",
+   "title": "Clevis pin bearing in the 2 mm horn at the 51 N stall force (x 1.4375)",
+   "calc": "CALC-A-HORN-BEARING-STALL-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.petg_allow_mpa",
+    "resolved": 20.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 36.65,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "FAILS: margin -83.2% (36.65 MPa vs <= 20 MPa)",
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.bearing_stall_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: same at 51 N, x 1.4375)",
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.petg_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.8324999999999999,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-ROD-LEG-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Z-bend leg: yield needed at 1.5 x the 51 N stall force, rod lifted against the keeper (e 1.9 mm), vs the A228 music-wire allowable",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.rod_yield_req_mpa"
+   },
+   "assumes": [
+    "ASM-A-ROD-GRADE"
+   ],
+   "outputs": {
+    "v": 1392.0
+   },
+   "input_values": {
+    "v": 1392.0
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-ROD-LEG-STALL",
+   "type": "claim",
+   "title": "Z-bend leg: yield needed at 1.5 x the 51 N stall force, rod lifted against the keeper (e 1.9 mm), vs the A228 music-wire allowable",
+   "calc": "CALC-A-ROD-LEG-STALL-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.a228_allow_mpa",
+    "resolved": 1680.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "Receipt test of a formed M02 rod at 91 N (1.5 x 51 N x e_hi / e_lo = 1.9 / 1.6, rod lifted against the keeper, review r3 m-3) along the rod, 10 s, no permanent set over 0.2 mm; else A228 1.2 mm wire.",
+   "assumes": [
+    "ASM-A-ROD-GRADE"
+   ],
+   "value": 1392.0,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "uses ASM-A-ROD-GRADE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.rod_yield_req_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625, rod lifted against the keeper (e 1.9 mm, review r3 m-3; was 1.6 mm, 1172 MPa); stall basis: 0.397 N m at 7.2 V, valid with the Kakute rail jumper at 7.2 V (m-8; 8.4 V is not available from the FC, would give about 59 N))",
+    "uses ASM-A-ROD-GRADE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.a228_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: A228 music wire bending allowable 0.78 S_ut at 1.2 mm (Shigley constants RECALLED, not re-read))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.17142857142857143,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-HORN-SHEAROUT-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Horn hole shear-out (1.65 mm ligament) at the 51 N stall force (x 1.4375); allowable PETG 20 MPa / sqrt(3) EST",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.shearout_stall_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 11.11
+   },
+   "input_values": {
+    "v": 11.11
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-HORN-SHEAROUT-STALL",
+   "type": "claim",
+   "title": "Horn hole shear-out (1.65 mm ligament) at the 51 N stall force (x 1.4375); allowable PETG 20 MPa / sqrt(3) EST",
+   "calc": "CALC-A-HORN-SHEAROUT-STALL-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.shearout_allow_mpa",
+    "resolved": 11.55
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "Passes by 4 % on an EST allowable (review r3 m-13), so it is no margin: the stall step of the horn-rib coupon (CL-A-HORN-STALL-STEP) and the bench stall test decide it.",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 11.11,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.shearout_stall_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: horn hole shear-out F / (2 t e), ligament 1.65 mm, at 51 N, x 1.4375)",
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.shearout_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: PETG in-layer 20 MPa / sqrt(3) (the script's shear-out allowable, linkage_loads_check.py; EST))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.0380952380952382,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-KEEPER-BRIDGE-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Keeper bridge (MEC-008) bending at the 51 N stall force (x 1.4375), rod lifted against the keeper; allowable PETG 20 MPa EST",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.keeper_bridge_stall_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 19.48
+   },
+   "input_values": {
+    "v": 19.48
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-KEEPER-BRIDGE-STALL",
+   "type": "claim",
+   "title": "Keeper bridge (MEC-008) bending at the 51 N stall force (x 1.4375), rod lifted against the keeper; allowable PETG 20 MPa EST",
+   "calc": "CALC-A-KEEPER-BRIDGE-STALL-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.petg_allow_mpa",
+    "resolved": 20.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-008-R",
+    "MEC-008-L",
+    "MEC-004-R",
+    "MEC-004-L"
+   ],
+   "how": "Passes by 3 % on an EST allowable (19.5 vs 20 MPa; 9.8 MPa at hold), so it is no margin. Creep and preload loss are '-' (not analysed): retorque and inspect the keeper screw at BUILD D2a, D5b and every preflight; the bench stall test (CL-A-HORN-STALL-BENCH) loads it too, inspect the keeper for a crack afterwards (review r3 m-4).",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 19.48,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.keeper_bridge_stall_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: keeper bridge (MEC-008, 0.8 x 3.1 mm section, 2.0 mm cantilever) bending at the 51 N stall force, rod lifted (e 1.9 mm), V = F e / L (L 43.25 mm), x 1.4375; allowable is the printed PETG 20 MPa EST; creep and preload loss '-')",
+    "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:linkage.petg_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.025999999999999978,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-SERVO-SPEED-READ",
+   "type": "calculation",
+   "title": "Stored result: Elevon servo speed margin: loaded rate over the 152 deg/s of the +-11 deg, 2.2 Hz roll sinusoid (AR-005, 6.0 V pair)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json servo_speed_torque_T056 (python -I redesign/qp/A/mechanism/linkage_loads_check.py)",
+   "inputs": {
+    "v": "P:linkage.servo_speed_margin_r2"
+   },
+   "outputs": {
+    "v": 1.521
+   },
+   "input_values": {
+    "v": 1.521
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-SERVO-SPEED",
+   "type": "claim",
+   "title": "Elevon servo speed margin: loaded rate over the 152 deg/s of the +-11 deg, 2.2 Hz roll sinusoid (AR-005, 6.0 V pair)",
+   "calc": "CALC-A-SERVO-SPEED-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:linkage.servo_speed_margin_min",
+    "resolved": 1.0
+   },
+   "verifies": [
+    "A-P11"
+   ],
+   "parts": [
+    "MEC-001-R",
+    "MEC-001-L",
+    "MEC-002-R",
+    "MEC-002-L",
+    "MEC-004-R",
+    "MEC-004-L"
+   ],
+   "how": "Hand calculation (AR-005): linear torque-speed line, gearing 0.909-0.928 from the solved linkage, end-point load. Required rates are EST; 7.2 V speed is not published so the 6 V no-load speed is used. Bench ramp of the built rail at BUILD D5b closes it. The full-throw sinusoid R3 (0.84) is not a required case.",
+   "value": 1.521,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "uses P:linkage.servo_speed_margin_r2, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: AR-005: loaded elevon rate (231 deg/s, 6.0 V pair, stall 0.333 N m, 0.13 s / 60 deg, linear torque-speed line, end-point load 0.146 N m + preload + damper) over the 152 deg/s needed for +-11 deg at the 2.2 Hz crossover (EST); the 7.2 V case (1.73) is not used (7.2 V speed unpublished))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.5209999999999999,
+   "importance": 1
+  },
+  {
+   "id": "CL-A-HORN-RIB-COUPON",
+   "type": "claim",
+   "title": "Horn-rib coupon: load held 30 s without damage, over the required 36.8 N (2.156 x the 17.05 N hold force)",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "E1 coupon: 100 mm tape-skinned elevon span, horn bonded in the slot, clamps 50 mm each side of the rib; 36.8 N along the chord for 30 s. Value = held load / 36.8 N, pass >= 1.0 with no crack, no slip, set < 0.5 deg. Local result only (clamps 50 mm from the rib, ~160 mm of elevon in flight). Supersedes CL-A-HORN-RIB-FOAM-HOLD once run and passed.",
+   "value": "-",
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-HORN-STALL-STEP",
+   "type": "claim",
+   "title": "Horn-rib coupon, stall step: 51 N held 5 s, hole elongation and cracks",
+   "unit": "mm",
+   "limit": {
+    "op": "<=",
+    "value": 0.1,
+    "resolved": 0.1
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "After the 36.8 N step, 51 N (the servo stall force, 0.397 N m / (8.5 mm x 0.916)) along the chord for 5 s. Value = hole elongation measured with a 1.2 mm pin gauge, pass <= 0.1 mm with no crack and set < 0.5 deg. Record what yields first. Supersedes CL-A-HORN-RIB-FOAM-STALL and CL-A-HORN-BEARING-STALL once run and passed; the 1.4375 scatter factor is not in the coupon (one coupon): run 3 coupons, lowest governs.",
+   "value": "-",
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-ELEVON-TORSION-COUPON",
+   "type": "claim",
+   "title": "Elevon-section torsion coupon: torque held over the required 0.161 N m (2.156 x the 74.65 N mm outboard hinge moment at VD)",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "A tape-skinned elevon section about 160 mm long, root clamped, torque applied through the horn hole path (horn force x 9.155 mm) to 0.161 N m held 30 s. Value = held torque / 0.161 N m, pass >= 1.0 with no tape debond or crack and twist set < 0.5 deg at the trailing edge. Supersedes CL-A-ELEVON-TORSION-FOAM (foam only, tape skin not credited) once run and passed. If it fails: the spanwise CF tube (trade row J).",
+   "value": "-",
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-HORN-STALL-BENCH",
+   "type": "claim",
+   "title": "Bench stall test on the built aircraft: 51 N for 5 s into the 21 deg stop, hole elongation",
+   "unit": "mm",
+   "limit": {
+    "op": "<=",
+    "value": 0.1,
+    "resolved": 0.1
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L",
+    "MEC-001-R",
+    "MEC-001-L"
+   ],
+   "how": "BUILD D5b: endpoints temporarily set past the stop, servo at 7.2 V driven into the +21 deg stop (smallest arm lever, 51 N) for 5 s, each elevon. Value = hole elongation (1.2 mm pin gauge), pass <= 0.1 mm with no crack in horn, rib, slot tape or stop, and trailing-edge set < 0.5 deg. Then the endpoints go back to +-20 deg.",
+   "value": "-",
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-LINKAGE-FREEPLAY-READ",
+   "type": "calculation",
+   "title": "Stored result: Elevon linkage free play from the hole clearances and the Z-bend freedom (clevis cheek holes '-')",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_kinematics.json free_play_budget_deg (python -I redesign/qp/A/mechanism/elevon_linkage.py)",
+   "inputs": {
+    "v": "P:linkage.free_play_deg"
+   },
+   "outputs": {
+    "v": 1.28
+   },
+   "input_values": {
+    "v": 1.28
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-LINKAGE-FREEPLAY",
+   "type": "claim",
+   "title": "Elevon linkage free play from the hole clearances and the Z-bend freedom (clevis cheek holes '-')",
+   "calc": "CALC-A-LINKAGE-FREEPLAY-READ",
+   "output": "v",
+   "unit": "deg",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.free_play_guide_deg",
+    "resolved": 1.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-002-R",
+    "MEC-002-L",
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "MEC-008-R",
+    "MEC-008-L"
+   ],
+   "how": "BASIS = FLUTTER (review r3 m-7): the 1 deg limit is the SERVO.md s4 flutter guide, the only sourced number; a control-precision limit has none. BUILD D5b / E1: measure the BUILT trailing-edge free play with the servo powered at neutral (dial gauge, +-0.05 mm); the budget excludes servo gear backlash and the clevis cheek holes (both '-'). The hinge damper (FIXES2 s1) removes the linear flutter dependence on K, but a free-play limit cycle is nonlinear and not covered, so a measured value above 1 deg stays a FAIL; the +-20 deg endpoints (1 deg short of the 21 deg stop) prevent a servo-driven stall only.",
+   "value": 1.28,
+   "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
+   "reasons": [
+    "FAILS: margin -28.0% (1.28 deg vs <= 1 deg)",
+    "uses P:linkage.free_play_deg, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: arm hole 0.1 + horn hole 0.1 mm over the 9.155 mm horn + Z-bend freedom; clevis cheek holes '-')"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.28,
+   "fails": true,
    "importance": 1
   },
   {
@@ -5365,12 +6469,18 @@ window.PROOF_GRAPH = {
     "CGE-004",
     "CGE-002-A"
    ],
-   "how": "Tap test of the built cage (T-A-TAP): first pitch mode 9-17 Hz, first roll mode 21-43 Hz (GM >= 2 grid, iter3_run.md); outside that window re-tune the rate loop.",
-   "note": "D-191 (CLAIMS-FIX s4): with the QP-3 gains (pitch P 0.15 / D 0.002 / FLTD 40) the minimum was 1.64 (1.56 at cant 17); pitch P 0.12 / D 0.0012 / FLTD 60 and yaw P 0.37 give 2.03 (roll, kd corner, modes -20 %; pitch 2.33).",
-   "value": 2.16,
+   "how": "T-092 (D-239 proposed): the design now has the FC hard-mounted 75 mm off the wing centre along the spar (-y side); the beam-FE model with the IMU there gives pitch GM 2.52-4.00 (modes x1.0 / 0.8 / 1.2, all 24 bound groups x kd / nom / hi, T091_report.md s0, s2), but this claim still evaluates the FC-at-centre model (P:sim.gm_nominal) and stays FAIL: the FC benefit is credited only after T-A-TAP / the tether hover confirm the 27-30 Hz mode shape (D-239). T-089 (D-237 proposed): FAILS on the rebuilt model with the modes shifted -20 % and +20 % (min 1.05, pitch +20 %); the 9-17 Hz / 21-43 Hz window of iter3_run.md belonged to the iteration-2 cage and is superseded. Tap test of the built cage (T-A-TAP) gives the real frequencies; re-tune the rate loop if the built mode is in the modelled range (T089_report.md s2).",
+   "note": "History: D-191 (CLAIMS-FIX s4, iteration-2 cage / MN2212, superseded by T-089 above): with the QP-3 gains (pitch P 0.15 / D 0.002 / FLTD 40) the minimum was 1.64 (1.56 at cant 17); pitch P 0.12 / D 0.0012 / FLTD 60 and yaw P 0.37 give 2.03 (roll, kd corner, modes -20 %; pitch 2.33).",
+   "value": 1.05,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
-   "status": "CHECKED",
-   "margin": 0.08000000000000007,
+   "reasons": [
+    "FAILS: margin -47.5% (1.05 vs >= 2)",
+    "uses P:sim.gm_shifted, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; all flexible modes shifted -20 %)",
+    "uses P:sim.gm_shifted_up, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; all flexible modes shifted +20 %)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.475,
+   "fails": true,
    "importance": 1
   },
   {
@@ -5379,7 +6489,7 @@ window.PROOF_GRAPH = {
    "title": "servo factors",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "servo_factors",
-   "equation": "factor = servo torque / (1.5 x (hinge moment at VD + preload + damper at slew)); cold case with the real arm ratio 12.9 / 12; ratio = servo / hinge",
+   "equation": "factor = servo torque / (1.5 x (hinge moment at VD + preload + damper at slew)); cold case with the real arm ratio 9.155 / 8.5 (D-212 rev 2; the gearing of the solved linkage is 0.906 to 0.929, 1 / 1.077 = 0.929); ratio = servo / hinge",
    "inputs": {
     "stall_72_nm": "P:servo.stall_72_nm",
     "hinge_vd_nm": "P:servo.hinge_vd_nm",
@@ -5393,7 +6503,7 @@ window.PROOF_GRAPH = {
    "outputs": {
     "factor_25c": 1.555947481873408,
     "factor_0c_equal_arms": 1.4711876968686306,
-    "factor_0c_real_arms": 1.5815267741337782,
+    "factor_0c_real_arms": 1.5845556899802722,
     "ratio_to_hinge": 2.6291390728476824
    },
    "input_values": {
@@ -5403,8 +6513,8 @@ window.PROOF_GRAPH = {
     "damper_slew_nm": 0.0098,
     "damper_slew_cold_nm": 0.0196,
     "load_factor": 1.5,
-    "arm_mm": 12.0,
-    "horn_mm": 12.9
+    "arm_mm": 8.5,
+    "horn_mm": 9.155
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
@@ -5440,7 +6550,9 @@ window.PROOF_GRAPH = {
     "uses P:servo.stall_72_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: ES3054HV at 7.2 V, interpolated from V 6.0 / 8.4 V figures (EST))",
     "uses P:servo.hinge_vd_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: hinge moment at VD, +-20 deg (0.146 x 0.31 / 0.30))",
     "uses P:servo.preload_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: preload strips, worst T0 + k_s x 21 deg)",
-    "uses P:servo.damper_slew_cold_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: damper at 0 C (EST x 2))"
+    "uses P:servo.damper_slew_cold_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: damper at 0 C (EST x 2))",
+    "uses P:servo.arm_mm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-212 rev 2: servo arm hole 8.5 mm (CAD ARM_R; was 12 mm, FIXES2 s1.3); arm hole row of the ES3054HV arm not published)",
+    "uses P:servo.horn_mm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-212 rev 2: horn hole 9.155 mm directly above the hinge axis (CAD HORN_R = ROD_Z - HINGE_Z; was 12.9 mm on the 44 deg line, FIXES2 s1.3))"
    ],
    "status": "UNVERIFIED",
    "margin": 0.03729832124893869,
@@ -5473,18 +6585,20 @@ window.PROOF_GRAPH = {
    "assumes": [
     "ASM-A-DAMPER-T"
    ],
-   "note": "Equal arms (the SERVO.md convention) give 1.47, 2 % short; FIXES2 s2 reports 1.58 with the drawn 12 mm arm and 12.9 mm horn. Bounding case: VD hinge moment, full slew and 0 C together.",
-   "value": 1.5815267741337782,
+   "note": "Equal arms (the SERVO.md convention) give 1.47, 2 % short; FIXES2 s2 reported 1.58 with a 12 mm arm and 12.9 mm horn; D-212 rev 2 (arm hole 8.5 mm, horn hole 9.155 mm over the hinge) gives 1.58 again, and the solved linkage gearing at +-20 deg (0.906 to 0.929) now matches the 8.5 / 9.155 ratio the claim assumes. Bounding case: VD hinge moment, full slew and 0 C together.",
+   "value": 1.5845556899802722,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "reasons": [
     "uses P:servo.stall_72_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: ES3054HV at 7.2 V, interpolated from V 6.0 / 8.4 V figures (EST))",
     "uses P:servo.hinge_vd_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: hinge moment at VD, +-20 deg (0.146 x 0.31 / 0.30))",
     "uses P:servo.preload_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: preload strips, worst T0 + k_s x 21 deg)",
     "uses P:servo.damper_slew_cold_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: damper at 0 C (EST x 2))",
+    "uses P:servo.arm_mm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-212 rev 2: servo arm hole 8.5 mm (CAD ARM_R; was 12 mm, FIXES2 s1.3); arm hole row of the ES3054HV arm not published)",
+    "uses P:servo.horn_mm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-212 rev 2: horn hole 9.155 mm directly above the hinge axis (CAD HORN_R = ROD_Z - HINGE_Z; was 12.9 mm on the 44 deg line, FIXES2 s1.3))",
     "uses ASM-A-DAMPER-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.05435118275585212,
+   "margin": 0.05637045998684812,
    "importance": 1
   },
   {
@@ -5517,7 +6631,9 @@ window.PROOF_GRAPH = {
     "uses P:servo.stall_72_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: ES3054HV at 7.2 V, interpolated from V 6.0 / 8.4 V figures (EST))",
     "uses P:servo.hinge_vd_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: hinge moment at VD, +-20 deg (0.146 x 0.31 / 0.30))",
     "uses P:servo.preload_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: preload strips, worst T0 + k_s x 21 deg)",
-    "uses P:servo.damper_slew_cold_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: damper at 0 C (EST x 2))"
+    "uses P:servo.damper_slew_cold_nm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: damper at 0 C (EST x 2))",
+    "uses P:servo.arm_mm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-212 rev 2: servo arm hole 8.5 mm (CAD ARM_R; was 12 mm, FIXES2 s1.3); arm hole row of the ES3054HV arm not published)",
+    "uses P:servo.horn_mm, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-212 rev 2: horn hole 9.155 mm directly above the hinge axis (CAD HORN_R = ROD_Z - HINGE_Z; was 12.9 mm on the 44 deg line, FIXES2 s1.3))"
    ],
    "status": "UNVERIFIED",
    "margin": 0.7527593818984549,
@@ -5537,24 +6653,25 @@ window.PROOF_GRAPH = {
     "ship": "P:cost.ship_usd",
     "bump": "P:cost.bump",
     "tubes": "P:cost.reserve_tube_ids",
+    "rship": "P:cost.reserve_ship_usd",
     "budget": "P:req.budget_usd"
    },
    "outputs": {
-    "total_usd": 1779.4666375000002,
-    "total_30_usd": 1899.9539012500002,
-    "margin_usd": 220.53336249999984,
-    "margin_30_usd": 100.04609874999983,
-    "reserve_usd": 327.4303875,
-    "shipping_usd": 55.13
+    "total_usd": 1939.1716625000001,
+    "total_30_usd": 2029.67643875,
+    "margin_usd": 60.82833749999986,
+    "margin_30_usd": -29.67643874999999,
+    "reserve_usd": 346.9446375,
+    "shipping_usd": 63.120000000000005
    },
    "input_values": {
     "rows": [
      [
       "P01",
       "propulsion",
-      "TMotor",
-      5.0,
-      46.9,
+      "RMRC",
+      4.0,
+      22.99,
       false
      ],
      [
@@ -5576,9 +6693,9 @@ window.PROOF_GRAPH = {
      [
       "W01",
       "power",
-      "RMRC",
+      "RDQ",
       2.0,
-      37.09,
+      54.99,
       false
      ],
      [
@@ -5625,7 +6742,7 @@ window.PROOF_GRAPH = {
       "W07",
       "power",
       "RMRC",
-      1.0,
+      2.0,
       3.96,
       false
      ],
@@ -5666,7 +6783,7 @@ window.PROOF_GRAPH = {
       "avionics",
       "RMRC",
       1.0,
-      95.98,
+      129.01,
       false
      ],
      [
@@ -5689,7 +6806,7 @@ window.PROOF_GRAPH = {
       "M01",
       "mechanisms",
       "RMRC",
-      3.0,
+      2.0,
       13.99,
       false
      ],
@@ -5706,7 +6823,7 @@ window.PROOF_GRAPH = {
       "airframe",
       "Local",
       1.0,
-      70.0,
+      45.0,
       true
      ],
      [
@@ -5730,31 +6847,31 @@ window.PROOF_GRAPH = {
       "airframe",
       "RMRC",
       1.0,
-      15.34,
-      true
+      15.36,
+      false
      ],
      [
       "R14",
       "airframe",
       "RMRC",
       1.0,
-      0.0,
-      true
+      2.3,
+      false
      ],
      [
       "R10",
       "airframe",
       "RMRC",
       1.0,
-      4.4,
+      8.5,
       false
      ],
      [
       "R03",
       "airframe",
-      "Prusa",
+      "Amazon",
       1.0,
-      23.99,
+      12.99,
       false
      ],
      [
@@ -5762,7 +6879,7 @@ window.PROOF_GRAPH = {
       "airframe",
       "Amazon",
       1.0,
-      20.0,
+      10.0,
       true
      ],
      [
@@ -5794,7 +6911,7 @@ window.PROOF_GRAPH = {
       "ground_test",
       "Amazon",
       1.0,
-      50.95,
+      45.15,
       true
      ],
      [
@@ -5818,24 +6935,8 @@ window.PROOF_GRAPH = {
       "ground_test",
       "Amazon",
       1.0,
-      25.0,
-      true
-     ],
-     [
-      "B01",
-      "ground_test",
-      "RMRC",
-      1.0,
-      15.99,
-      false
-     ],
-     [
-      "B02",
-      "ground_test",
-      "RMRC",
-      1.0,
       12.99,
-      false
+      true
      ],
      [
       "B03",
@@ -5852,14 +6953,6 @@ window.PROOF_GRAPH = {
       1.0,
       15.0,
       true
-     ],
-     [
-      "B05",
-      "ground_test",
-      "SparkFun",
-      1.0,
-      0.0,
-      false
      ],
      [
       "R11",
@@ -5884,34 +6977,170 @@ window.PROOF_GRAPH = {
       1.0,
       6.0,
       true
+     ],
+     [
+      "T1",
+      "airframe",
+      "Zoro",
+      1.0,
+      43.29,
+      false
+     ],
+     [
+      "T2",
+      "airframe",
+      "Amazon",
+      1.0,
+      15.98,
+      false
+     ],
+     [
+      "T3",
+      "airframe",
+      "Wicks",
+      3.0,
+      6.46,
+      false
+     ],
+     [
+      "T4",
+      "airframe",
+      "USComposites",
+      1.0,
+      20.2,
+      false
+     ],
+     [
+      "T5",
+      "airframe",
+      "RMRC",
+      2.0,
+      2.02,
+      false
+     ],
+     [
+      "T6",
+      "ground_test",
+      "Amazon",
+      1.0,
+      14.99,
+      false
+     ],
+     [
+      "T7",
+      "ground_test",
+      "Amazon",
+      1.0,
+      23.79,
+      false
+     ],
+     [
+      "T8",
+      "ground_test",
+      "Amazon",
+      1.0,
+      24.69,
+      false
+     ],
+     [
+      "T9",
+      "ground_test",
+      "Amazon",
+      1.0,
+      13.99,
+      false
+     ],
+     [
+      "T10",
+      "ground_test",
+      "Local",
+      1.0,
+      8.0,
+      true
+     ],
+     [
+      "R15",
+      "airframe",
+      "Carbonwebshop",
+      1.0,
+      50.09,
+      false
+     ],
+     [
+      "T11",
+      "airframe",
+      "Zoro",
+      1.0,
+      33.69,
+      false
+     ],
+     [
+      "T12",
+      "airframe",
+      "USComposites",
+      1.0,
+      4.9,
+      false
+     ],
+     [
+      "W10",
+      "power",
+      "RMRC",
+      1.0,
+      12.99,
+      false
      ]
     ],
     "tax": 0.1025,
     "faa": 5.0,
     "ship": [
      [
-      "RMRC",
-      15.0
-     ],
-     [
-      "TMotor",
+      "Alcobra",
       10.71
      ],
      [
       "Amazon",
-      10.71
+      0.0
+     ],
+     [
+      "Carbonwebshop",
+      25.0
+     ],
+     [
+      "Local",
+      0.0
      ],
      [
       "Prusa",
       10.71
      ],
      [
+      "RDQ",
+      10.71
+     ],
+     [
+      "RMRC",
+      0.0
+     ],
+     [
       "SparkFun",
       8.0
      ],
      [
-      "Local",
+      "TMotor",
       0.0
+     ],
+     [
+      "USComposites",
+      10.71
+     ],
+     [
+      "Wicks",
+      10.71
+     ],
+     [
+      "Zoro",
+      5.99
      ]
     ],
     "bump": 0.3,
@@ -5919,7 +7148,13 @@ window.PROOF_GRAPH = {
      "R02",
      "R08",
      "R09",
-     "R10"
+     "R10",
+     "R15"
+    ],
+    "rship": [
+     10.71,
+     15.0,
+     10.71
     ],
     "budget": 2000.0
    },
@@ -5930,59 +7165,9 @@ window.PROOF_GRAPH = {
   {
    "id": "CL-A-COST-TOTAL",
    "type": "claim",
-   "title": "BOM total incl. tax, shipping, FAA and crash reserve",
+   "title": "BOM total incl. tax, shipping, FAA and crash reserve (by its definition, AM-018)",
    "calc": "CALC-A-COST",
    "output": "total_usd",
-   "unit": "USD",
-   "limit": {
-    "op": "<=",
-    "ref": "P:req.g7_total_usd",
-    "resolved": 1800.0
-   },
-   "verifies": [
-    "A-U1"
-   ],
-   "how": "python -I qp/A/bom_a.py (reads BOM-A.csv): $1,779.47; gate G7 total <= $1,800. 16 of 42 lines are unverified (U / EST).",
-   "value": 1779.4666375000002,
-   "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
-   "reasons": [
-    "uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, EST (RMRC rates not readable, QP-1/COST.md))"
-   ],
-   "status": "UNVERIFIED",
-   "margin": 0.011407423611111021,
-   "importance": 1
-  },
-  {
-   "id": "CL-A-COST-MARGIN30",
-   "type": "claim",
-   "title": "Margin to $2,000 if the unverified lines run 30 % over",
-   "calc": "CALC-A-COST",
-   "output": "margin_30_usd",
-   "unit": "USD",
-   "limit": {
-    "op": ">=",
-    "ref": "P:req.g7_margin_usd",
-    "resolved": 100.0
-   },
-   "verifies": [
-    "A-U1"
-   ],
-   "how": "python -I qp/A/bom_a.py: +$100.05 at +30 %; gate G7 margin >= $100. The margin has 5 cents of slack: any rise in the EST lines beyond their +30 % allowance takes it under $100.",
-   "value": 100.04609874999983,
-   "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
-   "reasons": [
-    "uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, EST (RMRC rates not readable, QP-1/COST.md))"
-   ],
-   "status": "UNVERIFIED",
-   "margin": 0.00046098749999828214,
-   "importance": 1
-  },
-  {
-   "id": "CL-A-COST-BUDGET",
-   "type": "claim",
-   "title": "BOM total with the unverified lines +30 % against the $2,000 budget",
-   "calc": "CALC-A-COST",
-   "output": "total_30_usd",
    "unit": "USD",
    "limit": {
     "op": "<=",
@@ -5992,14 +7177,55 @@ window.PROOF_GRAPH = {
    "verifies": [
     "A-U1"
    ],
-   "how": "python -I qp/A/bom_a.py; Makers Pass outside the budget (user, memory).",
-   "value": 1899.9539012500002,
+   "how": "python -I qp/A/bom_a.py (reads BOM-A.csv): $1,999.12, margin +$0.88 (2026-11-22). AM-013: the only budget gate is the total incl. crash reserve <= $2,000.",
+   "value": 1939.1716625000001,
    "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
    "reasons": [
-    "uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, EST (RMRC rates not readable, QP-1/COST.md))"
+    "uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST)",
+    "uses P:cost.reserve_ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py reserve(): 3 shipments at the original EST (definition unchanged, AM-018))"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.05002304937499991,
+   "margin": 0.030414168749999932,
+   "importance": 1
+  },
+  {
+   "id": "CL-A-COST-MARGIN30",
+   "type": "claim",
+   "title": "Margin to $2,000 if the unverified lines run 30 % over (information only, AM-013)",
+   "calc": "CALC-A-COST",
+   "output": "margin_30_usd",
+   "unit": "USD",
+   "verifies": [
+    "A-U1"
+   ],
+   "how": "python -I qp/A/bom_a.py; the board G7 rule (margin >= $100 at +30 %) is information only since AM-013.",
+   "value": -29.67643874999999,
+   "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
+   "reasons": [
+    "uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST)",
+    "uses P:cost.reserve_ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py reserve(): 3 shipments at the original EST (definition unchanged, AM-018))"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-COST-BUDGET",
+   "type": "claim",
+   "title": "BOM total with the unverified lines +30 % (information only, AM-013)",
+   "calc": "CALC-A-COST",
+   "output": "total_30_usd",
+   "unit": "USD",
+   "verifies": [
+    "A-U1"
+   ],
+   "how": "python -I qp/A/bom_a.py; information only since AM-013; Makers Pass outside the budget (user, memory).",
+   "value": 2029.67643875,
+   "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
+   "reasons": [
+    "uses P:cost.ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST)",
+    "uses P:cost.reserve_ship_usd, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py reserve(): 3 shipments at the original EST (definition unchanged, AM-018))"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -6189,7 +7415,7 @@ window.PROOF_GRAPH = {
     "box": [
      0.9,
      0.5,
-     0.39
+     0.394
     ],
     "lim": [
      1.2,
@@ -6237,7 +7463,7 @@ window.PROOF_GRAPH = {
    "title": "Stored result: Part overlaps deeper than the tolerance (neutral, +-20, +-21 deg)",
    "script": "redesign/qp/A/proofs/claims_a3_program.py",
    "function": "read_value",
-   "equation": "count of hits with depth > tolerance in cad/out/report_pose20.json and report_pose21.json; read, not re-run",
+   "equation": "count of hits with depth > tolerance in cad/out/report_d212r3_pose20.json and report_d212r3_pose21.json; read, not re-run",
    "inputs": {
     "v": "P:cad3d.n_over_tol"
    },
@@ -6288,15 +7514,15 @@ window.PROOF_GRAPH = {
    "title": "Stored result: Deepest part overlap at any reachable pose",
    "script": "redesign/qp/A/proofs/claims_a3_program.py",
    "function": "read_value",
-   "equation": "largest depth_mm over the reachable poses in the stored reports; read, not re-run",
+   "equation": "largest depth_mm over the reachable poses in report_d212r3_pose21.json and report_d212r3_pose20.json; read, not re-run",
    "inputs": {
     "v": "P:cad3d.max_depth_mm"
    },
    "outputs": {
-    "v": 0.042
+    "v": 0.034
    },
    "input_values": {
-    "v": 0.042
+    "v": 0.034
    },
    "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
    "status": "CHECKED",
@@ -6325,11 +7551,11 @@ window.PROOF_GRAPH = {
     "HWC-001",
     "HWC-003"
    ],
-   "how": "collide_a.py report (D-194): the only hits under the 0.05 mm gate are the two balance horn tabs touching their stop bosses at the +21 deg stop (0.042 mm, WNG-007 on WNG-008, a designed contact) and one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); +-22 deg is past the stop and is not a reachable pose.",
-   "value": 0.042,
+   "how": "collide_a.py report after D-212 rev 3 (report_d212r3_pose21.json, review r3 m-9): ten static hits, all under the 0.05 mm gate, the deepest one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); the +-21 deg poses show none (the 0.042 mm balance-tab contact of the pre-D-212 report_pose21.json is gone). The +-20 deg poses (the commanded endpoints, BUILD D5b) are read from report_d212r3_pose20.json (rev 3, rerun 2026-11-19, 0 hits, static identical); +-22 deg is past the stop and is not a reachable pose.",
+   "value": 0.034,
    "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
    "status": "CHECKED",
-   "margin": 0.16,
+   "margin": 0.32,
    "importance": 1
   },
   {
@@ -6471,10 +7697,10 @@ window.PROOF_GRAPH = {
     "v": "P:cad3d.assy_parts_placed"
    },
    "outputs": {
-    "v": 113
+    "v": 129
    },
    "input_values": {
-    "v": 113
+    "v": 129
    },
    "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
    "status": "CHECKED",
@@ -6490,13 +7716,13 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": ">=",
     "ref": "P:cad3d.parts",
-    "resolved": 113
+    "resolved": 129
    },
    "verifies": [
     "A-U4"
    ],
    "how": "a_assembly.py: 78 of 78 parts placed, none missing from the sequence.",
-   "value": 113,
+   "value": 129,
    "defined_in": "redesign/qp/A/proofs/claims.a3_program.json",
    "status": "CHECKED",
    "margin": 0.0,
@@ -6723,11 +7949,14 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "req.motor_rating_a",
    "file": "redesign/qp/A/params-A.json",
-   "value": 13.0,
+   "value": 26.8,
    "unit": "A",
    "source": "SRC-A-REQ",
-   "note": "A-P16: motor 13 A / 180 s (maker)",
-   "status": "CHECKED",
+   "note": "T-083: SunnySky X2216 V3 880KV 450 W max continuous / 16.8 V = 26.8 A (32 A / 30 s); sunnyskyusa.com read 2026-11-21. The page gives power, not a continuous current: EST",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: SunnySky X2216 V3 880KV 450 W max continuous / 16.8 V = 26.8 A (32 A / 30 s); sunnyskyusa.com read 2026-11-21. The page gives power, not a continuous current: EST"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -7004,7 +8233,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-A-REQ",
    "note": "A-U1 / gate G7: total <= $1,800",
    "status": "CHECKED",
-   "importance": 1
+   "importance": 0
   },
   {
    "id": "P:req.g7_margin_usd",
@@ -7016,7 +8245,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-A-REQ",
    "note": "A-U1 / gate G7: +30 % margin >= $100",
    "status": "CHECKED",
-   "importance": 1
+   "importance": 0
   },
   {
    "id": "P:req.budget_usd",
@@ -7063,7 +8292,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "mass.basic_cad_kg",
    "file": "redesign/qp/A/params-A.json",
-   "value": 1.27324,
+   "value": 1.64098,
    "unit": "kg",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json mass_basic_kg (CAD, no growth)",
@@ -7208,7 +8437,7 @@ window.PROOF_GRAPH = {
    "value": 270.0,
    "unit": "g",
    "source": "SRC-A-BOM",
-   "note": "BOM-A.csv W01: Tattu 2300 4S, listing 270 g",
+   "note": "BOM-A.csv W01: RDQ 2800 mAh 4S 100C, listing 270 g (D-230)",
    "status": "CHECKED",
    "importance": 2
   },
@@ -7241,7 +8470,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "mass.cg_x_mm",
    "file": "redesign/qp/A/params-A.json",
-   "value": 21.368686971819926,
+   "value": 22.049361357237743,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_x_m, aft of the wing leading edge",
@@ -7253,7 +8482,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "mass.cg_y_mm",
    "file": "redesign/qp/A/params-A.json",
-   "value": 2.0344773962489398,
+   "value": 3.3228905897695276,
    "unit": "mm",
    "source": "SRC-A-CADMASS",
    "note": "cad_mass.json cg_y_m (lateral)",
@@ -7345,10 +8574,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "prop.kv",
    "file": "redesign/qp/A/params-A.json",
-   "value": 780.0,
+   "value": 880.0,
    "unit": "rpm/V",
    "source": "SRC-A-PROPA",
-   "note": "prop_a.py KV: T-Motor MN2212 V2.0 KV780 page",
+   "note": "prop_a.py KV (T-083): SunnySky X2216 V3 880KV page (sunnyskyusa.com, read 2026-11-21)",
    "status": "CHECKED",
    "importance": 10
   },
@@ -7357,10 +8586,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "prop.rm_ohm",
    "file": "redesign/qp/A/params-A.json",
-   "value": 0.173,
+   "value": 0.089,
    "unit": "ohm",
    "source": "SRC-A-PROPA",
-   "note": "prop_a.py RM: T-Motor page via SIZING-A s3",
+   "note": "prop_a.py RM (T-083): SunnySky X2216 V3 880KV page, 89 mohm (read 2026-11-21)",
    "status": "CHECKED",
    "importance": 10
   },
@@ -7372,9 +8601,9 @@ window.PROOF_GRAPH = {
    "value": 0.5,
    "unit": "A",
    "source": "SRC-A-PROPA",
-   "note": "prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it",
+   "note": "prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it",
    "reasons": [
-    "marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it"
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it"
    ],
    "status": "UNVERIFIED",
    "importance": 10
@@ -7453,11 +8682,14 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "prop.spin_cap",
    "file": "redesign/qp/A/params-A.json",
-   "value": 0.9,
+   "value": 0.993,
    "unit": "-",
    "source": "SRC-A-PROPA",
-   "note": "A.param Q_M_SPIN_MAX 0.90 (prop_a.py `duty`)",
-   "status": "CHECKED",
+   "note": "T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90"
+   ],
+   "status": "UNVERIFIED",
    "importance": 9
   },
   {
@@ -7657,10 +8889,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "mission.pack_ah",
    "file": "redesign/qp/A/params-A.json",
-   "value": 2.3,
+   "value": 2.8,
    "unit": "Ah",
    "source": "SRC-A-MGATE",
-   "note": "Tattu 2300",
+   "note": "T-083: O4b pack RDQ 2800 mAh 4S 100C (racedayquads.com, read 2026-11-19, BOM W01); was Tattu 2300 (stale, config study CS-5)",
    "status": "CHECKED",
    "importance": 1
   },
@@ -8017,14 +9249,11 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "sim.tipover_deg",
    "file": "redesign/qp/A/params-A.json",
-   "value": 33.2,
+   "value": 31.0,
    "unit": "deg",
-   "source": "SRC-A-SIZING",
-   "note": "SIZING-A s4 line 15: static tip angle 33.2 deg at CG 25 mm (EST)",
-   "reasons": [
-    "marked UNVERIFIED in redesign/qp/A/params-A.json: SIZING-A s4 line 15: static tip angle 33.2 deg at CG 25 mm (EST)"
-   ],
-   "status": "UNVERIFIED",
+   "source": "SRC-A-T084",
+   "note": "T-084 tipover_t084.txt: minimum 31.00 deg (drawn CG, forward trim end 20.96 mm; pivot the outer pad edge z 196.7 mm on the CG z side, D-215); pad-centre value 31.07 (landing_a.static); was SIZING-A 33.2 EST, and the drawn pads gave 29.2 (T-066)",
+   "status": "CHECKED",
    "importance": 1
   },
   {
@@ -8032,10 +9261,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "sim.gust_n_vd",
    "file": "redesign/qp/A/params-A.json",
-   "value": 3.01,
+   "value": 2.71,
    "unit": "g",
-   "source": "SRC-A-ITER3",
-   "note": "iter3_run.md C1: gust U 4 m/s at VD 24, n 3.01 (stall line 3.96)",
+   "source": "SRC-A-STRUCT-RUN",
+   "note": "structures_run.md s2 (T-084 rerun, 1.8796 kg): gust U 4 m/s at VD 24, n 2.71 (stall line 3.16); was 3.01 / 3.96 in iter3_run.md (MN2212 era)",
    "status": "CHECKED",
    "importance": 1
   },
@@ -8185,13 +9414,13 @@ window.PROOF_GRAPH = {
    "title": "sim.vib_below_hz",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    63.0,
-    67.0,
-    77.0
+    66.0,
+    69.0,
+    81.0
    ],
    "unit": "Hz",
-   "source": "SRC-A-ITER3",
-   "note": "iter3_run.md: highest strongly coupled mode below the bands, kd / nom / hi",
+   "source": "SRC-A-STRUCT-RUN",
+   "note": "structures_run.md s4 (T-084 rerun, X2216, spar-only beam FE): highest strongly coupled mode below the band, kd / nom / hi; was 63 / 67 / 77 (iter3_run.md). Does not include the in-band strong mode: see vib_inband_corners",
    "status": "CHECKED",
    "importance": 1
   },
@@ -8201,14 +9430,29 @@ window.PROOF_GRAPH = {
    "title": "sim.vib_above_hz",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    432.0,
-    462.0,
-    524.0
+    438.0,
+    474.0,
+    532.0
    ],
    "unit": "Hz",
-   "source": "SRC-A-ITER3",
-   "note": "iter3_run.md: lowest strongly coupled mode above the bands, kd / nom / hi",
+   "source": "SRC-A-STRUCT-RUN",
+   "note": "structures_run.md s4 (T-084 rerun, X2216, spar-only beam FE): lowest strongly coupled mode above the band, kd / nom / hi; was 432 / 462 / 524 (iter3_run.md)",
    "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "P:sim.vib_inband_corners",
+   "type": "parameter",
+   "title": "sim.vib_inband_corners",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 3,
+   "unit": "-",
+   "source": "SRC-A-T085",
+   "note": "structures_run.md s4: spar-only model has a strong mode (cy 0.52) IN the 94-321 Hz band at kd 201 / nom 215 / hi 244 Hz (FAIL at all 3 corners); T085_report.md s3.1 and D-236: the upgraded model (pad / tray / hub bounds) has the governing strong mode at 94.6-108.7 Hz (cx 0.74-0.85, cy 1.12-1.35), D-185 (a) FAIL in 23 of 24 bound groups, the one passing group by 0.1 Hz. Count of corners (kd / nom / hi) with a strong mode in the band, credible bound (cell nominal, 6061 hub, nominal pad)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: structures_run.md s4: spar-only model has a strong mode (cy 0.52) IN the 94-321 Hz band at kd 201 / nom 215 / hi 244 Hz (FAIL at all 3 corners); T085_report.md s3.1 and D-236: the upgraded model (pad / tray / hub bounds) has the governing strong mode at 94.6-108.7 Hz (cx 0.74-0.85, cy 1.12-1.35), D-185 (a) FAIL in 23 of 24 bound groups, the one passing group by 0.1 Hz. Count of corners (kd / nom / hi) with a strong mode in the band, credible bound (cell nominal, 6061 hub, nominal pad)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -8216,22 +9460,22 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "sim.hover_1p_rpm_lo",
    "file": "redesign/qp/A/params-A.json",
-   "value": 6018.0,
+   "value": 6789.0,
    "unit": "rpm",
-   "source": "SRC-A-REQ",
-   "note": "A-P10(a): hover 1P 100-119 Hz = 6,018-7,151 rpm",
+   "source": "SRC-A-STRUCT-RUN",
+   "note": "structures_run.md s4: lowest of the five operating rpm, hover derate 1.0 at 1.8796 kg with the SunnySky X2216 prop schedule (prop_a.py), 1P 113 Hz; was 6,018 (A-P10(a), MN2212 era); gives the band edge 94.3 Hz (structures_run.md: 94 Hz)",
    "status": "CHECKED",
    "importance": 2
   },
   {
-   "id": "P:sim.cruise_2p_hz_hi",
+   "id": "P:sim.hover_lean_2p_hz",
    "type": "parameter",
-   "title": "sim.cruise_2p_hz_hi",
+   "title": "sim.hover_lean_2p_hz",
    "file": "redesign/qp/A/params-A.json",
-   "value": 253.0,
+   "value": 267.6,
    "unit": "Hz",
-   "source": "SRC-A-REQ",
-   "note": "A-P10(a): cruise 2P 243-253 Hz (7,300-7,600 rpm)",
+   "source": "SRC-A-STRUCT-RUN",
+   "note": "structures_run.md s4: highest 2P of the five operating rpm = hover lean 1.3 W, 8,028 rpm / 60 x 2 (the cruise 2P is 248 Hz; renamed from cruise_2p_hz_hi in review round 3 m-E); gives the band edge 321 Hz (structures_run.md: 94-321 Hz); was 253 Hz (A-P10(a), MN2212 era)",
    "status": "CHECKED",
    "importance": 2
   },
@@ -8241,17 +9485,20 @@ window.PROOF_GRAPH = {
    "title": "sim.vib_fc_ms2",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    25.8,
-    27.1,
-    23.9,
-    23.9,
-    23.7,
-    23.7
+    82.7,
+    157.2,
+    87.6,
+    167.9,
+    97.9,
+    187.2
    ],
    "unit": "m/s2",
-   "source": "SRC-A-ITER3",
-   "note": "iter3_run.md forced response 6,000-10,500 rpm, U 1.0 g mm: kd 1 % / kd 0.5 % / nom 1 % / nom 0.5 % / hi 1 % / hi 0.5 %",
-   "status": "CHECKED",
+   "source": "SRC-A-T089",
+   "note": "T-089 (D-237 proposed): forced response at the FC of the T-085 upgraded model (structures_a.py s4 forcing: 1P U 1.0 g mm per rotor, 2P 5 % of static thrust, four rotors worst phase, modes summed in absolute value, sum of the three axes, 6,000-11,415 rpm, 400 modes), worst over the 24 T-085 bound groups: kd 1 % / kd 0.5 % / nom 1 % / nom 0.5 % / hi 1 % / hi 0.5 %; the worst point is the 94.6-108.7 Hz wing-flap / cage-bounce mode at its 1P resonance (5,676-6,521 rpm, below the lowest operating rpm 6,789); inside the operating window 6,789-8,028 rpm the same runs read 19.3-32.9 m/s2 (T089_report.md s3). Was 26.5..22.7 (spar-only model, structures_run.md s4, which has no mode there). EST: zeta 1 / 0.5 % is a guess, steady-state response (the transient spool-up pass is not credited)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: T-089 (D-237 proposed): forced response at the FC of the T-085 upgraded model (structures_a.py s4 forcing: 1P U 1.0 g mm per rotor, 2P 5 % of static thrust, four rotors worst phase, modes summed in absolute value, sum of the three axes, 6,000-11,415 rpm, 400 modes), worst over the 24 T-085 bound groups: kd 1 % / kd 0.5 % / nom 1 % / nom 0.5 % / hi 1 % / hi 0.5 %; the worst point is the 94.6-108.7 Hz wing-flap / cage-bounce mode at its 1P resonance (5,676-6,521 rpm, below the lowest operating rpm 6,789); inside the operating window 6,789-8,028 rpm the same runs read 19.3-32.9 m/s2 (T089_report.md s3). Was 26.5..22.7 (spar-only model, structures_run.md s4, which has no mode there). EST: zeta 1 / 0.5 % is a guess, steady-state response (the transient spool-up pass is not credited)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -8260,20 +9507,23 @@ window.PROOF_GRAPH = {
    "title": "sim.gm_nominal",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    4.19,
-    4.25,
-    5.88,
-    2.37,
-    2.56,
-    3.32,
-    2.19,
-    2.23,
-    2.23
+    1.36,
+    1.26,
+    1.13,
+    2.68,
+    2.72,
+    2.81,
+    2.44,
+    2.48,
+    2.48
    ],
    "unit": "-",
-   "source": "SRC-A-ITER3",
-   "note": "iter3_run.md control-band table (rerun D-195 with fe_a.py motor lump +7.2 g for the adapter and spinner nut, A.param D-191, cant 17), min GM at nominal mode frequencies: pit / rll / yaw x kd, nom, hi",
-   "status": "CHECKED",
+   "source": "SRC-A-T089",
+   "note": "T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; flexible modes at the FE frequencies (x 1.0). With the FE own (lighter, 1.64 kg) inertia the pitch rows are 1.0 (unstable at some thrust scale); T089_report.md s2",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; flexible modes at the FE frequencies (x 1.0). With the FE own (lighter, 1.64 kg) inertia the pitch rows are 1.0 (unstable at some thrust scale); T089_report.md s2"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -8282,20 +9532,23 @@ window.PROOF_GRAPH = {
    "title": "sim.gm_shifted",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    2.81,
+    2.37,
+    2.03,
+    1.61,
+    2.76,
     2.68,
-    4.06,
-    2.16,
-    2.16,
-    2.3,
-    2.16,
-    2.16,
-    2.19
+    2.44,
+    2.13,
+    2.19,
+    2.33
    ],
    "unit": "-",
-   "source": "SRC-A-ITER3",
-   "note": "iter3_run.md: min GM with all flexible modes shifted -20 %",
-   "status": "CHECKED",
+   "source": "SRC-A-T089",
+   "note": "T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; all flexible modes shifted -20 %",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; all flexible modes shifted -20 %"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -8304,20 +9557,23 @@ window.PROOF_GRAPH = {
    "title": "sim.gm_shifted_up",
    "file": "redesign/qp/A/params-A.json",
    "value": [
-    6.06,
-    5.7,
-    2.89,
-    3.22,
-    3.88,
-    6.06,
-    2.23,
-    2.26,
-    2.26
+    1.13,
+    1.08,
+    1.05,
+    3.38,
+    3.65,
+    4.12,
+    2.48,
+    2.48,
+    2.48
    ],
    "unit": "-",
-   "source": "SRC-A-ITER3",
-   "note": "iter3_run.md: min GM with modes shifted +20 %",
-   "status": "CHECKED",
+   "source": "SRC-A-T089",
+   "note": "T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; all flexible modes shifted +20 %",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; all flexible modes shifted +20 %"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -8409,11 +9665,14 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "servo.arm_mm",
    "file": "redesign/qp/A/params-A.json",
-   "value": 12.0,
+   "value": 8.5,
    "unit": "mm",
    "source": "SRC-A-FIXES2",
-   "note": "FIXES2 s1.3: servo arm 12 mm (CAD ARM_X1)",
-   "status": "CHECKED",
+   "note": "D-212 rev 2: servo arm hole 8.5 mm (CAD ARM_R; was 12 mm, FIXES2 s1.3); arm hole row of the ES3054HV arm not published",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: D-212 rev 2: servo arm hole 8.5 mm (CAD ARM_R; was 12 mm, FIXES2 s1.3); arm hole row of the ES3054HV arm not published"
+   ],
+   "status": "UNVERIFIED",
    "importance": 3
   },
   {
@@ -8421,11 +9680,14 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "servo.horn_mm",
    "file": "redesign/qp/A/params-A.json",
-   "value": 12.9,
+   "value": 9.155,
    "unit": "mm",
    "source": "SRC-A-FIXES2",
-   "note": "FIXES2 s1.3: horn pushrod radius 12.9 mm",
-   "status": "CHECKED",
+   "note": "D-212 rev 2: horn hole 9.155 mm directly above the hinge axis (CAD HORN_R = ROD_Z - HINGE_Z; was 12.9 mm on the 44 deg line, FIXES2 s1.3)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: D-212 rev 2: horn hole 9.155 mm directly above the hinge axis (CAD HORN_R = ROD_Z - HINGE_Z; was 12.9 mm on the 44 deg line, FIXES2 s1.3)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 3
   },
   {
@@ -8819,6 +10081,300 @@ window.PROOF_GRAPH = {
    "importance": 1
   },
   {
+   "id": "P:linkage.f_hold_n",
+   "type": "parameter",
+   "title": "linkage.f_hold_n",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 17.05,
+   "unit": "N",
+   "source": "SRC-A-LINKLOADS",
+   "note": "rod force at the VD hinge moment, max over +-20 deg (elevon_dynamics.py)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: rod force at the VD hinge moment, max over +-20 deg (elevon_dynamics.py)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 0
+  },
+  {
+   "id": "P:linkage.f_stall_n",
+   "type": "parameter",
+   "title": "linkage.f_stall_n",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 50.99,
+   "unit": "N",
+   "source": "SRC-A-LINKLOADS",
+   "note": "servo stalled into the stop / jammed elevon: 0.397 N m / (8.5 mm x min arm lever 0.916, +21 deg)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: servo stalled into the stop / jammed elevon: 0.397 N m / (8.5 mm x min arm lever 0.916, +21 deg)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 0
+  },
+  {
+   "id": "P:linkage.rib_foam_hold_kpa",
+   "type": "parameter",
+   "title": "linkage.rib_foam_hold_kpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 431.8,
+   "unit": "kPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 138-200 kPa unfactored)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 138-200 kPa unfactored)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.rib_foam_stall_kpa",
+   "type": "parameter",
+   "title": "linkage.rib_foam_stall_kpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 860.9,
+   "unit": "kPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "same at the 51 N stall force, x 1.4375",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: same at the 51 N stall force, x 1.4375"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.elevon_torsion_hold_kpa",
+   "type": "parameter",
+   "title": "linkage.elevon_torsion_hold_kpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 504.3,
+   "unit": "kPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "elevon beside the horn, foam-only Saint-Venant torsion, outboard share 0.51 of 0.146 N m, x 2.156 (tape skin not credited)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: elevon beside the horn, foam-only Saint-Venant torsion, outboard share 0.51 of 0.146 N m, x 2.156 (tape skin not credited)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.blade_root_hold_mpa",
+   "type": "parameter",
+   "title": "linkage.blade_root_hold_mpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 3.32,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "horn blade governing section, in-layer, x 2.156",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: horn blade governing section, in-layer, x 2.156"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.blade_root_stall_mpa",
+   "type": "parameter",
+   "title": "linkage.blade_root_stall_mpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 6.62,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "horn blade governing section at 51 N, x 1.4375",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: horn blade governing section at 51 N, x 1.4375"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.bearing_hold_mpa",
+   "type": "parameter",
+   "title": "linkage.bearing_hold_mpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 18.39,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "1.0 mm clevis pin bearing in the 2 mm horn, x 2.156",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: 1.0 mm clevis pin bearing in the 2 mm horn, x 2.156"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.bearing_stall_mpa",
+   "type": "parameter",
+   "title": "linkage.bearing_stall_mpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 36.65,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "same at 51 N, x 1.4375",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: same at 51 N, x 1.4375"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.shearout_stall_mpa",
+   "type": "parameter",
+   "title": "linkage.shearout_stall_mpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 11.11,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "horn hole shear-out F / (2 t e), ligament 1.65 mm, at 51 N, x 1.4375",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: horn hole shear-out F / (2 t e), ligament 1.65 mm, at 51 N, x 1.4375"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.shearout_allow_mpa",
+   "type": "parameter",
+   "title": "linkage.shearout_allow_mpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 11.55,
+   "unit": "MPa",
+   "source": "SRC-A-ARMCUP",
+   "note": "PETG in-layer 20 MPa / sqrt(3) (the script's shear-out allowable, linkage_loads_check.py; EST)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: PETG in-layer 20 MPa / sqrt(3) (the script's shear-out allowable, linkage_loads_check.py; EST)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.rod_yield_req_mpa",
+   "type": "parameter",
+   "title": "linkage.rod_yield_req_mpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 1392.0,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625, rod lifted against the keeper (e 1.9 mm, review r3 m-3; was 1.6 mm, 1172 MPa); stall basis: 0.397 N m at 7.2 V, valid with the Kakute rail jumper at 7.2 V (m-8; 8.4 V is not available from the FC, would give about 59 N)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625, rod lifted against the keeper (e 1.9 mm, review r3 m-3; was 1.6 mm, 1172 MPa); stall basis: 0.397 N m at 7.2 V, valid with the Kakute rail jumper at 7.2 V (m-8; 8.4 V is not available from the FC, would give about 59 N)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.a228_allow_mpa",
+   "type": "parameter",
+   "title": "linkage.a228_allow_mpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 1680.0,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "A228 music wire bending allowable 0.78 S_ut at 1.2 mm (Shigley constants RECALLED, not re-read)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: A228 music wire bending allowable 0.78 S_ut at 1.2 mm (Shigley constants RECALLED, not re-read)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.keeper_bridge_stall_mpa",
+   "type": "parameter",
+   "title": "linkage.keeper_bridge_stall_mpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 19.48,
+   "unit": "MPa",
+   "source": "SRC-A-LINKLOADS",
+   "note": "keeper bridge (MEC-008, 0.8 x 3.1 mm section, 2.0 mm cantilever) bending at the 51 N stall force, rod lifted (e 1.9 mm), V = F e / L (L 43.25 mm), x 1.4375; allowable is the printed PETG 20 MPa EST; creep and preload loss '-'",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: keeper bridge (MEC-008, 0.8 x 3.1 mm section, 2.0 mm cantilever) bending at the 51 N stall force, rod lifted (e 1.9 mm), V = F e / L (L 43.25 mm), x 1.4375; allowable is the printed PETG 20 MPa EST; creep and preload loss '-'"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.servo_speed_margin_r2",
+   "type": "parameter",
+   "title": "linkage.servo_speed_margin_r2",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 1.521,
+   "unit": "-",
+   "source": "SRC-A-LINKLOADS",
+   "note": "AR-005: loaded elevon rate (231 deg/s, 6.0 V pair, stall 0.333 N m, 0.13 s / 60 deg, linear torque-speed line, end-point load 0.146 N m + preload + damper) over the 152 deg/s needed for +-11 deg at the 2.2 Hz crossover (EST); the 7.2 V case (1.73) is not used (7.2 V speed unpublished)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: AR-005: loaded elevon rate (231 deg/s, 6.0 V pair, stall 0.333 N m, 0.13 s / 60 deg, linear torque-speed line, end-point load 0.146 N m + preload + damper) over the 152 deg/s needed for +-11 deg at the 2.2 Hz crossover (EST); the 7.2 V case (1.73) is not used (7.2 V speed unpublished)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.servo_speed_margin_min",
+   "type": "parameter",
+   "title": "linkage.servo_speed_margin_min",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 1.0,
+   "unit": "-",
+   "source": "SRC-A-LINKLOADS",
+   "note": "AR-005 acceptance criterion: speed margin >= 1.0 for the R2 sinusoid (set before the run)",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.foam_shear_kpa",
+   "type": "parameter",
+   "title": "linkage.foam_shear_kpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 85.8,
+   "unit": "kPa",
+   "source": "SRC-A-FOAM103",
+   "note": "foam shear 100 x 103/120 kPa (EST, foam_103.py)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: foam shear 100 x 103/120 kPa (EST, foam_103.py)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 3
+  },
+  {
+   "id": "P:linkage.petg_allow_mpa",
+   "type": "parameter",
+   "title": "linkage.petg_allow_mpa",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 20.0,
+   "unit": "MPa",
+   "source": "SRC-A-ARMCUP",
+   "note": "printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 5
+  },
+  {
+   "id": "P:linkage.free_play_deg",
+   "type": "parameter",
+   "title": "linkage.free_play_deg",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 1.28,
+   "unit": "deg",
+   "source": "SRC-A-LINKKIN",
+   "note": "arm hole 0.1 + horn hole 0.1 mm over the 9.155 mm horn + Z-bend freedom; clevis cheek holes '-'",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: arm hole 0.1 + horn hole 0.1 mm over the 9.155 mm horn + Z-bend freedom; clevis cheek holes '-'"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:linkage.free_play_guide_deg",
+   "type": "parameter",
+   "title": "linkage.free_play_guide_deg",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 1.0,
+   "unit": "deg",
+   "source": "SRC-A-SERVOMD",
+   "note": "SERVO.md s4: free play <= 1 deg (FLUTTER basis, review r3 m-7; FIXES2 s1: with the hinge damper the linear flutter result does not depend on K; free-play limit cycles not covered)",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
    "id": "P:cost.bom_rows",
    "type": "parameter",
    "title": "cost.bom_rows",
@@ -8827,9 +10383,9 @@ window.PROOF_GRAPH = {
     [
      "P01",
      "propulsion",
-     "TMotor",
-     5.0,
-     46.9,
+     "RMRC",
+     4.0,
+     22.99,
      false
     ],
     [
@@ -8851,9 +10407,9 @@ window.PROOF_GRAPH = {
     [
      "W01",
      "power",
-     "RMRC",
+     "RDQ",
      2.0,
-     37.09,
+     54.99,
      false
     ],
     [
@@ -8900,7 +10456,7 @@ window.PROOF_GRAPH = {
      "W07",
      "power",
      "RMRC",
-     1.0,
+     2.0,
      3.96,
      false
     ],
@@ -8941,7 +10497,7 @@ window.PROOF_GRAPH = {
      "avionics",
      "RMRC",
      1.0,
-     95.98,
+     129.01,
      false
     ],
     [
@@ -8964,7 +10520,7 @@ window.PROOF_GRAPH = {
      "M01",
      "mechanisms",
      "RMRC",
-     3.0,
+     2.0,
      13.99,
      false
     ],
@@ -8981,7 +10537,7 @@ window.PROOF_GRAPH = {
      "airframe",
      "Local",
      1.0,
-     70.0,
+     45.0,
      true
     ],
     [
@@ -9005,31 +10561,31 @@ window.PROOF_GRAPH = {
      "airframe",
      "RMRC",
      1.0,
-     15.34,
-     true
+     15.36,
+     false
     ],
     [
      "R14",
      "airframe",
      "RMRC",
      1.0,
-     0.0,
-     true
+     2.3,
+     false
     ],
     [
      "R10",
      "airframe",
      "RMRC",
      1.0,
-     4.4,
+     8.5,
      false
     ],
     [
      "R03",
      "airframe",
-     "Prusa",
+     "Amazon",
      1.0,
-     23.99,
+     12.99,
      false
     ],
     [
@@ -9037,7 +10593,7 @@ window.PROOF_GRAPH = {
      "airframe",
      "Amazon",
      1.0,
-     20.0,
+     10.0,
      true
     ],
     [
@@ -9069,7 +10625,7 @@ window.PROOF_GRAPH = {
      "ground_test",
      "Amazon",
      1.0,
-     50.95,
+     45.15,
      true
     ],
     [
@@ -9093,24 +10649,8 @@ window.PROOF_GRAPH = {
      "ground_test",
      "Amazon",
      1.0,
-     25.0,
-     true
-    ],
-    [
-     "B01",
-     "ground_test",
-     "RMRC",
-     1.0,
-     15.99,
-     false
-    ],
-    [
-     "B02",
-     "ground_test",
-     "RMRC",
-     1.0,
      12.99,
-     false
+     true
     ],
     [
      "B03",
@@ -9127,14 +10667,6 @@ window.PROOF_GRAPH = {
      1.0,
      15.0,
      true
-    ],
-    [
-     "B05",
-     "ground_test",
-     "SparkFun",
-     1.0,
-     0.0,
-     false
     ],
     [
      "R11",
@@ -9159,11 +10691,123 @@ window.PROOF_GRAPH = {
      1.0,
      6.0,
      true
+    ],
+    [
+     "T1",
+     "airframe",
+     "Zoro",
+     1.0,
+     43.29,
+     false
+    ],
+    [
+     "T2",
+     "airframe",
+     "Amazon",
+     1.0,
+     15.98,
+     false
+    ],
+    [
+     "T3",
+     "airframe",
+     "Wicks",
+     3.0,
+     6.46,
+     false
+    ],
+    [
+     "T4",
+     "airframe",
+     "USComposites",
+     1.0,
+     20.2,
+     false
+    ],
+    [
+     "T5",
+     "airframe",
+     "RMRC",
+     2.0,
+     2.02,
+     false
+    ],
+    [
+     "T6",
+     "ground_test",
+     "Amazon",
+     1.0,
+     14.99,
+     false
+    ],
+    [
+     "T7",
+     "ground_test",
+     "Amazon",
+     1.0,
+     23.79,
+     false
+    ],
+    [
+     "T8",
+     "ground_test",
+     "Amazon",
+     1.0,
+     24.69,
+     false
+    ],
+    [
+     "T9",
+     "ground_test",
+     "Amazon",
+     1.0,
+     13.99,
+     false
+    ],
+    [
+     "T10",
+     "ground_test",
+     "Local",
+     1.0,
+     8.0,
+     true
+    ],
+    [
+     "R15",
+     "airframe",
+     "Carbonwebshop",
+     1.0,
+     50.09,
+     false
+    ],
+    [
+     "T11",
+     "airframe",
+     "Zoro",
+     1.0,
+     33.69,
+     false
+    ],
+    [
+     "T12",
+     "airframe",
+     "USComposites",
+     1.0,
+     4.9,
+     false
+    ],
+    [
+     "W10",
+     "power",
+     "RMRC",
+     1.0,
+     12.99,
+     false
     ]
    ],
    "unit": "id, subsystem, ship group, qty, USD each, unverified",
    "source": "SRC-A-BOM",
-   "note": "all 38 rows of BOM-A.csv (status U / EST = unverified)",
+   "note": "all rows of BOM-A.csv (status U / EST = unverified)",
    "status": "CHECKED",
    "importance": 3
   },
@@ -9210,35 +10854,78 @@ window.PROOF_GRAPH = {
    "file": "redesign/qp/A/params-A.json",
    "value": [
     [
-     "RMRC",
-     15.0
-    ],
-    [
-     "TMotor",
+     "Alcobra",
      10.71
     ],
     [
      "Amazon",
-     10.71
+     0.0
+    ],
+    [
+     "Carbonwebshop",
+     25.0
+    ],
+    [
+     "Local",
+     0.0
     ],
     [
      "Prusa",
      10.71
     ],
     [
+     "RDQ",
+     10.71
+    ],
+    [
+     "RMRC",
+     0.0
+    ],
+    [
      "SparkFun",
      8.0
     ],
     [
-     "Local",
+     "TMotor",
      0.0
+    ],
+    [
+     "USComposites",
+     10.71
+    ],
+    [
+     "Wicks",
+     10.71
+    ],
+    [
+     "Zoro",
+     5.99
     ]
    ],
    "unit": "USD",
    "source": "SRC-A-BOMPY",
-   "note": "bom_a.py SHIP per distinct ship group, EST (RMRC rates not readable, QP-1/COST.md)",
+   "note": "bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST",
    "reasons": [
-    "marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, EST (RMRC rates not readable, QP-1/COST.md)"
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 3
+  },
+  {
+   "id": "P:cost.reserve_ship_usd",
+   "type": "parameter",
+   "title": "cost.reserve_ship_usd",
+   "file": "redesign/qp/A/params-A.json",
+   "value": [
+    10.71,
+    15.0,
+    10.71
+   ],
+   "unit": "USD",
+   "source": "SRC-A-BOMPY",
+   "note": "bom_a.py reserve(): 3 shipments at the original EST (definition unchanged, AM-018)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: bom_a.py reserve(): 3 shipments at the original EST (definition unchanged, AM-018)"
    ],
    "status": "UNVERIFIED",
    "importance": 3
@@ -9252,11 +10939,12 @@ window.PROOF_GRAPH = {
     "R02",
     "R08",
     "R09",
-    "R10"
+    "R10",
+    "R15"
    ],
    "unit": "-",
    "source": "SRC-A-BOMPY",
-   "note": "bom_a.py reserve(): full carbon-tube set",
+   "note": "bom_a.py reserve(): full carbon-tube set incl. R15 25x23 rib",
    "status": "CHECKED",
    "importance": 3
   },
@@ -9416,11 +11104,11 @@ window.PROOF_GRAPH = {
    "value": [
     0.9,
     0.5,
-    0.39
+    0.394
    ],
    "unit": "m",
    "source": "SRC-A-REQ",
-   "note": "A-U3: A is one piece, 0.90 x 0.50 x 0.39 m, props on; the trunk size is `—` (no car measured)",
+   "note": "A-U3: A is one piece, 0.90 x 0.50 x 0.394 m, props on (T-084: fin pads reach z +-196.7 mm = FIN_H 0.1937 + 3 mm, 393.4 mm, was 0.39 m; t083_bbox.py on the T-084 CAD: x 490.9 mm); the trunk size is `—` (no car measured)",
    "status": "CHECKED",
    "importance": 1
   },
@@ -9432,7 +11120,7 @@ window.PROOF_GRAPH = {
    "value": 0,
    "unit": "-",
    "source": "SRC-A-COLL",
-   "note": "cad/out/report_pose20.json + report_pose21.json (= report.json): overlaps deeper than the tolerance at neutral, +-20 and +-21 deg",
+   "note": "cad/out/report_d212r3_pose21.json (neutral and +-21 deg) + report_d212r3_pose20.json (+-20 deg), both D-212 rev 3: overlaps deeper than the tolerance",
    "status": "CHECKED",
    "importance": 1
   },
@@ -9441,10 +11129,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "cad3d.max_depth_mm",
    "file": "redesign/qp/A/params-A.json",
-   "value": 0.042,
+   "value": 0.034,
    "unit": "mm",
    "source": "SRC-A-COLL",
-   "note": "deepest overlap at any reachable pose (neutral, +-20, +-21 deg): 0.042 mm, balance tab on its stop boss at +21 deg (D-194)",
+   "note": "deepest overlap at any reachable pose: 0.034 mm static at neutral and +-21 deg (report_d212r3_pose21.json, D-212 rev 3; was 0.042 mm in the pre-D-212 report_pose21.json); the +-20 deg poses (report_d212r3_pose20.json, rev 3) show 0 hits over tolerance, static identical",
    "status": "CHECKED",
    "importance": 1
   },
@@ -9477,7 +11165,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "cad3d.parts",
    "file": "redesign/qp/A/params-A.json",
-   "value": 113,
+   "value": 129,
    "unit": "-",
    "source": "SRC-A-COLL",
    "note": "report.json parts checked",
@@ -9513,7 +11201,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "cad3d.assy_parts_placed",
    "file": "redesign/qp/A/params-A.json",
-   "value": 113,
+   "value": 129,
    "unit": "-",
    "source": "SRC-A-ASSY",
    "note": "assembly.json parts placed (96 of 96)",
@@ -9532,68 +11220,68 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Spar, CF tube 12x10 x 0.90 m",
    "status": "UNVERIFIED",
-   "importance": 9
+   "importance": 10
   },
   {
    "id": "PWR-001",
    "type": "part",
-   "title": "Pack Tattu 2300 mAh 4S 75C",
+   "title": "Pack RDQ Series 2800 mAh 4S 100C XT60 (107 x 33 x 46 mm, 270 g, T-077)",
    "status": "UNVERIFIED",
    "importance": 10
   },
   {
    "id": "CGE-001",
    "type": "part",
-   "title": "Hub (printed PETG, D-202: 1.5 mm sleeves over s +-24 mm of both arm tubes, 38 x 20 x 20 mm centre block on the bridge axis, running aft to the tray face (no separate boss), 3 mm edge radii, junction fillets 2.0 mm (sleeve B / block) and 1.5 mm (sleeve A / block) as in the FEA (D-207; outer body is the OpenCASCADE mesh of hub_body.py), 2 strut sockets, tray flange; mass = drawn volume x 1.27)",
+   "title": "Hub (machined 6061-T6, D-220 / D-221 / D-222: two OCTAGONAL sleeves 16 mm across flats, 1.0 mm wall at the flats, over s +-32 mm of both arm tubes, 38.5 x 20 x 20 mm centre block on the bridge axis to the tray face, 3 mm edge radii, internal radii 1.0 / 0.9 mm at the junctions (OCC mesh, hub_body.py), 0.5 mm sleeve-mouth and lead-exit chamfers, 2 strut sockets, tray flange; hub pockets T-077 p4: block aft of x +15.5 and the 30 mm bond collar (D-220) turned to a cylinder R 9.25 mm about the bridge axis (wall 1.25 mm round the 16 mm bore); mass = drawn volume x 2.70 g/cm3)",
    "status": "UNVERIFIED",
    "importance": 5
   },
   {
    "id": "FIN-001-R",
    "type": "part",
-   "title": "Fin tube 16x14 x 0.36 m (R)",
+   "title": "Fin tube 16x14 x 0.3874 m (R; T-084: 2 x FIN_H, was 0.36 m)",
    "status": "UNVERIFIED",
    "importance": 5
   },
   {
    "id": "FIN-001-L",
    "type": "part",
-   "title": "Fin tube 16x14 x 0.36 m (L)",
+   "title": "Fin tube 16x14 x 0.3874 m (L; T-084: 2 x FIN_H, was 0.36 m)",
    "status": "UNVERIFIED",
    "importance": 5
   },
   {
    "id": "CGE-008",
    "type": "part",
-   "title": "Pack tray (66 x 109 mm plate, integral lips at the trim ends, lead notch; 4.0 g at 44 mm scaled by plate area + longer walls, EST)",
+   "title": "Pack tray R1 (T-077: 1.2 mm windowed plate on a 2.0 mm root pad + ribs, 2.0 mm end walls with windows, two 40 x 2.0 mm tabs per lip; mass = drawn solid volume x 1.27, T-067 basis M applied by printed_mass.json when present)",
    "status": "CHECKED",
    "importance": 6
   },
   {
    "id": "PRP-001-UR",
    "type": "part",
-   "title": "Motor MN2212 V2.0 KV780 (UR)",
+   "title": "Motor SunnySky X2216 V3 880KV short shaft (UR), 67.5 g with 100 mm leads (EST that the page mass includes them)",
    "status": "UNVERIFIED",
    "importance": 10
   },
   {
    "id": "PRP-001-UL",
    "type": "part",
-   "title": "Motor MN2212 V2.0 KV780 (UL)",
+   "title": "Motor SunnySky X2216 V3 880KV short shaft (UL), 67.5 g with 100 mm leads (EST that the page mass includes them)",
    "status": "UNVERIFIED",
    "importance": 10
   },
   {
    "id": "PRP-001-LR",
    "type": "part",
-   "title": "Motor MN2212 V2.0 KV780 (LR)",
+   "title": "Motor SunnySky X2216 V3 880KV short shaft (LR), 67.5 g with 100 mm leads (EST that the page mass includes them)",
    "status": "UNVERIFIED",
    "importance": 10
   },
   {
    "id": "PRP-001-LL",
    "type": "part",
-   "title": "Motor MN2212 V2.0 KV780 (LL)",
+   "title": "Motor SunnySky X2216 V3 880KV short shaft (LL), 67.5 g with 100 mm leads (EST that the page mass includes them)",
    "status": "UNVERIFIED",
    "importance": 10
   },
@@ -9637,41 +11325,41 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Arm tube A 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub (D-202; UR + LL)",
    "status": "UNVERIFIED",
-   "importance": 9
+   "importance": 10
   },
   {
    "id": "CGE-002-B",
    "type": "part",
    "title": "Arm tube B 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub (D-202; LR + UL)",
    "status": "UNVERIFIED",
-   "importance": 7
+   "importance": 8
   },
   {
    "id": "GER-001-UR",
    "type": "part",
-   "title": "Foot shoe (UR)",
-   "status": "UNVERIFIED",
+   "title": "Foot shoe (UR; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closure s2 recovery, -1 g; mass from printed_mass.json at Onyx 1.20 g/cm3)",
+   "status": "CHECKED",
    "importance": 2
   },
   {
    "id": "GER-001-UL",
    "type": "part",
-   "title": "Foot shoe (UL)",
-   "status": "UNVERIFIED",
+   "title": "Foot shoe (UL; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closure s2 recovery, -1 g; mass from printed_mass.json at Onyx 1.20 g/cm3)",
+   "status": "CHECKED",
    "importance": 2
   },
   {
    "id": "GER-001-LR",
    "type": "part",
-   "title": "Foot shoe (LR)",
-   "status": "UNVERIFIED",
+   "title": "Foot shoe (LR; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closure s2 recovery, -1 g; mass from printed_mass.json at Onyx 1.20 g/cm3)",
+   "status": "CHECKED",
    "importance": 2
   },
   {
    "id": "GER-001-LL",
    "type": "part",
-   "title": "Foot shoe (LL)",
-   "status": "UNVERIFIED",
+   "title": "Foot shoe (LL; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closure s2 recovery, -1 g; mass from printed_mass.json at Onyx 1.20 g/cm3)",
+   "status": "CHECKED",
    "importance": 2
   },
   {
@@ -9679,26 +11367,26 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Elevon right",
    "status": "UNVERIFIED",
-   "importance": 9
+   "importance": 22
   },
   {
    "id": "WNG-006-L",
    "type": "part",
    "title": "Elevon left",
    "status": "UNVERIFIED",
-   "importance": 9
+   "importance": 22
   },
   {
    "id": "WNG-007-R",
    "type": "part",
-   "title": "Elevon balance (D-187 v2, D-205 R): 12.8 g lead strip 20 mm ahead of the hinge (10 x 1.07 mm x 106 mm; D-195 fallback) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
+   "title": "Elevon balance (D-187 v2, D-205, T-077 p8 R): 10.0 g lead strip 20 mm ahead of the hinge (10 x 0.83 mm x 106 mm; T-077 p8 flutter re-run) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
    "status": "UNVERIFIED",
    "importance": 5
   },
   {
    "id": "WNG-007-L",
    "type": "part",
-   "title": "Elevon balance (D-187 v2, D-205 L): 12.8 g lead strip 20 mm ahead of the hinge (10 x 1.07 mm x 106 mm; D-195 fallback) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
+   "title": "Elevon balance (D-187 v2, D-205, T-077 p8 L): 10.0 g lead strip 20 mm ahead of the hinge (10 x 0.83 mm x 106 mm; T-077 p8 flutter re-run) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
    "status": "UNVERIFIED",
    "importance": 5
   },
@@ -9733,14 +11421,14 @@ window.PROOF_GRAPH = {
   {
    "id": "FIN-005-R",
    "type": "part",
-   "title": "Rib saddle on spar (R)",
+   "title": "Fin node bulkheads (R, T-077 p8, D-226 s3; replaces the printed rib saddle): two 0.5 mm CF sheet bulkheads (waterjet, BOM T2) at |y| 369.5..370.0 and 396.0..396.5 mm (0.5 mm from the 25 mm rib flanks), cut to the cell inside the 3 skin plies from the LE to x 176, spar holes 12 mm (flox), slotted into the core; rib bonded between them by flox fillets (12 mm wide per flank, EST) over x 70.5..176; 2-ply 1080 tape laps 8 mm on both skins. Mass = plates 5.02 + tape laps 2.07 + flox 2.91 g (EST)",
    "status": "UNVERIFIED",
    "importance": 1
   },
   {
    "id": "FIN-005-L",
    "type": "part",
-   "title": "Rib saddle on spar (L)",
+   "title": "Fin node bulkheads (L, T-077 p8, D-226 s3; replaces the printed rib saddle): two 0.5 mm CF sheet bulkheads (waterjet, BOM T2) at |y| 369.5..370.0 and 396.0..396.5 mm (0.5 mm from the 25 mm rib flanks), cut to the cell inside the 3 skin plies from the LE to x 176, spar holes 12 mm (flox), slotted into the core; rib bonded between them by flox fillets (12 mm wide per flank, EST) over x 70.5..176; 2-ply 1080 tape laps 8 mm on both skins. Mass = plates 5.02 + tape laps 2.07 + flox 2.91 g (EST)",
    "status": "UNVERIFIED",
    "importance": 1
   },
@@ -9791,12 +11479,12 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Bridge 16x14 (D-206, torsion; axis z -2 mm; D-202: starts 15 mm aft of the hub axis, bored into the boss)",
    "status": "UNVERIFIED",
-   "importance": 6
+   "importance": 7
   },
   {
    "id": "CGE-006",
    "type": "part",
-   "title": "Bridge saddle on spar",
+   "title": "Centre node (T-077 p8, D-226 s3; replaces the printed bridge saddle and the audit T-fitting + 6061 tube + flanges with ONE machined 6061-T6 part, Tormach): octagonal sleeve apothem 7.3 mm (wall 1.15 at the flats) over |y| <= 59.8 mm on the spar, bore 12.3 mm (0.15 mm slip fit, not bonded), end flanges 1.0 mm thick (x 20..120, |z| <= 8, inside the skin) bonded on the centre bulkheads, bridge socket boss OD 20.1, socket 16 mm from x 27.5 to 51.5 (bridge bonded); mass = drawn volume (voxel 0.2 mm) x 2.70 g/cm3",
    "status": "UNVERIFIED",
    "importance": 2
   },
@@ -9831,14 +11519,14 @@ window.PROOF_GRAPH = {
   {
    "id": "FIN-003-R",
    "type": "part",
-   "title": "Fin root block (R)",
+   "title": "Fin root fitting (R; T-083b, replaces the PETG root block): machined 6061-T6, ring OD 18.2 / bore 16.2 x 38 mm on the fin tube, plug OD 22.8 / ID 20.8 x 31 mm bonded inside the 25x23 rib end, end plate 2.0 mm x 24.6 mm diameter notched by the fin tube; mass = drawn volume (voxel 0.2 mm) x 2.70 g/cm3",
    "status": "CHECKED",
    "importance": 1
   },
   {
    "id": "FIN-003-L",
    "type": "part",
-   "title": "Fin root block (L)",
+   "title": "Fin root fitting (L; T-083b, replaces the PETG root block): machined 6061-T6, ring OD 18.2 / bore 16.2 x 38 mm on the fin tube, plug OD 22.8 / ID 20.8 x 31 mm bonded inside the 25x23 rib end, end plate 2.0 mm x 24.6 mm diameter notched by the fin tube; mass = drawn volume (voxel 0.2 mm) x 2.70 g/cm3",
    "status": "CHECKED",
    "importance": 1
   },
@@ -9847,14 +11535,14 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Servo EMAX ES3054HV (R)",
    "status": "UNVERIFIED",
-   "importance": 4
+   "importance": 6
   },
   {
    "id": "MEC-001-L",
    "type": "part",
    "title": "Servo EMAX ES3054HV (L)",
    "status": "UNVERIFIED",
-   "importance": 4
+   "importance": 6
   },
   {
    "id": "WNG-008-RU",
@@ -9887,63 +11575,91 @@ window.PROOF_GRAPH = {
   {
    "id": "AVN-002",
    "type": "part",
-   "title": "Flight controller Kakute F405 Wing Mini",
-   "status": "CHECKED",
+   "title": "Flight controller Holybro Kakute H743-Wing, 45 x 30 x 13.5 mm (V docs.holybro.com kakute-h743-wing, read 2026-11-20), M2 25 x 25 mm, 28 g with USB extender; drawn: PCB 45 x 30 x 1.6 mm (PCB thickness EST, vendor -), corner radius -, hole diameter - (2.2 mm drawn), connector and header outlines and heights - (not drawn; the 13.5 mm overall height is a wiring keep-out), orientation 45 mm along y is my choice; position (T-092, D-239): board centre x 47 mm, y -75 mm (75 mm off the wing centre, left side, hard-mounted); IMU chip position on the board \"-\" (not published)",
+   "status": "UNVERIFIED",
    "importance": 3
   },
   {
-   "id": "AVN-001",
+   "id": "AVN-010",
    "type": "part",
-   "title": "Avionics plate",
-   "status": "CHECKED",
+   "title": "R2 mounting bosses (T-073 R2, T-077 p5): 4 FC bosses 6 x 6 mm on the 25 x 25 pattern with M2 hex-nut pockets, 4 ESC bosses 6 x 6 on the 20 x 20 pattern, 4 GPS corner pads 6 x 6 and 2 RX strip pads 5 x 11 mm (T-073 s.R2 Phase 2: GPS / RX pads), each up to the pad plane ZP (heights from the skin), bonded to the skin, printed PETG 6 x 6 x h (T-070); mass = drawn volume x T-067 basis",
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
    "id": "AVN-007",
    "type": "part",
    "title": "Foam-tape pads x4 (FC hard mount, 3.0 mm)",
-   "status": "CHECKED",
+   "status": "UNVERIFIED",
    "importance": 1
+  },
+  {
+   "id": "MEC-003-R",
+   "type": "part",
+   "title": "Pushrod 1.2 mm with Z-bend and clevis (R)",
+   "status": "UNVERIFIED",
+   "importance": 10
+  },
+  {
+   "id": "MEC-003-L",
+   "type": "part",
+   "title": "Pushrod 1.2 mm with Z-bend and clevis (L)",
+   "status": "UNVERIFIED",
+   "importance": 10
+  },
+  {
+   "id": "MEC-004-R",
+   "type": "part",
+   "title": "Control horn (R), printed PETG 2 mm flat profile: blade with the 1.1 mm reamed hole over the hinge line + rib through a slot in the elevon, 2.5-55 mm aft of the hinge (D-212 rev 3; mass CALC from the drawn volume)",
+   "status": "UNVERIFIED",
+   "importance": 18
+  },
+  {
+   "id": "MEC-004-L",
+   "type": "part",
+   "title": "Control horn (L), printed PETG 2 mm flat profile: blade with the 1.1 mm reamed hole over the hinge line + rib through a slot in the elevon, 2.5-55 mm aft of the hinge (D-212 rev 3; mass CALC from the drawn volume)",
+   "status": "UNVERIFIED",
+   "importance": 18
+  },
+  {
+   "id": "MEC-008-R",
+   "type": "part",
+   "title": "Z-bend keeper (R), printed PETG: 1.5 mm spacer + 0.8 mm bridge over the Z-bend, clamped under the arm screw (D-212 rev 3; mass CALC)",
+   "status": "UNVERIFIED",
+   "importance": 2
+  },
+  {
+   "id": "MEC-008-L",
+   "type": "part",
+   "title": "Z-bend keeper (L), printed PETG: 1.5 mm spacer + 0.8 mm bridge over the Z-bend, clamped under the arm screw (D-212 rev 3; mass CALC)",
+   "status": "UNVERIFIED",
+   "importance": 2
   },
   {
    "id": "MEC-002-R",
    "type": "part",
    "title": "Servo arm (R)",
    "status": "UNVERIFIED",
-   "importance": 3
+   "importance": 5
   },
   {
    "id": "MEC-002-L",
    "type": "part",
    "title": "Servo arm (L)",
    "status": "UNVERIFIED",
-   "importance": 3
-  },
-  {
-   "id": "MEC-004-R",
-   "type": "part",
-   "title": "Control horn (R)",
-   "status": "UNVERIFIED",
-   "importance": 3
-  },
-  {
-   "id": "MEC-004-L",
-   "type": "part",
-   "title": "Control horn (L)",
-   "status": "UNVERIFIED",
-   "importance": 3
+   "importance": 5
   },
   {
    "id": "HWC-001",
    "type": "part",
-   "title": "FC mounting screws: 4 x M2 x 25 pan screw (stock)",
+   "title": "FC mounting screws: 4 x M2 pan screw (stock, length per hole 8-10 mm, T-077 p5)",
    "status": "CHECKED",
    "importance": 1
   },
   {
    "id": "HWC-003",
    "type": "part",
-   "title": "FC mounting nuts: 4 x M2 thin nut (DIN 439 1.2 mm) in the plate hex pockets",
+   "title": "FC mounting nuts: 4 x M2 thin nut (DIN 439 1.2 mm) in the boss hex pockets",
    "status": "CHECKED",
    "importance": 1
   }
@@ -10000,6 +11716,66 @@ window.PROOF_GRAPH = {
    "type": "verifies"
   },
   {
+   "source": "T-A-HORN-RIB",
+   "target": "CL-A-HORN-RIB-COUPON",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-RIB",
+   "target": "CL-A-HORN-STALL-STEP",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-RIB",
+   "target": "CL-A-ELEVON-TORSION-COUPON",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-RIB",
+   "target": "CL-A-HORN-STALL-BENCH",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-RIB",
+   "target": "CL-A-HORN-SHEAROUT-STALL",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-FREEPLAY",
+   "target": "CL-A-LINKAGE-FREEPLAY",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-FOAM-COUPON",
+   "target": "CL-A-HORN-RIB-FOAM-HOLD",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-FOAM-COUPON",
+   "target": "CL-A-HORN-RIB-FOAM-STALL",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-FOAM-COUPON",
+   "target": "CL-A-ELEVON-TORSION-FOAM",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-FOAM-COUPON",
+   "target": "CL-A-HORN-BEARING-STALL",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-BENCH-STALL",
+   "target": "CL-A-HORN-RIB-FOAM-STALL",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-HORN-BENCH-STALL",
+   "target": "CL-A-HORN-BEARING-STALL",
+   "type": "verifies"
+  },
+  {
    "source": "T-A-SERVO-RAIL",
    "target": "CL-A-SERVO-FACTOR",
    "type": "verifies"
@@ -10052,6 +11828,11 @@ window.PROOF_GRAPH = {
   {
    "source": "T-A-TAP",
    "target": "CL-A-VIB-HIGH",
+   "type": "verifies"
+  },
+  {
+   "source": "T-A-TAP",
+   "target": "CL-A-VIB-IN-BAND",
    "type": "verifies"
   },
   {
@@ -13180,7 +14961,7 @@ window.PROOF_GRAPH = {
    "type": "uses"
   },
   {
-   "source": "P:sim.cruise_2p_hz_hi",
+   "source": "P:sim.hover_lean_2p_hz",
    "target": "CALC-A-VIB-HIGH-LIMIT",
    "type": "uses"
   },
@@ -13280,6 +15061,41 @@ window.PROOF_GRAPH = {
    "type": "about"
   },
   {
+   "source": "P:sim.vib_inband_corners",
+   "target": "CALC-A-VIB-IN-BAND-READ",
+   "type": "uses"
+  },
+  {
+   "source": "CALC-A-VIB-IN-BAND-READ",
+   "target": "CL-A-VIB-IN-BAND",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-A-VIB-IN-BAND",
+   "target": "A-P10",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-VIB-IN-BAND",
+   "target": "CGE-002-A",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-VIB-IN-BAND",
+   "target": "CGE-002-B",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-VIB-IN-BAND",
+   "target": "CGE-004",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-VIB-IN-BAND",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
    "source": "P:sim.vib_fc_ms2",
    "target": "CALC-A-VIB-FC",
    "type": "uses"
@@ -13306,7 +15122,7 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-A-VIB-FC",
-   "target": "AVN-001",
+   "target": "AVN-010",
    "type": "about"
   },
   {
@@ -13358,6 +15174,806 @@ window.PROOF_GRAPH = {
    "source": "P:sim.gm_shifted_up",
    "target": "CALC-A-VIB-GM-SHIFT",
    "type": "uses"
+  },
+  {
+   "source": "ASM-A-FOAM-ALLOW",
+   "target": "CALC-A-HORN-RIB-FOAM-HOLD-READ",
+   "type": "assumes"
+  },
+  {
+   "source": "P:linkage.rib_foam_hold_kpa",
+   "target": "CALC-A-HORN-RIB-FOAM-HOLD-READ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-A-FOAM-ALLOW",
+   "target": "CL-A-HORN-RIB-FOAM-HOLD",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-A-HORN-RIB-FOAM-HOLD-READ",
+   "target": "CL-A-HORN-RIB-FOAM-HOLD",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.foam_shear_kpa",
+   "target": "CL-A-HORN-RIB-FOAM-HOLD",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-HOLD",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-HOLD",
+   "target": "MEC-003-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-HOLD",
+   "target": "MEC-003-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-HOLD",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-HOLD",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-HOLD",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-HOLD",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "ASM-A-FOAM-ALLOW",
+   "target": "CALC-A-HORN-RIB-FOAM-STALL-READ",
+   "type": "assumes"
+  },
+  {
+   "source": "P:linkage.rib_foam_stall_kpa",
+   "target": "CALC-A-HORN-RIB-FOAM-STALL-READ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-A-FOAM-ALLOW",
+   "target": "CL-A-HORN-RIB-FOAM-STALL",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-A-HORN-RIB-FOAM-STALL-READ",
+   "target": "CL-A-HORN-RIB-FOAM-STALL",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.foam_shear_kpa",
+   "target": "CL-A-HORN-RIB-FOAM-STALL",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-STALL",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-STALL",
+   "target": "MEC-003-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-STALL",
+   "target": "MEC-003-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-STALL",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-STALL",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-STALL",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-FOAM-STALL",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "ASM-A-FOAM-ALLOW",
+   "target": "CALC-A-ELEVON-TORSION-FOAM-READ",
+   "type": "assumes"
+  },
+  {
+   "source": "P:linkage.elevon_torsion_hold_kpa",
+   "target": "CALC-A-ELEVON-TORSION-FOAM-READ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-A-FOAM-ALLOW",
+   "target": "CL-A-ELEVON-TORSION-FOAM",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-A-ELEVON-TORSION-FOAM-READ",
+   "target": "CL-A-ELEVON-TORSION-FOAM",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.foam_shear_kpa",
+   "target": "CL-A-ELEVON-TORSION-FOAM",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-ELEVON-TORSION-FOAM",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-ELEVON-TORSION-FOAM",
+   "target": "MEC-003-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ELEVON-TORSION-FOAM",
+   "target": "MEC-003-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ELEVON-TORSION-FOAM",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ELEVON-TORSION-FOAM",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ELEVON-TORSION-FOAM",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ELEVON-TORSION-FOAM",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CALC-A-HORN-BLADE-HOLD-READ",
+   "type": "assumes"
+  },
+  {
+   "source": "P:linkage.blade_root_hold_mpa",
+   "target": "CALC-A-HORN-BLADE-HOLD-READ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CL-A-HORN-BLADE-HOLD",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-A-HORN-BLADE-HOLD-READ",
+   "target": "CL-A-HORN-BLADE-HOLD",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.petg_allow_mpa",
+   "target": "CL-A-HORN-BLADE-HOLD",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-HOLD",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-HOLD",
+   "target": "MEC-003-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-HOLD",
+   "target": "MEC-003-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-HOLD",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-HOLD",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-HOLD",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-HOLD",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CALC-A-HORN-BLADE-STALL-READ",
+   "type": "assumes"
+  },
+  {
+   "source": "P:linkage.blade_root_stall_mpa",
+   "target": "CALC-A-HORN-BLADE-STALL-READ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CL-A-HORN-BLADE-STALL",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-A-HORN-BLADE-STALL-READ",
+   "target": "CL-A-HORN-BLADE-STALL",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.petg_allow_mpa",
+   "target": "CL-A-HORN-BLADE-STALL",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-STALL",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-STALL",
+   "target": "MEC-003-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-STALL",
+   "target": "MEC-003-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-STALL",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-STALL",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-STALL",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BLADE-STALL",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CALC-A-HORN-BEARING-HOLD-READ",
+   "type": "assumes"
+  },
+  {
+   "source": "P:linkage.bearing_hold_mpa",
+   "target": "CALC-A-HORN-BEARING-HOLD-READ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CL-A-HORN-BEARING-HOLD",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-A-HORN-BEARING-HOLD-READ",
+   "target": "CL-A-HORN-BEARING-HOLD",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.petg_allow_mpa",
+   "target": "CL-A-HORN-BEARING-HOLD",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-HOLD",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-HOLD",
+   "target": "MEC-003-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-HOLD",
+   "target": "MEC-003-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-HOLD",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-HOLD",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-HOLD",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-HOLD",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CALC-A-HORN-BEARING-STALL-READ",
+   "type": "assumes"
+  },
+  {
+   "source": "P:linkage.bearing_stall_mpa",
+   "target": "CALC-A-HORN-BEARING-STALL-READ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CL-A-HORN-BEARING-STALL",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-A-HORN-BEARING-STALL-READ",
+   "target": "CL-A-HORN-BEARING-STALL",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.petg_allow_mpa",
+   "target": "CL-A-HORN-BEARING-STALL",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-STALL",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-STALL",
+   "target": "MEC-003-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-STALL",
+   "target": "MEC-003-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-STALL",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-STALL",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-STALL",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-BEARING-STALL",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "ASM-A-ROD-GRADE",
+   "target": "CALC-A-ROD-LEG-STALL-READ",
+   "type": "assumes"
+  },
+  {
+   "source": "P:linkage.rod_yield_req_mpa",
+   "target": "CALC-A-ROD-LEG-STALL-READ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-A-ROD-GRADE",
+   "target": "CL-A-ROD-LEG-STALL",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-A-ROD-LEG-STALL-READ",
+   "target": "CL-A-ROD-LEG-STALL",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.a228_allow_mpa",
+   "target": "CL-A-ROD-LEG-STALL",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-ROD-LEG-STALL",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-ROD-LEG-STALL",
+   "target": "MEC-003-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ROD-LEG-STALL",
+   "target": "MEC-003-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ROD-LEG-STALL",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ROD-LEG-STALL",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ROD-LEG-STALL",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ROD-LEG-STALL",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CALC-A-HORN-SHEAROUT-STALL-READ",
+   "type": "assumes"
+  },
+  {
+   "source": "P:linkage.shearout_stall_mpa",
+   "target": "CALC-A-HORN-SHEAROUT-STALL-READ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CL-A-HORN-SHEAROUT-STALL",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-A-HORN-SHEAROUT-STALL-READ",
+   "target": "CL-A-HORN-SHEAROUT-STALL",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.shearout_allow_mpa",
+   "target": "CL-A-HORN-SHEAROUT-STALL",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-HORN-SHEAROUT-STALL",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-HORN-SHEAROUT-STALL",
+   "target": "MEC-003-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-SHEAROUT-STALL",
+   "target": "MEC-003-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-SHEAROUT-STALL",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-SHEAROUT-STALL",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-SHEAROUT-STALL",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-SHEAROUT-STALL",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CALC-A-KEEPER-BRIDGE-STALL-READ",
+   "type": "assumes"
+  },
+  {
+   "source": "P:linkage.keeper_bridge_stall_mpa",
+   "target": "CALC-A-KEEPER-BRIDGE-STALL-READ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-A-PETG-ALLOW",
+   "target": "CL-A-KEEPER-BRIDGE-STALL",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-A-KEEPER-BRIDGE-STALL-READ",
+   "target": "CL-A-KEEPER-BRIDGE-STALL",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.petg_allow_mpa",
+   "target": "CL-A-KEEPER-BRIDGE-STALL",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-KEEPER-BRIDGE-STALL",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-KEEPER-BRIDGE-STALL",
+   "target": "MEC-008-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-KEEPER-BRIDGE-STALL",
+   "target": "MEC-008-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-KEEPER-BRIDGE-STALL",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-KEEPER-BRIDGE-STALL",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "P:linkage.servo_speed_margin_r2",
+   "target": "CALC-A-SERVO-SPEED-READ",
+   "type": "uses"
+  },
+  {
+   "source": "CALC-A-SERVO-SPEED-READ",
+   "target": "CL-A-SERVO-SPEED",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.servo_speed_margin_min",
+   "target": "CL-A-SERVO-SPEED",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-SERVO-SPEED",
+   "target": "A-P11",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-SERVO-SPEED",
+   "target": "MEC-001-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-SERVO-SPEED",
+   "target": "MEC-001-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-SERVO-SPEED",
+   "target": "MEC-002-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-SERVO-SPEED",
+   "target": "MEC-002-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-SERVO-SPEED",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-SERVO-SPEED",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-COUPON",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-HORN-RIB-COUPON",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-COUPON",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-COUPON",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-RIB-COUPON",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-STALL-STEP",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-HORN-STALL-STEP",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-STALL-STEP",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-STALL-STEP",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-STALL-STEP",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ELEVON-TORSION-COUPON",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-ELEVON-TORSION-COUPON",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-ELEVON-TORSION-COUPON",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-STALL-BENCH",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-HORN-STALL-BENCH",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-STALL-BENCH",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-STALL-BENCH",
+   "target": "WNG-006-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-STALL-BENCH",
+   "target": "WNG-006-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-STALL-BENCH",
+   "target": "MEC-001-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-HORN-STALL-BENCH",
+   "target": "MEC-001-L",
+   "type": "about"
+  },
+  {
+   "source": "P:linkage.free_play_deg",
+   "target": "CALC-A-LINKAGE-FREEPLAY-READ",
+   "type": "uses"
+  },
+  {
+   "source": "CALC-A-LINKAGE-FREEPLAY-READ",
+   "target": "CL-A-LINKAGE-FREEPLAY",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:linkage.free_play_guide_deg",
+   "target": "CL-A-LINKAGE-FREEPLAY",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-LINKAGE-FREEPLAY",
+   "target": "A-P13",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-LINKAGE-FREEPLAY",
+   "target": "MEC-002-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-LINKAGE-FREEPLAY",
+   "target": "MEC-002-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-LINKAGE-FREEPLAY",
+   "target": "MEC-003-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-LINKAGE-FREEPLAY",
+   "target": "MEC-003-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-LINKAGE-FREEPLAY",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-LINKAGE-FREEPLAY",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-LINKAGE-FREEPLAY",
+   "target": "MEC-008-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-LINKAGE-FREEPLAY",
+   "target": "MEC-008-L",
+   "type": "about"
   },
   {
    "source": "CALC-A-VIB-GM-SHIFT",
@@ -13600,6 +16216,11 @@ window.PROOF_GRAPH = {
    "type": "uses"
   },
   {
+   "source": "P:cost.reserve_ship_usd",
+   "target": "CALC-A-COST",
+   "type": "uses"
+  },
+  {
    "source": "P:req.budget_usd",
    "target": "CALC-A-COST",
    "type": "uses"
@@ -13610,7 +16231,7 @@ window.PROOF_GRAPH = {
    "type": "derives-from"
   },
   {
-   "source": "P:req.g7_total_usd",
+   "source": "P:req.budget_usd",
    "target": "CL-A-COST-TOTAL",
    "type": "uses"
   },
@@ -13625,11 +16246,6 @@ window.PROOF_GRAPH = {
    "type": "derives-from"
   },
   {
-   "source": "P:req.g7_margin_usd",
-   "target": "CL-A-COST-MARGIN30",
-   "type": "uses"
-  },
-  {
    "source": "CL-A-COST-MARGIN30",
    "target": "A-U1",
    "type": "verifies"
@@ -13638,11 +16254,6 @@ window.PROOF_GRAPH = {
    "source": "CALC-A-COST",
    "target": "CL-A-COST-BUDGET",
    "type": "derives-from"
-  },
-  {
-   "source": "P:req.budget_usd",
-   "target": "CL-A-COST-BUDGET",
-   "type": "uses"
   },
   {
    "source": "CL-A-COST-BUDGET",
@@ -14490,12 +17101,12 @@ window.PROOF_GRAPH = {
    "type": "cites"
   },
   {
-   "source": "SRC-A-SIZING",
+   "source": "SRC-A-T084",
    "target": "P:sim.tipover_deg",
    "type": "cites"
   },
   {
-   "source": "SRC-A-ITER3",
+   "source": "SRC-A-STRUCT-RUN",
    "target": "P:sim.gust_n_vd",
    "type": "cites"
   },
@@ -14545,43 +17156,28 @@ window.PROOF_GRAPH = {
    "type": "cites"
   },
   {
-   "source": "SRC-A-ITER3",
+   "source": "SRC-A-STRUCT-RUN",
    "target": "P:sim.vib_below_hz",
    "type": "cites"
   },
   {
-   "source": "SRC-A-ITER3",
+   "source": "SRC-A-STRUCT-RUN",
    "target": "P:sim.vib_above_hz",
    "type": "cites"
   },
   {
-   "source": "SRC-A-REQ",
+   "source": "SRC-A-T085",
+   "target": "P:sim.vib_inband_corners",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-STRUCT-RUN",
    "target": "P:sim.hover_1p_rpm_lo",
    "type": "cites"
   },
   {
-   "source": "SRC-A-REQ",
-   "target": "P:sim.cruise_2p_hz_hi",
-   "type": "cites"
-  },
-  {
-   "source": "SRC-A-ITER3",
-   "target": "P:sim.vib_fc_ms2",
-   "type": "cites"
-  },
-  {
-   "source": "SRC-A-ITER3",
-   "target": "P:sim.gm_nominal",
-   "type": "cites"
-  },
-  {
-   "source": "SRC-A-ITER3",
-   "target": "P:sim.gm_shifted",
-   "type": "cites"
-  },
-  {
-   "source": "SRC-A-ITER3",
-   "target": "P:sim.gm_shifted_up",
+   "source": "SRC-A-STRUCT-RUN",
+   "target": "P:sim.hover_lean_2p_hz",
    "type": "cites"
   },
   {
@@ -14770,6 +17366,106 @@ window.PROOF_GRAPH = {
    "type": "cites"
   },
   {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.f_hold_n",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.f_stall_n",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.rib_foam_hold_kpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.rib_foam_stall_kpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.elevon_torsion_hold_kpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.blade_root_hold_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.blade_root_stall_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.bearing_hold_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.bearing_stall_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.shearout_stall_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-ARMCUP",
+   "target": "P:linkage.shearout_allow_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.rod_yield_req_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.a228_allow_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.keeper_bridge_stall_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.servo_speed_margin_r2",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKLOADS",
+   "target": "P:linkage.servo_speed_margin_min",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-FOAM103",
+   "target": "P:linkage.foam_shear_kpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-ARMCUP",
+   "target": "P:linkage.petg_allow_mpa",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LINKKIN",
+   "target": "P:linkage.free_play_deg",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-SERVOMD",
+   "target": "P:linkage.free_play_guide_deg",
+   "type": "cites"
+  },
+  {
    "source": "SRC-A-BOM",
    "target": "P:cost.bom_rows",
    "type": "cites"
@@ -14792,6 +17488,11 @@ window.PROOF_GRAPH = {
   {
    "source": "SRC-A-BOMPY",
    "target": "P:cost.ship_usd",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-BOMPY",
+   "target": "P:cost.reserve_ship_usd",
    "type": "cites"
   },
   {
