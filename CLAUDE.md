@@ -30,7 +30,7 @@ H743-Wing, 4S 2,800 mAh pack, glass wing skin, mass recovery; predicted 1.64 kg 
 880KV motors (D-227) and the FC 75 mm left of centre (D-239/D-240); mass gate missed, physics checks govern; 12 proof claims
 FAIL pending bench / tap tests (D-237); BOM $1,939.17 of $2,000 (D-235); Order 1 $887.25 for approval 1-4 Dec (T-093); go/no-go 2026-12-15).
 
-**Configuration changed 2026-11-14 (D-182, J6 board, `redesign/review/QP-1/BOARD.md`):**
+**History (superseded by the O4b status above): configuration changed 2026-11-14 (D-182, J6 board, `redesign/review/QP-1/BOARD.md`):**
 K09-L could not be built new within the $2,000 limit (cheapest workable build
 about $2,577, `redesign/review/CLOSURE-ROUND-2026-11-14/DESIGN-TO-COST.md`).
 After sizing four concepts to the same depth (`redesign/review/QP-1/`), the board
