@@ -1,31 +1,26 @@
-order_id,bom_id,vendor,item,qty,unit_usd,flag,why,url
-O1-01,P01,TMotor,T-Motor MN2212 V2.0 KV780 (4 + 1 spare),2,46.9,V,stock risk: asked for stock/lead time; if no answer by 2026-12-04 buy qty 5 (see totals),https://store.tmotor.com/goods-388-MN2212-V20.html
-O1-02,P02,RMRC,"APC 9x4.5MR 4-pack (2 x 9x4.5MR standard rotation + 2 x 9x4.5MRP reverse rotation; seen from the thrust side MR turns CCW and MRP turns CW, as in sitl/a_plant.py (RMRC page says 'Standard (CW)' and 'Reverse (Pusher/CCW)', read 2026-11-15, i.e. seen from behind the prop), 11.06 g each, adapter rings): flight set, no spare (D-183)",1,9.4,V,"stock risk (T9545 sold out); flight set + bench prop; 2nd pack = $9.40 optional, not added",https://www.readymaderc.com/products/details/86771-apc-multirotor-9x4-5-2-blade-4-pack-with-adapter-rings
-O1-03,P04,RMRC,SpeedyBee BLS 35A Mini V2 4-in-1 ESC 20x20 (DShot300/600; 7.2 g board),1,45.66,V,single-source 4-in-1 ESC; M4 bidirectional-DShot bench test needs it,https://www.readymaderc.com/products/details/86873-speedybee-bls-35a-mini-v2-20x20-4-in-1-esc
-O1-04,W01,RMRC,Tattu 2300 mAh 4S 75C XT60 270 g (2 flight packs),2,37.09,V,concept-neutral power; 2 packs flown one at a time,https://www.readymaderc.com/products/details/tattu-2300-75c-4s1p-xt60
-O1-05,W02,RMRC,ToolkitRC M6AC charger,1,63.71,V,concept-neutral,https://www.readymaderc.com/products/details/86179-toolkitrc-m6ac-charger
-O1-06,W03,RMRC,TBS LiPo bag,2,7.61,V,concept-neutral,https://www.readymaderc.com/products/details/tbs-lipo-battery-bag
-O1-07,W05,RMRC,"Wire 14 AWG silicone (3 m red + 3 m black), XT60 5-pair, heat-shrink kit 500 pc",1,23.92,V,concept-neutral,https://www.readymaderc.com/products/details/premium-silicone-wire-14ga-red-1m
-O1-08,V01,RMRC,Radiomaster Pocket ELRS TX,1,76.99,V,concept-neutral,https://www.readymaderc.com/products/details/85660-radiomaster-pocket-radio-controller-expresslrs-elrs-2-4ghz-charcoal-mode-2
-O1-09,V02,RMRC,Radiomaster RP3 V2 ELRS RX,1,23.08,V,concept-neutral,https://www.readymaderc.com/products/details/85670-radiomaster-rp3-expresslrs-2-4ghz-nano-receiver-v2
-O1-10,V03,RMRC,Holybro Kakute F405 Wing Mini FC,1,95.98,V,single-source FC; M4 test,https://www.readymaderc.com/products/details/87184-holybro-kakute-f405-wing-mini-flight-controller
-O1-11,V04,RMRC,"TBS M10Q GPS + QMC5883 compass (13.5 g; replaces Foxeer M10Q-250, backordered at RMRC)",1,19.76,V,stock risk (Foxeer backordered); connector is NOT a plug on the Kakute (see FOLDIN s3),https://www.readymaderc.com/products/details/86501-tbs-m10q-gps-receiver-with-glonass
-O1-12,V05,RMRC,RMRC MS4525 airspeed + pitot,1,59.99,V,concept-neutral,https://www.readymaderc.com/products/details/rmrc-digital-air-speed-sensor-pixhawk-ii-2
-O1-13,G01,RMRC,ToolkitRC WM150 watt meter,1,35.31,V,bench M1/M2,https://www.readymaderc.com/products/details/toolkitrc-wm150-watt-meter
-O1-14,B01,RMRC,SunnySky X2212 KV980 CW (R1 bench motor),1,15.99,V,bench R1 motor,https://www.readymaderc.com/products/details/sunnysky-x2212-kv980-multirotor-cw
-O1-15,B02,RMRC,Holybro 1045 prop set (bench / C7 spare props),1,12.99,V,bench props / C7 spare,https://www.readymaderc.com/products/details/87244-holybro-1045-propeller-set-2cw-2ccw-x500-s500-spare-parts
-O1-16,R03,Prusa,"Prusament PETG 1 kg (printed cage, mounts, foot pads)",1,23.99,V,stock risk: Prusa shipping; cage prints at Jacobs before 18 Dec,https://www.prusa3d.com/product/prusament-petg-jet-black-1kg-nfc/
-O1-17,B03,Amazon,1 kgf bar cell + HX711 (+K-type probes) for the yaw-torque arm,1,17.0,EST,bench yaw-torque cell (EST; page not read),https://www.amazon.com/dp/B0F52QCK3T
-O1-18,B04,Amazon,"Bench fixture: 2 x 608 bearings, plywood, M3/M6 hardware, print (Jacobs)",1,15.0,EST,bench fixture (EST),—
-O1-19,G02,SparkFun,SparkFun TAL220 10 kg cell $12.95 + HX711 $4.95 (the SparkFun part of BOM G02),1,17.9,EST,bench thrust cell; In stock 2026-11-15,—
-O1-20,G02,Amazon,"IR thermometer, 0.1 g scale, caliper, knife-edge (the Amazon remainder of BOM G02 50.95 - 17.90)",1,33.05,EST,bench M2/M6 (EST; Amazon not read),—
-O1-21,G03,Local,Thrust-stand + hanging yaw-rig parts (wood and hardware),1,25.0,EST,bench stand + yaw rig,—
-O1-22,G04,Local,Foam-board planform for hanging yaw test (M3),1,10.0,EST,bench M3,—
-O1-23,W04,Local,Metal ammo can (pack storage),1,13.99,V,LiPo storage before the first charge,https://www.harborfreight.com/30-cal-metal-ammo-can-57767.html
-O1-24,W06,Local,Threadlocker,1,6.0,EST,bench fixture,—
-TOTAL,,,Goods (qty x unit),,827.91,,,
-TOTAL,,,Tax 10.25 % on goods,,84.86,,,
-TOTAL,,,"Shipping EST (RMRC 15.00, T-Motor 10.71, Amazon 10.71, Prusa 10.71, SparkFun 8.00)",,55.13,,,
-TOTAL,,,"ORDER 1 TOTAL, 2 MN2212",,967.90,EST,"Excludes R04 (removed), tubes R02/R08-R10, servos M01/M02, foam R01, epoxy/CA R05/R07, R06 struts, G05 anemometer: main order",
-TOTAL,,,"IF T-Motor gives no stock/lead time by 2026-12-04: +3 MN2212 (3 x 46.90 x 1.1025, same shipment, no extra shipping)",,155.12,,,
-TOTAL,,,"ORDER 1 TOTAL, 5 MN2212",,1123.02,EST,,
+order_id,bom_id,vendor,item,qty,unit_usd,flag,status,date_checked,why,url
+O1-01,P01,RMRC,SunnySky X2216 V3 880KV SHORT shaft (4 with no BOM spare per AM-019 since the crash reserve covers one motor; each with X-mount + screws and prop adapter),4,22.99,V,verified,2026-11-21,"TP-1 (1 motor on the stand), TP-2 (4-motor limiter run); stock risk: RMRC BACKORDER (availability Nov 2026, read 2026-11-22), no spare (AM-019)",https://www.readymaderc.com/products/details/sunny-sky-x2216-brushless-motor-short-shaft-880kv
+O1-02,P02,RMRC,"APC 9x4.5MR 4-pack (2 x 9x4.5MR standard rotation + 2 x 9x4.5MRP reverse rotation; seen from the thrust side MR turns CCW and MRP turns CW, as in sitl/a_plant.py (RMRC page says 'Standard (CW)' and 'Reverse (Pusher/CCW)', read 2026-11-15, i.e. seen from behind the prop), 11.06 g each, adapter rings): flight set, no spare (D-183)",1,9.40,V,verified,2026-11-14,"TP-1 (MR + MRP on the stand), TP-2 (4 props); in stock, no spare (D-183)",https://www.readymaderc.com/products/details/86771-apc-multirotor-9x4-5-2-blade-4-pack-with-adapter-rings
+O1-03,P04,RMRC,SpeedyBee BLS 35A Mini V2 4-in-1 ESC 20x20 (DShot300/600; 7.2 g board),1,45.66,V,verified,2026-11-14,TP-2 needs 4 ESC channels on the stand; single-source 4-in-1; bidirectional-DShot rpm check (UNVERIFIED) is a TP-1 option,https://www.readymaderc.com/products/details/86873-speedybee-bls-35a-mini-v2-20x20-4-in-1-esc
+O1-04,W01,RDQ,RDQ 2800 mAh 4S 100C XT60 270 g (2 flight packs; O4b),2,54.99,V,verified,2026-11-19,"TP-1 fresh-pack and 14.9 V sweeps, TP-2 voltage cap; 2 packs; order only after the CAD tray fit (TEST-PLAN-O4B T-082 note)",https://www.racedayquads.com/products/rdq-series-11-1v-4s-2800mah-100c-lipo-battery-xt60
+O1-05,W02,RMRC,ToolkitRC M6AC charger,1,63.71,V,verified,2026-11-14,charges / part-discharges the packs to 14.9 V resting for TP-1 and TP-2,https://www.readymaderc.com/products/details/86179-toolkitrc-m6ac-charger
+O1-06,W03,RMRC,TBS LiPo bag,2,7.61,V,verified,2026-11-14,LiPo safety for the 2 packs before first charge,https://www.readymaderc.com/products/details/tbs-lipo-battery-bag
+O1-07,W04,Local,Metal ammo can (pack storage),1,13.99,V,verified,2026-11-14,LiPo storage before the first charge,https://www.harborfreight.com/30-cal-metal-ammo-can-57767.html
+O1-08,W05,RMRC,"Wire 14 AWG silicone (2 m red + 2 m black), XT60 5-pair, heat-shrink kit 500 pc",1,19.94,V,verified,2026-11-15,"14 AWG leads, XT60, heat-shrink: stand power wiring for TP-1 and TP-2",https://www.readymaderc.com/products/details/premium-silicone-wire-14ga-red-1m
+O1-09,W06,Local,Threadlocker,1,6.00,EST,unverified,—,"motor-stand / ESC hardware (unverified EST, local)",—
+O1-10,W07,RMRC,"Wire 20 AWG silicone (4 m red + 4 m black): phase-lead extensions 12 strands = 5.40 m beyond the 100 mm X2216 stock leads (CAD route, HRN_ITEMS) + 2.6 m splice practice and spare",2,3.96,V,verified,2026-11-15,"phase-lead extensions: X2216 stock leads are only 100 mm, the 4-motor stand needs the extensions",https://www.readymaderc.com/products/details/premium-silicone-wire-20ga-red-1m
+O1-11,W10,RMRC,"XT90 male + female pigtails, 12 AWG 10 cm, 3 pairs (aircraft battery tail, 2 packs, charge lead); A-P16 connector >= 1.25 x 72 A = 90 A",1,12.99,V,verified,2026-11-21,TP-2 pass line names XT90 (90 A = 1.25 x 72 A); the 72 A limiter run needs it,https://www.readymaderc.com/products/details/86593-xt90-male-female-adapters-with-12awg-10cm-leads
+O1-12,V01,RMRC,Radiomaster Pocket ELRS TX,1,76.99,V,verified,2026-11-14,TX to command throttle and trigger the failsafe on the FC in TP-2 (concept-neutral),https://www.readymaderc.com/products/details/85660-radiomaster-pocket-radio-controller-expresslrs-elrs-2-4ghz-charcoal-mode-2
+O1-13,V02,RMRC,Radiomaster RP3 V2 ELRS RX,1,23.08,V,verified,2026-11-14,RX paired with V01 for TP-2 (concept-neutral),https://www.readymaderc.com/products/details/85670-radiomaster-rp3-expresslrs-2-4ghz-nano-receiver-v2
+O1-14,V03,RMRC,Holybro Kakute H743-Wing FC (Lua-capable; replaces V03 F405 Wing Mini),1,129.01,V,verified,2026-11-21,"TP-2 runs on the real H743-Wing (Lua cap, 72 A limiter, current sensor range read before the order)",https://www.readymaderc.com/products/details/87185-holybro-kakute-h743-wing-flight-controller
+O1-15,V04,RMRC,"TBS M10Q GPS + QMC5883 compass (13.5 g; replaces Foxeer M10Q-250, backordered at RMRC)",1,19.76,V,verified,2026-11-15,stock risk (Foxeer backordered); not needed by TP-1/TP-2; ships in the same RMRC group,https://www.readymaderc.com/products/details/86501-tbs-m10q-gps-receiver-with-glonass
+O1-16,G01,RMRC,ToolkitRC WM150 watt meter,1,35.31,V,verified,2026-11-14,TP-1 bus current and voltage logging,https://www.readymaderc.com/products/details/toolkitrc-wm150-watt-meter
+O1-17,G02,Amazon,"Load cell + HX711, IR thermometer, 0.1 g scale, caliper, knife-edge",1,45.15,EST,unverified,—,"TP-1 thrust cell + HX711, scale, IR thermometer, caliper (Amazon lines, EST)",—
+O1-18,G03,Local,Thrust-stand + hanging yaw-rig parts (wood and hardware),1,25.00,EST,unverified,—,"TP-1 / TP-2 thrust stand (wood and hardware, EST)",—
+O1-19,B03,Amazon,1 kgf bar cell + HX711 (+K-type probes) for the yaw-torque arm,1,17.00,EST,unverified,—,"TP-1 K-type probes for the H-1 motor-base temperature (EST; the 1 kgf cell part is the yaw rig, not needed before 15 Dec)",https://www.amazon.com/dp/B0F52QCK3T
+O1-20,T9,Amazon,Nano V3 clone ATmega328P USB-C (HX711 logger),1,13.99,V,verified,2026-11-20,TP-1 HX711 logger to the laptop,https://www.amazon.com/s?k=arduino+nano+clone+atmega328p+usb-c
+O1-21,R03,Amazon,"PETG 1.75 mm 1 kg (ELEGOO, black; printed cage, mounts, foot pads)",1,12.99,V,verified,2026-11-20,PETG for the stand motor mount prints (TP-1 base temperature is on a PETG base); Jacobs prints before 18 Dec,https://www.amazon.com/s?k=PETG+filament+1.75mm+1kg+black
+TOTAL,,,Goods (qty x unit),,795.05,,,,,
+TOTAL,,,Tax 10.25 % on goods,,81.49,,,,,
+TOTAL,,,"Shipping EST, bom_a.py ship groups ['Amazon', 'Local', 'RDQ', 'RMRC']",,10.71,EST,,,RMRC / Amazon / Local are $0 in bom_a.py (RMRC rates not readable); RDQ $10.71 EST,
+TOTAL,,,ORDER 1 TOTAL,,887.25,EST,,,"Plan, nothing bought. History: the earlier file (967.90 / 1,123.02) was written for T-Motor MN2212; replaced T-090 2026-11-22",
