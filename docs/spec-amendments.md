@@ -349,3 +349,13 @@ Requirement IDs: R-COM-01, R-GEN-02.
 ```text
 Sounds good, resume the work you were doing before
 ```
+
+## AM-028 — 2026-11-22 — Do not ask to continue between steps
+Relation: communication rule (extends AM-001). The conductor moves on through the queue without asking "continue?";
+it prompts Dillon only for a team decision (money, purchases, hard constraints, irreversible actions) or a real
+problem.
+Requirement IDs: R-COM-01, R-COM-02.
+
+```text
+Also, previously you were having me manually say continue for each step, there is no need for that, if you are good to continue, just move along. Only prompt me if you need the team's decision on something or a problem arises
+```
