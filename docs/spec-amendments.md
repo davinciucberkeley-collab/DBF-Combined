@@ -384,3 +384,11 @@ Requirement IDs: R-COM-01, R-COM-02.
 ```text
 Also, remember what I said earlier about unnecessary text output
 ```
+
+## AM-032 — 2026-11-23 — Approve pushing redesign/v1
+Relation: push authorization (redesign/v1 to origin, so the published Explorer updates; this approval covers this push only).
+Requirement IDs: R-REPO-04.
+
+```text
+Yeah, push it
+```
