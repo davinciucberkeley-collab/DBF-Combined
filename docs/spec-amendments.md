@@ -338,3 +338,14 @@ Requirement IDs: R-COM-01.
 ```text
 Reach a good place to pause for later resumption
 ```
+
+## AM-027 — 2026-11-22 — Resume after the AM-026 pause
+Relation: process instruction after Dillon asked what the December purchase approval is and what he needs to do now
+(answer: nothing for the approval itself; before about 1 Dec the team books Tormach training, asks Jacobs about
+material charges and X7 / Tormach booking, asks an ME lab for a test-frame loan, measures the Altima trunk). The
+conductor rebuilds the Order 1 list for the X2216 motors (it still assumes MN2212) before December (T-090).
+Requirement IDs: R-COM-01, R-GEN-02.
+
+```text
+Sounds good, resume the work you were doing before
+```
