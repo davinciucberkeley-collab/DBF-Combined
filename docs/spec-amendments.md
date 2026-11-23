@@ -359,3 +359,12 @@ Requirement IDs: R-COM-01, R-COM-02.
 ```text
 Also, previously you were having me manually say continue for each step, there is no need for that, if you are good to continue, just move along. Only prompt me if you need the team's decision on something or a problem arises
 ```
+
+## AM-029 — 2026-11-23 — Approve removal of the three line-ending-only worktrees
+Relation: cleanup approval (T-042, batch 3; the held batch-2 items `worktree-agent-a952e…`, `claude/morph-chart-bc71a6`,
+`claude/proof-chain-readable-c5026d`; branches kept).
+Requirement IDs: R-REPO-04.
+
+```text
+Yes, remove them
+```
