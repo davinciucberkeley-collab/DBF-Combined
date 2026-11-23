@@ -814,7 +814,7 @@ E(en('PWR'), 'PWR-003', 'CGE-008', 'CT-TAPE-FOAM', 'power', 'pad stuck on the tr
 E(en('PWR'), 'PWR-002', 'PWR-001', 'CT-STRAP-VELCRO', 'power', 'strap bears on the pack top face')
 # avionics
 E(en('AVN'), 'AVN-010', 'WNG-001', CA, 'avionics', 'R2 bosses and pads: bases follow the upper skin (same vertices as the core), bonded with CA / epoxy; no plate (T-073 R2)')
-E(en('AVN'), 'AVN-007', 'AVN-010', 'CT-GEL-PAD', 'avionics', 'four thin foam-tape pads on the FC bosses (FC on the wing centre, not on the cage hub: SITL-FLIGHT follow-up 2; hard mount, BOARD D-186)')
+E(en('AVN'), 'AVN-007', 'AVN-010', 'CT-GEL-PAD', 'avionics', 'four thin foam-tape pads on the FC bosses (FC on the wing, 75 mm left of centre (D-239 / D-240), not on the cage hub: SITL-FLIGHT follow-up 2; hard mount, BOARD D-186)')
 E(en('AVN'), 'AVN-002', 'AVN-007', 'CT-GEL-PAD', 'avionics', 'FC on the tape pads, M2 screws (hard mount; gel only if its frequency is measured at 40-70 Hz)')
 E(en('AVN'), 'AVN-005', 'WNG-001', TAPEF, 'avionics', 'airspeed board in its pocket in the left wing core next to the pitot, foam tape; pocket taped over (D-208)', retention=dict(item='VHB-class tape', count=1))
 for pid in ('AVN-003', 'AVN-004'):
@@ -1414,7 +1414,7 @@ def hrn_items():
             ('airspeed I2C lead (D-208): 4 conductors of 28 AWG x %.0f mm (CAD route to the left wing tip) at 1.2 g/m (EST) + JST plug 0.5 g (EST)' % (_plen(i2c_path()) * 1e3),
              round(4 * _plen(i2c_path()) * WIRE_G_PER_M[28] + 0.5, 1)),
             ('servo leads: the 3-wire leads are in the 20.5 g servo mass (EST: stock length reached the old FC pads at the wing centre), plus 2 groove fish-wire ties', 0.2),
-            ('servo lead extension (T-092, D-239): the +y lead (S5) now runs %+.0f mm longer than the centre-FC route (stock lead length "-": assumed to end at the old pad), 3 x 26 AWG at 2.0 g/m + 1 splice 0.15 g (EST); the -y lead is %.0f mm shorter and is cut to length (its stock lead is already in the servo mass: conservative, not subtracted)'
+            ('servo lead extension (T-092, D-239): the +y lead (S5) now runs %+.0f mm longer than the centre-FC route (stock lead length "-": assumed to end at the old pad), 3 x 26 AWG at 2.0 g/m + 1 splice 0.15 g (EST), splice under the bay cover AVN-008 next to the FC (enclosed, not in the exposed inventory); the -y lead is %.0f mm shorter and is cut to length (its stock lead is already in the servo mass: conservative, not subtracted)'
              % ((_plen(servo_lead_pts(1)) - _plen(servo_lead_pts_old(1))) * 1e3, (_plen(servo_lead_pts_old(-1)) - _plen(servo_lead_pts(-1))) * 1e3),
              round(3 * max(0.0, _plen(servo_lead_pts(1)) - _plen(servo_lead_pts_old(1))) * WIRE_G_PER_M[26] + 0.15, 1)),
             ('heat-shrink sleeves at the cup collar / floor hole, ties, foam tape, solder (EST)', 5.0)]

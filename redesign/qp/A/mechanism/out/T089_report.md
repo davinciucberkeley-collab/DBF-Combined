@@ -26,6 +26,8 @@ FE = `structures/fe_a.py` with the T-085 options, exactly the 24 bound groups of
 GM >= 2.0 (`req.gm_min`, A-P10(c)) on every axis, corner, zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, no RHP pole; flexible modes x 1.0 (gm_nominal), x 0.8 (gm_shifted), x 1.2 (gm_shifted_up); GM = loop-gain factor at which the first closed-loop pole reaches the RHP (geomspace 1-100, 300 steps; 1.0 means already unstable). Reported = minimum over all 24 groups.
 
 ## 2. Gain margin results (`T089_data/t089_gm.json`, `t089_params.json`; reproduced identically on re-run)
+
+**Erratum [R4, 2026-11-23]:** the statement below that the node choice does not remove the pole holds for the cage hub, not for spar stations; corrected by T-091 / D-239 (FC 75 mm off centre: model pitch GM 2.52-4.00). This report was committed in 1a709569.
 Minimum over the 24 groups, order pit / rll / yaw x kd, nom, hi:
 | list | CAD inertia (re-pointed in params) | FE inertia (bound) |
 |---|---|---|

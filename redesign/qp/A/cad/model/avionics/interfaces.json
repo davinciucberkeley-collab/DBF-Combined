@@ -202,7 +202,7 @@
    "part_b": "AVN-010",
    "via": "CT-GEL-PAD",
    "owner": "avionics",
-   "notes": "four thin foam-tape pads on the FC bosses (FC on the wing centre, not on the cage hub: SITL-FLIGHT follow-up 2; hard mount, BOARD D-186)"
+   "notes": "four thin foam-tape pads on the FC bosses (FC on the wing, 75 mm left of centre (D-239 / D-240), not on the cage hub: SITL-FLIGHT follow-up 2; hard mount, BOARD D-186)"
   },
   {
    "id": "E-AVN-03",

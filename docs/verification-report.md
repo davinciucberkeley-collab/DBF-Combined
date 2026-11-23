@@ -58,5 +58,8 @@ Same method (container parse + Blender `--debug-ffmpeg` full decode + per-frame 
 Decode total of the re-check: 9,714 frames, 0 decode errors. R-VID-15: decode and visual review both passed (reviewer view; ledger status is set by the conductor).
 
 
+
+**T-032 (2026-11-23, review round 4):** VERIFIED COMPLETE with "reproducible" read as: the commands, frame counts, durations, decode and decoded-stream hash of a re-encode reproduce from `docs/video/PIPELINE.md`; a re-render is not pixel-identical (mean per-frame MSE 83-95, differences on glyph and geometry edges, `PIPELINE-FOLLOW-2026-11-22.md` step 9). Evidence `docs/audits/2026-11-23-review-round-4.md`.
+
 ## Final verification (T-047)
 T-011: run 2026-11-18, `docs/audits/2026-11-18-ledger.md` (haiku accounting audit, 21 gaps fixed). T-048 milestone audits: not run yet.

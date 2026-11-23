@@ -45,7 +45,7 @@ with open(os.path.join(A, "ORDER-1.csv"), "w", newline="", encoding="utf-8") as 
     w.writerow(["TOTAL","","","Goods (qty x unit)","",f"{goods:.2f}","","","","",""])
     w.writerow(["TOTAL","","","Tax 10.25 % on goods","",f"{tax:.2f}","","","","",""])
     w.writerow(["TOTAL","","",f"Shipping EST, bom_a.py ship groups {sorted(groups)}","",f"{ship:.2f}","EST","","","RMRC / Amazon / Local are $0 in bom_a.py (RMRC rates not readable); RDQ $10.71 EST",""])
-    w.writerow(["TOTAL","","","ORDER 1 TOTAL","",f"{o1tot:.2f}","EST","","","Plan, nothing bought. History: the earlier file (967.90 / 1,123.02) was written for T-Motor MN2212; replaced T-090 2026-11-22",""])
+    w.writerow(["TOTAL","","","ORDER 1 TOTAL","",f"{o1tot:.2f}","EST","","","Plan, nothing bought (history in mechanism/out/T090_report.md)",""])
 print(f"lines {len(out)}  goods {goods:.2f}  tax {tax:.2f}  ship {ship:.2f}  Order1 {o1tot:.2f}")
 print(f"BOM total {t['total']:.2f}  remaining main order {main:.2f}  (goods {main_goods:.2f}; ship {t['ship']-ship:.2f}; FAA {B.FAA:.2f}; reserve {t['reserve']:.2f})")
 print(f"Order1 + main = {o1tot+main:.2f}  reconcile {'PASS' if chk_goods and abs(o1tot+main-t['total'])<0.005 else 'FAIL'}")

@@ -99,7 +99,7 @@ Q_A_RATE_Y_MAX,90
 #   lag of the motor, gyro and D filters turns the 12-15 Hz mode into a pole). Lower P, D and LESS lag restore it (pitch 15 / 0.002 / FLTD 40 + gyro 60: min gain margin 2.8; roll 0.20 / 0.003 / 32 + gyro 60: 2.5).
 #   D-191 (CLAIMS-FIX): with the tap-test tolerance +-20 % on the cage modes the 0.15 / 0.002 / 40 set had pitch GM 1.56-1.64 (< 2). Pitch P 0.12 / D 0.0012 / FLTD 60 (gyro 60 kept): GM 2.33 over every corner, damping, thrust scale and mode shift of 0.8-1.2 (sitl/fu_cage.py; structures/iter3_run.md); rigid crossover 2.2 Hz (was 2.6), PM 54 deg (was 56), Ms 2.2 (was 2.7).
 #   QP-4 / D-186: the FC stays on the wing-centre plate as drawn, HARD-MOUNTED (thin foam tape), NOT on the 5 mm gel pads (their stiffness is unknown; a gel mode could sit in the rate band or on hover 1P). Gel only if its frequency is measured at 40-70 Hz.
-#   REQUIRES the flight controller hard-mounted on the wing spar (C4: spar centre; D-239/D-240: 75 mm left of centre, y -75 mm, to cut the 27-30 Hz wing-flap pickup), not on the cage hub: with the IMU on the hub the yaw (8-10 Hz) and roll (29-35 Hz) loops are unstable at zeta <= 1 % with any of these settings.
+#   REQUIRES the flight controller hard-mounted on the wing spar (C4: spar centre; D-239/D-240: 75 mm left of centre, y -75 mm, to cut the 27-30 Hz wing-flap pickup: model result, T-091; unconfirmed until T-A-TAP / tether), not on the cage hub: with the IMU on the hub the yaw (8-10 Hz) and roll (29-35 Hz) loops are unstable at zeta <= 1 % with any of these settings.
 Q_A_RAT_RLL_P,0.20
 Q_A_RAT_RLL_I,0.25
 Q_A_RAT_RLL_D,0.003

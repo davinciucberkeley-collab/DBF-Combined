@@ -23,4 +23,4 @@ O1-21,R03,Amazon,"PETG 1.75 mm 1 kg (ELEGOO, black; printed cage, mounts, foot p
 TOTAL,,,Goods (qty x unit),,795.05,,,,,
 TOTAL,,,Tax 10.25 % on goods,,81.49,,,,,
 TOTAL,,,"Shipping EST, bom_a.py ship groups ['Amazon', 'Local', 'RDQ', 'RMRC']",,10.71,EST,,,RMRC / Amazon / Local are $0 in bom_a.py (RMRC rates not readable); RDQ $10.71 EST,
-TOTAL,,,ORDER 1 TOTAL,,887.25,EST,,,"Plan, nothing bought. History: the earlier file (967.90 / 1,123.02) was written for T-Motor MN2212; replaced T-090 2026-11-22",
+TOTAL,,,ORDER 1 TOTAL,,887.25,EST,,,"Plan, nothing bought (history in mechanism/out/T090_report.md)",

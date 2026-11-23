@@ -1,4 +1,4 @@
-# T-092: FC 75 mm off the wing centre (D-239 implementation). 2026-11-23. Not VERIFIED COMPLETE. Nothing committed; docs/, CHANGE-LOG, ledger not edited.
+# T-092: FC 75 mm off the wing centre (D-239 implementation). 2026-11-23. Not VERIFIED COMPLETE. Committed in 5660ee07 (D-240); round-4 review fixes 2026-11-23 marked [R4].
 
 Labels: **interference** (collide_a pose 21 + 18 linkage poses, a_assembly sweep, proxy_collide screen, wire-wire distance check), **illustrative / hand calculation** (CG tally, wire lengths, masses; EST where marked). No kinematics, rigid-body dynamics, FEA, CFD or flight dynamics was run in T-092; the GM figures quoted are the T-091 FEA-lite results (not re-run). Unknowns "—".
 
@@ -21,7 +21,7 @@ First pose-21 run failed with 3 wire folds (E-HRN-06, fake kink from a 0.26 mm s
 
 ## 1. FC move: where and why
 - Side chosen: **-y (left)**, centre y = -75 mm (board y -97.5 to -52.5, x 32-62 unchanged, 45 mm along y, hard-mounted on four R2 bosses, D-186 kept; foam tape pads and M2 screws as before). The model node s+0.075 (T-091) is symmetric in y.
-- Why -y, not +y: (a) enclosure: the GPS board (y +27.5 to +52.5) is on +y, so a +y FC needs a tunnel past the GPS (no hood over the GPS: sky view); -y needs one annex of the cover; (b) the RX UART (E-HRN-09), the airspeed I2C (E-HRN-11) and the left servo lead go to -y anyway (shorter); (c) GPS / compass clearance: FC is 80 mm from the GPS; no current-carrying part moves. Cost: lateral CG moves from -1.66 to **-3.32 mm** (limit 5 mm, A-P4, CL-A-CG-LATERAL +34 % margin); +y would have kept it near -0.4 mm. Margin left 1.68 mm. Tell the owner: a +y mounting gives better lateral balance and a tunnel; the choice is reversible by mirroring FC_YC and the annex.
+- Why -y, not +y: (a) enclosure: the GPS board (y +27.5 to +52.5) is on +y, so a +y FC needs a tunnel past the GPS (no hood over the GPS: sky view); -y needs one annex of the cover; (b) the RX UART (E-HRN-09), the airspeed I2C (E-HRN-11) and the left servo lead go to -y anyway (shorter); (c) GPS / compass clearance: FC is 80 mm from the GPS; no current-carrying part moves. Cost: lateral CG moves from -1.66 to **-3.32 mm** (limit 5 mm, A-P4, CL-A-CG-LATERAL +34 % margin); +y would have kept it near -0.4 mm (EST, mirror of the measured shift; not computed by cad_mass) [R4]; the 1.68 mm left is the allowance for as-built asymmetry (pack y-trim, wire routing, the 0.6 g splice). Margin left 1.68 mm. Tell the owner: a +y mounting gives better lateral balance and a tunnel; the choice is reversible by mirroring FC_YC and the annex.
 - D-186 (BOARD s3 / SITL-FLIGHT follow-up 2) only requires the FC on the wing, hard-mounted, not on the cage hub; "wing spar centre" appears in an A.param comment (l.102, "REQUIRES the flight controller on the wing spar centre (C4's IMU node)"): that comment is now superseded by D-239 (spar station 75 mm; not edited, listed in s6).
 - 75 mm is feasible (checked: bosses at y -62.5 / -87.5 are above the skin, the left centre bulkhead face at |y| 60-60.5 is under the skin; no part clash). A node at exactly 75 mm exists in the T-091 FE model, so no other station was needed (T091_data/t091_nodes.py not re-run).
 - CAD (`cad/amodel/electrical.py`; pre / post copies in `T092_data/pre`, `post`): `FC_YC = -0.075` moves holes, bosses, tape pads, PCB, pads, screws, nuts; GPS and I2C pads swap sides (EST layout; the pad positions are EST, Holybro gives names only); **FC annex of the bay cover AVN-008** (x 22.5-72.2, y -26.5 to -99.0, roof 45 mm as the cover, 0.5 mm vacuum-formed wall EST design value; the -y end wall of the main cover is open over the annex). Cover mass 9.01 -> 14.61 g (`printed_mass.json`, +5.6 g from `cover_mass_g()`).
@@ -43,7 +43,7 @@ First pose-21 run failed with 3 wire folds (E-HRN-06, fake kink from a 0.26 mm s
 | CG y | -1.66 mm | -3.32 mm (limit 5) |
 | CG z | 6.48 mm | 6.56 mm |
 | Ixx / Iyy / Izz kg m2 | 0.08802 / 0.03508 / 0.09836 | 0.08805 / 0.03509 / 0.09839 |
-| tallied (T-084 basis +7.0 g cups, EST) | 1,640.0 g, CG 23.13, SM 7.17 % | 1,648.0 g, CG about **23.22 mm**, SM about **7.13 %** (my hand tally with the T-084 cup arm 298 mm, not a rerun of MASS-GATE s15); predicted 1.8796 -> about 1.888 kg EST |
+| tallied (T-084 basis +7.0 g cups, EST) | 1,640.0 g, CG 23.13, SM 7.17 % | 1,648.0 g, CG about **23.22 mm**, SM about **7.13 %** (my hand tally with the T-084 cup arm 298 mm, not a rerun of MASS-GATE s15); predicted: the claim value CL-A-MASS-PRED 1.881 kg (run_all, params-A.json: 1.64098 x 1.1174 + 0.048) is the figure quoted; my 1.888 kg hand tally is superseded [R4] |
 The 1.5 kg gate stays missed (D-232 style, physics checks govern); CL-A-CG, CL-A-SM, CL-A-CG-LATERAL pass in run_all.
 
 ## 3. Claims text
@@ -51,17 +51,17 @@ The 1.5 kg gate stays missed (D-232 style, physics checks govern); CL-A-CG, CL-A
 - `proofs/claims_a2_struct.py` CL-A-VIB-GM and CL-A-VIB-GM-SHIFT `how`: sentence added: design has the FC 75 mm off centre (-y); model pitch GM there 2.52-4.00 (T-091); claim still evaluates the FC-at-centre model (P:sim.gm_nominal) and stays FAIL; benefit credited only after T-A-TAP / tether (D-239). No claim value changed; `fu_cage.py` not edited.
 
 ## 4. R15 rib tube (T-088): no switch
-Easy Composites US page (read 2026-11-23 via fetch): 25 x 23 mm woven-finish roll-wrapped prepreg tube, wall 1 mm, **113.1 g/m**, **$59.05 per 1 m** (more than the Carbonwebshop $50.09), "more than 50 units" in stock, handling surcharge because the packed length exceeds 1 m, US shipping "from the cart calculator". I did not run the guest cart (the fetch tool cannot add to a cart; no browser session used), so shipping is "—". Landed price is therefore at least $59.05 + "—" vs $50.09 + $25 EST = $75.09: switch only if the cart shows < $16 shipping. Spec is the same (25/23, 1 mm, roll-wrapped). The stock risk is not a reason on this evidence (Carbonwebshop line is a quote). **BOM-A.csv / bom_a.py unchanged**; `python -I bom_a.py`: total $1,939.17 (cap $2,000). No ZIP used or written.
+Easy Composites US page https://www.easycomposites.us/25mm-23mm-woven-finish-carbon-fiber-tube (read 2026-11-23 via fetch, no saved capture): 25 x 23 mm woven-finish roll-wrapped prepreg tube, wall 1 mm, **113.1 g/m**, **$59.05 per 1 m** (more than the Carbonwebshop $50.09), "more than 50 units" in stock, handling surcharge because the packed length exceeds 1 m, US shipping "from the cart calculator". I did not run the guest cart (the fetch tool cannot add to a cart; no browser session used), so shipping is "—". Landed price is therefore at least $59.05 + "—" vs $50.09 + $25 EST = $75.09: switch only if the cart shows < $16 shipping. Spec is the same (25/23, 1 mm, roll-wrapped). The stock risk is not a reason on this evidence (Carbonwebshop line is a quote). **BOM-A.csv / bom_a.py unchanged**; `python -I bom_a.py`: total $1,939.17 (cap $2,000). No ZIP used or written.
 
 ## 5. Evidence files
 `T092_data/`: `pre/`, `post/` (changed files), `gates/` (outputs, summary), `gates_run1_wirefold/`, `run_gates_t092.sh`, `cad_mass_stdout.txt`, `mission_gate_stdout.txt`, `patch1-3.py`, `k3.py` (fold check), `wwd.py` (wire-wire distance). Changed repo files: `cad/amodel/electrical.py`, `cad/amodel/printed_mass.json`, `cad/a_build_steps.py`, `cad/a_assembly_plan.py`, `cad/parts_links_a.py`, `A.param`, `proofs/claims_a0_base.py`, `proofs/claims_a2_struct.py`, regenerated: `BUILD-GUIDE-A.md`, `cad/out/*`, `cad/model/*/interfaces.json`, `drawings/out/*`, `sitl/cad_mass.json`, `proofs/out/*`.
 
 ## 6. Open items / not done
 1. The FC benefit is a beam-FE result at node s+0.075 (symmetric +y); the -y side, real mode shape, IMU chip offset and the FC mount flexibility are unmeasured: T-A-TAP / tether (D-239). Pitch GM 2.52-4.00 is the model number, not credited.
-2. A.param comment l.102 and REQUIREMENTS / MISSION text still say "FC on the wing spar centre"; not edited (outside the brief); the owner should reword to "75 mm off the spar centre".
+2. [R4] A.param l.102 reworded by the conductor (model result, unconfirmed); electrical.py AVN-007 text fixed; a grep found no other "spar centre" FC text in REQUIREMENTS / MISSION.
 3. INS_POS reference point to verify (s1); servo lead stock length "—".
 4. Lateral CG -3.32 mm uses 66 % of the 5 mm limit; pack y-trim or mirroring the FC to +y recovers it.
-5. R15 Easy Composites shipping not read.
+5. R15 Easy Composites shipping not read: moved to T-093 (the cart needs a delivery address, which only Dillon can enter) [R4].
 6. `proofs` explain text (`explain_a.py`) not touched.
 
 ## 7. Proposed CHANGE-LOG entry

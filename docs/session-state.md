@@ -35,7 +35,7 @@ confirmed, reopen the C-route (arms 10x8 + bridge soft in z first). Proof chain 
 margin claims UNVERIFIED (T-089).
 
 **PAUSED 2026-11-22 (AM-026).** Nothing running; working tree clean; nothing pushed.
-**Next action on resume:** (2026-11-23) T-089, T-090, T-091 (D-239) and T-092 (D-240: FC 75 mm left of centre in CAD) are done and READY FOR REVIEW with T-032. (1) Independent review round 4 of T-032, T-089, T-090, T-091, T-092 (eng-reviewer, sonnet override); fix findings, verify rows. (2) T-088 closes with the R15 decision at the December stock re-check (Easy Composites shipping "—"; Carbonwebshop kept). (3) Before the 1-4 Dec order: re-check motor stock and every price, present Order 1 ($887.25) to Dillon. (4) Cleanup T-042..T-045, T-008; final verification T-047.
+**Next action on resume:** (2026-11-23) Review round 4 done: T-032, T-089, T-090, T-091, T-092 VERIFIED COMPLETE; order-week re-check and the R15 shipping read split to T-093. (1) T-093 on 1-4 Dec 2026: re-read every ORDER-1 price and stock (X2216 backorder), R15 vendor (Carbonwebshop quote or Easy Composites cart, Dillon enters the address), then present Order 1 to Dillon; T-088 closes with it. (2) Meanwhile: cleanup T-042..T-045, T-008; final verification T-047 last.
 
 **Failures (history):** see git log and CHANGE-LOG; O4b with MN2212 infeasible (AM-017 study); MN3110, legs/skid,
 0.8 m/s touchdown and concept B rejected (`docs/audits/2026-11-21-config-study.md`); PETG FIN-003 failed (D-229).

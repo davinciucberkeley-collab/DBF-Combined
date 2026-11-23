@@ -241,6 +241,7 @@ Gaps (unchanged): no rpm sensor, one motor only so the all-four pack current (73
 ### TP-2 (re-spec): Lua cap, current limiter and sensor on the H743-Wing (go/no-go)
 Settings: `Q_M_BAT_CURR_MAX` 72, `spin_cap.lua` table 1.0 at every voltage, failsafe 1.0, `Q_M_SPIN_MAX` 1.0, BATT_CAPACITY 2800, BATT_LOW_MAH 790, BATT_CRT_MAH 420 (T083_report s2.4; the 0.90 failsafe would cut the sag window to +4.6 % without download, `gate_prop_sched.txt`).
 **Pass:** cap reads 1.0 +-0.01 at 16.8 / 16.0 / 15.4 / 14.9 V resting; the battery-current limiter holds <= 72 A with four motors at full throttle on a fresh pack (needs a 4-motor stand or the built aircraft tethered); the H743-Wing current sensor reads to >= 80 A (its range is "—", not read; read it before Order 1). Connector: XT90 (90 A = 1.25 x 72 A, BOM W10); XT60 60 A momentary fails (T083_report s2.1).
+**Before the first powered test (T-092 / D-240, review round 4):** read the ArduPilot `INS_POS1_X/Y/Z` definition and confirm its reference point (the params assume the CG, `A.param` l.268-273); measure the IMU chip position on the Kakute H743-Wing (now "—", EST +-10 mm) and the built CG (T-A-CG-BREADBOARD), then reset INS_POS1 from the measured values.
 Also open for the bench: the A-P10(b) forced-response sweep (6,000 to 10,500 rpm) must be extended to 11,400 rpm (full duty 11,358 rpm), and 1P at hover (118 Hz) is now at the top of the hover band 100 to 119 Hz (T083_report s2.1).
 
 ### TP-3 (re-spec): pad zeta acceptance, the gate for the landing rows
