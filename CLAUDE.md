@@ -80,10 +80,12 @@ each one with its reasoning in `redesign/params/CHANGE-LOG.md`.
 ## Where things are
 - README.md is the front door: directory map, status, how to view the pages.
 - The 3-D gates (`collide.py`, `assembly_check.py`) are interference checks (static, plus straight-line swept insertion); mechanism physics is in docs/analysis-records.md (AR-001 kinematics, AR-002 rigid-body dynamics, AR-003 swept interference).
-- DECISIONS.md lists the open design-parameter conflicts. Do not pick a side
-  silently; the root `analysis/` + `cad/` are the 11-02 resize, while
-  `inventory/`, `fusion/`, `concepts/variants/` are still on v0.3.1.
+- archive/c0/DECISIONS.md lists the open design-parameter conflicts (C0 era). Do not pick a side
+  silently; `archive/c0/analysis/` + `archive/c0/cad/` are the 11-02 resize, while
+  `archive/c0/inventory/`, `archive/c0/fusion/`, `archive/c0/concepts/variants/` are still on v0.3.1.
+  Old path to new path: docs/archive-path-map.md (T-104 layout cleanup).
 - PROVENANCE.md says which source repo and commit each area came from.
+- redesign/README.md is the concept A entry page; the K09-L entry page is redesign/README-K09L.md.
 
 ## Working rules
 - Scope is the real, physical aircraft. Ignore any browser flight-sim code.

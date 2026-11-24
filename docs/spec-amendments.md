@@ -468,3 +468,67 @@ Requirement IDs: R-REPO-06, R-REPO-08, R-RULE-07, R-GEN-05.
 ```text
 Also, put on agent on cleaning up the file layout in the local folder and the github to make it cleaner and easier to follow
 ```
+
+## AM-042 — 2026-11-23 — Keep the team weekly-update card current
+Relation: standing rule; keep Dillon's card on the team "DBF 161 weekly updates" artifact (week 2026-12-02 and later weeks) updated as this week's tasks are completed, in bullet points and plain words for teammates who have not seen the master prompt; the week resets on Wednesdays.
+Requirement IDs: R-INT-06, R-COM-04.
+
+```text
+Continue to update it as we work through this week's tasks (the week resets on Wednesdays)
+```
+
+## AM-043 — 2026-11-23 — Merge the ui-redesign-survey worktree
+Relation: approval (T-104 plan decision D6): check the status of the unmerged `ui-redesign-survey` worktree (.claude/worktrees, 768 MB) and merge it; removal of the worktree afterwards keeps the branch (plan recommendation).
+Requirement IDs: R-GEN-02, R-REPO-06.
+
+```text
+Yes, check its status and merge it
+```
+
+## AM-044 — 2026-11-23 — 3-D replays of the simulation results in the Explorer
+Relation: work order (T-105): add 3-D visualisations of the physics-simulation results to the Explorer's existing Simulations view: flight replay of the SITL runs (model, elevons, props, trail, timeline, synced plots, case picker), landing replay of the touchdown cases, elevon linkage sweep; labelled as playback of simulation output (R-PHY-06); after T-101 and T-104 land.
+Requirement IDs: R-PHY-10, R-INT-05, R-PHY-06.
+
+```text
+Yes, add them
+```
+
+## AM-045 — 2026-11-23 — DaVinci API documentation
+Relation: input to T-037 / R-INT-04 (answers findings question 1, which product: the DaVinci app, docs at docs.davinci-app.com); access, account and spend cap still open (AM-003 $0 stands).
+Requirement IDs: R-INT-04.
+
+```text
+Here is a link to the Davinci API instructions https://docs.davinci-app.com/pages/api/introduction
+```
+
+## AM-046 — 2026-11-23 — Use the DaVinci "API Test" project; start the research
+Relation: work order (T-037): use the design-build-fly organization's DaVinci project "API Test" (id b53fed82-b072-43c2-9994-de76de845d93) for the DaVinci work instead of the personal "Test" project; work on scratch branches, never `main`; start the $0 research: data mapping to DaVinci object types, capability inventory (tools, simulation types), Claude connector (MCP) check, public pricing.
+Requirement IDs: R-INT-04.
+
+```text
+Yes, use API Test and start the research
+```
+
+## AM-047 — 2026-11-23 — Import the current design into DaVinci to verify the workflow
+Relation: work order (T-037): import what exists so far (committed concept A data, labelled as a snapshot because T-101 is still changing numbers) into the DaVinci "API Test" project on a scratch branch, committed so Dillon can open and check it in the DaVinci web app; $0 pattern (no agent prompts), usage read before and after.
+Requirement IDs: R-INT-04.
+
+```text
+Could you import what we have don so far into davinci so that I can verify that it actually does work
+```
+
+## AM-048 — 2026-11-23 — Show the 3-D model in DaVinci
+Relation: work order (T-037): on the API Test snapshot branch, (1) upload the exported concept A model (concept-a.opt.glb, the gated GLB), (2) create a DaVinci Page that shows it in the DavinciViewer (or give Dillon the steps if pages cannot be created over the API), (3) add the individual CAD parts with their masses as part objects; $0 pattern (no agent prompts), usage read before and after.
+Requirement IDs: R-INT-04.
+
+```text
+Do all three
+```
+
+## AM-049 — 2026-11-23 — One-part STEP test in DaVinci
+Relation: work order (T-037): convert one concept A part (the 6061 hub CGE-001) from the gated GLB to a faceted STEP file, upload it to the API Test snapshot branch, and find out whether DaVinci turns it into a geometry object with a 3-D view (else create a geometry of kind step pointing at it, or prepare the file for a drag-in); $0 pattern.
+Requirement IDs: R-INT-04.
+
+```text
+Yes, do the one-part STEP test
+```
