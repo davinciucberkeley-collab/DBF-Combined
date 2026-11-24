@@ -588,3 +588,19 @@ Requirement IDs: R-INT-04.
 ```text
 Yes, I'll delete it
 ```
+
+## AM-057 — 2026-11-24 — Derive the roll and gust requirement
+Relation: work order (T-101): derive the cruise roll-rate requirement (A-P11, 90 deg/s has no derivation) and the gust case from the mission (racetrack turns, reversals, site wind) instead of waiting for a team pick (derived requirements are the engineering team's; memory "derived requirements are ours"), then re-check the elevon reserve and pitch-use claim against it.
+Requirement IDs: R-PHY-10, R-OPT-01.
+
+```text
+Yes, derive the roll and gust requirement
+```
+
+## AM-058 — 2026-11-24 — DaVinci storage raised to 50 GB
+Relation: information from Dillon (Celedon raised the account storage); with 50 GB the T-037 import uses the full-detail per-part STEP set (129 parts, CAD fidelity) instead of the lighter per-subsystem set planned under AM-056.
+Requirement IDs: R-INT-04.
+
+```text
+It says we should have 50GB of storage now
+```
