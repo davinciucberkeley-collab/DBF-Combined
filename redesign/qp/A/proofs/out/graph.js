@@ -2,7 +2,7 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-24 01:54 UTC",
+  "generated": "2026-11-24 09:16 UTC",
   "dataset": "concept-a",
   "ok": false,
   "errors": [
@@ -10,19 +10,19 @@ window.PROOF_GRAPH = {
    "STRICT A-D3: CL-A-MASS-PRED: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)",
    "STRICT A-P6: CL-A-STALL is UNVERIFIED",
    "STRICT A-P10: CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)",
-   "STRICT A-P11: CL-A-PITCH-USE: FAILS: margin -31.7% (0.79 vs <= 0.6)",
+   "STRICT A-P11: CL-A-PITCH-USE: FAILS: margin -8.5% (0.651 vs <= 0.6)",
    "STRICT A-P13: CL-A-FLUTTER-ELEVON-NOM is UNVERIFIED",
    "STRICT CL-A-MASS-PRED: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)",
    "STRICT CL-A-MASS-GATE-ROOM: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)",
    "STRICT CL-A-CUTS-REQUIRED: FAILS: margin -883.5% (409.1 g vs <= 41.6 g)",
    "STRICT CL-A-STALL-PRED: FAILS: margin -4.4% (17.74 m/s vs <= 17 m/s)",
-   "STRICT CL-A-PITCH-USE: FAILS: margin -31.7% (0.79 vs <= 0.6)",
+   "STRICT CL-A-PITCH-USE: FAILS: margin -8.5% (0.651 vs <= 0.6)",
    "STRICT CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)",
    "STRICT CL-A-VIB-FC: FAILS: margin -524.0% (187.2 m/s2 vs <= 30 m/s2)",
    "STRICT CL-A-VIB-GM: FAILS: margin -43.5% (1.13 vs >= 2)",
    "STRICT CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)",
    "STRICT CL-A-HORN-RIB-FOAM-STALL: FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)",
-   "STRICT CL-A-ELEVON-TORSION-FOAM: FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)",
+   "STRICT CL-A-ELEVON-TORSION-FOAM: FAILS: margin -507.8% (521.5 kPa vs <= 85.8 kPa)",
    "STRICT CL-A-HORN-BEARING-STALL: FAILS: margin -83.2% (36.65 MPa vs <= 20 MPa)",
    "STRICT CL-A-LINKAGE-FREEPLAY: FAILS: margin -28.0% (1.28 deg vs <= 1 deg)",
    "STRICT CL-A-VIB-GM-SHIFT: FAILS: margin -47.5% (1.05 vs >= 2)"
@@ -35,7 +35,7 @@ window.PROOF_GRAPH = {
   ],
   "counts": {
    "by_type": {
-    "source": 40,
+    "source": 41,
     "assumption": 10,
     "requirement": 22,
     "test": 16,
@@ -46,7 +46,7 @@ window.PROOF_GRAPH = {
    },
    "by_status": {
     "CHECKED": 321,
-    "UNVERIFIED": 228,
+    "UNVERIFIED": 229,
     "PROPOSED": 20
    },
    "fails": 20
@@ -461,6 +461,18 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
    "importance": 4
+  },
+  {
+   "id": "SRC-A-AR017",
+   "type": "source",
+   "title": "Analysis record AR-017 (T-101 C3 controls, SITL transition pitch use at the 0.25 elevon chord)",
+   "kind": "file",
+   "url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/docs/analysis-records.md",
+   "checked": "2026-11-15",
+   "where": "AR-017 result: C3 elevon pitch use on the 15 deg basis 0.554 / 0.571 / 0.651 / 0.605 (Z5, Z5 Lua, T-074, T-074 Lua); worst 0.651 (T-074 without Lua)",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "CHECKED",
+   "importance": 1
   },
   {
    "id": "SRC-A-AR015",
@@ -952,7 +964,7 @@ window.PROOF_GRAPH = {
    "ref": "qp/A/REQUIREMENTS-A.md#a-p11",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
-    "CL-A-PITCH-USE: FAILS: margin -31.7% (0.79 vs <= 0.6)",
+    "CL-A-PITCH-USE: FAILS: margin -8.5% (0.651 vs <= 0.6)",
     "CL-A-SERVO-SPEED is UNVERIFIED",
     "CL-A-SERVO-FACTOR is UNVERIFIED",
     "CL-A-SERVO-COLD is UNVERIFIED",
@@ -991,7 +1003,7 @@ window.PROOF_GRAPH = {
     "CL-A-FOAM-CAP-PEEL is UNVERIFIED",
     "CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)",
     "CL-A-HORN-RIB-FOAM-STALL: FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)",
-    "CL-A-ELEVON-TORSION-FOAM: FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)",
+    "CL-A-ELEVON-TORSION-FOAM: FAILS: margin -507.8% (521.5 kPa vs <= 85.8 kPa)",
     "CL-A-HORN-BLADE-HOLD is UNVERIFIED",
     "CL-A-HORN-BLADE-STALL is UNVERIFIED",
     "CL-A-HORN-BEARING-HOLD is UNVERIFIED",
@@ -3563,10 +3575,10 @@ window.PROOF_GRAPH = {
     "v": "P:sim.pitch_use_15_worst"
    },
    "outputs": {
-    "v": 0.79
+    "v": 0.651
    },
    "input_values": {
-    "v": 0.79
+    "v": 0.651
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -3591,14 +3603,15 @@ window.PROOF_GRAPH = {
     "WNG-006-R",
     "WNG-006-L"
    ],
-   "how": "D-245: the standing line is 0.60 of 15 deg (SITL-FLIGHT.md l.25), 0.69 (Z5) to 0.79 (T-074) in AR-015, so FAIL, open (AR-010 item 5). Fix path is the ladder from rung 1 (controls: lower the entry pitch-rate demand), then a SITL rerun; a 20 deg basis is not used (no A-specific roll / gust reserve derivation; review round 10 98-4). First transition flight logs the elevon commands.",
-   "value": 0.79,
+   "how": "D-245: the standing line is 0.60 of 15 deg (SITL-FLIGHT.md l.25), worst C3 case 0.651 (0.554 / 0.571 / 0.651 / 0.605, AR-017) against 0.60, so FAIL, open pending the reserve derivation (D-251); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls (AR-010 item 5). Fix path is the ladder from rung 1 (controls: lower the entry pitch-rate demand), then a SITL rerun; a 20 deg basis is not used (no A-specific roll / gust reserve derivation; review round 10 98-4). First transition flight logs the elevon commands.",
+   "value": 0.651,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -31.7% (0.79 vs <= 0.6)"
+    "FAILS: margin -8.5% (0.651 vs <= 0.6)",
+    "uses P:sim.pitch_use_15_worst, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: AR-017 (T-101, C3 controls, 0.25 chord): worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251))"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.31666666666666676,
+   "margin": -0.08500000000000008,
    "fails": true,
    "importance": 1
   },
@@ -5847,10 +5860,10 @@ window.PROOF_GRAPH = {
     "ASM-A-FOAM-ALLOW"
    ],
    "outputs": {
-    "v": 504.3
+    "v": 521.5
    },
    "input_values": {
-    "v": 504.3
+    "v": 521.5
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
@@ -5883,17 +5896,17 @@ window.PROOF_GRAPH = {
    "assumes": [
     "ASM-A-FOAM-ALLOW"
    ],
-   "value": 504.3,
+   "value": 521.5,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "reasons": [
-    "FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)",
+    "FAILS: margin -507.8% (521.5 kPa vs <= 85.8 kPa)",
     "uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:linkage.elevon_torsion_hold_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: elevon beside the horn, foam-only Saint-Venant torsion, outboard share 0.51 of 0.146 N m, x 2.156 (tape skin not credited))",
     "uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:linkage.foam_shear_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: foam shear 100 x 103/120 kPa (EST, foam_103.py))"
    ],
    "status": "UNVERIFIED",
-   "margin": -4.8776223776223775,
+   "margin": -5.078088578088578,
    "fails": true,
    "importance": 1
   },
@@ -6342,10 +6355,10 @@ window.PROOF_GRAPH = {
     "v": "P:linkage.servo_speed_margin_r2"
    },
    "outputs": {
-    "v": 1.521
+    "v": 1.482
    },
    "input_values": {
-    "v": 1.521
+    "v": 1.482
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
@@ -6375,13 +6388,13 @@ window.PROOF_GRAPH = {
     "MEC-004-L"
    ],
    "how": "Hand calculation (AR-005): linear torque-speed line, gearing 0.909-0.928 from the solved linkage, end-point load. Required rates are EST; 7.2 V speed is not published so the 6 V no-load speed is used. Bench ramp of the built rail at BUILD D5b closes it. The full-throw sinusoid R3 (0.84) is not a required case.",
-   "value": 1.521,
+   "value": 1.482,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "reasons": [
     "uses P:linkage.servo_speed_margin_r2, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: AR-005: loaded elevon rate (231 deg/s, 6.0 V pair, stall 0.333 N m, 0.13 s / 60 deg, linear torque-speed line, end-point load 0.146 N m + preload + damper) over the 152 deg/s needed for +-11 deg at the 2.2 Hz crossover (EST); the 7.2 V case (1.73) is not used (7.2 V speed unpublished))"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.5209999999999999,
+   "margin": 0.482,
    "importance": 1
   },
   {
@@ -9281,11 +9294,14 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "sim.pitch_use_15_worst",
    "file": "redesign/qp/A/params-A.json",
-   "value": 0.79,
+   "value": 0.651,
    "unit": "-",
-   "source": "SRC-A-AR015",
-   "note": "AR-015 (T-097, 1.881 kg EST, X2216, CG 22.049 mm): elevon pitch use on the 15 deg basis, worst of Z5 0.69 and T-074 0.77-0.79 (T097_data/sitl_*/sum.json pitch_use_15); information on other bases: 20 deg 0.52-0.59, 25 deg 0.41-0.47",
-   "status": "CHECKED",
+   "source": "SRC-A-AR017",
+   "note": "AR-017 (T-101, C3 controls, 0.25 chord): worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: AR-017 (T-101, C3 controls, 0.25 chord): worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -10249,7 +10265,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "linkage.elevon_torsion_hold_kpa",
    "file": "redesign/qp/A/params-A.json",
-   "value": 504.3,
+   "value": 521.5,
    "unit": "kPa",
    "source": "SRC-A-LINKLOADS",
    "note": "elevon beside the horn, foam-only Saint-Venant torsion, outboard share 0.51 of 0.146 N m, x 2.156 (tape skin not credited)",
@@ -10399,7 +10415,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "linkage.servo_speed_margin_r2",
    "file": "redesign/qp/A/params-A.json",
-   "value": 1.521,
+   "value": 1.482,
    "unit": "-",
    "source": "SRC-A-LINKLOADS",
    "note": "AR-005: loaded elevon rate (231 deg/s, 6.0 V pair, stall 0.333 N m, 0.13 s / 60 deg, linear torque-speed line, end-point load 0.146 N m + preload + damper) over the 152 deg/s needed for +-11 deg at the 2.2 Hz crossover (EST); the 7.2 V case (1.73) is not used (7.2 V speed unpublished)",
@@ -17240,7 +17256,7 @@ window.PROOF_GRAPH = {
    "type": "cites"
   },
   {
-   "source": "SRC-A-AR015",
+   "source": "SRC-A-AR017",
    "target": "P:sim.pitch_use_15_worst",
    "type": "cites"
   },

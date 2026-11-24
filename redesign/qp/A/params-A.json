@@ -782,10 +782,11 @@
    "note": "D-195: worst elevon peak in the transition runs at the CAD CG, 1.455 / 1.47 kg (R5_t0, R5_g0 11.5; wind 4 m/s 10.3; CG 19.3 forward trim end 12.0, R5_cgf)"
   },
   "pitch_use_15_worst": {
-   "value": 0.79,
+   "value": 0.651,
    "unit": "-",
-   "source": "SRC-A-AR015",
-   "note": "AR-015 (T-097, 1.881 kg EST, X2216, CG 22.049 mm): elevon pitch use on the 15 deg basis, worst of Z5 0.69 and T-074 0.77-0.79 (T097_data/sitl_*/sum.json pitch_use_15); information on other bases: 20 deg 0.52-0.59, 25 deg 0.41-0.47"
+   "source": "SRC-A-AR017",
+   "note": "AR-017 (T-101, C3 controls, 0.25 chord): worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251)",
+   "status": "UNVERIFIED"
   },
   "elevon_stop_deg": {
    "value": 20.0,
@@ -1292,7 +1293,7 @@
    "status": "UNVERIFIED"
   },
   "elevon_torsion_hold_kpa": {
-   "value": 504.3,
+   "value": 521.5,
    "unit": "kPa",
    "source": "SRC-A-LINKLOADS",
    "note": "elevon beside the horn, foam-only Saint-Venant torsion, outboard share 0.51 of 0.146 N m, x 2.156 (tape skin not credited)",
@@ -1362,7 +1363,7 @@
    "status": "UNVERIFIED"
   },
   "servo_speed_margin_r2": {
-   "value": 1.521,
+   "value": 1.482,
    "unit": "-",
    "source": "SRC-A-LINKLOADS",
    "note": "AR-005: loaded elevon rate (231 deg/s, 6.0 V pair, stall 0.333 N m, 0.13 s / 60 deg, linear torque-speed line, end-point load 0.146 N m + preload + damper) over the 152 deg/s needed for +-11 deg at the 2.2 Hz crossover (EST); the 7.2 V case (1.73) is not used (7.2 V speed unpublished)",

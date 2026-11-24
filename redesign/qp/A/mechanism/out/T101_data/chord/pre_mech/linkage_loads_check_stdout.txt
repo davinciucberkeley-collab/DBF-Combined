@@ -1,0 +1,266 @@
+{
+ "inputs": {
+  "F_hold_N": 17.0532370588428,
+  "F_stall_N": 50.993721868355266,
+  "F_stall_at_delta_deg": 21.0,
+  "min_arm_lever_ratio": 0.9159143643901201,
+  "tau_stall_Nm": 0.397,
+  "dynamic_step_peak_N_not_used": 42.74455079930922,
+  "hinge_vd_Nm": 0.146,
+  "KP": 2.15625,
+  "K_stall_printed": 1.4375,
+  "arm_joint_state": "mid"
+ },
+ "pass": {
+  "rod_leg_music_wire_recalled": true,
+  "blade_root_hold": true,
+  "blade_root_stall": true,
+  "hole_bearing_hold": true,
+  "hole_bearing_stall": false,
+  "rib_foam_hold": false,
+  "rib_foam_stall": false,
+  "elevon_torsion_foam_hold": false,
+  "elevon_torsion_foam_stall": false,
+  "free_play_le_1deg": false,
+  "keeper_bridge_hold": true,
+  "keeper_bridge_stall": true,
+  "servo_speed_margin_ge_1": true
+ },
+ "horn_rib_vs_elevon_body_hold": 0.8563544794923127,
+ "rod_leg": {
+  "hold": {
+   "F_N": 17.0532370588428,
+   "sigma_nominal_MPa": 190.99271295934017,
+   "sigma_K_MPa": 310.36315855892775,
+   "required_yield_MPa": {
+    "1.5": 465.54473783839165
+   },
+   "required_yield_MPa_rod_on_arm_LO": {
+    "1.5": 392.0376739691717
+   }
+  },
+  "stall": {
+   "F_N": 50.993721868355266,
+   "sigma_nominal_MPa": 571.1190931038464,
+   "sigma_K_MPa": 928.0685262937503,
+   "required_yield_MPa": {
+    "1.0": 928.0685262937503,
+    "1.5": 1392.1027894406254
+   },
+   "required_yield_MPa_rod_on_arm_LO": {
+    "1.0": 781.5313905631577,
+    "1.5": 1172.2970858447366
+   }
+  },
+  "required_yield_MPa_governing": 1392.1027894406254,
+  "collapse_Fc_N_at_required_yield": 211.01347545205257
+ },
+ "blade": {
+  "governing_width_mm": 17.265894645948883,
+  "governing_lever_mm": 8.971222031576001,
+  "hold": {
+   "F_N": 17.0532370588428,
+   "factor": 2.15625,
+   "root_sigma_MPa": 1.539577360383437,
+   "root_factored_MPa": 3.319713683326786,
+   "root_ok": true,
+   "bearing_MPa": 8.5266185294214,
+   "bearing_factored_MPa": 18.385521204064894,
+   "bearing_ok": true,
+   "shearout_MPa": 2.583823796794363,
+   "shearout_factored_MPa": 5.571370061837846,
+   "shearout_ok": true
+  },
+  "stall": {
+   "F_N": 50.993721868355266,
+   "factor": 1.4375,
+   "root_sigma_MPa": 4.603746458183407,
+   "root_factored_MPa": 6.617885533638647,
+   "root_ok": true,
+   "bearing_MPa": 25.496860934177633,
+   "bearing_factored_MPa": 36.651737592880345,
+   "bearing_ok": false,
+   "shearout_MPa": 7.726321495205343,
+   "shearout_factored_MPa": 11.106587149357681,
+   "shearout_ok": true
+  }
+ },
+ "rib": {
+  "hold": {
+   "F_N": 17.0532370588428,
+   "factor": 2.15625,
+   "peak_kPa_range": [
+    138.0536815013014,
+    200.27283811080403
+   ],
+   "factored_kPa_max": 431.8383071764212,
+   "factored_kPa_min": 297.67825073718114,
+   "ok": false
+  },
+  "stall": {
+   "F_N": 50.993721868355266,
+   "factor": 1.4375,
+   "peak_kPa_range": [
+    412.8172858395259,
+    598.869139491976
+   ],
+   "factored_kPa_max": 860.8743880197154,
+   "ok": false
+  },
+  "sweep": [
+   {
+    "E_foam_MPa": 5.0,
+    "l_mm": 2.0,
+    "G_over_l_MPa_per_mm": 1.1363636363636362,
+    "hold_peak_kPa": 178.89469822757528,
+    "stall_peak_kPa": 534.9428062016924,
+    "lambda_L_front": 3.780077178101373,
+    "at_x_mm": 2.500000000000002
+   },
+   {
+    "E_foam_MPa": 5.0,
+    "l_mm": 4.0,
+    "G_over_l_MPa_per_mm": 0.5681818181818181,
+    "hold_peak_kPa": 157.7470052154727,
+    "stall_peak_kPa": 471.70556991229677,
+    "lambda_L_front": 3.1786533484478214,
+    "at_x_mm": 2.500000000000002
+   },
+   {
+    "E_foam_MPa": 5.0,
+    "l_mm": 8.0,
+    "G_over_l_MPa_per_mm": 0.28409090909090906,
+    "hold_peak_kPa": 138.0536815013014,
+    "stall_peak_kPa": 412.8172858395259,
+    "lambda_L_front": 2.6729182060439896,
+    "at_x_mm": 2.500000000000002
+   },
+   {
+    "E_foam_MPa": 10.0,
+    "l_mm": 2.0,
+    "G_over_l_MPa_per_mm": 2.2727272727272725,
+    "hold_peak_kPa": 200.27283811080403,
+    "stall_peak_kPa": 598.869139491976,
+    "lambda_L_front": 4.4952946754575605,
+    "at_x_mm": 2.500000000000002
+   },
+   {
+    "E_foam_MPa": 10.0,
+    "l_mm": 4.0,
+    "G_over_l_MPa_per_mm": 1.1363636363636362,
+    "hold_peak_kPa": 178.89469822757528,
+    "stall_peak_kPa": 534.9428062016924,
+    "lambda_L_front": 3.780077178101373,
+    "at_x_mm": 2.500000000000002
+   },
+   {
+    "E_foam_MPa": 10.0,
+    "l_mm": 8.0,
+    "G_over_l_MPa_per_mm": 0.5681818181818181,
+    "hold_peak_kPa": 157.7470052154727,
+    "stall_peak_kPa": 471.70556991229677,
+    "lambda_L_front": 3.1786533484478214,
+    "at_x_mm": 2.500000000000002
+   }
+  ]
+ },
+ "elevon": {
+  "J_mm4": 2756.737236411379,
+  "hold": {
+   "T_Nm": 0.07464838709677418,
+   "factor": 2.15625,
+   "tau_kPa": 233.86674900040833,
+   "factored_kPa": 504.2751775321305,
+   "ok": false,
+   "bredt_q_N_per_m": 151.69363235195536,
+   "bredt_note": "tape skin shear flow if the elevon cell is closed (nose face taped): tape strength \"-\", not credited"
+  },
+  "stall": {
+   "T_Nm": 0.46684887463424785,
+   "factor": 1.4375,
+   "tau_kPa": 1462.5959492422685,
+   "factored_kPa": 2102.481677035761,
+   "ok": false,
+   "bredt_q_N_per_m": 948.687631534265,
+   "bredt_note": "tape skin shear flow if the elevon cell is closed (nose face taped): tape strength \"-\", not credited"
+  }
+ },
+ "free_play": 1.2801189760845506,
+ "rod_receipt_test": {
+  "e_lo_mm": 1.5999999999999999,
+  "e_hi_mm": 1.9000000000000006,
+  "receipt_test_load_N": 90.83256707800786
+ },
+ "keeper_bridge_MEC008": {
+  "a_mm": 2.0,
+  "hold": {
+   "F_N": 17.0532370588428,
+   "V_N": 0.7491595470936727,
+   "sigma_MPa": 4.5312069380665685,
+   "factor": 2.15625,
+   "factored_MPa": 9.770414960206038,
+   "ok": true,
+   "utilisation": 0.4885207480103019
+  },
+  "stall": {
+   "F_N": 50.993721868355266,
+   "V_N": 2.2401866254306375,
+   "sigma_MPa": 13.54951587962079,
+   "factor": 1.4375,
+   "factored_MPa": 19.477429076954884,
+   "ok": true,
+   "utilisation": 0.9738714538477442
+  }
+ },
+ "stall_8p4V_informational": {
+  "note": "8.4 V is NOT available from the Kakute (5.3 / 7.2 V); informational, not a claim. Checks are linear in F.",
+  "tau_stall_Nm": 0.46091255000000003,
+  "F_stall_N": 59.20313949706395,
+  "scale_vs_7V2": 1.1609887909319898,
+  "leg_required_yield_MPa_1p0": 1077.4771562438148,
+  "leg_required_yield_MPa_1p5": 1616.215734365722
+ },
+ "servo_speed_T056": {
+  "gearing_at_end_points_max": 0.9282128971785047,
+  "required_elevon_rate_deg_s": {
+   "R1_step_deg_s": 80.0,
+   "R2_sine_deg_s": 152.053084433746,
+   "R3_sine_full_throw_deg_s": 276.4601535159018
+  },
+  "cases": {
+   "6.0V_pair_0.333": {
+    "tau_stall_Nm": 0.333,
+    "tau_hold_Nm": 0.13551908298806167,
+    "torque_margin_hold": 2.4572185160766997,
+    "tau_loaded_Nm": 0.15324794932417113,
+    "torque_margin_loaded": 2.1729491420181595,
+    "servo_speed_loaded_rad_s": 4.348253806659615,
+    "elevon_rate_loaded_deg_s": 231.25179727177897,
+    "elevon_rate_no_load_deg_s": 428.4059525439252,
+    "speed_margin_R1": 2.890647465897237,
+    "speed_margin_R2": 1.520862257631756,
+    "speed_margin_R3": 0.8364742416974659,
+    "sine_limit_Hz_at_11deg": 3.345896966789864,
+    "sine_limit_Hz_at_20deg": 1.8402433317344251,
+    "ok": true
+   },
+   "7.2V_EST_0.397_speed_at_6V": {
+    "tau_stall_Nm": 0.397,
+    "tau_hold_Nm": 0.13551908298806167,
+    "torque_margin_hold": 2.929476729376726,
+    "tau_loaded_Nm": 0.15324794932417113,
+    "torque_margin_loaded": 2.5905730011447727,
+    "servo_speed_loaded_rad_s": 4.945873872638577,
+    "elevon_rate_loaded_deg_s": 263.0348348975154,
+    "elevon_rate_no_load_deg_s": 428.4059525439252,
+    "speed_margin_R1": 3.2879354362189424,
+    "speed_margin_R2": 1.7298881892272788,
+    "speed_margin_R3": 0.9514385040750033,
+    "sine_limit_Hz_at_11deg": 3.805754016300014,
+    "sine_limit_Hz_at_20deg": 2.0931647089650074,
+    "ok": true
+   }
+  },
+  "ok": true
+ }
+}

@@ -10,19 +10,19 @@ Parameter files: `redesign/qp/A/params-A.json`
 > - STRICT A-D3: CL-A-MASS-PRED: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)
 > - STRICT A-P6: CL-A-STALL is UNVERIFIED
 > - STRICT A-P10: CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)
-> - STRICT A-P11: CL-A-PITCH-USE: FAILS: margin -31.7% (0.79 vs <= 0.6)
+> - STRICT A-P11: CL-A-PITCH-USE: FAILS: margin -8.5% (0.651 vs <= 0.6)
 > - STRICT A-P13: CL-A-FLUTTER-ELEVON-NOM is UNVERIFIED
 > - STRICT CL-A-MASS-PRED: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)
 > - STRICT CL-A-MASS-GATE-ROOM: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)
 > - STRICT CL-A-CUTS-REQUIRED: FAILS: margin -883.5% (409.1 g vs <= 41.6 g)
 > - STRICT CL-A-STALL-PRED: FAILS: margin -4.4% (17.74 m/s vs <= 17 m/s)
-> - STRICT CL-A-PITCH-USE: FAILS: margin -31.7% (0.79 vs <= 0.6)
+> - STRICT CL-A-PITCH-USE: FAILS: margin -8.5% (0.651 vs <= 0.6)
 > - STRICT CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)
 > - STRICT CL-A-VIB-FC: FAILS: margin -524.0% (187.2 m/s2 vs <= 30 m/s2)
 > - STRICT CL-A-VIB-GM: FAILS: margin -43.5% (1.13 vs >= 2)
 > - STRICT CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)
 > - STRICT CL-A-HORN-RIB-FOAM-STALL: FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)
-> - STRICT CL-A-ELEVON-TORSION-FOAM: FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)
+> - STRICT CL-A-ELEVON-TORSION-FOAM: FAILS: margin -507.8% (521.5 kPa vs <= 85.8 kPa)
 > - STRICT CL-A-HORN-BEARING-STALL: FAILS: margin -83.2% (36.65 MPa vs <= 20 MPa)
 > - STRICT CL-A-LINKAGE-FREEPLAY: FAILS: margin -28.0% (1.28 deg vs <= 1 deg)
 > - STRICT CL-A-VIB-GM-SHIFT: FAILS: margin -47.5% (1.05 vs >= 2)
@@ -34,7 +34,7 @@ Parameter files: `redesign/qp/A/params-A.json`
 | [A-D8](#a-d8) First tethered hover by 2027-02-18 | **UNVERIFIED** | 2 | — |
 | [A-P1](#a-p1) Mass gate 1.47 kg and T/W at the gate | **UNVERIFIED** **FAILS** | 3 | -28% |
 | [A-P10](#a-p10) Vibration rule D-185 | **UNVERIFIED** **FAILS** | 8 | -524%; 1 below a limit of 0 |
-| [A-P11](#a-p11) Cruise control authority | **UNVERIFIED** **FAILS** | 7 | -32% |
+| [A-P11](#a-p11) Cruise control authority | **UNVERIFIED** **FAILS** | 7 | -9% |
 | [A-P13](#a-p13) Loads and flutter (G8) | **UNVERIFIED** **FAILS** | 46 | -903% |
 | [A-P16](#a-p16) Motor and ESC current | **UNVERIFIED** | 2 | +25% |
 | [A-P2](#a-p2) Hover T/W >= 2.0 fresh, >= 1.6 worst pack state | **UNVERIFIED** | 4 | +35% |
@@ -450,21 +450,23 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p11
     - `v` ← param `P:sim.roll_150_degs` = 106.4 deg/s — **CHECKED**
       - `SRC-A-D195SITL` (see above)
   - `P:req.roll_min_degs` (see above)
-- claim **CL-A-PITCH-USE** Elevon pitch use in transition (share of the 15 deg basis; the 0.60 line is 9 deg) = **0.79** (limit <= 0.6, margin -32%) — **UNVERIFIED** **FAILS**
-  - ⚠ FAILS: margin -31.7% (0.79 vs <= 0.6)
-  - how to verify: D-245: the standing line is 0.60 of 15 deg (SITL-FLIGHT.md l.25), 0.69 (Z5) to 0.79 (T-074) in AR-015, so FAIL, open (AR-010 item 5). Fix path is the ladder from rung 1 (controls: lower the entry pitch-rate demand), then a SITL rerun; a 20 deg basis is not used (no A-specific roll / gust reserve derivation; review round 10 98-4). First transition flight logs the elevon commands.
+- claim **CL-A-PITCH-USE** Elevon pitch use in transition (share of the 15 deg basis; the 0.60 line is 9 deg) = **0.651** (limit <= 0.6, margin -9%) — **UNVERIFIED** **FAILS**
+  - ⚠ FAILS: margin -8.5% (0.651 vs <= 0.6)
+  - ⚠ uses P:sim.pitch_use_15_worst, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: AR-017 (T-101, C3 controls, 0.25 chord): worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251))
+  - how to verify: D-245: the standing line is 0.60 of 15 deg (SITL-FLIGHT.md l.25), worst C3 case 0.651 (0.554 / 0.571 / 0.651 / 0.605, AR-017) against 0.60, so FAIL, open pending the reserve derivation (D-251); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls (AR-010 item 5). Fix path is the ladder from rung 1 (controls: lower the entry pitch-rate demand), then a SITL rerun; a 20 deg basis is not used (no A-specific roll / gust reserve derivation; review round 10 98-4). First transition flight logs the elevon commands.
   - parts: WNG-006-R, WNG-006-L
   - calc `CALC-A-PITCH-USE-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `SITL (ArduPlane, 6-DOF plant) transition runs T-097, pitch_use_15 in sum.json; read, not re-run` — **CHECKED**
-    - `v` ← param `P:sim.pitch_use_15_worst` = 0.79 — **CHECKED**
-      - source `SRC-A-AR015` [Analysis records AR-015 / AR-016 (SITL transition pitch use, landing foam region)](https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/docs/analysis-records.md), AR-015 result (pitch use 0.69-0.79 of 15 deg, 0.52-0.59 of 20 deg); AR-016 result (landing: record run 17.2 mm at Fp 37.5 N / zeta 0.05; accepted region Fp 37.5-39.0 N, zeta 0.02-0.05), checked 2026-11-15 — **CHECKED**
+    - `v` ← param `P:sim.pitch_use_15_worst` = 0.651 — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: AR-017 (T-101, C3 controls, 0.25 chord): worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251)
+      - source `SRC-A-AR017` [Analysis record AR-017 (T-101 C3 controls, SITL transition pitch use at the 0.25 elevon chord)](https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/docs/analysis-records.md), AR-017 result: C3 elevon pitch use on the 15 deg basis 0.554 / 0.571 / 0.651 / 0.605 (Z5, Z5 Lua, T-074, T-074 Lua); worst 0.651 (T-074 without Lua), checked 2026-11-15 — **CHECKED**
   - param `P:req.pitch_use_max` = 0.6 — **CHECKED**
-    - `SRC-A-AR015` (see above)
-- claim **CL-A-SERVO-SPEED** Elevon servo speed margin: loaded rate over the 152 deg/s of the +-11 deg, 2.2 Hz roll sinusoid (AR-005, 6.0 V pair) = **1.521** (limit >= 1, margin +52%) — **UNVERIFIED**
+    - source `SRC-A-AR015` [Analysis records AR-015 / AR-016 (SITL transition pitch use, landing foam region)](https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/docs/analysis-records.md), AR-015 result (pitch use 0.69-0.79 of 15 deg, 0.52-0.59 of 20 deg); AR-016 result (landing: record run 17.2 mm at Fp 37.5 N / zeta 0.05; accepted region Fp 37.5-39.0 N, zeta 0.02-0.05), checked 2026-11-15 — **CHECKED**
+- claim **CL-A-SERVO-SPEED** Elevon servo speed margin: loaded rate over the 152 deg/s of the +-11 deg, 2.2 Hz roll sinusoid (AR-005, 6.0 V pair) = **1.482** (limit >= 1, margin +48%) — **UNVERIFIED**
   - ⚠ uses P:linkage.servo_speed_margin_r2, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: AR-005: loaded elevon rate (231 deg/s, 6.0 V pair, stall 0.333 N m, 0.13 s / 60 deg, linear torque-speed line, end-point load 0.146 N m + preload + damper) over the 152 deg/s needed for +-11 deg at the 2.2 Hz crossover (EST); the 7.2 V case (1.73) is not used (7.2 V speed unpublished))
   - how to verify: Hand calculation (AR-005): linear torque-speed line, gearing 0.909-0.928 from the solved linkage, end-point load. Required rates are EST; 7.2 V speed is not published so the 6 V no-load speed is used. Bench ramp of the built rail at BUILD D5b closes it. The full-throw sinusoid R3 (0.84) is not a required case.
   - parts: MEC-001-R, MEC-001-L, MEC-002-R, MEC-002-L, MEC-004-R, MEC-004-L
   - calc `CALC-A-SERVO-SPEED-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `read from mechanism/out/linkage_loads_check.json servo_speed_torque_T056 (python -I redesign/qp/A/mechanism/linkage_loads_check.py)` — **CHECKED**
-    - `v` ← param `P:linkage.servo_speed_margin_r2` = 1.521 — **UNVERIFIED**
+    - `v` ← param `P:linkage.servo_speed_margin_r2` = 1.482 — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: AR-005: loaded elevon rate (231 deg/s, 6.0 V pair, stall 0.333 N m, 0.13 s / 60 deg, linear torque-speed line, end-point load 0.146 N m + preload + damper) over the 152 deg/s needed for +-11 deg at the 2.2 Hz crossover (EST); the 7.2 V case (1.73) is not used (7.2 V speed unpublished)
       - source `SRC-A-LINKLOADS` [Elevon linkage strength checks, D-212 rev 3 (linkage_loads_check.json)](redesign/qp/A/mechanism/out/linkage_loads_check.json), hand calculations + 1-D beam-on-foundation FE of the horn rib; stall force 51.0 N quasi-static; factors KP 2.156 hold, 1.4375 stall (printed / bonded), checked 2026-11-15 — **CHECKED**
   - param `P:linkage.servo_speed_margin_min` = 1 — **CHECKED**
@@ -881,8 +883,8 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
       - `SRC-A-LINKLOADS` (see above)
     - `ASM-A-FOAM-ALLOW` (see above)
   - `P:linkage.foam_shear_kpa` (see above)
-- claim **CL-A-ELEVON-TORSION-FOAM** Elevon torsion beside the horn, foam only (tape skin not credited), 1.5 x VD hold (x 2.156) = **504.3 kPa** (limit <= 85.8 kPa, margin -488%) — **UNVERIFIED** **FAILS**
-  - ⚠ FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)
+- claim **CL-A-ELEVON-TORSION-FOAM** Elevon torsion beside the horn, foam only (tape skin not credited), 1.5 x VD hold (x 2.156) = **521.5 kPa** (limit <= 85.8 kPa, margin -508%) — **UNVERIFIED** **FAILS**
+  - ⚠ FAILS: margin -507.8% (521.5 kPa vs <= 85.8 kPa)
   - ⚠ uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses P:linkage.elevon_torsion_hold_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: elevon beside the horn, foam-only Saint-Venant torsion, outboard share 0.51 of 0.146 N m, x 2.156 (tape skin not credited))
   - ⚠ uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -892,7 +894,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
   - `T-A-HORN-FOAM-COUPON` (see above)
   - `ASM-A-FOAM-ALLOW` (see above)
   - calc `CALC-A-ELEVON-TORSION-FOAM-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header` — **CHECKED**
-    - `v` ← param `P:linkage.elevon_torsion_hold_kpa` = 504.3 kPa — **UNVERIFIED**
+    - `v` ← param `P:linkage.elevon_torsion_hold_kpa` = 521.5 kPa — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: elevon beside the horn, foam-only Saint-Venant torsion, outboard share 0.51 of 0.146 N m, x 2.156 (tape skin not credited)
       - `SRC-A-LINKLOADS` (see above)
     - `ASM-A-FOAM-ALLOW` (see above)

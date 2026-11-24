@@ -1,0 +1,134 @@
+{
+ "free_swing": {
+  "E0_J": 0.0002459943838920138,
+  "max_rel_energy_error": 5.506859071248872e-12,
+  "max_residual_m": 3.122502256758253e-17,
+  "t_end_s": 0.1431177924984796,
+  "n_steps": 145,
+  "kinetic_energy_ratio_min_max": [
+   0.9999999999944932,
+   1.0
+  ],
+  "omega_end_rad_s": 4.999853281556533,
+  "nfev": 1733,
+  "status": 1
+ },
+ "rod": {
+  "peak_compression_N": 51.95292455558401,
+  "peak_tension_N": 51.95292455558401,
+  "euler_N": 526.893854660111,
+  "euler_over_peak": 10.141755428924728,
+  "euler_E_200GPa_N": 509.07618807740187,
+  "hold_force_max_N": 29.842840822366668
+ },
+ "pass": {
+  "D1": true,
+  "D2": true,
+  "D3": true,
+  "D4": true,
+  "D5": true,
+  "D6": true
+ },
+ "hold_margin_min_by_stall": {
+  "7.2V_EST_0.397": 2.031083739968653,
+  "6.0V_0.333": 1.703654623197888
+ },
+ "steps": [
+  {
+   "name": "7.2V_EST_0.397|linear|+1",
+   "t_reach_s": 0.06241855700867774,
+   "overshoot_deg": -0.07092957821365431,
+   "peak_rod_force_compression_N": 51.95292455558401,
+   "peak_rod_force_tension_N": -0.0,
+   "hold_tau_required_Nm": 0.1907986973884967,
+   "hold_rod_force_N": 29.525935260663434,
+   "hold_margin": 2.0807269936001944,
+   "max_residual_m": 2.42861286636753e-17,
+   "max_N_mismatch": 7.105427357601002e-15
+  },
+  {
+   "name": "7.2V_EST_0.397|linear|-1",
+   "t_reach_s": 0.06237302315216737,
+   "overshoot_deg": -0.07371306004733214,
+   "peak_rod_force_compression_N": 0.0,
+   "peak_rod_force_tension_N": 51.95292455558401,
+   "hold_tau_required_Nm": 0.1954621526368613,
+   "hold_rod_force_N": 29.842840822366668,
+   "hold_margin": 2.031083739968653,
+   "max_residual_m": 2.42861286636753e-17,
+   "max_N_mismatch": 7.105427357601002e-15
+  },
+  {
+   "name": "7.2V_EST_0.397|constant|+1",
+   "t_reach_s": 0.08880896085603418,
+   "overshoot_deg": -0.07167990392091994,
+   "peak_rod_force_compression_N": 51.95292455558401,
+   "peak_rod_force_tension_N": -0.0,
+   "hold_tau_required_Nm": 0.1907986973884967,
+   "hold_rod_force_N": 29.525935260663434,
+   "hold_margin": 2.0807269936001944,
+   "max_residual_m": 2.42861286636753e-17,
+   "max_N_mismatch": 7.105427357601002e-15
+  },
+  {
+   "name": "7.2V_EST_0.397|constant|-1",
+   "t_reach_s": 0.08879657372178153,
+   "overshoot_deg": -0.07449351554753392,
+   "peak_rod_force_compression_N": 0.0,
+   "peak_rod_force_tension_N": 51.95292455558401,
+   "hold_tau_required_Nm": 0.1954621526368613,
+   "hold_rod_force_N": 29.842840822366668,
+   "hold_margin": 2.031083739968653,
+   "max_residual_m": 2.7755575615628914e-17,
+   "max_N_mismatch": 7.105427357601002e-15
+  },
+  {
+   "name": "6.0V_0.333|linear|+1",
+   "t_reach_s": 0.06774897627735048,
+   "overshoot_deg": -0.08639427309318393,
+   "peak_rod_force_compression_N": 43.577642007580536,
+   "peak_rod_force_tension_N": -0.0,
+   "hold_tau_required_Nm": 0.1907986973884967,
+   "hold_rod_force_N": 29.525935260663434,
+   "hold_margin": 1.7452949341785007,
+   "max_residual_m": 2.7755575615628914e-17,
+   "max_N_mismatch": 7.105427357601002e-15
+  },
+  {
+   "name": "6.0V_0.333|linear|-1",
+   "t_reach_s": 0.06774878687882743,
+   "overshoot_deg": -0.09005175665530629,
+   "peak_rod_force_compression_N": 0.0,
+   "peak_rod_force_tension_N": 43.577642007580536,
+   "hold_tau_required_Nm": 0.1954621526368613,
+   "hold_rod_force_N": 29.842840822366668,
+   "hold_margin": 1.703654623197888,
+   "max_residual_m": 2.42861286636753e-17,
+   "max_N_mismatch": 7.105427357601002e-15
+  },
+  {
+   "name": "6.0V_0.333|constant|+1",
+   "t_reach_s": 0.10868659943708027,
+   "overshoot_deg": -0.08713983658165958,
+   "peak_rod_force_compression_N": 43.577642007580536,
+   "peak_rod_force_tension_N": -0.0,
+   "hold_tau_required_Nm": 0.1907986973884967,
+   "hold_rod_force_N": 29.525935260663434,
+   "hold_margin": 1.7452949341785007,
+   "max_residual_m": 2.42861286636753e-17,
+   "max_N_mismatch": 7.105427357601002e-15
+  },
+  {
+   "name": "6.0V_0.333|constant|-1",
+   "t_reach_s": 0.10875191489330067,
+   "overshoot_deg": -0.09115934782510138,
+   "peak_rod_force_compression_N": 0.0,
+   "peak_rod_force_tension_N": 43.577642007580536,
+   "hold_tau_required_Nm": 0.1954621526368613,
+   "hold_rod_force_N": 29.842840822366668,
+   "hold_margin": 1.703654623197888,
+   "max_residual_m": 2.7755575615628914e-17,
+   "max_N_mismatch": 1.4210854715202004e-14
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "servo_angle_for_delta": {
+  "-21": {
+   "theta_R_deg": -22.644310173205486,
+   "theta_L_deg": 22.644310173205486,
+   "gear": 0.9285927472684182,
+   "gamma_horn_deg": 111.6449202224175,
+   "sigma_min": 0.6047104032965747,
+   "rod_pitch_deg": -0.6482674236208223
+  },
+  "-20": {
+   "theta_R_deg": -21.567041997468575,
+   "theta_L_deg": 21.56704199746852,
+   "gear": 0.9279758437084512,
+   "gamma_horn_deg": 110.56047950569013,
+   "sigma_min": 0.6062873392431504,
+   "rod_pitch_deg": -0.5630952590271842
+  },
+  "+20": {
+   "theta_R_deg": 21.662222945132466,
+   "theta_L_deg": -21.662222945132417,
+   "gear": 0.9092376738766919,
+   "gamma_horn_deg": 70.56573796690515,
+   "sigma_min": 0.6130182489156846,
+   "rod_pitch_deg": -0.5630952590271846
+  },
+  "+21": {
+   "theta_R_deg": 22.763746834280063,
+   "theta_L_deg": -22.763746834280088,
+   "gear": 0.9063845596372074,
+   "gamma_horn_deg": 69.65165531019919,
+   "sigma_min": 0.6127178157637765,
+   "rod_pitch_deg": -0.6482674236208223
+  }
+ },
+ "sweep": {
+  "step_deg": 0.05,
+  "n": 841,
+  "max_residual_m": 2.42861286636753e-17,
+  "max_solver_disagreement": 5.828670879282072e-15,
+  "max_LR_asymmetry_rad": 1.3322676295501878e-15,
+  "max_gear_formula_diff": 1.5543122344752192e-15,
+  "min_sigma": 0.6047104032965747,
+  "min_horn_lever": 0.9293245828478608,
+  "min_horn_gamma_deg": 68.3550797775825,
+  "max_zbend_misalign_deg": 0.6482674236208223,
+  "max_clevis_misalign_deg": 1.0077976050630082
+ },
+ "gearing": {
+  "neutral": 0.9285018009479435,
+  "min": 0.9063845596372074,
+  "max": 0.9285927472684182
+ },
+ "toggle": {
+  "plus": {
+   "first_delta_deg_lever_lt_1em3_or_unreachable": 55.25563909774436,
+   "margin_from_stop_deg": 34.25563909774436
+  },
+  "minus": null
+ },
+ "servo_travel": {
+  "45.0": {
+   "required_deg": 22.763746834280063,
+   "covers": true,
+   "margin_deg": 22.236253165719937
+  },
+  "60.0": {
+   "required_deg": 22.763746834280063,
+   "covers": true,
+   "margin_deg": 37.23625316571994
+  }
+ },
+ "free_play_budget_deg": {
+  "arm_hole_clearance_mm": 0.10099999999999996,
+  "horn_hole_clearance_mm": 0.10000000000000005,
+  "arm_hole_deg": 0.7675889554495505,
+  "horn_hole_deg": 0.7599890648015358,
+  "zbend_z_freedom_deg": 0.03978650507514049,
+  "clevis_cheek_holes_deg": "-",
+  "total_known_deg": 1.5673645253262267,
+  "model": "slop along the rod = sum of the diametral clearances, elevon free play = slop / horn radius (small angle, rod along the horn tangent at neutral); no clevis since T-101 U6a (second Z-bend leg through the horn hole: the horn-hole term above); servo backlash \"-\": measured at E1"
+ },
+ "pass": {
+  "K1": true,
+  "K2": true,
+  "K3": true,
+  "K4": true,
+  "K5": true,
+  "K6": true,
+  "K7": true
+ },
+ "info_gamma_horn_vs_40deg_rule": {
+  "min_gamma_horn_deg": 68.3550797775825,
+  "meets": true
+ }
+}

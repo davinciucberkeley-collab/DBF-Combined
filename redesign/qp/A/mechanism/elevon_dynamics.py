@@ -34,7 +34,7 @@ E_STEEL = 207e9          # Pa, music wire / carbon steel, Acxess Spring Store + 
 ROD_D = k.ROD_D
 I_ROD = math.pi * ROD_D ** 4 / 64
 P_EULER = math.pi ** 2 * E_STEEL * I_ROD / k.L_ROD ** 2     # pinned-pinned
-HINGE_NM = 0.146                                            # params-A.json servo.hinge_vd_nm note / SERVO.md s1 (0.151 in the params file: x 0.31 / 0.30)
+HINGE_NM = json.load(open(os.path.join(HERE, '..', 'params-A.json'), encoding='utf-8'))['servo']['hinge_vd_nm']['value']   # N m at VD, EST: the one source is proofs/gen_params_a.py (0.146 x 0.31 / 0.30), via params-A.json
 TAU_STALL = {'7.2V_EST_0.397': 0.397, '6.0V_0.333': 0.333}  # params-A.json:1002-1007 (EST, interpolated) and SERVO.md 3.4 kgf cm at 6.0 V
 OMEGA_NL = math.radians(60.0) / 0.13                        # SERVO.md: 0.13 s / 60 deg at 6 V (no load)
 THETA_SAT = math.radians(0.2)                               # servo error for full drive (EST: a digital servo is stiff; steady error at hold is reported)
@@ -235,7 +235,7 @@ def main():
     for a in ax.flat:
         a.set_xlabel('t (s)')
         a.grid(alpha=.3)
-    fig.suptitle('Elevon 1-DOF dynamics (frictionless), tau_stall 0.397, constant 0.146 N m load; red = Euler (solid) and Euler/2 (dotted)')
+    fig.suptitle('Elevon 1-DOF dynamics (frictionless), tau_stall 0.397, constant %.3f N m load' % HINGE_NM + '; red = Euler (solid) and Euler/2 (dotted)')
     fig.tight_layout()
     fig.savefig(os.path.join(k.OUT, 'linkage_dynamics' + k.SUF + '.png'), dpi=110)
     print(json.dumps({'free_swing': fs, 'rod': res['rod'], 'pass': res['pass'], 'hold_margin_min_by_stall': res['hold_margin_min_by_stall'],

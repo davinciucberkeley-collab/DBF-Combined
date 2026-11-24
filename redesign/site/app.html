@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="site.css?v=20261123b">
 <link rel="stylesheet" href="app.css?v=20261123d">
 <link rel="stylesheet" href="proofs/embed.css?v=20261118h">
-<link rel="stylesheet" href="explorer.css?v=20261116e">
+<link rel="stylesheet" href="explorer.css?v=20261124b">
 <script type="importmap">
 { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }
@@ -2519,6 +2519,66 @@
     <p class="use">Landing: a 6-degree-of-freedom rigid-body model with four crushable foam feet and pad friction 0.40 (<code class="ds-inline">landing_a.py</code>). Flight: ArduPlane 4.7.3 SITL, the real autopilot firmware and the project parameter file, flying a model of the aircraft (<code class="ds-inline">a_plant.py</code>). No pass line was changed for these runs. <span class="ds-badge" data-status="MODELLED">MODELLED</span></p>
   </header>
 
+  <h3 class="ds-h2" id="sims-replay">Replays of the recorded runs</h3>
+  <p class="use">Three replays of the files in <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/sims3d/out/" target="_blank" rel="noopener">qp/A/sims3d/out</a>: the flight runs (take-off, transition, cruise), the ten landing cases and the elevon linkage sweep. They play back what the physics models already wrote; nothing is recomputed in your browser, and the pass lines are the ones in the tables below. Each loads only the data you pick, and the 3-D model is loaded once and shared by the first two.</p>
+  <noscript><p class="use">The replays need JavaScript.</p></noscript>
+
+  <h3 class="ds-h2" id="sims-replay-flight">Flight replay</h3>
+  <section class="rp" id="rp-flight" aria-label="Flight replay">
+    <div class="rp-bar"><label class="rp-pick">Run <select id="rp-f-case" aria-label="Flight run"><option value="T101C3_T074" selected>Current design basis: C3 at 0.25 chord, hard case T-074 (T-101), without Lua</option><option value="T101C3_T074_lua">Current design basis: C3 at 0.25 chord, hard case T-074 (T-101), with Lua motor cap and battery monitor</option><option value="T101C3_Z5">Current design basis: C3 at 0.25 chord, full flight Z5 (T-101), without Lua</option><option value="T101C3_Z5_lua">Current design basis: C3 at 0.25 chord, full flight Z5 (T-101), with Lua motor cap and battery monitor</option><option value="T101C1_T074">Controls fix C1, hard case T-074 (T-101), without Lua</option><option value="T101C1_T074_lua">Controls fix C1, hard case T-074 (T-101), with Lua motor cap and battery monitor</option><option value="T101C1_Z5">Controls fix C1, full flight Z5 (T-101), without Lua</option><option value="T101C1_Z5_lua">Controls fix C1, full flight Z5 (T-101), with Lua motor cap and battery monitor</option><option value="T101C2_T074">Controls fix C2, hard case T-074 (T-101), without Lua</option><option value="T101C2_T074_lua">Controls fix C2, hard case T-074 (T-101), with Lua motor cap and battery monitor</option><option value="T101C2_Z5">Controls fix C2, full flight Z5 (T-101), without Lua</option><option value="T101C2_Z5_lua">Controls fix C2, full flight Z5 (T-101), with Lua motor cap and battery monitor</option><option value="T097_T074">Baseline 1.881 kg, hard case T-074 (T-097), without Lua</option><option value="T097_T074_lua">Baseline 1.881 kg, hard case T-074 (T-097), with Lua motor cap and battery monitor</option><option value="T097_Z5">Baseline 1.881 kg, full flight Z5 (T-097), without Lua</option><option value="T097_Z5_lua">Baseline 1.881 kg, full flight Z5 (T-097), with Lua motor cap and battery monitor</option></select></label></div>
+    <p class="rp-src"><span class="rp-label">Playback of recorded simulation output (not a new simulation)</span> Source: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/sims3d/out/flight_T101C3_T074.json" target="_blank" rel="noopener">flight_*.json</a> (one file per run). <span class="rp-kb" id="rp-f-kb">Loads <b>104.7 KB</b> of run data and the 3-D model (2437 KB, once, shared).</span></p>
+    <div class="rp-main">
+      <div class="rp-left">
+        <div class="rp-stage"><canvas id="rp-f-canvas" role="img" aria-label="3-D replay of the aircraft in flight"></canvas>
+          <div class="rp-over" id="rp-f-over" aria-hidden="true"></div><div class="rp-msg" id="rp-f-msg">Loads when this section is in view.</div></div>
+        <div class="rp-transport"><button type="button" class="rp-btn rp-play" id="rp-f-play" aria-label="Play">Play</button><button type="button" class="rp-btn" id="rp-f-prev" aria-label="Jump to the previous event">&#9664;&#9664; Event</button><button type="button" class="rp-btn" id="rp-f-next" aria-label="Jump to the next event">Event &#9654;&#9654;</button><span class="rp-speeds" role="group" aria-label="Playback speed"><button type="button" class="rp-btn" data-speed="0.5" aria-pressed="false" aria-label="Playback speed 0.5 times">0.5x</button><button type="button" class="rp-btn" data-speed="1" aria-pressed="true" aria-label="Playback speed 1 times">1x</button><button type="button" class="rp-btn" data-speed="2" aria-pressed="false" aria-label="Playback speed 2 times">2x</button><button type="button" class="rp-btn" data-speed="5" aria-pressed="false" aria-label="Playback speed 5 times">5x</button><button type="button" class="rp-btn" data-speed="10" aria-pressed="false" aria-label="Playback speed 10 times">10x</button></span><span class="rp-time" id="rp-f-time" aria-live="off">t = 0 s</span></div>
+        <div class="rp-sliderwrap"><input type="range" class="rp-slider" id="rp-f-slider" min="0" max="1" step="0.1" value="0" aria-label="Flight time, seconds"><div class="rp-ticks" id="rp-f-ticks" aria-hidden="true"></div></div>
+        <div class="rp-chips" id="rp-f-marks" role="group" aria-label="Events"></div>
+        <div class="rp-chips" id="rp-f-modes" role="group" aria-label="Autopilot modes"></div>
+        <p class="rp-cap">Event marks come from the test driver&rsquo;s clock and sit about 0.1&ndash;0.4 s off the simulation clock the slider uses; do not read sub-second alignment from them. Propeller spin is a visual cue (rate follows the square root of thrust, capped), not the real rpm. Aircraft attitude: pitch is drawn exactly; roll and heading are not defined near hover, so they are held at their last valid value above 80&deg; pitch.</p>
+      </div>
+      <div class="rp-right">
+        <div class="rp-read" id="rp-f-read" aria-live="off"></div>
+        <div id="rp-f-pf"></div>
+      </div>
+    </div>
+    <div class="rp-plots" id="rp-f-plots"></div>
+  </section>
+
+  <h3 class="ds-h2" id="sims-replay-landing">Landing replay</h3>
+  <section class="rp" id="rp-landing" aria-label="Landing replay">
+    <div class="rp-bar"><label class="rp-pick">Case <select id="rp-l-case" aria-label="Landing case"><option value="hard_level">Hard level landing, 1.2 m/s sink</option><option value="hard_10_narrow">Hard landing leaning 10 deg, narrow axis</option><option value="hard_10_narrow_neg">Hard landing leaning 10 deg the other way, narrow axis</option><option value="hard_10_narrow_plus_drift_p5">Hard landing leaning 10 deg, narrow axis, drifting 0.5 m/s (tightest case)</option><option value="hard_10_wide">Hard landing leaning 10 deg, wide axis</option><option value="hard_10_wide_plus_drift_p5_y">Hard landing leaning 10 deg, wide axis, drifting 0.5 m/s sideways</option><option value="hard_7-7_combo">Hard landing leaning 7 deg on both axes</option><option value="normal_level_p5">Normal level landing, 0.5 m/s sink</option><option value="normal_10_narrow_p5">Normal landing leaning 10 deg, narrow axis, 0.5 m/s sink</option><option value="normal_10_wide_p5_plus_drift">Normal landing leaning 10 deg, wide axis, drifting 0.5 m/s</option></select></label></div>
+    <p class="rp-src"><span class="rp-label">Playback of recorded simulation output (not a new simulation)</span> Source: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/sims3d/out/landing_hard_level.json" target="_blank" rel="noopener">landing_*.json</a> (one file per case; foam 37.5 N, damping 0.05, T-098 basis). <span class="rp-kb" id="rp-l-kb">Loads <b>49.7 KB</b> of case data and the 3-D model (shared with the flight replay).</span></p>
+    <div class="rp-main">
+      <div class="rp-left">
+        <div class="rp-stage"><canvas id="rp-l-canvas" role="img" aria-label="3-D replay of the aircraft landing"></canvas>
+          <div class="rp-over" id="rp-l-over" aria-hidden="true"></div><div class="rp-msg" id="rp-l-msg">Loads when this section is in view.</div></div>
+        <div class="rp-transport"><button type="button" class="rp-btn rp-play" id="rp-l-play" aria-label="Play">Play</button><span class="rp-speeds" role="group" aria-label="Playback speed"><button type="button" class="rp-btn" data-speed="0.1" aria-pressed="true" aria-label="Playback speed 0.1 times">0.1x</button><button type="button" class="rp-btn" data-speed="0.5" aria-pressed="false" aria-label="Playback speed 0.5 times">0.5x</button><button type="button" class="rp-btn" data-speed="1" aria-pressed="false" aria-label="Playback speed 1 times">1x</button></span><span class="rp-time" id="rp-l-time" aria-live="off">t = 0 s</span></div>
+        <div class="rp-sliderwrap"><input type="range" class="rp-slider" id="rp-l-slider" min="0" max="1" step="0.005" value="0" aria-label="Landing time, seconds"></div>
+        <p class="rp-cap">The aircraft stands on its fin feet (nose up). The four foam pads are drawn shortened by the recorded crush; the 3-D motion is the recorded rigid-body pose at 200 Hz. The limits are the T-098 ones.</p>
+      </div>
+      <div class="rp-right"><div class="rp-read" id="rp-l-read" aria-live="off"></div></div>
+    </div>
+    <div class="rp-plots" id="rp-l-plots"></div>
+  </section>
+
+  <h3 class="ds-h2" id="sims-replay-linkage">Linkage sweep</h3>
+  <section class="rp" id="rp-linkage" aria-label="Elevon linkage sweep">
+    <p class="rp-src"><span class="rp-label">Playback of recorded simulation output (not a new simulation)</span> Source: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/sims3d/out/linkage.json" target="_blank" rel="noopener">linkage.json</a>. <span class="rp-kb" id="rp-k-kb">Loads <b>89.2 KB</b>; no 3-D model.</span></p>
+    <p class="use">The servo arm, pushrod and control horn for every elevon angle in the file. Every number on this panel is read from the file when the page opens, so it follows the file when it is re-exported.</p>
+    <div class="rp-main">
+      <div class="rp-left">
+        <div class="rp-bar"><span class="rp-speeds" role="group" aria-label="Elevon side"><button type="button" class="rp-btn" data-side="R" aria-pressed="true" aria-label="Show the right elevon">Right elevon</button><button type="button" class="rp-btn" data-side="L" aria-pressed="false" aria-label="Show the left elevon">Left elevon</button></span></div>
+        <div class="rp-svgs"><figure><div id="rp-k-top" class="rp-svg" role="img" aria-label="Top view of the servo arm and pushrod"></div><figcaption>Top view (x aft, y span): servo arm and pushrod</figcaption></figure>
+        <figure><div id="rp-k-side" class="rp-svg" role="img" aria-label="Side view of the control horn and hinge"></div><figcaption>Side view (x aft, z up): hinge and horn; elevon chord not to scale</figcaption></figure></div>
+        <div class="rp-transport"><button type="button" class="rp-btn rp-play" id="rp-k-play" aria-label="Sweep the elevon angle">Sweep</button><span class="rp-time" id="rp-k-time"></span></div>
+        <div class="rp-sliderwrap"><input type="range" class="rp-slider" id="rp-k-slider" min="-1" max="1" step="0.5" value="0" aria-label="Elevon angle, degrees, trailing edge down positive"></div>
+      </div>
+      <div class="rp-right"><div class="rp-read" id="rp-k-read" aria-live="off"></div><p class="rp-cap" id="rp-k-cap"></p></div>
+    </div>
+    <div class="rp-plots" id="rp-k-plots"></div>
+  </section>
+
   <h3 class="ds-h2" id="sims-landing">Landing (AR-014)</h3>
   <p class="use">Ten touchdowns per foam setting, from a normal 0.5 m/s landing up to a hard 1.2 m/s one, leaning 10&deg; and drifting sideways at 0.5 m/s. Static tip-over angle 31.08&deg; <span class="ds-badge" data-status="CHECKED">PASS</span>. The one soft-foam failure is the hard narrow lean with drift: the pads crush their full 20 mm, the aircraft hits the stop, and the jolt reaches 17.5 g. The stiff foam does not bottom out but the jolt is just over 12 g on a straight hard landing. Values in bold miss their limit. <b>Note:</b> the rib strength ratios in these two tables were computed on the old 14 &times; 12 rib tube; the drawn tube is 25 &times; 23 (see the landing fix below).</p>
   <h4>Soft foam, 30 N per pad</h4>
@@ -2781,6 +2841,6 @@ python -I redesign/proofs/build_graph.py --strict</pre>
 .bom-bar i{height:8px;border-radius:0;background:linear-gradient(90deg,var(--fg-3) var(--v),var(--panel-2) var(--v))}.bom-bar b{font-family:var(--font-sans);font-variant-numeric:tabular-nums lining-nums;font-weight:600;text-align:right}
 #bom-table tr.gated td{color:var(--fg-3)}#bom-table .pid{display:block;font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-3)}#bom-table td.id{font-family:var(--font-mono);font-size:var(--text-xs)}
 </style>
-<script type="module" src="site.js?v=20261123b"></script>
+<script type="module" src="site.js?v=20261124a"></script>
 <script>(function(){var q=document.getElementById('bom-q'),g=document.getElementById('bom-g'),w=document.getElementById('bom-w'),c=document.getElementById('bom-count');if(!q)return;var rows=[].slice.call(document.querySelectorAll('#bom-table tbody tr'));function f(){var s=q.value.trim().toLowerCase(),n=0;rows.forEach(function(r){var ok=(!g.value||r.dataset.group===g.value)&&(!w.value||r.dataset.wave===w.value)&&(!s||r.textContent.toLowerCase().indexOf(s)>=0);r.hidden=!ok;if(ok)n++;});c.textContent=n+' of '+rows.length;}[q,g,w].forEach(function(e){e.addEventListener('input',f);});f();})();</script>
 

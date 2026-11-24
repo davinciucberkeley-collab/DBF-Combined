@@ -1,0 +1,39 @@
+FNB_X1 = 0.1760  FNP_X = (0.058, 0.168)  FNP_REL = (0.16425, 0.362, 0.3699)
+method: solid = box per x sample (bulkhead: x 0..176, z zl..zu; plates: z band under the skin plies); damper part = cylinder about Y at (x 171.50, z 2.060); distance = sqrt(dy^2 + dradial^2); notch / elevon tip = boxes.
+solid                      vs                min mm
+bulkhead inner             housing                        0.500
+bulkhead inner             end disc                       0.500
+bulkhead inner             stator pin                     0.500
+bulkhead inner             rotor sleeve                   2.000
+bulkhead inner             rotor flange                  19.000
+bulkhead inner             core notch (void box)          0.100
+bulkhead inner             elevon tip env. (y<=349.5)    20.000
+bulkhead outer             housing                       27.000
+bulkhead outer             end disc                      27.000
+bulkhead outer             stator pin                    27.000
+bulkhead outer             rotor sleeve                  28.500
+bulkhead outer             rotor flange                  45.500
+bulkhead outer             core notch (void box)         26.600
+bulkhead outer             elevon tip env. (y<=349.5)    46.500
+upper plate A (relieved)   housing                        0.911
+upper plate A (relieved)   end disc                       0.911
+upper plate A (relieved)   stator pin                     2.811
+upper plate A (relieved)   rotor sleeve                   2.011
+upper plate A (relieved)   rotor flange                  12.610
+upper plate A (relieved)   core notch (void box)          0.500
+upper plate A (relieved)   elevon tip env. (y<=349.5)    15.324
+upper plate B              housing                        0.900
+upper plate B              end disc                       0.900
+upper plate B              stator pin                     0.900
+upper plate B              rotor sleeve                   2.400
+upper plate B              rotor flange                  19.400
+upper plate B              core notch (void box)          0.500
+upper plate B              elevon tip env. (y<=349.5)    20.698
+lower plate                housing                        4.605
+lower plate                end disc                       4.605
+lower plate                stator pin                     6.505
+lower plate                rotor sleeve                   5.705
+lower plate                rotor flange                  13.599
+lower plate                core notch (void box)          3.631
+lower plate                elevon tip env. (y<=349.5)    13.946
+MIN over solids x damper parts / elevon tip: 0.500 mm  (>= 0.5: True)

@@ -6,7 +6,7 @@ Every check states MODEL, VALIDITY, INPUTS, ALLOWABLE (source), FACTOR; the resu
 for the proof claims (CL-A-HORN-*, CL-A-ELEVON-TORSION-FOAM, CL-A-ROD-LEG-STALL, CL-A-LINKAGE-FREEPLAY). A check that fails is reported as failing.
 
 LOAD CASES
-  hold  : rod force at the VD hinge moment, max over +-20 deg (elevon_dynamics.py, 17.05 N; hinge moment 0.146 N m EST, FIXES2 s2).
+  hold  : rod force at the VD hinge moment, max over +-20 deg (elevon_dynamics.py, 17.05 N; hinge moment read from params-A.json servo.hinge_vd_nm, one source gen_params_a.py, EST).
   stall : the servo stalled against the stop or a jammed elevon. Quasi-static: F = tau_stall / (R_arm * min l_a) over +-21 deg (review r2 M-1),
           tau_stall 0.397 N m at 7.2 V (EST, params servo.stall_72_nm). The dynamic step peak (42.7 N) is lower and is NOT used.
           VOLTAGE BASIS (review r3 m-8): the 7.2 V stall torque is valid ONLY with the Kakute servo-rail jumper at 7.2 V (SERVO.md s2: the FC offers 5.3 V default /
@@ -55,7 +55,7 @@ import linkage_core as k    # noqa: E402
 e, c = k._e, k._c
 MM = 1e-3
 TAU_STALL = 0.397                                   # N m, 7.2 V EST (params servo.stall_72_nm; elevon_dynamics.TAU_STALL)
-HINGE_NM = 0.146                                    # N m at VD, +-20 deg (elevon_dynamics.HINGE_NM)
+HINGE_NM = json.load(open(os.path.join(HERE, '..', 'params-A.json'), encoding='utf-8'))['servo']['hinge_vd_nm']['value']   # N m at VD, EST: the one source is proofs/gen_params_a.py (0.146 x 0.31 / 0.30), via params-A.json
 KP, KF = 1.5 * 1.15 * 1.25, 1.5 * 1.15             # structures/fea_arm.py
 K_STALL_PRINTED = 1.15 * 1.25
 D = k.ROD_D

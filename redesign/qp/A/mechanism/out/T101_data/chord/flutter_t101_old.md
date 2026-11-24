@@ -1,0 +1,23 @@
+Mode old: cf 0.25, hinge x 183.75 mm, elevon 6.7 g, lead 10.0 g at 20 mm
+Hinge inertia per elevon: CAD 1.793e-05 kg m2 (cad_mass.json: elevon 1.369e-05 + balance 4.245e-06; CAD file is the NEW design); section-model inputs here me 6.7 g plate c^2/3 + (lead+tabs) x 20 mm^2 = 1.258e-05
+Elevon CG aft of the hinge (CAD, new): unbalanced 25.73 mm, balanced -0.55 mm
+
+| case | corner | wing f_h / f_a (Hz) | no instability <= 28.8 m/s at any K (0.01-20 N m/rad) | unstable K band | worst damping ratio needed | lowest onset over the grid (m/s) |
+|---|---|---|---|---|---|---|
+| A no damper, lead 10.0 g, elevon 6.7 g | kd | 10.6 / 41.3 | FAIL (134 of 600 K points) | 0.14-0.77 | 1.2e-02 at K 0.41 | 3.0 at K 0.77 |
+| A no damper, lead 10.0 g, elevon 6.7 g | nom | 12.3 / 45.3 | FAIL (91 of 600 K points) | 0.29-0.92 | 8.8e-03 at K 0.57 | 4.0 at K 0.89 |
+| A no damper, lead 10.0 g, elevon 6.7 g | hi | 14.2 / 51.7 | FAIL (61 of 600 K points) | 0.56-1.20 | 5.6e-03 at K 0.86 | 4.5 at K 1.17 |
+| B damper hot 50 C (EST x0.6), lead 10.0 g | kd | 10.6 / 41.3 | **PASS** | - | <= 0 | 35.5 at K 0.16 |
+| B damper hot 50 C (EST x0.6), lead 10.0 g | nom | 12.3 / 45.3 | **PASS** | - | <= 0 | 38.0 at K 0.22 |
+| B damper hot 50 C (EST x0.6), lead 10.0 g | hi | 14.2 / 51.7 | **PASS** | - | <= 0 | 41.5 at K 0.47 |
+| C damper nominal 25 C, lead 10.0 g | kd | 10.6 / 41.3 | **PASS** | - | <= 0 | 39.5 at K 0.01 |
+| C damper nominal 25 C, lead 10.0 g | nom | 12.3 / 45.3 | **PASS** | - | <= 0 | 42.0 at K 0.20 |
+| C damper nominal 25 C, lead 10.0 g | hi | 14.2 / 51.7 | **PASS** | - | <= 0 | 47.0 at K 0.17 |
+| D damper cold 0 C (EST x2), lead 10.0 g | kd | 10.6 / 41.3 | **PASS** | - | <= 0 | 43.0 at K 0.01 |
+| D damper cold 0 C (EST x2), lead 10.0 g | nom | 12.3 / 45.3 | **PASS** | - | <= 0 | 46.5 at K 0.01 |
+| D damper cold 0 C (EST x2), lead 10.0 g | hi | 14.2 / 51.7 | **PASS** | - | <= 0 | 52.0 at K 0.21 |
+| E damper half-hot (leak / half fill), lead 10.0 g | kd | 10.6 / 41.3 | **PASS** | - | <= 0 | 29.5 at K 0.34 |
+| E damper half-hot (leak / half fill), lead 10.0 g | nom | 12.3 / 45.3 | **PASS** | - | <= 0 | 31.5 at K 0.43 |
+| E damper half-hot (leak / half fill), lead 10.0 g | hi | 14.2 / 51.7 | **PASS** | - | <= 0 | 34.5 at K 0.61 |
+
+Pass limit: no instability at V <= 28.8 m/s = 1.2 x VD (VD 24 m/s) for any hinge stiffness K; the grid onset speed is reported for margin (x VD = onset / 24).

@@ -1,0 +1,15 @@
+m 1.381: model Vs 11.80 (MISSION 11.70, density 1.225 vs 1.20 explains +1.2 %), 1.3 Vs 15.34
+   V 15: alpha 6.3 deg, trim elevon 4.9 deg (TE up), hinge moment at that deflection 0.0119 N m per elevon
+   V 17: alpha 4.8 deg, trim elevon 3.5 deg (TE up), hinge moment at that deflection 0.0109 N m per elevon
+   V 18: alpha 4.2 deg, trim elevon 3.0 deg (TE up), hinge moment at that deflection 0.0103 N m per elevon
+m 1.500: model Vs 12.30 (MISSION 12.19, density 1.225 vs 1.20 explains +1.2 %), 1.3 Vs 15.98
+   V 15: alpha 6.9 deg, trim elevon 5.5 deg (TE up), hinge moment at that deflection 0.0133 N m per elevon
+   V 17: alpha 5.3 deg, trim elevon 3.9 deg (TE up), hinge moment at that deflection 0.0122 N m per elevon
+   V 18: alpha 4.6 deg, trim elevon 3.3 deg (TE up), hinge moment at that deflection 0.0116 N m per elevon
+roll at 17 m/s, differential +-5.0 deg: moment 0.28 N m, steady rate 57 deg/s (requirement >= 90 deg/s, A-P11)
+roll at 17 m/s, differential +-8.7 deg: moment 0.48 N m, steady rate 100 deg/s (requirement >= 90 deg/s, A-P11)
+roll at 17 m/s, differential +-15.0 deg: moment 0.83 N m, steady rate 172 deg/s (requirement >= 90 deg/s, A-P11)
+Cn_beta (fins, wing neglected) = 0.238 /rad (requirement >= 0.03, A-P15)
+peak hinge moment at 18 m/s, 20 deg stop (QP-4), alpha 5 deg: 0.0696 N m vs servo 0.167 N m (ES3352HV at 6 V, old) ratio 2.4
+elevon area both 0.0456 m2 (cf/c 0.30, y 0.04-0.35 m each side), CL_delta 0.420 /rad, tau 0.54; stops +-20 deg, rate 300 deg/s
+QP-4 as drawn: CG 21.6 mm aft of the LE, SM 7.8 % (NP 40.7 mm EST); elevon hinge inertia incl. D-187 balance 1.96e-05 kg m2 per elevon; servo ES3054HV 0.333-0.397 N m (SERVO.md, 6.0-7.2 V): alpha at 300 deg/s^2 x 4 = 0.0026 N m inertial torque

@@ -1,0 +1,61 @@
+{
+ "n_pairs_evaluated": 174,
+ "penetrating_pairs": [
+  {
+   "side": "L",
+   "pair": "keeper bridge / rod",
+   "depth_mm": 0.003617693427021562,
+   "at_delta_deg": 0.0,
+   "range_deg": [
+    -21.0,
+    21.0
+   ],
+   "design_contact": true,
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": -0.0034605105457691243,
+    "-20": -0.0034831973091883905,
+    "20": -0.0034831961678132017,
+    "21": -0.003460508729288131
+   }
+  },
+  {
+   "side": "R",
+   "pair": "keeper bridge / rod",
+   "depth_mm": 0.003617693427021562,
+   "at_delta_deg": 0.0,
+   "range_deg": [
+    -21.0,
+    21.0
+   ],
+   "design_contact": true,
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": -0.0034605105457691243,
+    "-20": -0.0034831973091883905,
+    "20": -0.0034831961678132017,
+    "21": -0.003460508729288131
+   }
+  }
+ ],
+ "worst_penetration_mm": 0.003617693427021562,
+ "worst_pair": "keeper bridge / rod",
+ "min_positive_clearance_mm": 0.2438720739727611,
+ "min_clearance_pair": "arm / rod",
+ "min_clearance_excl_design_contact_mm": 0.400000000000001,
+ "elevon_vs_core_2d": {
+  "min_sep_mm": 0.0,
+  "at_delta_deg": -21.0,
+  "neutral_mm": 0.0,
+  "nose_below_hinge_to_core_min_mm": 1.141206845859571,
+  "nose_below_hinge_min_at_delta_deg": 21.0,
+  "note": "elevon nose touches the core corner at the hinge at neutral by construction (0 mm); sections only (no balance pocket, caps, tape)"
+ },
+ "horn_rib_vs_core_2d": {
+  "min_sep_mm": 2.5460110573987285,
+  "at_delta_deg": 21.0
+ },
+ "y_gap_horn_to_cap_flange_mm": 31.25149999999996,
+ "pass_no_penetration_gt_tol": true,
+ "pairs_failing": []
+}

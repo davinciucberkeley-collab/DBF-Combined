@@ -303,6 +303,15 @@
    "where": "cant 17, D-191 gains, CAD mass / CG / inertia 2026-11-15, S5010 aero; batch_qp5.sh"
   },
   {
+   "id": "SRC-A-AR017",
+   "type": "source",
+   "title": "Analysis record AR-017 (T-101 C3 controls, SITL transition pitch use at the 0.25 elevon chord)",
+   "kind": "file",
+   "url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/docs/analysis-records.md",
+   "checked": "2026-11-15",
+   "where": "AR-017 result: C3 elevon pitch use on the 15 deg basis 0.554 / 0.571 / 0.651 / 0.605 (Z5, Z5 Lua, T-074, T-074 Lua); worst 0.651 (T-074 without Lua)"
+  },
+  {
    "id": "SRC-A-AR015",
    "type": "source",
    "title": "Analysis records AR-015 / AR-016 (SITL transition pitch use, landing foam region)",

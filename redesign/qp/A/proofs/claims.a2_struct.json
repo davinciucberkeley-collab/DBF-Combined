@@ -1798,10 +1798,10 @@
     "ASM-A-FOAM-ALLOW"
    ],
    "outputs": {
-    "v": 504.3
+    "v": 521.5
    },
    "input_values": {
-    "v": 504.3
+    "v": 521.5
    }
   },
   {
@@ -1830,7 +1830,7 @@
    "assumes": [
     "ASM-A-FOAM-ALLOW"
    ],
-   "value": 504.3
+   "value": 521.5
   },
   {
    "id": "CALC-A-HORN-BLADE-HOLD-READ",
@@ -2177,10 +2177,10 @@
     "v": "P:linkage.servo_speed_margin_r2"
    },
    "outputs": {
-    "v": 1.521
+    "v": 1.482
    },
    "input_values": {
-    "v": 1.521
+    "v": 1.482
    }
   },
   {
@@ -2206,7 +2206,7 @@
     "MEC-004-L"
    ],
    "how": "Hand calculation (AR-005): linear torque-speed line, gearing 0.909-0.928 from the solved linkage, end-point load. Required rates are EST; 7.2 V speed is not published so the 6 V no-load speed is used. Bench ramp of the built rail at BUILD D5b closes it. The full-throw sinusoid R3 (0.84) is not a required case.",
-   "value": 1.521
+   "value": 1.482
   },
   {
    "id": "CL-A-HORN-RIB-COUPON",

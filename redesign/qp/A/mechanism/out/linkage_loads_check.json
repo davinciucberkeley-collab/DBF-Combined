@@ -6,7 +6,7 @@
   "min_arm_lever_ratio": 0.9159143643901201,
   "tau_stall_Nm": 0.397,
   "dynamic_step_peak_N_not_used": 42.74455079930922,
-  "hinge_vd_Nm": 0.146,
+  "hinge_vd_Nm": 0.151,
   "KP": 2.15625,
   "K_stall_printed": 1.4375,
   "arm_joint_state": "mid"
@@ -105,34 +105,34 @@
   "cases": {
    "6.0V_pair_0.333": {
     "tau_stall_Nm": 0.333,
-    "tau_hold_Nm": 0.13551908298806167,
-    "torque_margin_hold": 2.4572185160766997,
-    "tau_loaded_Nm": 0.15324794932417113,
-    "torque_margin_loaded": 2.1729491420181595,
-    "servo_speed_loaded_rad_s": 4.348253806659615,
-    "elevon_rate_loaded_deg_s": 231.25179727177897,
+    "tau_hold_Nm": 0.14016014747395422,
+    "torque_margin_hold": 2.3758536645509807,
+    "tau_loaded_Nm": 0.15788901381006365,
+    "torque_margin_loaded": 2.1090764453098068,
+    "servo_speed_loaded_rad_s": 4.235985121869313,
+    "elevon_rate_loaded_deg_s": 225.28104756638385,
     "elevon_rate_no_load_deg_s": 428.4059525439252,
-    "speed_margin_R1": 2.890647465897237,
-    "speed_margin_R2": 1.520862257631756,
-    "speed_margin_R3": 0.8364742416974659,
-    "sine_limit_Hz_at_11deg": 3.345896966789864,
-    "sine_limit_Hz_at_20deg": 1.8402433317344251,
+    "speed_margin_R1": 2.816013094579798,
+    "speed_margin_R2": 1.4815947233516689,
+    "speed_margin_R3": 0.8148770978434179,
+    "sine_limit_Hz_at_11deg": 3.259508391373672,
+    "sine_limit_Hz_at_20deg": 1.7927296152555194,
     "ok": true
    },
    "7.2V_EST_0.397_speed_at_6V": {
     "tau_stall_Nm": 0.397,
-    "tau_hold_Nm": 0.13551908298806167,
-    "torque_margin_hold": 2.929476729376726,
-    "tau_loaded_Nm": 0.15324794932417113,
-    "torque_margin_loaded": 2.5905730011447727,
-    "servo_speed_loaded_rad_s": 4.945873872638577,
-    "elevon_rate_loaded_deg_s": 263.0348348975154,
+    "tau_hold_Nm": 0.14016014747395422,
+    "torque_margin_hold": 2.8324741886688867,
+    "tau_loaded_Nm": 0.15788901381006365,
+    "torque_margin_loaded": 2.5144244708348147,
+    "servo_speed_loaded_rad_s": 4.8517039178900365,
+    "elevon_rate_loaded_deg_s": 258.0266241874484,
     "elevon_rate_no_load_deg_s": 428.4059525439252,
-    "speed_margin_R1": 3.2879354362189424,
-    "speed_margin_R2": 1.7298881892272788,
-    "speed_margin_R3": 0.9514385040750033,
-    "sine_limit_Hz_at_11deg": 3.805754016300014,
-    "sine_limit_Hz_at_20deg": 2.0931647089650074,
+    "speed_margin_R1": 3.225332802343105,
+    "speed_margin_R2": 1.696950937551538,
+    "speed_margin_R3": 0.9333230156533457,
+    "sine_limit_Hz_at_11deg": 3.733292062613384,
+    "sine_limit_Hz_at_20deg": 2.053310634437361,
     "ok": true
    }
   },
@@ -274,12 +274,12 @@
   "allowable_kPa_EST": 85.83333333333333,
   "thickness_over_chord": 0.14100591447930924,
   "hold": {
-   "T_Nm": 0.07464838709677418,
+   "T_Nm": 0.07720483870967741,
    "factor": 2.15625,
-   "tau_kPa": 233.86674900040833,
-   "factored_kPa": 504.2751775321305,
+   "tau_kPa": 241.8758842401484,
+   "factored_kPa": 521.5448753928199,
    "ok": false,
-   "bredt_q_N_per_m": 151.69363235195536,
+   "bredt_q_N_per_m": 156.8886197612689,
    "bredt_note": "tape skin shear flow if the elevon cell is closed (nose face taped): tape strength \"-\", not credited"
   },
   "stall": {
@@ -292,7 +292,7 @@
    "bredt_note": "tape skin shear flow if the elevon cell is closed (nose face taped): tape strength \"-\", not credited"
   }
  },
- "horn_rib_vs_elevon_body_hold": 0.8563544794923127,
+ "horn_rib_vs_elevon_body_hold": 0.8279983708998521,
  "free_play": {
   "total_known_deg": 1.2801189760845506,
   "guide_deg": 1.0,
@@ -325,5 +325,5 @@
   "keeper_bridge_stall": true,
   "servo_speed_margin_ge_1": true
  },
- "git_head": "73d9596689ee35afa630383f6454860f592efbd7"
+ "git_head": "9c6a13b862313932e907c73133e622625391ca48"
 }

@@ -1,0 +1,266 @@
+{
+ "version": "20261124a",
+ "note": "Playback of recorded simulation output (not a new simulation)",
+ "source": "redesign/qp/A/sims3d/out/",
+ "flight": [
+  {
+   "id": "T101C3_T074",
+   "file": "flight_T101C3_T074.json",
+   "label": "Current design basis: C3 at 0.25 chord, hard case T-074 (T-101), without Lua",
+   "kb": 104.7,
+   "default": true
+  },
+  {
+   "id": "T101C3_T074_lua",
+   "file": "flight_T101C3_T074_lua.json",
+   "label": "Current design basis: C3 at 0.25 chord, hard case T-074 (T-101), with Lua motor cap and battery monitor",
+   "kb": 105.5,
+   "default": false
+  },
+  {
+   "id": "T101C3_Z5",
+   "file": "flight_T101C3_Z5.json",
+   "label": "Current design basis: C3 at 0.25 chord, full flight Z5 (T-101), without Lua",
+   "kb": 251.1,
+   "default": false
+  },
+  {
+   "id": "T101C3_Z5_lua",
+   "file": "flight_T101C3_Z5_lua.json",
+   "label": "Current design basis: C3 at 0.25 chord, full flight Z5 (T-101), with Lua motor cap and battery monitor",
+   "kb": 253.6,
+   "default": false
+  },
+  {
+   "id": "T101C1_T074",
+   "file": "flight_T101C1_T074.json",
+   "label": "Controls fix C1, hard case T-074 (T-101), without Lua",
+   "kb": 104.9,
+   "default": false
+  },
+  {
+   "id": "T101C1_T074_lua",
+   "file": "flight_T101C1_T074_lua.json",
+   "label": "Controls fix C1, hard case T-074 (T-101), with Lua motor cap and battery monitor",
+   "kb": 105.4,
+   "default": false
+  },
+  {
+   "id": "T101C1_Z5",
+   "file": "flight_T101C1_Z5.json",
+   "label": "Controls fix C1, full flight Z5 (T-101), without Lua",
+   "kb": 251.4,
+   "default": false
+  },
+  {
+   "id": "T101C1_Z5_lua",
+   "file": "flight_T101C1_Z5_lua.json",
+   "label": "Controls fix C1, full flight Z5 (T-101), with Lua motor cap and battery monitor",
+   "kb": 253.3,
+   "default": false
+  },
+  {
+   "id": "T101C2_T074",
+   "file": "flight_T101C2_T074.json",
+   "label": "Controls fix C2, hard case T-074 (T-101), without Lua",
+   "kb": 104.8,
+   "default": false
+  },
+  {
+   "id": "T101C2_T074_lua",
+   "file": "flight_T101C2_T074_lua.json",
+   "label": "Controls fix C2, hard case T-074 (T-101), with Lua motor cap and battery monitor",
+   "kb": 105.5,
+   "default": false
+  },
+  {
+   "id": "T101C2_Z5",
+   "file": "flight_T101C2_Z5.json",
+   "label": "Controls fix C2, full flight Z5 (T-101), without Lua",
+   "kb": 251.6,
+   "default": false
+  },
+  {
+   "id": "T101C2_Z5_lua",
+   "file": "flight_T101C2_Z5_lua.json",
+   "label": "Controls fix C2, full flight Z5 (T-101), with Lua motor cap and battery monitor",
+   "kb": 253.3,
+   "default": false
+  },
+  {
+   "id": "T097_T074",
+   "file": "flight_T097_T074.json",
+   "label": "Baseline 1.881 kg, hard case T-074 (T-097), without Lua",
+   "kb": 107.7,
+   "default": false
+  },
+  {
+   "id": "T097_T074_lua",
+   "file": "flight_T097_T074_lua.json",
+   "label": "Baseline 1.881 kg, hard case T-074 (T-097), with Lua motor cap and battery monitor",
+   "kb": 108.4,
+   "default": false
+  },
+  {
+   "id": "T097_Z5",
+   "file": "flight_T097_Z5.json",
+   "label": "Baseline 1.881 kg, full flight Z5 (T-097), without Lua",
+   "kb": 251.2,
+   "default": false
+  },
+  {
+   "id": "T097_Z5_lua",
+   "file": "flight_T097_Z5_lua.json",
+   "label": "Baseline 1.881 kg, full flight Z5 (T-097), with Lua motor cap and battery monitor",
+   "kb": 252.1,
+   "default": false
+  }
+ ],
+ "landing": [
+  {
+   "id": "hard_level",
+   "file": "landing_hard_level.json",
+   "label": "Hard level landing, 1.2 m/s sink",
+   "case": "hard level",
+   "kb": 49.7
+  },
+  {
+   "id": "hard_10_narrow",
+   "file": "landing_hard_10_narrow.json",
+   "label": "Hard landing leaning 10 deg, narrow axis",
+   "case": "hard 10 narrow",
+   "kb": 50.1
+  },
+  {
+   "id": "hard_10_narrow_neg",
+   "file": "landing_hard_10_narrow_neg.json",
+   "label": "Hard landing leaning 10 deg the other way, narrow axis",
+   "case": "hard 10 narrow neg",
+   "kb": 49.5
+  },
+  {
+   "id": "hard_10_narrow_plus_drift_p5",
+   "file": "landing_hard_10_narrow_plus_drift_p5.json",
+   "label": "Hard landing leaning 10 deg, narrow axis, drifting 0.5 m/s (tightest case)",
+   "case": "hard 10 narrow + drift .5",
+   "kb": 49.2
+  },
+  {
+   "id": "hard_10_wide",
+   "file": "landing_hard_10_wide.json",
+   "label": "Hard landing leaning 10 deg, wide axis",
+   "case": "hard 10 wide",
+   "kb": 49.3
+  },
+  {
+   "id": "hard_10_wide_plus_drift_p5_y",
+   "file": "landing_hard_10_wide_plus_drift_p5_y.json",
+   "label": "Hard landing leaning 10 deg, wide axis, drifting 0.5 m/s sideways",
+   "case": "hard 10 wide + drift .5 y",
+   "kb": 49.6
+  },
+  {
+   "id": "hard_7-7_combo",
+   "file": "landing_hard_7-7_combo.json",
+   "label": "Hard landing leaning 7 deg on both axes",
+   "case": "hard 7/7 combo",
+   "kb": 49.0
+  },
+  {
+   "id": "normal_level_p5",
+   "file": "landing_normal_level_p5.json",
+   "label": "Normal level landing, 0.5 m/s sink",
+   "case": "normal level .5",
+   "kb": 49.1
+  },
+  {
+   "id": "normal_10_narrow_p5",
+   "file": "landing_normal_10_narrow_p5.json",
+   "label": "Normal landing leaning 10 deg, narrow axis, 0.5 m/s sink",
+   "case": "normal 10 narrow .5",
+   "kb": 48.7
+  },
+  {
+   "id": "normal_10_wide_p5_plus_drift",
+   "file": "landing_normal_10_wide_p5_plus_drift.json",
+   "label": "Normal landing leaning 10 deg, wide axis, drifting 0.5 m/s",
+   "case": "normal 10 wide .5 + drift",
+   "kb": 48.6
+  }
+ ],
+ "linkage": {
+  "file": "linkage.json",
+  "kb": 89.2
+ },
+ "glb": {
+  "file": "../concept-a.opt.glb",
+  "kb": 2437.2
+ },
+ "total_kb": 3446.5,
+ "props": {
+  "UL": {
+   "center": [
+    -0.1271,
+    -0.2376,
+    0.142
+   ],
+   "axis": [
+    -0.9559,
+    -0.16544,
+    -0.24265
+   ],
+   "dir": 1
+  },
+  "UR": {
+   "center": [
+    -0.1401,
+    0.2184,
+    0.17
+   ],
+   "axis": [
+    -0.95675,
+    -0.16559,
+    0.23919
+   ],
+   "dir": -1
+  },
+  "LL": {
+   "center": [
+    -0.1401,
+    -0.2184,
+    -0.17
+   ],
+   "axis": [
+    -0.95675,
+    0.16559,
+    -0.23919
+   ],
+   "dir": -1
+  },
+  "LR": {
+   "center": [
+    -0.1271,
+    0.2376,
+    -0.142
+   ],
+   "axis": [
+    -0.9559,
+    0.16544,
+    0.24265
+   ],
+   "dir": 1
+  }
+ },
+ "th_to_prop": [
+  "LR",
+  "UL",
+  "LL",
+  "UR"
+ ],
+ "pad_order": [
+  "UR",
+  "LR",
+  "UL",
+  "LL"
+ ]
+}

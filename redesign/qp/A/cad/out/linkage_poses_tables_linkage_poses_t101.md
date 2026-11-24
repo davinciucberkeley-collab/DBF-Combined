@@ -1,0 +1,219 @@
+### Pairs over 0.05 mm per angle (mesh, all parts in)
+
+| delta deg | zj=mid | zj=lo | zj=hi |
+|---|---|---|---|
+| -21 | 0 (deepest 0.000) | 0 (deepest 0.026) | 0 (deepest 0.019) |
+| -20 | 0 (deepest 0.000) | 0 (deepest 0.022) | 0 (deepest 0.017) |
+| -18 | 0 (deepest 0.000) | 0 (deepest 0.011) | 0 (deepest 0.012) |
+| -15 | 0 (deepest 0.000) | 0 (deepest 0.000) | 0 (deepest 0.000) |
+| -12 | 0 (deepest 0.000) | 0 (deepest 0.000) | 0 (deepest 0.000) |
+| -9 | 0 (deepest 0.000) | 0 (deepest 0.000) | 0 (deepest 0.000) |
+| -6 | 0 (deepest 0.000) | 0 (deepest 0.000) | 0 (deepest 0.000) |
+| -3 | 0 (deepest 0.000) | 0 (deepest 0.000) | 0 (deepest 0.000) |
+| +0 | 0 (deepest 0.000) | 0 (deepest 0.000) | 0 (deepest 0.000) |
+| +3 | 0 (deepest 0.000) | 0 (deepest 0.000) | 0 (deepest 0.000) |
+| +6 | 0 (deepest 0.000) | 0 (deepest 0.000) | 0 (deepest 0.000) |
+| +9 | 0 (deepest 0.000) | 0 (deepest 0.000) | 0 (deepest 0.000) |
+| +12 | 0 (deepest 0.000) | 0 (deepest 0.000) | 0 (deepest 0.000) |
+| +15 | 0 (deepest 0.000) | 0 (deepest 0.000) | 0 (deepest 0.000) |
+| +18 | 0 (deepest 0.000) | 0 (deepest 0.011) | 0 (deepest 0.011) |
+| +20 | 0 (deepest 0.000) | 0 (deepest 0.019) | 0 (deepest 0.015) |
+| +21 | 0 (deepest 0.000) | 0 (deepest 0.017) | 0 (deepest 0.020) |
+
+### Minimum mesh clearance per part pair, zj=mid (mm; negative = penetration depth from the hit list; only pairs under 2 mm)
+
+| Part pair | mesh min mm | at delta | same group (constant) | declared contact |
+|---|---|---|---|---|
+| HWC-002 / MEC-001 | 0.000 | -21 | no | - |
+| HWC-002 / MEC-008 | 0.000 | -21 | yes | arm screw through the keeper hole |
+| HWC-002 / WNG-011 | 0.000 | -21 | no | - |
+| HWC-002 / WNG-014 | 0.000 | -21 | no | - |
+| MEC-001 / MEC-002 | 0.000 | -21 | no | arm bottom sits on the servo case top (ARM_Z0 = SV_Z1) |
+| MEC-002 / MEC-003 | 0.000 | -18 | no | Z-bend leg in the 1.3 mm arm hole (leg 1.2 mm dia, end 0.25 mm inside the arm underside); at zj=lo the rod rests on the arm top (rod bottom tangent, by design) |
+| MEC-002 / MEC-008 | 0.000 | -21 | yes | keeper clamped on the arm top by the arm screw (same group: constant) |
+| MEC-002 / WNG-011 | 0.000 | -21 | no | - |
+| MEC-002 / WNG-014 | 0.000 | -20 | no | - |
+| MEC-003 / MEC-005 | 0.000 | -21 | yes | clevis pin through the cheek holes (ctx.seat: cheeks are cut to the pin; seated joint) |
+| MEC-003 / WNG-011 | 0.000 | -21 | no | - |
+| MEC-003 / WNG-014 | 0.000 | -21 | no | - |
+| MEC-004 / MEC-005 | 0.018 | +21 | no | clevis pin in the 1.1 mm horn hole (same elevon group: relative pose constant) |
+| HWC-002 / MEC-002 | 0.062 | -21 | yes | arm screw through the arm hub bore |
+| MEC-003 / MEC-004 | 0.072 | +21 | no | - |
+| MEC-003 / MEC-008 | 0.150 | -18 | no | keeper bridge over the Z-bend: top stop of the leg freedom, rod top bears on it at zj=hi (by design, D-212 rev 3) |
+| MEC-001 / MEC-003 | 0.241 | -21 | no | - |
+| MEC-008 / WNG-011 | 1.665 | -21 | no | - |
+| MEC-008 / WNG-014 | 1.718 | -21 | no | - |
+| MEC-001 / MEC-008 | 2.000 | -21 | no | - |
+
+### Mesh vs analytic (AR-003), like for like at body level, zj=mid, side R, chosen angles (mm)
+
+| Analytic pair (solids) | CAD bodies compared | analytic min | at delta | mesh min | at delta | max abs(mesh - analytic) over angles | note |
+|---|---|---|---|---|---|---|---|
+| arm / servo case | MEC-002 servo arm / MEC-001 servo case | 0.000 | -21 | 0.000 | -21 | 0.000 |  |
+| clevis cheek -1 / horn blade | MEC-003 clevis cheek / MEC-004 horn | 0.062 | +21 | 0.072 | +21 | 0.010 |  |
+| clevis cheek +1 / horn blade | MEC-003 clevis cheek / MEC-004 horn | 0.074 | +21 | 0.072 | +21 | 0.002 |  |
+| arm / rod | MEC-002 servo arm / MEC-003 pushrod | 0.107 | -21 | 0.112 | -21 | 0.009 |  |
+| keeper bridge / rod | MEC-008 keeper bridge / MEC-003 pushrod | 0.147 | -9 | 0.150 | -18 | 0.003 |  |
+| rod Z-bend pin / servo case | MEC-003 rod Z-bend leg / MEC-001 servo case | 0.250 | -21 | 0.241 | -21 | 0.009 |  |
+| keeper spacer / rod | MEC-008 keeper spacer / MEC-003 pushrod | 0.702 | -21 | 0.705 | -21 | 0.003 |  |
+| keeper bridge / rod Z-bend pin | MEC-008 keeper bridge / MEC-003 rod Z-bend leg | 0.750 | -21 | 0.741 | -21 | 0.009 |  |
+| clevis sleeve / horn blade | MEC-003 clevis sleeve / MEC-004 horn | 1.285 | +21 | 1.284 | +21 | 0.000 |  |
+| keeper spacer / rod Z-bend pin | MEC-008 keeper spacer / MEC-003 rod Z-bend leg | 1.397 | -21 | 1.399 | +15 | 0.007 |  |
+| rod / servo case | MEC-003 pushrod / MEC-001 servo case | 1.869 | -21 | 1.872 | -21 | 0.003 |  |
+| keeper spacer / servo case | MEC-008 keeper spacer / MEC-001 servo case | 2.000 | -21 | 2.000 | -21 | 0.000 |  |
+| clevis sleeve / clevis pin | MEC-003 clevis sleeve / MEC-005 clevis pin | 2.971 | -21 | 3.000 | -21 | 0.029 | analytic hull bound |
+| arm / servo boot | MEC-002 servo arm / MEC-001 servo lead strain-relief boot | 2.985 | +0 | > 3 (none within cap) | - | - | |
+
+### Minimum mesh clearance per part pair, zj=lo (mm; negative = penetration depth from the hit list; only pairs under 2 mm)
+
+| Part pair | mesh min mm | at delta | same group (constant) | declared contact |
+|---|---|---|---|---|
+| MEC-002 / MEC-003 | -0.026 | -21 | no | Z-bend leg in the 1.3 mm arm hole (leg 1.2 mm dia, end 0.25 mm inside the arm underside); at zj=lo the rod rests on the arm top (rod bottom tangent, by design) |
+| HWC-002 / MEC-001 | 0.000 | -21 | no | - |
+| HWC-002 / MEC-008 | 0.000 | -21 | yes | arm screw through the keeper hole |
+| HWC-002 / WNG-011 | 0.000 | -21 | no | - |
+| HWC-002 / WNG-014 | 0.000 | -21 | no | - |
+| MEC-001 / MEC-002 | 0.000 | -21 | no | arm bottom sits on the servo case top (ARM_Z0 = SV_Z1) |
+| MEC-002 / MEC-008 | 0.000 | -21 | yes | keeper clamped on the arm top by the arm screw (same group: constant) |
+| MEC-002 / WNG-011 | 0.000 | -21 | no | - |
+| MEC-002 / WNG-014 | 0.000 | -21 | no | - |
+| MEC-003 / MEC-005 | 0.000 | -21 | yes | clevis pin through the cheek holes (ctx.seat: cheeks are cut to the pin; seated joint) |
+| MEC-003 / WNG-011 | 0.000 | -21 | no | - |
+| MEC-003 / WNG-014 | 0.000 | -20 | no | - |
+| MEC-004 / MEC-005 | 0.018 | +21 | no | clevis pin in the 1.1 mm horn hole (same elevon group: relative pose constant) |
+| HWC-002 / MEC-002 | 0.062 | -21 | yes | arm screw through the arm hub bore |
+| MEC-003 / MEC-004 | 0.072 | +21 | no | - |
+| MEC-001 / MEC-003 | 0.094 | -21 | no | - |
+| MEC-003 / MEC-008 | 0.292 | +0 | no | keeper bridge over the Z-bend: top stop of the leg freedom, rod top bears on it at zj=hi (by design, D-212 rev 3) |
+| MEC-008 / WNG-011 | 1.664 | -21 | no | - |
+| MEC-008 / WNG-014 | 1.718 | -21 | no | - |
+| MEC-001 / MEC-008 | 2.000 | -21 | no | - |
+
+### Mesh vs analytic (AR-003), like for like at body level, zj=lo, side R, chosen angles (mm)
+
+| Analytic pair (solids) | CAD bodies compared | analytic min | at delta | mesh min | at delta | max abs(mesh - analytic) over angles | note |
+|---|---|---|---|---|---|---|---|
+| arm / rod | MEC-002 servo arm / MEC-003 pushrod | -0.030 | -21 | 0.000 | -20 | 0.031 | analytic hull bound |
+| arm / servo case | MEC-002 servo arm / MEC-001 servo case | 0.000 | -21 | 0.000 | -21 | 0.000 |  |
+| clevis cheek -1 / horn blade | MEC-003 clevis cheek / MEC-004 horn | 0.062 | +21 | 0.072 | +21 | 0.009 |  |
+| clevis cheek +1 / horn blade | MEC-003 clevis cheek / MEC-004 horn | 0.074 | +21 | 0.072 | +21 | 0.002 |  |
+| rod Z-bend pin / servo case | MEC-003 rod Z-bend leg / MEC-001 servo case | 0.100 | -21 | 0.094 | -21 | 0.006 |  |
+| keeper bridge / rod | MEC-008 keeper bridge / MEC-003 pushrod | 0.289 | +0 | 0.292 | +0 | 0.003 |  |
+| keeper spacer / rod | MEC-008 keeper spacer / MEC-003 pushrod | 0.702 | -21 | 0.705 | -21 | 0.003 |  |
+| keeper bridge / rod Z-bend pin | MEC-008 keeper bridge / MEC-003 rod Z-bend leg | 0.900 | -21 | 0.893 | -21 | 0.007 |  |
+| clevis sleeve / horn blade | MEC-003 clevis sleeve / MEC-004 horn | 1.285 | +21 | 1.285 | +21 | 0.000 |  |
+| keeper spacer / rod Z-bend pin | MEC-008 keeper spacer / MEC-003 rod Z-bend leg | 1.397 | -21 | 1.400 | +15 | 0.007 |  |
+| rod / servo case | MEC-003 pushrod / MEC-001 servo case | 1.804 | -21 | 1.807 | -21 | 0.003 |  |
+| keeper spacer / servo case | MEC-008 keeper spacer / MEC-001 servo case | 2.000 | -21 | 2.000 | -21 | 0.000 |  |
+| clevis sleeve / clevis pin | MEC-003 clevis sleeve / MEC-005 clevis pin | 2.971 | -21 | 3.000 | -21 | 0.029 | analytic hull bound |
+| arm / servo boot | MEC-002 servo arm / MEC-001 servo lead strain-relief boot | 2.985 | +0 | > 3 (none within cap) | - | - | |
+
+### Minimum mesh clearance per part pair, zj=hi (mm; negative = penetration depth from the hit list; only pairs under 2 mm)
+
+| Part pair | mesh min mm | at delta | same group (constant) | declared contact |
+|---|---|---|---|---|
+| MEC-002 / MEC-003 | -0.020 | +21 | no | Z-bend leg in the 1.3 mm arm hole (leg 1.2 mm dia, end 0.25 mm inside the arm underside); at zj=lo the rod rests on the arm top (rod bottom tangent, by design) |
+| HWC-002 / MEC-001 | 0.000 | -21 | no | - |
+| HWC-002 / MEC-008 | 0.000 | -21 | yes | arm screw through the keeper hole |
+| HWC-002 / WNG-011 | 0.000 | -21 | no | - |
+| HWC-002 / WNG-014 | 0.000 | -21 | no | - |
+| MEC-001 / MEC-002 | 0.000 | -21 | no | arm bottom sits on the servo case top (ARM_Z0 = SV_Z1) |
+| MEC-002 / MEC-008 | 0.000 | -21 | yes | keeper clamped on the arm top by the arm screw (same group: constant) |
+| MEC-002 / WNG-011 | 0.000 | -21 | no | - |
+| MEC-002 / WNG-014 | 0.000 | -20 | no | - |
+| MEC-003 / MEC-005 | 0.000 | -21 | yes | clevis pin through the cheek holes (ctx.seat: cheeks are cut to the pin; seated joint) |
+| MEC-003 / MEC-008 | 0.000 | -12 | no | keeper bridge over the Z-bend: top stop of the leg freedom, rod top bears on it at zj=hi (by design, D-212 rev 3) |
+| MEC-004 / MEC-005 | 0.018 | +21 | no | clevis pin in the 1.1 mm horn hole (same elevon group: relative pose constant) |
+| HWC-002 / MEC-002 | 0.062 | -21 | yes | arm screw through the arm hub bore |
+| MEC-003 / MEC-004 | 0.072 | +21 | no | - |
+| MEC-003 / WNG-011 | 0.087 | -21 | no | - |
+| MEC-003 / WNG-014 | 0.141 | -21 | no | - |
+| MEC-001 / MEC-003 | 0.388 | -21 | no | - |
+| MEC-008 / WNG-011 | 1.665 | -21 | no | - |
+| MEC-008 / WNG-014 | 1.719 | -21 | no | - |
+| MEC-001 / MEC-008 | 2.000 | -21 | no | - |
+
+### Mesh vs analytic (AR-003), like for like at body level, zj=hi, side R, chosen angles (mm)
+
+| Analytic pair (solids) | CAD bodies compared | analytic min | at delta | mesh min | at delta | max abs(mesh - analytic) over angles | note |
+|---|---|---|---|---|---|---|---|
+| keeper bridge / rod | MEC-008 keeper bridge / MEC-003 pushrod | -0.003 | -3 | 0.000 | -12 | 0.003 |  |
+| arm / servo case | MEC-002 servo arm / MEC-001 servo case | 0.000 | -21 | 0.000 | -21 | 0.000 |  |
+| clevis cheek -1 / horn blade | MEC-003 clevis cheek / MEC-004 horn | 0.062 | +21 | 0.072 | +21 | 0.009 |  |
+| clevis cheek +1 / horn blade | MEC-003 clevis cheek / MEC-004 horn | 0.074 | +21 | 0.072 | +21 | 0.002 |  |
+| arm / rod | MEC-002 servo arm / MEC-003 pushrod | 0.245 | -21 | 0.249 | -21 | 0.012 |  |
+| rod Z-bend pin / servo case | MEC-003 rod Z-bend leg / MEC-001 servo case | 0.400 | -21 | 0.388 | -21 | 0.012 |  |
+| keeper bridge / rod Z-bend pin | MEC-008 keeper bridge / MEC-003 rod Z-bend leg | 0.600 | -21 | 0.588 | -21 | 0.012 |  |
+| keeper spacer / rod | MEC-008 keeper spacer / MEC-003 pushrod | 0.703 | -21 | 0.706 | -21 | 0.003 |  |
+| clevis sleeve / horn blade | MEC-003 clevis sleeve / MEC-004 horn | 1.284 | +21 | 1.284 | +21 | 0.000 |  |
+| keeper spacer / rod Z-bend pin | MEC-008 keeper spacer / MEC-003 rod Z-bend leg | 1.397 | -21 | 1.396 | +21 | 0.007 |  |
+| rod / servo case | MEC-003 pushrod / MEC-001 servo case | 1.934 | -21 | 1.937 | -21 | 0.003 |  |
+| keeper spacer / servo case | MEC-008 keeper spacer / MEC-001 servo case | 2.000 | -21 | 2.000 | -21 | 0.000 |  |
+| clevis sleeve / clevis pin | MEC-003 clevis sleeve / MEC-005 clevis pin | 2.971 | -21 | 3.000 | -21 | 0.029 | analytic hull bound |
+| arm / servo boot | MEC-002 servo arm / MEC-001 servo lead strain-relief boot | 2.985 | +0 | > 3 (none within cap) | - | - | |
+
+### Per-angle clearance, zj=mid (mm, min of R and L; negative = penetration)
+
+| delta | MEC-002 / MEC-003 | MEC-003 / MEC-008 | MEC-003 / MEC-004 | MEC-004 / MEC-005 | MEC-001 / MEC-003 | MEC-001 / MEC-002 | MEC-002 / MEC-008 | HWC-002 / MEC-002 | MEC-003 / MEC-005 |
+|---|---|---|---|---|---|---|---|---|---|
+| -21 | 0.000 | 0.150 | 0.072 | 0.018 | 0.241 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -20 | 0.000 | 0.150 | 0.075 | 0.020 | 0.242 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -18 | 0.000 | 0.150 | 0.079 | 0.021 | 0.243 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -15 | 0.008 | 0.150 | 0.086 | 0.022 | 0.245 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -12 | 0.015 | 0.150 | 0.091 | 0.027 | 0.247 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -9 | 0.023 | 0.150 | 0.095 | 0.032 | 0.248 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -6 | 0.028 | 0.150 | 0.098 | 0.033 | 0.249 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -3 | 0.028 | 0.150 | 0.099 | 0.032 | 0.250 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +0 | 0.028 | 0.150 | 0.100 | 0.031 | 0.250 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +3 | 0.028 | 0.150 | 0.099 | 0.032 | 0.250 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +6 | 0.029 | 0.150 | 0.098 | 0.033 | 0.249 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +9 | 0.023 | 0.150 | 0.095 | 0.032 | 0.248 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +12 | 0.015 | 0.150 | 0.091 | 0.028 | 0.247 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +15 | 0.008 | 0.150 | 0.086 | 0.022 | 0.245 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +18 | 0.001 | 0.150 | 0.079 | 0.020 | 0.243 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +20 | 0.000 | 0.150 | 0.074 | 0.019 | 0.242 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +21 | 0.000 | 0.150 | 0.072 | 0.018 | 0.241 | 0.000 | 0.000 | 0.062 | 0.000 |
+
+### Per-angle clearance, zj=lo (mm, min of R and L; negative = penetration)
+
+| delta | MEC-002 / MEC-003 | MEC-003 / MEC-008 | MEC-003 / MEC-004 | MEC-004 / MEC-005 | MEC-001 / MEC-003 | MEC-001 / MEC-002 | MEC-002 / MEC-008 | HWC-002 / MEC-002 | MEC-003 / MEC-005 |
+|---|---|---|---|---|---|---|---|---|---|
+| -21 | -0.026 | 0.300 | 0.072 | 0.018 | 0.094 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -20 | -0.022 | 0.300 | 0.075 | 0.020 | 0.094 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -18 | -0.011 | 0.300 | 0.079 | 0.021 | 0.096 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -15 | 0.000 | 0.300 | 0.086 | 0.022 | 0.098 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -12 | 0.000 | 0.300 | 0.091 | 0.027 | 0.100 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -9 | 0.002 | 0.297 | 0.095 | 0.032 | 0.099 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -6 | 0.003 | 0.294 | 0.098 | 0.033 | 0.098 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -3 | 0.004 | 0.293 | 0.099 | 0.032 | 0.097 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +0 | 0.003 | 0.292 | 0.100 | 0.031 | 0.097 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +3 | 0.004 | 0.293 | 0.099 | 0.032 | 0.097 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +6 | 0.003 | 0.294 | 0.098 | 0.033 | 0.098 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +9 | 0.002 | 0.297 | 0.095 | 0.032 | 0.099 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +12 | 0.000 | 0.300 | 0.091 | 0.027 | 0.100 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +15 | 0.000 | 0.300 | 0.086 | 0.022 | 0.098 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +18 | -0.011 | 0.300 | 0.079 | 0.020 | 0.096 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +20 | -0.019 | 0.300 | 0.074 | 0.019 | 0.094 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +21 | -0.017 | 0.300 | 0.072 | 0.018 | 0.094 | 0.000 | 0.000 | 0.062 | 0.000 |
+
+### Per-angle clearance, zj=hi (mm, min of R and L; negative = penetration)
+
+| delta | MEC-002 / MEC-003 | MEC-003 / MEC-008 | MEC-003 / MEC-004 | MEC-004 / MEC-005 | MEC-001 / MEC-003 | MEC-001 / MEC-002 | MEC-002 / MEC-008 | HWC-002 / MEC-002 | MEC-003 / MEC-005 |
+|---|---|---|---|---|---|---|---|---|---|
+| -21 | -0.019 | 0.000 | 0.072 | 0.019 | 0.388 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -20 | -0.017 | 0.000 | 0.075 | 0.020 | 0.389 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -18 | -0.012 | 0.000 | 0.079 | 0.022 | 0.390 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -15 | 0.000 | 0.000 | 0.086 | 0.022 | 0.392 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -12 | 0.003 | 0.000 | 0.091 | 0.027 | 0.394 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -9 | 0.011 | 0.000 | 0.095 | 0.032 | 0.395 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -6 | 0.016 | 0.000 | 0.098 | 0.034 | 0.396 | 0.000 | 0.000 | 0.062 | 0.000 |
+| -3 | 0.016 | 0.000 | 0.099 | 0.032 | 0.397 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +0 | 0.016 | 0.000 | 0.100 | 0.031 | 0.397 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +3 | 0.016 | 0.000 | 0.099 | 0.032 | 0.397 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +6 | 0.017 | 0.000 | 0.098 | 0.033 | 0.396 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +9 | 0.011 | 0.000 | 0.095 | 0.032 | 0.395 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +12 | 0.003 | 0.000 | 0.091 | 0.028 | 0.394 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +15 | 0.000 | 0.000 | 0.086 | 0.022 | 0.392 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +18 | -0.011 | 0.000 | 0.079 | 0.019 | 0.390 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +20 | -0.015 | 0.000 | 0.074 | 0.018 | 0.389 | 0.000 | 0.000 | 0.062 | 0.000 |
+| +21 | -0.020 | 0.000 | 0.072 | 0.018 | 0.388 | 0.000 | 0.000 | 0.062 | 0.000 |

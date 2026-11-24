@@ -81,7 +81,7 @@ def rot(axis, a):
 
 
 def simulate(m=M_GATE, Fp=45.0, s_y=0.0015, s_max=0.020, v_sink=1.2, th_n=0.0, th_w=0.0, drift=0.0, drift_dir=0.0, lam=0.667,
-             mu=MU, dt=1e-4, T=1.5, y_foot=None, z_foot=None, x_foot=None, zeta=0.05, k_stop=5e5, cgdx=0.0, cg_override=None, trace=False):
+             mu=MU, dt=1e-4, T=1.5, y_foot=None, z_foot=None, x_foot=None, zeta=0.05, k_stop=5e5, cgdx=0.0, cg_override=None, trace=False, hist=None):
     g_ = geom(); y_foot = g_['y_foot'] if y_foot is None else y_foot; z_foot = g_['z_foot'] if z_foot is None else z_foot; x_foot = g_['x_foot'] if x_foot is None else x_foot
     mm, cg, I = mass_props(m)
     if cg_override is None and g_['cg'] is not None: cg_override = g_['cg']      # CAD CG (x, y, z); inertia stays the ITEMS roll-up about its own CG (same as AR-008)
@@ -101,15 +101,18 @@ def simulate(m=M_GATE, Fp=45.0, s_y=0.0015, s_max=0.020, v_sink=1.2, th_n=0.0, t
         lw = lam if t < 0.3 else max(0.0, lam*(1-(t-0.3)/0.3))
         F = np.array([0, 0, -W+lw*W]); tau = np.zeros(3); wb = R.T@w
         Mrib = np.zeros((2, 3)); Nrib = np.zeros(2); FBs = np.zeros((4, 3))
+        if hist is not None: dcur = np.zeros(4); fcur = np.zeros(4)      # T-105 LAND_TRACE: per-step record only; nothing below depends on it
         for i, r in enumerate(feet):
             rw = R@r; P = p+rw
             d = -P[2]
+            if hist is not None: dcur[i] = max(0.0, d)
             if d <= 0: continue
             vp = v+np.cross(w, rw)
             fe = ke*(d-sp[i])
             if fe > Fp: sp[i] = d-Fp/ke; fe = Fp
             if d > s_max: fe += k_stop*(d-s_max)
             fn = max(0.0, fe+(c_d*(-vp[2]) if -vp[2] > 0 else 0.0))
+            if hist is not None: fcur[i] = fn
             if fn <= 0: continue
             vt = vp[:2]; sp_ = np.linalg.norm(vt)
             ft = -mu*fn*vt/max(sp_, 0.02)*min(1.0, sp_/0.02) if sp_ > 1e-9 else np.zeros(2)
@@ -120,6 +123,7 @@ def simulate(m=M_GATE, Fp=45.0, s_y=0.0015, s_max=0.020, v_sink=1.2, th_n=0.0, t
             Mb = Mrib[k]; sig = KF_RIB*(math.hypot(Mb[1], Mb[2])/RIB_Z+Nrib[k]/RIB_A); tq = KF_RIB*abs(Mb[0])*(RIB_OD/2)/RIB_J
             rib_idx = max(rib_idx, math.hypot(sig/SIG_RIB, tq/TAU_RIB)); tors_max = max(tors_max, abs(Mb[0]))
         if trace: TRC.append(FBs.ravel().copy())
+        if hist is not None: hist.append((t, p.copy(), R.copy(), dcur.copy(), fcur.copy(), sp.copy(), (F[2]+W-lw*W)/W, lw))
         v = v+F/mm*dt
         tb = R.T@tau
         wb_dot = Ibi@(tb-np.cross(wb, Ib@wb))
@@ -130,6 +134,47 @@ def simulate(m=M_GATE, Fp=45.0, s_y=0.0015, s_max=0.020, v_sink=1.2, th_n=0.0, t
     tilt = math.degrees(math.acos(max(-1, min(1, -(R[:, 0])[2]))))     # body +x vs down; upright => body x = -Z => 0 deg
     return dict(dmax_mm=dmax*1e3, sp_mm=sp*1e3, F=Fmax, side=fside, n_peak=nmax, tilt_end=tilt, drift_end=np.linalg.norm(p[:2]), rib_rf=1.0/max(rib_idx, 1e-9), rib_T=tors_max,
                 v_end=np.linalg.norm(v), trace=(np.array(TRC) if trace else None))
+
+
+def _quat(R):
+    """rotation matrix -> unit quaternion (w, x, y, z), body -> world (T-105 LAND_TRACE)."""
+    t = R[0, 0]+R[1, 1]+R[2, 2]
+    if t > 0:
+        s = 0.5/math.sqrt(t+1.0); q = [0.25/s, (R[2, 1]-R[1, 2])*s, (R[0, 2]-R[2, 0])*s, (R[1, 0]-R[0, 1])*s]
+    elif R[0, 0] > R[1, 1] and R[0, 0] > R[2, 2]:
+        s = 2.0*math.sqrt(1.0+R[0, 0]-R[1, 1]-R[2, 2]); q = [(R[2, 1]-R[1, 2])/s, 0.25*s, (R[0, 1]+R[1, 0])/s, (R[0, 2]+R[2, 0])/s]
+    elif R[1, 1] > R[2, 2]:
+        s = 2.0*math.sqrt(1.0+R[1, 1]-R[0, 0]-R[2, 2]); q = [(R[0, 2]-R[2, 0])/s, (R[0, 1]+R[1, 0])/s, 0.25*s, (R[1, 2]+R[2, 1])/s]
+    else:
+        s = 2.0*math.sqrt(1.0+R[2, 2]-R[0, 0]-R[1, 1]); q = [(R[1, 0]-R[0, 1])/s, (R[0, 2]+R[2, 0])/s, (R[1, 2]+R[2, 1])/s, 0.25*s]
+    return q
+
+
+def write_trace(path, name, Fp, kw, r, hist, dt=1e-4, rate_hz=200.0, extra=None):
+    """T-105: write one case's time history (sampled at <= rate_hz) as JSON. Only called when LAND_TRACE is set; peaks are over the full-rate record."""
+    step = max(1, int(round(1.0/(rate_hz*dt)))); idx = list(range(0, len(hist), step))
+    if idx[-1] != len(hist)-1: idx.append(len(hist)-1)
+    rd = lambda x, n=5: [round(float(v), n) for v in x]
+    H = [hist[i] for i in idx]
+    allf = np.array([h[4] for h in hist]); alld = np.array([h[3] for h in hist]); nn = np.array([h[6] for h in hist])
+    out = dict(
+        meta=dict(case=name, Fp_N=Fp, kwargs=kw, mass_kg=M_GATE, mass_model=MASS_MODEL, geom="legacy" if LEGACY else "CAD", dt_s=dt, rate_hz=1.0/(step*dt),
+                  rib_od_m=RIB_OD, rib_id_m=RIB_ID, units="t s; p m; crush_mm mm; force_N N; load_factor g; tilt deg",
+                  frame="world Z up (touchdown ground plane z=0); body x aft (down in stance), y right, z cruise-up (world +X in stance). R0 maps the upright stance to body->world.",
+                  p="CG position in world axes [x, y, z]", quat_wxyz="unit quaternion, body -> world", tilt_deg="angle of body +x from world down; 0 = upright stance (as tilt_end)",
+                  pads="order = landing_a feet: (sy,sz) = (+1,+1), (+1,-1), (-1,+1), (-1,-1); y = sy*y_foot (+y right wing fin), z_body = sz*z_foot",
+                  crush_mm="penetration depth d of the pad (elastic + plastic); capped only by the stop spring beyond s_max", set_mm="permanent (plastic) set of each pad",
+                  load_factor_g="sum of pad normal forces / (m g): same definition as n_peak (rotor lift excluded)", rotor_lift_frac="lam ramp: 0.667 until 0.3 s, to 0 at 0.6 s (C1 convention)",
+                  limits=dict(stroke_mm=20.0, tilt_deg=3.0, load_factor_g=12.0)),
+        peaks=dict(stroke_mm=float(r["dmax_mm"].max()), n_g=float(r["n_peak"]), tilt_end_deg=float(r["tilt_end"]), Fmax_N=float(r["F"].max()), side_N=float(r["side"].max()),
+                   rib_rf=float(r["rib_rf"]), drift_end_mm=float(r["drift_end"]*1e3), set_mm_max=float(r["sp_mm"].max()),
+                   stroke_mm_fullrate=float(alld.max()*1e3), Fmax_N_fullrate=float(allf.max()), n_g_fullrate=float(nn.max())),
+        t=rd([h[0] for h in H], 4), p=[rd(h[1]) for h in H], quat_wxyz=[rd(_quat(h[2]), 6) for h in H],
+        tilt_deg=[round(math.degrees(math.acos(max(-1, min(1, -h[2][2, 0])))), 3) for h in H],
+        crush_mm=[rd(h[3]*1e3, 3) for h in H], force_N=[rd(h[4], 3) for h in H], set_mm=[rd(h[5]*1e3, 3) for h in H],
+        load_factor_g=rd([h[6] for h in H], 4), rotor_lift_frac=rd([h[7] for h in H], 4))
+    if extra: out["meta"].update(extra)
+    with open(path, "w", encoding="utf-8") as f: json.dump(out, f, separators=(",", ":"))
 
 
 def static():
@@ -163,5 +208,10 @@ if __name__ == "__main__":
                  ("hard 10 wide + drift .5 y", dict(v_sink=1.2, th_w=10, drift=0.5, drift_dir=math.pi/2)),
                  ("normal level .5", dict(v_sink=0.5)), ("normal 10 narrow .5", dict(v_sink=0.5, th_n=10)), ("normal 10 wide .5 + drift", dict(v_sink=0.5, th_w=10, drift=0.5, drift_dir=math.pi/2))]
         for name, kw in cases:
-            r = simulate(Fp=Fp, **kw)
+            _tr = os.environ.get("LAND_TRACE")                      # T-105: opt-in time histories into the directory named by LAND_TRACE; unset = unchanged
+            _h = [] if _tr else None
+            r = simulate(Fp=Fp, hist=_h, **kw)
+            if _tr:
+                os.makedirs(_tr, exist_ok=True)
+                write_trace(os.path.join(_tr, "landing_%s%s.json" % (name.replace(" ", "_").replace("+", "plus").replace("/", "-").replace(".", "p"), "_%gN" % Fp if len(sweep) > 1 else "")), name, Fp, kw, r, _h)
             print(f"{name:28s} stroke max {r['dmax_mm'].max():5.1f} mm  n {r['n_peak']:.2f}  Fmax {r['F'].max():5.1f} N  side {r['side'].max():5.1f} N  tilt_end {r['tilt_end']:5.1f}  drift {r['drift_end']*1e3:5.0f} mm  set {r['sp_mm'].max():.1f}  rib RF {r['rib_rf']:.2f}")

@@ -1,0 +1,13 @@
+kin_mid exit 0 wall 6s
+dyn_mid exit 1 wall 4s
+sweep_mid exit 0 wall 19s
+kin_lo exit 0 wall 20s
+dyn_lo exit 1 wall 14s
+sweep_lo exit 0 wall 17s
+kin_hi exit 0 wall 14s
+dyn_hi exit 1 wall 13s
+sweep_hi exit 0 wall 25s
+loads exit 0 wall 13s
+dyn_mid exit 0 wall 19s
+dyn_lo exit 0 wall 13s
+dyn_hi exit 0 wall 11s

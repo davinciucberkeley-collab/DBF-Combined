@@ -532,3 +532,11 @@ Requirement IDs: R-INT-04.
 ```text
 Yes, do the one-part STEP test
 ```
+
+## AM-050 — 2026-11-24 — DaVinci branch clean-up deferred; continue the main work
+Relation: Dillon will delete the DaVinci API Test branch `concept-a-snapshot-73656c93` later (836 MB of the org's 1 GB storage); no further DaVinci uploads until storage is confirmed freed; resume the queued T-101 / T-105 / T-104 / final-verification work.
+Requirement IDs: R-INT-04, R-VER-01.
+
+```text
+I'll work on that later, continue with the work you were doing before
+```

@@ -1,0 +1,6 @@
+m 1.881 | old chord, old CG  | CG 22.049 mm | alpha 7.37 deg | trim 7.29 deg TE up | SM 7.61 % | CLD 0.3226 /rad | EL_X -192.3 mm
+m 1.881 | old chord, new CG  | CG 21.567 mm | alpha 7.39 deg | trim 7.53 deg TE up | SM 7.81 % | CLD 0.3226 /rad | EL_X -192.8 mm
+m 1.881 | new chord, new CG  | CG 21.567 mm | alpha 7.42 deg | trim 6.00 deg TE up | SM 7.81 % | CLD 0.4200 /rad | EL_X -186.7 mm
+m 1.883 | old chord, old CG  | CG 22.049 mm | alpha 7.38 deg | trim 7.31 deg TE up | SM 7.61 % | CLD 0.3226 /rad | EL_X -192.3 mm
+m 1.883 | old chord, new CG  | CG 21.567 mm | alpha 7.40 deg | trim 7.54 deg TE up | SM 7.81 % | CLD 0.3226 /rad | EL_X -192.8 mm
+m 1.883 | new chord, new CG  | CG 21.567 mm | alpha 7.42 deg | trim 6.01 deg TE up | SM 7.81 % | CLD 0.4200 /rad | EL_X -186.7 mm

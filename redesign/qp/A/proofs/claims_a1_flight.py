@@ -343,7 +343,7 @@ stored("CL-A-ROLL-GATE", "Peak roll rate in SITL at cruise speed, 1.47 kg (the g
 
 
 stored("CL-A-PITCH-USE", "Elevon pitch use in transition (share of the 15 deg basis; the 0.60 line is 9 deg)", "P:sim.pitch_use_15_worst", "-", limit=("<=", "P:req.pitch_use_max"), verifies=["A-P11"], parts=["WNG-006-R", "WNG-006-L"],
-       how="D-245: the standing line is 0.60 of 15 deg (SITL-FLIGHT.md l.25), 0.69 (Z5) to 0.79 (T-074) in AR-015, so FAIL, open (AR-010 item 5). Fix path is the ladder from rung 1 (controls: lower the entry pitch-rate demand), then a SITL rerun; a 20 deg basis is not used (no A-specific roll / gust reserve derivation; review round 10 98-4). First transition flight logs the elevon commands.",
+       how="D-245: the standing line is 0.60 of 15 deg (SITL-FLIGHT.md l.25), worst C3 case 0.651 (0.554 / 0.571 / 0.651 / 0.605, AR-017) against 0.60, so FAIL, open pending the reserve derivation (D-251); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls (AR-010 item 5). Fix path is the ladder from rung 1 (controls: lower the entry pitch-rate demand), then a SITL rerun; a 20 deg basis is not used (no A-specific roll / gust reserve derivation; review round 10 98-4). First transition flight logs the elevon commands.",
        equation="SITL (ArduPlane, 6-DOF plant) transition runs T-097, pitch_use_15 in sum.json; read, not re-run")
 
 

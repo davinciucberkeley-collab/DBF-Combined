@@ -1,0 +1,61 @@
+{
+ "n_pairs_evaluated": 174,
+ "penetrating_pairs": [
+  {
+   "side": "L",
+   "pair": "arm / rod",
+   "depth_mm": 0.03184526087524932,
+   "at_delta_deg": -21.0,
+   "range_deg": [
+    -21.0,
+    21.0
+   ],
+   "design_contact": true,
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": -0.03184526087524932,
+    "-20": -0.02782178126653316,
+    "20": -0.023312670709518465,
+    "21": -0.026208514347147993
+   }
+  },
+  {
+   "side": "R",
+   "pair": "arm / rod",
+   "depth_mm": 0.03184526087524932,
+   "at_delta_deg": -21.0,
+   "range_deg": [
+    -21.0,
+    21.0
+   ],
+   "design_contact": true,
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": -0.03184526087524932,
+    "-20": -0.027821781266531426,
+    "20": -0.023312670709518465,
+    "21": -0.026208514347147993
+   }
+  }
+ ],
+ "worst_penetration_mm": 0.03184526087524932,
+ "worst_pair": "arm / rod",
+ "min_positive_clearance_mm": 0.0999999999999994,
+ "min_clearance_pair": "rod Z-bend pin / servo case",
+ "min_clearance_excl_design_contact_mm": 0.0999999999999994,
+ "elevon_vs_core_2d": {
+  "min_sep_mm": 0.0,
+  "at_delta_deg": -21.0,
+  "neutral_mm": 0.0,
+  "nose_below_hinge_to_core_min_mm": 1.141206845859571,
+  "nose_below_hinge_min_at_delta_deg": 21.0,
+  "note": "elevon nose touches the core corner at the hinge at neutral by construction (0 mm); sections only (no balance pocket, caps, tape)"
+ },
+ "horn_rib_vs_core_2d": {
+  "min_sep_mm": 2.5460110573987285,
+  "at_delta_deg": 21.0
+ },
+ "y_gap_horn_to_cap_flange_mm": 31.25149999999996,
+ "pass_no_penetration_gt_tol": true,
+ "pairs_failing": []
+}

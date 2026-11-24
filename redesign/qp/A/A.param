@@ -177,6 +177,8 @@ PTCH2SRV_RMAX_DN,20
 # QP-3 follow-up 1: climb attainable at 17 m/s at the THR_MAX 68 ceiling is 2.8-3.2 m/s fresh, 2.2-2.5 m/s at 13.2 V rest (EST); the cap follows the worst state
 TECS_CLMB_MAX,2
 TECS_SINK_MAX,2.5
+# T-101 / D-251 C3 control: pitch weights height over speed so TECS does not chop throttle after CRUISE handover; SITL pitch use at the 0.25 chord 0.554-0.651 (AR-017, T101_results.json C3 runs T101C3_*); default 1.0; verify on bench param dump, TP-19.
+TECS_SPDWEIGHT,0.5
 ARSPD_TYPE,1
 ARSPD_BUS,0
 ARSPD_TUBE_ORDR,2

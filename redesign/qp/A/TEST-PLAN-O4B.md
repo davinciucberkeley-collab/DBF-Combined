@@ -325,3 +325,17 @@ Equipment: G02 10 kg cell + HX711 + caliper (BOM), T10 lever-rig hardware, G03 s
 
 ### Sources for this section
 `mechanism/out/T083_report.md` s2.1 to s2.4, s5.3, s10; `mechanism/out/T083b_report.md` s0, s2 to s4, s9; `docs/spec-amendments.md` AM-016 to AM-019; `CHANGE-LOG.md` D-227, D-228, D-229.
+
+### TP-19 (new, T-101): first-transition flight-card step: CRUISE switch timing and TECS setting
+Added 2026-11-23 (T-101); reworded 2026-11-24 for the 0.25 chord after D-250 was superseded by D-251 (reverted). Category: test plan; no analysis run here. The C3 SITL runs (pitch use 0.554 Z5, 0.571 Z5+Lua, 0.651 T-074, 0.605 T-074+Lua; AR-017) used a pilot-procedure change and one parameter, both of which must be on the first-transition flight card (AR-017 s diagnosis: the peak came from the 3 s entry-throttle hold, the airspeed overshoot to 20.5 m/s and the CRUISE-mode TECS throttle chop and pull-up, pitch -4 to +9 deg, q about 18 deg/s).
+
+| Item | Value |
+|---|---|
+| Procedure | After the "Transition FW done" message the pilot switches FBWA -> CRUISE **1.0 s** later (the T-097 harness used 3.0 s; `fw_hold=1.0` in `sitl/run_fwd.py`). Throttle is not held at the entry value beyond that. |
+| Parameter | `TECS_SPDWEIGHT 0.5` (stock default 1.0; 0 = height only, 1 = balanced, 2 = speed only, ArduPilot TECS tuning guide, read 2026-11-23). It is a line in `redesign/qp/A/A.param`. Bench check before flight: read the parameter back from the loaded board (GCS parameter list or parameter dump) and compare with `A.param`; the card is not signed until the dump shows 0.5. |
+| Log | Elevon outputs SERVO5 and SERVO6 (microseconds, convert to degrees about the bench-set trim and endpoints); airspeed (MS4525, BOM V05) and groundspeed; pitch and pitch rate; throttle output and TECS log messages; time stamps of the "Transition FW done" message and the mode change. Keep the BIN log. |
+| **Pass** | **Peak mean elevon deflection <= 9 deg (= 0.60 of 15 deg), taken as max of the mean of the two elevons, measured from zero command (the `fwd_sum.py` metric), from the FBWA switch until 20 s into CRUISE.** The C3 SITL runs gave 0.554 / 0.571 / 0.651 / 0.605 of 15 deg (Z5, Z5+Lua, T-074, T-074+Lua; AR-017). The pass line is still peak mean elevon <= 9 deg (0.60 of 15 deg); the worst C3 case 0.651 is ABOVE it (open, pending the reserve derivation, D-251). One sample per case, scatter 0.01-0.03 of 15 deg. |
+| Abort rule (EST, team line, not derived from a flight measurement) | If, after the CRUISE switch, the airspeed rises past 20 m/s (the 20.5 m/s overshoot of the T-097 harness) or the pitch goes beyond +-15 deg or the pitch rate exceeds about 18 deg/s (the SITL transient), the pilot switches to QHOVER / QSTABILIZE (VTOL motors) at once, as in the TP-11 recovery, and the card is not repeated until the log is read. The 20 m/s, 15 deg and 18 deg/s figures are EST thresholds taken from the AR-017 diagnosis, not tested. |
+| If the pass line fails | The claim CL-A-PITCH-USE flight value stays open; the team and reviewer rule. Untried controls (D-249): TECS_SPDWEIGHT 0, TECS_PTCH_DAMP 0.2-0.3, a CRUISE switch only once the pitch rate is near zero; each is the same lever, so the margin is weak evidence (D-249). |
+| When | First transition flight, after the tethered hover; a flight item that does not gate the 29 Jan 2027 go/no-go (EST scoping, the team confirms). |
+| Source | D-251 (D-250 superseded, reverted); AR-017; `redesign/qp/A/mechanism/out/T101_results.json`; `docs/audits/2026-11-24-T101-revert.md`. |
