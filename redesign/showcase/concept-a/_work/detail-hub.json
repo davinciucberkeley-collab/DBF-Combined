@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 67.42,
+ "render_s": 19.37,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -51,17 +51,17 @@
  "callouts": [
   {
    "item": "CGE-001",
-   "x": 719.0,
-   "y": 495.5,
+   "x": 719.1,
+   "y": 495.1,
    "title": "CGE-001",
    "text": "Printed hub, 4 arm sockets",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.084,
-    -0.0099,
-    0.0059
+    -0.0838,
+    -0.0098,
+    0.006
    ]
   },
   {
@@ -235,7 +235,7 @@
    "subsystem": "cage",
    "bbox_px": [
     641,
-    447,
+    446,
     803,
     548
    ]

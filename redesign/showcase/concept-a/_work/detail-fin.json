@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 35.77,
+ "render_s": 18.06,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",

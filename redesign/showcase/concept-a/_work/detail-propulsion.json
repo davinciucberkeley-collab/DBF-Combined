@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 69.44,
+ "render_s": 17.47,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -132,8 +132,8 @@
    "mass_g": 43.3,
    "subsystem": "cage",
    "bbox_px": [
-    1223,
-    765,
+    1224,
+    767,
     1549,
     999
    ]

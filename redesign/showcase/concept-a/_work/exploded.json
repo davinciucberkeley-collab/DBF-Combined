@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 73.63,
+ "render_s": 19.12,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -58,16 +58,16 @@
   {
    "item": "CGE-001",
    "x": 673.6,
-   "y": 558.6,
+   "y": 559.6,
    "title": "",
    "text": "Cage (hub, arms, struts)",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.3034,
-    -0.0099,
-    0.0058
+    -0.3036,
+    -0.01,
+    0.0038
    ]
   },
   {

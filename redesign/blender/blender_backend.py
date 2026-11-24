@@ -75,7 +75,8 @@ LOOKS = [
     (('carbon', 'cf '), ('#2A2D31', 0.32, 0.0, 0.5)),
     (('cf tube',), ('#2A2D31', 0.32, 0.0, 0.5)),
     (('foam', 'xps', 'epp', 'eps'), ('#AFBCCB', 0.6, 0.0, 0.0)),
-    (('ply', 'birch', 'balsa', 'wood', 'bass'), ('#C9A27A', 0.6, 0.0, 0.0)),
+    (('glass cloth',), ('#E9E6DC', 0.22, 0.0, 0.6, 0.45)),   # AM-066: wet-laid glass / epoxy skin over foam (WNG-011 / WNG-014): clear, slight epoxy tint; the foam shows through
+    (('plywood', 'birch', 'balsa', 'wood', 'bass'), ('#C9A27A', 0.6, 0.0, 0.0)),   # AM-066: was 'ply', which caught '1 ply 48 g/m2 glass' and drew the glass skin as wood
     (('lipo', 'li-ion', 'battery'), ('#2D4E86', 0.45, 0.0, 0.2)),
     (('pcb', 'esc', 'flight controller'), ('#2F6B4A', 0.45, 0.0, 0.1)),
     (('motor',), ('#3C4047', 0.3, 0.8, 0.0)),

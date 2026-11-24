@@ -660,3 +660,27 @@ Requirement IDs: R-PHY-10, R-VER-01.
 ```text
 Yes, do the directional stability check
 ```
+
+## AM-066 — 2026-11-24 — Glass-skin look and branch clean-up
+Relation: (1) the wing's glass torsion skin (WNG-011, WNG-014) shows tan in the renders; give it a realistic glass / epoxy look; (2) delete the two GitHub side branches `build-film-audit` and `claude/proof-chain-readable-c5026d`, both fully merged into redesign/v1.
+Requirement IDs: R-REPO-08, R-GEN-02.
+
+```text
+Yes, do both
+```
+
+## AM-067 — 2026-11-24 — Merge redesign/v1 into main by pull request
+Relation: once the glass-skin render fix and its records are finished and pushed, open a pull request from redesign/v1 into main (fast-forward; main last updated 2026-11-18) and merge it, so main carries the completed design phase.
+Requirement IDs: R-GEN-02, R-REPO-08.
+
+```text
+Okay yes, do that once everything is finished
+```
+
+## AM-068 — 2026-11-24 — Re-render the Explorer videos, then merge to main
+Relation: the Explorer's "How it flies" (2026-11-16) and 10-stage build video (2026-11-19) predate the X2216 motors (D-227) and the FC move (D-240) and show the glass skin as wood; re-render both from the current CAD with the AM-066 glass look, check frames, publish, then do the AM-067 merge of redesign/v1 into main.
+Requirement IDs: R-VID-02, R-VID-03, R-CAD-01, R-REPO-08.
+
+```text
+Yes, re-render the videos, then merge to main
+```

@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 41.31,
+ "render_s": 22.0,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -162,7 +162,7 @@
    "subsystem": "cage",
    "bbox_px": [
     721,
-    412,
+    411,
     892,
     524
    ]
