@@ -1265,7 +1265,7 @@
  },
  "linkage": {
   "f_hold_n": {
-   "value": 17.05,
+   "value": 17.64,
    "unit": "N",
    "source": "SRC-A-LINKLOADS",
    "note": "rod force at the VD hinge moment, max over +-20 deg (elevon_dynamics.py)",
@@ -1279,10 +1279,10 @@
    "status": "UNVERIFIED"
   },
   "rib_foam_hold_kpa": {
-   "value": 431.8,
+   "value": 446.6,
    "unit": "kPa",
    "source": "SRC-A-LINKLOADS",
-   "note": "horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 138-200 kPa unfactored)",
+   "note": "horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 143-207 kPa unfactored)",
    "status": "UNVERIFIED"
   },
   "rib_foam_stall_kpa": {
@@ -1300,7 +1300,7 @@
    "status": "UNVERIFIED"
   },
   "blade_root_hold_mpa": {
-   "value": 3.32,
+   "value": 3.43,
    "unit": "MPa",
    "source": "SRC-A-LINKLOADS",
    "note": "horn blade governing section, in-layer, x 2.156",
@@ -1314,7 +1314,7 @@
    "status": "UNVERIFIED"
   },
   "bearing_hold_mpa": {
-   "value": 18.39,
+   "value": 19.02,
    "unit": "MPa",
    "source": "SRC-A-LINKLOADS",
    "note": "1.0 mm clevis pin bearing in the 2 mm horn, x 2.156",

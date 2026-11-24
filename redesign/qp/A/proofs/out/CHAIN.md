@@ -20,7 +20,7 @@ Parameter files: `redesign/qp/A/params-A.json`
 > - STRICT CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)
 > - STRICT CL-A-VIB-FC: FAILS: margin -524.0% (187.2 m/s2 vs <= 30 m/s2)
 > - STRICT CL-A-VIB-GM: FAILS: margin -43.5% (1.13 vs >= 2)
-> - STRICT CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)
+> - STRICT CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -420.5% (446.6 kPa vs <= 85.8 kPa)
 > - STRICT CL-A-HORN-RIB-FOAM-STALL: FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)
 > - STRICT CL-A-ELEVON-TORSION-FOAM: FAILS: margin -507.8% (521.5 kPa vs <= 85.8 kPa)
 > - STRICT CL-A-HORN-BEARING-STALL: FAILS: margin -83.2% (36.65 MPa vs <= 20 MPa)
@@ -848,10 +848,10 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
       - `SRC-A-FOAM103` (see above)
     - `ASM-A-FOAM-ALLOW` (see above)
   - `P:req.ms_min` (see above)
-- claim **CL-A-HORN-RIB-FOAM-HOLD** Horn rib face shear in the elevon foam at 1.5 x VD hold (x 2.156), beam-on-foundation FE, worst foam case = **431.8 kPa** (limit <= 85.8 kPa, margin -403%) — **UNVERIFIED** **FAILS**
-  - ⚠ FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)
+- claim **CL-A-HORN-RIB-FOAM-HOLD** Horn rib face shear in the elevon foam at 1.5 x VD hold (x 2.156), beam-on-foundation FE, worst foam case = **446.6 kPa** (limit <= 85.8 kPa, margin -421%) — **UNVERIFIED** **FAILS**
+  - ⚠ FAILS: margin -420.5% (446.6 kPa vs <= 85.8 kPa)
   - ⚠ uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
-  - ⚠ uses P:linkage.rib_foam_hold_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 138-200 kPa unfactored))
+  - ⚠ uses P:linkage.rib_foam_hold_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 143-207 kPa unfactored))
   - ⚠ uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses P:linkage.foam_shear_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: foam shear 100 x 103/120 kPa (EST, foam_103.py))
   - how to verify: NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).
@@ -859,8 +859,8 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
   - test `T-A-HORN-FOAM-COUPON` TP-16 / TP-17 (T-094): horn-rib and elevon-torsion foam coupons, n = 3 each, 10 kg cell on the lever rig (planned) — **PROPOSED**
   - `ASM-A-FOAM-ALLOW` (see above)
   - calc `CALC-A-HORN-RIB-FOAM-HOLD-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header` — **CHECKED**
-    - `v` ← param `P:linkage.rib_foam_hold_kpa` = 431.8 kPa — **UNVERIFIED**
-      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 138-200 kPa unfactored)
+    - `v` ← param `P:linkage.rib_foam_hold_kpa` = 446.6 kPa — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 143-207 kPa unfactored)
       - source `SRC-A-LINKLOADS` [Elevon linkage strength checks, D-212 rev 3 (linkage_loads_check.json)](redesign/qp/A/mechanism/out/linkage_loads_check.json), hand calculations + 1-D beam-on-foundation FE of the horn rib; stall force 51.0 N quasi-static; factors KP 2.156 hold, 1.4375 stall (printed / bonded), checked 2026-11-15 — **CHECKED**
     - `ASM-A-FOAM-ALLOW` (see above)
   - param `P:linkage.foam_shear_kpa` = 85.8 kPa — **UNVERIFIED**
@@ -899,7 +899,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
       - `SRC-A-LINKLOADS` (see above)
     - `ASM-A-FOAM-ALLOW` (see above)
   - `P:linkage.foam_shear_kpa` (see above)
-- claim **CL-A-HORN-BLADE-HOLD** Printed horn blade bending at 1.5 x VD hold (x 2.156), printed lying flat (in-layer) = **3.32 MPa** (limit <= 20 MPa, margin +83%) — **UNVERIFIED**
+- claim **CL-A-HORN-BLADE-HOLD** Printed horn blade bending at 1.5 x VD hold (x 2.156), printed lying flat (in-layer) = **3.43 MPa** (limit <= 20 MPa, margin +83%) — **UNVERIFIED**
   - ⚠ uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses P:linkage.blade_root_hold_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: horn blade governing section, in-layer, x 2.156)
   - ⚠ uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -909,7 +909,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
   - assumption `ASM-A-PETG-ALLOW` Printed PETG (Prusament, R03) carries 20 MPa in the layer plane and in hole bearing (basis: structures/fea_arm.py ALLOW['petg'] and arm_cup_checks.py PETG_BEAR: EST, no coupon yet; the horn is printed lying flat so its bending and bearing are in the layer plane) — **UNVERIFIED**
     - ⚠ assumption marked UNVERIFIED by its author
   - calc `CALC-A-HORN-BLADE-HOLD-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header` — **CHECKED**
-    - `v` ← param `P:linkage.blade_root_hold_mpa` = 3.32 MPa — **UNVERIFIED**
+    - `v` ← param `P:linkage.blade_root_hold_mpa` = 3.43 MPa — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: horn blade governing section, in-layer, x 2.156
       - `SRC-A-LINKLOADS` (see above)
     - `ASM-A-PETG-ALLOW` (see above)
@@ -930,7 +930,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
       - `SRC-A-LINKLOADS` (see above)
     - `ASM-A-PETG-ALLOW` (see above)
   - `P:linkage.petg_allow_mpa` (see above)
-- claim **CL-A-HORN-BEARING-HOLD** Clevis pin bearing in the 2 mm horn at 1.5 x VD hold (x 2.156) = **18.39 MPa** (limit <= 20 MPa, margin +8%) — **UNVERIFIED**
+- claim **CL-A-HORN-BEARING-HOLD** Clevis pin bearing in the 2 mm horn at 1.5 x VD hold (x 2.156) = **19.02 MPa** (limit <= 20 MPa, margin +5%) — **UNVERIFIED**
   - ⚠ uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses P:linkage.bearing_hold_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: 1.0 mm clevis pin bearing in the 2 mm horn, x 2.156)
   - ⚠ uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -939,7 +939,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
   - parts: MEC-003-R, MEC-003-L, MEC-004-R, MEC-004-L, WNG-006-R, WNG-006-L
   - `ASM-A-PETG-ALLOW` (see above)
   - calc `CALC-A-HORN-BEARING-HOLD-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header` — **CHECKED**
-    - `v` ← param `P:linkage.bearing_hold_mpa` = 18.39 MPa — **UNVERIFIED**
+    - `v` ← param `P:linkage.bearing_hold_mpa` = 19.02 MPa — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: 1.0 mm clevis pin bearing in the 2 mm horn, x 2.156
       - `SRC-A-LINKLOADS` (see above)
     - `ASM-A-PETG-ALLOW` (see above)

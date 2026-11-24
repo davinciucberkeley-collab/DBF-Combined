@@ -183,7 +183,18 @@ try:
         run_for(float(kv.get("fw_hold", 3.0)))               # override held 3 s after the handover (T-101: key fw_hold, default unchanged)
         rc[5] = CRZ; rc[2] = 1500; mk["t_cruise_mode"] = st["t"]
         if "cthr" in kv: setp("THR_MIN", kv["cthr"]); setp("THR_MAX", kv["cthr"])      # F4 follow-up: pin the cruise throttle (percent) to read the duty it maps to
-        run_for(float(kv.get("cruise_s", 25)))
+        if kv.get("c3g", "0") == "1":     # T-101 C3G (opt-in): 1-cos vertical + side gust and a roll doublet start c3g_t s after the CRUISE command (AR-017 pitch peak, 1.14 s in T101C3_T074)
+            run_for(float(kv.get("c3g_pre", 0.4)))
+            t_ev = st["t"] + float(kv.get("c3g_lead", 0.74)); mk["t_c3g_cmd"] = st["t"]
+            cmd(gv_t0=t_ev, gv_dur=float(kv.get("gv_dur", 1.08)), gv_vert=float(kv.get("gv_vert", 3.0)), gv_side=float(kv.get("gv_side", 3.0)))
+            run_for(max(0.0, t_ev - st["t"])); mk["t_c3g0"] = st["t"]
+            st_ = float(kv.get("c3g_stick", 0.75)); leg = float(kv.get("c3g_leg", 1.5))     # roll stick (fraction of full = ROLL_LIMIT_DEG 45) in CRUISE = bank demand; doublet +, -, then centre
+            rc[0] = int(1500 + 500 * st_); run_for(leg); mk["t_c3g1"] = st["t"]
+            rc[0] = int(1500 - 500 * st_); run_for(leg); mk["t_c3g2"] = st["t"]
+            rc[0] = 1500
+            run_for(max(0.0, float(kv.get("cruise_s", 25)) - (st["t"] - mk["t_cruise_mode"])))
+        else:
+            run_for(float(kv.get("cruise_s", 25)))
         mk["t_cruise_end"] = st["t"]
         if case == "trans" and kv.get("chain", "0") == "1":
             mk["t_back"] = st["t"]; rc[5] = QLOI; rc[2] = 1500

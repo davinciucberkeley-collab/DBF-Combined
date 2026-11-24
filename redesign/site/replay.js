@@ -14,7 +14,7 @@ const VER = '20261124a', GLB_URL = 'assets/concept-a.opt.glb?v=20261118f', GLB_B
 const REDUCE = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
 const $ = (s, r = document) => r.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const nf = (v, d = 2) => (v === null || v === undefined || Number.isNaN(v)) ? '—' : Number(v).toFixed(d);
+const nf = (v, d = 2) => (v === null || v === undefined || Number.isNaN(v)) ? '\u2014' : Number(v).toFixed(d);
 const cssv = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const RAD = Math.PI / 180;
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
@@ -256,8 +256,8 @@ function tick(now) {
 // ================================================================ FLIGHT
 const MARK_LABEL = { t_armed: 'Motors armed', t_climb_done: 'Climb finished', t_qstab: 'QSTABILIZE (transition starts)', t_fbwa: 'FBWA mode', t_fwdone: 'Forward transition done',
   t_cruise_mode: 'CRUISE mode', t_cruise_end: 'Cruise ended', t_back: 'Back-transition starts', t_desc0: 'Descent starts', t_qland: 'QLAND (landing)' };
-const PF_LABEL = { alt_peak_abs: 'Peak altitude, m', alt_max_gain: 'Highest climb during the transition, m', 't_to_1.3Vs_s': 'Time to 1.3 × stall speed, s',
-  t_cap_run_s: 'Longest run at the motor cap, s', t_ge85_s: 't_ge85_s (recorded line, s)', pitch_use_15: 'Elevon pitch use, share of ±15°', t_elevon_sat_s: 'Time with the elevons saturated, s',
+const PF_LABEL = { alt_peak_abs: 'Peak altitude, m', alt_max_gain: 'Highest climb during the transition, m', 't_to_1.3Vs_s': 'Time to 1.3 \u00d7 stall speed, s',
+  t_cap_run_s: 'Longest run at the motor cap, s', t_ge85_s: 't_ge85_s (recorded line, s)', pitch_use_15: 'Elevon pitch use, share of \u00b115\u00b0', t_elevon_sat_s: 'Time with the elevons saturated, s',
   touch_in_flight: 'Fin-foot contacts while flying' };
 const CG_AC = [0.02205, -0.00332, 0.00656];      // CAD-frame CG, m (cad_mass.json, T-098 basis); only offsets where the model hangs from the recorded position
 const TH_PROP = () => manifest.th_to_prop;       // th1..th4 -> prop corner (a_plant.py motor order 1 FR, 2 RL, 3 FL, 4 RR in the belly-forward copter frame)
@@ -272,7 +272,7 @@ function mountFlight() {
   modelInfo.listeners.push(() => { kbEl.innerHTML = kbText(); });
 
   const P = addPanel(root, async () => {
-    showMsg('Loading 3-D model…');
+    showMsg('Loading 3-D model\u2026');
     st = makeStage($('#rp-f-canvas', root), { gridSize: 100, gridDiv: 100 });
     if (!st.ok) { showMsg('3-D is not available in this browser. The plots below still work.', true); }
     if (st.ok) {
@@ -299,7 +299,7 @@ function mountFlight() {
   P.render = () => { if (st && st.ok) renderStage(st); };
 
   async function load(key) {
-    F.key = key; showMsg('Loading run data…'); if (tl) tl.setPlaying(false);
+    F.key = key; showMsg('Loading run data\u2026'); if (tl) tl.setPlaying(false);
     const m = manifest.flight.find(c => c.id === key);
     const { data, bytes } = await fetchJSON('assets/sims3d/' + m.file + '?v=' + VER);
     F.D = data; F.bytes = bytes; kbEl.innerHTML = kbText(); derive(data);
@@ -341,10 +341,10 @@ function mountFlight() {
   }
   function buildPF() {
     const D = F.D, pf = D.meta.pass_fail, host = $('#rp-f-pf', root), ps = D.meta.pitch_use_scalar;
-    const rows = Object.entries(pf.lines).map(([k, l]) => '<tr><td class="first">' + esc(PF_LABEL[k] || k) + '</td><td class="val">' + esc(l.value) + '</td><td>' + esc(String(l.limit).replace('<=', '≤').replace('>=', '≥')) + '</td><td class="' + (l.pass ? 'rp-ok' : 'rp-bad') + '">' + (l.pass ? '✓ pass' : '✕ FAIL') + '</td></tr>').join('');
+    const rows = Object.entries(pf.lines).map(([k, l]) => '<tr><td class="first">' + esc(PF_LABEL[k] || k) + '</td><td class="val">' + esc(l.value) + '</td><td>' + esc(String(l.limit).replace('<=', '\u2264').replace('>=', '\u2265')) + '</td><td class="' + (l.pass ? 'rp-ok' : 'rp-bad') + '">' + (l.pass ? '\u2713 pass' : '\u2715 FAIL') + '</td></tr>').join('');
     const fails = Object.entries(pf.lines).filter(([, l]) => !l.pass).map(([k]) => PF_LABEL[k] || k);
-    host.innerHTML = '<p class="rp-sum ' + (pf.all_pass ? 'rp-ok' : 'rp-bad') + '"><b>' + (pf.all_pass ? '✓ All recorded lines pass.' : '✕ Not all lines pass: ' + esc(fails.join('; ')) + '.') + '</b> '
-      + 'Elevon pitch use, the largest share of ±15° between FBWA and the end of cruise, is <b>' + nf(ps.pitch_use_15, 2) + '</b> against ' + nf(F.useLimit, 2) + ' (recorded summary; this 10 Hz file gives ' + nf(F.useMax10Hz, 2) + ').</p>'
+    host.innerHTML = '<p class="rp-sum ' + (pf.all_pass ? 'rp-ok' : 'rp-bad') + '"><b>' + (pf.all_pass ? '\u2713 All recorded lines pass.' : '\u2715 Not all lines pass: ' + esc(fails.join('; ')) + '.') + '</b> '
+      + 'Elevon pitch use, the largest share of \u00b115\u00b0 between FBWA and the end of cruise, is <b>' + nf(ps.pitch_use_15, 2) + '</b> against ' + nf(F.useLimit, 2) + ' (recorded summary; this 10 Hz file gives ' + nf(F.useMax10Hz, 2) + ').</p>'
       + '<div class="scroll"><table class="ds-table"><thead><tr><th>Line</th><th>Value</th><th>Limit</th><th>Result</th></tr></thead><tbody>' + rows + '</tbody></table></div>'
       + '<span class="ds-source">Lines from mechanism/out/T101_results.json via the export (<code class="ds-inline">meta.pass_fail</code>).</span>';
   }
@@ -357,7 +357,7 @@ function mountFlight() {
     plots.push({ key: 'V', p: makePlot(host, W, { ...base, title: 'Airspeed V, m/s', series: [{ ys: D.V }] }) });
     plots.push({ key: 'pitch', p: makePlot(host, W, { ...base, title: 'Pitch, deg (90 = nose straight up)', series: [{ ys: D.pitch }] }) });
     const bands = mk.t_fbwa !== undefined && mk.t_cruise_end !== undefined ? [{ x0: mk.t_fbwa, x1: mk.t_cruise_end }] : [];
-    plots.push({ key: 'use', p: makePlot(host, W, { ...base, title: 'Elevon pitch use, share of ±15° (shaded: FBWA to end of cruise, where the line is judged)', series: [{ ys: D.pitch_use_15 }], lines: [{ y: F.useLimit, label: nf(F.useLimit, 2) + ' limit' }], bands }) });
+    plots.push({ key: 'use', p: makePlot(host, W, { ...base, title: 'Elevon pitch use, share of \u00b115\u00b0 (shaded: FBWA to end of cruise, where the line is judged)', series: [{ ys: D.pitch_use_15 }], lines: [{ y: F.useLimit, label: nf(F.useLimit, 2) + ' limit' }], bands }) });
     tl.changed = true;
   }
   function apply(t) {
@@ -369,13 +369,13 @@ function mountFlight() {
     const LA = a => { let d = a[i + 1] - a[i]; d -= 360 * Math.round(d / 360); return a[i] + d * f; };
     const pitch = L(D.pitch), roll = LA(F.rollH), hdg = LA(F.hdgH), dl = L(D.dl), dr = L(D.dr);
     const alt = L(D.alt), V = L(D.V), use = L(D.pitch_use_15);
-    read.set('t', nf(t, 1) + ' s'); read.set('alt', nf(alt, 1) + ' m'); read.set('V', nf(V, 1) + ' m/s'); read.set('pitch', nf(pitch, 1) + '°'); read.set('use', nf(use, 2) + ' of ±15° (limit ' + nf(F.useLimit, 2) + ')', use > F.useLimit ? 'rp-bad' : '');
-    read.set('dl', nf(dl, 1) + '° (trailing edge down +)'); read.set('dr', nf(dr, 1) + '° (trailing edge down +)');
+    read.set('t', nf(t, 1) + ' s'); read.set('alt', nf(alt, 1) + ' m'); read.set('V', nf(V, 1) + ' m/s'); read.set('pitch', nf(pitch, 1) + '\u00b0'); read.set('use', nf(use, 2) + ' of \u00b115\u00b0 (limit ' + nf(F.useLimit, 2) + ')', use > F.useLimit ? 'rp-bad' : '');
+    read.set('dl', nf(dl, 1) + '\u00b0 (trailing edge down +)'); read.set('dr', nf(dr, 1) + '\u00b0 (trailing edge down +)');
     for (const pl of plots) {
       if (pl.key === 'alt') pl.p.set(t, [alt], nf(alt, 1) + ' m');
       else if (pl.key === 'V') pl.p.set(t, [V], nf(V, 1) + ' m/s');
-      else if (pl.key === 'pitch') pl.p.set(t, [pitch], nf(pitch, 1) + '°');
-      else pl.p.set(t, [use], nf(use, 2) + (use > F.useLimit ? ' ✕ over ' : ' ✓ within ') + nf(F.useLimit, 2));
+      else if (pl.key === 'pitch') pl.p.set(t, [pitch], nf(pitch, 1) + '\u00b0');
+      else pl.p.set(t, [use], nf(use, 2) + (use > F.useLimit ? ' \u2715 over ' : ' \u2713 within ') + nf(F.useLimit, 2));
     }
     if (!st || !st.ok || !rg) return;
     // attitude: body (CAD x aft, y right, z up) -> scene (x east, y up, z -north); pitch about the body y axis, nose up positive.
@@ -401,7 +401,7 @@ function mountFlight() {
     else { const d = P.clone().sub(st.lastTarget); st.camera.position.add(d); st.controls.target.copy(P); st.lastTarget.copy(P); }
     const dist = st.camera.position.distanceTo(st.controls.target), cell = dist < 6 ? 1 : dist < 60 ? 10 : 100;
     st.grid.scale.setScalar(cell); st.grid.position.set(Math.round(P.x / cell) * cell, 0, Math.round(P.z / cell) * cell);
-    over.textContent = 'grid cell ' + cell + ' m · height ' + nf(alt, 1) + ' m · initial view from the south (north is away from you)';
+    over.textContent = 'grid cell ' + cell + ' m \u00b7 height ' + nf(alt, 1) + ' m \u00b7 initial view from the south (north is away from you)';
     st.dirty = true;
   }
   window.__rp = window.__rp || {}; window.__rp.flight = { get st() { return st; }, get rg() { return rg; }, get tl() { return tl; }, F, apply, load, renderNow: () => { st.dirty = true; renderStage(st); } };
@@ -428,7 +428,7 @@ function mountLanding() {
   const Cm = new THREE.Matrix4().set(1, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1), CmT = Cm.clone().transpose();   // world (x, y, z-up) -> scene (x, z, -y)
 
   const P = addPanel(root, async () => {
-    showMsg('Loading 3-D model…');
+    showMsg('Loading 3-D model\u2026');
     st = makeStage($('#rp-l-canvas', root), { gridSize: 4, gridDiv: 40 });
     if (!st.ok) showMsg('3-D is not available in this browser. The plots below still work.', true);
     else {
@@ -447,7 +447,7 @@ function mountLanding() {
   P.render = () => { if (st && st.ok) renderStage(st); };
 
   async function load(key) {
-    Lc.key = key; showMsg('Loading case data…'); if (tl) tl.setPlaying(false);
+    Lc.key = key; showMsg('Loading case data\u2026'); if (tl) tl.setPlaying(false);
     const m = manifest.landing.find(c => c.id === key);
     const { data, bytes } = await fetchJSON('assets/sims3d/' + m.file + '?v=' + VER);
     Lc.D = data; Lc.bytes = bytes; kbEl.innerHTML = kbText();
@@ -465,10 +465,10 @@ function mountLanding() {
     plots.push({ key: 'n', p: makePlot(host, W, { ...base, title: 'Load factor, g', series: [{ ys: D.load_factor_g }], lines: [{ y: lim.load_factor_g, label: lim.load_factor_g + ' g limit' }] }) });
     const cs = [0, 1, 2, 3].map(k => D.crush_mm.map(r => r[k]));
     plots.push({ key: 'c', p: makePlot(host, W, { ...base, title: 'Pad crush, mm (four pads)', series: cs.map((ys, k) => ({ ys, label: LAND_LABEL[k] })), lines: [{ y: lim.stroke_mm, label: lim.stroke_mm + ' mm limit' }] }) });
-    plots.push({ key: 't', p: makePlot(host, W, { ...base, title: 'Tilt, deg', series: [{ ys: D.tilt_deg }], lines: [{ y: lim.tilt_deg, label: lim.tilt_deg + '° limit' }] }) });
+    plots.push({ key: 't', p: makePlot(host, W, { ...base, title: 'Tilt, deg', series: [{ ys: D.tilt_deg }], lines: [{ y: lim.tilt_deg, label: lim.tilt_deg + '\u00b0 limit' }] }) });
     tl.changed = true;
   }
-  const okTxt = (v, lim, unit) => (v <= lim ? '✓ within ' : '✕ OVER ') + lim + ' ' + unit;
+  const okTxt = (v, lim, unit) => (v <= lim ? '\u2713 within ' : '\u2715 OVER ') + lim + ' ' + unit;
   const qa = new THREE.Quaternion(), qb = new THREE.Quaternion(), Rw = new THREE.Matrix4(), Rs = new THREE.Matrix4();
   function apply(t) {
     const D = Lc.D; if (!D) return;
@@ -480,12 +480,12 @@ function mountLanding() {
     read.set('t', nf(t * 1000, 0) + ' ms'); read.set('n', nf(nNow, 2) + ' g (limit ' + lim.load_factor_g + ')');
     read.set('nmax', nf(nm, 2) + ' g  ' + okTxt(nm, lim.load_factor_g, 'g'), nm <= lim.load_factor_g ? 'rp-ok' : 'rp-bad');
     read.set('s', nf(cmax, 1) + ' mm'); read.set('smax', nf(cm, 1) + ' mm  ' + okTxt(cm, lim.stroke_mm, 'mm'), cm <= lim.stroke_mm ? 'rp-ok' : 'rp-bad');
-    read.set('tilt', nf(tilt, 2) + '°  ' + okTxt(tilt, lim.tilt_deg, '°') + ' (the limit is on the end tilt: ' + nf(D.peaks.tilt_end_deg, 2) + '°)', tilt <= lim.tilt_deg ? 'rp-ok' : 'rp-bad');
-    read.set('pads', LAND_LABEL.map((l, k) => l + ' ' + nf(crush[k], 1)).join(' · ') + ' mm');
+    read.set('tilt', nf(tilt, 2) + '\u00b0  ' + okTxt(tilt, lim.tilt_deg, '\u00b0') + ' (the limit is on the end tilt: ' + nf(D.peaks.tilt_end_deg, 2) + '\u00b0)', tilt <= lim.tilt_deg ? 'rp-ok' : 'rp-bad');
+    read.set('pads', LAND_LABEL.map((l, k) => l + ' ' + nf(crush[k], 1)).join(' \u00b7 ') + ' mm');
     for (const pl of plots) {
-      if (pl.key === 'n') pl.p.set(t, [nNow], nf(nNow, 2) + ' g ' + (nm <= lim.load_factor_g ? '✓' : '✕') + ' peak so far ' + nf(nm, 2));
-      else if (pl.key === 'c') pl.p.set(t, crush, nf(cm, 1) + ' mm max so far ' + (cm <= lim.stroke_mm ? '✓' : '✕'));
-      else pl.p.set(t, [tilt], nf(tilt, 2) + '° ' + (tilt <= lim.tilt_deg ? '✓' : '✕'));
+      if (pl.key === 'n') pl.p.set(t, [nNow], nf(nNow, 2) + ' g ' + (nm <= lim.load_factor_g ? '\u2713' : '\u2715') + ' peak so far ' + nf(nm, 2));
+      else if (pl.key === 'c') pl.p.set(t, crush, nf(cm, 1) + ' mm max so far ' + (cm <= lim.stroke_mm ? '\u2713' : '\u2715'));
+      else pl.p.set(t, [tilt], nf(tilt, 2) + '\u00b0 ' + (tilt <= lim.tilt_deg ? '\u2713' : '\u2715'));
     }
     if (!st || !st.ok || !rg) return;
     // body (CAD axes: x aft, y right, z up) -> world (x, y, z up) by quat_wxyz; the glTF root frame is the CAD frame mapped by Cm, so R_scene = Cm R_world Cm^T.
@@ -499,7 +499,7 @@ function mountLanding() {
     // pads: shortened by the recorded crush about the end that meets the shoe (smaller CAD x); the free end moves up off the ground
     manifest.pad_order.forEach((c, k) => { const pd = rg.pads[c]; if (!pd) return; const s = clamp(1 - crush[k] / 1000 / pd.len, 0.05, 1);
       _a.makeTranslation(pd.x0, 0, 0).multiply(_b.makeScale(s, 1, 1)).multiply(_c.makeTranslation(-pd.x0, 0, 0)); pd.part.node.matrix.copy(_a).multiply(pd.part.base); pd.part.node.matrixWorldNeedsUpdate = true; });
-    over.textContent = 'grid cell 0.1 m · pads (' + LAND_LABEL.join(', ') + ') drawn shortened by their crush';
+    over.textContent = 'grid cell 0.1 m \u00b7 pads (' + LAND_LABEL.join(', ') + ') drawn shortened by their crush';
     st.dirty = true;
   }
   window.__rp = window.__rp || {}; window.__rp.landing = { get st() { return st; }, get rg() { return rg; }, get tl() { return tl; }, Lc, apply, load, renderNow: () => { st.dirty = true; renderStage(st); } };
@@ -555,10 +555,10 @@ function mountLinkage() {
   }
   function apply() {
     const a = poses(), p = a[K.i], g = K.D.meta.geometry, sy = K.side === 'R' ? 1 : -1, p0 = a[nearest(0)];
-    slider.value = String(p.delta_deg); timeEl.textContent = 'elevon angle = ' + nf(p.delta_deg, 1) + '°';
-    read.set('d', nf(p.delta_deg, 1) + '°'); read.set('th', nf(p.servo_theta_deg, 2) + '°'); read.set('gear', nf(p.gear_ddelta_dtheta, 3));
+    slider.value = String(p.delta_deg); timeEl.textContent = 'elevon angle = ' + nf(p.delta_deg, 1) + '\u00b0';
+    read.set('d', nf(p.delta_deg, 1) + '\u00b0'); read.set('th', nf(p.servo_theta_deg, 2) + '\u00b0'); read.set('gear', nf(p.gear_ddelta_dtheta, 3));
     read.set('hm', nf(p.hinge_moment_Nm, 4) + ' N m'); read.set('tq', nf(p.servo_torque_req_Nm, 4) + ' N m'); read.set('rf', nf(p.rod_force_N, 1) + ' N'); read.set('rod', nf(p.rod_len_mm, 2) + ' mm');
-    read.set('c0', nf(p.min_clearance_mm, 3) + ' mm — ' + p.min_clearance_pair); read.set('c1', nf(p.min_clearance_excl_design_contact_mm, 3) + ' mm — ' + p.min_clearance_excl_pair);
+    read.set('c0', nf(p.min_clearance_mm, 3) + ' mm \u2014 ' + p.min_clearance_pair); read.set('c1', nf(p.min_clearance_excl_design_contact_mm, 3) + ' mm \u2014 ' + p.min_clearance_excl_pair);
     capEl.textContent = 'The all-pairs minimum includes the declared design contacts (named in its pair: ' + p.min_clearance_pair + '), which touch by design, so it can read zero or close to it. The second line leaves the declared design contacts out. Solid hulls, so both are lower bounds.';
     // geometry in CAD mm: x aft, y span (+ right), z up. Top view uses (x, y); side view (x, z); SVG y runs down, so y is negated.
     const pv = [g.SV_XS_mm, sy * g.SERVO_Y_mm, g.ROD_Z_mm], hx = g.XH_mm, hz = g.HINGE_Z_mm;

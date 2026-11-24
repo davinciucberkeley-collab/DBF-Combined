@@ -162,3 +162,15 @@ Token scopes: projects:read, projects:write, sessions:manage, usage:read. **No `
 - Raw JSON is kept locally only (git-ignored).
 
 **User check (2026-11-23, after the 367-object import, AM-047):** Dillon saw the imported snapshot in the DaVinci web app and confirmed that the DaVinci budget shown there had not changed. That matches the API Usage reading ($49.060351 / 1,093 events). A next-day re-read is still due.
+
+## Spend evidence: what it does and does not show (fix pass C, review round 13 R13-3, 2026-11-24)
+
+- The Usage `asOf` stayed **2026-11-09** through every probe (probes 1 and 2, the imports). Equal before and after values ($49.060351, 1,093 events) are therefore consistent with no charge but are **not proof** of $0, because the usage snapshot predates all probes.
+- Dillon's UI check (2026-11-23, above) showed the DaVinci budget unchanged. That is the only other evidence.
+- Proof needs a later Usage read after `asOf` moves past the probe times, or the DaVinci invoice / wallet. Until then the claim is "no change observed, usage snapshot stale".
+
+**Storage facts (read 2026-11-24):**
+- API Test: storageUsedBytes 836.1 MB.
+- Held by the 205 STEP geometry objects (129 + 76 assembly copies) on branch `concept-a-snapshot-73656c93`. The attached files are only the 2.5 MB GLB.
+- The organization is at about 1.0 of 1.0 GB, with Model Benchmarks at 226 MB.
+- Deleting the branch is pending with Dillon (AM-050; deletion needs his approval, R-GEN-02).

@@ -2,7 +2,7 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-24 09:16 UTC",
+  "generated": "2026-11-24 09:39 UTC",
   "dataset": "concept-a",
   "ok": false,
   "errors": [
@@ -20,7 +20,7 @@ window.PROOF_GRAPH = {
    "STRICT CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)",
    "STRICT CL-A-VIB-FC: FAILS: margin -524.0% (187.2 m/s2 vs <= 30 m/s2)",
    "STRICT CL-A-VIB-GM: FAILS: margin -43.5% (1.13 vs >= 2)",
-   "STRICT CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)",
+   "STRICT CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -420.5% (446.6 kPa vs <= 85.8 kPa)",
    "STRICT CL-A-HORN-RIB-FOAM-STALL: FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)",
    "STRICT CL-A-ELEVON-TORSION-FOAM: FAILS: margin -507.8% (521.5 kPa vs <= 85.8 kPa)",
    "STRICT CL-A-HORN-BEARING-STALL: FAILS: margin -83.2% (36.65 MPa vs <= 20 MPa)",
@@ -1001,7 +1001,7 @@ window.PROOF_GRAPH = {
     "CL-A-FOAM-SPAR-BOND is UNVERIFIED",
     "CL-A-FOAM-SERVO is UNVERIFIED",
     "CL-A-FOAM-CAP-PEEL is UNVERIFIED",
-    "CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)",
+    "CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -420.5% (446.6 kPa vs <= 85.8 kPa)",
     "CL-A-HORN-RIB-FOAM-STALL: FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)",
     "CL-A-ELEVON-TORSION-FOAM: FAILS: margin -507.8% (521.5 kPa vs <= 85.8 kPa)",
     "CL-A-HORN-BLADE-HOLD is UNVERIFIED",
@@ -5732,10 +5732,10 @@ window.PROOF_GRAPH = {
     "ASM-A-FOAM-ALLOW"
    ],
    "outputs": {
-    "v": 431.8
+    "v": 446.6
    },
    "input_values": {
-    "v": 431.8
+    "v": 446.6
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
@@ -5768,17 +5768,17 @@ window.PROOF_GRAPH = {
    "assumes": [
     "ASM-A-FOAM-ALLOW"
    ],
-   "value": 431.8,
+   "value": 446.6,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "reasons": [
-    "FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)",
+    "FAILS: margin -420.5% (446.6 kPa vs <= 85.8 kPa)",
     "uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses P:linkage.rib_foam_hold_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 138-200 kPa unfactored))",
+    "uses P:linkage.rib_foam_hold_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 143-207 kPa unfactored))",
     "uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:linkage.foam_shear_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: foam shear 100 x 103/120 kPa (EST, foam_103.py))"
    ],
    "status": "UNVERIFIED",
-   "margin": -4.032634032634033,
+   "margin": -4.205128205128205,
    "fails": true,
    "importance": 1
   },
@@ -5924,10 +5924,10 @@ window.PROOF_GRAPH = {
     "ASM-A-PETG-ALLOW"
    ],
    "outputs": {
-    "v": 3.32
+    "v": 3.43
    },
    "input_values": {
-    "v": 3.32
+    "v": 3.43
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
@@ -5960,7 +5960,7 @@ window.PROOF_GRAPH = {
    "assumes": [
     "ASM-A-PETG-ALLOW"
    ],
-   "value": 3.32,
+   "value": 3.43,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "reasons": [
     "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -5969,7 +5969,7 @@ window.PROOF_GRAPH = {
     "uses P:linkage.petg_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW))"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.834,
+   "margin": 0.8285,
    "importance": 1
   },
   {
@@ -6048,10 +6048,10 @@ window.PROOF_GRAPH = {
     "ASM-A-PETG-ALLOW"
    ],
    "outputs": {
-    "v": 18.39
+    "v": 19.02
    },
    "input_values": {
-    "v": 18.39
+    "v": 19.02
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
@@ -6084,7 +6084,7 @@ window.PROOF_GRAPH = {
    "assumes": [
     "ASM-A-PETG-ALLOW"
    ],
-   "value": 18.39,
+   "value": 19.02,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "reasons": [
     "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -6093,7 +6093,7 @@ window.PROOF_GRAPH = {
     "uses P:linkage.petg_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW))"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.08049999999999997,
+   "margin": 0.04900000000000002,
    "importance": 1
   },
   {
@@ -10205,7 +10205,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "linkage.f_hold_n",
    "file": "redesign/qp/A/params-A.json",
-   "value": 17.05,
+   "value": 17.64,
    "unit": "N",
    "source": "SRC-A-LINKLOADS",
    "note": "rod force at the VD hinge moment, max over +-20 deg (elevon_dynamics.py)",
@@ -10235,12 +10235,12 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "linkage.rib_foam_hold_kpa",
    "file": "redesign/qp/A/params-A.json",
-   "value": 431.8,
+   "value": 446.6,
    "unit": "kPa",
    "source": "SRC-A-LINKLOADS",
-   "note": "horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 138-200 kPa unfactored)",
+   "note": "horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 143-207 kPa unfactored)",
    "reasons": [
-    "marked UNVERIFIED in redesign/qp/A/params-A.json: horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 138-200 kPa unfactored)"
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 143-207 kPa unfactored)"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -10280,7 +10280,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "linkage.blade_root_hold_mpa",
    "file": "redesign/qp/A/params-A.json",
-   "value": 3.32,
+   "value": 3.43,
    "unit": "MPa",
    "source": "SRC-A-LINKLOADS",
    "note": "horn blade governing section, in-layer, x 2.156",
@@ -10310,7 +10310,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "linkage.bearing_hold_mpa",
    "file": "redesign/qp/A/params-A.json",
-   "value": 18.39,
+   "value": 19.02,
    "unit": "MPa",
    "source": "SRC-A-LINKLOADS",
    "note": "1.0 mm clevis pin bearing in the 2 mm horn, x 2.156",

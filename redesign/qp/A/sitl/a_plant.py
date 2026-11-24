@@ -116,6 +116,7 @@ pos = (0.0, 0.0, FOOT_X); vel = (0.0, 0.0, 0.0); om = (0.0, 0.0, 0.0)
 uf = [0.0] * 4
 feet = [(FOOT_X, sy * (CADM["fin_y_m"] if CADM else 0.45), sz * 0.18) for sy in (1, -1) for sz in (1, -1)]
 turb = [0.0, 0.0, 0.0]
+GV = dict(t0=None, dur=1.08, vert=0.0, side=0.0)                 # T-101 C3G 1-cos gust set by cmd.json (gv_t0 = plant time of the start, s)
 
 def air_wind(t, tw0):
     s = 0.0 if tw0 is None else min(max((t - tw0) / RAMP, 0.0), 1.0)
@@ -123,6 +124,9 @@ def air_wind(t, tw0):
     if GUST and tw0 is not None:
         tg = t - (tw0 + RAMP + cfg.get("gust_at", 20.0))
         if 0 <= tg <= GUST_T: w += GUST * 0.5 * (1 - math.cos(2 * math.pi * tg / GUST_T))
+    if GV["t0"] is not None and 0.0 <= t - GV["t0"] <= GV["dur"]:      # T-101 C3G, opt-in (cmd key gv_t0; default off): 1-cos gust, vertical (+ = downdraft) and side (+ = air moving east = body y in cruise)
+        f = 0.5 * (1.0 - math.cos(2.0 * math.pi * (t - GV["t0"]) / GV["dur"]))
+        return (-w * math.cos(WFROM) + turb[0], -w * math.sin(WFROM) + turb[1] + GV["side"] * f, turb[2] + GV["vert"] * f)
     return (-w * math.cos(WFROM) + turb[0], -w * math.sin(WFROM) + turb[1], turb[2])
 
 # ---- forward-flight loads (fwd=1): motors from APC data, wing / elevons / fins from a_aero.airframe
@@ -261,6 +265,7 @@ try:
                         if "elv_dead" in c: ST["elv_dead"] = bool(c["elv_dead"])
                         if "wind" in c: WIND = float(c["wind"]); evlog.append((round(t, 2), "wind", WIND))
                         if "wind_from" in c: WFROM = math.radians(float(c["wind_from"]))
+                        if "gv_t0" in c: GV.update(t0=float(c["gv_t0"]), dur=float(c.get("gv_dur", 1.08)), vert=float(c.get("gv_vert", 0.0)), side=float(c.get("gv_side", 0.0))); evlog.append((round(t, 2), "gv", c["gv_t0"]))
                         if "gust" in c: GUST = float(c["gust"]); cfg["gust_at"] = t - (tw0 if tw0 is not None else 0) - RAMP + 1.0
                 except Exception: pass
         aspec, wn, vrel, thr, touch = step(t, dt, pwm, tw0)

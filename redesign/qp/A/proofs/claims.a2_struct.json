@@ -1702,10 +1702,10 @@
     "ASM-A-FOAM-ALLOW"
    ],
    "outputs": {
-    "v": 431.8
+    "v": 446.6
    },
    "input_values": {
-    "v": 431.8
+    "v": 446.6
    }
   },
   {
@@ -1734,7 +1734,7 @@
    "assumes": [
     "ASM-A-FOAM-ALLOW"
    ],
-   "value": 431.8
+   "value": 446.6
   },
   {
    "id": "CALC-A-HORN-RIB-FOAM-STALL-READ",
@@ -1846,10 +1846,10 @@
     "ASM-A-PETG-ALLOW"
    ],
    "outputs": {
-    "v": 3.32
+    "v": 3.43
    },
    "input_values": {
-    "v": 3.32
+    "v": 3.43
    }
   },
   {
@@ -1878,7 +1878,7 @@
    "assumes": [
     "ASM-A-PETG-ALLOW"
    ],
-   "value": 3.32
+   "value": 3.43
   },
   {
    "id": "CALC-A-HORN-BLADE-STALL-READ",
@@ -1942,10 +1942,10 @@
     "ASM-A-PETG-ALLOW"
    ],
    "outputs": {
-    "v": 18.39
+    "v": 19.02
    },
    "input_values": {
-    "v": 18.39
+    "v": 19.02
    }
   },
   {
@@ -1974,7 +1974,7 @@
    "assumes": [
     "ASM-A-PETG-ALLOW"
    ],
-   "value": 18.39
+   "value": 19.02
   },
   {
    "id": "CALC-A-HORN-BEARING-STALL-READ",

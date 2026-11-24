@@ -19,7 +19,7 @@
 > [redesign/qp/README.md](redesign/qp/README.md). Decisions D-182 to D-247: [CHANGE-LOG.md](redesign/params/CHANGE-LOG.md).
 > **Status:** designed and checked on paper, in SITL and in the 3-D gates; nothing bought, built or flown. The strict proof build
 > (`python -I redesign/qp/A/proofs/run_all.py`, 2026-11-23) has 14 FAIL claims (mass gate and prediction, hover vibration in band,
-> gain margin, FC vibration, elevon horn / rib / free play, elevon pitch use 0.69-0.79 against 0.60 of 15 deg, and 1.3 Vs 17.74 m/s at the
+> gain margin, FC vibration, elevon horn / rib / free play, elevon pitch use 0.651 against 0.60 of 15 deg (C3 controls at 0.25 chord; the 0.30-chord attempt D-250 was reverted, D-251; the derived roll + gust reserve does not fit, D-252; next rung: cut the cruise trim), and 1.3 Vs 17.74 m/s at the
 > predicted mass against 17 m/s cruise), to be decided by bench and tap tests. Order 1 ($887.25 EST) awaits approval 1-4 Dec; go/no-go 2027-01-29 (AM-037, D-248).
 > The Explorer's renders, films and drawings show concept A (the K09-L ones are kept as the record).
 

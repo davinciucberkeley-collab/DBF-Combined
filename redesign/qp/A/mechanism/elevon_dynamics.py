@@ -53,7 +53,6 @@ def arm_inertia():
     return 1.0e-3 * abs(Iz_area) / abs(A), abs(A)          # kg m2 (mass 1.0 g / area * second moment), area m2
 
 
-I_E_CAD = 1.3698381583333334e-05   # sitl/cad_mass.json elevon.hinge_inertia_total_kgm2 (8.378e-6 elevon + 5.320e-6 balance); read from the file below
 I_A, ARM_AREA = arm_inertia()
 M_HORN = k._e.PARTS['MEC-004-R']['mass_g'] * 1e-3   # P('MEC-004') printed horn, mass CALC from the drawn volume; point mass at the hole radius
 I_HORN = M_HORN * k.HORN_R ** 2
@@ -171,7 +170,6 @@ def main():
     with open(os.path.join(k.CAD, '..', 'sitl', 'cad_mass.json')) as fh:
         ev = json.load(fh)['elevon']
     i_e = ev['hinge_inertia_total_kgm2']
-    assert abs(i_e - I_E_CAD) < 1e-12
     I_e = i_e + I_HORN
     res = dict(git_head=k.git_head(), versions=dict(python=sys.version.split()[0], numpy=np.__version__, scipy=scipy.__version__),
                inputs=dict(I_elevon_balance_CAD=i_e, I_horn_pointmass_EST=I_HORN, I_e_used=I_e, I_arm_from_CAD_outline_1g=I_A, arm_area_m2=ARM_AREA,

@@ -1,6 +1,6 @@
 {
  "task": "T-101",
- "generated": "2026-11-23",
+ "generated": "2026-11-24",
  "category": "flight dynamics",
  "runs": {
   "T097_Z5": {
@@ -2546,6 +2546,167 @@
     }
    },
    "all_pass": true
+  },
+  "T101C3G_T074": {
+   "sum": {
+    "case": "trans",
+    "mass": 1.881,
+    "wind": 0.0,
+    "wfrom": 0.0,
+    "r": 1.33,
+    "alt0": 50.9,
+    "alt_gain_at_handover": 31.6,
+    "alt_max_gain": 33.7,
+    "alt_min_loss": -0.0,
+    "alt_peak_abs": 84.6,
+    "v13": 17.75,
+    "t_to_1.3Vs_s": 9.4,
+    "V_at_handover": 14.5,
+    "pitch_use_15": 0.87,
+    "pitch_use_25": 0.52,
+    "pitch_use_20": 0.65,
+    "elevon_max_deg": 20.0,
+    "t_elevon_sat_s": 1.1,
+    "u_max": 0.75,
+    "t_cap_run_s": 0.0,
+    "t_ge85_s": 0,
+    "I_pack_peak_A": 30.1,
+    "I_motor_peak_A": 7.5,
+    "hinge_peak_Nm": 0.0542,
+    "pitch_max": 89.7,
+    "roll_max_abs_after_fwdone": 54.0,
+    "alpha_max": 12.2,
+    "nz_max": 1.72,
+    "V_end": 15.3,
+    "alt_end": 78.4,
+    "roll_end_abs": 8.7,
+    "touch_in_flight": false,
+    "crossed_fence_110": false,
+    "t_fwdone_s": 6.4,
+    "Wh_to_cruise": 1.21,
+    "P_cruise_end_W": 123.0,
+    "tag": "T101C3G_T074"
+   },
+   "checks": {
+    "alt_peak_abs": {
+     "value": 84.6,
+     "limit": "< 110.0",
+     "pass": true
+    },
+    "alt_max_gain": {
+     "value": 33.7,
+     "limit": "< 60.0",
+     "pass": true
+    },
+    "t_to_1.3Vs_s": {
+     "value": 9.4,
+     "limit": "<= 15.0",
+     "pass": true
+    },
+    "t_cap_run_s": {
+     "value": 0.0,
+     "limit": "<= 1.0",
+     "pass": true
+    },
+    "t_ge85_s": {
+     "value": 0,
+     "limit": "<= 1.0",
+     "pass": true
+    },
+    "pitch_use_15": {
+     "value": 0.87,
+     "limit": "<= 0.6",
+     "pass": false
+    },
+    "t_elevon_sat_s": {
+     "value": 1.1,
+     "limit": "<= 1.0",
+     "pass": false
+    },
+    "touch_in_flight": {
+     "value": 0,
+     "limit": "== 0",
+     "pass": true
+    }
+   },
+   "c3g_metrics": {
+    "tag": "T101C3G_T074",
+    "window_s": [
+     104.324,
+     107.324,
+     108.324
+    ],
+    "peak_left_deg": 20.0,
+    "peak_right_deg": 20.0,
+    "peak_left_events_deg": 20.0,
+    "peak_right_events_deg": 20.0,
+    "peak_left_signed": [
+     -20.0,
+     7.47
+    ],
+    "peak_right_signed": [
+     -20.0,
+     5.56
+    ],
+    "mean_elevon_peak_deg": 12.98,
+    "mean_elevon_peak_before_events_deg": 9.29,
+    "mean_elevon_peak_events_deg": 12.98,
+    "diff_elevon_peak_events_deg": 12.95,
+    "t_sat_20_s": 0.8,
+    "t_sat_19p04_s": 1.25,
+    "t_sat_20_left_s": 0.5,
+    "t_sat_20_right_s": 0.3,
+    "p_peak_degs": 110.0,
+    "p_peak_pos_degs": 88.5,
+    "p_peak_neg_degs": -110.0,
+    "roll_peak_deg": 54.0,
+    "pitch_peak_events_deg": 12.3,
+    "V_min_events": 16.98,
+    "alpha_max_events": 12.2,
+    "nz_max_events": 1.72,
+    "att_events": {
+     "n": 30,
+     "roll_err_peak_deg": 83.7,
+     "roll_err_rms_deg": 36.6,
+     "pitch_err_peak_deg": 17.4,
+     "pitch_err_rms_deg": 9.3,
+     "des_roll_range": [
+      -40.8,
+      43.7
+     ],
+     "des_pitch_range": [
+      7.9,
+      15.0
+     ]
+    },
+    "att_events_plus_recovery": {
+     "n": 40,
+     "roll_err_peak_deg": 83.7,
+     "roll_err_rms_deg": 35.7,
+     "pitch_err_peak_deg": 17.4,
+     "pitch_err_rms_deg": 8.2,
+     "des_roll_range": [
+      -40.8,
+      43.7
+     ],
+     "des_pitch_range": [
+      7.9,
+      15.0
+     ]
+    },
+    "rcou_events_pwm": {
+     "c5": [
+      1000,
+      1693
+     ],
+     "c6": [
+      1353,
+      2000
+     ],
+     "t_c5_or_c6_at_pwm_limit_s": 1.2
+    }
+   },
+   "all_pass": false
   }
  }
 }

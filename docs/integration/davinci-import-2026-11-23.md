@@ -115,3 +115,10 @@ Branch commit "CAD geometry: 129 STEP parts and partial assembly, Claude via API
 
 ### Blocker
 Account storage is at its 1.0 GB limit (storageUsedBytes 1,073,743,780 of 1,073,741,824). Free space (delete other files or projects, or a larger plan) before completing the assembly.
+
+## Spend evidence and storage facts (fix pass C, review round 13 R13-3, 2026-11-24)
+
+- The Usage `asOf` stayed 2026-11-09T07:22:13Z through all probes and imports. Equal before and after readings ($49.060351, 1,093 events) are consistent with no charge but are **not proof**; the snapshot predates every probe.
+- Dillon's UI check showed the budget unchanged.
+- Proof needs a later Usage read after `asOf` moves, or the DaVinci invoice / wallet. Until then: "no change observed, usage snapshot stale".
+- Storage (read 2026-11-24): API Test is at 836.1 MB (storageUsedBytes). It is held by the 205 STEP geometry objects (129 + 76 assembly copies) on branch `concept-a-snapshot-73656c93`; the attached files are only the 2.5 MB GLB. The organization is at about 1.0 of 1.0 GB, with Model Benchmarks at 226 MB. The branch deletion is pending with Dillon (AM-050).
