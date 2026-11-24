@@ -15,6 +15,23 @@ DOWNLOAD = 0.97                             # 3 % slipstream download (sizing_a.
 KQ = 0.0204                                 # prop torque / thrust, m (sizing: 65 N mm at 3.19 N)
 if os.environ.get('A_MOTOR', 'mn2212').lower() == 'x2216': KQ = 0.0145       # T-097: X2216 + APC 9x4.5MR shaft torque / thrust, m (T089_report s1.1, prop_a.py T-083 model)
 TAU_M = 0.04                                # motor + ESC + rotor lag, s (EST)
+# T-101 / AM-062 (D-258), opt-in cfg x2216_hover=1 (with A_MOTOR=x2216): hover-mode static thrust and rpm from the X2216 V3 880KV + APC 9x4.5MR model
+#   (prop_a.full: pack rest voltage cfg vrest, default 14.92 V = 3.73 V/cell sag, pack R 30 mohm, four motors at one duty), x DER 0.93 x hot 0.97 when vrest < 15.5 V
+#   (the mission_gate_a.py 'sag' basis). Below duty 0.5 the APC table ends (5000 rpm), so thrust ~ duty^2 from the 0.5 point (EST). Default off: the MN2212 table below is unchanged.
+XH = bool(cfg.get("x2216_hover", 0)) and os.environ.get('A_MOTOR', 'mn2212').lower() == 'x2216'
+if XH:
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+    import prop_a as _PA
+    _VR = cfg.get("vrest", 14.92); _K = _PA.DER * (0.97 if _VR < 15.5 else 1.0)
+    XH_U = [0.5 + 0.02 * k for k in range(26)]
+    _R = [_PA.full(_VR, u) for u in XH_U]
+    XH_T = [r[2] * _K for r in _R]; XH_N = [r[0] for r in _R]
+def xh(u):
+    """X2216 hover model: (thrust N incl. derate / hot, rpm) at duty u."""
+    u = min(max(u, 0.0), 1.0)
+    if u <= 0.5: f = (u / 0.5) ** 2; return XH_T[0] * f, XH_N[0] * math.sqrt(f)
+    k = min(int((u - 0.5) / 0.02), len(XH_U) - 2); w = (u - XH_U[k]) / 0.02
+    return XH_T[k] + w * (XH_T[k + 1] - XH_T[k]), XH_N[k] + w * (XH_N[k + 1] - XH_N[k])
 WIND = cfg.get("wind", 0.0); WFROM = math.radians(cfg.get("wind_from_deg", 0.0))
 GUST = cfg.get("gust", 0.0); GUST_T = cfg.get("gust_s", 2.0)            # 1-cos gust on top of WIND, m/s, rise time s
 TURB = cfg.get("turb", 0.0)                                             # OU turbulence sigma, m/s (vertical 0.5x), tau 2 s
@@ -188,8 +205,12 @@ def step(t, dt, pwm, tw0):
         for i in range(4):
             u = min(max((pwm[i] - 1000.0) / 1000.0, 0.0), 1.0)
             uf[i] += (u - uf[i]) * min(1.0, dt / TAU_M)
-            ts = tstat(uf[i]) * TSCALE * DOWNLOAD
-            rpm = 4248.0 * math.sqrt(max(ts, 0.05) / 3.2); v0 = rpm * 4.5 * 0.0254 / 60.0
+            if XH:
+                ts, rpm = xh(uf[i]); ts *= DOWNLOAD; rpm = max(rpm, 1000.0)
+            else:
+                ts = tstat(uf[i]) * TSCALE * DOWNLOAD
+                rpm = 4248.0 * math.sqrt(max(ts, 0.05) / 3.2)
+            v0 = rpm * 4.5 * 0.0254 / 60.0
             rv = add(vrel, sc(cross(om, mpos[i]), -1.0))
             vc = -rv[0]                                          # air flowing through the disc from the thrust side
             fct = 1 - (vc / v0) ** 2 if vc >= 0 else 1 + 0.3 * (-vc / v0)

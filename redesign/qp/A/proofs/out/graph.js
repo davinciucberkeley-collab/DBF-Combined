@@ -2,7 +2,7 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-24 20:57 UTC",
+  "generated": "2026-11-24 21:21 UTC",
   "dataset": "concept-a",
   "ok": false,
   "errors": [
@@ -456,7 +456,7 @@ window.PROOF_GRAPH = {
    "where": "cant 17, D-191 gains, CAD mass / CG / inertia 2026-11-15, S5010 aero; batch_qp5.sh",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
-   "importance": 4
+   "importance": 5
   },
   {
    "id": "SRC-A-AR017",
@@ -3279,15 +3279,15 @@ window.PROOF_GRAPH = {
    "title": "Stored result: Belly-on hover lean at 5 m/s (SITL max)",
    "script": "redesign/qp/A/proofs/claims_a1_flight.py",
    "function": "read_value",
-   "equation": "SITL case, QP-2 SITL.md s70 (ArduPlane 4.7.3-beta1 JSON backend); read, not re-run",
+   "equation": "SITL case AP8_belly5 (D-258: 5 m/s belly-on, 1 m/s turbulence, 1.881 kg, X2216 hover model, ArduPlane 4.7.3-beta1 JSON backend; mechanism/out/T101_data/sitl_batch_AP8.txt); read, not re-run (was QP-2 SITL.md s70)",
    "inputs": {
     "v": "P:sim.lean_belly_5ms_deg"
    },
    "outputs": {
-    "v": 31.5
+    "v": 28.3
    },
    "input_values": {
-    "v": 31.5
+    "v": 28.3
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -3312,27 +3312,27 @@ window.PROOF_GRAPH = {
     "WNG-001"
    ],
    "how": "Tethered hover with the wing edge into the wind (M9); the heading rule keeps the belly out of the wind above 3 m/s.",
-   "value": 31.5,
+   "value": 28.3,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.2125,
+   "margin": 0.2925,
    "importance": 1
   },
   {
    "id": "CALC-A-WIND-OUTPUT-READ",
    "type": "calculation",
-   "title": "Stored result: Longest time any motor is at or above 0.85 output, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)",
+   "title": "Stored result: Longest time any motor is at or above 0.85 output, 4 m/s turbulence hover (SITL, 1.881 kg predicted, X2216, worst pack; D-258)",
    "script": "redesign/qp/A/proofs/claims_a1_flight.py",
    "function": "read_value",
-   "equation": "SITL turbulence cases N4_* (sitl/results.jsonl, run_case.py, A.param D-191, arm 1.2, cant 17); read, not re-run",
+   "equation": "SITL turbulence cases AP8_h* (D-258: run_case.py x2216_hover=1, 1.881 kg, CG 23.49 mm, A.param, arm 1.2, cant 17; mechanism/out/T101_data/sitl_batch_AP8.txt); read, not re-run (was N4_* / R5_h*)",
    "inputs": {
     "v": "P:sim.wind_ge85_s"
    },
    "outputs": {
-    "v": 0.2
+    "v": 0.0
    },
    "input_values": {
-    "v": 0.2
+    "v": 0.0
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -3341,7 +3341,7 @@ window.PROOF_GRAPH = {
   {
    "id": "CL-A-WIND-OUTPUT",
    "type": "claim",
-   "title": "Longest time any motor is at or above 0.85 output, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)",
+   "title": "Longest time any motor is at or above 0.85 output, 4 m/s turbulence hover (SITL, 1.881 kg predicted, X2216, worst pack; D-258)",
    "calc": "CALC-A-WIND-OUTPUT-READ",
    "output": "v",
    "unit": "s",
@@ -3360,17 +3360,17 @@ window.PROOF_GRAPH = {
     "PRP-001-LL"
    ],
    "how": "Log motor outputs in the tethered turbulence hover (M9) at <= 4 m/s mean: no motor above 0.85 for more than 0.5 s, none at the 0.90 cap.",
-   "note": "D-192 (CLAIMS-FIX s3): the old claim read the 0.87 peak of the BASE airframe at 1.23 kg; at the 1.47 kg gate on the worst pack the 5 m/s peak is 0.89-0.90 (0.5-1.9 s above 0.85, cap touched), so the hover limit is 4 m/s (peak 0.83-0.873, <= 0.20 s above 0.85) and the line is stated as a duration. Peak 0.873 is reported, not a limit.",
-   "value": 0.2,
+   "note": "D-258 (2026-11-24): re-run at 1.881 kg with the X2216 hover model: 0 s >= 0.85 in all seven, peak 0.738-0.761. History: D-192 (CLAIMS-FIX s3): the old claim read the 0.87 peak of the BASE airframe at 1.23 kg; at the 1.47 kg gate on the worst pack the 5 m/s peak is 0.89-0.90 (0.5-1.9 s above 0.85, cap touched), so the hover limit is 4 m/s (peak 0.83-0.873, <= 0.20 s above 0.85) and the line is stated as a duration. Peak 0.873 is reported, not a limit.",
+   "value": 0.0,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.6,
+   "margin": 1.0,
    "importance": 1
   },
   {
    "id": "CALC-A-WIND-CAP-READ",
    "type": "calculation",
-   "title": "Stored result: Time any motor is at the 0.90 spin cap, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)",
+   "title": "Stored result: Time any motor is at full output (the 0.90 cap line), 4 m/s turbulence hover (SITL, 1.881 kg, X2216, worst pack; D-258)",
    "script": "redesign/qp/A/proofs/claims_a1_flight.py",
    "function": "read_value",
    "equation": "same seven SITL runs; read, not re-run",
@@ -3390,7 +3390,7 @@ window.PROOF_GRAPH = {
   {
    "id": "CL-A-WIND-CAP",
    "type": "claim",
-   "title": "Time any motor is at the 0.90 spin cap, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)",
+   "title": "Time any motor is at full output (the 0.90 cap line), 4 m/s turbulence hover (SITL, 1.881 kg, X2216, worst pack; D-258)",
    "calc": "CALC-A-WIND-CAP-READ",
    "output": "v",
    "unit": "s",
@@ -9313,10 +9313,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "sim.lean_belly_5ms_deg",
    "file": "redesign/qp/A/params-A.json",
-   "value": 31.5,
+   "value": 28.3,
    "unit": "deg",
-   "source": "SRC-A-SITL2",
-   "note": "SITL.md s70: belly into wind at 5 m/s needs 29-31 deg (mean 29.3, max 31.5)",
+   "source": "SRC-A-D195SITL",
+   "note": "D-258 (AM-062): belly into wind, 5 m/s mean + 1 m/s turbulence, 1.881 kg, CG 23.49 mm, arm 1.2, cant 17, X2216 hover thrust model on the worst pack (run AP8_belly5, mechanism/out/T101_data/sitl_batch_AP8.txt); was 31.5 (SITL.md s70, MN2212 era)",
    "status": "CHECKED",
    "importance": 1
   },
@@ -9325,10 +9325,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "sim.wind_ge85_s",
    "file": "redesign/qp/A/params-A.json",
-   "value": 0.2,
+   "value": 0.0,
    "unit": "s",
    "source": "SRC-A-D195SITL",
-   "note": "D-195: 4 m/s mean, turbulence 1.0 m/s, 1.455 kg, worst pack (thrust scale 0.767), arm 1.2, cant 17, A.param D-191, CAD inertia / CG: longest time at or above 0.85 over the seven runs (0 / 0 / 0 / 0.20 / 0 / 0 / 0), runs R5_h60, h60s2, h60s3, h70, h70s2, h80, h90 (sitl/results.jsonl; same as CLAIMS-FIX N4 at 1.47 kg)",
+   "note": "D-258 (AM-062): seven D-195 cases re-run (4 m/s mean, turbulence 1.0 m/s, from 60-90 deg, seeds 1-3, arm 1.2, cant 17) at 1.881 kg, CG 23.49 mm, X2216 + APC 9x4.5MR hover thrust (a_plant x2216_hover, prop_a.full at 14.92 V rest x 0.93 derate x 0.97 hot; below duty 0.5 thrust ~ duty^2 EST): longest time >= 0.85 is 0 s in all seven, peak output 0.738-0.761 (runs AP8_h60/h60s2/h60s3/h70/h70s2/h80/h90); was 0.20 s at 1.455 kg with the MN2212 table (D-195)",
    "status": "CHECKED",
    "importance": 1
   },
@@ -9340,7 +9340,7 @@ window.PROOF_GRAPH = {
    "value": 0.0,
    "unit": "s",
    "source": "SRC-A-D195SITL",
-   "note": "same seven R5_h* runs: time at the 0.90 cap, all 0",
+   "note": "D-258: same seven AP8_h* runs: no sample at full output (the 0.90 cap line of D-192; Q_M_SPIN_MAX is 1.0 since T-083)",
    "status": "CHECKED",
    "importance": 1
   },
@@ -9349,10 +9349,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "sim.wind_peak",
    "file": "redesign/qp/A/params-A.json",
-   "value": 0.884,
+   "value": 0.761,
    "unit": "-",
    "source": "SRC-A-D195SITL",
-   "note": "same seven R5_h* runs: highest instantaneous output (seed 3, from 60 deg; 0.873 at the CLAIMS-FIX 1.47 kg runs); reported, not a limit",
+   "note": "D-258: seven AP8_h* runs (1.881 kg, X2216 hover model): highest instantaneous output 0.761 (seed 3, from 60 deg); was 0.884 at the R5_h* runs (1.455 kg, MN2212, D-195); reported, not a limit",
    "status": "CHECKED",
    "importance": 0
   },
@@ -17258,7 +17258,7 @@ window.PROOF_GRAPH = {
    "type": "cites"
   },
   {
-   "source": "SRC-A-SITL2",
+   "source": "SRC-A-D195SITL",
    "target": "P:sim.lean_belly_5ms_deg",
    "type": "cites"
   },

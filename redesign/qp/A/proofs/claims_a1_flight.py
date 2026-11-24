@@ -320,13 +320,13 @@ stored("CL-A-YAW-Q", "Rotor reaction Q (model)", "P:yaw.q_model_nmm", "N mm", li
 # ================================================================ wind, SITL results read from the stored reports
 stored("CL-A-WIND-LEAN", "Belly-on hover lean at 5 m/s (SITL max)", "P:sim.lean_belly_5ms_deg", "deg", limit=("<=", "P:req.lean_max_deg"), verifies=["A-P8"], parts=["WNG-001"],
        how="Tethered hover with the wing edge into the wind (M9); the heading rule keeps the belly out of the wind above 3 m/s.",
-       equation="SITL case, QP-2 SITL.md s70 (ArduPlane 4.7.3-beta1 JSON backend); read, not re-run")
-stored("CL-A-WIND-OUTPUT", "Longest time any motor is at or above 0.85 output, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)", "P:sim.wind_ge85_s", "s",
+       equation="SITL case AP8_belly5 (D-258: 5 m/s belly-on, 1 m/s turbulence, 1.881 kg, X2216 hover model, ArduPlane 4.7.3-beta1 JSON backend; mechanism/out/T101_data/sitl_batch_AP8.txt); read, not re-run (was QP-2 SITL.md s70)")
+stored("CL-A-WIND-OUTPUT", "Longest time any motor is at or above 0.85 output, 4 m/s turbulence hover (SITL, 1.881 kg predicted, X2216, worst pack; D-258)", "P:sim.wind_ge85_s", "s",
        limit=("<=", "P:req.motor_ge85_s_max"), verifies=["A-P8"], parts=["PRP-001-UR", "PRP-001-UL", "PRP-001-LR", "PRP-001-LL"],
        how="Log motor outputs in the tethered turbulence hover (M9) at <= 4 m/s mean: no motor above 0.85 for more than 0.5 s, none at the 0.90 cap.",
-       note="D-192 (CLAIMS-FIX s3): the old claim read the 0.87 peak of the BASE airframe at 1.23 kg; at the 1.47 kg gate on the worst pack the 5 m/s peak is 0.89-0.90 (0.5-1.9 s above 0.85, cap touched), so the hover limit is 4 m/s (peak 0.83-0.873, <= 0.20 s above 0.85) and the line is stated as a duration. Peak 0.873 is reported, not a limit.",
-       equation="SITL turbulence cases N4_* (sitl/results.jsonl, run_case.py, A.param D-191, arm 1.2, cant 17); read, not re-run")
-stored("CL-A-WIND-CAP", "Time any motor is at the 0.90 spin cap, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)", "P:sim.wind_cap_s", "s",
+       note="D-258 (2026-11-24): re-run at 1.881 kg with the X2216 hover model: 0 s >= 0.85 in all seven, peak 0.738-0.761. History: D-192 (CLAIMS-FIX s3): the old claim read the 0.87 peak of the BASE airframe at 1.23 kg; at the 1.47 kg gate on the worst pack the 5 m/s peak is 0.89-0.90 (0.5-1.9 s above 0.85, cap touched), so the hover limit is 4 m/s (peak 0.83-0.873, <= 0.20 s above 0.85) and the line is stated as a duration. Peak 0.873 is reported, not a limit.",
+       equation="SITL turbulence cases AP8_h* (D-258: run_case.py x2216_hover=1, 1.881 kg, CG 23.49 mm, A.param, arm 1.2, cant 17; mechanism/out/T101_data/sitl_batch_AP8.txt); read, not re-run (was N4_* / R5_h*)")
+stored("CL-A-WIND-CAP", "Time any motor is at full output (the 0.90 cap line), 4 m/s turbulence hover (SITL, 1.881 kg, X2216, worst pack; D-258)", "P:sim.wind_cap_s", "s",
        limit=("<=", "P:req.motor_cap_s_max"), verifies=["A-P8"], parts=["PRP-001-UR", "PRP-001-UL", "PRP-001-LR", "PRP-001-LL"],
        how="Log motor outputs in the tethered turbulence hover (M9): no sample at the cap.", equation="same seven SITL runs; read, not re-run")
 stored("CL-A-TIPOVER", "Static tip-over angle on the fin tips", "P:sim.tipover_deg", "deg", limit=(">=", "P:req.tipover_min_deg"), verifies=["A-P9"],

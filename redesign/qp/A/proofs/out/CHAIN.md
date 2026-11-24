@@ -40,7 +40,7 @@ Parameter files: `redesign/qp/A/params-A.json`
 | [A-P5](#a-p5) Pack retained at 12 g crash | **CHECKED** | 1 | — |
 | [A-P6](#a-p6) Stall: 1.3 Vs below cruise | **UNVERIFIED** | 2 | +1% |
 | [A-P7](#a-p7) Hover yaw authority >= 0.35 N m | **UNVERIFIED** | 3 | +4% |
-| [A-P8](#a-p8) Wind limits | **CHECKED** | 3 | +21% |
+| [A-P8](#a-p8) Wind limits | **CHECKED** | 3 | +29% |
 | [A-P9](#a-p9) Fin-tip landing tip-over >= 30 deg | **CHECKED** | 1 | +3% |
 | [A-U1](#a-u1) Total spend and the G7 gate | **UNVERIFIED** | 3 | +3% |
 | [A-U2](#a-u2) Built and flight-tested by 2027-04-30 | **UNVERIFIED** | 1 | — |
@@ -1539,25 +1539,25 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p7
 **Wind limits** — <= 4 m/s mean, gust <= 6.4 m/s (D-192; was 5 / 8); hover lean <= Q_A_ANGLE_MAX 45 deg (40 deg with margin); no motor above 85 % output for more than 0.5 s and none at the 0.90 cap — **CHECKED**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-p8
 
-- claim **CL-A-WIND-LEAN** Belly-on hover lean at 5 m/s (SITL max) = **31.5 deg** (limit <= 40 deg, margin +21%) — **CHECKED**
+- claim **CL-A-WIND-LEAN** Belly-on hover lean at 5 m/s (SITL max) = **28.3 deg** (limit <= 40 deg, margin +29%) — **CHECKED**
   - how to verify: Tethered hover with the wing edge into the wind (M9); the heading rule keeps the belly out of the wind above 3 m/s.
   - parts: WNG-001
   - test `T-A-WIND-HEADING` Tethered hover, heading hold, vane off, light turbulence (M9) (planned) — **PROPOSED**
-  - calc `CALC-A-WIND-LEAN-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `SITL case, QP-2 SITL.md s70 (ArduPlane 4.7.3-beta1 JSON backend); read, not re-run` — **CHECKED**
-    - `v` ← param `P:sim.lean_belly_5ms_deg` = 31.5 deg — **CHECKED**
-      - source `SRC-A-SITL2` [QP-2 SITL wind study (SITL.md)](redesign/review/QP-2/SITL.md), hover wind lean vs Q_A_ANGLE_MAX, checked 2026-11-15 — **CHECKED**
+  - calc `CALC-A-WIND-LEAN-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `SITL case AP8_belly5 (D-258: 5 m/s belly-on, 1 m/s turbulence, 1.881 kg, X2216 hover model, ArduPlane 4.7.3-beta1 JSON backend; mechanism/out/T101_data/sitl_batch_AP8.txt); read, not re-run (was QP-2 SITL.md s70)` — **CHECKED**
+    - `v` ← param `P:sim.lean_belly_5ms_deg` = 28.3 deg — **CHECKED**
+      - source `SRC-A-D195SITL` [QP-5 SITL runs R5_* (sitl/results_fwd.jsonl, runs/R5_*)](redesign/qp/A/sitl/jobs_qp5.txt), cant 17, D-191 gains, CAD mass / CG / inertia 2026-11-15, S5010 aero; batch_qp5.sh, checked 2026-11-15 — **CHECKED**
   - param `P:req.lean_max_deg` = 40 deg — **CHECKED**
-    - `SRC-A-SITL2` (see above)
-- claim **CL-A-WIND-OUTPUT** Longest time any motor is at or above 0.85 output, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack) = **0.2 s** (limit <= 0.5 s, margin +60%) — **CHECKED**
+    - source `SRC-A-SITL2` [QP-2 SITL wind study (SITL.md)](redesign/review/QP-2/SITL.md), hover wind lean vs Q_A_ANGLE_MAX, checked 2026-11-15 — **CHECKED**
+- claim **CL-A-WIND-OUTPUT** Longest time any motor is at or above 0.85 output, 4 m/s turbulence hover (SITL, 1.881 kg predicted, X2216, worst pack; D-258) = **0 s** (limit <= 0.5 s, margin +100%) — **CHECKED**
   - how to verify: Log motor outputs in the tethered turbulence hover (M9) at <= 4 m/s mean: no motor above 0.85 for more than 0.5 s, none at the 0.90 cap.
   - parts: PRP-001-UR, PRP-001-UL, PRP-001-LR, PRP-001-LL
   - `T-A-WIND-HEADING` (see above)
-  - calc `CALC-A-WIND-OUTPUT-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `SITL turbulence cases N4_* (sitl/results.jsonl, run_case.py, A.param D-191, arm 1.2, cant 17); read, not re-run` — **CHECKED**
-    - `v` ← param `P:sim.wind_ge85_s` = 0.2 s — **CHECKED**
-      - source `SRC-A-D195SITL` [QP-5 SITL runs R5_* (sitl/results_fwd.jsonl, runs/R5_*)](redesign/qp/A/sitl/jobs_qp5.txt), cant 17, D-191 gains, CAD mass / CG / inertia 2026-11-15, S5010 aero; batch_qp5.sh, checked 2026-11-15 — **CHECKED**
+  - calc `CALC-A-WIND-OUTPUT-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `SITL turbulence cases AP8_h* (D-258: run_case.py x2216_hover=1, 1.881 kg, CG 23.49 mm, A.param, arm 1.2, cant 17; mechanism/out/T101_data/sitl_batch_AP8.txt); read, not re-run (was N4_* / R5_h*)` — **CHECKED**
+    - `v` ← param `P:sim.wind_ge85_s` = 0 s — **CHECKED**
+      - `SRC-A-D195SITL` (see above)
   - param `P:req.motor_ge85_s_max` = 0.5 s — **CHECKED**
     - source `SRC-A-REQ` [Concept A requirements (REQUIREMENTS-A.md)](redesign/qp/A/REQUIREMENTS-A.md), limits of A-U1 ... A-D12; status PROPOSED, owner A2, checked 2026-11-15 — **CHECKED**
-- claim **CL-A-WIND-CAP** Time any motor is at the 0.90 spin cap, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack) = **0 s** (limit <= 0 s, margin +0 s abs) — **CHECKED**
+- claim **CL-A-WIND-CAP** Time any motor is at full output (the 0.90 cap line), 4 m/s turbulence hover (SITL, 1.881 kg, X2216, worst pack; D-258) = **0 s** (limit <= 0 s, margin +0 s abs) — **CHECKED**
   - how to verify: Log motor outputs in the tethered turbulence hover (M9): no sample at the cap.
   - parts: PRP-001-UR, PRP-001-UL, PRP-001-LR, PRP-001-LL
   - calc `CALC-A-WIND-CAP-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `same seven SITL runs; read, not re-run` — **CHECKED**
