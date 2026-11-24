@@ -12,8 +12,8 @@
 <script>(function(){var t=null;try{t=localStorage.getItem('k09l.theme');}catch(e){}document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap">
-<link rel="stylesheet" href="site.css?v=20261118b">
-<link rel="stylesheet" href="app.css?v=20261123a">
+<link rel="stylesheet" href="site.css?v=20261123b">
+<link rel="stylesheet" href="app.css?v=20261123d">
 <link rel="stylesheet" href="proofs/embed.css?v=20261118h">
 <link rel="stylesheet" href="explorer.css?v=20261116e">
 <script type="importmap">
@@ -212,7 +212,7 @@
 
   <div class="page">
   <section class="c about" id="about">
-  <header><span class="secno">Concept A, from the CAD</span><h2 class="ds-h1">General arrangement</h2><p class="use">Three views at one scale with an isometric inset. The numbers in the status bar above the model are read from the same data as the 3-D explorer.</p></header>
+  <header><h2 class="sh-t">General arrangement</h2><p class="sh-meta">Concept A, from the CAD</p><p class="use">Three views at one scale with an isometric inset. The numbers in the status bar above the model are read from the same data as the 3-D explorer.</p></header>
 <figure class="fig ga-fig" id="fig-ga">
     <div class="stage">
 <!-- GA-SHEET:a1 -->
@@ -356,8 +356,8 @@
 
   <section class="c" id="how-it-flies">
     <header>
-      <span class="secno">How it flies · concept A, rendered in Blender from the as-designed CAD</span>
-      <h2 class="ds-h1">Take-off, transition, cruise and landing</h2>
+      <h2 class="sh-t">Take-off, transition, cruise and landing</h2>
+      <p class="sh-meta">How it flies · concept A, rendered in Blender from the as-designed CAD</p>
       <p class="use">Nothing tilts mechanically: the whole aircraft rotates. Orange arrows show each motor's thrust. To pitch over, the top-side motors speed up and the belly-side motors slow down, creating a pitching moment; the reverse brings it back to hover. The elevons (orange) help once air flows over them.</p>
     </header>
     <figure class="fig">
@@ -368,8 +368,8 @@
 
   <section class="c" id="how-its-built">
     <header>
-      <span class="secno">How it's built · concept A, rendered in Blender from the as-designed CAD</span>
-      <h2 class="ds-h1">Build film</h2>
+      <h2 class="sh-t">Build film</h2>
+      <p class="sh-meta">How it's built · concept A, rendered in Blender from the as-designed CAD</p>
       <p class="use">A build guide you can follow at the bench, in 14 minutes: 66 steps in 10 stages. Each stage opens with a card listing its parts and tools; each step has a card with the step id, a one-line instruction, the key tools and the key check, labels with leader lines on the parts being fitted, and a make-it banner for the parts you cut or print (cut length, print file and orientation). Twelve checkpoint cards say what to measure, weigh or test before you go on; the phase leads are threaded through the arms, the hub conduits and the raceway shown slowly. Every part moves the way a_assembly_plan.py defines (the swept-path check, a_assembly.py, passed). Pick a stage to play only that part, or play the whole build. Skin tape, hinge tape and epoxy fillets are not drawn. The written guide with every dimension, BOM line, time (EST) and checkpoint is <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/BUILD-GUIDE-A.md" target="_blank" rel="noopener">BUILD-GUIDE-A.md</a>.</p>
     </header>
     <figure class="fig">
@@ -391,10 +391,12 @@
       <figcaption><span class="ds-source">showcase/concept-a/render_build_a.py · Blender EEVEE, 1280×720, 24 fps · motions from qp/A/cad/a_assembly_plan.py, card text from qp/A/cad/a_build_steps.py (the same script writes qp/A/BUILD-GUIDE-A.md); same CAD as the 3-D explorer and the collision check. Approach distances under 70 mm are drawn from 70 mm along the same checked direction (the extra length is not part of the swept check). Make-it beats, callouts and the phase-lead reveal are added to the plan and move no part. Print orientations and times in the cards are EST; the concept A STL files are in qp/A/drawings/out/stl/ (one piece each). K09-L build film (previous design): redesign/showcase/animation/build/k09l-build.mp4</span></figcaption>
     </figure>
     <style>
-      .bstages{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-      .bstage{font:inherit;font-size:12px;padding:5px 10px;text-decoration:none;display:inline-flex;align-items:center;border-radius:999px;border:1px solid var(--line, #ccc);background:var(--panel-2, transparent);color:inherit;cursor:pointer}
-      .bstage b{margin-right:4px}
-      .bstage.on{border-color:currentColor;font-weight:600}
+      .bstages{display:flex;flex-wrap:wrap;gap:0;margin-top:10px;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+      .bstage{font:inherit;font-size:var(--text-sm);padding:7px 12px;text-decoration:none;display:inline-flex;align-items:center;border-radius:0;border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:transparent;color:var(--fg-2);cursor:pointer;text-align:left}
+      .bstage:hover{background:var(--panel-2);color:var(--fg)}
+      .bstage b{margin-right:6px;font-family:var(--font-mono);font-weight:500;color:var(--fg-3)}
+      .bstage.on{background:var(--accent-wash);color:var(--fg);box-shadow:inset 0 -2px 0 var(--accent)}
+      .bstage.on b{color:var(--accent)}
     </style>
     <script>
       (function () {
@@ -412,8 +414,8 @@
 
   <section class="c" id="renders">
     <header>
-      <span class="secno">Renders · showcase/concept-a/renders · Blender from the concept A CAD model (qp/A/cad/model)</span>
-      <h2 class="ds-h1">Renders</h2>
+      <h2 class="sh-t">Renders</h2>
+      <p class="sh-meta">showcase/concept-a/renders · Blender from the concept A CAD model (qp/A/cad/model)</p>
       <p class="use">Click any image to view it full size. Rendered with the design-system Blender style from the concept A subsystem modules (real part geometry, lofted APC props); the 3-D explorer above shows the same geometry. There is no transport-box render yet: qp/A defines the packed envelope (0.90 x 0.50 x 0.39 m) but no box CAD. The K09-L renders (previous design) stay in showcase/renders/.</p>
     </header>
     <div class="gallery" id="gallery"><figure class="shot" id="r-hero-iso"><a href="assets/renders/a-hero-iso.webp" data-lightbox="assets/renders/a-hero-iso.webp" data-caption="Concept A in cruise attitude: a 0.90 m flying wing with two fins and a four-arm motor cage carrying four APC 9x4.5MR props."><img src="assets/renders/thumb/a-hero-iso.jpg" alt="Concept A in cruise attitude: a 0.90 m flying wing with two fins and a four-arm motor cage carrying four APC 9x4.5MR props." loading="lazy" width="480" height="300"></a><figcaption>Concept A in cruise attitude: a 0.90 m flying wing with two fins and a four-arm motor cage carrying four APC 9x4.5MR props.</figcaption></figure><figure class="shot" id="r-hover-pose"><a href="assets/renders/a-hover-pose.webp" data-lightbox="assets/renders/a-hover-pose.webp" data-caption="Standing nose-up on its four fin-tip feet (take-off and landing pose)."><img src="assets/renders/thumb/a-hover-pose.jpg" alt="Standing nose-up on its four fin-tip feet (take-off and landing pose)." loading="lazy" width="480" height="300"></a><figcaption>Standing nose-up on its four fin-tip feet (take-off and landing pose).</figcaption></figure><figure class="shot" id="r-exploded"><a href="assets/renders/a-exploded.webp" data-lightbox="assets/renders/a-exploded.webp" data-caption="Exploded view, labelled by subsystem."><img src="assets/renders/thumb/a-exploded.jpg" alt="Exploded view, labelled by subsystem." loading="lazy" width="480" height="300"></a><figcaption>Exploded view, labelled by subsystem.</figcaption></figure><figure class="shot" id="r-front"><a href="assets/renders/a-front.webp" data-lightbox="assets/renders/a-front.webp" data-caption="Front view (orthographic)."><img src="assets/renders/thumb/a-front.jpg" alt="Front view (orthographic)." loading="lazy" width="480" height="300"></a><figcaption>Front view (orthographic).</figcaption></figure><figure class="shot" id="r-side"><a href="assets/renders/a-side.webp" data-lightbox="assets/renders/a-side.webp" data-caption="Left side view (orthographic)."><img src="assets/renders/thumb/a-side.jpg" alt="Left side view (orthographic)." loading="lazy" width="480" height="300"></a><figcaption>Left side view (orthographic).</figcaption></figure><figure class="shot" id="r-top"><a href="assets/renders/a-top.webp" data-lightbox="assets/renders/a-top.webp" data-caption="Top view (orthographic), nose up."><img src="assets/renders/thumb/a-top.jpg" alt="Top view (orthographic), nose up." loading="lazy" width="480" height="300"></a><figcaption>Top view (orthographic), nose up.</figcaption></figure><figure class="shot" id="r-cutaway-xray"><a href="assets/renders/a-cutaway-xray.webp" data-lightbox="assets/renders/a-cutaway-xray.webp" data-caption="X-ray: cage, pack tray, 4S pack, flight controller, ESC and the harness; wing core and fairings ghosted."><img src="assets/renders/thumb/a-cutaway-xray.jpg" alt="X-ray: cage, pack tray, 4S pack, flight controller, ESC and the harness; wing core and fairings ghosted." loading="lazy" width="480" height="300"></a><figcaption>X-ray: cage, pack tray, 4S pack, flight controller, ESC and the harness; wing core and fairings ghosted.</figcaption></figure><figure class="shot" id="r-detail-wing"><a href="assets/renders/a-detail-wing.webp" data-lightbox="assets/renders/a-detail-wing.webp" data-caption="Wing: XPS core (ghosted), carbon spar, plugs, two elevons, balance strips and hinge dampers."><img src="assets/renders/thumb/a-detail-wing.jpg" alt="Wing: XPS core (ghosted), carbon spar, plugs, two elevons, balance strips and hinge dampers." loading="lazy" width="480" height="300"></a><figcaption>Wing: XPS core (ghosted), carbon spar, plugs, two elevons, balance strips and hinge dampers.</figcaption></figure><figure class="shot" id="r-detail-hub"><a href="assets/renders/a-detail-hub.webp" data-lightbox="assets/renders/a-detail-hub.webp" data-caption="Hub and cage: machined 6061-T6 hub (D-220), CF arms, bridge tube, V struts and the pack tray."><img src="assets/renders/thumb/a-detail-hub.jpg" alt="Hub and cage: machined 6061-T6 hub (D-220), CF arms, bridge tube, V struts and the pack tray." loading="lazy" width="480" height="300"></a><figcaption>Hub and cage: machined 6061-T6 hub (D-220), CF arms, bridge tube, V struts and the pack tray.</figcaption></figure><figure class="shot" id="r-detail-propulsion"><a href="assets/renders/a-detail-propulsion.webp" data-lightbox="assets/renders/a-detail-propulsion.webp" data-caption="Propulsion station, current design (D-227): SunnySky X2216 V3 880KV on a canted cup, APC 9x4.5MR prop, adapter and spinner nut."><img src="assets/renders/thumb/a-detail-propulsion.jpg" alt="Propulsion station, current design (D-227): SunnySky X2216 V3 880KV on a canted cup, APC 9x4.5MR prop, adapter and spinner nut." loading="lazy" width="480" height="300"></a><figcaption>Propulsion station, current design (D-227): SunnySky X2216 V3 880KV on a canted cup, APC 9x4.5MR prop, adapter and spinner nut.</figcaption></figure><figure class="shot" id="r-detail-linkage"><a href="assets/renders/a-detail-linkage.webp" data-lightbox="assets/renders/a-detail-linkage.webp" data-caption="Elevon linkage: servo, arm, pushrod, horn, balance lead strip and hinge damper."><img src="assets/renders/thumb/a-detail-linkage.jpg" alt="Elevon linkage: servo, arm, pushrod, horn, balance lead strip and hinge damper." loading="lazy" width="480" height="300"></a><figcaption>Elevon linkage: servo, arm, pushrod, horn, balance lead strip and hinge damper.</figcaption></figure><figure class="shot" id="r-detail-avionics"><a href="assets/renders/a-detail-avionics.webp" data-lightbox="assets/renders/a-detail-avionics.webp" data-caption="Avionics plate, 4-in-1 ESC and pack in the tray."><img src="assets/renders/thumb/a-detail-avionics.jpg" alt="Avionics plate, 4-in-1 ESC and pack in the tray." loading="lazy" width="480" height="300"></a><figcaption>Avionics plate, 4-in-1 ESC and pack in the tray.</figcaption></figure><figure class="shot" id="r-detail-fin"><a href="assets/renders/a-detail-fin.webp" data-lightbox="assets/renders/a-detail-fin.webp" data-caption="Fin: carbon tube, rib tube on a spar saddle, root block, fairing, shoes and pads."><img src="assets/renders/thumb/a-detail-fin.jpg" alt="Fin: carbon tube, rib tube on a spar saddle, root block, fairing, shoes and pads." loading="lazy" width="480" height="300"></a><figcaption>Fin: carbon tube, rib tube on a spar saddle, root block, fairing, shoes and pads.</figcaption></figure><figure class="shot" id="r-detail-foot"><a href="assets/renders/a-detail-foot.webp" data-lightbox="assets/renders/a-detail-foot.webp" data-caption="Landing foot: printed shoe and EVA/PE pad on the fin tube end."><img src="assets/renders/thumb/a-detail-foot.jpg" alt="Landing foot: printed shoe and EVA/PE pad on the fin tube end." loading="lazy" width="480" height="300"></a><figcaption>Landing foot: printed shoe and EVA/PE pad on the fin tube end.</figcaption></figure><figure class="shot" id="r-detail-harness"><a href="assets/renders/a-detail-harness.webp" data-lightbox="assets/renders/a-detail-harness.webp" data-caption="Harness: ESC phase leads along each arm, servo leads along the wing, XT60 from the pack."><img src="assets/renders/thumb/a-detail-harness.jpg" alt="Harness: ESC phase leads along each arm, servo leads along the wing, XT60 from the pack." loading="lazy" width="480" height="300"></a><figcaption>Harness: ESC phase leads along each arm, servo leads along the wing, XT60 from the pack.</figcaption></figure></div>
@@ -427,8 +429,8 @@
   <div class="page">
 <section class="c hero" id="cs-decision-d182">
   <div class="lede">
-    <span class="secno">The case · D-182 · 2026-11-14 · J6 board</span>
-    <h1 class="ds-display">Decision</h1>
+    <h1 class="sh-t">Decision</h1>
+    <p class="sh-meta">The case · D-182 · 2026-11-14 · J6 board</p>
     <p class="summary">Build concept A: a scaled quad tailsitter. 0.90 m wing, four fixed motors on 4S, about 1.2 kg (EST) at selection, now 1.881 kg predicted EST with X2216 motors (params-A.json, D-227), packed into one car trunk.</p>
  <p class="ds-body">After sizing four concepts to the same depth (QP-1), the J6 board chose A: about $1,499 re-priced at selection (earlier design (record); $1,779.47 with real parts at D-199; now $1,939.17, bom_a.py, D-235), +$501 margin (+$387 if EST/U lines run 30 % over). Fallback: B, the small quadplane, after re-pricing (about $1,883, +$117, +$8 at +30 %: fails the $100 rule). Lifeboat: D2, ZOHD Altus kit, if there is no tethered hover by 2027-02-15. Transport rule (user): the packed aircraft must fit one standard car trunk (two at most), not one piece, so B's plug-in wing is allowed; A's one-piece fit is a convenience and the choice rests on cost margin and growth headroom. Reversal trigger R1: a lift motor of $25 or less that passes a 4S bench test makes B score 79. Conditions C1-C8 (14 deg cant, 1.50 kg mass gate, SM &ge; 5 %) and first actions (SITL by 2026-11-30, bench kit and yaw test by 2026-12-10, one BOM) are in the board record. <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-1/BOARD.md" target="_blank" rel="noopener">QP-1/BOARD.md</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/config-study/tiebreak/DECISION.md" target="_blank" rel="noopener">tiebreak/DECISION.md</a></p>
   </div>
@@ -447,7 +449,7 @@
 </section>
 
 <section class="c" id="cs-baseline-a">
-  <header><span class="secno">Concept A baseline · 2026-11-15 · after QP-2 to QP-5 (D-182 to D-197); current-design rows added 2026-11-23 (D-227 to D-241)</span><h2 class="ds-h1">Concept A baseline</h2>
+  <header><h2 class="sh-t">Concept A baseline</h2><p class="sh-meta">2026-11-15 · after QP-2 to QP-5 (D-182 to D-197); current-design rows added 2026-11-23 (D-227 to D-241)</p>
   <p class="use">Validated on paper, in SITL and in the 3-D gates. Nothing bought yet.</p></header>
   <div class="scroll wide"><table class="ds-table">
     <caption>Current numbers (EST = estimate; nothing is weighed or flown)</caption>
@@ -473,7 +475,7 @@
 </section>
 
 <section class="c" id="constraints">
-  <header><span class="secno">The real constraints</span><h2 class="ds-h1">Hard constraints</h2>
+  <header><h2 class="sh-t">Hard constraints</h2><p class="sh-meta">The real constraints</p>
   <p class="use">Eight things the team lead fixed. Everything else is derived by the team and logged with its basis.</p><p class="use">Derived numbers (earlier design (record): mass target 1.46 kg, weigh-in gate 1.47 kg; current O4b prediction 1.881 kg EST, D-219, D-233; T/W &ge; 2.0 fresh, hover wind 4 m/s) are the engineering team's, written in CHANGE-LOG with their reasons, and may be re-derived; these eight may not.</p></header>
   <div class="constraints">
     <div class="constraint"><span class="n">C1 · hard</span><b>$2 000 total, all new</b><span>Hardware, spares, batteries, charger, radio, test gear, shipping, tax. The Jacobs Hall Makers Pass is paid outside it.</span><span class="how">concept A: $1 779 · $221 left (+$100 at +30 %)</span></div>
@@ -489,7 +491,7 @@
 </section>
 
 <section class="c" id="morph">
-  <header><span class="secno">Morphological chart</span><h2 class="ds-h1">Morphological chart</h2>
+  <header><h2 class="sh-t">Morphological chart</h2>
   <p class="use">11 functions × 67 options (+ 9 added by three audit rounds, + 3 by the 2026-11-14 re-study). Every concept is one path down the chart.</p>
   <p class="use morph-how"><b>How to read it.</b> Rows are jobs the aircraft must do; columns are designs, one answer per row. <b>A</b> (blue) is the chosen design (D-182), <b>B</b> (dashed) the fallback, the third is K09-L, the previous choice, or any concept you pick; an orange dot marks where it differs from A. Click a row to open every option studied for it, rejected ones included (the completeness audit).</p></header>
   <div class="morph-wrap">
@@ -510,7 +512,7 @@
 </section>
 
 <section class="c" id="concepts">
-  <header><span class="secno">Every concept considered</span><h2 class="ds-h1">Concepts considered</h2>
+  <header><h2 class="sh-t">Concepts considered</h2><p class="sh-meta">Every concept considered</p>
   <p class="use">43 concepts: 7 kept, 19 merged into a parent, 17 dropped.</p><p class="use">Merged concepts live on as options on their parent, never deleted. Reasons are the screener's one line; costs are cost_model.py totals with tax and shipping.</p></header>
   <div class="filters">
     <input type="search" id="f-q" placeholder="Search id, name, reason" aria-label="Search concepts">
@@ -532,8 +534,8 @@
 <p class="use">K09-L was chosen on 2026-11-09 and replaced by concept A (D-182) because it could not be built new within $2,000. Everything in this section describes K09-L, not the current aircraft.</p></header>
 <section class="c" id="cs-decision">
   <div class="lede">
-    <span class="secno">Previous design · record</span>
-    <h2 class="ds-h1">K09-L decision, 2026-11-09</h2>
+    <h2 class="sh-t">K09-L decision, 2026-11-09</h2>
+    <p class="sh-meta">Previous design · record</p>
   <p class="use">Build K09-L: a quad tailsitter, flat flying wing on four fixed motors, two elevons, airspeed sensor.</p>
     <p class="ds-body">One piece, one plug, five minutes at the field. It is the only shortlisted concept whose reserve covers one $309 crash on pessimistic numbers, and the fastest to build and repair. Runner-up K01 (lean twin-boom quadplane) is the better flying bet by about 0.1 in probability; it lost at the budget gate, not in the air. Reversible until the mid-December order.</p>
   </div>
@@ -550,7 +552,7 @@
 </section>
 
 <section class="c" id="case">
-  <header><span class="secno">Previous decision · K09-L · 2026-11-13 · superseded by D-182</span><h2 class="ds-h1">Why K09-L was chosen and why it was replaced</h2><p class="use">Kept as the record. K09-L was chosen from 43 concepts after a morphological study, a trade matrix and a tie-break against the lean twin-boom quadplane K01; it could not be built new within $2,000 (cheapest workable build $2,577), so the 2026-11-14 re-study chose concept A.</p></header>
+  <header><h2 class="sh-t">Why K09-L was chosen and why it was replaced</h2><p class="sh-meta">Previous decision · K09-L · 2026-11-13 · superseded by D-182</p><p class="use">Kept as the record. K09-L was chosen from 43 concepts after a morphological study, a trade matrix and a tie-break against the lean twin-boom quadplane K01; it could not be built new within $2,000 (cheapest workable build $2,577), so the 2026-11-14 re-study chose concept A.</p></header>
   <div class="decision">
     <div class="ds-card">
       <header><h3 class="ds-h2">The case</h3><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></header>
@@ -585,7 +587,7 @@
 
 </section>
 <section class="c" id="shortlist">
-  <header><span class="secno">The v1 shortlist of seven (2026-11-13, kept as the record; the current design is concept A)</span><h2 class="ds-h1">Shortlist of seven</h2><p class="use">Card values are struck through where the skeptic changed them. Reserve is what is left of $2 000 after tax and shipping. Hours are team-hours to first hover.</p></header>
+  <header><h2 class="sh-t">Shortlist of seven</h2><p class="sh-meta">The v1 shortlist of seven (2026-11-13, kept as the record; the current design is concept A)</p><p class="use">Card values are struck through where the skeptic changed them. Reserve is what is left of $2 000 after tax and shipping. Hours are team-hours to first hover.</p></header>
   <div class="ds-grid" style="--c:1">
 
     <article class="ds-concept chosen">
@@ -934,7 +936,7 @@
 </section>
 
 <section class="c" id="trade">
-  <header><span class="secno">Trade matrix, gates and tie-break</span><h2 class="ds-h1">Trade matrix and tie-break</h2><p class="use">Scores 0–10 from the three judges on corrected numbers; weights are the study's (REQUIREMENTS §5). B08 wins the arithmetic and is set aside; U01 fails G6 and is not ranked. Among concepts the team would build and that transition, K09 stays first in all 12 sensitivity cases.</p></header>
+  <header><h2 class="sh-t">Trade matrix and tie-break</h2><p class="sh-meta">Trade matrix, gates and tie-break</p><p class="use">Scores 0–10 from the three judges on corrected numbers; weights are the study's (REQUIREMENTS §5). B08 wins the arithmetic and is set aside; U01 fails G6 and is not ranked. Among concepts the team would build and that transition, K09 stays first in all 12 sensitivity cases.</p></header>
 
   <div class="scroll wide">
     <table class="ds-trade">
@@ -1003,7 +1005,7 @@
 </section>
 
 <section class="c" id="risks">
-  <header><span class="secno">What we accept, what reverses it, what to do before the order</span><h2 class="ds-h1">Risks and reversal conditions</h2></header>
+  <header><h2 class="sh-t">Risks and reversal conditions</h2><p class="sh-meta">What we accept, what reverses it, what to do before the order</p></header>
   <div class="two">
     <div class="ds-stack">
       <h3 class="ds-h3">Accepted operating limits</h3>
@@ -1049,7 +1051,7 @@
 
 </div>
 <section class="c" id="cs-sources">
-  <header><span class="secno">Sources</span><h2 class="ds-h1">Sources: configuration study</h2></header>
+  <header><h2 class="sh-t">Sources: configuration study</h2></header>
   <div class="srcs">
     <ul>
       <li><b>Decision</b>redesign/CONFIGURATION.md · redesign/config-study/tiebreak/DECISION.md</li>
@@ -1083,8 +1085,8 @@
   <div class="page">
 <section class="c" id="ov-team">
   <header>
-    <span class="secno">The case · TEAM.md</span>
-    <h1 class="ds-display">Team</h1>
+    <h1 class="sh-t">Team</h1>
+    <p class="sh-meta">The case · TEAM.md</p>
   <p class="use">One role per engineer, ten groups, 31 delivered</p>
     <p class="use">Each role does exactly one thing and writes a SUMMARY.md, a claims file the proof chain re-computes, and change requests the chief engineer decides. Status is the word each role gave its own work at A1-R5, the K09-L design frame (2026-11-10); concept A work is tracked on the <a class="ds-link" href="#status">Status page</a>. See the <a class="ds-link" href="#status-key">status key</a>.</p>
   </header>
@@ -1187,8 +1189,8 @@
   <div class="page">
 <section class="c" id="ov-subsystems">
   <header>
-    <span class="secno">The case · concept A · 8 flying + software</span>
-    <h1 class="ds-display">Subsystems and mass</h1>
+    <h1 class="sh-t">Subsystems and mass</h1>
+    <p class="sh-meta">The case · concept A · 8 flying + software</p>
     <p class="use">As-drawn CAD mass by subsystem, concept A O4b: the sum of the 131 parts in the current CAD data (redesign/site/data/viewer-data.json, from redesign/qp/A/cad; 2026-11-23), 1,641.0 g basic before maturity growth, predicted 1.881 kg EST (params-A.json, 1,641.0 x 1.1174 + 48 g, D-233). Fins include the four landing feet; the 27.8 g lumped hardware (screws, nuts, fillets, paint) is in the total but in no card. The bar is the share of the CAD total. Wiring is routed inside the arm tubes, foam grooves and the bay cover; HARNESS-ENCLOSED.md lists what is still exposed.</p>
   </header>
   <div class="subs">
@@ -1217,8 +1219,8 @@
   <div class="page">
 <section class="c" id="ov-status">
   <header>
-    <span class="secno">Concept A (D-182) &middot; 2026-11-23</span>
-    <h1 class="ds-display">Status</h1>
+    <h1 class="sh-t">Status</h1>
+    <p class="sh-meta">Concept A (D-182) &middot; 2026-11-23</p>
     <p class="summary">Designed and checked on paper, in SITL and the 3-D gates; 14 strict proof claims FAIL (2026-11-23, D-245). Nothing bought, built or flown.</p>
     <p class="use">Phases follow the concept A rounds (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/README.md" target="_blank" rel="noopener">qp/README.md</a>). Done means the round delivered and its decisions are logged in CHANGE-LOG; it does not mean verified. Claims: strict build, 14 FAIL as of 2026-11-23 (run_all; earlier design, record: 0 failing) (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/proofs/out/CHAIN.md" target="_blank" rel="noopener">qp/A/proofs</a>). The K09-L programme status stays in redesign/STATUS.md as the record.</p>
   </header>
@@ -1263,8 +1265,8 @@
 <section class="view" id="bom" hidden>
   <div class="page">
   <section class="c">
-    <header><span class="secno">Concept A (D-182) · prices read 2026-11-14 to 2026-11-22 (BOM-A.csv date_checked)</span>
-      <h1 class="ds-display">Bill of materials</h1>
+    <header><h1 class="sh-t">Bill of materials</h1>
+      <p class="sh-meta">Concept A (D-182) · prices read 2026-11-14 to 2026-11-22 (BOM-A.csv date_checked)</p>
       <p class="summary">$1,939.17 including the crash reserve, against the $2,000 limit: $60.83 margin.</p>
       <p class="use">53 lines, all bought new, including the charger, radio, test gear and spares (nothing is owned; Jacobs Hall tools are covered by the Makers Pass). Totals add tax 10.25 %, shipping per vendor (estimate) and the FAA fee, then a crash reserve. In the Price column, V = read on the vendor page, U = unverified, EST = estimate: confirm price and stock on order day (see the <a class="ds-link" href="#status-key">status key</a>). Nothing is bought yet; Order 1 (the bench kit) goes out in early December.</p>
       <div class="ds-row"><a class="ds-btn primary" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/BOM-A.csv" target="_blank" rel="noopener">BOM-A.csv on GitHub</a><a class="ds-btn" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/ORDER-1.csv" target="_blank" rel="noopener">Order 1 (bench kit)</a><a class="ds-btn" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/bom_a.py" target="_blank" rel="noopener">bom_a.py (totals)</a></div>
@@ -1289,8 +1291,8 @@
   <div class="page">
     <section class="c" id="build-guide">
       <header>
-        <span class="secno">The plan · concept A (D-182) · from redesign/qp/A/BUILD-GUIDE-A.md</span>
-        <h1 class="ds-display">Build guide: concept A</h1>
+        <h1 class="sh-t">Build guide: concept A</h1>
+        <p class="sh-meta">The plan · concept A (D-182) · from redesign/qp/A/BUILD-GUIDE-A.md</p>
   <p class="use">66 steps in 10 stages, 42.8 h hands-on (EST; print time and the 24 h cures not counted), written for a team of four at Jacobs Hall. Pick a stage, play its clip, then open each step (parts, how to make and fit them, checkpoint, safety). Whole film: <a class="ds-link" href="#how-its-built">Aircraft page</a>.</p>
   <p class="use"><b>Engineering drawings and print files:</b> one sheet per made part (39 sheets: views, every hole and pocket with its size and position, cut-and-drill layouts for the carbon tubes) and one STL per printed part (38, each checked to be one piece). <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/DRAWINGS-A.md" target="_blank" rel="noopener">Drawing index and print list</a> &middot; <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/drawings/out/DRAWINGS-A.pdf" target="_blank" rel="noopener">All sheets (PDF)</a>. All 39 sheets are shown below (<a class="ds-link" href="#build-drawings">jump to the drawings</a>); each made part in the 3-D viewer shows its own sheet in the part panel.</p>
   <p class="use"> Nothing built yet (PROPOSED). K09-L guide (previous design): <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/BUILD-GUIDE.md" target="_blank" rel="noopener">BUILD-GUIDE.md</a>. · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/BUILD-GUIDE-A.md" target="_blank" rel="noopener">Markdown source on GitHub</a></p>
@@ -1302,7 +1304,7 @@
 </details>
 <!-- drawings:end -->
 <!-- build-guide:begin (generated by redesign/site/make_build_guide.py from redesign/qp/A/BUILD-GUIDE-A.md; do not edit) -->
-<div class="md-wrap"><nav class="md-toc" aria-label="Build guide sections"><a href="#build-overview">Overview</a><a href="#build-1-before-you-start">1. Before you start</a><a href="#build-2-cut-list-and-print-list">2. Cut list and print list</a><a href="#build-3-cure-plan">3. Cure plan</a><a href="#build-stage-1" data-stage="1">1 · Wing core with bulkheads, plates and skin plies (T-077 p8)</a><a href="#build-stage-2" data-stage="2">2 · Cage frame on the bench (D-202), centre node, motor leads threaded, motors, props, dock; then the spar and plugs</a><a href="#build-stage-3" data-stage="3">3 · Phase-lead raceways, pack tray, hinge dampers</a><a href="#build-stage-4" data-stage="4">4 · Fin ribs (25x23) and rib fairings</a><a href="#build-stage-5" data-stage="5">5 · Elevons, balance strips, lens caps</a><a href="#build-stage-6" data-stage="6">6 · Fins: fairings, root blocks, tubes</a><a href="#build-stage-7" data-stage="7">7 · Landing feet</a><a href="#build-stage-8" data-stage="8">8 · Servos, pushrods, horns, lead threading</a><a href="#build-stage-9" data-stage="9">9 · Avionics: pitot, R2 bosses, ESC, FC, leads</a><a href="#build-stage-10" data-stage="10">10 · Pack, XT60, strap, phase leads, bay cover</a><a href="#build-14-after-the-last-step">14. After the last step</a><a href="#build-15-time-summary-running-mass-open-items">15. Time summary, running mass, open items</a></nav>
+<div class="md-wrap"><nav class="md-toc" aria-label="Build guide sections"><p class="md-toc-h">Stages</p><a href="#build-overview">Overview</a><a href="#build-1-before-you-start">1. Before you start</a><a href="#build-2-cut-list-and-print-list">2. Cut list and print list</a><a href="#build-3-cure-plan">3. Cure plan</a><a href="#build-stage-1" data-stage="1">1 · Wing core with bulkheads, plates and skin plies (T-077 p8)</a><a href="#build-stage-2" data-stage="2">2 · Cage frame on the bench (D-202), centre node, motor leads threaded, motors, props, dock; then the spar and plugs</a><a href="#build-stage-3" data-stage="3">3 · Phase-lead raceways, pack tray, hinge dampers</a><a href="#build-stage-4" data-stage="4">4 · Fin ribs (25x23) and rib fairings</a><a href="#build-stage-5" data-stage="5">5 · Elevons, balance strips, lens caps</a><a href="#build-stage-6" data-stage="6">6 · Fins: fairings, root blocks, tubes</a><a href="#build-stage-7" data-stage="7">7 · Landing feet</a><a href="#build-stage-8" data-stage="8">8 · Servos, pushrods, horns, lead threading</a><a href="#build-stage-9" data-stage="9">9 · Avionics: pitot, R2 bosses, ESC, FC, leads</a><a href="#build-stage-10" data-stage="10">10 · Pack, XT60, strap, phase leads, bay cover</a><a href="#build-14-after-the-last-step">14. After the last step</a><a href="#build-15-time-summary-running-mass-open-items">15. Time summary, running mass, open items</a></nav>
 <article class="md">
 <section class="md-sec" id="build-overview">
 <p>Status <code>PROPOSED</code>, nothing built yet. Written for a team of four students at Jacobs Hall. It follows the 66 steps of <code>qp/A/cad/a_assembly_plan.py</code> in the order of the build film (&quot;How it&#x27;s built&quot; in the Explorer), stage by stage. Each step says what you need, how to make the part, how to fit it, what to measure before you go on, the safety points and a time (<code>EST</code>). Every number is taken from a repo file (CAD parameters in <code>qp/A/cad/amodel/*.py</code>, <code>BOM-A.csv</code>, <code>MASS-GATE.md</code>, <code>review/QP-5/ARMS.md</code>, <code>review/QP-5/HARNESS-ENCLOSED.md</code>, <code>review/QP-4/FIXES2.md</code>) or is marked <code>EST</code>; <code>-</code> means the repo does not have it. This file is generated by <code>python -I redesign/qp/A/make_build_guide_a.py</code> from <code>qp/A/cad/a_build_steps.py</code> (the same script drives the cards of the film), so edit the script, not this file.</p>
@@ -1338,7 +1340,7 @@
 </section>
 <section class="md-sec" id="build-stage-1">
 <h2 class="md-h2">Stage 1: Wing core with bulkheads, plates and skin plies (T-077 p8)</h2>
-<figure class="md-clip" id="build-clip-1"><video src="assets/animation/build/a-stage-01.mp4?v=20261118c" data-poster="assets/animation/build/a-stage-01.webp?v=20261118c" controls muted playsinline preload="none" aria-label="Stage 1 build clip"></video><figcaption><span class="ds-source">Stage 1 clip · assets/animation/build/a-stage-01.mp4 · same CAD as the collision check</span></figcaption></figure>
+<figure class="md-clip" id="build-clip-1"><video src="assets/animation/build/a-stage-01.mp4?v=20261118c" data-poster="assets/animation/build/a-stage-01.webp?v=20261118c" controls muted playsinline preload="none" aria-label="Stage 1 build clip"></video><figcaption><b class="ds-mono">FIG BG-01</b> Stage 1 clip <span class="ds-source">assets/animation/build/a-stage-01.mp4 · same CAD as the collision check</span></figcaption></figure>
 <p class="md-meta">Film clip: <code>assets/animation/build/a-stage-01.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 1). Steps A1. Hands-on time EST 10 h 00 min.</p>
 <details class="md-step" id="build-a1-wing-core-on-the-bench"><summary><h3 class="md-h3">A1. Wing core on the bench</h3></summary>
 <p><em>Step 1 of 66. Plan caption: Wing core on the bench</em></p>
@@ -1362,7 +1364,7 @@
 </section>
 <section class="md-sec" id="build-stage-2">
 <h2 class="md-h2">Stage 2: Cage frame on the bench (D-202), centre node, motor leads threaded, motors, props, dock; then the spar and plugs</h2>
-<figure class="md-clip" id="build-clip-2"><video src="assets/animation/build/a-stage-02.mp4?v=20261118c" data-poster="assets/animation/build/a-stage-02.webp?v=20261118c" controls muted playsinline preload="none" aria-label="Stage 2 build clip"></video><figcaption><span class="ds-source">Stage 2 clip · assets/animation/build/a-stage-02.mp4 · same CAD as the collision check</span></figcaption></figure>
+<figure class="md-clip" id="build-clip-2"><video src="assets/animation/build/a-stage-02.mp4?v=20261118c" data-poster="assets/animation/build/a-stage-02.webp?v=20261118c" controls muted playsinline preload="none" aria-label="Stage 2 build clip"></video><figcaption><b class="ds-mono">FIG BG-02</b> Stage 2 clip <span class="ds-source">assets/animation/build/a-stage-02.mp4 · same CAD as the collision check</span></figcaption></figure>
 <p class="md-meta">Film clip: <code>assets/animation/build/a-stage-02.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 2). Steps B0a, B0b, B0c, B0d, B0e, B0f, B0g1, B0g2, B0g3, B0g4, B0h, B0i1, B0i2, B0i3, B0i4, B0j1, B0j2, B0k, B1, A2, A3, A4, A5. Hands-on time EST 13 h 40 min.</p>
 <details class="md-step" id="build-b0a-cut-the-cage-tubes-bench"><summary><h3 class="md-h3">B0a. Cut the cage tubes (bench)</h3></summary>
 <p><em>Step 2 of 66. Plan caption: Bench: cut the two arm tubes</em></p>
@@ -1686,7 +1688,7 @@
 </section>
 <section class="md-sec" id="build-stage-3">
 <h2 class="md-h2">Stage 3: Phase-lead raceways, pack tray, hinge dampers</h2>
-<figure class="md-clip" id="build-clip-3"><video src="assets/animation/build/a-stage-03.mp4?v=20261118c" data-poster="assets/animation/build/a-stage-03.webp?v=20261118c" controls muted playsinline preload="none" aria-label="Stage 3 build clip"></video><figcaption><span class="ds-source">Stage 3 clip · assets/animation/build/a-stage-03.mp4 · same CAD as the collision check</span></figcaption></figure>
+<figure class="md-clip" id="build-clip-3"><video src="assets/animation/build/a-stage-03.mp4?v=20261118c" data-poster="assets/animation/build/a-stage-03.webp?v=20261118c" controls muted playsinline preload="none" aria-label="Stage 3 build clip"></video><figcaption><b class="ds-mono">FIG BG-03</b> Stage 3 clip <span class="ds-source">assets/animation/build/a-stage-03.mp4 · same CAD as the collision check</span></figcaption></figure>
 <p class="md-meta">Film clip: <code>assets/animation/build/a-stage-03.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 3). Steps B2a, B2b1, B2b2, B2b3, B2b4, B2c, B3, B4. Hands-on time EST 3 h 50 min.</p>
 <details class="md-step" id="build-b2a-phase-lead-raceways"><summary><h3 class="md-h3">B2a. Phase-lead raceways</h3></summary>
 <p><em>Step 25 of 66. Plan caption: D-199: phase-lead raceways R and L lowered from above into their foam grooves</em></p>
@@ -1811,7 +1813,7 @@
 </section>
 <section class="md-sec" id="build-stage-4">
 <h2 class="md-h2">Stage 4: Fin ribs (25x23) and rib fairings</h2>
-<figure class="md-clip" id="build-clip-4"><video src="assets/animation/build/a-stage-04.mp4?v=20261118c" data-poster="assets/animation/build/a-stage-04.webp?v=20261118c" controls muted playsinline preload="none" aria-label="Stage 4 build clip"></video><figcaption><span class="ds-source">Stage 4 clip · assets/animation/build/a-stage-04.mp4 · same CAD as the collision check</span></figcaption></figure>
+<figure class="md-clip" id="build-clip-4"><video src="assets/animation/build/a-stage-04.mp4?v=20261118c" data-poster="assets/animation/build/a-stage-04.webp?v=20261118c" controls muted playsinline preload="none" aria-label="Stage 4 build clip"></video><figcaption><b class="ds-mono">FIG BG-04</b> Stage 4 clip <span class="ds-source">assets/animation/build/a-stage-04.mp4 · same CAD as the collision check</span></figcaption></figure>
 <p class="md-meta">Film clip: <code>assets/animation/build/a-stage-04.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 4). Steps C1, C1a, C1b. Hands-on time EST 1 h 55 min.</p>
 <details class="md-step" id="build-c1-fin-ribs"><summary><h3 class="md-h3">C1. Fin ribs</h3></summary>
 <p><em>Step 33 of 66. Plan caption: Ribs</em></p>
@@ -1869,7 +1871,7 @@
 </section>
 <section class="md-sec" id="build-stage-5">
 <h2 class="md-h2">Stage 5: Elevons, balance strips, lens caps</h2>
-<figure class="md-clip" id="build-clip-5"><video src="assets/animation/build/a-stage-05.mp4?v=20261118c" data-poster="assets/animation/build/a-stage-05.webp?v=20261118c" controls muted playsinline preload="none" aria-label="Stage 5 build clip"></video><figcaption><span class="ds-source">Stage 5 clip · assets/animation/build/a-stage-05.mp4 · same CAD as the collision check</span></figcaption></figure>
+<figure class="md-clip" id="build-clip-5"><video src="assets/animation/build/a-stage-05.mp4?v=20261118c" data-poster="assets/animation/build/a-stage-05.webp?v=20261118c" controls muted playsinline preload="none" aria-label="Stage 5 build clip"></video><figcaption><b class="ds-mono">FIG BG-05</b> Stage 5 clip <span class="ds-source">assets/animation/build/a-stage-05.mp4 · same CAD as the collision check</span></figcaption></figure>
 <p class="md-meta">Film clip: <code>assets/animation/build/a-stage-05.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 5). Steps C2, C2a, C2b. Hands-on time EST 2 h 30 min.</p>
 <details class="md-step" id="build-c2-elevons-with-balance-strips"><summary><h3 class="md-h3">C2. Elevons with balance strips</h3></summary>
 <p><em>Step 36 of 66. Plan caption: Elevons with their balance horns on from aft</em></p>
@@ -1927,7 +1929,7 @@
 </section>
 <section class="md-sec" id="build-stage-6">
 <h2 class="md-h2">Stage 6: Fins: fairings, root blocks, tubes</h2>
-<figure class="md-clip" id="build-clip-6"><video src="assets/animation/build/a-stage-06.mp4?v=20261118c" data-poster="assets/animation/build/a-stage-06.webp?v=20261118c" controls muted playsinline preload="none" aria-label="Stage 6 build clip"></video><figcaption><span class="ds-source">Stage 6 clip · assets/animation/build/a-stage-06.mp4 · same CAD as the collision check</span></figcaption></figure>
+<figure class="md-clip" id="build-clip-6"><video src="assets/animation/build/a-stage-06.mp4?v=20261118c" data-poster="assets/animation/build/a-stage-06.webp?v=20261118c" controls muted playsinline preload="none" aria-label="Stage 6 build clip"></video><figcaption><b class="ds-mono">FIG BG-06</b> Stage 6 clip <span class="ds-source">assets/animation/build/a-stage-06.mp4 · same CAD as the collision check</span></figcaption></figure>
 <p class="md-meta">Film clip: <code>assets/animation/build/a-stage-06.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 6). Steps C3, C4, C5, C6. Hands-on time EST 6 h 00 min.</p>
 <details class="md-step" id="build-c3-fin-fairing-right"><summary><h3 class="md-h3">C3. Fin fairing, right</h3></summary>
 <p><em>Step 39 of 66. Plan caption: Fairing, right, from outboard</em></p>
@@ -2000,7 +2002,7 @@
 </section>
 <section class="md-sec" id="build-stage-7">
 <h2 class="md-h2">Stage 7: Landing feet</h2>
-<figure class="md-clip" id="build-clip-7"><video src="assets/animation/build/a-stage-07.mp4?v=20261118c" data-poster="assets/animation/build/a-stage-07.webp?v=20261118c" controls muted playsinline preload="none" aria-label="Stage 7 build clip"></video><figcaption><span class="ds-source">Stage 7 clip · assets/animation/build/a-stage-07.mp4 · same CAD as the collision check</span></figcaption></figure>
+<figure class="md-clip" id="build-clip-7"><video src="assets/animation/build/a-stage-07.mp4?v=20261118c" data-poster="assets/animation/build/a-stage-07.webp?v=20261118c" controls muted playsinline preload="none" aria-label="Stage 7 build clip"></video><figcaption><b class="ds-mono">FIG BG-07</b> Stage 7 clip <span class="ds-source">assets/animation/build/a-stage-07.mp4 · same CAD as the collision check</span></figcaption></figure>
 <p class="md-meta">Film clip: <code>assets/animation/build/a-stage-07.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 7). Steps C7, C8, C9. Hands-on time EST 1 h 00 min.</p>
 <details class="md-step" id="build-c7-upper-shoes"><summary><h3 class="md-h3">C7. Upper shoes</h3></summary>
 <p><em>Step 43 of 66. Plan caption: Upper shoes on the tube ends</em></p>
@@ -2054,7 +2056,7 @@
 </section>
 <section class="md-sec" id="build-stage-8">
 <h2 class="md-h2">Stage 8: Servos, pushrods, horns, lead threading</h2>
-<figure class="md-clip" id="build-clip-8"><video src="assets/animation/build/a-stage-08.mp4?v=20261118c" data-poster="assets/animation/build/a-stage-08.webp?v=20261118c" controls muted playsinline preload="none" aria-label="Stage 8 build clip"></video><figcaption><span class="ds-source">Stage 8 clip · assets/animation/build/a-stage-08.mp4 · same CAD as the collision check</span></figcaption></figure>
+<figure class="md-clip" id="build-clip-8"><video src="assets/animation/build/a-stage-08.mp4?v=20261118c" data-poster="assets/animation/build/a-stage-08.webp?v=20261118c" controls muted playsinline preload="none" aria-label="Stage 8 build clip"></video><figcaption><b class="ds-mono">FIG BG-08</b> Stage 8 clip <span class="ds-source">assets/animation/build/a-stage-08.mp4 · same CAD as the collision check</span></figcaption></figure>
 <p class="md-meta">Film clip: <code>assets/animation/build/a-stage-08.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 8). Steps D1, D0, D2, D2a, D3, D4, D5, D5b. Hands-on time EST 3 h 20 min.</p>
 <details class="md-step" id="build-d1-servos-in-their-pockets"><summary><h3 class="md-h3">D1. Servos in their pockets</h3></summary>
 <p><em>Step 46 of 66. Plan caption: Servos into their pockets</em></p>
@@ -2179,7 +2181,7 @@
 </section>
 <section class="md-sec" id="build-stage-9">
 <h2 class="md-h2">Stage 9: Avionics: pitot, R2 bosses, ESC, FC, leads</h2>
-<figure class="md-clip" id="build-clip-9"><video src="assets/animation/build/a-stage-09.mp4?v=20261118c" data-poster="assets/animation/build/a-stage-09.webp?v=20261118c" controls muted playsinline preload="none" aria-label="Stage 9 build clip"></video><figcaption><span class="ds-source">Stage 9 clip · assets/animation/build/a-stage-09.mp4 · same CAD as the collision check</span></figcaption></figure>
+<figure class="md-clip" id="build-clip-9"><video src="assets/animation/build/a-stage-09.mp4?v=20261118c" data-poster="assets/animation/build/a-stage-09.webp?v=20261118c" controls muted playsinline preload="none" aria-label="Stage 9 build clip"></video><figcaption><b class="ds-mono">FIG BG-09</b> Stage 9 clip <span class="ds-source">assets/animation/build/a-stage-09.mp4 · same CAD as the collision check</span></figcaption></figure>
 <p class="md-meta">Film clip: <code>assets/animation/build/a-stage-09.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 9). Steps E1, E2, E3, E3a, E3d, E3b. Hands-on time EST 4 h 05 min.</p>
 <details class="md-step" id="build-e1-pitot-probe"><summary><h3 class="md-h3">E1. Pitot probe</h3></summary>
 <p><em>Step 54 of 66. Plan caption: Pitot into its groove from the front</em></p>
@@ -2280,7 +2282,7 @@
 </section>
 <section class="md-sec" id="build-stage-10">
 <h2 class="md-h2">Stage 10: Pack, XT60, strap, phase leads, bay cover</h2>
-<figure class="md-clip" id="build-clip-10"><video src="assets/animation/build/a-stage-10.mp4?v=20261118c" data-poster="assets/animation/build/a-stage-10.webp?v=20261118c" controls muted playsinline preload="none" aria-label="Stage 10 build clip"></video><figcaption><span class="ds-source">Stage 10 clip · assets/animation/build/a-stage-10.mp4 · same CAD as the collision check</span></figcaption></figure>
+<figure class="md-clip" id="build-clip-10"><video src="assets/animation/build/a-stage-10.mp4?v=20261118c" data-poster="assets/animation/build/a-stage-10.webp?v=20261118c" controls muted playsinline preload="none" aria-label="Stage 10 build clip"></video><figcaption><b class="ds-mono">FIG BG-10</b> Stage 10 clip <span class="ds-source">assets/animation/build/a-stage-10.mp4 · same CAD as the collision check</span></figcaption></figure>
 <p class="md-meta">Film clip: <code>assets/animation/build/a-stage-10.mp4</code> (Explorer, &quot;How it&#x27;s built&quot;, stage 10). Steps E3c, E4, E4a, E4b, E5, E6, E7. Hands-on time EST 3 h 55 min.</p>
 <details class="md-step" id="build-e3c-anti-slip-pad"><summary><h3 class="md-h3">E3c. Anti-slip pad</h3></summary>
 <p><em>Step 60 of 66. Plan caption: Anti-slip pad stuck on the tray floor</em></p>
@@ -2409,8 +2411,8 @@
   <div class="page">
 <section class="c" id="fea-hub">
   <header>
-    <span class="secno">Hub FEA of the printed PETG hub: EARLIER DESIGN (record) &middot; D-202 / D-205 / D-206 / D-207 &middot; 2026-11-17</span>
-    <h1 class="ds-display">Structures</h1>
+    <h1 class="sh-t">Structures</h1>
+    <p class="sh-meta">Hub FEA of the printed PETG hub: EARLIER DESIGN (record) &middot; D-202 / D-205 / D-206 / D-207 &middot; 2026-11-17</p>
     <p class="summary"><b>Earlier design (record).</b> The map below is of the printed PETG hub (run d209, 2026-11-17). Since D-220 (2026-11-20) the hub is machined 6061-T6, because the PETG hub had been sized on the wrong landing load (in-plane moment Mz 17.51 N&middot;m); this PASS does not describe the current hub. Current status is in the box below. The printed hub passed its stress analysis in flight at the full safety factors and holds a 30 N prop strike at limit load. The map also exposed an overload in the bridge tube behind the hub (torsion); it is now 16 &times; 14 instead of 12 &times; 10 and passes (D-206). The inside corners are now filleted and the bridge seats on a conical floor in the hub (D-207). Analysis only: nothing has been printed or tested.</p>
     <p class="use">A 3-D finite-element model of the hub, the two continuous carbon arm tubes, the 16 &times; 14 bridge tube and the five 3 mm pins (1.50 million unknowns). The colour is the <b>utilisation</b>: stress &times; required safety factor &divide; allowable. Under 1 passes. Every load pattern in a case is enveloped, so the map shows the worst value each point sees. <span class="ds-badge" data-status="MODELLED">MODELLED</span></p>
   </header>
@@ -2519,8 +2521,8 @@
   <div class="page">
 <section class="c" id="sims-top">
   <header>
-    <span class="secno">Physics simulations &middot; AR-014 / AR-015 &middot; T-097 &middot; 2026-11-23</span>
-    <h1 class="ds-display">Simulations</h1>
+    <h1 class="sh-t">Simulations</h1>
+    <p class="sh-meta">Physics simulations &middot; AR-014 / AR-015 &middot; T-097 &middot; 2026-11-23</p>
     <p class="summary">Both physics simulations were re-run on the current design: 1.881 kg (estimate), SunnySky X2216 motors, CG 22.05 mm. <b>Transition flight passes</b> every line except elevon pitch use (0.69&ndash;0.79 of &plusmn;15&deg; against 0.60, an open item) and the cruise speed already carried as A-P6. <b>Landing passes only inside a narrow foam window</b> (crush force 37.5&ndash;39 N per pad and damping 0.02&ndash;0.05; T-098, below), which the foam bench test decides; a longer-pad fallback widens it. The first rerun (30 N and 45 N foam) failed 1 and 4 of 10 cases. The aircraft never tips over (static tip-over angle 31.08&deg;, needs 30.5&deg;). These are calculations, not tests: the foam and pad friction are estimates until the bench tests.</p>
     <p class="use">Landing: a 6-degree-of-freedom rigid-body model with four crushable foam feet and pad friction 0.40 (<code class="ds-inline">landing_a.py</code>). Flight: ArduPlane 4.7.3 SITL, the real autopilot firmware and the project parameter file, flying a model of the aircraft (<code class="ds-inline">a_plant.py</code>). No pass line was changed for these runs. <span class="ds-badge" data-status="MODELLED">MODELLED</span></p>
   </header>
@@ -2632,8 +2634,8 @@
   <div class="page">
 <section class="c" id="documents">
   <header>
-    <span class="secno">The plan · branch redesign/v1 on GitHub</span>
-    <h1 class="ds-display">Documents</h1>
+    <h1 class="sh-t">Documents</h1>
+    <p class="sh-meta">The plan · branch redesign/v1 on GitHub</p>
     <p class="use">The repository's Markdown is the record. Links open the file on GitHub (branch redesign/v1, folder redesign/); the numbers on these pages come from the files below.</p>
   </header>
   <div class="scroll fit"><table class="ds-table"><thead><tr><th>Area</th><th>Start here</th></tr></thead><tbody><tr><td class="first">Front door, key numbers, directory map</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/README.md" target="_blank" rel="noopener">README.md</a></td></tr><tr><td class="first">What is done, what fails, what needs tests</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/STATUS.md" target="_blank" rel="noopener">STATUS.md</a></td></tr><tr><td class="first">What the team does next, what to order</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/HANDOFF.md" target="_blank" rel="noopener">HANDOFF.md</a></td></tr><tr><td class="first">How to continue the work</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/RESUME.md" target="_blank" rel="noopener">RESUME.md</a></td></tr><tr><td class="first">Configuration decision and study</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/CONFIGURATION.md" target="_blank" rel="noopener">CONFIGURATION.md</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/config-study/README.md" target="_blank" rel="noopener">config-study/</a></td></tr><tr><td class="first">Requirements and verification</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/A2" target="_blank" rel="noopener">team/A2/</a></td></tr><tr><td class="first">Parameters and mass/CG</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/params/params.json" target="_blank" rel="noopener">params/params.json</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/MASS-CG.md" target="_blank" rel="noopener">MASS-CG.md</a></td></tr><tr><td class="first">Subsystem specs (one page each)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/wing/SPEC.md" target="_blank" rel="noopener">wing</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/fins/SPEC.md" target="_blank" rel="noopener">fins</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/pod/SPEC.md" target="_blank" rel="noopener">pod</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/landing/SPEC.md" target="_blank" rel="noopener">landing</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/propulsion/SPEC.md" target="_blank" rel="noopener">propulsion</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/power/SPEC.md" target="_blank" rel="noopener">power</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/avionics/SPEC.md" target="_blank" rel="noopener">avionics</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/harness/SPEC.md" target="_blank" rel="noopener">harness</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/mechanisms/SPEC.md" target="_blank" rel="noopener">mechanisms</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/flight-software/SPEC.md" target="_blank" rel="noopener">flight software</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/transport/SPEC.md" target="_blank" rel="noopener">transport</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/ground/SPEC.md" target="_blank" rel="noopener">ground</a></td></tr><tr><td class="first">Each engineer's work</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team" target="_blank" rel="noopener">team/</a> (one folder per role, each with SUMMARY.md)</td></tr><tr><td class="first">Interfaces (knowledge graph)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/interfaces" target="_blank" rel="noopener">interfaces/</a></td></tr><tr><td class="first">Design system (visual standard)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/design-system/README.md" target="_blank" rel="noopener">design-system/README.md</a></td></tr></tbody></table></div>
@@ -2650,8 +2652,8 @@
 </section>
 <section class="c howto" id="ov-howto">
   <header>
-    <span class="secno">How to use the redesign</span>
-    <h2 class="ds-h1">How to use the repository</h2>
+    <h2 class="sh-t">How to use the repository</h2>
+    <p class="sh-meta">How to use the redesign</p>
     <p class="use">Everything runs from a checkout of branch redesign/v1 with Python 3 and no installs; the web pages open from disk or from GitHub Pages.</p>
   </header>
   <div class="three">
@@ -2702,8 +2704,7 @@ python -I redesign/proofs/build_graph.py --strict</pre>
 
 <section class="c" id="ov-sources">
   <header>
-    <span class="secno">Sources and directory map</span>
-    <h2 class="ds-h1">Sources and directory map</h2>
+    <h2 class="sh-t">Sources and directory map</h2>
   </header>
   <div class="srcs">
     <div>
@@ -2743,7 +2744,7 @@ python -I redesign/proofs/build_graph.py --strict</pre>
 </section>
 
 <section class="c" id="cs-sources-docs">
-  <header><span class="secno">Configuration-study sources</span><h2 class="ds-h1">Sources: configuration study</h2></header>
+  <header><h2 class="sh-t">Sources: configuration study</h2><p class="sh-meta">Configuration-study sources</p></header>
   <div class="srcs">
     <ul>
       <li><b>Decision</b>redesign/CONFIGURATION.md · redesign/config-study/tiebreak/DECISION.md</li>
@@ -2785,10 +2786,10 @@ python -I redesign/proofs/build_graph.py --strict</pre>
 
 <style>
 .bom-bars{display:grid;gap:6px;max-width:760px}.bom-bar{display:grid;grid-template-columns:120px 1fr 90px;gap:10px;align-items:center;font-size:var(--text-sm)}
-.bom-bar i{height:10px;border-radius:var(--radius-xs);background:linear-gradient(90deg,var(--accent) var(--v),var(--panel-3) var(--v))}.bom-bar b{font-family:var(--font-mono);font-weight:500;text-align:right}
+.bom-bar i{height:8px;border-radius:0;background:linear-gradient(90deg,var(--fg-3) var(--v),var(--panel-2) var(--v))}.bom-bar b{font-family:var(--font-sans);font-variant-numeric:tabular-nums lining-nums;font-weight:600;text-align:right}
 #bom-table tr.gated td{color:var(--fg-3)}#bom-table .pid{display:block;font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-3)}#bom-table td.id{font-family:var(--font-mono);font-size:var(--text-xs)}
 </style>
-<script type="module" src="site.js?v=20261123a"></script>
+<script type="module" src="site.js?v=20261123b"></script>
 <script>(function(){var q=document.getElementById('bom-q'),g=document.getElementById('bom-g'),w=document.getElementById('bom-w'),c=document.getElementById('bom-count');if(!q)return;var rows=[].slice.call(document.querySelectorAll('#bom-table tbody tr'));function f(){var s=q.value.trim().toLowerCase(),n=0;rows.forEach(function(r){var ok=(!g.value||r.dataset.group===g.value)&&(!w.value||r.dataset.wave===w.value)&&(!s||r.textContent.toLowerCase().indexOf(s)>=0);r.hidden=!ok;if(ok)n++;});c.textContent=n+' of '+rows.length;}[q,g,w].forEach(function(e){e.addEventListener('input',f);});f();})();</script>
 
 

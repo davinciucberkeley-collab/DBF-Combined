@@ -55,7 +55,7 @@ function buildRail(name) {
     view.querySelectorAll('h2, h3.ds-h2[id]').forEach(h => {
       if (h.closest('details:not([open])') || h.closest('.md .md-sec') && h.tagName !== 'H2') return;
       const sec = h.closest('section[id]'), id = (h.tagName === 'H2' && sec && sec.querySelector('h2') === h && sec.id) || h.id || (h.id = slug(h.textContent));
-      const t = h.textContent.trim().replace(/\s+/g, ' '); if (!id || !t || items.some(i => i.id === id)) return;
+      const t = Array.from(h.childNodes).filter(n => !(n.classList && n.classList.contains('sh-anchor'))).map(n => n.textContent).join('').trim().replace(/\s+/g, ' '); if (!id || !t || items.some(i => i.id === id)) return;
       items.push({ id, t, el: h });
     });
   }
@@ -84,6 +84,8 @@ function route() {
   }
   document.querySelectorAll('main > .view').forEach(v => { v.hidden = v.id !== name; });
   document.querySelectorAll('#nav a').forEach(a => { if (a.getAttribute('href') === '#' + name) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+  { const nav = document.getElementById('nav'), cur = nav && nav.querySelector('a[aria-current="page"]');   // narrow screens: keep the current tab in view
+    if (cur && nav.scrollWidth > nav.clientWidth) nav.scrollLeft = Math.max(0, cur.offsetLeft - nav.offsetLeft - 24); }
   document.body.dataset.route = name;
   document.title = 'Concept A · ' + TITLES[name];     // concept A is the current design (D-182)
   if (name === 'build') { watchBuildToc(); if (target) openBuildTarget(target); }
@@ -357,7 +359,19 @@ document.addEventListener('click', e => {
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !pop.hidden) hidePop(); });
 window.addEventListener('hashchange', hidePop);
 
+// ---------------- section permalinks ----------------
+// Every numbered section title (h2.sh-t in a section with an id) gets a "#" permalink (UI-SURVEY.md rule). The in-page contents list is
+// the "On this page" rail above (T-053 / D-242 layout, 2026-11-16), so the survey's own contents list is not built (T-104).
+function addPermalinks() {
+  document.querySelectorAll('main > .view section.c[id] h2.sh-t').forEach(h => {
+    const sec = h.closest('section.c[id]'); if (!sec || sec.querySelector('h2.sh-t') !== h || h.querySelector('.sh-anchor')) return;
+    const a = document.createElement('a'); a.className = 'sh-anchor'; a.href = '#' + sec.id; a.textContent = '#';
+    a.setAttribute('aria-label', 'Link to this section'); h.appendChild(a);
+  });
+}
+
 // ---------------- start ----------------
+addPermalinks();
 initMorph();
 route();
 startViewer();

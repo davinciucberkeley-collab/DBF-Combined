@@ -50,8 +50,8 @@ bars = "".join(f'<div class="bom-bar"><span>{s.replace("_", " ")}</span><i style
 gopts = "".join(f'<option value="{s}">{s.replace("_", " ")}</option>' for s in subs)
 
 section = f'''<section class="c">
-    <header><span class="secno">Concept A (D-182) · prices read {DATE_RANGE} (BOM-A.csv date_checked)</span>
-      <h1 class="ds-display">Bill of materials</h1>
+    <header><h1 class="sh-t">Bill of materials</h1>
+      <p class="sh-meta">Concept A (D-182) · prices read {DATE_RANGE} (BOM-A.csv date_checked)</p>
       <p class="summary">${t["total"]:,.2f} including the crash reserve, against the $2,000 limit: ${t["margin"]:,.2f} margin.</p>
       <p class="use">{len(rows)} lines, all bought new, including the charger, radio, test gear and spares (nothing is owned; Jacobs Hall tools are covered by the Makers Pass). Totals add tax 10.25 %, shipping per vendor (estimate) and the FAA fee, then a crash reserve. In the Price column, V = read on the vendor page, U = unverified, EST = estimate: confirm price and stock on order day (see the <a class="ds-link" href="#status-key">status key</a>). Nothing is bought yet; Order 1 (the bench kit) goes out in early December.</p>
       <div class="ds-row"><a class="ds-btn primary" href="{GH}BOM-A.csv" target="_blank" rel="noopener">BOM-A.csv on GitHub</a><a class="ds-btn" href="{GH}ORDER-1.csv" target="_blank" rel="noopener">Order 1 (bench kit)</a><a class="ds-btn" href="{GH}bom_a.py" target="_blank" rel="noopener">bom_a.py (totals)</a></div>

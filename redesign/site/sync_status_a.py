@@ -93,8 +93,8 @@ drows = "".join(f'<tr><td class="first"><b>{a}</b></td><td>{b}</td><td>{c}</td><
 
 NEW = f'''<section class="c" id="ov-status">
   <header>
-    <span class="secno">Concept A (D-182) &middot; 2026-11-23</span>
-    <h1 class="ds-display">Status</h1>
+    <h1 class="sh-t">Status</h1>
+    <p class="sh-meta">Concept A (D-182) &middot; 2026-11-23</p>
     <p class="summary">Designed and checked on paper, in SITL and the 3-D gates; 14 strict proof claims FAIL (2026-11-23, D-245). Nothing bought, built or flown.</p>
     <p class="use">Phases follow the concept A rounds ({L("qp/README.md", "qp/README.md")}). Done means the round delivered and its decisions are logged in CHANGE-LOG; it does not mean verified. Claims: strict build, 14 FAIL as of 2026-11-23 (run_all; earlier design, record: 0 failing) ({L("qp/A/proofs/out/CHAIN.md", "qp/A/proofs")}). The K09-L programme status stays in redesign/STATUS.md as the record.</p>
   </header>

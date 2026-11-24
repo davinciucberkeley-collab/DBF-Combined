@@ -1,6 +1,10 @@
 /* K09-L explorer: app shell, 3-D explorer layout (from redesign/viewer/viewer.css), gallery, lightbox.
    Tokens and components come from site.css (design-system/tokens.css + components.css + the two source pages). */
-:root { --gutter-l: max(16px, env(safe-area-inset-left, 0px)); --gutter-r: max(16px, env(safe-area-inset-right, 0px)); --inspector-w: 340px; }
+:root {
+  /* theme-independent: plots are PNGs on white paper; the lightbox is a dark scrim in both themes */
+  --plot-paper: #FFFFFF; --plot-ink: #5C646E;
+  --scrim: rgba(8, 10, 14, 0.9); --scrim-ink: #E6EAF0; --scrim-btn: rgba(255, 255, 255, 0.12); --scrim-line: rgba(255, 255, 255, 0.25);
+  --gutter-l: max(16px, env(safe-area-inset-left, 0px)); --gutter-r: max(16px, env(safe-area-inset-right, 0px)); --inspector-w: 340px; }
 
 /* ---- base ---- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -169,15 +173,15 @@ i.sub { display: inline-block; padding: 0; border: 0; gap: 0; min-width: 0; flex
 /* ---- simulations: extra figures ---- */
 .plots { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--space-4); }
 .plot { margin: 0; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
-.plot-img { display: grid; place-items: center; background: #FFFFFF; height: 170px; padding: 8px 12px; }
+.plot-img { display: grid; place-items: center; background: var(--plot-paper); height: 170px; padding: 8px 12px; }
 .plot-img img { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; }
 .plot figcaption { padding: 8px 12px 10px; font-size: var(--text-xs); color: var(--fg-2); line-height: 1.45; border-top: 1px solid var(--line); }
 .plot figcaption b { color: var(--fg); }
 /* simulation cards: fixed-aspect frame, image contained, caption in its own row below */
 .sim figure { display: flex; flex-direction: column; height: auto; padding: 0; background: transparent; border-bottom: 1px solid var(--line); }
-.sim figure .plot-img { display: block; position: relative; aspect-ratio: 4 / 3; width: 100%; height: auto; padding: 0; box-sizing: border-box; background: #FFFFFF; overflow: hidden; cursor: zoom-in; }
+.sim figure .plot-img { display: block; position: relative; aspect-ratio: 4 / 3; width: 100%; height: auto; padding: 0; box-sizing: border-box; background: var(--plot-paper); overflow: hidden; cursor: zoom-in; }
 .sim figure .plot-img img { position: absolute; inset: 8px; width: calc(100% - 16px); height: calc(100% - 16px); max-width: none; max-height: none; object-fit: contain; }
-.sim figure .plot-img::after { content: "Enlarge"; position: absolute; right: 8px; bottom: 8px; padding: 3px 8px; border-radius: 999px; font: var(--weight-medium) 12px/1.2 var(--font-sans); background: rgba(17,24,39,.78); color: #fff; opacity: 0; transition: opacity .15s; pointer-events: none; }
+.sim figure .plot-img::after { content: "Enlarge"; position: absolute; right: 8px; bottom: 8px; padding: 3px 8px; border-radius: 999px; font: var(--weight-medium) 12px/1.2 var(--font-sans); background: var(--scrim); color: var(--scrim-ink); opacity: 0; transition: opacity .15s; pointer-events: none; }
 .sim figure .plot-img:hover::after, .sim figure .plot-img:focus-visible::after { opacity: 1; }
 .sim figure .plot-img:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 .sim figure .fid { position: static; display: block; padding: 6px 12px; border-top: 1px solid var(--line); background: var(--panel); color: var(--fg-3); }
@@ -250,12 +254,12 @@ a.term:hover { color: var(--accent); text-decoration-color: var(--accent); }
 #status .use { color: var(--fg-2); margin: 0; max-width: var(--measure); font-size: var(--text-sm); }
 
 /* ---- lightbox ---- */
-.lightbox { position: fixed; inset: 0; z-index: 60; background: rgba(8, 10, 14, 0.88); display: grid; place-items: center; padding: var(--space-5); }
+.lightbox { position: fixed; inset: 0; z-index: 60; background: var(--scrim); display: grid; place-items: center; padding: var(--space-5); }
 .lightbox figure { margin: 0; display: grid; gap: 10px; justify-items: center; max-width: 100%; }
-.lightbox img { max-width: min(1400px, 92vw); max-height: 80vh; width: auto; height: auto; border-radius: var(--radius-sm); background: #fff; box-shadow: var(--shadow-pop); }
-.lightbox figcaption { color: #E6EAF0; font-size: var(--text-sm); text-align: center; max-width: 70ch; }
-.lightbox .ds-iconbtn { position: absolute; width: 40px; height: 40px; font: 500 20px/1 var(--font-sans); background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.25); color: #fff; }
-.lightbox .ds-iconbtn:hover { background: rgba(255,255,255,0.22); }
+.lightbox img { max-width: min(1400px, 92vw); max-height: 80vh; width: auto; height: auto; border-radius: var(--radius-sm); background: var(--plot-paper); box-shadow: var(--shadow-pop); }
+.lightbox figcaption { color: var(--scrim-ink); font-size: var(--text-sm); text-align: center; max-width: 70ch; }
+.lightbox .ds-iconbtn { position: absolute; width: 40px; height: 40px; font: 500 20px/1 var(--font-sans); background: var(--scrim-btn); border-color: var(--scrim-line); color: var(--scrim-ink); }
+.lightbox .ds-iconbtn:hover { background: var(--scrim-line); }
 .lb-close { top: calc(var(--space-4) + env(safe-area-inset-top, 0px)); right: var(--gutter-r); }
 .lb-prev { left: var(--gutter-l); top: 50%; transform: translateY(-50%); }
 .lb-next { right: var(--gutter-r); top: 50%; transform: translateY(-50%); }
@@ -279,13 +283,13 @@ a.term:hover { color: var(--accent); text-decoration-color: var(--accent); }
 .ds-metrics-decision { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
 .ds-metric .lim .nw { white-space: nowrap; }
 /* fasteners view (H) */
-.v-fastbtn[aria-pressed="true"] { background: var(--highlight); border-color: var(--highlight); color: #fff; }
-.v-hwhead { display: flex; align-items: center; gap: 8px; padding: 6px 8px; font-size: var(--text-xs); font-weight: var(--weight-medium); color: var(--highlight); border-bottom: 1px solid var(--border, rgba(127,127,127,.25)); }
-.v-hwhead i { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--highlight); box-shadow: inset 0 0 0 2px var(--bg, #fff), inset 0 0 0 5px var(--highlight); }
+.v-fastbtn[aria-pressed="true"] { background: var(--highlight); border-color: var(--highlight); color: var(--on-accent); }
+.v-hwhead { display: flex; align-items: center; gap: 8px; padding: 6px 8px; font-size: var(--text-xs); font-weight: var(--weight-medium); color: var(--highlight); border-bottom: 1px solid var(--line); }
+.v-hwhead i { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--highlight); box-shadow: inset 0 0 0 2px var(--bg), inset 0 0 0 5px var(--highlight); }
 .v-hwhead .m { margin-left: auto; font-family: var(--font-mono); color: var(--fg-3); font-weight: normal; }
 .v-hwtable td:nth-child(2) { text-align: left; font-family: var(--font-sans); color: var(--fg-2, inherit); padding-left: 8px; }
 .v-hwtable th:nth-child(2) { text-align: left; padding-left: 8px; }
-.v-hwtable tr.tot td { border-top: 1px solid var(--border, rgba(127,127,127,.3)); font-weight: var(--weight-medium); }
+.v-hwtable tr.tot td { border-top: 1px solid var(--line-2); font-weight: var(--weight-medium); }
 .v-hwtable td, .v-hwtable th { white-space: nowrap; padding-left: 8px; }
 .v-hwtable td:first-child, .v-hwtable th:first-child { padding-left: 0; white-space: normal; }
 .v-hwtable td:nth-child(2) { white-space: normal; }
@@ -321,6 +325,172 @@ a.term:hover { color: var(--accent); text-decoration-color: var(--accent); }
   .md-sec { scroll-margin-top: calc(var(--topbar-h) + 64px); }
 }
 
+   Reference layout (2026-11-13, rules in UI-SURVEY.md). Loaded last on purpose: it restyles the shared components for a
+   document a reader scans and cites, not a dashboard of cards.
+   - type: titles in --font-display (Newsreader, explorer.css), IBM Plex Sans text, quantities as tabular lining figures (T-104: explorer.css type kept over the survey faces)
+   - section = short title + mono meta line + one verdict sentence; h2s numbered per page, # permalink on hover
+   - repeated items sit on hairline rules, not in floating rounded cards; tables are ruled top / head / bottom only
+   - status is one outlined mono word everywhere; no dots, no washes behind words
+   ===================================================================================================================== */
+body { font-size: var(--text-md); line-height: 1.55; }
+h1, h2, h3 { font-family: var(--font-head); }
+.ds-h1, .ds-h2, .ds-h3 { font-family: var(--font-head); letter-spacing: 0.005em; }
+.ds-h2 { font-size: 1.1875rem; }
+.ds-h3 { font-size: 1.0625rem; }
+.ds-body { font-size: var(--text-md); }
+
+/* ---- status: one outlined word ---- */
+.ds-badge { height: 20px; padding: 0 6px; background: transparent; box-shadow: inset 0 0 0 1px var(--st-l, var(--line-2)); color: var(--st-c, var(--fg-2)); border-radius: var(--radius-xs); font: 500 0.6875rem/1 var(--font-mono); letter-spacing: 0.06em; }
+.ds-badge::before { display: none; }
+.ds-badge.dot { height: 18px; padding: 0 5px; font-size: 0.625rem; box-shadow: inset 0 0 0 1px var(--st-l); }
+.ds-badge.dot::after { content: attr(data-status); }
+[data-phase="DONE"] { --st-c: var(--st-checked); --st-l: var(--st-checked-line); }
+[data-phase="PARTIAL"] { --st-c: var(--st-unverified); --st-l: var(--st-unverified-line); }
+[data-phase="NOT STARTED"] { --st-c: var(--st-proposed); --st-l: var(--st-proposed-line); }
+.verdict { background: transparent; padding: 1px 6px; border-radius: var(--radius-xs); font: 600 var(--text-xs)/1.4 var(--font-sans); }
+.verdict::before { display: none; }
+
+/* ---- section headers: title, meta, verdict, note ---- */
+main > .view { counter-reset: sec; }
+#aircraft { --vn: "1"; } #decision { --vn: "2"; } #proof { --vn: "3"; } #structures { --vn: "4"; } #sims { --vn: "5"; } #subsystems { --vn: "6"; } #team { --vn: "7"; }
+#build { --vn: "8"; } #status { --vn: "9"; } #bom { --vn: "10"; } #docs { --vn: "11"; }
+.sh-t { margin: 0; color: var(--fg); font-family: var(--font-display, var(--font-head)); font-weight: 500; letter-spacing: 0; text-wrap: balance; }
+h1.sh-t { font-size: var(--text-2xl); line-height: 1.08; }
+h2.sh-t { font-size: var(--text-xl); line-height: 1.15; counter-increment: sec; }
+h2.sh-t::before { content: var(--vn, "") "." counter(sec); display: inline-block; min-width: 2.6em; margin-right: 0.45em; font: 500 0.8125rem/1 var(--font-mono); color: var(--fg-3); vertical-align: 0.18em; }
+.sh-anchor { margin-left: 0.4em; font: 400 0.8em/1 var(--font-mono); color: var(--fg-3); text-decoration: none; opacity: 0; transition: opacity var(--dur-fast) var(--ease-out); }
+.sh-t:hover .sh-anchor, .sh-anchor:focus-visible { opacity: 1; }
+.sh-anchor:hover { color: var(--accent); }
+@media (hover: none) { .sh-anchor { opacity: 0.6; } }
+.sh-meta { margin: 0; font: 400 var(--text-xs)/1.45 var(--font-mono); color: var(--fg-3); overflow-wrap: anywhere; }
+.sh-v { margin: 4px 0 0; max-width: 72ch; font: 600 var(--text-md)/1.45 var(--font-sans); color: var(--fg); text-wrap: pretty; }
+h1.sh-t ~ .sh-v { font-size: var(--text-lg); font-weight: 400; line-height: 1.4; }
+section.c > header { gap: 4px; }
+section.c > header .use, #status .use { font-size: var(--text-sm); color: var(--fg-2); margin-top: 2px; }
+.hero .lede { gap: 6px; }
+
+/* ---- figures: picture in a hairline frame, caption under it ---- */
+.fig { background: none; border: 0; border-radius: 0; overflow: visible; }
+.fig .stage { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-md); }
+.fig > video { border: 1px solid var(--line); border-radius: var(--radius-md); }
+.fig figcaption { padding: 8px 0 0; border-top: 0; gap: 4px; }
+.fig figcaption .cap { font-size: var(--text-sm); }
+.fig figcaption .cap b { font-weight: 500; margin-right: 6px; }
+.gallery { gap: var(--space-5) var(--space-4); grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); }
+.shot { background: none; border: 0; border-radius: 0; overflow: visible; }
+.shot a { border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; background: var(--panel); }
+.shot a:hover { border-color: var(--line-3); }
+.shot a:hover img { transform: none; }
+.shot figcaption { padding: 6px 0 0; font-size: var(--text-sm); color: var(--fg-2); }
+.plot { background: none; border: 0; border-radius: 0; overflow: visible; }
+.plot-img { border: 1px solid var(--line); border-radius: var(--radius-md); }
+.plot figcaption { padding: 6px 0 0; border-top: 0; font-size: var(--text-sm); }
+.sim figure .plot-img::after { border-radius: var(--radius-xs); }
+
+/* ---- tables: three rules (top, under the head, bottom), sentence-case heads, right-aligned numbers ---- */
+.ds-table, .ds-trade { background: transparent; border: 0; border-radius: 0; border-top: 1px solid var(--line-3); border-bottom: 1px solid var(--line-3); overflow: hidden; /* kept from site.css: wide tables stay clipped, not page-wide (T-104) */ }
+.ds-table th, .ds-trade th { font: 600 var(--text-sm)/1.3 var(--font-head); letter-spacing: 0.01em; text-transform: none; color: var(--fg-2); background: transparent; border-bottom: 1px solid var(--line-3); padding: 8px 10px; vertical-align: bottom; }
+.ds-trade th .w { font-size: var(--text-xs); }
+.ds-table td, .ds-trade td { padding: 7px 10px; }
+.ds-table th:first-child, .ds-table td:first-child, .ds-trade th:first-child, .ds-trade td:first-child { padding-left: 2px; }
+.ds-table tr.total td { background: transparent; border-top: 1px solid var(--line-3); }
+.ds-table tbody tr:hover td, .ds-trade tbody tr:hover td { background: var(--panel-2); }
+.ds-table td.num, .ds-table .num { font-variant-numeric: tabular-nums lining-nums; }
+.ds-trade .bar, .ds-trade .bar i { border-radius: 0; }
+.md-figtable { border: 0; }
+
+/* ---- numbers: quantities in the text face with tabular lining figures (columns line up, no slashed zeros);
+        mono stays for ids, file paths, claim names and code ---- */
+.ds-num, .ds-table td.num, .ds-table th.num, .ds-metric .v, .ds-metric .lim, .ds-metric .cur, .ds-trade td.total,
+.ds-trade .score .ds-num, .ds-kv dd, .v-subtable td, .sim-sum .sn, .bom-bar b, .ds-concept dd, .constraint .how, .facts dt {
+  font-family: var(--font-sans); font-variant-numeric: tabular-nums lining-nums; letter-spacing: 0; }
+.ds-metric .v { font-weight: 600; font-size: 1.625rem; line-height: 1.1; }
+.ds-metric .lim, .ds-metric .cur { font-size: var(--text-sm); }
+.ds-table td.num { color: var(--fg); }
+.role .o .ds-num, .sub .mass .ds-num { font-weight: 600; }
+#proofapp .tile.fail span { font-family: var(--font-sans); font-weight: 400; white-space: normal; color: var(--fg-3); }
+
+/* ---- key-number strip: ruled, not boxed ---- */
+.ds-metrics { background: transparent; border: 0; border-radius: 0; border-top: 1px solid var(--line-3); border-bottom: 1px solid var(--line); overflow: visible; }
+.ds-metric { padding: 10px 14px 12px; }
+.ds-metric:first-child { padding-left: 2px; }
+.ds-metric .k { font-size: var(--text-sm); align-items: flex-start; }
+.ds-metric .v .ds-unit { font-size: 0.8125rem; }
+@media (max-width: 720px) { .ds-metric { padding-left: 2px; padding-right: 2px; } }
+
+/* ---- repeated items on hairline rules instead of floating cards ---- */
+.ds-card, .sub, .phase, .constraint, .group, .ds-concept, .sim, .check-list li {
+  background: transparent; border: 0; border-radius: 0; box-shadow: none; border-top: 1px solid var(--line-2); }
+.ds-card { padding: var(--space-3) 0 0; }
+.ds-card.selected { border-top: 2px solid var(--accent); box-shadow: none; }
+.subs, .phases, .constraints, .org, .sims, .three, .two, #shortlist .ds-grid { column-gap: var(--space-6); row-gap: var(--space-6); }
+.sub { padding: var(--space-3) 0 0; }
+.sub .thumb { margin: 0 0 6px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--panel-2); }
+.sub .bar, .sub .bar i, .v-meter, .v-meter i { border-radius: 0; }
+.sub .bar i { background: var(--fg-3); }
+.sub .bar.full i { background: var(--st-unverified); }
+.phase { padding: var(--space-3) 0 0; }
+.phase[data-phase="NOT STARTED"] { background: transparent; }
+.progress .track, .progress .track i { border-radius: 0; }
+.constraint { padding: var(--space-3) 0 0; }
+.group { border-top: 2px solid var(--fg); }
+.group > header { background: transparent; padding: 8px 0; border-bottom: 1px solid var(--line-2); }
+.group > header .g { color: var(--fg-3); font-size: var(--text-sm); }
+.group > header .n { font: 600 1.0625rem/1.2 var(--font-head); }
+.role { padding: 8px 0; }
+.ds-concept.chosen { border-top: 2px solid var(--accent); box-shadow: none; }
+.ds-concept:hover { border-color: var(--line-3); }
+.ds-concept.chosen:hover { border-top-color: var(--accent); }
+.ds-concept figure { margin-top: var(--space-3); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-md); }
+.ds-concept .body { padding: var(--space-3) 0 0; grid-template-columns: minmax(0, 1fr); min-width: 0; }
+.ds-concept .body > * { min-width: 0; overflow-wrap: anywhere; }
+.sim { overflow: visible; }
+.sim figure { margin-top: var(--space-3); border-bottom: 0; }
+.sim figure .plot-img { border-radius: var(--radius-md) var(--radius-md) 0 0; }
+.sim figure .fid { border: 1px solid var(--line); border-top: 0; border-radius: 0 0 var(--radius-md) var(--radius-md); background: transparent; }
+.sim .body { padding: var(--space-3) 0 0; }
+.sim:target { box-shadow: none; border-top: 2px solid var(--accent); }
+.sim .howto { border-radius: var(--radius-xs); }
+.check-list li { padding: 8px 0; }
+.sim-sum { background: transparent; border: 0; border-radius: 0; border-top: 1px solid var(--line-3); border-bottom: 1px solid var(--line-3); }
+.sim-sum .sum-head { background: transparent; font: 600 var(--text-sm)/1.3 var(--font-head); color: var(--fg-2); border-bottom: 1px solid var(--line-3); padding-left: 2px; }
+.sim-sum .sum-row { padding-left: 2px; }
+.sim-sum .sum-row:hover { background: var(--panel-2); }
+.sim-gloss, .morph-wrap { border-radius: var(--radius-md); }
+.howto .ds-card header { padding-bottom: 4px; }
+.cmd { border-radius: var(--radius-sm); }
+.ds-actions li::before { border-radius: 0; background: var(--fg); color: var(--bg); }
+.srcs li b { font-family: var(--font-sans); }
+.footer { font-family: var(--font-sans); font-size: var(--text-sm); }
+
+/* ---- controls ---- */
+.ds-btn { border-radius: var(--radius-sm); font-family: var(--font-sans); }
+.ds-seg { border-radius: var(--radius-sm); }
+.ds-seg button { border-radius: 2px; }
+.ds-chip { border-radius: var(--radius-sm); }
+.v-stage, .ds-panel, .v-loadbox, .v-legend, .v-hint { border-radius: var(--radius-md); }
+.term-pop { border-radius: var(--radius-sm); }
+
+/* ---- build guide: contents as a plain list, current stage marked, square frames ---- */
+.md-toc { gap: 0; border-left: 1px solid var(--line); }
+.md-toc .md-toc-h { margin: 0 0 6px; padding-left: 12px; font: 600 var(--text-sm)/1.3 var(--font-head); color: var(--fg-3); }
+.md-toc a { border-radius: 0; padding: 4px 12px; margin-left: -1px; border-left: 1px solid transparent; }
+.md-toc a:hover { background: transparent; color: var(--fg); border-left-color: var(--line-3); }
+.md-toc a[aria-current="true"] { background: transparent; box-shadow: none; color: var(--fg); font-weight: 600; border-left-color: var(--fg); }
+.md { font-size: var(--text-md); }
+.md-h2 { font: 600 1.375rem/1.2 var(--font-head); }
+.md-h3, .md-h4 { font-family: var(--font-head); font-size: 1.0625rem; }
+.md-clip video { border-radius: var(--radius-md); }
+.md figcaption { color: var(--fg-2); font-size: var(--text-sm); }
+.md figcaption b.ds-mono { font-weight: 500; color: var(--fg); margin-right: 6px; }
+.md figcaption .ds-source { display: block; }
+@media (max-width: 860px) {
+  .md-toc { border-left: 0; border-bottom: 1px solid var(--line); }
+  .md-toc .md-toc-h { display: none; }
+  .md-toc a { border-left: 0; padding: 6px 10px; }
+  .md-toc a[aria-current="true"] { box-shadow: inset 0 -2px 0 var(--fg); }
+}
+=======
 /* ---------------- Structures: hub FEA view (fea-view.js) ---------------- */
 .fea-tool { display: grid; gap: 10px; margin: 18px 0 8px; }
 .fea-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
@@ -354,3 +524,5 @@ a.term:hover { color: var(--accent); text-decoration-color: var(--accent); }
 .shot figcaption a { display: inline; aspect-ratio: auto; background: none; }
 .v-drw a { display: block; border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; }
 .v-drw img { width: 100%; height: 100%; display: block; }
+
+/* ==============================================================================================================

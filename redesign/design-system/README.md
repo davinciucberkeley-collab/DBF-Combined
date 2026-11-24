@@ -13,8 +13,12 @@ at a glance. Mode is **Operate/Read**, so the brand lives in precision, not expr
 | `diagram-style.md` | SVG 3-views, morphological charts, graphs, wiring diagrams | config study, proofs, SPEC figures |
 
 Open `components.html` in a browser (works from disk). Load order in any page:
-`tokens.css` → `components.css` → page CSS. Fonts: **IBM Plex Sans** (words) and **IBM Plex Mono** (anything
-measured, cited or coded), from Google Fonts, SIL Open Font License 1.1; the system stack is the offline fallback.
+`tokens.css` → `components.css` → page CSS. Fonts: **IBM Plex Sans** (words, nav, table heads, `--font-head`) and **IBM Plex Mono** (ids, paths, claim names, code),
+with **Newsreader** as the page-title face loaded by `redesign/site/explorer.css` (2026-11-16). The 2026-11-13 UI survey
+(`redesign/site/UI-SURVEY.md`) proposed Barlow Semi Condensed / Source Sans 3 / Red Hat Mono (the
+`docs/reference/REVIEW-STYLE.md` pairing); the later Explorer redesign kept Plex + Newsreader, so T-104 did too (open
+decision recorded in `docs/audits/2026-11-23-T104-ui-survey-merge.md`). Google Fonts, SIL Open Font License 1.1; the
+system stack is the offline fallback. Radii are 2 / 3 / 4 / 6 px in the tokens (explorer.css squares them).
 
 ## Seven rules
 
@@ -28,7 +32,8 @@ measured, cited or coded), from Google Fonts, SIL Open Font License 1.1; the sys
    that stand alone (no eyebrows, no "Introduction"). If a sentence restates the figure, delete it.
 5. **Colour has a job.** Blue = *here / selected / follow this*. Orange = *the part you act on* (figures only).
    Status hues = status only. Subsystem hues = geometry only. Everything else is neutral.
-6. **Flat, 1 px, 8 px.** Panels are flat with a hairline border and 8 px corners; no shadows except popovers; no
+6. **Flat, 1 px, 4 px.** Panels are flat with a hairline border and 4 px corners; repeated items sit on a hairline
+   rule rather than in a card; no shadows except popovers; no
    coloured left borders; no gradients except the 3-D stage.
 7. **Same thing, same look, everywhere.** A part chip in the manual, the viewer and the config page is the same
    component. A status badge is `.ds-badge`. A figure id is `FIG BMS-07`. Do not restyle locally.
