@@ -32,6 +32,28 @@ This repo's own definitions (eng-reviewer, implementer, ledger-auditor, runner) 
 | quiet by default | AM-001 / AM-031 |
 | `plane` CLI for design changes | not applicable: concept A is edited as source in `redesign/qp/A/` (AM-038 holds dbf-hangar for now) |
 
+## Superpowers skills inside the roles (AM-052, 2026-11-24)
+
+The roles say who does a step; the Superpowers skills say how. Each step invokes the skill named here and the
+phase's "Skill / method used" column in `docs/execution-plan.md` records it (R-GEN-01). Phases before AM-052 stay
+covered by AM-051.
+
+| Step | Role | Superpowers skill |
+|---|---|---|
+| Shape a new piece of work | conductor | `superpowers:brainstorming`, then `superpowers:writing-plans` |
+| Turn a plan step into exact briefs | tactician | `superpowers:writing-plans` (brief format) |
+| Launch independent briefs | tactician or conductor | `superpowers:dispatching-parallel-agents`, `superpowers:subagent-driven-development`, launching only the roles above |
+| Build | builder | `superpowers:test-driven-development` (the brief's pass check is written and seen failing first) |
+| A failure | builder; one tier up after two failures | `superpowers:systematic-debugging` |
+| Review a batch | reviewer (fresh) | `superpowers:requesting-code-review`; the conductor fixes findings with `superpowers:receiving-code-review` |
+| Claim done / VERIFIED | conductor, auditor | `superpowers:verification-before-completion` |
+| Finish a branch | conductor | `superpowers:finishing-a-development-branch` |
+
+Conflict rules (CLAUDE.md and the amendments override skills):
+- Only the six roles are launched; a skill that would launch a generic subagent launches the matching role instead.
+- `brainstorming` questions are answered by the conductor within its permissions (AM-028); only team decisions go to the user.
+- Minimize compute: on small tasks use each skill's lightest form (no separate plan document for a one-row change).
+
 ## Not adopted, and why
 
 - **Hooks** (`tools/agent_hooks.py`: plan gate, edit gate, agent log).

@@ -548,3 +548,11 @@ Requirement IDs: R-GEN-01, R-ORC-04.
 ```text
 Yes, count it
 ```
+
+## AM-052 — 2026-11-24 — Combine the Agent Standard and the Superpowers skills
+Relation: work order: the Superpowers skills run inside the Agent Standard roles (the roles say who, the skills say how), mapped in `docs/reference/agent-standard/LOCAL.md` with conflict rules (roles only, AM-028, minimize compute); each phase logs the skill used (R-GEN-01); one line in CLAUDE.md; push 73daed39 and this change to redesign/v1.
+Requirement IDs: R-GEN-01, R-GEN-02, R-ORC-04.
+
+```text
+Yes, write it in and push
+```

@@ -15,6 +15,7 @@
   `docs/reference/agent-standard/agents-v0.2.md` and `LOCAL.md` (repo mapping) before any multi-agent work. Use only
   the roles in `.claude/agents/`: builder, scout, tactician, auditor, reviewer (a fresh one per batch), advisor.
   Cheapest tier first, one tier up after two failures; subtract before adding; scout before picking an approach.
+  Superpowers skills run inside those roles (AM-052; mapping in `LOCAL.md`): log the skill used per phase (R-GEN-01).
 
 ## Communication (AM-001)
 - Work quietly: no narration of routine actions, no restating the plan or ledger, no long progress summaries,
