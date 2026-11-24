@@ -12,6 +12,19 @@ the ledger and the spec are.
 7. This file. 8. Active task + unfinished deps. 9. Compare plan vs requirements (`python -I tools/ledger_audit.py`).
 10. Note any lost/changed instruction under "Reconciliation" below. 11. Resume "Next action".
 
+## PAUSE CHECKPOINT — 2026-11-24 evening (Dillon: "Reach a good place to pause for later resumption"; AM-001..AM-068 in force; supersedes "Next action on resume" below)
+
+**Pushed:** origin/redesign/v1 at 9de29365 (CI green). Requirements 103 / 113 VERIFIED, tasks 93 / 105 (ledger_audit 0 errors). Since the checkpoint below: D-253..D-261, T-037 VERIFIED (DAVINCI.md), T-101 adopted A1 (pack aft, cruise 18, RLL2SRV_RMAX 45 / TCONST 0.9; pitch use 0.59; flight decides), D-256 Lua dropped, D-258 A-P8 pass, D-259 FC kept + A.param battery / airspeed fixes, D-260 Cn_beta pass / spiral re-derived, D-261 glass-skin render fix + stills + Explorer text; replays include the A1 runs; side branches deleted (only main and redesign/v1 remain).
+
+**In flight at pause (background, may or may not have finished):** AM-068 video re-render: `python -I redesign/showcase/animation/render_animation.py --concept a` then `python -I redesign/showcase/concept-a/render_build_a.py` (logs in the session scratchpad, not durable). Output lands in `redesign/showcase/concept-a/animation/`; nothing published yet.
+
+**Next actions on resume, in order:**
+1. Videos: check `redesign/showcase/concept-a/animation/` timestamps (a-how-it-flies.mp4 / build stage-NN.mp4 newer than 2026-11-24 15:00). If missing or old, re-run the two commands above (the build film supports `--skip-render` if frames exist). Frame check: X2216 motors, FC annex 75 mm left (D-240), light glass skin (no wood). Then `python -I redesign/showcase/concept-a/publish_assets.py`, add `?v=20261124` to the assets/animation/*.mp4 / *.webp URLs in redesign/site/app.html, `make_index.py`, commit, push.
+2. GLB colour: `redesign/site/assets/concept-a.opt.glb` (3-D viewer fallback colour and the replays) still carries the wood colour for WNG-011 / WNG-014; re-export (redesign/blender/export_glb.py), re-run the exported-model gate `redesign/qp/A/cad/collide_glb_a.py` (must stay 0 / 0 / 0), bump GLB_URL ?v= in replay.js / viewer, commit, push.
+3. AM-067 / AM-068: open a PR redesign/v1 -> main (fast-forward; main at 2026-11-18) and merge it; then ccd_pr get_status / bind_pr.
+4. Refresh the status page artifact (Da5o3i6p5o6Jvf3iaheFBG) and Dillon's weekly card (4RrDZ8DYUqq5UzAzMx61oG, doc 2026-12-02__dylan; the week resets Wed 2 Dec).
+5. 1-4 Dec: T-093 order-week re-check, then Dillon approves Order 1 ($887.25). Waiting on Dillon (not urgent): car-trunk measurement (T-078), Carbonwebshop email for the R15 tube (T-088), dbf-hangar "not yet" (T-034), OpenCAE hold (T-036).
+
 ## Checkpoint — 2026-11-24 (resumed AM-027, running under AM-028 / AM-036; AM-001..AM-050 in force; session 7cb35b0a, conductor Opus); sections follow spec 10.4
 Pushed to origin redesign/v1 five times, latest 7cbaa3f9 on 2026-11-24 (CI and Pages green); see the approval gate below.
 
