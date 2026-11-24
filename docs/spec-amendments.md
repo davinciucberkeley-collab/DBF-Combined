@@ -416,3 +416,55 @@ Requirement IDs: R-VER-01, R-TRK-05.
 ```text
 Once you reach a final design with what we have now, run a "final" audit on the design
 ```
+
+## AM-036 — 2026-11-23 — Close as many requirements and tasks as possible; keep working until done
+Relation: work order (drive the requirement roll-up, 62 of 113 VERIFIED COMPLETE at the time, and the task ledger as far toward complete as the evidence allows; keep working without stopping; only VERIFIED COMPLETE with independent evidence counts, per the spec).
+Requirement IDs: R-VER-01, R-VER-06, R-TRK-05.
+
+```text
+Right now it is at 62/113 requirements met, try to get that as complete as possible and keep working until you achieve this
+```
+
+```text
+Also try to get as many tasks done as you can
+```
+
+## AM-037 — 2026-11-23 — No fabrication until after winter break; orders start early December
+Relation: schedule constraint from the user (answers the T-099 F-6 go/no-go question in substance: the bench-stand build, prints, soldering and airframe fabrication move after the break; purchasing may start in early December as already planned, T-093). Supersedes the December fabrication steps of redesign/qp/A/SCHEDULE-A.md (B0, EL1, PR1) and the 2026-12-15 go/no-go date's basis.
+Requirement IDs: R-GEN-07, R-GEN-02.
+
+```text
+Realistically, we will not be doing any fabrication work until after winter break, we will likely start making orders though during early december
+```
+
+## AM-038 — 2026-11-23 — Do not use dbf-hangar yet for the schema / agent tasks
+Relation: answer to "Use dbf-hangar's schema and agent harness to unblock T-034 and T-015?"; T-034 (R-INT-01) and T-015 (R-ORC-04) stay BLOCKED; the DaVinci findings (T-037, docs/integration/davinci-findings.md) stand.
+Requirement IDs: R-INT-01, R-ORC-04.
+
+```text
+Not yet
+```
+
+## AM-039 — 2026-11-23 — Shared agent definitions for T-015
+Relation: provides the team's shared agent definitions (T-015, R-ORC-04, previously BLOCKED under AM-003): the Claude doc "DBF Agent Roles — Quick Guide", which points to `standards/agents.md` (Agent Standard v0.2) in davinciucberkeley-collab/aircraft-platform. The artifact share key in the link is redacted here under the CLAUDE.md no-secrets rule; the rest of the text is verbatim.
+Requirement IDs: R-ORC-04.
+
+```text
+For T-015, here is the shared agent definitions artifact https://claude.ai/artifact/5SDz7c6h3BKfxoNowM9mAg?sk=[redacted]#19ca5749-d1f9
+```
+
+## AM-040 — 2026-11-23 — The team Agent Standard governs all future work
+Relation: standing rule; makes the Agent Standard v0.2 adopted under AM-039 / T-015 mandatory for all future work in this repo (CLAUDE.md master-program rule, SessionStart brief, docs/execution-plan.md routing).
+Requirement IDs: R-ORC-04, R-ORC-01.
+
+```text
+Make sure this is used for all future work in the DBF-Combined repo
+```
+
+## AM-041 — 2026-11-23 — Clean up the file layout, local and on GitHub
+Relation: work order (T-104): make the repository layout cleaner and easier to follow, both the local working folder and the GitHub repo (redesign/v1); covers pushing the layout change once the gates and the Explorer pass; deletions of engineering files still need a verified purpose check (R-RULE-07) and Dillon's OK for anything not recoverable from git (R-GEN-02); run under the Agent Standard (AM-040).
+Requirement IDs: R-REPO-06, R-REPO-08, R-RULE-07, R-GEN-05.
+
+```text
+Also, put on agent on cleaning up the file layout in the local folder and the github to make it cleaner and easier to follow
+```

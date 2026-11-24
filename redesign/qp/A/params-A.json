@@ -139,8 +139,8 @@
   "pitch_use_max": {
    "value": 0.6,
    "unit": "-",
-   "source": "SRC-A-BOARD4",
-   "note": "BOARD QP-4 s3: <= 0.60 of the 20 deg stop (G5 basis)"
+   "source": "SRC-A-AR015",
+   "note": "D-245 (2026-11-23): <= 0.60 of the 15 deg basis (SITL-FLIGHT.md l.25); D-245 supersedes BOARD QP-4 s3 G5 (20 deg stop basis), which has no A-specific roll / gust reserve derivation (ASDRAWN s3 asks the board to state the basis; review round 10 98-4)"
   },
   "servo_factor_min": {
    "value": 1.5,
@@ -781,6 +781,12 @@
    "source": "SRC-A-D195SITL",
    "note": "D-195: worst elevon peak in the transition runs at the CAD CG, 1.455 / 1.47 kg (R5_t0, R5_g0 11.5; wind 4 m/s 10.3; CG 19.3 forward trim end 12.0, R5_cgf)"
   },
+  "pitch_use_15_worst": {
+   "value": 0.79,
+   "unit": "-",
+   "source": "SRC-A-AR015",
+   "note": "AR-015 (T-097, 1.881 kg EST, X2216, CG 22.049 mm): elevon pitch use on the 15 deg basis, worst of Z5 0.69 and T-074 0.77-0.79 (T097_data/sitl_*/sum.json pitch_use_15); information on other bases: 20 deg 0.52-0.59, 25 deg 0.41-0.47"
+  },
   "elevon_stop_deg": {
    "value": 20.0,
    "unit": "deg",
@@ -1211,10 +1217,10 @@
    "status": "UNVERIFIED"
   },
   "landing_stroke_mm": {
-   "value": 15.2,
+   "value": 17.2,
    "unit": "mm",
-   "source": "SRC-A-REQ",
-   "note": "A-P13 basis: landing stroke 15.2 of 20 mm (structures iteration 2)"
+   "source": "SRC-A-AR015",
+   "note": "AR-016 record run, 1.881 kg EST, rib 25x23, Fp 37.5 N, zeta 0.05: worst stroke 17.2 mm of 20 (n 10.76 g, tilt 2.3 deg). Holds ONLY inside the accepted foam region Fp 37.5-39.0 N AND zeta 0.02-0.05 (D-243); outside it the stroke reaches 20.2-20.6 mm (FAIL, e.g. zeta 0.01) or 30 / 31.5 N bottom the stroke. Foam plateau and zeta unmeasured: TP-3"
   },
   "landing_stroke_max_mm": {
    "value": 20.0,
@@ -2033,7 +2039,7 @@
    "value": 0,
    "unit": "-",
    "source": "SRC-A-COLL",
-   "note": "report.json wire_ends: wire ends not seated in a part (41 strands)"
+   "note": "report.json wire_ends: wire ends not seated in a part (strand count: see wire_inventory.json, 44 strands in the T-099 GLB probe)"
   },
   "wire_kinks": {
    "value": 0,
@@ -2057,13 +2063,13 @@
    "value": 59,
    "unit": "-",
    "source": "SRC-A-ASSY",
-   "note": "assembly.json steps with no blocking pair at or above the tolerance (35 of 35 in ASSEMBLY.md)"
+   "note": "assembly.json steps with no blocking pair at or above the tolerance (count is computed; current a_assembly run per T-099 gates record: 66 steps, 59 with parts plus 7 marker steps, 0 blocked)"
   },
   "assy_parts_placed": {
    "value": 129,
    "unit": "-",
    "source": "SRC-A-ASSY",
-   "note": "assembly.json parts placed (96 of 96)"
+   "note": "assembly.json parts placed (computed; current a_assembly run per T-099 gates record: 129 of 129)"
   }
  }
 }

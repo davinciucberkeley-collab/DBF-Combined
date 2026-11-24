@@ -4,7 +4,7 @@ cases: trans    hover to 50 m, entry (held throttle, pre-climb, FBWA), cruise, o
        land     hover at 20 m, QLAND (wind and heading from the keys)
        takeoff  wind from t=5 s, arm, climb in QHOVER to 12 m
        battH / battC   battery low in hover / in cruise;  rcH / rcC  RC loss in hover / cruise;  moH / moC  motor 1 out in hover / cruise
-keys: mass wind from(deg, wind FROM; belly = 0 = the flight direction) turb gust seed r(entry T/W, default window centre) preclimb(s, 1.0) vrest slip inst
+keys: fw_hold(s, FBWA override held after "Transition FW done", default 3.0, T-101) mass wind from(deg, wind FROM; belly = 0 = the flight direction) turb gust seed r(entry T/W, default window centre) preclimb(s, 1.0) vrest slip inst
       speedup  chain  yawcmd(s of full yaw stick to go edge-on after the back-transition, default 0) es5 es6 tmax P:NAME=VALUE (SITL param override)
 Outputs: runs/<tag>/ (fwd.csv from the plant, result.json) and one line in results_fwd.jsonl."""
 import json, math, os, subprocess, sys, time
@@ -180,7 +180,7 @@ try:
         if float(kv.get("gust", 0)) and case == "trans": cmd(gust=float(kv["gust"]))      # 1-cos gust, 2 s, peak 2 s after the mode change
         t_fw = st["t"]
         ok = run_for(30, lambda: seen("Transition FW done", t_fw)); mk["t_fwdone"] = st["t"] if ok else None
-        run_for(3.0)                                         # override held 3 s after the handover
+        run_for(float(kv.get("fw_hold", 3.0)))               # override held 3 s after the handover (T-101: key fw_hold, default unchanged)
         rc[5] = CRZ; rc[2] = 1500; mk["t_cruise_mode"] = st["t"]
         if "cthr" in kv: setp("THR_MIN", kv["cthr"]); setp("THR_MAX", kv["cthr"])      # F4 follow-up: pin the cruise throttle (percent) to read the duty it maps to
         run_for(float(kv.get("cruise_s", 25)))

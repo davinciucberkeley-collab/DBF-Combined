@@ -1,0 +1,439 @@
+{
+ "bodies": 129,
+ "wire_strands": 44,
+ "reversed_bodies": [],
+ "glb": "C:/Users/dillo/AppData/Local/Temp/g/glb2/assembly.glb",
+ "tol_mm": 0.05,
+ "hits": [
+  {
+   "a": "E-HRN-05#0",
+   "b": "E-HRN-05#2",
+   "depth_mm": 0.007,
+   "at_mm": [
+    -85.87,
+    -208.82,
+    -143.0
+   ],
+   "bodies": [
+    "E-HRN-05 \"wire strand 0 (1.8 mm)\" x E-HRN-05 \"wire strand 2 (1.8 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-02#0",
+   "b": "E-HRN-02#2",
+   "depth_mm": 0.011,
+   "at_mm": [
+    -4.44,
+    16.59,
+    2.4
+   ],
+   "bodies": [
+    "E-HRN-02 \"wire strand 2 (1.8 mm)\" x E-HRN-02 \"wire strand 0 (1.8 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-02#1",
+   "b": "E-HRN-02#2",
+   "depth_mm": 0.009,
+   "at_mm": [
+    52.14,
+    16.73,
+    36.07
+   ],
+   "bodies": [
+    "E-HRN-02 \"wire strand 2 (1.8 mm)\" x E-HRN-02 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-02#0",
+   "b": "E-HRN-02#1",
+   "depth_mm": 0.01,
+   "at_mm": [
+    -84.02,
+    11.32,
+    14.99
+   ],
+   "bodies": [
+    "E-HRN-02 \"wire strand 0 (1.8 mm)\" x E-HRN-02 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-05#1",
+   "b": "E-HRN-05#2",
+   "depth_mm": 0.01,
+   "at_mm": [
+    1.34,
+    -20.88,
+    2.23
+   ],
+   "bodies": [
+    "E-HRN-05 \"wire strand 2 (1.8 mm)\" x E-HRN-05 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "CGE-001",
+   "b": "E-HRN-02",
+   "depth_mm": 0.634,
+   "at_mm": [
+    -85.7,
+    10.34,
+    15.41
+   ],
+   "bodies": [
+    "E-HRN-02 \"wire strand 2 (1.8 mm)\" x CGE-001 \"CGE-001\" 0.63 mm",
+    "E-HRN-02 \"wire strand 0 (1.8 mm)\" x CGE-001 \"CGE-001\" 0.46 mm"
+   ],
+   "samples": 271,
+   "samples_in_cutters": 259,
+   "cutters_of_pair": 32,
+   "class": "REAL CLASH",
+   "uncovered_depth_mm": 0.065,
+   "uncovered_at_mm": [
+    -86.34,
+    10.63,
+    15.54
+   ]
+  },
+  {
+   "a": "CGE-001",
+   "b": "E-HRN-05",
+   "depth_mm": 0.629,
+   "at_mm": [
+    -83.3,
+    -10.96,
+    -15.84
+   ],
+   "bodies": [
+    "E-HRN-05 \"wire strand 1 (1.8 mm)\" x CGE-001 \"CGE-001\" 0.63 mm",
+    "E-HRN-05 \"wire strand 2 (1.8 mm)\" x CGE-001 \"CGE-001\" 0.46 mm"
+   ],
+   "samples": 237,
+   "samples_in_cutters": 224,
+   "cutters_of_pair": 32,
+   "class": "REAL CLASH",
+   "uncovered_depth_mm": 0.067,
+   "uncovered_at_mm": [
+    -82.69,
+    -11.17,
+    -15.92
+   ]
+  },
+  {
+   "a": "CGE-001",
+   "b": "E-HRN-03",
+   "depth_mm": 0.693,
+   "at_mm": [
+    -72.7,
+    -10.64,
+    15.62
+   ],
+   "bodies": [
+    "CGE-001 \"CGE-001\" x E-HRN-03 \"wire strand 0 (1.8 mm)\" 0.69 mm",
+    "CGE-001 \"CGE-001\" x E-HRN-03 \"wire strand 2 (1.8 mm)\" 0.21 mm",
+    "CGE-001 \"CGE-001\" x E-HRN-03 \"wire strand 1 (1.8 mm)\" 0.18 mm"
+   ],
+   "samples": 230,
+   "samples_in_cutters": 219,
+   "cutters_of_pair": 32,
+   "class": "REAL CLASH",
+   "uncovered_depth_mm": 0.081,
+   "uncovered_at_mm": [
+    -73.41,
+    -10.87,
+    15.69
+   ]
+  },
+  {
+   "a": "CGE-001",
+   "b": "E-HRN-04",
+   "depth_mm": 0.627,
+   "at_mm": [
+    -72.7,
+    10.34,
+    -15.41
+   ],
+   "bodies": [
+    "CGE-001 \"CGE-001\" x E-HRN-04 \"wire strand 1 (1.8 mm)\" 0.63 mm",
+    "CGE-001 \"CGE-001\" x E-HRN-04 \"wire strand 0 (1.8 mm)\" 0.47 mm"
+   ],
+   "samples": 272,
+   "samples_in_cutters": 258,
+   "cutters_of_pair": 32,
+   "class": "REAL CLASH",
+   "uncovered_depth_mm": 0.066,
+   "uncovered_at_mm": [
+    -73.32,
+    10.11,
+    -15.2
+   ]
+  },
+  {
+   "a": "E-HRN-04#1",
+   "b": "E-HRN-04#2",
+   "depth_mm": 0.012,
+   "at_mm": [
+    -72.78,
+    226.42,
+    -154.12
+   ],
+   "bodies": [
+    "E-HRN-04 \"wire strand 2 (1.8 mm)\" x E-HRN-04 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-03#0",
+   "b": "E-HRN-03#1",
+   "depth_mm": 0.008,
+   "at_mm": [
+    -82.3,
+    -245.26,
+    163.37
+   ],
+   "bodies": [
+    "E-HRN-03 \"wire strand 0 (1.8 mm)\" x E-HRN-03 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-03#0",
+   "b": "E-HRN-03#2",
+   "depth_mm": 0.005,
+   "at_mm": [
+    67.95,
+    -14.71,
+    23.74
+   ],
+   "bodies": [
+    "E-HRN-03 \"wire strand 0 (1.8 mm)\" x E-HRN-03 \"wire strand 2 (1.8 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-03#1",
+   "b": "E-HRN-03#2",
+   "depth_mm": 0.008,
+   "at_mm": [
+    36.55,
+    -16.59,
+    35.6
+   ],
+   "bodies": [
+    "E-HRN-03 \"wire strand 1 (1.8 mm)\" x E-HRN-03 \"wire strand 2 (1.8 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-04#0",
+   "b": "E-HRN-04#2",
+   "depth_mm": 0.012,
+   "at_mm": [
+    9.95,
+    21.12,
+    2.19
+   ],
+   "bodies": [
+    "E-HRN-04 \"wire strand 2 (1.8 mm)\" x E-HRN-04 \"wire strand 0 (1.8 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-04#0",
+   "b": "E-HRN-04#1",
+   "depth_mm": 0.006,
+   "at_mm": [
+    -87.94,
+    240.61,
+    -158.91
+   ],
+   "bodies": [
+    "E-HRN-04 \"wire strand 1 (1.8 mm)\" x E-HRN-04 \"wire strand 0 (1.8 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "CGE-002-B",
+   "b": "E-HRN-04",
+   "depth_mm": 0.021,
+   "at_mm": [
+    -71.81,
+    13.99,
+    -15.61
+   ],
+   "bodies": [
+    "E-HRN-04 \"wire strand 2 (1.8 mm)\" x CGE-002-B \"CGE-002-B\" 0.02 mm"
+   ]
+  },
+  {
+   "a": "CGE-002-B",
+   "b": "E-HRN-03",
+   "depth_mm": 0.011,
+   "at_mm": [
+    -71.04,
+    -13.98,
+    15.61
+   ],
+   "bodies": [
+    "E-HRN-03 \"wire strand 1 (1.8 mm)\" x CGE-002-B \"CGE-002-B\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "HWC-001",
+   "b": "HWC-003",
+   "depth_mm": 0.034,
+   "at_mm": [
+    35.47,
+    -87.24,
+    11.48
+   ],
+   "bodies": [
+    "HWC-003 \"HWC-003\" x HWC-001 \"HWC-001\" 0.03 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-11",
+   "b": "WNG-001",
+   "depth_mm": 0.338,
+   "at_mm": [
+    85.8,
+    -410.2,
+    8.38
+   ],
+   "bodies": [
+    "WNG-001 \"WNG-001\" x E-HRN-11 \"wire strand 2 (1.0 mm)\" 0.34 mm",
+    "WNG-001 \"WNG-001\" x E-HRN-11 \"wire strand 3 (1.0 mm)\" 0.29 mm",
+    "WNG-001 \"WNG-001\" x E-HRN-11 \"wire strand 1 (1.0 mm)\" 0.01 mm"
+   ],
+   "samples": 378,
+   "samples_in_cutters": 4,
+   "cutters_of_pair": 117,
+   "class": "REAL CLASH",
+   "uncovered_depth_mm": 0.317,
+   "uncovered_at_mm": [
+    85.48,
+    -410.52,
+    8.2
+   ]
+  },
+  {
+   "a": "E-HRN-10#2",
+   "b": "E-HRN-10#5",
+   "depth_mm": 0.008,
+   "at_mm": [
+    43.44,
+    25.43,
+    18.51
+   ],
+   "bodies": [
+    "E-HRN-10 \"wire strand 2 (1.0 mm)\" x E-HRN-10 \"wire strand 5 (1.0 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-10#0",
+   "b": "E-HRN-10#3",
+   "depth_mm": 0.006,
+   "at_mm": [
+    41.54,
+    24.64,
+    18.72
+   ],
+   "bodies": [
+    "E-HRN-10 \"wire strand 0 (1.0 mm)\" x E-HRN-10 \"wire strand 3 (1.0 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "AVN-006",
+   "b": "AVN-009-S",
+   "depth_mm": 0.017,
+   "at_mm": [
+    44.0,
+    -422.46,
+    0.97
+   ],
+   "bodies": [
+    "AVN-006 \"AVN-006\" x AVN-009-S \"AVN-009-S\" 0.02 mm"
+   ]
+  },
+  {
+   "a": "AVN-009-S",
+   "b": "WNG-001",
+   "depth_mm": 0.236,
+   "at_mm": [
+    51.5,
+    -422.06,
+    6.7
+   ],
+   "bodies": [
+    "WNG-001 \"WNG-001\" x AVN-009-S \"AVN-009-S\" 0.24 mm"
+   ],
+   "samples": 54,
+   "samples_in_cutters": 6,
+   "cutters_of_pair": 117,
+   "class": "REAL CLASH",
+   "uncovered_depth_mm": 0.189,
+   "uncovered_at_mm": [
+    51.69,
+    -422.2,
+    6.51
+   ]
+  },
+  {
+   "a": "AVN-006",
+   "b": "AVN-009-T",
+   "depth_mm": 0.017,
+   "at_mm": [
+    44.0,
+    -417.3,
+    0.87
+   ],
+   "bodies": [
+    "AVN-006 \"AVN-006\" x AVN-009-T \"AVN-009-T\" 0.02 mm"
+   ]
+  },
+  {
+   "a": "AVN-009-T",
+   "b": "WNG-001",
+   "depth_mm": 0.189,
+   "at_mm": [
+    51.69,
+    -417.8,
+    6.51
+   ],
+   "bodies": [
+    "WNG-001 \"WNG-001\" x AVN-009-T \"AVN-009-T\" 0.19 mm"
+   ],
+   "samples": 52,
+   "samples_in_cutters": 4,
+   "cutters_of_pair": 117,
+   "class": "REAL CLASH",
+   "uncovered_depth_mm": 0.189,
+   "uncovered_at_mm": [
+    51.69,
+    -417.8,
+    6.51
+   ]
+  },
+  {
+   "a": "AVN-005",
+   "b": "AVN-009-S",
+   "depth_mm": 0.017,
+   "at_mm": [
+    68.38,
+    -421.33,
+    9.5
+   ],
+   "bodies": [
+    "AVN-009-S \"AVN-009-S\" x AVN-005 \"AVN-005\" 0.02 mm"
+   ]
+  },
+  {
+   "a": "AVN-005",
+   "b": "AVN-009-T",
+   "depth_mm": 0.017,
+   "at_mm": [
+    67.12,
+    -418.67,
+    8.5
+   ],
+   "bodies": [
+    "AVN-009-T \"AVN-009-T\" x AVN-005 \"AVN-005\" 0.02 mm"
+   ]
+  }
+ ],
+ "wire_ends": [],
+ "entries": []
+}

@@ -29,3 +29,7 @@
 - 2026-11-23T12:08:43-07:00 PreCompact trigger=auto session=7cb35b0a missing=none
 - 2026-11-23T12:48:25-07:00 SessionStart source=compact session=7cb35b0a
 - 2026-11-23T12:48:25-07:00 PostCompact trigger=auto session=7cb35b0a
+- 2026-11-23T19:57:04-07:00 PreCompact trigger=auto session=7cb35b0a missing=none
+- 2026-11-23T20:24:18-07:00 SessionStart source=compact session=7cb35b0a
+- 2026-11-23T20:24:18-07:00 PostCompact trigger=auto session=7cb35b0a
+- 2026-11-23T22:42:26-07:00 SessionStart source=startup session=t

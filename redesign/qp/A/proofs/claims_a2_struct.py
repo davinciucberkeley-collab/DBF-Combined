@@ -115,7 +115,7 @@ kit.claim("CL-A-BRIDGE-TORSION-S2", "Bridge 16x14 torsion shear, 30 N prop strik
 
 stored("CL-A-LANDING-STROKE", "Landing crush stroke at 1.2 m/s on the fin-tip feet", "P:struct.landing_stroke_mm", "mm", limit=("<=", "P:struct.landing_stroke_max_mm"), verifies=["A-P13"],
        parts=["GER-001-UR", "GER-001-UL", "GER-001-LR", "GER-001-LL", "GER-002-UR", "GER-002-UL", "GER-002-LR", "GER-002-LL"],
-       how="Drop test of the feet at 1.2 m/s on the built aircraft; 20 mm available.", equation="landing_a.py via STRUCTURES iteration 2 (A-P13 basis); read, not re-run")
+       how="TP-3 drop test of the feet at 1.2 m/s on the built aircraft, with the foam plateau and damping measured; 20 mm available. PASS (17.2 mm) holds only inside the accepted foam region Fp 37.5-39.0 N and zeta 0.02-0.05 (AR-016, D-243); outside it the stroke bottoms (20.2-20.6 mm, FAIL).", equation="landing_a.py 37.5 N record run at 1.881 kg EST, rib 25x23 (AR-016 / T098_results.json); read, not re-run")
 
 # ================================================================ foam at the 103 kPa basis (stored MS)
 for cid, title, param, parts, extra in [

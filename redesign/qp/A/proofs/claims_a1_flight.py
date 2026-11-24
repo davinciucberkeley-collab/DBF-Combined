@@ -103,9 +103,9 @@ def structure_mass(g):
 
 kit.claim("CL-A-MASS-PRED", "Predicted take-off mass (CAD basic x growth + overrun)", calc="CALC-A-MASS-PRED", output="m_kg", unit="kg",
           limit=("<=", "P:req.mass_target_kg"), verifies=["A-D3"], parts=["WNG-001", "WNG-002", "PWR-001", "CGE-001", "FIN-001-R", "FIN-001-L"],
-          how="Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).")
+          how="Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; predicted 1.881 kg EST at D-240 (CAD basic 1,641.0 g x growth + overrun, MASS-GATE.md; 1,423.9 g was the MASS-GATE s7 value at D-195).")
 kit.claim("CL-A-MASS-ITEM", "Predicted mass, itemised growth by maturity (cross-check)", calc="CALC-A-MASS-ITEM", output="m_kg", unit="kg",
-          limit=("<=", "P:req.mass_target_kg"), verifies=["A-D3"], how="python -I qp/A/mission_gate_a.py prints 1,449 g (D-195); both methods must stay <= 1.470 kg (D-208).")
+          limit=("<=", "P:req.mass_target_kg"), verifies=["A-D3"], how="python -I qp/A/mission_gate_a.py prints the itemised roll-up (1,449 g at D-195, superseded; MASS-GATE.md has the current tally); both methods must stay <= 1.470 kg (D-208).")
 kit.claim("CL-A-MASS-GATE-ROOM", "Predicted mass against the 1.47 kg gate", calc="CALC-A-MASS-PRED", output="m_kg", unit="kg",
           limit=("<=", "P:req.mass_gate_kg"), verifies=["A-P1"], how="As-built weigh-in <= 1.47 kg (D-190, MASS-GATE s8); the +-5 % window holds to 1.478 kg.")
 kit.claim("CL-A-MASS-USER", "Predicted mass against the 25 kg user cap", calc="CALC-A-MASS-PRED", output="m_kg", unit="kg",
@@ -286,6 +286,19 @@ kit.claim("CL-A-STALL", "1.3 x clean stall speed at the 1.47 kg gate", calc="CAL
           how="Measured stall on the first cruise sorties (T-A-FIRST-CRUISE) replaces CLmax 0.75; 12.07 m/s stall, 15.69 m/s at 1.3 Vs at 1.47 kg (12.19 / 15.85 at 1.50 kg, MISSION s1).")
 
 
+@kit.calc("CALC-A-STALL-PRED", equation="1.3 Vs = 1.3 sqrt(2 m g / (rho S CLmax)) at the predicted mass; rho 1.20 (MISSION s1), g 9.807, S 0.22 m2, CLmax 0.75 EST (ISA rho 1.225 gives 17.56 m/s at 1.881 kg, T-084; the project basis is 1.20)", assumes=["ASM-A-CLMAX"],
+          inputs={"m": "CL-A-MASS-PRED", "g": "P:env.g_ms2", "rho": "P:env.rho_kgm3", "s": "P:mission.s_m2", "cl": "ASM-A-CLMAX", "k": "P:req.cruise_ratio"},
+          units={"m": "kg", "rho": "kg/m3", "s": "m2"})
+def stall_pred(m, g, rho, s, cl, k):
+    vs = math.sqrt(2 * m * g / (rho * s * cl))
+    return {"vs_ms": vs, "k_vs_ms": k * vs}
+
+
+kit.claim("CL-A-STALL-PRED", "1.3 x clean stall speed at the predicted take-off mass", calc="CALC-A-STALL-PRED", output="k_vs_ms", unit="m/s",
+          limit=("<=", "P:mission.cruise_ms"), verifies=["A-P6"], assumes=["ASM-A-CLMAX"], parts=["WNG-001"],
+          how="FAIL on the estimate (AM-011: physics checks apply at the predicted mass). Gated by TP-11 (TEST-PLAN-O4B): the measured stall (T-A-FIRST-CRUISE) must give CLmax >= 0.81 at this mass; a cruise-speed re-derivation alone has zero margin (A-P6).")
+
+
 # ================================================================ hover yaw authority
 @kit.calc("CALC-A-YAW", equation="authority = 0.201 x 1.2 x sin(17)/sin(14) + 1.2 Q   (cant term + 1.2 x rotor reaction), D184.md / bench_analysis.py",
           inputs=pin("yaw", "cant_term_ref_nm", "arm_factor", "cant_deg", "cant_ref_deg", "q_model_nmm", "q_gain"), units={"q_model_nmm": "N mm"}, output="n_m")
@@ -329,14 +342,10 @@ stored("CL-A-ROLL-GATE", "Peak roll rate in SITL at cruise speed, 1.47 kg (the g
        how="Measure the roll rate on the first cruise (T-A-FIRST-CRUISE).", equation="SITL case=roll, run R5_rt65g, D-195; read, not re-run")
 
 
-@kit.calc("CALC-A-PITCH-USE", equation="use = peak transition elevon / the 20 deg stop (BOARD QP-4 s3 basis)", inputs={"peak": "P:sim.elevon_peak_deg", "stop": "P:sim.elevon_stop_deg"},
-          units={"peak": "deg", "stop": "deg"}, output="use")
-def pitch_use(peak, stop):
-    return peak / stop
+stored("CL-A-PITCH-USE", "Elevon pitch use in transition (share of the 15 deg basis; the 0.60 line is 9 deg)", "P:sim.pitch_use_15_worst", "-", limit=("<=", "P:req.pitch_use_max"), verifies=["A-P11"], parts=["WNG-006-R", "WNG-006-L"],
+       how="D-245: the standing line is 0.60 of 15 deg (SITL-FLIGHT.md l.25), 0.69 (Z5) to 0.79 (T-074) in AR-015, so FAIL, open (AR-010 item 5). Fix path is the ladder from rung 1 (controls: lower the entry pitch-rate demand), then a SITL rerun; a 20 deg basis is not used (no A-specific roll / gust reserve derivation; review round 10 98-4). First transition flight logs the elevon commands.",
+       equation="SITL (ArduPlane, 6-DOF plant) transition runs T-097, pitch_use_15 in sum.json; read, not re-run")
 
-
-kit.claim("CL-A-PITCH-USE", "Elevon use in transition (share of the 20 deg stop)", calc="CALC-A-PITCH-USE", output="use", unit="-",
-          limit=("<=", "P:req.pitch_use_max"), verifies=["A-P11"], parts=["WNG-006-R", "WNG-006-L"], how="C3 pitch-over run and SITL transition logs (D-195: peak 11.5 deg at the CAD CG, 12.0 at the forward trim end; was 8.9-9.6 before the S5010 section, CG 21.5 and the corrected trim).")
 
 if __name__ == "__main__":
     kit.write()

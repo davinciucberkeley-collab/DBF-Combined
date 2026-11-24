@@ -65,6 +65,8 @@ Before resuming work, follow the recovery procedure in docs/session-state.md sec
 read docs/session-state.md (checkpoint + next action), then the in-progress rows of docs/task-ledger.md and
 docs/requirements.md; read docs/MASTER_PROJECT_SPEC.md in full at milestones, after compaction, and before final
 verification. Never edit MASTER_PROJECT_SPEC.md; new user instructions go verbatim into docs/spec-amendments.md.
+All work uses the team Agent Standard v0.2 (AM-040): docs/reference/agent-standard/agents-v0.2.md + LOCAL.md;
+roles builder / scout / tactician / auditor / reviewer / advisor in .claude/agents/, cheapest tier first.
 {brief()}
 Missing state files: {', '.join(missing) if missing else 'none'}.""")
     return 0

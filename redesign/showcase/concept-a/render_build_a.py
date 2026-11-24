@@ -510,6 +510,15 @@ def mech_state_log(sh, tl):
 
 # ---- scene 4 (T-029): playback of an ALREADY EXECUTED ArduPilot SITL run (PD-007): the aircraft pose is read from the run's case.fwd.csv, no new simulation
 SITL_DIR = os.path.join(REDESIGN, 'qp', 'A', 'sitl')
+T097_DIR = os.path.join(REDESIGN, 'qp', 'A', 'mechanism', 'out', 'T097_data')       # F-5 rework: the 1.881 kg T-097 runs (sitl_<run>/case.fwd.csv, sum.json) are tracked here, not in the git-ignored runs/ folder
+T098_JSON = os.path.join(REDESIGN, 'qp', 'A', 'mechanism', 'out', 'T098_results.json')
+
+
+def run_dir(run):
+    """Folder of an executed SITL run: sitl/runs/<run>, or mechanism/out/T097_data/sitl_<run> for the T-097 runs (names starting T097_)."""
+    return os.path.join(T097_DIR, 'sitl_' + run) if run.startswith('T097_') else os.path.join(SITL_DIR, 'runs', run)
+
+
 CAD_MASS_JSON = os.path.join(SITL_DIR, 'cad_mass.json')
 # Column meanings (a_plant.py line 304 header, euler_rpy line 234): t s; pn, pe m north / east of the take-off point; alt m of the CG above ground (up); pitch deg (+90 = nose up,
 # 0 = level cruise); roll, hdg_nose deg (ZYX Euler of the body FRD frame: x nose, y right wing, z belly); V m/s airspeed; dl, dr deg left / right elevon (trailing edge down +).
@@ -519,7 +528,7 @@ _SITL = {}
 def load_sitl(run):
     if run not in _SITL:
         import csv
-        rows = list(csv.DictReader(open(os.path.join(SITL_DIR, 'runs', run, 'case.fwd.csv'), encoding='utf-8')))
+        rows = list(csv.DictReader(open(os.path.join(run_dir(run), 'case.fwd.csv'), encoding='utf-8')))
         cols = {k: [float(r[k]) for r in rows] for k in rows[0]}
         n = len(rows)
         pre = {}
@@ -604,7 +613,7 @@ def np_prod(expr):
 
 def sitl_sum(run):
     """sum.json of an executed SITL run (read at draw time)."""
-    return json.load(open(os.path.join(SITL_DIR, 'runs', run, 'sum.json'), encoding='utf-8'))
+    return json.load(open(os.path.join(run_dir(run), 'sum.json'), encoding='utf-8'))
 
 
 _GIT = {}
@@ -630,6 +639,11 @@ def src_val(spec):
     entries above 1); {sum: run, path} (sitl/runs/<run>/sum.json); {calc: 'a*b+c', of: {a: spec, ...}}; {git: 'rev'}. Optional: times / div (const names, fea_arm.py)."""
     if 'git' in spec:
         return git_rev()
+    if 't098' in spec:                   # F-5: a row of mechanism/out/T098_results.json (AR-016): {t098: case, metric: prefix (optional), idx: n of the 'a / b / c' value}
+        rows = json.load(open(T098_JSON, encoding='utf-8'))['rows']
+        r = next(x for x in rows if x['case'] == spec['t098'] and x['metric'].startswith(spec.get('metric', '')))
+        v = r['value']
+        return float(str(v).split('/')[spec['idx']]) if 'idx' in spec else v
     if 'calc' in spec:
         v = eval(spec['calc'], {'__builtins__': {}}, {k_: src_val(q_) for k_, q_ in spec['of'].items()})
     elif 'const' in spec:
@@ -669,7 +683,7 @@ def source_hashes(film):
         for sh in S['shots']:
             if sh.get('sitl'):
                 for fn in ('case.fwd.csv', 'sum.json', 'result.json'):
-                    paths.add(os.path.join(SITL_DIR, 'runs', sh['sitl']['run'], fn))
+                    paths.add(os.path.join(run_dir(sh['sitl']['run']), fn))
             if sh.get('fea'):
                 paths.add(os.path.join(FEA_OUT, sh['fea']['glb']))
             for v in list(sh.get('vals', {}).values()) + list(sh.get('card', {}).get('vals', {}).values()):
@@ -1949,7 +1963,7 @@ def key_of(pid):
 
 
 SHORT = {'WNG-001': 'Wing core (XPS + tape)', 'WNG-002': 'Spar, CF 12x10, 900 mm', 'WNG-003': 'Spar plug (PETG)', 'WNG-004': 'Spar plug (PETG)', 'WNG-005': 'Spar plug (PETG)',
-         'CGE-001': 'Hub (PETG)', 'CGE-002': 'Arm, CF 12x10, 245 mm', 'CGE-003': 'Motor cup (PETG)', 'CGE-004': 'Bridge, CF 16x14, 108 mm', 'CGE-005': 'V strut, CF 6x4.5',
+         'CGE-001': 'Hub (6061-T6, machined)', 'CGE-002': 'Arm, CF 12x10, 245 mm', 'CGE-003': 'Motor cup (PETG)', 'CGE-004': 'Bridge, CF 16x14, 108 mm', 'CGE-005': 'V strut, CF 6x4.5',
          'CGE-006': 'Bridge saddle', 'CGE-007': 'Strut clamp', 'CGE-008': 'Pack tray (PETG)', 'PRP-001': 'Motor SunnySky X2216 880KV', 'PRP-002': 'Prop APC 9x4.5 (MR / MRP)',
          'PRP-003': 'ESC SpeedyBee 4-in-1', 'PRP-004': 'Prop adapter', 'PRP-005': 'Spinner nut', 'FIN-005': 'Rib saddle (PETG)', 'HRN-003': 'Phase-lead raceway',
          'HRN-004': 'Hub conduit', 'WNG-009': 'Damper stator + silicone', 'WNG-010': 'Damper rotor', 'FIN-002': 'Fin rib, CF 14x12', 'FIN-006': 'Rib fairing (XPS)',
@@ -2403,7 +2417,7 @@ def film_overlay(src, dst, f, sw, sh):
         rows_ = [('Pitch (nose up +)', '%+6.1f deg' % a_['pitch']), ('Altitude (CG)', '%6.1f m' % a_['alt']), ('Airspeed', '%6.1f m/s' % a_['V']),
                  ('Elevon left / right', '%+5.1f / %+5.1f deg' % (a_['dl'], a_['dr']))]
         notes_ = [('Log time %6.1f s   time scale x%.1f' % (tlog, sitl_scale(shot)), INK),
-                  ('Run %s: %.2f kg, wind %.0f m/s (sum.json)' % (run, sm_['mass'], sm_['wind']), MUTED),
+                  ('Run %s: %.3f kg, wind %.0f m/s (sum.json)' % (run, sm_['mass'], sm_['wind']), MUTED),
                   (shot['sitl'].get('note', ''), MUTED),
                   ('Prop rotation illustrative, not to rate' if shot.get('props_spin') else '', MUTED)]
         ld_ = sm_.get('landing')
@@ -2546,8 +2560,8 @@ def shot_fade(shot, tl):
     """Opacity of a shot's lower third / card in twelfths: 0.4 s fade in and out for a title, 0.4 s fade in for the closing card (T-030 m-1)."""
     if shot.get('card'):
         return round(max(0.0, min(1.0, (tl - shot['t0'] + shot.get('fade_src_a', 0.0)) / 0.4)) * 12)       # fade_src_a: the highlight cut starts inside the source shot, whose card has already faded in
-    if shot.get('title'):
-        return round(max(0.0, min(1.0, (tl - shot['t0']) / 0.4, (shot['t1'] - tl) / 0.4)) * 12)
+    if shot.get('title'):                # title_delay (F-5): the lower third fades in this many seconds after the shot starts (caption timed to the view)
+        return round(max(0.0, min(1.0, (tl - shot['t0'] - shot.get('title_delay', 0.0)) / 0.4, (shot['t1'] - tl) / 0.4)) * 12)
     return 12
 
 
@@ -2612,7 +2626,7 @@ def contact_sheet(frames, name_of, work, fps, film, out, cols=8, tw=240):
     sheet.save(out)
 
 
-FILM_OVERLAY_ONLY = ('id', 'title', 'sub', 'tag', 'readout', 'vals', 'card', 'annot', 'todo', 'src', 'fade_src_a', 'cam')     # shot fields that do not change a raw (3-D) frame; 'cam' is compared per frame
+FILM_OVERLAY_ONLY = ('id', 'title', 'sub', 'tag', 'readout', 'vals', 'card', 'annot', 'todo', 'src', 'fade_src_a', 'title_delay', 'cam')     # shot fields that do not change a raw (3-D) frame; 'cam' is compared per frame
 
 
 def shot_signature(sh):

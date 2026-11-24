@@ -176,13 +176,14 @@
        "el": 29,
        "dist": 0.62
       }
-     ]
+     ],
+     "title_delay": 1.5
     },
     {
      "id": "2.3",
      "dur": 5.0,
      "title": "Hub and arm interfaces",
-     "sub": "PETG hub, carbon arms 12 x 10, motor cups (CGE-001, CGE-002, CGE-003). Cut-away: props, pack, avionics and leads hidden.",
+     "sub": "Machined 6061-T6 hub (D-220), carbon arms 12 x 10, motor cups (CGE-001 to CGE-003). Cut-away: props, pack, avionics and leads hidden.",
      "cam": [
       {
        "t": 2.0,
@@ -525,20 +526,20 @@
   },
   {
    "id": "S4",
-   "title": "Simulation playback: executed ArduPilot SITL run Z5_gb0",
+   "title": "Simulation playback: executed ArduPilot SITL run T097_Z5 (1.881 kg EST)",
    "shots": [
     {
      "id": "4.1",
      "dur": 7.0,
-     "tag": "SIMULATED: ArduPilot SITL run Z5_gb0, a_plant.py plant model (EST aero)",
+     "tag": "SIMULATED: ArduPilot SITL run T097_Z5, 1.881 kg EST, a_plant.py plant model (EST aero)",
      "los": false,
      "follow": true,
      "sitl": {
-      "run": "Z5_gb0",
+      "run": "T097_Z5",
       "t0": 31.0,
       "t1": 98.0,
       "trail_from": 33.5,
-      "note": "Run file 2026-11-15, geometry before D-207; SITL with the a_plant.py plant (EST aero)."
+      "note": "Run of T-097 (AR-015), 1.881 kg EST, X2216, CG 22.049 mm; SITL with the a_plant.py plant (EST aero)."
      },
      "mech": {
       "from_log": true
@@ -574,15 +575,15 @@
     {
      "id": "4.2",
      "dur": 10.0,
-     "tag": "SIMULATED: ArduPilot SITL run Z5_gb0, a_plant.py plant model (EST aero)",
+     "tag": "SIMULATED: ArduPilot SITL run T097_Z5, 1.881 kg EST, a_plant.py plant model (EST aero)",
      "los": false,
      "follow": true,
      "sitl": {
-      "run": "Z5_gb0",
+      "run": "T097_Z5",
       "t0": 98.0,
       "t1": 126.0,
       "trail_from": 33.5,
-      "note": "Run file 2026-11-15, geometry before D-207; SITL with the a_plant.py plant (EST aero)."
+      "note": "Run of T-097 (AR-015), 1.881 kg EST, X2216, CG 22.049 mm; SITL with the a_plant.py plant (EST aero)."
      },
      "mech": {
       "from_log": true
@@ -618,15 +619,15 @@
     {
      "id": "4.3",
      "dur": 5.0,
-     "tag": "SIMULATED: ArduPilot SITL run Z5_gb0, a_plant.py plant model (EST aero)",
+     "tag": "SIMULATED: ArduPilot SITL run T097_Z5, 1.881 kg EST, a_plant.py plant model (EST aero)",
      "los": false,
      "follow": true,
      "sitl": {
-      "run": "Z5_gb0",
+      "run": "T097_Z5",
       "t0": 126.0,
       "t1": 140.0,
       "trail_from": 33.5,
-      "note": "Run file 2026-11-15, geometry before D-207; SITL with the a_plant.py plant (EST aero)."
+      "note": "Run of T-097 (AR-015), 1.881 kg EST, X2216, CG 22.049 mm; SITL with the a_plant.py plant (EST aero)."
      },
      "mech": {
       "from_log": true
@@ -651,21 +652,21 @@
     {
      "id": "4.4",
      "dur": 3.5,
-     "tag": "SIMULATED: ArduPilot SITL run Z5_gb0, a_plant.py plant model (EST aero)",
+     "tag": "SIMULATED: ArduPilot SITL run T097_Z5, 1.881 kg EST, a_plant.py plant model (EST aero)",
      "los": false,
      "follow": true,
      "sitl": {
-      "run": "Z5_gb0",
+      "run": "T097_Z5",
       "t0": 140.0,
       "t1": 232.0,
       "trail_from": 33.5,
-      "note": "Run file 2026-11-15, geometry before D-207; SITL with the a_plant.py plant (EST aero)."
+      "note": "Run of T-097 (AR-015), 1.881 kg EST, X2216, CG 22.049 mm; SITL with the a_plant.py plant (EST aero)."
      },
      "mech": {
       "from_log": true
      },
      "title": "Hover descent (sped up)",
-     "sub": "Descent in hover from about 89 m, shown at a high time scale.",
+     "sub": "Descent in hover from about 92 m, shown at a high time scale.",
      "cam": [
       {
        "t": 3.5,
@@ -684,22 +685,22 @@
     {
      "id": "4.5",
      "dur": 5.5,
-     "tag": "SIMULATED: ArduPilot SITL run Z5_gb0, a_plant.py plant model (EST aero)",
+     "tag": "SIMULATED: ArduPilot SITL run T097_Z5, 1.881 kg EST, a_plant.py plant model (EST aero)",
      "los": false,
      "follow": true,
      "sitl": {
-      "run": "Z5_gb0",
+      "run": "T097_Z5",
       "t0": 232.0,
       "t1": 252.0,
       "trail_from": 33.5,
-      "note": "Run file 2026-11-15, geometry before D-207; SITL with the a_plant.py plant (EST aero).",
+      "note": "Run of T-097 (AR-015), 1.881 kg EST, X2216, CG 22.049 mm; SITL with the a_plant.py plant (EST aero).",
       "landing_note": true
      },
      "mech": {
       "from_log": true
      },
      "title": "Landing",
-     "sub": "Touch-down on the fin pads at the end of the run.",
+     "sub": "Touch-down on the fin pads at the end of the run. The foam pad stroke is checked separately (AR-016, closing card).",
      "cam": [
       {
        "t": 5.5,
@@ -719,122 +720,50 @@
   },
   {
    "id": "S5",
-   "title": "FEA results (hub, arm and motor cup)",
+   "title": "Structures: machined 6061-T6 hub status, arm and motor cup FEA",
    "shots": [
     {
      "id": "5.1",
      "dur": 6.0,
-     "tag": "SIMULATED: FEA hub F2 motor runaway (run d209), PETG hub p99 judged {j:.1f} vs {a:.0f} MPa (D-207 rule)",
+     "tag": "SIMULATED: FEA T-076c run H-A1, aluminium hub (analysis only, not VERIFIED)",
      "los": false,
-     "fea": {
-      "glb": "hub_F2.glb",
-      "shift_x": 0.17
+     "wires": false,
+     "modes": {
+      "PRP-": "hidden",
+      "PWR-": "hidden",
+      "AVN-": "hidden"
      },
-     "vals": {
-      "j": {
-       "file": "hub_result_L0_d209.json",
-       "path": [
-        "F2 uncapped fault, any pattern",
-        "hub_zones_envelope"
-       ],
-       "maxkey": "p99",
-       "times": "KP"
-      },
-      "p99": {
-       "file": "hub_result_L0_d209.json",
-       "path": [
-        "F2 uncapped fault, any pattern",
-        "hub_zones_envelope"
-       ],
-       "maxkey": "p99"
-      },
-      "kp": {
-       "const": "KP"
-      },
-      "a": {
-       "const": "ALLOW.petg"
-      },
-      "pk": {
-       "file": "hub_result_L0_d209.json",
-       "path": [
-        "F2 uncapped fault, any pattern",
-        "hub_peak"
-       ]
-      },
-      "pkf": {
-       "file": "hub_result_L0_d209.json",
-       "path": [
-        "F2 uncapped fault, any pattern",
-        "hub_peak"
-       ],
-       "times": "KP"
-      },
-      "br": {
-       "npz": "hub_fields_L0_d209.npz",
-       "key": "U_F2_3",
-       "reduce": "nanmax"
-      },
-      "red": {
-       "npz": "hub_fields_L0_d209.npz",
-       "key": "U_F2_0",
-       "reduce": "pct_over1"
-      }
-     },
-     "title": "Hub, motor runaway (F2)",
-     "sub": "Colour is utilisation (stress x required factor / allowable). Red = over 1, here at singular points of the mesh; the panel lists the highest value on screen.",
+     "title": "Hub: machined 6061-T6 (D-220)",
+     "sub": "The hub passes in the aluminium-hub FEA. The printed PETG hub map of 2026-11-17 is an earlier design (record) and is not shown.",
      "readout": {
-      "title": "HUB FEA F2, RUN d209 (PETG principal)",
-      "legend": true,
-      "src": "qp/A/structures/out_fea/hub_result_L0_d209.json, hub_fields_L0_d209.npz; allowables fea_arm.py ALLOW (EST)",
+      "title": "HUB STATUS, 6061-T6 (D-220)",
+      "legend": false,
+      "src": "qp/A/mechanism/out/T076c_hub_al.md s0; CHANGE-LOG.md D-220, D-226; Explorer #structures (analysis only, EST)",
       "rows": [
        {
-        "label": "99th percentile, worst zone",
-        "fmt": "%.1f MPa",
-        "vals": [
-         "p99"
-        ]
+        "label": "Hub, aluminium FEA H-A1",
+        "fmt": "passes",
+        "vals": []
        },
        {
-        "label": "x required factor (printed)",
-        "fmt": "%.3f",
-        "vals": [
-         "kp"
-        ]
+        "label": "Mesh (tet10 elements)",
+        "fmt": "427,333",
+        "vals": []
        },
        {
-        "label": "PETG hub judged (p99 x factor)",
-        "fmt": "%.1f MPa",
-        "vals": [
-         "j"
-        ]
+        "label": "Allowables, factors",
+        "fmt": "not relaxed",
+        "vals": []
        },
        {
-        "label": "Allowable (PETG)",
-        "fmt": "%.0f MPa",
-        "vals": [
-         "a"
-        ]
+        "label": "H-A2 and the d209 map",
+        "fmt": "not re-run",
+        "vals": []
        },
        {
-        "label": "Peak point x factor, not judged (D-207)",
-        "fmt": "%.1f MPa",
-        "vals": [
-         "pkf"
-        ]
-       },
-       {
-        "label": "Hub skin vertices over 1",
-        "fmt": "%.2f %%",
-        "vals": [
-         "red"
-        ]
-       },
-       {
-        "label": "Highest on screen: bridge tube",
-        "fmt": "u %.3f",
-        "vals": [
-         "br"
-        ]
+        "label": "Status",
+        "fmt": "not VERIFIED",
+        "vals": []
        }
       ]
      },
@@ -842,107 +771,69 @@
       {
        "t": 0,
        "target": [
-        0,
+        -0.08,
         0,
         0
        ],
        "az": -38,
        "el": 26,
-       "dist": 0.42
+       "dist": 0.5
       },
       {
        "t": 6.0,
        "target": [
-        0,
+        -0.08,
         0,
         0
        ],
        "az": 12,
        "el": 24,
-       "dist": 0.38
+       "dist": 0.46
       }
      ]
     },
     {
      "id": "5.2",
      "dur": 6.0,
-     "tag": "SIMULATED: FEA hub S2 prop strike 30 N (run d209), hub peak {pk:.1f} vs {a:.0f} MPa; bridge tube u {br:.3f}, over 1 (OPEN)",
+     "tag": "SIMULATED: FEA T-076c run H-A1, landing demand (analysis only, not VERIFIED)",
      "los": false,
-     "fea": {
-      "glb": "hub_S2.glb",
-      "shift_x": 0.17
+     "wires": false,
+     "modes": {
+      "PRP-": "hidden",
+      "PWR-": "hidden",
+      "AVN-": "hidden"
      },
-     "vals": {
-      "pk": {
-       "file": "hub_result_L0_d209.json",
-       "path": [
-        "S2 strike on UR (ground)",
-        "hub_peak"
-       ]
-      },
-      "a": {
-       "const": "ALLOW.petg"
-      },
-      "p99": {
-       "file": "hub_result_L0_d209.json",
-       "path": [
-        "S2 strike on UR (ground)",
-        "hub_zones_worst_combo"
-       ],
-       "maxkey": "p99"
-      },
-      "br": {
-       "npz": "hub_fields_L0_d209.npz",
-       "key": "U_S2_3",
-       "reduce": "nanmax"
-      },
-      "red": {
-       "npz": "hub_fields_L0_d209.npz",
-       "key": "U_S2_0",
-       "reduce": "pct_over1"
-      }
-     },
-     "title": "Hub, prop strike (S2)",
-     "sub": "A 30 N blade hit in the disc plane (damage case, required factor 1.0). Colour is utilisation; the highest value on screen is the bridge tube (panel).",
+     "title": "Open rows: arm tube and bond",
+     "sub": "The carbon arm-tube shear and the arm-tube / sleeve bond fail for the landing demand. They also fail with a PETG hub, so the hub material is not the cause.",
      "readout": {
-      "title": "HUB FEA S2, RUN d209 (PETG principal)",
-      "legend": true,
-      "src": "qp/A/structures/out_fea/hub_result_L0_d209.json, hub_fields_L0_d209.npz; allowables fea_arm.py ALLOW (EST)",
+      "title": "OPEN ROWS, H-A1 (landing demand)",
+      "legend": false,
+      "src": "qp/A/mechanism/out/T076c_hub_al.md s0; CHANGE-LOG.md D-220, D-226; load basis 1.64 kg, older than the 1.881 kg EST",
       "rows": [
        {
-        "label": "PETG hub single-point peak",
-        "fmt": "%.1f MPa",
-        "vals": [
-         "pk"
-        ]
+        "label": "CF arm-tube shear",
+        "fmt": "FAIL, open",
+        "vals": []
        },
        {
-        "label": "99th percentile, worst zone",
-        "fmt": "%.1f MPa",
-        "vals": [
-         "p99"
-        ]
+        "label": "Arm-tube / sleeve bond",
+        "fmt": "FAIL, open",
+        "vals": []
        },
        {
-        "label": "Allowable (PETG, factor 1.0)",
-        "fmt": "%.0f MPa",
-        "vals": [
-         "a"
-        ]
+        "label": "Same rows, PETG hub (control)",
+        "fmt": "also FAIL",
+        "vals": []
        },
        {
-        "label": "Hub skin vertices over 1",
-        "fmt": "%.2f %%",
-        "vals": [
-         "red"
-        ]
+        "label": "Routed to",
+        "fmt": "D-226, TP-4, TP-5",
+        "vals": []
        },
        {
-        "label": "Highest: bridge tube bond end (OPEN)",
-        "fmt": "u %.3f, over 1",
-        "vals": [
-         "br"
-        ]
+        "label": "Load basis (T-076c)",
+        "fmt": "1.64 kg",
+        "vals": []
        }
       ]
      },
@@ -950,13 +841,13 @@
       {
        "t": 6.0,
        "target": [
-        0,
-        0,
+        -0.12,
+        0.05,
         0
        ],
-       "az": -40,
-       "el": 24,
-       "dist": 0.38
+       "az": 62,
+       "el": 22,
+       "dist": 0.4
       }
      ]
     },
@@ -1064,14 +955,10 @@
       "name": "Concept A",
       "lines": [
        {
-        "label": "Revision",
-        "vals": {
-         "g": {
-          "git": "rev"
-         }
-        },
-        "text": "D-212 rev 3, commit {g}",
-        "cite": "git rev-parse HEAD; CHANGE-LOG.md D-212 rev 3"
+        "label": "Design record",
+        "vals": {},
+        "text": "CHANGE-LOG D-246, 2026-11-23 (untagged working tree)",
+        "cite": "CHANGE-LOG D-246"
        },
        {
         "label": "Mass, predicted vs gate",
@@ -1099,8 +986,8 @@
          "m": {
           "param": "req/mass_gate_kg"
          },
-         "left": {
-          "calc": "(m-(b*g+o*m))*1000",
+         "over": {
+          "calc": "((b*g+o*m)-m)*1000",
           "of": {
            "b": {
             "param": "mass/basic_cad_kg"
@@ -1117,8 +1004,8 @@
           }
          }
         },
-        "text": "CAD basic {bk:.3f} kg; predicted {p:.4f} kg vs gate {m:.2f} kg ({left:.1f} g left)",
-        "cite": "params-A.json mass/*, req/mass_gate_kg (predicted = basic x growth + overrun x gate, D-208)"
+        "text": "predicted {p:.3f} kg EST (CAD {bk:.3f} kg) vs {m:.2f} kg gate: over the gate by {over:.1f} g",
+        "cite": "params-A.json mass/*, req/mass_gate_kg (D-208); README.md"
        },
        {
         "label": "Packed, one piece",
@@ -1167,24 +1054,24 @@
         "cite": "params-A.json cad3d/*, req/coll_tol_mm"
        },
        {
-        "label": "Landing (SITL, Z5_gb0)",
+        "label": "Landing (SITL, 1.881 kg)",
         "vals": {
          "s": {
-          "sum": "Z5_gb0",
+          "sum": "T097_Z5",
           "path": [
            "landing",
            "sink_ms"
           ]
          },
          "l": {
-          "sum": "Z5_gb0",
+          "sum": "T097_Z5",
           "path": [
            "landing",
            "lean_deg_at_touch"
           ]
          },
          "ms": {
-          "sum": "Z5_gb0",
+          "sum": "T097_Z5",
           "path": [
            "mass"
           ]
@@ -1193,7 +1080,7 @@
           "calc": "'yes' if t else 'no'",
           "of": {
            "t": {
-            "sum": "Z5_gb0",
+            "sum": "T097_Z5",
             "path": [
              "landing",
              "tipped_over"
@@ -1202,57 +1089,46 @@
           }
          }
         },
-        "text": "sink {s:.2f} m/s, lean {l:.1f} deg, tipped over: {tip} ({ms:.2f} kg, run of 2026-11-15)",
-        "cite": "qp/A/sitl/runs/Z5_gb0/sum.json"
+        "text": "run T097_Z5 ({ms:.3f} kg EST): sink {s:.2f} m/s, lean {l:.1f} deg, tipped over: {tip}",
+        "cite": "T097_data sum.json (AR-015)"
        },
        {
-        "label": "Hub FEA (run d209)",
+        "label": "Landing foam (AR-016)",
         "vals": {
-         "j": {
-          "file": "hub_result_L0_d209.json",
-          "path": [
-           "F2 uncapped fault, any pattern",
-           "hub_zones_envelope"
-          ],
-          "maxkey": "p99",
-          "times": "KP"
-         },
-         "a": {
-          "const": "ALLOW.petg"
-         },
-         "b1": {
-          "npz": "hub_fields_L0_d209.npz",
-          "key": "U_F2_3",
-          "reduce": "nanmax"
-         },
-         "b2": {
-          "npz": "hub_fields_L0_d209.npz",
-          "key": "U_S2_3",
-          "reduce": "nanmax"
-         },
-         "ov": {
-          "calc": "(b-1)*100",
-          "of": {
-           "b": {
-            "npz": "hub_fields_L0_d209.npz",
-            "key": "U_S2_3",
-            "reduce": "nanmax"
-           }
-          }
-         },
          "st": {
-          "calc": "'PASS' if b < 1 else 'over 1'",
-          "of": {
-           "b": {
-            "npz": "hub_fields_L0_d209.npz",
-            "key": "U_F2_3",
-            "reduce": "nanmax"
-           }
-          }
+          "t098": "plateau_sweep_rib25x23/37.5N",
+          "idx": 0
+         },
+         "n": {
+          "t098": "plateau_sweep_rib25x23/37.5N",
+          "idx": 1
+         },
+         "t": {
+          "t098": "plateau_sweep_rib25x23/37.5N",
+          "idx": 2
          }
         },
-        "text": "F2: hub p99 {j:.1f} of {a:.0f} MPa, bridge tube u {b1:.3f} {st}. S2: bridge tube bond end u {b2:.3f}, over 1 by {ov:.1f} %, OPEN (D-207)",
-        "cite": "out_fea/hub_result_L0_d209.json, hub_fields_L0_d209.npz; CHANGE-LOG D-207 (bond-end local edge peak)"
+        "text": "stroke {st:.1f} of 20 mm, {n:.2f} g of 12 g, tilt {t:.1f} deg (worst of 10); only for foam 37.5-39.0 N, zeta 0.02-0.05 (D-243); TP-3 open",
+        "cite": "T098_results.json (AR-016), D-243"
+       },
+       {
+        "label": "Hub (machined 6061-T6)",
+        "vals": {},
+        "text": "FEA H-A1: hub passes; CF arm-tube shear and tube / sleeve bond FAIL, open (D-226, TP-4, TP-5)",
+        "cite": "T076c_hub_al.md s0, D-220"
+       },
+       {
+        "label": "Elevon pitch use (open)",
+        "vals": {
+         "u": {
+          "param": "sim/pitch_use_15_worst"
+         },
+         "lim": {
+          "param": "req/pitch_use_max"
+         }
+        },
+        "text": "{u:.2f} vs {lim:.2f} limit (15 deg basis): FAIL, open (D-245)",
+        "cite": "params-A.json sim/pitch_use_15_worst"
        }
       ]
      },

@@ -8,11 +8,15 @@ Parameter files: `redesign/qp/A/params-A.json`
 
 > - STRICT A-P1: CL-A-MASS-GATE-ROOM: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)
 > - STRICT A-D3: CL-A-MASS-PRED: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)
+> - STRICT A-P6: CL-A-STALL is UNVERIFIED
 > - STRICT A-P10: CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)
+> - STRICT A-P11: CL-A-PITCH-USE: FAILS: margin -31.7% (0.79 vs <= 0.6)
 > - STRICT A-P13: CL-A-FLUTTER-ELEVON-NOM is UNVERIFIED
 > - STRICT CL-A-MASS-PRED: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)
 > - STRICT CL-A-MASS-GATE-ROOM: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)
 > - STRICT CL-A-CUTS-REQUIRED: FAILS: margin -883.5% (409.1 g vs <= 41.6 g)
+> - STRICT CL-A-STALL-PRED: FAILS: margin -4.4% (17.74 m/s vs <= 17 m/s)
+> - STRICT CL-A-PITCH-USE: FAILS: margin -31.7% (0.79 vs <= 0.6)
 > - STRICT CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)
 > - STRICT CL-A-VIB-FC: FAILS: margin -524.0% (187.2 m/s2 vs <= 30 m/s2)
 > - STRICT CL-A-VIB-GM: FAILS: margin -43.5% (1.13 vs >= 2)
@@ -30,7 +34,7 @@ Parameter files: `redesign/qp/A/params-A.json`
 | [A-D8](#a-d8) First tethered hover by 2027-02-18 | **UNVERIFIED** | 2 | — |
 | [A-P1](#a-p1) Mass gate 1.47 kg and T/W at the gate | **UNVERIFIED** **FAILS** | 3 | -28% |
 | [A-P10](#a-p10) Vibration rule D-185 | **UNVERIFIED** **FAILS** | 8 | -524%; 1 below a limit of 0 |
-| [A-P11](#a-p11) Cruise control authority | **UNVERIFIED** | 7 | +4% |
+| [A-P11](#a-p11) Cruise control authority | **UNVERIFIED** **FAILS** | 7 | -32% |
 | [A-P13](#a-p13) Loads and flutter (G8) | **UNVERIFIED** **FAILS** | 46 | -903% |
 | [A-P16](#a-p16) Motor and ESC current | **UNVERIFIED** | 2 | +25% |
 | [A-P2](#a-p2) Hover T/W >= 2.0 fresh, >= 1.6 worst pack state | **UNVERIFIED** | 4 | +35% |
@@ -38,7 +42,7 @@ Parameter files: `redesign/qp/A/params-A.json`
 | [A-P3](#a-p3) Transition window >= +-5 % | **UNVERIFIED** | 3 | +17% |
 | [A-P4](#a-p4) CG band, static margin, lateral CG | **UNVERIFIED** | 6 | +11% |
 | [A-P5](#a-p5) Pack retained at 12 g crash | **CHECKED** | 1 | — |
-| [A-P6](#a-p6) Stall: 1.3 Vs below cruise | **UNVERIFIED** | 1 | +8% |
+| [A-P6](#a-p6) Stall: 1.3 Vs below cruise | **UNVERIFIED** **FAILS** | 2 | -4% |
 | [A-P7](#a-p7) Hover yaw authority >= 0.35 N m | **UNVERIFIED** | 3 | +4% |
 | [A-P8](#a-p8) Wind limits | **CHECKED** | 3 | +21% |
 | [A-P9](#a-p9) Fin-tip landing tip-over >= 30 deg | **CHECKED** | 1 | +3% |
@@ -151,7 +155,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-d3
   - ⚠ FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)
   - ⚠ uses P:mass.growth_factor, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s7: predicted = basic x 1.1174 + 48 g (growth by maturity, ASM-A3-MGA))
   - ⚠ uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)
-  - how to verify: Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).
+  - how to verify: Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; predicted 1.881 kg EST at D-240 (CAD basic 1,641.0 g x growth + overrun, MASS-GATE.md; 1,423.9 g was the MASS-GATE s7 value at D-195).
   - parts: WNG-001, WNG-002, PWR-001, CGE-001, FIN-001-R, FIN-001-L
   - test `T-A-WEIGH` Weigh-in: foam block, printed parts, epoxy joint, lead strip, one servo, then the aircraft (planned) — **PROPOSED**
   - calc `CALC-A-MASS-PRED` `redesign/qp/A/proofs/claims_a1_flight.py::mass_pred()`: `m = basic_CAD x growth_factor + overrun_frac x gate   (MASS-GATE s7)` — **CHECKED**
@@ -170,7 +174,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-d3
 - claim **CL-A-MASS-ITEM** Predicted mass, itemised growth by maturity (cross-check) = **1.447 kg** (limit <= 1.47 kg, margin +2%) — **UNVERIFIED**
   - ⚠ uses P:mass.itemised_g_growth, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py `items` (D-195, cage +3.6 g D-196 hub walls; D-198: bay cover, bottom-up harness, cup collars; D-199: raceways, hub conduits, shorter phase extensions, 20 mm strap, drawn pad; CAD 2026-11-15): [basic g, growth fraction by maturity]: wing, fins + feet, motors, props, adapters + spinner nuts (CALC 10 %), ESC, pack, strap, avionics + harness, servos, cage, hardware)
   - ⚠ uses P:mass.overrun_frac, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MASS-GATE s4: build overrun 3.2 % of the gate (K09-L ratio 84 / 2,600), 48 g)
-  - how to verify: python -I qp/A/mission_gate_a.py prints 1,449 g (D-195); both methods must stay <= 1.470 kg (D-208).
+  - how to verify: python -I qp/A/mission_gate_a.py prints the itemised roll-up (1,449 g at D-195, superseded; MASS-GATE.md has the current tally); both methods must stay <= 1.470 kg (D-208).
   - calc `CALC-A-MASS-ITEM` `redesign/qp/A/proofs/claims_a1_flight.py::mass_itemised()`: `m = (sum of item g x (1 + maturity growth) + overrun) / 1000   (mission_gate_a.py items)` — **CHECKED**
     - `items` ← param `P:mass.itemised_g_growth` = table (12 rows) g, fraction — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py `items` (D-195, cage +3.6 g D-196 hub walls; D-198: bay cover, bottom-up harness, cup collars; D-199: raceways, hub conduits, shorter phase extensions, 20 mm strap, drawn pad; CAD 2026-11-15): [basic g, growth fraction by maturity]: wing, fins + feet, motors, props, adapters + spinner nuts (CALC 10 %), ESC, pack, strap, avionics + harness, servos, cage, hardware
@@ -210,7 +214,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-d3
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: D-195: CAD part table 2026-11-15: wing 221.7 + fins 108.2 (D-200) + feet 8.4 + hardware HRD-001 26.08 + cage 119.2 (D-196: hub 17.7 g, was 13.1; D-198: cup collars +1.2 g) = 484.9 g with the EST cuts
       - `SRC-A-CADMASS` (see above)
   - param `P:req.structure_ceiling_g` = 494 g — **CHECKED**
-    - source `SRC-A-BOARD4` [QP-4 board re-sit (BOARD.md)](redesign/review/QP-4/BOARD.md), s1 structure ceiling 494 g, s3 pitch-use basis, G1-G10, checked 2026-11-15 — **CHECKED**
+    - source `SRC-A-BOARD4` [QP-4 board re-sit (BOARD.md)](redesign/review/QP-4/BOARD.md), s1 structure ceiling 494 g, s3 pitch-use basis (G5 basis superseded by D-245, 15 deg), G1-G10, checked 2026-11-15 — **CHECKED**
 
 ## A-D8
 
@@ -427,7 +431,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p10
 
 ## A-P11
 
-**Cruise control authority** — Roll rate >= 90 deg/s within +-20 deg; pitch use <= 0.60 of the stop; servo torque factor >= 1.5 at the 7.2 V rail — **UNVERIFIED**  
+**Cruise control authority** — Roll rate >= 90 deg/s within +-20 deg; pitch use <= 0.60 of the stop; servo torque factor >= 1.5 at the 7.2 V rail — **UNVERIFIED** **FAILS**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-p11
 
 - claim **CL-A-ROLL-141** Peak roll rate in SITL at cruise speed, 1.455 kg (D-195 target mass) = **106.9 deg/s** (limit >= 90 deg/s, margin +19%) — **CHECKED**
@@ -446,16 +450,15 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p11
     - `v` ← param `P:sim.roll_150_degs` = 106.4 deg/s — **CHECKED**
       - `SRC-A-D195SITL` (see above)
   - `P:req.roll_min_degs` (see above)
-- claim **CL-A-PITCH-USE** Elevon use in transition (share of the 20 deg stop) = **0.575** (limit <= 0.6, margin +4%) — **CHECKED**
-  - how to verify: C3 pitch-over run and SITL transition logs (D-195: peak 11.5 deg at the CAD CG, 12.0 at the forward trim end; was 8.9-9.6 before the S5010 section, CG 21.5 and the corrected trim).
+- claim **CL-A-PITCH-USE** Elevon pitch use in transition (share of the 15 deg basis; the 0.60 line is 9 deg) = **0.79** (limit <= 0.6, margin -32%) — **UNVERIFIED** **FAILS**
+  - ⚠ FAILS: margin -31.7% (0.79 vs <= 0.6)
+  - how to verify: D-245: the standing line is 0.60 of 15 deg (SITL-FLIGHT.md l.25), 0.69 (Z5) to 0.79 (T-074) in AR-015, so FAIL, open (AR-010 item 5). Fix path is the ladder from rung 1 (controls: lower the entry pitch-rate demand), then a SITL rerun; a 20 deg basis is not used (no A-specific roll / gust reserve derivation; review round 10 98-4). First transition flight logs the elevon commands.
   - parts: WNG-006-R, WNG-006-L
-  - calc `CALC-A-PITCH-USE` `redesign/qp/A/proofs/claims_a1_flight.py::pitch_use()`: `use = peak transition elevon / the 20 deg stop (BOARD QP-4 s3 basis)` — **CHECKED**
-    - `peak` ← param `P:sim.elevon_peak_deg` = 11.5 deg — **CHECKED**
-      - `SRC-A-D195SITL` (see above)
-    - `stop` ← param `P:sim.elevon_stop_deg` = 20 deg — **CHECKED**
-      - source `SRC-A-FIXES2` [QP-4 fixes 2 (FIXES2.md, supersedes FIXES where they differ)](redesign/review/QP-4/FIXES2.md), s1 flutter with damper, s2 servo, s3 gates, s6 foam, s7 mass and cost, checked 2026-11-15 — **CHECKED**
+  - calc `CALC-A-PITCH-USE-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `SITL (ArduPlane, 6-DOF plant) transition runs T-097, pitch_use_15 in sum.json; read, not re-run` — **CHECKED**
+    - `v` ← param `P:sim.pitch_use_15_worst` = 0.79 — **CHECKED**
+      - source `SRC-A-AR015` [Analysis records AR-015 / AR-016 (SITL transition pitch use, landing foam region)](https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/docs/analysis-records.md), AR-015 result (pitch use 0.69-0.79 of 15 deg, 0.52-0.59 of 20 deg); AR-016 result (landing: record run 17.2 mm at Fp 37.5 N / zeta 0.05; accepted region Fp 37.5-39.0 N, zeta 0.02-0.05), checked 2026-11-15 — **CHECKED**
   - param `P:req.pitch_use_max` = 0.6 — **CHECKED**
-    - source `SRC-A-BOARD4` [QP-4 board re-sit (BOARD.md)](redesign/review/QP-4/BOARD.md), s1 structure ceiling 494 g, s3 pitch-use basis, G1-G10, checked 2026-11-15 — **CHECKED**
+    - `SRC-A-AR015` (see above)
 - claim **CL-A-SERVO-SPEED** Elevon servo speed margin: loaded rate over the 152 deg/s of the +-11 deg, 2.2 Hz roll sinusoid (AR-005, 6.0 V pair) = **1.521** (limit >= 1, margin +52%) — **UNVERIFIED**
   - ⚠ uses P:linkage.servo_speed_margin_r2, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: AR-005: loaded elevon rate (231 deg/s, 6.0 V pair, stall 0.333 N m, 0.13 s / 60 deg, linear torque-speed line, end-point load 0.146 N m + preload + damper) over the 152 deg/s needed for +-11 deg at the 2.2 Hz crossover (EST); the 7.2 V case (1.73) is not used (7.2 V speed unpublished))
   - how to verify: Hand calculation (AR-005): linear torque-speed line, gearing 0.909-0.928 from the solved linkage, end-point load. Required rates are EST; 7.2 V speed is not published so the 6 V no-load speed is used. Bench ramp of the built rail at BUILD D5b closes it. The full-throw sinusoid R3 (0.84) is not a required case.
@@ -479,7 +482,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p11
   - calc `CALC-A-SERVO` `redesign/qp/A/proofs/claims_a2_struct.py::servo_factors()`: `factor = servo torque / (1.5 x (hinge moment at VD + preload + damper at slew)); cold case with the real arm ratio 9.155 / 8.5 (D-212 rev 2; the gearing of the solved linkage is 0.906 to 0.929, 1 / 1.077 = 0.929); ratio = servo / hinge` — **CHECKED**
     - `stall_72_nm` ← param `P:servo.stall_72_nm` = 0.397 N m — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: ES3054HV at 7.2 V, interpolated from V 6.0 / 8.4 V figures (EST)
-      - `SRC-A-FIXES2` (see above)
+      - source `SRC-A-FIXES2` [QP-4 fixes 2 (FIXES2.md, supersedes FIXES where they differ)](redesign/review/QP-4/FIXES2.md), s1 flutter with damper, s2 servo, s3 gates, s6 foam, s7 mass and cost, checked 2026-11-15 — **CHECKED**
     - `hinge_vd_nm` ← param `P:servo.hinge_vd_nm` = 0.151 N m — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: FIXES2 s2: hinge moment at VD, +-20 deg (0.146 x 0.31 / 0.30)
       - `SRC-A-FIXES2` (see above)
@@ -781,12 +784,12 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
     - `k` ← param `P:struct.k_strike` = 1 — **CHECKED**
       - `SRC-A-D206BR` (see above)
   - `P:struct.cf_shear_mpa` (see above)
-- claim **CL-A-LANDING-STROKE** Landing crush stroke at 1.2 m/s on the fin-tip feet = **15.2 mm** (limit <= 20 mm, margin +24%) — **CHECKED**
-  - how to verify: Drop test of the feet at 1.2 m/s on the built aircraft; 20 mm available.
+- claim **CL-A-LANDING-STROKE** Landing crush stroke at 1.2 m/s on the fin-tip feet = **17.2 mm** (limit <= 20 mm, margin +14%) — **CHECKED**
+  - how to verify: TP-3 drop test of the feet at 1.2 m/s on the built aircraft, with the foam plateau and damping measured; 20 mm available. PASS (17.2 mm) holds only inside the accepted foam region Fp 37.5-39.0 N and zeta 0.02-0.05 (AR-016, D-243); outside it the stroke bottoms (20.2-20.6 mm, FAIL).
   - parts: GER-001-UR, GER-001-UL, GER-001-LR, GER-001-LL, GER-002-UR, GER-002-UL, GER-002-LR, GER-002-LL
-  - calc `CALC-A-LANDING-STROKE-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `landing_a.py via STRUCTURES iteration 2 (A-P13 basis); read, not re-run` — **CHECKED**
-    - `v` ← param `P:struct.landing_stroke_mm` = 15.2 mm — **CHECKED**
-      - `SRC-A-REQ` (see above)
+  - calc `CALC-A-LANDING-STROKE-READ` `redesign/qp/A/proofs/claims_a2_struct.py::read_value()`: `landing_a.py 37.5 N record run at 1.881 kg EST, rib 25x23 (AR-016 / T098_results.json); read, not re-run` — **CHECKED**
+    - `v` ← param `P:struct.landing_stroke_mm` = 17.2 mm — **CHECKED**
+      - source `SRC-A-AR015` [Analysis records AR-015 / AR-016 (SITL transition pitch use, landing foam region)](https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/docs/analysis-records.md), AR-015 result (pitch use 0.69-0.79 of 15 deg, 0.52-0.59 of 20 deg); AR-016 result (landing: record run 17.2 mm at Fp 37.5 N / zeta 0.05; accepted region Fp 37.5-39.0 N, zeta 0.02-0.05), checked 2026-11-15 — **CHECKED**
   - param `P:struct.landing_stroke_max_mm` = 20 mm — **CHECKED**
     - `SRC-A-REQ` (see above)
 - claim **CL-A-FOAM-SPAR-BOND** Foam shear around the spar, bond over |y| <= 0.20 m (FIXES2 rule), MS at 103 kPa basis = **0.48** (limit >= 0, margin +0.48 abs) — **UNVERIFIED**
@@ -1444,7 +1447,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p5
 
 ## A-P6
 
-**Stall: 1.3 Vs below cruise** — Clean stall Vs <= cruise / 1.3 at the gate mass (1.3 Vs < 17 m/s) — **UNVERIFIED**  
+**Stall: 1.3 Vs below cruise** — Clean stall Vs <= cruise / 1.3 at the gate mass (1.3 Vs < 17 m/s) — **UNVERIFIED** **FAILS**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-p6
 
 - claim **CL-A-STALL** 1.3 x clean stall speed at the 1.47 kg gate = **15.69 m/s** (limit <= 17 m/s, margin +8%) — **UNVERIFIED**
@@ -1471,6 +1474,25 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p6
     - `ASM-A-CLMAX` (see above)
   - param `P:mission.cruise_ms` = 17 m/s — **CHECKED**
     - `SRC-A-MISSION` (see above)
+- claim **CL-A-STALL-PRED** 1.3 x clean stall speed at the predicted take-off mass = **17.74 m/s** (limit <= 17 m/s, margin -4%) — **UNVERIFIED** **FAILS**
+  - ⚠ FAILS: margin -4.4% (17.74 m/s vs <= 17 m/s)
+  - ⚠ uses ASM-A-CLMAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
+  - ⚠ uses CL-A-MASS-PRED, which is UNVERIFIED
+  - ⚠ uses ASM-A-CLMAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
+  - ⚠ uses ASM-A-CLMAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
+  - how to verify: FAIL on the estimate (AM-011: physics checks apply at the predicted mass). Gated by TP-11 (TEST-PLAN-O4B): the measured stall (T-A-FIRST-CRUISE) must give CLmax >= 0.81 at this mass; a cruise-speed re-derivation alone has zero margin (A-P6).
+  - parts: WNG-001
+  - `T-A-FIRST-CRUISE` (see above)
+  - `ASM-A-CLMAX` (see above)
+  - calc `CALC-A-STALL-PRED` `redesign/qp/A/proofs/claims_a1_flight.py::stall_pred()`: `1.3 Vs = 1.3 sqrt(2 m g / (rho S CLmax)) at the predicted mass; rho 1.20 (MISSION s1), g 9.807, S 0.22 m2, CLmax 0.75 EST (ISA rho 1.225 gives 17.56 m/s at 1.881 kg, T-084; the project basis is 1.20)` — **CHECKED**
+    - `m` ← claim **CL-A-MASS-PRED** Predicted take-off mass (CAD basic x growth + overrun) = **1.881 kg** (limit <= 1.47 kg, margin -28%) — **UNVERIFIED** **FAILS** — chain under [A-D3](#a-d3)
+    - `g` ← `P:env.g_ms2` (see above)
+    - `rho` ← `P:env.rho_kgm3` (see above)
+    - `s` ← `P:mission.s_m2` (see above)
+    - `cl` ← `ASM-A-CLMAX` (see above)
+    - `k` ← `P:req.cruise_ratio` (see above)
+    - `ASM-A-CLMAX` (see above)
+  - `P:mission.cruise_ms` (see above)
 
 ## A-P7
 
@@ -1681,7 +1703,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-u4
   - param `P:req.coll_tol_mm` = 0.05 mm — **CHECKED**
     - `SRC-A-COLL` (see above)
 - claim **CL-A-WIRE-ENDS** Wire ends not seated in a part = **0** (limit <= 0, margin +0 abs) — **CHECKED**
-  - how to verify: collide_a.py wire_ends check (41 strands).
+  - how to verify: collide_a.py wire_ends check (strands per wire_inventory.json).
   - calc `CALC-A-WIRE-ENDS-READ` `redesign/qp/A/proofs/claims_a3_program.py::read_value()`: `len(wire_ends) in cad/out/report.json; read, not re-run` — **CHECKED**
     - `v` ← param `P:cad3d.wire_ends_open` = 0 — **CHECKED**
       - `SRC-A-COLL` (see above)
@@ -1691,14 +1713,14 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-u4
     - `v` ← param `P:cad3d.wire_kinks` = 0 — **CHECKED**
       - `SRC-A-COLL` (see above)
 - claim **CL-A-ASSY-STEPS** Build steps that pass the assembly sweep = **59** (limit >= 59, margin +0%) — **CHECKED**
-  - how to verify: python -I qp/A/cad/a_assembly.py: 28 of 28 steps, 0 blocked, 0 unsupported, no wire laid before its ends.
+  - how to verify: python -I qp/A/cad/a_assembly.py: 0 blocked, 0 unsupported, no wire laid before its ends (T-099 gates record 2026-11-23: 66 steps, 59 with parts plus 7 marker steps).
   - calc `CALC-A-ASSY-STEPS-READ` `redesign/qp/A/proofs/claims_a3_program.py::read_value()`: `steps with no blocking pair in cad/out/assembly.json; read, not re-run` — **CHECKED**
     - `v` ← param `P:cad3d.assy_steps_ok` = 59 — **CHECKED**
-      - source `SRC-A-ASSY` [Build-sequence check output (cad/out/assembly.json, ASSEMBLY.md)](redesign/qp/A/cad/out/ASSEMBLY.md), 35 steps, 96 of 96 parts (2026-11-15, D-194), checked 2026-11-15 — **CHECKED**
+      - source `SRC-A-ASSY` [Build-sequence check output (cad/out/assembly.json, ASSEMBLY.md)](redesign/qp/A/cad/out/ASSEMBLY.md), step and part counts are computed from assembly.json; T-099 gates record 2026-11-23: 66 steps, 129 of 129 parts placed, checked 2026-11-15 — **CHECKED**
   - param `P:cad3d.assy_steps` = 59 — **CHECKED**
     - `SRC-A-ASSY` (see above)
 - claim **CL-A-ASSY-PARTS** Parts placed by the build sequence = **129** (limit >= 129, margin +0%) — **CHECKED**
-  - how to verify: a_assembly.py: 78 of 78 parts placed, none missing from the sequence.
+  - how to verify: a_assembly.py: 129 of 129 parts placed (T-099 gates record 2026-11-23), none missing from the sequence.
   - calc `CALC-A-ASSY-PARTS-READ` `redesign/qp/A/proofs/claims_a3_program.py::read_value()`: `parts across the steps of cad/out/assembly.json; read, not re-run` — **CHECKED**
     - `v` ← param `P:cad3d.assy_parts_placed` = 129 — **CHECKED**
       - `SRC-A-ASSY` (see above)

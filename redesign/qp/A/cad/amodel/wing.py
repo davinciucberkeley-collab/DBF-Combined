@@ -1323,7 +1323,7 @@ def build_cage(ctx):
         db.revolve('Y', (0.0, ys0, 0.0), dbl_profile(sg), name='doubler 14x12 CF tube, s %.0f..%.0f mm, outer end tapered over %.0f mm (D-222 P1: staggered %.0f mm past the sleeve end)' % (DBL_S0 * 1e3, DBL_S1 * 1e3, DBL_TAPER * 1e3, DBL_STAG * 1e3))
         z0, z1 = sorted((sig * 0.0050, sig * 0.0075))
         db.cut(_tube_cyl('Z', (0.0, hs, 0.0), z0, z1, HOLE_R), None, 'phase-lead exit hole 4.8 mm through the doubler (D-202)')
-        z0, z1 = sorted((sig * 0.0069, sig * 0.0095))
+        z0, z1 = sorted((sig * 0.0060, sig * 0.0095))       # T-099 F-2b (D-247): the hole starts 1.0 mm inside the 7.0 mm bore radius (was 6.9 mm: a flat hole floor 0.1 mm inside a curved bore left a sickle of hub, 0.3-0.4 mm thick at the hole edges, across the lead)
         ctx.components['CGE-001'].cut(_tube_cyl('Z', (0.0, hs, 0.0), z0, z1, HOLE_R), tube.matrix(), 'phase-lead exit hole 4.8 mm through the sleeve (D-202)')
         hz0 = sig * (SLV_R - HOLE_CH) if sig > 0 else -(SLV_R + 0.001)       # D-221 s7.1.5: 0.5 mm x 45 deg chamfer on the exit where it meets the flat
         hprof = ([(0.0, 0.0), (0.0, HOLE_R), (HOLE_CH, HOLE_R + HOLE_CH), (HOLE_CH + 0.001, HOLE_R + HOLE_CH), (HOLE_CH + 0.001, 0.0)] if sig > 0 else

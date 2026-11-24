@@ -6195,7 +6195,7 @@ window.VIEWER_DATA = {
     "resolved": 1.47
    },
    "status": "UNVERIFIED",
-   "how": "Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).",
+   "how": "Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; predicted 1.881 kg EST at D-240 (CAD basic 1,641.0 g x growth + overrun, MASS-GATE.md; 1,423.9 g was the MASS-GATE s7 value at D-195).",
    "margin": -0.2793680625850341,
    "parts": [
     "WNG-001",
@@ -6635,17 +6635,17 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-A-PITCH-USE",
-   "title": "Elevon use in transition (share of the 20 deg stop)",
-   "value": 0.575,
+   "title": "Elevon pitch use in transition (share of the 15 deg basis; the 0.60 line is 9 deg)",
+   "value": 0.79,
    "unit": "-",
    "limit": {
     "op": "<=",
     "ref": "P:req.pitch_use_max",
     "resolved": 0.6
    },
-   "status": "CHECKED",
-   "how": "C3 pitch-over run and SITL transition logs (D-195: peak 11.5 deg at the CAD CG, 12.0 at the forward trim end; was 8.9-9.6 before the S5010 section, CG 21.5 and the corrected trim).",
-   "margin": 0.041666666666666706,
+   "status": "UNVERIFIED",
+   "how": "D-245: the standing line is 0.60 of 15 deg (SITL-FLIGHT.md l.25), 0.69 (Z5) to 0.79 (T-074) in AR-015, so FAIL, open (AR-010 item 5). Fix path is the ladder from rung 1 (controls: lower the entry pitch-rate demand), then a SITL rerun; a 20 deg basis is not used (no A-specific roll / gust reserve derivation; review round 10 98-4). First transition flight logs the elevon commands.",
+   "margin": -0.31666666666666676,
    "parts": [
     "WNG-006-R",
     "WNG-006-L"
@@ -7140,7 +7140,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A-LANDING-STROKE",
    "title": "Landing crush stroke at 1.2 m/s on the fin-tip feet",
-   "value": 15.2,
+   "value": 17.2,
    "unit": "mm",
    "limit": {
     "op": "<=",
@@ -7148,8 +7148,8 @@ window.VIEWER_DATA = {
     "resolved": 20.0
    },
    "status": "CHECKED",
-   "how": "Drop test of the feet at 1.2 m/s on the built aircraft; 20 mm available.",
-   "margin": 0.24000000000000005,
+   "how": "TP-3 drop test of the feet at 1.2 m/s on the built aircraft, with the foam plateau and damping measured; 20 mm available. PASS (17.2 mm) holds only inside the accepted foam region Fp 37.5-39.0 N and zeta 0.02-0.05 (AR-016, D-243); outside it the stroke bottoms (20.2-20.6 mm, FAIL).",
+   "margin": 0.14000000000000004,
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -7823,6 +7823,23 @@ window.VIEWER_DATA = {
     "WNG-008-LU",
     "HWC-001",
     "HWC-003"
+   ]
+  },
+  {
+   "id": "CL-A-STALL-PRED",
+   "title": "1.3 x clean stall speed at the predicted take-off mass",
+   "value": 17.74394826463012,
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "P:mission.cruise_ms",
+    "resolved": 17.0
+   },
+   "status": "UNVERIFIED",
+   "how": "FAIL on the estimate (AM-011: physics checks apply at the predicted mass). Gated by TP-11 (TEST-PLAN-O4B): the measured stall (T-A-FIRST-CRUISE) must give CLmax >= 0.81 at this mass; a cruise-speed re-derivation alone has zero margin (A-P6).",
+   "margin": -0.04376166262530118,
+   "parts": [
+    "WNG-001"
    ]
   }
  ],

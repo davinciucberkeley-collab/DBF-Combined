@@ -26,6 +26,8 @@ total incl. crash reserve by its definition <= $2,000 (AM-013, AM-018); weight m
 **State (EST):** CAD 1,641.0 g, predicted 1.881 kg (CL-A-MASS-PRED), CG 22.05 mm CAD (tallied about 23.22), SM 7.61 % CAD, lateral CG -3.32 mm (FC 75 mm left, D-240), window +11.88 %, T/W 2.632/2.111, cruise 234 s, A-P9
 tip-over 31.00 deg; BOM $1,939.17, margin +$60.83 (reserve $346.94). 3-D gates PASS at T-092 (2026-11-23; no geometry change since).
 
+**Open item (T-103, 2026-11-23):** T-099 F-6 (go/no-go date) is answered by AM-037: go/no-go and bench decision Fri 29 Jan 2027, no fabrication before Jacobs reopens (19 Jan assumed), D-248, SCHEDULE-A, slack +2 d.
+
 **Open engineering items:** D-185 rotor-band vibration rule (D-236, TP-10b decides); A-P6 1.3 Vs 17.56 > 17.0 m/s (TP-11
 stall test); landing pad zeta <= 0.05 (TP-3) and pad retention PSA 0.13; TP-4 bond coupon; bench derate >= 0.889;
 X2216 short-shaft backorder; R15 rib tube supply (T-088, Carbonwebshop EU); if TP-3 lengthens the pad, re-check A-P9

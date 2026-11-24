@@ -265,7 +265,7 @@ tau("CL-A-BRIDGE-TORSION-F2", "If one motor goes to full power (an ESC cap failu
     limit_why="30 MPa is the estimated carbon shear allowable (no coupon test yet).", via_note="Roll moment 4.37 N m is from the hub FEA load set (bridge_torsion_d206.md).", real="Twist a spare 16 x 14 tube on a lever arm with a known weight; the 30 MPa allowable is an estimate.")
 tau("CL-A-BRIDGE-TORSION-S2", "The same tube in a worse load: a 30 N prop strike in the disc plane. This is a damage case, so the factor is 1.0.",
     limit_why="30 MPa estimated carbon shear allowable.", via_note="Roll moment 7.93 N m is from the hub FEA load set.", real="Same twist test.")
-C("CL-A-LANDING-STROKE", "struct", "On landing, the fin-tip feet crush and absorb the touchdown. This checks that the crush stays within the 20 mm available.", via="landing_a.py (energy absorbed by the foot shoe at 1.2 m/s descent)", formula="stroke = kinetic energy at touchdown / crush force of the foot",
+C("CL-A-LANDING-STROKE", "struct", "On landing, the fin-tip feet crush and absorb the touchdown. This checks that the crush stays within the 20 mm available. It passes (17.2 mm) only inside the accepted foam region (AR-016, D-243); the foam is unmeasured (TP-3).", via="landing_a.py (energy absorbed by the foot shoe at 1.2 m/s descent)", formula="stroke = kinetic energy at touchdown / crush force of the foot",
   sym={"v": "crush stroke of the foot"}, limit_why="20 mm is the stroke the foot design allows (A-P13).", real="Drop the built aircraft from the height that gives 1.2 m/s onto a hard floor and measure the foot crush.")
 C("CL-A-TIPOVER", "struct", "Standing on its fin tips, the aircraft must not tip over if the ground slopes or a gust leans it. This is the tilt at which it starts to tip.", via="geometry in SIZING-A s4: feet 0.36 m apart, CG 0.275 m above the ground", formula="tip-over angle = arctan( half the foot spacing / CG height )",
   sym={"v": "static tip-over angle"}, limit_why="At least 30 degrees (requirement A-P9).", real="Tilt the built aircraft on a board until it tips, read the board angle on a phone.")
@@ -318,6 +318,10 @@ C("CL-A-STALL", "flight", "The slowest speed at which the wing still lifts the a
   formula="Vs = sqrt(2 x m x g / (rho x S x CLmax));  claim = 1.3 x Vs", sym={"m": "gate mass", "g": "gravity", "rho": "air density", "s": "wing area", "cl": "wing's peak lift coefficient (an assumption)", "k": "safety ratio of cruise to stall"},
   steps=[("vs", "(2*m*g/(rho*s*cl))**0.5", "m/s", "stall speed"), ("k_vs", "k*vs", "m/s", "1.3 x stall speed")], limit_why="At most the 17 m/s cruise speed (requirement A-P6).",
   real="First-cruise test (T-A-FIRST-CRUISE): slow the aircraft until it stalls at altitude and read airspeed; the measured stall replaces the CLmax assumption.")
+C("CL-A-STALL-PRED", "flight", "The same stall check at the predicted take-off mass (1.881 kg estimate) instead of the 1.47 kg gate. Cruise (17 m/s) must be at least 1.3 times the stall speed; at this mass it is not (17.74 m/s), so it FAILS until a measured stall shows the wing lifts better than the 0.75 estimate (TP-11).",
+  formula="Vs = sqrt(2 x m x g / (rho x S x CLmax));  claim = 1.3 x Vs", sym={"m": "predicted mass", "g": "gravity", "rho": "air density 1.20", "s": "wing area", "cl": "wing's peak lift coefficient (an assumption)", "k": "safety ratio of cruise to stall"},
+  steps=[("vs", "(2*m*g/(rho*s*cl))**0.5", "m/s", "stall speed"), ("k_vs", "k*vs", "m/s", "1.3 x stall speed")], limit_why="At most the 17 m/s cruise speed (requirement A-P6).",
+  real="First-cruise test (T-A-FIRST-CRUISE, TP-11): measure the stall at the as-weighed mass; the pass line is CLmax 0.81 or more.")
 yawsym = {"cant_term_ref_nm": "yaw authority from cant at the reference cant angle", "arm_factor": "factor for the longer arm design", "cant_deg": "actual cant", "cant_ref_deg": "reference cant", "q_model_nmm": "rotor reaction torque from the model", "q_gain": "arm-factor scaling on Q"}
 for cid, why, lw in [("CL-A-YAW-MODEL", "In hover the aircraft steers in yaw by slightly speeding two motors and slowing two. This checks it can make at least 0.35 N m of twist.", "0.35 N m is the pass level (requirement A-P7)."),
                      ("CL-A-YAW-R2", "The same yaw authority against the lower R2 floor: below 0.30 N m the design must be changed.", "0.30 N m is the R2 fail level.")]:
@@ -335,9 +339,9 @@ C("CL-A-WIND-CAP", "flight", "The same turbulence runs must never hit the 0.90 t
 for cid, why, via, sym in [("CL-A-ROLL-141", "Can the aircraft roll fast enough in cruise (at least 90 degrees per second) to steer through a gust? This SITL run uses the 1.455 kg target mass.", "SITL run R5_rt65", {"v": "peak roll rate"}),
                            ("CL-A-ROLL-GATE", "The same roll rate at the 1.47 kg gate mass.", "SITL run R5_rt65g", {"v": "peak roll rate"})]:
     C(cid, "flight", why, via=via, formula="peak roll rate from a full-stick roll command in the simulator", sym=sym, limit_why="At least 90 degrees per second (requirement A-P11).", real="First cruise test (T-A-FIRST-CRUISE): full-aileron roll and read the gyro.")
-C("CL-A-PITCH-USE", "flight", "During the pitch-over transition the elevons deflect part of their travel. This checks they use at most 60 % of the 20 degree stop, leaving travel for gusts.",
-  formula="use = peak elevon deflection / stop", sym={"peak": "largest elevon deflection in the transition", "stop": "mechanical stop"}, steps=[("use", "peak/stop", "-", "share of the stop used")],
-  limit_why="At most 0.60 (QP-4 board basis).", real="Log elevon commands during the first transition.")
+C("CL-A-PITCH-USE", "flight", "During the pitch-over transition the elevons deflect part of their travel. This checks the use stays under 60 % of a 15 degree basis (9 degrees), leaving travel for roll and gusts. It currently FAILS (0.69 to 0.79 in the simulation); decision D-245 keeps this line.",
+  via="SITL transition runs (AR-015)", formula="use = elevon pitch deflection / 15 degree basis (read from the simulation summary)", sym={"v": "elevon pitch use on the 15 degree basis"},
+  limit_why="At most 0.60 (SITL-FLIGHT.md line 25; D-245 supersedes the QP-4 board 20 degree basis).", real="Log elevon commands during the first transition.")
 C("CL-A-SERVO-FACTOR", "flight", "The elevon servo must be strong enough to hold the elevon against the airflow at top speed with a safety factor of 1.5 on top. This is the 25 C case.",
   formula="factor = servo torque / (load factor x (hinge moment + preload + damper at slew))", sym={"stall_72_nm": "servo stall torque at 7.2 V", "hinge_vd_nm": "aerodynamic hinge moment at VD", "preload_nm": "hinge friction preload", "damper_slew_nm": "damper drag while moving", "load_factor": "safety factor on load", "damper_slew_cold_nm": "damper drag when cold", "arm_mm": "servo arm length", "horn_mm": "elevon horn length"},
   steps=[("factor_25c", "stall_72_nm/(load_factor*(hinge_vd_nm + preload_nm + damper_slew_nm))", "-", "torque factor")], limit_why="At least 1.5 (requirement A-P11).", real="Servo rail voltage test (T-A-SERVO-RAIL) and the elevon coupon E1 (T-A-ELEVON-E1): measure real servo torque and hinge moment.")
@@ -437,10 +441,10 @@ TEX = {
     "CL-A-CRUISE-RADIUS": r"R = \frac{V^{2}}{g\tan\phi}",
     "CL-A-CRUISE-AVAIL": r"t_{\mathrm{cruise}} = \frac{E_{\mathrm{usable}} - E_{\mathrm{hover}} - E_{\mathrm{trans}} - E_{\mathrm{climb}}}{P_{\mathrm{cruise}}}\times 3600",
     "CL-A-FENCE": r"d = \frac{L}{2} + R + d_{\mathrm{run}}",
+    "CL-A-STALL-PRED": r"V_s = \sqrt{\frac{2\,m\,g}{\rho\,S\,C_{L\max}}},\qquad \text{claim} = 1.3\,V_s",
     "CL-A-STALL": r"V_s = \sqrt{\frac{2\,m\,g}{\rho\,S\,C_{L\max}}},\qquad \text{claim} = 1.3\,V_s",
     "CL-A-YAW-MODEL": r"N = N_{\mathrm{ref}}\,k_{\mathrm{arm}}\,\frac{\sin\theta}{\sin\theta_{\mathrm{ref}}} + k_Q\,Q",
     "CL-A-YAW-R2": r"N = N_{\mathrm{ref}}\,k_{\mathrm{arm}}\,\frac{\sin\theta}{\sin\theta_{\mathrm{ref}}} + k_Q\,Q",
-    "CL-A-PITCH-USE": r"u = \frac{\delta_{\mathrm{peak}}}{\delta_{\mathrm{stop}}}",
     "CL-A-SERVO-FACTOR": r"F = \frac{M_{\mathrm{servo}}}{k\,\left(M_{\mathrm{hinge}} + M_{\mathrm{preload}} + M_{\mathrm{damper}}\right)}",
     "CL-A-SERVO-COLD": r"F = \frac{M_{\mathrm{servo}}}{k\,\left(M_{\mathrm{hinge}} + M_{\mathrm{preload}} + M_{\mathrm{damper,cold}}\right)}\cdot\frac{\ell_{\mathrm{horn}}}{\ell_{\mathrm{arm}}}",
     "CL-A-SERVO-RATIO": r"r = \frac{M_{\mathrm{servo}}}{M_{\mathrm{hinge}}}",

@@ -844,7 +844,7 @@
    "verifies": [
     "A-U4"
    ],
-   "how": "collide_a.py wire_ends check (41 strands).",
+   "how": "collide_a.py wire_ends check (strands per wire_inventory.json).",
    "value": 0
   },
   {
@@ -912,7 +912,7 @@
    "verifies": [
     "A-U4"
    ],
-   "how": "python -I qp/A/cad/a_assembly.py: 28 of 28 steps, 0 blocked, 0 unsupported, no wire laid before its ends.",
+   "how": "python -I qp/A/cad/a_assembly.py: 0 blocked, 0 unsupported, no wire laid before its ends (T-099 gates record 2026-11-23: 66 steps, 59 with parts plus 7 marker steps).",
    "value": 59
   },
   {
@@ -946,7 +946,7 @@
    "verifies": [
     "A-U4"
    ],
-   "how": "a_assembly.py: 78 of 78 parts placed, none missing from the sequence.",
+   "how": "a_assembly.py: 129 of 129 parts placed (T-099 gates record 2026-11-23), none missing from the sequence.",
    "value": 129
   }
  ]

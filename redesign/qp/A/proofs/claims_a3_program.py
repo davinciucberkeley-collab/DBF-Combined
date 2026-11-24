@@ -117,14 +117,14 @@ stored("CL-A-COLL-COUNT", "Part overlaps deeper than the tolerance (neutral, +-2
 stored("CL-A-COLL-DEPTH", "Deepest part overlap at any reachable pose", "P:cad3d.max_depth_mm", "mm", limit=("<=", "P:req.coll_tol_mm"), verifies=["A-U4"], parts=["WNG-007-R", "WNG-007-L", "WNG-008-RU", "WNG-008-LU", "HWC-001", "HWC-003"],
        how="collide_a.py report after D-212 rev 3 (report_d212r3_pose21.json, review r3 m-9): ten static hits, all under the 0.05 mm gate, the deepest one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); the +-21 deg poses show none (the 0.042 mm balance-tab contact of the pre-D-212 report_pose21.json is gone). The +-20 deg poses (the commanded endpoints, BUILD D5b) are read from report_d212r3_pose20.json (rev 3, rerun 2026-11-19, 0 hits, static identical); +-22 deg is past the stop and is not a reachable pose.",
        equation="largest depth_mm over the reachable poses in report_d212r3_pose21.json and report_d212r3_pose20.json; read, not re-run")
-stored("CL-A-WIRE-ENDS", "Wire ends not seated in a part", "P:cad3d.wire_ends_open", "-", limit=("<=", 0), verifies=["A-U4"], how="collide_a.py wire_ends check (41 strands).",
+stored("CL-A-WIRE-ENDS", "Wire ends not seated in a part", "P:cad3d.wire_ends_open", "-", limit=("<=", 0), verifies=["A-U4"], how="collide_a.py wire_ends check (strands per wire_inventory.json).",
        equation="len(wire_ends) in cad/out/report.json; read, not re-run")
 stored("CL-A-WIRE-FOLDS", "Wire folds (kinks)", "P:cad3d.wire_kinks", "-", limit=("<=", 0), verifies=["A-U4"], how="collide_a.py kinks check.", equation="len(kinks) in cad/out/report.json; read, not re-run")
 stored("CL-A-ASSY-STEPS", "Build steps that pass the assembly sweep", "P:cad3d.assy_steps_ok", "-", limit=(">=", "P:cad3d.assy_steps"), verifies=["A-U4"],
-       how="python -I qp/A/cad/a_assembly.py: 28 of 28 steps, 0 blocked, 0 unsupported, no wire laid before its ends.",
+       how="python -I qp/A/cad/a_assembly.py: 0 blocked, 0 unsupported, no wire laid before its ends (T-099 gates record 2026-11-23: 66 steps, 59 with parts plus 7 marker steps).",
        equation="steps with no blocking pair in cad/out/assembly.json; read, not re-run")
 stored("CL-A-ASSY-PARTS", "Parts placed by the build sequence", "P:cad3d.assy_parts_placed", "-", limit=(">=", "P:cad3d.parts"), verifies=["A-U4"],
-       how="a_assembly.py: 78 of 78 parts placed, none missing from the sequence.", equation="parts across the steps of cad/out/assembly.json; read, not re-run")
+       how="a_assembly.py: 129 of 129 parts placed (T-099 gates record 2026-11-23), none missing from the sequence.", equation="parts across the steps of cad/out/assembly.json; read, not re-run")
 
 if __name__ == "__main__":
     kit.write()

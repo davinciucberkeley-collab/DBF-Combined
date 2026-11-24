@@ -77,7 +77,7 @@ def build():
         "motor_rating_a": V(26.8, "A", R, "T-083: SunnySky X2216 V3 880KV 450 W max continuous / 16.8 V = 26.8 A (32 A / 30 s); sunnyskyusa.com read 2026-11-21. The page gives power, not a continuous current: EST", est=True),
         "esc_rating_a": V(35.0, "A", "SRC-A-BOM", "BOM-A.csv P04: 35 A continuous per channel"),
         "connector_factor": V(1.25, "-", R, "A-P16: connector >= 1.25 x peak"),
-        "roll_min_degs": V(90.0, "deg/s", R, "A-P11 (G5)"), "pitch_use_max": V(0.60, "-", "SRC-A-BOARD4", "BOARD QP-4 s3: <= 0.60 of the 20 deg stop (G5 basis)"),
+        "roll_min_degs": V(90.0, "deg/s", R, "A-P11 (G5)"), "pitch_use_max": V(0.60, "-", "SRC-A-AR015", "D-245 (2026-11-23): <= 0.60 of the 15 deg basis (SITL-FLIGHT.md l.25); D-245 supersedes BOARD QP-4 s3 G5 (20 deg stop basis), which has no A-specific roll / gust reserve derivation (ASDRAWN s3 asks the board to state the basis; review round 10 98-4)"),
         "servo_factor_min": V(1.5, "-", "SRC-A-FIXES2", "FIXES2 s2: factor >= 1.5 on the required torque (1.5 x load)"),
         "servo_ratio_min": V(1.5, "-", R, "A-P11: servo stall torque >= 1.5 x hinge moment"),
         "yaw_pass_nm": V(0.35, "N m", R, "A-P7"), "yaw_r2_nm": V(0.30, "N m", R, "A-P7: below 0.30 the 5 m/s card is reopened (R2)"),
@@ -170,6 +170,7 @@ def build():
         "roll_141_degs": V(106.9, "deg/s", "SRC-A-D195SITL", "D-195: SITL case=roll, 1.455 kg (target), cant 17, D-191 gains, CAD CG 21.47, S5010 aero, FBWA throttle held (rollthr 1650, 16.3-19 m/s), run R5_rt65: 6,126 / 57.3. Roll steps at the old 1500 stick decelerate to 14.4 m/s and give 86.7 deg/s (R5_roll, elevon at its stop): not a cruise state"),
         "roll_150_degs": V(106.4, "deg/s", "SRC-A-D195SITL", "D-195: SITL case=roll, 1.47 kg (the gate), same conditions, run R5_rt65g (106.7 at the forward trim end CG 19.3, R5_rt65f)"),
         "elevon_peak_deg": V(11.5, "deg", "SRC-A-D195SITL", "D-195: worst elevon peak in the transition runs at the CAD CG, 1.455 / 1.47 kg (R5_t0, R5_g0 11.5; wind 4 m/s 10.3; CG 19.3 forward trim end 12.0, R5_cgf)"),
+        "pitch_use_15_worst": V(0.79, "-", "SRC-A-AR015", "AR-015 (T-097, 1.881 kg EST, X2216, CG 22.049 mm): elevon pitch use on the 15 deg basis, worst of Z5 0.69 and T-074 0.77-0.79 (T097_data/sitl_*/sum.json pitch_use_15); information on other bases: 20 deg 0.52-0.59, 25 deg 0.41-0.47"),
         "elevon_stop_deg": V(20.0, "deg", "SRC-A-FIXES2", "FIXES2 s3.1: control authority 20 deg (stop 21 deg)"),
         "lean_belly_5ms_deg": V(31.5, "deg", "SRC-A-SITL2", "SITL.md s70: belly into wind at 5 m/s needs 29-31 deg (mean 29.3, max 31.5)"),
         "wind_ge85_s": V(0.20, "s", "SRC-A-D195SITL", "D-195: 4 m/s mean, turbulence 1.0 m/s, 1.455 kg, worst pack (thrust scale 0.767), arm 1.2, cant 17, A.param D-191, CAD inertia / CG: longest time at or above 0.85 over the seven runs (0 / 0 / 0 / 0.20 / 0 / 0 / 0), runs R5_h60, h60s2, h60s3, h70, h70s2, h80, h90 (sitl/results.jsonl; same as CLAIMS-FIX N4 at 1.47 kg)"),
@@ -233,7 +234,7 @@ def build():
         "ms_cup_op_headpull": V(14.82, "-", "SRC-A-ARMCUP", "arm_cup_checks.md: cup head pull-through at the 0.90 cap thrust + 1P, 1.26 vs 20 MPa", est=True),
         "ms_fatigue_hub_wall": V(1.17, "-", "SRC-A-ARMCUP", "arm_cup_checks.md: hub arm-socket wall, 2000 cycles 0 to cap, 6 mm patch, 4.6 vs 10 MPa (knock-down EST)", est=True),
         "ms_fatigue_arm": V(15.32, "-", "SRC-A-ARMCUP", "arm_cup_checks.md: arm tube bending amplitude 8.6 vs 140 MPa at 4e6 cycles (knock-down 0.40 EST)", est=True),
-        "landing_stroke_mm": V(15.2, "mm", "SRC-A-REQ", "A-P13 basis: landing stroke 15.2 of 20 mm (structures iteration 2)"),
+        "landing_stroke_mm": V(17.2, "mm", "SRC-A-AR015", "AR-016 record run, 1.881 kg EST, rib 25x23, Fp 37.5 N, zeta 0.05: worst stroke 17.2 mm of 20 (n 10.76 g, tilt 2.3 deg). Holds ONLY inside the accepted foam region Fp 37.5-39.0 N AND zeta 0.02-0.05 (D-243); outside it the stroke reaches 20.2-20.6 mm (FAIL, e.g. zeta 0.01) or 30 / 31.5 N bottom the stroke. Foam plateau and zeta unmeasured: TP-3"),
         "landing_stroke_max_mm": V(20.0, "mm", "SRC-A-REQ", "A-P13 basis: 20 mm available"),
         "foam_ms_spar_bond": V(0.48, "-", "SRC-A-FOAM103", "foam_103.md: spar bond zone, FIXES2 rule |y| <= 0.20 m, 58 kPa vs 86 (shear 86 kPa EST)", est=True),
         "foam_ms_fin_slot": V(0.81, "-", "SRC-A-FOAM103", "foam_103.md: bearing at the fin slot, 57 vs 103 kPa (compressive 103 kPa, data sheet)"),
@@ -302,13 +303,13 @@ def build():
     P["cad3d"] = {
         "n_over_tol": V(n_over, "-", "SRC-A-COLL", "cad/out/report_d212r3_pose21.json (neutral and +-21 deg) + report_d212r3_pose20.json (+-20 deg), both D-212 rev 3: overlaps deeper than the tolerance"),
         "max_depth_mm": V(max(depths) if depths else 0.0, "mm", "SRC-A-COLL", "deepest overlap at any reachable pose: 0.034 mm static at neutral and +-21 deg (report_d212r3_pose21.json, D-212 rev 3; was 0.042 mm in the pre-D-212 report_pose21.json); the +-20 deg poses (report_d212r3_pose20.json, rev 3) show 0 hits over tolerance, static identical"),
-        "wire_ends_open": V(len(reps[""]["wire_ends"]), "-", "SRC-A-COLL", "report.json wire_ends: wire ends not seated in a part (41 strands)"),
+        "wire_ends_open": V(len(reps[""]["wire_ends"]), "-", "SRC-A-COLL", "report.json wire_ends: wire ends not seated in a part (strand count: see wire_inventory.json, 44 strands in the T-099 GLB probe)"),
         "wire_kinks": V(len(reps[""]["kinks"]), "-", "SRC-A-COLL", "report.json kinks (wire folds)"),
         "parts": V(reps[""]["parts"], "-", "SRC-A-COLL", "report.json parts checked"),
         "assy_steps": V(len(asm["steps"]) + len(asm_bench), "-", "SRC-A-ASSY", "assembly.json steps + assembly_bench.json steps (D-202 bench run)"),
         "assy_steps_ok": V(sum(1 for s in asm["steps"] + asm_bench if not s["pairs"] and s["worst_mm"] <= tol), "-", "SRC-A-ASSY",
-                           "assembly.json steps with no blocking pair at or above the tolerance (35 of 35 in ASSEMBLY.md)"),
-        "assy_parts_placed": V(sum(len(s["parts"]) for s in asm["steps"]), "-", "SRC-A-ASSY", "assembly.json parts placed (96 of 96)"),
+                           "assembly.json steps with no blocking pair at or above the tolerance (count is computed; current a_assembly run per T-099 gates record: 66 steps, 59 with parts plus 7 marker steps, 0 blocked)"),
+        "assy_parts_placed": V(sum(len(s["parts"]) for s in asm["steps"]), "-", "SRC-A-ASSY", "assembly.json parts placed (computed; current a_assembly run per T-099 gates record: 129 of 129)"),
     }
     return P
 

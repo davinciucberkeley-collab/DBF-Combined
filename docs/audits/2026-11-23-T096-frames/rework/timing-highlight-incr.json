@@ -1,0 +1,46 @@
+{
+ "film": "shots-highlight.json",
+ "changed_from": "old-highlight.json",
+ "film_seconds": 24.2,
+ "frames": 1452,
+ "frames_reused": 672,
+ "frames_changed": 780,
+ "new_raw_pictures": 780,
+ "seconds": 2395.1,
+ "seconds_render": 2366.8,
+ "seconds_frame_loop_per_worker": [
+  1752.3,
+  2045.5
+ ],
+ "seconds_per_rendered_frame": 4.87,
+ "workers": 2,
+ "samples": 24,
+ "resolution": [
+  1920,
+  1080
+ ],
+ "fps": 60,
+ "dof": false,
+ "motion_blur": false,
+ "ray_tracing": true,
+ "changed_frame_ranges": [
+  [
+   432,
+   1211
+  ]
+ ],
+ "sources": {
+  "qp/A/mechanism/out/T097_data/sitl_T097_Z5/case.fwd.csv": {
+   "sha256": "a0e789d1c9ff7bde4fb9ab0f8b0f94d94bd4dc7cc0d630689ff9961a85865dfa",
+   "bytes": 1113180
+  },
+  "qp/A/mechanism/out/T097_data/sitl_T097_Z5/result.json": {
+   "sha256": "842eb0dcd4008a81bc6a5b66538055f206e38897dd4385c9f458da1fe7ec483f",
+   "bytes": 3146
+  },
+  "qp/A/mechanism/out/T097_data/sitl_T097_Z5/sum.json": {
+   "sha256": "ac32c88fde4d8909c61a7ff7f0dfd4d95c6163ccab89f4e64cfe3536dbd36726",
+   "bytes": 1491
+  }
+ }
+}

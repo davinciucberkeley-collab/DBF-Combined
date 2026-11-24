@@ -120,7 +120,7 @@
    "kind": "file",
    "url": "redesign/qp/A/cad/out/ASSEMBLY.md",
    "checked": "2026-11-15",
-   "where": "35 steps, 96 of 96 parts (2026-11-15, D-194)"
+   "where": "step and part counts are computed from assembly.json; T-099 gates record 2026-11-23: 66 steps, 129 of 129 parts placed"
   },
   {
    "id": "SRC-A-SIZING",
@@ -138,7 +138,7 @@
    "kind": "repo",
    "url": "redesign/review/QP-4/BOARD.md",
    "checked": "2026-11-15",
-   "where": "s1 structure ceiling 494 g, s3 pitch-use basis, G1-G10"
+   "where": "s1 structure ceiling 494 g, s3 pitch-use basis (G5 basis superseded by D-245, 15 deg), G1-G10"
   },
   {
    "id": "SRC-A-FIXES",
@@ -301,6 +301,15 @@
    "url": "redesign/qp/A/sitl/jobs_qp5.txt",
    "checked": "2026-11-15",
    "where": "cant 17, D-191 gains, CAD mass / CG / inertia 2026-11-15, S5010 aero; batch_qp5.sh"
+  },
+  {
+   "id": "SRC-A-AR015",
+   "type": "source",
+   "title": "Analysis records AR-015 / AR-016 (SITL transition pitch use, landing foam region)",
+   "kind": "file",
+   "url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/docs/analysis-records.md",
+   "checked": "2026-11-15",
+   "where": "AR-015 result (pitch use 0.69-0.79 of 15 deg, 0.52-0.59 of 20 deg); AR-016 result (landing: record run 17.2 mm at Fp 37.5 N / zeta 0.05; accepted region Fp 37.5-39.0 N, zeta 0.02-0.05)"
   },
   {
    "id": "SRC-A-FLUTTER",
@@ -753,7 +762,8 @@
    "title": "First cruise: roll rate and measured stall (M8 extended)",
    "verifies": [
     "CL-A-ROLL-GATE",
-    "CL-A-STALL"
+    "CL-A-STALL",
+    "CL-A-STALL-PRED"
    ],
    "state": "planned",
    "procedure": "Measure the peak roll rate (>= 90 deg/s) and the clean stall; the measured CLmax replaces 0.75"

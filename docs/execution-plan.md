@@ -22,9 +22,13 @@ parallel in separate worktrees. Phase 6 waits on team inputs (schema, DaVinci ac
 ## Model routing (R-ORC-01)
 | Work | Agent (`.claude/agents/`) | Model |
 |---|---|---|
-| File inspection, inventories, ledger accounting, test runs, docs | `ledger-auditor`, `runner` | haiku |
-| CAD features, mechanism/sim scripts, render pipeline, CLI, moderate analysis | `implementer` | sonnet |
-| Architecture, hard trade-offs, root cause after 2 failed attempts, independent engineering/film/final review | `eng-reviewer` | opus |
+| Exact, checkable tasks (runs, inventories, file writes to a schema) | `builder` | haiku (sonnet on hard rows) |
+| Research: how others solved it, options with evidence | `scout` | haiku (sonnet on hard rows) |
+| Fuzzy step to exact briefs, narrow fixes | `tactician` | sonnet (opus on hard rows) |
+| Read-only checks on long runs (stalls, loops, broken rules, dropped requests) | `auditor` | haiku |
+| Independent review per batch (engineering, sims, film, final verification) | `reviewer` | opus |
+| Intent drift | `advisor` | opus |
+Team Agent Standard v0.2 since 2026-11-23 (T-015, AM-039): `docs/reference/agent-standard/` (LOCAL.md maps it to this repo).
 Escalate one tier after two failed attempts with different approaches; log the escalation in `model-usage.md`.
 
 ## Task protocol (R-TRK-04)

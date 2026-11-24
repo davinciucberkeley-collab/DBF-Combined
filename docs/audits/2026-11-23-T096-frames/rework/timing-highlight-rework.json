@@ -1,0 +1,53 @@
+{
+ "film": "shots-highlight.json",
+ "scenes": [
+  "H1",
+  "H2",
+  "H3",
+  "H4",
+  "H5",
+  "H6",
+  "H7"
+ ],
+ "film_seconds": 24.2,
+ "frames": 1452,
+ "frames_mapped": 1452,
+ "every": 1,
+ "rendered": 1452,
+ "overlay_pictures": 1452,
+ "seconds": 177.2,
+ "seconds_render": 0.0,
+ "seconds_overlay": 56.6,
+ "seconds_encode": 120.3,
+ "seconds_blender_start_and_frames": 0.0,
+ "seconds_frame_loop_per_worker": [
+  3731.2,
+  10589.1
+ ],
+ "seconds_per_rendered_frame": 9.86,
+ "workers": 2,
+ "samples": 24,
+ "resolution": [
+  1920,
+  1080
+ ],
+ "fps": 60,
+ "dof": false,
+ "motion_blur": false,
+ "ray_tracing": true,
+ "preview": false,
+ "sources": {
+  "qp/A/mechanism/out/T097_data/sitl_T097_Z5/case.fwd.csv": {
+   "sha256": "a0e789d1c9ff7bde4fb9ab0f8b0f94d94bd4dc7cc0d630689ff9961a85865dfa",
+   "bytes": 1113180
+  },
+  "qp/A/mechanism/out/T097_data/sitl_T097_Z5/result.json": {
+   "sha256": "842eb0dcd4008a81bc6a5b66538055f206e38897dd4385c9f458da1fe7ec483f",
+   "bytes": 3146
+  },
+  "qp/A/mechanism/out/T097_data/sitl_T097_Z5/sum.json": {
+   "sha256": "ac32c88fde4d8909c61a7ff7f0dfd4d95c6163ccab89f4e64cfe3536dbd36726",
+   "bytes": 1491
+  }
+ }
+}

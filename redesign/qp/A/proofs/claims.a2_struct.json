@@ -1113,15 +1113,15 @@
    "title": "Stored result: Landing crush stroke at 1.2 m/s on the fin-tip feet",
    "script": "redesign/qp/A/proofs/claims_a2_struct.py",
    "function": "read_value",
-   "equation": "landing_a.py via STRUCTURES iteration 2 (A-P13 basis); read, not re-run",
+   "equation": "landing_a.py 37.5 N record run at 1.881 kg EST, rib 25x23 (AR-016 / T098_results.json); read, not re-run",
    "inputs": {
     "v": "P:struct.landing_stroke_mm"
    },
    "outputs": {
-    "v": 15.2
+    "v": 17.2
    },
    "input_values": {
-    "v": 15.2
+    "v": 17.2
    }
   },
   {
@@ -1148,8 +1148,8 @@
     "GER-002-LR",
     "GER-002-LL"
    ],
-   "how": "Drop test of the feet at 1.2 m/s on the built aircraft; 20 mm available.",
-   "value": 15.2
+   "how": "TP-3 drop test of the feet at 1.2 m/s on the built aircraft, with the foam plateau and damping measured; 20 mm available. PASS (17.2 mm) holds only inside the accepted foam region Fp 37.5-39.0 N and zeta 0.02-0.05 (AR-016, D-243); outside it the stroke bottoms (20.2-20.6 mm, FAIL).",
+   "value": 17.2
   },
   {
    "id": "CALC-A-FOAM-SPAR-BOND-READ",

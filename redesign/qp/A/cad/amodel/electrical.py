@@ -1214,7 +1214,7 @@ def build_pitot_lines(ctx):
                  name='pitot nose channel: the attachment block slides in from the front, filled with foam and epoxy after (D-208)')
     yl, yh = PIT_Y - 0.0055, PIT_Y + 0.0055
     core.cut_box((bx0, yl, -0.0035), (PT_XR + 0.0025, yh, 0.0170), name='pitot line pocket behind the probe, open through the upper skin, taped after (D-208)')
-    core.cut_box((PT_XR + 0.0025, yl, PT_ZT - 0.0023), (AS_B[0][0] + 0.0005, yh, 0.0170), name='pitot line slot over the spar, open through the upper skin (D-208)')
+    core.cut_box((PT_XR + 0.0025, yl, PT_ZT - 0.0028), (AS_B[0][0] + 0.0005, yh, 0.0170), name='pitot line slot over the spar, open through the upper skin (D-208; floor 0.5 mm lower, T-099 F-2b D-247: the 4 mm bend put the tube 0.19 mm under the old floor)')
     (ax0, ay0), (ax1, ay1) = AS_B
     core.cut_box((ax0 - 0.0005, ay0 - 0.0005, AS_ZB - 0.0005), (ax1 + 0.0005, ay1 + 0.0005, 0.0170), name='airspeed board pocket, open through the upper skin, taped after (D-208)')
 
@@ -1516,18 +1516,19 @@ def build_harness(ctx):
     # airspeed cable: FC I2C pad -> JST-GH plug on the board at the left wing tip (D-208)
     _wire_s(ctx, 'E-HRN-11', i2c_path(), 0.004, wd, [((j % 2 - 0.5) * wd, (j // 2 - 0.5) * wd) for j in range(4)], lay=0.100)
     hg = 0.0017                                  # groove half width / height round the 2 x 2 bundle (envelope 1.4 mm) + 0.3 mm
+    hw = hg + 0.0005                             # T-099 F-2b (D-247): plan-view clearance of the shallow grooves +0.5 mm (the 4 mm bend fillet and the bundle offset put a strand up to 0.34 mm into the foam wall at the corners; GLB gate)
     core = ctx.components['WNG-001']
     core.cut_box((I2C_XD - hg, -UART_Y - hg, I2C_ZD - hg), (I2C_XD + hg, -UART_Y + hg, 0.0150), name='I2C lead drop slot through the skin, inside the cover (D-208, moved by T-022 Q4, T-077 p5)')
     core.cut_box((I2C_XD - hg, -UART_Y - hg, I2C_ZD - hg), (I2C_X + hg, -UART_Y + hg, I2C_ZD + hg), name='I2C lead groove along x, deep, from the drop to the groove along y (T-077 p5)')
     core.cut_box((I2C_X - hg, -0.2300, I2C_ZD - hg), (I2C_X + hg, -UART_Y + hg, I2C_ZD + hg), name='I2C lead groove along y, deep (under the servo-lead groove) (D-208, extended inboard to the drop slot by T-022 Q4)')
     core.cut_prism('X', I2C_X - hg, [[(-0.2300, I2C_ZD - hg), (-0.2300, I2C_ZD + hg), (-0.2800, I2C_ZS + hg), (-0.2800, I2C_ZS - hg)]], 2 * hg,
                    name='I2C lead groove ramp (D-208)')
-    core.cut_box((I2C_X - hg, I2C_YF - hg, I2C_ZS - hg), (I2C_X + hg, -0.2800, I2C_ZS + hg), name='I2C lead groove along y, shallow, to the fin-node lane at |y| 335 (T-077 p8)')
-    core.cut_box((I2C_XF - hg, I2C_YF - hg, I2C_ZS - hg), (I2C_X + hg, I2C_YF + hg, I2C_ZS + hg), name='I2C lead groove along x at |y| 335 (T-077 p8)')
-    core.cut_box((I2C_XF - hg, I2C_YO - hg, I2C_ZS - hg), (I2C_XF + hg, I2C_YF + hg, I2C_ZS + hg), name='I2C lead groove along y at x 64 over the spar, through the fin-node bulkheads, ahead of the rib nose (T-077 p8)')
-    core.cut_box((I2C_XF - hg, I2C_YO - hg, I2C_ZS - hg), (I2C_XB + hg, I2C_YO + hg, I2C_ZS + hg), name='I2C lead groove along x at |y| 408.5 (T-077 p8)')
-    core.cut_box((I2C_XB - hg, PIT_Y - hg, I2C_ZS - hg), (I2C_XB + hg, I2C_YO + hg, I2C_ZS + hg), name='I2C lead groove along y behind the board pocket (T-077 p8)')
-    core.cut_box((AS_B[1][0], PIT_Y - hg, AS_ZB + T_PCB), (I2C_XB + hg, PIT_Y + hg, I2C_ZS + hg), name='I2C lead groove into the board pocket (D-208)')
+    core.cut_box((I2C_X - hw, I2C_YF - hw, I2C_ZS - hg), (I2C_X + hw, -0.2800, I2C_ZS + hg), name='I2C lead groove along y, shallow, to the fin-node lane at |y| 335 (T-077 p8)')
+    core.cut_box((I2C_XF - hw, I2C_YF - hw, I2C_ZS - hg), (I2C_X + hw, I2C_YF + hw, I2C_ZS + hg), name='I2C lead groove along x at |y| 335 (T-077 p8)')
+    core.cut_box((I2C_XF - hw, I2C_YO - hw, I2C_ZS - hg), (I2C_XF + hw, I2C_YF + hw, I2C_ZS + hg), name='I2C lead groove along y at x 64 over the spar, through the fin-node bulkheads, ahead of the rib nose (T-077 p8)')
+    core.cut_box((I2C_XF - hw, I2C_YO - hw, I2C_ZS - hg), (I2C_XB + hw, I2C_YO + hw, I2C_ZS + hg), name='I2C lead groove along x at |y| 408.5 (T-077 p8)')
+    core.cut_box((I2C_XB - hw, PIT_Y - hw, I2C_ZS - hg), (I2C_XB + hw, I2C_YO + hw, I2C_ZS + hg), name='I2C lead groove along y behind the board pocket (T-077 p8)')
+    core.cut_box((AS_B[1][0], PIT_Y - hw, AS_ZB + T_PCB), (I2C_XB + hw, PIT_Y + hw, I2C_ZS + hg), name='I2C lead groove into the board pocket (D-208)')
     # T-077 p8 (D-226): holes for the lead in the left fin-node bulkheads (3 mm round the 2 x 2 bundle, envelope r 1.21 mm), the left centre bulkhead and the left flange of the centre node
     ctx.components['FIN-005-L'].cut_cylinder('Y', (I2C_XF, -(RIB_Y + RIB_OD / 2 + FNB_GAP + FNB_T + 0.001), I2C_ZS), 2 * (RIB_OD / 2 + FNB_GAP + FNB_T + 0.001), 0.0015, name='I2C lead hole 3 mm (T-077 p8)')
     for pid_ in ('WNG-013-L', 'CGE-006'):
@@ -1539,7 +1540,15 @@ def build_assembly(ctx):
     hw = ctx.part('HRD-001', proxy=True)
     core_ = ctx.components['WNG-001']        # T-077 p3: the skin and the cove strip carry every explicit cut of the core (slots, pockets, windows, wire slits cut by the later modules); seats are realised later
     for pid_ in ('WNG-011', 'WNG-012', 'WNG-014-R', 'WNG-014-L'):     # T-077 p8: the skin plies 2-3 carry the same openings
-        ctx.components[pid_].cuts = list(core_.cuts)
+        sk_ = ctx.components[pid_]
+        sk_.cuts = list(core_.cuts)
+        # T-099 F-2: the mesh backend keeps its own cut list (Component.cut calls backend.cut); copying the list above bypassed it, so
+        # the exported GLB's skin plies had none of these openings while the CAD gates honoured them. Mirror the copy into the backend.
+        bcuts_ = getattr(ctx.backend, 'cuts', None)
+        if isinstance(bcuts_, dict):
+            bcuts_.pop(pid_, None)
+            for s_, m_, _n, _shop in sk_.cuts:
+                ctx.backend.cut(sk_, s_, m_)
     hw.cylinder('X', (0.100, 0.0, 0.0), 0.002, 0.001, name='hardware lump')
     comps = ctx.components
     for e in EDGES:
