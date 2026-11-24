@@ -1,4 +1,5 @@
 # Mission definition, concept A (scaled quad tailsitter), 2026-11-14 (updated D-183 / D-184; QP-4 fold-in of BOARD QP-3, 2026-11-15)
+> **D-255 (2026-11-24, T-101): cruise is now 18 m/s (A.param AIRSPEED_CRUISE 18, AIRSPEED_MAX 20) with the pack at the aft end of its tray slot (CG 23.49 mm).** The 17 m/s tables below are the record; the 18 m/s mission numbers are in the proof chain (CL-A-CRUISE-NEED 201.6 s, CL-A-CRUISE-AVAIL 208.6 s, CL-A-FENCE 226 m, turn radius 57.2 m) and in CHANGE-LOG D-255.
 
 One definition for every A report (BOARD C6). Reproduce: `python -I mission_gate_a.py`. Labels: `EST` estimate, `V` vendor page, `—` unknown. Updated for D-183 (APC 9x4.5MR props x0.93 derate, Tattu 2300 pack kept, 0.90 spin cap) and D-184 (arm x1.2, cant 16 deg, wind rule; `review/QP-2/D183.md`, `D184.md`, `WIND.md`). Basis: method of `review/CLOSURE-ROUND-2026-11-14/A2.md` s2.1 (flight-test programme: H2 gate 1i, flight card 4b), re-done with A's stall and power. The 3.5 min / 17 m/s mission of K09-L, B's 15 m/s / 3.6 min and the 16 m/s of the first A draft are replaced by this one.
 

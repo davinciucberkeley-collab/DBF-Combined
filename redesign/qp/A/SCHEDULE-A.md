@@ -41,10 +41,10 @@ User constraint AM-037 (verbatim, `docs/spec-amendments.md`): "Realistically, we
 | O2 | Parts arrive; incoming weigh-in against the mass table (scale G02) | 7-22 Dec EST | no | no |
 | S1 | >= 10 h SITL on A with the Pocket TX (A-D9) | 9 Dec - 15 Jan | no | no |
 | WN1 | RFS anemometer mornings x 3 (R-WIND-MEASURE; G05 $12.99 is in Order 1b) | 21 Dec - 15 Jan | no | no |
-| FC0 | Optional, fabrication-free: H743-Wing firmware, `A.param` load, Lua script load check, ELRS bind, on USB power, 2 people, about 6 h `EST`. The cap-versus-voltage reading (TP-2) needs the soldered power input, so it stays in the bench week | 28 Dec - 15 Jan | no (saves unknown hours, not credited) | no |
+| FC0 | Optional, fabrication-free: H743-Wing firmware, `A.param` load (no Lua script, D-256), ELRS bind, on USB power, 2 people, about 6 h `EST`. The current-limiter and sensor checks (TP-2) need the soldered power input, so they stay in the bench week | 28 Dec - 15 Jan | no (saves unknown hours, not credited) | no |
 | - | Winter break, Jacobs closed (18 Dec - 18 Jan): **no printing, soldering, cutting, stand building** | 19 Dec - 18 Jan | | none |
 | B0 | Bench stand build, PETG prints, power stack solder, flash at Jacobs | Tue 19 - Fri 22 Jan | **yes** | yes |
-| TP | TP-1 (derate, current) and TP-2 (Lua cap, 72 A limiter) | Mon 25 - Thu 28 Jan | **yes** | yes (stand) |
+| TP | TP-1 (derate, current) and TP-2 (72 A limiter and current sensor; Lua cap dropped, D-256) | Mon 25 - Thu 28 Jan | **yes** | yes (stand) |
 | D1 | **Bench decision = go / no-go: Fri 29 Jan 2027** (one date; replaces 15 Dec and 18 Dec) | 29 Jan | **yes** | no |
 | O3 | Order 2: the config-dependent lines still unbought ($113.28 EST in Option B+) | Fri 29 Jan, arrives about 5 Feb EST | no (needed by about 11 Feb) | no |
 | B1 | First cut: wing cores, spar, fin parts (ShopBot assumed D-203; hours-limited, in parallel with TP days) | 26 Jan - 5 Feb | **yes** | yes |

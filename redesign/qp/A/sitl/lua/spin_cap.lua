@@ -1,3 +1,5 @@
+-- RETIRED (D-256, 2026-11-24, AM-060): dropped from the concept A build; with the X2216 (D-227) every path set Q_M_SPIN_MAX 1.0, the A.param value.
+--   Kept only so the earlier *_lua SITL runs (T-076, T-097, T-101) can be reproduced. Do not load it on the aircraft.
 -- spin_cap.lua  (T-076, concept A O4b)  Voltage-scheduled Q_M_SPIN_MAX.
 -- T-083 (D-227): SunnySky X2216 V3 880KV. cap(V_rest) = largest duty with ONE saturated motor + three hovering <= 24.94 A (450 W / 16.8 V x 12.1/13, EST),
 -- 1.912 kg, from redesign/qp/A/prop_a.py cap_sched() (Kv 880, Rm 0.089, I0 0.5 A, pack R 30 mohm EST): 1.0 at every voltage (one motor 20.1 A fresh).

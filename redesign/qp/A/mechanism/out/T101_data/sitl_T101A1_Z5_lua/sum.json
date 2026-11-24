@@ -1,0 +1,73 @@
+{
+ "case": "trans",
+ "mass": 1.881,
+ "wind": 0.0,
+ "wfrom": 0.0,
+ "r": 1.3925164191830017,
+ "alt0": 51.1,
+ "alt_gain_at_handover": 36.8,
+ "alt_max_gain": 39.4,
+ "alt_min_loss": 0.0,
+ "alt_peak_abs": 90.4,
+ "v13": 17.75,
+ "t_to_1.3Vs_s": 8.5,
+ "V_at_handover": 15.0,
+ "pitch_use_15": 0.54,
+ "pitch_use_25": 0.32,
+ "pitch_use_20": 0.4,
+ "elevon_max_deg": 8.1,
+ "t_elevon_sat_s": 0,
+ "u_max": 0.791,
+ "t_cap_run_s": 0.0,
+ "t_ge85_s": 0,
+ "I_pack_peak_A": 32.1,
+ "I_motor_peak_A": 8.0,
+ "hinge_peak_Nm": 0.0195,
+ "pitch_max": 89.6,
+ "roll_max_abs_after_fwdone": 1.0,
+ "alpha_max": 8.6,
+ "nz_max": 1.38,
+ "V_end": 18.1,
+ "alt_end": 90.4,
+ "roll_end_abs": 0.3,
+ "touch_in_flight": false,
+ "crossed_fence_110": false,
+ "t_fwdone_s": 6.5,
+ "Wh_to_cruise": 1.71,
+ "P_cruise_end_W": 170.0,
+ "landing": {
+  "case": "chain-landing",
+  "mass": 1.881,
+  "wind": 0.0,
+  "wfrom": 0.0,
+  "t_touch": 253.048,
+  "sink_ms": -0.12,
+  "sink_peak_last1s_ms": 0.29,
+  "lean_deg_at_touch": 0.0,
+  "lateral_speed_ms": 0.01,
+  "drift_m_from_qland_start": 0.1,
+  "lean_max_next5s": 0.0,
+  "lean_final": 0.0,
+  "tipped_over": false,
+  "u_max_descent": 0.624
+ },
+ "back": {
+  "modes": [
+   [
+    123.62,
+    "QLOITER"
+   ],
+   [
+    151.42,
+    "QLAND"
+   ]
+  ],
+  "alt_max_after_switch": 99.0,
+  "alt_min_after_switch": 90.4,
+  "alt_at_switch": 90.4,
+  "lean_max_in_descent": 2.6,
+  "u_max": 0.815,
+  "hdg_belly_at_qland": 5.0
+ },
+ "tag": "T101A1_Z5_lua"
+}

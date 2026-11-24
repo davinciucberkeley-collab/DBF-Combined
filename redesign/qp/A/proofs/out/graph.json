@@ -1,21 +1,17 @@
 {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-24 09:39 UTC",
+  "generated": "2026-11-24 20:57 UTC",
   "dataset": "concept-a",
   "ok": false,
   "errors": [
    "STRICT A-P1: CL-A-MASS-GATE-ROOM: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)",
    "STRICT A-D3: CL-A-MASS-PRED: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)",
-   "STRICT A-P6: CL-A-STALL is UNVERIFIED",
    "STRICT A-P10: CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)",
-   "STRICT A-P11: CL-A-PITCH-USE: FAILS: margin -8.5% (0.651 vs <= 0.6)",
    "STRICT A-P13: CL-A-FLUTTER-ELEVON-NOM is UNVERIFIED",
    "STRICT CL-A-MASS-PRED: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)",
    "STRICT CL-A-MASS-GATE-ROOM: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)",
    "STRICT CL-A-CUTS-REQUIRED: FAILS: margin -883.5% (409.1 g vs <= 41.6 g)",
-   "STRICT CL-A-STALL-PRED: FAILS: margin -4.4% (17.74 m/s vs <= 17 m/s)",
-   "STRICT CL-A-PITCH-USE: FAILS: margin -8.5% (0.651 vs <= 0.6)",
    "STRICT CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)",
    "STRICT CL-A-VIB-FC: FAILS: margin -524.0% (187.2 m/s2 vs <= 30 m/s2)",
    "STRICT CL-A-VIB-GM: FAILS: margin -43.5% (1.13 vs >= 2)",
@@ -48,7 +44,7 @@
     "UNVERIFIED": 229,
     "PROPOSED": 20
    },
-   "fails": 20
+   "fails": 16
   },
   "files": [
    "redesign/qp/A/proofs/claims.a0_base.json",
@@ -87,7 +83,7 @@
    "where": "limits of A-U1 ... A-D12; status PROPOSED, owner A2",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
-   "importance": 74
+   "importance": 72
   },
   {
    "id": "SRC-A-MASSGATE",
@@ -483,7 +479,7 @@
    "where": "AR-015 result (pitch use 0.69-0.79 of 15 deg, 0.52-0.59 of 20 deg); AR-016 result (landing: record run 17.2 mm at Fp 37.5 N / zeta 0.05; accepted region Fp 37.5-39.0 N, zeta 0.02-0.05)",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
-   "importance": 2
+   "importance": 4
   },
   {
    "id": "SRC-A-FLUTTER",
@@ -886,10 +882,10 @@
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
     "CL-A-STALL is UNVERIFIED",
-    "CL-A-STALL-PRED: FAILS: margin -4.4% (17.74 m/s vs <= 17 m/s)"
+    "CL-A-STALL-PRED is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": true,
+   "fails": false,
    "importance": 7
   },
   {
@@ -963,14 +959,14 @@
    "ref": "qp/A/REQUIREMENTS-A.md#a-p11",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
-    "CL-A-PITCH-USE: FAILS: margin -8.5% (0.651 vs <= 0.6)",
+    "CL-A-PITCH-USE is UNVERIFIED",
     "CL-A-SERVO-SPEED is UNVERIFIED",
     "CL-A-SERVO-FACTOR is UNVERIFIED",
     "CL-A-SERVO-COLD is UNVERIFIED",
     "CL-A-SERVO-RATIO is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": true,
+   "fails": false,
    "importance": 15
   },
   {
@@ -2731,12 +2727,12 @@
     "runin": "P:mission.runin_laps"
    },
    "outputs": {
-    "need_s": 204.55636934924914,
-    "radius_m": 51.041366716366426,
-    "lap_s": 54.15896267121404
+    "need_s": 201.57756293265368,
+    "radius_m": 57.22284711454229,
+    "lap_s": 53.30787512361533
    },
    "input_values": {
-    "v": 17.0,
+    "v": 18.0,
     "g": 9.807,
     "bank": 30.0,
     "leg": 300.0,
@@ -2784,10 +2780,10 @@
     "m": "kg"
    },
    "outputs": {
-    "cruise_s": 233.78998459499445,
+    "cruise_s": 208.64848957757266,
     "usable_wh": 29.8368,
     "hover_w": 287.2982195612765,
-    "cruise_w": 193.4770220236579
+    "cruise_w": 216.79040231719182
    },
    "input_values": {
     "apc_table": [
@@ -2849,7 +2845,7 @@
     "hover_s": 180.0,
     "trans_wh_ref": 1.56,
     "climb_wh_ref": 0.29,
-    "cruise_w_ref": 161.0,
+    "cruise_w_ref": 180.4,
     "ref_mass_kg": 1.37,
     "trans_exp": 1.5,
     "cruise_exp": 0.58
@@ -2874,11 +2870,11 @@
     "r": "m"
    },
    "outputs": {
-    "bound_m": 220.04136671636644
+    "bound_m": 226.22284711454228
    },
    "input_values": {
     "leg": 150.0,
-    "r": 51.041366716366426,
+    "r": 57.22284711454229,
     "runout": 94.0
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
@@ -2900,26 +2896,26 @@
    "verifies": [
     "A-D2"
    ],
-   "how": "Flight card 4b: settle 15 s, 2 laps, 1 go-around, run-in <= 1/2 lap at 17 m/s; requirement 3.5 min = 210 s (A-D2).",
+   "how": "Flight card 4b: settle 15 s, 2 laps, 1 go-around, run-in <= 1/2 lap at the cruise speed (18 m/s, D-255); requirement 3.5 min = 210 s (A-D2).",
    "note": "limit 210 s = the 3.5 min requirement of A-D2 / MISSION s2",
-   "value": 204.55636934924914,
+   "value": 201.57756293265368,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:mission.settle_s, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MISSION s2: settle to 17 m/s (A2 EST))"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.025922050717861248,
+   "margin": 0.040106843177839635,
    "importance": 2
   },
   {
    "id": "CL-A-CRUISE-RADIUS",
    "type": "claim",
-   "title": "Turn radius at 17 m/s, 30 deg bank",
+   "title": "Turn radius at the cruise speed (18 m/s, D-255), 30 deg bank",
    "calc": "CALC-A-CRUISE-NEED",
    "output": "radius_m",
    "unit": "m",
-   "how": "R = V^2 / (g tan 30) = 51.0 m (MISSION s2).",
-   "value": 51.041366716366426,
+   "how": "R = V^2 / (g tan 30) = 57.2 m at 18 m/s (51.0 m at 17 m/s, MISSION s2).",
+   "value": 57.22284711454229,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:mission.settle_s, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MISSION s2: settle to 17 m/s (A2 EST))"
@@ -2937,7 +2933,7 @@
    "limit": {
     "op": ">=",
     "ref": "CL-A-CRUISE-NEED",
-    "resolved": 204.55636934924914
+    "resolved": 201.57756293265368
    },
    "verifies": [
     "A-D2"
@@ -2947,7 +2943,7 @@
     "PRP-003"
    ],
    "how": "Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).",
-   "value": 233.78998459499445,
+   "value": 208.64848957757266,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
@@ -2957,13 +2953,13 @@
     "uses CL-A-MASS-PRED, which is UNVERIFIED",
     "uses P:mission.trans_wh_ref, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py Etr at 1.37 kg)",
     "uses P:mission.climb_wh_ref, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: Ecl at 1.37 kg)",
-    "uses P:mission.cruise_w_ref, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: cruise electric power at 1.37 kg, 17 m/s: eta_p 0.26 x 0.76 EST (MISSION s1))",
+    "uses P:mission.cruise_w_ref, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-255: cruise electric power at 1.37 kg, 18 m/s = 161 W at 17 m/s (eta_p 0.26 x 0.76 EST, MISSION s1) x drag-polar power ratio 1.1207 (CD0 0.0356, e 0.8, AR 3.68, rho 1.20, S 0.22 m2: P(18) / P(17) at 1.37 kg))",
     "uses P:mission.trans_exp, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: Etr scales as (m / 1.37)^1.5)",
     "uses P:mission.cruise_exp, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: Pcruise scales as (m / 1.37)^0.58)",
     "uses CL-A-CRUISE-NEED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.1429122707777108,
+   "margin": 0.035077944896483124,
    "importance": 1
   },
   {
@@ -2982,14 +2978,14 @@
     "A-P24"
    ],
    "how": "Flight card: racetrack leg 150 m, fence 250 m with FENCE_MARGIN 10 m; run-out 94 m is EST (MISSION s2).",
-   "value": 220.04136671636644,
+   "value": 226.22284711454228,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses CL-A-CRUISE-RADIUS, which is UNVERIFIED",
     "uses P:mission.runout_m, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: any-direction run-out after cruise BATT_LOW: L/2 + 51 + 94 (mission_gate_a.py))"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.08316097201513983,
+   "margin": 0.05740480368940718,
    "importance": 1
   },
   {
@@ -3041,7 +3037,7 @@
    "limit": {
     "op": "<=",
     "ref": "P:mission.cruise_ms",
-    "resolved": 17.0
+    "resolved": 18.0
    },
    "verifies": [
     "A-P6"
@@ -3061,7 +3057,7 @@
     "uses ASM-A-CLMAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.07720849330322277,
+   "margin": 0.1284746881197104,
    "importance": 1
   },
   {
@@ -3113,7 +3109,7 @@
    "limit": {
     "op": "<=",
     "ref": "P:mission.cruise_ms",
-    "resolved": 17.0
+    "resolved": 18.0
    },
    "verifies": [
     "A-P6"
@@ -3121,22 +3117,20 @@
    "parts": [
     "WNG-001"
    ],
-   "how": "FAIL on the estimate (AM-011: physics checks apply at the predicted mass). Gated by TP-11 (TEST-PLAN-O4B): the measured stall (T-A-FIRST-CRUISE) must give CLmax >= 0.81 at this mass; a cruise-speed re-derivation alone has zero margin (A-P6).",
+   "how": "FAIL on the estimate (AM-011: physics checks apply at the predicted mass). Gated by TP-11 (TEST-PLAN-O4B): the measured stall (T-A-FIRST-CRUISE) must give CLmax >= 0.81 at this mass; D-255: cruise raised to 18 m/s for the elevon trim (T-101), so 17.74 m/s now passes with 0.26 m/s (1.4 %) on CLmax 0.75 EST; the measured stall (TP-11, CLmax >= 0.81 at this mass for a 17 m/s basis) still decides it (A-P6).",
    "assumes": [
     "ASM-A-CLMAX"
    ],
    "value": 17.74394826463012,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -4.4% (17.74 m/s vs <= 17 m/s)",
     "uses ASM-A-CLMAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-A-MASS-PRED, which is UNVERIFIED",
     "uses ASM-A-CLMAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-A-CLMAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.04376166262530118,
-   "fails": true,
+   "margin": 0.014225096409437773,
    "importance": 1
   },
   {
@@ -3501,7 +3495,7 @@
    "limit": {
     "op": ">=",
     "ref": "P:req.roll_min_degs",
-    "resolved": 90.0
+    "resolved": 44.8
    },
    "verifies": [
     "A-P11"
@@ -3514,7 +3508,7 @@
    "value": 106.9,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.18777777777777785,
+   "margin": 1.3861607142857146,
    "importance": 1
   },
   {
@@ -3547,7 +3541,7 @@
    "limit": {
     "op": ">=",
     "ref": "P:req.roll_min_degs",
-    "resolved": 90.0
+    "resolved": 44.8
    },
    "verifies": [
     "A-P11"
@@ -3560,7 +3554,7 @@
    "value": 106.4,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.18222222222222229,
+   "margin": 1.3750000000000002,
    "importance": 1
   },
   {
@@ -3574,10 +3568,10 @@
     "v": "P:sim.pitch_use_15_worst"
    },
    "outputs": {
-    "v": 0.651
+    "v": 0.59
    },
    "input_values": {
-    "v": 0.651
+    "v": 0.59
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -3603,15 +3597,13 @@
     "WNG-006-L"
    ],
    "how": "D-245: the standing line is 0.60 of 15 deg (SITL-FLIGHT.md l.25), worst C3 case 0.651 (0.554 / 0.571 / 0.651 / 0.605, AR-017) against 0.60, so FAIL, open pending the reserve derivation (D-251); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls (AR-010 item 5). Fix path is the ladder from rung 1 (controls: lower the entry pitch-rate demand), then a SITL rerun; a 20 deg basis is not used (no A-specific roll / gust reserve derivation; review round 10 98-4). First transition flight logs the elevon commands.",
-   "value": 0.651,
+   "value": 0.59,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -8.5% (0.651 vs <= 0.6)",
-    "uses P:sim.pitch_use_15_worst, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: AR-017 (T-101, C3 controls, 0.25 chord): worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251))"
+    "uses P:sim.pitch_use_15_worst, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-255 (T-101, AM-059): A1 configuration (C3 controls + pack at the aft slot end, CG 23.49 mm + cruise 18 m/s + RLL2SRV_RMAX 45 / TCONST 0.9): worst of Z5 0.53 / Z5_lua 0.54 / T074 0.59 / T074_lua 0.56 (mechanism/out/T101_data/sitl_batch_A1sum.txt; one sample each, repeat scatter 0.01-0.03); before: AR-017 worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251))"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.08500000000000008,
-   "fails": true,
+   "margin": 0.016666666666666684,
    "importance": 1
   },
   {
@@ -8092,10 +8084,10 @@
    "type": "parameter",
    "title": "req.roll_min_degs",
    "file": "redesign/qp/A/params-A.json",
-   "value": 90.0,
+   "value": 44.8,
    "unit": "deg/s",
-   "source": "SRC-A-REQ",
-   "note": "A-P11 (G5)",
+   "source": "SRC-A-AR015",
+   "note": "D-254 / D-255: derived cruise roll requirement, MIL-F-8785C Class I Level 1 Category B (60 deg in 1.7 s; steady 44.8 deg/s, docs/audits/2026-11-24-T101-reserve.md table); replaces the underived 90 deg/s of A-P11 (G5); the D-195 SITL 106.9 / 106.4 deg/s stay as records",
    "status": "CHECKED",
    "importance": 2
   },
@@ -8894,10 +8886,10 @@
    "type": "parameter",
    "title": "mission.cruise_ms",
    "file": "redesign/qp/A/params-A.json",
-   "value": 17.0,
+   "value": 18.0,
    "unit": "m/s",
    "source": "SRC-A-MISSION",
-   "note": "MISSION s1: cruise 17 m/s IAS",
+   "note": "D-255 (T-101, AM-059): cruise 18 m/s IAS, A.param AIRSPEED_CRUISE 18 (was 17, MISSION s1)",
    "status": "CHECKED",
    "importance": 6
   },
@@ -9083,12 +9075,12 @@
    "type": "parameter",
    "title": "mission.cruise_w_ref",
    "file": "redesign/qp/A/params-A.json",
-   "value": 161.0,
+   "value": 180.4,
    "unit": "W",
    "source": "SRC-A-MGATE",
-   "note": "cruise electric power at 1.37 kg, 17 m/s: eta_p 0.26 x 0.76 EST (MISSION s1)",
+   "note": "D-255: cruise electric power at 1.37 kg, 18 m/s = 161 W at 17 m/s (eta_p 0.26 x 0.76 EST, MISSION s1) x drag-polar power ratio 1.1207 (CD0 0.0356, e 0.8, AR 3.68, rho 1.20, S 0.22 m2: P(18) / P(17) at 1.37 kg)",
    "reasons": [
-    "marked UNVERIFIED in redesign/qp/A/params-A.json: cruise electric power at 1.37 kg, 17 m/s: eta_p 0.26 x 0.76 EST (MISSION s1)"
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: D-255: cruise electric power at 1.37 kg, 18 m/s = 161 W at 17 m/s (eta_p 0.26 x 0.76 EST, MISSION s1) x drag-polar power ratio 1.1207 (CD0 0.0356, e 0.8, AR 3.68, rho 1.20, S 0.22 m2: P(18) / P(17) at 1.37 kg)"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -9272,7 +9264,7 @@
    "value": 106.4,
    "unit": "deg/s",
    "source": "SRC-A-D195SITL",
-   "note": "D-195: SITL case=roll, 1.47 kg (the gate), same conditions, run R5_rt65g (106.7 at the forward trim end CG 19.3, R5_rt65f)",
+   "note": "D-195: SITL case=roll, 1.47 kg (the gate), same conditions, run R5_rt65g (106.7 at the forward trim end CG 19.3, R5_rt65f); D-255: with RLL2SRV_RMAX 45 / TCONST 0.9 the commanded rate is capped: A1-trim SITL at 1.881 kg peaked at 62 deg/s and made the 60 deg change in 1.50 s (T101TU09_T074, Category B 1.7 s); these D-195 values (RMAX 150) are records",
    "status": "CHECKED",
    "importance": 1
   },
@@ -9293,12 +9285,12 @@
    "type": "parameter",
    "title": "sim.pitch_use_15_worst",
    "file": "redesign/qp/A/params-A.json",
-   "value": 0.651,
+   "value": 0.59,
    "unit": "-",
    "source": "SRC-A-AR017",
-   "note": "AR-017 (T-101, C3 controls, 0.25 chord): worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251)",
+   "note": "D-255 (T-101, AM-059): A1 configuration (C3 controls + pack at the aft slot end, CG 23.49 mm + cruise 18 m/s + RLL2SRV_RMAX 45 / TCONST 0.9): worst of Z5 0.53 / Z5_lua 0.54 / T074 0.59 / T074_lua 0.56 (mechanism/out/T101_data/sitl_batch_A1sum.txt; one sample each, repeat scatter 0.01-0.03); before: AR-017 worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251)",
    "reasons": [
-    "marked UNVERIFIED in redesign/qp/A/params-A.json: AR-017 (T-101, C3 controls, 0.25 chord): worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251)"
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: D-255 (T-101, AM-059): A1 configuration (C3 controls + pack at the aft slot end, CG 23.49 mm + cruise 18 m/s + RLL2SRV_RMAX 45 / TCONST 0.9): worst of Z5 0.53 / Z5_lua 0.54 / T074 0.59 / T074_lua 0.56 (mechanism/out/T101_data/sitl_batch_A1sum.txt; one sample each, repeat scatter 0.01-0.03); before: AR-017 worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251)"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -16825,7 +16817,7 @@
    "type": "cites"
   },
   {
-   "source": "SRC-A-REQ",
+   "source": "SRC-A-AR015",
    "target": "P:req.roll_min_degs",
    "type": "cites"
   },

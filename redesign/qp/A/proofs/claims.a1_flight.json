@@ -1188,12 +1188,12 @@
     "runin": "P:mission.runin_laps"
    },
    "outputs": {
-    "need_s": 204.55636934924914,
-    "radius_m": 51.041366716366426,
-    "lap_s": 54.15896267121404
+    "need_s": 201.57756293265368,
+    "radius_m": 57.22284711454229,
+    "lap_s": 53.30787512361533
    },
    "input_values": {
-    "v": 17.0,
+    "v": 18.0,
     "g": 9.807,
     "bank": 30.0,
     "leg": 300.0,
@@ -1238,10 +1238,10 @@
     "m": "kg"
    },
    "outputs": {
-    "cruise_s": 233.78998459499445,
+    "cruise_s": 208.64848957757266,
     "usable_wh": 29.8368,
     "hover_w": 287.2982195612765,
-    "cruise_w": 193.4770220236579
+    "cruise_w": 216.79040231719182
    },
    "input_values": {
     "apc_table": [
@@ -1303,7 +1303,7 @@
     "hover_s": 180.0,
     "trans_wh_ref": 1.56,
     "climb_wh_ref": 0.29,
-    "cruise_w_ref": 161.0,
+    "cruise_w_ref": 180.4,
     "ref_mass_kg": 1.37,
     "trans_exp": 1.5,
     "cruise_exp": 0.58
@@ -1325,11 +1325,11 @@
     "r": "m"
    },
    "outputs": {
-    "bound_m": 220.04136671636644
+    "bound_m": 226.22284711454228
    },
    "input_values": {
     "leg": 150.0,
-    "r": 51.041366716366426,
+    "r": 57.22284711454229,
     "runout": 94.0
    }
   },
@@ -1347,19 +1347,19 @@
    "verifies": [
     "A-D2"
    ],
-   "how": "Flight card 4b: settle 15 s, 2 laps, 1 go-around, run-in <= 1/2 lap at 17 m/s; requirement 3.5 min = 210 s (A-D2).",
+   "how": "Flight card 4b: settle 15 s, 2 laps, 1 go-around, run-in <= 1/2 lap at the cruise speed (18 m/s, D-255); requirement 3.5 min = 210 s (A-D2).",
    "note": "limit 210 s = the 3.5 min requirement of A-D2 / MISSION s2",
-   "value": 204.55636934924914
+   "value": 201.57756293265368
   },
   {
    "id": "CL-A-CRUISE-RADIUS",
    "type": "claim",
-   "title": "Turn radius at 17 m/s, 30 deg bank",
+   "title": "Turn radius at the cruise speed (18 m/s, D-255), 30 deg bank",
    "calc": "CALC-A-CRUISE-NEED",
    "output": "radius_m",
    "unit": "m",
-   "how": "R = V^2 / (g tan 30) = 51.0 m (MISSION s2).",
-   "value": 51.041366716366426
+   "how": "R = V^2 / (g tan 30) = 57.2 m at 18 m/s (51.0 m at 17 m/s, MISSION s2).",
+   "value": 57.22284711454229
   },
   {
    "id": "CL-A-CRUISE-AVAIL",
@@ -1380,7 +1380,7 @@
     "PRP-003"
    ],
    "how": "Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).",
-   "value": 233.78998459499445
+   "value": 208.64848957757266
   },
   {
    "id": "CL-A-FENCE",
@@ -1397,7 +1397,7 @@
     "A-P24"
    ],
    "how": "Flight card: racetrack leg 150 m, fence 250 m with FENCE_MARGIN 10 m; run-out 94 m is EST (MISSION s2).",
-   "value": 220.04136671636644
+   "value": 226.22284711454228
   },
   {
    "id": "CALC-A-STALL",
@@ -1511,7 +1511,7 @@
    "parts": [
     "WNG-001"
    ],
-   "how": "FAIL on the estimate (AM-011: physics checks apply at the predicted mass). Gated by TP-11 (TEST-PLAN-O4B): the measured stall (T-A-FIRST-CRUISE) must give CLmax >= 0.81 at this mass; a cruise-speed re-derivation alone has zero margin (A-P6).",
+   "how": "FAIL on the estimate (AM-011: physics checks apply at the predicted mass). Gated by TP-11 (TEST-PLAN-O4B): the measured stall (T-A-FIRST-CRUISE) must give CLmax >= 0.81 at this mass; D-255: cruise raised to 18 m/s for the elevon trim (T-101), so 17.74 m/s now passes with 0.26 m/s (1.4 %) on CLmax 0.75 EST; the measured stall (TP-11, CLmax >= 0.81 at this mass for a 17 m/s basis) still decides it (A-P6).",
    "assumes": [
     "ASM-A-CLMAX"
    ],
@@ -1871,10 +1871,10 @@
     "v": "P:sim.pitch_use_15_worst"
    },
    "outputs": {
-    "v": 0.651
+    "v": 0.59
    },
    "input_values": {
-    "v": 0.651
+    "v": 0.59
    }
   },
   {
@@ -1896,7 +1896,7 @@
     "WNG-006-L"
    ],
    "how": "D-245: the standing line is 0.60 of 15 deg (SITL-FLIGHT.md l.25), worst C3 case 0.651 (0.554 / 0.571 / 0.651 / 0.605, AR-017) against 0.60, so FAIL, open pending the reserve derivation (D-251); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls (AR-010 item 5). Fix path is the ladder from rung 1 (controls: lower the entry pitch-rate demand), then a SITL rerun; a 20 deg basis is not used (no A-specific roll / gust reserve derivation; review round 10 98-4). First transition flight logs the elevon commands.",
-   "value": 0.651
+   "value": 0.59
   }
  ]
 }

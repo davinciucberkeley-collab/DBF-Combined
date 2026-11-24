@@ -159,17 +159,24 @@ Q_TRANS_FAIL,15
 Q_TRANS_FAIL_ACT,1
 
 # ---------------------------------------------------------------- 5 Fixed wing (A: cruise 17 m/s, Vs 11.76 / 12.19 m/s at 1.396 / 1.50 kg EST, MISSION.md s1; QP-3 SITL-FLIGHT.md)
-AIRSPEED_CRUISE,17
+# T-101 D-255 (AM-059): cruise 18 m/s (cuts the elevon cruise trim about 1 deg; with the pack at the aft end of its tray slot, CG 23.49 mm, pitch use 0.59 worst of the four C3 cases).
+#   Margin to the THR_MAX 68 ceiling shrinks: level speed at the ceiling 18.5-18.8 m/s (above); SITL A1 settled at 18.1-18.3 m/s (0.2-0.7 m/s headroom). Checked on the first cruise logs (duty, M8 / TP-11).
+AIRSPEED_CRUISE,18
 # integer parameter (14.5 read back as 14 in SITL). 1.3 x Vs = 14.3, so 15; K09-L kept MIN = cruise
 AIRSPEED_MIN,16
-AIRSPEED_MAX,18
+# D-255: 20 (was 18 = the new cruise); below the maximum level speed is not required, VD 24 m/s (A-P13) bounds it
+AIRSPEED_MAX,20
 AIRSPEED_STALL,12.2
 # QP-3: servo-gain scaling speed = cruise (was 15, left from the 15 m/s draft). Not tested separately in SITL (FBWA / CRUISE flew stable at 17 m/s with the stock gains, elevon peak 8.6 deg)
 SCALING_SPEED,17
 ROLL_LIMIT_DEG,45
 PTCH_LIM_MAX_DEG,20
 PTCH_LIM_MIN_DEG,-10
-RLL2SRV_RMAX,150
+# D-254 / D-255: roll-rate demand cap = the derived cruise roll requirement (MIL-F-8785C Class I L1 Cat B, 60 deg in 1.7 s, about 45 deg/s); was 150.
+#   TCONST 0.9 (ArduPlane default 0.5) trims the bank overshoot a little (SITL, one sample each: elevon 18.14 -> 17.36 deg; 60 deg change from the bank at the reversal command in 1.50 s,
+#   1.81 s from the commanded +30 to -30 deg). Flight tune at TP-11.
+RLL2SRV_RMAX,45
+RLL2SRV_TCONST,0.9
 # pitch-rate caps (K09-L: from its torsion mode and CL-F4-PTCH-RMAX-TURN). A: a 45 deg bank level turn at 15 m/s needs g tan(phi) sin(phi) / V = 26.5 deg/s
 #   (K09-L 17 m/s: 23.4), so UP 35 still covers it. No A structural basis for the cap yet (fin f1 / wing torsion not computed): keep the K09-L numbers
 PTCH2SRV_RMAX_UP,35

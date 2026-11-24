@@ -262,9 +262,9 @@ def fence_bound(leg, r, runout):
 
 
 kit.claim("CL-A-CRUISE-NEED", "Cruise time the mission needs (300 m reference lap)", calc="CALC-A-CRUISE-NEED", output="need_s", unit="s",
-          limit=("<=", 210.0), verifies=["A-D2"], how="Flight card 4b: settle 15 s, 2 laps, 1 go-around, run-in <= 1/2 lap at 17 m/s; requirement 3.5 min = 210 s (A-D2).",
+          limit=("<=", 210.0), verifies=["A-D2"], how="Flight card 4b: settle 15 s, 2 laps, 1 go-around, run-in <= 1/2 lap at the cruise speed (18 m/s, D-255); requirement 3.5 min = 210 s (A-D2).",
           note="limit 210 s = the 3.5 min requirement of A-D2 / MISSION s2")
-kit.claim("CL-A-CRUISE-RADIUS", "Turn radius at 17 m/s, 30 deg bank", calc="CALC-A-CRUISE-NEED", output="radius_m", unit="m", how="R = V^2 / (g tan 30) = 51.0 m (MISSION s2).")
+kit.claim("CL-A-CRUISE-RADIUS", "Turn radius at the cruise speed (18 m/s, D-255), 30 deg bank", calc="CALC-A-CRUISE-NEED", output="radius_m", unit="m", how="R = V^2 / (g tan 30) = 57.2 m at 18 m/s (51.0 m at 17 m/s, MISSION s2).")
 kit.claim("CL-A-CRUISE-AVAIL", "Cruise time to BATT_LOW at the predicted mass", calc="CALC-A-ENDURANCE", output="cruise_s", unit="s",
           limit=(">=", "CL-A-CRUISE-NEED"), verifies=["A-D2"], parts=["PWR-001", "PRP-003"],
           how="Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).")
@@ -296,7 +296,7 @@ def stall_pred(m, g, rho, s, cl, k):
 
 kit.claim("CL-A-STALL-PRED", "1.3 x clean stall speed at the predicted take-off mass", calc="CALC-A-STALL-PRED", output="k_vs_ms", unit="m/s",
           limit=("<=", "P:mission.cruise_ms"), verifies=["A-P6"], assumes=["ASM-A-CLMAX"], parts=["WNG-001"],
-          how="FAIL on the estimate (AM-011: physics checks apply at the predicted mass). Gated by TP-11 (TEST-PLAN-O4B): the measured stall (T-A-FIRST-CRUISE) must give CLmax >= 0.81 at this mass; a cruise-speed re-derivation alone has zero margin (A-P6).")
+          how="FAIL on the estimate (AM-011: physics checks apply at the predicted mass). Gated by TP-11 (TEST-PLAN-O4B): the measured stall (T-A-FIRST-CRUISE) must give CLmax >= 0.81 at this mass; D-255: cruise raised to 18 m/s for the elevon trim (T-101), so 17.74 m/s now passes with 0.26 m/s (1.4 %) on CLmax 0.75 EST; the measured stall (TP-11, CLmax >= 0.81 at this mass for a 17 m/s basis) still decides it (A-P6).")
 
 
 # ================================================================ hover yaw authority

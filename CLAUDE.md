@@ -29,11 +29,11 @@
 
 **2026-11-19 (AM-008): the aircraft must be designed by Claude and built by the students; no commercial kit airframe
 (the ZOHD Altus lifeboat is withdrawn; D-218 reversed).** Concept A failed its mass gate (T-067/T-070) and
-its O4 resize (D-217). Re-sit (AM-009, D-219): concept A continues as **O4b** (9x4.5 props, Lua spin cap on a Kakute
-H743-Wing, 4S 2,800 mAh pack, glass wing skin, mass recovery; predicted 1.64 kg at D-219, now 1.881 kg EST (CAD 1,641 g) with SunnySky X2216
-880KV motors (D-227) and the FC 75 mm left of centre (D-239/D-240); mass gate missed, physics checks govern; 14 proof claims
-FAIL (run_all, 2026-11-23: the 12 of D-237 pending bench / tap tests, plus elevon pitch use 0.651 against 0.60 of 15 deg
-(C3 controls at 0.25 chord; the 0.30 chord D-250 was reverted, D-251; no derived reserve fits, D-252), and 1.3 Vs 17.74 m/s at the predicted mass, A-P6, gated by TP-11); landing stroke passes (17.2 mm) only inside
+its O4 resize (D-217). Re-sit (AM-009, D-219): concept A continues as **O4b** (9x4.5 props, Kakute
+H743-Wing FC (Lua spin cap dropped, D-256), 4S 2,800 mAh pack, glass wing skin, mass recovery; predicted 1.64 kg at D-219, now 1.881 kg EST (CAD 1,641 g) with SunnySky X2216
+880KV motors (D-227) and the FC 75 mm left of centre (D-239/D-240); mass gate missed, physics checks govern; 12 proof claims
+FAIL (run_all, 2026-11-24: the 12 of D-237, bench / tap tests and the mass gate); elevon pitch use 0.59 of the 0.60 line after D-255 (pack aft,
+cruise 18 m/s, roll-rate cap 45 deg/s, TCONST 0.9; roll / gust requirement re-derived, D-254), and 1.3 Vs 17.74 m/s now under the 18 m/s cruise, both thin, TP-11 decides); landing stroke passes (17.2 mm) only inside
 the foam region Fp 37.5-39.0 N, zeta 0.02-0.05 (D-243, TP-3); BOM $1,939.17 of $2,000 (D-235); Order 1 $887.25 for approval 1-4 Dec (T-093); no fabrication before Jacobs reopens (AM-037), go/no-go Fri 2027-01-29 (D-248, slack +2 d)).
 
 **History (superseded by the O4b status above): configuration changed 2026-11-14 (D-182, J6 board, `redesign/review/QP-1/BOARD.md`):**

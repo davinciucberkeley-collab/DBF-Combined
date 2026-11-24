@@ -131,10 +131,10 @@
    "note": "A-P16: connector >= 1.25 x peak"
   },
   "roll_min_degs": {
-   "value": 90.0,
+   "value": 44.8,
    "unit": "deg/s",
-   "source": "SRC-A-REQ",
-   "note": "A-P11 (G5)"
+   "source": "SRC-A-AR015",
+   "note": "D-254 / D-255: derived cruise roll requirement, MIL-F-8785C Class I Level 1 Category B (60 deg in 1.7 s; steady 44.8 deg/s, docs/audits/2026-11-24-T101-reserve.md table); replaces the underived 90 deg/s of A-P11 (G5); the D-195 SITL 106.9 / 106.4 deg/s stay as records"
   },
   "pitch_use_max": {
    "value": 0.6,
@@ -583,10 +583,10 @@
    "status": "UNVERIFIED"
   },
   "cruise_ms": {
-   "value": 17.0,
+   "value": 18.0,
    "unit": "m/s",
    "source": "SRC-A-MISSION",
-   "note": "MISSION s1: cruise 17 m/s IAS"
+   "note": "D-255 (T-101, AM-059): cruise 18 m/s IAS, A.param AIRSPEED_CRUISE 18 (was 17, MISSION s1)"
   },
   "bank_deg": {
    "value": 30.0,
@@ -676,10 +676,10 @@
    "status": "UNVERIFIED"
   },
   "cruise_w_ref": {
-   "value": 161.0,
+   "value": 180.4,
    "unit": "W",
    "source": "SRC-A-MGATE",
-   "note": "cruise electric power at 1.37 kg, 17 m/s: eta_p 0.26 x 0.76 EST (MISSION s1)",
+   "note": "D-255: cruise electric power at 1.37 kg, 18 m/s = 161 W at 17 m/s (eta_p 0.26 x 0.76 EST, MISSION s1) x drag-polar power ratio 1.1207 (CD0 0.0356, e 0.8, AR 3.68, rho 1.20, S 0.22 m2: P(18) / P(17) at 1.37 kg)",
    "status": "UNVERIFIED"
   },
   "ref_mass_kg": {
@@ -773,7 +773,7 @@
    "value": 106.4,
    "unit": "deg/s",
    "source": "SRC-A-D195SITL",
-   "note": "D-195: SITL case=roll, 1.47 kg (the gate), same conditions, run R5_rt65g (106.7 at the forward trim end CG 19.3, R5_rt65f)"
+   "note": "D-195: SITL case=roll, 1.47 kg (the gate), same conditions, run R5_rt65g (106.7 at the forward trim end CG 19.3, R5_rt65f); D-255: with RLL2SRV_RMAX 45 / TCONST 0.9 the commanded rate is capped: A1-trim SITL at 1.881 kg peaked at 62 deg/s and made the 60 deg change in 1.50 s (T101TU09_T074, Category B 1.7 s); these D-195 values (RMAX 150) are records"
   },
   "elevon_peak_deg": {
    "value": 11.5,
@@ -782,10 +782,10 @@
    "note": "D-195: worst elevon peak in the transition runs at the CAD CG, 1.455 / 1.47 kg (R5_t0, R5_g0 11.5; wind 4 m/s 10.3; CG 19.3 forward trim end 12.0, R5_cgf)"
   },
   "pitch_use_15_worst": {
-   "value": 0.651,
+   "value": 0.59,
    "unit": "-",
    "source": "SRC-A-AR017",
-   "note": "AR-017 (T-101, C3 controls, 0.25 chord): worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251)",
+   "note": "D-255 (T-101, AM-059): A1 configuration (C3 controls + pack at the aft slot end, CG 23.49 mm + cruise 18 m/s + RLL2SRV_RMAX 45 / TCONST 0.9): worst of Z5 0.53 / Z5_lua 0.54 / T074 0.59 / T074_lua 0.56 (mechanism/out/T101_data/sitl_batch_A1sum.txt; one sample each, repeat scatter 0.01-0.03); before: AR-017 worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251)",
    "status": "UNVERIFIED"
   },
   "elevon_stop_deg": {

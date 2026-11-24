@@ -8,15 +8,11 @@ Parameter files: `redesign/qp/A/params-A.json`
 
 > - STRICT A-P1: CL-A-MASS-GATE-ROOM: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)
 > - STRICT A-D3: CL-A-MASS-PRED: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)
-> - STRICT A-P6: CL-A-STALL is UNVERIFIED
 > - STRICT A-P10: CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)
-> - STRICT A-P11: CL-A-PITCH-USE: FAILS: margin -8.5% (0.651 vs <= 0.6)
 > - STRICT A-P13: CL-A-FLUTTER-ELEVON-NOM is UNVERIFIED
 > - STRICT CL-A-MASS-PRED: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)
 > - STRICT CL-A-MASS-GATE-ROOM: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)
 > - STRICT CL-A-CUTS-REQUIRED: FAILS: margin -883.5% (409.1 g vs <= 41.6 g)
-> - STRICT CL-A-STALL-PRED: FAILS: margin -4.4% (17.74 m/s vs <= 17 m/s)
-> - STRICT CL-A-PITCH-USE: FAILS: margin -8.5% (0.651 vs <= 0.6)
 > - STRICT CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)
 > - STRICT CL-A-VIB-FC: FAILS: margin -524.0% (187.2 m/s2 vs <= 30 m/s2)
 > - STRICT CL-A-VIB-GM: FAILS: margin -43.5% (1.13 vs >= 2)
@@ -29,20 +25,20 @@ Parameter files: `redesign/qp/A/params-A.json`
 
 | Requirement | Status | Claims | Smallest margin |
 |---|---|---|---|
-| [A-D2](#a-d2) Mission: 3.0 min hover, 3.41 min cruise at 17 m/s | **UNVERIFIED** | 2 | +3% |
+| [A-D2](#a-d2) Mission: 3.0 min hover, 3.41 min cruise at 17 m/s | **UNVERIFIED** | 2 | +4% |
 | [A-D3](#a-d3) Design target <= 1.470 kg; structure <= 494 g | **UNVERIFIED** **FAILS** | 4 | -883% |
 | [A-D8](#a-d8) First tethered hover by 2027-02-18 | **UNVERIFIED** | 2 | — |
 | [A-P1](#a-p1) Mass gate 1.47 kg and T/W at the gate | **UNVERIFIED** **FAILS** | 3 | -28% |
 | [A-P10](#a-p10) Vibration rule D-185 | **UNVERIFIED** **FAILS** | 8 | -524%; 1 below a limit of 0 |
-| [A-P11](#a-p11) Cruise control authority | **UNVERIFIED** **FAILS** | 7 | -9% |
+| [A-P11](#a-p11) Cruise control authority | **UNVERIFIED** | 7 | +2% |
 | [A-P13](#a-p13) Loads and flutter (G8) | **UNVERIFIED** **FAILS** | 46 | -903% |
 | [A-P16](#a-p16) Motor and ESC current | **UNVERIFIED** | 2 | +25% |
 | [A-P2](#a-p2) Hover T/W >= 2.0 fresh, >= 1.6 worst pack state | **UNVERIFIED** | 4 | +35% |
-| [A-P24](#a-p24) Fence and run-out | **UNVERIFIED** | 1 | +8% |
+| [A-P24](#a-p24) Fence and run-out | **UNVERIFIED** | 1 | +6% |
 | [A-P3](#a-p3) Transition window >= +-5 % | **UNVERIFIED** | 3 | +17% |
 | [A-P4](#a-p4) CG band, static margin, lateral CG | **UNVERIFIED** | 6 | +11% |
 | [A-P5](#a-p5) Pack retained at 12 g crash | **CHECKED** | 1 | — |
-| [A-P6](#a-p6) Stall: 1.3 Vs below cruise | **UNVERIFIED** **FAILS** | 2 | -4% |
+| [A-P6](#a-p6) Stall: 1.3 Vs below cruise | **UNVERIFIED** | 2 | +1% |
 | [A-P7](#a-p7) Hover yaw authority >= 0.35 N m | **UNVERIFIED** | 3 | +4% |
 | [A-P8](#a-p8) Wind limits | **CHECKED** | 3 | +21% |
 | [A-P9](#a-p9) Fin-tip landing tip-over >= 30 deg | **CHECKED** | 1 | +3% |
@@ -57,11 +53,11 @@ Parameter files: `redesign/qp/A/params-A.json`
 **Mission: 3.0 min hover, 3.41 min cruise at 17 m/s** — 3.0 min hover mode incl. 40 s go-around, cruise 3.41 min at 17 m/s (requirement 3.5 min), 20 % reserve; cruise to BATT_LOW lasts longer than the mission needs — **UNVERIFIED**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-d2
 
-- claim **CL-A-CRUISE-NEED** Cruise time the mission needs (300 m reference lap) = **204.6 s** (limit <= 210 s, margin +3%) — **UNVERIFIED**
+- claim **CL-A-CRUISE-NEED** Cruise time the mission needs (300 m reference lap) = **201.6 s** (limit <= 210 s, margin +4%) — **UNVERIFIED**
   - ⚠ uses P:mission.settle_s, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MISSION s2: settle to 17 m/s (A2 EST))
-  - how to verify: Flight card 4b: settle 15 s, 2 laps, 1 go-around, run-in <= 1/2 lap at 17 m/s; requirement 3.5 min = 210 s (A-D2).
+  - how to verify: Flight card 4b: settle 15 s, 2 laps, 1 go-around, run-in <= 1/2 lap at the cruise speed (18 m/s, D-255); requirement 3.5 min = 210 s (A-D2).
   - calc `CALC-A-CRUISE-NEED` `redesign/qp/A/proofs/claims_a1_flight.py::cruise_need()`: `R = V^2 / (g tan(bank)); lap = 2 L_ref + 2 pi R; need = settle + (laps + go-around + run-in) x lap / V` — **CHECKED**
-    - `v` ← param `P:mission.cruise_ms` = 17 m/s — **CHECKED**
+    - `v` ← param `P:mission.cruise_ms` = 18 m/s — **CHECKED**
       - source `SRC-A-MISSION` [Mission definition, concept A](redesign/qp/A/MISSION.md), s1 speeds, s2 racetrack, checked 2026-11-15 — **CHECKED**
     - `g` ← param `P:env.g_ms2` = 9.807 m/s2 — **CHECKED**
       - source `SRC-A-MGATE` [mission_gate_a.py (mission and mass-gate arithmetic)](redesign/qp/A/mission_gate_a.py), items list, stall, T/W, energy and cruise-to-BATT_LOW lines, checked 2026-11-15 — **CHECKED**
@@ -78,7 +74,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-d2
       - `SRC-A-MISSION` (see above)
     - `runin` ← param `P:mission.runin_laps` = 0.5 — **CHECKED**
       - `SRC-A-MISSION` (see above)
-- claim **CL-A-CRUISE-AVAIL** Cruise time to BATT_LOW at the predicted mass = **233.8 s** (limit >= 204.6 s, margin +14%) — **UNVERIFIED**
+- claim **CL-A-CRUISE-AVAIL** Cruise time to BATT_LOW at the predicted mass = **208.6 s** (limit >= 201.6 s, margin +4%) — **UNVERIFIED**
   - ⚠ uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)
   - ⚠ uses P:prop.derate, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1)
   - ⚠ uses P:prop.esc_eff, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py hover: input power = V I / 0.98)
@@ -86,7 +82,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-d2
   - ⚠ uses CL-A-MASS-PRED, which is UNVERIFIED
   - ⚠ uses P:mission.trans_wh_ref, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py Etr at 1.37 kg)
   - ⚠ uses P:mission.climb_wh_ref, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: Ecl at 1.37 kg)
-  - ⚠ uses P:mission.cruise_w_ref, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: cruise electric power at 1.37 kg, 17 m/s: eta_p 0.26 x 0.76 EST (MISSION s1))
+  - ⚠ uses P:mission.cruise_w_ref, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-255: cruise electric power at 1.37 kg, 18 m/s = 161 W at 17 m/s (eta_p 0.26 x 0.76 EST, MISSION s1) x drag-polar power ratio 1.1207 (CD0 0.0356, e 0.8, AR 3.68, rho 1.20, S 0.22 m2: P(18) / P(17) at 1.37 kg))
   - ⚠ uses P:mission.trans_exp, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: Etr scales as (m / 1.37)^1.5)
   - ⚠ uses P:mission.cruise_exp, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: Pcruise scales as (m / 1.37)^0.58)
   - ⚠ uses CL-A-CRUISE-NEED, which is UNVERIFIED
@@ -133,8 +129,8 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-d2
     - `climb_wh_ref` ← param `P:mission.climb_wh_ref` = 0.29 Wh — **UNVERIFIED**
       - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: Ecl at 1.37 kg
       - `SRC-A-MGATE` (see above)
-    - `cruise_w_ref` ← param `P:mission.cruise_w_ref` = 161 W — **UNVERIFIED**
-      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: cruise electric power at 1.37 kg, 17 m/s: eta_p 0.26 x 0.76 EST (MISSION s1)
+    - `cruise_w_ref` ← param `P:mission.cruise_w_ref` = 180.4 W — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: D-255: cruise electric power at 1.37 kg, 18 m/s = 161 W at 17 m/s (eta_p 0.26 x 0.76 EST, MISSION s1) x drag-polar power ratio 1.1207 (CD0 0.0356, e 0.8, AR 3.68, rho 1.20, S 0.22 m2: P(18) / P(17) at 1.37 kg)
       - `SRC-A-MGATE` (see above)
     - `ref_mass_kg` ← param `P:mission.ref_mass_kg` = 1.37 kg — **CHECKED**
       - `SRC-A-MGATE` (see above)
@@ -431,18 +427,18 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p10
 
 ## A-P11
 
-**Cruise control authority** — Roll rate >= 90 deg/s within +-20 deg; pitch use <= 0.60 of the stop; servo torque factor >= 1.5 at the 7.2 V rail — **UNVERIFIED** **FAILS**  
+**Cruise control authority** — Roll rate >= 90 deg/s within +-20 deg; pitch use <= 0.60 of the stop; servo torque factor >= 1.5 at the 7.2 V rail — **UNVERIFIED**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-p11
 
-- claim **CL-A-ROLL-141** Peak roll rate in SITL at cruise speed, 1.455 kg (D-195 target mass) = **106.9 deg/s** (limit >= 90 deg/s, margin +19%) — **CHECKED**
+- claim **CL-A-ROLL-141** Peak roll rate in SITL at cruise speed, 1.455 kg (D-195 target mass) = **106.9 deg/s** (limit >= 44.8 deg/s, margin +139%) — **CHECKED**
   - how to verify: Measure the roll rate on the first cruise (M8 extended); the surface is at its 20 deg stop at the peak, +3-5 % is smaller than the EST aero error.
   - parts: WNG-006-R, WNG-006-L
   - calc `CALC-A-ROLL-141-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `SITL case=roll, run R5_rt65 (6,126 / 57.3), D-195; read, not re-run` — **CHECKED**
     - `v` ← param `P:sim.roll_141_degs` = 106.9 deg/s — **CHECKED**
       - source `SRC-A-D195SITL` [QP-5 SITL runs R5_* (sitl/results_fwd.jsonl, runs/R5_*)](redesign/qp/A/sitl/jobs_qp5.txt), cant 17, D-191 gains, CAD mass / CG / inertia 2026-11-15, S5010 aero; batch_qp5.sh, checked 2026-11-15 — **CHECKED**
-  - param `P:req.roll_min_degs` = 90 deg/s — **CHECKED**
-    - source `SRC-A-REQ` [Concept A requirements (REQUIREMENTS-A.md)](redesign/qp/A/REQUIREMENTS-A.md), limits of A-U1 ... A-D12; status PROPOSED, owner A2, checked 2026-11-15 — **CHECKED**
-- claim **CL-A-ROLL-GATE** Peak roll rate in SITL at cruise speed, 1.47 kg (the gate) = **106.4 deg/s** (limit >= 90 deg/s, margin +18%) — **CHECKED**
+  - param `P:req.roll_min_degs` = 44.8 deg/s — **CHECKED**
+    - source `SRC-A-AR015` [Analysis records AR-015 / AR-016 (SITL transition pitch use, landing foam region)](https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/docs/analysis-records.md), AR-015 result (pitch use 0.69-0.79 of 15 deg, 0.52-0.59 of 20 deg); AR-016 result (landing: record run 17.2 mm at Fp 37.5 N / zeta 0.05; accepted region Fp 37.5-39.0 N, zeta 0.02-0.05), checked 2026-11-15 — **CHECKED**
+- claim **CL-A-ROLL-GATE** Peak roll rate in SITL at cruise speed, 1.47 kg (the gate) = **106.4 deg/s** (limit >= 44.8 deg/s, margin +138%) — **CHECKED**
   - how to verify: Measure the roll rate on the first cruise (T-A-FIRST-CRUISE).
   - parts: WNG-006-R, WNG-006-L
   - test `T-A-FIRST-CRUISE` First cruise: roll rate and measured stall (M8 extended) (planned) — **PROPOSED**
@@ -450,17 +446,16 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p11
     - `v` ← param `P:sim.roll_150_degs` = 106.4 deg/s — **CHECKED**
       - `SRC-A-D195SITL` (see above)
   - `P:req.roll_min_degs` (see above)
-- claim **CL-A-PITCH-USE** Elevon pitch use in transition (share of the 15 deg basis; the 0.60 line is 9 deg) = **0.651** (limit <= 0.6, margin -9%) — **UNVERIFIED** **FAILS**
-  - ⚠ FAILS: margin -8.5% (0.651 vs <= 0.6)
-  - ⚠ uses P:sim.pitch_use_15_worst, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: AR-017 (T-101, C3 controls, 0.25 chord): worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251))
+- claim **CL-A-PITCH-USE** Elevon pitch use in transition (share of the 15 deg basis; the 0.60 line is 9 deg) = **0.59** (limit <= 0.6, margin +2%) — **UNVERIFIED**
+  - ⚠ uses P:sim.pitch_use_15_worst, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-255 (T-101, AM-059): A1 configuration (C3 controls + pack at the aft slot end, CG 23.49 mm + cruise 18 m/s + RLL2SRV_RMAX 45 / TCONST 0.9): worst of Z5 0.53 / Z5_lua 0.54 / T074 0.59 / T074_lua 0.56 (mechanism/out/T101_data/sitl_batch_A1sum.txt; one sample each, repeat scatter 0.01-0.03); before: AR-017 worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251))
   - how to verify: D-245: the standing line is 0.60 of 15 deg (SITL-FLIGHT.md l.25), worst C3 case 0.651 (0.554 / 0.571 / 0.651 / 0.605, AR-017) against 0.60, so FAIL, open pending the reserve derivation (D-251); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls (AR-010 item 5). Fix path is the ladder from rung 1 (controls: lower the entry pitch-rate demand), then a SITL rerun; a 20 deg basis is not used (no A-specific roll / gust reserve derivation; review round 10 98-4). First transition flight logs the elevon commands.
   - parts: WNG-006-R, WNG-006-L
   - calc `CALC-A-PITCH-USE-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `SITL (ArduPlane, 6-DOF plant) transition runs T-097, pitch_use_15 in sum.json; read, not re-run` — **CHECKED**
-    - `v` ← param `P:sim.pitch_use_15_worst` = 0.651 — **UNVERIFIED**
-      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: AR-017 (T-101, C3 controls, 0.25 chord): worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251)
+    - `v` ← param `P:sim.pitch_use_15_worst` = 0.59 — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: D-255 (T-101, AM-059): A1 configuration (C3 controls + pack at the aft slot end, CG 23.49 mm + cruise 18 m/s + RLL2SRV_RMAX 45 / TCONST 0.9): worst of Z5 0.53 / Z5_lua 0.54 / T074 0.59 / T074_lua 0.56 (mechanism/out/T101_data/sitl_batch_A1sum.txt; one sample each, repeat scatter 0.01-0.03); before: AR-017 worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251)
       - source `SRC-A-AR017` [Analysis record AR-017 (T-101 C3 controls, SITL transition pitch use at the 0.25 elevon chord)](https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/docs/analysis-records.md), AR-017 result: C3 elevon pitch use on the 15 deg basis 0.554 / 0.571 / 0.651 / 0.605 (Z5, Z5 Lua, T-074, T-074 Lua); worst 0.651 (T-074 without Lua), checked 2026-11-15 — **CHECKED**
   - param `P:req.pitch_use_max` = 0.6 — **CHECKED**
-    - source `SRC-A-AR015` [Analysis records AR-015 / AR-016 (SITL transition pitch use, landing foam region)](https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/docs/analysis-records.md), AR-015 result (pitch use 0.69-0.79 of 15 deg, 0.52-0.59 of 20 deg); AR-016 result (landing: record run 17.2 mm at Fp 37.5 N / zeta 0.05; accepted region Fp 37.5-39.0 N, zeta 0.02-0.05), checked 2026-11-15 — **CHECKED**
+    - `SRC-A-AR015` (see above)
 - claim **CL-A-SERVO-SPEED** Elevon servo speed margin: loaded rate over the 152 deg/s of the +-11 deg, 2.2 Hz roll sinusoid (AR-005, 6.0 V pair) = **1.482** (limit >= 1, margin +48%) — **UNVERIFIED**
   - ⚠ uses P:linkage.servo_speed_margin_r2, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: AR-005: loaded elevon rate (231 deg/s, 6.0 V pair, stall 0.333 N m, 0.13 s / 60 deg, linear torque-speed line, end-point load 0.146 N m + preload + damper) over the 152 deg/s needed for +-11 deg at the 2.2 Hz crossover (EST); the 7.2 V case (1.73) is not used (7.2 V speed unpublished))
   - how to verify: Hand calculation (AR-005): linear torque-speed line, gearing 0.909-0.928 from the solved linkage, end-point load. Required rates are EST; 7.2 V speed is not published so the 6 V no-load speed is used. Bench ramp of the built rail at BUILD D5b closes it. The full-throw sinusoid R3 (0.84) is not a required case.
@@ -532,7 +527,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p11
   - parts: MEC-001-R, MEC-001-L, MEC-002-R, MEC-002-L, MEC-004-R, MEC-004-L
   - `CALC-A-SERVO` (see above)
   - param `P:req.servo_ratio_min` = 1.5 — **CHECKED**
-    - `SRC-A-REQ` (see above)
+    - source `SRC-A-REQ` [Concept A requirements (REQUIREMENTS-A.md)](redesign/qp/A/REQUIREMENTS-A.md), limits of A-U1 ... A-D12; status PROPOSED, owner A2, checked 2026-11-15 — **CHECKED**
 
 ## A-P13
 
@@ -1221,18 +1216,18 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p2
 **Fence and run-out** — Any-direction bound after a cruise BATT_LOW inside the 240 m fence — **UNVERIFIED**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-p24
 
-- claim **CL-A-FENCE** Any-direction bound after a cruise BATT_LOW = **220 m** (limit <= 240 m, margin +8%) — **UNVERIFIED**
+- claim **CL-A-FENCE** Any-direction bound after a cruise BATT_LOW = **226.2 m** (limit <= 240 m, margin +6%) — **UNVERIFIED**
   - ⚠ uses CL-A-CRUISE-RADIUS, which is UNVERIFIED
   - ⚠ uses P:mission.runout_m, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: any-direction run-out after cruise BATT_LOW: L/2 + 51 + 94 (mission_gate_a.py))
   - how to verify: Flight card: racetrack leg 150 m, fence 250 m with FENCE_MARGIN 10 m; run-out 94 m is EST (MISSION s2).
   - calc `CALC-A-FENCE` `redesign/qp/A/proofs/claims_a1_flight.py::fence_bound()`: `bound = L/2 + R + run-out (any direction after cruise BATT_LOW)` — **CHECKED**
     - `leg` ← param `P:mission.leg_m` = 150 m — **CHECKED**
       - source `SRC-A-MGATE` [mission_gate_a.py (mission and mass-gate arithmetic)](redesign/qp/A/mission_gate_a.py), items list, stall, T/W, energy and cruise-to-BATT_LOW lines, checked 2026-11-15 — **CHECKED**
-    - `r` ← claim **CL-A-CRUISE-RADIUS** Turn radius at 17 m/s, 30 deg bank = **51.04 m** — **UNVERIFIED**
+    - `r` ← claim **CL-A-CRUISE-RADIUS** Turn radius at the cruise speed (18 m/s, D-255), 30 deg bank = **57.22 m** — **UNVERIFIED**
       - ⚠ uses P:mission.settle_s, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MISSION s2: settle to 17 m/s (A2 EST))
-      - how to verify: R = V^2 / (g tan 30) = 51.0 m (MISSION s2).
+      - how to verify: R = V^2 / (g tan 30) = 57.2 m at 18 m/s (51.0 m at 17 m/s, MISSION s2).
       - calc `CALC-A-CRUISE-NEED` `redesign/qp/A/proofs/claims_a1_flight.py::cruise_need()`: `R = V^2 / (g tan(bank)); lap = 2 L_ref + 2 pi R; need = settle + (laps + go-around + run-in) x lap / V` — **CHECKED**
-        - `v` ← param `P:mission.cruise_ms` = 17 m/s — **CHECKED**
+        - `v` ← param `P:mission.cruise_ms` = 18 m/s — **CHECKED**
           - source `SRC-A-MISSION` [Mission definition, concept A](redesign/qp/A/MISSION.md), s1 speeds, s2 racetrack, checked 2026-11-15 — **CHECKED**
         - `g` ← param `P:env.g_ms2` = 9.807 m/s2 — **CHECKED**
           - `SRC-A-MGATE` (see above)
@@ -1449,10 +1444,10 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p5
 
 ## A-P6
 
-**Stall: 1.3 Vs below cruise** — Clean stall Vs <= cruise / 1.3 at the gate mass (1.3 Vs < 17 m/s) — **UNVERIFIED** **FAILS**  
+**Stall: 1.3 Vs below cruise** — Clean stall Vs <= cruise / 1.3 at the gate mass (1.3 Vs < 17 m/s) — **UNVERIFIED**  
 Defined in: qp/A/REQUIREMENTS-A.md#a-p6
 
-- claim **CL-A-STALL** 1.3 x clean stall speed at the 1.47 kg gate = **15.69 m/s** (limit <= 17 m/s, margin +8%) — **UNVERIFIED**
+- claim **CL-A-STALL** 1.3 x clean stall speed at the 1.47 kg gate = **15.69 m/s** (limit <= 18 m/s, margin +13%) — **UNVERIFIED**
   - ⚠ uses ASM-A-CLMAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-A-CLMAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-A-CLMAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -1474,15 +1469,14 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p6
     - `k` ← param `P:req.cruise_ratio` = 1.3 — **CHECKED**
       - `SRC-A-REQ` (see above)
     - `ASM-A-CLMAX` (see above)
-  - param `P:mission.cruise_ms` = 17 m/s — **CHECKED**
+  - param `P:mission.cruise_ms` = 18 m/s — **CHECKED**
     - `SRC-A-MISSION` (see above)
-- claim **CL-A-STALL-PRED** 1.3 x clean stall speed at the predicted take-off mass = **17.74 m/s** (limit <= 17 m/s, margin -4%) — **UNVERIFIED** **FAILS**
-  - ⚠ FAILS: margin -4.4% (17.74 m/s vs <= 17 m/s)
+- claim **CL-A-STALL-PRED** 1.3 x clean stall speed at the predicted take-off mass = **17.74 m/s** (limit <= 18 m/s, margin +1%) — **UNVERIFIED**
   - ⚠ uses ASM-A-CLMAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-A-MASS-PRED, which is UNVERIFIED
   - ⚠ uses ASM-A-CLMAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-A-CLMAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
-  - how to verify: FAIL on the estimate (AM-011: physics checks apply at the predicted mass). Gated by TP-11 (TEST-PLAN-O4B): the measured stall (T-A-FIRST-CRUISE) must give CLmax >= 0.81 at this mass; a cruise-speed re-derivation alone has zero margin (A-P6).
+  - how to verify: FAIL on the estimate (AM-011: physics checks apply at the predicted mass). Gated by TP-11 (TEST-PLAN-O4B): the measured stall (T-A-FIRST-CRUISE) must give CLmax >= 0.81 at this mass; D-255: cruise raised to 18 m/s for the elevon trim (T-101), so 17.74 m/s now passes with 0.26 m/s (1.4 %) on CLmax 0.75 EST; the measured stall (TP-11, CLmax >= 0.81 at this mass for a 17 m/s basis) still decides it (A-P6).
   - parts: WNG-001
   - `T-A-FIRST-CRUISE` (see above)
   - `ASM-A-CLMAX` (see above)
@@ -1754,7 +1748,7 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-u5
 
 ## Claims not tied to a requirement
 
-- claim **CL-A-CRUISE-RADIUS** Turn radius at 17 m/s, 30 deg bank = **51.04 m** — **UNVERIFIED** — chain printed above
+- claim **CL-A-CRUISE-RADIUS** Turn radius at the cruise speed (18 m/s, D-255), 30 deg bank = **57.22 m** — **UNVERIFIED** — chain printed above
 - claim **CL-A-FLUTTER-HALF** Elevon flutter onset with a half-filled (leaking) damper, kd corner = **31.5 m/s** — **UNVERIFIED**
   - ⚠ uses ASM-A-RELIABLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-A-RELIABLE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)

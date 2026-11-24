@@ -2,27 +2,23 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-24 01:54 UTC",
+  "generated": "2026-11-24 20:57 UTC",
   "dataset": "concept-a",
   "ok": false,
   "errors": [
    "STRICT A-P1: CL-A-MASS-GATE-ROOM: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)",
    "STRICT A-D3: CL-A-MASS-PRED: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)",
-   "STRICT A-P6: CL-A-STALL is UNVERIFIED",
    "STRICT A-P10: CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)",
-   "STRICT A-P11: CL-A-PITCH-USE: FAILS: margin -31.7% (0.79 vs <= 0.6)",
    "STRICT A-P13: CL-A-FLUTTER-ELEVON-NOM is UNVERIFIED",
    "STRICT CL-A-MASS-PRED: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)",
    "STRICT CL-A-MASS-GATE-ROOM: FAILS: margin -27.9% (1.881 kg vs <= 1.47 kg)",
    "STRICT CL-A-CUTS-REQUIRED: FAILS: margin -883.5% (409.1 g vs <= 41.6 g)",
-   "STRICT CL-A-STALL-PRED: FAILS: margin -4.4% (17.74 m/s vs <= 17 m/s)",
-   "STRICT CL-A-PITCH-USE: FAILS: margin -31.7% (0.79 vs <= 0.6)",
    "STRICT CL-A-VIB-IN-BAND: FAILS: margin -3 abs (3 vs <= 0)",
    "STRICT CL-A-VIB-FC: FAILS: margin -524.0% (187.2 m/s2 vs <= 30 m/s2)",
    "STRICT CL-A-VIB-GM: FAILS: margin -43.5% (1.13 vs >= 2)",
-   "STRICT CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)",
+   "STRICT CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -420.5% (446.6 kPa vs <= 85.8 kPa)",
    "STRICT CL-A-HORN-RIB-FOAM-STALL: FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)",
-   "STRICT CL-A-ELEVON-TORSION-FOAM: FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)",
+   "STRICT CL-A-ELEVON-TORSION-FOAM: FAILS: margin -507.8% (521.5 kPa vs <= 85.8 kPa)",
    "STRICT CL-A-HORN-BEARING-STALL: FAILS: margin -83.2% (36.65 MPa vs <= 20 MPa)",
    "STRICT CL-A-LINKAGE-FREEPLAY: FAILS: margin -28.0% (1.28 deg vs <= 1 deg)",
    "STRICT CL-A-VIB-GM-SHIFT: FAILS: margin -47.5% (1.05 vs >= 2)"
@@ -35,7 +31,7 @@ window.PROOF_GRAPH = {
   ],
   "counts": {
    "by_type": {
-    "source": 40,
+    "source": 41,
     "assumption": 10,
     "requirement": 22,
     "test": 16,
@@ -46,10 +42,10 @@ window.PROOF_GRAPH = {
    },
    "by_status": {
     "CHECKED": 321,
-    "UNVERIFIED": 228,
+    "UNVERIFIED": 229,
     "PROPOSED": 20
    },
-   "fails": 20
+   "fails": 16
   },
   "files": [
    "redesign/qp/A/proofs/claims.a0_base.json",
@@ -88,7 +84,7 @@ window.PROOF_GRAPH = {
    "where": "limits of A-U1 ... A-D12; status PROPOSED, owner A2",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
-   "importance": 74
+   "importance": 72
   },
   {
    "id": "SRC-A-MASSGATE",
@@ -463,6 +459,18 @@ window.PROOF_GRAPH = {
    "importance": 4
   },
   {
+   "id": "SRC-A-AR017",
+   "type": "source",
+   "title": "Analysis record AR-017 (T-101 C3 controls, SITL transition pitch use at the 0.25 elevon chord)",
+   "kind": "file",
+   "url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/docs/analysis-records.md",
+   "checked": "2026-11-15",
+   "where": "AR-017 result: C3 elevon pitch use on the 15 deg basis 0.554 / 0.571 / 0.651 / 0.605 (Z5, Z5 Lua, T-074, T-074 Lua); worst 0.651 (T-074 without Lua)",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
    "id": "SRC-A-AR015",
    "type": "source",
    "title": "Analysis records AR-015 / AR-016 (SITL transition pitch use, landing foam region)",
@@ -472,7 +480,7 @@ window.PROOF_GRAPH = {
    "where": "AR-015 result (pitch use 0.69-0.79 of 15 deg, 0.52-0.59 of 20 deg); AR-016 result (landing: record run 17.2 mm at Fp 37.5 N / zeta 0.05; accepted region Fp 37.5-39.0 N, zeta 0.02-0.05)",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
-   "importance": 2
+   "importance": 4
   },
   {
    "id": "SRC-A-FLUTTER",
@@ -875,10 +883,10 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
     "CL-A-STALL is UNVERIFIED",
-    "CL-A-STALL-PRED: FAILS: margin -4.4% (17.74 m/s vs <= 17 m/s)"
+    "CL-A-STALL-PRED is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": true,
+   "fails": false,
    "importance": 7
   },
   {
@@ -952,14 +960,14 @@ window.PROOF_GRAPH = {
    "ref": "qp/A/REQUIREMENTS-A.md#a-p11",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "reasons": [
-    "CL-A-PITCH-USE: FAILS: margin -31.7% (0.79 vs <= 0.6)",
+    "CL-A-PITCH-USE is UNVERIFIED",
     "CL-A-SERVO-SPEED is UNVERIFIED",
     "CL-A-SERVO-FACTOR is UNVERIFIED",
     "CL-A-SERVO-COLD is UNVERIFIED",
     "CL-A-SERVO-RATIO is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": true,
+   "fails": false,
    "importance": 15
   },
   {
@@ -989,9 +997,9 @@ window.PROOF_GRAPH = {
     "CL-A-FOAM-SPAR-BOND is UNVERIFIED",
     "CL-A-FOAM-SERVO is UNVERIFIED",
     "CL-A-FOAM-CAP-PEEL is UNVERIFIED",
-    "CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)",
+    "CL-A-HORN-RIB-FOAM-HOLD: FAILS: margin -420.5% (446.6 kPa vs <= 85.8 kPa)",
     "CL-A-HORN-RIB-FOAM-STALL: FAILS: margin -903.4% (860.9 kPa vs <= 85.8 kPa)",
-    "CL-A-ELEVON-TORSION-FOAM: FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)",
+    "CL-A-ELEVON-TORSION-FOAM: FAILS: margin -507.8% (521.5 kPa vs <= 85.8 kPa)",
     "CL-A-HORN-BLADE-HOLD is UNVERIFIED",
     "CL-A-HORN-BLADE-STALL is UNVERIFIED",
     "CL-A-HORN-BEARING-HOLD is UNVERIFIED",
@@ -2720,12 +2728,12 @@ window.PROOF_GRAPH = {
     "runin": "P:mission.runin_laps"
    },
    "outputs": {
-    "need_s": 204.55636934924914,
-    "radius_m": 51.041366716366426,
-    "lap_s": 54.15896267121404
+    "need_s": 201.57756293265368,
+    "radius_m": 57.22284711454229,
+    "lap_s": 53.30787512361533
    },
    "input_values": {
-    "v": 17.0,
+    "v": 18.0,
     "g": 9.807,
     "bank": 30.0,
     "leg": 300.0,
@@ -2773,10 +2781,10 @@ window.PROOF_GRAPH = {
     "m": "kg"
    },
    "outputs": {
-    "cruise_s": 233.78998459499445,
+    "cruise_s": 208.64848957757266,
     "usable_wh": 29.8368,
     "hover_w": 287.2982195612765,
-    "cruise_w": 193.4770220236579
+    "cruise_w": 216.79040231719182
    },
    "input_values": {
     "apc_table": [
@@ -2838,7 +2846,7 @@ window.PROOF_GRAPH = {
     "hover_s": 180.0,
     "trans_wh_ref": 1.56,
     "climb_wh_ref": 0.29,
-    "cruise_w_ref": 161.0,
+    "cruise_w_ref": 180.4,
     "ref_mass_kg": 1.37,
     "trans_exp": 1.5,
     "cruise_exp": 0.58
@@ -2863,11 +2871,11 @@ window.PROOF_GRAPH = {
     "r": "m"
    },
    "outputs": {
-    "bound_m": 220.04136671636644
+    "bound_m": 226.22284711454228
    },
    "input_values": {
     "leg": 150.0,
-    "r": 51.041366716366426,
+    "r": 57.22284711454229,
     "runout": 94.0
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
@@ -2889,26 +2897,26 @@ window.PROOF_GRAPH = {
    "verifies": [
     "A-D2"
    ],
-   "how": "Flight card 4b: settle 15 s, 2 laps, 1 go-around, run-in <= 1/2 lap at 17 m/s; requirement 3.5 min = 210 s (A-D2).",
+   "how": "Flight card 4b: settle 15 s, 2 laps, 1 go-around, run-in <= 1/2 lap at the cruise speed (18 m/s, D-255); requirement 3.5 min = 210 s (A-D2).",
    "note": "limit 210 s = the 3.5 min requirement of A-D2 / MISSION s2",
-   "value": 204.55636934924914,
+   "value": 201.57756293265368,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:mission.settle_s, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MISSION s2: settle to 17 m/s (A2 EST))"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.025922050717861248,
+   "margin": 0.040106843177839635,
    "importance": 2
   },
   {
    "id": "CL-A-CRUISE-RADIUS",
    "type": "claim",
-   "title": "Turn radius at 17 m/s, 30 deg bank",
+   "title": "Turn radius at the cruise speed (18 m/s, D-255), 30 deg bank",
    "calc": "CALC-A-CRUISE-NEED",
    "output": "radius_m",
    "unit": "m",
-   "how": "R = V^2 / (g tan 30) = 51.0 m (MISSION s2).",
-   "value": 51.041366716366426,
+   "how": "R = V^2 / (g tan 30) = 57.2 m at 18 m/s (51.0 m at 17 m/s, MISSION s2).",
+   "value": 57.22284711454229,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:mission.settle_s, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: MISSION s2: settle to 17 m/s (A2 EST))"
@@ -2926,7 +2934,7 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": ">=",
     "ref": "CL-A-CRUISE-NEED",
-    "resolved": 204.55636934924914
+    "resolved": 201.57756293265368
    },
    "verifies": [
     "A-D2"
@@ -2936,7 +2944,7 @@ window.PROOF_GRAPH = {
     "PRP-003"
    ],
    "how": "Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).",
-   "value": 233.78998459499445,
+   "value": 208.64848957757266,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses P:prop.i0_a, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it)",
@@ -2946,13 +2954,13 @@ window.PROOF_GRAPH = {
     "uses CL-A-MASS-PRED, which is UNVERIFIED",
     "uses P:mission.trans_wh_ref, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: mission_gate_a.py Etr at 1.37 kg)",
     "uses P:mission.climb_wh_ref, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: Ecl at 1.37 kg)",
-    "uses P:mission.cruise_w_ref, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: cruise electric power at 1.37 kg, 17 m/s: eta_p 0.26 x 0.76 EST (MISSION s1))",
+    "uses P:mission.cruise_w_ref, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-255: cruise electric power at 1.37 kg, 18 m/s = 161 W at 17 m/s (eta_p 0.26 x 0.76 EST, MISSION s1) x drag-polar power ratio 1.1207 (CD0 0.0356, e 0.8, AR 3.68, rho 1.20, S 0.22 m2: P(18) / P(17) at 1.37 kg))",
     "uses P:mission.trans_exp, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: Etr scales as (m / 1.37)^1.5)",
     "uses P:mission.cruise_exp, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: Pcruise scales as (m / 1.37)^0.58)",
     "uses CL-A-CRUISE-NEED, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.1429122707777108,
+   "margin": 0.035077944896483124,
    "importance": 1
   },
   {
@@ -2971,14 +2979,14 @@ window.PROOF_GRAPH = {
     "A-P24"
    ],
    "how": "Flight card: racetrack leg 150 m, fence 250 m with FENCE_MARGIN 10 m; run-out 94 m is EST (MISSION s2).",
-   "value": 220.04136671636644,
+   "value": 226.22284711454228,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
     "uses CL-A-CRUISE-RADIUS, which is UNVERIFIED",
     "uses P:mission.runout_m, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: any-direction run-out after cruise BATT_LOW: L/2 + 51 + 94 (mission_gate_a.py))"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.08316097201513983,
+   "margin": 0.05740480368940718,
    "importance": 1
   },
   {
@@ -3030,7 +3038,7 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": "<=",
     "ref": "P:mission.cruise_ms",
-    "resolved": 17.0
+    "resolved": 18.0
    },
    "verifies": [
     "A-P6"
@@ -3050,7 +3058,7 @@ window.PROOF_GRAPH = {
     "uses ASM-A-CLMAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.07720849330322277,
+   "margin": 0.1284746881197104,
    "importance": 1
   },
   {
@@ -3102,7 +3110,7 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": "<=",
     "ref": "P:mission.cruise_ms",
-    "resolved": 17.0
+    "resolved": 18.0
    },
    "verifies": [
     "A-P6"
@@ -3110,22 +3118,20 @@ window.PROOF_GRAPH = {
    "parts": [
     "WNG-001"
    ],
-   "how": "FAIL on the estimate (AM-011: physics checks apply at the predicted mass). Gated by TP-11 (TEST-PLAN-O4B): the measured stall (T-A-FIRST-CRUISE) must give CLmax >= 0.81 at this mass; a cruise-speed re-derivation alone has zero margin (A-P6).",
+   "how": "FAIL on the estimate (AM-011: physics checks apply at the predicted mass). Gated by TP-11 (TEST-PLAN-O4B): the measured stall (T-A-FIRST-CRUISE) must give CLmax >= 0.81 at this mass; D-255: cruise raised to 18 m/s for the elevon trim (T-101), so 17.74 m/s now passes with 0.26 m/s (1.4 %) on CLmax 0.75 EST; the measured stall (TP-11, CLmax >= 0.81 at this mass for a 17 m/s basis) still decides it (A-P6).",
    "assumes": [
     "ASM-A-CLMAX"
    ],
    "value": 17.74394826463012,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -4.4% (17.74 m/s vs <= 17 m/s)",
     "uses ASM-A-CLMAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-A-MASS-PRED, which is UNVERIFIED",
     "uses ASM-A-CLMAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-A-CLMAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.04376166262530118,
-   "fails": true,
+   "margin": 0.014225096409437773,
    "importance": 1
   },
   {
@@ -3490,7 +3496,7 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": ">=",
     "ref": "P:req.roll_min_degs",
-    "resolved": 90.0
+    "resolved": 44.8
    },
    "verifies": [
     "A-P11"
@@ -3503,7 +3509,7 @@ window.PROOF_GRAPH = {
    "value": 106.9,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.18777777777777785,
+   "margin": 1.3861607142857146,
    "importance": 1
   },
   {
@@ -3536,7 +3542,7 @@ window.PROOF_GRAPH = {
    "limit": {
     "op": ">=",
     "ref": "P:req.roll_min_degs",
-    "resolved": 90.0
+    "resolved": 44.8
    },
    "verifies": [
     "A-P11"
@@ -3549,7 +3555,7 @@ window.PROOF_GRAPH = {
    "value": 106.4,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
-   "margin": 0.18222222222222229,
+   "margin": 1.3750000000000002,
    "importance": 1
   },
   {
@@ -3563,10 +3569,10 @@ window.PROOF_GRAPH = {
     "v": "P:sim.pitch_use_15_worst"
    },
    "outputs": {
-    "v": 0.79
+    "v": 0.59
    },
    "input_values": {
-    "v": 0.79
+    "v": 0.59
    },
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "status": "CHECKED",
@@ -3591,15 +3597,14 @@ window.PROOF_GRAPH = {
     "WNG-006-R",
     "WNG-006-L"
    ],
-   "how": "D-245: the standing line is 0.60 of 15 deg (SITL-FLIGHT.md l.25), 0.69 (Z5) to 0.79 (T-074) in AR-015, so FAIL, open (AR-010 item 5). Fix path is the ladder from rung 1 (controls: lower the entry pitch-rate demand), then a SITL rerun; a 20 deg basis is not used (no A-specific roll / gust reserve derivation; review round 10 98-4). First transition flight logs the elevon commands.",
-   "value": 0.79,
+   "how": "D-245: the standing line is 0.60 of 15 deg (SITL-FLIGHT.md l.25), worst C3 case 0.651 (0.554 / 0.571 / 0.651 / 0.605, AR-017) against 0.60, so FAIL, open pending the reserve derivation (D-251); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls (AR-010 item 5). Fix path is the ladder from rung 1 (controls: lower the entry pitch-rate demand), then a SITL rerun; a 20 deg basis is not used (no A-specific roll / gust reserve derivation; review round 10 98-4). First transition flight logs the elevon commands.",
+   "value": 0.59,
    "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
    "reasons": [
-    "FAILS: margin -31.7% (0.79 vs <= 0.6)"
+    "uses P:sim.pitch_use_15_worst, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-255 (T-101, AM-059): A1 configuration (C3 controls + pack at the aft slot end, CG 23.49 mm + cruise 18 m/s + RLL2SRV_RMAX 45 / TCONST 0.9): worst of Z5 0.53 / Z5_lua 0.54 / T074 0.59 / T074_lua 0.56 (mechanism/out/T101_data/sitl_batch_A1sum.txt; one sample each, repeat scatter 0.01-0.03); before: AR-017 worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251))"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.31666666666666676,
-   "fails": true,
+   "margin": 0.016666666666666684,
    "importance": 1
   },
   {
@@ -5719,10 +5724,10 @@ window.PROOF_GRAPH = {
     "ASM-A-FOAM-ALLOW"
    ],
    "outputs": {
-    "v": 431.8
+    "v": 446.6
    },
    "input_values": {
-    "v": 431.8
+    "v": 446.6
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
@@ -5755,17 +5760,17 @@ window.PROOF_GRAPH = {
    "assumes": [
     "ASM-A-FOAM-ALLOW"
    ],
-   "value": 431.8,
+   "value": 446.6,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "reasons": [
-    "FAILS: margin -403.3% (431.8 kPa vs <= 85.8 kPa)",
+    "FAILS: margin -420.5% (446.6 kPa vs <= 85.8 kPa)",
     "uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses P:linkage.rib_foam_hold_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 138-200 kPa unfactored))",
+    "uses P:linkage.rib_foam_hold_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 143-207 kPa unfactored))",
     "uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:linkage.foam_shear_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: foam shear 100 x 103/120 kPa (EST, foam_103.py))"
    ],
    "status": "UNVERIFIED",
-   "margin": -4.032634032634033,
+   "margin": -4.205128205128205,
    "fails": true,
    "importance": 1
   },
@@ -5847,10 +5852,10 @@ window.PROOF_GRAPH = {
     "ASM-A-FOAM-ALLOW"
    ],
    "outputs": {
-    "v": 504.3
+    "v": 521.5
    },
    "input_values": {
-    "v": 504.3
+    "v": 521.5
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
@@ -5883,17 +5888,17 @@ window.PROOF_GRAPH = {
    "assumes": [
     "ASM-A-FOAM-ALLOW"
    ],
-   "value": 504.3,
+   "value": 521.5,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "reasons": [
-    "FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)",
+    "FAILS: margin -507.8% (521.5 kPa vs <= 85.8 kPa)",
     "uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:linkage.elevon_torsion_hold_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: elevon beside the horn, foam-only Saint-Venant torsion, outboard share 0.51 of 0.146 N m, x 2.156 (tape skin not credited))",
     "uses ASM-A-FOAM-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:linkage.foam_shear_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: foam shear 100 x 103/120 kPa (EST, foam_103.py))"
    ],
    "status": "UNVERIFIED",
-   "margin": -4.8776223776223775,
+   "margin": -5.078088578088578,
    "fails": true,
    "importance": 1
   },
@@ -5911,10 +5916,10 @@ window.PROOF_GRAPH = {
     "ASM-A-PETG-ALLOW"
    ],
    "outputs": {
-    "v": 3.32
+    "v": 3.43
    },
    "input_values": {
-    "v": 3.32
+    "v": 3.43
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
@@ -5947,7 +5952,7 @@ window.PROOF_GRAPH = {
    "assumes": [
     "ASM-A-PETG-ALLOW"
    ],
-   "value": 3.32,
+   "value": 3.43,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "reasons": [
     "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -5956,7 +5961,7 @@ window.PROOF_GRAPH = {
     "uses P:linkage.petg_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW))"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.834,
+   "margin": 0.8285,
    "importance": 1
   },
   {
@@ -6035,10 +6040,10 @@ window.PROOF_GRAPH = {
     "ASM-A-PETG-ALLOW"
    ],
    "outputs": {
-    "v": 18.39
+    "v": 19.02
    },
    "input_values": {
-    "v": 18.39
+    "v": 19.02
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
@@ -6071,7 +6076,7 @@ window.PROOF_GRAPH = {
    "assumes": [
     "ASM-A-PETG-ALLOW"
    ],
-   "value": 18.39,
+   "value": 19.02,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "reasons": [
     "uses ASM-A-PETG-ALLOW, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -6080,7 +6085,7 @@ window.PROOF_GRAPH = {
     "uses P:linkage.petg_allow_mpa, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW))"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.08049999999999997,
+   "margin": 0.04900000000000002,
    "importance": 1
   },
   {
@@ -6342,10 +6347,10 @@ window.PROOF_GRAPH = {
     "v": "P:linkage.servo_speed_margin_r2"
    },
    "outputs": {
-    "v": 1.521
+    "v": 1.482
    },
    "input_values": {
-    "v": 1.521
+    "v": 1.482
    },
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "status": "CHECKED",
@@ -6375,13 +6380,13 @@ window.PROOF_GRAPH = {
     "MEC-004-L"
    ],
    "how": "Hand calculation (AR-005): linear torque-speed line, gearing 0.909-0.928 from the solved linkage, end-point load. Required rates are EST; 7.2 V speed is not published so the 6 V no-load speed is used. Bench ramp of the built rail at BUILD D5b closes it. The full-throw sinusoid R3 (0.84) is not a required case.",
-   "value": 1.521,
+   "value": 1.482,
    "defined_in": "redesign/qp/A/proofs/claims.a2_struct.json",
    "reasons": [
     "uses P:linkage.servo_speed_margin_r2, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: AR-005: loaded elevon rate (231 deg/s, 6.0 V pair, stall 0.333 N m, 0.13 s / 60 deg, linear torque-speed line, end-point load 0.146 N m + preload + damper) over the 152 deg/s needed for +-11 deg at the 2.2 Hz crossover (EST); the 7.2 V case (1.73) is not used (7.2 V speed unpublished))"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.5209999999999999,
+   "margin": 0.482,
    "importance": 1
   },
   {
@@ -8080,10 +8085,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "req.roll_min_degs",
    "file": "redesign/qp/A/params-A.json",
-   "value": 90.0,
+   "value": 44.8,
    "unit": "deg/s",
-   "source": "SRC-A-REQ",
-   "note": "A-P11 (G5)",
+   "source": "SRC-A-AR015",
+   "note": "D-254 / D-255: derived cruise roll requirement, MIL-F-8785C Class I Level 1 Category B (60 deg in 1.7 s; steady 44.8 deg/s, docs/audits/2026-11-24-T101-reserve.md table); replaces the underived 90 deg/s of A-P11 (G5); the D-195 SITL 106.9 / 106.4 deg/s stay as records",
    "status": "CHECKED",
    "importance": 2
   },
@@ -8882,10 +8887,10 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "mission.cruise_ms",
    "file": "redesign/qp/A/params-A.json",
-   "value": 17.0,
+   "value": 18.0,
    "unit": "m/s",
    "source": "SRC-A-MISSION",
-   "note": "MISSION s1: cruise 17 m/s IAS",
+   "note": "D-255 (T-101, AM-059): cruise 18 m/s IAS, A.param AIRSPEED_CRUISE 18 (was 17, MISSION s1)",
    "status": "CHECKED",
    "importance": 6
   },
@@ -9071,12 +9076,12 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "mission.cruise_w_ref",
    "file": "redesign/qp/A/params-A.json",
-   "value": 161.0,
+   "value": 180.4,
    "unit": "W",
    "source": "SRC-A-MGATE",
-   "note": "cruise electric power at 1.37 kg, 17 m/s: eta_p 0.26 x 0.76 EST (MISSION s1)",
+   "note": "D-255: cruise electric power at 1.37 kg, 18 m/s = 161 W at 17 m/s (eta_p 0.26 x 0.76 EST, MISSION s1) x drag-polar power ratio 1.1207 (CD0 0.0356, e 0.8, AR 3.68, rho 1.20, S 0.22 m2: P(18) / P(17) at 1.37 kg)",
    "reasons": [
-    "marked UNVERIFIED in redesign/qp/A/params-A.json: cruise electric power at 1.37 kg, 17 m/s: eta_p 0.26 x 0.76 EST (MISSION s1)"
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: D-255: cruise electric power at 1.37 kg, 18 m/s = 161 W at 17 m/s (eta_p 0.26 x 0.76 EST, MISSION s1) x drag-polar power ratio 1.1207 (CD0 0.0356, e 0.8, AR 3.68, rho 1.20, S 0.22 m2: P(18) / P(17) at 1.37 kg)"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -9260,7 +9265,7 @@ window.PROOF_GRAPH = {
    "value": 106.4,
    "unit": "deg/s",
    "source": "SRC-A-D195SITL",
-   "note": "D-195: SITL case=roll, 1.47 kg (the gate), same conditions, run R5_rt65g (106.7 at the forward trim end CG 19.3, R5_rt65f)",
+   "note": "D-195: SITL case=roll, 1.47 kg (the gate), same conditions, run R5_rt65g (106.7 at the forward trim end CG 19.3, R5_rt65f); D-255: with RLL2SRV_RMAX 45 / TCONST 0.9 the commanded rate is capped: A1-trim SITL at 1.881 kg peaked at 62 deg/s and made the 60 deg change in 1.50 s (T101TU09_T074, Category B 1.7 s); these D-195 values (RMAX 150) are records",
    "status": "CHECKED",
    "importance": 1
   },
@@ -9281,11 +9286,14 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "sim.pitch_use_15_worst",
    "file": "redesign/qp/A/params-A.json",
-   "value": 0.79,
+   "value": 0.59,
    "unit": "-",
-   "source": "SRC-A-AR015",
-   "note": "AR-015 (T-097, 1.881 kg EST, X2216, CG 22.049 mm): elevon pitch use on the 15 deg basis, worst of Z5 0.69 and T-074 0.77-0.79 (T097_data/sitl_*/sum.json pitch_use_15); information on other bases: 20 deg 0.52-0.59, 25 deg 0.41-0.47",
-   "status": "CHECKED",
+   "source": "SRC-A-AR017",
+   "note": "D-255 (T-101, AM-059): A1 configuration (C3 controls + pack at the aft slot end, CG 23.49 mm + cruise 18 m/s + RLL2SRV_RMAX 45 / TCONST 0.9): worst of Z5 0.53 / Z5_lua 0.54 / T074 0.59 / T074_lua 0.56 (mechanism/out/T101_data/sitl_batch_A1sum.txt; one sample each, repeat scatter 0.01-0.03); before: AR-017 worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: D-255 (T-101, AM-059): A1 configuration (C3 controls + pack at the aft slot end, CG 23.49 mm + cruise 18 m/s + RLL2SRV_RMAX 45 / TCONST 0.9): worst of Z5 0.53 / Z5_lua 0.54 / T074 0.59 / T074_lua 0.56 (mechanism/out/T101_data/sitl_batch_A1sum.txt; one sample each, repeat scatter 0.01-0.03); before: AR-017 worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -10189,7 +10197,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "linkage.f_hold_n",
    "file": "redesign/qp/A/params-A.json",
-   "value": 17.05,
+   "value": 17.64,
    "unit": "N",
    "source": "SRC-A-LINKLOADS",
    "note": "rod force at the VD hinge moment, max over +-20 deg (elevon_dynamics.py)",
@@ -10219,12 +10227,12 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "linkage.rib_foam_hold_kpa",
    "file": "redesign/qp/A/params-A.json",
-   "value": 431.8,
+   "value": 446.6,
    "unit": "kPa",
    "source": "SRC-A-LINKLOADS",
-   "note": "horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 138-200 kPa unfactored)",
+   "note": "horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 143-207 kPa unfactored)",
    "reasons": [
-    "marked UNVERIFIED in redesign/qp/A/params-A.json: horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 138-200 kPa unfactored)"
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range 143-207 kPa unfactored)"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -10249,7 +10257,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "linkage.elevon_torsion_hold_kpa",
    "file": "redesign/qp/A/params-A.json",
-   "value": 504.3,
+   "value": 521.5,
    "unit": "kPa",
    "source": "SRC-A-LINKLOADS",
    "note": "elevon beside the horn, foam-only Saint-Venant torsion, outboard share 0.51 of 0.146 N m, x 2.156 (tape skin not credited)",
@@ -10264,7 +10272,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "linkage.blade_root_hold_mpa",
    "file": "redesign/qp/A/params-A.json",
-   "value": 3.32,
+   "value": 3.43,
    "unit": "MPa",
    "source": "SRC-A-LINKLOADS",
    "note": "horn blade governing section, in-layer, x 2.156",
@@ -10294,7 +10302,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "linkage.bearing_hold_mpa",
    "file": "redesign/qp/A/params-A.json",
-   "value": 18.39,
+   "value": 19.02,
    "unit": "MPa",
    "source": "SRC-A-LINKLOADS",
    "note": "1.0 mm clevis pin bearing in the 2 mm horn, x 2.156",
@@ -10399,7 +10407,7 @@ window.PROOF_GRAPH = {
    "type": "parameter",
    "title": "linkage.servo_speed_margin_r2",
    "file": "redesign/qp/A/params-A.json",
-   "value": 1.521,
+   "value": 1.482,
    "unit": "-",
    "source": "SRC-A-LINKLOADS",
    "note": "AR-005: loaded elevon rate (231 deg/s, 6.0 V pair, stall 0.333 N m, 0.13 s / 60 deg, linear torque-speed line, end-point load 0.146 N m + preload + damper) over the 152 deg/s needed for +-11 deg at the 2.2 Hz crossover (EST); the 7.2 V case (1.73) is not used (7.2 V speed unpublished)",
@@ -16810,7 +16818,7 @@ window.PROOF_GRAPH = {
    "type": "cites"
   },
   {
-   "source": "SRC-A-REQ",
+   "source": "SRC-A-AR015",
    "target": "P:req.roll_min_degs",
    "type": "cites"
   },
@@ -17240,7 +17248,7 @@ window.PROOF_GRAPH = {
    "type": "cites"
   },
   {
-   "source": "SRC-A-AR015",
+   "source": "SRC-A-AR017",
    "target": "P:sim.pitch_use_15_worst",
    "type": "cites"
   },

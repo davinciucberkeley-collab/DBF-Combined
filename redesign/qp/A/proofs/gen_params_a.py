@@ -77,7 +77,7 @@ def build():
         "motor_rating_a": V(26.8, "A", R, "T-083: SunnySky X2216 V3 880KV 450 W max continuous / 16.8 V = 26.8 A (32 A / 30 s); sunnyskyusa.com read 2026-11-21. The page gives power, not a continuous current: EST", est=True),
         "esc_rating_a": V(35.0, "A", "SRC-A-BOM", "BOM-A.csv P04: 35 A continuous per channel"),
         "connector_factor": V(1.25, "-", R, "A-P16: connector >= 1.25 x peak"),
-        "roll_min_degs": V(90.0, "deg/s", R, "A-P11 (G5)"), "pitch_use_max": V(0.60, "-", "SRC-A-AR015", "D-245 (2026-11-23): <= 0.60 of the 15 deg basis (SITL-FLIGHT.md l.25); D-245 supersedes BOARD QP-4 s3 G5 (20 deg stop basis), which has no A-specific roll / gust reserve derivation (ASDRAWN s3 asks the board to state the basis; review round 10 98-4)"),
+        "roll_min_degs": V(44.8, "deg/s", "SRC-A-AR015", "D-254 / D-255: derived cruise roll requirement, MIL-F-8785C Class I Level 1 Category B (60 deg in 1.7 s; steady 44.8 deg/s, docs/audits/2026-11-24-T101-reserve.md table); replaces the underived 90 deg/s of A-P11 (G5); the D-195 SITL 106.9 / 106.4 deg/s stay as records"), "pitch_use_max": V(0.60, "-", "SRC-A-AR015", "D-245 (2026-11-23): <= 0.60 of the 15 deg basis (SITL-FLIGHT.md l.25); D-245 supersedes BOARD QP-4 s3 G5 (20 deg stop basis), which has no A-specific roll / gust reserve derivation (ASDRAWN s3 asks the board to state the basis; review round 10 98-4)"),
         "servo_factor_min": V(1.5, "-", "SRC-A-FIXES2", "FIXES2 s2: factor >= 1.5 on the required torque (1.5 x load)"),
         "servo_ratio_min": V(1.5, "-", R, "A-P11: servo stall torque >= 1.5 x hinge moment"),
         "yaw_pass_nm": V(0.35, "N m", R, "A-P7"), "yaw_r2_nm": V(0.30, "N m", R, "A-P7: below 0.30 the 5 m/s card is reopened (R2)"),
@@ -141,7 +141,7 @@ def build():
     # ---------------------------------------------------------------- mission (mission_gate_a.py, MISSION.md)
     P["mission"] = {
         "s_m2": V(0.22, "m2", "SRC-A-MGATE", "mission_gate_a.py S (SIZING-A s2)"), "clmax": V(0.75, "-", "SRC-A-MGATE", "CLmax 0.75 EST; measured stall replaces it (MISSION s1)", est=True),
-        "cruise_ms": V(17.0, "m/s", "SRC-A-MISSION", "MISSION s1: cruise 17 m/s IAS"), "bank_deg": V(30.0, "deg", "SRC-A-MISSION", "MISSION s2: bank 30 deg"),
+        "cruise_ms": V(18.0, "m/s", "SRC-A-MISSION", "D-255 (T-101, AM-059): cruise 18 m/s IAS, A.param AIRSPEED_CRUISE 18 (was 17, MISSION s1)"), "bank_deg": V(30.0, "deg", "SRC-A-MISSION", "MISSION s2: bank 30 deg"),
         "leg_ref_m": V(300.0, "m", "SRC-A-MGATE", "mission_gate_a.py LEG_REF: requirement time defined on the 300 m reference lap"),
         "leg_m": V(150.0, "m", "SRC-A-MGATE", "mission_gate_a.py LEG: flown leg 150 m (BOARD QP-3 s3)"),
         "settle_s": V(15.0, "s", "SRC-A-MISSION", "MISSION s2: settle to 17 m/s (A2 EST)", est=True),
@@ -151,7 +151,7 @@ def build():
         "floor_frac": V(0.90, "-", "SRC-A-MGATE", "usable after the 0.90 floor"), "reserve_frac": V(0.80, "-", "SRC-A-MGATE", "20 % reserve"),
         "hover_s": V(180.0, "s", "SRC-A-MGATE", "3.0 min hover mode incl. 40 s go-around (A-D2)"),
         "trans_wh_ref": V(1.56, "Wh", "SRC-A-MGATE", "mission_gate_a.py Etr at 1.37 kg", est=True), "climb_wh_ref": V(0.29, "Wh", "SRC-A-MGATE", "Ecl at 1.37 kg", est=True),
-        "cruise_w_ref": V(161.0, "W", "SRC-A-MGATE", "cruise electric power at 1.37 kg, 17 m/s: eta_p 0.26 x 0.76 EST (MISSION s1)", est=True),
+        "cruise_w_ref": V(180.4, "W", "SRC-A-MGATE", "D-255: cruise electric power at 1.37 kg, 18 m/s = 161 W at 17 m/s (eta_p 0.26 x 0.76 EST, MISSION s1) x drag-polar power ratio 1.1207 (CD0 0.0356, e 0.8, AR 3.68, rho 1.20, S 0.22 m2: P(18) / P(17) at 1.37 kg)", est=True),
         "ref_mass_kg": V(1.37, "kg", "SRC-A-MGATE", "reference mass of the three lines above"),
         "trans_exp": V(1.5, "-", "SRC-A-MGATE", "Etr scales as (m / 1.37)^1.5", est=True), "cruise_exp": V(0.58, "-", "SRC-A-MGATE", "Pcruise scales as (m / 1.37)^0.58", est=True),
         "runout_m": V(94.0, "m", "SRC-A-MGATE", "any-direction run-out after cruise BATT_LOW: L/2 + 51 + 94 (mission_gate_a.py)", est=True),
@@ -168,9 +168,9 @@ def build():
     # ---------------------------------------------------------------- stored simulation / analysis results (read, not re-run)
     P["sim"] = {
         "roll_141_degs": V(106.9, "deg/s", "SRC-A-D195SITL", "D-195: SITL case=roll, 1.455 kg (target), cant 17, D-191 gains, CAD CG 21.47, S5010 aero, FBWA throttle held (rollthr 1650, 16.3-19 m/s), run R5_rt65: 6,126 / 57.3. Roll steps at the old 1500 stick decelerate to 14.4 m/s and give 86.7 deg/s (R5_roll, elevon at its stop): not a cruise state"),
-        "roll_150_degs": V(106.4, "deg/s", "SRC-A-D195SITL", "D-195: SITL case=roll, 1.47 kg (the gate), same conditions, run R5_rt65g (106.7 at the forward trim end CG 19.3, R5_rt65f)"),
+        "roll_150_degs": V(106.4, "deg/s", "SRC-A-D195SITL", "D-195: SITL case=roll, 1.47 kg (the gate), same conditions, run R5_rt65g (106.7 at the forward trim end CG 19.3, R5_rt65f); D-255: with RLL2SRV_RMAX 45 / TCONST 0.9 the commanded rate is capped: A1-trim SITL at 1.881 kg peaked at 62 deg/s and made the 60 deg change in 1.50 s (T101TU09_T074, Category B 1.7 s); these D-195 values (RMAX 150) are records"),
         "elevon_peak_deg": V(11.5, "deg", "SRC-A-D195SITL", "D-195: worst elevon peak in the transition runs at the CAD CG, 1.455 / 1.47 kg (R5_t0, R5_g0 11.5; wind 4 m/s 10.3; CG 19.3 forward trim end 12.0, R5_cgf)"),
-        "pitch_use_15_worst": V(0.651, "-", "SRC-A-AR017", "AR-017 (T-101, C3 controls, 0.25 chord): worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251)", est=True),
+        "pitch_use_15_worst": V(0.59, "-", "SRC-A-AR017", "D-255 (T-101, AM-059): A1 configuration (C3 controls + pack at the aft slot end, CG 23.49 mm + cruise 18 m/s + RLL2SRV_RMAX 45 / TCONST 0.9): worst of Z5 0.53 / Z5_lua 0.54 / T074 0.59 / T074_lua 0.56 (mechanism/out/T101_data/sitl_batch_A1sum.txt; one sample each, repeat scatter 0.01-0.03); before: AR-017 worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251)", est=True),
         "elevon_stop_deg": V(20.0, "deg", "SRC-A-FIXES2", "FIXES2 s3.1: control authority 20 deg (stop 21 deg)"),
         "lean_belly_5ms_deg": V(31.5, "deg", "SRC-A-SITL2", "SITL.md s70: belly into wind at 5 m/s needs 29-31 deg (mean 29.3, max 31.5)"),
         "wind_ge85_s": V(0.20, "s", "SRC-A-D195SITL", "D-195: 4 m/s mean, turbulence 1.0 m/s, 1.455 kg, worst pack (thrust scale 0.767), arm 1.2, cant 17, A.param D-191, CAD inertia / CG: longest time at or above 0.85 over the seven runs (0 / 0 / 0 / 0.20 / 0 / 0 / 0), runs R5_h60, h60s2, h60s3, h70, h70s2, h80, h90 (sitl/results.jsonl; same as CLAIMS-FIX N4 at 1.47 kg)"),

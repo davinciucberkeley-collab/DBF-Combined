@@ -604,3 +604,19 @@ Requirement IDs: R-INT-04.
 ```text
 It says we should have 50GB of storage now
 ```
+
+## AM-059 — 2026-11-24 — Finish T-101: tune, check, adopt
+Relation: work order (T-101): (1) tune the cruise roll overshoot that put an elevon on the stop in the D-254 bank reversal (SITL); (2) run the checks the D-254 configuration depends on (mission energy and BATT_LOW at 18 m/s, AIRSPEED_MAX, hover and landing at CG 23.49 mm, run_all); (3) adopt the configuration in params-A.json / A.param, amend A-P11 to the derived requirement, independent review.
+Requirement IDs: R-PHY-10, R-OPT-01.
+
+```text
+Yes, go ahead with all three
+```
+
+## AM-060 — 2026-11-24 — Drop the Lua spin-cap script
+Relation: design simplification: `spin_cap.lua` sets Q_M_SPIN_MAX 1.0 on every path (table 1.0, failsafe 1.0) since the X2216 motors (D-227), the value A.param already holds; remove it from the build, the bench test TP-2 and the SITL batches; Q_M_BAT_CURR_MAX 72 A stays the current protection.
+Requirement IDs: R-PHY-08, R-GEN-08.
+
+```text
+Yes, drop the Lua script
+```

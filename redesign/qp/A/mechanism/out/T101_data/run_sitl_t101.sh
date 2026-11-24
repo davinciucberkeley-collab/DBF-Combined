@@ -1,4 +1,5 @@
 #!/bin/bash
+# D-256 (2026-11-24): the Lua spin cap is dropped from the design; new batches run only the non-Lua cases (Z5, T074). The _lua cases stay reproducible with this script.
 # T-101 SITL reruns: identical T097 setup (1.881 kg EST, X2216, same cases / Lua / battery monitor) except the candidate change in $EXTRA.
 # usage: run_sitl_t101.sh <candidate tag, e.g. C1> "<extra run_fwd args>"   4 instances in parallel
 CAND=$1; EXTRA=$2

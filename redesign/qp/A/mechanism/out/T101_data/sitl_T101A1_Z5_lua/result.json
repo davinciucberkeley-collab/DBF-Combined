@@ -1,0 +1,336 @@
+{
+ "tag": "T101A1_Z5_lua",
+ "args": [
+  "inst=1",
+  "speedup=8",
+  "case=trans",
+  "mass=1.881",
+  "wind=0",
+  "from=0",
+  "chain=1",
+  "hold=30",
+  "cruise_s=15",
+  "P:THR_MAX=80",
+  "P:Q_WVANE_ENABLE=0",
+  "P:SCR_ENABLE=1",
+  "P:BATT_MONITOR=4",
+  "P:BATT_VOLT_MULT=10.1",
+  "P:BATT_AMP_PERVLT=17",
+  "P:SIM_BATT_VOLTAGE=14.92",
+  "P:BATT_ARM_VOLT=0",
+  "P:Q_M_BAT_VOLT_MAX=0",
+  "P:Q_M_BAT_VOLT_MIN=0",
+  "fw_hold=1.0",
+  "P:TECS_SPDWEIGHT=0.5",
+  "cg=23.49",
+  "P:AIRSPEED_CRUISE=18",
+  "P:AIRSPEED_MAX=20",
+  "P:RLL2SRV_RMAX=45",
+  "P:RLL2SRV_TCONST=0.9"
+ ],
+ "case": "trans",
+ "mass": 1.881,
+ "cfg": {
+  "out": "C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\redesign\\qp\\A\\sitl\\runs\\T101A1_Z5_lua\\case",
+  "fwd": 1,
+  "mass": 1.881,
+  "cant_deg": 17.0,
+  "arm": 1.2,
+  "wind": 0.0,
+  "wind_from_deg": 0.0,
+  "gust": 0.0,
+  "gust_at": 20.0,
+  "turb": 0.0,
+  "seed": 1,
+  "inst": 1,
+  "vrest": 14.92,
+  "slip": 0.0,
+  "es5": 1.0,
+  "es6": -1.0,
+  "cmd_file": "C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\redesign\\qp\\A\\sitl\\runs\\T101A1_Z5_lua\\cmd.json",
+  "max_t": 900.0,
+  "wind_alt": 40.0,
+  "cg_aft": 0.02349
+ },
+ "marks": {
+  "t_armed": 33.025,
+  "t_climb_done": 64.525,
+  "t_qstab": 99.625,
+  "alt_qstab": 50.404,
+  "t_fbwa": 100.724,
+  "alt_fbwa": 51.041,
+  "t_fwdone": 107.223,
+  "t_cruise_mode": 108.224,
+  "t_cruise_end": 123.322,
+  "t_back": 123.322,
+  "t_desc0": 151.422,
+  "t_qland": 151.422
+ },
+ "armed": true,
+ "reached_alt": true,
+ "thst_hover": 0.41071000695228577,
+ "entry": {
+  "r_target": 1.3925164191830017,
+  "window": [
+   1.33,
+   1.4550328383660034
+  ],
+  "u_out": 0.7524128077340947,
+  "stick": 1738,
+  "th_hover": 0.41071000695228577,
+  "static_T_over_W": 1.392516419184178,
+  "u_cap_ratio": 1.818791047957504
+ },
+ "events": [
+  [
+   0.0,
+   "Barometer 1 calibration complete"
+  ],
+  [
+   0.0,
+   "Barometer 2 calibration complete"
+  ],
+  [
+   0.0,
+   "Airspeed 1 calibration started"
+  ],
+  [
+   0.0,
+   "ArduPilot Ready"
+  ],
+  [
+   0.0,
+   "AHRS: DCM active"
+  ],
+  [
+   0.0,
+   "spin_cap.lua loaded"
+  ],
+  [
+   1.93,
+   "spin_cap V 14.92 cap 1.000"
+  ],
+  [
+   3.42,
+   "Airspeed 1 calibrated"
+  ],
+  [
+   3.72,
+   "EKF3 IMU0 initialised"
+  ],
+  [
+   3.72,
+   "EKF3 IMU1 initialised"
+  ],
+  [
+   5.42,
+   "EKF3 IMU1 tilt alignment complete"
+  ],
+  [
+   5.42,
+   "EKF3 IMU0 tilt alignment complete"
+  ],
+  [
+   5.52,
+   "EKF3 IMU1 MAG0 initial yaw alignment complete"
+  ],
+  [
+   5.52,
+   "EKF3 IMU0 MAG0 initial yaw alignment complete"
+  ],
+  [
+   9.02,
+   "GPS 1: probing for u-blox at 230400 baud"
+  ],
+  [
+   9.02,
+   "GPS 1: detected u-blox"
+  ],
+  [
+   12.12,
+   "spin_cap V 14.92 cap 1.000"
+  ],
+  [
+   19.22,
+   "EKF3 IMU1 origin set"
+  ],
+  [
+   19.32,
+   "Field Elevation Set: 5m"
+  ],
+  [
+   19.42,
+   "EKF3 IMU0 origin set"
+  ],
+  [
+   22.12,
+   "spin_cap V 14.92 cap 1.000"
+  ],
+  [
+   30.02,
+   "Throttle armed"
+  ],
+  [
+   32.32,
+   "spin_cap V 14.85 cap 1.000"
+  ],
+  [
+   42.52,
+   "spin_cap V 14.69 cap 1.000"
+  ],
+  [
+   52.52,
+   "spin_cap V 14.70 cap 1.000"
+  ],
+  [
+   55.02,
+   "EKF3 IMU0 is using GPS"
+  ],
+  [
+   55.02,
+   "AHRS: EKF3 active"
+  ],
+  [
+   55.02,
+   "EKF3 IMU1 is using GPS"
+  ],
+  [
+   62.72,
+   "spin_cap V 14.70 cap 1.000"
+  ],
+  [
+   72.92,
+   "spin_cap V 14.73 cap 1.000"
+  ],
+  [
+   83.02,
+   "spin_cap V 14.73 cap 1.000"
+  ],
+  [
+   93.22,
+   "spin_cap V 14.73 cap 1.000"
+  ],
+  [
+   103.42,
+   "spin_cap V 14.71 cap 1.000"
+  ],
+  [
+   107.22,
+   "Transition FW done"
+  ],
+  [
+   113.42,
+   "spin_cap V 14.80 cap 1.000"
+  ],
+  [
+   123.62,
+   "spin_cap V 14.81 cap 1.000"
+  ],
+  [
+   127.52,
+   "Transition VTOL done, timeout"
+  ],
+  [
+   133.62,
+   "spin_cap V 14.85 cap 1.000"
+  ],
+  [
+   143.62,
+   "spin_cap V 14.85 cap 1.000"
+  ],
+  [
+   153.72,
+   "spin_cap V 14.85 cap 1.000"
+  ],
+  [
+   163.93,
+   "spin_cap V 14.85 cap 1.000"
+  ],
+  [
+   174.02,
+   "spin_cap V 14.85 cap 1.000"
+  ],
+  [
+   184.22,
+   "spin_cap V 14.85 cap 1.000"
+  ],
+  [
+   194.42,
+   "spin_cap V 14.86 cap 1.000"
+  ],
+  [
+   204.42,
+   "spin_cap V 14.86 cap 1.000"
+  ],
+  [
+   214.52,
+   "spin_cap V 14.86 cap 1.000"
+  ],
+  [
+   224.52,
+   "spin_cap V 14.86 cap 1.000"
+  ],
+  [
+   234.62,
+   "spin_cap V 14.86 cap 1.000"
+  ],
+  [
+   244.62,
+   "spin_cap V 14.86 cap 1.000"
+  ],
+  [
+   254.62,
+   "spin_cap V 14.90 cap 1.000"
+  ],
+  [
+   259.22,
+   "Land complete"
+  ],
+  [
+   259.22,
+   "Throttle disarmed"
+  ],
+  [
+   264.82,
+   "spin_cap V 14.92 cap 1.000"
+  ]
+ ],
+ "modes": [
+  [
+   0.0,
+   16
+  ],
+  [
+   0.0,
+   "MANUAL"
+  ],
+  [
+   2.02,
+   "QHOVER"
+  ],
+  [
+   64.82,
+   "QLOITER"
+  ],
+  [
+   99.92,
+   "QSTAB"
+  ],
+  [
+   101.12,
+   "FBWA"
+  ],
+  [
+   108.52,
+   "CRUISE"
+  ],
+  [
+   123.62,
+   "QLOITER"
+  ],
+  [
+   151.42,
+   "QLAND"
+  ]
+ ]
+}
