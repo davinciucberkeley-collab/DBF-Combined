@@ -48,8 +48,8 @@ CATALOG = {
                 'Du-Bro 2-56 threaded rod + 2-56 steel clevis (SRC-D6-CLEVIS)', 'cut, Z-bend'),
     'MEC-004': ('Control horn, inboard panel (clevis + rod boss)', 'PETG (printed)', 'make', 'printed',
                 'subsystems/mechanisms/fusion/mechanisms.py#build_horn', 'FDM PETG 100 %'),
-    'MEC-005': ('Inter-panel rod, 1/8 in pultruded CF', 'CF rod pultruded (bought)', 'buy', 'rod',
-                '1/8 in (3.18 mm) pultruded carbon rod (SRC-D6-CFROD)', 'cut 67 mm (abrasive disc), scuff'),
+    'MEC-005': ('Inter-panel rod, 4 mm pultruded CF', 'CF rod pultruded (bought)', 'buy', 'rod',
+                '4 mm pultruded carbon rod (SRC-D6-CFROD)', 'cut 104 mm (abrasive disc), scuff'),
     'MEC-006': ('Link horn, outboard panel (rod boss)', 'PETG (printed)', 'make', 'printed',
                 'subsystems/mechanisms/fusion/mechanisms.py#build_horn', 'FDM PETG 100 %'),
     'MEC-007': ('Servo cover with arm slot', 'PETG (printed)', 'make', 'cover',
@@ -302,7 +302,7 @@ def write_parts_csv(mod, M, LP):
             'MEC-010': 0.20, 'MEC-013': 0.05}
     note = {'MEC-001': 'UNVERIFIED price (SRC-D6-SH0255-PRICE); 3.9 kgf cm at 6 V, 1.4 A stall; buy 3 (1 spare, I1)',
             'MEC-003': 'per side: 1/3 of a 12 in 2-56 rod + 1 clevis + keeper; EST',
-            'MEC-005': 'cut from one 1 m 1/8 in pultruded CF rod (EST $5/rod); D6-R2, was music wire', 'MEC-009': 'cut from one 1 m tube (EST $8): 2 x 0.210 m outboard + 2 x 0.160 m inboard',
+            'MEC-005': 'cut from one 1 m 4 mm pultruded CF rod (EST $5/rod); CR-D1-C1: was 1/8 in, 67 mm', 'MEC-009': 'cut from one 1 m tube (EST $8): 2 x 0.168 m outboard + 2 x 0.160 m inboard',
             'MEC-002': 'supplied with the servo', 'MEC-010': 'from the wing tape roll'}
     rows = []
     for num in sorted(CATALOG):

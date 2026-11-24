@@ -232,7 +232,27 @@ def add_loft(bm, s):
     bm.faces.new(list(reversed(rings[-1])))
 
 
-BUILDERS = {'prism': add_prism, 'revolve': add_revolve, 'loft': add_loft}
+def add_mesh(bm, s):
+    """Closed outward-wound triangle mesh (fusionkit kind 'mesh'). Duplicate vertices are merged by position so the
+    body is watertight; degenerate and repeated faces are skipped."""
+    key = lambda p: (round(p[0] * 1e8), round(p[1] * 1e8), round(p[2] * 1e8))
+    ids, vs = {}, []
+    for p in s.verts:
+        k = key(p)
+        if k not in ids:
+            ids[k] = bm.verts.new(tuple(p))
+        vs.append(ids[k])
+    seen = set()
+    for i, j, k in s.tris:
+        a, b, c = vs[i], vs[j], vs[k]
+        f = frozenset((id(a), id(b), id(c)))
+        if len(f) < 3 or f in seen:
+            continue
+        seen.add(f)
+        bm.faces.new((a, b, c))
+
+
+BUILDERS = {'prism': add_prism, 'revolve': add_revolve, 'loft': add_loft, 'mesh': add_mesh}
 
 
 def _matrix(comp):
@@ -865,3 +885,18 @@ def build(examples=True, root=None, mode='material', log=print):
     for sev, code, item, msg in ctx.issues:
         log('%s %s %s: %s' % (sev, code, item, msg))
     return be, ctx, graph, results
+
+
+def solid_tape(be, hex_='#D3DCE6'):
+    """Showcase option (concept A): the 'packing tape' LOOK is a 22 % clear skin that shows the taped-over grooves of the
+    K09-L core. On concept A's plain tape-skinned XPS core and elevons it reads as a ghosted wing, so the showcase
+    renders swap every see-through part material for one opaque light foam-and-tape material (geometry unchanged)."""
+    m = _principled('xps + tape (solid)', srgb(hex_), 0.3, 0.0, 0.15)
+    n = 0
+    for ob in list(be.objects.values()):
+        for slot in ob.material_slots:
+            mat = slot.material
+            if mat is not None and mat.diffuse_color[3] < 0.99:
+                slot.material = m
+                n += 1
+    return n

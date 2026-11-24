@@ -1,0 +1,40 @@
+{
+"tag": "b5pos",
+"args": [
+"wind=5",
+"from=0",
+"hold=40",
+"P:Q_P_NE_VEL_I=1.5",
+"P:Q_P_NE_POS_P=1.0"
+],
+"summary": {
+"n": 708,
+"t_window": [
+8.027,
+43.967
+],
+"wind_ms": 5.0,
+"lean_max": 35.5,
+"lean_mean": 33.1,
+"lean_pre": 10.5,
+"u_max": 0.786,
+"u_mean_max": 0.746,
+"t_cap_s": 0.0,
+"t_cap_run_s": 0.0,
+"t_ge85_s": 0.0,
+"u_min": 0.333,
+"t_floor_s": 0.0,
+"t_floor_run_s": 0.0,
+"yaw_err_max": 11.3,
+"yaw_err_rms": 6.63,
+"pos_err_max": 3.55,
+"pos_err_rms": 2.75,
+"pos_err_last20_mean": 2.73,
+"alt_dev_max": 0.23,
+"diag_spread_max": 0.318,
+"diag_spread_mean": 0.169
+},
+"armed": true,
+"reached_alt": true,
+"events": []
+}

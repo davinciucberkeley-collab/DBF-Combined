@@ -1,5 +1,9 @@
 # F1 power distribution: summary
 
+> **CDR fix round, 2026-11-13 (D-115, D-117).** Path resistance and 100 A drop re-issued on the leads as routed
+> (0.564–0.701 m, one XT30U per branch): **7.92 mΩ**, **5.68 %** against a limit of **11.5 %** from E1's thrust need
+> (`CL-E1-DROP-ALLOW`). 42 claims, all limits pass. The other rows are still F1-R4 and are re-published under CDR-23.
+
 Status `PROPOSED`. Analysis F1-R4 (`team/F1/power.py`, 39 claims) and design PWR-R1 (`subsystems/power/`, 10 claims,
 CAD `MODELLED`). Nothing is bench-tested. R4 re-runs the analysis on F2's harness re-run (ESC leads trimmed to
 0.475–0.620 m), adds a check on the power-board link and acknowledges the 15 power wires. **Every F1 and PWR
@@ -13,8 +17,8 @@ check passes.** Details: `team/F1/POWER.md`, `subsystems/power/SPEC.md`.
 | Main jumpers | **10 AWG**, 0.030 + 0.050 m | 0.5 °C above the joints (limit 10); loop 0.61 mΩ | `CL-F1-MAIN-RISE`, `CL-PWR-JUMPER-R` | `MODELLED` |
 | ESC leads | **16 AWG**, routed 0.475–0.620 m (F2) | open run 9.2 °C; bundles 9.5 °C (+5 %); burst peak 23.7 °C ≤ 30 | `CL-F1-ESC-RISE`, `-BUNDLE-RISE`, `-BUNDLE-PEAK` | `MODELLED` |
 | Pack's own leads | ≥ 10 AWG, 0.066–0.10 m | 16.4 °C ≤ 20 (12 AWG 28.5 °C: pack refused) | `CL-F1-PACKLEAD-RISE` | `UNVERIFIED` (gauge) |
-| Path resistance | pack terminals → ESC pads | **6.69 mΩ** (R3 6.94, params 6.5): drop 1.59 % at 30 A | `CL-F1-R-EXT`, `-DROP-CONT` | `MODELLED` |
-| Drop at 100 A | farthest ESC (LR 0.620 m) | **4.89 % ≤ 5 %** (+2 %); leads ≤ 0.643 m pass | `CL-F1-DROP-PEAK`, `-ESC-LEN-ALLOW` | `MODELLED` (CR-F1-25 closed) |
+| Path resistance | pack terminals → ESC pads | **7.92 mΩ** (R4 6.69; params 7.9, D-115): drop 1.86 % at 30 A (limit 2) | `CL-F1-R-EXT`, `-DROP-CONT` | `MODELLED` |
+| Drop at 100 A | farthest ESC (LR 0.701 m) | **5.68 % ≤ 11.5 %** (+51 %; limit = E1's thrust need, `CL-E1-DROP-ALLOW`); 0.68 points over the 5 % guideline, accepted (D-117); leads ≤ 1.907 m pass | `CL-F1-DROP-PEAK`, `-ESC-LEN-ALLOW`, `-DROP-OVER-5PCT`, `-ESC-LEN-5PCT` | `MODELLED` |
 | Sensing | CoreWing V2 power board (`PWR-003`) | 90 / 215 A ≥ 38 / 120 A | `CL-F1-SENSOR-*` | `UNVERIFIED` (measure on arrival) |
 | Power-board link | GH-6, 28 AWG: sense + 5 V only, **no Vx** | 5 V line 2.7 °C at 0.87 A; 24.7 °C if servo stall current ran in it | `CL-F1-PMOD-RISE`, `-SERVO-RISE` | `MODELLED` (CR-F1-29) |
 | Protection | no propulsion fuse; 5 A fuse on the UBEC feed; 680 µF at each ESC | limiter worst case 105 A ≤ 140 A | `CL-F1-ILIM-WORST` | `MODELLED` |
@@ -26,7 +30,7 @@ check passes.** Details: `team/F1/POWER.md`, `subsystems/power/SPEC.md`.
 |---|---|---|
 | Wire rise: steady / short (< 60 s) / pack leads | 10 / 30 / 20 °C | `P:electrical.wire_temp_rise_max_c`, `_short_max_c` (4 peak claims), `pack_lead_rise_max_c` (D-56) |
 | Mission profile (wire heating) | climb 35.5 A, hover 30.1, transition 43.5 / 40.0, cruise 22.4 A (407 s) | `CL-F1-PROFILE` ← `CL-E2-*-PESS` (CR-E2-19) |
-| ESC lead lengths | UR 0.595, UL 0.475, LR 0.620, LL 0.497 m | `CL-F2-ESC-LEN-*` (F2 re-run 2026-11-09) |
+| ESC lead lengths | UR 0.670, UL 0.564, LR 0.701, LL 0.593 m | `CL-F2-ESC-LEN-*` (as routed, D-85…D-89) |
 | FC 5 V load | 0.87 A (2 × load) | `CL-F3-5V-REQ` |
 
 ## Mass (D-48)
@@ -42,7 +46,7 @@ check passes.** Details: `team/F1/POWER.md`, `subsystems/power/SPEC.md`.
 
 | Check | Result |
 |---|---|
-| `python -I redesign/team/F1/power.py` | 39 claims, **all limits pass**. Tightest: `DROP-PEAK` +2 %, `BUNDLE-RISE` +5 %, `ESC-RISE` +8 % |
+| `python -I redesign/team/F1/power.py` (re-run 2026-11-13) | 42 claims, **all limits pass**. Tightest: `POWER-MASS` +4 %, `BUNDLE-RISE` +5 %, `DROP-CONT` +7 %; `DROP-PEAK` +51 % against its new limit |
 | `python -I redesign/team/F1/draw_schematic.py` | `power-schematic.svg` redrawn (0.47–0.62 m, link "no Vx") |
 | `python -I redesign/subsystems/power/make_power.py`, `power_claims.py` | 10 claims pass; `CL-PWR-MASS` 638.2 ≤ 648 g; 15 harness edges acknowledged |
 | `python -I redesign/interfaces/merge_check.py` | PASS, 0 errors; **0 power warnings**. E-HRN-22/-23 wait for avionics' acknowledgement |

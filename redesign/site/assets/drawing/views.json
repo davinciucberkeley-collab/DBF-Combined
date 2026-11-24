@@ -49,6 +49,16 @@
      "subsystem": "wing",
      "name": "Wing core, one piece (XPS), with all cuts"
     },
+    "WNG-008": {
+     "bbox_px": [
+      141.5,
+      439.7,
+      1541.5,
+      471.1
+     ],
+     "subsystem": "wing",
+     "name": "Spar-slot cap strips (XPS, the slot strip re-bonded)"
+    },
     "WNG-006-R": {
      "bbox_px": [
       1259.9,
@@ -784,10 +794,10 @@
       743.5,
       154.8,
       939.5,
-      452.6
+      447.0
      ],
      "subsystem": "pod",
-     "name": "Hatch (foam board, printed tongue, 12 x 40 hook-and-loop tab, antenna tube A)"
+     "name": "Hatch (foam board, printed tongue, 8 x 60 hook-and-loop tab, antenna tube A)"
     },
     "POD-004": {
      "bbox_px": [
@@ -1403,7 +1413,7 @@
      "bbox_px": [
       1237.1,
       615.1,
-      1243.9,
+      1245.1,
       690.7
      ],
      "subsystem": "mechanisms",
@@ -1531,7 +1541,7 @@
     },
     "MEC-003-L": {
      "bbox_px": [
-      439.1,
+      437.9,
       615.1,
       445.9,
       690.7
@@ -1797,7 +1807,7 @@
       336.4
      ],
      "subsystem": "power",
-     "name": "Power-frame washer set: 4 x M3 nylon washer 1.0 mm"
+     "name": "Power-frame washer set: 4 x M3 nylon washer 0.5 mm"
     },
     "PWR-101": {
      "bbox_px": [
@@ -1910,6 +1920,16 @@
      ],
      "subsystem": "wing",
      "name": "Wing core, one piece (XPS), with all cuts"
+    },
+    "WNG-008": {
+     "bbox_px": [
+      141.5,
+      332.8,
+      1541.5,
+      354.2
+     ],
+     "subsystem": "wing",
+     "name": "Spar-slot cap strips (XPS, the slot strip re-bonded)"
     },
     "WNG-006-R": {
      "bbox_px": [
@@ -2649,7 +2669,7 @@
       235.3
      ],
      "subsystem": "pod",
-     "name": "Hatch (foam board, printed tongue, 12 x 40 hook-and-loop tab, antenna tube A)"
+     "name": "Hatch (foam board, printed tongue, 8 x 60 hook-and-loop tab, antenna tube A)"
     },
     "POD-004": {
      "bbox_px": [
@@ -2664,7 +2684,7 @@
     "POD-009": {
      "bbox_px": [
       805.5,
-      230.4,
+      233.9,
       877.5,
       312.9
      ],
@@ -2674,7 +2694,7 @@
     "POD-010": {
      "bbox_px": [
       805.5,
-      230.4,
+      233.9,
       877.5,
       312.9
      ],
@@ -2746,7 +2766,7 @@
       373.7,
       35.4,
       413.3,
-      70.1
+      102.3
      ],
      "subsystem": "landing",
      "name": "Foot shoe UR"
@@ -2806,7 +2826,7 @@
       1269.7,
       35.4,
       1309.3,
-      70.1
+      102.3
      ],
      "subsystem": "landing",
      "name": "Foot shoe UL"
@@ -2814,7 +2834,7 @@
     "GER-001-LR": {
      "bbox_px": [
       373.7,
-      613.9,
+      581.7,
       413.3,
       648.6
      ],
@@ -2824,7 +2844,7 @@
     "GER-001-LL": {
      "bbox_px": [
       1269.7,
-      613.9,
+      581.7,
       1309.3,
       648.6
      ],
@@ -3263,7 +3283,7 @@
     },
     "MEC-003-R": {
      "bbox_px": [
-      439.1,
+      437.9,
       362.8,
       445.9,
       372.6
@@ -3395,7 +3415,7 @@
      "bbox_px": [
       1237.1,
       362.8,
-      1243.9,
+      1245.1,
       372.6
      ],
      "subsystem": "mechanisms",
@@ -3564,9 +3584,9 @@
     "PWR-003": {
      "bbox_px": [
       884.0,
-      266.4,
+      263.2,
       928.8,
-      286.6
+      288.0
      ],
      "subsystem": "power",
      "name": "Power module: CoreWing F405 Wing V2 power board (V/I sense, servo BEC), separated from the FC stack"
@@ -3654,19 +3674,19 @@
     "PWR-103": {
      "bbox_px": [
       884.0,
-      286.6,
+      287.3,
       928.8,
       288.0
      ],
      "subsystem": "power",
-     "name": "Power-frame washer set: 4 x M3 nylon washer 1.0 mm"
+     "name": "Power-frame washer set: 4 x M3 nylon washer 0.5 mm"
     },
     "PWR-101": {
      "bbox_px": [
       885.0,
-      281.8,
+      284.7,
       927.8,
-      309.5
+      312.5
      ],
      "subsystem": "power",
      "name": "Power-frame screw set: 4 x M3x18 pan head, nylon PA66"
@@ -3772,6 +3792,16 @@
      ],
      "subsystem": "wing",
      "name": "Wing core, one piece (XPS), with all cuts"
+    },
+    "WNG-008": {
+     "bbox_px": [
+      439.7,
+      332.8,
+      471.1,
+      354.2
+     ],
+     "subsystem": "wing",
+     "name": "Spar-slot cap strips (XPS, the slot strip re-bonded)"
     },
     "WNG-006-R": {
      "bbox_px": [
@@ -4507,11 +4537,11 @@
      "bbox_px": [
       154.8,
       202.0,
-      452.6,
+      447.0,
       235.3
      ],
      "subsystem": "pod",
-     "name": "Hatch (foam board, printed tongue, 12 x 40 hook-and-loop tab, antenna tube A)"
+     "name": "Hatch (foam board, printed tongue, 8 x 60 hook-and-loop tab, antenna tube A)"
     },
     "POD-004": {
      "bbox_px": [
@@ -4526,7 +4556,7 @@
     "POD-009": {
      "bbox_px": [
       159.7,
-      230.4,
+      233.9,
       196.4,
       312.9
      ],
@@ -4536,7 +4566,7 @@
     "POD-010": {
      "bbox_px": [
       196.4,
-      230.4,
+      233.9,
       198.5,
       312.9
      ],
@@ -4608,7 +4638,7 @@
       698.4,
       35.4,
       800.6,
-      70.1
+      102.3
      ],
      "subsystem": "landing",
      "name": "Foot shoe UR"
@@ -4668,7 +4698,7 @@
       698.4,
       35.4,
       800.6,
-      70.1
+      102.3
      ],
      "subsystem": "landing",
      "name": "Foot shoe UL"
@@ -4676,7 +4706,7 @@
     "GER-001-LR": {
      "bbox_px": [
       698.4,
-      613.9,
+      581.7,
       800.6,
       648.6
      ],
@@ -4686,7 +4716,7 @@
     "GER-001-LL": {
      "bbox_px": [
       698.4,
-      613.9,
+      581.7,
       800.6,
       648.6
      ],
@@ -5426,9 +5456,9 @@
     "PWR-003": {
      "bbox_px": [
       256.6,
-      266.4,
+      263.2,
       329.4,
-      286.6
+      288.0
      ],
      "subsystem": "power",
      "name": "Power module: CoreWing F405 Wing V2 power board (V/I sense, servo BEC), separated from the FC stack"
@@ -5516,19 +5546,19 @@
     "PWR-103": {
      "bbox_px": [
       291.6,
-      286.6,
+      287.3,
       336.4,
       288.0
      ],
      "subsystem": "power",
-     "name": "Power-frame washer set: 4 x M3 nylon washer 1.0 mm"
+     "name": "Power-frame washer set: 4 x M3 nylon washer 0.5 mm"
     },
     "PWR-101": {
      "bbox_px": [
       292.6,
-      281.8,
+      284.7,
       335.4,
-      309.5
+      312.5
      ],
      "subsystem": "power",
      "name": "Power-frame screw set: 4 x M3x18 pan head, nylon PA66"

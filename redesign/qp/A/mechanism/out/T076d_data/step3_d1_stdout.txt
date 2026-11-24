@@ -1,0 +1,34 @@
+# T-076d step 3: D-1 modal transient, partition-B arm wrench.  Category: dynamics (modal superposition, one-way coupling).  Pad Fp 30 N, usable stroke 24 mm; mass model cad; 1.64 kg.
+pad zeta 0.02: foot forces done, worst stroke 21.5 mm, n 8.49, tilt 2.97  [30 s]
+pad zeta 0.05: foot forces done, worst stroke 18.8 mm, n 10.00, tilt 2.56  [62 s]
+pad zeta 0.10: foot forces done, worst stroke 15.6 mm, n 12.41, tilt 2.07  [94 s]
+
+## frame asbuilt kd: FE mass 1640.0 g; lowest flexible modes (Hz): 10.6, 20.3, 23.8, 24.8, 27.6, 32.0, 32.0, 35.0
+pad zeta 0.02 kd damp 1 %: arm-group Mexit dyn env 8.22 / sim RB 5.24 N m -> DAF env 1.57, case-max 3.08; Mz_arm dyn 12.13 vs RB 8.47 (DAF 1.43); components judge DAF 4.52 (Fx 3.24 Fy 2.66 Fz 4.52 Mx 1.76 My 3.75 Mz 1.56); sigma dyn 92.6 RB 58.8 MPa; tau dyn 3.21 RB 1.56; hub Mz dyn 12.77; RF_bridge(dyn) 2.42; QS/RB arm Mz 0.78
+pad zeta 0.02 kd damp 2 %: arm-group Mexit dyn env 6.99 / sim RB 5.24 N m -> DAF env 1.33, case-max 2.62; Mz_arm dyn 11.01 vs RB 8.47 (DAF 1.30); components judge DAF 3.42 (Fx 2.66 Fy 2.35 Fz 3.42 Mx 1.49 My 3.06 Mz 1.50); sigma dyn 79.0 RB 58.8 MPa; tau dyn 2.36 RB 1.56; hub Mz dyn 11.67; RF_bridge(dyn) 3.01; QS/RB arm Mz 0.78
+pad zeta 0.05 kd damp 1 %: arm-group Mexit dyn env 7.55 / sim RB 5.41 N m -> DAF env 1.40, case-max 2.47; Mz_arm dyn 13.89 vs RB 10.42 (DAF 1.33); components judge DAF 4.26 (Fx 3.18 Fy 2.93 Fz 4.26 Mx 2.38 My 3.43 Mz 1.83); sigma dyn 85.2 RB 61.4 MPa; tau dyn 2.54 RB 1.88; hub Mz dyn 13.70; RF_bridge(dyn) 2.73; QS/RB arm Mz 0.78
+pad zeta 0.05 kd damp 2 %: arm-group Mexit dyn env 6.40 / sim RB 5.41 N m -> DAF env 1.18, case-max 1.80; Mz_arm dyn 11.56 vs RB 10.42 (DAF 1.11); components judge DAF 3.21 (Fx 2.51 Fy 2.60 Fz 3.21 Mx 2.04 My 2.95 Mz 1.64); sigma dyn 72.2 RB 61.4 MPa; tau dyn 2.31 RB 1.88; hub Mz dyn 12.59; RF_bridge(dyn) 3.17; QS/RB arm Mz 0.78
+pad zeta 0.10 kd damp 1 %: arm-group Mexit dyn env 8.37 / sim RB 6.95 N m -> DAF env 1.20, case-max 2.00; Mz_arm dyn 13.64 vs RB 13.50 (DAF 1.01); components judge DAF 3.92 (Fx 2.47 Fy 2.74 Fz 3.92 Mx 1.24 My 2.96 Mz 1.50); sigma dyn 95.4 RB 78.8 MPa; tau dyn 2.91 RB 2.39; hub Mz dyn 15.76; RF_bridge(dyn) 2.67; QS/RB arm Mz 0.78
+pad zeta 0.10 kd damp 2 %: arm-group Mexit dyn env 7.31 / sim RB 6.95 N m -> DAF env 1.05, case-max 1.65; Mz_arm dyn 12.60 vs RB 13.50 (DAF 0.93); components judge DAF 3.09 (Fx 2.05 Fy 2.34 Fz 3.09 Mx 1.03 My 2.43 Mz 1.43); sigma dyn 82.7 RB 78.8 MPa; tau dyn 2.64 RB 2.39; hub Mz dyn 14.34; RF_bridge(dyn) 3.25; QS/RB arm Mz 0.78
+frame wall 151 s
+
+## frame asbuilt nom: FE mass 1640.0 g; lowest flexible modes (Hz): 11.1, 22.0, 25.7, 26.5, 29.5, 34.3, 34.5, 37.5
+pad zeta 0.02 nom damp 1 %: arm-group Mexit dyn env 7.94 / sim RB 5.24 N m -> DAF env 1.52, case-max 2.58; Mz_arm dyn 13.37 vs RB 8.47 (DAF 1.58); components judge DAF 4.58 (Fx 2.85 Fy 2.84 Fz 4.58 Mx 1.41 My 2.97 Mz 2.13); sigma dyn 88.5 RB 58.8 MPa; tau dyn 3.08 RB 1.56; hub Mz dyn 13.81; RF_bridge(dyn) 2.95; QS/RB arm Mz 0.78
+pad zeta 0.02 nom damp 2 %: arm-group Mexit dyn env 6.39 / sim RB 5.24 N m -> DAF env 1.22, case-max 2.00; Mz_arm dyn 11.46 vs RB 8.47 (DAF 1.35); components judge DAF 3.91 (Fx 2.37 Fy 2.46 Fz 3.91 Mx 1.29 My 2.64 Mz 1.76); sigma dyn 71.3 RB 58.8 MPa; tau dyn 2.40 RB 1.56; hub Mz dyn 11.32; RF_bridge(dyn) 3.26; QS/RB arm Mz 0.78
+pad zeta 0.05 nom damp 1 %: arm-group Mexit dyn env 7.32 / sim RB 5.41 N m -> DAF env 1.35, case-max 1.80; Mz_arm dyn 14.58 vs RB 10.42 (DAF 1.40); components judge DAF 4.60 (Fx 2.68 Fy 3.08 Fz 4.60 Mx 2.23 My 2.69 Mz 2.10); sigma dyn 84.4 RB 61.4 MPa; tau dyn 2.72 RB 1.88; hub Mz dyn 14.58; RF_bridge(dyn) 3.20; QS/RB arm Mz 0.78
+pad zeta 0.05 nom damp 2 %: arm-group Mexit dyn env 6.31 / sim RB 5.41 N m -> DAF env 1.17, case-max 1.61; Mz_arm dyn 13.16 vs RB 10.42 (DAF 1.26); components judge DAF 3.81 (Fx 2.19 Fy 2.65 Fz 3.81 Mx 1.96 My 2.35 Mz 1.89); sigma dyn 71.7 RB 61.4 MPa; tau dyn 2.11 RB 1.88; hub Mz dyn 13.07; RF_bridge(dyn) 3.53; QS/RB arm Mz 0.78
+pad zeta 0.10 nom damp 1 %: arm-group Mexit dyn env 7.51 / sim RB 6.95 N m -> DAF env 1.08, case-max 1.64; Mz_arm dyn 12.97 vs RB 13.50 (DAF 0.96); components judge DAF 4.09 (Fx 2.65 Fy 2.42 Fz 4.09 Mx 1.14 My 2.26 Mz 1.74); sigma dyn 85.4 RB 78.8 MPa; tau dyn 2.77 RB 2.39; hub Mz dyn 14.00; RF_bridge(dyn) 2.72; QS/RB arm Mz 0.78
+pad zeta 0.10 nom damp 2 %: arm-group Mexit dyn env 7.14 / sim RB 6.95 N m -> DAF env 1.03, case-max 1.48; Mz_arm dyn 12.02 vs RB 13.50 (DAF 0.89); components judge DAF 3.13 (Fx 2.31 Fy 2.13 Fz 3.13 Mx 1.00 My 1.96 Mz 1.61); sigma dyn 81.3 RB 78.8 MPa; tau dyn 2.33 RB 2.39; hub Mz dyn 13.16; RF_bridge(dyn) 3.01; QS/RB arm Mz 0.78
+frame wall 227 s
+
+## frame asbuilt hi: FE mass 1640.0 g; lowest flexible modes (Hz): 13.0, 25.4, 30.6, 31.2, 34.6, 38.9, 40.1, 42.5
+pad zeta 0.02 hi damp 1 %: arm-group Mexit dyn env 8.45 / sim RB 5.24 N m -> DAF env 1.61, case-max 2.44; Mz_arm dyn 13.01 vs RB 8.47 (DAF 1.54); components judge DAF 4.59 (Fx 2.74 Fy 2.52 Fz 4.59 Mx 1.04 My 3.28 Mz 1.91); sigma dyn 97.1 RB 58.8 MPa; tau dyn 2.85 RB 1.56; hub Mz dyn 13.17; RF_bridge(dyn) 2.55; QS/RB arm Mz 0.78
+pad zeta 0.02 hi damp 2 %: arm-group Mexit dyn env 6.92 / sim RB 5.24 N m -> DAF env 1.32, case-max 1.95; Mz_arm dyn 11.44 vs RB 8.47 (DAF 1.35); components judge DAF 3.94 (Fx 2.27 Fy 2.16 Fz 3.94 Mx 0.85 My 2.56 Mz 1.63); sigma dyn 78.6 RB 58.8 MPa; tau dyn 2.46 RB 1.56; hub Mz dyn 11.50; RF_bridge(dyn) 3.04; QS/RB arm Mz 0.78
+pad zeta 0.05 hi damp 1 %: arm-group Mexit dyn env 8.24 / sim RB 5.41 N m -> DAF env 1.52, case-max 2.16; Mz_arm dyn 14.97 vs RB 10.42 (DAF 1.44); components judge DAF 5.35 (Fx 3.19 Fy 2.95 Fz 5.35 Mx 2.50 My 3.15 Mz 2.04); sigma dyn 95.8 RB 61.4 MPa; tau dyn 3.30 RB 1.88; hub Mz dyn 14.77; RF_bridge(dyn) 2.86; QS/RB arm Mz 0.78
+pad zeta 0.05 hi damp 2 %: arm-group Mexit dyn env 6.73 / sim RB 5.41 N m -> DAF env 1.25, case-max 1.72; Mz_arm dyn 13.25 vs RB 10.42 (DAF 1.27); components judge DAF 4.29 (Fx 2.68 Fy 2.45 Fz 4.29 Mx 2.20 My 2.41 Mz 1.90); sigma dyn 76.7 RB 61.4 MPa; tau dyn 2.57 RB 1.88; hub Mz dyn 13.30; RF_bridge(dyn) 3.49; QS/RB arm Mz 0.78
+pad zeta 0.10 hi damp 1 %: arm-group Mexit dyn env 8.02 / sim RB 6.95 N m -> DAF env 1.15, case-max 1.94; Mz_arm dyn 13.24 vs RB 13.50 (DAF 0.98); components judge DAF 4.47 (Fx 1.82 Fy 2.55 Fz 4.47 Mx 1.36 My 2.63 Mz 1.78); sigma dyn 91.8 RB 78.8 MPa; tau dyn 3.04 RB 2.39; hub Mz dyn 13.48; RF_bridge(dyn) 2.81; QS/RB arm Mz 0.78
+pad zeta 0.10 hi damp 2 %: arm-group Mexit dyn env 7.82 / sim RB 6.95 N m -> DAF env 1.13, case-max 1.68; Mz_arm dyn 12.53 vs RB 13.50 (DAF 0.93); components judge DAF 3.36 (Fx 1.59 Fy 2.16 Fz 3.36 Mx 1.25 My 2.19 Mz 1.68); sigma dyn 89.5 RB 78.8 MPa; tau dyn 2.90 RB 2.39; hub Mz dyn 12.61; RF_bridge(dyn) 3.26; QS/RB arm Mz 0.78
+frame wall 317 s
+
+## OVERALL (max over 18 runs): {"DAF_comp_judge_max": 5.348, "DAF_Mexit_env_max": 1.613, "DAF_Mexit_casemax_max": 3.08, "RF_bridge_dyn_min": 2.422}
+done 321 s

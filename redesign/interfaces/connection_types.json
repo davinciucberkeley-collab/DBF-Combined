@@ -7,7 +7,7 @@
   {"id": "CT-M3-SHCS-NYLOC", "kind": "mechanical", "method": "fastened", "spec": "M3 SHCS through clearance hole, nyloc nut"},
   {"id": "CT-M3-SHCS-MOTOR", "kind": "mechanical", "method": "fastened", "spec": "M3 SHCS into motor base tapped hole (manufacturer pattern)"},
   {"id": "CT-M4-SHCS-NYLOC", "kind": "mechanical", "method": "fastened", "spec": "M4 SHCS through clearance hole, nyloc nut"},
-  {"id": "CT-PROP-ADAPTER", "kind": "mechanical", "method": "fastened", "spec": "bolt-on prop adapter, 4 x M3x4 SHCS into the motor bell, pilot on the shaft"},
+  {"id": "CT-PROP-ADAPTER", "kind": "mechanical", "method": "fastened", "spec": "bolt-on prop adapter, 3 x M2.5 SHCS on a 15 mm circle into the motor bell, pilot on the shaft"},
   {"id": "CT-PROP-NUT", "kind": "mechanical", "method": "fastened", "spec": "M6x1 nut and washer clamp the prop hub on the adapter post (field joint)"},
   {"id": "CT-SERVO-SPLINE", "kind": "mechanical", "method": "fastened", "spec": "servo arm on the output spline, M2 retaining screw"},
   {"id": "CT-EPOXY", "kind": "mechanical", "method": "bonded", "spec": "epoxy bond (30 min laminating epoxy), surfaces scuffed"},
@@ -41,6 +41,12 @@
   {"id": "CT-JST-GH-6", "kind": "electrical", "method": "connector", "spec": "JST-GH 6-pin (telemetry / GPS)"},
   {"id": "CT-ELRS-RF", "kind": "electrical", "method": "radio", "spec": "ExpressLRS 2.4 GHz radio link, CRSF to the FC (control and telemetry); no wire"},
   {"id": "CT-THERMAL-PAD", "kind": "thermal", "method": "conductive", "spec": "thermal pad between heat source and sink"},
-  {"id": "CT-THERMAL-CONTACT", "kind": "thermal", "method": "conductive", "spec": "dry contact of a heat source on the part that carries it (conduction path; treated as insulating where the thermal block says so)"}
+  {"id": "CT-THERMAL-CONTACT", "kind": "thermal", "method": "conductive", "spec": "dry contact of a heat source on the part that carries it (conduction path; treated as insulating where the thermal block says so)"},
+  {"id": "CT-HW-SEATED", "kind": "mechanical", "method": "fastened", "spec": "loose hardware (screw, nut, washer) seated in the hole or pocket of the part it fastens; named in collide.py MOVE_VIA, added for concept A (2026-11-15)"},
+  {"id": "CT-A-M25-SHCS-MOTOR", "kind": "mechanical", "method": "fastened", "spec": "earlier design (record; superseded by CT-A-M3-CSK-MOTOR and CT-A-M3-BOLT-MOUNT, T-083): concept A: 4 x M2.5 SHCS through 2.9 mm clearance holes in the printed motor cup into the T-Motor MN2212 base (4-M2.5 on a 19 x 16 mm rectangle, T-Motor drawing)"},
+  {"id": "CT-A-PROP-ADAPTER", "kind": "mechanical", "method": "fastened", "spec": "concept A (T-083): SunnySky X2216 prop adapter (Phi17 x 4 flange with a Phi 9 recess over the bell-top boss, M5x0.8 stud 18.5) on the bell top, 3 x M2 on Phi 12 (Phi2.1 holes, Phi4.1 counterbore; SunnySky drawing X2216); was the T-Motor MN2212 adapter"},
+  {"id": "CT-A-PROP-NUT", "kind": "mechanical", "method": "fastened", "spec": "concept A (T-083): APC hub with its adapter ring (ID 5 mm, EST) on the M5 stud of the SunnySky X2216 adapter, washer Phi 14.8 x 2, clamped by an M5 nyloc ISO 10511 (field joint); was the T-Motor adapter + spinner nut; replaces the M6x1 text of CT-PROP-NUT, which is the K09-L meaning"},
+  {"id": "CT-A-M3-CSK-MOTOR", "kind": "mechanical", "method": "fastened", "spec": "concept A (T-083): SunnySky X2216 base on its X-mount, 4 x M3 countersunk (supplied) through the mount Phi 3.2 / Phi 5.7 countersink into the motor base 4-M3x0.5 depth 2.8 on the 19 / 16 pattern (SunnySky drawing X2216)"},
+  {"id": "CT-A-M3-BOLT-MOUNT", "kind": "mechanical", "method": "fastened", "spec": "concept A (T-083): SunnySky X-mount on the printed motor cup plate, 4 x M3x14 SHCS through the mount Phi 3.1 (34 mm spans) and 3.4 mm plate holes, M3 nyloc behind the plate"}
  ]
 }

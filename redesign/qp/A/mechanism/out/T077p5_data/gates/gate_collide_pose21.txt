@@ -1,0 +1,5 @@
+  static                                              0 part pairs penetrate > 0.05 mm
+  elevons at lower limit (E-WNG-10 -21, E-WNG-11 -    0 part pairs penetrate > 0.05 mm
+  elevons at upper limit (E-WNG-10 +21, E-WNG-11 +    0 part pairs penetrate > 0.05 mm
+  wire ends not on a termination: 0; wire folds: 0
+collide_a: PASS (553 bodies in 124 parts, 3 poses, 717 s)

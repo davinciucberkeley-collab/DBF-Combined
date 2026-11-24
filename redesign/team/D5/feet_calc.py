@@ -24,6 +24,11 @@ R8 (2026-11-13, CR-H1-22): side-load margin. Sleeve inside fillets R 1.0 -> 2.0 
 0.16 mm to the arc, CL-D5-FILLET-CLEAR), rim y sides 3.4 -> 4.8 mm (shoe.rim_side_t_m), rim floor side 3.4 -> 0.4 mm
 (shoe.rim_floor_t_m: not a stop face, and a thick floor rim raised the +y corner peak); the roof side, lip, sleeve
 section and fin step are unchanged. D5 FEA of the drawn shoe at 59.25 N ult on three meshes: CL-D5-SIDE-RIM-SF.
+R9 (closure 2026-11-14, D-165, review/CLOSURE-ROUND-2026-11-14/C5.md 1.2 and D5.md): the C5 closure foot. Foot 48 -> 53
+mm, stroke 38 -> 43, engagement 25 -> 30, replace mark 3 -> 6 (cartridge 102 -> 117 mm, sleeve 64 -> 74 mm, back wall
+and fin step 10 mm forward); plateau, cartridge section, pad and friction unchanged. Design fixes on top: flange
+1.8 -> 2.2 mm (CL-D5-FLANGE-SF), pad z_outer 0.219 -> 0.221 with the whole foot (CL-D5-TIPOVER-CORNER >= 30.5 deg),
+tine window offset 3 -> 10 mm (CL-D5-SIDE-TINE-SF on the 5 mm longer lever). Shoe FEA re-run on the drawn R9 shoe.
 """
 import json
 import math
@@ -39,7 +44,8 @@ import proofkit as pk  # noqa: E402
 import k09kit as k9  # noqa: E402
 import landing  # noqa: E402
 
-kit = pk.Kit(__file__, params=["../../params/params.json", "../../subsystems/landing/params.json"])
+kit = pk.Kit(__file__, params=["../../params/params.json", "../../subsystems/landing/params.json",
+                               "../C6/params.json"])
 P = "P:"
 LP = "P:landing."
 
@@ -96,13 +102,23 @@ kit.assumption("ASM-D5-NORMAL-SINK", "Normal touchdown 0.5 m/s with rotor lift =
                "Routine landings touch down at Q_LAND_SPEED 0.5 m/s with the rotors still carrying the weight",
                basis="params requirements.landing_sink_ms note (3 x Q_LAND_SPEED 0.5 m/s); F4 sets it",
                value=0.5, unit="m/s", status="PROPOSED")
-kit.assumption("ASM-D5-PAD-MU", "Neoprene pad friction 0.7 on dry concrete/asphalt",
-               "Static friction of a 40A neoprene pad on dry concrete or asphalt", basis="Engineering ToolBox rubber/"
-               "concrete 0.6-0.85; grass is lower and unmeasured. Tilt-board slide test T-D5-PAD-MU",
-               value=0.7, unit="-", status="UNVERIFIED", cites=["SRC-D5-TOOLBOX-MU"])
-kit.assumption("ASM-D5-PETG-SIGMA", "Printed PETG allowable 40 MPa", "Printed PETG bending allowable (XY, 100 % walls)",
-               basis="filament data 40-50 MPa; low end for layer adhesion", value=40.0e6, unit="Pa", status="UNVERIFIED",
-               cites=["SRC-D5-PETG"])
+kit.assumption("ASM-D5-PAD-MU", "Pad face friction on the landing mat, upper bound 0.40 (D-105, CDR decision B1)",
+               "Static friction of the foot pad face on the landing mat is at most requirements.pad_mu_max: the 40A "
+               "neoprene pad carries a low-friction face (UHMW-PE tape 0.13 mm, EST; the face material is chosen by "
+               "the incline test, not by this assumption)",
+               basis="params requirements.pad_mu_max (D-105, CDR-SUMMARY decision B1). Bare neoprene on dry concrete "
+                     "is 0.6-0.85 (Engineering ToolBox), which gave the 39.5 N side load of D-65; a face value for "
+                     "UHMW-PE on the mat is not published (-), so T-D5-PAD-MU measures it: slide at or below 21.8 deg",
+               value=kit.value(P + "requirements.pad_mu_max"), unit="-", status="UNVERIFIED", cites=["SRC-D5-TOOLBOX-MU"])
+kit.assumption("ASM-D5-PETG-SIGMA", "Printed PETG in-plane allowable 23.5 MPa (C6 table, D-107)",
+               "Printed PETG tension / bending allowable with the stress in the layer plane. Print orientation "
+               "(stated for CDR-18): shoe GER-001 and piston GER-002 are printed standing on the bed with the layers "
+               "stacked along the sleeve axis x, so the hoop bending of the sleeve end, rim and inside fillets, the "
+               "tine walls in bending about y / z and the flange plate all work in the layer plane; only the axial "
+               "(x) stress of the sleeve crosses layers (CL-D5-SIDE-AXIAL-RF)",
+               basis="= P:allowables.petg_inplane_pa (team/C6/params.json): 0.5 x 47 MPa, Prusament PETG TDS v1.1 "
+                     "printed specimens. Was 40 MPa (filament data 40-50 MPa, low end)",
+               value=kit.value("P:allowables.petg_inplane_pa"), unit="Pa", status="UNVERIFIED", cites=["SRC-D5-PETG"])
 kit.assumption("ASM-D5-BOND-TAU", "Epoxy to paper-faced foam board 0.20 MPa shear",
                "Failure of an epoxy bond on foam-board paper facing occurs in the paper/foam at ~0.2 MPa shear",
                basis="estimate; C6 halves it (ASM-C6-FOAM-KD) for design, CR-C6-12", value=0.20e6, unit="Pa",
@@ -306,9 +322,10 @@ def bond(F, F_c1, F_c1u, ff, tau, kd, **kw):
 
 SIDE_IN = dict(GEOM_IN)
 SIDE_IN.update({"F_lim": "CL-C5-SIM3D-SIDE-LOAD", "k_ult": "ASM-D5-ULT-FACTOR", "eps_y": "ASM-D5-YIELD-STRAIN",
-                "allow": "ASM-D5-PETG-SIGMA", "k_fea": "ASM-D5-FEA-SHOE-K"})
+                "allow": "ASM-D5-PETG-SIGMA", "k_fea": "ASM-D5-FEA-SHOE-K", "ff": "ASM-D5-FIT-FACTOR",
+                "allow_z": "P:allowables.petg_interlayer_pa"})
 SIDE_UNITS = dict(GEOM_UNITS)
-SIDE_UNITS.update({"F_lim": "N", "allow": "Pa", "k_fea": "Pa/N"})
+SIDE_UNITS.update({"F_lim": "N", "allow": "Pa", "k_fea": "Pa/N", "allow_z": "Pa"})
 
 
 def _fea_matches(s, kw):
@@ -327,12 +344,15 @@ def _fea_matches(s, kw):
 
 @kit.calc("CALC-D5-SIDE", title="Side load at the pad: shoe sleeve end by FEA, tine bending by beam",
           inputs=SIDE_IN, units=SIDE_UNITS,
-          equation="F = 1.5 F_side (C5 3-D sim, mu 0.7, D-65) ; sleeve end: sigma = k_FEA F (D5 FEA of the drawn shoe, "
+          equation="F = 1.5 F_side (D-105 cap) ; RF at the printed / bonded design load = RF / ff (ff = 1.15 x 1.25) ; "
+                   "axial stress across layers at the fin TE section = R (x_end - x_te) c / I_z of the sleeve box, "
+                   "x 3 for the window corner (EST), vs the interlayer value ; "
+                   "sleeve end: sigma = k_FEA F (D5 FEA of the drawn shoe, "
                    "lever R = F (a + e) / (e + s0), s0 = eps_y L_cart) ; RF = allow / sigma ; R5 beam kept for "
                    "information: M = R b / 12 over the rim ; tine (R8): max(F a on the full chamfered section at the sleeve "
                    "end, F (a - dxw) on the windowed section, dxw = window front - sleeve end at rest); clearance of "
                    "the tine chamfer to the sleeve fillet r_in - hypot(r_in - cs - tc, r_in - cs)")
-def side(F_lim, k_ult, eps_y, allow, k_fea, **kw):
+def side(F_lim, k_ult, eps_y, allow, k_fea, ff, allow_z, **kw):
     s = landing.stack(_n(kw))
     _fea_matches(s, kw)
     F = k_ult * F_lim
@@ -369,7 +389,14 @@ def side(F_lim, k_ult, eps_y, allow, k_fea, **kw):
     # which sits cs inside the sleeve's square corner) must lie inside the fillet arc of radius r_in
     cs, ri = kw["cs"], kw["r_in"]
     fil_clear = ri - math.hypot(ri - cs - tc, ri - cs)
+    # axial (across-layer) stress of the sleeve box where it leaves the fin TE: cantilever moment of the lip reaction
+    by, bz = s["slv_out"]
+    I_z = (bz * by ** 3 - (bz - 2 * ws) * (by - 2 * ws) ** 3) / 12
+    sig_ax = R * (s["x_slv_end"] - kw["te"]) * (by / 2) / I_z
     return {"F_N": F, "R_lip_N": R, "R_open_N": R - F, "sigma_fea_Pa": sig_fea, "sf_shoe": allow / sig_fea,
+            "sf_shoe_full": allow / sig_fea / ff, "sf_tine_full": allow / sig_t / ff,
+            "sigma_axial_Pa": sig_ax, "sf_axial_kt3_full": allow_z / (3.0 * sig_ax) / ff,
+            "F_proof_each_N": 1.15 * F_lim, "F_batch_fail_N": F * 1.25,
             "fillet_clear_m": fil_clear,
             "sigma_rim_beam_Pa": sig_beam, "fea_over_beam": sig_fea / sig_beam,
             "sigma_tine_Pa": sig_t, "sf_tine": allow / sig_t, "sigma_tine_win_Pa": sig_t_win,
@@ -412,7 +439,7 @@ def G(id, title, out, unit="m", **k):
 
 
 G("CL-D5-CART-LEN", "Crush cartridge length", "cart_len_m", parts=CARTS,
-  how="Measure the three pressed segments end to end (3 x 34 mm incl. 0.5 mm preload).")
+  how="Measure the three pressed segments end to end (3 x 39 mm incl. 0.5 mm preload; R9).")
 G("CL-D5-SLEEVE-OUT", "Sleeve outside y x z", "sleeve_out_m", parts=SHOES, how="Calipers on the printed shoe.")
 G("CL-D5-PISTON-OUT", "Tine outside y x z", "piston_out_m", parts=PISTONS,
   how="Calipers on the printed piston; it slides in the sleeve by hand without play.")
@@ -437,21 +464,22 @@ G("CL-D5-FIN-STEP-DEPTH", "Half-fin step depth below the 0.21 m tip", "step_dept
   how="Template check before cutting (D3).")
 G("CL-D5-STROKE-AVAIL", "Crush stroke available (flange to rim gap)", "stroke_m",
   limit=(">=", P + "requirements.foot_crush_stroke_min_m"), parts=SHOES + PISTONS,
-  note="D-30: >= 38 mm flange-to-sleeve gap; usable (gap - 3 mm guard) is CL-D5-STROKE-USABLE",
+  note="D-165 (was D-30 38 mm): >= 43 mm flange-to-sleeve gap; usable (gap - 3 mm guard) is CL-D5-STROKE-USABLE",
   how="Assembled foot: gap between the flange and the rim, calipers.")
 G("CL-D5-CONTACT-Z", "Tip-over pivot (pad outboard edge less the edge round)", "z_contact_eff_m",
-  limit=(">=", 0.21), parts=PADS, note="D-30 keeps it at +/-0.218 with the 0.21 m half-fins",
+  limit=(">=", 0.21), parts=PADS, note="R9: +/-0.220 (pad z_outer 0.221, whole foot 2 mm outboard for the tip-over margin; D-30 was 0.218)",
   how="Measure pad edge to the wing chord plane on the built aircraft.")
 G("CL-D5-TE-CLEAR-CRUSHED", "Wing TE above the ground with a fully crushed foot", "te_clear_crushed_m",
   limit=(">=", 0.010), note="D-11 rule; equals C5's CL-C5-TE-CLEAR-PROP",
-  how="Stand the aircraft on the rims (inserts removed, a 38 mm spacer) and measure the TE height.")
+  how="Stand the aircraft on the rims (inserts removed, a 43 mm spacer) and measure the TE height.")
 G("CL-D5-RIM-AFT-OF-TE", "Rim starts aft of the fin TE", "rim_clear_of_te_m", limit=(">=", 0.0), parts=SHOES,
   how="Shoe drawing: the thickened rim never overlaps the fin.")
 G("CL-D5-LEVER", "Pad to rim lever arm at rest", "lever_m", parts=PISTONS, how="Calipers on the assembled foot.")
 G("CL-D5-RIM-TOP-MARGIN", "Rim top below the pad outboard edge (no envelope growth)", "rim_top_margin_m",
   limit=(">=", 0.0), parts=SHOES, how="Straight edge across the pad edge and the rim on the built foot.")
-G("CL-D5-ENGAGE", "Tine engagement in the sleeve at rest", "engage_m", limit=(">=", 0.025), parts=PISTONS + SHOES,
-  note="C5 CR-C5-18 recommended 25 mm", how="Calipers: tine open end to rim end, insert seated.")
+G("CL-D5-ENGAGE", "Tine engagement in the sleeve at rest", "engage_m", limit=(">=", 0.030), parts=PISTONS + SHOES,
+  note="D-165 / C5 closure: 30 mm with the 43 mm stroke keeps the lip reaction at or below R8's (C5 CR-C5-18 had 25 mm "
+       "for 38 mm)", how="Calipers: tine open end to rim end, insert seated.")
 
 C = "CALC-D5-CRUSH"
 kit.claim("CL-D5-F-PLATEAU", "Crush plateau per foot, mean of the upper and lower types", calc=C,
@@ -489,9 +517,9 @@ kit.claim("CL-D5-STROKE-USABLE", "Usable stroke (gap less C5's 3 mm guard) vs C5
           how="T-C5-AIRCRAFT-DROP pitched 4 deg: each pair within 3 mm of the model.")
 kit.claim("CL-D5-ETA", "Crush efficiency (energy / peak force x stroke)", calc=C, output="eta", unit="-",
           limit=(">=", 0.8), how="Integrate the T-D5-COUPON force-stroke record.")
-kit.claim("CL-D5-STRAIN-MARGIN", "Cartridge strain margin to densification at the full 38 mm", calc=C,
+kit.claim("CL-D5-STRAIN-MARGIN", "Cartridge strain margin to densification at the full stroke (43 mm, R9)", calc=C,
           output="strain_margin", unit="-", limit=(">=", 0.0), parts=CARTS,
-          how="T-D5-COUPON: force still flat at 39 % strain (incl. the 1 mm pre-crush per segment).")
+          how="T-D5-COUPON: force still flat at 38 % strain (incl. the 1 mm pre-crush per segment; R9 43 / 117 mm).")
 kit.claim("CL-D5-CUT-SEG-LEN", "Cartridge segment cut length before the 1 mm pre-crush", calc=C, output="cut_seg_len_m",
           unit="m", limit=("<=", 0.0508), note="<= the 2 in board thickness (crush axis = through-thickness); R6: 3 segments",
           parts=CARTS, how="Calipers on the cut stick before pressing.")
@@ -550,14 +578,32 @@ kit.claim("CL-D5-BOND-AREA", "Shoe bond area on the half-fin", calc="CALC-D5-BON
 kit.claim("CL-D5-BOND-SF", "Shoe-to-fin bond RF at the printed/bonded design load (C6 allowable)",
           calc="CALC-D5-BOND", output="sf", unit="-", limit=(">=", 1.0), parts=SHOES,
           how="Pull test of a shoe bonded on a stepped two-layer offcut to 96 N along x (T-D5-PROOF, C6 coupon).")
-kit.claim("CL-D5-SIDE-RIM-SF", "Shoe sleeve end RF at C5's 59.0 N ultimate side load (D5 FEA of the drawn shoe)",
+kit.claim("CL-D5-SIDE-RIM-SF", "Shoe sleeve end RF at the ultimate side load (D-105 cap x 1.5), common in-plane value",
           calc="CALC-D5-SIDE", output="sf_shoe", unit="-", limit=(">=", 1.0), parts=SHOES, verifies=["R-LANDING-IMPACT"],
-          note="CR-C5-18 / CR-A1-65: replaces the R5 beam (FEA/beam 2.78); worst of +y and +z",
-          how="T-D5-SIDE: 60 N (>= 59.0 N ult) sideways at the pad of a foot crushed 5 mm, along +y then +z on a "
-              "second shoe; no crack at the rim, window or roof; then C5's T-C5-SHOE-SIDE-FAIL to failure.")
+          note="D-107: on the C6 table value 23.5 MPa (was 40 MPa). Ultimate only, under the table's test rule: every "
+               "flight shoe is proof-loaded to 1.15 x limit and one shoe per printed batch is taken past 1.5 x 1.25 x "
+               "limit (T-D5-SIDE). CL-D5-SIDE-RIM-SF-FULL reports the same on the full printed / bonded factor. "
+               "D5 FEA of the drawn shoe, worst of +y and +z, finest mesh (the window-corner peak still rises with "
+               "refinement: 28.3 / 28.9 / 31.6 MPa at 59.25 N on h 0.4 / 0.3 / 0.2 mm; the rim is converged at 30.4)",
+          how="T-D5-SIDE.")
+kit.claim("CL-D5-SIDE-RIM-SF-FULL", "Shoe sleeve end RF at ultimate x 1.15 x 1.25 (reported, no limit)",
+          calc="CALC-D5-SIDE", output="sf_shoe_full", unit="-", parts=SHOES,
+          note="D-107 / CDR-18: below 1 on the common value. Not the pass line because T-D5-SIDE proof-loads every "
+               "flight shoe; to pass it without the test rule the sleeve end stress must fall by the shortfall "
+               "(snap-window corner radius R >= 0.5 mm and a thicker rim; needs a new D5 FEA sweep, not run)",
+          how="T-D5-SIDE batch failure load.")
+kit.claim("CL-D5-SIDE-AXIAL-RF", "Shoe sleeve axial stress across layers at the fin TE, x 3 at the window corner, "
+          "full factor", calc="CALC-D5-SIDE", output="sf_axial_kt3_full", unit="-", limit=(">=", 1.0), parts=SHOES,
+          note="D-107: the one stress of the standing print that crosses layers; hand beam value x 3 (EST "
+               "concentration at the snap-window corner) against the interlayer row 9 MPa",
+          how="T-D5-SIDE: no crack across the sleeve at the fin TE.")
+kit.claim("CL-D5-SIDE-PROOF-EACH", "Side proof load for every flight shoe before bonding (1.15 x limit)",
+          calc="CALC-D5-SIDE", output="F_proof_each_N", unit="N", parts=SHOES, how="T-D5-SIDE step 1.")
+kit.claim("CL-D5-SIDE-BATCH-FAIL", "Least side failure load of the batch sample shoe (1.5 x 1.25 x limit)",
+          calc="CALC-D5-SIDE", output="F_batch_fail_N", unit="N", parts=SHOES, how="T-D5-SIDE step 2.")
 kit.claim("CL-D5-FILLET-CLEAR", "Tine corner chamfer clear of the sleeve inside fillet (R8)", calc="CALC-D5-SIDE",
           output="fillet_clear_m", unit="m", limit=(">=", 0.0001), parts=SHOES + PISTONS,
-          how="Dry fit: the insert slides the full 38 mm stroke by hand with no rub at the corners; 0.1 mm feeler at "
+          how="Dry fit: the insert slides the full 43 mm stroke by hand with no rub at the corners; 0.1 mm feeler at "
               "each corner of the first print.")
 kit.claim("CL-D5-SIDE-TINE-SF", "Tine bending at the rim under the side load", calc="CALC-D5-SIDE",
           output="sf_tine", unit="-", limit=(">=", 1.0), parts=PISTONS, how="T-D5-SIDE.")
@@ -571,9 +617,14 @@ kit.claim("CL-D5-ENVELOPE-GROWTH", "Props-off envelope height growth from the fe
           output="growth_m", unit="m", how="A1 envelope 0.438 m already includes the pads.")
 kit.claim("CL-D5-ENVELOPE-SPAN-GROWTH", "Props-off envelope span growth from the corner caps", calc="CALC-D5-BOX",
           output="span_growth_m", unit="m", parts=CAPS, how="Measure tip to tip over the caps (CR-D5-16).")
-kit.claim("CL-D5-PAD-MU", "Pad friction vs the friction to stand in 8 m/s", value=0.7, unit="-",
-          limit=(">=", "CL-C1-STANCE-MU-REQ"), assumes=["ASM-D5-PAD-MU"], verifies=["R-WIND"], parts=PADS,
-          how="T-D5-PAD-MU tilt-board slide test.")
+kit.claim("CL-D5-PAD-MU", "Pad face friction on the landing mat (design upper bound)",
+          value=kit.value(P + "requirements.pad_mu_max"), unit="-",
+          limit=("<=", P + "requirements.pad_mu_max"), assumes=["ASM-D5-PAD-MU"], verifies=["R-LANDING-IMPACT"],
+          parts=PADS,
+          note="D-105 (CDR decision B1): the pad face caps the foot side load (requirements.foot_side_load_cap_n). It "
+               "no longer holds the parked aircraft in 8 m/s (needs CL-C1-STANCE-MU-REQ 0.68): laid flat or tied "
+               "when parked (flight card, H3). Until D-105 this claim was mu 0.7 >= the stance friction",
+          how="T-D5-PAD-MU incline test on the landing mat.")
 kit.claim("CL-D5-REPLACE-TIME", "Field replacement of a crushed foot insert", value=3.0, unit="min",
           limit=("<=", P + "requirements.foot_replace_max_min"), assumes=["ASM-D5-REPLACE-MIN"],
           parts=PISTONS + CARTS + PADS, how="T-D5-REPLACE, stopwatch.")
@@ -581,24 +632,32 @@ kit.claim("CL-D5-REPLACE-TIME", "Field replacement of a crushed foot insert", va
 kit.test("T-D5-COUPON", "Cartridge crush coupon, both types", verifies=["CL-D5-F-PLATEAU-UPPER",
          "CL-D5-F-PLATEAU-LOWER", "CL-D5-BIAS-ERR", "CL-D5-F-PEAK", "CL-D5-ETA", "CL-D5-STRAIN-MARGIN"],
          procedure="Pre-crush every segment 1 mm (drill-press stop). Crush 3 type-U and 3 type-L cartridge pairs in a printed "
-         "piston + shoe on the drill press over the H1 load cell, 40 mm at < 10 mm/s; record force every 2 mm. Pass "
-         "(C5-R3, mean force 5-35 mm): U 38.2-40.2 N, L 34.6-36.3 N, ratio U/L 1.09-1.14, peak <= 1.05 x plateau, "
-         "flat to 40 mm. Off target: change section_y_m (both types) by the force ratio, or the bore tube (ratio), and "
+         "piston + shoe on the drill press over the H1 load cell, 45 mm at < 10 mm/s; record force every 2 mm. Pass "
+         "(C5-R3, mean force 5-40 mm): U 38.2-40.2 N, L 34.6-36.3 N, ratio U/L 1.09-1.14, peak <= 1.05 x plateau, "
+         "flat to 45 mm (R9: 43 mm stroke). Off target: change section_y_m (both types) by the force ratio, or the bore tube (ratio), and "
          "re-run feet_calc.py.")
-kit.test("T-D5-PAD-MU", "Pad slide on a tilt board", verifies=["CL-D5-PAD-MU"],
-         procedure="Foot with pad, 0.65 kg on it, on a board faced with concrete paver / asphalt shingle / the landing "
-                   "mat; tilt until it slides; mu = tan(angle). Pass >= 0.7 dry.")
+kit.test("T-D5-PAD-MU", "Pad slide on an incline (the landing mat)", verifies=["CL-D5-PAD-MU"],
+         procedure="Foot with the faced pad, 0.65 kg on it, on a board covered with the landing mat the team flies "
+                   "from; raise the board until the foot slides; mu = tan(angle); 5 repeats, dry, and 5 with the "
+                   "mat damp. Pass (D-105): every slide at or below 21.8 deg (mu <= 0.40). Fail: change the face "
+                   "material, or adopt the sideways piston snap (23-26 N release, CDR decision B1 fallback).")
 kit.test("T-D5-REPLACE", "Timed foot-insert swap", verifies=["CL-D5-REPLACE-TIME"],
          procedure="One student, field kit only, swap a crushed insert for a spare on the built aircraft; pass <= 10 min.")
 kit.test("T-D5-PROOF", "Shoe bond and flange proof load", verifies=["CL-D5-BOND-SF", "CL-D5-FLANGE-SF"],
          procedure="Shoe bonded (24 h) on a stepped two-layer foam-board offcut with strip ends; load the pad along x "
                    "to 96 N (C1 upper-foot ult 66.6 N x 1.4375) through a 10 mm steel block at the pad edge; hold 3 s. "
                    "Pass: no bond crack, no flange crack.")
-kit.test("T-D5-SIDE", "Side load at the pad", verifies=["CL-D5-SIDE-RIM-SF", "CL-D5-SIDE-TINE-SF"],
-         procedure="Two R6 shoes bonded on stepped offcuts (as T-D5-PROOF), printed as flown (layers stacked along the "
-                   "sleeve axis), insert pushed 5 mm in; 60 N (>= C5's 59.0 N ult, D-65) at the pad sideways along +y on "
-                   "one, +z on the other, held 3 s; pass: no crack at the rim, window or roof, insert still slides. "
-                   "Then C5's T-C5-SHOE-SIDE-FAIL on the same specimens.")
+kit.test("T-D5-SIDE", "Side load at the pad: proof of every flight shoe, failure load of one per batch",
+         verifies=["CL-D5-SIDE-RIM-SF", "CL-D5-SIDE-TINE-SF", "CL-D5-SIDE-AXIAL-RF"],
+         procedure="Shoes printed as flown (standing, layers stacked along the sleeve axis). Step 1, every flight "
+                   "shoe before it is bonded: seat it on a stepped two-layer board offcut clamped in a vice (legs "
+                   "taped, not glued), insert pushed 5 mm in; hang CL-D5-SIDE-PROOF-EACH (1.15 x limit, 28.2 N at "
+                   "the D-105 cap) at the pad sideways along +y, then +z, 3 s each; pass: no crack or whitening at "
+                   "the rim, window or roof, insert still slides. Step 2, one extra shoe per printed batch, bonded "
+                   "on an offcut (as T-D5-PROOF): load the pad sideways in 5 N steps to failure, +y; pass: failure "
+                   "at or above CL-D5-SIDE-BATCH-FAIL (1.5 x 1.25 x limit, 45.9 N); record the load and where it "
+                   "cracks. A batch that fails step 2 is not flown. Then C5's T-C5-SHOE-SIDE-FAIL (+z) on a second "
+                   "sample of the first batch.")
 
 
 def _cad_crosscheck():

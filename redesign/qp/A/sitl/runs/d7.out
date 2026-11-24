@@ -1,0 +1,38 @@
+{
+"tag": "d7",
+"args": [
+"wind=7",
+"from=45",
+"hold=40"
+],
+"summary": {
+"n": 708,
+"t_window": [
+8.027,
+43.967
+],
+"wind_ms": 7.0,
+"lean_max": 47.3,
+"lean_mean": 41.9,
+"lean_pre": 1.1,
+"u_max": 0.9,
+"u_mean_max": 0.838,
+"t_cap_s": 2.35,
+"t_cap_run_s": 0.35,
+"t_ge85_s": 13.8,
+"u_min": 0.15,
+"t_floor_s": 5.65,
+"t_floor_run_s": 1.4,
+"yaw_err_max": 67.3,
+"yaw_err_rms": 33.71,
+"pos_err_max": 11.29,
+"pos_err_rms": 10.08,
+"pos_err_last20_mean": 10.02,
+"alt_dev_max": 0.33,
+"diag_spread_max": 0.696,
+"diag_spread_mean": 0.342
+},
+"armed": true,
+"reached_alt": true,
+"events": []
+}

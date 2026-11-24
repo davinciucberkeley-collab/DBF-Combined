@@ -3,6 +3,16 @@
 Evidence for every row: `team/B1/PERFORMANCE.md` and `team/B1/claims.json` (run `python -I redesign/team/B1/performance.py`).
 All numbers are at 2.6 kg and 16 m/s unless marked. Rev 3 (2026-11-09) answers CR-A1-30 (D-25, D-29, D-35, D-36).
 
+## Open (design round, 2026-11-14)
+
+Evidence: `review/DESIGN-ROUND-2026-11-14/B1.md`, `team/B1/round-2026-11-14/design_round_results.json`.
+
+| # | To | What | Why / numbers |
+|---|---|---|---|
+| CR-B1-24 | A1 (copy E1, E2, F4) | `performance.transition_min_ms` 15.6 → **17.0**, `performance.cruise_ms` 16 → **17.0**, `cruise_power_w` 253 → **293**, `ld_cruise` 5.66 → **5.19**, `cruise_current_a` 16.2 → **19.8** (at 16 m/s instead: 256 W, 5.53, 17.3 A). Replaces the CR-B1-20 cruise values (235 W, k 0.0957). | D-122 flies 17 m/s; 1.3 Vs tripped 16.82 / clean 15.70 at the forward CG; E1 286.2 + 6 W at 17 m/s; W/D 5.187 at 2.6 kg with e 0.85 (k 0.1042, D-118) |
+| CR-B1-26 | E2, E1, B2, B3 (via A1) | Wave 2: the B1 claims moved to 17 m/s and 9° cant. **E2:** `CL-B1V-CRUISE-P-GATE` and `-P-PESS`, which `CALC-E2-BUDGET-*` read as the 16 m/s level, are now 17 m/s values (278.2 W gate, 365.1 W pessimistic at 2.502 kg); `CALC-E2-BUDGET-V17`'s k becomes the E1/B1 chain ratio (292.2 / 278.2 = 1.050) and no longer carries the 16 → 17 scaling `EST`. Any E2 budget still titled 16 m/s now runs at 17. New `CL-B1V-CRUISE-P-GATE-PESS` 368.2 W and `-I-GATE-PESS` 24.9 A at the gate. **E1:** `p_check` against `CL-B1V-CRUISE-P-GATE` is now like for like at 17 m/s. **B2, B3:** `CL-B1V-CLMAX-SIM` 0.862 → 0.838 (AVL re-run at the A3 CG 0.0512 m and stall Re at 12.3 m/s); `b1sim.avl.xnp_m` 0.0708 → 0.0711. | `review/DESIGN-ROUND-2026-11-14/B1-W2.md` |
+| CR-B1-25 | E1, D3, C4 (via A1) | R-MISSION savings at 17 m/s: 11×5.5E/EP props (E1) and a 55 mm fin TE bevel to 1 mm (C4 stiffness first): −11 % pessimistic cruise power together. Neither closes E2's corrected count alone. | B1.md §1.5–1.6 |
+
 ## Open (simulation round, 2026-11-10)
 
 Evidence: `team/B1/SIMULATION-REPORT.md`, `team/B1/claims.verify.json` (`python -I redesign/team/B1/sim_verify.py`).

@@ -1,0 +1,56 @@
+# T-076d step 5: landing load-path table. chosen pad Fp 30 N, stroke 24 mm, x_foot 0.3475, z_foot 0.1937; DAF floor used 1.61
+baseline done [54 s]
+new pad zeta 0.02 done [103 s]
+new pad zeta 0.05 done [153 s]
+new pad zeta 0.10 done [203 s]
+|---|---|---|---|---|---|---|---|
+| tube A axial (judged, 0.5 mm excl.) | 1.52 | 1.56 | 1.65 | 3.34 | 3.05 | 2.39 | 1.48 |
+| tube A hoop (judged, 0.5 mm excl.) | 2.47 | 2.60 | 2.68 | 5.47 | 4.97 | 3.89 | 2.41 |
+| tube A tau_st (judged, 0.5 mm excl.) | 5.14 | 5.35 | 5.31 | 9.62 | 10.51 | 8.56 | 5.14 |
+| tube A old combined shear, raw max, no exclusion (hypot of tau_s,r and tau_s,theta; the T-076c row) | 0.55 | 0.58 | 0.61 | 1.25 | 1.10 | 0.86 | 0.54 |
+| tube B axial (judged, 0.5 mm excl.) | 1.61 | 1.54 | 1.55 | 2.53 | 2.37 | 1.85 | 1.15 |
+| tube B hoop (judged, 0.5 mm excl.) | 2.54 | 2.50 | 2.44 | 3.81 | 3.78 | 2.93 | 1.82 |
+| tube B tau_st (judged, 0.5 mm excl.) | 4.84 | 4.60 | 5.09 | 9.05 | 7.79 | 6.10 | 3.78 |
+| tube B old combined shear, raw max, no exclusion (hypot of tau_s,r and tau_s,theta; the T-076c row) | 0.59 | 0.60 | 0.60 | 0.91 | 0.87 | 0.67 | 0.42 |
+| bond mean shear (full bonded length) | 0.77 | 0.82 | 0.78 | 1.24 | 1.13 | 0.88 | 0.55 |
+| bond mean shear (T-076c definition) | 1.09 | 1.07 | 1.01 | 1.93 | 1.57 | 1.21 | 0.75 |
+| Al hub von Mises max excl 0.5 mm | 2.14 | 2.01 | 1.67 | 3.45 | 2.80 | 2.16 | 1.34 |
+
+## Bridge 16x14 with the D-1 dynamic peak (step 3): RF = 0.02|hi|0.01: 2.55, 0.02|hi|0.02: 3.04, 0.02|kd|0.01: 2.42, 0.02|kd|0.02: 3.01, 0.02|nom|0.01: 2.95, 0.02|nom|0.02: 3.26, 0.05|hi|0.01: 2.86, 0.05|hi|0.02: 3.49, 0.05|kd|0.01: 2.73, 0.05|kd|0.02: 3.17, 0.05|nom|0.01: 3.20, 0.05|nom|0.02: 3.53, 0.10|hi|0.01: 2.81, 0.10|hi|0.02: 3.26, 0.10|kd|0.01: 2.67, 0.10|kd|0.02: 3.25, 0.10|nom|0.01: 2.72, 0.10|nom|0.02: 3.01  (minimum 2.42)
+
+Tube interlaminar shear tau_s,r (judged, 0.5 mm exclusion): the allowable is "-" (no coupon, no data sheet in the repo), so it is not a pass / fail row. The allowable it would have to meet for RF 1.0 at the judged demand (KF x tau, RB sets x 1.61, D-1 sets x 1.0) is 43.3 MPa (worst set RB z0.10).
+
+
+## One minimum RF per part. Column RB = at the rigid-body demand of the repo practice (KF / KP in the formulas, no dynamic factor); column FLOOR = at max(DAF, 1.61) = 1.61 (hub-escalation rule; the repo never applied it to the wing, fin or shoe hand rows: shown for the single demand set the audit asks for)
+
+| part | min RF (RB / D-1) | verdict | min RF at the DAF floor | verdict |
+|---|---|---|---|---|
+| cup / cross-pin rows (proposed D-215 geometry) | 0.01 | **FAIL** | 0.01 | **FAIL** |
+| wing torsion / in-plane, skin-less (reference) | 0.08 | **FAIL** | 0.05 | **FAIL** |
+| rib tube and saddle socket | 0.21 | **FAIL** | 0.13 | **FAIL** |
+| saddle ring on spar / spar under the saddle | 0.23 | **FAIL** | 0.14 | **FAIL** |
+| root block (ring bond, junction, socket, wall) | 0.40 | **FAIL** | 0.25 | **FAIL** |
+| shoe (plate, ring bond) | 0.53 | **FAIL** | 0.33 | **FAIL** |
+| wing, glass skin (P15 / P16, V0) | 0.86 | **FAIL** | 0.54 | **FAIL** |
+| FEA: bond mean shear | 0.77 | **FAIL** | 0.55 | **FAIL** |
+| V strut | 0.92 | **FAIL** | 0.57 | **FAIL** |
+| pad: A-P5 12 g / n peak | 0.97 | **FAIL** | 0.97 | **FAIL** |
+| pad: AR-008 tilt 3.0 deg / end tilt | 1.02 | PASS | 1.02 | PASS |
+| pad: usable stroke / worst stroke | 1.12 | PASS | 1.12 | PASS |
+| FEA: tube B axial | 1.54 | PASS | 1.15 | PASS |
+| FEA: Al hub von Mises max excl 0.5 mm | 1.67 | PASS | 1.34 | PASS |
+| FEA: tube A axial | 1.52 | PASS | 1.48 | PASS |
+| bridge tube 16x14 (hand) | 2.60 | PASS | 1.61 | PASS |
+| fin tube 16x14 | 2.68 | PASS | 1.66 | PASS |
+| FEA: tube B hoop | 2.44 | PASS | 1.82 | PASS |
+| FEA: tube A hoop | 2.47 | PASS | 2.41 | PASS |
+| bridge tube 16x14 (D-1 dynamic) | 2.42 | PASS | 2.42 | PASS |
+| FEA: tube B tau_st | 4.60 | PASS | 3.78 | PASS |
+| FEA: tube A tau_st | 5.14 | PASS | 5.14 | PASS |
+
+(old-definition rows and the T-076c bond definition are shown for continuity and are not judged; the skin-less P15 / P16 rows are the pre-skin reference: the glass-skin V0 rows govern the wing.)
+done 203 s
+
+real	3m23.404s
+user	0m0.031s
+sys	0m0.000s

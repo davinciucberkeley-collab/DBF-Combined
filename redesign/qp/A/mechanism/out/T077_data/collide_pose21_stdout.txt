@@ -1,0 +1,2 @@
+Blender run failed (exit 4294967295); see out/blender.log
+exit 1

@@ -25,7 +25,7 @@ def o(calc, key, nd=1, k=1.0):
 
 ST = ["UR", "UL", "LR", "LL"]
 HALF_D3 = {"UR": "RU", "LR": "RD", "UL": "LU", "LL": "LD"}            # D3's current edge part ids (pre D-26 rename)
-EPOXY = "30 min laminating epoxy + ~5 % colloidal silica (non-sag)"
+EPOXY = "30 min laminating epoxy, neat (no silica; the lap-shear coupons that set the allowables are neat, T-C6-LAP-PETG)"
 FOAMEPOXY = "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)"
 PREP_P = "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves"
 CURE = "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)"
@@ -34,6 +34,7 @@ tb, st, br = out("CALC-C6-TUBE-BONDS"), out("CALC-C6-STRIP"), out("CALC-C6-BRACE
 fb, pa, pw = out("CALC-C6-FOAM-BONDS"), out("CALC-C6-POD-ALLOW"), out("CALC-C6-PWR-FRAME")
 bp, fs = out("CALC-C6-BLOCK-POCKET"), out("CALC-C6-FIN-SCALE")
 stacks = {}
+MOTOR_MIN_MM = json.loads((HERE.parents[1] / "params/params.json").read_text(encoding="utf-8"))["requirements"]["thread_engagement_motor_m3_min_m"]["value"] * 1e3
 
 for i, s in enumerate(ST):
     stacks[f"E-FIN-{61 + i}"] = {"joint_stack": {
@@ -41,7 +42,7 @@ for i, s in enumerate(ST):
         "hole": "3.4 mm drilled square to the canted 4.5 mm plate face (holes parallel to the motor axis) on the "
                 "measured motor pattern, motor as template; no radial slots",
         "insert": "none (motor base tapped M3)",
-        "engagement_mm": round(cs["engage_m"] * 1e3, 2), "min_engagement_mm": 3.0,
+        "engagement_mm": round(cs["engage_m"] * 1e3, 2), "min_engagement_mm": MOTOR_MIN_MM,
         "max_engagement_mm": "probed hole depth - 0.5 (T-E1-MOTOR-RM)", "washer_nut": "none (head bears flat on "
                                                                                        "the canted back face)",
         "torque": "0.20 N m (4 N on a luggage scale 50 mm out on the key) + Loctite 243 on the screw tip only",
@@ -185,7 +186,7 @@ for i, s in enumerate(ST):
             f"tail RF {fs['rf_tail_net']:.2f}: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips "
             "to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes", "L4")
 
-PIN = ("30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in")
+PIN = ("30 min laminating epoxy, neat, injected into the hole before the pin goes in")
 PIN_PREP = "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA"
 for i, s in enumerate(ST):
     stacks[f"E-FIN-{69 + i}"] = bond(
@@ -211,16 +212,8 @@ stacks["E-POD-02"] = bond("30 min epoxy", 13505, "PETG underside 120 grit; board
                           f"wall corner inside POD-001 under the front strap needs a 6 mm microballoon fillet "
                           f"(RF {pa['rf_floor']:.2f} -> {pa['rf_floor_prop']:.2f}, CR-C6-17)", "C1 crash", "C3, C6")
 
-for i in range(3):
-    stacks[f"E-TRN-{13 + i}"] = {"ground_joint": True, "joint_stack": {
-        "fastener": "M3x16 SHCS ISO 4762", "count": 2, "grade": "A2-70",
-        "hole": "3.4 mm through handle strap, 4 mm Coroplast wall and 3 mm ply backing strip",
-        "insert": "none", "engagement_mm": "16 - grip; grip <= 11.0 mm", "min_engagement_mm": 5.0,
-        "washer_nut": "M3 x 12 mm fender washer outside; M3 nyloc on the 140 x 30 x 3 mm ply strip inside (TRN-105)",
-        "torque": "snug, wall not crushed", "tool": "2.5 mm hex key + 5.5 mm spanner", "access": "nut inside, lid off",
-        "install_order": 12, "removal_order": 9,
-        "load": "57-59 N per bolt (CL-D7-HANDLE-BOLT-F); confirmed by C6 (CR-D7-10): the ply strip spreads it to "
-                "27 kPa on the Coroplast; min engagement = nyloc 4.0 + 2 pitches (D-41), not 3.0"}}
+# E-TRN-13..15: D-167 (closure round) replaced the bolted handles with die-cut hand holes and taped patches; no
+# fastener stack (D7.md).
 
 # E-MEC-03/04 (FIX 1, FASTENERS-CAD.md): reinstated. The servo sits in the frame's ear slots and the screwed cover
 # holds it there, so the edge carries the stack of the cover's two screws (the same MEC-011 pair as E-MEC-35/36).
@@ -237,6 +230,24 @@ for k, s in ((3, "L"), (4, "R")):
         "load": "cover holds the servo up into the frame: 15.8 g x 12.75 g crash = 2.0 N on 2 screws; thread shear "
                 "0.5 x pi x 2 x 5.2 mm2 x 15 MPa (PETG across layers) = 245 N per screw; the ears carry the 14 N "
                 "servo reaction. Not an M3 insert: the 4 x 5 mm bosses cannot take a 7.2 mm insert boss"}}
+
+# D-89c parts (CDR-27): strap eyes FIN-013 on the block bosses, horn backplates MEC-013 over the blade tops
+ey = out("CALC-C6-EYE")
+for i, (s_, blk) in enumerate((("UR", "R"), ("UL", "L"), ("LR", "R"), ("LL", "L"))):
+    stacks[f"E-FIN-{89 + i}"] = bond(
+        EPOXY, round(ey["area_mm2"]), load=f"{ey['tau_design_mpa']:.2f} MPa design shear on the foot (tie 29.4 N along x, "
+        f"arm {ey['arm_m'] * 1e3:.1f} mm about the boss axis); RF {ey['rf_shear']:.1f} on 2.0 MPa, "
+        f"{ey['rf_peel_value']:.1f} on the 1.0 MPa flat-wise value, {ey['rf_splay']:.1f} with the tie splayed 30 deg "
+        "(CL-C6-EYE-BOND-RF, -PEEL, -SPLAY)", case="restrained ground run (C1 G4, GT-13), per tie",
+        prep="boss outboard face and saddle foot sanded 120 grit, IPA wipe; skin tape cut back 2 mm round the foot so "
+             "the foot bonds PETG to PETG only (0.32 mm tape stand-off otherwise); eye printed flat, hole axis vertical")
+for i, (inst, horn) in enumerate((("LI", "MEC-004-L"), ("RI", "MEC-004-R"), ("LO", "MEC-006-L"), ("RO", "MEC-006-R"))):
+    stacks[f"E-MEC-{37 + i}"] = bond(
+        FOAMEPOXY, 288, load="not a load path: the horn's own bond (flange + slot walls, 930 mm2, D6 CL-D6-BOND-HORN) "
+        "carries the pushrod force and hinge moment (CL-D6-HORN-MOMENT-RF); the backplate closes the slot and spreads "
+        "the blade-top bearing", case="full travel at VD (R-SERVO-TORQUE)",
+        prep="hinge tape cut back 1.5 mm, foam scuffed, backplate MEC-013 sanded 120 grit; set over the blade top "
+             "after the horn is in from below; 2.5 mm blade-top glue line")
 
 WITHDRAWN = {"E-PWR-05": "bus board on foam tape (F1), retention block owned by power; no C6 stack (CR-A4-44b)"}
 

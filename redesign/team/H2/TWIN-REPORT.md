@@ -1,6 +1,6 @@
 # Foam-board twin test report (`R-TWIN`): TEMPLATE
 
-Revision H2-R1, 2026-11-13. Status: **template, nothing flown**. Copy this file's tables into one report per twin campaign, fill every cell from the logs in `logs/`, keep unmeasured cells as `-`.
+Revision H2-R2, 2026-11-14 (1i transition lines per B3 closure; M1 / M2 rows). R1, 2026-11-13. Status: **template, nothing flown**. Copy this file's tables into one report per twin campaign, fill every cell from the logs in `logs/`, keep unmeasured cells as `-`.
 Pass lines come from `R-TWIN` and `R-TEST-ORDER` (`team/A2/REQUIREMENTS.md`) and gate 1 of [`FLIGHT-TEST-PLAN.md`](FLIGHT-TEST-PLAN.md). A failed or missing line is reported as `FAIL` or `NOT RUN`, never rounded into a pass.
 
 ## 1. Header
@@ -32,12 +32,18 @@ Pass lines come from `R-TWIN` and `R-TEST-ORDER` (`team/A2/REQUIREMENTS.md`) and
 | 1f | Neutral point Xnp | from elevon trim vs CL (slope 0) | - | m | `T-B3-TWIN-NP` | - |
 | 1g | Stall speed Vs (mean of 3) | <= 12.0 | - | m/s | `T-B2-STALL` | - |
 | 1h | Yaw doublet: return within 2 s | yes | - | s | `T-B3-YAW-DOUBLET` | - |
-| 1i | Transition speed | >= 15.5 and >= 1.3 Vs | - | m/s | `T-B1-TRANSITION-LOG` | - |
-| 1i | Height loss in transition | <= 10 | - | m | - | - |
+| 1i | Start height, by the transition switch | 50 (<= 55) | - | m AGL | `T-B1-TRANSITION-LOG` | - |
+| 1i | Held throttle, mode change to 70 deg | 1.285 θh +/- 0.01 | - | - | - | - |
+| 1i | Handover airspeed | >= 1.3 Vs | - | m/s | - | - |
+| 1i | Climb in transition | <= 50 | - | m | - | - |
+| 1i | M1a hold at 50 m before the transition | <= 35 budget | - | s | A2 M1 | - |
+| 1i | M2 lap time, straight, wind | information (twin speed differs) | - | s, m, m/s | A2 M2 | - |
 | 1i | Laps flown, back-transition | 2 laps + back-transition | - | - | - | - |
 | 1i | Cruise current | about 16.2 | - | A | `T-B1-CRUISE-POWER` | - |
 | 1j | Touchdown ground speed, 95th percentile (20 landings) | <= 0.3 | - | m/s | `T-C5-DRIFT-LOG` | - |
 | 1j | Throttle out within 0.5 s of contact | <= 0.71 hover | - | - | `T-F4-TD-CUT` | - |
+| 1j | Touchdowns per sortie | <= 2 | - | - | plan section 4a | - |
+| 1j | M1b go-around / M1c landing hover | <= 40 / <= 30 | - | s | A2 M1 | - |
 | 1k | Dive airspeed | <= 20.5 | - | m/s | `T-F4-DIVE` | - |
 | - | Elevon size that gives clean FBWA authority | recorded | - | fraction | - | - |
 

@@ -26,7 +26,7 @@ REDESIGN = HERE.parents[1]
 sys.path.insert(0, str(REDESIGN / "proofs"))
 import proofkit as pk  # noqa: E402
 
-kit = pk.Kit(__file__, params=["../../params/params.json"])
+kit = pk.Kit(__file__, params=["../../params/params.json", "../C6/params.json"])
 P = "P:"
 G0 = 9.80665
 _POD = json.loads((REDESIGN / "subsystems" / "pod" / "params.json").read_text(encoding="utf-8"))
@@ -231,11 +231,11 @@ kit.assumption("ASM-C3-FEA-D0", "Bond peak averaging length 2 mm", "Peel / shear
                "the raw and 5 mm values", basis="point/average-stress practice for foam bonds; T-C3-POD-PROOF",
                value=0.002, unit="m", status="UNVERIFIED", cites=SRC)
 
-kit.assumption("ASM-C3-D47-NOSE", "D-47 nose stack: forward stop aft face -0.1212 m, stack 8.8 mm",
-               "[forward stop aft face x, nose wall + block A + forward stop length] that A1 decided at D-47",
-               basis="params/CHANGE-LOG.md D-47 (CR-A3-22, CR-D2-16): nose block 14.8 -> 8.8 mm, forward stop "
-                     "-0.1002 -> -0.1212; D2 has not yet re-laid subsystems/pod/params.json (nose_block_l_m 0.007)",
-               value=[-0.1212, 0.0088], unit="m", cites=["SRC-K09-CARD"])
+# C3-R5 (design round 2026-11-14): ASM-C3-D47-NOSE retired. It hard-coded the D-47 forward-stop aft face -0.1212 m;
+# D-62 moved the nose to x_le -0.140 and the stop face to -0.1312, so CALC-C3-NOSE-PATH credited 11 mm of block A that
+# the pod does not have (1 mm epoxy line, subsystems/pod/params.json nose_block_l_m). The stop face is now read from
+# D2's CL-D2-FWD-STOP-X (x_le + board t + nose_block_l_m + fwd_stop_m[0], the same sum subsystems/pod/fusion/pod.py
+# draws), so it follows any future nose move.
 kit.assumption("ASM-C3-FILLET-LEG", "Floor-to-side-wall corner fillet leg 6 mm",
                "Microballoon-epoxy fillet along both floor-to-wall corners +-30 mm of each strap; widens the glue line",
                basis="C6 CR-C6-17, adopted by D2 at R4 (subsystems/pod/params.json bought_g.fillet_corners)",
@@ -283,9 +283,11 @@ kit.assumption("ASM-C3-HATCH", "Hatch plan and latch", "[hatch length x, width y
                unit="m", cites=SRC)
 kit.assumption("ASM-C3-GRIP", "Carry-handle grip 10 x 8 mm PETG, legs at +-34 mm", "[grip x, grip z, leg y]",
                basis="subsystems/pod/params.json grip_m, leg_y_m", value=_pv("grip_m") + [_pv("leg_y_m")], unit="m", cites=SRC)
-kit.assumption("ASM-C3-PETG-INPLANE", "Printed PETG in-plane (along-raster) allowable 25 MPa",
+kit.assumption("ASM-C3-PETG-INPLANE", "Printed PETG in-plane (along-raster) allowable 23.5 MPa (C6 table, D-107)",
                "Bending allowable along the filament (part printed so the stress runs along the layers)",
-               basis="filament data 40-50 MPa (ASM-D5-PETG-SIGMA basis) x ~0.6", value=25.0e6, unit="Pa", status="UNVERIFIED",
+               basis="= P:allowables.petg_inplane_pa (team/C6/params.json): 0.5 x 47 MPa, Prusament PETG TDS v1.1 "
+                     "printed specimens. Was 25 MPa", value=kit.value("P:allowables.petg_inplane_pa"), unit="Pa",
+               status="UNVERIFIED",
                cites=SRC)
 
 # ---------------------------------------------------------------- calculations
@@ -447,6 +449,22 @@ def overhang(n_lim, nc, pack_rng, pack, px, items, W, H, tb, tf, g, sf, kf, kp):
             "sigma_design_pa": n_d * mom * g * c / I, "sigma_crash_pa": nc * mom * g * c / I}
 
 
+kit.assumption("ASM-C3-AFT-FILLER", "Aft filler section [length x, height z, removable fore piece] (m), D-174",
+               "XPS F-250 filler between the U-spacer stack and the aft stop (POD-013); the crash +x pack load bears on its "
+               "fore face over bay width x filler height",
+               basis="subsystems/pod/params.json aft_filler_m (D2.md D-174: 43 x 20 x 16 mm)",
+               value=_pv("aft_filler_m"), unit="m", cites=SRC)
+
+
+@kit.calc("CALC-C3-FILLER", title="Aft filler bearing under the 12.75 g crash (pack -> spacers -> filler -> aft stop)",
+          equation="capacity = sigma_XPS W_bay h_filler ; load = C1 pack crash force (ultimate, no further factor) ; "
+                   "margin = capacity / load - 1",
+          inputs={"F": "CL-C1-PACK-CRASH-LOAD", "fil": "ASM-C3-AFT-FILLER", "w": "CL-D2-BAY-W", "sig": "ASM-D5-XPS-PLATEAU"})
+def filler(F, fil, w, sig):
+    cap = sig * w * fil[1]
+    return {"capacity_n": cap, "load_n": F, "ms": cap / F - 1.0}
+
+
 @kit.calc("CALC-C3-HANDLE", title="Carry handle on the spar (G1, whole aircraft at 2 g)",
           equation="F = m_gate g n_h x SF x k_fit x k_print; ties: F vs n x rating; grip: uniform hand load over the "
                    "leg span s = 2 y_leg, M = F s / 8, sigma = 6 M / (b h^2)",
@@ -481,22 +499,24 @@ def mass(m0, rho, rec, t0, fs, gd, h, hf, bw, bay, hb):
             "mass_full_section_g": m0 + dv * rho * 1000 + full}
 
 
-@kit.calc("CALC-C3-NOSE-PATH", title="Nose-in crush path with the D-47 nose (8.8 mm nose stack, block A ~1 mm)",
-          equation="L_A = (x_fs - t_fs) - (x_le + t_b) ; per pack m (503/550/680 g): F = min(n_pack m g, sigma A_bay), "
+@kit.calc("CALC-C3-NOSE-PATH", title="Nose-in crush path at the current nose (stop face from D2, block A = bond line)",
+          equation="L_A = (x_fs - t_fs) - (x_le + t_b), x_fs = CL-D2-FWD-STOP-X, t_fs = fwd_stop_m[0] (C3-R5: was the "
+                   "hard-coded D-47 face -0.1212) ; L_A is the 1 mm epoxy line, credited as if it were XPS (upper bound) ; "
+                   "per pack m (546/550/590 g): F = min(n_pack m g, sigma A_bay), "
                    "KE = m v^2/2, eff = eps_d - eps_y/2 ; block A energy E_A = min(F, sigma A_stop) eff L_A, share = E_A/KE ; "
                    "block B gap penalty of a stop of height h_f vs the full section = (min(F, sigma A_bay) - "
                    "min(F, sigma h_f b_bay)) L_A / F ; same at the D2-R3/R4 block A (ASM-D2-FWD-STOP[0]) for comparison ; "
                    "stack = t_b + L_A + t_fs",
-          inputs={"x_le": P + "pod.x_le_m", "tb": P + "fins.board_t_m", "d47": "ASM-C3-D47-NOSE", "fs": "ASM-D2-FWD-STOP",
+          inputs={"x_le": P + "pod.x_le_m", "tb": P + "fins.board_t_m", "x_fs": "CL-D2-FWD-STOP-X", "fs": "ASM-D2-FWD-STOP",
                   "rec": "ASM-C3-REC", "pack_rng": "ASM-A3-PACK-RANGE", "m_nom": P + "battery.mass_kg",
                   "v": "ASM-C1-CRASH-V", "n_pack": "ASM-C5-PACK-G-MAX", "sigma": "ASM-D5-XPS-PLATEAU",
                   "eps_d": "ASM-D5-DENSIFY", "eps_y": "ASM-D5-YIELD-STRAIN", "bw": "ASM-D2-BAY-W", "hb": "CL-D2-BAY-H",
                   "hf": "ASM-C3-STOP-H", "g": P + "env.g_ms2"})
-def nose_path(x_le, tb, d47, fs, rec, pack_rng, m_nom, v, n_pack, sigma, eps_d, eps_y, bw, hb, hf, g):
-    L_A = (d47[0] - rec[1]) - (x_le + tb)
+def nose_path(x_le, tb, x_fs, fs, rec, pack_rng, m_nom, v, n_pack, sigma, eps_d, eps_y, bw, hb, hf, g):
+    L_A = (x_fs - fs[1]) - (x_le + tb)
     eff = eps_d - eps_y / 2
     A_bay, A_c3 = bw * hb, bw * hf
-    out = {"L_A_m": L_A, "L_A_r4_m": fs[0], "stack_m": tb + L_A + rec[1]}
+    out = {"L_A_m": L_A, "L_A_r4_m": fs[0], "stack_m": tb + L_A + fs[1]}
     share_full, share_c3, pen, pen_r4, FB = 0.0, 0.0, 0.0, 0.0, 0.0
     for m in (min(pack_rng) / 1000, m_nom, max(pack_rng) / 1000):
         F = min(n_pack * m * g, sigma * A_bay)
@@ -629,15 +649,17 @@ kit.claim("CL-C3-FEA-OVERHANG-CRASH", "Overhang wall-top face stress at the LE, 
           output="overhang_crash_pa", unit="Pa", limit=("<=", "ASM-C4-FACE-SIGMA"), verifies=["R-PACK-RETENTION"],
           parts=[SHELL], how=_FEA_HOW + "T-C3-POD-PROOF to 12.75 x pack weight.")
 kit.claim("CL-C3-FEA-AFT-STOP-PEAK", "Aft stop as drawn (+2 mm fillet), root peak principal stress, design (FEA)",
-          calc="CALC-C3-FEA", output="aft_fillet_solid_stop_peak_pa", unit="Pa", limit=("<=", "ASM-C4-PETG-TENSILE"),
+          calc="CALC-C3-FEA", output="aft_fillet_solid_stop_peak_pa", unit="Pa", 
           verifies=["R-PACK-RETENTION"], parts=[TRAY], how=_FEA_HOW + "T-C3-STOP-PUSH on the built tray rear piece.",
-          note="solid tray section (best case); the 1 mm tray rotates under the stop, so the root is the tray, not the stop")
+          note="D-107 / CDR-23: superseded record (pre-D-69 stop printed with the tray, or the unpropped aft stop), limit removed; the built design is checked by CL-C3-FEA-AFT-PROP-* and CL-C3-FEA-FWD-T-*. solid tray section (best case); the 1 mm tray rotates under the stop, so the root is the tray, not the stop")
 kit.claim("CL-C3-FEA-AFT-TRAY-BEND", "Tray rear piece bending under the aft stop root moment, design (FEA)",
-          calc="CALC-C3-FEA", output="aft_fillet_solid_tray_peak_pa", unit="Pa", limit=("<=", "ASM-C3-PETG-INPLANE"),
-          verifies=["R-PACK-RETENTION"], parts=[TRAY], how=_FEA_HOW + "T-C3-STOP-PUSH.")
+          calc="CALC-C3-FEA", output="aft_fillet_solid_tray_peak_pa", unit="Pa", 
+          verifies=["R-PACK-RETENTION"], parts=[TRAY], how=_FEA_HOW + "T-C3-STOP-PUSH.",
+          note="D-107 / CDR-23: superseded record (pre-D-69 stop printed with the tray, or the unpropped aft stop), limit removed; the built design is checked by CL-C3-FEA-AFT-PROP-* and CL-C3-FEA-FWD-T-*.")
 kit.claim("CL-C3-FEA-AFT-PEEL", "Board flat-wise peel under the aft stop, design (FEA, 2 mm mean)", calc="CALC-C3-FEA",
-          output="aft_fillet_solid_peel_pa", unit="Pa", limit=("<=", "CL-C3-ALLOW-BOARD-FLAT"),
-          verifies=["R-PACK-RETENTION"], parts=[TRAY, SHELL], how=_FEA_HOW + "T-C3-STOP-PUSH on a tray bonded to board.")
+          output="aft_fillet_solid_peel_pa", unit="Pa", 
+          verifies=["R-PACK-RETENTION"], parts=[TRAY, SHELL], how=_FEA_HOW + "T-C3-STOP-PUSH on a tray bonded to board.",
+          note="D-107 / CDR-23: superseded record (pre-D-69 stop printed with the tray, or the unpropped aft stop), limit removed; the built design is checked by CL-C3-FEA-AFT-PROP-* and CL-C3-FEA-FWD-T-*.")
 kit.claim("CL-C3-FEA-AFT-PROP-PEEL", "Board peel with the aft stop strutted to the handle bridge (CR-C3-14, FEA)",
           calc="CALC-C3-FEA", output="aft_propped_win_peel_pa", unit="Pa", limit=("<=", "CL-C3-ALLOW-BOARD-FLAT"),
           verifies=["R-PACK-RETENTION"], parts=[TRAY, HANDLE], how=_FEA_HOW + "T-C3-STOP-PUSH with the strut fitted.",
@@ -646,8 +668,8 @@ kit.claim("CL-C3-FEA-AFT-PROP-PEAK", "Aft stop root peak with the strut (CR-C3-1
           output="aft_propped_win_stop_peak_pa", unit="Pa", limit=("<=", "ASM-C4-PETG-TENSILE"),
           verifies=["R-PACK-RETENTION"], parts=[TRAY], how=_FEA_HOW + "T-C3-STOP-PUSH with the strut fitted.")
 kit.claim("CL-C3-FEA-AFT-HEEL-PEEL", "Board peel with a 2 mm heel under the aft stop (option, FEA)", calc="CALC-C3-FEA",
-          output="aft_heel_fillet_peel_pa", unit="Pa", limit=("<=", "CL-C3-ALLOW-BOARD-FLAT"), parts=[TRAY],
-          how=_FEA_HOW + "not adopted.", note="option studied and rejected: the heel fixes the PETG but not the peel")
+          output="aft_heel_fillet_peel_pa", unit="Pa",  parts=[TRAY],
+          how=_FEA_HOW + "not adopted.", note="D-107 / CDR-23: superseded record (pre-D-69 stop printed with the tray, or the unpropped aft stop), limit removed; the built design is checked by CL-C3-FEA-AFT-PROP-* and CL-C3-FEA-FWD-T-*. option studied and rejected: the heel fixes the PETG but not the peel")
 kit.claim("CL-C3-FEA-FWD-PEEL", "Board peel under the forward stop as a cantilever, 85 N crash (FEA)", calc="CALC-C3-FEA",
           output="fwd_fillet_peel_pa", unit="Pa", parts=[TRAY, SHELL], how=_FEA_HOW + "record only.",
           note="SUPERSEDED (C3-R4): the stop printed with the tray (pre-D-69) is not built; D-69's T is checked by "
@@ -745,9 +767,9 @@ kit.claim("CL-C3-BOND-R-CRASH", "Pod-to-wing bond interaction, 12.75 g crash any
 kit.claim("CL-C3-POD-GROUP-MASS", "Pod group mass, heaviest pack (crash case)", calc="CALC-C3-BOND", output="group_mass_kg",
           unit="kg", parts=[SHELL], how="Weigh the pod group with the 680 g listing pack.")
 kit.claim("CL-C3-AFT-STOP-D2", "Aft stop as modelled by D2 (ASM-D2-STOP-T): root bending stress, design", calc="CALC-C3-STOPS",
-          output="sigma_aft_d2_pa", unit="Pa", limit=("<=", "ASM-C4-PETG-TENSILE"), verifies=["R-PACK-RETENTION"],
+          output="sigma_aft_d2_pa", unit="Pa",  verifies=["R-PACK-RETENTION"],
           parts=[TRAY], how="T-C3-STOP-PUSH on a printed tray: 89 N on a 680 g-pack-size block at 13 mm height.",
-          note="D2-R5: printed with the tray rear piece at x 0.056; 2 gussets behind it ignored (conservative)")
+          note="D-107 / CDR-23: superseded record (pre-D-69 stop printed with the tray, or the unpropped aft stop), limit removed; the built design is checked by CL-C3-FEA-AFT-PROP-* and CL-C3-FEA-FWD-T-*. D2-R5: printed with the tray rear piece at x 0.056; 2 gussets behind it ignored (conservative)")
 kit.claim("CL-C3-AFT-STOP-BOND", "Aft stop design load vs D2's tray rear piece bond (stop on the tray since D-47)",
           calc="CALC-C3-STOPS", output="F_aft_n", unit="N", limit=("<=", "CL-D2-AFT-STOP-BOND"),
           verifies=["R-PACK-RETENTION"], parts=[TRAY, SHELL],
@@ -757,8 +779,9 @@ kit.claim("CL-C3-AFT-STOP-BOND", "Aft stop design load vs D2's tray rear piece b
 kit.claim("CL-C3-AFT-STOP-T-REQ", "Aft stop thickness required", calc="CALC-C3-STOPS", output="t_req_m", unit="m",
           parts=[TRAY], how="Recompute after T-C3-STOP-PUSH sets the printed-PETG allowable.")
 kit.claim("CL-C3-AFT-STOP-REC", "Aft stop 3.0 mm (C3): root bending stress, design", calc="CALC-C3-STOPS",
-          output="sigma_aft_rec_pa", unit="Pa", limit=("<=", "ASM-C4-PETG-TENSILE"), verifies=["R-PACK-RETENTION"],
-          parts=[TRAY], how="T-C3-STOP-PUSH.")
+          output="sigma_aft_rec_pa", unit="Pa",  verifies=["R-PACK-RETENTION"],
+          parts=[TRAY], how="T-C3-STOP-PUSH.",
+          note="D-107 / CDR-23: superseded record (pre-D-69 stop printed with the tray, or the unpropped aft stop), limit removed; the built design is checked by CL-C3-FEA-AFT-PROP-* and CL-C3-FEA-FWD-T-*.")
 kit.claim("CL-C3-NOSE-WALL-M", "Foam-board nose wall as the forward stop: moment needed per mm (85 N crash)",
           calc="CALC-C3-STOPS", output="nose_m_req_nmm_per_mm", unit="N mm/mm",
           parts=[SHELL],
@@ -767,8 +790,9 @@ kit.claim("CL-C3-NOSE-WALL-M", "Foam-board nose wall as the forward stop: moment
                "which is why the printed forward stop exists (adopted by D2, fwd_stop_m); the wall carries pack load only "
                "when the ground backs it in a nose-in impact")
 kit.claim("CL-C3-FWD-STOP-REC", "Forward stop 3.0 mm printed with the tray (C3): root bending stress",
-          calc="CALC-C3-STOPS", output="sigma_fwd_rec_pa", unit="Pa", limit=("<=", "ASM-C4-PETG-TENSILE"),
-          verifies=["R-PACK-RETENTION"], parts=[TRAY], how="T-C3-STOP-PUSH in -x.")
+          calc="CALC-C3-STOPS", output="sigma_fwd_rec_pa", unit="Pa", 
+          verifies=["R-PACK-RETENTION"], parts=[TRAY], how="T-C3-STOP-PUSH in -x.",
+          note="D-107 / CDR-23: superseded record (pre-D-69 stop printed with the tray, or the unpropped aft stop), limit removed; the built design is checked by CL-C3-FEA-AFT-PROP-* and CL-C3-FEA-FWD-T-*.")
 kit.claim("CL-C3-GUIDE-D2", "Bay guide as modelled by D2 (guide_t_m): bending stress, lateral crash", calc="CALC-C3-GUIDES",
           output="sigma_d2_pa", unit="Pa", limit=("<=", "ASM-C4-PETG-TENSILE"), verifies=["R-PACK-RETENTION"], parts=[TRAY],
           how="T-C3-STOP-PUSH sideways, 85 N along the guide.")
@@ -798,6 +822,13 @@ kit.claim("CL-C3-OVERHANG-DESIGN", "Overhang root (x = 0) wall-top face stress, 
 kit.claim("CL-C3-OVERHANG-CRASH", "Overhang root (x = 0) wall-top face stress, 12.75 g crash", calc="CALC-C3-OVERHANG",
           output="sigma_crash_pa", unit="Pa", limit=("<=", "ASM-C4-FACE-SIGMA"), verifies=["R-PACK-RETENTION"], parts=[SHELL],
           how="T-C3-POD-PROOF to 12.75 x pack weight.")
+kit.claim("CL-C3-FILLER-BEARING", "Aft filler (POD-013) bearing margin under the crash +x pack load", calc="CALC-C3-FILLER",
+          output="ms", unit="-", limit=(">=", 0.0), verifies=["R-PACK-RETENTION"], parts=[TRAY],
+          how="T-C3-POD-PROOF aft pull on the dummy pack to 85 N with the filler in; no filler crush or dent.",
+          note="D-174: XPS F-250 plateau 172 kPa over 52 x 20 mm = 179 N (D2.md: 179 N against 85 N). The load is C1's "
+               "pack crash force (CL-C1-PACK-CRASH-LOAD, 12.75 g x the heaviest pack of ASM-A1-PACK-CASES-G).")
+kit.claim("CL-C3-FILLER-CAPACITY", "Aft filler bearing capacity (information)", calc="CALC-C3-FILLER", output="capacity_n",
+          unit="N", parts=[TRAY], how="XPS crush coupon (T-D5-COUPON method).")
 kit.claim("CL-C3-HANDLE-TIES", "Carry-handle design load (G1) vs 2 spar ties", calc="CALC-C3-HANDLE", output="F_design_n",
           unit="N", limit=("<=", "CL-C3-HANDLE-TIE-CAP"), verifies=["R-STRUCT-MARGIN"], parts=[HANDLE, "WNG-002"],
           how="T-D2-HANDLE-PULL (120 N, 10 s) proves 1.1 x this.")
@@ -819,26 +850,26 @@ kit.claim("CL-C3-ALLOW-PAPER-SHEAR", "Epoxy on foam-board paper face, shear allo
 kit.claim("CL-C3-ALLOW-BOARD-FLAT", "Foam-board flat-wise tension allowable (C6)", calc="CALC-C3-ALLOW",
           output="board_flat_pa", unit="Pa", how="T-C6-BOARD-LAP flat-wise pulls.")
 kit.claim("CL-C3-FWD-STOP-FUSE", "Forward stop root capacity (fuse) vs the 85 N crash pack load", calc="CALC-C3-STOPS",
-          output="fwd_fuse_n", unit="N", limit=(">=", "CL-C1-PACK-CRASH-LOAD"), verifies=["R-PACK-RETENTION"],
+          output="fwd_fuse_n", unit="N",  verifies=["R-PACK-RETENTION"],
           parts=[TRAY], how="T-C3-STOP-PUSH in -x to failure.",
-          note="holds every airframe-decelerated case (pack load <= 12.75 g); in a nose-in impact it is backed by the "
+          note="D-107 / CDR-23: superseded record (pre-D-69 stop printed with the tray, or the unpropped aft stop), limit removed; the built design is checked by CL-C3-FEA-AFT-PROP-* and CL-C3-FEA-FWD-T-*. holds every airframe-decelerated case (pack load <= 12.75 g); in a nose-in impact it is backed by the "
                "nose wall and the ground, so the fuse no longer has to break (block A ~1 mm, CALC-C3-NOSE-PATH)")
-kit.claim("CL-C3-NOSE-BLOCK-A", "Block A length left by the D-47 nose stack", calc="CALC-C3-NOSE-PATH", output="L_A_m",
+kit.claim("CL-C3-NOSE-BLOCK-A", "Block A (nose-wall bond line) length at the current nose", calc="CALC-C3-NOSE-PATH", output="L_A_m",
           unit="m", parts=[SHELL, "POD-008"], how="Rule from the nose wall inside face to the forward stop fore face.",
           note="7.0 mm at D2-R4 -> 1.0 mm at D-47: too thin to cut from XPS; C3 asks D2 to fill it with the "
                "stop-to-nose-wall epoxy bed (CR-C3-08)")
-kit.claim("CL-C3-NOSE-STACK", "Nose stack (wall + block A + forward stop) at D-47", calc="CALC-C3-NOSE-PATH",
-          output="stack_m", unit="m", parts=[SHELL], how="D2 CAD read-out.", note="D-47 states 8.8 mm")
+kit.claim("CL-C3-NOSE-STACK", "Nose stack (wall + block A + forward stop), current nose", calc="CALC-C3-NOSE-PATH",
+          output="stack_m", unit="m", parts=[SHELL], how="D2 CAD read-out.", note="D-47 / D-62 state 8.8 mm; C3-R5 reads it from CL-D2-FWD-STOP-X (was 18.8 mm from the stale D-47 face)")
 kit.claim("CL-C3-BLOCK-A-SHARE", "Share of the nose-in pack energy block A can take (full-section stop, worst pack)",
           calc="CALC-C3-NOSE-PATH", output="blockA_share_full", unit="-", limit=("<=", 0.10),
           verifies=["R-PACK-RETENTION"], parts=["POD-008"],
-          how="C5 CALC-C5-CRASH re-run on the D-47 bay.",
-          note="<= 10 % means block B (removable, behind the spreader) carries the crush path alone; the shorter nose "
+          how="C5 CALC-C5-CRASH re-run on the current bay.",
+          note="C3-R5: stop face from CL-D2-FWD-STOP-X (was the hard-coded D-47 -0.1212, which gave 11 mm and 0.43); <= 10 % means block B (removable, behind the spreader) carries the crush path alone; the shorter nose "
                "block keeps the path, it only drops block A's contribution")
-kit.claim("CL-C3-STOP-SECTION-PENALTY", "Block B length a 25 mm stop costs vs a full-section stop (D-47, worst pack)",
+kit.claim("CL-C3-STOP-SECTION-PENALTY", "Block B length a 25 mm stop costs vs a full-section stop (current nose, worst pack)",
           calc="CALC-C3-NOSE-PATH", output="gap_penalty_c3_m", unit="m", limit=("<=", 0.001),
           verifies=["R-PACK-RETENTION"], parts=[TRAY, "POD-008"],
-          how="C5 CL-C5-PACK-ROOM-C3-STOP re-run on the D-47 bay.",
+          how="C5 CL-C5-PACK-ROOM-C3-STOP re-run on the current bay.",
           note="limit 1 mm: below it the full-section stop (CR-C5-13, +6 g) buys nothing worth its mass; was ~3.8 mm "
                "with block A 7 mm")
 kit.claim("CL-C3-BLOCK-B-FORCE", "Block B crush force the forward stop and nose wall react (worst pack)",

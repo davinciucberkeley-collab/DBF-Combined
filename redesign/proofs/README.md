@@ -69,7 +69,13 @@ The build fails (exit 1, every problem printed at once) when:
 - a claim's value differs from its calculation's output;
 - an id is unknown or duplicated;
 - one parameter key has two different values in two files;
-- a declared input unit differs from the parameter's unit (`mm` vs `m`).
+- a declared input unit differs from the parameter's unit (`mm` vs `m`);
+- the self-check finds a claim whose `fails` flag disagrees with the plain comparison of its value and limit
+  (`SELF-CHECK …`; added 2026-11-13 after limits of 0 went uncounted, CDR-03).
+
+A claim against a limit of 0 (a margin of safety, a clearance, an error count) fails on the sign of its value; its
+margin is printed as a distance in the claim's unit (`-0.34 abs`, `-0.00012 m abs`), because a percentage of 0 does
+not exist (`SCHEMA.md`). A claim that has a limit but a non-numeric value produces a warning.
 
 With `--strict`, a negative margin or a requirement that no claim verifies also fails the build. Missing part ids and
 sources without a URL produce warnings. The graph and `CHAIN.md` are still written when the build fails, with the
@@ -103,7 +109,7 @@ and from GitHub Pages if the repo, or `redesign/`, is published.
 | `SCHEMA.md` | node and edge types, status rules, build rules |
 | `proofkit.py` | what analysis scripts import (`Kit`, `@kit.calc`, `kit.claim`, …) and the shared engine |
 | `build_graph.py` | merge, re-compute, status, write `out/graph.json`, `out/graph.js`, `out/CHAIN.md` |
-| `test_proofs.py` | breaks a copy of the demo on purpose (drift, unit, bad id) and checks the build catches it |
+| `test_proofs.py` | breaks a copy of the demo on purpose (drift, unit, bad id, claims on both sides of a limit of 0) and checks the build catches it |
 | `viewer/` | `index.html`, `app.js` (UI), `model.js` (chain logic, also run by `check_viewer.js` in Node) |
 | `examples/` | demo aircraft: `params.json`, `interfaces.json`, `requirements/claims.json` (hand-written), `power/` and `wing/` analysis scripts with their `claims.json`, `out/` |
 | `out/` | the real graph (empty until subsystem/analysis agents write `claims.json` files) |

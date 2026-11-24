@@ -1,0 +1,8 @@
+| skin on, 2.0 ply | corner | skin GJ N m2 / effective semispan GJ | f1 / f2 / f3 (Hz) | flutter V (m/s) | x 28.8 line |
+|---|---|---|---|---|---|
+| fin on tip (base) | kd | 69.8 / 38.36 | 20.7 / 63.0 / 164.0 | 71.4 | PASS |
+| fin on tip (base) | nom | 99.7 / 53.24 | 23.6 / 72.9 / 189.1 | 82.9 | PASS |
+| fin on tip (base) | hi | 129.6 / 72.33 | 27.1 / 84.2 / 217.7 | 95.8 | PASS |
+| fins off (worst sensitivity) | kd | 69.8 / 38.36 | 34.8 / 98.4 / 219.7 | >100 | PASS |
+| fins off (worst sensitivity) | nom | 99.7 / 53.24 | 39.3 / 115.2 / 250.7 | >100 | PASS |
+| fins off (worst sensitivity) | hi | 129.6 / 72.33 | 44.7 / 133.9 / 287.1 | >100 | PASS |

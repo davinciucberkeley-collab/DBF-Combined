@@ -1,5 +1,8 @@
 # Power: build notes for G4
 
+> **R8 (closure round 2026-11-14, D-173b / D-174):** CoreWing F405 Wing APP V2 with power board `PWR-003` on the deck (the D-161c Kakute is reverted). Main path AS150U → power board → bus board, 10 AWG, no S-loops. Limiter 80 A; pack Gens Ace Redline 4S 6000 HV Shorty (17.4 V full) with two 5 mm bullets and 10 AWG 0.10 m pigtails. ESC branch connectors: **XT60H** (one per ESC; the XT30U is rated 20 A max / 30 A instantaneous against 40 A in a one-motor transient). ESC caps: three Rubycon 35PZJ560M10X15 (560 µF 35 V hybrid, lead wire) per ESC, `PWR-008` / `-009` / `-010`. Analysis: `team/F1/claims.json` and `review/CLOSURE-ROUND-2026-11-14/F1.md` § D-173. Where the text below says 680 µF or XT30U, R8 governs.
+
+
 Status: `PROPOSED` (F1, PWR-R1, 2026-11-09; build order rewritten 2026-11-11 for WB-02 / WB-03, D-74).
 **One build order, shared with `harness/BUILD.md`:** every joint on the 8 AWG bars is made **on the bench, in free
 air, before the bus board goes into the pod** (order B1–B7 below, the same table in both files). The ESC leads are

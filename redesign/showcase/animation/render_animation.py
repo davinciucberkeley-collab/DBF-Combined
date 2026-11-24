@@ -30,9 +30,19 @@ SHOW = os.path.dirname(HERE)
 REDESIGN = os.path.dirname(SHOW)
 BL = os.path.join(REDESIGN, 'blender')
 BLENDER_DEFAULT = r'C:/Users/dillo/tools/blender/blender-4.5.14-windows-x64/blender.exe'
-OUT_MP4 = os.path.join(HERE, 'k09l-how-it-flies.mp4')
-OUT_GIF = os.path.join(HERE, 'k09l-how-it-flies.gif')
-OUT_POSTER = os.path.join(HERE, 'poster.png')
+# Concept selection: default K09-L (previous design, kept reproducible); `--concept a` (or env DBF_CONCEPT=a) renders
+# concept A (D-182, scaled quad tailsitter) from redesign/qp/A/cad/model into redesign/showcase/concept-a/animation/.
+CONCEPT = os.environ.get('DBF_CONCEPT', 'k09l').lower()
+if '--concept' in sys.argv:
+    CONCEPT = sys.argv[sys.argv.index('--concept') + 1].lower()
+os.environ['DBF_CONCEPT'] = CONCEPT          # the Blender worker inherits it
+A = CONCEPT == 'a'
+MODEL_A = os.path.join(REDESIGN, 'qp', 'A', 'cad', 'model')
+OUT_DIR = os.path.join(REDESIGN, 'showcase', 'concept-a', 'animation') if A else HERE
+TITLE = 'Concept A quad tailsitter' if A else 'K09-L quad tailsitter'
+OUT_MP4 = os.path.join(OUT_DIR, 'a-how-it-flies.mp4' if A else 'k09l-how-it-flies.mp4')
+OUT_GIF = os.path.join(OUT_DIR, 'a-how-it-flies.gif' if A else 'k09l-how-it-flies.gif')
+OUT_POSTER = os.path.join(OUT_DIR, 'a-poster.png' if A else 'poster.png')
 
 FPS = 30
 W, H = 1280, 720
@@ -55,7 +65,7 @@ PHASES = [
      'All four motors at equal thrust: it climbs straight up'),
     (4.6, 9.6, 'Transition: pitches 90\u00b0 onto the wing',
      'Top-side motors speed up, belly-side motors slow \u2192 the nose tips over; elevons help once air flows'),
-    (9.6, 12.8, 'Cruise on the wing \u00b7 ~16 m/s',
+    (9.6, 12.8, 'Cruise on the wing \u00b7 ~%d m/s' % (17 if A else 16),
      'The same four motors now pull it forward; the wing carries the weight; elevons steer'),
     (12.8, 16.4, 'Back-transition to hover',
      'Belly-side motors speed up, top-side motors slow \u2192 the nose pitches back up'),
@@ -83,7 +93,7 @@ def bump(t, t0, t1):
     return math.sin(math.pi * seg(t, t0, t1))
 
 
-V_CRUISE = 16.0          # m/s, shown at the true speed against the ground grid
+V_CRUISE = 17.0 if A else 16.0          # m/s (A: MISSION.md cruise 17 m/s), shown at the true speed against the ground grid
 H_CRUISE = 4.2           # m above the ground
 
 
@@ -183,166 +193,14 @@ def phase_at(t):
     return len(PHASES) - 1
 
 
-# =====================================================================================================================
-# Blender worker
-# =====================================================================================================================
-def blender_render(argv):
-    import argparse
-    ap = argparse.ArgumentParser()
-    ap.add_argument('--out', required=True)
-    ap.add_argument('--frames', default='')
-    ap.add_argument('--samples', type=int, default=16)
-    a = ap.parse_args(argv)
-    sys.path.insert(0, BL)
-    sys.dont_write_bytecode = True
-    import fnmatch
-    import json
+def make_stage(sc, samples, width=None, height=None):
+    """EEVEE settings, stage-gradient world and the ground (2 m grid, soft contact shadow). Returns the three
+    shader inputs that place the contact shadow (centre, size, strength); shared with the concept-A build film."""
     import bpy
-    import numpy as np
-    from mathutils import Matrix, Vector
     import blender_backend as bb
-
-    spec = json.load(open(os.path.join(BL, 'specs', 'showcase.json'), encoding='utf-8'))
-    flight = spec['flight']
-    be, ctx, graph, _ = bb.build(False, None, log=lambda *x: None)
-    sc = bpy.context.scene
-    items = dict(be.objects)
-    items.update(be.wires)
-    shown = {}
-    for i, ob in items.items():
-        vis = any(fnmatch.fnmatchcase(i, p) for p in flight) and not ob.get('mass_proxy')
-        ob.hide_render = ob.hide_viewport = not vis
-        if vis:
-            shown[i] = ob
-    rest = {i: ob.matrix_world.copy() for i, ob in shown.items()}
-
-    # ---- pivot (wing centre) and ground contact in the hover pose
-    pivot = Vector((0.10, 0.0, 0.007))
-    Rh = Matrix.Rotation(math.radians(90), 4, 'Y')
-
-    def pts(ob, M=None):
-        M = M or ob.matrix_world
-        vs = ob.data.vertices
-        st = max(1, len(vs) // 3000)
-        return [M @ vs[k].co for k in range(0, len(vs), st)]
-    zmin = min(p.z for ob in shown.values() for p in pts(ob, Rh @ Matrix.Translation(-pivot) @ ob.matrix_world))
-    z0 = -zmin                                        # pivot height when standing on the feet
-
-    # ---- props: hub, axis (smallest principal direction of the blade), spin sense, blur disc
-    props = []
-    disc_mat = bb._principled('prop disc', bb.srgb('#2A2D31'), 0.6, alpha=0.0)
-    disc_mat.blend_method = 'BLEND'
-    disc_mat.surface_render_method = 'BLENDED'
-    disc_bsdf = disc_mat.node_tree.nodes.get('Principled BSDF')
-    for c in ('UL', 'UR', 'LL', 'LR'):
-        blade = shown['PRP-003-' + c]
-        adapter = shown['PRP-004-' + c]
-        P = np.array([blade.matrix_world @ v.co for v in blade.data.vertices])
-        cen = P.mean(axis=0)
-        w, V = np.linalg.eigh(np.cov((P - cen).T))
-        ax = Vector(V[:, 0]).normalized()
-        if ax.x < 0:
-            ax = -ax                                   # +x-ish = aft, i.e. looking from the nose
-        hub = Vector(cen)
-        r = max(((Vector(p) - hub) - ax * (Vector(p) - hub).dot(ax)).length for p in P)
-        name = blade.get('name', '')
-        sense = 1.0 if 'CW from the nose' in name and 'CCW' not in name else -1.0
-        # disc
-        n = 64
-        me = bpy.data.meshes.new('disc ' + c)
-        q = ax.to_track_quat('Z', 'Y').to_matrix()
-        verts = [hub] + [hub + q @ Vector((math.cos(2 * math.pi * k / n) * r, math.sin(2 * math.pi * k / n) * r, 0))
-                         for k in range(n)]
-        me.from_pydata([tuple(v) for v in verts], [], [(0, 1 + k, 1 + (k + 1) % n) for k in range(n)])
-        me.materials.append(disc_mat)
-        d = bpy.data.objects.new('disc ' + c, me)
-        sc.collection.objects.link(d)
-        d.visible_shadow = False
-        rest['disc ' + c] = d.matrix_world.copy()
-        shown['disc ' + c] = d
-        props.append({'c': c, 'hub': hub, 'ax': ax, 'sense': sense, 'parts': ['PRP-003-' + c, 'PRP-004-' + c]})
-
-    # ---- elevons: hinge from the joints (axis Y of WNG-001 through the joint origin)
-    Rb = shown['WNG-001'].matrix_world.to_3x3()
-    hinge_ax = (Rb @ Vector((0, 1, 0))).normalized()
-    elevons = {}
-    for e, (ob_j, j) in be.joints.items():
-        if j.kind == 'revolute' and j.a.startswith('WNG-01'):
-            elevons[j.a] = Vector(j.origin)
-    elevon_act = bb._principled('elevon act', bb.srgb('#E0661A'), 0.45)        # emphasis.act (design system)
-    el_anchor_ob = shown['WNG-012-R']                                          # starboard = the camera side
-    el_anchor_loc = sum((Vector(c) for c in el_anchor_ob.bound_box), Vector()) / 8
-
-    # ---- thrust arrows (one per motor, along its own thrust axis incl. the 7 deg cant) and pitching-moment arcs
-    import bmesh
-    acc_mat = bb._principled('thrust arrow', bb.srgb(bb.TOKENS['highlight']), 0.5)
-    pn = acc_mat.node_tree.nodes.get('Principled BSDF')
-    pn.inputs['Emission Color'].default_value = (*bb.srgb(bb.TOKENS['highlight']), 1)
-    pn.inputs['Emission Strength'].default_value = 0.6
-    arc_mat = bb._principled('moment arc', bb.srgb(bb.TOKENS['highlight']), 0.5, alpha=1.0)
-    arc_mat.blend_method = 'BLEND'
-    arc_mat.surface_render_method = 'BLENDED'
-    arc_bsdf = arc_mat.node_tree.nodes.get('Principled BSDF')
-    arc_bsdf.inputs['Emission Color'].default_value = (*bb.srgb(bb.TOKENS['highlight']), 1)
-    arc_bsdf.inputs['Emission Strength'].default_value = 0.6
-
-    def tube_mesh(name, path, radius, head_len=0.0, head_r=0.0, sides=14):
-        """Tube along a polyline (list of Vector) with an optional cone head on the last point."""
-        bm = bmesh.new()
-        rings = []
-        for k, pnt in enumerate(path):
-            tng = (path[min(k + 1, len(path) - 1)] - path[max(k - 1, 0)]).normalized()
-            q = tng.to_track_quat('Z', 'Y').to_matrix()
-            rings.append([bm.verts.new(pnt + q @ Vector((math.cos(2 * math.pi * i / sides) * radius,
-                                                         math.sin(2 * math.pi * i / sides) * radius, 0)))
-                          for i in range(sides)])
-        for r0, r1 in zip(rings, rings[1:]):
-            for i in range(sides):
-                bm.faces.new((r0[i], r0[(i + 1) % sides], r1[(i + 1) % sides], r1[i]))
-        bm.faces.new(list(reversed(rings[0])))
-        if head_len:
-            tng = (path[-1] - path[-2]).normalized()
-            q = tng.to_track_quat('Z', 'Y').to_matrix()
-            base = [bm.verts.new(path[-1] + q @ Vector((math.cos(2 * math.pi * i / sides) * head_r,
-                                                        math.sin(2 * math.pi * i / sides) * head_r, 0)))
-                    for i in range(sides)]
-            tip = bm.verts.new(path[-1] + tng * head_len)
-            for i in range(sides):
-                bm.faces.new((base[i], base[(i + 1) % sides], tip))
-            bm.faces.new(list(reversed(base)))
-        else:
-            bm.faces.new(rings[-1])
-        me = bpy.data.meshes.new(name)
-        bm.to_mesh(me)
-        bm.free()
-        for poly in me.polygons:
-            poly.use_smooth = True
-        ob = bpy.data.objects.new(name, me)
-        sc.collection.objects.link(ob)
-        ob.visible_shadow = False
-        return ob
-
-    HEAD = 0.075
-    arrows = []
-    for p in props:
-        sh = tube_mesh('thrust shaft ' + p['c'], [Vector((0, 0, 0)), Vector((0, 0, 1))], 0.011)
-        hd = tube_mesh('thrust head ' + p['c'], [Vector((0, 0, -0.001)), Vector((0, 0, 0))], 0.001, HEAD, 0.03)
-        sh.data.materials.append(acc_mat)
-        hd.data.materials.append(acc_mat)
-        arrows.append((p, sh, hd))
-    ARC_R, ARC_Y = 0.36, 0.74          # arc radius about the spanwise axis; placed just beyond the starboard tip
-
-    def arc_pts(a0, a1, n=28):         # angle 0 = straight up, 90 = toward the flight direction (-x)
-        return [Vector((-math.sin(math.radians(a0 + (a1 - a0) * k / n)) * ARC_R, 0,
-                        math.cos(math.radians(a0 + (a1 - a0) * k / n)) * ARC_R)) for k in range(n + 1)]
-    arc_down = tube_mesh('moment arc nose-down', arc_pts(18, 78), 0.011, 0.08, 0.032)
-    arc_up = tube_mesh('moment arc nose-up', arc_pts(78, 18), 0.011, 0.08, 0.032)
-    for o in (arc_down, arc_up):
-        o.data.materials.append(arc_mat)
-
     # ---- render settings
     sc.render.engine = 'BLENDER_EEVEE_NEXT'
-    sc.eevee.taa_render_samples = a.samples
+    sc.eevee.taa_render_samples = samples
     try:
         sc.eevee.use_shadows = True
         sc.eevee.shadow_ray_count = 2
@@ -352,7 +210,7 @@ def blender_render(argv):
         sc.eevee.use_fast_gi = True
     except Exception:
         pass
-    sc.render.resolution_x, sc.render.resolution_y = W, H
+    sc.render.resolution_x, sc.render.resolution_y = width or W, height or H
     sc.render.resolution_percentage = 100
     sc.render.film_transparent = False
     sc.view_settings.view_transform = 'Standard'          # as render_kit: token colours stay true
@@ -494,6 +352,202 @@ def blender_render(argv):
     L2(fade.outputs['Result'], pb.inputs['Alpha'])
     L2(pb.outputs[0], o2.inputs['Surface'])
     floor.data.materials.append(fm)
+    return blob_c, blob_s, blob_op
+
+
+# =====================================================================================================================
+# Blender worker
+# =====================================================================================================================
+def blender_render(argv):
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--out', required=True)
+    ap.add_argument('--frames', default='')
+    ap.add_argument('--samples', type=int, default=16)
+    a = ap.parse_args(argv)
+    sys.path.insert(0, BL)
+    sys.dont_write_bytecode = True
+    import fnmatch
+    import json
+    import bpy
+    import numpy as np
+    from mathutils import Matrix, Vector
+    import blender_backend as bb
+
+    if A:
+        flight = ['*']
+        be, ctx, graph, _ = bb.build(False, MODEL_A, log=lambda *x: None)
+        bb.solid_tape(be)
+    else:
+        spec = json.load(open(os.path.join(BL, 'specs', 'showcase.json'), encoding='utf-8'))
+        flight = spec['flight']
+        be, ctx, graph, _ = bb.build(False, None, log=lambda *x: None)
+    sc = bpy.context.scene
+    items = dict(be.objects)
+    items.update(be.wires)
+    shown = {}
+    for i, ob in items.items():
+        vis = any(fnmatch.fnmatchcase(i, p) for p in flight) and not ob.get('mass_proxy')
+        ob.hide_render = ob.hide_viewport = not vis
+        if vis:
+            shown[i] = ob
+    rest = {i: ob.matrix_world.copy() for i, ob in shown.items()}
+
+    # ---- pivot (wing centre) and ground contact in the hover pose
+    pivot = Vector((0.03, 0.0, 0.0)) if A else Vector((0.10, 0.0, 0.007))
+    Rh = Matrix.Rotation(math.radians(90), 4, 'Y')
+
+    def pts(ob, M=None):
+        M = M or ob.matrix_world
+        vs = ob.data.vertices
+        st = max(1, len(vs) // 3000)
+        return [M @ vs[k].co for k in range(0, len(vs), st)]
+    zmin = min(p.z for ob in shown.values() for p in pts(ob, Rh @ Matrix.Translation(-pivot) @ ob.matrix_world))
+    z0 = -zmin                                        # pivot height when standing on the feet
+
+    # ---- props: hub, axis (smallest principal direction of the blade), spin sense, blur disc
+    props = []
+    disc_mat = bb._principled('prop disc', bb.srgb('#2A2D31'), 0.6, alpha=0.0)
+    disc_mat.blend_method = 'BLEND'
+    disc_mat.surface_render_method = 'BLENDED'
+    disc_bsdf = disc_mat.node_tree.nodes.get('Principled BSDF')
+    ghosts = []                                        # concept A: motion-blur copies of the real blade
+    ghost_mat = bb._principled('blade blur', bb.srgb('#2A2D31'), 0.6, alpha=0.0)
+    ghost_mat.blend_method = 'BLEND'
+    ghost_mat.surface_render_method = 'BLENDED'
+    ghost_bsdf = ghost_mat.node_tree.nodes.get('Principled BSDF')
+    NG = 9
+    for c in ('UL', 'UR', 'LL', 'LR'):
+        blade = shown[('PRP-002-' if A else 'PRP-003-') + c]
+        adapter = shown['PRP-004-' + c]
+        P = np.array([blade.matrix_world @ v.co for v in blade.data.vertices])
+        cen = P.mean(axis=0)
+        w, V = np.linalg.eigh(np.cov((P - cen).T))
+        ax = Vector(V[:, 0]).normalized()
+        if ax.x < 0:
+            ax = -ax                                   # +x-ish = aft, i.e. looking from the nose
+        hub = Vector(cen)
+        if A:                                          # the adapter is symmetric about the shaft: its centre is on the axis
+            Q = np.array([adapter.matrix_world @ v.co for v in adapter.data.vertices])
+            hub = Vector(Q.mean(axis=0))
+        r = max(((Vector(p) - hub) - ax * (Vector(p) - hub).dot(ax)).length for p in P)
+        name = blade.get('name', '')
+        if A:
+            sense = -1.0 if 'CCW' in name else 1.0     # CCW seen from the nose = negative about the aft-pointing axis
+            parts_rot = ['PRP-002-' + c, 'PRP-004-' + c, 'PRP-005-' + c]
+            for k in range(NG):
+                g = bpy.data.objects.new('blur %s %d' % (c, k), blade.data)     # same mesh: the real blade
+                sc.collection.objects.link(g)
+                g.visible_shadow = False
+                if not g.material_slots:
+                    g.data.materials.append(ghost_mat)
+                g.material_slots[0].link = 'OBJECT'
+                g.material_slots[0].material = ghost_mat
+                rest['blur %s %d' % (c, k)] = blade.matrix_world.copy()
+                shown['blur %s %d' % (c, k)] = g
+                ghosts.append((c, k, g))
+        else:
+            sense = 1.0 if 'CW from the nose' in name and 'CCW' not in name else -1.0
+            parts_rot = ['PRP-003-' + c, 'PRP-004-' + c]
+            # disc
+            n = 64
+            me = bpy.data.meshes.new('disc ' + c)
+            q = ax.to_track_quat('Z', 'Y').to_matrix()
+            verts = [hub] + [hub + q @ Vector((math.cos(2 * math.pi * k / n) * r, math.sin(2 * math.pi * k / n) * r, 0))
+                             for k in range(n)]
+            me.from_pydata([tuple(v) for v in verts], [], [(0, 1 + k, 1 + (k + 1) % n) for k in range(n)])
+            me.materials.append(disc_mat)
+            d = bpy.data.objects.new('disc ' + c, me)
+            sc.collection.objects.link(d)
+            d.visible_shadow = False
+            rest['disc ' + c] = d.matrix_world.copy()
+            shown['disc ' + c] = d
+        props.append({'c': c, 'hub': hub, 'ax': ax, 'sense': sense, 'parts': parts_rot})
+
+    # ---- elevons: hinge from the joints (axis Y of WNG-001 through the joint origin)
+    Rb = shown['WNG-001'].matrix_world.to_3x3()
+    hinge_ax = (Rb @ Vector((0, 1, 0))).normalized()
+    elevons = {}
+    elev_parts = {}
+    for e, (ob_j, j) in be.joints.items():
+        if j.kind == 'revolute' and j.a.startswith('WNG-006' if A else 'WNG-01'):
+            elevons[j.a] = Vector(j.origin)
+            side = j.a[-1]
+            # concept A: the elevon carries its balance strip, horn and clevis pin
+            elev_parts[j.a] = [j.a] + (['WNG-007-' + side, 'MEC-004-' + side, 'MEC-005-' + side] if A else [])
+    elevon_act = bb._principled('elevon act', bb.srgb('#E0661A'), 0.45)        # emphasis.act (design system)
+    el_anchor_ob = shown['WNG-006-R' if A else 'WNG-012-R']                                          # starboard = the camera side
+    el_anchor_loc = sum((Vector(c) for c in el_anchor_ob.bound_box), Vector()) / 8
+
+    # ---- thrust arrows (one per motor, along its own thrust axis incl. the 7 deg cant) and pitching-moment arcs
+    import bmesh
+    acc_mat = bb._principled('thrust arrow', bb.srgb(bb.TOKENS['highlight']), 0.5)
+    pn = acc_mat.node_tree.nodes.get('Principled BSDF')
+    pn.inputs['Emission Color'].default_value = (*bb.srgb(bb.TOKENS['highlight']), 1)
+    pn.inputs['Emission Strength'].default_value = 0.6
+    arc_mat = bb._principled('moment arc', bb.srgb(bb.TOKENS['highlight']), 0.5, alpha=1.0)
+    arc_mat.blend_method = 'BLEND'
+    arc_mat.surface_render_method = 'BLENDED'
+    arc_bsdf = arc_mat.node_tree.nodes.get('Principled BSDF')
+    arc_bsdf.inputs['Emission Color'].default_value = (*bb.srgb(bb.TOKENS['highlight']), 1)
+    arc_bsdf.inputs['Emission Strength'].default_value = 0.6
+
+    def tube_mesh(name, path, radius, head_len=0.0, head_r=0.0, sides=14):
+        """Tube along a polyline (list of Vector) with an optional cone head on the last point."""
+        bm = bmesh.new()
+        rings = []
+        for k, pnt in enumerate(path):
+            tng = (path[min(k + 1, len(path) - 1)] - path[max(k - 1, 0)]).normalized()
+            q = tng.to_track_quat('Z', 'Y').to_matrix()
+            rings.append([bm.verts.new(pnt + q @ Vector((math.cos(2 * math.pi * i / sides) * radius,
+                                                         math.sin(2 * math.pi * i / sides) * radius, 0)))
+                          for i in range(sides)])
+        for r0, r1 in zip(rings, rings[1:]):
+            for i in range(sides):
+                bm.faces.new((r0[i], r0[(i + 1) % sides], r1[(i + 1) % sides], r1[i]))
+        bm.faces.new(list(reversed(rings[0])))
+        if head_len:
+            tng = (path[-1] - path[-2]).normalized()
+            q = tng.to_track_quat('Z', 'Y').to_matrix()
+            base = [bm.verts.new(path[-1] + q @ Vector((math.cos(2 * math.pi * i / sides) * head_r,
+                                                        math.sin(2 * math.pi * i / sides) * head_r, 0)))
+                    for i in range(sides)]
+            tip = bm.verts.new(path[-1] + tng * head_len)
+            for i in range(sides):
+                bm.faces.new((base[i], base[(i + 1) % sides], tip))
+            bm.faces.new(list(reversed(base)))
+        else:
+            bm.faces.new(rings[-1])
+        me = bpy.data.meshes.new(name)
+        bm.to_mesh(me)
+        bm.free()
+        for poly in me.polygons:
+            poly.use_smooth = True
+        ob = bpy.data.objects.new(name, me)
+        sc.collection.objects.link(ob)
+        ob.visible_shadow = False
+        return ob
+
+    HEAD = 0.060 if A else 0.075
+    ARROW_L = 0.22 if A else 0.27
+    arrows = []
+    for p in props:
+        sh = tube_mesh('thrust shaft ' + p['c'], [Vector((0, 0, 0)), Vector((0, 0, 1))], 0.011)
+        hd = tube_mesh('thrust head ' + p['c'], [Vector((0, 0, -0.001)), Vector((0, 0, 0))], 0.001, HEAD, 0.03)
+        sh.data.materials.append(acc_mat)
+        hd.data.materials.append(acc_mat)
+        arrows.append((p, sh, hd))
+    ARC_R, ARC_Y = (0.30, 0.60) if A else (0.36, 0.74)          # arc radius about the spanwise axis; placed just beyond the starboard tip
+
+    def arc_pts(a0, a1, n=28):         # angle 0 = straight up, 90 = toward the flight direction (-x)
+        return [Vector((-math.sin(math.radians(a0 + (a1 - a0) * k / n)) * ARC_R, 0,
+                        math.cos(math.radians(a0 + (a1 - a0) * k / n)) * ARC_R)) for k in range(n + 1)]
+    arc_down = tube_mesh('moment arc nose-down', arc_pts(18, 78), 0.011, 0.08, 0.032)
+    arc_up = tube_mesh('moment arc nose-up', arc_pts(78, 18), 0.011, 0.08, 0.032)
+    for o in (arc_down, arc_up):
+        o.data.materials.append(arc_mat)
+
+    blob_c, blob_s, blob_op = make_stage(sc, a.samples)
 
 
     # ---- camera and lights
@@ -530,6 +584,8 @@ def blender_render(argv):
         az = 60 + 8 * seg(t, 5.0, 9.4) - 8 * seg(t, 12.8, 17.0)
         el = 10 + 6 * seg(t, 1.5, 4.5) + 6 * seg(t, 6.0, 9.4) - 6 * seg(t, 12.8, 16.0) - 2 * seg(t, 16.4, 19.5)
         dist = 3.25 + 0.25 * seg(t, 5.0, 9.0) - 0.25 * seg(t, 12.8, 16.0)
+        if A:
+            dist *= 0.88
         return az, el, dist
 
     def cam_target(t):
@@ -546,11 +602,13 @@ def blender_render(argv):
         # lead room ahead of the aircraft when it moves (it travels toward -x = screen right); in hover the thrust
         # arrows stand above the props, so aim a little higher
         th = state(t)[2] / 90.0
+        if A:                                           # hover: aim below the pivot so the whole stack clears the lower-third panel
+            return acc / wsum + Vector((-0.28 * speed(t) / V_CRUISE, 0, -0.11 * th - 0.03 * (1 - th)))
         return acc / wsum + Vector((-0.28 * speed(t) / V_CRUISE, 0, 0.10 * th - 0.03))
 
     def pose(t):
         x, z, theta, bank, rate, (pe, rr) = state(t)
-        A = (Matrix.Translation(Vector((x, 0, z0 + z))) @ Matrix.Rotation(math.radians(bank), 4, 'X')
+        A_ = (Matrix.Translation(Vector((x, 0, z0 + z))) @ Matrix.Rotation(math.radians(bank), 4, 'X')
              @ Matrix.Rotation(math.radians(theta), 4, 'Y') @ Matrix.Translation(-pivot))
         # prop angle = integral of rate (deg); 55 deg/frame at full speed stays readable for a two-blade prop
         ang = 0.0
@@ -568,17 +626,28 @@ def blender_render(argv):
             left = pid.endswith('-L')
             # trailing edge up = negative rotation about +Y; roll: left up / right down for positive rr
             dlt = -(pe + (rr if left else -rr))
-            local[pid] = Matrix.Translation(o) @ Matrix.Rotation(math.radians(dlt), 4, hinge_ax) @ Matrix.Translation(-o)
+            for q_ in elev_parts[pid]:
+                local[q_] = Matrix.Translation(o) @ Matrix.Rotation(math.radians(dlt), 4, hinge_ax) @ Matrix.Translation(-o)
         for i, ob in shown.items():
-            ob.matrix_world = A @ local.get(i, Matrix()) @ rest[i]
+            ob.matrix_world = A_ @ local.get(i, Matrix()) @ rest[i]
+        if A:                                    # blur fan: the real blade at earlier angles within this frame
+            step = 55.0 * rate
+            for c, k, g in ghosts:
+                p = next(q for q in props if q['c'] == c)
+                a_k = ang - step * (k + 1) / (NG + 1)
+                M = (Matrix.Translation(p['hub']) @ Matrix.Rotation(math.radians(a_k * p['sense']), 4, p['ax'])
+                     @ Matrix.Translation(-p['hub']))
+                g.matrix_world = A_ @ M @ rest['blur %s %d' % (c, k)]
+                g.hide_render = rate < 0.3
+            ghost_bsdf.inputs['Alpha'].default_value = 0.20 * smooth((rate - 0.3) / 0.7)
         # thrust arrows: length proportional to the commanded thrust (1.0 = hover share -> 0.27 m)
         top, belly = thrust(t)
-        A3 = A.to_3x3()
+        A3 = A_.to_3x3()
         for p, sh, hd in arrows:
             T = top if p['c'].startswith('U') else belly
-            ln = 0.27 * T
+            ln = ARROW_L * T
             fwd = (A3 @ -p['ax']).normalized()
-            base = A @ (p['hub'] - p['ax'] * 0.04)
+            base = A_ @ (p['hub'] - p['ax'] * 0.04)
             R = fwd.to_track_quat('Z', 'Y').to_matrix().to_4x4()
             vis = ln > HEAD + 0.01
             sh.hide_render = hd.hide_render = not vis
@@ -600,9 +669,10 @@ def blender_render(argv):
                 sl.material = elevon_act
             else:
                 sl.link = 'DATA'
-        disc_bsdf.inputs['Alpha'].default_value = 0.16 * smooth((rate - 0.4) / 0.6)
-        for i in ('disc UL', 'disc UR', 'disc LL', 'disc LR'):
-            shown[i].hide_render = rate < 0.4
+        if not A:
+            disc_bsdf.inputs['Alpha'].default_value = 0.16 * smooth((rate - 0.4) / 0.6)
+            for i in ('disc UL', 'disc UR', 'disc LL', 'disc LR'):
+                shown[i].hide_render = rate < 0.4
         # camera
         az, el, dist = cam_params(t)
         tg = cam_target(t)
@@ -728,7 +798,7 @@ def overlay(src_png, dst_png, f):
     lay = Image.new('RGBA', im.size, (0, 0, 0, 0))
     d = ImageDraw.Draw(lay)
     # top-left title, top-right legend
-    d.text((36, 28), 'K09-L quad tailsitter', font=f_head, fill=ink + (230,))
+    d.text((36, 28), TITLE, font=f_head, fill=ink + (230,))
     d.text((36, 52), 'HOW IT FLIES', font=f_mono, fill=muted + (230,))
     leg = 'thrust per motor (arrow length = command)'
     lw = d.textlength(leg, font=f_leg)
@@ -826,7 +896,10 @@ def driver():
     ap.add_argument('--work', default=os.path.join(tempfile.gettempdir(), 'k09l_anim'))
     ap.add_argument('--skip-render', action='store_true')
     ap.add_argument('--kbps', type=int, default=2000)
+    ap.add_argument('--concept', default=None, choices=('a', 'k09l'), help='a = concept A (default k09l)')
+    ap.add_argument('--gif', action='store_true', help='also write the GIF (always for K09-L)')
     a = ap.parse_args()
+    os.makedirs(OUT_DIR, exist_ok=True)
     t0 = time.time()
     os.makedirs(a.work, exist_ok=True)
     me = os.path.abspath(__file__)
@@ -850,7 +923,7 @@ def driver():
     # GIF: 720 px wide, one shared 128-colour palette, no dither (dither noise on the moving floor costs ~60 % more
     # bytes); 10 fps, dropping to 8 fps only if needed to stay under GitHub's 10 MB inline limit
     gw, gh = 720, int(round(720 * H / W))
-    for gif_fps in (10, 8):
+    for gif_fps in ((10, 8) if (a.gif or not A) else ()):
         picks = [int(round(k * FPS / gif_fps)) for k in range(int(DURATION * gif_fps))]
         ims = [Image.open(os.path.join(a.work, 'lab_%04d.png' % min(p, NFRAMES - 1))).resize((gw, gh), Image.LANCZOS)
                for p in picks]
@@ -865,6 +938,8 @@ def driver():
         if os.path.getsize(OUT_GIF) < 9.8e6:
             break
     for p in (OUT_MP4, OUT_GIF, OUT_POSTER):
+        if not os.path.exists(p):
+            continue
         print('%-28s %7.2f MB' % (os.path.basename(p), os.path.getsize(p) / 1e6))
     print('render %.1f min, total %.1f min' % (t_render / 60, (time.time() - t0) / 60))
 

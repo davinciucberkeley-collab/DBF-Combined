@@ -35,33 +35,16 @@ log (ground) carry everything flight test needs. Upgrade paths if A1 later frees
 | TX power | 100 fixed (dynamic off) | mW | logs comparable flight to flight; 250 mW kept in hand | `ASM-F5-POWER` |
 | Binding phrase | team-chosen, **not in the repo** | — | brief: no secrets in files | — |
 | Model match | on; K09-L and the twin have different model ids | — | the wrong EdgeTX model cannot fly the wrong aircraft | `T-F5-BENCH` |
+| **RX failsafe mode** (CDR-26) | **"No Pulses"**, set in the receiver's ELRS web UI or the ELRS Lua and read back after a power cycle | — | ArduPilot detects RC loss only when CRSF frames stop. With "Last Position" or "Set Position" the receiver keeps sending frames and no failsafe ever fires (ArduPilot ELRS / CRSF page, `SRC-F5-AP-ELRS`; page not re-read this session) | `T-F5-BENCH` |
 | RX serial protocol | CRSF | — | RC + telemetry on one UART | `SRC-F5-AP-ELRS` |
 
 ## Channel map (EdgeTX model "K09L", AETR)
 
-ELRS sends ch 5 (AUX1) as a 2-position bit in every packet: it is the arm channel and **cannot carry six flight
-modes**. `K09L.param` puts the modes on ch 5 and arm on ch 8, so `CR-F5-01` asks F4 to swap them.
-
-| Ch | Function | Switch (Pocket) | ArduPilot | Status |
-|---|---|---|---|---|
-| 1–4 | roll, pitch, throttle, yaw | sticks, mode 2 | `RCMAP_*` default | `PROPOSED` |
-| 5 | arm / disarm | SA, 2-pos | `RC5_OPTION 153` (CR-F5-01) | `PROPOSED` |
-| 6 | flight mode, 6 positions | SC up = Q modes, SC down = FW; SB selects 1 of 3 | `FLTMODE_CH 6` (CR-F5-01) | `PROPOSED` |
-| 9 | emergency motor stop | SD, 2-pos | `RC9_OPTION 31` (F4) | `PROPOSED` |
-| 7, 8, 10–12 | spare | — | `RCn_OPTION 0` | `PROPOSED` |
-
-Mode outputs on ch 6 (ArduPilot band centres; confirm in Mission Planner radio calibration):
-
-| Position | SC · SB | Mode | Pulse | EdgeTX output |
-|---|---|---|---|---|
-| 1 | up · up | QSTABILIZE | 1165 µs | −65 % |
-| 2 | up · mid | QHOVER | 1295 µs | −40 % |
-| 3 | up · down | QLOITER | 1425 µs | −15 % |
-| 4 | down · up | FBWA (starts transition) | 1555 µs | +11 % |
-| 5 | down · mid | CRUISE | 1685 µs | +36 % |
-| 6 | down · down | RTL | 1815 µs | +62 % |
-
-Pocket switch names are taken from the manual and are `UNVERIFIED` until the radio arrives.
+**Superseded 2026-11-14 by `TRANSITION-SWITCH.md` §2–4 (F5-R3, B3 CL-4).** Summary: ch 1–4 sticks (CH3 overridden by
+the transition switch), ch 5 arm (SA), ch 6 flight mode from SB / SC and logical switches, ch 9 e-stop (SD). SC down
+from QSTABILIZE starts the timed forward transition; fixed-wing modes (FBWA, CRUISE, RTL) exist only after it. F4
+re-orders `FLTMODE1-6` to 17, 5, 7, 18, 11, 19 so that 988 / 1500 / 2012 µs are Q modes (CR-F5-15). The R2 table
+(SC down = FW modes on the plain switch) is withdrawn: it let FBWA start at hover throttle (B3 §2).
 
 ## ArduPilot link parameters (F4 writes them into `K09L.param`)
 
@@ -71,14 +54,14 @@ Pocket switch names are taken from the manual and are `UNVERIFIED` until the rad
 | `RSSI_TYPE` | 3 | RSSI and LQ from the CRSF stream into the log | `SRC-F5-AP-ELRS` |
 | `RC_OPTIONS` | 8448 (bit 8 passthrough telemetry + bit 13 420 kbaud ELRS) | Yaapu screen; ELRS baud | `SRC-F5-AP-ELRS` |
 | `FS_GCS_ENABL` | 0 | no GCS link in flight; a USB unplug must not trigger anything | `R-FAILSAFES` |
-| `THR_FAILSAFE`, `FS_SHORT_TIMEOUT`, `FS_LONG_TIMEOUT` | 1, 1.5 s, 5 s (F4 values kept) | CRSF stops frames on link loss → RC failsafe | `K09L.param` §10 |
+| `THR_FAILSAFE`, `RC_FS_TIMEOUT`, `FS_LONG_TIMEOUT` | 1, 1.0 s, 5 s (F4-R6; `FS_SHORT_TIMEOUT` was removed in ArduPlane 4.7) | CRSF stops frames on link loss → RC failsafe 1.0 s + 0.2 s later; Q modes go to QLAND then, FW goes to RTL at 5 s | `K09L.param` §10; `CL-F4-RC-FS-QLAND` |
 | No other `SERIALn_PROTOCOL` = 10 | — | conflicts with CRSF passthrough | ArduPilot CRSF thread |
 
 ## Failsafe behaviour (link side; F4 owns the actions)
 
 | Event | Receiver | ArduPilot (F4) | Time | Claim |
 |---|---|---|---|---|
-| Link lost | stops CRSF channel frames (no "hold" or "custom" outputs in CRSF) | Q modes: QLAND in place; FW: circle, RTL at 5 s, then QRTL (`Q_RTL_MODE 1`) | ≤ 2.5 s TX off → failsafe | `CL-F5-FS-TIME` `UNVERIFIED` |
+| Link lost | stops CRSF channel frames, **only in failsafe mode "No Pulses"** | Q modes: QLAND in place at the short event; FW: circle, RTL at 5 s, then the VTOL approach (`Q_RTL_MODE` 2) | 2.2 s TX off → failsafe (1.0 s ELRS + 1.0 s `RC_FS_TIMEOUT` + 0.2 s; was 2.5 s); SITL from the last frame to QLAND 1.0–1.15 s | `CL-F5-FS-TIME` 2.2 s `UNVERIFIED` |
 | Link back | frames resume | pilot re-selects the mode switch to take control | — | `T-F5-FS-BENCH` |
 | E-stop ch 9 | sent within one round-robin cycle | all motors off | ≤ 0.059 s link part vs 1 s | `CL-F5-SWITCH-LATENCY` |
 | RX brown-out | RX reboots, ~1 s without frames | as link lost | — | CR-F5-02: RX on the FC 5 V rail, not the servo rail |
@@ -128,8 +111,8 @@ the two-attitude ground check below measures it.
 
 | Id | Test | Set-up | Pass | Claim |
 |---|---|---|---|---|
-| `T-F5-BENCH` | arrival bench | FCC domain, matching ELRS 3.x, bind, model match, channel directions, ch 9 latency from log | all channels right; latency ≤ 1 s | `CL-F5-SWITCH-LATENCY` |
-| `T-F5-FS-BENCH` | RC failsafe, props off, tied down | armed in QSTABILIZE, FBWA, CRUISE in turn; TX off | QLAND in Q modes; circle → RTL in FW; ≤ 2.5 s | `CL-F5-FS-TIME` → `R-FAILSAFES` |
+| `T-F5-BENCH` | arrival bench | FCC domain, matching ELRS 3.x, bind, model match, **RX failsafe mode "No Pulses" set and read back, then TX off with props off: "Throttle failsafe on" appears and the RC inputs freeze**, channel directions, ch 9 latency from log | all channels right; failsafe message seen; latency ≤ 1 s | `CL-F5-SWITCH-LATENCY` |
+| `T-F5-FS-BENCH` | RC failsafe, props off, tied down | armed in QSTABILIZE, QHOVER, FBWA, CRUISE in turn; TX off | QLAND in Q modes **≤ 3 s after TX off** (`CL-F4-RC-FS-QLAND`); circle → RTL at 5 s in FW; failsafe message ≤ 2.5 s | `CL-F5-FS-TIME` → `R-FAILSAFES` |
 | `T-F5-RANGE` (updates H1 `GT-14`) | ground range check | **25 mW** (Pocket minimum), 150 Hz; aircraft 1 m up on a stand, motors spinning props-off at 20 %; 100 m; 4 headings × 2 attitudes (hover and cruise) | LQ ≥ 0.9 and best of 1RSS/2RSS ≥ **−93.8 dBm** in every position (predicted −82.2) | `CL-F5-RC-RSSI-REQ`, `-PRED` → `R-RC-LINK` |
 | Daily | short range check | first flight of each day, 25 mW, 100 m, one heading per attitude | LQ ≥ 0.9, no failsafe | `R-RC-LINK` |
 | `T-F5-FLIGHT-LINK` | in-flight log review | every flight; fixed-wing tune flights reach the 250 m fence | LQ ≥ 0.9, RSSI ≥ −102 dBm at the farthest point | `CL-F5-LINK-MARGIN` |
@@ -166,5 +149,6 @@ RSSI ≥ −112 + 10 + 20 log10(515/100) − 6 dB. A pass proves the margin with
 | Implementation loss 16 dB assumed | link margin and range-check prediction `UNVERIFIED` | `T-F5-RANGE` |
 | ELRS link-loss time 1.0 s assumed | failsafe time 2.5 s `UNVERIFIED` | `T-F5-FS-BENCH` |
 | BOM "Pocket Crush" vs Pocket ELRS manual | power range and switch names | I1 (CR-F5-06) |
-| Flight-mode channel on ch 5 in `K09L.param` | modes unusable over ELRS | F4 (CR-F5-01) |
+| Flight-mode channel on ch 5 in `K09L.param` | closed: `FLTMODE_CH` 6 in F4-R7 | F4 (CR-F5-01) |
+| FLTMODE order and RC3 calibration for the transition switch | override lands in the right stick step; Q modes at 988 / 1500 / 2012 µs | F4 (CR-F5-15, -16) |
 | Yaapu on the Pocket's 128 × 64 screen | fallback is the EdgeTX telemetry page | `T-F5-BENCH` |

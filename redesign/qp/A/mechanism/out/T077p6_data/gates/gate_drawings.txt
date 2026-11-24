@@ -1,0 +1,53 @@
+stage 1: 48 drawings for 83 made parts
+drw AVN-008      ok  488 tris, non-manifold 0, 92.0 x 80.7 x 37.1 mm
+drw AVN-010      ok  1108 tris, non-manifold 0, 76.5 x 102.5 x 4.2 mm
+drw CGE-001      ok  21210 tris, non-manifold 0, 59.5 x 106.7 x 49.3 mm
+drw CGE-002-A    ok  680 tris, non-manifold 0, 12.0 x 552.5 x 12.0 mm
+drw CGE-002-B    ok  680 tris, non-manifold 0, 12.0 x 552.5 x 12.0 mm
+drw CGE-003      member CGE-003-LL: union open (628 edges) in its pose; same geometry as CGE-003-UR, its mesh used
+drw CGE-003      ok  3537 tris, non-manifold 79, 19.9 x 41.5 x 33.0 mm
+drw CGE-004      ok  480 tris, non-manifold 0, 120.0 x 16.0 x 16.0 mm
+drw CGE-005      ok  192 tris, non-manifold 0, 291.2 x 6.0 x 6.0 mm
+drw CGE-006      ok  446 tris, non-manifold 8, 41.0 x 33.0 x 22.0 mm
+drw CGE-007      ok  5159 tris, non-manifold 3, 33.5 x 47.5 x 14.0 mm
+drw CGE-008      ok  810 tris, non-manifold 0, 54.2 x 112.0 x 23.5 mm
+drw CGE-009      ok  620 tris, non-manifold 0, 14.0 x 36.0 x 14.0 mm
+drw CGE-010-C    ok  96 tris, non-manifold 0, 38.5 x 3.0 x 3.0 mm
+drw CGE-010-LR   ok  96 tris, non-manifold 0, 14.5 x 3.0 x 3.0 mm
+drw CGE-010-LL   ok  96 tris, non-manifold 0, 15.0 x 3.0 x 3.0 mm
+drw CGE-011      ok  64 tris, non-manifold 0, 39.5 x 34.0 x 19.0 mm
+drw CGE-012      ok  768 tris, non-manifold 0, 14.0 x 37.2 x 13.0 mm
+drw CGE-013      ok  64 tris, non-manifold 0, 39.5 x 37.0 x 19.0 mm
+drw FIN-001      ok  384 tris, non-manifold 0, 16.0 x 16.0 x 360.0 mm
+drw FIN-002      ok  384 tris, non-manifold 0, 218.0 x 14.0 x 14.0 mm
+drw FIN-003      ok  460 tris, non-manifold 0, 50.5 x 23.0 x 60.0 mm
+drw FIN-004      ok  180 tris, non-manifold 0, 110.0 x 3.0 x 360.0 mm
+drw FIN-005      ok  956 tris, non-manifold 4, 56.0 x 60.0 x 22.0 mm
+drw FIN-006      ok  28 tris, non-manifold 0, 53.8 x 17.0 x 7.9 mm
+drw FIN-007      ok  24 tris, non-manifold 0, 41.5 x 24.0 x 19.0 mm
+drw FIN-008      ok  288 tris, non-manifold 0, 25.0 x 3.0 x 21.8 mm
+drw GER-001      ok  576 tris, non-manifold 0, 24.0 x 21.0 x 15.0 mm
+drw GER-002      ok  12 tris, non-manifold 0, 30.0 x 15.0 x 12.0 mm
+drw HRN-003      ok  96 tris, non-manifold 0, 87.3 x 9.6 x 6.6 mm
+drw HRN-004-LL   ok  228 tris, non-manifold 0, 33.6 x 20.6 x 23.9 mm
+drw HRN-004-LR   ok  224 tris, non-manifold 0, 20.6 x 20.6 x 23.9 mm
+drw HRN-004-UL   ok  246 tris, non-manifold 0, 20.6 x 16.6 x 18.5 mm
+drw HRN-004-UR   ok  238 tris, non-manifold 0, 33.6 x 16.6 x 18.5 mm
+drw MEC-004      ok  264 tris, non-manifold 0, 57.2 x 2.0 x 19.7 mm
+drw MEC-008      ok  124 tris, non-manifold 0, 3.1 x 12.1 x 2.3 mm
+drw WNG-001      ok  5282 tris, non-manifold 0, 183.8 x 900.0 x 24.0 mm
+drw WNG-002      ok  384 tris, non-manifold 0, 12.0 x 900.0 x 12.0 mm
+drw WNG-003      ok  384 tris, non-manifold 0, 9.8 x 20.0 x 9.8 mm
+drw WNG-004      ok  384 tris, non-manifold 0, 9.8 x 20.0 x 9.8 mm
+drw WNG-005      ok  384 tris, non-manifold 0, 9.8 x 20.0 x 9.8 mm
+drw WNG-006      ok  352 tris, non-manifold 0, 61.5 x 309.0 x 9.8 mm
+drw WNG-007      ok  60 tris, non-manifold 0, 24.6 x 106.0 x 1.4 mm
+drw WNG-008-LL   ok  3076 tris, non-manifold 0, 42.8 x 116.0 x 6.6 mm
+drw WNG-008-LU   ok  2664 tris, non-manifold 0, 44.8 x 116.0 x 7.2 mm
+drw WNG-009      ok  1152 tris, non-manifold 0, 12.7 x 18.3 x 12.7 mm
+drw WNG-010      ok  708 tris, non-manifold 12, 11.2 x 18.0 x 11.2 mm
+drw WNG-011      ok  2846 tris, non-manifold 0, 183.8 x 800.0 x 24.0 mm
+drw WNG-012      ok  340 tris, non-manifold 0, 3.2 x 800.0 x 5.6 mm
+stage 3: printed parts not in one piece: AVN-010, CGE-013
+stage 3: 42 STL files for printed parts, links for 83 parts
+stage 3: 48 of 48 drawings composed -> out/DRAWINGS-A.pdf

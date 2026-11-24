@@ -1,0 +1,41 @@
+{
+"tag": "w_ac45",
+"args": [
+"inst=0",
+"hold=40",
+"wind=5",
+"from=45",
+"arm=1.2",
+"cant=16"
+],
+"summary": {
+"n": 708,
+"t_window": [
+8.027,
+43.967
+],
+"wind_ms": 5.0,
+"lean_max": 23.1,
+"lean_mean": 19.6,
+"lean_pre": 1.0,
+"u_max": 0.714,
+"u_mean_max": 0.698,
+"t_cap_s": 0.0,
+"t_cap_run_s": 0.0,
+"t_ge85_s": 0.0,
+"u_min": 0.407,
+"t_floor_s": 0.0,
+"t_floor_run_s": 0.0,
+"yaw_err_max": 6.8,
+"yaw_err_rms": 3.8,
+"pos_err_max": 3.67,
+"pos_err_rms": 1.96,
+"pos_err_last20_mean": 1.64,
+"alt_dev_max": 0.11,
+"diag_spread_max": 0.279,
+"diag_spread_mean": 0.259
+},
+"armed": true,
+"reached_alt": true,
+"events": []
+}

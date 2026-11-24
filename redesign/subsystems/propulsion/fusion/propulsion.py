@@ -3,9 +3,10 @@
     build(ctx)               Fusion / stub module (fusionkit), cruise attitude, aircraft frame (DATUMS.md)
     geometry(P, LP)          every derived dimension and the per-station placement (shared with make_propulsion.py)
 
-Per station: PRP-001 motor SunnySky X3108S KV900 (envelope: base boss, bell, shaft stub, rear E-clip, lead exit),
-PRP-004 bolt-on prop adapter (base with the 4 mm pilot bore, M6x1 post) with its washer and nut, PRP-003 APC
-11x5.5MR/MRP (hub with the LPAR06E bore, two blades as twisted flat-plate lofts, parked spanwise), PRP-002 LANRC
+Per station: PRP-001 motor SunnySky X2814 V3 KV900 (D-173; envelope: base boss, bell 35 x 36 mm, shaft stub 12 mm proud,
+rear E-clip, lead exit), PRP-004 the maker's bolt-on prop adapter (base dia. 21 with the 4 mm pilot bore and 3 x M2.5 on a
+15 mm circle, M6x1 post, LH on the CW motors) with its 17.8 x 2.5 washer and nut, PRP-003 APC 11x8E/EP (hub with the
+LPAR06E bore, two blades as twisted flat-plate lofts, parked spanwise), PRP-002 LANRC
 45 A ESC (45 x 20 x 6 mm box) flat on the outboard face of D3's ASA pad FIN-007.
 
 Cant (D-27, 7 deg tangential): the motor base sits flat on D3's canted plate. The motor, adapter and prop of a station
@@ -15,9 +16,10 @@ x' is the shaft axis (thrust toward -x'), the base face is the local plane x' = 
 normal of D3's plate at that station (fins.py geometry: face_x_at, mirrored per station), so the stack follows the
 plate exactly; ctx.mirror cannot copy a rotated component, so the four stations are built one by one.
 
-Prop plane: on the motor axis, base face + body 26.5 + adapter base 6.35 + hub 8.89 / 2 = 37.3 mm (E1's stack,
-CL-E1-STACK-PROP-PLANE). Its x is -0.0062 m, not the datum DP-PROP -0.0082 (D-28 carried D3's 39 mm stack):
-the keep-outs are registered on the modelled hubs; CR-E1-22 / CR-E1-29 settle the datum on the measured motor.
+Prop plane: on the motor axis, base face + body 36.0 + adapter base 6.5 + hub 10.41 / 2 = 47.7 mm (E1's stack,
+CL-E1-STACK-PROP-PLANE, D-173 applied). The keep-outs are registered on the modelled hubs; the datum
+params.json#propulsion.stations.x_prop_plane_m is A1's (D-173); the measured motor settles it (CR-E1-22 / CR-E1-29).
+Maker drawing: https://cdn.shopify.com/s/files/1/2024/0305/files/X2814.jpg (read 2026-11-14, E1.md D-173).
 
 Joints registered here (interfaces.json, owner propulsion): E-PRP-01..04 adapter -> motor (rigid at the bell top),
 E-PRP-05..08 prop -> adapter (rigid at the hub centre, field joint). Registered by fins (D3): E-FIN-61..64 motor ->
@@ -93,6 +95,10 @@ def geometry(P, LP, F=None):
     G['m_holes'] = [(s * pat[0] / 2, 0.0) for s in (1, -1)] + [(0.0, s * pat[1] / 2) for s in (1, -1)]
     G['m_screw_len'] = _fv(F, 'mount.motor_screw_len_m', 'm')
     G['ad_screw_r'] = l('adapter.screw_circle_d_m', 'm') / 2
+    G['ad_n'] = int(l('adapter.screw_count', '-'))
+    G['ad_screw_len'], G['ad_screw_d'] = l('adapter.screw_len_m', 'm'), l('adapter.screw_d_m', 'm')
+    G['ad_head_r'], G['ad_head_k'] = l('adapter.screw_head_d_m', 'm') / 2, l('adapter.screw_head_k_m', 'm')
+    G['cb_r'], G['cb_depth'] = l('adapter.cbore_d_m', 'm') / 2, l('adapter.cbore_depth_m', 'm')
 
     # axial stations along -x' from the base face
     G['a_bell_top'] = G['body']                                        # adapter base seats here (E-PRP-0n origin)
@@ -147,19 +153,21 @@ def build_motor(part, G, sy):
 
 
 def build_adapter(part, G, nut_part=None, washer_part=None):
-    """Base (pilot bore on the shaft, 4 x M3x4 into the bell top), M6x1 post, washer, ISO 4032 nut. The washer and
+    """Base (pilot bore on the shaft, 3 x M2.5 on 15 mm into the bell top), M6x1 post, washer, nut. The washer and
     nut go into their own components (PRP-008 / PRP-007) when those are modelled (C6 FASTENERS-CAD)."""
     a0, a1 = -G['body'], -G['body'] - G['ad_t']
     part.revolve('X', (0, 0, 0), [(a0, G['pilot_r']), (a0, G['ad_r']), (a1, G['ad_r']), (a1, G['pilot_r'])],
                  name='adapter base')
-    # D-89b: the 4 screw counterbores open to the adapter's front face (they were cut to the head envelope only, so a
-    # screw could not be driven in: build-film assembly check). 6.0 mm for the 5.5 mm M3 SHCS head (ISO 4762, EST
-    # clearance), from the screw seat out through the face; the prop hub covers them once fitted (build step 8.6)
-    seat = -(G['body'] + 0.0015)
-    for i in range(4):
-        t = math.radians(45 + 90 * i)
-        part.cut_cylinder('X', (seat, G['ad_screw_r'] * math.cos(t), G['ad_screw_r'] * math.sin(t)),
-                          (a1 - 0.0005) - seat, 0.003, name='screw counterbore %d' % i)
+    # D-89b / D-173: the maker's 3 counterbores (dia. 4.8, depth EST 3.0 mm) open to the adapter's front face so a screw
+    # can be driven in; the prop hub covers them once fitted (build step 8.6). The 2.7 mm clearance hole runs through
+    # the remaining base to the bell top.
+    seat = -G['body']
+    for i in range(G['ad_n']):
+        t = math.radians(90 + 360 * i / G['ad_n'])
+        yy, zz = G['ad_screw_r'] * math.cos(t), G['ad_screw_r'] * math.sin(t)
+        part.cut_cylinder('X', (seat, yy, zz), a1 - 0.0005 - seat, 0.00135, name='screw hole %d' % i)
+        part.cut_cylinder('X', (a1 + G['cb_depth'], yy, zz), -(G['cb_depth'] + 0.0005), G['cb_r'],
+                          name='screw counterbore %d' % i)
     tip = -G['a_post_tip']
     part.revolve('X', (0, 0, 0), [(a1, 0), (a1, G['post_r']), (tip, G['post_r']), (tip, 0)], name='M6 post')
     (washer_part or part).revolve('X', (0, 0, 0), [(-G['a_wash'], G['post_r']), (-G['a_wash'], G['wash_r']),
@@ -180,12 +188,15 @@ def build_motor_screws(part, G):
 
 
 def build_adapter_screws(part, G):
-    """4 x M3x4 SHCS (PRP-006, supplied with the adapter) in the counterbored base: 2.5 mm into the bell top."""
-    seat = -(G['body'] + 0.0015)                                       # 4 mm screw, 2.5 mm thread in the bell
-    for i in range(4):
-        t = math.radians(45 + 90 * i)
-        k9.hw_screw(part, 'X', (seat, G['ad_screw_r'] * math.cos(t), G['ad_screw_r'] * math.sin(t)), 1, 'M3',
-                    0.004, 'socket', name='M3x4 SHCS')
+    """3 x M2.5 SHCS (PRP-006, supplied with the adapter; length EST) in the counterbored base: heads on the
+    counterbore floor, shanks into the bell top (3.5 mm deep holes). k9.HW_DIMS has no M2.5, so the screw is
+    drawn here (ISO 4762: head dia. 4.5, k 2.5)."""
+    seat = -(G['body'] + G['ad_t'] - G['cb_depth'])                    # counterbore floor
+    for i in range(G['ad_n']):
+        t = math.radians(90 + 360 * i / G['ad_n'])
+        yy, zz = G['ad_screw_r'] * math.cos(t), G['ad_screw_r'] * math.sin(t)
+        part.cylinder('X', (seat, yy, zz), -G['ad_head_k'], G['ad_head_r'], name='M2.5 head')
+        part.cylinder('X', (seat, yy, zz), G['ad_screw_len'], G['ad_screw_d'] / 2, name='M2.5 shank')
 
 
 def build_prop(part, G, cw):
@@ -230,9 +241,9 @@ def build_hardware(ctx, G, s, S, rot):
     ad = k9.hw_part(ctx, 'PRP-006-' + s, at=S['at'], rotate=rot)
     if ad:
         build_adapter_screws(ad, G)
-        r = G['ad_screw_r'] * math.sqrt(0.5)
-        k9.hw_join(ctx, ad.id, 'PRP-004-' + s, ad.to_world((-(G['body'] + 0.003), r, r)))
-        k9.hw_join(ctx, ad.id, 'PRP-001-' + s, ad.to_world((-(G['body'] - 0.001), r, r)))
+        r = G['ad_screw_r']                                            # first screw at 90 deg: (y, z) = (0, r)
+        k9.hw_join(ctx, ad.id, 'PRP-004-' + s, ad.to_world((-(G['body'] + 0.003), 0.0, r)))
+        k9.hw_join(ctx, ad.id, 'PRP-001-' + s, ad.to_world((-(G['body'] - 0.001), 0.0, r)))
     nut = ctx.components.get('PRP-007-' + s)
     if nut:
         k9.hw_join(ctx, nut.id, 'PRP-004-' + s, nut.to_world((-(G['a_nut'] + G['nut_h'] / 2), 0, 0)))

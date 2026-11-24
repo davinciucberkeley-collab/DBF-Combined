@@ -1,0 +1,4 @@
+CGE-003-UR   listed   8.38  solid   9.06  basis S  computed   7.68  core 0.25
+CGE-003-UL   listed   8.38  solid   9.06  basis S  computed   7.68  core 0.25
+CGE-003-LR   listed   8.38  solid   9.06  basis S  computed   7.68  core 0.25
+CGE-003-LL   listed   8.38  solid   9.06  basis S  computed   7.68  core 0.25

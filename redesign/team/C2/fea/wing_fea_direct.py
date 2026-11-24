@@ -168,6 +168,7 @@ def run_level(lev, g, msets, cases, stations, sets=("B", "T"), case_names=None):
     sel_cases = [cs for cs in wf.CASES if case_names is None or cs[0] in case_names]
     loads = {}
     for cs in sel_cases:
+        wf.CUR_CASE = cs[0]
         tr, chk = wf.tractions(model, cases[cs]["rows"], g["xs"])
         loads[cs] = (sf.traction_vector(X, mk, tr), chk)
     runs = {}
@@ -202,7 +203,7 @@ def main():
     ap.add_argument("--cases", nargs="+", default=None, help="C1 case names (default: all four)")
     ap.add_argument("--out", default="wing_fea_direct.json", help="output file in fea/out (merge parallel runs)")
     ap.add_argument("--no-validation", action="store_true")
-    ap.add_argument("--intro", default="block", choices=["block", "distributed"],
+    ap.add_argument("--intro", default="block", choices=["block", "distributed", "fore", "c4split"],
                     help="station-load introduction (wing_fea.INTRO)")
     a = ap.parse_args()
     wf.INTRO = a.intro

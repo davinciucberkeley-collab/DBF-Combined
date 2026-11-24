@@ -1,0 +1,77 @@
+{
+ "daf": 1.613309043228564,
+ "part_min_floor": {
+  "cup / cross-pin rows (proposed D-215 geometry)": 0.005068794926441303,
+  "wing torsion / in-plane, skin-less (reference)": 0.051170667034103355,
+  "rib tube and saddle socket": 0.13023742249131745,
+  "saddle ring on spar / spar under the saddle": 0.1407745605390471,
+  "root block (ring bond, junction, socket, wall)": 0.2525708947847406,
+  "shoe (plate, ring bond)": 0.3398677669523569,
+  "V strut": 0.4570553489744056,
+  "wing, glass skin (P15 / P16, V0)": 0.537532524635778,
+  "bridge tube 16x14 (hand)": 1.5434238598001737,
+  "fin tube 16x14": 1.6414445638413346,
+  "FEA: tube A axial": 1.4795448251924754,
+  "FEA: tube A hoop": 2.410231931736761,
+  "FEA: tube A tau_st": 5.144004137128992,
+  "FEA: tube B axial": 1.1455357974257891,
+  "FEA: tube B hoop": 1.819156607601117,
+  "FEA: tube B tau_st": 3.7798953135491424,
+  "FEA: bond mean shear": 0.5481630176567135,
+  "FEA: Al hub von Mises max excl 0.5 mm": 1.3368446221739814,
+  "bridge tube 16x14 (D-1 dynamic)": 2.4224467482593366,
+  "pad: usable stroke / worst stroke": 1.1168949329266933,
+  "pad: A-P5 12 g / n peak": 0.9667104938769769,
+  "pad: AR-008 tilt 3.0 deg / end tilt": 1.0114419166501516
+ },
+ "part_min_rb": {
+  "cup / cross-pin rows (proposed D-215 geometry)": 0.008177532693098817,
+  "wing torsion / in-plane, skin-less (reference)": 0.0825540998741567,
+  "rib tube and saddle socket": 0.2101132114720216,
+  "saddle ring on spar / spar under the saddle": 0.22711287157417162,
+  "root block (ring bond, junction, socket, wall)": 0.40747490861255214,
+  "shoe (plate, ring bond)": 0.5483117419261354,
+  "V strut": 0.7373715277563957,
+  "wing, glass skin (P15 / P16, V0)": 0.8672060830243816,
+  "bridge tube 16x14 (hand)": 2.4900196705503554,
+  "fin tube 16x14": 2.648157358803591,
+  "FEA: tube A axial": 1.5163912775582038,
+  "FEA: tube A hoop": 2.4679256116699704,
+  "FEA: tube A tau_st": 5.144004137128992,
+  "FEA: tube B axial": 1.5404320573039603,
+  "FEA: tube B hoop": 2.443402443025904,
+  "FEA: tube B tau_st": 4.6006072546006,
+  "FEA: bond mean shear": 0.7742502620065365,
+  "FEA: Al hub von Mises max excl 0.5 mm": 1.6704778887309508,
+  "bridge tube 16x14 (D-1 dynamic)": 2.4224467482593366,
+  "pad: usable stroke / worst stroke": 1.1168949329266933,
+  "pad: A-P5 12 g / n peak": 0.9667104938769769,
+  "pad: AR-008 tilt 3.0 deg / end tilt": 1.0114419166501516
+ },
+ "stats": {
+  "BASELINE": {
+   "stroke": 18.848784742897585,
+   "n": 10.003961342974938,
+   "tilt": 2.583347970029998,
+   "Ffoot": 47.088453333400636
+  },
+  "NEW z0.02": {
+   "stroke": 21.488144759606698,
+   "n": 8.493472777131329,
+   "tilt": 2.9660625594160264,
+   "Ffoot": 36.286525500703775
+  },
+  "NEW z0.05": {
+   "stroke": 18.775554675401096,
+   "n": 10.003974889269255,
+   "tilt": 2.5572878146578475,
+   "Ffoot": 45.40314995348135
+  },
+  "NEW z0.10": {
+   "stroke": 15.58754740595958,
+   "n": 12.413230306287659,
+   "tilt": 2.074354589191875,
+   "Ffoot": 59.59536152326042
+  }
+ }
+}

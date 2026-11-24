@@ -1,0 +1,78 @@
+{
+ "h_mm": 0.25,
+ "rho": 1.27,
+ "rows": [
+  {
+   "id": "FIN-005-R",
+   "listed_g": 12.32,
+   "vol_cm3": 10.78575,
+   "solid_g": 13.6979025,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.16804290383144427,
+   "computed_g": 12.316801312499999,
+   "name": "Clamshell cradle on spar (R, T-077 p5, D-221): ring wall 2.0 mm on the",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "FIN-005-L",
+   "listed_g": 12.32,
+   "vol_cm3": 10.78575,
+   "solid_g": 13.6979025,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.16804290383144427,
+   "computed_g": 12.316801312499999,
+   "name": "Clamshell cradle on spar (L, T-077 p5, D-221): ring wall 2.0 mm on the",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "CGE-007-R",
+   "listed_g": 2.96,
+   "vol_cm3": 2.4542968750000003,
+   "solid_g": 3.1169570312500006,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.09391691866942543,
+   "computed_g": 2.9413160312500004,
+   "name": "Strut clamp on spar (R)",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "CGE-007-L",
+   "listed_g": 2.96,
+   "vol_cm3": 2.452078125,
+   "solid_g": 3.11413921875,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.09374064091045223,
+   "computed_g": 2.9389863750000003,
+   "name": "Strut clamp on spar (L)",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "CGE-006",
+   "listed_g": 12.41,
+   "vol_cm3": 12.26759375,
+   "solid_g": 14.721112499999998,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.2707820146065727,
+   "computed_g": 12.329385,
+   "name": "Centre node saddle (T-077 p5, D-221 s3.2, T-071b N2): ring wall 2.0 mm",
+   "material": "Onyx + CF (Markforged X7)"
+  },
+  {
+   "id": "CGE-013",
+   "listed_g": 2.2,
+   "vol_cm3": 1.627875,
+   "solid_g": 1.95345,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.0,
+   "computed_g": 1.95345,
+   "name": "Node outer clevis ears: 2 x (41.5 x 19 x 1.5 mm, spar hole 12 mm), Ony",
+   "material": "Onyx + CF (Markforged X7)"
+  }
+ ]
+}

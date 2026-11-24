@@ -33,7 +33,7 @@ DBF-VTOL changed no shared engineering file (only `README.md`, `CLAUDE.md`, `PRO
 | `CLAUDE.md`, `PRODUCT.md` | DBF-VTOL `9cc31fe` | only DBF-VTOL edited them after the fork (team list, sibling pages); repo name updated |
 | `README.md` | hand-merged | DillonVTOL's design table and layout + DBF-VTOL's inventory, Fusion, concepts and artifact sections, numbers checked against the files in this repo |
 | `inventory/`, `fusion/`, `concepts/`, `sim/` | DBF-VTOL `9cc31fe` | built on design v0.3.1, see [DECISIONS.md](DECISIONS.md) |
-| `Inventory-Overview.html`, `Concept-Models.html` | DBF-VTOL `9cc31fe` | generated pages (v0.3.1 inventory; concept models placed on the rev D C0) |
+| `Inventory-Overview.html` (removed 2026-11-19, batch 2; recoverable from git 8d15f419^), `Concept-Models.html` | DBF-VTOL `9cc31fe` | generated pages (v0.3.1 inventory; concept models placed on the rev D C0) |
 | `docs/research/electrical-architecture.md`, `hardware-schedule.md`, `nautical-wings-props.md`, `tolerance-analysis.md` | DBF-VTOL `9cc31fe` | v0.3.1 numbers |
 | `explorations/tiltwing/` | TiltWing `1488f8f` | = DBF-VTOL `design2:tiltwing/` at `aef0007` (57 of 59 files byte-identical; TiltWing adds an origin note to the README and the paper PDF). Archived exploration |
 | `tools/opencae-studio/` | OpenCAEModel `792f0ab` | OpenCAE Studio 0.2 source. Licensed **GPL-3.0** (`tools/opencae-studio/LICENSE`); the rest of this repo carries no licence file |
@@ -44,7 +44,7 @@ DBF-VTOL changed no shared engineering file (only `README.md`, `CLAUDE.md`, `PRO
 | Left out | Why |
 |---|---|
 | `review/vtol-review.html`, `review/build-manual.html`, `review/test-plan.html`, `review/flight-software.html`, `review/templates.html` (DillonVTOL) | Second copies of the root pages (about 37 MB). `review/build.mjs` writes both; the root copies are the ones GitHub Pages, `index.html` and the README use. The builder still writes the `review/` copies locally (for publishing as a claude.ai artifact); they are now git-ignored and the CI no longer diffs them |
-| `inventory/inventory-overview.html` (DBF-VTOL) | Fragment copy of `Inventory-Overview.html` (5.6 MB), written by `inventory/build_overview.mjs` for artifact publishing; now git-ignored |
+| `inventory/inventory-overview.html` (DBF-VTOL) | Fragment copy of `Inventory-Overview.html` (removed 2026-11-19, batch 2; recoverable from git 8d15f419^) (5.6 MB), written by `inventory/build_overview.mjs` for artifact publishing; now git-ignored |
 | `concepts/variants/a2/fusion/build_a2_fusion.py`, `concepts/variants/a3/fusion/build_a3_fusion.py` (DBF-VTOL) | Byte-identical to `fusion/variants/build_a2_fusion.py` and `build_a3_fusion.py`. The `fusion/variants/` set is kept because it also holds `build_a1_fusion.py`; nothing referenced either path |
 | `analysis/cfd3d/out_rev1/scheme_check_2d.json` (DillonVTOL) | Byte-identical to `analysis/cfd3d/out_rev1/scheme_check_2d_rev1.json`, which is the name `analysis/cfd3d/verify_cfd.py` cites |
 | Orchestration and build logs nothing cites: `analysis/cfd3d/out/{geometry_rev2,mesh_L1,mesh_L2,mesh_L3,mesh_L4,mesh_audit,resume_L4,run_batch,run_batch_rev2,scheme_check_2d}.log`, `analysis/validation/xtool_boom_fea.log`, `cad/build_2026-11-01.log`, `cad/build_2026-11-03b.log` (DillonVTOL) | Solver/build console output, regenerated on every run |
@@ -54,7 +54,7 @@ DBF-VTOL changed no shared engineering file (only `README.md`, `CLAUDE.md`, `PRO
 | `tools/opencae-studio/opencae/tests/data/pe/{fakeccx.exe,libdep-1.dll,libfwd.dll,libmid.dll}` (OpenCAEModel) | Compiled PE test fixtures for `opencae/tests/test_launcher.py`; executables are not imported (and `*.exe`/`*.dll` are git-ignored). That test cannot run in this copy |
 | `tools/opencae-studio/opencae/examples/projects/*_data/results/run_*` (OpenCAEModel) | Solver runs (job.inp, results.npz). Re-solve in the app or run `opencae/examples/build_examples.py`; the example `.ocae` files still name the old run folders |
 
-Kept on purpose although generated: `analysis/cfd3d/out/` (the review build reads `viz/cfd3d_viz.json` and
+Kept on purpose although generated: `analysis/cfd3d/out/` (the review build reads `viz/cfd3d_viz.json` (removed 2026-11-19, batch 2; recoverable from git 8d15f419^) and
 `mesh_audit.json`, and the validation matrix cites the per-case `history.csv`, `su2.log` and `post/*.json` files as
 evidence), `analysis/cfd3d/out_rev1/` (cited by `verify_cfd.py`), `cad/build_2026-11-03.log` (cited as CAD build
 evidence in `analysis/validation/validation_matrix.json`), the SITL `console.log` files, and all CI-checked outputs.

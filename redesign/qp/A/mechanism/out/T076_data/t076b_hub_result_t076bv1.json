@@ -1,0 +1,515 @@
+{
+ "geo": {
+  "COL_E": 12.0,
+  "COL_Y": 12.0,
+  "COL_ZLO": -16.0,
+  "COL_ZHI": 8.0,
+  "XA": -6.5,
+  "XB": 6.5,
+  "S_END": 60.0,
+  "L_SLV": 24.0,
+  "SLV_W": 1.5,
+  "CB": 10.0,
+  "R_BR": 9.5,
+  "BR_RO": 8.0,
+  "BR_RI": 7.0,
+  "BR_Z": -2.0,
+  "BLK_Z": -2.0,
+  "BLK_AFT": 10.000000000000007,
+  "X_BR0": 15.0,
+  "X_HUB1": 36.0,
+  "S_HOLE": 18.0,
+  "HOLE_R": 2.4,
+  "TUBE_RO": 6.0,
+  "TUBE_RI": 5.0,
+  "DBL": 1.0,
+  "DBL_T": 1.0,
+  "DBL_S0": 11.0,
+  "DBL_S1": 25.0,
+  "BR_L": 40.0,
+  "R_CB": 3.0,
+  "PIN_R": 1.5,
+  "PIN_C": 1.0,
+  "PIN_S": 8.0,
+  "E_PIN": 70000.0,
+  "FIL": 2.0,
+  "FIL_A": 1.5,
+  "FMS": 0.0,
+  "BORE_FR": 0.0,
+  "BR_GAP": 0.0,
+  "BR_CH": 0.8,
+  "MS": 1.1
+ },
+ "hub_g": 21.810993191601415,
+ "equilibrium": 2.2491153449988618e-10,
+ "elements": 379039,
+ "dof": 1758939,
+ "solve_wall_s": 377.85515427589417,
+ "landing": {
+  "A_all_through_arms RB": {
+   "whole hub": {
+    "p99_MPa": 10.188084238333593,
+    "p99_case": "hard 10 wide + drift .5 y@342",
+    "max_MPa": 55.13664542776408,
+    "max_case": "hard 10 wide + drift .5 y@342",
+    "RF_p99": 0.910412802039974,
+    "RF_max_singular": 0.16822500257097556,
+    "allow_MPa": 9.27536231884058
+   },
+   "aft of block face (D-209 \"bridge boss\" definition)": {
+    "p99_MPa": 11.686817497609258,
+    "p99_case": "hard 10 wide + drift .5 y@342",
+    "max_MPa": 55.13664542776408,
+    "max_case": "hard 10 wide + drift .5 y@342",
+    "RF_p99": 0.7936602347677644,
+    "RF_max_singular": 0.16822500257097556,
+    "allow_MPa": 9.27536231884058
+   },
+   "last 12 mm before the bore mouth (collar in C6; block in base)": {
+    "p99_MPa": 4.425553852847795,
+    "p99_case": "hard 7/7 combo@345",
+    "max_MPa": 18.577265724740304,
+    "max_case": "hard 7/7 combo@345",
+    "RF_p99": 2.0958647498712475,
+    "RF_max_singular": 0.49928565679545084,
+    "allow_MPa": 9.27536231884058
+   },
+   "collar extension only (x > 24)": {
+    "p99_MPa": 4.421474888297686,
+    "p99_case": "hard 7/7 combo@345",
+    "max_MPa": 18.577265724740304,
+    "max_case": "hard 7/7 combo@345",
+    "RF_p99": 2.0977982580857066,
+    "RF_max_singular": 0.49928565679545084,
+    "allow_MPa": 9.27536231884058
+   }
+  },
+  "A_all_through_arms RBx1.5": {
+   "whole hub": {
+    "p99_MPa": 15.282126357500388,
+    "p99_case": "hard 10 wide + drift .5 y@342",
+    "max_MPa": 82.70496814164612,
+    "max_case": "hard 10 wide + drift .5 y@342",
+    "RF_p99": 0.6069418680266493,
+    "RF_max_singular": 0.1121500017139837,
+    "allow_MPa": 9.27536231884058,
+    "note": "RB row scaled by 1.5 (linear)"
+   },
+   "aft of block face (D-209 \"bridge boss\" definition)": {
+    "p99_MPa": 17.53022624641389,
+    "p99_case": "hard 10 wide + drift .5 y@342",
+    "max_MPa": 82.70496814164612,
+    "max_case": "hard 10 wide + drift .5 y@342",
+    "RF_p99": 0.5291068231785095,
+    "RF_max_singular": 0.1121500017139837,
+    "allow_MPa": 9.27536231884058,
+    "note": "RB row scaled by 1.5 (linear)"
+   },
+   "last 12 mm before the bore mouth (collar in C6; block in base)": {
+    "p99_MPa": 6.638330779271692,
+    "p99_case": "hard 7/7 combo@345",
+    "max_MPa": 27.865898587110458,
+    "max_case": "hard 7/7 combo@345",
+    "RF_p99": 1.3972431665808316,
+    "RF_max_singular": 0.33285710453030054,
+    "allow_MPa": 9.27536231884058,
+    "note": "RB row scaled by 1.5 (linear)"
+   },
+   "collar extension only (x > 24)": {
+    "p99_MPa": 6.632212332446529,
+    "p99_case": "hard 7/7 combo@345",
+    "max_MPa": 27.865898587110458,
+    "max_case": "hard 7/7 combo@345",
+    "RF_p99": 1.3985321720571378,
+    "RF_max_singular": 0.33285710453030054,
+    "allow_MPa": 9.27536231884058,
+    "note": "RB row scaled by 1.5 (linear)"
+   }
+  },
+  "B_partition RB": {
+   "whole hub": {
+    "p99_MPa": 10.518876820740282,
+    "p99_case": "hard 10 wide + drift .5 y@342",
+    "max_MPa": 56.116403753040586,
+    "max_case": "hard 10 wide + drift .5 y@342",
+    "RF_p99": 0.8817825778273362,
+    "RF_max_singular": 0.1652878962033986,
+    "allow_MPa": 9.27536231884058
+   },
+   "aft of block face (D-209 \"bridge boss\" definition)": {
+    "p99_MPa": 12.14697635907089,
+    "p99_case": "hard 10 wide + drift .5 y@342",
+    "max_MPa": 56.116403753040586,
+    "max_case": "hard 10 wide + drift .5 y@342",
+    "RF_p99": 0.7635943336560542,
+    "RF_max_singular": 0.1652878962033986,
+    "allow_MPa": 9.27536231884058
+   },
+   "last 12 mm before the bore mouth (collar in C6; block in base)": {
+    "p99_MPa": 4.467124803353112,
+    "p99_case": "hard 7/7 combo@345",
+    "max_MPa": 17.925711532910597,
+    "max_case": "hard 7/7 combo@345",
+    "RF_p99": 2.076360685485731,
+    "RF_max_singular": 0.5174334252680312,
+    "allow_MPa": 9.27536231884058
+   },
+   "collar extension only (x > 24)": {
+    "p99_MPa": 4.463988706632538,
+    "p99_case": "hard 7/7 combo@345",
+    "max_MPa": 17.925711532910597,
+    "max_case": "hard 7/7 combo@345",
+    "RF_p99": 2.077819396151107,
+    "RF_max_singular": 0.5174334252680312,
+    "allow_MPa": 9.27536231884058
+   }
+  },
+  "B_partition RBx1.5": {
+   "whole hub": {
+    "p99_MPa": 15.778315231110422,
+    "p99_case": "hard 10 wide + drift .5 y@342",
+    "max_MPa": 84.17460562956089,
+    "max_case": "hard 10 wide + drift .5 y@342",
+    "RF_p99": 0.5878550518848907,
+    "RF_max_singular": 0.11019193080226573,
+    "allow_MPa": 9.27536231884058,
+    "note": "RB row scaled by 1.5 (linear)"
+   },
+   "aft of block face (D-209 \"bridge boss\" definition)": {
+    "p99_MPa": 18.220464538606336,
+    "p99_case": "hard 10 wide + drift .5 y@342",
+    "max_MPa": 84.17460562956089,
+    "max_case": "hard 10 wide + drift .5 y@342",
+    "RF_p99": 0.5090628891040362,
+    "RF_max_singular": 0.11019193080226573,
+    "allow_MPa": 9.27536231884058,
+    "note": "RB row scaled by 1.5 (linear)"
+   },
+   "last 12 mm before the bore mouth (collar in C6; block in base)": {
+    "p99_MPa": 6.700687205029668,
+    "p99_case": "hard 7/7 combo@345",
+    "max_MPa": 26.888567299365896,
+    "max_case": "hard 7/7 combo@345",
+    "RF_p99": 1.3842404569904874,
+    "RF_max_singular": 0.3449556168453541,
+    "allow_MPa": 9.27536231884058,
+    "note": "RB row scaled by 1.5 (linear)"
+   },
+   "collar extension only (x > 24)": {
+    "p99_MPa": 6.695983059948807,
+    "p99_case": "hard 7/7 combo@345",
+    "max_MPa": 26.888567299365896,
+    "max_case": "hard 7/7 combo@345",
+    "RF_p99": 1.3852129307674046,
+    "RF_max_singular": 0.3449556168453541,
+    "allow_MPa": 9.27536231884058,
+    "note": "RB row scaled by 1.5 (linear)"
+   }
+  }
+ },
+ "hotspot": {
+  "A": {
+   "case": "hard 10 wide + drift .5 y@342",
+   "partition": "A",
+   "allow_MPa": 9.27536231884058,
+   "n_gp": 939276,
+   "p99_whole": 10.188084238333593,
+   "max": 55.13664542776408,
+   "n_over_allow": 13938,
+   "regions": {
+    "collar (x > 24)": {
+     "n_gp": 235450,
+     "p99": 3.64532996195342,
+     "p999": 6.017127529688988,
+     "max": 17.086444603248832,
+     "n_over": 70,
+     "whole_hub_p99_without_region": 10.923160113896886
+    },
+    "aft block / bore wall (x > floor+2, <= 24)": {
+     "n_gp": 71955,
+     "p99": 9.359915258690021,
+     "p999": 11.237366398444271,
+     "max": 13.385831015344513,
+     "n_over": 773,
+     "whole_hub_p99_without_region": 10.302827353528519
+    },
+    "floor band (tube-B surface to floor+2 mm, r < bore+2)": {
+     "n_gp": 58762,
+     "p99": 21.054058766291387,
+     "p999": 39.10178689376625,
+     "max": 55.13664542776408,
+     "n_over": 8341,
+     "whole_hub_p99_without_region": 8.684010258264763
+    },
+    "sleeves outside the block box": {
+     "n_gp": 283125,
+     "p99": 6.487142206654922,
+     "p999": 11.80334171052366,
+     "max": 18.749476183350268,
+     "n_over": 787,
+     "whole_hub_p99_without_region": 10.98304302189819
+    },
+    "block forward of the floor band": {
+     "n_gp": 289984,
+     "p99": 9.679327675500915,
+     "p999": 14.01645662853384,
+     "max": 22.027000915383468,
+     "n_over": 3967,
+     "whole_hub_p99_without_region": 10.588952956278606
+    }
+   },
+   "top_cells_1p5mm": [
+    {
+     "x": 14.908716050278064,
+     "y": -6.672074997875031,
+     "z": -0.04393468817449886,
+     "p1": 55.13664542776408,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.896559813524522,
+     "y": -6.311379880942669,
+     "z": 0.9572359044097316,
+     "p1": 53.4163127400094,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.893971907838003,
+     "y": -5.801529978878931,
+     "z": -5.825669367073636,
+     "p1": 50.66700982769293,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.884260525880789,
+     "y": -6.925699336887121,
+     "z": -2.24110762677201,
+     "p1": 49.62718346764316,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.897658270224591,
+     "y": -6.878906992514667,
+     "z": -3.2475465377700905,
+     "p1": 49.356891371850516,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.875745459490382,
+     "y": -6.8743239681212955,
+     "z": -0.7308606900617894,
+     "p1": 46.2234223873643,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.859066104003642,
+     "y": -6.5117057107321,
+     "z": -4.554187801155342,
+     "p1": 42.81883739143462,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.904533355784949,
+     "y": -4.878852417385398,
+     "z": -6.93162219584943,
+     "p1": 41.00081174306794,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.895389070502167,
+     "y": -6.799931044788193,
+     "z": -3.9375788967436147,
+     "p1": 39.770139001445145,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.94483309297938,
+     "y": -5.450674013955524,
+     "z": -6.757977792551397,
+     "p1": 39.44313184569195,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.897658270224591,
+     "y": -6.696338063717202,
+     "z": -3.534611107547781,
+     "p1": 37.579944073192394,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.883209272496416,
+     "y": -5.321149818627133,
+     "z": 2.4171660497485505,
+     "p1": 37.32541505117539,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.875373547883928,
+     "y": -5.180080528972698,
+     "z": -6.671948876134194,
+     "p1": 36.29876111810853,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.894036271167865,
+     "y": -4.407592052056561,
+     "z": 3.392739714598119,
+     "p1": 36.20904022716111,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    }
+   ]
+  },
+  "B": {
+   "case": "hard 10 wide + drift .5 y@342",
+   "partition": "B",
+   "allow_MPa": 9.27536231884058,
+   "n_gp": 939276,
+   "p99_whole": 10.518876820740282,
+   "max": 56.116403753040586,
+   "n_over_allow": 15454,
+   "regions": {
+    "collar (x > 24)": {
+     "n_gp": 235450,
+     "p99": 3.696172189181829,
+     "p999": 5.992531823637921,
+     "max": 16.488927464968622,
+     "n_over": 67,
+     "whole_hub_p99_without_region": 11.281139768947536
+    },
+    "aft block / bore wall (x > floor+2, <= 24)": {
+     "n_gp": 71955,
+     "p99": 9.792697368062294,
+     "p999": 11.867154957353936,
+     "max": 14.236624100281158,
+     "n_over": 1062,
+     "whole_hub_p99_without_region": 10.623608381775652
+    },
+    "floor band (tube-B surface to floor+2 mm, r < bore+2)": {
+     "n_gp": 58762,
+     "p99": 21.250281319348545,
+     "p999": 39.400067276227894,
+     "max": 56.116403753040586,
+     "n_over": 8574,
+     "whole_hub_p99_without_region": 8.910819810645124
+    },
+    "sleeves outside the block box": {
+     "n_gp": 283125,
+     "p99": 6.708474606076632,
+     "p999": 12.769481467487676,
+     "max": 19.463224641492705,
+     "n_over": 1082,
+     "whole_hub_p99_without_region": 11.291688489713684
+    },
+    "block forward of the floor band": {
+     "n_gp": 289984,
+     "p99": 9.93743752073383,
+     "p999": 14.951225040400484,
+     "max": 22.086617800736946,
+     "n_over": 4669,
+     "whole_hub_p99_without_region": 10.881032949741057
+    }
+   },
+   "top_cells_1p5mm": [
+    {
+     "x": 14.908716050278064,
+     "y": -6.672074997875031,
+     "z": -0.04393468817449886,
+     "p1": 56.116403753040586,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.896559813524522,
+     "y": -6.311379880942669,
+     "z": 0.9572359044097316,
+     "p1": 54.5192677432571,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.893971907838003,
+     "y": -5.801529978878931,
+     "z": -5.825669367073636,
+     "p1": 50.67937957139997,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.884260525880789,
+     "y": -6.925699336887121,
+     "z": -2.24110762677201,
+     "p1": 50.182973607968634,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.897658270224591,
+     "y": -6.878906992514667,
+     "z": -3.2475465377700905,
+     "p1": 49.72181879544286,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.875745459490382,
+     "y": -6.8743239681212955,
+     "z": -0.7308606900617894,
+     "p1": 46.76650563649912,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.859066104003642,
+     "y": -6.5117057107321,
+     "z": -4.554187801155342,
+     "p1": 43.01572662487066,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.904533355784949,
+     "y": -4.878852417385398,
+     "z": -6.93162219584943,
+     "p1": 40.79267534357755,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.895389070502167,
+     "y": -6.799931044788193,
+     "z": -3.9375788967436147,
+     "p1": 40.018616248046406,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.94483309297938,
+     "y": -5.450674013955524,
+     "z": -6.757977792551397,
+     "p1": 39.402630870697465,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.883209272496416,
+     "y": -5.321149818627133,
+     "z": 2.4171660497485505,
+     "p1": 38.353554015043095,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.897658270224591,
+     "y": -6.696338063717202,
+     "z": -3.534611107547781,
+     "p1": 37.82080947595389,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.894036271167865,
+     "y": -4.407592052056561,
+     "z": 3.392739714598119,
+     "p1": 37.243668895753636,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    },
+    {
+     "x": 14.875373547883928,
+     "y": -5.180080528972698,
+     "z": -6.671948876134194,
+     "p1": 36.206561018567406,
+     "region": "floor band (tube-B surface to floor+2 mm, r < bore+2)"
+    }
+   ]
+  }
+ },
+ "total_wall_s": 804.886342048645
+}

@@ -9,6 +9,11 @@ linear), and a staleness check that compares the inputs each simulation recorded
 (CL-C5-SIM-INPUTS-STALE must be 0; if it is not, re-run sim/landing_sim3d.py, sim/sink_sweep.py, sim/side_check.py,
 then this script).
 
+C5-R7 (2026-11-13, D-105 / CDR-01): the pad face is held to mu <= requirements.pad_mu_max (0.40) and the design side
+load is the parameter requirements.foot_side_load_cap_n (24.5 N limit); the envelope, sink sweep (0.05 m/s grid), drift
+sweep, side check and corner-drop height were re-run at mu 0.40 on D5-R8 and A3's current masses, with mu 0.7 (bare
+neoprene, the D-65 basis) and 0.5 kept as comparison envelopes. ASM-C5-SIDE-DESIGN-D65 (39.5 N) is retired.
+
 C5-R6 (2026-11-10, after D-62 / D-64 / D-65): the 6-DOF envelope runs at requirements.landing_sink_ms (1.2 m/s) with a
 lightest-mass case (546 g pack) and a mu 0.5 pad envelope; the design side load stays the D-65 value (39.3 N limit /
 59.0 N ultimate, ASM-C5-SIDE-DESIGN-D65) and the run checks that it still bounds the envelope; the shoe FEA is run on
@@ -24,7 +29,8 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[1] / "proofs"))
 import proofkit as pk  # noqa: E402
 
-kit = pk.Kit(__file__, params=["../../params/params.json", "../../subsystems/landing/params.json"],
+kit = pk.Kit(__file__, params=["../../params/params.json", "../../subsystems/landing/params.json",
+                             "../../subsystems/flight-software/params.json"],
              out="claims.sim.json")
 P = "P:"
 OUT = HERE / "sim" / "out"
@@ -33,6 +39,9 @@ SINK = json.loads((OUT / "sink_sweep.json").read_text("utf-8"))
 SIDE = json.loads((OUT / "side_check.json").read_text("utf-8"))
 DRIFT = json.loads((OUT / "drift_sweep.json").read_text("utf-8"))
 TESTH = json.loads((OUT / "test_height.json").read_text("utf-8"))
+CR = HERE / "cr1114" / "out"
+CART = json.loads((CR / "cart_life.json").read_text("utf-8"))                     # C5 closure 2026-11-14
+MSW = json.loads((CR / "mass_sweep.json").read_text("utf-8"))                     # C5 closure 2026-11-14
 FEA = json.loads((OUT / "fea_shoe.json").read_text("utf-8"))                       # C5-S1: as-drawn D5-R5 shoe
 D65_TAG = "_v_engage25_rim_t3_w2_rin1"
 FEA65 = json.loads((OUT / ("fea_shoe%s.json" % D65_TAG)).read_text("utf-8"))         # C5-R6: D-65 decision stack
@@ -61,8 +70,9 @@ side_req = max([side_env] + [x["side_N"] for k in SINK for x in SINK[k]["rows"]
 side_nodrift = max([side_env] + [x["side_N"] for k in SINK for x in SINK[k]["rows"]
                                  if x["stroke_m"] <= USABLE and x["v"] <= V + 1e-9])
 side_sweep_all = max([side_env] + [x["side_N"] for k in SINK for x in SINK[k]["rows"] if x["stroke_m"] <= USABLE])
-mu05 = SIM["hard_envelope_mu05_gate"]
-side_mu05 = max(r[4] for r in mu05["rows"] if r[2] <= USABLE)
+ALT = SIM["hard_envelope_mu_alt_gate"]
+side_mu05 = max(r[4] for r in ALT["0.50"]["rows"] if r[2] <= USABLE)
+side_mu07 = max(r[4] for r in ALT["0.70"]["rows"])        # every case: at mu 0.7 the worst rows sit at the stroke limit
 
 
 def _bottom_tilt(rows):
@@ -106,7 +116,7 @@ kit.assumption("ASM-C5-SIM3D-BOTTOM-TILT", "3-D sim: tilt that uses up the strok
                "foot passes the usable stroke; when no case inside the 10 deg envelope bottoms, the largest tilt "
                "simulated (10 deg)", basis=REC, value=_bottom_tilt(gate["rows"]), unit="deg")
 kit.assumption("ASM-C5-SIM3D-V-SINK-10", "3-D sim: sink speed limit at 10 deg",
-               "Largest sink speed (0.1 m/s steps, 0.8-1.3) at which a 10 deg touchdown in any of 24 directions stays "
+               "Largest sink speed (0.05 m/s steps, 0.8-1.3) at which a 10 deg touchdown in any of 24 directions stays "
                "inside the usable stroke, gate mass", basis="sim/out/sink_sweep.json (sim/sink_sweep.py, C5-R6)",
                value=SINK["gate"]["v_max_ms"], unit="m/s")
 kit.assumption("ASM-C5-SIM3D-N", "3-D sim: peak load factor, level, A3 basic mass",
@@ -122,22 +132,21 @@ kit.assumption("ASM-C5-SIM3D-N-ENV", "3-D sim: peak load factor anywhere in the 
 kit.assumption("ASM-C5-SIM3D-SIDE", "3-D sim: sustained foot side load at the design sink",
                "Largest transverse (side) load on one foot, 1 ms filtered, over every design-envelope case (4 masses), "
                "every sink-sweep row at or below the design sink and every drift-sweep row (0.3 m/s drift, 10 deg) "
-               "that stays inside the usable stroke, mu 0.7",
+               "that stays inside the usable stroke, pad mu = ASM-D5-PAD-MU (0.40, D-105)",
                basis=REC + " + sim/out/drift_sweep.json; without drift %.2f N; sink sweep to 1.3 m/s %.2f N; the "
                "unfiltered peak includes the 0.2 ms piston-mass impact on the pad (%.1f N)"
                % (side_nodrift, side_sweep_all, max(env[k]["side_peak_max_N"] for k in env)),
                value=side_req, unit="N")
-kit.assumption("ASM-C5-SIDE-DESIGN-D65", "Design foot side load (limit), D-65 basis rounded up to cover drift",
-               "Limit side load per foot that D5, C4/D3 and C1 design to (CHANGE-LOG D-65, CR-C5-16)",
-               basis="C5-S1 6-DOF 39.30 N (1.5 m/s envelope + sink sweep, no drift) adopted by D-65; C5-R6 adds the "
-                     "0.3 m/s drift landings, 39.44 N (+0.4 %, sim/out/drift_sweep.json), so C5 rounds the basis up "
-                     "to 39.5 N (ultimate 59.25 N; was 39.3 / 59.0, CR-C5-16 update). Held fixed between runs so "
-                     "the downstream roles do not drift; CL-C5-SIM3D-SIDE-12 checks every run against it",
-               value=39.5, unit="N", status="PROPOSED")
 kit.assumption("ASM-C5-SIM3D-SIDE-MU05", "3-D sim: sustained foot side load, pad mu 0.5",
                "As ASM-C5-SIM3D-SIDE over the gate-mass 10 deg envelope with a pad face of mu 0.5 on the landing mat",
                basis=REC + "; governing single case re-run in side_check.py: %.1f N" % SIDE["sens"]["mu 0.5"]["side_1ms_N"],
                value=side_mu05, unit="N")
+kit.assumption("ASM-C5-SIM3D-SIDE-MU07", "3-D sim: sustained foot side load, bare neoprene pad mu 0.7",
+               "As ASM-C5-SIM3D-SIDE over the gate-mass 10 deg envelope with mu 0.7 (the D-65 basis: no low-friction "
+               "pad face, or a face that has worn through)",
+               basis=REC + "; stroke %.1f mm; governing single case re-run in side_check.py: %.1f N"
+               % (1000 * ALT["0.70"]["stroke_max_m"], SIDE["sens"]["mu 0.7"]["side_1ms_N"]),
+               value=side_mu07, unit="N")
 kit.assumption("ASM-C5-SIM3D-STRIKE-TILT", "3-D sim: wingtip strike onset tilt",
                "Smallest touchdown tilt (design sink, any direction, any mass) at which the wingtip TE corner reaches "
                "the ground", basis=REC + " (wingtip contact itself not modelled: the corner cap GER-007 takes it)",
@@ -146,6 +155,20 @@ kit.assumption("ASM-C5-SIM3D-V-BROADSIDE", "3-D sim: broadside landing wind limi
                "Largest wind (0.5 m/s steps) for which a touchdown tilted by the hover lean + 10 deg toward the narrow "
                "pod-side pad line, drifting 0.3 m/s toward it, does not tip; wind gone at touchdown (lull), sink "
                "0.5 m/s and the design sink, A3 basic mass", basis=REC, value=v_b, unit="m/s")
+HEAD = SIM["heading"]
+kit.assumption("ASM-C5-SIM3D-V-HEADING", "3-D sim: landing wind limit by heading",
+               "Rows [lean azimuth deg, lull limit m/s, all-modes limit m/s]: largest wind (0.1 m/s steps, 3.5-7.0) for "
+               "which a touchdown tilted by the hover lean + 10 deg toward the azimuth (0 = pod (+z) face to the wind, "
+               "90 = wingtip, 180 = belly (-z) face), drifting 0.3 m/s the same way, does not tip; lull = wind gone at "
+               "touchdown (the claim's case), all = lull and steady; sink 0.5 m/s and the design sink, A3 basic mass; "
+               "the lean uses the full broadside area at every azimuth (conservative off the broadside)",
+               basis=REC + " section 3b (C5-W2); 7.0 = top of the sweep",
+               value=[[float(k), r["v_lull_ms"], r["v_all_ms"]] for k, r in sorted(HEAD["rows"].items(), key=lambda t: float(t[0]))],
+               unit="-")
+kit.assumption("ASM-C5-HEADING-ERR", "Touchdown heading error 30 deg",
+               "Largest error of the touchdown heading about the one Q_WVANE_LAND commands, wind 5 m/s",
+               basis="F4-W2.md SITL S21 pass line (belly within +/-30 deg of the wind from 6 m to land-detect); not run "
+                     "yet; twin logs (C5 M2) replace it", value=30.0, unit="deg", status="UNVERIFIED")
 kit.assumption("ASM-C5-SIM3D-V-SPANWISE", "3-D sim: span-into-wind landing wind limit",
                "As ASM-C5-SIM3D-V-BROADSIDE, lean and error toward a wide (fin) pad line",
                basis=REC + " (12 m/s is the top of the sweep)", value=v_s, unit="m/s")
@@ -153,7 +176,7 @@ kit.assumption("ASM-C5-SIM3D-DRIFT-TIPS", "3-D sim: drift cases that tip",
                "Number of the 128 drift cases (0.3 m/s, 8 directions x 8 tilts of 10 deg x 2 sinks) that tip over",
                basis=REC, value=float(SIM["drift"]["tipped"]), unit="-")
 kit.assumption("ASM-C5-SIM3D-V-SINK-DRIFT", "3-D sim: sink speed limit at 10 deg with 0.3 m/s drift",
-               "Largest sink speed (0.1 m/s steps) at which a 10 deg touchdown (8 attitudes) drifting 0.3 m/s in 8 "
+               "Largest sink speed (0.05 m/s steps, 0.9-1.2) at which a 10 deg touchdown (8 attitudes) drifting 0.3 m/s in 8 "
                "directions stays inside the usable stroke, gate mass",
                basis="sim/out/drift_sweep.json (sim/drift_sweep.py, C5-R6): 1.2 m/s gives %.1f mm at the gate, %.1f mm "
                      "at A3 predicted" % (1000 * DRIFT["gate"]["rows"][-1]["stroke_m"],
@@ -244,27 +267,51 @@ for _sid, (_fea, _tag, _txt, _sh) in STACKS.items():
           inputs={"s": "ASM-C5-SIM3D-STROKE", "n": "ASM-C5-SIM3D-N", "n_l": "ASM-C5-SIM3D-N-LIGHT",
                   "n_env": "ASM-C5-SIM3D-N-ENV", "s_ax": "ASM-C5-SIM3D-STROKE-AXES",
                   "s_a3": "ASM-C5-SIM3D-STROKE-A3", "bt": "ASM-C5-SIM3D-BOTTOM-TILT", "v10": "ASM-C5-SIM3D-V-SINK-10",
-                  "side": "ASM-C5-SIM3D-SIDE", "side_d": "ASM-C5-SIDE-DESIGN-D65", "side_mu": "ASM-C5-SIM3D-SIDE-MU05",
+                  "side": "ASM-C5-SIM3D-SIDE", "side_d": P + "requirements.foot_side_load_cap_n",
+                  "side_mu": "ASM-C5-SIM3D-SIDE-MU05", "side_mu7": "ASM-C5-SIM3D-SIDE-MU07",
                   "strike": "ASM-C5-SIM3D-STRIKE-TILT", "vb": "ASM-C5-SIM3D-V-BROADSIDE",
                   "vs": "ASM-C5-SIM3D-V-SPANWISE", "tips": "ASM-C5-SIM3D-DRIFT-TIPS",
                   "v_dr": "ASM-C5-SIM3D-V-SINK-DRIFT", "h_t": "ASM-C5-TEST-CORNER-H",
-                  "side_hand": "CL-C5-FOOT-SIDE-LOAD", "s_hand": "CL-C5-DYN-PAIR-CUR", "vb_hand": "CL-C5-V-LAND-BROADSIDE",
+                  "side_hand": "CL-C5-FOOT-SIDE-LOAD", "s_hand": "CL-C5-DYN-PAIR-CUR", "vb_hand": "CL-C5-V-LAND-POD-FACE",
                   "k_ult": P + "requirements.safety_factor_ult"},
           units={"s": "m", "s_ax": "m", "s_a3": "m", "bt": "deg", "v10": "m/s", "side": "N", "side_d": "N", "v_dr": "m/s",
                  "h_t": "m",
-                 "side_mu": "N", "strike": "deg", "vb": "m/s", "vs": "m/s", "side_hand": "N", "s_hand": "m",
+                 "side_mu": "N", "side_mu7": "N", "strike": "deg", "vb": "m/s", "vs": "m/s", "side_hand": "N", "s_hand": "m",
                  "vb_hand": "m/s"},
           equation="results of sim/landing_sim3d.py (6-DOF rigid body, 4 elastic-plastic piston feet, 16 pad corners "
-                   "with Coulomb friction) ; ratios to the planar / hand values ; design side load = D-65 value ; "
+                   "with Coulomb friction) ; ratios to the planar / hand values ; design side load = requirements.foot_side_load_cap_n (D-105) ; "
                    "ultimate = k_ult x side")
-def sim3d(s, n, n_l, n_env, s_ax, s_a3, bt, v10, side, side_d, side_mu, strike, vb, vs, tips, v_dr, h_t, side_hand,
+def sim3d(s, n, n_l, n_env, s_ax, s_a3, bt, v10, side, side_d, side_mu, side_mu7, strike, vb, vs, tips, v_dr, h_t, side_hand,
           s_hand, vb_hand, k_ult):
     return {"stroke_m": s, "stroke_axes_m": s_ax, "stroke_a3_m": s_a3, "bottom_tilt_deg": bt, "v_sink_10_ms": v10,
             "n": n, "n_light": n_l, "n_env_light": n_env, "side_N": side_d, "side_ult_N": k_ult * side_d,
             "side_run_N": side, "side_mu05_N": side_mu, "side_mu05_ult_N": k_ult * side_mu,
+            "side_mu07_N": side_mu7, "side_mu07_over_design": side_mu7 / side_d,
             "side_vs_hand": side / side_hand, "stroke_vs_planar": s / s_hand, "strike_tilt_deg": strike,
             "v_broadside_ms": vb, "v_broadside_vs_hand": vb / vb_hand, "v_spanwise_ms": vs, "drift_tips": tips,
             "v_sink_drift_ms": v_dr, "test_corner_h_m": h_t}
+
+
+WVANE_AZ = {1: (180.0,), 2: (180.0, 0.0), 3: (90.0, 270.0), 4: (0.0,)}   # ArduPilot Q_WVANE_* values (F4-W2.md)
+
+
+@kit.calc("CALC-C5-SIM3D-HEADING", title="Landing wind limit at the commanded landing heading (D-152)",
+          inputs={"wv": P + "fsw.wvane_land", "tab": "ASM-C5-SIM3D-V-HEADING", "err": "ASM-C5-HEADING-ERR"},
+          units={"err": "deg"},
+          equation="Q_WVANE_LAND -> headings: 1 nose (belly, lean azimuth 180), 2 nose or tail (180, 0), 3 side (90, "
+                   "270), 4 tail (0), 0 / -1 no weathervane (every azimuth) ; azimuths used = each heading +/- err "
+                   "(the sim grid is 30 deg) ; limit = min lull limit over them ; all-modes and pod-face (azimuth 0) "
+                   "values are reported")
+def heading(wv, tab, err):
+    rows = {round(r[0]) % 360: r for r in tab}
+    hs = WVANE_AZ.get(int(round(wv)), tuple(rows))
+    use = sorted({round(h + d) % 360 for h in hs for d in (-err, 0.0, err)})
+    miss = [a for a in use if a not in rows]
+    if miss:
+        raise ValueError("no simulated heading at azimuth %r" % miss)
+    return {"v_land_heading_ms": min(rows[a][1] for a in use), "v_land_heading_all_ms": min(rows[a][2] for a in use),
+            "v_pod_face_ms": rows[0][1], "v_pod_face_all_ms": rows[0][2],
+            "v_heading_exact_ms": min(rows[round(h) % 360][1] for h in hs), "azimuths_deg": use}
 
 
 STALE_IN = {"snap": "ASM-C5-SIM3D-INPUTS"}
@@ -280,7 +327,7 @@ def stale(snap, **now):
 
 
 @kit.calc("CALC-C5-FEA-SHOE", title="As-drawn shoe GER-001 (D5-R5) stress under the landing side load, C5-S1 record",
-          inputs={"k": "ASM-C5-FEA-K-SHOE", "lever": "ASM-C5-FEA-LEVER", "side_d": "ASM-C5-SIDE-DESIGN-D65",
+          inputs={"k": "ASM-C5-FEA-K-SHOE", "lever": "ASM-C5-FEA-LEVER", "side_d": P + "requirements.foot_side_load_cap_n",
                   "side_hand": "CL-C5-FOOT-SIDE-LOAD", "k_ult": P + "requirements.safety_factor_ult",
                   "allow": "ASM-D5-PETG-SIGMA", "sf_d5": "CL-D5-SIDE-RIM-SF"},
           units={"k": "MPa/N", "side_d": "N", "side_hand": "N", "allow": "Pa"},
@@ -306,7 +353,7 @@ def _shoe(k, lever, side_d, side_run, side_mu, k_ult, allow, gci, k_edge):
 
 def _shoe_in(sid):
     return {"k": "ASM-C5-FEA-K-SHOE-%s" % sid, "lever": "ASM-C5-FEA-LEVER-%s" % sid,
-            "side_d": "ASM-C5-SIDE-DESIGN-D65", "side_run": "ASM-C5-SIM3D-SIDE", "side_mu": "ASM-C5-SIM3D-SIDE-MU05",
+            "side_d": P + "requirements.foot_side_load_cap_n", "side_run": "ASM-C5-SIM3D-SIDE", "side_mu": "ASM-C5-SIM3D-SIDE-MU05",
             "k_ult": P + "requirements.safety_factor_ult", "allow": "ASM-D5-PETG-SIGMA",
             "gci": "ASM-C5-FEA-GCI-%s" % sid, "k_edge": "ASM-C5-FEA-K-EDGE-%s" % sid}
 
@@ -362,44 +409,68 @@ kit.claim("CL-C5-SIM3D-STROKE-A3", "3-D sim worst stroke at the A3 basic mass", 
 kit.claim("CL-C5-SIM3D-BOTTOM-TILT", "Touchdown tilt that uses up the foot stroke (design sink, gate mass)",
           calc="CALC-C5-SIM3D", output="bottom_tilt_deg", unit="deg",
           limit=(">=", P + "requirements.landing_attitude_err_deg"), verifies=["R-LANDING-IMPACT"], parts=FEET,
-          note="C5-R6 at 1.2 m/s: no case inside the 10 deg envelope reaches the usable stroke (value = largest tilt "
-               "simulated); at 1.5 m/s it was 5.0 deg (C5-S1)",
+          note="C5-R6 at 1.2 m/s: no case inside the 10 deg envelope reaches the usable stroke, so the value is the "
+               "top of the sweep (10 deg), NOT a stroke used up at 10 deg; the stroke margin is CL-C5-SIM3D-STROKE "
+               "(about 10 mm at the gate) and the mass capacity CL-C5-SIM3D-MASS-MAX (C5 closure 2026-11-14 corrects "
+               "the A2 / D-160 reading); at 1.5 m/s it was 5.0 deg (C5-S1)",
           how="T-C5-AIRCRAFT-DROP corner drop at 10 deg diagonal at the 1.2 m/s-equivalent height (run on the rig first).")
 kit.claim("CL-C5-SIM3D-V-SINK-10", "Sink speed limit for 10 deg in any direction (gate mass)", calc="CALC-C5-SIM3D",
           output="v_sink_10_ms", unit="m/s", limit=(">=", P + "requirements.landing_sink_ms"), parts=FEET,
-          note="0.1 m/s steps: the 1.2 m/s requirement is the last step that holds (0 % margin at the gate mass)",
+          note="0.05 m/s steps (C5-R7); with the mu 0.40 pad face the feet scrub less and the stroke falls, so the "
+               "whole 0.8-1.3 m/s sweep stays inside the usable stroke (at mu 0.7 it was 1.1 m/s on a 0.1 grid)",
           how="As CL-C5-SIM3D-BOTTOM-TILT.")
-kit.claim("CL-C5-SIM3D-SIDE-LOAD", "Design foot side load (limit), D-65", calc="CALC-C5-SIM3D",
+kit.claim("CL-C5-SIM3D-SIDE-LOAD", "Design foot side load (limit), D-105 cap", calc="CALC-C5-SIM3D",
           output="side_N", unit="N", parts=FEET,
-          note="D-65 design value (C5-S1 6-DOF, mu 0.7): replaces CL-C5-FOOT-SIDE-LOAD in D5, C4/D3 and C1 (CR-C5-16). "
-               "Pads scrub at mu 0.7 while the aircraft rotates over the first foot. CL-C5-SIM3D-SIDE-12 checks that "
-               "the 1.2 m/s envelope stays inside it",
-          how="T-D5-SIDE at the ultimate of this value; T-C5-AIRCRAFT-DROP with a side-load witness (crack check).")
-kit.claim("CL-C5-SIM3D-SIDE-ULT", "Design foot side load, ultimate (D-65)", calc="CALC-C5-SIM3D", output="side_ult_N",
+          note="D-105 (CDR decision B1): = requirements.foot_side_load_cap_n, held by a pad face of mu <= 0.40 on "
+               "the landing mat. Replaces the D-65 value 39.5 N (mu 0.7) in D5, C4/D3, C1 and C6. "
+               "CL-C5-SIM3D-SIDE-12 checks that every run of the 1.2 m/s envelope stays inside it",
+          how="T-D5-PAD-MU (pad slides at <= 21.8 deg on the mat); T-D5-SIDE at the ultimate of this value; "
+              "T-C5-AIRCRAFT-DROP with a side-load witness (crack check).")
+kit.claim("CL-C5-SIM3D-SIDE-ULT", "Design foot side load, ultimate (D-105)", calc="CALC-C5-SIM3D", output="side_ult_N",
           unit="N", parts=FEET, how="T-D5-SIDE.")
-kit.claim("CL-C5-SIM3D-SIDE-12", "3-D sim sustained foot side load, 1.2 m/s envelope (4 masses, mu 0.7)",
+kit.claim("CL-C5-SIM3D-SIDE-12", "3-D sim sustained foot side load, 1.2 m/s envelope (4 masses, drift, pad mu 0.40)",
           calc="CALC-C5-SIM3D", output="side_run_N", unit="N", limit=("<=", "CL-C5-SIM3D-SIDE-LOAD"),
           verifies=["R-LANDING-IMPACT"], parts=FEET,
-          note="the scrub load saturates near mu x plateau + tilt component, so it barely depends on the sink speed",
+          note="the scrub load saturates near mu x plateau + a tilt component, so it barely depends on the sink "
+               "speed and is not proportional to mu: 24.3 N at mu 0.40, 28.8 N at 0.5, 38.9 N at 0.7",
           how="As CL-C5-SIM3D-SIDE-LOAD.")
-kit.claim("CL-C5-SIM3D-SIDE-MU05", "3-D sim foot side load with a mu 0.5 pad face (option), limit",
-          calc="CALC-C5-SIM3D", output="side_mu05_N", unit="N", limit=("<=", "CL-C5-SIM3D-SIDE-LOAD"), parts=FEET,
-          note="option for D5 (CR-C5-16): a pad face with mu <= 0.5 on the landing mat (e.g. PTFE / UHMW tape over "
-               "the neoprene) cuts the side load by a quarter; the parked-slide and drift checks then use mu 0.5",
-          how="T-D5-PAD-MU on the chosen pad face and the landing mat (tilt board, 5 pulls); <= 0.5 to adopt it.")
-kit.claim("CL-C5-SIM3D-SIDE-MU05-ULT", "Foot side load with a mu 0.5 pad face, ultimate", calc="CALC-C5-SIM3D",
+kit.claim("CL-C5-SIM3D-SIDE-MU05", "3-D sim foot side load if the pad face reaches mu 0.5 (record), limit",
+          calc="CALC-C5-SIM3D", output="side_mu05_N", unit="N", parts=FEET,
+          note="record, no limit: what the side load becomes if the pad face misses the D-105 target by 0.1",
+          how="T-D5-PAD-MU on the chosen pad face and the landing mat (incline, 5 repeats).")
+kit.claim("CL-C5-SIM3D-SIDE-MU05-ULT", "Foot side load with a mu 0.5 pad face, ultimate (record)", calc="CALC-C5-SIM3D",
           output="side_mu05_ult_N", unit="N", parts=FEET, how="T-D5-SIDE.")
+kit.claim("CL-C5-SIM3D-SIDE-MU07", "3-D sim foot side load on bare neoprene, mu 0.7 (record), limit",
+          calc="CALC-C5-SIM3D", output="side_mu07_N", unit="N", parts=FEET,
+          note="record, no limit: the D-65 case. A pad that has lost its low-friction face puts this load on a fin "
+               "designed for the D-105 cap, so the pad face is a pre-flight inspection item (flight card, H3)",
+          how="Pre-flight: pad face present and unworn on all four feet.")
+kit.claim("CL-C5-SIM3D-SIDE-MU07-RATIO", "Bare-neoprene side load / design side load (record)",
+          calc="CALC-C5-SIM3D", output="side_mu07_over_design", unit="-", parts=FEET,
+          note="above the 1.5 ultimate factor: a landing at 1.2 m/s and 10 deg on bare neoprene is past the fin's "
+               "ultimate design load",
+          how="As CL-C5-SIM3D-SIDE-MU07.")
 kit.claim("CL-C5-SIM3D-STRIKE-TILT", "Touchdown tilt that grounds the wingtip TE corner", calc="CALC-C5-SIM3D",
           output="strike_tilt_deg", unit="deg", limit=(">=", P + "requirements.landing_attitude_err_deg"),
           parts=["GER-007-R", "GER-007-L"],
           note="FAILS by design intent: inside the 10 deg envelope a mostly-roll touchdown crushes the low fin's "
                "feet far enough for the wingtip TE corner to touch; the TPU corner cap (CR-C5-04) is the protection",
           how="T-C5-AIRCRAFT-DROP roll drop: witness tape on the corner caps.")
-kit.claim("CL-C5-SIM3D-V-BROADSIDE", "3-D sim broadside landing wind limit", calc="CALC-C5-SIM3D",
-          output="v_broadside_ms", unit="m/s", limit=(">=", P + "requirements.wind_limit_ms"), verifies=["R-WIND"],
-          note="dynamic re-check of CL-C5-V-LAND-BROADSIDE (static, pivot stuck): crushing feet, friction, sink. "
-               "FAILS: land with a wingtip into the wind (CR-C5-05, rule S1)",
-          how="Landing practice in measured wind (H2), anemometer; count tip-overs.")
+kit.claim("CL-C5-SIM3D-V-BROADSIDE", "3-D sim landing wind limit at the commanded landing heading (Q_WVANE_LAND +/- 30 deg)",
+          calc="CALC-C5-SIM3D-HEADING", output="v_land_heading_ms", unit="m/s",
+          limit=(">=", P + "requirements.wind_limit_ms"), verifies=["R-WIND"],
+          note="C5-W2 (D-152): lull limit at the heading fsw.wvane_land sets (1 = belly into the wind), worst of the "
+               "heading and +/- 30 deg; was the pod-face-to-wind case (4.5 m/s, now CL-C5-SIM3D-V-POD-FACE). "
+               "Conditions: F4 SITL S21, B3 weathervane stability, H3 card 'land belly into the wind, never pod face "
+               "to the wind'",
+          how="SITL S21 heading hold; landing practice in measured wind (H2), anemometer, heading logged; count tip-overs.")
+kit.claim("CL-C5-SIM3D-V-HEADING-ALL", "3-D sim landing wind limit at the commanded heading, lull and steady (information)",
+          calc="CALC-C5-SIM3D-HEADING", output="v_land_heading_all_ms", unit="m/s",
+          note="C5-W2: includes the steady-wind modes; the claim's definition is the lull", how="As above.")
+kit.claim("CL-C5-SIM3D-V-POD-FACE", "3-D sim landing wind limit, pod (+z) face to the wind (information)",
+          calc="CALC-C5-SIM3D-HEADING", output="v_pod_face_ms", unit="m/s",
+          note="C5-W2 (D-152): information row, no limit; flight-card rule: abort and re-orient if the pod faces the wind",
+          how="H3 flight card.")
 kit.claim("CL-C5-SIM3D-V-SPANWISE", "3-D sim span-into-wind landing wind limit", calc="CALC-C5-SIM3D",
           output="v_spanwise_ms", unit="m/s", limit=(">=", P + "requirements.gust_survive_ms"), verifies=["R-WIND"],
           how="As above, wingtip into the wind.")
@@ -410,8 +481,8 @@ kit.claim("CL-C5-SIM3D-V-SINK-DRIFT", "Sink speed limit for 10 deg with 0.3 m/s 
           calc="CALC-C5-SIM3D", output="v_sink_drift_ms", unit="m/s", limit=(">=", "ASM-C5-PILOT-SPD-DN"),
           parts=FEET,
           note="the D-65 requirement (1.2 m/s at 10 deg) has no drift; a pilot down-stick landing in QLOITER also "
-               "drifts. 1.2 m/s + 10 deg + 0.3 m/s bottoms a foot (38.1 mm at the gate), 1.1 m/s holds. C5 asks F4 "
-               "for Q_PILOT_SPD_DN 1.0 m/s (CR-C5-23)",
+               "drifts. C5-R7 at pad mu 0.40: 1.2 m/s + 10 deg + 0.3 m/s stays inside the stroke (at mu 0.7 it "
+               "bottomed a foot). C5 still asks F4 for Q_PILOT_SPD_DN 1.0 m/s (CR-C5-23)",
           how="T-C5-DRIFT-LOG: touchdown sink and ground speed in the twin hard-landing logs.")
 kit.claim("CL-C5-TEST-CORNER-H", "Free-drop height for the 10 deg corner drops of T-C5-AIRCRAFT-DROP",
           calc="CALC-C5-SIM3D", output="test_corner_h_m", unit="m",
@@ -422,18 +493,20 @@ kit.claim("CL-C5-SIM-INPUTS-STALE", "Simulation inputs changed since the run", c
           output="stale_count", unit="-", limit=("<=", 0.0),
           how="Re-run sim/landing_sim3d.py, sim/sink_sweep.py, sim/side_check.py, then this script, whenever this is > 0.")
 
-kit.claim("CL-C5-FEA-SHOE-SF", "Shoe GER-001 reserve factor at the design side load (59.25 N ult), D5-R6 stack",
+kit.claim("CL-C5-FEA-SHOE-SF", "Shoe GER-001 reserve factor at the design side load (D-105 cap x 1.5), D5-R6 stack",
           calc="CALC-C5-FEA-SHOE-D5R6", output="rf_design", unit="-", limit=(">=", 1.0),
           verifies=["R-LANDING-IMPACT"], parts=SHOES,
           note="C5-R6: C5's independent SU2 FEA of D5's R6 stack (walls 1.2, rim 2.8, R 1.0, engagement 25 mm) on 3 "
                "meshes, rim body / window strips; D5 has not yet re-published CALC-D5-SIDE, so the R6 numbers enter "
                "as overrides (CR-C5-20). Was 0.22 on the as-drawn D5-R5 shoe (CL-C5-FEA-SHOE-SF-R5)",
-          how="T-C5-SHOE-SIDE-FAIL on the R6 shoe: failure load >= 59.25 N at the pad, both axes.")
+          how="T-C5-SHOE-SIDE-FAIL on the R6 shoe: failure load >= 1.5 x CL-C5-SIM3D-SIDE-LOAD at the pad, both axes.")
 kit.claim("CL-C5-FEA-SHOE-SF-GCI", "D5-R6 shoe reserve factor with the grid error taken off",
           calc="CALC-C5-FEA-SHOE-D5R6", output="rf_design_gci", unit="-", limit=(">=", 1.0), parts=SHOES,
           how="As CL-C5-FEA-SHOE-SF.")
-kit.claim("CL-C5-FEA-SHOE-SF-MU05", "D5-R6 shoe reserve factor with the mu 0.5 pad option",
-          calc="CALC-C5-FEA-SHOE-D5R6", output="rf_mu05", unit="-", limit=(">=", 1.0), parts=SHOES,
+kit.claim("CL-C5-FEA-SHOE-SF-MU05", "D5-R6 shoe reserve factor if the pad face reaches mu 0.5 (record)",
+          calc="CALC-C5-FEA-SHOE-D5R6", output="rf_mu05", unit="-", parts=SHOES,
+          note="record, no limit: off-design (pad face missing its D-105 target by 0.1), on the C6 in-plane value "
+               "23.5 MPa; below 1, so the pad face is an acceptance item (T-D5-PAD-MU) and a pre-flight check",
           how="As CL-C5-FEA-SHOE-SF.")
 kit.claim("CL-C5-FEA-SHOE-SF-EDGE", "D5-R6 shoe: reserve factor at the clamp edge (fin TE), reported",
           calc="CALC-C5-FEA-SHOE-D5R6", output="rf_edge", unit="-", parts=SHOES,
@@ -463,11 +536,86 @@ kit.claim("CL-C5-FEA-SHOE-SF-HAND", "As-drawn D5-R5 shoe reserve factor at D5's 
 kit.claim("CL-C5-FEA-SIDE-CAPACITY", "Limit side load the as-drawn D5-R5 shoe takes at RF 1 (record)",
           calc="CALC-C5-FEA-SHOE", output="side_capacity_N", unit="N", parts=SHOES, how="None: superseded.")
 
+# ---------------------------------------------------------------- C5 closure 2026-11-14: cartridge life, honest mark,
+# mass capacity of the foot (records cr1114/out/cart_life.json, mass_sweep.json; low plateau k_F 0.90)
+_cg = "%.2f/%.3f" % (0.90, CART["snapshot"]["m_gate"])
+_cl = CART["rows"][_cg]
+CREC = "team/C5/cr1114/out/cart_life.json (cr1114/cart_life.py, 3-D sim, plateau x0.90, gate %.3f kg, mark %.1f mm)" % (
+    CART["snapshot"]["m_gate"], 1000 * CART["snapshot"]["mark"])
+kit.assumption("ASM-C5-SIM3D-SET-NORMAL", "3-D sim: worst-foot permanent set of one level 0.5 m/s touchdown",
+               "Permanent set of the most loaded foot after one level normal touchdown (ASM-D5-NORMAL-SINK) at the gate "
+               "mass, low plateau (x0.90 of ASM-D5-CART-PLATEAU, the ~10 % band), D5 set convention "
+               "(s_max - eps_y L/4 - eps_e L/2)", basis=CREC + "; nominal plateau %.2f mm; a 2.5 deg touchdown "
+               "%.2f mm" % (1000 * CART["rows"]["1.00/%.3f" % CART["snapshot"]["m_gate"]]["set_level_m"],
+                            1000 * _cl["set_2p5_m"]), value=_cl["set_level_m"], unit="m")
+kit.assumption("ASM-C5-SIM3D-HARD-WORN", "3-D sim: hard-landing stroke from a cartridge worn to the mark",
+               "Worst stroke of the 1.2 m/s / 10 deg envelope at the gate mass, low plateau, starting from a cartridge "
+               "worn to the replace mark plus one normal set (stance that much lower)", basis=CREC,
+               value=_cl["hard_worn_m"], unit="m")
+kit.assumption("ASM-C5-CART-LIFE-INPUTS", "Cartridge-life record: input snapshot",
+               "gate mass, replace mark, flange gap, cartridge length the cart_life.py record ran with", basis=CREC,
+               value=[CART["snapshot"][k] for k in ("m_gate", "mark", "s_av", "L_cart")], unit="-")
+
+
+@kit.calc("CALC-C5-CART-LIFE", title="Cartridge life and honest replace mark (3-D set, sortie rule)",
+          inputs={"set_n": "ASM-C5-SIM3D-SET-NORMAL", "hard": "ASM-C5-SIM3D-HARD-WORN",
+                  "mark": P + "landing.piston.replace_mark_m", "s_av": "CL-D5-STROKE-AVAIL", "guard": "ASM-C5-DROP-GUARD",
+                  "snap": "ASM-C5-CART-LIFE-INPUTS", "m_gate": P + "requirements.mtow_gate_kg", "L_cart": "CL-D5-CART-LEN"},
+          units={"set_n": "m", "hard": "m", "mark": "m", "s_av": "m", "guard": "m", "m_gate": "kg", "L_cart": "m"},
+          equation="landings = mark / set_n ; honest margin = (s_av - guard) - mark - set_n - hard (a foot just short of "
+                   "its mark flies a sortie: one normal touchdown, then the hard landing) ; stale = inputs that differ "
+                   "from the record")
+def cart_life(set_n, hard, mark, s_av, guard, snap, m_gate, L_cart):
+    now = [m_gate, mark, s_av, L_cart]
+    bad = [i for i, (a, b) in enumerate(zip(snap, now)) if abs(a - b) > 1e-6 * max(1.0, abs(a))]
+    return {"landings": mark / set_n if set_n > 0 else float("inf"),
+            "honest_margin_m": (s_av - guard) - mark - set_n - hard, "stale_count": float(len(bad))}
+
+
+kit.claim("CL-C5-LANDINGS-PER-CARTRIDGE", "Normal 0.5 m/s landings before the replace mark (3-D worst-foot set)",
+          calc="CALC-C5-CART-LIFE", output="landings", unit="-", limit=(">=", "ASM-C5-TD-PER-SORTIE"), parts=FEET,
+          note="C5 closure 2026-11-14: limit re-derived with A2 2.5 (was 5, no basis) = touchdowns per sortie (1 landing "
+               "+ 1 go-around touchdown); value on the 3-D worst-foot set at the low plateau (the symmetric hand value is "
+               "CL-C5-LANDINGS-PER-CARTRIDGE-HAND). Passes with margin once D5 draws the C5 closure foot (stroke 43 mm, "
+               "engagement 30 mm, mark 6 mm)",
+          how="H2 records the flange gap of every foot after each landing for the first 10 flights; T-D5-COUPON gives "
+              "the plateau.")
+kit.claim("CL-C5-MARK-HONEST-MARGIN", "Hard landing still fits from the replace mark after one more normal touchdown",
+          calc="CALC-C5-CART-LIFE", output="honest_margin_m", unit="m", limit=(">=", 0.0), parts=FEET,
+          verifies=["R-LANDING-IMPACT"],
+          note="C5 closure 2026-11-14: (s_av - guard) - mark - set - hard, gate mass, low plateau; the 3 mm guard is "
+               "kept on top",
+          how="T-C5-AIRCRAFT-DROP corner drop on a foot pre-crushed to the mark (H1 crushes it on the press).")
+kit.claim("CL-C5-CART-LIFE-STALE", "Cartridge-life record inputs changed since the run", calc="CALC-C5-CART-LIFE",
+          output="stale_count", unit="-", limit=("<=", 0.0),
+          how="Re-run team/C5/cr1114/cart_life.py, then this script.")
+
+_ms = [float(k.split("/")[1]) for k, r in MSW["hard"].items() if k.startswith("0.90/") and r["margin_new_m"] >= 0]
+kit.assumption("ASM-C5-SIM3D-MASS-MAX", "3-D sim: largest mass whose hard landing stays in the usable stroke",
+               "Largest swept mass (2.60-2.90 kg) at which the 1.2 m/s / 10 deg envelope on a fresh cartridge at the low "
+               "plateau stays inside the usable stroke (CG fixed, inertia scaled with mass)",
+               basis="team/C5/cr1114/out/mass_sweep.json (cr1114/mass_sweep.py); at 2.90 kg the margin is %.1f mm, "
+                     "so the true limit is above the sweep (about 3.0 kg, EST)"
+                     % (1000 * MSW["hard"]["0.90/2.90"]["margin_new_m"]), value=max(_ms), unit="kg")
+
+
+@kit.calc("CALC-C5-MASS-CAP", title="Foot hard-landing mass capacity", inputs={"m": "ASM-C5-SIM3D-MASS-MAX"},
+          units={"m": "kg"}, equation="record")
+def mass_cap(m):
+    return {"m_max_kg": m}
+
+
+kit.claim("CL-C5-SIM3D-MASS-MAX", "Largest mass the fresh foot carries through the hard landing (low plateau)",
+          calc="CALC-C5-MASS-CAP", output="m_max_kg", unit="kg", limit=(">=", P + "requirements.mtow_gate_kg"),
+          parts=FEET, note="C5 closure 2026-11-14: the foot stroke does not bind the mass gate below about 2.9 kg; the "
+          "cartridge life with an honest mark (CL-C5-LANDINGS-PER-CARTRIDGE) is what sizes the foot",
+          how="T-C5-AIRCRAFT-DROP with ballast to the gate mass.")
+
 kit.test("T-C5-SHOE-SIDE-FAIL", "Shoe side load to failure", verifies=["CL-C5-FEA-SIDE-CAPACITY-D5R6", "CL-C5-FEA-SHOE-SF"],
          procedure="Two shoes as D5 builds them (R6: walls 1.2, rim 2.8, R 1.0 inside fillets, 25 mm engagement, "
                    "layers along the sleeve axis) bonded on stepped foam-board offcuts (as T-D5-PROOF), insert pushed 4.5 mm in; load "
                    "the pad sideways along +y on one, +z on the other, in 5 N steps to failure; record the load and "
-                   "where it cracks (rim, window end, roof, fin TE). Pass: failure load >= 59.25 N (1.5 x CL-C5-SIM3D-SIDE-LOAD) "
+                   "where it cracks (rim, window end, roof, fin TE). Pass: failure load >= 1.5 x CL-C5-SIM3D-SIDE-LOAD (36.75 N at the D-105 cap) "
                    "on both.")
 
 if __name__ == "__main__":

@@ -11,7 +11,7 @@
    "mass_g": 98.5,
    "material": "motor (bought)",
    "cg_xyz_m": [
-    0.011,
+    0.0064,
     0.32,
     0.19
    ],
@@ -26,7 +26,7 @@
    "mass_g": 98.5,
    "material": "motor (bought)",
    "cg_xyz_m": [
-    0.011,
+    0.0064,
     -0.32,
     0.19
    ],
@@ -41,7 +41,7 @@
    "mass_g": 98.5,
    "material": "motor (bought)",
    "cg_xyz_m": [
-    0.011,
+    0.0064,
     0.32,
     -0.19
    ],
@@ -56,7 +56,7 @@
    "mass_g": 98.5,
    "material": "motor (bought)",
    "cg_xyz_m": [
-    0.011,
+    0.0064,
     -0.32,
     -0.19
    ],
@@ -71,7 +71,7 @@
    "mass_g": 17.0,
    "material": "nylon-glass prop (bought)",
    "cg_xyz_m": [
-    -0.0127,
+    -0.017,
     0.32,
     0.19
    ],
@@ -86,7 +86,7 @@
    "mass_g": 17.0,
    "material": "nylon-glass prop (bought)",
    "cg_xyz_m": [
-    -0.0127,
+    -0.017,
     -0.32,
     0.19
    ],
@@ -101,7 +101,7 @@
    "mass_g": 17.0,
    "material": "nylon-glass prop (bought)",
    "cg_xyz_m": [
-    -0.0127,
+    -0.017,
     0.32,
     -0.19
    ],
@@ -116,7 +116,7 @@
    "mass_g": 17.0,
    "material": "nylon-glass prop (bought)",
    "cg_xyz_m": [
-    -0.0127,
+    -0.017,
     -0.32,
     -0.19
    ],

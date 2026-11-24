@@ -114,10 +114,27 @@ def fmt(v, unit=""):
 
 
 def margin(value, limit_value, op):
-    """Signed fractional margin; negative = fails."""
-    if not isinstance(value, (int, float)) or not isinstance(limit_value, (int, float)) or limit_value == 0:
+    """Signed margin; negative = fails.
+
+    Limit not 0: a fraction of the limit, (value - limit) / |limit| for ">=", (limit - value) / |limit| for "<=".
+    Limit 0 (margins of safety, clearances, counts): a fraction of 0 does not exist, so the margin is the signed
+    distance to the limit in the claim's own unit: value for ">= 0", -value for "<= 0". The sign alone decides
+    pass / fail in both cases. (CDR-03, 2026-11-13: a limit of 0 used to return None, so the fail was not counted.)
+    """
+    if not isinstance(value, (int, float)) or not isinstance(limit_value, (int, float)) \
+            or math.isnan(value) or math.isnan(limit_value):
         return None
-    return (value - limit_value) / abs(limit_value) if op == ">=" else (limit_value - value) / abs(limit_value)
+    d = (value - limit_value) if op == ">=" else (limit_value - value)
+    return (d / abs(limit_value) if limit_value != 0 else d) + 0.0        # + 0.0 turns -0.0 into 0.0
+
+
+def margin_text(m, limit_value, unit="", digits=0):
+    """A margin as text: a percentage, or for a limit of 0 the signed distance in the claim's unit ("-0.74 abs")."""
+    if m is None:
+        return ""
+    if limit_value == 0:
+        return f"{m:+.3g}" + (f" {unit}" if unit and unit != "-" else "") + " abs"
+    return f"{m:+.{digits}%}"
 
 
 # ---------------------------------------------------------------- calling a calculation
@@ -283,7 +300,8 @@ class Kit:
                 lv = self.value(n["limit"]["ref"]) if lv is None else lv
                 m = margin(n["value"], lv, n["limit"]["op"])
             lines.append(f"  {n['id']:<22} {fmt(n['value'], n['unit']):>14}"
-                         + (f"   margin {m:+.0%}" if m is not None else "") + ("   FAILS" if m is not None and m < 0 else ""))
+                         + (f"   margin {margin_text(m, lv, n['unit'])}" if m is not None else "")
+                         + ("   FAILS" if m is not None and m < 0 else ""))
         for n in self.nodes.values():
             n.pop("_done", None)
             n.pop("_output", None)

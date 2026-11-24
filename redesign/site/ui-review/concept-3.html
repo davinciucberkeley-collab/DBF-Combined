@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Concept 3 · Mission control</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* dark first: instrument panel */
+  --bg:#0a0d10;--panel:#10151a;--panel-2:#151b21;--line:#222b33;--line-2:#2f3a44;--ink:#e6ebef;--ink-2:#9aa6b2;--ink-3:#6d7a87;
+  --amber:#f5a524;--green:#3ddc97;--red:#ff6b5e;--cyan:#5bc0eb;
+  /* spacing 2 4 8 12 16 24 */
+  --s0:2px;--s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;
+  --sans:"IBM Plex Sans Condensed","IBM Plex Sans",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+}
+:root[data-theme=light]{--bg:#e9edf0;--panel:#ffffff;--panel-2:#f3f5f7;--line:#d5dbe1;--line-2:#b9c2cb;--ink:#12181e;--ink-2:#46525e;--ink-3:#66727e;--amber:#9a5b00;--green:#0d7a50;--red:#b3261e;--cyan:#0b6a96}
+@media (prefers-color-scheme:light){:root:not([data-theme=dark]):not([data-theme=light]){--bg:#e9edf0;--panel:#ffffff;--panel-2:#f3f5f7;--line:#d5dbe1;--line-2:#b9c2cb;--ink:#12181e;--ink-2:#46525e;--ink-3:#66727e;--amber:#9a5b00;--green:#0d7a50;--red:#b3261e;--cyan:#0b6a96}}
+*{box-sizing:border-box}
+html{background:var(--bg);color:var(--ink);font:400 14px/1.45 var(--sans);-webkit-text-size-adjust:100%}
+body{margin:0}
+a{color:var(--cyan);text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--amber);outline-offset:1px}
+.m{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.bar{display:flex;align-items:stretch;border-bottom:1px solid var(--line-2);background:var(--panel);font-size:12px;overflow:hidden}
+.bar>div{padding:var(--s2) var(--s4);border-right:1px solid var(--line);white-space:nowrap}
+.bar .id{font-weight:600;font-size:14px;letter-spacing:.02em}
+.bar small{display:block;color:var(--ink-3);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.bar b{font:500 14px var(--mono)}
+.bar .sp{flex:1;border:0}
+.bar .ok{color:var(--green)}
+.shell{display:grid;grid-template-columns:168px minmax(0,1fr);min-height:calc(100vh - 41px)}
+.rail{border-right:1px solid var(--line-2);background:var(--panel);padding:var(--s2) 0;font-size:13px}
+.rail a{display:flex;justify-content:space-between;padding:6px var(--s4);color:var(--ink-2);text-decoration:none;border-left:2px solid transparent}
+.rail a kbd{font:11px var(--mono);color:var(--ink-3)}
+.rail a[aria-current]{color:var(--ink);background:var(--panel-2);border-left-color:var(--amber)}
+.rail h6{margin:var(--s4) var(--s4) var(--s1);font:500 10px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.mbtn{display:none}
+main{padding:var(--s4);min-width:0;display:grid;gap:var(--s5);align-content:start}
+.grid{align-content:start;align-items:start;display:grid;grid-template-columns:repeat(12,1fr);gap:var(--s3)}
+.pn{background:var(--panel);border:1px solid var(--line);border-radius:3px;min-width:0}
+.pn>header{display:flex;justify-content:space-between;align-items:baseline;padding:6px var(--s3);border-bottom:1px solid var(--line);font:500 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.pn>header span{font:11px var(--mono);letter-spacing:0;text-transform:none;color:var(--ink-3)}
+.c12{grid-column:span 12}.c9{grid-column:span 9}.c8{grid-column:span 8}.c6{grid-column:span 6}.c4{grid-column:span 4}.c3{grid-column:span 3}
+.ttl{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s4);flex-wrap:wrap}
+h1{font:600 20px/1.2 var(--sans);margin:0;letter-spacing:.01em}
+.sub{color:var(--ink-2);font-size:13px;max-width:90ch}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3)}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:var(--s3)}
+.tile .k{font:500 10px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.tile .v{font:500 24px/1.15 var(--mono);margin:var(--s1) 0 var(--s0)}
+.tile .l{font:11.5px/1.35 var(--sans);color:var(--ink-2)}
+.tile.g .v{color:var(--green)}
+.vw{position:relative;aspect-ratio:16/10;background:#0e1318;overflow:hidden}
+.vw img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92}
+.vw .tl{position:absolute;top:var(--s2);left:var(--s2);display:flex;gap:var(--s1);flex-wrap:wrap}
+.vw .tl span{font:11px var(--mono);background:rgba(10,13,16,.82);color:var(--ink-2);padding:2px 7px;border:1px solid var(--line-2);border-radius:2px}
+.vw .tl .on{color:var(--amber);border-color:var(--amber)}
+.vw .ft{position:absolute;left:var(--s2);bottom:var(--s2);font:11px var(--mono);color:#9aa6b2;background:rgba(10,13,16,.82);padding:2px 7px;border-radius:2px}
+.tree{font-size:13px}.tree div{display:grid;grid-template-columns:10px 1fr auto;gap:var(--s2);align-items:center;padding:4px var(--s3);border-bottom:1px solid var(--line)}
+.tree i{width:8px;height:8px;border-radius:1px;display:block}.tree b{font:12px var(--mono);font-weight:400;color:var(--ink-2)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{font:500 10px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);text-align:left;padding:6px var(--s3);border-bottom:1px solid var(--line-2);background:var(--panel-2);white-space:nowrap;position:sticky;top:0}
+td{padding:6px var(--s3);border-bottom:1px solid var(--line);vertical-align:top}
+tr:hover td{background:var(--panel-2)}
+.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap} th.num{text-align:right}
+td.id{font:12px var(--mono);color:var(--ink-3);white-space:nowrap}
+.led{font:500 11px var(--mono);letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}.led::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;background:currentColor}
+.l-done,.l-v{color:var(--green)}.l-partial,.l-unverified,.l-marginal,.l-est{color:var(--amber)}.l-open{color:var(--red)}.l-todo{color:var(--ink-3)}.l-todo::before{background:none;box-shadow:inset 0 0 0 1.5px currentColor}
+.src{font:11px var(--mono);color:var(--ink-3);display:block;margin-top:2px}
+.strip{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;padding:var(--s3)}
+.strip div{height:8px;background:var(--line-2)}.strip .d{background:var(--green)}.strip .p{background:var(--amber)}
+.strip-l{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;padding:0 var(--s3) var(--s3);font:11px var(--mono);color:var(--ink-3)}
+.hbar{display:grid;grid-template-columns:90px 1fr 70px;gap:var(--s3);align-items:center;padding:4px var(--s3);font-size:12.5px}
+.hbar i{display:block;height:6px;background:var(--cyan)}.hbar b{font:500 12px var(--mono);text-align:right}
+.legend{padding:var(--s2) var(--s3);font:11px var(--mono);color:var(--ink-3);display:flex;gap:var(--s4);flex-wrap:wrap;border-top:1px solid var(--line)}
+.scroll{overflow-x:auto}
+.theme{font:11px var(--mono);background:none;border:1px solid var(--line-2);color:var(--ink-2);padding:2px 8px;border-radius:2px;cursor:pointer;margin:6px var(--s3)}
+@media (max-width:900px){.c9,.c8,.c6,.c4,.c3{grid-column:span 12}.tiles{grid-template-columns:1fr 1fr}}
+@media (max-width:760px){
+ .bar>div.opt{display:none}.shell{display:block}
+ .rail{display:none;border-right:0;border-bottom:1px solid var(--line-2)} #menu:checked ~ .shell .rail{display:block}
+ .mbtn{display:block;padding:var(--s2) var(--s4);border-bottom:1px solid var(--line-2);background:var(--panel);font:12px var(--mono)}
+ main{padding:var(--s3)} .col-hide{display:none} .strip{grid-template-columns:repeat(10,1fr)}
+}
+</style></head><body>
+<!--
+ CONCEPT 3 "Mission control": dense instrument panels (Grafana, Onshape, Joby "data as of" footers).
+ Type: IBM Plex Sans Condensed (labels, text) + JetBrains Mono (every number, id, source; tabular figures). Scale 10 / 11 / 12.5 / 14 / 20 / 24.
+ Dark = #0a0d10 / panels #10151a / amber #f5a524 / green #3ddc97 / red #ff6b5e / cyan #5bc0eb; light = #e9edf0 / white / darker amber #9a5b00.
+ Spacing 2 4 8 12 16 24. Radius 3. Nav: left rail with F-key shortcuts, status bar on top carries the live gate numbers (mass, CG, claims, build time).
+ Under 760 px: rail hides behind a Pages bar, status bar keeps three readouts, tables drop owner and group columns.
+-->
+<input type="checkbox" id="menu" hidden>
+<div class="bar"><div class="id">Concept A <small>scaled quad tailsitter, D-182</small></div>
+ <div>Mass <b class="m">1,263</b> g <small>gate 1,500</small></div>
+ <div class="opt">CG x <b class="m">0.021</b> m <small>0.004 to 0.029</small></div>
+ <div class="opt">Claims <b class="m ok">63</b> <small>0 failing</small></div>
+ <div class="opt">Built <b class="m">2026-11-16 07:46Z</b></div><div class="sp"></div>
+ <div class="opt"><button class="theme" onclick="var r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark'">dark / light</button></div></div>
+<label for="menu" class="mbtn" role="button" tabindex="0">Pages (9) +</label>
+<div class="shell"><nav class="rail" aria-label="Pages"><h6>Explorer</h6><a href="#aircraft" aria-current="page">Aircraft<kbd>F1</kbd></a><a href="#decision">Decision<kbd>F2</kbd></a><a href="#team">Team<kbd>F3</kbd></a><a href="#subsystems">Subsystems<kbd>F4</kbd></a><a href="#build-guide">Build guide<kbd>F5</kbd></a><a href="#proofs">Proofs<kbd>F6</kbd></a><a href="#status">Status<kbd>F7</kbd></a><a href="#bom">BOM<kbd>F8</kbd></a><a href="#docs">Docs<kbd>F9</kbd></a><h6>Tools</h6><a href="#">Search<kbd>/</kbd></a><a href="#">Fasteners<kbd>H</kbd></a></nav>
+<main>
+<section id="aircraft" class="grid">
+ <div class="c12 ttl"><h1>Aircraft</h1><p class="sub">106 flight parts, 141 interfaces. Select a part for its numbers, interfaces and claims.</p></div>
+ <div class="pn c3"><header>Parts <span>106</span></header><div class="tree"><div><i style="background:#6b7280"></i><span>propulsion</span><b>353 g</b></div><div><i style="background:#4caf50"></i><span>power</span><b>279 g</b></div><div><i style="background:#26a69a"></i><span>wing</span><b>222 g</b></div><div><i style="background:#26a69a"></i><span>cage</span><b>119 g</b></div><div><i style="background:#e0a800"></i><span>fins</span><b>110 g</b></div><div><i style="background:#a47c3c"></i><span>avionics</span><b>65 g</b></div><div><i style="background:#7a8794"></i><span>mechanisms</span><b>48 g</b></div><div><i style="background:#e8573f"></i><span>harness</span><b>33 g</b></div><div><i style="background:#d6457f"></i><span>assembly</span><b>26 g</b></div><div><i style="background:#3b82f6"></i><span>wiring</span><b>14 g</b></div><div><i style="background:#e0a800"></i><span>landing</span><b>8.4 g</b></div></div></div>
+ <div class="pn c6"><header>Model <span>assets/concept-a.glb, placeholder render</span></header><div class="vw"><img src="../assets/renders/a-hero-iso.webp" alt="Placeholder for the 3-D viewer: render of concept A"><div class="tl"><span class="on">Aircraft</span><span>Inside &amp; wiring</span><span>Structure</span><span>Exploded</span><span class="on">Cruise</span><span>Hover</span></div><div class="ft">drag rotate · scroll zoom · click part · H fasteners</div></div></div>
+ <div class="pn c3"><header>Inspector <span>no part selected</span></header>
+  <table><tbody><tr><td>Flight parts</td><td class=num>106</td></tr><tr><td>Declared mass</td><td class=num>1,263 g</td></tr><tr><td>Gate</td><td class=num>1,500 g</td></tr><tr><td>CG x</td><td class=num>0.021 m</td></tr><tr><td>Target</td><td class=num>0.004 to 0.029</td></tr><tr><td>Interfaces</td><td class=num>141</td></tr><tr><td>Claims</td><td class=num>63</td></tr></tbody></table>
+  <div class="legend"><span>click a part for numbers</span></div></div>
+</section>
+<section id="status" class="grid">
+ <div class="c12 ttl"><h1>Status</h1><p class="sub">Concept A (D-182), 2026-11-15. Five of ten phases done, one partial, four not started. Done means the round delivered and its decisions are logged; it does not mean verified.</p></div>
+ <div class="pn c12"><header>Programme <span>5 done · 1 partial · 4 not started</span></header><div class="strip"><div class="d"></div><div class="d"></div><div class="d"></div><div class="d"></div><div class="d"></div><div class="p"></div><div class=""></div><div class=""></div><div class=""></div><div class=""></div></div><div class="strip-l"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span><span>09</span><span>10</span></div>
+  <div class="scroll"><table><thead><tr><th>No.</th><th>Phase</th><th class=col-hide>Scope</th><th class=col-hide>Ref</th><th>State</th></tr></thead><tbody><tr><td class=id>01</td><td><b style="font-weight:500">Re-study and selection</b><span class=src>D-182</span></td><td class=col-hide>Re-study 2026-11-14, QP-1 sizing of A, B, T, D2; J6 board picks A</td><td class="col-hide m">D-182</td><td><span class="led l-done">Done</span></td></tr><tr><td class=id>02</td><td><b style="font-weight:500">Sizing and SITL</b><span class=src>D-183, D-184</span></td><td class=col-hide>QP-2: wind, bench plan, baseline</td><td class="col-hide m">D-183, D-184</td><td><span class="led l-done">Done</span></td></tr><tr><td class=id>03</td><td><b style="font-weight:500">Pre-order validation</b><span class=src>D-185, D-186</span></td><td class=col-hide>QP-3: SITL flight, structures, cost and schedule, CAD through the 3-D gates</td><td class="col-hide m">D-185, D-186</td><td><span class="led l-done">Done</span></td></tr><tr><td class=id>04</td><td><b style="font-weight:500">Fixes and board re-sit</b><span class=src>D-187, D-188</span></td><td class=col-hide>QP-4: elevon balance and hinge damper, caps and stops. Order 1 YES, main order NOT YET</td><td class="col-hide m">D-187, D-188</td><td><span class="led l-done">Done</span></td></tr><tr><td class=id>05</td><td><b style="font-weight:500">Claims and real-shape CAD</b><span class=src>D-189 to D-197</span></td><td class=col-hide>QP-5: claims cleared, CAD to vendor geometry, analyses on it, hub walls, arms and motor cups</td><td class="col-hide m">D-189 to D-197</td><td><span class="led l-done">Done</span></td></tr><tr><td class=id>06</td><td><b style="font-weight:500">Enclosed wiring</b><span class=src>D-199</span></td><td class=col-hide>C8: phase leads enclosed from motor to ESC; exposed wire 9.09 to 0.87 strand-m; pitot tube run not designed</td><td class="col-hide m">D-199</td><td><span class="led l-partial">Partial</span></td></tr><tr><td class=id>07</td><td><b style="font-weight:500">Order 1 and bench</b><span class=src>by 4 Dec</span></td><td class=col-hide>Bench kit early December: thrust, current, yaw (M1 to M4), elevon coupon, weigh-in</td><td class="col-hide m">by 4 Dec</td><td><span class="led l-todo">Not started</span></td></tr><tr><td class=id>08</td><td><b style="font-weight:500">Main order</b><span class=src>28 Dec</span></td><td class=col-hide>Gates G1 to G9 (QP-4 board s4); latest safe date 28 Dec</td><td class="col-hide m">28 Dec</td><td><span class="led l-todo">Not started</span></td></tr><tr><td class=id>09</td><td><b style="font-weight:500">Build and tethered hover</b><span class=src>15 Feb 2027</span></td><td class=col-hide>January to February; lifeboat (ZOHD Altus) if no tethered hover</td><td class="col-hide m">15 Feb 2027</td><td><span class="led l-todo">Not started</span></td></tr><tr><td class=id>10</td><td><b style="font-weight:500">Flight test</b><span class=src>30 Apr 2027</span></td><td class=col-hide>Transition round trip and the mission profile</td><td class="col-hide m">30 Apr 2027</td><td><span class="led l-todo">Not started</span></td></tr></tbody></table></div></div>
+ <div class="pn c12"><header>Open issues <span>5 of 9 shown</span></header><div class="scroll"><table><thead><tr><th>#</th><th>Issue and source</th><th class=col-hide>Owner</th><th>State</th></tr></thead><tbody><tr><td class=id>1</td><td><b style="font-weight:500">Exposed wiring (hard constraint C8)</b><br>After D-199, 0.87 strand-m are still outside the skin (was 9.09; 0.60 without the vendor pack leads). Left: vendor pack leads and battery tail to the cover slot, short RX / airspeed / servo lead stubs, and the pitot silicone tube, not designed (0.45 m, needs a foam groove across the spar).<span class=src>CLAUDE.md C8; HARNESS-ENCLOSED.md s5</span></td><td class=col-hide>harness, CAD</td><td><span class="led l-open">Open</span></td></tr><tr><td class=id>2</td><td><b style="font-weight:500">Hub arm-socket wall</b><br>2.0 mm over the 12 mm mouth: the rough hoop check passes only with a 12 mm bearing patch (MS +0.05; -0.47 at 6 mm).<span class=src>ASM-A-HUB-WALL, D-196; qp5_checks.md s2</span></td><td class=col-hide>structures, bench</td><td><span class="led l-unverified">Unverified</span></td></tr><tr><td class=id>3</td><td><b style="font-weight:500">Mass has about 4 g of room</b><br>Predicted 1,455.6 g against the 1.46 kg target (weigh-in gate 1.47 kg) after D-198; the estimated cuts must prove real at the weigh-in.<span class=src>CL-A-MASS-PRED, CL-A-CUTS-REQUIRED; MASS-GATE.md s11</span></td><td class=col-hide>mass (A3)</td><td><span class="led l-unverified">Unverified</span></td></tr><tr><td class=id>4</td><td><b style="font-weight:500">Elevon flutter</b><br>Cleared only with the silicone-fluid hinge damper (lowest onset 38.5 m/s hot against the 28.8 m/s line); the coupon must show K >= 2, free play <= 0.5 deg, damping >= 1 %.<span class=src>G8, D-188; flutter_d195.md</span></td><td class=col-hide>structures (C1, C2)</td><td><span class="led l-unverified">Unverified</span></td></tr><tr><td class=id>5</td><td><b style="font-weight:500">Gusty hover heading</b><br>Excursion 25.4 deg in one of seven turbulence seeds (8.5 to 14.0 deg in the rest); flown with the pilot holding heading.<span class=src>A-P8a; QP-5/ANALYSES.md</span></td><td class=col-hide>flight controls</td><td><span class="led l-marginal">Marginal</span></td></tr></tbody></table></div>
+  <div class="legend"><span>OPEN needs work</span><span>UNVERIFIED analysed, not tested</span><span>MARGINAL little room</span><span>EST estimate</span></div></div>
+</section>
+<section id="bom" class="grid">
+ <div class="c12 ttl"><h1>Bill of materials</h1><p class="sub">41 lines, all bought new, against the $2,000 limit. Prices read 2026-11-14/15. Nothing is bought yet.</p></div>
+ <div class="tiles c12"><div class="tile"><div class="k">Total with reserve</div><div class="v">$1,779.47</div><div class="l">spend $1,452.04 + reserve $327.43</div></div><div class="tile g"><div class="k">Margin to $2,000</div><div class="v">$220.53</div><div class="l">+$100.05 if unverified lines run 30 % over</div></div><div class="tile"><div class="k">Goods</div><div class="v">$1,262.50</div><div class="l">+ tax $129.41, ship $55.13 EST, FAA $5</div></div><div class="tile"><div class="k">Order 1, early Dec</div><div class="v">$967.90</div><div class="l">bench kit, 2 motors</div></div></div>
+ <div class="pn c4"><header>Spend by group <span>incl. tax</span></header><div class=hbar><span>propulsion</span><i style="width:100%"></i><b>$319.24</b></div><div class=hbar><span>avionics</span><i style="width:95%"></i><b>$304.07</b></div><div class=hbar><span>airframe</span><i style="width:85%"></i><b>$273.36</b></div><div class=hbar><span>power</span><i style="width:69%"></i><b>$221.59</b></div><div class=hbar><span>ground test</span><i style="width:68%"></i><b>$217.46</b></div><div class=hbar><span>mechanisms</span><i style="width:17%"></i><b>$56.18</b></div></div>
+ <div class="pn c8"><header>Lines <span>12 of 41, qp/A/BOM-A.csv</span></header><div class="scroll"><table><thead><tr><th>Line</th><th>Item</th><th class=col-hide>Group</th><th class=col-hide>Vendor</th><th class=num>Qty</th><th class=num>Unit</th><th class=num>Ext</th><th>Price</th><th class=col-hide>Order</th></tr></thead><tbody><tr><td class=id>P01</td><td>T-Motor MN2212 V2.0 KV780 (4 + 1 spare)</td><td class=col-hide>propulsion</td><td class=col-hide>T-Motor</td><td class=num>5</td><td class=num>$46.90</td><td class=num>$234.50</td><td><span class="led l-v">V</span></td><td class=col-hide>Order 1</td></tr><tr><td class=id>P02</td><td>APC 9x4.5MR 4-pack (2 standard + 2 reverse rotation)</td><td class=col-hide>propulsion</td><td class=col-hide>RMRC</td><td class=num>1</td><td class=num>$9.40</td><td class=num>$9.40</td><td><span class="led l-v">V</span></td><td class=col-hide>Order 1</td></tr><tr><td class=id>P04</td><td>SpeedyBee BLS 35A Mini V2 4-in-1 ESC 20x20 (DShot300/600)</td><td class=col-hide>propulsion</td><td class=col-hide>RMRC</td><td class=num>1</td><td class=num>$45.66</td><td class=num>$45.66</td><td><span class="led l-v">V</span></td><td class=col-hide>Order 1</td></tr><tr><td class=id>W01</td><td>Tattu 2300 mAh 4S 75C XT60 270 g (2 flight packs)</td><td class=col-hide>power</td><td class=col-hide>RMRC</td><td class=num>2</td><td class=num>$37.09</td><td class=num>$74.18</td><td><span class="led l-v">V</span></td><td class=col-hide>Order 1</td></tr><tr><td class=id>W02</td><td>ToolkitRC M6AC charger</td><td class=col-hide>power</td><td class=col-hide>RMRC</td><td class=num>1</td><td class=num>$63.71</td><td class=num>$63.71</td><td><span class="led l-v">V</span></td><td class=col-hide>Order 1</td></tr><tr><td class=id>W03</td><td>TBS LiPo bag</td><td class=col-hide>power</td><td class=col-hide>RMRC</td><td class=num>2</td><td class=num>$7.61</td><td class=num>$15.22</td><td><span class="led l-v">V</span></td><td class=col-hide>Order 1</td></tr><tr><td class=id>W04</td><td>Metal ammo can (pack storage)</td><td class=col-hide>power</td><td class=col-hide>Local</td><td class=num>1</td><td class=num>$13.99</td><td class=num>$13.99</td><td><span class="led l-v">V</span></td><td class=col-hide>Order 1</td></tr><tr><td class=id>W05</td><td>Wire 14 AWG silicone, XT60 5-pair, heat shrink</td><td class=col-hide>power</td><td class=col-hide>RMRC</td><td class=num>1</td><td class=num>$19.94</td><td class=num>$19.94</td><td><span class="led l-v">V</span></td><td class=col-hide>Order 1</td></tr><tr><td class=id>W06</td><td>Threadlocker</td><td class=col-hide>power</td><td class=col-hide>Local</td><td class=num>1</td><td class=num>$6.00</td><td class=num>$6.00</td><td><span class="led l-est">EST</span></td><td class=col-hide>Order 1</td></tr><tr><td class=id>W07</td><td>Wire 20 AWG silicone: phase-lead extension</td><td class=col-hide>power</td><td class=col-hide>RMRC</td><td class=num>1</td><td class=num>$3.96</td><td class=num>$3.96</td><td><span class="led l-v">V</span></td><td class=col-hide>Main</td></tr><tr><td class=id>W08</td><td>Battery strap 20 x 300 mm (2 pcs)</td><td class=col-hide>power</td><td class=col-hide>RMRC</td><td class=num>1</td><td class=num>$1.99</td><td class=num>$1.99</td><td><span class="led l-v">V</span></td><td class=col-hide>Main</td></tr><tr><td class=id>W09</td><td>Anti-slip pad: silicone rubber sheet 1 mm</td><td class=col-hide>power</td><td class=col-hide>Amazon</td><td class=num>1</td><td class=num>$2.00</td><td class=num>$2.00</td><td><span class="led l-est">EST</span></td><td class=col-hide>Main</td></tr></tbody></table></div></div>
+</section>
+</main></div>
+<script>if(location.hash==='#light')document.documentElement.dataset.theme='light'</script>
+</body></html>

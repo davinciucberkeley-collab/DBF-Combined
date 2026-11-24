@@ -1,0 +1,49 @@
+Stall (CLmax 0.75 EST): {1.226: 11.02, 1.37: 11.65, 1.45: 11.98, 1.5: 12.19}
+1.3 Vs at 1.50 kg: 15.85  1.45 Vs: 17.68
+V 15.0: CL 0.452 L/D 7.84 drag 1.71 N aero 25.7 W elec 130 W (eta_p 0.26 x 0.76 EST)
+V 16.0: CL 0.398 L/D 7.55 drag 1.78 N aero 28.5 W elec 144 W (eta_p 0.26 x 0.76 EST)
+V 17.0: CL 0.352 L/D 7.19 drag 1.87 N aero 31.8 W elec 161 W (eta_p 0.26 x 0.76 EST)
+R 51.0 m; reference lap (300 m leg) 920.7 m = 54.16 s; cruise requirement 204.6 s = 3.41 min
+flown: leg 150 m, lap 620.7 m = 36.51 s, 5.2 laps of cruise after the 15 s settle; racetrack far point 126 m; any-direction bound after BATT_LOW L/2 + 51 + 94 = 220 m vs fence 250 - 10 = 240 m (margin 20 m)
+basic 1311.3 g; growth 146.4 g; predicted 1457.7 g; overrun 48 g; predicted+overrun 1506 g; headroom to the 1.47 kg gate -36 g (to the old 1.50 kg: -6 g), to 1440 -66 g
+Stall (CLmax 0.75 EST): {1.226: 11.02, 1.506: 12.21, 1.44: 11.94, 1.5: 12.19}
+1.3 Vs at 1.50 kg: 15.85 (cruise 17 is 7.3 % over); at 1.506 kg: 15.88
+m 1.506: T/W fresh 3.42 (cap 2.93); sag 2.72 (cap 2.31)
+   window uncapped sag: 1.33-2.173 W, +-24.1 %
+   window 0.90-capped sag: 1.33-1.851 W, +-16.4 %
+m 1.44: T/W fresh 3.58 (cap 3.06); sag 2.84 (cap 2.42)
+   window uncapped sag: 1.33-2.272 W, +-26.2 %
+   window 0.90-capped sag: 1.33-1.936 W, +-18.5 %
+m 1.455: T/W fresh 3.54 (cap 3.03); sag 2.81 (cap 2.39)
+   window uncapped sag: 1.33-2.249 W, +-25.7 %
+   window 0.90-capped sag: 1.33-1.916 W, +-18.0 %
+m 1.46: T/W fresh 3.53 (cap 3.02); sag 2.80 (cap 2.39)
+   window uncapped sag: 1.33-2.241 W, +-25.5 %
+   window 0.90-capped sag: 1.33-1.909 W, +-17.9 %
+m 1.47: T/W fresh 3.51 (cap 3.00); sag 2.78 (cap 2.37)
+   window uncapped sag: 1.33-2.226 W, +-25.2 %
+   window 0.90-capped sag: 1.33-1.896 W, +-17.5 %
+m 1.5: T/W fresh 3.44 (cap 2.94); sag 2.73 (cap 2.32)
+   window uncapped sag: 1.33-2.182 W, +-24.2 %
+   window 0.90-capped sag: 1.33-1.858 W, +-16.6 %
+max mass T/W fresh 2.0: 2.577 kg
+max mass T/W fresh 2.0 capped: 2.203 kg
+max mass T/W sag 1.6: 2.556 kg
+max mass T/W sag 1.6 capped: 2.178 kg
+mass for +-5 % window uncapped: 2.226 kg
+mass for +-5 % window capped: 1.896 kg
+O4b RDQ 2800 pack 41.4 Wh, usable after 0.90 floor and 20 % reserve 29.8 Wh; BATT_LOW remaining = 784 mAh of 2800
+m 1.506: hover 211 W 10.55 Wh (180 s incl 40 s go-around); trans 1.80; climb 0.32; cruise 170 W 9.66 Wh; total 22.33 Wh; pack margin 1.34x; hover pack 14.3 A; max cruise to BATT_LOW 363 s = 6.06 min (need 3.41); spare laps (150 m leg) 4.4
+m 1.44: hover 198 W 9.88 Wh (180 s incl 40 s go-around); trans 1.68; climb 0.30; cruise 166 W 9.42 Wh; total 21.29 Wh; pack margin 1.40x; hover pack 13.4 A; max cruise to BATT_LOW 390 s = 6.50 min (need 3.41); spare laps (150 m leg) 5.1
+m 1.455: hover 201 W 10.04 Wh (180 s incl 40 s go-around); trans 1.71; climb 0.31; cruise 167 W 9.47 Wh; total 21.52 Wh; pack margin 1.39x; hover pack 13.6 A; max cruise to BATT_LOW 384 s = 6.40 min (need 3.41); spare laps (150 m leg) 4.9
+m 1.46: hover 202 W 10.09 Wh (180 s incl 40 s go-around); trans 1.72; climb 0.31; cruise 167 W 9.49 Wh; total 21.60 Wh; pack margin 1.38x; hover pack 13.6 A; max cruise to BATT_LOW 382 s = 6.37 min (need 3.41); spare laps (150 m leg) 4.9
+m 1.47: hover 204 W 10.19 Wh (180 s incl 40 s go-around); trans 1.73; climb 0.31; cruise 168 W 9.53 Wh; total 21.76 Wh; pack margin 1.37x; hover pack 13.8 A; max cruise to BATT_LOW 378 s = 6.30 min (need 3.41); spare laps (150 m leg) 4.7
+m 1.5: hover 210 W 10.49 Wh (180 s incl 40 s go-around); trans 1.79; climb 0.32; cruise 170 W 9.64 Wh; total 22.24 Wh; pack margin 1.34x; hover pack 14.2 A; max cruise to BATT_LOW 366 s = 6.10 min (need 3.41); spare laps (150 m leg) 4.4
+aero check at 1.506 kg, 17.0 m/s: CL 0.387 L/D 7.47 elec 170 W (EST eta)
+hard landing 1.2 m/s on 6 mm crush: decel g = 12.2 ; impact energy at 1.50 kg (J) = 1.08
+O4b: CAD basic 1627.3 g, CG 21.07 mm from sitl/cad_mass.json (pack centre x -29.0 mm); fixed NP 40.7 mm; SM at the CAD CG 8.01 % (limits 5..15 %); A-P4 band 19.3..26.0 mm
+CAD CG with the pack centre at x -39 mm: 19.4 mm aft of LE, SM 8.7 %
+CAD CG with the pack centre at x -22 mm: 22.2 mm aft of LE, SM 7.5 %
+CAD CG with the pack centre at x -12 mm: 23.9 mm aft of LE, SM 6.9 %
+CG 21.1 mm aft of LE, SM 8.0 %; pack 10 mm aft -> CG 22.9
+CG aft limit SM 5 %: 28.450000000000003  fwd limit SM 15 %: 3.950000000000003

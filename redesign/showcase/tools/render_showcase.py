@@ -1,7 +1,10 @@
 """render_showcase.py - showcase renders of the K09-L for the README (redesign/showcase/renders/).
 
     blender -b --factory-startup -P redesign/showcase/tools/render_showcase.py -- [--only id,id] [--samples 64]
-        [--work DIR] [--spec redesign/blender/specs/showcase.json]
+        [--work DIR] [--spec redesign/blender/specs/showcase.json] [--root MODEL_ROOT] [--renders DIR]
+
+Concept A (scaled quad tailsitter): --root redesign/qp/A/cad/model --spec redesign/blender/specs/showcase-a.json
+    --work redesign/showcase/concept-a/_work --renders redesign/showcase/concept-a/renders
 
 Reuses redesign/blender/render_kit.Stage and annotate.py. Spec format = render_figures.py plus the keys listed in the
 spec's _note. Raw renders and sidecars go to --work (default: <showcase>/_work, not committed); the final PNG
@@ -36,8 +39,23 @@ def args():
     ap.add_argument('--samples', type=int, default=64)
     ap.add_argument('--work', default=os.path.join(SHOW, '_work'))
     ap.add_argument('--spec', default=os.path.join(BL, 'specs', 'showcase.json'))
+    ap.add_argument('--root', default=None,
+                    help='module root to build (default: K09-L, redesign/subsystems); concept A: redesign/qp/A/cad/model')
+    ap.add_argument('--renders', default=os.path.join(SHOW, 'renders'), help='folder for the final PNGs')
     argv = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
-    return ap.parse_args(argv)
+    a = ap.parse_args(argv)
+    # Absolute paths only. A relative path given to Blender's render.filepath is resolved against the drive root when no .blend
+    # is loaded (the concept A run wrote its raw PNGs to C:/redesign/...). Relative arguments are taken from the repo root
+    # (the folder that holds redesign/), so the result does not depend on the current directory.
+    repo = os.path.dirname(REDESIGN)
+
+    def absp(p):
+        return p if p is None or os.path.isabs(p) else os.path.normpath(os.path.join(repo, p))
+    a.spec, a.root, a.renders = absp(a.spec), absp(a.root), absp(a.renders)
+    if a.root and os.path.normpath(a.root).replace(os.sep, '/').endswith('qp/A/cad/model') and a.work == os.path.join(SHOW, '_work'):
+        a.work = os.path.join(SHOW, 'concept-a', '_work')          # concept A raw renders live inside the repo, next to its renders
+    a.work = absp(a.work)
+    return a
 
 
 def expand(pats, spec):
@@ -60,9 +78,11 @@ def main():
     if a.only:
         figs = [f for f in figs if f['id'] in a.only.split(',')]
     os.makedirs(a.work, exist_ok=True)
-    renders = os.path.join(SHOW, 'renders')
+    renders = a.renders
     os.makedirs(renders, exist_ok=True)
-    be, ctx, graph, _ = bb.build(False, None)
+    be, ctx, graph, _ = bb.build(False, a.root)
+    if spec.get('solid_tape'):
+        bb.solid_tape(be)
     S = rk.Stage(be, ctx, graph, 'studio', samples=a.samples)
     items = S.items()
     times = []
@@ -131,6 +151,10 @@ def main():
             src = base + '.annotated.png'
         else:
             src = base + '.png'
+        for _ in range(60):                           # headless Edge may finish writing the screenshot just after it exits
+            if os.path.exists(src) or src == base + '.png':
+                break
+            time.sleep(0.5)
         shutil.copyfile(src, os.path.join(renders, f['id'] + '.png'))
         times.append((f['id'], meta['render_s'], time.time() - t0, meta['clipped']))
     for t in times:

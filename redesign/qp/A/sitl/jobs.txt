@@ -1,0 +1,34 @@
+Ta_h5 case=trans wind=5 from=0 chain=1 yawcmd=1.3 mass=1.381 hold=30 cruise_s=15
+Ta_h3 case=trans wind=3 from=0 chain=1 mass=1.381 hold=30 cruise_s=15
+Ta_h0 case=trans wind=0 from=0 chain=1 mass=1.381 hold=30 cruise_s=15
+Tb_h5 case=trans wind=5 from=0 chain=1 yawcmd=1.3 mass=1.50 hold=30 cruise_s=15
+Tb_h3 case=trans wind=3 from=0 chain=1 mass=1.50 hold=30 cruise_s=15
+Tb_h0 case=trans wind=0 from=0 chain=1 mass=1.50 hold=30 cruise_s=15
+Ta_t3 case=trans wind=3 from=180 mass=1.381 hold=30 cruise_s=15
+Ta_t5 case=trans wind=5 from=180 mass=1.381 hold=30 cruise_s=15
+Ta_x3 case=trans wind=3 from=90 mass=1.381 hold=30 cruise_s=15
+Ta_x5 case=trans wind=5 from=90 mass=1.381 hold=30 cruise_s=15
+Tb_t3 case=trans wind=3 from=180 mass=1.50 hold=30 cruise_s=15
+Tb_t5 case=trans wind=5 from=180 mass=1.50 hold=30 cruise_s=15
+Tb_x3 case=trans wind=3 from=90 mass=1.50 hold=30 cruise_s=15
+Tb_x5 case=trans wind=5 from=90 mass=1.50 hold=30 cruise_s=15
+La_5e case=land mass=1.381 wind=5 from=90 turb=1.0 hold=15
+La_3b case=land mass=1.381 wind=3 from=0 turb=0.5 hold=15
+Oa_5e case=takeoff mass=1.381 wind=5 from=90 turb=0.5
+Oa_5b case=takeoff mass=1.381 wind=5 from=0 turb=0.5
+Lb_5e case=land mass=1.50 wind=5 from=90 turb=1.0 hold=15
+Lb_3b case=land mass=1.50 wind=3 from=0 turb=0.5 hold=15
+Ob_5e case=takeoff mass=1.50 wind=5 from=90 turb=0.5
+Ob_5b case=takeoff mass=1.50 wind=5 from=0 turb=0.5
+Fb_battH case=battH mass=1.50 hold=25 cruise_s=15
+Fb_rcH case=rcH mass=1.50 hold=25 cruise_s=15
+Fb_moH case=moH mass=1.50 hold=25 cruise_s=15
+Fb_battC case=battC mass=1.50 hold=25 cruise_s=15
+Fb_rcC case=rcC mass=1.50 hold=25 cruise_s=15
+Fb_moC case=moC mass=1.50 hold=25 cruise_s=15
+Fa_battH case=battH mass=1.381 hold=25 cruise_s=15
+Fa_rcH case=rcH mass=1.381 hold=25 cruise_s=15
+Fa_moH case=moH mass=1.381 hold=25 cruise_s=15
+Fa_battC case=battC mass=1.381 hold=25 cruise_s=15
+Fa_rcC case=rcC mass=1.381 hold=25 cruise_s=15
+Fa_moC case=moC mass=1.381 hold=25 cruise_s=15

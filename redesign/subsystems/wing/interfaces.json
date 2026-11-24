@@ -8,12 +8,12 @@
    "name": "Wing core, one piece (XPS), with all cuts",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 201.9,
+   "mass_g": 198.1,
    "material": "XPS foam F-250",
    "cg_xyz_m": [
-    0.1187,
+    0.1195,
     0.0,
-    0.0053
+    0.0055
    ],
    "make_or_buy": "make",
    "notes": "S5010, 1.150 x 0.320 m, hot-wired LE sanded smooth; spar bore 22.4 mm (slot from below, cap re-bonded); pod recess x 0.0226-0.065 floor z 0.015, |y| <= 0.07; pod saddle windows |y| 0.029-0.053 with tie channels at 0.036; anchor pockets |y| 0.2335-0.2505 top and bottom; block pockets |y| 0.302-0.338 x 0.028-0.097 full depth, corners R 3.15, 3 x 3 mm lip chamfers inboard and outboard both surfaces; ESC grooves both surfaces |y| 0.086-0.296; servo groove and branch with the JR recess x 0.150-0.168 |y| 0.280-0.290 5 mm deep; servo pockets (open below) x 0.1722-0.2075 |y| 0.2527-0.2879; elevon cut-outs with R 3 mm corners at the fin-root tabs"
@@ -38,10 +38,10 @@
    "name": "Tape skin (packing tape, both surfaces, doublers, tip edge layer)",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 47.9,
+   "mass_g": 47.5,
    "material": "packing tape (BOPP), 48 mm",
    "cg_xyz_m": [
-    0.1329,
+    0.1323,
     0.0,
     0.0041
    ],
@@ -139,64 +139,94 @@
    "notes": "inboard and outboard pocket lips, upper and lower, x 0.0279-0.0972 (D-68, CR-C2-11); 60 mm tape doubler over them"
   },
   {
+   "id": "WNG-008",
+   "name": "Spar-slot cap strips (XPS, the slot strip re-bonded)",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 3.9,
+   "material": "XPS foam F-250",
+   "cg_xyz_m": [
+    0.08,
+    0.0,
+    -0.0049
+   ],
+   "make_or_buy": "make",
+   "notes": "x 0.0688-0.0912 from the lower skin to the spar, every span segment where the spar runs in foam (not in the block or anchor pockets); stops at the lip beads and round the pod-tie channels; foam mass counted in WNG-001"
+  },
+  {
    "id": "WNG-011-R",
    "name": "Elevon inboard R",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.7,
+   "mass_g": 3.6,
    "material": "XPS foam F-250 + packing-tape skin",
    "cg_xyz_m": [
-    0.2769,
-    0.1829,
+    0.2765,
+    0.1779,
     0.0002
    ],
    "make_or_buy": "make",
-   "notes": "y 0.071-0.299, hinge x 0.2496 on the upper skin, lower edge bevelled 30 deg; D6 torque-tube groove (open below) |y| 0.1335-0.296 and 2.5 mm horn-blade slot at y 0.285; outboard front corner relieved round the R 3 mm tab fill; tape cut back for the horn flange (14 mm) and backplate (12 mm)"
+   "notes": "y 0.071-0.299 (TE corner chamfered beside the fin-root tab: full chord to y 0.280, 20 mm set-back, D-164), hinge x 0.2496 on the upper skin, lower edge bevelled 30 deg; D6 torque-tube groove (open below) |y| 0.1335-0.296 and 2.5 mm horn-blade slot at y 0.285; outboard front corner relieved round the R 3 mm tab fill; tape cut back for the horn flange (14 mm) and backplate (12 mm)"
   },
   {
    "id": "WNG-011-L",
    "name": "Elevon inboard L",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.7,
+   "mass_g": 3.6,
    "material": "XPS foam F-250 + packing-tape skin",
    "cg_xyz_m": [
-    0.2769,
-    -0.1829,
+    0.2765,
+    -0.1779,
     0.0002
    ],
    "make_or_buy": "make",
-   "notes": "y 0.071-0.299, hinge x 0.2496 on the upper skin, lower edge bevelled 30 deg; D6 torque-tube groove (open below) |y| 0.1335-0.296 and 2.5 mm horn-blade slot at y 0.285; outboard front corner relieved round the R 3 mm tab fill; tape cut back for the horn flange (14 mm) and backplate (12 mm)"
+   "notes": "y 0.071-0.299 (TE corner chamfered beside the fin-root tab: full chord to y 0.280, 20 mm set-back, D-164), hinge x 0.2496 on the upper skin, lower edge bevelled 30 deg; D6 torque-tube groove (open below) |y| 0.1335-0.296 and 2.5 mm horn-blade slot at y 0.285; outboard front corner relieved round the R 3 mm tab fill; tape cut back for the horn flange (14 mm) and backplate (12 mm)"
   },
   {
    "id": "WNG-012-R",
    "name": "Elevon outboard R",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.5,
+   "mass_g": 3.0,
    "material": "XPS foam F-250 + packing-tape skin",
    "cg_xyz_m": [
-    0.2776,
-    0.4507,
+    0.2763,
+    0.4662,
     0.0002
    ],
    "make_or_buy": "make",
-   "notes": "y 0.341-0.559, hinge x 0.2496 on the upper skin, lower edge bevelled 30 deg; D6 torque-tube groove |y| 0.344-0.556 and 2.5 mm link-horn slot at y 0.355; inboard front corner relieved round the R 3 mm tab fill; tape cut back for the horn flange and backplate"
+   "notes": "y 0.341-0.559 (TE corner chamfered beside the fin-root tab: full chord from y 0.410, 70 mm set-back, D-164), hinge x 0.2496 on the upper skin, lower edge bevelled 30 deg; D6 torque-tube groove |y| 0.344-0.556 and 2.5 mm link-horn slot at y 0.355; inboard front corner relieved round the R 3 mm tab fill; tape cut back for the horn flange and backplate"
   },
   {
    "id": "WNG-012-L",
    "name": "Elevon outboard L",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 3.5,
+   "mass_g": 3.0,
    "material": "XPS foam F-250 + packing-tape skin",
    "cg_xyz_m": [
-    0.2776,
-    -0.4507,
+    0.2763,
+    -0.4662,
     0.0002
    ],
    "make_or_buy": "make",
-   "notes": "y 0.341-0.559, hinge x 0.2496 on the upper skin, lower edge bevelled 30 deg; D6 torque-tube groove |y| 0.344-0.556 and 2.5 mm link-horn slot at y 0.355; inboard front corner relieved round the R 3 mm tab fill; tape cut back for the horn flange and backplate"
+   "notes": "y 0.341-0.559 (TE corner chamfered beside the fin-root tab: full chord from y 0.410, 70 mm set-back, D-164), hinge x 0.2496 on the upper skin, lower edge bevelled 30 deg; D6 torque-tube groove |y| 0.344-0.556 and 2.5 mm link-horn slot at y 0.355; inboard front corner relieved round the R 3 mm tab fill; tape cut back for the horn flange and backplate"
+  },
+  {
+   "id": "WNG-009",
+   "name": "Lower-surface zigzag turbulator tape",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 5.9,
+   "material": "zigzag trip tape, 0.7 mm (bought)",
+   "cg_xyz_m": [
+    0.064,
+    0.0,
+    -0.0089
+   ],
+   "make_or_buy": "buy",
+   "notes": "D-168: strip 6 mm wide x 0.7 mm centred on x/c 0.20 (x 0.061-0.067), lower surface only, |y| <= 0.572; broken at the half-fin root coves (|y - 0.320| < 14.4 mm); over the block doubler band |y| 0.290-0.350 it rides on the 3 tape layers; mass = solid envelope x 1.3 g/cm3 (EST)"
   },
   {
    "id": "WNG-020",
@@ -415,10 +445,10 @@
    "part_b": "WNG-001",
    "via": "CT-EPOXY",
    "owner": "wing",
-   "notes": "lip bead in the 3 x 3 mm 45 deg chamfer along the inboard and outboard block-pocket lips, upper and lower surface, x 0.0279-0.0972 (4 beads per side); laid wet in the same pour as the block bond, sanded flush; the 60 mm doubler covers it",
+   "notes": "lip bead in the 3 x 3 mm 45 deg chamfer along the inboard and outboard block-pocket lips, upper and lower surface, x 0.0278-0.0972 (4 beads per side); laid wet in the same pour as the block bond, sanded flush; the 60 mm doubler covers it",
    "bond": {
     "adhesive": "30 min laminating epoxy + glass microballoons 1:1 by volume (foam-safe; no CA, no solvent glue on XPS)",
-    "area_mm2": 1176,
+    "area_mm2": 1177,
     "prep": "chamfer cut with a 45 deg hot tool or sanding block guided on the pocket wall; foam dust off",
     "cure": "24 h at >= 18 degC before load or tape",
     "load_n": "block corner load into the foam: as drawn (square corners, no bead) 203 / 199 kPa vs 150 / 120 kPa ultimate at the inboard-front-lower corner (CL-C2-FEA-FOAM-CORNER-S1/-S3); C2 re-runs the FEA on the R 3 mm pocket with these beads",
@@ -432,10 +462,10 @@
    "part_b": "WNG-001",
    "via": "CT-EPOXY",
    "owner": "wing",
-   "notes": "lip bead in the 3 x 3 mm 45 deg chamfer along the inboard and outboard block-pocket lips, upper and lower surface, x 0.0279-0.0972 (4 beads per side); laid wet in the same pour as the block bond, sanded flush; the 60 mm doubler covers it",
+   "notes": "lip bead in the 3 x 3 mm 45 deg chamfer along the inboard and outboard block-pocket lips, upper and lower surface, x 0.0278-0.0972 (4 beads per side); laid wet in the same pour as the block bond, sanded flush; the 60 mm doubler covers it",
    "bond": {
     "adhesive": "30 min laminating epoxy + glass microballoons 1:1 by volume (foam-safe; no CA, no solvent glue on XPS)",
-    "area_mm2": 1176,
+    "area_mm2": 1177,
     "prep": "chamfer cut with a 45 deg hot tool or sanding block guided on the pocket wall; foam dust off",
     "cure": "24 h at >= 18 degC before load or tape",
     "load_n": "block corner load into the foam: as drawn (square corners, no bead) 203 / 199 kPa vs 150 / 120 kPa ultimate at the inboard-front-lower corner (CL-C2-FEA-FOAM-CORNER-S1/-S3); C2 re-runs the FEA on the R 3 mm pocket with these beads",
@@ -475,6 +505,37 @@
     "load_n": "spreads the block corner load into the lip (see E-WNG-12); C2 FEA re-run",
     "load_case": "L4 corner + side landing, ultimate",
     "sized_by": "C2"
+   }
+  },
+  {
+   "id": "E-WNG-18",
+   "part_a": "WNG-008",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "wing",
+   "notes": "spar-slot cap strips re-bonded under the spar in the slot cut from below (BUILD-GUIDE 2.2, 2.5), microballoon epoxy on the slot walls and round the spar, sanded flush with the lower surface; part of the spar bond E-WNG-01",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + glass microballoons 1:1 by volume (foam-safe; no CA, no solvent glue on XPS)",
+    "area_mm2": "—",
+    "prep": "slot vacuumed, foam dust off",
+    "cure": "24 h at >= 18 degC before load or tape",
+    "load_n": "closes the slot; the spar bond is sized as E-WNG-01 (CL-C2-SPAR-BOND-TAU)",
+    "load_case": "C1 flight envelope",
+    "sized_by": "C2"
+   }
+  },
+  {
+   "id": "E-WNG-19",
+   "part_a": "WNG-009",
+   "part_b": "WNG-003",
+   "via": "CT-TAPE-SKIN",
+   "owner": "wing",
+   "notes": "zigzag trip tape on the lower skin, strip 6 mm wide centred on x 0.0640 (x/c 0.20), 0.7 mm high, both half-spans from y = 0 to |y| 0.572; broken at each half-fin root cove (|y - 0.320| < 14.4 mm); laid after the block-doubler hold point (BUILD step 11) so it never replaces a doubler layer; stops 1.8 mm ahead of the spar-slot cap (x 0.0688)",
+   "retention": {
+    "item": "zigzag tape, pressure-sensitive adhesive on the packing-tape skin",
+    "count": "continuous strips",
+    "load_n": "none (aerodynamic device, non-structural)",
+    "inspection": "pre-flight: no lifted edge or missing section (a lifted trip is a laminar wedge); H2 tuft / oil-flow check"
    }
   }
  ],

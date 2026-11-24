@@ -1,0 +1,260 @@
+[
+ {
+  "part": "Bridge tube 16x14 (CF, not a changed part)",
+  "row": "B1 bridge bending at the ring face x 50 (350 MPa EST, KF)",
+  "rb": 2.198938825296904,
+  "case": "hard 10 wide + drift .5 y z0.10 mu0.30"
+ },
+ {
+  "part": "Bridge tube 16x14 (CF, not a changed part)",
+  "row": "B1 bridge bending at the forward end x 30 (350 MPa EST, KF)",
+  "rb": 2.2776641135802027,
+  "case": "hard 10 wide + drift .5 y z0.10 mu0.40"
+ },
+ {
+  "part": "Clamshell pins FIN-008 (3 x 3 mm CF)",
+  "row": "CS5 pin shear, double shear, rib torque Mx (3 pins)",
+  "rb": 1.622175418768387,
+  "case": "SITL Tb_h5 wide (y drift) z0.10 mu0.40"
+ },
+ {
+  "part": "Clamshell plates FIN-007 (CF 0.5)",
+  "row": "CS3 plate-to-cradle bond shear (contact 596 mm2 per plate; T-071b used 1,875)",
+  "rb": 0.529032184232822,
+  "case": "hard 7/7 combo z0.10 mu0.40"
+ },
+ {
+  "part": "Clamshell plates FIN-007 (CF 0.5)",
+  "row": "CS1 plate x-direction stress (My couple, Fx/2, Mz in-plane)",
+  "rb": 3.3318126818392853,
+  "case": "hard 7/7 combo z0.10 mu0.40"
+ },
+ {
+  "part": "Clamshell plates FIN-007 (CF 0.5)",
+  "row": "CS2 plate y-direction stress (Mx couple, Fy/2, Mz in-plane)",
+  "rb": 4.1605882956718485,
+  "case": "hard 16 wide + drift .5 y z0.10 mu0.40"
+ },
+ {
+  "part": "Clamshell plates FIN-007 (CF 0.5)",
+  "row": "CS3p plate-to-cradle PEEL by Fz (integrity class, outside the minimum)",
+  "rb": 28.894767734923,
+  "case": "hard 7/7 combo z0.10 mu0.40"
+ },
+ {
+  "part": "Cradle FIN-005 (PETG)",
+  "row": "P12 socket-to-ring junction (9.3 x 18 mm), interlayer 9.5 (shown only)",
+  "rb": 0.07272556155422091,
+  "case": "hard 7/7 combo z0.10 mu0.40"
+ },
+ {
+  "part": "Cradle FIN-005 (PETG)",
+  "row": "P12 socket-to-ring junction (9.3 x 18 mm), in-layer 20",
+  "rb": 0.1531064453773072,
+  "case": "hard 7/7 combo z0.10 mu0.40"
+ },
+ {
+  "part": "Cradle FIN-005 (PETG)",
+  "row": "P11 same, interlayer 9.5 (shown only)",
+  "rb": 0.24068115276035534,
+  "case": "hard 16 wide + drift .5 y z0.10 mu0.40"
+ },
+ {
+  "part": "Cradle FIN-005 (PETG)",
+  "row": "P10 saddle socket: rib epoxy bond / bearing (D14 x 20) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) [in-layer]",
+  "rb": 0.2466125395417103,
+  "case": "hard 16 wide + drift .5 y z0.10 mu0.40"
+ },
+ {
+  "part": "Cradle FIN-005 (PETG)",
+  "row": "P13 saddle ring epoxy bond on spar (D12 x 60) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) [in-layer]",
+  "rb": 0.3883600746222865,
+  "case": "hard 10 wide z0.10 mu0.40"
+ },
+ {
+  "part": "Cradle FIN-005 (PETG)",
+  "row": "P11 socket wall at the mouth (wall 2.00 mm, Z 765 mm3), in-layer 20",
+  "rb": 0.5066971637060111,
+  "case": "hard 16 wide + drift .5 y z0.10 mu0.40"
+ },
+ {
+  "part": "Cradle FIN-005 (PETG)",
+  "row": "CS5b pin bearing in the 4 mm boss wall (3 pins)",
+  "rb": 0.9179635074103258,
+  "case": "SITL Tb_h5 wide (y drift) z0.10 mu0.40"
+ },
+ {
+  "part": "Cradle FIN-005 (PETG)",
+  "row": "P13 saddle ring epoxy bond on spar (D12 x 60) - shear (axial + torsion) [in-layer]",
+  "rb": 0.947104589282897,
+  "case": "hard 7/7 combo z0.10 mu0.40"
+ },
+ {
+  "part": "Cradle FIN-005 (PETG)",
+  "row": "P14a spar 12x10 under the cradle ring with the skin torque share 0.056 (bending in full), KF",
+  "rb": 1.0774482407502008,
+  "case": "hard 16 wide + drift .5 y z0.10 mu0.40"
+ },
+ {
+  "part": "Cradle FIN-005 (PETG)",
+  "row": "P14b spar wall diametral crush under the saddle ring (hoop EST 40 MPa) [in-layer]",
+  "rb": 1.1062904207880584,
+  "case": "hard 10 wide + drift .5 y z0.10 mu0.30"
+ },
+ {
+  "part": "Cradle FIN-005 (PETG)",
+  "row": "P10 saddle socket: rib epoxy bond / bearing (D14 x 20) - shear (axial + torsion) [in-layer]",
+  "rb": 2.2306792096031236,
+  "case": "SITL Tb_h5 wide (y drift) z0.10 mu0.40"
+ },
+ {
+  "part": "Cradle FIN-005 (PETG)",
+  "row": "P10 saddle socket: rib epoxy bond / bearing (D14 x 20) - bearing, compression side [in-layer]",
+  "rb": 2.466125395417103,
+  "case": "hard 16 wide + drift .5 y z0.10 mu0.40"
+ },
+ {
+  "part": "Cradle FIN-005 (PETG)",
+  "row": "P13 saddle ring epoxy bond on spar (D12 x 60) - bearing, compression side [in-layer]",
+  "rb": 3.8836007462228648,
+  "case": "hard 10 wide z0.10 mu0.40"
+ },
+ {
+  "part": "Node CGE-006/011/013 (X7 + CF plate)",
+  "row": "N1 skin-to-plate lap bond (lap 5 mm EST; integrity class)",
+  "rb": 3.9211043204235274,
+  "case": "hard 7/7 combo z0.10 mu0.40"
+ },
+ {
+  "part": "Node bridge socket CGE-006 (Onyx)",
+  "row": "N7 socket net section under M at the ring face x 50 (box 21 x 21 less bore 16, Z 1237 mm3; ears not effective), in-layer 20, no fibre",
+  "rb": 0.7473211741780214,
+  "case": "hard 10 wide + drift .5 y z0.10 mu0.30"
+ },
+ {
+  "part": "Node bridge socket CGE-006 (Onyx)",
+  "row": "N7 socket net section under M at the forward end x 30 (box 21 x 21 less bore 16, Z 1237 mm3; ears not effective), in-layer 20, no fibre",
+  "rb": 0.7740763863742655,
+  "case": "hard 10 wide + drift .5 y z0.10 mu0.40"
+ },
+ {
+  "part": "Node bridge socket CGE-006 (Onyx)",
+  "row": "N6 bridge bearing in the 23.5 mm socket (6M/(D L^2)+V/(D L), M at the mouth, Onyx 20)",
+  "rb": 0.9156666922044872,
+  "case": "hard 10 wide + drift .5 y z0.10 mu0.40"
+ },
+ {
+  "part": "Node bridge socket CGE-006 (Onyx)",
+  "row": "N6b bridge-in-socket bond, axial + torque (epoxy on Onyx \"-\", integrity class)",
+  "rb": 1.8108978427264615,
+  "case": "hard 7/7 combo z0.02 mu0.40"
+ },
+ {
+  "part": "Node ears CGE-006 inner / CGE-013 outer (Onyx)",
+  "row": "N5 inner ear in-plane bending at the ring front x 49.5 (pins carry the couple; section 3 x 19 mm; the ear forward of the ring is joined only through the ring), in-layer 20",
+  "rb": 0.20883277365110905,
+  "case": "hard 7/7 combo z0.10 mu0.40"
+ },
+ {
+  "part": "Node ears CGE-006 inner / CGE-013 outer (Onyx)",
+  "row": "N4 pin bearing in the 1.5 mm outer clevis ear (F/2 per ear, Onyx 20)",
+  "rb": 0.30959225848327165,
+  "case": "hard 7/7 combo z0.10 mu0.40"
+ },
+ {
+  "part": "Node ears CGE-006 inner / CGE-013 outer (Onyx)",
+  "row": "N4b pin bearing in the 3.0 mm inner ear",
+  "rb": 0.6191845169665445,
+  "case": "hard 7/7 combo z0.10 mu0.40"
+ },
+ {
+  "part": "Node pins CGE-012 (4 x 3 mm CF per side)",
+  "row": "N3 pin shear, double shear, skin torque couple (r 7.43 mm)",
+  "rb": 0.72945957364449,
+  "case": "hard 7/7 combo z0.10 mu0.40"
+ },
+ {
+  "part": "Node plate CGE-011 (CF 0.5) / ear bond",
+  "row": "N2 plate-to-ear bond, 2 faces (39.5 x 19 mm), polar moment (epoxy on Onyx \"-\": integrity class)",
+  "rb": 1.2686529467435257,
+  "case": "hard 7/7 combo z0.10 mu0.40"
+ },
+ {
+  "part": "Node ring CGE-006 (Onyx) on the spar",
+  "row": "N8 ring bond on spar D12 x 30: BOND INTEGRITY / peel (epoxy on Onyx \"-\"; integrity class)",
+  "rb": 0.10489557867671727,
+  "case": "hard 10 wide + drift .5 y z0.10 mu0.30"
+ },
+ {
+  "part": "Node ring CGE-006 (Onyx) on the spar",
+  "row": "N8 ring epoxy bond on spar D12 x 30: shear (axial + torsion)",
+  "rb": 0.4905589041571662,
+  "case": "SITL Z5_b45 narrow (z drift) z0.10 mu0.30"
+ },
+ {
+  "part": "Node ring CGE-006 (Onyx) on the spar",
+  "row": "N9 socket-to-ring junction at x 53.5 (16.5 x 21 mm: ring chord x socket width), in-layer 20",
+  "rb": 0.5136443932892522,
+  "case": "hard 7/7 combo z0.10 mu0.40"
+ },
+ {
+  "part": "Node ring CGE-006 (Onyx) on the spar",
+  "row": "N8c spar wall diametral crush under the 30 mm ring (hoop 40 MPa EST)",
+  "rb": 0.6961999058427063,
+  "case": "hard level z0.10 mu0.40"
+ },
+ {
+  "part": "Node ring CGE-006 (Onyx) on the spar",
+  "row": "N8 ring bond on spar D12 x 30: bearing, compression side (Onyx 20)",
+  "rb": 1.0489557867671728,
+  "case": "hard 10 wide + drift .5 y z0.10 mu0.30"
+ },
+ {
+  "part": "Rib FIN-002 (not a changed part, shown)",
+  "row": "P9a rib tube 14x12 at the socket mouth x 108",
+  "rb": 0.8436507340048516,
+  "case": "SITL Tb_h5 wide (y drift) z0.10 mu0.40"
+ },
+ {
+  "part": "Strut clamp CGE-007 R4 (PETG) + strut",
+  "row": "R4 socket wall axial, interlayer 9.5 (if printed standing; shown only)",
+  "rb": 0.5661170962292751,
+  "case": "hard 10 wide + drift .5 y z0.10 mu0.30"
+ },
+ {
+  "part": "Strut clamp CGE-007 R4 (PETG) + strut",
+  "row": "R4 socket-to-ring junction at the R 2.0 fillet base (annulus OD 13 / bore 6, Kt 2.0 EST), interlayer 9.5",
+  "rb": 0.8376123877757378,
+  "case": "hard 10 wide + drift .5 y z0.10 mu0.30"
+ },
+ {
+  "part": "Strut clamp CGE-007 R4 (PETG) + strut",
+  "row": "STRUT Euler pinned, no foam support (416 N)",
+  "rb": 0.877390703885111,
+  "case": "hard 10 wide + drift .5 y z0.10 mu0.30"
+ },
+ {
+  "part": "Strut clamp CGE-007 R4 (PETG) + strut",
+  "row": "R4 socket wall axial (A 35.3 mm2: OD 9 / bore 6), in-layer 20 (axis in the print plane)",
+  "rb": 1.1918254657458422,
+  "case": "hard 10 wide + drift .5 y z0.10 mu0.30"
+ },
+ {
+  "part": "Strut clamp CGE-007 R4 (PETG) + strut",
+  "row": "STRUT bond at clamp (D6 x 25.0 mm, epoxy 2.0 MPa EST)",
+  "rb": 1.5910326321027077,
+  "case": "hard 10 wide + drift .5 y z0.10 mu0.30"
+ },
+ {
+  "part": "Strut clamp CGE-007 R4 (PETG) + strut",
+  "row": "R4 ring bond on the spar (D12 x 16, Ny + torque Nx x 10 mm lever EST)",
+  "rb": 1.7605795932866888,
+  "case": "hard 10 wide + drift .5 y z0.10 mu0.30"
+ },
+ {
+  "part": "Strut clamp CGE-007 R4 (PETG) + strut",
+  "row": "STRUT tube strength, 6x4.5 CF 350 MPa EST",
+  "rb": 11.601279609082246,
+  "case": "hard 10 wide + drift .5 y z0.10 mu0.30"
+ }
+]

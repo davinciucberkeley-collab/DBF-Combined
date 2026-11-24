@@ -1,0 +1,43 @@
+{
+"tag": "w_sac60m",
+"args": [
+"inst=3",
+"hold=40",
+"wind=5",
+"from=60",
+"mass=1.37",
+"wing_s=0.75",
+"arm=1.2",
+"cant=16"
+],
+"summary": {
+"n": 708,
+"t_window": [
+8.027,
+43.967
+],
+"wind_ms": 5.0,
+"lean_max": 12.4,
+"lean_mean": 10.0,
+"lean_pre": 0.5,
+"u_max": 0.734,
+"u_mean_max": 0.73,
+"t_cap_s": 0.0,
+"t_cap_run_s": 0.0,
+"t_ge85_s": 0.0,
+"u_min": 0.495,
+"t_floor_s": 0.0,
+"t_floor_run_s": 0.0,
+"yaw_err_max": 6.5,
+"yaw_err_rms": 3.77,
+"pos_err_max": 1.54,
+"pos_err_rms": 0.37,
+"pos_err_last20_mean": 0.16,
+"alt_dev_max": 0.07,
+"diag_spread_max": 0.196,
+"diag_spread_mean": 0.167
+},
+"armed": true,
+"reached_alt": true,
+"events": []
+}

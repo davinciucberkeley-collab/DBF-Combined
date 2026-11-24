@@ -40,15 +40,15 @@ def parts_table(ge, cr, n_seg):
          % (mm(so[0]), mm(so[1]), mm(ge['ws_m']), mm(ge['r_in_m']), mm(ge['rs_m']), mm(ge['rim_t_m']), mm(ge['rf_m']))),
         ('GER-002', 'Foot piston', 'PETG (printed)', 'make', 'piston_g', ST,
          'tine %.1f x %.1f mm (%.1f mm corner chamfers), %.0f mm engaged at rest, two 6.5 mm snap fingers with ramped '
-         'hooks, stop flange, inspection windows, replace-mark groove; ORANGE on UR/UL, BLUE on LR/LL; slides %.0f mm '
+         'hooks, stop flange, inspection windows (from 10 mm aft of the rim), replace-mark line 6 mm aft of the rim (R9); ORANGE on UR/UL, BLUE on LR/LL; slides %.0f mm '
          'into the shoe when the cartridge crushes' % (mm(po[0]), mm(po[1]), mm(ge['tc_m']), mm(ge['engage_m']), mm(ge['stroke_m']))),
         ('GER-003', 'Crush cartridge type U (solid)', 'XPS foam FOAMULAR 400 (cut, D-76)', 'make', 'cartridge_upper_g', ('UR', 'UL'),
          '%d segments %.1f mm long, %.1f x %.1f mm, each pre-crushed 1 mm (cut %.1f mm), crush axis = board thickness, '
          'orange stripe; plateau %.1f N; bonded on the piston floor; consumable'
          % (n_seg, seg, mm(ge['cart_y_m']), mm(ge['cart_z_m']), seg + 1.0, cr['F_upper_N'])),
         ('GER-004', 'Foot pad', 'neoprene 40A 1/16 in, adhesive back (bought sheet, cut)', 'make', 'pad_g', ST,
-         'ground contact %.1f x %.1f mm, mu >= 0.7 (CR-C1-02); outboard edge at z +/-0.219 (contact 0.218)'
-         % (mm(ge['pad_y_m']), mm(ge['pad_z_m']))),
+         'ground contact %.1f x %.1f mm, low-friction face mu <= 0.40 (D-105); tip-over pivot (outboard edge less the edge round) at z +/-%.1f mm (R9)'
+         % (mm(ge['pad_y_m']), mm(ge['pad_z_m']), mm(ge['z_contact_eff_m']))),
         ('GER-007', 'Wingtip TE corner cap', 'TPU (printed)', 'make', 'cap_g', ('R', 'L'),
          'TPU 95A U-cap over the fixed wingtip TE corner (y 0.5615-0.575) + tip wall, held by 2 wraps of 12 mm filament '
          'tape (CR-C5-04); includes 0.10 g tape'),
@@ -60,9 +60,9 @@ def parts_table(ge, cr, n_seg):
 
 CT = [
     {"id": "CT-GER-CRUSH-SLIDE", "kind": "kinematic", "method": "slid",
-     "spec": "printed tine in printed sleeve, 0.2 mm/side, 25 mm engaged at rest; two 6.5 mm snap fingers with 0.6 mm "
+     "spec": "printed tine in printed sleeve, 0.2 mm/side, 30 mm engaged at rest (R9, D-165); two 6.5 mm snap fingers with 0.6 mm "
              "hooks (45 deg ramp forward) in 6 mm windows retain it; a hard landing cams the hooks under the window "
-             "front edge and they ride inside the wall; flange stops on the sleeve-end rim after 38 mm"},
+             "front edge and they ride inside the wall; flange stops on the sleeve-end rim after 43 mm (R9, D-165)"},
     {"id": "CT-GER-END-BEAR", "kind": "mechanical", "method": "slid",
      "spec": "crush cartridge slides in the sleeve and bears on the back wall in compression (0.5 mm preload, not bonded)"},
     {"id": "CT-GER-PSA", "kind": "mechanical", "method": "bonded",

@@ -1,0 +1,3 @@
+basic (growth off): mass 1274.30 g (CAD 1274.30 g); CG (21.43, -2.06, 6.37) mm (CAD 21.43, -2.06, 6.37); I diag [65.69, 26.5, 71.79] g m2 (CAD [65.69, 26.5, 71.79]): ratio [1.0, 1.0, 1.0]
+at 1.640 kg (placement maturity, factor on class E 1.8486, on class C 1.4243): CG (36.25, -1.53, 5.33) mm; I diag [87.78, 33.47, 98.46] g m2; ratio to CAD basic [1.336, 1.263, 1.371]
+at 1.640 kg (placement E, factor on class E 2.1381, on class C 1.0000): CG (36.24, -1.51, 5.46) mm; I diag [85.23, 32.3, 95.16] g m2; ratio to CAD basic [1.298, 1.219, 1.325]

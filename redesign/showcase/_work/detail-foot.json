@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 20.5,
+ "render_s": 123.84,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -17,9 +17,9 @@
   "ortho": false,
   "lens_mm": 60,
   "location_m": [
-   0.4903,
-   0.5252,
-   -0.1013
+   0.4882,
+   0.5227,
+   -0.0919
   ],
   "fit": [
    "GER-008-LR",
@@ -39,61 +39,61 @@
   "sub": "Printed shoe and piston over a crushable XPS cartridge, neoprene pad"
  },
  "subject_px": [
-  350,
-  -2043,
-  2282,
-  745
+  351,
+  -1903,
+  2281,
+  848
  ],
  "callouts": [
   {
    "item": "GER-001-LR",
-   "x": 964.5,
-   "y": 414.1,
+   "x": 964.2,
+   "y": 413.5,
    "title": "GER-001-LR",
    "text": "Foot shoe (ghosted)",
    "detail": null,
    "role": "ghost",
    "occluded": false,
    "world_m": [
-    0.3017,
-    0.3283,
-    -0.2012
+    0.2997,
+    0.3258,
+    -0.1917
    ]
   },
   {
    "item": "GER-002-LR",
-   "x": 696.3,
-   "y": 533.9,
+   "x": 717.8,
+   "y": 628.2,
    "title": "GER-002-LR",
    "text": "Foot piston",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.3386,
-    0.3281,
-    -0.2054
+    0.3359,
+    0.3282,
+    -0.2058
    ]
   },
   {
    "item": "GER-008-LR",
-   "x": 1012.8,
-   "y": 407.4,
+   "x": 1012.4,
+   "y": 494.2,
    "title": "GER-008-LR",
    "text": "Crush cartridge, XPS",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.2918,
-    0.3256,
+    0.2913,
+    0.3251,
     -0.2035
    ]
   },
   {
    "item": "GER-004-LR",
-   "x": 417.3,
-   "y": 624.0,
+   "x": 417.9,
+   "y": 725.8,
    "title": "GER-004-LR",
    "text": "Neoprene pad",
    "detail": null,
@@ -102,7 +102,7 @@
    "world_m": [
     0.368,
     0.3219,
-    -0.2089
+    -0.2088
    ]
   }
  ],
@@ -116,9 +116,9 @@
    "subsystem": "fins",
    "bbox_px": [
     665,
-    -2043,
-    2282,
-    442
+    -1903,
+    2281,
+    537
    ]
   },
   {
@@ -129,10 +129,10 @@
    "mass_g": 1.64,
    "subsystem": "fins",
    "bbox_px": [
-    1172,
-    -162,
-    1947,
-    336
+    1171,
+    -96,
+    1946,
+    419
    ]
   },
   {
@@ -144,9 +144,9 @@
    "subsystem": "fins",
    "bbox_px": [
     1188,
-    -289,
-    2109,
-    403
+    -224,
+    2108,
+    486
    ]
   },
   {
@@ -157,10 +157,10 @@
    "mass_g": 3.89,
    "subsystem": "fins",
    "bbox_px": [
-    1124,
-    -294,
-    2043,
-    380
+    1123,
+    -230,
+    2041,
+    462
    ]
   },
   {
@@ -172,9 +172,9 @@
    "subsystem": "landing",
    "bbox_px": [
     394,
-    327,
-    1200,
-    673
+    409,
+    1199,
+    776
    ]
   },
   {
@@ -182,13 +182,13 @@
    "role": "ghost",
    "name": "Foot shoe LR",
    "status": "MODELLED",
-   "mass_g": 9.98,
+   "mass_g": 12.71,
    "subsystem": "landing",
    "bbox_px": [
     657,
-    255,
-    1251,
-    643
+    152,
+    1250,
+    738
    ]
   },
   {
@@ -199,10 +199,10 @@
    "mass_g": 0.71,
    "subsystem": "landing",
    "bbox_px": [
-    350,
-    511,
+    351,
+    612,
     480,
-    745
+    848
    ]
   },
   {
@@ -213,10 +213,10 @@
    "mass_g": 3.19,
    "subsystem": "landing",
    "bbox_px": [
-    364,
-    390,
+    365,
+    479,
     964,
-    740
+    843
    ]
   }
  ],
@@ -478,6 +478,7 @@
   "WNG-005-R",
   "WNG-006-L",
   "WNG-006-R",
+  "WNG-008",
   "WNG-011-L",
   "WNG-011-R",
   "WNG-012-L",

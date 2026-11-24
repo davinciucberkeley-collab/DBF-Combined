@@ -1,0 +1,126 @@
+{
+ "_note": "Written by team/B2/sim/turbulator.py (closure round 2026-11-14). Do not edit by hand.",
+ "b2sim": {
+  "trip": {
+   "design": {
+    "value": "L20",
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "status": "MODELLED",
+    "note": "turbulator design evaluated: [{\"surface\": \"lower\", \"x_c\": 0.2, \"k_m\": 0.0007}]"
+   },
+   "dcm_dcl_design_max": {
+    "value": 0.0006948234980229436,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "status": "MODELLED",
+    "note": "XFOIL forced transition, max over B3's rows vmax/vc/vt at the gate mass (local slope +/-0.15 in cl, Re-interpolated 3.4-3.9e5)"
+   },
+   "dcm_dcl_upper05_max": {
+    "value": 0.01535579217856358,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "status": "MODELLED",
+    "note": "same, B3's spec (upper x/c 0.05 only, lower free)"
+   },
+   "dcm_dcl_free_max": {
+    "value": 0.01338203593474991,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "status": "MODELLED",
+    "note": "same, free transition (Ncrit 9)"
+   },
+   "dcm_dcl_lower_late_max": {
+    "value": 0.0004060306413284506,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "status": "MODELLED",
+    "note": "lower transition at x/c 0.40 / 0.60 (trip acting late), upper free"
+   },
+   "cd_design_cruise": {
+    "value": 0.011769459061000263,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "status": "ESTIMATED",
+    "note": "section cd at the cruise CL (17 m/s, gate mass): XFOIL forced transition + device drag (EST)"
+   },
+   "cd_free_cruise": {
+    "value": 0.00774013159953449,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "status": "MODELLED",
+    "note": "free transition at the cruise CL"
+   },
+   "dcd_design_cruise": {
+    "value": 0.004029327461465774,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "status": "ESTIMATED",
+    "note": "design minus free, incl. device drag"
+   },
+   "dcd_device_design": {
+    "value": 0.0016716276884601604,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "status": "ESTIMATED",
+    "note": "C_Dk (k/c)(u_k/V)^2, C_Dk 1.0 (EST)"
+   },
+   "dcd_upper05_cruise": {
+    "value": 0.004910344965448754,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "status": "ESTIMATED",
+    "note": "B3's spec, incl. device drag"
+   },
+   "re_k_design_vt": {
+    "value": 634.4960019556379,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "status": "MODELLED",
+    "note": "u_k k / nu at 1.3 Vs, gate mass"
+   },
+   "k_design_m": {
+    "value": 0.0007,
+    "unit": "m",
+    "source": "SRC-B2-XFOIL",
+    "status": "MODELLED",
+    "note": "tape height for Re_k >= 600 at 1.3 Vs"
+   },
+   "clmax_design_re2p6": {
+    "value": 1.2463,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "status": "MODELLED",
+    "note": "section clmax, design trip state, Re 2.6e5"
+   },
+   "clmax_free_re2p6": {
+    "value": 1.2563,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "status": "MODELLED",
+    "note": "free n9, Re 2.6e5 (same run set)"
+   },
+   "clmax_tripped_min": {
+    "value": 1.2461,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "status": "MODELLED",
+    "note": "lowest section clmax at Re 2.6e5 over every forced-transition case of this script that converged past its clmax (upper 0.02-0.10, lower 0.05-0.60)"
+   },
+   "clmax_t05b05_re2p6": {
+    "value": 1.2461,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "status": "MODELLED",
+    "note": "xtr 0.05 both, Re 2.6e5"
+   },
+   "e1_p_over_dv": {
+    "value": 3.139625060712017,
+    "unit": "-",
+    "source": "SRC-B2-AVL",
+    "status": "ESTIMATED",
+    "note": "CL-E1-CRUISE-P-55-V17 / (CL-E1-CRUISE-DRAG x V)"
+   }
+  }
+ }
+}

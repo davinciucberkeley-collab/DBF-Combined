@@ -16,7 +16,7 @@ Three design states sit side by side in this repo. Most conflicts below come fro
 |---|---|---|
 | **v0.4.0, 11-02 resize, CAD rev G** (DillonVTOL, 2026-11-03) | Vc 18 m/s, MTOW 7.438 kg, S 0.774 m², chord 322.3 mm, AR 7.45, hover 1132 W / 51.0 A, T/W 1.68, $1,854.55 committed | `analysis/` (incl. `results.json`, `aero/`, `cfd3d/`, `validation/`, `mass/`), `cad/`, `firmware/`, `docs/DESIGN-BASIS.md`, `docs/purchasing/C0_BOM.csv`, `docs/build/`, `docs/test/`, `review/`, the root pages `VTOL-Review.html` (issue 6), `build-manual.html`, `test-plan.html`, `flight-software.html`, `templates.html` |
 | **v0.4.0 rev D** (DBF-VTOL `analysis/` as of 2026-10-25) | Vc 20 m/s, MTOW 6.552 kg, chord 284.2 mm | `Concept-Models.html` only (A0 is placed with chord 0.284176 and 6.55 kg; `concepts/build.mjs` reads the root `cad/params.txt` and `analysis/results.json`, so a rebuild moves it to rev G) |
-| **v0.3.1** (2026-10-18/19) | Vc 20 m/s, MTOW 6.182 kg, S 0.573 m², chord 238.7 mm, AR 10.06, hover 832 W / 37.5 A, T/W 2.03, $1,897.92 committed | `inventory/` (the builders read the frozen copy in `inventory/v031/`), `Inventory-Overview.html`, the live Google Sheet, `fusion/` and `inventory/fusion/` (Fusion model), `concepts/variants/a1–a3`, `docs/research/electrical-architecture.md`, `hardware-schedule.md`, `tolerance-analysis.md`, `nautical-wings-props.md` |
+| **v0.3.1** (2026-10-18/19) | Vc 20 m/s, MTOW 6.182 kg, S 0.573 m², chord 238.7 mm, AR 10.06, hover 832 W / 37.5 A, T/W 2.03, $1,897.92 committed | `inventory/` (the builders read the frozen copy in `inventory/v031/`), `Inventory-Overview.html` (removed 2026-11-19, batch 2; recoverable from git 8d15f419^), the live Google Sheet, `fusion/` and `inventory/fusion/` (Fusion model), `concepts/variants/a1–a3`, `docs/research/electrical-architecture.md`, `hardware-schedule.md`, `tolerance-analysis.md`, `nautical-wings-props.md` |
 | Not the C0 design | — | `explorations/tiltwing/` (tilt-wing, 9.5 kg paper defaults), `sim/` (notional 8-lift, 2,200 kg, 13 m span), `tools/opencae-studio/` (general CAE tool; its wing tutorial uses an S1223 half-wing) |
 
 Sources: `analysis/results.json` and `inventory/v031/analysis/results.json` (`base.Vc`, `concepts.C0.sized.*`,
@@ -133,7 +133,7 @@ C0 has no hover motor-out tolerance, so a failed lift motor grounds the aircraft
 | Value | Where |
 |---|---|
 | $1,854.55 committed, $145.45 reserve (goods $1,598.69, tax $163.87, shipping $91.99) | `analysis/results.json` `concepts.C0.bom`; `docs/purchasing/C0_BOM.csv` lines 53–57 |
-| $1,897.92 committed, $102.08 reserve (goods $1,630.77, shipping $100) | `inventory/v031/analysis/results.json`; `inventory/v031/docs/purchasing/C0_BOM.csv` lines 43–47; `inventory/inventory.json`, `Inventory-Overview.html`, the Google Sheet |
+| $1,897.92 committed, $102.08 reserve (goods $1,630.77, shipping $100) | `inventory/v031/analysis/results.json`; `inventory/v031/docs/purchasing/C0_BOM.csv` lines 43–47; `inventory/inventory.json`, `Inventory-Overview.html` (removed 2026-11-19, batch 2; recoverable from git 8d15f419^), the Google Sheet |
 
 Follows D5–D9. **Decision needed:** after D5–D9, regenerate one BOM and feed it to `inventory/` and the Google Sheet.
 
@@ -154,7 +154,7 @@ Follows D5–D9. **Decision needed:** after D5–D9, regenerate one BOM and feed
 | On the 11-02 sizing: 7.438 kg / 4 ≈ 1.86 kg per rotor, pusher at 18 m/s | arithmetic from `analysis/results.json` |
 
 **Decision needed:** update the design point (after D1–D3) before the spec goes to the sponsor. The message itself is
-in `inventory/build_overview.mjs` (`NWA_MSG`) and on `Inventory-Overview.html` §8.
+in `inventory/build_overview.mjs` (`NWA_MSG`) and on `Inventory-Overview.html` (removed 2026-11-19, batch 2; recoverable from git 8d15f419^) §8.
 
 ## D13. Which CAD model is the build reference
 
@@ -192,7 +192,7 @@ These are not team decisions, just places where one document disagrees with itse
 3. **Nautical Wings spec.** `docs/research/nautical-wings-props.md` §3: the lift column header says "x4 + 1 spare", the
    rotation row asks for "a spare of each" direction, and the quantity row says "6 min"; the BOM holds 2 + 1 pairs
    (6 props) of JeeFly 1755. The design point cites `../DESIGN-BASIS.md` for 6.18 kg, which that file no longer says
-   (see D12). The reserve after free props is "$102.08 to $186.05 (EST)" in the DBF-VTOL text (`Inventory-Overview.html`
+   (see D12). The reserve after free props is "$102.08 to $186.05 (EST)" in the DBF-VTOL text (`Inventory-Overview.html` (removed 2026-11-19, batch 2; recoverable from git 8d15f419^)
    §8) and "$145.45 to about $229.43 (EST)" on the 11-02 BOM (DillonVTOL README, carried into `README.md`).
 4. **Electrical architecture currents.** `docs/research/electrical-architecture.md` cites `analysis/results.json` for a
    74.4 A transition current; that file now says 82.1 A (the 74.4 A value is in `inventory/v031/analysis/results.json`).

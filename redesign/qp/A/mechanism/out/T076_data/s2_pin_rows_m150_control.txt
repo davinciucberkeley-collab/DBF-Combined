@@ -1,0 +1,19 @@
+mass 1.500 kg, 23 cases, KP 2.156
+| Row | min RF | governing case |
+|---|---|---|
+| PIN root block: 1 x 3 mm, bearing in 2.5 mm PETG wall | 0.23 | SITL Ta_h5 wide (y drift) |
+| PIN root block: 1 x 3 mm, double shear | 0.66 | SITL Ta_h5 wide (y drift) |
+| PIN saddle: 1 x 3 mm, bearing in 2.5 mm PETG wall | 0.23 | SITL Ta_h5 wide (y drift) |
+| PIN saddle: 1 x 3 mm, double shear | 0.66 | SITL Ta_h5 wide (y drift) |
+| PIN root block: 2 x 3 mm, bearing in 2.5 mm PETG wall | 0.47 | SITL Ta_h5 wide (y drift) |
+| PIN root block: 2 x 3 mm, double shear | 1.32 | SITL Ta_h5 wide (y drift) |
+| PIN saddle: 2 x 3 mm, bearing in 2.5 mm PETG wall | 0.47 | SITL Ta_h5 wide (y drift) |
+| PIN saddle: 2 x 3 mm, double shear | 1.32 | SITL Ta_h5 wide (y drift) |
+| PIN root block: 3 x 3 mm, bearing in 4.0 mm PETG wall | 1.12 | SITL Ta_h5 wide (y drift) |
+| PIN root block: 3 x 3 mm, double shear | 1.97 | SITL Ta_h5 wide (y drift) |
+| PIN saddle: 3 x 3 mm, bearing in 4.0 mm PETG wall | 1.12 | SITL Ta_h5 wide (y drift) |
+| PIN saddle: 3 x 3 mm, double shear | 1.97 | SITL Ta_h5 wide (y drift) |
+| CRADLE 2 pins, bearing in 2 mm PETG wall | 0.56 | hard 7/7 combo |
+| CRADLE 2 x 3 mm CF pins, double shear | 1.98 | hard 7/7 combo |
+| CRADLE 3 pins, bearing in 4 mm PETG wall | 1.68 | hard 7/7 combo |
+| CRADLE 3 x 3 mm CF pins, double shear | 2.97 | hard 7/7 combo |

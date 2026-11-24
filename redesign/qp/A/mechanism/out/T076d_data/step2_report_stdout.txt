@@ -1,0 +1,34 @@
+| 30 | 22 | 0.10 | 13.87 | 13.90 | 6.93 | 78.6 | 2.40 | 15.6 | 6.4 | 2.10 | 12.41 | 59.3 | hard 7/7 combo | 5.8 / 5.88 |
+| 30 | 24 | 0.02 | 8.70 | 8.76 | 5.03 | 56.5 | 1.57 | 21.5 | 2.5 | 2.96 | 8.49 | 36.4 | hard 7/7 combo | 1.6 / 3.73 |
+| 30 | 24 | 0.05 | 10.75 | 10.75 | 5.44 | 61.7 | 1.89 | 18.8 | 5.2 | 2.56 | 10.00 | 45.4 | hard 7/7 combo | 4.5 / 4.65 |
+| 30 | 24 | 0.10 | 13.87 | 13.88 | 7.05 | 80.0 | 2.43 | 15.6 | 8.4 | 2.08 | 12.41 | 60.2 | hard 7/7 combo | 7.8 / 5.89 |
+| 30 | 26 | 0.02 | 8.72 | 8.78 | 5.20 | 58.4 | 1.57 | 21.5 | 4.5 | 2.93 | 8.49 | 36.5 | hard 7/7 combo | 3.6 / 3.73 |
+| 30 | 26 | 0.05 | 10.79 | 10.80 | 5.50 | 62.4 | 1.91 | 18.8 | 7.2 | 2.54 | 10.00 | 45.8 | hard 7/7 combo | 6.5 / 4.69 |
+| 30 | 26 | 0.10 | 13.95 | 13.98 | 7.10 | 80.5 | 2.44 | 15.6 | 10.4 | 2.06 | 12.41 | 60.5 | hard 7/7 combo | 9.8 / 6.06 |
+
+
+(bold Fp = baseline 30 N / 20 mm rows; all other rows have the pad geometry shifted with the stroke)
+
+
+## Stop-rule check (zeta 0.05): reserve >= 2 mm, tilt <= 3.0 deg, n <= 12 g
+
+- items: 7 of 10 grid points (incl. the baseline pad) meet the three limits at zeta 0.05
+- cad: 7 of 10 grid points (incl. the baseline pad) meet the three limits at zeta 0.05
+- cad_E: 7 of 10 grid points (incl. the baseline pad) meet the three limits at zeta 0.05
+
+**Stop rule NOT triggered** (a grid point exists for every model: {'items': 7, 'cad': 7, 'cad_E': 7}).
+
+
+## Pad point for the downstream steps (the zeta of the foam is unmeasured, D-222 LR-1)
+
+Feasible at all three zeta (0.02, 0.05, 0.10) on the CAD mass (reserve >= 2 mm, tilt <= 3.0 deg, n <= 12 g, drift-0.70 reserve >= 0): 0 points
+Feasible at zeta 0.02 and 0.05 (0.10 not met) on the CAD mass (reserve >= 2 mm, tilt <= 3.0 deg, n <= 12 g, drift-0.70 reserve >= 0): 2 points
+- 30 N, 24 mm: worst-zeta sleeve-exit moment 5.41 N m, worst-zeta tilt 2.97 deg
+- 30 N, 26 mm: worst-zeta sleeve-exit moment 5.43 N m, worst-zeta tilt 2.94 deg
+
+**Chosen: Fp 30 N, usable stroke 24 mm** (tier: zeta 0.02 and 0.05 (0.10 not met); smallest worst-zeta sleeve-exit moment; NO point has tilt <= 2.8 deg (the audit s4.1 wish); the AR-008 limit 3.0 governs and the margin is thin).
+Pad geometry at the choice: x_foot 0.3475 m (baseline 0.3415), pad edge z 0.1984 m (baseline 0.195), A-P9 30.5 deg held; z extent +3.4 mm on each side vs baseline.
+- zeta 0.02: Mexit 5.24 (cad baseline pad 13.39; old ITEMS baseline pad zeta 0.05 7.08), Mz_arm 8.47, tilt 2.97, n 8.49, reserve 2.5 mm, drift-0.70 reserve 1.7 mm  
+- zeta 0.05: Mexit 5.41 (cad baseline pad 5.32; old ITEMS baseline pad zeta 0.05 7.08), Mz_arm 10.42, tilt 2.56, n 10.00, reserve 5.2 mm, drift-0.70 reserve 4.5 mm  
+- zeta 0.10: Mexit 6.95 (cad baseline pad 6.79; old ITEMS baseline pad zeta 0.05 7.08), Mz_arm 13.50, tilt 2.07, n 12.41, reserve 8.4 mm, drift-0.70 reserve 7.8 mm  <-- limit not met
+n = 12 g (A-P5) is reached at zeta about 0.091 (linear between the 0.05 and 0.10 rows, EST): the pad specification must require a measured equivalent zeta below this.

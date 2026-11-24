@@ -892,13 +892,13 @@
     "b": "m"
    },
    "outputs": {
-    "gap_pod_m": 0.15460000000000004,
+    "gap_pod_m": 0.15460000000000002,
     "gap_fin_inboard_m": 0.015199999999999991,
     "gap_fin_outboard_m": 0.015199999999999991,
     "gap_tip_m": 0.014999999999999902,
     "gap_min_m": 0.014999999999999902,
     "gap_pod_spanwise_m": 0.0,
-    "pod_end_to_hinge_m": 0.15460000000000004,
+    "pod_end_to_hinge_m": 0.15460000000000002,
     "fin_thickness_m": 0.0096
    },
    "input_values": {
@@ -911,11 +911,11 @@
      0.56
     ],
     "pod": [
-     0.235,
+     0.242,
      0.14,
      0.07
     ],
-    "pod_x": -0.14,
+    "pod_x": -0.147,
     "c": 0.32,
     "f": 0.22,
     "y_fin": 0.32,
@@ -943,6 +943,7 @@
     "a_mec": "P:mass.allocation_g.mechanisms",
     "m_pack_kg": "P:battery.mass_kg",
     "spar_kgm": "P:wing.spar.mass_per_m_kgm",
+    "tube_kgm": "P:fins.tube.mass_per_m_kgm",
     "spar_l": "P:wing.spar.length_m",
     "prop_kg": "P:propulsion.prop_mass_kg",
     "c": "P:wing.chord_m",
@@ -999,6 +1000,7 @@
     "a_mec": "g",
     "m_pack_kg": "kg",
     "spar_kgm": "kg/m",
+    "tube_kgm": "kg/m",
     "spar_l": "m",
     "prop_kg": "kg",
     "c": "m",
@@ -1046,32 +1048,33 @@
     "ASM-A5-SECTION"
    ],
    "outputs": {
-    "mass_g": 2374.0,
-    "cg_x_m": 0.04516774904392407,
-    "cg_z_m": 0.01646058559077993,
-    "cg_x_frac_chord": 0.14114921576226272,
-    "cg_x_fwd_limit_m": 0.0466,
-    "cg_x_aft_limit_m": 0.0514,
+    "mass_g": 2426.0,
+    "cg_x_m": 0.04535067519098498,
+    "cg_z_m": 0.01610687407543324,
+    "cg_x_frac_chord": 0.14172085997182804,
+    "cg_x_fwd_limit_m": 0.0394,
+    "cg_x_aft_limit_m": 0.0511,
     "cg_z_up_limit_m": 0.025,
-    "cg_x_range_use": 1.5967712316983043,
+    "cg_x_range_use": 0.017209434356406712,
     "pack_x_m": -0.036000000000000004,
-    "pack_x_for_target_m": -0.019458611327774083,
-    "pack_shift_m": 0.01654138867222592,
-    "hover_upper_pair_share": 0.5433173305020524,
-    "hover_split_ratio": 1.1897042887555738
+    "pack_x_for_target_m": -0.019903160024235554,
+    "pack_shift_m": 0.01609683997576445,
+    "hover_upper_pair_share": 0.5423865107248244,
+    "hover_split_ratio": 1.1852502678273809
    },
    "input_values": {
-    "a_wing": 393,
-    "a_fins": 434,
-    "a_pod": 146,
-    "a_land": 60,
+    "a_wing": 391,
+    "a_fins": 477,
+    "a_pod": 148,
+    "a_land": 70,
     "a_prop": 462,
-    "a_pwr": 627,
-    "a_avn": 37,
+    "a_pwr": 626,
+    "a_avn": 36,
     "a_hrn": 142,
-    "a_mec": 73,
+    "a_mec": 74,
     "m_pack_kg": 0.55,
     "spar_kgm": 0.102,
+    "tube_kgm": 0.156,
     "spar_l": 1.0,
     "prop_kg": 0.017,
     "c": 0.32,
@@ -1337,18 +1340,18 @@
     "od_s": 0.022,
     "xt": 0.045,
     "te": 0.32,
-    "od": 0.022,
+    "od": 0.0221,
     "y_fin": 0.32,
     "hh": 0.21,
     "can_l": 0.0265,
     "can_d": 0.038,
     "x_mount": 0.045,
-    "x_prop": -0.0127,
+    "x_prop": -0.01704,
     "z_m": 0.19,
     "foot": 0.048,
-    "pod_x": -0.14,
+    "pod_x": -0.147,
     "pod_size": [
-     0.235,
+     0.242,
      0.14,
      0.07
     ],
@@ -1360,8 +1363,8 @@
     ],
     "x_target": 0.049,
     "x_range": [
-     0.0466,
-     0.0514
+     0.0394,
+     0.0511
     ],
     "z_range": [
      0.0165,
@@ -1370,7 +1373,7 @@
     "tube_l": 0.344,
     "bond_gap": 0.00015,
     "col_wall": 0.002,
-    "face_ahead": 0.0075,
+    "face_ahead": 0.012,
     "grip": 0.018,
     "plate_hz": 0.015,
     "sc_gap": 0.0005,
@@ -1490,7 +1493,7 @@
    "output": "cg_x_aft_limit_m",
    "unit": "m",
    "how": "B3 re-derives the range at R1 geometry (CHANGE-LOG D-17, CR-A1-10).",
-   "value": 0.0514
+   "value": 0.0511
   },
   {
    "id": "CL-A5-CG-X-FWD-LIMIT",
@@ -1500,7 +1503,7 @@
    "output": "cg_x_fwd_limit_m",
    "unit": "m",
    "how": "B3: elevon trim at CLmax (CL-B3-CG-FWD, D-60).",
-   "value": 0.0466
+   "value": 0.0394
   },
   {
    "id": "CL-A5-LAYOUT-CG-X",
@@ -1514,7 +1517,7 @@
     "ASM-A5-MASS-SPLIT",
     "ASM-A5-SECTION"
    ],
-   "value": 0.04516774904392407
+   "value": 0.04535067519098498
   },
   {
    "id": "CL-A5-LAYOUT-CG-X-RANGE-USE",
@@ -1528,7 +1531,7 @@
     "ASM-A5-MASS-SPLIT",
     "ASM-A5-SECTION"
    ],
-   "value": 1.5967712316983043
+   "value": 0.017209434356406712
   },
   {
    "id": "CL-A5-PACK-X-FOR-CG",
@@ -1545,7 +1548,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": -0.019458611327774083
+   "value": -0.019903160024235554
   },
   {
    "id": "CL-A5-PACK-SHIFT",
@@ -1558,7 +1561,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 0.01654138867222592
+   "value": 0.01609683997576445
   },
   {
    "id": "CL-A5-CG-Z-UP-LIMIT",
@@ -1585,7 +1588,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 0.01646058559077993
+   "value": 0.01610687407543324
   },
   {
    "id": "CL-A5-HOVER-SPLIT",
@@ -1602,7 +1605,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 1.1897042887555738
+   "value": 1.1852502678273809
   },
   {
    "id": "ASM-A5-ASSY-ROLLUP",
@@ -1707,7 +1710,7 @@
     "cg_x_m": 0.05052,
     "cg_y_m": -0.00121,
     "cg_z_m": 0.01849,
-    "cg_x_range_use": 0.6333333333333337,
+    "cg_x_range_use": 0.9008547008547013,
     "cg_x_shift_m": 0.00392,
     "check_errors": 0
    },
@@ -1777,8 +1780,8 @@
      }
     },
     "x_range": [
-     0.0466,
-     0.0514
+     0.0394,
+     0.0511
     ],
     "z_range": [
      0.0165,
@@ -1865,7 +1868,7 @@
    "assumes": [
     "ASM-A5-ASSY-ROLLUP"
    ],
-   "value": 0.6333333333333337
+   "value": 0.9008547008547013
   },
   {
    "id": "CL-A5-ASSY-CG-SHIFT",

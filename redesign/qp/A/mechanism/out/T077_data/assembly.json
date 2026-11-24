@@ -1,0 +1,465 @@
+{
+ "steps": [
+  {
+   "id": "A1",
+   "parts": [
+    "WNG-001"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "A2",
+   "parts": [
+    "WNG-002"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "A3",
+   "parts": [
+    "WNG-003-C"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "A4",
+   "parts": [
+    "WNG-004-R",
+    "WNG-005-R"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "A5",
+   "parts": [
+    "WNG-004-L",
+    "WNG-005-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B1",
+   "parts": [
+    "CGE-001",
+    "CGE-004",
+    "CGE-006",
+    "CGE-002-A",
+    "CGE-002-B",
+    "CGE-003-UR",
+    "CGE-003-UL",
+    "CGE-003-LR",
+    "CGE-003-LL",
+    "CGE-009-UR",
+    "CGE-009-UL",
+    "CGE-009-LR",
+    "CGE-009-LL",
+    "CGE-010-UR",
+    "CGE-010-UL",
+    "CGE-010-LR",
+    "CGE-010-LL",
+    "CGE-010-C",
+    "CGE-005-R",
+    "CGE-005-L",
+    "CGE-007-R",
+    "CGE-007-L",
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL",
+    "PRP-004-UR",
+    "PRP-004-UL",
+    "PRP-004-LR",
+    "PRP-004-LL",
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL",
+    "PRP-005-UR",
+    "PRP-005-UL",
+    "PRP-005-LR",
+    "PRP-005-LL"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B2",
+   "parts": [
+    "FIN-005-R",
+    "FIN-005-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B2a",
+   "parts": [
+    "HRN-003-R",
+    "HRN-003-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B2b1",
+   "parts": [
+    "HRN-004-UR"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B2b2",
+   "parts": [
+    "HRN-004-UL"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B2b3",
+   "parts": [
+    "HRN-004-LR"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B2b4",
+   "parts": [
+    "HRN-004-LL"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B3",
+   "parts": [
+    "CGE-008"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B4",
+   "parts": [
+    "WNG-009-R",
+    "WNG-010-R",
+    "WNG-009-L",
+    "WNG-010-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "C1",
+   "parts": [
+    "FIN-002-R",
+    "FIN-002-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "C1a",
+   "parts": [
+    "FIN-006-R",
+    "FIN-006-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "C2",
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L",
+    "WNG-007-R",
+    "WNG-007-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "C2a",
+   "parts": [
+    "WNG-008-RU",
+    "WNG-008-LU"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "C2b",
+   "parts": [
+    "WNG-008-RL",
+    "WNG-008-LL"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "C3",
+   "parts": [
+    "FIN-004-R"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "C4",
+   "parts": [
+    "FIN-004-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "C5",
+   "parts": [
+    "FIN-003-R",
+    "FIN-003-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "C6",
+   "parts": [
+    "FIN-001-R",
+    "FIN-001-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "C7",
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "C8",
+   "parts": [
+    "GER-001-LR",
+    "GER-001-LL"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "C9",
+   "parts": [
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "D1",
+   "parts": [
+    "MEC-001-R",
+    "MEC-001-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "D2",
+   "parts": [
+    "MEC-002-R",
+    "MEC-002-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "D3",
+   "parts": [
+    "MEC-004-R",
+    "MEC-004-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "D4",
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "D2a",
+   "parts": [
+    "MEC-008-R",
+    "MEC-008-L",
+    "HWC-002-R",
+    "HWC-002-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "D5",
+   "parts": [
+    "MEC-005-R"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "D5b",
+   "parts": [
+    "MEC-005-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "E1",
+   "parts": [
+    "AVN-006"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "E2",
+   "parts": [
+    "AVN-001",
+    "HWC-003"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "E3",
+   "parts": [
+    "PRP-003",
+    "AVN-007",
+    "AVN-002",
+    "AVN-003",
+    "AVN-004",
+    "AVN-005"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "E3a",
+   "parts": [
+    "HWC-001"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "E3d",
+   "parts": [
+    "AVN-009-T",
+    "AVN-009-S"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "E3c",
+   "parts": [
+    "PWR-003"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "E4",
+   "parts": [
+    "PWR-001"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "E4a",
+   "parts": [
+    "HRN-002"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "E5",
+   "parts": [
+    "PWR-002"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "E7",
+   "parts": [
+    "AVN-008"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  }
+ ],
+ "tol_mm": 0.05,
+ "flipped": 1652
+}

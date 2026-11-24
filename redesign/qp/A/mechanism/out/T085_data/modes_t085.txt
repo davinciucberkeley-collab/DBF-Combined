@@ -1,0 +1,237 @@
+# T-085 D-185 re-judgement (FEA-lite beam FE with the T-085 options). Band 94-321 Hz, strong = cx or cy >= 0.5 (unchanged).
+Pack geometry from the CAD: pack CG x -0.0290 z 0.0320 m; plate solid fraction 0.518 (windows 48.2 %); collar top x -0.0540..-0.0330, pad / collar overlap 11.0 mm x 24 mm = 264 mm2 (centre x -0.0385)
+
+## 0. Validation
+| check | result | expected |
+|---|---|---|
+| default build + cell, governing mode kd / nom / hi (T-084 s2.4) | 84.6 / 88.0 / 96.2 | 84.6 / 88.0 / 96.2 |
+| pack rigid at drawn x (pack_cfg rigid) + cell, nominal (t084_pack_place) | 94.0 / 97.9 / 106.6 | 94.0 / 97.9 / 106.6 |
+| default build, spar-only, nom, strong in band (T-066 / T-084 s2.4) | 215.3 (0.02 / 0.52) | 215.3 Hz (0.02 / 0.52) |
+| superelement al6061: Fl symmetry error, K rigid-body null space (6 smallest |eig| / largest), K min eig | 2.1e-11; 6.9e-17; -6.9e-17 | 0 / ~1e-12 / >= -1e-9 |
+| superelement petg: Fl symmetry error, K rigid-body null space (6 smallest |eig| / largest), K min eig | 1.1e-11; 9.9e-17; -9.9e-17 | 0 / ~1e-12 / >= -1e-9 |
+
+## 1. Hub joint from the hub FEA (re-solved flexibility of the existing D-209 mesh, t085_hubflex.py)
+Cantilever of the 60 mm stub (12x10 CF, E 70 GPa): 1.95e-03 mm/N at the tip.
+al6061: UR stub-end translation flexibility (mm/N) x 3.123e-03, y 7.040e-03, z 1.199e-02; rotation about x (rad per N mm) 5.066e-06, y 6.859e-06, z 4.110e-06; hub centre: x 1.578e-05 y 1.360e-03 z 1.345e-03 mm/N
+petg: UR stub-end translation flexibility (mm/N) x 6.667e-03, y 9.202e-03, z 1.590e-02; rotation about x (rad per N mm) 6.638e-06, y 8.706e-06, z 5.440e-06; hub centre: x 2.593e-05 y 1.571e-03 z 1.568e-03 mm/N
+
+## 2. Strong modes vs the band: modelling bounds x corners x wing cell
+Hub: rigid = T-084; al6061 = hub FEA with a 6061 hub (D-209 geometry, tie-bonded); petg = hub FEA as run (PETG block: soft bound).  Pack: lump = T-084 default (on the hub node); rigid = at the drawn x on the hub; tray stiff / nom / soft = pack on the tray CGE-008 with pad E 4 / 2 / 0.5 MPa (EST, unknown "—") and plate width 112 / 24 / 24 mm.
+| wing cell | hub | pack | corner | strong modes IN the band (f, cx / cy) | highest strong below (Hz, margin to 94) | lowest strong above (Hz, margin to 321) | strongest 120-330 Hz mode (f, max c) | D-185 (a) |
+|---|---|---|---|---|---|---|---|---|
+| nominal | rigid | lump | kd | none | 84.6 (+11 %) | 654.6 (+104 %) | 162.0 (0.27) | PASS |
+| nominal | rigid | lump | nom | none | 88.0 (+7 %) | 700.5 (+118 %) | 172.8 (0.26) | PASS |
+| nominal | rigid | lump | hi | 96.2 (0.81 / 0.93) | 47.0 (+100 %) | 793.1 (+147 %) | 194.2 (0.26) | FAIL |
+| nominal | rigid | rigid | kd | 94.0 (0.64 / 1.36); 274.7 (0.18 / 0.80); 308.5 (0.15 / 0.60) | 40.4 (+133 %) | 731.5 (+128 %) | 274.7 (0.80) | FAIL |
+| nominal | rigid | rigid | nom | 97.9 (0.67 / 1.36); 293.8 (0.18 / 0.80) | 41.9 (+125 %) | 327.7 (+2 %) | 293.8 (0.80) | FAIL |
+| nominal | rigid | rigid | hi | 106.6 (0.72 / 1.36) | 47.0 (+100 %) | 333.3 (+4 %) | 315.1 (0.39) | FAIL |
+| nominal | rigid | rigid+rot | kd | 229.0 (0.15 / 0.74) | 93.2 (+1 %) | 728.8 (+127 %) | 229.0 (0.74) | FAIL |
+| nominal | rigid | rigid+rot | nom | 97.1 (0.68 / 1.35); 244.5 (0.16 / 0.75) | 41.9 (+125 %) | 777.6 (+142 %) | 244.5 (0.75) | FAIL |
+| nominal | rigid | rigid+rot | hi | 105.7 (0.73 / 1.35); 277.4 (0.16 / 0.75) | 47.0 (+100 %) | 358.2 (+12 %) | 277.4 (0.75) | FAIL |
+| nominal | rigid | tray stiff | kd | 310.6 (0.15 / 1.27) | 93.6 (+0 %) | 710.2 (+121 %) | 310.6 (1.27) | FAIL |
+| nominal | rigid | tray stiff | nom | 97.4 (0.65 / 1.28); 298.9 (0.08 / 0.65); 321.0 (0.14 / 1.21) | 42.5 (+121 %) | 756.9 (+136 %) | 321.0 (1.21) | FAIL |
+| nominal | rigid | tray stiff | hi | 105.9 (0.70 / 1.27) | 48.1 (+95 %) | 326.0 (+2 %) | 326.0 (1.20) | FAIL |
+| nominal | rigid | tray nom | kd | 243.3 (0.16 / 1.35); 257.5 (0.05 / 0.56); 294.4 (0.12 / 0.59) | 93.1 (+1 %) | 675.3 (+110 %) | 243.3 (1.35) | FAIL |
+| nominal | rigid | tray nom | nom | 96.8 (0.65 / 1.24); 249.2 (0.17 / 1.42); 314.0 (0.12 / 0.59) | 42.4 (+122 %) | 722.6 (+125 %) | 249.2 (1.42) | FAIL |
+| nominal | rigid | tray nom | hi | 105.1 (0.70 / 1.21); 258.0 (0.18 / 1.49) | 48.1 (+96 %) | 331.7 (+3 %) | 258.0 (1.49) | FAIL |
+| nominal | rigid | tray soft | kd | 147.8 (0.26 / 1.71); 213.6 (0.10 / 0.69) | 89.3 (+5 %) | 750.8 (+134 %) | 147.8 (1.71) | FAIL |
+| nominal | rigid | tray soft | nom | 150.4 (0.29 / 1.74); 221.7 (0.10 / 0.70) | 92.3 (+2 %) | nan (+nan %) | 150.4 (1.74) | FAIL |
+| nominal | rigid | tray soft | hi | 99.1 (0.63 / 0.72); 155.3 (0.33 / 1.74); 228.7 (0.09 / 0.71) | 48.1 (+96 %) | nan (+nan %) | 155.3 (1.74) | FAIL |
+| nominal | al6061 | lump | kd | none | 89.7 (+5 %) | 660.7 (+106 %) | 162.1 (0.27) | PASS |
+| nominal | al6061 | lump | nom | none | 92.2 (+2 %) | 698.5 (+118 %) | 172.9 (0.27) | PASS |
+| nominal | al6061 | lump | hi | 98.0 (0.86 / 0.95) | 49.0 (+92 %) | 774.1 (+141 %) | 194.2 (0.26) | FAIL |
+| nominal | al6061 | rigid+rot | kd | 99.1 (0.77 / 1.38); 249.6 (0.12 / 0.76) | 43.8 (+114 %) | 333.0 (+4 %) | 249.6 (0.76) | FAIL |
+| nominal | al6061 | rigid+rot | nom | 102.0 (0.78 / 1.38); 260.3 (0.13 / 0.76) | 45.7 (+106 %) | 340.9 (+6 %) | 260.3 (0.76) | FAIL |
+| nominal | al6061 | rigid+rot | hi | 107.8 (0.78 / 1.36); 280.9 (0.14 / 0.77) | 49.0 (+92 %) | 364.8 (+14 %) | 280.9 (0.77) | FAIL |
+| nominal | al6061 | tray stiff | kd | 99.6 (0.74 / 1.31) | 44.9 (+109 %) | 330.2 (+3 %) | 264.3 (0.47) | FAIL |
+| nominal | al6061 | tray stiff | nom | 102.3 (0.75 / 1.31) | 46.8 (+101 %) | 334.7 (+4 %) | 272.6 (0.46) | FAIL |
+| nominal | al6061 | tray stiff | hi | 108.0 (0.75 / 1.28) | 50.1 (+87 %) | 328.4 (+2 %) | 328.4 (1.04) | FAIL |
+| nominal | al6061 | tray nom | kd | 99.0 (0.74 / 1.26); 248.8 (0.13 / 1.10); 260.1 (0.08 / 0.91); 305.2 (0.10 / 0.51) | 44.8 (+110 %) | 692.4 (+116 %) | 248.8 (1.10) | FAIL |
+| nominal | al6061 | tray nom | nom | 101.7 (0.74 / 1.26); 254.2 (0.16 / 1.35); 271.6 (0.04 / 0.58) | 46.7 (+101 %) | 322.7 (+1 %) | 254.2 (1.35) | FAIL |
+| nominal | al6061 | tray nom | hi | 107.2 (0.74 / 1.22); 259.7 (0.17 / 1.48) | 50.1 (+88 %) | 334.7 (+4 %) | 259.7 (1.48) | FAIL |
+| nominal | al6061 | tray soft | kd | 94.1 (0.69 / 0.87); 150.6 (0.30 / 1.74); 217.5 (0.09 / 0.68) | 44.8 (+110 %) | 682.5 (+113 %) | 150.6 (1.74) | FAIL |
+| nominal | al6061 | tray soft | nom | 96.1 (0.69 / 0.83); 152.6 (0.32 / 1.76); 224.7 (0.09 / 0.69) | 46.7 (+101 %) | 720.8 (+125 %) | 152.6 (1.76) | FAIL |
+| nominal | al6061 | tray soft | hi | 100.7 (0.67 / 0.71); 156.1 (0.34 / 1.76); 229.7 (0.09 / 0.71) | 50.1 (+88 %) | 791.8 (+147 %) | 156.1 (1.76) | FAIL |
+| nominal | petg | lump | kd | none | 84.0 (+12 %) | 602.2 (+88 %) | 162.0 (0.27) | PASS |
+| nominal | petg | lump | nom | none | 85.9 (+9 %) | 635.3 (+98 %) | 172.8 (0.27) | PASS |
+| nominal | petg | lump | hi | none | 90.8 (+3 %) | 704.0 (+119 %) | 194.2 (0.26) | PASS |
+| nominal | petg | rigid+rot | kd | 225.1 (0.18 / 0.81); 242.3 (0.23 / 0.53) | 92.6 (+1 %) | 715.0 (+123 %) | 225.1 (0.81) | FAIL |
+| nominal | petg | rigid+rot | nom | 94.8 (0.63 / 1.36); 232.6 (0.19 / 0.83); 248.8 (0.24 / 0.56) | 43.6 (+116 %) | 747.1 (+133 %) | 232.6 (0.83) | FAIL |
+| nominal | petg | rigid+rot | hi | 99.4 (0.62 / 1.34); 247.3 (0.20 / 0.86); 261.2 (0.26 / 0.58) | 46.4 (+103 %) | nan (+nan %) | 247.3 (0.86) | FAIL |
+| nominal | petg | tray stiff | kd | 240.5 (0.23 / 0.56); 281.6 (0.08 / 0.52); 306.1 (0.16 / 1.20) | 92.8 (+1 %) | 653.7 (+104 %) | 306.1 (1.20) | FAIL |
+| nominal | petg | tray stiff | nom | 94.9 (0.60 / 1.29); 247.6 (0.23 / 0.58); 296.2 (0.13 / 0.93); 313.7 (0.13 / 0.95) | 44.6 (+111 %) | 682.6 (+113 %) | 313.7 (0.95) | FAIL |
+| nominal | petg | tray stiff | hi | 99.4 (0.58 / 1.26); 255.1 (0.23 / 0.57); 310.7 (0.18 / 1.30) | 47.5 (+98 %) | 738.4 (+130 %) | 310.7 (1.30) | FAIL |
+| nominal | petg | tray nom | kd | 240.8 (0.17 / 1.41) | 92.3 (+2 %) | 670.5 (+109 %) | 240.8 (1.41) | FAIL |
+| nominal | petg | tray nom | nom | 94.3 (0.60 / 1.25); 244.2 (0.18 / 1.47); 308.8 (0.15 / 0.58) | 44.6 (+111 %) | 701.3 (+118 %) | 244.2 (1.47) | FAIL |
+| nominal | petg | tray nom | hi | 98.8 (0.58 / 1.20); 248.5 (0.19 / 1.52); 320.3 (0.15 / 0.63) | 47.4 (+98 %) | nan (+nan %) | 248.5 (1.52) | FAIL |
+| nominal | petg | tray soft | kd | 147.9 (0.27 / 1.72); 213.0 (0.12 / 0.69) | 88.4 (+6 %) | 614.0 (+91 %) | 147.9 (1.72) | FAIL |
+| nominal | petg | tray soft | nom | 149.6 (0.28 / 1.74); 220.0 (0.12 / 0.70) | 90.0 (+4 %) | 682.1 (+113 %) | 149.6 (1.74) | FAIL |
+| nominal | petg | tray soft | hi | 94.1 (0.52 / 0.78); 150.9 (0.20 / 1.16); 153.0 (0.22 / 1.36); 225.3 (0.12 / 0.71) | 47.4 (+98 %) | 745.8 (+132 %) | 153.0 (1.36) | FAIL |
+| lower | al6061 | lump | kd | none | 85.0 (+11 %) | 625.7 (+95 %) | 316.9 (0.28) | PASS |
+| lower | al6061 | lump | nom | none | 87.4 (+8 %) | 660.5 (+106 %) | 155.5 (0.22) | PASS |
+| lower | al6061 | lump | hi | none | 93.4 (+1 %) | 721.8 (+125 %) | 170.4 (0.21) | PASS |
+| lower | al6061 | rigid+rot | kd | 248.6 (0.13 / 0.73) | 93.8 (+0 %) | 328.8 (+2 %) | 248.6 (0.73) | FAIL |
+| lower | al6061 | rigid+rot | nom | 96.5 (0.85 / 1.38); 259.2 (0.14 / 0.73) | 45.6 (+106 %) | 336.8 (+5 %) | 259.2 (0.73) | FAIL |
+| lower | al6061 | rigid+rot | hi | 102.3 (0.85 / 1.36); 279.7 (0.15 / 0.66) | 48.9 (+92 %) | 357.1 (+11 %) | 279.7 (0.66) | FAIL |
+| lower | al6061 | tray nom | kd | 239.8 (0.11 / 0.79); 249.1 (0.07 / 0.73); 267.6 (0.11 / 0.99) | 93.7 (+0 %) | 321.5 (+0 %) | 267.6 (0.99) | FAIL |
+| lower | al6061 | tray nom | nom | 96.2 (0.82 / 1.27); 248.1 (0.14 / 1.06); 260.0 (0.06 / 0.79); 279.3 (0.08 / 0.68) | 46.6 (+102 %) | 343.5 (+7 %) | 248.1 (1.06) | FAIL |
+| lower | al6061 | tray nom | hi | 101.8 (0.81 / 1.23); 257.7 (0.17 / 1.43) | 77.9 (+21 %) | 758.2 (+136 %) | 257.7 (1.43) | FAIL |
+| lower | al6061 | tray soft | kd | 149.6 (0.29 / 1.71); 216.3 (0.09 / 0.65) | 89.7 (+5 %) | 661.1 (+106 %) | 149.6 (1.71) | FAIL |
+| lower | al6061 | tray soft | nom | 151.4 (0.31 / 1.73); 223.3 (0.09 / 0.65) | 91.7 (+3 %) | 694.3 (+116 %) | 151.4 (1.73) | FAIL |
+| lower | al6061 | tray soft | hi | 96.6 (0.75 / 0.78); 154.4 (0.34 / 1.78); 227.3 (0.10 / 0.66) | 50.0 (+88 %) | 753.8 (+135 %) | 154.4 (1.78) | FAIL |
+| lower | petg | lump | kd | none | 78.9 (+19 %) | 599.8 (+87 %) | 316.8 (0.28) | PASS |
+| lower | petg | lump | nom | none | 80.7 (+17 %) | 633.4 (+97 %) | 155.4 (0.22) | PASS |
+| lower | petg | lump | hi | none | 86.3 (+9 %) | 583.3 (+82 %) | 170.3 (0.21) | PASS |
+| lower | petg | rigid+rot | kd | 222.9 (0.19 / 0.80); 271.7 (0.16 / 0.59) | 86.8 (+8 %) | 656.1 (+104 %) | 222.9 (0.80) | FAIL |
+| lower | petg | rigid+rot | nom | 230.3 (0.19 / 0.82); 285.4 (0.16 / 0.58) | 88.8 (+6 %) | 686.9 (+114 %) | 230.3 (0.82) | FAIL |
+| lower | petg | rigid+rot | hi | 244.5 (0.21 / 0.84); 256.6 (0.24 / 0.52); 313.8 (0.12 / 0.51) | 93.5 (+1 %) | 745.8 (+132 %) | 244.5 (0.84) | FAIL |
+| lower | petg | tray nom | kd | 235.9 (0.15 / 1.18); 246.2 (0.06 / 0.62); 261.9 (0.09 / 0.69); 291.1 (0.15 / 0.52) | 86.6 (+9 %) | 624.6 (+95 %) | 235.9 (1.18) | FAIL |
+| lower | petg | tray nom | nom | 241.3 (0.17 / 1.37); 306.6 (0.15 / 0.53) | 88.4 (+6 %) | 658.3 (+105 %) | 241.3 (1.37) | FAIL |
+| lower | petg | tray nom | hi | 247.3 (0.19 / 1.50); 318.2 (0.15 / 0.57) | 93.0 (+1 %) | 723.1 (+125 %) | 247.3 (1.50) | FAIL |
+| lower | petg | tray soft | kd | 146.7 (0.15 / 0.95); 147.1 (0.23 / 1.41); 211.8 (0.12 / 0.66) | 83.5 (+13 %) | 612.0 (+91 %) | 147.1 (1.41) | FAIL |
+| lower | petg | tray soft | nom | 148.6 (0.27 / 1.71); 218.5 (0.12 / 0.66) | 85.0 (+11 %) | 644.7 (+101 %) | 148.6 (1.71) | FAIL |
+| lower | petg | tray soft | hi | 151.0 (0.29 / 1.75); 222.7 (0.13 / 0.67) | 89.5 (+5 %) | 731.5 (+128 %) | 151.0 (1.75) | FAIL |
+| lower | rigid | lump | kd | none | 79.4 (+18 %) | 630.1 (+96 %) | 316.8 (0.27) | PASS |
+| lower | rigid | lump | nom | none | 82.7 (+14 %) | 663.6 (+107 %) | 155.4 (0.22) | PASS |
+| lower | rigid | lump | hi | none | 91.4 (+3 %) | 724.3 (+126 %) | 170.4 (0.21) | PASS |
+| lower | rigid | rigid+rot | kd | 227.3 (0.16 / 0.73); 292.0 (0.15 / 0.53) | 87.3 (+8 %) | 657.6 (+105 %) | 227.3 (0.73) | FAIL |
+| lower | rigid | rigid+rot | nom | 242.6 (0.16 / 0.73); 310.2 (0.16 / 0.58) | 91.1 (+3 %) | 690.1 (+115 %) | 242.6 (0.73) | FAIL |
+| lower | rigid | rigid+rot | hi | 99.9 (0.80 / 1.34); 275.1 (0.16 / 0.73) | 46.9 (+100 %) | 349.0 (+9 %) | 275.1 (0.73) | FAIL |
+| lower | rigid | tray nom | kd | 237.6 (0.13 / 1.04); 247.4 (0.07 / 0.72); 262.1 (0.10 / 0.75); 292.3 (0.12 / 0.53) | 87.2 (+8 %) | 661.6 (+106 %) | 237.6 (1.04) | FAIL |
+| lower | rigid | tray nom | nom | 245.4 (0.15 / 1.23); 258.4 (0.05 / 0.68); 276.6 (0.08 / 0.50); 311.5 (0.12 / 0.53) | 90.9 (+3 %) | 699.9 (+118 %) | 245.4 (1.23) | FAIL |
+| lower | rigid | tray nom | hi | 99.5 (0.77 / 1.21); 256.5 (0.17 / 1.44) | 77.8 (+21 %) | 329.1 (+3 %) | 256.5 (1.44) | FAIL |
+
+## 3. Every strong mode (cx or cy >= 0.5) between 60 and 400 Hz, with shape
+
+### nominal cell / hub rigid / pack rigid+rot / kd: 2 strong mode(s)
+- 93.2 Hz: cx 0.65 cy 1.35; symmetric in y (uz even); strain energy arm 40%, spar 39%, bridge 14%, rib 6%; rms translations wing spar (x 0.12 y 0.00 z 0.64); hub (x 0.11 y 0.00 z 1.15); pack (x 0.33 y 0.00 z 0.47); motors (x 0.33 y 0.63 z 0.24); fin tips (x 0.79 y 0.50 z 0.49)
+- 229.0 Hz IN BAND: cx 0.15 cy 0.74; antisymmetric in y (uz odd); strain energy arm 64%, bridge 31%, spar 3%, rib 2%; rms translations wing spar (x 0.02 y 0.37 z 0.39); hub (x 0.00 y 0.36 z 0.00); pack (x 0.00 y 1.14 z 0.00); motors (x 0.08 y 0.28 z 0.25); fin tips (x 0.32 y 0.39 z 0.08)
+- below the 0.5 rule (0.3-0.5) in 60-400 Hz: 249 Hz (cx 0.17 / cy 0.41); 259 Hz (cx 0.11 / cy 0.32); 288 Hz (cx 0.08 / cy 0.32); 302 Hz (cx 0.11 / cy 0.39); 320 Hz (cx 0.03 / cy 0.30); 371 Hz (cx 0.22 / cy 0.38)
+
+### nominal cell / hub rigid / pack rigid+rot / nom: 2 strong mode(s)
+- 97.1 Hz IN BAND: cx 0.68 cy 1.35; symmetric in y (uz even); strain energy arm 42%, spar 39%, bridge 14%, rib 5%; rms translations wing spar (x 0.12 y 0.00 z 0.64); hub (x 0.11 y 0.00 z 1.16); pack (x 0.33 y 0.00 z 0.49); motors (x 0.34 y 0.64 z 0.23); fin tips (x 0.74 y 0.45 z 0.48)
+- 244.5 Hz IN BAND: cx 0.16 cy 0.75; antisymmetric in y (uz odd); strain energy arm 65%, bridge 30%, spar 2%, rib 2%; rms translations wing spar (x 0.02 y 0.37 z 0.34); hub (x 0.00 y 0.36 z 0.00); pack (x 0.00 y 1.15 z 0.00); motors (x 0.08 y 0.28 z 0.25); fin tips (x 0.23 y 0.38 z 0.06)
+- below the 0.5 rule (0.3-0.5) in 60-400 Hz: 262 Hz (cx 0.15 / cy 0.36); 276 Hz (cx 0.13 / cy 0.36); 319 Hz (cx 0.13 / cy 0.46); 343 Hz (cx 0.03 / cy 0.30); 397 Hz (cx 0.22 / cy 0.38)
+
+### nominal cell / hub rigid / pack rigid+rot / hi: 3 strong mode(s)
+- 105.7 Hz IN BAND: cx 0.73 cy 1.35; symmetric in y (uz even); strain energy arm 44%, spar 36%, bridge 13%, rib 6%; rms translations wing spar (x 0.12 y 0.00 z 0.61); hub (x 0.11 y 0.00 z 1.14); pack (x 0.32 y 0.00 z 0.49); motors (x 0.37 y 0.64 z 0.22); fin tips (x 0.58 y 0.67 z 0.44)
+- 277.4 Hz IN BAND: cx 0.16 cy 0.75; antisymmetric in y (uz odd); strain energy arm 65%, bridge 31%, spar 2%, rib 2%; rms translations wing spar (x 0.02 y 0.37 z 0.31); hub (x 0.00 y 0.36 z 0.00); pack (x 0.00 y 1.15 z 0.00); motors (x 0.08 y 0.28 z 0.25); fin tips (x 0.19 y 0.36 z 0.05)
+- 358.2 Hz: cx 0.14 cy 0.52; symmetric in y (uz even); strain energy fin 41%, bridge 31%, spar 14%, arm 8%; rms translations wing spar (x 0.28 y 0.02 z 0.68); hub (x 0.43 y 0.00 z 0.44); pack (x 0.32 y 0.00 z 0.70); motors (x 0.07 y 0.22 z 0.14); fin tips (x 3.21 y 0.43 z 0.27)
+- below the 0.5 rule (0.3-0.5) in 60-400 Hz: 80 Hz (cx 0.02 / cy 0.38); 290 Hz (cx 0.13 / cy 0.31); 310 Hz (cx 0.14 / cy 0.38); 388 Hz (cx 0.03 / cy 0.31)
+
+### nominal cell / hub al6061 / pack tray nom / kd: 4 strong mode(s)
+- 99.0 Hz IN BAND: cx 0.74 cy 1.26; symmetric in y (uz even); strain energy spar 34%, arm 28%, hubjoint 23%, bridge 7%; rms translations wing spar (x 0.07 y 0.02 z 0.66); hub (x 0.06 y 0.02 z 1.07); pack (x 0.20 y 0.02 z 0.62); motors (x 0.37 y 0.60 z 0.21); fin tips (x 0.64 y 0.49 z 0.43); tray (x 0.06 y 0.03 z 0.62)
+- 248.8 Hz IN BAND: cx 0.13 cy 1.10; symmetric in y (uz even); strain energy pad 40%, spar 21%, fin 12%, rib 9%; rms translations wing spar (x 0.12 y 0.01 z 0.84); hub (x 0.02 y 0.00 z 0.92); pack (x 0.34 y 0.08 z 0.99); motors (x 0.07 y 0.47 z 0.28); fin tips (x 2.00 y 0.23 z 0.36); tray (x 0.06 y 0.09 z 1.00)
+- 260.1 Hz IN BAND: cx 0.08 cy 0.91; symmetric in y (uz even); strain energy fin 26%, pad 25%, spar 19%, rib 17%; rms translations wing spar (x 0.11 y 0.01 z 0.82); hub (x 0.02 y 0.01 z 0.75); pack (x 0.28 y 0.07 z 0.74); motors (x 0.04 y 0.39 z 0.23); fin tips (x 2.85 y 0.22 z 0.55); tray (x 0.12 y 0.08 z 0.74)
+- 305.2 Hz IN BAND: cx 0.10 cy 0.51; antisymmetric in y (uz odd); strain energy pad 33%, tray 32%, fin 12%, hubjoint 10%; rms translations wing spar (x 0.09 y 0.42 z 0.04); hub (x 0.02 y 0.30 z 0.18); pack (x 0.03 y 1.22 z 0.10); motors (x 0.05 y 0.21 z 0.15); fin tips (x 1.67 y 0.44 z 0.01); tray (x 0.01 y 1.27 z 0.10)
+- below the 0.5 rule (0.3-0.5) in 60-400 Hz: 67 Hz (cx 0.06 / cy 0.34); 284 Hz (cx 0.05 / cy 0.33); 323 Hz (cx 0.06 / cy 0.49)
+
+### nominal cell / hub al6061 / pack tray nom / nom: 4 strong mode(s)
+- 101.7 Hz IN BAND: cx 0.74 cy 1.26; symmetric in y (uz even); strain energy spar 34%, arm 26%, hubjoint 25%, bridge 7%; rms translations wing spar (x 0.07 y 0.02 z 0.66); hub (x 0.06 y 0.02 z 1.06); pack (x 0.20 y 0.02 z 0.63); motors (x 0.37 y 0.60 z 0.20); fin tips (x 0.61 y 0.46 z 0.43); tray (x 0.05 y 0.02 z 0.63)
+- 254.2 Hz IN BAND: cx 0.16 cy 1.35; symmetric in y (uz even); strain energy pad 59%, spar 11%, hubjoint 9%, arm 6%; rms translations wing spar (x 0.13 y 0.01 z 0.60); hub (x 0.04 y 0.00 z 1.13); pack (x 0.38 y 0.08 z 1.18); motors (x 0.08 y 0.58 z 0.35); fin tips (x 1.16 y 0.20 z 0.17); tray (x 0.01 y 0.09 z 1.19)
+- 271.6 Hz IN BAND: cx 0.04 cy 0.58; symmetric in y (uz even); strain energy spar 39%, fin 24%, rib 19%, pad 10%; rms translations wing spar (x 0.07 y 0.01 z 1.15); hub (x 0.00 y 0.01 z 0.48); pack (x 0.17 y 0.04 z 0.46); motors (x 0.02 y 0.25 z 0.15); fin tips (x 2.79 y 0.22 z 0.55); tray (x 0.06 y 0.05 z 0.46)
+- 322.7 Hz: cx 0.11 cy 0.54; antisymmetric in y (uz odd); strain energy pad 36%, tray 30%, hubjoint 12%, fin 8%; rms translations wing spar (x 0.06 y 0.42 z 0.04); hub (x 0.02 y 0.31 z 0.17); pack (x 0.02 y 1.25 z 0.08); motors (x 0.05 y 0.22 z 0.16); fin tips (x 1.37 y 0.40 z 0.01); tray (x 0.02 y 1.21 z 0.08)
+- below the 0.5 rule (0.3-0.5) in 60-400 Hz: 68 Hz (cx 0.08 / cy 0.35); 345 Hz (cx 0.05 / cy 0.46)
+
+### nominal cell / hub al6061 / pack tray nom / hi: 3 strong mode(s)
+- 107.2 Hz IN BAND: cx 0.74 cy 1.22; symmetric in y (uz even); strain energy spar 34%, hubjoint 28%, arm 23%, rib 7%; rms translations wing spar (x 0.07 y 0.02 z 0.64); hub (x 0.07 y 0.02 z 1.03); pack (x 0.20 y 0.02 z 0.64); motors (x 0.37 y 0.58 z 0.19); fin tips (x 0.50 y 0.72 z 0.42); tray (x 0.04 y 0.02 z 0.64)
+- 259.7 Hz IN BAND: cx 0.17 cy 1.48; symmetric in y (uz even); strain energy pad 69%, hubjoint 11%, arm 7%, rigid 4%; rms translations wing spar (x 0.14 y 0.01 z 0.31); hub (x 0.07 y 0.00 z 1.25); pack (x 0.39 y 0.08 z 1.26); motors (x 0.09 y 0.64 z 0.38); fin tips (x 0.59 y 0.18 z 0.05); tray (x 0.03 y 0.09 z 1.26)
+- 334.7 Hz: cx 0.10 cy 0.52; antisymmetric in y (uz odd); strain energy pad 28%, tray 22%, fin 19%, hubjoint 9%; rms translations wing spar (x 0.12 y 0.34 z 0.49); hub (x 0.15 y 0.30 z 0.10); pack (x 0.10 y 1.08 z 0.02); motors (x 0.05 y 0.21 z 0.15); fin tips (x 2.29 y 0.37 z 0.37); tray (x 0.23 y 1.00 z 0.02)
+- below the 0.5 rule (0.3-0.5) in 60-400 Hz: 80 Hz (cx 0.05 / cy 0.41); 390 Hz (cx 0.03 / cy 0.37)
+
+### nominal cell / hub al6061 / pack rigid+rot / kd: 3 strong mode(s)
+- 99.1 Hz IN BAND: cx 0.77 cy 1.38; symmetric in y (uz even); strain energy spar 33%, arm 31%, hubjoint 23%, bridge 8%; rms translations wing spar (x 0.12 y 0.01 z 0.62); hub (x 0.11 y 0.02 z 1.17); pack (x 0.34 y 0.03 z 0.47); motors (x 0.38 y 0.65 z 0.23); fin tips (x 0.68 y 0.44 z 0.43)
+- 249.6 Hz IN BAND: cx 0.12 cy 0.76; antisymmetric in y (uz odd); strain energy arm 50%, hubjoint 33%, bridge 13%, spar 2%; rms translations wing spar (x 0.03 y 0.33 z 0.33); hub (x 0.00 y 0.32 z 0.02); pack (x 0.06 y 1.07 z 0.11); motors (x 0.06 y 0.27 z 0.26); fin tips (x 0.40 y 0.31 z 0.09)
+- 333.0 Hz: cx 0.17 cy 0.58; symmetric in y (uz even); strain energy hubjoint 47%, fin 17%, spar 12%, bridge 12%; rms translations wing spar (x 0.37 y 0.03 z 0.61); hub (x 0.22 y 0.06 z 0.45); pack (x 0.66 y 0.01 z 0.90); motors (x 0.08 y 0.25 z 0.15); fin tips (x 1.95 y 0.13 z 0.18)
+- below the 0.5 rule (0.3-0.5) in 60-400 Hz: 67 Hz (cx 0.08 / cy 0.32); 320 Hz (cx 0.03 / cy 0.33)
+
+### nominal cell / hub al6061 / pack rigid+rot / nom: 3 strong mode(s)
+- 102.0 Hz IN BAND: cx 0.78 cy 1.38; symmetric in y (uz even); strain energy spar 34%, arm 29%, hubjoint 25%, bridge 7%; rms translations wing spar (x 0.12 y 0.01 z 0.62); hub (x 0.11 y 0.02 z 1.17); pack (x 0.34 y 0.03 z 0.48); motors (x 0.39 y 0.65 z 0.22); fin tips (x 0.65 y 0.41 z 0.42)
+- 260.3 Hz IN BAND: cx 0.13 cy 0.76; antisymmetric in y (uz odd); strain energy arm 46%, hubjoint 36%, bridge 13%, spar 3%; rms translations wing spar (x 0.03 y 0.34 z 0.34); hub (x 0.00 y 0.33 z 0.02); pack (x 0.07 y 1.08 z 0.13); motors (x 0.07 y 0.28 z 0.26); fin tips (x 0.34 y 0.32 z 0.07)
+- 340.9 Hz: cx 0.12 cy 0.55; symmetric in y (uz even); strain energy fin 57%, hubjoint 24%, spar 7%, bridge 6%; rms translations wing spar (x 0.40 y 0.13 z 0.46); hub (x 0.20 y 0.09 z 0.32); pack (x 0.43 y 0.00 z 0.64); motors (x 0.06 y 0.23 z 0.15); fin tips (x 3.62 y 0.37 z 0.14)
+- below the 0.5 rule (0.3-0.5) in 60-400 Hz: 68 Hz (cx 0.10 / cy 0.33); 345 Hz (cx 0.13 / cy 0.39)
+
+### nominal cell / hub al6061 / pack rigid+rot / hi: 3 strong mode(s)
+- 107.8 Hz IN BAND: cx 0.78 cy 1.36; symmetric in y (uz even); strain energy spar 33%, hubjoint 29%, arm 26%, bridge 6%; rms translations wing spar (x 0.12 y 0.01 z 0.61); hub (x 0.11 y 0.02 z 1.15); pack (x 0.33 y 0.03 z 0.49); motors (x 0.39 y 0.65 z 0.21); fin tips (x 0.55 y 0.64 z 0.42)
+- 280.9 Hz IN BAND: cx 0.14 cy 0.77; antisymmetric in y (uz odd); strain energy hubjoint 42%, arm 40%, bridge 13%, spar 3%; rms translations wing spar (x 0.04 y 0.35 z 0.35); hub (x 0.00 y 0.34 z 0.01); pack (x 0.09 y 1.11 z 0.15); motors (x 0.07 y 0.28 z 0.26); fin tips (x 0.27 y 0.34 z 0.06)
+- 364.8 Hz: cx 0.16 cy 0.59; symmetric in y (uz even); strain energy hubjoint 37%, fin 32%, spar 13%, arm 7%; rms translations wing spar (x 0.29 y 0.06 z 0.65); hub (x 0.36 y 0.03 z 0.45); pack (x 0.45 y 0.01 z 0.78); motors (x 0.08 y 0.25 z 0.15); fin tips (x 2.80 y 0.36 z 0.24)
+- below the 0.5 rule (0.3-0.5) in 60-400 Hz: 80 Hz (cx 0.02 / cy 0.39); 316 Hz (cx 0.13 / cy 0.32)
+
+### nominal cell / hub petg / pack tray soft / kd: 3 strong mode(s)
+- 88.4 Hz: cx 0.56 cy 0.91; symmetric in y (uz even); strain energy spar 35%, hubjoint 21%, pad 14%, arm 13%; rms translations wing spar (x 0.09 y 0.01 z 0.66); hub (x 0.09 y 0.02 z 0.77); pack (x 0.26 y 0.02 z 0.85); motors (x 0.28 y 0.44 z 0.13); fin tips (x 0.66 y 0.69 z 0.50); tray (x 0.01 y 0.02 z 0.85)
+- 147.9 Hz IN BAND: cx 0.27 cy 1.72; symmetric in y (ux even); strain energy pad 71%, arm 10%, hubjoint 9%, spar 4%; rms translations wing spar (x 0.10 y 0.01 z 0.06); hub (x 0.10 y 0.01 z 1.48); pack (x 0.33 y 0.06 z 1.13); motors (x 0.14 y 0.76 z 0.40); fin tips (x 0.36 y 0.16 z 0.07); tray (x 0.13 y 0.06 z 1.14)
+- 213.0 Hz IN BAND: cx 0.12 cy 0.69; antisymmetric in y (uz odd); strain energy pad 60%, tray 22%, hubjoint 8%, arm 3%; rms translations wing spar (x 0.04 y 0.43 z 0.07); hub (x 0.00 y 0.41 z 0.12); pack (x 0.02 y 1.31 z 0.03); motors (x 0.06 y 0.28 z 0.20); fin tips (x 0.15 y 0.47 z 0.01); tray (x 0.00 y 0.69 z 0.04)
+- below the 0.5 rule (0.3-0.5) in 60-400 Hz: 320 Hz (cx 0.02 / cy 0.32)
+
+### nominal cell / hub petg / pack tray soft / nom: 3 strong mode(s)
+- 90.0 Hz: cx 0.56 cy 0.89; symmetric in y (uz even); strain energy spar 35%, hubjoint 22%, pad 16%, arm 12%; rms translations wing spar (x 0.09 y 0.01 z 0.66); hub (x 0.09 y 0.02 z 0.75); pack (x 0.26 y 0.02 z 0.87); motors (x 0.28 y 0.43 z 0.12); fin tips (x 0.65 y 0.65 z 0.50); tray (x 0.00 y 0.02 z 0.87)
+- 149.6 Hz IN BAND: cx 0.28 cy 1.74; symmetric in y (ux even); strain energy pad 70%, hubjoint 10%, arm 9%, spar 4%; rms translations wing spar (x 0.10 y 0.01 z 0.07); hub (x 0.10 y 0.01 z 1.50); pack (x 0.32 y 0.05 z 1.11); motors (x 0.14 y 0.77 z 0.40); fin tips (x 0.35 y 0.22 z 0.08); tray (x 0.15 y 0.05 z 1.12)
+- 220.0 Hz IN BAND: cx 0.12 cy 0.70; antisymmetric in y (uz odd); strain energy pad 63%, tray 18%, hubjoint 8%, rib 3%; rms translations wing spar (x 0.03 y 0.43 z 0.07); hub (x 0.00 y 0.41 z 0.12); pack (x 0.01 y 1.31 z 0.03); motors (x 0.06 y 0.28 z 0.21); fin tips (x 0.12 y 0.51 z 0.01); tray (x 0.00 y 0.59 z 0.03)
+- below the 0.5 rule (0.3-0.5) in 60-400 Hz: 343 Hz (cx 0.02 / cy 0.31)
+
+### nominal cell / hub petg / pack tray soft / hi: 4 strong mode(s)
+- 94.1 Hz IN BAND: cx 0.52 cy 0.78; symmetric in y (uz even); strain energy spar 34%, hubjoint 22%, pad 16%, rib 13%; rms translations wing spar (x 0.09 y 0.01 z 0.63); hub (x 0.09 y 0.02 z 0.65); pack (x 0.26 y 0.02 z 0.85); motors (x 0.26 y 0.38 z 0.10); fin tips (x 0.42 y 1.28 z 0.48); tray (x 0.00 y 0.02 z 0.85)
+- 150.9 Hz IN BAND: cx 0.20 cy 1.16; symmetric in y (uz even); strain energy rib 39%, pad 27%, spar 16%, hubjoint 5%; rms translations wing spar (x 0.17 y 0.02 z 0.06); hub (x 0.04 y 0.01 z 1.00); pack (x 0.23 y 0.03 z 0.69); motors (x 0.10 y 0.52 z 0.26); fin tips (x 0.37 y 2.10 z 0.07); tray (x 0.00 y 0.03 z 0.69)
+- 153.0 Hz IN BAND: cx 0.22 cy 1.36; symmetric in y (ux even); strain energy pad 40%, rib 29%, spar 11%, hubjoint 7%; rms translations wing spar (x 0.10 y 0.02 z 0.07); hub (x 0.15 y 0.01 z 1.17); pack (x 0.21 y 0.04 z 0.83); motors (x 0.11 y 0.61 z 0.31); fin tips (x 0.26 y 1.78 z 0.07); tray (x 0.20 y 0.04 z 0.84)
+- 225.3 Hz IN BAND: cx 0.12 cy 0.71; antisymmetric in y (uz odd); strain energy pad 61%, tray 15%, hubjoint 7%, rib 7%; rms translations wing spar (x 0.04 y 0.46 z 0.17); hub (x 0.00 y 0.42 z 0.11); pack (x 0.01 y 1.26 z 0.03); motors (x 0.06 y 0.29 z 0.21); fin tips (x 0.13 y 0.79 z 0.02); tray (x 0.00 y 0.50 z 0.03)
+- below the 0.5 rule (0.3-0.5) in 60-400 Hz: 79 Hz (cx 0.11 / cy 0.40); 389 Hz (cx 0.02 / cy 0.32)
+
+### lower cell / hub petg / pack tray soft / kd: 4 strong mode(s)
+- 83.5 Hz: cx 0.64 cy 0.98; symmetric in y (uz even); strain energy spar 33%, hubjoint 25%, arm 16%, pad 12%; rms translations wing spar (x 0.09 y 0.01 z 0.64); hub (x 0.08 y 0.02 z 0.81); pack (x 0.25 y 0.02 z 0.81); motors (x 0.32 y 0.47 z 0.12); fin tips (x 0.49 y 0.87 z 0.45); tray (x 0.02 y 0.02 z 0.81)
+- 146.7 Hz IN BAND: cx 0.15 cy 0.95; antisymmetric in y (ux odd); strain energy rib 45%, pad 23%, spar 17%, fin 7%; rms translations wing spar (x 0.43 y 0.34 z 0.03); hub (x 0.05 y 0.10 z 0.80); pack (x 0.19 y 0.21 z 0.64); motors (x 0.07 y 0.42 z 0.22); fin tips (x 0.73 y 2.07 z 0.03); tray (x 0.07 y 0.22 z 0.65)
+- 147.1 Hz IN BAND: cx 0.23 cy 1.41; antisymmetric in y (ux odd); strain energy pad 51%, rib 21%, spar 9%, arm 7%; rms translations wing spar (x 0.32 y 0.22 z 0.05); hub (x 0.07 y 0.05 z 1.22); pack (x 0.28 y 0.08 z 0.96); motors (x 0.11 y 0.63 z 0.33); fin tips (x 0.57 y 1.39 z 0.04); tray (x 0.10 y 0.08 z 0.96)
+- 211.8 Hz IN BAND: cx 0.12 cy 0.66; antisymmetric in y (uz odd); strain energy pad 61%, tray 22%, hubjoint 8%, arm 3%; rms translations wing spar (x 0.08 y 0.41 z 0.05); hub (x 0.00 y 0.39 z 0.12); pack (x 0.02 y 1.33 z 0.03); motors (x 0.06 y 0.26 z 0.20); fin tips (x 0.25 y 0.25 z 0.01); tray (x 0.00 y 0.71 z 0.03)
+- below the 0.5 rule (0.3-0.5) in 60-400 Hz: 65 Hz (cx 0.06 / cy 0.39); 318 Hz (cx 0.02 / cy 0.37)
+
+### lower cell / hub petg / pack tray soft / nom: 3 strong mode(s)
+- 85.0 Hz: cx 0.64 cy 0.96; symmetric in y (uz even); strain energy spar 33%, hubjoint 26%, arm 14%, pad 13%; rms translations wing spar (x 0.10 y 0.01 z 0.64); hub (x 0.08 y 0.02 z 0.80); pack (x 0.25 y 0.02 z 0.83); motors (x 0.32 y 0.47 z 0.11); fin tips (x 0.47 y 0.83 z 0.44); tray (x 0.01 y 0.02 z 0.83)
+- 148.6 Hz IN BAND: cx 0.27 cy 1.71; symmetric in y (ux even); strain energy pad 72%, hubjoint 10%, arm 9%, spar 3%; rms translations wing spar (x 0.10 y 0.02 z 0.06); hub (x 0.09 y 0.02 z 1.48); pack (x 0.33 y 0.06 z 1.14); motors (x 0.14 y 0.76 z 0.39); fin tips (x 0.30 y 0.19 z 0.06); tray (x 0.14 y 0.06 z 1.15)
+- 218.5 Hz IN BAND: cx 0.12 cy 0.66; antisymmetric in y (uz odd); strain energy pad 64%, tray 18%, hubjoint 8%, arm 3%; rms translations wing spar (x 0.08 y 0.41 z 0.05); hub (x 0.00 y 0.39 z 0.12); pack (x 0.02 y 1.33 z 0.03); motors (x 0.06 y 0.27 z 0.20); fin tips (x 0.24 y 0.25 z 0.01); tray (x 0.00 y 0.62 z 0.03)
+- below the 0.5 rule (0.3-0.5) in 60-400 Hz: 66 Hz (cx 0.05 / cy 0.39); 341 Hz (cx 0.03 / cy 0.32)
+
+### lower cell / hub petg / pack tray soft / hi: 4 strong mode(s)
+- 76.7 Hz: cx 0.23 cy 0.56; symmetric in y (uz even); strain energy rib 52%, spar 29%, bridge 6%, pad 5%; rms translations wing spar (x 0.06 y 0.00 z 0.87); hub (x 0.05 y 0.01 z 0.44); pack (x 0.15 y 0.00 z 0.55); motors (x 0.11 y 0.28 z 0.03); fin tips (x 1.27 y 3.37 z 0.19); tray (x 0.03 y 0.00 z 0.56)
+- 89.5 Hz: cx 0.58 cy 0.82; symmetric in y (uz even); strain energy spar 31%, hubjoint 24%, rib 18%, pad 12%; rms translations wing spar (x 0.09 y 0.01 z 0.62); hub (x 0.08 y 0.02 z 0.67); pack (x 0.23 y 0.02 z 0.76); motors (x 0.29 y 0.40 z 0.09); fin tips (x 0.19 y 1.67 z 0.41); tray (x 0.01 y 0.02 z 0.76)
+- 151.0 Hz IN BAND: cx 0.29 cy 1.75; symmetric in y (ux even); strain energy pad 70%, hubjoint 11%, arm 9%, spar 4%; rms translations wing spar (x 0.10 y 0.01 z 0.07); hub (x 0.10 y 0.01 z 1.51); pack (x 0.32 y 0.05 z 1.11); motors (x 0.15 y 0.78 z 0.39); fin tips (x 0.28 y 0.20 z 0.07); tray (x 0.15 y 0.05 z 1.12)
+- 222.7 Hz IN BAND: cx 0.13 cy 0.67; antisymmetric in y (uz odd); strain energy pad 66%, tray 16%, hubjoint 8%, arm 2%; rms translations wing spar (x 0.08 y 0.42 z 0.09); hub (x 0.00 y 0.39 z 0.12); pack (x 0.01 y 1.32 z 0.03); motors (x 0.06 y 0.27 z 0.20); fin tips (x 0.19 y 0.30 z 0.01); tray (x 0.00 y 0.56 z 0.03)
+- below the 0.5 rule (0.3-0.5) in 60-400 Hz: 385 Hz (cx 0.02 / cy 0.39)
+
+### nominal cell / hub al6061 / pack tray soft / kd: 3 strong mode(s)
+- 94.1 Hz IN BAND: cx 0.69 cy 0.87; symmetric in y (uz even); strain energy spar 29%, arm 21%, hubjoint 19%, pad 18%; rms translations wing spar (x 0.09 y 0.01 z 0.66); hub (x 0.09 y 0.02 z 0.73); pack (x 0.27 y 0.02 z 0.88); motors (x 0.35 y 0.41 z 0.13); fin tips (x 0.55 y 0.61 z 0.43); tray (x 0.02 y 0.02 z 0.88)
+- 150.6 Hz IN BAND: cx 0.30 cy 1.74; symmetric in y (ux even); strain energy pad 71%, arm 12%, hubjoint 7%, spar 4%; rms translations wing spar (x 0.10 y 0.01 z 0.06); hub (x 0.09 y 0.01 z 1.50); pack (x 0.33 y 0.05 z 1.11); motors (x 0.15 y 0.77 z 0.40); fin tips (x 0.38 y 0.14 z 0.07); tray (x 0.12 y 0.05 z 1.11)
+- 217.5 Hz IN BAND: cx 0.09 cy 0.68; antisymmetric in y (uz odd); strain energy pad 63%, tray 23%, hubjoint 5%, rib 2%; rms translations wing spar (x 0.04 y 0.42 z 0.05); hub (x 0.00 y 0.40 z 0.09); pack (x 0.01 y 1.32 z 0.02); motors (x 0.04 y 0.28 z 0.20); fin tips (x 0.15 y 0.45 z 0.01); tray (x 0.00 y 0.64 z 0.02)
+- below the 0.5 rule (0.3-0.5) in 60-400 Hz: 67 Hz (cx 0.05 / cy 0.32); 321 Hz (cx 0.03 / cy 0.32)
+
+### nominal cell / hub al6061 / pack tray soft / nom: 3 strong mode(s)
+- 96.1 Hz IN BAND: cx 0.69 cy 0.83; symmetric in y (uz even); strain energy spar 29%, hubjoint 20%, pad 19%, arm 19%; rms translations wing spar (x 0.10 y 0.01 z 0.66); hub (x 0.09 y 0.02 z 0.69); pack (x 0.28 y 0.02 z 0.91); motors (x 0.35 y 0.40 z 0.12); fin tips (x 0.52 y 0.58 z 0.42); tray (x 0.01 y 0.02 z 0.91)
+- 152.6 Hz IN BAND: cx 0.32 cy 1.76; symmetric in y (uz even); strain energy pad 69%, arm 12%, hubjoint 8%, spar 5%; rms translations wing spar (x 0.10 y 0.01 z 0.08); hub (x 0.09 y 0.01 z 1.52); pack (x 0.31 y 0.04 z 1.08); motors (x 0.16 y 0.79 z 0.40); fin tips (x 0.36 y 0.18 z 0.08); tray (x 0.14 y 0.04 z 1.09)
+- 224.7 Hz IN BAND: cx 0.09 cy 0.69; antisymmetric in y (uz odd); strain energy pad 66%, tray 19%, hubjoint 6%, rib 3%; rms translations wing spar (x 0.03 y 0.43 z 0.05); hub (x 0.00 y 0.41 z 0.09); pack (x 0.01 y 1.32 z 0.02); motors (x 0.05 y 0.28 z 0.21); fin tips (x 0.11 y 0.49 z 0.01); tray (x 0.00 y 0.54 z 0.02)
+- below the 0.5 rule (0.3-0.5) in 60-400 Hz: 68 Hz (cx 0.06 / cy 0.32); 343 Hz (cx 0.03 / cy 0.31)
+
+### nominal cell / hub al6061 / pack tray soft / hi: 3 strong mode(s)
+- 100.7 Hz IN BAND: cx 0.67 cy 0.71; symmetric in y (uz even); strain energy spar 28%, pad 21%, hubjoint 21%, arm 15%; rms translations wing spar (x 0.10 y 0.01 z 0.64); hub (x 0.09 y 0.02 z 0.59); pack (x 0.28 y 0.01 z 0.92); motors (x 0.34 y 0.34 z 0.10); fin tips (x 0.35 y 1.01 z 0.41); tray (x 0.00 y 0.02 z 0.92)
+- 156.1 Hz IN BAND: cx 0.34 cy 1.76; symmetric in y (uz even); strain energy pad 62%, arm 12%, hubjoint 10%, spar 7%; rms translations wing spar (x 0.09 y 0.01 z 0.10); hub (x 0.11 y 0.01 z 1.52); pack (x 0.28 y 0.04 z 1.01); motors (x 0.17 y 0.79 z 0.39); fin tips (x 0.33 y 0.64 z 0.10); tray (x 0.16 y 0.04 z 1.01)
+- 229.7 Hz IN BAND: cx 0.09 cy 0.71; antisymmetric in y (uz odd); strain energy pad 65%, tray 16%, rib 6%, hubjoint 5%; rms translations wing spar (x 0.03 y 0.46 z 0.09); hub (x 0.00 y 0.42 z 0.09); pack (x 0.01 y 1.28 z 0.02); motors (x 0.05 y 0.28 z 0.21); fin tips (x 0.06 y 0.72 z 0.01); tray (x 0.00 y 0.45 z 0.02)
+- below the 0.5 rule (0.3-0.5) in 60-400 Hz: 79 Hz (cx 0.10 / cy 0.37); 152 Hz (cx 0.09 / cy 0.42); 389 Hz (cx 0.02 / cy 0.32)
+
+## 4. Design-option sketches on the credible model (nominal cell, hub al6061, pack tray nom; and pack rigid+rot): strong modes in the band
+| option | corner | strong modes IN band (f, cx / cy) | highest strong below | lowest strong above | D-185 (a) |
+|---|---|---|---|---|---|
+| as drawn | kd | 99.0 (0.74 / 1.26); 248.8 (0.13 / 1.10); 260.1 (0.08 / 0.91); 305.2 (0.10 / 0.51) | 44.8 | 692.4 | FAIL |
+| as drawn | nom | 101.7 (0.74 / 1.26); 254.2 (0.16 / 1.35); 271.6 (0.04 / 0.58) | 46.7 | 322.7 | FAIL |
+| as drawn | hi | 107.2 (0.74 / 1.22); 259.7 (0.17 / 1.48) | 50.1 | 334.7 | FAIL |
+| C1 bridge z-bending EI x0.5, torsion unchanged | kd | 97.0 (0.77 / 1.27); 247.4 (0.15 / 1.22); 258.4 (0.07 / 0.75); 305.2 (0.10 / 0.51) | 44.8 | 692.2 | FAIL |
+| C1 bridge z-bending EI x0.5, torsion unchanged | nom | 99.9 (0.78 / 1.27); 252.1 (0.17 / 1.38) | 46.7 | 322.7 | FAIL |
+| C1 bridge z-bending EI x0.5, torsion unchanged | hi | 105.8 (0.76 / 1.23); 257.7 (0.18 / 1.48) | 50.1 | 334.7 | FAIL |
+| C1 bridge z-bending EI x0.25, torsion unchanged | kd | 94.2 (0.81 / 1.27); 244.7 (0.18 / 1.34); 256.8 (0.05 / 0.53); 305.1 (0.10 / 0.51) | 44.8 | 691.8 | FAIL |
+| C1 bridge z-bending EI x0.25, torsion unchanged | nom | 97.2 (0.81 / 1.27); 248.9 (0.19 / 1.42) | 46.7 | 322.7 | FAIL |
+| C1 bridge z-bending EI x0.25, torsion unchanged | hi | 103.6 (0.79 / 1.22); 254.8 (0.20 / 1.49) | 50.1 | 334.7 | FAIL |
+| C2 pack and tray carried by the wing centre node (pack CG unchanged) | kd | 101.1 (0.65 / 1.14); 143.6 (0.32 / 1.60); 254.1 (0.02 / 0.76) | 44.8 | 681.2 | FAIL |
+| C2 pack and tray carried by the wing centre node (pack CG unchanged) | nom | 103.2 (0.65 / 1.11); 148.8 (0.32 / 1.62); 261.6 (0.02 / 0.76) | 46.7 | 717.6 | FAIL |
+| C2 pack and tray carried by the wing centre node (pack CG unchanged) | hi | 107.9 (0.65 / 1.04); 158.0 (0.32 / 1.63); 266.4 (0.02 / 0.75) | 50.1 | 788.8 | FAIL |
+| C2 as above, pack rigid on the carrier | kd | 101.6 (0.69 / 1.41); 186.3 (0.22 / 1.38) | 43.9 | 339.8 | FAIL |
+| C2 as above, pack rigid on the carrier | nom | 104.1 (0.70 / 1.39); 196.3 (0.22 / 1.40) | 45.7 | 352.6 | FAIL |
+| C2 as above, pack rigid on the carrier | hi | 109.2 (0.71 / 1.37); 216.2 (0.22 / 1.43) | 49.0 | 749.5 | FAIL |
+| C1 x0.5 + C2 | kd | 100.8 (0.63 / 1.12); 125.2 (0.41 / 1.58); 254.1 (0.02 / 0.76) | 44.8 | 680.8 | FAIL |
+| C1 x0.5 + C2 | nom | 102.8 (0.62 / 1.05); 130.3 (0.43 / 1.66); 261.6 (0.02 / 0.76) | 46.7 | 717.3 | FAIL |
+| C1 x0.5 + C2 | hi | 107.3 (0.61 / 0.94); 139.7 (0.44 / 1.74); 266.4 (0.02 / 0.75) | 50.1 | 788.5 | FAIL |

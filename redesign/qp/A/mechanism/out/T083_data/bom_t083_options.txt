@@ -1,0 +1,8 @@
+| Scenario (T-083 BOM copy, crash reserve by definition) | Goods | Spend | Reserve | Total | Margin |
+|---|---|---|---|---|---|
+| T-083 as drawn (rib 25x23, R15) | 1,439.34 | 1,659.71 | 346.94 | 2,006.66 | -6.66 |
+| rib 14x12 after the coupon (R15 dropped) | 1,389.25 | 1,579.49 | 291.72 | 1,871.21 | +128.79 |
+| no spare motor (P01 qty 4) | 1,416.35 | 1,634.37 | 346.94 | 1,981.31 | +18.69 |
+| W07 3 m + 3 m only (5.4 m needed, 0.6 m spare) | 1,437.36 | 1,657.53 | 346.94 | 2,004.47 | -4.47 |
+| no spare motor + W07 6 m | 1,414.37 | 1,632.18 | 346.94 | 1,979.13 | +20.87 |
+| long-shaft 85810 at $18.99 (CAD does not fit; reference only) | 1,419.34 | 1,637.66 | 342.53 | 1,980.20 | +19.80 |

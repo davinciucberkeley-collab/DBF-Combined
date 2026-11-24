@@ -1,6 +1,10 @@
 # Landing feet (GER)
 
-Status: `MODELLED` (D5, revision D5-R8, 2026-11-13). R8 (CR-H1-22, side-load margin): sleeve inside fillets R 1.0 → 2.0,
+Status: `MODELLED` (D5, revision D5-R9, 2026-11-14). R9 (closure round, D-165, C5 closure foot; `review/CLOSURE-ROUND-2026-11-14/D5.md`):
+foot 48 → 53 mm, stroke 38 → 43, engagement 25 → 30, cartridge 102 → 117 mm, sleeve 64 → 74 mm, replace mark 3 → 6 mm;
+flange 1.8 → 2.2 mm (`CL-D5-FLANGE-SF` 0.75 → 1.11); whole foot 2 mm outboard, pad z 0.219 → 0.221 (worst-corner
+tip-over 30.58°); tine window starts 10 mm aft of the rim (tine SF 1.21); fin step x 0.2510, |z| 0.2030, depth 7.0 mm;
+landing 79.50 g `EST`. The rows below marked R8 are the previous revision where R9 does not restate them. R8 (CR-H1-22, side-load margin): sleeve inside fillets R 1.0 → 2.0,
 rim y sides 3.4 → 4.6 mm, rim floor side 3.4 → 0.4 mm, tine chamfers 1.0 → 1.4 mm, tine rails 2.0 → 2.5 mm; sleeve
 section, roof rim, lip and fin step unchanged; shoe RF 1.06 → 1.27 at the 59.25 N ultimate side load (D5 FEA, three
 meshes), landing 59.08 → 58.94 g. R7 (D-75, D-76, D-78; BR-00, BR-01 / SW-02): the cartridges
@@ -28,7 +32,7 @@ full stroke, and is repaired at the field by swapping one colour-coded insert wi
 
 | Parameter | Value | Unit | Source | Status |
 |---|---|---|---|---|
-| Foot beyond TE / stroke (flange to rim) / usable (−3 mm guard) | 48 / 38 / 35 | mm | `CL-D5-STROKE-AVAIL`, `-STROKE-USABLE` | `UNVERIFIED` |
+| Foot beyond TE / stroke (flange to rim) / usable (−3 mm guard) | 53 / 43 / 40 (R9) | mm | `CL-D5-STROKE-AVAIL`, `-STROKE-USABLE` | `UNVERIFIED` |
 | C5 3-D sim worst stroke, 1.2 m/s, 10° any direction, gate mass | 35.0 vs 35 | mm | `CL-C5-SIM3D-STROKE` | `UNVERIFIED` |
 | Plateau upper / lower / mean (C5-R3: 39.4 / 35.6 / 37.5) | 39.2 / 35.8 / 37.49 | N | `CL-D5-F-PLATEAU-UPPER/-LOWER`, `-F-MEAN-ERR` 0.04 % | `UNVERIFIED` (coupon) |
 | Bias upper (C5 target 1.05) | 1.046 | — | `CL-D5-BIAS-UPPER`, `-BIAS-ERR` 0.0045 ≤ 0.01 | `UNVERIFIED` |
@@ -36,13 +40,13 @@ full stroke, and is repaired at the field by swapping one colour-coded insert wi
 | Level landing at 1.2 m/s: stroke / n / η | 15.9 mm / 5.88 / 0.84 | — | `CL-D5-STROKE-USED`, `-N-LAND`, `-ETA` | `UNVERIFIED` |
 | Permanent set per 0.5 m/s landing / sink with no set | 1.15 mm / 0.34 m/s | — | `CL-D5-SET-NORMAL`, `-V-NO-SET` | `UNVERIFIED` |
 | Wing TE above ground at full stroke | 10 | mm | `CL-D5-TE-CLEAR-CRUSHED` (≥ 10) | `UNVERIFIED` |
-| Tip-over at target / worst flying CG | 32.0 / 31.0 | ° | `CL-D5-TIPOVER-NARROW`, `-CORNER` | `UNVERIFIED` |
-| **Fin step: front x / \|z\| / depth** (D3 copies these, D-75) | **0.2614 / 0.2010 / 9.0** | m / m / mm | `CL-D5-FIN-STEP-X/-Z/-DEPTH`; D3 `CL-D3-TIP-STEP-MISMATCH` 0 | `PROPOSED` |
+| Tip-over at target / worst flying CG (R9, CG fwd 0.043, z 0.025) | 31.88 / 30.58 | ° | `CL-D5-TIPOVER-NARROW`, `-CORNER` | `UNVERIFIED` |
+| **Fin step: front x / \|z\| / depth** (D3 copies these; R9) | **0.2510 / 0.2030 / 7.0** | m / m / mm | `CL-D5-FIN-STEP-X/-Z/-DEPTH`; D3 `CL-D3-TIP-STEP-MISMATCH` 0 | `PROPOSED` |
 | Shoe length on the fin (step front to TE) / cheeks from | 58.6 / x 0.2536 | mm / m | `CL-D5-LEG-LEN`; fins `tip_clear_x_m` | `PROPOSED` |
 | Shoe bond area / RF at C6's 0.10 MPa, 114.9 N design (C1 80.0 N × 1.4375) | 1 657 / 1.44 | mm² / — | `CL-D5-BOND-AREA`, `-BOND-SF` | `UNVERIFIED` |
 | Sleeve end RF at 59.25 N ult side load (D5 FEA, finest mesh h 0.2: +y 31.6 MPa at the inboard window corner, rim 30.4; +z 24.2 MPa at h 0.3; vs 40 MPa). R7 was 1.06 (+y 37.6 MPa at the rim) | 1.27 | — | `CL-D5-SIDE-RIM-SF` (`ASM-D5-FEA-SHOE-K` 0.533 MPa/N) | `UNVERIFIED` |
 | Mesh study, +y governing, h 0.4 / 0.3 / 0.2 mm: rim 28.7 / 30.1 / 30.4 MPa (converging), window corner 28.3 / 28.9 / 31.6 MPa (sharp re-entrant corner, grows with refinement) | — | MPa | `sim/out/fea_d5_h{400,300,200}_py.json` | `MODELLED` |
-| Tine SF (R8: windowed section at F (a − 3 mm), full section at F a) / flange SF (C1 80.0 N bound) | 1.23 / 1.07 | — | `CL-D5-SIDE-TINE-SF`, `-FLANGE-SF` | `UNVERIFIED` |
+| Tine SF (R9: windowed section at F (a − 10 mm), full section at F a) / flange SF (C1 67.9 N bound, 2.2 mm) | 1.21 / 1.11 | — | `CL-D5-SIDE-TINE-SF`, `-FLANGE-SF` | `UNVERIFIED` |
 | Tine chamfer clear of the R 2.0 sleeve fillet (0.2 mm slide clearance) | 0.16 | mm | `CL-D5-FILLET-CLEAR` (≥ 0.10) | `PROPOSED` |
 | Snap finger strain / length (C6: ≥ 6.0 mm, ≤ 2 %) | 1.7 % / 6.5 mm | — / mm | `CL-D5-SNAP-STRAIN`, `-SNAP-LEN` | `CHECKED` |
 | Insert swap | 3 | min | `CL-D5-REPLACE-TIME` (≤ 10) | `PROPOSED` |
@@ -52,7 +56,7 @@ full stroke, and is repaired at the field by swapping one colour-coded insert wi
 | Edge | Between | How | Registered |
 |---|---|---|---|
 | `E-GER-01…04` | shoe ↔ `FIN-001-UR/UL/LR/LL` | 30 min epoxy + silica: floor on the step, 7 mm legs, back wall, cheeks; 1 657 mm² | contact; fins acknowledges |
-| `E-GER-05…08` | piston ↔ shoe | `CT-GER-CRUSH-SLIDE`: 0.2 mm/side, 2 snap fingers, flange stops on the rim | slider X, −38…0 mm |
+| `E-GER-05…08` | piston ↔ shoe | `CT-GER-CRUSH-SLIDE`: 0.2 mm/side, 2 snap fingers, flange stops on the rim | slider X, −43…0 mm |
 | `E-GER-09…12` | cartridge (`GER-003`/`GER-008`) ↔ piston | `CT-CA` foam-safe CA | contact |
 | `E-GER-13…16` | pad ↔ flange | `CT-GER-PSA` | contact |
 | `E-GER-17…20` | cartridge ↔ shoe back wall | `CT-GER-END-BEAR`, 0.5 mm preload | contact |
@@ -71,7 +75,7 @@ Fin fit (D-75): the shoe floor sits 0.2 mm (glue line) above the 0.2010 step fro
 |---|---|---|---|---|
 | Shoe (with 0.35 g epoxy) / piston / cartridge U, L / pad / cap | 9.98 / 3.19 / 0.51, 0.47 / 0.71 / 0.73 | g `EST` | `CALC-D5-MASS` (CAD volumes) | `UNVERIFIED` |
 | Foot upper / lower · insert upper | 14.39 / 14.35 · 4.41 | g `EST` | `CL-D5-MASS-FOOT`, `-MASS-INSERT` | `UNVERIFIED` |
-| Landing (4 feet + 2 caps) / allocation / margin | 58.94 / 60 / 1.06 | g | `CL-D5-MASS-TOTAL` (D-78: 48 → 60, from power) | `UNVERIFIED` |
+| Landing (4 feet + 2 caps) / allocation / margin (R9) | 79.50 / 77 / −2.50 (A1 asked 77 → 80) | g | `CL-D5-MASS-TOTAL` (D-78: 48 → 60, from power) | `UNVERIFIED` |
 | R8 change against R7: shoe +0.05 each (R 2.0 fillets and 4.6 mm y-side rim, less the floor-side rim cut to 0.4 mm); piston −0.09 each (1.4 mm chamfers, less the 2.5 mm rails) | −0.14 | g | `CALC-D5-MASS` R7 59.08 → R8 58.94 | `UNVERIFIED` |
 | R6 for comparison (F-250, 25.5 × 15.6 mm sleeve) | 69.9 | g | — | superseded |
 
@@ -101,7 +105,7 @@ capped load first.
 |---|---|---|
 | Numbers | `python -I redesign/team/D5/feet_calc.py` (asserts CAD volumes = calc, FEA records = drawn shoe) | anyone |
 | Shoe FEA | `python -I redesign/team/D5/sim/fea_shoe_d5.py --one 0.4 +y` and `+z` (≈ 2 min each) | D5 |
-| CAD | `python -I redesign/fusion/check.py`; Fusion: BuildAll, slide E-GER-05 to −38 mm | A5 |
+| CAD | `python -I redesign/fusion/check.py`; Fusion: BuildAll, slide E-GER-05 to −43 mm | A5 |
 | Crush, bias | `T-D5-COUPON` on F-400; `T-C5-AIRCRAFT-DROP` | H1, C5 |
 | Strength | `T-D5-PROOF` (96 N along x), `T-D5-SIDE` (60 N sideways, +y and +z) | H1, C6 |
 | Stance, field | tilt board ≥ 30°; `T-D5-PAD-MU` ≥ 0.7; `T-D5-REPLACE` ≤ 10 min; weigh 4 feet + 2 caps ≤ 60 g | C5, H1, H2, A3 |

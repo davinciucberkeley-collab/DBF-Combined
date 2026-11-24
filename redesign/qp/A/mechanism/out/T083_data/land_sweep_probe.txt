@@ -1,0 +1,5 @@
+# mass 1.912 kg, CG x 25.92 mm (model CG [25.92 -1.64  6.41] mm), stroke 24 mm, x_foot 0.3475 z_foot 0.1898
+| Fp N | zeta | mu | worst stroke mm (of 24) | case | peak n g | end tilt deg | case | peak foot N |
+|---|---|---|---|---|---|---|---|---|
+| 33.6 | 0.02 | 0.40 | 22.35 | hard 10 narrow + drift .5 | 8.18 | 3.14 | hard 10 narrow + drift .5 | 40.8 |
+done 27 s

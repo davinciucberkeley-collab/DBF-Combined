@@ -1,0 +1,21 @@
+hard level                     ax  10.67 g  ay  1.35 g  az  1.64 g  n_peak(landing_a) 10.00
+hard 10 narrow                 ax   5.40 g  ay  0.51 g  az  2.84 g  n_peak(landing_a) 5.03
+hard 10 narrow neg             ax   5.32 g  ay  0.91 g  az  2.79 g  n_peak(landing_a) 5.03
+hard 10 wide                   ax   6.17 g  ay  2.83 g  az  0.43 g  n_peak(landing_a) 5.46
+hard 7/7 combo                 ax   6.46 g  ay  2.08 g  az  1.99 g  n_peak(landing_a) 5.81
+hard 10 narrow + drift .5      ax   5.29 g  ay  0.95 g  az  2.87 g  n_peak(landing_a) 5.05
+hard 10 wide + drift .5 y      ax   6.45 g  ay  2.54 g  az  0.62 g  n_peak(landing_a) 5.74
+normal level .5                ax   8.92 g  ay  1.95 g  az  1.16 g  n_peak(landing_a) 8.25
+normal 10 narrow .5            ax   4.58 g  ay  0.85 g  az  2.03 g  n_peak(landing_a) 4.21
+normal 10 wide .5 + drift      ax   5.56 g  ay  2.13 g  az  0.72 g  n_peak(landing_a) 4.96
+SITL Tb_h5 wide (y drift)      ax   5.51 g  ay  2.14 g  az  0.82 g  n_peak(landing_a) 4.82
+SITL Tb_h5 narrow (z drift)    ax   5.43 g  ay  0.70 g  az  2.04 g  n_peak(landing_a) 5.16
+SITL Ta_h5 wide (y drift)      ax   5.41 g  ay  2.24 g  az  1.19 g  n_peak(landing_a) 4.77
+SITL Ta_h5 narrow (z drift)    ax   4.64 g  ay  0.78 g  az  1.92 g  n_peak(landing_a) 4.63
+SITL Z5_b45 wide (y drift)     ax   5.50 g  ay  1.98 g  az  1.00 g  n_peak(landing_a) 4.85
+SITL Z5_b45 narrow (z drift)   ax   6.40 g  ay  1.10 g  az  2.69 g  n_peak(landing_a) 6.41
+SITL Lb_5e wide (y drift)      ax   7.66 g  ay  2.84 g  az  0.95 g  n_peak(landing_a) 7.01
+SITL Lb_5e narrow (z drift)    ax   4.85 g  ay  0.84 g  az  2.41 g  n_peak(landing_a) 4.85
+SITL Z5_gb45 wide (y drift)    ax   5.52 g  ay  2.00 g  az  0.55 g  n_peak(landing_a) 4.88
+SITL Z5_gb45 narrow (z drift)  ax   5.21 g  ay  0.79 g  az  2.33 g  n_peak(landing_a) 5.22
+hard 16 wide + drift .5 y      ax   6.34 g  ay  3.02 g  az  0.53 g  n_peak(landing_a) 5.60

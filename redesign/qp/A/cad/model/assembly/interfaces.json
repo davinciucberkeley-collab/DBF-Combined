@@ -1,0 +1,34 @@
+{
+ "schema": "dbf-interfaces/1",
+ "subsystem": "assembly",
+ "parts": [
+  {
+   "id": "HRD-001",
+   "name": "Hardware: screws, nuts, epoxy fillets, paint (MASS-GATE 40 g less rib saddles) - lumped, less modelled sets",
+   "subsystem": "assembly",
+   "status": "MODELLED",
+   "mass_g": 27.77,
+   "material": "steel / epoxy",
+   "cg_xyz_m": [
+    0.1,
+    0.0,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "mass_proxy": true,
+   "carried": true,
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  }
+ ],
+ "edges": [
+  {
+   "id": "E-ASM-01",
+   "part_a": "HRD-001",
+   "part_b": "WNG-001",
+   "via": "CT-TIE",
+   "owner": "assembly",
+   "notes": "hardware lump"
+  }
+ ],
+ "acknowledges": []
+}

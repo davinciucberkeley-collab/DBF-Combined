@@ -1,0 +1,21 @@
+  self-checks (max error, m): horn_hole 3.03e-17, rod_clevis_end 2.78e-17, rod_joint 0.00e+00, arm_tip 3.93e-17
+  static                                              0 part pairs penetrate > 0.05 mm
+  linkage zj=mid delta -21 deg                        0 part pairs penetrate > 0.05 mm
+  linkage zj=mid delta -20 deg                        0 part pairs penetrate > 0.05 mm
+  linkage zj=mid delta -18 deg                        0 part pairs penetrate > 0.05 mm
+  linkage zj=mid delta -15 deg                        0 part pairs penetrate > 0.05 mm
+  linkage zj=mid delta -12 deg                        0 part pairs penetrate > 0.05 mm
+  linkage zj=mid delta -9 deg                         0 part pairs penetrate > 0.05 mm
+  linkage zj=mid delta -6 deg                         0 part pairs penetrate > 0.05 mm
+  linkage zj=mid delta -3 deg                         0 part pairs penetrate > 0.05 mm
+  linkage zj=mid delta +0 deg                         0 part pairs penetrate > 0.05 mm
+  linkage zj=mid delta +3 deg                         0 part pairs penetrate > 0.05 mm
+  linkage zj=mid delta +6 deg                         0 part pairs penetrate > 0.05 mm
+  linkage zj=mid delta +9 deg                         0 part pairs penetrate > 0.05 mm
+  linkage zj=mid delta +12 deg                        0 part pairs penetrate > 0.05 mm
+  linkage zj=mid delta +15 deg                        0 part pairs penetrate > 0.05 mm
+  linkage zj=mid delta +18 deg                        0 part pairs penetrate > 0.05 mm
+  linkage zj=mid delta +20 deg                        0 part pairs penetrate > 0.05 mm
+  linkage zj=mid delta +21 deg                        0 part pairs penetrate > 0.05 mm
+  wire ends not on a termination: 0; wire folds: 0
+collide_a --linkage-poses: PASS (499 bodies in 117 parts, 18 poses, 774 s)

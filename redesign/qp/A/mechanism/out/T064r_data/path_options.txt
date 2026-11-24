@@ -1,0 +1,36 @@
+
+### V0 baseline CAD (mu 0.40, CG z 6.4 mm) 
+min all rows 0.02 (P1 pad PSA to shoe plate (180 mm2) - peel (30 mm lever, no f); min excluding peel and PSA rows 0.28 (P12 saddle socket-to-ring junction, PETG (16.5 x 19 mm))
+by part: P1 0.02  P2 1.46  P3 0.37  P4 3.91  P5 1.09  P6 0.50  P7 0.26  P8 0.51  P9a 0.86  P9b 0.86  P10 0.07  P11 0.34  P12 0.28  P13 0.48  P14a 0.32  P14b 1.45
+
+### V2a saddle socket 20 -> 40 mm long (x 0.0665-0.1105); EST +5.3 g per saddle solid 
+min all rows 0.02 (P1 pad PSA to shoe plate (180 mm2) - peel (30 mm lever, no f); min excluding peel and PSA rows 0.28 (P12 saddle socket-to-ring junction, PETG (16.5 x 19 mm))
+by part: P1 0.02  P2 1.46  P3 0.37  P4 3.91  P5 1.09  P6 0.50  P7 0.26  P8 0.51  P9a 0.86  P9b 0.86  P10 0.31  P11 0.37  P12 0.28  P13 0.48  P14a 0.32  P14b 1.45
+
+### V2b saddle socket 40 mm long and 24 mm square; EST +9.5 g per saddle solid 
+min all rows 0.02 (P1 pad PSA to shoe plate (180 mm2) - peel (30 mm lever, no f); min excluding peel and PSA rows 0.32 (P14a spar 12x10 bending + torsion under the saddle (foot loa)
+by part: P1 0.02  P2 1.46  P3 0.37  P4 3.91  P5 1.09  P6 0.50  P7 0.26  P8 0.51  P9a 0.86  P9b 0.86  P10 0.31  P11 0.38  P12 0.35  P13 0.48  P14a 0.32  P14b 1.45
+
+### V3 root-block socket 71 mm long (x 0.215-0.286) and 24 mm square; EST +10 g per block solid 
+min all rows 0.02 (P1 pad PSA to shoe plate (180 mm2) - peel (30 mm lever, no f); min excluding peel and PSA rows 0.28 (P12 saddle socket-to-ring junction, PETG (16.5 x 19 mm))
+by part: P1 0.02  P2 1.46  P3 0.37  P4 3.91  P5 1.09  P6 0.76  P7 1.28  P8 1.09  P9a 0.86  P9b 0.86  P10 0.07  P11 0.75  P12 0.28  P13 0.48  P14a 0.32  P14b 1.45
+
+### V2b+V3 together 
+min all rows 0.02 (P1 pad PSA to shoe plate (180 mm2) - peel (30 mm lever, no f); min excluding peel and PSA rows 0.32 (P14a spar 12x10 bending + torsion under the saddle (foot loa)
+by part: P1 0.02  P2 1.46  P3 0.37  P4 3.91  P5 1.09  P6 0.76  P7 1.28  P8 1.09  P9a 0.86  P9b 0.86  P10 0.31  P11 0.84  P12 0.35  P13 0.48  P14a 0.32  P14b 1.45
+
+### V1 pad face mu 0.30 (UHMW-PE-class face, mu is the assumption; EST +0.2 g on four pads, K09-L D-105) 
+min all rows 0.02 (P1 pad PSA to shoe plate (180 mm2) - peel (30 mm lever, no f); min excluding peel and PSA rows 0.32 (P12 saddle socket-to-ring junction, PETG (16.5 x 19 mm))
+by part: P1 0.02  P2 1.71  P3 0.45  P4 4.24  P5 1.05  P6 0.50  P7 0.27  P8 0.51  P9a 1.23  P9b 1.23  P10 0.08  P11 0.40  P12 0.32  P13 0.56  P14a 0.34  P14b 1.42
+
+### V1 pad face mu 0.25 (UHMW-PE-class face, mu is the assumption; EST +0.2 g on four pads, K09-L D-105) 
+min all rows 0.03 (P1 pad PSA to shoe plate (180 mm2) - peel (30 mm lever, no f); min excluding peel and PSA rows 0.34 (P14a spar 12x10 bending + torsion under the saddle (foot loa)
+by part: P1 0.03  P2 1.87  P3 0.50  P4 4.38  P5 1.07  P6 0.51  P7 0.27  P8 0.52  P9a 1.52  P9b 1.52  P10 0.09  P11 0.44  P12 0.36  P13 0.61  P14a 0.34  P14b 1.40
+
+### V5 CG z centred (rearrange mass, CG z 0), mu 0.40 
+min all rows 0.02 (P1 pad PSA to shoe plate (180 mm2) - peel (30 mm lever, no f); min excluding peel and PSA rows 0.29 (P12 saddle socket-to-ring junction, PETG (16.5 x 19 mm))
+by part: P1 0.02  P2 1.45  P3 0.37  P4 3.93  P5 1.08  P6 0.50  P7 0.26  P8 0.50  P9a 1.26  P9b 1.25  P10 0.07  P11 0.34  P12 0.29  P13 0.48  P14a 0.31  P14b 1.41
+
+### V6 mu 0.30 and CG z centred 
+min all rows 0.02 (P1 pad PSA to shoe plate (180 mm2) - peel (30 mm lever, no f); min excluding peel and PSA rows 0.33 (P14a spar 12x10 bending + torsion under the saddle (foot loa)
+by part: P1 0.02  P2 1.70  P3 0.45  P4 4.27  P5 1.09  P6 0.52  P7 0.27  P8 0.52  P9a 1.55  P9b 1.55  P10 0.08  P11 0.40  P12 0.34  P13 0.56  P14a 0.33  P14b 1.40

@@ -1,0 +1,69 @@
+# T-084 D-185 study (FEA-lite beam FE). Band 94-321 Hz, strong = cx or cy >= 0.5 (unchanged).
+
+## 1. Coupling growth, cumulative (spar-only model, nom corner): the mode with the largest motor coupling in 120-330 Hz
+| step | f (Hz) | cx | cy | strong + in band? | top strain-energy groups |
+|---|---|---|---|---|---|
+| iter3 inputs (iter3_run.py CFG + fe_a defaults) | 213.5 | 0.009 | 0.453 | no | spar 51%, rib 30%, bridge 15% |
+| + rib 25x23 (T-077 p8, D-226) | 251.8 | 0.022 | 0.436 | no | spar 72%, bridge 17%, rib 6% |
+| + bridge 16x14 (D-206) | 262.9 | 0.005 | 0.484 | no | spar 71%, bridge 16%, rib 6% |
+| + struts 8x6 (T-077 p7, D-225) | 270.7 | 0.003 | 0.441 | no | spar 68%, bridge 19%, rib 6% |
+| + strut end y 0.300 -> 0.285 (strut clamp, wing.py STRUT_E) | 258.3 | 0.022 | 0.579 | YES | spar 69%, bridge 19%, rib 7% |
+| + hub x -0.075 -> -0.078 (T-077 p4 / T-083b cage shifts) | 257.4 | 0.021 | 0.584 | YES | spar 69%, bridge 19%, rib 7% |
+| + wing group 212 -> 309 g (D-226 cell, skins, bulkheads) | 230.1 | 0.008 | 0.503 | YES | spar 71%, bridge 18%, rib 7% |
+| + fin-root lumps 6 -> 31.9 g (D-226 node, D-229 6061 fitting) | 223.5 | 0.014 | 0.546 | YES | spar 72%, bridge 19%, rib 7% |
+| + centre 65 -> 84 g (6061 centre node), avionics 110 -> 176 g | 223.3 | 0.014 | 0.564 | YES | spar 71%, bridge 19%, rib 7% |
+| + hub 20 -> 59 g (6061 hub), pack 270 -> 296 g | 222.5 | 0.014 | 0.536 | YES | spar 71%, bridge 19%, rib 7% |
+| + motor station 88.3 -> 101.7 g (X2216, D-227 / D-228) | 222.1 | 0.013 | 0.521 | YES | spar 71%, bridge 19%, rib 7% |
+| + feet 5.0 g, fin tip at FIN_H 0.1937 (T-084) | 217.0 | 0.017 | 0.537 | YES | spar 68%, bridge 18%, fin 8% |
+
+## 2. Shape of the in-band mode, spar-only model, nom: 217.0 Hz, cx 0.017, cy 0.537, spar 68%, bridge 18%, fin 8% (mass-normalised translations; r = rotation)
+| node | ux | uy | uz | rz |
+|---|---|---|---|---|
+| s+0.000 | -0.000 | -0.196 | -0.000 | -11.58 |
+| s+0.150 | +2.218 | -0.187 | +0.000 | -5.62 |
+| s+0.228 | +1.908 | -0.183 | +0.000 | +13.12 |
+| s+0.285 | +0.882 | -0.179 | +0.000 | +21.41 |
+| s+0.380 | -0.738 | -0.183 | -0.000 | +1.87 |
+| s+0.450 | -0.931 | -0.183 | -0.000 | +3.18 |
+| hub | -0.000 | +0.318 | -0.000 | -1.09 |
+| m+1+1 | -0.008 | +0.217 | +0.159 | -0.01 |
+| m+1-1 | -0.008 | +0.217 | -0.159 | -0.01 |
+| f+1r | -0.743 | -0.403 | -0.000 | -2.31 |
+| f+1+1 | -1.586 | -0.859 | -0.000 | -2.33 |
+
+## 3. Strongly coupled modes vs the band, T-084 CAD (FIN_H 0.1937), three corners x three wing models
+| wing model | corner | strong modes IN the band (f, cx, cy) | highest strong below (Hz, margin to 94.0) | lowest strong above (Hz, margin to 321) | the 120-330 Hz mode with the largest coupling (f, max(cx,cy)) | D-185 (a) |
+|---|---|---|---|---|---|---|
+| spar only (T-066 model) | kd | 202.6 (0.02 / 0.54) | 71.8 (+31 %) | 438.7 (+37 %) | 202.6 (0.54) | FAIL |
+| spar only (T-066 model) | nom | 217.0 (0.02 / 0.54) | 74.7 (+26 %) | 475.5 (+48 %) | 217.0 (0.54) | FAIL |
+| spar only (T-066 model) | hi | 246.1 (0.02 / 0.54) | 87.5 (+7 %) | 533.2 (+66 %) | 246.1 (0.54) | FAIL |
+| D-226 cell, nominal | kd | none | 86.8 (+8 %) | 653.6 (+104 %) | 188.4 (0.29) | PASS |
+| D-226 cell, nominal | nom | none | 89.9 (+5 %) | 699.3 (+118 %) | 200.7 (0.28) | PASS |
+| D-226 cell, nominal | hi | 100.2 (0.64 / 0.69) | 88.2 (+7 %) | 791.5 (+147 %) | 224.8 (0.28) | FAIL |
+| D-226 cell, lower bound | kd | none | 82.4 (+14 %) | 631.8 (+97 %) | 315.4 (0.26) | PASS |
+| D-226 cell, lower bound | nom | none | 85.3 (+10 %) | 668.2 (+108 %) | 174.0 (0.22) | PASS |
+| D-226 cell, lower bound | hi | 96.6 (0.61 / 0.58) | 83.9 (+12 %) | 735.5 (+129 %) | 189.0 (0.21) | FAIL |
+
+Governing mode of the cell model at hi: 100.2 Hz, cx 0.64 cy 0.69, spar 32%, rib 31%, arm 28%:
+| node | ux | uy | uz | ry |
+|---|---|---|---|---|
+| s+0.000 | +0.000 | -0.000 | -1.111 | +11.32 |
+| s+0.150 | +0.000 | -0.000 | -0.630 | +5.49 |
+| s+0.285 | +0.000 | -0.000 | +0.096 | +2.68 |
+| s+0.450 | +0.000 | -0.000 | +0.550 | +0.56 |
+| hub | +0.000 | -0.000 | +0.581 | +10.37 |
+| m+1+1 | -0.322 | +0.330 | +0.101 | +4.66 |
+| m+1-1 | +0.322 | -0.330 | +0.101 | +4.66 |
+| f+1r | +0.000 | -0.000 | +0.370 | +0.06 |
+
+## 4. Levers on the cage-bounce mode (cell nominal / lower; f of the strong mode nearest the band low edge; in band = FAIL)
+| lever | kd nom-cell | nom nom-cell | hi nom-cell | hi lower-cell | note |
+|---|---|---|---|---|---|
+| as drawn (T-084) | 86.8 | 89.9 | 100.2 IN | 96.6 IN |  |
+| bridge 12x10 | 82.7 | 85.4 | 97.2 IN | 81.2 | fails D-206 bridge torsion (bridge_torsion_d206.md) |
+| bridge 20x18 | 88.8 | 91.9 | 101.7 IN | 97.8 IN | not in the BOM |
+| struts 10x8 | 87.7 | 91.0 | 100.9 IN | 97.1 IN | not in the BOM |
+| arms 14x12 | 95.2 IN | 99.4 IN | 109.7 IN | 105.3 IN | R09 stock; +mass |
+| strut end y 0.300 | 86.7 | 89.7 | 100.1 IN | 96.5 IN | strut Euler / R4 rows |
+| spar 14x12 | 86.8 | 89.9 | 100.2 IN | 96.6 IN | R09 |
+| pack 30 g lighter (info) | 87.5 | 90.7 | 100.7 IN | 97.0 IN | not a design option |

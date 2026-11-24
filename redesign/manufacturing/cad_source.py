@@ -73,6 +73,8 @@ def shape_to_json(s):
         d.update(axis=s.axis, center=list(s.center), profile=[list(p) for p in s.profile])
     elif s.kind == 'loft':
         d.update(axis=s.axis, smooth=bool(s.smooth), sections=[[o, [list(p) for p in l]] for o, l in s.sections])
+    elif s.kind == 'mesh':
+        d.update(verts=[list(p) for p in s.verts], tris=[list(t) for t in s.tris])
     return d
 
 
@@ -86,6 +88,9 @@ def shape_from_json(d):
         d['profile'] = [tuple(p) for p in d['profile']]
     elif kind == 'loft':
         d['sections'] = [(o, [tuple(p) for p in l]) for o, l in d['sections']]
+    elif kind == 'mesh':
+        d['verts'] = [tuple(p) for p in d['verts']]
+        d['tris'] = [tuple(t) for t in d['tris']]
     return fk.Shape(kind, name, **d)
 
 

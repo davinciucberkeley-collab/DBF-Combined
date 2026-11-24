@@ -5,20 +5,20 @@
    "external_m": {
     "value": [
      1.25,
-     0.55,
-     0.54
+     0.565,
+     0.546
     ],
     "unit": "m",
-    "source": "team/D7/CHANGE-REQUESTS.md#CR-D7-01",
+    "source": "review/CLOSURE-ROUND-2026-11-14/D7.md#1",
     "status": "PROPOSED",
-    "note": "L (y) x W (x) x H (z). Length and width are A1's D-16 values; height 0.54 (was 0.50) because the lower tube ends need free travel equal to the cradle crush stroke (CL-D7-BOX-H-REQ). Freeze only after CAR-FIT.md has two measured cars"
+    "note": "Closure 2026-11-14 (D-165 taller foot): W (x) 0.56 -> 0.565 m. The foot tips move x 0.368 -> 0.373 (cg.foot_height_m 0.053), drawn extent 0.515 -> 0.520 m; in the 0.56 box the nose gap fell to 7.3 mm (< 10) and the antenna / collar gaps went negative. +5 mm on W restores nose gap 12.30, collar 4.30, antenna 2.30 mm, aft gap 12 mm unchanged. Length 1.25 and height 0.54 unchanged (height: CL-D7-H-MIN is the least the 0.3 m drop allows; 0.45 m is below the aircraft alone, CL-D7-H-FLOOR). Was [1.25, 0.56, 0.54] (D-134). L (y) x W (x) x H (z). Freeze only after CAR-FIT.md has two measured cars"
    },
    "shell_t_m": {
     "value": 0.004,
     "unit": "m",
-    "source": "SRC-D7-COROPLAST",
+    "source": "SRC-D7-CARDBOARD",
     "status": "PROPOSED",
-    "note": "4 mm corrugated polypropylene (Coroplast) twin-wall, one sheet per face, scored and folded"
+    "note": "Closure 2026-11-14 (I1 cost request): single-wall corrugated board cut from 4 flattened Home Depot XLBX moving boxes (24 x 20 x 21 in, ECT 32 EST), about 4 mm (C flute, EST: caliper a blank). Was 4 mm Coroplast. Panel nest in SPEC.md"
    },
    "floor_doubler_t_m": {
     "value": 0.0,
@@ -77,7 +77,7 @@
     "unit": "m",
     "source": "D7 choice",
     "status": "PROPOSED",
-    "note": "+/-; two cam-buckle straps around the outside of the box, outboard of the cradles"
+    "note": "+/-; two paracord lashings (550 cord, 2.6 m each, slipped trucker's hitch) around the box girth, outboard of the cradles, over folded-board edge saddles at the four box edges. Cord from the G18 250 ft roll (no new buy)"
    },
    "fallback_height_m": {
     "value": 0.5,
@@ -101,11 +101,11 @@
     "note": "round 3 (C1 CR-C1-22): the aircraft sits 12 mm off the aft wall (foot pads, x 0.368) instead of centred; the four crushable feet take an aft-wall-first drop along their own stroke axis (CALC-D7-OFFAXIS). The slack moves to the nose side"
    },
    "nose_pad_t_m": {
-    "value": 0.01905,
+    "value": 0.0127,
     "unit": "m",
-    "source": "D7 choice",
+    "source": "review/DESIGN-ROUND-2026-11-14/D7-W3.md",
     "status": "PROPOSED",
-    "note": "round 4 (D-47/D-53 forward): 3/4 in PE plank on the front wall facing the pod nose (was 1 in). With the nose at -0.130 (envelope x 0.498) the 1 in pad left 6.6 mm < 10 mm; 3/4 in leaves 12.95 mm (CL-D7-NOSE-GAP). Box W stays 0.55 (A1 D-16). Costs nose-first drop height 0.079 -> 0.059 m (label-and-test case, KEEP UPRIGHT)"
+    "note": "D-150 (design round 2026-11-14, D7-W3): 3/4 -> 1/2 in PE plank (CR-A1-66 path). Drawn stack with the nose at -0.147: front wall inner face -0.172, pad face -0.172 + t. At 3/4 in the pad face is -0.15295: nose gap 5.95 mm (< 10), pitot socket collar -0.155 2.05 mm INTO the pad, antenna tube B rule tip -0.157 4.05 mm into it. At 1/2 in (face -0.1593): nose 12.30 mm, collar 4.30 mm, antenna rule tip 2.30 mm, drawn tube end -0.151 8.30 mm (CL-D7-NOSE-GAP, -COLLAR-PAD-GAP, -ANTENNA-PAD-GAP). Cost: nose-first drop allowance 0.061 -> 0.040 m (label-and-test case, KEEP UPRIGHT). Box W stays 0.56. Was 0.01905 (round 4: 1 in -> 3/4 in at nose -0.130)"
    },
    "nose_pad_size_m": {
     "value": [
@@ -115,13 +115,13 @@
     "unit": "m",
     "source": "D7 choice",
     "status": "PROPOSED",
-    "note": "y by z, centred on the pod nose (y 0, z +0.05); 0.2 m tall so the nose still faces it after the 72 mm floor-drop sink. Round 4: antenna tube B ends <= 10 mm ahead of the nose (CR-D7-13) and so stops 2.9 mm short of the pad (CL-D7-ANTENNA-PAD-GAP); a 12 mm wide vertical relief slot (antenna z +6 mm down 90 mm, covers the 72 mm sink) is kept as margin"
+    "note": "y by z, centred on the pod nose (y 0, z +0.05); 0.2 m tall so the nose still faces it after the 72 mm floor-drop sink. The pitot socket collar (y -0.046, z 0.039-0.051, 8 mm ahead of the nose) and antenna tube B (y -0.046, z 0.0245, OD 6) both face the pad. A 14 mm wide vertical relief slot at y -0.046 from z +0.055 down 95 mm (covers the collar top and the 72 mm sink) is kept as margin only; the gap claims do not count it"
    },
    "labels": {
     "value": [
      "THIS SIDE UP",
      "KEEP FLAT: NEVER STAND ON END",
-     "LIFT BY HANDLES",
+     "LIFT BY THE HAND HOLES",
      "AIRCRAFT INSIDE: NO LOAD ON LID",
      "PACKS TRAVEL IN THE BATTERY CAN, NEVER IN THE BOX",
      "PROPS AND PITOT IN THE TRAY"
@@ -137,6 +137,57 @@
     "source": "team/D7/CHANGE-REQUESTS.md#CR-D7-13",
     "status": "PROPOSED",
     "note": "antenna tube B may end at most 10 mm ahead of the pod nose (D2/F3 accepted under D-47 forward); not in the props-off envelope"
+   },
+   "handhole": {
+    "_note": "Closure 2026-11-14: die-cut hand holes replace the bolted strap handles (TRN-007 = 3-layer board patch around each hole). Side hole on the AFT wall at y 0 (fingers 25 mm in reach x 0.36, 40 mm aft of the wing TE, above the pod and feet); end holes on both end walls at the chord centre. Hole top 35 mm below the lid lip bottom",
+    "size_m": {
+     "value": [
+      0.1,
+      0.03
+     ],
+     "unit": "m",
+     "source": "D7 choice",
+     "status": "PROPOSED",
+     "note": "width x height of each hand hole"
+    },
+    "grip_w_m": {
+     "value": 0.085,
+     "unit": "m",
+     "source": "D7 estimate",
+     "status": "UNVERIFIED",
+     "note": "EST, width of four fingers bearing on the hole top edge"
+    },
+    "layers": {
+     "value": 3,
+     "unit": "-",
+     "source": "D7 choice",
+     "status": "PROPOSED",
+     "note": "wall + 2 patch layers (180 x 80 mm offcut, flutes vertical, taped)"
+    },
+    "ect_kn_m": {
+     "value": 5.6,
+     "unit": "kN/m",
+     "source": "SRC-D7-CARDBOARD",
+     "status": "UNVERIFIED",
+     "note": "ECT 32 lb/in x 0.1751 (kN/m)/(lb/in) = 5.60 kN/m, edgewise crush per layer; the hand loads the top edge of the hole edgewise"
+    },
+    "sf": {
+     "value": 2.0,
+     "unit": "-",
+     "source": "D7 choice",
+     "status": "PROPOSED",
+     "note": "covers humid-air strength loss of paper board (EST) and an uneven grip"
+    },
+    "patch_m": {
+     "value": [
+      0.18,
+      0.08
+     ],
+     "unit": "m",
+     "source": "D7 choice",
+     "status": "PROPOSED",
+     "note": "each patch layer"
+    }
    }
   },
   "cradle": {
@@ -172,11 +223,11 @@
     "note": "6 mm PE cap on the saddle contour (no point load on the tape skin)"
    },
    "crush_t_m": {
-    "value": 0.12,
+    "value": 0.126,
     "unit": "m",
     "source": "D7 choice",
     "status": "PROPOSED",
-    "note": "PE plank 2 + 2 + 1 in laminated (127 mm) and band-sawn to 120 mm: >= t_req (CALC-D7-STROKE) for the 0.3 m drop, and bottoms (0.6 x 120 = 72 mm) >= 10 mm above the floor under the lower tube ends in the 0.54 m box (window 109-123 mm at n_allow 11.0)"
+    "note": "PE 3 x 2 in layers (152 mm) stacked, one band-sawn to 18.6 mm: 120 mm, bound by a packing-tape wrap (tape buckles, carries no axial load) and located by a 30 mm board collar on the floor (below the 48 mm bottomed column top). >= t_req (CALC-D7-STROKE) for the 0.3 m drop; bottoms 72 mm, >= 10 mm above the floor under the lower tube ends in the 0.54 m box"
    },
    "crush_footprint_m": {
     "value": [
@@ -240,7 +291,7 @@
     "unit": "kg/m3",
     "source": "SRC-D7-PE-FOAM",
     "status": "UNVERIFIED",
-    "note": "1.7 lb/ft3 closed-cell polyethylene plank; weigh a plank"
+    "note": "1.7 lb/ft3 closed-cell PE assumed. Closure 2026-11-14: bought as one Walmart 'Polyethylene Foam Sheet' 2-count, 16 x 12 x 2 in; density '—' on the listing. T-D7-CUSHION on that foam sets the column footprint (a cut size, free) so the static stress lands in the 2-7 kPa band; weigh a sheet"
    },
    "eps_use": {
     "value": 0.55,
@@ -314,35 +365,21 @@
     "unit": "kg/m2",
     "source": "SRC-D7-COROPLAST",
     "status": "UNVERIFIED",
-    "note": "4.99 lb packaged weight of one 48 x 96 in 4 mm sheet (upper bound); weigh one sheet"
-   },
-   "handle_kg": {
-    "value": 0.04,
-    "unit": "kg",
-    "source": "D7 estimate",
-    "status": "UNVERIFIED",
-    "note": "EST, bought strap handle with 2 x M3x16 SHCS, M3 x 12 mm fender washers and nylocs (C6 CR-C6-08); 3 fitted"
-   },
-   "cam_strap_kg": {
-    "value": 0.045,
-    "unit": "kg",
-    "source": "D7 estimate",
-    "status": "UNVERIFIED",
-    "note": "EST, 25 mm PP webbing 1.8 m + cam buckle; 2 fitted"
+    "note": "Kept as the shell areal mass after the board change (closure 2026-11-14) as an UPPER bound: the 4 mm Coroplast packaged weight 0.76 kg/m2. Single-wall board weight '—' (not looked up): weigh one XLBX blank (T-D7-WEIGH-BOX)"
    },
    "corners_kg": {
     "value": 0.08,
     "unit": "kg",
     "source": "D7 estimate",
     "status": "UNVERIFIED",
-    "note": "EST, 8 plastic corner protectors"
+    "note": "EST, folded-board edge saddles under the cords and packing tape on the seams (was 8 plastic corner protectors)"
    },
    "consumables_kg": {
     "value": 0.1,
     "unit": "kg",
     "source": "D7 estimate",
     "status": "UNVERIFIED",
-    "note": "EST, LSE tape, hot-melt, zip ties, M3 handle hardware"
+    "note": "EST, packing tape, PE stack wraps (no LSE tape, no handle hardware)"
    },
    "pouch_kg": {
     "value": 0.15,
@@ -358,18 +395,18 @@
     "status": "PROPOSED",
     "note": "spares carried in the tray"
    },
-   "handle_backing_kg": {
-    "value": 0.008,
+   "cord_kg": {
+    "value": 0.02,
     "unit": "kg",
     "source": "D7 estimate",
     "status": "UNVERIFIED",
-    "note": "EST, 3 mm laser-cut plywood strip 140 x 30 mm inside the wall behind each handle (600 kg/m3 -> 7.6 g): spreads the M3 nut load over 4 200 mm2 of Coroplast instead of a 12 mm washer"
+    "note": "EST, one 2.6 m paracord lashing; 2 fitted"
    }
   },
   "setup_steps_s": {
    "value": [
     [
-     "open box: 2 cam straps, lift lid (pillars come with it); unfold the mat upwind, rubber up",
+     "open box: pull the tails of the 2 cord lashings (slipped hitch), lift lid (pillars come with it); unfold the mat upwind, rubber up",
      30
     ],
     [
@@ -521,64 +558,65 @@
    "foot_stroke_m": {
     "value": 0.04,
     "unit": "m",
-    "source": "team/C5/LANDING.md#3",
+    "source": "review/CLOSURE-ROUND-2026-11-14/C5.md#1.2",
     "status": "UNVERIFIED",
-    "note": "usable crush of one pre-crushed foot cartridge (42 mm, 2 mm pre-crush; C5 R3 table); T-C5-FOOT-RIG"
+    "note": "usable crush of one foot cartridge: C5 closure foot (D-165) stroke 43 mm less the 3 mm guard = 40 mm (was 42 - 2 pre-crush, R3 table); T-C5-FOOT-RIG"
    },
    "blade_half_t_m": {
     "value": 0.012,
     "unit": "m",
     "source": "D7 estimate",
     "status": "UNVERIFIED",
-    "note": "half the out-of-plane thickness of an APC 11 x 5.5MR at the hub (prop on, clocked spanwise; option CR-D7-15); measure a prop"
+    "note": "EST, half the out-of-plane thickness of an APC 11 x 5.5E at the hub (D-161 E hub, 10.41 mm long; prop on, clocked spanwise; option CR-D7-15 only, information); measure a prop"
    }
   },
   "_note_r3": "D7 round 3 (2026-11-09): off-axis drops (C1 CR-C1-22): aircraft 12 mm off the aft wall so the feet take an aft-wall drop, 1 in PE nose pad, labels for end-first and lid-down; strap ids L/R (A4 CR-A4-24); stowed prop edges; landing spares and mat in the field tote (C5 CR-C5-06, I1 CR-I1-18); set-up steps +25 s",
-  "handle": {
-   "_note": "Round 4 (A4 PLAN-STATUS, C6 joint_stacks.json E-TRN-13...15, D-41): grip stack of each M3 handle bolt. Engagement = bolt length - grip, measured from the nut bearing face; must be >= nyloc height + requirements.nyloc_pitches_min x pitch (5.0 mm, C6 min_engagement_mm). CALC-D7-HANDLE-GRIP",
-   "bolt_len_m": {
-    "value": 0.016,
-    "unit": "m",
-    "source": "team/C6/joint_stacks.json#E-TRN-13",
-    "status": "PROPOSED",
-    "note": "M3x16 SHCS ISO 4762 A2-70 (TRN-102)"
-   },
-   "pitch_m": {
-    "value": 0.0005,
-    "unit": "m",
-    "source": "ISO 261 M3 coarse",
-    "status": "PROPOSED",
-    "note": "M3 x 0.5"
-   },
-   "nyloc_h_m": {
-    "value": 0.004,
-    "unit": "m",
-    "source": "DIN 985 M3 (m = 4.0 mm)",
-    "status": "PROPOSED",
-    "note": "nylon-insert lock nut height"
-   },
-   "strap_t_m": {
-    "value": 0.0025,
-    "unit": "m",
-    "source": "D7 estimate",
+  "_note_r4": "D7 round 4 (2026-11-10): saddle modelled at contact with the outer skin face, preload 0 (CR-A4-46); handle grip stack and engagement >= 5.0 mm (D-41, C6 E-TRN-13...15); C6 ground_joint / joint_stack blocks copied into E-TRN-13...15",
+  "cost": {
+   "_note": "Closure 2026-11-14 (I1 request): the four box lines T01 + T02 + T03 + T06, priced 2026-11-14 from search snippets (the pages returned 403 / bot checks to the fetcher). CALC-D7-COST. Pessimistic = highest price seen for the same item",
+   "lines": {
+    "value": [
+     [
+      "T01 board: Home Depot XLBX 24 x 20 x 21 in moving box",
+      4,
+      3.48,
+      3.48,
+      "https://www.homedepot.com/p/The-Home-Depot-24-in-L-x-20-in-W-x-21-in-D-Extra-Large-Moving-Shipping-and-Packing-Box-with-Handles-XLBX/316235468"
+     ],
+     [
+      "T02 tape: Scotch 3350-RD packaging tape 1.88 in x 54.6 yd (pess.: 3M 3850-DC heavy duty)",
+      1,
+      4.3,
+      5.51,
+      "https://www.homedepot.com/p/Scotch-1-88-in-x-54-6-yds-Packaging-Tape-with-Dispenser-3350-RD/308945509"
+     ],
+     [
+      "T03 closure + handles: paracord from the G18 roll, die-cut hand holes",
+      1,
+      0.0,
+      0.0,
+      "I1 G18 (already bought)"
+     ],
+     [
+      "T06 PE foam: Walmart Polyethylene Foam Sheet 16 x 12 x 2 in, 2-count",
+      1,
+      11.38,
+      15.96,
+      "https://www.walmart.com/ip/12596320554"
+     ]
+    ],
+    "unit": "USD",
+    "source": "review/CLOSURE-ROUND-2026-11-14/D7.md#2",
     "status": "UNVERIFIED",
-    "note": "EST, thickness of the bought strap handle's end tab under the washer; measure with calipers on receipt. Max allowed 3.0 mm with M3x16 (CL-D7-HANDLE-STRAP-T-MAX); thicker -> buy M3x20 (protrudes 9 mm inside, clear of the pads)"
+    "note": "[item, qty, unit baseline, unit pessimistic, url]; seen 2026-11-14 (search snippets). XLBX: $3.48 single (one cached copy showed 0 in stock; fallback U-Haul 24 x 18 x 24 in $3.77). PE: listings $8.14-11.75 now, 'was' up to $15.96"
    },
-   "washer_t_m": {
-    "value": 0.001,
-    "unit": "m",
-    "source": "ISO 7093-1 M3 (0.8 mm) rounded up",
+   "limit_incl_tax_usd": {
+    "value": 40.0,
+    "unit": "USD",
+    "source": "review/CLOSURE-ROUND-2026-11-14/I1.md#4",
     "status": "PROPOSED",
-    "note": "M3 x 12 mm fender washer outside"
-   },
-   "backing_t_m": {
-    "value": 0.003,
-    "unit": "m",
-    "source": "TRN-105",
-    "status": "PROPOSED",
-    "note": "3 mm birch ply backing strip inside the wall"
+    "note": "I1 request: T01 + T02 + T03 + T06 <= $40 incl. tax (A2 card $25)"
    }
-  },
-  "_note_r4": "D7 round 4 (2026-11-10): saddle modelled at contact with the outer skin face, preload 0 (CR-A4-46); handle grip stack and engagement >= 5.0 mm (D-41, C6 E-TRN-13...15); C6 ground_joint / joint_stack blocks copied into E-TRN-13...15"
+  }
  }
 }

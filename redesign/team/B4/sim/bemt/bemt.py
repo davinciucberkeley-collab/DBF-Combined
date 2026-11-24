@@ -39,7 +39,11 @@ def load_geom(name):
     return rows
 
 
-GEOMS = {"11x5.5E": ("apce_11x5.5", 11.0), "11x4.7SF": ("apcsf_11x4.7", 11.0)}
+GEOMS = {"11x5.5E": ("apce_11x5.5", 11.0), "11x4.7SF": ("apcsf_11x4.7", 11.0),
+         # D-173 PROXY (ESTIMATE): APC does not publish 11x8E blade geometry (UIUC has no 11x8E file). Chord of the 11x5.5E,
+         # twist re-pitched by tan(beta_8) = (8 / 5.5) tan(beta_5.5) at every station (constant-pitch scaling).
+         "11x8E": ("apce_11x5.5", 11.0)}
+PITCH_SCALE = {"11x8E": 8.0 / 5.5}
 POLARS = json.loads((HERE / "polars.json").read_text(encoding="utf-8"))
 
 
@@ -116,6 +120,8 @@ def blade(name, N):
     D = GEOMS[name][1] * IN
     R = D / 2
     rr, cc, bb = [r[0] for r in g], [r[1] for r in g], [r[2] for r in g]
+    if name in PITCH_SCALE:
+        bb = [math.degrees(math.atan(math.tan(math.radians(x)) * PITCH_SCALE[name])) for x in bb]
     r0 = rr[0]
     out = []
     for i in range(N):

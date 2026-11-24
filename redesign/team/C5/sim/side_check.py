@@ -21,9 +21,9 @@ for dt in (8e-5, 4e-5, 2e-5, 1e-5):
     out["dt"][str(dt)] = {"side_1ms_N": max(x["side_1ms"][0]), "stroke_m": max(x["s_max"][0])}
 for name, kw in (("k_pad x0.5", dict(k_pad=L.K_PAD / 2)), ("k_pad x2", dict(k_pad=L.K_PAD * 2)),
                  ("m_piston x2", dict(m_f=2 * inp["m_piston"])), ("eps_v x0.5", dict(eps_v=L.EPS_V / 2)),
-                 ("mu 0.5", None)):
-    c = dict(case, mu=0.5) if kw is None else case
-    x = L.simulate(inp, [c], **(kw or {}))
+                 ("mu 0.5", 0.5), ("mu 0.7", 0.7)):
+    c = dict(case, mu=kw) if isinstance(kw, float) else case
+    x = L.simulate(inp, [c], **({} if isinstance(kw, float) else kw))
     out["sens"][name] = {"side_1ms_N": max(x["side_1ms"][0]), "stroke_m": max(x["s_max"][0])}
 print(json.dumps(out, indent=1))
 (HERE / "out" / "side_check.json").write_text(json.dumps(out, indent=1))

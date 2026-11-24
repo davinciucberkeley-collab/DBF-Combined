@@ -1,0 +1,35 @@
+{
+ "film": "shots-main.json",
+ "scenes": [
+  "S4",
+  "S5"
+ ],
+ "film_seconds": 51.0,
+ "frames": 3060,
+ "frames_mapped": 51,
+ "every": 60,
+ "rendered": 46,
+ "overlay_pictures": 47,
+ "seconds": 104.5,
+ "seconds_render": 100.7,
+ "seconds_overlay": 1.5,
+ "seconds_encode": 0.0,
+ "seconds_blender_start_and_frames": 100.7,
+ "seconds_frame_loop_per_worker": [
+  8.4,
+  9.5,
+  5.8
+ ],
+ "seconds_per_rendered_frame": 0.52,
+ "workers": 3,
+ "samples": 12,
+ "resolution": [
+  1920,
+  1080
+ ],
+ "fps": 60,
+ "dof": false,
+ "motion_blur": false,
+ "ray_tracing": true,
+ "preview": true
+}

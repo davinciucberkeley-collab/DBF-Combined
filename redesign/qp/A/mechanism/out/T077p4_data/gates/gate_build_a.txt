@@ -1,0 +1,14 @@
+module         ok       ms parts bodies joints wires   mass g  err warn
+wing           ok   6240.8    21     59      0     0      247    0    0
+fins           ok      3.7    12     16      0     0      166    0    0
+cage           ok     21.6    23     71      0     0      211    0    0
+propulsion     ok      6.4    17    128      0     0      353    0    0
+power          ok      2.9     3     12      0     0      282    0    0
+avionics       ok     30.0    12    100      0     0       75    0    0
+mechanisms     ok      4.5    14     34      0     0       48    0    0
+landing        ok      2.4     8     16      0     0       21    0    0
+harness        ok    162.4     8     20      0    14       38    0    0
+assembly       ok    447.2     1      1     35     0       26    0    0
+TOTAL 1468 g, CG 0.021, -0.002, 0.008 m (declared mass; CG declared or CAD centroid); 0 datums, 5 keep-outs
+note: 4 body boxes enter a keep-out but their convex hulls do not (box artefacts, not issues): CGE-002-A/KO-PROP-UL (arm tube (one continuous tube, motor cup to motor cup)); CGE-002-B/KO-PROP-UL (arm tube (one continuous tube, motor cup to motor cup)); CGE-002-A/KO-PROP-LR (arm tube (one continuous tube, motor cup to motor cup)); CGE-002-B/KO-PROP-LR (arm tube (one continuous tube, motor cup to motor cup))
+check: PASS (10 modules, 0 errors, 0 warnings)

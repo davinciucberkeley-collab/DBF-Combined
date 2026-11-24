@@ -1,0 +1,50 @@
+def hub_superelement(Fl, pts_mm, pb_mm):
+    """T-085: stiffness (SI, 36 x 36, global axes) of the hub as a superelement from the solid hub FEA flexibility.
+    Fl: 30 x 30 generalised flexibility of five masters (four stub ends UR, LL, LR, UL and the hub centre), load = N and N mm, displacement = mm and rad (work conjugates),
+    bridge bore fixed.  The sixth node is the bore (fixed in the FEA, free here): K = T^T Kq T with the rigid-body transfer T of that node (rigid motions strain nothing)."""
+    P = np.diag([1, 1, 1, 1e3, 1e3, 1e3]); Q = np.diag([1e-3, 1e-3, 1e-3, 1, 1, 1]); n = Fl.shape[0]//6
+    Fs = np.zeros_like(Fl)
+    for i in range(n):
+        for j in range(n): Fs[6*i:6*i+6, 6*j:6*j+6] = Q@Fl[6*i:6*i+6, 6*j:6*j+6]@P
+    Fs = 0.5*(Fs+Fs.T); Kq = np.linalg.inv(Fs); Kq = 0.5*(Kq+Kq.T)
+    T = np.zeros((6*n, 6*(n+1)))
+    for i in range(n):
+        r = (np.array(pts_mm[i], float)-np.array(pb_mm, float))*1e-3
+        sk = np.array([[0, -r[2], r[1]], [r[2], 0, -r[0]], [-r[1], r[0], 0]])
+        T[6*i:6*i+6, 6*i:6*i+6] = np.eye(6); T[6*i:6*i+3, 6*n:6*n+3] = -np.eye(3); T[6*i:6*i+3, 6*n+3:6*n+6] = sk; T[6*i+3:6*i+6, 6*n+3:6*n+6] = -np.eye(3)
+    K = T.T@Kq@T; return 0.5*(K+K.T)
+
+
+def _link(F, a, b, grp="rigid"):
+    """T-085: stiff massless link between two nodes (EA 1e7 N, EI 2e2 N m2: at least 80x the soft springs it joins; the nodes carry small lumps)."""
+    d = F.n[b]-F.n[a]; ax = int(np.argmin(np.abs(d))); vref = [0, 0, 0]; vref[ax] = 1
+    F.beam(a, b, 1e7, 2e2, 2e2, 2e2, 0.0, tuple(vref), grp, nseg=1)
+
+
+def add_pack(F, x_hubnode, kind, pack_g, c):
+    """T-085: the pack (pack_g = 295.7 g incl. tray CGE-008 13.3 g, straps 8.9 g, pad 3.5 g) on the drawn tray, instead of a lump on the hub node.
+    c['mode'] = 'rigid': one lump at (x, 0, z) rigid on the hub (T-084 pack_place; c['rot'] adds the pack's box rotary inertia).
+    c['mode'] = 'tray':  tray plate as a cantilever beam from the hub aft face (x_face) to the pack x (section: width c['w'] x t x solid fraction, PETG corner modulus),
+        pack cell (pack_g - tray_g) lumped at its CG (x, 0, z) with the box rotary inertia of 107 (y) x 33 (x) x 46 (z) mm, tied to the hub / tray by pad springs
+        (collar-top patch to the hub, four plate patches to the tray; stiffness E_pad A / t, shear E_pad / 3; strap preload assumed to keep contact)."""
+    x, z = c['x'], c['z']; mt = c.get('tray_g', 13.3); mp = pack_g-mt
+    Ix, Iy, Iz = [mp*1e-3/12*v for v in ((0.107**2+0.046**2), (0.033**2+0.046**2), (0.107**2+0.033**2))]
+    if c['mode'] == 'rigid':
+        F.node('pack', (x, 0, z)); F.beam('hub', 'pack', 1e9, 1e5, 1e5, 1e5, 0.0, (0, 0, 1), 'tray', nseg=1); F.lump('pack', pack_g*1e-3)
+        if c.get('rot'): F.lump_rot('pack', Ix, Iy, Iz)
+        return
+    E_ = E_PETG[kind]; G_ = G_PETG[kind]; w, t, s = c['w'], c.get('t', 1.2e-3), c['solid']
+    zt = 0.0074; xf = x_hubnode+0.024                     # plate mid-plane (plate 6.8..8.0 on the 2.0 mm root pad), hub aft face (hub x + 24 mm)
+    F.node('tr0', (xf, 0, zt)); F.node('trc', (x, 0, zt)); F.node('pk', (x, 0, z))
+    _link(F, 'hub', 'tr0'); F.lump('tr0', 0.15*mt*1e-3)
+    F.beam('tr0', 'trc', E_*w*t*s, E_*w*t**3/12*s, E_*t*w**3/12*s, G_*w*t**3/3*s, 0.0, (0, 0, 1), 'tray', nseg=1); F.lump('trc', 0.85*mt*1e-3)
+
+    def pad(nameH, posH, rigidH, nameP, posP, k):
+        F.node(nameH, posH); F.node(nameP, posP); _link(F, rigidH, nameH); _link(F, 'pk', nameP); F.lump(nameH, 3e-4); F.lump(nameP, 3e-4)
+        F.spring(nameH, nameP, k, 'pad')
+    Ep, tp = c['pad_E'], c.get('pad_t', 1.0e-3); xc = c['collar_x']; A_c = c['collar_A']
+    pad('cpH', (xc, 0, 0.008), 'hub', 'cpP', (xc, 0, 0.009), (Ep/3*A_c/tp, Ep/3*A_c/tp, Ep*A_c/tp))
+    A_p = c['pad_A']-A_c; kz = Ep*A_p/4/tp; kx = Ep/3*A_p/4/tp
+    for i, (dx, dy) in enumerate(((-7.5e-3, -26e-3), (7.5e-3, -26e-3), (-7.5e-3, 26e-3), (7.5e-3, 26e-3))):
+        pad('ppH%d' % i, (x+dx, dy, 0.008), 'trc', 'ppP%d' % i, (x+dx, dy, 0.009), (kx, kx, kz))
+    F.lump('pk', mp*1e-3-3.0e-3); F.lump_rot('pk', Ix, Iy, Iz)       # 3.0 g = the ten light pad-node lumps (3e-4 kg each), taken from the pack cell

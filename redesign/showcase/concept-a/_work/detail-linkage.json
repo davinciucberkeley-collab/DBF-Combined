@@ -1,0 +1,493 @@
+{
+ "id": "detail-linkage",
+ "size": [
+  1600,
+  1000
+ ],
+ "scene": "studio",
+ "engine": "CYCLES",
+ "device": "GPU",
+ "samples": 64,
+ "render_s": 54.45,
+ "explode": 0.0,
+ "camera": {
+  "preset": "closeup",
+  "az_deg": 15,
+  "el_deg": 50,
+  "ortho": false,
+  "lens_mm": 70,
+  "location_m": [
+   -0.2236,
+   0.1651,
+   0.4694
+  ],
+  "fit": [
+   "WNG-007-R",
+   "WNG-009-R",
+   "MEC-001-R",
+   "MEC-004-R",
+   "MEC-003-R"
+  ],
+  "frame": [
+   0.22,
+   0.78,
+   0.07,
+   0.93
+  ]
+ },
+ "caption": {
+  "title": "Elevon linkage, balance and hinge damper (right)",
+  "sub": "Servo, arm, pushrod and horn; lead balance strip behind lens caps; fluid damper at the elevon tip"
+ },
+ "subject_px": [
+  -431,
+  143,
+  5902,
+  2535
+ ],
+ "callouts": [
+  {
+   "item": "MEC-001-R",
+   "x": 1116.0,
+   "y": 647.6,
+   "title": "MEC-001-R",
+   "text": "Servo EMAX ES3054HV",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.1296,
+    0.1991,
+    0.0097
+   ]
+  },
+  {
+   "item": "MEC-002-R",
+   "x": 1132.0,
+   "y": 618.6,
+   "title": "MEC-002-R",
+   "text": "Servo arm",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.1379,
+    0.1976,
+    0.0087
+   ]
+  },
+  {
+   "item": "MEC-003-R",
+   "x": 1194.3,
+   "y": 503.0,
+   "title": "MEC-003-R",
+   "text": "1.2 mm pushrod + clevis",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.1677,
+    0.1913,
+    0.01
+   ]
+  },
+  {
+   "item": "MEC-004-R",
+   "x": 1227.4,
+   "y": 377.6,
+   "title": "MEC-004-R",
+   "text": "Control horn",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.2141,
+    0.1916,
+    -0.0035
+   ]
+  },
+  {
+   "item": "WNG-007-R",
+   "x": 715.3,
+   "y": 465.4,
+   "title": "WNG-007-R",
+   "text": "Balance lead strip",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.1633,
+    0.2863,
+    -0.0026
+   ]
+  },
+  {
+   "item": "WNG-009-R",
+   "x": 395.1,
+   "y": 312.9,
+   "title": "WNG-009-R",
+   "text": "Hinge damper (silicone)",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.1796,
+    0.3592,
+    0.0051
+   ]
+  }
+ ],
+ "shown": [
+  {
+   "id": "WNG-001",
+   "role": "ghost",
+   "name": "Wing core, XPS 25 kg/m3 + tape skin + glue + hinge tape (lumped)",
+   "status": "MODELLED",
+   "mass_g": 100.1,
+   "subsystem": "wing",
+   "bbox_px": [
+    -431,
+    234,
+    5902,
+    2535
+   ]
+  },
+  {
+   "id": "WNG-002",
+   "role": "context",
+   "name": "Spar, CF tube 12x10 x 0.90 m",
+   "status": "MODELLED",
+   "mass_g": 49.8,
+   "subsystem": "wing",
+   "bbox_px": [
+    -294,
+    658,
+    5653,
+    2082
+   ]
+  },
+  {
+   "id": "WNG-006-R",
+   "role": "context",
+   "name": "Elevon right",
+   "status": "MODELLED",
+   "mass_g": 6.7,
+   "subsystem": "wing",
+   "bbox_px": [
+    448,
+    143,
+    1989,
+    658
+   ]
+  },
+  {
+   "id": "WNG-007-R",
+   "role": "context",
+   "name": "Elevon balance (D-187 v2, D-205, T-077 p8 R): 10.0 g lead strip 20 mm ahead of the hinge (10 x 0.83 mm x 106 mm; T-077 p8 flutter re-run) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
+   "status": "MODELLED",
+   "mass_g": 10.5,
+   "subsystem": "wing",
+   "bbox_px": [
+    463,
+    359,
+    987,
+    539
+   ]
+  },
+  {
+   "id": "WNG-008-RU",
+   "role": "ghost",
+   "name": "Lens cap + stop bosses (R, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
+   "status": "MODELLED",
+   "mass_g": 3.69,
+   "subsystem": "wing",
+   "bbox_px": [
+    394,
+    340,
+    1024,
+    603
+   ]
+  },
+  {
+   "id": "WNG-008-RL",
+   "role": "ghost",
+   "name": "Lens cap + stop bosses (R, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
+   "status": "MODELLED",
+   "mass_g": 3.72,
+   "subsystem": "wing",
+   "bbox_px": [
+    407,
+    372,
+    1022,
+    652
+   ]
+  },
+  {
+   "id": "WNG-010-R",
+   "role": "context",
+   "name": "Hinge damper rotor (R): sleeve + flange bonded on the elevon tip",
+   "status": "MODELLED",
+   "mass_g": 0.47,
+   "subsystem": "wing",
+   "bbox_px": [
+    357,
+    282,
+    458,
+    350
+   ]
+  },
+  {
+   "id": "WNG-009-R",
+   "role": "context",
+   "name": "Hinge damper stator (R): printed housing + pin, 12,500 cSt silicone fluid, 2 silicone preload strips",
+   "status": "MODELLED",
+   "mass_g": 2.0,
+   "subsystem": "wing",
+   "bbox_px": [
+    348,
+    276,
+    453,
+    353
+   ]
+  },
+  {
+   "id": "MEC-001-R",
+   "role": "context",
+   "name": "Servo EMAX ES3054HV (R)",
+   "status": "MODELLED",
+   "mass_g": 20.5,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1033,
+    539,
+    1205,
+    724
+   ]
+  },
+  {
+   "id": "MEC-002-R",
+   "role": "context",
+   "name": "Servo arm (R)",
+   "status": "MODELLED",
+   "mass_g": 1.0,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1100,
+    589,
+    1177,
+    630
+   ]
+  },
+  {
+   "id": "MEC-008-R",
+   "role": "context",
+   "name": "Z-bend keeper (R), printed PETG: 1.5 mm spacer + 0.8 mm bridge over the Z-bend, clamped under the arm screw (D-212 rev 3; mass CALC)",
+   "status": "MODELLED",
+   "mass_g": 0.07,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1110,
+    589,
+    1178,
+    619
+   ]
+  },
+  {
+   "id": "HWC-002-R",
+   "role": "context",
+   "name": "Servo arm screw M2 x 8 pan (R)",
+   "status": "MODELLED",
+   "mass_g": 0.32,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1113,
+    587,
+    1134,
+    628
+   ]
+  },
+  {
+   "id": "MEC-004-R",
+   "role": "context",
+   "name": "Control horn (R), printed PETG 2 mm flat profile: blade with the 1.1 mm reamed hole over the hinge line + rib through a slot in the elevon, 2.5-55 mm aft of the hinge (D-212 rev 3; mass CALC from the drawn volume)",
+   "status": "MODELLED",
+   "mass_g": 0.95,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1197,
+    297,
+    1252,
+    493
+   ]
+  },
+  {
+   "id": "MEC-003-R",
+   "role": "context",
+   "name": "Pushrod 1.2 mm with Z-bend and clevis (R)",
+   "status": "MODELLED",
+   "mass_g": 0.97,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1163,
+    431,
+    1220,
+    623
+   ]
+  },
+  {
+   "id": "MEC-005-R",
+   "role": "context",
+   "name": "Clevis pin 1.0 x 4.4 mm (R); mass CALC steel, carried inside the 1.0 g rod before D-194",
+   "status": "MODELLED",
+   "mass_g": 0.03,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1196,
+    439,
+    1220,
+    449
+   ]
+  }
+ ],
+ "hidden": [
+  "AVN-002",
+  "AVN-003",
+  "AVN-004",
+  "AVN-005",
+  "AVN-006",
+  "AVN-007",
+  "AVN-008",
+  "AVN-009-S",
+  "AVN-009-T",
+  "AVN-010",
+  "CGE-001",
+  "CGE-002-A",
+  "CGE-002-B",
+  "CGE-003-LL",
+  "CGE-003-LR",
+  "CGE-003-UL",
+  "CGE-003-UR",
+  "CGE-004",
+  "CGE-005-L",
+  "CGE-005-R",
+  "CGE-006",
+  "CGE-007-L",
+  "CGE-007-R",
+  "CGE-008",
+  "CGE-009-LL",
+  "CGE-009-LR",
+  "CGE-009-UL",
+  "CGE-009-UR",
+  "CGE-010-C",
+  "CGE-010-LL",
+  "CGE-010-LR",
+  "CGE-010-UL",
+  "CGE-010-UR",
+  "E-HRN-01",
+  "E-HRN-02",
+  "E-HRN-03",
+  "E-HRN-04",
+  "E-HRN-05",
+  "E-HRN-06",
+  "E-HRN-07",
+  "E-HRN-08",
+  "E-HRN-09",
+  "E-HRN-10",
+  "E-HRN-11",
+  "E-HRN-12",
+  "E-HRN-13",
+  "E-HRN-14",
+  "FIN-001-L",
+  "FIN-001-R",
+  "FIN-002-L",
+  "FIN-002-R",
+  "FIN-003-L",
+  "FIN-003-R",
+  "FIN-004-L",
+  "FIN-004-R",
+  "FIN-005-L",
+  "FIN-005-R",
+  "FIN-006-L",
+  "FIN-006-R",
+  "FIN-009-L",
+  "FIN-009-R",
+  "FIN-010-L",
+  "FIN-010-R",
+  "GER-001-LL",
+  "GER-001-LR",
+  "GER-001-UL",
+  "GER-001-UR",
+  "GER-002-LL",
+  "GER-002-LR",
+  "GER-002-UL",
+  "GER-002-UR",
+  "HRD-001",
+  "HRN-001",
+  "HRN-002",
+  "HRN-003-L",
+  "HRN-003-R",
+  "HRN-004-LL",
+  "HRN-004-LR",
+  "HRN-004-UL",
+  "HRN-004-UR",
+  "HWC-001",
+  "HWC-002-L",
+  "HWC-003",
+  "MEC-001-L",
+  "MEC-002-L",
+  "MEC-003-L",
+  "MEC-004-L",
+  "MEC-005-L",
+  "MEC-008-L",
+  "PRP-001-LL",
+  "PRP-001-LR",
+  "PRP-001-UL",
+  "PRP-001-UR",
+  "PRP-002-LL",
+  "PRP-002-LR",
+  "PRP-002-UL",
+  "PRP-002-UR",
+  "PRP-003",
+  "PRP-004-LL",
+  "PRP-004-LR",
+  "PRP-004-UL",
+  "PRP-004-UR",
+  "PRP-005-LL",
+  "PRP-005-LR",
+  "PRP-005-UL",
+  "PRP-005-UR",
+  "PRP-006-LL",
+  "PRP-006-LR",
+  "PRP-006-UL",
+  "PRP-006-UR",
+  "PWR-001",
+  "PWR-002",
+  "PWR-003",
+  "WNG-003-C",
+  "WNG-004-L",
+  "WNG-004-R",
+  "WNG-005-L",
+  "WNG-005-R",
+  "WNG-006-L",
+  "WNG-007-L",
+  "WNG-008-LL",
+  "WNG-008-LU",
+  "WNG-009-L",
+  "WNG-010-L",
+  "WNG-011",
+  "WNG-012",
+  "WNG-013-L",
+  "WNG-013-R",
+  "WNG-014-L",
+  "WNG-014-R"
+ ],
+ "clipped": [],
+ "legend": [
+  "context",
+  "ghost"
+ ],
+ "files": {
+  "png": "detail-linkage.png",
+  "jpg": "detail-linkage.jpg"
+ }
+}

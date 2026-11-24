@@ -1,0 +1,102 @@
+{
+ "schema": "dbf-interfaces/1",
+ "subsystem": "power",
+ "parts": [
+  {
+   "id": "PWR-001",
+   "name": "Pack RDQ Series 2800 mAh 4S 100C XT60 (107 x 33 x 46 mm, 270 g, T-077)",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 270.0,
+   "material": "LiPo",
+   "cg_xyz_m": [
+    -0.0279,
+    0.0007,
+    0.032
+   ],
+   "make_or_buy": "buy",
+   "electrical": "source",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "PWR-002",
+   "name": "Pack straps x2: 20 mm webbing with buckle, each about 244 mm (inner loop 214 mm + 30 mm overlap, EST), at y +-35 mm, each a closed loop round the tray plate (front and aft edges) and the pack; BOM W08 STRIX 20 x 300 mm covers each loop (second strap price \"-\"); mass scaled 5.5 g x length / 300 mm per strap, EST (11 g if both are used uncut)",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 8.9,
+   "material": "nylon webbing + plastic buckle",
+   "cg_xyz_m": [
+    -0.0269,
+    0.0,
+    0.032
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "PWR-003",
+   "name": "Anti-slip pad 100 x 30 x 1.0 mm silicone rubber sheet on the tray floor (BOM W09; thickness, size and density EST)",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 3.5,
+   "material": "silicone rubber",
+   "cg_xyz_m": [
+    -0.028,
+    0.0,
+    0.0085
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  }
+ ],
+ "edges": [
+  {
+   "id": "E-PWR-01",
+   "part_a": "PWR-002",
+   "part_b": "CGE-008",
+   "via": "CT-STRAP-VELCRO",
+   "owner": "power",
+   "notes": "two buckle straps at y +-35 mm, each a closed loop round the whole tray plate and the pack: over the pack top, round the plate front edge (hub aft face) and aft end, under the plate (D-224 rung 3a; the bridge tube and the hub collar are not enclosed)",
+   "retention": {
+    "item": "20 mm strap",
+    "count": 2,
+    "load_n": 38.8
+   },
+   "field_joint": true
+  },
+  {
+   "id": "E-PWR-02",
+   "part_a": "PWR-001",
+   "part_b": "CGE-008",
+   "via": "CT-STRAP-VELCRO",
+   "owner": "power",
+   "notes": "pack sits on the anti-slip pad PWR-003 on the tray floor, between the integral lips; strap PWR-002 holds it",
+   "retention": {
+    "item": "anti-slip pad + strap",
+    "count": 1
+   },
+   "field_joint": true
+  },
+  {
+   "id": "E-PWR-03",
+   "part_a": "PWR-003",
+   "part_b": "CGE-008",
+   "via": "CT-TAPE-FOAM",
+   "owner": "power",
+   "notes": "pad stuck on the tray plate (adhesive-backed sheet, EST)"
+  },
+  {
+   "id": "E-PWR-04",
+   "part_a": "PWR-002",
+   "part_b": "PWR-001",
+   "via": "CT-STRAP-VELCRO",
+   "owner": "power",
+   "notes": "strap bears on the pack top face"
+  }
+ ],
+ "acknowledges": [
+  "E-HRN-01",
+  "E-HRN-13",
+  "E-HRN-14"
+ ]
+}

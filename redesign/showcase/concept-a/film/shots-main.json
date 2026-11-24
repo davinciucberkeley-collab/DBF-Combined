@@ -1,0 +1,1177 @@
+{
+ "_note": "T-027 draft shot list of the main film (docs/video/FILM-PROGRESS.md). Camera keys: t = seconds from the shot start, target = [x, y, z] m in the CAD frame (nose -x, wing +x, z up), az = azimuth deg from the nose (90 = left), el = elevation deg, dist = m. All keys of a scene form one smooth path (cuts only between scenes); the first shot of a scene needs a key at t = 0. parts: 'all' or a list of part-id prefixes; modes: {prefix: normal|ghost|fab|move|hidden}. tag: on-screen tag text (ILLUSTRATIVE = authored motion). todo: placeholder card text. card: closing card, values read from qp/A/params-A.json at draw time (key paths). T-029: S4 shots carry sitl = {run, t0, t1, trail_from} (log seconds of an executed SITL run played over the shot duration, qp/A/sitl/runs/<run>/case.fwd.csv), follow = true (camera keys are offsets from the filtered aircraft position, world frame x north, y west, z up), mech.from_log (elevons from the logged dl, dr). S5 shots carry fea.glb (stress-coloured mesh from qp/A/structures/out_fea) or plate.image (existing FEA figure), vals (numbers read from the result files at draw time: file relative to out_fea, path, maxkey, times/div const, or const), readout (panel rows of vals), and tag / sub as format strings over vals.",
+ "scenes": [
+  {
+   "id": "S1",
+   "title": "Overview orbit",
+   "shots": [
+    {
+     "id": "1.1",
+     "dur": 4.0,
+     "title": "Concept A",
+     "sub": "Quad tailsitter VTOL: a flying wing with two fins and four fixed motors in an X.",
+     "cam": [
+      {
+       "t": 0,
+       "target": [
+        0.1,
+        0,
+        0.04
+       ],
+       "az": 25,
+       "el": 38,
+       "dist": 1.8
+      },
+      {
+       "t": 4,
+       "target": [
+        0.1,
+        0,
+        0.04
+       ],
+       "az": 140,
+       "el": 36,
+       "dist": 1.8
+      }
+     ]
+    },
+    {
+     "id": "1.2",
+     "dur": 4.0,
+     "title": "One piece, 0.90 m wing",
+     "sub": "Packed 0.90 x 0.50 x 0.39 m with props on (params-A.json box/packed_m).",
+     "cam": [
+      {
+       "t": 4,
+       "target": [
+        0.1,
+        0,
+        0.04
+       ],
+       "az": 260,
+       "el": 34,
+       "dist": 1.8
+      }
+     ],
+     "annot": [
+      {
+       "kind": "dim",
+       "param": "box/packed_m/0",
+       "at": [
+        0.42,
+        0.2
+       ],
+       "ext_from_x": 0.2,
+       "label": "Wing span {v:.2f} m",
+       "cite": "params-A.json box/packed_m/0 (CAD y -0.45 to +0.45 m)",
+       "t": [
+        0.1,
+        3.4
+       ]
+      }
+     ]
+    },
+    {
+     "id": "1.3",
+     "dur": 4.0,
+     "title": "The live CAD",
+     "sub": "{n:.0f} modelled parts: every part is modelled, unknown vendor dimensions are marked EST (params-A.json cad3d/parts).",
+     "cam": [
+      {
+       "t": 4,
+       "target": [
+        0.1,
+        0,
+        0.04
+       ],
+       "az": 380,
+       "el": 36,
+       "dist": 1.8
+      }
+     ],
+     "vals": {
+      "n": {
+       "param": "cad3d/parts"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "S2",
+   "title": "Close-ups",
+   "shots": [
+    {
+     "id": "2.1",
+     "dur": 5.0,
+     "title": "Wing",
+     "sub": "Foam core (XPS + tape) over a carbon spar, 12 x 10 mm, 900 mm (WNG-001, WNG-002).",
+     "cam": [
+      {
+       "t": 0,
+       "target": [
+        0.09,
+        0.12,
+        0
+       ],
+       "az": -210,
+       "el": 30,
+       "dist": 1.0
+      },
+      {
+       "t": 2.5,
+       "target": [
+        0.1,
+        0.25,
+        0
+       ],
+       "az": -195,
+       "el": 28,
+       "dist": 0.65
+      },
+      {
+       "t": 5,
+       "target": [
+        0.1,
+        0.25,
+        0
+       ],
+       "az": -180,
+       "el": 24,
+       "dist": 0.6,
+       "hold": true
+      }
+     ],
+     "modes": {
+      "PRP-": "hidden",
+      "CGE-002-": "hidden"
+     }
+    },
+    {
+     "id": "2.2",
+     "dur": 5.0,
+     "title": "Propulsion",
+     "sub": "Motor SunnySky X2216 880KV with APC 9x4.5 prop, four on the hub arms (PRP-001, PRP-002).",
+     "cam": [
+      {
+       "t": 3.0,
+       "target": [
+        -0.11,
+        0.22,
+        0.16
+       ],
+       "az": -40,
+       "el": 27,
+       "dist": 0.7,
+       "hold": true
+      },
+      {
+       "t": 5.0,
+       "target": [
+        -0.11,
+        0.22,
+        0.16
+       ],
+       "az": -60,
+       "el": 29,
+       "dist": 0.62
+      }
+     ],
+     "title_delay": 1.5
+    },
+    {
+     "id": "2.3",
+     "dur": 5.0,
+     "title": "Hub and arm interfaces",
+     "sub": "Machined 6061-T6 hub (D-220), carbon arms 12 x 10, motor cups (CGE-001 to CGE-003). Cut-away: props, pack, avionics and leads hidden.",
+     "cam": [
+      {
+       "t": 2.0,
+       "target": [
+        -0.07,
+        0,
+        0
+       ],
+       "az": -20,
+       "el": 25,
+       "dist": 0.5
+      },
+      {
+       "t": 5.0,
+       "target": [
+        -0.07,
+        0,
+        0
+       ],
+       "az": 15,
+       "el": 28,
+       "dist": 0.48
+      }
+     ],
+     "modes": {
+      "PRP-": "hidden",
+      "PWR-": "hidden",
+      "AVN-": "hidden"
+     },
+     "wires": false
+    },
+    {
+     "id": "2.4",
+     "dur": 5.0,
+     "title": "Structure",
+     "sub": "Wing core as an x-ray: the carbon spar (teal) and its PETG plugs (orange), WNG-002 to WNG-005.",
+     "modes": {
+      "WNG-001": "ghost",
+      "WNG-002": "fab",
+      "WNG-003": "move",
+      "WNG-004": "move",
+      "WNG-005": "move"
+     },
+     "cam": [
+      {
+       "t": 2.0,
+       "target": [
+        0.06,
+        0.25,
+        0
+       ],
+       "az": 150,
+       "el": 42,
+       "dist": 0.62
+      },
+      {
+       "t": 5.0,
+       "target": [
+        0.06,
+        0.15,
+        0
+       ],
+       "az": 165,
+       "el": 38,
+       "dist": 0.75
+      }
+     ],
+     "parts": [
+      "WNG-"
+     ],
+     "wires": false
+    },
+    {
+     "id": "2.5",
+     "dur": 5.0,
+     "title": "Control surface",
+     "sub": "Servo EMAX ES3054HV, arm, pushrod, horn and elevon (MEC-001 to MEC-005, MEC-008, WNG-006). Cut-away: other parts and leads hidden.",
+     "modes": {
+      "WNG-001": "ghost"
+     },
+     "cam": [
+      {
+       "t": 2.0,
+       "target": [
+        0.17,
+        0.195,
+        0.004
+       ],
+       "az": 140,
+       "el": 42,
+       "dist": 0.26
+      },
+      {
+       "t": 5.0,
+       "target": [
+        0.17,
+        0.195,
+        0.004
+       ],
+       "az": 160,
+       "el": 36,
+       "dist": 0.22,
+       "hold": true
+      }
+     ],
+     "parts": [
+      "WNG-",
+      "MEC-",
+      "HWC-002"
+     ],
+     "wires": false
+    },
+    {
+     "id": "2.6",
+     "dur": 3.9,
+     "tag": "ILLUSTRATIVE: exploded view, offsets for clarity (not to scale of travel)",
+     "los": false,
+     "wires": false,
+     "modes": {
+      "PWR-002": "hidden",
+      "AVN-009": "hidden"
+     },
+     "explode": {
+      "from": 2.1,
+      "to": 3.7,
+      "p0": 0.0,
+      "p1": 1.0
+     },
+     "title": "Exploded view",
+     "sub": "Each part is pulled out along the line it is pushed in on in the build (assembly steps, cad/out/assembly.json). Strap, pitot lines and wires not shown.",
+     "cam": [
+      {
+       "t": 2.7,
+       "target": [
+        0.1,
+        0.0,
+        0.02
+       ],
+       "az": 150,
+       "el": 28,
+       "dist": 2.3
+      },
+      {
+       "t": 3.9,
+       "target": [
+        0.1,
+        0.0,
+        0.02
+       ],
+       "az": 172,
+       "el": 26,
+       "dist": 2.3
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "S3",
+   "title": "Elevon linkage",
+   "shots": [
+    {
+     "id": "3.1",
+     "dur": 12.0,
+     "tag": "SIMULATED: kinematics AR-001 (D-212 rev 3)",
+     "wires": false,
+     "parts": [
+      "WNG-",
+      "MEC-",
+      "HWC-002"
+     ],
+     "modes": {
+      "WNG-001": "ghost",
+      "WNG-006": "fab",
+      "MEC-002": "move",
+      "MEC-003": "move",
+      "MEC-004": "move",
+      "MEC-005": "move"
+     },
+     "title": "Servo arm, rod and horn",
+     "sub": "The servo arm pushes the rod, the rod turns the horn, the horn turns the elevon, to the 21 deg mechanical stops (flight limit 20 deg, wing.py ELEV_LIM).",
+     "mech": {
+      "sweep": [
+       [
+        0,
+        0
+       ],
+       [
+        0.8,
+        0
+       ],
+       [
+        3.0,
+        -21
+       ],
+       [
+        3.8,
+        -21
+       ],
+       [
+        8.0,
+        21
+       ],
+       [
+        8.8,
+        21
+       ],
+       [
+        11.2,
+        0
+       ],
+       [
+        12,
+        0
+       ]
+      ]
+     },
+     "cam": [
+      {
+       "t": 0,
+       "target": [
+        0.18,
+        0.2,
+        0.0
+       ],
+       "az": 135,
+       "el": 30,
+       "dist": 0.42
+      },
+      {
+       "t": 12,
+       "target": [
+        0.18,
+        0.2,
+        0.0
+       ],
+       "az": 165,
+       "el": 24,
+       "dist": 0.34
+      }
+     ],
+     "annot": [
+      {
+       "kind": "arc",
+       "t": [
+        0.2,
+        11.8
+       ]
+      }
+     ]
+    },
+    {
+     "id": "3.2",
+     "dur": 6.0,
+     "tag": "SIMULATED: kinematics AR-001 (D-212 rev 3)",
+     "wires": false,
+     "parts": [
+      "WNG-",
+      "MEC-",
+      "HWC-002"
+     ],
+     "modes": {
+      "WNG-001": "ghost",
+      "WNG-006": "fab50",
+      "WNG-007": "hidden",
+      "WNG-008": "hidden",
+      "WNG-009": "hidden",
+      "WNG-010": "hidden",
+      "MEC-002": "move",
+      "MEC-003": "move",
+      "MEC-004": "move",
+      "MEC-005": "move"
+     },
+     "title": "Horn and hinge",
+     "sub": "Seen from the wing tip side (balance strip and damper hidden; elevon half see-through): the horn hole sits over the hinge axis, drawn in orange.",
+     "mech": {
+      "sweep": [
+       [
+        0,
+        0
+       ],
+       [
+        1.5,
+        0
+       ],
+       [
+        2.5,
+        -21
+       ],
+       [
+        3.0,
+        -21
+       ],
+       [
+        4.5,
+        21
+       ],
+       [
+        5.0,
+        21
+       ],
+       [
+        5.8,
+        0
+       ],
+       [
+        6,
+        0
+       ]
+      ]
+     },
+     "cam": [
+      {
+       "t": 1.5,
+       "hold": true,
+       "target": [
+        0.175,
+        0.195,
+        0.004
+       ],
+       "az": 270,
+       "el": 16,
+       "dist": 0.24
+      },
+      {
+       "t": 6,
+       "target": [
+        0.175,
+        0.195,
+        0.004
+       ],
+       "az": 270,
+       "el": 16,
+       "dist": 0.24
+      }
+     ],
+     "hinge_line": true
+    }
+   ]
+  },
+  {
+   "id": "S4",
+   "title": "Simulation playback: executed ArduPilot SITL run T097_Z5 (1.881 kg EST)",
+   "shots": [
+    {
+     "id": "4.1",
+     "dur": 7.0,
+     "tag": "SIMULATED: ArduPilot SITL run T097_Z5, 1.881 kg EST, a_plant.py plant model (EST aero)",
+     "los": false,
+     "follow": true,
+     "sitl": {
+      "run": "T097_Z5",
+      "t0": 31.0,
+      "t1": 98.0,
+      "trail_from": 33.5,
+      "note": "Run of T-097 (AR-015), 1.881 kg EST, X2216, CG 22.049 mm; SITL with the a_plant.py plant (EST aero)."
+     },
+     "mech": {
+      "from_log": true
+     },
+     "title": "Take-off and climb",
+     "sub": "Four motors lift the aircraft off its fin pads and climb to a hover at about 50 m (time sped up).",
+     "cam": [
+      {
+       "t": 0,
+       "target": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "az": 75,
+       "el": 16,
+       "dist": 2.6
+      },
+      {
+       "t": 7.0,
+       "target": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "az": 95,
+       "el": 22,
+       "dist": 3.6
+      }
+     ],
+     "props_spin": true
+    },
+    {
+     "id": "4.2",
+     "dur": 10.0,
+     "tag": "SIMULATED: ArduPilot SITL run T097_Z5, 1.881 kg EST, a_plant.py plant model (EST aero)",
+     "los": false,
+     "follow": true,
+     "sitl": {
+      "run": "T097_Z5",
+      "t0": 98.0,
+      "t1": 126.0,
+      "trail_from": 33.5,
+      "note": "Run of T-097 (AR-015), 1.881 kg EST, X2216, CG 22.049 mm; SITL with the a_plant.py plant (EST aero)."
+     },
+     "mech": {
+      "from_log": true
+     },
+     "title": "Transition to cruise",
+     "sub": "The aircraft pitches from nose-up hover to level flight on the same motors; elevons move as logged.",
+     "cam": [
+      {
+       "t": 3.5,
+       "target": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "az": 95,
+       "el": 26,
+       "dist": 3.4
+      },
+      {
+       "t": 10.0,
+       "target": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "az": 100,
+       "el": 26,
+       "dist": 4.2
+      }
+     ],
+     "props_spin": true
+    },
+    {
+     "id": "4.3",
+     "dur": 5.0,
+     "tag": "SIMULATED: ArduPilot SITL run T097_Z5, 1.881 kg EST, a_plant.py plant model (EST aero)",
+     "los": false,
+     "follow": true,
+     "sitl": {
+      "run": "T097_Z5",
+      "t0": 126.0,
+      "t1": 140.0,
+      "trail_from": 33.5,
+      "note": "Run of T-097 (AR-015), 1.881 kg EST, X2216, CG 22.049 mm; SITL with the a_plant.py plant (EST aero)."
+     },
+     "mech": {
+      "from_log": true
+     },
+     "title": "Back-transition",
+     "sub": "Cruise ends: the aircraft pitches back up to a nose-up hover.",
+     "cam": [
+      {
+       "t": 5.0,
+       "target": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "az": 92,
+       "el": 26,
+       "dist": 3.6
+      }
+     ],
+     "props_spin": true
+    },
+    {
+     "id": "4.4",
+     "dur": 3.5,
+     "tag": "SIMULATED: ArduPilot SITL run T097_Z5, 1.881 kg EST, a_plant.py plant model (EST aero)",
+     "los": false,
+     "follow": true,
+     "sitl": {
+      "run": "T097_Z5",
+      "t0": 140.0,
+      "t1": 232.0,
+      "trail_from": 33.5,
+      "note": "Run of T-097 (AR-015), 1.881 kg EST, X2216, CG 22.049 mm; SITL with the a_plant.py plant (EST aero)."
+     },
+     "mech": {
+      "from_log": true
+     },
+     "title": "Hover descent (sped up)",
+     "sub": "Descent in hover from about 92 m, shown at a high time scale.",
+     "cam": [
+      {
+       "t": 3.5,
+       "target": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "az": 85,
+       "el": 26,
+       "dist": 3.6
+      }
+     ],
+     "props_spin": true
+    },
+    {
+     "id": "4.5",
+     "dur": 5.5,
+     "tag": "SIMULATED: ArduPilot SITL run T097_Z5, 1.881 kg EST, a_plant.py plant model (EST aero)",
+     "los": false,
+     "follow": true,
+     "sitl": {
+      "run": "T097_Z5",
+      "t0": 232.0,
+      "t1": 252.0,
+      "trail_from": 33.5,
+      "note": "Run of T-097 (AR-015), 1.881 kg EST, X2216, CG 22.049 mm; SITL with the a_plant.py plant (EST aero).",
+      "landing_note": true
+     },
+     "mech": {
+      "from_log": true
+     },
+     "title": "Landing",
+     "sub": "Touch-down on the fin pads at the end of the run. The foam pad stroke is checked separately (AR-016, closing card).",
+     "cam": [
+      {
+       "t": 5.5,
+       "target": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "az": 70,
+       "el": 17,
+       "dist": 2.6
+      }
+     ],
+     "props_spin": true
+    }
+   ]
+  },
+  {
+   "id": "S5",
+   "title": "Structures: machined 6061-T6 hub status, arm and motor cup FEA",
+   "shots": [
+    {
+     "id": "5.1",
+     "dur": 6.0,
+     "tag": "SIMULATED: FEA T-076c run H-A1, aluminium hub (analysis only, not VERIFIED)",
+     "los": false,
+     "wires": false,
+     "modes": {
+      "PRP-": "hidden",
+      "PWR-": "hidden",
+      "AVN-": "hidden"
+     },
+     "title": "Hub: machined 6061-T6 (D-220)",
+     "sub": "The hub passes in the aluminium-hub FEA. The printed PETG hub map of 2026-11-17 is an earlier design (record) and is not shown.",
+     "readout": {
+      "title": "HUB STATUS, 6061-T6 (D-220)",
+      "legend": false,
+      "src": "qp/A/mechanism/out/T076c_hub_al.md s0; CHANGE-LOG.md D-220, D-226; Explorer #structures (analysis only, EST)",
+      "rows": [
+       {
+        "label": "Hub, aluminium FEA H-A1",
+        "fmt": "passes",
+        "vals": []
+       },
+       {
+        "label": "Mesh (tet10 elements)",
+        "fmt": "427,333",
+        "vals": []
+       },
+       {
+        "label": "Allowables, factors",
+        "fmt": "not relaxed",
+        "vals": []
+       },
+       {
+        "label": "H-A2 and the d209 map",
+        "fmt": "not re-run",
+        "vals": []
+       },
+       {
+        "label": "Status",
+        "fmt": "not VERIFIED",
+        "vals": []
+       }
+      ]
+     },
+     "cam": [
+      {
+       "t": 0,
+       "target": [
+        -0.08,
+        0,
+        0
+       ],
+       "az": -38,
+       "el": 26,
+       "dist": 0.5
+      },
+      {
+       "t": 6.0,
+       "target": [
+        -0.08,
+        0,
+        0
+       ],
+       "az": 12,
+       "el": 24,
+       "dist": 0.46
+      }
+     ]
+    },
+    {
+     "id": "5.2",
+     "dur": 6.0,
+     "tag": "SIMULATED: FEA T-076c run H-A1, landing demand (analysis only, not VERIFIED)",
+     "los": false,
+     "wires": false,
+     "modes": {
+      "PRP-": "hidden",
+      "PWR-": "hidden",
+      "AVN-": "hidden"
+     },
+     "title": "Open rows: arm tube and bond",
+     "sub": "The carbon arm-tube shear and the arm-tube / sleeve bond fail for the landing demand. They also fail with a PETG hub, so the hub material is not the cause.",
+     "readout": {
+      "title": "OPEN ROWS, H-A1 (landing demand)",
+      "legend": false,
+      "src": "qp/A/mechanism/out/T076c_hub_al.md s0; CHANGE-LOG.md D-220, D-226; load basis 1.64 kg, older than the 1.881 kg EST",
+      "rows": [
+       {
+        "label": "CF arm-tube shear",
+        "fmt": "FAIL, open",
+        "vals": []
+       },
+       {
+        "label": "Arm-tube / sleeve bond",
+        "fmt": "FAIL, open",
+        "vals": []
+       },
+       {
+        "label": "Same rows, PETG hub (control)",
+        "fmt": "also FAIL",
+        "vals": []
+       },
+       {
+        "label": "Routed to",
+        "fmt": "D-226, TP-4, TP-5",
+        "vals": []
+       },
+       {
+        "label": "Load basis (T-076c)",
+        "fmt": "1.64 kg",
+        "vals": []
+       }
+      ]
+     },
+     "cam": [
+      {
+       "t": 6.0,
+       "target": [
+        -0.12,
+        0.05,
+        0
+       ],
+       "az": 62,
+       "el": 22,
+       "dist": 0.4
+      }
+     ]
+    },
+    {
+     "id": "5.3",
+     "dur": 7.0,
+     "tag": "SIMULATED: FEA arm and motor cup (run current_d210), cup S2 max {cup_s2:.1f} MPa vs allowable {a:.0f} MPa",
+     "los": false,
+     "plate": {
+      "image": "qp/A/structures/fig/fea-arm-along.png"
+     },
+     "vals": {
+      "cup_s2": {
+       "file": "result_L0_current_d210.json",
+       "path": [
+        "cases",
+        "@S2",
+        "regions",
+        "cup",
+        "p1"
+       ]
+      },
+      "a": {
+       "const": "ALLOW.petg"
+      },
+      "cup_f2": {
+       "file": "result_L0_current_d210.json",
+       "path": [
+        "cases",
+        "@F2",
+        "regions",
+        "cup",
+        "p1"
+       ],
+       "times": "KP"
+      },
+      "tube_f2": {
+       "file": "result_L0_current_d210.json",
+       "path": [
+        "cases",
+        "@F2",
+        "regions",
+        "tube_root",
+        "axial"
+       ],
+       "times": "KF"
+      },
+      "tube_s2": {
+       "file": "result_L0_current_d210.json",
+       "path": [
+        "cases",
+        "@S2",
+        "regions",
+        "tube_root",
+        "axial"
+       ]
+      },
+      "cf": {
+       "const": "ALLOW.cf_axial"
+      }
+     },
+     "title": "Arm and motor cup (figure fea-arm-along.png, run current_d210)",
+     "sub": "Flight F2 at the full factors: cup {cup_f2:.1f} of {a:.0f} MPa, tube axial {tube_f2:.0f} of {cf:.0f} MPa. Prop strike S2 (factor 1.0): tube axial {tube_s2:.0f} of {cf:.0f} MPa."
+    }
+   ]
+  },
+  {
+   "id": "S6",
+   "title": "Final overview and closing card",
+   "shots": [
+    {
+     "id": "6.1",
+     "dur": 5.0,
+     "cam": [
+      {
+       "t": 0,
+       "target": [
+        0.1,
+        0,
+        0
+       ],
+       "az": 200,
+       "el": 24,
+       "dist": 1.8
+      },
+      {
+       "t": 5,
+       "target": [
+        0.1,
+        0,
+        0
+       ],
+       "az": 290,
+       "el": 20,
+       "dist": 2.5
+      }
+     ],
+     "los": false
+    },
+    {
+     "id": "6.2",
+     "dur": 6.0,
+     "card": {
+      "kicker": "CONCEPT A  /  QUAD TAILSITTER VTOL",
+      "name": "Concept A",
+      "lines": [
+       {
+        "label": "Design record",
+        "vals": {},
+        "text": "CHANGE-LOG D-246, 2026-11-23 (untagged working tree)",
+        "cite": "CHANGE-LOG D-246"
+       },
+       {
+        "label": "Mass, predicted vs gate",
+        "vals": {
+         "bk": {
+          "param": "mass/basic_cad_kg"
+         },
+         "p": {
+          "calc": "b*g+o*m",
+          "of": {
+           "b": {
+            "param": "mass/basic_cad_kg"
+           },
+           "g": {
+            "param": "mass/growth_factor"
+           },
+           "o": {
+            "param": "mass/overrun_frac"
+           },
+           "m": {
+            "param": "req/mass_gate_kg"
+           }
+          }
+         },
+         "m": {
+          "param": "req/mass_gate_kg"
+         },
+         "over": {
+          "calc": "((b*g+o*m)-m)*1000",
+          "of": {
+           "b": {
+            "param": "mass/basic_cad_kg"
+           },
+           "g": {
+            "param": "mass/growth_factor"
+           },
+           "o": {
+            "param": "mass/overrun_frac"
+           },
+           "m": {
+            "param": "req/mass_gate_kg"
+           }
+          }
+         }
+        },
+        "text": "predicted {p:.3f} kg EST (CAD {bk:.3f} kg) vs {m:.2f} kg gate: over the gate by {over:.1f} g",
+        "cite": "params-A.json mass/*, req/mass_gate_kg (D-208); README.md"
+       },
+       {
+        "label": "Packed, one piece",
+        "vals": {
+         "a": {
+          "param": "box/packed_m/0"
+         },
+         "b": {
+          "param": "box/packed_m/1"
+         },
+         "c": {
+          "param": "box/packed_m/2"
+         }
+        },
+        "text": "{a:.2f} x {b:.2f} x {c:.2f} m, props on",
+        "cite": "params-A.json box/packed_m"
+       },
+       {
+        "label": "Interference gate (CAD)",
+        "vals": {
+         "n": {
+          "param": "cad3d/n_over_tol"
+         },
+         "tol": {
+          "param": "req/coll_tol_mm"
+         },
+         "dm": {
+          "param": "cad3d/max_depth_mm"
+         },
+         "w": {
+          "param": "cad3d/wire_ends_open"
+         },
+         "np": {
+          "param": "cad3d/parts"
+         },
+         "ok": {
+          "calc": "'PASS' if n == 0 else 'FAIL'",
+          "of": {
+           "n": {
+            "param": "cad3d/n_over_tol"
+           }
+          }
+         }
+        },
+        "text": "{ok}: {n:.0f} of {np:.0f} parts over {tol:.2f} mm, deepest {dm:.3f} mm, {w:.0f} open wire ends",
+        "cite": "params-A.json cad3d/*, req/coll_tol_mm"
+       },
+       {
+        "label": "Landing (SITL, 1.881 kg)",
+        "vals": {
+         "s": {
+          "sum": "T097_Z5",
+          "path": [
+           "landing",
+           "sink_ms"
+          ]
+         },
+         "l": {
+          "sum": "T097_Z5",
+          "path": [
+           "landing",
+           "lean_deg_at_touch"
+          ]
+         },
+         "ms": {
+          "sum": "T097_Z5",
+          "path": [
+           "mass"
+          ]
+         },
+         "tip": {
+          "calc": "'yes' if t else 'no'",
+          "of": {
+           "t": {
+            "sum": "T097_Z5",
+            "path": [
+             "landing",
+             "tipped_over"
+            ]
+           }
+          }
+         }
+        },
+        "text": "run T097_Z5 ({ms:.3f} kg EST): sink {s:.2f} m/s, lean {l:.1f} deg, tipped over: {tip}",
+        "cite": "T097_data sum.json (AR-015)"
+       },
+       {
+        "label": "Landing foam (AR-016)",
+        "vals": {
+         "st": {
+          "t098": "plateau_sweep_rib25x23/37.5N",
+          "idx": 0
+         },
+         "n": {
+          "t098": "plateau_sweep_rib25x23/37.5N",
+          "idx": 1
+         },
+         "t": {
+          "t098": "plateau_sweep_rib25x23/37.5N",
+          "idx": 2
+         }
+        },
+        "text": "stroke {st:.1f} of 20 mm, {n:.2f} g of 12 g, tilt {t:.1f} deg (worst of 10); only for foam 37.5-39.0 N, zeta 0.02-0.05 (D-243); TP-3 open",
+        "cite": "T098_results.json (AR-016), D-243"
+       },
+       {
+        "label": "Hub (machined 6061-T6)",
+        "vals": {},
+        "text": "FEA H-A1: hub passes; CF arm-tube shear and tube / sleeve bond FAIL, open (D-226, TP-4, TP-5)",
+        "cite": "T076c_hub_al.md s0, D-220"
+       },
+       {
+        "label": "Elevon pitch use (open)",
+        "vals": {
+         "u": {
+          "param": "sim/pitch_use_15_worst"
+         },
+         "lim": {
+          "param": "req/pitch_use_max"
+         }
+        },
+        "text": "{u:.2f} vs {lim:.2f} limit (15 deg basis): FAIL, open (D-245)",
+        "cite": "params-A.json sim/pitch_use_15_worst"
+       }
+      ]
+     },
+     "cam": [
+      {
+       "t": 1.0,
+       "target": [
+        0.1,
+        0,
+        -0.22
+       ],
+       "az": 300,
+       "el": 19,
+       "dist": 2.5
+      },
+      {
+       "t": 6,
+       "target": [
+        0.1,
+        0,
+        -0.22
+       ],
+       "az": 330,
+       "el": 18,
+       "dist": 2.5
+      }
+     ],
+     "los": false
+    }
+   ]
+  }
+ ],
+ "clips": [
+  {
+   "list": "list-3.1.txt",
+   "shot": "3.1",
+   "from_s": 0.2,
+   "note": "clip 3.1 starts 0.2 s in: the first 0.2 s of S3 is the dip from the stage colour (T-030-N m-D)"
+  },
+  {
+   "list": "list-3.2.txt",
+   "shot": "3.2",
+   "from_s": 0.0
+  }
+ ]
+}

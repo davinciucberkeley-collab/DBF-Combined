@@ -1,0 +1,13 @@
+FIN-005-R    listed  12.31  solid  13.70  basis S  computed  12.32  core 0.17
+FIN-005-L    listed  12.31  solid  13.70  basis S  computed  12.32  core 0.17
+CGE-003-UR   listed   8.38  solid   9.79  basis S  computed   8.38  core 0.24
+CGE-003-UL   listed   8.38  solid   9.79  basis S  computed   8.38  core 0.24
+CGE-003-LR   listed   8.38  solid   9.79  basis S  computed   8.38  core 0.24
+CGE-003-LL   listed   8.38  solid   9.79  basis S  computed   8.38  core 0.24
+CGE-007-R    listed   2.96  solid   3.14  basis S  computed   2.96  core 0.10
+CGE-007-L    listed   2.96  solid   3.14  basis S  computed   2.96  core 0.10
+CGE-006      listed  12.77  solid  14.80  basis S  computed  12.41  core 0.27
+CGE-013      listed   2.35  solid   2.20  basis S  computed   2.20  core 0.00
+CGE-008      listed  13.30  solid  13.83  basis M  computed  13.30  core 0.05
+AVN-010      listed   1.63  solid   1.68  basis S  computed   1.63  core 0.05
+AVN-008      listed   9.47  solid   9.01  basis C  computed   9.01  core 0.00

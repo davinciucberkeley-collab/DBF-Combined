@@ -141,25 +141,32 @@ kit.claim("CL-H1-STEP-I", "Unlimited 16.8 V full-throttle step current", calc="C
 
 
 # ---------------------------------------------------------------- 3. pass lines for R-HOVER-TW on the isolated stand
-@kit.calc("CALC-H1-TW-PASS", equation="T_pass = TW m g k_dl / (n g) [kgf] ; T_pred_sag = T_max x sag",
+@kit.calc("CALC-H1-TW-PASS", equation="T_pass = TW m / (n cos(cant)) [kgf] ; T_pred = TW_E1 m / (n cos(cant)) ; T_pred_sag = T_max x sag ; "
+          "stand 11.9 V: E1 CL-E1-T-STAND vs CL-E1-T-NEED-SAG",
           inputs={"tw": P + "requirements.hover_tw_min", "tw_sag": P + "requirements.hover_tw_min_sag",
-                  "m": P + "requirements.mtow_gate_kg", "k_dl": P + "propulsion.download_factor",
+                  "m": P + "requirements.mtow_gate_kg", "cant": P + "propulsion.stations.cant_deg",
                   "n": P + "propulsion.n_motors", "t_max": P + "propulsion.thrust_max_per_motor_kg",
-                  "sag": P + "propulsion.voltage_sag"},
-          units={"m": "kg", "t_max": "kg"})
-def tw_pass(tw, tw_sag, m, k_dl, n, t_max, sag):
-    return {"pass_fresh_kgf": tw * m * k_dl / n, "pass_sag_kgf": tw_sag * m * k_dl / n,
-            "pred_sag_kgf": t_max * sag, "pred_fresh_kgf": t_max}
+                  "sag": P + "propulsion.voltage_sag", "tw_e1": "CL-E1-TW-FRESH", "st_e1": "CL-E1-T-STAND",
+                  "need_e1": "CL-E1-T-NEED-SAG"},
+          units={"m": "kg", "t_max": "kg", "cant": "deg"})
+def tw_pass(tw, tw_sag, m, cant, n, t_max, sag, tw_e1, st_e1, need_e1):
+    c = math.cos(math.radians(cant))
+    return {"pass_fresh_kgf": tw * m / (n * c), "pass_sag_kgf": tw_sag * m / (n * c),
+            "pred_sag_kgf": t_max * sag, "pred_fresh_kgf": tw_e1 * m / (n * c),
+            "stand119_pred_gf": st_e1, "stand119_pass_gf": need_e1}
 
 
+kit.claim("CL-H1-T-STAND-119-PASS", "T-E1-STAND pass line at a held 11.9 V (E1 CL-E1-T-NEED-SAG, X2814 + 11x8E, 80 A limiter, 2.70 kg)",
+          calc="CALC-H1-TW-PASS", output="stand119_pass_gf", unit="gf", limit=("<=", "CL-E1-T-STAND"),
+          how="Card GT-02b: one motor at a held 11.9 V, full throttle: thrust >= this value (E1 predicts 1 211 gf).")
 kit.claim("CL-H1-T-PRED-FRESH", "Predicted thrust, limiter, fresh", calc="CALC-H1-TW-PASS", output="pred_fresh_kgf",
-          unit="kgf", how="E1 CL-E1-ILIM-TW-FRESH via params; measured by T-A1-THRUST-STATION.")
+          unit="kgf", how="E1 CL-E1-TW-FRESH (2.067 at 80 A, 2.70 kg, 10 deg); measured by T-A1-THRUST-STATION.")
 kit.claim("CL-H1-T-PRED-SAG", "Predicted thrust, worst pack state", calc="CALC-H1-TW-PASS", output="pred_sag_kgf",
           unit="kgf", how="params.json thrust_max x voltage_sag; measured on a 3.6 V/cell 10 degC pack.")
 kit.claim("CL-H1-T-PASS-FRESH", "Stand pass line, fresh pack (T/W 2.0)", calc="CALC-H1-TW-PASS",
           output="pass_fresh_kgf", unit="kgf", limit=("<=", "CL-H1-T-PRED-FRESH"),
-          how="Card GT-02d: isolated full-throttle thrust at the per-motor limiter share (25 A) on a "
-              "16.8 V pack must be >= CL-H1-T-FRESH-ACCEPT.")
+          how="Card GT-02d: isolated full-throttle thrust at the 80 A limiter share (20 A per motor) on a "
+              "17.4 V pack must be >= CL-H1-T-FRESH-ACCEPT.")
 kit.claim("CL-H1-T-PASS-SAG", "Stand pass line, worst pack (T/W 1.6)", calc="CALC-H1-TW-PASS",
           output="pass_sag_kgf", unit="kgf", limit=("<=", "CL-H1-T-PRED-SAG"),
           how="Card GT-02e: full-throttle thrust on a 3.6 V/cell (20 %) pack at 10 degC must be >= CL-H1-T-SAG-ACCEPT.")
@@ -331,7 +338,7 @@ kit.claim("CL-H1-RESTRAINT-PER-TIE", "Tie-down force per strap (4 straps)", calc
                   "r": "ASM-E2-R-CELL", "k_cold": "ASM-E2-COLD-R"},
           units={"c": "Ah"})
 def pack_lines(c, frac, r, k_cold):
-    return {"cap_min_ah": c * frac, "ir25_max_mohm": 5.0, "ir10_max_mohm": 5.0 * k_cold,
+    return {"cap_min_ah": c * frac, "ir25_max_mohm": 3.8, "ir10_max_mohm": 3.8 * k_cold,
             "ir25_expect_mohm": r * 1000.0, "ir10_expect_mohm": r * 1000.0 * k_cold}
 
 
@@ -339,7 +346,7 @@ kit.claim("CL-H1-PACK-CAP-MIN", "Pack capacity acceptance (1C to 3.5 V/cell)", c
           output="cap_min_ah", unit="Ah", how="Card GT-05 (T-E2-CAPACITY); pack_log.csv capacity_mah.")
 kit.claim("CL-H1-PACK-IR10-MAX", "Pack IR acceptance at 10 degC", calc="CALC-H1-PACK", output="ir10_max_mohm",
           unit="mOhm/cell",
-          how="Card GT-05 (T-E2-IR): E2's 5 mOhm/cell at 25 degC x the cold factor; pack_log.csv ir_mohm_cell_10c.")
+          how="Card GT-05 (T-E2-IR): E2 D-173 accepts <= 3.8 mOhm per cell group at 25 degC (hot-landing temperature 48.6 C passes only at that IR); x the cold factor at 10 degC; pack_log.csv.")
 
 
 # ---------------------------------------------------------------- 8. R2 rigs for the structures and avionics tests (CR-A1-41)
@@ -353,11 +360,12 @@ kit.assumption("ASM-H1-OPTLEVER", "Mount-stiffness rig: optical lever and load s
                "T-C4-MOUNT-STIFF read by a laser pointer reflected off a 10 mm mirror bonded to the motor can, onto "
                "mm paper on a wall L = 5.0 m away (spot moves 2 theta L); a second mirror on the collar subtracts tube "
                "and stub rotation. Spot centre read to +/-0.3 mm from a tripod phone photo against a 1 mm grid. Loads "
-               "0.5, 1.0, 1.5 kg at the prop nut. For comparison, C4's two dial gauges (0.01 mm) are 0.030 m apart.",
+               "0.5, 1.0, 1.7 kg at the prop nut (CDR-28: top step 1.5 -> 1.7 kg, so the U95 at the pass line is under 10 %; "
+               "still under 0.8 x the mount proof load). For comparison, C4's two dial gauges (0.01 mm) are 0.030 m apart.",
                basis="optical lever is the standard way to read sub-milliradian rotations without a fine gauge; "
                      "R3: wall 3.0 -> 5.0 m (a corridor) and photo read-out, because C4's need rose to ~1 970 N m/rad "
                      "(15:01 re-publish) and the spot shrinks with it; laser pointer and mirror are team-owned",
-               value={"L_m": 5.0, "read_mm": 0.3, "load_kg": [0.5, 1.0, 1.5], "dial_res_mm": 0.01,
+               value={"L_m": 5.0, "read_mm": 0.3, "load_kg": [0.5, 1.0, 1.7], "dial_res_mm": 0.01,
                       "gauge_s_m": 0.030}, unit="m,mm,kg,mm,m")
 kit.assumption("ASM-H1-MSTIFF-PASS", "Mount rocking-stiffness pass level: floor 1 100 N m/rad (both axes)",
                "GT-17 passes a mount whose measured rocking stiffness is >= max(1 100, CL-C4-D3-MOUNT-K-REQ) about y "
@@ -367,14 +375,23 @@ kit.assumption("ASM-H1-MSTIFF-PASS", "Mount rocking-stiffness pass level: floor 
                value=1100.0, unit="N m/rad")
 
 
+kit.assumption("ASM-H1-C4-LINES", "C4 pass lines read from C4.md (closure 2026-11-14), not from claims.d3.json",
+               "GT-16: tube E >= 78.6 GPa and G >= 10.27 GPa (the knock-down the RW 35046-S design passes at, CL-C4-SIM-SEP-KNOCK "
+               "0.208 >= 0.20); GT-17: mount rocking stiffness >= 2 548 N m/rad (CL-C4-D3-MOUNT-K-REQ at the knock-down, R7), "
+               "C4 model value 2 950 after D3 R8",
+               basis="review/CLOSURE-ROUND-2026-11-14/C4.md sections 1 and D173.4; A1-STATUS 'From C4'. team/C4/claims.d3.json "
+                     "(E_REQ 1.35e12 Pa, G_REQ 1e11 Pa, K_REQ 3e5) is stale until C4 re-runs after D3 R8, so it is not read",
+               value={"e_pa": 78.6e9, "g_pa": 10.27e9, "k_nmrad": 2548.0}, unit="Pa,Pa,N m/rad")
+
+
 @kit.calc("CALC-H1-MOUNT-STIFF", equation="k_pass = max(k_floor, k_req) ; a = x_mount - x_prop ; theta = F a / k_pass ; "
           "spot = 2 theta L ; u_k = read / spot_pass ; dial = theta(0.5 kg) s",
-          inputs={"k_floor": "ASM-H1-MSTIFF-PASS", "k_req": "CL-C4-D3-MOUNT-K-REQ", "k_nom": "ASM-C4-MOUNT-K-ROCK",
+          inputs={"k_floor": "ASM-H1-MSTIFF-PASS", "k_lines": "ASM-H1-C4-LINES", "k_nom": "ASM-C4-MOUNT-K-ROCK",
                   "xm": P + "propulsion.stations.x_mount_m", "xp": P + "propulsion.stations.x_prop_plane_m",
                   "rig": "ASM-H1-OPTLEVER", "f_proof": "CL-H1-MOUNT-PROOF-F", "g": P + "env.g_ms2"},
           units={"xm": "m", "xp": "m", "g": "m/s2"})
-def mount_stiff(k_floor, k_req, k_nom, xm, xp, rig, f_proof, g):
-    k_pass = max(k_floor, k_req)
+def mount_stiff(k_floor, k_lines, k_nom, xm, xp, rig, f_proof, g):
+    k_pass = max(k_floor, k_lines["k_nmrad"])
     a = xm - xp                                                # load point no closer than the prop plane: least signal
     f_max = max(rig["load_kg"]) * g
     th_pass = f_max * a / k_pass
@@ -389,11 +406,11 @@ def mount_stiff(k_floor, k_req, k_nom, xm, xp, rig, f_proof, g):
 
 
 kit.claim("CL-H1-MSTIFF-K-PASS", "GT-17 rocking-stiffness pass level", calc="CALC-H1-MOUNT-STIFF", output="k_pass",
-          unit="N m/rad", limit=(">=", "CL-C4-D3-MOUNT-K-REQ"),
-          how="CR-C4-41; re-run whenever C4 re-publishes CL-C4-D3-MOUNT-K-REQ.")
-kit.claim("CL-H1-MSTIFF-SPOT-ACCEPT", "T-C4-MOUNT-STIFF acceptance: spot travel at 1.5 kg (can minus collar)",
+          unit="N m/rad", limit=(">=", 2548.0),
+          how="C4 closure 2026-11-14: >= 2 548 N m/rad (model 2 950 after D3 R8); CR-C4-41 floor 1 100. Re-run when C4 re-issues the K_REQ claim.")
+kit.claim("CL-H1-MSTIFF-SPOT-ACCEPT", "T-C4-MOUNT-STIFF acceptance: spot travel at the top load step, 1.7 kg (can minus collar)",
           calc="CALC-H1-MOUNT-STIFF", output="spot_accept_mm", unit="mm",
-          how="Card GT-17: net spot travel at 1.5 kg <= this value in y and in z passes k >= CL-H1-MSTIFF-K-PASS.")
+          how="Card GT-17: net spot travel at 1.7 kg <= this value in y and in z passes k >= CL-H1-MSTIFF-K-PASS.")
 kit.claim("CL-H1-MSTIFF-SPOT-NOM", "Spot travel expected at C4's rocking-stiffness estimate", calc="CALC-H1-MOUNT-STIFF",
           output="spot_nom_mm", unit="mm", how="Informational: what the mount as estimated reads on GT-17.")
 kit.claim("CL-H1-MSTIFF-NOM-RATIO", "C4's stiffness estimate / GT-17 pass level", calc="CALC-H1-MOUNT-STIFF",
@@ -418,7 +435,7 @@ kit.assumption("ASM-H1-TAP", "Tap-test acquisition", "FFT of FC raw IMU (INS_LOG
 
 @kit.calc("CALC-H1-TAP", equation="f_op = n/60 x {1, 2} at hover, cruise, cap ; window = f_op (1 +/- s) ; "
           "fs_req = k max(f_pred, top window)",
-          inputs={"n_h": "CL-B4-HOVER-RPM", "n_c": "CL-B4-CRUISE-RPM", "n_cap": P + "propulsion.rpm_max",
+          inputs={"n_h": "CL-B4-HOVER-RPM", "n_c": "CL-B4-CRUISE-RPM", "n_cap": "CL-B4-RPM-MAX",  # params propulsion.rpm_max (13 360, 11x5.5E) is stale for the X2814 + 11x8E: A1 to update; B4 in-flight max
                   "s": P + "requirements.vibration_sep_frac", "f_up": "CL-C4-D3-F1-UP", "f_lo": "CL-C4-D3-F1-LO",
                   "acq": "ASM-H1-TAP"},
           units={"n_cap": "rpm"})
@@ -453,19 +470,28 @@ kit.assumption("ASM-H1-BEND", "Tube bend rig", "Span 0.80 m on two 22 mm dowels,
 @kit.calc("CALC-H1-BEND", equation="I = pi/64 (D^4 - d^4) ; delta = F L^3 / (48 E I) ; sigma = F L D / (8 I) ; "
           "u_E = u_delta / delta",
           inputs={"od": P + "fins.tube.od_m", "idm": P + "fins.tube.id_m", "e_lo": "ASM-C4-E-TUBE-LO",
-                  "rig": "ASM-H1-BEND", "g": P + "env.g_ms2"},
+                  "e_lines": "ASM-H1-C4-LINES", "rig": "ASM-H1-BEND", "g": P + "env.g_ms2"},
           units={"od": "m", "idm": "m", "g": "m/s2"})
-def bend(od, idm, e_lo, rig, g):
+def bend(od, idm, e_lo, e_lines, rig, g):
+    e_req = e_lines["e_pa"]
     i = math.pi / 64.0 * (od ** 4 - idm ** 4)
     f = rig["load_kg"] * g
-    d = f * rig["span_m"] ** 3 / (48.0 * e_lo * i)
-    return {"I_m4": i, "defl_elo_mm": d * 1000.0, "defl_accept_mm": d * 1000.0 - rig["u_defl_mm"],
+    d_lo = f * rig["span_m"] ** 3 / (48.0 * e_lo * i)
+    e_pass = max(e_lo, e_req)                                  # pass line = C4's requirement (78.6 GPa, closure 2026-11-14)
+    d = f * rig["span_m"] ** 3 / (48.0 * e_pass * i)
+    return {"I_m4": i, "defl_elo_mm": d_lo * 1000.0, "e_pass_pa": e_pass, "defl_pass_mm": d * 1000.0,
+            "defl_accept_mm": d * 1000.0 - rig["u_defl_mm"],
             "sigma_mpa": f * rig["span_m"] * od / (8.0 * i) / 1e6, "u_e_frac": rig["u_defl_mm"] / (d * 1000.0)}
 
 
-kit.claim("CL-H1-TUBE-DEFL-ACCEPT", "Aloft tube bend acceptance: centre deflection at 4 kg (E >= 70 GPa)",
+kit.claim("CL-H1-TUBE-E-PASS", "GT-16 tube axial modulus pass line (C4 closure 2026-11-14: 78.6 GPa)", calc="CALC-H1-BEND",
+          output="e_pass_pa", unit="Pa", limit=(">=", 78.6e9), parts=["FIN-002"],
+          how="GT-16 on the Rock West 35046-S coupon (BOM W10): E >= 78.6 GPa (C4 closure 2026-11-14).",
+          note="CDR-19: was written for E >= 70 GPa (ASM-C4-E-TUBE-LO); a 72 GPa tube passed the card and failed "
+               "the station-mode separation. Closure 2026-11-14: pass line 78.6 GPa on the Rock West coupon (ASM-H1-C4-LINES)")
+kit.claim("CL-H1-TUBE-DEFL-ACCEPT", "RW 35046-S coupon bend acceptance: centre deflection at 4 kg at the E pass line",
           calc="CALC-H1-BEND", output="defl_accept_mm", unit="mm", parts=["WNG-002"],
-          how="Card GT-16 (T-C4-TUBE-BEND on BOM line W03 by 10 Dec): slope of 8 load steps; deflection at 4 kg <= "
+          how="Card GT-16 (T-C4-TUBE-BEND on the BOM line W10 coupon): slope of 8 load steps; deflection at 4 kg <= "
               "this value passes; result to I1 (CR-I1-08) and C4.")
 kit.claim("CL-H1-TUBE-SIGMA", "Bend-test peak stress at 4 kg", calc="CALC-H1-BEND", output="sigma_mpa", unit="MPa",
           limit=("<=", 100.0), how="Far below any CF tube strength: the spare tube stays usable after the test.")
@@ -489,7 +515,7 @@ kit.assumption("ASM-H1-RING", "Ring-crush coupon for the tube hoop modulus",
                "upper plate. Thin-ring result: delta = 0.1488 P R^3 / (E_hoop I), I = b t^3 / 12.",
                basis="Roark, thin circular ring under diametral load (case of two opposite point loads); a standard "
                      "way to get the hoop modulus of a wound tube without a strain gauge",
-               value={"b_m": 0.020, "p_n": 20.0, "dial_mm": 0.01}, unit="m,N,mm", status="UNVERIFIED")
+               value={"b_m": 0.020, "p_n": 80.0, "dial_mm": 0.01}, unit="m,N,mm", status="UNVERIFIED")
 
 
 @kit.calc("CALC-H1-TORSION", equation="J = pi/32 (D^4 - d^4) ; T = m g l ; dtheta = T L_g / (G J) ; "
@@ -497,9 +523,10 @@ kit.assumption("ASM-H1-RING", "Ring-crush coupon for the tube hoop modulus",
           "I = b t^3/12, delta = 0.1488 P R^3 / (E_t I), sigma = 0.318 P R (t/2) / I",
           inputs={"od": P + "fins.tube.od_m", "idm": P + "fins.tube.id_m", "g_lo": "ASM-C4-G-TUBE-LO",
                   "g_nom": "ASM-C4-G-TUBE", "g_hi": "ASM-C4-G-TUBE-HI", "e_t": "ASM-C2-TUBE-ET",
-                  "rig": "ASM-H1-TORSION", "ring": "ASM-H1-RING", "g": P + "env.g_ms2"},
+                  "g_lines": "ASM-H1-C4-LINES", "rig": "ASM-H1-TORSION", "ring": "ASM-H1-RING", "g": P + "env.g_ms2"},
           units={"od": "m", "idm": "m", "g": "m/s2"})
-def torsion(od, idm, g_lo, g_nom, g_hi, e_t, rig, ring, g):
+def torsion(od, idm, g_lo, g_nom, g_hi, e_t, g_lines, rig, ring, g):
+    g_req = g_lines["g_pa"]
     j = math.pi / 32.0 * (od ** 4 - idm ** 4)
     t = rig["load_kg"] * g * rig["lever_m"]
     dth = {k: t * rig["gauge_m"] / (gg * j) for k, gg in (("lo", g_lo), ("nom", g_nom), ("hi", g_hi))}
@@ -508,7 +535,8 @@ def torsion(od, idm, g_lo, g_nom, g_hi, e_t, rig, ring, g):
     tw = (od - idm) / 2.0
     i_r = ring["b_m"] * tw ** 3 / 12.0
     delta = 0.1488 * ring["p_n"] * r ** 3 / (e_t * i_r)
-    return {"J_m4": j, "torque_nm": t, "gj_lo": g_lo * j, "gj_nom": g_nom * j,
+    return {"J_m4": j, "torque_nm": t, "gj_lo": g_lo * j, "gj_nom": g_nom * j, "g_pass_pa": g_req,
+            "gj_pass": g_req * j, "dtheta_pass_deg": math.degrees(t * rig["gauge_m"] / (g_req * j)),
             "dtheta_lo_deg": math.degrees(dth["lo"]), "spot_hi_mm": s_hi,
             "u_gj": math.sqrt(2.0) * rig["read_mm"] / s_hi, "tau_mpa": t * (od / 2.0) / j / 1e6,
             "ring_defl_mm": delta * 1000.0, "ring_u": math.sqrt(2.0) * ring["dial_mm"] / (delta * 1000.0),
@@ -519,6 +547,17 @@ kit.claim("CL-H1-TORS-GJ-LO", "Tube GJ at C4's low corner (G 3 GPa)", calc="CALC
           unit="N m2", parts=["WNG-002"],
           how="Card GT-16 step 4 (T-C4-TUBE-TORSION, CR-C2-15): measured GJ = T L_g / dtheta from the slope of 4 "
               "steps, both senses; report GJ and G = GJ / J; >= this value keeps C4's low corner conservative.")
+kit.claim("CL-H1-TUBE-G-PASS", "GT-16 tube shear modulus pass line (C4's live requirement)", calc="CALC-H1-TORSION",
+          output="g_pass_pa", unit="Pa", limit=(">=", 10.27e9), parts=["FIN-002"],
+          how="GT-16 step 4 on the Rock West 35046-S coupon (BOM W10): G >= 10.27 GPa (C4 closure 2026-11-14).",
+          note="CDR-19: the card used to report GJ against C4's low corner (G 3 GPa) only")
+kit.claim("CL-H1-TORS-GJ-PASS", "GT-16 torsion pass: GJ at the G pass line", calc="CALC-H1-TORSION", output="gj_pass",
+          unit="N m2", parts=["WNG-002"],
+          how="Card GT-16 step 4: measured GJ minus its U95 (CL-H1-TORS-U) >= this value passes; below it the "
+              "+/-45 deg fallback tube is ordered (BOM, I1).")
+kit.claim("CL-H1-TORS-TWIST-PASS", "GT-16 torsion pass: twist over the 0.30 m gauge at 2.0 kg at the G pass line",
+          calc="CALC-H1-TORSION", output="dtheta_pass_deg", unit="deg", parts=["WNG-002"],
+          how="Card GT-16 step 4: measured twist <= this value (less the read U95) passes.")
 kit.claim("CL-H1-TORS-U", "GJ relative U95 at the stiffest corner (G 10 GPa, smallest spot)", calc="CALC-H1-TORSION",
           output="u_gj", unit="-", limit=("<=", 0.05), how="T-H1-RIG-CHECK: both lasers on a 1.00 mm shim step.")
 kit.claim("CL-H1-TORS-TAU", "Torsion-test peak shear stress at 2.0 kg", calc="CALC-H1-TORSION", output="tau_mpa",
@@ -532,17 +571,19 @@ kit.claim("CL-H1-RING-SIGMA", "Ring-crush peak bending stress at 20 N", calc="CA
           output="ring_sigma_mpa", unit="MPa", limit=("<=", 100.0), how="Elastic: the ring is not damaged.")
 
 # R3 (CR-C6-33, CR-C6-39): the strip anchor now needs a 15:1 lever; the same lever keeps a 9:1 hole for small coupons.
-kit.assumption("ASM-H1-LEVER", "Coupon lever frame 15:1 / 9:1, water jugs to 20 kg", "2x4 (38 x 89 mm) lever 1.0 m "
-               "long on an M8 pivot; coupon clevis at 0.060 m (15:1) or 0.100 m (9:1) from the pivot, jug hook at "
-               "0.900 m. Pivot and both clevis holes in a pair of 3 mm steel side plates 40 x 200 mm, each plate held "
-               "to the lever by 4 x M6 through-bolts; lever tare balanced by a counterweight on the short side. "
+kit.assumption("ASM-H1-LEVER", "Coupon lever frame 20:1 / 15:1 / 9:1, water jugs to 20 kg", "2x4 (38 x 89 mm) lever 1.0 m "
+               "long on an M8 pivot; coupon clevis at 0.045 m (20:1, CDR-28), 0.060 m (15:1) or 0.100 m (9:1) from "
+               "the pivot, jug hook at 0.900 m. Pivot and the three clevis holes in a pair of 3 mm steel side plates "
+               "40 x 200 mm, each plate held to the lever by 6 x M6 through-bolts (was 4: the 20:1 hole raises the "
+               "pivot load and 4 bolts would bear on the wood at 4.5 MPa against 4.3); lever tare balanced by a counterweight on the short side. "
                "Water filled slowly from a hose; jug weighed after failure.",
                basis="CR-C6-39 asks >= 2 660 N for the strip anchor; 15:1 x 20 kg = 2 940 N. The 9:1 hole keeps "
                      "resolution for the 40-300 N coupons. Steel plates because bare wood across the grain does not "
                      "carry the pivot bearing (CALC-H1-LEVER)",
                value={"arm_jug_m": 0.90, "arm_hi_m": 0.060, "arm_lo_m": 0.100, "jug_max_kg": 20.0, "b_m": 0.038,
-                      "h_m": 0.089, "bolt_m": 0.008, "plate_t_m": 0.003, "n_m6": 4, "m6_m": 0.006},
-               unit="m,m,m,kg,m,m,m,m,-,m")
+                      "h_m": 0.089, "bolt_m": 0.008, "plate_t_m": 0.003, "n_m6": 6, "m6_m": 0.006,
+                      "arm_20_m": 0.045},
+               unit="m,m,m,kg,m,m,m,m,-,m,m")
 kit.assumption("ASM-H1-WOOD", "Construction lumber allowables (Douglas fir-larch No. 2)", "Bending 6.0 MPa, "
                "compression perpendicular to grain 4.3 MPa (bolt bearing across the grain).",
                basis="NDS supplement reference design values for DF-L No. 2 (Fb 900 psi, Fc-perp 625 psi), rounded "
@@ -558,8 +599,10 @@ kit.assumption("ASM-H1-WOOD", "Construction lumber allowables (Douglas fir-larch
 def lever(lev, f_strip, f_est, f_ins, k, g):
     w = lev["jug_max_kg"] * g
     cap_hi = lev["arm_jug_m"] / lev["arm_hi_m"] * w
-    f_piv = cap_hi + w
-    return {"cap_n": cap_hi, "cap9_n": lev["arm_jug_m"] / lev["arm_lo_m"] * w,
+    cap_20 = lev["arm_jug_m"] / lev["arm_20_m"] * w
+    f_piv = cap_20 + w                                         # the 20:1 hole sets the pivot load
+    return {"cap_n": cap_hi, "cap9_n": lev["arm_jug_m"] / lev["arm_lo_m"] * w, "cap20_n": cap_20,
+            "fail_headroom_20": cap_20 / max(f_strip, f_est),
             "need_n": k * max(f_strip, f_est, f_ins), "need9_n": k * f_strip,
             "sigma_mpa": w * lev["arm_jug_m"] / (lev["b_m"] * lev["h_m"] ** 2 / 6.0) / 1e6,
             "wood_brg_mpa": f_piv / (lev["bolt_m"] * lev["b_m"]) / 1e6,
@@ -574,9 +617,18 @@ kit.claim("CL-H1-LEVER-NEED", "Coupon load the 15:1 hole must reach (1.25 x stri
           how="Re-run when C6/C4 change the anchor force.")
 kit.claim("CL-H1-LEVER-CAP9", "Coupon lever capacity, 9:1 hole", calc="CALC-H1-LEVER", output="cap9_n", unit="N",
           how="T-H1-LEVER-CAL: 2.000 kg at the 9:1 clevis balances 0.222 kg within 2 %.")
-kit.claim("CL-H1-LEVER-NEED9", "Load the 9:1 hole must reach (1.25 x CL-C6-STRIP-ANCHOR-F, CR-C6-33)",
-          calc="CALC-H1-LEVER", output="need9_n", unit="N", limit=("<=", "CL-H1-LEVER-CAP9"),
-          how="CR-C6-33 frame line (>= 1 560 N at C4 R4); the anchor runs on the 15:1 hole regardless.")
+kit.claim("CL-H1-LEVER-NEED9", "Load the 9:1 hole would need for the strip anchor (record, CR-C6-33)",
+          calc="CALC-H1-LEVER", output="need9_n", unit="N",
+          how="None: the strip anchor runs on the 20:1 hole; the 9:1 hole is for the 40-300 N coupons.",
+          note="CDR-28: limit retired. The 9:1 hole was never used for the strip anchor after CR-C6-39, so this was a "
+               "standing failure for a test that does not exist")
+kit.claim("CL-H1-LEVER-CAP20", "Coupon lever capacity, 20:1 hole (CDR-28)", calc="CALC-H1-LEVER", output="cap20_n",
+          unit="N", how="T-H1-LEVER-CAL: 4.000 kg check mass at the 20:1 clevis balances 0.200 kg at the jug hook within 2 %.")
+kit.claim("CL-H1-LEVER-FAIL-HEADROOM", "20:1 hole capacity / strip-anchor design force (room to reach failure)",
+          calc="CALC-H1-LEVER", output="fail_headroom_20", unit="-", limit=(">=", 1.5),
+          how="T-C6-STRIP-ANCHOR is taken to failure on the 20:1 hole; the failure load / design force is the measured RF.",
+          note="CDR-28: the 15:1 hole had 5 % over 1.25 x the design force, so a joint that passed could not be "
+               "taken to failure and its real RF stayed unknown")
 kit.claim("CL-H1-LEVER-SIGMA", "Lever bending stress at full jug", calc="CALC-H1-LEVER", output="sigma_mpa",
           unit="MPa", limit=("<=", 6.0), how="ASM-H1-WOOD Fb; inspect the 2x4 for knots at the plates.")
 kit.claim("CL-H1-LEVER-WOOD-BRG", "Pivot bearing on bare wood (why the steel plates are required)",
@@ -589,13 +641,13 @@ kit.claim("CL-H1-LEVER-M6-BRG", "Plate-to-lever M6 bolt bearing on the wood acro
 
 
 @kit.calc("CALC-H1-D5", equation="F_req = k F_peak,U / g [kgf] ; u_ratio = sqrt2 U_cell / F_plateau,L ; "
-          "theta_acc = atan(mu) + u_theta",
+          "theta_acc = atan(mu_max) - u_theta (D-105: mu is an upper bound)",
           inputs={"f_pk": "CL-D5-F-PEAK-UPPER", "f_l": "CL-D5-F-PLATEAU-LOWER", "k": "ASM-H1-RANGE-FACTOR",
                   "u_t": "CL-H1-T-U95", "mu": "ASM-D5-PAD-MU", "inc": "ASM-H1-INCLINO", "g": P + "env.g_ms2"},
           units={"g": "m/s2"})
 def d5(f_pk, f_l, k, u_t, mu, inc, g):
     return {"cell_req_kgf": k * f_pk / g, "ratio_u": math.sqrt(2.0) * u_t / f_l,
-            "mu_angle_deg": math.degrees(math.atan(mu)), "mu_accept_deg": math.degrees(math.atan(mu)) + inc}
+            "mu_angle_deg": math.degrees(math.atan(mu)), "mu_accept_deg": math.degrees(math.atan(mu)) - inc}
 
 
 kit.assumption("ASM-H1-INCLINO", "Phone inclinometer U95 0.3 deg on a tilt board", "Phone level app on the board "
@@ -606,9 +658,13 @@ kit.claim("CL-H1-D5-CELL-REQ", "Thrust cell range needed for the D5 crush coupon
           how="Card GT-15 D5 block: the 20 kgf cell under the drill-press table carries the crush.")
 kit.claim("CL-H1-D5-RATIO-U", "U95 of the U/L plateau ratio", calc="CALC-H1-D5", output="ratio_u", unit="-",
           limit=("<=", 0.01), how="Against D5's bias tolerance 0.01 (CL-D5-BIAS-ERR); from T-H1-STAND-CAL.")
-kit.claim("CL-H1-MU-ANGLE-ACCEPT", "T-D5-PAD-MU acceptance slip angle (mu 0.7 + U95)", calc="CALC-H1-D5",
+kit.claim("CL-H1-MU-ANGLE-ACCEPT", "T-D5-PAD-MU acceptance slip angle (mu <= 0.40 less U95)", calc="CALC-H1-D5",
           output="mu_accept_deg", unit="deg",
-          how="Card GT-15: mean slip angle of 5 runs per surface >= this value passes mu >= 0.7.")
+          how="Card GT-15: every one of 5 runs on the landing mat (dry) and 5 with the mat damp slides at or below "
+              "this angle; that passes mu <= requirements.pad_mu_max (D-105, CDR decision B1).",
+          note="D-105: the pass used to be a LOWER bound (slip angle >= 35.3 deg, mu >= 0.7, to stand parked in "
+               "8 m/s). The pad face now caps the foot side load, so the test is an upper bound and the parked "
+               "aircraft is laid flat or tied")
 
 kit.assumption("ASM-H1-GPS-U", "Phone GPS distance U95 5 m", "Distance to the 100 m point from two phone GPS fixes "
                "(or a pace count checked against a 30 m tape); U95 5 m.", basis="consumer GPS open-sky CEP",

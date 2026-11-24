@@ -1,0 +1,11 @@
+# T-084 shoe rows (t3_drawn): contact x 0.3475 z 0.19070; RB = rigid-body demand min over all zeta; x2.23 = RB / 2.23 (D-223); record rows in MPa at x2.23
+| Row | class | RB min (all zeta) | x2.23 zeta 0.02 | **x2.23 zeta 0.05** | x2.23 zeta 0.10 | governing case (zeta 0.05) |
+|---|---|---|---|---|---|---|
+| P1 pad PSA shear on the plate (0.10 MPa EST, landing_path_a PSA) | RF | 0.24 | 0.15 | **0.13** | 0.11 | 0.05|0.40|hard 16 wide + drift .5 y |
+| S2 shoe ring + plate section under the cap (z-plane, interlayer 9.5) | RF | 2.00 | 1.26 | **1.12** | 0.90 | 0.05|0.40|hard 10 narrow + drift .5 |
+| S3 ring bond PEEL (integrity class, outside the RF minimum; T-069 F-3) | integrity | 0.20 | 0.12 | **0.11** | 0.09 | 0.05|0.40|hard 10 narrow + drift .5 |
+| S3 ring epoxy bond on the fin tube D16 x 12: shear (axial + torsion), 2.0 MPa | RF | 2.46 | 1.46 | **1.30** | 1.10 | 0.05|0.40|hard 16 wide + drift .5 y |
+| S3 ring on the fin tube: bearing, compression side (20 MPa) | RF | 1.99 | 1.21 | **1.12** | 0.89 | 0.05|0.40|hard 10 narrow + drift .5 |
+| S5 fin tube 16x14 at the shoe ring edge (CF 350 / 30, KF) | RF | 3.17 | 1.88 | **1.67** | 1.42 | 0.05|0.40|hard 16 wide + drift .5 y |
+
+Minimum RF-class row at x2.23: zeta 0.02 0.15, zeta 0.05 0.13, zeta 0.10 0.11

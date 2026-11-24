@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 38.49,
+ "render_s": 59.39,
  "explode": 0.0,
  "camera": {
   "preset": "front",
@@ -46,12 +46,26 @@
    "role": "context",
    "name": "Wing core, one piece (XPS), with all cuts",
    "status": "MODELLED",
-   "mass_g": 201.9,
+   "mass_g": 198.1,
    "subsystem": "wing",
    "bbox_px": [
     97,
     472,
     1503,
+    511
+   ]
+  },
+  {
+   "id": "WNG-008",
+   "role": "context",
+   "name": "Spar-slot cap strips (XPS, the slot strip re-bonded)",
+   "status": "MODELLED",
+   "mass_g": 3.9,
+   "subsystem": "wing",
+   "bbox_px": [
+    189,
+    492,
+    1411,
     511
    ]
   },
@@ -158,7 +172,7 @@
    "role": "context",
    "name": "Tape skin (packing tape, both surfaces, doublers, tip edge layer)",
    "status": "MODELLED",
-   "mass_g": 47.9,
+   "mass_g": 47.5,
    "subsystem": "wing",
    "bbox_px": [
     97,
@@ -1054,7 +1068,7 @@
    "role": "context",
    "name": "Pod shell (foam-board box, XPS LE filler, printed nose lip and antenna tube B)",
    "status": "MODELLED",
-   "mass_g": 24.8,
+   "mass_g": 24.7,
    "subsystem": "pod",
    "bbox_px": [
     714,
@@ -1080,7 +1094,7 @@
   {
    "id": "POD-003",
    "role": "context",
-   "name": "Hatch (foam board, printed tongue, 12 x 40 hook-and-loop tab, antenna tube A)",
+   "name": "Hatch (foam board, printed tongue, 8 x 60 hook-and-loop tab, antenna tube A)",
    "status": "MODELLED",
    "mass_g": 9.2,
    "subsystem": "pod",
@@ -1110,11 +1124,11 @@
    "role": "context",
    "name": "Crush block (XPS F-250, hot-wired, cut per pack, vent groove)",
    "status": "MODELLED",
-   "mass_g": 2.2,
+   "mass_g": 2.1,
    "subsystem": "pod",
    "bbox_px": [
     769,
-    403,
+    406,
     831,
     475
    ]
@@ -1124,11 +1138,11 @@
    "role": "context",
    "name": "Spreader (1.5 mm PETG plate, full block section)",
    "status": "MODELLED",
-   "mass_g": 5.3,
+   "mass_g": 5.1,
    "subsystem": "pod",
    "bbox_px": [
     769,
-    403,
+    406,
     831,
     475
    ]
@@ -1222,13 +1236,13 @@
    "role": "context",
    "name": "Foot shoe UR",
    "status": "MODELLED",
-   "mass_g": 9.98,
+   "mass_g": 12.71,
    "subsystem": "landing",
    "bbox_px": [
     391,
     232,
     426,
-    263
+    291
    ]
   },
   {
@@ -1306,13 +1320,13 @@
    "role": "context",
    "name": "Foot shoe UL",
    "status": "MODELLED",
-   "mass_g": 9.98,
+   "mass_g": 12.71,
    "subsystem": "landing",
    "bbox_px": [
     1174,
     232,
     1209,
-    263
+    291
    ]
   },
   {
@@ -1320,11 +1334,11 @@
    "role": "context",
    "name": "Foot shoe LR",
    "status": "MODELLED",
-   "mass_g": 9.98,
+   "mass_g": 12.71,
    "subsystem": "landing",
    "bbox_px": [
     391,
-    737,
+    709,
     426,
     768
    ]
@@ -1334,11 +1348,11 @@
    "role": "context",
    "name": "Foot shoe LL",
    "status": "MODELLED",
-   "mass_g": 9.98,
+   "mass_g": 12.71,
    "subsystem": "landing",
    "bbox_px": [
     1174,
-    737,
+    709,
     1209,
     768
    ]
@@ -1953,7 +1967,7 @@
    "mass_g": 1.64,
    "subsystem": "mechanisms",
    "bbox_px": [
-    449,
+    448,
     518,
     454,
     527
@@ -2137,7 +2151,7 @@
    "bbox_px": [
     1146,
     518,
-    1151,
+    1152,
     527
    ]
   },
@@ -2374,9 +2388,9 @@
    "subsystem": "power",
    "bbox_px": [
     837,
-    434,
+    431,
     876,
-    452
+    453
    ]
   },
   {
@@ -2494,7 +2508,7 @@
   {
    "id": "PWR-103",
    "role": "context",
-   "name": "Power-frame washer set: 4 x M3 nylon washer 1.0 mm",
+   "name": "Power-frame washer set: 4 x M3 nylon washer 0.5 mm",
    "status": "MODELLED",
    "mass_g": 0.08,
    "subsystem": "power",
@@ -2514,9 +2528,9 @@
    "subsystem": "power",
    "bbox_px": [
     838,
-    447,
+    450,
     875,
-    472
+    474
    ]
   },
   {
@@ -3130,7 +3144,7 @@
    "subsystem": "harness",
    "bbox_px": [
     843,
-    434,
+    432,
     855,
     447
    ]
@@ -3144,7 +3158,7 @@
    "subsystem": "harness",
    "bbox_px": [
     846,
-    434,
+    432,
     870,
     468
    ]
@@ -3270,7 +3284,7 @@
    "subsystem": "harness",
    "bbox_px": [
     752,
-    437,
+    434,
     843,
     475
    ]

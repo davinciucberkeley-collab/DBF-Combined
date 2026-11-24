@@ -1,0 +1,4 @@
+variant both (D-221)   drawn 1464.2 g CG 20.44 | tallied 1483.4 g CG 23.91 SM 6.85 % | predicted 1.7046 kg, T/W fresh(dl) 1.969 sag(dl) 1.827, window 4.70 % (with download)
+variant noclam         drawn 1456.9 g CG 19.88 | tallied 1476.1 g CG 23.38 SM 7.07 % | predicted 1.6964 kg, T/W fresh(dl) 1.979 sag(dl) 1.835, window 4.94 % (with download)
+variant nonode         drawn 1458.2 g CG 20.32 | tallied 1477.4 g CG 23.81 SM 6.89 % | predicted 1.6979 kg, T/W fresh(dl) 1.977 sag(dl) 1.834, window 4.90 % (with download)
+variant none           drawn 1450.9 g CG 19.76 | tallied 1470.1 g CG 23.27 SM 7.11 % | predicted 1.6898 kg, T/W fresh(dl) 1.986 sag(dl) 1.843, window 5.14 % (with download)

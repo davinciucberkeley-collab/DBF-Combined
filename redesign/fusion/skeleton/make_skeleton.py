@@ -37,10 +37,10 @@ SIDE = {'UR': 'R', 'UL': 'L', 'LR': 'R', 'LL': 'L'}
 
 # ---------------------------------------------------------------- mass split (ASM-A5-MASS-SPLIT, team/A5/cad_claims.py)
 SPAR_G = round(V('wing.spar.mass_per_m_kgm', 'kg/m') * V('wing.spar.length_m', 'm') * 1000.0, 1)   # 102 g
-# fins (R3): tube from the spar's mass per metre (same 22 x 20 CF); the printed and CF parts at D3's R3 CAD unit
+# fins (R3): tube from fins.tube.mass_per_m_kgm (D-147 Rock West 35046-S); the printed and CF parts at D3's R3 CAD unit
 # masses (subsystems/fins/parts.csv, rounded, EST); each half-fin carries the rest (two-layer board, edge strips,
 # pins, ESC pad, plug share, fillets)
-FIN_TUBE_G = round(V('wing.spar.mass_per_m_kgm', 'kg/m') * V('fins.tube.length_m', 'm') * 1000.0, 1)   # 35.1 g
+FIN_TUBE_G = round(V('fins.tube.mass_per_m_kgm', 'kg/m') * V('fins.tube.length_m', 'm') * 1000.0, 1)   # 53.7 g
 FIN_MOUNT_G, FIN_BLOCK_G, FIN_COLLAR_G, FIN_BRACE_G, FIN_ANCHOR_G = 11.0, 41.0, 10.6, 5.2, 3.2       # each
 HALF_FIN_G = (A('fins') - 2 * FIN_TUBE_G - 2 * FIN_BLOCK_G
               - 4 * (FIN_MOUNT_G + FIN_COLLAR_G + FIN_BRACE_G + FIN_ANCHOR_G)) / 4
@@ -71,7 +71,7 @@ def wing_split(params, coords):
 
 CORE, ELI, ELO = wing_split(P, k9.section(P)[0])
 FOAM = 'XPS foam F-250 + packing-tape skin'
-CF = 'CF tube 22x20 (bought)'
+CF = 'CF tube (bought)'
 PETG = 'PETG (printed)'
 ASA = 'ASA (printed)'
 CFS = 'CF strip 10x3, pultruded (bought)'
@@ -120,7 +120,7 @@ SPEC = {
     'fins': {
         'parts': [part('FIN-901-' + s, 'Half-fin %s (2-layer foam board, edge strips, pins, ESC pad)' % s,
                        HALF_FIN_G, BOARD) for s in ST] +
-                 [part('FIN-902-' + s, 'Motor tube %s CF 22x20x%.0f (through the core)'
+                 [part('FIN-902-' + s, 'Motor tube %s CF 22.1x19.05x%.0f (through the core)'
                        % (s, V('fins.tube.length_m', 'm') * 1000), FIN_TUBE_G, CF, 'buy') for s in 'RL'] +
                  [part('FIN-903-' + s, 'Motor mount %s (slip clamp on the tube end, canted plate)' % s, FIN_MOUNT_G, ASA)
                   for s in ST] +

@@ -13,11 +13,12 @@ at a glance. Mode is **Operate/Read**, so the brand lives in precision, not expr
 | `diagram-style.md` | SVG 3-views, morphological charts, graphs, wiring diagrams | config study, proofs, SPEC figures |
 
 Open `components.html` in a browser (works from disk). Load order in any page:
-`tokens.css` → `components.css` → page CSS. Fonts (changed 2026-11-13, see `redesign/site/UI-SURVEY.md`):
-**Barlow Semi Condensed** (titles, nav, table heads, `--font-head`), **Source Sans 3** (words, and quantities with
-tabular figures) and **Red Hat Mono** (ids, paths, claim names, code), the `docs/reference/REVIEW-STYLE.md` pairing, from
-Google Fonts, SIL Open Font License 1.1. IBM Plex stays next in each stack so older pages that load only Plex keep their
-look; the system stack is the offline fallback. Radii are now 2 / 3 / 4 / 6 px.
+`tokens.css` → `components.css` → page CSS. Fonts: **IBM Plex Sans** (words, nav, table heads, `--font-head`) and **IBM Plex Mono** (ids, paths, claim names, code),
+with **Newsreader** as the page-title face loaded by `redesign/site/explorer.css` (2026-11-16). The 2026-11-13 UI survey
+(`redesign/site/UI-SURVEY.md`) proposed Barlow Semi Condensed / Source Sans 3 / Red Hat Mono (the
+`docs/reference/REVIEW-STYLE.md` pairing); the later Explorer redesign kept Plex + Newsreader, so T-104 did too (open
+decision recorded in `docs/audits/2026-11-23-T104-ui-survey-merge.md`). Google Fonts, SIL Open Font License 1.1; the
+system stack is the offline fallback. Radii are 2 / 3 / 4 / 6 px in the tokens (explorer.css squares them).
 
 ## Seven rules
 

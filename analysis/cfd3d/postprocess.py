@@ -396,7 +396,12 @@ def volume_fields(f):
 def pack(level=2):
     """out/viz/cfd3d_viz.json: the wall mesh of one level (SU2 frame, quantised), per-case Cp and speed on it,
     streamlines, wake planes, symmetry slice, the tet cut, residual histories, mesh statistics and the results"""
-    tets, pts, markers = read_su2(OUT / f"L{level}" / "mesh.su2")
+    mesh = OUT / f"L{level}" / "mesh.su2"
+    if not mesh.exists():
+        print(f"pack skipped: {mesh} missing, so out/viz/cfd3d_viz.json was not written "
+              "(the file was removed 2026-11-19, batch 2; recoverable from git 8d15f419^; regenerate the mesh first)")
+        return
+    tets, pts, markers = read_su2(mesh)
     groups, tri_all = [], []
     for tag in WALLS:
         groups.append({"name": tag, "i0": int(sum(len(t) for t in tri_all)), "n": int(len(markers[tag]))}); tri_all.append(markers[tag])

@@ -76,8 +76,10 @@ def main():
     ap.add_argument('--budget', help='mass_budget.json')
     ap.add_argument('--csv', nargs='*', help='parts.csv files')
     ap.add_argument('--out', help='output folder')
+    ap.add_argument('--no-spec', action='store_true', help='no SPEC.md links (another concept, e.g. qp/A)')
+    ap.add_argument('--dataset', help='dataset name written into the data (default aircraft)')
     a = ap.parse_args()
-    ds = 'examples' if a.examples else 'aircraft'
+    ds = 'examples' if a.examples else (a.dataset or 'aircraft')
     if a.examples:
         d = dict(glb=os.path.join(RED, 'blender/out/examples/glb'),
                  interfaces=os.path.join(RED, 'interfaces/example-output/interfaces.json'),
@@ -140,13 +142,14 @@ def main():
         if p is None:
             warn.append('%s is in %s but not in interfaces.json' % (pid, r['csv_ref']))
             continue
-        p.update(vendor=r.get('vendor_or_file') or None, unit_cost_usd=num(r.get('unit_cost_usd')),
+        p.update(vendor=r.get('vendor_or_file') or None, vendor_url=r.get('url') or None, how_url=r.get('how_url') or None,
+                 unit_cost_usd=num(r.get('unit_cost_usd')),
                  qty=num(r.get('qty')), process=r.get('process') or None, csv_ref=r['csv_ref'])
 
     # ---- SPEC.md links (real aircraft only) ----
     for p in parts.values():
         spec = os.path.join(RED, 'subsystems', p.get('subsystem') or '-', 'SPEC.md')
-        p['spec'] = '../subsystems/%s/SPEC.md' % p['subsystem'] if os.path.isfile(spec) else None
+        p['spec'] = '../subsystems/%s/SPEC.md' % p['subsystem'] if os.path.isfile(spec) and not a.no_spec else None
 
     # ---- claims from the proof chain ----
     claims = []

@@ -1,0 +1,1 @@
+collide_a rc=0 wall=975s

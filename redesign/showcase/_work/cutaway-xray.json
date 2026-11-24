@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 42.35,
+ "render_s": 104.59,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -17,9 +17,9 @@
   "ortho": false,
   "lens_mm": 50,
   "location_m": [
-   -1.4957,
-   -1.4435,
-   1.5535
+   -1.4954,
+   -1.4434,
+   1.5533
   ],
   "fit": "visible",
   "frame": [
@@ -42,7 +42,7 @@
  "callouts": [
   {
    "item": "AVN-001",
-   "x": 628.8,
+   "x": 628.7,
    "y": 494.0,
    "title": "AVN-001",
    "text": "Flight controller F405 Wing",
@@ -57,7 +57,7 @@
   },
   {
    "item": "PWR-001",
-   "x": 663.5,
+   "x": 663.4,
    "y": 505.1,
    "title": "PWR-001",
    "text": "4S 6500 mAh flight pack",
@@ -87,7 +87,7 @@
   },
   {
    "item": "E-HRN-13",
-   "x": 570.3,
+   "x": 570.2,
    "y": 424.0,
    "title": "E-HRN-13",
    "text": "ESC power pair, routed",
@@ -122,13 +122,27 @@
    "role": "ghost",
    "name": "Wing core, one piece (XPS), with all cuts",
    "status": "MODELLED",
-   "mass_g": 201.9,
+   "mass_g": 198.1,
    "subsystem": "wing",
    "bbox_px": [
-    350,
-    268,
-    1248,
-    743
+    351,
+    270,
+    1240,
+    747
+   ]
+  },
+  {
+   "id": "WNG-008",
+   "role": "context",
+   "name": "Spar-slot cap strips (XPS, the slot strip re-bonded)",
+   "status": "MODELLED",
+   "mass_g": 3.9,
+   "subsystem": "wing",
+   "bbox_px": [
+    428,
+    349,
+    1077,
+    689
    ]
   },
   {
@@ -234,7 +248,7 @@
    "role": "ghost",
    "name": "Tape skin (packing tape, both surfaces, doublers, tip edge layer)",
    "status": "MODELLED",
-   "mass_g": 47.9,
+   "mass_g": 47.5,
    "subsystem": "wing",
    "bbox_px": [
     350,
@@ -379,7 +393,7 @@
    "bbox_px": [
     492,
     381,
-    552,
+    551,
     435
    ]
   },
@@ -489,7 +503,7 @@
    "mass_g": 3.24,
    "subsystem": "fins",
    "bbox_px": [
-    565,
+    564,
     402,
     586,
     422
@@ -519,7 +533,7 @@
    "bbox_px": [
     506,
     204,
-    622,
+    621,
     315
    ]
   },
@@ -559,7 +573,7 @@
    "mass_g": 2.04,
    "subsystem": "fins",
    "bbox_px": [
-    534,
+    533,
     455,
     561,
     491
@@ -659,7 +673,7 @@
    "bbox_px": [
     908,
     596,
-    928,
+    927,
     645
    ]
   },
@@ -685,7 +699,7 @@
    "mass_g": 2.04,
    "subsystem": "fins",
    "bbox_px": [
-    943,
+    942,
     497,
     970,
     540
@@ -715,7 +729,7 @@
    "bbox_px": [
     879,
     508,
-    912,
+    911,
     568
    ]
   },
@@ -1105,7 +1119,7 @@
    "mass_g": 0.24,
    "subsystem": "fins",
    "bbox_px": [
-    508,
+    507,
     513,
     517,
     521
@@ -1130,7 +1144,7 @@
    "role": "ghost",
    "name": "Pod shell (foam-board box, XPS LE filler, printed nose lip and antenna tube B)",
    "status": "MODELLED",
-   "mass_g": 24.8,
+   "mass_g": 24.7,
    "subsystem": "pod",
    "bbox_px": [
     543,
@@ -1156,7 +1170,7 @@
   {
    "id": "POD-003",
    "role": "ghost",
-   "name": "Hatch (foam board, printed tongue, 12 x 40 hook-and-loop tab, antenna tube A)",
+   "name": "Hatch (foam board, printed tongue, 8 x 60 hook-and-loop tab, antenna tube A)",
    "status": "MODELLED",
    "mass_g": 9.2,
    "subsystem": "pod",
@@ -1186,11 +1200,11 @@
    "role": "context",
    "name": "Crush block (XPS F-250, hot-wired, cut per pack, vent groove)",
    "status": "MODELLED",
-   "mass_g": 2.2,
+   "mass_g": 2.1,
    "subsystem": "pod",
    "bbox_px": [
     577,
-    510,
+    512,
     629,
     580
    ]
@@ -1200,11 +1214,11 @@
    "role": "context",
    "name": "Spreader (1.5 mm PETG plate, full block section)",
    "status": "MODELLED",
-   "mass_g": 5.3,
+   "mass_g": 5.1,
    "subsystem": "pod",
    "bbox_px": [
-    593,
-    509,
+    594,
+    511,
     630,
     569
    ]
@@ -1246,7 +1260,7 @@
    "subsystem": "pod",
    "bbox_px": [
     671,
-    402,
+    401,
     769,
     510
    ]
@@ -1298,13 +1312,13 @@
    "role": "context",
    "name": "Foot shoe UR",
    "status": "MODELLED",
-   "mass_g": 9.98,
+   "mass_g": 12.71,
    "subsystem": "landing",
    "bbox_px": [
     616,
     177,
     668,
-    218
+    234
    ]
   },
   {
@@ -1382,13 +1396,13 @@
    "role": "context",
    "name": "Foot shoe UL",
    "status": "MODELLED",
-   "mass_g": 9.98,
+   "mass_g": 12.71,
    "subsystem": "landing",
    "bbox_px": [
     1033,
     349,
     1087,
-    398
+    415
    ]
   },
   {
@@ -1396,11 +1410,11 @@
    "role": "context",
    "name": "Foot shoe LR",
    "status": "MODELLED",
-   "mass_g": 9.98,
+   "mass_g": 12.71,
    "subsystem": "landing",
    "bbox_px": [
     630,
-    447,
+    434,
     678,
     483
    ]
@@ -1410,11 +1424,11 @@
    "role": "context",
    "name": "Foot shoe LL",
    "status": "MODELLED",
-   "mass_g": 9.98,
+   "mass_g": 12.71,
    "subsystem": "landing",
    "bbox_px": [
     1012,
-    636,
+    623,
     1061,
     680
    ]
@@ -1484,7 +1498,7 @@
    "subsystem": "landing",
    "bbox_px": [
     654,
-    437,
+    436,
     695,
     469
    ]
@@ -1637,7 +1651,7 @@
    "mass_g": 1.2,
    "subsystem": "propulsion",
    "bbox_px": [
-    464,
+    463,
     297,
     476,
     311
@@ -1749,7 +1763,7 @@
    "mass_g": 81.0,
    "subsystem": "propulsion",
    "bbox_px": [
-    487,
+    486,
     533,
     519,
     567
@@ -1889,7 +1903,7 @@
    "mass_g": 3.0,
    "subsystem": "propulsion",
    "bbox_px": [
-    876,
+    875,
     767,
     895,
     785
@@ -2045,7 +2059,7 @@
    "bbox_px": [
     637,
     346,
-    669,
+    668,
     376
    ]
   },
@@ -2071,7 +2085,7 @@
    "mass_g": 2.62,
    "subsystem": "mechanisms",
    "bbox_px": [
-    604,
+    603,
     328,
     630,
     354
@@ -2115,7 +2129,7 @@
    "bbox_px": [
     642,
     353,
-    737,
+    736,
     400
    ]
   },
@@ -2297,7 +2311,7 @@
    "bbox_px": [
     901,
     475,
-    1013,
+    1012,
     530
    ]
   },
@@ -2421,7 +2435,7 @@
    "mass_g": 550.0,
    "subsystem": "power",
    "bbox_px": [
-    597,
+    596,
     463,
     747,
     566
@@ -2450,9 +2464,9 @@
    "subsystem": "power",
    "bbox_px": [
     657,
-    511,
+    510,
     709,
-    551
+    549
    ]
   },
   {
@@ -2570,7 +2584,7 @@
   {
    "id": "PWR-103",
    "role": "context",
-   "name": "Power-frame washer set: 4 x M3 nylon washer 1.0 mm",
+   "name": "Power-frame washer set: 4 x M3 nylon washer 0.5 mm",
    "status": "MODELLED",
    "mass_g": 0.08,
    "subsystem": "power",
@@ -2590,9 +2604,9 @@
    "subsystem": "power",
    "bbox_px": [
     674,
-    516,
+    518,
     710,
-    550
+    552
    ]
   },
   {
@@ -2716,7 +2730,7 @@
    "subsystem": "harness",
    "bbox_px": [
     673,
-    466,
+    465,
     692,
     476
    ]
@@ -2729,7 +2743,7 @@
    "mass_g": 2.0,
    "subsystem": "harness",
    "bbox_px": [
-    715,
+    714,
     509,
     733,
     524
@@ -2757,7 +2771,7 @@
    "mass_g": 0.5,
    "subsystem": "harness",
    "bbox_px": [
-    665,
+    664,
     476,
     681,
     493
@@ -2786,7 +2800,7 @@
    "subsystem": "harness",
    "bbox_px": [
     659,
-    474,
+    473,
     675,
     490
    ]
@@ -2815,7 +2829,7 @@
    "bbox_px": [
     653,
     471,
-    670,
+    669,
     487
    ]
   },
@@ -2827,7 +2841,7 @@
    "mass_g": 0.5,
    "subsystem": "harness",
    "bbox_px": [
-    651,
+    650,
     469,
     667,
     486
@@ -2869,7 +2883,7 @@
    "mass_g": 0.5,
    "subsystem": "harness",
    "bbox_px": [
-    933,
+    932,
     624,
     946,
     635
@@ -2899,7 +2913,7 @@
    "bbox_px": [
     935,
     571,
-    949,
+    948,
     582
    ]
   },
@@ -2927,7 +2941,7 @@
    "bbox_px": [
     663,
     479,
-    669,
+    668,
     489
    ]
   },
@@ -2939,7 +2953,7 @@
    "mass_g": 0.0147,
    "subsystem": "harness",
    "bbox_px": [
-    961,
+    960,
     671,
     964,
     675
@@ -3053,7 +3067,7 @@
    "bbox_px": [
     737,
     489,
-    744,
+    743,
     495
    ]
   },
@@ -3079,7 +3093,7 @@
    "mass_g": 0.0147,
    "subsystem": "harness",
    "bbox_px": [
-    970,
+    969,
     509,
     974,
     513
@@ -3149,7 +3163,7 @@
    "mass_g": 0.0147,
    "subsystem": "harness",
    "bbox_px": [
-    545,
+    544,
     304,
     548,
     307
@@ -3206,9 +3220,9 @@
    "subsystem": "harness",
    "bbox_px": [
     689,
-    510,
+    509,
     705,
-    519
+    517
    ]
   },
   {
@@ -3220,7 +3234,7 @@
    "subsystem": "harness",
    "bbox_px": [
     678,
-    515,
+    513,
     710,
     547
    ]
@@ -3235,8 +3249,8 @@
    "bbox_px": [
     518,
     302,
-    745,
-    537
+    744,
+    538
    ]
   },
   {
@@ -3249,7 +3263,7 @@
    "bbox_px": [
     684,
     501,
-    979,
+    978,
     593
    ]
   },
@@ -3275,8 +3289,8 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    689,
-    507,
+    688,
+    506,
     969,
     680
    ]
@@ -3332,7 +3346,7 @@
    "subsystem": "harness",
    "bbox_px": [
     912,
-    692,
+    693,
     941,
     771
    ]
@@ -3345,7 +3359,7 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    638,
+    637,
     510,
     683,
     547
@@ -3429,7 +3443,7 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    567,
+    566,
     373,
     705,
     491
@@ -3457,7 +3471,7 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    628,
+    627,
     515,
     681,
     549

@@ -1,0 +1,9 @@
+# T-076d step 3: D-1 modal transient, partition-B arm wrench.  Category: dynamics (modal superposition, one-way coupling).  Pad Fp 30 N, usable stroke 24 mm; mass model cad; 1.64 kg.
+pad zeta 0.05: foot forces done, worst stroke 18.8 mm, n 10.00, tilt 2.56  [28 s]
+
+## frame asbuilt nom: FE mass 1640.0 g; lowest flexible modes (Hz): 11.1, 22.0, 25.7, 26.5, 29.5, 34.3, 34.5, 37.5
+pad zeta 0.05 nom damp 1 %: arm-group Mexit dyn env 7.32 / sim RB 5.41 N m -> DAF env 1.35, case-max 1.80; Mz_arm dyn 14.58 vs RB 10.42 (DAF 1.40); components judge DAF 4.60 (Fx 2.68 Fy 3.08 Fz 4.60 Mx 2.23 My 2.69 Mz 2.10); sigma dyn 84.4 RB 61.4 MPa; tau dyn 2.72 RB 1.88; hub Mz dyn 14.58; RF_bridge(dyn) 3.20; QS/RB arm Mz 0.78
+frame wall 38 s
+
+## OVERALL (max over 1 runs): {"DAF_comp_judge_max": 4.596, "DAF_Mexit_env_max": 1.353, "DAF_Mexit_casemax_max": 1.8, "RF_bridge_dyn_min": 3.202}
+done 38 s

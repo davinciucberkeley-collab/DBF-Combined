@@ -1,0 +1,162 @@
+{
+ "h_mm": 0.25,
+ "rho": 1.27,
+ "rows": [
+  {
+   "id": "FIN-005-R",
+   "listed_g": 12.31,
+   "vol_cm3": 10.791,
+   "solid_g": 13.70457,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.1679611481790381,
+   "computed_g": 12.323468812499998,
+   "name": "Clamshell cradle on spar (R, T-077 p5, D-221): ring wall 2.0 mm on the",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "FIN-005-L",
+   "listed_g": 12.31,
+   "vol_cm3": 10.791,
+   "solid_g": 13.70457,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.1679611481790381,
+   "computed_g": 12.323468812499998,
+   "name": "Clamshell cradle on spar (L, T-077 p5, D-221): ring wall 2.0 mm on the",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "CGE-003-UR",
+   "listed_g": 8.38,
+   "vol_cm3": 7.711718750000001,
+   "solid_g": 9.793882812500001,
+   "cls": "S",
+   "build_axis": "x",
+   "core_frac": 0.24100496403606525,
+   "computed_g": 8.377658187500002,
+   "name": "Motor cup (UR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "CGE-003-UL",
+   "listed_g": 8.38,
+   "vol_cm3": 7.711718750000001,
+   "solid_g": 9.793882812500001,
+   "cls": "S",
+   "build_axis": "x",
+   "core_frac": 0.24100496403606525,
+   "computed_g": 8.377658187500002,
+   "name": "Motor cup (UL; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "CGE-003-LR",
+   "listed_g": 8.38,
+   "vol_cm3": 7.711718750000001,
+   "solid_g": 9.793882812500001,
+   "cls": "S",
+   "build_axis": "x",
+   "core_frac": 0.24100496403606525,
+   "computed_g": 8.377658187500002,
+   "name": "Motor cup (LR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "CGE-003-LL",
+   "listed_g": 8.38,
+   "vol_cm3": 7.711718750000001,
+   "solid_g": 9.793882812500001,
+   "cls": "S",
+   "build_axis": "x",
+   "core_frac": 0.24100496403606525,
+   "computed_g": 8.377658187500002,
+   "name": "Motor cup (LL; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "CGE-007-R",
+   "listed_g": 2.96,
+   "vol_cm3": 2.475078125,
+   "solid_g": 3.14334921875,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.09721915343581326,
+   "computed_g": 2.9599929687500004,
+   "name": "Strut clamp on spar (R)",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "CGE-007-L",
+   "listed_g": 2.96,
+   "vol_cm3": 2.4727343750000004,
+   "solid_g": 3.1403726562500007,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.09704590692237212,
+   "computed_g": 2.95751646875,
+   "name": "Strut clamp on spar (L)",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "CGE-006",
+   "listed_g": 12.77,
+   "vol_cm3": 12.33471875,
+   "solid_g": 14.801662499999999,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.26930843072526484,
+   "computed_g": 12.409934999999999,
+   "name": "Centre node saddle (T-077 p5, D-221 s3.2, T-071b N2): ring wall 2.0 mm",
+   "material": "Onyx + CF (Markforged X7)"
+  },
+  {
+   "id": "CGE-013",
+   "listed_g": 2.35,
+   "vol_cm3": 1.82925,
+   "solid_g": 2.1951,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.0,
+   "computed_g": 2.1951,
+   "name": "Node outer clevis ears: 2 x (41.5 x 19 x 1.5 mm, spar hole 12 mm), Ony",
+   "material": "Onyx + CF (Markforged X7)"
+  },
+  {
+   "id": "CGE-008",
+   "listed_g": 13.3,
+   "vol_cm3": 10.890562500000001,
+   "solid_g": 13.831014375000002,
+   "cls": "M",
+   "build_axis": "z",
+   "core_frac": 0.051556967328363436,
+   "computed_g": 13.2962005078125,
+   "name": "Pack tray R1 (T-077: 1.2 mm windowed plate on a 2.0 mm root pad + ribs",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "AVN-010",
+   "listed_g": 1.63,
+   "vol_cm3": 1.3226250000000002,
+   "solid_g": 1.6797337500000002,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.05264152726585389,
+   "computed_g": 1.6266795,
+   "name": "R2 mounting bosses (T-073 R2, T-077 p5): 4 FC bosses 6 x 6 mm on the 2",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "AVN-008",
+   "listed_g": 9.47,
+   "vol_cm3": 7.0945625,
+   "solid_g": 9.010094375000001,
+   "cls": "C",
+   "build_axis": "z",
+   "core_frac": 0.0,
+   "computed_g": 9.010094375000001,
+   "name": "Bay cover (D-198, T-022 Q4): 0.6 mm printed PETG hood over the FC stac",
+   "material": "PETG (printed)"
+  }
+ ]
+}

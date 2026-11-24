@@ -1,6 +1,25 @@
-# Redesign v1 — K09-L quad tailsitter
+# Redesign v1: concept A quad tailsitter (K09-L record below)
 
-Status: `PROPOSED` design, frame revision **A1-R5** (2026-11-10). Nothing is `VERIFIED`: no part has been bought,
+> **Current design (2026-11-16): concept A, a scaled quad tailsitter (D-182).** K09-L, described below, could not be
+> built new within $2,000 (cheapest workable build about $2,577) and is kept as the record. Concept A: 0.90 m wing,
+> 4 x T-Motor MN2212 KV780 on 4S, about 1.456 kg predicted (`EST`), BOM $1,779 of $2,000 (+$100 margin if unverified prices run 30 % over). Design, reports and status:
+> [qp/README.md](qp/README.md). Decisions D-182 to D-200: [CHANGE-LOG.md](params/CHANGE-LOG.md). The Explorer's renders, flight and build films and general-arrangement sheet now show concept A (the K09-L ones are kept as the record).
+
+**Hard constraints (team lead; full text in [CLAUDE.md](../CLAUDE.md)):**
+1. $2,000 total, all bought new (tax, shipping, packs, charger, radio, test gear, spares); the Jacobs Hall Makers Pass is outside it.
+2. Built and flight-tested by 2027-04-30.
+3. The packed aircraft fits one car trunk (two at most); a team of 4 moves it; under 25 kg.
+4. Passes the 3-D gates: an interference check (static, at neutral and at the elevon stops) of every build step and the assembled aircraft, no part interpenetration, no open wire ends, no exemptions, plus a swept insertion check (straight-line build-step paths); flight cases in the 3-D sims pass. These are interference checks, not physics simulations; mechanism physics is in docs/analysis-records.md (kinematics AR-001, rigid-body dynamics AR-002, swept interference AR-003).
+5. **The CAD looks exactly like the physical aircraft** (2026-11-15): every part at its real shape and size from the vendor drawing or data sheet, real prop blades, no stand-in disks or boxes; unknown dimensions flagged, never invented.
+6. **Limit exposed wiring** (2026-11-15): wires inside the arm tubes, wing-core channels, fairings or covers; any wire left outside the skin is listed with its length and reason, and kept to the minimum.
+
+![Concept A in cruise attitude, isometric render](showcase/concept-a/renders/hero-iso.webp)
+
+*Concept A (current design) in cruise attitude, from the CAD model in `qp/A/cad`. Films: [how it flies](showcase/concept-a/animation/a-how-it-flies.mp4),
+[whole build](showcase/concept-a/animation/a-build.mp4) (written guide: [qp/A/BUILD-GUIDE-A.md](qp/A/BUILD-GUIDE-A.md)). The general-arrangement sheet below is K09-L (previous design);
+concept A's is [showcase/concept-a/drawing/a-sheet.svg](showcase/concept-a/drawing/a-sheet.svg).*
+
+**K09-L record below.** Status: `PROPOSED` design, frame revision **A1-R5** (2026-11-10). Nothing is `VERIFIED`: no part has been bought,
 weighed, built or flown. The configuration is reversible until the mid-December order on the conditions in
 [`CONFIGURATION.md`](CONFIGURATION.md). Where things stand: [`STATUS.md`](STATUS.md). What the team does next:
 [`HANDOFF.md`](HANDOFF.md).
@@ -26,8 +45,8 @@ All at the 2.6 kg gate unless stated. Live values: `python -I redesign/team/A1/f
 
 | Parameter | Value | Limit | Unit | Status | Source |
 |---|---|---|---|---|---|
-| Take-off mass, basic / predicted (550 g pack) | 2 366 / 2 489 | ≤ 2 600 gate | g | `MODELLED` (+111 g after growth; 100 g of it is the first-build overrun) | [`MASS-CG.md`](MASS-CG.md) A3-R8 |
-| Allocations + A1 reserve | 2 374 + 226 | = 2 600 | g | `CHECKED` (reserve = growth 123 + overrun 100 + 3 g free, D-95) | `params/mass_budget.json` |
+| Take-off mass, basic / predicted (550 g pack) | 2 398 / 2 528 (live re-run with the in-progress landing change: 2 409 / 2 540) | ≤ 2 600 gate | g | `MODELLED` (+72 g after growth against a 64 g first-build overrun, 31 g structures contingency booked, D-132; **+60 g, `FAIL` by 4 g, with landing at 69.9 g**: see `MASS-CG.md` CDR-12) | [`MASS-CG.md`](MASS-CG.md) |
+| Allocations + A1 reserve | 2 406 + 194 | = 2 600 | g | `CHECKED` (reserve = growth 130 + overrun 64 + 0 g free, D-132; was 2 374 + 226, D-95) | `params/mass_budget.json` |
 | Pack acceptance line (heaviest pack the overrun still covers) | 560.8 (one number: A1 = A3 = E2); `T-E2-WEIGH` pass ≤ 560 | ≥ 556 SKU max | g | `MODELLED`; weigh on arrival | `MASS-CG.md`, D-95 |
 | CG x, basic (551 g pack at its D-98 station) | 0.0484–0.0490 | 0.0466–0.0514 | m | `MODELLED` (aft margin 0.8 mm predicted for 546 g, set by the bay travel) | `MASS-CG.md` |
 | CG height z | +0.0184 | 0.0165–0.025 (D-96) | m | `MODELLED` | `MASS-CG.md` |
@@ -44,13 +63,13 @@ All at the 2.6 kg gate unless stated. Live values: `python -I redesign/team/A1/f
 | Hard landing: sink at ≤ 10° tilt, any direction; n | 1.2; 6.6 | design | m/s; — | `MODELLED` (D-65) | `team/C5/SIMULATION-REPORT.md` |
 | Stance tip-over, worst CG | 31.0 | ≥ 30 | ° | `UNVERIFIED` (tilt board) | `team/A1/SUMMARY.md` |
 | ESC peak / field ambient ceiling | 56.1 / 44 | ≤ 85 / mission | °C | `UNVERIFIED` (SU2 pad h; GT-04) | `team/E3/SIMULATION-REPORT.md` |
-| Spend, pessimistic / reserve (Maker Pass paid outside the budget; hot-wire gear bought) | 1 716 / 284 | ≤ 2 000 / ≥ 309 (one crash) | USD | `FAIL` by $25.28 on the reserve line; all-in pessimistic reserve +$20.45 (was −$57.82); prices re-read at order | [`team/I1/ORDER-PLAN.md`](team/I1/ORDER-PLAN.md) I1-R4 |
-| Build to first hover | 70–85 (older estimate); **111** on the BUILD-GUIDE stage times | ≤ 90 | h | `FAIL` on the guide's times (`CR-I2-02`) | `params/params.json#requirements`; [`team/G4/BUILD-STEPS.md`](team/G4/BUILD-STEPS.md) |
+| Reserve **at order** / **flight-ready** (+ X07 box, + X08 airspeed), pessimistic (BOM R5; Maker Pass paid outside the budget) | 98.01 / −235.84 (baseline 227.11 / −42.47) | ≥ 309 (one crash; B3 proposal 227.89, not signed) / ≥ 0 (the $2 000 cap) | USD | `FAIL` on both lines; spend at order $1 901.99 pessimistic, inside $2 000 | [`team/I1/ORDER-PLAN.md`](team/I1/ORDER-PLAN.md), `team/I1/bom_summary.json` |
+| Build to first hover | **82** `EST` on stages 2–10 (G4-R2: 13 h of bench work moved before first cut); 98 on stages 2–11 | ≤ 90 | h | meets on stages 2–10 under the B2 wording (`PROPOSED`); `FAIL` as written; first tethered hover 12–14 Feb (week 4) with cores from 10 Jan | [`team/I2/SCHEDULE.md`](team/I2/SCHEDULE.md) I2-R2; [`team/G4/BUILD-STEPS.md`](team/G4/BUILD-STEPS.md) |
 | Transport box, external / mass | 1.25 × 0.55 × 0.54 / 3.6 | two cars | m / kg | `PROPOSED` (`CAR-FIT.md` waits for the cars) | `subsystems/transport/SPEC.md` |
 
 ## General arrangement
 
-![K09-L general arrangement, three views to scale](team/A1/ga-3view.svg)
+![K09-L (previous design) general arrangement, three views to scale](team/A1/ga-3view.svg)
 
 `FIG A1-01 — General arrangement at A1-R5, drawn from params.json by team/A1/draw_ga.py.`
 

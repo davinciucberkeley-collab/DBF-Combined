@@ -1,0 +1,1019 @@
+{
+ "_note": "Written by team/C2/fea/c2r5_reduce.py from out/c2r5/measures.json and data/c2w2_*.json. Do not edit by hand. Stresses at LIMIT load, Pa; s3 = compression magnitude.",
+ "c2r5": {
+  "tcd_K_Ic_pa_sqrtm": {
+   "value": 54700.0,
+   "unit": "Pa m^0.5",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "XPS fracture toughness, KEM 776:160 (K_Ice 0.0547 MPa m^0.5, n = 3), C2.md section 1.3"
+  },
+  "tcd_sigma0_pa": {
+   "value": 517000.0,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "plain strength for the TCD length: FOAMULAR 250 flexural minimum 75 psi (ASTM C203), C2.md section 1.3"
+  },
+  "measure_radius_m": {
+   "value": 0.00178,
+   "unit": "m",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "ball radius used in the FE measure, L/2 rounded to 0.01 mm"
+  },
+  "base_L1_h_m": {
+   "value": 0.0016,
+   "unit": "m",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "local element size at the corners, base_L1_narrow_L4-CORNER-SIDE-Y"
+  },
+  "base_L1_vm_s1_lim_pa": {
+   "value": 130468.00595650951,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s1, limit, base_L1_narrow_L4-CORNER-SIDE-Y (ball centre [0.0309, 0.2978, -0.0068])"
+  },
+  "base_L1_peak_s1_lim_pa": {
+   "value": 208133.22184829623,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s1, limit, base_L1_narrow_L4-CORNER-SIDE-Y (at [0.0292, 0.2978, -0.0068]; singular, information only)"
+  },
+  "base_L1_vm_s3_lim_pa": {
+   "value": 98044.01294267859,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s3, limit, base_L1_narrow_L4-CORNER-SIDE-Y (ball centre [0.0956, 0.2978, -0.0083])"
+  },
+  "base_L1_peak_s3_lim_pa": {
+   "value": 135045.1455179522,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s3, limit, base_L1_narrow_L4-CORNER-SIDE-Y (at [0.096, 0.2978, -0.0078]; singular, information only)"
+  },
+  "base_L1_vm_tau_lim_pa": {
+   "value": 60561.03740670454,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) tau, limit, base_L1_narrow_L4-CORNER-SIDE-Y (ball centre [0.0299, 0.2978, -0.0066])"
+  },
+  "base_L1_peak_tau_lim_pa": {
+   "value": 88050.1400575155,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak tau, limit, base_L1_narrow_L4-CORNER-SIDE-Y (at [0.0295, 0.2978, -0.0064]; singular, information only)"
+  },
+  "base_L1_bead_s1_lim_pa": {
+   "value": 1943936.8955229141,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "bead max principal, limit, base_L1_narrow_L4-CORNER-SIDE-Y"
+  },
+  "base_L2_h_m": {
+   "value": 0.0011,
+   "unit": "m",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "local element size at the corners, base_L2_narrow_L4-CORNER-SIDE-Y"
+  },
+  "base_L2_vm_s1_lim_pa": {
+   "value": 141602.21620998913,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s1, limit, base_L2_narrow_L4-CORNER-SIDE-Y (ball centre [0.0303, 0.2985, -0.0068])"
+  },
+  "base_L2_peak_s1_lim_pa": {
+   "value": 221094.18149642262,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s1, limit, base_L2_narrow_L4-CORNER-SIDE-Y (at [0.0296, 0.2985, -0.0068]; singular, information only)"
+  },
+  "base_L2_vm_s3_lim_pa": {
+   "value": 96434.06041085575,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s3, limit, base_L2_narrow_L4-CORNER-SIDE-Y (ball centre [0.0957, 0.2985, -0.0083])"
+  },
+  "base_L2_peak_s3_lim_pa": {
+   "value": 160665.45153245077,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s3, limit, base_L2_narrow_L4-CORNER-SIDE-Y (at [0.096, 0.2985, -0.0081]; singular, information only)"
+  },
+  "base_L2_vm_tau_lim_pa": {
+   "value": 66020.98377452146,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) tau, limit, base_L2_narrow_L4-CORNER-SIDE-Y (ball centre [0.0303, 0.2985, -0.0068])"
+  },
+  "base_L2_peak_tau_lim_pa": {
+   "value": 94010.81994130925,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak tau, limit, base_L2_narrow_L4-CORNER-SIDE-Y (at [0.0957, 0.2985, 0.0223]; singular, information only)"
+  },
+  "base_L2_bead_s1_lim_pa": {
+   "value": 1573651.187305762,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "bead max principal, limit, base_L2_narrow_L4-CORNER-SIDE-Y"
+  },
+  "base_L3_h_m": {
+   "value": 0.00075,
+   "unit": "m",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "local element size at the corners, base_L3_narrow_L4-CORNER-SIDE-Y"
+  },
+  "base_L3_vm_s1_lim_pa": {
+   "value": 142568.09094775203,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s1, limit, base_L3_narrow_L4-CORNER-SIDE-Y (ball centre [0.0305, 0.2981, -0.0069])"
+  },
+  "base_L3_peak_s1_lim_pa": {
+   "value": 259374.16390682198,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s1, limit, base_L3_narrow_L4-CORNER-SIDE-Y (at [0.0296, 0.2989, -0.0069]; singular, information only)"
+  },
+  "base_L3_vm_s3_lim_pa": {
+   "value": 95793.33151833709,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s3, limit, base_L3_narrow_L4-CORNER-SIDE-Y (ball centre [0.0954, 0.2989, -0.0085])"
+  },
+  "base_L3_peak_s3_lim_pa": {
+   "value": 187974.0126728693,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s3, limit, base_L3_narrow_L4-CORNER-SIDE-Y (at [0.0958, 0.2989, -0.0083]; singular, information only)"
+  },
+  "base_L3_vm_tau_lim_pa": {
+   "value": 67132.5935414722,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) tau, limit, base_L3_narrow_L4-CORNER-SIDE-Y (ball centre [0.0305, 0.2981, -0.0069])"
+  },
+  "base_L3_peak_tau_lim_pa": {
+   "value": 108636.18503053258,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak tau, limit, base_L3_narrow_L4-CORNER-SIDE-Y (at [0.0296, 0.2989, -0.0069]; singular, information only)"
+  },
+  "base_L3_bead_s1_lim_pa": {
+   "value": 1899147.7356929686,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "bead max principal, limit, base_L3_narrow_L4-CORNER-SIDE-Y"
+  },
+  "tape50_L1_h_m": {
+   "value": 0.0016,
+   "unit": "m",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "local element size at the corners, tapeA_L1_L4-CORNER-SIDE-Y"
+  },
+  "tape50_L1_vm_s1_lim_pa": {
+   "value": 67334.47489838075,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s1, limit, tapeA_L1_L4-CORNER-SIDE-Y (ball centre [0.0318, 0.2882, -0.0071])"
+  },
+  "tape50_L1_peak_s1_lim_pa": {
+   "value": 80801.67723212684,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s1, limit, tapeA_L1_L4-CORNER-SIDE-Y (at [0.0302, 0.2992, -0.0051]; singular, information only)"
+  },
+  "tape50_L1_vm_s3_lim_pa": {
+   "value": 50236.84974185538,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s3, limit, tapeA_L1_L4-CORNER-SIDE-Y (ball centre [0.1209, 0.2892, -0.0081])"
+  },
+  "tape50_L1_peak_s3_lim_pa": {
+   "value": 63398.2055294572,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s3, limit, tapeA_L1_L4-CORNER-SIDE-Y (at [0.1204, 0.2892, -0.0082]; singular, information only)"
+  },
+  "tape50_L1_vm_tau_lim_pa": {
+   "value": 34340.08633293886,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) tau, limit, tapeA_L1_L4-CORNER-SIDE-Y (ball centre [0.0318, 0.2882, -0.0071])"
+  },
+  "tape50_L1_peak_tau_lim_pa": {
+   "value": 38792.63140710657,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak tau, limit, tapeA_L1_L4-CORNER-SIDE-Y (at [0.0302, 0.2992, -0.0051]; singular, information only)"
+  },
+  "tape50_L1_bead_s1_lim_pa": {
+   "value": 2212274.146108146,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "bead max principal, limit, tapeA_L1_L4-CORNER-SIDE-Y"
+  },
+  "tape50_L2_h_m": {
+   "value": 0.0011,
+   "unit": "m",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "local element size at the corners, tapeA_L2s_L4-CORNER-SIDE-Y"
+  },
+  "tape50_L2_vm_s1_lim_pa": {
+   "value": 67955.61342925478,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s1, limit, tapeA_L2s_L4-CORNER-SIDE-Y (ball centre [0.0309, 0.2884, -0.007])"
+  },
+  "tape50_L2_peak_s1_lim_pa": {
+   "value": 92712.03326470079,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s1, limit, tapeA_L2s_L4-CORNER-SIDE-Y (at [0.0299, 0.2985, -0.0056]; singular, information only)"
+  },
+  "tape50_L2_vm_s3_lim_pa": {
+   "value": 49708.10079118856,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s3, limit, tapeA_L2s_L4-CORNER-SIDE-Y (ball centre [0.1203, 0.2884, -0.0082])"
+  },
+  "tape50_L2_peak_s3_lim_pa": {
+   "value": 71153.16703853119,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s3, limit, tapeA_L2s_L4-CORNER-SIDE-Y (at [0.0954, 0.2985, -0.0077]; singular, information only)"
+  },
+  "tape50_L2_vm_tau_lim_pa": {
+   "value": 34697.224899370034,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) tau, limit, tapeA_L2s_L4-CORNER-SIDE-Y (ball centre [0.0309, 0.2884, -0.007])"
+  },
+  "tape50_L2_peak_tau_lim_pa": {
+   "value": 45678.12742296515,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak tau, limit, tapeA_L2s_L4-CORNER-SIDE-Y (at [0.0299, 0.2985, -0.0056]; singular, information only)"
+  },
+  "tape50_L2_bead_s1_lim_pa": {
+   "value": 3166936.9222622863,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "bead max principal, limit, tapeA_L2s_L4-CORNER-SIDE-Y"
+  },
+  "tape25_L1_h_m": {
+   "value": 0.0016,
+   "unit": "m",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "local element size at the corners, tapeAlo_L1_L4-CORNER-SIDE-Y"
+  },
+  "tape25_L1_vm_s1_lim_pa": {
+   "value": 75277.08472380962,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s1, limit, tapeAlo_L1_L4-CORNER-SIDE-Y (ball centre [0.0305, 0.2992, -0.0064])"
+  },
+  "tape25_L1_peak_s1_lim_pa": {
+   "value": 95811.55958579967,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s1, limit, tapeAlo_L1_L4-CORNER-SIDE-Y (at [0.0302, 0.2992, -0.0051]; singular, information only)"
+  },
+  "tape25_L1_vm_s3_lim_pa": {
+   "value": 55568.80212629922,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s3, limit, tapeAlo_L1_L4-CORNER-SIDE-Y (ball centre [0.0969, 0.3026, -0.008])"
+  },
+  "tape25_L1_peak_s3_lim_pa": {
+   "value": 70560.7376654601,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s3, limit, tapeAlo_L1_L4-CORNER-SIDE-Y (at [0.0959, 0.2992, -0.0075]; singular, information only)"
+  },
+  "tape25_L1_vm_tau_lim_pa": {
+   "value": 36640.50776921993,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) tau, limit, tapeAlo_L1_L4-CORNER-SIDE-Y (ball centre [0.0305, 0.2992, -0.0064])"
+  },
+  "tape25_L1_peak_tau_lim_pa": {
+   "value": 44848.32167682508,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak tau, limit, tapeAlo_L1_L4-CORNER-SIDE-Y (at [0.0302, 0.2992, -0.0051]; singular, information only)"
+  },
+  "tape25_L1_bead_s1_lim_pa": {
+   "value": 2100469.8110852926,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "bead max principal, limit, tapeAlo_L1_L4-CORNER-SIDE-Y"
+  },
+  "tape25_L2_h_m": {
+   "value": 0.0011,
+   "unit": "m",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "local element size at the corners, tapeAlo_L2_L4-CORNER-SIDE-Y"
+  },
+  "tape25_L2_vm_s1_lim_pa": {
+   "value": 75131.29401579843,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s1, limit, tapeAlo_L2_L4-CORNER-SIDE-Y (ball centre [0.0307, 0.2975, -0.0065])"
+  },
+  "tape25_L2_peak_s1_lim_pa": {
+   "value": 111718.98536798757,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s1, limit, tapeAlo_L2_L4-CORNER-SIDE-Y (at [0.0299, 0.2985, -0.0056]; singular, information only)"
+  },
+  "tape25_L2_vm_s3_lim_pa": {
+   "value": 58401.37936402302,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s3, limit, tapeAlo_L2_L4-CORNER-SIDE-Y (ball centre [0.0971, 0.3033, -0.0081])"
+  },
+  "tape25_L2_peak_s3_lim_pa": {
+   "value": 87154.40868469735,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s3, limit, tapeAlo_L2_L4-CORNER-SIDE-Y (at [0.0954, 0.2985, -0.0077]; singular, information only)"
+  },
+  "tape25_L2_vm_tau_lim_pa": {
+   "value": 38655.76073960366,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) tau, limit, tapeAlo_L2_L4-CORNER-SIDE-Y (ball centre [0.0307, 0.2975, -0.0065])"
+  },
+  "tape25_L2_peak_tau_lim_pa": {
+   "value": 54222.597727724446,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak tau, limit, tapeAlo_L2_L4-CORNER-SIDE-Y (at [0.0299, 0.2985, -0.0056]; singular, information only)"
+  },
+  "tape25_L2_bead_s1_lim_pa": {
+   "value": 2899220.809262317,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "bead max principal, limit, tapeAlo_L2_L4-CORNER-SIDE-Y"
+  },
+  "tape50g_L2_h_m": {
+   "value": 0.0011,
+   "unit": "m",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "local element size at the corners, tapeAg_L2_L4-CORNER-SIDE-Y"
+  },
+  "tape50g_L2_vm_s1_lim_pa": {
+   "value": 68184.33067884443,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s1, limit, tapeAg_L2_L4-CORNER-SIDE-Y (ball centre [0.0309, 0.2884, -0.007])"
+  },
+  "tape50g_L2_peak_s1_lim_pa": {
+   "value": 93105.71781681057,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s1, limit, tapeAg_L2_L4-CORNER-SIDE-Y (at [0.0299, 0.2985, -0.0056]; singular, information only)"
+  },
+  "tape50g_L2_vm_s3_lim_pa": {
+   "value": 50673.025565605676,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s3, limit, tapeAg_L2_L4-CORNER-SIDE-Y (ball centre [0.0969, 0.3033, -0.0077])"
+  },
+  "tape50g_L2_peak_s3_lim_pa": {
+   "value": 74857.16767956725,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s3, limit, tapeAg_L2_L4-CORNER-SIDE-Y (at [0.0949, 0.2985, -0.0073]; singular, information only)"
+  },
+  "tape50g_L2_vm_tau_lim_pa": {
+   "value": 34824.867876446086,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) tau, limit, tapeAg_L2_L4-CORNER-SIDE-Y (ball centre [0.0309, 0.2884, -0.007])"
+  },
+  "tape50g_L2_peak_tau_lim_pa": {
+   "value": 45875.58250916727,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak tau, limit, tapeAg_L2_L4-CORNER-SIDE-Y (at [0.0299, 0.2985, -0.0056]; singular, information only)"
+  },
+  "tape50g_L2_bead_s1_lim_pa": {
+   "value": 3172542.9406987075,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "bead max principal, limit, tapeAg_L2_L4-CORNER-SIDE-Y"
+  },
+  "tape50g431_L2_h_m": {
+   "value": 0.0011,
+   "unit": "m",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "local element size at the corners, tapeA431_L2_L4-CORNER-SIDE-Y"
+  },
+  "tape50g431_L2_vm_s1_lim_pa": {
+   "value": 56772.5836468824,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s1, limit, tapeA431_L2_L4-CORNER-SIDE-Y (ball centre [0.0309, 0.2884, -0.007])"
+  },
+  "tape50g431_L2_peak_s1_lim_pa": {
+   "value": 78193.52971508067,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s1, limit, tapeA431_L2_L4-CORNER-SIDE-Y (at [0.0299, 0.2985, -0.0056]; singular, information only)"
+  },
+  "tape50g431_L2_vm_s3_lim_pa": {
+   "value": 38687.27636734419,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s3, limit, tapeA431_L2_L4-CORNER-SIDE-Y (ball centre [0.1203, 0.2884, -0.0082])"
+  },
+  "tape50g431_L2_peak_s3_lim_pa": {
+   "value": 54018.290775980204,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s3, limit, tapeA431_L2_L4-CORNER-SIDE-Y (at [0.0954, 0.2985, -0.0077]; singular, information only)"
+  },
+  "tape50g431_L2_vm_tau_lim_pa": {
+   "value": 28988.18994551741,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) tau, limit, tapeA431_L2_L4-CORNER-SIDE-Y (ball centre [0.0309, 0.2884, -0.007])"
+  },
+  "tape50g431_L2_peak_tau_lim_pa": {
+   "value": 38630.4859381503,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak tau, limit, tapeA431_L2_L4-CORNER-SIDE-Y (at [0.0307, 0.2985, -0.0056]; singular, information only)"
+  },
+  "tape50g431_L2_bead_s1_lim_pa": {
+   "value": 2550127.922176089,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "bead max principal, limit, tapeA431_L2_L4-CORNER-SIDE-Y"
+  },
+  "tape50_L2_servo_h_m": {
+   "value": 0.0011,
+   "unit": "m",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "local element size at the corners, tapeA_L2s_L4-CORNER-SIDE-Y@servo"
+  },
+  "tape50_L2_servo_vm_s1_lim_pa": {
+   "value": 19203.16803328098,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s1, limit, tapeA_L2s_L4-CORNER-SIDE-Y@servo (ball centre [0.1575, 0.2788, 0.0183])"
+  },
+  "tape50_L2_servo_peak_s1_lim_pa": {
+   "value": 20681.846434711955,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s1, limit, tapeA_L2s_L4-CORNER-SIDE-Y@servo (at [0.1575, 0.2763, 0.0183]; singular, information only)"
+  },
+  "tape50_L2_servo_vm_s3_lim_pa": {
+   "value": 61244.938415750716,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s3, limit, tapeA_L2s_L4-CORNER-SIDE-Y@servo (ball centre [0.2078, 0.2875, -0.0056])"
+  },
+  "tape50_L2_servo_peak_s3_lim_pa": {
+   "value": 104331.2268418188,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s3, limit, tapeA_L2s_L4-CORNER-SIDE-Y@servo (at [0.2078, 0.2875, -0.0056]; singular, information only)"
+  },
+  "tape50_L2_servo_vm_tau_lim_pa": {
+   "value": 29510.421589459245,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) tau, limit, tapeA_L2s_L4-CORNER-SIDE-Y@servo (ball centre [0.2078, 0.2875, -0.0056])"
+  },
+  "tape50_L2_servo_peak_tau_lim_pa": {
+   "value": 48566.99686956101,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak tau, limit, tapeA_L2s_L4-CORNER-SIDE-Y@servo (at [0.2078, 0.2875, -0.0056]; singular, information only)"
+  },
+  "tape25_L2_servo_h_m": {
+   "value": 0.0011,
+   "unit": "m",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "local element size at the corners, tapeAlo_L2_L4-CORNER-SIDE-Y@servo"
+  },
+  "tape25_L2_servo_vm_s1_lim_pa": {
+   "value": 18347.43078592056,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s1, limit, tapeAlo_L2_L4-CORNER-SIDE-Y@servo (ball centre [0.1575, 0.2763, 0.0183])"
+  },
+  "tape25_L2_servo_peak_s1_lim_pa": {
+   "value": 19740.655499057626,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s1, limit, tapeAlo_L2_L4-CORNER-SIDE-Y@servo (at [0.1575, 0.2763, 0.0183]; singular, information only)"
+  },
+  "tape25_L2_servo_vm_s3_lim_pa": {
+   "value": 59091.983726103084,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s3, limit, tapeAlo_L2_L4-CORNER-SIDE-Y@servo (ball centre [0.2078, 0.2875, -0.0056])"
+  },
+  "tape25_L2_servo_peak_s3_lim_pa": {
+   "value": 100578.96394871506,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s3, limit, tapeAlo_L2_L4-CORNER-SIDE-Y@servo (at [0.2078, 0.2875, -0.0056]; singular, information only)"
+  },
+  "tape25_L2_servo_vm_tau_lim_pa": {
+   "value": 28589.922373266418,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) tau, limit, tapeAlo_L2_L4-CORNER-SIDE-Y@servo (ball centre [0.2078, 0.2875, -0.0056])"
+  },
+  "tape25_L2_servo_peak_tau_lim_pa": {
+   "value": 46712.23366415243,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak tau, limit, tapeAlo_L2_L4-CORNER-SIDE-Y@servo (at [0.2078, 0.2875, -0.0056]; singular, information only)"
+  },
+  "tape50g_L2_servo_h_m": {
+   "value": 0.0011,
+   "unit": "m",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "local element size at the corners, tapeAg_L2_L4-CORNER-SIDE-Y@servo"
+  },
+  "tape50g_L2_servo_vm_s1_lim_pa": {
+   "value": 19232.221180704484,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s1, limit, tapeAg_L2_L4-CORNER-SIDE-Y@servo (ball centre [0.1575, 0.2788, 0.0183])"
+  },
+  "tape50g_L2_servo_peak_s1_lim_pa": {
+   "value": 20715.130233302072,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s1, limit, tapeAg_L2_L4-CORNER-SIDE-Y@servo (at [0.1575, 0.2763, 0.0183]; singular, information only)"
+  },
+  "tape50g_L2_servo_vm_s3_lim_pa": {
+   "value": 61204.98613618861,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s3, limit, tapeAg_L2_L4-CORNER-SIDE-Y@servo (ball centre [0.2078, 0.2875, -0.0056])"
+  },
+  "tape50g_L2_servo_peak_s3_lim_pa": {
+   "value": 104264.89107446812,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s3, limit, tapeAg_L2_L4-CORNER-SIDE-Y@servo (at [0.2078, 0.2875, -0.0056]; singular, information only)"
+  },
+  "tape50g_L2_servo_vm_tau_lim_pa": {
+   "value": 29491.850247506234,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) tau, limit, tapeAg_L2_L4-CORNER-SIDE-Y@servo (ball centre [0.2078, 0.2875, -0.0056])"
+  },
+  "tape50g_L2_servo_peak_tau_lim_pa": {
+   "value": 48535.74253928567,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak tau, limit, tapeAg_L2_L4-CORNER-SIDE-Y@servo (at [0.2078, 0.2875, -0.0056]; singular, information only)"
+  },
+  "tape50g431_L2_servo_h_m": {
+   "value": 0.0011,
+   "unit": "m",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "local element size at the corners, tapeA431_L2_L4-CORNER-SIDE-Y@servo"
+  },
+  "tape50g431_L2_servo_vm_s1_lim_pa": {
+   "value": 14052.177067445293,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s1, limit, tapeA431_L2_L4-CORNER-SIDE-Y@servo (ball centre [0.1575, 0.2865, 0.0183])"
+  },
+  "tape50g431_L2_servo_peak_s1_lim_pa": {
+   "value": 15036.662242559181,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s1, limit, tapeA431_L2_L4-CORNER-SIDE-Y@servo (at [0.1575, 0.281, 0.0183]; singular, information only)"
+  },
+  "tape50g431_L2_servo_vm_s3_lim_pa": {
+   "value": 48283.75797659123,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s3, limit, tapeA431_L2_L4-CORNER-SIDE-Y@servo (ball centre [0.2078, 0.2875, -0.0056])"
+  },
+  "tape50g431_L2_servo_peak_s3_lim_pa": {
+   "value": 82004.23463481148,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s3, limit, tapeA431_L2_L4-CORNER-SIDE-Y@servo (at [0.2078, 0.2875, -0.0056]; singular, information only)"
+  },
+  "tape50g431_L2_servo_vm_tau_lim_pa": {
+   "value": 23285.72344113127,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) tau, limit, tapeA431_L2_L4-CORNER-SIDE-Y@servo (ball centre [0.2078, 0.2875, -0.0056])"
+  },
+  "tape50g431_L2_servo_peak_tau_lim_pa": {
+   "value": 38166.00194667122,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak tau, limit, tapeA431_L2_L4-CORNER-SIDE-Y@servo (at [0.2078, 0.2875, -0.0056]; singular, information only)"
+  },
+  "base_L2_servo_h_m": {
+   "value": 0.0011,
+   "unit": "m",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "local element size at the corners, base_L2s_L4-CORNER-SIDE-Y@servo"
+  },
+  "base_L2_servo_vm_s1_lim_pa": {
+   "value": 18236.527794515827,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s1, limit, base_L2s_L4-CORNER-SIDE-Y@servo (ball centre [0.1583, 0.2763, 0.0175])"
+  },
+  "base_L2_servo_peak_s1_lim_pa": {
+   "value": 18236.527794515827,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s1, limit, base_L2s_L4-CORNER-SIDE-Y@servo (at [0.1583, 0.2763, 0.0175]; singular, information only)"
+  },
+  "base_L2_servo_vm_s3_lim_pa": {
+   "value": 50303.01434076717,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) s3, limit, base_L2s_L4-CORNER-SIDE-Y@servo (ball centre [0.2081, 0.2869, -0.0042])"
+  },
+  "base_L2_servo_peak_s3_lim_pa": {
+   "value": 63516.563823093675,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak s3, limit, base_L2s_L4-CORNER-SIDE-Y@servo (at [0.2081, 0.2869, -0.0042]; singular, information only)"
+  },
+  "base_L2_servo_vm_tau_lim_pa": {
+   "value": 23447.952403288164,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "vm(L/2) tau, limit, base_L2s_L4-CORNER-SIDE-Y@servo (ball centre [0.2081, 0.2869, -0.0042])"
+  },
+  "base_L2_servo_peak_tau_lim_pa": {
+   "value": 28225.065078301246,
+   "unit": "Pa",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "element peak tau, limit, base_L2s_L4-CORNER-SIDE-Y@servo (at [0.2081, 0.2869, -0.0042]; singular, information only)"
+  },
+  "rerun_check_rel": {
+   "value": 0.0009341634043100733,
+   "unit": "-",
+   "source": "team/C2/fea/c2r5_reduce.py",
+   "status": "UNVERIFIED",
+   "note": "largest |wave-1 / wave-2 - 1| of the decided-model vm(L/2) at level 2: wave 1 ran before A1's D-147 params edit (fin tube OD 22.10 mm, block bore follows), wave 2 on the current params"
+  }
+ },
+ "_runs": {
+  "tapeA_L2s": {
+   "args": {
+    "phase": "local",
+    "variant": "band",
+    "level": 2,
+    "cuts": "narrow",
+    "cases": [
+     "L4"
+    ],
+    "band_x": 0.24,
+    "band_dy": 0.2,
+    "band_y0": null,
+    "global_tag": "",
+    "t_model": 0.00035,
+    "Et": 44000.0,
+    "collar_m": 0.01,
+    "collar_E": 60000000.0,
+    "dbl_mult": 3.0,
+    "dbl_y": [
+     0.29,
+     0.35
+    ],
+    "dbl_x": 0.12,
+    "tag": "tapeA_L2s",
+    "geom": "d68",
+    "global_pkl": "",
+    "dump_servo": true,
+    "out_dir": "<scratch, outside the repo>"
+   },
+   "stats": {
+    "h_local_mm": 1.1,
+    "section_nodes": 6878,
+    "layers": 73,
+    "nodes": 462187,
+    "elements": 850046,
+    "bead_elements": 2583,
+    "min_signed_volume": -1.2639042048148167e-08,
+    "max_morph_shift_mm": 3.0,
+    "cuts": [
+     0.27,
+     0.37
+    ],
+    "glass_elements": 52260,
+    "collar_elements": 0,
+    "wall_s": 972.1
+   }
+  },
+  "tapeAg_L2": {
+   "args": {
+    "phase": "local",
+    "variant": "band",
+    "level": 2,
+    "cuts": "narrow",
+    "cases": [
+     "L4"
+    ],
+    "band_x": 0.24,
+    "band_dy": 0.2,
+    "band_y0": null,
+    "global_tag": "",
+    "t_model": 0.00035,
+    "Et": 44000.0,
+    "collar_m": 0.01,
+    "collar_E": 60000000.0,
+    "dbl_mult": 3.0,
+    "dbl_y": [
+     0.29,
+     0.35
+    ],
+    "dbl_x": 0.12,
+    "tag": "tapeAg_L2",
+    "geom": "d68g",
+    "global_pkl": "",
+    "dump_servo": true,
+    "out_dir": "<scratch, outside the repo>"
+   },
+   "stats": {
+    "h_local_mm": 1.1,
+    "section_nodes": 6888,
+    "layers": 73,
+    "nodes": 462117,
+    "elements": 845629,
+    "bead_elements": 2530,
+    "min_signed_volume": -1.2639042048148167e-08,
+    "max_morph_shift_mm": 3.0,
+    "cuts": [
+     0.27,
+     0.37
+    ],
+    "glass_elements": 52260,
+    "collar_elements": 0,
+    "wall_s": 969.7
+   }
+  },
+  "tapeA431_L2": {
+   "args": {
+    "phase": "local",
+    "variant": "band",
+    "level": 2,
+    "cuts": "narrow",
+    "cases": [
+     "L4"
+    ],
+    "band_x": 0.24,
+    "band_dy": 0.2,
+    "band_y0": null,
+    "global_tag": "",
+    "t_model": 0.00035,
+    "Et": 44000.0,
+    "collar_m": 0.01,
+    "collar_E": 60000000.0,
+    "dbl_mult": 3.0,
+    "dbl_y": [
+     0.29,
+     0.35
+    ],
+    "dbl_x": 0.12,
+    "tag": "tapeA431_L2",
+    "geom": "d68",
+    "global_pkl": "redesign/team/C2/fea/out/d68_global_block_g431.pkl",
+    "dump_servo": true,
+    "out_dir": "<scratch, outside the repo>"
+   },
+   "stats": {
+    "h_local_mm": 1.1,
+    "section_nodes": 6878,
+    "layers": 73,
+    "nodes": 462187,
+    "elements": 850046,
+    "bead_elements": 2583,
+    "min_signed_volume": -1.2639042048148167e-08,
+    "max_morph_shift_mm": 3.0,
+    "cuts": [
+     0.27,
+     0.37
+    ],
+    "glass_elements": 52260,
+    "collar_elements": 0,
+    "wall_s": 849.8
+   }
+  },
+  "tapeAlo_L2": {
+   "args": {
+    "phase": "local",
+    "variant": "band",
+    "level": 2,
+    "cuts": "narrow",
+    "cases": [
+     "L4"
+    ],
+    "band_x": 0.24,
+    "band_dy": 0.2,
+    "band_y0": null,
+    "global_tag": "",
+    "t_model": 0.00035,
+    "Et": 22000.0,
+    "collar_m": 0.01,
+    "collar_E": 60000000.0,
+    "dbl_mult": 3.0,
+    "dbl_y": [
+     0.29,
+     0.35
+    ],
+    "dbl_x": 0.12,
+    "tag": "tapeAlo_L2",
+    "geom": "d68",
+    "global_pkl": "",
+    "dump_servo": true,
+    "out_dir": "<scratch, outside the repo>"
+   },
+   "stats": {
+    "h_local_mm": 1.1,
+    "section_nodes": 6878,
+    "layers": 73,
+    "nodes": 462187,
+    "elements": 850046,
+    "bead_elements": 2583,
+    "min_signed_volume": -1.2639042048148167e-08,
+    "max_morph_shift_mm": 3.0,
+    "cuts": [
+     0.27,
+     0.37
+    ],
+    "glass_elements": 52260,
+    "collar_elements": 0,
+    "wall_s": 842.1
+   }
+  },
+  "base_L2s": {
+   "args": {
+    "phase": "local",
+    "variant": "base",
+    "level": 2,
+    "cuts": "narrow",
+    "cases": [
+     "L4"
+    ],
+    "band_x": 0.12,
+    "band_dy": 0.025,
+    "band_y0": null,
+    "global_tag": "",
+    "t_model": 0.00035,
+    "Et": 2600000.0,
+    "collar_m": 0.01,
+    "collar_E": 60000000.0,
+    "dbl_mult": 0.0,
+    "dbl_y": [
+     0.29,
+     0.35
+    ],
+    "dbl_x": 0.12,
+    "tag": "base_L2s",
+    "geom": "d68",
+    "global_pkl": "",
+    "dump_servo": true,
+    "out_dir": "<scratch, outside the repo>"
+   },
+   "stats": {
+    "h_local_mm": 1.1,
+    "section_nodes": 3419,
+    "layers": 63,
+    "nodes": 185720,
+    "elements": 324160,
+    "bead_elements": 3420,
+    "min_signed_volume": -3.203348554976864e-08,
+    "max_morph_shift_mm": 3.0,
+    "cuts": [
+     0.27,
+     0.37
+    ],
+    "glass_elements": 0,
+    "collar_elements": 0,
+    "wall_s": 268.7
+   }
+  }
+ }
+}

@@ -30,6 +30,11 @@ class StubBackend(Backend):
         elif shape.kind == 'loft':
             if len(shape.sections) < 2 or any(len(l) < 3 for _, l in shape.sections):
                 raise ValueError('%s: loft needs >= 2 sections of >= 3 points' % comp.id)
+        elif shape.kind == 'mesh':
+            if len(shape.verts) < 4 or len(shape.tris) < 4:
+                raise ValueError('%s: mesh needs >= 4 vertices and >= 4 triangles' % comp.id)
+            if any(q < 0 or q >= len(shape.verts) for t in shape.tris for q in t):
+                raise ValueError('%s: mesh triangle index out of range' % comp.id)
         else:
             raise ValueError('unknown shape kind ' + shape.kind)
         self.counts['bodies'] += 1

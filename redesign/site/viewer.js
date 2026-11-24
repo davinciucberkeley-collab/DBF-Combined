@@ -1,11 +1,12 @@
 // 3-D aircraft explorer: three.js (ES modules from jsDelivr via the import map in app.html) + the viewer rules in model.js.
 // Adapted from redesign/viewer/app.js: modes (Aircraft / Inside & wiring / Structure / Exploded), part browser, part panel,
-// focus, plus a cruise / hover attitude toggle and a ground-kit toggle. Data: data/viewer-data.json; geometry: assets/k09l.glb.
+// focus, plus a cruise / hover attitude toggle and a ground-kit toggle. Data: data/viewer-data.json; geometry: assets/concept-a.glb.
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import M from './model.js?v=20261111d';
+import M from './model.js?v=20261116e';
 
 const GH = 'https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/';
 const $ = s => document.querySelector(s);
@@ -72,13 +73,13 @@ function initThree() {
   G.controls = new OrbitControls(G.camera, canvas);
   Object.assign(G.controls, { enableDamping: true, dampingFactor: 0.12, screenSpacePanning: true, zoomToCursor: true });
   G.controls.addEventListener('change', requestRender);
-  new ResizeObserver(resize).observe($('#stage'));
+  new ResizeObserver(resize).observe($('#canvas'));   // the canvas fills the stage on wide screens and sits under the toolbar on narrow ones
   resize();
   requestAnimationFrame(loop);
   return true;
 }
 function resize() {
-  const st = $('#stage'), w = st.clientWidth, h = st.clientHeight;
+  const st = $('#canvas'), w = st.clientWidth, h = st.clientHeight;
   if (!w || !h) return;   // the Aircraft page is hidden: keep the last size
   G.renderer.setSize(w, h, false);
   G.camera.aspect = w / h; G.camera.updateProjectionMatrix();
@@ -260,7 +261,7 @@ function lookOf(p) {
   const mat = String(p.material || '').toLowerCase(), name = String(p.name || '').toLowerCase(), id = String(p.id || '');
   const has = re => re.test(mat);
   if (/^PRP-001/.test(id) || has(/^motor/)) return 'motor';
-  if (/^PRP-003/.test(id) || /\bprop\b/.test(name) && has(/nylon/)) return 'prop';
+  if (/\bprop\b/.test(name) && has(/nylon/)) return 'prop';
   if (/^HRN-/.test(id) || has(/copper \+ silicone|wire/)) return 'wire';
   if (has(/lipo/)) return 'battery';
   if (has(/fr4/)) return 'pcb';
@@ -543,6 +544,16 @@ function claimHtml(c) {
     (c.how ? '<div class="how">Verify: ' + esc(c.how) + '</div>' : '') +
     '<div class="how"><a class="ds-link" href="#proof-' + esc(encodeURIComponent(c.id)) + '">Open the proof chain</a></div></div>' + badge(c.status) + '</li>';
 }
+// vendor page (buy parts, or the material line for made parts) and the build-film stage clip that shows the part going on
+function srcLinks(p) {
+  const ok = u => /^https?:\/\//.test(u) || /^assets\/[\w./-]+$/.test(u);
+  const L = [];
+  if (p.vendor_url && ok(p.vendor_url)) L.push('<a class="ds-link" href="' + esc(p.vendor_url) + '" target="_blank" rel="noopener">' + (p.make_or_buy === 'make' ? 'material vendor' : 'vendor page') + ' &#8599;</a>');
+  if (p.how_url && ok(p.how_url)) L.push('<a class="ds-link" href="' + esc(p.how_url) + '" target="_blank" rel="noopener">' + 'build clip: where it goes on' + ' &#8599;</a>');
+  if (p.drawing_url && ok(p.drawing_url)) L.push('<a class="ds-link" href="' + esc(p.drawing_url) + '" target="_blank" rel="noopener">engineering drawing (PDF) &#8599;</a>');
+  if (p.stl_url && ok(p.stl_url)) L.push('<a class="ds-link" href="' + esc(p.stl_url) + '" target="_blank" rel="noopener">STL to print &#8599;</a>');
+  return L.length ? '<br>' + L.join(' &middot; ') : '';
+}
 function renderPanel() {
   const I = $('#inspector');
   if (!S.sel) { I.innerHTML = summaryHtml(); return; }
@@ -551,7 +562,7 @@ function renderPanel() {
   const e = G.parts.get(id);
   const nums = [['Mass', M.fmtMass(p.mass_g) + (p.flight === false ? ' <span class="ds-meta">(ground, not flying mass)</span>' : '')], ['Material', esc(p.material || '—')],
     ['Make / buy', esc(p.make_or_buy || '—') + (typeof p.unit_cost_usd === 'number' ? ' · $' + M.fmtNum(p.unit_cost_usd, 2) : '')],
-    ['Vendor / file', esc(p.vendor || '—')]];
+    ['Vendor / file', esc(p.vendor || '—') + srcLinks(p)]];
   if (p.qty && p.qty !== 1) nums.push(['Qty', M.fmtNum(p.qty)]);
   if (p.process) nums.push(['Process', esc(p.process)]);
   nums.push(['CG x y z', Array.isArray(p.cg_xyz_m) ? p.cg_xyz_m.map(v => M.fmtNum(v, 3)).join(', ') + ' m' : '—']);
@@ -563,7 +574,11 @@ function renderPanel() {
     '<section class="ds-row"><button class="ds-btn primary" data-act="focus"' + (e ? '' : ' disabled') + '>Focus</button>' +
     '<button class="ds-btn" data-act="isolate"' + (e ? '' : ' disabled') + '>' + (S.isolated === id ? 'Show all' : 'Isolate') + '</button>' +
     (spec ? '<a class="ds-btn" href="' + esc(spec) + '" target="_blank" rel="noopener">SPEC.md</a>' : '') + '</section>' +
-    '<section><h3>Numbers</h3>' + kv(nums) + (p.notes ? '<p class="ds-meta" style="margin:6px 0 0">' + esc(p.notes) + '</p>' : '') + '</section>';
+    '<section><h3>Numbers</h3>' + kv(nums) + (p.notes ? '<p class="ds-meta" style="margin:6px 0 0">' + esc(p.notes) + '</p>' : '') + '</section>'
+  const dm = p.drawing_url && /\/([A-Z0-9-]+)\.pdf$/.exec(p.drawing_url);   // its engineering drawing sheet (site/make_drawing_gallery.py)
+  if (dm) h += '<section><h3>Engineering drawing</h3><div class="gallery v-drw"><a href="assets/drawings/' + dm[1] + '.webp" data-lightbox="assets/drawings/' + dm[1] + '.webp" data-caption="' + esc('Drawing ' + dm[1] + ' (' + id + ' ' + (p.name || '') + '), sheet 1') + '">' +
+    '<img src="assets/drawings/thumb/' + dm[1] + '.jpg" alt="Engineering drawing ' + esc(dm[1]) + '" loading="lazy" width="480" height="311"></a></div>' +
+    '<p class="ds-meta" style="margin:6px 0 0">Sheet ' + esc(dm[1]) + ': click to enlarge. <a class="ds-link" href="' + esc(p.drawing_url) + '" target="_blank" rel="noopener">PDF with all sheets &#8599;</a></p></section>';
   h += '<section><h3>Interfaces (' + ifs.length + ')</h3>' + (ifs.length ? '<ul class="ds-iface v-iface">' + ifs.map(f => ifaceHtml(f, id)).join('') + '</ul>' : '<p class="ds-meta" style="margin:0">None declared. A part with no interface floats.</p>') + '</section>';
   h += '<section><h3>Claims about this part (' + claims.length + ')</h3>' + (claims.length ? '<ul class="ds-iface">' + claims.map(claimHtml).join('') + '</ul>' : '<p class="ds-meta" style="margin:0">No proof-chain claim names this part.</p>') + '</section></article>';
   I.innerHTML = h; I.scrollTop = 0;
@@ -612,7 +627,7 @@ function summaryHtml() {
   const d = S.data, mc = M.massCG(d), by = {};
   for (const p of d.parts) if (p.flight !== false) by[p.status] = (by[p.status] || 0) + 1;
   const lim = mc.limit_g, over = lim !== null && mc.total_g > lim;
-  let h = '<div class="ds-panel v-summary"><h2>K09-L as designed</h2><p>Click a part for its numbers, interfaces and claims; double-click to focus. ' +
+  let h = '<div class="ds-panel v-summary"><h2>Concept A as modelled</h2><p>Click a part for its numbers, interfaces and claims; double-click to focus. ' +
     'Modes: <b>Aircraft</b>, <b>Inside &amp; wiring</b> (skins x-rayed, electrical parts solid), <b>Structure</b> (load path only), <b>Exploded</b> (slider).</p>' +
     '<div class="ds-row">' + M.STATUSES.filter(s => by[s]).map(s => badge(s) + '<span class="ds-meta ds-mono">' + by[s] + '</span>').join(' ') + '</div>' +
     kv([['Flight parts', M.fmtNum(mc.count)], ['Declared mass', M.fmtMass(mc.total_g) + (lim !== null ? ' <span class="ds-meta">of ' + M.fmtMass(lim) + ' gate</span>' : '')],
@@ -620,14 +635,15 @@ function summaryHtml() {
       ['Interfaces', M.fmtNum(d.edges.length)], ['Claims', M.fmtNum(d.claims.length)], ['Data built', esc(d.generated)]]);
   if (lim !== null) h += '<div class="v-meter' + (over ? ' over' : '') + '"><i style="width:' + Math.min(100, mc.total_g / lim * 100).toFixed(1) + '%"></i></div>';
   if (mc.subsystems.length) {
-    h += '<table class="v-subtable"><tr><th>Subsystem</th><th>Mass</th><th>Allocation</th></tr>';
+    const hasAlloc = mc.subsystems.some(s => s.alloc_g !== null);   // the column is dropped when no subsystem has an allocation
+    h += '<table class="v-subtable"><tr><th>Subsystem</th><th>Mass</th>' + (hasAlloc ? '<th>Allocation</th>' : '') + '</tr>';
     for (const s of mc.subsystems) h += '<tr><td>' + esc(s.subsystem) + '</td><td' + (s.alloc_g !== null && s.mass_g > s.alloc_g ? ' class="over"' : '') + '>' +
-      M.fmtMass(s.mass_g) + '</td><td>' + M.fmtMass(s.alloc_g) + '</td></tr>';
+      M.fmtMass(s.mass_g) + '</td>' + (hasAlloc ? '<td>' + M.fmtMass(s.alloc_g) + '</td>' : '') + '</tr>';
     h += '</table>';
   }
   h += '<div class="v-keys"><span class="ds-kbd">1</span>Aircraft<span class="ds-kbd">2</span>Inside &amp; wiring<span class="ds-kbd">3</span>Structure<span class="ds-kbd">4</span>Exploded' +
     '<span class="ds-kbd">H</span>Fasteners<span class="ds-kbd">F</span>Focus selected<span class="ds-kbd">Esc</span>Show full aircraft<span class="ds-kbd">/</span>Search</div>' +
-    '<p class="ds-source">Declared masses from interfaces.json (A3-R7 roll-up in MASS-CG.md); allocations from params/mass_budget.json; geometry from blender/export_glb.py; ground tools excluded.</p></div>';
+    '<p class="ds-source">Declared masses from the merged concept A interfaces.json; gate and CG band from qp/A/cad/model/mass_budget.json (no per-subsystem allocations); claims from the concept A proof graph (qp/A/proofs/out/graph.json); geometry from the concept A CAD (qp/A/cad/model) via blender/export_glb.py; vendor links map each CAD part to its BOM-A line (qp/A/cad/parts_links_a.py); cost per part is not split out.</p></div>';
   return h;
 }
 
@@ -657,6 +673,15 @@ function hint() {
 function renderCounts() {
   const d = S.data, mc = M.massCG(d);
   $('#counts').textContent = M.fmtNum(mc.count) + ' flight parts · ' + M.fmtMass(mc.total_g) + ' · ' + M.fmtNum(d.edges.length) + ' interfaces';
+  // top status bar on the Aircraft page (same numbers as the inspector summary)
+  const put = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
+  const lim = mc.limit_g, over = lim !== null && mc.total_g > lim;
+  put('sb-mass', M.fmtMass(mc.total_g) + (lim !== null ? ' <small>of ' + M.fmtMass(lim) + ' gate' + (over ? ', over' : '') + '</small>' : ''));
+  put('sb-cg', mc.cg ? M.fmtNum(mc.cg[0], 3) + ' m' + (mc.cg_range ? ' <small>target ' + M.fmtNum(mc.cg_range[0], 3) + '–' + M.fmtNum(mc.cg_range[1], 3) + '</small>' : '') : '—');
+  put('sb-claims', M.fmtNum(d.claims.length) + ' <small>' + M.fmtNum(d.edges.length) + ' interfaces</small>');
+  put('sb-parts', M.fmtNum(mc.count));
+  put('sb-built', esc(d.generated));
+  const sbar = document.getElementById('statusbar'); if (sbar) sbar.classList.toggle('over', over);
 }
 
 // ---------------- events ----------------
@@ -734,7 +759,8 @@ export const viewer = {
   themeChanged,
   setQuery(q) { const s = $('#search'); if (!s) return; s.value = q; S.query = q; S.ov = {}; if (S.data) renderTree(); },
   resize() { if (G.renderer) resize(); },
-  selectPart(id) { if (!S.idx || !S.idx.parts.has(id)) return false; select({ type: 'part', id }, { focus: true }); return true; },
+  selectPart(id) { if (!S.idx || !S.ready || !S.idx.parts.has(id)) return false;   // wait for the model: focusing needs the scene
+    select({ type: 'part', id }, { focus: true }); return true; },
   state: S,
   setFasteners: on => setFast(!!on),
 };
@@ -743,45 +769,38 @@ export async function start() {
   readColours(); wire(); hint();
   progress(0, 'reading part data');
   let data;
-  try { const r = await fetch('data/viewer-data.json?v=20261112a'); if (!r.ok) throw new Error('HTTP ' + r.status); data = await r.json(); }
+  try { const r = await fetch('data/viewer-data.json?v=20261118f'); if (!r.ok) throw new Error('HTTP ' + r.status); data = await r.json(); }
   catch (e) { loadFailed('Part data not found', esc(e.message) + '<br>data/viewer-data.json is built by redesign/viewer/build_data.py --out site/data'); return; }
   S.data = data; S.idx = M.index(data);
+  if (!data.parts.some(p => p.flight === false)) { const kb = $('#kit'); if (kb) kb.style.display = 'none'; }   // concept A has no ground kit / transport box in the model
   renderCounts(); renderTree(); renderPanel();
   if (!initThree()) { loadFailed('3-D is not available', 'This browser could not start WebGL. The part list and panel still work.'); return; }
-  const total = (data.glb && data.glb.bytes) || 3443204;
-  // the embedded copy comes in parts (data/assembly.glb.part1.js ... partN.js, N = data.glb.js_parts): a host that
-  // caps a file's size (claude.ai artifacts: 16 MB per text file) takes each part; build_data.py writes them
-  const nParts = (data.glb && data.glb.js_parts) || 0;
+  // The model is meshopt-compressed (gltf-transform meshopt, 16-bit positions per mesh, 12-bit normals; 7.4 MB -> 1.6 MB).
+  // assets/concept-a.opt.glb is fetched as a binary; hosts that do not serve .glb (claude.ai artifacts) and file://
+  // get the same bytes as base64 in data/assembly.opt.glb.part1.js. The decoder is three's own, from the pinned jsDelivr import map.
+  const total = 1587964;
+  const mkLoader = () => new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
   const addScript = src => new Promise((ok, no) => {
     const s = document.createElement('script');
     s.src = src; s.onload = ok; s.onerror = () => no(new Error(src.split('?')[0] + ' not found'));
     document.head.appendChild(s);
   });
   const loadGlbScript = async () => {
-    window.VIEWER_GLB_B64_PARTS = []; window.VIEWER_GLB_B64 = null;
-    if (nParts) {
-      for (let i = 1; i <= nParts; i++) {
-        progress(0.5 * i / nParts, 'loading model (embedded copy, part ' + i + ' of ' + nParts + ')');
-        await addScript('data/assembly.glb.part' + i + '.js?v=20261112a');
-      }
-    } else {
-      progress(0.5, 'loading model (embedded copy)');
-      await addScript('data/assembly.glb.js?v=20261112a');
-    }
-    const b64 = nParts ? window.VIEWER_GLB_B64_PARTS.join('') : (window.VIEWER_GLB_B64 || '');
-    window.VIEWER_GLB_B64_PARTS = null; window.VIEWER_GLB_B64 = null;
-    const bin = atob(b64), buf = new Uint8Array(bin.length);
+    window.VIEWER_GLB_B64_PARTS = [];
+    progress(0.5, 'loading model (embedded copy)');
+    await addScript('data/assembly.opt.glb.part1.js?v=20261118f');
+    const bin = atob(window.VIEWER_GLB_B64_PARTS.join('')), buf = new Uint8Array(bin.length);
+    window.VIEWER_GLB_B64_PARTS = null;
     for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
-    return new Promise((res, rej) => new GLTFLoader().parse(buf.buffer, '', res, rej));
+    return new Promise((res, rej) => mkLoader().parse(buf.buffer, '', res, rej));
   };
   let gltf;
   try {
-    gltf = await new Promise((res, rej) => new GLTFLoader().load('assets/k09l.glb?v=20261112a', res,
+    gltf = await new Promise((res, rej) => mkLoader().load('assets/concept-a.opt.glb?v=20261118f', res,
       ev => { const got = ev.loaded || 0; progress(Math.min(got / total, 1), kB(got) + ' of ' + kB(total)); }, rej));
   } catch (e) {
-    // hosts that do not serve .glb (claude.ai artifacts) and file:// get the same bytes as base64 in a script
     try { gltf = await loadGlbScript(); }
-    catch (e2) { loadFailed('Model could not be loaded', esc((e && e.message) || e) + '<br>assets/k09l.glb'); return; }
+    catch (e2) { loadFailed('Model could not be loaded', esc((e && e.message) || e) + '<br>assets/concept-a.opt.glb'); return; }
   }
   progress(1, 'building scene');
   buildModel(gltf);

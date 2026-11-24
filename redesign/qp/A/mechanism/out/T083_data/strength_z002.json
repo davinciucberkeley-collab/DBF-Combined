@@ -1,0 +1,660 @@
+{
+ "tag": "z002",
+ "daf": 2.23,
+ "geom": {
+  "rib": [
+   25.0,
+   23.0
+  ],
+  "fil_w": 12.0,
+  "slv_a": 7.3,
+  "A_fin": 3259.0002616944544,
+  "A_cen": 3308.728827831719,
+  "n_ply": 3,
+  "flange": {
+   "A": 1465.5,
+   "J": 1489155.9296875037
+  },
+  "plate": {
+   "A": 1962.4999999999998,
+   "J": 2870187.8906250037
+  },
+  "sleeve": {
+   "t": 1.15,
+   "Am": 149.86453793439765,
+   "Z": 172.77272230501373,
+   "A": 57.837500000000006
+  }
+ },
+ "rows": [
+  {
+   "part": "Bridge CGE-004 16x14 (CF; shortened to x 51.5)",
+   "row": "B3 bridge-in-socket bond, axial + torque (integrity class)",
+   "rb": 1.56885547731641,
+   "x15": 1.0459036515442734,
+   "x223": 0.7035226355678968,
+   "cls": "integrity",
+   "verdict": "integrity class: < 1",
+   "case": "hard 7/7 combo z0.02 mu0.40"
+  },
+  {
+   "part": "Bridge CGE-004 16x14 (CF; shortened to x 51.5)",
+   "row": "B1 bridge bending at the socket mouth x 27.5 (350 MPa EST, KF)",
+   "rb": 3.106208746342403,
+   "x15": 2.0708058308949355,
+   "x223": 1.392918720332916,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 10 narrow neg z0.02 mu0.30"
+  },
+  {
+   "part": "Centre node CGE-006 (one machined 6061-T6 part: octagonal sleeve apothem 7.3 mm, bore 12.3, flanges 1.0 mm, bridge socket boss OD 20.1) + bulkheads WNG-013",
+   "row": "C3p flange bond peel from the out-of-plane share (half the hub Mz, Mx; integrity class)",
+   "rb": 1.1774362559489708,
+   "x15": 0.7849575039659805,
+   "x223": 0.5279983210533502,
+   "cls": "integrity",
+   "verdict": "integrity class: < 1",
+   "case": "hard 7/7 combo z0.02 mu0.40"
+  },
+  {
+   "part": "Centre node CGE-006 (one machined 6061-T6 part: octagonal sleeve apothem 7.3 mm, bore 12.3, flanges 1.0 mm, bridge socket boss OD 20.1) + bulkheads WNG-013",
+   "row": "C3 flange-to-bulkhead bond, polar shear (T_half; flange area 1466 mm2, J 1.49e+06 mm4, r 60.4 mm), epoxy 2.0",
+   "rb": 2.579367918650849,
+   "x15": 1.7195786124338994,
+   "x223": 1.1566672280945511,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 7/7 combo z0.02 mu0.40"
+  },
+  {
+   "part": "Centre node CGE-006 (one machined 6061-T6 part: octagonal sleeve apothem 7.3 mm, bore 12.3, flanges 1.0 mm, bridge socket boss OD 20.1) + bulkheads WNG-013",
+   "row": "C1 sleeve: torsion (Bredt, wall 1.15 mm at the flats) + bending (half the hub Mx, Mz at the spar axis), von Mises x KF <= 240",
+   "rb": 2.8247559399028606,
+   "x15": 1.883170626601907,
+   "x223": 1.2667066995080092,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 7/7 combo z0.02 mu0.40"
+  },
+  {
+   "part": "Centre node CGE-006 (one machined 6061-T6 part: octagonal sleeve apothem 7.3 mm, bore 12.3, flanges 1.0 mm, bridge socket boss OD 20.1) + bulkheads WNG-013",
+   "row": "C2 sleeve-to-flange junction (integral, 1.0 mm flange round the sleeve), von Mises x KF",
+   "rb": 3.033186269489699,
+   "x15": 2.0221241796597993,
+   "x223": 1.3601732150178023,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 7/7 combo z0.02 mu0.40"
+  },
+  {
+   "part": "Centre node CGE-006 (one machined 6061-T6 part: octagonal sleeve apothem 7.3 mm, bore 12.3, flanges 1.0 mm, bridge socket boss OD 20.1) + bulkheads WNG-013",
+   "row": "C6 socket boss annulus (OD 20.1 / 16.1) at the socket end x 51.5: bending hypot(My, Mz) + axial, von Mises x KF",
+   "rb": 5.464444776464991,
+   "x15": 3.6429631843099943,
+   "x223": 2.450423666576229,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 10 narrow neg z0.02 mu0.30"
+  },
+  {
+   "part": "Centre node CGE-006 (one machined 6061-T6 part: octagonal sleeve apothem 7.3 mm, bore 12.3, flanges 1.0 mm, bridge socket boss OD 20.1) + bulkheads WNG-013",
+   "row": "C4 centre bulkhead-to-skin tape lap (one bulkhead per side, 8 mm lap; outboard lap only below: the flange slit), epoxy 2.0",
+   "rb": 5.537631075066417,
+   "x15": 3.691754050044278,
+   "x223": 2.4832426345589313,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 7/7 combo z0.02 mu0.40"
+  },
+  {
+   "part": "Centre node CGE-006 (one machined 6061-T6 part: octagonal sleeve apothem 7.3 mm, bore 12.3, flanges 1.0 mm, bridge socket boss OD 20.1) + bulkheads WNG-013",
+   "row": "C5 centre bulkhead in-plane shear (0.5 mm CF), S 70 MPa lower bound (EST)",
+   "rb": 12.113567976707788,
+   "x15": 8.075711984471859,
+   "x223": 5.432093263097663,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 7/7 combo z0.02 mu0.40"
+  },
+  {
+   "part": "Centre node CGE-006 (one machined 6061-T6 part: octagonal sleeve apothem 7.3 mm, bore 12.3, flanges 1.0 mm, bridge socket boss OD 20.1) + bulkheads WNG-013",
+   "row": "C7 6061 socket wall bearing under the bridge (6M/(D L^2) + V/(D L), D 16, L 24), bearing yield 386 MPa (ASM / aerospacemetals.com data sheet, typical, e/D 2.0, read 2026-11-21), KF",
+   "rb": 31.17778727461597,
+   "x15": 20.785191516410645,
+   "x223": 13.98107052673362,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 10 narrow neg z0.02 mu0.30"
+  },
+  {
+   "part": "Fin node FIN-005 (2 CF bulkheads 0.5 mm) + FIN-009 (2 CF in-plane plates 0.5 mm) + rib straps (4-ply 0/90 glass, undrawn laminate)",
+   "row": "N4a rib strap laps on the skin (Mz, Fy; one 8 mm lap per strap, 2 straps), epoxy 2.0",
+   "rb": 2.7703338700733218,
+   "x15": 1.8468892467155478,
+   "x223": 1.242302183889382,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 16 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "part": "Fin node FIN-005 (2 CF bulkheads 0.5 mm) + FIN-009 (2 CF in-plane plates 0.5 mm) + rib straps (4-ply 0/90 glass, undrawn laminate)",
+   "row": "N3 rib-to-bulkhead flox fillet, per flank (My, Fz, rib torsion Mx as a z-couple), L 105.5 mm, width 12 mm (EST), epoxy 2.0",
+   "rb": 3.5149057066481197,
+   "x15": 2.3432704710987466,
+   "x223": 1.5761908998422063,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 7/7 combo z0.02 mu0.40"
+  },
+  {
+   "part": "Fin node FIN-005 (2 CF bulkheads 0.5 mm) + FIN-009 (2 CF in-plane plates 0.5 mm) + rib straps (4-ply 0/90 glass, undrawn laminate)",
+   "row": "N5 in-plane plates bonded on the skin, polar group (Mz at the plate centroid; 2 plates, area 1962 mm2 each less the rib notch, J 2.87e+06 mm4)",
+   "rb": 6.340206095041088,
+   "x15": 4.226804063360725,
+   "x223": 2.8431417466551965,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 16 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "part": "Fin node FIN-005 (2 CF bulkheads 0.5 mm) + FIN-009 (2 CF in-plane plates 0.5 mm) + rib straps (4-ply 0/90 glass, undrawn laminate)",
+   "row": "N1 bulkhead-to-skin tape lap (2 bulkheads, 8 mm lap each, q / 2 per bulkhead), epoxy 2.0 MPa",
+   "rb": 8.277364693738416,
+   "x15": 5.518243129158944,
+   "x223": 3.711822732618124,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Z5_b45 narrow (z drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Fin node FIN-005 (2 CF bulkheads 0.5 mm) + FIN-009 (2 CF in-plane plates 0.5 mm) + rib straps (4-ply 0/90 glass, undrawn laminate)",
+   "row": "N4b rib strap tension (4 plies 0/90, X 298 MPa, ACP x 0.70), half of w_y per strap",
+   "rb": 11.06047024744782,
+   "x15": 7.37364683163188,
+   "x223": 4.959852128900367,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 16 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "part": "Fin node FIN-005 (2 CF bulkheads 0.5 mm) + FIN-009 (2 CF in-plane plates 0.5 mm) + rib straps (4-ply 0/90 glass, undrawn laminate)",
+   "row": "N6 skin + plate in-plane shear at the strap lap line (w_y spread both ways, 2 surfaces, 3-ply skin + 0.5 mm plate), S 70 MPa lower bound (EST)",
+   "rb": 16.023906063022952,
+   "x15": 10.682604042015301,
+   "x223": 7.185608100010293,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 16 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "part": "Fin node FIN-005 (2 CF bulkheads 0.5 mm) + FIN-009 (2 CF in-plane plates 0.5 mm) + rib straps (4-ply 0/90 glass, undrawn laminate)",
+   "row": "N2 bulkhead in-plane shear (2 x 0.5 mm CF), glass +-45 S 70 MPa as the lower bound (EST)",
+   "rb": 18.106735267552782,
+   "x15": 12.071156845035189,
+   "x223": 8.119612227602145,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Z5_b45 narrow (z drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Rib FIN-002 25x23 CF",
+   "row": "R1 rib tube at the node exit x 176 (axial Fx, torsion Mx, bending hypot(My, Mz)), CF 350 / 30, KF",
+   "rb": 2.546425553721302,
+   "x15": 1.6976170358142013,
+   "x223": 1.1418948671395972,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Tb_h5 wide (y drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Rib FIN-002 25x23 CF",
+   "row": "R2 rib tube at the root-block mouth x 255, KF",
+   "rb": 2.5478041225675336,
+   "x15": 1.698536081711689,
+   "x223": 1.1425130594473245,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Tb_h5 wide (y drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Root block FIN-003 (PETG, socket 29 x 29 for the 25 mm rib; drawn block, not the tallied enlargement)",
+   "row": "P6 ring-to-socket junction (16.5 x 29 mm), interlayer 9.5",
+   "rb": 0.9880432094603344,
+   "x15": 0.6586954729735562,
+   "x223": 0.4430687037938719,
+   "cls": "RF",
+   "verdict": "FAIL",
+   "case": "SITL Tb_h5 wide (y drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Root block FIN-003 (PETG, socket 29 x 29 for the 25 mm rib; drawn block, not the tallied enlargement)",
+   "row": "P8 socket wall, PETG box 29 / bore 25, bending + torsion, interlayer 9.5",
+   "rb": 1.3434377155202826,
+   "x15": 0.8956251436801884,
+   "x223": 0.6024384374530415,
+   "cls": "RF",
+   "verdict": "FAIL",
+   "case": "hard 7/7 combo z0.02 mu0.40"
+  },
+  {
+   "part": "Root block FIN-003 (PETG, socket 29 x 29 for the 25 mm rib; drawn block, not the tallied enlargement)",
+   "row": "P7 socket: rib bearing, compression side (PETG 20)",
+   "rb": 4.246696418490695,
+   "x15": 2.831130945660463,
+   "x223": 1.9043481697267688,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 7/7 combo z0.02 mu0.40"
+  },
+  {
+   "part": "Root block FIN-003 (PETG, socket 29 x 29 for the 25 mm rib; drawn block, not the tallied enlargement)",
+   "row": "P7 socket: rib epoxy bond (D25 x 31): shear",
+   "rb": 4.691322310029761,
+   "x15": 3.1275482066865075,
+   "x223": 2.103731977591821,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Tb_h5 wide (y drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Root block FIN-003 (PETG, socket 29 x 29 for the 25 mm rib; drawn block, not the tallied enlargement)",
+   "row": "P5 ring epoxy bond on the fin tube (D16 x 60): shear",
+   "rb": 8.122876845423834,
+   "x15": 5.415251230282556,
+   "x223": 3.6425456705936474,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 16 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "part": "Root block FIN-003 (PETG, socket 29 x 29 for the 25 mm rib; drawn block, not the tallied enlargement)",
+   "row": "P5 ring bond: bearing, compression side (PETG 20)",
+   "rb": 10.161069925465585,
+   "x15": 6.774046616977056,
+   "x223": 4.556533598863491,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Tb_h5 wide (y drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Skin WNG-011 + WNG-014: 3 plies 48 g/m2 glass +-45 over |y| 0.052-0.400",
+   "row": "K1 skin shear at the fin node (T / 2A, all torque in the skin), S 70 MPa",
+   "rb": 2.9329244977813276,
+   "x15": 1.955282998520885,
+   "x223": 1.315212779274138,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Z5_b45 narrow (z drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Skin WNG-011 + WNG-014: 3 plies 48 g/m2 glass +-45 over |y| 0.052-0.400",
+   "row": "K2 skin wrinkling, torsion (0.5 (E1 Ef Gf)^(1/3) = 80.83 MPa, EST formula)",
+   "rb": 3.3669703673833475,
+   "x15": 2.2446469115888985,
+   "x223": 1.5098521826831155,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Z5_b45 narrow (z drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Skin WNG-011 + WNG-014: 3 plies 48 g/m2 glass +-45 over |y| 0.052-0.400",
+   "row": "K3 skin shear at the centre bulkheads (T_half / 2A), S 70 MPa",
+   "rb": 3.924305486267539,
+   "x15": 2.6162036575116927,
+   "x223": 1.759778244963022,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 7/7 combo z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P15 foam shear (cell), y 0.35",
+   "rb": 3.1100382704046177,
+   "x15": 2.073358846936412,
+   "x223": 1.394635995697138,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Z5_b45 narrow (z drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P15 foam shear (cell), y 0.285 (clamp node, outboard side, no truss)",
+   "rb": 3.1100382704046177,
+   "x15": 2.073358846936412,
+   "x223": 1.394635995697138,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Z5_b45 narrow (z drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P15 foam shear (cell), y 0.228",
+   "rb": 3.1100382704046177,
+   "x15": 2.073358846936412,
+   "x223": 1.394635995697138,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Z5_b45 narrow (z drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P15 foam shear (cell), y 0.060",
+   "rb": 3.1100382704046177,
+   "x15": 2.073358846936412,
+   "x223": 1.394635995697138,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Z5_b45 narrow (z drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P15 foam shear (cell), y 0.040",
+   "rb": 3.1100382704046177,
+   "x15": 2.073358846936412,
+   "x223": 1.394635995697138,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Z5_b45 narrow (z drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P15 skin shear+axial interaction, y 0.285 (clamp node, outboard side, no truss)",
+   "rb": 3.1709891088406588,
+   "x15": 2.113992739227106,
+   "x223": 1.4219682102424478,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Z5_b45 narrow (z drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P15 skin shear+axial interaction, y 0.228",
+   "rb": 3.1729799299210386,
+   "x15": 2.1153199532806926,
+   "x223": 1.422860955121542,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Z5_b45 narrow (z drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P15 skin shear+axial interaction, y 0.060",
+   "rb": 3.1729799299210386,
+   "x15": 2.1153199532806926,
+   "x223": 1.422860955121542,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Z5_b45 narrow (z drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P15 skin shear+axial interaction, y 0.040",
+   "rb": 3.1729799299210386,
+   "x15": 2.1153199532806926,
+   "x223": 1.422860955121542,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Z5_b45 narrow (z drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P15 skin shear+axial interaction, y 0.35",
+   "rb": 3.1751483333093073,
+   "x15": 2.1167655555395384,
+   "x223": 1.4238333333225595,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Z5_b45 narrow (z drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P16 foam bending + axial, y 0.285 (clamp node, outboard side, no truss)",
+   "rb": 5.862462620677078,
+   "x15": 3.9083084137847184,
+   "x223": 2.6289070047879273,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 10 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P16 cove CF strip, y 0.285 (clamp node, outboard side, no truss)",
+   "rb": 6.225309214918014,
+   "x15": 4.150206143278676,
+   "x223": 2.7916184820260153,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 10 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P16 foam bending + axial, y 0.040",
+   "rb": 6.5040174982641235,
+   "x15": 4.336011665509416,
+   "x223": 2.9165997750063335,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 10 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P16 foam bending + axial, y 0.060",
+   "rb": 6.504017498264125,
+   "x15": 4.3360116655094165,
+   "x223": 2.9165997750063344,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 10 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P16 foam bending + axial, y 0.228",
+   "rb": 6.504017498264128,
+   "x15": 4.336011665509418,
+   "x223": 2.9165997750063353,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 10 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P16 cove CF strip, y 0.040",
+   "rb": 6.9065719793460065,
+   "x15": 4.604381319564005,
+   "x223": 3.0971174795273573,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 10 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P16 cove CF strip, y 0.060",
+   "rb": 6.906571979346007,
+   "x15": 4.604381319564005,
+   "x223": 3.0971174795273577,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 10 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P16 cove CF strip, y 0.228",
+   "rb": 6.906571979346011,
+   "x15": 4.604381319564007,
+   "x223": 3.097117479527359,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 10 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P16 foam bending + axial, y 0.35",
+   "rb": 8.07203181961954,
+   "x15": 5.381354546413026,
+   "x223": 3.619745210591722,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 16 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P16 cove CF strip, y 0.35",
+   "rb": 8.571635730785314,
+   "x15": 5.7144238205235425,
+   "x223": 3.843782838917181,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 16 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P15 spar torsion, y 0.35",
+   "rb": 12.875218577252275,
+   "x15": 8.583479051501516,
+   "x223": 5.773640617601917,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Z5_b45 narrow (z drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P15 spar torsion, y 0.285 (clamp node, outboard side, no truss)",
+   "rb": 12.875218577252275,
+   "x15": 8.583479051501516,
+   "x223": 5.773640617601917,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Z5_b45 narrow (z drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P15 spar torsion, y 0.228",
+   "rb": 12.875218577252275,
+   "x15": 8.583479051501516,
+   "x223": 5.773640617601917,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Z5_b45 narrow (z drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P15 spar torsion, y 0.060",
+   "rb": 12.875218577252275,
+   "x15": 8.583479051501516,
+   "x223": 5.773640617601917,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Z5_b45 narrow (z drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P15 spar torsion, y 0.040",
+   "rb": 12.875218577252275,
+   "x15": 8.583479051501516,
+   "x223": 5.773640617601917,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Z5_b45 narrow (z drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P16 spar bending + axial, y 0.040",
+   "rb": 27.696657334857694,
+   "x15": 18.464438223238464,
+   "x223": 12.420025710698518,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 10 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P16 spar bending + axial, y 0.060",
+   "rb": 27.6966573348577,
+   "x15": 18.464438223238467,
+   "x223": 12.420025710698521,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 10 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P16 spar bending + axial, y 0.228",
+   "rb": 27.696657334857704,
+   "x15": 18.46443822323847,
+   "x223": 12.420025710698523,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 10 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P16 spar bending + axial, y 0.285 (clamp node, outboard side, no truss)",
+   "rb": 40.19880157913729,
+   "x15": 26.799201052758193,
+   "x223": 18.026368421137796,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 10 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "part": "Wing section (landing_path_a P15 / P16, 3-ply skin, GJ share; outboard stations unchanged)",
+   "row": "P16 spar bending + axial, y 0.35",
+   "rb": 49.49973676283769,
+   "x15": 32.99982450855846,
+   "x223": 22.197191373469817,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 16 wide + drift .5 y z0.02 mu0.40"
+  },
+  {
+   "part": "Bridge CGE-004 16x14 (CF; shortened to x 51.5)",
+   "row": "B2 bridge CF wall bearing stress in the 6061 socket at x2.23 x KF [MPa]; CF bearing allowable \"-\" (TP-4 coupon)",
+   "value": 27.608758518306445,
+   "cls": "record",
+   "case": "hard 10 narrow neg z0.02 mu0.30"
+  },
+  {
+   "part": "Demand record",
+   "row": "max fin |My| into the cell at the rib axis [N m, RB]",
+   "value": 11.68619601735001,
+   "cls": "record",
+   "case": "SITL Z5_b45 narrow (z drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Demand record",
+   "row": "max half-wing |My| at the spar axis (sleeve / flange torque T_half) [N m, RB]",
+   "value": 8.867230995178222,
+   "cls": "record",
+   "case": "hard 7/7 combo z0.02 mu0.40"
+  },
+  {
+   "part": "Demand record",
+   "row": "max hub |My| at the spar axis [N m, RB]",
+   "value": 12.051947269439697,
+   "cls": "record",
+   "case": "hard 10 narrow neg z0.02 mu0.30"
+  },
+  {
+   "part": "Demand record",
+   "row": "max rib Mx at the node exit x 176 [N m, RB]",
+   "value": 5.9361013103390015,
+   "cls": "record",
+   "case": "SITL Tb_h5 wide (y drift) z0.02 mu0.40"
+  },
+  {
+   "part": "Demand record",
+   "row": "max rib My at the node exit x 176 [N m, RB]",
+   "value": 9.836517122970386,
+   "cls": "record",
+   "case": "hard 7/7 combo z0.02 mu0.40"
+  },
+  {
+   "part": "Demand record",
+   "row": "max rib Mz at the node exit x 176 [N m, RB]",
+   "value": 9.031912306785586,
+   "cls": "record",
+   "case": "hard 16 wide + drift .5 y z0.02 mu0.40"
+  }
+ ]
+}

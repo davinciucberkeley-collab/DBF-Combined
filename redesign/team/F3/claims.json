@@ -270,11 +270,11 @@
     ],
     [
      "AVN-004",
-     4.51
+     4.05
     ],
     [
      "AVN-005",
-     4.84
+     4.24
     ],
     [
      "AVN-006",
@@ -370,10 +370,10 @@
     "i_lim": "A"
    },
    "outputs": {
-    "b_hover_ut": 3.5881042600847155,
-    "ratio_hover": 0.07475217208509824,
-    "ratio_limit": 0.24692887045288484,
-    "heading_err_hover_deg": 8.681176086367989,
+    "b_hover_ut": 4.119009937667824,
+    "ratio_hover": 0.08581270703474635,
+    "ratio_limit": 0.19754309636230785,
+    "heading_err_hover_deg": 9.941645143843939,
     "r_min_power_m": 0.1543016526159069,
     "r_pack_m": 0.1651455115950779
    },
@@ -413,8 +413,8 @@
      48.0,
      23.5
     ],
-    "i_hover": 30.272755043992028,
-    "i_lim": 100.0
+    "i_hover": 34.75199432021045,
+    "i_lim": 80.0
    }
   },
   {
@@ -469,17 +469,17 @@
     "rpm": "rpm"
    },
    "outputs": {
-    "f1p_hz": 90.26319535055327,
-    "t_1p": 0.20549488412034056,
-    "t_2p": 0.05755042717074425,
-    "r_1p": 2.536328897477494,
+    "f1p_hz": 99.39854248557322,
+    "t_1p": 0.16785770082083395,
+    "t_2p": 0.04960810547292136,
+    "r_1p": 2.7930253819865287,
     "fn_hz": 35.588127170858854,
     "fn_lateral_hz": 20.546814802049994,
     "k_total_n_per_m": 600.0,
     "sag_50g_mm": 0.8172208333333333
    },
    "input_values": {
-    "rpm": 5415.791721033196,
+    "rpm": 5963.912549134393,
     "iso": [
      4,
      0.005,
@@ -508,15 +508,15 @@
     "rho": "kg/m3"
    },
    "outputs": {
-    "q_pa": 156.8,
-    "dv_per_count_ms": 0.05357142857142857,
-    "err_rss_ms": 0.45292245462411795,
-    "err_linear_ms": 0.7801923274849102
+    "q_pa": 177.01250000000002,
+    "dv_per_count_ms": 0.050420168067226885,
+    "err_rss_ms": 0.45482965585685586,
+    "err_linear_ms": 0.7736194968465739
    },
    "input_values": {
-    "v": 16.0,
+    "v": 17.0,
     "rho": 1.225,
-    "wash": 0.0175215867943375,
+    "wash": 0.015550105280220043,
     "e": [
      1.05,
      3.0,
@@ -567,7 +567,7 @@
     "m": "ASM-F3-MASS"
    },
    "outputs": {
-    "value": 36.48
+    "value": 35.42
    },
    "input_values": {
     "m": [
@@ -585,11 +585,11 @@
      ],
      [
       "AVN-004",
-      4.51
+      4.05
      ],
      [
       "AVN-005",
-      4.84
+      4.24
      ],
      [
       "AVN-006",
@@ -788,7 +788,7 @@
     "AVN-002"
    ],
    "how": "T-F3-COMPASSMOT: COMPASS_MOT calibration to hover current; interference <= 30 %.",
-   "value": 0.07475217208509824
+   "value": 0.08581270703474635
   },
   {
    "id": "CL-F3-COMPASS-RATIO-LIM",
@@ -805,7 +805,7 @@
     "AVN-002"
    ],
    "how": "As CL-F3-COMPASS-RATIO, extrapolated from the compassmot slope.",
-   "value": 0.24692887045288484
+   "value": 0.19754309636230785
   },
   {
    "id": "CL-F3-COMPASS-B",
@@ -818,7 +818,7 @@
     "AVN-002"
    ],
    "how": "Compassmot log (MAG field vs current).",
-   "value": 3.5881042600847155
+   "value": 4.119009937667824
   },
   {
    "id": "CL-F3-COMPASS-HDG",
@@ -831,7 +831,7 @@
     "AVN-002"
    ],
    "how": "Hover log heading vs GPS course at take-off; compassmot removes most of it.",
-   "value": 8.681176086367989
+   "value": 9.941645143843939
   },
   {
    "id": "CL-F3-GPS-CLEAR",
@@ -892,7 +892,7 @@
     "AVN-006"
    ],
    "how": "T-F3-VIBE: tethered hover, VIBE X/Y/Z < 30 m/s2, clip 0; batch-sampler FFT shows the 1P peak.",
-   "value": 0.20549488412034056
+   "value": 0.16785770082083395
   },
   {
    "id": "CL-F3-VIBE-FN",
@@ -967,7 +967,7 @@
    ],
    "how": "T-F3-ARSPD-CAL: ARSPD_AUTOCAL then calm-air box pattern; airspeed vs GPS ground speed both ways.",
    "note": "also meets B1's proposed 0.5 m/s (CR-B1-13) by 11 %; the linear sum (CL-F3-ASPD-ERR-LIN) does not",
-   "value": 0.45292245462411795
+   "value": 0.45482965585685586
   },
   {
    "id": "CL-F3-ASPD-ERR-LIN",
@@ -980,7 +980,7 @@
     "AVN-004"
    ],
    "how": "As CL-F3-ASPD-ERR.",
-   "value": 0.7801923274849102
+   "value": 0.7736194968465739
   },
   {
    "id": "CL-F3-ASPD-RES",
@@ -997,7 +997,7 @@
     "AVN-004"
    ],
    "how": "Bench log ARSP at a steady blow; steps of one count.",
-   "value": 0.05357142857142857
+   "value": 0.050420168067226885
   },
   {
    "id": "CL-F3-5V-REQ",
@@ -1119,7 +1119,7 @@
    ],
    "how": "Weigh each part on arrival; A3 replaces the EST rows.",
    "note": "F3-R2: FC top board only; the CoreWing power board (~28 g) is PWR-003 at its own station (CR-F3-13)",
-   "value": 36.48
+   "value": 35.42
   },
   {
    "id": "CL-F3-FC-H",
@@ -1229,7 +1229,7 @@
     "CL-F3-I2C-CLASH"
    ],
    "state": "planned",
-   "procedure": "boot with GPS and airspeed connected: messages list SPL06, QMC5883, MS4525; blow on the pitot, airspeed rises and baro altitude does not jump"
+   "procedure": "boot with GPS and airspeed connected: messages list SPL06, QMC5883, MS4525; blow on the pitot, airspeed rises and baro altitude does not jump. CDR-26 compass step: read COMPASS_DEV_ID in Mission Planner (Setup > Compass, or the parameter decoded as bus / address / devtype): address 0x0D = QMC5883L, 0x2C = QMC5883P; both drivers are in the 4.7.2 CoreWingF405WingV2 build (features.txt read 2026-11-13: AP_COMPASS_QMC5883L_ENABLED, AP_COMPASS_QMC5883P_ENABLED). If COMPASS_DEV_ID stays 0 with the module wired, the chip is neither: fit the fallback module Matek M10Q-5883 (QMC5883L, 8 g, JST-GH 6P; about $39.99, RaceDayQuads / Rotor Riot listings found by search 2026-11-13, price to confirm at order). Record SCL rise time with a scope if one is at the bench (CDR-EL-12)"
   },
   {
    "id": "T-F3-COMPASSMOT",

@@ -1,0 +1,2 @@
+  self-checks (max error, m): horn_hole 3.03e-17, rod_clevis_end 2.78e-17, rod_joint 0.00e+00, arm_tip 3.93e-17
+Blender run failed (exit 4294967295); see out/blender_linkage_poses.log

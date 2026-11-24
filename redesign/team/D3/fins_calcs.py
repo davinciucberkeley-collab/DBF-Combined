@@ -1,4 +1,4 @@
-"""D3 fins and motor tubes, design R5 (CR-A1-63): the checks that belong to the fins CAD (subsystems/fins). Emits claims.json.
+"""D3 fins and motor tubes, design R6 (D-146 / D-147; R5 CR-A1-63): the checks that belong to the fins CAD (subsystems/fins). Emits claims.json.
 
     python -I redesign/subsystems/fins/make_fins.py     (CAD -> interfaces.json, masses)
     python -I redesign/team/D3/fins_calcs.py            then   python -I redesign/proofs/build_graph.py
@@ -6,7 +6,7 @@
 Vibration, fin-face, tube, brace and block strength are C4's (team/C4/fin_structures_d3.py: CL-C4-D3-SEP,
 CL-C4-D3-SEP-WORST, CL-C4-D3-F1-LO, CL-C4-D3-MS-FACE, CL-C4-D3-BLOCK-MS, CL-C4-D3-MOUNT-K-REQ); joint strength is
 C6's (team/C6/joints.py). This script checks what D3's R3 geometry adds or changes: the slip-clamp fuse (D-23), prop
-gap (B4), screw engagement on the 7 deg canted plate (D-27), the collar height and tail length against C6's
+gap (B4), screw engagement on the canted plate (D-27; 9 deg since D-146), the collar height and tail length against C6's
 requirements, the strap eye (H1), the square foot tip (D5), ESC pads in the wash, the root fillet, the brace geometry
 against C4's model, and the mass. Every input is a params key, another role's claim or an ASM-D3 assumption.
 Python 3 stdlib.
@@ -87,14 +87,16 @@ def prop_gap(ahead, stack, D, xt, od, gap, wall, cant, sense, ym, zm):
 @kit.calc("CALC-D3-SCREW-ENGAGE",
           inputs={"Ls": "P:fin_detail.mount.motor_screw_len_m", "tp": "P:fin_detail.mount.plate_t_m",
                   "pat": "P:fin_detail.mount.bolt_pattern_m", "cant": "P:propulsion.stations.cant_deg",
-                  "ym": "P:propulsion.stations.y_m", "zm": "P:propulsion.stations.z_m"},
+                  "ym": "P:propulsion.stations.y_m", "zm": "P:propulsion.stations.z_m",
+                  "wst": "P:fin_detail.mount.washer_stack_m", "hd": "P:fin_detail.mount.motor_hole_depth_m"},
           equation="R3 canted plate (front and back faces both on the cant plane): engagement = L_screw - t_plate at "
-                   "every hole; for comparison the R2 flat plate + canted pads would give L - (t + tan(cant) max|t.hole|)",
-          title="Motor screw thread engagement on the 7 deg canted plate")
-def screw_engage(Ls, tp, pat, cant, ym, zm):
+                   "every hole, less the washer stack under the head (D-173: 2 x 0.5 mm); tip clearance = blind hole depth - engagement; "
+                   "for comparison the R2 flat plate + canted pads would give L - (t + tan(cant) max|t.hole|)",
+          title="Motor screw thread engagement on the canted plate (10 deg, X2814 blind holes, D-173)")
+def screw_engage(Ls, tp, pat, cant, ym, zm, wst, hd):
     n = math.hypot(ym, zm)
     dmax = max(abs(-zm / n * pat[0] / 2), abs(ym / n * pat[1] / 2))
-    return {"engage": Ls - tp, "stack_max": tp, "flat_plate_engage": Ls - (tp + math.tan(math.radians(cant)) * dmax),
+    return {"engage": Ls - tp - wst, "tip_clear": hd - (Ls - tp - wst), "stack_max": tp, "flat_plate_engage": Ls - (tp + math.tan(math.radians(cant)) * dmax),
             "head_tilt_flat_deg": cant}
 
 
@@ -248,7 +250,7 @@ SC = ["FIN-008-UR", "FIN-008-UL", "FIN-008-LR", "FIN-008-LL"]
 HF = ["FIN-001-UR", "FIN-001-UL", "FIN-001-LR", "FIN-001-LL"]
 kit.claim("CL-D3-SLIP-FUSE", "Fin-joint design moment / root moment when the mount slips", calc="CALC-D3-MOUNT-SLIP",
           output="fuse_ratio", unit="-", limit=(">=", 1.0), verifies=["R-CRASH-REPAIR"], parts=MT + ["FIN-004-R"],
-          how="T-D3-SLIP: luggage scale at the motor can along y; the collar turns between 70 and 80 N (R5 lever 33.9 mm)")
+          how="T-D3-SLIP: luggage scale at the motor can along y; the collar turns between 62 and 71 N (R6 lever 38.5 mm, D-146; R5 was 70-80 N at 33.9 mm)")
 kit.claim("CL-D3-SLIP-HOLD", "Slip torque / mount design moment (holds in flight)", calc="CALC-D3-MOUNT-SLIP",
           output="hold_ratio", unit="-", limit=(">=", 1.0), verifies=["R-STRUCT-MARGIN"], parts=MT,
           how="T-D3-SLIP; witness line checked before every flight")
@@ -257,29 +259,60 @@ kit.claim("CL-D3-SLIP-F", "Side force at the motor can that turns the collar", c
 kit.claim("CL-D3-PROP-GAP", "Prop plane to collar front / B4 minimum 0.14 D", calc="CALC-D3-PROP-GAP", output="ratio",
           unit="-", limit=(">=", 1.0), verifies=["R-PROP-CLEAR"], parts=MT,
           how="Measure motor face to prop hub face on the built station; Fusion interference check",
-          note="R5 (D-61): face_ahead 7.5 mm, E1 stack 37.3 mm (37.0 along x). The canted plate corners sit up to 2.5 mm "
-               "ahead of the face at the axis, inside the motor-base shadow. The tube clearance with the blade's swept "
-               "volume is E1's CL-E1-TIP-GAP-AT-75 (26.1 mm) and B4's CL-B4-GAP-TUBE-FIX5")
+          note="R6 (D-146): 9 deg cant, face_ahead 12.0 mm, E1 stack 37.3 mm (36.8 along x). The canted plate corners sit up to "
+               "3.2 mm ahead of the face at the axis, inside the motor-base shadow. The tube clearance with the blade's swept "
+               "volume is E1's tip_gap / probe at 9 deg / 12.0 mm (26.3 mm, E1.md 7.1; was CL-E1-TIP-GAP-AT-75 26.1 mm at "
+               "7 deg / 7.5 mm)")
 kit.claim("CL-D3-PROP-TIP-GAP", "Blade tip (disc mid-plane) to the tube front over the tube, canted disc, D-52 sense",
           calc="CALC-D3-PROP-GAP", output="tip_gap", unit="m", limit=(">=", "P:requirements.prop_clearance_min_m"),
           verifies=["R-PROP-CLEAR"], parts=MT + ["FIN-002-R", "FIN-002-L"],
           how="Ruler from the blade tip, turned over the tube, to the tube face (B4 CL-B4-GAP-TUBE)",
-          note="mid-plane only; E1's swept-volume envelope (+10 / -6 mm) comes off this: 26.1 mm at face_ahead 7.5 mm "
-               "(CL-E1-TIP-GAP-AT-75, D-61). check.py's hull test is the CAD check")
-kit.claim("CL-D3-X-PROP", "Prop plane x (hub on the motor axis) with the D3 mount, face_ahead 7.5 mm", calc="CALC-D3-PROP-GAP",
+          note="mid-plane only; E1's swept-volume envelope (+10 / -6 mm) comes off this: 26.3 mm at 9 deg / 12.0 mm "
+               "(E1.md 7.1, D-146; 26.1 mm at 7 deg / 7.5 mm, CL-E1-TIP-GAP-AT-75). check.py's hull test is the CAD check")
+kit.claim("CL-D3-X-PROP", "Prop plane x (hub on the motor axis) with the D3 mount, 10 deg, face_ahead 4.0 mm, stack 47.7 mm", calc="CALC-D3-PROP-GAP",
           output="x_prop", unit="m", parts=MT,
-          how="Measure collar front to prop hub face on the built station (44.5 mm along x); Fusion CAD",
-          note="D-61: A1 copies this exact value into propulsion.stations.x_prop_plane_m (carried -0.0127); "
-               "-0.01267 = x_face 0.02435 - 37.3 mm cos 7 deg")
-kit.claim("CL-D3-X-FACE", "Motor plate face x at the motor axis (DP-MOTOR-FACE), D3 mount, face_ahead 7.5 mm",
+          how="Measure collar front to prop hub face on the built station (51.0 mm along x); Fusion CAD",
+          note="D-173 closure round: A1 copies this exact value into propulsion.stations.x_prop_plane_m (was -0.01779); "
+               "x_face 0.02780 - 47.7 mm cos 10 deg. D-146 was -0.01704 (9 deg, 12.0 mm, 37.3 mm stack)")
+kit.claim("CL-D3-X-FACE", "Motor plate face x at the motor axis (DP-MOTOR-FACE), D3 mount, face_ahead 4.0 mm",
           calc="CALC-D3-PROP-GAP", output="x_face", unit="m", parts=MT,
-          how="Calliper from the tube front face (x 0.034) to the plate face on the printed mount: 9.65 mm",
-          note="D-61: A1 copies this exact value into propulsion.stations.x_plate_face_m (carried 0.0244); "
-               "= tube axis 0.045 - (11.15 + 2.0) mm collar radius - 7.5 mm")
-kit.claim("CL-D3-SCREW-ENGAGE", "Motor-screw engagement, every hole, 7 deg canted plate", calc="CALC-D3-SCREW-ENGAGE",
-          output="engage", unit="m", limit=(">=", 0.003), verifies=["R-JOINT-STACK"], parts=MT,
+          how="Calliper from the tube front face (x 0.03395 at OD 22.10) to the plate face on the printed mount: 6.15 mm",
+          note="D-173 closure round: A1 copies this exact value into propulsion.stations.x_plate_face_m (was 0.0198); "
+               "= tube axis 0.045 - (11.05 + 0.15 + 2.0) mm collar radius (RW tube, D-147) - 4.0 mm. D-146 was 0.01980 at 12.0 mm")
+kit.claim("CL-D3-SCREW-TIP-CLEAR", "Motor-screw tip to the bottom of the X2814 3.0 mm blind base hole (M3x8, 4.5 mm plate, 2 washers)",
+          calc="CALC-D3-SCREW-ENGAGE", output="tip_clear", unit="m", limit=(">=", 0.0004), verifies=["R-JOINT-STACK"], parts=MT,
+          how="Probe the hole depth on arrival (T-E1-MOTOR-RM); count turns on assembly; add a washer if the hole is shallower",
+          note="D-173: the screw must not bottom before the head clamps the plate. 0.4 mm = thread-run-out / tip chamfer allowance EST")
+kit.claim("CL-D3-SCREW-ENGAGE", "Motor-screw engagement, every hole, canted plate (10 deg, X2814, D-173)", calc="CALC-D3-SCREW-ENGAGE",
+          output="engage", unit="m", limit=(">=", "P:requirements.thread_engagement_motor_m3_min_m"), verifies=["R-JOINT-STACK"], parts=MT,
           how="Probe the motor screw-hole depth on arrival (T-E1-MOTOR-RM); count turns on assembly",
-          note="limit = requirements.thread_engagement_min 1.0 x d, d = 3 mm; the R2 flat plate + pads gives 2.5 mm at 7 deg")
+          note="limit = requirements.thread_engagement_motor_m3_min_m 2.5 mm (D-178, C6 strip calculation for the X2814 3.0 mm blind base hole; "
+               "the general 1.0 x d rule thread_engagement_min is unchanged); engagement 8 - 4.5 - 2 x 0.5 washers = 2.5 mm; independent of the cant (both plate faces on the "
+               "cant plane); the R2 flat plate + pads would give 2.5 mm at 7 deg")
+@kit.calc("CALC-D3-RELEASE",
+          inputs={"xr": "P:fin_detail.fin.root_fillet.release_x_m", "xe": "P:fin_detail.fin.root_fillet.release_end_x_m", "w": "P:fin_detail.fin.root_fillet.release_film_w_m",
+                  "tb": "P:fins.board_t_m", "la": "P:fin_detail.fin.root_fillet.leg_aft_m", "c": "P:wing.chord_m",
+                  "t": "P:fin_detail.fin.root_fillet.release_film_t_m",
+                  "am": "P:fin_detail.fin.root_fillet.release_film_areal_kgm2"},
+          equation="film = (x_end - x_release) x w x t; spare width = w - (t_fin + 2 leg_aft) (fin face plus both aft coves); "
+                   "mass = 4 strips x (x_end - x_release) x w x areal mass (one layer of the wing's 48 mm packing tape, EST)",
+          title="Fin-root release film (D-179): length, spare width, mass")
+def release(xr, xe, w, tb, la, c, t, am):
+    L = xe - xr                                   # closure fix: film from x_release to release_end_x_m (the TE tab stays bonded)
+    return {"len_m": L, "spare_w_m": w - (tb + 2 * la), "film_g": 4 * L * w * am * 1000, "film_mm3": L * w * t * 1e9}
+
+
+kit.claim("CL-D3-RELEASE-FILM-W", "Release film spare width beyond the fin face and both 13 mm aft coves", calc="CALC-D3-RELEASE",
+          output="spare_w_m", unit="m", limit=(">=", 0.0), verifies=["R-JOINT-STACK"], parts=["FIN-001-UR", "FIN-001-UL", "FIN-001-LR", "FIN-001-LL"],
+          how="Rule across a laid strip: 7 mm of film visible each side of the cove toe; 0.05 mm feeler slides under the cove edge aft of x 0.22",
+          note="C2 D-179: root, coves and tape laps stay on the film from x 0.22 to the TE")
+kit.claim("CL-D3-RELEASE-LEN", "Release film length, x_release to release_end_x_m", calc="CALC-D3-RELEASE", output="len_m", unit="m",
+          parts=["FIN-001-UR", "FIN-001-UL", "FIN-001-LR", "FIN-001-LL"], how="Rule on the laid strip: 50 mm (x 0.22 to 0.27)",
+          note="C2 asked 100 x 45 x 0.13 mm bodies")
+kit.claim("CL-D3-RELEASE-MASS", "Release film mass, four strips (EST)", calc="CALC-D3-RELEASE", output="film_g", unit="g",
+          parts=["FIN-001-UR", "FIN-001-UL", "FIN-001-LR", "FIN-001-LL"], how="Weigh the four strips (T-D3-WEIGH)",
+          note="one strip each; x4 = 1.17 g; PTFE (C2) was 4.9 g")
+
 kit.claim("CL-D3-COLLAR-H", "Station collar height (15 mm, CR-C6-36) / C4 required bond height", calc="CALC-D3-COLLAR",
           output="h_ratio", unit="-", limit=(">=", 1.0), verifies=["R-FIN-TUBE-JOINT"], parts=SC,
           how="C6 coupon T-C6-COLLAR; measure the printed collar",
@@ -298,9 +331,13 @@ kit.claim("CL-D3-TONGUE-FIT", "Strip-tail tongue fit under the 15 mm collar ring
 kit.claim("CL-D3-TAIL-EMBED", "Edge-strip embedment in the collar tail / C6 required", calc="CALC-D3-COLLAR",
           output="embed_ratio", unit="-", limit=(">=", 1.0), verifies=["R-FIN-TUBE-JOINT"],
           parts=SC + ["FIN-011-URO"], how="Measure on the dry fit; C6 strip-anchor coupon")
-kit.claim("CL-D3-STRAP-EYE-RF", "Strap eye shear-out reserve factor at the H1 tie load", calc="CALC-D3-STRAP-EYE",
-          output="rf", unit="-", limit=(">=", 1.0), verifies=["R-STRUCT-MARGIN"], parts=["FIN-004-R", "FIN-004-L"],
-          how="T-D3-EYE: spring scale on a printed eye to 2 x 29.4 N, then to failure")
+kit.claim("CL-D3-STRAP-EYE-RF", "Strap eye FIN-013 ligament shear-out reserve factor at the H1 tie load",
+          calc="CALC-D3-STRAP-EYE", output="rf", unit="-", limit=(">=", 1.0), verifies=["R-STRUCT-MARGIN"],
+          parts=["FIN-013-UR", "FIN-013-UL", "FIN-013-LR", "FIN-013-LL"],
+          how="T-D3-EYE on a bonded eye (C6 T-D3-EYE-BONDED): along x to 2 x 29.4 N, then to failure",
+          note="D-108 (CDR-27): the eye is the separate part FIN-013 since D-89c (this claim still named the block "
+               "FIN-004). Its bond on the boss and the tab bending are C6's CL-C6-EYE-BOND-RF, -PEEL, -SPLAY, "
+               "CL-C6-EYE-TAB-RF; the tie load is C1 case G4 (CL-C1-G4-TIE-LIM)")
 kit.claim("CL-D3-TIP-SQUARE", "Stepped tip length / D5 step length", calc="CALC-D3-TIP", output="ratio", unit="-",
           limit=(">=", 1.0), verifies=["R-LANDING-IMPACT"], parts=HF, how="Dry-fit the D5 shoe on the cut half-fin",
           note="R4 (D-54): D5's step adopted (45.4 mm, |z| 0.2005), over D3's CR-D3-19")
@@ -355,8 +392,10 @@ for tid, title, ver, proc in (
          "luggage scale hooked on the motor can, pull along y; adjust the pinch bolt until the collar turns at 85-100 N"),
         ("T-D3-ROOT", "Half-fin root side pull", ["CL-D3-ROOT-FILLET-RF"],
          "half-fin bonded to a core offcut per BUILD.md; pull at the TE tip along y to 35 N, then to failure"),
-        ("T-D3-EYE", "Strap eye pull", ["CL-D3-STRAP-EYE-RF"],
-         "printed block offcut with one eye; spring scale through the eye along z and along y to 60 N, then to failure"),
+        ("T-D3-EYE", "Strap eye pull (bonded eye, CDR-27)", ["CL-D3-STRAP-EYE-RF"],
+         "run as C6's T-D3-EYE-BONDED: two FIN-013 eyes bonded as built on the boss of a printed block offcut; spring "
+         "scale through the eye along x (the tie-hole axis) to 58.8 N and, on the second, 30 deg outboard of x; then "
+         "to failure; record bond shear, foot peel, ligament shear-out or tab break"),
         ("T-D3-WEIGH", "Weigh every fins part", ["CL-D3-MASS", "CL-D3-FILLET-MASS"],
          "1 g scale; update mass_g and status VERIFIED; weigh one half-fin before and after its root fillets and a "
          "cured 20 cm3 cup of the fillet mix (ASM-D3-FILLET-DENSITY)")):
@@ -390,7 +429,10 @@ kit.claim("CL-D3-MASS", "Fins subsystem flying mass, design R5", value=_mass(), 
                "not grow (CL-D3-LAMINATE-MASS); the rest of the overrun is the C6 root fillet (D-63: 437 g). R5 "
                "(CR-A1-63): cheeks +5 mm and the 7.5 mm face_ahead (mounts 47.8 g), pins 2.5 mm, collar 15 mm (C6-R5 needs 13.007 mm), block "
                "edges R 3 mm -0.4 g: 440.3 g; lever taken: fillet mix 0.55 -> 0.45 g/cm3 -5.6 g (T-D3-WEIGH cup "
-               "<= 9.0 g). Block fill (C4) and cheeks (withdrawn: length set by the reach to the collar) not taken")
+               "<= 9.0 g). Block fill (C4) and cheeks (withdrawn: length set by the reach to the collar) not taken. "
+               "R6 (design round 2026-11-14): 434.9 -> 476.1 g = RW 35046-S tubes +37.1 g (0.156 kg/m, D-147), mounts "
+               "+4.0 g (cheeks 17 -> 21.5 mm and the 4.5 mm longer reach, D-146), CF 19 x 17 plug 0 g (S01R). "
+               "Against the D-155 allocation 471 g: A3 to reconcile (D3-W2.md)")
 kit.claim("CL-D3-FILLET-MASS", "Root fillets, four half-fins (CAD volume x fillet density)", value=_fillet_mass(),
           unit="g", parts=HF, how="T-D3-WEIGH (half-fin before / after fillets)",
           note="ASM-D3-FILLET-DENSITY 0.45 g/cm3 (R5 lever; 30.6 g at 0.55); was carried inside fin.root_joint_g 3.0 g "

@@ -1,0 +1,143 @@
+{
+ "note": "Information (D-146 contingency): envelope at 10 deg / face_ahead 14.0 mm against the params case.",
+ "params_case": {
+  "cant_deg": 10.0,
+  "face_ahead_m": 0.012,
+  "x_face_m": 0.0278,
+  "x_prop_m": -0.01918,
+  "prop_stack_m": 0.047704742226392295
+ },
+ "contingency": {
+  "cant_deg": 10.0,
+  "face_ahead_m": 0.014,
+  "x_face_m": 0.025799999999999997,
+  "x_prop_m": -0.021179999999999997
+ },
+ "outputs": {
+  "motor_Fside_lim": {
+   "params": 9.8894276092273,
+   "c10_14": 9.889234782362944,
+   "case": [
+    "F7-ROLLPULL-VA",
+    "F7-ROLLPULL-VA"
+   ]
+  },
+  "motor_Mb_ult": {
+   "params": 1.1993472480131389,
+   "c10_14": 1.2109564464735108,
+   "case": [
+    "H5-SIDE-RIGHT",
+    "H5-SIDE-RIGHT"
+   ]
+  },
+  "motor_F_ult": {
+   "params": 31.829843940901043,
+   "c10_14": 31.618100616100946,
+   "case": [
+    "G3-BENCH",
+    "G3-BENCH"
+   ]
+  },
+  "mount_F_ult": {
+   "params": 31.300284840901043,
+   "c10_14": 31.289189629593093,
+   "case": [
+    "G3-BENCH",
+    "G4-RESTRAINED"
+   ]
+  },
+  "mount_M_ult": {
+   "params": 1.4514446343869165,
+   "c10_14": 1.4610543305212298,
+   "case": [
+    "H5-SIDE-RIGHT",
+    "H5-SIDE-RIGHT"
+   ]
+  },
+  "cant_Fside_TLIM_N": {
+   "params": 3.8376247264391607,
+   "c10_14": 3.8376247264391607,
+   "case": [
+    3.8376247264391607,
+    3.8376247264391607
+   ]
+  },
+  "finjoint_M_design": {
+   "params": 23.201420246734635,
+   "c10_14": 23.202869007291667,
+   "case": [
+    "L4-CORNER-SIDE-Y",
+    "L4-CORNER-SIDE-Y"
+   ]
+  },
+  "finjoint_F_ult": {
+   "params": 82.86895925139211,
+   "c10_14": 82.86795444785609,
+   "case": [
+    "L1-LEVEL",
+    "L1-LEVEL"
+   ]
+  },
+  "finhalf_T_lim": {
+   "params": 8.102525726881609,
+   "c10_14": 8.108033526457328,
+   "case": [
+    "L4-CORNER-SIDE-Y",
+    "L4-CORNER-SIDE-Y"
+   ]
+  },
+  "finhalf_T_wingplane_lim": {
+   "params": 8.08458304715076,
+   "c10_14": 8.08973587346656,
+   "case": [
+    "L4-CORNER-SIDE-Y",
+    "L4-CORNER-SIDE-Y"
+   ]
+  },
+  "finhalf_Mb_ult": {
+   "params": 12.575833511418285,
+   "c10_14": 12.572280339361345,
+   "case": [
+    "L4-CORNER-SIDE-Y",
+    "L4-CORNER-SIDE-Y"
+   ]
+  },
+  "g3_can_F_lim": {
+   "params": 23.886520228600695,
+   "c10_14": 23.745358012067296,
+   "case": [
+    "",
+    ""
+   ]
+  },
+  "g4_tie_lim": {
+   "params": 30.2895251831396,
+   "c10_14": 30.2895251831396,
+   "case": [
+    "",
+    ""
+   ]
+  },
+  "foot_side_ult": {
+   "params": 36.75,
+   "c10_14": 36.75,
+   "case": [
+    "",
+    ""
+   ]
+  },
+  "foot_F_ult": {
+   "params": 70.6965976722134,
+   "c10_14": 70.6965778875968,
+   "case": [
+    "L5-CORNER-SIDE-Z",
+    "L5-CORNER-SIDE-Z"
+   ]
+  }
+ },
+ "d149_entry": {
+  "T_entry_tot_N": 37.069137,
+  "T_env_tot_axial_N": 87.0570053662792,
+  "ratio_entry_to_env": 0.42580303381717766
+ }
+}

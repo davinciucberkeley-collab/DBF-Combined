@@ -1,0 +1,537 @@
+{
+ "info": {
+  "level": 0,
+  "nodes": 295679,
+  "elements": 167457,
+  "dof_free": 848601,
+  "rbe3_nodes": 2051,
+  "fixed_nodes": 12812,
+  "t_mesh": 0.1,
+  "t_assemble": 68.8,
+  "t_factor": 0.0,
+  "t_solve": 71.4,
+  "equilibrium_err": [
+   1.19e-07,
+   8.11e-09,
+   4.69e-07,
+   2.88e-09,
+   2.05e-11,
+   3.91e-10
+  ]
+ },
+ "checks": {
+  "tip_defl_1N_mm": 56.28915693172831,
+  "tip_defl_beam_clamped_at_mouth_mm": 0.07665550832276455,
+  "mid_axial_1N_MPa": 1.2434312969780876,
+  "mid_axial_beam_MPa": 1.2523667653132748
+ },
+ "cases": [
+  {
+   "case": "F1 hover/transition at the spin cap, pitch-over, 1P",
+   "flight": true,
+   "regions": {
+    "sleeve": {
+     "label": "Hub bridge sleeve (PETG 1.2 mm)",
+     "p1": 563.076368296608,
+     "vm": 357.6782191396693,
+     "at": [
+      3.25,
+      7.22,
+      -0.35
+     ]
+    },
+    "web": {
+     "label": "Hub radial web (as drawn: PETG 0.8 x 22 mm; spoke variant: tube 13.6 x 10.4)",
+     "p1": 998.0222236538953,
+     "vm": 829.2633685617006,
+     "at": [
+      5.79,
+      29.21,
+      -0.35
+     ]
+    },
+    "floor": {
+     "label": "Socket floor and inner boss (PETG, 0.8 mm wall)",
+     "p1": 1164.1572876212035,
+     "vm": 1006.7169866131172,
+     "at": [
+      6.83,
+      29.78,
+      0.34
+     ]
+    },
+    "mouth": {
+     "label": "Socket mouth (PETG, 2.0 mm wall)",
+     "p1": 2.415007863448572,
+     "vm": 1.6386045870911636,
+     "at": [
+      5.52,
+      56.2,
+      -2.57
+     ]
+    },
+    "tube_root": {
+     "label": "Arm tube in and near the socket (CFRP)",
+     "axial": 172.43969064004548,
+     "hoop": 33.348473927952924,
+     "shear": 32.52784851907696,
+     "at": [
+      -4.98,
+      31.32,
+      0.92
+     ]
+    },
+    "tube_mid": {
+     "label": "Arm tube, free span (CFRP)",
+     "axial": 20.902398631590078,
+     "hoop": 0.047474740975510805,
+     "shear": 0.5582313210524324,
+     "at": [
+      -5.76,
+      86.42,
+      1.09
+     ]
+    },
+    "tube_tip": {
+     "label": "Arm tube in and near the cup (CFRP)",
+     "axial": 6.390797163332082,
+     "hoop": 1.3059811852858898,
+     "shear": 1.0225946678155953,
+     "at": [
+      -5.86,
+      236.27,
+      0.24
+     ]
+    },
+    "cup": {
+     "label": "Motor cup (PETG)",
+     "p1": 5.8120231627702506,
+     "vm": 4.744030878120924,
+     "at": [
+      -4.58,
+      279.5,
+      8.31
+     ]
+    }
+   }
+  },
+  {
+   "case": "F2 uncapped motor fault + pitch-over + 1P",
+   "flight": true,
+   "regions": {
+    "sleeve": {
+     "label": "Hub bridge sleeve (PETG 1.2 mm)",
+     "p1": 638.053528935288,
+     "vm": 406.0537828242701,
+     "at": [
+      3.25,
+      7.22,
+      -0.35
+     ]
+    },
+    "web": {
+     "label": "Hub radial web (as drawn: PETG 0.8 x 22 mm; spoke variant: tube 13.6 x 10.4)",
+     "p1": 1116.279457448587,
+     "vm": 924.81636275575,
+     "at": [
+      5.79,
+      29.21,
+      -0.35
+     ]
+    },
+    "floor": {
+     "label": "Socket floor and inner boss (PETG, 0.8 mm wall)",
+     "p1": 1320.1658910486944,
+     "vm": 1141.1898788282328,
+     "at": [
+      6.83,
+      29.78,
+      0.34
+     ]
+    },
+    "mouth": {
+     "label": "Socket mouth (PETG, 2.0 mm wall)",
+     "p1": 2.805535058200149,
+     "vm": 1.9036702967575223,
+     "at": [
+      5.52,
+      56.2,
+      -2.57
+     ]
+    },
+    "tube_root": {
+     "label": "Arm tube in and near the socket (CFRP)",
+     "axial": 198.5149074267699,
+     "hoop": 38.29416276747348,
+     "shear": 36.849191466660386,
+     "at": [
+      -4.98,
+      31.32,
+      0.92
+     ]
+    },
+    "tube_mid": {
+     "label": "Arm tube, free span (CFRP)",
+     "axial": 24.226178356223148,
+     "hoop": 0.05183573908921284,
+     "shear": 0.65738164078142,
+     "at": [
+      -5.76,
+      86.42,
+      1.09
+     ]
+    },
+    "tube_tip": {
+     "label": "Arm tube in and near the cup (CFRP)",
+     "axial": 7.136583625957192,
+     "hoop": 1.4178044655521536,
+     "shear": 1.0887573641083663,
+     "at": [
+      -5.86,
+      236.27,
+      0.24
+     ]
+    },
+    "cup": {
+     "label": "Motor cup (PETG)",
+     "p1": 6.122342317983055,
+     "vm": 5.0165465762682695,
+     "at": [
+      -4.58,
+      279.5,
+      8.31
+     ]
+    }
+   }
+  },
+  {
+   "case": "S2 prop strike 30 N transverse at the prop plane (ground handling, not flight)",
+   "flight": false,
+   "regions": {
+    "sleeve": {
+     "label": "Hub bridge sleeve (PETG 1.2 mm)",
+     "p1": 4097.421601161197,
+     "vm": 2550.8878248932133,
+     "at": [
+      -3.49,
+      7.21,
+      -0.34
+     ]
+    },
+    "web": {
+     "label": "Hub radial web (as drawn: PETG 0.8 x 22 mm; spoke variant: tube 13.6 x 10.4)",
+     "p1": 6437.049105536134,
+     "vm": 5207.742325709588,
+     "at": [
+      5.79,
+      29.21,
+      0.34
+     ]
+    },
+    "floor": {
+     "label": "Socket floor and inner boss (PETG, 0.8 mm wall)",
+     "p1": 7531.2225628825145,
+     "vm": 7012.360920389214,
+     "at": [
+      6.83,
+      29.78,
+      0.34
+     ]
+    },
+    "mouth": {
+     "label": "Socket mouth (PETG, 2.0 mm wall)",
+     "p1": 9.110316602450437,
+     "vm": 7.682031358451892,
+     "at": [
+      2.01,
+      56.19,
+      5.76
+     ]
+    },
+    "tube_root": {
+     "label": "Arm tube in and near the socket (CFRP)",
+     "axial": 756.3781979839885,
+     "hoop": 167.04833402159633,
+     "shear": 247.9640574184349,
+     "at": [
+      4.89,
+      31.35,
+      1.32
+     ]
+    },
+    "tube_mid": {
+     "label": "Arm tube, free span (CFRP)",
+     "axial": 63.354638192375276,
+     "hoop": 0.18845229706986755,
+     "shear": 9.515064629927501,
+     "at": [
+      1.56,
+      86.31,
+      5.64
+     ]
+    },
+    "tube_tip": {
+     "label": "Arm tube in and near the cup (CFRP)",
+     "axial": 21.7035558370344,
+     "hoop": 5.301488009662888,
+     "shear": 4.1084902464502955,
+     "at": [
+      -5.5,
+      251.08,
+      2.03
+     ]
+    },
+    "cup": {
+     "label": "Motor cup (PETG)",
+     "p1": 24.11442132105618,
+     "vm": 19.129285609426397,
+     "at": [
+      -4.58,
+      279.5,
+      8.31
+     ]
+    }
+   }
+  },
+  {
+   "case": "S3 blade stop, torque 30 N x 80 mm about the shaft (ground handling, not flight)",
+   "flight": false,
+   "regions": {
+    "sleeve": {
+     "label": "Hub bridge sleeve (PETG 1.2 mm)",
+     "p1": 1174.5832277813445,
+     "vm": 772.9102694528533,
+     "at": [
+      -1.69,
+      7.22,
+      0.34
+     ]
+    },
+    "web": {
+     "label": "Hub radial web (as drawn: PETG 0.8 x 22 mm; spoke variant: tube 13.6 x 10.4)",
+     "p1": 1716.719932000509,
+     "vm": 1330.5995463968923,
+     "at": [
+      5.79,
+      29.21,
+      0.34
+     ]
+    },
+    "floor": {
+     "label": "Socket floor and inner boss (PETG, 0.8 mm wall)",
+     "p1": 2296.199183945708,
+     "vm": 1996.2053768710628,
+     "at": [
+      6.83,
+      29.78,
+      0.34
+     ]
+    },
+    "mouth": {
+     "label": "Socket mouth (PETG, 2.0 mm wall)",
+     "p1": 2.6727912505102007,
+     "vm": 1.8105988387702563,
+     "at": [
+      2.01,
+      56.19,
+      5.76
+     ]
+    },
+    "tube_root": {
+     "label": "Arm tube in and near the socket (CFRP)",
+     "axial": 220.09731646101045,
+     "hoop": 48.329592588896794,
+     "shear": 70.69728020631953,
+     "at": [
+      -4.88,
+      31.35,
+      -1.33
+     ]
+    },
+    "tube_mid": {
+     "label": "Arm tube, free span (CFRP)",
+     "axial": 26.744551422962104,
+     "hoop": 0.5282048789600746,
+     "shear": 0.3033025027575032,
+     "at": [
+      1.66,
+      123.66,
+      5.62
+     ]
+    },
+    "tube_tip": {
+     "label": "Arm tube in and near the cup (CFRP)",
+     "axial": 33.41060657839989,
+     "hoop": 7.98211826853782,
+     "shear": 7.758000154193557,
+     "at": [
+      0.22,
+      251.14,
+      5.86
+     ]
+    },
+    "cup": {
+     "label": "Motor cup (PETG)",
+     "p1": 39.316720845123754,
+     "vm": 32.41201725851217,
+     "at": [
+      -5.99,
+      279.71,
+      4.09
+     ]
+    }
+   }
+  },
+  {
+   "case": "S1 prop strike 30 N along the shaft (ground handling, not flight)",
+   "flight": false,
+   "regions": {
+    "sleeve": {
+     "label": "Hub bridge sleeve (PETG 1.2 mm)",
+     "p1": 1231.176183819985,
+     "vm": 787.0049038077015,
+     "at": [
+      -1.69,
+      7.22,
+      0.34
+     ]
+    },
+    "web": {
+     "label": "Hub radial web (as drawn: PETG 0.8 x 22 mm; spoke variant: tube 13.6 x 10.4)",
+     "p1": 1972.2367822507772,
+     "vm": 1599.5753863670695,
+     "at": [
+      -5.79,
+      29.23,
+      0.34
+     ]
+    },
+    "floor": {
+     "label": "Socket floor and inner boss (PETG, 0.8 mm wall)",
+     "p1": 2598.8317005688823,
+     "vm": 2229.6884842960885,
+     "at": [
+      6.89,
+      29.82,
+      0.34
+     ]
+    },
+    "mouth": {
+     "label": "Socket mouth (PETG, 2.0 mm wall)",
+     "p1": 7.399324941304279,
+     "vm": 5.021622010751184,
+     "at": [
+      5.52,
+      56.2,
+      -2.57
+     ]
+    },
+    "tube_root": {
+     "label": "Arm tube in and near the socket (CFRP)",
+     "axial": 465.30338818376543,
+     "hoop": 92.00354474647708,
+     "shear": 77.87178738208652,
+     "at": [
+      -4.98,
+      31.32,
+      0.92
+     ]
+    },
+    "tube_mid": {
+     "label": "Arm tube, free span (CFRP)",
+     "axial": 63.45684816915308,
+     "hoop": 0.03274512355933788,
+     "shear": 1.84914302843124,
+     "at": [
+      5.54,
+      86.46,
+      -1.91
+     ]
+    },
+    "tube_tip": {
+     "label": "Arm tube in and near the cup (CFRP)",
+     "axial": 13.32160384627059,
+     "hoop": 1.5398854297210032,
+     "shear": 1.9624897884878583,
+     "at": [
+      -5.62,
+      236.4,
+      1.65
+     ]
+    },
+    "cup": {
+     "label": "Motor cup (PETG)",
+     "p1": 4.607870142352532,
+     "vm": 3.6513063232113994,
+     "at": [
+      -4.58,
+      279.5,
+      8.31
+     ]
+    }
+   }
+  }
+ ],
+ "bonds": {
+  "F1 hover/transition at the spin cap, pitch-over, 1P": {
+   "socket": {
+    "shear": 10.565644694765478,
+    "peel": 10.142033912869854
+   },
+   "cup": {
+    "shear": 0.5621998391833158,
+    "peel": 0.48457792164260627
+   }
+  },
+  "F2 uncapped motor fault + pitch-over + 1P": {
+   "socket": {
+    "shear": 12.291287989235492,
+    "peel": 11.677822635829367
+   },
+   "cup": {
+    "shear": 0.5917813100752168,
+    "peel": 0.5175384437978117
+   }
+  },
+  "S2 prop strike 30 N transverse at the prop plane (ground handling, not flight)": {
+   "socket": {
+    "shear": 39.21053225586255,
+    "peel": 55.07578825282262
+   },
+   "cup": {
+    "shear": 3.274270830724585,
+    "peel": 2.0106966591838593
+   }
+  },
+  "S3 blade stop, torque 30 N x 80 mm about the shaft (ground handling, not flight)": {
+   "socket": {
+    "shear": 9.39777757670544,
+    "peel": 15.183483342732462
+   },
+   "cup": {
+    "shear": 3.4085262386047295,
+    "peel": 2.7734950136961505
+   }
+  },
+  "S1 prop strike 30 N along the shaft (ground handling, not flight)": {
+   "socket": {
+    "shear": 32.9465118791909,
+    "peel": 28.13706816720545
+   },
+   "cup": {
+    "shear": 0.5624658807641726,
+    "peel": 0.6465450262506123
+   }
+  }
+ },
+ "loads": {
+  "T_CAP": 8.81,
+  "Q_CAP": 0.13,
+  "T_UNC": 10.38,
+  "Q_UNC": 0.153,
+  "F_1P": 0.96,
+  "M_GYRO_Nm": 0.15585417928984918,
+  "I_ROT": 5.30644198e-05,
+  "PITCH_RATE": 3.0
+ }
+}

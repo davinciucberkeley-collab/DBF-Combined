@@ -52,11 +52,11 @@ PORTS = {
     # F1 PWR-R1 stack (CR-F1-18)
     "pack_mate": ((0.031, -0.046, 0.046), "CR-F1-18: AS150U mating face"),
     "as150u_cups": ((0.0025, -0.040, 0.046), "CR-F1-18: AS150U aircraft-half solder cups x 0.002"),
-    "board_in": ((-0.0105, -0.040, 0.0478), "CR-F1-18: power-board input pads, aft edge x -0.010, z 0.0486"),
-    "board_out": ((-0.0105, -0.052, 0.0478), "CR-F1-18: power-board output pads, aft edge"),
+    "board_in": ((-0.0105, -0.040, 0.0501), "CR-F1-18: power-board input pads, aft edge x -0.010, z 0.0486"),
+    "board_out": ((-0.0105, -0.052, 0.0501), "CR-F1-18: power-board output pads, aft edge"),
     "bars_end": ((-0.0105, -0.046, 0.0245), "CR-F1-18: aft end of the bus bars, z 0.024"),
     "bars_out": ((-0.005, -0.0464, 0.024), "CR-F1-18: bars (+ y -0.0499, - y -0.0429), ESC pigtails (D-74)"),
-    "pdb_link": ((-0.0612, -0.034, 0.0506), "D-89: rear of the ribbon plug on the PDB board-to-board header (power.py "
+    "pdb_link": ((-0.0612, -0.034, 0.0529), "D-89: rear of the ribbon plug on the PDB board-to-board header (power.py "
                  "PWR-003 'board-link header', fore face x -0.0615, top-face forward-inboard corner); pin map at "
                  "BOARD-CHECK.md step 4"),
     # F3 avionics ports (CR-F3-16, ASM-F3-PORTS +/- 10 mm). D-89: each is a drawn termination on the board part
@@ -81,6 +81,7 @@ FC_OUT_Y = lambda n: 0.0565 + 0.00254 * (n - 5)              # hole y of output 
 FC_PCB_TOP, FC_JOINT_H = 0.0272, 0.0005                      # PCB top z, solder joint height (avionics params)
 GPS_PLUG_DIR = (0.70711, 0.0, 0.70711)                       # cable direction out of the GPS plug
 PORT_LIST = [[k, list(v[0])] for k, v in PORTS.items()]
+FACTORY_LEAD_M = 0.110        # D-174: X2814 V3 factory phase leads from the lead exit (E1.md D-173, maker drawing), EST
 XT30 = {}                     # station -> (XT30U centre [x, y, z], path length bars -> centre m); filled by build()
 GROM = {}                     # station -> (hole centre [x, y, z], outboard sign); filled by build() (D-83)
 BAR_X0, BAR_Y, BAR_TOP = -0.0075, -0.04635, 0.0255   # F1 bus bars (PWR-004): aft-most pad x (D-87: bars 35 mm,
@@ -95,10 +96,14 @@ PWR_EDGE = dict(zip(("UR", "UL", "LR", "LL"), ("E-HRN-13", "E-HRN-14", "E-HRN-15
 GROM_DIM_M = {"flange_od": 0.010, "barrel_od": 0.0079, "bore": 0.007, "length": 0.012, "flange_t": 0.0012}
 GROM_G = 0.50                 # g each, EST (the value the fittings table carried before D-83)
 GROM_EDGES = ("E-HRN-42", "E-HRN-43", "E-HRN-44", "E-HRN-45")      # HRN-110-<st> bonded in FIN-001-<st> (D-83)
-# Amass XT30U mated pair (manual, manufacturer's drawing: length 20.1 +/- 0.5, height across the two contacts
-# 10.2 +/- 0.3 mm; housing thickness 5.2 mm from the Amass listing, UNVERIFIED): [along the wire, across the pins, thick]
-XT30_SIZE_M = (0.0201, 0.0102, 0.0052)
-XT30_G = 2.0                  # g per mated pair with adhesive heat-shrink (resellers 1.7 g bare), EST
+# D-174 (F1 D-173.2): the XT30U (20 A) fails the 40 A one-motor transient, so every ESC pair carries an Amass XT60H
+# (30 A continuous / 60 A for 1 min, Holybro; F1 SRC-J1-HOLYBRO-CONN). Mated pair 30.0 x 15.8 x 8.1 mm: 15.8 x 8.1 mm
+# is the XT60 plug section (Avifly XT60 listing, 40 x 15.8 x 8.1 mm overall incl. the solder cups, search 2026-11-14), the
+# 30 mm mated length is EST (no maker drawing found): [along the wire, across the pins, thick]. UNVERIFIED until T-F2-FIT.
+# The pod was drawn for the 20.1 x 10.2 x 5.2 mm XT30U (D2 xt30u_mated_m): the XT60H does not fit those zones (see the
+# F2 closure report); the part ids (HRN-113-*, CT-XT30U, XT30_*) keep their D-74 names.
+XT30_SIZE_M = (0.0300, 0.0158, 0.0081)
+XT30_G = 7.3                  # g per mated pair with adhesive heat-shrink (F1 D-173: 4 g F + 3 g M + 0.3 g), EST
 # D-86: JR servo connectors (BOM HRN-105) drawn as parts HRN-105-<n> (tray, FC output n) and HRN-105-S<L|R> (servo
 # recess). Pololu dimension drawings, checked 2026-11-11 (https://www.pololu.com/product/1925/pictures): male shroud
 # 18.00 x 10.30 x 4.00 mm, female housing 14.00 x 7.90 x 2.75 mm, 2.54 mm pitch. Mated, JR_TAIL_M of the female
@@ -178,7 +183,7 @@ def lengths(wires, od):
     out["i2c_total"] = cut["W-GPS"] + cut["W-ASPD"]
     out["rx"] = cut["W-RX"]
     out["servo_max"] = max(sum(cut.get("W-SRV-%s%s" % (s, e), 0.0) for e in ("-P", "", "-S")) for s in "LR")
-    out["cap_lead_max"] = max(cut["W-CAP-" + s] for s in STATIONS)
+    out["cap_lead_max"] = max(cut[p + s] for s in STATIONS for p in ("W-CAP-", "W-CAP2-", "W-CAP3-"))
     out["pmod"] = cut["W-PMOD"]
     out["servo_own_max"] = max(cut.get("W-SRV-%s-S" % s, 0.0) for s in "LR")
     return out
@@ -285,7 +290,7 @@ def bends(wires, od, k_table):
     worst = (1e9, "")
     for row in wires:
         wid, awg, pts = row[0], int(row[2]), row[9]
-        if wid in OTHER_FORMED or wid.startswith("W-CAP-"):
+        if wid in OTHER_FORMED or wid.startswith("W-CAP"):
             continue
         r_req0 = kd.get(awg, 3.0) * odd.get(awg, 1.0) / 1000.0
         segs = seg_len(pts)
@@ -416,15 +421,30 @@ def calc_servo_v(L, L_own, I, elec, L_link, n):
     return {"v_servo": v_bec - lead - link, "v_link_drop": link, "v_lead_drop": lead}
 
 
-@kit.calc("CALC-F2-CAP-RIPPLE", title="ESC bus-cap leg current (E-HRN-34..37): AC ripple RMS, no DC",
-          equation="I_esc,cont = I_hover / 4 x split_max; I_esc,peak = I_motor,max; "
-                   "I_cap,rms = I_esc sqrt(D (1 - D)) <= 0.5 I_esc (worst D = 0.5, leads carry the DC)",
-          inputs={"i_hover": "P:performance.hover_current_a", "split": "P:requirements.hover_split_max",
-                  "i_max": "P:propulsion.current_max_per_motor_a"},
-          units={"i_hover": "A", "split": "-", "i_max": "A"}, output="cap_rms_peak")
-def calc_cap_ripple(i_hover, split, i_max):
-    i_cont = i_hover / 4 * split
-    return {"esc_cont": i_cont, "cap_rms_cont": 0.5 * i_cont, "cap_rms_peak": 0.5 * i_max}
+kit.assumption("ASM-F2-CAPS-PER-ESC", "Three bus cans per ESC (D-174, F1 R8)",
+               "PWR-008 / -009 / -010, Rubycon 35PZJ560M10X15, in parallel on the ESC power pads; the ripple splits "
+               "equally between them",
+               basis="subsystems/power/params.json power.cap_n_per_esc = 3; F1.md D-173.4 (the 2 s single-motor "
+                     "transient decides: 2 cans carry 9.64 A each against 7.28 A permissible)",
+               value=3, unit="-", status="PROPOSED")
+
+
+@kit.calc("CALC-F2-CAP-RIPPLE", title="ESC bus-cap leg current (E-HRN-34..37, -73..80): AC ripple RMS per can, from the WINDING current",
+          equation="I_esc,ripple = I_ph sqrt(D (1 - D)) per ESC, D = I_bus / I_ph (limiter, transient); hover: "
+                   "0.5 I_ph,hover x split_max (D = 0.5 upper bound); per can = I_esc,ripple / n_cans. I_ph = the winding "
+                   "current (F1 ASM-F1-D173: limiter / hover / one-motor transient), not the battery current",
+          inputs={"d173": "ASM-F1-D173", "i_lim": "P:performance.full_throttle_current_a",
+                  "split": "P:requirements.hover_split_max", "n_cans": "ASM-F2-CAPS-PER-ESC"},
+          units={"i_lim": "A", "split": "-"}, output="cap_rms_peak")
+def calc_cap_ripple(d173, i_lim, split, n_cans):
+    i_ph_lim, i_ph_hov, i_ph_tr, i_esc_tr, _t = d173
+    d_lim = (i_lim / 4) / i_ph_lim
+    d_tr = i_esc_tr / i_ph_tr
+    hover = 0.5 * i_ph_hov * split
+    limiter = i_ph_lim * math.sqrt(d_lim * (1 - d_lim))
+    trans = i_ph_tr * math.sqrt(d_tr * (1 - d_tr))
+    return {"esc_hover": hover, "esc_limiter": limiter, "esc_trans": trans, "d_lim": d_lim, "d_trans": d_tr,
+            "cap_rms_cont": hover / n_cans, "cap_rms_lim": limiter / n_cans, "cap_rms_peak": trans / n_cans}
 
 
 @kit.calc("CALC-F2-BODIES", title="CAD bundle legs sized by the wire mass they carry; body centroid vs wire-mass CG",
@@ -451,9 +471,11 @@ kit.assumption("ASM-F2-WIRE-GPM", "Wire mass per conductor metre",
                value=[[16, 16.15], [20, 6.6], [22, 4.0], [26, 1.8], [28, 1.1]], unit="AWG,g/m", status="UNVERIFIED",
                cites=["CL-F1-ESC-MASS"])
 kit.assumption("ASM-F2-FACTORY-LEADS", "Factory phase-lead lengths",
-               "[motor lead beyond the stator, ESC phase lead] in m; X3108S lead length is not published (E1), the "
-               "LANRC ESC is taken as bare phase pads (worst case)",
-               basis="E1 PROPULSION.md open item; measured at T-E1-MOTOR-RM on the first motor", value=[0.06, 0.0],
+               "[motor lead beyond the stator, ESC phase lead] in m; D-174: SunnySky X2814 V3 leads 110 mm (maker drawing, "
+               "E1.md D-173 table, sunnyskyusa.com 2026-11-14; was 60 mm EST for the X3108S); the LANRC ESC is taken as "
+               "bare phase pads (worst case)",
+               basis="E1.md D-173 (leads 110 mm per the drawing; whether the 108 g includes them is open); measured at "
+                     "T-E1-MOTOR-RM on the first motor", value=[FACTORY_LEAD_M, 0.0],
                unit="m", status="UNVERIFIED")
 kit.assumption("ASM-F2-SERVO-CIRCUIT", "Servo supply circuit",
                "[servo-BEC set point V, 22 AWG Ohm/m (harness servo + / -), contacts in series per servo lead, Ohm "
@@ -513,14 +535,16 @@ kit.claim("CL-F2-CAP-LEAD", "Longest ESC-cap lead (cap body to ESC power pad) in
           output="cap_lead_max", unit="m", limit=("<=", "P:harness.rules.cap_lead_max_m"),
           parts=["PRP-002-UR", "PWR-008-UR"], how="T-F2-FIT: measure each cap leg after forming, before soldering",
           verifies=["R-HARNESS-INSTALL"])
-kit.claim("CL-F2-CAP-RIPPLE-CONT", "ESC bus-cap leg ripple current, hover (RMS, upper-bound D = 0.5)",
+kit.claim("CL-F2-CAP-RIPPLE-CONT", "ESC bus-cap leg ripple current per can, hover (RMS, winding current, upper-bound D = 0.5)",
           calc="CALC-F2-CAP-RIPPLE", output="cap_rms_cont", unit="A", parts=["PWR-008-UR", "PRP-002-UR"],
           how="T-F1-RIPPLE: current probe on one cap leg at hover throttle, props on, tethered",
-          note="current_a.cont of E-HRN-34..37; F1 checks the PWR-008 ripple rating against it")
-kit.claim("CL-F2-CAP-RIPPLE-PEAK", "ESC bus-cap leg ripple current, per-motor max (RMS, upper-bound D = 0.5)",
+          note="current_a.cont of E-HRN-34..37 and -73..80 (D-174: 15.8 A winding x split / 2 / 3 cans); F1 checks the "
+               "PWR-008 / -009 / -010 ripple rating against it (CL-F1-CAP-I-HOVER 2.93 A)")
+kit.claim("CL-F2-CAP-RIPPLE-PEAK", "ESC bus-cap leg ripple current per can, 2 s one-motor transient (RMS, winding current)",
           calc="CALC-F2-CAP-RIPPLE", output="cap_rms_peak", unit="A", parts=["PWR-008-UR", "PRP-002-UR"],
           how="T-F1-RIPPLE: current probe on one cap leg at full throttle burst (< 5 s)",
-          note="current_a.peak of E-HRN-34..37; 22 AWG legs 11 mm long carry it with negligible rise")
+          note="current_a.peak of E-HRN-34..37 and -73..80 (D-174: 49.3 A winding, D 0.81, 3 cans; F1 CL-F1-CAP-I-TRANS "
+               "6.43 A); 22 AWG legs about 20 mm long carry it with negligible rise")
 kit.claim("CL-F2-I2C-LEN", "I2C bus total (FC to GPS + Y-branch to airspeed)", calc="CALC-F2-LENGTHS",
           output="i2c_total", unit="m", limit=("<=", "P:harness.rules.i2c_max_m"), parts=["AVN-001", "AVN-002", "AVN-004"],
           how="T-F3-I2C-SCAN with the routed cables; all three addresses found, no bus errors in 10 min")
@@ -628,6 +652,12 @@ def fins_geometry(P):
     return fins_mod.geometry(P, fins_mod.load_local(), k09kit.section(P)[0])
 
 
+def motor_pt(g, st, xl, yl, zl):
+    """World point of a motor-local point (x' along -thrust from the plate face) at station st."""
+    R, t = g["motor_frame"][st]
+    return [t[i] + R[i][0] * xl + R[i][1] * yl + R[i][2] * zl for i in range(3)]
+
+
 def geometry():
     P = load_json(RED / "params/params.json")
     F = load_json(RED / "subsystems/fins/params.json")
@@ -658,6 +688,32 @@ def geometry():
     g["tail_face_y"] = FG["yf"] + FG["t_fin"] / 2 + FG["es_t"] + 2 * FG["sc_clear"] + FG["sc_wall"]
     g["zm"] = pv(P, "propulsion.stations.z_m")
     g["x_face"] = d3["CL-D3-X-FACE"]["value"]
+    # D-174 (D3, cheeks 5.5 mm): the outboard motor-mount cheek's outer face; the phase bundle (3 x 16 AWG, r 2.8 mm) rides
+    # 0.7 mm over it (the margin the D-91 route had over the 2.5 mm cheek)
+    g["cheek_out"] = g["yf"] + pv(F, "fin_detail.mount.cheek_y_in_m") + pv(F, "fin_detail.mount.cheek_t_m")
+    g["y_phase"] = g["cheek_out"] + 0.0035
+    # Motor frame per station, the same placement as subsystems/propulsion/fusion/propulsion.py (canted plate normal,
+    # D-146 9 deg): x' = -thrust, rotation about (0, az, -ay); the phase leads end on the motor's lead-exit body
+    # instead of fixed world points, so a cant or face move carries them (wave 3, 2026-11-14)
+    PL = load_json(RED / "subsystems/propulsion/params.json")
+    cant = math.radians(pv(P, "propulsion.stations.cant_deg"))
+    sense = pv(F, "fin_detail.mount.cant_sense_UR")
+    g["lead_y"] = (pv(PL, "propulsion_detail.motor.base_d_m") / 2 * 0.8 + pv(PL, "propulsion_detail.motor.lead_exit_r_m")) / 2   # lead-exit box mid (local y')
+    g["motor_frame"] = {}
+    for st in ("UR", "UL", "LR", "LL"):
+        sy, sz = (1 if st[1] == "R" else -1), (1 if st[0] == "U" else -1)
+        n = math.hypot(g["yf"], g["zm"])
+        ay = sense * math.tan(cant) * (-g["zm"] / n) * sy
+        az = sense * math.tan(cant) * (g["yf"] / n) * sz
+        nn = math.sqrt(1 + ay * ay + az * az)
+        k = (0.0, az, -ay)
+        kn = math.sqrt(sum(c * c for c in k))
+        k = tuple(c / kn for c in k)
+        c, sn = 1 / nn, math.sqrt(1 - 1 / nn ** 2)
+        K = [[0, -k[2], k[1]], [k[2], 0, -k[0]], [-k[1], k[0], 0]]
+        R = [[(1.0 if i == j else 0.0) + sn * K[i][j] + (1 - c) * sum(K[i][m] * K[m][j] for m in range(3))
+              for j in range(3)] for i in range(3)]
+        g["motor_frame"][st] = (R, (g["x_face"], sy * g["yf"], sz * g["zm"]))
     g["r_motor"] = pv(P, "propulsion.motor_diameter_m") / 2
     # pod (D2)
     g["pod_x0"] = pv(P, "pod.x_le_m")
@@ -679,6 +735,7 @@ def geometry():
     g["x_leg"] = g["x_spar"]                                           # handle on the spar (POD-007 at x 0.08)
     g["aft_exit"] = pv(D, "cable_exit_m")                              # y0, y1, z0, z1 (aft wall)
     g["strap_x"], g["pad_len"] = pv(D, "strap_x_m"), pv(D, "pad_len_m")
+    g["pack_aft"] = pv(D, "pack_aft_face_m")[0]                        # D-174: nominal pack aft face (-0.0055; was 0.0315)
     g["grip_z"] = g["pod_z0"] + H + pv(D, "grip_gap_m") + pv(D, "grip_m")[1] / 2
     g["side_exit"] = pv(D, "side_exit_m")                              # x0, x1, z0, z1 (D2, CR-F2-03 a)
     g["x_under"] = pv(D, "floor_channel_m")[0]                         # under-pack channel centre x (D2)
@@ -696,6 +753,9 @@ def geometry():
     # its centre and top are now only a lane datum in a free zone.
     g["rlane"] = [0.044 + 0.0205, g["y_ch"], g["pod_z0"] + g["wall"] + pv(D, "plate_t_m") + 0.005]
     g["cap"] = list(pwr["PWR-008-UR"]["cg_xyz_m"])                     # cap body centre, UR (others mirror)
+    g["cap_len"] = pv(load_json(RED / "subsystems/power/params.json"), "power.cap_m")[0]   # can length along x (F1 R8: 15 mm)
+    g["cap2"] = list(pwr["PWR-009-UR"]["cg_xyz_m"])                    # D-174: second / third can per ESC (F1 R8)
+    g["cap3"] = list(pwr["PWR-010-UR"]["cg_xyz_m"])
     g["servo"] = list(mec["MEC-001-R"]["cg_xyz_m"])
     # clearance references for the routes (ROUTE-CLEARANCE.md): what the wires must clear by >= 1 mm
     g["foot_top"] = 0.0228 + pv(D, "foot_plate_t_m")                   # POD-007 foot plate / bridge top z (D2 CAD)
@@ -962,10 +1022,11 @@ def build(g):
              [0.0615, sy * 0.3345, sz * 0.1400, "B"],                       # D-89c: up outboard of the lug face
              [0.0615, sy * 0.3345, sz * 0.1498, "T"],                       # phase lug tie at the lug's mid
              #   (D-91 moved the lug 6 mm down: z 0.1473-0.1523, face y 0.3308; the lead's inner surface 0.09 mm off)
-             [0.0590, sy * 0.3375, sz * 0.1785, "T"],                       # tape on the cheek face
-             [0.0330, sy * 0.3375, sz * g["zm"], "T"],
-             [0.0245, sy * 0.3375, sz * g["zm"], "E"]]      # D-89: 1.4 mm into the motor's phase-lead exit
-        wires.append(["W-PH-" + st, eid, 16, 3, 1, 0.030, 0.020, 16.15, 0.06, r])
+             [0.0590, sy * g["y_phase"], sz * 0.1785, "T"],                 # tape on the cheek face (D-174: 5.5 mm cheek)
+             motor_pt(g, st, 0.0068, sy * (g["y_phase"] - g["yf"]), 0.0) + ["T"],   # 6.8 mm run behind the exit face,
+             #                                                                         still over the cheek (x' <= 0.0125)
+             motor_pt(g, st, -0.0014, sy * (g["y_phase"] - g["yf"]), 0.0) + ["E"]]   # D-89: 1.4 mm into the exit (centre 0.8 mm inside its outboard face)
+        wires.append(["W-PH-" + st, eid, 16, 3, 1, 0.030, 0.020, 16.15, FACTORY_LEAD_M, r])
 
     def pigtail(out_n):
         """D-89: output n's conductors are soldered in the FC's through-hole field (rows S / Vx / G at 2.54 mm EST,
@@ -1080,8 +1141,8 @@ def build(g):
     # (1.4 mm outboard of the can axis, 2.5 mm either side of it), is formed 2 mm on and runs to the ESC end face,
     # where it lands on its pad beside the conductor (+ leg z 0.1160, - leg 0.1235, 1.4 mm outboard of the pair), and
     # enters square 2 mm before the face. Drawn as the two legs (STRAND_FIX).
-    cap_x0 = g["cap"][0] - 0.008                                        # can forward face (cap_m 16 mm long)
-    y_leg, d_leg = g["cap"][1] + 0.0014, 0.0006
+    cap_x0 = g["cap"][0] - g["cap_len"] / 2                             # can forward face (D-174: 15 mm can, was 16)
+    y_leg, d_leg = g["cap"][1] + 0.0012, 0.0006      # D-174: 331.0 (was 331.2) to leave room for cans 2 and 3
     for st, eid in zip(STATIONS, ("E-HRN-34", "E-HRN-35", "E-HRN-36", "E-HRN-37")):
         sy = 1 if st[1] == "R" else -1
         sz = 1 if st[0] == "U" else -1
@@ -1094,6 +1155,25 @@ def build(g):
         wires.append(["W-CAP-" + st, eid, 22, 2, 0, 0.0, 0.003, 0.0, 0.0, r])   # 3 mm forming allowance
         STRAND_FIX["W-CAP-" + st] = lambda s, legs=legs: [[d_leg, [[round(c, 5) for c in p] for p in L]]
                                                           for L in legs]
+        # D-174 (F1 R8): three cans per ESC. Cans 2 and 3 (PWR-009 / -010) sit one pitch (11 mm) toward the wing / the
+        # tip. Their legs run straight from the can's forward face to the same two ESC pads (+ z 0.1160, - z 0.1235),
+        # in their own planes 0.8 mm apart in y so no bare leg touches another (the legs cross in the x-z view: the
+        # third can's + leg descends past the - leg; EST: sleeve those two legs, 0.05 g). The three landings share
+        # each pad: y 0.3302 / 0.3310 / 0.3318 (cans 2 / 1 / 3), inside the ESC body (y 0.326-0.332) and clear of the
+        # power conductor (y 0.3272-0.3298). No forming allowance, and no straight stubs: the 19.9 mm leg is the
+        # longest the 20 mm rule (CR-F1-18) allows at the 15 mm can gap.
+        for n_can, key, y_land, eid2 in ((2, "cap2", y_leg - 0.0008, CAP_EDGES[2][st]),
+                                         (3, "cap3", y_leg + 0.0008, CAP_EDGES[3][st])):
+            zcn = g[key][2]
+            legs_n = []
+            for dz_, ze in ((-0.0025, z_pad[0]), (0.0025, z_pad[1])):
+                legs_n.append([[cap_x0 + 0.0003, sy * y_land, sz * (zcn + dz_)],
+                               [x_ef - 0.0003, sy * y_land, sz * ze]])
+            lg = max(legs_n, key=lambda L: math.dist(L[0], L[1]))      # the row carries the longest leg (the claim)
+            rn = [lg[0] + ["B"], lg[1] + ["J"]]
+            wires.append(["W-CAP%d-%s" % (n_can, st), eid2, 22, 2, 0, 0.0, 0.0, 0.0, 0.0, rn])
+            STRAND_FIX["W-CAP%d-%s" % (n_can, st)] = lambda s, legs=legs_n: [
+                [d_leg, [[round(c, 5) for c in p] for p in L]] for L in legs]
 
     # ---- D-88: adhesive-lined heat-shrink (BOM HRN-107) over every soldered end that leaves a part's face, drawn as
     # parts HRN-107-*: a tube on the lead's straight run against the face, inner = the lead's drawn OD, wall 0.4 mm
@@ -1210,7 +1290,15 @@ def build(g):
     # is the pair of 10 AWG leads
     # D-87: the turns are drawn as arcs no tighter than the 6 mm bundle can bend (r 4 mm in plan and a 4 mm loop
     # aft of the pack half, clear of the left handle leg at x 0.0765); the end stays 2 mm inside the pack half
-    r = [[0.0330, -0.014, 0.0535, "F"], [0.0635, -0.014, 0.0535, "P"], [0.0635, -0.04235, 0.0535, "P"],
+    # D-174 (D2): the pack moved forward, its aft face is now g["pack_aft"] (-0.0055, was 0.0315): the lead starts 1.5 mm
+    # inside the factory lead-exit boot on that face (power.py: boot x a_nom ... a_nom + 3 mm) and runs aft over the
+    # 20 mm XPS filler and the aft stop to the same park
+    # The 67 mm to the park is longer than the 50 mm free-span rule, so from 10 mm behind the boot the pair is taped
+    # down onto the XPS filler (top z 0.0408, POD-013; centre 3.4 mm over it for the 6 mm bundle, tape strips), runs
+    # aft on it, and rises over the aft stop (POD-002, top z 0.0503) 3.6 mm clear of it to the old height
+    xf0 = g["pack_aft"] + 0.0015
+    r = [[xf0, -0.014, 0.0535, "F"], [xf0 + 0.0100, -0.014, 0.0535, "F"], [0.0250, -0.014, 0.0442, "P"],
+         [0.0360, -0.014, 0.0442, "P"], [0.0470, -0.014, 0.0536, "P"], [0.0635, -0.014, 0.0535, "P"], [0.0635, -0.04235, 0.0535, "P"],
          [0.0647, -0.0452, 0.0535, "P"], [0.0675, BAR_Y, 0.0535, "P"], [0.07029, BAR_Y, 0.0523, "P"],
          [0.07145, BAR_Y, 0.04955, "P"], [0.07029, BAR_Y, 0.0468, "P"], [0.0675, BAR_Y, 0.0456, "P"],
          [0.0597, BAR_Y, 0.0456, "E"]]       # D-88: into the solder cups at the pack half's wire end (x 0.060), 0.3
@@ -1218,8 +1306,9 @@ def build(g):
     wires.append(["W-PACK", "E-HRN-10", 10, 2, 0, 0.0, 0.0, 0.0, 0.0, r])
     # D-88: out of the AS150U aircraft half's cup end square (x 0.002, 0.3 mm in) and 5 mm straight, then up onto the
     # board's input pads (top, z 0.0486) and along them
-    r = [[0.0023, -0.0403, 0.046, "P"], [-0.003, -0.0403, 0.046, "P"], [-0.0085, -0.0403, 0.0514, "P"],
-         [-0.0145, -0.0403, 0.0514, "E"]]      # D-89: one 44 deg rise onto the pads, the last 6 mm flat on them
+    r = [[0.0023, -0.0403, 0.046, "P"], [-0.002, -0.0403, 0.046, "P"], [-0.0085, -0.0403, 0.0537, "P"],
+         [-0.0145, -0.0403, 0.0537, "E"]]      # D-89: one rise onto the pads, the last 6 mm flat on them; CDR-17: the
+    #                                          board stands 2.3 mm higher on its foam pad (49 deg rise)
     wires.append(["W-MAIN-1", "E-HRN-11", 10, 2, 0, 0.0, 0.015, 0.0, 0.0, r])
     # D-89: drawn as its two 10 AWG conductors side by side (y -0.04272 / -0.03788, 4.84 mm apart) from the cups
     # through the widened cup slot onto the board's two input pads (power.py PWR-003 'input pad', joint top z
@@ -1241,14 +1330,14 @@ def build(g):
     # front edge, and neither it nor its solder fillet reaches the RX ahead of the bars (x <= -0.0405)
     arc = lambda yc, s: [[-0.0335 - 0.0035 * math.sin(math.radians(a)), yc - s * 0.0035 * math.cos(math.radians(a)),
                           zm2 - (zm2 - zbar) * a / 90.0] for a in (0, 30, 60, 90)]
-    # D-89: the first two points lie on the output pads (joint top z 0.0491)
-    mp = [[-0.0145, -0.0545, 0.0514], [-0.0085, -0.0545, 0.0514], [-0.003, -0.0532, 0.044], [-0.003, -0.0532, zm2]]
+    # D-89: the first two points lie on the output pads (joint top z 0.0514 since CDR-17)
+    mp = [[-0.0145, -0.0545, 0.0537], [-0.0085, -0.0545, 0.0537], [-0.003, -0.0532, 0.0455], [-0.003, -0.0532, zm2]]
     mp += arc(-0.0497, 1)                                               # the arc ends lying on the + bar
-    mn = [[-0.0145, -0.0495, 0.0514], [-0.0085, -0.0495, 0.0514], [-0.0040, -0.0480, 0.0440],   # down first, then in
+    mn = [[-0.0145, -0.0495, 0.0537], [-0.0085, -0.0495, 0.0537], [-0.0040, -0.0480, 0.0455],   # down first, then in
           [-0.0030, -0.0430, 0.0405], [-0.0030, -0.0396, 0.0370], [-0.0030, -0.0396, zm2]]   # under main 1, over
     #                                                                                      the pairs (top 0.0364)
     mn += arc(-0.0431, -1)                                              # ... and on the - bar
-    r = [[-0.0145, -0.0545, 0.0484, "P"]] + [p + ["P"] for p in mp[1:-1]] + [[-0.0370, -0.04985, BAR_TOP - 0.0005, "E"]]
+    r = [[-0.0145, -0.0545, 0.0507, "P"]] + [p + ["P"] for p in mp[1:-1]] + [[-0.0370, -0.04985, BAR_TOP - 0.0005, "E"]]
     #                                                                     centre line on the pad and on the bar
     wires.append(["W-MAIN-2", "E-HRN-12", 10, 2, 0, 0.0, 0.020, 0.0, 0.0, r])
     STRAND_FIX["W-MAIN-2"] = lambda s, mp=mp, mn=mn: [[0.0048, mp], [0.0048, mn]]
@@ -1268,7 +1357,7 @@ def build(g):
     # D-89: the ribbon plug sits on the PDB's board-to-board header (top face, forward-inboard corner, power.py) and
     # on the FC's underside header between the gel cubes (avionics.py fc_link_m): it leaves the PDB plug's fore face
     # square, and enters the FC plug's inboard face square from the under-FC lane (no lead ends on a bare board)
-    r = [port("pdb_link") + ["F"], [-0.0685, -0.0335, 0.0506, "F"], [-0.0685, -0.033, 0.0350, "P"],
+    r = [port("pdb_link") + ["F"], [-0.0685, -0.0335, 0.0529, "F"], [-0.0685, -0.033, 0.0350, "P"],
          [-0.0555, y_c, zc["PMOD"], "P"], [xl["PMOD"], y_out, zc["PMOD"], "P"],
          [xl["PMOD"], y_out, z_under, "L"], [xl["PMOD"], yb, z_under, "P"],
          [xl["PMOD"], 0.0362, 0.0236, "P"], port("fc_link") + ["E"]]
@@ -1435,6 +1524,9 @@ def build(g):
 
 
 # ============================================================================ edges, parts, outputs
+# D-174 (F1 R8): edges of the second and third ESC cap
+CAP_EDGES = {2: dict(zip(("UR", "UL", "LR", "LL"), ("E-HRN-73", "E-HRN-74", "E-HRN-75", "E-HRN-76"))),
+             3: dict(zip(("UR", "UL", "LR", "LL"), ("E-HRN-77", "E-HRN-78", "E-HRN-79", "E-HRN-80")))}   # D-174 cans 2, 3
 EDGE_INFO = {
     # edge: (part_a, part_b, via, signal/current text)
     "E-HRN-10": ("PWR-001", "PWR-002", "CT-AS150U"),
@@ -1452,6 +1544,8 @@ EDGE_INFO = {
     "E-HRN-35": ("PRP-002-UL", "PWR-008-UL", "CT-SOLDER-DC"),
     "E-HRN-36": ("PRP-002-LR", "PWR-008-LR", "CT-SOLDER-DC"),
     "E-HRN-37": ("PRP-002-LL", "PWR-008-LL", "CT-SOLDER-DC"),
+    **{CAP_EDGES[n][st]: ("PRP-002-" + st, "PWR-%03d-%s" % (7 + n, st), "CT-SOLDER-DC")
+       for n in (2, 3) for st in ("UR", "UL", "LR", "LL")},
     "E-HRN-23": ("PWR-003", "AVN-001", "CT-PIN-HEADER-LINK"),
     "E-HRN-24": ("AVN-001", "PRP-002-UR", "CT-SERVO-JR"),
     "E-HRN-25": ("AVN-001", "PRP-002-UL", "CT-SERVO-JR"),
@@ -1468,7 +1562,7 @@ SRV_GPM = round((2 * 4.0 + 1.1) / 3, 3)    # servo lead g/m per conductor: + / -
 SRV_DIA_MM = (0.9, 1.3, 1.3)               # drawn conductors across the 4.0 mm servo groove: signal 28, + 22, GND 22
 HRN_CTS = [
     {"id": "CT-XT30U", "kind": "electrical", "method": "connector",
-     "spec": "Amass XT30U 2-pin keyed (20 A) in line in an ESC power pair just inside the pod side exit: female on the "
+     "spec": "Amass XT60H 2-pin keyed (30 A cont / 60 A 1 min; D-174, was XT30U 20 A) in line in an ESC power pair just inside the pod side exit: female on the "
              "bus-bar pigtail (soldered on the bench), male on the ESC lead; both ends of the pair soldered (D-74, WB-03)"},
     {"id": "CT-PIN-HEADER-LINK", "kind": "electrical", "method": "connector",
      "spec": "28 AWG ribbon with a male pin header at each end, plugged into the CoreWing PDB and FC board-to-board "
@@ -1561,12 +1655,15 @@ def wire_text(w):
                 "pod floor, crossing (L only), D2 aft exit, servo groove aft of the spar, upper branch groove at "
                 "|y| 0.285 (D1)", "tie at the JR; JR bodies taped in the recess under a re-openable tape flap",
                 "JR in the wing recess (servo swap: lift the flap, unplug)")
-    if wid.startswith("W-CAP-"):
+    if wid.startswith("W-CAP"):
         st = wid[-2:]
-        return ("ESC %s bus decoupling: 680 uF cap + / - (cap's own legs, PWR-008)" % st,
+        n_can = int(wid[5]) if wid[5].isdigit() else 1
+        return ("ESC %s bus decoupling: 560 uF cap %d of 3 + / - (cap's own legs, PWR-%03d)" % (st, n_can, 7 + n_can),
                 "ESC %s power pads (solder, with the power lead)" % st, "cap body (factory legs)",
-                "on the fin outboard face, cap in line aft of the ESC; legs formed forward 90 deg",
-                "legs sleeved (heat-shrink), cap foam-taped to the face (E-PWR-11...14)", "soldered")
+                "on the fin outboard face, three cans in line aft of the ESC (11 mm pitch in z); legs run forward to "
+                "the two pads",
+                "legs sleeved (heat-shrink) where they cross, cans foam-taped to the face (E-PWR-%d...%d)" % (
+                    11 + 4 * (n_can - 1), 14 + 4 * (n_can - 1)), "soldered")
     return ("", "", "", "", "", "")
 
 
@@ -1704,7 +1801,7 @@ def draw_strands(row, od_table, want_lat=False):
 LAP_ENDS = ([["W-PWR-" + st, 0, "PWR-004", "bar"] for st in STATIONS] +
             [["W-MAIN-2", 0, "PWR-003", "pad"], ["W-MAIN-2", -1, "PWR-004", "bar", 0.0008], ["W-MAIN-1", -1, "PWR-003", "pad"],
              ["W-RX", -1, "AVN-003", "rx"]])
-LAP_FLAT = {"bar": 0.0255, "pad": 0.0491, "rx": 0.0261}     # bar top (BAR_TOP), PDB pad joint top, RX pad joint top
+LAP_FLAT = {"bar": 0.0255, "pad": 0.0514, "rx": 0.0261}     # bar top (BAR_TOP), PDB pad joint top, RX pad joint top
 LAP_LEN = {10: 0.0040, 16: 0.0018, 28: 0.0020}              # fillet length along the conductor, EST (16 AWG
 #                                                            pairs rise 1.5 mm after the landing: the fillet ends first)
 LAP_WALL = 0.0003                                            # solder at the conductor's sides, EST
@@ -2063,12 +2160,12 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
                                    + cg_note % ([round(v, 4) for v in parts[pid]["cg"]], bgap[pid] * 1000)})
     for st, eid in zip(STATIONS, XT30_EDGES):                       # D-74: the four XT30U, drawn (HRN-113-*)
         c, plen, ax = XT30[st]
-        hrn_parts.append({"id": "HRN-113-" + st, "name": "Amass XT30U mated pair, ESC %s power plug" % st,
+        hrn_parts.append({"id": "HRN-113-" + st, "name": "Amass XT60H mated pair, ESC %s power plug" % st,
                           "subsystem": "harness", "status": "MODELLED", "mass_g": XT30_G, "material": "PA + brass",
                           "cg_xyz_m": [round(v, 4) for v in c], "make_or_buy": "buy", "carried": True,
-                          "notes": "D-74 / WB-03: XT30U-F on the bus pigtail (%.3f m of route from the bars), XT30U-M on "
-                                   "the ESC lead; body %.1f x %.1f x %.1f mm (Amass manual drawing 20.1 x 10.2; "
-                                   "thickness 5.2 from the listing, UNVERIFIED), axis (x, y) %s; tied in its station "
+                          "notes": "D-74 / WB-03 (D-174: XT60H): XT60H-F on the bus pigtail (%.3f m of route from the bars), XT60H-M on "
+                                   "the ESC lead; body %.1f x %.1f x %.1f mm (XT60 plug section 15.8 x 8.1; "
+                                   "mated length 30 EST, UNVERIFIED), axis (x, y) %s; tied in its station "
                                    "(%s); team/I1/BOM.csv#H06" % (plen, *(v * 1000 for v in XT30_SIZE_M), ax,
                                                                   "right channel, just inside the exit" if st[1] == "R"
                                                                   else "tunnel under the AS150U cradle")})
@@ -2172,17 +2269,23 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
                            "count": 1 if via == "CT-TIE" else "continuous", "load_n": "< 2 (lead weight x 10 g)",
                            "inspection": "pre-flight: no lead moves in the slipstream"}}
         (edges if b in declared or b.startswith("HRN") else pending).append(e)
-    cur = {"E-HRN-10": {"cont": 30.3, "peak": 120.0}, "E-HRN-11": {"cont": 30.3, "peak": 120.0},
-           "E-HRN-12": {"cont": 30.3, "peak": 120.0},
+    # D-174 currents (F1 D-173.3 / E2): main path = E2's hover at the gate in wind, peak = the 80 A limiter; each ESC pair
+    # = the 50 A transition share (0.278, heavier pair) and F1's 40 A one-motor transient; phase leads = the winding
+    # currents of ASM-F1-D173 (hover 15.8 A, one motor at the 0.81 cap 49.3 A)
+    i_hov, i_lim = kit.value("CL-E2-HOVER-I-GATE"), kit.value("P:performance.full_throttle_current_a")
+    d173 = kit.value("ASM-F1-D173")
+    cur = {"E-HRN-10": {"cont": round(i_hov, 1), "peak": i_lim}, "E-HRN-11": {"cont": round(i_hov, 1), "peak": i_lim},
+           "E-HRN-12": {"cont": round(i_hov, 1), "peak": i_lim},
            "E-HRN-23": {"cont": 3.7, "peak": 6.5, "kind": "servo Vx (2.8 A both stalled, 5.6 A design) + FC 5 V "
                         "0.87 A, on parallel 28 AWG conductors (F1 CL-F1-PMOD-*)"}}
     for st, eid in zip(STATIONS, ("E-HRN-13", "E-HRN-14", "E-HRN-15", "E-HRN-16")):
-        cur[eid] = {"cont": 8.4, "peak": 24.8}
+        cur[eid] = {"cont": round(kit.value("CL-E2-I-MAX-PHASE-PESS") * 0.278, 1), "peak": d173[3]}
     for st, eid in zip(STATIONS, ("E-HRN-17", "E-HRN-18", "E-HRN-19", "E-HRN-20")):
-        cur[eid] = {"cont": round(8.4 * math.sqrt(2 / 3), 1), "peak": round(24.8 * math.sqrt(2 / 3), 1)}
-    rip = calc_cap_ripple(kit.value("P:performance.hover_current_a"), kit.value("P:requirements.hover_split_max"),
-                          kit.value("P:propulsion.current_max_per_motor_a"))
-    for eid in ("E-HRN-34", "E-HRN-35", "E-HRN-36", "E-HRN-37"):    # cap legs: AC ripple only (CALC-F2-CAP-RIPPLE)
+        cur[eid] = {"cont": d173[1], "peak": d173[2], "kind": "winding current (ASM-F1-D173)"}
+    rip = calc_cap_ripple(kit.value("ASM-F1-D173"), kit.value("P:performance.full_throttle_current_a"),
+                          kit.value("P:requirements.hover_split_max"), kit.value("ASM-F2-CAPS-PER-ESC"))
+    for eid in ("E-HRN-34", "E-HRN-35", "E-HRN-36", "E-HRN-37") + tuple(CAP_EDGES[2].values()) + tuple(
+            CAP_EDGES[3].values()):                                 # cap legs: AC ripple only (CALC-F2-CAP-RIPPLE)
         cur[eid] = {"cont": round(rip["cap_rms_cont"], 1), "peak": round(rip["cap_rms_peak"], 1),
                     "kind": "AC ripple RMS, no DC (CL-F2-CAP-RIPPLE-CONT / -PEAK)"}
     for eid in sorted(EDGE_INFO):
@@ -2272,9 +2375,9 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
          "Amazon: BNTECHGO 22 AWG silicone wire, red/black 10 ft",
          "elevon servo + / - (FC pad -> wing recess, D-74 follow-up: 26 AWG gave 5.61 V at double stall); the signal "
          "core is 28 AWG from HRN-104"),
-        ("HRN-113", "Amass XT30U male + female pairs, 10-pair pack", 1, 9.99,
-         "team/I1/BOM.csv#H06 (Amass XT30U, genuine, 2-pin, 20 A)",
-         "D-74 / WB-03: 4 fitted as parts HRN-113-UR/UL/LR/LL (2.0 g each, drawn 20.1 x 10.2 x 5.2 mm): right pair "
+        ("HRN-113", "Amass XT60H male + female pairs, 5-pair set", 1, 8.99,
+         "team/I1/BOM.csv#H06 (Amass XT60H 5-pair set $8.99, GetFPV, F1 D-173.2 2026-11-14)",
+         "D-74 / WB-03 / D-174: 4 fitted as parts HRN-113-UR/UL/LR/LL (7.3 g each, drawn 30.0 x 15.8 x 8.1 mm): right pair "
          "stacked just inside the right exit, left pair stacked in the tunnel under the cradle; rest spares"),
         ("HRN-114", "Male pin-header strip 1 x 40 (pitch per power BOARD-CHECK.md step 4) + 10-way 28 AWG ribbon 0.3 m",
          1, 3.00, "any (DigiKey / Amazon); 1.27 mm pitch -> bought IDC ribbon instead",
@@ -2322,7 +2425,7 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
         for i in range(3):
             fmom[i] += f[1] * f[2] * f[3 + i]
     pm = [XT30[s] for s in STATIONS]
-    est_rows.append(["HRN-E08", "harness", "electrical", "XT30U mated pairs x4 (HRN-113-*, D-74)", 4, "-",
+    est_rows.append(["HRN-E08", "harness", "electrical", "XT60H mated pairs x4 (HRN-113-*, D-74 / D-174)", 4, "-",
                      round(XT30_G * 4, 2), *(round(sum(q[0][i] for q in pm) / 4, 4) for i in range(3)),
                      *(round(v, 4) for v in XT30_SIZE_M), "EST", "", "HRN-113-UR;HRN-113-UL;HRN-113-LR;HRN-113-LL",
                      "", "team/F2/harness.py XT30_SIZE_M, XT30_G"])

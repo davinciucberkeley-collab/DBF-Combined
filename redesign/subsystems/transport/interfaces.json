@@ -8,28 +8,28 @@
    "name": "Box base (floor, walls, end pads, nose pad)",
    "subsystem": "transport",
    "status": "MODELLED",
-   "mass_g": 2333.5,
-   "material": "Coroplast 4 mm (PP twin-wall)",
+   "mass_g": 2355.8,
+   "material": "corrugated board, single wall (ECT 32 EST)",
    "cg_xyz_m": [
-    0.1037,
+    0.1054,
     0.0,
-    -0.0853
+    -0.0885
    ],
    "make_or_buy": "make",
    "flight": false,
-   "notes": "incl. 2 end pads, 3/4 in PE nose pad (round 4), 8 corner protectors, consumables; 1.25 x 0.55 x 0.54 m external; aircraft 12 mm off the aft wall"
+   "notes": "unit cost per blank, 4 blanks incl. lid; incl. 2 end pads, 1/2 in PE nose pad (D-150), consumables; 1.25 x 0.565 x 0.54 m external (closure 2026-11-14); aircraft 12 mm off the aft wall, against the saddle LE lips (x-stops)"
   },
   {
    "id": "TRN-005",
    "name": "Lid with plug lip (no lining, D-31)",
    "subsystem": "transport",
    "status": "MODELLED",
-   "mass_g": 634.8,
-   "material": "Coroplast 4 mm (PP twin-wall)",
+   "mass_g": 650.5,
+   "material": "corrugated board, single wall (ECT 32 EST)",
    "cg_xyz_m": [
-    0.109,
+    0.1065,
     0.0,
-    0.2293
+    0.2294
    ],
    "make_or_buy": "make",
    "flight": false,
@@ -41,7 +41,7 @@
    "subsystem": "transport",
    "status": "MODELLED",
    "mass_g": 69.8,
-   "material": "XPS foam F-250 + PE foam 1.7 pcf (closed cell)",
+   "material": "XPS foam F-250 + PE foam (closed cell, 1.7 pcf assumed)",
    "cg_xyz_m": [
     0.1061,
     -0.2,
@@ -49,7 +49,7 @@
    ],
    "make_or_buy": "make",
    "flight": false,
-   "notes": "column 60 x 50 x 120 mm under the spar; saddle 60 x 250 mm at y 0.17-0.23 (4 mm inboard of the brace anchor); 6 mm PE cap"
+   "notes": "column 60 x 50 x 120 mm under the spar in a 30 mm board collar; saddle 60 x 250 mm at y 0.17-0.23 (4 mm inboard of the brace anchor); 6 mm PE cap"
   },
   {
    "id": "TRN-002-R",
@@ -57,7 +57,7 @@
    "subsystem": "transport",
    "status": "MODELLED",
    "mass_g": 69.8,
-   "material": "XPS foam F-250 + PE foam 1.7 pcf (closed cell)",
+   "material": "XPS foam F-250 + PE foam (closed cell, 1.7 pcf assumed)",
    "cg_xyz_m": [
     0.1061,
     0.2,
@@ -81,7 +81,7 @@
    ],
    "make_or_buy": "make",
    "flight": false,
-   "notes": "8 prop slots on edge; pitot slot 220 x 25 x 25 mm with a PE tip plug; props stowed here, packs never in the box"
+   "notes": "8 prop slots on edge (APC 11x5.5E, D-161); pitot slot 220 x 25 x 25 mm with a PE tip plug; props stowed here, packs never in the box"
   },
   {
    "id": "TRN-004-L",
@@ -89,7 +89,7 @@
    "subsystem": "transport",
    "status": "MODELLED",
    "mass_g": 37.9,
-   "material": "PE foam 1.7 pcf (closed cell)",
+   "material": "PE foam (closed cell, 1.7 pcf assumed)",
    "cg_xyz_m": [
     0.08,
     -0.2,
@@ -105,7 +105,7 @@
    "subsystem": "transport",
    "status": "MODELLED",
    "mass_g": 37.9,
-   "material": "PE foam 1.7 pcf (closed cell)",
+   "material": "PE foam (closed cell, 1.7 pcf assumed)",
    "cg_xyz_m": [
     0.08,
     0.2,
@@ -117,81 +117,81 @@
   },
   {
    "id": "TRN-006-L",
-   "name": "Cam-buckle strap L",
+   "name": "Cord lashing L",
    "subsystem": "transport",
    "status": "MODELLED",
-   "mass_g": 45.0,
-   "material": "25 mm PP webbing + cam buckle",
+   "mass_g": 20.0,
+   "material": "paracord 550, 2.6 m",
    "cg_xyz_m": [
-    0.109,
+    0.1065,
     -0.4,
     -0.037
    ],
-   "make_or_buy": "buy",
+   "make_or_buy": "make",
    "flight": false,
-   "notes": "EST mass; closes the lid, y -0.40 (was TRN-006-A, A4 CR-A4-24)"
+   "notes": "EST mass; closes the lid, y -0.40"
   },
   {
    "id": "TRN-006-R",
-   "name": "Cam-buckle strap R",
+   "name": "Cord lashing R",
    "subsystem": "transport",
    "status": "MODELLED",
-   "mass_g": 45.0,
-   "material": "25 mm PP webbing + cam buckle",
+   "mass_g": 20.0,
+   "material": "paracord 550, 2.6 m",
    "cg_xyz_m": [
-    0.109,
+    0.1065,
     0.4,
     -0.037
    ],
-   "make_or_buy": "buy",
+   "make_or_buy": "make",
    "flight": false,
-   "notes": "y +0.40 (was TRN-006-B)"
+   "notes": "y +0.40"
   },
   {
    "id": "TRN-007-C",
-   "name": "Side carry handle",
+   "name": "Side hand hole + 2-layer patch",
    "subsystem": "transport",
    "status": "MODELLED",
-   "mass_g": 40.0,
-   "material": "strap handle (bought)",
+   "mass_g": 21.9,
+   "material": "corrugated board offcut (from TRN-001 blanks)",
    "cg_xyz_m": [
-    -0.181,
+    0.381,
     0.0,
-    0.153
+    0.149
    ],
-   "make_or_buy": "buy",
+   "make_or_buy": "make",
    "flight": false,
-   "notes": "at the CG (y 0) on the front wall: one-person carry"
+   "notes": "aft wall at y 0: one-person carry (CL-D7-HANDHOLE-Q)"
   },
   {
    "id": "TRN-007-L",
-   "name": "End handle L",
+   "name": "End hand hole L + patch",
    "subsystem": "transport",
    "status": "MODELLED",
-   "mass_g": 40.0,
-   "material": "strap handle (bought)",
+   "mass_g": 21.9,
+   "material": "corrugated board offcut (from TRN-001 blanks)",
    "cg_xyz_m": [
-    0.109,
-    -0.64,
-    0.153
+    0.1065,
+    -0.617,
+    0.149
    ],
-   "make_or_buy": "buy",
+   "make_or_buy": "make",
    "flight": false,
    "notes": "two-person carry"
   },
   {
    "id": "TRN-007-R",
-   "name": "End handle R",
+   "name": "End hand hole R + patch",
    "subsystem": "transport",
    "status": "MODELLED",
-   "mass_g": 40.0,
-   "material": "strap handle (bought)",
+   "mass_g": 21.9,
+   "material": "corrugated board offcut (from TRN-001 blanks)",
    "cg_xyz_m": [
-    0.109,
-    0.64,
-    0.153
+    0.1065,
+    0.617,
+    0.149
    ],
-   "make_or_buy": "buy",
+   "make_or_buy": "make",
    "flight": false,
    "notes": ""
   },
@@ -210,57 +210,6 @@
    "make_or_buy": "buy",
    "flight": false,
    "notes": "carried mass, part of the loaded box"
-  },
-  {
-   "id": "TRN-102-C",
-   "name": "Handle bolt set C: 2 x (M3x16 SHCS + M3 nyloc + M3 x 12 fender washer)",
-   "subsystem": "transport",
-   "status": "MODELLED",
-   "mass_g": 4.6,
-   "material": "A2 stainless",
-   "cg_xyz_m": [
-    -0.1648,
-    -0.0,
-    0.153
-   ],
-   "make_or_buy": "buy",
-   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-TRN-13",
-   "hardware_of": "E-TRN-13",
-   "flight": false
-  },
-  {
-   "id": "TRN-102-L",
-   "name": "Handle bolt set L: 2 x (M3x16 SHCS + M3 nyloc + M3 x 12 fender washer)",
-   "subsystem": "transport",
-   "status": "MODELLED",
-   "mass_g": 4.6,
-   "material": "A2 stainless",
-   "cg_xyz_m": [
-    0.109,
-    -0.6238,
-    0.153
-   ],
-   "make_or_buy": "buy",
-   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-TRN-14",
-   "hardware_of": "E-TRN-14",
-   "flight": false
-  },
-  {
-   "id": "TRN-102-R",
-   "name": "Handle bolt set R: 2 x (M3x16 SHCS + M3 nyloc + M3 x 12 fender washer)",
-   "subsystem": "transport",
-   "status": "MODELLED",
-   "mass_g": 4.6,
-   "material": "A2 stainless",
-   "cg_xyz_m": [
-    0.109,
-    0.6235,
-    0.153
-   ],
-   "make_or_buy": "buy",
-   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-TRN-15",
-   "hardware_of": "E-TRN-15",
-   "flight": false
   }
  ],
  "connection_types": [
@@ -268,7 +217,7 @@
    "id": "CT-TRN-LSE-TAPE",
    "kind": "mechanical",
    "method": "taped",
-   "spec": "double-sided tape for low-surface-energy plastics (3M 300LSE class) on PP/PE, plus zip ties where stated"
+   "spec": "packaging-tape tabs and wraps on board / PE (closure 2026-11-14; id kept), column in a 30 mm board collar"
   },
   {
    "id": "CT-CRADLE-CONTACT",
@@ -286,13 +235,13 @@
    "id": "CT-TRN-PLUG-LID",
    "kind": "mechanical",
    "method": "slid",
-   "spec": "plug lid: folded lip inside the base walls, held closed by cam-buckle straps"
+   "spec": "plug lid: folded lip inside the base walls, held closed by two cord lashings"
   },
   {
    "id": "CT-TRN-CAM-STRAP",
    "kind": "mechanical",
    "method": "strapped",
-   "spec": "25 mm PP webbing with cam buckle around the box, through wall loops"
+   "spec": "paracord 550 lashing around the box girth, slipped trucker's hitch, folded-board edge saddles (closure 2026-11-14; id kept)"
   },
   {
    "id": "CT-TRN-POCKET",
@@ -301,16 +250,10 @@
    "spec": "item sits in a cut foam pocket, no fastening"
   },
   {
-   "id": "CT-TRN-M3-BOLT",
+   "id": "CT-TRN-PATCH",
    "kind": "mechanical",
-   "method": "fastened",
-   "spec": "M3 SHCS through handle strap and Coroplast wall, M3 x 12 mm fender washer outside, 3 mm plywood backing strip and nyloc inside"
-  },
-  {
-   "id": "CT-HW-SEATED",
-   "kind": "mechanical",
-   "method": "clamped",
-   "spec": "fastener hardware seated in a fastened joint (screw in its hole or thread, nut / washer / spacer under it, heat-set insert in its bore); the joint_stack is on the parent edge named in hardware_of"
+   "method": "taped",
+   "spec": "2-layer board patch taped and pressed inside the wall around a die-cut hand hole, flutes vertical"
   }
  ],
  "edges": [
@@ -320,9 +263,9 @@
    "part_b": "TRN-001",
    "via": "CT-TRN-LSE-TAPE",
    "owner": "transport",
-   "notes": "column base on the floor + 2 zip ties through the floor",
+   "notes": "column base in a 30 mm board collar taped to the floor",
    "retention": {
-    "item": "LSE tape 60 x 50 mm + 2 zip ties through the floor",
+    "item": "30 mm board collar taped to the floor + tape wrap",
     "count": 1,
     "load_n": 10,
     "load_basis": "C1 drop is compression; 10 N = half the aircraft weight at a 45 deg tilt, EST",
@@ -337,7 +280,7 @@
    "owner": "transport",
    "notes": "as E-TRN-01",
    "retention": {
-    "item": "LSE tape 60 x 50 mm + 2 zip ties through the floor",
+    "item": "30 mm board collar taped to the floor + tape wrap",
     "count": 1,
     "load_n": 10,
     "load_basis": "C1 drop is compression; 10 N = half the aircraft weight at a 45 deg tilt, EST",
@@ -352,7 +295,7 @@
    "owner": "transport",
    "notes": "tray on the floor between the cradles",
    "retention": {
-    "item": "LSE tape, 4 strips",
+    "item": "packing-tape tabs, 4",
     "count": 1,
     "load_n": 6,
     "load_basis": "tray + props at 2 g, EST",
@@ -367,7 +310,7 @@
    "owner": "transport",
    "notes": "pillar on the lid shell",
    "retention": {
-    "item": "LSE tape 100 x 60 mm",
+    "item": "packing-tape tabs around the pillar base",
     "count": 1,
     "load_n": 102,
     "load_basis": "CL-C1-PILLAR-F-LIM (compression)",
@@ -382,7 +325,7 @@
    "owner": "transport",
    "notes": "pillar on the lid shell",
    "retention": {
-    "item": "LSE tape 100 x 60 mm",
+    "item": "packing-tape tabs around the pillar base",
     "count": 1,
     "load_n": 102,
     "load_basis": "CL-C1-PILLAR-F-LIM (compression)",
@@ -477,7 +420,7 @@
    "owner": "transport",
    "notes": "",
    "retention": {
-    "item": "30 mm plug lip + 2 cam straps",
+    "item": "30 mm plug lip + 2 cord lashings",
     "count": 1,
     "load_n": 102,
     "load_basis": "rebound into the pillars, CL-C1-PILLAR-F-LIM",
@@ -492,11 +435,11 @@
    "owner": "transport",
    "notes": "y -0.40",
    "retention": {
-    "item": "25 mm PP webbing, cam buckle",
+    "item": "paracord 550 lashing, slipped trucker's hitch",
     "count": 1,
     "load_n": 50,
     "load_basis": "hand-cinched tension, EST",
-    "inspection": "webbing not frayed, buckle bites"
+    "inspection": "cord not frayed, edge saddles in place, hitch holds"
    }
   },
   {
@@ -507,89 +450,56 @@
    "owner": "transport",
    "notes": "y +0.40",
    "retention": {
-    "item": "25 mm PP webbing, cam buckle",
+    "item": "paracord 550 lashing, slipped trucker's hitch",
     "count": 1,
     "load_n": 50,
     "load_basis": "hand-cinched tension, EST",
-    "inspection": "webbing not frayed, buckle bites"
+    "inspection": "cord not frayed, edge saddles in place, hitch holds"
    }
   },
   {
    "id": "E-TRN-13",
    "part_a": "TRN-007-C",
    "part_b": "TRN-001",
-   "via": "CT-TRN-M3-BOLT",
+   "via": "CT-TRN-PATCH",
    "owner": "transport",
-   "notes": "side handle at the box CG",
-   "ground_joint": true,
-   "joint_stack": {
-    "fastener": "M3x16 SHCS ISO 4762",
-    "count": 2,
-    "grade": "A2-70",
-    "hole": "3.4 mm through handle strap, 4 mm Coroplast wall and 3 mm ply backing strip",
-    "insert": "none",
-    "engagement_mm": 5.5,
-    "min_engagement_mm": 5.0,
-    "washer_nut": "M3 x 12 mm fender washer outside; M3 nyloc on the 140 x 30 x 3 mm ply strip inside (TRN-105)",
-    "torque": "snug, wall not crushed",
-    "tool": "2.5 mm hex key + 5.5 mm spanner",
-    "access": "nut inside, lid off",
-    "install_order": 12,
-    "removal_order": 9,
-    "load": "57-59 N per bolt (CL-D7-HANDLE-BOLT-F); confirmed by C6 (CR-D7-10): the ply strip spreads it to 27 kPa on the Coroplast; min engagement = nyloc 4.0 + 2 pitches (D-41), not 3.0",
-    "engagement_basis": "CL-D7-HANDLE-ENGAGE: grip 10.5 mm (strap 2.5 EST + washer 1.0 + wall 4.0 + ply 3.0); strap tab <= 3.0 mm keeps M3x16, else M3x20; inspect: nyloc fully on, 2 threads showing"
+   "notes": "side hand hole on the aft wall at y 0 (box CG)",
+   "retention": {
+    "item": "2-layer board patch, packing tape",
+    "count": 1,
+    "load_n": 114,
+    "load_basis": "CL-D7-HANDHOLE-F (loaded box at 2 g)",
+    "inspection": "no crease or tear at the hole edge"
    }
   },
   {
    "id": "E-TRN-14",
    "part_a": "TRN-007-L",
    "part_b": "TRN-001",
-   "via": "CT-TRN-M3-BOLT",
+   "via": "CT-TRN-PATCH",
    "owner": "transport",
-   "notes": "end handle",
-   "ground_joint": true,
-   "joint_stack": {
-    "fastener": "M3x16 SHCS ISO 4762",
-    "count": 2,
-    "grade": "A2-70",
-    "hole": "3.4 mm through handle strap, 4 mm Coroplast wall and 3 mm ply backing strip",
-    "insert": "none",
-    "engagement_mm": 5.5,
-    "min_engagement_mm": 5.0,
-    "washer_nut": "M3 x 12 mm fender washer outside; M3 nyloc on the 140 x 30 x 3 mm ply strip inside (TRN-105)",
-    "torque": "snug, wall not crushed",
-    "tool": "2.5 mm hex key + 5.5 mm spanner",
-    "access": "nut inside, lid off",
-    "install_order": 12,
-    "removal_order": 9,
-    "load": "57-59 N per bolt (CL-D7-HANDLE-BOLT-F); confirmed by C6 (CR-D7-10): the ply strip spreads it to 27 kPa on the Coroplast; min engagement = nyloc 4.0 + 2 pitches (D-41), not 3.0",
-    "engagement_basis": "CL-D7-HANDLE-ENGAGE: grip 10.5 mm (strap 2.5 EST + washer 1.0 + wall 4.0 + ply 3.0); strap tab <= 3.0 mm keeps M3x16, else M3x20; inspect: nyloc fully on, 2 threads showing"
+   "notes": "end hand hole",
+   "retention": {
+    "item": "2-layer board patch, packing tape",
+    "count": 1,
+    "load_n": 114,
+    "load_basis": "CL-D7-HANDHOLE-F (loaded box at 2 g)",
+    "inspection": "no crease or tear at the hole edge"
    }
   },
   {
    "id": "E-TRN-15",
    "part_a": "TRN-007-R",
    "part_b": "TRN-001",
-   "via": "CT-TRN-M3-BOLT",
+   "via": "CT-TRN-PATCH",
    "owner": "transport",
-   "notes": "end handle",
-   "ground_joint": true,
-   "joint_stack": {
-    "fastener": "M3x16 SHCS ISO 4762",
-    "count": 2,
-    "grade": "A2-70",
-    "hole": "3.4 mm through handle strap, 4 mm Coroplast wall and 3 mm ply backing strip",
-    "insert": "none",
-    "engagement_mm": 5.5,
-    "min_engagement_mm": 5.0,
-    "washer_nut": "M3 x 12 mm fender washer outside; M3 nyloc on the 140 x 30 x 3 mm ply strip inside (TRN-105)",
-    "torque": "snug, wall not crushed",
-    "tool": "2.5 mm hex key + 5.5 mm spanner",
-    "access": "nut inside, lid off",
-    "install_order": 12,
-    "removal_order": 9,
-    "load": "57-59 N per bolt (CL-D7-HANDLE-BOLT-F); confirmed by C6 (CR-D7-10): the ply strip spreads it to 27 kPa on the Coroplast; min engagement = nyloc 4.0 + 2 pitches (D-41), not 3.0",
-    "engagement_basis": "CL-D7-HANDLE-ENGAGE: grip 10.5 mm (strap 2.5 EST + washer 1.0 + wall 4.0 + ply 3.0); strap tab <= 3.0 mm keeps M3x16, else M3x20; inspect: nyloc fully on, 2 threads showing"
+   "notes": "end hand hole",
+   "retention": {
+    "item": "2-layer board patch, packing tape",
+    "count": 1,
+    "load_n": 114,
+    "load_basis": "CL-D7-HANDHOLE-F (loaded box at 2 g)",
+    "inspection": "no crease or tear at the hole edge"
    }
   },
   {
@@ -686,66 +596,6 @@
     "load_basis": "boom about 0.01 kg at 10 g, EST",
     "inspection": "tip cover on; slot not crushed"
    }
-  },
-  {
-   "id": "E-TRN-101",
-   "part_a": "TRN-102-C",
-   "part_b": "TRN-007-C",
-   "via": "CT-HW-SEATED",
-   "owner": "transport",
-   "notes": "hardware of E-TRN-13 (joint stack there); seated on TRN-007-C",
-   "hardware": true,
-   "hardware_of": "E-TRN-13"
-  },
-  {
-   "id": "E-TRN-102",
-   "part_a": "TRN-102-C",
-   "part_b": "TRN-001",
-   "via": "CT-HW-SEATED",
-   "owner": "transport",
-   "notes": "hardware of E-TRN-13 (joint stack there); seated on TRN-001",
-   "hardware": true,
-   "hardware_of": "E-TRN-13"
-  },
-  {
-   "id": "E-TRN-103",
-   "part_a": "TRN-102-L",
-   "part_b": "TRN-007-L",
-   "via": "CT-HW-SEATED",
-   "owner": "transport",
-   "notes": "hardware of E-TRN-14 (joint stack there); seated on TRN-007-L",
-   "hardware": true,
-   "hardware_of": "E-TRN-14"
-  },
-  {
-   "id": "E-TRN-104",
-   "part_a": "TRN-102-L",
-   "part_b": "TRN-001",
-   "via": "CT-HW-SEATED",
-   "owner": "transport",
-   "notes": "hardware of E-TRN-14 (joint stack there); seated on TRN-001",
-   "hardware": true,
-   "hardware_of": "E-TRN-14"
-  },
-  {
-   "id": "E-TRN-105",
-   "part_a": "TRN-102-R",
-   "part_b": "TRN-007-R",
-   "via": "CT-HW-SEATED",
-   "owner": "transport",
-   "notes": "hardware of E-TRN-15 (joint stack there); seated on TRN-007-R",
-   "hardware": true,
-   "hardware_of": "E-TRN-15"
-  },
-  {
-   "id": "E-TRN-106",
-   "part_a": "TRN-102-R",
-   "part_b": "TRN-001",
-   "via": "CT-HW-SEATED",
-   "owner": "transport",
-   "notes": "hardware of E-TRN-15 (joint stack there); seated on TRN-001",
-   "hardware": true,
-   "hardware_of": "E-TRN-15"
   }
  ],
  "acknowledges": []

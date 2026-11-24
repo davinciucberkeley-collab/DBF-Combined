@@ -74,7 +74,7 @@
    "material": "steel (bought)",
    "cg_xyz_m": [
     0.2298,
-    0.285,
+    0.2855,
     -0.0184
    ],
    "make_or_buy": "buy",
@@ -89,7 +89,7 @@
    "material": "steel (bought)",
    "cg_xyz_m": [
     0.2298,
-    -0.285,
+    -0.2855,
     -0.0184
    ],
    "make_or_buy": "buy",
@@ -100,90 +100,90 @@
    "name": "Control horn, inboard panel (clevis + rod boss) right",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 2.87,
+   "mass_g": 2.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2636,
-    0.2858,
-    -0.007
+    0.264,
+    0.2857,
+    -0.0069
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (2.25 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
+   "notes": "mass EST (2.19 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
   },
   {
    "id": "MEC-004-L",
    "name": "Control horn, inboard panel (clevis + rod boss) left",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 2.87,
+   "mass_g": 2.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2636,
-    -0.2858,
-    -0.007
+    0.264,
+    -0.2857,
+    -0.0069
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (2.25 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
+   "notes": "mass EST (2.19 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
   },
   {
    "id": "MEC-005-R",
-   "name": "Inter-panel rod, 1/8 in pultruded CF right",
+   "name": "Inter-panel rod, 4 mm pultruded CF right",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 0.85,
+   "mass_g": 2.09,
    "material": "CF rod pultruded (bought)",
    "cg_xyz_m": [
     0.2496,
-    0.32,
+    0.3385,
     -0.0109
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (0.53 cm3 CF rod); CG = CAD centroid"
+   "notes": "mass EST (1.31 cm3 CF rod); CG = CAD centroid"
   },
   {
    "id": "MEC-005-L",
-   "name": "Inter-panel rod, 1/8 in pultruded CF left",
+   "name": "Inter-panel rod, 4 mm pultruded CF left",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 0.85,
+   "mass_g": 2.09,
    "material": "CF rod pultruded (bought)",
    "cg_xyz_m": [
     0.2496,
-    -0.32,
+    -0.3385,
     -0.0109
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (0.53 cm3 CF rod); CG = CAD centroid"
+   "notes": "mass EST (1.31 cm3 CF rod); CG = CAD centroid"
   },
   {
    "id": "MEC-006-R",
    "name": "Link horn, outboard panel (rod boss) right",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 2.62,
+   "mass_g": 2.56,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2647,
-    0.3541,
-    -0.0058
+    0.2651,
+    0.3912,
+    -0.0056
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (2.03 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
+   "notes": "mass EST (1.98 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
   },
   {
    "id": "MEC-006-L",
    "name": "Link horn, outboard panel (rod boss) left",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 2.62,
+   "mass_g": 2.56,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2647,
-    -0.3541,
-    -0.0058
+    0.2651,
+    -0.3912,
+    -0.0056
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (2.03 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
+   "notes": "mass EST (1.98 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
   },
   {
    "id": "MEC-007-R",
@@ -282,30 +282,30 @@
    "name": "Elevon torque tube CF 5 x 4 mm right, outboard panel",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 2.93,
+   "mass_g": 2.35,
    "material": "CF tube 5x4 roll-wrapped (bought)",
    "cg_xyz_m": [
     0.2571,
-    0.45,
+    0.4422,
     0.0005
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (1.48 cm3 CF + groove fill); CG = CAD centroid"
+   "notes": "mass EST (1.19 cm3 CF + groove fill); CG = CAD centroid"
   },
   {
    "id": "MEC-009-LO",
    "name": "Elevon torque tube CF 5 x 4 mm left, outboard panel",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 2.93,
+   "mass_g": 2.35,
    "material": "CF tube 5x4 roll-wrapped (bought)",
    "cg_xyz_m": [
     0.2571,
-    -0.45,
+    -0.4422,
     0.0005
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (1.48 cm3 CF + groove fill); CG = CAD centroid"
+   "notes": "mass EST (1.19 cm3 CF + groove fill); CG = CAD centroid"
   },
   {
    "id": "MEC-010-R",
@@ -378,7 +378,7 @@
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.2756,
-    0.355,
+    0.392,
     0.0031
    ],
    "make_or_buy": "make",
@@ -393,7 +393,7 @@
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.2756,
-    -0.355,
+    -0.392,
     0.0031
    ],
    "make_or_buy": "make",
@@ -624,7 +624,7 @@
    "part_a": "MEC-003-L",
    "part_b": "MEC-002-L",
    "via": "CT-CLEVIS",
-   "notes": "Z-bend in the arm hole drilled 1.6 mm",
+   "notes": "Z-bend leg through the arm hole drilled 1.85 mm (#49, SC-07), main run beside the arm (D-142)",
    "owner": "mechanisms",
    "motion": {
     "axis": "Y",
@@ -647,7 +647,7 @@
    "part_a": "MEC-003-R",
    "part_b": "MEC-002-R",
    "via": "CT-CLEVIS",
-   "notes": "Z-bend in the arm hole drilled 1.6 mm",
+   "notes": "Z-bend leg through the arm hole drilled 1.85 mm (#49, SC-07), main run beside the arm (D-142)",
    "owner": "mechanisms",
    "motion": {
     "axis": "Y",

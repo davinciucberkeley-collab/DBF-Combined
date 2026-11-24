@@ -119,6 +119,10 @@ def layout(ctx):
     g['e_gap'] = lv('elevon.end_gap_m', 'm')
     g['tab_y'] = (g['spans'][0][1], g['spans'][1][0])                      # fin-root tab faces (CR-C2-13)
     g['ecr'] = lv('elevon.cutout_corner_r_m', 'm')
+    # D-164 / CR-B4-32: TE-corner chamfers at the fin-root tabs, [inboard, outboard] set-back of the TE from the
+    # hinge-line end (|y| 0.30 / 0.34 -> TE at |y| 0.28 / 0.41), drawn as a staircase of Y-slabs
+    g['te_cham'] = tuple(v('wing.elevon.te_chamfer_m', 'm'))
+    g['cham_step'] = lv('elevon.chamfer_step_m', 'm')
     th =surf(g, g['xh'], 'upper') - surf(g, g['xh'], 'lower')
     g['t_hinge'] = th
     g['bevel'] = th * math.tan(math.radians(lv('elevon.bevel_deg', 'deg')))
@@ -137,6 +141,14 @@ def layout(ctx):
     g['horn_x'] = (min(g['xh'] + bx[0] / 1000.0, g['tube_groove'][0]), g['xh'] + bx[1] / 1000.0)
     g['horn_y'] = [(y - hs / 2, y + hs / 2) for y in (k9.lval(M, 'mec.station.arm_plane_y_m', 'm', 0.285),
                                                        k9.lval(M, 'mec.station.outboard_horn_y_m', 'm', 0.355))]
+    # lower-surface zigzag turbulator (D-168, B2): strip centred on x/c, full span, stopped at the fin-root coves
+    tb = v('wing.turbulator', '-')
+    g['tb_x'] = tb['x_c'] * c
+    g['tb_w'] = lv('turbulator.width_m', 'm')
+    g['tb_h'] = tb['height_m']
+    g['tb_stop'] = (v('fins.board_t_m', 'm') / 2 + k9.lval(F, 'fin_detail.fin.root_fillet.leg_m', 'm', 0.01)
+                    + lv('turbulator.fin_stop_clear_m', 'm'))
+    g['tb_tip'] = lv('turbulator.tip_stop_m', 'm')
     # skin, label, plugs
     g['t_skin'] = lv('skin.model_t_m', 'm')
     g['untaped_x'] = tuple(lv('skin.untaped_upper_x_m', 'm'))
@@ -218,6 +230,18 @@ def _dedupe(loop):
 def _arc(xc, zc, r, a0, a1, n=None):
     n = n or max(3, int(N_ARC * abs(a1 - a0) / (2 * math.pi) + 0.5))
     return [(xc + r * math.cos(a0 + (a1 - a0) * i / n), zc + r * math.sin(a0 + (a1 - a0) * i / n)) for i in range(n + 1)]
+
+
+def cap_loop(g, d, r):
+    """(x, z) loop of the spar-slot cap strip in one span segment: from the lower boundary (skin, or the lip bead
+    d deep) up the slot walls x_s +/- r_bore to the spar, then under the spar on radius r (the bore, or the bore plus
+    the pod-tie channel). The slot is cut from below to z_s; the spar goes up it; this strip is re-bonded under it."""
+    xs, zs, rb = g['xs'], g['zs'], g['rb']
+    xa, xb = xs - rb, xs + rb
+    h = math.sqrt(max(r * r - rb * rb, 0.0))
+    a0 = math.atan2(-h, rb)
+    bottom = [(xa + (xb - xa) * i / 8, surf(g, xa + (xb - xa) * i / 8, 'lower') + d) for i in range(9)]
+    return bottom + [(xb, zs - h)] + _arc(xs, zs, r, a0, -math.pi - a0)[1:-1] + [(xa, zs - h)]
 
 
 def bore_floor(g, xa, xb, zf, r):
@@ -552,6 +576,51 @@ def skin_slits(g):
     return out
 
 
+def cover_footprint(g, clr=0.0001):
+    """D-140/D-141: plan footprint (x0, x1, y0, y1, right side) and the z of D6's servo cover MEC-007, grown by clr:
+    the cover is the frame outline (= servo_pocket x/y less its 0.2 mm bond line) plus mec.cover.lip_m on three sides
+    and 2 mm on the arm side (mechanisms.build_cover), a flat mec.cover.t_m plate whose top is the frame bottom =
+    the servo case base = the lower surface at the shaft (mec.station.shaft_x_m)."""
+    M = k9.local('mechanisms')
+    lip = k9.lval(M, 'mec.cover.lip_m', 'm', 0.004)
+    ct = k9.lval(M, 'mec.cover.t_m', 'm', 0.0008)
+    xs = k9.lval(M, 'mec.station.shaft_x_m', 'm', 0.195)
+    bl = 0.0002                                                          # servo_pocket = frame + 0.2 mm bond line
+    (px0, px1), (py0, py1) = g['sp_x'], g['sp_y']
+    ztop = surf(g, xs, 'lower')
+    return (px0 + bl - lip - clr, px1 - bl + lip + clr, py0 + bl - lip - clr, py1 - bl + 0.002 + clr,
+            ztop - ct - clr, ztop + clr)
+
+
+def servo_openings(g):
+    """D-140: the tape (skin and the servo doubler) cut out over each servo cover, as on the bench (skin laid, then
+    cut out round the pocket with a fresh blade, BUILD-GUIDE 6.5): a Z-prism over the cover footprint + 0.1 mm,
+    4 mm either side of the lower surface, right and left. The servo goes in through it (7.4) and the cover sits in
+    it, edges taped over (E-MEC-17/18). Before this the opening existed only as each part's own seat, so the servo
+    could not pass the tape (assembly check)."""
+    x0, x1, y0, y1, _z0, _z1 = cover_footprint(g)
+    zs = [surf(g, x0 + (x1 - x0) * i / 8, 'lower') for i in range(9)]
+    out = []
+    for s in (1, -1):
+        loop = [(x0, s * y0), (x1, s * y0), (x1, s * y1), (x0, s * y1)]
+        out.append(fk.Shape('prism', 'servo cover opening', axis='Z', offset=min(zs) - 0.004,
+                            depth=max(zs) - min(zs) + 0.008, loops=[loop if s > 0 else loop[::-1]]))
+    return out
+
+
+def cover_recesses(g):
+    """D-141: the flat servo cover is screwed to the frame bottom, but the lower surface falls 1.6 mm across it (forward
+    of the shaft the foam is below the cover's top): a shallow recess in the core under the cover, its footprint and
+    thickness + 0.1 mm clearance all round, right and left (cut with the pocket, BUILD-GUIDE 2.2)."""
+    x0, x1, y0, y1, z0, z1 = cover_footprint(g)
+    out = []
+    for s in (1, -1):
+        loop = [(x0, s * y0), (x1, s * y0), (x1, s * y1), (x0, s * y1)]
+        out.append(fk.Shape('prism', 'servo cover recess', axis='Z', offset=z0, depth=z1 - z0,
+                            loops=[loop if s > 0 else loop[::-1]]))
+    return out
+
+
 def elevon_section(g, groove=True):
     """Panel section: upper skin TE -> hinge, 30 deg lower bevel, D6's torque-tube groove open below (where the tube
     runs), lower skin -> TE."""
@@ -601,6 +670,27 @@ def panel_start_x(g, ya, yb):
     return g['xh'] + corner_ext(r, k * r / n) + gap
 
 
+def cham_xmax(g, y):
+    """D-164 TE-corner chamfer: aft limit of the panel at span station y > 0 (m). The straight cut runs from the hinge
+    line (x_h) at the hinge-line end (the tab face, |y| 0.30 / 0.34) to the TE at |y| 0.28 (inboard) / 0.41 (outboard);
+    beyond it the panel is full chord."""
+    t0, t1 = g['tab_y']
+    d, u = (g['te_cham'][0], t0 - y) if y < t0 else (g['te_cham'][1], y - t1)
+    if u >= d - 1e-12:
+        return g['c']
+    return g['xh'] + (g['c'] - g['xh']) * max(u, 0.0) / d
+
+
+def cham_edges(g):
+    """Slab boundaries (y) of the chamfer staircase on the right-hand panels."""
+    t0, t1 = g['tab_y']
+    out = set()
+    for d, y_tab, sgn in ((g['te_cham'][0], t0, -1), (g['te_cham'][1], t1, 1)):
+        n = max(1, int(round(d / g['cham_step'])))
+        out |= {round(y_tab + sgn * d * i / n, 7) for i in range(n + 1)}
+    return out
+
+
 def elevon_pieces(g, y0, y1):
     """[(y_from, y_to, loop)] for one right-hand panel between y0 and y1 (gaps applied by the caller): the section
     with D6's torque-tube groove where the tube runs (D6-R2 y ranges), without it elsewhere; at a horn-blade slot the
@@ -612,6 +702,7 @@ def elevon_pieces(g, y0, y1):
     br |= {v for a, b in g['horn_y'] for v in (a, b)}
     br |= {v for a, b in g['tube_groove_y'] for v in (a, b)}
     br |= {t0 - gap - r * i / n for i in range(n + 1)} | {t1 + gap + r * i / n for i in range(n + 1)}
+    br |= cham_edges(g)
     ys = sorted(round(v, 7) for v in br if y0 - 1e-9 <= v <= y1 + 1e-9)
     out = []
     for a, b in zip(ys, ys[1:]):
@@ -623,10 +714,17 @@ def elevon_pieces(g, y0, y1):
         xs = panel_start_x(g, a, b)
         if xs > g['xh'] + 1e-9:
             sec = clip_x(sec, xs, g['c'])
+        # chamfer: the slab keeps x <= the line at its tab-side end (inboard: b, outboard: a), never more than the cut
+        hi = min(cham_xmax(g, b if ym < t0 else a), g['c'])
+        if hi < g['c'] - 1e-9:
+            if hi - max(xs, g['xh']) < 1e-3:                        # nothing left but a sliver: slab is all chamfer
+                continue
+            sec = clip_x(sec, 0.0, hi)
         if any(p < ym < q for p, q in g['horn_y']):
             if g['horn_x'][0] - max(xs, g['xh']) > 1e-4:          # D-82: slot open from the hinge, no front sliver
                 out.append((a, b, clip_x(sec, max(xs, g['xh']), g['horn_x'][0])))
-            out.append((a, b, clip_x(sec, g['horn_x'][1], g['c'])))
+            if hi - g['horn_x'][1] > 1e-3:                         # chamfered away behind the blade end: no aft piece
+                out.append((a, b, clip_x(sec, g['horn_x'][1], g['c'])))
         else:
             out.append((a, b, sec))
     return out
@@ -660,6 +758,32 @@ def build(ctx):
                           loops=[tri if s_ > 0 else tri[::-1]]), note='servo groove corner relief (D-87)')
     for cutter in p1s_jog(g):                                 # D-86: lower-surface jog P1s mouth -> signal groove
         core.cut(cutter, note='jog groove from the P1s lower mouth to the signal groove (hand-cut with the grooves)')
+    for cutter in cover_recesses(g):                          # D-141: recess under the flat servo cover, 0.1 mm clear
+        core.cut(cutter, note='servo cover recess, cover outline + 0.1 mm (cut with the servo pocket)')
+
+    # Spar slot and cap strip (build-film assembly check, 2026-11-13): BUILD-GUIDE 2.2 cuts the spar slot from the
+    # lower surface with the core in its bed, the spar (with the blocks and plugs) goes up it at 2.5, and the slot
+    # strip is re-bonded under it as the cap (E-WNG-01). The core is drawn with that slot cut (x_s +/- r_bore, from
+    # below the skin to the spar axis) wherever the spar runs in foam; WNG-008 is the cap. The block and anchor
+    # pockets are full depth already. The cap's foam mass stays in WNG-001 (team/D1/wing_data.py).
+    xs, zs, rb = g['xs'], g['zs'], g['rb']
+    zlo = min(surf(g, x, 'lower') for x in (xs - rb, xs, xs + rb)) - 0.002
+    slot = [(xs - rb, zlo), (xs + rb, zlo), (xs + rb, zs), (xs - rb, zs)]
+    capp = ctx.part('WNG-008')
+    caps = []
+    for y0, y1, act in segments(g):
+        if 'spar' not in act or act & {'block', 'anchor'}:
+            continue
+        d = bead_depth(g, y0, y1) if 'bead' in act else 0.0
+        r = g['rb'] + (g['tie_d'] if 'tie' in act else 0.0)
+        spans = [(-y1, 2 * y1)] if y0 == 0.0 else [(y0, y1 - y0), (-y1, y1 - y0)]
+        for off, dep in spans:
+            core.cut(fk.Shape('prism', 'spar slot', axis='Y', offset=off, depth=dep, loops=[slot]),
+                     note='spar slot cut from the lower surface (BUILD-GUIDE 2.2), closed by the cap WNG-008')
+        caps.append(capp.prism('Y', spans[0][0], [cap_loop(g, d, r)], spans[0][1], name='cap strip y%.3f-%.3f' % (y0, y1)))
+    for s in [s for s in caps if s.offset >= 0.0]:
+        capp._add(s.mirrored(1))
+    ctx.contact('E-WNG-18', 'slot strip re-bonded under the spar as the cap (microballoon epoxy), sanded flush')
 
     # WNG-006 block-pocket lip beads (D-68): microballoon epoxy in the stepped 45 deg chamfer along the inboard and
     # outboard pocket lips, upper and lower surface, sanded flush; the 60 mm tape doubler runs over them
@@ -693,6 +817,9 @@ def build(ctx):
     skin = ctx.part('WNG-003')
     for cutter in p1_holes(g):                                # the tape is cut at both P1 mouths
         skin.cut(cutter, note='tape opened over the P1 mouths')
+    for cutter in servo_openings(g):                          # D-140: opened over each servo pocket mouth
+        skin.cut(cutter, note='tape cut out round the servo cover (servo in from below, cover in it, edges taped)',
+                 shop=False)
     for cutter in skin_slits(g):                              # D-86: slit round each lead where it passes the tape
         skin.cut(cutter, note='tape slit round a lead (F2 cad.skin_slots)', shop=False)
     for cutter in fillet_trims(ctx, g):                       # D-88: trimmed square along the fin root fillets
@@ -714,6 +841,20 @@ def build(ctx):
         s = skin.prism('Y', ya, [face], t, name='tape tab edge')
         skin._add(s.mirrored(1))
     ctx.contact('E-WNG-02', 'tape skin on the core (spanwise strips, 10 % overlap, 15 mm round the LE)')
+
+    # WNG-009 lower-surface zigzag turbulator (D-168, B2): x/c 0.20, full span, laid on the finished skin after the
+    # block-doubler hold point. One piece over the centre and the root bay, then the pieces between the fin-root coves
+    # (|y - y_fin| < board_t / 2 + cove leg + 2 mm: nothing is taped under the roots or the coves), 3 layers of tape
+    # under it over the D-153 doubler band |y| 0.29-0.35, 1 layer elsewhere
+    tb = ctx.part('WNG-009')
+    yb0, yb1 = g['y_fin'] - g['sp_dbl'] / 2, g['y_fin'] + g['sp_dbl'] / 2
+    yf0, yf1 = g['y_fin'] - g['tb_stop'], g['y_fin'] + g['tb_stop']
+    yend = g['half'] - g['tb_tip']
+    tx0, tx1 = g['tb_x'] - g['tb_w'] / 2, g['tb_x'] + g['tb_w'] / 2
+    for ya, yb, nl in ((0.0, yb0, 1), (yb0, yf0, 3), (yf1, yb1, 3), (yb1, yend, 1)):
+        sh = tb.prism('Y', ya, [skin_strip(g, tx0, tx1, 'lower', t * nl, g['tb_h'])], yb - ya, name='tape turbulator')
+        tb._add(sh.mirrored(1))
+    ctx.contact('E-WNG-19', 'zigzag tape on the lower skin at x/c 0.20, over the doubler band between the fin coves')
 
     # WNG-020 FAA label on the upper skin, right wing
     lab = ctx.part('WNG-020')

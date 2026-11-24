@@ -110,6 +110,27 @@ kit.assumption("ASM-D1-RECESS", "Pod recess cut", "Recess front x (upper skin = 
                basis="subsystems/wing/fusion/wing.py#layout() (CR-D2-04)", value=[round(_R["recess_x"][0], 5), round(_R["recess_x"][1], 5),
                                                                                  round(_R["recess_depth_max"], 5), round(_R["recess_foam_under"], 5)],
                unit="m", cites=SRC)
+def _d164():
+    """D-164 chamfer and D-168 turbulator read-outs from the same module the CAD uses."""
+    import wing_data as wd
+    ctx, Pp, g, mod = wd.build_wing()
+    tb = ctx.components["WNG-009"].shapes
+    gaps = [min(abs(min(e.offset, e.offset + e.depth) - g["y_fin"]), abs(max(e.offset, e.offset + e.depth) - g["y_fin"]))
+            for e in tb if min(e.offset, e.offset + e.depth) > 0.2]
+    xs = [p[0] for e in tb for p in e.loops[0]]
+    M = wd.masses(ctx, Pp, g, mod)["WNG-009"][0]
+    return {"cham": g["te_cham"], "stop": min(gaps), "x_ahead_slot": g["x_slot"][0] - max(xs), "tb_g": M,
+            "xc": (min(xs) + max(xs)) / 2 / g["c"]}
+
+
+_D = _d164()
+kit.assumption("ASM-D1-D164-GEOM", "Elevon TE chamfers (D-164) and lower turbulator (D-168) as drawn",
+               "[inboard chamfer set-back, outboard set-back, closest turbulator piece end to the fin plane, turbulator strip to the "
+               "spar-slot cap, turbulator centre x/c, turbulator mass (g, EST, solid envelope x 1.3 g/cm3)]",
+               basis="subsystems/wing/fusion/wing.py (cham_xmax, WNG-009 bodies) via team/D1/wing_data.py; params wing.elevon.te_chamfer_m, "
+                     "wing.turbulator; wing params turbulator.*",
+               value=[_D["cham"][0], _D["cham"][1], round(_D["stop"], 6), round(_D["x_ahead_slot"], 6), round(_D["xc"], 5), round(_D["tb_g"], 2)],
+               unit="m, m, m, m, -, g", status="UNVERIFIED", cites=SRC)
 kit.assumption("ASM-D1-D68-GEOM", "Wing structure-fix geometry (D-68, D-69, CR-B2-17, CR-F2-14)",
                "[block-pocket corner radius, lip-bead leg, lip-bead length along x, elevon cut-out corner radius at the fin-root "
                "tab, foremost LE-strip edge x, recess-step fillet floor leg, step leg, foam wall JR recess to servo pocket, foam "
@@ -143,12 +164,17 @@ def mass(m, x):
     return {"mass_g": M, "cg_x": sum(a * b for a, b in zip(m, x)) / M}
 
 
-@kit.calc("CALC-D1-ELEVON", equation="frac = 2 sum(span_i - 2 gap) x chord_frac x c / (b c)",
+@kit.calc("CALC-D1-ELEVON", equation="frac = (2 sum(span_i - 2 gap) - 2 sum(chamfer_i)) x chord_frac / b  (chamfer triangles: 2 sides x 1/2 x set-back x chord_frac c)",
           inputs={"yi": P + "wing.elevon.inboard_y_m", "yo": P + "wing.elevon.outboard_y_m", "cf": P + "wing.elevon.chord_frac",
-                  "b": P + "wing.span_m", "gap": "ASM-D1-ELEVON-GAP"})
-def elevon(yi, yo, cf, b, gap):
+                  "b": P + "wing.span_m", "gap": "ASM-D1-ELEVON-GAP", "ch": P + "wing.elevon.te_chamfer_m"})
+def elevon(yi, yo, cf, b, gap, ch):
     span = 2 * ((yi[1] - yi[0] - 2 * gap) + (yo[1] - yo[0] - 2 * gap))
-    return {"frac": span * cf / b, "span_m": span}
+    return {"frac": (span - sum(ch)) * cf / b, "span_m": span, "frac_nocham": span * cf / b}
+
+
+@kit.calc("CALC-D1-D164", equation="pass-through of the chamfer / turbulator read-outs", inputs={"g": "ASM-D1-D164-GEOM"})
+def d164(g):
+    return {"cham_in": g[0], "cham_out": g[1], "tb_fin_stop": g[2], "tb_slot_gap": g[3], "tb_xc": g[4], "tb_mass_g": g[5]}
 
 
 @kit.calc("CALC-D1-CAD", equation="read-outs of wing.py#layout(): spar cover, groove wall, groove depth fraction, pocket floor, hinge clearances",
@@ -187,7 +213,7 @@ kit.claim("CL-D1-WING-MASS", "Wing subsystem mass (CAD estimate)", calc="CALC-D1
           how="T-D1-WEIGH: weigh the cut core, the tube, the plugs, the tape used and the finished wing on a 1 g scale.")
 kit.claim("CL-D1-WING-CG-X", "Wing subsystem CG x (CAD estimate)", calc="CALC-D1-MASS", output="cg_x", unit="m", parts=ALL,
           how="Balance the finished bare wing (no pod, fins) on two knife edges along the span; read x from the LE.")
-kit.claim("CL-D1-ELEVON-FRAC", "Elevon area fraction as built (end gaps off)", calc="CALC-D1-ELEVON", output="frac", unit="-",
+kit.claim("CL-D1-ELEVON-FRAC", "Elevon area fraction as built (end gaps off, TE chamfers 20 / 70 mm cut)", calc="CALC-D1-ELEVON", output="frac", unit="-",
           limit=(">=", 0.15), verifies=["R-ELEVON-AREA"], parts=["WNG-011-L", "WNG-011-R", "WNG-012-L", "WNG-012-R"],
           how="Measure the four cut panels (span x chord) and divide by 1.15 x 0.32 m.")
 kit.claim("CL-D1-SPAR-COVER", "Minimum foam over the spar bore (S5010 at x 0.080, z +0.0066)", calc="CALC-D1-CAD", output="cover",
@@ -235,6 +261,22 @@ kit.claim("CL-D1-LE-SEAM-X", "Foremost tape edge on the LE (LE strip edges; noth
 # D-103: CL-D1-RECESS-FILLET retired with the recess-step fillet (WNG-007 deleted)
 kit.claim("CL-D1-JR-RECESS-WALL", "Foam between F2's JR recess and the servo pocket", calc="CALC-D1-D68", output="jr_wall", unit="m",
           limit=(">=", 0.003), parts=CORE, how="Calipers between the recess aft wall (x 0.168) and the pocket front (x 0.1722).")
+
+kit.claim("CL-D1-CHAMFER-SETBACK-IN", "Inboard elevon TE chamfer set-back drawn = params wing.elevon.te_chamfer_m[0]", calc="CALC-D1-D164",
+          output="cham_in", unit="m", limit=(">=", 0.02), parts=["WNG-011-L", "WNG-011-R"],
+          how="Rule on the cut panel: the straight cut meets the TE 20 mm inboard of the hinge-line end (|y| 280 for the +y panel).")
+kit.claim("CL-D1-CHAMFER-SETBACK-OUT", "Outboard elevon TE chamfer set-back drawn = params wing.elevon.te_chamfer_m[1]", calc="CALC-D1-D164",
+          output="cham_out", unit="m", limit=(">=", 0.07), parts=["WNG-012-L", "WNG-012-R"],
+          how="Rule on the cut panel: the straight cut meets the TE 70 mm outboard of the hinge-line end (|y| 410 for the +y panel).")
+kit.claim("CL-D1-TURB-FIN-STOP", "Closest turbulator piece end to the fin plane (fin face 2.4 + cove 10 + 2 mm clear)", calc="CALC-D1-D164",
+          output="tb_fin_stop", unit="m", limit=(">=", 0.0144), parts=["WNG-009", "WNG-003"],
+          how="Rule from the fin plane on the taped wing before the fins' coves are filled: no trip tape within 14.4 mm.")
+kit.claim("CL-D1-TURB-SLOT-GAP", "Turbulator strip to the spar-slot cap (x 0.0688)", calc="CALC-D1-D164", output="tb_slot_gap", unit="m",
+          limit=(">=", 0.001), parts=["WNG-009", "WNG-008"], how="Rule from the LE: strip x 61-67 mm, cap edge 68.8 mm.")
+kit.claim("CL-D1-TURB-XC", "Turbulator centre x/c (B2 design 0.20)", calc="CALC-D1-D164", output="tb_xc", unit="-",
+          parts=["WNG-009"], how="Rule from the LE at five stations each side: strip centre 64.0 mm (x/c 0.20).")
+kit.claim("CL-D1-TURB-MASS", "Turbulator tape mass (CAD, solid envelope x 1.3 g/cm3, EST)", calc="CALC-D1-D164", output="tb_mass_g", unit="g",
+          parts=["WNG-009"], how="T-D1-WEIGH: weigh the tape roll before and after the lower surface is tripped.")
 
 kit.test("T-D1-WEIGH", "Weigh every wing part", verifies=["CL-D1-WING-MASS", "CL-D1-WING-CG-X"],
          procedure="1 g scale: core after cutting and pocketing, spar, 4 plugs, a cured 20 cm3 cup of the bead mix (<= 13 g), tape roll before / after skinning, each elevon, finished wing; "

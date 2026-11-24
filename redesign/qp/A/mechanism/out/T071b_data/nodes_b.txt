@@ -1,0 +1,79 @@
+# T-071b Part B: D2 pad (x 0.3415, z 0.189), mu 0.30, 23 cases, plateau 30 N, KF 1.725 KP 2.156 [30 s]
+
+## Printed-part rows (landing_path_a.checks, minimum RF over 23 cases; interlayer 9.5 MPa / in-layer 20 MPa where both run)
+| Row | A0 as drawn, mu 0.30 | B1 T-071b geometry, interlayer | B1 in-layer rule (P6 / P8 / P11 / P12 are the in-layer-print rows) |
+|---|---|---|---|
+| P2 shoe plate-to-ring junction, PETG (13.6 x 12 mm) | 0.96 | 0.96 | 2.03 |
+| P3 shoe ring epoxy bond on fin tube (D16 x 12) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) | 0.26 | 0.26 | 0.26 |
+| P3 shoe ring epoxy bond on fin tube (D16 x 12) - bearing, compression side | 2.59 | 2.59 | 2.59 |
+| P3 shoe ring epoxy bond on fin tube (D16 x 12) - shear (axial + torsion) | 4.59 | 4.59 | 4.59 |
+| P4 fin tube 16x14 at root-block edge | 3.89 | 3.89 | 3.89 |
+| P5 root-block ring epoxy bond on fin tube (D16 x 60) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) | 1.03 | 1.03 | 1.03 |
+| P5 root-block ring epoxy bond on fin tube (D16 x 60) - bearing, compression side | 10.27 | 10.27 | 10.27 |
+| P5 root-block ring epoxy bond on fin tube (D16 x 60) - shear (axial + torsion) | 11.49 | 11.49 | 11.49 |
+| P6 root-block ring-to-socket junction, PETG (16.5 x 19 mm) | 0.48 | - | - |
+| P6 root-block ring-to-socket junction, PETG (19.2 x 19 mm) | - | 0.75 | 1.58 |
+| P7 root-block socket: rib epoxy bond / bearing (D14 x 31) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) | 0.25 | 0.67 | 0.67 |
+| P7 root-block socket: rib epoxy bond / bearing (D14 x 31) - bearing, compression side | 2.52 | 6.67 | 6.67 |
+| P7 root-block socket: rib epoxy bond / bearing (D14 x 31) - shear (axial + torsion) | 2.10 | 3.45 | 3.45 |
+| P8 root-block socket wall, PETG box 19x19 / bore 14, bending + torsion | 0.49 | 0.82 | 1.72 |
+| P9a rib tube 14x12 at saddle mouth x 0.0905 | 1.03 | 1.03 | 1.03 |
+| P9b rib tube 14x12 at x 0.0705 (AR-012 section) | 1.03 | 1.03 | 1.03 |
+| P10 saddle socket: rib epoxy bond / bearing (D14 x 20) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) | 0.08 | 0.36 | 0.36 |
+| P10 saddle socket: rib epoxy bond / bearing (D14 x 20) - bearing, compression side | 0.83 | 3.55 | 3.55 |
+| P10 saddle socket: rib epoxy bond / bearing (D14 x 20) - shear (axial + torsion) | 1.35 | 2.71 | 2.71 |
+| P11 saddle socket wall, PETG box 19x19 / bore 14, bending + torsion | 0.39 | 0.43 | 0.90 |
+| P12 saddle socket-to-ring junction, PETG (16.5 x 19 mm) | 0.31 | 0.31 | 0.66 |
+| P13 saddle ring epoxy bond on spar (D12 x 60) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) | 0.55 | 0.55 | 0.55 |
+| P13 saddle ring epoxy bond on spar (D12 x 60) - bearing, compression side | 5.48 | 5.48 | 5.48 |
+| P13 saddle ring epoxy bond on spar (D12 x 60) - shear (axial + torsion) | 1.29 | 1.29 | 1.29 |
+| P14a spar 12x10 bending + torsion under the saddle (foot loads only) | 0.31 | 0.31 | 0.31 |
+| P14b spar wall diametral crush under the saddle ring (hoop EST 40 MPa) | 1.43 | 1.43 | 1.43 |
+
+## Clamshell saddle first-order rows (replace P11 / P12; engagement 40 mm P9a / P10 / P13 above)
+| plate t 1.0 mm | CS1 plate, x-direction (My couple, Fx half, Mz in-plane), CF 1.0 mm vs 399 MPa | 15.86 | hard 16 wide + drift .5 y |
+| plate t 1.0 mm | CS2 plate, y-direction (Mx couple, Fy half, Mz in-plane) | 16.22 | hard 16 wide + drift .5 y |
+| plate t 1.0 mm | CS3 plate-to-cradle bond shear (area 1875 mm2 EST, epoxy 2.0 MPa EST) | 2.70 | hard 16 wide + drift .5 y |
+| plate t 1.0 mm | CS3p plate-to-cradle PEEL by Fz (bond integrity, outside the minimum) | 150.88 | hard 16 wide + drift .5 y |
+| plate t 1.0 mm | CS5 CF cross-pins 2 x 3 mm, double shear, rib torque Mx (EST 30 MPa) | 1.32 | hard 16 wide + drift .5 y |
+| plate t 1.0 mm | CS5b pin bearing in PETG cradle wall 3 x 2 mm (20 MPa EST) | 0.37 | hard 16 wide + drift .5 y |
+| plate t 1.5 mm | CS1 plate, x-direction (My couple, Fx half, Mz in-plane), CF 1.5 mm vs 399 MPa | 23.79 | hard 16 wide + drift .5 y |
+| plate t 1.5 mm | CS2 plate, y-direction (Mx couple, Fy half, Mz in-plane) | 24.33 | hard 16 wide + drift .5 y |
+| plate t 1.5 mm | CS3 plate-to-cradle bond shear (area 1875 mm2 EST, epoxy 2.0 MPa EST) | 2.70 | hard 16 wide + drift .5 y |
+| plate t 1.5 mm | CS3p plate-to-cradle PEEL by Fz (bond integrity, outside the minimum) | 150.88 | hard 16 wide + drift .5 y |
+| plate t 1.5 mm | CS5 CF cross-pins 2 x 3 mm, double shear, rib torque Mx (EST 30 MPa) | 1.32 | hard 16 wide + drift .5 y |
+| plate t 1.5 mm | CS5b pin bearing in PETG cradle wall 3 x 2 mm (20 MPa EST) | 0.37 | hard 16 wide + drift .5 y |
+
+## Wing (V0 skin, 1 ply 48 g/m2 +-45, strip 3 mm2, KP), strut 6x4.0, pin / cup rows with D2 pad and mu 0.30: min over 23 cases and stations
+| CUP EVA bearing at rim (15 x 2 mm contact) vs crush plateau | 0.01 | CUP EVA bearing at rim (15 x 2 mm contact) vs crush plateau | hard 16 wide + drift .5 y |
+| CUP EVA bearing at pin hole (3 x 12 mm) vs crush plateau | 0.14 | CUP EVA bearing at pin hole (3 x 12 mm) vs crush plateau | hard 16 wide + drift .5 y |
+| CUP wall bending (printed, in-layer 20 MPa EST; 4 mm cantilever, 15 x 1.5 mm) | 0.15 | CUP wall bending (printed, in-layer 20 MPa EST; 4 mm cantilever, 15 x 1.5 mm) | hard 16 wide + drift .5 y |
+| PIN root block: bearing in PETG socket wall (3 mm x 2.5 mm) | 0.23 | PIN root block: bearing in PETG socket wall (3 mm x 2.5 mm) | hard 16 wide + drift .5 y |
+| PIN saddle: bearing in PETG socket wall (3 mm x 2.5 mm) | 0.23 | PIN saddle: bearing in PETG socket wall (3 mm x 2.5 mm) | hard 16 wide + drift .5 y |
+| PIN root block: 1 x 3 mm CF cross-pin shear (double shear, rib torsion) | 0.66 | PIN root block: 1 x 3 mm CF cross-pin shear (double shear, rib torsion) | hard 16 wide + drift .5 y |
+| PIN saddle: 1 x 3 mm CF cross-pin shear (double shear, rib torsion) | 0.66 | PIN saddle: 1 x 3 mm CF cross-pin shear (double shear, rib torsion) | hard 16 wide + drift .5 y |
+| STRUT bond at clamp (D6 x 14.2 mm, epoxy 2.0 MPa EST) | 1.07 | STRUT bond at clamp (D6 x 14.2 mm, epoxy 2.0 MPa EST) | hard 16 wide + drift .5 y |
+| STRUT Euler pinned, no foam support (431 N) | 1.08 | STRUT Euler pinned, no foam support (431 N) | hard 16 wide + drift .5 y |
+| P15 skin wrinkling | 1.23 | P15 skin wrinkling, torsion + bending (E_f = E_x), y 0.285 (clamp node, outboard side, no truss) | hard 16 wide + drift .5 y |
+| P15 foam shear (cell) | 1.34 | P15 foam shear (cell), y 0.35 | hard 16 wide + drift .5 y |
+| P15 skin shear+axial interaction | 1.37 | P15 skin shear+axial interaction, y 0.285 (clamp node, outboard side, no truss) | hard 16 wide + drift .5 y |
+| P15 skin shear | 1.37 | P15 skin shear, y 0.35 | hard 16 wide + drift .5 y |
+| STRUT bond at hub socket (D6 x 30 mm) | 2.27 | STRUT bond at hub socket (D6 x 30 mm) | hard 16 wide + drift .5 y |
+| P16 foam bending + axial | 5.31 | P16 foam bending + axial, y 0.285 (clamp node, outboard side, no truss) | hard 16 wide + drift .5 y |
+| P15 spar torsion | 5.54 | P15 spar torsion, y 0.35 | hard 16 wide + drift .5 y |
+| P16 cove CF strip | 5.63 | P16 cove CF strip, y 0.285 (clamp node, outboard side, no truss) | hard 16 wide + drift .5 y |
+| CUP pin shear (1 x 3 mm CF, double shear) | 9.59 | CUP pin shear (1 x 3 mm CF, double shear) | hard 16 wide + drift .5 y |
+| STRUT Euler bound with foam bedding, not credited (5498 N) | 13.77 | STRUT Euler bound with foam bedding, not credited (5498 N) | hard 16 wide + drift .5 y |
+| STRUT tube strength, 6x4.5 CF 350 MPa EST | 13.77 | STRUT tube strength, 6x4.5 CF 350 MPa EST | hard 16 wide + drift .5 y |
+| P16 spar bending + axial | 24.61 | P16 spar bending + axial, y 0.040 | hard 16 wide + drift .5 y |
+
+## P14a spar under the saddle with the skin: torsion share 0.056 on the spar, bending in full (conservative), KF: min RF 1.53 (the skin-less P14a above is the superseded bound)
+
+## PIN options (torque Mx on the rib shared by n pins; D4 chose 1 pin at the root block and 2 at the saddle)
+| PIN root block: 1 x 3 mm, bearing in 2.5 mm PETG wall 0.23 | PIN root block: 1 x 3 mm, double shear 0.66 | PIN saddle: 1 x 3 mm, bearing in 2.5 mm PETG wall 0.23 | PIN saddle: 1 x 3 mm, double shear 0.66 |
+| PIN root block: 2 x 3 mm, bearing in 2.5 mm PETG wall 0.47 | PIN root block: 2 x 3 mm, double shear 1.32 | PIN saddle: 2 x 3 mm, bearing in 2.5 mm PETG wall 0.47 | PIN saddle: 2 x 3 mm, double shear 1.32 |
+| PIN root block: 2 x 3 mm, bearing in 4.0 mm PETG wall 0.74 | PIN root block: 2 x 3 mm, double shear 1.32 | PIN saddle: 2 x 3 mm, bearing in 4.0 mm PETG wall 0.74 | PIN saddle: 2 x 3 mm, double shear 1.32 |
+| PIN root block: 3 x 3 mm, bearing in 4.0 mm PETG wall 1.12 | PIN root block: 3 x 3 mm, double shear 1.97 | PIN saddle: 3 x 3 mm, bearing in 4.0 mm PETG wall 1.12 | PIN saddle: 3 x 3 mm, double shear 1.97 |
+| PIN root block: 4 x 3 mm, bearing in 4.0 mm PETG wall 1.49 | PIN root block: 4 x 3 mm, double shear 2.63 | PIN saddle: 4 x 3 mm, bearing in 4.0 mm PETG wall 1.49 | PIN saddle: 4 x 3 mm, double shear 2.63 |
+
+wall 32 s

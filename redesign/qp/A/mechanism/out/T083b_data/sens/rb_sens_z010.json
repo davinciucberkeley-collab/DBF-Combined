@@ -1,0 +1,139 @@
+{
+ "tag": "sens_z010",
+ "petg": false,
+ "zetas": [
+  0.1
+ ],
+ "geom": {
+  "TR": 1.0,
+  "HR": 38.0,
+  "TP": 1.0,
+  "TE": 2.0,
+  "RD": 12.3
+ },
+ "min_x223": 0.8978523256050073,
+ "rows": [
+  {
+   "row": "Q7c plug bond peel vs epoxy 2.0 (integrity class)",
+   "rb": 0.2025966147018765,
+   "x223": 0.09085049986631234,
+   "cls": "integrity",
+   "verdict": "integrity class: < 1",
+   "case": "hard 7/7 combo z0.10 mu0.30"
+  },
+  {
+   "row": "Q1c ring bond peel, same stress vs epoxy 2.0 (integrity class, outside the RF minimum as T-069 F-3)",
+   "rb": 0.2150597982592554,
+   "x223": 0.09643937141670646,
+   "cls": "integrity",
+   "verdict": "integrity class: < 1",
+   "case": "hard 7/7 combo z0.10 mu0.30"
+  },
+  {
+   "row": "Q3 ring 18.2/16 alone at the collar root z +-12.3 (one foot; fin tube share ignored), 6061 von Mises x KF",
+   "rb": 2.002210686099166,
+   "x223": 0.8978523256050073,
+   "cls": "RF",
+   "verdict": "FAIL",
+   "case": "hard 7/7 combo z0.10 mu0.30"
+  },
+  {
+   "row": "Q2 fin tube 16x14 at the ring edge z +-19 mm (P4 formula), CF 350 / 30, KF",
+   "rb": 2.1824416720384017,
+   "x223": 0.9786733955329155,
+   "cls": "RF",
+   "verdict": "FAIL",
+   "case": "hard 16 wide + drift .5 y z0.10 mu0.40"
+  },
+  {
+   "row": "Q6b plug at the mouth x 255 (OD 22.8 / ID 20.8), 6061 von Mises x KF",
+   "rb": 2.8866481641257034,
+   "x223": 1.2944610601460553,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 7/7 combo z0.10 mu0.30"
+  },
+  {
+   "row": "Q6a plug at its root x 286 (OD 22.8 / ID 20.8), 6061 von Mises x KF",
+   "rb": 2.9840132459289985,
+   "x223": 1.3381225318067258,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 7/7 combo z0.10 mu0.30"
+  },
+  {
+   "row": "Q7a plug epoxy bond inside the rib (D23 x 31): shear, epoxy 2.0",
+   "rb": 3.8989441852355866,
+   "x223": 1.7484054642312048,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "SITL Tb_h5 wide (y drift) z0.10 mu0.40"
+  },
+  {
+   "row": "Q1a ring epoxy bond on the fin tube (D16 x 38): shear (axial + torsion), epoxy 2.0",
+   "rb": 3.907852239759321,
+   "x223": 1.7524001075153905,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 16 wide + drift .5 y z0.10 mu0.40"
+  },
+  {
+   "row": "Q5 plate aft face x 288.00 (ring side strips + plate): bending + axial, torsion by the Prandtl stress function, 6061 von Mises x KF",
+   "rb": 5.142872664693918,
+   "x223": 2.3062209258717123,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 7/7 combo z0.10 mu0.40"
+  },
+  {
+   "row": "Q8 rib end bearing on the plate face (Fx + bending of the rib-end annulus, KF), bearing yield 386",
+   "rb": 5.90707236774273,
+   "x223": 2.648911375669386,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 7/7 combo z0.10 mu0.30"
+  },
+  {
+   "row": "Q4 plate mid-plane x 287.00: bending + axial, torsion by the Prandtl stress function, 6061 von Mises x KF",
+   "rb": 7.02987189737987,
+   "x223": 3.15240892259187,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 7/7 combo z0.10 mu0.40"
+  },
+  {
+   "row": "Q7b plug bearing on the 6061 (KP), bearing yield 386",
+   "rb": 39.101146637462165,
+   "x223": 17.53414647419828,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 7/7 combo z0.10 mu0.30"
+  },
+  {
+   "row": "Q1b ring bearing on the 6061 bore (6M/(D L^2) + V/(D L), KP), bearing yield 386",
+   "rb": 41.50654106403629,
+   "x223": 18.612798683424344,
+   "cls": "RF",
+   "verdict": "PASS",
+   "case": "hard 7/7 combo z0.10 mu0.30"
+  },
+  {
+   "row": "Q1d CF fin-tube wall bearing in the ring at x2.23 [MPa]; CF bearing allowable \"-\" (TP-4 coupon)",
+   "value": 20.738418040471952,
+   "cls": "record",
+   "case": "hard 7/7 combo z0.10 mu0.30"
+  },
+  {
+   "row": "Q7d CF rib-wall bearing on the plug at x2.23 [MPa]; allowable \"-\" (TP-4 coupon); the PETG block put the same stress into the rib wall",
+   "value": 22.014188176653132,
+   "cls": "record",
+   "case": "hard 7/7 combo z0.10 mu0.30"
+  },
+  {
+   "row": "max |My| at the junction x 286 [N m, RB]",
+   "value": 16.019106599833645,
+   "cls": "record",
+   "case": "hard 7/7 combo z0.10 mu0.30"
+  }
+ ]
+}

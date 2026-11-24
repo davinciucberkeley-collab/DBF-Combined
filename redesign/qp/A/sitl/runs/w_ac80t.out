@@ -1,0 +1,42 @@
+{
+"tag": "w_ac80t",
+"args": [
+"inst=1",
+"hold=45",
+"wind=5",
+"from=80",
+"turb=1.0",
+"arm=1.2",
+"cant=16"
+],
+"summary": {
+"n": 807,
+"t_window": [
+8.027,
+48.999
+],
+"wind_ms": 7.81,
+"lean_max": 20.6,
+"lean_mean": 10.8,
+"lean_pre": 1.0,
+"u_max": 0.83,
+"u_mean_max": 0.714,
+"t_cap_s": 0.0,
+"t_cap_run_s": 0.0,
+"t_ge85_s": 0.0,
+"u_min": 0.288,
+"t_floor_s": 0.0,
+"t_floor_run_s": 0.0,
+"yaw_err_max": 11.0,
+"yaw_err_rms": 3.42,
+"pos_err_max": 2.62,
+"pos_err_rms": 1.18,
+"pos_err_last20_mean": 0.97,
+"alt_dev_max": 0.22,
+"diag_spread_max": 0.459,
+"diag_spread_mean": 0.096
+},
+"armed": true,
+"reached_alt": true,
+"events": []
+}

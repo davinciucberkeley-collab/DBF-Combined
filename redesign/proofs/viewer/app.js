@@ -77,7 +77,15 @@
   const pct = x => { const a = Math.abs(x) * 100, d = a < 9.95 && a > 0 ? 1 : 0; return (x > 0 ? '+' : x < 0 ? '−' : '') + a.toFixed(d) + ' %'; };
   const badge = n => `<span class="ds-badge" data-status="${st(n)}">${st(n)}</span>`;
   const mgClass = x => (x < 0 ? ' neg' : x < 0.1 ? ' thin' : '');
-  const marginBadge = x => (typeof x === 'number' ? `<span class="mg${mgClass(x)}" title="margin to the limit${x < 0 ? ' — FAILS' : ''}">${pct(x)}</span>` : '');
+  // A limit of 0 has no percentage margin: build_graph.py then stores the signed distance to the limit in the claim's
+  // unit and sets margin_abs. Pass the node; a bare number is still read as a fraction.
+  const absTxt = n => (n.margin > 0 ? '+' : n.margin < 0 ? '−' : '') + M.fmt(Math.abs(n.margin), n.unit);
+  const mgText = n => (n.margin_abs ? absTxt(n) : pct(n.margin));
+  const mgCls = n => (n.margin < 0 ? ' neg' : !n.margin_abs && n.margin < 0.1 ? ' thin' : '');
+  const marginBadge = x => {
+    const n = typeof x === 'number' ? { margin: x } : x;
+    return n && typeof n.margin === 'number' ? `<span class="mg${mgCls(n)}" title="${n.margin_abs ? 'distance to a limit of 0' : 'margin to the limit'}${n.margin < 0 ? ' — FAILS' : ''}">${esc(mgText(n))}</span>` : '';
+  };
   const go = (id, label) => `<button class="nlink" data-go="${esc(id)}">${esc(label || id)}</button>`;
   const repoLink = (p, label) => /^https?:/.test(p) ? `<a href="${esc(p)}" target="_blank" rel="noopener">${esc(label || p)}</a>` : `<a href="${esc(REPO + p)}" target="_blank" rel="noopener">${esc(label || p)}</a>`;
 
@@ -229,7 +237,7 @@
   // ------------------------------------------------------------------ home (centre, no requirement chosen)
   function renderHome() {
     const claims = model.nodes.filter(n => n.type === 'claim'), c = M.counts(model, 'status', 'claim');
-    const fails = claims.filter(n => n.fails).sort((a, b) => (a.margin ?? 0) - (b.margin ?? 0));
+    const fails = claims.filter(n => n.fails).sort((a, b) => (a.margin_abs ? -9 : a.margin ?? 0) - (b.margin_abs ? -9 : b.margin ?? 0));   // limit-0 fails first: their margin is a distance, not comparable
     const reqs = model.nodes.filter(n => n.type === 'requirement'), traced = reqs.filter(r => M.claimsOfReq(model, r.id).length).length;
     const order = M.STATUSES.slice().reverse();
     const failRows = fails.map(n => {
@@ -237,7 +245,7 @@
       const lv = n.limit ? (n.limit.value !== undefined ? n.limit.value : n.limit.resolved) : undefined;
       return `<tr class="click" data-open="${esc(n.id)}"><td><span class="id">${esc(n.id)}</span>${esc(n.title)}</td>
         <td class="num">${esc(M.fmt(n.value, n.unit))}</td><td class="num">${n.limit ? esc(M.opText(n.limit.op) + ' ' + M.fmt(lv, n.unit)) : '—'}</td>
-        <td class="num">${marginBadge(n.margin) || '<span class="ds-badge" data-status="FAIL">FAIL</span>'}</td><td><span class="v">${esc(rq.join(', ') || '—')}</span></td></tr>`;
+        <td class="num">${marginBadge(n) || '<span class="ds-badge" data-status="FAIL">FAIL</span>'}</td><td><span class="v">${esc(rq.join(', ') || '—')}</span></td></tr>`;
     }).join('');
     $('#home').innerHTML = `<h1>Requirements and their proof chains</h1>
       <p class="sub">Pick a requirement on the left to see the claims that verify it, the calculations behind each claim, and the parameters, assumptions and sources those rest on. Press <kbd>/</kbd> to search any id.</p>
@@ -318,8 +326,8 @@
         const hasM = typeof n.margin === 'number';
         inner += `<text class="nv" x="9" y="52">${esc(fit(val, W - 18 - (hasM ? 64 : 0), 7.3))}</text>`;
         if (hasM) {
-          const t = pct(n.margin), bw = t.length * 7 + 12;
-          inner += `<g class="${n.margin < 0 ? 'mg-neg' : n.margin < 0.1 ? 'mg-thin' : ''}" transform="translate(${W - 8 - bw} 40)"><rect class="mgb" width="${bw}" height="16" rx="3"/><text class="mgt" x="${bw / 2}" y="12" text-anchor="middle">${esc(t)}</text></g>`;
+          const t = mgText(n), bw = t.length * 7 + 12;
+          inner += `<g class="${n.margin < 0 ? 'mg-neg' : !n.margin_abs && n.margin < 0.1 ? 'mg-thin' : ''}" transform="translate(${W - 8 - bw} 40)"><rect class="mgb" width="${bw}" height="16" rx="3"/><text class="mgt" x="${bw / 2}" y="12" text-anchor="middle">${esc(t)}</text></g>`;
         }
       }
       out.push(`<g class="${cls}" data-k="${esc(nd.key)}" data-status="${s}" transform="translate(${x} ${y})"><title>${esc(nd.id + ' — ' + (n.title || '') + (nd.ref ? ' (input; double-click to open its chain)' : ''))}</title>${inner}</g>`);
@@ -395,9 +403,9 @@
   function marginBlock(n) {
     const lim = n.limit;
     const lv = lim.value !== undefined ? lim.value : lim.resolved;
-    let html = `<div class="big"><b>${esc(M.fmt(n.value))}</b><span>${esc(n.unit && n.unit !== '-' ? n.unit : '')}</span>${marginBadge(n.margin)}</div>
+    let html = `<div class="big"><b>${esc(M.fmt(n.value))}</b><span>${esc(n.unit && n.unit !== '-' ? n.unit : '')}</span>${marginBadge(n)}</div>
       <div class="text" style="margin:0">limit ${M.opText(lim.op)} ${esc(M.fmt(lv, n.unit))}${lim.ref ? ' from ' + go(lim.ref) : ''}</div>`;
-    if (typeof n.value === 'number' && typeof lv === 'number' && typeof n.margin === 'number' && n.value >= 0 && lv >= 0) {
+    if (typeof n.value === 'number' && typeof lv === 'number' && typeof n.margin === 'number' && !n.margin_abs && n.value >= 0 && lv >= 0) {
       const top = Math.max(n.value, lv) * 1.15 || 1, col = n.margin < 0 ? 'var(--st-fail)' : n.margin < 0.1 ? 'var(--st-unverified)' : 'var(--st-verified)';
       html += `<div class="gauge" title="value vs limit"><i style="width:${100 * n.value / top}%;background:${col}"></i><u style="left:${100 * lv / top}%"></u></div>`;
     }
@@ -627,7 +635,7 @@
     const fresh = data.missing === data.nodes.length, partial = data.missing > 0 && !fresh;
     const ticks = fresh ? (ovMode === '3d' ? 60 : 90) : partial ? 40 : 0;
     const common = g => g.width(box.width).height(box.height).backgroundColor(pal.bg).nodeId('id')
-      .nodeLabel(d => `<div style="font:12px ${esc(pal.sans)};padding:2px 4px"><b>${esc(d.id)}</b> ${esc(d.n.title || '')}<br>${st(d.n)}${typeof d.n.margin === 'number' ? ' · margin ' + pct(d.n.margin) : ''}</div>`)
+      .nodeLabel(d => `<div style="font:12px ${esc(pal.sans)};padding:2px 4px"><b>${esc(d.id)}</b> ${esc(d.n.title || '')}<br>${st(d.n)}${typeof d.n.margin === 'number' ? ' · margin ' + mgText(d.n) : ''}</div>`)
       .nodeVal(nodeVal).nodeColor(nodeColor).nodeVisibility(statusVisible).linkVisibility(linkVisible).linkColor(linkColor)
       .onNodeClick(d => ovSelect(d.id)).onBackgroundClick(() => ovSelect(null))
       .d3AlphaDecay(0.06).d3VelocityDecay(0.45).warmupTicks(ticks).cooldownTicks(0)

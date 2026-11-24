@@ -27,7 +27,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[1] / "proofs"))          # redesign/proofs (python -I adds no paths)
 import proofkit as pk  # noqa: E402
 
-kit = pk.Kit(__file__, params=["../../params/params.json"])
+kit = pk.Kit(__file__, params=["../../params/params.json", "../../subsystems/flight-software/params.json"])
 P = "P:"
 
 # ====================================================================== sources and assumptions
@@ -39,6 +39,12 @@ kit.source("SRC-C1-PRATT", "Pratt & Walker, NACA Rep. 1206 (1954) gust formula",
            where="kg = 0.88 mu / (5.3 + mu), mu = 2 (W/S) / (rho c a g)")
 kit.source("SRC-C1-THIN-AIRFOIL", "Abbott & von Doenhoff, Theory of Wing Sections, sec. 8.6", "book",
            where="plain-flap thin-airfoil increments dCl/d(delta), dCm/d(delta)")
+kit.source("SRC-C1-AP-PITCHCTL", "ArduPilot AP_PitchController.cpp at tag Plane-4.7.1", "code",
+           url="https://raw.githubusercontent.com/ArduPilot/ardupilot/Plane-4.7.1/libraries/APM_Control/AP_PitchController.cpp",
+           checked="2026-11-14",
+           where="get_servo_out: desired_rate = angle_err/tau; desired_rate += rate_offset (turn coordination); then "
+                 "clamped to [-rmax_neg, +rmax_pos] (PTCH2SRV_RMAX_DN / _UP) when not inverted. Param text: 'maximum "
+                 "nose up pitch rate that the attitude controller will demand ... in angle stabilized modes'")
 kit.source("SRC-C1-HOERNER", "Hoerner, Fluid-Dynamic Drag (1965), ch. 3", "book",
            where="flat plate normal to the flow CD ~ 1.17-1.2")
 
@@ -69,13 +75,13 @@ asm("ASM-C1-CLMIN", "Negative CL limit 0.44", "Most negative CL of the reflexed 
     "given", 0.44, "-", cites=["SRC-B2-XFOIL"])
 asm("ASM-C1-UDE-D-FRAC", "Gust at VD is half the gust at VC", "Derived gust velocity at VD = 0.5 x the VC value",
     "FAR 23.333(c) ratio (25/50 ft/s)", 0.5, "-", status="PROPOSED", cites=["SRC-C1-FAR23"])
-asm("ASM-C1-PROP-PITCH", "Prop pitch 5.5 in", "Geometric pitch of the APC 11x5.5MR", "from the prop name (D-05)",
+asm("ASM-C1-PROP-PITCH", "Prop pitch 5.5 in", "Geometric pitch of the APC 11x5.5E (D-161; same 5.5 in as the MR it replaced)", "from the prop name (D-05, D-161)",
     0.1397, "m", status="PROPOSED", cites=["SRC-APC-11X55MR"])
 asm("ASM-C1-VD-FACTOR", "VD = 1.25 x fastest level speed", "Design dive speed = 1.25 x max(VC, VH)",
     "FAR 23.335(b) VD >= 1.25 VC with VC = the highest level speed the aircraft can hold; VH = max(prop pitch speed "
     "at the F4 rpm cap, B1's top level speed)", 1.25, "-", status="PROPOSED", cites=["SRC-C1-FAR23"])
-asm("ASM-C1-BELL-INERTIA", "Motor bell inertia 1.5e-5 kg m2", "Rotating bell + magnets of the X3108S about its axis",
-    "~40 g ring at r ~ 19 mm", 1.5e-5, "kg m2")
+asm("ASM-C1-BELL-INERTIA", "Motor bell inertia 2.0e-5 kg m2 (X2814 V3, EST)", "Rotating bell + magnets of the X2814 V3 about its axis",
+    "D-173 closure re-run: X3108S 1.5e-5 (~40 g ring at r ~ 19 mm) scaled by the motor mass 108 / 81 g, as C4 did (round1114/cl_opts.py D173_IBELL); EST, maker gives no rotor inertia", 2.0e-5, "kg m2")
 asm("ASM-C1-PITCH-RATE", "Peak body rate 3 rad/s", "Highest body rate during transition or recovery (any axis)",
     "about 2 x the ArduPilot tailsitter rate limits; covers a saturated recovery", 3.0, "rad/s")
 asm("ASM-C1-ELEVON-CN", "Elevon panel CN 1.0", "Normal-force coefficient on a fully deflected elevon panel, for hinge/horn sizing",
@@ -92,11 +98,13 @@ asm("ASM-C1-CRUSH-EFF", "Crush efficiency 0.5", "Energy absorbed / (peak force x
 asm("ASM-C1-LAND-LIFT", "Rotor lift 2/3 W at touchdown", "Thrust still acting at touchdown, fraction of weight",
     "FAR 23.473(b); ArduPilot keeps throttle until the land detector trips", 0.667, "-", status="PROPOSED",
     cites=["SRC-C1-FAR23"])
-asm("ASM-C1-FRICTION", "Ground friction 0.7 (neoprene pad on the landing mat)", "Side load / vertical load at a foot",
-    "CHANGE-LOG D-30 and CR-C5-09: flight-card rule S1 puts every fin-tip landing on the mat, so the friction is D5's "
-    "neoprene pad value (ASM-D5-PAD-MU 0.7, UNVERIFIED until H1's pad pull test). Was 0.5 (grass) at C1-R2; the higher "
-    "value raises L4/L5 side loads by 40 %; it also sets the parked-stance slide check (higher = less margin needed)",
-    0.7, "-")
+asm("ASM-C1-FRICTION", "Ground friction 0.40 (low-friction pad face on the landing mat, D-105)",
+    "Side load / vertical load at a foot",
+    "D-105 (CDR decision B1, 2026-11-13): the pad face is held to mu <= requirements.pad_mu_max so the foot side load "
+    "stays at or below requirements.foot_side_load_cap_n; flight-card rule S1 puts every fin-tip landing on the mat. "
+    "Was 0.7 (bare neoprene, D-30 / CR-C5-09) and 0.5 (grass) at C1-R2. UNVERIFIED until the incline test T-D5-PAD-MU. "
+    "The parked aircraft needs more than this to stand in 8 m/s (CL-C1-STANCE-MU-REQ): laid flat or tied when parked",
+    kit.value(P + "requirements.pad_mu_max"), "-")
 # ASM-C1-FOOT-BIAS (1.077, D-30) is retired at C1-R4: the upper/lower split is read from D5's per-type cartridge
 # plateaus (CL-D5-F-PLATEAU-UPPER / CL-D5-F-PLATEAU, CR-D5-23), bias = upper / mean.
 asm("ASM-C1-MOUNT-MASS", "Printed motor mount 18 g", "One printed ASA motor mount with its collar and screws",
@@ -106,6 +114,23 @@ asm("ASM-C1-CONTACT-STROKE", "Contact stroke 10 mm", "Crush stroke at an unprote
     "foam/grass contact without a bumper", 0.010, "m")
 asm("ASM-C1-CD-PLATE", "Flat-plate CD 1.2", "Broadside drag/normal-force coefficient of the wing or a fin",
     "flat plate normal to the flow", 1.2, "-", status="PROPOSED", cites=["SRC-C1-HOERNER"])
+asm("ASM-C1-TIE-SHARE", "Restrained run: two of the four ties carry the net thrust",
+    "Share factor on the per-tie load of the restrained four-motor run: per tie = share x (4 T_lim - W) / 4",
+    "four cords of unequal length: the two shortest go taut first. Same number as H1's tie-down factor "
+    "ASM-H1-RESTRAINT-SF 2.0, so the C1 limit load per tie equals CL-H1-RESTRAINT-PER-TIE (29.45 N at the gate mass)",
+    2.0, "-", status="PROPOSED")
+asm("ASM-C1-EYE-POS", "Strap eye FIN-013 tie point: 21.1 mm outboard of the tube axis, |z| 0.030 m",
+    "Tie hole centre relative to the fin-tube axis: [dy outboard, |z|] (x = tube axis)",
+    "subsystems/fins/params.json fin_detail.strap_eye: boss bond radius 13.6 mm + foot 1.5 mm + hole offset 6 mm = "
+    "21.1 mm; the eye stands 10 mm above the upper / below the lower skin at the block (|z| about 0.030 m, EST from "
+    "the block top z 0.0304)", [0.0211, 0.030], "m", status="PROPOSED")
+asm("ASM-C1-PROP-STRIKE-T", "Prop strike: mount turns on the tube at 6.55 N m",
+    "Largest torque about the fin-tube axis that one motor mount can pass to the tube: the slip clamp plus the "
+    "clocking dog let go above it",
+    "A1 decision 2026-11-14 on C6.md section 6: the dog that holds the 10 deg cant twist is a 10 mm sector, fuse torque "
+    "(slip + dog break, upper bound, C6 CL-C6-DOG-FUSE-T) 3.71 -> 6.55 N m; carried at 6.55, rounded up as before "
+    "(was 3.72 on the 3.7138 dog). Copied as a number so C1 and C6 do not read each other in a loop; "
+    "CL-C1-P1-FUSE-MATCH checks the copy", 6.55, "N m", status="PROPOSED")
 asm("ASM-C1-HANDLING-N", "Handling factor 2", "Ground-handling load factor (lift, carry, set down)",
     "jerk when lifting one-handed or setting down", 2.0, "-", status="PROPOSED")
 asm("ASM-C1-CRASH-V", "Crash speed 5 m/s", "Impact speed of the survivable crash for pack retention",
@@ -127,6 +152,16 @@ asm("ASM-C1-PRINTED-FACTOR", "Printed/bonded factor 1.25", "Extra factor on prin
     "FAR 23.619 special factor for variable material; C6 may lower it with coupon tests", 1.25, "-")
 asm("ASM-C1-PROP-NUT-TORQUE", "Prop nut torque 1.5 N m", "Torque applied to a prop nut at field set-up",
     "hand tightening with a prop wrench; reacted by the mount and tube", 1.5, "N m")
+asm("ASM-C1-RATE-OVERSHOOT", "Pitch-rate tracking overshoot 1.25 x the demand cap (EST)",
+    "Peak body pitch rate / PTCH2SRV_RMAX_UP (or _DN, Q_TAILSIT_RAT_VT) the tuned rate loop can reach in a full "
+    "step demand",
+    "EST: a tuned rate loop (FF + P, autotune) overshoots its demand by well under 25 %; 1.25 is the pessimistic end "
+    "used for design. The claims pass up to 1.41 (CL-C1-N-STALL-VD). Confirmed by F4's TUNING-PLAN FBWA full-pull "
+    "step (logged RATE.PDes / RATE.P): peak <= 1.25 x RMAX_UP", 1.25, "-")
+asm("ASM-C1-RAT-VT", "Tailsitter back-transition pitch rate 30 deg/s", "Q_TAILSIT_RAT_VT, the pitch-up rate of "
+    "the fixed-wing to VTOL transition",
+    "subsystems/flight-software/K09L.param line 201 (Q_TAILSIT_RAT_VT,30; F4 SITL S5a). Not yet a key in "
+    "subsystems/flight-software/params.json (CR-C1 closure request to F4)", 30.0, "deg/s", status="PROPOSED")
 asm("ASM-C1-STRAP-PRELOAD", "Pack strap preload 40 N", "Total pack strap tension after cinching",
     "two-hand cinch of a 20 mm strap", 40.0, "N")
 
@@ -143,7 +178,8 @@ MODEL = {
     "motor_m": P + "propulsion.motor_mass_kg", "motor_len": P + "propulsion.motor_length_m",
     "prop_m": P + "propulsion.prop_mass_kg", "prop_D": P + "propulsion.prop_diameter_m",
     "esc_m": P + "propulsion.esc_mass_kg", "x_mount": P + "propulsion.stations.x_mount_m",
-    "x_prop": P + "propulsion.stations.x_prop_plane_m", "st_y": P + "propulsion.stations.y_m",
+    "x_prop": P + "propulsion.stations.x_prop_plane_m", "x_face": P + "propulsion.stations.x_plate_face_m",
+    "tube_mpm": P + "fins.tube.mass_per_m_kgm", "st_y": P + "propulsion.stations.y_m",
     "st_z": P + "propulsion.stations.z_m", "pod_size": P + "pod.size_m", "pod_xle": P + "pod.x_le_m",
     "pod_zb": P + "pod.z_base_m", "batt_m": P + "battery.mass_kg", "batt_size": P + "battery.size_m",
     "foot_h": P + "cg.foot_height_m",
@@ -160,8 +196,8 @@ MODEL_UNITS = {
     "g": "m/s2", "rho": "kg/m3", "m_gate": "kg", "b": "m", "c": "m", "x_spar": "m", "spar_len": "m",
     "spar_mpm": "kg/m", "el_in": "m", "el_out": "m", "el_def": "deg", "fin_y": "m", "fin_hh": "m", "fin_le": "m",
     "fin_te": "m", "fin_am": "kg/m2", "tube_od": "m", "tube_len": "m", "tube_x": "m", "motor_m": "kg",
-    "motor_len": "m", "prop_m": "kg", "prop_D": "m", "esc_m": "kg", "x_mount": "m", "x_prop": "m", "st_y": "m",
-    "st_z": "m", "pod_size": "m", "pod_xle": "m", "pod_zb": "m", "batt_m": "kg", "batt_size": "m", "foot_h": "m",
+    "motor_len": "m", "prop_m": "kg", "prop_D": "m", "esc_m": "kg", "x_mount": "m", "x_prop": "m", "x_face": "m",
+    "tube_mpm": "kg/m", "st_y": "m", "st_z": "m", "pod_size": "m", "pod_xle": "m", "pod_zb": "m", "batt_m": "kg", "batt_size": "m", "foot_h": "m",
     "a_wing": "g", "a_fins": "g", "a_pod": "g", "a_landing": "g", "a_power": "g", "a_avionics": "g",
     "a_harness": "g", "a_mech": "g", "mount_m": "kg", "adapter_m": "kg", "pack_x": "m", "x_cg_rng": "m",
     "cant": "deg", "fp_u": "N", "fp_m": "N", "iyy_a3": "kg m2", "m_a3": "kg", "z_cg_t": "m", "groups": "kg, m, kg m2",
@@ -223,6 +259,18 @@ SPIN = {"UR": 1, "LL": 1, "UL": -1, "LR": -1}        # spin sense about +x, diag
 # ====================================================================== mass model
 
 
+def x_motor(k):
+    """Motor can centroid x (W2 2026-11-14, D-146): half the can ahead of the plate face along the canted axis.
+    Was x_mount - od/2 - len/2 (the D-28 tube-face stack), which did not follow face_ahead (14 mm aft at R6)."""
+    return k["x_face"] - k["motor_len"] / 2 * math.cos(math.radians(k["cant"]))
+
+
+def x_mount_cg(k):
+    """Printed mount centroid x, EST: midway between the plate face and the tube axis (D3 R6 CAD centroid 0.0345,
+    subsystems/fins/interfaces.json FIN-003-UR, vs 0.0324 here). Was x_mount - 0.005."""
+    return (k["x_face"] + k["x_mount"]) / 2
+
+
 def build_items(k, growth="centre", dy_target=0.005):
     """Lumped masses (kg, m) from params. growth: 'centre' (gap to the gate in the pod) or 'prorata'."""
     it = []
@@ -244,7 +292,7 @@ def build_items(k, growth="centre", dy_target=0.005):
             put(k["spar_mpm"] * dy, (k["x_spar"], y, 0.0), "wing")
     for s in (1, -1):
         put(k["a_mech"] / 2000.0, (0.63 * c, s * k["el_in"][1], 0.0), "mech")
-    m_tube = k["spar_mpm"] * k["tube_len"]
+    m_tube = k["tube_mpm"] * k["tube_len"]          # D-147 (2026-11-14): fin tubes have their own key (RW 35046-S)
     m_board = k["fin_am"] * k["fin_layers"] * (k["fin_te"] - k["fin_le"]) * 2 * k["fin_hh"]
     m_finrem = k["a_fins"] / 2000.0 - m_tube - m_board - 2 * k["mount_m"]
     for s in (1, -1):
@@ -266,9 +314,9 @@ def build_items(k, growth="centre", dy_target=0.005):
                 st=st, fin=True)
     for st, (s, sz) in STATIONS.items():
         y, z = s * k["st_y"], sz * k["st_z"]
-        put(k["motor_m"], (k["x_mount"] - k["tube_od"] / 2 - k["motor_len"] / 2, y, z), "rotor", side=s, st=st, fin=True)
+        put(k["motor_m"], (x_motor(k), y, z), "rotor", side=s, st=st, fin=True)
         put(k["prop_m"] + k["adapter_m"], (k["x_prop"], y, z), "rotor", side=s, st=st, fin=True, transport=False)
-        put(k["mount_m"], (k["x_mount"] - 0.005, y, z), "mount", side=s, st=st, fin=True)
+        put(k["mount_m"], (x_mount_cg(k), y, z), "mount", side=s, st=st, fin=True)
         put(k["esc_m"], (k["tube_x"] + 0.04, y, 0.6 * z), "esc", side=s, st=st, fin=True)
     # centre group, pack and harness (C1-R5, CR-C1-33 answered by A3-R7 CL-A3-GROUPS): allocation masses placed at
     # A3's group centroids; the centre group's own pitch inertia enters as two halves at +/- its A3 radius of gyration
@@ -587,11 +635,11 @@ def _vn(g, rho, m, b, c, clmax, clmin, a, nlim, nneg, Vc, ude_c, ude_d_frac, Vd)
                    "F4's THR_MAX) ; VH = max(V_pitch, V_lvl_F4) ; VD = f_D max(Vc, VH) rounded UP to 0.1 m/s ; "
                    "VD_uncapped = f_D max(Vc, VMAX_B1) (information) ; n_hover = n T_lim / (m g)",
           inputs={"T_h": "CL-B4-HOVER-T", "rpm_h": "CL-B4-HOVER-RPM", "Q_h": "CL-B4-HOVER-Q", "kT": "CL-E1-KT",
-                  "kP": "CL-E1-KP", "rpm_cap": P + "propulsion.rpm_max", "T_req": P + "requirements.thrust_limit_per_motor_n",
+                  "kP": "CL-E1-KP", "rpm_cap": "CL-B4-RPM-MAX-FULL", "T_req": P + "requirements.thrust_limit_per_motor_n",
                   "t_ilim": P + "propulsion.thrust_max_per_motor_kg", "g": P + "env.g_ms2",
                   "m_p": P + "propulsion.prop_mass_kg", "D": P + "propulsion.prop_diameter_m",
                   "I_bell": "ASM-C1-BELL-INERTIA", "q_max": "ASM-C1-PITCH-RATE", "pitch": "ASM-C1-PROP-PITCH",
-                  "Vc": P + "performance.cruise_ms", "VH_f4": "CL-F4-VLEVEL", "rpm_fw": "CL-F4-FW-RPM-CAP",
+                  "Vc": P + "performance.cruise_ms", "VH_f4": "CL-F4-VLEVEL", "rpm_fw": "CL-B4-RPM-FW",
                   "VH_b1": "CL-B1-VMAX", "fD": "ASM-C1-VD-FACTOR",
                   "m": P + "requirements.mtow_gate_kg", "n_mot": P + "propulsion.n_motors"},
           units={"T_h": "N", "rpm_h": "rpm", "Q_h": "N*m", "rpm_cap": "rpm", "T_req": "N", "t_ilim": "kg", "g": "m/s2",
@@ -636,6 +684,38 @@ def vn_calc(g, rho, m, b, c, clmax, clmin, a, nlim, nneg, Vc, ude_c, ude_d_frac,
     out["VD_env"] = Vd
     out["q_VD_Pa"] = 0.5 * rho * Vd * Vd
     return out
+
+
+@kit.calc("CALC-C1-N-REACH", title="Load factor the flight software can reach at VD (stall line capped by the pitch-rate demand limit)",
+          equation="n = V (q - alpha_dot)/g + cos(theta) cos(phi); quasi-steady alpha, |cos theta cos phi| <= 1 -> "
+                   "n_pos <= 1 + V k q_up / g ; n_neg >= -V k q_dn / g (gravity term >= 0 upright: ROLL_LIMIT 45, "
+                   "no raw-stick mode) ; n_reach_pos = min((VD/Vs)^2, 1 + VD k q_up/g) ; n_reach_neg = "
+                   "max(-(VD/Vs_neg)^2, -VD k q_dn/g) ; back-transition n_VT = min((VD/Vs)^2, 1 + VD k q_VT/g) ; "
+                   "q_up_max = (n+ - 1) g/(VD k), q_dn_max = |n-| g/(VD k)",
+          inputs={"g": P + "env.g_ms2", "Vd": "CL-C1-VD-ENV", "Vs": "CL-C1-VS", "rho": P + "env.rho_kgm3",
+                  "m": P + "requirements.mtow_gate_kg", "b": P + "wing.span_m", "c": P + "wing.chord_m",
+                  "clmin": "ASM-C1-CLMIN", "rate_fw": P + "fsw.rate_max_fw_degs", "k": "ASM-C1-RATE-OVERSHOOT",
+                  "q_vt": "ASM-C1-RAT-VT", "nlim": "CL-C1-N-LIMIT-POS", "nneg": "CL-C1-N-LIMIT-NEG"},
+          units={"g": "m/s2", "Vd": "m/s", "Vs": "m/s", "rho": "kg/m3", "m": "kg", "b": "m", "c": "m",
+                 "rate_fw": "deg/s [roll, pitch up, pitch down]", "q_vt": "deg/s"},
+          assumes=["ASM-C1-RATE-OVERSHOOT", "ASM-C1-RAT-VT"], cites=["SRC-C1-AP-PITCHCTL", "SRC-C1-FAR23"])
+def n_reach_calc(g, Vd, Vs, rho, m, b, c, clmin, rate_fw, k, q_vt, nlim, nneg):
+    # CR-C1-08 closure (2026-11-14): above VA the stall line is not a structural boundary (FAR 23.333(b): the
+    # envelope is cut at n_lim); the structure must hold n_lim at every speed to VD and the control law must keep the
+    # aircraft inside it. K09-L has no raw-stick fixed-wing mode (FLTMODE 17/18/19/5/7/11, CL-F4-NO-RAW-MODES), so
+    # the elevon follows ArduPilot's angle -> rate controller, whose pitch-rate demand (incl. turn coordination) is
+    # clamped to PTCH2SRV_RMAX_UP / _DN (SRC-C1-AP-PITCHCTL). The reachable n is the lesser of the stall line and the
+    # rate-limited pull-up.
+    r = math.pi / 180
+    q_up, q_dn = rate_fw[1] * r, rate_fw[2] * r
+    stall = (Vd / Vs) ** 2
+    Vsn = math.sqrt(2 * m * g / (rho * b * c * clmin))
+    n_rate_pos = 1 + Vd * k * q_up / g
+    n_rate_neg = -Vd * k * q_dn / g
+    return {"n_stall_line_VD": stall, "n_rate_pos_VD": n_rate_pos, "n_reach_pos_VD": min(stall, n_rate_pos),
+            "n_reach_neg_VD": max(-(Vd / Vsn) ** 2, n_rate_neg), "n_reach_VT_VD": min(stall, 1 + Vd * k * q_vt * r / g),
+            "q_up_max_degs": (nlim - 1) * g / (Vd * k) / r, "q_dn_max_degs": abs(nneg) * g / (Vd * k) / r,
+            "k_os_max": (nlim - 1) * g / (Vd * q_up) if q_up > 0 else float("inf")}
 
 
 @kit.calc("CALC-C1-LANDING", title="Landing, wingtip strike, tip-over and stance-in-wind loads",
@@ -894,7 +974,7 @@ def build_cases(k, X, items, growth, dy=0.005):
         LD["F_foot_corner_N"], X["mu"]
     bias = foot_bias(k)
     # foot side load (C1-R5, D-65, CR-C5-16): the larger of friction x corner load and C5's 3-D simulated sustained
-    # side load (CL-C5-SIM3D-SIDE-LOAD 39.3 N limit, 1.2 m/s at 10 deg any direction), applied with the corner load
+    # side load (CL-C5-SIM3D-SIDE-LOAD = requirements.foot_side_load_cap_n since D-105), applied with the corner load
     Fs = max(mu * Fc, X["F_side"])
     land("L1-LEVEL", "Level landing on four feet, biased cartridges (upper x bias, lower x (2 - bias))",
          {st: (-Fl * (bias if STATIONS[st][1] > 0 else 2 - bias), 0.0, 0.0) for st in STATIONS},
@@ -935,7 +1015,7 @@ def build_cases(k, X, items, growth, dy=0.005):
     # set down flat (lower surface down). R3 geometry: the tube ends stop at z -0.172 inside the mounts, so the
     # lowest points are the lower motor cans (axis z -0.19, can radius ~0.019) and the lower feet at the fin tips
     # (z -0.21). The CG (x 0.050-0.055) lies between them; props are off in transport but on at the field.
-    xm = k["x_mount"] - k["tube_od"] / 2 - k["motor_len"] / 2
+    xm = x_motor(k)
     xf = k["fin_te"] + k["foot_h"] / 2
     (xa, za, ga), (xb, zb, gb_) = (xm, -k["st_z"], "rotor"), (xf, -k["fin_hh"], "foot")
     Ra = nh * W * (xb - cg[0]) / (xb - xa) / 2
@@ -948,6 +1028,29 @@ def build_cases(k, X, items, growth, dy=0.005):
     cases.append({"id": "G3-BENCH", "family": "ground", "title": "Set down flat on the lower motor cans and lower feet",
                   "gb": (0.0, 0.0, -g), "loads": sup,
                   "info": {"n": nh, "support_a": ga, "R_a_N": Ra, "support_b": gb_, "R_b_N": Rb}})
+
+    # G4 (CDR-28, CR-H1-08): restrained four-motor ground run. The aircraft stands on its feet, tied down at the four
+    # strap eyes FIN-013; all four motors at T_lim. Net up-force 4 T_lim - W goes into the ties; with unequal cords
+    # two ties (one diagonal pair, so there is no net moment) carry all of it: per tie = share (4 T_lim - W) / 4.
+    dy_e, z_e = X["eye"]
+    f_tie = X["tie_k"] * (4 * T_lim * math.cos(math.radians(k["cant"])) - W) / 4
+    ties = [load((k["tube_x"], s * (k["fin_y"] + dy_e), sz * z_e), (f_tie, 0.0, 0.0), grp="tie", side=s, st=st,
+                 fin=True, kind="tie") for st, (s, sz) in STATIONS.items() if st in ("UR", "LL")]
+    cases.append({"id": "G4-RESTRAINED", "family": "ground",
+                  "title": "Restrained ground run: four motors at T_lim, held by two diagonal strap eyes",
+                  "gb": hov, "loads": ties + rotor_loads(k, Rr, {st: T_lim for st in STATIONS}),
+                  "info": {"F_tie_N": f_tie, "ties": "UR+LL", "T_tot_N": 4 * T_lim}})
+    # P1 (CDR-28): prop strike on the ground, one upper motor (UR) at T_lim. The blade stops on the ground or a
+    # stand; the mount turns on the tube once the torque about the tube axis reaches the slip-clamp + dog fuse
+    # (ASM-C1-PROP-STRIKE-T), so that torque is the most the tube, collar and block see. Reported, not in the sizing
+    # envelope (C6 holds the downstream check, CL-C6-DOG-FUSE-RF).
+    s_, sz_ = STATIONS["UR"]
+    strike = [load((k["tube_x"], s_ * k["st_y"], sz_ * k["st_z"]), ZERO, (0.0, 0.0, SPIN["UR"] * X["T_ps"]), grp="mount",
+                   side=s_, st="UR", fin=True, kind="strike")]
+    cases.append({"id": "P1-PROP-STRIKE", "family": "damage",
+                  "title": "Prop strike on the ground: UR mount at its slip + dog fuse torque about the tube axis",
+                  "gb": hov, "loads": strike + rotor_loads(k, Rr, trim_split(k, cg, W, [], T_lim)),
+                  "info": {"T_fuse_Nm": X["T_ps"]}})
 
     # transport (props and pack out). Cradles under the spar at y +/-y_cr on the lower surface, lid pillars over the
     # spar on the upper surface at the same stations, each preloaded with p_lid (self-equilibrated pinch, CR-D7-02c).
@@ -1244,7 +1347,7 @@ def derived(k, kx):
             "v_gust": kx["v_gust"], "cdp": kx["cdp"], "clmax": kx["clmax"], "V_tr": kx["V_tr"],
             "landing": kx["landing"], "lw": kx["lw"], "att": kx["att"], "mu": kx["mu"], "n_h": kx["n_h"],
             "n_T": kx["n_T"], "y_cr": kx["y_cr"], "p_lid": kx["p_lid"], "el_vd_frac": kx["el_vd_frac"],
-            "F_side": kx["F_side"]}
+            "F_side": kx["F_side"], "tie_k": kx["tie_k"], "eye": kx["eye"], "T_ps": kx["T_ps"]}
 
 
 ENV_INPUTS = {
@@ -1259,7 +1362,8 @@ ENV_INPUTS = {
     "F_pw": "CL-C1-FOOT-PAIR-WIDE", "F_cor": "CL-C1-FOOT-CORNER", "F_tip": "CL-C1-WINGTIP-FORCE",
     "th_to": "CL-C1-TIPOVER-ANGLE-CONTACT", "F_to": "CL-C1-TIPOVER-FORCE", "lw": "ASM-C1-LAND-LIFT",
     "att": P + "requirements.landing_attitude_err_deg", "mu": "ASM-C1-FRICTION", "n_h": "ASM-C1-HANDLING-N", "n_T": "CL-C1-TRANSPORT-N",
-    "F_side": "CL-C5-SIM3D-SIDE-LOAD",
+    "F_side": "CL-C5-SIM3D-SIDE-LOAD", "tie_k": "ASM-C1-TIE-SHARE", "eye": "ASM-C1-EYE-POS",
+    "T_ps": "ASM-C1-PROP-STRIKE-T",
     "y_cr": "ASM-C1-CRADLE-Y", "h_drop": P + "requirements.box_drop_m", "s_cr": "CL-D7-CRADLE-STROKE",
     "p_lid": "ASM-C1-LID-PRELOAD", "pad": "ASM-C1-CRADLE-PAD", "el_vd": "ASM-C1-ELEVON-VD-FRAC",
     "eta": "ASM-C1-CRUSH-EFF", "sf": P + "requirements.safety_factor_ult",
@@ -1267,7 +1371,7 @@ ENV_INPUTS = {
 }
 ENV_UNITS = {**MODEL_UNITS, "Vc": "m/s", "VD": "m/s", "VA": "m/s", "V_gp": "m/s", "V_gn": "m/s", "v_gust": "m/s",
              "V_tr": "m/s", "att": "deg", "y_cr": "m", "h_drop": "m", "s_cr": "m", "p_lid": "N", "pad": "m",
-             "T_lim": "N", "F_lvl": "N", "F_pn": "N", "F_side": "N",
+             "T_lim": "N", "F_lvl": "N", "F_pn": "N", "F_side": "N", "eye": "m", "T_ps": "N m",
              "F_pw": "N", "F_cor": "N", "F_tip": "N", "F_to": "N", "th_to": "deg"}
 
 
@@ -1288,7 +1392,8 @@ def pack_inputs(kw):
                     "F_foot_corner_N": kw["F_cor"], "F_wingtip_N": kw["F_tip"], "tipover_theta_contact_deg": kw["th_to"],
                     "F_tipover_total_N": kw["F_to"]},
         "lw": kw["lw"], "att": kw["att"], "mu": kw["mu"], "n_h": kw["n_h"], "n_T": kw["n_T"], "y_cr": kw["y_cr"],
-        "p_lid": kw["p_lid"], "el_vd_frac": kw["el_vd"], "F_side": kw["F_side"],
+        "p_lid": kw["p_lid"], "el_vd_frac": kw["el_vd"], "F_side": kw["F_side"], "tie_k": kw["tie_k"],
+        "eye": kw["eye"], "T_ps": kw["T_ps"],
     }
     return k, derived(k, kx)
 
@@ -1335,6 +1440,16 @@ def envelope_calc(**kw):
     o["foot_side_lim"] = max(kw["mu"] * kw["F_cor"], kw["F_side"])
     o["foot_side_ult"] = o["foot_side_lim"] * kw["sf"]
     o["foot_side_friction_N"] = kw["mu"] * kw["F_cor"]
+    # G4 restrained run and P1 prop strike (CDR-28): tie load, the fin-group and half-fin resultants they produce
+    g4 = [c for c in res["cases"] if c["case"] == "G4-RESTRAINED"]
+    o["g4_tie_lim"] = max(c["F_tie_N"] for c in g4)
+    o["g4_tie_ult"] = o["g4_tie_lim"] * sf
+    for tag, cid in (("g4", "G4-RESTRAINED"), ("p1", "P1-PROP-STRIKE")):
+        rows = [(jid, v, mb) for case, mc, family, jid, v, mb in res["joints"] if case == cid]
+        o[tag + "_finjoint_M_lim"] = max(norm(v[3:]) for jid, v, mb in rows if jid.startswith("J-FIN-"))
+        o[tag + "_finhalf_T_lim"] = max(abs(v[5]) for jid, v, mb in rows if jid.startswith("J-FINHALF-"))
+        o[tag + "_finhalf_Mb_lim"] = max(mb for jid, v, mb in rows if jid.startswith("J-FINHALF-"))
+    o["p1_fuse_T"] = kw["T_ps"]
     o["aft_ratio"] = n_aft / o["n_T_allow_aft"]
     n_allow, rkey, s_req = o["n_T_allow_z"], o["n_T_governing_z"], o["stroke_req_z_m"]
     # lid pillar / cradle local loads (the pinch is self-equilibrated; it adds bearing, not wing bending)
@@ -1350,7 +1465,7 @@ def envelope_calc(**kw):
     o["finhalf_T_wingplane_lim"] = env["J-FINHALF:Mz"][0]
     o["finhalf_T_wingplane_ult"] = env["J-FINHALF:Mz"][0] * sf
     o["finhalf_T_wingplane_case"] = env["J-FINHALF:Mz"][1]
-    # 7 deg tangential cant (CR-C6-21a): the thrust side component rides in every rotor-on case through the J-MOTOR
+    # tangential cant (CR-C6-21a; 9 deg at D-146): the thrust side component rides in every rotor-on case through the J-MOTOR
     # and J-FINHALF cuts (rotor_loads applies T sin(cant) at the prop plane). Publish the side force in the motor
     # plane (y-z) and the bending at the mount face it produces, separately from the resultants.
     side = {}
@@ -1378,6 +1493,7 @@ def envelope_calc(**kw):
         o[name + "_case"] = c
     o["finjoint_F_design"] = o["finjoint_F_ult"] * kw["kfit"] * kw["kprint"]
     o["finjoint_M_design"] = o["finjoint_M_ult"] * kw["kfit"] * kw["kprint"]
+    o["g4_finjoint_ratio"] = o["g4_finjoint_M_lim"] / o["finjoint_M_lim"]
     o["mount_F_design"] = o["mount_F_ult"] * kw["kfit"] * kw["kprint"]
     o["mount_M_design"] = o["mount_M_ult"] * kw["kfit"] * kw["kprint"]
     o["pod_F_design"] = o["pod_F_ult"] * kw["kfit"] * kw["kprint"]
@@ -1394,11 +1510,15 @@ def envelope_calc(**kw):
 
 # ====================================================================== claims
 # rotor
-kit.claim("CL-C1-T-CAP", "Peak static thrust per motor at the F4 rpm cap", calc="CALC-C1-ROTOR", output="T_cap_N",
+kit.claim("CL-C1-T-CAP", "Peak thrust per motor: static PER3 thrust at the highest envelope rpm (bound)", calc="CALC-C1-ROTOR", output="T_cap_N",
           unit="N", limit=("<=", P + "requirements.thrust_limit_per_motor_n"), verifies=["R-LOADS"], parts=[],
           how="T-C1-THRUST-FRESH: thrust stand on a 16.8 V pack with the F4 output cap; peak thrust <= the requirement.",
-          note="The 100 A pack-current limiter is filtered (seconds), so a step to full throttle reaches the rpm cap "
-               "before it acts: the limiter does not bound an instantaneous structural load (CR-C1-12).")
+          note="Closure re-run 2026-11-14 (D-161, 11x5.5E): rpm_cap = B4 CL-B4-RPM-MAX-FULL (highest rpm in the flight "
+               "envelope at F4's output caps, fresh pack, cold winding), not propulsion.rpm_max (13 360 is now APC's "
+               "structural rpm limit, not a reachable speed). Static thrust at that rpm bounds every path: the Q path "
+               "is held to <= 11.2 V terminal by the Lua spin cap (0.746 boot / fault), the FW path at THR_MAX reaches "
+               "the rpm only with axial inflow, which lowers thrust at a given rpm. The 73.2 A pack-current limiter is "
+               "filtered (seconds), so it does not bound an instantaneous structural load (CR-C1-12).")
 kit.claim("CL-C1-T-ILIM", "Thrust per motor held by the 100 A limiter (steady)", calc="CALC-C1-ROTOR",
           output="T_ilim_N", unit="N", how="E1 CL-E1-ILIM-TW-FRESH; stand with the limiter active.")
 kit.claim("CL-C1-T-LIMIT", "Limit thrust per motor used for every load case", calc="CALC-C1-ROTOR", output="T_lim_N",
@@ -1417,7 +1537,7 @@ kit.claim("CL-C1-VH", "Highest level speed used for VD (F4 THR_MAX cap)", calc="
           unit="m/s",
           how="H2 first full-throttle FBWB level leg, fresh pack: logged airspeed <= this value (same log as "
               "CL-F4-VLEVEL-VH).",
-          note="D-50: max(prop pitch speed at the fixed-wing rpm cap CL-F4-FW-RPM-CAP, F4's level speed at THR_MAX "
+          note="D-50: max(prop pitch speed at the fixed-wing rpm cap CL-B4-RPM-FW, F4's level speed at THR_MAX "
                "70 % CL-F4-VLEVEL). B1's uncapped 25.7 m/s (CL-B1-VMAX) is no longer the basis; it is kept as "
                "information (CL-C1-VD-UNCAPPED).")
 kit.claim("CL-C1-VD", "Design dive speed VD = 1.25 VH, re-derived on the capped VH", calc="CALC-C1-ROTOR",
@@ -1455,10 +1575,31 @@ kit.claim("CL-C1-GUST-N-NEG", "Peak negative gust load factor", calc="CALC-C1-VN
           limit=(">=", P + "requirements.load_factor_limit_neg"), how="Calculated.")
 kit.claim("CL-C1-GUST-V-NEG", "Speed of the negative gust peak", calc="CALC-C1-VN", output="V_gust_neg", unit="m/s",
           how="Calculated.")
-kit.claim("CL-C1-N-STALL-VD", "Stall-line load factor at VD", calc="CALC-C1-VN", output="n_stall_VD", unit="-",
-          limit=("<=", "CL-C1-N-LIMIT-POS"),
-          how="F4: limit pitch rate / elevon in manual modes so a full pull at VD cannot reach the stall line.",
-          note="Above VA a full elevon pull can exceed the design n; the flight software must prevent it (CR-C1-08).")
+kit.claim("CL-C1-N-STALL-VD", "Load factor reachable at VD in the fixed-wing modes (stall line capped by PTCH2SRV_RMAX_UP)",
+          calc="CALC-C1-N-REACH", output="n_reach_pos_VD", unit="-", limit=("<=", "CL-C1-N-LIMIT-POS"),
+          verifies=["R-LOADS"],
+          how="F4 TUNING-PLAN FBWA full-pull step at AIRSPEED_MAX: logged peak pitch rate <= 1.25 x PTCH2SRV_RMAX_UP "
+              "(ASM-C1-RATE-OVERSHOOT) and IMU n below CL-C1-N-LIMIT-POS; the test confirms, the design passes at 1.25.",
+          note="Closure 2026-11-14 (CR-C1-08): was the bare stall line (VD/Vs)^2 = 5.22, which no aircraft with VD > VA "
+               "can meet; the structure is designed to n_lim to VD and the control law keeps the aircraft inside it. "
+               "Corrected model = min(stall line, 1 + VD k q_up/g), q_up = P:fsw.rate_max_fw_degs[1] (F4 sets "
+               "PTCH2SRV_RMAX_UP 35 deg/s; 100 fails).")
+kit.claim("CL-C1-N-STALL-LINE-VD", "Bare stall-line load factor at VD (information)", calc="CALC-C1-N-REACH",
+          output="n_stall_line_VD", unit="-",
+          how="Information: what a raw-stick full pull at VD would reach; no such mode exists (CL-F4-NO-RAW-MODES).")
+kit.claim("CL-C1-N-REACH-NEG-VD", "Load factor reachable at VD in a full push (PTCH2SRV_RMAX_DN)", calc="CALC-C1-N-REACH",
+          output="n_reach_neg_VD", unit="-", limit=(">=", "CL-C1-N-LIMIT-NEG"), verifies=["R-LOADS"],
+          how="As CL-C1-N-STALL-VD, full-push step: peak nose-down rate <= 1.25 x PTCH2SRV_RMAX_DN.",
+          note="Gravity term taken as 0 (upright, ROLL_LIMIT 45 deg). F4 sets PTCH2SRV_RMAX_DN 20 deg/s; 100 fails.")
+kit.claim("CL-C1-N-REACH-VT", "Load factor of a back-transition started at VD (Q_TAILSIT_RAT_VT)", calc="CALC-C1-N-REACH",
+          output="n_reach_VT_VD", unit="-", limit=("<=", "CL-C1-N-LIMIT-POS"), verifies=["R-LOADS"],
+          how="F4 SITL S5 back-transition from AIRSPEED_MAX: logged pitch rate <= 1.25 x Q_TAILSIT_RAT_VT.")
+kit.claim("CL-C1-Q-UP-MAX", "Largest PTCH2SRV_RMAX_UP that keeps n at VD within the limit (request to F4)",
+          calc="CALC-C1-N-REACH", output="q_up_max_degs", unit="deg/s",
+          how="Information: F4 sets PTCH2SRV_RMAX_UP at or below this (35 asked).")
+kit.claim("CL-C1-Q-DN-MAX", "Largest PTCH2SRV_RMAX_DN that keeps n at VD within the negative limit (request to F4)",
+          calc="CALC-C1-N-REACH", output="q_dn_max_degs", unit="deg/s",
+          how="Information: F4 sets PTCH2SRV_RMAX_DN at or below this (20 asked).")
 # landing and ground
 kit.claim("CL-C1-N-LAND-STROKE-MIN", "Landing factor, energy bound at the 38 mm requirement stroke (cartridge eta)",
           calc="CALC-C1-LANDING", output="n_L_stroke_min", unit="-", limit=("<=", P + "requirements.landing_n_design"),
@@ -1511,10 +1652,11 @@ kit.claim("CL-C1-STANCE-TIP-WIND", "Wind that tips the parked aircraft", calc="C
           output="stance_tip_wind_ms", unit="m/s", limit=(">=", P + "requirements.gust_survive_ms"),
           how="Parked on its feet, motors off: fan or measured wind until a foot lifts.")
 kit.claim("CL-C1-STANCE-MU-REQ", "Friction needed to stand in 8 m/s", calc="CALC-C1-LANDING",
-          output="stance_mu_req_8ms", unit="-", limit=("<=", "ASM-C1-FRICTION"),
-          how="Pull test of a neoprene-padded foot on the landing mat with a spring scale (H1).",
-          note="Against the mat friction (rule S1). On grass (~0.5) the parked aircraft slides before it tips: lay it "
-               "flat above 5 m/s (C5 S1-S8, CR-C1-02).")
+          output="stance_mu_req_8ms", unit="-",
+          how="Flight card (H3): the aircraft is laid flat or tied by the strap eyes when parked.",
+          note="D-105 (CDR decision B1): the pad face is held to mu <= 0.40 to cap the foot side load, which is below "
+               "this value, so the limit against ASM-C1-FRICTION is removed on purpose: the parked aircraft is not "
+               "left standing in wind. It slides before it tips (C5 CL-C5-V-PARK-GUST).")
 kit.claim("CL-C1-CRASH-N", "Crash deceleration (ultimate)", calc="CALC-C1-CRASH", output="n_crash", unit="-",
           limit=(">=", P + "requirements.crash_decel_g"), verifies=["R-PACK-RETENTION"],
           how="Pack strap pull test (C3) at F_pack in each axis.")
@@ -1577,7 +1719,7 @@ for out, cid, title, unit_, how in (
          "Half-fin torsion about the tube axis at the wing plane (J-FINHALF joint cut), ultimate", "N m",
          "As above x 1.5."),
         ("motor_Fside_lim", "CL-C1-MOTOR-FSIDE-LIM",
-         "Motor-to-mount force in the motor plane (y-z), rotor-on cases incl. the 7 deg cant side force, limit", "N",
+         "Motor-to-mount force in the motor plane (y-z), rotor-on cases incl. the cant side force (propulsion.stations.cant_deg), limit", "N",
          "Stand: side load cell under the canted mount at T_lim (T-C1-STATION-PROOF); C6 motor screws and mount side. "
          "The set-down case G3 (motor can on the bench) is in CL-C1-MOTOR-F-ULT."),
         ("motor_Mb_lim", "CL-C1-MOTOR-MB-LIM",
@@ -1585,7 +1727,7 @@ for out, cid, title, unit_, how in (
          "As above; C6 CALC-C6-MOTOR-SCREW reads it."),
         ("motor_Mb_ult", "CL-C1-MOTOR-MB-ULT",
          "Bending at the motor mount face (about y-z), rotor-on cases incl. cant, ultimate", "N m", "As above x 1.5."),
-        ("cant_Fside_TLIM_N", "CL-C1-CANT-FSIDE", "Thrust side force per motor from the 7 deg tangential cant at T_lim",
+        ("cant_Fside_TLIM_N", "CL-C1-CANT-FSIDE", "Thrust side force per motor from the tangential cant (propulsion.stations.cant_deg) at T_lim",
          "N", "Inclinometer on the built mounts (D-52) x stand thrust."),
         ("pillar_F_lid_drop_N", "CL-C1-PILLAR-F-LIM", "Lid pillar force per side, lid-down drop (limit)", "N",
          "D7 sizes the pillar and its pad; C2 checks skin bearing over the spar."),
@@ -1683,6 +1825,27 @@ kit.claim("CL-C1-FOOT-SIDE-DESIGN", "Design foot side load at the pad, limit (ma
           calc="CALC-C1-ENVELOPE", output="foot_side_lim", unit="N", verifies=["R-LOADS"],
           how="T-D5-SIDE pull on the shoe; C5's 6-DOF sim (CL-C5-SIM3D-SIDE-LOAD).",
           note="D-65 / CR-C5-16: applied with the corner foot load in L4 (y) and L5 (z).")
+kit.claim("CL-C1-G4-TIE-LIM", "Case G4: strap-eye tie load, restrained four-motor run, limit", calc="CALC-C1-ENVELOPE",
+          output="g4_tie_lim", unit="N", verifies=["R-LOADS"],
+          how="T-H1-RESTRAINT-PULL (spring scale on each strap) and T-D3-EYE on a bonded eye.",
+          note="CDR-28: two of four ties carry 4 T_lim - W (worst mass configuration = lightest). D3 sizes the eye "
+               "FIN-013 and its bond to this (fin_detail.strap_eye.load_n 29.4 N); H1's CL-H1-RESTRAINT-PER-TIE is the "
+               "same load at the gate mass.")
+kit.claim("CL-C1-G4-TIE-ULT", "Case G4: strap-eye tie load, ultimate", calc="CALC-C1-ENVELOPE", output="g4_tie_ult",
+          unit="N", how="As CL-C1-G4-TIE-LIM x 1.5.")
+kit.claim("CL-C1-G4-FINJOINT-M", "Case G4: fin-group moment at the wing / the fin-joint envelope", calc="CALC-C1-ENVELOPE",
+          output="g4_finjoint_ratio", unit="-", limit=("<=", 1.0),
+          how="Re-run loads.py: G4 is inside the envelope the blocks and spar are sized to.",
+          note="CDR-28: the blocks and spar react the tie pair; the check is that G4 does not set the fin-joint envelope.")
+kit.claim("CL-C1-P1-TUBE-TORQUE", "Case P1: half-fin torsion at the wing plane in a prop strike, limit",
+          calc="CALC-C1-ENVELOPE", output="p1_finhalf_T_lim", unit="N m",
+          how="T-C6-DOG-SHEAR: the mount turns at or below the fuse torque.",
+          note="CDR-28: reported (damage family), not in the sizing envelope. The torque is capped by the slip clamp "
+               "and clocking dog; C6 CL-C6-DOG-FUSE-RF holds the collar and block bond against it.")
+kit.claim("CL-C1-P1-FUSE-MATCH", "Case P1: fuse torque carried by C1 vs C6's fuse torque", calc="CALC-C1-ENVELOPE",
+          output="p1_fuse_T", unit="N m", limit=(">=", "CL-C6-DOG-FUSE-T"),
+          how="Re-run after any change to the mount clamp or dog (team/C6/joints.py).",
+          note="C1 carries a copy of C6's number (ASM-C1-PROP-STRIKE-T); this fails if C6's fuse torque rises above it.")
 kit.claim("CL-C1-FOOT-SIDE-DESIGN-ULT", "Design foot side load at the pad, ultimate", calc="CALC-C1-ENVELOPE",
           output="foot_side_ult", unit="N", how="As CL-C1-FOOT-SIDE-DESIGN x 1.5.")
 kit.claim("CL-C1-TRANSPORT-N-ALLOW-NOSE", "Box front-wall impact factor with the pod nose on the nose pad",
@@ -1717,7 +1880,7 @@ kit.test("T-C1-FOOT-DROP", "Foot drop test at 1.5 m/s", verifies=["CL-C1-N-LAND-
          procedure="0.115 m free drop of the aircraft (or a 2.6 kg dummy on one fin) onto its feet, accelerometer at the "
                    "CG; level and 10 deg tilted; n <= 6.")
 kit.test("T-C1-THRUST-FRESH", "Max thrust on a fresh pack", verifies=["CL-C1-T-CAP", "CL-C1-T-LIMIT"],
-         procedure="H1 thrust stand, one station, 11x5.5MR, 16.8 V pack, F4 output cap and 100 A limiter as flown: step to full throttle, record peak thrust, torque and rpm.")
+         procedure="H1 thrust stand, one station, 11x5.5E, 16.8 V pack, F4 output caps (Lua spin cap, THR_MAX) and 73.2 A limiter as flown: step to full throttle, record peak thrust, torque and rpm.")
 kit.test("T-C1-STATION-PROOF", "Motor-station proof load", verifies=["CL-C1-MOUNT-F-ULT", "CL-C1-FINHALF-MB-ULT"],
          procedure="Hang the limit mount load from each motor mount in -x and y with the wing supported at the spar. "
                    "G2 step (CR-H1-13): wing held under the pod, a load equal to the G2 fin-group cut "
@@ -1871,9 +2034,9 @@ def write_data(outdir):
                                             "C6 sizes the collar to max(C4 FE collar torque, C1 section total)."},
     }
     with open(outdir / "envelope.json", "w", encoding="utf-8") as f:
-        json.dump({"note": "Limit-load envelopes over cases F1-F8, H1-H9, T1-T3, L1-L5, G1-G3 and both mass configs. "
+        json.dump({"note": "Limit-load envelopes over cases F1-F8, H1-H9, T1-T3, L1-L5, G1-G4 and both mass configs. "
                            "ultimate = 1.5 x limit; joint_design = x fitting factor; printed_bonded_design = x printed factor. "
-                           "Damage (L6, L7), transport (X1-X3) and crash are reported separately.",
+                           "Damage (L6, L7, P1 prop strike), transport (X1-X3) and crash are reported separately.",
                    "joints": jenv, "other": other}, f, indent=1)
     # wing proof whiffletree (H1, CR-H1-03)
     pt, rows = proof_tree(k, res, sf)
@@ -2153,20 +2316,48 @@ if __name__ == "__main__":
     (out / "sensitivity_vd.json").write_text(json.dumps(sens, indent=1), encoding="utf-8")
     for kk, vv in sens["outputs"].items():
         print(f"  {kk:24s} {vv['at_derived']:9.3f} {vv['at_requirement']:9.3f}  {vv['case']}")
-    # sensitivity (information, D-65 / CR-C5-16): the design foot side load at C5's 39.3 N (mu 0.7 mat) against
-    # C5's mu <= 0.5 pad-face option (29.1 N, CR-C5-16) and the friction-only value (mu x corner load)
+    # sensitivity (information, D-105): the design foot side load at the cap (C5 3-D sim, pad mu 0.40) against the
+    # D-65 value (39.5 N, bare neoprene mu 0.7) and the friction-only value (mu x corner load)
     keys2 = ["finjoint_M_ult", "finjoint_M_design", "finhalf_Mb_ult", "finhalf_T_lim", "finhalf_T_wingplane_lim",
              "wing_T_ult", "foot_F_ult", "spar_Mb_ult", "pod_F_ult", "pack_F_lim", "n_T_allow_aft", "n_T_allow_nose"]
-    o_s = {"c5_mu07": o1}
-    for tag, fs in (("c5_mu05_29N", 29.1), ("friction_only", 0.0)):
+    o_s = {"d105_cap": o1}
+    for tag, fs in (("d65_mu07_39N5", 39.5), ("friction_only", 0.0)):
         o_s[tag] = envelope_calc(**dict(kw, F_side=fs))
-    side = {"note": "Envelope outputs at the design side load (C5 3-D sim, mu 0.7, 39.3 N), at C5's mu <= 0.5 pad option "
-                    "(29.1 N, CR-C5-16) and with friction x corner load only (C1-R4 basis). Information only.",
-            "F_side_N": {"c5_mu07": kw["F_side"], "c5_mu05_29N": 29.1,
+    side = {"note": "Envelope outputs at the design side load (D-105 cap, pad mu 0.40), at the D-65 value (39.5 N, bare "
+                    "neoprene mu 0.7: what a foot without its pad face would see) and with friction x corner load "
+                    "only. Information only.",
+            "F_side_N": {"d105_cap": kw["F_side"], "d65_mu07_39N5": 39.5,
                          "friction_only": kw["mu"] * kw["F_cor"]},
             "outputs": {kk: {t: o_s[t][kk] for t in o_s} for kk in keys2},
             "cases": {kk: {t: o_s[t].get(kk.replace("_ult", "_case").replace("_lim", "_case").replace("_design", "_case"), "")
                            for t in o_s} for kk in keys2}}
     (out / "sensitivity_side.json").write_text(json.dumps(side, indent=1), encoding="utf-8")
+    # contingency (information, D-146, design round 2026-11-14): 10 deg cant with face_ahead 14.0 mm vs the carried
+    # params (9 deg / 12.0 mm). Plate face and prop plane follow D3's CALC-D3-PROP-GAP: x_face moves forward by the
+    # face_ahead change, x_prop = x_face - prop_stack cos(cant). Not a claim; the claims carry params.
+    fa0 = 0.012                       # face_ahead carried by params (A1 D-146; D3 R6 fin_detail.mount.face_ahead_m)
+    stack = (kw["x_face"] - kw["x_prop"]) / math.cos(math.radians(kw["cant"]))   # prop stack along the axis (D3 0.0373)
+    xf10 = kw["x_face"] - (0.014 - fa0)
+    kw10 = dict(kw, cant=10.0, x_face=xf10, x_prop=xf10 - stack * math.cos(math.radians(10.0)))
+    o10 = envelope_calc(**kw10)
+    keys3 = ["motor_Fside_lim", "motor_Mb_ult", "motor_F_ult", "mount_F_ult", "mount_M_ult", "cant_Fside_TLIM_N",
+             "finjoint_M_design", "finjoint_F_ult", "finhalf_T_lim", "finhalf_T_wingplane_lim", "finhalf_Mb_ult",
+             "g3_can_F_lim", "g4_tie_lim", "foot_side_ult", "foot_F_ult"]
+    cont = {"note": "Information (D-146 contingency): envelope at 10 deg / face_ahead 14.0 mm against the params case.",
+            "params_case": {"cant_deg": kw["cant"], "face_ahead_m": fa0, "x_face_m": kw["x_face"], "x_prop_m": kw["x_prop"], "prop_stack_m": stack},
+            "contingency": {"cant_deg": 10.0, "face_ahead_m": 0.014, "x_face_m": kw10["x_face"], "x_prop_m": kw10["x_prop"]},
+            "outputs": {kk: {"params": o1[kk], "c10_14": o10[kk],
+                             "case": [o1.get(kk.replace("_ult", "_case").replace("_lim", "_case").replace("_design", "_case"), ""),
+                                      o10.get(kk.replace("_ult", "_case").replace("_lim", "_case").replace("_design", "_case"), "")]}
+                        for kk in keys3}}
+    # D-149: forward transition entered at >= 1.4 W static. Every rotor-on envelope case (H2, T1, G4) already runs all
+    # four motors at T_lim, so the entry thrust is inside the envelope when 1.4 W <= 4 T_lim cos(cant).
+    W_gate = kw["m_gate"] * kw["g"]
+    cont["d149_entry"] = {"T_entry_tot_N": 1.4 * W_gate, "T_env_tot_axial_N": 4 * kw["T_lim"] * math.cos(math.radians(kw["cant"])),
+                          "ratio_entry_to_env": 1.4 * W_gate / (4 * kw["T_lim"] * math.cos(math.radians(kw["cant"])))}
+    (out / "sensitivity_cant.json").write_text(json.dumps(cont, indent=1), encoding="utf-8")
+    for kk, vv in cont["outputs"].items():
+        print(f"  cant {kk:24s} 9/12 {vv['params']:9.4f}  10/14 {vv['c10_14']:9.4f}  {vv['case']}")
+    print("  D-149 entry", cont["d149_entry"])
     for kk, vv in side["outputs"].items():
         print(f"  side {kk:24s} " + "  ".join(f"{t} {v:8.3f}" for t, v in vv.items()))

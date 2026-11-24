@@ -54,7 +54,7 @@
    "title": "As-designed drag polar from AVL + XFOIL (wing) and SU2 (fins)",
    "script": "redesign/team/B1/sim_verify.py",
    "function": "aero_asdesigned",
-   "equation": "CD0 = IF [A_fit f_rough + n_f c_f (Cd_A L_tube + Cd_B (2 h_f - L_tube)) + n CdA_m + pod + pod_front + braces + collars] / S ; k = K_fit (AVL CDi + XFOIL lift-dependent profile, trimmed) ; k_pess = 1/(pi AR e_params) ; alpha0_trim = alpha_cruise - CL_cruise / CLa",
+   "equation": "CD0 = IF [A_fit f_rough + n_f c_f (Cd_A L_tube + Cd_B (2 h_f - L_tube)) + n CdA_m + pod + pod_front + braces + collars] / S ; k = max(K_fit (AVL CDi + XFOIL lift-dependent profile, trimmed), 1/(pi AR e_base)) ; k_pess = 1/(pi AR e_params) ; alpha0_trim = alpha_cruise - CL_cruise / CLa",
    "inputs": {
     "b": "P:wing.span_m",
     "c": "P:wing.chord_m",
@@ -68,7 +68,7 @@
     "m": "CL-A3-MASS-PREDICTED",
     "g": "P:env.g_ms2",
     "rho": "P:env.rho_kgm3",
-    "vc": "ASM-B1-VCRUISE",
+    "vc": "P:performance.cruise_ms",
     "cd_a": "P:b1sim.cfd.fin_a_cd",
     "cd_b": "P:b1sim.cfd.fin_b_cd",
     "fin_h": "P:fins.half_height_m",
@@ -82,7 +82,8 @@
     "podf": "ASM-B1-POD-FRONT",
     "clmax": "CL-B1V-CLMAX",
     "cd0_hand": "CL-B1-CD0",
-    "k_hand": "CL-B1-K"
+    "k_hand": "CL-B1-K",
+    "e_base": "ASM-B1-E-BASE"
    },
    "units": {
     "b": "m",
@@ -104,25 +105,28 @@
     "ASM-B1-DRAG",
     "ASM-B1-WING-ROUGH",
     "ASM-B1-DRAG-ADDONS",
-    "ASM-B1-POD-FRONT"
+    "ASM-B1-POD-FRONT",
+    "ASM-B1-E-BASE"
    ],
    "cites": [
     "SRC-B1-SIM-CFD",
     "SRC-B1-SIM-VLMXF"
    ],
    "outputs": {
-    "cd0": 0.05802115249999999,
-    "k": 0.09571,
+    "cd0": 0.05770937375,
+    "k": 0.1042037479067141,
+    "k_avl_xfoil": 0.097671,
+    "e_avl_xfoil": 0.9068524507858728,
     "k_pess": 0.11071648215088373,
-    "e_equiv": 0.9254329298997699,
+    "e_equiv": 0.85,
     "cd0_parts": [
-     0.009003,
+     0.008612,
      0.032664,
      0.005,
-     0.003364,
+     0.003448,
      0.00175,
      0.0045,
-     0.00174
+     0.001735
     ],
     "cd0_parts_names": [
      "wing",
@@ -133,39 +137,39 @@
      "braces",
      "collars"
     ],
-    "fins_cd0_hand": 0.0265556841,
+    "fins_cd0_hand": 0.0266201841,
     "fins_cd0_sim": 0.032663991249999996,
-    "fins_ratio_sim_hand": 1.2300188210929952,
-    "d_cd0_vs_hand_pct": 12.498402050787671,
-    "d_k_vs_hand_pct": 2.006311802870564,
-    "cla_per_rad": 3.407762,
-    "alpha0_trim_deg": 0.17240910160048983,
-    "alpha_stall_deg": 13.30463750943328,
-    "ld_max": 6.709623802094627,
-    "cl_cruise_pred": 0.4224699565077882
+    "fins_ratio_sim_hand": 1.227038518114531,
+    "d_cd0_vs_hand_pct": 11.583194364569493,
+    "d_k_vs_hand_pct": -6.2692062789933445,
+    "cla_per_rad": 3.419739,
+    "alpha0_trim_deg": 0.31845381139948614,
+    "alpha_stall_deg": 13.402523847645213,
+    "ld_max": 6.447704921695129,
+    "cl_cruise_pred": 0.38019771405736197
    },
    "input_values": {
     "b": 1.15,
     "c": 0.32,
     "tc": 0.0982,
     "e_pess": 0.8,
-    "a_fit": 0.007117,
-    "k_fit": 0.09571,
+    "a_fit": 0.006808,
+    "k_fit": 0.097671,
     "rough": 1.1,
-    "cla": 3.407762,
-    "a_cr": 7.27553,
-    "m": 2.4858162999999998,
+    "cla": 3.419739,
+    "a_cr": 6.68845,
+    "m": 2.5254605,
     "g": 9.80665,
     "rho": 1.225,
-    "vc": 16.0,
+    "vc": 17.0,
     "cd_a": 0.047206,
     "cd_b": 0.03639,
     "fin_h": 0.21,
     "fin_c": 0.275,
     "tube_l": 0.344,
-    "tube_d": 0.022,
+    "tube_d": 0.0221,
     "pod": [
-     0.235,
+     0.242,
      0.14,
      0.07
     ],
@@ -192,9 +196,10 @@
      0.2,
      0.1
     ],
-    "clmax": 0.7810611763003414,
-    "cd0_hand": 0.05157509035,
-    "k_hand": 0.09382752724651164
+    "clmax": 0.7809319458070122,
+    "cd0_hand": 0.0517186966,
+    "k_hand": 0.1042037479067141,
+    "e_base": 0.85
    }
   },
   {
@@ -236,26 +241,26 @@
     "SRC-B2-AVL"
    ],
    "outputs": {
-    "sm_a3": 0.07441287490501612,
-    "clmax_b2_at_a3": 0.7810611763003414,
-    "clmax_sim": 0.862248,
-    "clmax": 0.7810611763003414,
-    "vs_basic_ms": 11.473615288282117,
-    "vs_pred_ms": 11.767260615020644,
-    "vs_gate_ms": 12.034485565251742,
-    "vt_pred_ms": 15.297438799526839,
-    "vt_gate_ms": 15.644831234827265,
-    "d_vs_gate_vs_hand_pct": 1.1302909356368351,
-    "vs_gate_sim_clmax_ms": 11.453915058143641
+    "sm_a3": 0.07465670602450525,
+    "clmax_b2_at_a3": 0.7809319458070122,
+    "clmax_sim": 0.8384,
+    "clmax": 0.7809319458070122,
+    "vs_basic_ms": 11.575571816209644,
+    "vs_pred_ms": 11.861703869159959,
+    "vs_gate_ms": 12.035481271842917,
+    "vt_pred_ms": 15.420215029907947,
+    "vt_gate_ms": 15.646125653395792,
+    "d_vs_gate_vs_hand_pct": 1.1386582311648352,
+    "vs_gate_sim_clmax_ms": 11.615674167836088
    },
    "input_values": {
-    "m_b": 2.3633,
-    "m_p": 2.4858162999999998,
+    "m_b": 2.4050900000000004,
+    "m_p": 2.5254605,
     "m_g": 2.6,
     "g": 9.80665,
     "rho": 1.225,
     "S": 0.368,
-    "cl_sim": 0.862248,
+    "cl_sim": 0.8384,
     "tab": [
      [
       0.03,
@@ -299,7 +304,7 @@
      ]
     ],
     "xnp": 0.07376,
-    "xcg": 0.049947880030394846,
+    "xcg": 0.049869854072158326,
     "c": 0.32,
     "kt": 1.3,
     "vs_hand": 11.899981156892892
@@ -356,22 +361,22 @@
     "ASM-B1-PESS"
    ],
    "outputs": {
-    "p_pred_w": 365.9545593682279,
-    "p_basic_w": 339.44481903046085,
-    "p_pred_pess_w": 402.5500153050507,
-    "i_pred_a": 24.726659416772154,
-    "p_gate_cant_w": 392.279151530229,
-    "throttle_pred_sag": 0.4814150032873283,
-    "tw_pred_sag": 2.077209877489337,
-    "tw_pred_fresh": 2.4409046739005142,
-    "throttle_gate_sag": 0.5035283615072657,
-    "hover_only_pred_min": 12.617960022063055
+    "p_pred_w": 377.4266013000382,
+    "p_basic_w": 350.9622629830156,
+    "p_pred_pess_w": 415.16926143004207,
+    "i_pred_a": 25.501797385137717,
+    "p_gate_cant_w": 395.96658592737646,
+    "throttle_pred_sag": 0.5970459862590548,
+    "tw_pred_sag": 1.674912859335605,
+    "tw_pred_fresh": 1.9318487420249195,
+    "throttle_gate_sag": 0.6146679246313862,
+    "hover_only_pred_min": 12.234431765261833
    },
    "input_values": {
-    "m_p": 2.4858162999999998,
-    "m_b": 2.3633,
+    "m_p": 2.5254605,
+    "m_b": 2.4050900000000004,
     "m_g": 2.6,
-    "cant": 7.0,
+    "cant": 9.0,
     "table": [
      [
       690,
@@ -397,8 +402,8 @@
     "E": 96.2,
     "v": 14.8,
     "res": 0.2,
-    "t_max_kg": 1.62,
-    "sag": 0.851,
+    "t_max_kg": 1.309,
+    "sag": 0.867,
     "pess": [
      1.3,
      0.85,
@@ -669,10 +674,10 @@
   {
    "id": "CALC-B1V-CRUISE",
    "type": "calculation",
-   "title": "Cruise at 16 m/s, as-designed mass and drag",
+   "title": "Cruise at the cruise speed (performance.cruise_ms), as-designed mass and drag",
    "script": "redesign/team/B1/sim_verify.py",
    "function": "cruise_asdesigned",
-   "equation": "as CALC-B1-CRUISE with m = A3 predicted, CD0 and k from CALC-B1V-AERO ; also at the 2.6 kg gate ; sweep 14-20 m/s",
+   "equation": "as CALC-B1-CRUISE with m = A3 predicted, CD0 and k from CALC-B1V-AERO ; thrust per prop = D / (n cos cant) ; also at the 2.6 kg gate (base and pessimistic) ; sweep 10-22 m/s at both masses ; V_minP,allowed = argmin P over V >= 1.3 Vs (CL-B1V-VT-GATE)",
    "inputs": {
     "m": "CL-A3-MASS-PREDICTED",
     "m_g": "P:requirements.mtow_gate_kg",
@@ -692,9 +697,11 @@
     "D": "P:propulsion.prop_diameter_m",
     "esc": "ASM-B1-ESC",
     "av": "ASM-B1-AVIONICS-W",
-    "vc": "ASM-B1-VCRUISE",
+    "vc": "P:performance.cruise_ms",
     "pess": "ASM-B1-PESS",
-    "v": "P:battery.v_nom"
+    "v": "P:battery.v_nom",
+    "cant": "P:propulsion.stations.cant_deg",
+    "vt": "CL-B1V-VT-GATE"
    },
    "units": {
     "m": "kg",
@@ -705,112 +712,347 @@
     "D": "m",
     "av": "W",
     "vc": "m/s",
-    "v": "V"
+    "v": "V",
+    "cant": "deg",
+    "vt": "m/s"
    },
    "assumes": [
     "ASM-B1-TRIM",
-    "ASM-B1-PESS",
-    "ASM-B1-VCRUISE"
+    "ASM-B1-PESS"
    ],
    "outputs": {
-    "p_el_w": 236.4969060669032,
-    "p_el_pess_w": 314.2767169708027,
-    "drag_n": 4.420328538797497,
-    "ld": 5.625165823879503,
-    "i_a": 15.979520680196162,
-    "rpm": 5983.636959126304,
-    "eta_prop": 0.45891985711979255,
-    "p_el_gate_w": 239.0822065019597,
-    "drag_gate_n": 4.51481503471588,
+    "p_el_w": 276.4782294905793,
+    "p_el_pess_w": 365.8470211267886,
+    "drag_n": 4.835223762411226,
+    "ld": 5.2245014083844685,
+    "i_a": 18.680961452066168,
+    "rpm": 6346.631643268636,
+    "eta_prop": 0.4550616448489477,
+    "p_el_gate_w": 278.2427459246165,
+    "p_el_gate_pess_w": 368.1718136412596,
+    "i_gate_a": 18.80018553544706,
+    "i_gate_pess_a": 24.876473894679698,
+    "p_el_gate_nocant_w": 276.46889961568104,
+    "ld_eff_gate": 5.208658338668626,
+    "drag_gate_n": 4.895174216114414,
+    "t_prop_gate_n": 1.2390482946181172,
+    "cant_deg": 9.0,
+    "v_min_power_gate_free_ms": 10.0,
+    "v_min_power_gate_allowed_ms": 16.0,
+    "v_best_range_gate_ms": 11.0,
     "rows_V_P_Ppess_D": [
      [
+      10.0,
+      118.9,
+      149.8,
+      4.219
+     ],
+     [
+      10.5,
+      123.3,
+      156.0,
+      4.086
+     ],
+     [
+      11.0,
+      128.8,
+      163.5,
+      3.996
+     ],
+     [
+      11.5,
+      135.4,
+      172.5,
+      3.942
+     ],
+     [
+      12.0,
+      143.0,
+      182.9,
+      3.919
+     ],
+     [
+      12.5,
+      151.6,
+      194.6,
+      3.924
+     ],
+     [
+      13.0,
+      161.3,
+      207.8,
+      3.954
+     ],
+     [
+      13.5,
+      171.9,
+      222.3,
+      4.005
+     ],
+     [
       14.0,
-      178.7,
-      235.6,
-      3.928
+      183.6,
+      238.3,
+      4.076
      ],
      [
       14.5,
-      191.5,
-      253.1,
-      4.029
+      196.3,
+      255.8,
+      4.165
      ],
      [
       15.0,
-      205.4,
-      272.0,
-      4.145
+      210.0,
+      274.8,
+      4.271
      ],
      [
       15.5,
-      220.4,
-      292.4,
-      4.276
+      224.9,
+      295.2,
+      4.391
      ],
      [
       16.0,
-      236.5,
-      314.3,
-      4.42
+      240.9,
+      317.1,
+      4.526
      ],
      [
       16.5,
-      253.7,
-      337.8,
-      4.577
+      258.1,
+      340.7,
+      4.675
      ],
      [
       17.0,
-      272.1,
-      362.9,
-      4.746
+      276.5,
+      365.8,
+      4.835
      ],
      [
       17.5,
-      291.7,
-      389.7,
-      4.926
+      296.1,
+      392.7,
+      5.008
      ],
      [
       18.0,
-      312.6,
-      418.3,
-      5.116
+      316.9,
+      421.4,
+      5.191
      ],
      [
       18.5,
-      334.7,
-      448.6,
-      5.317
+      339.0,
+      451.8,
+      5.386
      ],
      [
       19.0,
-      358.0,
-      480.8,
-      5.529
+      362.4,
+      484.0,
+      5.591
      ],
      [
       19.5,
-      382.7,
-      514.8,
-      5.749
+      387.1,
+      518.2,
+      5.806
      ],
      [
       20.0,
-      408.8,
-      550.8,
-      5.979
+      413.2,
+      554.3,
+      6.03
+     ],
+     [
+      20.5,
+      440.7,
+      592.4,
+      6.264
+     ],
+     [
+      21.0,
+      469.7,
+      632.5,
+      6.507
+     ],
+     [
+      21.5,
+      500.1,
+      674.8,
+      6.759
+     ],
+     [
+      22.0,
+      532.1,
+      719.2,
+      7.019
+     ]
+    ],
+    "rows_gate_V_P_Ppess_D": [
+     [
+      10.0,
+      122.2,
+      154.1,
+      4.392
+     ],
+     [
+      10.5,
+      126.4,
+      160.0,
+      4.243
+     ],
+     [
+      11.0,
+      131.7,
+      167.4,
+      4.139
+     ],
+     [
+      11.5,
+      138.1,
+      176.1,
+      4.073
+     ],
+     [
+      12.0,
+      145.6,
+      186.3,
+      4.039
+     ],
+     [
+      12.5,
+      154.1,
+      197.8,
+      4.035
+     ],
+     [
+      13.0,
+      163.6,
+      210.8,
+      4.056
+     ],
+     [
+      13.5,
+      174.2,
+      225.3,
+      4.1
+     ],
+     [
+      14.0,
+      185.8,
+      241.1,
+      4.165
+     ],
+     [
+      14.5,
+      198.4,
+      258.5,
+      4.248
+     ],
+     [
+      15.0,
+      212.1,
+      277.4,
+      4.348
+     ],
+     [
+      15.5,
+      226.9,
+      297.7,
+      4.464
+     ],
+     [
+      16.0,
+      242.8,
+      319.6,
+      4.594
+     ],
+     [
+      16.5,
+      259.9,
+      343.1,
+      4.738
+     ],
+     [
+      17.0,
+      278.2,
+      368.2,
+      4.895
+     ],
+     [
+      17.5,
+      297.8,
+      395.0,
+      5.064
+     ],
+     [
+      18.0,
+      318.5,
+      423.6,
+      5.245
+     ],
+     [
+      18.5,
+      340.6,
+      453.9,
+      5.437
+     ],
+     [
+      19.0,
+      364.0,
+      486.1,
+      5.639
+     ],
+     [
+      19.5,
+      388.7,
+      520.2,
+      5.851
+     ],
+     [
+      20.0,
+      414.7,
+      556.3,
+      6.074
+     ],
+     [
+      20.5,
+      442.2,
+      594.3,
+      6.305
+     ],
+     [
+      21.0,
+      471.1,
+      634.4,
+      6.546
+     ],
+     [
+      21.5,
+      501.6,
+      676.6,
+      6.796
+     ],
+     [
+      22.0,
+      533.5,
+      721.0,
+      7.055
      ]
     ]
    },
    "input_values": {
-    "m": 2.4858162999999998,
+    "m": 2.5254605,
     "m_g": 2.6,
     "g": 9.80665,
     "rho": 1.225,
     "S": 0.368,
-    "cd0": 0.05802115249999999,
-    "k": 0.09571,
+    "cd0": 0.05770937375,
+    "k": 0.1042037479067141,
     "k_pess": 0.11071648215088373,
     "trim": 1.02,
     "n": 4,
@@ -923,13 +1165,15 @@
     "D": 0.2794,
     "esc": 0.95,
     "av": 6.0,
-    "vc": 16.0,
+    "vc": 17.0,
     "pess": [
      1.3,
      0.85,
      1.1
     ],
-    "v": 14.8
+    "v": 14.8,
+    "cant": 9.0,
+    "vt": 15.646125653395792
    }
   },
   {
@@ -963,7 +1207,7 @@
     "frac": "ASM-B1-CTRL-RESERVE",
     "trans": "ASM-B1-TRANS",
     "vs": "CL-B1V-VS-PRED",
-    "vc": "ASM-B1-VCRUISE",
+    "vc": "P:performance.cruise_ms",
     "kt": "P:requirements.transition_factor",
     "dl": "P:propulsion.download_factor"
    },
@@ -986,215 +1230,197 @@
     "ASM-B1-CTRL-RESERVE"
    ],
    "outputs": {
-    "t_to_vt_s": 7.539999999999884,
-    "alt_loss_m": 0.014932590025683826,
-    "thrust_frac_max": 0.5362849628289037,
-    "energy_wh": 0.8471728980148275,
-    "corr_thrust_frac_max": 0.4778266088552321,
-    "corr_p_peak_w": 362.4761280526836,
+    "t_to_vt_s": 6.859999999999898,
+    "alt_loss_m": -0.0,
+    "thrust_frac_max": 0.7468666510811468,
+    "energy_wh": 0.9292738240396556,
+    "corr_thrust_frac_max": 0.5896953594271933,
+    "corr_p_peak_w": 370.9055646768362,
     "v_wingborne_ms": 12,
     "corridor_rows": [
      [
       0,
       90.0,
-      34.5,
+      44.25,
       1.06,
-      0.478,
-      362.5,
+      0.59,
+      370.9,
       1
      ],
      [
       1,
-      89.29,
-      34.29,
+      89.3,
+      43.8,
       1.0,
-      0.451,
-      333.4,
+      0.556,
+      341.1,
       1
      ],
      [
       2,
-      87.17,
-      33.67,
+      87.21,
+      42.96,
       0.999,
-      0.451,
-      334.5,
+      0.557,
+      342.2,
       1
      ],
      [
       3,
-      83.65,
-      32.9,
-      0.994,
-      0.451,
-      336.8,
+      83.75,
+      41.75,
+      0.995,
+      0.558,
+      344.6,
       1
      ],
      [
       4,
-      78.8,
-      31.8,
+      78.98,
+      40.23,
       0.983,
-      0.45,
-      339.8,
+      0.557,
+      347.5,
       1
      ],
      [
       5,
-      72.81,
-      30.56,
-      0.959,
-      0.447,
-      342.6,
+      73.07,
+      38.32,
+      0.96,
+      0.553,
+      350.4,
       1
      ],
      [
       6,
-      65.99,
-      29.24,
-      0.921,
-      0.44,
-      344.2,
+      66.33,
+      36.33,
+      0.923,
+      0.547,
+      352.2,
       1
      ],
      [
       7,
-      58.78,
-      28.03,
-      0.869,
-      0.429,
-      343.3,
+      59.18,
+      34.43,
+      0.872,
+      0.537,
+      351.3,
       1
      ],
      [
       8,
-      51.63,
-      26.63,
-      0.805,
-      0.416,
-      339.9,
+      52.08,
+      32.58,
+      0.809,
+      0.524,
+      348.0,
       1
      ],
      [
       9,
-      44.94,
-      25.19,
-      0.737,
-      0.401,
-      335.9,
+      45.4,
+      30.4,
+      0.742,
+      0.512,
+      343.8,
       1
      ],
      [
       10,
-      38.96,
-      23.46,
-      0.67,
-      0.389,
-      332.1,
+      39.41,
+      28.41,
+      0.675,
+      0.502,
+      339.9,
       1
      ],
      [
       11,
-      33.75,
-      21.25,
-      0.607,
-      0.379,
-      330.3,
+      34.18,
+      26.18,
+      0.612,
+      0.497,
+      337.9,
       1
      ],
      [
       12,
-      12.4,
-      10.4,
-      0.148,
-      0.11,
-      130.9,
+      12.67,
+      11.17,
+      0.154,
+      0.156,
+      134.8,
       0
      ],
      [
       13,
-      10.63,
-      9.38,
-      0.151,
-      0.123,
-      150.1,
+      10.89,
+      10.14,
+      0.155,
+      0.177,
+      153.6,
       0
      ],
      [
       14,
-      9.22,
-      8.47,
-      0.157,
-      0.141,
-      172.9,
+      9.46,
+      8.96,
+      0.161,
+      0.209,
+      176.0,
       0
      ],
      [
       15,
-      8.07,
-      7.57,
-      0.166,
-      0.167,
-      199.7,
+      8.3,
+      8.05,
+      0.168,
+      0.257,
+      202.6,
       0
      ],
      [
       16,
-      7.12,
-      6.87,
-      0.177,
-      0.204,
-      230.8,
+      7.35,
+      7.35,
+      0.179,
+      0.33,
+      233.3,
       0
      ],
      [
       17,
-      6.33,
-      6.08,
+      6.55,
+      6.55,
       0.191,
-      0.257,
-      266.4,
+      0.449,
+      268.6,
       0
      ],
      [
       18,
-      5.67,
-      5.67,
+      5.88,
+      5.88,
       0.205,
-      0.334,
-      306.6,
-      0
-     ],
-     [
-      19,
-      5.11,
-      5.11,
-      0.222,
-      0.458,
-      351.8,
-      0
-     ],
-     [
-      20,
-      4.63,
-      4.63,
-      0.24,
-      0.679,
-      402.2,
+      0.666,
+      308.6,
       0
      ]
     ]
    },
    "input_values": {
-    "m": 2.4858162999999998,
+    "m": 2.5254605,
     "g": 9.80665,
     "rho": 1.225,
     "S": 0.368,
-    "cla": 3.407762,
-    "a0": 0.17240910160048983,
-    "clmax": 0.7810611763003414,
-    "cd0": 0.05802115249999999,
-    "k": 0.09571,
+    "cla": 3.419739,
+    "a0": 0.31845381139948614,
+    "clmax": 0.7809319458070122,
+    "cd0": 0.05770937375,
+    "k": 0.1042037479067141,
     "cd90": 1.28,
     "n": 4,
     "tab": [
@@ -1303,7 +1529,7 @@
     "rm": 0.086,
     "i0": 0.9,
     "kcal": 1.131836279989992,
-    "nmax": 127.10392763934884,
+    "nmax": 115.32303293915007,
     "D": 0.2794,
     "esc": 0.95,
     "av": 6.0,
@@ -1313,8 +1539,8 @@
      1.1,
      1.0
     ],
-    "vs": 11.767260615020644,
-    "vc": 16.0,
+    "vs": 11.861703869159959,
+    "vc": 17.0,
     "kt": 1.3,
     "dl": 1.06
    }
@@ -1336,7 +1562,7 @@
     "p_c": "CL-B1V-CRUISE-P",
     "p_cp": "CL-B1V-CRUISE-P-PESS",
     "pess": "ASM-B1-PESS",
-    "vc": "ASM-B1-VCRUISE",
+    "vc": "P:performance.cruise_ms",
     "t_hand": "CL-B1-CRUISE-TIME"
    },
    "units": {
@@ -1354,32 +1580,32 @@
     "ASM-B1-PESS"
    ],
    "outputs": {
-    "t_cruise_min": 16.000336733501673,
-    "t_cruise_pess_min": 11.77520620210547,
-    "e_cruise_wh": 63.06716889169609,
-    "range_km": 15.360323264161606,
-    "d_t_vs_hand_pct": -1.6471390537012964
+    "t_cruise_min": 13.567917971071155,
+    "t_cruise_pess_min": 10.016747768178965,
+    "e_cruise_wh": 62.520565641919426,
+    "range_km": 13.839276330492579,
+    "d_t_vs_hand_pct": -1.9601944503433444
    },
    "input_values": {
     "E": 96.2,
     "res": 0.2,
-    "p_h": 365.9545593682279,
+    "p_h": 377.4266013000382,
     "t_h": 2.0,
-    "e_tr": 0.8471728980148275,
+    "e_tr": 0.9292738240396556,
     "trans": [
      12.0,
      1.1,
      1.0
     ],
-    "p_c": 236.4969060669032,
-    "p_cp": 314.2767169708027,
+    "p_c": 276.4782294905793,
+    "p_cp": 365.8470211267886,
     "pess": [
      1.3,
      0.85,
      1.1
     ],
-    "vc": 16.0,
-    "t_hand": 16.268298226970703
+    "vc": 17.0,
+    "t_hand": 13.839193065513655
    }
   },
   {
@@ -1407,7 +1633,7 @@
     "D": "P:propulsion.prop_diameter_m",
     "esc": "ASM-B1-ESC",
     "av": "ASM-B1-AVIONICS-W",
-    "vc": "ASM-B1-VCRUISE",
+    "vc": "P:performance.cruise_ms",
     "frac": "ASM-B1-CTRL-RESERVE",
     "dl": "P:propulsion.download_factor",
     "rpm_fw": "CL-F4-FW-RPM-CAP",
@@ -1437,21 +1663,21 @@
     "ASM-B1-PESS"
    ],
    "outputs": {
-    "vh_fw_cap_ms": 21.020000000000785,
-    "vh_ratio_vd": 0.9659926470588596,
-    "vmax_fw_sag_ms": 21.020000000000785,
-    "roc_fw_cap_ms": 11.732783624809107,
-    "vh_vtol_cap_ms": 25.46000000000148,
-    "vh_nocap_ms": 34.12000000000208,
-    "p_vclimb_w": 421.10884487075424
+    "vh_fw_cap_ms": 21.010000000000627,
+    "vh_ratio_vd": 0.965533088235323,
+    "vmax_fw_sag_ms": 21.010000000000627,
+    "roc_fw_cap_ms": 9.55690007360188,
+    "vh_vtol_cap_ms": 25.460000000001322,
+    "vh_nocap_ms": 28.350000000001774,
+    "p_vclimb_w": 430.4514477746971
    },
    "input_values": {
-    "m": 2.4858162999999998,
+    "m": 2.5254605,
     "g": 9.80665,
     "rho": 1.225,
     "S": 0.368,
-    "cd0": 0.05802115249999999,
-    "k": 0.09571,
+    "cd0": 0.05770937375,
+    "k": 0.1042037479067141,
     "k_pess": 0.11071648215088373,
     "trim": 1.02,
     "n": 4,
@@ -1564,12 +1790,12 @@
     "D": 0.2794,
     "esc": 0.95,
     "av": 6.0,
-    "vc": 16.0,
+    "vc": 17.0,
     "frac": 0.8,
     "dl": 1.06,
     "rpm_fw": 7748.694104449502,
     "rpm_cap": 9350,
-    "i_lim": 24.8,
+    "i_lim": 17.3,
     "vterm": [
      16.0,
      13.6
@@ -1605,7 +1831,7 @@
     "frac": "ASM-B1-CTRL-RESERVE",
     "vw": "P:requirements.wind_limit_ms",
     "vg": "P:requirements.gust_survive_ms",
-    "vc": "ASM-B1-VCRUISE"
+    "vc": "P:performance.cruise_ms"
    },
    "units": {
     "m_b": "kg",
@@ -1628,30 +1854,30 @@
     "ASM-B1-LAND-ERR"
    ],
    "outputs": {
-    "m_light_kg": 2.3163,
-    "lean_5ms_deg": 17.616343420643766,
-    "lean_allowed_deg": 20.984724794454205,
-    "v_hover_max_ms": 5.49530023400081,
-    "thrust_frac_8ms": 0.620405508627741,
-    "v_ground_tip_ms": 8.915665796219027
+    "m_light_kg": 2.3580900000000002,
+    "lean_5ms_deg": 17.322980186519523,
+    "lean_allowed_deg": 20.427430066833967,
+    "v_hover_max_ms": 5.46371136500045,
+    "thrust_frac_8ms": 0.7640244878967293,
+    "v_ground_tip_ms": 8.99573317617525
    },
    "input_values": {
-    "m_b": 2.3633,
+    "m_b": 2.4050900000000004,
     "light": 47.0,
     "g": 9.80665,
     "rho": 1.225,
     "S": 0.368,
     "cd90": 1.28,
-    "tip": 30.984724794454205,
+    "tip": 30.427430066833967,
     "err": 10.0,
     "z_fin": 0.21,
     "c": 0.32,
     "foot": 0.048,
-    "tw_sag": 2.077209877489337,
+    "tw_sag": 1.674912859335605,
     "frac": 0.8,
     "vw": 5.0,
     "vg": 8.0,
-    "vc": 16.0
+    "vc": 17.0
    }
   },
   {
@@ -1686,21 +1912,21 @@
    ],
    "outputs": {
     "gci_max_pct": 5.810546,
-    "avl_spread_pct": 0.664036,
-    "xfoil_spread_pct": 0.236822,
-    "su2_vs_xfoil_trip_cd_pct": -12.193500738552432,
+    "avl_spread_pct": 0.8274,
+    "xfoil_spread_pct": 0.255265,
+    "su2_vs_xfoil_trip_cd_pct": -10.943820224719103,
     "su2_vs_xfoil_trip_cl_pct": -1.0128239380176485,
-    "trip_over_free_cd": 1.690387016229713
+    "trip_over_free_cd": 1.709346991037132
    },
    "input_values": {
     "ga": 5.810546,
     "gb": 2.086485,
     "gw": 1.966181,
-    "avl": 0.664036,
-    "xf": 0.236822,
+    "avl": 0.8274,
+    "xf": 0.255265,
     "cd_su2": 0.011889,
-    "cd_trip": 0.01354,
-    "cd_free": 0.00801,
+    "cd_trip": 0.01335,
+    "cd_free": 0.00781,
     "cl_su2": 0.370509,
     "cl_trip": 0.3743
    }
@@ -1712,18 +1938,18 @@
    "calc": "CALC-B1V-AERO",
    "output": "cd0",
    "unit": "-",
-   "how": "Re-run team/B1/vlm_xfoil.py and cfd_sections.py; flight: cruise power legs at 14/16/18 m/s (T-B1-CRUISE-POWER).",
-   "value": 0.05802115249999999
+   "how": "Re-run team/B1/vlm_xfoil.py and cfd_sections.py; flight: cruise power legs at 15/17/19 m/s (T-B1-CRUISE-POWER).",
+   "value": 0.05770937375
   },
   {
    "id": "CL-B1V-K",
    "type": "claim",
-   "title": "Lift-dependent drag factor, trimmed AVL + XFOIL",
+   "title": "Lift-dependent drag factor, base case: e 0.85 (CDR-AE-14) over trimmed AVL + XFOIL",
    "calc": "CALC-B1V-AERO",
    "output": "k",
    "unit": "-",
-   "how": "Re-run team/B1/vlm_xfoil.py and cfd_sections.py; flight: cruise power legs at 14/16/18 m/s (T-B1-CRUISE-POWER).",
-   "value": 0.09571
+   "how": "Re-run team/B1/vlm_xfoil.py and cfd_sections.py; flight: cruise power legs at 15/17/19 m/s (T-B1-CRUISE-POWER).",
+   "value": 0.1042037479067141
   },
   {
    "id": "CL-B1V-FIN-RATIO",
@@ -1733,7 +1959,7 @@
    "output": "fins_ratio_sim_hand",
    "unit": "-",
    "how": "Re-run cfd_sections.py; flight: the cruise power test cannot separate it, a fin-off glide comparison on the twin can.",
-   "value": 1.2300188210929952
+   "value": 1.227038518114531
   },
   {
    "id": "CL-B1V-ALPHA0-TRIM",
@@ -1743,7 +1969,7 @@
    "output": "alpha0_trim_deg",
    "unit": "deg",
    "how": "AVL trim at the A3 CG; flight: pitch vs airspeed in level cruise (H2).",
-   "value": 0.17240910160048983
+   "value": 0.31845381139948614
   },
   {
    "id": "CL-B1V-LDMAX",
@@ -1753,7 +1979,7 @@
    "output": "ld_max",
    "unit": "-",
    "how": "Glide test (H2).",
-   "value": 6.709623802094627
+   "value": 6.447704921695129
   },
   {
    "id": "CL-B1V-CLMAX",
@@ -1763,7 +1989,7 @@
    "output": "clmax",
    "unit": "-",
    "how": "Slow-flight stall (T-B2-STALL); B2 owns the CLmax, B1's run is the cross-check.",
-   "value": 0.7810611763003414
+   "value": 0.7809319458070122
   },
   {
    "id": "CL-B1V-CLMAX-SIM",
@@ -1773,7 +1999,7 @@
    "output": "clmax_sim",
    "unit": "-",
    "how": "As CL-B1V-CLMAX.",
-   "value": 0.862248
+   "value": 0.8384
   },
   {
    "id": "CL-B1V-SM-A3",
@@ -1787,7 +2013,7 @@
     "ref": "P:requirements.static_margin_min"
    },
    "how": "B3's CG/NP analysis; CG jig on the built aircraft.",
-   "value": 0.07441287490501612
+   "value": 0.07465670602450525
   },
   {
    "id": "CL-B1V-VS-PRED",
@@ -1804,7 +2030,7 @@
     "R-STALL"
    ],
    "how": "Slow-flight stall at the weighed mass with airspeed logged (T-B2-STALL).",
-   "value": 11.767260615020644
+   "value": 11.861703869159959
   },
   {
    "id": "CL-B1V-VS-GATE",
@@ -1821,7 +2047,7 @@
     "R-STALL"
    ],
    "how": "As CL-B1V-VS-PRED with ballast to 2.6 kg.",
-   "value": 12.034485565251742
+   "value": 12.035481271842917
   },
   {
    "id": "CL-B1V-VT-PRED",
@@ -1832,13 +2058,13 @@
    "unit": "m/s",
    "limit": {
     "op": "<=",
-    "ref": "ASM-B1-VCRUISE"
+    "ref": "P:performance.cruise_ms"
    },
    "verifies": [
     "R-TRANSITION"
    ],
    "how": "Airspeed at 'Transition done' in the log (F4/H2).",
-   "value": 15.297438799526839
+   "value": 15.420215029907947
   },
   {
    "id": "CL-B1V-VT-GATE",
@@ -1849,23 +2075,23 @@
    "unit": "m/s",
    "limit": {
     "op": "<=",
-    "ref": "ASM-B1-VCRUISE"
+    "ref": "P:performance.cruise_ms"
    },
    "verifies": [
     "R-TRANSITION"
    ],
    "how": "As CL-B1V-VT-PRED.",
-   "value": 15.644831234827265
+   "value": 15.646125653395792
   },
   {
    "id": "CL-B1V-HOVER-P",
    "type": "claim",
-   "title": "Hover power at the predicted mass, 7 deg cant",
+   "title": "Hover power at the predicted mass, motor cant (propulsion.stations.cant_deg)",
    "calc": "CALC-B1V-HOVER",
    "output": "p_pred_w",
    "unit": "W",
    "how": "Tethered hover at the weighed mass (T-B1-TETHER-HOVER).",
-   "value": 365.9545593682279
+   "value": 377.4266013000382
   },
   {
    "id": "CL-B1V-HOVER-THROTTLE",
@@ -1882,7 +2108,7 @@
     "R-HOVER-TW"
    ],
    "how": "Learned hover throttle in the log (F4/H2).",
-   "value": 0.4814150032873283
+   "value": 0.5970459862590548
   },
   {
    "id": "CL-B1V-HOVER-TW-SAG",
@@ -1899,7 +2125,7 @@
     "R-HOVER-TW"
    ],
    "how": "Thrust stand at 14.0 V (H1).",
-   "value": 2.077209877489337
+   "value": 1.674912859335605
   },
   {
    "id": "CL-B1V-HOVER-TW",
@@ -1916,12 +2142,12 @@
     "R-HOVER-TW"
    ],
    "how": "Thrust stand at 16.0 V (H1).",
-   "value": 2.4409046739005142
+   "value": 1.9318487420249195
   },
   {
    "id": "CL-B1V-CRUISE-P",
    "type": "claim",
-   "title": "Cruise power, 16 m/s, predicted mass, sim drag",
+   "title": "Cruise power, 17 m/s, predicted mass, sim drag, motor cant",
    "calc": "CALC-B1V-CRUISE",
    "output": "p_el_w",
    "unit": "W",
@@ -1929,7 +2155,7 @@
     "R-MISSION"
    ],
    "how": "T-B1-CRUISE-POWER at the weighed mass.",
-   "value": 236.4969060669032
+   "value": 276.4782294905793
   },
   {
    "id": "CL-B1V-CRUISE-P-PESS",
@@ -1939,27 +2165,67 @@
    "output": "p_el_pess_w",
    "unit": "W",
    "how": "As CL-B1V-CRUISE-P.",
-   "value": 314.2767169708027
+   "value": 365.8470211267886
   },
   {
    "id": "CL-B1V-CRUISE-P-GATE",
    "type": "claim",
-   "title": "Cruise power at 2.6 kg with sim drag",
+   "title": "Cruise power at 2.6 kg, 17 m/s, sim drag, motor cant",
    "calc": "CALC-B1V-CRUISE",
    "output": "p_el_gate_w",
    "unit": "W",
    "how": "As CL-B1V-CRUISE-P with ballast.",
-   "value": 239.0822065019597
+   "value": 278.2427459246165
+  },
+  {
+   "id": "CL-B1V-CRUISE-P-GATE-PESS",
+   "type": "claim",
+   "title": "Cruise power at 2.6 kg, 17 m/s, pessimistic (CD0 x 1.3, e 0.80, eta_prop x 0.85)",
+   "calc": "CALC-B1V-CRUISE",
+   "output": "p_el_gate_pess_w",
+   "unit": "W",
+   "how": "As CL-B1V-CRUISE-P with ballast; E2 reads it for the BATT_LOW budget in place of the scaled 16 m/s value.",
+   "value": 368.1718136412596
+  },
+  {
+   "id": "CL-B1V-CRUISE-I-GATE-PESS",
+   "type": "claim",
+   "title": "Cruise current at 2.6 kg, 17 m/s, pessimistic, at battery.v_nom",
+   "calc": "CALC-B1V-CRUISE",
+   "output": "i_gate_pess_a",
+   "unit": "A",
+   "how": "Current sensor in cruise at the gate mass (H2).",
+   "value": 24.876473894679698
+  },
+  {
+   "id": "CL-B1V-CRUISE-LD-GATE",
+   "type": "claim",
+   "title": "Effective L/D (W / trimmed drag) at 2.6 kg, 17 m/s",
+   "calc": "CALC-B1V-CRUISE",
+   "output": "ld_eff_gate",
+   "unit": "-",
+   "how": "Re-run team/B1/vlm_xfoil.py and cfd_sections.py; flight: cruise power legs at 15/17/19 m/s (T-B1-CRUISE-POWER).",
+   "value": 5.208658338668626
+  },
+  {
+   "id": "CL-B1V-V-MINPOWER",
+   "type": "claim",
+   "title": "Lowest-power speed at or above 1.3 Vs, 2.6 kg (sweep 10-22 m/s)",
+   "calc": "CALC-B1V-CRUISE",
+   "output": "v_min_power_gate_allowed_ms",
+   "unit": "m/s",
+   "how": "Cruise power legs at 15, 17, 19 m/s (T-B1-CRUISE-POWER). The free minimum (v_min_power_gate_free_ms) lies below Vs.",
+   "value": 16.0
   },
   {
    "id": "CL-B1V-CRUISE-DRAG",
    "type": "claim",
-   "title": "Cruise drag, 16 m/s, predicted mass",
+   "title": "Cruise drag, 17 m/s, predicted mass",
    "calc": "CALC-B1V-CRUISE",
    "output": "drag_n",
    "unit": "N",
-   "how": "Re-run team/B1/vlm_xfoil.py and cfd_sections.py; flight: cruise power legs at 14/16/18 m/s (T-B1-CRUISE-POWER).",
-   "value": 4.420328538797497
+   "how": "Re-run team/B1/vlm_xfoil.py and cfd_sections.py; flight: cruise power legs at 15/17/19 m/s (T-B1-CRUISE-POWER).",
+   "value": 4.835223762411226
   },
   {
    "id": "CL-B1V-CRUISE-LD",
@@ -1968,8 +2234,8 @@
    "calc": "CALC-B1V-CRUISE",
    "output": "ld",
    "unit": "-",
-   "how": "Re-run team/B1/vlm_xfoil.py and cfd_sections.py; flight: cruise power legs at 14/16/18 m/s (T-B1-CRUISE-POWER).",
-   "value": 5.625165823879503
+   "how": "Re-run team/B1/vlm_xfoil.py and cfd_sections.py; flight: cruise power legs at 15/17/19 m/s (T-B1-CRUISE-POWER).",
+   "value": 5.2245014083844685
   },
   {
    "id": "CL-B1V-CRUISE-I",
@@ -1979,7 +2245,7 @@
    "output": "i_a",
    "unit": "A",
    "how": "Current sensor in cruise (H2).",
-   "value": 15.979520680196162
+   "value": 18.680961452066168
   },
   {
    "id": "CL-B1V-TRANS-THRUST",
@@ -1996,7 +2262,7 @@
     "R-TRANSITION"
    ],
    "how": "Throttle output in the transition log (T-B1-TRANSITION-LOG).",
-   "value": 0.5362849628289037
+   "value": 0.7468666510811468
   },
   {
    "id": "CL-B1V-TRANS-ALT-LOSS",
@@ -2013,7 +2279,7 @@
     "R-TRANSITION"
    ],
    "how": "Baro altitude in the transition log (T-B1-TRANSITION-LOG).",
-   "value": 0.014932590025683826
+   "value": -0.0
   },
   {
    "id": "CL-B1V-TRANS-TIME",
@@ -2023,7 +2289,7 @@
    "output": "t_to_vt_s",
    "unit": "s",
    "how": "F4 SITL, then the log.",
-   "value": 7.539999999999884
+   "value": 6.859999999999898
   },
   {
    "id": "CL-B1V-TRANS-ENERGY",
@@ -2033,7 +2299,7 @@
    "output": "energy_wh",
    "unit": "Wh",
    "how": "Integrate pack W over the transition in the log.",
-   "value": 0.8471728980148275
+   "value": 0.9292738240396556
   },
   {
    "id": "CL-B1V-CORR-THRUST",
@@ -2050,7 +2316,7 @@
     "R-TRANSITION"
    ],
    "how": "As CL-B1V-TRANS-THRUST.",
-   "value": 0.4778266088552321
+   "value": 0.5896953594271933
   },
   {
    "id": "CL-B1V-CRUISE-TIME",
@@ -2067,7 +2333,7 @@
     "R-MISSION"
    ],
    "how": "Fly the mission profile at the weighed mass; land with >= 20 % (H2).",
-   "value": 16.000336733501673
+   "value": 13.567917971071155
   },
   {
    "id": "CL-B1V-CRUISE-TIME-PESS",
@@ -2084,7 +2350,7 @@
     "R-MISSION"
    ],
    "how": "As CL-B1V-CRUISE-TIME.",
-   "value": 11.77520620210547
+   "value": 10.016747768178965
   },
   {
    "id": "CL-B1V-VH-FW",
@@ -2095,10 +2361,10 @@
    "unit": "m/s",
    "limit": {
     "op": ">=",
-    "value": 18.0
+    "value": 19.0
    },
    "how": "Full-throttle FBWA level run on a fresh pack with rpm telemetry, after the VD loads case is cleared (H2).",
-   "value": 21.020000000000785
+   "value": 21.010000000000627
   },
   {
    "id": "CL-B1V-VH-RATIO",
@@ -2112,12 +2378,12 @@
     "value": 1.0
    },
    "how": "As CL-B1V-VH-FW; C1 holds VD = 27.2 m/s while this stays <= 1.",
-   "value": 0.9659926470588596
+   "value": 0.965533088235323
   },
   {
    "id": "CL-B1V-ROC-FW",
    "type": "claim",
-   "title": "FW climb at 16 m/s, THR_MAX 70 %, worst pack",
+   "title": "FW climb at 17 m/s, THR_MAX 70 %, worst pack",
    "calc": "CALC-B1V-SPEED",
    "output": "roc_fw_cap_ms",
    "unit": "m/s",
@@ -2125,8 +2391,8 @@
     "op": ">=",
     "value": 3.0
    },
-   "how": "FBWA full-throttle climb at 16 m/s (H2); F4 sets TECS_CLMB_MAX below it.",
-   "value": 11.732783624809107
+   "how": "FBWA full-throttle climb at 17 m/s (H2); F4 sets TECS_CLMB_MAX below it.",
+   "value": 9.55690007360188
   },
   {
    "id": "CL-B1V-WIND-HOVER-MAX",
@@ -2143,7 +2409,7 @@
     "R-WIND"
    ],
    "how": "QLOITER in measured wind at the lightest pack (H2).",
-   "value": 5.49530023400081
+   "value": 5.46371136500045
   },
   {
    "id": "CL-B1V-GROUND-TIP-WIND",
@@ -2161,7 +2427,7 @@
     "R-TIPOVER"
    ],
    "how": "Tilt-board angle (C5) and a fan test (H3).",
-   "value": 8.915665796219027
+   "value": 8.99573317617525
   },
   {
    "id": "CL-B1V-GUST-8-THRUST",
@@ -2178,7 +2444,7 @@
     "R-WIND"
    ],
    "how": "Thrust stand T/W (H1) and the lean in the logs.",
-   "value": 0.620405508627741
+   "value": 0.7640244878967293
   },
   {
    "id": "CL-B1V-GCI-MAX",
@@ -2202,7 +2468,7 @@
    "output": "su2_vs_xfoil_trip_cd_pct",
    "unit": "%",
    "how": "Cross-code check; both fully turbulent.",
-   "value": -12.193500738552432
+   "value": -10.943820224719103
   }
  ]
 }

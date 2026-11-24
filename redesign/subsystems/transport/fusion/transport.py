@@ -1,5 +1,6 @@
 """K09-L transport (D7): one-piece box, two spar cradles with crush columns, lid hold-down pillars, prop tray with
-the pitot-boom and pouch pockets, cam straps, handles. Every part is `flight: false` (no mass, envelope, keep-out or
+the pitot-boom and pouch pockets, cord lashings, hand-hole patches (closure 2026-11-14: board box, no bolted handles,
+build_handle_hardware is no longer called). Every part is `flight: false` (no mass, envelope, keep-out or
 floating checks). Built around the aircraft in its own frame: upright, cruise attitude, props off, pitot boom out.
 
 Fore-aft (aircraft x, round 3, C1 CR-C1-22): the foot pads sit 12 mm off the aft wall (trn.box.aft_gap_m) so the feet
@@ -141,37 +142,43 @@ def build(ctx):
     pouch = ctx.part('TRN-008')
     pouch.box((tx0 + tx - 0.15, -0.05, zb + t + tz - 0.045), (tx0 + tx - 0.01, 0.05, zb + t + tz), name='pouch')
 
-    # TRN-006-L/R cam straps around the box at y = +/-0.40; TRN-007 handles (side at y 0, both ends)
-    ys = L(ctx, 'box.strap_y_m')
+    # TRN-006-L/R paracord lashings (4 mm, closure 2026-11-14) around the box girth at y = +/-0.40
+    ys, dc = L(ctx, 'box.strap_y_m'), 0.004
     for pid, y in (('TRN-006-L', -ys), ('TRN-006-R', ys)):
         s = ctx.part(pid)
-        s.box((xf - 0.002, y - 0.0125, zt), (xa + 0.002, y + 0.0125, zt + 0.002), name='over lid')
-        s.box((xf - 0.002, y - 0.0125, zb - 0.002), (xa + 0.002, y + 0.0125, zb), name='under floor')
-        s.box((xf - 0.002, y - 0.0125, zb - 0.002), (xf, y + 0.0125, zt + 0.002), name='front leg')
-        s.box((xa, y - 0.0125, zb - 0.002), (xa + 0.002, y + 0.0125, zt + 0.002), name='aft leg')
-    zh = zt - 0.08
+        s.box((xf - dc, y - dc / 2, zt), (xa + dc, y + dc / 2, zt + dc), name='over lid')
+        s.box((xf - dc, y - dc / 2, zb - dc), (xa + dc, y + dc / 2, zb), name='under floor')
+        s.box((xf - dc, y - dc / 2, zb), (xf, y + dc / 2, zt), name='front leg')
+        s.box((xa, y - dc / 2, zb), (xa + dc, y + dc / 2, zt), name='aft leg')
+    # TRN-007-C/L/R: 2-layer board patch inside the wall around each die-cut hand hole (closure 2026-11-14; the hole
+    # itself is not modelled). Side hole on the AFT wall at y 0; end holes at the chord centre. Hole top 35 mm under the
+    # lid lip bottom; patch 180 x 80 mm, 8 mm thick (trn.box.handhole)
+    lip = L(ctx, 'box.lid_lip_m')
+    pw, ph = L(ctx, 'box.handhole.patch_m')
+    hh = L(ctx, 'box.handhole.size_m')[1]
+    zh = zt - t - lip - 0.035 - hh / 2
+    tp = 2 * t
     h = ctx.part('TRN-007-C')
-    h.box((xf - 0.03, -0.06, zh - 0.015), (xf, 0.06, zh + 0.015), name='side handle')
-    ctx.rigid('E-TRN-13', 'TRN-007-C', 'TRN-001', at=(xf, 0.0, zh))
+    h.box((xa - t - tp, -pw / 2, zh - ph / 2), (xa - t, pw / 2, zh + ph / 2), name='side hand-hole patch')
+    ctx.rigid('E-TRN-13', 'TRN-007-C', 'TRN-001', at=(xa - t, 0.0, zh))
     for pid, edge, s in (('TRN-007-L', 'E-TRN-14', -1), ('TRN-007-R', 'E-TRN-15', 1)):
         h = ctx.part(pid)
-        y0, y1 = sorted((s * Lh, s * (Lh + 0.03)))
-        h.box((f['xc'] - 0.06, y0, zh - 0.015), (f['xc'] + 0.06, y1, zh + 0.015), name='end handle')
-        ctx.rigid(edge, pid, 'TRN-001', at=(f['xc'], s * Lh, zh))
-    build_handle_hardware(ctx, f, zh)
+        y0, y1 = sorted((s * (Lh - t), s * (Lh - t - tp)))
+        h.box((f['xc'] - pw / 2, y0, zh - ph / 2), (f['xc'] + pw / 2, y1, zh + ph / 2), name='end hand-hole patch')
+        ctx.rigid(edge, pid, 'TRN-001', at=(f['xc'], s * (Lh - t), zh))
 
-    for e, note in (('E-TRN-01', 'cradle L column on the floor: LSE tape + 2 zip ties'),
-                    ('E-TRN-02', 'cradle R column on the floor: LSE tape + 2 zip ties'),
-                    ('E-TRN-03', 'tray on the floor: LSE tape'),
-                    ('E-TRN-04', 'pillar L on the lid shell: LSE tape'),
-                    ('E-TRN-05', 'pillar R on the lid shell: LSE tape'),
+    for e, note in (('E-TRN-01', 'cradle L column on the floor: 30 mm board collar + tape wrap'),
+                    ('E-TRN-02', 'cradle R column on the floor: 30 mm board collar + tape wrap'),
+                    ('E-TRN-03', 'tray on the floor: packing-tape tabs'),
+                    ('E-TRN-04', 'pillar L on the lid shell: packing-tape tabs'),
+                    ('E-TRN-05', 'pillar R on the lid shell: packing-tape tabs'),
                     ('E-TRN-06', 'wing skin rests on cradle L (lower surface, spar line)'),
                     ('E-TRN-07', 'wing skin rests on cradle R (lower surface, spar line)'),
                     ('E-TRN-08', 'pillar L presses the upper skin over the spar, 5 mm preload'),
                     ('E-TRN-09', 'pillar R presses the upper skin over the spar, 5 mm preload'),
                     ('E-TRN-10', 'plug lid on the base walls'),
-                    ('E-TRN-11', 'cam strap A around the box'),
-                    ('E-TRN-12', 'cam strap B around the box'),
+                    ('E-TRN-11', 'cord lashing L around the box'),
+                    ('E-TRN-12', 'cord lashing R around the box'),
                     ('E-TRN-16', 'field pouch in the tray pocket')):
         ctx.contact(e, note)
     # stowed props (E1 PRP-003-*): registered, not touch-checked (the props stay at their flight station in CAD)

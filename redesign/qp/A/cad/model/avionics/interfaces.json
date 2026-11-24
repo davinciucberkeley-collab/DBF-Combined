@@ -1,0 +1,425 @@
+{
+ "schema": "dbf-interfaces/1",
+ "subsystem": "avionics",
+ "parts": [
+  {
+   "id": "AVN-010",
+   "name": "R2 mounting bosses (T-073 R2, T-077 p5): 4 FC bosses 6 x 6 mm on the 25 x 25 pattern with M2 hex-nut pockets, 4 ESC bosses 6 x 6 on the 20 x 20 pattern, 4 GPS corner pads 6 x 6 and 2 RX strip pads 5 x 11 mm (T-073 s.R2 Phase 2: GPS / RX pads), each up to the pad plane ZP (heights from the skin), bonded to the skin, printed PETG 6 x 6 x h (T-070); mass = drawn volume x T-067 basis",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 1.63,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.0629,
+    -0.0187,
+    0.0125
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "AVN-002",
+   "name": "Flight controller Holybro Kakute H743-Wing, 45 x 30 x 13.5 mm (V docs.holybro.com kakute-h743-wing, read 2026-11-20), M2 25 x 25 mm, 28 g with USB extender; drawn: PCB 45 x 30 x 1.6 mm (PCB thickness EST, vendor -), corner radius -, hole diameter - (2.2 mm drawn), connector and header outlines and heights - (not drawn; the 13.5 mm overall height is a wiring keep-out), orientation 45 mm along y is my choice; position (T-092, D-239): board centre x 47 mm, y -75 mm (75 mm off the wing centre, left side, hard-mounted); IMU chip position on the board \"-\" (not published)",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 28.0,
+   "material": "PCB",
+   "cg_xyz_m": [
+    0.0472,
+    -0.075,
+    0.0178
+   ],
+   "make_or_buy": "buy",
+   "electrical": "bus",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "AVN-007",
+   "name": "Foam-tape pads x4 (FC hard mount, 3.0 mm)",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 1.0,
+   "material": "VHB-class foam tape",
+   "cg_xyz_m": [
+    0.047,
+    -0.075,
+    0.0154
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "AVN-003",
+   "name": "Receiver RP3 V2 ELRS",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 4.6,
+   "material": "PCB",
+   "cg_xyz_m": [
+    0.1035,
+    -0.046,
+    0.0142
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "AVN-004",
+   "name": "GPS TBS M10Q + compass",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 13.5,
+   "material": "PCB",
+   "cg_xyz_m": [
+    0.0425,
+    0.0395,
+    0.0172
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "AVN-005",
+   "name": "Airspeed sensor MS4525 board",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "material": "PCB",
+   "cg_xyz_m": [
+    0.0763,
+    -0.42,
+    0.0067
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "AVN-006",
+   "name": "Pitot-static probe (RMRC kit; size not published: EST 166 x 3 mm, measure)",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 5.0,
+   "material": "brass tube",
+   "cg_xyz_m": [
+    -0.0136,
+    -0.42,
+    0.0
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "AVN-009-T",
+   "name": "Pitot line, total pressure: silicone tubing 2 / 4 mm (V RMRC), 36 mm (CAD route)",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "material": "silicone rubber",
+   "cg_xyz_m": [
+    0.0536,
+    -0.4178,
+    0.0059
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "AVN-009-S",
+   "name": "Pitot line, static pressure: silicone tubing 2 / 4 mm (V RMRC), 36 mm (CAD route)",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "material": "silicone rubber",
+   "cg_xyz_m": [
+    0.0536,
+    -0.4222,
+    0.0059
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "AVN-008",
+   "name": "Bay cover (D-198, T-022 Q4): 0.6 mm printed PETG hood over the FC (T-092: now at y -75 under the FC annex, x 22.5-72.2, y -99 to -26.5), ESC and the phase-lead runs from the foam ditch to the ESC pads, with a low annex (RX hood) over the receiver enclosing the RX UART lead; bottom-open slots for the GPS lead, the battery tail and the two antennas",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 14.61,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.0594,
+    -0.0312,
+    0.0295
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "HWC-001",
+   "name": "FC mounting screws: 4 x M2 pan screw (stock, length per hole 8-10 mm, T-077 p5)",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 1.18,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.0459,
+    -0.075,
+    0.0167
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "HWC-003",
+   "name": "FC mounting nuts: 4 x M2 thin nut (DIN 439 1.2 mm) in the boss hex pockets",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 0.41,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.047,
+    -0.075,
+    0.0121
+   ],
+   "make_or_buy": "buy",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  }
+ ],
+ "edges": [
+  {
+   "id": "E-AVN-01",
+   "part_a": "AVN-010",
+   "part_b": "WNG-001",
+   "via": "CT-CA",
+   "owner": "avionics",
+   "notes": "R2 bosses and pads: bases follow the upper skin (same vertices as the core), bonded with CA / epoxy; no plate (T-073 R2)"
+  },
+  {
+   "id": "E-AVN-02",
+   "part_a": "AVN-007",
+   "part_b": "AVN-010",
+   "via": "CT-GEL-PAD",
+   "owner": "avionics",
+   "notes": "four thin foam-tape pads on the FC bosses (FC on the wing, 75 mm left of centre (D-239 / D-240), not on the cage hub: SITL-FLIGHT follow-up 2; hard mount, BOARD D-186)"
+  },
+  {
+   "id": "E-AVN-03",
+   "part_a": "AVN-002",
+   "part_b": "AVN-007",
+   "via": "CT-GEL-PAD",
+   "owner": "avionics",
+   "notes": "FC on the tape pads, M2 screws (hard mount; gel only if its frequency is measured at 40-70 Hz)"
+  },
+  {
+   "id": "E-AVN-04",
+   "part_a": "AVN-005",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "avionics",
+   "notes": "airspeed board in its pocket in the left wing core next to the pitot, foam tape; pocket taped over (D-208)",
+   "retention": {
+    "item": "VHB-class tape",
+    "count": 1
+   }
+  },
+  {
+   "id": "E-AVN-05",
+   "part_a": "AVN-003",
+   "part_b": "AVN-010",
+   "via": "CT-TAPE-FOAM",
+   "owner": "avionics",
+   "notes": "foam tape + tie on the R2 pads",
+   "retention": {
+    "item": "VHB-class tape",
+    "count": 1
+   }
+  },
+  {
+   "id": "E-AVN-06",
+   "part_a": "AVN-004",
+   "part_b": "AVN-010",
+   "via": "CT-TAPE-FOAM",
+   "owner": "avionics",
+   "notes": "foam tape + tie on the R2 pads",
+   "retention": {
+    "item": "VHB-class tape",
+    "count": 1
+   }
+  },
+  {
+   "id": "E-AVN-07",
+   "part_a": "AVN-006",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "avionics",
+   "notes": "pitot in a groove in the LE at y = -0.42 (D-208: left wing, the sensor board side; 0.11 m outboard of the prop discs, EST)"
+  },
+  {
+   "id": "E-AVN-08",
+   "part_a": "AVN-009-T",
+   "part_b": "AVN-006",
+   "via": "CT-PITOT-TUBING",
+   "owner": "avionics",
+   "notes": "total line on the probe total outlet barb (D-208)",
+   "retention": {
+    "item": "push-on silicone on the barb",
+    "count": 1,
+    "load_n": "none (pneumatic)",
+    "inspection": "set-up: line on the barb to the shoulder; blow test reads > 0"
+   }
+  },
+  {
+   "id": "E-AVN-09",
+   "part_a": "AVN-009-T",
+   "part_b": "AVN-005",
+   "via": "CT-PITOT-TUBING",
+   "owner": "avionics",
+   "notes": "total line on board port P1 (ARSPD_TUBE_ORDR 2: a swap is harmless; D-208)",
+   "retention": {
+    "item": "push-on silicone on the barb",
+    "count": 1,
+    "load_n": "none (pneumatic)",
+    "inspection": "set-up: line on the barb to the shoulder; blow test reads > 0"
+   }
+  },
+  {
+   "id": "E-AVN-10",
+   "part_a": "AVN-009-T",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "avionics",
+   "notes": "total line in its foam-core groove, laid in from above through a slit in the skin, slit taped (as the servo grooves; D-208)"
+  },
+  {
+   "id": "E-AVN-11",
+   "part_a": "AVN-009-S",
+   "part_b": "AVN-006",
+   "via": "CT-PITOT-TUBING",
+   "owner": "avionics",
+   "notes": "static line on the probe static outlet barb (D-208)",
+   "retention": {
+    "item": "push-on silicone on the barb",
+    "count": 1,
+    "load_n": "none (pneumatic)",
+    "inspection": "set-up: line on the barb to the shoulder; blow test reads > 0"
+   }
+  },
+  {
+   "id": "E-AVN-12",
+   "part_a": "AVN-009-S",
+   "part_b": "AVN-005",
+   "via": "CT-PITOT-TUBING",
+   "owner": "avionics",
+   "notes": "static line on board port P2 (ARSPD_TUBE_ORDR 2: a swap is harmless; D-208)",
+   "retention": {
+    "item": "push-on silicone on the barb",
+    "count": 1,
+    "load_n": "none (pneumatic)",
+    "inspection": "set-up: line on the barb to the shoulder; blow test reads > 0"
+   }
+  },
+  {
+   "id": "E-AVN-13",
+   "part_a": "AVN-009-S",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "avionics",
+   "notes": "static line in its foam-core groove, laid in from above through a slit in the skin, slit taped (as the servo grooves; D-208)"
+  },
+  {
+   "id": "E-AVN-14",
+   "part_a": "AVN-008",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "avionics",
+   "notes": "cover walls stand on the skin (T-077 p5: no plate), foam tape + two ties; removable for FC access (D-198)",
+   "retention": {
+    "item": "VHB-class tape + ties",
+    "count": 1
+   }
+  },
+  {
+   "id": "E-AVN-15",
+   "part_a": "HWC-001",
+   "part_b": "AVN-002",
+   "via": "CT-HW-SEATED",
+   "owner": "avionics",
+   "hardware": true,
+   "notes": "four M2 screws through the board, the tape pads and the bosses (hardware of E-AVN-03)",
+   "joint_stack": {
+    "fastener": "M2 pan screw (stock 6..25 mm, per hole)",
+    "count": 4,
+    "grade": "A2-70",
+    "hole": "board hole 2.2 mm clearance (EST)",
+    "insert": "none",
+    "engagement_mm": 1.2,
+    "min_engagement_mm": 1.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 30,
+    "removal_order": 30
+   }
+  },
+  {
+   "id": "E-AVN-16",
+   "part_a": "HWC-001",
+   "part_b": "HWC-003",
+   "via": "CT-HW-SEATED",
+   "owner": "avionics",
+   "hardware": true,
+   "notes": "screw threads into the nut (shortest stock length that reaches the nut bottom)",
+   "joint_stack": {
+    "fastener": "M2 x 25 pan screw into M2 thin nut",
+    "count": 4,
+    "grade": "A2-70",
+    "hole": "nut thread",
+    "insert": "none",
+    "engagement_mm": 1.1,
+    "min_engagement_mm": 1.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 31,
+    "removal_order": 31
+   }
+  },
+  {
+   "id": "E-AVN-17",
+   "part_a": "HWC-003",
+   "part_b": "AVN-010",
+   "via": "CT-HW-SEATED",
+   "owner": "avionics",
+   "hardware": true,
+   "notes": "four M2 thin nuts trapped in hex pockets in the FC bosses (seated before the bosses go on the skin)",
+   "joint_stack": {
+    "fastener": "M2 pan screw + M2 thin nut (DIN 439, 1.2 mm)",
+    "count": 4,
+    "grade": "A2-70",
+    "hole": "2.2 mm hole + hex pocket in the boss (boss 1.6-3.0 mm over the skin)",
+    "insert": "none",
+    "engagement_mm": 1.2,
+    "min_engagement_mm": 1.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.0 mm hex key",
+    "access": "from the aft side before the arm is bonded",
+    "install_order": 30,
+    "removal_order": 30
+   }
+  }
+ ],
+ "acknowledges": [
+  "E-HRN-06",
+  "E-HRN-07",
+  "E-HRN-08",
+  "E-HRN-09",
+  "E-HRN-10",
+  "E-HRN-11",
+  "E-PRP-13"
+ ]
+}

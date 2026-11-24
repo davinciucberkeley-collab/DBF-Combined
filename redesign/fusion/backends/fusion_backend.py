@@ -314,6 +314,8 @@ class FusionBackend(Backend):
                 self._loop(sk, [to3d(shape.axis, o, uv) for uv in loop], shape.smooth)
                 inp.loftSections.add(self._profile(sk))
             feat = feats.loftFeatures.add(inp)
+        elif shape.kind == 'mesh':
+            feat = self._mesh_body(fc, shape, tag)
         else:
             raise ValueError('unknown shape kind ' + shape.kind)
         mat = self._material(comp.material)
@@ -328,6 +330,36 @@ class FusionBackend(Backend):
                 b.appearance = ap
         for sk in fc.sketches:
             sk.isLightBulbOn = False      # the settable one (isVisible is the computed state); as in the old scripts
+
+    @staticmethod
+    def _mesh_body(fc, shape, tag):
+        """kind 'mesh' (the printed hub with its OpenCASCADE fillets): the triangles are added as a mesh body, then
+        converted to a solid BRep body so the part's cuts (combine-cut) and joints work as for every other body.
+        UNVERIFIED-IN-FUSION: MeshBodies.addByTriangleMeshData and MeshConvertFeatures were written from the API
+        documentation, not run. If the conversion is refused (large meshes can be), the mesh body stays as it is
+        and cuts on this part must be made in Fusion by hand (Mesh > Convert Mesh, then the combine-cuts); the
+        script prints a line saying so. A fallback that always works: write the triangles to an STL and use
+        Insert > Insert Mesh."""
+        coords = []
+        for v in shape.verts:
+            coords.extend((v[0] * CM, v[1] * CM, v[2] * CM))
+        idx = []
+        for t in shape.tris:
+            idx.extend(t)
+        mb = fc.meshBodies.addByTriangleMeshData(coords, idx, [], [])
+        try:
+            cf = fc.features.meshConvertFeatures
+            ci = cf.createInput(mb)
+            return cf.add(ci)
+        except Exception:
+            print('%s: mesh body not converted to BRep (%d triangles); convert it by hand before the cuts' %
+                  (tag, len(shape.tris)))
+
+            class _Keep:                       # feat.bodies stand-in: the mesh body itself (renamed, no material)
+                class bodies:
+                    count = 1
+                    item = staticmethod(lambda i: mb)
+            return _Keep
 
     def _point_geometry(self, comp, world):
         fc = comp.native.component

@@ -1,0 +1,160 @@
+{
+ "tag": "t3_drawn",
+ "geom": {
+  "XC": 0.34750000000000003,
+  "ZC": 0.1907,
+  "TOE_X0": 0.2955,
+  "TOE_TW": 0.009000000000000001,
+  "WALL": 0.0015,
+  "DEPTH": 0.004,
+  "RING_L": 0.012,
+  "FLOOR_ZIN": -0.01200000000000001,
+  "sec2": {
+   "A": 0.00023837,
+   "xc": 0.2983793010865442,
+   "Iy": 1.3670256871558007e-08,
+   "Ix": 1.0361192599999874e-08,
+   "cx": 0.014779301086544516,
+   "cy": 0.010499999999999858
+  }
+ },
+ "rows": {
+  "P1 pad PSA shear on the plate (0.10 MPa EST, landing_path_a PSA)": {
+   "all": {
+    "rb": 0.24200760246475894,
+    "case": "0.10|0.40|hard 10 narrow + drift .5",
+    "cls": "RF"
+   },
+   "0.02": {
+    "rb": 0.32389823780338534,
+    "case": "0.02|0.40|hard 16 wide + drift .5 y",
+    "cls": "RF"
+   },
+   "0.05": {
+    "rb": 0.28843781427635495,
+    "case": "0.05|0.40|hard 16 wide + drift .5 y",
+    "cls": "RF"
+   },
+   "0.10": {
+    "rb": 0.24200760246475894,
+    "case": "0.10|0.40|hard 10 narrow + drift .5",
+    "cls": "RF"
+   }
+  },
+  "S2 shoe ring + plate section under the cap (z-plane, interlayer 9.5)": {
+   "all": {
+    "rb": 1.9960824438406863,
+    "case": "0.10|0.40|hard 10 narrow + drift .5",
+    "cls": "RF"
+   },
+   "0.02": {
+    "rb": 2.8113290110048887,
+    "case": "0.02|0.40|SITL Z5_b45 narrow (z drift)",
+    "cls": "RF"
+   },
+   "0.05": {
+    "rb": 2.4993509816288997,
+    "case": "0.05|0.40|hard 10 narrow + drift .5",
+    "cls": "RF"
+   },
+   "0.10": {
+    "rb": 1.9960824438406863,
+    "case": "0.10|0.40|hard 10 narrow + drift .5",
+    "cls": "RF"
+   }
+  },
+  "S3 ring bond PEEL (integrity class, outside the RF minimum; T-069 F-3)": {
+   "all": {
+    "rb": 0.19900154946650653,
+    "case": "0.10|0.40|hard 10 narrow + drift .5",
+    "cls": "integrity"
+   },
+   "0.02": {
+    "rb": 0.27065401363640046,
+    "case": "0.02|0.40|SITL Z5_b45 narrow (z drift)",
+    "cls": "integrity"
+   },
+   "0.05": {
+    "rb": 0.24916515264396594,
+    "case": "0.05|0.40|hard 10 narrow + drift .5",
+    "cls": "integrity"
+   },
+   "0.10": {
+    "rb": 0.19900154946650653,
+    "case": "0.10|0.40|hard 10 narrow + drift .5",
+    "cls": "integrity"
+   }
+  },
+  "S3 ring epoxy bond on the fin tube D16 x 12: shear (axial + torsion), 2.0 MPa": {
+   "all": {
+    "rb": 2.456693464528036,
+    "case": "0.10|0.40|hard 16 wide + drift .5 y",
+    "cls": "RF"
+   },
+   "0.02": {
+    "rb": 3.2483405401040155,
+    "case": "0.02|0.40|hard 16 wide + drift .5 y",
+    "cls": "RF"
+   },
+   "0.05": {
+    "rb": 2.892266322847226,
+    "case": "0.05|0.40|hard 16 wide + drift .5 y",
+    "cls": "RF"
+   },
+   "0.10": {
+    "rb": 2.456693464528036,
+    "case": "0.10|0.40|hard 16 wide + drift .5 y",
+    "cls": "RF"
+   }
+  },
+  "S3 ring on the fin tube: bearing, compression side (20 MPa)": {
+   "all": {
+    "rb": 1.9900154946650654,
+    "case": "0.10|0.40|hard 10 narrow + drift .5",
+    "cls": "RF"
+   },
+   "0.02": {
+    "rb": 2.706540136364005,
+    "case": "0.02|0.40|SITL Z5_b45 narrow (z drift)",
+    "cls": "RF"
+   },
+   "0.05": {
+    "rb": 2.4916515264396595,
+    "case": "0.05|0.40|hard 10 narrow + drift .5",
+    "cls": "RF"
+   },
+   "0.10": {
+    "rb": 1.9900154946650654,
+    "case": "0.10|0.40|hard 10 narrow + drift .5",
+    "cls": "RF"
+   }
+  },
+  "S5 fin tube 16x14 at the shoe ring edge (CF 350 / 30, KF)": {
+   "all": {
+    "rb": 3.1729130106818677,
+    "case": "0.10|0.40|hard 16 wide + drift .5 y",
+    "cls": "RF"
+   },
+   "0.02": {
+    "rb": 4.195611369635037,
+    "case": "0.02|0.40|hard 16 wide + drift .5 y",
+    "cls": "RF"
+   },
+   "0.05": {
+    "rb": 3.73517232297842,
+    "case": "0.05|0.40|hard 16 wide + drift .5 y",
+    "cls": "RF"
+   },
+   "0.10": {
+    "rb": 3.1729130106818677,
+    "case": "0.10|0.40|hard 16 wide + drift .5 y",
+    "cls": "RF"
+   }
+  }
+ },
+ "rfmin": {
+  "0.02": 0.14524584654860329,
+  "0.05": 0.12934431133468832,
+  "0.10": 0.10852358854921926
+ }
+}

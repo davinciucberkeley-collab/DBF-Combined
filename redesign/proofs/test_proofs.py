@@ -1,7 +1,8 @@
 """Self-test for the proof-chain tools (stdlib unittest, ~1 s):  python -I redesign/proofs/test_proofs.py
 
 Copies the example claims set into a temporary redesign/ folder, breaks it on purpose and checks that
-build_graph.py notices: drift after a parameter change, a unit mismatch, an unknown reference.
+build_graph.py notices: drift after a parameter change, a unit mismatch, an unknown reference, and a claim that
+violates a limit of 0 (CDR-03 regression: those used to get margin None and were not counted as fails).
 """
 import contextlib
 import io
@@ -15,6 +16,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import build_graph  # noqa: E402
+import proofkit as pk  # noqa: E402
 
 
 def run(*args):
@@ -79,6 +81,66 @@ class ProofChainTest(unittest.TestCase):
         code, log = self.build()
         self.assertEqual(code, 1)
         self.assertIn("R-NOPE", log)
+
+    # ---- limits of 0 (CDR-03, 2026-11-13) ----
+    ZERO = [("CL-T-MS-NEG", -0.34, ">=", "-", True),        # margin of safety below 0
+            ("CL-T-CLEAR-NEG", -0.00012, ">=", "m", True),  # -0.12 mm against >= 0 (the CG-range case)
+            ("CL-T-COUNT-POS", 6, "<=", "-", True),         # 6 stale inputs against <= 0
+            ("CL-T-MS-POS", 0.28, ">=", "-", False),
+            ("CL-T-AT-ZERO", 0.0, ">=", "-", False),        # exactly on the limit passes
+            ("CL-T-NEG-ZERO", -0.0, ">=", "-", False),
+            ("CL-T-COUNT-ZERO", 0, "<=", "-", False),
+            ("CL-T-BELOW-ZERO-OK", -3.0, "<=", "-", False)]
+
+    def write_zero_claims(self):
+        nodes = [{"id": i, "type": "claim", "title": i, "value": v, "unit": u, "limit": {"op": op, "value": 0},
+                  "how": "regression case"} for i, v, op, u, _ in self.ZERO]
+        (self.tmp / "zero").mkdir()
+        (self.tmp / "zero" / "claims.json").write_text(json.dumps({"schema": "proofs/1", "nodes": nodes}), encoding="utf-8")
+
+    def test_margin_function_zero_limit(self):
+        self.assertEqual(pk.margin(-0.34, 0, ">="), -0.34)                 # distance, sign = pass / fail
+        self.assertEqual(pk.margin(6, 0, "<="), -6)
+        self.assertEqual(pk.margin(0.28, 0, ">="), 0.28)
+        self.assertEqual(pk.margin(0.0, 0, ">="), 0.0)
+        self.assertEqual(str(pk.margin(-0.0, 0, ">=")), "0.0")             # never "-0.0"
+        self.assertAlmostEqual(pk.margin(2.4, 2.0, ">="), 0.2)             # non-zero limits unchanged: fraction
+        self.assertAlmostEqual(pk.margin(34.6, 30.0, "<="), -4.6 / 30.0)
+        self.assertAlmostEqual(pk.margin(-3.0, -2.0, ">="), -0.5)
+        self.assertIsNone(pk.margin("n/a", 0, ">="))
+        self.assertIsNone(pk.margin(float("nan"), 0, ">="))
+        self.assertEqual(pk.margin_text(-0.00012, 0, "m"), "-0.00012 m abs")
+        self.assertEqual(pk.margin_text(-0.154, 30.0, "A"), "-15%")
+
+    def test_zero_limit_violation_is_a_fail(self):
+        self.write_zero_claims()
+        code, log = self.build()
+        self.assertEqual(code, 0, log)                                     # a fail is not a build error...
+        g = self.graph()
+        for cid, _, _, _, fails in self.ZERO:
+            self.assertEqual(bool(g[cid].get("fails")), fails, cid)
+            self.assertIsNotNone(g[cid].get("margin"), cid)
+            self.assertTrue(g[cid].get("margin_abs"), cid)
+            self.assertEqual(g[cid]["margin"] < 0, fails, cid)
+        self.assertIn("FAILS: margin -0.34 abs", g["CL-T-MS-NEG"]["reasons"][0])
+        meta = json.loads((self.tmp / "out" / "graph.json").read_text(encoding="utf-8"))["meta"]
+        base = 2                                                           # the demo's own fails: CL-EX-ESC-CONN, R-EX-DISCONNECT
+        self.assertEqual(meta["counts"]["fails"], base + sum(f for *_, f in self.ZERO))
+        self.assertNotIn("margin_abs", g["CL-EX-ESC-CONN"])                # non-zero limit: still a fraction
+        code, log = self.build("--strict")                                 # ...but the release gate stops on it
+        self.assertEqual(code, 1)
+        for cid, _, _, _, fails in self.ZERO:
+            self.assertEqual(f"STRICT {cid}:" in log, fails, cid)
+
+    def test_self_check_catches_an_unjudged_claim(self):
+        ok = {"id": "CL-A", "type": "claim", "value": -1.0, "limit": {"op": ">=", "resolved": 0}, "margin": -1.0, "fails": True}
+        self.assertEqual(build_graph.self_check([ok]), [])
+        hidden = dict(ok, margin=None, fails=False)                        # what the old rule produced
+        self.assertIn("no margin", build_graph.self_check([hidden])[0])
+        unmarked = dict(ok, fails=False)
+        self.assertIn("not marked FAILS", build_graph.self_check([unmarked])[0])
+        wrong = {"id": "CL-B", "type": "claim", "value": 1.0, "limit": {"op": ">=", "resolved": 0}, "margin": -1.0}
+        self.assertIn("negative margin", build_graph.self_check([wrong])[0])
 
 
 if __name__ == "__main__":

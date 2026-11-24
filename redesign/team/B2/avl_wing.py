@@ -142,13 +142,28 @@ def cdcl(foil):
     return " ".join(f"{c:.4f} {d:.5f}" for c, d in pts)
 
 
-def write_avl(path, foil, eta, fins=True, twist=0.0, nc=12, ns_scale=1.0):
+def write_avl(path, foil, eta, fins=True, twist=0.0, nc=12, ns_scale=1.0, chamfer=None):
+    """chamfer = [inboard, outboard] TE set-back next to the fin root (m, wing.elevon.te_chamfer_m, D-164) or None.
+    Closure round 2026-11-14: as B3 avl_model.py, one extra control section per panel at the set-back with the normal
+    hinge and Xhinge 1.0 (zero elevon chord) at the fin-side panel end; AVL interpolates the hinge linearly."""
     shutil.copy(HERE / "airfoils" / f"{foil}.dat", OUT / f"{foil}.dat")
     b2 = SPAN / 2
-    ys = [0.0, POD_HALF, YIN[0], YIN[1], YFIN, YOUT[0], YOUT[1], b2]
+    hx = {}
+    if chamfer:
+        ci, co = chamfer
+        ys = [0.0, POD_HALF, YIN[0], YIN[1] - ci, YIN[1], YFIN, YOUT[0], YOUT[0] + co, YOUT[1], b2]
+        n_in = max(1, round(10 * ci / (YIN[1] - YIN[0])))
+        n_out = max(1, round(10 * co / (YOUT[1] - YOUT[0])))
+        # the main part of each panel keeps the 10 cosine-spaced strips of the model of record (the root strip next to
+        # the pod sets the critical section, so its spacing must not change with the chamfer)
+        nseg = [max(1, round(n * ns_scale)) for n in (2, 1, 10, n_in, 1, 1, n_out, 10, 1)]
+        nseg[4] = nseg[5] = 1
+        hx = {round(YIN[1], 6): 1.0, round(YOUT[0], 6): 1.0}
+    else:
+        ys = [0.0, POD_HALF, YIN[0], YIN[1], YFIN, YOUT[0], YOUT[1], b2]
+        nseg = [max(1, round(n * ns_scale)) for n in (2, 1, 10, 1, 1, 10, 1)]
+        nseg[3] = nseg[4] = 1                               # one strip each side of the fin plane (no control point on it)
     ctrl = {(YIN[0], YIN[1]), (YOUT[0], YOUT[1])}
-    nseg = [max(1, round(n * ns_scale)) for n in (2, 1, 10, 1, 1, 10, 1)]
-    nseg[3] = nseg[4] = 1                                   # one strip each side of the fin plane (no control point on it)
     # B2-R3: since D-25 the pod half-width (0.07) equals the inboard elevon end (0.07). A zero-width segment hangs
     # AVL 3.52, so a coincident station is dropped and its segment merged into the one before it.
     i = 1
@@ -170,8 +185,9 @@ def write_avl(path, foil, eta, fins=True, twist=0.0, nc=12, ns_scale=1.0):
         s += ["SECTION", line, "AFILE", f"{foil}.dat"]
         in_ctrl = any(a - 1e-9 <= y <= b + 1e-9 for a, b in ctrl)
         if in_ctrl:
-            s += ["CONTROL", f"elevator {eta:.4f} {XH:.4f} 0 0 0 1.0",
-                  "CONTROL", f"aileron {eta:.4f} {XH:.4f} 0 0 0 -1.0"]
+            h = hx.get(round(y, 6), XH)
+            s += ["CONTROL", f"elevator {eta:.4f} {h:.4f} 0 0 0 1.0",
+                  "CONTROL", f"aileron {eta:.4f} {h:.4f} 0 0 0 -1.0"]
     if fins:
         nz = max(2, 2 * round(6 * ns_scale))
         s += ["#", "SURFACE", "Fin", f"{max(6, nc - 4)} 1.0 {nz} 0.0", "YDUPLICATE", "0.0",

@@ -1,0 +1,145 @@
+hub block volume 11648 mm3 = 14.79 g PETG
+chol flag 0, 66.6 s, nnz(R) 1488 M
+solved 154.5 s, residual 1.0e-08 
+relative residual per load case: 4.5e-09 8.1e-09 6.6e-09 2.1e-10 1.2e-10 3.3e-10 5.5e-09 6.2e-09 2.0e-09 2.5e-10 1.7e-10 1.9e-10 6.2e-09 7.6e-09 7.1e-09 2.4e-10 9.5e-11 3.1e-10 6.1e-09 1.3e-08 1.9e-09 2.7e-10 8.9e-11 2.7e-10
+equilibrium max error 5.7e-10
+mesh 305814 elements, 1451064 free dof, hub block 14.79 g, 329 s
+F1 spin cap, any thrust pattern {
+"hub_peak": 21.980246082017082,
+"hub_zones_worst_combo": {
+"bridge boss (aft of the block)": {
+"max": 15.383707304482833,
+"p99": 5.81060923654466,
+"p95": 3.218398992982406
+},
+"centre block / crossing": {
+"max": 21.980246082017082,
+"p99": 3.218229004590988,
+"p95": 1.9029148320862768
+},
+"sleeves outside the block": {
+"max": 16.68208988820441,
+"p99": 2.37954248567393,
+"p95": 1.1764802061777841
+}
+},
+"hub_peak_at": [
+13.49,
+6.02,
+-9.87
+],
+"hub_zones_envelope": {
+"bridge boss (aft of the block)": {
+"max": 16.197700206630024,
+"p99": 6.82852167389431
+},
+"centre block / crossing": {
+"max": 21.980246082017082,
+"p99": 3.8073487260750647
+},
+"sleeves outside the block": {
+"max": 17.165893297605013,
+"p99": 2.457874251925698
+}
+},
+"tube_A": {
+"axial": 42.62178256476226,
+"axial_at_s": 17.999999999152656,
+"hoop": 8.321189364765651,
+"shear": 7.592670558010434,
+"shear_at_s": -9.53816294580902
+},
+"tube_B": {
+"axial": 47.9229782180146,
+"axial_at_s": -1.5768040727479313,
+"hoop": 16.475581817491683,
+"shear": 12.124476616965648,
+"shear_at_s": 9.247219496459147
+},
+"bond": {
+"shear": 2.5291995239766316,
+"peel": 3.8857465454649347,
+"shear_p99": 1.8985683320766298,
+"shear_mean_worst_arm": 0.6833438429793222
+},
+"pin_vm": {
+"max": 50.4359693909387,
+"p99": 22.85823416004064
+}
+}
+F2 uncapped fault, any pattern {
+"hub_peak": 25.308676729020434,
+"hub_zones_worst_combo": {
+"bridge boss (aft of the block)": {
+"max": 17.74986705619208,
+"p99": 6.746767349376357,
+"p95": 3.7279808397482284
+},
+"centre block / crossing": {
+"max": 25.308676729020434,
+"p99": 3.715270945306309,
+"p95": 2.1964737357924666
+},
+"sleeves outside the block": {
+"max": 19.09647581050072,
+"p99": 2.748934375124591,
+"p95": 1.3554171395223475
+}
+},
+"hub_peak_at": [
+13.49,
+6.02,
+-9.87
+],
+"hub_zones_envelope": {
+"bridge boss (aft of the block)": {
+"max": 19.001903967550636,
+"p99": 8.006025616582997
+},
+"centre block / crossing": {
+"max": 25.308676729020434,
+"p99": 4.463086949946365
+},
+"sleeves outside the block": {
+"max": 19.508304606082,
+"p99": 2.823988265983156
+}
+},
+"tube_A": {
+"axial": 49.08787252852326,
+"axial_at_s": 25.1765973362978,
+"hoop": 9.583433157076364,
+"shear": 8.789834540411505,
+"shear_at_s": -9.53816294580902
+},
+"tube_B": {
+"axial": 55.924149456801636,
+"axial_at_s": -1.5768040727479313,
+"hoop": 18.920220459590848,
+"shear": 13.970807490193799,
+"shear_at_s": 9.247219496459147
+},
+"bond": {
+"shear": 2.86303544248605,
+"peel": 4.494518369997199,
+"shear_p99": 2.168024829044392,
+"shear_mean_worst_arm": 0.7747906071012651
+},
+"pin_vm": {
+"max": 59.13817695547842,
+"p99": 26.802316789289446
+}
+}
+S1 {"hub_peak": 34.926435911926085, "hub_zones_worst_combo": {"bridge boss (aft of the block)": {"max": 29.52035107263996, "p99": 13.261618489964563, "p95": 6.996012651203003}, "centre block / crossing": {"max": 34.926435911926085, "p99": 9.055361819713024, "p95": 5.8835042439900915}, "sleeves outside the block": {"max": 30.255342905972665, "p99": 5.040199553763093, "p95": 2.1103136139499306}}, "hub_peak_at": [2.05, 9.84, 7.57], "hub_zones_envelope": {"bridge boss (aft of the block)": {"max": 32.13710081152437, "p99": 13.261618489964563}, "centre block / crossing": {"max": 34.926435911926085, "p9
+S2 {"hub_peak": 39.27981335460041, "hub_zones_worst_combo": {"bridge boss (aft of the block)": {"max": 27.46187658600529, "p99": 10.775575124613056, "p95": 6.147271374286209}, "centre block / crossing": {"max": 39.27981335460041, "p99": 7.9822570960030905, "p95": 4.929318190435728}, "sleeves outside the block": {"max": 32.93359861912892, "p99": 6.765229303667147, "p95": 3.23935377732297}}, "hub_peak_at": [13.49, 6.02, -9.87], "hub_zones_envelope": {"bridge boss (aft of the block)": {"max": 27.804880526953294, "p99": 10.775575124613056}, "centre block / crossing": {"max": 39.27981335460041, "p99":
+S3 {"hub_peak": 9.93777633011145, "hub_zones_worst_combo": {"bridge boss (aft of the block)": {"max": 7.163824433603975, "p99": 2.811956711455805, "p95": 1.8246864603172739}, "centre block / crossing": {"max": 9.93777633011145, "p99": 2.0362324716304445, "p95": 1.3588468731879206}, "sleeves outside the block": {"max": 9.072478328541344, "p99": 1.8094186733819588, "p95": 0.9087486177174593}}, "hub_peak_at": [13.49, 6.02, -9.87], "hub_zones_envelope": {"bridge boss (aft of the block)": {"max": 8.328223311918673, "p99": 2.811956711455805}, "centre block / crossing": {"max": 9.93777633011145, "p99": 
+fields F1: max utilisation 2.37
+fields F2: max utilisation 2.73
+fields S1: max utilisation 1.75
+fields S2: max utilisation 1.96
+skin material 0: 25376 vertices, 50776 triangles
+skin material 1: 14233 vertices, 28498 triangles
+skin material 2: 14212 vertices, 28456 triangles
+skin material 3: 6131 vertices, 12262 triangles
+skin material 4: 2414 vertices, 4808 triangles
+EXIT 0

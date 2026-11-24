@@ -1,0 +1,42 @@
+{
+"tag": "w_sac60",
+"args": [
+"inst=1",
+"hold=40",
+"wind=5",
+"from=60",
+"wing_s=0.75",
+"arm=1.2",
+"cant=16"
+],
+"summary": {
+"n": 708,
+"t_window": [
+8.027,
+43.967
+],
+"wind_ms": 5.0,
+"lean_max": 13.6,
+"lean_mean": 10.9,
+"lean_pre": 1.1,
+"u_max": 0.698,
+"u_mean_max": 0.693,
+"t_cap_s": 0.0,
+"t_cap_run_s": 0.0,
+"t_ge85_s": 0.0,
+"u_min": 0.445,
+"t_floor_s": 0.0,
+"t_floor_run_s": 0.0,
+"yaw_err_max": 6.1,
+"yaw_err_rms": 3.25,
+"pos_err_max": 1.58,
+"pos_err_rms": 0.5,
+"pos_err_last20_mean": 0.37,
+"alt_dev_max": 0.07,
+"diag_spread_max": 0.221,
+"diag_spread_mean": 0.183
+},
+"armed": true,
+"reached_alt": true,
+"events": []
+}

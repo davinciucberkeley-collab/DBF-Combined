@@ -1,8 +1,19 @@
 # K09-L whole-aircraft performance
 
+> **Wave 2 (2026-11-14, D-145 / D-146).** The scripts now read `performance.cruise_ms` (17 m/s) and
+> `propulsion.stations.cant_deg` (9°, thrust per prop = D / (n cos 9°)), and the cruise sweep runs 10–22 m/s.
+> AVL + XFOIL were re-run at 17 m/s and the current A3 mass and CG; SU2 fin drag is still the 16 m/s run (Re +6 %,
+> effect on cd < 1 % `EST`). Current: cruise at 17 m/s **275.9 W** (365.1 W pessimistic) at 2.502 kg, **278.2 W**
+> (368.2 W) at 2.6 kg, CD0 0.0577, L/D 5.20. Before/after: `review/DESIGN-ROUND-2026-11-14/B1-W2.md`.
+>
 > Simulation round (2026-11-10): the as-designed re-run is in `SIMULATION-REPORT.md` (claims `CL-B1V-*`). It
-> replaces this rev 3 hand-estimate report for current values: CD0 0.0579, cruise 235 W, 16.2 min, VH 21.0 m/s at
-> THR_MAX 70 %. This report stays as the hand calculation the simulations are compared against.
+> replaces this rev 3 hand-estimate report for current values: CD0 0.0580, k 0.1042 (Oswald e 0.85, D-118), cruise
+> 239.3 W at 2.50 kg and 241.8 W at 2.6 kg (16 m/s), 15.8 min, VH 21.0 m/s at THR_MAX 70 %. This report stays as the
+> hand calculation the simulations are compared against. **Since D-118 the rev 3 claims also run at e 0.85**
+> (`ASM-B1-E-BASE`): `CL-B1-K` 0.1042 (was 0.0943 at e 0.94), L/D max 6.82, cruise 231.4 W (301.3 W pessimistic), L/D
+> 6.14, 16.0 / 12.0 min (`claims.json`); the e 0.94 / k 0.0943 rows and the 16 m/s tables below are the 2026-11-09
+> values. Since D-122 the aircraft flies `AIRSPEED_MIN` / `AIRSPEED_CRUISE` 17 m/s; the first-flight table below is
+> history. Current speed side, power curve at e 0.85 and 17 m/s values: `review/DESIGN-ROUND-2026-11-14/B1.md`.
 
 Status: `MODELLED` (B1, rev 3, 2026-11-09, answers CR-A1-30). Rev 3 adds five changes to the model:
 
@@ -43,7 +54,7 @@ C1's VD therefore becomes 32.1 m/s, unless F4 caps fixed-wing rpm at about 7 950
 | Mass: gate / sized / lightest flying | 2.600 / 2.590 / 2.318 | kg | `params.json#requirements`, `CL-A1-MASS-SIZED`, sized − growth reserve | `PROPOSED` |
 | Wing S, AR | 0.368, 3.59 | m², — | `CL-A1-WING-AREA`, `params.json#wing` (c 0.32) | `PROPOSED` |
 | Wing profile drag × tape-seam factor | 0.00685 × 1.10 | — | `P:b2.avl.cd0_wing`, `ASM-B1-WING-ROUGH` | `UNVERIFIED` |
-| Oswald e: base / pessimistic | 0.94 / 0.80 | — | `P:b2.avl.e_oswald`, `params.json#wing.oswald_e` | `UNVERIFIED` |
+| Oswald e: base / pessimistic (rev 3; since D-118 base 0.85) | 0.94 / 0.80 | — | `P:b2.avl.e_oswald`, `params.json#wing.oswald_e` | `UNVERIFIED` |
 | Lift slope, α₀, trimmed CLmax | 3.48 /rad, −1.17°, 0.80 | — | `P:b2.avl.cla_per_rad`, `P:b2.xfoil.alpha0_2d_deg`, `CL-B2-CLMAX-DESIGN` | `UNVERIFIED` |
 | Non-wing drag build-up | Cf 0.007, FF fin 1.20 / pod 1.30, tube Cd 0.30, CdA 0.0004 m² per motor, IF 1.15 | — | `ASM-B1-DRAG` | `UNVERIFIED` |
 | Pod widening 0.10 → 0.14 m: Cd on the added frontal area | 0.20 | — | `ASM-B1-POD-FRONT` (D-25) | `PROPOSED` |
@@ -67,7 +78,7 @@ C1's VD therefore becomes 32.1 m/s, unless F4 caps fixed-wing rpm at about 7 950
 | CD0: wing 0.0087 · fins 0.0124 · tubes 0.0142 · motors 0.0050 · pod 0.0031 + front 0.0018 · braces 0.0045 · collars 0.0017 | 0.0513 | — | `CL-B1-CD0` | `UNVERIFIED` |
 | Pod widening, friction + front | +0.0024 (0.14 N, 3.4 % of cruise drag) | — | `CALC-B1-AERO` `d_cd0_pod_wide` | `MODELLED` |
 | Braces + collars | +0.0062 (0.37 N, 9 % of cruise drag) | — | `CALC-B1-AERO` `d_cd0_braces_collars` | `MODELLED` |
-| k, base / pessimistic | 0.0943 / 0.1107 | — | `CL-B1-K`, `CL-B1-K-PESS` | `UNVERIFIED` |
+| k, base / pessimistic (rev 3; since D-118 `CL-B1-K` 0.1042) | 0.0943 / 0.1107 | — | `CL-B1-K`, `CL-B1-K-PESS` | `UNVERIFIED` |
 | Stall angle of attack | 12.0 | ° | `CL-B1-ALPHA-STALL` | `UNVERIFIED` |
 | L/D max (CL 0.74) / at 16 m/s | 7.2 / 6.3 | — | `CL-B1-LDMAX`, `CL-B1-CRUISE-LD` | `UNVERIFIED` |
 

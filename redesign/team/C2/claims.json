@@ -150,11 +150,11 @@
     "SRC-C2-ROARK"
    ],
    "outputs": {
-    "sigma_pa": 62587921.84590675,
+    "sigma_pa": 55795863.727678,
     "I_m4": 3.645032876327555e-09
    },
    "input_values": {
-    "Mb": 20.739548435395427,
+    "Mb": 18.488887059134406,
     "D": 0.022,
     "d": 0.02
    }
@@ -173,11 +173,11 @@
     "d": "P:wing.spar.id_m"
    },
    "outputs": {
-    "value": 13764119.19807867
+    "value": 14187482.1419552
    },
    "input_values": {
-    "T": 8.454878501359838,
-    "V": 33.20212880732039,
+    "T": 8.714774317291308,
+    "V": 34.231494069091355,
     "D": 0.022,
     "d": 0.02
    }
@@ -221,10 +221,10 @@
     "d": "P:wing.spar.id_m"
    },
    "outputs": {
-    "value": 59697465.7249478
+    "value": 60239225.99640126
    },
    "input_values": {
-    "Mx": 11.999507219620783,
+    "Mx": 12.179028492396784,
     "Fb": 143.422702,
     "y_fin": 0.32,
     "D": 0.022,
@@ -491,6 +491,23 @@
    }
   },
   {
+   "id": "CALC-C2-ANCHOR-PLUG",
+   "type": "calculation",
+   "title": "Plug bearing stress under the brace anchor",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_anchor_plug",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.anchor_plug_bearing_pa"
+   },
+   "outputs": {
+    "value": 448195.944733
+   },
+   "input_values": {
+    "v": 448195.944733
+   }
+  },
+  {
    "id": "CALC-C2-BOND",
    "type": "calculation",
    "title": "Spar slot bond shear",
@@ -709,11 +726,11 @@
     "r": "P:c2fea.fea_beam_twist_ratio_L4"
    },
    "outputs": {
-    "value": 16.42863806819269
+    "value": 16.354647936903536
    },
    "input_values": {
     "f": 15.046639,
-    "r": 0.8388337176668121
+    "r": 0.846440828788533
    }
   },
   {
@@ -728,11 +745,11 @@
     "r": "P:c2fea.fea_beam_twist_ratio_L4"
    },
    "outputs": {
-    "value": 31.042802151200434
+    "value": 30.902993787462876
    },
    "input_values": {
     "f": 28.43144,
-    "r": 0.8388337176668121
+    "r": 0.846440828788533
    }
   },
   {
@@ -940,7 +957,7 @@
     "WNG-002"
    ],
    "how": "T-C1-WING-PROOF (GT-08, the one wing limit proof, CR-C1-27): step 1 four-pad tree, step 2 V-block under the spar at y 0.32 m; no crack, permanent set < 0.5 mm; inspect the block-pocket and elevon cut-out corners with a light after each step",
-   "value": 62587921.84590675
+   "value": 55795863.727678
   },
   {
    "id": "CL-C2-SPAR-SIGMA-ENV",
@@ -980,7 +997,7 @@
     "WNG-002"
    ],
    "how": "T-C2-TWIST loads the wing in torsion to CL-C1-WING-TORSION-ULT / 1.5 (limit)",
-   "value": 13764119.19807867
+   "value": 14187482.1419552
   },
   {
    "id": "CL-C2-SPAR-BUCKLE",
@@ -1022,7 +1039,7 @@
     "FIN-004-R"
    ],
    "how": "T-C4-BLOCK-PROOF on a spar stub with the brace fitted",
-   "value": 59697465.7249478
+   "value": 60239225.99640126
   },
   {
    "id": "CL-C2-TIP-DEFL-FRAC",
@@ -1373,7 +1390,7 @@
     "WNG-003"
    ],
    "how": "T-C2-TAP-TEST (tap a fin tip); the band CL-C2-F-TORSION-ANTI .. -ANTI-HI is what F4's notch / crossover must clear until the tap test",
-   "value": 16.42863806819269
+   "value": 16.354647936903536
   },
   {
    "id": "CL-C2-F-SYM-HI",
@@ -1388,7 +1405,7 @@
     "WNG-003"
    ],
    "how": "T-C2-TAP-TEST; band CL-C2-F-TORSION-SYM .. -SYM-HI",
-   "value": 31.042802151200434
+   "value": 30.902993787462876
   },
   {
    "id": "CL-C2-WING-ZETA",
@@ -1423,47 +1440,64 @@
   {
    "id": "CL-C2-RING-NO-PLUG",
    "type": "claim",
-   "title": "Spar wall ring stress at the block bore end without a plug, design",
+   "title": "Spar wall ring stress at the block bore end without a plug (option not in the design, record)",
    "calc": "CALC-C2-RING",
    "output": "value",
    "unit": "Pa",
-   "limit": {
-    "op": "<=",
-    "ref": "P:c2.inputs.spar_hoop_allow_pa"
-   },
    "parts": [
     "WNG-002",
     "FIN-004-L",
     "FIN-004-R"
    ],
-   "how": "Shows the plug is required (expected FAIL); the plug claim CL-C2-PLUG-BEARING carries the load",
+   "how": "Why the plug is needed; the design is CL-C2-PLUG-BEARING",
    "assumes": [
     "ASM-C2-CONTACT"
    ],
    "cites": [
     "SRC-C2-ROARK"
    ],
+   "note": "record, no limit (closure round 2026-11-14): the design has the plug WNG-004-L/R; this is the no-plug option, 911 MPa vs the 40 MPa hoop allowable, kept to show why the plug is there",
    "value": 910890812.725561
   },
   {
    "id": "CL-C2-RING-ANCHOR",
    "type": "claim",
-   "title": "Spar wall ring stress under the brace anchor without a plug, design",
+   "title": "Spar wall ring stress under the brace anchor without a plug (option not in the design, record)",
    "calc": "CALC-C2-RING-ANCHOR",
+   "output": "value",
+   "unit": "Pa",
+   "parts": [
+    "WNG-002"
+   ],
+   "how": "Why the anchor plug is needed; the design is CL-C2-ANCHOR-PLUG-BEARING",
+   "assumes": [
+    "ASM-C2-CONTACT"
+   ],
+   "note": "record, no limit (closure round 2026-11-14): the design has the plug WNG-005-L/R; this is the no-plug option, 76 MPa vs the 40 MPa hoop allowable, kept to show why the plug is there",
+   "value": 76442538.602036
+  },
+  {
+   "id": "CL-C2-ANCHOR-PLUG-BEARING",
+   "type": "claim",
+   "title": "Plug bearing stress under the brace anchor saddle, plug fitted, design",
+   "calc": "CALC-C2-ANCHOR-PLUG",
    "output": "value",
    "unit": "Pa",
    "limit": {
     "op": "<=",
-    "ref": "P:c2.inputs.spar_hoop_allow_pa"
+    "ref": "P:c2.inputs.petg_bearing_allow_pa"
    },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
    "parts": [
-    "WNG-002"
+    "WNG-002",
+    "WNG-005-L",
+    "WNG-005-R"
    ],
-   "how": "Shows the anchor plug is required (expected FAIL)",
-   "assumes": [
-    "ASM-C2-CONTACT"
-   ],
-   "value": 76442538.602036
+   "how": "T-C4-BLOCK-PROOF with the plugs fitted: no wall crack under the anchor (light inside the tube)",
+   "note": "saddle line load w_anchor over the plug diameter (wing_struct.py local_spar); the plug is 30 % fill, so the bearing allowable on the solid PETG is high by up to about 3x (EST); the margin is ~45x",
+   "value": 448195.944733
   },
   {
    "id": "CL-C2-PLUG-BEARING",

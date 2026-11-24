@@ -1,0 +1,105 @@
+hub sector volume 7279 mm3 = 9.24 g PETG
+chol flag 0, 46.0 s
+solved 65.9 s, residual 2.2e-08 
+relative residual per load case: 1.7e-08 8.8e-10 2.3e-08 9.4e-10 1.3e-10 5.1e-10
+equilibrium error per unit case (N, or N mm / 100 mm): 2.9e-10 5.0e-12 4.6e-10 3.2e-12 4.7e-13 2.3e-12
+{"level": 0, "nodes": 475992, "elements": 280823, "dof_free": 1355016, "rbe3_nodes": 2048, "fixed_nodes": 24320, "t_mesh": 10.8, "t_assemble": 46.5, "t_factor": 0.0, "t_solve": 76.4, "equilibrium_err": [2.85e-10, 5.02e-12, 4.56e-10, 3.16e-12, 4.69e-13, 2.3e-12]}
+{"tip_defl_1N_mm": 0.38971172635226703, "tip_defl_beam_clamped_at_mouth_mm": 0.07665550832276455, "mid_axial_1N_MPa": 1.2432314584064557, "mid_axial_beam_MPa": 1.2523667653132748}
+F1 hover/transition at the spin cap, pitch-over, 1P
+   sleeve     {'p1': 15.49, 'vm': 12.26, 'at': [9.93, 6.9, -2.21]}
+   web        {'p1': 37.85, 'vm': 34.65, 'at': [8.83, 29.21, -4.39]}
+   floor      {'p1': 40.44, 'vm': 35.56, 'at': [8.73, 29.33, -4.73]}
+   mouth      {'p1': 2.31, 'vm': 1.61, 'at': [4.74, 56.2, -3.85]}
+   tube_root  {'axial': 32.27, 'hoop': 5.34, 'shear': 7.79, 'at': [5.1, 35.19, -2.89]}
+   tube_mid   {'axial': 20.91, 'hoop': 0.05, 'shear': 0.56, 'at': [-5.74, 86.4, 1.17]}
+   tube_tip   {'axial': 6.39, 'hoop': 1.56, 'shear': 1.02, 'at': [-4.86, 236.42, 3.28]}
+   cup        {'p1': 5.79, 'vm': 4.69, 'at': [-4.58, 279.5, 8.31]}
+F2 uncapped motor fault + pitch-over + 1P
+   sleeve     {'p1': 18.0, 'vm': 14.21, 'at': [9.93, 6.9, -2.21]}
+   web        {'p1': 43.93, 'vm': 40.21, 'at': [8.83, 29.21, -4.39]}
+   floor      {'p1': 46.91, 'vm': 41.25, 'at': [8.73, 29.33, -4.73]}
+   mouth      {'p1': 2.67, 'vm': 1.87, 'at': [4.74, 56.2, -3.85]}
+   tube_root  {'axial': 37.47, 'hoop': 6.21, 'shear': 9.1, 'at': [5.1, 35.19, -2.89]}
+   tube_mid   {'axial': 24.23, 'hoop': 0.05, 'shear': 0.66, 'at': [-5.74, 86.4, 1.17]}
+   tube_tip   {'axial': 7.14, 'hoop': 1.69, 'shear': 1.08, 'at': [-4.86, 236.42, 3.28]}
+   cup        {'p1': 6.1, 'vm': 4.98, 'at': [-4.58, 279.5, 8.31]}
+S2 prop strike 30 N transverse at the prop plane (ground handling, not flight)
+   sleeve     {'p1': 50.86, 'vm': 36.86, 'at': [9.93, 5.93, 4.16]}
+   web        {'p1': 105.07, 'vm': 92.11, 'at': [-8.41, 29.3, -5.19]}
+   floor      {'p1': 106.43, 'vm': 101.21, 'at': [-8.74, 29.32, -4.71]}
+   mouth      {'p1': 8.82, 'vm': 7.44, 'at': [-2.05, 56.18, -5.73]}
+   tube_root  {'axial': 97.38, 'hoop': 19.71, 'shear': 26.16, 'at': [3.53, 35.54, 4.68]}
+   tube_mid   {'axial': 63.32, 'hoop': 0.07, 'shear': 9.51, 'at': [-1.72, 86.39, -5.59]}
+   tube_tip   {'axial': 21.85, 'hoop': 5.3, 'shear': 4.12, 'at': [-5.5, 251.05, 2.03]}
+   cup        {'p1': 24.05, 'vm': 18.94, 'at': [-4.58, 279.5, 8.31]}
+S3 blade stop, torque 30 N x 80 mm about the shaft (ground handling, not flight)
+   sleeve     {'p1': 14.18, 'vm': 10.81, 'at': [-9.94, 5.14, -5.08]}
+   web        {'p1': 31.96, 'vm': 29.71, 'at': [-8.76, 29.3, -4.64]}
+   floor      {'p1': 36.1, 'vm': 33.41, 'at': [-8.74, 29.32, -4.71]}
+   mouth      {'p1': 2.67, 'vm': 1.89, 'at': [-2.05, 56.18, -5.73]}
+   tube_root  {'axial': 31.41, 'hoop': 6.28, 'shear': 7.81, 'at': [3.53, 35.54, 4.68]}
+   tube_mid   {'axial': 26.74, 'hoop': 0.53, 'shear': 0.3, 'at': [1.42, 235.18, 5.69]}
+   tube_tip   {'axial': 33.4, 'hoop': 8.02, 'shear': 7.8, 'at': [0.22, 251.14, 5.86]}
+   cup        {'p1': 39.44, 'vm': 32.55, 'at': [-5.99, 279.71, 4.09]}
+S1 prop strike 30 N along the shaft (ground handling, not flight)
+   sleeve     {'p1': 53.74, 'vm': 36.35, 'at': [-9.94, 6.87, 2.26]}
+   web        {'p1': 113.71, 'vm': 104.25, 'at': [8.83, 29.21, -4.39]}
+   floor      {'p1': 120.98, 'vm': 106.58, 'at': [8.73, 29.33, -4.73]}
+   mouth      {'p1': 6.97, 'vm': 4.99, 'at': [-5.9, 56.17, 1.51]}
+   tube_root  {'axial': 98.79, 'hoop': 16.48, 'shear': 25.58, 'at': [-5.56, 35.48, 1.85]}
+   tube_mid   {'axial': 63.35, 'hoop': 0.03, 'shear': 1.85, 'at': [-5.61, 86.52, 1.69]}
+   tube_tip   {'axial': 13.36, 'hoop': 1.54, 'shear': 1.96, 'at': [-5.59, 236.3, 1.74]}
+   cup        {'p1': 4.6, 'vm': 3.62, 'at': [-4.58, 279.5, 8.31]}
+{
+"F1 hover/transition at the spin cap, pitch-over, 1P": {
+"socket": {
+"shear": 3.196316886889593,
+"peel": 1.9339556989463618
+},
+"cup": {
+"shear": 0.5603425768705693,
+"peel": 0.6871101555165331
+}
+},
+"F2 uncapped motor fault + pitch-over + 1P": {
+"socket": {
+"shear": 3.688177519138645,
+"peel": 2.2167957749719718
+},
+"cup": {
+"shear": 0.5869505907371363,
+"peel": 0.7292757679347778
+}
+},
+"S2 prop strike 30 N transverse at the prop plane (ground handling, not flight)": {
+"socket": {
+"shear": 10.133915015066622,
+"peel": 8.966700511839365
+},
+"cup": {
+"shear": 3.2717726599184167,
+"peel": 2.709902475702325
+}
+},
+"S3 blade stop, torque 30 N x 80 mm about the shaft (ground handling, not flight)": {
+"socket": {
+"shear": 3.216935867257581,
+"peel": 2.789401381766903
+},
+"cup": {
+"shear": 3.410500871688994,
+"peel": 2.7826764848788295
+}
+},
+"S1 prop strike 30 N along the shaft (ground handling, not flight)": {
+"socket": {
+"shear": 8.954581376921624,
+"peel": 5.493883776942543
+},
+"cup": {
+"shear": 0.5615805125492924,
+"peel": 0.6455448259330518
+}
+}
+}
+EXIT 0

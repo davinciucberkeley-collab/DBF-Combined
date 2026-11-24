@@ -112,8 +112,7 @@ Ids are the declared edges in `subsystems/*/interfaces.json`. Order = install / 
 
 ## Bonded joints
 
-Adhesive: one 30 min laminating epoxy for everything. **Structural** (printed and CF parts): + ~5 % colloidal
-silica, bond gap 0.1–0.3 mm. **Foam** fillets: + glass microballoons. Prep: PETG/ASA and CF 120 grit + IPA; paper
+Adhesive: one 30 min laminating epoxy for everything. **Structural** (printed and CF parts): neat (no silica: closure-round cost lever; the allowables come from neat-epoxy coupons T-C6-LAP-PETG), bond gap 0.1–0.3 mm. **Foam** fillets: + glass microballoons. Prep: PETG/ASA and CF 120 grit + IPA; paper
 face 220 grit without tearing; foam dust-off only. Cure 24 h ≥ 18 °C; parts within 50 mm of a motor get 4 h at
 50 °C post-cure (CR-C6-04).
 

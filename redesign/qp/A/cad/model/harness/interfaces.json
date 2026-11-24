@@ -1,0 +1,562 @@
+{
+ "schema": "dbf-interfaces/1",
+ "subsystem": "harness",
+ "parts": [
+  {
+   "id": "HRN-003-R",
+   "name": "Phase-lead raceway (D-199, R): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 1.43,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0204,
+    0.019,
+    0.0027
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "HRN-003-L",
+   "name": "Phase-lead raceway (D-199, L): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 1.43,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0204,
+    -0.019,
+    0.0027
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "HRN-004-UR",
+   "name": "Hub conduit (D-199, D-202, UR): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.98,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0659,
+    0.012,
+    0.0182
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "HRN-004-UL",
+   "name": "Hub conduit (D-199, D-202, UL): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.72,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0612,
+    -0.013,
+    0.0179
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "HRN-004-LR",
+   "name": "Hub conduit (D-199, D-202, LR): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.9,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0607,
+    0.0156,
+    -0.0168
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "HRN-004-LL",
+   "name": "Hub conduit (D-199, D-202, LL): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 1.22,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    -0.0649,
+    -0.0142,
+    -0.0173
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "HRN-002",
+   "name": "XT60 female + 14 AWG tail to the ESC (modelled)",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 8.0,
+   "material": "copper / silicone / nylon",
+   "cg_xyz_m": [
+    0.0883,
+    0.0635,
+    0.0168
+   ],
+   "make_or_buy": "buy",
+   "electrical": "bus",
+   "carried": true,
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "HRN-001",
+   "name": "Harness remainder, bottom-up (D-198): phase-lead extensions, splices, ESC ribbon, sensor leads, servo ties, sleeves / ties / tape / solder - lumped",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 54.0,
+   "material": "copper / silicone",
+   "cg_xyz_m": [
+    0.03,
+    0.0,
+    0.02
+   ],
+   "make_or_buy": "make",
+   "mass_proxy": true,
+   "carried": true,
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  }
+ ],
+ "edges": [
+  {
+   "id": "E-HRN-30",
+   "part_a": "HRN-003-R",
+   "part_b": "CGE-008",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "raceway bonded to the tray plate underside (top face z 6.0), lowered from above before the tray, in its foam groove (D-199)"
+  },
+  {
+   "id": "E-HRN-32",
+   "part_a": "HRN-003-R",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "harness",
+   "notes": "raceway taped in its foam groove (D-199)"
+  },
+  {
+   "id": "E-HRN-33",
+   "part_a": "HRN-003-L",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "harness",
+   "notes": "raceway taped in its foam groove (D-199)"
+  },
+  {
+   "id": "E-HRN-31",
+   "part_a": "HRN-003-L",
+   "part_b": "CGE-008",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "raceway bonded to the tray plate underside (top face z 6.0), lowered from above before the tray, in its foam groove (D-199)"
+  },
+  {
+   "id": "E-HRN-40",
+   "part_a": "HRN-004-UR",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "hub conduit floor bonded on the hub sleeve and the tube (D-199, D-202)"
+  },
+  {
+   "id": "E-HRN-50",
+   "part_a": "HRN-004-UR",
+   "part_b": "HRN-003-R",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "conduit drop column bonded on the raceway wall round its window (D-199, D-202)"
+  },
+  {
+   "id": "E-HRN-41",
+   "part_a": "HRN-004-UL",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "hub conduit floor bonded on the hub sleeve and the tube (D-199, D-202)"
+  },
+  {
+   "id": "E-HRN-51",
+   "part_a": "HRN-004-UL",
+   "part_b": "HRN-003-L",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "conduit drop column bonded on the raceway wall round its window (D-199, D-202)"
+  },
+  {
+   "id": "E-HRN-42",
+   "part_a": "HRN-004-LR",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "hub conduit floor bonded on the hub sleeve and the tube (D-199, D-202)"
+  },
+  {
+   "id": "E-HRN-52",
+   "part_a": "HRN-004-LR",
+   "part_b": "HRN-003-R",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "conduit drop column bonded on the raceway wall round its window (D-199, D-202)"
+  },
+  {
+   "id": "E-HRN-43",
+   "part_a": "HRN-004-LL",
+   "part_b": "CGE-001",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "hub conduit floor bonded on the hub sleeve and the tube (D-199, D-202)"
+  },
+  {
+   "id": "E-HRN-53",
+   "part_a": "HRN-004-LL",
+   "part_b": "HRN-003-L",
+   "via": "CT-EPOXY",
+   "owner": "harness",
+   "notes": "conduit drop column bonded on the raceway wall round its window (D-199, D-202)"
+  },
+  {
+   "id": "E-HRN-21",
+   "part_a": "HRN-002",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-FOAM",
+   "owner": "harness",
+   "notes": "XT60 pair and tail taped on the skin (foam tape) and tied",
+   "retention": {
+    "item": "VHB-class tape",
+    "count": 1
+   }
+  },
+  {
+   "id": "E-HRN-20",
+   "part_a": "HRN-001",
+   "part_b": "WNG-001",
+   "via": "CT-TIE",
+   "owner": "harness",
+   "notes": "harness lump: ties and tape on the wing"
+  },
+  {
+   "id": "E-HRN-01",
+   "part_a": "PWR-001",
+   "part_b": "HRN-002",
+   "via": "CT-XT60",
+   "owner": "harness",
+   "notes": "pack lead XT60 male mated to the ESC-side XT60 female (disconnect); both lead pairs run outboard of the plate",
+   "wire": {
+    "gauge_awg": 14,
+    "connector": "XT60",
+    "route_id": "R-A-01",
+    "support_points": [
+     "tape on the skin"
+    ],
+    "bend_radius_mm": 6,
+    "strain_relief": "heat-shrink + tie",
+    "disconnect": true
+   },
+   "current_a": {
+    "cont": 11,
+    "peak": 41
+   }
+  },
+  {
+   "id": "E-HRN-12",
+   "part_a": "HRN-002",
+   "part_b": "PRP-003",
+   "via": "CT-SOLDER-DC",
+   "owner": "harness",
+   "notes": "14 AWG tail from the XT60 female to the ESC battery pads (flat pair, inboard over the ESC)",
+   "wire": {
+    "gauge_awg": 14,
+    "connector": "solder + heat-shrink",
+    "route_id": "R-A-12",
+    "support_points": [
+     "tie at the plate edge"
+    ],
+    "bend_radius_mm": 6,
+    "strain_relief": "heat-shrink + tie",
+    "disconnect": false
+   },
+   "current_a": {
+    "cont": 11,
+    "peak": 41
+   }
+  },
+  {
+   "id": "E-HRN-13",
+   "part_a": "PWR-001",
+   "part_b": "HRN-002",
+   "via": "CT-SOLDER-DC",
+   "owner": "harness",
+   "notes": "D-199: pack power leads (vendor, 14 AWG about 100 mm) from the pack end face through the tray end-wall notch, down to the skin and along it to the XT60 male; taped on the skin",
+   "wire": {
+    "gauge_awg": 14,
+    "connector": "vendor leads to XT60 male",
+    "route_id": "R-A-13",
+    "support_points": [
+     "tray end-wall notch",
+     "tape on the skin"
+    ],
+    "bend_radius_mm": 6,
+    "strain_relief": "vendor heat-shrink",
+    "disconnect": false
+   },
+   "current_a": {
+    "cont": 11,
+    "peak": 41
+   }
+  },
+  {
+   "id": "E-HRN-14",
+   "part_a": "PWR-001",
+   "part_b": "HRN-002",
+   "via": "CT-SOLDER-DC",
+   "owner": "harness",
+   "notes": "D-199: pack balance lead (5 conductors, EST 1.2 mm bundle) from the end face over the top edge to the JST-XH plug on the pack top",
+   "wire": {
+    "gauge_awg": 26,
+    "connector": "JST-XH 5-pin",
+    "route_id": "R-A-14",
+    "support_points": [
+     "pack top"
+    ],
+    "bend_radius_mm": 4,
+    "strain_relief": "vendor lead",
+    "disconnect": false
+   }
+  },
+  {
+   "id": "E-HRN-02",
+   "part_a": "PRP-003",
+   "part_b": "PRP-001-UR",
+   "via": "CT-SOLDER-PHASE",
+   "owner": "harness",
+   "notes": "motor phase leads UR (3 x 20 AWG, OD 1.8 mm, V T-Motor / Pimoroni): out of the motor base through the cup lead hole into the cup collar, inside the arm bore to the hub end, out through the socket floor hole, then exposed over the hub and wing (D-198) to the ESC pad",
+   "wire": {
+    "gauge_awg": 20,
+    "connector": "solder + heat-shrink",
+    "route_id": "R-A-02",
+    "support_points": [
+     "cup collar",
+     "inside the arm tube",
+     "hub socket floor hole",
+     "tie at the hub aft face",
+     "tie at the plate edge"
+    ],
+    "bend_radius_mm": 4,
+    "strain_relief": "heat-shrink + tie at the floor hole",
+    "disconnect": false
+   },
+   "current_a": {
+    "cont": 10.9,
+    "peak": 12.1
+   }
+  },
+  {
+   "id": "E-HRN-03",
+   "part_a": "PRP-003",
+   "part_b": "PRP-001-UL",
+   "via": "CT-SOLDER-PHASE",
+   "owner": "harness",
+   "notes": "motor phase leads UL (3 x 20 AWG, OD 1.8 mm, V T-Motor / Pimoroni): out of the motor base through the cup lead hole into the cup collar, inside the arm bore to the hub end, out through the socket floor hole, then exposed over the hub and wing (D-198) to the ESC pad",
+   "wire": {
+    "gauge_awg": 20,
+    "connector": "solder + heat-shrink",
+    "route_id": "R-A-03",
+    "support_points": [
+     "cup collar",
+     "inside the arm tube",
+     "hub socket floor hole",
+     "tie at the hub aft face",
+     "tie at the plate edge"
+    ],
+    "bend_radius_mm": 4,
+    "strain_relief": "heat-shrink + tie at the floor hole",
+    "disconnect": false
+   },
+   "current_a": {
+    "cont": 10.9,
+    "peak": 12.1
+   }
+  },
+  {
+   "id": "E-HRN-04",
+   "part_a": "PRP-003",
+   "part_b": "PRP-001-LR",
+   "via": "CT-SOLDER-PHASE",
+   "owner": "harness",
+   "notes": "motor phase leads LR (3 x 20 AWG, OD 1.8 mm, V T-Motor / Pimoroni): out of the motor base through the cup lead hole into the cup collar, inside the arm bore to the hub end, out through the socket floor hole, then exposed over the hub and wing (D-198) to the ESC pad",
+   "wire": {
+    "gauge_awg": 20,
+    "connector": "solder + heat-shrink",
+    "route_id": "R-A-04",
+    "support_points": [
+     "cup collar",
+     "inside the arm tube",
+     "hub socket floor hole",
+     "tie at the hub aft face",
+     "tie at the plate edge"
+    ],
+    "bend_radius_mm": 4,
+    "strain_relief": "heat-shrink + tie at the floor hole",
+    "disconnect": false
+   },
+   "current_a": {
+    "cont": 10.9,
+    "peak": 12.1
+   }
+  },
+  {
+   "id": "E-HRN-05",
+   "part_a": "PRP-003",
+   "part_b": "PRP-001-LL",
+   "via": "CT-SOLDER-PHASE",
+   "owner": "harness",
+   "notes": "motor phase leads LL (3 x 20 AWG, OD 1.8 mm, V T-Motor / Pimoroni): out of the motor base through the cup lead hole into the cup collar, inside the arm bore to the hub end, out through the socket floor hole, then exposed over the hub and wing (D-198) to the ESC pad",
+   "wire": {
+    "gauge_awg": 20,
+    "connector": "solder + heat-shrink",
+    "route_id": "R-A-05",
+    "support_points": [
+     "cup collar",
+     "inside the arm tube",
+     "hub socket floor hole",
+     "tie at the hub aft face",
+     "tie at the plate edge"
+    ],
+    "bend_radius_mm": 4,
+    "strain_relief": "heat-shrink + tie at the floor hole",
+    "disconnect": false
+   },
+   "current_a": {
+    "cont": 10.9,
+    "peak": 12.1
+   }
+  },
+  {
+   "id": "E-HRN-06",
+   "part_a": "PRP-003",
+   "part_b": "AVN-002",
+   "via": "CT-JST-GH-6",
+   "owner": "harness",
+   "notes": "ESC lead to the FC (VBAT, signals, telemetry): 6 conductors, soldered to the FC pads (the Kakute has pads, not sockets: docs.holybro.com pinout 2026-11-15)",
+   "wire": {
+    "gauge_awg": 26,
+    "connector": "JST-GH 6-pin",
+    "route_id": "R-A-06",
+    "support_points": [
+     "tie on the plate"
+    ],
+    "bend_radius_mm": 3,
+    "strain_relief": "strain loop",
+    "disconnect": false
+   }
+  },
+  {
+   "id": "E-HRN-07",
+   "part_a": "AVN-002",
+   "part_b": "MEC-001-R",
+   "via": "CT-SERVO-JR",
+   "owner": "harness",
+   "notes": "servo lead R: 3-conductor ribbon, soldered to the FC pad M5/M6 (JR plug cut off; the FC has pads only), laid on the skin to the servo",
+   "wire": {
+    "gauge_awg": 26,
+    "connector": "JR 3-pin",
+    "route_id": "R-A-07",
+    "support_points": [
+     "tie at the plate edge",
+     "tape on the skin"
+    ],
+    "bend_radius_mm": 3,
+    "strain_relief": "strain loop",
+    "disconnect": false
+   }
+  },
+  {
+   "id": "E-HRN-08",
+   "part_a": "AVN-002",
+   "part_b": "MEC-001-L",
+   "via": "CT-SERVO-JR",
+   "owner": "harness",
+   "notes": "servo lead L: 3-conductor ribbon, soldered to the FC pad M5/M6 (JR plug cut off; the FC has pads only), laid on the skin to the servo",
+   "wire": {
+    "gauge_awg": 26,
+    "connector": "JR 3-pin",
+    "route_id": "R-A-08",
+    "support_points": [
+     "tie at the plate edge",
+     "tape on the skin"
+    ],
+    "bend_radius_mm": 3,
+    "strain_relief": "strain loop",
+    "disconnect": false
+   }
+  },
+  {
+   "id": "E-HRN-09",
+   "part_a": "AVN-002",
+   "part_b": "AVN-003",
+   "via": "CT-JST-GH-4",
+   "owner": "harness",
+   "notes": "RX UART (CRSF wire soldered at the RX pads), enclosed under the bay cover and the RX hood (T-022 Q4) lead",
+   "wire": {
+    "gauge_awg": 28,
+    "connector": "CT-JST-GH-4",
+    "route_id": "R-HRN-09",
+    "support_points": [
+     "tie on the plate"
+    ],
+    "bend_radius_mm": 3,
+    "strain_relief": "strain loop",
+    "disconnect": false
+   }
+  },
+  {
+   "id": "E-HRN-10",
+   "part_a": "AVN-002",
+   "part_b": "AVN-004",
+   "via": "CT-JST-GH-6",
+   "owner": "harness",
+   "notes": "GPS (plug on the GPS board, other end soldered to the FC) lead",
+   "wire": {
+    "gauge_awg": 28,
+    "connector": "CT-JST-GH-6",
+    "route_id": "R-HRN-10",
+    "support_points": [
+     "tie on the plate"
+    ],
+    "bend_radius_mm": 3,
+    "strain_relief": "strain loop",
+    "disconnect": false
+   }
+  },
+  {
+   "id": "E-HRN-11",
+   "part_a": "AVN-002",
+   "part_b": "AVN-005",
+   "via": "CT-JST-GH-4",
+   "owner": "harness",
+   "notes": "airspeed I2C (plug on the MS4525 board, other end soldered to the FC), enclosed under the bay cover, through the window drop and in the core groove (T-022 Q4) lead",
+   "wire": {
+    "gauge_awg": 28,
+    "connector": "CT-JST-GH-4",
+    "route_id": "R-HRN-11",
+    "support_points": [
+     "tie on the plate"
+    ],
+    "bend_radius_mm": 3,
+    "strain_relief": "strain loop",
+    "disconnect": false
+   }
+  }
+ ],
+ "acknowledges": []
+}

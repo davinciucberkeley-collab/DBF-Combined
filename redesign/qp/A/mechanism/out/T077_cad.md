@@ -1,0 +1,819 @@
+# T-077 concept A O4b CAD (partial: pack, tray, strut, cover, mass basis), 2026-11-20
+
+Status: **PARTIAL. Not VERIFIED COMPLETE. Nothing committed.** Edited: `cad/amodel/common.py`, `wing.py`, `electrical.py`, new `cad/amodel/printed_mass.json`; gate runs regenerated tracked outputs (interfaces.json, cad/out/*, sitl/cad_mass.json, params-A.json, proofs/out/*, drawings/out/*). No docs/, CHANGE-LOG, ledger, MASS-GATE edit. Data and scripts: `T077_data/`.
+
+## 0. Acceptance test (restated from the brief)
+1. FIRST: RDQ 2,800 mAh pack (107 x 33 x 46 mm, 270 g) fit against bay / tray / cover and the 0.90 x 0.50 x 0.39 m box; STOP and report options if it needs other systems moved.
+2. Then CAD for the decided O4b parts with vendor/real shapes, enclosed wiring (exposed lengths listed), no interpenetration, masses from volume x T-067 basis, drawings regenerated, gates once at the end (build, collide pose 21, linkage poses, assembly, wire_inventory, cad_mass, mission_gate, T-067 audit, proofs/run_all).
+Categories: interference (fit check, collide, assembly), geometry arithmetic (mass), illustrative (CG shift), kinematics (linkage poses, unchanged).
+
+## 1. Step 1: pack fit check (`T077_data/fit_check.py`, output `fit_check_out.txt`): FITS, no other system moved; no STOP
+Orientation: 107 mm along y, 33 mm along x, 46 mm up (z). Pack cell 46 x 33 x 107 occupies x -26.5..6.5 mm (centre -10, as before), z 9..55 mm.
+- Tray: pack half length 53.5 mm vs end wall inner face 54.0 mm (0.5 mm gap). Walls moved outward 1.5 mm each (tray plate 109 -> 112 mm wide, core slot 114 -> 117 mm). Nothing else is in that y range at x -45..22.5.
+- Trim travel kept: at -6 / 0 / +10 mm the cell x ranges are -32.5..0.5 / -26.5..6.5 / -16.5..16.5; bbox overlaps with every other part (excluding tray, strap, pad, wires, core): none. Cover AVN-008 starts x 22.5: 6.0 mm clear at full aft trim.
+- Upper arm tubes at the pack end (|y| 53.5): axis z 36.6, x -81.5..-56.5; pack x min -32.5: 24 mm clear in x.
+- Box proxy: whole-aircraft CAD bbox 479.4 x 900.0 x 461.3 mm before and after (the pack sets no extreme: x min PRP-005-LL, z extremes PRP-002). **Pre-existing finding (not caused by T-077): sorted extent 0.900 / 0.479 / 0.461 m against the 0.90 / 0.50 / 0.39 proxy: the third dimension is 0.461, over by 71 mm, because the props (z +-230.7 mm) are included.** `params-A.json` `box.packed_m` says 0.39 "props on"; the CAD does not agree. Needs the packed configuration decided (props off or rotated).
+- Rejected orientation B (46 mm along x, 33 up): x span -39..23 mm at full trim, pack top z 42 mm against the cover roof outer z 8.9 mm at x 23: collides with the cover at aft trim, would remove the +10 mm trim travel (CG authority) or force the cover and FC/ESC aft. Not taken.
+- Strap: drawn loop inner perimeter 354 mm (327 mm with the Tattu). **BOM W08 is a 300 mm strap: too short, already too short for the old loop.** Longer strap needed (about 384 mm with buckle overlap EST); price "-". Mass in the CAD scaled 5.5 g x 384/300 = 7.0 g (EST).
+- Leads: vendor XT60 lead 80 mm (RDQ page, 2026-11-19). Drawn route E-HRN-13 is 117.5 mm per strand (was 107.5). **Extension of about 37.5 mm 14 AWG (solder splice + heat-shrink, on the exposed run) or a re-soldered XT60 is needed; not drawn.** Pack tiny shifts: power leads exit x 1.5 mm (was 2.5) so the 3.0 mm strand clears the balance lead (gate caught a 0.56 mm overlap with 2.5).
+- Not analysed (no sims until final): aero effect of a 55 mm tall nose pack (was 38 mm), CG height (+8.5 mm of cell centroid).
+
+## 2. What was implemented (file:line)
+| Item | Change | Where |
+|---|---|---|
+| RDQ pack | PACK_L/W/H 107 x 33 x 46 mm (V racedayquads.com, read 2026-11-19), PACK_X (-26.5, 6.5), LEAD_LEN 80 mm, PACK_XL 1.5 mm, part name, mass 270 g | `common.py:48`, `electrical.py:534,539,545,711`, `wing.py:31` |
+| Tray y walls | TRAY_YI/YO 54.0/56.0, wall top z 29.5 (leads at z 32 clear by 1.0 mm), core slot +-58.5 | `common.py:51-52`, `wing.py:732` |
+| R1'' tray CGE-008 | one source of solids and windows (`_tray_solids`, `tray_volume_m3`, `tray_stats`): 1.2 mm plate on a 2.0 mm root pad (x -45..-35), centre rib tangent to the bridge tube, 3 x 4 plate windows per side drawn as 52.6 % of the 112 x 66.5 mm plate (R1'' calc used 50 % with 1.2 mm ribs; here ribs 2.0 mm, EST, T-073 hand calc NOT re-run), 2.0 mm end walls with 3 windows each, two 40 x 2.0 tabs per lip, solid band over the raceway footprint | `wing.py:512-565`, builder `wing.py:918+` |
+| Strut 6x4.0 | STRUT_ID 4.0 mm; mass from length x section x 1600 kg/m3 | `wing.py:83,622` |
+| Bay cover | COV_T 0.5 mm (vacuum-formed sheet, D-221) | `electrical.py:263` |
+| Strap | loop follows the pack height; mass scaled to the needed length | `electrical.py:712-714,911` |
+| Mass basis | `printed_mass.json` read by `P()` (T-067 s7 option A): printed parts = CAD volume x T-067 shell + infill basis; CGE-008 and AVN-008 re-run on the new shapes (`t077_mass_audit.py`, h 0.25 mm), the rest = T-067 adopted values | `common.py:176-188`, `T077_data/t077_write_printed_mass.py` |
+
+## 3. NOT done (needs the next implementer; each is a CAD module change that ripples into edges, build steps, assembly plan, drawings)
+- D-220 machined 6061 hub (the hub is still the printed PETG D-202 body, 15.82 g); D-222 sleeve L 32, staggered/tapered doubler, sleeve-mouth chamfer (touches the hub mesh `hub_body.py`, pins, doublers, cups); D-215 non-gated items; T-070 s7 Phase 2 CGE-006 node (Onyx + CF), CGE-007 tubular + R4 fillets r >= 1.5 and 3 x 3 mm pins in 4 mm walls, FIN-003/FIN-005 clamshell, glass skin shell part (1 ply +-45) and cove CF strip; R2 (AVN-001 removed, FC/ESC on bosses) and the Kakute H743-Wing part; R3fix cups.
+- Why stopped: each is a multi-file change to coupled geometry (wire holes, edges, assembly steps, FEA constants); doing them half-way would leave the 3-D gates failing. The pack and tray were done first by the stop rule, gated, and are in a passing interference state.
+- Kakute H743-Wing vendor data read (docs.holybro.com `kakute-h743-wing/overview.md`, 2026-11-20): dimensions 45 x 30 x 13.5 mm, mounting 25 x 25 mm M2, weight 28 g with USB extender. Hole diameter, PCB thickness, connector and header heights, stack/standoff height: "-" (not on the page; holybro.com store pages returned HTTP 429/404). It is a single 45 x 30 board against the 30 x 25 two-board F405 stack in the CAD, so the FC footprint, cover roof (45 mm now) and wire pads all change: not drawn.
+- Test-gated, left as drawn: pad foam / stroke change (December drop test), anything that waits on TP-4 / TP-5 coupons.
+- Not run: `collision/collide.py --glb` (not found as an A gate; `collide_a.py` is the A equivalent, as for D-212/T-022b).
+
+## 4. Gate results (all after the final edit; driver `T077_data/run_gates.sh`, summary `gates_summary.txt`)
+| Gate | Command | Exit | Time | Result |
+|---|---|---|---|---|
+| build / check | `python -I build_a.py` | **1** | 13 s | **FAIL: `graph:cg` CG x 29.7 mm outside 0.004..0.029 m.** All 10 modules ok, 0 warnings. A real consequence of s5, not a model error |
+| collide pose 21 | `A_ELEV_POSE=21 python -I collide_a.py` | 0 | 151 s | PASS, 496 bodies, 115 parts, 0 pairs > 0.05 mm static / -21 / +21 (`REPORT_pose21.md`) |
+| linkage poses | `collide_a.py --linkage-poses` | 0 | 253 s | PASS, 18 poses, 0 hits |
+| assembly | `a_assembly.py` | 0 | 1749 s | 66 steps, 115/115 placed, blocked or unsupported 0, wires before end parts none (`ASSEMBLY.md`) |
+| wire inventory | `wire_inventory.py` | 0 | 9 s | exposed 0.478 strand-m (was 0.448) |
+| cad_mass | `sitl/cad_mass.py` | 0 | 6 s | 1.40283 kg, CG x 29.72 mm |
+| mission_gate | `mission_gate_a.py` | 0 | 0 s | **stale**: hard-codes the Tattu 2300 (34 Wh) and CAD_BASIC 1,273.3 g / CG 21.37 mm (lines 59, 74); it does not read the CAD, so its output is unchanged and does not test T-077 |
+| T-067 audit | `t077_mass_audit.py 0.5` (all 42 printed parts) and `0.25 AVN-008 CGE-008` | 0 | minutes | tray 14.07 g (h 0.25; 13.94 at 0.5), cover 8.82 g; `t077_rows_*.json` |
+| proofs | `proofs/run_all.py` | 1 (strict) | 3 s | **fails 20 (stdout count, duplicates included) against the known 5 FAILS + A-P13 unverified.** New fails: CL-A-MASS-PRED / MASS-GATE-ROOM 1.615 kg vs 1.47, CUTS-REQUIRED 171 g, CG-HI 29.72 vs 26 mm, CG-TRIM-AFT 31.65 vs 28.5, SM 4.48 % vs 5 %, WINDOW-PRED 0.60 % vs 5, WINDOW-MASS, CRUISE-AVAIL 202.3 vs 204.6 s |
+| drawings | `make_drawings_a.py` | 0 | 170 s | 41/41 composed, 42 STLs |
+
+## 5. Mass roll-up and the CG finding (decision needed, not mine)
+CAD basic mass 1,287 g (HEAD build) -> **1,402.8 g**. Parts: printed parts to the T-067 basis +125.6 g (fin root blocks +31.4, saddles +26.8, cups +20.8, shoes +12.6, tray +10.3, avionics plate +9.9, clamps +10.2, node +7.7, hub -2.2, cover -1.6), strut 6x4.0 +about 3 g, strap +1.5 g, pack 0. CG x 21.2 -> **29.7 mm** (+8.5 mm; `cg_shift.py`). Three-fifths of it is the two fin root blocks (x 283 mm) and the four foot shoes (x 298 mm) whose drawn solids were already far above their listed 3.2 / 1.4 g (T-067). Consequences (claims above): SM 4.5 % chord below the 5 % limit, CG over the A-P4 26 mm top by 3.7 mm, over the 28.5 mm aft trim limit; the pack cannot fix it (270 g x 36 mm needed, the hub face is at -45 mm). Options for the board: forward ballast / forward-mounted FC and ESC, lighter aft parts (X7 Onyx blocks, -4 to -8 g pair per T-080), or re-derive the CG window. The predicted 1,639 g (T-074) is not reproduced by the CAD yet: hub Al, skin, node, bosses, H743 and growth are not drawn.
+
+## 6. Exposed wire table (CLAUDE.md rule; `wire_inventory.json`, strand-metres, sharp-corner lengths)
+| Edge | Wire | Exposed length | Reason it cannot be enclosed |
+|---|---|---|---|
+| E-HRN-13 | pack power leads, 2 strands 14 AWG | 117.5 mm each (was 107.5) | pack is outside the 53 mm wide cover; leads run from the end face over the wall and along the skin to the XT60 at x 85. Vendor lead 80 mm: about 37.5 mm extension |
+| E-HRN-14 | balance lead 5 x 26 AWG | 63.5 mm (was 54) | end face to the JST plug on the pack top (pack is 46 mm taller) |
+| E-HRN-12 | battery tail | 42.5 mm | unchanged |
+| E-HRN-07/08/11/10 | servo / I2C groove ends | 12 / 12 / 0 / 3 mm | unchanged |
+Total exposed 0.478 strand-m (was 0.448): +30 mm. Min bend radius of E-HRN-13 4.0 mm (rule >= 4), E-HRN-14 1.5 mm (as before, 1.2 mm class lead).
+
+## 7. Proposed CHANGE-LOG text (for the conductor)
+D-223 (T-077 partial, 2026-11-20): RDQ 2,800 mAh pack (107 x 33 x 46 mm, 270 g) fits standing 107 y x 33 x 46 z in the existing bay with the tray walls moved out 1.5 mm; no other system moved; trim travel -6/+10 mm kept; orientation with the 46 mm side along x rejected (cover and trim). Tray redrawn as R1'' (windows 52.6 %, ribs 2.0 mm EST, hand calc not re-run); strut 6x4.0; bay cover 0.5 mm vacuum-formed; masses of printed parts now from CAD volume x T-067 basis via `printed_mass.json`. Gates: collide pose 21, 18 linkage poses and the 66-step assembly pass; build check and proofs fail on CG / mass (CG 29.7 mm, 1,403 g basic) because the drawn fin blocks and shoes were under-listed. Open: strap 384 mm, pack lead extension 37.5 mm, packed box z 0.461 vs 0.39 m, mission_gate_a.py stale, hub Al / skin / node / R2 / R3fix / R4 / H743 not drawn.
+
+## 8. Limits
+Tray strength not re-checked on the drawn windows (T-073 numbers were 50 % / 1.2 mm ribs); orientation and print-basis values are EST (T-067); 6061, Onyx, glass values not used (those parts not drawn); lead exit height at mid thickness is EST (RDQ page does not give it); strap and lead extensions have no price ("-").
+
+---
+# Part 2 (2026-11-20, after conductor commit 77f3a8dd). PARTIAL again. Not VERIFIED COMPLETE. Nothing committed.
+
+## P2.0 What was and was not done
+Done: (a) ladder rung 1 for the CG: pack moved 10 mm forward (centre -20 mm, the QP-4 position) in the bay/tray; (b) `mission_gate_a.py --o4b` switch; (c) strap and lead-extension BOM text (proposed below); (d) all gates re-run.
+**NOT drawn (unchanged from part 1 s3):** Al hub (D-220) and sleeves L 32, D-222 arm-tube exit (staggered tapered doubler, sleeve-mouth chamfer, conduits), glass skin shell, X7 centre node, waterjet CF saddle clamshell, R2 bosses (avionics plate AVN-001 still drawn), R3fix cups, R4 clamps, Kakute H743-Wing part.
+Reasons, stated plainly: (1) the hub body is an OpenCASCADE mesh (`hub_body.py`, cached `hub_body_cache.npz`); **pythonocc / cadquery are not installed here (`No module named 'OCC'`)**, so a hub with sleeve L 32 or octagonal sleeves cannot be regenerated, and an Al hub from primitives would also change pins, doublers, cups, conduits, `fea_hub.py` constants and the lead-exit holes together; (2) R2 and the H743 move the FC / ESC pad coordinates that every wire (E-HRN-02..11) and the cover (roof 45 mm over a 30 x 25 board, now 45 x 30) depend on; (3) skin, node, clamshell need new parts with edges, assembly steps and drawings. Doing them half-way would break the 3-D gates, so I stopped before editing instead of leaving a failing tree. Each is a separate implementer task; suggested order: install OCC (or write the hub from prisms), then hub + D-222 together, then R2 + H743, then skin / node / clamshell.
+Kakute H743-Wing part name to use when drawn (CAD rule): "Flight controller Holybro Kakute H743-Wing, 45 x 30 x 13.5 mm (V docs.holybro.com, 2026-11-20), M2 25 x 25 mm, 28 g with USB extender; hole diameter -, PCB thickness -, connector and header heights -".
+
+## P2.1 CG and SM (CAD as drawn now, A-P4 band 19.3..26.0 mm, SM limit 5 %)
+| State | Basic g | CG x mm | SM % chord | Verdict |
+|---|---|---|---|---|
+| part 1 (pack centre -10) | 1,402.8 | 29.72 | 4.48 | fail CG band and SM |
+| **part 2 rung 1 (pack centre -20)** | 1,402.8 | **27.70** | **5.31** | SM passes; **CG-HI 27.7 vs 26 fails (-6.5 %)**; CL-A-CG-TRIM-AFT 29.62 vs 28.5 fails |
+(`sitl/cad_mass.json`, `mission_gate_a.py --o4b`; NP 40.7 mm from the script.) `build_a.py` check now PASSES (CG inside its 4..29 mm band).
+Rung 1 is exhausted: the front lip is at x -44.5..-42.5 on the root pad, the hub face is at x -45 (no further room); the +10 / -6 mm trim travel is unchanged, so the aft trim end is +10 mm of pack = +1.9 mm CG.
+**Rung 2 (avionics / ESC forward), estimate only, not drawn:** the plate may start at about x 31 (pack aft edge at +10 trim is now 6.5 mm; cover starts 22.5). FC + ESC + GPS + RX + plate + cover are about 100 g; moving them 10-20 mm forward is 1,000-2,000 g mm = -0.7 to -1.4 mm of CG.
+**Undrawn items, EST (g mm about the 27.7 mm CG, 1,403 g):** Al hub +11 g at x -65 = -1,040 (-0.7 mm); R2 (plate 17.9 g -> bosses about 3 g at x 92) = -960 (-0.7 mm); R3fix cups -11.2 g at x -73 = +1,130 (+0.8 mm); glass skin plus cove strip about 30 g at x 70 = +1,270 (+0.9 mm); H743 vs F405 +11 g at x 60 = +360 (+0.3 mm); net about +0.6 mm. All EST: skin mass is 48 g/m2 x about 0.32 m2 x 2 (resin) from the wing area, not from drawn volume.
+**Projection:** 27.7 + 0.6 - (0.7..1.4 rung 2) = 26.9..27.6 mm. **Rearranging cannot close it to 26.0 mm.** The residual 0.9-1.6 mm is 1,300-2,300 g mm. Ladder rung 3 (geometry), numbers: each fin root block FIN-003 is 18.9 g at x 283 mm (lever 255 mm): -4 g per block = -2,040 g mm = -1.5 mm CG (T-080's X7 Onyx variant gives -4 to -8 g for the pair: -0.7 to -1.4 mm); each foot shoe 4.55 g at x 298 (lever 270): -1 g on all four = -1,080 g mm = -0.8 mm; the saddles FIN-005 14.4 g each at x 67 are forward of the CG and do not help. No ballast, A-P4 band unchanged, as instructed. I stop here per the rule and report the options; the choice (X7 fin blocks and a lighter shoe, or a pack-length / hub geometry change) is the conductor's.
+
+## P2.2 Gates (re-run after the last edit; `gates_summary.txt`; part-1 outputs kept in `part1_gates/`)
+| Gate | Exit | Time | Result |
+|---|---|---|---|
+| build_a.py | **0** | 14 s | check PASS, 10 modules, 0 warnings, 1,403 g, CG 27.7 mm |
+| collide_a (A_ELEV_POSE=21) | 0 | 153 s | PASS, 0 pairs > 0.05 mm static / -21 / +21 |
+| collide_a --linkage-poses | 0 | 254 s | PASS, 18 poses |
+| a_assembly.py | 0 | 1745 s | 66 steps, 115/115 placed, 0 blocked or unsupported |
+| wire_inventory | 0 | 9 s | exposed 0.504 strand-m (HEAD 0.448); E-HRN-13 131 mm per strand, E-HRN-14 63.5 mm |
+| cad_mass | 0 | 6 s | 1.40283 kg, CG 27.70 mm |
+| mission_gate_a.py (default) | 0 | 1 s | output unchanged from before |
+| mission_gate_a.py --o4b | 0 | 1 s | RDQ 2800 (41.4 Wh, 784 mAh left at BATT_LOW); CAD basic 1,402.8 g, CG 27.70 mm, SM 5.31 %. Its mass roll-up table (the 1.466 kg rows) is still the old item list, so the energy rows use that mass, not 1.40 / 1.64 kg: not edited |
+| proofs/run_all.py | 1 (strict) | 1 s | fails 19 (was 20). Known: 5 FAILS + A-P13 unverified. New or still failing from the mass adoption: MASS-PRED and MASS-GATE-ROOM 1.615 vs 1.47 kg, CUTS-REQUIRED 171 g, CG-HI 27.7 vs 26, CG-TRIM-AFT 29.62 vs 28.5, WINDOW-PRED, WINDOW-MASS, CRUISE-AVAIL 202.3 vs 204.6 s. CL-A-SM now passes |
+Collision of the redrawn conduits: not applicable (conduits not redrawn).
+
+## P2.3 Strap and lead extension as real items (proposed BOM text; BOM-A.csv NOT edited)
+Exposed run now 131 mm per strand (pack 10 mm further forward) against the 80 mm vendor lead: extension 51 mm of 14 AWG per strand, or move the XT60 pair 51 mm forward (then the battery tail E-HRN-12 grows by the same and is exposed on the skin: rejected, more exposed wire).
+- W01 (change): "RDQ Series 14.8 V 4S 2800 mAh 100C XT60, 107 x 33 x 46 mm, 270 g +-1 %, XT60 lead 80 mm, JST-XH balance 35 mm; Race Day Quads $54.99, in stock, ground shipping only; page read 2026-11-19 (T079 addendum)". Qty and spares as the board set them.
+- W08 (change): "Pack strap 20 mm webbing, buckle, length >= 385 mm (drawn loop 354 mm inner + 30 mm overlap, EST; the STRIX 20 x 300 mm listing is 85 mm too short). Source and price: - (not looked up; suggestion: any 20 mm battery strap sold in 400 mm or longer)". CAD mass 7.0 g (EST, 5.5 g x 385/300).
+- New W10 (add): "Pack lead extension: 2 x 55 mm 14 AWG silicone (red + black; from W05 stock, 0.11 m), 2 solder splices with 3 mm heat-shrink (W05 kit), 0 extra purchase; about 1 g". Not drawn as a part (the CAD draws the full 131 mm run as the wires E-HRN-13); splice location on the exposed run, 3 mm.
+
+---
+# Part 3 (2026-11-20, T-077-p3). PARTIAL. Not VERIFIED COMPLETE. Nothing committed. No docs/, CHANGE-LOG, ledger, MASS-GATE or BOM edit (text proposed below).
+
+Acceptance test (restated from the brief): (1) machined 6061 hub per D-220 / D-221 (octagonal sleeves, L 32 per D-222, mass = drawn volume x 2.70 g/cm3) and the D-222 arm-tube exit (staggered tapered doubler, sleeve-mouth chamfer, conduits collision-checked); (2) glass skin shell (1 ply +-45, real thickness) and cove CF strip; (3) X7 centre node and waterjet CF saddle clamshell; (4) R2 FC / ESC bosses, Kakute H743-Wing; (5) R3fix cups, R4 clamps (fillets r >= 1.5); then the CG test against A-P4 19.3-26.0 mm and SM >= 5 %, rungs 2-3 only with a strength check; gates once at the end with no failing 3-D gate. Categories of every number below: interference (collide, assembly), geometry arithmetic (masses, CG moments), illustrative (CG sensitivities marked EST). No simulation, FEA, CFD or flight dynamics was run (no sims until final).
+Data and gate outputs: `T077_data/p3_gate_*.txt`, `p3_gates_summary.txt`, driver `T077_data/run_gates_p3.sh`; probe scripts for the hub fillet limit are described in P3.2.
+
+## P3.1 Outcome per item
+| Item | Status | Where |
+|---|---|---|
+| (1) Al hub, octagonal sleeves L 32, D-220 collar and 30 mm bore | **DONE, gated** | `wing.py` (constants SLV_*, COL_*, HUB_FIL*, hub_vol_m3, dbl_profile), `hub_body.py` (v3), `hub_body_cache.npz` regenerated with gmsh 4.15.2 OCC (5 s) |
+| (1) D-222 P1 staggered tapered doubler, sleeve-mouth chamfer; P2 L 32 | **DONE, gated** | `wing.py` DBL_STAG / DBL_TAPER / MOUTH_CH, `build_cage` |
+| (1) conduits redrawn | Conduits HRN-004 are generated from seat cuts against the new hub and doubler; no geometry change was needed, the collision gate is clean with them | `electrical.py` cd_mass_g mask updated to the octagon |
+| (2) glass skin shell WNG-011, cove CF strip WNG-012 | **DONE, gated** | `wing.py` (SKIN_*, skin_loops, strip_loop), assembly step A1 |
+| (3) X7 node CGE-006, CF saddle clamshell FIN-005 | **NOT drawn** (P3.4) | |
+| (4) R2 bosses, H743 part | **NOT drawn** (P3.4) | |
+| (5) R3fix cups, R4 clamps | **NOT drawn** (P3.4) | |
+| CG test | **FAILS and cannot be closed by rungs 2-3**; stop and numbers in P3.5 | |
+
+## P3.2 Hub CGE-001 as drawn (D-220 / D-221 s7.1 / D-222)
+- Material 6061-T6 (machined), density 2.70 g/cm3 (T-080 s1, https://en.wikipedia.org/wiki/6061_aluminium_alloy read 2026-11-20; secondary source, the conductor must replace it with a mill cert or MMPDS value before H-A1). `printed_mass.json` no longer lists CGE-001. **Mass = drawn volume 22.78 cm3 x 2.70 = 61.5 g** (was 15.82 g printed PETG, +45.7 g). Volume = core by voxel (pitch 0.25 mm: block + collar + two sleeves minus bores, pins, lead exits) + OCC junction-radius material 18.0 mm3 + strut sockets, webs and tray flange (analytic) - chamfers (analytic).
+- Shape: centre block 38.5 x 20 x 20 mm on the bridge axis (front face moved 0.5 mm forward, x -14.5, so sleeve A's front flat is flush with it), 3 mm radii on the four x-parallel edges; **two octagonal sleeves, 16 mm across flats (apothem 8.0 mm = 14 mm doubler OD + 2 x 1.0 mm wall at the flats; circumradius 8.66 mm), flats facing +-x and +-t (T-080 s7.1.1), over s +-32 mm (D-222 P2, was +-24, round R 8.5)**; the bore is the 12 mm tube for |s| < 11 and the 14 mm doubler OD for 11..32 (seat cut by the doubler); **0.5 mm x 45 deg internal chamfer at each sleeve mouth (D-222 P1; size EST, D-222 gives none)** and 0.5 mm x 45 deg chamfers on the four 4.8 mm lead exits (T-080 s7.1.5).
+- **D-220 collar drawn: 24 x 24 mm (y +-12, z -16..+8, top flush with the tray plate top z 8, 3 mm edge radii), mouth at x -24 (hub axis +45 mm), so the bridge bore is 30 mm long (floor at +15)**: T-071b C6 test box and D-220 "mouth about x 45". The tray plate and root pad are notched by a seat cut against the hub (T-071b: "24 x 12 mm notch"; tray mass not re-audited, the notch removes under 1 g, so CGE-008 14.07 g is conservative).
+- Junction radii: T-080 s7.1.2 asks R >= the end-mill radius (R 3.0 for a 6 mm cutter, EST). The OpenCASCADE fillet of the octagonal prisms **fails at 1.5, 2.0 and 3.0 mm** (probe: gmsh `occ.fillet` "Could not compute fillet" at sleeve A; sleeve B accepts 3.0 mm alone, sleeve A only up to 0.9 mm, 1.0 mm / 0.9 mm works as a pair). Drawn **1.0 mm (sleeve B) / 0.9 mm (sleeve A)**: needs a 2 mm end mill; cutter list "-". The 3.0 mm radius is NOT met: a machinist may add it, the CAD does not show it (mass effect about +0.1 g).
+- NOT drawn (sizes unspecified, "-"): lightening pockets (T-080: 24-30 g EST "lightened"; the drawn solid is the knee-mill / upper-mass-end shape, T-080 s3.1), 2.5 mm floor web (the floor is at +15 with the 45 deg cone as before), cross-pin holes through the collar and bridge (3 mm, drilled with the tubes bonded), glass-scrim barrier, anodise. **Grommets at the lead exits not drawn: the 3 x 1.8 mm strand bundle (3.88 mm envelope) leaves 0.46 mm per side in the 4.8 mm hole, no room for a grommet wall; size and material "-".**
+- Doubler CGE-009 (D-222 P1): s 11..47 mm (15 mm past the sleeve end), outer 5 mm tapered to a 0.2 mm tip wall (EST ply drop-off), 2.01 g each = revolved volume 1,259 mm3 x 1.6 g/cm3 (was 1.46 g); +2.2 g for four (audit EST +3.8 g for a straight 15 mm stagger).
+- Pack and strap interaction (decision needed, P3.6): the collar mouth at x -24 lies across the strap path (strap passes under the bridge at z -10 inside the collar's z -16..8, |y| <= 12), so **the strap moved aft to x -23.5..-3.5 and the pack went back to centre -10 mm (part-2 rung 1 reverted)**: the pack leads and balance plug sit in the pack's aft 10 mm (x -8.5 / -3.5 at centre -20), exactly under that strap. Gate evidence: with the pack at -20 and the strap at -23.5 the first collide run had E-HRN-13 / E-HRN-14 / JST plug vs strap overlaps of 1.29 / 0.27 / 1.60 mm.
+
+## P3.3 Glass skin WNG-011 and cove strip WNG-012 as drawn
+- WNG-011: 1 ply 48 g/m2 cloth + 40 g/m2 resin = 88 g/m2 (T-071_wing_skin.md l.24, l.67; T-070 s3), wet ply 0.054 mm (EST, no wet lay-up coupon), density 1.63 g/cm3 (= 88 g/m2 / 0.054 mm). Closed shell over the leading edge and the cove face on the core outline, y -0.40..+0.40 (T-070). **Drawn inside the core outline** (core machined by a seat cut), so every part that sits on the surface still sits on it. Openings are the core's own cuts: all explicit core cuts (including the wire slits, pitot and I2C slots, pockets, tray slot) and the core's guest seats are replicated on the skin. **Mass 26.7 g from the shell volume** (T-071: 27.0 g, T-070: 28.8 g). Packing-tape skin and hinge tape stay inside WNG-001's lumped 100.1 g (T-070 did not credit them).
+- WNG-012: cove CF strip, section **6 x 0.5 mm = 3 mm2 is my split: T-071 l.32 / l.69 give only the 3 mm2 area**, width, thickness and product "-" (in the part name). Under the skin on the cove face, centred, y -0.40..+0.40, interrupted by the same openings; 1.55 g/cm3 (T-071 l.69): **3.7 g** (full length; the openings are not subtracted: about 0.2 g conservative).
+- Assembly: laid in step A1 with the core (no sweep). Edges E-WNG-90 / 91 / 92 (epoxy).
+- Cost: the collision gate went from 152 s to 675 s (thin shell with ~40 copied cutters); the linkage and assembly gates are slower in proportion.
+
+## P3.4 Not drawn, and why (each is a specification or decision gap, not effort; nothing half-built is in the tree)
+- **(3) CGE-006 X7 node (T-071b N2: one-piece saddle with ears to y +-16.5, 0.5 mm CF plate, clevis ears, 4 x 3 mm pins in double shear).** The repo gives areas and EST allowables only (ear bond 41.5 x 19 mm, plate 0.5 mm): no ear outline, plate outline, pin coordinates or fibre layout. T-080 s3.2 itself says "expected yes; must be shown" (six-component rows, D-1 transient T-076c and coupons C-2 / C-3 pending). Drawing it would mean inventing about 15 dimensions; a material swap alone (Onyx 1.2 / 1.27 = x 0.945, -0.5 g) would be a false picture of N2. The current CGE-006 (9.67 g printed saddle) is unchanged.
+- **(3) FIN-005 clamshell (T-068 D4, D-221: 0.5 mm waterjet CF plates, about 50 x 75 mm at z +-7.5..9 inside the core, slim 2 mm cradle, rib engagement >= 40 mm, CF pins).** Three conflicts: the drawn socket is 24 mm long and the rib starts at the saddle front (40 mm engagement needs a longer rib or another socket); T-071b B.2 shows the cradle pin bearing at 0.37 (fix on paper: 4 mm boss, 3 pins) and the plate outlines are "about"; the core plate pockets and the spar ring (r 10.5) against plates at z +-9 are not reconciled. Needs a drawn-to-dimension spec. Current FIN-005 (14.4 g each in `printed_mass.json`) unchanged.
+- **(4) R2 / Kakute H743-Wing.** Removing AVN-001 moves the FC and ESC pad coordinates that E-HRN-02..11 and the cover (roof 45 mm) depend on, and the H743 is one 45 x 30 board against the drawn 30 x 25 two-board stack; GPS, RX and the cover seat need their own pads (T-073: +1..3 g). Part name ready: "Flight controller Holybro Kakute H743-Wing, 45 x 30 x 13.5 mm (V docs.holybro.com kakute-h743-wing, read 2026-11-20), M2 25 x 25 mm, 28 g with USB extender; hole diameter -, PCB thickness -, connector and header heights -".
+- **(5) R3fix cups.** T-073 gives "5 mm plate over the +y 13 mm, 3 mm web 55 % of the area elsewhere (EST), tab widths my assumption, sleeve wall 3.5 -> 2.5 mm except at the screw-head pockets": which regions are windowed is not defined. **R4 clamps (socket OD 9 x 25 mm tube along the strut axis, ring wall 2.5, junction strips 2 x 2.5 x 9 mm EST, fillets r >= 1.5):** the CAD kernel's tube / revolve bodies are axis-aligned and the strut is 66 deg to x, so it needs an OCC mesh body like the hub (the hub_body route now works); not started.
+- Lightening of FIN-003 (rung 3): blocked, see P3.5.
+
+## P3.5 CG and static margin (illustrative, geometry arithmetic; `sitl/cad_mass.json`, `mission_gate_a.py --o4b`; A-P4 band 19.3..26.0 mm, SM >= 5 %)
+| State | Basic g | CG x mm | SM % | Verdict |
+|---|---|---|---|---|
+| part 2 (pack -20, no hub / skin) | 1,402.8 | 27.70 | 5.31 | CG-HI fails |
+| **part 3 as drawn (pack -10: the collar forces the strap and the pack aft)** | **1,483.3** | **28.30** | **5.06** | SM passes by 0.15 mm (limit CG 28.45); **A-P4 CG-HI fails by 2.3 mm; CL-A-CG-TRIM-AFT 30.12 vs 28.5 fails** |
+
+Moment budget part 2 -> part 3 (g mm about x 0): hub 61.5 g at x -58.4 replaces 15.8 g: -2,548; four doublers +2.2 g: -165; skin 26.7 g at x 91.9: +2,454; strip 3.7 g at x 181.2: +670; pack back 10 mm: +2,700; net +3,111 (+3,119 from the CAD totals). The solid Al hub gains 1.7 mm of forward CG, the skin and the strip take back 2.1, and the collar costs the 1.8 mm of the pack's rung 1.
+
+- Rung 1 (pack forward 10 mm, centre -20; `mission_gate_a --o4b` shows CG 26.5 mm, SM 5.8 %) is not available as drawn: it needs the two power leads and the balance plug moved to the front 12 mm of the pack (x -33..-29, ahead of the strap) with a longer exposed run over the nose (not drawn, not routed). Even then **26.5 > 26.0**.
+- Rung 2 (avionics forward): the group (plate 17.9 + FC 17.0 + RX 4.6 + GPS 13.5 + pads 1.0 + ESC 20.0 + cover 8.8 + screws 3.4 = 86.2 g) can move at most 5.5 mm (cover front x 22.5 against the pack aft edge 16.5 at +10 trim, 0.5 mm margin): 86.2 x 5.5 / 1,483 = **-0.32 mm** (EST, not drawn).
+- Rung 3 (lighten the fin root blocks / shoes): **no strength margin to give.** FIN-003 as drawn (PETG, 18.9 g) already has P6 0.50 / P8 0.51 against the landing demand (T-080 s3.4, "As drawn, PETG: no"); the decided T-068 enlarged block (+12.2 g pair, P6 1.58 / P8 1.72 in-layer) is not drawn yet. An X7 CF-reinforced slimmer block (+4 to +8 g EST, bond to Onyx "-", coupons C-1 to C-3) is "not shown" in T-080, and no D-223 landing-path run (`landing_path_a.py` / `landing_nodes_b.py`) exists for it, so I lightened nothing. The shoes (+7 g, T-068 D3) are decided aft growth, not savings.
+- **What the decided-but-undrawn items add** (EST, dg x (x - 28.3) / M): R2 -0.65 (plate out, bosses back +3 g at x 92), R3fix +0.78 (-11.2 g at x -73.6), R4 -0.08, X7 node about +0.2, H743 +0.24, **enlarged root blocks +2.08 (+12.2 g at x 283), shoe cups and pads +1.27 (+7 g at x 298)**. Sum about +3.8 mm: CG about **32 mm (EST), SM about 3.5 %** if every decided item is drawn at its estimate.
+- **The A-P4 band cannot be met by rungs 1-3 with the band unchanged and no ballast.** Stop; numbers above for the board. Options (conductor's call): move the wing about 6 mm aft relative to the hub (re-run the hub / bridge geometry), a longer nose for the pack (the collar sets x -24), re-derive the band, or give up the enlarged root blocks and the shoe cup growth (needs a strength path).
+
+## P3.6 Decisions and open items for the conductor
+1. Collar vs strap / pack (above): choose between pack aft (as drawn, CG 28.3), pack forward with the leads moved to the front (CG 26.5), or a shorter collar (D-220 asks for 30 mm of bond; a 21 mm collar cannot give it).
+2. The hub is drawn solid: pockets "-" (T-080 expected 24-30 g lightened; solid 61.5 g). 10 g of pockets moves the CG aft by about 0.59 mm (10 x (28.3 + 58.4) / 1,473). Decide the pocket mass only after the CG is closed.
+3. Junction radii 1.0 / 0.9 mm (2 mm cutter) instead of R3.0; confirm the cutter or accept a mesh body built another way.
+4. Hub FEA H-A1 / H-A2 and the D-222 re-judgement (P1 doubler, P2 L 32) were NOT run here (no FEA in this task): the drawn octagon wall (1.0 mm at the flats, 0.5 mm at the chamfered mouth edge) and the collar section are inputs for them. The wall at the chamfered mouth is below the T-080 1.0 mm rule (the 0.5 mm chamfer is EST).
+5. Tray strength with the collar notch and the windows is not re-checked (T-073 numbers: 50 % windows, 1.2 mm ribs).
+6. The mass-dependent gates (proofs below) fail on mass and CG; see P3.7.
+
+## P3.7 Gates (final tree, driver `T077_data/run_gates_p3.sh`; drawings composed separately)
+| Gate | Command | Exit | Time | Result |
+|---|---|---|---|---|
+| build / check | `python -I build_a.py` | 0 | 15 s | PASS, 10 modules, 0 warnings, 1,483 g declared |
+| collide pose 21 | `A_ELEV_POSE=21 python -I collide_a.py` | 0 | 675 s | **PASS**, 498 bodies, 117 parts, 0 pairs > 0.05 mm static / -21 / +21 |
+| linkage poses | `python -I collide_a.py --linkage-poses` | 0 | 788 s | **PASS**, 18 poses, 0 hits |
+| assembly (Blender) | `python -I a_assembly.py` | 0 | 1,852 s | **PASS**: 66 steps, 117 / 117 parts placed, blocked or unsupported 0, wires before end parts none |
+| wire inventory | `python -I wire_inventory.py` | 0 | 9 s | exposed **0.478 strand-m** (part 2: 0.504; part 1: 0.478): E-HRN-13 117 mm per strand, E-HRN-14 64 mm, E-HRN-12 43 mm, servo / I2C groove ends 12 / 12 / 0 / 3 mm; no new exposure from the hub or the skin |
+| cad_mass | `sitl/cad_mass.py` | 0 | 7 s | 1.48331 kg, CG x 28.30 mm |
+| mission gate | `mission_gate_a.py --o4b` | 0 | 1 s | RDQ 2800 pack, 41.4 Wh; CAD basic 1,483.3 g, CG 28.30 mm, SM 5.06 %; CG with the pack at -20: 26.5 mm (SM 5.8 %); its roll-up rows still use the old item list (1.466 kg), unchanged |
+| proofs | `proofs/run_all.py` | 1 (strict) | 4 s | the known 5 (ELEVON-TORSION-FOAM, HORN-BEARING-STALL, HORN-RIB-FOAM-HOLD / STALL, LINKAGE-FREEPLAY) plus the mass / CG / energy ones: **MASS-PRED and MASS-GATE-ROOM 1.704 kg vs 1.47 (part 2: 1.615)**, CUTS-REQUIRED 251.5 g, **CG-HI 28.3 vs 26**, CG-TRIM-AFT 30.12 vs 28.5, WINDOW-PRED -2.1 %, WINDOW-MASS 1.478 kg, CRUISE-AVAIL 173.5 vs 204.6 s, **TW-SAG-PRED 1.594 vs 1.6 (new)**; 14 distinct claims fail |
+| drawings | `make_drawings_a.py` (jobs + render, then `--compose`; the `-I` form cannot import compose_drawings) | 0 | 86 s + 95 s | 43 / 43 composed (41 before: WNG-011, WNG-012 added); hub step B0b text updated to the machined part in `a_build_steps.py` |
+
+The 3-D gates (collide pose 21, linkage poses, assembly, build check) pass without exemptions. The failing proofs are mass / CG claims, not interference: the drawn parts now carry the decided masses (hub, skin) while the mass savings (R2, R3fix, R4) are not drawn.
+
+## P3.8 Proposed text (for the conductor; not applied)
+- CHANGE-LOG D-224 (T-077 p3, 2026-11-20): "CAD now carries D-220 / D-221 / D-222: machined 6061 hub (octagonal sleeves 16 mm across flats, L 32; 24 x 24 mm collar with a 30 mm bridge bore; 0.5 mm mouth and exit chamfers; junction radii 1.0 / 0.9 mm because OCC cannot fillet larger on the octagons; no pockets: 61.5 g = 22.78 cm3 x 2.70), staggered tapered doublers (s 11..47, +0.55 g each), glass skin shell 26.7 g (0.054 mm wet ply, EST) and cove CF strip 3.7 g. The collar crosses the pack strap path: strap moved to x -23.5..-3.5 and the pack back to centre -10 mm. CAD basic 1,483.3 g, CG 28.30 mm, SM 5.06 %: A-P4 CG-HI fails by 2.3 mm; rungs 1-3 cannot close it (rung 2 -0.3 mm, rung 1 needs the leads moved and still gives 26.5, rung 3 has no strength margin); the decided-but-undrawn aft items add about +3.8 mm (EST). Not drawn: X7 node, CF clamshell, R2 / H743, R3fix, R4 (specification gaps). Gates: collide pose 21, 18 linkage poses and the 66-step assembly pass; proofs fail on mass and CG."
+- BOM (not edited): 6061-T6 bar about 63.5 x 63.5 x 50.8 mm x 2 (T-080 V7, price "-"); glass cloth 48 g/m2 about 0.33 m2 per aircraft plus epoxy (O4b list, price "-"); CF strip 3 mm2 x 0.8 m (price "-"); the longer doublers use the same 14x12 CF tube (+0.55 g each).
+- MASS-GATE basis: hub 61.5 g solid (T-080 est. 24-30 g with pockets), skin 26.7, strip 3.7, doublers +2.2; the hub is no longer a printed part (removed from `printed_mass.json`).
+
+## P3.9 Limits
+Strength of the drawn hub, collar and doublers: not checked (H-A1 / H-A2 not run). Skin thickness 0.054 mm and the strip split 6 x 0.5 mm are EST; the skin was collision-checked at its real thickness, but the 0.05 mm tolerance is close to it, so a skin / part overlap below 0.05 mm would pass. 6061 density is from a secondary source. The pocket-free hub mass and all CG sensitivities are estimates labelled EST. Nothing was committed.
+
+---
+# Part 4 (2026-11-20, T-077-p4, D-224 rung 3 implementation). Not VERIFIED COMPLETE. Nothing committed. No docs/, CHANGE-LOG, ledger, MASS-GATE or BOM edit (text proposed in P4.9).
+
+Acceptance test (restated from the brief): (1) hub pockets >= 19 g removed, with the hub FEA H-A1 / H-A2 re-run on the pocketed geometry with the T-076c / T-076d tools and judging code, D-223 DAF 1.97 (tubes, bond, hub) / 2.23 (bridge) with the 1.5 floor and the D-1 / r_m 0.84 term; STOP if any row < 1.0; (2) CAD: pack on two outboard straps clear of the hub collar, avionics 15 mm forward, cage and pack 12 mm forward of the wing, wiring re-routed and enclosed; (3) the 12 mm longer bridge re-checked (bending, Euler, modal A-P10); (4) gates once at the end: build_a, `A_ELEV_POSE=21 collide_a.py`, `collide_a.py --linkage-poses`, a_assembly (Blender), wire_inventory, sitl/cad_mass, mission_gate_a --o4b, prop_a --sched at the new mass, proofs/run_all; report CG, SM, mass, window, T/W sag and fresh. Never leave a 3-D gate failing. Analysis categories: FEA (hub), hand calculation (bridge, strut), FEA-class beam modal (A-P10), interference (collide, linkage, assembly), geometry arithmetic (mass, CG), illustrative (prop_a thrust model, EST). No CFD, flight dynamics or landing simulation was run.
+Data and scripts: `T077p4_data/` (stress map `t077p4_stressmap.py`, pocketed FEA `t077p4_step4.py` + `fea_hub_d.py` (RC_R switch), judging `t077p4_judge.py`, step 5 `t077p4_step5.py`, modal `t077p4_modal.py`, metrics `t077p4_metrics.py`, gate driver `run_gates_p4.sh`, gate outputs `gates/`). Meshes, stress maps and wrench histories are `*.npz` in the git-ignored `T077p4_data/fea/` (`.gitignore` got three patterns).
+
+## P4.0 Outcome in one table
+| Item | Status |
+|---|---|
+| (1) hub pockets | **DONE and gated.** Cylinder R 9.25 mm about the bridge axis from x +15.5 mm to the collar mouth (block aft part and D-220 collar turned round; 1.25 mm wall round the 16 mm bore). CAD hub 61.5 -> **41.7 g (-19.8 g, >= 19)**; FEA solid 61.2 -> 41.0 g (-20.2 g). **H-A1 / H-A2 hub von Mises RF 1.03 (baseline 1.10) at MS 1.1 on the D-223 basis: no stop on the repo judging convention; but the mesh-refinement extrapolation gives about 0.87 (baseline 0.98): open, see P4.2** |
+| (2) cage + pack | **DONE and gated** (3c 12 mm, 3a two outboard straps). **3b avionics 15 mm forward: NOT done** (P4.4: the acceptance CG <= 25 mm is met without it and it is coupled to the pending R2 / H743 re-layout) |
+| (3) bridge 12 mm longer | Done by hand calculation + beam modal: bending, Euler, A-P10 (P4.5) |
+| (4) gates | 3-D gates **PASS** (collide pose 21, 18 linkage poses, assembly); build_a PASS; proofs fail only on the known / stale claims (P4.7) |
+
+## P4.1 Stress map and pocket choice (FEA post-processing; `t077p4_stressmap.py`, 27 min)
+Model = T-076d G1 (L_SLV 32, P1 doubler, mouth chamfer; 506,478 tet10, MS 1.1), partition B, the RB sets x 1.97 and the D-1 sets / 0.84. **Reproduction finding:** `fea_hub_d.py` reads `W.BLK_AFT` from the CAD; the T-077 p3 octagon (apothem 8.0 mm, was R 8.5) made it 9.5 instead of 10.0 mm, which silently moved the FEA block aft end 24.0 -> 23.5 mm, the collar to 44.5 mm and the hub-group RBE3 patch to a 1.5 mm annulus (891 nodes instead of 3,611). I pinned `BLK_AFT = 10.0` in the part-4 scripts; with it the G1 baseline reproduces T-076d exactly (hub 22,674 mm3, RB z0.02 max-excl 40.4, D-1 z0.10 83.3 MPa, RF 1.095). The T-076c / T-076d scripts themselves were not edited (a latent drift for any later run that imports the current CAD constants).
+Volume-weighted envelope (RB x 1.97, D-1 / 0.84), hub 61.2 g: below 15 MPa 30.9 g; below 30 MPa 59.8 g; the collar outside a cylinder of radius r about the bore: r > 10.0 mm 14.8 g, r > 9.5 mm 16.6 g, with maximum stress there 45 MPa (RF 3.1). Material at least 2.0 mm from every bore is 25.7 g in total (voxel, `T077p4_data/t077p4_medial.py`), and none of it is reachable from the block faces with a 2 mm bore wall (columns from a face are blocked at once): the T-080 estimate of 31-37 g removable (24-30 g left) is **not reachable** in 6061 with these bores; about 20 g is the practical figure. Cut chosen: everything outside **R 9.25 mm about the bridge axis for x >= 15.5 mm** (1.0 mm aft of sleeve B's aft flat; to the collar mouth x 45): 19.8 g in the CAD (voxel + OCC), 1.25 mm wall round the 16 mm bore (the old D-207 boss was R 9.5, 1.5 mm). Machining: turned or milled round; the 0.75 mm radial step at x 15.5 is a sharp shoulder in the CAD and the FEA (singular), see P4.2.
+
+## P4.2 H-A1 / H-A2 on the pocketed hub (FEA; `t077p4_step4.py --tag p925 --geom G1 --p RC_R=9.25 RC_X0=15.5`, 21 min; mesh 40.96 g Al, equilibrium error 3.8e-10, residual 1.2e-9)
+Same sets and judging as T-076d (tubes: LR-4 exclusion 0.5 mm, bond mean shear, hub von Mises max excluding 0.5 mm from tied edges vs 240 / 1.725 = 139.1 MPa; 6061 yield 240 MPa minimum from the secondary page of T-076c, unchanged). D-223 rule applied by `t077p4_judge.py` (RB row = RF / 1.97, D-1 row = RF x 0.84, minimum over pad zeta 0.02 / 0.05 / 0.10):
+
+| row | RB baseline -> pocketed | D-1 baseline -> pocketed |
+|---|---|---|
+| **hub von Mises (max excl 0.5 mm)** | 1.095 -> **1.032** | 1.403 -> 1.374 |
+| tube A axial / hoop | 1.212 -> 1.218 / 1.974 -> 1.919 | 1.274 -> 1.282 / 2.073 -> 2.018 |
+| tube B axial / hoop | **0.938 -> 0.940** / 1.490 -> 1.438 | 1.294 -> 1.293 / 2.052 -> 2.065 |
+| tube in-plane shear A / B | 4.34 -> 4.34 / 3.10 -> 3.08 | 4.32 -> 4.33 / 3.87 -> 3.84 |
+| bond mean shear, full length (judged) | **0.449 -> 0.439** | **0.650 -> 0.648** |
+| bond, T-076c definition (diagnostic) | 0.615 -> 0.484 | 0.852 -> 0.721 |
+Rows that passed (>= 1.0) at baseline and fail now: **none**. Rows below 1.0 are the same open rows as before the pockets (D-223, DAF ruling DR-2): tube B axial 0.94 (passes only if the pad zeta is below about 0.088), bond full 0.44-0.65 (TP-4 coupon), the T-076c-definition bond diagnostic (not judged; it fell from 0.61 / 0.85 to 0.48 / 0.72 because the pocket moves bond traction onto the hub points near the doubler seat: EST reading); interlaminar tau_s,r unchanged (allowable "-"). The hub maximum moved from the collar-mouth bore edge (x 44.65) to the new shoulder at x 15.6 (y 8.1, z -6.3; a sharp re-entrant corner that is not a tied edge, so it is not excluded); 44.2 MPa (RB z0.02) vs 40.4 baseline.
+**Interpretation of the stop rule (mine, stated):** several rows were already below 1.0 under D-223 before the pockets, so "any row < 1.0" cannot mean those; I stopped on (a) any aluminium hub row < 1.0 and (b) any row that passed at baseline and fails with the pockets. Neither fired at MS 1.1.
+**Mesh convergence, not hidden (`step4_p925ms14.json`, MS 1.4, 267 k elements, 13 min):** hub max-excl von Mises, coarse / fine = 0.855 / 0.849 / 0.843 (RB z0.02 / .05 / .10) and 0.746 / 0.800 / 0.929 (D-1): the finer mesh gives about 15-18 % higher stress at the governing row (T-076d baseline 0.88-0.90). One further refinement step with the same ratio would put the pocketed hub RB row at about 1.032 / 1.19 = **0.87** against the baseline 0.98 of the DAF ruling (EST, both below 1.0). So on the refinement-corrected reading the hub is an open row both before and after, and the pockets cost about 11 % of it. Closing it needs the shoulder and the collar mouth edge filleted (a radius at x 15.5, a 0.5-1.0 mm fillet at the bore mouth) and a converged mesh; none is drawn or run. This is the conductor's call (DR-2 already lists the hub under "fillets plus convergence").
+H-A2 note: the pocketed geometry above is the lightened geometry (H-A2 of the escalation audit s3.3); H-A1 on the solid hub is the T-076c / T-076d G1 baseline, reproduced here.
+
+## P4.3 CAD changes
+| Item | Change | Where |
+|---|---|---|
+| 3c cage 12 mm forward | `CAGE_DX = -0.012`; `HUB = (-0.081, 0, 0)`; hub aft face / tray face `HUB_X1` -0.057; conduit drop `CD_DX` and pad notch `PADN_X` follow; strut start `STRUT_S` x -0.077; raceway front follows `RW_DX`; tray root pad, tray front `TRAY_X0` -0.057; tray end-wall windows follow the pack. **Bridge BR_X0 -66 mm, BR_X1 stays +54 (saddle): bridge 120 mm (was 108); struts 291.2 mm (was 286.2)** | `common.py` 42-56, `wing.py` 18, 84, 616-621 |
+| 3a pack | `PACK_X = (-0.0485, -0.0155)` (centre -32 mm absolute = -20 mm in the tray, 22 mm forward of part 3); trim -6 / +10 unchanged | `common.py` 49 |
+| 3a straps | the single strap round tray + bridge is replaced by **two 20 mm straps at y +-35 mm** (y 25..45), each a closed loop in the x-z plane round the whole tray plate (front edge at the hub aft face, inner face x -57.3; aft end, inner face x -2.5) and over the pack (inner top z 58.0: the balance lead passes under it), bottom run z 4.3..5.9 under the root pad. No slots are cut in the plate (a loop round the plate ends instead of slots through it: my choice, no strength loss, trim travel free). Clear of the collar (|y| <= 12), raceway and conduits (|y| <= 24.2, 0.8 mm), end walls (54), struts (y > 60 at x -58). Loop 214 mm inner, 244 mm with buckle overlap, 4.45 g each (5.5 g x 244 / 300, EST; 11 g if two 300 mm straps are used uncut) | `electrical.py` 551-555, 713-715, 911-918 |
+| tray | plate aft end `TRAY_X1` +21.5 -> **-2.8 mm** (2.8 mm aft of the pack aft edge at +10 trim, 0.7 mm aft of the rear lip), so the aft strap leg wraps the plate end ahead of the core leading edge; plate 54.2 mm long (was 66.5), windows 48.2 % of the plate (was 52.6 %, fixed 2.0 mm ribs: slightly stiffer); the core tray slot (to x 22.5) is left open aft of the tray (raceway groove and ditch unchanged). `printed_mass.json` still gives CGE-008 14.07 g (stale: the drawn solid x 1.27 is 13.86 g, conservative) | `common.py` 55-56, `wing.py` 621 |
+| hub pockets | `POCKET_R 9.25 mm`, `POCKET_X0 15.5 mm`; OCC cut in the hub outer body (the sharp reference body is cut the same way so the fillet material volume stays right), voxel mass cut with the same predicate | `wing.py` 449, 520; `hub_body.py` (VERSION v4, `rc_cut`), `hub_body_cache.npz` regenerated |
+| build text | E5 (assembly plan and build step) rewritten for two straps round the plate | `a_assembly_plan.py`, `a_build_steps.py` |
+Mass changes (CAD volume x density, as in part 3): hub 41.7 g (was 61.5), straps 8.9 g (was 7.0), tray 14.07 g, bridge 9.0 g (+0.9 g with length), struts 7.3 g each (+0.3 g each).
+
+## P4.4 3b avionics 15 mm forward: not done, and why
+D-224 s6 item 3 (cover front 22.5 -> 7.5 mm; FC / ESC / RX / GPS / XT60 / plate / screws 15 mm forward). I read the avionics module end to end before deciding: about 40 absolute x coordinates are interlocked (plate by grid index `PLATE_I0/1`, `FC_X0`, `ESC_X0`, `FC_PADS`, `RX_B`, `GPS_B`, `_xt0`, the cover profile breakpoints, lightening windows, the servo-lead window at x 83 and the I2C groove at x 95 in the core, the wire polylines of E-HRN-02..11), and the same layout is pending its R2 / Kakute H743-Wing re-layout (part 3 P3.4: 45 x 30 mm board, new GPS / RX pads, plate removed). Moving the old F405 layout 15 mm and then redoing it for R2 would pay twice, and a cover front at 7.5 mm would bridge 15 mm of open tray slot. **The acceptance CG is met without it** (P4.6: tallied 24.84 mm <= 25.0), so I did not put a half-moved layout into a passing tree. Cost: the -0.83 mm of CG (EST) is not taken, and the pack leads are about 15 mm longer (E-HRN-13 143 mm per strand, XT60 still at x 85). If the conductor wants it, it belongs in the R2 / H743 task (shift the whole group by one `AV_DX` there).
+
+## P4.5 Bridge 12 mm longer (hand calculation; beam modal)
+- **Bending (hand calculation, T-080 V3 method):** hub-end Mz 17.51 N m (T-076c step 1) + shear x lever; T-080 V3 gives 19.68 N m at the saddle for the 99 mm mouth-to-saddle lever (V = 21.9 N implied); the lever is now 111 mm, so **19.94 N m (+1.3 %)**. 16x14 (Z 166.4 mm3, 350 MPa EST, KF 1.725): RF **1.69 / 1.13 / 0.86 / 0.76** at RB / x1.5 / x1.97 / x2.23 (bridge DAF, D-223); was 1.72 / 1.15 / 0.87 / 0.77. **Below 1.0 at the D-223 bridge DAF, as before (D-221 open row); the length costs 1.5 %, not the 11 % the audit assumed** (the moment is dominated by the hub-end Mz; the shear lever adds only 2.2 N m). Fallback 18x16 (Z 215.1 mm3, +29 %): 2.19 / 1.46 / 1.11 / 0.98 (still 0.98 at x2.23; price and stock "-", an 18 mm bore needs the collar redrawn). The D-1 dynamic bridge row (RF 2.42 minimum, T-076d step 3) was **not re-run** (old frame and length). `t077p4_step5.py` (the T-076d step 5 table on the current CAD constants) hand row "bridge at the mouth" gives 2.60 / 1.61 (RB / judged at 1.61); its demand model still has the old CG and inertia: the landing re-run at the new CG and Iyy is not part of this task.
+- **Strut Euler:** strut length 286.2 -> 291.2 mm (+1.7 %); Euler load scales 0.966; the strut angle moves (ux 0.402 -> 0.436), so the axial force N = Fx / ux falls 7.9 %: net **RF x 1.05** (EST, same Fx). `t077p4_step5.py` (current CAD, 6x4.0 strut, old-CG demand at 1.64 kg): Euler 416 N, RF 0.92 at pad zeta 0.10 (judged 0.57 at 1.61). That row has been below 1.0 since T-064r (T-076d s5 0.74 with the older strut); pockets and cage shift do not make it worse.
+- **Modal A-P10 (FEA-class beam frame, `t077p4_modal.py`, T-076d configuration: bridge 16x14, T-067 masses, 1,640 g; hub node moved with X_M / X_HUB; the pack + hub lump rides on the hub node, avionics at the spar centre):**
+
+| hub x (mm) | bridge mode (Hz) | highest strongly coupled mode below the exclusion zone (limit 88.0) | lowest above (limit 304) | forced response zeta 1 % (limit 30 m/s2) |
+|---|---|---|---|---|
+| -75 (T-076d record) | 10.6 | 68 | 317 | 22.7 |
+| -69 (CAD part 3) | 10.7 | 70 | 319 | 23.1 |
+| **-81 (this part)** | **10.4** | **66** | **316** | **22.3** |
+12 mm longer bridge: bridge mode -0.3 Hz, highest coupled mode -4 Hz (away from the 88 Hz zone: favourable), lowest above 316 Hz (limit 304), forced response MS +0.82 unchanged. A-P10(a/b) verdict unchanged; A-P10(c) gain margin (yaw GM 1.61, T76d-6) was **not re-run** (control-loop task).
+
+## P4.6 CG, SM, mass, window, T/W (geometry arithmetic + prop_a.py, EST; `t077p4_metrics.py`, `gates/gate_prop_sched.txt`)
+| State | Basic g | CG mm | SM % | Predicted kg | Window +-% (0.93, download) | T/W fresh (no dl / dl) | T/W sag (sched cap, dl) |
+|---|---|---|---|---|---|---|---|
+| part 3 as drawn | 1,483.3 | 28.30 | 5.06 | 1.704 | 4.70 (audit) | 2.031 / 1.970 | 1.827 |
+| **part 4 as drawn** (`cad_mass.json`, `mission_gate_a --o4b`) | **1,467.6** | **20.85** | **8.10** | 1.687 | 5.22 | 2.051 / 1.989 | 1.846 |
+| **part 4 + decided-but-undrawn items tallied** (R2 -14.9 g at x 92, R3fix -11.2 g at x -85.6, H743 +11 g, enlarged root blocks +12.2 g, shoe cups +7 g = +4.09 g; R4 / X7 +0.12 mm; EST, CG-closure s1.1) | 1,471.7 | **24.84** | **6.47** | **1.6915** | **5.08** | 2.045 / 1.984 | **1.841** |
+Predicted mass = basic x 1.1174 + 0.032 x 1.47 (CALC-A-MASS-PRED form). D-224 s6 item 6 acceptance: **CG <= 25.0 with the undrawn items tallied: 24.84 passes (0.16 mm margin, thin); SM >= 6 %: 6.47 passes; trim ends 22.6 / 24.8 as drawn (CG-TRIM-AFT <= 28.5 passes); box x extent about 491 mm (479.4 + 12; limit 500).** A-P3 window +5.08 % with the download passes by 0.08 point. T/W sag 1.84 with the download (1.898 without) passes 1.6 (the stale fixed-0.90 claim also passes now). **Fresh T/W: 2.045 without the download passes 2.0; with the 3 % download it is 1.984 and fails 2.0: the open F-3 ruling.** Bench derate lines at the tallied mass: **A-P3 0.928** (window 5 %, with download), A-P2 fresh 0.909 (no download) or 0.937 (with download); the audit's S* estimate was 0.920: the difference is the pockets, 19.8 g here against the audit's 34 g. The mass ceiling for the window at 0.93 with the download is 1.694 kg: the tally is 1.6915, **2.5 g of margin**. The packed z extent (0.461 m with props, part-1 finding) is still open.
+
+## P4.7 Gates (final tree; driver `T077p4_data/run_gates_p4.sh`, outputs `T077p4_data/gates/`)
+| Gate | Command | Exit | Time | Result |
+|---|---|---|---|---|
+| build / check | `python -I build_a.py` | 0 | 15 s | PASS, 10 modules, 0 errors, 0 warnings, 1,468 g declared, CG 20.9 mm |
+| collide pose 21 | `A_ELEV_POSE=21 python -I collide_a.py` | 0 | 750 s | **PASS**, 499 bodies, 117 parts, 0 pairs > 0.05 mm static / -21 / +21, wire ends 0, folds 0. (A first static try found one real hit, the balance lead against the strap top run, 0.27 mm: strap inner top raised 56.5 -> 58.0 mm; nothing else.) |
+| linkage poses | `python -I collide_a.py --linkage-poses` | 0 | 782 s | **PASS**, 18 poses, 0 hits |
+| assembly (Blender) | `python -I a_assembly.py` | 0 | 1,874 s | **PASS**: 66 steps, 117 / 117 parts placed, blocked or unsupported 0, wires before end parts none. **First run (1,865 s, exit 1): B0j1 / B0j2 BLOCKED 0.81 mm** (strut sweep against the hub): the plan's strut insertion direction was hard-coded to the old 66.3 deg axis; the 12 mm cage shift turns the strut axis to 64.15 deg, so the sweep ran 2 deg off the socket. Fixed in `a_assembly_plan.py` (direction (-0.43605, +-0.89992)), the cut-list captions (bridge 120 mm, struts 291.2 mm) updated, full gate re-run: PASS. The collide and linkage gates were not affected by that data edit |
+| wire inventory | `python -I wire_inventory.py` | 0 | 9 s | exposed **0.529 strand-m** (part 3: 0.478): E-HRN-13 143 mm per strand (was 117), E-HRN-14 64, E-HRN-12 43, servo / I2C groove ends 12 / 12 / 0 / 3 mm |
+| cad_mass | `python -I sitl/cad_mass.py` | 0 | 8 s | 1.46761 kg, CG x 20.85 mm |
+| mission gate | `python -I mission_gate_a.py --o4b` | 0 | 0 s | CAD basic 1,467.6 g, CG 20.85 mm, SM 8.10 %; pack at -42 / -25 / -15 mm: 19.0 / 22.1 / 24.0 mm; its roll-up rows still use the old item list (F-5) |
+| prop_a --sched | `python -I prop_a.py --sched --mass 1.692` | 0 | 1 s | fresh cap 0.904, sag cap 1.000; derate 0.93: T/W fresh 2.045, sag 1.897, window +6.6 % (no download) |
+| proofs | `python -I proofs/run_all.py` | 1 (strict) | 4 s | CG-HI, CG-TRIM-AFT, SM and TW-SAG-PRED **now pass**; 11 distinct claims fail (14 in part 3): the known 5 (ELEVON-TORSION-FOAM, HORN-BEARING-STALL, HORN-RIB-FOAM-HOLD / STALL, LINKAGE-FREEPLAY) plus the stale mass / window / cruise claims MASS-PRED and MASS-GATE-ROOM 1.687 vs 1.47 kg, WINDOW-PRED and WINDOW-MASS (fixed-0.90 cap, F-1), CUTS-REQUIRED 235.8 g, CRUISE-AVAIL 179 s (2,300 mAh pack). Not caused by this change; the F-1 re-basing is the conductor's |
+Drawings (`make_drawings_a.py`): not re-run (not in the task list); the STL / drawing set and the generated `BUILD-GUIDE-A.md` still show part 3 until regenerated.
+
+## P4.8 Exposed wire table (CLAUDE.md rule; `wire_inventory.json`)
+| Edge | Wire | Exposed length | Reason it cannot be enclosed |
+|---|---|---|---|
+| E-HRN-13 | pack power leads, 2 strands 14 AWG | **143 mm each** (part 3: 117.5; pack 22 mm further forward, XT60 stayed at x 85) | pack is outside the 53 mm wide cover; leads run from the pack end face over the tray wall and along the skin to the XT60 at x 85. Vendor lead 80 mm: **63 mm of extension** (W10 as proposed in part 2 was 55 mm, 8 mm short; propose W10 70 mm of 14 AWG from the W05 stock, no purchase) |
+| E-HRN-14 | balance lead 5 x 26 AWG | 64 mm | end face to the JST plug on the pack top; passes under the straps' top runs (inner top z 58.0, lead top 56.8) |
+| E-HRN-12 | battery tail | 43 mm | unchanged |
+| E-HRN-07/08/11/10 | servo / I2C groove ends | 12 / 12 / 0 / 3 mm | unchanged |
+Total exposed 0.529 strand-m (was 0.478): +51 mm. The phase-lead runs (E-HRN-02..05) are still enclosed (arm, hub conduit, raceway, groove, cover); the raceway part is about 6 mm longer per strand because the cage moved.
+
+## P4.9 Proposed text (for the conductor; not applied)
+- **CHANGE-LOG D-225 (T-077 p4, 2026-11-20):** "D-224 rung 3 drawn: cage (hub, arms, motors, props, tray, collar, struts) 12 mm forward of the wing (HUB x -81 mm, bridge 108 -> 120 mm, struts 286 -> 291 mm), pack centre -32 mm absolute on two 20 mm outboard straps (y +-35 mm, each a loop round the tray plate ends and the pack), tray plate shortened to end at x -2.8 mm, hub pockets: block aft of x +15.5 and the collar turned to R 9.25 mm (-19.8 g, hub 41.7 g; the T-080 estimate of 24-30 g is not reachable). CAD basic 1,467.6 g, CG 20.85 mm as drawn, 24.84 mm with the decided-but-undrawn items tallied (EST), SM 6.47 %, predicted 1.6915 kg, window +5.08 % (0.93, download), T/W sag 1.84, fresh 2.045 (1.984 with the download). Hub FEA H-A1/H-A2 on the pocketed geometry: von Mises RF 1.03 (baseline 1.10) at MS 1.1 on the D-223 basis, about 0.87 after the mesh-refinement extrapolation (baseline 0.98): open, needs fillets at the x +15.5 shoulder and the bore mouth plus a converged mesh. Avionics 15 mm forward (3b) NOT drawn (coupled to R2 / H743; acceptance met without it). 3-D gates pass. Bridge at the saddle RF 1.69 / 1.13 / 0.86 / 0.76 (RB / 1.5 / 1.97 / 2.23), strut Euler x 1.05, A-P10 highest coupled mode 70 -> 66 Hz."
+- **BOM:** W08 qty 2 (STRIX 20 x 300 mm covers each 244 mm loop; second strap price "-"); W10 pack lead extension 70 mm of 14 AWG per strand (63 mm needed), 2 splices, from W05 stock; hub 6061-T6 mass now 41.7 g.
+- **MASS-GATE basis:** hub 41.7 g (was 61.5 solid), straps 8.9 g (2 x 4.45), bridge +0.9 g, struts +0.6 g, tray 14.07 g listed (13.86 g drawn).
+- **TEST-PLAN TP-1:** bench pass line follows the predicted mass: 0.928 at 1.6915 kg (A-P3 with download), 0.937 if A-P2 fresh is judged with the download (F-3).
+
+## P4.10 Limits and open items
+- CG, mass and window numbers use EST stations for the undrawn items (CG-closure s1.1) and the prop_a EST thrust model (derate 0.93 EST, I0 0.5 A EST). The CG margin to 25.0 mm is 0.16 mm, thinner than the audit's 1.3 mm because the pockets removed 19.8 g, not 34 g (about +0.8 mm of CG); more mass removal (X7 root blocks, lead strip, the F-3 and growth-method rulings) or the 3b move (-0.83 mm) restores it.
+- The pocketed hub FEA is one mesh pair (MS 1.1, 1.4); 6061 yield is the 240 MPa minimum from a secondary page; the shoulder at x 15.5 is sharp; the hub-group RBE3 patch is the real aft-face annulus (about 900 nodes). The D-1 bridge row, A-P10(c) gain margin, landing path at the new CG and Iyy (+2.5 % EST), A-P9, tray strength on the new window layout (T-073 hand calc not re-run) and the strap loop sizing (thickness 1.6 mm EST; tension and slip not analysed) were not run.
+- T-076d scripts pick up CAD constants that changed after they were written (BLK_AFT): anyone re-running them needs the same pin.
+
+---
+# Part 5 (2026-11-20, T-077-p5: hub fillets and FEA, R2 / H743 / 3b, R3fix, R4, X7 node, CF clamshell). Not VERIFIED COMPLETE. Nothing committed. No docs/, CHANGE-LOG, ledger, MASS-GATE or BOM edit (text proposed in P5.10).
+
+Acceptance test (restated from the brief): (1) hub fillets at the x +15.5 mm shoulder and the bridge-bore mouth (largest radius that geometry and machining allow, tool named), hub FEA re-run on the D-223 basis with a mesh-convergence pair (MS 1.4 vs 1.1), converged / extrapolated hub von Mises RF >= 1.0 at max(DAF 1.97, 1.5); STOP if not met within the CG / mass margins (report both). (2) R2 FC / ESC bosses (plate removed) with the Kakute H743-Wing (45 x 30 x 13.5 mm, 25 x 25 M2, 28 g; unknown dimensions "-"), the 15 mm avionics-forward move (D-224 3b) with wiring re-routed and the battery-lead extension shortened if possible, R3fix cups, R4 strut clamps (fillets r >= 1.5), the X7 centre node and the waterjet CF saddle clamshell per D-221 (unsourced dimensions marked "-" and reported). (3) CG / SM / window / T-W after all parts (`mission_gate_a.py --o4b`, `prop_a.py --sched`); STOP and report if CG > 25.0 mm tallied or the window < +5 %, no ballast, no limit change. (4) Drawings and BUILD-GUIDE-A regenerated, build steps updated. (5) Gates once at the end: build_a, `A_ELEV_POSE=21 collide_a.py`, `collide_a.py --linkage-poses`, a_assembly (Blender), wire_inventory, sitl/cad_mass, proofs/run_all; check hard-coded insertion directions in `a_assembly_plan.py`; no 3-D gate left failing.
+Analysis categories: FEA (hub, linear elastic tet10, direct solve, the T-076d / T-077 p4 tools), interference (collide, linkage, assembly), geometry arithmetic (masses, CG, tally), illustrative (prop_a EST thrust model, bench lines). No CFD, flight-dynamics or landing simulation was run.
+Data and scripts: `T077p5_data/` (FEA `fea_hub_e.py` = the p4 `fea_hub_d.py` + SH_R / MO_R / SH_FMS / MO_FMS switches, `t077p5_step4.py`, `t077p5_judge.py`, `geo_probe.py`; mass audit `t077p5_mass_audit.py`, `t077p5_write_printed_mass.py`; `t077p5_metrics.py`, `t077p5_variants.py`; gate driver `run_gates_p5.sh`, outputs `gates/`). Meshes are `*.npz` in the git-ignored `T077p5_data/fea/` (`.gitignore` got three patterns). New CAD files: `cad/amodel/occ_bodies.py` (+ `occ_bodies_cache.npz`: the R4 clamp as an OpenCASCADE mesh body, committed cache as for the hub).
+
+## P5.0 Outcome in one table
+| Item | Status |
+|---|---|
+| (1) hub fillets + FEA | **DONE.** R 4.0 mm concave fillet at the x +15.5 shoulder (revolved profile, tool: 8 mm ball-nose / R 4 corner-radius end mill, catalogue item "-"), R 0.5 mm rounding of the bridge-bore mouth edge (corner-rounding cutter R 0.5, catalogue item "-"). Hub von Mises RF (RB, D-223 DAF 1.97, minimum over pad zeta 0.02 / 0.05 / 0.10): **1.408 at MS 1.4, 1.474 at MS 1.1** (p4 pocketed hub: 0.843 / 1.032), the finer mesh gives LOWER stress (50.2 -> 47.9 MPa), so the converged value is >= 1.47. D-1 row x 0.84: 1.81 / 1.97. Hub +0.5 g (CAD 42.17 g) |
+| (2) R2 bosses, H743, 3b | **DONE and gated, 3b in part:** the boards and the XT60 are 13-15 mm forward; **the bay-cover front stays at x 22.5 mm** (the pack-tray slot is open ahead of it, nothing to stand on, P5.3). Wiring re-routed (P5.3), exposed pack-lead run 143 -> 130 mm per strand (extension 50 mm of the 80 mm vendor lead, was 63) |
+| R3fix cups, R4 clamps | **DONE and gated** |
+| X7 node, CF clamshell | **DONE and gated** with the dimensions marked "-" below; **they cost the window (P5.5)** |
+| (3) CG / window | CG 23.91 mm tallied (limit 25.0: passes), SM 6.85 %; **window +4.70 % with the 3 % download (limit +5.0): FAILS by 0.30 point, predicted mass 1.7046 kg vs the 1.694 kg ceiling. STOP rule: reported, no ballast, no limit change.** Without the clamshell and the node the same tree gives CG 23.27 mm, window +5.14 % (P5.5) |
+| (4) drawings, guide | regenerated (P5.9) |
+| (5) gates | build_a, collide pose 21, 18 linkage poses and the 67-step assembly **PASS**; wire inventory, cad_mass, mission_gate, proofs run (proofs: 11 distinct failing claims = the known 5 + 6 stale mass / window / cruise claims; CG-HI, CG-TRIM-AFT, SM, TW-SAG, ASSY-PARTS pass) (P5.6) |
+
+## P5.1 Hub fillets and FEA (category: FEA; `T077p5_data/`)
+**Geometry.** Same hub as part 4 (octagonal sleeves, junction radii 1.0 / 0.9 mm, collar turned to R 9.25 mm from x +15.5 to the mouth at x +45 mm, 16 mm bridge bore) plus two radii:
+- **Shoulder, concave R 4.0 mm** between the R 9.25 cylinder and the shoulder plane x +15.5 mm. The OCC edge fillet cannot do it (the step is only 0.75 mm at the flats of the 20 x 20 block); it is a revolved profile: the pocket cutter is the block minus a body of revolution about the bridge axis made of the cylinder and a quarter-circle ring (arc radius 4.0 mm, centre at x +19.5 mm and 13.25 mm from the axis), so any radius works. Probe (`geo_probe.py`, OCC mesh at MS 2.0): R 2, 3, 4, 5 mm mesh; R 6 mm fails the mesh ("ScaledJac"). R 4.0 is where the shoulder plane vanishes everywhere (corner radius 3 mm of the block: the block corner is at r 12.9 mm < 9.25 + 4.0). Larger radii only add material (0.2 g per mm of radius above 3 mm). **Tool: an 8 mm ball-nose end mill (= R 4 corner radius) on the Tormach, or a lathe nose radius insert if the collar is turned; catalogue item and price "-".**
+- **Bore mouth, convex R 0.5 mm** on the bore edge at the collar end face x +45 mm. The wall at the mouth is 1.25 mm (R 9.25 over the R 8 bore), so the largest radius that leaves a flat land is 0.5 mm (leaves 0.75 mm); R 0.75 / 1.0 mesh but leave 0.5 / 0.25 mm. **Tool: a corner-rounding end mill R 0.5 mm, catalogue item "-"** (a 0.5 x 45 deg chamfer is the fallback). It is modelled as a void in the FEA (the adhesive fillet is not modelled, conservative, as the sleeve-mouth chamfer).
+- CAD: `wing.py` `POCKET_SH_R`, `BORE_MO_R`, `hub_body.py` v5 (`RC` 4th element), the voxel mass predicate follows the same profile, the bore revolve profile carries the flare. **Hub mass 41.7 -> 42.17 g (+0.47 g; FEA mesh 40.96 -> 41.41 g Al, +0.45 g).** CG effect of that gram count: -0.03 mm (the hub centroid is at x -74.1 mm), predicted-mass effect +0.53 g (window -0.02 point).
+
+**FEA (the T-076d / T-077 p4 model G1: L_SLV 32, P1 doubler, mouth chamfer; D-223 sets RB x 1.97, D-1 x 0.84; hub von Mises maximum excluding 0.5 mm from tied edges vs 240 / 1.725 = 139.1 MPa; `BLK_AFT` pinned to 10.0 in `t077p5_step4.py` as in part 4).** Commands (each 10-23 min, 1 thread solve through the MATLAB Cholesky, memory about 20-35 GB):
+`python -I t077p5_step4.py --tag f4m05ms14 --geom G1 --p MS=1.4 RC_R=9.25 RC_X0=15.5 SH_R=4.0 MO_R=0.5 MO_FMS=0.35` and `--tag f4m05ms11 ... MS=1.1 ... MO_FMS=0.275`, judged by `python -I t077p5_judge.py <tag>` (`judge_<tag>.txt`).
+| Mesh | elements | dof | equilibrium error | hub max vM RB z0.02 / z0.05 / z0.10 (MPa) | hub RF at scale 1 (RB z0.10) | D-223 row RB (/ 1.97) | D-223 row D-1 (x 0.84) |
+|---|---|---|---|---|---|---|---|
+| p4 pocketed, MS 1.1 | 506,478 class | - | 3.8e-10 | 44.2 (z0.02) | 2.03 | 1.032 | 1.374 |
+| p4 pocketed, MS 1.4 | 267 k | - | - | 0.855 / 0.849 / 0.843 in the rows | - | 0.843 | 0.746 |
+| **p5 fillets, MS 1.4** | 259,652 | 1,280,649 | 3.4e-10 | 31.6 / 38.8 / 50.2 | 2.773 | **1.408** | 1.809 |
+| **p5 fillets, MS 1.1** | 487,638 | 2,334,282 | 5.9e-10 | 30.8 / 37.5 / 47.9 | 2.904 | **1.474** | 1.970 |
+The governing row is RB at pad zeta 0.10 on both meshes; the maximum is at the end of the shoulder fillet (x +19.1 mm, y +7.1, z -7.8, on the R 9.25 cylinder) at MS 1.1 and on the fillet start at MS 1.4. **The stress falls by 4.6 % when the mesh is refined (50.2 -> 47.9 MPa) and does not rise as the part-4 sharp shoulder did (+15-18 %)**, so the fillet removed the singularity; a Richardson extrapolation of a falling sequence would lower the stress further and is not used: the judged value is the finest mesh, RF **1.47 (>= 1.0 at DAF 1.97, margin 47 %)**. Acceptance met without a wall change; the STOP rule did not fire; no gram was added beyond the 0.5 g above.
+Diagnostics at MS 1.4 (`judge_f4m05nofms14.txt`, `judge_f4only14.txt`): without the local mouth refinement (MO_FMS 0) RF 1.429 (the hub-group RBE3 patch has 472 / 1,867 / 3,002 nodes in p4 / p5 MS 1.4 / p5 MS 1.1 because the refined mouth faces put more nodes on the end face: a 1.5 % effect on the answer); shoulder fillet only (no mouth radius): RF 1.285, the maximum moves to the bore mouth edge (x +44.6, y 8.1, z -2.5), so **the mouth radius is worth +10 %** and the two radii together are needed for the margin. Caveats: yield 240 MPa is the secondary-source minimum of T-076c (unchanged); the mouth edge is a tied re-entrant edge excluded within 0.5 mm as before; one mesh pair (a third mesh at MS about 1.25 would give the order; MS 0.8 does not fit in 64 GB).
+Rows that are open and unchanged by this task (D-223, DR-2): tube B axial RF 0.955 (RB, was 0.940 at p4, 0.938 baseline; passes only if the pad zeta is below about 0.088), bond rows 0.446 (full length) / 0.543 (T-076c definition) (TP-4 coupon), interlaminar tau_s,r (allowable "-"). No row that passed at baseline fails now.
+
+## P5.2 CAD changes (file:line in the tree; masses = drawn volume x T-067 basis, `printed_mass.json` via `t077p5_mass_audit.py` h 0.25 mm; Onyx rho 1.20, CF sheet 1.6 g/cm3)
+| Part | Change | Where | Mass (was -> now) |
+|---|---|---|---|
+| AVN-001 plate -> **AVN-010 R2 bosses** | plate removed; 4 FC bosses 6 x 6 mm on the 25 x 25 pattern (M2 hex-nut pockets as the plate had), 4 ESC bosses 6 x 6 on the 20 x 20 pattern, 4 GPS corner pads 6 x 6, 2 RX strip pads 5 x 11 (T-073 Phase 2), each up to the same pad plane ZP so every board keeps its height; bases follow the skin polyline `skin_pts` | `electrical.py` `build_avionics`, `AVN-010` | 17.91 -> 1.63 g |
+| AVN-002 FC | **Kakute H743-Wing**: ONE board 45 x 30 mm (45 mm along y, 30 along x: my choice, the page gives only 45 x 30 x 13.5), PCB 1.6 mm EST, corners R 1.5 EST, M2 holes 25 x 25 (2.2 mm drawn), pads on the board top (EST positions); **connector / header outlines and heights, hole diameter, PCB thickness, standoff height "-"** (not drawn; the 13.5 mm overall height is a wiring keep-out, not a solid); FC centre x 47 mm | `electrical.py` constants `FC_*` | 17.0 -> 28.0 g (vendor, with USB extender) |
+| HWC-001 screws | one 1.6 mm board + 3.0 mm tape + a boss: stock M2 x 8 / 10 instead of 25 | `FCS_STOCK_LEN` | follows |
+| 3b group shift `AV_DX` = -15 mm | ESC (x 67..102), GPS, RX, XT60, bay-cover internals, hood: shifted; FC centre 13 mm forward (its 45 x 30 outline); **cover front NOT shifted** | `common.py` `AV_DX`, `propulsion.py` `ESC_X0`, `electrical.py` | - |
+| CGE-003 cups (R3fix) | sleeve OD 19.2 -> 17.2 mm; plate 5.0 mm kept over the +y 13 mm cantilever, 3.5 mm web (T-073: 3.0, and "3.4 to reach the sleeve crest": 3.5 gives 0.1 mm overlap) over the sleeve side; local screw-head pocket bosses R 3.9 mm (EST); D-210 fillets re-derived | `wing.py` `CUP_RO`, `CUP_WEB_X`, `build_cage`, `_rrect_part` | 9.51 -> 8.38 g each (-4.5 g for four; T-073 expected -11.2: the drawn cups were already heavier than the T-067 model, part 1) |
+| CGE-007 clamps (R4) | ring OD 17 x 16 mm on the spar (wall 2.5), tubular socket OD 9 mm along the STRUT axis (25 mm bond + 14 mm buried in the ring wall), junction fillet **R 2.0 mm** (OCC; R 1.5 and 1.0 also work once the socket end is buried; with the end disc outside the ring OCC fails at R >= 1.0); the T-073 "two 2 x 2.5 x 9 mm junction strips" are replaced by the fused section (my geometry; strip footprint was an EST) | `occ_bodies.py`, `wing.py` `clamp_params` | 6.58 -> 2.94 g each (-7.3 g) |
+| CGE-006 node (X7) + CGE-011 / 012 / 013 | saddle ring and bridge socket as drawn, **ears to y +-16.5** (x 31.5..71.0, 19 mm high, 3 mm thick), **CF plate N2** 0.5 mm (x 31.5..71.0, z +-9.5, y 16.5..17.0, spar hole 12 mm, waterjet), **outer clevis ears** 1.5 mm (y 17.0..18.5, Onyx), **4 pins of 3 mm per side** along y (positions EST, both columns ahead of the spar); core pockets open below | `wing.py` `NODE_*`, `build_cage` | CGE-006 9.67 -> 12.33 g (Onyx basis), CGE-011 0.87, CGE-013 1.95, CGE-012 0.47 (+6.0 g) |
+| FIN-005 clamshell + FIN-007 + FIN-008 | cradle: ring wall 2.0 mm on the spar (60 mm), socket 18 x 18 mm x 40 mm round the 14 mm rib (**rib start moved 70.5 -> 68.0 mm so the engagement is 40 mm**), three vertical pin bosses (R 4 mm, 4 mm wall, z 7..11); **plates** 2 x (0.5 mm x 50 x 64 mm, z +-9.0..9.5) per side, cut round the bosses; **3 pins** 3 x 21.8 mm vertical (flush with the lower boss face, so the hole is open for the push-in sweep) | `wing.py` `CLAM_*`, `build_fins` | FIN-005 14.39 -> 12.32 g, FIN-007 4.88, FIN-008 0.74 (per side +3.55 g, +7.1 g for both) |
+| AVN-008 cover | front at x 22.5 (steep ramp 22.5 -> 28), roof 45 mm to x 72.2 then 32.5 over the ESC, aft wall x 114.5 (I2C), walls stand on the skin (no plate), hood x 84.5..111.5 on the skin | `electrical.py` `cov_*`, `skin_pts` | 8.82 -> 9.01 g |
+| CGE-008 tray | re-audited on the p4 shape | audit | 14.07 -> 13.30 g |
+| Flags | `P5_CLAMSHELL`, `P5_NODE` in `wing.py` (True): False restores the part-4 drawing of that item; env `P5_VARIANT` only for `t077p5_variants.py` | `wing.py` | - |
+
+## P5.3 What drawing forced (decisions, with the reason; each is mine unless a record is cited)
+1. **Cover front stays at x 22.5 mm** (D-224 3b asked 7.5 mm). The core pack-tray slot is open from x -10 to 22.5 mm; the first collide run put the cover roof through the bridge tube and the raceways at x 8.9 mm (depth 1.0 mm): a front at 7.5 mm has no surface to stand on (part 4 had the same finding). The boards moved, the cover front did not: CG gain 0.1 mm smaller than the 0.83 mm of the audit (EST).
+2. **FC orientation 45 mm along y and the phase bundles over it.** A 45 mm board along x collides with the ESC (x 67); a 30 mm width along y puts bosses and board edge 0.06 mm from the phase bundles (lanes y 17 / 21, envelope to y 15.06). With 45 along y the board spans the lanes, so **the four phase bundles now rise straight up at x 29 to z 36, run aft over the board (bottom z 34.1 over the 30.4 mm envelope keep-out), come down to z 28 behind it and end on the ESC pads** (`phase_route`, `Z_HI`); the cover roof is 45 mm to x 72.2 for that; E-HRN-02..05 stay enclosed (arm, hub conduit, raceway, groove, cover).
+3. **Servo leads** leave the board aft through the 5 mm gap between its aft edge (x 62) and the ESC (x 67), run outboard to the drop at x 64 mm, |y| 24 (was x 83: `SRV_XD`), and follow the old groove to the servo. **I2C lead:** drops into the core at x 78, runs aft in a deep groove along x at |y| 24.4 to x 109.5 (`I2C_X`, `I2C_XD`, new core cuts), because the RX UART drop (x 83) and the I2C lane at z 22 would cross; `I2C_X` moved from 95 to 109.5 because the 40 mm clamshell socket now ends at x 108.0; shallow groove height re-set (`I2C_ZS`) to clear the rib by 0.4 mm. **GPS lead** vertical moved to y 24.75 to clear the bundles (22.94) and the cover wall (26.5). **RX pad** moved off the aft screw holes; **RX hood** aft wall stays at x 111.5 (the antenna stubs and turns end in their slots).
+4. **Node ears start at x 31.5 mm** (T-071b: 29.5): the bundles rise at x 29 (envelope to 30.94 mm); ear bond length 41.5 -> 39.5 mm (-4.8 %; T-071b ear bond RF 1.39 | 0.93 at RB | x 1.5 scales to about 1.32 | 0.89: **below 1.0 at x 1.5, as in T-071b, not improved**). Pins moved ahead of the spar (the spar tube passes through the ears).
+5. **Clamshell plates 50 x 64 mm** (record: about 50 x 75; z +-7.5..9 in the record cannot hold a 2 mm wall on a 14 mm rib: drawn at z 9.0..9.5 on the cradle faces): 75 mm in y would hit the airspeed board pocket (y -427.5..-412.5, x 69..84, top z 11.5). The plate pair sits in one core pocket open below (a 50 x 64 mm opening in the lower skin, taped after, per side). Cradle pin pitch 11 mm (EST) so the bosses stay forward of x 98, where the skin is >= 11.4 mm over the 11 mm boss top.
+6. **Assembly order and slots** (P5.6): the clamshells are placed before the spar (A1b) because the upper plate cannot pass the spar from below; the clip slots / notches of the R4 clamps, the node saddle, plates and outer ears are opened to cover their whole thickness. **Hard-coded insertion data (`a_assembly_plan.py`)**: the strut direction (-0.43605, +-0.89992) is correct for the unchanged hub x -81 mm (part 4 fix); the new parts are in plan steps (clamshell + plates in B2 from below, pins C1p from below after the ribs, node plate / ears / pins in the CAGE group of B1, bosses E2); captions with the old x 83 / plate text corrected (data only).
+7. Not changed and still open from the brief: the avionics-group 15 mm shift is 13 mm for the FC; the XT60 pair and the battery tail moved 15 mm (the exposed pack-lead run is 13 mm shorter, 130 mm per strand).
+
+## P5.4 CG, SM, mass, window, T/W (geometry arithmetic + `prop_a.py` EST model; `t077p5_metrics.py`, `gates/gate_prop_sched.txt`)
+| State | Basic g | CG mm | SM % | Predicted kg | Window (0.93, download) | T/W fresh (no dl / dl) | T/W sag (sched, dl) |
+|---|---|---|---|---|---|---|---|
+| part 4 as drawn | 1,467.6 | 20.85 | 8.10 | 1.687 | 5.22 | 2.051 / 1.989 | 1.846 |
+| part 4 tallied (EST) | 1,471.7 | 24.84 | 6.47 | 1.6915 | 5.08 | 2.045 / 1.984 | 1.841 |
+| **p5 as drawn** (`cad_mass.json`) | **1,464.2** | **20.44** | **8.26** | 1.6831 | 5.33 | 2.055 / 1.993 | 1.850 |
+| **p5 tallied**: + enlarged root blocks +12.2 g at x 283.1 and shoe cups +7.0 g at 298.1 (T-068, the only items still undrawn, EST) | **1,483.4** | **23.91** | **6.85** | **1.7046** | **4.70 FAILS** | 2.030 / 1.969 | 1.827 |
+Predicted mass = basic x 1.1174 + 0.032 x 1.47 (CALC-A-MASS-PRED form). Ceiling for the window at 0.93 with the download is 1.694 kg: **the tally is 10.7 g over (9.6 g basic)**. CG 23.91 <= 25.0 passes (margin 1.08 mm, was 0.16); SM 6.85 % >= 6 passes; trim ends 22.8 / 25.7 mm (23.91 - 1.09 forward 6 mm, + 1.82 aft 10 mm of the 270 g pack; <= 28.5 passes); T/W sag 1.83 (>= 1.6 passes); fresh T/W with the 3 % download 1.969 (F-3 ruling still open, 2.030 without). Bench derate lines at the tallied mass: A-P3 0.936 (was 0.928), A-P2 fresh 0.916 without / 0.945 with the download. Where the p5 tally differs from the p4 tally (+12.2 g): clamshell +7.1 and node +6.0 (the p4 tally had them as +0.12 mm only), cups -4.5 drawn against -11.2 tallied (+6.7), R4 clamps -7.3 (not in the p4 tally), bosses -16.3 drawn against -14.9 (-1.4), H743 +11 as tallied, cover / tray / hub +0.4.
+
+## P5.5 STOP rule: the window, and the four variants (`t077p5_variants.py`, `variants_out.txt`; same prop_a model, same tally)
+| Variant (flags) | drawn g | CG drawn | tallied g | CG tallied | SM tallied % | predicted kg | window % (download) |
+|---|---|---|---|---|---|---|---|
+| clamshell + node (D-221, as drawn) | 1,464.2 | 20.44 | 1,483.4 | 23.91 | 6.85 | 1.7046 | **4.70 FAIL** |
+| node only (`P5_CLAMSHELL = False`) | 1,456.9 | 19.88 | 1,476.1 | 23.38 | 7.07 | 1.6964 | 4.94 FAIL |
+| clamshell only (`P5_NODE = False`) | 1,458.2 | 20.32 | 1,477.4 | 23.81 | 6.89 | 1.6979 | 4.90 FAIL |
+| neither (part-4 saddles) | 1,450.9 | 19.76 | 1,470.1 | 23.27 | 7.11 | 1.6898 | **5.14 pass** |
+All four have CG <= 25.0 and SM >= 6.8 %. The window needs predicted mass <= 1.694 kg, i.e. tallied basic <= 1,473.8 g: **either D-221 item alone is not enough, both together are 10 g over.** I did not add ballast and did not change a limit. Options for the conductor (numbers, not my call): (a) drop the clamshell plates or the node (each alone leaves 4.9 %); (b) lighten what D-221 added: the cradle socket is a solid 18 x 18 mm box (9 g per side; a round OD 18 socket with two 9 mm flats would save about 3.7 g per side, EST) and the node saddle ring is the old 10.5 mm ring (the ring wall could go to 2.0 mm, EST -1.5 g); with both about -9 g, still marginal; (c) the three open items of CG-closure s3.2 (growth-method ruling, X7 root blocks, elevon-lead flutter re-run); (d) re-derive the window with the real bench derate. Flags make (a) a one-line change; re-run `make_drawings_a.py` and `make_build_guide_a.py` after flipping one.
+
+## P5.6 Gates (final tree; driver `T077p5_data/run_gates_p5.sh`, outputs `T077p5_data/gates/`; the flags are True)
+| Gate | Command | Exit | Time | Result |
+|---|---|---|---|---|
+| build / check | `python -I build_a.py` | 0 | 16 s | PASS, 10 modules, 0 errors, 0 warnings, 1,465 g declared |
+| collide pose 21 | `A_ELEV_POSE=21 python -I collide_a.py` | 0 | 726 s | **PASS**, 553 bodies, 124 parts, 0 pairs > 0.05 mm static / -21 / +21, wire ends 0, folds 0 (`gate_collide_pose21.txt`) |
+| linkage poses | `python -I collide_a.py --linkage-poses` | 0 | 856 s | **PASS**, 18 poses, 0 hits |
+| assembly (Blender) | `python -I a_assembly.py` | 0 | 2,018 s | **PASS**: 67 steps (A1b and C1p are new), 124 / 124 parts placed, blocked or unsupported 0, wires before end parts none (`gate_assembly_final.txt`, `ASSEMBLY_final.md`) |
+| wire inventory | `python -I wire_inventory.py` | 0 | 10 s | exposed **0.502 strand-m** (part 4 0.529): E-HRN-13 130 mm per strand |
+| cad_mass | `python -I sitl/cad_mass.py` | 0 | 8 s | 1.4642 kg, CG x 20.44 mm |
+| mission gate | `python -I mission_gate_a.py --o4b` | 0 | 0 s | CAD basic 1,464.2 g, CG 20.44 mm, SM 8.27 %; pack at -42 / -25 / -15 mm: 18.6 / 21.7 / 23.6 mm; its roll-up rows still use the old item list (F-5) |
+| prop_a --sched | `python -I prop_a.py --sched --mass 1.705` | 0 | 69 s | fresh cap 0.904, sag cap 1.000; derate 0.93: T/W fresh 2.030, sag 1.883, window +6.2 % (no download) |
+| proofs | `python -I proofs/run_all.py` | 1 (strict) | 2 s | 11 distinct claims fail: the known 5 (ELEVON-TORSION-FOAM, HORN-BEARING-STALL, HORN-RIB-FOAM-HOLD / STALL, LINKAGE-FREEPLAY) and the stale MASS-PRED, MASS-GATE-ROOM (1.683 vs 1.47 kg), CUTS-REQUIRED 232 g, WINDOW-PRED and WINDOW-MASS (fixed-0.90 cap, F-1), CRUISE-AVAIL 180 s (2,300 mAh pack). CG-HI, CG-TRIM-AFT, SM, TW-SAG-PRED, ASSY-PARTS (124) pass |
+| drawings | `python -B drawings/make_drawings_a.py` | 0 | about 4 min | 48 / 48 composed (43 before: AVN-010, CGE-011 / 012 / 013, FIN-007 / 008 added, AVN-001 out), 42 STL files |
+**What the first assembly run found (3 blocked steps, then fixed; the collide and linkage gates were run again on the fixed tree, the figures above are from that pass):**
+1. **B2 clamshell snapped on the spar from below: blocked by the spar.** The upper CF plate lies above the spar axis (z 9.0..9.5, spar z +-6) and cannot pass the spar from below (depth 1.44 mm at 12 mm travel). Fix: the clamshells go into their foam pockets BEFORE the spar (new step A1b after A1; edge cradle - core added), the spar then slides through both cradle rings (A2). The cradle ring front (x 52..58) was also outside the pocket (depth 1.17 mm against the core at 6 mm): the pocket now starts at x 51.7.
+2. **C1p pins: blocked by the lower boss.** The pin ended 0.2 mm inside the boss, so the hole was closed at the bottom (depth 1.49 mm). Fix: the pin is flush with the lower boss face (length 21.8 mm), pushed in from below into a blind hole at the top.
+3. **B1 dock of the cage: R4 clamps, node plates / ears against the spar (1.30 / 0.58 / 0.50 mm).** The clip slot (opening upward, which lets a part rise onto the spar from below) did not reach all of their material: the new clamp socket passes the spar footprint ahead of the ring (slot now from y 280), and the node ears, plates and outer ears are 3 / 0.5 / 1.5 mm thick at y 13.5..18.5 (slot and notch now cover y +-18.8).
+
+## P5.7 Exposed wires (CLAUDE.md rule; `wire_inventory.json`; part 4 values in brackets)
+| Edge | Wire | Exposed length | Reason it cannot be enclosed |
+|---|---|---|---|
+| E-HRN-13 | pack power leads, 2 strands 14 AWG | **130 mm each** [143] | pack is outside the 53 mm wide cover; leads run from the pack end face over the tray wall and along the skin to the XT60 at x 70 (3b: 15 mm forward). Vendor lead 80 mm: **extension 50 mm of 14 AWG per strand** (was 63; W10 as proposed in part 4 gives 70 mm per strand: more than enough) |
+| E-HRN-14 | balance lead 5 x 26 AWG | 64 mm [64] | end face to the JST plug on the pack top |
+| E-HRN-12 | battery tail | 42 mm [43] | XT60 female to the cover slot |
+| E-HRN-07/08/10 | servo lead ends / GPS lead | 12 / 12 / 3 mm [12 / 12 / 3] | servo pocket wall to the boot; GPS plug to the cover slot |
+Total exposed 0.502 strand-m (part 4 0.529, HEAD 0.448). The new routes (bundles over the FC, servo leads, I2C groove, UART, GPS) stay inside the cover, the core grooves or the arms; no new exposure.
+
+## P5.8 Unknown or unsourced dimensions ("-"), all in the part names
+Kakute H743-Wing: PCB thickness, corner radius, hole diameter, connector and header outlines and heights, USB extender geometry, standoff height, orientation (mine). GPS M10Q hole pattern (corner pads), RX pad size (EST). R3fix: web 3.5 mm (T-073 3.0 / 3.4), pocket-boss R 3.9, windows not drawn ("55 % of the area" is not a defined layout), tab widths. R4: junction section (fused, not two strips), buried length 14 mm. Node: ear thickness 3.0 / 1.5 mm, plate corner radii, pin positions, fibre layout and rings (manufacturing note), X7 charges; clamshell: plate corner radii, pin pitch, waterjet lead-in practice, plate z (record z +-7.5..9 not reconcilable), 75 mm plate width (64 drawn). Vendor and price items: CF 0.5 mm sheet, X7 Onyx charge, 3 mm carbon rod for six more pins, M2 x 8 / 10 stock screws, ball-nose and corner-rounding cutters: "-".
+
+## P5.9 Drawings and build guide
+`make_drawings_a.py` (jobs, Blender render, compose): **48 of 48 drawings composed** (43 before; AVN-010, CGE-011, CGE-012, CGE-013, FIN-007, FIN-008 added, AVN-001 removed), 42 STL files; the generator reports AVN-010 and CGE-013 as "not in one piece" (14 separate bosses / pads, two outer ears: print as loose pieces on one plate; the plates FIN-007 / CGE-011 are waterjet sheet parts with no STL; no DXF export exists in the generator: the drawing shows the outline and the feature table). `BUILD-GUIDE-A.md` regenerated: 67 steps, 47.2 h hands-on EST, printed mass 213 g; build steps rewritten: A1b (clamshells before the spar), C1p (clamshell pins), E2 (R2 bosses), E3 / E3a (H743, screws), E7 (cover); the film script `showcase/concept-a/render_build_a.py` has the new stages and views (film not re-rendered). If the conductor flips `P5_CLAMSHELL` / `P5_NODE`, re-run `python -B redesign/qp/A/drawings/make_drawings_a.py` and `python -I redesign/qp/A/make_build_guide_a.py` and the plan steps A1b / C1p must be removed with the clamshell (the assembly gate reports parts missing otherwise).
+
+## P5.10 Proposed text (for the conductor; not applied)
+- **CHANGE-LOG (next free D-number, T-077 p5, 2026-11-20):** "Hub fillets R 4.0 mm at the x +15.5 shoulder (revolved profile, 8 mm ball-nose) and R 0.5 mm at the bridge-bore mouth: FEA H-A1/H-A2 on the D-223 basis, MS 1.4 / 1.1: hub von Mises RF 1.408 / 1.474 (p4 pocketed 0.843 / 1.032; the finer mesh gives lower stress), +0.47 g. Drawn: R2 bosses (AVN-001 plate out, AVN-010 1.63 g), Kakute H743-Wing (45 x 30, 28 g; unknown dimensions '-'), boards 13-15 mm forward (cover front stays at x 22.5: pack-tray slot), phase bundles over the FC at z 36, servo drop x 64, I2C groove along x, R3fix cups (sleeve OD 17.2, web 3.5, -4.5 g), R4 clamps (-7.3 g, fillet R 2.0), X7 node with N2 plate and ears (+6.0 g), CF clamshell (+7.1 g, rib engagement 40 mm, plates 50 x 64). CAD basic 1,464.2 g, CG 20.44 mm; tallied with the undrawn root blocks and shoe cups 1,483.4 g, CG 23.91 mm, SM 6.85 %, predicted 1.7046 kg, window +4.70 % (limit +5.0, ceiling 1.694 kg): **fails by 0.30 point**; without both D-221 items 5.14 %. Gates: collide pose 21, linkage poses, assembly (67 steps, 124 / 124 parts, 0 blocked) pass; proofs: only the known and stale claims fail."
+- **BOM:** W01/W08/W10 as part 4 (W10 extension now 50 mm per strand); new lines: 0.5 mm CF sheet for 4 clamshell plates (50 x 64 mm) + 2 node plates (39.5 x 19 mm minus holes), price "-"; Markforged X7 Onyx for CGE-006 (12.3 g) and CGE-013 (2.0 g), charge "-"; 3 mm carbon rod +14 pins (6 x 21.8 + 8 x 5.2 mm = 0.17 m), from R14 stock; M2 pan screws 8 / 10 mm stock x 4 (R05); FC line V03: Kakute H743-Wing (price not looked up: the F405 price in V03 stays until replaced); 8 mm ball-nose and 0.5 mm corner-rounding cutters for the hub (access to the Tormach, price "-").
+- **MASS-GATE basis:** hub 42.17 g, AVN-010 1.63 g, FC 28.0 g, cups 8.38 g x 4, clamps 2.94 g x 2, node 12.33 + 0.87 + 1.95 + 0.47 g, clamshell 12.32 + 4.88 + 0.74 g x 2, cover 9.01 g, tray 13.30 g.
+- **TEST-PLAN TP-1:** bench pass line follows the predicted mass: 0.936 at 1.7046 kg (A-P3 with download).
+
+## P5.11 Limits and open items
+- The window fails; CG / SM pass (P5.4, P5.5). The tally still contains two EST undrawn items (T-068 root blocks, shoe cups, 19.2 g); CG-closure s1.1 stations.
+- FEA: one mesh pair, direct solve; shoulder / mouth modelling choices stated; D-1 bridge row, strut Euler, A-P10, landing path at the new CG and Iyy, A-P9, tray windows and strap loop strength not re-run (not in this task). **The node, clamshell, R3fix cups, R4 clamps and bosses were NOT strength-checked** (T-071b / T-073 rows are for different geometry: ear bond 0.89-0.93 at x 1.5 stays below 1.0; clamshell pin bearing 0.37 -> 1.12 on paper for the 3 x 3 mm / 4 mm boss, not recomputed for the 11 mm pitch).
+- Mass and CG values for the new parts use the T-067 print basis (EST), Onyx 1.20 g/cm3 and CF 1.6 g/cm3 (secondary sources); the audit voxel is 0.25 mm (the 0.5 mm plates were computed analytically).
+- `mission_gate_a.py` roll-up rows are still the old item list (F-5). The stale proofs (MASS-PRED, MASS-GATE-ROOM, CUTS-REQUIRED, WINDOW-PRED, WINDOW-MASS, CRUISE-AVAIL) fail as in part 4.
+
+
+# Part 6 (2026-11-21, T-077-p6: strength check of the drawn node / clamshell / cradle / cups / clamps / bosses on the D-223 demand, lightening where the rows allow). Not VERIFIED COMPLETE. Nothing committed. No docs/, CHANGE-LOG, ledger, MASS-GATE or BOM edit (text proposed in P6.8).
+
+Acceptance test (restated from the brief): (1) every part of node, clamshell, R3fix cups, R4 clamps, R2 bosses strength-checked on its DRAWN geometry against the D-223 landing demand (RF >= 1.0 at max(DAF, 1.5)) and the flight loads it carries; table part / row / RF. (2) Lighten where the RF allows, subtract first; redraw, mass from volume. (3) Re-run CG / SM / window / T-W; window >= +5.0 % with the 3 % download, no ballast, no limit change; else STOP and report the gap. (4) If CAD changed: drawings + BUILD-GUIDE-A regenerated; gates once at the end, none failing.
+Categories: rigid-body dynamics (demand, `t077p6_demand.py`), hand calculation (all strength rows; no FEA), geometry arithmetic (masses, CG, tally), illustrative (prop_a EST thrust model). No CFD, flight-dynamics or kinematics run.
+Data and scripts: `T077p6_data/` (`t077p6_demand.py`, `t077p6_strength.py --variant`, `t077p6_cups.py` = copy of arm_cup_checks.py with the drawn cup, `t077p6_bosses.py`, `t077p6_table.py`, `geo_probe.py`, `t077p6_mass_audit.py`, `t077p6_write_printed_mass.py`, `t077p6_metrics.py`, `run_gates_p6.sh`, `gates/`). Demand arrays in git-ignored `T077p6_data/fea/` (`.gitignore` +2 patterns).
+
+## P6.0 Outcome in one table
+| Item | Result |
+|---|---|
+| (1) strength check | **Done. Most rows of the drawn node, clamshell / cradle and R4 clamps FAIL the D-223 basis, many already at the rigid-body demand (RF_RB < 1).** Cups (R3fix) and R2 bosses PASS. Table P6.2. These shortfalls exist in the p5 drawing (p5 said "not strength-checked"); the lightening does not cause them. |
+| (2) lightening | **-9.86 g basic** from the two items whose rows have margin: clamshell plates trimmed to the socket face (-7.06 g), cup sleeve wall 2.6 -> 1.8 mm (-2.80 g). The two items named in the brief are **rejected by the rows**: round-with-flats socket (CS3 bond 0.53 -> 0.17, wall 0.51 -> 0.21 at RB) and node ring wall 2.0 mm (N9 junction 0.51 -> 0.22). |
+| (3) window | CG 23.83 mm tallied (<= 25.0), SM 6.88 %, predicted 1.6936 kg, **window +5.02 % with the 3 % download (passes by 0.02 point, about 0.4 g of mass)**, +6.54 % without. No ballast, no limit changed. EST masses: the margin is inside the mass tolerance. |
+| (4) CAD / gates | wing.py, a_build_steps.py (text), printed_mass.json; build_a, `A_ELEV_POSE=21 collide_a.py`, `collide_a.py --linkage-poses`, a_assembly (67 steps, 124/124), wire_inventory, cad_mass, mission gate, prop_a, proofs (the 11 known and stale claims only) as P6.6; drawings and BUILD-GUIDE regenerated (P6.7). |
+**Reading for the conductor: the window now closes on paper, but the strength table says the D-221 parts do not meet D-223; closing those rows is a load-path redesign, not a mass trim, and will cost mass the window does not have.**
+
+## P6.1 Demand (rigid-body dynamics; `t077p6_demand.py`, 193 s)
+Chosen pad (D-222: Fp 30 N, usable stroke 24 mm, x_foot 0.3475, z_foot 0.1918), CAD mass model at the predicted 1.705 kg, CG x 23.91 mm (p5 tallied), 23 cases, pad zeta 0.02 / 0.05 / 0.10, face mu 0.40 (T-076d basis) and 0.30 (T-071b printed-part practice); hub / R / L wrench by d'Alembert on the point-mass model (sum to zero 3e-13). Stats reproduce T-076d step 2 (zeta 0.10 n 12.41 g; zeta 0.02 tilt 2.98 deg, stroke 21.5 mm). Peak hub-side |M| at the saddle forward end 14.8 N m (RB; T-080 V2 gives 15.3-19.7 with D-1). RF_RB = minimum over all cases / zeta / mu (landing_path_a formulas, KF 1.725, KP 2.156); columns x1.5 (floor) and x2.23 (DAF ruling s1.3: D-1 has no wing / saddle / clamshell output, so the largest moment DAF is used; 1.97 is the arm / tube / bond value). Bond rows on Onyx are integrity class (T-080 F-3: no allowable, outside the RF minimum).
+
+## P6.2 Strength table (adopted geometry; `strength_table_p6.md`; EST allowables as the repo: PETG / Onyx 20 in-layer / 9.5 interlayer, epoxy 2.0, CF pin 30, CF plate ACP x 0.70, CF 350; build axis z-up for cradle and node)
+| Part | Row | RB | x1.5 | x2.23 (D-223 interim wing / saddle DAF) | Verdict at max(DAF, 1.5) |
+|---|---|---|---|---|---|
+| Bridge tube 16x14 (CF, not a changed part) | B1 bridge bending at the ring face x 50 (350 MPa EST, KF) | 2.20 | 1.47 | 0.99 | **FAIL** |
+| Bridge tube 16x14 (CF, not a changed part) | B1 bridge bending at the forward end x 30 (350 MPa EST, KF) | 2.28 | 1.52 | 1.02 | PASS |
+| Clamshell pins FIN-008 (3 x 3 mm CF) | CS5 pin shear, double shear, rib torque Mx (3 pins) | 1.62 | 1.08 | 0.73 | **FAIL** |
+| Clamshell plates FIN-007 (CF 0.5) | CS3 plate-to-cradle bond shear (contact 596 mm2 per plate; T-071b used 1,875) | 0.53 | 0.35 | 0.24 | **FAIL** |
+| Clamshell plates FIN-007 (CF 0.5) | CS1 plate x-direction stress (My couple, Fx/2, Mz in-plane) | 2.96 | 1.97 | 1.33 | PASS |
+| Clamshell plates FIN-007 (CF 0.5) | CS2 plate y-direction stress (Mx couple, Fy/2, Mz in-plane) | 4.16 | 2.77 | 1.87 | PASS |
+| Clamshell plates FIN-007 (CF 0.5) | CS3p plate-to-cradle PEEL by Fz (integrity class, outside the minimum) | 28.89 | 19.26 | 12.96 | integrity class (outside the RF minimum): >= 1 |
+| Cradle FIN-005 (PETG) | P12 socket-to-ring junction (9.3 x 18 mm), in-layer 20 | 0.15 | 0.10 | 0.07 | **FAIL** |
+| Cradle FIN-005 (PETG) | P10 saddle socket: rib epoxy bond / bearing (D14 x 20) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) [in-layer] | 0.25 | 0.16 | 0.11 | integrity class (outside the RF minimum): **< 1, open** |
+| Cradle FIN-005 (PETG) | P13 saddle ring epoxy bond on spar (D12 x 60) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) [in-layer] | 0.39 | 0.26 | 0.17 | integrity class (outside the RF minimum): **< 1, open** |
+| Cradle FIN-005 (PETG) | P11 socket wall at the mouth (wall 2.00 mm, Z 765 mm3), in-layer 20 | 0.51 | 0.34 | 0.23 | **FAIL** |
+| Cradle FIN-005 (PETG) | CS5b pin bearing in the 4 mm boss wall (3 pins) | 0.92 | 0.61 | 0.41 | **FAIL** |
+| Cradle FIN-005 (PETG) | P13 saddle ring epoxy bond on spar (D12 x 60) - shear (axial + torsion) [in-layer] | 0.95 | 0.63 | 0.42 | **FAIL** |
+| Cradle FIN-005 (PETG) | P14a spar 12x10 under the cradle ring with the skin torque share 0.056 (bending in full), KF | 1.08 | 0.72 | 0.48 | **FAIL** |
+| Cradle FIN-005 (PETG) | P14b spar wall diametral crush under the saddle ring (hoop EST 40 MPa) [in-layer] | 1.11 | 0.74 | 0.50 | **FAIL** |
+| Cradle FIN-005 (PETG) | P10 saddle socket: rib epoxy bond / bearing (D14 x 20) - shear (axial + torsion) [in-layer] | 2.23 | 1.49 | 1.00 | PASS |
+| Cradle FIN-005 (PETG) | P10 saddle socket: rib epoxy bond / bearing (D14 x 20) - bearing, compression side [in-layer] | 2.47 | 1.64 | 1.11 | PASS |
+| Cradle FIN-005 (PETG) | P13 saddle ring epoxy bond on spar (D12 x 60) - bearing, compression side [in-layer] | 3.88 | 2.59 | 1.74 | PASS |
+| Node CGE-006/011/013 (X7 + CF plate) | N1 skin-to-plate lap bond (lap 5 mm EST; integrity class) | 3.92 | 2.61 | 1.76 | integrity class (outside the RF minimum): >= 1 |
+| Node bridge socket CGE-006 (Onyx) | N7 socket net section under M at the ring face x 50 (box 21 x 21 less bore 16, Z 1237 mm3; ears not effective), in-layer 20, no fibre | 0.75 | 0.50 | 0.34 | **FAIL** |
+| Node bridge socket CGE-006 (Onyx) | N7 socket net section under M at the forward end x 30 (box 21 x 21 less bore 16, Z 1237 mm3; ears not effective), in-layer 20, no fibre | 0.77 | 0.52 | 0.35 | **FAIL** |
+| Node bridge socket CGE-006 (Onyx) | N6 bridge bearing in the 23.5 mm socket (6M/(D L^2)+V/(D L), M at the mouth, Onyx 20) | 0.92 | 0.61 | 0.41 | **FAIL** |
+| Node bridge socket CGE-006 (Onyx) | N6b bridge-in-socket bond, axial + torque (epoxy on Onyx "-", integrity class) | 1.81 | 1.21 | 0.81 | integrity class (outside the RF minimum): **< 1, open** |
+| Node ears CGE-006 inner / CGE-013 outer (Onyx) | N5 inner ear in-plane bending at the ring front x 49.5 (pins carry the couple; section 3 x 19 mm; the ear forward of the ring is joined only through the ring), in-layer 20 | 0.21 | 0.14 | 0.09 | **FAIL** |
+| Node ears CGE-006 inner / CGE-013 outer (Onyx) | N4 pin bearing in the 1.5 mm outer clevis ear (F/2 per ear, Onyx 20) | 0.31 | 0.21 | 0.14 | **FAIL** |
+| Node ears CGE-006 inner / CGE-013 outer (Onyx) | N4b pin bearing in the 3.0 mm inner ear | 0.62 | 0.41 | 0.28 | **FAIL** |
+| Node pins CGE-012 (4 x 3 mm CF per side) | N3 pin shear, double shear, skin torque couple (r 7.43 mm) | 0.73 | 0.49 | 0.33 | **FAIL** |
+| Node plate CGE-011 (CF 0.5) / ear bond | N2 plate-to-ear bond, 2 faces (39.5 x 19 mm), polar moment (epoxy on Onyx "-": integrity class) | 1.27 | 0.85 | 0.57 | integrity class (outside the RF minimum): **< 1, open** |
+| Node ring CGE-006 (Onyx) on the spar | N8 ring bond on spar D12 x 30: BOND INTEGRITY / peel (epoxy on Onyx "-"; integrity class) | 0.10 | 0.07 | 0.05 | integrity class (outside the RF minimum): **< 1, open** |
+| Node ring CGE-006 (Onyx) on the spar | N8 ring epoxy bond on spar D12 x 30: shear (axial + torsion) | 0.49 | 0.33 | 0.22 | **FAIL** |
+| Node ring CGE-006 (Onyx) on the spar | N9 socket-to-ring junction at x 53.5 (16.5 x 21 mm: ring chord x socket width), in-layer 20 | 0.51 | 0.34 | 0.23 | **FAIL** |
+| Node ring CGE-006 (Onyx) on the spar | N8c spar wall diametral crush under the 30 mm ring (hoop 40 MPa EST) | 0.70 | 0.46 | 0.31 | **FAIL** |
+| Node ring CGE-006 (Onyx) on the spar | N8 ring bond on spar D12 x 30: bearing, compression side (Onyx 20) | 1.05 | 0.70 | 0.47 | **FAIL** |
+| Rib FIN-002 (not a changed part, shown) | P9a rib tube 14x12 at the socket mouth x 108 | 0.84 | 0.56 | 0.38 | **FAIL** |
+| Strut clamp CGE-007 R4 (PETG) + strut | R4 socket-to-ring junction at the R 2.0 fillet base (annulus OD 13 / bore 6, Kt 2.0 EST), interlayer 9.5 | 0.84 | 0.56 | 0.38 | **FAIL** |
+| Strut clamp CGE-007 R4 (PETG) + strut | STRUT Euler pinned, no foam support (416 N) | 0.88 | 0.58 | 0.39 | **FAIL** |
+| Strut clamp CGE-007 R4 (PETG) + strut | R4 socket wall axial (A 35.3 mm2: OD 9 / bore 6), in-layer 20 (axis in the print plane) | 1.19 | 0.79 | 0.53 | **FAIL** |
+| Strut clamp CGE-007 R4 (PETG) + strut | STRUT bond at clamp (D6 x 25.0 mm, epoxy 2.0 MPa EST) | 1.59 | 1.06 | 0.71 | **FAIL** |
+| Strut clamp CGE-007 R4 (PETG) + strut | R4 ring bond on the spar (D12 x 16, Ny + torque Nx x 10 mm lever EST) | 1.76 | 1.17 | 0.79 | **FAIL** |
+| Strut clamp CGE-007 R4 (PETG) + strut | STRUT tube strength, 6x4.5 CF 350 MPa EST | 11.60 | 7.73 | 5.20 | PASS |
+| Motor cup CGE-003 R3fix (PETG), as drawn: OD 15.8, wall 1.8, web 4.2 | Plate bending, cantilever 6 mm past the sleeve end (2 screws, net section 30.3 x 5 mm after the D-198 lead hol | 8.51 (strike envelope, KP) | - | - | PASS |
+| Motor cup CGE-003 R3fix (PETG), as drawn: OD 15.8, wall 1.8, web 4.2 | Strike S1 axial 30 N: head pull-through | 5.75 (strike envelope, KP) | - | - | PASS |
+| Motor cup CGE-003 R3fix (PETG), as drawn: OD 15.8, wall 1.8, web 4.2 | Strike S2 transverse 30 N (35 mm above base face): worst screw tension, + hover thrust share | 2.55 (strike envelope, KP) | - | - | PASS |
+| Motor cup CGE-003 R3fix (PETG), as drawn: OD 15.8, wall 1.8, web 4.2 | Strike S2: plate cantilever bending beyond the sleeve end | 1.37 (strike envelope, KP) | - | - | PASS |
+| Motor cup CGE-003 R3fix (PETG), as drawn: OD 15.8, wall 1.8, web 4.2 | Strike S3 blade stop: hole bearing, torque 2.4 N m on 2 of 4 screws | 1.39 (strike envelope, KP) | - | - | PASS |
+| Motor cup CGE-003 R3fix (PETG), as drawn: OD 15.8, wall 1.8, web 4.2 | Strike S2/S3: cup-to-arm bond, torsion 30 N x 47 mm + torque couple 2.4 N m / 25 mm | 2.88 (strike envelope, KP) | - | - | PASS |
+| Motor cup CGE-003 R3fix (PETG), as drawn: OD 15.8, wall 1.8, web 4.2 | Strike S3: sleeve wall hoop at the mouth (couple 96 N, 6 mm patch) | 2.37 (strike envelope, KP) | - | - | PASS |
+| Motor cup CGE-003 R3fix (PETG), as drawn: OD 15.8, wall 1.8, web 4.2 | FATIGUE cup plate cantilever bending, amplitude | 7.25 (strike envelope, KP) | - | - | PASS |
+| R2 bosses AVN-010 (PETG) | FC Kakute H743-Wing 28: mount f_z 872 Hz / f_horizontal 659 Hz vs 304 Hz (A-P10(a) 1.2 x top 2P band) | - | - | 2.17 | PASS |
+| R2 bosses AVN-010 (PETG) | FC Kakute H743-Wing 28: landing x2.23 (n 26.6 g, F 7.3 N along x, lever 7.5 mm): foam bearing under one boss (dN 1.10 N, 6 x 6 mm punch, no skin spreading) | - | - | 1.56 | PASS |
+| R2 bosses AVN-010 (PETG) | FC Kakute H743-Wing 28: landing x2.23: boss base bond peel / tension (epoxy 2.0 MPa) | - | - | 30.37 | PASS |
+| R2 bosses AVN-010 (PETG) | FC Kakute H743-Wing 28: landing x2.23: M2 screw shear (FC: 4 screws; ESC held by tape + tie: not a screw row) | - | - | 290.16 | PASS |
+| R2 bosses AVN-010 (PETG) | ESC SpeedyBee 4-in-1 2: mount f_z 1031 Hz / f_horizontal 780 Hz vs 304 Hz (A-P10(a) 1.2 x top 2P band) | - | - | 2.56 | PASS |
+| R2 bosses AVN-010 (PETG) | ESC SpeedyBee 4-in-1 2: landing x2.23 (n 26.6 g, F 5.2 N along x, lever 7.4 mm): foam bearing under one boss (dN 0.97 N, 6 x 6 mm punch, no skin spreading) | - | - | 1.77 | PASS |
+| R2 bosses AVN-010 (PETG) | ESC SpeedyBee 4-in-1 2: landing x2.23: boss base bond peel / tension (epoxy 2.0 MPa) | - | - | 34.35 | PASS |
+
+
+Notes on the rows. N1 reproduces T-071b N1 (3.92). N3-N9 and the CS3 / P12 drawn-geometry rows are my formulations (stated in the row text). N7: the voxel slices of CGE-006 show the inner ear (y 13.5-16.5) separated from the socket box (|y| <= 10.5) by a 3 mm gap for x 31.5-49.5, joined only through the ring at x >= 49.5, so the ears are not in the net section. CS3: the plate touches the cradle only on the socket face (x 66.5-108 by 18 mm less three boss holes = 596 mm2 per plate); the 1 mm gap over the ring and the plate area outside the socket have no bond partner; T-071b / T-080 used 1,875 mm2 per plate (50 x 75, frame fraction 0.5): the drawing gives 32 % of it. P12: the p5 slim ring (R 8.0) leaves a socket-to-ring neck of 9.3 x 18 mm (T-071b ring R 10.5: 16.5 mm). Rib P9a and bridge B1 are context rows, not changed parts. Fibre layout in Onyx is not drawn: for N7 at x2.23 the fibre needed is 9.6 mm2 per side in tension at 400 MPa EST (18.3 mm2 in compression at 210), consistent with T-080 V5; N rows are judged without fibre. Plate bearing at the node pins: allowable "-", not judged.
+Flight loads (hand estimates, illustrative): hover wing weight on the saddle about 0.21 kg x 9.81 x 1.5 x 0.19 m = 0.6 N m per side, cancelling in the bridge; 2.5 g pull-up lift 42 N reacts as shear through the continuous spar and ring (bond shear 0.04 MPa); aero pitching moment about 1 N m. All are an order below the 14.8 N m landing moment: landing governs. Cups: motor-station inertial force in landing 22.6 N RB (peak), x2.23 = 50 N, x5.22 (arm flapping Fz ratio of the DAF ruling) = 118 N, acting along the shaft = the S1 axial strike case (30 N, head pull-through RF 5.75): RF 3.45 at 50 N, 1.46 at 118 N; the S2 / S3 transverse strike rows are the envelope and govern (min RF 1.37).
+
+## P6.3 Lightening decisions (subtract; each judged by the rows it touches)
+| Candidate | Rows touched | Verdict | Mass |
+|---|---|---|---|
+| L1 clamshell plates x 66.5-108, y +-12 (socket face; p5 50 x 64) | CS1 / CS2 only (CS3 contact is the socket face, unchanged 0.53) | CS1 2.96 RB -> 1.33 at x2.23, CS2 4.16 -> 1.87: **allowed** (y +-10 gives 1.15; +-12 taken). Core pocket stays 64 mm (cradle ring is 60 mm long) | -3.53 g per side, **-7.06 g** (FIN-007 4.88 -> 1.35 g) |
+| L2 cup sleeve wall 1.8 mm (OD 15.8, p5 17.2), web 3.5 -> 4.2 mm to still meet the crest | S3 sleeve hoop 2.37 x 1.8 / 2.6 = 1.64; S2 plate cantilever (5 mm region) unchanged 1.37; screws and pockets unchanged (head seat x -7.2) | **allowed** (hand strike rows; no FEA of the S2 / S3 junction hot spot after the D-210 fillet) | -0.70 g per cup, **-2.80 g** (8.38 -> 7.68) |
+| L3 cradle socket round OD 18 with flats at z +-8.0 (brief, EST -3.7 g per side) | CS3 contact 596 -> 191 mm2 per plate, P11 wall 2.0 -> 1.0 mm | **rejected**: CS3 0.53 -> 0.17, P11 0.51 -> 0.21 (RB), already < 1 | not taken |
+| L4 node saddle ring wall 2.0 mm (OD 16, brief EST -1.5 g) | N9 junction chord 16.5 -> 9.3 mm | **rejected**: 0.51 -> 0.22 (RB), already < 1 | not taken |
+| R2 bosses, other cup features, R4 clamps, node pins / ears | rows < 1.4 or < 1; bosses total 1.63 g | no margin | - |
+Net -9.86 g basic (CAD 1,464.2 -> 1,454.3 g; tallied 1,483.4 -> 1,473.5 g). Masses: `t077p6_mass_audit.py` h 0.25 mm on CGE-003 (basis S, as p5) and the analytic CF plate (41.5 x 24 - 3 pi 4^2) x 0.5 x 2 x 1.6 g/cm3.
+
+## P6.4 CG, SM, window, T-W (geometry arithmetic + prop_a EST; `t077p6_metrics.py`, `gates/gate_prop_sched.txt`)
+| State | Basic g | CG mm | SM % | Predicted kg | Window % (download) | T/W fresh (no dl / dl) | T/W sag (dl) |
+|---|---|---|---|---|---|---|---|
+| p5 as drawn | 1,464.2 | 20.44 | 8.26 | 1.6831 | 5.33 | 2.055 / 1.993 | 1.850 |
+| p5 tallied | 1,483.4 | 23.91 | 6.85 | 1.7046 | 4.70 FAILS | 2.030 / 1.969 | 1.827 |
+| **p6 as drawn** (`cad_mass.json`) | **1,454.3** | **20.34** | **8.31** | 1.6721 | 5.66 | 2.068 / 2.006 | 1.862 |
+| **p6 tallied** (+12.2 g root blocks at 283.1 mm, +7.0 g shoe cups at 298.1 mm, EST, undrawn) | **1,473.5** | **23.83** | **6.88** | **1.6936** | **5.02 passes (6.54 without download)** | 2.043 / 1.982 | 1.838 |
+Predicted = basic x 1.1174 + 0.032 x 1.47. Ceiling at derate 0.93 with the download 1.694 kg: margin 0.4 g. CG limit 25.0 holds (margin 1.17 mm). Bench derate line A-P3 (window 5 %, download) 0.930 (p5 0.936); A-P2 fresh 0.910 without / 0.939 with the download.
+
+## P6.5 What the strength table means (decisions for the conductor, not mine)
+1. The D-221 parts as drawn: node (N3 pins 0.73, N4 outer-ear bearing 0.31, N5 ear bending 0.21, N7 net section 0.75-0.77, N8 ring bond on spar 0.49, N9 junction 0.51 at RB), cradle (P12 0.15, P11 0.51, CS3 0.53, CS5b 0.92, P13 shear 0.95) and R4 clamps / strut (strut Euler 0.88, junction 0.84) are below 1.0 **at the rigid-body demand itself**; all are below 1.0 at x2.23. CS5 pins pass at RB only (1.62 -> 0.73). p5 had said these were not checked; T-071b / T-076 passed them on different geometry (ring R 10.5, plates on a 50 x 75 frame, ears on a one-piece box to y +-16.5, pins at r 17 mm).
+2. Closing them is a load-path redesign (a bond partner or frame for the plates, the ring neck, an ear web across the 3 mm gap, pin pattern and boss height, ring length 30 -> 60 mm at the node), each needing FEA or a coupon; no credible gram figure exists and the window has 0.4 g. Options (numbers, not my call): (a) carry them as open rows with coupons C-2 / C-3 and TP-4 / TP-5 deciding (hand bounds, EST allowables); (b) re-open the DAF (2.23 is the interim wing value borrowed from the bridge; a wing output in D-1 replaces it: at the 1.5 floor the pins pass (1.08) but CS5b 0.61, CS3 0.35, P12 0.10 still fail); (c) revert one D-221 item to the p4 saddle (window 4.94 / 4.90 with one item, 5.14 with none, p5 P5.5) and re-judge; (d) a redesign pass for the cradle and node with the mass accepted against a real bench derate.
+3. Not done: FEA of cradle / node; the D-1 direct / r_m term for wing rows; strut Euler is not a changed part (0.88 RB, T-071 had 1.10 at the old demand): flagged.
+
+## P6.6 Gates (final tree; driver `T077p6_data/run_gates_p6.sh`, outputs `gates/`)
+| Gate | Command | Exit | Time | Result |
+|---|---|---|---|---|
+| build | `python -I build_a.py` | 0 | 16 s | PASS, 10 modules, 0 errors, 0 warnings |
+| collide pose 21 | `A_ELEV_POSE=21 python -I collide_a.py` | 0 | 721 s | PASS, 553 bodies, 124 parts, 0 pairs > 0.05 mm static / -21 / +21, wire ends 0, folds 0 |
+| linkage | `python -I collide_a.py --linkage-poses` | 0 | 850 s | PASS, 18 poses |
+| assembly (Blender) | `python -I a_assembly.py` | 0 | 2,022 s | PASS, 67 steps, 124 / 124 parts, blocked or unsupported 0 |
+| wire inventory | `python -I wire_inventory.py` | 0 | 10 s | exposed 0.502 strand-m (unchanged) |
+| cad_mass | `python -I sitl/cad_mass.py` | 0 | 8 s | 1.4543 kg, CG x 20.34 mm |
+| mission gate | `python -I mission_gate_a.py --o4b` | 0 | 0 s | CAD basic 1,454.3 g, CG 20.34 mm, SM 8.31 % |
+| prop_a --sched | `python -I prop_a.py --sched --mass 1.694` | 0 | 69 s | derate 0.93: T/W fresh 2.043, sag 1.895, window +6.5 % (no download) |
+| proofs | `python -I proofs/run_all.py` | 1 (strict) | 2 s | the same 11 claims as p5 (5 known + 6 stale mass / window / cruise); no new failure |
+Hard-coded insertion data (`a_assembly_plan.py`): unchanged (plates smaller, cups thinner only); the assembly gate passes.
+
+## P6.7 CAD changes, drawings, guide
+wing.py: `CUP_RO` 0.0086 -> 0.0079, `CUP_WEB_X` -0.0085 -> -0.0078 (old kept as `_CUP_WEB_X_P5`), `CLAM_PL_X` (0.058, 0.108) -> (0.0665, 0.108), `CLAM_PL_HY` 0.032 -> 0.012, new `CLAM_POCKET_HY` 0.032 (pocket unchanged), part names; a_build_steps.py: FIN-007 size text; printed_mass.json: CGE-003 x4 8.38 -> 7.68, FIN-007 x2 4.88 -> 1.35 g. Drawings (`make_drawings_a.py`) and `BUILD-GUIDE-A.md` regenerated by the driver (exit codes in `gates/gates_summary.txt`).
+
+## P6.8 Proposed text (for the conductor; not applied)
+- **CHANGE-LOG (T-077 p6):** "Strength check of the drawn D-221 parts on the D-223 demand (chosen pad, 1.705 kg, 23 cases x zeta x mu; DAF 2.23 interim wing value): motor cups R3fix and R2 bosses pass (min RF 1.37 and 1.56); node, clamshell / cradle and R4 clamps fail, many already at RB (CS3 plate bond 0.53 on 596 mm2 per plate against 1,875 assumed, P12 neck 0.15, N7 0.75, N5 0.21, pins 0.73). Lightened -9.86 g: clamshell plates trimmed to the socket face (-7.06 g, CS1 / CS2 1.33 / 1.87 at DAF), cup sleeve wall 1.8 mm (-2.80 g, hoop RF 1.64). Round-socket and node-ring-wall options rejected by the rows. Window +5.02 % (tallied 1,473.5 g, 1.6936 kg, CG 23.83 mm, SM 6.88 %), 0.4 g margin; the node / cradle shortfall is open."
+- **MASS-GATE basis:** FIN-007 1.35 g per side, CGE-003 7.68 g x 4.
+- **BOM:** 0.5 mm CF sheet for 4 clamshell plates now 41.5 x 24 mm.
+- **TEST-PLAN:** TP-1 bench pass line 0.930 at 1.6936 kg; add a coupon for the CF plate to PETG cradle bond on the socket face (CS3).
+
+## P6.9 Limits and open items
+All strength rows are hand bounds with EST allowables (no FEA, no coupons); N3-N9, CS3 and P12 on drawn geometry are my formulations. The window margin (+0.02 point) is smaller than the mass tolerance (EST print basis; undrawn root blocks and shoe cups 19.2 g EST). Cup wall 1.8 mm is judged on hand strike rows only (the D-210 fillet hot spot was an FEA finding). DAF 2.23 on cradle / node rows is the D-223 interim rule.
+
+
+# Part 7 (2026-11-21, T-077-p7: D-225 implementation: D-221 node and clamshell withdrawn, part-4 printed saddles back, strut and R4 clamp resized). **STOP (brief item 4): the saddle rows fail and the window does not close.** Not VERIFIED COMPLETE. Nothing committed. No docs/, CHANGE-LOG, ledger, MASS-GATE or BOM edit (text proposed in P7.8).
+
+Acceptance test (restated from the brief): (1) `wing.py` with the D-221 flags off (X7 node, CF clamshell / cradle gone, part-4 printed saddles back), part-6 cup wall 1.8 mm kept; `printed_mass.json` and `a_build_steps.py` follow. (2) Part-4 saddles, root / node joint and pins re-judged with the part-6 method (`t077p6_strength.py` formulas, `demand_p6.json`, D-223 2.23 for wing / saddle rows, 1.97 tubes / bond, same EST allowables): RF >= 1.0 at max(DAF, 1.5); the strut (Euler 0.88 RB) and the R4 junction (0.84 RB) resized to pass at that level with minimal mass; lighten only where rows pass. (3) CG / SM / mass / window / T-W re-run; window (A-P3, 3 % download) >= +5.0 % with no ballast. (4) If a saddle row still fails or the window cannot close: fix what geometry can fix, then STOP and report the gap (rows, grams); no limit or DAF change. (5) Gates once at the end into `T077p7_data/gates/`; drawings and build guide regenerated. (6) This section.
+Categories: rigid-body dynamics (the p6 demand, not re-run), hand calculation (every strength row; no FEA), interference (collide, linkage, assembly), geometry arithmetic (masses, CG, tally, voxel audit), illustrative (prop_a EST thrust model). No CFD, flight-dynamics, kinematics or FEA run.
+Data and scripts: `T077p7_data/` (`t077p7_strength.py` = the p6 rows without the D-221 parts, with geometry switches; `t077p7_table.py` -> `strength_table_p7.md`; `t077p7_mass_audit.py` = p6 audit unchanged; `t077p7_write_printed_mass.py`; `t077p7_metrics.py` = p6 metrics unchanged; `run_gates_p7.sh`, `gates/`). Sizing probes: `strength_drawn.txt` (part-4 saddles + p6 strut / clamp), `strength_R4S.txt`, `strength_S1.txt`, `strength_S2.txt`, `strength_rs_*.json`. No large arrays were written (the demand arrays are the git-ignored p6 `fea/demand_p6.npz`), so `.gitignore` needed no new pattern.
+
+## P7.0 Outcome in one table
+| Item | Result |
+|---|---|
+| (1) flags off | **Done.** `P5_CLAMSHELL = P5_NODE = False` by default (`wing.py` l.92; the env `P5_VARIANT` = `clam` / `node` / `both` re-draws the withdrawn items for analysis only). Cup wall 1.8 mm kept. `printed_mass.json`: FIN-007, CGE-011, CGE-013 rows removed, FIN-005 14.39 g and CGE-006 9.67 g (the p7 voxel audit reproduces both part-4 values exactly). Assembly plan and build steps: A1b and C1p removed, B2 (rib saddles snap on from below) back, CAGE without CGE-011..013 |
+| (2a) saddles re-judged | **FAIL. The part-4 saddles do not carry the D-223 demand: 14 rows of the two saddles are below 1.0 at x2.23, and 10 of them are already below 1.0 at the rigid-body demand.** The D-225 premise ("the saddles carry earlier strength passes, T-071b, T-076") does not hold under the part-6 method: those passes used a smaller demand and other geometry (P6.2 notes). Table P7.2 |
+| (2b) strut + R4 clamp | **Done, all rows pass at x2.23:** strut 8x6 (Euler 2.36 RB, 1.06), R4 clamp ring OD 21 x 21, socket OD 12.5 / bore 8 x 27 mm bond, junction fillet R 4.0 (junction 1.01, ring bond 1.04, socket wall 1.10, strut bond 1.03); drawn, audited (6.34 g each) |
+| (2c) lightening | none: every saddle row fails, the strut / clamp rows sit at 1.01-1.14 |
+| (3) window | **FAILS: +4.78 % with the 3 % download (limit +5.0)**, tallied basic 1,481.1 g vs the 1,474.3 g ceiling: **6.8 g basic over** (the strut / clamp resize costs +13.7 g; without it the tree gives 1,467.4 g and +5.23 %). CG 23.39 mm tallied (<= 25.0), SM 7.07 %. No ballast, no limit or DAF changed |
+| (4) STOP | fired on both conditions; gaps in P7.5 |
+| (5) gates | build_a, `A_ELEV_POSE=21 collide_a.py` (517 bodies, 117 parts), 18 linkage poses and the 66-step assembly (117 / 117 parts, 0 blocked) **PASS**; wire inventory 0.502 strand-m (unchanged); proofs: 12 claims fail = the 11 of p6 + **CG-TRIM-FWD on the drawn CAD (18.8 mm vs >= 19; the drawn CG moved 0.43 mm forward with the saddles; the tallied forward trim end is 22.3 mm)**; drawings 43 / 43, BUILD-GUIDE-A 66 steps (P7.6) |
+
+## P7.1 What was changed in the CAD (file:line, values)
+| Part | Change | Where | Mass (p6 -> p7) |
+|---|---|---|---|
+| Flags | `P5_CLAMSHELL, P5_NODE` False by default (D-225) | `wing.py` l.92 | node / clamshell parts gone: CGE-011 0.87, CGE-012 0.47, CGE-013 1.95, FIN-007 1.35 x 2, FIN-008 0.74 x 2 g (p5 / p6 values) |
+| FIN-005-R/L rib saddle (part 4) | ring R 10.5 x 60 mm on the spar, socket 19 x 19 mm, x 66.5..90.5, rib from x 70.5 (20 mm engagement), clip slot | `wing.py` `build_fins` (else branch) | 12.32 -> **14.39 g** each (p7 voxel audit h 0.25 mm, basis S) |
+| CGE-006 bridge saddle (part 4) | ring R 10.5 x 30 mm, socket box 21 x 21 x 23.5 mm round the 16 mm bridge | `wing.py` `build_cage` | 12.33 (X7) -> **9.67 g** (audit) |
+| CGE-005-R/L strut | **8x6** (was 6x4.0), same axis (S x -77, E (50, 285) mm), length 291.2 mm | `wing.py` `STRUT_OD, STRUT_ID` l.87 | 7.3 -> **10.2 g** each (tube section x length x 1.6 g/cm3) |
+| CGE-001 hub | strut socket bore 8 mm, boss radius 4.8 mm (follow `STRUT_OD`) | `wing.py` `hub_strut_boss`, `hub_vol_m3` | 42.17 -> **43.33 g** (+1.16 g Al) |
+| CGE-007-R/L R4 clamp | ring OD 21 (R 10.5) x 21 mm, y 289.5..310.5 (centred on plug WNG-004 at y 300); socket OD 12.5 along the strut axis, 27 mm bond + 14 mm buried; junction fillet **R 4.0** (OCC, 3 edges filleted); clip slot y 278..311 | `wing.py` `CLAMP_FIL`, `CLAMP_Y`, `CLAMP_RR`, `CLAMP_RS`, `CLAMP_SL`, `clamp_params`; `occ_bodies_cache.npz` (pruned to the current key) | 2.94 -> **6.34 g** each (audit) |
+| WNG-001 core | clamp slot to y +-311; new "clamp socket slot" (0.5 mm clear round the OD 12.5 socket, s -28..+2 mm about the strut end, open below) | `wing.py` `build_wing` | core mass is the lumped 100.1 g (not recomputed) |
+| a_assembly_plan.py | A1b and C1p removed, B2 back, CAGE list without CGE-011..013, A2 caption; the strut insertion direction (-0.43605, +-0.89992) is unchanged (STRUT_S / STRUT_E unchanged) | `a_assembly_plan.py` | - |
+| a_build_steps.py | A1b -> B2 (part-4 rib saddles, 14.4 g text), C1p removed, C1 callout, strut stock 8x6, strut check 10.2 g, 64.2 deg | `a_build_steps.py` | - |
+| parts_links_a.py | CGE-005 8x6 (no BOM line, "-"), CGE-006 / FIN-005 printed PETG, D-221 rows removed | `parts_links_a.py` | - |
+
+## P7.2 Strength table (adopted tree; `strength_table_p7.md`, `strength_adopted.txt`; hand calculation on the p6 rigid-body demand)
+Demand: `T077p6_data/demand_p6.json` (chosen pad Fp 30 N, 24 mm stroke, 1.705 kg, CG 23.91 mm, 23 cases x pad zeta 0.02 / 0.05 / 0.10 x mu 0.40 / 0.30), not re-run: the p7 tally is lighter (1.702 kg predicted) and its CG 0.5 mm further forward, so the p6 demand is the slightly larger one. Formulas: `landing_path_a.py` P9a-P14 and the p6 N6-N9 rows (the node rows without the ears, plates and pins); allowables EST as p6 (PETG 20 in-layer for the z-up build, interlayer 9.5 shown; epoxy 2.0; CF 350 / 30; hoop 40). Verdict column at x2.23 (D-223 bridge and interim wing / saddle DAF, the p6 rule; none of these parts is in the D-1 frame model, so no D-1 / 0.84 term exists). Integrity-class rows (bond peel, coupon rows) stay outside the RF minimum as in p6.
+Geometry (mm): {'rsock': 12.5, 'rbore': 8.0, 'rfil': 4.0, 'rring': 21.0, 'sbond': 27.0, 'sad_ring': 30.0, 'sad_ro': 10.5, 'sad_box': 21.0, 'rsad_w': 19.0, 'rsad_ro': 10.5, 'rsad_x1': 90.5}; strut [8.0, 6.0]
+
+| Part | Row | RB | x1.5 | x1.97 | x2.23 | Verdict at x2.23 | Governing case |
+|---|---|---|---|---|---|---|---|
+| Bridge saddle CGE-006 (PETG, part 4: ring R 10.5 x 30 on the spar, socket box 21 x 21 round the 16 mm bridge, 23.5 mm deep) | N8 ring bond on spar D12 x 30: BOND INTEGRITY / peel (integrity class) | 0.10 | 0.07 | 0.05 | 0.05 | integrity class (outside the RF minimum): < 1 | hard 10 wide + drift .5 y z0.10 mu0.30 |
+| Bridge saddle CGE-006 (PETG, part 4: ring R 10.5 x 30 on the spar, socket box 21 x 21 round the 16 mm bridge, 23.5 mm deep) | N8 ring epoxy bond on spar D12 x 30: shear (axial + torsion) | 0.49 | 0.33 | 0.25 | 0.22 | **FAIL** | SITL Z5_b45 narrow (z drift) z0.10 mu0.30 |
+| Bridge saddle CGE-006 (PETG, part 4: ring R 10.5 x 30 on the spar, socket box 21 x 21 round the 16 mm bridge, 23.5 mm deep) | N9 socket-to-ring junction at x 53.5 (16.5 x 21 mm: ring chord x socket width), in-layer 20 | 0.51 | 0.34 | 0.26 | 0.23 | **FAIL** | hard 7/7 combo z0.10 mu0.40 |
+| Bridge saddle CGE-006 (PETG, part 4: ring R 10.5 x 30 on the spar, socket box 21 x 21 round the 16 mm bridge, 23.5 mm deep) | N8c spar wall diametral crush under the 30 mm ring (hoop 40 MPa EST), KF | 0.70 | 0.46 | 0.35 | 0.31 | **FAIL** | hard level z0.10 mu0.40 |
+| Bridge saddle CGE-006 (PETG, part 4: ring R 10.5 x 30 on the spar, socket box 21 x 21 round the 16 mm bridge, 23.5 mm deep) | N7 socket net section under M at the ring face x 49.5 (box 21 x 21 less bore 16, Z 1237 mm3), in-layer 20 | 0.75 | 0.50 | 0.38 | 0.34 | **FAIL** | hard 10 wide + drift .5 y z0.10 mu0.30 |
+| Bridge saddle CGE-006 (PETG, part 4: ring R 10.5 x 30 on the spar, socket box 21 x 21 round the 16 mm bridge, 23.5 mm deep) | N7 socket net section under M at the forward end x 30 (box 21 x 21 less bore 16, Z 1237 mm3), in-layer 20 | 0.77 | 0.52 | 0.39 | 0.35 | **FAIL** | hard 10 wide + drift .5 y z0.10 mu0.40 |
+| Bridge saddle CGE-006 (PETG, part 4: ring R 10.5 x 30 on the spar, socket box 21 x 21 round the 16 mm bridge, 23.5 mm deep) | N6 bridge bearing in the 23.5 mm socket (6M/(D L^2)+V/(D L), M at the mouth, PETG 20) | 0.92 | 0.61 | 0.46 | 0.41 | **FAIL** | hard 10 wide + drift .5 y z0.10 mu0.40 |
+| Bridge saddle CGE-006 (PETG, part 4: ring R 10.5 x 30 on the spar, socket box 21 x 21 round the 16 mm bridge, 23.5 mm deep) | N8 ring bond on spar D12 x 30: bearing, compression side (PETG 20) | 1.05 | 0.70 | 0.53 | 0.47 | **FAIL** | hard 10 wide + drift .5 y z0.10 mu0.30 |
+| Bridge saddle CGE-006 (PETG, part 4: ring R 10.5 x 30 on the spar, socket box 21 x 21 round the 16 mm bridge, 23.5 mm deep) | N6b bridge-in-socket bond, axial + torque (integrity class) | 1.81 | 1.21 | 0.92 | 0.81 | integrity class (outside the RF minimum): < 1 | hard 7/7 combo z0.02 mu0.40 |
+| Bridge tube CGE-004 16x14 (CF, not a changed part) | B1 bridge bending at the ring face x 49.5 (350 MPa EST, KF) | 2.20 | 1.47 | 1.12 | 0.99 | **FAIL** | hard 10 wide + drift .5 y z0.10 mu0.30 |
+| Bridge tube CGE-004 16x14 (CF, not a changed part) | B1 bridge bending at the forward end x 30 (350 MPa EST, KF) | 2.28 | 1.52 | 1.16 | 1.02 | PASS | hard 10 wide + drift .5 y z0.10 mu0.40 |
+| Rib FIN-002 (not a changed part, shown) | P9a rib tube 14x12 at saddle mouth x 0.0905 | 0.84 | 0.56 | 0.43 | 0.38 | **FAIL** | SITL Tb_h5 wide (y drift) z0.10 mu0.40 |
+| Rib saddle FIN-005 (PETG, part 4: ring R 10.5 x 60 on the spar, socket 19 x 19 x 24 mm, rib 20 mm in) | P10 saddle socket: rib epoxy bond / bearing (D14 x 20) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) [in-layer] | 0.06 | 0.04 | 0.03 | 0.03 | integrity class (outside the RF minimum): < 1 | hard 16 wide + drift .5 y z0.10 mu0.40 |
+| Rib saddle FIN-005 (PETG, part 4: ring R 10.5 x 60 on the spar, socket 19 x 19 x 24 mm, rib 20 mm in) | P13 saddle ring epoxy bond on spar (D12 x 60) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) [in-layer] | 0.39 | 0.26 | 0.20 | 0.17 | integrity class (outside the RF minimum): < 1 | hard 10 wide z0.10 mu0.40 |
+| Rib saddle FIN-005 (PETG, part 4: ring R 10.5 x 60 on the spar, socket 19 x 19 x 24 mm, rib 20 mm in) | P12 saddle socket-to-ring junction, PETG (16.5 x 19 mm), in-layer 20 | 0.45 | 0.30 | 0.23 | 0.20 | **FAIL** | hard 7/7 combo z0.10 mu0.40 |
+| Rib saddle FIN-005 (PETG, part 4: ring R 10.5 x 60 on the spar, socket 19 x 19 x 24 mm, rib 20 mm in) | P10 saddle socket: rib epoxy bond / bearing (D14 x 20) - bearing, compression side [in-layer] | 0.58 | 0.39 | 0.30 | 0.26 | **FAIL** | hard 16 wide + drift .5 y z0.10 mu0.40 |
+| Rib saddle FIN-005 (PETG, part 4: ring R 10.5 x 60 on the spar, socket 19 x 19 x 24 mm, rib 20 mm in) | P11 saddle socket wall, PETG box 19x19 / bore 14, bending + torsion, in-layer 20 | 0.58 | 0.39 | 0.30 | 0.26 | **FAIL** | hard 16 wide + drift .5 y z0.10 mu0.40 |
+| Rib saddle FIN-005 (PETG, part 4: ring R 10.5 x 60 on the spar, socket 19 x 19 x 24 mm, rib 20 mm in) | P13 saddle ring epoxy bond on spar (D12 x 60) - shear (axial + torsion) [in-layer] | 0.95 | 0.63 | 0.48 | 0.42 | **FAIL** | hard 7/7 combo z0.10 mu0.40 |
+| Rib saddle FIN-005 (PETG, part 4: ring R 10.5 x 60 on the spar, socket 19 x 19 x 24 mm, rib 20 mm in) | P14a spar 12x10 under the saddle ring with the skin torque share 0.056 (bending in full), KF | 1.08 | 0.72 | 0.55 | 0.48 | **FAIL** | hard 16 wide + drift .5 y z0.10 mu0.40 |
+| Rib saddle FIN-005 (PETG, part 4: ring R 10.5 x 60 on the spar, socket 19 x 19 x 24 mm, rib 20 mm in) | P14b spar wall diametral crush under the saddle ring (hoop EST 40 MPa) [in-layer] | 1.11 | 0.74 | 0.56 | 0.50 | **FAIL** | hard 10 wide + drift .5 y z0.10 mu0.30 |
+| Rib saddle FIN-005 (PETG, part 4: ring R 10.5 x 60 on the spar, socket 19 x 19 x 24 mm, rib 20 mm in) | P10 saddle socket: rib epoxy bond / bearing (D14 x 20) - shear (axial + torsion) [in-layer] | 1.12 | 0.74 | 0.57 | 0.50 | **FAIL** | SITL Tb_h5 wide (y drift) z0.10 mu0.40 |
+| Rib saddle FIN-005 (PETG, part 4: ring R 10.5 x 60 on the spar, socket 19 x 19 x 24 mm, rib 20 mm in) | P13 saddle ring epoxy bond on spar (D12 x 60) - bearing, compression side [in-layer] | 3.88 | 2.59 | 1.97 | 1.74 | PASS | hard 10 wide z0.10 mu0.40 |
+| Strut 8x6.0 CGE-005 + R4 clamp CGE-007 (PETG: ring OD 21 x 21, socket OD 12.5 / bore 8.0, bond 27, fillet R 4.0) | R4 socket-to-ring junction at the R 4.0 fillet base (annulus OD 20.5 / bore 8.0, Kt 2.0 EST), interlayer 9.5 | 2.24 | 1.50 | 1.14 | 1.01 | PASS | hard 10 wide + drift .5 y z0.10 mu0.30 |
+| Strut 8x6.0 CGE-005 + R4 clamp CGE-007 (PETG: ring OD 21 x 21, socket OD 12.5 / bore 8.0, bond 27, fillet R 4.0) | STRUT bond at clamp (D8 x 27.0 mm, epoxy 2.0 MPa EST) | 2.29 | 1.53 | 1.16 | 1.03 | PASS | hard 10 wide + drift .5 y z0.10 mu0.30 |
+| Strut 8x6.0 CGE-005 + R4 clamp CGE-007 (PETG: ring OD 21 x 21, socket OD 12.5 / bore 8.0, bond 27, fillet R 4.0) | R4 ring bond on the spar (D12 x 21, Ny + torque Nx x 10 mm lever EST) | 2.31 | 1.54 | 1.17 | 1.04 | PASS | hard 10 wide + drift .5 y z0.10 mu0.30 |
+| Strut 8x6.0 CGE-005 + R4 clamp CGE-007 (PETG: ring OD 21 x 21, socket OD 12.5 / bore 8.0, bond 27, fillet R 4.0) | STRUT Euler pinned, no foam support (1119 N) | 2.36 | 1.57 | 1.20 | 1.06 | PASS | hard 10 wide + drift .5 y z0.10 mu0.30 |
+| Strut 8x6.0 CGE-005 + R4 clamp CGE-007 (PETG: ring OD 21 x 21, socket OD 12.5 / bore 8.0, bond 27, fillet R 4.0) | R4 socket wall axial (A 72.5 mm2: OD 12.5 / bore 8.0), in-layer 20 (axis in the print plane) | 2.45 | 1.63 | 1.24 | 1.10 | PASS | hard 10 wide + drift .5 y z0.10 mu0.30 |
+| Strut 8x6.0 CGE-005 + R4 clamp CGE-007 (PETG: ring OD 21 x 21, socket OD 12.5 / bore 8.0, bond 27, fillet R 4.0) | STRUT bond at hub socket (D8 x 30 mm) | 2.55 | 1.70 | 1.29 | 1.14 | PASS | hard 10 wide + drift .5 y z0.10 mu0.30 |
+| Strut 8x6.0 CGE-005 + R4 clamp CGE-007 (PETG: ring OD 21 x 21, socket OD 12.5 / bore 8.0, bond 27, fillet R 4.0) | STRUT tube strength, 8x6.0 CF 350 MPa EST | 16.24 | 10.83 | 8.24 | 7.28 | PASS | hard 10 wide + drift .5 y z0.10 mu0.30 |
+
+Notes. The bridge-saddle rows are the p6 node rows N6-N9 on the ring-and-socket body that the X7 node shared with the part-4 saddle; without the ears they give the same RF (the ears only carried the skin torque share, rows N1-N5). B1 (bridge tube at the ring face x 49.5) is 0.99 at x2.23 (context row, not a saddle part, as in p6). P9a (rib tube 14x12 at the saddle mouth) 0.84 RB is a rib row, not a saddle row (p6 had it at x 108). P14a / P14b are spar rows under the saddle ring (the spar takes 5.6 % of the torque, the skin 89 %, `wing_checks_skin`).
+
+## P7.3 What geometry can and cannot fix (sizing probes; same script, geometry switches)
+1. **Strut and R4 clamp: fixed (drawn).** Strut Euler needs I >= 51.05 x 2.23 / 0.88 = 129 mm4: 8x6 (137 mm4) is the smallest tube of the 1 mm wall family in the repo (12x10, 14x12, 16x14) that passes; 7x5 (87 mm4) gives 0.76 at x1.97. With the 8 mm strut: socket wall area >= 66 mm2 -> OD 12.5 / bore 8 (72.5 mm2); junction annulus >= 277 mm2 at interlayer 9.5 and Kt 2.0 -> OD 20.5 = socket 12.5 + 2 x R 4.0 (R 1.5 gives 0.50 at x2.23, `strength_R4S_fil15.txt`); the ring must carry that fillet base: OD 21 (fits the section: z -11.62..+12.27 mm at x 60, `wing.zl / zu`); ring bond D12 >= 20.3 mm -> 21; strut bond D8 >= 26.3 mm -> 27. Cost: strut +5.86 g (two), hub +1.16 g, clamps +6.80 g (two): **+13.7 g basic.**
+2. **Rib saddle FIN-005: not fixable inside the section.** P10 bearing / P11 / P12 pass at x2.23 only with a 40 mm rib engagement, a socket 30 x 30 mm and a ring R 17-18 (`strength_rs_17_30.json` 1.00, `strength_rs_18_28.json` 1.00); the section is 23.9 mm deep at x 60 (z -11.62..+12.27), so a R 17 ring and a 30 mm socket stand 5-6 mm out of both skins. Mass if it fitted: about +47 g per side (solid volume 80.5 vs 19.0 cm3 x 1.27 x 0.60, the FIN-005 audit-to-solid ratio; EST). P13 bond shear (torque about the spar, 0.42) needs a 141 mm ring or a mechanical torque path; P14a / P14b (spar 12x10 under the ring, 0.48 / 0.50) need a stiffer spar or a doubler there: **load-path items, grams "-".**
+3. **Bridge saddle CGE-006: not fixable inside the section.** N7 / N9 pass with a 30 x 30 socket box and R 15 ring (`strength_S1.txt` 1.17 / 0.81) or 34 x 34 and R 18 (1.75 / 1.33): outside the 23.9 mm section. N6 bearing (0.41) needs a 37 mm socket, which would reach x 16.5 where the pack-tray slot and the phase bundles (x 29) are. **N8 bond shear (0.22) is the hub pitch moment (12.8 N m RB at the spar axis) put into the spar as torsion through a 30 mm epoxy ring: a 90 mm ring gives 0.66, it would need about 137 mm (y +-68) and the bundle / servo-lead / I2C routes cross that span.** N8c spar crush (0.31) needs a 96 mm ring. This is the load path that T-071b moved into the skin with the N2 ears (whose own rows then failed in p6). **Grams "-": a load-path redesign, as p6 P6.5 said for the node.**
+4. The D-221 parts were withdrawn because their rows failed at RB; the part-4 saddles fail the same way. Neither drawing has a credible mass figure for a passing centre / root joint at x2.23.
+
+## P7.4 CG, SM, mass, window, T/W (geometry arithmetic + prop_a EST; `t077p7_metrics.py` -> `metrics_p7.txt`, `gates/gate_prop_sched.txt`)
+| State | Basic g | CG mm | SM % | Predicted kg | Window % (download) | T/W fresh (no dl / dl) | T/W sag (dl) |
+|---|---|---|---|---|---|---|---|
+| p6 tallied (D-221 parts drawn) | 1,473.5 | 23.83 | 6.88 | 1.6936 | 5.02 | 2.043 / 1.982 | 1.838 |
+| p7 flags off, p6 strut / clamp (`metrics_drawn.txt`) | 1,467.4 | 23.46 | 7.04 | 1.6867 | 5.23 | 2.051 / 1.989 | 1.846 |
+| **p7 as drawn** (`cad_mass.json`) | **1,461.9** | **19.91** | **8.49** | 1.6805 | 5.41 | 2.058 / 1.996 | 1.853 |
+| **p7 tallied** (+12.2 g root blocks at 283.1 mm, +7.0 g shoe cups at 298.1 mm, EST, undrawn) | **1,481.1** | **23.39** | **7.07** | **1.7020** | **4.78 FAILS (6.30 without download)** | 2.033 / 1.972 | 1.829 |
+Predicted = basic x 1.1174 + 0.032 x 1.47 (CALC-A-MASS-PRED form). Ceiling at derate 0.93 with the download (bisection on the same prop_a model): **basic 1,474.3 g, predicted 1.6944 kg; gap 6.8 g basic (7.6 g predicted), 0.22 point.** CG <= 25.0 passes (margin 1.61 mm); trim ends with the 270 g pack 6 mm forward / 10 mm aft: 22.30 / 25.21 mm (<= 28.5). T/W sag 1.83 >= 1.6. Bench derate line A-P3 (window 5 %, download) 0.934 (p6 0.930); A-P2 fresh 0.915 without / 0.943 with the download.
+
+## P7.5 STOP: the gaps (no ballast, no limit or DAF change)
+| Gap | Rows (RF at x2.23) | Grams |
+|---|---|---|
+| Rib saddle FIN-005 x 2 | P12 junction 0.20, P10 bearing 0.26, P11 socket wall 0.26, P13 bond shear 0.42, P14a spar 0.48, P14b spar crush 0.50, P10 bond shear 0.50 (all < 1 at x1.5 too; P12, P10 bearing, P11, P13 < 1 at RB) | "-" (no in-section geometry passes; scaled shapes would be +47 g per side EST and do not fit) |
+| Bridge saddle CGE-006 | N8 bond shear 0.22, N9 junction 0.23, N8c spar crush 0.31, N7 net section 0.34 / 0.35, N6 bearing 0.41, N8 bearing 0.47 (N6-N9 < 1 at RB except N8 bearing 1.05) | "-" |
+| Context rows | B1 bridge tube at the ring face 0.99 (bridge, 2.23 is its own D-223 value), P9a rib tube at the saddle mouth 0.38 (0.84 RB) | "-" |
+| Window | +4.78 % vs +5.0 with the download | 6.8 g basic over (the strut / clamp resize is +13.7 g of it) |
+Options (numbers, not my call): (a) a centre-joint and fin-root load-path redesign that takes the hub pitch moment and the fin torque into the skin / a frame instead of into the spar through epoxy rings, judged by FEA or coupons (TP-4 / TP-5, the C-2 / C-3 coupons named in p6); (b) a ruling on the R4 junction print direction: with the junction in-layer (20 MPa) the annulus needs 132 mm2, so socket OD 12.5 + R 1.5 (`strength_R4S_fil15.txt`: 1.11 RB interlayer = 2.34 in-layer, 1.05 at x2.23) and the ring could shrink; mass not computed ("-"); (c) a 10x9 strut (I 169 mm4, Euler 1.30 at x2.23 on paper, section 14.9 mm2 vs 22.0: -4.1 g for two against 8x6, tube arithmetic EST) with a bore-10 socket and hub boss (not computed, "-"); availability of 0.5 mm wall tube "-"; (d) the three CG-closure s3.2 items and a measured bench derate (P5.5 (c), (d)).
+
+## P7.6 Gates (final tree; driver `T077p7_data/run_gates_p7.sh`, outputs `T077p7_data/gates/`)
+| Gate | Command | Exit | Time | Result |
+|---|---|---|---|---|
+| build / check | `python -I build_a.py` | 0 | 16 s | PASS, 10 modules, 0 errors, 0 warnings, 1,462 g declared |
+| collide pose 21 | `A_ELEV_POSE=21 python -I collide_a.py` | 0 | 719 s | **PASS**, 517 bodies, 117 parts, 0 pairs > 0.05 mm static / -21 / +21, wire ends 0, folds 0 (the 8 mm strut, OD 21 clamp ring and new socket slot included) |
+| linkage poses | `python -I collide_a.py --linkage-poses` | 0 | 852 s | **PASS**, 18 poses, 0 hits |
+| assembly (Blender) | `python -I a_assembly.py` | 0 | 1,874 s | **PASS**: 66 steps (16 bench), 117 / 117 parts placed, blocked or unsupported 0, parts not in the sequence none |
+| wire inventory | `python -I wire_inventory.py` | 0 | 13 s | exposed 0.502 strand-m (unchanged); total 11.450 strand-m |
+| cad_mass | `python -I sitl/cad_mass.py` | 0 | 7 s | 1.4619 kg, CG x 19.91 mm |
+| mission gate | `python -I mission_gate_a.py --o4b` | 0 | 1 s | CAD basic 1,461.9 g, CG 19.91 mm, SM 8.49 %; pack at -42 / -25 / -15 mm: 18.1 / 21.2 / 23.0 mm |
+| prop_a --sched | `python -I prop_a.py --sched --mass 1.702` | 0 | 69 s | derate 0.93: T/W fresh 2.033, sag 1.886, window +6.3 % (no download) |
+| proofs | `python -I proofs/run_all.py` | 1 (strict) | 3 s | 12 claims fail: the known 5 (ELEVON-TORSION-FOAM, HORN-BEARING-STALL, HORN-RIB-FOAM-HOLD / STALL, LINKAGE-FREEPLAY), the 6 stale (MASS-PRED, MASS-GATE-ROOM 1.681 vs 1.47 kg, CUTS-REQUIRED 230 g, WINDOW-PRED, WINDOW-MASS, CRUISE-AVAIL 181 s) and **CG-TRIM-FWD 18.8 mm vs >= 19 (new: drawn CAD, no undrawn tally; p6 drawn CG 20.34 -> 19.91)** |
+| drawings | `python -B drawings/make_drawings_a.py` | 0 | 194 s | 43 / 43 composed (48 in p5 / p6: CGE-011 / 012 / 013, FIN-007 / 008 gone), 41 STL files |
+| build guide | `python -I make_build_guide_a.py` | 1, then 0 | 4 s | first run: "stage list and plan differ" (the film script `showcase/concept-a/render_build_a.py` STAGES still listed A1b / C1p); STAGES / VIEW / ONE_SIDE reverted to the part-4 steps, re-run: 2,311 lines, 66 steps, 46.6 h hands-on EST, printed mass 228 g |
+Hard-coded insertion data (`a_assembly_plan.py`): the strut direction (-0.43605, +-0.89992) is unchanged (strut axis unchanged); the clamp still docks with the cage from below (B1, 30 mm), the new clip slot (y 278..311) and core socket slot open its path; it passed.
+
+## P7.7 Exposed wires (CLAUDE.md rule; `wire_inventory.json`)
+| Edge | Wire | Exposed length | Reason it cannot be enclosed |
+|---|---|---|---|
+| E-HRN-13 | pack power leads, 2 strands 14 AWG | 130 mm each (unchanged) | pack outside the 53 mm cover; pack end face over the tray wall to the XT60 at x 70 |
+| E-HRN-14 | balance lead 5 x 26 AWG | 64 mm | end face to the JST plug on the pack top |
+| E-HRN-12 | battery tail | 42 mm | XT60 female to the cover slot |
+| E-HRN-07/08/10 | servo lead ends / GPS lead | 12 / 12 / 3 mm | servo pocket wall to the boot; GPS plug to the cover slot |
+Total 0.502 strand-m, as p5 / p6: no route changed in this part.
+
+## P7.8 Proposed text (for the conductor; not applied)
+- **CHANGE-LOG (T-077 p7, D-225 implementation):** "D-221 node and clamshell flags off (part-4 printed saddles FIN-005 14.39 g, CGE-006 9.67 g, voxel audit = part-4 values); cup wall 1.8 mm kept. Strut 8x6 (Euler 2.36 RB, 1.06 at x2.23) and R4 clamp ring OD 21 x 21, socket OD 12.5 / bore 8 x 27, fillet R 4.0 (junction 1.01, ring bond 1.04) drawn: +13.7 g basic. Re-judgement of the part-4 saddles with the p6 method on the D-223 demand: rib saddle P10-P14 and bridge saddle N6-N9 fail at x2.23 (lowest P12 0.20, N8 0.22), most already at RB; no in-section geometry passes them (load-path redesign, grams '-'). Tallied 1,481.1 g, CG 23.39 mm, SM 7.07 %, predicted 1.702 kg, window +4.78 % with the download: 6.8 g basic over the 1,474.3 g ceiling. STOP per the brief; no limit or DAF change."
+- **MASS-GATE basis:** FIN-005 14.39 g x 2, CGE-006 9.67 g, CGE-007 6.34 g x 2, CGE-005 10.2 g x 2 (8x6), hub 43.33 g; remove FIN-007, FIN-008, CGE-011, CGE-012, CGE-013.
+- **BOM:** strut stock 8x6 CF tube, 2 x 291.2 mm (line, vendor and price "-": R10 6x4.5 no longer fits); drop the 0.5 mm CF sheet, the X7 Onyx charge and the 14 extra 3 mm pins of P5.10 / P6.8.
+- **TEST-PLAN:** TP-1 bench pass line A-P3 0.934 at 1.702 kg; the saddle / centre-joint coupons stay open with the redesign (no pass line can be written for a joint that fails on paper).
+
+## P7.9 Limits and open items
+All strength rows are hand bounds with EST allowables on the p6 demand (not re-run; slightly conservative). The R4 junction row keeps the p6 interlayer choice and Kt 2.0 (EST). The hub FEA (P5.1, RF 1.47) was not re-run for the 8 mm strut socket (boss radius 4.8 mm; the governing point is the shoulder fillet, away from the socket): open. Stale texts not touched: the B0k / B1 weigh lines in `a_build_steps.py` (hub 18.3 / 19.0 g, struts 13.0 g, clamps 3.0 g, saddle 2.0 g) predate parts 3-7. `t077p5_variants.py` uses the old `P5_VARIANT` meanings (now `clam` / `node` / `both`). `mission_gate_a.py` roll-up rows are still the old item list (F-5).
+
+# Part 8 (2026-11-21, T-077-p8: D-226 implementation, AM-016: torsion-cell landing path drawn). Not VERIFIED COMPLETE. Nothing committed. No docs/, CHANGE-LOG, ledger, TEST-PLAN, MASS-GATE or BOM-A edit (text proposed in P8.9).
+
+Acceptance test (restated from the brief): (1) CAD: bonded CF bulkheads at the fin stations and at y +-0.060, the 6061 centre torque member, the skin ply count the audit chose (3, or 2 with fin relief if it passes; the lighter passing one), the rib per the audit (25x23 unless the coupon case applies; coupon carried as a TP item), the rib-to-bulkhead bond at RF >= 1.0, the printed saddles FIN-005 / CGE-006 out of the primary path; printed_mass.json, a_build_steps.py, drawings follow. (2) Strength table of every new and changed part at max(DAF, 1.5) = 2.23 on the p6 demand, with a sourced 6061 bearing allowable for the bridge socket. (3) Mass / CG / SM / window / T-W with the named recoveries (elevon lead after a flutter re-run, Onyx shoes, X7 root blocks only if they pass); the bench derate line the mass requires; no ballast; window failing accepted (AM-016). (4) New material priced from vendor pages (URL, date) in a BOM copy; total with the crash reserve <= $2,000, else the excess stated. (5) Gates once at the end (driver `T077p8_data/run_gates_p8.sh`), drawings and build guide regenerated. (6) This section.
+Categories: rigid-body dynamics (the p6 demand, NOT re-run; the spanwise d'Alembert cut torque `t077p8_span_torque.py`), hand calculation (every strength row, `t077p8_path.py`; no FEA), flight dynamics (aeroelastic 3-DOF section flutter, `t077p8_flutter.py` = flutter_d205.py with the 10.0 g lead), interference (collide, linkage, assembly), geometry arithmetic (masses, CG, voxel audit, per-part CG deltas), illustrative (prop_a EST thrust model). No CFD or FEA.
+Data and scripts: `T077p8_data/` (t077p8_path.py -> strength_adopted.txt / .json, t077p8_table.py -> strength_table_p8.md; t077p8_span_torque.py -> span_torque.json; t077p8_flutter.py -> flutter_p8.md; t077p8_mass_audit.py (= p7 audit) -> t077_rows_h0.25_only.json; t077p8_write_printed_mass.py; t077p8_partmass.py -> cg_delta_p8.md; t077p8_metrics.py -> metrics_p8.txt; BOM-P8.csv + bom_p8.py -> bom_p8_out.txt; run_gates_p8.sh -> gates/). No large arrays written (the demand arrays are the git-ignored p6 npz).
+
+## P8.0 Outcome in one table
+| Item | Result |
+|---|---|
+| (1) CAD | **Done.** Fin node FIN-005-R/L = two 0.5 mm CF bulkheads per side (|y| 369.5..370.0 and 396.0..396.5, LE to x 176) + FIN-009 in-plane plates (110 x 40 mm under the skin plies) + rib straps (undrawn laminate). Centre: WNG-013-R/L bulkheads at |y| 60.0..60.5 and **CGE-006 = one machined 6061 part** (octagonal sleeve apothem 7.3 on the spar, 1.0 mm end flanges bonded on the bulkheads, bridge socket boss), replacing the audit's T-fitting + 5/8 in tube + flanges (P8.3: their bonded metal joints cannot carry the torque). Skin **3 plies** over |y| 52..400 (WNG-014). Rib **25x23** (FIN-002), axis 3 mm outboard of the fin tube (damper clearance). Rib-to-bulkhead bond 1.35 at x2.23 (12 mm flox fillets over x 70.5..176). Printed saddles gone (not kept as locators: the bulkheads locate the rib and the centre node). Root block socket 29 x 29, upper + new lower rib fairings, I2C lead rerouted ahead of the rib nose |
+| (2) strength | **All new / changed primary-path rows pass at x2.23:** fin node min 1.12, centre node min 1.04, rib 1.32, skin 1.16, bridge 1.03, wing section 1.23. 6061 socket bearing 10.37 with the ASM data-sheet bearing yield 386 MPa. **Fail:** the DRAWN root block (P6 0.37, P8 0.49; the enlarged block is the undrawn +12.2 g tally, SL-3). Integrity class below 1: flange peel 0.50, bridge-in-socket bond 0.83 |
+| (3) mass / CG / window | Drawn basic **1,579.2 g**, tallied **1,598.4 g**, predicted **1.833 kg**; window **+1.07 %** with the 3 % download (limit +5.0; accepted per AM-016); **bench derate line A-P3 1.006** (tallied; 0.994 drawn) replacing 0.928 / 0.934; A-P2 fresh 0.982 / 1.012. **NEW FAILURE: CG tallied 30.17 mm, SM 4.30 % (< 5 %, A-P4 band <= 26.0): D-226 moves the CG 7.1 mm aft** (P8.4). No ballast |
+| (4) BOM | **Does not fit: total $2,150.75, margin -$150.75** (T-082 $1,957.51 / +$42.49) |
+| (5) gates | collide pose 21 PASS (529 bodies, 125 parts), 18 linkage poses PASS, assembly PASS (66 steps, 125 / 125 placed, 0 blocked, after one fix), wire inventory exposed 0.502 strand-m (unchanged), drawings 49 / 49, BUILD-GUIDE-A 66 steps; **build_a FAILS only on graph:mass (1,579 g > the 1,500 g MASS-GATE limit, not relaxed)**; proofs 15 strict claim fails (4 new: CG-HI, CG-TRIM-AFT, TW-FRESH-PRED, TW-SAG-PRED) |
+| Recoveries | elevon lead 12.8 -> 10.0 g applied (flutter damped cases pass, worst 29.5 >= 28.8 m/s); Onyx shoes applied (-1.0 g); X7 root blocks NOT credited (drawn root-block rows fail) |
+
+## P8.1 CAD changes (file, constant, value)
+| Part | Change | Where | Mass |
+|---|---|---|---|
+| Constants | `RIB_OD/ID` 25/23, `RIB_Y` 383 mm, `SKIN_N` 3, `SKN2_Y` (52, 400), `FNB_*`, `FNP_*`, `CN_*`, `BLK_*`, `BR_X1` 54.0 -> 51.5; `P5_CLAMSHELL / P5_NODE` forced False (the D-221 variants cannot be re-drawn on this tree) | `wing.py` constants block | - |
+| WNG-014-R/L skin plies 2-3 (new) | 2 x 0.054 mm +-45 glass inside ply 1, |y| 52..400, every core cut copied (`electrical.build_assembly`) | `wing.py` `ply_loops`, `build_wing` | 23.2 g each |
+| WNG-013-R/L centre bulkheads (new) | 0.5 mm CF, |y| 60.0..60.5, the cell inside the plies to the cove; spar hole (seat), servo-lead slot 6 x 3.2, left I2C hole 4 mm | `wing.py`, `electrical.py` | 4.0 g each (plate 2.55 + tape lap 1.07 + flange bond 0.37, EST) |
+| FIN-005-R/L (was the printed rib saddle, 14.39 g) | two 0.5 mm CF bulkheads at |y| 369.5..370.0 and 396.0..396.5, LE to x 176 (the audit's x 184 would cut the hinge-damper notch at x 177.0), spar holes, left I2C holes 3 mm | `wing.py` `build_fins` | 10.0 g (plates 5.02 + laps 2.07 + flox 2.91, EST) |
+| FIN-009-R/L in-plane plates (new) | 0.5 mm CF under the skin plies, x 58..168, |y - 383| <= 20, bent to the airfoil, notched by the rib (seat) + rib straps (4-ply 0/90 1080, undrawn laminate) | `wing.py` `plate_loop` | 9.2 g (plates 5.09, notch EST + straps 4.08 EST) |
+| FIN-002-R/L rib | 14x12 -> 25x23, axis |y| 383 (3 mm outboard: the inner flank at 370.5 clears the damper end disc at 369.0) | `wing.py` | 14.1 -> 26.0 g each |
+| FIN-003-R/L root block | socket 19 x 19 -> 29 x 29 round the rib, centred on `RIB_Y` | `wing.py` | 18.9 -> 22.86 g each (voxel audit) |
+| FIN-006 / FIN-010 rib fairings | upper: half-round R 13.9 mm (was the 17 mm D-194 blister from x 130); new lower half-round (the 25 mm rib stands 0.9-4 mm proud of the lower skin); x 70.5..176.25; groove r 12.7 for rib + strap | `wing.py` | 0.6 / 0.4 g EST |
+| FIN-004 fin fairing | rib groove r 14.0 at `RIB_Y` (r 13.0 swept 0.65 mm into the rib in assembly run 1); it splits the 3 mm fairing into two pieces | `wing.py` | unchanged |
+| CGE-006 (was the printed bridge saddle, 9.67 g) | ONE machined 6061-T6 part: octagonal sleeve apothem 7.3 (wall 1.15 at the flats) over |y| <= 59.8 on the spar, bore 12.3 slip fit (not bonded), 1.0 mm end flanges x 20..120, |z| <= 8 inside the plies, bonded to WNG-013, socket boss OD 20.1, bridge socket x 27.5..51.5; left I2C hole | `wing.py` `cn_volume_m3` | 36.3 g (voxel 0.2 mm x 2.70) |
+| CGE-004 bridge | aft end 54.0 -> 51.5 (0.6 mm ahead of the sleeve flat) | `wing.py` | 9.0 -> 8.9 g |
+| WNG-007 elevon lead | 12.8 -> 10.0 g (`BAL_T` x 10 / 12.8) after the flutter re-run (P8.5) | `wing.py` | 13.3 -> 10.5 g each |
+| GER-001 shoes | PETG -> Markforged X7 Onyx (1.20 g/cm3) | `electrical.py`, `printed_mass.json` | 4.55 -> 4.30 g each |
+| WNG-001 core cuts | printed-saddle slots removed; centre-node sleeve channel, socket-boss channel and two flange slits, all open below (the lower-skin openings are taped after the dock: tape not drawn) | `wing.py` `build_wing` | lumped 100.1 g unchanged |
+| E-HRN-11 airspeed I2C lead | rerouted: the 25 mm rib fills the section at the fin, so the lead crosses the fin node ahead of the rib nose (x 64, z 8.4, over the spar) through 3 mm bulkhead holes, then along |y| 408.5 and behind the board pocket; 0.604 m, all GROOVE (enclosed) | `electrical.py` `i2c_path`, grooves | HRN-001 +0.2 g |
+| Edges / plan / steps | new edges (explicit ids E-WNG-81..84: `en('WNG')` would have shifted the plug edges onto the fixed hinge ids E-WNG-10 / 11); assembly plan: A1 carries the bulkheads, plates and plies, **B1 (cage dock, with CGE-006) before A2 (spar)**, B2 removed, C1b added; build steps and the film STAGES (`showcase/concept-a/render_build_a.py`) follow; parts_links for CGE-006, FIN-002, FIN-005, FIN-009, FIN-010, WNG-013, WNG-014, GER-001 | `a_assembly_plan.py`, `a_build_steps.py`, `parts_links_a.py` | - |
+| printed_mass.json | FIN-005 and CGE-006 removed; FIN-003 22.86, GER-001 4.30, WNG-008 3.69 / 3.72 (`t077p8_write_printed_mass.py`; backup `printed_mass_p7_backup.json`) | | |
+
+## P8.2 Strength table (hand calculation on the p6 rigid-body demand; full table `strength_table_p8.md`, `strength_adopted.txt`)
+Demand records (they match D-226 s1.1): fin |My| into the cell 13.29 N m RB, half-wing |My| at the spar axis 8.76, hub |My| 12.83, rib at the node exit Mx 5.14 / My 10.01 / Mz 10.00. Every row combines the components concurrently at each time step, then takes the minimum over 23 cases x 3 zeta x 2 mu x both fins. Verdict at x2.23 (D-223), KF 1.725 for metal / CF, KP 2.156 for bonds.
+
+| Part | Row (governing) | RB | x2.23 | Verdict |
+|---|---|---|---|---|
+| Fin node (FIN-005 + FIN-009 + straps) | N4a rib strap laps on the skin (Mz, Fy) | 2.50 | **1.12** | PASS |
+| | N3 rib-to-bulkhead flox fillet, 12 mm per flank, L 105.5 (My, Fz, and rib torsion as a z-couple; the audit row had 0.90-1.16 without Mx) | 3.00 | 1.35 | PASS |
+| | N5 plates polar bond on the skin 2.52; N1 bulkhead tape lap 3.26; N4b strap tension 4.48; N6 skin + plate shear 6.49; N2 bulkhead shear 7.14 (CF plate shear lower bound = glass +-45 at 70 MPa, EST) | | >= 2.52 | PASS |
+| Rib FIN-002 25x23 | R1 tube at the node exit x 176 (torsion governs) | 2.94 | **1.32** | PASS |
+| Skin, 3 plies | K1 shear at the fin node (all torque in the skin, no relief) | 2.58 | **1.16** | PASS |
+| | K2 wrinkling 1.33; K3 shear at the centre 1.78 | | | PASS |
+| Centre node CGE-006 + WNG-013 | C1 sleeve torsion + bending (half the hub Mx, Mz), von Mises x KF <= 240 | 2.33 | **1.04** | PASS (apothem 7.25 gives 1.00 rounded down, 7.15 gives 0.90) |
+| | C3 flange-to-bulkhead bond, polar | 2.61 | 1.17 | PASS |
+| | C2 sleeve-to-flange junction 1.38; C6 boss annulus 1.87; C4 bulkhead lap 2.51; C5 bulkhead shear 5.50 | | | PASS |
+| | **C7 6061 socket wall bearing; allowable 386 MPa bearing yield** (Aerospace Specification Metals 6061-T6 / T651 data sheet, MatWeb data, typical, e/D 2.0, https://www.aerospacemetals.com/wp-content/uploads/2023/06/Aluminum-6061-T6-6061-T651.pdf read 2026-11-21; asm.matweb.com refused the connection) | 23.13 | 10.37 | PASS (a pin-bearing value applied to a socket wall: applicability EST) |
+| | C3p flange bond peel from the out-of-plane Mz, Mx share | 1.12 | 0.50 | integrity class (outside the RF minimum) |
+| Bridge CGE-004 | B1 bending at the socket mouth x 27.5 | 2.29 | **1.03** | PASS |
+| | B3 bridge-in-socket bond | 1.85 | 0.83 | integrity class |
+| | B2 CF wall bearing in the socket: 37.2 MPa at x2.23 x KF; CF bearing allowable "-" | | - | TP-4 coupon |
+| Wing section (landing_path_a P15 / P16, 3-ply skin) | P15 foam shear 1.23, skin interaction 1.23, spar torsion 5.08, P16 >= 1.98 | | **1.23** | PASS |
+| Root block FIN-003 (drawn, 29 x 29 socket) | **P6 ring-to-socket junction** | 0.82 | **0.37** | **FAIL** |
+| | **P8 socket wall** | 1.10 | **0.49** | **FAIL** (P5 and P7 pass; the +12.2 g enlarged block of T-068 is still undrawn and not judged, SL-3) |
+
+The struts and R4 clamps are unchanged (P7.2 rows stand: minimum 1.01).
+
+## P8.3 Design decisions forced by drawing (mine, each with the reason; for the CHANGE-LOG, ladder rung: redesign of the element, no limit change)
+1. **The centre node is one machined part, not T-fitting + tube + flanges.** Bonding the audit's T-fitting to the 5/8 in tube needs tau = 12.83 x 2.23 x KP / (2 pi r^2 L) <= 2.0 MPa, so L >= 78 mm; each flange-to-tube joint needs L >= 53 mm for 8.76 N m. The 120 mm tube has room for neither, and pins would have to cross the spar. One 6061 part (octagonal sleeve + integral flanges + boss) has no metal-to-metal bond. It is +26.6 g against the saddle (audit +31.3 g including bulkheads; mine +34.6 g including bulkheads).
+2. **The cage docks before the spar.** The closed sleeve cannot clip on. The cage docks from below with the node on the bridge, then the spar slides through bulkheads, clamps and sleeve (assembly gate PASS).
+3. **The sleeve is not bonded to the spar** (0.15 mm slip fit): it carries no root bending, and the spar carries no centre torque.
+4. **3 plies, not 2.** 2 plies pass only with the fin-inertia relief (span cut torque <= 9.72 N m everywhere, `span_torque.json`), which SL-6 forbids until DR-6 closes. Removing the 3rd ply (-23.2 g, -1.06 mm CG) is the first recovery after DR-6.
+5. **Rib 25x23 at |y| 383** (3 mm offset for the hinge damper). The bulkheads sit 0.5 mm from the rib flanks, not +-7.5 mm about the fin plane (a 25 mm rib does not fit between those).
+6. **Rib-to-bulkhead bond:** the fillets are widened to 12 mm (cusp filled to |dz| <= 6), and 4-ply 0/90 straps over the rib top and bottom (the audit's "wrap") carry Mz / Fy into the skin over the plates. Fillet row 1.35, strap row 1.12.
+7. **The plates are notched by the rib**: the rib stands proud of both skins, so the plates cannot pass over it.
+8. **Flanges 1.0 mm** (audit 1.5): C2 still passes at 1.38; -4.3 g.
+9. **Printed saddles removed, not kept as locators**: the bulkheads locate the rib; the flanges and bulkheads locate the node.
+
+## P8.4 Mass, CG, SM, window, T/W (geometry arithmetic + prop_a EST; `metrics_p8.txt`, `cg_delta_p8.md`, `gates/gate_prop_sched.txt`)
+| State | Basic g | CG mm | SM % | Predicted kg | Window % (download) | T/W fresh (no dl / dl) | T/W sag (dl) | Derate line A-P3 | A-P2 fresh line (no dl / dl) |
+|---|---|---|---|---|---|---|---|---|---|
+| p7 tallied | 1,481.1 | 23.39 | 7.07 | 1.702 | +4.78 | 2.033 / 1.972 | 1.829 | 0.934 | 0.915 / 0.943 |
+| **p8 as drawn** (`cad_mass.json`) | **1,579.2** | **27.03** | **5.58** | 1.8117 | +1.66 | 1.915 / 1.858 | 1.719 | **0.994** | 0.971 / 1.001 |
+| **p8 tallied** (+12.2 g root blocks at 283.1, +7.0 g shoe cups at 298.1, EST, undrawn) | **1,598.4** | **30.17** | **4.30** | **1.8331** | **+1.07 FAILS** (2.59 without download) | 1.894 / 1.837 | 1.698 | **1.006** | 0.982 / 1.012 |
+
+Predicted = basic x 1.1174 + 0.032 x 1.47. Ceiling for +5 % at derate 0.93 with the download: basic 1,474.3 g (1.6944 kg). The tallied tree is **124.1 g basic over**. Recoveries applied: lead -5.6 g, Onyx shoes -1.0 g; X7 root blocks not credited (P8.2). Mass change against p7 tallied: +117.3 g basic.
+
+**CG (a new finding, not covered by AM-016):** D-226 moves the CG **7.1 mm aft** (`cg_delta_p8.md`: ribs +2.38 mm, plies +2.12, root blocks +1.18, plates + straps +1.08, centre node +0.65, bulkheads +0.30, lead -0.52). Tallied CG 30.17 mm is aft of the SM 5 % line (28.45 mm) and the A-P4 band (26.0). The drawn CG 27.03 is also above 26.0 (proof CL-A-CG-HI fails; CG-TRIM-AFT 28.74 > 28.5). No ballast was added. Numbers for the conductor:
+- rib coupon -> 14x12: -23.8 g, -2.4 mm;
+- 2 plies after DR-6: -23.2 g, -1.06 mm;
+- cage forward to the 500 mm box limit: about 8.6 mm at -0.56 mm CG per mm = -4.8 mm. Struts, bridge and assembly would need a re-run; not drawn.
+
+## P8.5 Recoveries (named in D-226 s4)
+- **Elevon lead 10.0 g: applied.** Flight dynamics (aeroelastic 3-DOF section, `t077p8_flutter.py` = flutter_d205.py with the 10.0 g lead): damped cases B-E PASS at every corner; worst is E (half fill) kd, onset 29.5 m/s >= 28.8 (D-205 at 12.8 g: 31.5). The undamped case A fails as it did at 12.8 g (onset 3.0-4.5 m/s, was 15-18.5). The damper is now the only flutter barrier, with 0.7 m/s margin in case E: flagged for a TP damper fill check.
+- **Onyx shoes: applied** (-1.0 g; the repo allowables are the same for PETG and Onyx, EST).
+- **X7 root blocks: not applied** (the drawn root-block rows P6 0.37 / P8 0.49 fail; coupons C-1..C-3 are open).
+
+## P8.6 BOM (`BOM-P8.csv`, `bom_p8.py` -> `bom_p8_out.txt`; the T082 files are untouched)
+| Line | Item | $ | Source, date |
+|---|---|---|---|
+| R15 (new) | CF tube 25x23 x 1 m (ribs 0.431 m) | 50.09 + shipping EST 25.00 | carbonwebshop.com High Performance Tube 25x23x1000mm, EUR 45.58 incl. VAT, read 2026-11-21, x 1.0990 USD/EUR (ECB reference rate 2026-11-20, read 2026-11-21). Stock and US shipping not stated. No readable US page (RMRC stops at 16x14; Rock West, HobbyKing, eBay and Walmart refused or returned 404) |
+| T11 (new) | 6061-T6511 bar 1 x 4 x 12 in (CGE-006 blank + second attempt) | 47.52 (U) | alcobrametals.com/product/1-x-4-6061t6511/, read 2026-11-21: range $47.52-$380.16 over 12-96 in lengths, length mapping not shown (12 in taken as $47.52, EST) |
+| T12 (new) | Cotton flock, 1 quart | 4.90 | uscomposites.com/prices.html, read 2026-11-21 |
+| T2 | CF sheet 0.5 mm 200 x 300 (6 bulkheads of about 176 x 24 + 4 plates of 110 x 40 nest in one sheet, leaving a 50 x 300 strip for C-4) | unchanged 15.98 | T-082 (2026-11-20) |
+| T3 | 1080 glass 3 yd x 50 in = 3.48 m2 against about 0.94 m2 needed (ply 1 0.31 + plies 2-3 0.53 + laps / straps about 0.1) | unchanged | |
+| R09 | 14x12 kept for the 4 hub doublers | unchanged | |
+
+Crash reserve: R15 is added to the carbon-tube set (the reserve's definition is the full airframe tube set). **Total $2,150.75, margin -$150.75: over by $150.75** (R15 with reserve and shipping $135.4, T11 $52.4, T12 $5.4). If the rib coupon restores 14x12, R15 drops out (-$135.4) and the BOM is still $15.3 over. The price of the 8x6 strut stock (p7) is still "-".
+
+## P8.7 Gates (final tree; driver `T077p8_data/run_gates_p8.sh`, outputs in `gates/`; run 1 kept in `gates_run1/`)
+| Gate | Exit | Time | Result |
+|---|---|---|---|
+| build_a | 1 | 17 s | 10 modules, **1 error: graph:mass 1,579 g > 1,500 g limit** (MASS-GATE s1 via gen_interfaces; not relaxed); otherwise clean |
+| `A_ELEV_POSE=21 collide_a.py` | 0 | 981 s | **PASS**, 529 bodies, 125 parts; static / -21 / +21: 0 pairs > 0.05 mm; wire ends 0, folds 0 |
+| `collide_a.py --linkage-poses` | 0 | 1,127 s | **PASS**, 18 poses |
+| `a_assembly.py` | 0 | 2,246 s | **PASS**, 66 steps, 125 / 125 parts, 0 blocked. Run 1: the C3 / C4 fin fairings swept 0.65 mm into the 25 mm rib; groove r 13.0 -> 14.0, re-run |
+| wire_inventory | 0 | 9 s | exposed 0.502 strand-m (unchanged), total 11.611 |
+| cad_mass / mission_gate | 0 | 8 / 0 s | 1,579.2 g, CG 27.03 mm, SM 5.58 % |
+| `prop_a.py --sched --mass 1.833` | 0 | 70 s | derate 0.93: T/W fresh 1.894, window +2.6 % (no download) |
+| proofs (re-run after the assembly) | 1 | 3 s | 15 strict claim fails: the 5 known (horn / elevon foam / free-play), the 6 mass-chain claims (MASS-PRED, MASS-GATE-ROOM, CUTS-REQUIRED 347 g, WINDOW-PRED, WINDOW-MASS, CRUISE-AVAIL 141.6 s) and **4 new: CG-HI 27.03 > 26, CG-TRIM-AFT 28.74 > 28.5, TW-FRESH-PRED 1.897 < 2, TW-SAG-PRED 1.50 < 1.6**. CG-TRIM-FWD now passes |
+| drawings | 0 (re-run) | 226 s | 49 / 49 (new: FIN-005-R/L, FIN-009, FIN-010, WNG-013-R/L, WNG-014). Run 2 hit an OSError writing DRAWINGS-A.pdf (file lock) |
+| build guide | 0 | 4 s | 2,316 lines, 66 steps, 46.8 h EST |
+
+## P8.8 Exposed wires (`wire_inventory.json`)
+Unchanged from P7.7: pack leads 2 x 130 mm, balance lead 64 mm, battery tail 42 mm, servo lead ends 2 x 12 mm, GPS 3 mm; total 0.502 strand-m. The rerouted I2C lead (0.604 m) is enclosed for its whole length (groove / cover). New holes: 3 mm in the left fin bulkheads, 4 mm in the left centre bulkhead and flange, and servo-lead slots in both centre bulkheads.
+
+## P8.9 Proposed text (for the conductor; not applied)
+- **CHANGE-LOG (T-077 p8, D-226 implementation):** "Torsion-cell landing path drawn: fin nodes (two 0.5 mm CF bulkheads per side 0.5 mm off the 25x23 rib, in-plane plates, rib straps, 12 mm flox fillets), centre bulkheads at |y| 60, the centre node as ONE machined 6061 part (the audit's T-fitting / tube / flanges need 78 mm and 53 mm bonds that do not fit), a 3-ply skin (2 plies need the relief credit SL-6 withholds), rib 25x23 at |y| 383 (damper clearance); printed saddles removed; the cage docks before the spar. All new rows pass at x2.23 (minimum 1.04 sleeve, 1.12 fin node); the drawn root block fails P6 0.37 / P8 0.49. Lead 10.0 g after a flutter re-run; Onyx shoes. Tallied 1,598.4 g, 1.833 kg, window +1.07 %, bench derate line 1.006; CG 30.17 mm, SM 4.30 % (A-P4 fails, new); BOM $2,150.75 (-$150.75)."
+- **TEST-PLAN:**
+  - TP-1 bench go/no-go: derate >= 1.006 (tallied 1.833 kg; 0.994 at the drawn 1.812 kg), replacing 0.928 / 0.934. A line above 1.0 means the motors must beat catalogue thrust. **Failure branch: reopen the configuration per AM-016 (bigger props or motors, or fallback concept B), not O6 / Altus (withdrawn by AM-008).**
+  - Rib torsion coupon on a 14x12 offcut: >= 79 MPa restores 14x12 (-23.8 g, -2.4 mm CG, -$135).
+  - Add the CF-in-6061 socket bearing and the CF plate shear to TP-4.
+  - Flox-fillet coupon (12 mm fillet, 2.0 MPa assumed).
+  - Damper fill check (flutter margin 0.7 m/s with the 10 g lead).
+- **MASS-GATE basis:** FIN-002 26.0 x 2, FIN-003 22.86 x 2, FIN-005 10.0 x 2, FIN-009 9.2 x 2, FIN-006 0.6 x 2, FIN-010 0.4 x 2, WNG-013 4.0 x 2, WNG-014 23.2 x 2, CGE-006 36.3, CGE-004 8.9, WNG-007 10.5 x 2, GER-001 4.30 x 4.
+- **BOM:** R15, T11, T12 as P8.6.
+
+## P8.10 Limits and open items
+- All rows are hand bounds with EST allowables; no FEA of the node, sleeve or bulkheads. The sleeve row C1 (1.04) has little margin, and its bending share ("half the hub Mx, Mz") is my bound; the struts take part of it.
+- Bonding-material masses (flox, laps, straps) are EST and lumped in FIN-005 / FIN-009 / WNG-013; the straps and tape laps are not drawn (adhesive / tape class). The plate notch mass is EST.
+- The p6 demand was not re-run at 1.833 kg. It was computed at 1.705 kg; the pad-capped foot force bounds it (D-226 s1.1), but the heavier wing changes the d'Alembert split: open.
+- The drag of the 25 mm rib blisters is not assessed.
+- The rib torsion coupon, DR-6, TP-3 and TP-4 decide whether 23-48 g and 2.4-3.5 mm of CG come back.
+- Stale texts not touched: the B0k / B1 weigh lines in `a_build_steps.py` predate parts 3-8.

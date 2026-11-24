@@ -1,0 +1,4 @@
+Fu_f1 case=trans wind=5 from=0 chain=1 mass=1.50 hold=30 cruise_s=15 P:THR_MAX=80 P:Q_TAILSIT_RAT_VT=24
+Fu_f2 case=trans wind=5 from=0 chain=1 mass=1.50 hold=30 cruise_s=15 P:THR_MAX=80 P:Q_TAILSIT_RAT_VT=20
+Fu_f3 case=trans wind=5 from=0 chain=1 mass=1.50 hold=30 cruise_s=15 P:THR_MAX=80 P:Q_TAILSIT_RAT_VT=24 P:Q_WVANE_ENABLE=-1 P:Q_WVANE_GAIN=1 P:Q_WVANE_LAND=3 P:Q_WVANE_TAKEOFF=3
+Fu_f4 case=battC mass=1.50 hold=25 cruise_s=15 P:THR_MAX=80 P:WP_LOITER_RAD=40 P:Q_TAILSIT_RAT_VT=24

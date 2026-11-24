@@ -1,0 +1,37 @@
+id,config,item,ship_group,qty,unit_usd,flag,stock_2026-11-14,old_unit_usd,source_url,note
+F01,floor,RadioMaster Pocket ELRS 2.4GHz TX (Mode 2),RMRC,1,76.99,V,in stock,69.99,https://www.readymaderc.com/products/details/85660-radiomaster-pocket-radio-controller-expresslrs-elrs-2-4ghz-charcoal-mode-2,
+F02,floor,RadioMaster RP3 V2 ELRS nano RX,RMRC,1,23.08,V,in stock,19.99,https://www.readymaderc.com/products/details/85670-radiomaster-rp3-expresslrs-2-4ghz-nano-receiver-v2,
+F03,floor,Holybro Kakute F405 Wing Mini FC (ArduPilot target KakuteF405WingMini; 16 MB flash log; no SD),RMRC,1,95.98,V,in stock,51.99,https://www.readymaderc.com/products/details/87184-holybro-kakute-f405-wing-mini-flight-controller,SpeedyBee/CoreWing F405 Wing V2 is 67.26 at RMRC but Unavailable; RDQ CoreWing stack 69.49 and Pyrodrone 39.99 are search snippets only (page fetch 429) so not used
+F04,floor,Foxeer M10Q-250 GPS + QMC5883 compass,RMRC,1,20.68,V,BACKORDER (page: Nov 2026),20.49,https://www.readymaderc.com/products/details/86863-foxeer-m10q-250-gps-w-5883-compass,Price read; not buyable today. Holybro Micro M10 also backorder
+F05,floor,RMRC digital airspeed sensor MS4525 + pitot,RMRC,1,59.99,V,in stock,62.99,https://www.readymaderc.com/products/details/rmrc-digital-air-speed-sensor-pixhawk-ii-2,Matek ASPD-4525 49.87 is Unavailable at RMRC
+F06,floor,microSD + IPEX antennas + FC foam mount,Amazon,1,22.00,EST,—,22.00,—,Kakute has no SD slot; kept as margin
+F07,floor,EMAX ES3352HV servo (3: 2 control + 1 spare),RMRC,3,15.99,V,in stock,14.99,https://www.readymaderc.com/products/details/85976-emax-es3352-hv-high-voltage-12-4g-metal-gear-dual-bearing-servo,1.7-2.4 kgf-cm
+F08,floor,ToolkitRC M6AC charger (1-6S; AC 120 W / DC 300 W),RMRC,1,63.71,V,in stock,59.99,https://www.readymaderc.com/products/details/86179-toolkitrc-m6ac-charger,HTRC C150 pages returned 429 so not read; AC power limit unclear on page
+F09,floor,TBS LiPo bag,RMRC,2,7.61,V,in stock,9.99,https://www.readymaderc.com/products/details/tbs-lipo-battery-bag,
+F10,floor,Metal ammo can (pack storage/transport),Local pickup,1,19.99,U,—,19.99,—,Harbor Freight page not read
+F11a,floor,ToolkitRC WM150 watt meter (60 V / 150 A),RMRC,1,35.31,V,in stock,12.99,https://www.readymaderc.com/products/details/toolkitrc-wm150-watt-meter,Old 12.99 was a card value
+F11b,floor,"Thrust-stand load cell + HX711, IR thermometer, 0.1 g scale, caliper",Amazon,1,50.95,EST,—,50.95,—,Multimeter dropped: Jacobs Electronics Lab lists multimeters
+F12,floor,"Solder flux, wick, tip cleaner (iron, solder, supply: Jacobs Electronics Lab)",Amazon,1,15.00,EST,—,60.99,https://jacobsinstitute.berkeley.edu/making-at-jacobs/labs-and-equipment/,Pinecil + PD supply dropped; Jacobs lists soldering irons with solder provided
+F13,floor,"Wire, XT60/bullets, heat-shrink, velcro, threadlocker, hinge tape, epoxy, CA",Amazon,1,60.00,EST,—,60.00,—,
+B01,B,SunnySky X2212 980KV CW (3 of 6 motors),RMRC,3,15.99,V,in stock,30.00,https://www.readymaderc.com/products/details/sunnysky-x2212-kv980-multirotor-cw,4 lift + pusher + 1 spare
+B02,B,SunnySky X2212 980KV CCW (3 of 6 motors),RMRC,3,15.99,V,in stock,30.00,https://www.readymaderc.com/products/details/sunnysky-x2212-kv980-multirotor-ccw,
+B03,B,HobbyWing Skywalker 30A V2 ESC 3-4S (5 + 1 spare),RMRC,6,14.99,V,in stock,7.50,https://www.readymaderc.com/products/details/85587-hobbywing-skywalker-30a-v2-esc-2s-4s-5a-bec,33 g each (sizing EST used 10 g: +115 g); 5 V BEC on each so remove red lead on 4 of 5; high-rate PWM not confirmed
+B04,B,Holybro 1045 prop set (2CW+2CCW) x2 = lift props + spares,RMRC,2,12.99,V,in stock,15.20,https://www.readymaderc.com/search?q=9450+prop,Read from RMRC search page (no product URL); motor page recommends 9450
+B05,B,APC 10x4.7 SF pusher prop (1 + 2 spare),RMRC,3,3.47,V,only 8 left,3.80,https://www.readymaderc.com/products/details/apc-10x4-7-sf-prop,
+B06,B,Tattu 3700 mAh 4S 45C XT60 361 g (x2 flight packs),RMRC,2,59.99,V,in stock,42.00,https://www.readymaderc.com/products/details/tattu-3700mah-45c-4s1p-lipo-xt60,4S 3000 mAh not found in stock at a readable vendor; 361 g vs 356 g assumed
+B07,B,"Foam, tape, glue, foam-board tail",Local pickup,1,80.00,EST,—,80.00,—,Home Depot not read
+B08,B,RMRC carbon tube 16x14 mm 1 m (booms x2 + spar),RMRC,3,27.46,V,in stock,25.00,https://www.readymaderc.com/products/details/86475-carbon-fiber-tube-16mm-x-14mm-1m-long,Old line was 75 for the lot
+B09,B,EMAX ES3352HV servo (2 more; 4 control + spare),RMRC,2,15.99,V,in stock,14.99,https://www.readymaderc.com/products/details/85976-emax-es3352-hv-high-voltage-12-4g-metal-gear-dual-bearing-servo,
+B10,B,PETG 1 kg + hardware,Amazon,1,46.00,EST,—,46.00,—,Filament price not read; Jacobs Prusa printers are free to use
+D01,D2,ZOHD Altus VTOL PNP/ARF (airframe unassembled + 3 motors + 3 ESC + servos),RMRC,1,299.99,V,in stock on product page (collection snippet said backorder),299.99,https://www.readymaderc.com/products/details/86192-zohd-altus-fpv-vtol-pnp,Needs assembly; no FC/RX/battery. Alt path: Altus PNP 159.99 (RMRC 85838) plus VTOL kit (snippets 119.99-129.99; not read)
+D02,D2,"Spares: 2 x 2204 motor, 2 tilt servos, props",RMRC,1,80.00,EST,—,80.00,—,
+D03,D2,Tattu 3700 mAh 4S 45C XT60 (x2 flight packs),RMRC,2,59.99,V,in stock,42.00,https://www.readymaderc.com/products/details/tattu-3700mah-45c-4s1p-lipo-xt60,
+D04,D2,Modification budget,Amazon,1,60.00,EST,—,60.00,—,
+A01,A,SunnySky X2212 980KV CW (3 of 5 motors),RMRC,3,15.99,V,in stock,30.00,https://www.readymaderc.com/products/details/sunnysky-x2212-kv980-multirotor-cw,4 + 1 spare
+A02,A,SunnySky X2212 980KV CCW (2 of 5 motors),RMRC,2,15.99,V,in stock,30.00,https://www.readymaderc.com/products/details/sunnysky-x2212-kv980-multirotor-ccw,
+A03,A,HobbyWing Skywalker 30A V2 ESC (4 + 1 spare),RMRC,5,14.99,V,in stock,7.50,https://www.readymaderc.com/products/details/85587-hobbywing-skywalker-30a-v2-esc-2s-4s-5a-bec,33 g each vs 10 g EST (+115 g on a 1.23 kg aircraft)
+A04,A,SunnySky 9045 prop pair CW+CCW (6 pairs),RMRC,6,2.99,V,in stock,7.00,https://www.readymaderc.com/search?q=9450+prop,Read from RMRC search page
+A05,A,Tattu 2300 mAh 4S 75C XT60 270 g (x2 flight packs),RMRC,2,37.09,V,in stock,38.00,https://www.readymaderc.com/products/details/tattu-2300-75c-4s1p-xt60,Tattu 2300 45C is discontinued and out of stock
+A06,A,"Foam, tape, glue",Local pickup,1,70.00,EST,—,70.00,—,Home Depot not read
+A07,A,RMRC carbon tube 16x14 mm 1 m (spar),RMRC,1,27.46,V,in stock,40.00,https://www.readymaderc.com/products/details/86475-carbon-fiber-tube-16mm-x-14mm-1m-long,
+A08,A,PETG 1 kg + hardware,Amazon,1,46.00,EST,—,46.00,—,

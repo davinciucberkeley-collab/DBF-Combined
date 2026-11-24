@@ -1,0 +1,30 @@
+film: 3 scenes, 78.9 s, 4734 frames at 1920x1080 @ 60 fps, every 1
+    CAMCHECK selftest {'WNG-006-R': {'centre_inside': True, 'point_0p2_above_inside': False}, 'WNG-007-R': {'centre_inside': False, 'point_0p2_above_inside': False}, 'WNG-001': {'centre_inside': False, 'point_0p2_above_inside': False}}
+    CAMCHECK frames 4734 inside 0  2 s
+    CAMCHECK motion peak view_speed 70.63 deg/s at f954 (shot S2/2.4)
+    CAMCHECK motion peak view_accel 105.9 deg/s^2 at f958 (shot S2/2.4)
+    CAMCHECK motion peak zoom_rate 1.18 1/s at f1596 (shot S2/2.6)
+    CAMCHECK motion peak zoom_accel 1.964 1/s^2 at f1664 (shot S2/2.6)
+    CAMCHECK motion peak pan_speed 0.3523 dist/s at f952 (shot S2/2.4)
+    CAMCHECK motion peak pan_accel 0.5911 dist/s^2 at f1502 (shot S2/2.6)
+    CAMCHECK S2/2.1 frames 300 inside 0 ({}) min_clear None m @fNone (None) blocked 0 {}
+    CAMCHECK S2/2.2 frames 300 inside 0 ({}) min_clear 0.2653 m @f352 (GER-002-UR) blocked 15 {'FIN-004-R': 11, 'FIN-001-R': 4}
+    CAMCHECK S2/2.3 frames 300 inside 0 ({}) min_clear None m @fNone (None) blocked 0 {}
+    CAMCHECK S2/2.4 frames 300 inside 0 ({}) min_clear None m @fNone (None) blocked 0 {}
+    CAMCHECK S2/2.5 frames 300 inside 0 ({}) min_clear 0.1653 m @f1442 (WNG-006-R) blocked 0 {}
+    CAMCHECK S2/2.6 frames 234 inside 0 ({}) min_clear 0.166 m @f1500 (WNG-006-R) blocked 0 {}
+    CAMCHECK S4/4.1 frames 420 inside 0 ({}) min_clear None m @fNone (None) blocked 0 {}
+    CAMCHECK S4/4.2 frames 600 inside 0 ({}) min_clear None m @fNone (None) blocked 0 {}
+    CAMCHECK S4/4.3 frames 300 inside 0 ({}) min_clear None m @fNone (None) blocked 0 {}
+    CAMCHECK S4/4.4 frames 210 inside 0 ({}) min_clear None m @fNone (None) blocked 0 {}
+    CAMCHECK S4/4.5 frames 330 inside 0 ({}) min_clear None m @fNone (None) blocked 0 {}
+    CAMCHECK S5/5.1 frames 360 inside 0 ({}) min_clear None m @fNone (None) blocked 0 {}
+    CAMCHECK S5/5.2 frames 360 inside 0 ({}) min_clear 0.212 m @f4313 (CGE-003-UL) blocked 0 {}
+    CAMCHECK S5/5.3 frames 420 inside 0 ({}) min_clear None m @fNone (None) blocked 0 {}
+CAMCHECK written C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\showcase\concept-a\film\cam-clearance.json 225 s
+
+real	3m45.233s
+user	0m0.046s
+sys	0m0.062s
+024ffc131b023b0e8048726819280ab56d22c1590f9fa67f564d547a837e522f *redesign/showcase/concept-a/film/cam-clearance.json
+7c42559d963b25eaa2a937ede2f75876096c02c95df998082a771c5c6e871754 *redesign/showcase/concept-a/film/cam-clearance-highlight.json

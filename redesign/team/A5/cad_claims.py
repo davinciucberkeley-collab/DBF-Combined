@@ -124,7 +124,7 @@ def elevon_gaps(yin, yout, pod, pod_x, c, f, y_fin, layers, t_board, b):
                   "a_prop": P + "mass.allocation_g.propulsion", "a_pwr": P + "mass.allocation_g.power",
                   "a_avn": P + "mass.allocation_g.avionics", "a_hrn": P + "mass.allocation_g.harness",
                   "a_mec": P + "mass.allocation_g.mechanisms", "m_pack_kg": P + "battery.mass_kg",
-                  "spar_kgm": P + "wing.spar.mass_per_m_kgm", "spar_l": P + "wing.spar.length_m",
+                  "spar_kgm": P + "wing.spar.mass_per_m_kgm", "tube_kgm": P + "fins.tube.mass_per_m_kgm", "spar_l": P + "wing.spar.length_m",
                   "prop_kg": P + "propulsion.prop_mass_kg",
                   "c": P + "wing.chord_m", "sec": "ASM-A5-SECTION", "f": P + "wing.elevon.chord_frac",
                   "b": P + "wing.span_m", "skin_kgm2": P + "wing.skin.areal_mass_kgm2",
@@ -145,14 +145,14 @@ def elevon_gaps(yin, yout, pod, pod_x, c, f, y_fin, layers, t_board, b):
                   "proud": P + "fin_detail.anchor.proud_m", "blk_wall": P + "fin_detail.block.wall_m",
                   "pack_aft": P + "pack_aft_face_m"},
           units={"a_wing": "g", "a_fins": "g", "a_pod": "g", "a_land": "g", "a_prop": "g", "a_pwr": "g", "a_avn": "g",
-                 "a_hrn": "g", "a_mec": "g", "m_pack_kg": "kg", "spar_kgm": "kg/m", "spar_l": "m", "prop_kg": "kg",
+                 "a_hrn": "g", "a_mec": "g", "m_pack_kg": "kg", "spar_kgm": "kg/m", "tube_kgm": "kg/m", "spar_l": "m", "prop_kg": "kg",
                  "c": "m", "b": "m", "skin_kgm2": "kg/m2", "yin": "m", "yout": "m", "x_s": "m", "z_s": "m", "od_s": "m", "xt": "m", "te": "m", "od": "m", "y_fin": "m",
                  "hh": "m", "can_l": "m", "can_d": "m", "x_mount": "m", "x_prop": "m", "z_m": "m", "foot": "m",
                  "pod_x": "m", "pod_size": "m", "pod_z": "m", "pack_size": "m", "x_target": "m", "x_range": "m",
                  "z_range": "m", "tube_l": "m", "bond_gap": "m", "col_wall": "m", "face_ahead": "m", "grip": "m",
                  "plate_hz": "m", "sc_gap": "m", "sc_h": "m", "ear_h": "m", "tail": "m", "proud": "m", "blk_wall": "m",
                  "pack_aft": "m"})
-def layout_cg(a_wing, a_fins, a_pod, a_land, a_prop, a_pwr, a_avn, a_hrn, a_mec, m_pack_kg, spar_kgm, spar_l, prop_kg,
+def layout_cg(a_wing, a_fins, a_pod, a_land, a_prop, a_pwr, a_avn, a_hrn, a_mec, m_pack_kg, spar_kgm, tube_kgm, spar_l, prop_kg,
               c, sec, f, b, skin_kgm2, yin, yout, x_s, z_s, od_s, xt, te, od, y_fin, hh, can_l, can_d, x_mount, x_prop, z_m, foot, pod_x,
               pod_size, pod_z, pack_size, x_target, x_range, z_range, tube_l, bond_gap, col_wall, face_ahead, grip,
               plate_hz, sc_gap, sc_h, ear_h, tail, proud, blk_wall, pack_aft):
@@ -177,7 +177,7 @@ def layout_cg(a_wing, a_fins, a_pod, a_land, a_prop, a_pwr, a_avn, a_hrn, a_mec,
     # (z cancels); braces from DX-COLLAR to DX-ANCHOR; anchors from the spar face to proud of the skin
     _, (hu_x, hu_z) = cen(k9.half_fin_outline(s, c, xt + od / 2, te, hh))
     _, (hl_x, hl_z) = cen(k9.half_fin_outline(s, c, xt + od / 2, te, -hh))
-    tube_g = spar_kgm * tube_l * 1000.0
+    tube_g = tube_kgm * tube_l * 1000.0          # D-147 Rock West 35046-S
     m_hf = (a_fins - 2 * tube_g - 2 * BLOCK_G - 4 * (MOUNT_G + COLLAR_G + BRACE_G + ANCHOR_G)) / 4
     _, (bx, bz) = cen(k9.section_loop(s, c, (0.0, 0.0), (xt - od / 2 - blk_wall) / c, (x_s + od_s / 2 + blk_wall) / c, 8))
     face = xt - od / 2 - bond_gap - col_wall - face_ahead                  # DP-MOTOR-FACE
@@ -360,7 +360,7 @@ def cross_check():
                 a_land=v("mass.allocation_g.landing"), a_prop=v("mass.allocation_g.propulsion"),
                 a_pwr=v("mass.allocation_g.power"), a_avn=v("mass.allocation_g.avionics"),
                 a_hrn=v("mass.allocation_g.harness"), a_mec=v("mass.allocation_g.mechanisms"),
-                m_pack_kg=v("battery.mass_kg"), spar_kgm=v("wing.spar.mass_per_m_kgm"), spar_l=v("wing.spar.length_m"),
+                m_pack_kg=v("battery.mass_kg"), spar_kgm=v("wing.spar.mass_per_m_kgm"), tube_kgm=v("fins.tube.mass_per_m_kgm"), spar_l=v("wing.spar.length_m"),
                 prop_kg=v("propulsion.prop_mass_kg"), c=v("wing.chord_m"), sec=_COORDS, f=v("wing.elevon.chord_frac"),
                 b=v("wing.span_m"), skin_kgm2=v("wing.skin.areal_mass_kgm2"), yin=v("wing.elevon.inboard_y_m"),
                 yout=v("wing.elevon.outboard_y_m"),

@@ -1,0 +1,126 @@
+{
+ "h_mm": 0.25,
+ "rho": 1.27,
+ "rows": [
+  {
+   "id": "WNG-008-RU",
+   "listed_g": 3.67,
+   "vol_cm3": 2.917875,
+   "solid_g": 3.70570125,
+   "cls": "C",
+   "build_axis": "z",
+   "core_frac": 0.005204986505590541,
+   "computed_g": 3.6883419375000006,
+   "name": "Lens cap + stop bosses (R, upper skin): wall 0.6 mm, >= 0.5 mm clearan",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "WNG-008-RL",
+   "listed_g": 3.69,
+   "vol_cm3": 2.964875,
+   "solid_g": 3.7653912500000004,
+   "cls": "C",
+   "build_axis": "z",
+   "core_frac": 0.01387073654032632,
+   "computed_g": 3.7183853750000004,
+   "name": "Lens cap + stop bosses (R, lower skin): wall 0.6 mm, >= 0.5 mm clearan",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "WNG-008-LU",
+   "listed_g": 3.67,
+   "vol_cm3": 2.917875,
+   "solid_g": 3.70570125,
+   "cls": "C",
+   "build_axis": "z",
+   "core_frac": 0.005204986505590541,
+   "computed_g": 3.6883419375000006,
+   "name": "Lens cap + stop bosses (L, upper skin): wall 0.6 mm, >= 0.5 mm clearan",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "WNG-008-LL",
+   "listed_g": 3.69,
+   "vol_cm3": 2.964875,
+   "solid_g": 3.7653912500000004,
+   "cls": "C",
+   "build_axis": "z",
+   "core_frac": 0.01387073654032632,
+   "computed_g": 3.7183853750000004,
+   "name": "Lens cap + stop bosses (L, lower skin): wall 0.6 mm, >= 0.5 mm clearan",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "FIN-003-R",
+   "listed_g": 18.9,
+   "vol_cm3": 22.575,
+   "solid_g": 28.67025,
+   "cls": "S",
+   "build_axis": "y",
+   "core_frac": 0.33776439645625694,
+   "computed_g": 22.859976187500003,
+   "name": "Fin root block (R)",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "FIN-003-L",
+   "listed_g": 18.9,
+   "vol_cm3": 22.575,
+   "solid_g": 28.67025,
+   "cls": "S",
+   "build_axis": "y",
+   "core_frac": 0.33776439645625694,
+   "computed_g": 22.859976187500003,
+   "name": "Fin root block (L)",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "GER-001-UR",
+   "listed_g": 4.55,
+   "vol_cm3": 4.1602500000000004,
+   "solid_g": 4.9923,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.23198726038098672,
+   "computed_g": 4.29741,
+   "name": "Foot shoe (UR; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closu",
+   "material": "Onyx (Markforged X7, printed)"
+  },
+  {
+   "id": "GER-001-UL",
+   "listed_g": 4.55,
+   "vol_cm3": 4.1602500000000004,
+   "solid_g": 4.9923,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.23198726038098672,
+   "computed_g": 4.29741,
+   "name": "Foot shoe (UL; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closu",
+   "material": "Onyx (Markforged X7, printed)"
+  },
+  {
+   "id": "GER-001-LR",
+   "listed_g": 4.55,
+   "vol_cm3": 4.1602500000000004,
+   "solid_g": 4.9923,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.23198726038098672,
+   "computed_g": 4.29741,
+   "name": "Foot shoe (LR; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closu",
+   "material": "Onyx (Markforged X7, printed)"
+  },
+  {
+   "id": "GER-001-LL",
+   "listed_g": 4.55,
+   "vol_cm3": 4.1602500000000004,
+   "solid_g": 4.9923,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.23198726038098672,
+   "computed_g": 4.29741,
+   "name": "Foot shoe (LL; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closu",
+   "material": "Onyx (Markforged X7, printed)"
+  }
+ ]
+}

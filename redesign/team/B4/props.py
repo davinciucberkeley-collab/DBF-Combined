@@ -18,7 +18,8 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[1] / "proofs"))          # redesign/proofs (python -I adds no paths)
 import proofkit as pk  # noqa: E402
 
-kit = pk.Kit(__file__, params=["../../params/params.json", "../../subsystems/fins/params.json"])  # P:fin_detail.* (D3)
+kit = pk.Kit(__file__, params=["../../params/params.json", "../../subsystems/fins/params.json",   # P:fin_detail.* (D3)
+                               "../../subsystems/flight-software/params.json"])                 # P:fsw.* (F4)
 P = "P:"
 IN = 0.0254
 PROPS = {  # key -> (data file, diameter in, APC rpm-limit constant, mass g, price USD, pusher part exists)
@@ -27,6 +28,13 @@ PROPS = {  # key -> (data file, diameter in, APC rpm-limit constant, mass g, pri
     "11x5.5MR": ("apc_per3_11x55MR.csv", 11.0, 105000, 17.0, 3.83, "MRP"),
     "11x5.5E": ("apc_per3_11x55E.csv", 11.0, 150000, 23.0, 4.17, "EP"),
     "12x4.5MR": ("apc_per3_12x45MR.csv", 12.0, 105000, 20.0, 4.10, "MRP"),
+    # D-173 (closure round 2026-11-14): flight prop APC 11x8E / 11x8EP on the SunnySky X2814 V3 (E1, params
+    # propulsion.prop). PER3_11x8E.dat as copied by E1 (static rows 1000-12000 rpm + the 6000 rpm J sweep); mass 22.96 g
+    # (params propulsion.prop_mass_kg); price not read by B4 (None).
+    "11x8E": ("apc_per3_11x8E.csv", 11.0, 150000, 22.96, None, "EP"),
+    # CDR-15 / CDR-AE-08 (2026-11-13): higher-pitch thin electric for the cruise A/B. LP11070E, 0.81 oz, $4.17 (APC
+    # product page, read 2026-11-13). No thin-electric pusher 11x7EP is listed by APC (SRC-B4-APC-11X7E): "-".
+    "11x7E": ("apc_per3_11x7E.csv", 11.0, 150000, 23.0, 4.17, "-"),
 }
 
 
@@ -40,6 +48,19 @@ def _load(name):
 
 
 DATA = {k: _load(v[0]) for k, v in PROPS.items()}
+# 11x8E: the file has J > 0 rows only in the 6000 rpm block, so Ct, Cp(J, rpm) = block-6000(J) x static(rpm) / static(6000)
+SCALED = {"11x8E"}
+# E1's calibrated PER3 factors for the 11x8E on the X2814 V3 (CL-E1-KT / CL-E1-KP, team/E1/claims.json): thrust x kT, power x kP
+def _e1_factors():
+    ids = {"CL-E1-KT": None, "CL-E1-KP": None}
+    for n in json.loads((HERE.parent / "E1" / "claims.json").read_text(encoding="utf-8"))["nodes"]:
+        if n["id"] in ids:
+            ids[n["id"]] = n["value"]
+    return ids["CL-E1-KT"], ids["CL-E1-KP"]
+
+
+KT_E1, KP_E1 = _e1_factors()
+FACTORS = {"11x8E": (KT_E1, KP_E1)}
 UIUC = _load("uiuc_measured.csv")
 AIRFOIL = HERE.parents[1] / "team" / "B2" / "airfoils" / "s5010.dat"   # B2's checked S5010 coordinates (SRC-S5010)
 
@@ -70,7 +91,20 @@ def _interp(xs, ys, x):
 
 
 def coeffs(prop, J, rpm):
-    """Ct, Cp at advance ratio J and rpm: linear in J inside each APC rpm table, then linear in rpm (clamped)."""
+    """Ct, Cp at advance ratio J and rpm: linear in J inside each APC rpm table, then linear in rpm (clamped).
+    Props in FACTORS carry E1's kT, kP (calibrated to the maker row); props in SCALED use the 6000 rpm J sweep."""
+    kt, kp = FACTORS.get(prop, (1.0, 1.0))
+    if prop in SCALED:
+        sw = [r for r in DATA[prop] if r["rpm"] == 6000.0]
+        st = sorted((r["rpm"], r["Ct"], r["Cp"]) for r in DATA[prop] if r["J"] == 0.0)
+        rs = [x[0] for x in st]
+        rpm_c = min(max(rpm, rs[0]), rs[-1])
+        ct_r = _interp(rs, [x[1] for x in st], rpm_c) / _interp(rs, [x[1] for x in st], 6000.0)
+        cp_r = _interp(rs, [x[2] for x in st], rpm_c) / _interp(rs, [x[2] for x in st], 6000.0)
+        js = [r["J"] for r in sw]
+        Jc = min(J, js[-1])
+        return (kt * ct_r * max(_interp(js, [r["Ct"] for r in sw], Jc), 0.0),
+                kp * cp_r * _interp(js, [r["Cp"] for r in sw], Jc))
     tables = sorted({r["rpm"] for r in DATA[prop]})
     rpm_c = min(max(rpm, tables[0]), tables[-1])
     out = []
@@ -218,6 +252,12 @@ A = kit.assumption
 A("ASM-B4-VSAG", "Pack voltage at the end of a flight, loaded", "4S pack at 3.4 V/cell under full-throttle load",
   value=13.6, unit="V", basis="4S 6500 130C late in the flight; same basis as the K09 review section (3.4 V/cell)",
   status="PROPOSED", cites=["SRC-K09-REVIEW"])
+A("ASM-B4-OCV", "Pack open-circuit voltage states, LiHV 4S: full 4.35 V/cell, mid 3.80, low 3.60", "[17.4, 15.2, 14.4] V",
+  value=[17.4, 15.2, 14.4], unit="V", basis="params battery.pack (Gens Ace 4S LiHV, charge 4.35 V/cell, D-174) and F4 D-174 "
+  "(FWD_BAT_VOLT_MAX 17.4); mid and low as E1's ASM-E1-OCV (E1 has not yet re-based its list to 17.4 V)", status="PROPOSED")
+A("ASM-B4-V-LOADED-SAG", "Loaded bus on a 3.6 V/cell resting pack at level-flight current: 13.9 V", "F4 D-174 sagged-pack point",
+  value=13.9, unit="V", basis="review/CLOSURE-ROUND-2026-11-14/F4.md D-174 section 2 (14.4 V resting / 13.9 V loaded); the motor "
+  "model already lumps pack resistance per motor, so using 13.9 V as the bus is conservative", status="PROPOSED")
 A("ASM-B4-CD-TUBE", "Cylinder drag coefficient 1.1", "22 mm tube in the slipstream, Re ~1.3e4 (subcritical)",
   value=1.1, unit="-", basis="Hoerner, Fluid-Dynamic Drag, ch. 3: Cd 1.0-1.2 for 1e4 < Re < 2e5")
 A("ASM-B4-PROFILE", "Slipstream peak-to-mean dynamic pressure 1.3", "A real prop loads its outer half: the tube "
@@ -254,6 +294,13 @@ A("ASM-B4-BOOM", "Pitot boom 80 mm ahead of the pod front at z 0.045 m", "plug-i
   "probe along body x, tip 80 mm ahead of the pod front face, 30 mm above the pod base", value=[0.08, 0.045],
   unit="m", basis="B4 placement (CR-B4-05); D2 draws POD-006; the tip x follows pod.x_le_m if the pod moves",
   status="PROPOSED")
+A("ASM-B4-ELEVON-CHAMFER", "Elevon trailing-corner chamfers at the fin root: 20 mm inboard panel, 70 mm outboard panel",
+  "each elevon panel's trailing-edge corner next to the fin root is cut on a straight line from the hinge-line end "
+  "(unchanged at y 0.30 / 0.34) to a point on the TE 20 mm inboard (inboard panel, TE end y 0.28) and 70 mm outboard "
+  "(outboard panel, TE end y 0.41); [inboard panel, outboard panel] spanwise set-back at the TE",
+  basis="B4 closure round 2026-11-14 (review/CLOSURE-ROUND-2026-11-14/B4.md section 3): clears the mirrored-map "
+        "hover wake by >= 6.6 mm. Requested as params wing.elevon.te_chamfer_m (A1, D1); replace this "
+        "assumption by the params key when A1 applies it", value=[0.02, 0.07], unit="m", status="PROPOSED")
 A("ASM-B4-SPAN-AR", "Fin effective aspect ratio doubles on the wing", "the wing acts as an end plate at the fin "
   "root inside the slipstream", value=2.0, unit="-", basis="image method for a plate ending on a wall")
 
@@ -269,7 +316,14 @@ S("SRC-B4-UIUC", "UIUC Propeller Database vol. 1, APC 11x4.7SF and 11x5.5E", "da
   where="apcsf_11x4.7_static_pg0526, apcsf_11x4.7_pg0533_6004, apce_11x5.5_static_kt0467, apce_11x5.5_kt0472_6000; "
         "copied into data/uiuc_measured.csv")
 S("SRC-B4-APC-RPM", "APC suggested rpm limits", "datasheet", url="https://www.apcprop.com/technical-information/rpm-limits",
-  checked="2026-11-09", where="MR 105,000/D(in); SF 65,000/D; Thin Electric 150,000/D")
+  checked="2026-11-14", where="MR and MRF 105,000/D(in); SF 65,000/D; Thin Electric (E, incl. the EP pusher) 150,000/D",
+  note="one maximum rpm per prop type; the page states no airspeed condition, so it holds in flight as on the stand")
+S("SRC-B4-AP-SRC", "ArduPilot master: ArduPlane/tailsitter.cpp and libraries/AP_Motors/AP_MotorsMulticopter.cpp", "code",
+  url="https://github.com/ArduPilot/ardupilot", checked="2026-11-14",
+  where="Tailsitter::output(): FW flight sends k_throttle to output_motor_mask(throttle, mask, rudder_dt); FW->VTOL "
+        "transition uses Q_TAILSIT_THR_VT and the FW attitude controller; output_motor_mask(): actuator = thrust + "
+        "roll_factor x rudder_dt x 0.5, PWM linear in actuator, no thrust_to_actuator / spin max; no arming check or "
+        "clamp on Q_M_SPIN_MAX (range 0.9-1.0 is metadata only)")
 S("SRC-B4-APC-PRODUCTS", "APC product pages 11x4.5MR and 11x5.5EP", "datasheet",
   url="https://www.apcprop.com/product/11x5-5ep/", checked="2026-11-09",
   where="11x4.5MR LP11045MR 0.60 oz (17 g) $3.83, adapter rings not included; 11x5.5EP LP11055EP 0.81 oz (23 g) "
@@ -281,6 +335,19 @@ S("SRC-B4-ZHOU-ROTOR", "Zhou, Ning, Hu: rotor-to-rotor interaction of small UAV 
 
 
 # ---------------------------------------------------------------- 1. data transcription check
+S("SRC-B4-APC-11X7E", "APC PER3 performance file 11x7E and product page 11x7E (LP11070E)", "datasheet",
+  url="https://www.apcprop.com/files/PER3_11x7E.dat", checked="2026-11-13",
+  where="tables at 5000-8000 rpm copied into redesign/team/B4/data/apc_per3_11x7E.csv; product page "
+        "https://www.apcprop.com/product/11x7e/ : LP11070E, $4.17, 0.81 oz (23 g), hub 0.80 in x 0.41 in, 1/4 in shaft, "
+        "adapter rings LPAR06E. https://www.apcprop.com/product/11x7ep/ returns HTTP 404 and a web search on "
+        "2026-11-13 finds no 11x7EP / LP11070EP: the only reverse-rotation 11x7 found is the sport pusher LP11070P "
+        "(about 40 g on retailer pages, a different blade)",
+  note="APC blade-element predictions (v2022-0915), not measurements; transcription checked by CALC-B4-DATA")
+kit.assumption("ASM-B4-AB-HOVER-MAX", "Hover power penalty allowed for a cruise prop", "hover pack power <= 1.10 x the "
+               "11x5.5MR (measure M6 of the aero review: above +10 % stay on the MR)",
+               basis="review/CDR-2026-11-13/CDR-aero.md 'What the team must measure' M6", value=1.10, unit="-")
+
+
 @kit.calc("CALC-B4-DATA", title="APC data transcription check", cites=["SRC-B4-APC-PER3"],
           equation="Ct' = T / (rho n^2 D^4) ; Cp' = P / (rho n^3 D^5) from the printed N and W ; "
                    "error = max |Ct'/Ct - 1|, |Cp'/Cp - 1| over rows with Ct, Cp >= 0.02 (4-digit rounding < 0.25 %)",
@@ -291,6 +358,8 @@ def data_check(rho):
     for prop, rs in DATA.items():
         D = PROPS[prop][1] * IN
         for r in rs:
+            if "T_N" not in r:                       # 11x8E (E1 file): no N / W columns; spot rows checked below
+                continue
             n = r["rpm"] / 60.0
             ct = r["T_N"] / (rho * n * n * D ** 4)
             cp = r["P_W"] / (rho * n ** 3 * D ** 5)
@@ -299,6 +368,13 @@ def data_check(rho):
             if r["Cp"] >= 0.02:
                 worst = max(worst, abs(cp / r["Cp"] - 1))
             rows += 1
+    # E1's spot check of PER3_11x8E.dat: 6000 rpm, J 0 -> 8.760 N ; J 0.5736 -> 4.395 N
+    D8 = PROPS["11x8E"][1] * IN
+    n6 = 6000.0 / 60.0
+    for r in DATA["11x8E"]:
+        if r["rpm"] == 6000.0 and r["J"] in (0.0, 0.5736):
+            t = r["Ct"] * rho * n6 * n6 * D8 ** 4
+            worst = max(worst, abs(t / (8.760 if r["J"] == 0.0 else 4.395) - 1))
     return {"max_rel_err": worst, "rows": rows}
 
 
@@ -383,6 +459,91 @@ def cruise_points(kv, rm, i0, esc, pack, tcu, m, ld, V, g, rho):
         c2 = _cruise(prop, 2 * T, V, rho, mot, esc_w)       # option: two motors stopped (windmill drag not included)
         out[f"pack_w_2motor__{prop}"] = 2 * c2["in_w"]
     return out
+# ---------------------------------------------------------------- 4b. CDR-15: 11x7E against the 11x5.5MR (cruise A/B)
+def _drag_n(V, m, g, rho, S, cd0, k):
+    q = 0.5 * rho * V * V
+    cl = m * g / (q * S)
+    return q * S * (cd0 + k * cl * cl)
+
+
+def _level_speed(prop, duty, v_pack, mot, m, g, rho, S, cd0, k):
+    """Level speed where four props at motor output `duty` on a v_pack bus give thrust = drag (upper root)."""
+    def f(V):
+        rpm = mot.full_throttle_rpm(prop, duty * v_pack, V, rho)
+        return 4 * thrust_power(prop, rpm, V, rho)[0] - _drag_n(V, m, g, rho, S, cd0, k)
+    if f(14.0) <= 0:                 # not enough thrust to hold 14 m/s at this output
+        return 14.0
+    return _bisect(f, 14.0, 40.0)
+
+
+@kit.calc("CALC-B4-PROP-AB", title="Prop A/B for the cruise leg: 11x5.5MR, 11x5.5E, 11x7E at 16 and 17 m/s, hover cost, "
+          "level speed at the fixed-wing throttle cap (CDR-15, CDR-AE-08)",
+          cites=["SRC-B4-APC-PER3", "SRC-B4-APC-11X7E", "SRC-B4-APC-RPM"], assumes=["ASM-B4-AB-HOVER-MAX"],
+          equation="CD0 = CL_c / (L/D) - k CL_c^2 at the cruise key, k = 1 / (pi AR e) ; D(V) = q S (CD0 + k CL^2) ; "
+                   "T = D / 4 -> rpm, P_shaft (APC), P_in (E1 motor, 25 degC) ; pack = 4 P_in ; hover as CALC-B4-STATIC ; "
+                   "level speed: 4 T(rpm(duty x 16.8 V, V), V) = D(V), hot winding ; THR_MAX for V_H: duty with "
+                   "V_level = VD / 1.25",
+          inputs=dict(E1_MOTOR, m=P + "requirements.mtow_gate_kg", ld=P + "performance.ld_cruise",
+                      vc=P + "performance.cruise_ms", g=P + "env.g_ms2", rho=P + "env.rho_kgm3", b=P + "wing.span_m",
+                      c=P + "wing.chord_m", e=P + "wing.oswald_e", vd=P + "requirements.vd_ms",
+                      k_dl=P + "propulsion.download_factor", cant=P + "propulsion.stations.cant_deg",
+                      ocv="ASM-B4-OCV", thr="P:fsw.thr_max_pct", vfwd="P:fsw.fwd_bat_volt_max_v",
+                      vsag="ASM-B4-V-LOADED-SAG"),
+          units={"m": "kg", "vc": "m/s", "rho": "kg/m3", "b": "m", "c": "m", "vd": "m/s", "cant": "deg", "thr": "%",
+                 "vfwd": "V", "vsag": "V"})
+def prop_ab(kv, rm, i0, esc, pack, tcu, m, ld, vc, g, rho, b, c, e, vd, k_dl, cant, ocv, thr, vfwd, vsag):
+    vfull = max(ocv)
+    mot, esc_w = _motor(kv, rm, i0, esc, pack, tcu, hot=False)
+    mot_hot, _ = _motor(kv, rm, i0, esc, pack, tcu, hot=True)
+    S = b * c
+    k = 1.0 / (math.pi * (b / c) * e)
+    cl_c = m * g / (0.5 * rho * vc * vc * S)
+    cd0 = cl_c / ld - k * cl_c * cl_c
+    out = {"cd0": cd0, "k": k, "vh_req": vd / 1.25}
+    cc = math.cos(math.radians(cant))
+    Th = k_dl * m * g / 4.0 / cc
+    for prop in ("11x5.5MR", "11x5.5E", "11x7E", "11x8E"):
+        tag = prop.replace(".", "").replace("x", "X")
+        for V in (16.0, 17.0, 18.0):
+            T = _drag_n(V, m, g, rho, S, cd0, k) / 4.0
+            cr = _cruise(prop, T, V, rho, mot, esc_w)
+            out[f"drag_n_{V:.0f}"] = 4 * T
+            out[f"pack_w_{V:.0f}__{tag}"] = 4 * cr["in_w"]
+            out[f"eta_{V:.0f}__{tag}"] = cr["eta_prop"]
+            out[f"rpm_{V:.0f}__{tag}"] = cr["rpm"]
+            out[f"J_{V:.0f}__{tag}"] = cr["J"]
+        rpm_h = rpm_for_thrust(prop, Th, 0.0, rho)
+        _, Ph, *_ = thrust_power(prop, rpm_h, 0.0, rho)
+        Pin, _ih = mot.p_in(rpm_h, Ph / (2 * math.pi * rpm_h / 60.0))
+        out[f"hover_pack_w__{tag}"] = 4 * (Pin + esc_w)
+        out[f"hover_rpm__{tag}"] = rpm_h
+        out[f"v_level_thr70__{tag}"] = _level_speed(prop, 0.704, vfull, mot_hot, m, g, rho, S, cd0, k)
+        out[f"thr_for_vh__{tag}"] = _bisect(
+            lambda a, prop=prop: _level_speed(prop, a, vfull, mot_hot, m, g, rho, S, cd0, k) - vd / 1.25, 0.30, 0.95)
+        if prop == SEL:   # F4 D-174: THR_MAX 41 with FWD_BAT compensation (output x FWD_BAT_VOLT_MAX / resting voltage)
+            d41 = thr / 100.0
+            out["thr_max_frac"] = d41
+            out["v_level_thr_max_fresh"] = _level_speed(prop, d41, vfull, mot_hot, m, g, rho, S, cd0, k)
+            d_sag = d41 * vfwd / min(ocv)                  # compensated output on the 14.4 V resting pack
+            out["thr_sag_output"] = d_sag
+            out["v_level_sag"] = _level_speed(prop, d_sag, vsag, mot_hot, m, g, rho, S, cd0, k)
+            out["vh_ratio_thr_max"] = d41 / out[f"thr_for_vh__{tag}"]
+        rpm_ft = mot_hot.full_throttle_rpm(prop, vfull, 0.0, rho)
+        v70 = out[f"v_level_thr70__{tag}"]
+        out[f"rpm_level_thr70__{tag}"] = mot_hot.full_throttle_rpm(prop, 0.704 * vfull, v70, rho)
+        out[f"rpm_static_thr70__{tag}"] = mot_hot.full_throttle_rpm(prop, 0.704 * vfull, 0.0, rho)
+        out[f"rpm_full_fresh__{tag}"] = rpm_ft
+        out[f"rpm_limit__{tag}"] = PROPS[prop][2] / PROPS[prop][1]
+    out["ratio_17__11X8E_over_MR"] = out["pack_w_17__11X8E"] / out["pack_w_17__11X55MR"]
+    for V in (16, 17):
+        out[f"ratio_{V}__11X7E_over_MR"] = out[f"pack_w_{V}__11X7E"] / out[f"pack_w_{V}__11X55MR"]
+        out[f"ratio_{V}__11X55E_over_MR"] = out[f"pack_w_{V}__11X55E"] / out[f"pack_w_{V}__11X55MR"]
+    out["hover_ratio__11X7E_over_MR"] = out["hover_pack_w__11X7E"] / out["hover_pack_w__11X55MR"]
+    out["hover_ratio__11X55E_over_MR"] = out["hover_pack_w__11X55E"] / out["hover_pack_w__11X55MR"]
+    out["mass_delta_g_4props__11X7E"] = 4 * (PROPS["11x7E"][3] - PROPS["11x5.5MR"][3])
+    return out
+
+
 # ---------------------------------------------------------------- 5. download (installed thrust loss in hover)
 def _v_axial(vi, x, R):
     return vi * (1 + x / math.sqrt(x * x + R * R))
@@ -656,14 +817,46 @@ def items_cruise(m, g, rho, ld, V, b, Pc, **geo):
                   "y_m": P + "propulsion.stations.y_m", "z_m": P + "propulsion.stations.z_m",
                   "cant": P + "propulsion.stations.cant_deg", "k": "ASM-B4-WAKE-SENSE",
                   "stack": P + "fin_detail.mount.prop_stack_m", "c": P + "wing.chord_m", "tc": P + "wing.t_c",
-                  "fe": P + "wing.elevon.chord_frac", "defl": P + "wing.elevon.deflection_deg", "mix": "ASM-B4-MIX"},
-          units={"m": "kg", "D": "m", "x_prop": "m", "y_m": "m", "z_m": "m", "cant": "deg", "stack": "m", "c": "m"})
-def wake_vs_surfaces(m, g, rho, D, x_prop, y_m, z_m, cant, k, stack, c, tc, fe, defl, mix):
+                  "fe": P + "wing.elevon.chord_frac", "defl": P + "wing.elevon.deflection_deg", "mix": "ASM-B4-MIX",
+                  "inb": P + "wing.elevon.inboard_y_m", "outb": P + "wing.elevon.outboard_y_m",
+                  "chamf": "ASM-B4-ELEVON-CHAMFER"},
+          units={"m": "kg", "D": "m", "x_prop": "m", "y_m": "m", "z_m": "m", "cant": "deg", "stack": "m", "c": "m",
+                 "inb": "m", "outb": "m", "chamf": "m"})
+def wake_vs_surfaces(m, g, rho, D, x_prop, y_m, z_m, cant, k, stack, c, tc, fe, defl, mix, inb, outb, chamf):
     R = D / 2
     x_hinge = c * (1 - fe)
     ce = c * fe
     z_elevon = ce * math.sin(math.radians(max(abs(d) for d in defl)))
     out = {}
+    # 3-D clearance (closure round): perpendicular distance from every point of each deflected elevon panel (its real
+    # span, the wake-side TE corner chamfered) to the leaning wake axis, minus the wake radius incl. mixing layer.
+    # Both props of a side (z > 0 with the TE deflected up, z < 0 with it deflected down), both spin-map senses.
+    dmax = math.radians(max(abs(d) for d in defl))
+    panels = ((inb[1], inb[0], chamf[0]), (outb[0], outb[1], chamf[1]))   # (wake-side end, far end, TE set-back)
+
+    def clear3d(kk, ch_on, n=40):
+        best = float("inf")
+        for zs in (1.0, -1.0):
+            hub = hub_centre(x_prop, y_m, zs * z_m, cant, kk, stack)
+            e = wake_axis(y_m, zs * z_m, cant, kk)
+            for y0, y1, ch in panels:
+                sgn = 1.0 if y1 > y0 else -1.0
+                for i in range(n + 1):
+                    t = i / n
+                    x = x_hinge + t * ce * math.cos(dmax)
+                    z = zs * t * ce * math.sin(dmax)
+                    ya = y0 + sgn * (ch if ch_on else 0.0) * t
+                    for j in range(n + 1):
+                        y = ya + (y1 - ya) * j / n
+                        d = (x - hub[0], y - hub[1], z - hub[2])
+                        s = sum(d[q] * e[q] for q in range(3))
+                        rp = math.sqrt(max(sum(q * q for q in d) - s * s, 0.0))
+                        best = min(best, rp - (_r_slip(s, R) + mix * s))
+        return best
+    out["hover_clear_elevon_m"] = clear3d(k, True)
+    out["hover_clear_elevon_m_alt"] = clear3d(-k, True)
+    out["hover_clear_elevon_m_alt_nochamfer"] = clear3d(-k, False)
+    out["elevon_area_kept_frac"] = 1 - 0.5 * (chamf[0] + chamf[1]) / ((inb[1] - inb[0]) + (outb[1] - outb[0]))
     for tag, kk in (("", k), ("_alt", -k)):
         hub = hub_centre(x_prop, y_m, z_m, cant, kk, stack)
         e = wake_axis(y_m, z_m, cant, kk)
@@ -878,7 +1071,7 @@ def swirl(Th, Q, rho, ar_k, **geo):
                    "V_d,max = 0.28 v_h ; T_IGE/T = 1 / (1 - (R / 4 h)^2) ; M_tip = pi D n / a ; BPF = 2 n",
           inputs=dict(GEO_IN, foot_h=P + "cg.foot_height_m", m=P + "requirements.mtow_gate_kg",
                       kdl=P + "propulsion.download_factor", g=P + "env.g_ms2", rho=P + "env.rho_kgm3",
-                      vrs="ASM-B4-VRS", rpm_h="CL-B4-HOVER-RPM", rpm_max="CL-B4-RPM-MAX"),
+                      vrs="ASM-B4-VRS", rpm_h="CL-B4-HOVER-RPM", rpm_max="CL-B4-RPM-MAX-FULL"),
           units=dict(GEO_U, m="kg"))
 def geometry(foot_h, m, kdl, g, rho, vrs, rpm_h, rpm_max, **geo):
     G = geo
@@ -1072,23 +1265,64 @@ def uiuc_xcheck(m, ld, V, g, rho):
     return out
 # ---------------------------------------------------------------- 11. worst-case rpm against the APC limit
 @kit.calc("CALC-B4-RPMFULL", title="Unlimited full-throttle rpm on a fresh pack and the output cap that respects the APC limit",
-          cites=["SRC-B4-APC-RPM"],
+          cites=["SRC-B4-APC-RPM", "SRC-B4-AP-SRC"],
           equation="(V - rpm/Kv)/R = Q(rpm)/Kt + I0, cold winding (lowest R, highest rpm), V = max OCV ; "
                    "cap: find V_eff giving rpm = 0.98 x 105000/D_in ; duty = V_eff / V_ocv,max ; "
-                   "T/W at the cap = 4 T(rpm_cap) cos cant / (k_dl m g)",
-          inputs=dict(E1_MOTOR, ocv="ASM-E1-OCV", m=P + "requirements.mtow_gate_kg",
+                   "T/W at the cap = 4 T(rpm_cap) cos cant / (k_dl m g) ; "
+                   "envelope (closure round): rpm_q = rpm(Q_M_SPIN_MAX x V_ocv,max, V_air = AIRSPEED_MAX) ; "
+                   "a_fw = THR_MAX/100 + k_dt RUDD_DT_GAIN/100 (output_motor_mask pass-through) ; "
+                   "rpm_fw = rpm(a_fw x V_ocv,max, V_air = VD) ; rpm_env = max(rpm_q, rpm_fw) ; cold winding, "
+                   "one motor (no pack sag) ; caps: output giving rpm = 105000/D_in at V_Q and at VD ; "
+                   "absolute bound: rpm(1.0 x V_ocv,max, VD) ; limiter check: output at which 4 motors draw I_lim at the end-of-flight OCV, hot winding, "
+                   "V_bus = V_ocv - R_pack (4 d I_m + I_av)",
+          inputs=dict(E1_MOTOR, ocv="ASM-B4-OCV", m=P + "requirements.mtow_gate_kg",
                       k_dl=P + "propulsion.download_factor", g=P + "env.g_ms2", rho=P + "env.rho_kgm3",
-                      cant=P + "propulsion.stations.cant_deg"),
-          units={"m": "kg", "rho": "kg/m3", "cant": "deg"})
-def rpm_full(kv, rm, i0, esc, pack, tcu, ocv, m, k_dl, g, rho, cant):
+                      cant=P + "propulsion.stations.cant_deg", spin="P:fsw.spin_max", thr="P:fsw.thr_max_pct",
+                      dt="P:fsw.rudd_dt_gain_pct", k_dt="ASM-F4-DT-MIX",
+                      v_as="P:fsw.airspeed_max_ms", vd=P + "requirements.vd_ms",
+                      i_lim=P + "performance.full_throttle_current_a"),
+          units={"m": "kg", "rho": "kg/m3", "cant": "deg", "thr": "%", "dt": "%", "v_as": "m/s",
+                 "vd": "m/s", "i_lim": "A"})
+def rpm_full(kv, rm, i0, esc, pack, tcu, ocv, m, k_dl, g, rho, cant, spin, thr, dt, k_dt, v_as, vd, i_lim):
     mot, _ = _motor(kv, rm, i0, esc, pack, tcu, hot=False)
     out = {}
-    for prop in ("11x5.5MR", "11x4.5MR"):
+    # envelope: the outputs F4 sets, at the highest airspeed each motor path can see (fresh pack, cold winding)
+    sel, lim = SEL, PROPS[SEL][2] / PROPS[SEL][1]
+    vmax = max(ocv)
+    a_fw = thr / 100.0 + k_dt * dt / 100.0
+    out["a_fw"] = a_fw
+    out["rpm_q"] = mot.full_throttle_rpm(sel, spin * vmax, v_as, rho)     # Q-assist can run up to AIRSPEED_MAX
+    out["rpm_fw"] = mot.full_throttle_rpm(sel, a_fw * vmax, vd, rho)
+    out["rpm_env"] = max(out["rpm_q"], out["rpm_fw"])
+    out["rpm_limit"] = lim
+    def cap_at(V):                     # highest output that keeps the limit at airspeed V (1.0 if never reached)
+        if mot.full_throttle_rpm(sel, vmax, V, rho) <= lim:
+            return 1.0
+        return _bisect(lambda d: mot.full_throttle_rpm(sel, d * vmax, V, rho) - lim, 0.3, 0.999)
+    out["q_cap_at_airspeed_max"] = cap_at(v_as)
+    out["fw_cap_at_vd"] = cap_at(vd)
+    out["rpm_out1_at_vd"] = mot.full_throttle_rpm(sel, vmax, vd, rho)     # output 1.0 at VD: the absolute bound
+    # Q_M_SPIN_MAX must not bind before the pack limiter on the end-of-flight pack (hover T/W with sag)
+    r_hot = rm * (1 + tcu[0] * (tcu[1] - 25.0)) + esc[0]
+    m_hot = Motor(kv, i0, r_hot)
+
+    def pack_amps(d, v_ocv):
+        vb = v_ocv
+        for _ in range(40):
+            rr = m_hot.full_throttle_rpm(sel, d * vb, 0.0, rho)
+            q = thrust_power(sel, rr, 0.0, rho)[1] / (2 * math.pi * rr / 60.0)
+            ip = 4 * d * m_hot.current(q) + pack[1]
+            vb = v_ocv - ip * pack[0]
+        return ip
+    out["spin_limiter_lowpack"] = _bisect(lambda d: pack_amps(d, min(ocv)) - i_lim, 0.5, 0.999)
+    out["pack_a_at_spin_fresh"] = pack_amps(spin, vmax)
+    for prop in (SEL, "11x5.5MR"):
         rpm = mot.full_throttle_rpm(prop, max(ocv), 0.0, rho)
-        cap = 0.98 * PROPS[prop][2] / PROPS[prop][1]
-        v_eff = _bisect(lambda vv: mot.full_throttle_rpm(prop, vv, 0.0, rho) - cap, 6.0, max(ocv))
+        cap = min(0.98 * PROPS[prop][2] / PROPS[prop][1], rpm)            # E: the limit is above full throttle
+        v_eff = (max(ocv) if cap >= rpm else
+                 _bisect(lambda vv: mot.full_throttle_rpm(prop, vv, 0.0, rho) - cap, 6.0, max(ocv)))
         t_cap = thrust_power(prop, cap, 0.0, rho)[0]
-        tag = "" if prop == "11x5.5MR" else "__11x4.5MR"
+        tag = "" if prop == SEL else "__11x5.5MR"
         out["rpm" + tag] = rpm
         out["rpm_cap" + tag] = cap
         out["spin_max_duty" + tag] = v_eff / max(ocv)
@@ -1098,7 +1332,7 @@ def rpm_full(kv, rm, i0, esc, pack, tcu, ocv, m, k_dl, g, rho, cant):
 
 
 # ---------------------------------------------------------------- claims
-SEL = "11x5.5MR"                                                     # B4 selection (concurs with CR-E1-06)
+SEL = "11x8E"                                                      # D-173: APC 11x8E / EP on the X2814 V3; was 11x5.5E (D-161), 11x5.5MR (D-05)
 OLD = "11x4.5MR"
 PRP = [f"PRP-003-{s}" for s in ("UR", "UL", "LR", "LL")]          # the four props (A4 interface plan ids)
 FINS = [f"FIN-001-{s}" for s in ("UR", "UL", "LR", "LL")]       # half-fins (CHANGE-LOG D-26 codes)
@@ -1108,53 +1342,129 @@ c("CL-B4-DATA", "APC data copied without error (worst row)", calc="CALC-B4-DATA"
   how="Re-run props.py; every row's printed N and W reproduce its Ct and Cp within 0.5 % (a typo shows as > 1 %).")
 c("CL-B4-HOVER-T", "Hover thrust per prop at the gate incl. download", calc="CALC-B4-STATIC",
   output="hover_thrust_per_prop_n", unit="N",
-  how="= 1.06 x 2.6 kg x g / (4 cos 7 deg): the canted thrust lifts with cos(cant); re-check after T-B4-INSTALLED.")
+  how="= 1.06 x 2.6 kg x g / (4 cos cant_deg): the canted thrust lifts with cos(cant); re-check after T-B4-INSTALLED.")
 c("CL-B4-DL", "Disk loading at the gate (11 in)", calc="CALC-B4-STATIC", output=f"disk_loading_npm2__{SEL}",
   unit="N/m2", how="Hand check: 6.81 N / 0.0613 m2.")
-c("CL-B4-HOVER-RPM", "Hover rpm, 11x5.5MR", calc="CALC-B4-STATIC", output=f"hover_rpm__{SEL}", unit="rpm",
+c("CL-B4-HOVER-RPM", "Hover rpm, 11x8E", calc="CALC-B4-STATIC", output=f"hover_rpm__{SEL}", unit="rpm",
   parts=PRP, how="Log rpm (Bluejay bidirectional DShot telemetry) in a tethered hover at 2.6 kg.")
-c("CL-B4-HOVER-Q", "Prop torque at hover, 11x5.5MR (reaction torque for yaw)", calc="CALC-B4-STATIC",
+c("CL-B4-HOVER-Q", "Prop torque at hover, 11x8E (reaction torque for yaw)", calc="CALC-B4-STATIC",
   output=f"hover_torque_nm__{SEL}", unit="N*m", parts=PRP, how="T-B4-STAND torque cell at 0.69 kgf.")
-c("CL-B4-FM", "Hover figure of merit, 11x5.5MR (APC data)", calc="CALC-B4-STATIC", output=f"hover_fm__{SEL}",
+c("CL-B4-FM", "Hover figure of merit, 11x8E (APC data)", calc="CALC-B4-STATIC", output=f"hover_fm__{SEL}",
   unit="-", parts=PRP, how="T-B4-STAND: FM from measured thrust and shaft power (rpm x torque) at 0.69 kgf.")
 c("CL-B4-FM-OLD", "Hover figure of merit, 11x4.5MR (APC data)", calc="CALC-B4-STATIC", output=f"hover_fm__{OLD}",
   unit="-", how="T-B4-STAND A/B with the 11x4.5MR.")
-c("CL-B4-HOVER-SHAFT", "Hover shaft power per motor, 11x5.5MR", calc="CALC-B4-STATIC",
+c("CL-B4-HOVER-SHAFT", "Hover shaft power per motor, 11x8E", calc="CALC-B4-STATIC",
   output=f"hover_shaft_w__{SEL}", unit="W", parts=PRP, how="T-B4-STAND: rpm x torque at 0.69 kgf.")
-c("CL-B4-RPM-MAX", "Full-throttle rpm, 11x5.5MR, 14.8 V bus, hot winding", calc="CALC-B4-STATIC",
-  output=f"rpm_max__{SEL}", unit="rpm", parts=PRP, limit=("<=", 105000 / 11.0), cites=["SRC-B4-APC-RPM"],
-  how="T-B4-STAND at 14.8 V full throttle with rpm telemetry; must stay below the APC MR limit 9 545 rpm.")
-c("CL-B4-RPM-MAX-FULL", "Full-throttle rpm, 11x5.5MR, 16.8 V fresh pack (unlimited)", calc="CALC-B4-RPMFULL",
-  output="rpm", unit="rpm", parts=PRP, limit=("<=", 105000 / 11.0), cites=["SRC-B4-APC-RPM"],
-  how="T-B4-STAND on a fully charged pack. Expected to FAIL unlimited: F4 caps the output (CL-B4-SPIN-MAX).")
-c("CL-B4-SPIN-MAX", "Motor output cap that holds 11x5.5MR rpm at 98 % of the APC limit, fresh pack", calc="CALC-B4-RPMFULL",
-  output="spin_max_duty", unit="-", parts=PRP,
-  how="Stand on a 16.8 V pack: at this output fraction rpm <= 9 350; F4 sets Q_M_SPIN_MAX (or the ESC limit) to it.")
-c("CL-B4-TW-CAP", "T/W at the rpm cap (11x5.5MR, installed, bus able to reach the cap)", calc="CALC-B4-RPMFULL",
+c("CL-B4-RPM-MAX", "Full-throttle rpm, 11x8E, 14.8 V bus, hot winding", calc="CALC-B4-STATIC",
+  output=f"rpm_max__{SEL}", unit="rpm", parts=PRP, limit=("<=", PROPS[SEL][2] / PROPS[SEL][1]), cites=["SRC-B4-APC-RPM"],
+  how="T-B4-STAND at 14.8 V full throttle with rpm telemetry; must stay below the APC thin-electric limit 13 636 rpm.")
+c("CL-B4-RPM-MAX-FULL", "Highest rpm in the flight envelope at F4's output caps, selected prop, 16.8 V fresh pack, "
+  "cold winding (Q path at AIRSPEED_MAX, FW path at VD)", calc="CALC-B4-RPMFULL",
+  output="rpm_env", unit="rpm", parts=PRP, limit=("<=", PROPS[SEL][2] / PROPS[SEL][1]), cites=["SRC-B4-APC-RPM", "SRC-B4-AP-SRC"],
+  how="D-161: APC thin-electric limit 150 000/11 = 13 636 rpm. Stand on a fresh pack at Q_M_SPIN_MAX and the first "
+      "FW full-throttle leg log ESC rpm; see also CL-B4-RPM-ABS, which holds for any F4 setting.")
+c("CL-B4-RPM-ABS", "rpm at output 1.0 at VD, selected prop, 16.8 V fresh pack, cold winding (bound for any F4 output "
+  "setting)", calc="CALC-B4-RPMFULL", output="rpm_out1_at_vd", unit="rpm", parts=PRP, limit=("<=", PROPS[SEL][2] / PROPS[SEL][1]),
+  cites=["SRC-B4-APC-RPM"], how="As CL-B4-RPM-MAX-FULL. With the E prop no F4 parameter is needed for the rpm limit.")
+c("CL-B4-RPM-UNLIMITED", "Static full-throttle rpm, selected prop, 16.8 V fresh pack, output 1.0 (information)",
+  calc="CALC-B4-RPMFULL", output="rpm", unit="rpm", how="Stand on a fresh pack, output 1.0.")
+c("CL-B4-RPM-Q", "Q-path rpm: Q_M_SPIN_MAX at AIRSPEED_MAX axial inflow, fresh pack, cold winding (information)",
+  calc="CALC-B4-RPMFULL", output="rpm_q", unit="rpm", how="As CL-B4-RPM-MAX-FULL.")
+c("CL-B4-RPM-FW", "FW-path rpm: THR_MAX + rudder differential at VD, fresh pack, cold winding (information)",
+  calc="CALC-B4-RPMFULL", output="rpm_fw", unit="rpm", how="ESC rpm telemetry on the first FW full-throttle leg.")
+c("CL-B4-Q-CAP", "Highest Q_M_SPIN_MAX that keeps the APC limit at AIRSPEED_MAX, fresh pack (1.0 = no rpm cap)",
+  calc="CALC-B4-RPMFULL", output="q_cap_at_airspeed_max", unit="-", parts=PRP, cites=["SRC-B4-APC-RPM"],
+  how="F4: Q_M_SPIN_MAX <= this (CL-F4-SPIN-MAX).")
+c("CL-B4-FW-CAP-VD", "Highest per-motor FW output that keeps the APC limit at VD, fresh pack (1.0 = no rpm cap)",
+  calc="CALC-B4-RPMFULL", output="fw_cap_at_vd", unit="-", parts=PRP, cites=["SRC-B4-APC-RPM"],
+  how="F4: THR_MAX/100 + 0.25 RUDD_DT_GAIN/100 <= this (CL-F4-FW-ACT-MAX).")
+c("CL-B4-SPIN-LIMITER-LOW", "Motor output at which the pack limiter binds on the end-of-flight pack (14.4 V OCV, hot "
+  "winding): Q_M_SPIN_MAX must not cut in first", calc="CALC-B4-RPMFULL", output="spin_limiter_lowpack", unit="-",
+  limit=("<=", "P:fsw.spin_max"), parts=PRP,
+  how="Keeps B1's sag T/W (CL-B1-HOVER-TW-SAG) on the limiter, not the output cap. Stand: pack current at "
+      "Q_M_SPIN_MAX on a 3.6 V/cell pack >= Q_M_BAT_CURR_MAX.")
+c("CL-B4-SPIN-MAX", "Static output cap that holds the selected prop at 98 % of the APC limit, fresh pack (1.0 = the "
+  "limit is above static full throttle)", calc="CALC-B4-RPMFULL", output="spin_max_duty", unit="-", parts=PRP,
+  how="D-161: 11x8E static full throttle 11 108 rpm < 0.98 x 13 636, so no static cap.")
+c("CL-B4-TW-CAP", "T/W at the rpm cap (11x8E, installed, bus able to reach the cap)", calc="CALC-B4-RPMFULL",
   output="tw_at_cap", unit="-", limit=(">=", P + "requirements.hover_tw_min"), verifies=["R-HOVER-TW"], parts=PRP,
-  how="T-B4-STAND: thrust at 9 350 rpm >= 1.40 kgf.")
-c("CL-B4-SF-RPM", "11x4.7SF rpm-limit margin at full throttle (negative = over limit)", calc="CALC-B4-STATIC",
-  output="rpm_limit_margin__11x4.7SF", unit="-", limit=(">=", 0.0), cites=["SRC-B4-APC-RPM"],
-  how="APC SF limit 65 000/11 = 5 909 rpm against full-throttle rpm. FAILS by design: the reason the SF is rejected.")
-c("CL-B4-CRUISE-ETA", "Cruise prop efficiency, 11x5.5MR, cruise speed and thrust (params)", calc="CALC-B4-CRUISE",
+  how="T-B4-STAND: static thrust at full throttle on a fresh pack (D-161: 11x8E, no rpm cap).")
+c("CL-B4-SF-RPM", "11x4.7SF rpm-limit margin at full throttle (information: rejected alternative, not in the design; "
+  "negative = over limit)", calc="CALC-B4-STATIC",
+  output="rpm_limit_margin__11x4.7SF", unit="-", cites=["SRC-B4-APC-RPM"],
+  how="Re-classed in the closure round 2026-11-14: the SF is not fitted (PRP-003 is the 11x8E / EP, D-161). APC SF limit "
+      "65 000/11 = 5 909 rpm; the negative margin is why the SF was rejected.")
+c("CL-B4-CRUISE-ETA", "Cruise prop efficiency, 11x8E, cruise speed and thrust (params)", calc="CALC-B4-CRUISE",
   output=f"eta_prop__{SEL}", unit="-", parts=PRP,
   how="Logged cruise: shaft power from ESC rpm and motor model vs drag x V; or a car-top test at cruise speed.")
 c("CL-B4-CRUISE-ETA-OLD", "Cruise prop efficiency, 11x4.5MR, cruise speed and thrust (params)", calc="CALC-B4-CRUISE",
   output=f"eta_prop__{OLD}", unit="-", how="As CL-B4-CRUISE-ETA.")
-c("CL-B4-CRUISE-J", "Cruise advance ratio, 11x5.5MR", calc="CALC-B4-CRUISE", output=f"J__{SEL}", unit="-",
+c("CL-B4-CRUISE-J", "Cruise advance ratio, 11x8E", calc="CALC-B4-CRUISE", output=f"J__{SEL}", unit="-",
   how="J = V / (n D) from logged rpm and airspeed.")
-c("CL-B4-CRUISE-RPM", "Cruise rpm, 11x5.5MR", calc="CALC-B4-CRUISE", output=f"rpm__{SEL}", unit="rpm", parts=PRP,
+c("CL-B4-CRUISE-RPM", "Cruise rpm, 11x8E", calc="CALC-B4-CRUISE", output=f"rpm__{SEL}", unit="rpm", parts=PRP,
   how="ESC rpm telemetry in steady cruise.")
-c("CL-B4-CRUISE-SHAFT", "Cruise shaft power per motor, 11x5.5MR", calc="CALC-B4-CRUISE", output=f"shaft_w__{SEL}",
+c("CL-B4-CRUISE-SHAFT", "Cruise shaft power per motor, 11x8E", calc="CALC-B4-CRUISE", output=f"shaft_w__{SEL}",
   unit="W", parts=PRP, how="Logged cruise: rpm and current with E1's motor constants.")
-c("CL-B4-CRUISE-W", "Cruise pack power, 11x5.5MR, 4 motors (E1 motor constants)", calc="CALC-B4-CRUISE",
+c("CL-B4-CRUISE-W", "Cruise pack power, 11x8E, 4 motors (E1 motor constants)", calc="CALC-B4-CRUISE",
   output=f"pack_w__{SEL}", unit="W", parts=PRP, how="Log pack power in steady level cruise at performance.cruise_ms, 2.6 kg.")
 c("CL-B4-CRUISE-W-OLD", "Cruise pack power, 11x4.5MR, 4 motors (E1 motor constants)", calc="CALC-B4-CRUISE",
   output=f"pack_w__{OLD}", unit="W", how="As CL-B4-CRUISE-W.")
-c("CL-B4-HOVER-W", "Hover pack power at the gate, 11x5.5MR (E1 motor constants)", calc="CALC-B4-STATIC",
+c("CL-B4-HOVER-W", "Hover pack power at the gate, 11x8E (E1 motor constants)", calc="CALC-B4-STATIC",
   output=f"hover_pack_w__{SEL}", unit="W", parts=PRP, how="Log pack power in a 60 s tethered hover at 2.6 kg.")
 c("CL-B4-HOVER-W-OLD", "Hover pack power at the gate, 11x4.5MR (E1 motor constants)", calc="CALC-B4-STATIC",
   output=f"hover_pack_w__{OLD}", unit="W", how="As CL-B4-HOVER-W.")
+# CDR-15 / CDR-AE-08: cruise prop A/B (APC PER3 predictions, uncalibrated; the stand and a cruise leg decide, M6)
+c("CL-B4-AB-CRUISE-W-MR-17", "Cruise pack power at 17 m/s (B6 baseline speed), 11x5.5MR, 4 motors", calc="CALC-B4-PROP-AB",
+  output="pack_w_17__11X55MR", unit="W", parts=PRP,
+  how="T-B1-CRUISE-POWER leg at 17 m/s; E1's own figure for 17 m/s is 283 W (D-96).")
+c("CL-B4-AB-CRUISE-W-11X7E-16", "Cruise pack power at 16 m/s, 11x7E, 4 motors", calc="CALC-B4-PROP-AB",
+  output="pack_w_16__11X7E", unit="W", how="GT-02 static A/B, then a cruise leg on the twin (M6).")
+c("CL-B4-AB-CRUISE-W-11X7E-17", "Cruise pack power at 17 m/s, 11x7E, 4 motors", calc="CALC-B4-PROP-AB",
+  output="pack_w_17__11X7E", unit="W", how="As CL-B4-AB-CRUISE-W-11X7E-16.")
+c("CL-B4-AB-CRUISE-RATIO-16", "Cruise pack power, 11x7E over 11x5.5MR, 16 m/s", calc="CALC-B4-PROP-AB",
+  output="ratio_16__11X7E_over_MR", unit="-", how="Ratio of logged cruise power in the A/B legs.")
+c("CL-B4-AB-CRUISE-RATIO-17", "Cruise pack power, 11x7E over 11x5.5MR, 17 m/s", calc="CALC-B4-PROP-AB",
+  output="ratio_17__11X7E_over_MR", unit="-", how="As CL-B4-AB-CRUISE-RATIO-16.")
+c("CL-B4-AB-CRUISE-RATIO-E-17", "Cruise pack power, 11x5.5E over 11x5.5MR, 17 m/s", calc="CALC-B4-PROP-AB",
+  output="ratio_17__11X55E_over_MR", unit="-", how="As CL-B4-AB-CRUISE-RATIO-16.")
+c("CL-B4-AB-ETA-11X7E-17", "Cruise prop efficiency at 17 m/s, 11x7E", calc="CALC-B4-PROP-AB", output="eta_17__11X7E",
+  unit="-", how="As CL-B4-CRUISE-ETA.")
+c("CL-B4-AB-ETA-MR-17", "Cruise prop efficiency at 17 m/s, 11x5.5MR", calc="CALC-B4-PROP-AB", output="eta_17__11X55MR",
+  unit="-", how="As CL-B4-CRUISE-ETA.")
+c("CL-B4-AB-HOVER-RATIO", "Hover pack power, 11x7E over 11x5.5MR, gate mass", calc="CALC-B4-PROP-AB",
+  output="hover_ratio__11X7E_over_MR", unit="-", limit=("<=", "ASM-B4-AB-HOVER-MAX"),
+  how="GT-02: pack power at 0.69 kgf per prop, both props on the same motor and supply.")
+c("CL-B4-AB-THR-VH-11X7E", "Motor output that reaches VH 21.8 m/s in level flight with the 11x7E, fresh pack "
+  "(THR_MAX would be set to this)", calc="CALC-B4-PROP-AB", output="thr_for_vh__11X7E", unit="-",
+  how="FBWB full-throttle level leg with the 11x7E fitted (TUNING-PLAN step 6c) before THR_MAX is frozen.")
+c("CL-B4-AB-VLEVEL-MR-70", "Level speed at fixed-wing output 0.704, fresh pack, 11x5.5MR (B4 motor and prop model; "
+  "F4 carries 21.3 m/s from B1)", calc="CALC-B4-PROP-AB", output="v_level_thr70__11X55MR", unit="m/s",
+  how="TUNING-PLAN step 6c.")
+c("CL-B4-THR-VH", "Motor output that reaches VH 21.76 m/s (= VD / 1.25) in level flight, selected prop, fresh 17.4 V pack, hot "
+  "winding, E1 prop factors, B1 drag at the cruise key", calc="CALC-B4-PROP-AB", output=f"thr_for_vh__{SEL.replace('.', '').replace('x', 'X')}",
+  unit="-", how="F4's ASM-F4-THR-VH (0.414 EST at D-174). FBWB full-throttle level leg, THR_MAX downward only (TUNING-PLAN 6c).")
+c("CL-B4-THR-MAX-VH", "THR_MAX / output that reaches VH (<= 1 holds VH at THR_MAX)", calc="CALC-B4-PROP-AB",
+  output="vh_ratio_thr_max", unit="-", limit=("<=", 1.0), how="As CL-B4-THR-VH; F4 CL-F4-VLEVEL-VH is the same ratio on F4's model.")
+c("CL-B4-VLEVEL-THR-MAX", "Level speed at THR_MAX 41, fresh 17.4 V pack, selected prop", calc="CALC-B4-PROP-AB",
+  output="v_level_thr_max_fresh", unit="m/s", limit=("<=", 21.76), how="VH = VD 27.2 / 1.25 = 21.76 m/s (params requirements.vd_ms, F4 D-174); see CL-B4-THR-MAX-VH.")
+c("CL-B4-VLEVEL-SAG", "Level speed with FWD_BAT compensation (output 0.41 x 17.4 / 14.4) on a 3.6 V/cell pack loaded to 13.9 V",
+  calc="CALC-B4-PROP-AB", output="v_level_sag", unit="m/s", limit=(">=", "P:fsw.airspeed_max_ms"),
+  how="F4 CL-F4-VLEVEL (EST 19.97 m/s); FBWB level leg late in the pack at AIRSPEED_MAX 18.")
+c("CL-B4-AB-THR-VH-MR", "Motor output that reaches VH 21.8 m/s in level flight with the 11x5.5MR, fresh pack "
+  "(B4 motor and prop model: the prop unloads in flight, so rpm at a fixed output is higher than on the stand)",
+  calc="CALC-B4-PROP-AB", output="thr_for_vh__11X55MR", unit="-",
+  how="TUNING-PLAN step 6c (FBWB full-throttle level leg, THR_MAX downward only): airspeed <= 21.8 m/s decides "
+      "THR_MAX. F4's CL-F4-VLEVEL-VH scales B1's speed with the static rpm (ASM-F4-RPM-LIN); this claim is the "
+      "second model and reads lower (CR-B4-20 to F4, B1).")
+c("CL-B4-AB-RPM-LEVEL-MR-70", "In-flight rpm at fixed-wing output 0.704 and the level speed it reaches, 11x5.5MR, "
+  "fresh pack", calc="CALC-B4-PROP-AB", output="rpm_level_thr70__11X55MR", unit="rpm",
+  limit=("<=", 105000 / 11.0), cites=["SRC-B4-APC-RPM"], how="ESC rpm telemetry in the step-6c leg.")
+c("CL-B4-AB-VLEVEL-11X7E-70", "Level speed at fixed-wing output 0.704, fresh pack, 11x7E (THR_MAX 70 kept)",
+  calc="CALC-B4-PROP-AB", output="v_level_thr70__11X7E", unit="m/s",
+  how="Information: above VH 21.8 m/s, so THR_MAX must drop to CL-B4-AB-THR-VH-11X7E if the 11x7E is flown.")
+c("CL-B4-AB-RPM-FULL-11X7E", "Full-throttle rpm, 11x7E, 16.8 V fresh pack (unlimited), against the thin-electric limit",
+  calc="CALC-B4-PROP-AB", output="rpm_full_fresh__11X7E", unit="rpm", limit=("<=", 150000 / 11.0),
+  cites=["SRC-B4-APC-RPM"], how="GT-02 with rpm telemetry on a full pack.")
 c("CL-B4-UIUC-ETA", "UIUC-measured over APC-predicted cruise efficiency, 11x4.7SF (data spread)",
   calc="CALC-B4-XCHECK", output="eta_ratio_uiuc_over_apc__11x4.7SF", unit="-",
   how="The 11x5.5MR value comes from T-B4-STAND plus a car-top or flight check; this ratio is the expected spread.")
@@ -1184,12 +1494,25 @@ c("CL-B4-ITEMS-NOT-B1", "Cruise CD0 of the items B1 rev 3 does not carry (mount 
   calc="CALC-B4-ITEMS-CRUISE", output="not_in_b1_dcd0", unit="-", how="As CL-B4-ITEMS-DRAG.")
 c("CL-B4-ITEMS-PACK-W", "Cruise pack power for the R3 fin hardware (share of CL-B4-CRUISE-W)",
   calc="CALC-B4-ITEMS-CRUISE", output="items_pack_w", unit="W", how="As CL-B4-ITEMS-DRAG.")
-c("CL-B4-ELEVON-HOVER", "Elevons outside the hover slipstream (gap; wake leaning per F4's spin map)",
-  calc="CALC-B4-WAKE", output="hover_gap_elevon_m", unit="m", limit=(">=", 0.0), assumes=["ASM-B4-WAKE-SENSE"],
+c("CL-B4-ELEVON-HOVER", "Elevons outside the hover slipstream (3-D clearance, real panel span with the fin-root "
+  "chamfers; wake leaning per F4's spin map)",
+  calc="CALC-B4-WAKE", output="hover_clear_elevon_m", unit="m", limit=(">=", 0.0),
+  assumes=["ASM-B4-WAKE-SENSE", "ASM-B4-ELEVON-CHAMFER"],
   how="Tufts on the elevons during a tethered hover: they stay still. Consequence: zero elevon authority in hover.")
-c("CL-B4-ELEVON-HOVER-ALT", "Elevon gap to the hover slipstream if the spin map were mirrored (wake leans to the wing)",
-  calc="CALC-B4-WAKE", output="hover_gap_elevon_m_alt", unit="m", limit=(">=", 0.0),
-  how="Only if F4 mirrors the map; same tuft test.")
+c("CL-B4-ELEVON-HOVER-ALT", "Elevons outside the hover slipstream with the spin map mirrored (wake leans to the wing; "
+  "3-D clearance with the fin-root chamfers)",
+  calc="CALC-B4-WAKE", output="hover_clear_elevon_m_alt", unit="m", limit=(">=", 0.0),
+  assumes=["ASM-B4-ELEVON-CHAMFER"],
+  how="Closure round: passes by geometry (chamfers), so either spin-map sense keeps the elevons dry; the tuft test "
+      "confirms.")
+c("CL-B4-ELEVON-HOVER-2D", "Elevon z-gap to the hover slipstream under the wake centre-line (R4 2-D model, design "
+  "sense; information)", calc="CALC-B4-WAKE", output="hover_gap_elevon_m", unit="m",
+  how="Information: the 2-D model puts elevon under the wake centre, where the fin-root gap is.")
+c("CL-B4-ELEVON-HOVER-ALT-NOCH", "Mirrored-map 3-D clearance without the chamfers (information: why they are needed)",
+  calc="CALC-B4-WAKE", output="hover_clear_elevon_m_alt_nochamfer", unit="m", how="Information.")
+c("CL-B4-ELEVON-AREA-KEPT", "Elevon area kept after the fin-root chamfers (fraction of the R4 panels)",
+  calc="CALC-B4-WAKE", output="elevon_area_kept_frac", unit="-", assumes=["ASM-B4-ELEVON-CHAMFER"],
+  how="B3 re-runs AVL with the chamfered panels; 17.2 % x this >= 15 % floor.")
 c("CL-B4-ELEVON-CRUISE", "Elevon tip vs cruise slipstream edge (negative = inside the mixing layer)",
   calc="CALC-B4-WAKE", output="cruise_gap_elevon_m", unit="m", how="Tufts on the elevons in cruise, camera on the fin.")
 c("CL-B4-PITOT", "Worst prop-induced airspeed error at the chosen pitot (pod-nose boom, left channel)",
@@ -1307,19 +1630,19 @@ c("CL-B4-GAP-TUBE-ALT", "Blade-to-tube gap if the spin map were mirrored (disc e
   calc="CALC-B4-GEOM", output="gap_tube_face_m_alt", unit="m", how="Trade point only.")
 c("CL-B4-BPF", "Hover blade-passing frequency (vibration input to C4)", calc="CALC-B4-GEOM", output="bpf_hover_hz",
   unit="Hz", how="FFT of the FC IMU log in hover (ArduPilot batch sampler).")
-c("CL-B4-BPF-MAX", "Blade-passing frequency at full throttle (14.8 V)", calc="CALC-B4-GEOM", output="bpf_max_hz",
+c("CL-B4-BPF-MAX", "Blade-passing frequency at the envelope maximum rpm (CL-B4-RPM-MAX-FULL)", calc="CALC-B4-GEOM", output="bpf_max_hz",
   unit="Hz", how="From rpm on the stand.")
-c("CL-B4-TIPMACH", "Tip Mach number at full throttle", calc="CALC-B4-GEOM", output="tip_mach_max", unit="-",
+c("CL-B4-TIPMACH", "Tip Mach number (rotational) at the envelope maximum rpm (CL-B4-RPM-MAX-FULL)", calc="CALC-B4-GEOM", output="tip_mach_max", unit="-",
   limit=("<=", 0.5), how="From rpm on the stand.")
 
-kit.test("T-B4-STAND", "Isolated static thrust A/B: 11x5.5MR and 11x4.5MR on one X3108S",
+kit.test("T-B4-STAND", "Isolated static thrust A/B: 11x5.5E (D-161) and 11x5.5MR on one X3108S",
          verifies=["CL-B4-FM", "CL-B4-HOVER-SHAFT", "CL-B4-RPM-MAX", "CL-B4-HOVER-Q", "CL-B4-FM-OLD"], state="planned",
          procedure="H1 stand (shared with T-E1-STAND), 14.8 V, 10 % throttle steps; log thrust, torque, rpm, V, A.")
 kit.test("T-B4-INSTALLED", "Installed thrust with the R3 fin station mock-up and a wing strip",
          verifies=["CL-B4-DOWNLOAD", "CL-B4-TUBE-LOAD", "CL-B4-WING-GAP", "CL-B4-ITEMS-HOVER", "CL-B4-GAP-TUBE",
                    "CL-B4-GAP-TUBE-ENV", "CL-B4-TIP-WING"],
          state="planned",
-         procedure="Same stand; the printed 7 deg canted mount on a 22 mm tube cut to the R3 end (0.172 m from the "
+         procedure="Same stand; the printed 9 deg (D-146) canted mount on a 22 mm tube cut to the R3 end (0.172 m from the "
                    "chord plane), mount and station collars with their ears, one 10 x 3 mm brace strip to a dummy "
                    "anchor, an ESC dummy (8 x 28 x 46 mm) on the pad station, a two-layer 0.21 m half-fin with the "
                    "R3 top edge, and a 0.32 m S5010 wing strip at the right offset; measure the blade-tip gap over "
@@ -1327,7 +1650,7 @@ kit.test("T-B4-INSTALLED", "Installed thrust with the R3 fin station mock-up and
                    "ESC removed, then the fin, then the strip.")
 kit.test("T-B4-YAW", "Fin side force and yaw moment from swirl and cant",
          verifies=["CL-B4-YAW", "CL-B4-SWIRL-FIN", "CL-B4-F-AXIS"], state="planned",
-         procedure="Stand with torque cell and the 7 deg canted mount; the half-fin mock-up on its own side-force "
+         procedure="Stand with torque cell and the 9 deg (D-146) canted mount; the half-fin mock-up on its own side-force "
                    "cell (two load points give the centre of pressure); at hover thrust record reaction torque and "
                    "fin side force, then with the 0 deg mount. Body-axis yaw factor = 1 + F z_cp / Q.")
 kit.test("T-B4-CRUISE", "Cruise prop check, car-top or flight", verifies=["CL-B4-CRUISE-ETA", "CL-B4-CRUISE-W"],

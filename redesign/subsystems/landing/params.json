@@ -1,5 +1,5 @@
 {
- "_note": "Landing subsystem (GER) local numbers, owner D5, revision D5-R7 (D-76: F-400 cartridges, narrower sleeve; CR-A1-65, CR-C5-18, CR-C1-34, CR-C4-36; D-63, D-65; R4: CR-A1-34, D-30, C5-R3 cartridges). Read by fusion/landing.py (ctx.local) and team/D5/feet_calc.py (P:landing.*). Shared numbers (fin TE x, half-fin height 0.21, board, foot height 0.048, CG, loads) come from params/params.json and are not repeated here. Frame: params.json#frame (x aft, y right, z up, metres). Each foot is a telescoping crush unit in the fin plane: a bonded PETG shoe seated on a step cut in the half-fin TE tip (CL-D5-FIN-STEP-*) (the shoe wraps the board and both edge-strip ends, CR-C4-09), a PETG piston (one tine, two snap fingers, stop flange) with a neoprene pad, and an XPS crush cartridge from the piston floor to the shoe back wall. Stack along +x (down in hover): back wall, cartridge, piston floor/flange, pad; the flange stops on the sleeve-end rim after stroke_max_m. Upper feet (UR, UL) take solid type-U cartridges, lower feet (LR, LL) bored type-L cartridges; every cartridge segment is pre-crushed 1 mm on a press (C5-R3: plateau upper 39.4 N, lower 35.6 N, bias x1.05 / x0.95, CR-C5-10 revised).",
+ "_note": "Landing subsystem (GER) local numbers, owner D5, revision D5-R9 (closure 2026-11-14, D-165: C5 closure foot, stroke 43, engagement 30, mark 6, flange 2.2, pad z 0.221, tine window offset 10 mm); was D5-R7 (D-76: F-400 cartridges, narrower sleeve; CR-A1-65, CR-C5-18, CR-C1-34, CR-C4-36; D-63, D-65; R4: CR-A1-34, D-30, C5-R3 cartridges). Read by fusion/landing.py (ctx.local) and team/D5/feet_calc.py (P:landing.*). Shared numbers (fin TE x, half-fin height 0.21, board, foot height 0.053, CG, loads) come from params/params.json and are not repeated here. Frame: params.json#frame (x aft, y right, z up, metres). Each foot is a telescoping crush unit in the fin plane: a bonded PETG shoe seated on a step cut in the half-fin TE tip (CL-D5-FIN-STEP-*) (the shoe wraps the board and both edge-strip ends, CR-C4-09), a PETG piston (one tine, two snap fingers, stop flange) with a neoprene pad, and an XPS crush cartridge from the piston floor to the shoe back wall. Stack along +x (down in hover): back wall, cartridge, piston floor/flange, pad; the flange stops on the sleeve-end rim after stroke_max_m. Upper feet (UR, UL) take solid type-U cartridges, lower feet (LR, LL) bored type-L cartridges; every cartridge segment is pre-crushed 1 mm on a press (C5-R3: plateau upper 39.4 N, lower 35.6 N, bias x1.05 / x0.95, CR-C5-10 revised).",
  "landing": {
   "cartridge": {
    "section_y_m": {
@@ -92,10 +92,10 @@
     "source": "D5 choice"
    },
    "leg_depth_m": {
-    "value": 0.007,
+    "value": 0.03,
     "unit": "m",
-    "source": "team/D5/feet_calc.py#CALC-D5-BOND",
-    "note": "R4: 10 -> 7 mm to pay for the wider R4 cartridge (-1.2 g on four shoes); legs bonded to both fin faces below the step; bond RF stays >= 1.4 (CL-D5-BOND-SF)"
+    "source": "team/C4/sim_fin.py#CALC-C4-SIM-FACE",
+    "note": "D-106 (CDR-01 d, CR-C4-30, 2026-11-13): 7 -> 30 mm. The two legs (0.8 mm, both fin faces, back wall to the TE) now reach |z| 0.171 m, so the foot side load enters the board over 30 mm instead of 7 mm; C4's 3-D model gives the face margins (CL-C4-SIM-MS-FACE-DRAWN, -FAR). Mass from the CAD volumes: CL-D5-MASS-TOTAL. Before: R4: 10 -> 7 mm to pay for the wider R4 cartridge (-1.2 g on four shoes); legs bonded to both fin faces below the step; bond RF stays >= 1.4 (CL-D5-BOND-SF)"
    },
    "glue_gap_m": {
     "value": 0.0002,
@@ -176,16 +176,16 @@
   },
   "piston": {
    "flange_t_m": {
-    "value": 0.0018,
+    "value": 0.0022,
     "unit": "m",
-    "source": "team/D5/feet_calc.py#CALC-D5-FLANGE",
-    "note": "R7 (D-76): 1.6 -> 1.8 mm: the flange is narrower (19.1 mm) with the narrower sleeve; SF 1.23 at C1's 80 N bound"
+    "source": "team/D5/feet_calc.py#CALC-D5-FLANGE (D5-R9)",
+    "note": "D5-R9 (closure 2026-11-14): 1.8 -> 2.2 mm closes CL-D5-FLANGE-SF at C1's 66.9 N foot-to-fin ultimate on the 4.8 mm overhang: SF 0.754 -> 1.127 (sigma = 6 F a / (b t^2)). The rim end moves 0.4 mm forward with it (rim 0.2 mm aft of the fin TE, CL-D5-RIM-AFT-OF-TE). R7 (D-76): 1.6 -> 1.8 mm"
    },
    "engage_m": {
-    "value": 0.025,
+    "value": 0.03,
     "unit": "m",
-    "source": "team/C5/CHANGE-REQUESTS.md#CR-C5-18",
-    "note": "R6: 12 -> 25 mm (C5 variant): tine engagement in the sleeve before any crush; lowers the lip reaction R = F (a + e) / (e + s0) from 3.2 F to 2.2 F"
+    "source": "review/CLOSURE-ROUND-2026-11-14/C5.md#1.2 (D-165)",
+    "note": "D5-R9 (D-165): 25 -> 30 mm with the 5 mm longer stroke, so the lip reaction R = F (a + e) / (e + s0) stays at or below R8's (78.7 vs 81.1 N at 36.75 N). R6: 12 -> 25 mm (CR-C5-18)"
    },
    "hook_protrusion_m": {
     "value": 0.0006,
@@ -222,11 +222,17 @@
     "source": "team/D5/feet_calc.py#CALC-D5-SIDE (D5 choice, R8)",
     "note": "R8: 2.0 -> 2.5 mm rail each side of the inspection window: the 1.4 mm tine chamfer (needed by the R 2.0 sleeve fillets) costs tine section; with R8's CALC-D5-SIDE (windowed section at F (a - 3 mm), full section at F a) the tine SF is CL-D5-SIDE-TINE-SF. Window 10.7 -> 9.7 mm wide, still shows the cartridge stripe. R7 (D-76): 1.5 -> 2.0 mm"
    },
-   "replace_mark_m": {
-    "value": 0.003,
+   "window_offset_m": {
+    "value": 0.01,
     "unit": "m",
-    "source": "team/D5/feet_calc.py#CALC-D5-CRUSH",
-    "note": "R4: 6 -> 3 mm. Groove on the tine 3 mm aft of the rim: once it is inside the sleeve, less than C5's pair-first stroke plus the 3 mm guard is left; replace the insert (CL-D5-MARK-MARGIN)"
+    "source": "team/D5/feet_calc.py#CALC-D5-SIDE (D5-R9)",
+    "note": "D5-R9 (closure 2026-11-14): tine inspection window starts this far aft of the sleeve end at rest (was a fixed 3 mm). The 5 mm longer lever (41.4 -> 46.8 mm) took the windowed-section tine SF to 1.018; starting the window 10 mm aft puts F (a - 10 mm) on the windowed section: SF 1.21 (the full section at F a: 1.85). Window 30 mm long, still shows the cartridge stripe; the 6 mm replace mark sits on the solid wall ahead of it"
+   },
+   "replace_mark_m": {
+    "value": 0.006,
+    "unit": "m",
+    "source": "review/CLOSURE-ROUND-2026-11-14/C5.md#1.2 (D-165)",
+    "note": "D5-R9 (D-165): 3 -> 6 mm, C5's honest mark (CL-C5-MARK-HONEST-MARGIN). Scribed line all round the tine 6 mm aft of the rim, on the solid wall ahead of the inspection window (piston.window_offset_m 10 mm); once it is inside the sleeve, replace the insert. R4: 6 -> 3 mm"
    },
    "corner_chamfer_m": {
     "value": 0.0014,
@@ -243,11 +249,11 @@
     "note": "1/16 in neoprene, 40A, adhesive back"
    },
    "z_outer_m": {
-    "value": 0.219,
+    "value": 0.221,
     "unit": "m",
-    "source": "team/D5/feet_calc.py#CALC-D5-TIPOVER",
+    "source": "team/D5/feet_calc.py#CALC-D5-TIPOVER (D5-R9)",
     "status": "PROPOSED",
-    "note": "outboard edge of the pad and flange (D-30, kept with the 0.21 m half-fins); tip-over pivot = z_outer - edge_r"
+    "note": "D5-R9 (closure 2026-11-14): 0.219 -> 0.221: the whole foot (pad, flange, sleeve) moves 2 mm outboard, so the worst-corner tip-over at the 53 mm foot and D-164's forward CG 0.043 is atan(0.195 / 0.330) = 30.58 deg (>= 30 + 0.5). The fin step gets 2 mm shallower (9.0 -> 7.0 mm, CL-D5-FIN-STEP-Z 0.201 -> 0.203); the flange overhang is unchanged. Outboard edge of the pad and flange; tip-over pivot = z_outer - edge_r. Was 0.219 (D-30)"
    },
    "edge_r_m": {
     "value": 0.001,
@@ -257,10 +263,10 @@
    }
   },
   "stroke_max_m": {
-   "value": 0.038,
+   "value": 0.043,
    "unit": "m",
-   "source": "params.json#requirements.foot_crush_stroke_min_m",
-   "note": "flange-to-rim gap (D-30); the wing TE stays 10 mm off the ground at full stroke"
+   "source": "params.json#requirements.foot_crush_stroke_min_m (D-165, review/CLOSURE-ROUND-2026-11-14/C5.md 1.2)",
+   "note": "D5-R9 (closure 2026-11-14, D-165): 0.038 -> 0.043, C5 closure foot: honest 6 mm replace mark plus 2 touchdowns per sortie at 2.70 kg, low plateau. Flange-to-rim gap; the wing TE stays 10 mm off the ground at full stroke (foot 53 mm). Was 0.038 (D-30)"
   },
   "cap": {
    "span_m": {

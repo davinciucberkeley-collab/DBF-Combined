@@ -234,7 +234,7 @@
     "gap_vertical_pair_m": 0.10060000000000002,
     "gap_lateral_pair_m": 0.36060000000000003,
     "gap_to_wingtip_m": 0.11529999999999996,
-    "gap_to_tube_face_m": 0.046700000000000005,
+    "gap_to_tube_face_m": 0.05313,
     "gap_disc_to_wing_plane_m": 0.03458800000000001,
     "gap_min_m": 0.03458800000000001
    },
@@ -244,8 +244,8 @@
     "z": 0.19,
     "b": 1.15,
     "x_mount": 0.045,
-    "x_prop": -0.0127,
-    "tube_od": 0.022,
+    "x_prop": -0.01918,
+    "tube_od": 0.0221,
     "t_c": 0.0982,
     "c": 0.32
    }
@@ -276,29 +276,29 @@
     "y_fin": "m"
    },
    "outputs": {
-    "cg_height_corner_m": 0.32139999999999996,
-    "cg_height_target_m": 0.319,
-    "narrow_corner_deg": 30.984724794454205,
-    "narrow_target_deg": 34.34813799339042,
-    "wide_corner_deg": 44.8749392517447,
+    "cg_height_corner_m": 0.33,
+    "cg_height_target_m": 0.324,
+    "narrow_corner_deg": 30.579226872489016,
+    "narrow_target_deg": 34.1769887737929,
+    "wide_corner_deg": 44.11859600341786,
     "footprint_m": [
      0.64,
-     0.436
+     0.44
     ]
    },
    "input_values": {
     "c": 0.32,
     "x_range": [
-     0.0466,
-     0.0514
+     0.043,
+     0.0501
     ],
     "x_target": 0.049,
     "z_range": [
      0.0165,
      0.025
     ],
-    "foot": 0.048,
-    "z_pad": 0.218,
+    "foot": 0.053,
+    "z_pad": 0.22,
     "y_fin": 0.32
    }
   },
@@ -325,27 +325,27 @@
    "outputs": {
     "internal_m": [
      1.225,
-     0.525,
+     0.5399999999999999,
      0.515
     ],
     "slack_m": [
      0.07300000000000018,
-     0.017000000000000015,
-     0.07700000000000001
+     0.019999999999999907,
+     0.07300000000000001
     ],
-    "slack_min_m": 0.017000000000000015
+    "slack_min_m": 0.019999999999999907
    },
    "input_values": {
     "ext": [
      1.25,
-     0.55,
+     0.565,
      0.54
     ],
     "wall": 0.0125,
     "env": [
      1.152,
-     0.508,
-     0.438
+     0.52,
+     0.442
     ]
    }
   },
@@ -374,22 +374,22 @@
     "c": "m"
    },
    "outputs": {
-    "fwd_inside_m": 0.00013070473450270403,
-    "aft_inside_m": -0.00012332758060219773,
-    "width_m": 0.004799999999999999,
-    "target_fwd_margin_m": 0.0023999999999999994,
-    "target_aft_margin_m": 0.0023999999999999994,
-    "sm_at_aft_limit": -0.0003853986893818731
+    "fwd_inside_m": 0.003835206050208269,
+    "aft_inside_m": 0.0010750190212091212,
+    "width_m": 0.007100000000000002,
+    "target_fwd_margin_m": 0.006000000000000005,
+    "target_aft_margin_m": 0.0010999999999999968,
+    "sm_at_aft_limit": 0.0033594344412785013
    },
    "input_values": {
     "x_range": [
-     0.0466,
-     0.0514
+     0.043,
+     0.0501
     ],
-    "x_fwd": 0.0464692952654973,
-    "x_aft": 0.051276672419397804,
+    "x_fwd": 0.03916479394979173,
+    "x_aft": 0.05117501902120912,
     "x_t": 0.049,
-    "x_np": 0.0672766724193978,
+    "x_np": 0.06717501902120912,
     "c": 0.32,
     "sm_min": 0.05
    }
@@ -443,61 +443,61 @@
     "ASM-A1-PACK-CASES-G"
    ],
    "outputs": {
-    "growth_dx_m": 0.0015823242397631082,
-    "empty_x_m": 0.06853545910770417,
-    "pack_x_fwd_limit_m": -0.03790000000000002,
-    "pack_x_aft_limit_m": -0.019999999999999997,
-    "fwd_room_nominal_m": 0.0019000000000000197,
-    "travel_left_fwd_m": 0.01790000000000002,
+    "growth_dx_m": 0.0012757236421004348,
+    "empty_x_m": 0.07352581592402459,
+    "pack_x_fwd_limit_m": -0.056699999999999987,
+    "pack_x_aft_limit_m": -0.0445,
+    "fwd_room_nominal_m": 0.0021999999999999867,
+    "travel_left_fwd_m": 0.00019999999999999185,
     "cases": {
      "546": {
       "spacer_m": 0.0,
-      "station_m": -0.019999999999999997,
-      "cg_basic_m": 0.048046178103674814,
-      "cg_pred_m": 0.049631185044645504,
+      "station_m": -0.0445,
+      "cg_basic_m": 0.047544347682346166,
+      "cg_pred_m": 0.04875217839140305,
       "nose_ballast_g": 0.0
      },
-     "550": {
-      "spacer_m": 0.0,
-      "station_m": -0.019999999999999997,
-      "cg_basic_m": 0.047931006643253074,
-      "cg_pred_m": 0.04951333088301618,
-      "nose_ballast_g": 0.0
+     "414": {
+      "spacer_m": 0.012,
+      "station_m": -0.056499999999999995,
+      "cg_basic_m": 0.05060265510090236,
+      "cg_pred_m": 0.051878378743002794,
+      "nose_ballast_g": 20.998685791669182
      },
      "590": {
       "spacer_m": 0.0,
-      "station_m": -0.019999999999999997,
-      "cg_basic_m": 0.0468003778138393,
-      "cg_pred_m": 0.04835636619474561,
+      "station_m": -0.0445,
+      "cg_basic_m": 0.045939968149712206,
+      "cg_pred_m": 0.04712674575863539,
       "nose_ballast_g": 0.0
      }
     },
-    "fwd_margin_min_m": 0.00020037781383929615,
-    "aft_margin_pred_min_m": 0.0017688149553544974,
-    "aft_margin_basic_min_m": 0.0033538218963251876,
-    "nose_ballast_max_g": 0.0,
-    "ballast_g_per_mm": 12.504232804232805
+    "fwd_margin_min_m": 0.002939968149712209,
+    "aft_margin_pred_min_m": -0.0017783787430027953,
+    "aft_margin_basic_min_m": -0.0005026551009023605,
+    "nose_ballast_max_g": 20.998685791669182,
+    "ballast_g_per_mm": 11.981173469387757
    },
    "input_values": {
-    "M_kg": 2.3633,
-    "cg_frac": 0.1511423618457242,
-    "x_pred_a3": 0.049947880030394846,
+    "M_kg": 2.3483100000000006,
+    "cg_frac": 0.17995281713232067,
+    "x_pred_a3": 0.05886062512444305,
     "c": 0.32,
     "x_t": 0.049,
-    "mp_kg": 0.55,
+    "mp_kg": 0.414,
     "x_rng": [
-     0.0466,
-     0.0514
+     0.043,
+     0.0501
     ],
-    "pod_le": -0.14,
+    "pod_le": -0.147,
     "pack": [
-     0.135,
-     0.046,
-     0.049
+     0.098,
+     0.047,
+     0.046
     ],
-    "nose": 0.0346,
-    "x_nom": -0.036,
-    "aft_travel": 0.016,
+    "nose": 0.0413,
+    "x_nom": -0.0545,
+    "aft_travel": 0.01,
     "step": 0.002,
     "pack_rng": [
      546.0,
@@ -533,13 +533,13 @@
     "ASM-A1-PACK-CASES-G"
    ],
    "outputs": {
-    "accept_g": 564.1837000000003,
-    "margin_to_sku_max_g": 8.183700000000272
+    "accept_g": 550.4521000000002,
+    "margin_to_sku_max_g": -5.5478999999997995
    },
    "input_values": {
-    "m_pack_kg": 0.55,
-    "gate_margin_kg": 0.11418370000000033,
-    "overrun_kg": 0.1,
+    "m_pack_kg": 0.414,
+    "gate_margin_kg": 0.22045210000000015,
+    "overrun_kg": 0.084,
     "added_g": 0.0,
     "sku_g": [
      546.0,
@@ -585,25 +585,25 @@
     "gate_kg": "kg"
    },
    "outputs": {
-    "allocated_g": 2374,
-    "sized_kg": 2.597,
-    "reserve_cover_g": 3.0,
+    "allocated_g": 2468,
+    "sized_kg": 2.682,
+    "reserve_cover_g": 18.0,
     "gate_check_g": 0.0
    },
    "input_values": {
-    "wing": 393,
-    "fins": 434,
-    "pod": 146,
-    "landing": 60,
-    "propulsion": 462,
-    "power": 627,
-    "avionics": 37,
-    "harness": 142,
-    "mechanisms": 73,
-    "reserve": 226,
-    "growth_kg": 0.123,
-    "overrun_kg": 0.1,
-    "gate_kg": 2.6
+    "wing": 396,
+    "fins": 487,
+    "pod": 147,
+    "landing": 80,
+    "propulsion": 594,
+    "power": 506,
+    "avionics": 36,
+    "harness": 148,
+    "mechanisms": 74,
+    "reserve": 232,
+    "growth_kg": 0.13,
+    "overrun_kg": 0.084,
+    "gate_kg": 2.7
    }
   },
   {
@@ -624,13 +624,13 @@
     "allow_kg": "kg"
    },
    "outputs": {
-    "growth_a3_g": 122.51629999999957,
-    "spare_g": 0.48370000000042523
+    "growth_a3_g": 131.23789999999946,
+    "spare_g": -1.2378999999994562
    },
    "input_values": {
-    "pred_kg": 2.4858162999999998,
-    "basic_kg": 2.3633,
-    "allow_kg": 0.123
+    "pred_kg": 2.4795479,
+    "basic_kg": 2.3483100000000006,
+    "allow_kg": 0.13
    }
   },
   {
@@ -696,17 +696,17 @@
     "g": "m/s2"
    },
    "outputs": {
-    "tw_gate": 2.4923076923076923,
-    "tw_gate_sag": 2.120953846153846,
-    "tw_sized": 2.4951867539468617,
-    "disk_loading_gate_Nm2": 103.9660028967778
+    "tw_gate": 2.005925925925926,
+    "tw_gate_sag": 1.7491674074074075,
+    "tw_sized": 2.0193885160328113,
+    "disk_loading_gate_Nm2": 107.96469531588464
    },
    "input_values": {
     "n": 4,
-    "t_max": 1.62,
-    "m_gate": 2.6,
-    "m_sized": 2.597,
-    "sag": 0.851,
+    "t_max": 1.354,
+    "m_gate": 2.7,
+    "m_sized": 2.682,
+    "sag": 0.872,
     "D": 0.2794,
     "g": 9.80665
    }
@@ -733,12 +733,12 @@
     "S": "m2"
    },
    "outputs": {
-    "vs_ms": 11.899981156892892,
-    "vt_ms": 15.46997550396076,
-    "wing_loading_Nm2": 69.28611413043478
+    "vs_ms": 12.126667833632933,
+    "vt_ms": 15.764668183722813,
+    "wing_loading_Nm2": 71.95096467391305
    },
    "input_values": {
-    "m": 2.6,
+    "m": 2.7,
     "g": 9.80665,
     "rho": 1.225,
     "S": 0.368,
@@ -762,11 +762,11 @@
     "spend": "USD"
    },
    "outputs": {
-    "reserve_usd": 312.99
+    "reserve_usd": 98.00999999999999
    },
    "input_values": {
     "budget": 2000.0,
-    "spend": 1687.01
+    "spend": 1901.99
    }
   },
   {
@@ -849,7 +849,7 @@
    ],
    "how": "Stand the aircraft on a tilting board with the pack at the forward limit (C5 T-C5-TIPOVER / H1 GT-10): record the angle at which it tips toward the pod.",
    "note": "D-30: frame-level corner bound with D5's pad contact z (CL-D5-CONTACT-Z); C5's CL-C5-TIPOVER-WORST (32.4 deg) is the claim of record.",
-   "value": 30.984724794454205
+   "value": 30.579226872489016
   },
   {
    "id": "CL-A1-TIPOVER-TARGET",
@@ -859,7 +859,7 @@
    "output": "narrow_target_deg",
    "unit": "deg",
    "how": "As CL-A1-TIPOVER with the pack at the target station; compare with C5's CL-C5-TIPOVER-R1 (32.8 deg, z_cg 0.017).",
-   "value": 34.34813799339042
+   "value": 34.1769887737929
   },
   {
    "id": "CL-A1-BOX-FIT",
@@ -876,7 +876,7 @@
     "R-TRANSPORT"
    ],
    "how": "Place the props-off aircraft in the built box on its cradles; lid closes without touching fins or tubes (D7).",
-   "value": 0.017000000000000015
+   "value": 0.019999999999999907
   },
   {
    "id": "CL-A1-MASS-SIZED",
@@ -893,7 +893,7 @@
     "R-MASS-GATE"
    ],
    "how": "A3 roll-up of every parts.csv against MASS-CG.md (CL-A3-MASS-PREDICTED is the maturity-based prediction); weigh the built aircraft with pack (H1).",
-   "value": 2.597
+   "value": 2.682
   },
   {
    "id": "CL-A1-RESERVE-COVERS",
@@ -910,7 +910,7 @@
     "R-MASS-GATE"
    ],
    "how": "growth_reserve_g in params.json minus (growth allowance + 100 g build overrun; D-95: 123 + 100 = 223 g of 226 g, 3 g free); A3's maturity growth (CL-A3-GATE-MARGIN) is the stricter check.",
-   "value": 3.0
+   "value": 18.0
   },
   {
    "id": "CL-A1-GROWTH-COVERS",
@@ -928,7 +928,7 @@
    ],
    "how": "Re-run A1 after every A3 roll-up; weigh parts as they arrive (T-A3-WEIGH-PARTS) so EST items become WEIGHED (1 %).",
    "note": "D-95: requirements.growth_allowance_kg is set from A3's live growth (CL-A3-MASS-PREDICTED - CL-A3-MASS-BASIC) rounded up; this claim fails the day A3's growth outgrows it, so the A1 reserve can no longer read 'covered' while the growth it covers has moved on.",
-   "value": 0.48370000000042523
+   "value": -1.2378999999994562
   },
   {
    "id": "CL-A1-I2C-CB",
@@ -1020,7 +1020,7 @@
     "R-HOVER-TW"
    ],
    "how": "Thrust stand, one station, 11x5.5MR on a fresh pack with the 100 A limiter (24.8 A per motor): thrust >= 1.3 kgf gives T/W 2.0 at 2.6 kg (H1, T-E1-STAND).",
-   "value": 2.4923076923076923
+   "value": 2.005925925925926
   },
   {
    "id": "CL-A1-HOVER-TW-SAG",
@@ -1038,7 +1038,7 @@
    ],
    "how": "Thrust-stand run on a pack at 3.6 V/cell after a cold soak at 10 degC (H1 GT-02, pass line CL-H1-T-PASS-SAG >= 1.102 kgf), or the fresh value x CL-E1-SAG-FACTOR (CL-E1-TW-WORST).",
    "note": "D-49: voltage_sag 0.851 is the one E1/E2 calculation (CALC-E1-WORST on E2's cell data and F1's r_ext 6.5 mOhm, CL-E1-SAG-FACTOR; CL-E1-TW-WORST 2.12); was 0.76 (D-35).",
-   "value": 2.120953846153846
+   "value": 1.7491674074074075
   },
   {
    "id": "CL-A1-STALL-GATE",
@@ -1055,7 +1055,7 @@
     "R-STALL"
    ],
    "how": "Trimmed CLmax from B2 (CL-B2-CLMAX-DESIGN); flight test: slow-flight stall in FBWA at altitude with airspeed logged (H2, T-B2-STALL).",
-   "value": 11.899981156892892
+   "value": 12.126667833632933
   },
   {
    "id": "CL-A1-TRANSITION-GATE",
@@ -1072,7 +1072,7 @@
     "R-TRANSITION"
    ],
    "how": "Cruise 16 m/s (B1) against 1.3 x the trimmed stall; log airspeed at 'Transition FW done' (F4/H2). Closed by D-01: chord 0.32 and cruise 16 m/s.",
-   "value": 15.46997550396076
+   "value": 15.764668183722813
   },
   {
    "id": "CL-A1-RESERVE",
@@ -1090,7 +1090,7 @@
     "R-BUDGET"
    ],
    "how": "I1 re-prices the BOM at order time; reserve = 2 000 - spend, pessimistic column.",
-   "value": 312.99
+   "value": 98.00999999999999
   },
   {
    "id": "CL-A1-CG-RANGE-FWD",
@@ -1108,7 +1108,7 @@
    ],
    "how": "Re-run after any B3 publish; the built aircraft is balanced at both marks (T-A3-CG-BALANCE, H1 GT-07).",
    "note": "D-62 (CR-B3-25): params carry B3's V1 range rounded inward to 0.1 mm, [0.0466, 0.0514]; the take-off CG 18.5 mm above the chord plane moves the effective NP 3.4 mm forward at 1.3 Vs, so the whole range slides 4.3 mm forward at the same width (4.8 mm). Was [0.0509, 0.0548] (D-60, B3 R4 at z = 0), [0.050, 0.0549] (D-47).",
-   "value": 0.00013070473450270403
+   "value": 0.003835206050208269
   },
   {
    "id": "CL-A1-CG-RANGE-AFT",
@@ -1126,7 +1126,7 @@
     "R-STATIC-MARGIN"
    ],
    "how": "As CL-A1-CG-RANGE-FWD; static margin at the aft mark from the twin's glide tests (T-B3-TWIN-NP).",
-   "value": -0.00012332758060219773
+   "value": 0.0010750190212091212
   },
   {
    "id": "CL-A1-CG-WIDTH",
@@ -1144,7 +1144,7 @@
    ],
    "how": "Distance between the two marks on the fin roots.",
    "note": "B3's CL-B3-V-CG-WIDTH-ENV 4.85 mm on the unrounded limits; the full D6 free-play band (not half) would take it to 3.3 mm (CR-B3-23: D6 centres each servo in its band).",
-   "value": 0.004799999999999999
+   "value": 0.007100000000000002
   },
   {
    "id": "CL-A1-CG-TARGET-IN",
@@ -1162,7 +1162,7 @@
    ],
    "how": "Balance the built aircraft with the carried pack at its flight-card station: the CG mark falls between the two limit marks.",
    "note": "D-62: target 0.0490 = range mid (2.4 mm to each mark); replaces CL-A1-CG-CENTRED (B3's R3 pack-centred CG, retired with CL-B3-CG-CENTRED-AFT).",
-   "value": 0.0023999999999999994
+   "value": 0.006000000000000005
   },
   {
    "id": "CL-A1-PACK-STATION",
@@ -1187,7 +1187,7 @@
     "ASM-A3-NOSE-STACK"
    ],
    "note": "D-62 bay: most forward centroid = pod.x_le_m (-0.140) + 34.6 mm + L/2 = -0.0379 m for the 135 mm Ovonic EC5 pack (D-64); the no-spacer station is -0.020 (aft stop 0.050). A1-R4a (D-59) had -0.0254 / -0.010 in the D-47 bay.",
-   "value": 0.01790000000000002
+   "value": 0.00019999999999999185
   },
   {
    "id": "CL-A1-PACK-CG-FWD",
@@ -1209,7 +1209,7 @@
    ],
    "how": "T-A3-CG-BALANCE / H1 GT-07 with each weighed pack at its flight-card station.",
    "note": "Worst case is the heaviest pack at the no-spacer station (nominal + pod.pack_aft_travel_m 12 mm, D-59/D-60); growth moves the CG aft, so basic is the forward-limit case. D-62 estimate on A3-R6a with ASM-A1-A3-PACK-X and ASM-A1-STACK-DX; A3 re-runs on D2's R6 bay.",
-   "value": 0.00020037781383929615
+   "value": 0.002939968149712209
   },
   {
    "id": "CL-A1-PACK-CG-AFT",
@@ -1232,7 +1232,7 @@
    ],
    "how": "T-A3-CG-BALANCE on the built aircraft; never fly aft of the aft mark (B3).",
    "note": "D-62: worst case is the lightest pack (546 g) at or near the crush stack; growth is A3's CL-A3-CG-X-PRED scaled by mass. The 503 g listing is no longer a flight case (D-64).",
-   "value": 0.0017688149553544974
+   "value": -0.0017783787430027953
   },
   {
    "id": "CL-A1-NOSE-BALLAST",
@@ -1250,7 +1250,7 @@
    ],
    "how": "Balance the built aircraft; add lead tape behind the nose block until the CG is 0.5 mm ahead of the aft mark; weigh it.",
    "note": "About 13 g per mm of CG at the pod nose, from the A1 reserve; beyond 10 g A1 re-opens the station.",
-   "value": 0.0
+   "value": 20.998685791669182
   },
   {
    "id": "CL-A1-PACK-ACCEPT",
@@ -1272,7 +1272,7 @@
    ],
    "how": "Weigh each pack on arrival (T-E2-WEIGH, 1 g scale); a pack above this line is returned or the first build must come in under its allocations.",
    "note": "D-64: replaces the D-58/D-59 lines (601 -> 631 g on the old bounding listings). The Ovonic 120C EC5 lists 551 +/- 5 g, so the limit here is its maximum 556 g; E2's PACK_ACCEPT_KG and the T-E2-WEIGH pass line follow this claim. A3 publishes the same figure from its roll-up (CL-A3-GATE-MARGIN) once D2, D3 and D5 deliver the R5 parts.",
-   "value": 564.1837000000003
+   "value": 550.4521000000002
   },
   {
    "id": "T-A1-WEIGH",

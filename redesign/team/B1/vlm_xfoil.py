@@ -210,7 +210,7 @@ def critical_section(trims, polars_stall):
 
 
 def main():
-    res = {"_note": "Written by team/B1/vlm_xfoil.py. CL_cruise at the A3 predicted mass, 16 m/s.",
+    res = {"_note": f"Written by team/B1/vlm_xfoil.py. CL_cruise at the A3 predicted mass, {V:g} m/s (params performance.cruise_ms).",
            "inputs": {"m_pred_kg": M_PRED, "m_basic_kg": M_BASIC, "xcg_m": XCG, "S_m2": S, "AR": SPAN ** 2 / S,
                       "cl_cruise": CL_CRUISE, "re_cruise": RE_CRUISE, "re_stall": RE_STALL, "eta": ETA}}
     # --- AVL lattice convergence at cruise CL
@@ -228,7 +228,7 @@ def main():
                  if (nc, f) != (9.0, 0.0)})                     # that one is ("pan", 240): same file
     jobs.update({("trip", f): (RE_CRUISE, 9.0, f, 240, 0.02) for f in FLAPS})
     jobs.update({("stall", f): (RE_STALL, 9.0, f, 240, None) for f in FLAPS})
-    with ThreadPoolExecutor(8) as ex:
+    with ThreadPoolExecutor(4) as ex:          # design-round rule: <= 4 threads per role
         futs = {k: ex.submit(xfoil_polar, *a) for k, a in jobs.items()}
         P_ = {k: fu.result() for k, fu in futs.items()}
     P_[("pol", 9.0, 0.0)] = P_[("pan", 240)]

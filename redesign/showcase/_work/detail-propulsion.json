@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 19.89,
+ "render_s": 105.11,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -593,6 +593,7 @@
   "WNG-005-R",
   "WNG-006-L",
   "WNG-006-R",
+  "WNG-008",
   "WNG-011-L",
   "WNG-011-R",
   "WNG-012-L",

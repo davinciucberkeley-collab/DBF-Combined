@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 35.04,
+ "render_s": 86.31,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -17,9 +17,9 @@
   "ortho": false,
   "lens_mm": 50,
   "location_m": [
-   1.8579,
+   1.8582,
    0.8069,
-   2.1997
+   2.2002
   ],
   "fit": "visible",
   "frame": [
@@ -43,7 +43,7 @@
   {
    "item": "WNG-002",
    "x": 843.1,
-   "y": 445.4,
+   "y": 445.5,
    "title": "WNG-002",
    "text": "CF spar 22 x 20 mm",
    "detail": null,
@@ -57,23 +57,23 @@
   },
   {
    "item": "WNG-001",
-   "x": 880.1,
-   "y": 506.4,
+   "x": 914.8,
+   "y": 456.9,
    "title": "WNG-001",
    "text": "XPS core (ghosted)",
    "detail": null,
    "role": "ghost",
    "occluded": false,
    "world_m": [
-    0.1452,
-    0.1225,
-    -0.0078
+    0.0477,
+    0.1297,
+    -0.008
    ]
   },
   {
    "item": "WNG-011-L",
-   "x": 615.8,
-   "y": 502.1,
+   "x": 615.9,
+   "y": 502.2,
    "title": "WNG-011-L",
    "text": "Elevon, inboard panel",
    "detail": null,
@@ -87,8 +87,8 @@
   },
   {
    "item": "WNG-012-L",
-   "x": 438.4,
-   "y": 440.0,
+   "x": 438.5,
+   "y": 440.1,
    "title": "WNG-012-L",
    "text": "Elevon, outboard panel",
    "detail": null,
@@ -102,8 +102,8 @@
   },
   {
    "item": "WNG-004-L",
-   "x": 601.5,
-   "y": 360.6,
+   "x": 601.6,
+   "y": 360.8,
    "title": "WNG-004-L",
    "text": "Spar plug at fin block",
    "detail": null,
@@ -117,8 +117,8 @@
   },
   {
    "item": "MEC-009-LO",
-   "x": 452.6,
-   "y": 421.3,
+   "x": 452.7,
+   "y": 421.5,
    "title": "MEC-009-LO",
    "text": "Elevon torque tube",
    "detail": null,
@@ -137,13 +137,27 @@
    "role": "ghost",
    "name": "Wing core, one piece (XPS), with all cuts",
    "status": "MODELLED",
-   "mass_g": 201.9,
+   "mass_g": 198.1,
    "subsystem": "wing",
    "bbox_px": [
-    347,
-    270,
+    354,
+    271,
     1251,
-    726
+    723
+   ]
+  },
+  {
+   "id": "WNG-008",
+   "role": "context",
+   "name": "Spar-slot cap strips (XPS, the slot strip re-bonded)",
+   "status": "MODELLED",
+   "mass_g": 3.9,
+   "subsystem": "wing",
+   "bbox_px": [
+    483,
+    316,
+    1179,
+    574
    ]
   },
   {
@@ -156,7 +170,7 @@
    "bbox_px": [
     1021,
     476,
-    1072,
+    1073,
     536
    ]
   },
@@ -171,7 +185,7 @@
     581,
     326,
     634,
-    381
+    382
    ]
   },
   {
@@ -225,7 +239,7 @@
    "subsystem": "wing",
    "bbox_px": [
     975,
-    484,
+    485,
     996,
     504
    ]
@@ -238,9 +252,9 @@
    "mass_g": 4.0,
    "subsystem": "wing",
    "bbox_px": [
-    642,
+    643,
     369,
-    662,
+    663,
     388
    ]
   },
@@ -249,7 +263,7 @@
    "role": "ghost",
    "name": "Tape skin (packing tape, both surfaces, doublers, tip edge layer)",
    "status": "MODELLED",
-   "mass_g": 47.9,
+   "mass_g": 47.5,
    "subsystem": "wing",
    "bbox_px": [
     347,
@@ -269,7 +283,7 @@
     1045,
     539,
     1096,
-    610
+    611
    ]
   },
   {
@@ -322,9 +336,9 @@
    "mass_g": 3.5,
    "subsystem": "wing",
    "bbox_px": [
-    357,
+    358,
     390,
-    525,
+    526,
     481
    ]
   },
@@ -336,7 +350,7 @@
    "mass_g": 2.24,
    "subsystem": "mechanisms",
    "bbox_px": [
-    852,
+    853,
     565,
     972,
     612

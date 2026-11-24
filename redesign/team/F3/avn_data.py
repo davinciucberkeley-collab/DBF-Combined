@@ -178,14 +178,17 @@ def masses(ctx, A):
                 m, k = 0.0, 'tube'                       # booked below by cut length; geometry gives the CG
             else:
                 m, k = 0.0, 'envelope'
-            items.append([m, cg, nm])
+            items.append([m, cg, nm, V])
             br[k] = br.get(k, 0.0) + m
         bought = {'AVN-001': lv(A, 'fc_mass_g'), 'AVN-002': lv(A, 'gps_mass_g'), 'AVN-003': lv(A, 'rx_mass_g'),
                   'AVN-004': lv(A, 'aspd_mass_g'), 'AVN-007': lv(A, 'sd_mass_g')}
-        if pid in bought:                                  # the envelope body carries the bought mass
+        if pid in bought:                                  # the envelope bodies carry the bought mass
+            # closure round 2026-11-14: shared by body volume (was an equal share per body, which put a board's CG on
+            # its small solder joints and plugs)
             env = [it for it in items if it[0] == 0.0 and not it[2].startswith('silicone')]
+            vt = sum(it[3] for it in env)
             for it in env:
-                it[0] = bought[pid] / len(env)
+                it[0] = bought[pid] * it[3] / vt
             br['bought'] = bought[pid]
         if pid == 'AVN-004':
             od, idd = lv(A, 'tube_m')

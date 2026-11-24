@@ -1,0 +1,153 @@
+{
+ "steps": [
+  {
+   "id": "B0b",
+   "parts": [
+    "CGE-001"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B0c",
+   "parts": [
+    "CGE-002-B"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B0d",
+   "parts": [
+    "CGE-010-LR",
+    "CGE-010-UL"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B0e",
+   "parts": [
+    "CGE-002-A"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B0f",
+   "parts": [
+    "CGE-010-C",
+    "CGE-010-UR",
+    "CGE-010-LL"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B0g1",
+   "parts": [
+    "CGE-009-UR"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B0g2",
+   "parts": [
+    "CGE-009-LL"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B0g3",
+   "parts": [
+    "CGE-009-LR"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B0g4",
+   "parts": [
+    "CGE-009-UL"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B0h",
+   "parts": [
+    "CGE-004"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B0i1",
+   "parts": [
+    "CGE-003-UR"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B0i2",
+   "parts": [
+    "CGE-003-LL"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B0i3",
+   "parts": [
+    "CGE-003-LR"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B0i4",
+   "parts": [
+    "CGE-003-UL"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B0j1",
+   "parts": [
+    "CGE-005-R"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B0j2",
+   "parts": [
+    "CGE-005-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  }
+ ],
+ "tol_mm": 0.05,
+ "flipped": 480
+}

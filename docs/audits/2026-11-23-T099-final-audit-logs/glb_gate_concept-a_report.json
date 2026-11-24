@@ -1,0 +1,1130 @@
+{
+ "bodies": 129,
+ "wire_strands": 44,
+ "hits": [
+  {
+   "a": "E-HRN-02#0",
+   "b": "E-HRN-02#2",
+   "depth_mm": 0.011,
+   "at_mm": [
+    -4.44,
+    16.59,
+    2.4
+   ],
+   "bodies": [
+    "E-HRN-02 \"wire strand 2 (1.8 mm)\" x E-HRN-02 \"wire strand 0 (1.8 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-02#0",
+   "b": "E-HRN-02#1",
+   "depth_mm": 0.01,
+   "at_mm": [
+    -84.02,
+    11.32,
+    14.99
+   ],
+   "bodies": [
+    "E-HRN-02 \"wire strand 0 (1.8 mm)\" x E-HRN-02 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "CGE-001",
+   "b": "E-HRN-02",
+   "depth_mm": 0.634,
+   "at_mm": [
+    -85.7,
+    10.34,
+    15.41
+   ],
+   "bodies": [
+    "E-HRN-02 \"wire strand 2 (1.8 mm)\" x CGE-001 \"CGE-001\" 0.63 mm",
+    "E-HRN-02 \"wire strand 0 (1.8 mm)\" x CGE-001 \"CGE-001\" 0.46 mm"
+   ]
+  },
+  {
+   "a": "CGE-001",
+   "b": "E-HRN-05",
+   "depth_mm": 0.629,
+   "at_mm": [
+    -83.3,
+    -10.96,
+    -15.84
+   ],
+   "bodies": [
+    "E-HRN-05 \"wire strand 1 (1.8 mm)\" x CGE-001 \"CGE-001\" 0.63 mm",
+    "E-HRN-05 \"wire strand 2 (1.8 mm)\" x CGE-001 \"CGE-001\" 0.46 mm"
+   ]
+  },
+  {
+   "a": "CGE-001",
+   "b": "E-HRN-03",
+   "depth_mm": 0.693,
+   "at_mm": [
+    -72.7,
+    -10.64,
+    15.62
+   ],
+   "bodies": [
+    "CGE-001 \"CGE-001\" x E-HRN-03 \"wire strand 0 (1.8 mm)\" 0.69 mm",
+    "CGE-001 \"CGE-001\" x E-HRN-03 \"wire strand 2 (1.8 mm)\" 0.21 mm",
+    "CGE-001 \"CGE-001\" x E-HRN-03 \"wire strand 1 (1.8 mm)\" 0.18 mm"
+   ]
+  },
+  {
+   "a": "CGE-001",
+   "b": "E-HRN-04",
+   "depth_mm": 0.627,
+   "at_mm": [
+    -72.7,
+    10.34,
+    -15.41
+   ],
+   "bodies": [
+    "CGE-001 \"CGE-001\" x E-HRN-04 \"wire strand 1 (1.8 mm)\" 0.63 mm",
+    "CGE-001 \"CGE-001\" x E-HRN-04 \"wire strand 0 (1.8 mm)\" 0.47 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-04#1",
+   "b": "E-HRN-04#2",
+   "depth_mm": 0.012,
+   "at_mm": [
+    -72.78,
+    226.42,
+    -154.12
+   ],
+   "bodies": [
+    "E-HRN-04 \"wire strand 2 (1.8 mm)\" x E-HRN-04 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-04#0",
+   "b": "E-HRN-04#2",
+   "depth_mm": 0.012,
+   "at_mm": [
+    9.95,
+    21.12,
+    2.19
+   ],
+   "bodies": [
+    "E-HRN-04 \"wire strand 2 (1.8 mm)\" x E-HRN-04 \"wire strand 0 (1.8 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "CGE-002-B",
+   "b": "E-HRN-04",
+   "depth_mm": 0.021,
+   "at_mm": [
+    -71.81,
+    13.99,
+    -15.61
+   ],
+   "bodies": [
+    "E-HRN-04 \"wire strand 2 (1.8 mm)\" x CGE-002-B \"CGE-002-B\" 0.02 mm"
+   ]
+  },
+  {
+   "a": "CGE-002-B",
+   "b": "E-HRN-03",
+   "depth_mm": 0.011,
+   "at_mm": [
+    -71.04,
+    -13.98,
+    15.61
+   ],
+   "bodies": [
+    "E-HRN-03 \"wire strand 1 (1.8 mm)\" x CGE-002-B \"CGE-002-B\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-02",
+   "b": "WNG-011",
+   "depth_mm": 0.772,
+   "at_mm": [
+    27.98,
+    17.19,
+    8.98
+   ],
+   "bodies": [
+    "E-HRN-02 \"wire strand 0 (1.8 mm)\" x WNG-011 \"WNG-011\" 0.77 mm",
+    "E-HRN-02 \"wire strand 2 (1.8 mm)\" x WNG-011 \"WNG-011\" 0.74 mm",
+    "E-HRN-02 \"wire strand 1 (1.8 mm)\" x WNG-011 \"WNG-011\" 0.53 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-05",
+   "b": "WNG-011",
+   "depth_mm": 0.606,
+   "at_mm": [
+    28.15,
+    -21.88,
+    9.01
+   ],
+   "bodies": [
+    "E-HRN-05 \"wire strand 2 (1.8 mm)\" x WNG-011 \"WNG-011\" 0.61 mm",
+    "E-HRN-05 \"wire strand 0 (1.8 mm)\" x WNG-011 \"WNG-011\" 0.59 mm",
+    "E-HRN-05 \"wire strand 1 (1.8 mm)\" x WNG-011 \"WNG-011\" 0.52 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-03",
+   "b": "WNG-011",
+   "depth_mm": 0.642,
+   "at_mm": [
+    30.0,
+    -17.19,
+    9.4
+   ],
+   "bodies": [
+    "E-HRN-03 \"wire strand 2 (1.8 mm)\" x WNG-011 \"WNG-011\" 0.64 mm",
+    "E-HRN-03 \"wire strand 0 (1.8 mm)\" x WNG-011 \"WNG-011\" 0.53 mm",
+    "E-HRN-03 \"wire strand 1 (1.8 mm)\" x WNG-011 \"WNG-011\" 0.50 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-04",
+   "b": "WNG-011",
+   "depth_mm": 0.84,
+   "at_mm": [
+    29.55,
+    21.88,
+    9.31
+   ],
+   "bodies": [
+    "E-HRN-04 \"wire strand 2 (1.8 mm)\" x WNG-011 \"WNG-011\" 0.84 mm",
+    "E-HRN-04 \"wire strand 0 (1.8 mm)\" x WNG-011 \"WNG-011\" 0.80 mm",
+    "E-HRN-04 \"wire strand 1 (1.8 mm)\" x WNG-011 \"WNG-011\" 0.64 mm"
+   ]
+  },
+  {
+   "a": "HWC-001",
+   "b": "HWC-003",
+   "depth_mm": 0.034,
+   "at_mm": [
+    35.47,
+    -87.24,
+    11.48
+   ],
+   "bodies": [
+    "HWC-003 \"HWC-003\" x HWC-001 \"HWC-001\" 0.03 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-11",
+   "b": "WNG-011",
+   "depth_mm": 0.441,
+   "at_mm": [
+    78.27,
+    -25.11,
+    12.24
+   ],
+   "bodies": [
+    "WNG-011 \"WNG-011\" x E-HRN-11 \"wire strand 3 (1.0 mm)\" 0.44 mm",
+    "WNG-011 \"WNG-011\" x E-HRN-11 \"wire strand 2 (1.0 mm)\" 0.32 mm",
+    "WNG-011 \"WNG-011\" x E-HRN-11 \"wire strand 1 (1.0 mm)\" 0.31 mm",
+    "WNG-011 \"WNG-011\" x E-HRN-11 \"wire strand 0 (1.0 mm)\" 0.29 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-11",
+   "b": "WNG-001",
+   "depth_mm": 0.338,
+   "at_mm": [
+    85.8,
+    -410.2,
+    8.38
+   ],
+   "bodies": [
+    "WNG-001 \"WNG-001\" x E-HRN-11 \"wire strand 2 (1.0 mm)\" 0.34 mm",
+    "WNG-001 \"WNG-001\" x E-HRN-11 \"wire strand 3 (1.0 mm)\" 0.29 mm",
+    "WNG-001 \"WNG-001\" x E-HRN-11 \"wire strand 1 (1.0 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "AVN-006",
+   "b": "AVN-009-S",
+   "depth_mm": 0.017,
+   "at_mm": [
+    44.0,
+    -422.46,
+    0.97
+   ],
+   "bodies": [
+    "AVN-006 \"AVN-006\" x AVN-009-S \"AVN-009-S\" 0.02 mm"
+   ]
+  },
+  {
+   "a": "AVN-009-S",
+   "b": "WNG-001",
+   "depth_mm": 0.236,
+   "at_mm": [
+    51.5,
+    -422.06,
+    6.7
+   ],
+   "bodies": [
+    "WNG-001 \"WNG-001\" x AVN-009-S \"AVN-009-S\" 0.24 mm"
+   ]
+  },
+  {
+   "a": "AVN-006",
+   "b": "AVN-009-T",
+   "depth_mm": 0.017,
+   "at_mm": [
+    44.0,
+    -417.3,
+    0.87
+   ],
+   "bodies": [
+    "AVN-006 \"AVN-006\" x AVN-009-T \"AVN-009-T\" 0.02 mm"
+   ]
+  },
+  {
+   "a": "AVN-009-T",
+   "b": "WNG-001",
+   "depth_mm": 0.189,
+   "at_mm": [
+    51.69,
+    -417.8,
+    6.51
+   ],
+   "bodies": [
+    "WNG-001 \"WNG-001\" x AVN-009-T \"AVN-009-T\" 0.19 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-07",
+   "b": "WNG-011",
+   "depth_mm": 0.544,
+   "at_mm": [
+    126.58,
+    193.39,
+    8.41
+   ],
+   "bodies": [
+    "WNG-011 \"WNG-011\" x E-HRN-07 \"wire strand 2 (1.2 mm)\" 0.54 mm",
+    "WNG-011 \"WNG-011\" x E-HRN-07 \"wire strand 1 (1.2 mm)\" 0.50 mm",
+    "WNG-011 \"WNG-011\" x E-HRN-07 \"wire strand 0 (1.2 mm)\" 0.49 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-07",
+   "b": "WNG-014-R",
+   "depth_mm": 0.557,
+   "at_mm": [
+    126.58,
+    190.85,
+    8.35
+   ],
+   "bodies": [
+    "WNG-014-R \"WNG-014-R\" x E-HRN-07 \"wire strand 1 (1.2 mm)\" 0.56 mm",
+    "WNG-014-R \"WNG-014-R\" x E-HRN-07 \"wire strand 2 (1.2 mm)\" 0.50 mm",
+    "WNG-014-R \"WNG-014-R\" x E-HRN-07 \"wire strand 0 (1.2 mm)\" 0.45 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-08",
+   "b": "WNG-011",
+   "depth_mm": 0.516,
+   "at_mm": [
+    126.64,
+    -193.48,
+    8.4
+   ],
+   "bodies": [
+    "WNG-011 \"WNG-011\" x E-HRN-08 \"wire strand 0 (1.2 mm)\" 0.52 mm",
+    "WNG-011 \"WNG-011\" x E-HRN-08 \"wire strand 2 (1.2 mm)\" 0.48 mm",
+    "WNG-011 \"WNG-011\" x E-HRN-08 \"wire strand 1 (1.2 mm)\" 0.48 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-08",
+   "b": "WNG-014-L",
+   "depth_mm": 0.556,
+   "at_mm": [
+    126.58,
+    -190.85,
+    8.35
+   ],
+   "bodies": [
+    "WNG-014-L \"WNG-014-L\" x E-HRN-08 \"wire strand 1 (1.2 mm)\" 0.56 mm",
+    "WNG-014-L \"WNG-014-L\" x E-HRN-08 \"wire strand 0 (1.2 mm)\" 0.52 mm",
+    "WNG-014-L \"WNG-014-L\" x E-HRN-08 \"wire strand 2 (1.2 mm)\" 0.52 mm"
+   ]
+  },
+  {
+   "a": "AVN-005",
+   "b": "AVN-009-S",
+   "depth_mm": 0.017,
+   "at_mm": [
+    68.38,
+    -421.33,
+    9.5
+   ],
+   "bodies": [
+    "AVN-009-S \"AVN-009-S\" x AVN-005 \"AVN-005\" 0.02 mm"
+   ]
+  },
+  {
+   "a": "AVN-005",
+   "b": "AVN-009-T",
+   "depth_mm": 0.017,
+   "at_mm": [
+    67.12,
+    -418.67,
+    8.5
+   ],
+   "bodies": [
+    "AVN-009-T \"AVN-009-T\" x AVN-005 \"AVN-005\" 0.02 mm"
+   ]
+  },
+  {
+   "a": "WNG-008-LU",
+   "b": "WNG-011",
+   "depth_mm": 0.46,
+   "at_mm": [
+    173.47,
+    -318.51,
+    1.77
+   ],
+   "bodies": [
+    "WNG-011 \"WNG-011\" x WNG-008-LU \"WNG-008-LU\" 0.46 mm"
+   ]
+  },
+  {
+   "a": "WNG-008-LU",
+   "b": "WNG-014-L",
+   "depth_mm": 0.418,
+   "at_mm": [
+    173.51,
+    -322.08,
+    1.71
+   ],
+   "bodies": [
+    "WNG-014-L \"WNG-014-L\" x WNG-008-LU \"WNG-008-LU\" 0.42 mm"
+   ]
+  },
+  {
+   "a": "WNG-008-RU",
+   "b": "WNG-011",
+   "depth_mm": 0.455,
+   "at_mm": [
+    173.45,
+    247.58,
+    1.77
+   ],
+   "bodies": [
+    "WNG-011 \"WNG-011\" x WNG-008-RU \"WNG-008-RU\" 0.46 mm"
+   ]
+  },
+  {
+   "a": "WNG-008-RU",
+   "b": "WNG-014-R",
+   "depth_mm": 0.418,
+   "at_mm": [
+    173.51,
+    321.45,
+    1.71
+   ],
+   "bodies": [
+    "WNG-014-R \"WNG-014-R\" x WNG-008-RU \"WNG-008-RU\" 0.42 mm"
+   ]
+  },
+  {
+   "a": "MEC-002-L",
+   "b": "WNG-011",
+   "depth_mm": 0.36,
+   "at_mm": [
+    136.95,
+    -200.25,
+    7.06
+   ],
+   "bodies": [
+    "WNG-011 \"WNG-011\" x MEC-002-L \"MEC-002-L\" 0.36 mm"
+   ]
+  },
+  {
+   "a": "MEC-002-L",
+   "b": "WNG-014-L",
+   "depth_mm": 0.309,
+   "at_mm": [
+    136.93,
+    -200.29,
+    7.01
+   ],
+   "bodies": [
+    "WNG-014-L \"WNG-014-L\" x MEC-002-L \"MEC-002-L\" 0.31 mm"
+   ]
+  },
+  {
+   "a": "MEC-002-R",
+   "b": "WNG-011",
+   "depth_mm": 0.36,
+   "at_mm": [
+    136.95,
+    200.36,
+    7.06
+   ],
+   "bodies": [
+    "WNG-011 \"WNG-011\" x MEC-002-R \"MEC-002-R\" 0.36 mm"
+   ]
+  },
+  {
+   "a": "MEC-002-R",
+   "b": "WNG-014-R",
+   "depth_mm": 0.309,
+   "at_mm": [
+    136.93,
+    200.29,
+    7.01
+   ],
+   "bodies": [
+    "WNG-014-R \"WNG-014-R\" x MEC-002-R \"MEC-002-R\" 0.31 mm"
+   ]
+  },
+  {
+   "a": "WNG-008-LL",
+   "b": "WNG-011",
+   "depth_mm": 1.327,
+   "at_mm": [
+    175.01,
+    -248.36,
+    -8.71
+   ],
+   "bodies": [
+    "WNG-011 \"WNG-011\" x WNG-008-LL \"WNG-008-LL\" 1.33 mm"
+   ]
+  },
+  {
+   "a": "WNG-008-LL",
+   "b": "WNG-014-L",
+   "depth_mm": 1.285,
+   "at_mm": [
+    175.04,
+    -250.7,
+    -8.66
+   ],
+   "bodies": [
+    "WNG-014-L \"WNG-014-L\" x WNG-008-LL \"WNG-008-LL\" 1.28 mm"
+   ]
+  },
+  {
+   "a": "WNG-008-RL",
+   "b": "WNG-011",
+   "depth_mm": 1.326,
+   "at_mm": [
+    175.02,
+    248.41,
+    -8.71
+   ],
+   "bodies": [
+    "WNG-011 \"WNG-011\" x WNG-008-RL \"WNG-008-RL\" 1.33 mm"
+   ]
+  },
+  {
+   "a": "WNG-008-RL",
+   "b": "WNG-014-R",
+   "depth_mm": 1.285,
+   "at_mm": [
+    175.04,
+    250.7,
+    -8.66
+   ],
+   "bodies": [
+    "WNG-014-R \"WNG-014-R\" x WNG-008-RL \"WNG-008-RL\" 1.28 mm"
+   ]
+  },
+  {
+   "a": "WNG-007-L",
+   "b": "WNG-011",
+   "depth_mm": 0.6,
+   "at_mm": [
+    181.98,
+    -247.76,
+    -3.19
+   ],
+   "bodies": [
+    "WNG-011 \"WNG-011\" x WNG-007-L \"WNG-007-L\" 0.60 mm"
+   ]
+  },
+  {
+   "a": "WNG-007-L",
+   "b": "WNG-014-L",
+   "depth_mm": 0.6,
+   "at_mm": [
+    181.8,
+    -321.55,
+    -3.18
+   ],
+   "bodies": [
+    "WNG-014-L \"WNG-014-L\" x WNG-007-L \"WNG-007-L\" 0.60 mm"
+   ]
+  },
+  {
+   "a": "WNG-007-R",
+   "b": "WNG-011",
+   "depth_mm": 0.6,
+   "at_mm": [
+    181.98,
+    252.12,
+    -3.19
+   ],
+   "bodies": [
+    "WNG-011 \"WNG-011\" x WNG-007-R \"WNG-007-R\" 0.60 mm"
+   ]
+  },
+  {
+   "a": "WNG-007-R",
+   "b": "WNG-014-R",
+   "depth_mm": 0.6,
+   "at_mm": [
+    181.8,
+    321.55,
+    -3.18
+   ],
+   "bodies": [
+    "WNG-014-R \"WNG-014-R\" x WNG-007-R \"WNG-007-R\" 0.60 mm"
+   ]
+  },
+  {
+   "a": "WNG-009-L",
+   "b": "WNG-011",
+   "depth_mm": 0.62,
+   "at_mm": [
+    181.97,
+    -360.03,
+    -3.09
+   ],
+   "bodies": [
+    "WNG-011 \"WNG-011\" x WNG-009-L \"WNG-009-L\" 0.62 mm"
+   ]
+  },
+  {
+   "a": "WNG-009-L",
+   "b": "WNG-014-L",
+   "depth_mm": 0.624,
+   "at_mm": [
+    179.96,
+    -353.13,
+    0.78
+   ],
+   "bodies": [
+    "WNG-014-L \"WNG-014-L\" x WNG-009-L \"WNG-009-L\" 0.62 mm"
+   ]
+  },
+  {
+   "a": "WNG-009-R",
+   "b": "WNG-011",
+   "depth_mm": 0.623,
+   "at_mm": [
+    179.97,
+    368.38,
+    0.78
+   ],
+   "bodies": [
+    "WNG-011 \"WNG-011\" x WNG-009-R \"WNG-009-R\" 0.62 mm"
+   ]
+  },
+  {
+   "a": "WNG-009-R",
+   "b": "WNG-014-R",
+   "depth_mm": 0.624,
+   "at_mm": [
+    179.96,
+    353.13,
+    0.78
+   ],
+   "bodies": [
+    "WNG-014-R \"WNG-014-R\" x WNG-009-R \"WNG-009-R\" 0.62 mm"
+   ]
+  },
+  {
+   "a": "WNG-010-L",
+   "b": "WNG-011",
+   "depth_mm": 0.499,
+   "at_mm": [
+    181.82,
+    -350.0,
+    -3.49
+   ],
+   "bodies": [
+    "WNG-011 \"WNG-011\" x WNG-010-L \"WNG-010-L\" 0.50 mm"
+   ]
+  },
+  {
+   "a": "WNG-010-L",
+   "b": "WNG-014-L",
+   "depth_mm": 0.506,
+   "at_mm": [
+    178.88,
+    -350.02,
+    0.83
+   ],
+   "bodies": [
+    "WNG-014-L \"WNG-014-L\" x WNG-010-L \"WNG-010-L\" 0.51 mm"
+   ]
+  },
+  {
+   "a": "WNG-010-R",
+   "b": "WNG-011",
+   "depth_mm": 0.499,
+   "at_mm": [
+    181.76,
+    350.0,
+    -3.49
+   ],
+   "bodies": [
+    "WNG-011 \"WNG-011\" x WNG-010-R \"WNG-010-R\" 0.50 mm"
+   ]
+  },
+  {
+   "a": "WNG-010-R",
+   "b": "WNG-014-R",
+   "depth_mm": 0.506,
+   "at_mm": [
+    178.88,
+    350.02,
+    0.83
+   ],
+   "bodies": [
+    "WNG-014-R \"WNG-014-R\" x WNG-010-R \"WNG-010-R\" 0.51 mm"
+   ]
+  }
+ ],
+ "wire_ends": [],
+ "entries": [
+  {
+   "wire": "E-HRN-12",
+   "strand": 0,
+   "end_mm": [
+    89.5,
+    10.4,
+    21.6
+   ],
+   "part": "PRP-003",
+   "at_mm": [
+    91.3,
+    10.4,
+    22.0
+   ],
+   "why": "enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-12",
+   "strand": 1,
+   "end_mm": [
+    89.5,
+    13.6,
+    21.1
+   ],
+   "part": "PRP-003",
+   "at_mm": [
+    91.3,
+    13.6,
+    21.5
+   ],
+   "why": "enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-02",
+   "strand": 0,
+   "end_mm": [
+    70.9,
+    13.5,
+    21.6
+   ],
+   "part": "PRP-003",
+   "at_mm": [
+    70.1,
+    14.4,
+    22.8
+   ],
+   "why": "enters 45 deg off square; enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-02",
+   "strand": 1,
+   "end_mm": [
+    69.8,
+    12.1,
+    21.8
+   ],
+   "part": "PRP-003",
+   "at_mm": [
+    69.1,
+    12.9,
+    23.3
+   ],
+   "why": "enters 56 deg off square; enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-02",
+   "strand": 2,
+   "end_mm": [
+    69.3,
+    13.4,
+    20.7
+   ],
+   "part": "PRP-003",
+   "at_mm": [
+    68.5,
+    14.0,
+    21.9
+   ],
+   "why": "enters 39 deg off square; enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-03",
+   "strand": 0,
+   "end_mm": [
+    69.4,
+    -12.2,
+    21.5
+   ],
+   "part": "PRP-003",
+   "at_mm": [
+    68.5,
+    -13.0,
+    22.7
+   ],
+   "why": "enters 45 deg off square; enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-03",
+   "strand": 1,
+   "end_mm": [
+    70.9,
+    -13.1,
+    21.9
+   ],
+   "part": "PRP-003",
+   "at_mm": [
+    70.0,
+    -13.8,
+    23.4
+   ],
+   "why": "enters 38 deg off square; enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-03",
+   "strand": 2,
+   "end_mm": [
+    69.7,
+    -13.8,
+    20.7
+   ],
+   "part": "PRP-003",
+   "at_mm": [
+    69.1,
+    -14.5,
+    21.9
+   ],
+   "why": "enters 39 deg off square; enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-04",
+   "strand": 0,
+   "end_mm": [
+    82.4,
+    12.5,
+    22.2
+   ],
+   "part": "PRP-003",
+   "at_mm": [
+    81.9,
+    13.9,
+    23.3
+   ],
+   "why": "enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-04",
+   "strand": 1,
+   "end_mm": [
+    81.0,
+    12.8,
+    21.1
+   ],
+   "part": "PRP-003",
+   "at_mm": [
+    80.4,
+    14.0,
+    22.2
+   ],
+   "why": "enters 48 deg off square; enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-04",
+   "strand": 2,
+   "end_mm": [
+    82.6,
+    13.7,
+    20.9
+   ],
+   "part": "PRP-003",
+   "at_mm": [
+    81.9,
+    14.9,
+    21.8
+   ],
+   "why": "enters 44 deg off square; enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-05",
+   "strand": 0,
+   "end_mm": [
+    81.2,
+    -13.1,
+    20.7
+   ],
+   "part": "PRP-003",
+   "at_mm": [
+    80.7,
+    -14.3,
+    21.6
+   ],
+   "why": "enters 40 deg off square; enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-05",
+   "strand": 1,
+   "end_mm": [
+    81.9,
+    -12.3,
+    22.2
+   ],
+   "part": "PRP-003",
+   "at_mm": [
+    81.2,
+    -13.5,
+    23.1
+   ],
+   "why": "enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-05",
+   "strand": 2,
+   "end_mm": [
+    82.9,
+    -13.5,
+    21.3
+   ],
+   "part": "PRP-003",
+   "at_mm": [
+    82.3,
+    -14.7,
+    22.4
+   ],
+   "why": "enters 48 deg off square; enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-06",
+   "strand": 0,
+   "end_mm": [
+    99.3,
+    1.3,
+    20.8
+   ],
+   "part": "PRP-003",
+   "at_mm": [
+    98.3,
+    1.3,
+    21.1
+   ],
+   "why": "enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-06",
+   "strand": 1,
+   "end_mm": [
+    99.3,
+    0.0,
+    20.8
+   ],
+   "part": "PRP-003",
+   "at_mm": [
+    97.9,
+    0.0,
+    21.3
+   ],
+   "why": "enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-06",
+   "strand": 2,
+   "end_mm": [
+    99.3,
+    -1.3,
+    20.8
+   ],
+   "part": "PRP-003",
+   "at_mm": [
+    98.3,
+    -1.3,
+    21.1
+   ],
+   "why": "enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-06",
+   "strand": 3,
+   "end_mm": [
+    99.7,
+    1.3,
+    22.0
+   ],
+   "part": "PRP-003",
+   "at_mm": [
+    98.8,
+    1.3,
+    22.3
+   ],
+   "why": "enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-06",
+   "strand": 4,
+   "end_mm": [
+    99.7,
+    0.0,
+    22.0
+   ],
+   "part": "PRP-003",
+   "at_mm": [
+    98.3,
+    0.0,
+    22.5
+   ],
+   "why": "enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-06",
+   "strand": 5,
+   "end_mm": [
+    99.7,
+    -1.3,
+    22.0
+   ],
+   "part": "PRP-003",
+   "at_mm": [
+    98.8,
+    -1.3,
+    22.3
+   ],
+   "why": "enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-07",
+   "strand": 0,
+   "end_mm": [
+    131.6,
+    199.5,
+    10.0
+   ],
+   "part": "MEC-001-R",
+   "at_mm": [
+    131.2,
+    198.6,
+    9.9
+   ],
+   "why": "enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-07",
+   "strand": 1,
+   "end_mm": [
+    59.5,
+    -70.0,
+    19.1
+   ],
+   "part": "AVN-002",
+   "at_mm": [
+    60.4,
+    -70.0,
+    19.1
+   ],
+   "why": "enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-07",
+   "strand": 2,
+   "end_mm": [
+    59.5,
+    -68.8,
+    19.1
+   ],
+   "part": "AVN-002",
+   "at_mm": [
+    60.4,
+    -68.8,
+    19.1
+   ],
+   "why": "enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-07",
+   "strand": 2,
+   "end_mm": [
+    129.4,
+    200.5,
+    9.4
+   ],
+   "part": "MEC-001-R",
+   "at_mm": [
+    128.8,
+    198.9,
+    9.2
+   ],
+   "why": "enters 31 deg off square; enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-08",
+   "strand": 0,
+   "end_mm": [
+    59.5,
+    -80.0,
+    17.9
+   ],
+   "part": "AVN-002",
+   "at_mm": [
+    62.0,
+    -80.0,
+    17.6
+   ],
+   "why": "enters 33 deg off square"
+  },
+  {
+   "wire": "E-HRN-08",
+   "strand": 0,
+   "end_mm": [
+    129.4,
+    -200.5,
+    9.4
+   ],
+   "part": "MEC-001-L",
+   "at_mm": [
+    128.8,
+    -198.9,
+    9.2
+   ],
+   "why": "enters 31 deg off square; enters at an edge or corner"
+  },
+  {
+   "wire": "E-HRN-08",
+   "strand": 2,
+   "end_mm": [
+    131.6,
+    -199.5,
+    10.0
+   ],
+   "part": "MEC-001-L",
+   "at_mm": [
+    131.2,
+    -198.6,
+    9.8
+   ],
+   "why": "enters at an edge or corner"
+  }
+ ]
+}

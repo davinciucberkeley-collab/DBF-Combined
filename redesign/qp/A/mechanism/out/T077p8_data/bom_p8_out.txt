@@ -1,0 +1,33 @@
+| Item | $ |
+|---|---|
+| Goods | 1,550.25 |
+| Tax 10.25 % | 158.90 |
+| Shipping (EST) | 67.84 |
+| FAA | 5.00 |
+| Spend | 1,781.99 |
+| Crash reserve | 368.76 |
+| **Total** | 2,150.75 |
+| **Margin** | -150.75 |
+
+Unverified goods (U + EST): 285.00 (18 % of goods); lines 17 of 52
++30 % on unverified lines: total 2,262.05, margin -262.05
+Growth absorbed: margin / (goods x 1.1025) = -9 %
+Margin >= $100 at +30 %: FAIL; R5 total <= $1,750 (replaced by G7): FAIL
+G7 (+30 % margin >= $100 AND total <= $1,800): FAIL (total 2,150.75, +30 % margin -262.05)
+
+| Subsystem | Nominal $ (incl tax) | +30 % unverified | Cap $ | Unverified share |
+|---|---|---|---|---|
+| propulsion | 319.24 | 319.24 | 320 | 0 % |
+| power | 261.06 | 263.71 | 265 | 3 % |
+| avionics | 354.19 | 354.19 | 355 | 0 % |
+| mechanisms | 56.18 | 56.18 | 60 | 0 % |
+| airframe | 458.39 | 509.28 | 460 | 37 % |
+| ground_test | 260.09 | 300.82 | 265 | 52 % |
+| shipping + FAA | 72.84 | | 75 | EST |
+| crash reserve | 368.76 | 385.80 | 370 | |
+
+Caps sum 2170; room left to $2,000: -170
+Over cap: none
+Spares:
+- P01 T-Motor MN2212 V2.0 KV780 (4 + 1 spare): 1 of 5
+- M01 EMAX ES3054HV servo (2 elevons + 1 spare; 20.5 g; replaces ES3352HV which fails the 1.5x torque at the 7.2 V rail): 1 of 3

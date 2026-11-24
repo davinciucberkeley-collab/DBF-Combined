@@ -1,0 +1,30 @@
+{
+ "cant 9.0 / face_ahead 0.012": {
+  "FIN-002-R / motor tube": 0.0263,
+  "FIN-004-R / bore boss": 0.0292,
+  "FIN-006-R / tube plug": 0.0302,
+  "FIN-013-UR / strap eye": 0.0324,
+  "FIN-003-UR / canted plate": 0.0329,
+  "FIN-009-UR / CF brace": 0.0339,
+  "FIN-004-R / tube socket": 0.0341,
+  "FIN-003-UR / cheek": 0.0343,
+  "WNG-003 / tape doubler block upper": 0.0351,
+  "WNG-003 / tape LE strip upper": 0.0352,
+  "WNG-001 / xps core y0.305-0.335": 0.0354,
+  "WNG-001 / xps core y0.335-0.336": 0.0357
+ },
+ "cant 9.0 / face_ahead 0.0075": {
+  "FIN-002-R / motor tube": 0.0219,
+  "FIN-004-R / bore boss": 0.0257,
+  "FIN-006-R / tube plug": 0.0263,
+  "FIN-003-UR / canted plate": 0.0285,
+  "FIN-013-UR / strap eye": 0.0286,
+  "FIN-009-UR / CF brace": 0.0294,
+  "FIN-003-UR / cheek": 0.0299,
+  "FIN-008-UR / collar ring": 0.0312,
+  "FIN-004-R / tube socket": 0.0317,
+  "WNG-003 / tape doubler block upper": 0.0337,
+  "FIN-003-UR / clocking dog": 0.0337,
+  "WNG-003 / tape LE strip upper": 0.0338
+ }
+}

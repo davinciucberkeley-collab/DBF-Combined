@@ -1,4 +1,4 @@
-"""B4 simulation / verification round on the settled CAD geometry and A3's roll-up (claims CL-B4-SIM-*).
+﻿"""B4 simulation / verification round on the settled CAD geometry and A3's roll-up (claims CL-B4-SIM-*).
 
 Run (standard library; reads the stored SU2 and XFOIL outputs):
     python -I redesign/team/B4/sim/sim_claims.py      -> claims.sim.json + out/sim_results.json beside this file
@@ -11,7 +11,8 @@ Four calculations:
                         thrust, rpm and shaft power of the hardest-working (upper) prop; headroom at the rpm cap
   CALC-B4-SIM-BEMT      BEMT (UIUC geometry, XFOIL polars) validated against UIUC measurements; radial and azimuth
                         convergence; static FM cross-check of the APC PER3 numbers B4 uses
-  CALC-B4-SIM-INC       prop at incidence in the pitch-over (BEMT, 15.6 m/s): thrust/power change and the
+  CALC-B4-SIM-INC       prop at incidence in the pitch-over (BEMT, performance.transition_min_ms, and the
+                        pre-D-145 15.6 m/s as a companion for B3's ASM-B3-B4-INC-V): thrust/power change and the
                         in-plane H-force each prop puts on the airframe (B3's prop normal force)
   CALC-B4-SIM-TUBEFIN   2-D SU2 RANS of the tube + board section (3 grids, GCI) replacing the bare-cylinder Cd 1.1
                         in the hover download and the cruise drag of the tube span with the board behind it
@@ -34,7 +35,7 @@ kit = pk.Kit(__file__, params=["../../../params/params.json", "../../../subsyste
 P = "P:"
 IN = 0.0254
 CFD = json.loads((HERE / "cfd" / "results.json").read_text(encoding="utf-8"))
-SEL = "11x5.5MR"
+SEL = pp.SEL                                   # D-173: follows props.py (11x8E; BEMT geometry is a re-pitched 11x5.5E proxy)
 PRP = [f"PRP-003-{s}" for s in ("UR", "UL", "LR", "LL")]
 FINS = [f"FIN-001-{s}" for s in ("UR", "UL", "LR", "LL")]
 
@@ -56,6 +57,10 @@ A("ASM-B4-SIM-SA", "Fully turbulent SA RANS for the tube-board section", "steady
   "board boundary layer is taken as turbulent from the tube", basis="Leishman, ch. 10 (slipstream turbulence); "
   "a laminar steady solve diverged (vortex shedding at Re_D 1.5e4), which is itself evidence the flow is not "
   "laminar-steady", value="SA", unit="-", status="PROPOSED")
+A("ASM-B4-SIM-INC-V-ALT", "Companion airspeed 15.6 m/s for the prop-at-incidence points", "the pre-D-145 "
+  "performance.transition_min_ms; B3's ASM-B3-B4-INC-V scales the H-force at this speed, so CALC-B4-SIM-INC "
+  "also reports dH/di, H and T(45 deg) there", basis="review/DESIGN-ROUND-2026-11-14/A1.md D-145 (15.6 -> 17 m/s); "
+  "B3-W2.md request W2-4", value=15.6, unit="m/s", status="PROPOSED")
 kit.source("SRC-B4-UIUC-GEOM", "UIUC Propeller Database vol. 1, measured blade geometry APC 11x5.5E and 11x4.7SF",
            "dataset", url="https://m-selig.ae.illinois.edu/props/volume-1/data/apce_11x5.5_geom.txt",
            checked="2026-11-10", where="apce_11x5.5_geom.txt, apcsf_11x4.7_geom.txt -> team/B4/data/uiuc_*_geom.csv")
@@ -69,16 +74,19 @@ kit.source("SRC-B4-CYL-RE40", "Steady cylinder drag at Re 40 (Dennis and Chang 1
 @kit.calc("CALC-B4-SIM-OPS", title="As-designed hover operating points (A3 roll-up, hover split, rpm cap)",
           assumes=["ASM-B4-SIM-PER3-FM"],
           equation="W = m g k_dl ; per pair: upper/lower = s ; T_u = W s / (2 (1 + s) cos(cant)) ; T_l = T_u / s ; "
-                   "rpm, shaft power from APC PER3 (11x5.5MR) x 1.047 ; T_cap = PER3 thrust at rpm_max ; "
+                   "rpm, shaft power from APC PER3 (selected prop, props.SEL) x 1.047 ; T_cap = PER3 thrust at min(rpm_max, static full-throttle rpm CL-B4-RPM-UNLIMITED) ; "
                    "headroom = T_cap / T_u ; T/W_cap = 4 T_cap cos(cant) / (m g) ; m_heavy = gate - margin_680",
           inputs={"m_pred": "CL-A3-MASS-PREDICTED", "m_gate": P + "requirements.mtow_gate_kg",
                   "mg680": "CL-A3-GATE-MARGIN-680", "s": "CL-A3-HOVER-SPLIT", "kdl": P + "propulsion.download_factor",
                   "cant": P + "propulsion.stations.cant_deg", "rpm_cap": P + "propulsion.rpm_max",
+                  "rpm_ft": "CL-B4-RPM-UNLIMITED",
                   "g": P + "env.g_ms2", "rho": P + "env.rho_kgm3", "fmk": "ASM-B4-SIM-PER3-FM"},
-          units={"m_pred": "kg", "m_gate": "kg", "mg680": "kg", "cant": "deg", "rpm_cap": "rpm", "rho": "kg/m3"})
-def ops(m_pred, m_gate, mg680, s, kdl, cant, rpm_cap, g, rho, fmk):
+          units={"m_pred": "kg", "m_gate": "kg", "mg680": "kg", "cant": "deg", "rpm_cap": "rpm", "rpm_ft": "rpm",
+                 "rho": "kg/m3"})
+def ops(m_pred, m_gate, mg680, s, kdl, cant, rpm_cap, rpm_ft, g, rho, fmk):
     cc = math.cos(math.radians(cant))
-    T_cap = pp.thrust_power(SEL, rpm_cap, 0.0, rho)[0]
+    # D-161: the E limit (rpm_max 13 360) is above static full throttle, so the cap is the reachable rpm
+    T_cap = pp.thrust_power(SEL, min(rpm_cap, rpm_ft), 0.0, rho)[0]
     out = {"t_cap_n": T_cap}
     for tag, m in (("pred", m_pred), ("heavy", m_gate - mg680), ("gate", m_gate)):
         W = m * g * kdl
@@ -87,7 +95,7 @@ def ops(m_pred, m_gate, mg680, s, kdl, cant, rpm_cap, g, rho, fmk):
         Te = W / 4 / cc
         for nm, T in (("upper", Tu), ("lower", Tl), ("even", Te)):
             rpm = pp.rpm_for_thrust(SEL, T, 0.0, rho)
-            Pw = pp.thrust_power(SEL, rpm, 0.0, rho)[1] * fmk
+            Pw = pp.thrust_power(SEL, rpm, 0.0, rho)[1] * (1.0 if SEL in pp.FACTORS else fmk)   # E1's kP already calibrates the 11x8E
             out[f"{nm}_t_n__{tag}"] = T
             out[f"{nm}_rpm__{tag}"] = rpm
             out[f"{nm}_shaft_w__{tag}"] = Pw
@@ -175,37 +183,30 @@ INCS = (0.0, 15.0, 30.0, 45.0, 60.0, 75.0, 90.0)
 
 
 @kit.calc("CALC-B4-SIM-INC", title="Prop at incidence in the pitch-over: thrust, power and in-plane H-force (BEMT)",
-          assumes=["ASM-B4-SIM-SECTION"],
+          assumes=["ASM-B4-SIM-SECTION", "ASM-B4-SIM-INC-V-ALT"],
           equation="i = angle between the free stream and the shaft ; Vx = V cos i, Vt = V sin i ; quasi-steady "
                    "blade element per azimuth (M stations) with local momentum ; T, P, H averaged over psi ; "
                    "fixed rpm = the BEMT rpm for the hover thrust (static) ; H/T and dH/di at V_t",
           inputs={"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "rho": P + "env.rho_kgm3",
                   "kdl": P + "propulsion.download_factor", "cant": P + "propulsion.stations.cant_deg",
-                  "V": P + "performance.transition_min_ms"},
-          units={"m": "kg", "rho": "kg/m3", "cant": "deg", "V": "m/s"})
-def incidence(m, g, rho, kdl, cant, V):
+                  "V": P + "performance.transition_min_ms", "V2": "ASM-B4-SIM-INC-V-ALT"},
+          units={"m": "kg", "rho": "kg/m3", "cant": "deg", "V": "m/s", "V2": "m/s"})
+def incidence(m, g, rho, kdl, cant, V, V2):
     T_h = kdl * m * g / 4 / math.cos(math.radians(cant))
-    # rpm for the hover thrust (static), 11x5.5E geometry (the MR geometry is not published)
-    lo, hi = 3000.0, 9000.0
-    for _ in range(30):
-        mid = 0.5 * (lo + hi)
-        if bemt.rotor("11x5.5E", mid, rho=rho, N=20)["T"] < T_h:
-            lo = mid
-        else:
-            hi = mid
-    rpm = 0.5 * (lo + hi)
-    st = bemt.rotor("11x5.5E", rpm, rho=rho, N=20)
-    out = {"rpm": rpm, "T_static_n": st["T"], "P_static_w": st["P"], "mu_edgewise": V / (rpm / 60 * 2 * math.pi *
+    # rpm for the hover thrust (static), SEL geometry: the 11x8E is a re-pitched 11x5.5E PROXY (ESTIMATE, bemt.PITCH_SCALE); no 11x8E blade geometry is published
+    rpm = pp.rpm_for_thrust(SEL, T_h, 0.0, rho)    # D-173: E1-calibrated PER3 rpm (the re-pitched proxy geometry is not trusted for rpm)
+    st = bemt.rotor(SEL, rpm, rho=rho, N=20)
+    out = {"rpm": rpm, "T_static_n": st["T"], "P_static_w": st["P"], "T_proxy_over_hover": st["T"] / T_h, "mu_edgewise": V / (rpm / 60 * 2 * math.pi *
                                                                                           5.5 * IN)}
     for i in INCS:
-        b = bemt.rotor("11x5.5E", rpm, V=V, inc_deg=i, rho=rho, N=20, M=12)
+        b = bemt.rotor(SEL, rpm, V=V, inc_deg=i, rho=rho, N=20, M=12)
         out[f"T_ratio__i{int(i)}"] = b["T"] / st["T"]
         out[f"P_ratio__i{int(i)}"] = b["P"] / st["P"]
         out[f"H_n__i{int(i)}"] = b["H"]
         out[f"H_over_T__i{int(i)}"] = b["H"] / b["T"] if b["T"] > 0 else None
     out["H_n_max"] = max(out[f"H_n__i{int(i)}"] for i in INCS)
     # section bound: NACA 3410 (matches UIUC in the tunnel within 4 % for J <= 0.47, CL-B4-SIM-BEMT-FWD)
-    hb = [bemt.rotor("11x5.5E", rpm, V=V, inc_deg=i, rho=rho, N=20, M=12, foil="naca3410")["H"] for i in INCS]
+    hb = [bemt.rotor(SEL, rpm, V=V, inc_deg=i, rho=rho, N=20, M=12, foil="naca3410")["H"] for i in INCS]
     out["H_n_max__naca3410"] = max(hb)
     out["H_ratio_3410_over_4412"] = out["H_n_max__naca3410"] / max(out[f"H_n__i{int(i)}"] for i in INCS)
     out["H_4props_max_n"] = 4 * out["H_n_max"]
@@ -216,11 +217,22 @@ def incidence(m, g, rho, kdl, cant, V):
     out["dH_di_n_per_rad"] = (out["H_n__i15"] - out["H_n__i0"]) / math.radians(15)
     # azimuth convergence at i = 45 deg
     for M in (6, 12, 24):
-        b = bemt.rotor("11x5.5E", rpm, V=V, inc_deg=45.0, rho=rho, N=20, M=M)
+        b = bemt.rotor(SEL, rpm, V=V, inc_deg=45.0, rho=rho, N=20, M=M)
         out[f"conv_H_M{M}"] = b["H"]
         out[f"conv_T_M{M}"] = b["T"]
     out["conv_H_change_12_24"] = abs(out["conv_H_M24"] / out["conv_H_M12"] - 1)
     out["conv_T_change_12_24"] = abs(out["conv_T_M24"] / out["conv_T_M12"] - 1)
+    # companion speed V2 (B3's ASM-B3-B4-INC-V): same rpm, same section
+    b2 = {i: bemt.rotor(SEL, rpm, V=V2, inc_deg=i, rho=rho, N=20, M=12) for i in INCS}
+    out["V_main_ms"], out["V_alt_ms"] = V, V2
+    out["H_n_max__valt"] = max(b2[i]["H"] for i in INCS)
+    out["H_over_T_max__valt"] = max(b2[i]["H"] / b2[i]["T"] for i in INCS if i > 0 and b2[i]["T"] > 0)
+    out["H_at_T_hover_max_n__valt"] = out["H_over_T_max__valt"] * T_h
+    out["dH_di_n_per_rad__valt"] = (b2[15.0]["H"] - b2[0.0]["H"]) / math.radians(15)
+    out["T_ratio__i45__valt"] = b2[45.0]["T"] / st["T"]
+    out["T_ratio__i90__valt"] = b2[90.0]["T"] / st["T"]
+    out["dH_di_per_q_main"] = out["dH_di_n_per_rad"] / (0.5 * rho * V * V)
+    out["dH_di_per_q_alt"] = out["dH_di_n_per_rad__valt"] / (0.5 * rho * V2 * V2)
     return out
 
 
@@ -318,7 +330,7 @@ c("CL-B4-SIM-HEADROOM-PRED", "Thrust headroom of the upper prop at the rpm cap, 
   limit=(">=", P + "requirements.hover_ctrl_factor"), parts=PRP, how="As CL-B4-SIM-HEADROOM.")
 c("CL-B4-SIM-TW-CAP", "T/W at the rpm cap, A3 predicted mass", calc="CALC-B4-SIM-OPS", output="tw_cap__pred",
   unit="-", limit=(">=", P + "requirements.hover_tw_min"), verifies=["R-HOVER-TW"], parts=PRP,
-  how="T-B4-STAND thrust at 9 350 rpm x 4 cos 7 deg / weighed mass.")
+  how="T-B4-STAND thrust at 9 350 rpm x 4 cos(cant_deg) / weighed mass.")
 c("CL-B4-SIM-BEMT-STATIC", "BEMT static Ct error vs UIUC 11x5.5E (worst of 5 rpm)", calc="CALC-B4-SIM-BEMT",
   output="static_ct_err_max", unit="-", limit=("<=", 0.05),
   how="Re-run sim_claims.py; compare with data/uiuc_measured.csv.")
@@ -333,19 +345,30 @@ c("CL-B4-SIM-BEMT-FWD", "BEMT Ct error vs UIUC 11x5.5E in the tunnel, worst for 
       "cruise numbers stay on PER3 x the UIUC cross-check (CALC-B4-XCHECK), not on BEMT.")
 c("CL-B4-SIM-BEMT-CONV", "BEMT thrust change 40 -> 80 radial elements", calc="CALC-B4-SIM-BEMT",
   output="conv_T_change_40_80", unit="-", limit=("<=", 0.005), how="Re-run with N = 160.")
-c("CL-B4-SIM-H-MAX", "In-plane H-force per prop in the pitch-over, worst incidence, 15.6 m/s",
+c("CL-B4-SIM-PROXY-T", "Re-pitched 11x5.5E BEMT proxy static thrust / E1-calibrated PER3 hover thrust at the hover rpm (information: "
+  "size of the proxy error for the 11x8E incidence forces)", calc="CALC-B4-SIM-INC", output="T_proxy_over_hover", unit="-",
+  how="T-B4-STAND on the 11x8E: thrust vs rpm; car-top or tunnel H-force on the real prop.")
+c("CL-B4-SIM-H-MAX", "In-plane H-force per prop in the pitch-over, worst incidence, at transition_min_ms",
   calc="CALC-B4-SIM-INC", output="H_n_max", unit="N", parts=PRP,
-  how="Car-top rig with the prop at 45-90 deg to the wind at 15.6 m/s, side-force cell; or B3's transition log fit.")
-c("CL-B4-SIM-HT-MAX", "Prop in-plane force / thrust, worst incidence 15-90 deg, 15.6 m/s", calc="CALC-B4-SIM-INC",
+  how="Car-top rig with the prop at 45-90 deg to the wind at transition_min_ms, side-force cell; or B3's transition log fit.")
+c("CL-B4-SIM-HT-MAX", "Prop in-plane force / thrust, worst incidence 15-90 deg, at transition_min_ms", calc="CALC-B4-SIM-INC",
   output="H_over_T_max", unit="-", parts=PRP, how="As CL-B4-SIM-H-MAX.")
 c("CL-B4-SIM-H-HOVERT", "In-plane force per prop if hover thrust is held through the pitch-over (worst incidence)",
   calc="CALC-B4-SIM-INC", output="H_at_T_hover_max_n", unit="N", parts=PRP, how="As CL-B4-SIM-H-MAX.")
-c("CL-B4-SIM-DH-DI", "Prop normal-force slope dH/di per prop at 15.6 m/s, hover rpm", calc="CALC-B4-SIM-INC",
+c("CL-B4-SIM-DH-DI", "Prop normal-force slope dH/di per prop at transition_min_ms, hover rpm", calc="CALC-B4-SIM-INC",
   output="dH_di_n_per_rad", unit="N/rad", parts=PRP, how="As CL-B4-SIM-H-MAX at 0 and 15 deg.")
-c("CL-B4-SIM-T-I45", "Thrust at 45 deg incidence / static, fixed hover rpm, 15.6 m/s", calc="CALC-B4-SIM-INC",
+c("CL-B4-SIM-T-I45", "Thrust at 45 deg incidence / static, fixed hover rpm, at transition_min_ms", calc="CALC-B4-SIM-INC",
   output="T_ratio__i45", unit="-", how="As CL-B4-SIM-H-MAX.")
-c("CL-B4-SIM-T-I90", "Thrust edgewise (90 deg) / static, fixed hover rpm, 15.6 m/s", calc="CALC-B4-SIM-INC",
+c("CL-B4-SIM-T-I90", "Thrust edgewise (90 deg) / static, fixed hover rpm, at transition_min_ms", calc="CALC-B4-SIM-INC",
   output="T_ratio__i90", unit="-", how="As CL-B4-SIM-H-MAX.")
+c("CL-B4-SIM-DH-DI-V156", "Prop normal-force slope dH/di per prop at 15.6 m/s (ASM-B4-SIM-INC-V-ALT), hover rpm",
+  calc="CALC-B4-SIM-INC", output="dH_di_n_per_rad__valt", unit="N/rad", parts=PRP, how="As CL-B4-SIM-DH-DI.")
+c("CL-B4-SIM-H-MAX-V156", "In-plane H-force per prop, worst incidence, 15.6 m/s", calc="CALC-B4-SIM-INC",
+  output="H_n_max__valt", unit="N", parts=PRP, how="As CL-B4-SIM-H-MAX.")
+c("CL-B4-SIM-H-HOVERT-V156", "In-plane force per prop at hover thrust, worst incidence, 15.6 m/s",
+  calc="CALC-B4-SIM-INC", output="H_at_T_hover_max_n__valt", unit="N", parts=PRP, how="As CL-B4-SIM-H-MAX.")
+c("CL-B4-SIM-T-I45-V156", "Thrust at 45 deg incidence / static, fixed hover rpm, 15.6 m/s", calc="CALC-B4-SIM-INC",
+  output="T_ratio__i45__valt", unit="-", how="As CL-B4-SIM-H-MAX.")
 c("CL-B4-SIM-INC-CONV", "BEMT H-force change 12 -> 24 azimuth stations (i 45 deg)", calc="CALC-B4-SIM-INC",
   output="conv_H_change_12_24", unit="-", limit=("<=", 0.01), how="Re-run with M = 48.")
 c("CL-B4-SIM-CFD-VAL", "SU2 cylinder at Re 40 vs Dennis and Chang 1.522 (relative error)", calc="CALC-B4-SIM-TUBEFIN",

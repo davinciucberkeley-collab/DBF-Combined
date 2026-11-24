@@ -97,7 +97,7 @@ code, .mono { font-family: var(--font-mono); font-size: 12.5px; }
 
 /* ---- layout ---- */
 .app { display: grid; grid-template-columns: 330px minmax(0, 1fr) 380px; grid-template-rows: 52px auto minmax(0, 1fr); height: 100vh; }
-.app.wide { grid-template-columns: 0 minmax(0, 1fr) 360px; }
+.app.wide { grid-template-columns: 0 minmax(0, 1fr) 440px; }
 aside.left { grid-column: 1; grid-row: 3; } main { grid-column: 2; grid-row: 3; } aside.right { grid-column: 3; grid-row: 3; }
 .app.wide aside.left { display: none; }
 header { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; padding: 0 16px; background: var(--panel); border-bottom: 1px solid var(--line); min-width: 0; }
@@ -278,7 +278,7 @@ details.grp2 summary .n { font: 600 12px var(--font-mono); color: var(--fg-2); w
 details.grp2 ul { margin: 0; padding: 4px 10px 8px 26px; font-size: 12.5px; color: var(--fg-2); }
 details.grp2 li { margin: 3px 0; word-break: break-word; }
 
-@media (max-width: 1180px) { .app { grid-template-columns: 290px minmax(0, 1fr) 330px; } .app.wide { grid-template-columns: 0 minmax(0, 1fr) 330px; } }
+@media (max-width: 1180px) { .app { grid-template-columns: 290px minmax(0, 1fr) 330px; } .app.wide { grid-template-columns: 0 minmax(0, 1fr) 400px; } }
 @media (max-width: 820px) {
   body { overflow: auto; }
   .app, .app.wide { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto auto auto; height: auto; }
@@ -292,6 +292,57 @@ details.grp2 li { margin: 3px 0; word-break: break-word; }
   .home { padding: 18px 16px 32px; }
   .legend { display: none; }
 }
+
+/* ---- guide: the plain-English pages ---- */
+.app.guide { grid-template-columns: 0 minmax(0, 1fr) 0; }
+.app.guide aside.left, .app.guide aside.right { display: none; }
+.gx { overflow-y: auto; padding: 24px 28px 64px; max-width: 980px; }
+#guide h1, .gx h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.015em; margin: 0 0 6px; }
+.gx h2 { font-size: 16px; font-weight: 600; margin: 30px 0 6px; padding-top: 14px; border-top: 1px solid var(--line); }
+.gx .gh3 { font-size: 13px; font-weight: 600; margin: 18px 0 6px; color: var(--fg-2); text-transform: uppercase; letter-spacing: 0.05em; }
+.gx p { max-width: 72ch; line-height: 1.55; margin: 6px 0; }
+.gx .v { color: var(--fg-3); font-size: 12.5px; }
+.gx .ghow { max-width: 74ch; padding-left: 20px; line-height: 1.55; }
+.gx .ghow li { margin: 5px 0; }
+.gx .gul { max-width: 74ch; padding-left: 20px; line-height: 1.5; font-size: 13.5px; }
+.gx .gstat dt { align-self: start; }
+.gx .gstat, .gx .gloss { grid-template-columns: 200px 1fr; }
+.gx .gloss dt { font-weight: 600; }
+.gx .gtitle { font-size: 20px; margin: 8px 0 2px; }
+.gx .gsec { border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--panel); padding: 12px 16px 14px; margin: 12px 0; }
+.gx .gsec h3 { font-size: 14px; margin: 0 0 6px; display: flex; align-items: center; gap: 8px; }
+.gx .gsec h3 i { font: 600 12px/1 var(--font-mono); font-style: normal; display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: var(--radius-xs); background: var(--accent-wash); color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent-line); }
+.gx .geq { margin: 8px 0 6px; padding: 12px 14px; background: var(--panel-2); border-radius: var(--radius-sm); font-size: 18px; line-height: 2.4; overflow-x: auto; font-family: "STIX Two Math", "Cambria Math", "Times New Roman", serif; }
+.gx .geq i { font-style: italic; }
+.gx .geq .trm { font-style: normal; }
+.gx .geq .ttx { font-family: var(--font-sans); font-size: 0.85em; }
+.gx .geq sub, .gx .geq sup { font-size: 0.68em; line-height: 0; }
+.gx .tfr { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; margin: 0 3px; line-height: 1.25; }
+.gx .tfr .tn { border-bottom: 1.5px solid var(--fg); padding: 0 4px 2px; }
+.gx .tfr .td { padding: 2px 4px 0; }
+.gx .tsq { white-space: nowrap; } .gx .tsi { border-top: 1.5px solid var(--fg); padding: 0 2px; margin-left: 1px; }
+.gx .tss { display: inline-flex; flex-direction: column; vertical-align: middle; line-height: 1; }
+.gx .gmono { font-family: var(--font-mono); font-size: 13px; }
+.gx .gnote { background: var(--st-unverified-wash); border-left: 3px solid var(--st-unverified); padding: 8px 12px; border-radius: var(--radius-xs); font-size: 13px; }
+.gx .gflag { display: inline-block; font-size: 11.5px; padding: 1px 6px; border-radius: var(--radius-xs); background: var(--panel-3); margin: 1px 0; }
+.gx .gflag.est { background: var(--st-unverified-wash); color: var(--st-unverified); box-shadow: inset 0 0 0 1px var(--st-unverified-line); }
+.gx .gsteps { list-style: none; margin: 4px 0; padding: 0; }
+.gx .gsteps li { padding: 8px 10px; border-left: 3px solid var(--line-2); margin: 6px 0; background: var(--panel-2); border-radius: 0 var(--radius-xs) var(--radius-xs) 0; }
+.gx .gsteps .gl { font-size: 12px; color: var(--fg-3); }
+.gx .gsteps .gs { font-family: var(--font-mono); font-size: 13px; overflow-wrap: anywhere; margin-top: 2px; }
+.gx .gsteps .gr { font-weight: 600; color: var(--fg); }
+.gx .gm { font: 600 13px var(--font-mono); color: var(--st-verified); margin-left: 12px; }
+.gx .gm.bad, .gx .bad { color: var(--st-fail); }
+.gx .gtab { margin: 8px 0; } .gx .gtab summary { cursor: pointer; color: var(--accent); font-size: 13px; }
+.gx table.gin td { vertical-align: top; }
+.gx .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+@media (max-width: 760px) { .gx { padding: 16px 14px 48px; } .gx .gstat, .gx .gloss { grid-template-columns: 1fr; } }
+#guide { } #detail .gx .gsec { padding: 10px 12px 12px; } #detail .gx .geq { font-size: 15px; } #detail .gtech { margin-top: 14px; }
+.gnote2 { background: var(--accent-wash); border: 1px solid var(--accent-line); border-radius: var(--radius-sm); padding: 10px 14px; max-width: 74ch; margin: 0 0 16px; line-height: 1.5; }
+.gmini td { font-size: 12.5px; vertical-align: top; }
+#detail .gx p { font-size: 13.5px; line-height: 1.5; } #detail .gx .v { font-size: 11.5px; } #detail .gx .gsec h3 { font-size: 13px; } #detail .gx .gsteps .gs { font-size: 12px; } #detail .gx table.kv { font-size: 12px; }
+.gmini tr { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px 8px; padding: 6px 0; border-top: 1px solid var(--line); } .gmini td { display: block; padding: 0; border: 0; } .gmini td:first-child { grid-column: 1 / -1; font-weight: 500; }
+@media (max-width: 760px) { header { flex-wrap: wrap; } .app, .app.wide { overflow-x: hidden; } aside.right { min-width: 0; overflow-x: hidden; } main { min-width: 0; } .gx .geq { font-size: 15px; } }
 </style>
 </head>
 <body>
@@ -306,7 +357,7 @@ details.grp2 li { margin: 3px 0; word-break: break-word; }
     </div>
     <div class="spacer"></div>
     <div class="ds-seg" role="group" aria-label="View">
-      <button data-view="reqs" aria-pressed="true">Requirements</button><button data-view="overview" aria-pressed="false" title="Whole graph (2-D canvas; 3-D on request)">Overview</button>
+      <button data-view="guide" aria-pressed="false" title="Plain-English reading of every claim, with a glossary">Guide</button><button data-view="reqs" aria-pressed="false">Requirements</button><button data-view="overview" aria-pressed="false" title="Whole graph (2-D canvas; 3-D on request)">Overview</button>
     </div>
     <button class="iconbtn" id="theme" title="Theme: auto / light / dark" aria-label="Theme">◐</button>
   </header>
@@ -332,6 +383,7 @@ details.grp2 li { margin: 3px 0; word-break: break-word; }
   </aside>
 
   <main>
+    <section class="pane" id="guidePane" hidden><div id="guide" class="home gx"></div></section>
     <section class="pane" id="homePane"><div class="home" id="home"></div></section>
     <section class="pane" id="chainPane" hidden>
       <div class="chainbar">
@@ -362,6 +414,6 @@ details.grp2 li { margin: 3px 0; word-break: break-word; }
 </div>
 
 <script src="model.js"></script>
-<script src="app.js"></script>
+<script src="app.js?v=20261118h"></script>
 </body>
 </html>

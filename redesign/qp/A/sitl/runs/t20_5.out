@@ -1,0 +1,38 @@
+{
+"tag": "t20_5",
+"args": [
+"wind=5",
+"from=70",
+"hold=40"
+],
+"summary": {
+"n": 708,
+"t_window": [
+8.027,
+43.967
+],
+"wind_ms": 5.0,
+"lean_max": 13.5,
+"lean_mean": 10.5,
+"lean_pre": 1.1,
+"u_max": 0.745,
+"u_mean_max": 0.735,
+"t_cap_s": 0.0,
+"t_cap_run_s": 0.0,
+"t_ge85_s": 0.0,
+"u_min": 0.359,
+"t_floor_s": 0.0,
+"t_floor_run_s": 0.0,
+"yaw_err_max": 9.4,
+"yaw_err_rms": 3.94,
+"pos_err_max": 1.51,
+"pos_err_rms": 0.49,
+"pos_err_last20_mean": 0.36,
+"alt_dev_max": 0.07,
+"diag_spread_max": 0.352,
+"diag_spread_mean": 0.263
+},
+"armed": true,
+"reached_alt": true,
+"events": []
+}

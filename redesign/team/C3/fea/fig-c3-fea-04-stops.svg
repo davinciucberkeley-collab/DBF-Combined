@@ -23,32 +23,32 @@
 <text x="840" y="18" font-size="12" fill="#4B5563">board peel / 50 kPa</text>
 <text x="316" y="74" font-size="12" fill="#4B5563" text-anchor="end">aft, as drawn + 2 mm fillet (y 0)</text>
 <line x1="330" y1="70" x2="1090" y2="70" stroke="#E3E7ED" stroke-width="0.75"/>
-<circle cx="476.5" cy="70.0" r="6" fill="#1F5FC7"/>
+<circle cx="574.2" cy="70.0" r="6" fill="#1F5FC7"/>
 <rect x="406.9" y="64.5" width="11" height="11" fill="#121619"/>
 <polygon points="1053.8,63.0 1060.8,70.0 1053.8,77.0 1046.8,70.0" fill="#D9480F"/>
 <text x="316" y="130" font-size="12" fill="#4B5563" text-anchor="end">aft, as drawn + fillet (tray edge)</text>
 <line x1="330" y1="126" x2="1090" y2="126" stroke="#E3E7ED" stroke-width="0.75"/>
-<circle cx="494.5" cy="126.0" r="6" fill="#1F5FC7"/>
+<circle cx="604.2" cy="126.0" r="6" fill="#1F5FC7"/>
 <rect x="419.7" y="120.5" width="11" height="11" fill="#121619"/>
 <polygon points="734.4,119.0 741.4,126.0 734.4,133.0 727.4,126.0" fill="#D9480F"/>
 <text x="316" y="186" font-size="12" fill="#4B5563" text-anchor="end">aft + 2 mm heel</text>
 <line x1="330" y1="182" x2="1090" y2="182" stroke="#E3E7ED" stroke-width="0.75"/>
-<circle cx="381.6" cy="182.0" r="6" fill="#1F5FC7"/>
+<circle cx="416.0" cy="182.0" r="6" fill="#1F5FC7"/>
 <rect x="352.2" y="176.5" width="11" height="11" fill="#121619"/>
 <polygon points="524.5,175.0 531.5,182.0 524.5,189.0 517.5,182.0" fill="#D9480F"/>
 <text x="316" y="242" font-size="12" fill="#4B5563" text-anchor="end">aft + strut to the spar bridge</text>
 <line x1="330" y1="238" x2="1090" y2="238" stroke="#E3E7ED" stroke-width="0.75"/>
-<circle cx="330.1" cy="238.0" r="6" fill="#1F5FC7"/>
+<circle cx="330.2" cy="238.0" r="6" fill="#1F5FC7"/>
 <rect x="324.6" y="232.5" width="11" height="11" fill="#121619"/>
 <polygon points="331.1,231.0 338.1,238.0 331.1,245.0 324.1,238.0" fill="#D9480F"/>
 <text x="316" y="298" font-size="12" fill="#4B5563" text-anchor="end">forward, cantilever + fillet</text>
 <line x1="330" y1="294" x2="1090" y2="294" stroke="#E3E7ED" stroke-width="0.75"/>
-<circle cx="484.4" cy="294.0" r="6" fill="#1F5FC7"/>
+<circle cx="587.3" cy="294.0" r="6" fill="#1F5FC7"/>
 <rect x="472.3" y="288.5" width="11" height="11" fill="#121619"/>
 <polygon points="729.3,287.0 736.3,294.0 729.3,301.0 722.3,294.0" fill="#D9480F"/>
 <text x="316" y="354" font-size="12" fill="#4B5563" text-anchor="end">forward + 1 mm bed to nose wall</text>
 <line x1="330" y1="350" x2="1090" y2="350" stroke="#E3E7ED" stroke-width="0.75"/>
-<circle cx="415.9" cy="350.0" r="6" fill="#1F5FC7"/>
+<circle cx="473.1" cy="350.0" r="6" fill="#1F5FC7"/>
 <rect x="372.5" y="344.5" width="11" height="11" fill="#121619"/>
 <polygon points="713.5,343.0 720.5,350.0 713.5,357.0 706.5,350.0" fill="#D9480F"/>
 </svg>

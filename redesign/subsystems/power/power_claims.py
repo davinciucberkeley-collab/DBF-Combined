@@ -17,7 +17,7 @@ import power as pw  # noqa: E402
 
 kit = pk.Kit(__file__, params=["../../params/params.json", "params.json", "../pod/params.json"])
 
-PARTS_LEFT = ["PWR-002", "PWR-003", "PWR-004", "PWR-006"]
+PARTS_LEFT = ["PWR-002", "PWR-003", "PWR-004", "PWR-006"]   # R7 (D-173b): PWR-003 back
 
 kit.assumption("ASM-PWR-BEND", "Bend radius of fixed short jumpers",
                "Fine-strand silicone jumpers that are soldered at both ends, tied, and never flexed in service may be "
@@ -25,9 +25,12 @@ kit.assumption("ASM-PWR-BEND", "Bend radius of fixed short jumpers",
                "class rules ask 3 x OD for general harness bundles that are handled. Check the formed jumper for "
                "insulation cracking at T-PWR-FIT", value=2.0, unit="-", status="UNVERIFIED")
 kit.assumption("ASM-PWR-R-BUDGET", "Main-path wire resistance budget",
-               "The aircraft-side wiring between the AS150U cups and the bus may add at most the 0.68 mOhm that the "
-               "R2 8 AWG 0.15 m loop carried inside CL-F1-R-EXT 6.5 mOhm", basis="team/F1/POWER.md voltage-drop table",
-               value=0.68, unit="mOhm", status="PROPOSED", cites=["CL-F1-R-EXT"])
+               "The 10 AWG main jumpers may add at most 1.5 mOhm to the path",
+               basis="R6 (corrected model): the old 0.68 mOhm was the R2 8 AWG loop's share of a 6.5 mOhm path that no "
+                     "longer exists. The physical limit is E1's allowable path resistance CL-E1-REXT-ALLOW (13.99 mOhm at "
+                     "the 73.2 A limiter, 2026-11-14); with the D-163 LiHV joints the rest of the path is about 10.2 mOhm "
+                     "(team/F1 CL-F1-HV-R-EXT), so 1.5 mOhm for the jumpers keeps >= 2 mOhm of the allowance free",
+               value=1.5, unit="mOhm", status="PROPOSED", cites=["CL-E1-REXT-ALLOW", "CL-F1-R-EXT"])
 kit.assumption("ASM-PWR-BOND-PA", "Epoxy on sanded nylon housing",
                "30 min epoxy on a 120-grit nylon (PA) connector housing gives >= 1 MPa lap shear",
                basis="low-end class value; nylon bonds poorly unless abraded; coupon at T-PWR-ARRIVAL", value=1.0,
@@ -54,7 +57,7 @@ LAYOUT_IN = {"zb": "P:pod.z_base_m", "tb": "P:fins.board_t_m", "size": "P:pod.si
              "deck_t": "P:power.deck_t_m", "board": "P:power.board_env_m", "margin": "P:power.deck_margin_m",
              "wall": "P:power.wall_t_m", "win": "P:power.window_x_m", "as_m": "P:power.as150u_half_m",
              "wall_h": "P:power.cradle_wall_h_m", "leg": "P:power.leg_m", "ko": "P:power.ko_board_m",
-             "leg_sb": "P:power.leg_setback_m"}
+             "leg_sb": "P:power.leg_setback_m", "pad": "P:power.board_pad_m"}
 
 
 def _geo(a):
@@ -65,19 +68,20 @@ def _geo(a):
     L_in = {"bus_board_m": a["bus_m"], "bar_m": a["bar_m"], "spacer_h_m": a["spacer"], "deck_t_m": a["deck_t"],
             "board_env_m": a["board"], "deck_margin_m": a["margin"], "wall_t_m": a["wall"], "window_x_m": a["win"],
             "as150u_half_m": a["as_m"], "cradle_wall_h_m": a["wall_h"], "leg_m": a["leg"], "ko_board_m": a["ko"],
-            "leg_setback_m": a["leg_sb"]}
+            "leg_setback_m": a["leg_sb"], "board_pad_m": a["pad"]}    # CDR-17 key (fusion/power.py layout)
     return _layout(a["zb"], a["tb"], a["size"], a["pack"], pod_in, L_in)
 
 
 @kit.calc("CALC-PWR-MASS", title="Power subsystem flying mass",
-          equation="m = pack + (AS150U half + 2 x (l1 + l2) x m'_10AWG) + board + bus + frame + 4 x cap (D-74: no UBEC, no fuse)",
+          equation="m = pack + (AS150U half + 2 x (l1 + l2) x m'_10AWG) + board + bus + frame + 4 x n_cap x cap (D-74: "
+                   "no UBEC, no fuse; R7: CoreWing board back, two caps per ESC)",
           inputs={"pack": "P:battery.mass_kg", "as_g": "P:power.as150u_mass_g", "jl": "P:power.jumper_len_m",
                   "wire": "P:power.wire_10awg", "board": "P:power.board_mass_g", "bus": "P:power.bus_mass_g",
-                  "frame": "P:power.frame_mass_g", "cap": "P:power.cap_mass_g"},
+                  "frame": "P:power.frame_mass_g", "cap": "P:power.cap_mass_g", "n_cap": "P:power.cap_n_per_esc"},
           units={"pack": "kg", "as_g": "g", "board": "g"})
-def mass(pack, as_g, jl, wire, board, bus, frame, cap):
+def mass(pack, as_g, jl, wire, board, bus, frame, cap, n_cap):
     jumpers = 2 * sum(jl) * wire[2]
-    rest = as_g + jumpers + board + bus + frame + 4 * cap
+    rest = as_g + jumpers + board + bus + frame + 4 * n_cap * cap
     return {"total_g": pack * 1000 + rest, "non_pack_g": rest, "jumpers_g": jumpers}
 
 
@@ -144,11 +148,11 @@ def ko_fit(stack_u, **a):
 C = "subsystems/power/SPEC.md"
 kit.claim("CL-PWR-MASS", "Power subsystem flying mass", calc="CALC-PWR-MASS", output="total_g", unit="g",
           limit=("<=", "P:mass.allocation_g.power"), parts=["PWR-001"] + PARTS_LEFT,
-          how="Weigh pack and frame stack on a 1 g scale at T-PWR-ARRIVAL; the 28 g power board moved from avionics "
-              "(CR-F1-19) is what the 620 g allocation does not yet carry",
-          note="D-74: UBEC (13 g) and fuse (3.5 g) deleted, deck 56 mm (+0.7 g frame)")
+          how="Weigh pack and frame stack on a 1 g scale at T-PWR-ARRIVAL",
+          note="R7 (D-173b): CoreWing power board PWR-003 28 g EST back, no S-loops; 8 ESC cans (two Rubycon "
+               "35PZJ560M10X15 per ESC; the D-160 second cans are in parts.csv). D-74: UBEC and fuse deleted")
 kit.claim("CL-PWR-MASS-NONPACK", "Power mass without the pack", calc="CALC-PWR-MASS", output="non_pack_g", unit="g",
-          parts=PARTS_LEFT, how="Weigh the built frame stack (board, bus, AS150U, frame) and the four caps")
+          parts=PARTS_LEFT, how="Weigh the built frame stack (board, bus, AS150U, jumpers, frame) and the eight caps")
 kit.claim("CL-PWR-JUMPER-R", "Main jumpers loop resistance, hot", calc="CALC-PWR-JUMPER", output="loop_mohm", unit="mOhm",
           limit=("<=", "ASM-PWR-R-BUDGET"), parts=["PWR-002"],
           how="4-wire milliohm reading AS150U cup to bus bar at T-F1-DROP")

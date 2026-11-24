@@ -157,7 +157,8 @@ top board, `E-HRN-22` and `-24`…`-29` end on `PWR-003` and F2 re-routes. `T-F3
 | Test | What passes | Claims |
 |---|---|---|
 | `T-F3-FW-LOAD` | stable .apj flashed; `Q_TAILSIT_ENABLE` appears after `Q_ENABLE` 1; rpm telemetry on all four ESCs; log on SD | `CL-F3-FC-STABLE`, `-BDSHOT-OUTS` |
-| `T-F3-I2C-SCAN` | SPL06, QMC5883 and MS4525 detected; airspeed rises on a blow, baro does not jump | `CL-F3-I2C-CLASH` |
+| `T-F3-I2C-SCAN` | SPL06, QMC5883 and MS4525 detected; airspeed rises on a blow, baro does not jump. **Compass step (CDR-26):** read `COMPASS_DEV_ID` and decode the address: 0x0D = QMC5883L, 0x2C = QMC5883P. Both drivers are in the 4.7.2 `CoreWingF405WingV2` build (`features.txt`, read 2026-11-13). `COMPASS_DEV_ID` 0 with the module wired = unsupported chip → fit the fallback module | `CL-F3-I2C-CLASH` |
+| Fallback GPS / compass (CDR-EL-14) | **Matek M10Q-5883**: u-blox M10, QMC5883L, 4–9 V, 8 g, 20 × 20 × 12.4 mm, JST-GH 6P, ArduPilot ≥ 4.3 (maker page https://www.mateksys.com/?portfolio=m10q-5883, read 2026-11-13). Price **$39.99** on the RaceDayQuads and Rotor Riot listings found by search on 2026-11-13 (https://www.racedayquads.com/products/matek-m10q-5883-gnss-compass; the page itself returned HTTP 429, so the price is to confirm at order). Not bought unless the scan or `T-F3-COMPASSMOT` (> 30 %) fails; about +$19.50 over A02 ($20.49) | — |
 | `T-F3-5V` | 5 V rail ≤ 1.2 A with everything on; board loss ≤ 2.0 W | `CL-F3-5V-REQ`, `CL-F3-FC-DISS` |
 | `T-F3-COMPASSMOT` | interference ≤ 30 % at hover throttle | `CL-F3-COMPASS-RATIO` |
 | `T-F3-HDOP` | standing on the fin tips at RFS: HDOP ≤ 1.2 within 3 min | `CL-F3-GPS-SKY` |

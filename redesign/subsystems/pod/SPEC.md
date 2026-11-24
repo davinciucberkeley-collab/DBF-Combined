@@ -1,6 +1,6 @@
 # Pod
 
-Status: `MODELLED` (D2, revision D2-R7, 2026-11-11). R7: the pack datum moves 4 mm forward to −0.036 (D-77, BR-00), and
+Status: `MODELLED` (D2, revision D2-R7, 2026-11-11; D-150 drawn 2026-11-14). D-150 (design round 2026-11-14): the nose, nose wall, epoxy line and forward stop move 7 mm forward (stop face −0.1382); the crush block's top goes back to 0.5 mm under the hatch with an 8 × 3 mm step on its fore top edge for the hatch tongue swing; the second 8 mm spacer returns. R7: the pack datum moves 4 mm forward to −0.036 (D-77, BR-00), and
 the pod takes D-74: the UBEC plate is gone, the power-board keep-outs `KO-PWR-*` are reserved and checked, the forward
 strap moves ahead of them, and each side exit has room inside it for two mated XT30U. R6 (2026-11-10) re-lays the bay for D-62 (CR-A1-62, CR-A3-25),
 draws the D-64 Ovonic pack, and builds C3's three FEA fixes from D-69 (CR-C3-14 to -18). It also takes CR-C6-27,
@@ -19,53 +19,56 @@ spreader and spacer stack, strap it, plug in, close.
 
 | Item | x | Part |
 |---|---|---|
-| Nose wall, 4.8 mm board · 1 mm microballoon epoxy line | −0.140 … −0.1352 · … −0.1342 | `POD-001` |
-| Forward-stop T: 3 × 25 mm upright, past the floor edge, to a 12 × 54 × 1.2 mm flange under the floor (D-69) | −0.1342 … −0.1312 (flange to −0.1222) | `POD-002` |
-| Crush block, cut per pack · 1.5 mm spreader (CAD at the D-77 datum) | −0.1312 … −0.1050 · … −0.1035 | `POD-009` · `POD-010` |
+| Nose wall, 4.8 mm board · 1 mm microballoon epoxy line | −0.147 … −0.1422 · … −0.1412 | `POD-001` |
+| Forward-stop T: 3 × 25 mm upright, past the floor edge, to a 12 × 54 × 1.2 mm flange under the floor (D-69) | −0.1412 … −0.1382 (flange to −0.1292) | `POD-002` |
+| Crush block, cut per pack, ≥ 31.0 mm; 8 × 3 mm fore-top step · 1.5 mm spreader (CAD at the D-77 datum) | −0.1382 … −0.1050 · … −0.1035 | `POD-009` · `POD-010` |
 | Forward strap slot (D-74: 26 mm, ahead of `KO-PWR-*`) · wire channel (F2, 10 mm) · aft strap slot | −0.092 … −0.066 · −0.0295 … −0.0195 · −0.007 … 0.019 | `POD-004` · `POD-002` |
 | Pack, 0.135 long: CAD at the −0.036 datum (D-77) · 546 · 550 · 590 g (A3 stations) | −0.1035 … 0.0315 · −0.1035 … 0.0315 · −0.1015 … 0.0335 · −0.0975 … 0.0375 | `PWR-001` |
-| U-spacers 2 / 4 / 6 / 8 · aft stop 3 mm on the tray rear piece | 0.0315 … 0.0475 (CAD, 16 mm) · 0.0475 … 0.0505 | `POD-008` · `POD-002` |
+| U-spacers 2 / 4 / 6 / 8 / 8 · aft stop 3 mm on the tray rear piece | 0.0315 … 0.0475 (CAD, 16 mm) · 0.0475 … 0.0505 | `POD-008` · `POD-002` |
 | Strut: 40 × 14 × 1.5 mm pad · three 3 × 14 mm ribs, z 0.026 … 0.040 · foot bridge (D-69) | 0.0505 … 0.052 · 0.052 … 0.077 · 0.077 … 0.0902 | `POD-007` |
 
 ## Pack on the crush stack (CR-A1-62)
 
 | Case | Block | Pack centroid | Gap to the aft stop | Spacers · play |
 |---|---|---|---|---|
-| A1's 24.3 mm block (D-62) | 24.3 mm | −0.0379 m | 17.9 mm | 16 mm · **1.9 mm** |
-| C5's 25.7 mm block, 550 g class | 25.8 mm | −0.0364 m | 16.4 mm | 16 mm · 0.4 mm |
+| A1's 31.0 mm block (D-150) | 31.0 mm | −0.0382 m | 18.2 mm | 18 mm · 0.2 mm |
+| C5's block, 590 g, D-150 section (C5.md §1.2, `EST` until C5 re-runs) | 29.1 mm | −0.0401 m | 20.1 mm | 20 mm · 0.1 mm |
 | Flown stations (A3 on the day) | cut to fill | as A3's station | spacer stack | 0 mm: the block takes up the play (CR-C5-14 c) |
 
 ## Key numbers
 
 | Parameter | Value | Unit | Claim | Status |
 |---|---|---|---|---|
-| Pod x range · width · height (outside) | −0.140 … 0.095 · 0.140 · 0.070 | m | `params.json#pod` (D-62) | `PROPOSED` |
-| Forward stop face · aft stop face · nose skin to the stop | −0.1312 · **0.0475** · 8.8 mm | m | `CL-D2-FWD-STOP-X`, `ASM-D2-AFT-STOP-X`, `CL-D2-NOSE-TO-STOP` | `CHECKED` |
-| Bay inside L × W × H (≥ 0.160 × 0.052 × 0.053) | 0.179 × 0.052 × 0.057 | m | `CL-D2-BAY-L/-W/-H` | `CHECKED` |
+| Pod x range · width · height (outside) | −0.147 … 0.095 · 0.140 · 0.070 | m | `params.json#pod` (D-150) | `PROPOSED` |
+| Forward stop face · aft stop face · nose skin to the stop | −0.1382 · **0.0475** · 8.8 mm | m | `CL-D2-FWD-STOP-X`, `ASM-D2-AFT-STOP-X`, `CL-D2-NOSE-TO-STOP` | `CHECKED` |
+| Bay inside L × W × H (≥ 0.160 × 0.052 × 0.053) | 0.186 × 0.052 × 0.057 | m | `CL-D2-BAY-L/-W/-H` | `CHECKED` |
 | Pack centroid: datum (CAD, D-77) · no spacer · 546 · 550 · 590 g | −0.036 · −0.020 · −0.036 · −0.034 · −0.030 | m | `CL-D2-PACK-X-NOM/-NOSPACER/-LIGHT/-550/-HEAVY` | `CHECKED` |
 | Spacer stack: CAD · 546 · 550 · 590 g | 16 (2 + 6 + 8) · 16 (2 + 6 + 8) · 14 (6 + 8) · 10 (2 + 8) | mm | `CL-D2-SPACER-NOM/-LIGHT/-HEAVY` | `CHECKED` |
-| Crush block CAD datum · 546 · 550 · 590 g (minimum: C5's 25.8 mm, scaled by mass) | 26.2 (≥ 25.8) · 26.2 (≥ 25.6) · 28.2 (≥ 25.8) · 32.2 (≥ 27.7) | mm | `CL-D2-BLOCK-B-LIGHT/-550/-HEAVY` | `CHECKED`, scaling `UNVERIFIED` |
-| Most forward centroid with C5's block · room ahead of the D-77 datum | −0.0364 · 0.4 | m · mm | `CL-D2-PACK-X-FWD-MIN`, `-PACK-FWD-ROOM` | `CHECKED` |
+| Crush block CAD datum · 546 · 550 · 590 g (minimum: C5's `CL-C5-BLOCK-L`, scaled by mass; never under 31.0, D-150) | 33.2 · 33.2 · 35.2 · 39.2 | mm | `CL-D2-BLOCK-B-LIGHT/-550/-HEAVY` | `CHECKED`, scaling `UNVERIFIED` |
+| Crush block section aft of the step · over the step · step length × depth · hatch swing gap (D-150) | 2.823e-3 · 2.757e-3 m² · 8 × 3 · 0.50 (≥ 0) mm | – | `CL-D2-BLOCK-SECTION`, `-BLOCK-STEP-SECTION`, `-BLOCK-STEP-L`, `-HATCH-SWEEP-CLR` | `MODELLED` |
+| Most forward centroid with A1's 31.0 mm block · with C5's block (stale 25.8 mm until C5 re-runs) | −0.0382 · −0.0434 | m | `CL-D2-PACK-X-FWD-MIN`, `-PACK-FWD-ROOM` | `CHECKED` |
 | Strut rib free length · rib to wing skin | 25 · 3.5 (≥ 2) | mm | `CL-D2-STRUT-RIB-L`, `-STRUT-SKIN-CLR` | `MODELLED`; C3 re-checks |
 | Wall bracket bonded area per side (≥ 1 000) · stop-T flange under the floor | 1 232 · 486 | mm² | `CL-D2-BRACKET-AREA`, `-FWD-FLANGE-AREA` | `CHECKED` |
 | PDB pad moment capacity vs the 1.94 N·m unplug moment · boss Ø | 2.16 (RF 1.11) · 7.2 | N·m · mm | `CL-D2-PDB-PAD-M` | `UNVERIFIED` (0.05 MPa allowable) |
 | Forward stop bond (≥ 85) · straps vs pack crash · ties vs handle | 214 · 200 vs 85 · 444 vs 76 | N | `CL-D2-FWD-STOP-BOND`, `-STRAP-CAP`, `-TIE-CAP` | `UNVERIFIED` |
 | Wire channel · crossing gap · crossing height | 3.5 (≥ 3.0) · 6.7 (≥ 6.7) · 54 (≥ 26) | mm | `CL-D2-FLOOR-CH-H`, `-CROSS-GAP`, `-CROSS-H` | `CHECKED` |
-| Pitot tip · boom `AVN-005` · socket depth · key flat | (−0.220, −0.046, 0.045) · 107 · 35 · 5.8 | m · mm · mm · mm | `CL-D2-PITOT-*` | `PROPOSED` |
-| Antenna A / B to the pack (≥ 30.7) · tube B end (≥ −0.150) · GPS to power items (≥ 100; no UBEC, D-74) | 36 / 36.5 · −0.144 · 153 | mm · m · mm | `CL-D2-ANT-A/B-CLR`, `-ANT-B-TIP-X`, `-GPS-CLR` | `CHECKED` |
+| Pitot tip · boom `AVN-005` · socket depth · key flat | (−0.220, −0.046, 0.045; −0.227 requested, D-150) · 99.8 (107 once the tip moves) · 35 · 5.8 | m · mm · mm · mm | `CL-D2-PITOT-*` | `PROPOSED` |
+| Antenna A / B to the pack (≥ 30.7) · tube B end (≥ −0.157, D-150) · GPS to power items (≥ 100; no UBEC, D-74) | 36 / 43.5 · −0.151 · 153 | mm · m · mm | `CL-D2-ANT-A/B-CLR`, `-ANT-B-TIP-X`, `-GPS-CLR` | `CHECKED` |
 | Pod bodies in `KO-PWR-BOARD` / `-PADS` (from the boss tops) / `-FWD` / `-SIDE-IN` (D-74) | 0 | – | `CL-D2-KO-PWR-HITS` | `CHECKED` |
 | Board outboard edge to the side-wall inner face (case U wants 6) | 1.8 | mm | `CL-D2-KO-PWR-SIDE-OUT` | `CHECKED`, short for case U (CR-D2-31) |
 | Pod bodies in the two XT30U zones · one XT30U body through a 16 × 12 exit (≥ 2) | 0 · 5.8 | – · mm | `CL-D2-XT30U-HITS`, `-XT30U-EXIT` | `CHECKED`; plug size `UNVERIFIED` |
 | Thermal: pack at landing (`E-POD-12`) · FC peak (`E-AVN-10`, F3) at 44 °C ambient | 44.8 · 54.9 (68.9 hover-only) | °C | `CL-E3-PACK-END`, `CL-E3-FC-PEAK` | `MODELLED` (E3) |
-| Mass · CG | **144.2** (allocation 146, D-63; UBEC plate −1.0 g) | g | `CL-D2-MASS` `EST` | `CHECKED`, 1.8 g margin |
+| Mass · CG | **146.6** (allocation 150, D-168; D-174 −0.7 g) · (−0.0125, −0.0040, 0.0488) m | g | `CL-D2-MASS` `EST` | `CHECKED` (+3.4 g) |
+| D-174 Shorty (98 × 47 × 46 mm): datum · most forward on the crush stack (block 31.2 mm) · no spacer (filler in / fore piece out) | −0.0545 · −0.0565 · −0.0445 / −0.0285 | m | `CL-D2-PACK-X-NOM`, `-PACK-X-FWD-MIN`, `-AFT-REACH` | `CHECKED` once A1 applies D-174 (D2.md) |
+| Hatch closing motion over the strapped FC (≥ 2) | 40.1 | mm | `CL-D2-FC-HATCH-GAP` | `CHECKED` |
 
 ## Channels (y ±0.0275 … ±0.0652)
 
 | Left (−y), x | Item | Right (+y), x | Item |
 |---|---|---|---|
-| −0.148 … −0.113 | pitot socket + 32 mm flange on the nose wall; antenna B tube (end −0.144) | −0.041 … 0.021 | FC on 4 gel cubes between end stops; 10 mm strap through the stop slots |
+| −0.148 … −0.113 | pitot socket + 32 mm flange on the nose wall; antenna B tube (end −0.144) | −0.041 … 0.021 | FC on 4 gel cubes between end stops; 10 mm strap through the stop slots (restored at D-173b) |
 | −0.088 … −0.040 | airspeed between tie posts (21 mm apart), RX behind; antenna A tube above (from z 0.076) | 0.021 … 0.040 | JR tie bar, 3 tie slots (six in-line plugs) |
-| −0.038 … 0.046 | PDB plate, 4 bosses Ø 7.2 for M3 inserts, rib along each boss row: F1's bus board and power frame; `KO-PWR-BOARD` −0.066 … −0.010 above the deck (z 0.0386 … 0.0626), `KO-PWR-FWD` −0.076 … −0.066 (D-74) | 0.044 … 0.074 | right XT30U pair (two mated, stacked, z 0.026 … 0.038); the UBEC plate is gone (D-74) |
+| −0.038 … 0.046 | PDB plate, 4 bosses Ø 7.2 for M3 inserts, rib along each boss row: F1's bus board and power frame; `KO-PWR-BOARD` −0.066 … −0.010 above the deck (z 0.0386 … 0.0626), `KO-PWR-FWD` −0.076 … −0.066 (D-74). | 0.044 … 0.074 | right XT30U pair (two mated, stacked, z 0.026 … 0.038); the UBEC plate is gone (D-74) |
 | 0.000 … 0.060 · 0.062 … 0.074 | AS150U park zone: F1's cradle `PWR-006` · left XT30U pair on the foot plate (D-74) | 0.056 … 0.072 | side-wall exit 16 × 12 mm, z 0.027 … 0.039 (each side) |
 | 0.066 … 0.090 | wall bracket flange (above the exit, down to the foot behind it) | 0.066 … 0.090 | same, mirrored |
 
@@ -100,6 +103,10 @@ Acknowledged: `E-PWR-03/-04/-05`, `E-AVN-01` … `-05`, `-07`, `-10`, `E-HRN-01`
 | PDB plate extension and ribs (CR-C6-27, not in D-63) | +2.5 g |
 | Guides 8 → 6 mm | −1.4 g |
 | D-62 nose, shell and hatch, and the re-laid tray, net | +1.4 g |
+| D-150 (2026-11-14, CAD 145.1 → 147.3 g): shell +0.4, tray front piece and guides 7 mm longer +0.7, hatch +0.2, crush block at the −0.036 datum 7 mm longer and 2.5 mm taller +0.7, spreader 2.5 mm taller +0.2 | +2.2 g |
+| D-161c (−2.5 g, FC tray deleted for the Kakute deck seat) reversed by D-173b: tray restored, POD-002 back to 41.9 g | 0 g |
+| D-174 Shorty: XPS aft filler POD-013 16 + 27 mm +1.3, U-spacer stack 16 → 10 mm −0.9, EVA pads 45 → 30 mm −0.4, tray (aft strap slot to −0.045) −0.7 | −0.7 g |
+| E2 D-163 option, not drawn: 12 mm closed-cell foam pack spacer 139 × 47 mm in POD-004 (`pack_spacer_m`, 64 kg/m³) | +5.0 g if A1 picks the 6.0 Ah pack |
 
 To stay inside 146 g, R6 uses these levers: bracket flange 1.5 → 1.2 mm and started at the hatch end, web 3 → 2 mm,
 PDB ribs 1.6 × 4 → 1.2 × 3 mm, pad 2 → 1.5 mm, stop flange 1.6 → 1.2 mm. Together with the guides they save 4.4 g, and
@@ -112,12 +119,13 @@ counts as D1's mass.
 |---|---|
 | The aft stop sits at 0.0475, not A1's 0.050, because 0.050 is the sum with the retired 0.140 pack | A1 (CR-D2-24) |
 | C3's fixes are drawn on the D-62 bay: ribs 25 mm (not 14), flanges 1.2 mm, bracket 1 232 mm² per side. C3 re-runs M2 and the tied-feet case | C3 (CR-D2-25) |
-| Crush limit: D-62's −0.0379 uses a 24.3 mm block; C5's 550 g class block is 25.8 mm, which gives −0.0364. The D-77 datum −0.036 keeps 0.4 mm of block margin at 550 g; no further forward move is possible without a longer nose (antenna B and D7's box gap stop that) | A1, A3, C5 (CR-D2-24, -26) |
+| D-150 made the longer nose: most forward centroid −0.0382 with the 31.0 mm block; C5 re-runs `CALC-C5-CRASH` on `CL-D2-BLOCK-SECTION` and the 8 mm step; A3 re-sets the stations (D-98 rule) | A3, C5 (D-150) |
+| The hatch is 7 mm longer (202.2 mm): C3 re-runs `CL-C3-HATCH-TAB` | C3 (D-150) |
 | Case U (whole stack, D-74): `KO-PWR-SIDE` wants 6 mm outboard of the board, the 37.7 mm channel leaves 1.8 mm to the side wall. The inboard 6 mm is clear (forward strap moved). GH plugs on the outboard edge need a vertical entry, or the board turns its plugged edge inboard | F1 (CR-D2-31) |
 | The XT30U zones hold the plugs only if F1/F2 route the ESC pairs there; F1's AS150U cradle legs end at 0.060 (left zone starts 0.062) | F1, F2 (CR-D2-31) |
 | The pack leads cross the aft stop | F1 (CR-D2-27) |
 | F2's bundles lie in the floor and channel, and on the new PDB plate (x −0.004 … 0.046) | F2 (CR-D2-27) |
-| Pitot socket collar (−0.148) overlaps D7's nose pad by 5 mm until D7 fits the ½ in pad (D-62) | D7 (CR-D2-28) |
+| Pitot socket collar (−0.155 since D-150) overlaps D7's nose pad by 5 mm until D7 fits the ½ in pad (D-62) | D7 (CR-D2-28) |
 | `POD-001` mass CG vs uniform body centroid 15.1 mm (bonded multi-material part) | A5 (CR-D2-19) |
 
 ## How to verify

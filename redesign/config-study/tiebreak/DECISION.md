@@ -1,3 +1,109 @@
+# Re-decision 2026-11-14 (D-182, J6 board): scaled quad tailsitter A replaces small quadplane B
+
+Status: DECIDED (J6 board, Opus chair, 2026-11-14). **D-181 (B, provisional, same day) is reversed.** The D-181 section below is kept as the record.
+Inputs: `../../review/QP-1/BOARD.md` (verdict, §1 inputs, §3 scores, §5 decision), `SIZING-A.md`, `SIZING.md` (B), `SIZING-T.md`, `COST.md` in the same folder.
+Tags: `EST` estimate, `U` UNVERIFIED price, `V` vendor page read, `—` unknown.
+
+**Decision in three lines.** Build **concept A**: a scaled quad tailsitter, 0.90 m wing, 4 x T-Motor MN2212 KV780 on 4S, 2 x 2300 mAh 4S packs, about 1.23 kg per the decision record (board re-roll 1.37 kg `EST`, one piece in the car box, a convenience only). Re-priced total about **$1,499**, margin **+$501**, **+$387** with EST/U lines +30 %. Fallback: **B**, the quadplane, after re-pricing (about $1,883, +$117, **+$8 at +30 %: fails the $100 rule**). Lifeboat: **D2, ZOHD Altus kit**, if there is no tethered hover by 2027-02-15.
+
+### Why D-181 is reversed (board rationale, BOARD §1, §5)
+- COST.md priced SunnySky X2212 KV980 ($15.99 `V`) for A and B; the sizing reports chose T-Motor MN3110 ($61.90 `V`) for B's lift and MN2212 ($46.90 `V`) for A. Re-pricing with the sized parts: B +$317.30 goods, total $1,882.56, margin +$117.44, +$8.34 at +30 %; A +$199.13, total $1,498.67, margin +$501.33, +$386.74 at +30 %. D-181's $1,625 assumed X2212 lift thrust that no one has measured.
+- ESC mass re-roll (33 g Skywalker 30A V2 vs 10 g assumed): B 2,180 g, T/W fresh 2.09, sag 1.72. Headroom to the T/W gates (2.0 fresh, 1.6 sag): A 1.655 kg (18 %), B 2.276 kg (**4 %**, 96 g), T 2.509 kg. K09-L's gate crept 2.60 to 2.70 kg in one closure round (A1-STATUS).
+- Growth absorbed (margin / candidate goods x 1.1025): A 77 %, D2 73 %, T 61 %, **B 12 %**. K09-L-scale growth (x2) breaks every candidate; x1.3 breaks only B.
+- D-181's concern about the tailsitter in wind is real; it is carried as conditions C1-C3, not dismissed. A's weak points are geometry choices that $0 SITL and under $60 bench tests can settle before the 15 Dec order.
+
+### Score table (BOARD §1, §3; scores 1-5 per criterion, weighted /100)
+Weights: cost margin 20, technical risk 25, schedule 20, transport 5, mission margin 10, reuse 10, educational 10.
+
+| Concept | Total $ / margin $ (sized parts) | Margin at +30 % | Mass headroom to T/W gate | Weighted score |
+|---|---|---|---|---|
+| **A scaled quad tailsitter** | **1,499 / +501** | +387 | 18 % (1.66 kg) | **71** |
+| B small quadplane 4+1 | 1,883 / +117 | +8 (fails $100 rule) | 4 % (2.28 kg) | 67 |
+| D2 ZOHD Altus kit | 1,552 / +448 | +346 | — | 59 |
+| T tilt-tricopter (K06) | 1,605 / +395 | +184 | 6 % on pack energy | 45 |
+
+Sensitivity: technical risk 35 / cost 10 gives B 73, A 65. Cost 30 / technical 15 gives A 77, B 61. B with a lift motor of $25 or less that passes the bench (cost score 4) gives 79.
+
+### Conditions (BOARD §5)
+- C1 Motor mounts at 14 deg cant minimum; hanging yaw ratio >= 1.5 measured before any free hover.
+- C2 Hover wind <= 5 m/s steady, land wing-edge into the wind, crew catches or lays the aircraft down at touchdown; `Q_ANGLE_MAX` from SITL.
+- C3 B3-style time-domain pitch-over with elevon limit before the first transition; the +-13 % window is not used until then.
+- C4 Pack in the motor cage ahead of the leading edge; CG breadboard shows SM >= 5 % before the wing is cut.
+- C5 Mass gate 1.50 kg, frozen; any change needs the board.
+- C6 One BOM (sized parts, DShot ESC, Kakute or CoreWing) and one mission definition for all reports; re-run `bom_qp1.py`.
+- C7 Cruise prop chosen on the bench (9545 vs higher pitch) with hover T/W >= 2.0 fresh at the gate.
+- C8 Fin tap test passes 20 % separation at the as-built root.
+
+### Reversal triggers (BOARD §5)
+- R1 A lift motor of $25 or less measures >= 1.10 kgf fresh on 4S within rated current and B's re-priced margin at +30 % is >= $150: board re-sits within one week; B expected to lead (score 79).
+- R2 A fails SITL at 5 m/s crosswind, or yaw ratio < 1.5 at 16 deg cant, or the pitch-over finds no window >= +-5 %: switch to B.
+- R3 A weighs > 1.50 kg at the CG breadboard, or MN2212 < 854 g at 100 %: resize once; a second failure goes to B.
+- R4 No tethered hover of the chosen concept by 2027-02-15: order D2 for the April flight test.
+- R5 A's re-priced total > $1,750 (margin < $250): board re-sits.
+
+### First three actions (BOARD §5)
+1. SITL now, $0: tailsitter quad with `K09L.param` adapted to A's mass and inertia (`EST`), 5 m/s steady and 7 m/s gust crosswind hover, plus stock QuadPlane S1-S7 for B. Due 2026-11-30.
+2. Order the bench kit with the floor items (common to A and B): 2 x MN2212 + 9545 and one higher-pitch prop, 2 x X2212 KV980 CW/CCW + 1045 ($31.98 `V`), one 4S pack, stand parts, watt meter, two DShot ESCs (source `—`). Run QP1-2 for both motors and the hanging yaw test by 2026-12-10.
+3. One BOM, one mission, one gate (C5, C6) before 2026-12-10, so the 15 Dec order is placed on the decided concept with vendor-page prices only.
+
+Resolved D-J6-2 (user, via A1, after the board): the aircraft need NOT travel in one piece; the packed aircraft must fit one standard car trunk (two at most). B's two-piece plug-in wing is therefore allowed and one-piece transport is no longer a mark against B; A's one-piece fit is a convenience. The board's choice of A stands on cost margin and growth headroom (BOARD §1, §3).
+
+---
+
+# Re-decision 2026-11-14 (D-181, REVERSED by D-182 above): small quadplane B replaces K09-L
+
+Status: ~~DECIDED (A1, 2026-11-14)~~ REVERSED the same day by D-182 (J6 board). Supersedes the K09-L decision below, which is kept unedited as the record.
+Inputs: `../RESTUDY-2026-11-14.md` (§2 costs, §4 steps, §5 chart rows), `../../review/CLOSURE-ROUND-2026-11-14/DESIGN-TO-COST.md`.
+Tags: `EST` estimate, `U` UNVERIFIED price (vendor page not read), `—` unknown.
+
+**Decision in three lines.** Build **candidate B**: a small quadplane, 4 fixed lift rotors + 1 cruise pusher on a foam wing,
+about 1.88 kg `EST`, ArduPilot QuadPlane. Total about $1,625 including crash reserve (+$375 margin; about +$175 if candidate
+parts run 30 % over). Fallback: **D2, ZOHD Altus VTOL PNP** ($1,549, +$451).
+
+### Why K09-L was dropped (cost)
+- Cheapest workable all-new K09-L path ends at **$2,577**, gap **$577** to $2,000 (DESIGN-TO-COST §0, §5). Honest baseline $3,243.67 (§1).
+- 3S packs (`EST` -$282) would still leave about $295 and reopen E1, E2, B1, B2, B3, A3, C1, C4, C5, F1, F4 with a likely T/W failure (§4).
+- Airframe is the overrun: +$247 over its cap, driven by the fin tube (§2). Motors cannot fall under about $175 (§3).
+- The closure round was also dominated by tailsitter-specific problems: hover yaw in wind, a narrow transition entry window, landing on fin tips, tip-over, and the transition climb-out.
+
+### Why B, and not A
+| Cand | Total $ | Margin $ | MTOW kg `EST` | Verdict |
+|---|---|---|---|---|
+| A scaled quad tailsitter | 1,461 | +539 | 1.23 | Not chosen: keeps every tailsitter problem; a smaller, lighter tailsitter is worse in wind |
+| **B small quadplane 4+1** | **1,625** | **+375** | **1.88** | **Selected** |
+| C dual-motor tailsitter | 1,351 | +649 | 1.02 | Rejected: motor-out is fatal |
+| D1 HEEWING T1-S VTOL PNP | 1,666 | +334 | 0.90 | Rejected: T/W 1.64 sits at the 1.6 limit |
+| **D2 ZOHD Altus VTOL PNP** | 1,549 | +451 | 1.16 | **Fallback** |
+| D3 HEEWING T2 Cruza + kit | 1,934 | +66 | 2.23 | Rejected: misses the $100 margin |
+
+Source: RESTUDY §2. B is the lowest-risk concept that clears the $100 margin (RESTUDY §4). The quadplane is the most-flown
+ArduPilot VTOL layout (`Q_ENABLE=1`), hovers on dedicated lift motors and lands on gear, so it carries the lowest risk to the
+30 April 2027 flight test. Technical risk Low-Medium (parked-prop drag, boom flex, pusher in transition); schedule Low-Medium
+(RESTUDY §3). Carry-over from K09-L is Medium: FC, airspeed, logging, test plan, harness.
+
+### Fallback
+D2 ZOHD Altus VTOL PNP, $299.99 `V` (readymaderc.com, read 2026-11-14), 1.16 kg, no maker ArduPilot parameter file found. It accepts low
+design content (RESTUDY §2, §4).
+
+### What would reverse it
+- Bench thrust test of X2212 KV980 + 9/10 in props on 4S fails to support B's hover T/W 2.13 `EST` (motor thrust is `EST` for every scratch candidate).
+- Vendor-page prices replacing the `U` values push B's margin below $100 (+$175 at parts +30 %, RESTUDY §2; the break-even overrun is not computed).
+- Wing / transition sizing shows 1.3 Vs 12.5 m/s `EST` cannot be met on the racetrack, or QuadPlane parameters on the SpeedyBee target fail in SITL.
+- Schedule: airframe parts not ordered by mid-December (RESTUDY §4 f).
+- Switch to A only if the bench test passes and the team wants pitch-over tuning; switch to D2 if both stall.
+
+### Immediate next steps (RESTUDY §4)
+1. Bench-test X2212 KV980 + 9/10 in props on 4S: replaces `EST` thrust, sets hover current and pack C-rate.
+2. Re-run `restudy_cost.py` with vendor-page prices (replace every `U`) and a real spares list.
+3. Check ArduPilot QuadPlane parameters, frame class and logging on the SpeedyBee F405 Wing APP target.
+4. Size wing area and 1.3 Vs transition on the racetrack (stall 9.6 / 1.3 Vs 12.5 m/s `EST`).
+5. CAD interference and assembly checks, landing and SITL on the quadplane layout.
+6. Order floor items first ($744.02 incl. tax, shipping, FAA), airframe parts by mid-December.
+
+---
+
+# Superseded record (2026-11-09): everything below describes K09-L and is no longer the decision
+
 # Tie-break decision: K09 quad tailsitter (lean, with elevons and airspeed)
 
 Status: DECIDED (deciding judge, 2026-11-09), for the team lead's sign-off before the mid-December order.

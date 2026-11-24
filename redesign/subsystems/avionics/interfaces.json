@@ -11,9 +11,9 @@
    "mass_g": 12.0,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    0.0043,
-    0.0488,
-    0.0277
+    -0.0117,
+    0.0458,
+    0.0293
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -27,9 +27,9 @@
    "mass_g": 7.73,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    0.0797,
+    0.0757,
     0.0,
-    0.1818
+    0.1778
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -43,9 +43,9 @@
    "mass_g": 4.6,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    -0.0448,
+    -0.0469,
     -0.0464,
-    0.0259
+    0.0237
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -59,9 +59,9 @@
    "mass_g": 4.05,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    -0.0696,
+    -0.0705,
     -0.0463,
-    0.0309
+    0.0277
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -75,7 +75,7 @@
    "mass_g": 4.24,
    "material": "PETG (printed) + aluminium probe",
    "cg_xyz_m": [
-    -0.1596,
+    -0.1666,
     -0.046,
     0.045
    ],

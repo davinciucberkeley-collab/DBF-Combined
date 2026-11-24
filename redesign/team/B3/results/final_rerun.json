@@ -1,0 +1,78 @@
+{
+ "_note": "B3 final re-run, EST where marked; hover duty from B4's X2814 + 11x8E model (E1 kT/kP), pack R from E1 ASM-E1-PACK",
+ "hover_duty": {
+  "rpm": 5757.16689868235,
+  "T_per_prop_N": 7.124901335858004,
+  "Q_Nm": 0.1523161456359028,
+  "I_motor_A": 15.555458524585955,
+  "V_terminal_V": 7.075070101319002,
+  "pack_states": {
+   "fresh_17p4V": {
+    "duty": 0.422517237798256,
+    "bus_V": 16.74504486062463,
+    "pack_A": 27.289797473973568,
+    "THR_VT_over_duty": 1.301722038291405
+   },
+   "mid_15p2V": {
+    "duty": 0.48980873370128125,
+    "bus_V": 14.444556853561256,
+    "pack_A": 31.47679776828099,
+    "THR_VT_over_duty": 1.1228872867249189
+   },
+   "low_14p4V": {
+    "duty": 0.5202608619173678,
+    "bus_V": 13.59908195908599,
+    "pack_A": 33.37158503808382,
+    "THR_VT_over_duty": 1.0571619744238145
+   }
+  },
+  "compensated_throttle_ref_17p4V": 0.4066132242137358,
+  "THR_VT_over_compensated_hover": 1.3526367743290444,
+  "Q_TAILSIT_THR_VT": 0.55,
+  "Q_M_THST_HOVER_param": 0.49
+ },
+ "entry": {
+  "T0_W_high": 1.389342,
+  "T0_W_low": 1.2907825,
+  "E1_worst_TW_band_edge": 1.770549457033169,
+  "frac_E1": 0.7846953918633025,
+  "frac_E1_thrust_magnitude": 0.772774105659933,
+  "frac_B3_params_formula": 0.7942876102746873,
+  "limit": 0.8,
+  "params_tmax_kg": 1.354,
+  "params_sag": 0.872
+ },
+ "static_margin": {
+  "tripped": {
+   "xnp_m": 0.06609849034014759,
+   "SM_fwd": 0.07218278231296121,
+   "SM_aft": 0.04999528231296121,
+   "x_aft_sm5_m": 0.050098490340147586,
+   "aft_limit_margin_mm": -0.001509659852412526,
+   "binding_speed": "vt"
+  },
+  "model_of_record": {
+   "xnp_m": 0.06714421693365051,
+   "SM_fwd": 0.07545067791765786,
+   "SM_aft": 0.05326317791765785,
+   "x_aft_sm5_m": 0.05114421693365051,
+   "aft_limit_margin_mm": 1.0442169336505116,
+   "binding_speed": "vt"
+  },
+  "free_transition": {
+   "xnp_m": 0.06312503278143494,
+   "SM_fwd": 0.0628907274419842,
+   "SM_aft": 0.0407032274419842,
+   "x_aft_sm5_m": 0.04712503278143494,
+   "aft_limit_margin_mm": -2.974967218565057,
+   "binding_speed": "vt"
+  },
+  "cg_range_m": [
+   0.043,
+   0.0501
+  ],
+  "x_fwd_stall_trim_m": 0.04293682314773162,
+  "fwd_margin_mm": 0.06317685226837899,
+  "sm_min_required": 0.05
+ }
+}

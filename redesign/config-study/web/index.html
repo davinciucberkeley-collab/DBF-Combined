@@ -1,4 +1,4 @@
-<title>Tailsitter Decision</title>
+<title>Tailsitter A Decision (D-182; D-181, K09-L superseded)</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -427,6 +427,29 @@ section.c > header .use { color: var(--fg-2); margin: 0; max-width: var(--measur
 </header>
 
 <main class="page" id="top">
+
+<section class="c hero" id="decision-d182">
+  <div class="lede">
+    <span class="secno">Current decision · D-182 · 2026-11-14 · J6 board</span>
+    <h1 class="ds-display">Build concept A: a scaled quad tailsitter. 0.90 m wing, four fixed motors on 4S, about 1.2 kg (EST), small enough to travel in one piece.</h1>
+    <p class="ds-body">After sizing four concepts to the same depth (QP-1), the J6 board chose A: about $1,499 re-priced, +$501 margin (+$387 if EST/U lines run 30 % over). Fallback: B, the small quadplane, after re-pricing (about $1,883, +$117, +$8 at +30 %: fails the $100 rule). Lifeboat: D2, ZOHD Altus kit, if there is no tethered hover by 2027-02-15. Transport rule (user): the packed aircraft must fit one standard car trunk (two at most), not one piece, so B's plug-in wing is allowed; A's one-piece fit is a convenience and the choice rests on cost margin and growth headroom. Reversal trigger R1: a lift motor of $25 or less that passes a 4S bench test makes B score 79. Conditions C1-C8 (14 deg cant, 1.50 kg mass gate, SM &ge; 5 %) and first actions (SITL by 2026-11-30, bench kit and yaw test by 2026-12-10, one BOM) are in the board record. <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/QP-1/BOARD.md" target="_blank" rel="noopener">QP-1/BOARD.md</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/config-study/tiebreak/DECISION.md" target="_blank" rel="noopener">tiebreak/DECISION.md</a></p>
+  </div>
+  <div class="scroll wide"><table class="ds-table">
+    <caption>QP-1 candidates (BOARD §1, §3; totals re-priced with sized parts; mass EST; score /100)</caption>
+    <thead><tr><th>Cand</th><th>Total $ / margin $</th><th>Margin at +30 %</th><th>Mass</th><th>Score</th><th>Key issues</th></tr></thead>
+    <tbody>
+      <tr class="chosen"><td class="first"><b>A scaled quad tailsitter</b></td><td>1,499 / +501</td><td>+387</td><td>1.23 kg (re-roll 1.37; gate 1.50)</td><td><b>71</b></td><td><b>selected</b>: hover yaw (14&deg; cant), wind lean, fin modes, SM 6.6 %</td></tr>
+      <tr><td class="first">B small quadplane 4+1</td><td>1,883 / +117</td><td>+8</td><td>2.18 kg (4 % headroom)</td><td>67</td><td>fallback: cost, boom modes, thin T/W headroom</td></tr>
+      <tr><td class="first">T tilt-tricopter (K06)</td><td>1,605 / +395</td><td>+184</td><td>1.75 kg</td><td>45</td><td>rejected: motor-out fatal, tilt-servo single point, pack energy +6 %</td></tr>
+      <tr><td class="first"><b>D2 ZOHD Altus VTOL PNP</b></td><td>1,552 / +448</td><td>+346</td><td>1.16 kg</td><td>59</td><td>lifeboat: hover T/W 1.82 EST under the 2.0 gate, no ArduPilot file</td></tr>
+    </tbody>
+  </table></div>
+  <p class="ds-body">Next steps: SITL crosswind hover, bench thrust and yaw tests, one BOM and one mission definition before the 15 Dec order. Reverses on R1-R5 (BOARD §5).</p>
+  <p class="ds-body"><b>D-181 (small quadplane B, provisional) was superseded the same day.</b> It rested on $1,625 with X2212 lift thrust no one had measured; B's own sizing moved to MN3110 motors and 2.06-2.18 kg, which removed the cost case.</p>
+</section>
+
+<div class="ds-rowlabel">Previous decision (K09-L; superseded 2026-11-14 by D-181, then D-182) <span>K09-L, decided 2026-11-09; kept as the record. The pages below still describe K09-L.</span></div>
+
 
 <!-- ================= 1. DECISION ================= -->
 <section class="c hero" id="decision">

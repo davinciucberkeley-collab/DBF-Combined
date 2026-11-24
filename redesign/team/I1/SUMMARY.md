@@ -1,6 +1,10 @@
 # I1 Procurement / BOM: K09-L
 
-> **R4, 2026-11-13 (supersedes the numbers below):** committed spend $1,631.07 baseline / $1,716.28 pessimistic, reserve $368.93 / $283.72 (short of $309 by $25.28), all-in pessimistic reserve +$20.45. See `ORDER-PLAN.md` and `bom_summary.json`; the figures in the table below are from I1-R1.
+> **R7, 2026-11-14 (final re-run; supersedes R6; quote `bom_summary.json` only):** X2814 x5, APC 11x8E/EP, 2 x Gens Ace Shorty 6000 HV, 13 x Rubycon 35PZJ560M10X15, XT60H, cardboard box, release film. Pessimistic at-order spend **$2,315.08**; flight-ready all new incl. X14 tools **$2,979.84**, plus $130 crash = **$3,109.84, $1,109.84 over $2,000**. Priced levers L1-L11 leave $2,736.97 (still $736.97 over); all tier-2 options leave $2,247.49 ($247.49 over). See `review/CLOSURE-ROUND-2026-11-14/I1.md` (Final re-run).
+
+> **R6, 2026-11-14 (closure round; supersedes R5 and everything below; quote `bom_summary.json` only):** D-147 tube now in the BOM (`W10` $151.96, plug tube `D08`). Pessimistic flight-ready spend **$2,259.38**; plus the $130 crash line (`crash_cost_usd`, D-160) = **$2,389.38, $389.38 over $2,000** with everything bought new (column a). If the team already owns the transmitter + 18650s, charger, watt meter and IR thermometer (column b, user to confirm): $2,052.17 + 130 = **$2,182.17, $182.17 over**. X14 tools bought new add $507.21 more. At order: reserve $31.08 pessimistic / $122.79 baseline against $130 (both FAIL). Report: `review/CLOSURE-ROUND-2026-11-14/I1.md`.
+
+> **R5, 2026-11-13 (CDR fix round; supersedes every figure below; quote `bom_summary.json` only):** reserve **at order** $227.11 baseline / **$98.01 pessimistic** (spend $1,772.89 / $1,901.99; crash line $309 FAILS by $210.99, the B3 proposal $227.89 would fail by $129.88); reserve **flight-ready** (+ X07 box, + X08 airspeed) **-$42.47 / -$235.84** (over the $2 000 cap). See `ORDER-PLAN.md` "What changed in R5" and `review/CDR-2026-11-13/fixes/S4.md`. The table below is from I1-R1.
 
 Revision I1-R1, 2026-11-09. Status `PROPOSED`: every price is `UNVERIFIED` until the order-day re-read (`T-I1-LISTINGS`).
 Files: [`BOM.csv`](BOM.csv) (one line per purchase) · [`ORDER-PLAN.md`](ORDER-PLAN.md) · `build_bom.py` → `claims.json`, `bom_summary.json` · [`CHANGE-REQUESTS.md`](CHANGE-REQUESTS.md).

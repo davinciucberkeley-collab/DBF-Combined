@@ -365,7 +365,14 @@ kit.test("T-F3-FW-LOAD", "Load stable Plane, tailsitter parameters present, bdsh
                    "SERVO_BLH_BDMASK 15 with Bluejay ESCs; spin each motor in motor test (props off); check log on SD")
 kit.test("T-F3-I2C-SCAN", "All I2C devices detected and reading", verifies=["CL-F3-I2C-CLASH"],
          procedure="boot with GPS and airspeed connected: messages list SPL06, QMC5883, MS4525; blow on the pitot, "
-                   "airspeed rises and baro altitude does not jump")
+                   "airspeed rises and baro altitude does not jump. CDR-26 compass step: read COMPASS_DEV_ID in "
+                   "Mission Planner (Setup > Compass, or the parameter decoded as bus / address / devtype): address "
+                   "0x0D = QMC5883L, 0x2C = QMC5883P; both drivers are in the 4.7.2 CoreWingF405WingV2 build "
+                   "(features.txt read 2026-11-13: AP_COMPASS_QMC5883L_ENABLED, AP_COMPASS_QMC5883P_ENABLED). If "
+                   "COMPASS_DEV_ID stays 0 with the module wired, the chip is neither: fit the fallback module "
+                   "Matek M10Q-5883 (QMC5883L, 8 g, JST-GH 6P; about $39.99, RaceDayQuads / Rotor Riot listings found "
+                   "by search 2026-11-13, price to confirm at order). Record SCL rise time with a scope if one is "
+                   "at the bench (CDR-EL-12)")
 kit.test("T-F3-COMPASSMOT", "Compass interference at hover current", verifies=["CL-F3-COMPASS-RATIO"],
          procedure="props on, aircraft tied down standing, COMPASS_MOT calibration ramped to hover throttle; record "
                    "interference %")

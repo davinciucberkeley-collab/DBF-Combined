@@ -1,0 +1,16 @@
+R5_roll case=roll mass=1.455 wind=0 from=0 hold=25 cruise_s=8 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+R5_t0 case=trans mass=1.455 wind=0 from=0 hold=25 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+R5_t5c case=trans mass=1.455 wind=4 from=90 hold=25 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+R5_t5h case=trans mass=1.455 wind=4 from=0 hold=25 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+R5_g0 case=trans mass=1.47 wind=0 from=0 hold=25 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+R5_b45 case=trans mass=1.455 wind=4 from=45 chain=1 hold=30 cruise_s=15 turb=0.5 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+R5_b0 case=trans mass=1.455 wind=0 from=0 chain=1 hold=30 cruise_s=15 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+R5_gb45 case=trans mass=1.47 wind=4 from=45 chain=1 hold=30 cruise_s=15 turb=0.5 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+R5_l0 case=land mass=1.455 wind=0 from=0 hold=25 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+R5_l4 case=land mass=1.455 wind=4 from=90 hold=25 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+R5_cgf case=trans mass=1.455 wind=0 from=0 hold=25 cruise_s=15 cg=19.3 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+R5_cgfw case=trans mass=1.455 wind=4 from=90 hold=25 cruise_s=15 cg=19.3 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+R5_cga case=trans mass=1.47 wind=4 from=90 hold=25 cruise_s=15 cg=23.6 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+R5_rollf case=roll mass=1.455 wind=0 from=0 hold=25 cruise_s=8 cg=19.3 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+R5_rolla case=roll mass=1.455 wind=0 from=0 hold=25 cruise_s=8 cg=23.6 P:THR_MAX=80 P:Q_WVANE_ENABLE=0
+R5_rollg case=roll mass=1.47 wind=0 from=0 hold=25 cruise_s=8 P:THR_MAX=80 P:Q_WVANE_ENABLE=0

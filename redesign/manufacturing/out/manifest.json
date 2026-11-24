@@ -1,27 +1,27 @@
 {
  "CHECKS.md": {
-  "bytes": 24226,
-  "sha256": "6a72947b453919a182dee97e98ef89b7a5871a9b2374bb67157fe21289a9f3a4"
+  "bytes": 24224,
+  "sha256": "da13ced9324a6788a68ce0ef830a0107cfd46ac7fe3c9f96f4315d31e24bdc88"
  },
  "CUT-LIST.csv": {
   "bytes": 12775,
-  "sha256": "09d73d59145888cb645042c805a856f13129482e0f291a6f848a340d79b3dce1"
+  "sha256": "245f54696b8a6b02f80d4af4a9fd1e2c9ec76b9993ee815d6a003585a94f713d"
  },
  "PRINT-LIST.csv": {
-  "bytes": 19731,
-  "sha256": "c41385ea3b1d3f851a040aa3514ecd197642a6b2085202cfa98ac382666c7014"
+  "bytes": 19732,
+  "sha256": "e557e26eccaa0d39c767b0b591f0ca0547ea9843a03e383dc1099ad54544403f"
  },
  "SHOP-PACK.md": {
   "bytes": 6626,
-  "sha256": "65a5031ccfed9592fcb7416d6197be18fd6ab694bd85c39088eca9e1d057d63c"
+  "sha256": "dde3a049a949c1b9b6da49a99ce8c98a63824376cd6c435e2b980cba618e1e6e"
  },
  "contact-sheet.png": {
-  "bytes": 956991,
-  "sha256": "4cd303101a574de756dea111c6d98ab32535563e3bf30102ae9c409f124dd29c"
+  "bytes": 960285,
+  "sha256": "cdf104f88d53b94176f98c7f3435168e53181bdcff93c532fb3a45d6322c1e26"
  },
  "dxf-preview.png": {
-  "bytes": 86026,
-  "sha256": "eae17f2d505b73184add803a5e04e0bc4e5aa63ae8f50dd17046645b2fb7fcba"
+  "bytes": 86052,
+  "sha256": "6da2cee6d36cdebd27d06b9e55de3c262ba70d016140d93e127c7edb3414e815"
  },
  "hotwire/WNG-001_template_root.dxf": {
   "bytes": 28638,
@@ -53,19 +53,19 @@
  },
  "laser/coroplast_sheet1of2.dxf": {
   "bytes": 3470,
-  "sha256": "31ce54f46bb1cf05742ed8fc44397d8e55093f56d19395603b5895b13bc340e3"
+  "sha256": "e2dce8a6b3649b57f5fd7277c6f73789d4c561ada528fe6c34026746bdc7a0e5"
  },
  "laser/coroplast_sheet2of2.dxf": {
   "bytes": 1894,
   "sha256": "1148907e750f0d676abb221bc93ad20dda3bc3446908ea336ed13b27e70cfc5d"
  },
  "laser/foamboard_1to1_letter.pdf": {
-  "bytes": 75644,
-  "sha256": "e7b590c6a6c9670127e73d029c483116995d5513ebe152769c09ad5320599651"
+  "bytes": 75622,
+  "sha256": "e628f5adc9af5cc30de38afccf359b8e1ed8791aa62a214121cb58e974f55ef9"
  },
  "laser/foamboard_sheet1of5.dxf": {
-  "bytes": 42470,
-  "sha256": "cd0834143a8f00e1cbb43ca03f9d816624dca508579b4c0adaec1cb31ac497fe"
+  "bytes": 42308,
+  "sha256": "4e2636902922a71331640ee8abafd348481c70f1e1c1575ff5f407a39b553b55"
  },
  "laser/foamboard_sheet2of5.dxf": {
   "bytes": 40153,
@@ -145,7 +145,7 @@
  },
  "print/GER-001_PETG_x6.stl": {
   "bytes": 27084,
-  "sha256": "36f6779b1f14ce235df0adcf3c3cff10841a1493ba70e3269bc2a7d1c1d2e72c"
+  "sha256": "1cbe3e4cd0a3b54fa223e4ceca7c34144ae8e1817266a08b26523a70d6a166d6"
  },
  "print/GER-002_PETG-blue_x6.stl": {
   "bytes": 11984,
@@ -249,7 +249,7 @@
  },
  "print/POD-003-tab_PETG_x1.stl": {
   "bytes": 684,
-  "sha256": "8ff63391ad765310051c63251dbda996a8ca6252f9d42a678fb091f8cff06090"
+  "sha256": "864fa85af25d367f821186ade03afea25756345449d839fa3757adae5fa4abc8"
  },
  "print/POD-003-tongue_PETG_x1.stl": {
   "bytes": 684,
@@ -289,7 +289,7 @@
  },
  "print/POD-010_PETG_x1.stl": {
   "bytes": 1484,
-  "sha256": "416875995b4995730ee858adff0a0ccd89529df3db1bc1442dbbaa4672fdac0d"
+  "sha256": "6cefb519874bf92575a2548a4eb850a6371bb9af8171585e8f5bcf2c1b3c4a81"
  },
  "print/PWR-006_PETG_x1.stl": {
   "bytes": 8184,

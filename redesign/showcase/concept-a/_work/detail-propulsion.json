@@ -1,0 +1,414 @@
+{
+ "id": "detail-propulsion",
+ "size": [
+  1600,
+  1000
+ ],
+ "scene": "studio",
+ "engine": "CYCLES",
+ "device": "GPU",
+ "samples": 64,
+ "render_s": 69.44,
+ "explode": 0.0,
+ "camera": {
+  "preset": "closeup",
+  "az_deg": -35,
+  "el_deg": 22,
+  "ortho": false,
+  "lens_mm": 70,
+  "location_m": [
+   -0.5425,
+   0.5165,
+   0.3779
+  ],
+  "fit": [
+   "CGE-003-UR",
+   "PRP-001-UR",
+   "PRP-006-UR",
+   "PRP-004-UR",
+   "PRP-005-UR",
+   "PRP-002-UR"
+  ],
+  "frame": [
+   0.22,
+   0.78,
+   0.07,
+   0.93
+  ]
+ },
+ "caption": {
+  "title": "Propulsion station (upper right)",
+  "sub": "X2216 on a canted cup at the end of a CF arm, APC 9x4.5MR prop on its adapter and spinner nut"
+ },
+ "subject_px": [
+  145,
+  277,
+  1549,
+  1035
+ ],
+ "callouts": [
+  {
+   "item": "PRP-001-UR",
+   "x": 751.0,
+   "y": 562.5,
+   "title": "PRP-001-UR",
+   "text": "SunnySky X2216 880KV",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    -0.125,
+    0.2347,
+    0.1626
+   ]
+  },
+  {
+   "item": "PRP-002-UR",
+   "x": 721.4,
+   "y": 476.5,
+   "title": "PRP-002-UR",
+   "text": "APC 9x4.5MR prop (real blade)",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    -0.1416,
+    0.2517,
+    0.1881
+   ]
+  },
+  {
+   "item": "PRP-004-UR",
+   "x": 877.0,
+   "y": 560.9,
+   "title": "PRP-004-UR",
+   "text": "Prop adapter",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    -0.1452,
+    0.2221,
+    0.1669
+   ]
+  },
+  {
+   "item": "PRP-005-UR",
+   "x": 893.8,
+   "y": 530.6,
+   "title": "PRP-005-UR",
+   "text": "Spinner nut",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    -0.1485,
+    0.221,
+    0.1734
+   ]
+  },
+  {
+   "item": "CGE-003-UR",
+   "x": 612.9,
+   "y": 532.6,
+   "title": "CGE-003-UR",
+   "text": "Canted motor cup (17 deg)",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    -0.0987,
+    0.247,
+    0.1623
+   ]
+  }
+ ],
+ "shown": [
+  {
+   "id": "CGE-001",
+   "role": "ghost",
+   "name": "Hub (machined 6061-T6, D-220 / D-221 / D-222: two OCTAGONAL sleeves 16 mm across flats, 1.0 mm wall at the flats, over s +-32 mm of both arm tubes, 38.5 x 20 x 20 mm centre block on the bridge axis to the tray face, 3 mm edge radii, internal radii 1.0 / 0.9 mm at the junctions (OCC mesh, hub_body.py), 0.5 mm sleeve-mouth and lead-exit chamfers, 2 strut sockets, tray flange; hub pockets T-077 p4: block aft of x +15.5 and the 30 mm bond collar (D-220) turned to a cylinder R 9.25 mm about the bridge axis (wall 1.25 mm round the 16 mm bore); mass = drawn volume x 2.70 g/cm3)",
+   "status": "MODELLED",
+   "mass_g": 43.3,
+   "subsystem": "cage",
+   "bbox_px": [
+    1223,
+    765,
+    1549,
+    999
+   ]
+  },
+  {
+   "id": "CGE-003-UR",
+   "role": "context",
+   "name": "Motor cup (UR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
+   "status": "MODELLED",
+   "mass_g": 8.96,
+   "subsystem": "cage",
+   "bbox_px": [
+    551,
+    402,
+    781,
+    624
+   ]
+  },
+  {
+   "id": "CGE-004",
+   "role": "context",
+   "name": "Bridge 16x14 (D-206, torsion; axis z -2 mm; D-202: starts 15 mm aft of the hub axis, bored into the boss)",
+   "status": "MODELLED",
+   "mass_g": 8.6,
+   "subsystem": "cage",
+   "bbox_px": [
+    1073,
+    685,
+    1410,
+    903
+   ]
+  },
+  {
+   "id": "CGE-005-R",
+   "role": "context",
+   "name": "V strut 8x6 (R), T-077 p7 (D-225 resize; was 6x4.0, D-219)",
+   "status": "MODELLED",
+   "mass_g": 10.2,
+   "subsystem": "cage",
+   "bbox_px": [
+    145,
+    895,
+    1361,
+    1035
+   ]
+  },
+  {
+   "id": "PRP-001-UR",
+   "role": "context",
+   "name": "Motor SunnySky X2216 V3 880KV short shaft (UR), 67.5 g with 100 mm leads (EST that the page mass includes them)",
+   "status": "MODELLED",
+   "mass_g": 67.5,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    655,
+    445,
+    888,
+    605
+   ]
+  },
+  {
+   "id": "PRP-006-UR",
+   "role": "context",
+   "name": "X-mount, SunnySky, supplied with the motor (UR): 34 x 34 cross, 3 mm; 4 x M3 countersunk to the motor, 4 x M3x14 + nyloc to the cup; mass CALC (aluminium EST)",
+   "status": "MODELLED",
+   "mass_g": 9.2,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    592,
+    417,
+    797,
+    622
+   ]
+  },
+  {
+   "id": "PRP-004-UR",
+   "role": "context",
+   "name": "Prop adapter, SunnySky (Phi17 x 4 flange + M5 stud 18.5, 3 x M2 on Phi 12) + prop washer Phi 14.8 x 2 (UR); supplied with the motor; mass CALC 6061, EST",
+   "status": "MODELLED",
+   "mass_g": 3.6,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    796,
+    479,
+    933,
+    576
+   ]
+  },
+  {
+   "id": "PRP-005-UR",
+   "role": "context",
+   "name": "M5 nyloc nut ISO 10511 (s 8, m 5) on the adapter stud (UR); replaces the supplied bullet nut (size not published); mass CALC steel",
+   "status": "MODELLED",
+   "mass_g": 1.4,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    872,
+    506,
+    930,
+    557
+   ]
+  },
+  {
+   "id": "PRP-002-UR",
+   "role": "context",
+   "name": "Prop APC 9x4.5MRP (UR), CW reverse",
+   "status": "MODELLED",
+   "mass_g": 11.06,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    350,
+    277,
+    1254,
+    724
+   ]
+  },
+  {
+   "id": "E-HRN-02",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    595,
+    476,
+    1439,
+    876
+   ]
+  }
+ ],
+ "hidden": [
+  "AVN-002",
+  "AVN-003",
+  "AVN-004",
+  "AVN-005",
+  "AVN-006",
+  "AVN-007",
+  "AVN-008",
+  "AVN-009-S",
+  "AVN-009-T",
+  "AVN-010",
+  "CGE-002-A",
+  "CGE-002-B",
+  "CGE-003-LL",
+  "CGE-003-LR",
+  "CGE-003-UL",
+  "CGE-005-L",
+  "CGE-006",
+  "CGE-007-L",
+  "CGE-007-R",
+  "CGE-008",
+  "CGE-009-LL",
+  "CGE-009-LR",
+  "CGE-009-UL",
+  "CGE-009-UR",
+  "CGE-010-C",
+  "CGE-010-LL",
+  "CGE-010-LR",
+  "CGE-010-UL",
+  "CGE-010-UR",
+  "E-HRN-01",
+  "E-HRN-03",
+  "E-HRN-04",
+  "E-HRN-05",
+  "E-HRN-06",
+  "E-HRN-07",
+  "E-HRN-08",
+  "E-HRN-09",
+  "E-HRN-10",
+  "E-HRN-11",
+  "E-HRN-12",
+  "E-HRN-13",
+  "E-HRN-14",
+  "FIN-001-L",
+  "FIN-001-R",
+  "FIN-002-L",
+  "FIN-002-R",
+  "FIN-003-L",
+  "FIN-003-R",
+  "FIN-004-L",
+  "FIN-004-R",
+  "FIN-005-L",
+  "FIN-005-R",
+  "FIN-006-L",
+  "FIN-006-R",
+  "FIN-009-L",
+  "FIN-009-R",
+  "FIN-010-L",
+  "FIN-010-R",
+  "GER-001-LL",
+  "GER-001-LR",
+  "GER-001-UL",
+  "GER-001-UR",
+  "GER-002-LL",
+  "GER-002-LR",
+  "GER-002-UL",
+  "GER-002-UR",
+  "HRD-001",
+  "HRN-001",
+  "HRN-002",
+  "HRN-003-L",
+  "HRN-003-R",
+  "HRN-004-LL",
+  "HRN-004-LR",
+  "HRN-004-UL",
+  "HRN-004-UR",
+  "HWC-001",
+  "HWC-002-L",
+  "HWC-002-R",
+  "HWC-003",
+  "MEC-001-L",
+  "MEC-001-R",
+  "MEC-002-L",
+  "MEC-002-R",
+  "MEC-003-L",
+  "MEC-003-R",
+  "MEC-004-L",
+  "MEC-004-R",
+  "MEC-005-L",
+  "MEC-005-R",
+  "MEC-008-L",
+  "MEC-008-R",
+  "PRP-001-LL",
+  "PRP-001-LR",
+  "PRP-001-UL",
+  "PRP-002-LL",
+  "PRP-002-LR",
+  "PRP-002-UL",
+  "PRP-003",
+  "PRP-004-LL",
+  "PRP-004-LR",
+  "PRP-004-UL",
+  "PRP-005-LL",
+  "PRP-005-LR",
+  "PRP-005-UL",
+  "PRP-006-LL",
+  "PRP-006-LR",
+  "PRP-006-UL",
+  "PWR-001",
+  "PWR-002",
+  "PWR-003",
+  "WNG-001",
+  "WNG-002",
+  "WNG-003-C",
+  "WNG-004-L",
+  "WNG-004-R",
+  "WNG-005-L",
+  "WNG-005-R",
+  "WNG-006-L",
+  "WNG-006-R",
+  "WNG-007-L",
+  "WNG-007-R",
+  "WNG-008-LL",
+  "WNG-008-LU",
+  "WNG-008-RL",
+  "WNG-008-RU",
+  "WNG-009-L",
+  "WNG-009-R",
+  "WNG-010-L",
+  "WNG-010-R",
+  "WNG-011",
+  "WNG-012",
+  "WNG-013-L",
+  "WNG-013-R",
+  "WNG-014-L",
+  "WNG-014-R"
+ ],
+ "clipped": [],
+ "legend": [
+  "context",
+  "ghost"
+ ],
+ "files": {
+  "png": "detail-propulsion.png",
+  "jpg": "detail-propulsion.jpg"
+ }
+}

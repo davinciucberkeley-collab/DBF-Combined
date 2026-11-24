@@ -1,0 +1,40 @@
+{
+"tag": "w_a70",
+"args": [
+"inst=0",
+"hold=40",
+"wind=5",
+"from=70",
+"arm=1.2"
+],
+"summary": {
+"n": 708,
+"t_window": [
+8.027,
+43.967
+],
+"wind_ms": 5.0,
+"lean_max": 13.3,
+"lean_mean": 10.6,
+"lean_pre": 1.0,
+"u_max": 0.727,
+"u_mean_max": 0.716,
+"t_cap_s": 0.0,
+"t_cap_run_s": 0.0,
+"t_ge85_s": 0.0,
+"u_min": 0.407,
+"t_floor_s": 0.0,
+"t_floor_run_s": 0.0,
+"yaw_err_max": 8.0,
+"yaw_err_rms": 3.64,
+"pos_err_max": 1.48,
+"pos_err_rms": 0.46,
+"pos_err_last20_mean": 0.34,
+"alt_dev_max": 0.06,
+"diag_spread_max": 0.291,
+"diag_spread_mean": 0.221
+},
+"armed": true,
+"reached_alt": true,
+"events": []
+}

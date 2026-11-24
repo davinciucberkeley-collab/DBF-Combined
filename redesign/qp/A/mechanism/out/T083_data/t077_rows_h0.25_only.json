@@ -1,0 +1,54 @@
+{
+ "h_mm": 0.25,
+ "rho": 1.27,
+ "rows": [
+  {
+   "id": "CGE-003-UR",
+   "listed_g": 7.68,
+   "vol_cm3": 8.690375000000001,
+   "solid_g": 11.036776250000003,
+   "cls": "S",
+   "build_axis": "x",
+   "core_frac": 0.31361563799030534,
+   "computed_g": 8.959992875000001,
+   "name": "Motor cup (UR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "CGE-003-UL",
+   "listed_g": 7.68,
+   "vol_cm3": 8.690375000000001,
+   "solid_g": 11.036776250000003,
+   "cls": "S",
+   "build_axis": "x",
+   "core_frac": 0.31361563799030534,
+   "computed_g": 8.959992875000001,
+   "name": "Motor cup (UL; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "CGE-003-LR",
+   "listed_g": 7.68,
+   "vol_cm3": 8.690375000000001,
+   "solid_g": 11.036776250000003,
+   "cls": "S",
+   "build_axis": "x",
+   "core_frac": 0.31361563799030534,
+   "computed_g": 8.959992875000001,
+   "name": "Motor cup (LR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "CGE-003-LL",
+   "listed_g": 7.68,
+   "vol_cm3": 8.690375000000001,
+   "solid_g": 11.036776250000003,
+   "cls": "S",
+   "build_axis": "x",
+   "core_frac": 0.31361563799030534,
+   "computed_g": 8.959992875000001,
+   "name": "Motor cup (LL; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D",
+   "material": "PETG (printed)"
+  }
+ ]
+}

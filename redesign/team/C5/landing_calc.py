@@ -21,7 +21,8 @@ sys.path.insert(0, str(HERE.parents[1] / "proofs"))          # redesign/proofs (
 import proofkit as pk  # noqa: E402
 
 kit = pk.Kit(__file__, params=["../../params/params.json", "../A3/rollup/mass_items.json",
-                               "../../subsystems/landing/params.json", "../../subsystems/pod/params.json"])
+                               "../../subsystems/landing/params.json", "../../subsystems/pod/params.json",
+                               "../../subsystems/flight-software/params.json"])
 P = "P:"
 
 # ---------------------------------------------------------------- sources and assumptions
@@ -378,6 +379,66 @@ def wind(g, rho, b, c, foot, fin_c, fin_hh, y_fin, z_pad, cd90, v_card, v_gust, 
             "v_lift_flat_empty_ms": math.sqrt(2 * m_e * g / (rho * S * cl_flat))}
 
 
+WVANE_AZ = {1: (180.0,), 2: (180.0, 0.0), 3: (90.0, 270.0), 4: (0.0,)}   # ArduPilot Q_WVANE_* values (F4-W2.md)
+WIND_HEAD_IN = {k: WIND_IN[k] for k in ("g", "rho", "b", "c", "y_fin", "z_pad", "cd90", "err", "v_td", "m", "z_cg", "h",
+                                        "Iyy", "Izz", "m_a3")}
+WIND_HEAD_IN.update({"wv": P + "fsw.wvane_land", "herr": "ASM-C5-HEADING-ERR"})
+
+
+def _v_land_az(az, g, rho, S, cd90, err, v_td, m, z_pad, z_cg, h, y_fin, k2y, k2z):
+    """Static landing wind limit for a lean toward azimuth az (0 = pod (+z) face to the wind, 180 = belly (-z)).
+    Tilt lean(V) + err and drift v_td both point along az; each stance axis is checked on its own component:
+    (lean + err) |cos az| + delta_n(v_td |cos az|) <= beta_n(side) and the same with |sin az| on the wide axis."""
+    a = math.radians(az)
+    cz, sy = math.cos(a), abs(math.sin(a))
+    arm_n = z_pad - z_cg if cz >= 0 else z_pad + z_cg       # pod-side or belly-side pad line
+    axes = [(abs(cz), arm_n, k2y), (sy, y_fin, k2z)]
+
+    def ok(V):
+        tilt = math.degrees(math.atan(0.5 * rho * V * V * S * cd90 / (m * g))) + err
+        for c_, arm, k2 in axes:
+            if c_ < 1e-9:
+                continue
+            beta = math.degrees(math.atan(arm / h))
+            delta = beta - _phi_for_v(arm, h, v_td * c_, k2, g)
+            if tilt * c_ + delta > beta:
+                return False
+        return True
+    if not ok(0.0):
+        return 0.0
+    lo, hi = 0.0, 30.0
+    if ok(hi):
+        return hi
+    for _ in range(60):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if ok(mid) else (lo, mid)
+    return lo
+
+
+@kit.calc("CALC-C5-WIND-HEADING", title="Static landing wind limit at the commanded landing heading (D-152)",
+          inputs=WIND_HEAD_IN,
+          units={"g": "m/s2", "rho": "kg/m3", "b": "m", "c": "m", "y_fin": "m", "z_pad": "m", "err": "deg",
+                 "v_td": "m/s", "m": "kg", "z_cg": "m", "h": "m", "Iyy": "kg m2", "Izz": "kg m2", "m_a3": "kg",
+                 "herr": "deg"},
+          equation="as CALC-C5-WIND v_land, with the lean (full broadside area S = b c at every azimuth, as the 6-DOF "
+                   "claim), the 10 deg error and the drift all toward azimuth az: narrow axis (lean + err)|cos az| + "
+                   "delta_n(v_td |cos az|) <= beta_n, pad line on the pod side (z_pad - z_cg) for |az| < 90 and the "
+                   "belly side (z_pad + z_cg) beyond ; wide axis the same with |sin az|, y_fin, Izz ; V by bisection. "
+                   "Q_WVANE_LAND -> headings 1: 180, 2: 180 / 0, 3: 90 / 270, 4: 0, else every 30 deg ; azimuths = "
+                   "heading and heading +/- herr ; limit = min over them ; pod face = az 0")
+def wind_heading(g, rho, b, c, y_fin, z_pad, cd90, err, v_td, m, z_cg, h, Iyy, Izz, m_a3, wv, herr):
+    S = b * c
+    k2y, k2z = Iyy / m_a3, Izz / m_a3
+    hs = WVANE_AZ.get(int(round(wv)), tuple(30.0 * k for k in range(12)))
+    use = sorted({(h_ + d) % 360.0 for h_ in hs for d in (-herr, 0.0, herr)})
+    v = {az: _v_land_az(az, g, rho, S, cd90, err, v_td, m, z_pad, z_cg, h, y_fin, k2y, k2z) for az in use}
+    v0 = _v_land_az(0.0, g, rho, S, cd90, err, v_td, m, z_pad, z_cg, h, y_fin, k2y, k2z)
+    return {"v_land_heading_ms": min(v.values()), "v_pod_face_ms": v0, "azimuths_deg": use,
+            "v_by_azimuth_ms": [[az, v[az]] for az in use],
+            "beta_belly_deg": math.degrees(math.atan((z_pad + z_cg) / h)),
+            "beta_pod_deg": math.degrees(math.atan((z_pad - z_cg) / h))}
+
+
 # scalar claims that carry CALC-C5-STANCE results into CALC-C5-WIND (inputs must be node ids)
 kit.claim("CL-C5-MASS-R1", "Flying mass, R1 roll-up with D5 feet, pack trimmed to the B3 target", calc="CALC-C5-STANCE", output="m_r1_kg",
           unit="kg", how="T-A1-WEIGH.")
@@ -414,9 +475,18 @@ kit.claim("CL-C5-TIPOVER-REQ-BROADSIDE", "Tip-over needed, broadside landing, 5 
 kit.claim("CL-C5-TIPOVER-REQ-SPANWISE", "Tip-over needed on the narrow axis, span-into-wind landing",
           calc="CALC-C5-WIND", output="beta_req_spanwise_deg", unit="deg", limit=("<=", "CL-C5-TIPOVER-R1"),
           verifies=["R-TIPOVER"], how="As above; the lean then acts on the wide axis.")
-kit.claim("CL-C5-V-LAND-BROADSIDE", "Wind limit for a broadside fin-tip landing", calc="CALC-C5-WIND",
-          output="v_land_broadside_ms", unit="m/s", limit=(">=", P + "requirements.wind_limit_ms"),
-          how="Landing practice (H2) with the anemometer; count tip-overs.")
+kit.claim("CL-C5-V-LAND-BROADSIDE", "Static wind limit for a fin-tip landing at the commanded heading "
+          "(Q_WVANE_LAND +/- 30 deg)", calc="CALC-C5-WIND-HEADING",
+          output="v_land_heading_ms", unit="m/s", limit=(">=", P + "requirements.wind_limit_ms"),
+          note="C5-W2 (D-152): heading from fsw.wvane_land (1 = belly into the wind), worst of the heading and "
+               "+/- ASM-C5-HEADING-ERR; was the pod-face case (now CL-C5-V-LAND-POD-FACE). Static, pivot stuck; "
+               "the 6-DOF check is CL-C5-SIM3D-V-BROADSIDE",
+          how="Landing practice (H2) with the anemometer, heading logged; count tip-overs.")
+kit.claim("CL-C5-V-LAND-POD-FACE", "Static wind limit, pod (+z) face to the wind (information)",
+          calc="CALC-C5-WIND-HEADING", output="v_pod_face_ms", unit="m/s",
+          note="C5-W2 (D-152): information row, no limit; the heading D-152 forbids (flight card: abort and "
+               "re-orient if the pod faces the wind). Same value as CALC-C5-WIND v_land_broadside_ms",
+          how="H3 flight card.")
 kit.claim("CL-C5-V-LAND-SPANWISE", "Wind limit for a span-into-wind landing", calc="CALC-C5-WIND",
           output="v_land_spanwise_ms", unit="m/s", limit=(">=", P + "requirements.gust_survive_ms"),
           verifies=["R-WIND"], how="Landing practice (H2) with a wingtip into the measured wind.")
@@ -436,10 +506,13 @@ kit.claim("CL-C5-V-TIP-PARKED-EMPTY", "Wind that tips the parked aircraft, pack 
 kit.claim("CL-C5-V-SLIDE-GRASS-EMPTY", "Wind that slides it on grass, pack out", calc="CALC-C5-WIND",
           output="v_slide_grass_empty_ms", unit="m/s", how="Spring-scale pull of the parked aircraft on RFS grass.")
 kit.claim("CL-C5-V-PARK-GUST", "Largest gust to leave it standing (on the mat)", calc="CALC-C5-WIND",
-          output="v_park_gust_mat_ms", unit="m/s", limit=(">=", P + "requirements.wind_limit_ms"),
-          verifies=["R-WIND"],
-          note="pack out governs; factor 1.5 on moment and friction. Below the 5 m/s card on grass: lay it flat",
-          how="Handheld anemometer gust reading at the landing mat (H3 flight card).")
+          output="v_park_gust_mat_ms", unit="m/s",
+          note="D-105 (CDR decision B1): the pad face is held to mu <= 0.40 (requirements.pad_mu_max) to cap the "
+               "foot side load, so the parked aircraft now slides before it tips and this value is below the 5 m/s "
+               "card (it was 5.36 m/s at mu 0.7). The limit is removed on purpose: the aircraft is not left "
+               "standing; it is laid flat (CL-C5-V-LIFT-FLAT) or tied by the strap eyes when parked (flight card, "
+               "H3). Pack out governs; factor 1.5 on moment and friction",
+          how="Handheld anemometer gust reading at the landing mat (H3 flight card); parked rule on the card.")
 kit.claim("CL-C5-V-PARK-GUST-GRASS", "Largest gust to leave it standing on grass", calc="CALC-C5-WIND",
           output="v_park_gust_grass_ms", unit="m/s", how="As CL-C5-V-PARK-GUST, on grass.")
 kit.claim("CL-C5-V-LIFT-FLAT", "Wind that lifts it lying flat, pack out", calc="CALC-C5-WIND",
@@ -556,10 +629,20 @@ kit.claim("CL-C5-WINGTIP-ROLL-CRUSHED", "Roll error that grounds the wingtip TE,
           note="about 10.7 deg with the feet uncrushed; during a hard landing the first foot crushes and the wingtip "
                "TE corner touches at about 6 deg: protect the corner (CR-C5-04)",
           how="T-C5-AIRCRAFT-DROP roll and corner drops: witness tape on the wingtip TE corners.")
-kit.claim("CL-C5-LANDINGS-PER-CARTRIDGE", "Normal 0.5 m/s landings before the replace mark", calc="CALC-C5-DROP",
-          output="landings_per_cartridge", unit="-", limit=(">=", 5.0),
-          note="FAILS at D5-R4: 1.28 mm permanent set per 0.5 m/s landing (CL-D5-SET-NORMAL) against the replace "
-               "mark; D5 owns the fix (CR-D5-21: mark position or a no-set touchdown below CL-D5-V-NO-SET 0.32 m/s)",
+kit.assumption("ASM-C5-TD-PER-SORTIE", "Touchdowns per sortie: 1 landing + 1 go-around touchdown",
+               "Most touchdowns one cartridge set must take between two foot inspections. Feet are inspected and "
+               "swapped only on the ground between sorties (requirements.foot_replace_max_min 10 min, at the pack "
+               "swap), so a set must not reach its replace mark inside one sortie",
+               basis="review/CLOSURE-ROUND-2026-11-14/A2.md#2.5 (the 5 had no user or physical basis; limit = "
+                     "touchdowns per sortie): 1 planned landing + at most 1 go-around touchdown (flight card 4b, "
+                     "requirements.goaround_hover_s) = 2. H2 states it in FLIGHT-TEST-PLAN (C5 closure request)",
+               value=2.0, unit="-", status="PROPOSED")
+kit.claim("CL-C5-LANDINGS-PER-CARTRIDGE-HAND", "Normal 0.5 m/s landings before the replace mark, symmetric hand set "
+          "(record)", calc="CALC-C5-DROP", output="landings_per_cartridge", unit="-",
+          note="C5 closure 2026-11-14: record only. D5's symmetric hand set (CL-D5-SET-NORMAL, four feet share the "
+               "energy) under-states the worst foot: the 3-D sim gives a larger set on the upper (pod-side) pair. The "
+               "claim of record is CL-C5-LANDINGS-PER-CARTRIDGE in claims.sim.json (3-D set, low plateau, limit "
+               "ASM-C5-TD-PER-SORTIE), with CL-C5-MARK-HONEST-MARGIN",
           how="H2 records the flange gap after each landing for the first 10 flights.")
 
 
@@ -792,8 +875,8 @@ kit.claim("CL-C5-DYN-VALID", "Model check: symmetric free level drop vs the hand
           how="Re-run; compare with CL-C5-DROP-STROKE.")
 kit.claim("CL-C5-FOOT-SIDE-LOAD", "Foot side load at the pad, mat friction, one foot first", calc="CALC-C5-DROP-DYN",
           output="side_load_N", unit="N", limit=("<=", "CL-C5-FOOT-SIDE-C1"), parts=FEET,
-          note="the landing mat and neoprene pad (mu 0.7) raise C1's L4/L5 side load (mu 0.5) by 40 %; C4's fin "
-               "face stress scales with it (CR-C5-09)",
+          note="hand value mu_pad x corner load at the D-105 pad face (mu <= 0.40); the design value is the cap "
+               "requirements.foot_side_load_cap_n, checked by the 6-DOF sim (CL-C5-SIM3D-SIDE-12)",
           how="T-D5-PAD-MU gives mu; C4's T-C4-FIN-PROOF at 1.5 x this load.")
 kit.claim("CL-C5-FOOT-SIDE-C1", "Foot side load in C1 case L4 (C1 friction as carried)", calc="CALC-C5-DROP-DYN",
           output="side_load_c1_N", unit="N", how="C1 LOADS.md case L4.")
@@ -845,85 +928,118 @@ kit.test("T-C5-AIRCRAFT-DROP", "Aircraft drop (= T-C1-FOOT-DROP), proposed foot"
 kit.assumption("ASM-C5-SPREADER-T", "Spreader plate 1.5 mm", "Printed PETG plate between the pack fore face and the "
                "crush block, so the block's whole section works", basis="D2 tray practice (1.5 mm stop wall)",
                value=0.0015, unit="m", status="PROPOSED")
+kit.assumption("ASM-C5-BLOCK-FIT-GAP", "Crush block fit gap to each bay guide 0.3 mm, no lateral spread in the crush",
+               "Clearance between each side of the cut XPS crush block and the bay guide; the block is taken not to "
+               "spread into it while it crushes, so only the drawn 51.4 mm width carries the plateau stress",
+               basis="drawn block width bay W - 2 x 0.3 mm (subsystems/pod/fusion/pod.py POD-009 section, D2-W2.md); "
+                     "crushable closed-cell foam compacts in place with a near-zero plastic Poisson ratio, so a 0.3 mm "
+                     "gap is not closed (T-D5-COUPON: coupon cut to the drawn section checks it)",
+               value=0.0003, unit="m", status="UNVERIFIED")
 CRASH_IN = {"v": "ASM-C1-CRASH-V",
             "g": P + "env.g_ms2", "n_pack": "ASM-C5-PACK-G-MAX", "sigma": "ASM-D5-XPS-PLATEAU",
             "eps_d": "ASM-D5-DENSIFY", "eps_y": "ASM-D5-YIELD-STRAIN", "pack": P + "battery.size_m",
             "bay_w": "CL-D2-BAY-W", "bay_h": "CL-D2-BAY-H", "blk_a": P + "nose_block_l_m",
+            "a_sec": "CL-D2-BLOCK-SECTION", "a_step": "CL-D2-BLOCK-STEP-SECTION", "l_step": "CL-D2-BLOCK-STEP-L",
+            "sec": "ASM-D2-BLOCK-SEC", "fit": "ASM-C5-BLOCK-FIT-GAP", "blk_d2": "ASM-D2-STACK-BLOCK-A1",
             "stop": P + "fwd_stop_m", "st": P + "pack_x_per_pack_m",
             "x_pack": "CL-C5-PACK-X-B3", "x_light": "CL-C5-PACK-X-B3-LIGHT", "x_heavy": "CL-C5-PACK-X-B3-HEAVY",
             "t_sp": "ASM-C5-SPREADER-T", "box": P + "requirements.box_external_m",
             "bwall": "ASM-A1-WALL", "env": P + "transport.envelope_props_off_m",
             "x_le": P + "pod.x_le_m", "t_nose": P + "fins.board_t_m", "blk_min": "ASM-A3-NOSE-STACK"}
-PACKS = ("546", "551", "590")      # D-64: listing - 5 g, listing, acceptance line; stations from the D2 table in order
+# D-174 (A1, closure round 2026-11-14): the flight pack is the 98 mm Gens Ace Shorty, 404 / 414 / 424 g (light / listing +
+# pigtails / worst) all at -0.0545 (P:pack_x_per_pack_m). "551" is kept only as the energy-length reference that D2 scales
+# its block from (ASM-D2-C5-BLOCK-BASIS, CL-C5-BLOCK-L); its station is the nominal pack's.
+PACKS = ("404", "414", "424")
+REF = "551"
+ALLP = PACKS + (REF,)
 
 
-@kit.calc("CALC-C5-CRASH", title="Crush block ahead of the pack (5 m/s nose-in), D-62 bay (nose -0.140 m), D-64 packs",
+@kit.calc("CALC-C5-CRASH", title="Crush block ahead of the pack (5 m/s nose-in), D-150 drawn block section and step, "
+          "D-64 packs",
           inputs=CRASH_IN,
           units={"v": "m/s", "g": "m/s2", "sigma": "Pa", "pack": "m", "bay_w": "m",
-                 "bay_h": "m", "blk_a": "m", "stop": "m", "st": "m", "x_pack": "m", "x_light": "m", "x_heavy": "m",
+                 "bay_h": "m", "blk_a": "m", "a_sec": "m2", "a_step": "m2", "l_step": "m", "sec": "m", "fit": "m",
+                 "blk_d2": "m", "stop": "m", "st": "m", "x_pack": "m", "x_light": "m", "x_heavy": "m",
                  "t_sp": "m", "box": "m", "bwall": "m", "env": "m", "x_le": "m", "t_nose": "m", "blk_min": "m"},
-          equation="per weighed pack mass m (546 / 551 / 590 g, D-64) at its D-62 station x_p (flight-card mark) and "
-                   "at the C5 trim to the D-62 target: F = min(n_pack m g, sigma A_bay) ; KE = m v^2 / 2 ; eff = eps_d - "
-                   "eps_y / 2 ; nose wall inside face x_n = x_le + t_nose ; block A L_A = nose_block_l_m ; forward stop "
-                   "(t_stop, h_stop, w = fwd_stop_m) aft face x_s = x_n + L_A + t_stop ; block B fills x_s .. pack fore face "
-                   "behind a t_sp spreader ; capacities add: gap_B needed = t_sp + max(0, KE - F_A eff L_A) / (F eff), "
-                   "F_A = min(F, sigma A_stop) ; full-section stop A_stop = A_bay ; D2's stop as drawn A_stop = h_stop w ; "
-                   "margin = (x_p - L_pack/2 - x_s) - gap_B needed ; most forward station x_fwd_max = x_p - margin ; "
-                   "block A (1 mm epoxy bond since D-47) gets no crush credit ; crush-stack station (A3/A1 nose stack blk_min from the pod LE) x_stack = x_le + blk_min + L_pack/2, stack margin = "
-                   "x_stack - x_fwd_max ; extension = max(0, -worst margin) ; box x slack = box_x - 2 wall - "
+          equation="per weighed pack mass m (546 / 551 / 590 g, D-64) at its station x_p (flight-card mark) and "
+                   "at the C5 trim to the D-62 target. Section (C5-W2, D-150): D2's drawn block section A_sec "
+                   "(CL-D2-BLOCK-SECTION, 52 mm wide) and over the fore-top step A_st (CL-D2-BLOCK-STEP-SECTION) for "
+                   "its length L_st ; drawn width bay_w - 2 fit, no lateral spread: A_L = A_sec - 2 fit h, "
+                   "h = (A_sec + groove w d) / bay_w ; A_L,st = A_st - 2 fit (h - step d). Length force "
+                   "F = min(n_pack m g, sigma A_L), F_st = min(n_pack m g, sigma A_L,st) ; KE = m v^2 / 2 ; eff = "
+                   "eps_d - eps_y / 2 ; block B length L_B = KE / (F eff) + L_st (1 - F_st / F) ; pack g "
+                   "n = min(n_pack m g, sigma A_sec) / (m g) (full 52 mm section, the upper force) ; nose wall inside "
+                   "face x_n = x_le + t_nose ; forward stop aft face x_s = x_n + L_A + t_stop (L_A = 1 mm bond line, "
+                   "no crush credit) ; gap_B needed = t_sp + L_B ; margin = (x_p - L_pack/2 - x_s) - gap_B needed ; "
+                   "most forward station x_fwd_max = x_p - margin ; drawn crush-stack station (D2, D-150 block "
+                   "blk_d2 = 31.0 mm) x_stack = x_s + blk_d2 + t_sp + L_pack/2, stack margin = x_stack - x_fwd_max ; "
+                   "A3's stack (information) x_stack_A3 = x_le + blk_min + L_pack/2 ; minimum cut length = "
+                   "max(blk_d2, worst L_B) ; extension = max(0, -worst margin) ; box x slack = box_x - 2 wall - "
                    "(envelope_x + extension)")
-def crash(v, g, n_pack, sigma, eps_d, eps_y, pack, bay_w, bay_h, blk_a, stop, st, x_pack, x_light,
-          x_heavy, t_sp, box, bwall, env, x_le, t_nose, blk_min):
+def crash(v, g, n_pack, sigma, eps_d, eps_y, pack, bay_w, bay_h, blk_a, a_sec, a_step, l_step, sec, fit, blk_d2, stop,
+          st, x_pack, x_light, x_heavy, t_sp, box, bwall, env, x_le, t_nose, blk_min):
     A_bay = bay_w * bay_h
+    h_blk = (a_sec + sec[1] * sec[2]) / bay_w                # block height behind the step (groove added back)
+    A_len = a_sec - 2 * fit * h_blk                          # drawn width, no spread into the fit gaps
+    A_len_st = a_step - 2 * fit * (h_blk - sec[5])
     face = pack[1] * pack[2]
     eff = eps_d - eps_y / 2
     x_n = x_le + t_nose
     t_stop, h_stop, w_stop = stop
     L_A = blk_a
     stop_aft = x_n + L_A + t_stop
-    x_stack = x_le + blk_min + pack[0] / 2                  # A3/A1 nose stack is counted from the pod LE
-    trim = {PACKS[0]: x_light, PACKS[1]: x_pack, PACKS[2]: x_heavy}
+    x_stack = stop_aft + blk_d2 + t_sp + pack[0] / 2         # D2's drawn stack (D-150)
+    x_stack_a3 = x_le + blk_min + pack[0] / 2                # A3/A1 nose stack is counted from the pod LE
+    trim = {PACKS[0]: x_light, PACKS[1]: x_pack, PACKS[2]: x_heavy, REF: x_pack}
     keys = sorted(st, key=float)
-    if len(keys) != 3 or abs(float(keys[0]) - 546) > 1 or abs(float(keys[2]) - 590) > 1:
-        raise ValueError("pack_x_per_pack_m is not the D-64 546 / 550 / 590 g table: %r" % st)
-    st = dict(zip(PACKS, (st[k] for k in keys)))           # the 551 g listing flies at the 550 g station
+    if len(keys) != 3 or abs(float(keys[0]) - 404) > 1 or abs(float(keys[2]) - 424) > 1:
+        raise ValueError("pack_x_per_pack_m is not the D-174 404 / 414 / 424 g table: %r" % st)
+    st = dict(zip(PACKS, (st[k] for k in keys)))           # D-174: all three at the forward crush stack
+    st[REF] = st[PACKS[1]]
     rows = {}
-    for tag in PACKS:
+    for tag in ALLP:
         mp, xs, xt = float(tag) / 1000.0, st[tag], trim[tag]
-        F = min(n_pack * mp * g, sigma * A_bay)
+        cap = n_pack * mp * g
+        F = min(cap, sigma * A_len)
+        F_st = min(cap, sigma * A_len_st)
+        F_hi = min(cap, sigma * a_sec)
         KE = 0.5 * mp * v * v
         A = F / sigma
         sp = t_sp if A > face else 0.0
-
-        def gap_need(A_stop):
-            # since D-47 'block A' is a 1 mm epoxy bond line, not XPS: it absorbs nothing (C5-R6; R5 credited it)
-            F_A = min(F, sigma * A_stop)
-            return sp + max(0.0, KE - F_A * eff * 0.0 * L_A) / (F * eff)
-        g_full, g_c3 = gap_need(A_bay), gap_need(h_stop * w_stop)
+        L_B = KE / (F * eff) + l_step * (1.0 - F_st / F)
+        # since D-47 'block A' is a 1 mm epoxy bond line, not XPS: it absorbs nothing (C5-R6; R5 credited it), so the
+        # stop section (full or as drawn) no longer changes the gap needed
+        g_full = g_c3 = sp + L_B
         gap = (xs - pack[0] / 2) - stop_aft
         gap_t = (xt - pack[0] / 2) - stop_aft
         x_fwd_max = xs - (gap - g_full)
-        rows[tag] = {"m_kg": mp, "x_pack_m": xs, "x_pack_trim_m": xt, "F_N": F, "n": F / (mp * g), "stroke_m": KE / F,
-                     "L_m": KE / F / eff, "spreader": A > face, "gap_avail_m": gap, "gap_avail_trim_m": gap_t,
+        rows[tag] = {"m_kg": mp, "x_pack_m": xs, "x_pack_trim_m": xt, "F_N": F, "F_step_N": F_st, "F_upper_N": F_hi,
+                     "n": F_hi / (mp * g), "stroke_m": KE / F, "step_dL_m": l_step * (1.0 - F_st / F),
+                     "L_m": L_B, "spreader": A > face, "gap_avail_m": gap, "gap_avail_trim_m": gap_t,
                      "gap_need_full_m": g_full, "gap_need_c3_m": g_c3,
                      "room_avail_m": (xs - pack[0] / 2) - x_n, "room_needed_m": L_A + t_stop + g_full,
                      "margin_full_m": gap - g_full, "margin_c3_m": gap - g_c3, "margin_trim_m": gap_t - g_full,
-                     "x_fwd_max_m": x_fwd_max, "block_fill_m": gap - t_sp, "stack_margin_m": x_stack - x_fwd_max}
-    nom = rows[PACKS[1]]
-    worst = min(rows.values(), key=lambda r: r["margin_full_m"])
-    worst_c3 = min(rows.values(), key=lambda r: r["margin_c3_m"])
-    worst_t = min(rows.values(), key=lambda r: r["margin_trim_m"])
+                     "x_fwd_max_m": x_fwd_max, "block_fill_m": gap - t_sp, "stack_margin_m": x_stack - x_fwd_max,
+                     "stack_margin_a3_m": x_stack_a3 - x_fwd_max}
+    nom = rows[REF]                                        # CL-C5-BLOCK-L stays the 551 g energy reference (D2's basis)
+    flown = {t: rows[t] for t in PACKS}
+    worst = min(flown.values(), key=lambda r: r["margin_full_m"])
+    worst_c3 = min(flown.values(), key=lambda r: r["margin_c3_m"])
+    worst_t = min(flown.values(), key=lambda r: r["margin_trim_m"])
     ext = max(0.0, -worst["margin_full_m"])
-    out = {"A_bay_m2": A_bay, "A_pack_face_m2": face, "packs": rows, "x_nose_inner_m": x_n, "x_stop_aft_m": stop_aft,
-           "x_stack_m": x_stack, "stack_margin_worst_m": min(r["stack_margin_m"] for r in rows.values()),
+    out = {"A_bay_m2": A_bay, "A_len_m2": A_len, "A_len_step_m2": A_len_st, "h_block_m": h_blk,
+           "A_pack_face_m2": face, "packs": rows, "x_nose_inner_m": x_n, "x_stop_aft_m": stop_aft,
+           "x_stack_m": x_stack, "stack_margin_worst_m": min(r["stack_margin_m"] for r in flown.values()),
+           "x_stack_a3_m": x_stack_a3, "stack_margin_a3_worst_m": min(r["stack_margin_a3_m"] for r in flown.values()),
+           "block_L_cut_min_m": max([blk_d2] + [r["L_m"] for r in flown.values()]),
            "L_A_m": L_A, "room_needed_nom_m": nom["room_needed_m"], "room_avail_m": nom["room_avail_m"],
            "room_margin_worst_m": worst["margin_full_m"], "room_margin_c3_stop_m": worst_c3["margin_c3_m"],
            "room_margin_trim_worst_m": worst_t["margin_trim_m"],
            "gap_B_nom_m": nom["gap_avail_m"], "block_L_nom_m": nom["L_m"], "n_pack_nom": nom["n"],
-           "n_pack_max": max(r["n"] for r in rows.values()),
+           "n_pack_max": max(r["n"] for r in flown.values()),
            "room_ideal_m": 0.5 * v * v / (n_pack * g) / eff,
            "nose_ext_m": ext, "box_x_slack_m": (box[1] - 2 * bwall) - (env[1] + ext)}
-    for tag in PACKS:
+    for tag in ALLP:
         out["margin_%s_m" % tag] = rows[tag]["margin_full_m"]
         out["block_L_%s_m" % tag] = rows[tag]["L_m"]
         out["x_fwd_max_%s_m" % tag] = rows[tag]["x_fwd_max_m"]
@@ -947,8 +1063,8 @@ kit.claim("CL-C5-PACK-ROOM-MARGIN-WORST", "Block B gap margin, worst D-64 pack a
           parts=["POD-008"],
           note="D-62 flight-card marks (A1 frame estimate): 546 g at -0.036, 551 g at -0.034, 590 g at -0.028",
           how="As CL-C5-PACK-NOSE-ROOM with the weighed pack at its marked station.")
-for _m, _x in (("546", "-0.036"), ("551", "-0.034"), ("590", "-0.028")):
-    kit.claim("CL-C5-PACK-ROOM-MARGIN-%s" % _m, "Block B gap margin, %s g pack at its D-62 station %s" % (_m, _x),
+for _m, _x in (("404", "-0.0545"), ("414", "-0.0545"), ("424", "-0.0545")):
+    kit.claim("CL-C5-PACK-ROOM-MARGIN-%s" % _m, "Block B gap margin, %s g pack at its D-174 station %s" % (_m, _x),
               calc="CALC-C5-CRASH", output="margin_%s_m" % _m, unit="m", limit=(">=", 0.0), parts=["POD-008"],
               how="As above.")
 kit.claim("CL-C5-PACK-ROOM-MARGIN-TRIM", "Block B gap margin, worst pack trimmed to the D-62 target", calc="CALC-C5-CRASH",
@@ -964,21 +1080,33 @@ kit.claim("CL-C5-PACK-ROOM-C3-STOP", "Block B gap margin, worst pack, D2-R5 forw
 kit.claim("CL-C5-PACK-STACK-MARGIN", "Crush-stack station minus the most forward station that keeps block B, worst pack",
           calc="CALC-C5-CRASH", output="stack_margin_worst_m", unit="m", limit=(">=", 0.0),
           verifies=["R-PACK-RETENTION"], parts=["POD-008"],
-          note="the D-62 bay's most forward pack centroid sits on the 34.6 mm nose stack (ASM-A3-NOSE-STACK: bond line, "
-               "stop, 24.3 mm block, spreader), about -0.0379 for the 135 mm pack. Negative means a block cut to the "
-               "24.3 mm minimum is too short for that pack: its flight-card station must stay aft of "
+          note="C5-W2 (D-150): the drawn stack (D2: stop aft face -0.1382, 31.0 mm block ASM-D2-STACK-BLOCK-A1, "
+               "1.5 mm spreader) puts the most forward 135 mm pack centroid at -0.0382; block B length on the drawn "
+               "51.4 mm-wide section with the 8 x 3 mm fore-top step (CL-D2-BLOCK-STEP-*). Negative means a block cut "
+               "to 31.0 mm is too short for that pack: its flight-card station must stay aft of "
                "CL-C5-PACK-X-FWD-MAX-<m> (rule S9)",
           how="H3 flight card; rule the pack fore face to the forward stop on the built pod.")
+kit.claim("CL-C5-PACK-STACK-MARGIN-A3", "As CL-C5-PACK-STACK-MARGIN on A3's nose stack (information)",
+          calc="CALC-C5-CRASH", output="stack_margin_a3_worst_m", unit="m", parts=["POD-008"],
+          note="C5-W2: reads ASM-A3-NOSE-STACK from the pod LE. Negative while A3 still books the D-62 34.6 mm stack "
+               "on the D-150 nose: A3's forward station limit then sits forward of the drawn stack. Closes when "
+               "ASM-A3-NOSE-STACK = 0.0413 (C5.md section 3)",
+          how="A3 roll-up input check.")
+kit.claim("CL-C5-BLOCK-L-CUT-MIN", "Crush block B minimum cut length (D-150 floor or the worst pack, whichever is longer)",
+          calc="CALC-C5-CRASH", output="block_L_cut_min_m", unit="m", parts=["POD-009"],
+          note="C5-W2: what D2 / C3 cut to; the floor is the D-150 31.0 mm (ASM-D2-STACK-BLOCK-A1). CL-C5-BLOCK-L "
+               "stays the energy-required length for the 551 g pack",
+          how="Cut length; rule.")
 kit.claim("CL-C5-NOSE-EXT", "Further pod nose extension needed beyond D-62 (-0.140 m)", calc="CALC-C5-CRASH",
           output="nose_ext_m", unit="m",
           note="zero when every pack at its D-62 mark keeps block B", how="D2 geometry.")
 kit.claim("CL-C5-PACK-CRASH-G", "Largest pack deceleration in its block, 5 m/s nose-in", calc="CALC-C5-CRASH",
           output="n_pack_max", unit="-", limit=("<=", "ASM-C5-PACK-G-MAX"),
           how="Block coupon crush force x section; pack mass weighed (E2).")
-kit.claim("CL-C5-BLOCK-L", "Crush block B length (F-250, weighed 551 g pack)", calc="CALC-C5-CRASH",
+kit.claim("CL-C5-BLOCK-L", "Crush block B length the 5 m/s energy needs (F-250, weighed 551 g pack)", calc="CALC-C5-CRASH",
           output="block_L_nom_m", unit="m", parts=["POD-008"],
           note="D2 reads this in pod_claims.py; D-64 nominal pack 551 g", how="Cut length; rule.")
-for _m in PACKS:
+for _m in ALLP:
     if _m != "551":
         kit.claim("CL-C5-BLOCK-L-%s" % _m, "Crush block B length, %s g pack" % _m, calc="CALC-C5-CRASH",
                   output="block_L_%s_m" % _m, unit="m", parts=["POD-008"], how="Cut length; rule.")

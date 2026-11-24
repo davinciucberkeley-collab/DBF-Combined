@@ -2,19 +2,19 @@
    One file, two themes. Load it first; everything else reads these variables.
    Theme: <html data-theme="light|dark">; with no attribute the OS preference applies.
    Fonts (Google Fonts, both SIL Open Font License 1.1, free for any use incl. print):
-     Barlow Semi Condensed 500 600   titles, nav, table heads (redesign/site/UI-SURVEY.md, REVIEW-STYLE.md)
-     Source Sans 3  400 600 400i    prose, UI, labels, callout text
-     Red Hat Mono   400 500         numbers, units, ids, paths, code, equations
-   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600&family=Red+Hat+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+     IBM Plex Sans  400 500 600   prose, UI, labels, callout text, nav, table heads
+     IBM Plex Mono  400 500       numbers, units, ids, paths, code, equations
+     (Newsreader, loaded by explorer.css, is the display face for page titles; T-104 kept it over the survey faces)
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
    IBM Plex stays in the stacks so pages that still load only Plex keep their look.
    Offline/print fallback is the system stack below; nothing breaks without the web fonts.
    Contrast: every text/wash pair here is >= 4.5:1 on its panel in its theme (checked 2026-11-09). */
 
 :root {
   /* ---------- type ---------- */
-  --font-sans: "Source Sans 3", "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-head: "Barlow Semi Condensed", "Source Sans 3", "IBM Plex Sans", system-ui, sans-serif; /* titles, nav, table heads */
-  --font-mono: "Red Hat Mono", "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, "SF Mono", monospace;
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-head: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; /* nav, table heads (page titles use --font-display in explorer.css) */
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, "SF Mono", monospace;
 
   --text-xs: 0.75rem;    /* 12px  meta, table headers, badges, axis labels */
   --text-sm: 0.875rem;   /* 14px  UI labels, table cells, captions */

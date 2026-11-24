@@ -80,7 +80,7 @@ const SOURCES = (() => { const f = new URL('../analysis/sources.json', import.me
 const FEA = (() => { const f = new URL('../analysis/fea_fields.json', import.meta.url); if (!existsSync(f)) { console.log('fea_fields.json missing'); return null; } return JSON.parse(readFileSync(f, 'utf8')); })();
 const THERM = (() => { const f = new URL('../analysis/thermal/thermal_results.json', import.meta.url); if (!existsSync(f)) { console.log('thermal_results.json missing'); return null; } return JSON.parse(readFileSync(f, 'utf8')); })();
 // whole-aircraft CFD (analysis/cfd3d/postprocess.py pack): already compact (gzipped typed arrays), embedded as is
-const CFD3 = (() => { const f = new URL('../analysis/cfd3d/out/viz/cfd3d_viz.json', import.meta.url); if (!existsSync(f)) { console.log('cfd3d_viz.json missing'); return null; } return readFileSync(f, 'utf8'); })();
+const CFD3 = (() => { const f = new URL('../analysis/cfd3d/out/viz/cfd3d_viz.json', import.meta.url); if (!existsSync(f)) { console.log('cfd3d_viz.json missing (removed 2026-11-19, batch 2; recoverable from git 8d15f419^, or regenerate: py analysis/cfd3d/postprocess.py pack); CFD panel skipped'); return null; } return readFileSync(f, 'utf8'); })();
 // engineering validation matrix (analysis/validation/build_matrix.py)
 // proof chains (analysis/validation/proofs.py) and the mesh audit with the meshing code each sizing rule comes from
 const PROOF = (() => { const f = new URL('../analysis/validation/proofs.json', import.meta.url); if (!existsSync(f)) { console.log('proofs.json missing'); return null; } return JSON.parse(readFileSync(f, 'utf8')); })();
@@ -156,7 +156,7 @@ for (const [src, out, docNo, kicker] of pages) {
   const md = r(src), rev = (md.match(/\|\s*Revision\s*\|\s*([A-Z])\b/) || [])[1];
   const no = docNo + (rev ? ' · Rev ' + rev : '');
   // figures embedded as data URIs (the companion pages stay self-contained); paths are relative to the Markdown file
-  const img = p => { const f = new URL(p, new URL(src, import.meta.url)); if (!existsSync(f)) return null; const ext = p.split('.').pop().toLowerCase(); return `data:image/${ext === 'jpg' ? 'jpeg' : ext === 'svg' ? 'svg+xml' : ext};base64,` + readFileSync(f).toString('base64'); };
+  const img = p => { const f = new URL(p, new URL(src, import.meta.url)); if (!existsSync(f)) return null; const ext = p.split('.').pop().toLowerCase(); const buf = ext === 'svg' ? Buffer.from(readFileSync(f, 'utf8').replace(/\r\n/g, '\n')) : readFileSync(f); /* SVG read with LF so a Windows (CRLF) checkout embeds the same bytes as CI */ return `data:image/${ext === 'jpg' ? 'jpeg' : ext === 'svg' ? 'svg+xml' : ext};base64,` + buf.toString('base64'); };
   writeSafe(new URL('./' + out, import.meta.url), docPage({ md, css: r('./src/style.css'), fontLink, docNo: no, kicker, back: './', chapters: CHAPTERS, img }));
   writeSafe(new URL('../' + out, import.meta.url), docPage({ md, css: r('./src/style.css'), fontLink, docNo: no, kicker, back: 'VTOL-Review.html', chapters: CHAPTERS, img }));
   console.log('wrote', out);

@@ -415,11 +415,11 @@
     "SRC-J1-RIBNER"
    ],
    "outputs": {
-    "arm_m": 0.061700000000000005,
-    "arm_chord": 0.1928125
+    "arm_m": 0.06818,
+    "arm_chord": 0.21306250000000002
    },
    "input_values": {
-    "x_prop": -0.0127,
+    "x_prop": -0.01918,
     "x_cg": 0.049,
     "c": 0.32
    }
@@ -456,19 +456,19 @@
     "ASM-J1-MOUNT-MASS"
    ],
    "outputs": {
-    "I_m4": 3.645032876327555e-09,
-    "EI_Nm2": 364.5032876327555,
-    "k_Npm": 118076.86674206528,
-    "m_eff_kg": 0.1211408,
-    "f1_hz": 157.1293533122149
+    "I_m4": 5.244795845544049e-09,
+    "EI_Nm2": 524.4795845544048,
+    "k_Npm": 169899.44430009878,
+    "m_eff_kg": 0.15410079999999998,
+    "f1_hz": 167.1143192555677
    },
    "input_values": {
-    "od": 0.022,
-    "id": 0.02,
+    "od": 0.0221,
+    "id": 0.01905,
     "E": 100000000000.0,
     "L": 0.21,
-    "m_motor": 0.081,
-    "m_prop": 0.017,
+    "m_motor": 0.108,
+    "m_prop": 0.02296,
     "m_mount": 0.018,
     "mu": 0.102
    }
@@ -491,19 +491,19 @@
     "rpm_max": "rpm"
    },
    "outputs": {
-    "f1P_hover_hz": 90.26319535055327,
-    "f2P_hover_hz": 180.52639070110655,
-    "f1P_cruise_hz": 99.90091444797763,
-    "f2P_cruise_hz": 199.80182889595525,
-    "f1P_max_hz": 155.83333333333334,
-    "f2P_max_hz": 311.6666666666667,
-    "band_lo_hz": 72.21055628044262,
-    "band_hi_hz": 374.0
+    "f1P_hover_hz": 99.39854248557322,
+    "f2P_hover_hz": 198.79708497114643,
+    "f1P_cruise_hz": 107.57751510142329,
+    "f2P_cruise_hz": 215.15503020284658,
+    "f1P_max_hz": 222.66666666666666,
+    "f2P_max_hz": 445.3333333333333,
+    "band_lo_hz": 79.51883398845857,
+    "band_hi_hz": 534.4
    },
    "input_values": {
-    "rpm_h": 5415.791721033196,
-    "rpm_c": 5994.054866878658,
-    "rpm_max": 9350
+    "rpm_h": 5963.912549134393,
+    "rpm_c": 6454.650906085397,
+    "rpm_max": 13360
    }
   },
   {
@@ -532,17 +532,17 @@
     "f": "Hz"
    },
    "outputs": {
-    "sep_min": 0.00831670574683363,
-    "nearest": "1P_max"
+    "sep_min": 0.1593723857680167,
+    "nearest": "2P_hover"
    },
    "input_values": {
-    "f1": 157.1293533122149,
-    "a": 90.26319535055327,
-    "b": 180.52639070110655,
-    "c": 99.90091444797763,
-    "d": 199.80182889595525,
-    "e": 155.83333333333334,
-    "f": 311.6666666666667
+    "f1": 167.1143192555677,
+    "a": 99.39854248557322,
+    "b": 198.79708497114643,
+    "c": 107.57751510142329,
+    "d": 215.15503020284658,
+    "e": 222.66666666666666,
+    "f": 445.3333333333333
    }
   },
   {
@@ -572,14 +572,14 @@
     "SRC-J1-HEPPERLE-PLANK"
    ],
    "outputs": {
-    "CL_cruise": 0.44187572787267076,
-    "sigma_trim": -0.009052318893498095
+    "CL_cruise": 0.4064739194910701,
+    "sigma_trim": -0.009840729769349634
    },
    "input_values": {
-    "m": 2.6,
+    "m": 2.7,
     "g": 9.80665,
     "rho": 1.225,
-    "V": 16.0,
+    "V": 17.0,
     "S": 0.368,
     "cm0": -0.004
    }
@@ -602,13 +602,13 @@
     "i_hover_pess": "A"
    },
    "outputs": {
-    "i_req_a": 33.75,
-    "i_req_pess_a": 37.677857432312685
+    "i_req_a": 36.5,
+    "i_req_pess_a": 43.56029619307547
    },
    "input_values": {
     "k": 1.25,
-    "i_hover": 27.0,
-    "i_hover_pess": 30.142285945850148
+    "i_hover": 29.2,
+    "i_hover_pess": 34.848236954460376
    }
   },
   {
@@ -656,7 +656,7 @@
     "SRC-J1-RIBNER"
    ],
    "note": "0.05 m (15 % chord) ahead of the CG at R1 (was 0.21 m, 70 % chord, at R0): the destabilising prop normal-force moment is 4x smaller than it was. B3's R1 neutral point should move aft (D-17).",
-   "value": 0.061700000000000005
+   "value": 0.06818
   },
   {
    "id": "CL-J1-TUBE-F1",
@@ -670,7 +670,7 @@
     "ASM-J1-E-TUBE"
    ],
    "note": "Tube alone, cantilevered 0.19 m from the chord plane, motor + 11x5.5MR + mount at the tip. The bonded half-fin should raise this a lot; it must be measured. E 50-140 GPa puts f1 at 130-215 Hz.",
-   "value": 157.1293533122149
+   "value": 167.1143192555677
   },
   {
    "id": "CL-J1-MOTOR-1P-HOVER",
@@ -681,7 +681,7 @@
    "unit": "Hz",
    "how": "ESC telemetry or bidirectional DShot RPM in the hover log; harmonic notch centre (INS_HNTCH_FREQ).",
    "note": "From B4's CL-B4-HOVER-RPM (11x5.5MR at the gate).",
-   "value": 90.26319535055327
+   "value": 99.39854248557322
   },
   {
    "id": "CL-J1-MOTOR-2P-HOVER",
@@ -691,7 +691,7 @@
    "output": "f2P_hover_hz",
    "unit": "Hz",
    "how": "FFT of the hover IMU log (ArduPilot notch review tool) shows the 2P peak.",
-   "value": 180.52639070110655
+   "value": 198.79708497114643
   },
   {
    "id": "CL-J1-MOTOR-1P-CRUISE",
@@ -701,7 +701,7 @@
    "output": "f1P_cruise_hz",
    "unit": "Hz",
    "how": "RPM telemetry in the cruise log (B4 CL-B4-CRUISE-RPM, 15 m/s).",
-   "value": 99.90091444797763
+   "value": 107.57751510142329
   },
   {
    "id": "CL-J1-MOTOR-2P-CRUISE",
@@ -711,7 +711,7 @@
    "output": "f2P_cruise_hz",
    "unit": "Hz",
    "how": "FFT of the cruise IMU log.",
-   "value": 199.80182889595525
+   "value": 215.15503020284658
   },
   {
    "id": "CL-J1-MOTOR-1P-MAX",
@@ -722,7 +722,7 @@
    "unit": "Hz",
    "how": "Thrust-stand RPM at the F4 output cap (H1); P:propulsion.rpm_max 9 350.",
    "note": "Unlimited on a fresh pack B4 gives 10 637 rpm (CL-B4-RPM-MAX-FULL): 1P 177 Hz, 2P 355 Hz for < 5 s.",
-   "value": 155.83333333333334
+   "value": 222.66666666666666
   },
   {
    "id": "CL-J1-MOTOR-2P-MAX",
@@ -732,7 +732,7 @@
    "output": "f2P_max_hz",
    "unit": "Hz",
    "how": "Same stand run; the top of the forcing band C4 must clear (B4 CR-B4-07: 80-330 Hz).",
-   "value": 311.6666666666667
+   "value": 445.3333333333333
   },
   {
    "id": "CL-J1-TUBE-MODE-SEP",
@@ -747,7 +747,7 @@
     "SRC-J1-AP-NOTCH"
    ],
    "note": "FAILS on the bare tube: f1 ~183 Hz sits 2 % from the hover 2P (180 Hz) and 9 % from the cruise 2P (200 Hz). The forcing sweeps 90-156 Hz (1P) and 180-312 Hz (2P) between hover and the capped maximum, so no bare-tube mode in 72-374 Hz clears 20 % at every steady point: the fin bond must put the first mode above ~375 Hz, or the tap test must show it damped (R-VIBRATION allows either). C4 owns the fix. D-100 (2026-11-13): no limit and no requirement link: the bare tube is not the design; C4's 3-D station model of the bonded fin (CL-C4-SIM-SEP) and T-C4-TAP-D3 are the claim and test of record for R-VIBRATION.",
-   "value": 0.00831670574683363
+   "value": 0.1593723857680167
   },
   {
    "id": "CL-J1-CL-CRUISE",
@@ -758,7 +758,7 @@
    "unit": "-",
    "how": "B1/B2 from the drag polar; airspeed log in cruise.",
    "note": "At 2.6 kg, 16 m/s, S 0.368 (was 0.54 at 15 m/s, S 0.345).",
-   "value": 0.44187572787267076
+   "value": 0.4064739194910701
   },
   {
    "id": "CL-J1-SM-TRIMMABLE",
@@ -773,7 +773,7 @@
     "SRC-J1-MH45-HEPPERLE"
    ],
    "note": "Informational since D-19 (SM stays 0.05; CR-J1-02 rejected). The S5010's cm0 is about zero (-0.004 at Re 2.3e5, +0.003 at 3e5, B2), so elevons-neutral it trims no positive static margin (-0.9 %): all 5 % of SM is carried by elevon up-trim (B2: about -4 deg at CL 0.5), and that penalty is already inside the trimmed CLmax 0.80 (CL-B2-CLMAX-DESIGN). The MH 45's +0.0145 would have trimmed 3.3 % at this CL. R-STATIC-MARGIN is verified by B3's CL-B3-CG-AFT, not by this screen.",
-   "value": -0.009052318893498095
+   "value": -0.009840729769349634
   },
   {
    "id": "CL-J1-DISCONNECT-REQ",
@@ -787,7 +787,7 @@
    ],
    "how": "1.25 x the logged hover current (tethered hover, H1).",
    "note": "1.25 x 27.0 A (params, E1). F1 sizes on E2's 29.9 A gate-wind hover (CR-E2-04): see CL-J1-DISCONNECT-REQ-PESS.",
-   "value": 33.75
+   "value": 36.5
   },
   {
    "id": "CL-J1-DISCONNECT-REQ-PESS",
@@ -800,7 +800,7 @@
     "R-DISCONNECT"
    ],
    "how": "1.25 x the hover current logged in 5 m/s wind at the gate mass (H2).",
-   "value": 37.677857432312685
+   "value": 43.56029619307547
   },
   {
    "id": "CL-J1-XT60-CONT",

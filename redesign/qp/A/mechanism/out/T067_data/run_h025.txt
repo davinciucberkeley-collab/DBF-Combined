@@ -1,0 +1,17 @@
+WNG-003-C    listed   1.20  solid   1.60  basis S  computed   1.42  core 0.19
+WNG-004-R    listed   1.20  solid   1.60  basis S  computed   1.42  core 0.19
+WNG-004-L    listed   1.20  solid   1.60  basis S  computed   1.42  core 0.19
+WNG-005-R    listed   1.20  solid   1.60  basis S  computed   1.42  core 0.19
+WNG-005-L    listed   1.20  solid   1.60  basis S  computed   1.42  core 0.19
+WNG-008-RU   listed   3.80  solid   3.69  basis C  computed   3.67  core 0.01
+WNG-008-RL   listed   3.80  solid   3.74  basis C  computed   3.69  core 0.01
+WNG-009-R    listed   2.00  solid   1.40  basis M  computed   1.40  core 0.00
+WNG-010-R    listed   0.50  solid   0.47  basis M  computed   0.47  core 0.00
+WNG-008-LU   listed   3.80  solid   3.69  basis C  computed   3.67  core 0.01
+WNG-008-LL   listed   3.80  solid   3.74  basis C  computed   3.69  core 0.01
+WNG-009-L    listed   2.00  solid   1.40  basis M  computed   1.40  core 0.00
+WNG-010-L    listed   0.50  solid   0.47  basis M  computed   0.47  core 0.00
+FIN-003-R    listed   3.20  solid  23.54  basis S  computed  18.90  core 0.33
+FIN-005-R    listed   1.00  solid  18.39  basis S  computed  14.39  core 0.36
+FIN-003-L    listed   3.20  solid  23.54  basis S  computed  18.90  core 0.33
+FIN-005-L    listed   1.00  solid  18.39  basis S  computed  14.39  core 0.36

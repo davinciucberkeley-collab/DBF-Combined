@@ -1,0 +1,14 @@
+| Scenario | Goods | Spend | Crash reserve | Total | Margin to $2,000 | Total with U/EST +30 % |
+|---|---|---|---|---|---|---|
+| p8 as recorded (reproduces bom_p8.py) | 1,550.25 | 1,781.99 | 368.76 | **2,150.75** | -150.75 | 2,262.05 |
+| p8 + 2026-11-21 reads (H743 $129.01, 14x12 $15.36, 8x6 strut $8.50) | 1,541.94 | 1,772.83 | 373.31 | **2,146.13** | -146.13 | 2,257.44 |
+| 1a KV920 motors, p8 airframe | 1,541.94 | 1,772.83 | 373.31 | **2,146.13** | -146.13 | 2,257.44 |
+| 3 (rib 16x14, coupon >= 45 MPa) | 1,519.31 | 1,722.88 | 348.36 | **2,071.24** | -71.24 | 2,182.54 |
+| 3 fallback (rib from Carbonwebshop, R15 price kept as the 20x18 proxy) | 1,541.94 | 1,772.83 | 373.31 | **2,146.13** | -146.13 | 2,257.44 |
+| 2 legs from the hub (rib 14x12) | 1,534.97 | 1,740.14 | 318.08 | **2,058.23** | -58.23 | 2,169.53 |
+| 4 concept B (MN3110 KV700 + P12x4, Tattu 3700, 1.2 m two-panel wing, 2 booms) | 1,703.51 | 1,904.54 | 387.16 | **2,291.70** | -291.70 | 2,380.34 |
+| 1e X2216 + p8 airframe (D-226 cell, rib 25x23 R15) | 1,424.39 | 1,643.23 | 342.53 | **1,985.76** | +14.24 | 2,104.34 |
+| 1e + 3, rib 16x14 (2nd RMRC 16x14; coupon >= 45 MPa) | 1,401.76 | 1,593.28 | 317.59 | **1,910.87** | +89.13 | 2,029.44 |
+| 1e + 3, rib 14x12 from R09 (coupon >= 60 MPa, or >= 47 MPa after TP-3 at zeta 0.02) | 1,374.30 | 1,563.01 | 287.31 | **1,850.32** | +149.68 | 1,968.89 |
+| 1e + 3, rib fallback from Carbonwebshop (R15 price as proxy) | 1,424.39 | 1,643.23 | 342.53 | **1,985.76** | +14.24 | 2,104.34 |
+| 2 legs, legs counted in the crash-reserve tube set | | | | **2,105.77** | -105.77 | |

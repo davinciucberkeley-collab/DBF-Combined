@@ -7,7 +7,8 @@ studio light, Freestyle ink outlines, transparent film. All three elevations sha
 metre, default 1400) so the SVG sheet (make_sheet.py) can place dimension lines exactly: views.json carries, for
 each view, the camera right/up vectors, the image centre in view coordinates and the pixel size. The iso inset is a
 perspective render and carries no scale. Output: <out>/{top,front,side,iso}.png + <out>/views.json
-(default redesign/site/assets/drawing/). Reuses redesign/blender/render_kit.Stage for the build, roles and outlines.
+(default redesign/site/assets/drawing/). Concept A: --root redesign/qp/A/cad/model --out redesign/showcase/concept-a/drawing
+(views.json 'bbox_m' is the dimension source for make_sheet_a.py). Reuses redesign/blender/render_kit.Stage for the build, roles and outlines.
 """
 import json
 import math
@@ -30,6 +31,7 @@ import render_kit as rk          # noqa: E402
 # the flying aircraft: everything that leaves the box, minus the harness (inside the wing) and wires
 FLIGHT = ['WNG-*', 'FIN-*', 'POD-*', 'GER-001-*', 'GER-002-*', 'GER-003-*', 'GER-004-*', 'GER-007-*', 'GER-008-*',
           'PRP-*', 'MEC-*', 'PWR-*', 'AVN-*']
+FLIGHT_A = ['WNG-*', 'FIN-*', 'CGE-*', 'GER-*', 'PRP-*', 'MEC-*', 'PWR-*', 'AVN-*', 'HWC-*', 'HRN-002']   # concept A, no wires
 VIEWS = {                          # name: (azimuth from the nose, elevation)  see render_kit.PRESETS
     'top': (0, 90), 'front': (0, 0), 'side': (90, 0),
 }
@@ -44,6 +46,7 @@ def args():
     ap.add_argument('--ppm', type=float, default=1400.0)
     ap.add_argument('--out', default=os.path.join(REDESIGN, 'site', 'assets', 'drawing'))
     ap.add_argument('--samples', type=int, default=48)
+    ap.add_argument('--root', default=None, help='module root; concept A: redesign/qp/A/cad/model (default K09-L)')
     argv = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
     return ap.parse_args(argv)
 
@@ -85,14 +88,15 @@ def bbox_world(ob):
 def main():
     a = args()
     os.makedirs(a.out, exist_ok=True)
-    be, ctx, graph, _ = bb.build(False, None)
+    be, ctx, graph, _ = bb.build(False, a.root)
+    flight = FLIGHT_A if a.root else FLIGHT
     S = rk.Stage(be, ctx, graph, 'studio', engine='EEVEE', samples=a.samples)
     sc = S.sc
     sc.eevee.taa_render_samples = a.samples
     sc.render.film_transparent = True
     sc.view_settings.view_transform = 'Standard'
     plain_world(sc, 0.75)
-    S.roles(context=FLIGHT)
+    S.roles(context=flight)
     vl = sc.view_layers[0]
     flat = flat_material()                        # EEVEE Next ignores view_layer.material_override: set it per object
     for ob in S._visible():

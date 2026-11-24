@@ -1,0 +1,90 @@
+diff --git a/redesign/qp/A/sitl/fu_cage.py b/redesign/qp/A/sitl/fu_cage.py
+index 0b8fa3f5..6dc58235 100644
+--- a/redesign/qp/A/sitl/fu_cage.py
++++ b/redesign/qp/A/sitl/fu_cage.py
+@@ -3,7 +3,10 @@ Takes the iteration-2 FE (qp/A/structures fe_a.py + iter2_eval.py CFG, free-free
+  motor-pair torque (N m) -> body rate at the IMU node (rigid modes + flexible modes, damping zeta), closes the A.param rate loop around it
+ (P, I, D, D filter, gyro LPF, motor lag, delay) and reports closed-loop stability, gain margin, peak sensitivity, with and without a notch.
+ python -I fu_cage.py   (numpy, scipy; about 1 min).  All EST: FE inputs are STRUCTURES EST, zeta 1 % is a guess, T_full / lag / delay are plant EST.
+-Axes: copter pitch = about y (spar), lever arm Z_M, input = x-force pairs on the motors at +-z; copter roll = about z (belly), arm Y_M."""
++Axes: copter pitch = about y (spar), lever arm Z_M, input = x-force pairs on the motors at +-z; copter roll = about z (belly), arm Y_M.
++T-089 (2026-11-22): `configure("t089")` switches the plant constants to the current configuration (SunnySky X2216 V3 880KV on APC 9x4.5MR, Q_M_SPIN_MAX 1.0, prop_a.py T-083 model;
++the FE frames come from the caller, see mechanism/out/T089_data/t089_gm.py).  The import default is the legacy "iter2" configuration (MN2212 aero via a_aero.motor, spin cap 0.90, KQ 0.0204),
++so fu_cage.py, iter3_run.py and iter3_gmwindow.py reproduce the earlier numbers unchanged (copy of the pre-T-089 file: mechanism/out/T089_data/fu_cage_pre_t089.py)."""
+ import sys, os, math
+ HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, os.path.join(HERE, "..", "structures")); sys.path.insert(0, HERE)
+ import warnings; warnings.filterwarnings("ignore")
+@@ -23,6 +26,26 @@ rpm, T, Q, I = AE.motor(0.90 * 16.0, 0.0); TFULL = T * AE.DER * AE.DOWNLOAD   #
+ 
+ 
+ CANT_TAN = True
++KQ_SHAFT = 0.0204   # prop torque / thrust, m (a_plant.py KQ: sizing 65 N mm at 3.19 N, MN2212 era); used in modal() and the yaw arm
++CONFIG = "iter2"
++A_PARAM_D191 = {"pit": dict(gyro_lpf=60, fltd=60, P=0.12, D=0.0012), "rll": dict(gyro_lpf=60, fltd=32, P=0.20, D=0.003), "yaw": dict(gyro_lpf=60, fltd=32, P=0.37)}   # A.param lines 103-113, 189 (D-191), as iter3_run.py SET
++
++
++def configure(name):
++    """name 'iter2' (legacy: MN2212 aero, spin cap 0.90, KQ 0.0204) or 't089' (X2216 V3 880KV / APC 9x4.5MR, spin cap 1.0, KQ from the same model).  Sets TFULL, KQ_SHAFT, RATE['yaw']['arm']."""
++    global TFULL, KQ_SHAFT, CONFIG
++    if name == "iter2":
++        rpm_, T_, Q_, I_ = AE.motor(0.90 * 16.0, 0.0); TFULL = T_ * AE.DER * AE.DOWNLOAD; KQ_SHAFT = 0.0204
++    elif name == "t089":
++        sys.path.insert(0, os.path.join(HERE, ".."))
++        import contextlib, io
++        with contextlib.redirect_stdout(io.StringIO()): import prop_a as PA      # T-083 propulsion model: X2216 V3 880KV (Kv 880, Rm 89 mohm, I0 0.5 A), APC 9x4.5MR static rows
++        n_, I_, th_, pw_ = PA.run(1.00 * 16.0)                                      # spin cap 1.0 (A.param Q_M_SPIN_MAX, T-083) x 16.0 V bus (as the 0.90 x 16 V of the legacy line)
++        TFULL = th_ * PA.DER * AE.DOWNLOAD                                          # x0.93 derate x0.97 download, as the legacy line
++        KQ_SHAFT = (pw_ / (n_ * 2 * math.pi / 60)) / (th_ * PA.DER)                  # prop torque / delivered thrust at that point (same power, thrust derated)
++    else: raise ValueError(name)
++    RATE["yaw"]["arm"] = math.hypot(YM, ZM) * math.sin(math.radians(CANT_DEG)) + KQ_SHAFT
++    CONFIG = name
+ 
+ 
+ def modal(F, node, dof_out, torque_split):
+@@ -37,7 +60,7 @@ def modal(F, node, dof_out, torque_split):
+         if CANT_TAN:                                                       # cant CANT_DEG: the tangential (swirl) component acts in y, z (derivation in the report)
+             rho = math.hypot(YM, ZM); tc = math.tan(math.radians(CANT_DEG))
+             b[6 * idx[m] + 1] += -q * tc * sy * ZM / rho; b[6 * idx[m] + 2] += q * tc * sz * YM / rho
+-            b[6 * idx[m] + 3] += sy * sz * 0.0204 * q                      # shaft reaction torque about x (KQ 0.0204 m, plant)
++            b[6 * idx[m] + 3] += sy * sz * KQ_SHAFT * q                    # shaft reaction torque about x (KQ_SHAFT m, plant)
+     gin = V.T @ b; gout = V[6 * idx[node] + dof_out, :]
+     return np.sqrt(np.maximum(lam, 0.0)) / (2 * math.pi), gin * gout
+ 
+@@ -111,20 +134,27 @@ def margins(sysL):
+     return up, lo, Ms, cr, pk
+ 
+ 
++def cases_frame(F, k):
++    """the 9 rows (3 axes x 2 IMU nodes) of one solved frame F (corner label k)"""
++    res = []
++    for ax in ("pit", "rll", "yaw"):
++        r = RATE[ax]
++        if ax == "pit": sg = lambda sy, sz, a=r["arm"]: sz / (4 * a)
++        elif ax == "rll": sg = lambda sy, sz, a=r["arm"]: -sy / (4 * a)
++        else: sg = lambda sy, sz, a=r["arm"]: sy * sz * math.cos(math.radians(CANT_DEG)) / (4 * a)     # unit yaw torque: th = -sy sz / (4 (rho sin c + KQ cos c)) per motor
++        for node, nname in (("s+0.000", "spar centre"), ("hub", "cage hub")):
++            f, g = modal(F, node, r["dof"], sg)
++            rig = [(0.0, sum(gg for ff, gg in zip(f, g) if ff < 1.0))]       # the six rigid modes collapse to one gain 1 / I
++            flex = [(ff, gg) for ff, gg in zip(f, g) if 1.0 <= ff < 250 and abs(gg) > 1e-9]
++            res.append(dict(k=k, ax=ax, node=nname, modes=rig + flex, inv_I=sum(gg for ff, gg in rig), flex=flex))
++    return res
++
++
+ def cases():
+     res = []
+     for k in ("kd", "nom", "hi"):
+         F, info = fe_a.build(k, **CFG); F.solve(60)
+-        for ax in ("pit", "rll", "yaw"):
+-            r = RATE[ax]
+-            if ax == "pit": sg = lambda sy, sz, a=r["arm"]: sz / (4 * a)
+-            elif ax == "rll": sg = lambda sy, sz, a=r["arm"]: -sy / (4 * a)
+-            else: sg = lambda sy, sz, a=r["arm"]: sy * sz * math.cos(math.radians(CANT_DEG)) / (4 * a)     # unit yaw torque: th = -sy sz / (4 (rho sin c + KQ cos c)) per motor
+-            for node, nname in (("s+0.000", "spar centre"), ("hub", "cage hub")):
+-                f, g = modal(F, node, r["dof"], sg)
+-                rig = [(0.0, sum(gg for ff, gg in zip(f, g) if ff < 1.0))]       # the six rigid modes collapse to one gain 1 / I
+-                flex = [(ff, gg) for ff, gg in zip(f, g) if 1.0 <= ff < 250 and abs(gg) > 1e-9]
+-                res.append(dict(k=k, ax=ax, node=nname, modes=rig + flex, inv_I=sum(gg for ff, gg in rig), flex=flex))
++        res += cases_frame(F, k)
+     return res
+ 
+ 

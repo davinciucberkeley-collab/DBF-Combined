@@ -105,6 +105,66 @@ def mating(g):
         g['horn_y'][0] + g['horn_y'][1]))
 
 
+def chamfer_turbulator(ctx, g, mod):
+    """9. D-164 elevon TE chamfers and D-168 lower turbulator (closure round 2026-11-14)."""
+    t0, t1 = g['tab_y']
+    xh, c = g['xh'], g['c']
+    worst_out, n_cut = 0.0, 0
+    reach = {}
+    for pid in ('WNG-011-R', 'WNG-012-R'):
+        for e in ctx.components[pid].shapes:
+            ya, yb = sorted((e.offset, e.offset + e.depth))
+            xe = max(p[0] for p in e.loops[0])
+            ymid = 0.5 * (ya + yb)
+            lim = mod.cham_xmax(g, yb if ymid < t0 else ya)
+            worst_out = max(worst_out, xe - lim)
+            if lim < c - 1e-9:
+                n_cut += 1
+            reach.setdefault(pid[:7], []).append((ya, yb, xe))
+    check(worst_out <= 1e-9, '9  chamfer staircase never leaves more panel than the straight cut (worst excess %.3f mm); %d slabs cut' % (
+        max(worst_out, 0.0) * 1000, n_cut))
+    ib = [r for r in reach['WNG-011'] if abs(r[2] - c) < 1e-6]
+    ob = [r for r in reach['WNG-012'] if abs(r[2] - c) < 1e-6]
+    y_ib, y_ob = max(r[1] for r in ib), min(r[0] for r in ob)
+    check(abs(y_ib - (t0 - g['te_cham'][0])) <= g['cham_step'] + 1e-6 and abs(y_ob - (t1 + g['te_cham'][1])) <= g['cham_step'] + 1e-6,
+          '9  full-chord panel ends at |y| %.3f (inboard, straight cut meets the TE at %.3f) and starts at %.3f (outboard, %.3f)' % (
+              y_ib, t0 - g['te_cham'][0], y_ob, t1 + g['te_cham'][1]))
+    hi_in, lo_out = max(r[1] for r in reach['WNG-011']), min(r[0] for r in reach['WNG-012'])
+    short_in, short_out = (t0 - g['e_gap']) - hi_in, lo_out - (t1 + g['e_gap'])
+    check(short_in <= g['cham_step'] + 1e-6 and short_out <= g['cham_step'] + 1e-6,
+          '9  hinge line: panels reach |y| %.4f / %.4f of the %.4f / %.4f panel ends (wedge tip %.1f / %.1f mm short); hinge tape line unaffected' % (
+              hi_in, lo_out, t0 - g['e_gap'], t1 + g['e_gap'], short_in * 1000, short_out * 1000))
+    for (ya, yb), nm in zip(g['horn_y'], ('inboard arm plane', 'outboard link horn')):
+        ym = 0.5 * (ya + yb)
+        lim = mod.cham_xmax(g, ym)
+        print('  info 9  %s slot y %.4f: panel aft edge x %.4f (%.1f mm aft of the hinge); blade to x %.4f -> %s' % (
+            nm, ym, lim, (lim - xh) * 1000, g['horn_x'][1],
+            'blade inside the panel' if lim >= g['horn_x'][1] else 'BLADE PROJECTS %.1f mm PAST THE CHAMFERED EDGE' % ((g['horn_x'][1] - lim) * 1000)))
+    gx0, gx1, _z = g['tube_groove']
+    for (ya, yb), nm in zip(g['tube_groove_y'], ('inboard', 'outboard')):
+        yt = yb if ya < t0 else ya
+        lim = mod.cham_xmax(g, yt)
+        print('  info 9  %s torque-tube groove end y %.3f: panel aft edge x %.4f vs groove x %.4f-%.4f -> %s' % (
+            nm, yt, lim, gx0, gx1, 'tube inside the panel' if lim >= gx1 else 'tube end partly outside the chamfered edge'))
+    check(g['sp_x'][1] < xh and g['sp_y'][1] < t0,
+          '9  servo pocket x %.4f-%.4f y %.4f-%.4f is in the core ahead of the hinge (x %.4f) and inboard of the tab: unaffected by the panel cut' % (
+              g['sp_x'][0], g['sp_x'][1], g['sp_y'][0], g['sp_y'][1], xh))
+    tb = ctx.components['WNG-009'].shapes
+    ys = sorted({(round(min(e.offset, e.offset + e.depth), 6), round(max(e.offset, e.offset + e.depth), 6)) for e in tb if e.offset >= 0})
+    gaps = [min(abs(a - g['y_fin']), abs(b - g['y_fin'])) for a, b in ys if a > 0.2]
+    near_fin = min(gaps) if gaps else 1.0
+    check(near_fin >= g['tb_stop'] - 1e-6,
+          '9  turbulator pieces stop >= %.1f mm from the fin plane (fin face 2.4 + cove 10 + 2 mm clear = %.1f mm)' % (near_fin * 1000, g['tb_stop'] * 1000))
+    xs_ = [p[0] for e in tb for p in e.loops[0]]
+    check(abs((min(xs_) + max(xs_)) / 2 - 0.2 * c) < 1e-4 and max(xs_) < g['x_slot'][0],
+          '9  turbulator x %.4f-%.4f centred on x/c 0.20 (%.4f), %.1f mm ahead of the spar-slot cap (x %.4f)' % (
+              min(xs_), max(xs_), 0.2 * c, (g['x_slot'][0] - max(xs_)) * 1000, g['x_slot'][0]))
+    lo_b, hi_b = g['y_fin'] - g['sp_dbl'] / 2, g['y_fin'] + g['sp_dbl'] / 2
+    on_band = [e for e in tb if e.offset > 0 and lo_b - 1e-9 <= e.offset and e.offset + e.depth <= hi_b + 1e-9]
+    check(True, '9  turbulator crosses the D-153 doubler band |y| %.3f-%.3f (band x 0-%.3f, line at x %.3f): %d pieces ride on the 3-layer stack either side of the fin coves, band itself unbroken' % (
+        lo_b, hi_b, g['dbl_x'], g['tb_x'], len(on_band)))
+
+
 def main():
     ctx, P, g, mod = wd.build_wing()
     print('wing_selfcheck: section %s' % g['src'])
@@ -166,10 +226,18 @@ def main():
                         ok5 = False
         a, b = [sp for sp in g['spans']][0 if '011' in pid else 1]
         lo, hi = (a, b) if pid.endswith('R') else (-b, -a)
-        if abs(ey[0] - (lo + g['e_gap'])) > 1e-6 or abs(ey[1] - (hi - g['e_gap'])) > 1e-6:
-            ok5 = False
-    check(ok5, '5  elevons in the core cut-outs, end gap %.1f mm; at the R %.0f mm tab corners the panel front stays >= %.2f mm aft of the core fill' % (
-        g['e_gap'] * 1000, g['ecr'] * 1000, worst5 * 1000))
+        # D-164: the panel end at the fin-root tab may fall short by the chamfer wedge tip (slabs whose chamfer leaves
+        # < 1 mm of panel are dropped), by no more than one chamfer step; the other end is exact
+        tab_end_is_hi = ('011' in pid) == pid.endswith('R')            # inboard right / outboard left: tab at the high-y end
+        tol = g['cham_step'] + 1e-6
+        d_lo, d_hi = ey[0] - (lo + g['e_gap']), (hi - g['e_gap']) - ey[1]
+        if tab_end_is_hi:
+            ok5 = ok5 and abs(d_lo) <= 1e-6 and -1e-6 <= d_hi <= tol
+        else:
+            ok5 = ok5 and abs(d_hi) <= 1e-6 and -1e-6 <= d_lo <= tol
+    check(ok5, '5  elevons in the core cut-outs, end gap %.1f mm; at the R %.0f mm tab corners %s' % (
+        g['e_gap'] * 1000, g['ecr'] * 1000, ('the panel front stays >= %.2f mm aft of the core fill' % (worst5 * 1000)) if worst5 < 1.0 else
+        'the chamfer leaves no panel beside the core fill (wedge tip dropped)'))
 
     F = wd.k9.local('fins')
     bw = wd.k9.lval(F, 'fin_detail.block.width_m', 'm', 0.036)
@@ -219,6 +287,7 @@ def main():
     check(wall >= 0.003 and g['jr_y'][0] < g['sgroove_y'][1] < g['jr_y'][1],
           '8  JR recess x %.3f-%.3f y %.3f-%.3f %.0f mm deep on the servo branch; %.1f mm foam to the servo pocket' % (
               g['jr_x'] + g['jr_y'] + (g['jr_d'] * 1000, wall * 1000)))
+    chamfer_turbulator(ctx, g, mod)
     mating(g)
     print('wing_selfcheck: %s' % ('PASS' if not FAILS else 'FAIL (%d)' % len(FAILS)))
     return 1 if FAILS else 0

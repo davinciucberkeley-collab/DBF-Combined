@@ -15,7 +15,7 @@ Per side (built for the right side, mirrored through DP-SYM with k9.pair):
   MEC-005 inter-panel rod 1/8 in pultruded CF rod (D6-R2, was music wire) on the hinge-parallel line 16.5 mm below the axis, bonded in the bosses of
                           MEC-004 and MEC-006: a rigid bridge that turns with both panels, through D3's 24 x 12 mm
                           notch in the lower half-fin root (fins/params.json#link_slot)
-  MEC-006 link horn       the same horn without the clevis hole, in the OUTBOARD panel at y 0.355
+  MEC-006 link horn       the same horn without the clevis hole, in the OUTBOARD panel at y 0.392 (D-164 chamfer, CR-D1-C1; was 0.355)
   MEC-007 servo cover     printed PETG plate on the lower skin, slot for the arm (its ends are the TE-up stops),
                           2 x M2 screws into the frame
   MEC-009 torque tube     CF 5 x 4 mm along each panel just aft of the bevel (-RI, -RO), through the horn blade:
@@ -123,7 +123,7 @@ def geometry(P, LP, coords):
     ins = l('tube.end_inset_m', 'm')
     a_in, a_out = l('tube.cover_frac', '-')
     G['tube_in'] = (max(G['yin'][0] + ins, G['ya'] - a_in * (G['ya'] - G['yin'][0])), G['yin'][1] - ins)
-    G['tube_out'] = (G['yout'][0] + ins, min(G['yout'][1] - ins, G['yo'] + a_out * (G['yout'][1] - G['yo'])))
+    G['tube_out'] = (max(G['yout'][0] + ins, l('tube.out_start_y_m', 'm')), min(G['yout'][1] - ins, G['yo'] + a_out * (G['yout'][1] - G['yo'])))
     # frame and cover
     G['fw'], G['fc'] = l('frame.wall_m', 'm'), l('frame.clear_m', 'm')
     G['f_rim'] = l('frame.window_rim_m', 'm')
@@ -241,8 +241,16 @@ def build_pushrod(part, G):
     # D-89: no open rod ends. The rod runs 3 mm into the clevis shank (threaded in), and at the servo arm it ends in
     # its Z-bend leg through the arm hole, 1 mm proud each side (the wire's own bent end, as built)
     xe, ze = xc - ux * 0.003, zc - uz * 0.003
-    part.loft('X', [(x0, circle(y, z0, G['pr_r'], 10)), (xe, circle(y, ze, G['pr_r'], 10))], name='pushrod wire')
-    part.cylinder('Y', (x0, y - G['at'] / 2 - 0.001, z0), G['at'] + 0.002, G['pr_r'], name='pushrod Z-bend leg')
+    # D-142: a Z-bend runs BESIDE the arm, not in its plane: the rod's main run starts offset from the arm centre by
+    # half the arm, the rod radius and 0.2 mm, on the side away from the case, and the leg crosses the arm through the
+    # 1.85 mm hole (#49 drill for the 1.83 mm 2-56 rod, review/SERVOS-CONTROLS.md SC-07; BUILD-GUIDE 7.3) to 1 mm
+    # proud on the far side. At the clevis the rod is back on the horn plane (threaded into the clevis shank).
+    # Before, the rod lay inside the arm through a rod-shaped cut, so it could not turn about the leg (assembly check)
+    side = 1.0 if G['ya'] > (G['cy0'] + G['cy1']) / 2 else -1.0         # away from the servo case
+    off = side * (G['at'] / 2 + G['pr_r'] + 0.0002)
+    part.loft('X', [(x0, circle(y + off, z0, G['pr_r'], 10)), (xe, circle(y, ze, G['pr_r'], 10))], name='pushrod wire')
+    ya0 = y - side * (G['at'] / 2 + 0.001)
+    part.cylinder('Y', (x0, min(ya0, y + off), z0), abs(y + off - ya0), G['pr_r'], name='pushrod Z-bend leg')
     part.loft('X', [(x1 - 0.0015, rect(y - cl_w / 2, z1 - cl_h / 2, y + cl_w / 2, z1 + cl_h / 2)),
                     (xc, rect(y - cl_w / 4, zc - cl_h / 4, y + cl_w / 4, zc + cl_h / 4))], name='clevis')
 
@@ -445,7 +453,8 @@ def edge_specs(G=None):
         'servo ears captured in the frame end-wall slots; the cover holds the servo up into the frame')
     add(6, 5, 'MEC-002-R', 'MEC-001-R', 'CT-SERVO-SPLINE', ('rigid', 'spline'), 'arm on the spline at servo neutral, '
         'supplied M2 screw + Loctite 222')
-    add(8, 7, 'MEC-003-R', 'MEC-002-R', 'CT-CLEVIS', ('revolute', 'P'), 'Z-bend in the arm hole drilled 1.6 mm')
+    add(8, 7, 'MEC-003-R', 'MEC-002-R', 'CT-CLEVIS', ('revolute', 'P'), 'Z-bend leg through the arm hole drilled 1.85 mm (#49, SC-07), '
+        'main run beside the arm (D-142)')
     add(10, 9, 'MEC-003-R', 'MEC-004-R', 'CT-CLEVIS', ('revolute', 'Q'), 'steel 2-56 clevis on the horn pin hole, '
         'silicone keeper')
     add(12, 11, 'MEC-004-R', WING['in'] + '!', 'CT-EPOXY', 'contact',

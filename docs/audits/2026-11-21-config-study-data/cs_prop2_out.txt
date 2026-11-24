@@ -1,0 +1,6 @@
+| State | basic g | pred kg | CG mm | SM % | window % (dl) | T/W fresh (no dl / dl) | T/W sag (dl) | fresh cap | one motor A | hover A/motor | cruise s (2.8 Ah) | 1.3 Vs m/s |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1b MN3110 KV780 + APC 9x4.5MR: p8 + motors + cups 20 g + landing growth 30 g | 1788.4 | 2.045 | 20.65 | 8.19 | +2.52 | 2.293 / 2.224 | 1.749 | 1.000 | 16.50 | 7.06 | 193 | 18.32 |  full-throttle fresh 10904 rpm 14.8 A/motor
+| 1b MN3110 KV780 + APC 9x4.5MR: same + option 3 recovery (-42.8 g) | 1745.6 | 1.998 | 18.37 | 9.11 | +3.71 | 2.348 / 2.277 | 1.790 | 1.000 | 16.53 | 6.90 | 207 | 18.10 |  full-throttle fresh 10904 rpm 14.8 A/motor
+| 1c MN3110 KV700 + APC 9x4.5MR: p8 + motors + cups 20 g + landing growth 30 g | 1784.4 | 2.041 | 20.92 | 8.07 | -5.57 | 1.957 / 1.899 | 1.487 | 1.000 | 12.25 | 6.26 | 196 | 18.30 |  full-throttle fresh 10079 rpm 11.3 A/motor
+| 1c MN3110 KV700 + APC 9x4.5MR: same + option 3 recovery (-42.8 g) | 1741.6 | 1.993 | 18.64 | 9.00 | -4.39 | 2.004 / 1.944 | 1.523 | 1.000 | 12.27 | 6.12 | 210 | 18.08 |  full-throttle fresh 10079 rpm 11.3 A/motor

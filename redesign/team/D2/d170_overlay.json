@@ -1,0 +1,60 @@
+{
+ "_note": "D-170 staged edits (team/D2/d170.py). shared: A1 applies in params/params.json; local: D2 applies in subsystems/pod/params.json after A1 (pod.py refuses a mismatched aft face / stop until both are in).",
+ "shared": {
+  "pod.x_le_m": -0.167,
+  "pod.size_m": [
+   0.262,
+   0.14,
+   0.07
+  ],
+  "pod.pack_x_nominal_m": -0.056,
+  "pod.pack_aft_travel_m": 0.034,
+  "battery.size_m": [
+   0.139,
+   0.047,
+   0.037
+  ],
+  "avionics.pitot_tip_xyz_m": [
+   -0.247,
+   -0.046,
+   0.045
+  ]
+ },
+ "local": {
+  "pack_aft_face_m": [
+   0.0135,
+   0.0475
+  ],
+  "spacer_set_m": [
+   0.002,
+   0.004,
+   0.006,
+   0.006,
+   0.008,
+   0.008
+  ],
+  "spacer_flown_m": [
+   0.008,
+   0.008,
+   0.006,
+   0.006,
+   0.004,
+   0.002
+  ],
+  "pack_x_per_pack_m": {
+   "469": -0.056,
+   "479": -0.056,
+   "489": -0.056
+  },
+  "strap_x_m": [
+   -0.09,
+   0.003
+  ],
+  "ant_b_tip_min_x_m": -0.177,
+  "pack_spacer_m": [
+   0.012,
+   0.139,
+   0.047
+  ]
+ }
+}

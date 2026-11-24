@@ -3,6 +3,8 @@
 Run:  python -I redesign/team/C5/sim/landing_sim3d.py        (about 30 min, single thread)
 C5-R6 (2026-11-10): sink from requirements.landing_sink_ms (1.2 m/s, D-65); a lightest-mass case (A3 basic with the
 D-64 546 g pack) and a mu 0.5 envelope at the gate mass are added.
+C5-R7 (2026-11-13, D-105 / CDR-01): pad friction = ASM-D5-PAD-MU = requirements.pad_mu_max (0.40); comparison
+envelopes at mu 0.7 and 0.5 (MU_ALT) at the gate mass.
 Writes sim/out/sim3d.json; landing_sim_claims.py carries the results into the proof chain.
 
 What it adds over landing_calc.py CALC-C5-DROP-DYN (planar, 2 contacts, frictionless, pitch and roll separately):
@@ -10,7 +12,7 @@ What it adds over landing_calc.py CALC-C5-DROP-DYN (planar, 2 contacts, friction
   * four feet, each a piston (mass m_f) on an elastic-plastic crusher (D5-R4 as delivered: plateau upper / lower,
     elastic ramp to the plateau over eps_y L/2, rigid stop at the 38 mm rim), with the pad as four corner contacts
     (neoprene k_p each, edges at the D5 pad outline) so a tilted foot lands and pivots on its edge;
-  * Coulomb friction (mu 0.7, regularised) at every corner: horizontal drift, sliding and the foot side load;
+  * Coulomb friction (mu = ASM-D5-PAD-MU, regularised) at every corner: horizontal drift, sliding and the foot side load;
   * combined pitch + roll touchdown errors, drift in any direction, steady wind or a lull, rotor lift lam W held to
     0.3 s then ramped to 0 at 0.6 s (C1 convention: vertical, through the CG; no attitude control = conservative).
 Outputs per case: stroke per foot, peak load factor at the CG, peak transverse (side) load per foot, wingtip TE
@@ -105,6 +107,7 @@ K_PAD = 1.0e5        # N/m per pad corner (1.6 mm 40A neoprene, 385 mm2 pad: E A
 ZETA_PAD = 0.3       # damping ratio of a corner contact against the piston mass
 EPS_V = 0.01         # m/s, friction regularisation (Coulomb above ~3 eps)
 K_STOP = 5.0e5       # N/m, flange on the sleeve rim after the full stroke
+MU_ALT = (0.7, 0.5)  # comparison pad frictions (bare neoprene D-65 basis; CR-C5-16 option), gate-mass envelope
 
 
 def quat_mul(a, b):
@@ -270,12 +273,39 @@ def simulate(inp, cases, dt=4e-5, t_end=0.3, k_pad=K_PAD, m_f=None, eps_v=EPS_V,
     u = -np.einsum("nij,j->ni", R, a_b)
     out["tilt_end"] = np.degrees(np.arccos(np.clip(u[:, 2], -1, 1)))
     out["tipped"] = out["tilt_end"] > 50.0                  # past every static tip angle (32-45 deg)
+    out["sp_end"] = sp.copy()                                # C5 closure 11-14: plastic set per foot at t_end (record only)
     return {k: v_.tolist() for k, v_ in out.items()}
 
 
 # ------------------------------------------------------------------ case sets
 def lean_deg(inp, V, area, m):
     return math.degrees(math.atan(0.5 * inp["rho"] * V * V * area * inp["cd90"] / (m * G0)))
+
+
+HEADING_AZ = tuple(30.0 * k for k in range(12))   # C5-W2: lean azimuth from the +z pad line, 30 deg grid
+HEADING_V = tuple(round(3.5 + 0.1 * k, 2) for k in range(36))   # 3.5 .. 7.0 m/s, 0.1 m/s grid
+
+
+def heading_cases(inp, m, Vs, az_deg, modes=("lull", "steady")):
+    """C5-W2 (C5.md section 4, D-152): wind cases of section 3 with the lean toward azimuth az from the +z pad line
+    (0 = pod (+z) face to the wind, 90 = a wingtip to the wind, 180 = belly (-z) face to the wind). Touchdown tilt =
+    lean(V) + err, drift v_td the same way, lull and steady wind, sink 0.5 and the design sink. The lean uses the full
+    broadside area at every azimuth (conservative off the pure broadside). Same as dr1114/broadside_levers.cases_for."""
+    S_b = inp["span"] * inp["chord"]
+    ar = math.radians(az_deg)
+    out, keys = [], []
+    for mode in modes:
+        for vs in (inp["v_normal"], inp["v_sink"]):
+            for V in Vs:
+                tilt = lean_deg(inp, V, S_b, m) + inp["err"]
+                D = 0.5 * inp["rho"] * V * V * S_b * inp["cd90"] if mode == "steady" else 0.0
+                # +theta lowers the +z feet (world +X); a lean toward world -Y is phi > 0
+                out.append(dict(m=m, I_scale=m / inp["m_a3"], theta=tilt * math.cos(ar), phi=tilt * math.sin(ar),
+                                v_sink=vs, lam=inp["lam"],
+                                drift=(inp["v_td"] * math.cos(ar), -inp["v_td"] * math.sin(ar)),
+                                wind=(-D * math.cos(ar), D * math.sin(ar))))
+                keys.append(("%s/%.1f" % (mode, vs), V, tilt))
+    return out, keys
 
 
 def disc_cases(inp, m, I_scale, lam, v, mags=(0.0, 2.5, 5.0, 7.5, 10.0), n_az=24):
@@ -335,14 +365,19 @@ def main():
             env[tag]["side_peak_max_N"], env[tag]["tip_min_m"], env[tag]["strike_tilt_min_deg"], time.time() - t0),
             flush=True)
     out["hard_envelope"] = env
-    # 1b. pad friction option (CR-C5-16): the same envelope at the gate mass with a pad face of mu 0.5 on the mat
-    c_mu = [dict(c, mu=0.5) for c in disc_cases(inp, inp["m_gate"], k_I(inp["m_gate"]), inp["lam"], inp["v_sink"])]
-    r_mu = simulate(inp, c_mu)
-    out["hard_envelope_mu05_gate"] = dict(summarise(c_mu, r_mu), rows=[
-        [c["theta"], c["phi"], max(sm), n_, max(sd), tm] for c, sm, n_, sd, tm in
-        zip(c_mu, r_mu["s_max"], r_mu["n_peak"], r_mu["side_1ms"], r_mu["tip_min"])])
-    print("hard gate mu 0.5   stroke %.4f m  side %.1f N" % (out["hard_envelope_mu05_gate"]["stroke_max_m"],
-                                                          out["hard_envelope_mu05_gate"]["side_1ms_max_N"]), flush=True)
+    # 1b. pad friction cases at the gate mass (C5-R7, D-105): the design envelope above runs at ASM-D5-PAD-MU
+    #     (requirements.pad_mu_max 0.40); the same envelope at mu 0.7 (bare neoprene, the D-65 basis) and 0.5 (the
+    #     CR-C5-16 option) shows what the side load, stroke and tilt become if the pad face misses its target
+    out["hard_envelope_mu_alt_gate"] = {}
+    for mu_alt in MU_ALT:
+        c_mu = [dict(c, mu=mu_alt) for c in disc_cases(inp, inp["m_gate"], k_I(inp["m_gate"]), inp["lam"], inp["v_sink"])]
+        r_mu = simulate(inp, c_mu)
+        out["hard_envelope_mu_alt_gate"]["%.2f" % mu_alt] = dict(summarise(c_mu, r_mu), rows=[
+            [c["theta"], c["phi"], max(sm), n_, max(sd), tm] for c, sm, n_, sd, tm in
+            zip(c_mu, r_mu["s_max"], r_mu["n_peak"], r_mu["side_1ms"], r_mu["tip_min"])])
+        print("hard gate mu %.2f   stroke %.4f m  side %.1f N" % (
+            mu_alt, out["hard_envelope_mu_alt_gate"]["%.2f" % mu_alt]["stroke_max_m"],
+            out["hard_envelope_mu_alt_gate"]["%.2f" % mu_alt]["side_1ms_max_N"]), flush=True)
     # level references and the beyond-requirement square corners (pitch and roll both at err)
     mg = inp["m_gate"]
     ref_cases = [dict(m=mg, I_scale=k_I(mg), theta=0, phi=0, v_sink=inp["v_sink"], lam=inp["lam"]),
@@ -411,6 +446,28 @@ def main():
                                                                               w_["tilt_limit_deg"]), flush=True)
     out["wind"] = wind
     print("(%.0f s)" % (time.time() - t0), flush=True)
+
+    # 3b. C5-W2 (D-152): landing heading. The same wind cases with the lean toward each azimuth (30 deg grid, 0.1 m/s
+    #     wind grid); landing_sim_claims.py takes the claim at the heading Q_WVANE_LAND commands (fsw.wvane_land) +/- 30
+    head = {}
+    for az in HEADING_AZ:
+        cs, keys = heading_cases(inp, m1, HEADING_V, az)
+        res = simulate(inp, cs, t_end=2.0)
+        tab = {}
+        for i, (key, V, tilt) in enumerate(keys):
+            tab.setdefault(key, []).append((V, tilt, bool(res["tipped"][i])))
+        by = {}
+        for key, rows in tab.items():
+            first = next((j for j, r_ in enumerate(rows) if r_[2]), None)
+            by[key] = {"v_limit_ms": rows[-1][0] if first is None else (rows[first - 1][0] if first > 0 else 0.0),
+                       "tilt_tip_deg": None if first is None else rows[first][1], "top_of_sweep": first is None}
+        head["%.0f" % az] = {"by_mode": by,
+                             "v_lull_ms": min(v_["v_limit_ms"] for k_, v_ in by.items() if k_.startswith("lull")),
+                             "v_all_ms": min(v_["v_limit_ms"] for v_ in by.values())}
+        print("heading az %3.0f: lull %.1f  all %.1f  %s (%.0f s)" % (az, head["%.0f" % az]["v_lull_ms"],
+              head["%.0f" % az]["v_all_ms"], {k_: v_["v_limit_ms"] for k_, v_ in by.items()}, time.time() - t0),
+              flush=True)
+    out["heading"] = {"az_deg": list(HEADING_AZ), "V_ms": list(HEADING_V), "mass_kg": m1, "rows": head}
 
     # 4. convergence: time-step ladder on the governing hard-landing case and on the tip-over threshold
     wc = env["gate"]["worst_case"]

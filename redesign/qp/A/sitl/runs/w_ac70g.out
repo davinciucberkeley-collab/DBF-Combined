@@ -1,0 +1,43 @@
+{
+"tag": "w_ac70g",
+"args": [
+"inst=1",
+"hold=45",
+"wind=5",
+"from=70",
+"gust=2",
+"gust_at=20",
+"arm=1.2",
+"cant=16"
+],
+"summary": {
+"n": 807,
+"t_window": [
+8.027,
+48.999
+],
+"wind_ms": 7.0,
+"lean_max": 15.4,
+"lean_mean": 10.6,
+"lean_pre": 1.1,
+"u_max": 0.792,
+"u_mean_max": 0.716,
+"t_cap_s": 0.0,
+"t_cap_run_s": 0.0,
+"t_ge85_s": 0.0,
+"u_min": 0.271,
+"t_floor_s": 0.0,
+"t_floor_run_s": 0.0,
+"yaw_err_max": 8.1,
+"yaw_err_rms": 3.38,
+"pos_err_max": 1.4,
+"pos_err_rms": 0.5,
+"pos_err_last20_mean": 0.46,
+"alt_dev_max": 0.1,
+"diag_spread_max": 0.455,
+"diag_spread_mean": 0.2
+},
+"armed": true,
+"reached_alt": true,
+"events": []
+}

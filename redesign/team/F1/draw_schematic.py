@@ -82,18 +82,18 @@ box(20, 150, 150, 112, "PWR", "PWR-001", "Flight pack 4S 6500",
 PL = CL["CALC-F1-PACKLEAD"]["outputs"]
 pair(170, 206, 242, 206)
 out.append(f'<text x="206" y="290" font-family="{MONO}" font-size="11" fill="{FG2}" text-anchor="middle">'
-           f'pack lead {PL["lead_awg"]} AWG · +{PL["lead_rise_c"]:.1f} °C</text>')
+           f'pack lead {PL["lead_awg"]} AWG Â· +{PL["lead_rise_c"]:.1f} Â°C</text>')
 disconnect(252, 206, "E-HRN-10", "AS150U")
 pair(262, 206, 280, 206)
 box(280, 150, 130, 112, "PWR", "PWR-002", "Disconnect",
-    ["anti-spark 15 Ω", "70 A / 140 A", f"t95 {CL['CL-F1-PRECHARGE-T95']['value']:.0f} ms"])
-# --- main path to power board
-pair(410, 206, 540, 206, f"{W['main_awg']} AWG ≤ 50 mm", 475, 190)
-out.append(f'<text x="475" y="236" font-family="{MONO}" font-size="11" fill="{FG2}" text-anchor="middle">+{r('main_rise_c')} °C</text>')
+    ["anti-spark 15 Î©", "70 A / 140 A", f"t95 {CL['CL-F1-PRECHARGE-T95']['value']:.0f} ms"])
+# --- main path to power board (R7: CoreWing back, D-173b)
+pair(410, 206, 540, 206, f"{W['main_awg']} AWG â‰¤ 50 mm", 475, 190)
+out.append(f'<text x="475" y="236" font-family="{MONO}" font-size="11" fill="{FG2}" text-anchor="middle">+{r('main_rise_c')} Â°C</text>')
 box(540, 150, 150, 112, "PWR", "PWR-003", "Power board",
     ["CoreWing PDB", "90 A / 215 A pk", "servo BEC 6 V 8 A"])
 pair(690, 206, 760, 206, f"{W['main_awg']} AWG", 725, 190)
-box(760, 150, 110, 112, "PWR", "PWR-004", "Bus board", ["2 × 8 AWG bars", "4 ESC pigtails"])
+box(760, 150, 110, 112, "PWR", "PWR-004", "Bus board", ["2 Ã— 8 AWG bars", "4 ESC pigtails"])
 
 # --- ESC leads (four)
 esc = [("PRP-002-UR", "ESC upper R"), ("PRP-002-UL", "ESC upper L"),
@@ -102,24 +102,24 @@ for k, (pid, name) in enumerate(esc):
     y = 40 + k * 110
     pair(870, 206, 1010, y + 46, bend=900 + k * 14)
     cap(990, y + 58)
-    box(1010, y, 150, 92, "PRP", pid, name, ["45 A (55 A 10 s)", "+680 µF at pads"])
+    box(1010, y, 150, 92, "PRP", pid, name, ["45 A (55 A 10 s)", "+680 ÂµF at pads"])
     sig(f"1190,{y + 70} 1160,{y + 70}")
 out.append(f'<text x="955" y="28" font-family="{MONO}" font-size="11" fill="{FG2}" text-anchor="middle">'
-           f'{W["esc_awg"]} AWG · {min(LEN):.2f}–{max(LEN):.2f} m · +{r("esc_rise_c")} °C · XT30U at the pod exit</text>')
+           f'{W["esc_awg"]} AWG Â· {min(LEN):.2f}â€“{max(LEN):.2f} m Â· +{r("esc_rise_c")} Â°C Â· XT60H at the pod exit</text>')
 out.append(f'<text x="1085" y="478" font-family="{MONO}" font-size="11" fill="{FG3}" text-anchor="middle">'
            f'to motor: soldered phases</text>')
 
 # --- servo rail (D-74: power-board servo BEC on the 6 V jumper, through the FC Vx header; no UBEC, no fuse)
-box(460, 450, 150, 92, "MEC", "MEC servos", "2 × elevon servo",
+box(460, 450, 150, 92, "MEC", "MEC servos", "2 Ã— elevon servo",
     [f"stall {CL['CL-F1-SERVO-STALL-BUS']['value']:.1f} A both",
      f"need {CL['CL-F1-SERVO-BEC-REQ']['value']:.1f} vs {CL['CL-F1-SERVO-BEC-RATING']['value']:.0f} A"])
 
 # --- avionics
 box(240, 330, 170, 92, "AVN", "AVN-001", "Flight controller",
     ["BATT_MONITOR 4", "Q_M_BAT_CURR_MAX 100"])
-sig("615,262 615,300 325,300 325,330", "board link · V, I, 5 V, Vx 6 V", 470, 294, data=True)
-sig("410,400 430,400 430,560 1190,560 1190,110", "DShot ×4", 1120, 552)
-sig("325,422 325,496 460,496", "PWM ×2 + Vx", 392, 488)
+sig("615,262 615,300 325,300 325,330", "board link Â· V, I, 5 V, Vx 6 V", 470, 294, data=True)
+sig("410,400 430,400 430,560 1190,560 1190,110", "DShot Ã—4", 1120, 552)
+sig("325,422 325,496 460,496", "PWM Ã—2 + Vx", 392, 488)
 
 # --- frame
 body = "\n".join(out)

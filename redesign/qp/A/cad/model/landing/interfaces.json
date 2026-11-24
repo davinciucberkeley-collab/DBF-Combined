@@ -1,0 +1,193 @@
+{
+ "schema": "dbf-interfaces/1",
+ "subsystem": "landing",
+ "parts": [
+  {
+   "id": "GER-001-UR",
+   "name": "Foot shoe (UR; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closure s2 recovery, -1 g; mass from printed_mass.json at Onyx 1.20 g/cm3)",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 4.3,
+   "material": "Onyx (Markforged X7, printed)",
+   "cg_xyz_m": [
+    0.2981,
+    0.38,
+    0.19
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "GER-002-UR",
+   "name": "Foot pad EVA/PE 12x15x30 (UR)",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 0.7,
+   "material": "EVA / PE foam",
+   "cg_xyz_m": [
+    0.3225,
+    0.38,
+    0.1907
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "GER-001-UL",
+   "name": "Foot shoe (UL; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closure s2 recovery, -1 g; mass from printed_mass.json at Onyx 1.20 g/cm3)",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 4.3,
+   "material": "Onyx (Markforged X7, printed)",
+   "cg_xyz_m": [
+    0.2981,
+    -0.38,
+    0.19
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "GER-002-UL",
+   "name": "Foot pad EVA/PE 12x15x30 (UL)",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 0.7,
+   "material": "EVA / PE foam",
+   "cg_xyz_m": [
+    0.3225,
+    -0.38,
+    0.1907
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "GER-001-LR",
+   "name": "Foot shoe (LR; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closure s2 recovery, -1 g; mass from printed_mass.json at Onyx 1.20 g/cm3)",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 4.3,
+   "material": "Onyx (Markforged X7, printed)",
+   "cg_xyz_m": [
+    0.2981,
+    0.38,
+    -0.19
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "GER-002-LR",
+   "name": "Foot pad EVA/PE 12x15x30 (LR)",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 0.7,
+   "material": "EVA / PE foam",
+   "cg_xyz_m": [
+    0.3225,
+    0.38,
+    -0.1907
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "GER-001-LL",
+   "name": "Foot shoe (LL; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closure s2 recovery, -1 g; mass from printed_mass.json at Onyx 1.20 g/cm3)",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 4.3,
+   "material": "Onyx (Markforged X7, printed)",
+   "cg_xyz_m": [
+    0.2981,
+    -0.38,
+    -0.19
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "GER-002-LL",
+   "name": "Foot pad EVA/PE 12x15x30 (LL)",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 0.7,
+   "material": "EVA / PE foam",
+   "cg_xyz_m": [
+    0.3225,
+    -0.38,
+    -0.1907
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  }
+ ],
+ "edges": [
+  {
+   "id": "E-GER-01",
+   "part_a": "GER-001-UR",
+   "part_b": "FIN-001-R",
+   "via": "CT-EPOXY",
+   "owner": "landing",
+   "notes": "shoe cap on the tube end"
+  },
+  {
+   "id": "E-GER-02",
+   "part_a": "GER-002-UR",
+   "part_b": "GER-001-UR",
+   "via": "CT-TAPE-FOAM",
+   "owner": "landing",
+   "notes": "pad PSA on the shoe plate"
+  },
+  {
+   "id": "E-GER-03",
+   "part_a": "GER-001-UL",
+   "part_b": "FIN-001-L",
+   "via": "CT-EPOXY",
+   "owner": "landing",
+   "notes": "shoe cap on the tube end"
+  },
+  {
+   "id": "E-GER-04",
+   "part_a": "GER-002-UL",
+   "part_b": "GER-001-UL",
+   "via": "CT-TAPE-FOAM",
+   "owner": "landing",
+   "notes": "pad PSA on the shoe plate"
+  },
+  {
+   "id": "E-GER-05",
+   "part_a": "GER-001-LR",
+   "part_b": "FIN-001-R",
+   "via": "CT-EPOXY",
+   "owner": "landing",
+   "notes": "shoe cap on the tube end"
+  },
+  {
+   "id": "E-GER-06",
+   "part_a": "GER-002-LR",
+   "part_b": "GER-001-LR",
+   "via": "CT-TAPE-FOAM",
+   "owner": "landing",
+   "notes": "pad PSA on the shoe plate"
+  },
+  {
+   "id": "E-GER-07",
+   "part_a": "GER-001-LL",
+   "part_b": "FIN-001-L",
+   "via": "CT-EPOXY",
+   "owner": "landing",
+   "notes": "shoe cap on the tube end"
+  },
+  {
+   "id": "E-GER-08",
+   "part_a": "GER-002-LL",
+   "part_b": "GER-001-LL",
+   "via": "CT-TAPE-FOAM",
+   "owner": "landing",
+   "notes": "pad PSA on the shoe plate"
+  }
+ ],
+ "acknowledges": []
+}

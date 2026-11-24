@@ -1,6 +1,6 @@
 """render_build.py - the K09-L build sequence as animation, one clip per BUILD-GUIDE stage plus the full film.
 
-    python -I redesign/showcase/animation/assembly_check.py      # 1. plan + physics-check the motions (~25 min)
+    python -I redesign/showcase/animation/assembly_check.py      # 1. plan + swept insertion check of the motions (straight-line paths) (~25 min)
     python redesign/showcase/animation/render_build.py           # 2. render the checked plan (~19 min)
     python redesign/showcase/animation/render_build.py --preview # quick look: half size, every 3rd frame, to --work
 
@@ -8,15 +8,21 @@ Run step 2 with the system Python (needs Pillow). It animates build/assembly_pla
 and refuses to run without it. After any CAD change re-run both commands: the motions are re-derived from the new
 geometry and re-checked, then re-rendered; nothing in this file names a position.
 
-What the film shows, action by action in BUILD-GUIDE.md order (assembly_plan.STEPS, each numbered step):
-  * rigid parts come in along the path the check found and passed (straight along a bore, pin, tube or screw axis,
-    down onto their mounting face, or out-then-across where a straight line is blocked); screws and nuts turn as
-    they run down their last 6 mm; bench sub-assemblies (spar + plugs + blocks, plugged motor tubes, the pod box,
-    motor on its mount, servo with its arm, foot inserts, FC with its card) are put together beside the aircraft
-    and then moved on as one piece;
-  * tape is laid in strips (lower surface, upper surface, then the leading edge, each wiped along the span), wet
-    epoxy beads and fillets appear in place, wires are laid along their route end to end, and the elevon panels
-    swing full TE-up and back while the lower hinge strip goes on.
+What the film shows is exactly the motion assembly_check.py tested, action by action in BUILD-GUIDE.md order
+(assembly_plan.STEPS, each numbered step); nothing moves on a path the check did not sample:
+  * rigid parts come in along the checked path (straight along a bore, pin, tube or screw axis, down onto their
+    mounting face, or out-then-across where a straight line is blocked); screws and nuts turn as they run down their
+    last 6 mm; bench sub-assemblies (spar + plugs + blocks, plugged motor tubes, brace + anchor + collar, the pod
+    box, motor on its mount, servo with its arm, foot inserts, FC with its card) are put together beside the
+    aircraft and then moved on as one piece;
+  * the pod box is glued up piece by piece, each foam-board wall on its own checked path ('built');
+  * the hatch comes in open, slides its tongue under the nose lip and turns down about the lip edge ('hinge':
+    the same keyframes, translation and hinge angle, the check swept);
+  * nothing that is laid, wet or cut in place moves: the hot-wired core and the panels cut free of it, tape, wet
+    epoxy and the straps appear where they lie, wiped on in slices along their longest side; wires grow along
+    their route, and a lead whose end part is not on yet is laid up to its first connector and finished later
+    (its held run grows when that part is on); the elevon panels swing full TE-up and back about the gate's hinge
+    joints, the hinge-tape half bonded to each panel turning with it.
   Parts of one part number at several stations (UR/UL/LR/LL, L/R) move together when their swept boxes do not
   overlap, one after another when they do. The moving part is tinted orange.
 Three steps, as before: render (Blender, Workbench, the CAD from redesign/blender/blender_backend.py: the same bodies
@@ -25,6 +31,7 @@ stage progress bar), encode (Blender FFmpeg): build/k09l-build.mp4, build/stage-
 stage's last frame). Blender path: --blender or $BLENDER.
 """
 import json
+import re
 import math
 import os
 import subprocess
@@ -46,8 +53,8 @@ FPS = 30
 W, H = 1280, 720
 T_MOVE, T_HOLD = 0.8, 1.0            # s: camera move at the start of a stage, hold at its end
 T_GAP, T_STEP = 0.05, 0.45           # s: between two actions; camera move at a new BUILD-GUIDE step
-DUR = {'built': 0.9, 'clip': 0.8, 'fixture': 0.6, 'slide': 0.7, 'screw': 0.95, 'install': 1.3, 'lay': 0.9, 'fill': 0.5, 'wire': 0.8,
-       'swing': 1.6}
+DUR = {'built': 0.45, 'hinge': 1.5, 'fixture': 0.9, 'park': 2.4, 'unpark': 1.4, 'slide': 0.7, 'screw': 0.95, 'install': 1.3, 'lay': 0.9,
+       'fill': 0.5, 'wire': 0.8, 'swing': 1.6}   # 'built': per piece
 DUR_SKIN = 2.6                       # s: the wing skin (three strips, each wiped along the span)
 SPIN_TURNS, THREAD_MM = 3.0, 6.0     # as assembly_check.py
 HI_COL = (0.95, 0.42, 0.08, 1.0)
@@ -107,7 +114,8 @@ def build_ops(plan):
     sequential ops where their swept boxes overlap."""
     ops = []
     for a in plan['actions']:
-        key = (a['step'], a['type'], a.get('kind'), 'wire' if a['type'] == 'wire' else
+        key = (a['step'], a['type'], a.get('kind'), ('tail' if a.get('tail_action') else 'wire') if a['type'] == 'wire' else
+               'blank' if a.get('kind') == 'fixture' else
                (a['id'].split('-')[0] if a['type'] == 'install' else _base(a['id'])))
         if ops and ops[-1]['key'] == key:
             ops[-1]['items'].append(a)
@@ -119,6 +127,9 @@ def build_ops(plan):
         subs = []
         for a in op['items']:
             box = _swept_box(a)
+            if op['kind'] == 'fixture' and subs:       # cut in place: nothing moves, so nothing to sequence
+                subs[0]['items'].append(a)
+                continue
             for s in subs:
                 if not any(_overlap(box, b) for b in s['boxes']):
                     s['items'].append(a)
@@ -137,6 +148,8 @@ def op_duration(op):
     n = max(len(a.get('clusters') or []) for a in op['items'])
     if op['kind'] == 'screw' and n > 1:                # a screw set: driven one screw after another
         return min(0.55 * n, 2.4)
+    if op['kind'] == 'built':                          # glued up piece by piece
+        return DUR['built'] * max(len(a.get('built') or [1]) for a in op['items'])
     return DUR.get(op['kind'], 0.9)
 
 
@@ -189,11 +202,30 @@ def op_label(op, names):
     n = len(ids)
     if op['type'] == 'swing':
         return 'Elevon panels swung full TE-up about the hinge line and back (lower strip laid TE-up)'
+    if op['type'] == 'wire' and any(a.get('tail_action') for a in op['items']):
+        ids = [w for a in op['items'] for w in a.get('members') or []]
+        return ('%s: held run laid on into %s connector now its end part is on'
+                % (', '.join(ids) if len(ids) <= 4 else '%s ... %s (%d leads)' % (ids[0], ids[-1], len(ids)),
+                   'its' if len(ids) == 1 else 'their'))
     if op['type'] == 'wire':
         return ('%s laid along %s route%s, then soldered / plugged at both ends'
                 % (', '.join(ids) if n <= 4 else '%s ... %s (%d leads)' % (ids[0], ids[-1], n),
                    'its' if n == 1 else 'their', '' if n == 1 else 's'))
     a0 = it[0]
+    if op['type'] in ('park', 'unpark'):
+        mem = a0.get('members') or []
+        bases = sorted({_base(m) for m in mem})
+        if op['type'] == 'park':
+            return ('Kerf cut round the elevon strip (%s), then the %d panels slid %g mm aft in the bed, clear of the core'
+                    % ('/'.join(bases), len(mem), (a0.get('park_mm') or [0])[0]))
+        car = sorted({_base(m) for m in a0.get('carried') or []})
+        return ('Panels %s with their %s slid %g mm forward, back against the core (checked sweep)'
+                % ('/'.join(sorted({_base(m) for m in mem if m.startswith('WNG')})), '/'.join(car) or 'tubes',
+                   (a0.get('park_mm') or [0])[0]))
+    if op['kind'] == 'fixture' and len({_base(a['id']) for a in it}) > 1:
+        bases = sorted({_base(a['id']) for a in it})
+        return ('%s: core blank with its elevon strip (%s), hot-wired and cut in place in the lower foam bed'
+                % (bases[0], ', '.join(bases[1:])))
     if op['type'] == 'install':
         grp = a0['id'].split('-')[0]
         head = 'Bench sub-assembly "%s"%s (%d parts: %s)' % (grp, ' x%d' % n if n > 1 else '', len(a0['members']),
@@ -209,22 +241,29 @@ def op_label(op, names):
     k = op['kind']
     words = _arrive_words(a0.get('path'))
     segs = len(a0.get('path') or []) - 1
-    if k == 'fixture':
-        tail = 'held in the %s' % (a0.get('fixture') or 'jig') if a0.get('fixture') else 'cut free in place'
+    if op['type'] == 'wrap':
+        tail = 'held run wrapped over the pack and closed, in place'
+    elif k == 'fixture':
+        tail = 'cut in place in the %s' % a0['fixture'] if a0.get('fixture') else 'cut free in place'
     elif k == 'lay':
-        tail = 'laid in strips onto what it covers'
+        tail = 'laid in place onto what it covers'
     elif k == 'fill':
         tail = 'wet epoxy applied in place'
     elif k == 'built':
-        tail = 'glued up from its flat pieces in place'
-    elif k == 'clip':
-        tail = 'bowed / hooked and sprung into place (flexible, not a rigid slide)'
+        tail = 'glued up piece by piece (%d pieces, each on its own path)' % len(a0.get('built') or [])
+    elif k == 'hinge':                                   # the checked motion, as the check recorded it
+        tail = ('slid along its line, then ' if a0.get('keys') and len(a0['keys']) > 2 else '') +             re.sub(r' the axis of \S+ pushrod ', ' its ', a0.get('motion') or 'turned about its hinge line').replace(
+                ' the upper aft edge of POD-001 petg nose lip', ' the nose-lip edge')
     elif k == 'screw':
         tail = ('driven %s along its axis, turning' % words) if len(a0.get('clusters') or []) < 2 else             ('%d screws driven one by one along their axes, turning' % len(a0['clusters']))
     elif k == 'install':
         tail = 'moved on as one piece, %s' % words + (' (out, then across)' if segs >= 2 else '')
     else:
         tail = ('slid %s into its seat' % words) + (' (brought in, then across)' if segs >= 2 else '')
+    if any(a.get('elastic') for a in it):
+        e = max((x for a in it for x in a['elastic']), key=lambda x: x['strain_pct'])
+        tail += ' (%s gives %.2f mm elastically, %.2f %% strain)' % (e['mover_body'].split(' (')[0],
+                                                                       e['deflection_mm'], e['strain_pct'])
     pre = 'Bench: ' if op['type'] == 'bench' else ''
     s = '%s%s: %s' % (pre, head, tail)
     return s if len(s) <= 118 else s[:115] + '...'
@@ -317,9 +356,11 @@ def blender_render(argv):
             faces.setdefault(comp[p.vertices[0]], []).append(p.index)
         return [sub_object(ob, fl, '.%d' % k) for k, fl in sorted(faces.items())]
 
-    def split_lay(ob):
-        """Tape as strips, in laying order: faces facing down (lower skin), up (upper skin), then the rest (LE strip,
-        edges), each wiped along its longest extent in 8 slices (1 for small tapes)."""
+    def split_lay(ob, by_normal=True):
+        """An item laid, wet or cut in place, as slices that appear one after another where they lie (a wipe; no
+        slice moves). Tape in laying order: faces facing down (lower skin), up (upper skin), then the rest (LE strip,
+        edges); each wiped along its longest extent in 8 slices (1 for small items). by_normal False (a hot-wired core,
+        panels, an epoxy bead): one group, wiped along its longest extent."""
         me = ob.data
         Mw = ob.matrix_world
         R = Mw.to_3x3()
@@ -331,14 +372,33 @@ def blender_render(argv):
         groups = {}
         for p, c in zip(me.polygons, cs):
             nz = (R @ p.normal).normalized().z
-            g = 0 if nz < -0.3 else (1 if nz > 0.3 else 2)
+            g = (0 if nz < -0.3 else (1 if nz > 0.3 else 2)) if by_normal else 0
             k = min(nsl - 1, int((c[ax] - lo[ax]) / max(hi[ax] - lo[ax], 1e-9) * nsl))
             groups.setdefault((g, k), []).append(p.index)
         out = []
         for (g, k), fl in sorted(groups.items()):
             o = sub_object(ob, fl, '.strip%d%d' % (g, k))
-            out.append((o, Vector((0, 0, -0.004 if g == 0 else 0.004))))
+            out.append((o, Vector()))                 # appears in place: no approach motion
         return out
+
+    def split_bodies(ob, built):
+        """A part glued up from pieces: its faces grouped by the checked CAD body they belong to (the smallest body box,
+        grown 0.3 mm, that holds the face centre; else the nearest box), in the order the check placed them."""
+        me = ob.data
+        Mw = ob.matrix_world
+        boxes = [(q['idx'], Vector(q['box_mm'][0]) / 1000.0, Vector(q['box_mm'][1]) / 1000.0) for q in built]
+        g = 0.0003
+        faces = {}
+        for pl in me.polygons:
+            c = Mw @ pl.center
+            inside = [(math.prod(hi[i] - lo[i] + 2 * g for i in range(3)), idx) for idx, lo, hi in boxes
+                      if all(lo[i] - g <= c[i] <= hi[i] + g for i in range(3))]
+            if inside:
+                idx = min(inside)[1]
+            else:
+                idx = min(boxes, key=lambda b: sum(max(b[1][i] - c[i], 0, c[i] - b[2][i]) ** 2 for i in range(3)))[0]
+            faces.setdefault(idx, []).append(pl.index)
+        return [(sub_object(ob, faces[q['idx']], '.piece%d' % q['idx']), q['idx']) for q in built if q['idx'] in faces]
 
     # ------------------------------------------------------------- objects and their schedules
     sched = {}                                         # object -> list of events
@@ -372,9 +432,13 @@ def blender_render(argv):
             if ps != [ob]:
                 ob.hide_render = True
             pieces[pid] = [(p, Vector()) for p in ps]
-        elif 'lay' in kinds:
+        elif kinds & {'lay', 'fill', 'fixture'}:
             ob.hide_render = True
-            pieces[pid] = split_lay(ob)
+            pieces[pid] = split_lay(ob, by_normal='lay' in kinds)
+        elif 'built' in kinds:
+            ob.hide_render = True
+            built = [q for _op, it in act_of[pid] for q in (it.get('built') or [])]
+            pieces[pid] = split_bodies(ob, built) if built else [(ob, Vector())]
         else:
             pieces[pid] = [(ob, Vector())]
         for p, _d in pieces[pid]:
@@ -383,8 +447,116 @@ def blender_render(argv):
                 vs = [p.matrix_world @ v.co for v in p.data.vertices]
                 spin_c[p] = sum(vs, Vector()) / max(len(vs), 1)
 
+    # faces split as the check split the part's triangles (a strap's held run; each hinge-tape half), by the nearest
+    # recorded triangle centre
+    from mathutils.kdtree import KDTree
+    fsets, piece_label = {}, {}
+    for op in ops:
+        for it in op['items']:
+            for pid, sets in (it.get('face_sets') or {}).items():
+                for lab, pts in sets.items():
+                    fsets.setdefault(pid, {}).setdefault(lab, []).extend(pts)
+    for pid, sets in fsets.items():
+        pts = [(mm(q), lab) for lab, L in sets.items() for q in L]
+        if not pts or pid not in pieces:
+            continue
+        kd = KDTree(len(pts))
+        for i, (v, _lab) in enumerate(pts):
+            kd.insert(v, i)
+        kd.balance()
+        new = []
+        for p, d in pieces[pid]:
+            groups = {}
+            for pl in p.data.polygons:
+                _co, i, _d = kd.find(p.matrix_world @ pl.center)
+                groups.setdefault(pts[i][1], []).append(pl.index)
+            if len(groups) == 1:
+                piece_label[p] = next(iter(groups))
+                new.append((p, d))
+                continue
+            for lab, fl in sorted(groups.items()):
+                q = sub_object(p, fl, '.' + lab.replace(':', '_'))
+                reg(q)
+                piece_label[q] = lab
+                new.append((q, d))
+            p.hide_render = True
+            managed.remove(p)
+        pieces[pid] = new
+
+    # the elevon strip is the same XPS blank as the core: same colour (it is cut from it at 3.1)
+    park_specs = [it for op in ops for it in op['items'] if it['type'] in ('park', 'unpark')]
+    core_ob = be.objects.get('WNG-001')
+    if core_ob is not None:
+        cc = base_colour(core_ob)
+        for it in park_specs:
+            for m in it.get('members') or []:
+                if m.startswith('WNG'):
+                    for q, _d in pieces.get(m, []):
+                        colours[q] = cc
+
+    def kerf_curve(ob, name):
+        """The kerf round a panel cut from the blank: its outline on the upper and lower surface (front edge and both
+        sides), from the panel mesh in its seated pose, as a dark 0.6 mm curve."""
+        V = [ob.matrix_world @ v.co for v in ob.data.vertices]
+        if not V:
+            return None
+        y0, y1 = min(v.y for v in V), max(v.y for v in V)
+        xmin = min(v.x for v in V)
+        tol = 0.0002
+        lines = []
+        for up in (True, False):
+            pick = (lambda a, b: a > b) if up else (lambda a, b: a < b)
+            side_pts = []
+            for ys in (y0, y1):
+                best = {}
+                for v in V:
+                    if abs(v.y - ys) < tol:
+                        k = round(v.x, 4)
+                        if k not in best or pick(v.z, best[k].z):
+                            best[k] = v
+                side_pts.append([best[k] for k in sorted(best)])
+            if not side_pts[0] or not side_pts[1]:
+                continue
+            a, b = side_pts[0][0], side_pts[1][0]                   # front corners on this surface
+            lines.append([a, b])                                    # the front kerf, then the two side kerfs
+            lines.append(side_pts[0])
+            lines.append(side_pts[1])
+        cu = bpy.data.curves.new(name, 'CURVE')
+        cu.dimensions, cu.bevel_depth, cu.bevel_resolution = '3D', 0.0015, 2
+        cu.bevel_factor_mapping_end = 'SPLINE'
+        for ln in lines:
+            if len(ln) < 2:
+                continue
+            sp = cu.splines.new('POLY')
+            sp.points.add(len(ln) - 1)
+            for pt, q in zip(sp.points, ln):
+                pt.co = (q.x, q.y, q.z, 1.0)
+        mat = bpy.data.materials.new(name + ' mat')
+        mat.diffuse_color = (0.85, 0.10, 0.04, 1.0)
+        cu.materials.append(mat)
+        o = bpy.data.objects.new(name, cu)
+        scn.collection.objects.link(o)
+        return o
+
+    kerfs = {}
+    for it in park_specs:
+        if it['type'] != 'park':
+            continue
+        for m in it.get('members') or []:
+            ob = be.objects.get(m)
+            if ob is not None:
+                k = kerf_curve(ob, m + ' kerf')
+                if k is not None:
+                    kerfs[m] = k
+                    reg(k)
+
     # wires as curves, laid end to end by the bevel end factor
     wire_obs = {}
+    for op in ops:                                     # held runs laid later: also keyed by each member wire
+        for it in op['items']:
+            if it.get('tail_action'):
+                for m in it.get('members') or []:
+                    act_of.setdefault(m, []).append((op, it))
     for w in ctx.wires:
         if w.edge not in act_of:
             continue
@@ -411,15 +583,44 @@ def blender_render(argv):
     for op in ops:
         for it in op['items']:
             k, pid = it.get('kind'), it['id']
+            if op['type'] in ('park', 'unpark'):
+                off = mm(it.get('park_mm') or [0, 0, 0])
+                f0, f1 = op['f0'], op['f1']
+                if op['type'] == 'park':                 # kerf drawn over the first 40 %, slide over the last 50 %
+                    fk = f0 + 0.4 * (f1 - f0)
+                    for m in it.get('members') or []:
+                        if m in kerfs:
+                            sched[kerfs[m]].append(('wire', f0, fk, [0.0, 0.0], [0.0, 1.0]))
+                            sched[kerfs[m]].append(('hide', f1 + int(0.6 * FPS)))
+                        for q, _d in pieces.get(m, []):
+                            sched[q].append(('park', f0 + 0.5 * (f1 - f0), f1, off))
+                else:
+                    for m in (it.get('members') or []):
+                        for q, _d in pieces.get(m, []):
+                            sched[q].append(('unpark', f0, f1, off))
+                continue
             if op['type'] == 'swing':
                 for m, sw in (it.get('swing') or {}).items():
                     for p, _d in pieces.get(m, []):
                         sched[p].append(('swing', op['f0'], op['f1'], Vector(sw['axis']), mm(sw['origin_mm']),
                                          sw['deg']))
+                # the hinge tape: the half bonded to a panel turns with it (as checked: face_sets 'panel:<id>')
+                for tp in (it.get('tape_split') or {}):
+                    for p, _d in pieces.get(tp, []):
+                        lab = piece_label.get(p, '')
+                        if lab.startswith('panel:') and lab[6:] in (it.get('swing') or {}):
+                            sw = it['swing'][lab[6:]]
+                            sched[p].append(('swing', op['f0'], op['f1'], Vector(sw['axis']), mm(sw['origin_mm']),
+                                             sw['deg']))
                 continue
             if op['type'] == 'wire':
-                if pid in wire_obs:
-                    sched[wire_obs[pid]].append(('wire', op['f0'], op['f1']))
+                if it.get('tail_action'):
+                    for m, sp in (it.get('tails') or {}).items():
+                        if m in wire_obs:
+                            sched[wire_obs[m]].append(('wire', op['f0'], op['f1'], sp['from'], sp['to']))
+                elif pid in wire_obs:
+                    sp = it.get('span') or [0.0, 1.0]
+                    sched[wire_obs[pid]].append(('wire', op['f0'], op['f1'], [sp[0], sp[0]], sp))
                 continue
             path = [mm(p) for p in (it.get('path') or [[0, 0, 0]])]
             if op['type'] == 'install':
@@ -429,12 +630,32 @@ def blender_render(argv):
                 continue
             bench = mm(it['bench_mm']) if op['type'] == 'bench' and it.get('bench_mm') else Vector()
             ps = pieces.get(pid, [])
+            if it.get('parked_with'):                    # bonded into a parked part: placed in its parked frame
+                for q, _d in ps:
+                    sched[q].append(('park', op['f0'], op['f0'], mm(it['park_mm'])))
+            if pid in fsets and any(lab == 'wrap' for lab in fsets[pid]):   # held strap run: on at the wrap step
+                ps = [(p, d) for p, d in ps if (piece_label.get(p) == 'wrap') == (op['type'] == 'wrap')]
+            if k == 'built':                            # this go's pieces only (the pod box comes in two goes)
+                mine = {q['idx'] for q in it.get('built') or []}
+                ps = [(p, d) for p, d in ps if isinstance(d, int) and d in mine]
             for j, (p, drop) in enumerate(ps):
-                if k == 'lay':
+                if k in ('lay', 'fill', 'fixture'):     # wiped on in place, slice after slice
                     n = len(ps)
                     t0 = op['f0'] + (op['f1'] - op['f0']) * 0.85 * j / max(n, 1)
-                    t1 = t0 + max(4, (op['f1'] - op['f0']) * 0.85 / max(n, 1) + 4)
-                    sched[p].append(('place', t0, t1, [drop, Vector()], bench, None, op['f1']))
+                    sched[p].append(('place', t0, t0, [Vector()], bench, None, op['f1'], None, None))
+                elif k == 'built':                      # each glued piece on its own checked path, in order
+                    bl = it.get('built') or []
+                    n = len(bl)
+                    jj = next(i for i, q in enumerate(bl) if q['idx'] == drop)
+                    t0 = op['f0'] + (op['f1'] - op['f0']) * jj / max(n, 1)
+                    t1 = op['f0'] + (op['f1'] - op['f0']) * (jj + 1) / max(n, 1)
+                    sched[p].append(('place', t0, t1, [mm(q) for q in bl[jj]['path']], bench, None, op['f1'],
+                                     None, None))
+                elif it.get('keys'):                    # keyframed: translation + hinge angle, as swept
+                    rot = (Vector(it['rot']['axis']), mm(it['rot']['origin_mm']))
+                    keys = [(mm(t), a_) for t, a_ in it['keys']]
+                    sched[p].append(('place', op['f0'], op['f1'], [keys[0][0], Vector()], bench, None, op['f1'],
+                                     keys, rot))
                 elif k == 'screw' and it.get('clusters') and p in spin_c:
                     cl = it['clusters']
                     ax = Vector(it['spin']['axis']) if it.get('spin') else Vector((0, 0, 1))
@@ -446,10 +667,11 @@ def blender_render(argv):
                     n = len(cl)
                     t0 = op['f0'] + (op['f1'] - op['f0']) * ci / n
                     t1 = op['f0'] + (op['f1'] - op['f0']) * (ci + 1) / n
-                    sched[p].append(('place', t0, t1, [mm(q) for q in cl[ci]['path']], bench, ax, op['f1']))
+                    sched[p].append(('place', t0, t1, [mm(q) for q in cl[ci]['path']], bench, ax, op['f1'],
+                                     None, None))
                 else:
                     spin = Vector(it['spin']['axis']) if (k == 'screw' and it.get('spin')) else None
-                    sched[p].append(('place', op['f0'], op['f1'], path, bench, spin, op['f1']))
+                    sched[p].append(('place', op['f0'], op['f1'], path, bench, spin, op['f1'], None, None))
 
     def path_at(path, u):
         """Point at fraction u of the path's length (start -> final), and the length still to go (m)."""
@@ -466,6 +688,31 @@ def blender_render(argv):
 
     def rot_about(axis, origin, deg):
         return Matrix.Translation(origin) @ Matrix.Rotation(math.radians(deg), 4, axis) @ Matrix.Translation(-origin)
+
+    def park_disp(ev, f):
+        """Translation of a parked part at frame f: slid out over its 'park' event, held, slid back over 'unpark'."""
+        d, moving = Vector(), False
+        for e in ev:
+            if e[0] == 'park' and f >= e[1]:
+                d = e[3] * (smooth((f - e[1]) / (e[2] - e[1])) if e[2] > e[1] else 1.0)
+                moving = f < e[2]
+            elif e[0] == 'unpark' and f >= e[1]:
+                d = e[3] * (1.0 - smooth((f - e[1]) / max(e[2] - e[1], 1)))
+                moving = f < e[2]
+        return d, moving
+
+    def keys_at(keys, u):
+        """Translation (m) and hinge angle at fraction u of a keyframed motion (assembly_check.sweep_keys: linear
+        between keys), u measured along translation mm + angle deg."""
+        w = [(keys[i + 1][0] - keys[i][0]).length * 1000.0 + abs(keys[i + 1][1] - keys[i][1])
+             for i in range(len(keys) - 1)]
+        d = u * (sum(w) or 1e-9)
+        for i, wi in enumerate(w):
+            if d <= wi or i == len(w) - 1:
+                f = min(1.0, d / wi) if wi > 0 else 1.0
+                return keys[i][0].lerp(keys[i + 1][0], f), keys[i][1] + (keys[i + 1][1] - keys[i][1]) * f
+            d -= wi
+        return keys[-1][0], keys[-1][1]
 
     # cameras: per stage, framed on what the stage places (final pose and bench pose)
     def bbox(obs_offs):
@@ -510,7 +757,7 @@ def blender_render(argv):
                                 obs.append((p, mm(it['bench_mm'])))
                     if it['id'] in wire_obs:
                         obs.append((wire_obs[it['id']], Vector()))
-                    if op['kind'] in ('slide', 'screw', 'install') and it.get('path'):
+                    if op['kind'] in ('slide', 'screw', 'install', 'hinge') and it.get('path'):
                         zs.append(it['path'][0][2] + ((it.get('bench_mm') or [0, 0, 0])[2]
                                                       if op['type'] == 'bench' else 0))
             el = st[3]
@@ -558,13 +805,19 @@ def blender_render(argv):
             base = colours[o]
             tint = 0.0
             if o.type == 'CURVE':
-                w = ev[0] if ev else None
-                if w is None or f < w[1]:
+                past = [e for e in ev if e[0] == 'wire' and e[1] <= f]
+                if any(e[0] == 'hide' and f >= e[1] for e in ev):
+                    past = []
+                if not past:
                     o.hide_render = True
                     continue
+                w = past[-1]
                 o.hide_render = False
                 p = smooth((f - w[1]) / max(w[2] - w[1], 1))
-                o.data.bevel_factor_end = max(0.002, p)
+                a0, b0 = w[3]
+                a1, b1 = w[4]
+                o.data.bevel_factor_start = a0 + (a1 - a0) * p
+                o.data.bevel_factor_end = max(o.data.bevel_factor_start + 0.002, b0 + (b1 - b0) * p)
                 tint = 1 - smooth((f - w[2]) / (0.8 * FPS))
                 o.color = tuple(base[i] * (1 - 0.75 * tint) + HI_COL[i] * 0.75 * tint for i in range(4))
                 continue
@@ -573,9 +826,14 @@ def blender_render(argv):
                 o.hide_render = True
                 continue
             o.hide_render = False
-            _k, f0, f1, path, bench, spin, f_end = pl
+            _k, f0, f1, path, bench, spin, f_end, keys, rot = pl
             M = Matrix.Identity(4)
-            if f < f1:
+            if f < f1 and keys:
+                t_, a_ = keys_at(keys, smooth((f - f0) / max(f1 - f0, 1)))
+                off = t_ + bench
+                M = rot_about(rot[0], rot[1], a_)
+                tint = 1.0
+            elif f < f1:
                 pr = smooth((f - f0) / max(f1 - f0, 1))
                 off, togo = path_at(path, pr)
                 off = off + bench
@@ -599,6 +857,10 @@ def blender_render(argv):
                     s = math.sin(math.pi * smooth((f - e[1]) / max(e[2] - e[1], 1)))
                     M = rot_about(e[3], e[4], e[5] * s) @ M
                     tint = max(tint, 0.6)
+            pd, moving = park_disp(ev, f)
+            off = off + pd
+            if moving:
+                tint = 1.0
             o.matrix_world = Matrix.Translation(off) @ M @ finals[o]
             o.color = tuple(base[i] * (1 - 0.75 * tint) + HI_COL[i] * 0.75 * tint for i in range(4))
         scn.render.filepath = os.path.join(a.out, 'raw_%04d.png' % f)

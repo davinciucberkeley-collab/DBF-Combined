@@ -1,0 +1,12 @@
+build_a exit 0 16 s
+collide_pose21 exit 0 721 s
+wire_inventory exit 0 10 s
+cad_mass exit 0 8 s
+mission_gate exit 0 0 s
+prop_sched exit 0 69 s
+proofs exit 1 2 s
+collide_linkage exit 0 850 s
+assembly exit 0 2022 s
+drawings exit 0 210 s
+build_guide exit 0 4 s
+GATES_DONE

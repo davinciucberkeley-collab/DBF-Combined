@@ -1,0 +1,94 @@
+{
+ "tag": "w_ac60g",
+ "cfg": {
+  "out": "C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\redesign\\qp\\A\\sitl\\runs\\w_ac60g\\case",
+  "wind": 5.0,
+  "wind_from_deg": 60.0,
+  "mass": 1.23,
+  "gust": 2.0,
+  "gust_at": 20.0,
+  "turb": 0.0,
+  "hold_s": 45.0,
+  "thrust_scale": 0.767,
+  "cant_deg": 16.0,
+  "seed": 1,
+  "arm": 1.2,
+  "wing_s": 1.0,
+  "fin_s": 1.0,
+  "inst": 2
+ },
+ "overrides": {},
+ "events": [
+  [
+   30.3,
+   "Throttle armed"
+  ],
+  [
+   55.8,
+   "EKF3 IMU1 is using GPS"
+  ],
+  [
+   55.8,
+   "EKF3 IMU0 is using GPS"
+  ],
+  [
+   55.9,
+   "AHRS: EKF3 active"
+  ]
+ ],
+ "readback": {
+  "Q_ANGLE_MAX": null,
+  "Q_A_ANGLE_MAX": 45.0,
+  "Q_LOIT_ANG_MAX": 15.0,
+  "Q_M_SPIN_MAX": 0.8999999761581421,
+  "Q_M_THST_EXPO": 0.550000011920929,
+  "Q_A_RAT_RLL_P": 0.25,
+  "Q_A_RAT_YAW_P": 0.4000000059604645,
+  "Q_FRAME_CLASS": 1.0,
+  "Q_TAILSIT_ENABLE": 1.0,
+  "Q_WVANE_ENABLE": 0.0,
+  "Q_A_ANGLE_BOOST": 0.0,
+  "Q_TAILSIT_DSKLD": 6.699999809265137,
+  "Q_P_NE_VEL_I": 0.3499999940395355,
+  "Q_P_NE_VEL_IMAX": 10.0,
+  "Q_P_NE_VEL_D": 0.17000000178813934,
+  "Q_P_ACC_XY_P": null,
+  "Q_P_ACC_XY_I": null,
+  "Q_PILOT_ACCEL": null,
+  "Q_PILOT_SPD_UP": 2.5,
+  "Q_P_NE_POS_P": 0.5,
+  "Q_P_NE_VEL_P": 0.699999988079071,
+  "Q_TAILSIT_MOTMX": 15.0
+ },
+ "armed": true,
+ "mode_after_arm": 18,
+ "reached_alt": true,
+ "mode_hold": 19,
+ "summary": {
+  "n": 807,
+  "t_window": [
+   8.027,
+   48.999
+  ],
+  "wind_ms": 7.0,
+  "lean_max": 17.6,
+  "lean_mean": 13.3,
+  "lean_pre": 1.0,
+  "u_max": 0.759,
+  "u_mean_max": 0.702,
+  "t_cap_s": 0.0,
+  "t_cap_run_s": 0.0,
+  "t_ge85_s": 0.0,
+  "u_min": 0.237,
+  "t_floor_s": 0.0,
+  "t_floor_run_s": 0.0,
+  "yaw_err_max": 8.1,
+  "yaw_err_rms": 3.63,
+  "pos_err_max": 2.16,
+  "pos_err_rms": 0.68,
+  "pos_err_last20_mean": 0.35,
+  "alt_dev_max": 0.08,
+  "diag_spread_max": 0.523,
+  "diag_spread_mean": 0.254
+ }
+}

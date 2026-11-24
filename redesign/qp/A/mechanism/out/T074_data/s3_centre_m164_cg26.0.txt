@@ -1,0 +1,105 @@
+  hard level                         [2 s]
+  hard 10 narrow                     [4 s]
+  hard 10 narrow neg                 [5 s]
+  hard 10 wide                       [7 s]
+  hard 7/7 combo                     [9 s]
+  hard 10 narrow + drift .5          [10 s]
+  hard 10 wide + drift .5 y          [12 s]
+  normal level .5                    [13 s]
+  normal 10 narrow .5                [15 s]
+  normal 10 wide .5 + drift          [17 s]
+  SITL Tb_h5 wide (y drift)          [18 s]
+  SITL Tb_h5 narrow (z drift)        [20 s]
+  SITL Ta_h5 wide (y drift)          [21 s]
+  SITL Ta_h5 narrow (z drift)        [22 s]
+  SITL Z5_b45 wide (y drift)         [24 s]
+  SITL Z5_b45 narrow (z drift)       [26 s]
+  SITL Lb_5e wide (y drift)          [27 s]
+  SITL Lb_5e narrow (z drift)        [29 s]
+  SITL Z5_gb45 wide (y drift)        [31 s]
+  SITL Z5_gb45 narrow (z drift)      [32 s]
+  hard 16 wide + drift .5 y          [34 s]
+# T-071b Part A: centre reaction of the landing pitch torque (concept A).  Categories: rigid-body dynamics (demand) + hand calculation (parts).  KF 1.725 KP 2.156
+# interface point P = bridge bore mouth x -0.0450, z -0.0020; pad D2 (x 0.3415, z 0.189), 23 cases, plateau 30 N, mu 0.40 (sim default; Part B reruns at 0.30)
+
+## 1. Demand (limit load, N m; moments about the span axis y)
+| case | foot torque fin R / fin L (feet about the span axis) | hub-side M at the bore mouth | hub-side M at the saddle fwd end (x 0.030) | hub-side Fz N | wing-half torque R / L (worse of spar line, mid-chord) | hub M, pack counted wing-side |
+|---|---|---|---|---|---|---|
+| hard level | 3.63 / 1.69 | 1.98 | 2.39 | 11.9 | 2.75 / 2.03 | 1.90 |
+| hard 10 narrow | 5.21 / 3.75 | 3.08 | 4.49 | 27.9 | 4.12 / 3.33 | 3.10 |
+| hard 10 narrow neg | 6.37 / 3.39 | 3.74 | 5.23 | 29.3 | 4.83 / 3.12 | 3.78 |
+| hard 10 wide | 6.06 / 5.66 | 2.74 | 3.85 | 14.8 | 5.66 / 4.69 | 2.77 |
+| hard 7/7 combo | 10.43 / 10.45 | 4.85 | 6.34 | 25.5 | 7.52 / 9.28 | 4.98 |
+| hard 10 narrow + drift .5 | 3.95 / 4.36 | 2.87 | 4.61 | 24.6 | 3.79 / 3.02 | 3.12 |
+| hard 10 wide + drift .5 y | 5.49 / 7.61 | 3.52 | 4.63 | 14.8 | 5.09 / 6.53 | 3.54 |
+| normal level .5 | 3.39 / 7.60 | 3.79 | 5.01 | 17.5 | 2.27 / 6.54 | 3.81 |
+| normal 10 narrow .5 | 5.59 / 3.47 | 3.57 | 4.75 | 25.1 | 4.40 / 3.07 | 3.69 |
+| normal 10 wide .5 + drift | 4.80 / 7.27 | 3.40 | 4.37 | 12.9 | 3.86 / 5.99 | 3.39 |
+| SITL Tb_h5 wide (y drift) | 7.48 / 3.42 | 3.21 | 4.72 | 20.1 | 7.25 / 2.87 | 3.40 |
+| SITL Tb_h5 narrow (z drift) | 8.45 / 5.86 | 6.51 | 8.35 | 24.6 | 5.77 / 5.06 | 6.71 |
+| SITL Ta_h5 wide (y drift) | 6.98 / 2.98 | 2.97 | 4.45 | 19.7 | 6.95 / 3.07 | 3.17 |
+| SITL Ta_h5 narrow (z drift) | 5.91 / 5.32 | 4.77 | 6.16 | 26.9 | 4.24 / 4.29 | 4.78 |
+| SITL Z5_b45 wide (y drift) | 6.71 / 3.62 | 2.88 | 4.23 | 18.0 | 6.50 / 3.03 | 3.06 |
+| SITL Z5_b45 narrow (z drift) | 5.44 / 5.84 | 5.16 | 6.49 | 26.5 | 3.68 / 4.69 | 5.31 |
+| SITL Lb_5e wide (y drift) | 3.01 / 3.92 | 1.70 | 1.93 | 10.5 | 2.74 / 2.54 | 1.59 |
+| SITL Lb_5e narrow (z drift) | 4.56 / 4.54 | 4.38 | 5.21 | 27.7 | 3.28 / 3.54 | 4.28 |
+| SITL Z5_gb45 wide (y drift) | 4.60 / 7.12 | 3.76 | 4.92 | 15.5 | 3.83 / 5.96 | 3.77 |
+| SITL Z5_gb45 narrow (z drift) | 5.01 / 5.31 | 4.70 | 6.04 | 28.3 | 3.42 / 4.32 | 4.84 |
+| hard 16 wide + drift .5 y | 6.62 / 7.42 | 3.44 | 4.51 | 16.3 | 6.21 / 6.33 | 3.45 |
+MAX: hub M at mouth 6.51, at saddle 8.35, hub Fz 29.3 N, wing-half torque 9.28; no-pack variant 6.71; step-2 bound 2 x single-fin max = 20.89 (T-071 step 2: 20.5)
+Check: hub + R + L wrench sums to zero in every case and time step (assert in demand(); residual < 1e-6 N, N m).
+
+## 2. Hub end (bridge bore) options. RF = min over 23 cases and all time steps. Demand columns: RB (rigid-body wrench), RB x 1.5 (EST dynamic factor), 2T (step-2 bound, constant moment, V 0)
+| Option | rung | L bore mm | dmass g (solid PETG EST) | bridge bending RB | hub bore bearing RB / RBx1.5 / 2T | collar bending, interlayer 9.5 MPa: RB / RBx1.5 / 2T | collar in-layer 20 MPa: RB / RBx1.5 |
+|---|---|---|---|---|---|---|---|
+| H0 as drawn: bore 9.0 mm, no extension | 0 | 9.0 | +0.0 | 4.04 | 0.31 / 0.20 / 0.10 | - / - / - | - / - |
+| H1 bore floor 1.5 mm deeper (limit: 1.0 mm web left over the aft surface of tube B at x -0.0565), no extension | 2 | 10.5 | -0.4 | 4.04 | 0.42 / 0.28 / 0.13 | - / - / - | - / - |
+| H2 H1 + block aft extension 10 mm, section 20 x 20 (= the block) | 2 | 20.5 | +2.1 | 4.04 | 1.52 / 1.01 / 0.50 | 1.34 / 0.90 / 0.44 | 2.83 / 1.89 |
+| H3 H1 + block aft extension 12 mm, section 24 (y) x 24 (z -16..+8) flared collar | 2 | 22.5 | +5.3 | 4.04 | 1.81 / 1.21 / 0.60 | 2.35 / 1.56 / 0.78 | 4.94 / 3.29 |
+| H4 arm tube B moved 12.5 mm forward, bore floor to x -0.068, + 6 mm aft extension 20 x 20 (L 29 mm) | 3 | 29.0 | +5.0 | 4.04 | 3.07 / 2.05 / 1.00 | 5.92 / 3.95 / 1.93 | 12.47 / 8.31 |
+
+Required bore length for hub bearing RF 1.0 (mean-bearing triangular model, KP, PETG 20 MPa EST):
+  RB: 16.3 mm
+  RB x 1.5: 20.0 mm
+  2T bound: 29.1 mm
+
+## 3. Wing end: saddle bridge socket bearing (CGE-006)
+| Option | dmass g | bearing RB / RBx1.5 / 2T |
+|---|---|---|
+| S0 as drawn: socket x 0.030..0.0535 (23.5 mm) | +0.0 | 1.62 / 1.08 / 0.65 |
+| S1 socket extended 5.3 mm forward to x 0.0245 (core saddle slot cut 5.3 mm longer) | +1.6 | 2.49 / 1.66 / 1.00 |
+
+## 4. Wing-end node (skin -> bulkhead plate -> saddle ear -> saddle).  V0 skin torque shares: skin 0.890 spar 0.056 foam 0.053; enclosed cell A 3389 mm2
+Max wing-half torque (RB) 9.28 N m -> T_skin 8.26 N m per side; x1.5 -> 12.40; step 2 used 10.24 x 0.890 = 9.12
+| Option | dmass g (both sides, vs T-070 2 g lite-ply plates; EST) | demand | rows (RF) | min | additive bound (bond + pins in parallel) |
+|---|---|---|---|---|---|
+| N0 step 2 as drawn: lite-ply 0.5 mm plate, butt bond 0.5 mm, face 23.5 x 21, 2 pins at arm 18 mm, double shear as step 2 | +0.0 | RB | skin->plate bond, lap 0.5 mm 0.38; plate shear flow at the ear edge (r_eq 12.5 mm) "-" (no allowable); plate->ear bond, ear 23.5 x 21.0 mm, 1 face(s) 0.29; CF pins: 2 x 3 mm at r 9 mm, 2 shear plane(s), 459 N each 0.43 | 0.29 (plate shear unknown) | 0.72 |
+|  |  | RBx1.5 | skin->plate bond, lap 0.5 mm 0.25; plate shear flow at the ear edge (r_eq 12.5 mm) "-" (no allowable); plate->ear bond, ear 23.5 x 21.0 mm, 1 face(s) 0.19; CF pins: 2 x 3 mm at r 9 mm, 2 shear plane(s), 689 N each 0.29 | 0.19 (plate shear unknown) | 0.48 |
+| N0b same, pins in single shear (one interface plane) | +0.0 | RB | skin->plate bond, lap 0.5 mm 0.38; plate shear flow at the ear edge (r_eq 12.5 mm) "-" (no allowable); plate->ear bond, ear 23.5 x 21.0 mm, 1 face(s) 0.29; CF pins: 2 x 3 mm at r 9 mm, 1 shear plane(s), 459 N each 0.21 | 0.21 (plate shear unknown) | 0.51 |
+|  |  | RBx1.5 | skin->plate bond, lap 0.5 mm 0.25; plate shear flow at the ear edge (r_eq 12.5 mm) "-" (no allowable); plate->ear bond, ear 23.5 x 21.0 mm, 1 face(s) 0.19; CF pins: 2 x 3 mm at r 9 mm, 1 shear plane(s), 689 N each 0.14 | 0.14 (plate shear unknown) | 0.34 |
+| N1 rung 2: 5 mm glass-tape lap, one-piece saddle with ears to y +-16.5 (ear 41.5 x 19 mm, 1.5 mm PETG), 4 pins at r 17 mm single shear, plate still lite-ply | +7.5 | RB | skin->plate bond, lap 5.0 mm 3.80; plate shear flow at the ear edge (r_eq 15.8 mm) "-" (no allowable); plate->ear bond, ear 41.5 x 19.0 mm, 1 face(s) 0.67; CF pins: 4 x 3 mm at r 17 mm, 1 shear plane(s), 122 N each 0.81 | 0.67 (plate shear unknown) | 1.48 |
+|  |  | RBx1.5 | skin->plate bond, lap 5.0 mm 2.54; plate shear flow at the ear edge (r_eq 15.8 mm) "-" (no allowable); plate->ear bond, ear 41.5 x 19.0 mm, 1 face(s) 0.45; CF pins: 4 x 3 mm at r 17 mm, 1 shear plane(s), 182 N each 0.54 | 0.45 (plate shear unknown) | 0.99 |
+| N2 rung 4: N1 + CF plate 0.5 mm (ACP S 90 MPa x 0.70) instead of lite-ply, ear on both faces of the plate (clevis), pins double shear | +13.9 | RB | skin->plate bond, lap 5.0 mm 3.80; plate shear flow at the ear edge (r_eq 15.8 mm) 2.79; plate->ear bond, ear 41.5 x 19.0 mm, 2 face(s) 1.35; CF pins: 4 x 3 mm at r 17 mm, 2 shear plane(s), 122 N each 1.62 | 1.35 | 2.97 |
+|  |  | RBx1.5 | skin->plate bond, lap 5.0 mm 2.54; plate shear flow at the ear edge (r_eq 15.8 mm) 1.86; plate->ear bond, ear 41.5 x 19.0 mm, 2 face(s) 0.90; CF pins: 4 x 3 mm at r 17 mm, 2 shear plane(s), 182 N each 1.08 | 0.90 | 1.98 |
+Printed saddle body, shear flow between ear and bridge socket (box walls 2.5 mm, 21 x 18.5 mm mean cell, PETG 20/sqrt(3) in-layer EST): RF 1.26 (RB), 0.84 (RBx1.5)
+Saddle ring bond on the spar carries the spar torque share (0.056 x 9.28 N m, ring D12 x 30 mm, epoxy 2.0 MPa EST): RF 12.0
+
+## 5. CAD cuts that interrupt the torsion cell (cell perimeter ahead of the hinge 383 mm = 372.6 airfoil + 8.6 cove face; wing.py core cuts)
+- tray slot (x -0.010..0.0225, |y| <= 0.057, open above z > 5.5 mm): top skin arc removed 8.3 mm (2.2 %).
+- saddle slot (x 0.0295..0.071, |y| <= 0.0165, open below, up to z 0.0115): bottom skin arc removed 41.6 mm and the foam below z 11.5 mm (almost the full depth; airfoil zu 9.4..12.4 mm there).
+- bridge slot (x 0..0.056, |y| <= 0.0085, open below): bottom skin arc removed 57.0 mm.
+- servo pocket (x 0.1245..0.1655, |y - 0.200| <= 0.0225, open to the upper skin): top skin arc removed 41.3 mm (10.8 %) at y 0.1775..0.2225 (inside the T-071 cell, not in my scope).
+=> a bulkhead plate inside the saddle slot (|y| < 0.0165) has no closed skin perimeter. The plate station must be y >= 0.0165 (foam and skin resume), so the saddle ears reach y = +-0.0165, 6 mm beyond the saddle box end face (0.0105) used in step 2.
+
+## 6. CAD envelope check of the hub-end option H3 (read-only stub build of amodel; world part boxes)
+test box x -0.045..-0.033, y +-0.012, z -0.016..+0.008. Parts whose boxes overlap it (mm, lo / hi):
+   ('CGE-004', [-54.0, -8.0, -10.0], [54.0, 8.0, 6.0])
+   ('CGE-008', [-45.0, -54.5, 6.0], [21.5, 54.5, 30.0])
+  expected: CGE-004 (the bridge itself, in the bore) and CGE-008 (tray: plate z 6..8 over x -0.045..-0.033 needs a 24 x 12 mm notch; the pack front lip is at x -0.0355..-0.0335, z >= 8, above the extension top z = 8). Nothing else lies in the box.
+  y clearance: raceway notches beside the hub pad flange start at |y| = 13.6 mm (wing.py PADN_Y); 24 mm width leaves 1.6 mm per side. Hub CG not re-solved.
+  CG shift of H1: +0.02 mm (dm -0.4 g at x -0.0500; CAD CG 21.37 mm, 1273 g; forward trim end limit 19.3 mm, CL-A-CG-TRIM-FWD, trim fwd 6 mm is about -1.27 mm EST)
+  CG shift of H2: -0.10 mm (dm +2.1 g at x -0.0400; CAD CG 21.37 mm, 1273 g; forward trim end limit 19.3 mm, CL-A-CG-TRIM-FWD, trim fwd 6 mm is about -1.27 mm EST)
+  CG shift of H3: -0.25 mm (dm +5.3 g at x -0.0390; CAD CG 21.37 mm, 1273 g; forward trim end limit 19.3 mm, CL-A-CG-TRIM-FWD, trim fwd 6 mm is about -1.27 mm EST)
+  H4 (tube B 12.5 mm forward): 2 x 88.26 g motors move 12.5 mm forward: CG -1.73 mm -> forward trim end about 18.4 mm (limit 19.3): FAILS by about 0.9 mm (EST)
+
+wall 41 s

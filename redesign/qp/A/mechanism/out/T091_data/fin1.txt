@@ -1,0 +1,6 @@
+B0 as drawn
+S1 sleeve CF 14x12 on the spar |y|<=0.075
+S1 sleeve CF 14x12 on the spar |y|<=0.100
+K3 struts 12x10 (R08 offcut)
+A1 arms 10x8 (T-085 C5)
+F1 sleeve 14x12, spar |y|<=0.075 + struts 12x10
