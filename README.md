@@ -23,6 +23,8 @@
 > predicted mass against 17 m/s cruise), to be decided by bench and tap tests. Order 1 ($887.25 EST) awaits approval 1-4 Dec; go/no-go 2027-01-29 (AM-037, D-248).
 > The Explorer's renders, films and drawings show concept A (the K09-L ones are kept as the record).
 
+**Start here:** concept A lives in [`redesign/qp/`](redesign/qp/README.md) (entry page [`redesign/README.md`](redesign/README.md)); open the Explorer with `START-EXPLORER.bat`; the root map is [below](#the-repository-root-17-entries-at-the-root). Earlier designs (C0, K09-L) are records.
+
 **Hard constraints (team lead; full text in [CLAUDE.md](CLAUDE.md)):**
 1. $2,000 total, all bought new (tax, shipping, packs, charger, radio, test gear, spares); the Jacobs Hall Makers Pass is outside it.
 2. Built and flight-tested by 2027-04-30.
@@ -67,7 +69,7 @@ complete on paper, nothing bought, built or flown yet.*
   [redesign/review/BUILDABILITY-REVIEW.md](redesign/review/BUILDABILITY-REVIEW.md) first: 6 blockers and 30 major
   build problems found by a buildability review, to fix before more CFD/FEA or any cutting.
 
-## Key numbers (K09-L, previous design, record)
+## Key numbers: K09-L record (superseded by concept A, see redesign/qp/)
 
 These rows are K09-L (frame revision A1-R5, 2026-11-10), not concept A; concept A numbers are in the current-design paragraph above and in [redesign/qp/A/proofs/out/CHAIN.md](redesign/qp/A/proofs/out/CHAIN.md).  "Modelled" means computed by analysis or simulation; no number is verified by test.
 
@@ -75,26 +77,43 @@ These rows are K09-L (frame revision A1-R5, 2026-11-10), not concept A; concept 
 |---|---|---|---|
 | Span × chord | 1.15 × 0.32 m, one piece | proposed | [`redesign/params/params.json`](redesign/params/params.json) `wing` |
 | Take-off mass, basic / predicted | 2,341 g / 2,457 g against a 2,600 g gate (margin 143 g; 103 g with a 590 g pack, gate 100 g); landing 59.1 g vs 60 g allocated; predicted CG 50.1 mm in the 46.6–51.4 mm range | modelled | [`redesign/MASS-CG.md`](redesign/MASS-CG.md) (D-75…D-78), `CL-A3-*` in the proof graph |
-| Propulsion | 4 × SunnySky X3108S, APC 11×5.5MR props, 4 × 45 A ESCs, 4S 6500 mAh pack | proposed | [`redesign/README.md`](redesign/README.md) |
-| Hover T/W, fresh pack / worst pack | 2.49 / 2.12 | unverified (thrust stand owed) | [`redesign/README.md`](redesign/README.md) key numbers |
+| Propulsion | 4 × SunnySky X3108S, APC 11×5.5MR props, 4 × 45 A ESCs, 4S 6500 mAh pack | proposed | [`redesign/README-K09L.md`](redesign/README-K09L.md) |
+| Hover T/W, fresh pack / worst pack | 2.49 / 2.12 | unverified (thrust stand owed) | [`redesign/README-K09L.md`](redesign/README-K09L.md) key numbers |
 | Cruise speed / power | 16 m/s / 240 W (E1 disputes: 246 W) | unverified | [`redesign/STATUS.md`](redesign/STATUS.md) issue 5 |
-| Cruise after 2 min hover, base / pessimistic | 12.0 / 6.4 min | unverified | [`redesign/README.md`](redesign/README.md) key numbers |
+| Cruise after 2 min hover, base / pessimistic | 12.0 / 6.4 min | unverified | [`redesign/README-K09L.md`](redesign/README-K09L.md) key numbers |
 | Stall at forward CG | 11.99 m/s against a 12.0 m/s limit | unverified | [`redesign/team/B2/SIMULATION-REPORT.md`](redesign/team/B2/SIMULATION-REPORT.md) |
 | Budget | $2,000 hard | requirement | [`redesign/BRIEF.md`](redesign/BRIEF.md) |
 | BOM spend / reserve, baseline | $1,588.38 / $411.62 | prices unverified | [`redesign/team/I1/bom_summary.json`](redesign/team/I1/bom_summary.json) |
 | BOM spend / reserve, pessimistic | $1,673.59 / $326.41 (gate: reserve ≥ $309, one crash) | holds only with two Jacobs Hall tool loans | [`redesign/team/I1/ORDER-PLAN.md`](redesign/team/I1/ORDER-PLAN.md) |
 | Orders | early order ~2026-11-20 ($1,064.39); main order 2026-12-15 ($430.83) | planned | [`redesign/team/I1/ORDER-PLAN.md`](redesign/team/I1/ORDER-PLAN.md) |
 | Build and finish | build start 2027-01-19 (proposed), first hover by build week 4, complete by 2027-04-30 | planned | [`redesign/params/params.json`](redesign/params/params.json) `schedule` |
-| Transport | one-piece box 1.25 × 0.55 × 0.54 m; field set-up about 5 min, one person | proposed | [`redesign/README.md`](redesign/README.md) |
+| Transport | one-piece box 1.25 × 0.55 × 0.54 m; field set-up about 5 min, one person | proposed | [`redesign/README-K09L.md`](redesign/README-K09L.md) |
 | Requirements | 59 total: 0 verified, 1 checked, 1 proposed, 57 unverified; 11 show a fail (most are stale claims) | | [`redesign/STATUS.md`](redesign/STATUS.md) |
 | Proof graph | 4,244 nodes, 13,815 links; clean build (0 drift, 0 errors); 87 claims fail on margin (2026-11-11) | | [`redesign/PROOFS.md`](redesign/PROOFS.md) |
 | Collision (no parts phasing) | 1,007 bodies in 193 parts plus every routed wire, tape skin included: 0 penetrations > 0.05 mm, static and at both elevon limits; every wire end seated in a part; no wire crosses or folds through itself (D-86, D-87) | modelled | [`redesign/collision/README.md`](redesign/collision/README.md) |
+
+## The repository root (17 entries at the root)
+
+Concept A comes first. `ls` of the root shows 17 entries (23 counting hidden ones other than `.git`).
+
+| Entry | What it is |
+|---|---|
+| `redesign/` | The current program. `qp/` (concept A, O4b: design, CAD, proofs, BOM) comes first; `site/` is the Explorer web app. Entry page: [redesign/README.md](redesign/README.md) |
+| `START-EXPLORER.bat` | Windows launcher: serves `redesign/site/` and opens the Explorer |
+| `index.html` | GitHub Pages root page (redirects to the Explorer) |
+| `docs/` | Program state, audits, requirements, task ledger, reference |
+| `tools/` | `ledger_audit.py` and other program tools |
+| `archive/` | Earlier designs: `archive/c0/` holds the C0 and v0.3.1 material ([archive/README.md](archive/README.md); old path to new path in [docs/archive-path-map.md](docs/archive-path-map.md)) |
+| `VTOL-Review.html`, `build-manual.html`, `test-plan.html`, `flight-software.html`, `templates.html`, `Concept-Models.html` | Redirect stubs: old page addresses forward to the pages now in `archive/c0/` |
+| `CLAUDE.md` | Standing project instructions for Claude sessions |
+| `PROVENANCE.md` | Which source repo and commit each area came from |
+| `PRODUCT.md`, `DESIGN.md` | Design-tool context files for the review page |
 
 ## Where things are
 
 | Path | What it is |
 |---|---|
-| [`redesign/`](redesign/README.md) | Everything for the redesign. Concept A (current) is in [`redesign/qp/`](redesign/qp/README.md); the K09-L record is described in the [README](redesign/README.md) |
+| [`redesign/`](redesign/README.md) | Everything for the redesign. Concept A (current) is in [`redesign/qp/`](redesign/qp/README.md); the entry page is [redesign/README.md](redesign/README.md); the K09-L record page is [redesign/README-K09L.md](redesign/README-K09L.md) |
 | [`redesign/config-study/`](redesign/config-study/README.md) | How K09-L was chosen: requirements, morphological chart, 43 concepts, shortlist, judging, tie-break. Decision: [`CONFIGURATION.md`](redesign/CONFIGURATION.md) |
 | [`redesign/team/<role>/`](redesign/TEAM.md) | One folder per engineering role (A systems, B aero, C structures, D CAD, E propulsion, F electrical, H test, I programme, J support), each with `SUMMARY.md`, scripts, `claims.json` and change requests |
 | [`redesign/params/`](redesign/params/params.json) | `params.json` (every top-level number), [`CHANGE-LOG.md`](redesign/params/CHANGE-LOG.md) (decisions D-01 to D-200), `mass_budget.json` |

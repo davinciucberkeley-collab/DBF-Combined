@@ -155,3 +155,13 @@ Every path removed in batch 2 is recoverable from git (`8d15f419^`, commit 50209
 `docs/engineering-decisions.md`, `docs/verification-report.md`, `docs/model-usage.md`, `.claude/settings.json`,
 `.claude/hooks/`, `.claude/agents/`, `tools/ledger_audit.py`, `redesign/params/CHANGE-LOG.md`, concept A CAD
 (`redesign/qp/A/cad/`), verified analysis outputs, current films.
+
+## T-104 layout cleanup (2026-11-23)
+
+- **Root entries:** before 31 (plan s1.1); after 23 counting hidden entries (`ls -A | grep -v '^\.git$' | wc -l`) and 17 visible (`ls | wc -l`).
+- **Tracked files:** before 15508 (`git ls-tree -r --name-only 73656c93 | wc -l`); now 15519 (`git ls-files | wc -l`, measured before the U7 commit; U7 adds none).
+- **Commits:** U1 no commit (empty `NVIDIA Corporation/` folder removal, untracked); U3 `51622f1e` (launcher renamed to `START-EXPLORER.bat`, link checker); U4 `9825669a` (archive README and path map); U5 `085fc2bf` (C0 and v0.3.1 material moved to `archive/c0`); U6 `cd92df91` (redirect stubs for the old root pages, root index to `redesign/site`); U7: see `git log` (README directory map, concept A entry in `redesign/README.md`, old entry page kept as `redesign/README-K09L.md` by `git mv`).
+- **What moved:** every old path to new path is in `docs/archive-path-map.md`.
+- **Deliberately not done:** U8 (moving the K09-L folders inside `redesign/`; decision D7 stops after U7); D4 (`redesign/review` stays); D6 (worktree).
+- **Note:** `python -I redesign/qp/A/proofs/run_all.py` rewrites `redesign/qp/A/cad/model/*/interfaces.json` as a side effect (observed in U5, not investigated).
+- **Link check:** 2 broken links remain (`redesign/qp/A/sitl/SITL-FLIGHT.md` from `redesign/site/index.html` and `app.html`), both already in the baseline. Proof-graph refs of the form `redesign/README.md#joints-both-sides-of-every-interface` (`redesign/proofs/out/`, `redesign/team/A2/`) already had no such anchor in the old README (checked: none in `redesign/README-K09L.md`); generated files were not edited.
