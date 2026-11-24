@@ -312,6 +312,15 @@
    "where": "AR-017 result: C3 elevon pitch use on the 15 deg basis 0.554 / 0.571 / 0.651 / 0.605 (Z5, Z5 Lua, T-074, T-074 Lua); worst 0.651 (T-074 without Lua)"
   },
   {
+   "id": "SRC-A-LATDIR",
+   "type": "source",
+   "title": "Lateral-directional stability script (D-260)",
+   "kind": "file",
+   "url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/sitl/latdir_a.py",
+   "checked": "2026-11-15",
+   "where": "Cn_beta 0.209 /rad at 18 m/s, CG 23.49 mm (fins 0.233, propellers -0.024); spiral +0.245 /s (time to double 2.8 s), Dutch roll 9.40 rad/s, zeta 0.152; output redesign/qp/A/mechanism/out/T101_data/latdir_a_18.json"
+  },
+  {
    "id": "SRC-A-AR015",
    "type": "source",
    "title": "Analysis records AR-015 / AR-016 (SITL transition pitch use, landing foam region)",
@@ -590,6 +599,13 @@
    "title": "Loads and flutter (G8)",
    "text": "MS >= 0 at 1.5 x limit; limit +3.4 g; VD 24 m/s; flutter, divergence and reversal >= 1.2 VD = 28.8 m/s; landing stroke within 20 mm",
    "ref": "qp/A/REQUIREMENTS-A.md#a-p13"
+  },
+  {
+   "id": "A-P15",
+   "type": "requirement",
+   "title": "Directional stability",
+   "text": "Cn_beta >= 0.03 per rad (CL-A-CNBETA); spiral half not a claim: the bare airframe diverges (time to double 2.8 s, EST), so it is flown only in roll-stabilized modes (D-260)",
+   "ref": "qp/A/REQUIREMENTS-A.md#a-p15"
   },
   {
    "id": "A-P16",

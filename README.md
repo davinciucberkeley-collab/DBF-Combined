@@ -10,17 +10,21 @@
   &middot; <a href="https://davinciucberkeley-collab.github.io/DBF-Combined/redesign/site/#build">Build guide</a>
 </p>
 
-> **Current design (2026-11-23): concept A, a scaled quad tailsitter, re-sit as O4b (D-182, D-219, D-227, D-240).** K09-L, described
+> **Current design (2026-11-24): concept A, a scaled quad tailsitter, re-sit as O4b (D-182, D-219, D-227, D-240).** K09-L, described
 > below, could not be built new within $2,000 (cheapest workable build about $2,577) and is kept as the record. Concept A O4b:
 > 0.90 m wing, 4 x SunnySky X2216 V3 880KV motors on 4 x APC 9x4.5MR props, 4S 2,800 mAh pack, Kakute H743-Wing flight controller
 > 75 mm left of centre, glass wing skin; **1.881 kg predicted (`EST`, CAD basic 1,641.0 g)**, which misses the 1.47 kg weigh-in gate
 > (-27.9 %), so the physics checks govern; **BOM $1,939.17 of $2,000** (spend $1,592.23 + crash reserve $346.94, margin $60.83;
 > $2,029.68 if unverified prices run 30 % over, information only). Design, reports and status:
-> [redesign/qp/README.md](redesign/qp/README.md). Decisions D-182 to D-247: [CHANGE-LOG.md](redesign/params/CHANGE-LOG.md).
+> [redesign/qp/README.md](redesign/qp/README.md). Decisions D-182 to D-260: [CHANGE-LOG.md](redesign/params/CHANGE-LOG.md).
 > **Status:** designed and checked on paper, in SITL and in the 3-D gates; nothing bought, built or flown. The strict proof build
-> (`python -I redesign/qp/A/proofs/run_all.py`, 2026-11-23) has 14 FAIL claims (mass gate and prediction, hover vibration in band,
-> gain margin, FC vibration, elevon horn / rib / free play, elevon pitch use 0.651 against 0.60 of 15 deg (C3 controls at 0.25 chord; the 0.30-chord attempt D-250 was reverted, D-251; the derived roll + gust reserve does not fit, D-252; next rung: cut the cruise trim), and 1.3 Vs 17.74 m/s at the
-> predicted mass against 17 m/s cruise), to be decided by bench and tap tests. Order 1 ($887.25 EST) awaits approval 1-4 Dec; go/no-go 2027-01-29 (AM-037, D-248).
+> (`python -I redesign/qp/A/proofs/run_all.py`, 2026-11-24) has 12 FAIL claims (mass gate and prediction, hover vibration in band,
+> gain margin, FC vibration, elevon horn / rib foam stress, linkage free play), to be decided by bench and tap tests. Since 2026-11-24 the elevon
+> pitch use passes at 0.59 against 0.60 (D-255: battery at the aft end of its slot, cruise 18 m/s, roll-rate cap 45 deg/s; roll / gust requirement
+> re-derived, D-254) and 1.3 Vs 17.74 m/s sits under the 18 m/s cruise: both thin, the first cruise flights decide (TP-11 / TP-19). Hover in wind
+> (A-P8) re-run for the X2216 motors passes (D-258); directional stability Cn_beta 0.21 /rad passes, the bare-airframe spiral diverges and is held
+> by the autopilot in every selectable mode (D-260). DaVinci: design data and all 129 parts in the team project "Concept A" (T-037 verified,
+> [docs/integration/DAVINCI.md](docs/integration/DAVINCI.md)). Requirements: 103 of 113 verified; tasks 93 of 105. Order 1 ($887.25 EST) awaits approval 1-4 Dec; go/no-go 2027-01-29 (AM-037, D-248).
 > The Explorer's renders, films and drawings show concept A (the K09-L ones are kept as the record).
 
 **Start here:** concept A lives in [`redesign/qp/`](redesign/qp/README.md) (entry page [`redesign/README.md`](redesign/README.md)); open the Explorer with `START-EXPLORER.bat`; the root map is [below](#the-repository-root-17-entries-at-the-root). Earlier designs (C0, K09-L) are records.
@@ -129,14 +133,14 @@ Concept A comes first. `ls` of the root shows 17 entries (23 counting hidden one
 
 ## Status and next steps
 
-As of 2026-11-23 (concept A, O4b; sources: `CLAUDE.md` status line, [`redesign/qp/A/bom_a.py`](redesign/qp/A/bom_a.py), `run_all.py`, [`docs/audits/2026-11-23-T099-final-design-audit.md`](docs/audits/2026-11-23-T099-final-design-audit.md)):
+As of 2026-11-24 (concept A, O4b; sources: `CLAUDE.md` status line, [`redesign/qp/A/bom_a.py`](redesign/qp/A/bom_a.py), `run_all.py`, [`docs/audits/2026-11-23-T099-final-design-audit.md`](docs/audits/2026-11-23-T099-final-design-audit.md)):
 
-- **Design:** 1.881 kg EST (CAD 1,641.0 g), X2216 motors, 4S 2,800 mAh, CG 22.05 mm, static margin 7.61 %; BOM $1,939.17 of $2,000.
+- **Design:** 1.881 kg EST (CAD 1,641.0 g), X2216 motors, 4S 2,800 mAh, CG 22.05 mm as drawn (flown at 23.49 mm with the pack at the aft end of its slot, D-255), static margin 7.61 % (7.02 % flown); cruise 18 m/s; BOM $1,939.17 of $2,000; Kakute H743-Wing kept (D-259); Lua spin cap dropped (D-256).
   Mass gate 1.47 kg missed; the physics checks govern (AM-011).
-- **Checks:** run_all 14 STRICT FAIL claims (list in the current-design paragraph) plus the nominal elevon flutter claim UNVERIFIED;
+- **Checks:** run_all 12 STRICT FAIL claims (list in the current-design paragraph) plus the nominal elevon flutter claim UNVERIFIED;
   3-D gates on the CAD: collide_a 0 pairs above 0.05 mm, 0 open wire ends, a_assembly 66 steps with 129 of 129 parts placed (T-099 gates record).
   Everything is modelled; nothing is VERIFIED by hardware.
-- **Open:** elevon pitch use (D-245 keeps the 15 deg basis; fix path is controls rung 1 then a SITL rerun); stall at the predicted mass (TP-11);
+- **Open:** elevon pitch use and stall pass only thinly on the model (D-255; TP-11 / TP-19 decide); the bare-airframe spiral mode diverges (2.8 s doubling EST, D-260; flown only in roll-stabilized modes);
   landing stroke passes only inside the foam region Fp 37.5-39.0 N, zeta 0.02-0.05 (TP-3); the X2216 is on RMRC backorder (T-088);
   the exported-model gate for `concept-a.glb` passes: 0 part pairs above 0.05 mm, 0 unseated wire ends, 0 bad wire entries (`collide_glb_a.py`, D-247; the published GLB is the gated export).
 - **Next:** Order 1 approval 1-4 Dec (T-093; order 1b with the config-independent lines and R15 by 11 Dec, D-248); no fabrication before Jacobs reopens (AM-037); bench stand, TP-1 / TP-2 19-28 Jan 2027, go/no-go Fri 29 Jan 2027 (F-6 answered by AM-037; schedule slack +2 d, SCHEDULE-A; Explorer Status), build January to February 2027,

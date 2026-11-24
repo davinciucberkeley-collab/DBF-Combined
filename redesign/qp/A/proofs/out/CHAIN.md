@@ -32,6 +32,7 @@ Parameter files: `redesign/qp/A/params-A.json`
 | [A-P10](#a-p10) Vibration rule D-185 | **UNVERIFIED** **FAILS** | 8 | -524%; 1 below a limit of 0 |
 | [A-P11](#a-p11) Cruise control authority | **UNVERIFIED** | 7 | +2% |
 | [A-P13](#a-p13) Loads and flutter (G8) | **UNVERIFIED** **FAILS** | 46 | -903% |
+| [A-P15](#a-p15) Directional stability | **UNVERIFIED** | 1 | +597% |
 | [A-P16](#a-p16) Motor and ESC current | **UNVERIFIED** | 2 | +25% |
 | [A-P2](#a-p2) Hover T/W >= 2.0 fresh, >= 1.6 worst pack state | **UNVERIFIED** | 4 | +35% |
 | [A-P24](#a-p24) Fence and run-out | **UNVERIFIED** | 1 | +6% |
@@ -1032,6 +1033,22 @@ Defined in: qp/A/REQUIREMENTS-A.md#a-p13
       - source `SRC-A-LINKKIN` [Elevon linkage kinematics, D-212 rev 3 (linkage_kinematics.json)](redesign/qp/A/mechanism/out/linkage_kinematics.json), free_play_budget_deg: hole clearances / horn radius + Z-bend freedom (K7), checked 2026-11-15 — **CHECKED**
   - param `P:linkage.free_play_guide_deg` = 1 deg — **CHECKED**
     - source `SRC-A-SERVOMD` [QP-4 servo review (SERVO.md)](redesign/review/QP-4/SERVO.md), s4: free play <= 1 deg (flutter target), checked 2026-11-15 — **CHECKED**
+
+## A-P15
+
+**Directional stability** — Cn_beta >= 0.03 per rad (CL-A-CNBETA); spiral half not a claim: the bare airframe diverges (time to double 2.8 s, EST), so it is flown only in roll-stabilized modes (D-260) — **UNVERIFIED**  
+Defined in: qp/A/REQUIREMENTS-A.md#a-p15
+
+- claim **CL-A-CNBETA** Directional stability Cn_beta in cruise (18 m/s, CG 23.49 mm; fins + wing + propeller estimate) = **0.209 1/rad** (limit >= 0.03 1/rad, margin +597%) — **UNVERIFIED**
+  - ⚠ uses P:sim.cn_beta, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-260 (AM-065): sitl/latdir_a.py at 18 m/s, CG 23.49 mm: fins from a_aero.airframe central differences 0.233 (the model has no wing Cn_beta), propeller estimate -0.024 (kp 0.3 per rad on disc area, 4 discs 0.10 m ahead of the CG; kp 0-0.6 gives 0.233-0.185); output mechanism/out/T101_data/latdir_a_18.json)
+  - how to verify: First cruise sorties: rudderless sideslip is not commanded on a flying wing; read the yaw response to the TP-19 roll doublets (Dutch roll period about 0.67 s, damping 0.15 EST) from the IMU log.
+  - parts: FIN-001-R, FIN-001-L, WNG-001
+  - calc `CALC-A-CNBETA-READ` `redesign/qp/A/proofs/claims_a1_flight.py::read_value()`: `sitl/latdir_a.py (D-260): N_v from a_aero.airframe central differences, Cn_beta = N_v V / (q S b), plus -4 kp A_disc x_p / (S b) for the propellers; read, not re-run` — **CHECKED**
+    - `v` ← param `P:sim.cn_beta` = 0.209 1/rad — **UNVERIFIED**
+      - ⚠ marked UNVERIFIED in redesign/qp/A/params-A.json: D-260 (AM-065): sitl/latdir_a.py at 18 m/s, CG 23.49 mm: fins from a_aero.airframe central differences 0.233 (the model has no wing Cn_beta), propeller estimate -0.024 (kp 0.3 per rad on disc area, 4 discs 0.10 m ahead of the CG; kp 0-0.6 gives 0.233-0.185); output mechanism/out/T101_data/latdir_a_18.json
+      - source `SRC-A-LATDIR` [Lateral-directional stability script (D-260)](https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/sitl/latdir_a.py), Cn_beta 0.209 /rad at 18 m/s, CG 23.49 mm (fins 0.233, propellers -0.024); spiral +0.245 /s (time to double 2.8 s), Dutch roll 9.40 rad/s, zeta 0.152; output redesign/qp/A/mechanism/out/T101_data/latdir_a_18.json, checked 2026-11-15 — **CHECKED**
+  - param `P:req.cn_beta_min` = 0.03 1/rad — **CHECKED**
+    - source `SRC-A-REQ` [Concept A requirements (REQUIREMENTS-A.md)](redesign/qp/A/REQUIREMENTS-A.md), limits of A-U1 ... A-D12; status PROPOSED, owner A2, checked 2026-11-15 — **CHECKED**
 
 ## A-P16
 

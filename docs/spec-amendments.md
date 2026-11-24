@@ -652,3 +652,11 @@ Requirement IDs: R-GEN-02, R-GEN-07, R-OPT-02.
 ```text
 Yes, check it
 ```
+
+## AM-065 — 2026-11-24 — Directional stability check
+Relation: work order (A-P15, not computed): compute Cn_beta (>= 0.03 /rad) and the spiral / Dutch-roll modes of concept A in cruise from the existing aero model and fin geometry, with a propeller estimate, and record a claim.
+Requirement IDs: R-PHY-10, R-VER-01.
+
+```text
+Yes, do the directional stability check
+```

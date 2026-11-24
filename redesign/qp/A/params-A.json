@@ -196,6 +196,12 @@
    "source": "SRC-A-REQ",
    "note": "A-P8 (D-192): no time at the 0.90 spin cap (the saturation line)"
   },
+  "cn_beta_min": {
+   "value": 0.03,
+   "unit": "1/rad",
+   "source": "SRC-A-REQ",
+   "note": "A-P15: directional stability Cn_beta >= 0.03 per rad"
+  },
   "tipover_min_deg": {
    "value": 30.0,
    "unit": "deg",
@@ -811,6 +817,13 @@
    "unit": "s",
    "source": "SRC-A-D195SITL",
    "note": "D-258: same seven AP8_h* runs: no sample at full output (the 0.90 cap line of D-192; Q_M_SPIN_MAX is 1.0 since T-083)"
+  },
+  "cn_beta": {
+   "value": 0.209,
+   "unit": "1/rad",
+   "source": "SRC-A-LATDIR",
+   "note": "D-260 (AM-065): sitl/latdir_a.py at 18 m/s, CG 23.49 mm: fins from a_aero.airframe central differences 0.233 (the model has no wing Cn_beta), propeller estimate -0.024 (kp 0.3 per rad on disc area, 4 discs 0.10 m ahead of the CG; kp 0-0.6 gives 0.233-0.185); output mechanism/out/T101_data/latdir_a_18.json",
+   "status": "UNVERIFIED"
   },
   "wind_peak": {
    "value": 0.761,

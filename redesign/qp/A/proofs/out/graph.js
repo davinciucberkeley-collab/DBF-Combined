@@ -2,7 +2,7 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-24 21:21 UTC",
+  "generated": "2026-11-24 21:41 UTC",
   "dataset": "concept-a",
   "ok": false,
   "errors": [
@@ -31,18 +31,18 @@ window.PROOF_GRAPH = {
   ],
   "counts": {
    "by_type": {
-    "source": 41,
+    "source": 42,
     "assumption": 10,
-    "requirement": 22,
+    "requirement": 23,
     "test": 16,
-    "calculation": 90,
-    "claim": 110,
-    "parameter": 216,
+    "calculation": 91,
+    "claim": 111,
+    "parameter": 218,
     "part": 65
    },
    "by_status": {
-    "CHECKED": 321,
-    "UNVERIFIED": 229,
+    "CHECKED": 324,
+    "UNVERIFIED": 232,
     "PROPOSED": 20
    },
    "fails": 16
@@ -84,7 +84,7 @@ window.PROOF_GRAPH = {
    "where": "limits of A-U1 ... A-D12; status PROPOSED, owner A2",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
-   "importance": 72
+   "importance": 73
   },
   {
    "id": "SRC-A-MASSGATE",
@@ -466,6 +466,18 @@ window.PROOF_GRAPH = {
    "url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/docs/analysis-records.md",
    "checked": "2026-11-15",
    "where": "AR-017 result: C3 elevon pitch use on the 15 deg basis 0.554 / 0.571 / 0.651 / 0.605 (Z5, Z5 Lua, T-074, T-074 Lua); worst 0.651 (T-074 without Lua)",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "SRC-A-LATDIR",
+   "type": "source",
+   "title": "Lateral-directional stability script (D-260)",
+   "kind": "file",
+   "url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/sitl/latdir_a.py",
+   "checked": "2026-11-15",
+   "where": "Cn_beta 0.209 /rad at 18 m/s, CG 23.49 mm (fins 0.233, propellers -0.024); spiral +0.245 /s (time to double 2.8 s), Dutch roll 9.40 rad/s, zeta 0.152; output redesign/qp/A/mechanism/out/T101_data/latdir_a_18.json",
    "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
    "status": "CHECKED",
    "importance": 1
@@ -1012,6 +1024,20 @@ window.PROOF_GRAPH = {
    "status": "UNVERIFIED",
    "fails": true,
    "importance": 93
+  },
+  {
+   "id": "A-P15",
+   "type": "requirement",
+   "title": "Directional stability",
+   "text": "Cn_beta >= 0.03 per rad (CL-A-CNBETA); spiral half not a claim: the bare airframe diverges (time to double 2.8 s, EST), so it is flown only in roll-stabilized modes (D-260)",
+   "ref": "qp/A/REQUIREMENTS-A.md#a-p15",
+   "defined_in": "redesign/qp/A/proofs/claims.a0_base.json",
+   "reasons": [
+    "CL-A-CNBETA is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "fails": false,
+   "importance": 3
   },
   {
    "id": "A-P16",
@@ -3414,6 +3440,56 @@ window.PROOF_GRAPH = {
    "status": "CHECKED",
    "margin": 0.0,
    "margin_abs": true,
+   "importance": 1
+  },
+  {
+   "id": "CALC-A-CNBETA-READ",
+   "type": "calculation",
+   "title": "Stored result: Directional stability Cn_beta in cruise (18 m/s, CG 23.49 mm; fins + wing + propeller estimate)",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "read_value",
+   "equation": "sitl/latdir_a.py (D-260): N_v from a_aero.airframe central differences, Cn_beta = N_v V / (q S b), plus -4 kp A_disc x_p / (S b) for the propellers; read, not re-run",
+   "inputs": {
+    "v": "P:sim.cn_beta"
+   },
+   "outputs": {
+    "v": 0.209
+   },
+   "input_values": {
+    "v": 0.209
+   },
+   "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-A-CNBETA",
+   "type": "claim",
+   "title": "Directional stability Cn_beta in cruise (18 m/s, CG 23.49 mm; fins + wing + propeller estimate)",
+   "calc": "CALC-A-CNBETA-READ",
+   "output": "v",
+   "unit": "1/rad",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.cn_beta_min",
+    "resolved": 0.03
+   },
+   "verifies": [
+    "A-P15"
+   ],
+   "parts": [
+    "FIN-001-R",
+    "FIN-001-L",
+    "WNG-001"
+   ],
+   "how": "First cruise sorties: rudderless sideslip is not commanded on a flying wing; read the yaw response to the TP-19 roll doublets (Dutch roll period about 0.67 s, damping 0.15 EST) from the IMU log.",
+   "value": 0.209,
+   "defined_in": "redesign/qp/A/proofs/claims.a1_flight.json",
+   "reasons": [
+    "uses P:sim.cn_beta, which is UNVERIFIED (marked UNVERIFIED in redesign/qp/A/params-A.json: D-260 (AM-065): sitl/latdir_a.py at 18 m/s, CG 23.49 mm: fins from a_aero.airframe central differences 0.233 (the model has no wing Cn_beta), propeller estimate -0.024 (kp 0.3 per rad on disc area, 4 discs 0.10 m ahead of the CG; kp 0-0.6 gives 0.233-0.185); output mechanism/out/T101_data/latdir_a_18.json)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 5.966666666666667,
    "importance": 1
   },
   {
@@ -8213,6 +8289,18 @@ window.PROOF_GRAPH = {
    "importance": 1
   },
   {
+   "id": "P:req.cn_beta_min",
+   "type": "parameter",
+   "title": "req.cn_beta_min",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 0.03,
+   "unit": "1/rad",
+   "source": "SRC-A-REQ",
+   "note": "A-P15: directional stability Cn_beta >= 0.03 per rad",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
    "id": "P:req.tipover_min_deg",
    "type": "parameter",
    "title": "req.tipover_min_deg",
@@ -9342,6 +9430,21 @@ window.PROOF_GRAPH = {
    "source": "SRC-A-D195SITL",
    "note": "D-258: same seven AP8_h* runs: no sample at full output (the 0.90 cap line of D-192; Q_M_SPIN_MAX is 1.0 since T-083)",
    "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "P:sim.cn_beta",
+   "type": "parameter",
+   "title": "sim.cn_beta",
+   "file": "redesign/qp/A/params-A.json",
+   "value": 0.209,
+   "unit": "1/rad",
+   "source": "SRC-A-LATDIR",
+   "note": "D-260 (AM-065): sitl/latdir_a.py at 18 m/s, CG 23.49 mm: fins from a_aero.airframe central differences 0.233 (the model has no wing Cn_beta), propeller estimate -0.024 (kp 0.3 per rad on disc area, 4 discs 0.10 m ahead of the CG; kp 0-0.6 gives 0.233-0.185); output mechanism/out/T101_data/latdir_a_18.json",
+   "reasons": [
+    "marked UNVERIFIED in redesign/qp/A/params-A.json: D-260 (AM-065): sitl/latdir_a.py at 18 m/s, CG 23.49 mm: fins from a_aero.airframe central differences 0.233 (the model has no wing Cn_beta), propeller estimate -0.024 (kp 0.3 per rad on disc area, 4 discs 0.10 m ahead of the CG; kp 0-0.6 gives 0.233-0.185); output mechanism/out/T101_data/latdir_a_18.json"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -11325,7 +11428,7 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Wing core, XPS 25 kg/m3 + tape skin + glue + hinge tape (lumped)",
    "status": "UNVERIFIED",
-   "importance": 12
+   "importance": 13
   },
   {
    "id": "WNG-002",
@@ -11353,14 +11456,14 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Fin tube 16x14 x 0.3874 m (R; T-084: 2 x FIN_H, was 0.36 m)",
    "status": "UNVERIFIED",
-   "importance": 5
+   "importance": 6
   },
   {
    "id": "FIN-001-L",
    "type": "part",
    "title": "Fin tube 16x14 x 0.3874 m (L; T-084: 2 x FIN_H, was 0.36 m)",
    "status": "UNVERIFIED",
-   "importance": 5
+   "importance": 6
   },
   {
    "id": "CGE-008",
@@ -13645,6 +13748,41 @@ window.PROOF_GRAPH = {
   {
    "source": "CL-A-WIND-CAP",
    "target": "PRP-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "P:sim.cn_beta",
+   "target": "CALC-A-CNBETA-READ",
+   "type": "uses"
+  },
+  {
+   "source": "CALC-A-CNBETA-READ",
+   "target": "CL-A-CNBETA",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:req.cn_beta_min",
+   "target": "CL-A-CNBETA",
+   "type": "uses"
+  },
+  {
+   "source": "CL-A-CNBETA",
+   "target": "A-P15",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-A-CNBETA",
+   "target": "FIN-001-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-CNBETA",
+   "target": "FIN-001-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-A-CNBETA",
+   "target": "WNG-001",
    "type": "about"
   },
   {
@@ -16874,6 +17012,11 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "SRC-A-REQ",
+   "target": "P:req.cn_beta_min",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-REQ",
    "target": "P:req.tipover_min_deg",
    "type": "cites"
   },
@@ -17270,6 +17413,11 @@ window.PROOF_GRAPH = {
   {
    "source": "SRC-A-D195SITL",
    "target": "P:sim.wind_cap_s",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-A-LATDIR",
+   "target": "P:sim.cn_beta",
    "type": "cites"
   },
   {

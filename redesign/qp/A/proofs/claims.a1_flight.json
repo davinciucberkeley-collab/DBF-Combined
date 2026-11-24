@@ -1743,6 +1743,45 @@
    "value": 0.0
   },
   {
+   "id": "CALC-A-CNBETA-READ",
+   "type": "calculation",
+   "title": "Stored result: Directional stability Cn_beta in cruise (18 m/s, CG 23.49 mm; fins + wing + propeller estimate)",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "read_value",
+   "equation": "sitl/latdir_a.py (D-260): N_v from a_aero.airframe central differences, Cn_beta = N_v V / (q S b), plus -4 kp A_disc x_p / (S b) for the propellers; read, not re-run",
+   "inputs": {
+    "v": "P:sim.cn_beta"
+   },
+   "outputs": {
+    "v": 0.209
+   },
+   "input_values": {
+    "v": 0.209
+   }
+  },
+  {
+   "id": "CL-A-CNBETA",
+   "type": "claim",
+   "title": "Directional stability Cn_beta in cruise (18 m/s, CG 23.49 mm; fins + wing + propeller estimate)",
+   "calc": "CALC-A-CNBETA-READ",
+   "output": "v",
+   "unit": "1/rad",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.cn_beta_min"
+   },
+   "verifies": [
+    "A-P15"
+   ],
+   "parts": [
+    "FIN-001-R",
+    "FIN-001-L",
+    "WNG-001"
+   ],
+   "how": "First cruise sorties: rudderless sideslip is not commanded on a flying wing; read the yaw response to the TP-19 roll doublets (Dutch roll period about 0.67 s, damping 0.15 EST) from the IMU log.",
+   "value": 0.209
+  },
+  {
    "id": "CALC-A-TIPOVER-READ",
    "type": "calculation",
    "title": "Stored result: Static tip-over angle on the fin tips",

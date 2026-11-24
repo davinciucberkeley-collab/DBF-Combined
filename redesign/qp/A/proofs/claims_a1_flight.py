@@ -329,6 +329,9 @@ stored("CL-A-WIND-OUTPUT", "Longest time any motor is at or above 0.85 output, 4
 stored("CL-A-WIND-CAP", "Time any motor is at full output (the 0.90 cap line), 4 m/s turbulence hover (SITL, 1.881 kg, X2216, worst pack; D-258)", "P:sim.wind_cap_s", "s",
        limit=("<=", "P:req.motor_cap_s_max"), verifies=["A-P8"], parts=["PRP-001-UR", "PRP-001-UL", "PRP-001-LR", "PRP-001-LL"],
        how="Log motor outputs in the tethered turbulence hover (M9): no sample at the cap.", equation="same seven SITL runs; read, not re-run")
+stored("CL-A-CNBETA", "Directional stability Cn_beta in cruise (18 m/s, CG 23.49 mm; fins + wing + propeller estimate)", "P:sim.cn_beta", "1/rad", limit=(">=", "P:req.cn_beta_min"), verifies=["A-P15"], parts=["FIN-001-R", "FIN-001-L", "WNG-001"],
+       how="First cruise sorties: rudderless sideslip is not commanded on a flying wing; read the yaw response to the TP-19 roll doublets (Dutch roll period about 0.67 s, damping 0.15 EST) from the IMU log.",
+       equation="sitl/latdir_a.py (D-260): N_v from a_aero.airframe central differences, Cn_beta = N_v V / (q S b), plus -4 kp A_disc x_p / (S b) for the propellers; read, not re-run")
 stored("CL-A-TIPOVER", "Static tip-over angle on the fin tips", "P:sim.tipover_deg", "deg", limit=(">=", "P:req.tipover_min_deg"), verifies=["A-P9"],
        parts=["GER-001-UR", "GER-001-UL", "GER-001-LR", "GER-001-LL", "FIN-001-R", "FIN-001-L"], how="Tilt test of the built aircraft on its feet (CG 20-26 mm): tips over at >= 30 deg.",
        equation="SIZING-A s4 geometry (feet 0.36 m apart, CG 0.275 m above); read, not recomputed")
