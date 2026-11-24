@@ -86,3 +86,5 @@ From the commit logs: Dillon Alcouffe (design, CAD, analysis: DillonVTOL and mos
 Hottier (inventory, electrical, Fusion model, alternative designs A1–A3), James Guymon (concept models), Vaibhav
 Bagrodia (tilt-wing study). The `sim/` import and OpenCAE Studio were committed mostly by Claude sessions on the team
 account. Commit attribution rules are in [CLAUDE.md](CLAUDE.md).
+
+T-104 moves (2026-11-23): the C0 and v0.3.1 root folders, pages, `DECISIONS.md`, `VTOL.bat`, `tools/vtol.py` and the C0 doc sets now live under `archive/c0/`; the history above keeps the old paths. Old path to new path: [docs/archive-path-map.md](docs/archive-path-map.md).

@@ -106,7 +106,7 @@ These rows are K09-L (frame revision A1-R5, 2026-11-10), not concept A; concept 
 | [`redesign/showcase/`](redesign/SHOWCASE.md) | Renders, flight and build animations, STL models, page snapshots |
 | [`redesign/design-system/`](redesign/design-system/README.md) | Visual standard for every output (tokens, components, Blender style) |
 | BOM | Concept A: [`redesign/qp/A/BOM-A.csv`](redesign/qp/A/BOM-A.csv), totals [`bom_a.py`](redesign/qp/A/bom_a.py), [`ORDER-1.csv`](redesign/qp/A/ORDER-1.csv). K09-L record: [`redesign/team/I1/K09L-BOM.xlsx`](redesign/team/I1/K09L-BOM.xlsx) (Excel with live formulas), [`BOM.csv`](redesign/team/I1/BOM.csv), [`ORDER-PLAN.md`](redesign/team/I1/ORDER-PLAN.md) |
-| Legacy (C0 era) | `analysis/`, `cad/` (SOLIDWORKS), `docs/`, `firmware/`, `review/`, the root `*.html` pages, `inventory/`, `fusion/` (C0 v0.3.1 scripts), `concepts/`, `sim/`, `explorations/tiltwing/`, `tools/`, [`DECISIONS.md`](DECISIONS.md). Imported on 2026-11-08 from DBF-VTOL, DillonVTOL, TiltWing and OpenCAEModel; superseded by K09-L. Source commits and what was left out: [`PROVENANCE.md`](PROVENANCE.md) |
+| Legacy (C0 era) | Everything C0 and v0.3.1 now lives under [`archive/c0/`](archive/README.md) (moved in T-104; old path to new path: [`docs/archive-path-map.md`](docs/archive-path-map.md)): `analysis/`, `cad/` (SOLIDWORKS), `firmware/`, `review/`, the C0 `*.html` pages, `inventory/`, `fusion/` (C0 v0.3.1 scripts), `concepts/`, `sim/`, `explorations/tiltwing/`, the C0 doc sets `docs/{build,test,validation,research,figures,purchasing}` and `docs/DESIGN-BASIS.md`, the menu launcher `archive/c0/VTOL.bat` with `archive/c0/tools/vtol.py`, and [`DECISIONS.md`](archive/c0/DECISIONS.md). Imported on 2026-11-08 from DBF-VTOL, DillonVTOL, TiltWing and OpenCAEModel; superseded by K09-L. Source commits and what was left out: [`PROVENANCE.md`](PROVENANCE.md) |
 
 ## Status and next steps
 
@@ -133,12 +133,12 @@ programme planning, media, design review) and lists the checks to run before any
 ## Legacy: C0 lift + cruise
 
 Before K09-L the team's baseline was C0, a 2.4 m twin-boom quadplane with four lift rotors and a pusher, designed in
-SOLIDWORKS. The configuration study superseded it on 2026-11-09. Its files remain at the repo root for reference;
+SOLIDWORKS. The configuration study superseded it on 2026-11-09. Its files remain in `archive/c0/` for reference (moved from the repo root in T-104);
 [`PROVENANCE.md`](PROVENANCE.md) records where each came from, and the design review is
-[`VTOL-Review.html`](VTOL-Review.html) (download and open locally).
+[`VTOL-Review.html`](archive/c0/VTOL-Review.html) (download and open locally).
 
 ## CI
 
-The GitHub Actions workflow `.github/workflows/regenerate-check.yml` (green) covers the K09-L / legacy generators only (`analysis/verify.py`,
-`review/build.mjs`, `firmware/tools/check_params.py`); it runs none of the concept A generators and is not evidence that concept A is consistent.
+The GitHub Actions workflow `.github/workflows/regenerate-check.yml` (green) covers the K09-L / legacy generators only (`archive/c0/analysis/verify.py`,
+`archive/c0/review/build.mjs`, `archive/c0/firmware/tools/check_params.py`); it runs none of the concept A generators and is not evidence that concept A is consistent.
 Concept A's check is `python -I redesign/qp/A/proofs/run_all.py` plus `python -I tools/ledger_audit.py`.

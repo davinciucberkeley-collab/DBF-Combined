@@ -107,7 +107,7 @@ def compare(ref):
     out = []
     for f, path, label in KEYS:
         now = dig(load(f), path) if (ROOT / f).exists() else None
-        p = subprocess.run(["git", "show", f"{ref}:{f}"], cwd=ROOT, capture_output=True, text=True, encoding="utf-8")
+        p = subprocess.run(["git", "show", f"{ref}:./{f}"], cwd=ROOT, capture_output=True, text=True, encoding="utf-8")
         then = dig(json.loads(p.stdout), path) if p.returncode == 0 else None
         d = (now - then) / then * 100 if isinstance(now, (int, float)) and isinstance(then, (int, float)) and then else None
         out.append({"quantity": label, "file": f, ref: then, "now": now, "change_pct": d})

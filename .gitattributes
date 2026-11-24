@@ -14,12 +14,12 @@
 *.[pP][dD][fF]             filter=lfs diff=lfs merge=lfs -text
 *.[xX][lL][sS][xX]         filter=lfs diff=lfs merge=lfs -text
 
-# Exception: the CI workflow (.github/workflows/regenerate-check.yml) builds the review page from cad/mesh/*.stl
+# Exception: the CI workflow (.github/workflows/regenerate-check.yml) builds the review page from archive/c0/cad/mesh/*.stl
 # on a hosted runner that checks out without LFS. Keep those meshes as ordinary Git blobs so CI sees real files.
-cad/mesh/*.[sS][tT][lL]    !filter !diff !merge -text
+archive/c0/cad/mesh/*.[sS][tT][lL]    !filter !diff !merge -text
 # Exception: the review page's Downloads section links the drawing set PDF directly (0.3 MB). GitHub Pages serves
 # LFS files as pointer text, so keep it as an ordinary blob.
-cad/drawings/DBF-DRW-001.PDF !filter !diff !merge -text
+archive/c0/cad/drawings/DBF-DRW-001.PDF !filter !diff !merge -text
 
 # Exception: build/test animations under redesign/ are embedded in web pages (manual, viewer). GitHub Pages serves
 # LFS files as pointer text, so keep them as ordinary blobs. Keep each clip short and small (target < 3 MB).
