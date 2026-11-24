@@ -628,3 +628,19 @@ Requirement IDs: R-PHY-10, R-VER-01.
 ```text
 Yes, rerun the landing and windy hover
 ```
+
+## AM-062 — 2026-11-24 — Rerun the A-P8 hover-wind checks for the current aircraft
+Relation: work order (D-257 gap): give the hover plant the X2216 + APC 9x4.5MR thrust model and re-run the A-P8 wind cases (4 m/s mean, turbulence, gust; output above 0.85, time at full output, lean) at 1.881 kg and arm 1.2, then update CL-A-WIND-OUTPUT / -CAP / -LEAN.
+Requirement IDs: R-PHY-08, R-VER-01.
+
+```text
+Yes, rerun A-P8
+```
+
+## AM-063 — 2026-11-24 — DaVinci cost accepted and workflow approved
+Relation: Dillon accepts the measured near-zero DaVinci cost (per-object embedding / indexing charges, under one cent in total for the Concept A imports; no AI chat spend), replacing AM-003's $0 line for this work, and approves the workflow: after each design change Claude pushes the current design data to a new snapshot branch in project Concept A, with 3-D parts and the lite whole-aircraft model only when geometry changes; DaVinci's AI agent is never used; main is changed only on purpose.
+Requirement IDs: R-INT-04.
+
+```text
+Yes, I accept the cost and approve the workflow
+```
