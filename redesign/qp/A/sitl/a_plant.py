@@ -39,6 +39,7 @@ if FWD:
     import a_aero as AE
     AE.SLIP = cfg.get("slip", 0.0)
     if "cg_aft" in cfg and CADM: AE.set_cg(cfg["cg_aft"])
+    if "cm0" in cfg: AE.CM0 = cfg["cm0"]   # T-101 D-253 opt-in: section Cm0 sensitivity (reflex trim study); default = a_aero.CM0 (S5010 +0.008)
     VREST = cfg.get("vrest", 14.92)            # pack rest voltage, V (14.92 = 3.73 V/cell, the T/W-sag state of MASS-GATE; 16.8 fresh)
     HOT = cfg.get("hot", 0.97 if VREST < 15.5 else 1.0)   # winding-hot thrust factor used with the sag state (sizing_a.py)
     RPACK = cfg.get("rpack", 0.030)            # pack resistance, ohm (prop_a.py EST)

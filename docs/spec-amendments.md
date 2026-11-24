@@ -556,3 +556,27 @@ Requirement IDs: R-GEN-01, R-GEN-02, R-ORC-04.
 ```text
 Yes, write it in and push
 ```
+
+## AM-053 — 2026-11-24 — Work on the elevon cruise trim
+Relation: work order (T-101): take the next D-252 rung, cutting the elevon cruise trim (6.4 deg) by wing reflex and / or CG so pitch use (CL-A-PITCH-USE 0.651 vs 0.60) and the roll / gust reserve fit inside the elevon stops.
+Requirement IDs: R-PHY-10, R-OPT-01.
+
+```text
+Work on the elevon cruise trim
+```
+
+## AM-054 — 2026-11-24 — Back to the DaVinci API work
+Relation: work order (T-037): resume the DaVinci API work from 2026-11-23 (storage after the branch delete, usage re-read, lighter re-import); the T-101 trim SITL batch continues in the background.
+Requirement IDs: R-INT-04.
+
+```text
+Lets get back to working on the DaVinci API that we were looking at last night
+```
+
+## AM-055 — 2026-11-24 — Delete the DaVinci snapshot branch via the API
+Relation: Dillon created a projects:manage token (in the git-ignored .env as DAVINCI_API_KEY_MANAGE) and approved deleting only the API Test branch `concept-a-snapshot-73656c93` (the UI delete failed); check storage afterwards.
+Requirement IDs: R-INT-04, R-GEN-02.
+
+```text
+token's in, delete the snapshot branch
+```

@@ -60,6 +60,7 @@ cfg = dict(out=os.path.join(run, "case"), fwd=1, mass=MASS, cant_deg=float(kv.ge
 if case == "takeoff": cfg["wind_t0"] = 5.0
 if case == "land": cfg["wind_alt"] = 14.0
 if "elv_scale" in kv: cfg["elv_scale"] = float(kv["elv_scale"])
+if "cm0" in kv: cfg["cm0"] = float(kv["cm0"])          # T-101 D-253: section Cm0 override (default off)
 if "cg" in kv: cfg["cg_aft"] = float(kv["cg"]) * 1e-3     # CG aft of the LE, mm (pack trim ends), re-references the aero arms (a_aero.set_cg)
 
 # ---- static thrust model for the entry throttle (same functions the plant uses)

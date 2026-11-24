@@ -174,3 +174,19 @@ Token scopes: projects:read, projects:write, sessions:manage, usage:read. **No `
 - Held by the 205 STEP geometry objects (129 + 76 assembly copies) on branch `concept-a-snapshot-73656c93`. The attached files are only the 2.5 MB GLB.
 - The organization is at about 1.0 of 1.0 GB, with Model Benchmarks at 226 MB.
 - Deleting the branch is pending with Dillon (AM-050; deletion needs his approval, R-GEN-02).
+
+## Status read 2026-11-24 (AM-054, `python -I tools/davinci_status.py`, read-only)
+
+- Branches in API Test: `concept-a-snapshot-73656c93` and `main`. The snapshot branch is still there: the UI delete on 2026-11-24 returned an error (AM-050).
+- API Test storageUsedBytes 836,126,423 (unchanged). Other projects visible: Test 11.3 MB (Dillon's own), Support Arm Astra 151.7 MB, Argon 23.6 MB, Sol 23.4 MB, Haiku 18.6 MB, Opus 11.7 MB (team projects; not touched).
+- Usage: $49.060351, 1,093 events, asOf still 2026-11-09T07:22:13Z, so the $0 claim is still "no change observed, usage snapshot stale". The plans page says credits cover "uploading files", so the uploads may be charged once the usage feed updates (—).
+- Storage ratio measured from the import: about 38.6 MB of STEP gave 836 MB stored (about 22x). A lighter re-import must budget for that: one decimated STEP per subsystem (10 geometries, target about 3 MB of STEP, about 70 MB stored EST at 22x), no assembly duplicates, the first upload measured before the rest.
+
+## Branch delete via the API, 2026-11-24 (AM-055)
+
+With a projects:manage token (Dillon, 1-day expiry, git-ignored `.env`, never printed), deleting `concept-a-snapshot-73656c93` in API Test:
+- `DELETE /projects/{id}/branches/concept-a-snapshot-73656c93`: HTTP 400 `BRANCH_NOT_FOUND`, although `GET /projects/{id}/branches` lists the branch (the list gives names only, no ids).
+- `DELETE /projects/{id}/branches` with the name as query (`branch=` or `name=`) or JSON body: HTTP 403 `CREDENTIAL_NOT_PERMITTED`, "This endpoint cannot be called with this credential type", allowed `jwt` only.
+- **Result:** branch deletion is not available to personal access tokens; it needs a signed-in web session (JWT), and the web-app delete fails for Dillon. Storage unchanged at 836,126,423 bytes. Nothing was deleted.
+- The manage token value was removed from `.env` after the attempt; Dillon should revoke it in Settings → Connections.
+- Next: an organization admin (Douglas) or DaVinci support deletes the branch or purges its storage, or raises the 1 GB limit. Until then no uploads (AM-050).
