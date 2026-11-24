@@ -24,15 +24,18 @@ DESIGN = {
     'T097': 'Baseline 1.881 kg (T-097)',
     'T101C1': 'Controls fix C1: 1.0 s hold before the CRUISE switch (T-101)',
     'T101C2': 'Controls fix C2: C1 plus TECS time constant 8 (T-101)',
-    'T101C3': 'Current design basis: controls fix C3 at 0.25 chord (T-101)',
+    'T101C3': 'Controls fix C3 at 0.25 chord, 17 m/s (T-101, record)',
+    'T101A1': 'Adopted design (D-255): C3 + battery aft + 18 m/s cruise + roll cap 45 deg/s',
+    'T101A1RQ4': 'Adopted design (D-255): cruise, worst 3 m/s gust + 30 deg bank reversal',
 }
 DESIGN_SHORT = {'T097': 'Baseline 1.881 kg', 'T101C1': 'Controls fix C1', 'T101C2': 'Controls fix C2',
-                'T101C3': 'Current design basis: C3 at 0.25 chord'}
-DESIGN_TAG = {'T097': 'baseline', 'T101C1': 'fix C1', 'T101C2': 'fix C2', 'T101C3': 'C3, current basis'}   # option text
+                'T101C3': 'Controls fix C3 (record)', 'T101A1': 'Adopted design D-255', 'T101A1RQ4': 'Adopted design, gust + roll reversal'}
+DESIGN_TAG = {'T097': 'baseline', 'T101C1': 'fix C1', 'T101C2': 'fix C2', 'T101C3': 'C3 (record)', 'T101A1': 'adopted D-255', 'T101A1RQ4': 'adopted, gust + roll'}   # option text
 CASE = {'T074': 'hard case T-074', 'Z5': 'full flight Z5'}
-CASE_REF = {'T097': ' (T-097)', 'T101C1': ' (T-101)', 'T101C2': ' (T-101)', 'T101C3': ' (T-101)'}
-DEFAULT_FLIGHT = 'T101C3_T074'
-FLIGHT_RUNS = [d + '_' + c + l for d in ('T101C3', 'T101C1', 'T101C2', 'T097') for c in ('T074', 'Z5') for l in ('', '_lua')]
+CASE_REF = {'T097': ' (T-097)', 'T101C1': ' (T-101)', 'T101C2': ' (T-101)', 'T101C3': ' (T-101)', 'T101A1': ' (D-255)', 'T101A1RQ4': ' (D-255)'}
+DEFAULT_FLIGHT = 'T101A1_T074'
+FLIGHT_RUNS = [d + '_' + c + l for d in ('T101A1', 'T101C3', 'T101C1', 'T101C2', 'T097') for c in ('T074', 'Z5') for l in ('', '_lua')]
+FLIGHT_RUNS.insert(4, 'T101A1RQ4_T074')
 
 def flight_label(run):
     lua = run.endswith('_lua'); base = run[:-4] if lua else run

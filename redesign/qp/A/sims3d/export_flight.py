@@ -8,7 +8,7 @@ A = os.path.normpath(os.path.join(HERE, ".."))
 SITL = os.path.join(A, "sitl"); sys.path.insert(0, SITL)
 import fwd_sum                                   # noqa: E402  (module has no import-time side effects)
 OUT = os.path.join(HERE, "out")
-RUNS = [r + s for r in ("T097", "T101C1", "T101C2", "T101C3") for s in ("_T074", "_T074_lua", "_Z5", "_Z5_lua")]
+RUNS = [r + s for r in ("T097", "T101C1", "T101C2", "T101C3", "T101A1") for s in ("_T074", "_T074_lua", "_Z5", "_Z5_lua")] + ["T101A1RQ4_T074"]   # A1 = D-255 adopted
 RATE_HZ = 10.0
 SD = lambda x: round(float(x), 3)                # 3 decimals
 FIELDS = [("t", "t"), ("pn", "pn"), ("pe", "pe"), ("alt", "alt"), ("pitch", "pitch"), ("roll", "roll"), ("hdg_nose", "hdg_nose"), ("dl", "dl"), ("dr", "dr"),
@@ -49,10 +49,16 @@ def export(run, t101, t097):
     data["touch"] = [int(f["touch"][i]) for i in idx]
     data["pitch_use_15"] = [SD(abs(0.5 * (f["dl"][i] + f["dr"][i])) / 15.0) for i in idx]
     s = fwd_sum.trans(f, res)
-    r = t101["runs"][run]
+    if run in t101["runs"]:
+        r = t101["runs"][run]
+    else:   # D-255 / AM-068: adopted A1 runs are not in T101_results.json; lines from fwd_sum.trans (pitch use <= 0.60 for the plain cases, elevon below the 20 deg stop for the gust + roll case)
+        gust = "RQ" in run
+        lines = {"elevon_below_stop": dict(value=s["elevon_max_deg"], limit="< 20 deg", ok=s["elevon_max_deg"] < 19.9)}
+        if not gust: lines["pitch_use_15"] = dict(value=s["pitch_use_15"], limit="<= 0.60", ok=s["pitch_use_15"] <= 0.60)
+        r = dict(all_pass=all(v["ok"] for v in lines.values()), checks=lines)
     meta = dict(run=run, mass_kg=res["mass"], setup=dict(args=res["args"], case=res["case"], cfg={k: v for k, v in res["cfg"].items() if k != "out"}, entry=res.get("entry"), thst_hover=res.get("thst_hover")),
                 lua=run.endswith("_lua"), rate_hz=RATE_HZ, n_samples=len(idx), n_source_samples=len(rows), duration_s=f["t"][-1],
-                pass_fail=dict(source="mechanism/out/T101_results.json runs[run].checks (result.json itself carries no pass/fail)", all_pass=r["all_pass"],
+                pass_fail=dict(source=("mechanism/out/T101_results.json runs[run].checks (result.json itself carries no pass/fail)" if run in t101["runs"] else "sitl/fwd_sum.py trans() lines for the D-255 A1 runs (CHANGE-LOG D-255)"), all_pass=r["all_pass"],
                                lines={k: dict(v) for k, v in r["checks"].items()},
                                ar015_rows=[dict(metric=x["metric"], value=x["value"], limit=x["limit"], **{"pass": x["pass"]}) for x in t097 if x["case"] == run]),
                 pitch_use_scalar=dict(pitch_use_15=s["pitch_use_15"], pitch_use_20=s["pitch_use_20"], pitch_use_25=s["pitch_use_25"], elevon_max_deg=s["elevon_max_deg"], window="t_fbwa .. t_cruise_end"),
