@@ -4,17 +4,17 @@ Spec: `docs/MASTER_PROJECT_SPEC.md` (+ `spec-amendments.md`). Requirements: `req
 Checkpoint: `session-state.md`. Phases follow spec Part 11; dependencies are the ledger's Deps column.
 
 ## Phases
-| Phase | Tasks | Gate to leave the phase |
-|---|---|---|
-| 1 Preservation + audit | T-001…T-014, T-016, T-040, T-046, T-052, T-054, T-060 | spec sealed; hooks tested (T-007, T-008); haiku registry audit (T-011) clean |
-| 2 Initial repo optimization | T-041…T-045 (dry-run, then approved batches) | Dillon approves deletions; regression green |
-| 3 Orchestration | T-013, T-014, T-015, T-048, T-051, T-055 | one routed agent run per tier logged |
-| 4 Mechanical engineering | T-016…T-025, T-050, T-056…T-058, T-061, T-063, T-064…T-066, T-067…T-071, T-073, T-076, T-077, T-083…T-085, T-089, T-091, T-092, T-094 | kinematic + dynamic + swept-collision records; O review |
-| 4b O4b design + budget | T-072, T-074, T-075, T-078…T-082, T-086…T-088, T-090, T-093 | go/no-go 2026-12-15 (AM-016); Order 1 approved by Dillon in order week (T-093) |
-| 5 Video | T-026…T-033 | preview reviewed → full render → playback + visual sign-off |
-| 6 Team integration | T-034…T-039, T-053, T-062 | blocked items resolved or recorded |
-| 7 Final optimization | T-042…T-045 rerun, T-049 | final audit; benchmarks before/after |
-| 8 Final verification | T-047, T-059 | O reviewer per-requirement table |
+| Phase | Tasks | Gate to leave the phase | Skill / method used (R-GEN-01) |
+|---|---|---|---|
+| 1 Preservation + audit | T-001…T-014, T-016, T-040, T-046, T-052, T-054, T-060 | spec sealed; hooks tested (T-007, T-008); haiku registry audit (T-011) clean | no Superpowers skill invocation recorded; method: sealed spec plus tamper test, hook tests (evidence before claims) |
+| 2 Initial repo optimization | T-041…T-045 (dry-run, then approved batches) | Dillon approves deletions; regression green | no Superpowers skill invocation recorded; method: dry run, approved batches, regression before each batch |
+| 3 Orchestration | T-013, T-014, T-015, T-048, T-051, T-055 | one routed agent run per tier logged | Agent Standard v0.2 roles (AM-039 / AM-040), in place of Superpowers dispatching: the team mandates one shared framework across repos |
+| 4 Mechanical engineering | T-016…T-025, T-050, T-056…T-058, T-061, T-063, T-064…T-066, T-067…T-071, T-073, T-076, T-077, T-083…T-085, T-089, T-091, T-092, T-094 | kinematic + dynamic + swept-collision records; O review | repo agents implementer / eng-reviewer until 2026-11-23, then Agent Standard roles (AM-040): scout before choosing, tactician plus builders, a fresh reviewer per batch; D-ladder subtract-first |
+| 4b O4b design + budget | T-072, T-074, T-075, T-078…T-082, T-086…T-088, T-090, T-093 | go/no-go 2026-12-15 (AM-016); Order 1 approved by Dillon in order week (T-093) | repo agents until 2026-11-23, then Agent Standard: scout (prices, servos), advisor on loops (T-101) |
+| 5 Video | T-026…T-033 | preview reviewed → full render → playback + visual sign-off | implementer plus eng-reviewer frame review (before AM-040), then builder plus reviewer; cam-check |
+| 6 Team integration | T-034…T-039, T-053, T-062 | blocked items resolved or recorded | Impeccable: the T-053 Explorer audit (D-242) and the 2026-11-24 finish review of the replay section with fixes applied (docs/audits/2026-11-24-impeccable-replays-review.md) |
+| 7 Final optimization | T-042…T-045 rerun, T-049 | final audit; benchmarks before/after | Agent Standard builder (haiku) plus reviewer check; before / after timings (repository-audit s14) |
+| 8 Final verification | T-047, T-059 | O reviewer per-requirement table | no Superpowers skill invocation recorded; method: fresh opus reviewers per the Agent Standard (T-047, T-059), evidence before claims |
 
 Phases 4 and 5 share one dependency (T-018 drives the film's mechanism motion); 2, 4 and 5 can otherwise run in
 parallel in separate worktrees. Phase 6 waits on team inputs (schema, DaVinci access).
@@ -93,5 +93,5 @@ Check (spec 11, R-PLAN-01): every R-id in `requirements.md` appears in the table
 - **Impeccable:** finish review of the changed Explorer replay section, `docs/audits/2026-11-24-impeccable-replays-review.md` (impeccable-finish-reviewer). Its 8 material fixes were applied and checked in the same file, section "Fixes applied". The earlier Explorer design audit is T-053 / D-242.
 - **Superpowers:** the using-superpowers skill loads at every session start (SessionStart hook context).
   - Planning, review and delegation in this program follow the team Agent Standard v0.2. It is mandatory since AM-040 ("Make sure this is used for all future work"), so the standard replaces Superpowers' subagent-driven-development and dispatching patterns here. The spec allows "other tools when better".
-  - Verification-before-completion is applied in practice: only VERIFIED COMPLETE counts, after an independent check.
+  - Evidence before claims is applied in practice (only VERIFIED COMPLETE counts, after an independent check), but no Superpowers skill invocation is on record for any phase; the Phases table says so per phase.
   - Whether this satisfies R-GEN-01's "phase plans name the skill used" is for the next independent review to judge.

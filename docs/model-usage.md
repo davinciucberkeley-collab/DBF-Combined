@@ -139,3 +139,11 @@ Routing deviation (2026-11-19): `eng-reviewer` is defined on opus, but the 2026-
 Scope (2026-11-18): this log starts with T-016. Delegations earlier on 2026-11-18 (program set-up done by the conductor itself; T-011 registry audit, haiku, `docs/audits/2026-11-18-ledger.md`) were not logged row by row; their outputs are the files named in the ledger.
 
 Backfill (fix pass C, 2026-11-24, review round 13 R13-P1): the rows dated 2026-11-23 and -24 for T-101, T-103, T-104, T-105, T-015 and T-037 are reconstructed from the audit files; per-run token counts were not recorded and are shown as "—", and a model is "—" where the audit does not name it. The Agent Standard's agent log (`plans/agent-log.jsonl`) is not adopted here (LOCAL.md); this file is the substitute record.
+| 2026-11-24 | T-047 final verification | reviewer | opus | fresh instance, 2 runs (turn limit) | docs/audits/2026-11-24-T047-final-verification.md |
+| 2026-11-24 | T-059 Part 13 checklist | reviewer | opus | fresh instance | docs/audits/2026-11-24-T059-deliverables.md |
+| 2026-11-24 | T-049 final repo audit | builder | haiku | — | docs/repository-audit.md s13 |
+| 2026-11-24 | T-104 s14 redundancy and timings | builder | sonnet | — | docs/repository-audit.md s14 |
+| 2026-11-24 | R-GEN-01 Impeccable finish review | impeccable-finish-reviewer | default (not recorded) | — | docs/audits/2026-11-24-impeccable-replays-review.md |
+| 2026-11-24 | Impeccable fixes | tactician + 2 builders | sonnet | first builder hit its turn limit | same file, "Fixes applied" |
+| 2026-11-24 | T-047 F-2 film card | builder | sonnet | — | docs/audits/2026-11-23-T096-film-rerender.md |
+| 2026-11-24 | R-MON-01 / R-GEN-01 follow-up check | reviewer | opus | fresh instance | docs/audits/2026-11-24-followup-check.md |

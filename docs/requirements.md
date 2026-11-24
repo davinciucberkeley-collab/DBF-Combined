@@ -142,7 +142,7 @@ The aircraft is **concept A** (D-182); K09-L material is the record only.
 ## Part 10 — Monitoring and recovery
 | ID | Src | Requirement | Interpretation | Pri | Deps | Owner | Acceptance | Verification | Status |
 |---|---|---|---|---|---|---|---|---|---|
-| R-MON-01 | 10.1 | Persist active tasks, agents, state, deps, progress, errors, blocks outside conversation | `session-state.md` + ledger | P0 | R-PRES-05 | C | Updated at each milestone | read | IN PROGRESS |
+| R-MON-01 | 10.1 | Persist active tasks, agents, state, deps, progress, errors, blocks outside conversation | `session-state.md` + ledger | P0 | R-PRES-05 | C | Updated at each milestone | read | VERIFIED COMPLETE |
 | R-MON-02 | 10.2 | Detect stalls, retries, loops, conflicting edits, scope drift (cheap checks) | Retry count in model-usage; background-job timeouts | P1 | R-MON-01 | C | Stall rule written; applied | log | VERIFIED COMPLETE |
 | R-MON-03 | 10.3 | Nine-step failure recovery; never silently abandon | Failures logged in session-state "Failed attempts" | P1 | R-MON-01 | C | Every FAILED task has diagnosis | audit | VERIFIED COMPLETE |
 | R-MON-04 | 10.4 | Persist goal, requirements, done, pending, failures, decisions, next action before handoff/compaction | session-state sections | P0 | R-MON-01 | C | All seven sections present | read | VERIFIED COMPLETE |
