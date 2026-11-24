@@ -56,7 +56,7 @@ complete on paper, nothing bought, built or flown yet.*
 
 - **In any browser, nothing to download:** the link at the top of this page (GitHub Pages, published from the
   `redesign/v1` branch; it updates a minute or two after each push).
-- **Windows, with Python installed:** double-click `00 - OPEN THE K09-L EXPLORER (double-click me).bat` in the repo
+- **Windows, with Python installed:** double-click `START-EXPLORER.bat` in the repo
   folder. It serves `redesign/site/` on `http://localhost:8765/` and opens the Explorer in your browser, now showing concept A: a
   rotatable 3-D model with a vendor link or build clip for every part, the configuration decision and morph chart, the
   concept A BOM and status, proof chains and every document and the Simulations view (SITL and landing reruns on the current design, T-097 / T-098). Close the console window to stop it.
@@ -102,7 +102,7 @@ These rows are K09-L (frame revision A1-R5, 2026-11-10), not concept A; concept 
 | [`redesign/interfaces/`](redesign/interfaces/REPORT.md) | Interface graph (parts and joints) and its checker `merge_check.py` |
 | [`redesign/fusion/`](redesign/fusion/DATUMS.md) | Fusion framework: `BuildAll` script, backends, `check.py`, skeleton, datums |
 | [`redesign/proofs/`](redesign/PROOFS.md) | Proof chains from requirement to claim to calculation to source; `build_graph.py` rebuilds and flags drift |
-| `redesign/site/` | The Explorer web app opened by the `.bat` file (concept A; the `.bat` keeps its old K09-L name) |
+| `redesign/site/` | The Explorer web app opened by the `.bat` file (concept A) |
 | [`redesign/showcase/`](redesign/SHOWCASE.md) | Renders, flight and build animations, STL models, page snapshots |
 | [`redesign/design-system/`](redesign/design-system/README.md) | Visual standard for every output (tokens, components, Blender style) |
 | BOM | Concept A: [`redesign/qp/A/BOM-A.csv`](redesign/qp/A/BOM-A.csv), totals [`bom_a.py`](redesign/qp/A/bom_a.py), [`ORDER-1.csv`](redesign/qp/A/ORDER-1.csv). K09-L record: [`redesign/team/I1/K09L-BOM.xlsx`](redesign/team/I1/K09L-BOM.xlsx) (Excel with live formulas), [`BOM.csv`](redesign/team/I1/BOM.csv), [`ORDER-PLAN.md`](redesign/team/I1/ORDER-PLAN.md) |
