@@ -1,0 +1,7 @@
+T101H_gu_22 exit 0 wall 129 s
+T101H_st_22 exit 0 wall 129 s
+T101H_tu_22 exit 0 wall 130 s
+T101H_st_23 exit 0 wall 116 s
+T101H_gu_23 exit 0 wall 116 s
+T101H_tu_23 exit 0 wall 115 s
+ALLDONE

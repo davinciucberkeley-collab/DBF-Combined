@@ -620,3 +620,11 @@ Requirement IDs: R-PHY-08, R-GEN-08.
 ```text
 Yes, drop the Lua script
 ```
+
+## AM-061 — 2026-11-24 — Rerun the landing and windy hover at the new CG
+Relation: work order (T-101 residual, review R-D255-3): re-run the C5 landing model and a windy hover SITL at the D-255 CG 23.49 mm (pack at the aft end of the tray slot) and compare with their limits.
+Requirement IDs: R-PHY-10, R-VER-01.
+
+```text
+Yes, rerun the landing and windy hover
+```

@@ -41,6 +41,7 @@ cfg = dict(out=os.path.join(run, "case"), wind=float(kv.get("wind", 0)), wind_fr
            gust=float(kv.get("gust", 0)), gust_at=float(kv.get("gust_at", 20)), turb=float(kv.get("turb", 0)), hold_s=float(kv.get("hold", 60)),
            thrust_scale=float(kv.get("thrust_scale", 0.767)), cant_deg=float(kv.get("cant", 14)), seed=int(kv.get("seed", 1)), arm=float(kv.get("arm", 1)), wing_s=float(kv.get("wing_s", 1)),
            fin_s=float(kv.get("fin_s", 1)), inst=int(kv.get("inst", 0)))
+if "cg" in kv: cfg["cg_aft"] = float(kv["cg"]) * 1e-3     # T-101 AM-061 opt-in: CG aft of the LE, mm (a_plant re-references the aero arms); default = cad_mass.json
 INST = int(kv.get("inst", 0))
 plant = subprocess.Popen([sys.executable, os.path.join(HERE, "a_plant.py"), json.dumps(cfg)], stdout=open(os.path.join(run, "plant.log"), "w"),
                          stderr=subprocess.STDOUT)
