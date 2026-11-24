@@ -158,3 +158,4 @@ redesign/qp/A/mechanism/out/T083_data/fea/*.npz
 # DaVinci probe raw output (account spend and ids; summary goes in docs/integration/davinci-findings.md)
 docs/integration/davinci-probe-*.json
 docs/integration/davinci-probe2-*.json
+redesign/qp/A/cad/out/glb/

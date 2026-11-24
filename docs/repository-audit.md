@@ -165,3 +165,156 @@ Every path removed in batch 2 is recoverable from git (`8d15f419^`, commit 50209
 - **Deliberately not done:** U8 (moving the K09-L folders inside `redesign/`; decision D7 stops after U7); D4 (`redesign/review` stays); D6 (worktree).
 - **Note:** `python -I redesign/qp/A/proofs/run_all.py` rewrites `redesign/qp/A/cad/model/*/interfaces.json` as a side effect (observed in U5, not investigated).
 - **Link check:** 2 broken links remain (`redesign/qp/A/sitl/SITL-FLIGHT.md` from `redesign/site/index.html` and `app.html`), both already in the baseline. Proof-graph refs of the form `redesign/README.md#joints-both-sides-of-every-interface` (`redesign/proofs/out/`, `redesign/team/A2/`) already had no such anchor in the old README (checked: none in `redesign/README-K09L.md`); generated files were not edited.
+
+## Final audit 2026-11-24 (T-049, R-REPO-10, R-REPO-08)
+
+Measured 2026-11-24 on branch `redesign/v1`, HEAD `71cab7a2`. Sizes from `du -sh` (1024-based) unless stated; `ls-tree` and `du -b` sums are bytes. "—" = no before value in this file.
+
+The working tree was not clean at measurement time. `git status --short` showed `?? redesign/qp/A/cad/out/glb/` (already present at session start). The regression commands in 13.2 then modified 10 `redesign/qp/A/cad/model/*/interfaces.json` files and `docs/session-log.md` (side effects, see 13.3).
+
+### 13.1 Before / after table
+
+| Metric | Before (this file) | After 2026-11-24 | Command (from the repo root) |
+|---|---|---|---|
+| Root entries, all incl. `.git` | 31 (T-104 section, plan s1.1) | 25 | `ls -A \| wc -l` |
+| Root entries, visible | 17 (T-104 after) | 17 | `ls \| wc -l` |
+| Root entries, excl. `.git` | 23 (T-104 after, `ls -A \| grep -v '^\.git$' \| wc -l`) | 24 = 7 hidden + 17 visible. The 7 hidden: 6 tracked (`.claude .gitattributes .github .gitignore .impeccable .nojekyll`) and the git-ignored `.env`. Whether T-104 counted `.env` is not verified. | `ls -A \| grep -v '^\.git$' \| wc -l` |
+| Git-tracked files | 13,798 (T-040, a93f14da); 15,281 (T-045, 76894339); 15,508 (T-104, 73656c93) | 15,803 | `git ls-files \| wc -l` |
+| Tracked tree size (sum of blob sizes at HEAD) | 1,489 MB, 13,798 files (T-040); 1,064.8 MB, 15,281 files (T-045, unit not stated) | 1,125,121,219 B = 1,125.1 MB (1,073.0 MiB), 15,803 files | `git ls-tree -r -l HEAD \| awk '{s+=$4; n++} END{print s, n}'` |
+| Git object store | 22,407 packed in 4 packs, 1.51 GiB, 2,451 loose, 524 MiB (T-040); 6,609 loose, 744.61 MiB (T-045) | 5 packs, 2.17 GiB, 29,599 in pack; 689 loose, 46.82 MiB | `git count-objects -vH` |
+| Working tree size excl. `.git` | ≈ 11.7 GB (T-040: `du -sh .` less `.git`, incl. 9 worktrees) | 4.5 GB | `du -sh --exclude=./.git .` (about 2 min) |
+| `.git` on disk | 2.3 GB (T-040); 2.7 GB (T-045) | 2.7 GB | `du -sh .git` |
+| Largest 10 tracked files | — (T-040 gave folder and type totals only) | largest 31,771,409 B; list below | `git ls-files -z \| xargs -0 du -b \| sort -n \| tail` |
+| `.claude/worktrees` | 9 checkouts, size not measured (T-040); 1 checkout `ui-redesign-survey`, 768 MB (T-045, `du -sm`) | 250 MB (`du -sm`): one leftover folder `agent-a738e3f4799ad7786`. `git worktree list` shows only the main checkout, so the folder is not a registered worktree. | `du -sh .claude/worktrees`; `du -sm .claude/worktrees`; `git worktree list` |
+| `__pycache__` directories (excl. `.git`) | — | 23 | `find . -path ./.git -prune -o -type d -name __pycache__ -print \| wc -l` |
+| Untracked files, excl. `.env` | — | 2 files: `redesign/qp/A/cad/out/glb/_job_glb.json` and `redesign/qp/A/cad/out/glb/glb_report.json` (git lists 2 paths) | `git ls-files --others --exclude-standard \| wc -l` |
+| Untracked size, excl. `.env` | — | 14,507,145 B (14.5 MB) | `git ls-files --others --exclude-standard -z \| tr '\0' '\n' \| grep -Ev '(^\|/)\.env$' \| tr '\n' '\0' \| xargs -0 du -cb \| tail -1` |
+
+Largest 10 tracked files (bytes, `git ls-files -z | xargs -0 du -b | sort -n | tail`; no before list exists, so each before value is "—"):
+
+| Bytes | Path |
+|---|---|
+| 16,440,265 | `archive/c0/concepts/variants/a3/fusion/a3.f3d` |
+| 19,785,812 | `redesign/showcase/concept-a/animation/a-build.mp4` |
+| 19,785,812 | `redesign/site/assets/animation/build/a-build.mp4` (same size as the line above: a copy, kept per s5) |
+| 22,760,084 | `redesign/showcase/stl/k09l-assembly.stl` |
+| 27,929,485 | `archive/c0/concepts/variants/a2/fusion/a2.step` |
+| 28,083,195 | `redesign/showcase/animation/build/k09l-build.mp4` |
+| 28,409,920 | `redesign/showcase/concept-a/film/film-main-1080p60.mp4` |
+| 28,890,336 | `archive/c0/inventory/fusion/VTOL_Fusion.step` |
+| 30,859,527 | `archive/c0/concepts/variants/a1/fusion/a1.step` |
+| 31,771,409 | `archive/c0/concepts/variants/a3/fusion/a3.step` |
+
+### 13.2 Regression commands (exit codes and key lines)
+
+| Check | Command | Exit | Key line | Before (T-045, s9) | Result |
+|---|---|---|---|---|---|
+| Ledger | `python -I tools/ledger_audit.py` | 0 | `113 requirements, 105 tasks, {... 'VERIFIED COMPLETE': 89, 'BLOCKED': 5, 'EXPLICITLY DEFERRED': 5, 'IN PROGRESS': 2, 'NOT STARTED': 4}; 0 errors` | 109 requirements, 93 tasks, 0 errors | PASS (counts grew with new tasks) |
+| Proof claims | `python -I redesign/qp/A/proofs/run_all.py` | 1 | 20 `ERROR: STRICT ...` lines: 18 contain `FAILS`, 2 are `UNVERIFIED` (A-P6 `CL-A-STALL`, A-P13 `CL-A-FLUTTER-ELEVON-NOM`). The literal text `STRICT FAIL` does not occur; the count is `grep -c 'ERROR: STRICT'` = 20 and `grep 'ERROR: STRICT' \| grep -c FAILS` = 18. | 12 distinct FAIL claims plus 1 UNVERIFIED, printed as 16 STRICT lines | rc 1 is expected while claims fail. **Count rose**: 18 FAIL lines against 12, and 2 UNVERIFIED against 1 (see 13.3). |
+| BOM | `python -I redesign/qp/A/bom_a.py` | 0 | `G7 (...): FAIL (total 1,939.17, +30 % margin -29.68)` | total 1,939.17 | PASS, total unchanged |
+| Session-start hook | `echo '{"source":"startup"}' \| python -I .claude/hooks/recovery.py session-start` | 0 | `DBF master program recovery ...` | — | PASS (side effect: one line appended to `docs/session-log.md`) |
+| Site JS syntax | `node --check redesign/site/<f>.js` for `fea-view.js`, `model.js`, `replay.js`, `site.js`, `viewer.js` | 0 for each of the 5 | no output | rc 0 on 3 build scripts (different files) | PASS (no before value for these files) |
+| Link checker (T-104 U3) | `python -I docs/audits/2026-11-23-T104-linkcheck.py` | 0 | `2 broken`: `redesign/site/index.html -> redesign/qp/A/sitl/SITL-FLIGHT.md` and `redesign/site/app.html -> redesign/qp/A/sitl/SITL-FLIGHT.md` | 2 broken (T-104 baseline, `docs/audits/2026-11-23-T104-linkcheck-baseline.txt`) | PASS, same 2 broken links, none new. The checker is in `docs/audits/`, not `tools/`; `find tools -iname '*link*'` finds nothing. |
+
+### 13.3 Regressions and side effects
+
+1. **Proof claim count rose.** `run_all.py` prints 18 FAIL lines and 2 UNVERIFIED, against 12 FAIL and 1 UNVERIFIED in s9. The FAIL lines include `CL-A-MASS-PRED` (1.881 kg, margin -28 %), `CL-A-HORN-BEARING-STALL`, `CL-A-LINKAGE-FREEPLAY` and `CL-A-VIB-GM-SHIFT`. This run does not show which are new since T-045, and the brief's stop rule forbids fixing. These are design-claim findings, not cleanup regressions.
+2. **Side effects of the regression commands (not reverted; the brief allows no edits):**
+   - `run_all.py` rewrote 10 `redesign/qp/A/cad/model/*/interfaces.json` files (assembly, avionics, cage, fins, harness, landing, mechanisms, power, propulsion, wing). `git diff --stat` shows 10 files, 130 insertions, 645 deletions. The T-104 section records the same side effect. The run also printed `wrote ...\redesign\qp\A\params-A.json`; git status does not show that file as modified.
+   - `.claude/hooks/recovery.py session-start` appended `- 2026-11-24T03:02:36-07:00 SessionStart source=startup session=?` to `docs/session-log.md`.
+   - Git printed `LF will be replaced by CRLF` warnings for the rewritten `interfaces.json` files and other CAD model files. These are line-ending warnings from the working copy.
+3. **Worktree leftover.** `.claude/worktrees` is 250 MB (768 MB at T-045). `git worktree list` shows only the main checkout, so the folder is unregistered. Removing it needs Dillon's approval; not done.
+4. **Growth since T-045.** Tracked files rose from 15,281 to 15,803. The object store is now 2.17 GiB in packs (was 1.51 GiB) with loose objects down to 689 (was 6,609); `.git` on disk is unchanged at 2.7 GB. No history rewrite was done. The T-045 size unit was not stated, so the tracked-tree size change is not computed here.
+5. **Rows with no before value** (`__pycache__`, untracked count and size, largest-10 list, node check per file) are shown as "—".
+
+**Conductor note on s13.3 (2026-11-24).** The STRICT count did not regress. run_all prints 20 STRICT lines: 14 failing claims (the same set as before), 4 requirement-level roll-up lines (A-P1, A-D3, A-P10, A-P11), and 2 UNVERIFIED (A-P6 CL-A-STALL, A-P13 CL-A-FLUTTER-ELEVON-NOM). The earlier "16 lines" was counted while 12 claims were failing, before CL-A-STALL-PRED and CL-A-PITCH-USE were added (fix pass A, D-245). Correction (T-059 V-1): the interfaces.json rewrite was a real content change (645 lines deleted, cg_xyz_m null), most likely from two run_all processes running at once (T-049 and T-059): build_a writes interfaces.json in two passes, and pass 1 has no CGs. The T-059 reviewer restored the files with git checkout; my empty diff was read after that restore. Rule: run run_all and the gates one at a time, never in parallel.
+
+## 14. Redundancy audit and speed measurements (2026-11-24)
+
+Spec 9.4 and 9.5 follow-up to s5 and s8 (T-104 follow-up, rows 23-24 of `docs/audits/2026-11-24-T059-deliverables.md`). Measured on HEAD `71cab7a2`. Evidence: `git ls-files`, `git ls-tree -r -l`, `git grep` on imports and path strings (excluding `*/out/*`, `*.md`, `*.json`). Report only: nothing was deleted, moved or merged. "A uses it" means a script under `redesign/qp/A`, `redesign/showcase/concept-a` or `redesign/site` imports it or names its path. Items marked "(to confirm)" were judged from file headers and grep hits, not by reading every line.
+
+### 14.1 Redundancy audit (report only)
+
+**A. CAD pipelines**
+| Paths | What overlaps | A uses it? | Recommendation | Risk |
+|---|---|---|---|---|
+| `redesign/fusion/` (25 .py, 0.3 MB: `build_all.py`, `check.py`, `backends/stub_backend.py`, `fusion_backend.py`) vs `redesign/qp/A/cad/model/*/fusion/*.py` | Not a duplicate: the K09-L generic builder is the engine, A's modules are its input. `fusion_backend.py` (real Fusion 360) is not called from A; only `StubBackend` is. | Yes: `qp/A/cad/build_a.py` lines 11-21 and `collide_a.py` lines 19-23 import `build_all` and `StubBackend`; `build_a.py` line 38 runs `fusion/check.py`. Also `wire_inventory.py`, `proxy_collide.py`, `collide_glb_a.py`, drawings and two landing scripts match. | keep. `fusion_backend.py` and `BuildAll/` are archive candidates once a grep confirms no A caller. | Medium: a move breaks `build_a.py`, `collide_a.py`, `wire_inventory.py`, `proxy_collide.py`. |
+| `archive/c0/fusion/` (22 files: `build_vtol_fusion.py`, `build_hardware_fusion.py`, `render_animations_fusion.py` ...), `archive/c0/cad/`, `archive/c0/concepts/variants/*/fusion` (STEP up to 31.8 MB) | v0.3.1 Fusion scripts: the same job as `redesign/fusion` plus `qp/A/cad`, for the old hybrid. | No. Nothing outside `archive/c0` names it (grep). | keep (already archived; spec 9.2: do not assume old designs are useless). The 5 largest STEP/F3D files (about 135 MB) are delete-after-OK candidates only. | Low for function; `.git` does not shrink (s10). |
+| `redesign/qp/A/cad/` (19 .py) | Internal overlap: `collide_a.py` (stub bodies), `collide_glb_a.py` (exported GLB), `proxy_collide.py`, and `showcase/animation/assembly_check.py` (about 1,900 lines) all drive the `collision/collide.py` machinery on the same model. They are gates on different inputs, not copies. `a_assembly_plan.py` and `showcase/animation/assembly_plan.py` overlap by name (to confirm). | Yes, all. | merge candidate, low priority: one gate driver with several inputs. A merge would not save run time (the gates cost 227 to 2,283 s each, s8). | Medium: they are the proof gates (CLAUDE.md hard constraint). |
+| `redesign/collision/` (3 .py, 0.1 MB) | K09-L collide, imported unmodified by `collide_a.py`, `assembly_check.py`, `a_collide_blender.py`. | Yes. | keep | Medium. |
+| `redesign/viewer/` (19 files, 1.4 MB, `build_data.py`, demo aircraft in `data/aircraft`) vs `redesign/site/viewer.js` plus `site/data/viewer-data.js` | Two three.js assembly viewers. The README says `redesign/viewer` shows a generic demo aircraft; the Explorer has its own. | `qp/A/cad/viewer_data_a.py` mentions the folder; it writes the Explorer data (to confirm whether it also feeds this viewer). | archive candidate, delete-after-OK. | Low. `redesign/index.html` may link it (check before moving). |
+| `redesign/blender/out/aircraft/glb/*.glb` (8.96 MB assembly, 5.4 MB harness, others) vs A's `site/assets/concept-a.glb` (11.8 MB) and `concept-a.opt.glb` (2.5 MB) | K09-L GLB outputs next to A's. | No. Only an example path in the `fea_coverage_render.py` docstring and in `redesign/viewer/build_data.py`. | keep the `redesign/blender` scripts (A imports `blender_backend.py`); the K09-L `out/aircraft/glb` files are delete-after-OK (about 17 MB, regenerable). | Low. |
+| Blender builders: `redesign/blender/{render_figures,render_kit,explode,annotate,export_glb}.py` vs `showcase/tools/render_showcase.py`, `showcase/animation/render_animation.py`, `render_build.py`, `showcase/concept-a/render_build_a.py` | Several Blender entry points that each build scene, lights and world. `render_animation.py` copies lighting and world code from `render_kit` and says so in comments (lines 216, 221, 682). | `blender_backend.py` is imported by `collide_glb_a_blender.py`, `render_animation.py`, `render_build.py`. `render_figures.py`, `render_kit.py`, `explode.py`, `annotate.py`: no A caller found. | merge (later): move shared scene setup into `blender_backend.py`; archive `render_figures.py` and `render_kit.py` after OK. | Medium: a render regression costs hours to detect (s8). |
+
+**B. Simulation wrappers**
+| Paths | What overlaps | A uses it? | Recommendation | Risk |
+|---|---|---|---|---|
+| `redesign/team/{B2,B3,B4,C2,C4,C5,E1}/**` (9,922 tracked files, 212.2 MB incl. all of `team`, 182 .py) | K09-L team simulation code. `team/C5/sim/landing_sim3d.py` is the parent of `qp/A/structures/landing_a.py`; `team/C4` is the method source of `fe_a.py`. A copied and rescaled them; the docstrings say "adapted, standalone". | No imports; docstring mentions only (`fe_a.py`, `fe_a_iter1.py`, `landing_a.py`). | keep as record (or archive the folder as a unit). Merging is not possible without re-validating A. | Low: large, no live caller, but old K09-L numbers cite it. |
+| `redesign/qp/A/structures/` (40 .py, 12 `landing_*`) | `landing_a.py` is the engine (17 referrers in `qp/A`). `landing_centre_a`, `landing_lean_scan_a`, `landing_path_a`, `landing_path_options_a`, `landing_side_a`, `landing_sitl_records_a`, `landing_tip_options_a` are one-purpose studies with one or a few referrers; `landing_nodes_b.py`, `landing_tip_b.py`, `landing_sitl_env_a.py` have 0 referrers. `fe_a.py` sits beside `fe_a_iter1.py` (iteration 1 kept). | Yes (proof claims). | keep the engine; the 3 orphans and `fe_a_iter1.py` are archive candidates (delete-after-OK; they are record scripts for cited results). | Low to medium: D-243 and AR-014 cite their output. |
+| `qp/A/sims3d/` (4 .py) vs `qp/A/sitl/` (18 .py) vs `qp/A/mechanism/*.py` (6) | `sims3d/run_landing_traces.py` imports `landing_a` and restates the touchdown case list that its own comment says is "same list and order as sweep_t098.py / landing_a.py". `export_flight.py` re-reads SITL output already summarised by `sitl/gather.py` and `fwd_sum.py`. | Yes (T-105). | merge candidate: `run_landing_traces.py` could import the case list from `landing_a.py`. | Low. |
+| `qp/A/sitl/` | `run_case.py` (hover) and `run_fwd.py` (forward flight) are two drivers for ArduPlane SITL with the same plant; `jobq.py` queues `run_fwd`; `wsum.py`, `fwd_sum.py`, `gather.py` each summarise runs; `fu_*` are four follow-up reports. | Yes. | merge (low value): one runner with a mode flag, one summary script. Not worth doing unless SITL is rerun. | Low. |
+| `qp/A/mechanism/out/T0*_data/` | 218 tracked `.py` among 1,578 files, 90.3 MB, mostly frozen before/after code copies (`a_build_steps_*backup.py`, `structures_a_before.py`); `a_build_steps.py` exists in 6 places. | No (data folders, not imported). | archive or delete-after-OK: keep results, drop the code copies (git history has them). Largest: `T076_data` 20.8 MB, `T071b_data` 16.4 MB, `T073_data` 15.4 MB. | Low, but decisions and AR entries cite these folders; check citations first. The three tracked SITL `.BIN` (s10 item 2) are in here. |
+| `tools/opencae-studio/` (130 tracked files, 89 .py, 5.7 MB) | A separate FE/CFD app (CalculiX, SU2), overlapping `team/C2/fea`, `team/C4/sim` and `qp/A/structures/fe_a.py`. | No: `git grep opencae` outside its folder finds `.gitignore`, PROVENANCE.md, docs and `redesign/inputs/` only. | keep as a team tool; mark unused by A. | Low. |
+| `tools/design_loop/` (3 .py) | Wraps `gen_params_a`, the claims scripts and `build_graph --strict`: a second route to what `run_all.py` runs. | It calls A; A does not call it (docs only). | keep (T-035 deliverable). | Low. |
+| `redesign/proofs/build_graph.py`, `proofkit.py` vs `qp/A/proofs/run_all.py` | Not duplicates: `run_all.py` shells out to `build_graph.py --strict`. `redesign/proofs/examples/` is a generic demo aircraft used by `test_proofs.py`. | Yes. | keep; `examples/` is an archive candidate. | Low. |
+
+**C. Rendering systems**
+| Paths | What overlaps | A uses it? | Recommendation | Risk |
+|---|---|---|---|---|
+| `showcase/animation/render_build.py` plus `render_animation.py` (K09-L film) vs `showcase/concept-a/render_build_a.py` (A film) | Two build-film renderers; `assembly_check.py` and `assembly_plan.py` in `showcase/animation/` are shared. | A's film: `render_build_a.py`. The older two are still named by `concept-a/audit_film.py`, `qp/A/cad/a_build_steps.py` and `parts_links_a.py` (grep hits on path strings; to confirm which are imports). | merge (later): one renderer parameterised by model root. Keep both now. | Medium: renders take hours (1.94 s per frame per worker, 6,470 frames, s8). |
+| `showcase/drawing/make_sheet.py` (K09-L sheet) vs `showcase/concept-a/make_sheet_a.py` and `qp/A/drawings/*` (`make_drawings_a.py`, `compose_drawings.py`, `render_drawings_blender.py`) | Two drawing generators for A (a general-arrangement sheet in `make_sheet_a.py`, the drawing set in `qp/A/drawings`); `render_drawing.py` is shared (to confirm how much of the output overlaps). | `make_sheet.py`: K09-L only. | merge: name one canonical A drawing path, archive `make_sheet.py`. | Low to medium. |
+| `showcase/_work/*.json` (16) vs `showcase/concept-a/_work/*.json` (15); `blender/specs/showcase.json` vs `showcase-a.json` | K09-L and A scene specs side by side; `render_animation.py` still reads `specs/showcase.json`. | A set: yes. K09-L set: record. | keep; label the K09-L set as record. | Low. |
+| `redesign/showcase/renders/hero-iso.png`, `showcase/_work/hero-iso.png`, `site/assets/renders/hero-iso.png` | Byte-identical (2.34 MB each, equal blob id). | n/a | merge: keep one tracked copy, regenerate the others (delete-after-OK). | Low. |
+
+**D. Site generators** (`redesign/site/`, 14 .py including `ui-review/gen/*`)
+| Paths | What overlaps | A uses it? | Recommendation | Risk |
+|---|---|---|---|---|
+| `make_index.py`, `make_build_guide.py`, `make_proof_embed.py`, `make_drawing_gallery.py`, `make_morph_sketches.py`, `make_sims_view.py`, `make_replays_view.py`, `sync_bom_a.py`, `sync_status_a.py` | Each patches a different part of `app.html`; `make_index.py` then copies it to `index.html`. `make_build_guide.py` renders the guide that `qp/A/make_build_guide_a.py` writes (a chain, not a copy). | Yes. | keep | Low. |
+| `sync_bom_tab.py` vs `sync_bom_a.py` | Both rebuild the BOM tab. `sync_bom_tab.py` reads K09-L `team/I1/BOM.csv`; `sync_bom_a.py` reads `qp/A/BOM-A.csv`. `git grep` finds no caller of `sync_bom_tab.py` outside its own docstring and `docs/audits`. | No. | archive candidate, delete-after-OK. | Low. |
+| `ui-review/` (3 concept pages, 4 .py, `mwrap.html`) | The UI survey concepts; one direction was merged (AM-043). | No. | archive once the UI decision is final. | Low. |
+| `redesign/proofs/viewer/` vs `redesign/site/proofs/` | Two copies of the proof-graph viewer (`app.js`, `model.js`, `3d-force-graph.min.js`, `force-graph.min.js`). `make_proof_embed.py` builds the Explorer page from `site/proofs`. | `site/proofs`: yes. `redesign/proofs/viewer`: written to by `build_graph.py` output paths and checked by `check_viewer.js` (s5). | merge: one viewer folder; `check_viewer.js` and the generator must follow. | Medium: the viewer loads `graph.js` from `file://` (s5). |
+| Root pages `Concept-Models.html`, `VTOL-Review.html`, `build-manual.html`, `flight-software.html`, `templates.html`, `index.html` vs `archive/c0/*.html`; `redesign/index.html` | After T-104 U5/U6 the root pages are redirect stubs and the full copies are in `archive/c0`. `redesign/index.html` is a second entry page. | n/a | keep (stubs are the redirect). | Low. |
+
+**E. Duplicated assets**
+Measured with `git ls-tree -r -l HEAD`, grouping identical blob ids: 1,904 files sit in groups of identical content (193.2 MB counting every copy). **1,318 are extra copies totalling 98.8 MB**: 86.6 MB (114 files) in `redesign/site`, 6.2 MB (479) in `redesign/qp`, 3.3 MB (685) in `redesign/team`, 2.3 MB (1) in `redesign/showcase`, 0.2 MB in `archive/c0`.
+| Paths | What overlaps | A uses it? | Recommendation | Risk |
+|---|---|---|---|---|
+| `redesign/site/assets/animation/**` (24 files, 70.0 MB) vs `redesign/showcase/concept-a/animation/**` | Byte-identical film copies (`a-build.mp4` 19.8 MB, 10 stage clips, `a-how-it-flies.mp4` 4.8 MB, posters). `publish_assets.py` makes the site copy and is the only writer. | Yes: the Explorer serves `site/assets`. | keep until a CI publish step exists (s5, s10 item 6); then delete the site copies after OK and publish from CI. | Medium: GitHub Pages breaks without them. |
+| `site/assets/renders`, `drawings`, `sims3d`, `plots` (rest of the 105.8 MB, 269 files in `site/assets`) | Web-size derivatives of showcase and drawing outputs, made by `publish_assets.py` and `make_drawing_gallery.py`. | Yes. | keep | Low. |
+| `qp/A/**/out` and `*_data` duplicates (479 extra files, 6.2 MB); `team/**` (685 extra files, 3.3 MB) | Repeated small outputs, per-round backups. | n/a | `mechanism/out` code copies: see B. The rest is not worth review time. | Low. |
+| `site/assets/concept-a.glb` (11.8 MB) beside `concept-a.opt.glb` (2.5 MB) | `viewer_data_a.py` (line 9) keeps the plain GLB "for the record and for other tools"; `collide_glb_a.py` uses it as its default input (line 49). | Yes (gate input). | keep | Medium: the GLB gate reads it. |
+
+**Not found redundant:** `tools/ledger_audit.py` and `tools/plan_rid_check.py` (different checks); `qp/A/bom_a.py` and `proofs/run_all.py` (different outputs). The other spec 9.4 items (repeated calculations, duplicate validation logic, conflicting configurations, overlapping agent instructions, repeated documentation) were not audited here (—).
+
+### 14.2 Speed before and after
+
+Setup: a throwaway `git worktree add --detach` of `c0caebf4` (perf-before; 2026-11-23 11:14, before the T-104 layout moves U1 to U7) and of HEAD `71cab7a2` (perf-after), both in the session scratchpad, not the main checkout. One script ran each command 3 times back to back (`subprocess.run`, wall time by `time.perf_counter`, Python 3.14.2, Windows 11). Other sessions may have been running, so noise is real. Both worktrees were removed with `git worktree remove --force`; `git worktree list` now shows only the main checkout.
+
+| | perf-before `c0caebf4` | perf-after `71cab7a2` | Main checkout (HEAD, not timed) |
+|---|---|---|---|
+| Tracked files | 15,319 | 15,803 | 15,803 |
+| Tracked size (`git ls-tree -r -l`) | 1,070.4 MB | 1,125.1 MB | 1,125.1 MB tracked; 4.5 GB working tree excl. `.git` (s13.1) |
+| Root layout | old (`analysis cad concepts fusion inventory review sim` at root) | T-104 layout (K09-L material in `archive/c0`) | same as after |
+
+Working-tree disk size of the two worktrees was not measured (`du` took over 3 minutes and was dropped).
+
+| Command | Before: runs (s), median | After: runs (s), median | Median change |
+|---|---|---|---|
+| `python -I tools/ledger_audit.py` (rc 0 both) | 0.077, 0.055, 0.055; **0.055** | 0.233, 0.058, 0.054; **0.058** | +0.003 s (+5 %), inside noise |
+| `python -I redesign/qp/A/bom_a.py` (rc 0) | 0.043, 0.029, 0.029; **0.029** | 0.103, 0.029, 0.030; **0.030** | +0.001 s |
+| `python -I redesign/qp/A/proofs/run_all.py` (rc 1 both: failing claims, expected) | 2.078, 1.253, 1.228; **1.253** | 3.140, 1.254, 1.302; **1.302** | +0.049 s (+4 %); the first run of each is a cold start |
+| `redesign/site/make_index.py` (rc 0) | 0.056, 0.045, 0.043; **0.045** | 0.241, 0.050, 0.049; **0.050** | +0.005 s |
+| `redesign/site/make_build_guide.py` (rc 0) | 0.071, 0.063, 0.061; **0.063** | 0.103, 0.059, 0.059; **0.059** | -0.004 s |
+| `redesign/site/make_drawing_gallery.py` (rc 0) | 0.104, 0.280, 0.269; **0.269** | 0.139, 0.314, 0.227; **0.227** | -0.042 s; spread larger than the change |
+| `redesign/site/make_proof_embed.py` (rc 0) | 0.332, 0.079, 0.093; **0.093** | 0.643, 0.093, 0.121; **0.121** | +0.028 s; spread larger than the change |
+| `git status --short`, cold (first run in the fresh worktree) | **0.667** | **1.018** | HEAD 0.35 s slower cold |
+| `git status --short`, warm (runs 2 and 3) | 0.055, 0.054 (median of all 3: 0.055) | 0.052, 0.054 (median of all 3: 0.054) | none |
+
+`make_replays_view.py` and `make_sims_view.py` exist only at HEAD, so they have no before value and were not timed. The generators wrote their outputs inside the throwaway worktrees only.
+
+**Interpretation.**
+1. No speed improvement is measured. Warm results are equal within noise. Where HEAD is slower (ledger_audit +5 %, run_all +4 %, make_proof_embed +30 %, cold `git status` +50 %), the first-run outliers (0.1 to 3 s) are as large as the differences, so the honest reading is "equal or slightly slower", not a proven regression. The ledger, BOM and generator runs are dominated by Python start-up (about 0.03 s), so they cannot show a cleanup effect.
+2. This is expected. Between the two commits the cleanup moved root files into `archive/c0`; none of these commands reads them. HEAD also has 16 more commits that added 484 tracked files and 54.7 MB and more ledger rows and claims (113 requirements and 105 tasks against 109 and 93 in s9). The comparison is "layout cleanup plus 16 commits of growth", not cleanup alone.
+3. `c0caebf4` is itself after batch 2 (the file deletions of 2026-11-19), so it cannot show batch 2. No true pre-cleanup speed baseline exists (s8).
+4. The commands that dominate real time were not re-timed: `collide_a` 1,007 s, `assembly_check` 2,283 s, drawings 227 s, SITL and the Blender films (s8, recorded values). They read A's model, not the moved root material, so no change is expected. The main checkout (4.5 GB working tree, 23 `__pycache__` folders, untracked GLB outputs) was not timed so as not to disturb running work; `git status` there is likely slower than in a fresh worktree.
+5. File count did not fall (15,803 tracked now against 15,319), so no checkout or `git status` gain is claimed. The recovered space is disk space (s7). Cutting the redundancy listed above (98.8 MB of identical-blob copies, 90.3 MB of `mechanism/out` backups) would shrink the checkout, not gate run time.

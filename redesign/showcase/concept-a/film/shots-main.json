@@ -956,9 +956,13 @@
       "lines": [
        {
         "label": "Design record",
-        "vals": {},
-        "text": "CHANGE-LOG D-246, 2026-11-23 (untagged working tree)",
-        "cite": "CHANGE-LOG D-246"
+        "vals": {
+         "rev": {
+          "git": "rev"
+         }
+        },
+        "text": "CHANGE-LOG D-252, 2026-11-24, commit {rev}",
+        "cite": "CHANGE-LOG D-252; git HEAD"
        },
        {
         "label": "Mass, predicted vs gate",
@@ -1125,10 +1129,34 @@
          },
          "lim": {
           "param": "req/pitch_use_max"
+         },
+         "mx": {
+          "t101": "T101C3_T074",
+          "path": [
+           "sum",
+           "elevon_max_deg"
+          ]
          }
         },
-        "text": "{u:.2f} vs {lim:.2f} limit (15 deg basis): FAIL, open (D-245)",
-        "cite": "params-A.json sim/pitch_use_15_worst"
+        "text": "{u:.3f} vs {lim:.2f} of 15 deg (peak {mx:.1f} deg): FAIL, open (D-251 revert, D-252 reserve)",
+        "cite": "params-A.json sim/pitch_use_15_worst; T101_results.json C3 T-074; D-252"
+       },
+       {
+        "label": "Proof FAILs (run_all)",
+        "vals": {
+         "n": {
+          "rx": "README.md",
+          "pat": "has (\\d+) FAIL claims"
+         },
+         "v": {
+          "claimval": "CL-A-STALL-PRED"
+         },
+         "c": {
+          "param": "mission/cruise_ms"
+         }
+        },
+        "text": "{n:d} strict proof FAILs, list in README; A-P6 stall: 1.3 Vs {v:.2f} vs {c:.1f} m/s, FAIL",
+        "cite": "README.md (run_all 2026-11-23); claims.a1_flight.json CL-A-STALL-PRED"
        }
       ]
      },

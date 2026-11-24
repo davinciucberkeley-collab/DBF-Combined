@@ -74,9 +74,9 @@ async function run(w, h, theme, doSpot) {
       results.spot.flight = [];
       for (const q of [0.1, 0.3, 0.5, 0.7, 0.9]) {
         const i = frac(q); const t = parseFloat(await setSlider('f', reqT(i))), r = await readout('f');
-        const exp = { alt: interp(fl.alt, t), V: interp(fl.V, t), pitch: interp(fl.pitch, t), use: interp(fl.pitch_use_15, t), t };
+        const exp = { alt: interp(fl.alt, t), V: interp(fl.V, t), pitch: interp(fl.pitch, t), use: interp(fl.pitch_use_15, t) * 100, t };   // use is shown as a percent (T-105 fix 2)
         const got = { alt: num(r.alt), V: num(r.V), pitch: num(r.pitch), use: num(r.use), t: num(r.t) };
-        const dec = { alt: 1, V: 1, pitch: 1, use: 2, t: 1 };
+        const dec = { alt: 1, V: 1, pitch: 1, use: 1, t: 1 };
         const ok = Object.keys(exp).every(k => Math.abs(got[k] - exp[k]) <= 0.5 * Math.pow(10, -dec[k]) + 1e-9);
         results.spot.flight.push({ index: i, slider_t: t, displayed: { alt: r.alt, V: r.V, pitch: r.pitch, use: r.use, t: r.t }, expected_from_json: exp, match: ok });
       }
@@ -120,7 +120,7 @@ async function run(w, h, theme, doSpot) {
     await setSlider('k', 12); await sleep(300);
     info.linkage_svg = await ev('document.querySelectorAll("#rp-k-top svg *, #rp-k-side svg *").length');
     await shot('linkage');
-    info.label_count = await ev('[...document.querySelectorAll(".rp-label")].filter(e=>e.textContent.includes("Playback of recorded simulation output (not a new simulation)")).length');
+    info.label_count = await ev('[...document.querySelectorAll("b")].filter(e=>e.textContent.includes("Playback of recorded simulation output (not a new simulation)")).length');   // stated once (T-105 fix 2)
     info.wide = await ev(`[...document.querySelectorAll('body *')].filter(e=>e.getBoundingClientRect().right>innerWidth+1).slice(0,8).map(e=>e.tagName+'#'+e.id+'.'+String(e.className).slice(0,40)+' '+Math.round(e.getBoundingClientRect().right))`);
     info.scrollWidth = await ev('document.documentElement.scrollWidth'); info.innerWidth = await ev('innerWidth');
     info.autoplay = await ev('!!(window.__rp.flight.tl&&window.__rp.flight.tl.playing)');
@@ -132,7 +132,7 @@ async function run(w, h, theme, doSpot) {
   if (!bl('landing_blank')) fail.push(tag + ' landing canvas blank');
   if (!(info.linkage_svg > 5)) fail.push(tag + ' linkage svg empty');
   if (w < 600 && !(info.scrollWidth <= info.innerWidth)) fail.push(tag + ' horizontal scroll ' + info.scrollWidth + ' > ' + info.innerWidth);
-  if (info.label_count < 3) fail.push(tag + ' label count ' + info.label_count);
+  if (info.label_count !== 1) fail.push(tag + ' label count ' + info.label_count);
   c.close();
 }
 

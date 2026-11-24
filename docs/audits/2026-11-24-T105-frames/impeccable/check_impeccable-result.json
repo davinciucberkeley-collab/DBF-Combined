@@ -1,0 +1,181 @@
+{
+ "pages": [
+  {
+   "tag": "1280-light",
+   "capture_heights": {
+    "flight": 1986,
+    "landing": 1222,
+    "linkage": 1019
+   },
+   "scrollWidth": 1280,
+   "innerWidth": 1280,
+   "overflow": [],
+   "ticks": {
+    "n": 94,
+    "min": 12,
+    "below12": 0
+   },
+   "touch": {
+    "n": 26,
+    "min": 44,
+    "below44": []
+   },
+   "aria": [
+    [
+     "rp-f-slider",
+     "0.0 seconds"
+    ],
+    [
+     "rp-l-slider",
+     "0 milliseconds"
+    ],
+    [
+     "rp-k-slider",
+     "0.0 degrees, trailing edge down positive"
+    ]
+   ],
+   "aria_missing": [],
+   "flight_verdict": "Fails 1 of 8 recorded lines: Elevon pitch use, share of ±15° is 65 % (limit ≤ 60 %).",
+   "landing_verdict": "Passes all three limits: peak load factor 9.93 g (limit 12 g); largest pad crush 8.42 mm (limit 20 mm); final tilt 0.04° (limit 3°).",
+   "linkage_verdict": "No pass line in this file. The readings below are for the chosen elevon angle.",
+   "pf_table_rows": 8,
+   "errors": []
+  },
+  {
+   "tag": "1280-dark",
+   "capture_heights": {
+    "flight": 1986,
+    "landing": 1222,
+    "linkage": 1019
+   },
+   "scrollWidth": 1280,
+   "innerWidth": 1280,
+   "overflow": [],
+   "ticks": {
+    "n": 94,
+    "min": 12,
+    "below12": 0
+   },
+   "touch": {
+    "n": 26,
+    "min": 44,
+    "below44": []
+   },
+   "aria": [
+    [
+     "rp-f-slider",
+     "0.0 seconds"
+    ],
+    [
+     "rp-l-slider",
+     "0 milliseconds"
+    ],
+    [
+     "rp-k-slider",
+     "0.0 degrees, trailing edge down positive"
+    ]
+   ],
+   "aria_missing": [],
+   "flight_verdict": "Fails 1 of 8 recorded lines: Elevon pitch use, share of ±15° is 65 % (limit ≤ 60 %).",
+   "landing_verdict": "Passes all three limits: peak load factor 9.93 g (limit 12 g); largest pad crush 8.42 mm (limit 20 mm); final tilt 0.04° (limit 3°).",
+   "linkage_verdict": "No pass line in this file. The readings below are for the chosen elevon angle.",
+   "pf_table_rows": 8,
+   "errors": []
+  },
+  {
+   "tag": "400-light",
+   "capture_heights": {
+    "flight": 3249,
+    "landing": 2073,
+    "linkage": 2037
+   },
+   "scrollWidth": 400,
+   "innerWidth": 400,
+   "overflow": [],
+   "ticks": {
+    "n": 76,
+    "min": 12,
+    "below12": 0
+   },
+   "touch": {
+    "n": 26,
+    "min": 44,
+    "below44": []
+   },
+   "aria": [
+    [
+     "rp-f-slider",
+     "0.0 seconds"
+    ],
+    [
+     "rp-l-slider",
+     "0 milliseconds"
+    ],
+    [
+     "rp-k-slider",
+     "0.0 degrees, trailing edge down positive"
+    ]
+   ],
+   "aria_missing": [],
+   "flight_verdict": "Fails 1 of 8 recorded lines: Elevon pitch use, share of ±15° is 65 % (limit ≤ 60 %).",
+   "landing_verdict": "Passes all three limits: peak load factor 9.93 g (limit 12 g); largest pad crush 8.42 mm (limit 20 mm); final tilt 0.04° (limit 3°).",
+   "linkage_verdict": "No pass line in this file. The readings below are for the chosen elevon angle.",
+   "pf_table_rows": 8,
+   "errors": []
+  },
+  {
+   "tag": "400-dark",
+   "capture_heights": {
+    "flight": 3249,
+    "landing": 2073,
+    "linkage": 2037
+   },
+   "scrollWidth": 400,
+   "innerWidth": 400,
+   "overflow": [],
+   "ticks": {
+    "n": 76,
+    "min": 12,
+    "below12": 0
+   },
+   "touch": {
+    "n": 26,
+    "min": 44,
+    "below44": []
+   },
+   "aria": [
+    [
+     "rp-f-slider",
+     "0.0 seconds"
+    ],
+    [
+     "rp-l-slider",
+     "0 milliseconds"
+    ],
+    [
+     "rp-k-slider",
+     "0.0 degrees, trailing edge down positive"
+    ]
+   ],
+   "aria_missing": [],
+   "flight_verdict": "Fails 1 of 8 recorded lines: Elevon pitch use, share of ±15° is 65 % (limit ≤ 60 %).",
+   "landing_verdict": "Passes all three limits: peak load factor 9.93 g (limit 12 g); largest pad crush 8.42 mm (limit 20 mm); final tilt 0.04° (limit 3°).",
+   "linkage_verdict": "No pass line in this file. The readings below are for the chosen elevon angle.",
+   "pf_table_rows": 8,
+   "errors": []
+  }
+ ],
+ "reduced": {
+  "errors": [],
+  "media": true,
+  "props_before": "0.10930563374857326,0.027580181636323656,-0.01887065108524776,0,0.03341807677018211,-0.09021073071989186,0.06172313376824826,0,1.4814337483703783e-10,-0.06454337069072318,-0.0943326153844869,0,-0.126646495484346,0.14208534755996793,0.23752055423794385,1|0.0117147358783014,0.002955881890665379,-0.002022445556866319,0,0.0035815532054274644,-0.009668256315159031,0.006615122980205334,0,1.587713704593045e-11,-0.006917379410436758,-0.010110015705874628,0,-0.12624844879194677,0.14218578337093665,0.23745183499707712,1|0.004416982517716705,0.0011145004694205253,-0.0007625529726418064,0,0.0013504067064753263,-0.003645367643325273,0.0024941990036867674,0,5.986394912356794e-12,-0.0026081632775781256,-0.003811930810100732,0,-0.1328335686544029,0.1405242148506066,0.238588697698377,1",
+  "flight_t_after_2s": 0.5251000000000003,
+  "props_after": "0.10930563374857326,0.027580181636323656,-0.01887065108524776,0,0.03341807677018211,-0.09021073071989186,0.06172313376824826,0,1.4814337483703783e-10,-0.06454337069072318,-0.0943326153844869,0,-0.126646495484346,0.14208534755996793,0.23752055423794385,1|0.0117147358783014,0.002955881890665379,-0.002022445556866319,0,0.0035815532054274644,-0.009668256315159031,0.006615122980205334,0,1.587713704593045e-11,-0.006917379410436758,-0.010110015705874628,0,-0.12624844879194677,0.14218578337093665,0.23745183499707712,1|0.004416982517716705,0.0011145004694205253,-0.0007625529726418064,0,0.0013504067064753263,-0.003645367643325273,0.0024941990036867674,0,5.986394912356794e-12,-0.0026081632775781256,-0.003811930810100732,0,-0.1328335686544029,0.1405242148506066,0.238588697698377,1",
+  "props_still": true,
+  "linkage_stopped_at_index": "84 of 84",
+  "linkage_button_after_stop": "Sweep",
+  "linkage_still_after_3s": true
+ },
+ "fail": [],
+ "fail_count": 0
+}

@@ -639,6 +639,21 @@ def src_val(spec):
     entries above 1); {sum: run, path} (sitl/runs/<run>/sum.json); {calc: 'a*b+c', of: {a: spec, ...}}; {git: 'rev'}. Optional: times / div (const names, fea_arm.py)."""
     if 'git' in spec:
         return git_rev()
+    if 'claimval' in spec:               # T-047 F-2: the stored value of a proof claim (qp/A/proofs/claims.a*.json, written by run_all)
+        import glob
+        for fn_ in sorted(glob.glob(os.path.join(REDESIGN, 'qp', 'A', 'proofs', 'claims.a*.json'))):
+            for nd_ in json.load(open(fn_, encoding='utf-8'))['nodes']:
+                if nd_.get('id') == spec['claimval']:
+                    return nd_['value']
+        raise KeyError(spec['claimval'])
+    if 't101' in spec:                   # T-047 F-2: a run of mechanism/out/T101_results.json (AR-017 / AR-019): {t101: run tag, path}
+        v = json.load(open(os.path.join(REDESIGN, 'qp', 'A', 'mechanism', 'out', 'T101_results.json'), encoding='utf-8'))['runs'][spec['t101']]
+        for k_ in spec['path']:
+            v = v[k_]
+        return v
+    if 'rx' in spec:                     # T-047 F-2: first capture group of a regex over a repo text file (README claim count)
+        txt_ = open(os.path.join(os.path.dirname(REDESIGN), spec['rx']), encoding='utf-8').read()
+        return int(re.search(spec['pat'], txt_, re.S).group(1))
     if 't098' in spec:                   # F-5: a row of mechanism/out/T098_results.json (AR-016): {t098: case, metric: prefix (optional), idx: n of the 'a / b / c' value}
         rows = json.load(open(T098_JSON, encoding='utf-8'))['rows']
         r = next(x for x in rows if x['case'] == spec['t098'] and x['metric'].startswith(spec.get('metric', '')))

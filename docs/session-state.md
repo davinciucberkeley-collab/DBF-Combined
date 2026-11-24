@@ -13,7 +13,7 @@ the ledger and the spec are.
 10. Note any lost/changed instruction under "Reconciliation" below. 11. Resume "Next action".
 
 ## Checkpoint — 2026-11-23 (resumed AM-027, running under AM-028; AM-001..AM-030 in force; session 7cb35b0a, conductor Opus); sections follow spec 10.4
-Nothing pushed (branch redesign/v1).
+Pushed to origin redesign/v1 four times, latest 71cab7a2 on 2026-11-24 (CI and Pages green); see the approval gate below.
 
 **Goal:** master program (spec + AM-001..AM-030). Concept A O4b, Claude-designed and student-built (AM-008). Current
 configuration: D-226 saddle load path (CF bulkheads, 6061 centre node, 3-ply skin, 25x23 rib), SunnySky X2216 V3
@@ -21,7 +21,7 @@ short-shaft 880KV on APC 9x4.5MR (D-227/D-228), no spare motor (AM-019), FIN-003
 fin tubes 387.4 mm / FIN_H 0.1937 (D-233), no BOM spare servo (D-234), hub bars T1/T11 from Zoro (D-235). Budget =
 total incl. crash reserve by its definition <= $2,000 (AM-013, AM-018); weight may exceed the mass gate (AM-011).
 
-**Requirements:** 109 R-ids; ledger 93 tasks (66 VERIFIED COMPLETE); `python -I tools/ledger_audit.py` 0 errors.
+**Requirements:** 113 R-ids (99 VERIFIED COMPLETE after T-047); ledger 105 tasks (92 VERIFIED COMPLETE); `python -I tools/ledger_audit.py` 0 errors. (Updated 2026-11-24.)
 
 **State (EST):** CAD 1,641.0 g, predicted 1.881 kg (CL-A-MASS-PRED), CG 22.05 mm CAD (tallied about 23.22), SM 7.61 % CAD, lateral CG -3.32 mm (FC 75 mm left, D-240), window +11.88 %, T/W 2.632/2.111, cruise 234 s, A-P9
 tip-over 31.00 deg; BOM $1,939.17, margin +$60.83 (reserve $346.94). 3-D gates PASS at T-092 (2026-11-23; no geometry change since).
@@ -41,7 +41,7 @@ margin claims UNVERIFIED (T-089).
 **Resumed 2026-11-22 (AM-027) after the AM-026 pause; running.** Nothing pushed. `docs/session-log.md` shows as modified between commits: hook logging, committed with the next checkpoint.
 
 **Known dependency gaps (2026-11-23 milestone audit s3.3; none blocks the next action):** T-077 is READY FOR REVIEW (part-8 blocker superseded by AM-017, AM-018, D-226..D-240) and T-083 waits on it (Deps "T-077 (READY FOR REVIEW)"); T-083 itself is BLOCKED on TP-3 (zeta <= 0.05), TP-11 (A-P6) and the X2216 backorder (T-093); T-088 is BLOCKED until order week (T-093); T-094 (free-play bench entry in TEST-PLAN-O4B, closes the T-061 residual FAIL) is NOT STARTED. T-045 and T-008 are VERIFIED COMPLETE.
-**Next action on resume:** (2026-11-24, after review round 13) (1) Fix pass C (done 6cc99eeb; re-review closed) (review round 13 findings R13-1..R13-4, T-103, T-104 / T-105 LOW, R13-3, R13-P1; change list in `docs/audits/2026-11-24-review-round-13.md` "Fix pass C"); (2) push `redesign/v1` once Dillon approves the push (R-GEN-02); (3) final verification T-047 / T-059 / T-049 at program end; (4) the DaVinci branch deletion (`concept-a-snapshot-73656c93`, storage at its 1.0 GB limit) is Dillon's decision (AM-050); T-037 stays IN PROGRESS (spend proof needs a usage read after asOf moves); (5) T-093 on 1-4 Dec 2026: re-check ORDER-1 prices and stock (R15 vendor with Dillon's cart address, X2216 backorder) and present Order 1 ($887.25) for approval; T-088 closes with it. Then bench tests TP-1..TP-4 and TP-15..TP-18 from 19 Jan 2027 as parts arrive (go / no-go 29 Jan 2027). Open engineering item: CL-A-PITCH-USE 0.651 FAIL, next rung cut cruise trim (D-251, D-252). Team-blocked: T-034, T-035, T-036.
+**Next action on resume:** (2026-11-24, after review round 13) (1) Fix pass C (done 6cc99eeb; re-review closed) (review round 13 findings R13-1..R13-4, T-103, T-104 / T-105 LOW, R13-3, R13-P1; change list in `docs/audits/2026-11-24-review-round-13.md` "Fix pass C"); (2) push done 71cab7a2 (AM-041; Dillon to confirm the 2026-11-24 push covered the non-layout commits too); (3) final verification T-047 / T-059 / T-049 done 2026-11-24 (99 / 113 requirements verified; docs/verification-report.md); (4) the DaVinci branch deletion (`concept-a-snapshot-73656c93`, storage at its 1.0 GB limit) is Dillon's decision (AM-050); T-037 stays IN PROGRESS (spend proof needs a usage read after asOf moves); (5) T-093 on 1-4 Dec 2026: re-check ORDER-1 prices and stock (R15 vendor with Dillon's cart address, X2216 backorder) and present Order 1 ($887.25) for approval; T-088 closes with it. Then bench tests TP-1..TP-4 and TP-15..TP-18 from 19 Jan 2027 as parts arrive (go / no-go 29 Jan 2027). Open engineering item: CL-A-PITCH-USE 0.651 FAIL, next rung cut cruise trim (D-251, D-252). Team-blocked: T-034, T-035, T-036.
 
 **Failures (history):** see git log and CHANGE-LOG; O4b with MN2212 infeasible (AM-017 study); MN3110, legs/skid,
 0.8 m/s touchdown and concept B rejected (`docs/audits/2026-11-21-config-study.md`); PETG FIN-003 failed (D-229).
@@ -51,7 +51,7 @@ margin claims UNVERIFIED (T-089).
 **Inspection (R-PRES-13):** CLAUDE.md kept whole; no AGENTS.md.
 
 ## Approval gate (T-054, R-GEN-02)
-Irreversible or costly actions: date, approval wording, sub-actions. Nothing has been pushed, no history rewritten, no purchase made, no DaVinci spend.
+Irreversible or costly actions: date, approval wording, sub-actions. No history rewritten, no purchase made, no DaVinci AI spend seen (usage unchanged; not proof, asOf 2026-11-09). Pushes are listed below.
 | Date | Action | Approval (exact wording) | Sub-actions |
 |---|---|---|---|
 | 2026-11-18 | Cleanup batch 1 | Dillon in chat: "approved, remove the two clean merged worktrees" | `git worktree remove` of `agent-a3ad648c…` and `agent-ab6e7d18…`; branches kept (recoverable); ≈ 2.17 GB disk |
@@ -60,6 +60,9 @@ Irreversible or costly actions: date, approval wording, sub-actions. Nothing has
 | 2026-11-19 | Reproducibility reruns (landing_a.py, D-209 FEA, one SITL transition case Z5_gb0), an exception to the "no new sims until final" rule | Dillon: "Yes, rerun them", answering "Rerun the landing, FEA and one SITL case to confirm reproducibility?" | T-057, T-058; outputs to new names, committed results not overwritten |
 | 2026-11-19 | Manual `/compact` (00:51 and 03:23) | typed by Dillon (his own action) | T-007 tests 1 and 2 |
 | 2026-11-23 | Cleanup batch 3 | AM-029: "Yes, remove them" | 3 line-ending-only worktrees removed with --force, branches kept, about 3.55 GB (`docs/repository-audit.md` s3 batch 3) |
+| 2026-11-23 | git push redesign/v1 (c6d027b6) | AM-032 "Yeah, push it"; AM-033 ("make sure to have the results available in the explored and GitHub") | CI + Pages green |
+| 2026-11-24 | git push redesign/v1 (c6d027b6..71cab7a2: T-099..T-105, T-015, T-037, layout cleanup) | AM-041 ("cleaning up the file layout in the local folder and the github"), read by the conductor as covering this push; confirmation from Dillon requested for the non-layout commits | CI + Pages green, live #sims checked |
+| 2026-11-24 | DaVinci writes to the org project API Test (scratch and snapshot branches, 367 objects, GLB, 129 + 76 STEP geometries; 836 MB of org storage) | AM-046 "Yes, use API Test and start the research", AM-047, AM-048 "Do all three", AM-049 | token in git-ignored .env; no agent prompts; branch deletion pending with Dillon (AM-050) |
 | Pending | DaVinci access and spend; branch deletion | AM-003: no spend; AM-050: branch deletion is Dillon's | T-037 IN PROGRESS |
 | Pending | Purchases | none before early Dec 2026 (ordering timeline) | none made |
 | 2026-11-19..21 | Board choice O1-O6 for concept A mass/wing (D-216, T-072) | AM-005, AM-006, AM-009 | O4 then O4b |

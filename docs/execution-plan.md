@@ -88,3 +88,10 @@ Check (spec 11, R-PLAN-01): every R-id in `requirements.md` appears in the table
 - CLAUDE.md hard constraints (budget, schedule, trunk, 3-D gates, CAD fidelity, enclosed wiring).
 - Memory "no sims until final" (Dillon, 11-14…11-16) vs spec Part 5 (11-18) → see `engineering-decisions.md` PD-002.
 - No purchases before early Dec 2026; DaVinci API spend needs Dillon's approval.
+
+## Skills used (R-GEN-01, recorded 2026-11-24)
+- **Impeccable:** finish review of the changed Explorer replay section, `docs/audits/2026-11-24-impeccable-replays-review.md` (impeccable-finish-reviewer). Its 8 material fixes were applied and checked in the same file, section "Fixes applied". The earlier Explorer design audit is T-053 / D-242.
+- **Superpowers:** the using-superpowers skill loads at every session start (SessionStart hook context).
+  - Planning, review and delegation in this program follow the team Agent Standard v0.2. It is mandatory since AM-040 ("Make sure this is used for all future work"), so the standard replaces Superpowers' subagent-driven-development and dispatching patterns here. The spec allows "other tools when better".
+  - Verification-before-completion is applied in practice: only VERIFIED COMPLETE counts, after an independent check.
+  - Whether this satisfies R-GEN-01's "phase plans name the skill used" is for the next independent review to judge.

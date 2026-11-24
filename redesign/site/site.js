@@ -96,7 +96,7 @@ function route() {
   if (name === 'aircraft') { viewer.resize(); if (focusPartId) focusPart(focusPartId); focusPartId = null; }
   if (name === 'decision') redrawMorph();
   if (name === 'structures') import('./fea-view.js?v=20261118f').then(m => m.mountFea());
-  if (name === 'sims') import('./replay.js?v=20261124a').then(m => m.mountReplays()).catch(e => console.error('replay.js: ' + e.message));   // T-105: lazy, first visit only
+  if (name === 'sims') import('./replay.js?v=20261124b').then(m => m.mountReplays()).catch(e => console.error('replay.js: ' + e.message));   // T-105: lazy, first visit only
   closeNav(false); buildRail(name);
 }
 window.addEventListener('hashchange', route);

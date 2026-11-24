@@ -106,3 +106,36 @@ Code: `render_build_a.py` gained `run_dir()` (T097_ runs read from `mechanism/ou
 3. The 5.3 arm and cup plate is still run current_d210 (PETG cups); the audit did not flag it.
 4. Audit items 5 and 6 (adopt the cam-check JSONs; Explorer caption `app.html:411`) are outside this task.
 5. The re-exported `concept-a.glb` was not used by the film renderer (it builds from `qp/A/cad/model`).
+
+
+## Rework (T-047 F-2), 2026-11-24 (T-047 final verification finding F-2, R12-9, R-REPO-08 render re-execution)
+
+Scope: only the closing card (main S6 shot 6.2, highlight H7 shot H7.1). Picture, camera and every other shot unchanged (raw frames reused from the F-5 scratch work folders `%TEMP%\t096\main` and `\hl`; overlay pass and encode only, `--skip-render`). Not marked VERIFIED COMPLETE; nothing committed; ledger, spec files, CLAUDE.md and `redesign/site/**` untouched; run_all and the CAD gates not run.
+
+### What changed on the card (read at draw time)
+| Row | Before | Now | Source read at draw time |
+|---|---|---|---|
+| Design record | "CHANGE-LOG D-246, 2026-11-23 (untagged working tree)" | "CHANGE-LOG D-252, 2026-11-24, commit 71cab7a2" | CHANGE-LOG D-252 (date, id); hash = git HEAD, supplied as `A_FILM_REV=71cab7a2` (see note) |
+| Elevon pitch use | "0.79 vs 0.60 limit (15 deg basis): FAIL, open (D-245)" | "0.651 vs 0.60 of 15 deg (peak 9.8 deg): FAIL, open (D-251 revert, D-252 reserve)" | `params-A.json` sim/pitch_use_15_worst (0.651, AR-017) and req/pitch_use_max; peak = `T101_results.json` run T101C3_T074 sum.elevon_max_deg (9.8; its pitch_use_15 is stored at 0.65, 2 decimals, so the 3-decimal figure comes from params) |
+| New row "Proof FAILs (run_all)" (R12-9) | none | "14 strict proof FAILs, list in README; A-P6 stall: 1.3 Vs 17.74 vs 17.0 m/s, FAIL" | 14 from `README.md` ("has 14 FAIL claims", run_all 2026-11-23; run_all not re-run); 17.74 from `proofs/claims.a1_flight.json` CL-A-STALL-PRED value; 17.0 from params mission/cruise_ms |
+| Other rows | | unchanged | as in F-5 |
+
+Code: `render_build_a.py` `src_val` gained three read-only source kinds, `claimval` (claims json node value), `rx` (regex over a repo text file) and `t101` (T101_results.json run field). Shot lists: only the card of `film/shots-main.json` and `film/shots-highlight.json` edited (diff: 38 lines each, card rows only). Card now has 9 rows; it fits (seen in the frames, no overlap with the header chip).
+
+Hash note: HEAD is 71cab7a2, but the tree is not clean (other agents' docs and site edits, plus this task's uncommitted renderer and shot-list changes). The label states the commit the card was rendered on top of; it does not claim a clean tree.
+
+### Render pipeline re-execution after the T-104 cleanup (R-REPO-08, spec 9.8, render part)
+`render_build_a.py` ran from the new layout (`redesign/showcase/concept-a`, params, mechanism, proofs and structures records under `redesign/qp/A`), Python `-I`, Blender 4.5.14: overlay, encode and `--cam-check` all exit 0 with no path errors. Logs: `docs/audits/2026-11-24-T047-F2-frames/render-main.log`, `render-highlight.log`. The first main run was invoked without `--width/--height/--fps` and encoded 1280x720 at 24 fps to scratch; it was discarded and not copied (always pass 1920 1080 60). Not covered by this re-execution: `collide.py`, `assembly_check.py`, `collide_a.py`, a full Blender stage rebuild (the raw frames were reused).
+
+### Verification
+- ffprobe `-count_frames` on the repo files: h264 1920x1080 60/1, main 7,194 frames (119.9 s), highlight 1,452 frames (24.2 s): same counts as before.
+- `ffmpeg -v error -i F -map 0:v:0 -f null -`: exit 0, no output, both files (`decode.log`).
+- Files: main 28,439,002 bytes, SHA-256 1d4a181b7eeb396d...; highlight 6,070,710 bytes, SHA-256 6780309736da1b60... (were 28,409,920 and 6,081,096).
+- `--cam-check` (no render): S6 660 frames, inside 0, blocked 0, min clearance none within 0.3 m; H7 240 frames, inside 0, blocked 0. Camera paths are unchanged. `film/cam-clearance*.json` restored from backup (check mode overwrites them). Outputs `camcheck-S6.txt`, `camcheck-H7.txt`.
+- Frames opened and read: `main_t118_card.png`, `highlight_t23_card.png` in `docs/audits/2026-11-24-T047-F2-frames/`; both show the new rows and fit on screen. Other shots not re-inspected (overlay-identical to F-5 apart from re-encoding).
+
+### Files written
+`redesign/showcase/concept-a/film/film-main-1080p60.mp4`, `film-highlight-1080p60.mp4`, `film/shots-main.json`, `film/shots-highlight.json`, `redesign/showcase/concept-a/render_build_a.py`, this section, and `docs/audits/2026-11-24-T047-F2-frames/` (2 PNGs, 2 cam-check logs, 2 render logs, decode log).
+
+### Residual
+The 14-claim figure and the A-P6 row follow the stored 2026-11-23 run_all outputs (README, claims json); if run_all is re-run and the count changes, README and the card must be re-read (the card reads the README at draw time, so only a re-render is needed). The Explorer copies of the films under `redesign/site` (if any) were not touched and need the site owner to refresh them.

@@ -14,21 +14,12 @@
    "landing_blank": {
     "w": 550,
     "h": 343,
-    "variance": 53924.26510081477,
-    "levels": 68
+    "variance": 54084.05041532139,
+    "levels": 69
    },
    "linkage_svg": 17,
-   "label_count": 3,
-   "wide": [
-    "TABLE#.ds-table 1504",
-    "THEAD#. 1504",
-    "TR#. 1504",
-    "TH#. 1309",
-    "TH#. 1410",
-    "TH#. 1504",
-    "TBODY#. 1504",
-    "TR#. 1504"
-   ],
+   "label_count": 1,
+   "wide": [],
    "scrollWidth": 1280,
    "innerWidth": 1280,
    "autoplay": false,
@@ -47,21 +38,12 @@
    "landing_blank": {
     "w": 550,
     "h": 343,
-    "variance": 37149.269812208106,
-    "levels": 68
+    "variance": 37022.39451167962,
+    "levels": 81
    },
    "linkage_svg": 17,
-   "label_count": 3,
-   "wide": [
-    "TABLE#.ds-table 1504",
-    "THEAD#. 1504",
-    "TR#. 1504",
-    "TH#. 1309",
-    "TH#. 1410",
-    "TH#. 1504",
-    "TBODY#. 1504",
-    "TR#. 1504"
-   ],
+   "label_count": 1,
+   "wide": [],
    "scrollWidth": 1280,
    "innerWidth": 1280,
    "autoplay": false,
@@ -80,20 +62,20 @@
    "landing_blank": {
     "w": 366,
     "h": 274,
-    "variance": 59634.83232852476,
+    "variance": 59753.34350640264,
     "levels": 70
    },
    "linkage_svg": 17,
-   "label_count": 3,
+   "label_count": 1,
    "wide": [
-    "TABLE#.ds-table 616",
-    "THEAD#. 616",
-    "TR#. 616",
-    "TH#. 433",
-    "TH#. 528",
-    "TH#. 616",
-    "TBODY#. 616",
-    "TR#. 616"
+    "TABLE#.ds-table 946",
+    "THEAD#. 946",
+    "TR#. 946",
+    "TH#. 420",
+    "TH#. 530",
+    "TH#. 743",
+    "TH#. 885",
+    "TH#. 946"
    ],
    "scrollWidth": 400,
    "innerWidth": 400,
@@ -113,20 +95,20 @@
    "landing_blank": {
     "w": 366,
     "h": 274,
-    "variance": 41886.89289951618,
-    "levels": 70
+    "variance": 41739.68115231455,
+    "levels": 76
    },
    "linkage_svg": 17,
-   "label_count": 3,
+   "label_count": 1,
    "wide": [
-    "TABLE#.ds-table 616",
-    "THEAD#. 616",
-    "TR#. 616",
-    "TH#. 433",
-    "TH#. 528",
-    "TH#. 616",
-    "TBODY#. 616",
-    "TR#. 616"
+    "TABLE#.ds-table 946",
+    "THEAD#. 946",
+    "TR#. 946",
+    "TH#. 420",
+    "TH#. 530",
+    "TH#. 743",
+    "TH#. 885",
+    "TH#. 946"
    ],
    "scrollWidth": 400,
    "innerWidth": 400,
@@ -143,7 +125,7 @@
      "alt": "0.3 m",
      "V": "0.0 m/s",
      "pitch": "90.0°",
-     "use": "0.00 of ±15° (limit 0.60)",
+     "use": "0.0 % (limit 60 %)",
      "t": "11.1 s"
     },
     "expected_from_json": {
@@ -162,14 +144,14 @@
      "alt": "0.3 m",
      "V": "0.0 m/s",
      "pitch": "90.0°",
-     "use": "0.00 of ±15° (limit 0.60)",
+     "use": "0.5 % (limit 60 %)",
      "t": "33.3 s"
     },
     "expected_from_json": {
      "alt": 0.314,
      "V": 0,
      "pitch": 90,
-     "use": 0.00461764705882346,
+     "use": 0.46176470588234597,
      "t": 33.3
     },
     "match": true
@@ -181,7 +163,7 @@
      "alt": "34.2 m",
      "V": "1.6 m/s",
      "pitch": "89.6°",
-     "use": "0.00 of ±15° (limit 0.60)",
+     "use": "0.0 % (limit 60 %)",
      "t": "55.6 s"
     },
     "expected_from_json": {
@@ -200,7 +182,7 @@
      "alt": "50.9 m",
      "V": "0.0 m/s",
      "pitch": "89.8°",
-     "use": "0.00 of ±15° (limit 0.60)",
+     "use": "0.0 % (limit 60 %)",
      "t": "77.9 s"
     },
     "expected_from_json": {
@@ -219,14 +201,14 @@
      "alt": "72.1 m",
      "V": "9.8 m/s",
      "pitch": "45.6°",
-     "use": "0.02 of ±15° (limit 0.60)",
+     "use": "2.1 % (limit 60 %)",
      "t": "100.1 s"
     },
     "expected_from_json": {
      "alt": 72.07635294117644,
      "V": 9.84941176470587,
      "pitch": 45.624117647058895,
-     "use": 0.02058823529411759,
+     "use": 2.058823529411759,
      "t": 100.1
     },
     "match": true
@@ -237,8 +219,8 @@
     "index": 15,
     "slider_t": 0.075,
     "displayed": {
-     "n": "0.00 g (limit 12)",
-     "tilt": "0.12°  ✓ within 3 ° (the limit is on the end tilt: 0.04°)",
+     "n": "0.00 g (limit 12 g)",
+     "tilt": "now 0.12°; limit 3° on the final tilt, which is 0.04° (pass)",
      "t": "75 ms",
      "s": "0.0 mm"
     },
@@ -254,8 +236,8 @@
     "index": 60,
     "slider_t": 0.3,
     "displayed": {
-     "n": "0.00 g (limit 12)",
-     "tilt": "1.02°  ✓ within 3 ° (the limit is on the end tilt: 0.04°)",
+     "n": "0.00 g (limit 12 g)",
+     "tilt": "now 1.02°; limit 3° on the final tilt, which is 0.04° (pass)",
      "t": "300 ms",
      "s": "3.8 mm"
     },
@@ -271,8 +253,8 @@
     "index": 120,
     "slider_t": 0.6,
     "displayed": {
-     "n": "0.95 g (limit 12)",
-     "tilt": "0.04°  ✓ within 3 ° (the limit is on the end tilt: 0.04°)",
+     "n": "0.95 g (limit 12 g)",
+     "tilt": "now 0.04°; limit 3° on the final tilt, which is 0.04° (pass)",
      "t": "600 ms",
      "s": "7.1 mm"
     },
@@ -288,8 +270,8 @@
     "index": 180,
     "slider_t": 0.9,
     "displayed": {
-     "n": "0.99 g (limit 12)",
-     "tilt": "0.04°  ✓ within 3 ° (the limit is on the end tilt: 0.04°)",
+     "n": "0.99 g (limit 12 g)",
+     "tilt": "now 0.04°; limit 3° on the final tilt, which is 0.04° (pass)",
      "t": "900 ms",
      "s": "7.1 mm"
     },
@@ -305,8 +287,8 @@
     "index": 255,
     "slider_t": 1.275,
     "displayed": {
-     "n": "0.99 g (limit 12)",
-     "tilt": "0.04°  ✓ within 3 ° (the limit is on the end tilt: 0.04°)",
+     "n": "0.99 g (limit 12 g)",
+     "tilt": "now 0.04°; limit 3° on the final tilt, which is 0.04° (pass)",
      "t": "1275 ms",
      "s": "7.1 mm"
     },
@@ -326,8 +308,8 @@
      "hm": "0.1283 N m",
      "th": "-18.33°",
      "rod": "43.25 mm",
-     "c0": "0.000 mm — arm / servo case",
-     "c1": "0.078 mm — clevis cheek -1 / horn blade",
+     "c0": "0.000 mm; designed contact: servo arm and servo case",
+     "c1": "0.078 mm; closest pair: left clevis cheek and horn blade",
      "d": "-17.0°"
     },
     "expected_from_json": {
@@ -346,8 +328,8 @@
      "hm": "0.0642 N m",
      "th": "-9.16°",
      "rod": "43.25 mm",
-     "c0": "0.000 mm — arm / servo case",
-     "c1": "0.095 mm — clevis cheek -1 / horn blade",
+     "c0": "0.000 mm; designed contact: servo arm and servo case",
+     "c1": "0.095 mm; closest pair: left clevis cheek and horn blade",
      "d": "-8.5°"
     },
     "expected_from_json": {
@@ -366,8 +348,8 @@
      "hm": "0.0000 N m",
      "th": "0.00°",
      "rod": "43.25 mm",
-     "c0": "0.000 mm — arm / servo case",
-     "c1": "0.100 mm — clevis cheek -1 / horn blade",
+     "c0": "0.000 mm; designed contact: servo arm and servo case",
+     "c1": "0.100 mm; closest pair: left clevis cheek and horn blade",
      "d": "0.0°"
     },
     "expected_from_json": {
@@ -386,8 +368,8 @@
      "hm": "0.0604 N m",
      "th": "8.62°",
      "rod": "43.25 mm",
-     "c0": "0.000 mm — arm / servo case",
-     "c1": "0.095 mm — clevis cheek -1 / horn blade",
+     "c0": "0.000 mm; designed contact: servo arm and servo case",
+     "c1": "0.095 mm; closest pair: left clevis cheek and horn blade",
      "d": "8.0°"
     },
     "expected_from_json": {
@@ -406,8 +388,8 @@
      "hm": "0.1246 N m",
      "th": "17.84°",
      "rod": "43.25 mm",
-     "c0": "0.000 mm — arm / servo case",
-     "c1": "0.079 mm — clevis cheek -1 / horn blade",
+     "c0": "0.000 mm; designed contact: servo arm and servo case",
+     "c1": "0.079 mm; closest pair: left clevis cheek and horn blade",
      "d": "16.5°"
     },
     "expected_from_json": {
