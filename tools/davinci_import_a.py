@@ -3,7 +3,8 @@
 Reads ONLY `git show 73656c93:<path>`; never the working tree. Token from DAVINCI_API_KEY / git-ignored .env
 (never printed or written). Never sends agent prompts. Stdlib only. Never writes main.
 Idempotent: object id = uuid5(NS, source key); a rerun re-posts the same ids (duplicates are reported, not made).
-Run:  python -I tools/davinci_import_a.py [--out docs/integration/davinci-import-2026-11-23.json]
+Run:  python -I tools/davinci_import_a.py [--project <id>] [--sha <commit>] [--out <json>]  (branch = concept-a-snapshot-<sha>)
+2026-11-24 (AM-056): project and commit are arguments; defaults are the 2026-11-23 API Test run (project since deleted).
 """
 import json, os, sys, csv, io, re, uuid, argparse, subprocess, tempfile, importlib.util
 import urllib.request, urllib.error
@@ -78,10 +79,14 @@ def md_rows(text, prefix):
 
 
 def main():
-    global KEY
+    global KEY, PID, SHA, BRANCH
     ap = argparse.ArgumentParser()
     ap.add_argument("--out")
+    ap.add_argument("--project", default=PID)
+    ap.add_argument("--sha", default=SHA)
     a = ap.parse_args()
+    PID, SHA = a.project, a.sha
+    BRANCH = "concept-a-snapshot-" + SHA
     KEY = load_key()
     if not KEY.startswith(("dav_ak_live_", "dav_ak_test_")):
         print("no token")
@@ -122,8 +127,8 @@ def main():
 
     P = {k: oid("pkg/" + k) for k in ("root", "hard", "parts", "bom", "reqs", "tests")}
     if post("package_root", {P["root"]: dict(
-            type="package", parent=MODEL, name=f"Concept A (snapshot {SHA}, 2026-11-23)",
-            documentation=f"Snapshot of committed data; the elevon chord change T-101 is not included. Source: {SRC}")})[0][0] != 201:
+            type="package", parent=MODEL, name=f"Concept A (snapshot {SHA})",
+            documentation=f"Snapshot of committed data at git {SHA}. Source: {SRC}")})[0][0] != 201:
         return fin(rec, a)
     sub = {
         P["hard"]: dict(type="package", parent=P["root"], name="Hard constraints"),

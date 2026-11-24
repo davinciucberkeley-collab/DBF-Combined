@@ -580,3 +580,11 @@ Requirement IDs: R-INT-04, R-GEN-02.
 ```text
 token's in, delete the snapshot branch
 ```
+
+## AM-056 — 2026-11-24 — Delete the API Test project and start a new DaVinci project
+Relation: Dillon deletes the DaVinci project API Test himself (its main branch holds only the default Library and Model packages; the snapshot branch content is reproducible from tools/davinci_*.py), then creates a new project; Claude checks the organization storage before any upload, then runs the lighter re-import (data first, one subsystem STEP measured before the rest).
+Requirement IDs: R-INT-04.
+
+```text
+Yes, I'll delete it
+```

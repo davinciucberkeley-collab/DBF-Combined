@@ -190,3 +190,10 @@ With a projects:manage token (Dillon, 1-day expiry, git-ignored `.env`, never pr
 - **Result:** branch deletion is not available to personal access tokens; it needs a signed-in web session (JWT), and the web-app delete fails for Dillon. Storage unchanged at 836,126,423 bytes. Nothing was deleted.
 - The manage token value was removed from `.env` after the attempt; Dillon should revoke it in Settings → Connections.
 - Next: an organization admin (Douglas) or DaVinci support deletes the branch or purges its storage, or raises the 1 GB limit. Until then no uploads (AM-050).
+
+## New project "Concept A", 2026-11-24 (AM-056)
+
+- Dillon deleted API Test and created **Concept A** (id bbb1b6e0-63d1-4a95-8e6d-0e300beed2c9, design-build-fly org). The token's project list now shows Test (11.3 MB) and Concept A only; the Support Arm projects listed earlier no longer appear to this token (reason —).
+- **Data import:** `python -I tools/davinci_import_a.py --project bbb1b6e0-... --sha 2aba012d` (script now takes project and commit as arguments) onto branch `concept-a-snapshot-2aba012d`: every POST 201, commit 201, five ReadObject checks 200. Concept A storageUsedBytes stays 0 (data objects take no counted storage). Usage unchanged ($49.060351, 1,093 events, asOf still 2026-11-09).
+- **Storage not freed by the project delete.** A measuring upload of two small STEP parts (AVN-002 70 KB, AVN-003 390 KB) returned 413 `STORAGE_LIMIT_EXCEEDED`: "Uploading this file would exceed the storage limit for this account (1.0 GB used of 1.0 GB)", storageUsedBytes 1,073,801,516 then 1,074,121,747 (the figure rose by 320,231 bytes between the two refused uploads; cause —). Nothing was stored in Concept A (0 geometries, 0 bytes). Uploads stopped.
+- Reading: the limit is per **account** and the deleted project's 836 MB is still counted (a soft delete / trash, or a delayed recount; —). Next: Dillon checks the web app for a trash or recently-deleted list and empties it; otherwise DaVinci support or Douglas (purge or a larger limit). No further uploads until the used figure drops.
