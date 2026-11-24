@@ -6,7 +6,7 @@ Date: 2026-11-24. This page is the T-037 output: capabilities, the workflow atte
 
 - **Tokens:** personal access tokens created by Dillon (AM-045, AM-046, AM-055). They are kept in the git-ignored `.env` and never printed or committed.
   - Scopes: projects:read / write, sessions:manage, usage:read. There is no agent:message scope, so DaVinci's AI agent cannot be run.
-  - A one-day projects:manage token was used once (AM-055); its value was removed from `.env` afterwards.
+  - A one-day projects:manage token was used once (AM-055); its value was removed from `.env` afterwards and Dillon revoked it on 2026-11-24.
 - **Projects:**
   - "API Test" (2026-11-23), deleted by Dillon on 2026-11-24.
   - "Concept A" (id bbb1b6e0-63d1-4a95-8e6d-0e300beed2c9, design-build-fly org) since 2026-11-24.

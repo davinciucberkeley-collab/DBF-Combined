@@ -187,7 +187,8 @@ TECS_SINK_MAX,2.5
 # T-101 / D-251 C3 control: pitch weights height over speed so TECS does not chop throttle after CRUISE handover; SITL pitch use at the 0.25 chord 0.554-0.651 (AR-017, T101_results.json C3 runs T101C3_*); default 1.0; verify on bench param dump, TP-19.
 TECS_SPDWEIGHT,0.5
 ARSPD_TYPE,1
-ARSPD_BUS,0
+# D-259 (2026-11-24): Kakute H743-Wing external I2C port = I2C2, ARSPD_BUS 2 (Holybro mapping, docs.holybro.com kakute-h743-wing, read 2026-11-24 by the AM-064 scout); was 0 (K09-L board). Confirm at the FC0 bench step (airspeed reads).
+ARSPD_BUS,2
 ARSPD_TUBE_ORDR,2
 ARSPD_USE,1
 RUDD_DT_GAIN,35
@@ -209,8 +210,10 @@ INS_LOG_BAT_OPT,5
 
 # ---------------------------------------------------------------- 6 Battery and failsafes (K09-L lessons)
 BATT_MONITOR,4
-BATT_VOLT_MULT,11.05
-BATT_AMP_PERVLT,64
+# D-259: Kakute H743-Wing built-in sensor scales 18.18 / 36.36 (https://docs.holybro.com/autopilot/kakute-h743-wing/power-monitor-and-scale.md, read 2026-11-24); were 11.05 / 64 (K09-L CoreWing values, A.param l.10).
+#   The Q_M_BAT_CURR_MAX 72 A limiter depends on this scale. Calibrate against a meter in TP-2 (current to >= 80 A).
+BATT_VOLT_MULT,18.18
+BATT_AMP_PERVLT,36.36
 # A: one Tattu 2300 mAh 4S 75C pack in flight (D-183b: the 2300, not the CNHL 3000; mission_gate_a.py: 24.5 Wh usable of 34.0 Wh). Two packs are bought, flown one at a time
 BATT_CAPACITY,2800
 # T-083: Q_M_BAT_CURR_MAX 72 A = XT90 90 A / 1.25 (A-P16); four X2216 V3 on the APC 9x4.5MR draw 73 A at full duty on a fresh pack (prop_a.py EST), so it binds only there (duty 0.993).

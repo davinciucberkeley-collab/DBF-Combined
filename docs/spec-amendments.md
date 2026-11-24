@@ -644,3 +644,11 @@ Requirement IDs: R-INT-04.
 ```text
 Yes, I accept the cost and approve the workflow
 ```
+
+## AM-064 — 2026-11-24 — Check whether a cheaper flight controller works
+Relation: before the Order 1 approval (T-093, 1-4 Dec): with the Lua spin cap dropped (D-256), check whether a cheaper flight controller than the Kakute H743-Wing (BOM V03, $129.01) meets every concept A need (ArduPlane tailsitter quadplane, outputs, current sensing to >= 80 A, logging for TP-3, sensors, size / mounting, wiring), and change the BOM / Order 1 only if one does.
+Requirement IDs: R-GEN-02, R-GEN-07, R-OPT-02.
+
+```text
+Yes, check it
+```
