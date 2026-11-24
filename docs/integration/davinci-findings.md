@@ -1,6 +1,6 @@
 # DaVinci API: findings (T-037, R-INT-04, spec 8.3)
 
-**Status (2026-11-23, updated after AM-045):** the product and its API documentation are identified. The task is still BLOCKED, because there is no account and no token yet, and AM-003 keeps spend at $0. Nothing has been called and nothing has been spent.
+**Status (2026-11-23, updated after AM-045):** the product and its API documentation are identified. The task is still BLOCKED, because there is no account and no token yet, and AM-003 keeps spend at $0. Superseded (2026-11-24): a token now exists and probes, an import and a STEP test have run (s7, s8 and davinci-import-2026-11-23.md); DaVinci usage readings stayed equal, which is consistent with no charge but not proof (usage asOf 2026-11-09); org storage 836 MB in API Test (AM-050).
 
 ## 1. What the team repos say
 

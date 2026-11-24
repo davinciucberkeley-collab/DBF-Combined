@@ -138,3 +138,31 @@ Files touched are listed per finding; nothing committed.
 - **T-104 / T-105 LOW.** Root `index.html` title changed. Mojibake: `redesign/site/replay.js` had literal non-ASCII characters (degree, plus-minus, check marks) that render as "Â°" when the file is served without a UTF-8 charset; they are now `\u` escapes (11 `°`); `make_replays_view.py` rerun. The 2 SITL-FLIGHT.md links are listed as known in the T-104 plan file.
 - **R13-3.** Added the spend-evidence and storage-facts sections to `docs/integration/davinci-findings.md` and `davinci-import-2026-11-23.md`.
 - **R13-P1.** Added 12 rows (T-101 x6, T-103, T-104, T-105, T-015, T-037, round-13 reviewer) and a backfill note to `docs/model-usage.md`; models and token counts are "—" where the audits do not record them.
+
+## Re-review (2026-11-24, reviewer, fresh instance, opus) of fix pass C @ 6cc99eeb
+
+### Automated
+- `python -I tools/ledger_audit.py`: `113 requirements, 105 tasks, {'VERIFIED COMPLETE': 88, 'BLOCKED': 5, 'EXPLICITLY DEFERRED': 5, 'IN PROGRESS': 3, 'NOT STARTED': 4}; 0 errors`.
+- Site generators `sync_status_a.py`, `make_sims_view.py`, `make_replays_view.py`, `make_index.py` run twice: sha256 of `redesign/site/app.html` (6119d46e...), `index.html` (021c2fd6...) and `redesign/site/index.html` (f6485884...) identical between runs and identical to the committed files; `git status` clean apart from the pre-existing untracked `redesign/qp/A/cad/out/glb/`.
+- run_all, collide and BOM not rerun (no geometry or BOM change in fix pass C; brief limits long runs).
+
+### Blocking items
+| Item | Criterion | Verdict | Reason |
+|---|---|---|---|
+| R13-1 | CLAUDE.md working rules (every number cites its source; front door consistent with run_all) | PASS | README:22 and CLAUDE.md:34-35 state 0.651 vs 0.60 FAIL and name D-251 and D-252; `app.html` live text says 0.651 with D-251 / D-252; the 0.69-0.79 strings are labelled "earlier ... record". The AR-015 transition table (app.html sims section, 0.69 / 0.69) is the AR-015 runs' measured result under a paragraph that labels it earlier. Root `index.html` is a redirect stub with no figures. |
+| R13-2 | CLAUDE.md working rules (every number cites its source) against `sitl_T101C3G_T074/case.fwd.csv` | SEND BACK | Checked: stop/clip windows (|dl| or |dr| >= 19.0) at 104.513-104.615, 106.038-106.648, 107.512-107.919 s; roll rate p 21.7-48.7, -108.5 to -33.5, +30.5 to +85.5 deg/s; wind column non-zero 104.31-105.327 s (gust ends about 105.34 s); first-leg worst -19.59 deg (right) at 104.564 s. All correct. Still wrong: AR-019 result, D-252 and reserve.md s4 caveat say "+88.5 deg/s (first leg, A-P11)" and "the first leg alone (88.5 deg/s) already reached 19.59 deg"; in the CSV the first leg (104.32-105.82 s) peaks at +82.0 deg/s at 104.818 s, p is 35.6 deg/s at the 19.59 deg sample, and +88.5 deg/s occurs at 108.021 s in the recovery. Reserve.md:66 "first leg (A-P11 reached)" is likewise unsupported. AR-019 also says the stop contacts show "the roll reversal at the A-P11 rate"; the 107.5 s window is at 30.5-85.5 deg/s, below 90 (fix pass C's own note says so, the record does not). |
+| R13-3 | CLAUDE.md working rules (label estimates; no unsupported claims) | SEND BACK | The new sections in both files say equal Usage is "consistent with no charge but not proof" (asOf 2026-11-09) and record storage (836.1 MB API Test, about 1.0 of 1.0 GB, Model Benchmarks 226 MB, 205 STEP objects). But `davinci-findings.md:3` status still reads "Nothing has been called and nothing has been spent", which the probes in the same file contradict. One-line fix. |
+| R13-4 | spec 10.4 checkpoint (docs/session-state.md "Next action") | PASS | Next action names push approval, T-047 / T-059 / T-049, AM-050 branch deletion, T-093 1-4 Dec, CL-A-PITCH-USE 0.651 open; DaVinci row says T-037 IN PROGRESS. LOW: step (1) still says "Fix pass C", which is now done; replace it with the re-review outcome. |
+| R13-P1 | standards agents.md agent record (docs/model-usage.md) | PASS | 12 rows (T-101 x6, T-103, T-104, T-105, T-015, T-037, round-13 reviewer) plus a backfill note; unrecorded models and tokens shown as "—", not invented. |
+
+### Overall
+- **T-099 (final design audit): PASS.** Its only blocker, R13-1, is closed; it can be marked VERIFIED COMPLETE.
+- **T-101 (records only): SEND BACK.** The roll-rate attribution in AR-019, D-252 and reserve.md must match the CSV (first-leg peak +82.0 deg/s, +88.5 deg/s in the recovery at 108.02 s, 19.59 deg reached at 35.6 deg/s, 107.5 s contact below A-P11). The NO conclusion is not affected: it rests on the hand sum and the 19.59 deg first-leg excess over the 19.04 deg clip, both verified. T-101 stays IN PROGRESS regardless (CL-A-PITCH-USE 0.651 FAIL).
+- T-037 stays IN PROGRESS (spend proof pending a Usage read after asOf moves).
+
+### Non-blocking suggestions
+- Simpler: in AR-019 / D-252 drop the per-leg rate attribution and cite only the window times, the per-window p range and the peak -110 deg/s; that removes the error source.
+- The proof-graph claim text (`claims_a0_base.py`, `claims_a1_flight.py`, `gen_params_a.py`, `graph.js`) still carries 0.69-0.79 (fix pass C note); refresh it with the next run_all so the graph view matches the front door.
+
+### Process
+- This re-review: reviewer, opus, one instance, about 15 tool calls; launched nothing. Process miss: none found in fix pass C beyond the R13-2 residue.
