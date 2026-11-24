@@ -21,7 +21,7 @@ short-shaft 880KV on APC 9x4.5MR (D-227/D-228), no spare motor (AM-019), FIN-003
 fin tubes 387.4 mm / FIN_H 0.1937 (D-233), no BOM spare servo (D-234), hub bars T1/T11 from Zoro (D-235). Budget =
 total incl. crash reserve by its definition <= $2,000 (AM-013, AM-018); weight may exceed the mass gate (AM-011).
 
-**Requirements:** 113 R-ids (101 VERIFIED COMPLETE after T-047, the conductor follow-up and the R-MON-01 re-check); ledger 105 tasks (92 VERIFIED COMPLETE); `python -I tools/ledger_audit.py` 0 errors. (Updated 2026-11-24.)
+**Requirements:** 113 R-ids (102 VERIFIED COMPLETE after T-047, the conductor follow-up, the R-MON-01 re-check and AM-051 closing R-GEN-01); ledger 105 tasks (92 VERIFIED COMPLETE); `python -I tools/ledger_audit.py` 0 errors. (Updated 2026-11-24.)
 
 **State (EST):** CAD 1,641.0 g, predicted 1.881 kg (CL-A-MASS-PRED), CG 22.05 mm CAD (tallied about 23.22), SM 7.61 % CAD, lateral CG -3.32 mm (FC 75 mm left, D-240), window +11.88 %, T/W 2.632/2.111, cruise 234 s, A-P9
 tip-over 31.00 deg; BOM $1,939.17, margin +$60.83 (reserve $346.94). 3-D gates PASS at T-092 (2026-11-23; no geometry change since).

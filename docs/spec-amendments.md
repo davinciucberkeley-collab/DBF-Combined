@@ -540,3 +540,11 @@ Requirement IDs: R-INT-04, R-VER-01.
 ```text
 I'll work on that later, continue with the work you were doing before
 ```
+
+## AM-051 — 2026-11-24 — Agent Standard counts for the Superpowers half of R-GEN-01
+Relation: team decision on R-GEN-01: the mandatory team Agent Standard v0.2 (AM-040: roles, briefs, fresh reviewer per batch, cheapest tier first) counts in place of Superpowers skill use for planning, implementation and testing; the Impeccable half was already met (T-053). R-GEN-01 may be closed on that basis; no Superpowers use is claimed.
+Requirement IDs: R-GEN-01, R-ORC-04.
+
+```text
+Yes, count it
+```
