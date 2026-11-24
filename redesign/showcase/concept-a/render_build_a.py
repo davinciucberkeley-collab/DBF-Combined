@@ -1950,14 +1950,14 @@ def key_of(pid):
 
 SHORT = {'WNG-001': 'Wing core (XPS + tape)', 'WNG-002': 'Spar, CF 12x10, 900 mm', 'WNG-003': 'Spar plug (PETG)', 'WNG-004': 'Spar plug (PETG)', 'WNG-005': 'Spar plug (PETG)',
          'CGE-001': 'Hub (PETG)', 'CGE-002': 'Arm, CF 12x10, 245 mm', 'CGE-003': 'Motor cup (PETG)', 'CGE-004': 'Bridge, CF 16x14, 108 mm', 'CGE-005': 'V strut, CF 6x4.5',
-         'CGE-006': 'Bridge saddle', 'CGE-007': 'Strut clamp', 'CGE-008': 'Pack tray (PETG)', 'PRP-001': 'Motor MN2212 KV780', 'PRP-002': 'Prop APC 9x4.5 (MR / MRP)',
+         'CGE-006': 'Bridge saddle', 'CGE-007': 'Strut clamp', 'CGE-008': 'Pack tray (PETG)', 'PRP-001': 'Motor SunnySky X2216 880KV', 'PRP-002': 'Prop APC 9x4.5 (MR / MRP)',
          'PRP-003': 'ESC SpeedyBee 4-in-1', 'PRP-004': 'Prop adapter', 'PRP-005': 'Spinner nut', 'FIN-005': 'Rib saddle (PETG)', 'HRN-003': 'Phase-lead raceway',
          'HRN-004': 'Hub conduit', 'WNG-009': 'Damper stator + silicone', 'WNG-010': 'Damper rotor', 'FIN-002': 'Fin rib, CF 14x12', 'FIN-006': 'Rib fairing (XPS)',
          'WNG-006': 'Elevon (XPS + tape)', 'WNG-007': 'Balance: lead strip + tabs', 'WNG-008': 'Lens cap (PETG)', 'FIN-004': 'Fin fairing (XPS 3 mm)', 'FIN-003': 'Fin root block (PETG)',
          'FIN-001': 'Fin tube, CF 16x14, 360 mm', 'GER-001': 'Foot shoe (PETG)', 'GER-002': 'Foot pad (EVA/PE)', 'MEC-001': 'Servo EMAX ES3054HV', 'MEC-002': 'Servo arm',
          'HWC-002': 'Arm screw M2x6', 'MEC-004': 'Control horn', 'MEC-003': 'Pushrod + clevis', 'MEC-005': 'Clevis pin', 'AVN-006': 'Pitot probe', 'AVN-001': 'Avionics plate (PETG)',
          'HWC-003': 'M2 thin nuts', 'AVN-007': 'Foam-tape pads', 'AVN-002': 'Flight controller Kakute F405', 'AVN-003': 'Receiver RP3', 'AVN-004': 'GPS + compass',
-         'AVN-005': 'Airspeed board', 'HWC-001': 'FC screws M2x25', 'PWR-003': 'Anti-slip pad', 'PWR-001': 'Pack Tattu 2300 4S', 'HRN-002': 'XT60 female + tail', 'PWR-002': 'Pack strap',
+         'AVN-005': 'Airspeed board', 'HWC-001': 'FC screws M2x25', 'PWR-003': 'Anti-slip pad', 'PWR-001': 'Pack RDQ 2800 mAh 4S', 'HRN-002': 'XT60 female + tail', 'PWR-002': 'Pack strap',
          'AVN-008': 'Bay cover (PETG)'}
 
 

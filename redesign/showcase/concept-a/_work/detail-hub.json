@@ -7,8 +7,8 @@
  "scene": "studio",
  "engine": "CYCLES",
  "device": "GPU",
- "samples": 48,
- "render_s": 54.93,
+ "samples": 64,
+ "render_s": 67.42,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -17,16 +17,14 @@
   "ortho": false,
   "lens_mm": 70,
   "location_m": [
-   -1.3639,
-   -0.7465,
-   1.0038
+   -1.3823,
+   -0.7533,
+   1.0114
   ],
   "fit": [
    "CGE-001",
-   "CGE-002-UR",
-   "CGE-002-UL",
-   "CGE-002-LR",
-   "CGE-002-LL",
+   "CGE-002-A",
+   "CGE-002-B",
    "CGE-004",
    "CGE-005-R",
    "CGE-005-L",
@@ -45,130 +43,115 @@
   "sub": "Hub, arms, bridge tube and V struts clip onto the spar; pack tray bonded to the hub aft face"
  },
  "subject_px": [
-  162,
-  139,
-  1599,
-  867
+  172,
+  135,
+  1595,
+  872
  ],
  "callouts": [
   {
    "item": "CGE-001",
-   "x": 712.4,
-   "y": 497.0,
+   "x": 719.0,
+   "y": 495.5,
    "title": "CGE-001",
    "text": "Printed hub, 4 arm sockets",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.0772,
-    -0.0053,
-    0.0049
-   ]
-  },
-  {
-   "item": "CGE-002-UR",
-   "x": 506.5,
-   "y": 311.9,
-   "title": "CGE-002-UR",
-   "text": "Arm CF 12 x 10",
-   "detail": null,
-   "role": "context",
-   "occluded": false,
-   "world_m": [
-    -0.0793,
-    0.1278,
-    0.0925
+    -0.084,
+    -0.0099,
+    0.0059
    ]
   },
   {
    "item": "CGE-004",
-   "x": 749.7,
-   "y": 456.2,
+   "x": 777.9,
+   "y": 428.5,
    "title": "CGE-004",
    "text": "Bridge tube",
    "detail": null,
    "role": "context",
-   "occluded": true,
+   "occluded": false,
    "world_m": [
-    -0.023,
-    -0.0,
-    0.0
+    -0.0028,
+    -0.0048,
+    0.0044
    ]
   },
   {
    "item": "CGE-005-R",
-   "x": 523.6,
-   "y": 366.1,
+   "x": 536.9,
+   "y": 370.4,
    "title": "CGE-005-R",
    "text": "V strut to the spar",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.0026,
-    0.1697,
-    0.0023
+    -0.0123,
+    0.1592,
+    0.0031
    ]
   },
   {
    "item": "HRN-004-UR",
-   "x": 690.1,
-   "y": 458.4,
+   "x": 702.1,
+   "y": 452.6,
    "title": "HRN-004-UR",
    "text": "Printed hub conduit (phase leads)",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.065,
-    0.0161,
-    0.0178
+    -0.0725,
+    0.0075,
+    0.0236
    ]
   },
   {
    "item": "HRN-003-R",
-   "x": 706.0,
-   "y": 467.7,
+   "x": 739.2,
+   "y": 433.6,
    "title": "HRN-003-R",
    "text": "Raceway under the tray",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.0501,
+    -0.0164,
     0.0142,
-    0.0033
+    0.0029
    ]
   },
   {
    "item": "CGE-006",
-   "x": 811.2,
-   "y": 390.8,
+   "x": 813.0,
+   "y": 386.3,
    "title": "CGE-006",
    "text": "Bridge saddle on spar",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0463,
-    -0.0044,
-    0.0085
+    0.0451,
+    -0.0033,
+    0.0075
    ]
   },
   {
    "item": "CGE-008",
-   "x": 754.7,
-   "y": 424.7,
+   "x": 800.2,
+   "y": 422.6,
    "title": "CGE-008",
    "text": "Pack tray",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.0024,
-    0.0078,
-    0.008
+    -0.0025,
+    -0.0198,
+    0.013
    ]
   }
  ],
@@ -181,10 +164,10 @@
    "mass_g": 100.1,
    "subsystem": "wing",
    "bbox_px": [
-    162,
-    145,
-    1599,
-    659
+    172,
+    142,
+    1595,
+    649
    ]
   },
   {
@@ -195,10 +178,10 @@
    "mass_g": 49.8,
    "subsystem": "wing",
    "bbox_px": [
-    211,
-    213,
-    1539,
-    603
+    221,
+    209,
+    1536,
+    594
    ]
   },
   {
@@ -206,13 +189,13 @@
    "role": "context",
    "name": "Spar plug (centre clamp)",
    "status": "MODELLED",
-   "mass_g": 1.2,
+   "mass_g": 1.42,
    "subsystem": "wing",
    "bbox_px": [
-    797,
-    378,
-    834,
-    402
+    801,
+    372,
+    838,
+    396
    ]
   },
   {
@@ -220,13 +203,13 @@
    "role": "context",
    "name": "Spar plug (right strut clamp)",
    "status": "MODELLED",
-   "mass_g": 1.2,
+   "mass_g": 1.42,
    "subsystem": "wing",
    "bbox_px": [
-    387,
-    264,
-    422,
-    286
+    396,
+    259,
+    430,
+    281
    ]
   },
   {
@@ -234,41 +217,69 @@
    "role": "context",
    "name": "Spar plug (left strut clamp)",
    "status": "MODELLED",
-   "mass_g": 1.2,
+   "mass_g": 1.42,
    "subsystem": "wing",
    "bbox_px": [
     1260,
-    508,
-    1300,
-    534
+    500,
+    1299,
+    525
    ]
   },
   {
    "id": "CGE-001",
    "role": "context",
-   "name": "Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 2.0 mm arm-socket mouth walls, 1.2 mm sleeve (D-196), 0.8 mm webs, mass = drawn volume x 1.27)",
+   "name": "Hub (machined 6061-T6, D-220 / D-221 / D-222: two OCTAGONAL sleeves 16 mm across flats, 1.0 mm wall at the flats, over s +-32 mm of both arm tubes, 38.5 x 20 x 20 mm centre block on the bridge axis to the tray face, 3 mm edge radii, internal radii 1.0 / 0.9 mm at the junctions (OCC mesh, hub_body.py), 0.5 mm sleeve-mouth and lead-exit chamfers, 2 strut sockets, tray flange; hub pockets T-077 p4: block aft of x +15.5 and the 30 mm bond collar (D-220) turned to a cylinder R 9.25 mm about the bridge axis (wall 1.25 mm round the 16 mm bore); mass = drawn volume x 2.70 g/cm3)",
    "status": "MODELLED",
-   "mass_g": 17.5,
+   "mass_g": 43.3,
    "subsystem": "cage",
    "bbox_px": [
-    626,
-    423,
-    805,
-    577
+    641,
+    447,
+    803,
+    548
    ]
   },
   {
-   "id": "CGE-002-UR",
+   "id": "CGE-002-A",
    "role": "context",
-   "name": "Arm 12x10 x 0.245 (UR)",
+   "name": "Arm tube A 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub (D-202; UR + LL)",
    "status": "MODELLED",
-   "mass_g": 13.5,
+   "mass_g": 30.6,
    "subsystem": "cage",
    "bbox_px": [
     351,
-    165,
-    674,
-    470
+    167,
+    1058,
+    833
+   ]
+  },
+  {
+   "id": "CGE-002-B",
+   "role": "context",
+   "name": "Arm tube B 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub (D-202; LR + UL)",
+   "status": "MODELLED",
+   "mass_g": 30.6,
+   "subsystem": "cage",
+   "bbox_px": [
+    401,
+    345,
+    1094,
+    607
+   ]
+  },
+  {
+   "id": "CGE-009-UR",
+   "role": "context",
+   "name": "Doubler 14x12 x 36 mm (UR), carbon tube sleeve bonded over the arm tube at s 11..47 mm 15 mm past the sleeve end, outer 5 mm tapered (D-202, D-222 P1); mass = revolved volume x 1.6 g/cm3 (STRUCTURES CF basis)",
+   "status": "MODELLED",
+   "mass_g": 2.01,
+   "subsystem": "cage",
+   "bbox_px": [
+    638,
+    437,
+    698,
+    496
    ]
   },
   {
@@ -276,26 +287,40 @@
    "role": "context",
    "name": "Motor cup (UR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "status": "MODELLED",
-   "mass_g": 4.3,
+   "mass_g": 8.96,
    "subsystem": "cage",
    "bbox_px": [
-    316,
-    139,
-    401,
-    214
+    309,
+    135,
+    399,
+    215
    ]
   },
   {
-   "id": "CGE-002-UL",
+   "id": "CGE-010-UR",
    "role": "context",
-   "name": "Arm 12x10 x 0.245 (UL)",
+   "name": "Pin 3 mm carbon rod x 15 mm (UR) through the arm tube and its sleeve at s +8 mm (D-202)",
    "status": "MODELLED",
-   "mass_g": 13.5,
+   "mass_g": 0.17,
    "subsystem": "cage",
    "bbox_px": [
-    738,
-    355,
-    1090,
+    685,
+    482,
+    702,
+    500
+   ]
+  },
+  {
+   "id": "CGE-009-UL",
+   "role": "context",
+   "name": "Doubler 14x12 x 36 mm (UL), carbon tube sleeve bonded over the arm tube at s 11..47 mm 15 mm past the sleeve end, outer 5 mm tapered (D-202, D-222 P1); mass = revolved volume x 1.6 g/cm3 (STRUCTURES CF basis)",
+   "status": "MODELLED",
+   "mass_g": 2.01,
+   "subsystem": "cage",
+   "bbox_px": [
+    720,
+    458,
+    781,
     496
    ]
   },
@@ -304,27 +329,41 @@
    "role": "context",
    "name": "Motor cup (UL; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "status": "MODELLED",
-   "mass_g": 4.3,
+   "mass_g": 8.96,
    "subsystem": "cage",
    "bbox_px": [
-    1034,
-    347,
-    1118,
-    409
+    1041,
+    332,
+    1131,
+    399
    ]
   },
   {
-   "id": "CGE-002-LR",
+   "id": "CGE-010-UL",
    "role": "context",
-   "name": "Arm 12x10 x 0.245 (LR)",
+   "name": "Pin 3 mm carbon rod x 15 mm (UL) through the arm tube and its sleeve at s -8 mm (D-202)",
    "status": "MODELLED",
-   "mass_g": 13.5,
+   "mass_g": 0.16,
    "subsystem": "cage",
    "bbox_px": [
-    390,
-    503,
-    676,
-    619
+    716,
+    477,
+    733,
+    494
+   ]
+  },
+  {
+   "id": "CGE-009-LR",
+   "role": "context",
+   "name": "Doubler 14x12 x 36 mm (LR), carbon tube sleeve bonded over the arm tube at s 11..47 mm 15 mm past the sleeve end, outer 5 mm tapered (D-202, D-222 P1); mass = revolved volume x 1.6 g/cm3 (STRUCTURES CF basis)",
+   "status": "MODELLED",
+   "mass_g": 2.01,
+   "subsystem": "cage",
+   "bbox_px": [
+    651,
+    482,
+    710,
+    519
    ]
   },
   {
@@ -332,27 +371,41 @@
    "role": "context",
    "name": "Motor cup (LR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "status": "MODELLED",
-   "mass_g": 4.3,
+   "mass_g": 8.96,
    "subsystem": "cage",
    "bbox_px": [
-    361,
-    584,
-    434,
-    643
+    366,
+    573,
+    443,
+    633
    ]
   },
   {
-   "id": "CGE-002-LL",
+   "id": "CGE-010-LR",
    "role": "context",
-   "name": "Arm 12x10 x 0.245 (LL)",
+   "name": "Pin 3 mm carbon rod x 15 mm (LR) through the arm tube and its sleeve at s +8 mm (D-202)",
    "status": "MODELLED",
-   "mass_g": 13.5,
+   "mass_g": 0.16,
    "subsystem": "cage",
    "bbox_px": [
-    739,
-    529,
-    1063,
-    836
+    697,
+    484,
+    713,
+    501
+   ]
+  },
+  {
+   "id": "CGE-009-LL",
+   "role": "context",
+   "name": "Doubler 14x12 x 36 mm (LL), carbon tube sleeve bonded over the arm tube at s 11..47 mm 15 mm past the sleeve end, outer 5 mm tapered (D-202, D-222 P1); mass = revolved volume x 1.6 g/cm3 (STRUCTURES CF basis)",
+   "status": "MODELLED",
+   "mass_g": 2.01,
+   "subsystem": "cage",
+   "bbox_px": [
+    709,
+    504,
+    770,
+    563
    ]
   },
   {
@@ -360,111 +413,139 @@
    "role": "context",
    "name": "Motor cup (LL; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "status": "MODELLED",
-   "mass_g": 4.3,
+   "mass_g": 8.96,
    "subsystem": "cage",
    "bbox_px": [
-    1012,
+    1010,
     786,
-    1078,
-    867
+    1085,
+    872
+   ]
+  },
+  {
+   "id": "CGE-010-LL",
+   "role": "context",
+   "name": "Pin 3 mm carbon rod x 15 mm (LL) through the arm tube and its sleeve at s -8 mm (D-202)",
+   "status": "MODELLED",
+   "mass_g": 0.17,
+   "subsystem": "cage",
+   "bbox_px": [
+    705,
+    501,
+    722,
+    518
+   ]
+  },
+  {
+   "id": "CGE-010-C",
+   "role": "context",
+   "name": "Crossing pin 3 mm carbon rod x 39 mm through both arm tubes and the hub block (D-202)",
+   "status": "MODELLED",
+   "mass_g": 0.44,
+   "subsystem": "cage",
+   "bbox_px": [
+    695,
+    472,
+    732,
+    509
    ]
   },
   {
    "id": "CGE-004",
    "role": "context",
-   "name": "Bridge 12x10",
+   "name": "Bridge 16x14 (D-206, torsion; axis z -2 mm; D-202: starts 15 mm aft of the hub axis, bored into the boss)",
    "status": "MODELLED",
-   "mass_g": 8.5,
+   "mass_g": 8.6,
    "subsystem": "cage",
    "bbox_px": [
-    676,
-    386,
-    819,
-    530
+    711,
+    382,
+    825,
+    496
    ]
   },
   {
    "id": "CGE-005-R",
    "role": "context",
-   "name": "V strut 6x4.5 (R)",
+   "name": "V strut 8x6 (R), T-077 p7 (D-225 resize; was 6x4.0, D-219)",
    "status": "MODELLED",
-   "mass_g": 6.5,
+   "mass_g": 10.2,
    "subsystem": "cage",
    "bbox_px": [
-    411,
-    283,
-    685,
-    486
+    418,
+    277,
+    684,
+    487
    ]
   },
   {
    "id": "CGE-005-L",
    "role": "context",
-   "name": "V strut 6x4.5 (L)",
+   "name": "V strut 8x6 (L), T-077 p7 (D-225 resize; was 6x4.0, D-219)",
    "status": "MODELLED",
-   "mass_g": 6.5,
+   "mass_g": 10.2,
    "subsystem": "cage",
    "bbox_px": [
-    749,
-    496,
+    747,
+    494,
     1249,
-    528
+    521
    ]
   },
   {
    "id": "CGE-006",
    "role": "context",
-   "name": "Bridge saddle on spar",
+   "name": "Centre node (T-077 p8, D-226 s3; replaces the printed bridge saddle and the audit T-fitting + 6061 tube + flanges with ONE machined 6061-T6 part, Tormach): octagonal sleeve apothem 7.3 mm (wall 1.15 at the flats) over |y| <= 59.8 mm on the spar, bore 12.3 mm (0.15 mm slip fit, not bonded), end flanges 1.0 mm thick (x 20..120, |z| <= 8, inside the skin) bonded on the centre bulkheads, bridge socket boss OD 20.1, socket 16 mm from x 27.5 to 51.5 (bridge bonded); mass = drawn volume (voxel 0.2 mm) x 2.70 g/cm3",
    "status": "MODELLED",
-   "mass_g": 2.0,
+   "mass_g": 36.3,
    "subsystem": "cage",
    "bbox_px": [
-    780,
-    368,
-    845,
-    429
+    703,
+    306,
+    950,
+    451
    ]
   },
   {
    "id": "CGE-007-R",
    "role": "context",
-   "name": "Strut clamp on spar (R)",
+   "name": "Strut clamp on spar (R), R4 resized T-077 p7: ring OD 21 x 21, socket OD 12.5 / bore 8 x 27, fillet R 4.0 (mass from printed_mass.json)",
    "status": "MODELLED",
-   "mass_g": 1.5,
+   "mass_g": 6.34,
    "subsystem": "cage",
    "bbox_px": [
-    381,
-    258,
-    436,
-    311
+    390,
+    251,
+    453,
+    308
    ]
   },
   {
    "id": "CGE-007-L",
    "role": "context",
-   "name": "Strut clamp on spar (L)",
+   "name": "Strut clamp on spar (L), R4 resized T-077 p7: ring OD 21 x 21, socket OD 12.5 / bore 8 x 27, fillet R 4.0 (mass from printed_mass.json)",
    "status": "MODELLED",
-   "mass_g": 1.5,
+   "mass_g": 6.34,
    "subsystem": "cage",
    "bbox_px": [
-    1217,
-    502,
-    1299,
-    552
+    1201,
+    491,
+    1303,
+    535
    ]
   },
   {
    "id": "CGE-008",
    "role": "context",
-   "name": "Pack tray (66 x 109 mm plate, integral lips at the trim ends, lead notch; 4.0 g at 44 mm scaled by plate area + longer walls, EST)",
+   "name": "Pack tray R1 (T-077: 1.2 mm windowed plate on a 2.0 mm root pad + ribs, 2.0 mm end walls with windows, two 40 x 2.0 mm tabs per lip; mass = drawn solid volume x 1.27, T-067 basis M applied by printed_mass.json when present)",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 13.3,
    "subsystem": "cage",
    "bbox_px": [
-    651,
-    372,
-    867,
-    490
+    647,
+    368,
+    856,
+    491
    ]
   },
   {
@@ -475,24 +556,24 @@
    "mass_g": 20.0,
    "subsystem": "propulsion",
    "bbox_px": [
-    807,
-    316,
-    883,
-    361
+    800,
+    321,
+    876,
+    366
    ]
   },
   {
    "id": "PWR-001",
    "role": "ghost",
-   "name": "Pack Tattu 2300 mAh 4S 75C",
+   "name": "Pack RDQ Series 2800 mAh 4S 100C XT60 (107 x 33 x 46 mm, 270 g, T-077)",
    "status": "MODELLED",
    "mass_g": 270.0,
    "subsystem": "power",
    "bbox_px": [
-    667,
-    306,
-    853,
-    468
+    656,
+    311,
+    843,
+    476
    ]
   },
   {
@@ -500,13 +581,13 @@
    "role": "context",
    "name": "Phase-lead raceway (D-199, R): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
    "status": "MODELLED",
-   "mass_g": 1.8,
+   "mass_g": 1.43,
    "subsystem": "harness",
    "bbox_px": [
-    684,
-    401,
-    765,
-    480
+    688,
+    395,
+    770,
+    475
    ]
   },
   {
@@ -514,74 +595,73 @@
    "role": "context",
    "name": "Phase-lead raceway (D-199, L): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
    "status": "MODELLED",
-   "mass_g": 1.8,
+   "mass_g": 1.43,
    "subsystem": "harness",
    "bbox_px": [
-    741,
-    417,
-    821,
-    498
+    744,
+    410,
+    826,
+    492
    ]
   },
   {
    "id": "HRN-004-UR",
    "role": "context",
-   "name": "Hub conduit (D-199, UR): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "name": "Hub conduit (D-199, D-202, UR): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 0.98,
    "subsystem": "harness",
    "bbox_px": [
-    666,
-    436,
-    709,
-    479
+    681,
+    432,
+    722,
+    478
    ]
   },
   {
    "id": "HRN-004-UL",
    "role": "context",
-   "name": "Hub conduit (D-199, UL): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "name": "Hub conduit (D-199, D-202, UL): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 0.72,
    "subsystem": "harness",
    "bbox_px": [
-    723,
-    455,
-    766,
-    494
+    717,
+    443,
+    759,
+    481
    ]
   },
   {
    "id": "HRN-004-LR",
    "role": "context",
-   "name": "Hub conduit (D-199, LR): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "name": "Hub conduit (D-199, D-202, LR): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 0.9,
    "subsystem": "harness",
    "bbox_px": [
-    662,
-    466,
-    705,
-    515
+    686,
+    465,
+    723,
+    522
    ]
   },
   {
    "id": "HRN-004-LL",
    "role": "context",
-   "name": "Hub conduit (D-199, LL): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "name": "Hub conduit (D-199, D-202, LL): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 1.22,
    "subsystem": "harness",
    "bbox_px": [
-    729,
-    485,
-    771,
-    538
+    707,
+    483,
+    766,
+    541
    ]
   }
  ],
  "hidden": [
-  "AVN-001",
   "AVN-002",
   "AVN-003",
   "AVN-004",
@@ -589,6 +669,9 @@
   "AVN-006",
   "AVN-007",
   "AVN-008",
+  "AVN-009-S",
+  "AVN-009-T",
+  "AVN-010",
   "E-HRN-01",
   "E-HRN-02",
   "E-HRN-03",
@@ -615,6 +698,10 @@
   "FIN-005-R",
   "FIN-006-L",
   "FIN-006-R",
+  "FIN-009-L",
+  "FIN-009-R",
+  "FIN-010-L",
+  "FIN-010-R",
   "GER-001-LL",
   "GER-001-LR",
   "GER-001-UL",
@@ -640,6 +727,8 @@
   "MEC-004-R",
   "MEC-005-L",
   "MEC-005-R",
+  "MEC-008-L",
+  "MEC-008-R",
   "PRP-001-LL",
   "PRP-001-LR",
   "PRP-001-UL",
@@ -656,6 +745,10 @@
   "PRP-005-LR",
   "PRP-005-UL",
   "PRP-005-UR",
+  "PRP-006-LL",
+  "PRP-006-LR",
+  "PRP-006-UL",
+  "PRP-006-UR",
   "PWR-002",
   "PWR-003",
   "WNG-005-L",
@@ -671,7 +764,13 @@
   "WNG-009-L",
   "WNG-009-R",
   "WNG-010-L",
-  "WNG-010-R"
+  "WNG-010-R",
+  "WNG-011",
+  "WNG-012",
+  "WNG-013-L",
+  "WNG-013-R",
+  "WNG-014-L",
+  "WNG-014-R"
  ],
  "clipped": [],
  "legend": [

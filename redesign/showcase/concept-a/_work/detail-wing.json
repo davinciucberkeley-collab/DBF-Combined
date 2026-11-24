@@ -7,8 +7,8 @@
  "scene": "studio",
  "engine": "CYCLES",
  "device": "GPU",
- "samples": 48,
- "render_s": 49.25,
+ "samples": 64,
+ "render_s": 33.61,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -42,32 +42,32 @@
  "callouts": [
   {
    "item": "WNG-002",
-   "x": 836.2,
-   "y": 465.1,
+   "x": 1161.0,
+   "y": 582.8,
    "title": "WNG-002",
    "text": "CF spar 12 x 10 x 0.90 m",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0635,
-    0.042,
-    0.0035
+    0.0659,
+    0.381,
+    0.0011
    ]
   },
   {
    "item": "WNG-001",
-   "x": 815.4,
-   "y": 484.9,
+   "x": 1202.9,
+   "y": 545.2,
    "title": "WNG-001",
    "text": "XPS core S5010 (ghosted)",
    "detail": null,
    "role": "ghost",
    "occluded": false,
    "world_m": [
-    0.1013,
-    0.0368,
-    0.011
+    0.0055,
+    0.4024,
+    0.0012
    ]
   },
   {
@@ -102,17 +102,17 @@
   },
   {
    "item": "WNG-008-LU",
-   "x": 503.3,
-   "y": 423.3,
+   "x": 503.1,
+   "y": 423.7,
    "title": "WNG-008-LU",
    "text": "Lens cap over the balance",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.1576,
-    -0.2814,
-    0.0081
+    0.158,
+    -0.2815,
+    0.0079
    ]
   },
   {
@@ -165,7 +165,7 @@
    "role": "context",
    "name": "Spar plug (centre clamp)",
    "status": "MODELLED",
-   "mass_g": 1.2,
+   "mass_g": 1.42,
    "subsystem": "wing",
    "bbox_px": [
     788,
@@ -179,7 +179,7 @@
    "role": "context",
    "name": "Spar plug (right strut clamp)",
    "status": "MODELLED",
-   "mass_g": 1.2,
+   "mass_g": 1.42,
    "subsystem": "wing",
    "bbox_px": [
     1071,
@@ -193,7 +193,7 @@
    "role": "context",
    "name": "Spar plug (left strut clamp)",
    "status": "MODELLED",
-   "mass_g": 1.2,
+   "mass_g": 1.42,
    "subsystem": "wing",
    "bbox_px": [
     525,
@@ -207,7 +207,7 @@
    "role": "context",
    "name": "Spar plug (right rib clamp)",
    "status": "MODELLED",
-   "mass_g": 1.2,
+   "mass_g": 1.42,
    "subsystem": "wing",
    "bbox_px": [
     1150,
@@ -221,7 +221,7 @@
    "role": "context",
    "name": "Spar plug (left rib clamp)",
    "status": "MODELLED",
-   "mass_g": 1.2,
+   "mass_g": 1.42,
    "subsystem": "wing",
    "bbox_px": [
     458,
@@ -261,9 +261,9 @@
   {
    "id": "WNG-007-R",
    "role": "context",
-   "name": "Elevon balance (D-187 v2, R): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
+   "name": "Elevon balance (D-187 v2, D-205, T-077 p8 R): 10.0 g lead strip 20 mm ahead of the hinge (10 x 0.83 mm x 106 mm; T-077 p8 flutter re-run) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
    "status": "MODELLED",
-   "mass_g": 16.1,
+   "mass_g": 10.5,
    "subsystem": "wing",
    "bbox_px": [
     974,
@@ -275,13 +275,13 @@
   {
    "id": "WNG-007-L",
    "role": "context",
-   "name": "Elevon balance (D-187 v2, L): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
+   "name": "Elevon balance (D-187 v2, D-205, T-077 p8 L): 10.0 g lead strip 20 mm ahead of the hinge (10 x 0.83 mm x 106 mm; T-077 p8 flutter re-run) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
    "status": "MODELLED",
-   "mass_g": 16.1,
+   "mass_g": 10.5,
    "subsystem": "wing",
    "bbox_px": [
     450,
-    413,
+    414,
     547,
     460
    ]
@@ -291,7 +291,7 @@
    "role": "context",
    "name": "Lens cap + stop bosses (R, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 3.69,
    "subsystem": "wing",
    "bbox_px": [
     965,
@@ -305,12 +305,12 @@
    "role": "context",
    "name": "Lens cap + stop bosses (L, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 3.69,
    "subsystem": "wing",
    "bbox_px": [
     440,
     389,
-    563,
+    562,
     460
    ]
   },
@@ -319,11 +319,11 @@
    "role": "context",
    "name": "Lens cap + stop bosses (R, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 3.72,
    "subsystem": "wing",
    "bbox_px": [
     964,
-    589,
+    590,
     1096,
     664
    ]
@@ -333,11 +333,11 @@
    "role": "context",
    "name": "Lens cap + stop bosses (L, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 3.72,
    "subsystem": "wing",
    "bbox_px": [
     441,
-    402,
+    403,
     563,
     467
    ]
@@ -347,7 +347,7 @@
    "role": "context",
    "name": "Hinge damper rotor (R): sleeve + flange bonded on the elevon tip",
    "status": "MODELLED",
-   "mass_g": 0.5,
+   "mass_g": 0.47,
    "subsystem": "wing",
    "bbox_px": [
     1084,
@@ -361,7 +361,7 @@
    "role": "context",
    "name": "Hinge damper rotor (L): sleeve + flange bonded on the elevon tip",
    "status": "MODELLED",
-   "mass_g": 0.5,
+   "mass_g": 0.47,
    "subsystem": "wing",
    "bbox_px": [
     414,
@@ -399,31 +399,115 @@
    ]
   },
   {
+   "id": "WNG-011",
+   "role": "context",
+   "name": "Wing torsion skin: 1 ply 48 g/m2 glass at +-45 deg wet-laid on the core, closed over the leading edge and the cove face, y -0.40..+0.40, wet ply 0.054 mm (EST) drawn as a shell inside the core outline; openings as the core (slots, pockets, windows); mass = shell volume x 1.63 g/cm3 (88 g/m2 / 0.054 mm, T-071 l.24)",
+   "status": "MODELLED",
+   "mass_g": 26.7,
+   "subsystem": "wing",
+   "bbox_px": [
+    389,
+    295,
+    1201,
+    685
+   ]
+  },
+  {
+   "id": "WNG-012",
+   "role": "context",
+   "name": "Cove CF strip, section 6 x 0.5 mm = 3 mm2 (only the area is given, T-071 l.32; width, thickness and product -), y -0.40..+0.40, under the skin on the cove face; mass = volume x 1.55 g/cm3",
+   "status": "MODELLED",
+   "mass_g": 3.7,
+   "subsystem": "wing",
+   "bbox_px": [
+    390,
+    410,
+    1139,
+    683
+   ]
+  },
+  {
+   "id": "WNG-014-R",
+   "role": "context",
+   "name": "Wing torsion skin plies 2-3 (R, T-077 p8, D-226 / AM-016): 2 more plies of 48 g/m2 glass at +-45 deg wet-laid over ply 1, |y| 0.052..0.400 (the torsion bay between the centre and fin bulkheads plus laps), closed over the LE and the cove face; drawn inside ply 1 (core machined smaller by the total); mass = shell volume x 1.63 g/cm3",
+   "status": "MODELLED",
+   "mass_g": 23.2,
+   "subsystem": "wing",
+   "bbox_px": [
+    794,
+    430,
+    1201,
+    684
+   ]
+  },
+  {
+   "id": "WNG-014-L",
+   "role": "context",
+   "name": "Wing torsion skin plies 2-3 (L, T-077 p8, D-226 / AM-016): 2 more plies of 48 g/m2 glass at +-45 deg wet-laid over ply 1, |y| 0.052..0.400 (the torsion bay between the centre and fin bulkheads plus laps), closed over the LE and the cove face; drawn inside ply 1 (core machined smaller by the total); mass = shell volume x 1.63 g/cm3",
+   "status": "MODELLED",
+   "mass_g": 23.2,
+   "subsystem": "wing",
+   "bbox_px": [
+    389,
+    295,
+    778,
+    524
+   ]
+  },
+  {
+   "id": "WNG-013-R",
+   "role": "context",
+   "name": "Centre bulkhead (R, T-077 p8, D-226 s3): 0.5 mm CF sheet (waterjet, BOM T2) cut to the cell inside the 3 skin plies (LE to the cove), y 60.0..60.5 mm, spar hole 12 mm (flox), servo-lead slot and (left) I2C hole; 2-ply 1080 tape lap 8 mm on the skin round the edge; CGE-006 flange bonded on its inboard face. Mass = plate 2.55 g (area x 0.5 mm x 1.6 g/cm3) + tape lap 1.07 g + flange bond line 0.37 g (EST)",
+   "status": "MODELLED",
+   "mass_g": 4.0,
+   "subsystem": "wing",
+   "bbox_px": [
+    801,
+    432,
+    879,
+    562
+   ]
+  },
+  {
+   "id": "WNG-013-L",
+   "role": "context",
+   "name": "Centre bulkhead (L, T-077 p8, D-226 s3): 0.5 mm CF sheet (waterjet, BOM T2) cut to the cell inside the 3 skin plies (LE to the cove), y -60.0..60.5 mm, spar hole 12 mm (flox), servo-lead slot and (left) I2C hole; 2-ply 1080 tape lap 8 mm on the skin round the edge; CGE-006 flange bonded on its inboard face. Mass = plate 2.55 g (area x 0.5 mm x 1.6 g/cm3) + tape lap 1.07 g + flange bond line 0.37 g (EST)",
+   "status": "MODELLED",
+   "mass_g": 4.0,
+   "subsystem": "wing",
+   "bbox_px": [
+    689,
+    395,
+    771,
+    521
+   ]
+  },
+  {
    "id": "FIN-005-R",
    "role": "context",
-   "name": "Rib saddle on spar (R)",
+   "name": "Fin node bulkheads (R, T-077 p8, D-226 s3; replaces the printed rib saddle): two 0.5 mm CF sheet bulkheads (waterjet, BOM T2) at |y| 369.5..370.0 and 396.0..396.5 mm (0.5 mm from the 25 mm rib flanks), cut to the cell inside the 3 skin plies from the LE to x 176, spar holes 12 mm (flox), slotted into the core; rib bonded between them by flox fillets (12 mm wide per flank, EST) over x 70.5..176; 2-ply 1080 tape laps 8 mm on both skins. Mass = plates 5.02 + tape laps 2.07 + flox 2.91 g (EST)",
    "status": "MODELLED",
-   "mass_g": 1.0,
+   "mass_g": 10.0,
    "subsystem": "fins",
    "bbox_px": [
-    1128,
-    558,
-    1196,
-    611
+    1109,
+    533,
+    1198,
+    681
    ]
   },
   {
    "id": "FIN-005-L",
    "role": "context",
-   "name": "Rib saddle on spar (L)",
+   "name": "Fin node bulkheads (L, T-077 p8, D-226 s3; replaces the printed rib saddle): two 0.5 mm CF sheet bulkheads (waterjet, BOM T2) at |y| 369.5..370.0 and 396.0..396.5 mm (0.5 mm from the 25 mm rib flanks), cut to the cell inside the 3 skin plies from the LE to x 176, spar holes 12 mm (flox), slotted into the core; rib bonded between them by flox fillets (12 mm wide per flank, EST) over x 70.5..176; 2-ply 1080 tape laps 8 mm on both skins. Mass = plates 5.02 + tape laps 2.07 + flox 2.91 g (EST)",
    "status": "MODELLED",
-   "mass_g": 1.0,
+   "mass_g": 10.0,
    "subsystem": "fins",
    "bbox_px": [
-    439,
-    317,
-    499,
-    364
+    396,
+    296,
+    507,
+    419
    ]
   },
   {
@@ -448,24 +532,38 @@
    "mass_g": 1.0,
    "subsystem": "mechanisms",
    "bbox_px": [
-    941,
-    565,
+    944,
+    566,
     959,
     575
    ]
   },
   {
-   "id": "MEC-004-R",
+   "id": "MEC-008-R",
    "role": "context",
-   "name": "Control horn (R)",
+   "name": "Z-bend keeper (R), printed PETG: 1.5 mm spacer + 0.8 mm bridge over the Z-bend, clamped under the arm screw (D-212 rev 3; mass CALC)",
    "status": "MODELLED",
-   "mass_g": 1.0,
+   "mass_g": 0.07,
    "subsystem": "mechanisms",
    "bbox_px": [
-    911,
-    604,
-    926,
-    624
+    944,
+    564,
+    957,
+    572
+   ]
+  },
+  {
+   "id": "MEC-004-R",
+   "role": "context",
+   "name": "Control horn (R), printed PETG 2 mm flat profile: blade with the 1.1 mm reamed hole over the hinge line + rib through a slot in the elevon, 2.5-55 mm aft of the hinge (D-212 rev 3; mass CALC from the drawn volume)",
+   "status": "MODELLED",
+   "mass_g": 0.95,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    904,
+    597,
+    930,
+    653
    ]
   },
   {
@@ -476,10 +574,10 @@
    "mass_g": 0.97,
    "subsystem": "mechanisms",
    "bbox_px": [
-    919,
-    565,
-    944,
-    609
+    926,
+    567,
+    947,
+    603
    ]
   },
   {
@@ -490,10 +588,10 @@
    "mass_g": 0.03,
    "subsystem": "mechanisms",
    "bbox_px": [
-    919,
-    605,
-    924,
-    607
+    926,
+    599,
+    931,
+    601
    ]
   },
   {
@@ -520,22 +618,36 @@
    "bbox_px": [
     579,
     434,
-    596,
-    444
+    593,
+    443
+   ]
+  },
+  {
+   "id": "MEC-008-L",
+   "role": "context",
+   "name": "Z-bend keeper (L), printed PETG: 1.5 mm spacer + 0.8 mm bridge over the Z-bend, clamped under the arm screw (D-212 rev 3; mass CALC)",
+   "status": "MODELLED",
+   "mass_g": 0.07,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    580,
+    434,
+    593,
+    440
    ]
   },
   {
    "id": "MEC-004-L",
    "role": "context",
-   "name": "Control horn (L)",
+   "name": "Control horn (L), printed PETG 2 mm flat profile: blade with the 1.1 mm reamed hole over the hinge line + rib through a slot in the elevon, 2.5-55 mm aft of the hinge (D-212 rev 3; mass CALC from the drawn volume)",
    "status": "MODELLED",
-   "mass_g": 1.0,
+   "mass_g": 0.95,
    "subsystem": "mechanisms",
    "bbox_px": [
-    559,
-    475,
-    574,
-    494
+    542,
+    467,
+    571,
+    518
    ]
   },
   {
@@ -546,10 +658,10 @@
    "mass_g": 0.97,
    "subsystem": "mechanisms",
    "bbox_px": [
-    566,
-    440,
-    594,
-    479
+    567,
+    439,
+    591,
+    472
    ]
   },
   {
@@ -560,15 +672,14 @@
    "mass_g": 0.03,
    "subsystem": "mechanisms",
    "bbox_px": [
-    566,
-    476,
-    570,
-    478
+    567,
+    468,
+    572,
+    470
    ]
   }
  ],
  "hidden": [
-  "AVN-001",
   "AVN-002",
   "AVN-003",
   "AVN-004",
@@ -576,11 +687,12 @@
   "AVN-006",
   "AVN-007",
   "AVN-008",
+  "AVN-009-S",
+  "AVN-009-T",
+  "AVN-010",
   "CGE-001",
-  "CGE-002-LL",
-  "CGE-002-LR",
-  "CGE-002-UL",
-  "CGE-002-UR",
+  "CGE-002-A",
+  "CGE-002-B",
   "CGE-003-LL",
   "CGE-003-LR",
   "CGE-003-UL",
@@ -592,6 +704,15 @@
   "CGE-007-L",
   "CGE-007-R",
   "CGE-008",
+  "CGE-009-LL",
+  "CGE-009-LR",
+  "CGE-009-UL",
+  "CGE-009-UR",
+  "CGE-010-C",
+  "CGE-010-LL",
+  "CGE-010-LR",
+  "CGE-010-UL",
+  "CGE-010-UR",
   "E-HRN-01",
   "E-HRN-02",
   "E-HRN-03",
@@ -616,6 +737,10 @@
   "FIN-004-R",
   "FIN-006-L",
   "FIN-006-R",
+  "FIN-009-L",
+  "FIN-009-R",
+  "FIN-010-L",
+  "FIN-010-R",
   "GER-001-LL",
   "GER-001-LR",
   "GER-001-UL",
@@ -654,6 +779,10 @@
   "PRP-005-LR",
   "PRP-005-UL",
   "PRP-005-UR",
+  "PRP-006-LL",
+  "PRP-006-LR",
+  "PRP-006-UL",
+  "PRP-006-UR",
   "PWR-001",
   "PWR-002",
   "PWR-003"

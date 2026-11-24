@@ -7,8 +7,8 @@
  "scene": "studio",
  "engine": "CYCLES",
  "device": "GPU",
- "samples": 48,
- "render_s": 57.51,
+ "samples": 64,
+ "render_s": 30.49,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -17,17 +17,15 @@
   "ortho": false,
   "lens_mm": 50,
   "location_m": [
-   -1.254,
-   -1.0751,
-   1.2125
+   -1.28,
+   -1.0878,
+   1.2245
   ],
   "fit": [
    "WNG-001",
    "CGE-001",
-   "CGE-002-UR",
-   "CGE-002-UL",
-   "CGE-002-LR",
-   "CGE-002-LL",
+   "CGE-002-A",
+   "CGE-002-B",
    "PRP-001-UR",
    "PRP-002-UR",
    "PRP-001-UL",
@@ -49,100 +47,100 @@
   "sub": "Wing core and fairings ghosted"
  },
  "subject_px": [
-  308,
-  9,
-  1298,
-  839
+  351,
+  -4,
+  1299,
+  837
  ],
  "callouts": [
   {
    "item": "AVN-002",
-   "x": 761.0,
-   "y": 373.1,
+   "x": 825.5,
+   "y": 416.7,
    "title": "AVN-002",
    "text": "Flight controller Kakute F405",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0601,
-    -0.0025,
-    0.0369
+    0.0496,
+    -0.079,
+    0.0185
    ]
   },
   {
    "item": "PWR-001",
-   "x": 700.8,
-   "y": 425.0,
+   "x": 703.2,
+   "y": 400.7,
    "title": "PWR-001",
-   "text": "4S 2300 mAh pack",
+   "text": "4S 2800 mAh pack",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.0275,
-    -0.003,
-    0.0279
+    -0.0392,
+    -0.0071,
+    0.055
    ]
   },
   {
    "item": "CGE-008",
-   "x": 692.9,
-   "y": 441.7,
+   "x": 737.9,
+   "y": 460.3,
    "title": "CGE-008",
    "text": "Pack tray",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.0355,
-    0.0002,
-    0.0123
+    -0.0504,
+    -0.056,
+    0.0167
    ]
   },
   {
    "item": "PRP-003",
-   "x": 791.7,
-   "y": 368.8,
+   "x": 771.9,
+   "y": 371.7,
    "title": "PRP-003",
    "text": "4-in-1 ESC",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.103,
-    -0.005,
+    0.0752,
+    0.005,
     0.0194
    ]
   },
   {
    "item": "E-HRN-02",
-   "x": 559.7,
-   "y": 349.0,
+   "x": 566.0,
+   "y": 352.4,
    "title": "E-HRN-02",
    "text": "Phase leads to the motors",
    "detail": "bend >= 4 mm",
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.076,
-    0.1205,
-    0.0851
+    -0.0863,
+    0.1159,
+    0.0816
    ]
   },
   {
    "item": "WNG-002",
-   "x": 812.2,
-   "y": 429.7,
+   "x": 1168.2,
+   "y": 585.8,
    "title": "WNG-002",
    "text": "CF spar 12 x 10",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0559,
-    -0.066,
-    0.0029
+    0.055,
+    -0.4433,
+    -0.0003
    ]
   }
  ],
@@ -155,10 +153,10 @@
    "mass_g": 100.1,
    "subsystem": "wing",
    "bbox_px": [
-    379,
-    201,
+    390,
+    197,
     1249,
-    639
+    627
    ]
   },
   {
@@ -169,10 +167,10 @@
    "mass_g": 49.8,
    "subsystem": "wing",
    "bbox_px": [
-    417,
-    243,
-    1181,
-    603
+    427,
+    239,
+    1182,
+    592
    ]
   },
   {
@@ -180,13 +178,13 @@
    "role": "context",
    "name": "Spar plug (centre clamp)",
    "status": "MODELLED",
-   "mass_g": 1.2,
+   "mass_g": 1.42,
    "subsystem": "wing",
    "bbox_px": [
-    748,
-    396,
-    771,
-    413
+    755,
+    389,
+    778,
+    406
    ]
   },
   {
@@ -194,13 +192,13 @@
    "role": "context",
    "name": "Spar plug (right strut clamp)",
    "status": "MODELLED",
-   "mass_g": 1.2,
+   "mass_g": 1.42,
    "subsystem": "wing",
    "bbox_px": [
-    516,
-    290,
-    537,
-    305
+    525,
+    284,
+    546,
+    300
    ]
   },
   {
@@ -208,13 +206,13 @@
    "role": "context",
    "name": "Spar plug (left strut clamp)",
    "status": "MODELLED",
-   "mass_g": 1.2,
+   "mass_g": 1.42,
    "subsystem": "wing",
    "bbox_px": [
-    1014,
-    518,
-    1040,
-    537
+    1018,
+    509,
+    1043,
+    528
    ]
   },
   {
@@ -222,13 +220,13 @@
    "role": "context",
    "name": "Spar plug (right rib clamp)",
    "status": "MODELLED",
-   "mass_g": 1.2,
+   "mass_g": 1.42,
    "subsystem": "wing",
    "bbox_px": [
-    459,
-    263,
-    480,
-    279
+    469,
+    259,
+    490,
+    274
    ]
   },
   {
@@ -236,13 +234,13 @@
    "role": "context",
    "name": "Spar plug (left rib clamp)",
    "status": "MODELLED",
-   "mass_g": 1.2,
+   "mass_g": 1.42,
    "subsystem": "wing",
    "bbox_px": [
-    1092,
-    554,
-    1119,
-    574
+    1095,
+    544,
+    1121,
+    563
    ]
   },
   {
@@ -253,10 +251,10 @@
    "mass_g": 6.7,
    "subsystem": "wing",
    "bbox_px": [
-    574,
-    211,
-    844,
-    339
+    582,
+    207,
+    849,
+    333
    ]
   },
   {
@@ -267,38 +265,38 @@
    "mass_g": 6.7,
    "subsystem": "wing",
    "bbox_px": [
-    872,
-    337,
-    1184,
-    489
+    877,
+    331,
+    1185,
+    480
    ]
   },
   {
    "id": "WNG-007-R",
    "role": "context",
-   "name": "Elevon balance (D-187 v2, R): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
+   "name": "Elevon balance (D-187 v2, D-205, T-077 p8 R): 10.0 g lead strip 20 mm ahead of the hinge (10 x 0.83 mm x 106 mm; T-077 p8 flutter re-run) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
    "status": "MODELLED",
-   "mass_g": 16.1,
+   "mass_g": 10.5,
    "subsystem": "wing",
    "bbox_px": [
-    566,
-    242,
-    649,
-    281
+    574,
+    237,
+    657,
+    276
    ]
   },
   {
    "id": "WNG-007-L",
    "role": "context",
-   "name": "Elevon balance (D-187 v2, L): 15.6 g lead strip 20 mm ahead of the hinge + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
+   "name": "Elevon balance (D-187 v2, D-205, T-077 p8 L): 10.0 g lead strip 20 mm ahead of the hinge (10 x 0.83 mm x 106 mm; T-077 p8 flutter re-run) + 2 PETG/CF tabs 0.5 g (caps are separate parts WNG-008)",
    "status": "MODELLED",
-   "mass_g": 16.1,
+   "mass_g": 10.5,
    "subsystem": "wing",
    "bbox_px": [
-    1024,
-    442,
-    1130,
-    493
+    1028,
+    434,
+    1131,
+    484
    ]
   },
   {
@@ -306,13 +304,13 @@
    "role": "ghost",
    "name": "Lens cap + stop bosses (R, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 3.69,
    "subsystem": "wing",
    "bbox_px": [
-    545,
-    234,
-    660,
-    284
+    555,
+    229,
+    667,
+    279
    ]
   },
   {
@@ -320,13 +318,13 @@
    "role": "ghost",
    "name": "Lens cap + stop bosses (L, upper skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 3.69,
    "subsystem": "wing",
    "bbox_px": [
-    1005,
-    432,
-    1141,
-    499
+    1009,
+    425,
+    1143,
+    489
    ]
   },
   {
@@ -334,13 +332,13 @@
    "role": "ghost",
    "name": "Lens cap + stop bosses (R, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 3.72,
    "subsystem": "wing",
    "bbox_px": [
-    548,
-    242,
-    660,
-    298
+    557,
+    237,
+    667,
+    293
    ]
   },
   {
@@ -348,13 +346,13 @@
    "role": "ghost",
    "name": "Lens cap + stop bosses (L, lower skin): wall 0.6 mm, >= 0.5 mm clearance to the lead at the +-21 deg stop",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 3.72,
    "subsystem": "wing",
    "bbox_px": [
-    1005,
-    441,
-    1140,
-    513
+    1010,
+    433,
+    1142,
+    504
    ]
   },
   {
@@ -362,13 +360,13 @@
    "role": "context",
    "name": "Hinge damper rotor (R): sleeve + flange bonded on the elevon tip",
    "status": "MODELLED",
-   "mass_g": 0.5,
+   "mass_g": 0.47,
    "subsystem": "wing",
    "bbox_px": [
-    557,
-    221,
-    577,
-    236
+    566,
+    217,
+    586,
+    232
    ]
   },
   {
@@ -376,13 +374,13 @@
    "role": "context",
    "name": "Hinge damper rotor (L): sleeve + flange bonded on the elevon tip",
    "status": "MODELLED",
-   "mass_g": 0.5,
+   "mass_g": 0.47,
    "subsystem": "wing",
    "bbox_px": [
-    1146,
-    475,
-    1170,
-    494
+    1148,
+    466,
+    1171,
+    485
    ]
   },
   {
@@ -393,10 +391,10 @@
    "mass_g": 2.0,
    "subsystem": "wing",
    "bbox_px": [
-    556,
-    219,
-    577,
-    236
+    564,
+    215,
+    585,
+    232
    ]
   },
   {
@@ -407,38 +405,122 @@
    "mass_g": 2.0,
    "subsystem": "wing",
    "bbox_px": [
-    1147,
-    475,
-    1172,
+    1149,
+    466,
+    1173,
+    487
+   ]
+  },
+  {
+   "id": "WNG-011",
+   "role": "context",
+   "name": "Wing torsion skin: 1 ply 48 g/m2 glass at +-45 deg wet-laid on the core, closed over the leading edge and the cove face, y -0.40..+0.40, wet ply 0.054 mm (EST) drawn as a shell inside the core outline; openings as the core (slots, pockets, windows); mass = shell volume x 1.63 g/cm3 (88 g/m2 / 0.054 mm, T-071 l.24)",
+   "status": "MODELLED",
+   "mass_g": 26.7,
+   "subsystem": "wing",
+   "bbox_px": [
+    424,
+    212,
+    1200,
+    603
+   ]
+  },
+  {
+   "id": "WNG-012",
+   "role": "context",
+   "name": "Cove CF strip, section 6 x 0.5 mm = 3 mm2 (only the area is given, T-071 l.32; width, thickness and product -), y -0.40..+0.40, under the skin on the cove face; mass = volume x 1.55 g/cm3",
+   "status": "MODELLED",
+   "mass_g": 3.7,
+   "subsystem": "wing",
+   "bbox_px": [
+    547,
+    213,
+    1199,
     495
+   ]
+  },
+  {
+   "id": "WNG-014-R",
+   "role": "context",
+   "name": "Wing torsion skin plies 2-3 (R, T-077 p8, D-226 / AM-016): 2 more plies of 48 g/m2 glass at +-45 deg wet-laid over ply 1, |y| 0.052..0.400 (the torsion bay between the centre and fin bulkheads plus laps), closed over the LE and the cove face; drawn inside ply 1 (core machined smaller by the total); mass = shell volume x 1.63 g/cm3",
+   "status": "MODELLED",
+   "mass_g": 23.2,
+   "subsystem": "wing",
+   "bbox_px": [
+    424,
+    212,
+    803,
+    412
+   ]
+  },
+  {
+   "id": "WNG-014-L",
+   "role": "context",
+   "name": "Wing torsion skin plies 2-3 (L, T-077 p8, D-226 / AM-016): 2 more plies of 48 g/m2 glass at +-45 deg wet-laid over ply 1, |y| 0.052..0.400 (the torsion bay between the centre and fin bulkheads plus laps), closed over the LE and the cove face; drawn inside ply 1 (core machined smaller by the total); mass = shell volume x 1.63 g/cm3",
+   "status": "MODELLED",
+   "mass_g": 23.2,
+   "subsystem": "wing",
+   "bbox_px": [
+    770,
+    358,
+    1200,
+    603
+   ]
+  },
+  {
+   "id": "WNG-013-R",
+   "role": "context",
+   "name": "Centre bulkhead (R, T-077 p8, D-226 s3): 0.5 mm CF sheet (waterjet, BOM T2) cut to the cell inside the 3 skin plies (LE to the cove), y 60.0..60.5 mm, spar hole 12 mm (flox), servo-lead slot and (left) I2C hole; 2-ply 1080 tape lap 8 mm on the skin round the edge; CGE-006 flange bonded on its inboard face. Mass = plate 2.55 g (area x 0.5 mm x 1.6 g/cm3) + tape lap 1.07 g + flange bond line 0.37 g (EST)",
+   "status": "MODELLED",
+   "mass_g": 4.0,
+   "subsystem": "wing",
+   "bbox_px": [
+    677,
+    319,
+    797,
+    409
+   ]
+  },
+  {
+   "id": "WNG-013-L",
+   "role": "context",
+   "name": "Centre bulkhead (L, T-077 p8, D-226 s3): 0.5 mm CF sheet (waterjet, BOM T2) cut to the cell inside the 3 skin plies (LE to the cove), y -60.0..60.5 mm, spar hole 12 mm (flox), servo-lead slot and (left) I2C hole; 2-ply 1080 tape lap 8 mm on the skin round the edge; CGE-006 flange bonded on its inboard face. Mass = plate 2.55 g (area x 0.5 mm x 1.6 g/cm3) + tape lap 1.07 g + flange bond line 0.37 g (EST)",
+   "status": "MODELLED",
+   "mass_g": 4.0,
+   "subsystem": "wing",
+   "bbox_px": [
+    776,
+    361,
+    894,
+    456
    ]
   },
   {
    "id": "FIN-001-R",
    "role": "context",
-   "name": "Fin tube 16x14 x 0.36 m (R)",
+   "name": "Fin tube 16x14 x 0.3874 m (R; T-084: 2 x FIN_H, was 0.36 m)",
    "status": "MODELLED",
-   "mass_g": 27.1,
+   "mass_g": 29.2,
    "subsystem": "fins",
    "bbox_px": [
-    605,
-    25,
-    637,
-    323
+    613,
+    11,
+    644,
+    328
    ]
   },
   {
    "id": "FIN-001-L",
    "role": "context",
-   "name": "Fin tube 16x14 x 0.36 m (L)",
+   "name": "Fin tube 16x14 x 0.3874 m (L; T-084: 2 x FIN_H, was 0.36 m)",
    "status": "MODELLED",
-   "mass_g": 27.1,
+   "mass_g": 29.2,
    "subsystem": "fins",
    "bbox_px": [
-    1209,
-    264,
-    1275,
-    591
+    1208,
+    246,
+    1277,
+    592
    ]
   },
   {
@@ -446,13 +528,13 @@
    "role": "context",
    "name": "Fin rib tube 14x12 (R)",
    "status": "MODELLED",
-   "mass_g": 14.8,
+   "mass_g": 26.0,
    "subsystem": "fins",
    "bbox_px": [
-    472,
-    177,
-    622,
-    273
+    476,
+    169,
+    631,
+    272
    ]
   },
   {
@@ -460,153 +542,237 @@
    "role": "context",
    "name": "Fin rib tube 14x12 (L)",
    "status": "MODELLED",
-   "mass_g": 14.8,
+   "mass_g": 26.0,
    "subsystem": "fins",
    "bbox_px": [
     1105,
-    433,
-    1243,
-    565
+    421,
+    1251,
+    561
    ]
   },
   {
    "id": "FIN-003-R",
    "role": "context",
-   "name": "Fin root block (R)",
+   "name": "Fin root fitting (R; T-083b, replaces the PETG root block): machined 6061-T6, ring OD 18.2 / bore 16.2 x 38 mm on the fin tube, plug OD 22.8 / ID 20.8 x 31 mm bonded inside the 25x23 rib end, end plate 2.0 mm x 24.6 mm diameter notched by the fin tube; mass = drawn volume (voxel 0.2 mm) x 2.70 g/cm3",
    "status": "MODELLED",
-   "mass_g": 3.2,
+   "mass_g": 12.04,
    "subsystem": "fins",
    "bbox_px": [
-    591,
-    151,
-    634,
-    210
+    614,
+    158,
+    638,
+    196
    ]
   },
   {
    "id": "FIN-003-L",
    "role": "context",
-   "name": "Fin root block (L)",
+   "name": "Fin root fitting (L; T-083b, replaces the PETG root block): machined 6061-T6, ring OD 18.2 / bore 16.2 x 38 mm on the fin tube, plug OD 22.8 / ID 20.8 x 31 mm bonded inside the 25x23 rib end, end plate 2.0 mm x 24.6 mm diameter notched by the fin tube; mass = drawn volume (voxel 0.2 mm) x 2.70 g/cm3",
    "status": "MODELLED",
-   "mass_g": 3.2,
+   "mass_g": 12.04,
    "subsystem": "fins",
    "bbox_px": [
-    1209,
-    402,
-    1257,
-    469
+    1227,
+    406,
+    1253,
+    450
    ]
   },
   {
    "id": "FIN-004-R",
    "role": "ghost",
-   "name": "Fin fairing 3 mm XPS + tape (R)",
+   "name": "Fin fairing 3 mm XPS + tape (R; T-084: 2 x FIN_H tall, mass scaled from the listed 8.4 g at 0.36 m by height, EST)",
    "status": "MODELLED",
-   "mass_g": 8.4,
+   "mass_g": 9.04,
    "subsystem": "fins",
    "bbox_px": [
-    540,
-    31,
-    625,
-    363
+    548,
+    18,
+    633,
+    367
    ]
   },
   {
    "id": "FIN-004-L",
    "role": "ghost",
-   "name": "Fin fairing 3 mm XPS + tape (L)",
+   "name": "Fin fairing 3 mm XPS + tape (L; T-084: 2 x FIN_H tall, mass scaled from the listed 8.4 g at 0.36 m by height, EST)",
    "status": "MODELLED",
-   "mass_g": 8.4,
+   "mass_g": 9.04,
    "subsystem": "fins",
    "bbox_px": [
     1159,
-    274,
-    1261,
+    255,
+    1263,
     645
    ]
   },
   {
    "id": "FIN-006-R",
    "role": "ghost",
-   "name": "Rib fairing, upper (R): XPS + tape blister over the 14 mm rib where the S5010 skin is thinner than the tube (D-194); mass EST",
+   "name": "Rib fairing, upper (R, T-077 p8): XPS + tape blister over the 25 mm rib and its strap, half-round R 13.9 mm about the rib axis, x 70.5..176.2 (stops 7.5 mm ahead of the hinge, clear of the damper notch), trimmed to the skin; mass EST",
    "status": "MODELLED",
-   "mass_g": 0.3,
+   "mass_g": 0.6,
    "subsystem": "fins",
    "bbox_px": [
-    513,
-    214,
-    558,
-    238
+    479,
+    208,
+    564,
+    253
    ]
   },
   {
    "id": "FIN-006-L",
    "role": "ghost",
-   "name": "Rib fairing, upper (L): XPS + tape blister over the 14 mm rib where the S5010 skin is thinner than the tube (D-194); mass EST",
+   "name": "Rib fairing, upper (L, T-077 p8): XPS + tape blister over the 25 mm rib and its strap, half-round R 13.9 mm about the rib axis, x 70.5..176.2 (stops 7.5 mm ahead of the hinge, clear of the damper notch), trimmed to the skin; mass EST",
    "status": "MODELLED",
-   "mass_g": 0.3,
+   "mass_g": 0.6,
    "subsystem": "fins",
    "bbox_px": [
-    1145,
-    485,
-    1188,
-    518
+    1112,
+    477,
+    1193,
+    541
+   ]
+  },
+  {
+   "id": "FIN-010-R",
+   "role": "context",
+   "name": "Rib fairing, lower (R, T-077 p8): XPS + tape blister under the 25 mm rib (it stands 0.9..4 mm proud of the lower skin), half-round R 13.9 mm, x 70.5..176.2, trimmed to the skin; mass EST",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "subsystem": "fins",
+   "bbox_px": [
+    480,
+    224,
+    562,
+    273
+   ]
+  },
+  {
+   "id": "FIN-010-L",
+   "role": "context",
+   "name": "Rib fairing, lower (L, T-077 p8): XPS + tape blister under the 25 mm rib (it stands 0.9..4 mm proud of the lower skin), half-round R 13.9 mm, x 70.5..176.2, trimmed to the skin; mass EST",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "subsystem": "fins",
+   "bbox_px": [
+    1109,
+    493,
+    1189,
+    563
+   ]
+  },
+  {
+   "id": "FIN-009-R",
+   "role": "context",
+   "name": "Fin node in-plane plates (R, T-077 p8, D-226 s3): two 0.5 mm CF sheet plates (waterjet, BOM T2) under the upper and lower skin plies, x 58..168, |y - 383| <= 20 mm, bent to the airfoil, notched round the rib; plus the two rib straps (undrawn laminate: 4 plies 0/90 1080 over the rib top and bottom, 8 mm laps on the skin, x 70.5..176). Mass = plates 5.09 (notch EST) + straps 4.08 g (EST)",
+   "status": "MODELLED",
+   "mass_g": 9.2,
+   "subsystem": "fins",
+   "bbox_px": [
+    461,
+    215,
+    563,
+    282
+   ]
+  },
+  {
+   "id": "FIN-009-L",
+   "role": "context",
+   "name": "Fin node in-plane plates (L, T-077 p8, D-226 s3): two 0.5 mm CF sheet plates (waterjet, BOM T2) under the upper and lower skin plies, x 58..168, |y - 383| <= 20 mm, bent to the airfoil, notched round the rib; plus the two rib straps (undrawn laminate: 4 plies 0/90 1080 over the rib top and bottom, 8 mm laps on the skin, x 70.5..176). Mass = plates 5.09 (notch EST) + straps 4.08 g (EST)",
+   "status": "MODELLED",
+   "mass_g": 9.2,
+   "subsystem": "fins",
+   "bbox_px": [
+    1089,
+    484,
+    1194,
+    575
    ]
   },
   {
    "id": "FIN-005-R",
    "role": "context",
-   "name": "Rib saddle on spar (R)",
+   "name": "Fin node bulkheads (R, T-077 p8, D-226 s3; replaces the printed rib saddle): two 0.5 mm CF sheet bulkheads (waterjet, BOM T2) at |y| 369.5..370.0 and 396.0..396.5 mm (0.5 mm from the 25 mm rib flanks), cut to the cell inside the 3 skin plies from the LE to x 176, spar holes 12 mm (flox), slotted into the core; rib bonded between them by flox fillets (12 mm wide per flank, EST) over x 70.5..176; 2-ply 1080 tape laps 8 mm on both skins. Mass = plates 5.02 + tape laps 2.07 + flox 2.91 g (EST)",
    "status": "MODELLED",
-   "mass_g": 1.0,
+   "mass_g": 10.0,
    "subsystem": "fins",
    "bbox_px": [
-    441,
-    248,
-    498,
-    291
+    427,
+    215,
+    564,
+    299
    ]
   },
   {
    "id": "FIN-005-L",
    "role": "context",
-   "name": "Rib saddle on spar (L)",
+   "name": "Fin node bulkheads (L, T-077 p8, D-226 s3; replaces the printed rib saddle): two 0.5 mm CF sheet bulkheads (waterjet, BOM T2) at |y| 369.5..370.0 and 396.0..396.5 mm (0.5 mm from the 25 mm rib flanks), cut to the cell inside the 3 skin plies from the LE to x 176, spar holes 12 mm (flox), slotted into the core; rib bonded between them by flox fillets (12 mm wide per flank, EST) over x 70.5..176; 2-ply 1080 tape laps 8 mm on both skins. Mass = plates 5.02 + tape laps 2.07 + flox 2.91 g (EST)",
    "status": "MODELLED",
-   "mass_g": 1.0,
+   "mass_g": 10.0,
    "subsystem": "fins",
    "bbox_px": [
-    1069,
-    533,
-    1142,
-    589
+    1060,
+    484,
+    1192,
+    602
    ]
   },
   {
    "id": "CGE-001",
    "role": "context",
-   "name": "Hub (printed PETG frame, D-193: bridge sleeve, 4 arm sockets 25 mm, 2 strut sockets, tray flange; 2.0 mm arm-socket mouth walls, 1.2 mm sleeve (D-196), 0.8 mm webs, mass = drawn volume x 1.27)",
+   "name": "Hub (machined 6061-T6, D-220 / D-221 / D-222: two OCTAGONAL sleeves 16 mm across flats, 1.0 mm wall at the flats, over s +-32 mm of both arm tubes, 38.5 x 20 x 20 mm centre block on the bridge axis to the tray face, 3 mm edge radii, internal radii 1.0 / 0.9 mm at the junctions (OCC mesh, hub_body.py), 0.5 mm sleeve-mouth and lead-exit chamfers, 2 strut sockets, tray flange; hub pockets T-077 p4: block aft of x +15.5 and the 30 mm bond collar (D-220) turned to a cylinder R 9.25 mm about the bridge axis (wall 1.25 mm round the 16 mm bore); mass = drawn volume x 2.70 g/cm3)",
    "status": "MODELLED",
-   "mass_g": 17.5,
+   "mass_g": 43.3,
    "subsystem": "cage",
    "bbox_px": [
-    618,
-    420,
-    727,
-    526
+    637,
+    432,
+    729,
+    502
    ]
   },
   {
-   "id": "CGE-002-UR",
+   "id": "CGE-002-A",
    "role": "ghost",
-   "name": "Arm 12x10 x 0.245 (UR)",
+   "name": "Arm tube A 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub (D-202; UR + LL)",
    "status": "MODELLED",
-   "mass_g": 13.5,
+   "mass_g": 30.6,
    "subsystem": "cage",
    "bbox_px": [
-    463,
+    467,
     238,
-    648,
-    451
+    870,
+    706
+   ]
+  },
+  {
+   "id": "CGE-002-B",
+   "role": "ghost",
+   "name": "Arm tube B 12x10 x 0.5525 m, ONE continuous tube from motor cup to motor cup through the hub (D-202; LR + UL)",
+   "status": "MODELLED",
+   "mass_g": 30.6,
+   "subsystem": "cage",
+   "bbox_px": [
+    504,
+    407,
+    886,
+    509
+   ]
+  },
+  {
+   "id": "CGE-009-UR",
+   "role": "context",
+   "name": "Doubler 14x12 x 36 mm (UR), carbon tube sleeve bonded over the arm tube at s 11..47 mm 15 mm past the sleeve end, outer 5 mm tapered (D-202, D-222 P1); mass = revolved volume x 1.6 g/cm3 (STRUCTURES CF basis)",
+   "status": "MODELLED",
+   "mass_g": 2.01,
+   "subsystem": "cage",
+   "bbox_px": [
+    628,
+    426,
+    665,
+    466
    ]
   },
   {
@@ -614,27 +780,41 @@
    "role": "context",
    "name": "Motor cup (UR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "status": "MODELLED",
-   "mass_g": 4.3,
+   "mass_g": 8.96,
    "subsystem": "cage",
    "bbox_px": [
-    441,
-    222,
-    494,
-    270
+    442,
+    217,
+    496,
+    268
    ]
   },
   {
-   "id": "CGE-002-UL",
-   "role": "ghost",
-   "name": "Arm 12x10 x 0.245 (UL)",
+   "id": "CGE-010-UR",
+   "role": "context",
+   "name": "Pin 3 mm carbon rod x 15 mm (UR) through the arm tube and its sleeve at s +8 mm (D-202)",
    "status": "MODELLED",
-   "mass_g": 13.5,
+   "mass_g": 0.17,
    "subsystem": "cage",
    "bbox_px": [
-    681,
-    418,
-    878,
-    475
+    654,
+    458,
+    668,
+    469
+   ]
+  },
+  {
+   "id": "CGE-009-UL",
+   "role": "context",
+   "name": "Doubler 14x12 x 36 mm (UL), carbon tube sleeve bonded over the arm tube at s 11..47 mm 15 mm past the sleeve end, outer 5 mm tapered (D-202, D-222 P1); mass = revolved volume x 1.6 g/cm3 (STRUCTURES CF basis)",
+   "status": "MODELLED",
+   "mass_g": 2.01,
+   "subsystem": "cage",
+   "bbox_px": [
+    677,
+    449,
+    714,
+    469
    ]
   },
   {
@@ -642,27 +822,41 @@
    "role": "context",
    "name": "Motor cup (UL; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "status": "MODELLED",
-   "mass_g": 4.3,
+   "mass_g": 8.96,
    "subsystem": "cage",
    "bbox_px": [
-    843,
-    413,
-    892,
-    452
+    852,
+    402,
+    905,
+    441
    ]
   },
   {
-   "id": "CGE-002-LR",
-   "role": "ghost",
-   "name": "Arm 12x10 x 0.245 (LR)",
+   "id": "CGE-010-UL",
+   "role": "context",
+   "name": "Pin 3 mm carbon rod x 15 mm (UL) through the arm tube and its sleeve at s -8 mm (D-202)",
    "status": "MODELLED",
-   "mass_g": 13.5,
+   "mass_g": 0.16,
    "subsystem": "cage",
    "bbox_px": [
-    492,
-    472,
-    650,
-    519
+    675,
+    457,
+    688,
+    467
+   ]
+  },
+  {
+   "id": "CGE-009-LR",
+   "role": "context",
+   "name": "Doubler 14x12 x 36 mm (LR), carbon tube sleeve bonded over the arm tube at s 11..47 mm 15 mm past the sleeve end, outer 5 mm tapered (D-202, D-222 P1); mass = revolved volume x 1.6 g/cm3 (STRUCTURES CF basis)",
+   "status": "MODELLED",
+   "mass_g": 2.01,
+   "subsystem": "cage",
+   "bbox_px": [
+    640,
+    457,
+    675,
+    477
    ]
   },
   {
@@ -670,27 +864,41 @@
    "role": "context",
    "name": "Motor cup (LR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "status": "MODELLED",
-   "mass_g": 4.3,
+   "mass_g": 8.96,
    "subsystem": "cage",
    "bbox_px": [
-    475,
-    497,
-    519,
-    533
+    485,
+    487,
+    530,
+    523
    ]
   },
   {
-   "id": "CGE-002-LL",
-   "role": "ghost",
-   "name": "Arm 12x10 x 0.245 (LL)",
+   "id": "CGE-010-LR",
+   "role": "context",
+   "name": "Pin 3 mm carbon rod x 15 mm (LR) through the arm tube and its sleeve at s +8 mm (D-202)",
    "status": "MODELLED",
-   "mass_g": 13.5,
+   "mass_g": 0.16,
    "subsystem": "cage",
    "bbox_px": [
-    683,
-    495,
-    870,
-    712
+    664,
+    459,
+    677,
+    470
+   ]
+  },
+  {
+   "id": "CGE-009-LL",
+   "role": "context",
+   "name": "Doubler 14x12 x 36 mm (LL), carbon tube sleeve bonded over the arm tube at s 11..47 mm 15 mm past the sleeve end, outer 5 mm tapered (D-202, D-222 P1); mass = revolved volume x 1.6 g/cm3 (STRUCTURES CF basis)",
+   "status": "MODELLED",
+   "mass_g": 2.01,
+   "subsystem": "cage",
+   "bbox_px": [
+    669,
+    474,
+    706,
+    514
    ]
   },
   {
@@ -698,152 +906,194 @@
    "role": "context",
    "name": "Motor cup (LL; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "status": "MODELLED",
-   "mass_g": 4.3,
+   "mass_g": 8.96,
    "subsystem": "cage",
    "bbox_px": [
-    839,
+    840,
+    674,
+    886,
+    731
+   ]
+  },
+  {
+   "id": "CGE-010-LL",
+   "role": "context",
+   "name": "Pin 3 mm carbon rod x 15 mm (LL) through the arm tube and its sleeve at s -8 mm (D-202)",
+   "status": "MODELLED",
+   "mass_g": 0.17,
+   "subsystem": "cage",
+   "bbox_px": [
+    666,
+    471,
     679,
-    878,
-    732
+    482
+   ]
+  },
+  {
+   "id": "CGE-010-C",
+   "role": "context",
+   "name": "Crossing pin 3 mm carbon rod x 39 mm through both arm tubes and the hub block (D-202)",
+   "status": "MODELLED",
+   "mass_g": 0.44,
+   "subsystem": "cage",
+   "bbox_px": [
+    660,
+    453,
+    690,
+    476
    ]
   },
   {
    "id": "CGE-004",
    "role": "context",
-   "name": "Bridge 12x10",
+   "name": "Bridge 16x14 (D-206, torsion; axis z -2 mm; D-202: starts 15 mm aft of the hub axis, bored into the boss)",
    "status": "MODELLED",
-   "mass_g": 8.5,
+   "mass_g": 8.6,
    "subsystem": "cage",
    "bbox_px": [
-    642,
-    402,
-    760,
-    493
+    676,
+    396,
+    767,
+    468
    ]
   },
   {
    "id": "CGE-005-R",
    "role": "context",
-   "name": "V strut 6x4.5 (R)",
+   "name": "V strut 8x6 (R), T-077 p7 (D-225 resize; was 6x4.0, D-219)",
    "status": "MODELLED",
-   "mass_g": 6.5,
+   "mass_g": 10.2,
    "subsystem": "cage",
    "bbox_px": [
-    527,
-    304,
-    656,
-    461
+    536,
+    298,
+    659,
+    459
    ]
   },
   {
    "id": "CGE-005-L",
    "role": "context",
-   "name": "V strut 6x4.5 (L)",
+   "name": "V strut 8x6 (L), T-077 p7 (D-225 resize; was 6x4.0, D-219)",
    "status": "MODELLED",
-   "mass_g": 6.5,
+   "mass_g": 10.2,
    "subsystem": "cage",
    "bbox_px": [
-    691,
-    474,
-    1007,
-    530
+    692,
+    469,
+    1011,
+    522
    ]
   },
   {
    "id": "CGE-006",
    "role": "context",
-   "name": "Bridge saddle on spar",
+   "name": "Centre node (T-077 p8, D-226 s3; replaces the printed bridge saddle and the audit T-fitting + 6061 tube + flanges with ONE machined 6061-T6 part, Tormach): octagonal sleeve apothem 7.3 mm (wall 1.15 at the flats) over |y| <= 59.8 mm on the spar, bore 12.3 mm (0.15 mm slip fit, not bonded), end flanges 1.0 mm thick (x 20..120, |z| <= 8, inside the skin) bonded on the centre bulkheads, bridge socket boss OD 20.1, socket 16 mm from x 27.5 to 51.5 (bridge bonded); mass = drawn volume (voxel 0.2 mm) x 2.70 g/cm3",
    "status": "MODELLED",
-   "mass_g": 2.0,
+   "mass_g": 36.3,
    "subsystem": "cage",
    "bbox_px": [
-    732,
-    389,
-    779,
-    430
+    691,
+    341,
+    854,
+    447
    ]
   },
   {
    "id": "CGE-007-R",
    "role": "context",
-   "name": "Strut clamp on spar (R)",
+   "name": "Strut clamp on spar (R), R4 resized T-077 p7: ring OD 21 x 21, socket OD 12.5 / bore 8 x 27, fillet R 4.0 (mass from printed_mass.json)",
    "status": "MODELLED",
-   "mass_g": 1.5,
+   "mass_g": 6.34,
    "subsystem": "cage",
    "bbox_px": [
-    508,
-    286,
-    543,
-    323
+    521,
+    279,
+    555,
+    320
    ]
   },
   {
    "id": "CGE-007-L",
    "role": "context",
-   "name": "Strut clamp on spar (L)",
+   "name": "Strut clamp on spar (L), R4 resized T-077 p7: ring OD 21 x 21, socket OD 12.5 / bore 8 x 27, fillet R 4.0 (mass from printed_mass.json)",
    "status": "MODELLED",
-   "mass_g": 1.5,
+   "mass_g": 6.34,
    "subsystem": "cage",
    "bbox_px": [
-    983,
-    514,
-    1041,
-    547
+    979,
+    503,
+    1047,
+    534
    ]
   },
   {
    "id": "CGE-008",
    "role": "context",
-   "name": "Pack tray (66 x 109 mm plate, integral lips at the trim ends, lead notch; 4.0 g at 44 mm scaled by plate area + longer walls, EST)",
+   "name": "Pack tray R1 (T-077: 1.2 mm windowed plate on a 2.0 mm root pad + ribs, 2.0 mm end walls with windows, two 40 x 2.0 mm tabs per lip; mass = drawn solid volume x 1.27, T-067 basis M applied by printed_mass.json when present)",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 13.3,
    "subsystem": "cage",
    "bbox_px": [
-    641,
-    387,
-    779,
-    475
+    642,
+    381,
+    773,
+    472
    ]
   },
   {
    "id": "PRP-001-UR",
    "role": "context",
-   "name": "Motor MN2212 V2.0 KV780 (UR)",
+   "name": "Motor SunnySky X2216 V3 880KV short shaft (UR), 67.5 g with 100 mm leads (EST that the page mass includes them)",
    "status": "MODELLED",
-   "mass_g": 65.0,
+   "mass_g": 67.5,
    "subsystem": "propulsion",
    "bbox_px": [
-    430,
-    228,
-    478,
+    429,
+    231,
+    475,
+    269
+   ]
+  },
+  {
+   "id": "PRP-006-UR",
+   "role": "context",
+   "name": "X-mount, SunnySky, supplied with the motor (UR): 34 x 34 cross, 3 mm; 4 x M3 countersunk to the motor, 4 x M3x14 + nyloc to the cup; mass CALC (aluminium EST)",
+   "status": "MODELLED",
+   "mass_g": 9.2,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    443,
+    221,
+    488,
     268
    ]
   },
   {
    "id": "PRP-004-UR",
    "role": "context",
-   "name": "Prop adapter, T-Motor (Phi19 x 4.5 flange + M5 stud) (UR); mass CALC 6061, EST",
+   "name": "Prop adapter, SunnySky (Phi17 x 4 flange + M5 stud 18.5, 3 x M2 on Phi 12) + prop washer Phi 14.8 x 2 (UR); supplied with the motor; mass CALC 6061, EST",
    "status": "MODELLED",
-   "mass_g": 4.3,
+   "mass_g": 3.6,
    "subsystem": "propulsion",
    "bbox_px": [
     425,
-    243,
-    452,
-    265
+    245,
+    450,
+    267
    ]
   },
   {
    "id": "PRP-005-UR",
    "role": "context",
-   "name": "Spinner nut, T-Motor (Phi12 x 16, M5) (UR); mass CALC 6061, EST",
+   "name": "M5 nyloc nut ISO 10511 (s 8, m 5) on the adapter stud (UR); replaces the supplied bullet nut (size not published); mass CALC steel",
    "status": "MODELLED",
-   "mass_g": 2.9,
+   "mass_g": 1.4,
    "subsystem": "propulsion",
    "bbox_px": [
-    421,
-    250,
-    440,
+    425,
+    254,
+    436,
     265
    ]
   },
@@ -856,51 +1106,65 @@
    "subsystem": "propulsion",
    "bbox_px": [
     351,
-    162,
-    524,
-    350
+    164,
+    522,
+    351
    ]
   },
   {
    "id": "PRP-001-UL",
    "role": "context",
-   "name": "Motor MN2212 V2.0 KV780 (UL)",
+   "name": "Motor SunnySky X2216 V3 880KV short shaft (UL), 67.5 g with 100 mm leads (EST that the page mass includes them)",
    "status": "MODELLED",
-   "mass_g": 65.0,
+   "mass_g": 67.5,
    "subsystem": "propulsion",
    "bbox_px": [
-    836,
-    418,
-    886,
-    471
+    840,
+    415,
+    888,
+    467
+   ]
+  },
+  {
+   "id": "PRP-006-UL",
+   "role": "context",
+   "name": "X-mount, SunnySky, supplied with the motor (UL): 34 x 34 cross, 3 mm; 4 x M3 countersunk to the motor, 4 x M3x14 + nyloc to the cup; mass CALC (aluminium EST)",
+   "status": "MODELLED",
+   "mass_g": 9.2,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    850,
+    401,
+    901,
+    445
    ]
   },
   {
    "id": "PRP-004-UL",
    "role": "context",
-   "name": "Prop adapter, T-Motor (Phi19 x 4.5 flange + M5 stud) (UL); mass CALC 6061, EST",
+   "name": "Prop adapter, SunnySky (Phi17 x 4 flange + M5 stud 18.5, 3 x M2 on Phi 12) + prop washer Phi 14.8 x 2 (UL); supplied with the motor; mass CALC 6061, EST",
    "status": "MODELLED",
-   "mass_g": 4.3,
+   "mass_g": 3.6,
    "subsystem": "propulsion",
    "bbox_px": [
-    835,
-    450,
-    862,
-    481
+    839,
+    447,
+    865,
+    477
    ]
   },
   {
    "id": "PRP-005-UL",
    "role": "context",
-   "name": "Spinner nut, T-Motor (Phi12 x 16, M5) (UL); mass CALC 6061, EST",
+   "name": "M5 nyloc nut ISO 10511 (s 8, m 5) on the adapter stud (UL); replaces the supplied bullet nut (size not published); mass CALC steel",
    "status": "MODELLED",
-   "mass_g": 2.9,
+   "mass_g": 1.4,
    "subsystem": "propulsion",
    "bbox_px": [
-    831,
-    465,
-    850,
-    486
+    840,
+    464,
+    852,
+    476
    ]
   },
   {
@@ -911,52 +1175,66 @@
    "mass_g": 11.06,
    "subsystem": "propulsion",
    "bbox_px": [
-    750,
-    446,
-    952,
-    490
+    756,
+    442,
+    955,
+    485
    ]
   },
   {
    "id": "PRP-001-LR",
    "role": "context",
-   "name": "Motor MN2212 V2.0 KV780 (LR)",
+   "name": "Motor SunnySky X2216 V3 880KV short shaft (LR), 67.5 g with 100 mm leads (EST that the page mass includes them)",
    "status": "MODELLED",
-   "mass_g": 65.0,
+   "mass_g": 67.5,
    "subsystem": "propulsion",
    "bbox_px": [
-    457,
-    502,
-    502,
-    535
+    463,
+    492,
+    507,
+    526
+   ]
+  },
+  {
+   "id": "PRP-006-LR",
+   "role": "context",
+   "name": "X-mount, SunnySky, supplied with the motor (LR): 34 x 34 cross, 3 mm; 4 x M3 countersunk to the motor, 4 x M3x14 + nyloc to the cup; mass CALC (aluminium EST)",
+   "status": "MODELLED",
+   "mass_g": 9.2,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    484,
+    488,
+    519,
+    522
    ]
   },
   {
    "id": "PRP-004-LR",
    "role": "context",
-   "name": "Prop adapter, T-Motor (Phi19 x 4.5 flange + M5 stud) (LR); mass CALC 6061, EST",
+   "name": "Prop adapter, SunnySky (Phi17 x 4 flange + M5 stud 18.5, 3 x M2 on Phi 12) + prop washer Phi 14.8 x 2 (LR); supplied with the motor; mass CALC 6061, EST",
    "status": "MODELLED",
-   "mass_g": 4.3,
+   "mass_g": 3.6,
    "subsystem": "propulsion",
    "bbox_px": [
-    444,
-    512,
-    473,
-    531
+    451,
+    504,
+    477,
+    523
    ]
   },
   {
    "id": "PRP-005-LR",
    "role": "context",
-   "name": "Spinner nut, T-Motor (Phi12 x 16, M5) (LR); mass CALC 6061, EST",
+   "name": "M5 nyloc nut ISO 10511 (s 8, m 5) on the adapter stud (LR); replaces the supplied bullet nut (size not published); mass CALC steel",
    "status": "MODELLED",
-   "mass_g": 2.9,
+   "mass_g": 1.4,
    "subsystem": "propulsion",
    "bbox_px": [
-    440,
-    518,
-    458,
-    531
+    452,
+    511,
+    462,
+    522
    ]
   },
   {
@@ -967,52 +1245,66 @@
    "mass_g": 11.06,
    "subsystem": "propulsion",
    "bbox_px": [
-    396,
-    507,
-    525,
-    541
+    403,
+    498,
+    531,
+    532
    ]
   },
   {
    "id": "PRP-001-LL",
    "role": "context",
-   "name": "Motor MN2212 V2.0 KV780 (LL)",
+   "name": "Motor SunnySky X2216 V3 880KV short shaft (LL), 67.5 g with 100 mm leads (EST that the page mass includes them)",
    "status": "MODELLED",
-   "mass_g": 65.0,
+   "mass_g": 67.5,
    "subsystem": "propulsion",
    "bbox_px": [
-    824,
-    699,
-    873,
-    747
+    817,
+    700,
+    864,
+    746
+   ]
+  },
+  {
+   "id": "PRP-006-LL",
+   "role": "context",
+   "name": "X-mount, SunnySky, supplied with the motor (LL): 34 x 34 cross, 3 mm; 4 x M3 countersunk to the motor, 4 x M3x14 + nyloc to the cup; mass CALC (aluminium EST)",
+   "status": "MODELLED",
+   "mass_g": 9.2,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    836,
+    688,
+    877,
+    729
    ]
   },
   {
    "id": "PRP-004-LL",
    "role": "context",
-   "name": "Prop adapter, T-Motor (Phi19 x 4.5 flange + M5 stud) (LL); mass CALC 6061, EST",
+   "name": "Prop adapter, SunnySky (Phi17 x 4 flange + M5 stud 18.5, 3 x M2 on Phi 12) + prop washer Phi 14.8 x 2 (LL); supplied with the motor; mass CALC 6061, EST",
    "status": "MODELLED",
-   "mass_g": 4.3,
+   "mass_g": 3.6,
    "subsystem": "propulsion",
    "bbox_px": [
-    814,
-    725,
-    844,
-    753
+    808,
+    727,
+    835,
+    752
    ]
   },
   {
    "id": "PRP-005-LL",
    "role": "context",
-   "name": "Spinner nut, T-Motor (Phi12 x 16, M5) (LL); mass CALC 6061, EST",
+   "name": "M5 nyloc nut ISO 10511 (s 8, m 5) on the adapter stud (LL); replaces the supplied bullet nut (size not published); mass CALC steel",
    "status": "MODELLED",
-   "mass_g": 2.9,
+   "mass_g": 1.4,
    "subsystem": "propulsion",
    "bbox_px": [
-    810,
-    739,
-    829,
-    757
+    808,
+    740,
+    819,
+    752
    ]
   },
   {
@@ -1023,10 +1315,10 @@
    "mass_g": 11.06,
    "subsystem": "propulsion",
    "bbox_px": [
-    742,
+    737,
     644,
-    914,
-    839
+    907,
+    837
    ]
   },
   {
@@ -1037,24 +1329,24 @@
    "mass_g": 20.0,
    "subsystem": "propulsion",
    "bbox_px": [
-    759,
-    355,
-    811,
-    388
+    756,
+    356,
+    808,
+    389
    ]
   },
   {
    "id": "PWR-001",
    "role": "context",
-   "name": "Pack Tattu 2300 mAh 4S 75C",
+   "name": "Pack RDQ Series 2800 mAh 4S 100C XT60 (107 x 33 x 46 mm, 270 g, T-077)",
    "status": "MODELLED",
    "mass_g": 270.0,
    "subsystem": "power",
    "bbox_px": [
-    654,
+    648,
     343,
-    768,
-    461
+    762,
+    462
    ]
   },
   {
@@ -1065,38 +1357,38 @@
    "mass_g": 3.5,
    "subsystem": "power",
    "bbox_px": [
-    659,
-    405,
-    764,
-    460
+    655,
+    406,
+    759,
+    462
    ]
   },
   {
    "id": "PWR-002",
    "role": "context",
-   "name": "Pack strap 20 x 300 mm with buckle (STRIX, BOM W08; round pack and tray)",
+   "name": "Pack straps x2: 20 mm webbing with buckle, each about 244 mm (inner loop 214 mm + 30 mm overlap, EST), at y +-35 mm, each a closed loop round the tray plate (front and aft edges) and the pack; BOM W08 STRIX 20 x 300 mm covers each loop (second strap price \"-\"); mass scaled 5.5 g x length / 300 mm per strap, EST (11 g if both are used uncut)",
    "status": "MODELLED",
-   "mass_g": 5.5,
+   "mass_g": 8.9,
    "subsystem": "power",
    "bbox_px": [
-    651,
-    382,
-    761,
-    478
+    648,
+    357,
+    765,
+    469
    ]
   },
   {
-   "id": "AVN-001",
+   "id": "AVN-010",
    "role": "context",
-   "name": "Avionics plate",
+   "name": "R2 mounting bosses (T-073 R2, T-077 p5): 4 FC bosses 6 x 6 mm on the 25 x 25 pattern with M2 hex-nut pockets, 4 ESC bosses 6 x 6 on the 20 x 20 pattern, 4 GPS corner pads 6 x 6 and 2 RX strip pads 5 x 11 mm (T-073 s.R2 Phase 2: GPS / RX pads), each up to the pad plane ZP (heights from the skin), bonded to the skin, printed PETG 6 x 6 x h (T-070); mass = drawn volume x T-067 basis",
    "status": "MODELLED",
-   "mass_g": 8.0,
+   "mass_g": 1.63,
    "subsystem": "avionics",
    "bbox_px": [
-    701,
-    341,
-    849,
-    426
+    705,
+    363,
+    844,
+    438
    ]
   },
   {
@@ -1107,52 +1399,52 @@
    "mass_g": 1.0,
    "subsystem": "avionics",
    "bbox_px": [
-    739,
-    379,
-    779,
-    404
+    797,
+    404,
+    844,
+    434
    ]
   },
   {
    "id": "AVN-002",
    "role": "context",
-   "name": "Flight controller Kakute F405 Wing Mini",
+   "name": "Flight controller Holybro Kakute H743-Wing, 45 x 30 x 13.5 mm (V docs.holybro.com kakute-h743-wing, read 2026-11-20), M2 25 x 25 mm, 28 g with USB extender; drawn: PCB 45 x 30 x 1.6 mm (PCB thickness EST, vendor -), corner radius -, hole diameter - (2.2 mm drawn), connector and header outlines and heights - (not drawn; the 13.5 mm overall height is a wiring keep-out), orientation 45 mm along y is my choice; position (T-092, D-239): board centre x 47 mm, y -75 mm (75 mm off the wing centre, left side, hard-mounted); IMU chip position on the board \"-\" (not published)",
    "status": "MODELLED",
-   "mass_g": 17.0,
+   "mass_g": 28.0,
    "subsystem": "avionics",
    "bbox_px": [
-    739,
-    361,
-    779,
-    402
+    792,
+    401,
+    849,
+    434
    ]
   },
   {
    "id": "HWC-001",
    "role": "context",
-   "name": "FC mounting screws: 4 x M2 x 25 pan screw (stock)",
+   "name": "FC mounting screws: 4 x M2 pan screw (stock, length per hole 8-10 mm, T-077 p5)",
    "status": "MODELLED",
-   "mass_g": 2.97,
+   "mass_g": 1.18,
    "subsystem": "avionics",
    "bbox_px": [
-    742,
-    361,
-    776,
-    404
+    799,
+    403,
+    841,
+    435
    ]
   },
   {
    "id": "HWC-003",
    "role": "context",
-   "name": "FC mounting nuts: 4 x M2 thin nut (DIN 439 1.2 mm) in the plate hex pockets",
+   "name": "FC mounting nuts: 4 x M2 thin nut (DIN 439 1.2 mm) in the boss hex pockets",
    "status": "MODELLED",
    "mass_g": 0.41,
    "subsystem": "avionics",
    "bbox_px": [
-    742,
-    383,
-    776,
-    404
+    799,
+    408,
+    842,
+    436
    ]
   },
   {
@@ -1163,9 +1455,9 @@
    "mass_g": 4.6,
    "subsystem": "avionics",
    "bbox_px": [
-    820,
-    353,
-    875,
+    817,
+    348,
+    904,
     392
    ]
   },
@@ -1177,9 +1469,9 @@
    "mass_g": 13.5,
    "subsystem": "avionics",
    "bbox_px": [
-    706,
-    364,
-    743,
+    704,
+    365,
+    740,
     389
    ]
   },
@@ -1191,38 +1483,66 @@
    "mass_g": 3.0,
    "subsystem": "avionics",
    "bbox_px": [
-    781,
-    404,
-    803,
-    420
+    1146,
+    548,
+    1170,
+    566
    ]
   },
   {
    "id": "AVN-008",
    "role": "ghost",
-   "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead runs from the foam ditch to the ESC pads; notches for the sensor leads and the battery tail",
+   "name": "Bay cover (D-198, T-022 Q4): 0.6 mm printed PETG hood over the FC (T-092: now at y -75 under the FC annex, x 22.5-72.2, y -99 to -26.5), ESC and the phase-lead runs from the foam ditch to the ESC pads, with a low annex (RX hood) over the receiver enclosing the RX UART lead; bottom-open slots for the GPS lead, the battery tail and the two antennas",
    "status": "MODELLED",
-   "mass_g": 9.6,
+   "mass_g": 14.61,
    "subsystem": "avionics",
    "bbox_px": [
-    711,
-    335,
-    826,
-    427
+    719,
+    334,
+    858,
+    448
    ]
   },
   {
    "id": "AVN-006",
    "role": "context",
-   "name": "Pitot probe",
+   "name": "Pitot-static probe (RMRC kit; size not published: EST 166 x 3 mm, measure)",
    "status": "MODELLED",
    "mass_g": 5.0,
    "subsystem": "avionics",
    "bbox_px": [
-    308,
-    266,
-    439,
-    345
+    1024,
+    579,
+    1141,
+    692
+   ]
+  },
+  {
+   "id": "AVN-009-T",
+   "role": "context",
+   "name": "Pitot line, total pressure: silicone tubing 2 / 4 mm (V RMRC), 36 mm (CAD route)",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "subsystem": "avionics",
+   "bbox_px": [
+    1131,
+    555,
+    1154,
+    585
+   ]
+  },
+  {
+   "id": "AVN-009-S",
+   "role": "context",
+   "name": "Pitot line, static pressure: silicone tubing 2 / 4 mm (V RMRC), 36 mm (CAD route)",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "subsystem": "avionics",
+   "bbox_px": [
+    1135,
+    557,
+    1159,
+    587
    ]
   },
   {
@@ -1233,10 +1553,10 @@
    "mass_g": 20.5,
    "subsystem": "mechanisms",
    "bbox_px": [
-    635,
-    280,
-    674,
-    312
+    643,
+    275,
+    682,
+    307
    ]
   },
   {
@@ -1247,38 +1567,52 @@
    "mass_g": 1.0,
    "subsystem": "mechanisms",
    "bbox_px": [
-    650,
-    287,
-    665,
-    296
+    658,
+    282,
+    670,
+    290
+   ]
+  },
+  {
+   "id": "MEC-008-R",
+   "role": "context",
+   "name": "Z-bend keeper (R), printed PETG: 1.5 mm spacer + 0.8 mm bridge over the Z-bend, clamped under the arm screw (D-212 rev 3; mass CALC)",
+   "status": "MODELLED",
+   "mass_g": 0.07,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    659,
+    281,
+    670,
+    287
    ]
   },
   {
    "id": "HWC-002-R",
    "role": "context",
-   "name": "Servo arm screw M2 x 6 pan (R)",
+   "name": "Servo arm screw M2 x 8 pan (R)",
    "status": "MODELLED",
-   "mass_g": 0.27,
+   "mass_g": 0.32,
    "subsystem": "mechanisms",
    "bbox_px": [
-    652,
-    287,
-    656,
-    295
+    660,
+    280,
+    664,
+    289
    ]
   },
   {
    "id": "MEC-004-R",
    "role": "context",
-   "name": "Control horn (R)",
+   "name": "Control horn (R), printed PETG 2 mm flat profile: blade with the 1.1 mm reamed hole over the hinge line + rib through a slot in the elevon, 2.5-55 mm aft of the hinge (D-212 rev 3; mass CALC from the drawn volume)",
    "status": "MODELLED",
-   "mass_g": 1.0,
+   "mass_g": 0.95,
    "subsystem": "mechanisms",
    "bbox_px": [
-    692,
-    263,
-    709,
-    281
+    694,
+    257,
+    731,
+    282
    ]
   },
   {
@@ -1289,10 +1623,10 @@
    "mass_g": 0.97,
    "subsystem": "mechanisms",
    "bbox_px": [
-    662,
-    268,
-    699,
-    295
+    668,
+    266,
+    698,
+    289
    ]
   },
   {
@@ -1303,10 +1637,10 @@
    "mass_g": 0.03,
    "subsystem": "mechanisms",
    "bbox_px": [
-    695,
-    269,
-    699,
-    272
+    694,
+    267,
+    698,
+    269
    ]
   },
   {
@@ -1317,10 +1651,10 @@
    "mass_g": 20.5,
    "subsystem": "mechanisms",
    "bbox_px": [
-    964,
-    424,
-    1006,
-    460
+    968,
+    416,
+    1009,
+    452
    ]
   },
   {
@@ -1331,38 +1665,52 @@
    "mass_g": 1.0,
    "subsystem": "mechanisms",
    "bbox_px": [
-    972,
-    429,
-    989,
-    439
+    979,
+    423,
+    993,
+    431
+   ]
+  },
+  {
+   "id": "MEC-008-L",
+   "role": "context",
+   "name": "Z-bend keeper (L), printed PETG: 1.5 mm spacer + 0.8 mm bridge over the Z-bend, clamped under the arm screw (D-212 rev 3; mass CALC)",
+   "status": "MODELLED",
+   "mass_g": 0.07,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    979,
+    420,
+    991,
+    429
    ]
   },
   {
    "id": "HWC-002-L",
    "role": "context",
-   "name": "Servo arm screw M2 x 6 pan (L)",
+   "name": "Servo arm screw M2 x 8 pan (L)",
    "status": "MODELLED",
-   "mass_g": 0.27,
+   "mass_g": 0.32,
    "subsystem": "mechanisms",
    "bbox_px": [
-    983,
-    432,
     987,
-    441
+    423,
+    991,
+    433
    ]
   },
   {
    "id": "MEC-004-L",
    "role": "context",
-   "name": "Control horn (L)",
+   "name": "Control horn (L), printed PETG 2 mm flat profile: blade with the 1.1 mm reamed hole over the hinge line + rib through a slot in the elevon, 2.5-55 mm aft of the hinge (D-212 rev 3; mass CALC from the drawn volume)",
    "status": "MODELLED",
-   "mass_g": 1.0,
+   "mass_g": 0.95,
    "subsystem": "mechanisms",
    "bbox_px": [
-    1000,
-    395,
-    1017,
-    415
+    1005,
+    387,
+    1039,
+    416
    ]
   },
   {
@@ -1373,10 +1721,10 @@
    "mass_g": 0.97,
    "subsystem": "mechanisms",
    "bbox_px": [
-    973,
-    400,
-    1009,
-    432
+    980,
+    399,
+    1010,
+    426
    ]
   },
   {
@@ -1387,24 +1735,24 @@
    "mass_g": 0.03,
    "subsystem": "mechanisms",
    "bbox_px": [
-    1004,
-    402,
-    1008,
-    405
+    1005,
+    400,
+    1009,
+    403
    ]
   },
   {
    "id": "GER-001-UR",
    "role": "context",
-   "name": "Foot shoe (UR)",
+   "name": "Foot shoe (UR; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closure s2 recovery, -1 g; mass from printed_mass.json at Onyx 1.20 g/cm3)",
    "status": "MODELLED",
-   "mass_g": 1.4,
+   "mass_g": 4.3,
    "subsystem": "landing",
    "bbox_px": [
-    603,
-    18,
-    630,
-    43
+    610,
+    5,
+    637,
+    30
    ]
   },
   {
@@ -1415,52 +1763,52 @@
    "mass_g": 0.7,
    "subsystem": "landing",
    "bbox_px": [
-    616,
-    9,
-    647,
-    34
+    624,
+    -4,
+    654,
+    20
    ]
   },
   {
    "id": "GER-001-UL",
    "role": "context",
-   "name": "Foot shoe (UL)",
+   "name": "Foot shoe (UL; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closure s2 recovery, -1 g; mass from printed_mass.json at Onyx 1.20 g/cm3)",
    "status": "MODELLED",
-   "mass_g": 1.4,
+   "mass_g": 4.3,
    "subsystem": "landing",
    "bbox_px": [
-    1252,
-    256,
-    1284,
-    287
+    1254,
+    237,
+    1286,
+    268
    ]
   },
   {
    "id": "GER-001-LR",
    "role": "context",
-   "name": "Foot shoe (LR)",
+   "name": "Foot shoe (LR; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closure s2 recovery, -1 g; mass from printed_mass.json at Onyx 1.20 g/cm3)",
    "status": "MODELLED",
-   "mass_g": 1.4,
+   "mass_g": 4.3,
    "subsystem": "landing",
    "bbox_px": [
-    620,
-    302,
-    644,
-    327
+    628,
+    308,
+    652,
+    332
    ]
   },
   {
    "id": "GER-001-LL",
    "role": "context",
-   "name": "Foot shoe (LL)",
+   "name": "Foot shoe (LL; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closure s2 recovery, -1 g; mass from printed_mass.json at Onyx 1.20 g/cm3)",
    "status": "MODELLED",
-   "mass_g": 1.4,
+   "mass_g": 4.3,
    "subsystem": "landing",
    "bbox_px": [
     1206,
-    565,
-    1236,
-    595
+    566,
+    1234,
+    596
    ]
   },
   {
@@ -1471,10 +1819,10 @@
    "mass_g": 0.7,
    "subsystem": "landing",
    "bbox_px": [
-    1264,
-    243,
-    1298,
-    274
+    1266,
+    225,
+    1299,
+    256
    ]
   },
   {
@@ -1485,10 +1833,10 @@
    "mass_g": 0.7,
    "subsystem": "landing",
    "bbox_px": [
-    632,
-    294,
-    660,
-    319
+    640,
+    299,
+    667,
+    324
    ]
   },
   {
@@ -1499,10 +1847,10 @@
    "mass_g": 0.7,
    "subsystem": "landing",
    "bbox_px": [
-    1218,
-    553,
-    1248,
-    584
+    1216,
+    555,
+    1246,
+    585
    ]
   },
   {
@@ -1510,13 +1858,13 @@
    "role": "context",
    "name": "Phase-lead raceway (D-199, R): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
    "status": "MODELLED",
-   "mass_g": 1.8,
+   "mass_g": 1.43,
    "subsystem": "harness",
    "bbox_px": [
-    657,
-    409,
-    722,
-    459
+    663,
+    401,
+    730,
+    453
    ]
   },
   {
@@ -1524,69 +1872,69 @@
    "role": "context",
    "name": "Phase-lead raceway (D-199, L): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
    "status": "MODELLED",
-   "mass_g": 1.8,
+   "mass_g": 1.43,
    "subsystem": "harness",
    "bbox_px": [
-    689,
-    423,
-    754,
-    475
+    695,
+    416,
+    761,
+    468
    ]
   },
   {
    "id": "HRN-004-UR",
    "role": "context",
-   "name": "Hub conduit (D-199, UR): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "name": "Hub conduit (D-199, D-202, UR): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 0.98,
    "subsystem": "harness",
    "bbox_px": [
-    641,
-    431,
-    673,
-    458
+    653,
+    426,
+    684,
+    455
    ]
   },
   {
    "id": "HRN-004-UL",
    "role": "context",
-   "name": "Hub conduit (D-199, UL): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "name": "Hub conduit (D-199, D-202, UL): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 0.72,
    "subsystem": "harness",
    "bbox_px": [
-    673,
-    448,
+    676,
+    436,
     705,
-    472
+    461
    ]
   },
   {
    "id": "HRN-004-LR",
    "role": "context",
-   "name": "Hub conduit (D-199, LR): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "name": "Hub conduit (D-199, D-202, LR): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 0.9,
    "subsystem": "harness",
    "bbox_px": [
-    640,
-    449,
-    672,
-    480
+    663,
+    445,
+    685,
+    482
    ]
   },
   {
    "id": "HRN-004-LL",
    "role": "context",
-   "name": "Hub conduit (D-199, LL): 0.6 mm PETG tunnel from the arm-socket floor hole along the hub web, then the vertical drop into the raceway",
+   "name": "Hub conduit (D-199, D-202, LL): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 1.22,
    "subsystem": "harness",
    "bbox_px": [
-    677,
-    466,
+    669,
+    462,
     709,
-    500
+    497
    ]
   },
   {
@@ -1597,9 +1945,9 @@
    "mass_g": 8.0,
    "subsystem": "harness",
    "bbox_px": [
-    725,
-    337,
-    746,
+    723,
+    338,
+    743,
     355
    ]
   },
@@ -1611,9 +1959,9 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    730,
+    727,
     348,
-    733,
+    730,
     351
    ]
   },
@@ -1625,9 +1973,9 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    737,
-    339,
-    787,
+    734,
+    340,
+    783,
     362
    ]
   },
@@ -1639,10 +1987,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    664,
+    658,
     352,
-    728,
-    405
+    725,
+    412
    ]
   },
   {
@@ -1653,10 +2001,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    676,
-    375,
-    708,
-    391
+    669,
+    363,
+    702,
+    386
    ]
   },
   {
@@ -1667,10 +2015,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    454,
-    238,
-    766,
-    453
+    448,
+    226,
+    763,
+    454
    ]
   },
   {
@@ -1681,10 +2029,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    679,
-    376,
-    877,
-    469
+    682,
+    372,
+    896,
+    460
    ]
   },
   {
@@ -1695,10 +2043,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    482,
-    357,
-    774,
-    518
+    485,
+    355,
+    771,
+    510
    ]
   },
   {
@@ -1709,10 +2057,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    683,
+    674,
     371,
-    868,
-    723
+    877,
+    729
    ]
   },
   {
@@ -1723,10 +2071,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    749,
-    358,
-    797,
-    395
+    771,
+    357,
+    835,
+    410
    ]
   },
   {
@@ -1737,10 +2085,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    623,
-    292,
-    768,
-    381
+    618,
+    286,
+    828,
+    409
    ]
   },
   {
@@ -1751,10 +2099,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    770,
-    380,
-    979,
-    461
+    832,
+    409,
+    983,
+    462
    ]
   },
   {
@@ -1765,10 +2113,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    766,
-    362,
-    828,
-    388
+    781,
+    374,
+    826,
+    413
    ]
   },
   {
@@ -1779,10 +2127,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    732,
-    360,
-    748,
-    382
+    729,
+    361,
+    822,
+    425
    ]
   },
   {
@@ -1793,10 +2141,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    753,
-    376,
-    786,
-    408
+    769,
+    379,
+    1164,
+    557
    ]
   }
  ],

@@ -187,7 +187,7 @@ def build(prefix, mk, standalone=False):
     a = (c[0] + r * SCALE * math.cos(ang), c[1] - r * SCALE * math.sin(ang))
     ty = front.y0 - 52
     o.append(callout(a, [(a[0] + 14, ty - 4)], a[0] + 8, ty,
-                     'Ø %s prop disc × 4 · APC 9×4.5MR on T-Motor MN2212' % mm(prop_d), 'end'))
+                     'Ø %s prop disc × 4 · APC 9×4.5MR on SunnySky X2216' % mm(prop_d), 'end'))
     a = side.pt(-0.075, 0, 0.10)
     bx = side.pt(0.02, 0, 0)[0]
     ty = side.y0 - 42

@@ -13,6 +13,7 @@ CANT = math.radians(cfg.get("cant_deg", 14.0))
 TSCALE = cfg.get("thrust_scale", 0.767)     # 1.0 = maker table at 14.8 V; 0.767 = sagged pack, hot (sizing_a.py: 13.16 V, x0.97)
 DOWNLOAD = 0.97                             # 3 % slipstream download (sizing_a.py DOWNLOAD)
 KQ = 0.0204                                 # prop torque / thrust, m (sizing: 65 N mm at 3.19 N)
+if os.environ.get('A_MOTOR', 'mn2212').lower() == 'x2216': KQ = 0.0145       # T-097: X2216 + APC 9x4.5MR shaft torque / thrust, m (T089_report s1.1, prop_a.py T-083 model)
 TAU_M = 0.04                                # motor + ESC + rotor lag, s (EST)
 WIND = cfg.get("wind", 0.0); WFROM = math.radians(cfg.get("wind_from_deg", 0.0))
 GUST = cfg.get("gust", 0.0); GUST_T = cfg.get("gust_s", 2.0)            # 1-cos gust on top of WIND, m/s, rise time s

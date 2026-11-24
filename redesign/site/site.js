@@ -4,8 +4,8 @@
 import { DIMS, C } from './data/concepts.js?v=20261115f';
 import { start as startViewer, viewer } from './viewer.js?v=20261118g';
 
-const ROUTES = ['aircraft', 'decision', 'team', 'subsystems', 'build', 'proof', 'structures', 'status', 'bom', 'docs'];
-const TITLES = { aircraft: 'Aircraft', decision: 'Decision', team: 'Team', subsystems: 'Subsystems', build: 'Build guide', proof: 'Proof chain', structures: 'Structures', status: 'Status', bom: 'BOM', docs: 'Docs' };
+const ROUTES = ['aircraft', 'decision', 'team', 'subsystems', 'build', 'proof', 'structures', 'sims', 'status', 'bom', 'docs'];
+const TITLES = { aircraft: 'Aircraft', decision: 'Decision', team: 'Team', subsystems: 'Subsystems', build: 'Build guide', proof: 'Proof chain', structures: 'Structures', sims: 'Simulations', status: 'Status', bom: 'BOM', docs: 'Docs' };
 const GH_ROOT = 'https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/';
 const store = { get(k) { try { return localStorage.getItem('k09l.' + k); } catch (e) { return null; } },
   set(k, v) { try { localStorage.setItem('k09l.' + k, v); } catch (e) { /* storage blocked: fine */ } } };

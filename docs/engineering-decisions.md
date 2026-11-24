@@ -116,3 +116,29 @@ Added from the independent retro-review `docs/audits/2026-11-19-T025-retro.md` (
 | G stronger rib (e.g. 16x14 tube) | + about 4 to 5 EST (not computed) | RF about 1.7 EST | yes | none | CAD, saddles, drawings all change | change | none | rung 5; rungs 1-4 suffice | not evaluated |
 
 Benchmark (6.4): foot-pad/crush-foot side load is a friction-limited demand: K09-L's own D-105/D-138 made the same call (cap the pad face friction, size the structure to the resulting load); no external landing-gear source was read for this entry.
+
+## Trade table D-243 landing foam spec (T-098, rev 2 after review round 10, 2026-11-23; pending independent review)
+Basis: 1.881 kg, CAD rib 25x23, 20 mm usable stroke, the 10 AR-014 cases at mu 0.40; limits stroke <= 20 mm, n <= 12 g, tilt <= 3 deg, rib RF >= 1.0 (none relaxed).
+| Option | Δmass g | Margin | Works? | Reliability | Manufacture | Assembly | Aero | Constraints | Source |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 flight-card limit: forward drift <= 0.2 m/s or lean <= 8 deg (rung 1, plateau stays 30 N) | 0 | 30 N: drift 0.2 gives 19.5 mm (0.5 mm), 0.3 gives 20.1 mm; lean 8 deg gives 19.9 mm | Not adopted: SITL records reach 0.50 m/s lateral at 11-12 deg lean, so it excludes cases the aircraft sees | depends on pilot | flight card | none | none | no ArduPilot parameter enforces touchdown drift | `T098_data/card_rib25.json`; AR-012 |
+| 2a plateau band 33-42 N at zeta 0.05 only (first version) | 0 | 37.5 N: 17.2 mm, 10.76 g | REJECTED by review 98-1: 33 N at zeta 0.02 fails (20.47 mm, 26.8 g) | zeta must be known | foam | none | none | zeta not encoded | `plateau_rib25.json`, `zeta_rib25.json` |
+| **2b joint region Fp 37.5-39.0 N AND zeta 0.02-0.05 AND stroke >= 20 mm (chosen)** | 0 | corner 37.5 N / zeta 0.02: 0.44 mm stroke, 9.20 g; 37.5 N / zeta 0.05: 2.8 mm, 10.76 g; upper edge 39 N set by the cell scaling (RF 1.09 x 36 / 39 = 1.006, EST) | YES in the model; UNVERIFIED (foam unmeasured, T-083 strength rows not rerun above 36 N) | region 1.5 N wide (+-2 %); foam must be selected / conditioned | foam grade by TP-3 | none | none | zeta <= 0.05 (cell fails at 0.10, min 0.66); mu 0.40 only | `zeta2_rib25.json`, `plateau_rib25.json`, T083b_report s4.3 |
+| **2c FALLBACK: 24 mm usable stroke (36 mm pad, T-083), Fp 34.5-39.0 N AND zeta 0.02-0.05** | about +0.5 EST (longer pad) | 4.5 N wide (+-6 %); stroke 21.3 of 24 mm at 34.5 N / zeta 0.02, binding tilt 2.81 deg; zeta 0.02 at 33 N fails (tilt 3.01) | YES in the model; UNVERIFIED; needs a CAD change (pad 30 -> 36 mm) and A-P9 re-check: 36 mm pad edge 30.60 deg (target 30.5, thin), pad-centre bound 29.81 deg; the T-084 30.22 deg is the 40 mm pad (30.30 deg at the current CG) | foam scatter tolerable (3x wider region) | pad / cup length | none | none | strength rows not rerun on the longer geometry; cell cap 39 N (EST scaling) | `stroke24_rib25.json`, `zeta24_rib25.json`, `zeta24b_rib25.json`, T084_report s1.3 |
+| 3 foot position (rung 3) | 0 | not evaluated | not needed unless 2b cannot be met | n/a | CAD change | none | none | A-P9 31.08 deg tight | — |
+| 4 stiffer rib / UHMW pad / extra material (rung 5) | + EST | not evaluated | not needed | n/a | CAD / BOM | change | none | rungs 1-2 suffice if the foam can be conditioned | — |
+| 5 keep 30 N or take 45 N | 0 | 30 N: 20.3 mm, 17.45 g; 45 N: 12.60 g | NO | n/a | none | none | none | limits | AR-014 |
+
+Passing grid (all 10 cases, rib 25x23; Fp N: zeta): 33 N: 0.05, 0.07, 0.10; 35 N: 0.05, 0.07; 37.5 N: 0.02-0.07; 39-40 N: 0.01-0.05 (40 N fails at 0.07); 42 N: 0.01-0.05 (fails at 0.07, 0.10). Tested zeta values: 0.01, 0.02, 0.03, 0.05, 0.07, 0.10; tested Fp: 33, 35 (0.01-0.03, 0.07 only), 37.5, 40, 42 N.
+
+Benchmark (6.4): the plateau is the region of an EVA foam compression curve where most energy is absorbed and its stress rises with loading rate (MDPI Polymers 2023, https://pmc.ncbi.nlm.nih.gov/articles/PMC10385341, checked 2026-11-23); no published drone landing-pad comparable found.
+
+## Trade table D-244 elevon pitch-use basis (T-098, 2026-11-23; basis change WITHDRAWN after review round 10, 98-4)
+The 20 deg proposal raised the pitch allowance from 9 deg (0.60 of 15) to 12 deg with no derivation of A's roll / yaw / gust reserve: a relaxation. The line stays on its 15 deg basis; AR-015 is FAIL there and open.
+| Option (basis for the 0.60 line) | Δmass g | Margin | Works? | Reliability | Manufacture | Assembly | Aero | Constraints | Source |
+|---|---|---|---|---|---|---|---|---|---|
+| **15 deg (K09-L: 25 deg less 10 kept), standing line (kept)** | 0 | 0.69 (Z5), 0.77-0.79 (T-074) vs 0.60 | FAIL, open item | no A hardware at 15 deg, reserve derivation for A missing | none | none | none | needs a pitch-authority fix (ladder from rung 1) or a derived reserve rule | SITL-FLIGHT.md l.25; AR-015 |
+| 20 deg commanded endpoint (information only, NOT adopted) | 0 | Z5 0.52; T-074 0.58-0.59 (thin, inside 0.03 scatter) | would pass, but allowance 9 -> 12 deg is a relaxation | SERVO5/6 MIN/MAX still to be bench-set | none | none | none | stops +-21 deg | AR-006, AR-001 rev 3, A.param |
+| 25 deg (old plant stop, information only) | 0 | 0.41-0.47 | not A's hardware | n/a | none | none | none | A stops are +-21 deg | a_aero.py history |
+
+Benchmark (6.4): none found for an elevon pitch-use line (project-internal criterion).

@@ -1,0 +1,1457 @@
+{
+ "task": "T-098",
+ "generated": "2026-11-23",
+ "decision": "Landing: the foam must be accepted by a joint region, plateau 37.5-39.0 N per foot AND pad damping zeta 0.02-0.05 AND usable stroke >= 20 mm on the drawn 25x23-rib airframe with no CAD change (a plateau band alone is not safe: 33 N fails at zeta 0.02); the elevon pitch-use line stays FAIL on its 15 deg basis as an open item (the 20 deg basis proposal was withdrawn as a relaxation).",
+ "rows": [
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard level",
+   "metric": "foam stroke (mm)",
+   "value": 8.4,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST); pad 30 mm long, CAD envelope unchanged"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard level",
+   "metric": "peak load factor (g)",
+   "value": 10.76,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g; zeta 0.05"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard level",
+   "metric": "end tilt (deg)",
+   "value": 0.0,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard level",
+   "metric": "rib-root RF (min over run)",
+   "value": 7.62,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "CAD rib 25x23 (D-226); allowables EST; AR-012 rib-root check only"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 10 narrow",
+   "metric": "foam stroke (mm)",
+   "value": 14.6,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST); pad 30 mm long, CAD envelope unchanged"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 10 narrow",
+   "metric": "peak load factor (g)",
+   "value": 5.42,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g; zeta 0.05"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 10 narrow",
+   "metric": "end tilt (deg)",
+   "value": 1.8,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 10 narrow",
+   "metric": "rib-root RF (min over run)",
+   "value": 12.55,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "CAD rib 25x23 (D-226); allowables EST; AR-012 rib-root check only"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 10 narrow neg",
+   "metric": "foam stroke (mm)",
+   "value": 14.2,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST); pad 30 mm long, CAD envelope unchanged"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 10 narrow neg",
+   "metric": "peak load factor (g)",
+   "value": 5.43,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g; zeta 0.05"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 10 narrow neg",
+   "metric": "end tilt (deg)",
+   "value": 1.7,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 10 narrow neg",
+   "metric": "rib-root RF (min over run)",
+   "value": 10.57,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "CAD rib 25x23 (D-226); allowables EST; AR-012 rib-root check only"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 10 wide",
+   "metric": "foam stroke (mm)",
+   "value": 9.0,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST); pad 30 mm long, CAD envelope unchanged"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 10 wide",
+   "metric": "peak load factor (g)",
+   "value": 5.62,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g; zeta 0.05"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 10 wide",
+   "metric": "end tilt (deg)",
+   "value": 0.1,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 10 wide",
+   "metric": "rib-root RF (min over run)",
+   "value": 3.48,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "CAD rib 25x23 (D-226); allowables EST; AR-012 rib-root check only"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 7/7 combo",
+   "metric": "foam stroke (mm)",
+   "value": 12.4,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST); pad 30 mm long, CAD envelope unchanged"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 7/7 combo",
+   "metric": "peak load factor (g)",
+   "value": 6.91,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g; zeta 0.05"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 7/7 combo",
+   "metric": "end tilt (deg)",
+   "value": 1.2,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 7/7 combo",
+   "metric": "rib-root RF (min over run)",
+   "value": 3.36,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "CAD rib 25x23 (D-226); allowables EST; AR-012 rib-root check only"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 10 narrow + drift .5",
+   "metric": "foam stroke (mm)",
+   "value": 17.2,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST); pad 30 mm long, CAD envelope unchanged"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 10 narrow + drift .5",
+   "metric": "peak load factor (g)",
+   "value": 7.05,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g; zeta 0.05"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 10 narrow + drift .5",
+   "metric": "end tilt (deg)",
+   "value": 2.3,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 10 narrow + drift .5",
+   "metric": "rib-root RF (min over run)",
+   "value": 5.38,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "CAD rib 25x23 (D-226); allowables EST; AR-012 rib-root check only"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 10 wide + drift .5 y",
+   "metric": "foam stroke (mm)",
+   "value": 11.7,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST); pad 30 mm long, CAD envelope unchanged"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 10 wide + drift .5 y",
+   "metric": "peak load factor (g)",
+   "value": 5.94,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g; zeta 0.05"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 10 wide + drift .5 y",
+   "metric": "end tilt (deg)",
+   "value": 0.4,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/hard 10 wide + drift .5 y",
+   "metric": "rib-root RF (min over run)",
+   "value": 4.84,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "CAD rib 25x23 (D-226); allowables EST; AR-012 rib-root check only"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/normal level .5",
+   "metric": "foam stroke (mm)",
+   "value": 2.3,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST); pad 30 mm long, CAD envelope unchanged"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/normal level .5",
+   "metric": "peak load factor (g)",
+   "value": 8.9,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g; zeta 0.05"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/normal level .5",
+   "metric": "end tilt (deg)",
+   "value": 0.0,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/normal level .5",
+   "metric": "rib-root RF (min over run)",
+   "value": 5.6,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "CAD rib 25x23 (D-226); allowables EST; AR-012 rib-root check only"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/normal 10 narrow .5",
+   "metric": "foam stroke (mm)",
+   "value": 3.4,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST); pad 30 mm long, CAD envelope unchanged"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/normal 10 narrow .5",
+   "metric": "peak load factor (g)",
+   "value": 7.87,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g; zeta 0.05"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/normal 10 narrow .5",
+   "metric": "end tilt (deg)",
+   "value": 0.1,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/normal 10 narrow .5",
+   "metric": "rib-root RF (min over run)",
+   "value": 6.81,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "CAD rib 25x23 (D-226); allowables EST; AR-012 rib-root check only"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/normal 10 wide .5 + drift",
+   "metric": "foam stroke (mm)",
+   "value": 6.8,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST); pad 30 mm long, CAD envelope unchanged"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/normal 10 wide .5 + drift",
+   "metric": "peak load factor (g)",
+   "value": 5.29,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g; zeta 0.05"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/normal 10 wide .5 + drift",
+   "metric": "end tilt (deg)",
+   "value": 0.4,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "chosen_37.5N_rib25x23/normal 10 wide .5 + drift",
+   "metric": "rib-root RF (min over run)",
+   "value": 4.39,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "CAD rib 25x23 (D-226); allowables EST; AR-012 rib-root check only"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib25x23/30N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "20.3 / 17.45 / 2.80 / 1.46",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "fails at zeta 0.05"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib25x23/31.5N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "20.1 / 9.26 / 2.75 / 2.44",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "fails at zeta 0.05"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib25x23/33N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "19.4 / 9.64 / 2.66 / 3.19",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "passes at zeta 0.05 only; the accepted spec is the joint (Fp, zeta) region, see zeta2 rows"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib25x23/34.5N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "18.6 / 10.01 / 2.53 / 3.62",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "passes at zeta 0.05 only; the accepted spec is the joint (Fp, zeta) region, see zeta2 rows"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib25x23/36N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "18.1 / 10.39 / 2.40 / 3.49",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "passes at zeta 0.05 only; the accepted spec is the joint (Fp, zeta) region, see zeta2 rows"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib25x23/37.5N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "17.2 / 10.76 / 2.27 / 3.36",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "passes at zeta 0.05 only; the accepted spec is the joint (Fp, zeta) region, see zeta2 rows"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib25x23/39N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "16.7 / 11.13 / 2.15 / 3.25",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "passes at zeta 0.05 only; the accepted spec is the joint (Fp, zeta) region, see zeta2 rows"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib25x23/40.5N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "16.0 / 11.50 / 2.05 / 3.15",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "passes at zeta 0.05 only; the accepted spec is the joint (Fp, zeta) region, see zeta2 rows"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib25x23/42N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "15.5 / 11.87 / 1.95 / 2.99",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "passes at zeta 0.05 only; the accepted spec is the joint (Fp, zeta) region, see zeta2 rows"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib25x23/43.5N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "15.0 / 12.24 / 1.88 / 2.84",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "fails at zeta 0.05"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib25x23/45N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "14.5 / 12.60 / 1.85 / 2.65",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "fails at zeta 0.05"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib14x12_T097_basis/30N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "20.3 / 17.45 / 2.80 / 0.42",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "stale 14x12 tube, not the drawn part (D-226 is 25x23)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib14x12_T097_basis/31.5N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "20.1 / 9.26 / 2.75 / 0.70",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "stale 14x12 tube, not the drawn part (D-226 is 25x23)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib14x12_T097_basis/33N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "19.4 / 9.64 / 2.66 / 0.91",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "stale 14x12 tube, not the drawn part (D-226 is 25x23)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib14x12_T097_basis/34.5N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "18.6 / 10.01 / 2.53 / 1.03",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "stale 14x12 tube, not the drawn part (D-226 is 25x23)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib14x12_T097_basis/36N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "18.1 / 10.39 / 2.40 / 1.00",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "stale 14x12 tube, not the drawn part (D-226 is 25x23)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib14x12_T097_basis/37.5N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "17.2 / 10.76 / 2.27 / 0.96",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "stale 14x12 tube, not the drawn part (D-226 is 25x23)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib14x12_T097_basis/39N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "16.7 / 11.13 / 2.15 / 0.93",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "stale 14x12 tube, not the drawn part (D-226 is 25x23)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib14x12_T097_basis/40.5N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "16.0 / 11.50 / 2.05 / 0.90",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "stale 14x12 tube, not the drawn part (D-226 is 25x23)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib14x12_T097_basis/42N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "15.5 / 11.87 / 1.95 / 0.85",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "stale 14x12 tube, not the drawn part (D-226 is 25x23)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib14x12_T097_basis/43.5N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "15.0 / 12.24 / 1.88 / 0.81",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "stale 14x12 tube, not the drawn part (D-226 is 25x23)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "plateau_sweep_rib14x12_T097_basis/45N",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "14.5 / 12.60 / 1.85 / 0.76",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "stale 14x12 tube, not the drawn part (D-226 is 25x23)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "flight dynamics",
+   "case": "T097_Z5 (Z5_gb0, 1.881 kg)",
+   "metric": "elevon pitch use on the 15 deg basis (standing line, governing)",
+   "value": 0.69,
+   "limit": "<= 0.60",
+   "pass": false,
+   "note": "FAIL, open item (AR-010 item 5); 15 deg = K09-L 25 deg travel less 10 deg kept"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "flight dynamics",
+   "case": "T097_Z5 (Z5_gb0, 1.881 kg)",
+   "metric": "elevon pitch use on the 20 deg basis (information only, proposal withdrawn)",
+   "value": 0.52,
+   "limit": "information",
+   "pass": null,
+   "note": "NOT the line: the 20 deg basis raises the pitch allowance 9 -> 12 deg with no derivation of A's reserve (D-244, review 98-4)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "flight dynamics",
+   "case": "T097_Z5 (Z5_gb0, 1.881 kg)",
+   "metric": "elevon pitch use on the 25 deg basis (information only, old plant stop)",
+   "value": 0.41,
+   "limit": "information",
+   "pass": null,
+   "note": "A stops are +-21 deg"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "flight dynamics",
+   "case": "T097_Z5_lua",
+   "metric": "elevon pitch use on the 15 deg basis (standing line, governing)",
+   "value": 0.69,
+   "limit": "<= 0.60",
+   "pass": false,
+   "note": "FAIL, open item (AR-010 item 5); 15 deg = K09-L 25 deg travel less 10 deg kept"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "flight dynamics",
+   "case": "T097_Z5_lua",
+   "metric": "elevon pitch use on the 20 deg basis (information only, proposal withdrawn)",
+   "value": 0.52,
+   "limit": "information",
+   "pass": null,
+   "note": "NOT the line: the 20 deg basis raises the pitch allowance 9 -> 12 deg with no derivation of A's reserve (D-244, review 98-4)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "flight dynamics",
+   "case": "T097_Z5_lua",
+   "metric": "elevon pitch use on the 25 deg basis (information only, old plant stop)",
+   "value": 0.41,
+   "limit": "information",
+   "pass": null,
+   "note": "A stops are +-21 deg"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "flight dynamics",
+   "case": "T097_T074",
+   "metric": "elevon pitch use on the 15 deg basis (standing line, governing)",
+   "value": 0.79,
+   "limit": "<= 0.60",
+   "pass": false,
+   "note": "FAIL, open item (AR-010 item 5); 15 deg = K09-L 25 deg travel less 10 deg kept"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "flight dynamics",
+   "case": "T097_T074",
+   "metric": "elevon pitch use on the 20 deg basis (information only, proposal withdrawn)",
+   "value": 0.59,
+   "limit": "information",
+   "pass": null,
+   "note": "NOT the line: the 20 deg basis raises the pitch allowance 9 -> 12 deg with no derivation of A's reserve (D-244, review 98-4)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "flight dynamics",
+   "case": "T097_T074",
+   "metric": "elevon pitch use on the 25 deg basis (information only, old plant stop)",
+   "value": 0.47,
+   "limit": "information",
+   "pass": null,
+   "note": "A stops are +-21 deg"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "flight dynamics",
+   "case": "T097_T074_lua",
+   "metric": "elevon pitch use on the 15 deg basis (standing line, governing)",
+   "value": 0.77,
+   "limit": "<= 0.60",
+   "pass": false,
+   "note": "FAIL, open item (AR-010 item 5); 15 deg = K09-L 25 deg travel less 10 deg kept"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "flight dynamics",
+   "case": "T097_T074_lua",
+   "metric": "elevon pitch use on the 20 deg basis (information only, proposal withdrawn)",
+   "value": 0.58,
+   "limit": "information",
+   "pass": null,
+   "note": "NOT the line: the 20 deg basis raises the pitch allowance 9 -> 12 deg with no derivation of A's reserve (D-244, review 98-4)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "flight dynamics",
+   "case": "T097_T074_lua",
+   "metric": "elevon pitch use on the 25 deg basis (information only, old plant stop)",
+   "value": 0.46,
+   "limit": "information",
+   "pass": null,
+   "note": "A stops are +-21 deg"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "flight dynamics",
+   "case": "T097_T074 / Z5_gb0 1.881 kg",
+   "metric": "worst peak individual elevon deflection (deg): T-074 12.0, Z5 10.6",
+   "value": 12.0,
+   "limit": "information (< 19.5 saturation)",
+   "pass": null,
+   "note": "T-074 sum.json elevon_max_deg 12.0; t_elevon_sat 0 s in Z5"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_sensitivity_rib25x23/33N_zeta0.02",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "20.5 / 26.83 / 2.81 / 1.20",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "pad damping ratio varied; TP-3 gate is zeta <= 0.05"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_sensitivity_rib25x23/33N_zeta0.1",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "16.1 / 11.98 / 2.15 / 2.99",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "pad damping ratio varied; TP-3 gate is zeta <= 0.05"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_sensitivity_rib25x23/37.5N_zeta0.02",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "19.6 / 9.20 / 2.54 / 3.39",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "pad damping ratio varied; TP-3 gate is zeta <= 0.05"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_sensitivity_rib25x23/37.5N_zeta0.1",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "14.4 / 13.23 / 1.92 / 2.71",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "pad damping ratio varied; TP-3 gate is zeta <= 0.05"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_sensitivity_rib25x23/42N_zeta0.02",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "17.5 / 10.23 / 2.28 / 3.19",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "pad damping ratio varied; TP-3 gate is zeta <= 0.05"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_sensitivity_rib25x23/42N_zeta0.1",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "13.0 / 14.46 / 1.72 / 2.22",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "pad damping ratio varied; TP-3 gate is zeta <= 0.05"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "rung1_card_scan_30N/hard 10 narrow drift 0.0",
+   "metric": "foam stroke (mm)",
+   "value": 17.9,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "30 N plateau, rib 25x23; rung 1 evaluation, not adopted"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "rung1_card_scan_30N/hard 10 narrow drift 0.1",
+   "metric": "foam stroke (mm)",
+   "value": 18.8,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "30 N plateau, rib 25x23; rung 1 evaluation, not adopted"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "rung1_card_scan_30N/hard 10 narrow drift 0.2",
+   "metric": "foam stroke (mm)",
+   "value": 19.5,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "30 N plateau, rib 25x23; rung 1 evaluation, not adopted"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "rung1_card_scan_30N/hard 10 narrow drift 0.3",
+   "metric": "foam stroke (mm)",
+   "value": 20.1,
+   "limit": "<= 20.0",
+   "pass": false,
+   "note": "30 N plateau, rib 25x23; rung 1 evaluation, not adopted"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "rung1_card_scan_30N/hard 10 narrow drift 0.4",
+   "metric": "foam stroke (mm)",
+   "value": 20.2,
+   "limit": "<= 20.0",
+   "pass": false,
+   "note": "30 N plateau, rib 25x23; rung 1 evaluation, not adopted"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "rung1_card_scan_30N/hard 10 narrow drift 0.5",
+   "metric": "foam stroke (mm)",
+   "value": 20.3,
+   "limit": "<= 20.0",
+   "pass": false,
+   "note": "30 N plateau, rib 25x23; rung 1 evaluation, not adopted"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "rung1_card_scan_30N/hard lean 0 narrow drift 0.5",
+   "metric": "foam stroke (mm)",
+   "value": 14.4,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "30 N plateau, rib 25x23; rung 1 evaluation, not adopted"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "rung1_card_scan_30N/hard lean 2 narrow drift 0.5",
+   "metric": "foam stroke (mm)",
+   "value": 16.2,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "30 N plateau, rib 25x23; rung 1 evaluation, not adopted"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "rung1_card_scan_30N/hard lean 4 narrow drift 0.5",
+   "metric": "foam stroke (mm)",
+   "value": 16.1,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "30 N plateau, rib 25x23; rung 1 evaluation, not adopted"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "rung1_card_scan_30N/hard lean 6 narrow drift 0.5",
+   "metric": "foam stroke (mm)",
+   "value": 18.0,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "30 N plateau, rib 25x23; rung 1 evaluation, not adopted"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "rung1_card_scan_30N/hard lean 8 narrow drift 0.5",
+   "metric": "foam stroke (mm)",
+   "value": 19.9,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "30 N plateau, rib 25x23; rung 1 evaluation, not adopted"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "rung1_card_scan_30N/hard lean 10 narrow drift 0.5",
+   "metric": "foam stroke (mm)",
+   "value": 20.3,
+   "limit": "<= 20.0",
+   "pass": false,
+   "note": "30 N plateau, rib 25x23; rung 1 evaluation, not adopted"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "rung1_card_scan_30N/sink 0.34 narrow 10 drift 0.5",
+   "metric": "foam stroke (mm)",
+   "value": 7.1,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "30 N plateau, rib 25x23; rung 1 evaluation, not adopted"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "rung1_card_scan_30N/sink 0.5 narrow 10 drift 0.5",
+   "metric": "foam stroke (mm)",
+   "value": 6.5,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "30 N plateau, rib 25x23; rung 1 evaluation, not adopted"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "rung1_card_scan_30N/sink 0.7 narrow 10 drift 0.5",
+   "metric": "foam stroke (mm)",
+   "value": 8.7,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "30 N plateau, rib 25x23; rung 1 evaluation, not adopted"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "rung1_card_scan_30N/sink 0.9 narrow 10 drift 0.5",
+   "metric": "foam stroke (mm)",
+   "value": 13.2,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "30 N plateau, rib 25x23; rung 1 evaluation, not adopted"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "rung1_card_scan_30N/sink 1.0 narrow 10 drift 0.5",
+   "metric": "foam stroke (mm)",
+   "value": 15.7,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "30 N plateau, rib 25x23; rung 1 evaluation, not adopted"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "rung1_card_scan_30N/sink 1.1 narrow 10 drift 0.5",
+   "metric": "foam stroke (mm)",
+   "value": 18.4,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "30 N plateau, rib 25x23; rung 1 evaluation, not adopted"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "rung1_card_scan_30N/sink 1.2 narrow 10 drift 0.5",
+   "metric": "foam stroke (mm)",
+   "value": 20.3,
+   "limit": "<= 20.0",
+   "pass": false,
+   "note": "30 N plateau, rib 25x23; rung 1 evaluation, not adopted"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_grid_rib25x23/33N_zeta0.01",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "20.60 / 33.70 / 2.81 / 0.92",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "T-098 rev 2 zeta grid (review 98-1)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_grid_rib25x23/35N_zeta0.01",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "20.45 / 26.00 / 2.80 / 1.24",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "T-098 rev 2 zeta grid (review 98-1)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_grid_rib25x23/37.5N_zeta0.01",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "20.20 / 9.67 / 2.76 / 1.75",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "T-098 rev 2 zeta grid (review 98-1)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_grid_rib25x23/40N_zeta0.01",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "19.21 / 9.23 / 2.54 / 3.24",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "T-098 rev 2 zeta grid (review 98-1)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_grid_rib25x23/42N_zeta0.01",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "18.29 / 9.67 / 2.40 / 3.16",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "T-098 rev 2 zeta grid (review 98-1)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_grid_rib25x23/33N_zeta0.02",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "20.47 / 26.83 / 2.81 / 1.20",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "T-098 rev 2 zeta grid (review 98-1)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_grid_rib25x23/35N_zeta0.02",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "20.28 / 15.85 / 2.81 / 1.44",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "T-098 rev 2 zeta grid (review 98-1)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_grid_rib25x23/37.5N_zeta0.02",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "19.56 / 9.20 / 2.54 / 3.39",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "T-098 rev 2 zeta grid (review 98-1)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_grid_rib25x23/40N_zeta0.02",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "18.34 / 9.77 / 2.40 / 3.27",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "T-098 rev 2 zeta grid (review 98-1)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_grid_rib25x23/42N_zeta0.02",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "17.48 / 10.23 / 2.28 / 3.19",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "T-098 rev 2 zeta grid (review 98-1)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_grid_rib25x23/33N_zeta0.03",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "20.31 / 18.02 / 2.78 / 1.42",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "T-098 rev 2 zeta grid (review 98-1)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_grid_rib25x23/35N_zeta0.03",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "20.26 / 11.37 / 2.68 / 1.39",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "T-098 rev 2 zeta grid (review 98-1)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_grid_rib25x23/37.5N_zeta0.03",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "18.69 / 9.73 / 2.42 / 3.41",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "T-098 rev 2 zeta grid (review 98-1)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_grid_rib25x23/40N_zeta0.03",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "17.55 / 10.31 / 2.25 / 3.29",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "T-098 rev 2 zeta grid (review 98-1)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_grid_rib25x23/42N_zeta0.03",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "16.75 / 10.78 / 2.17 / 3.21",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "T-098 rev 2 zeta grid (review 98-1)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_grid_rib25x23/33N_zeta0.07",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "17.88 / 10.59 / 2.44 / 3.41",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "T-098 rev 2 zeta grid (review 98-1)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_grid_rib25x23/35N_zeta0.07",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "16.95 / 11.12 / 2.31 / 3.24",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "T-098 rev 2 zeta grid (review 98-1)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_grid_rib25x23/37.5N_zeta0.07",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "15.93 / 11.77 / 2.15 / 3.06",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "T-098 rev 2 zeta grid (review 98-1)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_grid_rib25x23/40N_zeta0.07",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "15.03 / 12.41 / 1.97 / 2.89",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "T-098 rev 2 zeta grid (review 98-1)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "zeta_grid_rib25x23/42N_zeta0.07",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "14.38 / 12.92 / 1.84 / 2.65",
+   "limit": "20 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "T-098 rev 2 zeta grid (review 98-1)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "accepted_foam_region",
+   "metric": "Fp N per foot AND zeta AND usable stroke mm",
+   "value": "37.5-39.0 AND 0.02-0.05 AND >= 20",
+   "limit": "model passes every tested corner; D-226 cell path scaled to 39.2 N (EST)",
+   "pass": true,
+   "note": "joint region only, 1.5 N wide; outside it rerun landing_a (and T-083 strength rows above 39 N) at the measured pair; UNVERIFIED until TP-3"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_24mm_stroke24_rib25x23/30N_zeta0.05",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "21.2 / 8.88 / 2.93 / 3.95",
+   "limit": "24 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "TP-3 fallback, 36 mm pad (CAD change, not made)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_24mm_stroke24_rib25x23/31.5N_zeta0.05",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "20.3 / 9.26 / 2.79 / 2.44",
+   "limit": "24 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "TP-3 fallback, 36 mm pad (CAD change, not made)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_24mm_stroke24_rib25x23/33N_zeta0.05",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "19.4 / 9.64 / 2.66 / 3.19",
+   "limit": "24 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "TP-3 fallback, 36 mm pad (CAD change, not made)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_24mm_stroke24_rib25x23/34.5N_zeta0.05",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "18.6 / 10.01 / 2.53 / 3.62",
+   "limit": "24 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "TP-3 fallback, 36 mm pad (CAD change, not made)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_24mm_stroke24_rib25x23/36N_zeta0.05",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "18.1 / 10.39 / 2.40 / 3.49",
+   "limit": "24 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "TP-3 fallback, 36 mm pad (CAD change, not made)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_24mm_stroke24_rib25x23/37.5N_zeta0.05",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "17.2 / 10.76 / 2.27 / 3.36",
+   "limit": "24 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "TP-3 fallback, 36 mm pad (CAD change, not made)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_24mm_stroke24_rib25x23/39N_zeta0.05",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "16.7 / 11.13 / 2.15 / 3.25",
+   "limit": "24 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "TP-3 fallback, 36 mm pad (CAD change, not made)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_24mm_stroke24_rib25x23/40.5N_zeta0.05",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "16.0 / 11.50 / 2.05 / 3.15",
+   "limit": "24 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "TP-3 fallback, 36 mm pad (CAD change, not made)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_24mm_stroke24_rib25x23/42N_zeta0.05",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "15.5 / 11.87 / 1.95 / 2.99",
+   "limit": "24 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "TP-3 fallback, 36 mm pad (CAD change, not made)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_24mm_stroke24_rib25x23/43.5N_zeta0.05",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "15.0 / 12.24 / 1.88 / 2.84",
+   "limit": "24 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "TP-3 fallback, 36 mm pad (CAD change, not made)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_24mm_stroke24_rib25x23/45N_zeta0.05",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "14.5 / 12.60 / 1.85 / 2.65",
+   "limit": "24 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "TP-3 fallback, 36 mm pad (CAD change, not made)"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_24mm_zeta_rib25x23/33N_zeta0.02",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "22.70 / 8.16 / 3.01 / 3.59",
+   "limit": "24 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "TP-3 fallback; 33 N / zeta 0.02 fails on tilt 3.01 deg"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_24mm_zeta_rib25x23/34.5N_zeta0.02",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "21.26 / 8.51 / 2.81 / 2.68",
+   "limit": "24 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "TP-3 fallback; 33 N / zeta 0.02 fails on tilt 3.01 deg"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_24mm_zeta_rib25x23/36N_zeta0.02",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "20.37 / 8.86 / 2.66 / 2.91",
+   "limit": "24 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "TP-3 fallback; 33 N / zeta 0.02 fails on tilt 3.01 deg"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_24mm_zeta_rib25x23/37.5N_zeta0.02",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "19.56 / 9.20 / 2.54 / 3.39",
+   "limit": "24 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "TP-3 fallback; 33 N / zeta 0.02 fails on tilt 3.01 deg"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_24mm_zeta_rib25x23/39N_zeta0.02",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "18.81 / 9.54 / 2.46 / 3.31",
+   "limit": "24 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "TP-3 fallback; 33 N / zeta 0.02 fails on tilt 3.01 deg"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_24mm_zeta_rib25x23/45N_zeta0.02",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "16.33 / 10.92 / 2.12 / 3.08",
+   "limit": "24 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "TP-3 fallback; 33 N / zeta 0.02 fails on tilt 3.01 deg"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_24mm_zeta_rib25x23/33N_zeta0.1",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "16.05 / 11.98 / 2.15 / 2.99",
+   "limit": "24 / 12 / 3.0 / 1.0",
+   "pass": true,
+   "note": "TP-3 fallback; 33 N / zeta 0.02 fails on tilt 3.01 deg"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_24mm_zeta_rib25x23/39N_zeta0.1",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "13.89 / 13.64 / 1.85 / 2.55",
+   "limit": "24 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "TP-3 fallback; 33 N / zeta 0.02 fails on tilt 3.01 deg"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_24mm_zeta_rib25x23/45N_zeta0.1",
+   "metric": "worst of 10 cases: stroke mm / n g / tilt deg / rib RF",
+   "value": "12.28 / 15.26 / 1.57 / 1.97",
+   "limit": "24 / 12 / 3.0 / 1.0",
+   "pass": false,
+   "note": "TP-3 fallback; 33 N / zeta 0.02 fails on tilt 3.01 deg"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "fallback_foam_region_24mm",
+   "metric": "Fp N per foot AND zeta AND usable stroke mm",
+   "value": "34.5-39.0 AND 0.02-0.05 AND >= 24",
+   "limit": "model passes every tested corner; cell cap 39 N (EST scaling)",
+   "pass": true,
+   "note": "4.5 N wide (+-6 %); needs a CAD pad change (30 -> 36 mm) and A-P9 re-check; strength rows not rerun on the longer pad"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "A-P9 static tip-over, edge toward CG, 30 mm pad (x_foot 0.3375)",
+   "metric": "deg",
+   "value": 31.08,
+   "limit": ">= 30.5",
+   "pass": true,
+   "note": "current CG x 22.05 mm, z 6.56 mm"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "A-P9 static tip-over, edge toward CG, 36 mm pad (x_foot 0.3435)",
+   "metric": "deg",
+   "value": 30.6,
+   "limit": ">= 30.5",
+   "pass": true,
+   "note": "thin (0.10 deg); pad-centre bound 29.81 deg (under 30); fallback only"
+  },
+  {
+   "analysis": "AR-016",
+   "category": "rigid-body dynamics",
+   "case": "A-P9 static tip-over, edge toward CG, 40 mm analysis pad (x_foot 0.3475)",
+   "metric": "deg",
+   "value": 30.3,
+   "limit": ">= 30.5",
+   "pass": false,
+   "note": "inside the T-084 record range 30.22-30.52: the T-084 30.22 figure is confirmed and belongs to the 40 mm pad"
+  }
+ ]
+}

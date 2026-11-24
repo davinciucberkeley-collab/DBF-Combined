@@ -18,7 +18,7 @@ Frames: body x aft of the wing LE, y right, z cruise-up (m, kg)."""
 import json, math, os, sys
 import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
-TABLE = os.path.abspath(os.path.join(HERE, '..', 'mechanism', 'out', 'T076d_data', 'cad_part_table.json'))
+TABLE = os.path.abspath(os.environ.get('LAND_PART_TABLE') or os.path.join(HERE, '..', 'mechanism', 'out', 'T076d_data', 'cad_part_table.json'))      # T-097: env override so a current-CAD table can be built without overwriting the committed T-076d one
 CAD_MASS_JSON = os.path.abspath(os.path.join(HERE, '..', 'sitl', 'cad_mass.json'))
 N_SPAN, N_CHORD, N_ROD = 15, 5, 9          # lump counts per direction (plates: N_SPAN x N_CHORD; rods N_ROD)
 

@@ -392,3 +392,27 @@ Requirement IDs: R-REPO-04.
 ```text
 Yeah, push it
 ```
+
+## AM-033 — 2026-11-23 — Do the remaining doable deliverables (not OpenCAE); rerun the physics sims; publish the results
+Relation: work order (stale MN2212 text in the Explorer; film and renders re-rendered from the current CAD; T-035 agent design loop as a concept A CLI wrapper; landing and SITL reruns at the current design; results in the Explorer and pushed to GitHub, which authorizes pushing redesign/v1 for this work); T-036 OpenCAE held by the user; lifts the "no simulation round until final" hold for this rerun.
+Requirement IDs: R-INT-02, R-INT-03, R-VID-02, R-PHY-09, R-PHY-10, R-CAD-01.
+
+```text
+Don't do anything with OpenCAE yet but do the others, then rerun the physics sim and make sure to have the results available in the explored and GitHub
+```
+
+## AM-034 — 2026-11-23 — Approve design work on what the reruns flag
+Relation: acknowledgement of the plan to work, on paper and at $0, on any failure the landing / SITL reruns (T-097) show (e.g. the landing ladder) before the design is called final.
+Requirement IDs: R-PHY-09, R-OPT-01.
+
+```text
+Sounds good
+```
+
+## AM-035 — 2026-11-23 — Final design audit once the design is final
+Relation: work order (when the design is final with what exists now, run a "final" audit on the design; distinct from the program-end T-047 / T-049, which still wait on the build and tests).
+Requirement IDs: R-VER-01, R-TRK-05.
+
+```text
+Once you reach a final design with what we have now, run a "final" audit on the design
+```
