@@ -790,7 +790,7 @@ export async function start() {
   const loadGlbScript = async () => {
     window.VIEWER_GLB_B64_PARTS = [];
     progress(0.5, 'loading model (embedded copy)');
-    await addScript('data/assembly.opt.glb.part1.js?v=20261118f');
+    await addScript('data/assembly.opt.glb.part1.js?v=20261124');
     const bin = atob(window.VIEWER_GLB_B64_PARTS.join('')), buf = new Uint8Array(bin.length);
     window.VIEWER_GLB_B64_PARTS = null;
     for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
@@ -798,7 +798,7 @@ export async function start() {
   };
   let gltf;
   try {
-    gltf = await new Promise((res, rej) => mkLoader().load('assets/concept-a.opt.glb?v=20261118f', res,
+    gltf = await new Promise((res, rej) => mkLoader().load('assets/concept-a.opt.glb?v=20261124', res,
       ev => { const got = ev.loaded || 0; progress(Math.min(got / total, 1), kB(got) + ' of ' + kB(total)); }, rej));
   } catch (e) {
     try { gltf = await loadGlbScript(); }

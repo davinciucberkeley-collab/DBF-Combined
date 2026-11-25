@@ -684,3 +684,11 @@ Requirement IDs: R-VID-02, R-VID-03, R-CAD-01, R-REPO-08.
 ```text
 Yes, re-render the videos, then merge to main
 ```
+
+## AM-069 — 2026-11-24 — Resume after the pause
+Relation: resume from the pause checkpoint in docs/session-state.md: videos (check How it flies, re-render the build film, publish), GLB colour re-export and gate, the AM-067 / AM-068 merge into main, status refresh.
+Requirement IDs: R-VID-02, R-VID-03, R-REPO-08.
+
+```text
+resume
+```

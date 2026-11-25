@@ -1,0 +1,14 @@
+{
+ "film": "a-build",
+ "frames": 21772,
+ "rendered": 6516,
+ "overlay_pictures": 6806,
+ "seconds": 5190.0,
+ "workers": 3,
+ "samples": 12,
+ "resolution": [
+  1280,
+  720
+ ],
+ "fps": 24
+}

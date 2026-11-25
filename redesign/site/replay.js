@@ -10,7 +10,7 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import M from './model.js?v=20261116e';
 
-const VER = '20261124b', GLB_URL = 'assets/concept-a.opt.glb?v=20261118f', GLB_B64 = 'data/assembly.opt.glb.part1.js?v=20261118f';
+const VER = '20261124b', GLB_URL = 'assets/concept-a.opt.glb?v=20261124', GLB_B64 = 'data/assembly.opt.glb.part1.js?v=20261124';
 const REDUCE = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
 const $ = (s, r = document) => r.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
